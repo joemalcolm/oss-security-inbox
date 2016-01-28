@@ -1,116 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/3
-Message-Id: <1479103384.3374846.786740337.305C3E3C@webmail.messagingengine.com>
-Date: Mon, 14 Nov 2016 07:03:04 +0100
-From: Ondřej Surý <ondrej@...y.org>
-To: oss-security@...ts.openwall.com, Sam Trenholme <sam-k6mymjcnjpz3fmkieotlt7rbgvqt98qy@...iam.org>
-Subject: Re: Remote crash in MaraDNS 2.0.13 and git master
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/28/10
+Message-Id: <056121F3-6A4C-4962-B3EC-CE294DDF5C5F@ntppool.org>
+Date: Thu, 28 Jan 2016 09:38:33 -0800
+From: Ask Bjørn Hansen <ask@...pool.org>
+To: Luca BRUNO <lucab@...ian.org>
+Cc: pool@...ts.ntp.org, oss-security@...ts.openwall.com, linuxbrad@...il.com, team@...urity.debian.org, secalert@...hat.com
+Subject: Re: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
 Content-Type: text/plain; charset=utf-8
 
-And attachments.
+Hi Luca (and everyone),
 
-O.
+I removed those servers yesterday. Brad had been helping look to see if others were doing something similar.
+
+I think the behavior was falling well outside what's reasonably expected from a server operator participating in the pool.
+
+The operator had also been adding the same server multiple times in order to "attract" more traffic which is definitely outside the guidelines.
+
+It's not something we want to support, though being the "connector" between users and volunteer server operators on an protocol without any encryption or authentication we can't pretend there's more control than there is.
+
+I might just be too cynical, but it also feels like something we should come to expect. Anyone who's looked at traffic to an Internet facing IPv4 address have seen much worse.
+
+The NTP pool usage being the source sucks, but in general I am sure we will see more of this as IPv6 usage goes up. Because you can't scan the IPv6 space, there will be some value in "active addresses" so eventually we will see IP addresses traded like other PII data is now. Choose the websites you visit carefully?
+
+
+
+Ask
+
+
 -- 
-Ondřej Surý <ondrej@...y.org>
-Knot DNS (https://www.knot-dns.cz/) – a high-performance DNS server
-Knot Resolver (https://www.knot-resolver.cz/) – secure, privacy-aware,
-fast DNS(SEC) resolver
-Vše pro chleba (https://vseprochleba.cz) – Mouky ze mlýna a potřeby pro
-pečení chleba všeho druhu
-
-On Mon, Nov 14, 2016, at 06:53, Ondřej Surý wrote:
-> Hi all,
-> 
-> AFL found another 5 crashes totaling to 6 unique crashes. Looking at the
-> backtraces it
-> looks like, it's just 3 unique crashes:
-> 
-> - js_readuint16
-> - js_substr
-> 
-> - process_query -> this in fact looks like stack smashing, since it
-> crashes on htons in an unrelated place
-> 
-> id:000000
-> id:000002
-> Program received signal SIGSEGV, Segmentation fault.
-> js_readuint16 (js=js@...ry=0x6de290, offset=offset@...ry=4) at
-> JsStr.c:1064
-> 1064               (*(js->string + offset + 1) & 0xff);
-> 
-> 
-> id:000001
-> id:000005
-> Program received signal SIGSEGV, Segmentation fault.
-> js_substr (source=source@...ry=0x6de290, dest=dest@...ry=0x6e37f0,
-> start=start@...ry=99, count=count@...ry=63743) at JsStr.c:731
-> 731               *(source->string + counter + start *
-> source->unit_size);
-> 
-> NOTE: id000001 cannot be reproduced on git master, but id000005 still
-> crashes it, so they probably are separate issues after all.
-> 
-> id:000003
-> id:000004
-> Program received signal SIGSEGV, Segmentation fault.
-> proc_query (raw=0x6de5d0, ect=0x7fffffffd940, sock=0) at MaraDNS.c:2615
-> 2615        ip = htonl((z->sin_addr).s_addr);
-> 
-> This is after 58 AFL cycles.
-> 
-> It will be worth retesting with ASAN enabled.
-> 
-> Cheers,
-> -- 
-> Ondřej Surý <ondrej@...y.org>
-> Knot DNS (https://www.knot-dns.cz/) – a high-performance DNS server
-> Knot Resolver (https://www.knot-resolver.cz/) – secure, privacy-aware,
-> fast DNS(SEC) resolver
-> Vše pro chleba (https://vseprochleba.cz) – Mouky ze mlýna a potřeby pro
-> pečení chleba všeho druhu
-> 
-> On Sat, Nov 12, 2016, at 09:39, Ondřej Surý wrote:
-> > Hi,
-> > 
-> > while playing with fuzzing the DNS servers with AFL (2.35b) I found a
-> > remote crash bug in MaraDNS 2.0.13 js_readuint16. It can be also
-> > reproduced using https://github.com/samboy/MaraDNS/ master branch.
-> > 
-> > Attached is patch to allow the fuzzing (it overrides getudp() with
-> > read(0, ..)), the input data that crashes MaraDNS, and the bt full
-> > output.
-> > 
-> > Please assign CVE, I would provide a patch, but MaraDNS code is
-> > extremely hard to navigate for me, so I'll leave the fix for the code
-> > author.
-> > 
-> > AFL has finished only 1 cycle (and found the 1 unique crash), so I'll
-> > keep it running for a while.
-> > 
-> > Cheers,
-> > -- 
-> > Ondřej Surý <ondrej@...y.org>
-> > Knot DNS (https://www.knot-dns.cz/) – a high-performance DNS server
-> > Knot Resolver (https://www.knot-resolver.cz/) – secure, privacy-aware,
-> > fast DNS(SEC) resolver
-> > Vše pro chleba (https://vseprochleba.cz) – Mouky ze mlýna a potřeby pro
-> > pečení chleba všeho druhu
-> > Email had 3 attachments:
-> > + maradns.btfull
-> >   5k (application/octet-stream)
-> > + allow-fuzzing.patch
-> >   2k (text/x-patch)
-> > + id:000000,sig:11,src:007564,op:havoc,rep:32
-> >   1k (application/octet-stream)
-
-Download attachment "id:000000,sig:11,src:007564,op:havoc,rep:32" of type "application/octet-stream" (23 bytes)
-
-Download attachment "id:000001,sig:11,src:009775,op:arith8,pos:2,val:+6" of type "application/octet-stream" (20 bytes)
-
-Download attachment "id:000002,sig:11,src:009794+007532,op:splice,rep:2" of type "application/octet-stream" (21 bytes)
-
-Download attachment "id:000003,sig:11,src:009819,op:flip1,pos:0" of type "application/octet-stream" (20 bytes)
-
-Download attachment "id:000004,sig:11,src:009854,op:arith8,pos:0,val:-29" of type "application/octet-stream" (21 bytes)
-
-Download attachment "id:000005,sig:11,src:009792,op:flip2,pos:2" of type "application/octet-stream" (20 bytes)
+http://www.ntppool.org/
