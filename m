@@ -1,34 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/12/4
-Message-Id: <041433EB-C484-41D5-8589-A5CE9F8BA0E7@beckweb.net>
-Date: Sun, 13 Nov 2016 00:13:40 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/28/9
+Message-ID: <56AA4839.9000506@trylinux.us>
+Date: Thu, 28 Jan 2016 08:56:25 -0800
+From: "Zach W." <kestrel@...linux.us>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Jenkins remote code execution vulnerability
+Subject: Re: Re: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+> shodan.io are the bad guys!  block them wherever possible, put them in
+> default blocklists suggested
+> for firewalls, etc.
+>
+> these guys really don't care.   when submitting networks for
+> exclusion, they reply as if they will do something,
+> sometimes the scanning may pause for a day or a week, then it always
+> comes back.
+This is simply not true and this is the first case that I've heard of
+this happening. They DO care and they typically respond very well. I
+will be contacting you off-list to resolve this.
 
-An unauthenticated remote code execution vulnerability was discovered in the
-Jenkins continuous integration and continuous delivery automation server.
-A serialized Java object transferred to the Jenkins CLI can make Jenkins
-connect to an attacker-controlled LDAP server, which in turn can send a
-serialized payload leading to code execution, bypassing existing protection
-mechanisms.
+Zach W.
 
-The Jenkins project tracks this as SECURITY-360. Releases with the fix are
-planned for Wednesday, November 16.
 
-Please assign a CVE to this issue.
-
-References:
-
-Jenkins website:
-https://jenkins.io/
-
-Publication of the vulnerability in this talk:
-https://www.deepsec.net/speaker.html#PSLOT250
-
-Notification and workaround by the Jenkins project here:
-https://groups.google.com/d/msg/jenkinsci-advisories/-fc-w9tNEJE/GRvEzWoJBgAJ
+On 1/27/2016 8:36 AM, Rob Janssen wrote:
+> Luca BRUNO wrote:
+>> [cross-posted to pool-ntp and oss-sec]
+>>
+>>
+>> For ntp.org admins: can those rogue server be expunged from the
+>> pools, and the whole
+>> shodan.io situation clarified?
+>
+> shodan.io are the bad guys!  block them wherever possible, put them in
+> default blocklists suggested
+> for firewalls, etc.
+>
+> these guys really don't care.   when submitting networks for
+> exclusion, they reply as if they will do something,
+> sometimes the scanning may pause for a day or a week, then it always
+> comes back.
+>
+> Rob
 
