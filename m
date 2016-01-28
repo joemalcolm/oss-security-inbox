@@ -1,40 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/9
-Message-ID: <CAL2OCeWit0or+55tkP3-1=Bp+=Sv-Cd5mUeBPqsinQwvZMmOgA@mail.gmail.com>
-Date: Tue, 19 Jan 2016 20:48:10 +0800
-From: Qixue Xiao <s2exqx@...il.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Fwd: out of bound write in libdwarf -20151114
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/28/5
+Message-Id: <20160128063729.1D3D26C0056@smtpvmsrv1.mitre.org>
+Date: Thu, 28 Jan 2016 01:37:29 -0500 (EST)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Heap buffer overflow in fgetwln function of libbsd
 Content-Type: text/plain; charset=utf-8
 
-we found  an out of bound write in libdwarf -20151114.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-we run it with valgrind , the result as follows:
+> this check is off by one, therefore an out of bounds write happens.
+> 
+> https://blog.fuzzing-project.org/36-Heap-buffer-overflow-in-fgetwln-function-of-libbsd.html
+> https://bugs.freedesktop.org/show_bug.cgi?id=93881
+> http://cgit.freedesktop.org/libbsd/commit/?id=c8f0723d2b4520bdd6b9eb7c3e7976de726d7ff7
 
-============================================
-$ valgrind ./dwarfdump -ka aw.elf
-==5358== Memcheck, a memory error detector
-==5358== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==5358== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==5358== Command: ../../llvm-codes/dwarf-20151114/dwarfdump/dwarfdump -ka aw.elf
-==5358==
-==5358== Invalid write of size 8
-==5358==    at 0x40DA25: get_abbrev_array_info (in
-/home/xqx/test/libdwarf-test/llvm-codes/dwarf-20151114/dwarfdump/dwarfdump)
-==5358==    by 0x40FD92: print_one_die_section (in
-/home/xqx/test/libdwarf-test/llvm-codes/dwarf-20151114/dwarfdump/dwarfdump)
-==5358==    by 0x40ED22: print_infos (in
-/home/xqx/test/libdwarf-test/llvm-codes/dwarf-20151114/dwarfdump/dwarfdump)
-==5358==    by 0x4050DE: process_one_file (in
-/home/xqx/test/libdwarf-test/llvm-codes/dwarf-20151114/dwarfdump/dwarfdump)
-==5358==    by 0x403C1B: main (in
-/home/xqx/test/libdwarf-test/llvm-codes/dwarf-20151114/dwarfdump/dwarfdump)
-==5358==  Address 0x541fc00 is 18,352 bytes inside an unallocated
-block of size 4,156,304 in arena "client"
-==5358==
+> fgetwln.c
 
-please see the attachment for the bug elf.
+Use CVE-2016-2090.
 
-the vulnerability is found by Qixue Xiao at Tsinghua University.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Download attachment "aw.elf" of type "application/octet-stream" (7875 bytes)
+iQIcBAEBCAAGBQJWqbaKAAoJEL54rhJi8gl59xkP/04TTXdnPf8d7KiSwvOPJ3qO
+coK4/oALkMFfzC8qgYjtZeZMXj1EEDJJdTdiZXF2EKCMVQc3U0qmpsTFYHZHw7tJ
+Goa5m9byhMUV3w16uaFLcf+tSsPQzePWmAVP/oSIfHweiN11Zz4h/Zvn7JLd2b/I
+lTn3ThjC1HlS7LwGcqmj9QAUq2vrWBs34afIOmUd166vdZdZPNTZ4sKAOitWmMo6
+IPV0BEv/EBO0RolGd/A/GdCXGcqrcTSKAJVHsUoiaPUSPJFzG4XavgqOf/i9Ky+b
+cal2LDTQQrIwSXw3eqCFtpLfhAkAnHQhUIW/3wysUmEq52b+tko8+4A6EF9/dw6g
+xpPRhBHO+iP5qQ0PfkGO6QxGtFL+S9su6IU+UE9kCIgCvqQLeKTpD/ZrH9BEw+zX
+SbxkdqW+Oa57+2kzvBEO3NfxqhcPavrZnPQ9uf00biPa3rO7z9D1IRLAZPqb3mx2
+xQGN39/RglFaPWKpvMFqV6ZxaM5oRZqkWag8wSOSkImAfsE1KujqmtCw182Jnpwh
+Z7gjSxfAjuN5RlSez5WTRfOKT6JpOoh4LduX+uhw8hdXj3tCj9ibmxf63NQ7t2nU
++tPSZ/7k2NChu2i2lfPrSQTP/F6rEABjq/7osfNQlaWTonIA1Q+G794j7ioveVCf
+HiAK2pUK75NFHSOvy+qT
+=qJqt
+-----END PGP SIGNATURE-----
