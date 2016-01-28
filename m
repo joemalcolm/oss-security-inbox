@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4129" "Monday" "6" "December" "2021" "15:58:14" "+1100" "Aleksa Sarai" "cyphar@cyphar.com" nil "99" "[oss-security] CVE-2021-43784: integer overflow in runc's netlink bytemsg allows malicious configuration to discreetly modify container configuration" nil nil nil "12" nil nil (number mark "U       cyphar@cypha Dec  6   99/4129  " thread-indent "\"[oss-security] CVE-2021-43784: integer overflow in runc's netlink bytemsg allows malicious configuration to discreetly modify container configuration\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-43784: integer overflow in runc's netlink bytemsg allows malicious configuration to discreetly modify container configuration" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1391" "Thursday" "28" "January" "2016" "01:37:29" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160128063729.1D3D26C0056@smtpvmsrv1.mitre.org>" "35" "[oss-security] Re: Heap buffer overflow in fgetwln function of libbsd" "^Cc:" nil nil "1" "2016012806:37:29" "[oss-security] Re: Heap buffer overflow in fgetwln function of libbsd" (number mark "        cve-assign@m Jan 28   35/1391  " thread-indent "\"[oss-security] Re: Heap buffer overflow in fgetwln function of libbsd\"\n") "<20160127220326.5a8828a2@pc1>" ("<20160127220326.5a8828a2@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20242 invoked by uid 550); 6 Dec 2021 04:58:37 -0000
+Received: (qmail 9368 invoked by uid 550); 28 Jan 2016 06:37:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,116 +11,48 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 9350 invoked from network); 28 Jan 2016 06:37:40 -0000
+In-Reply-To: <20160127220326.5a8828a2@pc1>
+Message-Id: <20160128063729.1D3D26C0056@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 28 Jan 2016 01:37:29 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20221 invoked from network); 6 Dec 2021 04:58:37 -0000
-X-Virus-Scanned: amavisd-new at heinlein-support.de
-Date: Mon, 6 Dec 2021 15:58:14 +1100
-From: Aleksa Sarai <cyphar@cyphar.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20211206045814.q3o5m32osc37ra4o@senku>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="gykhjkorupfmixo3"
-Content-Disposition: inline
-Subject: [oss-security] CVE-2021-43784: integer overflow in runc's netlink bytemsg allows
- malicious configuration to discreetly modify container configuration
+Subject: [oss-security] Re: Heap buffer overflow in fgetwln function of libbsd
+To: hanno@hboeck.de
 
---gykhjkorupfmixo3
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-GitHub Advisory:
-  <https://github.com/opencontainers/runc/security/advisories/GHSA-v95c-p5h=
-m-xq8f>
+> this check is off by one, therefore an out of bounds write happens.
+> 
+> https://blog.fuzzing-project.org/36-Heap-buffer-overflow-in-fgetwln-function-of-libbsd.html
+> https://bugs.freedesktop.org/show_bug.cgi?id=93881
+> http://cgit.freedesktop.org/libbsd/commit/?id=c8f0723d2b4520bdd6b9eb7c3e7976de726d7ff7
 
-This vulnerability was originally thought to be exploitable in released
-versions of runc and thus a CVE was assigned (though it was thought to
-be more difficult than with the yet-unreleased runc tree), but
-subsequent analysis found that it appears to never have been exploitable
-outside of the yet-unreleased runc tree.
+> fgetwln.c
 
-However, out of an abundance of caution we still followed through with
-an emergency release of runc 1.0.3[2] which resolves this issue.
+Use CVE-2016-2090.
 
-[ Impact ]
-
-In runc, netlink is used internally as a serialization system for
-specifying the relevant container configuration to the C portion of our
-code (responsible for the based namespace setup of containers). In all
-versions of runc prior to 1.0.3, the encoder did not handle the
-possibility of an integer overflow in the 16-bit length field for the
-byte array attribute type, meaning that a large enough malicious byte
-array attribute could result in the length overflowing and the attribute
-contents being parsed as netlink messages for container configuration.
-
-This vulnerability requires the attacker to have some control over the
-configuration of the container and would allow the attacker to bypass
-the namespace restrictions of the container by simply adding their own
-netlink payload which disables all namespaces.
-
-Prior to 9c44407, in practice it was fairly difficult to specify an
-arbitrary-length netlink message with most container runtimes. The only
-user-controlled byte array was the namespace paths attributes which can
-be specified in runc's config.json, but as far as we can tell no
-container runtime gives raw access to that configuration setting -- and
-having raw access to that setting would allow the attacker to disable
-namespace protections entirely anyway (setting them to /proc/1/ns/...
-for instance). In addition, each namespace path is limited to 4096 bytes
-(with only 7 namespaces supported by runc at the moment) meaning that
-even with custom namespace paths it appears an attacker still cannot
-shove enough bytes into the netlink bytemsg in order to overflow the
-uint16 counter.
-
-However, out of an abundance of caution (given how old this bug is) we
-decided to treat it as a potentially exploitable vulnerability with a
-low severity. After 9c44407 (which was not present in any release of
-runc prior to the discovery of this bug), all mount paths are included
-as a giant netlink message which means that this bug becomes
-significantly more exploitable in more reasonable threat scenarios.
-
-The main users impacted are those who allow untrusted images with
-untrusted configurations to run on their machines (such as with shared
-cloud infrastructure), though as mentioned above it appears this bug was
-not practically exploitable on any released version of runc to date.
-
-[ Patches ]
-
-The patch for this is commit d72d057[1] and runc 1.0.3[2] was released with
-this bug fixed.
-
-[ Workarounds ]
-
-To the extent this is exploitable, disallowing untrusted namespace paths
-in container configuration should eliminate all practical ways of
-exploiting this bug. It should be noted that untrusted namespace paths
-would allow the attacker to disable namespace protections entirely even
-in the absence of this bug.
-
-[ Credits ]
-
-Thanks for Felix Wilhelm from Google Project Zero for discovering this
-vulnerability.
-
-[1]: https://github.com/opencontainers/runc/commit/d72d057ba794164c3cce9451=
-a00b72a78b25e1ae
-[2]: https://github.com/opencontainers/runc/releases/tag/v1.0.3
-
---=20
-Aleksa Sarai
-Senior Software Engineer (Containers)
-SUSE Linux GmbH
-<https://www.cyphar.com/>
-
---gykhjkorupfmixo3
-Content-Type: application/pgp-signature; name="signature.asc"
-
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iHUEABYKAB0WIQSxZm6dtfE8gxLLfYqdlLljIbnQEgUCYa2YYwAKCRCdlLljIbnQ
-EoSzAP91hJAuXiWjxo8opHA60zmVWVFQyHEb0qlvX0pLwZCf3QD/QvKWrA8w/i3W
-FnuVZwHNt5sQBBOq+lxc2n6uW8OcsAA=
-=A0U4
+iQIcBAEBCAAGBQJWqbaKAAoJEL54rhJi8gl59xkP/04TTXdnPf8d7KiSwvOPJ3qO
+coK4/oALkMFfzC8qgYjtZeZMXj1EEDJJdTdiZXF2EKCMVQc3U0qmpsTFYHZHw7tJ
+Goa5m9byhMUV3w16uaFLcf+tSsPQzePWmAVP/oSIfHweiN11Zz4h/Zvn7JLd2b/I
+lTn3ThjC1HlS7LwGcqmj9QAUq2vrWBs34afIOmUd166vdZdZPNTZ4sKAOitWmMo6
+IPV0BEv/EBO0RolGd/A/GdCXGcqrcTSKAJVHsUoiaPUSPJFzG4XavgqOf/i9Ky+b
+cal2LDTQQrIwSXw3eqCFtpLfhAkAnHQhUIW/3wysUmEq52b+tko8+4A6EF9/dw6g
+xpPRhBHO+iP5qQ0PfkGO6QxGtFL+S9su6IU+UE9kCIgCvqQLeKTpD/ZrH9BEw+zX
+SbxkdqW+Oa57+2kzvBEO3NfxqhcPavrZnPQ9uf00biPa3rO7z9D1IRLAZPqb3mx2
+xQGN39/RglFaPWKpvMFqV6ZxaM5oRZqkWag8wSOSkImAfsE1KujqmtCw182Jnpwh
+Z7gjSxfAjuN5RlSez5WTRfOKT6JpOoh4LduX+uhw8hdXj3tCj9ibmxf63NQ7t2nU
++tPSZ/7k2NChu2i2lfPrSQTP/F6rEABjq/7osfNQlaWTonIA1Q+G794j7ioveVCf
+HiAK2pUK75NFHSOvy+qT
+=qJqt
 -----END PGP SIGNATURE-----
-
---gykhjkorupfmixo3--
