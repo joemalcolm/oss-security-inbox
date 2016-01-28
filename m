@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3599" "Wednesday" "1" "November" "2017" "11:41:54" "-0400" "Z5T1" "z5t1@z5t1.com" "<e7a2d0fa-bb31-7320-44ba-47652bcfba47@Z5T1.com>" "84" "[oss-security] Re: Fw: Security risk of vim swap files" "^Date:" nil nil "11" "2017110115:41:54" "[oss-security] Re: Fw: Security risk of vim swap files" (number mark "U       z5t1@z5t1.co Nov  1   84/3599  " thread-indent "\"[oss-security] Re: Fw: Security risk of vim swap files\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2628" "Thursday" "28" "January" "2016" "20:50:08" "+0000" "Sushanth Sowmyan" "khorgath@apache.org" "<20160128205008.2154F185EB@minotaur.apache.org>" "65" "[oss-security] CVE-2015-7521: Apache Hive authorization bug disclosure" "^Cc:" nil nil "1" "2016012820:50:08" "[oss-security] CVE-2015-7521: Apache Hive authorization bug disclosure" (number mark "        khorgath@apa Jan 28   65/2628  " thread-indent "\"[oss-security] CVE-2015-7521: Apache Hive authorization bug disclosure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19960 invoked by uid 550); 1 Nov 2017 15:47:04 -0000
+Received: (qmail 25942 invoked by uid 550); 28 Jan 2016 21:28:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,128 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12178 invoked from network); 1 Nov 2017 15:42:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=z5t1-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:subject:message-id:date:user-agent:mime-version;
-        bh=UF+XweSCC5Jt/gUOH+x+UDMYnvWt1oS39xHt/E/uvtY=;
-        b=ryLX9eGihRd7dNvdhI5jXKl9dKXinyIzlZLK6gsIRM3WabT2d8+3yI1rRY1bEgAlFE
-         /OzU1StwQnKnXWXH/xNXhMm9x51uoan34z1zimakmnB3dJ2UpGnBmb9RC9solWdYUDn8
-         d7Nv41hkAq2sVsPm5vbGksYkRewYn+J2Vo2tVxEEpB1ioTvN3zFUiO1U+RKTxQ6MixVb
-         D2io5Z/GGVVjw1/sAcrWmt21tca5P++6od+ygGv/i4hx4id7sli/o8lFheodBqi9434R
-         +4mpUaM7pgxy0VrYAHR5w4TQw3LdlxOV9AFhI28q2AkcdkO1mZmOTKX4PBrLKt3FBh5a
-         q7sQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:message-id:date:user-agent
-         :mime-version;
-        bh=UF+XweSCC5Jt/gUOH+x+UDMYnvWt1oS39xHt/E/uvtY=;
-        b=IZTEWPiP13vAdOaCpctm/nBK4yk5kxzT4rkIbU8/ieTkW2FkIkgXoDDw3hPdDDIAHA
-         /Pzi3YwZ2+KZ2SEPLRdWrP/sXgH6W7vIAZT/Hod/mQJ4ShzcRLKcfwrk2dEi2xd5YFuw
-         DOkN5ZoMEFpcSD0LTJEigxpJ/iyEkAW71g0BkMif/jNiBLauqmWM1ad1MzrUspc+nXSy
-         BFOk5qepd9BNV6UvhyxBhiQRl7/64TTMdqzaa5PAZwsNT2WsXE+Q5XpRntcQQhKB3pKQ
-         17qzb1nBib9wfwSFVpaCAW+25X2EJzwfrzvrJIBz/tt0FHpFOCQBlXxhcKyE9iTNirDT
-         Kv+Q==
-X-Gm-Message-State: AMCzsaVR18LGpLytRZRLgnhJr00qWZik2f5BjtRg8H6RNlwPqot0leKo
-	ykVVrG0p3ATsRs20L/CVO5o/PHWNBuY=
-X-Google-Smtp-Source: ABhQp+SfOQ0pfWrTJ4YOvxlc8XLr87uqYagQnmIfNudqwuZyma0Ea5xt4h9zAO6dJ2Fpl7O+5DUiYg==
-X-Received: by 10.200.41.19 with SMTP id y19mr437720qty.300.1509550938662;
-        Wed, 01 Nov 2017 08:42:18 -0700 (PDT)
-X-Google-Original-From: Z5T1 <Z5T1@Z5T1.com>
-Message-ID: <e7a2d0fa-bb31-7320-44ba-47652bcfba47@Z5T1.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="lGxmo5SoxaEed0D5xkiCWFmkvNdLnbcBS"
-Date: Wed, 1 Nov 2017 11:41:54 -0400
-From: Z5T1 <z5t1@z5t1.com>
+Received: (qmail 5865 invoked from network); 28 Jan 2016 20:50:21 -0000
+Message-Id: <20160128205008.2154F185EB@minotaur.apache.org>
+Cc: announce@apache.org,, bugtraq@securityfocus.com,
+    dev@hive.apache.org, khorgath@apache.org, of@oflebbe.de,
+    oss-security@lists.openwall.com, security@hive.apache.org,
+    user@hive.apache.org
+Date: Thu, 28 Jan 2016 20:50:08 +0000 (UTC)
+From: khorgath@apache.org (Sushanth Sowmyan)
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Fw: Security risk of vim swap files
-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2015-7521: Apache Hive authorization bug disclosure
+To: security@apache.org
 
---lGxmo5SoxaEed0D5xkiCWFmkvNdLnbcBS
-Content-Type: multipart/mixed; boundary="BrAGdwnhMGFn7heCpGkk5xinrcwxGXLOW";
- protected-headers="v1"
-From: Z5T1 <Z5T1@Z5T1.com>
-To: oss-security@lists.openwall.com
-Message-ID: <e7a2d0fa-bb31-7320-44ba-47652bcfba47@Z5T1.com>
-Subject: Re: Fw: Security risk of vim swap files
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
---BrAGdwnhMGFn7heCpGkk5xinrcwxGXLOW
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Content-Language: en-US
+CVE-2015-7521: Apache Hive authorization bug disclosure
 
-Hello All. I'd just like to add my two sense to this conversation.
+Severity: Important
 
-I have reproduced this on Centos 6 and Cucumber Linux 1.0. It appears
-that the umask plays no role in the permissions on swap files; Vim
-creates its swap files with the same permissions as the file being
-edited. This is still a problem though, as configuration files in
-/var/www are usually readable by the httpd user, so the Vim .swp will
-also be readable by the httpd user and consequentially anyone connecting
-to the webserver.
+Vendor: The Apache Software Foundation
 
-Storing the swap files in /tmp is a bad idea for all the reasons
-previously discussed; /tmp gets wiped on reboot on most (but not all)
-Linux distributions and storing the swap files in a location that is
-readable by every user on the system has is own security problems. For
-instance, what if root goes to edit /etc/shadow and the swap file is
-placed in /tmp?
+Versions Affected:
+Apache Hive 1.0.0 - 1.0.1
+Apache Hive 1.1.0 - 1.1.1
+Apache Hive 1.2.0 - 1.2.1
 
-I have found this problem can be mitigated by changing the swap
-directory with the 'set directory' directive as Hanno originally
-suggested. I have added the following lines to my '/etc/vimrc':
+Description:
 
-" Move the swap file location to protect against CVE-2017-1000382
-silent !install -d -m 700 ~/.vim/swap/ 2>&1 > /dev/null
-set directory=3D~/.vim/swap/
+Some partition-level operations exist that do not explicitly also
+authorize privileges of the parent table. This can lead to issues when
+the parent table would have denied the operation, but no denial occurs
+because the partition-level privilege is not checked by the
+authorization framework, which defines authorization entities only
+from the table level upwards.
 
-This safely sets the swap file directory to a directory that should not
-cause any security problems. For added security, the directory is
-created so that only the owner has access to it, regardless of how the
-system's umask is set.
+This issue is known to affect Hive clusters protected by both Ranger
+as well as SqlStdHiveAuthorization.
 
-Additionally, the swap file collision (if you edit both ~/foo/file and
-~/bar/file at the same time) is not a major issue; Vim detects this and
-gives the second swap file a different file extension. When you go to
-restore from the swap file, you get a prompt asking which swap file you
-want to use (if there are two swap files with the same basename), which
-doesn't strike me as being terribly problematic.
+Mitigation:
 
-I will be adding this to the default '/etc/vimrc' on Cucumber Linux in
-the next few hours. I thought it may be helpful for other distro
-maintainers to know as well.
+For Hive 1.0, 1.1 and 1.2, a separate jar is being made available,
+which users can put in their ${HIVE_HOME}/lib/, and this provides a hook for
+administrators to add to their hive-site.xml, by setting
+hive.semantic.analyzer.hook=org.apache.hadoop.hive.ql.parse.ParentTableAuthorizationHook .
+This parameter is a comma-separated-list and this hook can be
+appended to an existing list if one already exists in the setup. You
+will then want to make sure that you protect the
+hive.semantic.analyzer.hook parameter from being changed at runtime by
+adding it to hive.conf.restricted.list.
 
-=C2=A0=C2=A0=C2=A0 - Scott
+This jar and associated source tarball are available for download
+over at : https://hive.apache.org/downloads.html
+along with their gpg-signed .asc signatures, as well as the md5sums
+for verification in the hive-parent-auth-hook/ directory.
 
+This issue has already been patched in all Hive branches that are
+affected, and any future release will not need these mitigation steps.
 
-
---BrAGdwnhMGFn7heCpGkk5xinrcwxGXLOW--
-
---lGxmo5SoxaEed0D5xkiCWFmkvNdLnbcBS
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Credit: This issue was discovered by Olaf Flebbe of science+computing ag.
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v1.4.5 (GNU/Linux)
 
-iQIcBAEBCAAGBQJZ+etIAAoJEI1dl2DAZNZcMBUP/3hTxTSNHW4/CcZotDvYUsb+
-K2t/MikvA5tTpBTyXIvC+lcqN5cxQ3d5dsm872BjvVwJKnITq0ptWivPERKCnhGW
-/azC8GEbV7kt3jWjdwQBJrJQzQgz5LotYls5Zd7xcWu8Cqjz/jzgfm/CmPQdGAqy
-A/xRtf0LvMxC9EfvRf0OSn3R1m+UJsXcSWeuE/YDVJaXkaAU3PdOSxpSDcZ7E4UU
-OWnJQ7ejV1sbr+u7Tuylty1uitcfWoQsqxymnIZJV683RZIvz2e2/SK36Ao+x5tG
-PIro+J9TQsMDk2UhkJbxeax+pCUVTnonaISr7xB4mgtWkO1J/gDd+GNtMwdEUne7
-Vmu0Lj9YPi1eFS1VmZJqAnjWcDF6dunPD5DAT3IjIGDP5jEoWuXws/ohXi+jUATn
-+UujQTS5S46ZMMOuilzK0t6BUtiV2Fmf8Jxb5rcBXqpU8fjSOugZ9J8upB809fnv
-ZRtAxydgY74vT2c4ZjugjbWh/rxVj+8ZV05a0z/aVITugypaRM9cLGM3mUnJsXO0
-uQr7mvEpHZ27qrQRcr+akwcIND93uGnQtfA0JZRHNkaFxCg+w24T43kUHSN1rqS7
-JZyhyfRpASzyqYneswNrNUEDnFBAK/q00wH/DjLDNGWXuRklmE6WnhgBEXflz3em
-FVdWHcYna0Mk1XddANRM
-=BZLa
+iQIVAwUBVqpoih6tt4FFMLreAQKkbA//f+r+DDDKiYPbymTXjOhCUqDIDirtiT2A
+OZHBn3LTNad3eQPZ6qrYadbw30iJpU+SCMtN+gO7F27TJRIdBfk/g9HjrG9i/uLb
+q4a/uzHEGbFFnfz61gXERtvyqHP/7RzbUz/WNBvCGitJJL2AZ/j3oTvUxc4r3fbC
+mVXSCtkY7fj28fbi9/jhj/go9Qr7aL0Tk/Tkb6RQ97YwoZVZTvPTFh7ALmX+f2Qh
+0qPMg7phL9clTXR/cNGRA8LUFRbDuTahP5hptHmE2KgGQJK5fjKwvisoH6lvVKnh
+iv5UFs9jjcvPd1MpuBDRfHj/RA0L8emkDzz2/36XKM0AFyEB5gHf4U7ZT7AVj1P/
+xwdxgNJZcqgRfSabkNIbNhEcYLVx9H2btIIAgkdDnu2HaxzCBErjRcv6hj7bbG5N
+5NHQDcnjzj86u2D7XiA4hXPLnQE6JNJyc7cLaU4xRV18QiN9KzpDJQpIot0GvXs1
+7q2+I6H6AxDxeotSCmQnwEE5NCVxl3ivUCKA8tA0jxEzhm8QE/bTaeM00OwJ+7wl
+ruDdGkfF3b854U4Fyzh14WCGy1b74wjc79iOt8tJfLEh9kdRNbA5Jb7QZYNpCJ4n
+Eb5lxZv5MQFyBvbJCttz59jgzxCcmunkyNZamGRGugmR3Dwu9jOQRCk2s+4pouCf
+20RJ9WEkoXY=
+=Q0SZ
 -----END PGP SIGNATURE-----
-
---lGxmo5SoxaEed0D5xkiCWFmkvNdLnbcBS--
