@@ -1,47 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/10/3
-Message-Id: <20160910164413.9514542E026@smtpvbsrv1.mitre.org>
-Date: Sat, 10 Sep 2016 12:44:13 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: autotrace: out-of-bounds write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/29/1
+Message-ID: <4e14191f.1337.1528a79fc07.Coremail.xiaoqixue_1@163.com>
+Date: Fri, 29 Jan 2016 07:03:16 +0800 (CST)
+From: xiaoqixue_1  <xiaoqixue_1@....com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re:Re: a bug in gif2rgb.c in giflib-5.1.2
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-> with Address Sanitizer I found that each bmp you try to manage with autotrace
-> causes an out-of-bounds write.
-> 
-> https://blogs.gentoo.org/ago/2016/09/10/autotrace-heap-based-buffer-overflow-in-pstoedit_suffix_table_init-output-pstoedit-c/
 
->> autotrace: heap-based buffer overflow in pstoedit_suffix_table_init (output-pstoedit.c)
+It has been fixed now.
+
+GifFile->SHeight and GifFile->SWidth both could result to zero memory allocation actually.
+the patch as follows:
+http://sourceforge.net/p/giflib/code/ci/4cc68b315ff9a378aef6664e1be6b2144ad4a5e6/#diff-2
+
+--- a/util/gif2rgb.c+++ b/util/gif2rgb.c@@ -378,8 +378,8 @@
+ 	}
+     }
+ 
+-    if (GifFile->SHeight == 0) {-	fprintf(stderr, "Image of height 0\n");+    if (GifFile->SHeight == 0 || GifFile->SWidth == 0) {+	fprintf(stderr, "Image of width or height 0\n");
+ 	exit(EXIT_FAILURE);
+     }
+
+
+
+
+
+
+
+At 2016-01-27 13:40:08, cve-assign@...re.org wrote:
+>-----BEGIN PGP SIGNED MESSAGE-----
+>Hash: SHA256
+>
+>> We find a memory allocation whose size could be zero in gif2rgb.c.
+>> and It will result to several memory out of bound read and write. the bug in gif2rgb.c:386 :
 >> 
->> AddressSanitizer: heap-buffer-overflow
->> WRITE of size 8
-
-Use CVE-2016-7392.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX1Df+AAoJEHb/MwWLVhi2el8QALQETkVVm3W/OW5YeG8BHI+y
-mukTPkQsJ08ToNBHyo6Q8DjAP6mLgR5sN65QGJfkCEbb+T2IJVPwJ17fYWfXeS+k
-hc79XGKWhRHrz+KGhL/9ljkgNMrFfXWfZ2MkS+Vhkv2f68bPDATxYXJlyVt/vKus
-UBwVk7DxfsURUe/hwWzzYiEFn2D8VyVaUkh+SveDQUbJWgytthNnvVBKGoeKXUzF
-jjmzRHXuwh++gG+IA1lsns6tpxsGP1Or7izMPwIvjSY0leTWF9nNT+xNftU535RC
-l0Bj4ldNeytGf3N9f6dqbUO4cuK6/Os73/QcplI2PXK7eV3y/8V+qmrFFgVn1u4p
-hXO5X1oMsG9AYJirud9EzqCSvlSuxlpuSzm4UgzGqXt2tyFT1XMw593X3C0RK0mt
-pWgt5RW6xrKNiEjL9muog4koPBiADGj1RyiOHJc7C+yrZ71+4pYq4NtEld3AUhPR
-x1cOss+Vu2MINRfFjlLhRFfhFIFNsit0HgxTH+2SMzwBZovXGrgLY+i2mC2WEwPt
-R4QXL0yuV2vIopghiH2Z2i8oWee6ukGTZk5ivmDElG/Hzr6COvUA0lTEsrkSNnXR
-JBJZBuEO2v55X/edX7C5chUaJxy82lPBjkJLNVZDHnI5wG5Qp6fbKBe4tVvAIHjU
-Q3X6ps58802kUEaVqOxq
-=poZW
------END PGP SIGNATURE-----
+>> 386 if ((ScreenBuffer = (GifRowType *) 
+>> 387 malloc(GifFile->SHeight * sizeof(GifRowType))) == NULL) 
+>> 388 GIF_EXIT("Failed to allocate memory required, aborted.");
+>> 
+>> 
+>> Please see "http://sourceforge.net/p/giflib/bugs/82/" for more details.
+>
+>Can you provide more information about the relationship between
+>http://sourceforge.net/p/giflib/bugs/82/ and the above instance of
+>GifFile->SHeight in the malloc call? The
+>http://sourceforge.net/p/giflib/code/ci/4cc68b315ff9a378aef6664e1be6b2144ad4a5e6/
+>patch for http://sourceforge.net/p/giflib/bugs/82/ adds a check for
+>"GifFile->SWidth == 0" but does not add new validation of the
+>GifFile->SHeight value.
+>
+>- -- 
+>CVE assignment team, MITRE CVE Numbering Authority
+>M/S M300
+>202 Burlington Road, Bedford, MA 01730 USA
+>[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+>-----BEGIN PGP SIGNATURE-----
+>Version: GnuPG v1
+>
+>iQIcBAEBCAAGBQJWqFekAAoJEL54rhJi8gl5AtQP/imjqKTZMrt2KiqYaIAiEbvK
+>KBvoKNDaBesh4kJQ2XHIlT+kG5y2Qr0KiXYR3+O0nrbebXzM9pUlcAI6H3jAhiOX
+>h2mRNBXKGOof7wbsoAFsKrYEKAdASvLxy+KSl74Bxb00Z68PSezgBo1SoHi/xW3z
+>C5yFxRnOjYLlVz/X76+gYYqbLgwnLHUPWN4mIxu2unDZ67Mc43i8br4pr1eXH4an
+>1GgExNhoMsIk2vwPLatOL7DDEqBJKLygVh5QYtXs1uXjBx/RA4opzJRsb3mgmX2D
+>K4q5mjgrUfx85meR/9zBVs22HLSWcJPQoqQnaRHcKKN0R8J0P+31X2NYBqbMj9d3
+>HVZaaX9zB4Uq3Mpj9ZTgGnvyJuI/YVi7VviYTWhn17NGrvH3ivCr/vvhs7nudBti
+>PfQj6if3vhy6cH7WYUN9ybzG3NXFdPpL9ZU5WN5GAyICXfYo3m63X03OZWPuTm3h
+>skzp2a4dAfh+6KTF53ebUzoi0V+vX3tq5+jnMbDam/UfZBOdq+cK0CYU2VrOmNCj
+>F0LcBDjzGBxepVLQS54Bvh/B5ymrIWjcub4zJ6gIIh0Sg5sUBBW2eg80my5wrD46
+>7mvpMgl2D2FWy8dHkdyf4abotfnZj62d43XD+tqjfERuTRnJCDNh/O8q4MyMVw73
+>69PiDuGJuPAhFns58FDN
+>=bNmf
+>-----END PGP SIGNATURE-----
