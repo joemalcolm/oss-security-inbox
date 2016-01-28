@@ -1,32 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/01/4
-Message-ID: <CACn5sdRjA1Vma3em7z0xyuV87_iggAojuFMFZLWKnEFOHww3hg@mail.gmail.com>
-Date: Sun, 1 May 2016 16:54:10 +0200
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: DoS in multiple versions of GraphicsMagick
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/28/4
+Message-ID: <3626D6E697A150459C44C0E5D8D8D00E0DBD5A35@EX02.corp.qihoo.net>
+Date: Thu, 28 Jan 2016 03:04:17 +0000
+From: limingxing <limingxing@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: invalid Read in the JasPer's jas_matrix_clip() function
 Content-Type: text/plain; charset=utf-8
 
-We recently tested GraphicsMagick with our tool and found two issues that
-causes DoS:
 
-* Infinite loop caused by converting a circularly defined svg file.
+Hello,
+We find another vulnerability in the way JasPer's jas_matrix_clip() function parsed certain JPEG 2000 image files.
+I was successful in reproducing this issuel in the jasper-1.900.1-31.fc23.src.
+The gdb info was:
+Starting program: ./jasper-1.900.1-31.fc23.src/jasper-1.900.1/src/appl/jasper -f ./jasper_poc/poc.jp2 -F temp.out -t jp2 -T bmp
 
-* Arithmetic exception converting a svg file caused by a X%0 operation in
-magick/render.c:3800
+Program received signal SIGSEGV, Segmentation fault.
+0x0805604b in jas_matrix_clip (matrix=0x8bc42f0, minval=0, maxval=255)
+    at jas_seq.c:286
+286		for (i = matrix->numrows_, rowstart = matrix->rows_[0]; i > 0; --i,
+(gdb) bt
+#0  0x0805604b in jas_matrix_clip (matrix=0x8bc42f0, minval=0, maxval=255)
+    at jas_seq.c:286
+#1  0x08066af5 in jpc_dec_tiledecode (dec=0x81a05b8, tile=0xb785c008)
+    at jpc_dec.c:1117
+#2  0x08064e7f in jpc_dec_process_sod (dec=0x81a05b8, ms=0x81a0628)
+    at jpc_dec.c:621
+#3  0x080647f4 in jpc_dec_decode (dec=0x81a05b8) at jpc_dec.c:390
+#4  0x0806450f in jpc_decode (in=0x819c308, optstr=0x0) at jpc_dec.c:254
+#5  0x08058e5e in jp2_decode (in=0x819c308, optstr=0x0) at jp2_dec.c:215
+#6  0x08052ba9 in jas_image_decode (in=0x819c308, fmt=4, optstr=0x0)
+    at jas_image.c:379
+#7  0x08049158 in main (argc=9, argv=0xbffff094) at jasper.c:229
 
-    (long) (y-fill_pattern->tile_info.y) % fill_pattern->rows,
 
-Reproducers for both issues are attached. They are triggered by converting
-a svg to another format. Identification is not affected.
-These issues affect 1.3.18 and 1.3.23. Most likely other versions are
-vulnerable too.
-
-Regards,
-Gustavo
-
-Content of type "text/html" skipped
-
-Download attachment "circular.svg" of type "image/svg+xml" (6285 bytes)
-
-Download attachment "sigfpe.svg" of type "image/svg+xml" (1450 bytes)
+This vulnerability was found by Qihoo 360 Codesafe Team
+Download attachment "jasper_poc.zip" of type "application/octet-stream" (1097 bytes)
