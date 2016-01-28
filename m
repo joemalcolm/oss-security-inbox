@@ -1,39 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/6
-Message-ID: <1452862593.9500.48.camel@opteya.com>
-Date: Fri, 15 Jan 2016 13:56:33 +0100
-From: Yann Droneaud <ydroneaud@...eya.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/28/11
+Message-ID: <56AA565D.6070804@amsat.org>
+Date: Thu, 28 Jan 2016 18:56:45 +0100
+From: Rob Janssen <pe1chl@...at.org>
+To: Ask Bjørn Hansen <ask@...pool.org>, Luca BRUNO <lucab@...ian.org>
+Cc: oss-security@...ts.openwall.com, team@...urity.debian.org, secalert@...hat.com
+Subject: Re: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Ask Bjørn Hansen wrote:
+> Hi Luca (and everyone),
+>
+> I removed those servers yesterday. Brad had been helping look to see if others were doing something similar.
+>
+> I think the behavior was falling well outside what's reasonably expected from a server operator participating in the pool.
+>
+> The operator had also been adding the same server multiple times in order to "attract" more traffic which is definitely outside the guidelines.
+>
 
-Le vendredi 15 janvier 2016 à 12:06 +0100, Florian Weimer a écrit :
-> On 01/14/2016 06:13 PM, Qualys Security Advisory wrote:
-> > Internal stdio buffering is the most severe of the three problems
-> > discussed in this section, although GNU/Linux is not affected
-> > because the glibc mmap()s and munmap()s (and therefore cleanses)
-> > stdio buffers.
-> 
-> This will change in glibc 2.23, stdio will use regular malloc and
-> free for its buffers.  I did not expect this change to have security
-> implications.  Considering that the actual bug lies elsewhere, and
-> stdio usage is based on copying out of the buffer (so leaks can still
-> happen elsewhere), I do not wish to revert this change.
-> 
+This guy has been doing other things that are not good net citizenship.
+But it is not his agenda.  He is a black hat and he supports cracking.  Some people are like that.  Jerks.
 
-Would setvbuf(stream, NULL, _IONBF, 0); be used to disable buffer
-before reading/writting sensible data to a stream ?
 
-What about a buffering flag (_IOSBF) that would enable "secure" 
-handling of the buffer, that is, on fclose() and fflush(), write
-back and cleanse buffer on output stream, cleanse buffer on input
-stream ?
-
-Regards.
-
--- 
-Yann Droneaud
-OPTEYA
+Rob
 
