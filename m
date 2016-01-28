@@ -1,63 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/07/7
-Message-Id: <20160507152115.4A261332033@smtpvbsrv1.mitre.org>
-Date: Sat,  7 May 2016 11:21:15 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/28/8
+Message-Id: <20160128164512.6AF96B2E1AC@smtpvbsrv1.mitre.org>
+Date: Thu, 28 Jan 2016 11:45:12 -0500 (EST)
 From: cve-assign@...re.org
-To: csmall@....com.au
+To: xiaoqixue_1@....com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: wordpress and mediaelement
+Subject: Re: an out of bound read is found in libdwarf -20151114
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://wordpress.org/news/2016/05/wordpress-4-5-2/
-> two security issues, both XSS
+[ The Subject line was changed from the original
+"Re:Re: Buffer Overflow in lha compression utility" because that
+was unrelated to the topic. ]
 
+> http://www.openwall.com/lists/oss-security/2016/01/19/3
 
-> WordPress versions 4.5.1 and earlier are affected by a SOME vulnerability through Plupload
+> an out of bound read is found in libdwarf -20151114.
+> 
+> *** DWARF CHECK: DW_DLE_DEBUG_FRAME_LENGTH_NOT_MULTIPLE
+> len=0x00000010, len size=0x00000004, extn size=0x00000000, totl
+> length=0x00000014, addr size=0x00000008, mod=0x00000004 must be zero
+> in cie, offset 0x00000000. ***
+> 7   ==53495== Invalid read of size 2
+>   1 ==53495==    at 0x4C2F7E0: memcpy@@GLIBC_2.14 (in
+> /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+>   2 ==53495==    by 0x43287F: dwarf_read_cie_fde_prefix (dwarf_frame2.c:934)
 
-> https://core.trac.wordpress.org/changeset/37382/
-
-> wp-includes/js/plupload/plupload.flash.swf
-
-Use CVE-2016-4566.
-
-
-> WordPress versions 4.2 through 4.5.1 are vulnerable to reflected XSS
-> using specially crafted URIs through MediaElement.js
-
-> https://core.trac.wordpress.org/changeset/37371
-
-> js/mediaelement/flashmediaelement.swf
-> js/mediaelement/mediaelement-and-player.min.js
-
-> https://github.com/johndyer/mediaelement/commit/34834eef8ac830b9145df169ec22016a4350f06e
-
-> flash/FlashMediaElement.as
-> js/me-shim.js
-
-Use CVE-2016-4567.
+Use CVE-2016-2091.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXLgZiAAoJEHb/MwWLVhi2KUwP/Amvnzvt7dhmVFVXumBcyAw3
-VhKj2FD/HMq7VXJemJSyVf6mo8oJKJwn5ruiMwY/ntQAOLy/+BkYhP3Ngm1HPGwR
-22XWXCAPBIBzcKS02oXLMSxFycqqvPpttt9mr1HjamCa8Z8/jXoDubniLjdHD3RJ
-psMkF1Yr2x+Tj6ZLBnKBJ8Mi/tF1fXGNfsNBLsg6V2189ZgcAh7lE5HcDUxb4V5H
-ShkjwIhqP24q5Hmb2Kg/wDqviDg64NMRGEvbdmXZa8O2MtsADTR7UPAK5ycCPO2d
-Tv2jg6xWBK7zb5KfeOAGZ7Ex9SESP8m41bhRW+zTx9rVPGEnrKmN4k3y/vBNYUYx
-Rwf8cGFF8Fit10hO46WV2TRZkRVdq7eEUR+o7ji3rIxWheMJjXgcdjRvMFO/B8c9
-w9NoFF0Lm5x4wOfccuSvEmxHfM8L40LJklKJMKP+hrxC3Q96cmS7ach55X7di8xf
-GQ9xv2OH7xhR/UtpROzXW3KZDLAYO4/5dPgNEEl5sgbnEYgSGMAlAHbg799wbn7w
-aUEhRJrzpxqEhwPpbOAPUWQsww+sCdYQtzmKfsY9mDZG1NhdnawQXznPwMayiCD6
-0c6o+OXYLarcS6Cc9oRhQzFutjR2/yphuXH8ACIcf/svCblAz4pbJNVbGoajQxae
-QiNFEoipdnkFPQiSGYa3
-=nnff
+iQIcBAEBCAAGBQJWqkTOAAoJEL54rhJi8gl5rSQP/jeiWzTqajFg+zQat/7oiqrF
+dEclF+0xce6DBqrRwdqW+K5rYDiOFgjpXTzIJytQ02ekrsL0kgKuBOJIDtde8C3/
+wx2anCEr+AbdUwyUjGvKnfyq+VO5ArA/tgvzNuOE5lLS/UlUUDKoYeJQK4olahAc
+k7Lw16y6u61d4eNzDfdE85RFa4ze+TVEC1rIt2rq3dXCxIf81GFvifVXvesgG2td
+EEwnDJUMRAL4fFBsYqZf5uU19B6QqWIRj9Yxmaeo6Levk5ssAqWk88DJgJcaxM2s
+S8hUjMKT25vvXRLmwqklA9Mg6Fv4eAdeQQ9jJ8l7u/g7u/jDr+MC+6FWuP02aO1S
+xbAf4PIFHp/e/zjmUJ2V52nbcYuIWjo5HdacTuHNEJS7HkmGfOTbwPHYqiAGzm00
+zi8bdXgfZnndgFYwzRB1uNIRaqjdZH1RkA7CK9CDUmbRq4y2y3k310kuVhwZBxAQ
+rNCUiY8uIYUay07nYK7947R2a8KYHxGrHpZAbjd5knONwi7Req0h/B063i7xYOzM
+K2Qs8bny21qZxOXei0Daej7tWAjzmV7d4KQm5IeZN0nvRiqKOCuc1V4qMvGvikH1
+Mtu8XuhHYEP1TGEg0NbgJVUpAXirsgphJF/+RueC4P0bVXfrlLkmDGjljC9kHdGv
+VkDBB/uOHOFYYZ+Fa7O9
+=Xfoe
 -----END PGP SIGNATURE-----
