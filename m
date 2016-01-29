@@ -1,37 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/18/16
-Message-ID: <56C6516E.7040808@xiphosresearch.co.uk>
-Date: Thu, 18 Feb 2016 23:19:10 +0000
-From: Darren Martyn <darren.martyn@...hosresearch.co.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/29/10
+Message-ID: <56ABC23C.3080202@redhat.com>
+Date: Fri, 29 Jan 2016 19:49:16 +0000
+From: Tristan Cacqueray <tdecacqu@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Address Sanitizer local root
+Subject: [OSSA 2016-005] Potential reuse of revoked Identity tokens (CVE-2015-7546)
 Content-Type: text/plain; charset=utf-8
 
-Hi List,
-Figured I would add this to the thread to keep it amusing.
+=========================================================
+OSSA-2016-005: Potential reuse of revoked Identity tokens
+=========================================================
 
-Here is a fully functioning local root by clobbering /etc/ld.so.preload
-instead of /etc/shadow (which breaks things spectacularly). I am using a
-fairly messy "symlink spray"/"symlink carpet bombing" technique.
-
-Simply point it at a setuid-root binary compiled with asan and away it
-goes.
-
-Video: https://www.youtube.com/watch?v=jhSIm3auQMk
-PoC Code: https://gist.github.com/0x27/9ff2c8fb445b6ab9c94e
-
-Development/Testing was done on a Debian 8.3 VM that was last updated
-last week.
-
-Now, I wonder - what can actually be done to mitigate against this,
-besides "don't use ASAN in production"?
-Is there something that can be done ASAN-side?
-Because due to how ld.so.preload is parsed so, uh, forgivingly, all the
-attacker needs to control is one line in the output file. Could it check
-for symlinks before writing the log?
-
-Regards,
-Darren.
+:Date: January 29, 2016
+:CVE: CVE-2015-7546
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Affects
+~~~~~~~
+- Keystone: <= 2015.1.2, >= 8.0.0 <= 8.0.1
+- Keystonemiddleware: >= 1.5.0 <= 1.5.3, >= 1.6.0 <= 2.3.2
+
+
+Description
+~~~~~~~~~~~
+Liu Sheng reported a vulnerability in Keystone. By manipulating a
+token content, an authenticated user may prevent its revocation. This
+can allow unauthorized access to cloud resources if a revoked token is
+intercepted by an attacker. Only keystone setups using PKI or PKIZ
+token are affected
+
+
+Patches
+~~~~~~~
+- https://review.openstack.org/266045 (keystone) (Kilo)
+- https://review.openstack.org/266607 (keystonemiddleware) (Kilo)
+- https://review.openstack.org/266022 (keystone) (Liberty)
+- https://review.openstack.org/265988 (keystonemiddleware) (Liberty)
+- https://review.openstack.org/258141 (keystone) (Mitaka)
+- https://review.openstack.org/258143 (keystonemiddleware) (Mitaka)
+
+
+Credits
+~~~~~~~
+- Liu Sheng from Huawei (CVE-2015-7546)
+
+
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/bugs/1490804
+- https://wiki.openstack.org/wiki/OSSN/OSSN-0062
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7546
+
+
+Notes
+~~~~~
+- The keystone fix is included in 2015.1.3 (Kilo) and will be included
+  in a future 8.0.2 (Liberty) releases.
+- The keystonemiddleware fix will be included in future 1.5.4 (Kilo)
+  and 2.3.3 (Liberty) releases.
+- Both keystone and keystonemiddleware needs to be updated
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
