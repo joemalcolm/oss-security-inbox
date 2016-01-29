@@ -1,4 +1,9 @@
-Received: (qmail 1806 invoked by uid 550); 10 May 2023 22:08:42 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1579" "Friday" "29" "January" "2016" "13:51:16" "-0500" "Daniel Micay" "danielmicay@gmail.com" "<1454093476.3461.19.camel@gmail.com>" "38" "Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" "^Date:" nil nil "1" "2016012918:51:16" "[oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" (number mark "        danielmicay@ Jan 29   38/1579  " thread-indent "\"Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes\"\n") "<CAEmCSgmmuLYpNLdz_vg3-NH_f8Psfj7PxgN7b5S9UCLbKzvO9A@mail.gmail.com>" ("<2413003.GtkKFizscD@chimera>" "<CANO=Ty1ZFtpeUespB+nn0gZ8oC7PAkkr7+eTR1U+RyLtGKHKtA@mail.gmail.com>" "<CAJMyd9Yje0QY+Th_QUYuO6JspRvysKqkkxtXq-xgANBASM_Nrw@mail.gmail.com>" "<1528e110c5f.11ff2dddc43704.3865822946264713459@fsck.pl>" "<CAEmCSgmmuLYpNLdz_vg3-NH_f8Psfj7PxgN7b5S9UCLbKzvO9A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 27701 invoked by uid 550); 29 Jan 2016 18:51:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,156 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12218 invoked from network); 10 May 2023 21:52:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1683755560;
-	bh=RgmgU8f5zP92cQB+rVZXHNfDQaNDlqhikNOYijB8V3c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type;
-	b=FV6D4oOOkGlZoLzw7veQEEkw3omx9jnQKdtQFXGj/nb0omTOedaH9RDt9+Pp8qMCi
-	 hE1Vjy6U5THxuVQjZxgMvi/a3cd+VWOlP1XI0/oRVgW7qEx+Zt7r9PADnO92sdzgbv
-	 8Jy6AOIC6sc00SlHCAwCLJgdP12qXYyLj0JCtgiXjEDFI14oTXSe7N1iYO8z8F1LZ2
-	 5wPqLYo37IvGoeRLLCHiDbAGtNyHrPgI6PUzwYi6J4Vz9nY8p2YZC9toLgLNh7zmlL
-	 RBoelSJgvYUpdYWron5QBX0Bm8if93UROp/z1dIRS0agR2JZFvjyaNOy6hm/BZLeqh
-	 y7NflIoOXfWZw==
+Received: (qmail 27680 invoked from network); 29 Jan 2016 18:51:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:subject:from:to:date:in-reply-to:references:content-type
+         :mime-version;
+        bh=rZcDpfxmeNB4qtzwxLKrAq6EEk5DEvbBMdzPInEJYYE=;
+        b=ZapnLhwS9Q+wkLVAcarYF9Dw196vVtD4XDcxjLlFm/KH8v8bBCLijXVtL2UPo4A6Ri
+         uDzUPaUQUXBBGPbpY70PAxskOlGs3d1O5UbJPXDj97OxZtsVKbWDDVpFCE3ZSSw6Po8P
+         mMSTMKS9S4IJaA/tQ9hR5Gz+zY2I+8yMy/oVcjc3z9s5mnMIM0rTVXH4gkaYDldEMZI9
+         Z4fA/rf6Il0a40+cPb+jEhzfnewdVIr7dLiBoiYupkkraC7Kn3AudK31RB+3rYba0zqn
+         dE5lNfrd+13dXwcGay/WyezOV5h1NYJmKqYX9dmWoIJm1ObdAmrHRBx8iBwpPTTxc6w/
+         0TJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683755559; x=1686347559;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RgmgU8f5zP92cQB+rVZXHNfDQaNDlqhikNOYijB8V3c=;
-        b=UvXsz4rKKIChZkuENFbEBv0nPbWu/mbB/wiAT0z7RDVcrlUgN5g4kPINo2CidqqRih
-         KLL9c/2S7+ua7cwHjVeHtQ+2iYtxfJOIPhXRVqHeqkptip+sJoWwDnfGonyABUbgWou/
-         Kll01wp1FKRA5E/12ub1CRnsCpqHCvF1cER9fCGEoYR0uK/2IgzNl5a8Z7ff49xN+0AH
-         S1sCE8uAsfXIZSVgIrNi7yAkbTVxqrhNO3ymHZEYwRw0q2QSSAHFiPsqh5PDK/t6cDm3
-         +mY0ShfJCHqlSMoc4FEH9otNtxFzq5usVKbCBL6Vms2D9mTqlcq4anGXXGRN/bwkivaT
-         7YAg==
-X-Gm-Message-State: AC+VfDxnapjvZYF8z+PUmke/1KdTXR6uCd5BpZGGVMyb9+yTkCzt5Tk/
-	VtCg0bH/tHv7H1SxkQqRrEgcr/hesJZZmCMYtaUxlLAOgmLPlnYkzOieZVZM1P8nX1IEdBNszLt
-	AUxWbUCec09+7m6/gC8f5iqnGrdLq/e8eA9S5rNRPSgOK0qFUjGDc/oyL4x6KwyHO7dR5WrdZ+J
-	Q=
-X-Received: by 2002:a1f:45d6:0:b0:440:441:37c1 with SMTP id s205-20020a1f45d6000000b00440044137c1mr5219445vka.8.1683755558644;
-        Wed, 10 May 2023 14:52:38 -0700 (PDT)
-X-Google-Smtp-Source: ACHHUZ5dagDZMgCyBzXjwCxqayihXCSmy00aUKmeKEB2c7vv4oTU64GdwX+hKduCFDALeUgbPGLarqJu/311UVmgXto=
-X-Received: by 2002:a1f:45d6:0:b0:440:441:37c1 with SMTP id
- s205-20020a1f45d6000000b00440044137c1mr5219436vka.8.1683755558170; Wed, 10
- May 2023 14:52:38 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAD3upLvuttgu3i6qZyB2LLY2CPcTvMdhQQLKdAYV2eoPD5Wjjg@mail.gmail.com>
- <20230510165545.GA25380@openwall.com> <ZFvuu+PpS3BO2T/t@quatroqueijos.cascardo.eti.br>
-In-Reply-To: <ZFvuu+PpS3BO2T/t@quatroqueijos.cascardo.eti.br>
-From: Tobias Heider <tobias.heider@canonical.com>
-Date: Wed, 10 May 2023 23:52:27 +0200
-Message-ID: <CAARv3RQS-sV4JCkRCJ1EOgfi+9MR0G8MsiS-xT9gXNjddqmJ-A@mail.gmail.com>
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:content-type:mime-version;
+        bh=rZcDpfxmeNB4qtzwxLKrAq6EEk5DEvbBMdzPInEJYYE=;
+        b=HT256MBomdqFXpSpxargZttLbw7ibsW4xGoTO+3AS0OgzecCjekC63+Urd6mwrRAWi
+         WRjT64jJoa/RvqC00G2rgbHmu1lZDu1XBrAx87Mj4XRAAMh0wLPyg4ILbOSx8oKz43wi
+         jWfb+htll/6vlyu8Lly9TOP2Bfz4uEzl8H6aJom3g57LYT8mWNpQ/Vr4IVyHpbw/8tIt
+         f6vAPbJTgWRKv9dL70/15GECHnt56sHjA1NkfXm5BF+r8Fi4myDhKYe1xKg0JFJwK7d7
+         9nRoONfw2eyumDTkFLBaxkWs2LlRP7AC8FcgKqHIAOhwGc6D4k6iQPM3iVWWyP5UMnAR
+         0Lzw==
+X-Gm-Message-State: AG10YOSrEeWVjQbQFKRr0mZdVw03jjBIRzWpCFyWq3rNbuHaUNui8KIJqa6+OhhsXZSgQw==
+X-Received: by 10.55.21.28 with SMTP id f28mr12752420qkh.57.1454093483041;
+        Fri, 29 Jan 2016 10:51:23 -0800 (PST)
+Message-ID: <1454093476.3461.19.camel@gmail.com>
+In-Reply-To: <CAEmCSgmmuLYpNLdz_vg3-NH_f8Psfj7PxgN7b5S9UCLbKzvO9A@mail.gmail.com>
+References: <2413003.GtkKFizscD@chimera>
+	 <CANO=Ty1ZFtpeUespB+nn0gZ8oC7PAkkr7+eTR1U+RyLtGKHKtA@mail.gmail.com>
+	 <CAJMyd9Yje0QY+Th_QUYuO6JspRvysKqkkxtXq-xgANBASM_Nrw@mail.gmail.com>
+	 <1528e110c5f.11ff2dddc43704.3865822946264713459@fsck.pl>
+	 <CAEmCSgmmuLYpNLdz_vg3-NH_f8Psfj7PxgN7b5S9UCLbKzvO9A@mail.gmail.com>
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-08ep2A+73wLG57GJBs46"
+X-Mailer: Evolution 3.18.4 
+Mime-Version: 1.0
+Date: Fri, 29 Jan 2016 13:51:16 -0500
+From: Daniel Micay <danielmicay@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6
+ pools for scanning purposes
 To: oss-security@lists.openwall.com
-Cc: Turritopsis Dohrnii Teo En Ming <tdtemccnp@gmail.com>, ceo@teo-en-ming-corp.com, 
-	Piotr Krysiuk <piotras@gmail.com>
+
+--=-08ep2A+73wLG57GJBs46
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] New Linux kernel NetFilter flaw gives attackers
- root privileges
 
-On Wed, May 10, 2023 at 9:39=E2=80=AFPM Thadeu Lima de Souza Cascardo
-<cascardo@canonical.com> wrote:
->
-> On Wed, May 10, 2023 at 06:55:46PM +0200, Solar Designer wrote:
-> > Hi,
-> >
-> > On Wed, May 10, 2023 at 11:52:58PM +0800, Turritopsis Dohrnii Teo En Mi=
-ng wrote:
-> > > I have just come across this article. Thought of sharing it.
-> > >
-> > > Article: New Linux kernel NetFilter flaw gives attackers root privile=
-ges
-> > > Link: https://www.bleepingcomputer.com/news/security/new-linux-kernel=
--netfilter-flaw-gives-attackers-root-privileges/
-> >
-> > We don't normally want in here links to news articles on something that
-> > was already brought up in here in more detail.  However, as a moderator,
-> > I reluctantly approved this posting so that we can use the resulting
-> > thread to discuss whether this issue got blown out of proportion and if
-> > so what we can do to avoid that going forward.  Here's the original
-> > posting this refers to:
-> >
-> > https://www.openwall.com/lists/oss-security/2023/05/08/4
-> >
-> > Another Linux kernel issue, in io_uring subsystem, was also disclosed in
-> > here on the same day, but I think didn't gain such tech media attention:
-> >
-> > https://www.openwall.com/lists/oss-security/2023/05/08/3
-> >
-> > Is the netfilter issue really worse than the io_uring issue?  I doubt
-> > it.  So _maybe_ it was something in the wording that tripped someone
-> > writing for one of those tech news websites, then others picked it up?
-> >
-> > Piotr's posting about the netfilter issue mentions intent to disclose an
-> > exploit later (like it should have, thank you Piotr!)
-> >
-> > Tobias' posting directly links to an exploit (which is also fine).
-> >
-> > Is intent to disclose an exploit later more newsworthy than having done
-> > so right away?  I doubt it.
-> >
-> > So maybe it's just random, and there's nothing to see here, after all.
-> >
-> > Now as to the actual issue and its description, I think we should
-> > clarify what exactly is meant by "unprivileged local users."  Piotr, I
-> > guess you actually meant not literally unprivileged, but users with
-> > CAP_NET_ADMIN, which can be had via unprivileged user/net namespaces if
-> > enabled in the distro / on the system, or when already in a container
-> > with such capability granted to container root.  Correct?  I think going
-> > forward we should always make this clear right away.  Here's a former
-> > netfilter core team leader also bringing this up:
-> >
-> > https://twitter.com/LaF0rge/status/1655867494152667140
-> >
-> > LaForge - @LaF0rge@chaos.social @LaF0rge:
-> > > Really curious to see how CVS-223-32233 for #linux #netfilter nf_tabl=
-es
-> > > https://seclists.org/oss-sec/2023/q2/133 can be exploted fom
-> > > "unprivileged local users".  AFAICT, nf_tables_api  goes through
-> > > nfnetlink, and nfnetlink_rcv() checks for CAP_NET_ADMIN way  before t=
-he
-> > > code in nf_tables_api.
-> >
-> > and a reply:
-> >
-> > Alex Plaskett @alexjplaskett:
-> > > Didn't look in depth at this one but you can trigger nf_tables_api
-> > > operations from a user / network namespace and distros such as Ubuntu
-> > > have unpriv user namespaces enabled.
->
-> If users don't need user namespaces, they can disable it on Ubuntu kernel=
-s as a
-> mitigation by doing:
->
-> sysctl -w kernel.unprivileged_userns_clone=3D0
->
-> Or persisting the option by adding a .conf file at /etc/sysctl.d/ with the
-> following line:
->
-> kernel.unprivileged_userns_clone=3D0
->
-> Cascardo.
+On Fri, 2016-01-29 at 17:45 +0000, Scott Herbert wrote:
+> That would be nice sure, but given that IoT vendors are rushing so
+> fast to market that their doing things like sending login credentials
+> via http, I think we're a long way from having them secure their
+> products from scanning let alone anything else.
 
-Another thing worth mentioning is that the apparmor team has done some very
-interesting work on providing finer control over unprivileged user namespac=
-es
-on a per application basis:
-https://gitlab.com/apparmor/apparmor/-/wikis/unprivileged_userns_restriction
+Many of them are going to be using the Android-based Brillo so there's a
+central point to make changes like this (AOSP).=
 
-This would allow having opt-in unprivileged userns support only for confine=
-d and
-explicitly permitted applications and could hopefully drastically reduce the
-impact of similar bugs in the future.
+--=-08ep2A+73wLG57GJBs46
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
 
-Tobias
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
->
-> >
-> > As expected.  Now, from a typical distro user's standpoint,
-> > "unprivileged local users" may be just right.  However, not all distros
-> > have unprivileged user namespaces enabled by default.
-> >
-> > Alexander
+iQIcBAABCAAGBQJWq7SkAAoJEPnnEuWa9fIqvFwP/jd/UrNCS78DoSV7CTH9XO+H
+GEYPthGBmFBCC2aFDO6FDq6oCQq51gFsxiiTBPejRLBd1EM32Piu6gfWxFJ0j4Ro
+nVFNa7+Ifn0I4ijGgJ/XS0tyrj2QFlZZko6JWKULproh3HCr0FqIz8esVb820Muy
+jFCMysRDp9h07nlRKFl0VJ8YbBc19N1V1vU+0nFDNFzDvsBiFo/yruJAMtJDGcDF
+ppvBxzd+hKr3SwfB8a93sgcptQBy1rfKTkaPTdBmwCSuopoVf1OgCMfVyRXuL3Cj
+nq92sL0A5zeZo/7c8R6WqcbIisTAi1wb+HTvfCfll8Wc+LPi4EngHnpDl+pTdCK0
+hoNUiyh1NUFnL61wIXlWJRQ1NHUWQa9pYhPy5nSzCifY8dWssU3+sZl5Nx3m3Pq9
+48Q4bGs4zyxNetFvan7g1+xPaKvlekDU/zCMY9jYk3knOsHhjSQsjaIXrX5NIKSS
+/nydPWfZvEPCnS9ImXrQ5qP+ikUIP0JHytdq5zO729z7lVEgc1tqMz592rkspIt0
+PIjw98W0W8n23zyRMuXa6hZCbObsuYi5lsde1EBjNNVfzTr/ZMo/qGdPiCu7hM9k
+5TVLmfejBgnoiuft05PJkjNccVCD8v7EST/FbPLBEScOUTQcDiLbbJJo5dRVs54S
+8WOvzOH5aE3GZGcVOCaW
+=F85M
+-----END PGP SIGNATURE-----
+
+--=-08ep2A+73wLG57GJBs46--
+
