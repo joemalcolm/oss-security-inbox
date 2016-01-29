@@ -1,42 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/21
-Message-ID: <87pone32pv.fsf@mid.deneb.enyo.de>
-Date: Wed, 05 Oct 2016 23:28:28 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/29/12
+Message-ID: <CACn5sdSmJz5Waf2nL2pHYrRsw1OvmS7uny-_KZuXi4tFc5ROZQ@mail.gmail.com>
+Date: Fri, 29 Jan 2016 18:43:32 -0300
+From: Gustavo Grieco <gustavo.grieco@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: NSPR 4.12, NSS 3.22.1 and PR_GetEnvSecure
+Subject: Re: Re: CVE request: out-of-bounds write with cpio 2.11
 Content-Type: text/plain; charset=utf-8
 
-* Florian Weimer:
+2016-01-29 17:52 GMT-03:00 anarcat <anarcat@...ngeseeds.org>:
 
-> It seems this was never disclosed properly; there are still a couple
-> of hidden Mozilla bugs about this.
+> I can't actually reproduce this on Debian, which runs 2.11 all the way
+> back to squeeze:
 >
-> The NSS 3.22.1 announcement
+> (gdb) run -i < ../overflow.cpio
+> Starting program: /bin/cpio -i < ../overflow.cpio
+> [Thread debugging using libthread_db enabled]
+> Using host libthread_db library
+> "/lib/x86_64-linux-gnu/libthread_db.so.1".
+> /bin/cpio: Malformed number0000000
+> /bin/cpio: warning: skipped 8 bytes of junk
+> /bin/cpio: Substituting `.' for empty member name
+> /bin/cpio: . not created: newer or same age version exists
+> /bin/cpio: premature end of file
+> [Inferior 1 (process 191) exited with code 02]
 >
->   <https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_3.22.1_release_notes>
+> Did i miss something?
 >
-> mentions one:
->
->   bug 1194680: NSS has been changed to use the PR_GetEnvSecure
->     function that was made available in NSPR 4.12
->
-> The story behind this is that NSS uses environment variables to
-> configure lots of things, some of which refer to file system
-> locations.  Others can be degrade the operation of NSS in various
-> ways, forcing compatibility modes and so on.
->
-> Previously, these environment variables were not ignored SUID
-> binaries.  NSPR 4.12 and NSS 3.22.1 introduce a new API,
-> PR_GetEnVSecure, to address this.  It's a very thin wrapper around
-> glibc's secure_getenv and similar functions on other systems.
->
-> Both NSPR and NSS need to be upgraded to address this; even if you run
-> s/PR_GetEnvSecure/secure_getenv/ on the NSS sources, some unprotected
-> environment variable lookups remain in NSPR.
 
-Debian has released DSA-3687-1 and DSA-3688-1, explicitly mentioning
-this as a security issue:
+Yeap, you need to user valgrind to expose this issue:
 
-  <https://lists.debian.org/debian-security-announce/2016/msg00268.html>
-  <https://lists.debian.org/debian-security-announce/2016/msg00269.html>
+$ valgrind cpio -i < ../overflow.cpio
+
+
+
+>
+> a.
+> --
+> The United States is a nation of laws:
+> badly written and randomly enforced.
+>                         - Frank Zappa
+>
+>
+
