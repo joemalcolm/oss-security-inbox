@@ -1,137 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/14
-Message-ID: <20161205182210.GA28847@openwall.com>
-Date: Mon, 5 Dec 2016 19:22:10 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/29/4
+Message-ID: <CAJMyd9Yje0QY+Th_QUYuO6JspRvysKqkkxtXq-xgANBASM_Nrw@mail.gmail.com>
+Date: Fri, 29 Jan 2016 14:21:01 +0000
+From: Hazel <hazel@...dlingmojo.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2016-8740: Apache HTTPD 2.4.17-2.4.23: Server memory can be exhausted and service denied when HTTP/2 is used
+Cc: pool@...ts.ntp.org, linuxbrad@...il.com, team@...urity.debian.org,  secalert <secalert@...hat.com>
+Subject: Re: shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
 Content-Type: text/plain; charset=utf-8
 
-This was erroneously(*) posted to the distros list earlier today, so it
-must be on oss-security as well.
+On 27 January 2016 at 14:43, Kurt Seifried <kseifried@...hat.com> wrote:
+> On Wed, Jan 27, 2016 at 4:24 AM, Luca BRUNO <lucab@...ian.org> wrote:
+> > For oss-sec crowd: is there anything we can do to improve the situation
+> > and avoid
+> > similar cases in the future? Should crowd-sourced and fundamental services
+> > like this
+> > be encouraged to move to a stronger WoT?
+>
+> [...]
+>
+> Sadly we can't really rely on the IoT device makers to fix this, they have
+> basically 0 incentive to prevent scanners from hitting their products
+> (they're already sold, to late for the customer to make an informed
+> decision).
 
-(*) The distros list is for embargoed issues only, whereas this one was
-being made public at the same time and thus should have been posted to
-public lists only.
+I hope you'll forgive me making a modest proposal here, but it seems
+to me that there might be an opportunity here for Linux distributions
+that are upstream of IoT vendors to modify their default configuration
+to address this.
 
------ Forwarded message from icing@...che.org -----
+My somewhat off-the-cuff suggestion would be to...
 
-From: icing@...che.org
-Subject: CVE-2016-8740, Server memory can be exhausted and service denied when HTTP/2 is used
-Date: Mon, 5 Dec 2016 13:43:28 +0100
-To: announce@...pd.apache.org
+1. Add an *additional, secondary* IPv6 address to external interfaces that is:
+-> a. generated in accordance with the IPv6 Privacy Extensions (i.e. RFC 4941)
+-> b. firewalled by default against all traffic except NTP in either direction
 
-        Security Advisory - Apache Software Foundation
-              Apache HTTPD WebServer  / httpd.apache.org
+2. Configure the NTP *client* to use this secondary address as the
+source for outgoing NTP traffic, instead of the default address?
 
+...thereby avoiding revealing the primary address of the host to
+would-be scanners?
 
-   Server memory can be exhausted and service denied when HTTP/2 is used
-
-
-                CVE-2016-8740
-
-
-The Apache HTTPD web server (from 2.4.17-2.4.23) did not apply limitations
-on request headers correctly when experimental module for the HTTP/2 
-protocol is used to access a resource. 
-
-
-The net result is that a the server allocates too much memory instead of denying
-the request. This can lead to memory exhaustion of the server by a properly
-crafted request.
-
-
-Background:
-- -----------
-
-
-Apache has limits on the number and length of request header fields. which
-limits the amount of memory a client can allocate on the server for a request.
+I realise that that is a rather drastic approach, and might be too
+bold a change for Debian or RHEL, but perhaps in the case of
+distributions like Raspbian which focus on IoT, it might be tenable?
 
 
-Version 2.4.17 of the Apache HTTP Server introduced an experimental feature:
-mod_http2 for the HTTP/2 protocol (RFC7540, previous versions were known as 
-Google SPDY).
+Cheers,
 
-
-This module is NOT compiled in by default -and- is not enabled by default, 
-although some distribution may have chosen to do so.
-
-
-It is generally needs to be enabled in the 'Protocols' line in httpd by 
-
-adding 'h2' and/or 'h2c' to the 'http/1.1' only default. 
-
-
-The default distributions of the Apache Software Foundation do not include 
-this experimental feature. 
-
-
-Details:
-- --------
-
-
-- From version 2.4.17, upto and including version 2.4.23 the server failed
-to take the limitations on request memory use into account when providing 
-access to a resource over HTTP/2. This issue has been fixed 
-in version 2.4.23 (r1772576).
-
-
-As a result - with a request using the HTTP/2 protocol a specially crafted
-request can allocate memory on the server until it reaches its limit. This can
-lead to denial of service for all requests against the server.
-
-
-Impact:
-- -------
-
-
-This can lead to denial of service for all server resources.
-Versions affected: 
-- ------------------
-All versions from  2.4.17 to  2.4.23. 
-
-
-Resolution:
-- -----------
-
-
-For a 2.4.23 version a patch is supplied. This will be included in the
-next release. 
-
-
-Mitigations and work arounds:
-- -----------------------------
-
-
-As a temporary workaround - HTTP/2 can be disabled by changing
-the configuration by removing h2 and h2c from the Protocols
-line(s) in the configuration file. 
-
-
-The resulting line should read:
-
-
-		Protocols http/1.1
-
-
-Credits and timeline
-- --------------------
-
-
-The flaw was found and reported by Naveen Tiwari <naveen.tiwari@....edu> 
-
-and CDF/SEFCOM at Arizona State University on 2016-11-22. The issue was 
-
-resolved by Stefan Eissing and incorporated in the Apache repository,
-ready for inclusion in the next release.
-
-
-Apache would like to thank all involved for their help with this.
-
-
-Patch against 2.4.23 release source:
-
-
-
------ End forwarded message -----
+Hazel
