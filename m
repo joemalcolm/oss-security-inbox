@@ -1,4 +1,9 @@
-Received: (qmail 3124 invoked by uid 550); 14 Dec 2022 15:55:53 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1579" "Friday" "29" "January" "2016" "14:40:33" "-0500" "Daniel Micay" "danielmicay@gmail.com" "<1454096433.25967.0.camel@gmail.com>" "38" "Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" "^Date:" nil nil "1" "2016012919:40:33" "[oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" (number mark "        danielmicay@ Jan 29   38/1579  " thread-indent "\"Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes\"\n") "<CAEmCSgmmuLYpNLdz_vg3-NH_f8Psfj7PxgN7b5S9UCLbKzvO9A@mail.gmail.com>" ("<2413003.GtkKFizscD@chimera>" "<CANO=Ty1ZFtpeUespB+nn0gZ8oC7PAkkr7+eTR1U+RyLtGKHKtA@mail.gmail.com>" "<CAJMyd9Yje0QY+Th_QUYuO6JspRvysKqkkxtXq-xgANBASM_Nrw@mail.gmail.com>" "<1528e110c5f.11ff2dddc43704.3865822946264713459@fsck.pl>" "<CAEmCSgmmuLYpNLdz_vg3-NH_f8Psfj7PxgN7b5S9UCLbKzvO9A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 31910 invoked by uid 550); 29 Jan 2016 19:40:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,250 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5841 invoked from network); 14 Dec 2022 15:23:02 -0000
+Received: (qmail 31892 invoked from network); 29 Jan 2016 19:40:47 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/M5fIDyVPe0VDkbzVrRf/NtUQvg3wpriSMqFNaiKp/E=;
-        b=XbPM3qXFZgQU5cfLUYiWnZaoKWSxwEQAzted0EzjsTxRqUnuhbpmQIz8c+QF39rb4L
-         YBMf9TRfC47on8ls1nsjtdIC8854KHVkTDqu84cLOTImVlRybBlAI0qampfzfaJyzFq8
-         aBpSt9V1jjF0K/usS9B6gJU8jDO1lhlS90b6lFZCL6pBTVfIukv3l5pK4XgAXNkHIiGP
-         g6nJ7lXJmgt4/BHGq5f2riVhM6UuLp2h5C5XK3lxzTMw4wz4peXPT5ejhtGB5gHN2Fuh
-         S/dqR2LLGTsa2hZNXYpxleRBWVu95LR+bhdkU0gkGn+wtdzZ2cwsZPDevW59xydr3kCa
-         VqEQ==
+        d=gmail.com; s=20120113;
+        h=message-id:subject:from:to:date:in-reply-to:references:content-type
+         :mime-version;
+        bh=Jf0wl9WenCVHW6LGUV/lIYZQ8CYsnuXr29Z+qWKNBB8=;
+        b=iBvmBVyMRiBNztkIiY1W9fVn9jKZMSa/LmgxMCgdoOuP6NwqpKVP/4OfERqa6LFUzg
+         eR+vxmTY9+YFS1n6kW3tgXI/+kBOYb1gLIZuRlZ1fZT06WeS/5g075C0QjFaH2WaWRc2
+         7nLQk8uicenqS8oYKfwsHVUWE7Nx5GIUYMkoI/xncLlr/RQ6rOjslZPWFneqIwThx4uC
+         RfkTsd/hA0YbIr5FwASsid+4vVmnZgYstyt/6Lsyu8kPPBRMOvq/DP9Jb+2ey+HaeNUv
+         tOmkAb1Fc3jdVCM82R8364zAVFftDzprXpmrP8853Q7rjddoCf/yKsixRYjg5Es3uj6a
+         omGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/M5fIDyVPe0VDkbzVrRf/NtUQvg3wpriSMqFNaiKp/E=;
-        b=NcY3pA9OFz8FrJEVhYRfxNVss0aeQs56byKAKUo/++RJlFOJ5QbgJV4gt6uH8DV9VH
-         CHVmciHJs5UkNWuDzplms/EY+hpwMmtmJojqTxhY4r1fGkfxWYqdAYpoHGzDOAUDa8BI
-         6kiEaxpLx2QdbaXImMwX8geThNaDEjVvHqvy2c7fKHg1rj4sAtanRa6zUgqfuoDz+Yx6
-         I0r0XmfLaZTYb226FtdbeK8zapxx5qyt6O0kBhDKGXtChIqDa9wYe3ryH26l6zQrosNG
-         aZQUaE3r2O8V5/uDvhUgP0/5Hnk9kVLZdZSbObFYtSzkmAoHyqTWQlDOUCsoIAWNwX4n
-         MI5g==
-X-Gm-Message-State: AFqh2kp4J9fLLzTwdpKnm8kjAWmjX2w2WAmz7sw4mX3bH8N6fC3flQKa
-	hwCwvyVPMSDpnpV8Cbr64RnYSVS7+hMLC5gDk2PK+D7qX/iwNg==
-X-Google-Smtp-Source: AMrXdXu4aOj40rqGHernun3a9AJ9HXpSXyXw4aSDZ/NfLo8ErmMZMd0khK23xg2aRK6AStrS8mh2L0ceuCivpZUJBVs=
-X-Received: by 2002:a17:90b:234d:b0:219:7c23:8a32 with SMTP id
- ms13-20020a17090b234d00b002197c238a32mr364971pjb.68.1671031370142; Wed, 14
- Dec 2022 07:22:50 -0800 (PST)
-MIME-Version: 1.0
-References: <CAO3qeMUSrAkw+L7zk72FhHWM3dRpXn0MoC3wABEuN5M4mw36ZA@mail.gmail.com>
-In-Reply-To: <CAO3qeMUSrAkw+L7zk72FhHWM3dRpXn0MoC3wABEuN5M4mw36ZA@mail.gmail.com>
-From: Gerald Lee <sundaywind2004@gmail.com>
-Date: Wed, 14 Dec 2022 23:22:38 +0800
-Message-ID: <CAO3qeMX_M+ut7FkyyV+utTsZGz5SNXs1ZDwa-5CLNdr4f630MQ@mail.gmail.com>
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:content-type:mime-version;
+        bh=Jf0wl9WenCVHW6LGUV/lIYZQ8CYsnuXr29Z+qWKNBB8=;
+        b=THbce1v8wW5P/QmuebEAqb34v+93r9Mhejj/6nI04/ElNzioaC0WZrRSY5KsQ2lwzA
+         QsHfnZCyfciyIUM8ka/eK+UWDk4wrXb+7INdo4JdkXmfFf3rIjeyQo238b3tDSbtu3+n
+         gMipklY/33h5Z2Y0L2j3Vz3uNYc/6IUgTx8/Ca7ygJTmG2Go6w520Nq6Sf0+nyhjlRSn
+         l67f+9vwedqdqD6lm4JmXynflN+PG0sIB9G0aE91vzRUVItCx5Pec+S1zQ8134PZ4Zqe
+         UaEWjaI0gs1x2/NyZGZhhRyamK/7h1t06YIOywN+pRde4ALx5NvLMJuG2ZXQA6CGv4Om
+         DAKA==
+X-Gm-Message-State: AG10YOSxUtXcWU8b4vKKuPMUJ61ypEHwhPOL9BuXyMbYBXQxEKLDqCp+1YdYjy8rHVIf3g==
+X-Received: by 10.140.151.4 with SMTP id 4mr13337186qhx.16.1454096435681;
+        Fri, 29 Jan 2016 11:40:35 -0800 (PST)
+Message-ID: <1454096433.25967.0.camel@gmail.com>
+In-Reply-To: <CAEmCSgmmuLYpNLdz_vg3-NH_f8Psfj7PxgN7b5S9UCLbKzvO9A@mail.gmail.com>
+References: <2413003.GtkKFizscD@chimera>
+	 <CANO=Ty1ZFtpeUespB+nn0gZ8oC7PAkkr7+eTR1U+RyLtGKHKtA@mail.gmail.com>
+	 <CAJMyd9Yje0QY+Th_QUYuO6JspRvysKqkkxtXq-xgANBASM_Nrw@mail.gmail.com>
+	 <1528e110c5f.11ff2dddc43704.3865822946264713459@fsck.pl>
+	 <CAEmCSgmmuLYpNLdz_vg3-NH_f8Psfj7PxgN7b5S9UCLbKzvO9A@mail.gmail.com>
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-UZUNo13u+eCy2ArDJGin"
+X-Mailer: Evolution 3.18.4 
+Mime-Version: 1.0
+Date: Fri, 29 Jan 2016 14:40:33 -0500
+From: Daniel Micay <danielmicay@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6
+ pools for scanning purposes
 To: oss-security@lists.openwall.com
+
+--=-UZUNo13u+eCy2ArDJGin
 Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] Linux Kernel: usb: A use-after-free Write in put_dev
+Content-Transfer-Encoding: quoted-printable
 
-This was assigned CVE-2022-4382.
+On Fri, 2016-01-29 at 17:45 +0000, Scott Herbert wrote:
+> That would be nice sure, but given that IoT vendors are rushing so
+> fast to market that their doing things like sending login credentials
+> via http, I think we're a long way from having them secure their
+> products from scanning let alone anything else.
 
-=*=*=*=*=*=*=*=*=     CREDIT     =*=*=*=*=*=*=*=*=
+Many of them are going to be using the Android-based Brillo so there's a
+central point to make changes like this (AOSP).=
 
-Zhixin Li from Zero-one Security <sundaywind2004@gmail.com>
+--=-UZUNo13u+eCy2ArDJGin
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-Thanks.
+iQIcBAABCAAGBQJWq8AxAAoJEPnnEuWa9fIqKbAP/1YMi6H7c1v3aKJSfqdif3Hr
+UOCa1twyxLFoJE4oEB+yBBFv0SEEJsx/QrS+Ksd2ANVIMdMrk24VSnG3dgESBygm
+RPFcX80x3sGp/XT/v/gsbAAy23qd3Y2nil6H/S7TOC6KBPdMyOGRiI9pdlJxGIm3
+zV5RGgTHxOU79OMrnW+cq13wj8R/pE3R2m8SyeTsyBxB87eS9aKp7pcLLxUcrUxo
+YWl6ph1nBgA+uurVyfpzKyOs87x0UKKAngCEbRkrenJqBsFioS4UsYFGEVHuDn+V
+bKOtzdJiA0AqfQT7juH1uDuwOm4w39lGGMpUKJ10PdN1N2mysxo30dODRuBORk5J
++JwpTZy7e/2hyzRzEDSAGcC+tBVxz9gFZYWwJdxkRb/CdwtWFu0qYbPkNgiBNXXs
+EitrNsBIPU1EhfgwRG4EhhW4WvAtDfLjML37usZtBP4DKmg6YU5DPv/EFgKoNxLf
+q/tHxfCwADsxg8GOanBnMnLej8IvUfSIXoSvGc2oGpMla5EtdJ8gTljXXOmxBYY1
+Q5lpgjOpzDN4o/MO1ywFxsCMFgWDsd7Z4i3X9gsLEHP7AGiPp5jq2DPni6dXIohs
+7eJU+CRoKJ2spwMqheVxwIjuDyZAH6J/xt9raITPz8ta/rHJfn47jAjYD6miv+F1
+GIU5+8JQCYJqcS1db83W
+=g5VR
+-----END PGP SIGNATURE-----
 
+--=-UZUNo13u+eCy2ArDJGin--
 
-On Tue, Dec 13, 2022 at 2:53 PM Gerald Lee <sundaywind2004@gmail.com> wrote:
->
-> Hi all,
->
-> =*=*=*=*=*=*=*=*=   BUG DETAILS  =*=*=*=*=*=*=*=*=
->
-> This use-after-free violation is caused by a race among the superblock
-> operations in the gadgetfs driver. The vulnerability may not be a big
-> deal, because the normal user can't execute umount. It could be
-> triggered by yanking out a device that is running the gadgetfs side,
-> but I don't know how to do that.
->
-> C repro is attached.
->
-> =*=*=*=*=*=*=*=*=     BACKTRACE     =*=*=*=*=*=*=*=*=
-> BUG: KASAN: use-after-free in instrument_atomic_read_write
-> include/linux/instrumented.h:102 [inline]
-> BUG: KASAN: use-after-free in atomic_fetch_sub_release
-> include/linux/atomic/atomic-instrumented.h:176 [inline]
-> BUG: KASAN: use-after-free in __refcount_sub_and_test
-> include/linux/refcount.h:272 [inline]
-> BUG: KASAN: use-after-free in __refcount_dec_and_test
-> include/linux/refcount.h:315 [inline]
-> BUG: KASAN: use-after-free in refcount_dec_and_test
-> include/linux/refcount.h:333 [inline]
-> BUG: KASAN: use-after-free in put_dev+0x22/0xd0
-> drivers/usb/gadget/legacy/inode.c:159
-> Write of size 4 at addr ffff8880436d2040 by task syz-executor.5/7587
->
-> CPU: 1 PID: 7587 Comm: syz-executor.5 Not tainted 6.1.0-rc7 #1
-> Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-> 1.13.0-1ubuntu1.1 04/01/2014
-> Call Trace:
->  <TASK>
->  __dump_stack lib/dump_stack.c:88 [inline]
->  dump_stack_lvl+0xd1/0x138 lib/dump_stack.c:106
->  print_address_description mm/kasan/report.c:284 [inline]
->  print_report+0x15e/0x45d mm/kasan/report.c:395
->  kasan_report+0xbf/0x1f0 mm/kasan/report.c:495
->  check_region_inline mm/kasan/generic.c:183 [inline]
->  kasan_check_range+0x141/0x190 mm/kasan/generic.c:189
->  instrument_atomic_read_write include/linux/instrumented.h:102 [inline]
->  atomic_fetch_sub_release
-> include/linux/atomic/atomic-instrumented.h:176 [inline]
->  __refcount_sub_and_test include/linux/refcount.h:272 [inline]
->  __refcount_dec_and_test include/linux/refcount.h:315 [inline]
->  refcount_dec_and_test include/linux/refcount.h:333 [inline]
->  put_dev+0x22/0xd0 drivers/usb/gadget/legacy/inode.c:159
->  gadgetfs_kill_sb+0x2e/0x60 drivers/usb/gadget/legacy/inode.c:2086
->  deactivate_locked_super+0x98/0x160 fs/super.c:332
->  vfs_get_super fs/super.c:1190 [inline]
->  get_tree_single+0x188/0x1d0 fs/super.c:1207
->  vfs_get_tree+0x8d/0x2f0 fs/super.c:1531
->  vfs_fsconfig_locked fs/fsopen.c:232 [inline]
->  __do_sys_fsconfig+0x8d6/0xc20 fs/fsopen.c:439
->  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
->  do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
->  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-> RIP: 0033:0x7f8d5129078d
-> Code: c3 e8 17 32 00 00 0f 1f 80 00 00 00 00 f3 0f 1e fa 48 89 f8 48
-> 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d
-> 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-> RSP: 002b:00007f8d52024bd8 EFLAGS: 00000246 ORIG_RAX: 00000000000001af
-> RAX: ffffffffffffffda RBX: 00007f8d513cbf80 RCX: 00007f8d5129078d
-> RDX: 0000000000000000 RSI: 0000000000000006 RDI: 0000000000000003
-> RBP: 00007f8d512feb02 R08: 0000000000000000 R09: 0000000000000000
-> R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-> R13: 00007ffd48293eff R14: 00007ffd48294090 R15: 00007f8d52024d80
->  </TASK>
->
-> Allocated by task 7561:
->  kasan_save_stack+0x22/0x40 mm/kasan/common.c:45
->  kasan_set_track+0x25/0x30 mm/kasan/common.c:52
->  ____kasan_kmalloc mm/kasan/common.c:371 [inline]
->  ____kasan_kmalloc mm/kasan/common.c:330 [inline]
->  __kasan_kmalloc+0xa5/0xb0 mm/kasan/common.c:380
->  kmalloc include/linux/slab.h:553 [inline]
->  kzalloc include/linux/slab.h:689 [inline]
->  dev_new drivers/usb/gadget/legacy/inode.c:170 [inline]
->  gadgetfs_fill_super+0x1e4/0x460 drivers/usb/gadget/legacy/inode.c:2041
->  vfs_get_super fs/super.c:1169 [inline]
->  get_tree_single+0xd6/0x1d0 fs/super.c:1207
->  vfs_get_tree+0x8d/0x2f0 fs/super.c:1531
->  vfs_fsconfig_locked fs/fsopen.c:232 [inline]
->  __do_sys_fsconfig+0x8d6/0xc20 fs/fsopen.c:439
->  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
->  do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
->  entry_SYSCALL_64_after_hwframe+0x63/0xcd
->
-> Last potentially related work creation:
->  kasan_save_stack+0x22/0x40 mm/kasan/common.c:45
->  __kasan_record_aux_stack+0xbc/0xd0 mm/kasan/generic.c:481
->  call_rcu+0x9d/0x820 kernel/rcu/tree.c:2798
->  pwq_unbound_release_workfn+0x26b/0x340 kernel/workqueue.c:3736
->  process_one_work+0x9bf/0x1710 kernel/workqueue.c:2289
->  worker_thread+0x669/0x1090 kernel/workqueue.c:2436
->  kthread+0x2e8/0x3a0 kernel/kthread.c:376
->  ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
->
-> Second to last potentially related work creation:
->  kasan_save_stack+0x22/0x40 mm/kasan/common.c:45
->  __kasan_record_aux_stack+0xbc/0xd0 mm/kasan/generic.c:481
->  call_rcu+0x9d/0x820 kernel/rcu/tree.c:2798
->  pwq_unbound_release_workfn+0x26b/0x340 kernel/workqueue.c:3736
->  process_one_work+0x9bf/0x1710 kernel/workqueue.c:2289
->  worker_thread+0x669/0x1090 kernel/workqueue.c:2436
->  kthread+0x2e8/0x3a0 kernel/kthread.c:376
->  ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
->
-> The buggy address belongs to the object at ffff8880436d2000
->  which belongs to the cache kmalloc-1k of size 1024
-> The buggy address is located 64 bytes inside of
->  1024-byte region [ffff8880436d2000, ffff8880436d2400)
->
-> The buggy address belongs to the physical page:
-> page:ffffea00010db400 refcount:1 mapcount:0 mapping:0000000000000000
-> index:0x0 pfn:0x436d0
-> head:ffffea00010db400 order:3 compound_mapcount:0 compound_pincount:0
-> flags: 0x4fff00000010200(slab|head|node=1|zone=1|lastcpupid=0x7ff)
-> raw: 04fff00000010200 dead000000000100 dead000000000122 ffff888012041dc0
-> raw: 0000000000000000 0000000000100010 00000001ffffffff 0000000000000000
-> page dumped because: kasan: bad access detected
-> page_owner tracks the page as allocated
-> page last allocated via order 3, migratetype Unmovable, gfp_mask
-> 0x52a20(GFP_ATOMIC|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP), pid 6599,
-> tgid 6599 (syz-executor.0), ts 29294571719, free_ts 29285126043
->  prep_new_page mm/page_alloc.c:2539 [inline]
->  get_page_from_freelist+0x10b5/0x2d50 mm/page_alloc.c:4291
->  __alloc_pages+0x1cb/0x5b0 mm/page_alloc.c:5558
->  alloc_pages+0x1aa/0x270 mm/mempolicy.c:2285
->  alloc_slab_page mm/slub.c:1794 [inline]
->  allocate_slab+0x213/0x300 mm/slub.c:1939
->  new_slab mm/slub.c:1992 [inline]
->  ___slab_alloc+0xa9b/0x13e0 mm/slub.c:3180
->  __slab_alloc.constprop.0+0x56/0xa0 mm/slub.c:3279
->  slab_alloc_node mm/slub.c:3364 [inline]
->  __kmem_cache_alloc_node+0x199/0x3e0 mm/slub.c:3437
->  kmalloc_trace+0x26/0x60 mm/slab_common.c:1045
->  kmalloc include/linux/slab.h:553 [inline]
->  kzalloc include/linux/slab.h:689 [inline]
->  batadv_hardif_add_interface net/batman-adv/hard-interface.c:864 [inline]
->  batadv_hard_if_event+0x8a1/0x1450 net/batman-adv/hard-interface.c:952
->  notifier_call_chain+0xb5/0x200 kernel/notifier.c:87
->  call_netdevice_notifiers_info+0xb5/0x130 net/core/dev.c:1945
->  call_netdevice_notifiers_extack net/core/dev.c:1983 [inline]
->  call_netdevice_notifiers net/core/dev.c:1997 [inline]
->  register_netdevice+0x10bf/0x1670 net/core/dev.c:10090
->  veth_newlink+0x4d1/0x990 drivers/net/veth.c:1795
->  rtnl_newlink_create net/core/rtnetlink.c:3364 [inline]
->  __rtnl_newlink+0x1084/0x17e0 net/core/rtnetlink.c:3581
->  rtnl_newlink+0x68/0xa0 net/core/rtnetlink.c:3594
->  rtnetlink_rcv_msg+0x43e/0xca0 net/core/rtnetlink.c:6091
-> page last free stack trace:
->  reset_page_owner include/linux/page_owner.h:24 [inline]
->  free_pages_prepare mm/page_alloc.c:1459 [inline]
->  free_pcp_prepare+0x65c/0xd90 mm/page_alloc.c:1509
->  free_unref_page_prepare mm/page_alloc.c:3387 [inline]
->  free_unref_page+0x1d/0x4d0 mm/page_alloc.c:3483
->  qlink_free mm/kasan/quarantine.c:168 [inline]
->  qlist_free_all+0x6a/0x170 mm/kasan/quarantine.c:187
->  kasan_quarantine_reduce+0x184/0x210 mm/kasan/quarantine.c:294
->  __kasan_slab_alloc+0x66/0x90 mm/kasan/common.c:302
->  kasan_slab_alloc include/linux/kasan.h:201 [inline]
->  slab_post_alloc_hook mm/slab.h:737 [inline]
->  slab_alloc_node mm/slub.c:3398 [inline]
->  __kmem_cache_alloc_node+0x2e2/0x3e0 mm/slub.c:3437
->  kmalloc_trace+0x26/0x60 mm/slab_common.c:1045
->  kmalloc include/linux/slab.h:553 [inline]
->  kzalloc include/linux/slab.h:689 [inline]
->  kset_create lib/kobject.c:937 [inline]
->  kset_create_and_add+0x4f/0x1a0 lib/kobject.c:980
->  register_queue_kobjects net/core/net-sysfs.c:1766 [inline]
->  netdev_register_kobject+0x1ca/0x400 net/core/net-sysfs.c:2019
->  register_netdevice+0xd99/0x1670 net/core/dev.c:10057
->  __ip_tunnel_create+0x398/0x570 net/ipv4/ip_tunnel.c:267
->  ip_tunnel_init_net+0x2ec/0x9f0 net/ipv4/ip_tunnel.c:1073
->  ops_init+0xb9/0x680 net/core/net_namespace.c:135
->  setup_net+0x5d1/0xc50 net/core/net_namespace.c:332
->  copy_net_ns+0x31c/0x760 net/core/net_namespace.c:478
->  create_new_namespaces+0x3f6/0xb20 kernel/nsproxy.c:110
->
-> Memory state around the buggy address:
->  ffff8880436d1f00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
->  ffff8880436d1f80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-> >ffff8880436d2000: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
->                                            ^
->  ffff8880436d2080: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
->  ffff8880436d2100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-> ==================================================================
->
->
-> =*=*=*=*=*=*=*=*=     PATCH     =*=*=*=*=*=*=*=*=
->
-> The patch has been done by Alan Stern, and it can be found here:
-> https://lore.kernel.org/linux-usb/Y5dV11OoM3ojxNHy@rowland.harvard.edu/
->
-> Thanks.
