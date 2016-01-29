@@ -1,50 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/8
-Message-Id: <20160818034004.E6E24B2E01B@smtpvbsrv1.mitre.org>
-Date: Wed, 17 Aug 2016 23:40:04 -0400 (EDT)
-From: cve-assign@...re.org
-To: dregad@...tisbt.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: MantisBT: XSS in view_all_bug_page.php
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/29/5
+Message-ID: <1528e110c5f.11ff2dddc43704.3865822946264713459@fsck.pl>
+Date: Fri, 29 Jan 2016 16:47:07 +0100
+From: enki <enki@...k.pl>
+To: <oss-security@...ts.openwall.com>
+Cc: <oss-security@...ts.openwall.com>,  <pool@...ts.ntp.org>,  <linuxbrad@...il.com>,  <team@...urity.debian.org>,  "secalert" <secalert@...hat.com>
+Subject: Re: shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> An XSS vulnerability was discovered in MantisBT's Filter API, affecting
-> the View Issues page. It is caused by unescaped output of the
-> 'view_type' GPC parameter, and can be exploited as follows:
+---- Wł. Pt, 29 sty 2016 15:21:01 +0100 Hazel  napisał(a) ---- 
+>On 27 January 2016 at 14:43, Kurt Seifried <kseifried@...hat.com> wrote: 
+>> On Wed, Jan 27, 2016 at 4:24 AM, Luca BRUNO <lucab@...ian.org> wrote: 
+>> > For oss-sec crowd: is there anything we can do to improve the situation 
+>> > and avoid 
+>> > similar cases in the future? Should crowd-sourced and fundamental services 
+>> > like this 
+>> > be encouraged to move to a stronger WoT? 
+>> 
+>> [...] 
+>> 
+>> Sadly we can't really rely on the IoT device makers to fix this, they have 
+>> basically 0 incentive to prevent scanners from hitting their products 
+>> (they're already sold, to late for the customer to make an informed 
+>> decision). 
 > 
-> /mantis/view_all_bug_page.php?view_type=[XSS]
+>I hope you'll forgive me making a modest proposal here, but it seems 
+>to me that there might be an opportunity here for Linux distributions 
+>that are upstream of IoT vendors to modify their default configuration 
+>to address this. 
 > 
-> To resolve the issue, the parameter's value is sanitized prior to being
-> stored in the filter, ensuring only authorized values 'simple' and
-> 'advanced' are saved, and subsequently printed on the hidden form field.
+>My somewhat off-the-cuff suggestion would be to... 
 > 
-> https://github.com/mantisbt/mantisbt/commit/7086c2d8b4b20ac14013b36761ac04f0abf21a4e
-> https://mantisbt.org/bugs/view.php?id=21611
+>1. Add an *additional, secondary* IPv6 address to external interfaces that is: 
+>-> a. generated in accordance with the IPv6 Privacy Extensions (i.e. RFC 4941) 
+>-> b. firewalled by default against all traffic except NTP in either direction 
+> 
+>2. Configure the NTP *client* to use this secondary address as the 
+>source for outgoing NTP traffic, instead of the default address? 
+> 
+>...thereby avoiding revealing the primary address of the host to 
+>would-be scanners? 
+> 
 
-Use CVE-2016-6837.
+I'd go even further and use the IPv6 privacy-enhanced address for all outgoing connections, not only NTP. It's only a matter of time before someone sets up a debian mirror for example that logs source addresses and launches scans against them.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+-- 
+enki@...k.pl
 
-iQIcBAEBCAAGBQJXtSbhAAoJEHb/MwWLVhi2y/sQAI4Zgb9yzisnCQlPnBFtPALu
-nSl9WntQBBBKSS/7EIv+4OntPTRF69ngqgLFSZRNBB8OAbOYxqhuxNKjx2O/t9HL
-3amuDNatrIQdvjd9dpd0yD23lIRRB3i7Zq+DzAPsEO2MwazQBtyHKTIGmmcYpGv9
-UsZ0Vw+jD3l16Z/9DfZINu+pBuUO0k7/zKlpQ4v2RRjq4J6RGrGMbR+lY4nP7sxm
-asQ5Mk9vz/Whpk7hAfYcAvSw2qb+K9bgTiLZ3HF/97kQCUTA+8VrCpVO8EG4k6Rz
-o+8jK2tZi3lRPlmzYIeVe+b3gLuyTvuYSNV1WbQllnjtU4NNaqgcXm3BxTEKmAqj
-IYo8OcZql1KDiVscDw8xuUTtPFmAqTtstUOh44DIVgzO0l4Rlz6PIF1kZ5IT8eFo
-d0YuCIrAOXSupfVASpffuHGNKwBniF+AoQYFAdG26XKIBDmir7y4vZIx/OPH257d
-sXTdJkzVhZuyQJWjVlOsV9tGIh/VkR/VO0vXj5Q02k//7AtmeLUf/utMVhNCOA0c
-MDxQatjIDh+eDfEFDlLY/FkeduHb2aJI9QiI1QRayE01C6+tJUo26mhGcqf0O7Wa
-Jgfd78fEaquju9kZ8TaR6qKVsABvEQWAesxVjfnrg5mk54rzbr09t3sqyVPpwNwy
-5ROx1/qpuWT03S5xW/PG
-=mmRp
------END PGP SIGNATURE-----
