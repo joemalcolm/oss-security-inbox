@@ -1,18 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/6
-Message-ID: <20160929103210.bm5itc2cu4a672ws@jwilk.net>
-Date: Thu, 29 Sep 2016 12:32:10 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-7545 -- SELinux sandbox escape
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/29/3
+Message-Id: <4DEA83BF-D7C9-40F2-AD63-BC9C9B3910AE@hojmark.org>
+Date: Fri, 29 Jan 2016 08:33:52 +0100
+From: Asbjorn Hojmark <lists@...mark.org>
+To: Ask Bjørn Hansen <ask@...pool.org>
+Cc: Luca BRUNO <lucab@...ian.org>, oss-security@...ts.openwall.com, pool@...ts.ntp.org, team@...urity.debian.org, secalert@...hat.com
+Subject: Re: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
 Content-Type: text/plain; charset=utf-8
 
-* Christos Zoulas <christos@...las.com>, 2016-09-26, 13:53:
->On the BSDs TIOCSTI has been limited to the superuser since the 4.4BSD Lite 2 
->release in 1995 (IIRC).
 
-Hmm. I've just tried OpenBSD 5.7 and FreeBSD 10.3, and TIOCSTI works fine for 
-non-root users.
+> I might just be too cynical, but it also feels like something we should come to expect. Anyone who's looked at traffic to an Internet facing IPv4 address have seen much worse.
 
--- 
-Jakub Wilk
+I (too) might just be too cynical, or in this business too long, but I feel that if you communicate on the global Internet, you should expect to be probed. If you’re not ready to be probed, your machine shouldn’t be on the Net. Really.
+
+One can probe the entire v4 Internet in minutes, so being probed should not be new to any device on it. The fact that the v6 address space takes ... slightly longer ;) to probe should not make one lazy and rely on security by obscurity, hoping that your machine will not be seen.
+
+That being said, I do agree that the NTP pool should try to only provide the services that it ‘advertises’. I just hope everyone realises that with volounteers running the servers and the pool, that will be very difficult to enforce.
+
+-A
