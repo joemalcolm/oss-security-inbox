@@ -1,4 +1,9 @@
-Received: (qmail 11610 invoked by uid 550); 17 Jun 2025 13:23:07 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1842" "Friday" "29" "January" "2016" "16:47:07" "+0100" "enki" "enki@fsck.pl" "<1528e110c5f.11ff2dddc43704.3865822946264713459@fsck.pl>" "48" "Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" "^Cc:" nil nil "1" "2016012915:47:07" "[oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" (number mark "        enki@fsck.pl Jan 29   48/1842  " thread-indent "\"Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes\"\n") "<CAJMyd9Yje0QY+Th_QUYuO6JspRvysKqkkxtXq-xgANBASM_Nrw@mail.gmail.com>" ("<2413003.GtkKFizscD@chimera>" "<CANO=Ty1ZFtpeUespB+nn0gZ8oC7PAkkr7+eTR1U+RyLtGKHKtA@mail.gmail.com>" "<CAJMyd9Yje0QY+Th_QUYuO6JspRvysKqkkxtXq-xgANBASM_Nrw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11600 invoked by uid 550); 29 Jan 2016 15:49:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,116 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 24444 invoked from network); 17 Jun 2025 13:21:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1750166493; x=1750771293; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=HjNHqHbI9etCr/VNJhA3fA6WZPCqhmZuRiM7VI/7bOM=;
-        b=NKI5NiXHrlmKkgs5ydz9zYWh8/KZX8HnIwpCgnSB867PWCpAbmcdOErp4XcwtroZNk
-         DEEkUj8ZG5zWUPfYKsoHsV83c2jTwhsTFcIP5BcSZD9qSbInvIjLNMwMPXMLYSsHTrq2
-         YIRUgId8tdO8cyzE/AH6IV94pp3QXuP5maSTTQV07ZlQfdv+Ds0Yr+/8EFvfazHeGnmZ
-         GWAhvAe8LgUJ8fBlVcoiUELOlpEeUeNjtsp1JysTeYnsWvgT6IlwOZZOPzQHawVqXYMD
-         KrBKCAZxU2gwHoOCJQMeOHDFdI6AOolZd6aSHHKHYlCDu3KIMJc1vsu/fjCdeA9ZuEPI
-         Tv8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750166493; x=1750771293;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HjNHqHbI9etCr/VNJhA3fA6WZPCqhmZuRiM7VI/7bOM=;
-        b=nm1igWmrUIn8mHGYc8FBfM2m5KQKB8peRt6DNQre3PmlAY6+d8/PxhD7MvnHJxrHxw
-         jU+4Z/LLyEOdxbj8rbYHroEncWLnl3Nrkk0M3jn2az8oCczR2EfKq08njqJi0YrWB7wr
-         sitV6DFnm8vcd/38qTmWiNk6+eEcgwCqSukR47kEjHw1dN8i860r3E6d7mA9ePS4y6Po
-         CBOOQgTSxVpasW4P0E8PiKD6oZsjJMv2tXmPg5sHnWeGMeb9Mpff5yr+LCQ4ZIC7LXA7
-         e80oOsDb67q4uobUZrTaG4UDeXxKcGhyBNdr6ZwK3k+dI1Q3OkYrNsBSi7kiJtDjaPMc
-         /pkQ==
-X-Gm-Message-State: AOJu0YyViZPRrbvlicFiQsnMetOy7fyRk9NXdvj1pOMgnHUn+THpYY4v
-	IOHSY9ayR7ljLI808nrL9cAGGStk1JS5y6obhp3b2COVNwnncujcZXFcEO2ab/OwmMC9TGbC+Wv
-	up+kgXqo5t60COiFDeJ44QHKihr05w4GoUZ+DcDMi/ZDZ3cFslyhGp6VX918=
-X-Gm-Gg: ASbGnctoSa5gCqLjfarxQW+JoKNio5CLyqQDkL1YS5xpa/bRMyRA7sn1dh1ZYmzqLf+
-	Wzr58JnMTXUjekUyMWuAKqAGWTHE9AGka3bMIbCBI0OWrcT5AIOoG4qcA8Vhe8FOdsReuea+RgX
-	FrZgf4htUgLGh3FgLjz+wrS3fBFjCvfoTYw8nLq4VLabvY+uT1OtQMCCefPmh1aN3i0nnzpSdcX
-	Rqs
-X-Google-Smtp-Source: AGHT+IHs7hURUWT8DKRHGckqIJZP3THBVSaZCyPi82hIanna46FB1tb2GY4qTNQytb54pDGaKoLSSJ2O3L1zm2PNRRo=
-X-Received: by 2002:a50:c358:0:b0:609:99a7:efdb with SMTP id
- 4fb4d7f45d1cf-60999a7f8b1mr37868a12.2.1750166492448; Tue, 17 Jun 2025
- 06:21:32 -0700 (PDT)
+Received: (qmail 9775 invoked from network); 29 Jan 2016 15:47:33 -0000
+Message-ID: <1528e110c5f.11ff2dddc43704.3865822946264713459@fsck.pl>
+In-Reply-To: <CAJMyd9Yje0QY+Th_QUYuO6JspRvysKqkkxtXq-xgANBASM_Nrw@mail.gmail.com>
+References: <2413003.GtkKFizscD@chimera> <CANO=Ty1ZFtpeUespB+nn0gZ8oC7PAkkr7+eTR1U+RyLtGKHKtA@mail.gmail.com> <CAJMyd9Yje0QY+Th_QUYuO6JspRvysKqkkxtXq-xgANBASM_Nrw@mail.gmail.com>
 MIME-Version: 1.0
-From: Craig Ingram <cjingram@google.com>
-Date: Tue, 17 Jun 2025 09:21:21 -0400
-X-Gm-Features: AX0GCFuLIQaHDIkGhco-HTEthtHWjc2LuKgBImI5SJ1yPqn1Wfk82HdFFdE9fjI
-Message-ID: <CAHXwHVwBUCqgagS=RfdnNEoBkfmSTNJff28U=Syff0Chm0X4bQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000152fb60637c46418"
-Subject: [oss-security] [kubernetes] Race Condition in Go allows Volume Deletion in older
- Kubernetes versions
-
---000000000000152fb60637c46418
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Priority: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
+X-Zoho-Virus-Status: 1
+Cc:  <oss-security@lists.openwall.com>,  <pool@lists.ntp.org>, 
+	 <linuxbrad@gmail.com>,  <team@security.debian.org>, 
+	"secalert" <secalert@redhat.com>
+Date: Fri, 29 Jan 2016 16:47:07 +0100
+From: enki <enki@fsck.pl>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6
+ pools for scanning purposes
+To:  <oss-security@lists.openwall.com>
 
-Hello Kubernetes Community,
+---- W=C5=82. Pt, 29 sty 2016 15:21:01 +0100 Hazel  napisa=C5=82(a) ----=20
+>On 27 January 2016 at 14:43, Kurt Seifried <kseifried@redhat.com> wrote:=20
+>> On Wed, Jan 27, 2016 at 4:24 AM, Luca BRUNO <lucab@debian.org> wrote:=20
+>> > For oss-sec crowd: is there anything we can do to improve the situatio=
+n=20
+>> > and avoid=20
+>> > similar cases in the future? Should crowd-sourced and fundamental serv=
+ices=20
+>> > like this=20
+>> > be encouraged to move to a stronger WoT?=20
+>>=20
+>> [...]=20
+>>=20
+>> Sadly we can't really rely on the IoT device makers to fix this, they ha=
+ve=20
+>> basically 0 incentive to prevent scanners from hitting their products=20
+>> (they're already sold, to late for the customer to make an informed=20
+>> decision).=20
+>=20
+>I hope you'll forgive me making a modest proposal here, but it seems=20
+>to me that there might be an opportunity here for Linux distributions=20
+>that are upstream of IoT vendors to modify their default configuration=20
+>to address this.=20
+>=20
+>My somewhat off-the-cuff suggestion would be to...=20
+>=20
+>1. Add an *additional, secondary* IPv6 address to external interfaces that=
+ is:=20
+>-> a. generated in accordance with the IPv6 Privacy Extensions (i.e. RFC 4=
+941)=20
+>-> b. firewalled by default against all traffic except NTP in either direc=
+tion=20
+>=20
+>2. Configure the NTP *client* to use this secondary address as the=20
+>source for outgoing NTP traffic, instead of the default address?=20
+>=20
+>...thereby avoiding revealing the primary address of the host to=20
+>would-be scanners?=20
+>=20
 
-The Go team has released a fix in Go versions 1.21.11 and 1.22.4 addressing
-a symlink race condition when using os.RemoveAll. The Kubernetes Security
-Response Committee received a report that this issue could be abused in
-Kubernetes to delete arbitrary directories on a Node with root permissions
-by a local non-root user with the same UID as the user in a Pod.
+I'd go even further and use the IPv6 privacy-enhanced address for all outgo=
+ing connections, not only NTP. It's only a matter of time before someone se=
+ts up a debian mirror for example that logs source addresses and launches s=
+cans against them.
 
-The Go team has not issued a CVE for this, as it is considered a hardening
-issue, and the SRC is following that decision as well.
+--=20
+enki@fsck.pl
 
-Am I affected?
-
-Kubernetes built with Go versions prior to 1.21.11 or 1.22.4 are affected.
-
-Affected Versions
-
-- <1.30.2
-
-- <1.29.6
-
-- <1.28.11
-
-- <1.27.15
-
-How do I mitigate this issue?
-
-Upgrade to a fixed (or newer) version of Kubernetes.
-
-Fixed Versions
-
-- 1.30.2+
-
-- 1.29.6+
-
-- 1.28.11+
-
-- 1.27.15+
-
-To upgrade, refer to the documentation:
-https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/
-
-Detection
-
-This issue could be detected by looking for unexpected file deletions on a
-Node.
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@kubernetes.io
-
-Additional Details
-
-See the GitHub issue for more details:
-https://github.com/kubernetes/kubernetes/issues/132267
-
-Acknowledgements
-
-This issue was reported by Addison Crump
-
-Thank You,
-
-Craig Ingram on behalf of the Kubernetes Security Response Committee
-
---000000000000152fb60637c46418--
