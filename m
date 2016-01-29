@@ -1,115 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/23/3
-Message-ID: <20160823104855.GA10508@kroah.com>
-Date: Tue, 23 Aug 2016 06:48:55 -0400
-From: Greg KH <greg@...ah.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com, meissner@...e.de
-Subject: Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/29/11
+Message-ID: <87twlwqfat.fsf@marcos.anarc.at>
+Date: Fri, 29 Jan 2016 15:52:26 -0500
+From: anarcat <anarcat@...ngeseeds.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: out-of-bounds write with cpio 2.11
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 22, 2016 at 06:57:53PM -0400, cve-assign@...re.org wrote:
-> > What "tool" was assigned this CVE for other operating systems
-> > that do the same thing (all BSDs, OS-X, Windows, etc.)?
-> 
-> We didn't find any information about a tool name and thus simply
-> listed the OS itself (CVE-2011-0638, CVE-2011-0639).
-> 
-> 
-> >>   - the Linux kernel does not require a configuration in which a newly
-> >>     connected USB device is recognized in any way
-> 
-> > I don't understand this statement, can you clarify?
-> 
-> To clarify: the ability of an attacker to connect a USB device and
-> trigger potentially unsafe device communication (e.g., injecting text
-> into an application) does not mean that the Linux kernel is missing an
-> access-control feature.
+I can't actually reproduce this on Debian, which runs 2.11 all the way
+back to squeeze:
 
-Ok, but then why is this somehow CVE related if a Linux system can "not
-handle" such a device?
+(gdb) run -i < ../overflow.cpio
+Starting program: /bin/cpio -i < ../overflow.cpio
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library
+"/lib/x86_64-linux-gnu/libthread_db.so.1".
+/bin/cpio: Malformed number0000000
+/bin/cpio: warning: skipped 8 bytes of junk
+/bin/cpio: Substituting `.' for empty member name
+/bin/cpio: . not created: newer or same age version exists
+/bin/cpio: premature end of file
+[Inferior 1 (process 191) exited with code 02]
 
-> >>    - a Linux distribution may ship with a default configuration in
-> >>      which a newly connected USB device can operate as a keyboard and
-> >>      inject text into an application
-> 
-> > Yes, but I don't understand, perhaps what you really mean to say is:
-> >        A Linux distribution may ship with a default configuration of
-> >        trusting all new devices that are plugged in without any form of
-> >        userspace authentication before they begin to operate.
-> 
-> Agreed. If it is trusting all new devices in this way, it would also
-> be trusting all new devices that wish to operate as keyboards.
+Did i miss something?
 
-So can you agree that the USB specification requires the OS to trust all
-new devices (it only requires "authorized" functionality for wireless
-USB devices.)  So if an operating system were to not trust new USB
-devices, it could then probably not be USB compliant.
+a.
+-- 
+The United States is a nation of laws:
+badly written and randomly enforced.
+                        - Frank Zappa
 
-Are you going to start filing CVEs against hardware specifications?
-(personally, I would love that...)
-
-> >>     there is no comprehensive method
-> >>     for "asking a user" about a new USB device in a way that is
-> >>     compatible with all use cases
-> 
-> > Huh?
-> 
-> A Linux distribution cannot expect that there is a logged-in user who
-> can provide sane answers to questions about each new USB device at the
-> instant that that device is connected.
-
-No multi-user operating system can.
-
-> For example, there isn't a comprehensive solution of the form "a
-> distribution must ensure that an application pops up a dialog asking
-> about each new device."
-
-I agree.  So how could this ever be something that an operating system
-could implement?
-
-> >>   - if anyone (whether a Linux distribution or other type of product)
-> >>     is announcing a required security update, in which software or
-> >>     configuration is being changed to address malicious keyboard
-> >>     attacks, then we can assign a CVE ID to associate with the update
-> >>     announcement
-> 
-> > Why would a CVE be needed for a "my distro decides to not trust USB
-> > devices as much as your distro does" type decision?
-> 
-> To improve the usability of CVE for patch management, we allow a CVE
-> mapping for an issue where the author of the code has announced a
-> required security patch, even if the issue is not universally
-> recognized as an exploitable vulnerability.
-
-Ok, but you are not doing this for where the "author of the code" is
-saying this.  If so, you need to go delete a bunch of Linux CVEs, as I
-sure as heck didn't want them created for my code :)
-
-Are you really saying that you need authorship permission here in order
-to create a CVE?  That seems new to me...
-
-> This can be helpful in situations where a vendor has direct knowledge
-> of advertised use cases or customer expectations. For example, if
-> there's a Linux distro designed specifically for connecting
-> compromised mobile phones over USB and initiating forensic analysis,
-> then it's perhaps reasonable to say that unrestricted acceptance of
-> new USB keyboards is a CVE-worthy vulnerability for that one distro.
-
-But given that we know of no such distro, why are you all creating new
-CVEs for these types of things?
-
-And, like Willy keeps pointing out, it's easy to break the hardware with
-USB with a bad devices.  I accidentally purchased such a thing in Japan
-a few months ago, and now am no longer able to use one of the USB ports
-in my laptop as the "magic smoke" escaped from it when the device was
-plugged in.  If we could get a CVE issued for that hardware design
-fault, that would be great :)
-
-In summary, yes, this is a mess where the physical world hits the
-software world, and unless you all draw a _very_ clear line, this is
-only going to get worse and worse.
-
-good luck!
-
-greg k-h
