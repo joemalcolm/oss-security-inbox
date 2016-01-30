@@ -1,88 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/10/10
-Message-ID: <20160510192837.GB30154@sisay.ephaone.org>
-Date: Tue, 10 May 2016 21:28:38 +0200
-From: Michael Scherer <misc@...b.org>
-To: oss-security@...ts.openwall.com
-Cc: security@...keeper.com
-Subject: Re: BitKeeper /tmp vulns
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/30/2
+Message-Id: <20160130011501.F2C0B3AE00B@smtpvbsrv1.mitre.org>
+Date: Fri, 29 Jan 2016 20:15:01 -0500 (EST)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, zuozhi.fzz@...baba-inc.com
+Subject: Re: CVE request Qemu: usb: ehci null pointer dereference in ehci_caps_write
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 10, 2016 at 10:43:27AM -0600, Kurt Seifried wrote:
-> Hopefully security@...keeper.com (it doesn't bounce so I assume it's valid)
-> will review/address these.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-So, looking at the current files included in the installer:
-https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/import.sh#L952
-https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/import.sh#L834
-https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/import.sh#L709
-
-from a quick check, this seems to be run with "bk import".
-
-There is this file
-https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/bk.sh#L283
-https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/bk.sh#L337
-nder the name bk.script
-
-And apply-patch:
-https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/applypatch.sh#L33
-
-And that' just on the shell code.
-
-There is also fun stuff like
-https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/gnu/diffutils/sdiff.c
-
-whose last edit is in 2000, but in 2001, someone found CVE-2001-0117
-
-
-> On Tue, May 10, 2016 at 10:24 AM, Michael Scherer <misc@...b.org> wrote:
+> Qemu emulator built with the USB EHCI emulation support is vulnerable to a
+> null pointer dereference flaw. It could occur when an application attempts to
+> write to EHCI capabilities registers.
 > 
-> > On Tue, May 10, 2016 at 09:31:27AM -0600, Kurt Seifried wrote:
-> > > Not found by me, mentioned on HackerNews:
-> > >
-> > > https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/bk.sh#L485
-> >
-> > Just to clarify, the vuln was not mentioned on HN, just the new about it
-> > being
-> > under a free license. Then I did a git clone, and grep /tmp and pointed on
-> > internal
-> > IRC that, as usual, there is a ton of /tmp issue (and then Kurt did see
-> > and asked where I did see it,
-> > and answered on HN (to the question "bk is now opensource").
-> >
-> > > BitKeeper is under Apache license so here it is.
-> > >
-> > > Also a quick look at the source shows a ton of other potential /tmp/
-> > vulns,
-> > > CC'ing bitkeeper security
-> >
-> > for example:
-> >
-> > https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/utils/bk_version#L1563
-> >
-> > There is also a few here:
-> >
-> > https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/utils/extractor.c
-> >
-> > but that's the installation script, so unlikely to be exploitable.
-> >
-> > Or in apply-patch, etc.
-> >
-> > But there is also a few projects that are bundled (like zlib), and a few
-> > scripts that
-> > are used only at installation and/or build time, so classifying everything
-> > is more
-> > work than what I have time to devote for the project.
-> >
-> > --
-> > Michael Scherer
-> >
+> A privileged user inside quest could use this flaw to crash the Qemu process
+> instance resulting in DoS.
 > 
-> 
-> 
-> -- 
-> 
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> Red Hat Product Security contact: secalert@...hat.com
+> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg05899.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1301643
+
+>> usb: ehci: add capability mmio write function
+
+>> its mmio '.write' function was missing, which lead to a null
+>> pointer dereference issue
+
+Use CVE-2016-2198.
+
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/usb/hcd-ehci.c but
+that may be an expected place for a later update.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWrA0IAAoJEL54rhJi8gl58PcP/2F+tp54ZD2CLMjKWW4D9W5G
+YoICQDA5qfy7VkJDEOwOnZ4clI+F2KFaUh34p0BQ2IVNHsvc+wMMofOfO9enlkIY
+s7hKhWNvBeaSR4UPSej14hxtY32uqoD2jEHBo+XCQ8DLH1CFJcMvC6sqEhuOGS0I
+1Ayl0xKBQTnl+5lFR2ayNMRbDac7lCvgVQx1jmptuydpuJW6h8CKzVt6hUyvZcL0
+qPwA7Q/bqkz4KFFzFb1JvW81fHZ95pBxbfgNn+RNey+BAEm46hLtBZOjOf70qgto
+iRGWEuAEyAcHdAE9HwvKHFXNaNVACNftvoEnzeR5krvxQke2JujtQWU8gZRQ/DYP
+vzdhAWEmmXl1d708zywYasVHRQka62H1ou7RhcIvEKw542gUTvoTUL0wefnHKb6X
+2fTzt3oQeE3OKqNYCXvcc6LxYqwCz9efcf4DX+e7VW2CbbDSvWghRgPwhZIj9+rr
+FEMQGtnN/NY7FnFBOlkUTRspk6sIsn3MeILU2hsNBuxzGs0vczM1fbYsdSEBR+2N
+KUlz5fMtC3bdl0/2xnb/ptdLxGEclbjWv8xnyT/McEFevIm2EqPi/iRz3YWgsJf0
+O31vnHuf4WZMqT+thvERuzm6gNrR1IvL6KxQvWDnTRxes2HQk2Vs2wmKv5ccIFBV
+Ew8JiuDju097TPIRuhuT
+=EwFk
+-----END PGP SIGNATURE-----
