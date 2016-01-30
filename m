@@ -1,30 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/09/4
-Message-ID: <alpine.LFD.2.20.1609091835510.24544@wniryva>
-Date: Fri, 9 Sep 2016 18:38:08 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Qinghao Tang <luodalongde@...il.com>, Li Qiang <liqiang6-s@....cn>
-Subject: CVE Request Qemu: vmware_vga: OOB stack memory access when processing svga command
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/30/1
+Message-Id: <20160130011323.7B7FD3AE072@smtpvbsrv1.mitre.org>
+Date: Fri, 29 Jan 2016 20:13:23 -0500 (EST)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, zuozhi.fzz@...baba-inc.com
+Subject: Re: CVE request Qemu: ide: ahci null pointer dereference when using FIS CLB engines
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Quick Emulator(Qemu) built with the VMware-SVGA "chipset" emulation support is 
-vulnerable to an OOB stack memory write issue. It could occur while processing 
-VGA commands in 'vmsvga_fifo_run' routine.
+> Qemu emulator built with an IDE AHCI emulation support is vulnerable to a null
+> pointer dereference flaw. It occurs while unmapping the Frame Information
+> Structure(FIS) & Command List Block(CLB) entries.
+>
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> instance resulting in DoS.
+>
+> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg05742.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1302057
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS.
+>> ide: ahci: add check before calling dma_memo
 
-Upstream fix:
--------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg01764.html
+>> address_space_map() returns NULL because 'bounce.buffer' is in use
 
-This issue was independently reported by Qinghao Tang and Li Qiang of 360.cn 
-Inc.
+Use CVE-2016-2197.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/ide/ahci.c but
+that may be an expected place for a later update.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWrAyZAAoJEL54rhJi8gl54p0QAK4MPiZJk06Dm60yZcoDkz2k
+AOnEE+vnHrYgD0pv3gNrtN5r7m3Aqo0FnDv9O+MlRy35ZouAnp5M5FcMhLCSnxyi
+5py9FNW0VMOSz45y7oXFv50SOtbHO63uRf5ZUGc1Sbb2gWFVZuYdZMy1MByZ38lO
+BEwBmrhDHHa7v1VEwA0avC+ur4H8IZeVv0o16IdgrkbJ3HMOq+mdH8wZVhiiQykK
+sR7K4u/iGk3ZV1Jn9Cf9YGtxArFQCYeN58kNQ9SyH5oe2ZnoGnub3ovB7V00ReiU
+E+cbPRTwByJyIE/5kOhDHUOV32CnRmkNwWW0g4ZiaROtsQY95gC6+VzASzrAahsY
+igG+FuW2YV98opbtqegVixPHeYN5SJu/DIQKJEolPqpNeGs8tNYrhmtShgm95ZJc
+K4LrPuNwmg4ZNCFuAGQB6bKzvddh9zutj9Eui5xeuzWd9cXWCJV8F2RHAVtYZZKM
+T2WedId8Bu5OstqMCPRQjFMnlMPiajqSdrot0hUAtLds1/EI+iWu0mXaq1fmTxY4
+qOtz7GzFWx5xQ+ZRlZj6W3J9dsN74w6xG94vle/bWYLxp646oYBfyMk2nBI4hW3m
+XjoUe09njgFRNFDzFJK9uj//qirsPRN2c14RamCN8y65bFKQ4rpopjW26VQwBNJJ
+IpC8cX/RD1LvEnWkxF8L
+=Huqy
+-----END PGP SIGNATURE-----
