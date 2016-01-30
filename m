@@ -1,58 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/7
-Message-Id: <4ee5cd2a-2692-446b-abf2-923003c1b9fc@googlegroups.com>
-Date: Fri, 16 Sep 2016 08:55:29 -0700 (PDT)
-From: Jeffrey Walton <noloader@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Fwd: CVE-2016-7420 and dev-brach 'trap' ready for testing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/30/3
+Message-ID: <CAGB5yN=VtQWD15+7n9NoVVrJiZdwrvgXhpyU67ir2M78C2HfGw@mail.gmail.com>
+Date: Sat, 30 Jan 2016 08:27:10 +0100
+From: Claus Ibsen <claus.ibsen@...il.com>
+To: "users@...el.apache.org" <users@...el.apache.org>, dev <dev@...el.apache.org>,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  security <security@...che.org>
+Subject: CVE-2015-5344 - Apache Camel medium disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-The improved code should be available in Master in the next few days. After 
-about three or four weeks we will release Crypto++ 5.6.5.
+Apache Camel's XStream usage is vulnerable to Remote Code Execution attacks
 
-The decision to release Crypto++ 5.6.5 was driven by Error Reporting 
-services like Apport, CrashReporter and WER; and company's like Apple, 
-Google and Microsoft's cooperation with governments to mine sensitive 
-information.
+Apache Camel's camel-xstream component is vulnerable to Java object
+de-serialisation vulnerability.
+Such as de-serializing untrusted data can lead to security flaws as
+demonstrated in various similar reports about Java de-serialization
+issues.
 
-On Friday, September 16, 2016 at 11:51:36 AM UTC-4, Jeffrey Walton wrote:
->
-> Hi Everyone,
->
-> CVE-2016-7420 caused us to cut-in CRYPTOPP_ASSERT a little earlier than 
-> expected. <trap.h> and CRYPTOPP_ASSERT have existed in Master for over a 
-> year. We set up a dev-branch called 'trap' to isolate the cut-in during 
-> testing.
->
-> The cut-over to CRYPTOPP_ASSERT occurred at 
-> https://github.com/weidai11/cryptopp/commit/399a1546de71f41598c15edada28e7f0d616f541 
-> . It tested OK under modern versions of Clang, CGG, Solaris and Visual 
-> Studio.
->
-> The defining factor of CRYPTOPP_ASSERT is it abandons Posix NDEBUG, which 
-> we used to rely upon to remove asserts. We switched strategies, and now we 
-> enable CRYPTOPP_ASSERT if any the following are defined: CRYPTOPP_DEBUG, 
-> DEBUG, _DEBUG. This strategy side steps bad release/production 
-> configurations due to policy (Debian never defines NDEBUG) and 
-> errors/omissions (users or Autotools or CMake or Eclipse <other build 
-> system> fails to define NDEBUG).
->
-> CRYPTOPP_ASSERT also adds a nice feature: it raises SIGTRAP rather than 
-> SIGABRT. SIGABRT will snap the debugger, if present. And it won't follow 
-> Posix's idiotic footsteps and crash the program with a SIGABRT while a 
-> developer is debugging it.
->
-> The last two, DEBUG and _DEBUG, are set in Visual Studio projects by 
-> Microsoft; and they cause CRYPTOPP_DEBUG to be set automatically. BSD, 
-> Linux, Solaris and Unix user will have to -DCRYPTOPP_DEBUG=1 or uncomment 
-> CRYPTOPP_DEBUG in config.h.
->
-> If all goes well with testing, then we will merge Trap dev-branch into 
-> Master this weekend or early next week. Our test script takes two or three 
-> days to run on IoT gadets like BeableBoards and CubieTrucks, so the 
-> earliest we can merge will be late Saturday or Sunday.
->
-> Jeff
->
+Please study this security vulnerability carefully!
+CVE-2015-5344 - [1]
 
-Content of type "text/html" skipped
+You can download the fixed Apache Camel 2.15.x and 2.16.x version from
+the Apache mirrors [2] or from the Central Maven repository.
+
+[1] http://camel.apache.org/security-advisories.data/CVE-2015-5344.txt.asc?version=1&modificationDate=1454056803464&api=v2
+[2] http://camel.apache.org/download
+
+
+On behalf of the Camel PMC,
+Claus Ibsen
+
+
+-- 
+Claus Ibsen
+-----------------
+http://davsclaus.com @davsclaus
+Camel in Action 2: https://www.manning.com/ibsen2
