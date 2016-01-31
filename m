@@ -1,25 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/05/4
-Message-ID: <5703B83B.30108@redhat.com>
-Date: Tue, 5 Apr 2016 15:06:03 +0200
-From: Andrej Nemec <anemec@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/31/1
+Message-ID: <CAHfSU62kxO42fsxm+toHhu99aWpDerxkUea2jv-zpXxZcbCnsQ@mail.gmail.com>
+Date: Sun, 31 Jan 2016 01:30:16 +0100
+From: Andrea Di Pasquale <spikey.it@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE Request - xchat/hexchat doesn't properly verify SSL certificates
+Subject: ArpON (ARP handler inspection) 3.0-ng release
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello guys,
 
-I noticed that this issue never got a CVE assigned.
-http://seclists.org/oss-sec/2015/q1/342
+we have released the next generation 3.0 version.
 
-Could one be assigned now, or was it deemed not CVE worthy?
-Thanks!
+ArpON is a Host-based solution that make the ARP standardized protocol
+secure in order to avoid the Man In The Middle (MITM) attack through the
+ARP spoofing, ARP cache poisoning or ARP poison routing attack.
 
-Best regards,
+For further information please visit:
 
--- 
---
-Andrej Nemec, Red Hat Product Security
-3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
+http://arpon.sourceforge.net
+
+
+Thank you in advance.
 
