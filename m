@@ -1,32 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/19/5
-Message-ID: <alpine.GSO.2.20.1605191154150.15930@freddy.simplesystems.org>
-Date: Thu, 19 May 2016 12:07:16 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security@...ts.openwall.com
-Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/01/6
+Message-ID: <56AF8FA4.9020409@igalia.com>
+Date: Mon, 1 Feb 2016 18:02:28 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org
+Cc: bugtraq@...urityfocus.com, oss-security@...ts.openwall.com
+Subject: WebKitGTK+ Security Advisory WSA-2016-0001
 Content-Type: text/plain; charset=utf-8
 
-I find it very disturbing that there seems to be very little response 
-from popular OS distributions to this issue.  Most do not appear to 
-have issued any package updates to close the shell exploit.  Perhaps
-the opinion is that major new versions will be introduced as part of 
-major distribution releases and it is ok for users to exposed to 
-problems for two or three years.
+------------------------------------------------------------------------
+WebKitGTK+ Security Advisory                               WSA-2016-0001
+------------------------------------------------------------------------
 
-As an example Ubuntu 14.04.4 LTS (which is supposed to be getting 
-security updates) has not provided ImageMagick or GraphicsMagick 
-package updates in 3 years.
+Date reported      : February 01, 2016
+Advisory ID        : WSA-2016-0001
+Advisory URL       : http://webkitgtk.org/security/WSA-2016-0001.html
+CVE identifiers    : CVE-2015-7096, CVE-2015-7098.
 
-Even NebBSD pkgsrc does not appear to have created a new version to 
-address the "ImageTragick" issues.
+Several vulnerabilities were discovered on WebKitGTK+.
 
-What is the point of security notices and advisories if there is no 
-response from the community to provide updates to protect the majority 
-of their users (who are using 'stable' releases) from the problems?
+CVE-2015-7096
+    Versions affected: WebKitGTK+ before 2.10.5.
+    Credit to Apple.
+    WebKit in Apple iOS before 9.2, Safari before 9.0.2, and tvOS before
+    9.1 allows remote attackers to execute arbitrary code or cause a
+    denial of service (memory corruption and application crash) via a
+    crafted web site, a different vulnerability than CVE-2015-7048,
+    CVE-2015-7095, CVE-2015-7097, CVE-2015-7098, CVE-2015-7099,
+    CVE-2015-7100, CVE-2015-7101, CVE-2015-7102, and CVE-2015-7103.
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+CVE-2015-7098
+    Versions affected: WebKitGTK+ before 2.10.5.
+    Credit to Apple.
+    WebKit in Apple iOS before 9.2, Safari before 9.0.2, and tvOS before
+    9.1 allows remote attackers to execute arbitrary code or cause a
+    denial of service (memory corruption and application crash) via a
+    crafted web site, a different vulnerability than CVE-2015-7048,
+    CVE-2015-7095, CVE-2015-7096, CVE-2015-7097, CVE-2015-7099,
+    CVE-2015-7100, CVE-2015-7101, CVE-2015-7102, and CVE-2015-7103.
+
+
+We recommend updating to the last stable version of WebKitGTK+. It is
+the best way of ensuring that you are running a safe version of
+WebKitGTK+. Please check our website for information about the last
+stable releases.
+
+Further information about WebKitGTK+ Security Advisories can be found
+at: http://webkitgtk.org/security.html
+
+The WebKitGTK+ team,
+February 01, 2016
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
