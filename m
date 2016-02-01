@@ -1,43 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/02/2
-Message-ID: <CAFkTriK94p6uR1j3fznZpOXVa+vOa7tLSvSMgGEDSgin7_bhMg@mail.gmail.com>
-Date: Sun, 2 Oct 2016 20:06:25 +0800
-From: Marco Grassi <marco.gra@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: cJSON buffer out of bound read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/01/3
+Message-ID: <CAFC7fYSmWcbfC+puEU7gxS+6+o3pfaQUoTCCef3jm9D-8rWc2g@mail.gmail.com>
+Date: Mon, 1 Feb 2016 12:00:04 +0800
+From: Lucas Leong <wmliang.tw@...il.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: CVE Request: FFmpeg issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi
 
-I would like to report a buffer out of bound read problem in cJSON, which
-is a embeddable JSON parser, used (I imagine) in embedded devices, or even
-bigger stuff like the ps4 (
-http://doc.dl.playstation.net/doc/ps4-oss/cjson.html).
+Id like to request CVE for the following issue in ffmpeg 2.8.5 release
 
-patch:
-https://github.com/DaveGamble/cJSON/commit/94df772485c92866ca417d92137747b2e3b0a917
+Fixes out of array read
+http://git.videolan.org/?p=ffmpeg.git;a=commit;h=0aada30510d809bccfd539a90ea37b61188f2cb4
 
-issue:
-https://github.com/DaveGamble/cJSON/issues/30
-
-Poc with the malformed string
-
-#include <stdio.h>
-#include <stdint.h>
-#include <fcntl.h>
-#include "cJSON.h"
-
-static const char *my_json = "\"000000000000000000\\";
-
-int main(int argc, const char * argv[]) {
-    cJSON * root = cJSON_Parse(my_json);
-    char * rendered = cJSON_Print(root);
-    printf("%s\n", rendered);
-    return 0;
-}
-
-thanks
-
-Marco
+Regards
 
