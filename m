@@ -1,33 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/29/6
-Message-ID: <alpine.LFD.2.20.1601292141150.18369@wniryva>
-Date: Fri, 29 Jan 2016 21:43:37 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Zuozhi Fzz <zuozhi.fzz@...baba-inc.com>
-Subject: CVE request Qemu: usb: ehci null pointer dereference in ehci_caps_write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/01/5
+Message-ID: <56AF7B26.9010700@dest-unreach.org>
+Date: Mon, 1 Feb 2016 16:35:02 +0100
+From: Gerhard Rieger <gerhard@...t-unreach.org>
+To: oss-security@...ts.openwall.com
+Subject: Socat security advisory 8 - Stack overflow in parser
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Socat security advisory 8 - Stack overflow in parser
 
-Qemu emulator built with the USB EHCI emulation support is vulnerable to a 
-null pointer dereference flaw. It could occur when an application attempts to 
-write to EHCI capabilities registers.
+Overview
+  A stack overflow vulnerability was found that can be triggered when
+  command line arguments (complete address specifications, host names,
+  file names) are longer than 512 bytes.
+  Successful exploitation might allow an attacker to execute arbitrary code
+  with the privileges of the socat process.
+  This vulnerability can only be exploited when an attacker is able to
+  inject data into socat's command line.
+  A vulnerable scenario would be a CGI script that reads data from
+  clients and uses (parts of) this data as hostname for a Socat
+  invocation.
 
-A privileged user inside quest could use this flaw to crash the Qemu process 
-instance resulting in DoS.
+Vulnerability Ids
+    Socat security issue 8
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg05899.html
+Severity: Low
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1301643
+Affected versions
+  1.5.0.0 - 1.7.3.0
+  2.0.0-b1 - 2.0.0-b8
 
-This issue was discovered by Mr Zuozhi Fzz of Alibaba Inc.
+Not affected or corrected versions
+  1.0.0.0 - 1.4.3.1
+  1.7.3.1 and later
+  2.0.0-b9 and later
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Workaround
+  Do not pass unfiltered data from untrusted sources to socat's command line
+
+Download
+  The updated sources can be downloaded from:
+
+    http://www.dest-unreach.org/socat/download/socat-1.7.3.1.tar.gz
+    http://www.dest-unreach.org/socat/download/socat-2.0.0-b9.tar gz
+
+Acknowledgement
+    Takume Akiyma found and reported this issue.
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
