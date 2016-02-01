@@ -1,4 +1,9 @@
-Received: (qmail 14245 invoked by uid 550); 1 Jul 2025 12:00:50 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["305" "Monday" "1" "February" "2016" "12:00:04" "+0800" "Lucas Leong" "wmliang.tw@gmail.com" "<CAFC7fYSmWcbfC+puEU7gxS+6+o3pfaQUoTCCef3jm9D-8rWc2g@mail.gmail.com>" "13" "[oss-security] CVE Request: FFmpeg issue" "^Date:" nil nil "2" "2016020104:00:04" "[oss-security] CVE Request: FFmpeg issue" (number mark "        wmliang.tw@g Feb  1   13/305   " thread-indent "\"[oss-security] CVE Request: FFmpeg issue\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11915 invoked by uid 550); 1 Feb 2016 08:50:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,233 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 14208 invoked from network); 1 Jul 2025 12:00:49 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 18319 invoked from network); 1 Feb 2016 04:00:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=HyRED28F9W2a8dqYoWdiIpYt8imzVgKl2zYx/+LsLLU=;
+        b=Inpx3e4/NwxfJIQo2aky6eXnmHF6AeGcsZuDFmGQO1vpBfjmeo+DNuMRGeJkp1V4VD
+         JvSjrfiLnRMxPr91ZE5AihrixQGwDiGE68mWGl6PmP6I5E0pp989UgM+JZQTlx0ftPVW
+         NPfkP1w2UP8fCn4CwXW03gQcaOs1Ox0awjmAsj16BfmOpLO9wyMblxg8U4NAbZYqGGgE
+         u3lZLJDi+pXL7wV0sIFDfDf+GSMD+hTjQTHJU8TcxvLLXtT+Gtq6QiXjRWDPcYH6hwuz
+         xXuXDYXzsqXYYAzhTY9WuOGXpQdL/uokNW6gIdWnP1cPUE1/C8jHwGjSx7Vl+brwkVyt
+         9shw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:date:message-id:subject:from
+         :to:content-type;
+        bh=HyRED28F9W2a8dqYoWdiIpYt8imzVgKl2zYx/+LsLLU=;
+        b=K6lJqdn5wkstaQA0ZW1gdwBX4cV2vKTBtRKXJFR0I1/rnt//q6XJFSEtTcwQCYtEWF
+         uHV9sv0E+dpS43fgL2y8uRDn4I8lkVWQUHTrLHLyB5AHFt0PbflCGFKe3NKyze706Tgb
+         fSD14CSS9MQbFaKuVSg6v/jMHl9Ps9TXa/IjY+ewMZQedwBRrdl3JnShwWnrAiM6+1zz
+         CY786crQXl6AnvsW0EEBYkeSfhADZ6KN7ru4HyZMQh7jYKsM+SfHhns2NmiY/YzIOiaE
+         bDHLaclole8nHCLGy0dks6QZgO5++0Rpmozz+wb3uzppp+BzTL4w0HCAjSBXITdCFFzj
+         Ct4A==
+X-Gm-Message-State: AG10YOQT/0XHXWnYSWKKECO/lJWmeDIDwoxAsATdfZ49UkJLM5nwu0Tac1oJFsm4eADdqwxXublthv4a5Y2IkQ==
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.510 (Entity 5.510)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1uWZf3-004MTf-2x@xenbits.xenproject.org>
-Date: Tue, 01 Jul 2025 12:00:29 +0000
-Subject: [oss-security] Xen Security Advisory 470 v2 (CVE-2025-27465) - x86: Incorrect
- stubs exception handling for flags recovery
+X-Received: by 10.31.162.3 with SMTP id l3mr14548899vke.68.1454299204721; Sun,
+ 31 Jan 2016 20:00:04 -0800 (PST)
+X-Google-Sender-Auth: Po2g0E-Ge-xFReVhJuT1HVrAmOE
+Message-ID: <CAFC7fYSmWcbfC+puEU7gxS+6+o3pfaQUoTCCef3jm9D-8rWc2g@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a114406ea7ea490052aad6be6
+Date: Mon, 1 Feb 2016 12:00:04 +0800
+From: Lucas Leong <wmliang.tw@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Sender: star03629@gmail.com
+Subject: [oss-security] CVE Request: FFmpeg issue
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+--001a114406ea7ea490052aad6be6
+Content-Type: text/plain; charset=UTF-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi
 
-            Xen Security Advisory CVE-2025-27465 / XSA-470
-                               version 2
+Id like to request CVE for the following issue in ffmpeg 2.8.5 release
 
-       x86: Incorrect stubs exception handling for flags recovery
+Fixes out of array read
+http://git.videolan.org/?p=ffmpeg.git;a=commit;h=0aada30510d809bccfd539a90ea37b61188f2cb4
 
-UPDATES IN VERSION 2
-====================
+Regards
 
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-Certain instructions need intercepting and emulating by Xen.  In some
-cases Xen emulates the instruction by replaying it, using an executable
-stub.  Some instructions may raise an exception, which is supposed to be
-handled gracefully.  Certain replayed instructions have additional logic
-to set up and recover the changes to the arithmetic flags.
-
-For replayed instructions where the flags recovery logic is used, the
-metadata for exception handling was incorrect, preventing Xen from
-handling the the exception gracefully, treating it as fatal instead.
-
-IMPACT
-======
-
-An unprivileged guest can cause a hypervisor crash, causing a Denial of
-Service (DoS) of the entire host.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 4.9 and onwards are vulnerable.  Xen 4.8 and older are not
-vulnerable.
-
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
-
-Only HVM or PVH guests can leverage the vulnerability.  PV guests cannot
-leverage the vulnerability.
-
-MITIGATION
-==========
-
-There are no mitigations.
-
-CREDITS
-=======
-
-This issue was discovered by Andrew Cooper of XenServer.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa470.patch           xen-unstable - Xen 4.18.x
-xsa470-4.17.patch      Xen 4.17.x
-
-$ sha256sum xsa470*
-99d7fbe6acb27aa13c586acbc8d15d00b04bb040bb0cb5f8feca495f0f414a10  xsa470.patch
-2c6490978bd1ba1578a4c1102a521cf4d01d99792a363708bb1e6a1b879b1f5c  xsa470-4.17.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmhjzN0MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ6skIAMivsvi9wpvpoaQubdbG3iUFoK4ocOZHdywJbfOQ
-OjUK23585BZo45xIp/myqbbmIjQ4PsN4JFh9D9F3xv3xVfSD1RYS8qMPm/pcpY60
-dDrk2SeLqqhQzdxguDrQ97qiPtanfDEvkwBUzu2Z7rDgbv/7hBCDURVgwaprs/d6
-hvF/K+FIT7rBFFfPJmCzO8RCMO7o3iKia77q7QScFSmm4AeJ+E9NQdPsa2Po9aJG
-reHCDEeWaPgktVV/M8nS0an/K6Oavf2jI18hkoweSnok2xAz0t9Me5gQ3UcaOdlz
-iNk3ItZ/41ja2+3xO6dFlwOdVSnk3KvWZJxjJMySeWLRTQI=
-=uDlQ
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa470.patch"
-Content-Disposition: attachment; filename="xsa470.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KU3ViamVjdDog
-eDg2L2VtdWw6IEZpeCBleHRhYmxlIHJlZ2lzdHJhdGlvbiBpbiBpbnZva2Vfc3R1YigpCgpGb3Ig
-ZXhjZXB0aW9uIHJlY292ZXJ5IGluIHRoZSBzdHVicywgdGhlIHJlZ2lzdGVyZWQgYWRkcmVzcyBm
-b3IgZml4dXAgaXMgdGhlCnJldHVybiBhZGRyZXNzIG9mIHRoZSBDQUxMIGVudGVyaW5nIHRoZSBz
-dHViLgoKSW4gaW52b2tlX3N0dWIoKSwgdGhlICcuTHJldCU9OicgbGFiZWwgaXMgdGhlIHdyb25n
-IHNpZGUgb2YgdGhlICdwb3N0JwpwYXJhbWV0ZXIuICBUaGUgJ3Bvc3QnIHBhcmFtZXRlciBpcyBu
-b24tZW1wdHkgaW4gY2FzZXMgd2hlcmUgdGhlIGFyaXRobWV0aWMKZmxhZ3Mgb2YgdGhlIG9wZXJh
-dGlvbiBuZWVkIHJlY292ZXJpbmcuCgpTcGxpdCB0aGUgbGluZSB0byBzZXBhcmF0ZSAncHJlJyBh
-bmQgJ3Bvc3QnLCBtYWtpbmcgaXQgbW9yZSBvYnZpb3VzIHRoYXQgdGhlCnJldHVybiBhZGRyZXNz
-IGxhYmVsIHdhcyBpbiB0aGUgd3JvbmcgcG9zaXRpb24uCgpIb3dldmVyLCBpbiB0aGUgY2FzZSB0
-aGF0IGFuIGV4Y2VwdGlvbiBkaWQgb2NjdXIsIHdlIHdhbnQgdG8gc2tpcCAncG9zdCcgYXMKaXQn
-cyBsb2dpY2FsbHkgcGFydCBvZiB0aGUgb3BlcmF0aW9uIHdoaWNoIGhhZCBhbHJlYWR5IGZhaWxl
-ZC4gIFRoZXJlZm9yZSwgYWRkCmEgbmV3IHNraXAgbGFiZWwgYW5kIHVzZSB0aGF0IGZvciB0aGUg
-ZXhjZXB0aW9uIHJlY292ZXJ5IHBhdGguCgpUaGlzIGlzIFhTQS00NzAgLyBDVkUtMjAyNS0yNzQ2
-NQoKRml4ZXM6IDc5OTAzZTUwZGJhOSAoIng4NmVtdWw6IGNhdGNoIGV4Y2VwdGlvbnMgb2NjdXJy
-aW5nIGluIHN0dWJzIikKU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3Bl
-cjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNv
-bT4KCmRpZmYgLS1naXQgYS94ZW4vYXJjaC94ODYveDg2X2VtdWxhdGUvcHJpdmF0ZS5oIGIveGVu
-L2FyY2gveDg2L3g4Nl9lbXVsYXRlL3ByaXZhdGUuaAppbmRleCA0NjdiY2UzYzg0YjguLmE0YmEx
-YjNjMzkxOSAxMDA2NDQKLS0tIGEveGVuL2FyY2gveDg2L3g4Nl9lbXVsYXRlL3ByaXZhdGUuaAor
-KysgYi94ZW4vYXJjaC94ODYveDg2X2VtdWxhdGUvcHJpdmF0ZS5oCkBAIC03MTQsMTIgKzcxNCwx
-NSBAQCBzdHJ1Y3Qgc3R1Yl9leG4gewogICAgIHN0dWJfZXhuLmluZm8gPSAodW5pb24gc3R1Yl9l
-eGNlcHRpb25fdG9rZW4pIHsgLnJhdyA9IH4wIH07ICAgICAgICAgXAogICAgIHN0dWJfZXhuLmxp
-bmUgPSBfX0xJTkVfXzsgLyogVXRpbGl0eSBvdXR3ZWlnaHMgbGl2ZXBhdGNoaW5nIGNvc3QgKi8g
-XAogICAgIGJsb2NrX3NwZWN1bGF0aW9uKCk7IC8qIFNDU0IgKi8gICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgXAotICAgIGFzbSB2b2xhdGlsZSAoIHByZSAiXG5cdElORElSRUNU
-X0NBTEwgJVtzdHViXVxuXHQiIHBvc3QgIlxuIiAgICAgICAgXAorICAgIGFzbSB2b2xhdGlsZSAo
-IHByZSAiXG5cdCIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAor
-ICAgICAgICAgICAgICAgICAgICJJTkRJUkVDVF9DQUxMICVbc3R1Yl1cbiIgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgXAogICAgICAgICAgICAgICAgICAgICIuTHJldCU9OlxuXHQiICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAorICAgICAgICAgICAgICAgICAgIHBv
-c3QgIlxuXHQiICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAorICAg
-ICAgICAgICAgICAgICAgICIuTHNraXAlPTpcblx0IiAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgXAogICAgICAgICAgICAgICAgICAgICIucHVzaHNlY3Rpb24gLmZpeHVwLFwi
-YXhcIlxuIiAgICAgICAgICAgICAgICAgICAgICAgXAogICAgICAgICAgICAgICAgICAgICIuTGZp
-eCU9OlxuXHQiICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAogICAgICAg
-ICAgICAgICAgICAgICJwb3AgJVtleG5dXG5cdCIgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgXAotICAgICAgICAgICAgICAgICAgICJqbXAgLkxyZXQlPVxuXHQiICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgXAorICAgICAgICAgICAgICAgICAgICJqbXAgLkxz
-a2lwJT1cblx0IiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAogICAgICAgICAg
-ICAgICAgICAgICIucG9wc2VjdGlvblxuXHQiICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgXAogICAgICAgICAgICAgICAgICAgIF9BU01fRVhUQUJMRSguTHJldCU9LCAuTGZpeCU9
-KSAgICAgICAgICAgICAgICAgICAgICAgXAogICAgICAgICAgICAgICAgICAgIDogW2V4bl0gIitn
-IiAoc3R1Yl9leG4uaW5mbykgQVNNX0NBTExfQ09OU1RSQUlOVCwgICAgXAo=
-
---=separator
-Content-Type: application/octet-stream; name="xsa470-4.17.patch"
-Content-Disposition: attachment; filename="xsa470-4.17.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KU3ViamVjdDog
-eDg2L2VtdWw6IEZpeCBleHRhYmxlIHJlZ2lzdHJhdGlvbiBpbiBpbnZva2Vfc3R1YigpCgpGb3Ig
-ZXhjZXB0aW9uIHJlY292ZXJ5IGluIHRoZSBzdHVicywgdGhlIHJlZ2lzdGVyZWQgYWRkcmVzcyBm
-b3IgZml4dXAgaXMgdGhlCnJldHVybiBhZGRyZXNzIG9mIHRoZSBDQUxMIGVudGVyaW5nIHRoZSBz
-dHViLgoKSW4gaW52b2tlX3N0dWIoKSwgdGhlICcuTHJldCU9OicgbGFiZWwgaXMgdGhlIHdyb25n
-IHNpZGUgb2YgdGhlICdwb3N0JwpwYXJhbWV0ZXIuICBUaGUgJ3Bvc3QnIHBhcmFtZXRlciBpcyBu
-b24tZW1wdHkgaW4gY2FzZXMgd2hlcmUgdGhlIGFyaXRobWV0aWMKZmxhZ3Mgb2YgdGhlIG9wZXJh
-dGlvbiBuZWVkIHJlY292ZXJpbmcuCgpTcGxpdCB0aGUgbGluZSB0byBzZXBhcmF0ZSAncHJlJyBh
-bmQgJ3Bvc3QnLCBtYWtpbmcgaXQgbW9yZSBvYnZpb3VzIHRoYXQgdGhlCnJldHVybiBhZGRyZXNz
-IGxhYmVsIHdhcyBpbiB0aGUgd3JvbmcgcG9zaXRpb24uCgpIb3dldmVyLCBpbiB0aGUgY2FzZSB0
-aGF0IGFuIGV4Y2VwdGlvbiBkaWQgb2NjdXIsIHdlIHdhbnQgdG8gc2tpcCAncG9zdCcgYXMKaXQn
-cyBsb2dpY2FsbHkgcGFydCBvZiB0aGUgb3BlcmF0aW9uIHdoaWNoIGhhZCBhbHJlYWR5IGZhaWxl
-ZC4gIFRoZXJlZm9yZSwgYWRkCmEgbmV3IHNraXAgbGFiZWwgYW5kIHVzZSB0aGF0IGZvciB0aGUg
-ZXhjZXB0aW9uIHJlY292ZXJ5IHBhdGguCgpUaGlzIGlzIFhTQS00NzAgLyBDVkUtMjAyNS0yNzQ2
-NQoKRml4ZXM6IDc5OTAzZTUwZGJhOSAoIng4NmVtdWw6IGNhdGNoIGV4Y2VwdGlvbnMgb2NjdXJy
-aW5nIGluIHN0dWJzIikKU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3Bl
-cjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNv
-bT4KCmRpZmYgLS1naXQgYS94ZW4vYXJjaC94ODYveDg2X2VtdWxhdGUveDg2X2VtdWxhdGUuYyBi
-L3hlbi9hcmNoL3g4Ni94ODZfZW11bGF0ZS94ODZfZW11bGF0ZS5jCmluZGV4IGI1ZWNhMTM0MTBj
-ZC4uNWE2MWJhNjEzNjBkIDEwMDY0NAotLS0gYS94ZW4vYXJjaC94ODYveDg2X2VtdWxhdGUveDg2
-X2VtdWxhdGUuYworKysgYi94ZW4vYXJjaC94ODYveDg2X2VtdWxhdGUveDg2X2VtdWxhdGUuYwpA
-QCAtMTI1OCwxMiArMTI1OCwxNSBAQCBzdGF0aWMgaW5saW5lIGludCBta2VjKHVpbnQ4X3QgZSwg
-aW50MzJfdCBlYywgLi4uKQogICAgIHN0dWJfZXhuLmluZm8gPSAodW5pb24gc3R1Yl9leGNlcHRp
-b25fdG9rZW4pIHsgLnJhdyA9IH4wIH07ICAgICAgICAgXAogICAgIHN0dWJfZXhuLmxpbmUgPSBf
-X0xJTkVfXzsgLyogVXRpbGl0eSBvdXR3ZWlnaHMgbGl2ZXBhdGNoaW5nIGNvc3QgKi8gXAogICAg
-IGJsb2NrX3NwZWN1bGF0aW9uKCk7IC8qIFNDU0IgKi8gICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgXAotICAgIGFzbSB2b2xhdGlsZSAoIHByZSAiXG5cdElORElSRUNUX0NBTEwg
-JVtzdHViXVxuXHQiIHBvc3QgIlxuIiAgICAgICAgXAorICAgIGFzbSB2b2xhdGlsZSAoIHByZSAi
-XG5cdCIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAorICAgICAg
-ICAgICAgICAgICAgICJJTkRJUkVDVF9DQUxMICVbc3R1Yl1cbiIgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgXAogICAgICAgICAgICAgICAgICAgICIuTHJldCU9OlxuXHQiICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgXAorICAgICAgICAgICAgICAgICAgIHBvc3QgIlxu
-XHQiICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAorICAgICAgICAg
-ICAgICAgICAgICIuTHNraXAlPTpcblx0IiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgXAogICAgICAgICAgICAgICAgICAgICIucHVzaHNlY3Rpb24gLmZpeHVwLFwiYXhcIlxu
-IiAgICAgICAgICAgICAgICAgICAgICAgXAogICAgICAgICAgICAgICAgICAgICIuTGZpeCU9Olxu
-XHQiICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAogICAgICAgICAgICAg
-ICAgICAgICJwb3AgJVtleG5dXG5cdCIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgXAotICAgICAgICAgICAgICAgICAgICJqbXAgLkxyZXQlPVxuXHQiICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgXAorICAgICAgICAgICAgICAgICAgICJqbXAgLkxza2lwJT1c
-blx0IiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAogICAgICAgICAgICAgICAg
-ICAgICIucG9wc2VjdGlvblxuXHQiICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-XAogICAgICAgICAgICAgICAgICAgIF9BU01fRVhUQUJMRSguTHJldCU9LCAuTGZpeCU9KSAgICAg
-ICAgICAgICAgICAgICAgICAgXAogICAgICAgICAgICAgICAgICAgIDogW2V4bl0gIitnIiAoc3R1
-Yl9leG4uaW5mbykgQVNNX0NBTExfQ09OU1RSQUlOVCwgICAgXAo=
-
---=separator--
+--001a114406ea7ea490052aad6be6--
