@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3595" "Thursday" "8" "December" "2016" "02:33:57" "+0000" "=?gb2312?B?wazSu7q6?=" "lianyihan@360.cn" "<A962A2D04FAB5C4499FEFD15B642FA0A32B53451@EX02.corp.qihoo.net>" "59" "[oss-security] [CVE-2016-9561] ffmpeg crashes on decoding MOV file " nil nil nil "12" "2016120802:33:57" "[oss-security] [CVE-2016-9561] ffmpeg crashes on decoding MOV file" (number mark "U       lianyihan@36 Dec  8   59/3595  " thread-indent "\"[oss-security] [CVE-2016-9561] ffmpeg crashes on decoding MOV file \"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6747" "Monday" "1" "February" "2016" "08:16:36" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1602010816060.21513@tvnag.unkk.fr>" "177" "[oss-security] curl: remote file name path traversal in curl tool for Windows" nil nil nil "2" "2016020107:16:36" "[oss-security] curl: remote file name path traversal in curl tool for Windows" (number mark "U       daniel@haxx. Feb  1  177/6747  " thread-indent "\"[oss-security] curl: remote file name path traversal in curl tool for Windows\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 8165 invoked by uid 550); 8 Dec 2016 04:50:22 -0000
+Received: (qmail 20407 invoked by uid 550); 1 Feb 2016 07:18:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,79 +12,193 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5140 invoked from network); 8 Dec 2016 02:34:09 -0000
-From: =?gb2312?B?wazSu7q6?= <lianyihan@360.cn>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: [CVE-2016-9561] ffmpeg crashes on decoding MOV file 
-Thread-Index: AdJQ+4MlGokhUCcXQ8CZ7/t1wEzSSg==
-Date: Thu, 8 Dec 2016 02:33:57 +0000
-Message-ID: <A962A2D04FAB5C4499FEFD15B642FA0A32B53451@EX02.corp.qihoo.net>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.18.213.15]
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+Received: (qmail 13668 invoked from network); 1 Feb 2016 07:16:48 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+Date: Mon, 1 Feb 2016 08:16:36 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@giant.haxx.se
+To: oss-security@lists.openwall.com
+Message-ID: <alpine.DEB.2.20.1602010816060.21513@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-Subject: [oss-security] [CVE-2016-9561] ffmpeg crashes on decoding MOV file 
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] curl: remote file name path traversal in curl tool for Windows
 
-DQpIaSAsIEmhr20gTGlhbiBZaWhhbiAsYSBzZWN1cml0eSByZXNlYXJjaGVy
-IGluIFFpaG9vIDM2MCBHZWFyIFRlYW0uDQoNCkkgZm91bmQgYSB2dWxuZXJh
-YmlsaXR5IGluIGZmbXBlZyA8PSAzLjIuIFdoZW4gZmZtcGVnIGRlY29kZXMg
-YSBzbWFsbCBjcmFmdCBNT1YgZmlsZSB3aGljaCBpcyBqdXN0IGEgZmV3IG1l
-Z2FiaXRzLCBpdCB3aWxsIGFsbG9jYXRlIGEgaHVnZSBtZW1vcnkoYWJvdXQg
-YSBmZXcgZ2lnYWJpdHMpIGFuZCB0aGVuIGJlIGtpbGxlZCBieSBPUyAuDQoN
-Cj09PT09PT09PT09PT09PT09PT09PT09PT0gdGFyZ2V0IHZlcnNpb24gPT09
-PT09PT09PT09PT09PT09PT09PT09PT0NCg0KRmZtcGVnIDMuMg0KDQo9PT09
-PT09PT09PT09PT09PT09PT09PT09IHRhcmdldCBjb21tYW5kID09PT09PT09
-PT09PT09PT09PT09PT09PT0NCg0KRmZtcGVnIC1pIGlucHV0Lm1vdiAteSAx
-LnRzDQoNCj09PT09PT09PT09PT09PT09PT09PT09PT09PT09IGtleSBpbmZv
-cm1hdGlvbiA9PT09PT09PT09PT09PT09PT09PT09PT09PQ0KDQoweDAwMDAw
-MDAwMDA3YWU3YjYgaW4gYXZmb3JtYXRfZmluZF9zdHJlYW1faW5mbyAoaWM9
-MHgyMTczMjkwLCBvcHRpb25zPTB4N2ZmZmY3Zjc0MDEwKSBhdCBsaWJhdmZv
-cm1hdC91dGlscy5jOjMzNzcNCjMzNzcgICAgICAgICAgICBhdmN0eCA9IHN0
-LT5pbnRlcm5hbC0+YXZjdHg7DQoNCihnZGIpIHAgaWMtPm5iX3N0cmVhbXMN
-CiQzID0gMjY0MTgNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KQnJl
-YWtwb2ludCAzLCBjaGVfY29uZmlndXJlIChhYz0weDE5ZmYxODEwLCBjaGVf
-cG9zPUFBQ19DSEFOTkVMX0ZST05ULCB0eXBlPTEsIGlkPTAsIGNoYW5uZWxz
-PTB4N2ZmZmZmZmZkNDU4KSBhdCBsaWJhdmNvZGVjL2FhY2RlY190ZW1wbGF0
-ZS5jOjEzNQ0KMTM1ICAgICAgICAgICAgICAgICBpZiAoIShhYy0+Y2hlW3R5
-cGVdW2lkXSA9IGF2X21hbGxvY3ooc2l6ZW9mKENoYW5uZWxFbGVtZW50KSkp
-KQkJCQkJCQkJCS8vIG1hbGxvYyBhIGJpZyBtZW1vcnkgb24gZXZlcnkgbG9v
-cC4NCihnZGIpIHAgc2l6ZW9mKENoYW5uZWxFbGVtZW50KQ0KJDQgPSA1NDc3
-NDQNCg0KVGhlIHRvdGFsIG1lbW9yeSBhbGxvY2F0ZWQgaXMgYWJvdXQgMjY0
-MTgqNTQ3NzQ0IGF0IGxhc3QuDQoNCj09PT09PT09PT09PT09PT09PT09PT09
-PT09PT0gbXkgdGVzdCBpbmZvID09PT09PT09PT09PT09PT09PT09PT09PT09
-PSBmZm1wZWcgdmVyc2lvbiAzLjIgQ29weXJpZ2h0IChjKSAyMDAwLTIwMTYg
-dGhlIEZGbXBlZyBkZXZlbG9wZXJzDQogIGJ1aWx0IHdpdGggY2xhbmcgdmVy
-c2lvbiAzLjguMCAodGFncy9SRUxFQVNFXzM4MC9maW5hbCkNCiAgY29uZmln
-dXJhdGlvbjogLS1jYz1hZmwtY2xhbmctZmFzdCAtLWVuYWJsZS1kZWJ1Zz0z
-IC0tZGlzYWJsZS1hc20gLS1kaXNhYmxlLXN0cmlwcGluZyAtLWRpc2FibGUt
-b3B0aW1pemF0aW9ucyAtLWRpc2FibGUtc2hhcmVkDQogIGxpYmF2dXRpbCAg
-ICAgIDU1LiAzNC4xMDAgLyA1NS4gMzQuMTAwDQogIGxpYmF2Y29kZWMgICAg
-IDU3LiA2NC4xMDAgLyA1Ny4gNjQuMTAwDQogIGxpYmF2Zm9ybWF0ICAgIDU3
-LiA1Ni4xMDAgLyA1Ny4gNTYuMTAwDQogIGxpYmF2ZGV2aWNlICAgIDU3LiAg
-MS4xMDAgLyA1Ny4gIDEuMTAwDQogIGxpYmF2ZmlsdGVyICAgICA2LiA2NS4x
-MDAgLyAgNi4gNjUuMTAwDQogIGxpYnN3c2NhbGUgICAgICA0LiAgMi4xMDAg
-LyAgNC4gIDIuMTAwDQogIGxpYnN3cmVzYW1wbGUgICAyLiAgMy4xMDAgLyAg
-Mi4gIDMuMTAwDQpbbW92LG1wNCxtNGEsM2dwLDNnMixtajIgQCAweDJhNTgy
-YjBdIG92ZXJyZWFkIGVuZCBvZiBhdG9tICd0a2hkJyBieSAzMiBieXRlcw0K
-W21vdixtcDQsbTRhLDNncCwzZzIsbWoyIEAgMHgyYTU4MmIwXSBzdHJlYW0g
-MSwgdGltZXNjYWxlIG5vdCBzZXQgS2lsbGVkDQoNCi0tLS0t08q8/tStvP4t
-LS0tLQ0Kt6K8/sjLOiBjdmUtcmVxdWVzdEBtaXRyZS5vcmcgW21haWx0bzpj
-dmUtcmVxdWVzdEBtaXRyZS5vcmddIA0Kt6LLzcqxvOQ6IDIwMTbE6jEx1MIy
-M8jVIDg6NDANCsrVvP7IyzogwazSu7q6DQqzrcvNOiBjdmUtcmVxdWVzdEBt
-aXRyZS5vcmcNCtb3zOI6IFJlOiBbc2NyMjY0ODcxXSBIdWdlIG1lbW9yeSBh
-bGxvY2F0ZWQNCg0KPiBbVnVsbmVyYWJpbGl0eVR5cGUgT3RoZXJdDQo+IEh1
-Z2UgbWVtb3J5IGFsbG9jYXRlZCAsIHJlc3VsdCBpbiBEb1Mgb2YgZmZtcGVn
-Lg0KPiANCj4gLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tDQo+IA0KPiBbQWZmZWN0ZWQgUHJvZHVjdCBDb2RlIEJhc2VdDQo+
-IGZmbXBlZyAtIDMuMg0KDQpVc2UgQ1ZFLTIwMTYtOTU2MS4NCg0KLS0NCkNW
-RSBBc3NpZ25tZW50IFRlYW0NCk0vUyBNMzAwLCAyMDIgQnVybGluZ3RvbiBS
-b2FkLCBCZWRmb3JkLCBNQSAwMTczMCBVU0EgWyBBIFBHUCBrZXkgaXMgYXZh
-aWxhYmxlIGZvciBlbmNyeXB0ZWQgY29tbXVuaWNhdGlvbnMgYXQNCiAgaHR0
-cDovL2N2ZS5taXRyZS5vcmcvY3ZlL3JlcXVlc3RfaWQuaHRtbCBdDQo=
+remote file name path traversal in curl tool for Windows
+========================================================
+
+Project cURL Security Advisory, January 27th 2016 -
+[Permalink](http://curl.haxx.se/docs/adv_20160127B.html)
+
+VULNERABILITY
+-------------
+
+curl does not sanitize colons in a remote file name that is used as the local
+file name. This may lead to a vulnerability on systems where the colon is a
+special path character. Currently Windows is the only OS where this
+vulnerability applies.
+
+curl offers command line options --remote-name (also usable as -O) and
+--remote-header-name (also usable as -J). When both of those options are used
+together (-OJ) and the server provides a remote file name for the content,
+curl will write its output to that server-provided file name, as long as that
+file does not already exist. If it does exist curl will fail to write.
+
+If both options are used together (-OJ) but the server does not provide a
+remote file name, or if -O is used without -J, curl will write output to a
+file name based solely on the remote file name in the URL string provided by
+the user, regardless of whether or not that file already exists.
+
+In either case curl does not sanitize colons in the file name. As a result in
+Windows it is possible and unintended behavior for curl to write to a file in
+the working directory of a drive that is not the current drive (ie outside the
+current working directory), and also possible to write to a file's alternate
+data stream.
+
+For example if curl -OJ and the server sends filename=f:foo curl will
+incorrectly write foo to the working directory for drive F even if drive F
+isn't the current drive. For a more detailed explanation see the 'MORE
+BACKGROUND AND EXAMPLE' section at the end of this notice.
+
+Though no known exploit is available for this issue, writing one would be
+undemanding and could be serious depending on the name of the file and where
+it ends up being written.
+
+INFO
+----
+
+This flaw only affects the curl command line tool as this is a feature not
+present or provided by libcurl.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-0754 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+In the case of using a remote file name provided by the user (-O without -J),
+the feature has existed since inception.
+
+- Affected versions (-O): curl <= 7.46.0
+- Not affected versions (-O): curl >= 7.47.0
+
+In the case of using a remote file name provided by the server (-OJ), the
+feature was added in 7.20.0 and didn't exist before then.
+
+- Affected versions (-OJ): curl 7.20.0 to and including 7.46.0
+- Not affected versions (-OJ): curl < 7.20.0 and curl >= 7.47.0
+
+THE SOLUTION
+------------
+
+Starting in curl 7.47.0 the curl tool in Windows will replace all colons in a
+remote file name with underscores. For example if `f:foo::$DATA` is the remote
+file name it will be sanitized as `f_foo__$DATA` .
+
+A patch is available at:
+
+     http://curl.haxx.se/CVE-2016-0754.patch
+
+Exercise judicious use of the -J option. The -J option when combined with -O
+lets the server choose the file name. Do you trust the server you are using
+the -J option on? Is your connection to the server vulnerable to a
+man-in-the-middle attack? Have you enabled location redirects and the server
+may send you somewhere untrustworthy? In any of these cases, even with this
+vulnerability fixed know that if you use the -J option it will still be
+possible for a rogue server to send you the name of a DLL or other file that
+could possibly be loaded automatically by Windows or some third party
+software.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.47.0.
+
+  B - Apply the patch to your version and rebuild.
+
+  C - If you cannot do (A) or (B) it is suggested you do not use -J on Windows.
+      If you choose to continue to use -O without -J it is your responsibility
+      to check that the URL you pass does not have a remote file name that could
+      be exploited.
+
+Regardless of which action you take, exercise judicious use of the -J option as
+described in THE SOLUTION.
+
+TIME LINE
+---------
+
+It was first reported to the curl project on November 30 2015. We contacted
+distros@openwall on January 21 2016.
+
+curl 7.47.0 was released on January 27 2016, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported and patched by Ray Satiro (Jay).
+
+Thanks a lot!
+
+MORE BACKGROUND AND EXAMPLE
+---------------------------
+
+In Windows if a colon is used to specify a drive letter for a path and there
+is a slash or backslash (hereafter path separator) that proceeds the colon it
+means start from the root of the drive, but if that slash is omitted it means
+start from the current working directory of the drive.
+
+  - C:\foo => Windows looks for foo in the root directory of drive C.
+  - C:foo => Windows looks for foo in the working directory of drive C.
+
+---
+
+A process in Windows on its creation may inherit a list of drives and their
+working directories from its parent, and one of those is the current working
+directory.
+
+For example a command prompt is open and has these working directories:
+
+  - Drive C, Path \bar\baz\
+  - Drive D, Path \
+  - Drive E, Path \qux\    <-- Current
+  - Drive F, Path \
+
+Assume other drives were not accessed which means they default to their root.
+
+A user running curl from that command prompt would expect that their file will
+be output to the current working directory, E:\qux\ in this example. However
+that may not happen if there is a colon in the filename.
+
+curl has a function which will strip the path to get the file name by removing
+the last path separator and everything that precedes it. In the case of a colon
+without a path separator that comes after it, it is not removed from the file
+name.
+
+Following this example:
+
+In the case of -O without -J recall that the filename is parsed from the user-
+supplied URL, and is written regardless of whether the file already exists.
+
+`curl -O http://somewhere/f:foo` => curl writes output to f:\foo
+
+`curl -O http://somewhere/c:foo` => curl writes output to c:\bar\baz\foo
+
+In the case of -O with -J recall that the file name is parsed from the
+server's "Content-Disposition:" header if one is given (eg
+`Content-Disposition: attachment; filename=abc`) and in that case the file is
+written only if it does not already exist.
+
+`curl -OJ http://somewhere/somefile` => Server sends filename=f:foo
+                                         curl writes output to f:\foo
+
+`curl -OJ http://somewhere/somefile` => Server sends filename=c:foo
+                                         curl writes output to c:\bar\baz\foo
+
+-- 
+
+  / daniel.haxx.se
