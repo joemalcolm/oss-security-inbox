@@ -1,27 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/24/8
-Message-ID: <CALJHwhSoFkAS5hhXWwmRD4FmCzzvVCCKUhwozwZY==FS7qZGZQ@mail.gmail.com>
-Date: Fri, 25 Nov 2016 10:25:20 +1100
-From: Wade Mealing <wmealing@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/01/1
+Message-ID: <alpine.DEB.2.20.1602010814410.21513@tvnag.unkk.fr>
+Date: Mon, 1 Feb 2016 08:16:05 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel: CVE-2016-8650 : Local denial of service with in key subsystem
+Subject: curl: NTLM credentials not-checked for proxy connection re-use
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+NTLM credentials not-checked for proxy connection re-use
+========================================================
 
-A flaw was found in the Linux kernel key management subsystem in which
-a local attacker could crash the kernel (denial of service) or corrupt
-the stack and additional memory by supplying a specially crafted RSA
-key.  This flaw panics the machine during the verification of the RSA
-key and seems to do a 1 byte corruption of the stack.
+Project cURL Security Advisory, January 27th 2016 -
+[Permalink](http://curl.haxx.se/docs/adv_20160127A.html)
 
-This vulnerably can be triggered by any unprivileged user with a local
-shell account.
+VULNERABILITY
+-------------
 
-Upstream fix:
+libcurl will reuse NTLM-authenticated proxy connections without properly
+making sure that the connection was authenticated with the same credentials as
+set for this transfer.
 
-https://lkml.org/lkml/2016/11/23/477
+libcurl maintains a pool of connections after a transfer has completed. The
+pool of connections is then gone through when a new transfer is requested and
+if there's a live connection available that can be reused, it is preferred
+instead of creating a new one.
 
-Red Hat bug:
+Since NTLM-based authentication is *connection oriented* instead of *request
+oriented* as other HTTP based authentication, it is important that only
+connections that have been authenticated with the correct username + password
+are reused. This was done properly for server connections already, but libcurl
+failed to do it properly for proxy connections using NTLM.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1395187
+A libcurl application can easily switch user credentials used for a proxy
+connection between two requests, and that subsequent transfer then MUST make
+libcurl use another connection. libcurl previously failed to do so.
+
+The effects of this flaw, is that the application could be reusing a proxy
+connection using the previously used credentials and thus it could be given to
+or prevented access from resources that it wasn't intended to.
+
+This problem is very similar to
+[CVE-2014-0015][http://curl.haxx.se/docs/adv_20140129.html], which was for
+direct server connections while this is for proxy connections.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This flaw can also affect the curl command line tool if a similar operation
+series is made with that.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-0755 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+This flaw is relevant for
+
+- Affected versions: libcurl 7.10.7 to and including 7.46.0
+- Not affected versions: libcurl < 7.10.7 and libcurl >= 7.47.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+In version 7.47.0, libcurl properly verifies the credentials for NTLM proxies
+and only reuses a connection if there there is a match.
+
+A patch for this problem that changes the default is available at:
+
+     http://curl.haxx.se/CVE-2016-0755.patch
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.47.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Avoid NTLM with proxies, or if you use NTLM with proxies, make sure you
+      close all the libcurl handles if you ever change proxy credentials so that
+      libcurl won't get a chance to reuse the wrong connection.
+
+TIME LINE
+---------
+
+It was first reported to the curl project on January 13 2016. We contacted
+distros@...nwall on January 21.
+
+libcurl 7.47.0 was released on January 27 2016, coordinated with the
+publication of this advisory.
+
+CREDITS
+-------
+
+Reported and patched by Isaac Boukris.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
