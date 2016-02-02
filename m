@@ -1,105 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/21/3
-Message-ID: <57188B6D.7050401@sysdream.com>
-Date: Thu, 21 Apr 2016 09:12:29 +0100
-From: Sysdream Labs <labs@...dream.com>
-To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
-Subject: Wordpress iThemes Security (Better WP Security) Insecure Backup/Logfile Generation (predicatable filename)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/02/2
+Message-ID: <20160202105622.08d2d62c@pc1>
+Date: Tue, 2 Feb 2016 10:56:22 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Miscomputations of elliptic curve scalar multiplications in Nettle
 Content-Type: text/plain; charset=utf-8
 
-Wordpress iThemes Security (Better WP Security) Insecure Backup/Logfile Generation (predicatable filename)
-==========================================================================================================
+https://blog.fuzzing-project.org/38-Miscomputations-of-elliptic-curve-scalar-multiplications-in-Nettle.html
 
+The Nettle library is a library for basic cryptographic functions. Its
+most prominent user is GnuTLS.
 
-Description
-===========
+Through fuzzing of elliptic curve scalar multiplications (multiplying a
+point on an elliptic curve with a scalar number) I discovered two carry
+propagation bugs that would lead the cauculations to produce wrong
+results. They affect the NIST P-256 and P-384 curves. The P-256 bug is
+in the C code and affects multiple architectures. The P-384 bug is in
+the assembly code and only affects 64 bit x86.
 
-When using the "database backup/logging on filesystem" feature, iThemes security generates a weak filename allowing attackers to obtain the backup/log file if they know when the backup/log file was generated (timestamp).
+While analyzing these bugs Nettle developer Niels Möller discovered
+another carry propagation bug in P-256 that was fixed in the same
+commit. Nettle 3.2 fixes all three bugs.
 
-**Access Vector**: remote
+The impact is currently unclear, but miscalculations in cryptographic
+functions should generally be considered security issues. I'd like to
+encourage cryptographers to try to analyze whether these bugs can lead
+to cryptographic breaks.
 
-**Security Risk**: medium
+https://github.com/hannob/bignum-fuzz/blob/master/point-fuzz.c
+I have published a code example on how to fuzz elliptic curve
+multiplications. It can compare the output of OpenSSL with either
+Nettle or NSS. It currently works only with prime field curves, but it
+can probably be adapted to other curves.
 
-**Vulnerability**: CWE-330
+P-256 bug:
+https://lists.lysator.liu.se/pipermail/nettle-bugs/2015/003028.html
+Mailing list post with code sample
+https://git.lysator.liu.se/nettle/nettle/commit/c71d2c9d20eeebb985e3872e4550137209e3ce4d
+Commit / fix for P-256 bug
 
-**CVSS Base Score**: 7.5
+P-384 bug:
+https://lists.lysator.liu.se/pipermail/nettle-bugs/2015/003024.html
+Mailing list post with code sample
+https://git.lysator.liu.se/nettle/nettle/commit/fa269b6ad06dd13c901dbd84a12e52b918a09cd7
+Commit / fix for P-384 bug
 
-
----------------
-Vulnerable code
----------------
-
-The vulnerable code is located at core/modules/backup/class-itsec-backup.php, line 244 :
-
-        $file = 'backup-' . substr( sanitize_title( get_bloginfo( 'name' ) ), 0, 20 ) . '-' . $current_time . '-' . ITSEC_Lib::get_random( mt_rand( 5, 10 ) );
-
-In core/class-itsec-logger.php, line  :
-
-        $itsec_globals['settings']['log_info'] = substr( sanitize_title( get_bloginfo( 'name' ) ), 0, 20 ) . '-' . ITSEC_Lib::get_random( mt_rand( 0, 10 ) );
-
-
-In core/class-itsec-lib.php, function get_random, line 415:
-
-        public static function get_random( $length, $base32 = false, $special_chars = false ) {
-
-                if ( true === $base32 ) {
-
-                        $string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
-
-                } else {
-
-                        $string = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-
-                        if ( true === $special_chars ) {
-
-                                $string .= '_)(*&^%$#@!~`:;<>,.?/{}[]|';
-
-                        }
-
-                }
-
-                return substr( str_shuffle( $string ), mt_rand( 0, strlen( $string ) - $length ), $length );
-
-        }
-
-
-The str_shuffle should *never* be used for generating secure strings as it uses the PHP rand() function and just shuffles the characters' position.
-
---------
-Solution
---------
-
-Make sure to generate non-predictable strings, using cryptographically secure generators. 
-Update iThemes Security to version >= 5.3.1
-
-Affected versions
-=================
-
-* iThemes Security <= 5.3.0
-
-Timeline (dd/mm/yyyy)
-=====================
-
-* 26/02/2016 : Initial contact with iThemes.
-* 26/02/2016 : iThemes confirms the vulnerabilities.
-* 29/02/2016 : iThemes publishes a new version (5.3.1) of iThemes Security that fixes the vulnerabilities.
-
-Credits
-=======
-
-* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
-
-
+https://lists.gnu.org/archive/html/info-gnu/2016-01/msg00006.html
+Nettle 3.2 release notes
 
 -- 
-SYSDREAM Labs <labs@...dream.com>
+Hanno Böck
+http://hboeck.de/
 
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Content of type "application/pgp-signature" skipped
