@@ -1,4 +1,9 @@
-Received: (qmail 8162 invoked by uid 550); 16 May 2025 16:02:25 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["943" "Monday" "1" "February" "2016" "19:05:21" "-0500" "Larry Cashdollar" "larry0@me.com" "<D2D55CF1.332B4%larry0@me.com>" "23" "[oss-security] Wordpress plugin Reflected XSS in connections v8.5.8" nil nil nil "2" "2016020200:05:21" "[oss-security] Wordpress plugin Reflected XSS in connections v8.5.8" (number mark "U       larry0@me.co Feb  1   23/943   " thread-indent "\"[oss-security] Wordpress plugin Reflected XSS in connections v8.5.8\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7615 invoked by uid 550); 2 Feb 2016 00:05:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,99 +12,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 11425 invoked from network); 16 May 2025 15:34:43 -0000
-Message-ID: <c72f7000-a909-478d-a487-bf4d5b244223@gentoo.org>
-Date: Fri, 16 May 2025 11:34:29 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com
-References: <aCISrQTbLQjaxBZS@kasco.suse.de> <aCdTYYH_N9dXOYf8@netmeister.org>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <aCdTYYH_N9dXOYf8@netmeister.org>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------l3R57gAN3GrSZ4salk1ppecH"
-Subject: Re: [oss-security] screen: Multiple Security Issues in Screen (mostly
- affecting release 5.0.0 and setuid-root installations)
+Received: (qmail 7533 invoked from network); 2 Feb 2016 00:05:37 -0000
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
+ definitions=2016-02-02_01:,, signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ clxscore=1015 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
+ bulkscore=1 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1510270003 definitions=main-1602010402
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=me.com; h=date : subject
+ : from : to : message-id : mime-version : content-type :
+ content-transfer-encoding; s=4d515a;
+ bh=dPnaBWL8iq4I4FLdeDgyidpV0XuVFyxWKvF1JFSSzUU=;
+ b=Y45+JeEi5qBYgN/tLId8s29Xj/GiN7WM6/DSvVHX6y9L8OxI6YzsqA9JeC/CPRMYLUba
+ qqRxXSmZe3sOFeAZ4UWGoe3wGGl+9QyS3FeFErkCnZfcTE57Qfa+Peury/AcYuVEOi3l
+ uHxEeVeYfGlD2XXuv1QsjpSLM4BVJqh8dPUyT0MeDD5vXXzwRqPrkG/Cf3yrzfijzr0D
+ n269MJZiJPKmENpTTE1E9YnipGZX+KigUtPdtQUrkjp4G5KpWPpZrEnwaNlBSDgiEzca
+ exTTotDTddrxYnqMqFA8Hou35iocFIng5zY442kfP68bnq7iB/flBvHe10C08D15EoBn Yg==
+User-Agent: Microsoft-MacOutlook/14.6.0.151221
+Date: Mon, 01 Feb 2016 19:05:21 -0500
+From: Larry Cashdollar <larry0@me.com>
+To: Open Security <oss-security@lists.openwall.com>
+Message-id: <D2D55CF1.332B4%larry0@me.com>
+Thread-topic: Wordpress plugin Reflected XSS in connections v8.5.8
+MIME-version: 1.0
+Content-type: text/plain; charset=UTF-8
+Content-transfer-encoding: quoted-printable
+Subject: [oss-security] Wordpress plugin Reflected XSS in connections v8.5.8
 
---------------l3R57gAN3GrSZ4salk1ppecH
-Content-Type: multipart/mixed; boundary="------------0iyriSxRzfksUgkjQyGeqnwN";
- protected-headers="v1"
-From: Eli Schwartz <eschwartz@gentoo.org>
-To: oss-security@lists.openwall.com
-Message-ID: <c72f7000-a909-478d-a487-bf4d5b244223@gentoo.org>
-Subject: Re: [oss-security] screen: Multiple Security Issues in Screen (mostly
- affecting release 5.0.0 and setuid-root installations)
-References: <aCISrQTbLQjaxBZS@kasco.suse.de> <aCdTYYH_N9dXOYf8@netmeister.org>
-In-Reply-To: <aCdTYYH_N9dXOYf8@netmeister.org>
-
---------------0iyriSxRzfksUgkjQyGeqnwN
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-On 5/16/25 11:01 AM, Jan Schaumann wrote:
-> Matthias Gerstner <mgerstner@suse.de> wrote:
->> we were surprised to find a local root exploit in
->> the Screen 5.0.0 major version update affecting distributions that ship
->> it as setuid-root (Arch Linux and NetBSD).
->=20
-> I think it's useful to clarify here that NetBSD does
-> _not_ ship with GNU screen(1) at all.  NetBSD's
-> third-party package manager pkgsrc[1] includes
-> screen(1), allowing users to install additional
-> software on top of the base OS.
->=20
-> That package as included in _pkgsrc_ was installed
-> setuid[2], but a NetBSD base installation does not
-> include that package.  (NetBSD happens to include
-> tmux(1) _in the base OS_, but not screen(1).)
->=20
-> This distinction between a base OS and add-on software
-> that is optionally available for users to choose tends
-> to cause confusion for some people, so I figured
-> it's worth noting.
+Title: Wordpress plugin Reflected XSS in connections v8.5.8
+Author: Larry W. Cashdollar, @_larry0
+Date: 2016-01-26
+Download Site: https://wordpress.org/plugins/connections/
+Vendor: https://profiles.wordpress.org/shazahm1hotmailcom/
+Vendor Notified: 2016-01-28
+Vendor Fixed: 2016-02-01, v8.5.9
+Vendor Contact: https://profiles.wordpress.org/shazahm1hotmailcom/
+Description: An easy to use directory plugin to create an address book,
+business directory, staff
+directory or church directory.
+Vulnerability:Line 320 contains unfiltered user input for the search field
+being sent directly via
+echo back to the users browser via the =E2=80=99s=E2=80=99 variable.
+In file includes/admin/pages/manage.php
+Line 320:
+<input type=3D"search" id=3D"entry-search-input" name=3D=E2=80=9Cs" value=
+=3D"<?php if (
+isset( $_GET['s'] ) && ! empty( $_GET['s'] )) echo $_GET['s'] ; ?>" />
+CVEID: 2016-0770
+Advisory: http://www.vapidlabs.com/advisory.php?v=3D161
 
 
-This is a nonsensical claim, but if I accept it as stated then I will
-counter-assert that zero (0) Linux distros are vulnerable as they don't
-preinstall screen in the base OS.
-
-The definition of "the NetBSD base installation" is "nobody uses it".
-People use computing devices in order to run software on it. You cannot
-consider your OS in a bubble and go "well ackshually it's perfectly
-secure unless you use the builtin software to install official software,
-but we don't support that as a secure option".
-
-Yes, this applies to other BSDs too. You know who I'm talking about. :P
-
-
---=20
-Eli Schwartz
-
---------------0iyriSxRzfksUgkjQyGeqnwN--
-
---------------l3R57gAN3GrSZ4salk1ppecH
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaCdbBQUDAAAAAAAKCRCEp9ErcA0vV+1A
-AQDg3Da5rr/QTMnYP4KAq7FIvJTm6zsg4NhgkEXrTYUupQEAp6kFBOVM7X1XJugb906TheeytsaA
-kY9hSi5/kJTUAgU=
-=lZpy
------END PGP SIGNATURE-----
-
---------------l3R57gAN3GrSZ4salk1ppecH--
