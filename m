@@ -1,43 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/04/6
-Message-ID: <6C149CB0AE53E944A358EC6730D07C7442EC599128@TUS1XCHEVSPIN35.SYMC.SYMANTEC.COM>
-Date: Fri, 4 Mar 2016 12:25:57 -0800
-From: Mike Prosser <mprosser@...antec.com>
-To: 'Art Manion' <amanion@...t.org>, Kurt Seifried <kseifried@...hat.com>, cve-editorial-board-list <cve-editorial-board-list@...TS.MITRE.ORG>, oss-security <oss-security@...ts.openwall.com>
-Subject: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/02/7
+Message-Id: <20160202193717.ED51C7BC0FE@smtpvmsrv1.mitre.org>
+Date: Tue,  2 Feb 2016 14:37:17 -0500 (EST)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Socat security advisory 8 - Stack overflow in parser
 Content-Type: text/plain; charset=utf-8
 
-While it would have an impact for sure on our community, I think the biggest impact would be on customers since CVEs have become a Vulnerability Name when calling support with concerns....rather than just a common tracking reference.  
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
--Mike
-Symantec Software Security Group
+>   This vulnerability can only be exploited when an attacker is able to
+>   inject data into socat's command line.
+>   A vulnerable scenario would be a CGI script that reads data from
+>   clients and uses (parts of) this data as hostname for a Socat
+>   invocation.
 
+This was sent to the oss-security list as a published advisory, not as
+a CVE ID request. Is there anyone (e.g., a Linux distribution) who is
+planning to re-announce this to a different audience in a way that
+would make a CVE ID especially useful? Note that there will be a
+CVE ID for the simultaneously released "security advisory 7."
 
------Original Message-----
-From: owner-cve-editorial-board-list@...ts.mitre.org [mailto:owner-cve-editorial-board-list@...ts.mitre.org] On Behalf Of Art Manion
-Sent: Friday, March 04, 2016 1:08 PM
-To: Kurt Seifried <kseifried@...hat.com>; cve-editorial-board-list <cve-editorial-board-list@...TS.MITRE.ORG>; oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+At this point, the MITRE CVE team does not see a realistic
+exploitation scenario (for security advisory 8) that would be best
+categorized as a socat problem that requires a socat CVE ID. For
+example, "a CGI script that reads data from clients and uses (parts
+of) this data as hostname for a Socat invocation" might be better
+categorized as an SSRF vulnerability in that CGI script (and
+potentially site-specific unless such a CGI script already exists in
+packaged code).
 
-On 2016-03-04 13:24, Kurt Seifried wrote:
-> So I've now heard from several security researchers that they are 
-> unable to get CVEs for issues that need CVEs (e.g. widely used 
-> hardware/software with flaws that have real world impacts and need to 
-> be properly tracked. This has definitely resulted in issues being 
-> publicized with no CVE that then makes it much harder to track and 
-> deal with these issues.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-I think it's been said on this list previously -- these are two separate
-activities:
-
-1. Assigning IDs
-
-2. Analysis, deconfliction, write-up
-
-Binding these together results in delay, because #2 takes considerably more calendar time and effort.  Another result is a limited but fairly high quality set of entries (once #2 is complete).
-
-I share Kurt's concern that CVE is not meeting a researcher/disclosure use case of having IDs for vulnerabilities, and that the community will at some point stop bothering with CVE.
-
-I'm not sure how bad such an outcome would be, or what impact that would have on CVE.
-
- - Art
+iQIcBAEBCAAGBQJWsQPRAAoJEL54rhJi8gl58g4QAJY2pF4cO5bxQA7rfwlGajZq
+/ZL6f4v59/LZpe9Vpa+HTUwXGe+cRv68Zvgp37K1gWqnmazIwgCmJGIZ3BvVJ019
+v/AizZt7aCOZf8X2VTK82ylQU56bcOdmXCKZ9Xb9OHukIpK918bILOPb+t2HmqCe
+jOHNyzMRou9R/23qan8WQzW78JmK1D8E2DjHZbdHDkKm83j2z+CKI2H2hHkaYOy+
+QHqMiJuo6PMPLObxPmF1HY8cqN+EIl2LPt0VShAr2uYjlyB3eCpY2kdfJQUSQ6FW
+RxBa5bue+X0fv8IenUEtQsEcVJgS5jWwPavE7mrR8fkeyjJM+WGyilf2/iXuofBx
+zasCOaH82xteaIGoXW99OmLhFjMDPCIcN6lD33xu/GtF/Xg9OBbYeMfsjb1FoLsf
+w6lRyW3PyRRDTzZoeLpRhacK759eJvBBDL8JUqeJTsKOhKdnbOD47wHYrVboypbC
+ZAcS8Jnl8wrTslP6iscad32J6plr8pIzoyo8iOks6oKx1BnaZTQn99MOHt7GBBN6
+7Io9JMcjDcael9iDIlM7Gwv+AzAUqDZuKZ6CIPPwbVklVQYM7zTBx4Ch2+7KB8yt
+5r8y5GgzFO29ryA6T+cBwFDFcAFsJf6D0t5qV39mELAi49R6Qw/GI7huLsi54W9B
+0fUfuGVElnJEWu8NEth2
+=FQZ0
+-----END PGP SIGNATURE-----
