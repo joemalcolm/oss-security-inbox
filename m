@@ -1,61 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/06/4
-Message-Id: <20160106082513.E5702332074@smtpvbsrv1.mitre.org>
-Date: Wed,  6 Jan 2016 03:25:13 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/02/6
+Message-Id: <20160202193606.7345E8BC044@smtpvmsrv1.mitre.org>
+Date: Tue,  2 Feb 2016 14:36:06 -0500 (EST)
 From: cve-assign@...re.org
-To: corsac@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for radicale
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Socat security advisory 7 - Created new 2048bit DH modulus
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://github.com/Kozea/Radicale/pull/343
-> http://radicale.org/news/#2015-12-31@11:54:03
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=809920
+>   In the OpenSSL address implementation the hard coded 1024 bit DH p
+>   parameter was not prime. The effective cryptographic strength of a key
+>   exchange using these parameters was weaker than the one one could get by
+>   using a prime p. Moreover, since there is no indication of how these
+>   parameters were chosen, the existence of a trapdoor that makes possible
+>   for an eavesdropper to recover the shared secret from a key exchange that
+>   uses them cannot be ruled out.
 
->> This fixes a number of issues with dodgy path handling
+This was sent to the oss-security list as a published advisory, not as
+a CVE ID request. We would expect that one or more parties (e.g.,
+Linux distributions) are planning to re-announce this to a different
+audience in a way that would make at least one CVE ID especially
+useful. Our question is about whether anyone needs two CVE IDs.
 
->> Many improvements in this release are related to security
-
-We do not see a straightforward way to determine the total number of
-independent vulnerabilities. For example:
-
-  Paths like .., ../.. or // are not sanitized correctly
-
-  The program crashes if a path doesn't start with base_prefix instead of showing an error message
-
-  On MS Windows the filesystem backend allows access to the first level of files on a drive.
-
-  Improve the regex used for well-known URIs
-
-  Decouple the daemon from its parent environment
-
-  Avoid race condition in PID file creation
-
-are missing information about the attacker and/or the impact.
-
-
-
-These might potentially be overlapping observations:
-
-  Paths like .., ../.. or // are not sanitized correctly
-
-  Improve the regex used for well-known URIs
-
-  Prevent crafted HTTP request from calling arbitrary functions
-
-  Improve URI sanitation and conversion to filesystem path
-
-  
-
-For now, we will start with two CVE IDs for the change information that
-seems somewhat more clear:
-
-CVE-2015-8747 - The multifilesystem backend allows access to arbitrary files on all platforms.
-
-CVE-2015-8748 - Prevent regex injection in rights management
+A CVE ID must be for a specific vulnerability (although we realize
+that the CVE ID may often be used to track the update). Here, there
+can be a CVE ID for the "was not prime" finding in the sense that p is
+supposed to be prime, and a non-prime value is an implementation error
+regardless of any other details of the situation. With the currently
+published information, we do not see a way to generate a second CVE ID
+for something related to "no indication of how these parameters were
+chosen" or "cannot be ruled out."
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -65,17 +42,17 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWjM5nAAoJEL54rhJi8gl5CT8P/3BdMvzOj6xjmM/jITW6Xabs
-F4KoH+xeoN8dABnJLMYoFxJSokjVlvNu2CbdQo4JIdE76iTLTG48s5BPOlga/6Nh
-fbEDGk+lrEsWro86FUDQh0oJYFcJCQdOS+GNSi3KW2I7DQVKvsvO5lTvG8zUNH8k
-ELJ67CVjFR2g1DeiTnJaXYIeGoDPf0YckjagpGnxZKR6ZFjKi0YOTSPThWNSqIVG
-I0NZxXpcno+MMylsSg7f9KObwkti8eFl6oFHzxOTuyugJjQbkpkdXBfY08ZiVBOq
-Ik44z97aIZqaGKpiDdYPZnLhSfeBAT8i0kDZn5SH5Am0Oacb5WF2774Vj1NOQtdT
-D4Z2q+KpydU9hMeIeaEz84IjF2JoZapZax32zY+vQI28jzrbWmJ2EFiMIHh29fHk
-h97+pz/nRlebbLcUcwvs9we6Bec0ZyA74+XCPH68UferVg5YUD85mbTl+elIB9x7
-VAD/9hKGzqEnuQNfaOEur6H+gfik6667qpcelYnpxa+ReidcUwtkq0MmkmZwaGBl
-Jw5mji3a77BhbakfMAc18OfJ16Xrd+bV5ffd/mFA0jegQDtd8HiY5+mMPDdKU5Sx
-kePOeaQxTM22mnFvYuyHekW/tZR8zWIajSbFpG/wQwM5E05Kr/KuIyozlU5oZWDj
-/Xvt2kqc2sHESQq+kDhG
-=HPXl
+iQIcBAEBCAAGBQJWsQPKAAoJEL54rhJi8gl57rMQAJdoD4DfUlHFbSupu548iP0N
+3c7E8nb497rmUP6cpA/TiTECHvgglIINK/xQ8a5Eb3dBVU9rLoZewwZYyDAnItmp
+cfM8F58criX0vycjv8RBh01+ZlZg8pLFNmj5O3Xew/D6qJp/mJfm80P4UE4roThh
+Xh/4GgwNpHCMsUyerCmNGVSEkMS/Gf3ixoGWLGWLyquw/mZywM4EdD8qjP1SlLKA
+S3nCh+1PO+CtCBNtHzWMpXtc+QD+mUTf/i5MZj9TIMEc4un0lhPLOsVQxOLM2JxG
+Bz3xat0oJRyB8wqvIpAiQGYsWFewLhIaB7Fulc4SsLbc//8I4GcX0bb+/rY4/phf
+5am4s0WgaXuTAkxQvhOat/scfNxwAjo5D5qkXvDozJmatYDgRN/bj8Q/PI+i6H1E
+mahB5IzRwwFkLpFYn5XnzgH8BzHN0mi6iX5b4dbCGBtqa5nRJj2h0R9uxDoosTaV
+8qJPzIwduwSQ0C8r5VueUdIRLhDaCoIOo/GpKAzeP/XUPNs1GMwku7WMtp3ihkPK
+v7hAIDJkxEX9KNG60ZPX/NpTteuSYLfmQaDWAxAZbW2hG962kbKnUdhwBv7rZD3p
+OHsBa6eUZ++f5LO7B/PWRPdt0o00menBizMV2YH8lQL2pPZf4UfoaalgsBaYidxu
+Bq/DO1TXK4HnST0rpcSj
+=P0EG
 -----END PGP SIGNATURE-----
