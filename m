@@ -1,22 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/12
-Message-ID: <20160718182341.GC18755@netmeister.org>
-Date: Mon, 18 Jul 2016 14:23:41 -0400
-From: Jan Schaumann <jschauma@...meister.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: A CGI application vulnerability for PHP, Go, Python and others
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/02/1
+Message-id: <D2D55CF1.332B4%larry0@me.com>
+Date: Mon, 01 Feb 2016 19:05:21 -0500
+From: Larry Cashdollar <larry0@...com>
+To: Open Security <oss-security@...ts.openwall.com>
+Subject: Wordpress plugin Reflected XSS in connections v8.5.8
 Content-Type: text/plain; charset=utf-8
 
-Richard Rowe <arch.richard@...il.com> wrote:
- 
-> The consequence is that an attacker can force a proxy of their choice to be
-> used. This proxy receives the full request for anything sent over HTTP
-> using a vulnerable client. It can also act in a malicious way to tie up
-> server resources (a "reverse slowloris").
+Title: Wordpress plugin Reflected XSS in connections v8.5.8
+Author: Larry W. Cashdollar, @_larry0
+Date: 2016-01-26
+Download Site: https://wordpress.org/plugins/connections/
+Vendor: https://profiles.wordpress.org/shazahm1hotmailcom/
+Vendor Notified: 2016-01-28
+Vendor Fixed: 2016-02-01, v8.5.9
+Vendor Contact: https://profiles.wordpress.org/shazahm1hotmailcom/
+Description: An easy to use directory plugin to create an address book,
+business directory, staff
+directory or church directory.
+Vulnerability:Line 320 contains unfiltered user input for the search field
+being sent directly via
+echo back to the users browser via the ’s’ variable.
+In file includes/admin/pages/manage.php
+Line 320:	
+<input type="search" id="entry-search-input" name=“s" value="<?php if (
+isset( $_GET['s'] ) && ! empty( $_GET['s'] )) echo $_GET['s'] ; ?>" />
+CVEID: 2016-0770
+Advisory: http://www.vapidlabs.com/advisory.php?v=161
 
-I know you mentioned it on https://httpoxy.org/, but I think it's worth
-stressing explicitly again:  use of HTTPS for all requests made by the
-application, internal as well as external, defeats this vulnerability
-(provided certificates are actually verified).
 
--Jan
