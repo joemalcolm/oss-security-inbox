@@ -1,27 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/17/2
-Message-ID: <CAMYtjAo9z9reKrVDUDu5gAm0zC_Ofm=XLPVhD34c-D2wX000oA@mail.gmail.com>
-Date: Sun, 17 Jul 2016 09:48:54 +0200
-From: Pere Orga <pere@...a.cat>
-To: oss-security@...ts.openwall.com
-Cc: Drupal Security Team <security@...pal.org>
-Subject: CVE requests for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/02/8
+Message-ID: <20160202202746.GA27418@hunt>
+Date: Tue, 2 Feb 2016 12:27:46 -0800
+From: Seth Arnold <seth.arnold@...onical.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: Socat security advisory 7 - Created new 2048bit DH modulus
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Tue, Feb 02, 2016 at 02:36:06PM -0500, cve-assign@...re.org wrote:
+> useful. Our question is about whether anyone needs two CVE IDs.
+> 
+> A CVE ID must be for a specific vulnerability (although we realize
+> that the CVE ID may often be used to track the update). Here, there
+> can be a CVE ID for the "was not prime" finding in the sense that p is
+> supposed to be prime, and a non-prime value is an implementation error
+> regardless of any other details of the situation. With the currently
+> published information, we do not see a way to generate a second CVE ID
+> for something related to "no indication of how these parameters were
+> chosen" or "cannot be ruled out."
 
-Please can I have CVE IDs assigned to the following vulnerabilities:
+Ubuntu won't issue an Ubuntu Security Notice for the socat issue (because
+socat is in our "universe" archive); however, we wouldn't find it useful
+to have a second CVE assigned for "no indication of how these parameters
+were chosen" or "cannot be ruled out".
 
-Webform Multiple File Upload - Remote code execution - SA-CONTRIB-2016-038
-https://www.drupal.org/node/2765573
+This is one area where distro needs don't 100% align with MITRE's: one CVE
+per line of code is sufficient for us but not for MITRE. When in doubt I'd
+suggest to limit the number of CVEs issued just on the principle of less
+work for everyone. When it's clear, of course, do what you must; we're
+lucky we get to use CVEs to identify issues, and some slight duplication
+(from our perspective) is a price well worth paying to use CVE's many
+positive benefits.
 
-Coder - Remote code execution - SA-CONTRIB-2016-039
-https://www.drupal.org/node/2765575
+Thanks
 
-RESTWS - Remote code execution - SA-CONTRIB-2016-040
-https://www.drupal.org/node/2765567
-
-Regards
--- 
-Pere Orga on behalf of the Drupal Security team
-
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
