@@ -1,55 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/16
-Message-ID: <CAKws9z00CYYUZMGW9-QaBDoLc42Em4WWy_eGKLoxNk2uDYwnOg@mail.gmail.com>
-Date: Tue, 19 Jan 2016 14:47:10 -0500
-From: Scott Arciszewski <scott@...agonie.com>
-To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
-Subject: OpenCart users, switch to OpenCart-CE immediately
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/02/5
+Message-Id: <009C89DE-A7D7-4E3E-875A-13C4A916676D@soroos.net>
+Date: Tue, 2 Feb 2016 18:51:24 +0000
+From: Eric Soroos <eric@...oos.net>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE Request -- Buffer overflow in Python-Pillow and PIL
 Content-Type: text/plain; charset=utf-8
 
-This commit was made against the Community Edition of OpenCart on April 2,
-2014.
+Hello, 
 
-https://github.com/opencart-ce/opencart-ce/commit/5bc5f7a816aab17f1718e0c09323c74cd7167f35#diff-d0709af23c0fbe35295ee9a1ceb9fd79
+I’d like to request a CVE number for all versions of Python Pillow <= 3.1.0  and PIL == 1.1.7 (at the least). 
 
-As you can see from the commit message, it was intended to prevent file
-inclusion attacks.
+There is a buffer overflow in PcdDecode.c, where the decoder writes assuming 4 bytes per pixel into a 3 byte per pixel wide buffer, allowing writing 768 bytes off the end of the buffer. This overwrites objects in Python's stack, leading to a crash. 
 
-It's January 19, 2016 and OpenCart proper is still doing it wrong.
+This issue and the patch are public:  https://github.com/python-pillow/Pillow/pull/1706
 
-https://github.com/opencart/opencart/blob/0b8ff2ef74309dd2e1797af762364dab2eef761b/upload/system/engine/action.php#L7
+Thanks, 
 
-What this line tries to do is prevent directory traversal attacks by
-stripping out ../, but unfortunately it's quite dumb.
-
-https://3v4l.org/tMmNK
-
-This also doesn't defend against NUL byte injections.
-
-This is a 0day, because Daniel Kerr usually just flames security
-researchers and I didn't feel like subjecting myself to that ever again. To
-wit:
-
-* https://github.com/opencart/opencart/issues/1269
-* https://github.com/opencart/opencart/issues/1279
-* https://github.com/opencart/opencart/issues/1534
-* https://github.com/opencart/opencart/issues/1594
-* https://github.com/opencart/opencart/issues/3721
-
-I'm sure I missed quite a few instances of him flaming people trying to
-help him secure his project for free. He doesn't seem to ever learn, either.
-
-The OpenCart-CE maintainer, in contrast, is more hospitable towards
-security researchers. So in addition to already having a fix in place,
-their rapport with the community means using the community edition is
-likely to make your system more secure than running OpenCart proper.
-
-In closing, I recommend everyone who runs OpenCart to switch to OpenCart-CE
-today and anyone who does penetration testing read this excellent article
-by Keith Makan about Ordering an RFI via Email:
-http://blog.k3170makan.com/2012/01/ordering-remote-file-inclusion-via-e.html
-
-Scott Arciszewski
-Chief Development Officer
-Paragon Initiative Enterprises <https://paragonie.com>
-
+Eric
