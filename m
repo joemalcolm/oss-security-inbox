@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1725" "Monday" "11" "January" "2016" "22:15:59" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1601112211500.22978@wniryva>" "47" "[oss-security] CVE request Qemu: nvram: OOB r/w access in processing firmware configurations" nil nil nil "1" "2016011116:45:59" "[oss-security] CVE request Qemu: nvram: OOB r/w access in processing firmware configurations" (number mark "U       ppandit@redh Jan 11   47/1725  " thread-indent "\"[oss-security] CVE request Qemu: nvram: OOB r/w access in processing firmware configurations\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2154" "Tuesday" "2" "February" "2016" "12:27:46" "-0800" "Seth Arnold" "seth.arnold@canonical.com" "<20160202202746.GA27418@hunt>" "49" "Re: [oss-security] Re: Socat security advisory 7 - Created new 2048bit DH modulus" "^Cc:" nil nil "2" "2016020220:27:46" "[oss-security] Re: Socat security advisory 7 - Created new 2048bit DH modulus" (number mark "        seth.arnold@ Feb  2   49/2154  " thread-indent "\"Re: [oss-security] Re: Socat security advisory 7 - Created new 2048bit DH modulus\"\n") "<20160202193606.7345E8BC044@smtpvmsrv1.mitre.org>" ("<56AF7AA7.7080609@dest-unreach.org>" "<20160202193606.7345E8BC044@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28113 invoked by uid 550); 11 Jan 2016 16:46:25 -0000
+Received: (qmail 27833 invoked by uid 550); 2 Feb 2016 20:28:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28093 invoked from network); 11 Jan 2016 16:46:25 -0000
-Date: Mon, 11 Jan 2016 22:15:59 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Donghai Zdh <donghai.zdh@alibaba-inc.com>
-Message-ID: <alpine.LFD.2.20.1601112211500.22978@wniryva>
+Received: (qmail 27812 invoked from network); 2 Feb 2016 20:28:01 -0000
+Message-ID: <20160202202746.GA27418@hunt>
+Mail-Followup-To: cve-assign@mitre.org, oss-security@lists.openwall.com
+References: <56AF7AA7.7080609@dest-unreach.org>
+ <20160202193606.7345E8BC044@smtpvmsrv1.mitre.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-Subject: [oss-security] CVE request Qemu: nvram: OOB r/w access in processing firmware
- configurations
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="7AUc2qLy4jB3hD7Z"
+Content-Disposition: inline
+In-Reply-To: <20160202193606.7345E8BC044@smtpvmsrv1.mitre.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Cc: oss-security@lists.openwall.com
+Date: Tue, 2 Feb 2016 12:27:46 -0800
+From: Seth Arnold <seth.arnold@canonical.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: Socat security advisory 7 - Created new
+ 2048bit DH modulus
+To: cve-assign@mitre.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--7AUc2qLy4jB3hD7Z
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-   Hello,
+On Tue, Feb 02, 2016 at 02:36:06PM -0500, cve-assign@mitre.org wrote:
+> useful. Our question is about whether anyone needs two CVE IDs.
+>=20
+> A CVE ID must be for a specific vulnerability (although we realize
+> that the CVE ID may often be used to track the update). Here, there
+> can be a CVE ID for the "was not prime" finding in the sense that p is
+> supposed to be prime, and a non-prime value is an implementation error
+> regardless of any other details of the situation. With the currently
+> published information, we do not see a way to generate a second CVE ID
+> for something related to "no indication of how these parameters were
+> chosen" or "cannot be ruled out."
 
-Qemu emulator built with the Firmware Configuration device emulation support 
-is vulnerable to an OOB r/w access issue. It could occur while processing 
-firmware configurations, if the current configuration entry value was set to 
-be invalid(FW_CFG_INVALID=0xffff).
+Ubuntu won't issue an Ubuntu Security Notice for the socat issue (because
+socat is in our "universe" archive); however, we wouldn't find it useful
+to have a second CVE assigned for "no indication of how these parameters
+were chosen" or "cannot be ruled out".
 
-A privileged(CAP_SYS_RAWIO) user/process inside guest could use this flaw to 
-crash the Qemu process instance resulting in DoS OR potentially execute 
-arbitrary code with privileges of the Qemu process on the host.
+This is one area where distro needs don't 100% align with MITRE's: one CVE
+per line of code is sufficient for us but not for MITRE. When in doubt I'd
+suggest to limit the number of CVEs issued just on the principle of less
+work for everyone. When it's clear, of course, do what you must; we're
+lucky we get to use CVEs to identify issues, and some slight duplication
+(from our perspective) is a price well worth paying to use CVE's many
+positive benefits.
 
-Upstream fix:
-- -------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg00428.html
+Thanks
 
-Reference:
-- ----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1296060
-
-
-This issue was discovered by Mr Donghai Zhu of Alibaba Inc.
-
-Thank you.
-- --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+--7AUc2qLy4jB3hD7Z
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBAgAGBQJWk9xHAAoJEN0TPTL+WwQfUuEP/1N9SRnLgrZknpztdvU83XJ0
-oWoPuJX2HsNZO1v9DCnwkMkUE4ljsmTyocQ61ACUNv7fP3BxBBWoAeVZPsMC2UED
-EGddY/Q5kne6KqVGJ2JaEOJ9Qlh8uxCoezk12x3oXIoAuj8z9oqpkMXTTgPZIQGU
-M9+MI0FnMm8tIiPuQSpalZrQKp9SZDRvMnQVVNsjM/VdjYJzyT5yrZIDVHGXCqKt
-A4g3u9M6oI+hFhKLwgtfuHbxuARKR/dbtHG6cDXqjrYESb6maRNtmk4ZGxGkVPYL
-IXX+epKa5+ZNCV+3CbIO8foiISVvxUZyhyw2jWKIWryzGJvYk1ZKhMPqJKXPjWBI
-Rn/6WqIcRPZ3qRI9gzwxJ0kVedkwmHwF67Qfgygl+HtMMP3bf6vFHrbqVW/PBh/o
-fbGjOZm84/BNRsIesvOAHxwRz+MF/vs5q2eFkNHMHJRGiDrpyz8HTvRoTJWwbP2+
-Ovi1OTbZu8dhHM6Vbk7OWyUWf0og8XCxkpzI2zxZ6+9UdFPXzUl9ApgHomi/Yrkq
-Je/Q+rsEXK3pDHToeQGS4/Jzm1jEW1Dk75IS89lFdgq/EoL1OjRHT00kBIfVTTu8
-IgY6DlBl4PiUA/GUIC6diUtVfytX7K9LdqnGS9FeyfhJtU4uMLDd5GYDmQ0XC1K6
-rhAqUKOXNseX5rSf3urE
-=XkHE
+iQEcBAEBAgAGBQJWsRFCAAoJEPMhclmdjS6XYZAH/3KTXkyt9Xctf6FZBCV+jC/u
+zU/vZ/EWs6Hq1lSANMjEaN6RfxAhGWIWSY7fuqaAirG7J9nzI4Nyyu9uyteRsjPe
+ZqJhdh72Lnq7kRXRguVrHs3lrgE4gwBS1O5IJZ7R4yOnQp2akVADGtYxLqsW1ZmA
+YtcmgHkFq33sxLejPGZ+3OQ6Bkc3eAeN+kP2nDauBoO2EwT3iBfCtZVeFxVu5jbJ
+DI1v1SfHbHmtg7oYsH00kWo+EXK32IxXCFeaVBZUFNaQ2qzZQm/VraSoaXpXTpzF
+3raSTSRlcLQbOgkF4zxI0gsbiQfjlP12xBB1zvrBVpBrjpAZqk1NfyAEvRa9tA0=
+=6sRv
 -----END PGP SIGNATURE-----
+
+--7AUc2qLy4jB3hD7Z--
