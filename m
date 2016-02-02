@@ -1,219 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/4
-Message-ID: <5728B29C.2010004@suse.de>
-Date: Tue, 3 May 2016 23:45:56 +0930
-From: Simon Lees <sflees@...e.de>
-To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com, security@...me.org, security@...e.com
-Subject: CVE-2016-3627 CVE-2016-3705: libxml2: stack overflow in xml validator (parser)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/02/4
+Message-ID: <56B0D4EE.8010002@firma.seznam.cz>
+Date: Tue, 2 Feb 2016 17:10:22 +0100
+From: Štefan Šafár <stefan.safar@...ma.seznam.cz>
+To: <oss-security@...ts.openwall.com>
+Subject: Fwd: PHP-FPM fpm_log.c memory leak and buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi
-This is a disclosure of the following issue that was raised a week ago
-on the distro's mailing list. Both bugs on the gnome bugtracker are
-currently private and should be made public now. The two attached
-patches are based off the 2.9.3 libxml2 release.
-
-A couple of weeks back while working on a related bug [CVE-2016-3627] I
-discovered a specially created xml file is capable of triggering a stack
-overflow before libxml2 can detect its a invalid xml file.
-
-We raised this issue upstream on 2016-04-18 and informed them that we
-would place a two week embargo on the issue in case we didn't here back.
-As of yet we have had no response so we have posted here.
-https://bugzilla.gnome.org/show_bug.cgi?id=765207
-
-We intend to keep the current embargo (ending May 3) unless we get
-advise otherwise here. Below is a script to generate the xml file along
-with a tested patch to fix the issue. I will also include our
-unpublished patch and simplified reproducer for CVE-2016-3627 as again
-we have had no response upstream and its likely that you will want to
-fix this less severe issue at the same time.
-https://bugzilla.gnome.org/show_bug.cgi?id=762100
-
-python3 repoducer.py ; xmllint repo.xml
-
-repoducer.py
------------------------------------------------------------------------
-#!/bin/python3
-
-f = open('repo.xml', 'w')
-
-f.write( "<!DOCTYPE a [ ")
-
-i = 1
-
-while (i < 30000):
-    f.write ("<!ENTITY a" + str(i) + " \"&a" + str(i+1) + ";\">")
-    i = i+1
-
-f.write("<!ENTITY a" + str(i+1) + " \"&a1;\">]> <bruces bogans=\"&a1;\">")
-
-f.close()
------------------------------------------------------------------------
-
-Patch for this issue.
------------------------------------------------------------------------
-From: Peter Simons <psimons@...e.com>
-Date: Fri, 15 Apr 2016 11:56:55 +0200
-Subject: Add missing increments of recursion depth counter to XML
- parser.
-
-The functions xmlParserEntityCheck() and xmlParseAttValueComplex() used
-to call
-xmlStringDecodeEntities() in a recursive context without incrementing the
-'depth' counter in the parser context. Because of that omission, the parser
-failed to detect attribute recursions in certain documents before
-running out
-of stack space.
----
- parser.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/parser.c b/parser.c
-index 9604a72..4da151f 100644
---- a/parser.c
-+++ b/parser.c
-@@ -144,8 +144,10 @@ xmlParserEntityCheck(xmlParserCtxtPtr ctxt, size_t
-size,
-
- 	ent->checked = 1;
-
-+        ++ctxt->depth;
- 	rep = xmlStringDecodeEntities(ctxt, ent->content,
- 				  XML_SUBSTITUTE_REF, 0, 0, 0);
-+        --ctxt->depth;
-
- 	ent->checked = (ctxt->nbentities - oldnbent + 1) * 2;
- 	if (rep != NULL) {
-@@ -3966,8 +3968,10 @@ xmlParseEntityValue(xmlParserCtxtPtr ctxt,
-xmlChar **orig) {
- 	 * an entity declaration, it is bypassed and left as is.
- 	 * so XML_SUBSTITUTE_REF is not set here.
- 	 */
-+        ++ctxt->depth;
- 	ret = xmlStringDecodeEntities(ctxt, buf, XML_SUBSTITUTE_PEREF,
- 				      0, 0, 0);
-+        --ctxt->depth;
- 	if (orig != NULL)
- 	    *orig = buf;
- 	else
-@@ -4092,9 +4096,11 @@ xmlParseAttValueComplex(xmlParserCtxtPtr ctxt,
-int *attlen, int normalize) {
- 		} else if ((ent != NULL) &&
- 		           (ctxt->replaceEntities != 0)) {
- 		    if (ent->etype != XML_INTERNAL_PREDEFINED_ENTITY) {
-+			++ctxt->depth;
- 			rep = xmlStringDecodeEntities(ctxt, ent->content,
- 						      XML_SUBSTITUTE_REF,
- 						      0, 0, 0);
-+			--ctxt->depth;
- 			if (rep != NULL) {
- 			    current = rep;
- 			    while (*current != 0) { /* non input consuming */
-@@ -4130,8 +4136,10 @@ xmlParseAttValueComplex(xmlParserCtxtPtr ctxt,
-int *attlen, int normalize) {
- 			(ent->content != NULL) && (ent->checked == 0)) {
- 			unsigned long oldnbent = ctxt->nbentities;
-
-+			++ctxt->depth;
- 			rep = xmlStringDecodeEntities(ctxt, ent->content,
- 						  XML_SUBSTITUTE_REF, 0, 0, 0);
-+			--ctxt->depth;
-
- 			ent->checked = (ctxt->nbentities - oldnbent + 1) * 2;
- 			if (rep != NULL) {
--- 
-2.7.4
-
------------------------------------------------------------------------
-
-CVE-2016-3627 - simplified reproducers
-echo '<!DOCTYPE b [ <!ENTITY b "&b;"> ]> <b b="&b;">' | xmllint -recover -
-echo '<!DOCTYPE b [ <!ENTITY b "&c;"> <!ENTITY c "&d;"> <!ENTITY d
-"&b;">]> <test123="&c;">' | xmllint -recover -
------------------------------------------------------------------------
+Forwarding this email as it seems it wasn't sent here. Perhaps a CVE
+should be issued?
 
 
-CVE-2016-3627 - Patch
------------------------------------------------------------------------
-From: Peter Simons <psimons@...e.com>
-Date: Thu, 14 Apr 2016 16:15:13 +0200
-Subject: [PATCH] xmlStringGetNodeList: limit the function to 1024 recursions
- to avoid CVE-2016-3627
+-------- Forwarded Message --------
+Subject: 	PHP-FPM fpm_log.c memory leak and buffer overflow
+Date: 	Mon, 25 Jan 2016 16:50:38 +0100
+From: 	Imre RAD <imre.rad@...rch-lab.hu>
+To: 	bugtraq@...urityfocus.com
 
-This patch prevents stack overflows like the one reported in
-https://bugzilla.gnome.org/show_bug.cgi?id=762100.
----
- tree.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/tree.c b/tree.c
-index 6a158ce..9c9f0ec 100644
---- a/tree.c
-+++ b/tree.c
-@@ -1464,6 +1464,8 @@ out:
-     return(ret);
- }
 
-+static xmlNodePtr xmlStringGetNodeListInternal(const xmlDoc *doc, const
-xmlChar *value, size_t recursionLevel);
-+
- /**
-  * xmlStringGetNodeList:
-  * @doc:  the document
-@@ -1475,6 +1477,11 @@ out:
-  */
- xmlNodePtr
- xmlStringGetNodeList(const xmlDoc *doc, const xmlChar *value) {
-+  return xmlStringGetNodeListInternal(doc, value, 0);
-+}
-+
-+static xmlNodePtr
-+xmlStringGetNodeListInternal(const xmlDoc *doc, const xmlChar *value,
-size_t recursionLevel) {
-     xmlNodePtr ret = NULL, last = NULL;
-     xmlNodePtr node;
-     xmlChar *val;
-@@ -1483,6 +1490,8 @@ xmlStringGetNodeList(const xmlDoc *doc, const
-xmlChar *value) {
-     xmlEntityPtr ent;
-     xmlBufPtr buf;
+The FastCGI Process Manager (FPM) SAPI of PHP was vulnerable to memory
+leak and buffer overflow in the access logging feature.
 
-+    if (recursionLevel > 1024) return(NULL);
-+
-     if (value == NULL) return(NULL);
+PHP-FPM offers customization of the access log lines based on format
+string variables which can be specified with the access.format option of
+the FPM configuration file.
+The log lines were compiled in php-fpm.c. The %{something}e fields were
+processed at line 237:
 
-     buf = xmlBufCreateSize(0);
-@@ -1593,8 +1602,9 @@ xmlStringGetNodeList(const xmlDoc *doc, const
-xmlChar *value) {
- 			else if ((ent != NULL) && (ent->children == NULL)) {
- 			    xmlNodePtr temp;
+len2 = snprintf(b, FPM_LOG_BUFFER - len, "%s", env ? env : "-");
+...
+len += len2;
+...
+    if (!test && strlen(buffer) > 0) {
+         buffer[len] = '\n';
+        write(fpm_log_fd, buffer, len + 1);
+    }
 
--			    ent->children = xmlStringGetNodeList(doc,
--				    (const xmlChar*)node->content);
-+			    ent->children = xmlStringGetNodeListInternal(doc,
-+				    (const xmlChar*)node->content,
-+                                    recursionLevel+1);
- 			    ent->owner = 1;
- 			    temp = ent->children;
- 			    while (temp) {
--- 
-2.7.4
+In case the string being appended to the access log line buffer was
+longer than the remaining space, the len variable became longer than the
+buffer (FPM_LOG_BUFFER) size, because snprintf returns the number of
+characters (excluding the terminating null byte) which would have been
+written to the final string if enough space had been available. Then the
+PHP engine performed an out-of-boundaries read and also wrote a \n
+character outside of the allocated memory.
 
------------------------------------------------------------------------
+The fix is available with the commit
+http://git.php.net/?p=php-src.git;a=commit;h=2721a0148649e07ed74468f097a28899741eb58f
+The fixed versions of PHP are: 5.5.31, 5.6.17 and 7.0.2.
 
-Cheers
+More information:
+http://www.search-lab.hu/about-us/news/111-some-unusual-vulnerabilities-in-the-php-engine
 
--- 
+Imre Rad
+Search-Lab Ltd.
+http://www.search-lab.hu/
+http://www.scademy.com/
 
-Simon Lees (Simotek)                            http://simotek.net
 
-Emergency Update Team                           keybase.io/simotek
-SUSE Linux                            Adeliade Australia, UTC+9:30
-GPG Fingerprint: 5B87 DB9D 88DC F606 E489 CEC5 0922 C246 02F0 014B
 
-View attachment "0001-Add-missing-increments-of-recursion-depth-counter-to.patch" of type "text/x-patch" (2319 bytes)
 
-View attachment "libxml2-2.9.1-CVE-2016-3627.patch" of type "text/x-patch" (1879 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
