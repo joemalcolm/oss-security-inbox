@@ -1,48 +1,145 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/23/9
-Message-Id: <20160923152546.C7048332026@smtpvbsrv1.mitre.org>
-Date: Fri, 23 Sep 2016 11:25:46 -0400 (EDT)
-From: cve-assign@...re.org
-To: noloader@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, jbyrd@...anticsoftware.com
-Subject: Re: CVE Assignment for Crypto++ and "AES and incorrect argument to _freea() under Microsoft compilers"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/02/3
+Message-id: <D2D61482.3331B%larry0@me.com>
+Date: Tue, 02 Feb 2016 08:08:34 -0500
+From: Larry Cashdollar <larry0@...com>
+To: Open Security <oss-security@...ts.openwall.com>
+Subject: Reflected XSS & Blind SQLi in wordpress plugin eshop v6.3.14
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Title: Reflected XSS & Blind SQLi in wordpress plugin eshop v6.3.14
+Author: Larry W. Cashdollar, @_larry0
+Date: 2016-01-27
+Download Site: https://wordpress.org/plugins/eshop
+Vendor: Richard Pedley
+Vendor Notified: 2016-01-29
+Vendor Contact: http://elfden.co.uk/
+Description: An accessible Shopping Cart plugin. eShop is an accessible
+shopping cart plugin for WordPress, packed with various features.
+Vulnerability:
+The following code snippets do not sanitize user input before passing back
+to the user’s browser via $_GET request.
 
-> a crash in Crypto++'s AES implementation under
-> Microsoft compilers due to use of `_malloca`, `AliasedWithTables` and
-> `_freea`. Crypto++ can potentially free the wrong pointer
-> 
-> https://github.com/weidai11/cryptopp/issues/302
+http://plugins.svn.wordpress.org/eshop/trunk/eshop-orders.php
 
->> if at any point the "space" pointer is changed from its original
->> location by the 256-byte rounding function, you're guaranteed to be in
->> for some pain at _freea time, as _freea refers to a memory address
->> that was never allocated in the first place.
+>From eshop-orders.php XSS via page & action variables:
 
-Use CVE-2016-7544.
+144                
+$apge=get_admin_url().'admin.php?page='.$_GET['page'].'&amp;action='.$_GET[
+'action'];
+145                         echo '<ul id="eshopsubmenu" class="stuffbox">';
+146                         echo '<li><span>'.__('Sort Orders by
+&raquo;','eshop').'</span></li>';
+147                         echo '<li><a
+href="'.$apge.'&amp;by=da"'.$cda.'>'.__('Date
+Ascending','eshop').'</a></li>';
+148                         echo '<li><a
+href="'.$apge.'&amp;by=dd"'.$cdd.'>'.__('Date
+Descending','eshop').'</a></li>';
+149                         echo '<li><a
+href="'.$apge.'&amp;by=tn"'.$ctn.'>'.__('ID Number','eshop').'</a></li>';
+150                         echo '<li><a
+href="'.$apge.'&amp;by=ca"'.$cca.'>'.__('Company','eshop').'</a></li>';
+151                         echo '<li><a
+href="'.$apge.'&amp;by=na"'.$cna.'>'.__('Customer','eshop').'</a></li>';
+152                         echo '</ul>';
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX5UhlAAoJEHb/MwWLVhi2SQ8P/37MUnrxMF7PynvK/O7dYgZj
-h9CP649WDx0v+hl+Z95wYGMX/ciy/iBwiFnCkrIEtT/FhvREtHt1KB06E6ZG0R0N
-ViqluDFJH+XsbIW1o8ETV/BOR70GPIpQzwwKKOP75qqGUcjKeEZon7LTqUFZgZsu
-Qn7c14zB7vYe66liSjT6+0bWtgxLK7DG7zbNBbjmw9tBxOG1igAh5qz9G6Kfct4H
-Pnoo1EZZ7k4qjGliGvoqvHkwfJWrjT89JUntQPBI5JPfTtd1RIjOVDvxCH0qLOXT
-kd+67l8eW8E1ST/wCJ565FaCAEvUEI25rvnAroL76fN1n2acgmgNmmrBKbLZVqqj
-n9f+R1DEJeip7eV44A/36n8Jwk7Y8k14aT4FhlboVtgyp9nDnR/jepm5Pn+hfUMr
-OPQPSOoCWF0O7TZfS6IG8Zf6Dluaw/XTinHLVM+H/SqVgadQJFwRawgbxQYVCrht
-21etDccBSvarT8WF6xzLKEgRk18GNFSRt37rfyI3PnR62Vv4I8DrKt5pgtV4D0iz
-GT7W3gV8x4C7UKtbA+pVnPYbPs7aOczcnH3E+GEIDeeB4r8SKWiDvI4FcDXd9N4V
-54rW4IhgBzmPWFUPlEMN6mfaOZHWcvA3XhDRRwo/GT7Mh8FBySXP+m/gWcw9G34I
-r5UwZOXTT2nm1iMsR7t+
-=n5Dw
------END PGP SIGNATURE-----
+
+244 <input type="hidden" name="action" value="<?php echo $_GET['action'];
+?>" />
+
+
+303 $phpself='?page='.$_GET['page’];
+.
+503         echo "<div id=\"eshopformfloat\"><form id=\"orderstatus\"
+action=\"".$phpself."\" method=\"post\">";
+504         ?>
+.
+515 <input type="hidden" name="action" value="<?php echo $_GET['action'];
+?>" />
+.
+.
+
+586                                 $downloadable .='
+'.$dlinfo->downloads.'<a
+href="'.$phpself.'&amp;view='.$view.'&amp;adddown='.$dlinfo->id.'"
+title="'.__('Increa    se download allowance by
+1','eshop').'">'.__('Increase','eshop').'</a>, <a
+href="'.$phpself.'&amp;view='.$view.'&amp;decdown='.$dlinfo->id.'"
+title="'.__('Decrea    se download allowance by
+1','eshop').'">'.__('Decrease','eshop').'</a></span>';
+587          
+.
+.
+
+642                 echo '<strong>'.__('Email:','eshop').'</strong>'." <a
+href=\"".$phpself."&amp;viewemail=".$view."\" title=\"".__('Send a form
+email','eshop')."\"    >".$drow->email.'</a> <small
+class="noprint">'.__('(sends a form email)','eshop')."</small><br />\n";
+.
+.
+746         if($status=='Deleted'){$delete="<p class=\"delete noprint\"><a
+href=\"".$phpself."&amp;delid=".$view."\">".__('Completely delete this
+order?','eshop')."<    /a><br />".__('<small><strong>Warning:</strong>
+this order will be completely deleted and cannot be recovered at a later
+date.</small>','eshop')."</p>";}else{$de    lete='';};
+
+
+
+
+Blind SQL Injection & requires authenticated user to Wordpress.
+
+>From eshop-orders.php, requires admin user:
+
+287 if (!function_exists('deleteorder')) {
+288         function deleteorder($delid){
+289                 global $wpdb;
+290                 $dtable=$wpdb->prefix.'eshop_orders';
+291                 $itable=$wpdb->prefix.'eshop_order_items';
+292                 $dltable=$wpdb->prefix.'eshop_download_orders';
+293                 $checkid=$wpdb->get_var("Select checkid From $dtable
+where id='$delid' && status='Deleted'");
+
+.
+.
+392 eshop_admin_mode();
+
+393 if(isset($_GET['delid']) && !isset($_GET['view'])){
+394         deleteorder($_GET['delid']);
+
+
+
+>From eshop-orders.php, Requires a regular logged in user:
+
+The following code allows SQL injection via the unsanitized $view
+variable.
+354 if(isset($_GET['view'])){
+355         $view=$_GET['view'];
+356         $status=$wpdb->get_var("Select status From $dtable where
+id='$view'”);
+
+SQL injection points via POST to mark & change:
+
+421 if(isset($_POST['mark']) && !isset($_POST['change'])){
+422         $mark=$_POST['mark'];
+423         $checkid=$_POST['checkid'];
+424         $query2=$wpdb->get_results("UPDATE $dtable set status='$mark'
+where checkid='$checkid'");
+425         do_action( 'eshop_order_status_updated', $checkid, $mark );
+426         echo '<div class="updated fade">'.__('Order status changed
+successfully.','eshop').'</div>';
+427 }
+.
+.
+429 if(isset($_POST['change'])){
+430         if(isset($_POST['move']) && $_POST['move'][0]!=''){
+431                 foreach($_POST['move'] as $v=>$ch){
+432                         $mark=$_POST['mark'];
+433                         $query2=$wpdb->get_results("UPDATE $dtable set
+status='$mark' where checkid='$ch'");
+434                         do_action( 'eshop_order_status_updated', $ch,
+$mark );
+CVEID: XSS 2016-0765 SQLi 2016-0769
+
+
