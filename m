@@ -1,87 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/07/2
-Message-ID: <E7DB4D18-75AD-4610-8A9B-12DFB6FEE032@360.cn>
-Date: Thu, 7 Apr 2016 07:36:20 +0000
-From: 王梅 <wangmei@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-3620 libtiff: Out-of-bounds Read in the bmp2tiff tool
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/03/1
+Message-Id: <20160203003333.A47A68BC0B7@smtpvmsrv1.mitre.org>
+Date: Tue,  2 Feb 2016 19:33:33 -0500 (EST)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Miscomputations of elliptic curve scalar multiplications in Nettle
 Content-Type: text/plain; charset=utf-8
 
-Details
-=======
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Product: libtiff
-Affected Versions: <= 4.0.6
-Vulnerability Type: Out-of-bounds Read
-Vendor URL: http://www.libtiff.org/
-CVE ID: CVE-2016-3620
-Credit: Mei Wang of the Cloud Security Team, Qihoo 360
+> I discovered two carry propagation bugs
 
-Introduction
-============
+> The P-256 bug is
+> in the C code and affects multiple architectures.
+> 
+> https://lists.lysator.liu.se/pipermail/nettle-bugs/2015/003028.html
+> 
+> secp256 calculation bug (already fixed)
+> 
+> Sat Dec 12 21:48:58 CET 2015
+> 
+> https://git.lysator.liu.se/nettle/nettle/commit/c71d2c9d20eeebb985e3872e4550137209e3ce4d
+> 
+> 2015-12-10
 
- ZIPEncode function in tif_zip.c in bmp2tiff allows attackers to cause a denial of service (Out-of-bounds Read) via a crafted bmp image with param -c zip.
-
-
-./bmp2tiff  -c zip  ./sample/bmp2tiff_zip.bmp 1.tif
-
-=================================================================
-==14228== ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7f563bf05800 at pc 0x7f5638d8eb3f bp 0x7fffca413bb0 sp 0x7fffca413358
-READ of size 32768 at 0x7f563bf05800 thread T0
-    #0 0x7f5638d8eb3e (/lib64/libasan.so.0+0xeb3e)
-    #1 0x7f5638b6a136 in fill_window (/lib64/libz.so.1+0x3136)
-    #2 0x7f5638b6abbf in deflate_slow (/lib64/libz.so.1+0x3bbf)
-    #3 0x7f5638b6bc6f in deflate (/lib64/libz.so.1+0x4c6f)
-    #4 0x49cfed in ZIPEncode /home/dazhuang/asan/libtiff-master/libtiff/tif_zip.c:277
-    #5 0x45665e in TIFFWriteScanline /home/dazhuang/asan/libtiff-master/libtiff/tif_write.c:173
-    #6 0x40450f in main /home/dazhuang/asan/libtiff-master/tools/bmp2tiff.c:775
-    #7 0x7f56384c5af4 in __libc_start_main (/lib64/libc.so.6+0x21af4)
-    #8 0x4019a8 in _start (/home/dazhuang/asan/libtiff-master/tools/bmp2tiff+0x4019a8)
-0x7f563bf05800 is located 0 bytes to the right of 1114112-byte region [0x7f563bdf5800,0x7f563bf05800)
-allocated by thread T0 here:
-    #0 0x7f5638d96129 (/lib64/libasan.so.0+0x16129)
-    #1 0x45b761 in _TIFFmalloc /home/dazhuang/asan/libtiff-master/libtiff/tif_unix.c:316
-    #2 0x4037c3 in main /home/dazhuang/asan/libtiff-master/tools/bmp2tiff.c:678
-    #3 0x7f56384c5af4 in __libc_start_main (/lib64/libc.so.6+0x21af4)
-SUMMARY: AddressSanitizer: heap-buffer-overflow ??:0 ??
-Shadow bytes around the buggy address:
-  0x0feb477d8ab0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0feb477d8ac0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0feb477d8ad0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0feb477d8ae0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0feb477d8af0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0feb477d8b00:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0feb477d8b10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0feb477d8b20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0feb477d8b30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0feb477d8b40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0feb477d8b50: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07
-  Heap left redzone:     fa
-  Heap righ redzone:     fb
-  Freed Heap region:     fd
-  Stack left redzone:    f1
-  Stack mid redzone:     f2
-  Stack right redzone:   f3
-  Stack partial redzone: f4
-  Stack after return:    f5
-  Stack use after scope: f8
-  Global redzone:        f9
-  Global init order:     f6
-  Poisoned by user:      f7
-  ASan internal:         fe
-==14228== ABORTING
-
-References:
-[1] http://www.remotesensing.org/libtiff/
-[2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
+Use CVE-2015-8803.
 
 
-Thank you!
-Best Regards,
+> The P-384 bug is in
+> the assembly code and only affects 64 bit x86.
+> 
+> https://lists.lysator.liu.se/pipermail/nettle-bugs/2015/003024.html
+> 
+> Miscalculations on secp384 curve
+> 
+> Fri Dec 11 11:19:05 CET 2015
+> 
+> https://git.lysator.liu.se/nettle/nettle/commit/fa269b6ad06dd13c901dbd84a12e52b918a09cd7
+> 
+> 2015-12-15
+
+Use CVE-2015-8804.
 
 
-Mei
+> Niels Moeller discovered
+> another carry propagation bug in P-256
+>
+> https://git.lysator.liu.se/nettle/nettle/commit/c71d2c9d20eeebb985e3872e4550137209e3ce4d
+>
+> 2015-12-10
 
+Use CVE-2015-8805.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWsUqEAAoJEL54rhJi8gl5kBgP/3SoSxsZyGfBYj+2LR1uF/o7
+1cIStfXACb7RaB02DnCzkjxlBBPUxxPnZbW3nDR7XHe1n9dVSmWYavenQceikS2y
+EJmRuu6L7CaXDQ9nwj9kfmUaLoPmC737eD5vkUNu3gWyyDaDpeb4ve0UHNmInNRG
+efDC4MbT9Tmzhpfx0cDkG5hdPImWgNDQRf2loSZ2owy7XcH3a0U60kZ5mwXndQms
+eEzyj2tD4gE1VWbadjuqPplkyCjp39a30WhbWNAdizHKj5N4ai0+W7uy1P1y47qK
+BsRQwtPprsf/Vsozmf4y/tMwX4zB3DFLKq/Gtm7wjj43SSahMkN22d2tCxHfTfHB
+Cj8YciUtun9oGOPDFCMcwmzY6UrmR+Hn+DCmp821FrHD12JEaptB+BNvDkit1/0F
+lyMWCuoiqoUUplIYY3K33Ys5I8WFxw2E3eGrCmcNs3nZ+IOEqZRedwGElLFKISwJ
+EFA2fzJp0VI2jpq6+/S4d3F70BFjsZ1ZvVd+KIYvrncfOz0A76/xCWCo2spQFz39
+W3gsOVN5vPajqfI091nFwTaX3y7wqkFhb20YV11Pz38rgiM5Kfrgj03g5n1tF0oD
+7mSgLHCnI8Uz1UxJcTAYoAGHLxFZu4hM+CL5rVq3hVlUpZhj4fjE29LUdq16lYij
+dZFxx5TihZtuH0n6KxkM
+=5gQs
+-----END PGP SIGNATURE-----
