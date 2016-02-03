@@ -1,56 +1,149 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/04/5
-Message-ID: <40eb0cc31307456c8bd21fa16e044f90@imshyb02.MITRE.ORG>
-Date: Fri, 4 Nov 2016 03:10:21 -0400
-From: <cve-assign@...re.org>
-To: <robert@...oraproject.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <daniel@...x.se>
-Subject: Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/03/3
+Message-ID: <CAC1DjbatXqoCShdq+QsFyZ9j51=YCXzyoYA+P_G5jYXggCwjfw@mail.gmail.com>
+Date: Wed, 3 Feb 2016 10:40:47 +0200
+From: Dmitry Kasyanov <dkasyanov@...udlinux.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: PHP-5.5.31: multiple security vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+There are some security vurnelabilities in PHP without CVEs assigned.
+Can CVEs be assigned to these issues?
 
->> translated into `strasse.de` using IDNA 2003 but
->> is translated into `xn--strae-oqa.de` using IDNA 2008. Needless to say, those
->> host names could very well resolve to different addresses and be two
->> completely independent servers.
 
-> Maybe
-> MITRE (or somebody else) could share their thoughts about this, too?
+bug70661: Use After Free Vulnerability in WDDX Packet Deserialization
+https://bugs.php.net/bug.php?id=70661
 
-In some situations, this would be a site-specific problem at a
-registry. Although domain names can have a variety of uses of '-'
-characters, the presence of a '-' as both the third character and the
-fourth character is often recognized as a special case. Trying to
-specify xn--strae-oqa.de directly when seeking a registration is very
-different from trying to specify (for example) x--strae-oqa.de or
-xn-strae-oqa.de.
+A use-after free vulnerability was found that could possible lead to
+arbitrary remote codeexecution. Vulnerable code:
 
-Various other types of bugs (not necessarily security-relevant) have
-been reported for this general concept, e.g., see:
+if (Z_TYPE_P(ent2->data) == IS_ARRAY || Z_TYPE_P(ent2->data) == IS_OBJECT) {
+	target_hash = HASH_OF(ent2->data);
+	if (ent1->varname) {
+		if (!strcmp(ent1->varname, PHP_CLASS_NAME_VAR) &&
+			Z_TYPE_P(ent1->data) == IS_STRING && Z_STRLEN_P(ent1->data)) {
+			...
+			/* Clean up old array entry */
+			zval_ptr_dtor(&ent2->data);
+				
+			/* Set stack entry to point to the newly created object */
+			ent2->data = obj;
+					
+			/* Clean up class name var entry */
+			zval_ptr_dtor(&ent1->data);
 
-  https://framework.zend.com/issues/browse/ZF-6133
+During wddx packet deserialization the zval_ptr_dtor() lead ZVAL is freed
+from the memory, however a crafted recordset can still use already freed
+memory.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYHDHrAAoJEHb/MwWLVhi2lDEQALqezzjWHt+/S1xi8LoS/Bnm
-R+2pJxpHLUjYo4FMoQxUqZnZYyJ/NsGEIL3xwoS4Mr4r7JdhEIx6Ud6P++9Oavqd
-AiwvY1F9ZL3KtjGOZ2j5DLX78vm2HYaNyP/sMQSgY+hZIiR9PaR7PcDsSJpr7egE
-DXm8gnCIbvA+8TsJsRCOA2nKHjCKcQrWe16OYI7tehT4X1R7CE71u0T2aaOGZu8t
-GvMfTMU93evZwocrbgkinN351CC9z4hUnF0Tn56aHkYZMQyDCKseMlWjmBAQQXCY
-J/E03r2MKL823s7vG3d01cBsFBrxB/7JtvGXwPmDuTEoJfdCiRgjJoN3WzphJyFQ
-xcc7FTExJE3Y6Vk9l+7G2qrvHVppjNOaphKBKIUyzsnuT67oVPIqJAr1Qg9O8UFV
-ynluEUtNY7g8yVW9WFlR19paq9Kc4uHI6AIROAmGIjx/7Mi52s8CAR2Ce2QIAOXC
-jRh05Y1uaTaXxMCaH3zZC3Y6JlPkXnrh9C8OuzkVI954FxMwtWWnbhSuy/D8i01D
-BeY3YPcHwKtzhXS+bAhUCNl0ZWiYf879bwncCFArDk7HOnpD6Wq5I0dDajfRbMUR
-ugIgJmMVAfNmkdVhstFqPQtg/WOJ4BeqAB1x/iqu5Ow0bwiZzouum597ZsakwKPJ
-gSZTC7tJDeD5rTUINLaZ
-=ki00
------END PGP SIGNATURE-----
+---------------
+
+bug70741: Session WDDX Packet Deserialization Type Confusion Vulnerability
+
+https://bugs.php.net/bug.php?id=70741
+
+It was found that attacker can deserialize a string-type ZVAL via
+php_wddx_deserialize_ex(), which means he is able to create fake HashTable
+via the Z_ARRVAL_P macro with the string-type ZVAL. This could result in
+arbitrary remote code execution.
+
+Vulnerable code:
+
+_SERIALIZER_DECODE_FUNC(wddx)
+{
+	...
+	
+	MAKE_STD_ZVAL(retval);
+
+	if ((ret = php_wddx_deserialize_ex((char *)val, vallen, retval)) == SUCCESS) {
+
+		for (zend_hash_internal_pointer_reset(Z_ARRVAL_P(retval));
+			 zend_hash_get_current_data(Z_ARRVAL_P(retval), (void **) &ent) == SUCCESS;
+			 zend_hash_move_forward(Z_ARRVAL_P(retval))) {
+			 hash_type = zend_hash_get_current_key_ex(Z_ARRVAL_P(retval), &key,
+&key_length, &idx, 0, NULL);
+
+
+---------------
+
+bug70728: Type Confusion Vulnerability in PHP_to_XMLRPC_worker()
+https://bugs.php.net/bug.php?id=70728
+
+It was found that an attacker can control type and val via
+get_zval_xmlrpc_type() with a crafted object-type ZVAL. Z_STRVAL_P
+macro and the Z_STRLEN_P macro handles a non-string-type val, which is
+able to look up an arbitrary memory address. This results in leaking
+arbitrary memory blocks, crash application or other issues.
+
+Vulnerable code:
+
+static XMLRPC_VALUE PHP_to_XMLRPC_worker (const char* key, zval*
+in_val, int depth TSRMLS_DC)
+{
+	XMLRPC_VALUE xReturn = NULL;
+
+	if (in_val) {
+		zval* val = NULL;
+		XMLRPC_VALUE_TYPE type = get_zval_xmlrpc_type(in_val, &val);
+	
+		if (val) {
+			switch (type) {
+				case xmlrpc_base64:
+					if (Z_TYPE_P(val) == IS_NULL) {
+						xReturn = XMLRPC_CreateValueEmpty();
+						XMLRPC_SetValueID(xReturn, key, 0);
+					} else {
+						xReturn = XMLRPC_CreateValueBase64(key, Z_STRVAL_P(val), Z_STRLEN_P(val));
+					}
+					break;
+				case xmlrpc_datetime:
+					convert_to_string(val);
+					xReturn = XMLRPC_CreateValueDateTime_ISO8601(key, Z_STRVAL_P(val));
+					break;
+...
+XMLRPC_VALUE_TYPE get_zval_xmlrpc_type(zval* value, zval** newvalue) /* {{{ */
+{
+	XMLRPC_VALUE_TYPE type = xmlrpc_none;
+	TSRMLS_FETCH();
+
+	if (value) {
+		switch (Z_TYPE_P(value)) {
+			...
+			case IS_OBJECT:
+				{
+					zval** attr;
+					type = xmlrpc_vector;
+
+					if (zend_hash_find(Z_OBJPROP_P(value), OBJECT_TYPE_ATTR,
+sizeof(OBJECT_TYPE_ATTR), (void**) &attr) == SUCCESS) {
+						if (Z_TYPE_PP(attr) == IS_STRING) {
+							type = xmlrpc_str_as_type(Z_STRVAL_PP(attr));
+						}
+					}
+					break;
+				}
+		}
+
+		/* if requested, return an unmolested (magic removed) copy of the value */
+		if (newvalue) {
+			zval** val;
+
+			if ((type == xmlrpc_base64 && Z_TYPE_P(value) != IS_NULL) || type
+== xmlrpc_datetime) {
+				if (zend_hash_find(Z_OBJPROP_P(value), OBJECT_VALUE_ATTR,
+sizeof(OBJECT_VALUE_ATTR), (void**) &val) == SUCCESS) {
+					*newvalue = *val;
+				}
+			} else {
+				*newvalue = value;
+			}
+		}
+
+
+Thank You!
+
+-- 
+Dmitry Kasyanov  |  CloudLinux Developer
+dkasyanov@...udlinux.com  |  Skype: korvin-san
+
