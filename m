@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1039" "Wednesday" "14" "December" "2016" "08:19:09" "+0000" "Sona Sarmadi" "sona.sarmadi@enea.com" "<3230301C09DEF9499B442BBE162C5E48AC0EAB12@sestoex09.enea.se>" "33" "[oss-security] vulnerable version: 4.8.12 and previous versions but xml file says: cpe:/o:linux:linux_kernel:4.8.12\"/>  " "^CC:" nil nil "12" "2016121408:19:09" "[oss-security] vulnerable version: 4.8.12 and previous versions but xml file says: cpe:/o:linux:linux_kernel:4.8.12\"/>" (number mark "        sona.sarmadi Dec 14   33/1039  " thread-indent "\"[oss-security] vulnerable version: 4.8.12 and previous versions but xml file says: cpe:/o:linux:linux_kernel:4.8.12\"/>  \"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1991" "Tuesday" "2" "February" "2016" "19:33:33" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160203003333.A47A68BC0B7@smtpvmsrv1.mitre.org>" "68" "[oss-security] Re: Miscomputations of elliptic curve scalar multiplications in Nettle" "^Cc:" nil nil "2" "2016020300:33:33" "[oss-security] Re: Miscomputations of elliptic curve scalar multiplications in Nettle" (number mark "        cve-assign@m Feb  2   68/1991  " thread-indent "\"[oss-security] Re: Miscomputations of elliptic curve scalar multiplications in Nettle\"\n") "<20160202105622.08d2d62c@pc1>" ("<20160202105622.08d2d62c@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 14330 invoked by uid 550); 14 Dec 2016 08:19:22 -0000
+Received: (qmail 5327 invoked by uid 550); 3 Feb 2016 00:33:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14312 invoked from network); 14 Dec 2016 08:19:22 -0000
-Thread-Topic: vulnerable version: 4.8.12 and previous versions but xml file
- says: cpe:/o:linux:linux_kernel:4.8.12"/>  
-Thread-Index: AdJV4ryQSk7MwcypQTKM1/RdzVvfHA==
-Message-ID: <3230301C09DEF9499B442BBE162C5E48AC0EAB12@sestoex09.enea.se>
-Accept-Language: sv-SE, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [172.16.142.231]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-Outbound-IP: 192.36.1.72
-X-Env-From: sona.sarmadi@enea.com
-X-Proto: esmtps
-X-Revdns: mx-3.enea.com
-X-HELO: mx-3.enea.com
-X-TLS: TLSv1:AES128-SHA:128
-X-Authenticated_ID: 
-X-PolicySMART: 6551647
-X-Virus-Status: Scanned by VirusSMART (c)
-X-Virus-Status: Scanned by VirusSMART (s)
-CC: "cve-assign@mitre.org" <cve-assign@mitre.org>
-Date: Wed, 14 Dec 2016 08:19:09 +0000
-From: Sona Sarmadi <sona.sarmadi@enea.com>
+Received: (qmail 5275 invoked from network); 3 Feb 2016 00:33:45 -0000
+In-Reply-To: <20160202105622.08d2d62c@pc1>
+Message-Id: <20160203003333.A47A68BC0B7@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue,  2 Feb 2016 19:33:33 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] vulnerable version: 4.8.12 and previous versions but xml file says:
- cpe:/o:linux:linux_kernel:4.8.12"/>  
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Subject: [oss-security] Re: Miscomputations of elliptic curve scalar multiplications in Nettle
+To: hanno@hboeck.de
 
-Hi all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-It seems that nvd.xml files (e.g. nvdcve-2.0-2016.xml) does not list vulner=
-able versions correctly. One example is the following CVE. Vulnerable versi=
-ons are according to the link below "linux kernel 4.8.12 and previous versi=
-ons":
+> I discovered two carry propagation bugs
 
-https://web.nvd.nist.gov/view/vuln/detail?vulnId=3DCVE-2016-8655=20
+> The P-256 bug is
+> in the C code and affects multiple architectures.
+> 
+> https://lists.lysator.liu.se/pipermail/nettle-bugs/2015/003028.html
+> 
+> secp256 calculation bug (already fixed)
+> 
+> Sat Dec 12 21:48:58 CET 2015
+> 
+> https://git.lysator.liu.se/nettle/nettle/commit/c71d2c9d20eeebb985e3872e4550137209e3ce4d
+> 
+> 2015-12-10
 
-      Race condition in net/packet/af_packet.c in the Linux kernel through =
-4.8.12 ..
+Use CVE-2015-8803.
 
 
-Vulnerable software and versions
-+ Configuration 1
-* OR
-*=A0cpe:/o:linux:linux_kernel:4.8.12 and previous versions
+> The P-384 bug is in
+> the assembly code and only affects 64 bit x86.
+> 
+> https://lists.lysator.liu.se/pipermail/nettle-bugs/2015/003024.html
+> 
+> Miscalculations on secp384 curve
+> 
+> Fri Dec 11 11:19:05 CET 2015
+> 
+> https://git.lysator.liu.se/nettle/nettle/commit/fa269b6ad06dd13c901dbd84a12e52b918a09cd7
+> 
+> 2015-12-15
 
-While in the xml file it just mention "cpe:/o:linux:linux_kernel:4.8.12"
+Use CVE-2015-8804.
 
-nvdcve-2.0-2016.xml:
-..
-<entry id=3D"CVE-2016-9919">
-    <vuln:vulnerable-configuration id=3D"http://nvd.nist.gov/">
-      <cpe-lang:logical-test operator=3D"OR" negate=3D"false">
-        <cpe-lang:fact-ref name=3D"cpe:/o:linux:linux_kernel:4.8.12"/>=20=20
-      </cpe-lang:logical-test>
-    </vuln:vulnerable-configuration>
-    <vuln:vulnerable-software-list>
-      <vuln:product>cpe:/o:linux:linux_kernel:4.8.12</vuln:product>
 
-Cheers
-//Sona
+> Niels Moeller discovered
+> another carry propagation bug in P-256
+>
+> https://git.lysator.liu.se/nettle/nettle/commit/c71d2c9d20eeebb985e3872e4550137209e3ce4d
+>
+> 2015-12-10
+
+Use CVE-2015-8805.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWsUqEAAoJEL54rhJi8gl5kBgP/3SoSxsZyGfBYj+2LR1uF/o7
+1cIStfXACb7RaB02DnCzkjxlBBPUxxPnZbW3nDR7XHe1n9dVSmWYavenQceikS2y
+EJmRuu6L7CaXDQ9nwj9kfmUaLoPmC737eD5vkUNu3gWyyDaDpeb4ve0UHNmInNRG
+efDC4MbT9Tmzhpfx0cDkG5hdPImWgNDQRf2loSZ2owy7XcH3a0U60kZ5mwXndQms
+eEzyj2tD4gE1VWbadjuqPplkyCjp39a30WhbWNAdizHKj5N4ai0+W7uy1P1y47qK
+BsRQwtPprsf/Vsozmf4y/tMwX4zB3DFLKq/Gtm7wjj43SSahMkN22d2tCxHfTfHB
+Cj8YciUtun9oGOPDFCMcwmzY6UrmR+Hn+DCmp821FrHD12JEaptB+BNvDkit1/0F
+lyMWCuoiqoUUplIYY3K33Ys5I8WFxw2E3eGrCmcNs3nZ+IOEqZRedwGElLFKISwJ
+EFA2fzJp0VI2jpq6+/S4d3F70BFjsZ1ZvVd+KIYvrncfOz0A76/xCWCo2spQFz39
+W3gsOVN5vPajqfI091nFwTaX3y7wqkFhb20YV11Pz38rgiM5Kfrgj03g5n1tF0oD
+7mSgLHCnI8Uz1UxJcTAYoAGHLxFZu4hM+CL5rVq3hVlUpZhj4fjE29LUdq16lYij
+dZFxx5TihZtuH0n6KxkM
+=5gQs
+-----END PGP SIGNATURE-----
