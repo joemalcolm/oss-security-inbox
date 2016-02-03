@@ -1,51 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/8
-Message-ID: <CADLX=aGK=sSvmbLxd-HaExNsVSVak64Xr6-nLVY6kXqvRT4iaw@mail.gmail.com>
-Date: Tue, 19 Jan 2016 18:12:57 +0530
-From: Rahul Pratap Singh <techno.rps@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Quick Cart v6.6 XSS Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/03/5
+Message-Id: <20160203171216.EA851332075@smtpvbsrv1.mitre.org>
+Date: Wed,  3 Feb 2016 12:12:16 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function
 Content-Type: text/plain; charset=utf-8
 
-## FULL DISCLOSURE
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-#Product    : Quick Cart
-#Version    : 6.6
-#Home page Link  : http://opensolution.org/home.html
-#Date        : 19/Jan/2016
+>> > From: Salvatore Bonaccorso
+>> >
+>> > While checking upstream bugzilla to see if that was reported I noticed
+>> >
+>> > https://bugzilla.gnome.org/show_bug.cgi?id=749115
+>> >
+>> > Does this have the same root cause?
+>>
+>> The CVE-2016-2073 PoC is an '&' followed by three characters, one of
+>> which is a 0273 character. The PoC in 749115 has an unexpected
+>> character immediately after a "<!DOCTYPE html" substring. We feel that
+>> the CVE-2016-2073 report can have that unique ID on the basis of (at
+>> least) a different attack methodology. CVE assignment for 749115 is
+>> also possible unless 749115 already has a CVE ID.
 
-XSS Vulnerability:
+> ... Can you assign an additional CVE for
+> the 749115 issue?
 
-----------------------------------------
-Description:
-----------------------------------------
- "sSort" parameter is not sanitized that leads to Reflected XSS.
+Use CVE-2015-8806 for 749115. (We don't know of any additional
+information about a CVE-2015-8806/CVE-2016-2073 interrelationship, or
+about other CVE IDs that could potentially apply to an 'unexpected
+character immediately after a "<!DOCTYPE html" substring' scenario.)
 
-----------------------------------------
-Vulnerable Code:
-----------------------------------------
-File Name: products.php
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Found at line:26
-<?php if( isset( $sSort ) ) echo '<input type="hidden" name="sSort"
-value="'.$sSort.'" />'; ?>
-
-----------------------------------------
-Exploit:
-----------------------------------------
-localhost/Quick.Cart_v6.6/admin.php?p=pages-list&sSort="%20onclick="alert(1)&sPhrase=
-
-----------------------------------------
-POC:
-----------------------------------------
-https://0x62626262.files.wordpress.com/2016/01/quick-cartv6-6xsspoc.png
-
-
-Disclosure Timeline:
-Tried to contact vendor via email  : 14/1/2016 ( email bounce back)
-Tried to contact vendor via forum : 18/1/2016 (thread deleted, no response)
-Public Disclosure: 19/1/2016
-
-Pub ref:
-https://0x62626262.wordpress.com/2016/01/19/quick-cart-v-6-6-xss-vulnerability
-
+iQIcBAEBCAAGBQJWsjQMAAoJEL54rhJi8gl5ygUQAM4hAERzVI/E9CpMfv6esYFh
+qu3drRJ0HyXvxCix9Qq1CvzegF3sFVUcvTjlz1gtNeZ4akP+k+U4VHwavU3yEuLN
+ALvOYERtEP+rv841VYXnWwyb717zYqcoy5H3mN3xIIetvLDhNjq2WDduLZTDXLYg
+szlt3pQpZIWdzURkfiZC05wcgi3JmRJG5rZQYI2gK2ijWW6yYI8Q+1R1fJT1mvO1
+Zp5Z+k6e3eaStEvR+8N9QXsLEL36EDb72B9KCF2Vu500g+cfTkA/KDGyM4h9dB1I
+6d2pENAtkt7ur42mMgU36VxZGF6thAtG2EaLJaD2U2DLh8DWwzqCtesBV0xK4u4z
+7KOKl9j46XmYvO6AbgrjdK1Ij0QWeOmDbNE3/gRfOTTLZrgH/uwWVx45e05SG9m/
+rs2Fb8zHkCfWrHJbBnKgh7biKYrnfg6oj/RELOf3mMdZZ8OVA015IIiI4zLPvdE3
+153o4nbiWs9rIXmFhNbuLB7FuCjg2mFl6Ffv7XgzL/BD6OIw5N53i1hxzmE+cV57
+JuUMZPCzfdQ75xyBm/UfMc7bpY4auLuegrSQYUkZI4HKaa+QVMdnSJOIA0RAAxsE
+9pkvHu9eF5s+j7X+M9u2xJxrwhLDRNolM10jkivTrgTjAPFYUdQ2ppfzJ0AUaYtQ
+UMHN8iEju9U93dGVuYRT
+=v0jI
+-----END PGP SIGNATURE-----
