@@ -1,51 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/16
-Message-ID: <10bd295d-3a8f-a08a-4c60-9af84d78ef25@apache.org>
-Date: Tue, 22 Nov 2016 09:57:59 +0000
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/04/2
+Message-ID: <56B321C5.40600@suse.com>
+Date: Thu, 4 Feb 2016 11:02:45 +0100
+From: Andreas Stieger <astieger@...e.com>
 To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2016-8735 Apache Tomcat Remote Code Execution
+Cc: cve-assign@...re.org
+Subject: Re: Socat security advisory 7 - Created new 2048bit DH modulus
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-8735 Apache Tomcat Remote Code Execution
+Hello,
 
-Severity: Important
+On 02.02.2016 20:36, cve-assign@...re.org wrote:
+> >   In the OpenSSL address implementation the hard coded 1024 bit DH p
+> >   parameter was not prime. The effective cryptographic strength of a key
+> >   exchange using these parameters was weaker than the one one could
+> get by
+> >   using a prime p. Moreover, since there is no indication of how these
+> >   parameters were chosen, the existence of a trapdoor that makes
+> possible
+> >   for an eavesdropper to recover the shared secret from a key
+> exchange that
+> >   uses them cannot be ruled out.
+>
+> This was sent to the oss-security list as a published advisory, not as
+> a CVE ID request. We would expect that one or more parties (e.g.,
+> Linux distributions) are planning to re-announce this to a different
+> audience in a way that would make at least one CVE ID especially
+> useful. Our question is about whether anyone needs two CVE IDs.
 
-Vendor: The Apache Software Foundation
+SUSE acknowledges that one CVE ID would be useful for the "was not
+prime" finding, and would not need a second CVE ID.
 
-Versions Affected:
-Apache Tomcat 9.0.0.M1 to 9.0.0.M11
-Apache Tomcat 8.5.0 to 8.5.6
-Apache Tomcat 8.0.0.RC1 to 8.0.38
-Apache Tomcat 7.0.0 to 7.0.72
-Apache Tomcat 6.0.0 to 6.0.47
-Earlier, unsupported versions may also be affected.
+SUSE distributions, except for the openSUSE Tumbleweed rolling community
+distribution, is not affected:
+https://bugzilla.suse.com/show_bug.cgi?id=964843
 
-Description
-The JmxRemoteLifecycleListener was not updated to take account of
-Oracle's fix for CVE-2016-3427. Therefore, Tomcat installations using
-this listener remained vulnerable to a similar remote code execution
-vulnerability. This issue has been rated as important rather than
-critical due to the small number of installations using this listener
-and that it would be highly unusual for the JMX ports to be accessible
-to an attacker even when the listener is used.
+Andreas
 
-Mitigation
-Users of affected versions should apply one of the following mitigations
-- Upgrade to Apache Tomcat 9.0.0.M13 or later
-  (Apache Tomcat 9.0.0.M12 has the fix but was not released)
-- Upgrade to Apache Tomcat 8.5.8 or later
-  (Apache Tomcat 8.5.7 has the fix but was not released)
-- Upgrade to Apache Tomcat 8.0.39 or later
-- Upgrade to Apache Tomcat 7.0.73 or later
-- Upgrade to Apache Tomcat 6.0.48 or later
+-- 
+Andreas Stieger <astieger@...e.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG Nürnberg)
 
-Credit:
-This issue was discovered by Pierre Ernst and reported responsibly to
-the Apache Tomcat Security Team.
 
-References:
-[1] http://tomcat.apache.org/security-9.html
-[2] http://tomcat.apache.org/security-8.html
-[3] http://tomcat.apache.org/security-7.html
-[4] http://tomcat.apache.org/security-6.html
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
