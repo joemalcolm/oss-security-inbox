@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1431" "Wednesday" "28" "September" "2016" "11:16:10" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkLCxTbJsZM7H53Kpd_OtBCPaiFowvoHJ0K-h6=e7u_Xog@mail.gmail.com>" "42" "Re: [oss-security] ImageMagick identify \"d:\" hangs" "^Date:" nil nil "9" "2016092818:16:10" "[oss-security] ImageMagick identify \"d:\" hangs" (number mark "        taviso@googl Sep 28   42/1431  " thread-indent "\"Re: [oss-security] ImageMagick identify \"d:\" hangs\"\n") "<alpine.GSO.2.20.1609270954220.18003@freddy.simplesystems.org>" ("<alpine.GSO.2.20.1609270837170.5577@freddy.simplesystems.org>" "<20160927142500.3x26pcrhw5x4nt6s@jwilk.net>" "<alpine.GSO.2.20.1609270954220.18003@freddy.simplesystems.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2830" "Thursday" "4" "February" "2016" "12:44:06" "+0000" "Tristan Cacqueray" "tdecacqu@redhat.com" "<56B34796.7080408@redhat.com>" "86" "[oss-security] [OSSA 2016-006] Glance image status manipulation through locations removal (CVE-2016-0757)" "^Date:" nil nil "2" "2016020412:44:06" "[oss-security] [OSSA 2016-006] Glance image status manipulation through locations removal (CVE-2016-0757)" (number mark "U       tdecacqu@red Feb  4   86/2830  " thread-indent "\"[oss-security] [OSSA 2016-006] Glance image status manipulation through locations removal (CVE-2016-0757)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32507 invoked by uid 550); 28 Sep 2016 18:25:11 -0000
+Received: (qmail 12286 invoked by uid 550); 4 Feb 2016 12:43:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,82 +11,106 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28157 invoked from network); 28 Sep 2016 18:16:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=yyxXO5Cza1DxbLatE7ay3N0OgQMnRn7gKk+/MAO89HE=;
-        b=BZI6vI32t08fe277A8lNK8jY6T9z/MrHjh90ICzaKZAIT5IOojLdB41TC7qHsncvgY
-         jicLkgpBoFAvesCXdzXWHoshwYB2as9CBdJFokm8H2d15KbneUMBULvgyVe2+uoat08Z
-         6AiXuLcNhv0JtETSDSJWun0B2GgPA17BNgVjCSOBX2bDp47Ml1cFX9K/bcEYlQFIvx5V
-         jmQj2fSHXItqGQbo8RZfIyzdNnANDKUNwCY02wQceQu3li8VGvH/Io2Ia+XIunbEf9Pu
-         HKRIOhCWmK9e93adzXZds6qqxAyKg2oFPDazNMkDlFxVUHKGrl2dBlXkUzaZIBI62cwM
-         df9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=yyxXO5Cza1DxbLatE7ay3N0OgQMnRn7gKk+/MAO89HE=;
-        b=FOxAASui2o7vRI6EIy++vxB1OPv0/qSvnCw4qx4dd9ND5009CwNu6Wa1kZqsoeTOUd
-         nwMh62pglT1AC61jmtudnijDixfyMdFZdPx6vbbLcaTRKcPgeF16j2Y91gVqix0Tjym2
-         RAemRmZUKDpFrBxO+/OeNvLBThMOzhSKVzVXgWFZOugysFu2vB4sMk+1l4itXTqklCVt
-         XmoXK61pJUt0MIr+llyHiN0148nQp2goP4j6DtXZw5K/DomFEZipAEwdeqbjOUfcbry1
-         WkSEj/qeOzyRVYDiNipQqbzAnuqW7AL9B0vtHKRtoys9dvU2e7guH55X7bTsxut29ejP
-         SMEA==
-X-Gm-Message-State: AA6/9RmyB2LVRgS17yO9tXIfLCymIbs+jQB3l4FMZE7ndzcuNQYHJjZjywFK8vQgXU8Xl6TDcnGyfUfS9dI6zEQ6
-X-Received: by 10.31.16.12 with SMTP id g12mr15272361vki.146.1475086591539;
- Wed, 28 Sep 2016 11:16:31 -0700 (PDT)
+Received: (qmail 12259 invoked from network); 4 Feb 2016 12:43:48 -0000
+X-Enigmail-Draft-Status: N1110
+Message-ID: <56B34796.7080408@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
 MIME-Version: 1.0
-In-Reply-To: <alpine.GSO.2.20.1609270954220.18003@freddy.simplesystems.org>
-References: <alpine.GSO.2.20.1609270837170.5577@freddy.simplesystems.org>
- <20160927142500.3x26pcrhw5x4nt6s@jwilk.net> <alpine.GSO.2.20.1609270954220.18003@freddy.simplesystems.org>
-Message-ID: <CAJ_zFkLCxTbJsZM7H53Kpd_OtBCPaiFowvoHJ0K-h6=e7u_Xog@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 28 Sep 2016 11:16:10 -0700
-From: Tavis Ormandy <taviso@google.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="CCJGBrWmkb7Cj2s1FGKk9I0AFpOWvGmmJ"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+Date: Thu, 4 Feb 2016 12:44:06 +0000
+From: Tristan Cacqueray <tdecacqu@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] ImageMagick identify "d:" hangs
+Subject: [oss-security] [OSSA 2016-006] Glance image status manipulation through locations
+ removal (CVE-2016-0757)
 To: oss-security@lists.openwall.com
 
-On Tue, Sep 27, 2016 at 7:56 AM, Bob Friesenhahn
-<bfriesen@simple.dallas.tx.us> wrote:
->
-> On Tue, 27 Sep 2016, Jakub Wilk wrote:
->
->> * Bob Friesenhahn <bfriesen@simple.dallas.tx.us>, 2016-09-27, 08:48:
->>>
->>> From my own investigations, I used
->>>
->>>  identify -debug all "d:"
->>>
->>> and see that a temporary file is reported to be created and then the program hangs which no apparent CPU usage.
->>
->>
->> strace tells me that it waits for input on stdin.
->> This is a simpler way to make it "hang":
->>
->>  identify -
->
->
-> This is what I expected was happening.  The main thing to investigate is if the "ImageTragick" patches distributions are using do protect against this possible issue as well.
->
+--CCJGBrWmkb7Cj2s1FGKk9I0AFpOWvGmmJ
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-You know, you reminded me that the pdf and/or the ps delegate probably
-allows filesystem enumeration via filenameforall, as far as I know
-that's permitted with -dSAFER. I think that's probably unexpected.
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+OSSA-2016-006: Glance image status manipulation through locations
+               removal
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-For example, if you try to identify a file like this, it will list
-local usernames on stdout, I guess a real attack would have to encode
-that in the output somehow, but I only know enough postscript to know
-i'd rather write bf. Might be a fun exercise for masochistic hackers
-though.
+:Date: February 03, 2016
+:CVE: CVE-2016-0757
 
-$ cat whatever.jpeg
-%PDF-1.0
-(/home/*) {==} 256 string filenameforall
-$ identify whatever.jpeg
-(/home/taviso)
-identify.im6: Postscript delegate failed `whatever.jpeg': No such file
-or directory @ error/pdf.c/ReadPDFImage/677.
 
-Tavis.
+Affects
+~~~~~~~
+- Glance: <=3D2015.1.2, >=3D11.0.0 <=3D 11.0.1
+
+
+Description
+~~~~~~~~~~~
+Erno Kuvaja from HPE reported a vulnerability in Glance. By removing
+the last location of an image, an authenticated user may change the
+image status back to queued and may be able to upload new image data
+resulting in a broken Glance's immutability promise. A malicious
+tenant may exploit this flaw to silently replace image data it owns,
+regardless of the original creator or the visibility settings. Only
+setups with show_multiple_locations enabled (not default) are
+affected.
+
+
+Patches
+~~~~~~~
+- https://review.openstack.org/275735 (Kilo)
+- https://review.openstack.org/275736 (Liberty)
+- https://review.openstack.org/275737 (Mitaka)
+
+
+Credits
+~~~~~~~
+- Erno Kuvaja from HPE (CVE-2016-0757)
+
+
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/bugs/1525915
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2016-0757
+
+
+Notes
+~~~~~
+- This fix will be included in future 2015.1.3 (kilo) and 11.0.2
+  (liberty) releases.
+- The proposed fix prevents the removal of the last location of an
+  image so that an active image is always available. This action was
+  previously incorrectly allowed and the fix might break some users who
+  are relying on the false assumption that it would be ok to replace
+  the data of existing image in the special case that the multiple
+  locations has been configured.
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+--CCJGBrWmkb7Cj2s1FGKk9I0AFpOWvGmmJ
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBCAAGBQJWs0eXAAoJECK5oFySXMXYj2oH/AtooRqmXhaNs6CedsrxlBMP
+Usn9aIFEYELxHsPiIh7RRM2ecsax1aJqAdHAhmZMFZw6vYYCeFREh6DqZzhxCnRH
+iej/30BjW6l9B3q0CrlO224HmLqdfe7ZFw8gB5GEng1j1kq/xSjZXcSntxoc12D6
+a+wIwDOpGaLApBAwy9H2yx5vwAC1CJ6y06e1NdiumEgggAqvbDRLzgvkh1WPRWyc
+xRozROu6RePaHb1oOl4Oo0YCzgB0f2psnK6TMDdIzIeN1GNZ64Bb8wdXCzroZP2+
+wE3oz70dj2+ndhIsgkoIz2ME8xAe8iJs8apjWivuwHScimgRQQ349qpLZyx8JLQ=
+=ZLd6
+-----END PGP SIGNATURE-----
+
+--CCJGBrWmkb7Cj2s1FGKk9I0AFpOWvGmmJ--
