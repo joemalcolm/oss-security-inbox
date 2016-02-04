@@ -1,58 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/28/11
-Message-Id: <20160928201120.CB064ABC23D@smtpvmsrv1.mitre.org>
-Date: Wed, 28 Sep 2016 16:11:20 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/04/3
+Message-ID: <56B34796.7080408@redhat.com>
+Date: Thu, 4 Feb 2016 12:44:06 +0000
+From: Tristan Cacqueray <tdecacqu@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE request - mujs Heap-Buffer-Overflow write and OOB Read
+Subject: [OSSA 2016-006] Glance image status manipulation through locations removal (CVE-2016-0757)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+=================================================================
+OSSA-2016-006: Glance image status manipulation through locations
+               removal
+=================================================================
 
-> mujs str Out-of-Bound read 1 byte in function chartorune.
-> http://bugs.ghostscript.com/show_bug.cgi?id=697136
-
->> AddressSanitizer: heap-buffer-overflow
->> READ of size 1
->> 
->> We were unconditionally reading the next character if we encountered
->> a '*' in a multi-line comment; possibly reading past the end of
->> the input.
-
-Use CVE-2016-7563.
+:Date: February 03, 2016
+:CVE: CVE-2016-0757
 
 
-> mujs "char *s" Heap overflow in Fp_toString at jsfunction.c:72
-> http://bugs.ghostscript.com/show_bug.cgi?id=697137
+Affects
+~~~~~~~
+- Glance: <=2015.1.2, >=11.0.0 <= 11.0.1
 
->> AddressSanitizer: heap-buffer-overflow
->> WRITE of size 1
->> 
->> We were not allocating space for the terminating zero byte.
 
-Use CVE-2016-7564.
+Description
+~~~~~~~~~~~
+Erno Kuvaja from HPE reported a vulnerability in Glance. By removing
+the last location of an image, an authenticated user may change the
+image status back to queued and may be able to upload new image data
+resulting in a broken Glance's immutability promise. A malicious
+tenant may exploit this flaw to silently replace image data it owns,
+regardless of the original creator or the visibility settings. Only
+setups with show_multiple_locations enabled (not default) are
+affected.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX7COpAAoJEHb/MwWLVhi24ugP/19AmMjWnrZ9kH88CpBt/y0M
-s6rWfYpCF0k56G6RSlkuUm/XOlqBPAsWK9I3REM32shkCLaA0L96IeQnW1h/flT1
-7m30tJmxi31i31XfvpnBJWl06EqKTMZvNdNQBO+JS79ehBGmhmsIWjs9EkbBpNIv
-9jr3rzWE+K7IAZcWAGu5e56mCC+FpNE1djZ8Iaw+RuX2oVOvJoDTq1hskiRMijKw
-qXiudF6upJ8HUzBWN3mbDAUtuA0VmYClQZ39iy7V6nH7QuwbG4XLvzAjkCjmzwhS
-bkg7zFhNOMw6J1nuVD5s5VtrhRctgaPaDDaTnNsw7IYjyYNbO+obhw3x1ZnqrXcx
-+wN3ZfMzxk0Q4n4KypmF2OJ6QITYqH5K6ofO5D9OI39cUmjsBEj1smqxSZq01xrU
-YxDyGS4gNQ6hWKS23/wgPt9YAjX+2xBMnAyygBrAzNcfFmO42XUpHDWl2ArnXQ1l
-kVyZLKOxFbGeTcsMyDFAjsDwD9tffl/6jDkZgd34em6kS1+lE7bccy2+IUsynrxz
-7zqhueAX7uOOVbjgJ4bVpGYgebj2J8AVHJoJJKtaWskCBKbxyxbT49twJ56lSDd9
-s5kVrUGdOz6+9RO7GJ/6dEwqJjmUYXh8O/3qI3h4gjmeTHAIaJ+uxhZ5J34Sj8xe
-B6ZoBxrnz+3QVOfjQ49u
-=iapx
------END PGP SIGNATURE-----
+Patches
+~~~~~~~
+- https://review.openstack.org/275735 (Kilo)
+- https://review.openstack.org/275736 (Liberty)
+- https://review.openstack.org/275737 (Mitaka)
+
+
+Credits
+~~~~~~~
+- Erno Kuvaja from HPE (CVE-2016-0757)
+
+
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/bugs/1525915
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-0757
+
+
+Notes
+~~~~~
+- This fix will be included in future 2015.1.3 (kilo) and 11.0.2
+  (liberty) releases.
+- The proposed fix prevents the removal of the last location of an
+  image so that an active image is always available. This action was
+  previously incorrectly allowed and the fix might break some users who
+  are relying on the false assumption that it would be ok to replace
+  the data of existing image in the special case that the multiple
+  locations has been configured.
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
