@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5513" "Tuesday" "21" "April" "2020" "21:15:44" "+0200" "Morten Linderud" "foxboron@archlinux.org" "<20200421191544.2w3zzmpwxl5tq5qg@anathema>" "130" "Re: [oss-security] Pacman package manager - taking untrusted input" nil nil nil "4" "2020042119:15:44" "[oss-security] Pacman package manager - taking untrusted input" (number mark "U       foxboron@arc Apr 21  130/5513  " thread-indent "\"Re: [oss-security] Pacman package manager - taking untrusted input\"\n") "<20200421184747.GA93069@espresso.pseudorandom.co.uk>" ("<RrVCUf0UYM4S99v51o8A6lAatx04FP2OR23b5CU8yUASHP5KYo_uzDUGevjvZdhYY8QxFFH190BQOw-r2TG7neN7NOkiAyixvsVOzwCpcs8=@protonmail.com>" "<5b8fe86a-56e8-715a-1f0d-a4961e516fc2@aminvakil.com>" "<20200421184747.GA93069@espresso.pseudorandom.co.uk>") nil nil nil nil nil nil nil "Re: [oss-security] Pacman package manager - taking untrusted input" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2536" "Thursday" "4" "February" "2016" "11:02:45" "+0100" "Andreas Stieger" "astieger@suse.com" "<56B321C5.40600@suse.com>" "65" "[oss-security] Re: Socat security advisory 7 - Created new 2048bit DH modulus" "^Cc:" nil nil "2" "2016020410:02:45" "[oss-security] Re: Socat security advisory 7 - Created new 2048bit DH modulus" (number mark "        astieger@sus Feb  4   65/2536  " thread-indent "\"[oss-security] Re: Socat security advisory 7 - Created new 2048bit DH modulus\"\n") "<20160202193606.7345E8BC044@smtpvmsrv1.mitre.org>" ("<20160202193606.7345E8BC044@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18005 invoked by uid 550); 21 Apr 2020 19:33:56 -0000
+Received: (qmail 28596 invoked by uid 550); 4 Feb 2016 10:03:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,151 +11,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32309 invoked from network); 21 Apr 2020 19:15:58 -0000
-Authentication-Results: linderud.pw; dkim=none; dkim-atps=neutral
-Date: Tue, 21 Apr 2020 21:15:44 +0200
-From: Morten Linderud <foxboron@archlinux.org>
-To: oss-security@lists.openwall.com
-Cc: "info@aminvakil.com" <info@aminvakil.com>
-Message-ID: <20200421191544.2w3zzmpwxl5tq5qg@anathema>
-References: <RrVCUf0UYM4S99v51o8A6lAatx04FP2OR23b5CU8yUASHP5KYo_uzDUGevjvZdhYY8QxFFH190BQOw-r2TG7neN7NOkiAyixvsVOzwCpcs8=@protonmail.com>
- <5b8fe86a-56e8-715a-1f0d-a4961e516fc2@aminvakil.com>
- <20200421184747.GA93069@espresso.pseudorandom.co.uk>
+Received: (qmail 28544 invoked from network); 4 Feb 2016 10:03:09 -0000
+References: <20160202193606.7345E8BC044@smtpvmsrv1.mitre.org>
+Organization: SUSE Linux GmbH
+Message-ID: <56B321C5.40600@suse.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
 MIME-Version: 1.0
+In-Reply-To: <20160202193606.7345E8BC044@smtpvmsrv1.mitre.org>
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="3j3a4p3c5ngbgltu"
-Content-Disposition: inline
-In-Reply-To: <20200421184747.GA93069@espresso.pseudorandom.co.uk>
-Subject: Re: [oss-security] Pacman package manager - taking untrusted input
+ protocol="application/pgp-signature";
+ boundary="fFMQg4Q4G2hUIsTir4UiI53bS9rmQfEqF"
+Cc: cve-assign@mitre.org
+Date: Thu, 4 Feb 2016 11:02:45 +0100
+From: Andreas Stieger <astieger@suse.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Socat security advisory 7 - Created new 2048bit DH modulus
+To: oss-security@lists.openwall.com
 
---3j3a4p3c5ngbgltu
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+--fFMQg4Q4G2hUIsTir4UiI53bS9rmQfEqF
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Apr 21, 2020 at 07:47:47PM +0100, Simon McVittie wrote:
-> On Tue, 21 Apr 2020 at 21:51:56 +0430, Amin Vakil wrote:
-> > On 4/21/20 8:57 PM, jellicent@protonmail.com wrote:
-> > > The code supports database signatures, so the real issue is the distro
-> > > infrastructure.
->=20
-> I interpret this as: pacman can accept either signed or unsigned
-> databases, but the various distros that use pacman (such as Arch Linux)
-> currently only publish unsigned databases in practice. Is that correct?
->=20
-> Can pacman be configured to *only* accept signed databases, so that a
-> mirror containing an unverifiable database (unsigned, signed with a key
-> that is not explicitly trusted, or with an invalid signature) is treated
-> as an error? If it cannot, then there's an obvious downgrade attack:
-> a malicious mirror could substitute an unsigned database and the pacman
-> client would happily use that.
+Hello,
 
-Pacman can enforce database signatures, it is described in the man page:
+On 02.02.2016 20:36, cve-assign@mitre.org wrote:
+> >   In the OpenSSL address implementation the hard coded 1024 bit DH p
+> >   parameter was not prime. The effective cryptographic strength of a key
+> >   exchange using these parameters was weaker than the one one could
+> get by
+> >   using a prime p. Moreover, since there is no indication of how these
+> >   parameters were chosen, the existence of a trapdoor that makes
+> possible
+> >   for an eavesdropper to recover the shared secret from a key
+> exchange that
+> >   uses them cannot be ruled out.
+>
+> This was sent to the oss-security list as a published advisory, not as
+> a CVE ID request. We would expect that one or more parties (e.g.,
+> Linux distributions) are planning to re-announce this to a different
+> audience in a way that would make at least one CVE ID especially
+> useful. Our question is about whether anyone needs two CVE IDs.
 
-https://www.archlinux.org/pacman/pacman.conf.5.html#SC
+SUSE acknowledges that one CVE ID would be useful for the "was not
+prime" finding, and would not need a second CVE ID.
 
-The defaults in Arch Linux is currently that package signatures are require=
-d,
-and database signatures optional. Installing files locally with `-U` is
-optional.
+SUSE distributions, except for the openSUSE Tumbleweed rolling community
+distribution, is not affected:
+https://bugzilla.suse.com/show_bug.cgi?id=3D964843
 
-SigLevel    =3D Required DatabaseOptional
-LocalFileSigLevel =3D Optional
-
-The upstream pacman project distributes with signing optional.
-
-> On Tue, 21 Apr 2020 at 17:41:42 +0000, jellicent@protonmail.com wrote:
-> > An attacker need only find a bug in how Pacman does
-> > parsing/reading of the database file to potentially get code execution
-> > on the box as root.
->=20
-> My understanding is that this is a risk, and at least arguably a design
-> flaw, but not generally considered to be a vulnerability (CVE IDs,
-> etc.) unless/until an unfixed parser bug with the necessary severity
-> is found.
->=20
-> Of course, that doesn't mean it wouldn't be a good idea to authenticate
-> the database before parsing it: that would mitigate a lot of potential
-> vulnerabilities.
->=20
-> Something that might be considered to be a vulnerability already (or not,
-> depending on the pacman and distro maintainers' threat models) is that
-> an attacker could substitute a database that lists obsolete packages
-> with known vulnerabilities. Those packages will presumably be validly
-> signed by distro developers (because at one time they were considered
-> to be the best version available). Presumably pacman won't normally
-> downgrade from the version it has installed to a strictly older version
-> from a mirror, but if a user installs a new (not currently installed)
-> package using that mirror/database, they'll unknowingly be installing
-> an older package that has known vulnerabilities.
-
-Pacman wouldn't downgrade any packages in this case without the user explic=
-itly
-asking pacman to do so. Pacman would also issue warning that locally instal=
-led
-packages are newer then the downgraded ones.
-
-Unless a parsing bug is found the worst case scenario is holding back secur=
-ity
-updates for some amount of time until the user notices.
-
-=20
-> That form of attack is difficult to address in general, because it needs
-> a revocation or expiry mechanism. apt-based distros are starting to
-> address equivalent issues by setting a Valid-Until field on their archive
-> metadata, so that clients will warn their user if presented with outdated
-> archive metadata (the equivalent of pacman's database) - although this is
-> somewhat awkward to deploy, because it requires a signing key to be
-> made available on a regular basis, which conflicts with the idea that
-> high-value signing keys should be kept offline when not in use.
-
-Timestamped databases is also a feature Allan McRae has been working on lat=
-ely.
-
-https://git.archlinux.org/users/allan/pacman.git/log/?h=3Dtimestamp
-
-However, as noted, it would still require an online signing key to sign it.=
- This
-is argueably one of the larger problems with the Arch Linux package
-infrastructure currently as all packager keys are distributed. We haven't c=
-ome
-up with reasonable solution yet as one would need to properly secure said k=
-ey.
-
-
-And at a closing note, there hasn't been any issues with the parsing code t=
-o the
-database. However the one the original author probably thinks of is the CVE=
- from
-2016 where there was a bug in the gnupg packet parsing code in relation to =
-GnuPG
-signatures.
-
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2016-5434
+Andreas
 
 --=20
-Morten Linderud
-PGP: 9C02FF419FECBE16
+Andreas Stieger <astieger@suse.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imend=F6rffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG N=FCrnberg)
 
---3j3a4p3c5ngbgltu
+
+
+
+--fFMQg4Q4G2hUIsTir4UiI53bS9rmQfEqF
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEktnGzemaICTWkKdu50JoO6CMsv8FAl6fRl8ACgkQ50JoO6CM
-sv8XlBAA05SpNrWlJadx7dYqrrxfBVGQY6GzlJKfYEijjcmR6WhKIdjlZfWPvH4T
-aekORgN0PPnkEJei8hbKc9JijCGAmHt2PnNyGsRxCDPUOOVDlY9Xh46MjITH+3jO
-UqFz1JLOl1xm9KMdplFT1ScjLEI6nPt+JL9ASiWKX4guSNSxmLUwnh/5OxxiM33y
-TLyO15tmKIIT45+4fZVDEz9NnXIp+VqV5km3inyKYGPi0N/vf9oPKSWgTn4SJRlf
-qZceMKoYWKKlLoSY0C5l+F7AkaxJDWdqFASLvdV4Y9WqyBaSD5c0AhB+1tghsXzN
-DE5vYMEuCmRR6WxIkIgy2Dk0sRVnU6IzX4LIAaZn2MsQvcSyNjbbG+1yKBe/CsgP
-0YNU8WNC/zr2kqSBynNjSAf68sM9Xl0O7v0AmgmbJMyXsg6oeW7jv5Fv/ofpcvuh
-/SuT/TQj62vqofkJTiqBDRwkd5Yl00Y6Rr6Ek2Ii03oi0WL0dJqWapqFxwoPXZmF
-9hyYrgiN2xL9PHIeVEqh27iITn/5Dfctrtf18KKgGpaNQIdF9M7rOgV3vI8oE9lT
-Qa/IUPN9mpxKjv6Q2vgk0Q9DbnjYwouKonPndyXIL+0jyG6lYsE6gQ3dA/jmTvC1
-IVOWNQ7sSyiaIM+urm0lec8bkhfsEz53qRauAlRexgwpbR+MQAU=
-=0LHs
+iQIcBAEBCgAGBQJWsyHLAAoJECzWqVXhWUVGK4UQAJiEDv8en+0msAX22YR/84zH
+OSIvErnZ/INmMGeG8WRcbdFIwBt+i9b6R13OsczjM4FncPs+DLWRF84gOxVJ5uUR
+IQ+j16s/o4h1VMKmWIGFJ3PtahVnI4GDgL52kyHMBSNWfnTzeJqz65+K2uF1UlNa
+oO+/qSTzZwKrjd4i7Hvpe6F5rDyYBrqAir1ids1yV2mqAoF8B91tmL83jGuytmc3
+bdPPA/b1OtuZ7ak+jEJJrz4dZhWT0TqgHGKK3iYFWKlv92FcalfpE6xNRXiquuus
+oErnp/QGvocFiot+l/UO4O5fvIuiySrsCHfmi6igEqZrT8xI/w1d/CAVjVJbcgUA
+fEyV9m8Aee8d8YYBsVK7+a2MNVDo+BKtHqGBQqx7yL7/9fDqcd4K8XQp7UfvhfaH
+RNj29jcqW5mp2tRAKzEhLF0Svqmp4rJrlV02njBDuRwLmv+ARiT1mfVP4HrBL8hz
+8GTWdQHAesfq5T8j7BTBiBc+TG00ucI8mp2zsCnSzx3YUAFGosb7yCIRrWmwAo0S
+B+8ysNWa2+Laq7DUxmUUNr9nBKS9de/mfv+b1Rg1+qjrpGpkHk3h0bmfDksD6xXF
+OSz07q/nFgxW6PBq/wTvISHnD0MZpvkcMcLmJyEUnQCo30ikcFHU8rhmqMGT1gKi
+2qDGD929xyWI4rJ/1xfS
+=CibR
 -----END PGP SIGNATURE-----
 
---3j3a4p3c5ngbgltu--
+--fFMQg4Q4G2hUIsTir4UiI53bS9rmQfEqF--
