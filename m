@@ -1,4 +1,9 @@
-Received: (qmail 16022 invoked by uid 550); 30 Apr 2026 15:56:15 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1417" "Friday" "5" "February" "2016" "01:00:53" "-0500" "Velmurugan Periasamy" "vel@apache.org" "<D2D9A4C5.114ECA%vel@apache.org>" "39" "[oss-security] CVE update (CVE-2015-5167 & CVE-2016-0733) - Fixed in Ranger 0.5.1" nil nil nil "2" "2016020506:00:53" "[oss-security] CVE update (CVE-2015-5167 & CVE-2016-0733) - Fixed in Ranger 0.5.1" (number mark "U       vel@apache.o Feb  5   39/1417  " thread-indent "\"[oss-security] CVE update (CVE-2015-5167 & CVE-2016-0733) - Fixed in Ranger 0.5.1\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 15968 invoked by uid 550); 5 Feb 2016 11:52:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,105 +12,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1255 invoked from network); 30 Apr 2026 07:20:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777533634;
-	bh=r1CY4+LPZzvpNAQyVfrXKeOMnPepyOCqALvV35m34bk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KHB/2EUwmTxbGBU9c2KGWNjvwK0l6o9hAErH5KVj9R9evsM3gvTuKUD0xsHveaocL
-	 5/wrbAPOdty3h33KFAocctRd3K6r4bPpac2LVMHjV7+heOXCsSDntKzJDa3/V216Eo
-	 7wcVOvTdPPhZxMGoikrYOCYLiH/ARYHSvkT3EkVCOJzxU4drZye0HoAqPSFcSq0BpM
-	 2bxcdMNDC0MtWmk8CUMwkemjXMb0/XAUl2q+TvU0uA6NxsVnY8ZLiHG9ICjAsjgBgM
-	 KDb1UG6NGf1a1QjxPTxGdKWJWOuLfFHWqW4MOUGipX1+Y6kQbCbVnC5dtNWxc9Dbtz
-	 HZpu8acro4qYw==
-Date: Thu, 30 Apr 2026 00:19:17 -0700
-From: Eric Biggers <ebiggers@kernel.org>
-To: oss-security@lists.openwall.com
-Cc: Jan Schaumann <jschauma@netmeister.org>
-Message-ID: <20260430071917.GB54208@sol>
-References: <afJorKIje4O6dXbH@netmeister.org>
- <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net>
- <87se8dgicq.fsf@gentoo.org>
- <afL-QhLfEKqHZqka@eldamar.lan>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <afL-QhLfEKqHZqka@eldamar.lan>
-Subject: Re: [oss-security] CVE-2026-31431: CopyFail: linux local privilege
- scalation
+Received: (qmail 12056 invoked from network); 5 Feb 2016 06:01:17 -0000
+User-Agent: Microsoft-MacOutlook/14.5.4.150722
+Date: Fri, 05 Feb 2016 01:00:53 -0500
+From: Velmurugan Periasamy <vel@apache.org>
+To: "dev@ranger.incubator.apache.org" <dev@ranger.incubator.apache.org>,
+	<user@ranger.incubator.apache.org>,
+	<security@apache.org>,
+	<oss-security@lists.openwall.com>,
+	<bugtraq@securityfocus.com>
+CC: Velmurugan Periasamy <vel@apache.org>,
+	<private@ranger.incubator.apache.org>
+Message-ID: <D2D9A4C5.114ECA%vel@apache.org>
+Thread-Topic: CVE update (CVE-2015-5167 & CVE-2016-0733) - Fixed in Ranger
+ 0.5.1
+Mime-version: 1.0
+Content-type: multipart/alternative;
+	boundary="B_3537478862_138950140"
+Subject: [oss-security] CVE update (CVE-2015-5167 & CVE-2016-0733) - Fixed in Ranger 0.5.1
 
-On Thu, Apr 30, 2026 at 09:01:22AM +0200, Salvatore Bonaccorso wrote:
-> Hi,
-> 
-> On Thu, Apr 30, 2026 at 05:52:37AM +0100, Sam James wrote:
-> > Eddie Chapman <eddie@ehuk.net> writes:
-> > 
-> > > On 29/04/2026 21:23, Jan Schaumann wrote:
-> > >> Affected and fixed versions
-> > >> ===========================
-> > >> Issue introduced in 4.14 with commit
-> > >> 72548b093ee38a6d4f2a19e6ef1948ae05c181f7 and fixed in
-> > >> 6.18.22 with commit
-> > >> fafe0fa2995a0f7073c1c358d7d3145bcc9aedd8
-> > >> Issue introduced in 4.14 with commit
-> > >> 72548b093ee38a6d4f2a19e6ef1948ae05c181f7 and fixed in
-> > >> 6.19.12 with commit
-> > >> ce42ee423e58dffa5ec03524054c9d8bfd4f6237
-> > >> Issue introduced in 4.14 with commit
-> > >> 72548b093ee38a6d4f2a19e6ef1948ae05c181f7 and fixed in
-> > >> 7.0 with commit
-> > >> a664bf3d603dc3bdcf9ae47cc21e0daec706d7a5
-> > >> https://git.kernel.org/stable/c/fafe0fa2995a0f7073c1c358d7d3145bcc9aedd8
-> > >> https://git.kernel.org/stable/c/ce42ee423e58dffa5ec03524054c9d8bfd4f6237
-> > >> https://git.kernel.org/stable/c/a664bf3d603dc3bdcf9ae47cc21e0daec706d7a5
-> > >
-> > > So this is one of the worst make-me-root vulnerabilities in the kernel
-> > > in recent times. I see that on the 11th of April 6.19.12 & 6.18.22
-> > > were released with the fix backported.
-> > >
-> > > Longterm 6.12, 6.6, 6.1, 5.15, 5.10 have not received the fix and I
-> > > don't see anything in the upstream stable queues yet as I write. My
-> > > guess is backporting that far back is not as straightforward. As this
-> > > was introduced in 2017 all those older kernels are affected, right? Or
-> > > am I missing something?
-> > 
-> > It does not apply cleanly, no. Attached is the workaround we're going to
-> > use. I'm not an expert on IPSec but I think this is the lesser evil.
-> > 
-> > I attempted a backport but ran into a few API changes and wasn't
-> > confident enough to muck around with it, especially for something to
-> > deploy immediately.
-> 
-> Backports have just been posted, for 6.12.y:
-> https://lore.kernel.org/stable/2026043038-unwilling-slogan-a20e@gregkh/T/#t
-> 
-> (but I do not see them yet for all versions, but guess following soon)
+--B_3537478862_138950140
+Content-type: text/plain;
+	charset="ISO-8859-1"
+Content-transfer-encoding: quoted-printable
 
-Yes, no one else was doing it, so I posted backports:
+Hello:
 
-6.12 and 6.6: https://lore.kernel.org/stable/20260430060702.110091-1-ebiggers@kernel.org/
-6.1: https://lore.kernel.org/stable/20260430062731.140497-1-ebiggers@kernel.org/
-5.15: https://lore.kernel.org/stable/20260430063604.173525-1-ebiggers@kernel.org/
-5.10: https://lore.kernel.org/stable/20260430070128.219863-1-ebiggers@kernel.org/
+Here=B9s a CVE update for Ranger 0.5.1 release. Please see below details.
 
-But I also hope this finally provides some more impetus for AF_ALG to be
-deprecated and removed.  It's a massive, largely pointless attack
-surface which has been causing problems, including regular CVEs, ever
-since it was added to the kernel in 2010.  And of course it's gotten
-even worse lately, with LLMs now being able to find the bugs.
+Thank you,
+Velmurugan Periasamy
 
-Userspace crypto libraries exist.  There's no need to escalate to kernel
-mode just to do some math.
+--------------------------------------------------------------------------
+CVE-2015-5167: Restrict REST API data access for non-admin users
+--------------------------------------------------------------------------
+Severity: Important
+Vendor: The Apache Software Foundation
+Versions Affected: 0.4.0 and 0.5.0 version of Apache Ranger
+Users affected: All users of ranger policy admin tool
+Description: Data access restrictions via REST API are not consistent with
+restrictions in policy admin UI.
+Mitigation: Users should upgrade to Ranger 0.5.1 version
+--------------------------------------------------------------------------
+CVE-2016-0733: Ranger Admin authentication issue
+--------------------------------------------------------------------------
+Severity: Important
+Vendor: The Apache Software Foundation
+Versions Affected: 0.4.0 and 0.5.0 version of Apache Ranger
+Users affected: All users of ranger policy admin tool
+Description: Malicious Users can gain access to ranger admin UI without
+proper authentication
+Mitigation: Users should upgrade to Ranger 0.5.1 version
+--------------------------------------------------------------------------
 
-On Linux systems with no programs that use AF_ALG, it can already be
-disabled in the kconfig by unsetting CONFIG_CRYPTO_USER_API_*.
 
-But there are some holdouts like iwd (iNet wireless daemon) that are
-keeping general-purpose Linux distros from being able to disable it.
 
-It may also be time for a sysctl that allows restricting it to root, or
-only to certain algorithms, etc.  There is zero reason for "authencesn"
-(which the exploit uses) to be accessible, for example.
+--B_3537478862_138950140--
 
-- Eric
+
