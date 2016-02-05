@@ -1,211 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/16/5
-Message-ID: <8737hn92i5.fsf@frougon.crabdance.com>
-Date: Fri, 16 Dec 2016 19:01:54 +0100
-From: Florent Rougon <f.rougon@...e.fr>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: FlightGear: Allows the route manager to overwrite arbitrary files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/05/3
+Message-Id: <20160205173700.66743B2E0CA@smtpvbsrv1.mitre.org>
+Date: Fri,  5 Feb 2016 12:37:00 -0500 (EST)
+From: cve-assign@...re.org
+To: daniel@...lgren.se
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request uclibc-ng dns resolver issues
 Content-Type: text/plain; charset=utf-8
 
-[ This is in reply to Salvatore Bonaccorso's mail from Wed, 14 Dec 2016
-  16:57:11 +0100, i.e.
-  <http://www.openwall.com/lists/oss-security/2016/12/14/11>,
-  unfortunately I don't have its Message-ID to reply in the same thread
-  (just subscribed a few hours ago). ]
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hello,
+> The first is a denial of service while parsing compressed items. An
+> attacker can make the application end up in an infinit loop. Fixed by:
+> 
+> http://repo.or.cz/uclibc-ng.git/commit/16719c1a7078421928e6d31dd1dec574825ef515
 
-As already written in private to Salvatore and maintainers of a few
-distributions, it is quite unclear to me how to achieve arbitrary code
-execution using this vulnerability. The reason I'm saying this is that
-the bug allows an attacker to choose which user-writable files he wants
-to overwrite, but *not their contents*, at least not freely at all. The
-actual writing is not done by Nasal code but by the Route manager's C++
-code, which doesn't seem to give much freedom as to the contents being
-written (Nasal code can only *trigger* the flightplan writing).
+Use CVE-2016-2224.
 
-Here is how the flightplan is saved
-(flightgear/src/Autopilot/route_mgr.cxx, code from FlightGear's 'next'
-branch):
 
-  bool FGRouteMgr::saveRoute(const SGPath& p)
-  {
-    if (!_plan) {
-      return false;
-    }
+> The other problem is that a crafted packet will make the parser
+> terminate early. The buffer is never initialized and is later passed to
+> strdup(). Fixed by:
+> 
+> http://repo.or.cz/uclibc-ng.git/commit/bb01edff0377f2585ce304ecbadcb7b6cde372ac
 
-    return _plan->save(p);
-  }
+Use CVE-2016-2225.
 
-calling (flightgear/src/Navaids/FlightPlan.cxx):
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-  bool FlightPlan::save(const SGPath& path)
-  {
-    SG_LOG(SG_NAVAID, SG_INFO, "Saving route to " << path);
-    try {
-      SGPropertyNode_ptr d(new SGPropertyNode);
-      d->setIntValue("version", 2);
-
-      if (_departure) {
-        d->setStringValue("departure/airport", _departure->ident());
-        if (_sid) {
-          d->setStringValue("departure/sid", _sid->ident());
-        }
-
-        if (_departureRunway) {
-          d->setStringValue("departure/runway", _departureRunway->ident());
-        }
-      }
-
-      if (_destination) {
-        d->setStringValue("destination/airport", _destination->ident());
-        if (_star) {
-          d->setStringValue("destination/star", _star->ident());
-        }
-
-        if (_approach) {
-          d->setStringValue("destination/approach", _approach->ident());
-        }
-
-        //d->setStringValue("destination/transition", destination->getStringValue("transition"));
-
-        if (_destinationRunway) {
-          d->setStringValue("destination/runway", _destinationRunway->ident());
-        }
-      }
-
-      // route nodes
-      SGPropertyNode* routeNode = d->getChild("route", 0, true);
-      for (unsigned int i=0; i<_legs.size(); ++i) {
-        Waypt* wpt = _legs[i]->waypoint();
-        wpt->saveAsNode(routeNode->getChild("wp", i, true));
-      } // of waypoint iteration
-      writeProperties(path, d, true /* write-all */);
-      return true;
-    } catch (sg_exception& e) {
-      SG_LOG(SG_NAVAID, SG_ALERT, "Failed to save flight-plan '" << path << "'. " << e.getMessage());
-      return false;
-  }
-
-calling [1] and [2] with:
-
-[1] (flightgear/src/Navaids/route.cxx):
-
-  void Waypt::saveAsNode(SGPropertyNode* n) const
-  {
-    n->setStringValue("type", type());
-    writeToProperties(n);
-  }
-
-calling (flightgear/src/Navaids/route.cxx):
-
-  void Waypt::writeToProperties(SGPropertyNode_ptr aProp) const
-  {
-    if (flag(WPT_OVERFLIGHT)) {
-      aProp->setBoolValue("overflight", true);
-    }
-
-    if (flag(WPT_DEPARTURE)) {
-      aProp->setBoolValue("departure", true);
-    }
-
-    if (flag(WPT_ARRIVAL)) {
-      aProp->setBoolValue("arrival", true);
-    }
-
-    if (flag(WPT_APPROACH)) {
-      aProp->setBoolValue("approach", true);
-    }
-
-    if (flag(WPT_MISS)) {
-      aProp->setBoolValue("miss", true);
-    }
-
-    if (flag(WPT_GENERATED)) {
-      aProp->setBoolValue("generated", true);
-    }
-
-    if (_altRestrict != RESTRICT_NONE) {
-      aProp->setStringValue("alt-restrict", restrictionToString(_altRestrict));
-      aProp->setDoubleValue("altitude-ft", _altitudeFt);
-    }
-
-    if (_speedRestrict != RESTRICT_NONE) {
-      aProp->setStringValue("speed-restrict", restrictionToString(_speedRestrict));
-      aProp->setDoubleValue("speed", _speed);
-    }
-  }
-
-(not very interesting IMHO), the actual writing to file being done
-above in FlightPlan::save() by
-
-[2] (simgear/props/props_io.cxx):
-
-  void
-  writeProperties (const SGPath &path, const SGPropertyNode * start_node,
-                   bool write_all, SGPropertyNode::Attribute archive_flag)
-  {
-    SGPath dpath(path);
-    dpath.create_dir(0755);
-
-    ofstream output(path.local8BitStr().c_str());
-    if (output.good()) {
-      writeProperties(output, start_node, write_all, archive_flag);
-    } else {
-      throw sg_io_exception("Cannot open file", sg_location(path.utf8Str()));
-    }
-  }
-
-which relies on (same file):
-
-  void
-  writeProperties (ostream &output, const SGPropertyNode * start_node,
-                   bool write_all, SGPropertyNode::Attribute archive_flag)
-  {
-    int nChildren = start_node->nChildren();
-
-    output << "<?xml version=\"1.0\"?>" << endl << endl;
-    output << "<PropertyList>" << endl;
-
-    for (int i = 0; i < nChildren; i++) {
-      writeNode(output, start_node->getChild(i), write_all, INDENT_STEP, archive_flag);
-    }
-
-    output << "</PropertyList>" << endl;
-  }
-
-...
-
-All this to say that the *contents* written to an arbitrary file is
-rather constrained, unless I missed something, and that an attacker has
-very little control over it. This contents is a flightplan in
-FlightGear's XML PropertyList format
-(<http://wiki.flightgear.org/PropertyList_XML_files>) and the attacker
-basically only gets to choose the departure, arrival and intermediate
-waypoints... which gives something as the LFPO-EDDF.xml file I am
-attaching to this mail.
-
-So, from my POV, an attacker can:
-  - destroy any user-writable file he wants (not remove it, but
-    overwrite it with a flightplan in XML format)
-    -> data loss
-  - because of this, cause software malfunctions
-    -> “DoS”
-
-But AFAICT, the attacker has *very little control* over the kinds of
-malfunctions he can cause, thus it is unclear to me how to go from the
-vulnerability to arbitrary code execution.
-
-Of course, I might have missed something and am ready to be educated if
-this happens to be the case; though, as Salvatore said in private mail
-inviting me to post this here, the mention of arbitrary code execution
-in his post was rather the result of a misunderstanding (no worries).
-
-Regards
-
--- 
-Florent
-
-Download attachment "LFPO-EDDF.xml" of type "application/xml" (2176 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
+iQIcBAEBCAAGBQJWtNzoAAoJEL54rhJi8gl5S9EP/jQ9DVZd0cXk8H0+ZJbgJi78
+3+rQH00Sh5sTlPIPiq5zlE+dTZEIvHHq3eaHqIa6clTiZ8aWMSRy7PzcODWkXRIi
+E1/Kj+IdBg6puYeWWnkJZY7FeeU3PYKo4+fOKwB4O5+DYH9Lo0IN1bsKisiWmIpo
+KXhsK117DPrcMfE5HlrjLIQ1ZHd+c0O9LIaVFbjW75gLCEN553tWls6KU3NFzFUz
+Nh+zASekPfnt8XsTkNA0DT88ZFutiqvznNuy4IHMf65Zz3lWiCqX9gfxprjrR1FV
+aHwp95qN6DOIiw7S9aE/E+UCYZkGF/HVaIkmAZkFAeNWGwICjlBnWhGviIaEPaJC
+Jphp2YGbbY/6wxA2d4pfz7yXd5rwpvSElizHrhUdmlH9c1DvW0kaZVCybvsfU2HN
++V8S2U/e5DZPLIcQXHV757WAjeMRduHMX2yP7qYO0EwEbor1IaD5LoQ3cIU//eSB
+AWC0rIIl6kaUeSktuwATRApk8OJ+11PX83cTy+XGYHLeP6jgaTgI6l9pRR9BJnIj
+qF4YSs/1kbikQXS6aLMGAeiIvVuxgbp64TRACw6rZNSLrXnbQ7DbcBxjxOAW9CNO
+2Ht/mY5o7hWTLJkyEbb7XHbpj6lx1gSWic+BRn38tmYsHvvLPYdU2hl3cfbtuI0O
+DQDtql0LtIp/P9AKIsCY
+=LXU8
+-----END PGP SIGNATURE-----
