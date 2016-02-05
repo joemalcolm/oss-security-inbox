@@ -1,4 +1,9 @@
-Received: (qmail 7928 invoked by uid 550); 29 Apr 2026 23:01:14 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["638" "Friday" "5" "February" "2016" "15:26:35" "+0100" "Daniel Fahlgren" "daniel@fahlgren.se" "<1454682395.12024.102.camel@fahlgren-laptop>" "21" "[oss-security] CVE Request uclibc-ng dns resolver issues" "^Cc:" nil nil "2" "2016020514:26:35" "[oss-security] CVE Request uclibc-ng dns resolver issues" (number mark "        daniel@fahlg Feb  5   21/638   " thread-indent "\"[oss-security] CVE Request uclibc-ng dns resolver issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 5412 invoked by uid 550); 5 Feb 2016 14:27:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,78 +11,37 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 24059 invoked from network); 29 Apr 2026 22:05:42 -0000
-DKIM-Filter: OpenDKIM Filter v2.10.3 james.steelbluetech.co.uk CE365BFC14
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ehuk.net; s=default;
-	t=1777500329; bh=iQKoO+Cx73SovsCz8wIzwOBdakcnAuWOeZHwzr1Igu4=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=M97gDyhI3+eby/weYUWryZI2U+PDV4rNuPOYGCDu1xbUwHv1vKfmaCTvY4zz3vrq+
-	 SyJvkDNlZpySszYivxUnMlSjwrAH6CZ8SQNPh+HJKJLIXYjqzkYmx2uK3Vprb/msov
-	 VVXEg2qzCgJ6XalDhbopJMlpnCJNzBa3FiuG3sgn/ysQ8VpFUe4LMuho/EMP43R9Od
-	 kDdNSCU4M5+zPS/ZNoeutia7lz+LouZe6cVfSBdX3CGCzuLB3JG7gWhgubTLxuxi8J
-	 dGh5gZKdUPLI6wwMHbT0Nh9ezOEjdOu4Zyd/BI86Fk/pLaB9EEmgycjMDSywR7IZAZ
-	 Kx74Iq+Il0pzQ==
-Message-ID: <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net>
-Date: Wed, 29 Apr 2026 23:05:29 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com, Jan Schaumann <jschauma@netmeister.org>
-References: <afJorKIje4O6dXbH@netmeister.org>
-Content-Language: en-GB
-From: Eddie Chapman <eddie@ehuk.net>
-In-Reply-To: <afJorKIje4O6dXbH@netmeister.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Received: (qmail 5122 invoked from network); 5 Feb 2016 14:26:48 -0000
+Message-ID: <1454682395.12024.102.camel@fahlgren-laptop>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.10.4-0ubuntu2 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang
-Subject: Re: [oss-security] CVE-2026-31431: CopyFail: linux local privilege
- scalation
+Cc: cve-assign@mitre.org
+Date: Fri, 05 Feb 2016 15:26:35 +0100
+From: Daniel Fahlgren <daniel@fahlgren.se>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request uclibc-ng dns resolver issues
+To: oss-security@lists.openwall.com
 
-On 29/04/2026 21:23, Jan Schaumann wrote:
-> Affected and fixed versions
-> ===========================
-> 
-> Issue introduced in 4.14 with commit
-> 72548b093ee38a6d4f2a19e6ef1948ae05c181f7 and fixed in
-> 6.18.22 with commit
-> fafe0fa2995a0f7073c1c358d7d3145bcc9aedd8
-> 
-> Issue introduced in 4.14 with commit
-> 72548b093ee38a6d4f2a19e6ef1948ae05c181f7 and fixed in
-> 6.19.12 with commit
-> ce42ee423e58dffa5ec03524054c9d8bfd4f6237
-> 
-> Issue introduced in 4.14 with commit
-> 72548b093ee38a6d4f2a19e6ef1948ae05c181f7 and fixed in
-> 7.0 with commit
-> a664bf3d603dc3bdcf9ae47cc21e0daec706d7a5
-> 
-> https://git.kernel.org/stable/c/fafe0fa2995a0f7073c1c358d7d3145bcc9aedd8
-> https://git.kernel.org/stable/c/ce42ee423e58dffa5ec03524054c9d8bfd4f6237
-> https://git.kernel.org/stable/c/a664bf3d603dc3bdcf9ae47cc21e0daec706d7a5
+Hi,
 
-So this is one of the worst make-me-root vulnerabilities in the kernel 
-in recent times. I see that on the 11th of April 6.19.12 & 6.18.22 were 
-released with the fix backported.
+Uclibc-ng 1.0.12 has been released which fixes some issues found in the
+dns resolver code.
 
-Longterm 6.12, 6.6, 6.1, 5.15, 5.10 have not received the fix and I 
-don't see anything in the upstream stable queues yet as I write. My 
-guess is backporting that far back is not as straightforward. As this 
-was introduced in 2017 all those older kernels are affected, right? Or 
-am I missing something?
+The first is a denial of service while parsing compressed items. An
+attacker can make the application end up in an infinit loop. Fixed by:
 
-If so, this is no reflection on Greg and Sasha, it's not up to them to 
-produce backports, they have enough of a job co-ordinating stable 
-releases for so many kernels, which I see them do an amazing job of week 
-in, week out. Evidently no one produced the needed backports?
+http://repo.or.cz/uclibc-ng.git/commit/16719c1a7078421928e6d31dd1dec574825ef515
 
-IIUC many installations with these older kernel could already be 
-protected by now, in an ideal world.
+The other problem is that a crafted packet will make the parser
+terminate early. The buffer is never initialized and is later passed to
+strdup(). Fixed by:
 
-What went wrong, has the embargo been broken early today? Not looking to 
-point any fingers, those who make things happen in our communities work 
-dam hard and deserve respect and support, especially with the extra 
-burden of AI slop now.
+http://repo.or.cz/uclibc-ng.git/commit/bb01edff0377f2585ce304ecbadcb7b6cde372ac
 
-Eddie
+Can one or two CVEs be assigned for these issues?
+
+Best regards,
+Daniel Fahlgren
+
