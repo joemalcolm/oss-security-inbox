@@ -1,33 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/09/9
-Message-ID: <alpine.NEB.2.11.1603091401200.15253@t1.m.reedmedia.net>
-Date: Wed, 9 Mar 2016 14:02:46 -0600 (CST)
-From: "Jeremy C. Reed" <security-officer@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/05/2
+Message-ID: <1454682395.12024.102.camel@fahlgren-laptop>
+Date: Fri, 05 Feb 2016 15:26:35 +0100
+From: Daniel Fahlgren <daniel@...lgren.se>
 To: oss-security@...ts.openwall.com
-cc: security-officer@....org
-Subject: ISC BIND vulnerabilities are now public (CVE-2016-1285,  CVE-2016-1286, CVE-2016-2088)
+Cc: cve-assign@...re.org
+Subject: CVE Request uclibc-ng dns resolver issues
 Content-Type: text/plain; charset=utf-8
 
-Please be advised that ISC announced security advisories for
-vulnerabilities in ISC BIND.
+Hi,
 
-CVE-2016-1285: An error parsing input received by the rndc control
-channel can cause an assertion failure in sexpr.c or alist.c. All
-versions since 9.2.0 are affected.
-https://kb.isc.org/article/AA-01352
+Uclibc-ng 1.0.12 has been released which fixes some issues found in the
+dns resolver code.
 
-CVE-2016-1286: A problem parsing resource record signatures for
-DNAME resource records can lead to an assertion failure in resolver.c
-or db.c. All versions since 9.0.0 are affected.
-https://kb.isc.org/article/AA-01353
+The first is a denial of service while parsing compressed items. An
+attacker can make the application end up in an infinit loop. Fixed by:
 
-CVE-2016-2088: A response containing multiple DNS cookies causes
-servers with cookie support enabled to exit with an assertion
-failure in resolver.c. This affects the 9.10.x versions.
-https://kb.isc.org/article/AA-01351
+http://repo.or.cz/uclibc-ng.git/commit/16719c1a7078421928e6d31dd1dec574825ef515
 
+The other problem is that a crafted packet will make the parser
+terminate early. The buffer is never initialized and is later passed to
+strdup(). Fixed by:
 
+http://repo.or.cz/uclibc-ng.git/commit/bb01edff0377f2585ce304ecbadcb7b6cde372ac
 
-Jeremy C. Reed
-ISC Security Officer
+Can one or two CVEs be assigned for these issues?
+
+Best regards,
+Daniel Fahlgren
 
