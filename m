@@ -1,28 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/18/10
-Message-ID: <20160418171550.GA53619@mail.corp.redhat.com>
-Date: Mon, 18 Apr 2016 13:15:51 -0400
-From: Randy Barlow <rbarlow@...hat.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request - Pulp < 2.3.0 shipped the same authentication CA key/cert to all users
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/05/4
+Message-ID: <87io22kiea.fsf@natryn.nanepng.ngu.pk>
+Date: Fri, 05 Feb 2016 15:32:29 -0500
+From: anarcat <anarcat@...ngeseeds.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: tiff: Out-of-bounds write for invalid images using LogL compression
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 18, 2016 at 11:11:35AM -0400, cve-assign@...re.org wrote:
-> Use CVE-2013-7450.
+So from what I understand, this issue is only related to the *sample*
+code in php-openid, correct?
 
-Thank you! I forgot to credit Sander Bos in my initial e-mail for
-bringing the lack of CVE for this issue to my attention.
+You also report that this code is in "use verbatim" in "the vast
+majority of sites", yet looking at the Debian code base, the only
+samples of that code I could find are in php-openid itself and the SAML
+library:
 
-> (We're interpreting this as a request from the Pulp upstream vendor.
-> In general, it would be hard for a third party to determine whether a
-> "tiny paragraph" was generally recognized as a required part of the
-> installation process.)
+https://codesearch.debian.net/search?perpkg=1&q=getTrustRoot
 
-That's correct, I am a core contributor to the Pulp project.
+(jglobus seems to be a false positive there)
 
+I have reviewed the usage of the openid.realm field in the Debian source
+code and, in general, it doesn't seem to use the `Host:` header:
+
+https://codesearch.debian.net/search?perpkg=1&q=openid.realm
+
+Furthermore, I am not sure the attack works even on the theoritical
+level: how would the user reach the proper website if the Host header is
+changed?
+
+A.
 -- 
-Randy Barlow
-irc:   bowlofeggs
+Never attribute to malice that which can be adequately explained by
+stupidity, but don't rule out malice.
+                         - Albert Einstein
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
