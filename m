@@ -1,52 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/18
-Message-ID: <20160310192521.GO1250@sentinelchicken.org>
-Date: Thu, 10 Mar 2016 11:25:21 -0800
-From: Tim <tim-security@...tinelchicken.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/06/3
+Message-Id: <20160206151106.CCD7F33202E@smtpvbsrv1.mitre.org>
+Date: Sat,  6 Feb 2016 10:11:06 -0500 (EST)
+From: cve-assign@...re.org
+To: gustavo.grieco@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Out-of-bound read in the parsing of gif files using GraphicsMagick 1.3.18
 Content-Type: text/plain; charset=utf-8
 
-> It's git. You can trivially keep an entire copy the databases trivially. It
-> can be hosted in many places. We'd have to redo the issue tracking, but
-> bugtracking systems are not exactly hard anymore.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I see that as only one component of having a distributed database.
-Who's running the cron job that constantly pulls down updates from the
-github server?  How do you ensure it's synced up when a legal threat
-causes the main repo to go black?  
+> We found a read out-of-bound in the parsing of gif files using
+> GraphicsMagick. This issue was tested in Ubuntu 14.04 (x86_64) using
+> GraphicsMagick 1.3.18.
+> 
+> $ ./gm identify overflow.gif
+> 
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 1
+> 
+> SUMMARY: AddressSanitizer: heap-buffer-overflow coders/gif.c:276 DecodeImage
+> 
+> This issue is caused by the use of unintialized memory in DecodeImage and
+> fortunately it was fixed here:
+> 
+> http://marc.info/?l=graphicsmagick-commit&m=142283721604323&w=2
 
-> See above. That's the whole point of the artifacts database. Please reread
-> my original email maybe?
+>> Date:       2015-02-02 0:33:27
+>> 
+>> coders/gif.c (DecodeImage): Assure that GIF decoder does not use
+>> unitialized data.
 
-> I am of course open to feedback, but please actually go to
-> https://github.com/distributedweaknessfiling/ and see what we're doing
-> first before assuming we aren't doing certain things (like making sure the
-> artifacts associated with a security vuln don't disappear).
+>> +  (void) memset(prefix,0,MaxStackSize*sizeof(short));
+>> +  (void) memset(suffix,0,MaxStackSize);
 
-I did look.  Sorry I missed the artifacts.  The git repos and
-documentation make it far from obvious where that info lies.
+Use CVE-2015-8808.
 
-Ok so is "A database of artifacts, files and related files for DWF
-entries (so that when websites disappear the required content is
-hopefully still available)" in an email the sum of your documentation
-on that right now?  Just want to be sure I didn't miss something else.
+The scope of this CVE does not include the "FIXME: Is the logic for
+this loop (or the loop which inits suffix and prefix arrays) correct?
+Values are intentionally accessed outside of the explictly initialized
+range of 'clear'." observation in the same commit.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Do you have ideas on how to capture vendor advisories?  Vendors are
-almost certainly, in 99% of cases, going to ignore the DWF for a long
-time.  Perhaps forever.  We're currently lucky to get many of them to
-even include a CVE # in their own advisory.  How can that information
-be captured without moderators having to do all the work?  Have you
-thought about how we can deal with the copyright issues associated
-with copying vendor content directly into the DWF for archival?
-
-What I'm thinking is that perhaps there's a way to make vendors *want*
-to post information.  Also, perhaps there could be a way to license
-DWF numbering in such a way that vendors implicitly agree that the DWF
-can re-publish.  Or maybe there's a way to work with the Internet
-Archive to have third-party URLs archived automatically when they are
-first posted.  See:
- https://archive-it.org/learn-more/
-
-tim
+iQIcBAEBCAAGBQJWtgyDAAoJEL54rhJi8gl5is8P/0gbJvpqOZvw+8wfuBUsyJJG
+wQ4PUn/+Kgo5SWH3dRpSRyoN8OMr0mtO0ikWGVTpYvIGP6PCLi3zv6utJyTXjj11
+EdGB6HCjvvCVQBIFyXP2fPQVK8hhwIwsiFqLoER9ZgHnGwRTOOrvkuaVIJeugHRl
+4RfdbEcPSNX0OtAk+lrpuv0YwQmlRRLK1ddt2GTh2L5Jzr/eRYJo8/QArFSzKu8n
+qJcW6bHx48w+2LXcQPPvexvxiRwCsSREKldKO9UWLZZO19dFQKhTGs254WnKyVq7
+byEsl6j49a4OvkLAB2CiLBTVyfYjuuWfpQdLAnjqx7YL6k5K3DlIozc387my8nz/
+BgwS3lK+ci8E7JEIg8hxXDrG5rENMGnIYJGX7WarEsonqbE7RKw/hwsygK0rl8dh
+gnFG8tPR1lP8ILegk7Jb8f6zsgUrMOqcwSjZXzRlEOX4BHbj6Q/zm+qTeYsasfhC
+8FfVfoN7o7P3wsHjlZ+sHX/+wwtzlor8/s3/kQBeIsksC2/HGUfkfUWpfjV0Bma8
+40PEfRhslxiFcwPb1BZZUq0L8wDN+utWMtL4uwmj7VVwmvNKUpO/yWsmdiA6AXPl
+y6fVZVaqH1TAHeCResnGV+zwcnbZngHfGIzdc2SKyEKUf4csq7pE4aTUzcE/sgE9
+Lg2goBw9tbht7gJhkjMQ
+=fCxG
+-----END PGP SIGNATURE-----
