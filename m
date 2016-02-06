@@ -1,4 +1,9 @@
-Received: (qmail 24393 invoked by uid 550); 30 Dec 2025 19:09:56 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["657" "Saturday" "6" "February" "2016" "18:46:13" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20160206174613.GA16774@eldamar.local>" "31" "[oss-security] CVE Request: Horde: Two cross-site scripting vulnerabilities" nil nil nil "2" "2016020617:46:13" "[oss-security] CVE Request: Horde: Two cross-site scripting vulnerabilities" (number mark "U       carnil@debia Feb  6   31/657   " thread-indent "\"[oss-security] CVE Request: Horde: Two cross-site scripting vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 24287 invoked by uid 550); 6 Feb 2016 17:46:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,100 +12,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28613 invoked from network); 30 Dec 2025 06:34:08 -0000
+Received: (qmail 24266 invoked from network); 6 Feb 2016 17:46:26 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767076437; x=1767681237; darn=lists.openwall.com;
-        h=in-reply-to:from:content-language:references:to:subject:reply-to
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BDH3lvEE1JvC1UlJKXYSz174KKJyAS4DXAlgJ/Kffxo=;
-        b=eJqJVoebpzryV/PErx4CquIBmoQ94S5sZ0QP/DH4FrxzfZWGAOn/omnOvvvDnfh7Eg
-         aV2EKhzj/HcgmkV6rs6HjyPk74CM4oUs2ghi4GTky3RxUq/VErhlpwdhpX+lqF79j+Le
-         C5eyRAa9o8EBO2TR5/x3lej0bqHbSMtJm4DToHqzJZy4CJ9JuAe7LkBzfJsX+fQcZDDe
-         0tij1XXCMp0hmJHH1HAfPfK2hLgv0amW+Md+YQO2+bGnWv4XNw5l5pWXppo5rbOEGxcE
-         +cHBhF6TS1s4cL89W5olwD9ybl4hagA7RUEVKUHiSYFQpAyp0F+6a5NV4W/zzhAWp4c6
-         uIYQ==
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=jpmrMFSEBhEUUVF7G3/PfqJu/7ZF0W1dVHoo+VPqYh8=;
+        b=ETbfXFFAogHfZom7dx2yDc5aFbMFSzxJiK7cPzyBYhFQwbC7E+Z9Ljgq6S97ireZud
+         aCPch+JGkr3nAQV/V7jp+GJugpMC5T4PtU1J69H5PxHR8wTrG/NaiZJ9uXX4a7/sLK0C
+         BN/CPBuRL4ycZhIeWOXUQohGfyLlAujUkLV2+QnY6zMNFR+08q1qKqA18LGwSDvO/Z57
+         Jcd+9u5BwYh39b0zaFihoidxfQYBME3DvGMsyNOfOfMK5wYpmlRtRzF0CgLxGRhb95Jg
+         vMxvBx9w9kt5WmQ504YbqMCORQ3j55pJ3a8o8P8GrNsZ/scPWlUKUjfqR+tvSAsDFdXa
+         gA9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767076437; x=1767681237;
-        h=in-reply-to:from:content-language:references:to:subject:reply-to
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BDH3lvEE1JvC1UlJKXYSz174KKJyAS4DXAlgJ/Kffxo=;
-        b=vXGBrT0P4ReMQF63K6dryL0I4WvHcvYpYqTcUVe/WBW+qf8eKxBx9db0la3amsVHLO
-         tCMrd1G0owgXXWZyHDy0s84KtQLvdSwqxgZvVBM06xg8eNfq0CyKR/h2rRnT3dIifS+8
-         RayAwKkbuw6B5OBOIigd4fv2r/2NF9/7nKxm5h4H+dzBt7gtgPfI/XO6aeW/niSCqw/7
-         gLRocy2Nz0GWVf09xMXglyg9ScD4/bAyIu+MPwxQ91ztSQTU89GlRGJO2E/NugxLCkP7
-         I1nQAO6YjxFWDyQH5Pp5qMjvrRwIqv5ztDoeKHZmDtJBXY0hwV93jK6m0R8B47Y+tRpc
-         WPXg==
-X-Gm-Message-State: AOJu0YzTLl4xBOk0SWMwpytNd9moD3ki3IG7yY62FcNJ6YtgBW5beY14
-	QpikzPP/RZ5LxvkyK0mx0axJbFR5zW+jcXJV2awkkunxvSpFSiTwhsJmjrX2q4El
-X-Gm-Gg: AY/fxX4Na/8yxrhn6QVURWRw8ZnS0CwyWh3EdAR3UwLvnAp5ac66Wf/mk1H+tcyNkKw
-	GHIaDFowMkYx75lpN2/Kg2AmAwX+XjgtZqzmr6dSPbU5sawQkv6I7EMhx/hhbcecvuL0sLv8aRc
-	gs8o8u9m4Fp4OZWNli83Z7IvIQpElvIy6AklIvJnG4lR1kNyUydBZTjFi1vIFMZ/z/4gJO8zzYl
-	2kOTe66EG3eOI4sAg7w2G1MrXXGx01O7crhkBSHvOyeVEVKIiZGzz+pKIF7SPNPA6nzQC7BUMCp
-	S+cEhsMOP57eZyinBvEMfYJ49wNRsY4NxqhwOj2VJO9kHcEn6MmLu/GZdwHSPDM4sUWR9+RBFPn
-	JTz1M4sIUD/YS/m+qbmaQPaY05UDat3kdNWyzRB9eNstIhl9pcLzQXDOdM2NEwmE6NNidE3o7Hg
-	mSLtHPMMA=
-X-Google-Smtp-Source: AGHT+IFojfLV6EN6K7poV+swg4ZmlVuxpZI5oj2SirCOQfeiNXopvPoRHAWVbKogYQzbujt+p6AXXQ==
-X-Received: by 2002:a05:6830:6d05:b0:7c7:6a17:ba35 with SMTP id 46e09a7af769-7cc66a49319mr21136673a34.31.1767076436778;
-        Mon, 29 Dec 2025 22:33:56 -0800 (PST)
-Content-Type: multipart/alternative;
- boundary="------------E8xQYPETmZ0OpI0KYHzQnAKU"
-Message-ID: <937f78c2-45fc-4062-8941-f6f419004318@gmail.com>
-Date: Tue, 30 Dec 2025 00:33:47 -0600
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-type:content-disposition:user-agent;
+        bh=jpmrMFSEBhEUUVF7G3/PfqJu/7ZF0W1dVHoo+VPqYh8=;
+        b=jWZggnAJWt0kr2Uof/ZAv+VwwRIIg3XRSFBVU38jqy0vPMCxslY7dm32xI6tL5QOOs
+         D/D2nMqDAQtWfmG/pLtPpIaBaNavTKYhEkRO/5WxC27iGa4VanVDLycHR0PgurQ27+sf
+         I8VXgRf94NZcMPyUue9KY05cBhW+qitqs+FesgURc6WLnkFjo44aRQz9NYI0T1VCzUho
+         TbICWFO3Q2cABPF6sqsMijnSJ/HeOXmoBFwwWZfofJ7nQ78RCpxP68ER6VTuP4O6pelb
+         u60r7f16s6g8BFp4r6bWGfuTuQ6Rq2QPmD83rfAsOpHeACk+c2Qb1Ir2aQUeQ+zrncM1
+         jaMw==
+X-Gm-Message-State: AG10YOTSimRDwaYD/NiMLdGVW1v2+LL3PocN4FuC3Ukh1pWeZQdUeaP8HaemG6HbdmpeHA==
+X-Received: by 10.194.71.135 with SMTP id v7mr19882982wju.106.1454780775397;
+        Sat, 06 Feb 2016 09:46:15 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Sat, 6 Feb 2016 18:46:13 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Message-ID: <20160206174613.GA16774@eldamar.local>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com, Greg Dahlman <dahlman@gmail.com>
-References: <CAM=PXV50+jaVYFueXFbZpioBX3PMrUG2Ey8WoQ5NT89J9gFwCA@mail.gmail.com>
- <974a2abd-7449-4cf7-bbe6-e329aa4af59e@gmail.com>
- <SN7PR14MB73782CD825FF151648AB323596BFA@SN7PR14MB7378.namprd14.prod.outlook.com>
- <CAM=PXV705V7Su6kwyKAipXtAqi+DU644Qxv_4LsqC=FVG5bg0Q@mail.gmail.com>
- <CADz+4x-t+9rW+OSef9A1rf4wV6zwxZQLnSk_NsxYm4ONv3HH8w@mail.gmail.com>
- <CAM=PXV4yADSZ2udrWhiWNocroCj4ceefd2V5ANOUYYcTF_+SHA@mail.gmail.com>
-Content-Language: en-US
-From: Jacob Bachmeyer <jcb62281@gmail.com>
-In-Reply-To: <CAM=PXV4yADSZ2udrWhiWNocroCj4ceefd2V5ANOUYYcTF_+SHA@mail.gmail.com>
-Subject: Re: [oss-security] Systemd vsock sshd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: [oss-security] CVE Request: Horde: Two cross-site scripting vulnerabilities
 
---------------E8xQYPETmZ0OpI0KYHzQnAKU
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Hi
 
-On 12/29/25 13:53, Greg Dahlman wrote:
-> I did reach out to the systemd team, while I was working with the kernel
-> security team and I encouraged others to do so if they think it will be
-> productive.
->
-> There are sensitivities and frustrations that span all groups that make
-> that conversation difficult, but I think someone with an established trust
-> with the project could make forward progress.
+Can you assing two CVEs for those two vulnerabilities in the Horde
+groupware:
 
-I certainly agree that the systemd team's apparent "cavalier" attitude 
-towards security (and sound architecture) makes lots of frustrations.  
-(For example, the "katamari" architecture that made the xz-utils sshd 
-backdoor possible is definitely a bad practice, although a distressingly 
-common one not unique to systemd.)
+1/ Cross-site scripting in XSS in Horde_Core_VarRenderer_Html:
+--------------------------------------------------------------
 
-To *really* set things off here, this vsock listener that crosses what 
-is otherwise a security boundary *looks* like an attempt at a backdoor, 
-although I believe it to be ignorance/negligence rather than malice.
+Upstream commit:
+https://github.com/horde/horde/commit/11d74fa5a22fe626c5e5a010b703cd46a136f253
 
-> That said, disabling this bridge will impact systemd's attempt to
-> enable zero config for VMs. The container ecosystem as a whole hasn't
-> exactly demonstrated that they will reciprocate. In a perfect world the
-> container runtimes would protect their use case from the remainder of the
-> shared kernel by default, unfortunately that is not what we have today.
+Debian Bug:
+https://bugs.debian.org/813590
 
-Does the systemd team understand that breaking container isolation may 
-be completely unacceptable, to the point of "if you want secure 
-containers, you must not use systemd" if they persist in setting up new 
-unexpected listeners like this?
+2/ Reflected cross-site scripting
+---------------------------------
 
-Maybe "zero config for VMs" is simply outside of the proper scope of a 
-system service manager?  It could perhaps be an optional module.
+Upstream bug:
+https://bugs.horde.org/ticket/14213
+
+Upstream commit:
+https://github.com/horde/horde/commit/f03301cf6edcca57121a15e80014c4d0f29d99a0
+
+Debian Bug:
+https://bugs.debian.org/813573
 
 
--- Jacob
+Many thanks in advance,
 
---------------E8xQYPETmZ0OpI0KYHzQnAKU--
+Regards,
+Salvatore
