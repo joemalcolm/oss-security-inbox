@@ -1,25 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/07/2
-Message-ID: <CAF5d3DB-uNzML+3Gd0tUgB3-vRG1NHdtqzBm8h42TV0r8tUDZw@mail.gmail.com>
-Date: Wed, 7 Dec 2016 11:29:30 +0800
-From: haojun hou <haojunhou@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: mr@...buckingham.com
-Subject: CVE request -BigTree CMS 4.2.13 Extension Form Builder Multiple Cross-Site Scripting (XSS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/06/4
+Message-ID: <20160206174613.GA16774@eldamar.local>
+Date: Sat, 6 Feb 2016 18:46:13 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: Horde: Two cross-site scripting vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-I reported multiple reflected cross-site scripting vulnerabilities in
-BigTree CMS Extension Form Builder several days ago. Please assign CVEs if
-you think they are suitable for identifiers.Thanks.
+Hi
 
-Affected version: BigTree CMS 4.2.13, From Builder 1.1
+Can you assing two CVEs for those two vulnerabilities in the Horde
+groupware:
 
-Reported by Tim Buckingham in
-*https://github.com/bigtreecms/BigTree-CMS/issues/265
-<https://github.com/bigtreecms/BigTree-CMS/issues/265>*
+1/ Cross-site scripting in XSS in Horde_Core_VarRenderer_Html:
+--------------------------------------------------------------
 
-Fixed in:
-https://github.com/Fastspot/bigtree-form-builder/commit/06fde0cc67ff121b212715031e12574f50970fcd
+Upstream commit:
+https://github.com/horde/horde/commit/11d74fa5a22fe626c5e5a010b703cd46a136f253
 
-Thanks & Regards
+Debian Bug:
+https://bugs.debian.org/813590
 
+2/ Reflected cross-site scripting
+---------------------------------
+
+Upstream bug:
+https://bugs.horde.org/ticket/14213
+
+Upstream commit:
+https://github.com/horde/horde/commit/f03301cf6edcca57121a15e80014c4d0f29d99a0
+
+Debian Bug:
+https://bugs.debian.org/813573
+
+
+Many thanks in advance,
+
+Regards,
+Salvatore
