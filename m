@@ -1,40 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/11/12
-Message-ID: <22f74020-dc61-9920-fb9c-e059c0567585@gmail.com>
-Date: Fri, 11 Nov 2016 20:45:22 +0200
-From: Angelos Tzotsos <gcpp.kalxas@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/06/2
+Message-ID: <CACn5sdQtnriS6yC4Hh0GNk6SZVT1Xfvvzsi26iP-hNt7S_u6xA@mail.gmail.com>
+Date: Sat, 6 Feb 2016 15:18:22 +0100
+From: Gustavo Grieco <gustavo.grieco@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2016-8640 pycsw SQL injection issue
+Subject: Re: CVE request: Out-of-bound read in the parsing of gif files using GraphicsMagick 1.3.18
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Test case to reproduce this is attached here, sorry!
 
-Some days ago, the pycsw team received a security notice from the 
-company Koordinates (thank you) regarding an SQL injection vulnerability 
-in pycsw. An exploit of this vulnerability was demonstrated, which is 
-able to read and extract any data from any table in the pycsw database 
-that the database user has access to. On PostgreSQL (at least) it is 
-possible to perform updates/inserts/deletes, and database modifications 
-to any table the database user has access to.
+2016-02-06 14:42 GMT+01:00 Gustavo Grieco <gustavo.grieco@...il.com>:
 
-The vulnerability affects all previously released pycsw versions except 
-2.0.2, 1.10.5 and 1.8.6 (those have been released after fixing this 
-security issue).
+> Hi,
+>
+> We found a read out-of-bound in the parsing of gif files using
+> GraphicsMagick. This issue was tested in Ubuntu 14.04 (x86_64) using
+> GraphicsMagick 1.3.18. Find attached a specially crafted file to reproduce
+> this issue. The AddressSanitizer report showing the faulty code is here:
+>
+> $ ./gm identify overflow.gif
+> =================================================================
+> ==3173==ERROR: AddressSanitizer: heap-buffer-overflow on address
+> 0x6210000037be at pc 0x0000007e5f56 bp 0x7fffffffa940 sp 0x7fffffffa938
+> READ of size 1 at 0x6210000037be thread T0
+>     #0 0x7e5f55 in DecodeImage coders/gif.c:276
+>     #1 0x7ebdac in ReadGIFImage coders/gif.c:1075
+>     #2 0x490fc6 in ReadImage magick/constitute.c:1600
+>     #3 0x48fcd0 in PingImage magick/constitute.c:1363
+>     #4 0x43fc25 in IdentifyImageCommand magick/command.c:8350
+>     #5 0x4427b9 in MagickCommand magick/command.c:8840
+>     #6 0x47c4d6 in GMCommandSingle magick/command.c:17253
+>     #7 0x47c79c in GMCommand magick/command.c:17306
+>     #8 0x40c8c5 in main utilities/gm.c:61
+>     #9 0x7ffff3739ec4 in __libc_start_main
+> (/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
+>     #10 0x40c7d8
+> (/home/vagrant/repos/graphicsmagick-1.3.18/utilities/gm+0x40c7d8)
+> AddressSanitizer can not describe address in more detail (wild memory
+> access suspected).
+> SUMMARY: AddressSanitizer: heap-buffer-overflow coders/gif.c:276
+> DecodeImage
+> Shadow bytes around the buggy address:
+>   0x0c427fff86a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c427fff86b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c427fff86c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c427fff86d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c427fff86e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+> =>0x0c427fff86f0: fa fa fa fa fa fa fa[fa]fa fa fa fa fa fa fa fa
+>   0x0c427fff8700: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c427fff8710: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c427fff8720: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c427fff8730: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c427fff8740: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+> Shadow byte legend (one shadow byte represents 8 application bytes):
+>   Addressable:           00
+>   Partially addressable: 01 02 03 04 05 06 07
+>   Heap left redzone:       fa
+>   Heap right redzone:      fb
+>   Freed heap region:       fd
+>   Stack left redzone:      f1
+>   Stack mid redzone:       f2
+>   Stack right redzone:     f3
+>   Stack partial redzone:   f4
+>   Stack after return:      f5
+>   Stack use after scope:   f8
+>   Global redzone:          f9
+>   Global init order:       f6
+>   Poisoned by user:        f7
+>   Container overflow:      fc
+>   Array cookie:            ac
+>   Intra object redzone:    bb
+>   ASan internal:           fe
+> ==3173==ABORTING
+>
+> This issue is caused by the use of unintialized memory in DecodeImage and
+> fortunately it was fixed here:
+>
+> http://marc.info/?l=graphicsmagick-commit&m=142283721604323&w=2
+>
+> Regards,
+> Gus.
+>
 
-The security patch can be seen in this git commit:
-https://github.com/geopython/pycsw/pull/474/files
-https://patch-diff.githubusercontent.com/raw/geopython/pycsw/pull/474.patch
-
-The CVE ID assigned is CVE-2016-8640. Many thanks to the Koordinates 
-team for picking this issue up and to RedHat security team for their 
-help with the CVE.
-
-Best regards,
-Angelos
-
-
--- 
-Angelos Tzotsos, PhD
-OSGeo Charter Member
-http://users.ntua.gr/tzotsos
-
+Content of type "text/html" skipped
