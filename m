@@ -1,23 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/20/7
-Message-ID: <CANO=Ty16P4GKb4HYtFugYsjufSZOBf+euv7O6WopKsAPuhKHtw@mail.gmail.com>
-Date: Wed, 20 Jan 2016 08:45:07 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Prime example of a can of worms
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/08/1
+Message-ID: <20160208071914.GB6074@sghpc.golosunov.pp.ru>
+Date: Mon, 8 Feb 2016 11:19:14 +0400
+From: Stepan Golosunov <stepan@...osunov.pp.ru>
+To: oss-security@...ts.openwall.com
+Cc: security@...ian.org, Salvatore Bonaccorso <carnil@...ian.org>
+Subject: CVE request - buffer overflow in xdelta3 before 3.0.9
 Content-Type: text/plain; charset=utf-8
 
-I finally got the article written and published, it's at:
+Hi,
 
-https://securityblog.redhat.com/2016/01/20/primes-parameters-and-moduli/
+Buffer overflow was found and fixed in xdelta3 binary diff tool that
+allows arbitrary code execution from input files at least on some
+systems.
 
-TL;DR: I found a lot of messy problems and no really good solutions. But
-ultimately we need to start using bigger keys/primes or this is all just a
-waste of compute time (might as well go back to clear text).
+08.02.2016 в 06:57:12 +0100 Salvatore Bonaccorso написал:
+> On Sun, Feb 07, 2016 at 07:05:12PM +0400, Stepan Golosunov wrote:
+> > This appears to be fixed in xdelta3 3.0.9 and later via
+> > https://github.com/jmacd/xdelta-devel/commit/ef93ff74203e030073b898c05e8b4860b5d09ef2
+> 
+> Can you request a CVE as well on the oss-security mailinglist or from
+> MITRE directly? (You can keep us in the loop).
 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+Doing so.
