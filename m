@@ -1,29 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/22/1
-Message-ID: <CAOJmqsDC25MV1BMWeaQNfugjv0WbPRaXE3FTvWKvdWEK2Jfo5g@mail.gmail.com>
-Date: Fri, 22 Apr 2016 11:32:26 +1000
-From: Brendan Scarvell <bscarvell@....net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/08/3
+Message-ID: <56B8C61D.6060006@oracle.com>
+Date: Mon, 8 Feb 2016 16:45:17 +0000
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request - XXE in Pentaho Business Analytics 6.0.1.0.386
+Subject: CVE-2016-0617: linux kernel: hugetlbfs: fix bugs in hugetlb_vmtruncate_list()
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
+Hello All,
 
-I've discovered an XXE vulnerability in Pentaho Business Analytics
-Community Edition 6.0.1.0.386 due to Pentaho's xml parser not disabling the
-parsing of external entities.
+There was a bug in the linux kernel's hugetlbfs handling of punching
+holes in huegtlbfs files with either truncate or fallocate.  The problem
+was introduced in 1bfad99ab (" hugetlbfs: hugetlb_vmtruncate_list()
+needs to take a range", 4.3-rc1) and, I think, fixed in 9aacdd354d19
+("fs/hugetlbfs/inode.c: fix bugs in hugetlb_vmtruncate_list(), 4.5-rc1).
 
-This issue has been reported to the vendor several times, who has refused
-to fix it in the community edition unless an enterprise license is
-purchased.  I've created a Github issue (
-https://github.com/pentaho/data-access/issues/728) for someone in the
-community to submit a patch.
+This issue was assigned CVE-2016-0617.
 
-
-Could a CVE ID please be assigned to this issue.
-
-
-Thanks,
-
-Brendan Scarvell
-
+jch
