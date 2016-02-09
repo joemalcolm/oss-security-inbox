@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["880" "Saturday" "23" "September" "2017" "14:57:27" "+0100" "Simon McVittie" "smcv@debian.org" "<20170923135727.2uys3wgimmyczgy2@perpetual.pseudorandom.co.uk>" "20" "Re: [oss-security] Why send bugs embargoed to distros?" "^Date:" nil nil "9" "2017092313:57:27" "[oss-security] Why send bugs embargoed to distros?" (number mark "        smcv@debian. Sep 23   20/880   " thread-indent "\"Re: [oss-security] Why send bugs embargoed to distros?\"\n") "<20170923134418.6e460656@pc1>" ("<20170923134418.6e460656@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["129" "Tuesday" "9" "February" "2016" "23:26:32" "+0100" "Albert Astals Cid" "aacid@kde.org" "<4879177.l6fT5WhknG@xps>" "5" "[oss-security] KDE Plasma vulnerability: need CVE" nil nil nil "2" "2016020922:26:32" "[oss-security] KDE Plasma vulnerability: need CVE" (number mark "U       aacid@kde.or Feb  9    5/129   " thread-indent "\"[oss-security] KDE Plasma vulnerability: need CVE\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23564 invoked by uid 550); 23 Sep 2017 13:57:57 -0000
+Received: (qmail 11709 invoked by uid 550); 9 Feb 2016 22:26:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,38 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22472 invoked from network); 23 Sep 2017 13:57:56 -0000
-Message-ID: <20170923135727.2uys3wgimmyczgy2@perpetual.pseudorandom.co.uk>
-References: <20170923134418.6e460656@pc1>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170923134418.6e460656@pc1>
-User-Agent: NeoMutt/20170609 (1.8.3)
-Date: Sat, 23 Sep 2017 14:57:27 +0100
-From: Simon McVittie <smcv@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Why send bugs embargoed to distros?
-To: oss-security@lists.openwall.com
+Received: (qmail 11689 invoked from network); 9 Feb 2016 22:26:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id:user-agent:mime-version
+         :content-transfer-encoding:content-type;
+        bh=E6ljIVtDPkC99RFaB/wA6WBo1ta8fEoEnSFwTLVEbNk=;
+        b=cIxYSBztznzFPCJG2RJXoNq8uhAzx9rf+N5IJ7JUy3DnCaScx5tMsagchSfXWHuiEs
+         Z2g2JfLExF8O5klWKskfyvDiGVn3R+nryFOyrbmEI5/ds2JnLweY81rVQmsG3f0h04Wq
+         w6yyZvGjzE9G8tPYNIZaergOL8bF5UFh9MRamH4orlyFLWPAYXMrKkKqvAvlEPGcJxWe
+         ZHYIoBdr2B6BliG/iwb7WnKFg8myPXO1N5R1fcnlLddLWtnhx54s5sOu1EAhyje8i3Cl
+         qod2LjdFCtA9v1LJxOcw3NONjKv4tMobIAbHAVy7Ds2k6gMO1pjSo8kB6MAfvRyTFxbM
+         Pulg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :user-agent:mime-version:content-transfer-encoding:content-type;
+        bh=E6ljIVtDPkC99RFaB/wA6WBo1ta8fEoEnSFwTLVEbNk=;
+        b=Cz8yAleWS/fAoYFFp8DN+gW+pZ2uXeTnnAWlSwM4HzZ2cYblXpmpdaeAjOabcSxPTx
+         rWawQHIEKHqxtCBFTA9jw9BDmjzXqcESvGkzjjMoC5bH3f0ov+ygcbcXlq7d+wg1vGqw
+         LvigcXaDjyV6ILyJ0SmTCuSLBs4Dkt8sMpCNCP5rub4IoyYV3Rj+3qYU6TxK2Mx2tLzb
+         5fiWfuJFRZAvVhC5fZT1GrOBsHb6O170o3GYs5sl2jjgGnKTlGGM8iQdg2er3yUvLdE1
+         7t0m6XAmjImdh4axchKQO5Ow0L4GRg8xsnXhRvmnvI2DgcFa3AT8ajNd32Uv2Qm/PgoW
+         /Lgg==
+X-Gm-Message-State: AG10YORJl/gf1S0CgxRRZ0ua2Vv64zVAWTVRYIiE0fuD4+t9K+COvmf2xHsV53tSrCbNiQ==
+X-Received: by 10.28.4.216 with SMTP id 207mr7058082wme.20.1455056794092;
+        Tue, 09 Feb 2016 14:26:34 -0800 (PST)
+Sender: Albert Astals Cid <tsdgeos@gmail.com>
+From: Albert Astals Cid <aacid@kde.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@mitre.org>, security@kde.org
+Date: Tue, 09 Feb 2016 23:26:32 +0100
+Message-ID: <4879177.l6fT5WhknG@xps>
+User-Agent: KMail/5.0.2 (Linux/4.4.0-2-generic; KDE/5.15.0; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Subject: [oss-security] KDE Plasma vulnerability: need CVE
 
-On Sat, 23 Sep 2017 at 13:44:18 +0200, Hanno Böck wrote:
-> Debian+Ubuntu took more than a day after disclosure to fix. According
-> to the Debian bug tracker the bug got only opened after the public
-> disclosure[2].
+Hi, Albert from KDE, can we get a CVEs assigned for 
+https://www.kde.org/info/security/advisory-20160209-1.txt
 
-The Debian bug tracker (bugs.debian.org) is always public and has no
-mechanism for embargoing individual bugs, so it is never used before
-public disclosure.
-
-It's entirely possible that your conclusion is correct in this case
-(I don't have any more information than you do on whether the Debian
-security team or package maintainer made use of the embargo period
-for this vulnerability), but the late opening of a bug is not evidence
-that no work was done before public disclosure.
-
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777545 is an example
-of a vulnerability for which the package maintainer (me) was definitely
-aware before the bug was filed.
-
-    S
+Thanks,
+  Albert
