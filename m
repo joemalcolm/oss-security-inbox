@@ -1,49 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/31/1
-Message-ID: <CACvbKQavmHbrxTWnpGKF4XTsmifAa_4hwWavV427P8b4gDb+Sg@mail.gmail.com>
-Date: Sat, 31 Dec 2016 05:38:20 -0200
-From: Pedro Santos <pedrosans@...il.com>
-To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  security <security@...che.org>
-Subject: Fwd: [ANNOUNCE] CVE-2016-6793 Apache Wicket deserialization vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/09/3
+Message-ID: <56BA3522.6020601@suse.com>
+Date: Tue, 9 Feb 2016 19:51:14 +0100
+From: Andreas Stieger <astieger@...e.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE Request: cacti: Authentication using web authentication as a user not in the,cacti database allows complete access
 Content-Type: text/plain; charset=utf-8
 
-Forwarding the message em plain text mode to:
+Could a CVE ID please assigned for the following issue:
 
-- be accepted by securityfocus's mail server ( didn't accepted MIME
-Content-Type 'multipart/alternative' )
-- add oss-security@...ts.openwall.com at the open receiver ( openwall
-is not accepting emails if in BCC)
-- adding missing Apache's security team (my bad, missed in the original email)
+http://svn.cacti.net/viewvc/cacti/tags/0.8.8g/docs/CHANGELOG?revision=7788&view=markup
+-bug:0002656: Authentication using web authentication as a user not in the
+cacti database allows complete access
+http://bugs.cacti.net/view.php?id=2656 Classified by upstream as a security fix.
+Upstream fix is http://svn.cacti.net/viewvc?view=rev&revision=7770
+https://bugzilla.suse.com/show_bug.cgi?id=965930
 
-Pedro Santos
+Accessing cacti using a user name not the cacti database fills the log with
+database error messages and allows complete access to everything, including the
+user administration pages. The bug is in auth_login.php which fails to check
+the query actually found any data or not.
 
----------- Forwarded message ----------
-From: Pedro Santos <pedro@...che.org>
-Date: Sat, Dec 31, 2016 at 5:21 AM
-Subject: [ANNOUNCE] CVE-2016-6793 Apache Wicket deserialization vulnerability
-To: announce@...ket.apache.org, "users@...ket.apache.org"
-<users@...ket.apache.org>, dev@...ket.apache.org
+Fixed in tagged but (as of writing) unreleased 0.8.8g.
+
+Thanks,
+Andreas
+
+-- 
+Andreas Stieger <astieger@...e.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG Nürnberg)
 
 
-CVE-2016-6793: Apache Wicket deserialization vulnerability
 
-Severity: Low
-
-Vendor: The Apache Software Foundation
-
-Versions Affected: Apache Wicket 6.x and 1.5.x
-
-Description: Depending on the ISerializer set in the Wicket
-application, it's possible that a Wicket's object deserialized from an
-untrusted source and utilized by the application to causes the code to
-enter in an infinite loop. Specifically, Wicket's DiskFileItem class,
-serialized by Kryo, allows an attacker to hack its serialized form to
-put a client on an infinite loop if the client attempts to write on
-the DeferredFileOutputStream attribute.
-
-Mitigation: Upgrade to Apache Wicket 6.25.0 or 1.5.17
-
-Credit: This issue was discovered by Jacob Baines, Tenable Network
-Security and Pedro Santos
-
-References: https://wicket.apache.org/news
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
