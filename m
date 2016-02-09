@@ -1,89 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/08/2
-Message-ID: <f1a94b45-2ea5-8943-b676-c07456992798@uni-konstanz.de>
-Date: Fri, 8 Jul 2016 14:19:02 +0200
-From: Jens Erat <jens.erat@...-konstanz.de>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: several SOGo issues (DOS, XSS, information leakage)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/09/1
+Message-ID: <56B9555C.9090009@geeklan.co.uk>
+Date: Tue, 9 Feb 2016 02:56:28 +0000
+From: Sevan Janiyan <venture37@...klan.co.uk>
+To: oss-security@...ts.openwall.com
+Subject: Libreoffice updater runs over http
 Content-Type: text/plain; charset=utf-8
 
-Thank you for your reply.
+Hi,
+Looking into the validity of an issue which was reported[1] a couple of
+years back, it seems that it's still possible to spoof the availability
+of an update for LibreOffice.
 
-Am 15.06.2016 um 04:40 schrieb cve-assign@...re.org:
-> We have a few questions about this. First, several of the
-> https://sogo.nu/bugs URLs provide an "Access Denied" response and we
-> were wondering whether that was intentional. MITRE has no role in
-> determining the list charter, but
-> http://oss-security.openwall.org/wiki/mailing-lists/oss-security says
-> "List Content Guidelines ... Any security issues that you post to
-> oss-security should be either already public or to be made public by
-> your posting."
->
-> When required, CVE IDs can be assigned based on commits in conjunction
-> with non-public bug reports; this potentially addresses all of the
-> cases except for SOGo #3670, which is apparently not yet public at
-> all.
+Unfortunately, I've not been able to get the download to happen as I
+need to look into what happens when the application requests PROPFIND
+/check.php?pkgfmt=dmg HTTP/1.1
+At this point the download is marked as stalled whilst attempting to
+download LibreOffice 9.9.9 I'd announced.
 
-I had inverse publishing the issues, apart from #3670 as the fix was released just recently.
+Though the original report used Windows, I repeated on OS X trying to
+see if libreoffice could just download a mp4 video, later changed to a dmg.
+Using the following check.php
+<?php
+echo '<?xml version="1.0" encoding="utf-8"?>
+<inst:description xmlns:inst="http://update.libreoffice.org/description">
+<inst:id>LibreOffice 9.9.9</inst:id>
+<inst:gitid>123456789</inst:gitid>
+<inst:os>MacOSX</inst:os>
+<inst:arch>x86</inst:arch>
+<inst:version>9.9.9</inst:version>
+<inst:buildid>9999</inst:buildid>
+<inst:update type="application/octet-stream"
+src="http://update.libreoffice.org/update.dmg"/>
+</inst:description>';
+?>
 
-
-> Also, your message didn't mention whether you are making the CVE
-> request on behalf of the Inverse team, or whether you are noting
-> issues that are security-related from your own perspective.
-
-I'm not requesting on behalf of the Inverse team ("from by own perspective"). Inverse already confirmed the issues (and fixed most of them), but SOGo has a history of missing CVEs even for nasty issues.
-
- 
-> Going through the list of public issues:
-> 
-> SOGo #3510 - is the ultimate case of the entire issue summarized by
-> "copies the attachment (into memcached?) and then eliminates the copy
-> in the sogod. The memcached copy stays forever/until the SOGo service
-> is restarted"? Or is there a second implementation error? It seems
-> that part of the issue, but not all of it, is a feature request (SOGo
-> #3135) suggesting that SOGo should have size limits because
-> configuring limits at the level of the web server and SMTP server
-> disrupts the user experience.
-
-The issues was resolved by limiting the upload size, which _also_ was a feature request (but now got important due to the possible DOS attack). Further investigation showed that not memcached was the issue but temporary files kept around, but the rest of the argument stayed the same.
+Is this of concern at this stage?
 
 
-> SOGo #3695 is listed twice but the second one has 3696 in the URL. We
-> are guessing that the second "SOGo #3695" is just a "SOGo #3696" typo.
-> More importantly, are there two distinct code problems? Or is it a
-> single code problem that is reachable with different attack vectors?
-
-These have been two different issues within related code, that have been resolved together:
-
-1. Not all private information removed for the public free/busy view
-2. It was possible to join appointments based on the UID of the public free/busy view from different users, to know who has appointments with whom
-
-
-> SOGo #3718 has two identical
-> "Issue: https://sogo.nu/bugs/view.php?id=3718" lines. Was one of them
-> supposed to be a different URL?
-
-I duplicated the line by accident.
-
-
-> SOGo #2598 - we are able to assign CVE-2014 IDs. Does "SOGo #2598:
-> Script injection in calendar title ... Reporter: Jens Erat" mean that
-> your own discovery was only about the calendar title, and that
-> additional attack vectors ("contacts module" and "CSS dialogs") were
-> follow-on discoveries by the Inverse team?
-
-The (now public) issue log says I realized the issue also exists with contacts, and the CSS stuff was not an additional attack vector, but a regression fix.
-
-
--- 
-Jens Erat
-Universität Konstanz
-Kommunikations-, Infomations-, Medienzentrum (KIM)
-Abteilung Basisdienste
-D-78457 Konstanz
-Mail: jens.erat@...-konstanz.de 
-
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4913 bytes)
+Sevan
+[1] http://www.waraxe.us/advisory-99.html
