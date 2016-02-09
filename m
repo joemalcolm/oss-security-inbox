@@ -1,4 +1,9 @@
-Received: (qmail 21944 invoked by uid 550); 31 Dec 2025 05:59:28 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1577" "Tuesday" "9" "February" "2016" "18:37:26" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160209233726.D5C4342E09B@smtpvbsrv1.mitre.org>" "38" "[oss-security] Re: KDE Plasma vulnerability: need CVE" nil nil nil "2" "2016020923:37:26" "[oss-security] Re: KDE Plasma vulnerability: need CVE" (number mark "U       cve-assign@m Feb  9   38/1577  " thread-indent "\"[oss-security] Re: KDE Plasma vulnerability: need CVE\"\n") "<4879177.l6fT5WhknG@xps>" ("<4879177.l6fT5WhknG@xps>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 22338 invoked by uid 550); 9 Feb 2016 23:37:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,75 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 24361 invoked from network); 31 Dec 2025 05:44:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767159853; x=1767764653; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=0KMFzzdkrsHYm1yTPKhtAsD5eCpEIiGrKWcqK7do5aM=;
-        b=LfKu7fH/BmdwALOvQttb70dS0PzzpZv7DNMkSa+qwJSzlRXkVLCwxsM0njojktL0Zg
-         1oo8QYUHa/fefa2eAZ+dqKCJ7EcoxYkS4hFFGosKSAwkkJpFyVgKcqf2um2Y7lu6h/Yn
-         lR+3vdIiJmBGE+i3yTiXzPhaZlcqVGMCSZkUdqMkfQJJLmiCnydHVZJ+D/JDmS6lVMmO
-         lbxuGlCXXIx94ov/pX24nRRvLcq0yCrKbioCLJAlk89t7XINTnihPRKVgAPWCfMw7qzg
-         hVxKvUi6/wHsYXlqIuGYsfT12iY7+1+89E6JCW5ICyDRaJSlVyE5yW4De1UCEfiC1ctu
-         adKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767159853; x=1767764653;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0KMFzzdkrsHYm1yTPKhtAsD5eCpEIiGrKWcqK7do5aM=;
-        b=J6g9jBuZTuv220iMd0wbhGrTR6gn1FtsgUi57ZR6YHTl2cW4GVGPTfsuUvemkDHqHP
-         4Prjg99t3WJVBhHBsuZC6XLAEgzcw0gHWuIgprYzVjw0motfv6VVUqco/GfNoI3HVvzi
-         yMRu9A6bfNN/TweQD9wyvlVeuMWqzNueksyO4cuEgO5hUNICyostVNR4k6bIsxVHyikb
-         9Jbf71VLYCbYUBcDek0qOCV6finv7SA1Dv31oudjaD7ARv7oIFbiSQjCeJ+b4LYu1lD+
-         ZgFKEJ5/nbPyY7MsegT913yFOvdsKVlTgPBsJYYIXseVLD+yekusCKnHeyg39NE3e570
-         mVgg==
-X-Gm-Message-State: AOJu0YyFWV7YVB5HNb+9oiU/cMfm5RPuWFJp9i3WZ+DbbfAKOd57MkUB
-	wuj+IWJu5sT9UO9hUrzG+a0rmVVxYIcpK1gCOOxHrYR45PzKMiv/fiSCIYoTiBg7
-X-Gm-Gg: AY/fxX7AGbX4eBs+cHXeBir29UFl2e0mUnSz4/k2Lp+/2VPpX/IsJUkd8SZ2C6qXvnx
-	pi+4/73BNeDWcKP+OfoqDeuky7rHMUHumf0Isjl6L2rMVsKYKheBT48Bv3FGzGydjUdVQYb39hn
-	xggSXSVQSzBZ7bMuWhtivuQDSdngQQTy7NZ3UYp5uPxH7kIoEObcI29CSCK98jTIHQVL/gfGKZQ
-	QwZfswDkfhqLh0eCzSOdmiSYiewcZKr6TjutsdacZvNR3T9RQWckHxDsHSJLEIMnpp4Fj7Msn2C
-	mZWR2q/htQErABXtHO7saUOLMgjBpEYwdZby44HEB51SAy4farHSQLjNyGsQUm1fM3AlukzQKQI
-	r0IK6DSIAeiC3p02Dr9pdDcNIVW5yO+6Kp11nA0r29bZbPpZfrCYJ4ogFryR0N4EozieYjCi7HT
-	jlQ/64AAw=
-X-Google-Smtp-Source: AGHT+IGxd5bloaYjj/jDObRmbWF74BjHvRKQtBv0R4N1oZkBCrTKuF7pUKLBoCf7KUNgXVjKarclrA==
-X-Received: by 2002:a05:6870:160c:b0:3f5:b411:ad9 with SMTP id 586e51a60fabf-3fda5886411mr16482274fac.41.1767159852665;
-        Tue, 30 Dec 2025 21:44:12 -0800 (PST)
-Message-ID: <0f885422-9937-438c-85cd-4f6850ee5b72@gmail.com>
-Date: Tue, 30 Dec 2025 23:44:05 -0600
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com, Peter Gutmann <pgut001@cs.auckland.ac.nz>
-References: <3318308d-70b1-4ab3-9cca-ab4ea67dd27d@gmail.com>
- <0bf8169edb12d002a4654c4ccf6aa54d84eba14a.camel@verbuecheln.ch>
- <SYCPR01MB366178C350BB2649FA5B82D6EEBCA@SYCPR01MB3661.ausprd01.prod.outlook.com>
-Content-Language: en-US
-From: Jacob Bachmeyer <jcb62281@gmail.com>
-In-Reply-To: <SYCPR01MB366178C350BB2649FA5B82D6EEBCA@SYCPR01MB3661.ausprd01.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Many vulnerabilities in GnuPG
+Received: (qmail 22315 invoked from network); 9 Feb 2016 23:37:38 -0000
+From: cve-assign@mitre.org
+To: aacid@kde.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@kde.org
+In-Reply-To: <4879177.l6fT5WhknG@xps>
+Message-Id: <20160209233726.D5C4342E09B@smtpvbsrv1.mitre.org>
+Date: Tue,  9 Feb 2016 18:37:26 -0500 (EST)
+Subject: [oss-security] Re: KDE Plasma vulnerability: need CVE
 
-On 12/29/25 18:57, Peter Gutmann wrote:
-> [...]
->
-> A solution for mission-critical use like authenticating downloaded binaries
-> would be to do two things:
->
-> 1. Create an app that does just that and nothing else: Here is a blob of data,
-> here is a detached signature, is it valid for the data?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Does using gpgv(1) with detached signatures fit this bill?
+> https://www.kde.org/info/security/advisory-20160209-1.txt
 
-I am unsure what having a separate tool dedicated for verifying 
-signatures using trusted keyrings says about the overall system...
+> https://bugs.kde.org/show_bug.cgi?id=358125
+> https://bugzilla.opensuse.org/show_bug.cgi?id=964548
 
+> Qt allows to have no screens. If all XRandR screens are disconnected
+> there are also no QScreens. This is from an X11 perspective wrong, but
+> we have to deal with it. No QScreens means that all views are destroyed
+> and no new ones are created. Thus all windows close and the greeter
+> exited successfully which in turn unlocked the screen.
 
--- Jacob
+Use CVE-2016-2312.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
+iQIcBAEBCAAGBQJWundZAAoJEL54rhJi8gl5D9sQAIdek7UXlkLwVbO0syNQ0wMs
+TsZBLePf5Ja0cfJQAAwK9yglPj2qDTHGfao9uZ+SEOsSG1u/cl61xsnHJB2RTBmv
+eyUZEWi1ysC4PuVJ/lIA5BhoIC3x/UWto1jLf/p4e/C5z/h4x13uMeaaRf68q/eW
+yRIYfWejHa/KpaqWj7cp5btKQoQbimfU1z8cR9kTomt9lVnOhKWSSutBZI9n9ffO
+PP2N6MrwnjaBOA+RUe++qUSyn1xEA2s5QDNYnKGyFZbusaLNqTy+QlBnTpU1a6Aq
+kA4+d6nsq7uZ3uxEhhgRfTBhPBmrl8k/N6/tgJFLDWsPZVSt1ZN+2RsYTh9P+Hit
+8cZyQj1kZSOnUufcv7qvxLIiUkIKq0/H3k+fgcXODQDhxt8+pymcNZE7lHiHhlyG
+fnduLHWIYXj7W+F15lpM7OTAVYi/cmbF9NNw43fg/I5xp0GHVV481KD7zW7CT6J+
+bihhdZiAl0SgxP/nR91D/JiKOKcw9KXhuaZChUKlhVgXyLGetbivTLkp+Qhbh1Dt
+DL/OyWprFy/cJSJIKAaAxDLWTo7gbNl/FnSHCjzPwl+nbrw11DeVD5W313VFSGwQ
+f7itbKMjlribDEZX6WC5OuXvv8uVWGUFTsVb3Ki5fi8pJeItzMS6lyZ6yJS3Skm5
+2Pz3zbA8ldJBJGX/anss
+=ti15
+-----END PGP SIGNATURE-----
