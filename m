@@ -1,4 +1,9 @@
-Received: (qmail 23992 invoked by uid 550); 7 Aug 2024 19:28:27 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["877" "Wednesday" "10" "February" "2016" "01:00:49" "+0100" "Albert Astals Cid" "aacid@kde.org" "<3089008.7Vjmlmn4H0@xps>" "26" "[oss-security] Re: KDE Plasma vulnerability: need CVE" nil nil nil "2" "2016021000:00:49" "[oss-security] Re: KDE Plasma vulnerability: need CVE" (number mark "U       aacid@kde.or Feb 10   26/877   " thread-indent "\"[oss-security] Re: KDE Plasma vulnerability: need CVE\"\n") "<20160209233726.D5C4342E09B@smtpvbsrv1.mitre.org>" ("<20160209233726.D5C4342E09B@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 10200 invoked by uid 550); 10 Feb 2016 00:01:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,121 +12,70 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1532 invoked from network); 7 Aug 2024 18:14:37 -0000
+Received: (qmail 10182 invoked from network); 10 Feb 2016 00:01:03 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723054468; x=1723659268; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vRTdojW1HPwsODbNGH8H8LSCRtcvp0WnoInB2vB7/s4=;
-        b=fCTn89C1TCxg4uSuBTySaWlvmakikSJ7ZWFvo3a9xGKpLktTLAgBU4RKvvH4vVk3uu
-         9edmF19Myu/fD7CV9Kp6hjyaznQWyA8IlvovqGqPokDKeuQrxfcECQ/1FySK3isLD5tH
-         d/AH5etpx8HaiUb6blqUt0+n10/j+QkdYvq+nK0z7LA9O9cBaQt80ISo60qkTfqUHJCQ
-         8/joBmSm2cyHS8JoUJGYNQA0/GmNXf9xGlF0gpSfIDesMy/mm5UceXjNZXdBOw67AXfj
-         OB3mDjP2UT+Nx/laWPCOUDlT9BsIvTNyn9u5UNbLvLAv2gQARaL8mTGXQcgbCN3KYZ9A
-         kRkw==
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id:user-agent:in-reply-to
+         :references:mime-version:content-transfer-encoding:content-type;
+        bh=emTB76b8ixEGVPC8zYrjXz7dG8V6Dt3nWojrDv2NdYk=;
+        b=kc9k1dPnmz8mrX1eKfMX6uF5ADwVH5yOmxe+Q9zoDrbtKjNyNMQZeoZrfJzD7dcUrG
+         AmoL+OJ5PgkjBdkF+mnGolcaugXZSBfWuNpJakDXs7u1AS8dg6hOdP7mcCzw6LP0JjVM
+         XkR48giActNa+BlMHhZ0OLFtPFOS+XJpYrC4SrOD15DUfOVDhsfI57pVJR46VUf6yaDz
+         sIg9X7YQJX6L5uSdjAesupNeooq//L5zrJVkORS+KkB636F4YDd0Osa/+V4GgUJN6Trn
+         yN3G8Pf0szbVazuv5C7poAfuktUd95f0g9B4R9heDbK6NOyXPm/9ve+1q5XzYoPSoMTb
+         fbwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723054468; x=1723659268;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vRTdojW1HPwsODbNGH8H8LSCRtcvp0WnoInB2vB7/s4=;
-        b=B0ufgq3p/+fOZOtQ9mCWguDmGaDl2DZh7lxG6ANQJnJz9wRgY1vkPGFMWNuu9np3Tf
-         2lvcq08JWGP0Zeapy+me5dkUeuNYsNiQCvNDtr2NZoMRF9KKUmUY08C4kFJDrxG3NfnB
-         qDM3Z08tviigrxZk6qI1nkcBH4KGV0uOnxkPQQsZ9TtQDlGOaI832hudTSZnyGf8Mx0N
-         kMN5RjacxmO+M6s6j8ZdLdDMeGx99PB0zfglibdGT0LU6XICEJyyEvtgKQNix4c9TlJP
-         vRmhAiFqJxACp34Tqbkj0LIUtssEfaqsUQHo0hWtRSyllNkhYnPhJPhAWVs4F6MTo1du
-         QC4Q==
-X-Gm-Message-State: AOJu0Yw/moe2gtLpPFmDjAo1xD2rhS72EpMvOl9/R/tx3J6gW/NDlPuk
-	KeNeIjWo/vc+KgZZHXolgD9bmTXMjVvPiu/ZLcnanfX4m7lWp6AKM4M653aaGTaY6Q2yQP2rpYn
-	nH/Yv0fHRVUA4EJnDN9vmTddSFVkZDQ==
-X-Google-Smtp-Source: AGHT+IExxJVx1TbfRMoVym860i1DsONzWcxl5L/cfnq/N3tGPfuXk96tkw1biZ9AXypDIihT7PUsNDd4IAtgWpbYMx8=
-X-Received: by 2002:a05:6358:8a1:b0:1a6:b0b1:f036 with SMTP id
- e5c5f4694b2df-1af3b9ff2bemr1502141055d.2.1723054467959; Wed, 07 Aug 2024
- 11:14:27 -0700 (PDT)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:content-type;
+        bh=emTB76b8ixEGVPC8zYrjXz7dG8V6Dt3nWojrDv2NdYk=;
+        b=NkXqliA+LBqM1qplTC4yaV7E2Nx/fIvExu7cN+sb8o+O9sptszwVCIu8xaqnM+MFP0
+         kyJ/iysfmN/fGwfEq8ChqjSUr0B8Kk7ujI+fKp2yGY8d5wlWqBDvyBmy/i7Sm0VtTERu
+         7oJnKFDqGxwWzJqQ+0E52ntrQ4+1A4bJqhbDxeOyNT9d4uGcVH3N8rAlNLZNS5GEZPth
+         xvqDWvBkEP0xZ9BKITl1Ed8RslDEU0mQwo0gKx0dEQECseRbC7jkcqLZQKhoQdyD6hx3
+         Dw0+c+4APkfkhLp80bjeKPQQiaBYuTZFC51xlf9MyiVWdqZYkxhu8/XJIIc4F4cCwEfC
+         DItQ==
+X-Gm-Message-State: AG10YOS1v6pr7WEPC4sX/KfUW702+yAjf+b3QwUBn2tDUK1V47ZrZC3/iloNTWVv9YoBwQ==
+X-Received: by 10.194.119.230 with SMTP id kx6mr20373705wjb.63.1455062452140;
+        Tue, 09 Feb 2016 16:00:52 -0800 (PST)
+Sender: Albert Astals Cid <tsdgeos@gmail.com>
+From: Albert Astals Cid <aacid@kde.org>
+To: cve-assign@mitre.org
+Cc: oss-security@lists.openwall.com, security@kde.org
+Date: Wed, 10 Feb 2016 01:00:49 +0100
+Message-ID: <3089008.7Vjmlmn4H0@xps>
+User-Agent: KMail/5.0.2 (Linux/4.4.0-2-generic; KDE/5.15.0; x86_64; ; )
+In-Reply-To: <20160209233726.D5C4342E09B@smtpvbsrv1.mitre.org>
+References: <20160209233726.D5C4342E09B@smtpvbsrv1.mitre.org>
 MIME-Version: 1.0
-References: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com>
- <20240806171232.6bd08942@zbook> <ZrJv8PDeCxQQJVxH@itl-email>
- <20240807144047.GA12108@test> <20240807174807.GA4206@openwall.com>
-In-Reply-To: <20240807174807.GA4206@openwall.com>
-From: Pat Gunn <pgunn01@gmail.com>
-Date: Wed, 7 Aug 2024 14:14:16 -0400
-Message-ID: <CADz+4x8wo6KaCU9b2s_+VkB08X7U4WWJHj66UfyvRU1qKUUd-A@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000007dd6ad061f1be1c9"
-Subject: Re: [oss-security] feedback requested regarding deprecation of TLS 1.0/1.1
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Subject: [oss-security] Re: KDE Plasma vulnerability: need CVE
 
---0000000000007dd6ad061f1be1c9
-Content-Type: text/plain; charset="UTF-8"
+El Tuesday 09 February 2016, a les 18:37:26, cve-assign@mitre.org va escriure:
+> > https://www.kde.org/info/security/advisory-20160209-1.txt
+> > 
+> > https://bugs.kde.org/show_bug.cgi?id=358125
+> > https://bugzilla.opensuse.org/show_bug.cgi?id=964548
+> > 
+> > Qt allows to have no screens. If all XRandR screens are disconnected
+> > there are also no QScreens. This is from an X11 perspective wrong, but
+> > we have to deal with it. No QScreens means that all views are destroyed
+> > and no new ones are created. Thus all windows close and the greeter
+> > exited successfully which in turn unlocked the screen.
+> 
+> Use CVE-2016-2312.
 
-There are degrees of old; supporting people with a range of computers still
-likely to be out there with some numbers is different from catering to the
-very long tail (or museum pieces). Taking "the widest audience possible"
-too literally would require supporting HTTP forever, perhaps even host-less
-HTTP/0.9 (no vhosts). I think to even enter the tent of reasonability
-people need to accept that "widest possible" is not a sustainable metric,
-and that letting security-essential libraries evolve means letting them
-ditch dead weight that may be part of their penetration surface.
+Thanks for the quick answer :)
 
-For expiring CA certs, I'm not aware of many tools that offer to bypass
-checks (although I also haven't verified that many do such checks); do you
-have examples in mind?
+Cheers,
+  Albert
 
-I'm guessing for that ssl-obsolete idea, you'd want to use dlopen() or some
-equivalent so the symbols are never loaded at the same time, or just link
-with an older version of the library, making two different binaries with
-different linking if need be. I suspect these concerns are so niche that
-the few people who might be inconvenienced are also technologically
-sophisticated enough to find solutions.
+> 
+> --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 
-On Wed, 7 Aug 2024 at 13:50, Solar Designer <solar@openwall.com> wrote:
-
-> Hi,
->
-> I think there are two categories of use cases that need a wide range of
-> supported protocol versions:
->
-> 1. Hosting a public server that's meant to be usable by the widest
-> audience possible, including from both up-to-date and older systems.
-> For example, a website should display in latest web browsers, but
-> command-line downloads from the same server should also work from old
-> systems (e.g., running LTS distros).
->
-> 2. Scanning or crawling a wide variety of systems, e.g. by a search
-> engine indexer, an asset enumeration tool, a security scanner, or during
-> a pentest.
->
-> For both of these categories, it's desirable to have a maintained
-> library that supports this wide range of protocol versions.  The proxy
-> solution that Demi Marie Obenour advocates for isn't of enough help.  It
-> could kind of work for #1, but it'd require two different end-points
-> that users would need to explicitly choose between, or some other hacks.
-> For #2, a workaround is to use two libraries, maybe trying the newer one
-> first followed by a fallback to the older, but this may also be tricky
-> (e.g., linking them into the same program might clash).
->
-> I have to admit that #1 is becoming difficult anyway as older CA certs
-> expire.  OTOH, especially older tools allow to bypass the certificate
-> check easily (if they have it at all).
->
-> On Wed, Aug 07, 2024 at 04:40:47PM +0200, niekt0 wrote:
-> > as a penetration tester, I would appreciate something like a package
-> > "ssl-obsolete", that would contain old, working code. While it is
-> probably not
-> > necessary to fix cryptography related bugs (we know that this part is
-> broken),
-> > it would be probably still nice to fix RCE bugs.
->
-> Right.  But if it's a separate package, then you also need a separate
-> tool chain using that package - e.g., programming language modules built
-> against it, then separate builds of the tools you use directly.  Or just
-> an older LTS distro that's ideally still maintained enough to fix RCEs,
-> but then you may be unhappy everything else is also out of date.
->
-> Now, I am not saying any of this is necessarily enough reason to keep
-> TLS 1.0/1.1 in OpenSSL 4.0.  Possibly not.  LTS distros to the rescue.
-> This would mean somewhat slower adoption of OpenSSL 4.0+, but quicker
-> deprecation of TLS 1.0/1.1 on the Internet.
->
-> Alexander
->
-
---0000000000007dd6ad061f1be1c9--
