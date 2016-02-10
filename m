@@ -1,51 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/14/2
-Message-ID: <nraqt1$a2m$1@blaine.gmane.org>
-Date: Wed, 14 Sep 2016 08:32:03 +0200
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/10/8
+Message-ID: <CAGKXR4sFSLHEf0Eb2tRxLUMsZQbB6b77WJrEuJ_HKqnF4HmA6g@mail.gmail.com>
+Date: Wed, 10 Feb 2016 13:35:17 -0800
+From: Matthew McPherrin <mmc@...areup.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: ADOdb PDO driver: incorrect quoting may allow SQL injection
+Subject: CVE request - OkHttp Certificate Pining Bypass
 Content-Type: text/plain; charset=utf-8
 
-On 2016-09-07 19:30, Damien Regad wrote:
-> Greetings
-> 
-> jdavidlists reported an issue [1] with ADOdb 5.x, qstr() method,
-> improperly quoting strings resulting in a potential SQL injection attack
-> vector.
-> 
-> This affects only PDO-based drivers, and only in the case where the
-> query is built by inlining the quoted string, e.g.
-> 
-> $strHack = 'xxxx\\\' OR 1 -- ';
-> $sql = "SELECT * FROM employees WHERE name = " . $db->qstr( $strHack );
-> $rs = $db->getAll($strSQL); // dumps the whole table
-> 
-> Note that it is not recommended to write SQL as per the above example,
-> the code should be rewritten to use query parameters, like
-> 
-> $strHack = 'xxxx\\\' OR 1 -- ';
-> $sql = "SELECT * FROM employees WHERE name = ?"
-> $rs = $db->getAll($strSQL, array($strHack));
-> 
-> Please let me know if a CVE is needed for this.
-> 
-> Patch for the issue is available [2], and will be included in upcoming
-> ADOdb v5.20.7 release.
-> 
-> Best regards
-> Damien Regad
-> ADOdb maintainer
-> 
-> 
-> [1] https://github.com/ADOdb/ADOdb/issues/226
-> [2] https://github.com/ADOdb/ADOdb/commit/bd9eca9
+A vulnerability was discovered in OkHttp that allows an attacker to bypass
+certificate pinning. OkHttp did not validate that the pinned certificate
+was in the chain to a trusted certificate authority.
 
-Should I assume from the silence that no CVE is required for this ?
+This resulted in an attacker being able to present a certificate chain with
+a certificate issued by one trusted certificate authority, and additionally
+including the pinned certificate authority. Because the pinned certificate
+was present, and the certificate was issued by a trusted certificate
+authority, the server's certificate was accepted. However, it should not
+have been accepted as the pinned certificate was not in the trust chain.
 
-Thanks for your reply.
-Damien
-
-
-
+This allows an attacker to obtain a certificate from a non-pinned but
+trusted CA, then have OkHttp connect to that server, bypassing certificate
+pinning.
 
