@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1155" "Wednesday" "27" "January" "2016" "16:40:41" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20160127154041.GA9254@eldamar.local>" "43" "[oss-security] CVE Request: Linux: NULL pointer dereference netfilter/nf_nat_redirect.c in nf_nat_redirect_ipv4 function" nil nil nil "1" "2016012715:40:41" "[oss-security] CVE Request: Linux: NULL pointer dereference netfilter/nf_nat_redirect.c in nf_nat_redirect_ipv4 function" (number mark "U       carnil@debia Jan 27   43/1155  " thread-indent "\"[oss-security] CVE Request: Linux: NULL pointer dereference netfilter/nf_nat_redirect.c in nf_nat_redirect_ipv4 function\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["905" "Wednesday" "10" "February" "2016" "13:35:17" "-0800" "Matthew McPherrin" "mmc@squareup.com" "<CAGKXR4sFSLHEf0Eb2tRxLUMsZQbB6b77WJrEuJ_HKqnF4HmA6g@mail.gmail.com>" "19" "[oss-security] CVE request - OkHttp Certificate Pining Bypass" nil nil nil "2" "2016021021:35:17" "[oss-security] CVE request - OkHttp Certificate Pining Bypass" (number mark "U       mmc@squareup Feb 10   19/905   " thread-indent "\"[oss-security] CVE request - OkHttp Certificate Pining Bypass\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1877 invoked by uid 550); 27 Jan 2016 15:40:54 -0000
+Received: (qmail 1976 invoked by uid 550); 10 Feb 2016 21:59:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1856 invoked from network); 27 Jan 2016 15:40:54 -0000
+Received: (qmail 18420 invoked from network); 10 Feb 2016 21:35:28 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=Vx72mkFdAiCW/nI7ThSVhYG5B54o003Su63AF4R4Y1E=;
-        b=pfsKVRoAyrDxO+V4lHMMW+Gdi+zHlm5pbcMKsZd/Oi9nNROSi8SUNKqyTcLS89IFBr
-         M5HmvK9V7gcUs9H0WvpX+w/eiW5MyKFZNVsISRh4rIj41rQzptVjT5CMyPsa2agYLVt2
-         duYGC1AEVb/QwG/hwB0Dw4XSaclyzZ0L+OZ+EQcmy9lL7BVZWCvRzDn66KnFwRBdhJY7
-         xvCKB39HMVDZ7P6j6siFqx7PUWDwFt+qhSzx5hsmhhnT5B6uaM6cweVC2GLNPqz1Gyaw
-         OlNJFDhexv1Bx2i/653exT58v+g23fA5DevydfOB84Btm0fFNEERdCO7KO1Uj8kQ3DKz
-         W1Qw==
+        d=squareup.com; s=google;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=jN1c9SVdP/xrvA1//jfofZsdtZWzsr7hdPL/7X7IgPM=;
+        b=aLm/ua+7RLVVCBXamcvJstyzUcHDriC6Vk3H0+jDEEMI5v6E7DfOdpQOGAVhPkekdK
+         iO8jCkxkISxa6JeJQsBnV6hBiSyHvLSbO3qrLF8emRw9EnrDw7ezheYDmFFThuNCAaHT
+         lommE99vjyKKEiLoLiIfNj5CV0epqdYmmktic=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :mime-version:content-type:content-disposition:user-agent;
-        bh=Vx72mkFdAiCW/nI7ThSVhYG5B54o003Su63AF4R4Y1E=;
-        b=gf2s+tQsYdgJiH0IDQ2LX+pViJhgblil6pM6/9ybxfq408OUtbqjir+8yJ3KV4trdZ
-         x0e+gOzP59pp7plwHVcYfdzAvkmiPn8OTN9hMETz0I23ctufKXL1P1ETy4XiaJfPe1Hv
-         1l82qF8NLEipOFBCUicvcWDfKyXYCAjxO1lRkE7E+6yT8Mf05FG1mfuZ4Dgvn0QkeOsE
-         jjUixIQXG8oGkzN2D3PX51c6h+iS/hoeE/j3MT/uHu398VLdEqJYP//qsY3Izb/fYOhR
-         RQSKWm64lsj12pLd5P8Ly2VaTmqdU02q2UaEEbcQ31UnPxFOwG0Nfo5gFKy5pxnQBSO/
-         8CQw==
-X-Gm-Message-State: AG10YORQHPpZOtsVHB9TGtG34qpJ8leUATv5I0VSOpU2tNJmv576UACQq+6RfyfCu3sncA==
-X-Received: by 10.194.83.136 with SMTP id q8mr29838359wjy.51.1453909242948;
-        Wed, 27 Jan 2016 07:40:42 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Wed, 27 Jan 2016 16:40:41 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Message-ID: <20160127154041.GA9254@eldamar.local>
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=jN1c9SVdP/xrvA1//jfofZsdtZWzsr7hdPL/7X7IgPM=;
+        b=EuWv2SimtXTGowU8Wkrn5EWVKJ9719LKUuRnS4xYZFjw/bsTO6F7QDPLjrhyZBdMxv
+         NalrFxw1etlwSBRIE5+7nvcsi+eDCW98Wc255AT1L3FJzaT6wymzxdoFQXOrZS4KAm25
+         EvO69ViUXFXBe6PhKZxW8b4YU5+ZFIrpB2fS6pPZAjaaGp2fDN1jGMkxklT84MAFDTeU
+         +XszC4jWxNx4IclZdt7quU9vG9/V4CdsQeXHDxbwVrQf+Uqyz6DUIG64HRSHxjv1elqv
+         qbAKrzfSOjL6HOWFIRYcKaqByYa3PncHMUt9MW2yUYs+AZrVEnUIY7qGrUnyoPH4B8mz
+         686Q==
+X-Gm-Message-State: AG10YOTWNZ69Eh80pNLWDVisaqM2v7ksT+hS6Md4mfKy/hJO5kwvnAj9PdNdlunPiq5AwvwLN2XPcIFisaFlHyWF
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: [oss-security] CVE Request: Linux: NULL pointer dereference
- netfilter/nf_nat_redirect.c in nf_nat_redirect_ipv4 function
+X-Received: by 10.60.140.129 with SMTP id rg1mr40902115oeb.25.1455140117398;
+ Wed, 10 Feb 2016 13:35:17 -0800 (PST)
+Message-ID: <CAGKXR4sFSLHEf0Eb2tRxLUMsZQbB6b77WJrEuJ_HKqnF4HmA6g@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=047d7b41cb7acbdbfa052b7135f9
+Date: Wed, 10 Feb 2016 13:35:17 -0800
+From: Matthew McPherrin <mmc@squareup.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request - OkHttp Certificate Pining Bypass
+To: oss-security@lists.openwall.com
 
-Hi
+--047d7b41cb7acbdbfa052b7135f9
+Content-Type: text/plain; charset=UTF-8
 
->From https://bugzilla.redhat.com/show_bug.cgi?id=1300731 
-> Kernel NULL pointer dereference vulnerability was found in
-> netfilter/nf_nat_redirect.c in nf_nat_redirect_ipv4 function introduced by
-> commit 8b13eddfdf04cbfa561725cfc42d6868fe896f56 ("netfilter: refactor NAT
-> redirect IPv4 to use it from nf_tables").
-> 
-> Vulnerable code:
-> 
-> unsigned int
-> nf_nat_redirect_ipv4(struct sk_buff *skb,
-> ...
-> {
-> ...
-> 		rcu_read_lock();
-> 		indev = __in_dev_get_rcu(skb->dev);
-> 		if (indev != NULL) {
-> 			ifa = indev->ifa_list;
-> 			newdst = ifa->ifa_local; <---
-> 		}
-> 		rcu_read_unlock();
-> ...
-> }
-> 
-> 'ifa' is not checked before access and can be accessed even if it's NULL.
-> Crash might happen when packets that need to be redirected somehow arrive on an
->  interface which hasn't been yet fully configured.
-> 
-> Patch and crash report:
-> 
-> https://lkml.org/lkml/2015/12/2/618
+A vulnerability was discovered in OkHttp that allows an attacker to bypass
+certificate pinning. OkHttp did not validate that the pinned certificate
+was in the chain to a trusted certificate authority.
 
-This was introduced in:
-https://git.kernel.org/linus/8b13eddfdf04cbfa561725cfc42d6868fe896f56 (v3.19-rc1)
+This resulted in an attacker being able to present a certificate chain with
+a certificate issued by one trusted certificate authority, and additionally
+including the pinned certificate authority. Because the pinned certificate
+was present, and the certificate was issued by a trusted certificate
+authority, the server's certificate was accepted. However, it should not
+have been accepted as the pinned certificate was not in the trust chain.
 
-Fixed by:
-https://git.kernel.org/linus/94f9cd81436c85d8c3a318ba92e236ede73752fc (v4.4-rc1)
+This allows an attacker to obtain a certificate from a non-pinned but
+trusted CA, then have OkHttp connect to that server, bypassing certificate
+pinning.
 
-Can you assign a CVE to track this issue?
-
-Regards,
-Salvatore
+--047d7b41cb7acbdbfa052b7135f9--
