@@ -1,64 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/8
-Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F7066E5F15@EXMBX-TJ002.tencent.com>
-Date: Thu, 8 Sep 2016 07:33:43 +0000
-From: winsonliu(刘科) <winsonliu@...cent.com>
-To: cve-assign <cve-assign@...re.org>
-CC: cve-assign <cve-assign@...re.org>, oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Re: CVE Request: OpenJPEG Heap Buffer Overflow Issue(Internet mail)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/10/1
+Message-ID: <3089008.7Vjmlmn4H0@xps>
+Date: Wed, 10 Feb 2016 01:00:49 +0100
+From: Albert Astals Cid <aacid@....org>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com, security@....org
+Subject: Re: KDE Plasma vulnerability: need CVE
 Content-Type: text/plain; charset=utf-8
 
-> e078172b1c3f98d2219c37076b238fb759c751ea modifies tcd.c not dwt.c - is this still the correct commit?
-Yes, the issue was triggered in dwt.c but can be fixed in tcd.c.
+El Tuesday 09 February 2016, a les 18:37:26, cve-assign@...re.org va escriure:
+> > https://www.kde.org/info/security/advisory-20160209-1.txt
+> > 
+> > https://bugs.kde.org/show_bug.cgi?id=358125
+> > https://bugzilla.opensuse.org/show_bug.cgi?id=964548
+> > 
+> > Qt allows to have no screens. If all XRandR screens are disconnected
+> > there are also no QScreens. This is from an X11 perspective wrong, but
+> > we have to deal with it. No QScreens means that all views are destroyed
+> > and no new ones are created. Thus all windows close and the greeter
+> > exited successfully which in turn unlocked the screen.
+> 
+> Use CVE-2016-2312.
 
-> Is it the same as Chromium bug 632622 that was already assigned CVE-2016-5157?
-I think so.
+Thanks for the quick answer :)
 
+Cheers,
+  Albert
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> I reported a security issue of OpenJPEG some days ago and it has been
-> fixed now. The fix is available at
-> https://github.com/uclouvain/openjpeg/commit/e078172b1c3f98d2219c37076b238fb759c751ea
->
-> A Heap Buffer Overflow (Out-of-Bounds Write) issue was found in
-> function opj_dwt_interleave_v of dwt.c. This vulnerability allows
-> remote attackers to execute arbitrary code on vulnerable installations
-> of OpenJPEG.
->
-> AddressSanitizer: heap-buffer-overflow
-> WRITE of size 4
-
-e078172b1c3f98d2219c37076b238fb759c751ea modifies tcd.c not dwt.c - is this
-still the correct commit?
-
-Also, is this the same vulnerability as the
-https://pdfium.googlesource.com/pdfium/+/b6befb2ed2485a3805cddea86dc7574510178ea9
-(aka Chromium bug 632622) issue that was already assigned CVE-2016-5157 in the
-https://googlechromereleases.blogspot.com/2016/08/stable-channel-update-for-desktop_31.html
-post?
-
-- --
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX0QmYAAoJEHb/MwWLVhi2JuIQAInY8Bed/W9wZwgmO4peepl7
-lOJptN9utdMwCdYEug6NzCFjpcUslSmrBQcNdXEGMoPw5rku/Hw73sHNbhdfM71I
-TDU2OEwzSNQeo+4m/3rXMlYyHwOqHMp3owHQnl5JWJRcz6hhmI/JpokWxKncthtb
-rpywwao89VJZJf5GLF7RQFXvHwlREP+D3XYrW0cbqEfOrUAQ7oxK5OaFCa30NWrh
-ISJ4iDalfTeWr7x98Bb3X6v40dL7bkUtuWHnqFN+LwuBJL2MlJ74XmsdIDrSXGOf
-grrpU1sMGZ+yJhbc+4n6JcTxXI6/AWOaKqn/pkCG8UkNL/LxzuaGmIYguGecYh7V
-2tc5e7IZ4IzCYNaRUKKLAtlfENMbOn8IqL0zFWXRoSzw7YcSw24s1A0hzEBiPonS
-cPWGhMYsu4bCmJmZZenuKNIKx/CuOZq+YgyFpXjowUxFGpZwOk9eVPnpmK8CRl7z
-kGaS33l9yElstG1gsPeGDxZYHtG09z/T/VrJWIHNieTMUOEO0LZf8+xG5bfXWC1A
-y5S6GCFOSM+8QrvPHgua4l8h7uAxbCVKlLqahOVhID83sCKKTWyxLGa+1FtPIsRH
-zTmEMeS0Q6JytXc7f2DitI9t/hEEh877xQLRWactOBmP19XdC+rCLcBZcoksK8UB
-2osVa1EkAYD9ZVrCOo0i
-=CVgG
------END PGP SIGNATURE-----
+> 
+> --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 
