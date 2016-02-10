@@ -1,34 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/29/5
-Message-ID: <CACG6YS21LGQ6sU3X8MTEND0dxyRMUSs23Zmr40KVJjGLBavvfQ@mail.gmail.com>
-Date: Wed, 29 Jun 2016 14:08:14 +0200
-From: Mathias Svensson <idolf@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/10/7
+Message-ID: <56BBAA64.4050701@gmail.com>
+Date: Wed, 10 Feb 2016 22:23:48 +0100
+From: FEIST Josselin <josselin.feist@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Heap-based buffer overflow in LibTIFF when using the PixarLog compression format
+Subject: CVE Request : Use-after-free in accel-ppp
 Content-Type: text/plain; charset=utf-8
 
-Hello oss-security,
+Hi,
 
-I would like to request a CVE number for a heap-based buffer overflow in
-LibTIFF in the file libtiff/tif_pixarlog.c. The vulnerability allows an
-attacker to control the size of the allocated heap-buffer while
-independently controlling the data to be written to the buffer with no
-restrictions on the size of the written data.
+A use-after-free in accel-ppp was reported one month ago. accel-ppp is a
+VPN server (https://accel-ppp.org)
+Since I got no news from the dev (neither by email or through the
+forum), I would suggest to use this service carefully.
 
-The bug seems to be at least superficially related to CVE-2012-4447,
-however this vulnerability seems to be a separate issue and not just a case
-of an insufficient fix.
+More details about the vuln here :
+http://accel-ppp.org/forum/viewtopic.php?f=18&t=581
 
-The issue is fixed in CVS HEAD with the commit:
+The vuln was found with the help of the analyzer GUEB.
 
-revision 1.44
-date: 2016-06-28 17:12:19 +0200;  author: erouault;  state: Exp;  lines: +9
--1;  commitid: 2SqWSFG5a8Ewffcz;
-* libtiff/tif_pixarlog.c: fix potential buffer write overrun in
-PixarLogDecode() on corrupted/unexpected images (reported by Mathias
-Svensson)
-
-
-Kind regards,
-Mathias Svensson, Google Security Team
+Best regards,
+Josselin Feist
 
