@@ -1,75 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/14/5
-Message-ID: <35D91F81-1E00-4305-8DED-848D88C8CD58@nccgroup.trust>
-Date: Thu, 14 Jul 2016 21:09:34 +0000
-From: Jesse Hertz <Jesse.Hertz@...group.trust>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: #NA-Disclosure <na-disclosure@...group.trust>
-Subject: Multiple Bugs in OpenBSD Kernel 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/10/2
+Message-ID: <20160210032005.GC26858@hunt>
+Date: Tue, 9 Feb 2016 19:20:05 -0800
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Cc: security@...ntu.com
+Subject: CVE Request: eom, gnome-photos, eog, gambas3, thunar, pinpoint, gtk+2.0
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+Hello MITRE, all,
 
-As part of NCC Group’s Project Triforce, a generic syscall fuzzing effort by
-myself and Tim Newsham, several new vulnerabilities were discovered in the
-OpenBSD kernel. These have all been fixed now.
+Virgil Grigoras and Vlad Orlov discovered an integer overflow flaw in
+gtk+2.0 in image handling:
 
-Attached are source files for each issue that include a full writeup of the
-issue, links to the patches, as well as a PoC to demonstrate the issue. We are
-requesting CVEs for all but the last issue (which is root-only). The following list contains brief
-description of each issue, ordered from highest to lowest severity.
+https://github.com/mate-desktop/eom/issues/93
 
-mmap_panic: Malicious calls to mmap() can trigger an allocation panic or trigger memory corruption.
-kevent_panic: Any user can panic the kernel with the kevent system call.
-thrsleep_panic: Any user can panic the kernel with the __thrsleep system call.
-thrsigdivert_panic: Any user can panic the kernel with the __thrsigdivert system call.
-ufs_getdents_panic: Any user can panic the kernel with the getdents system call.
-mount_panic: Root users, or users on systems with kern.usermount set to true, can trigger a kernel panic when mounting a tmpfs filesystem.
-unmount_panic: Root users, or users on systems with kern.usermount set to true, can trigger a kernel panic when unmounting a filesystem.
-tmpfs_mknod_panic: Root can panic kernel with mknod on a tmpfs filesystem.
+Bert Massop discovered the same issue in the gtk+3.0 codebase:
 
-Errata have been issued which cover some of these issues on http://www.openbsd.org/errata59.html <http://www.openbsd.org/errata59.html> and http://www.openbsd.org/errata58.html <http://www.openbsd.org/errata58.html>.
+https://bugzilla.gnome.org/show_bug.cgi?id=703220
 
-NCC Group would like to thank the OpenBSD development team for clear
-communication and a quick turnaround on these issues.
+The fix replaces a direct height * cairo_stride multiplication with a call
+to g_malloc_n() which knows how to multiply correctly:
 
-Best,
--jh
+https://git.gnome.org/browse/gtk+/commit?id=894b1ae76a32720f4bb3d39cf460402e3ce331d6
 
+-  cairo_pixels = g_malloc (height * cairo_stride);
++  cairo_pixels = g_malloc_n (height, cairo_stride);
 
+This same bug appears to be copy-and-pasted to at least:
+eom, gnome-photos, eog, gambas3, thunar, pinpoint, gtk+2.0
 
-Content of type "text/html" skipped
+https://codesearch.debian.net/results/height%20%5C*%20cairo_stride/page_0
 
-Download attachment "kevent_panic.c" of type "application/octet-stream" (2894 bytes)
+I haven't been able to find CVEs assigned for any of these issues.
 
-Content of type "text/html" skipped
+Thanks
 
-Download attachment "mmap_panic.c" of type "application/octet-stream" (6944 bytes)
+Related links:
 
-Content of type "text/html" skipped
+https://bugs.launchpad.net/ubuntu/+source/gtk+2.0/+bug/1540811
+https://github.com/mate-desktop/eom/issues/93
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=799275
+https://bugzilla.gnome.org/show_bug.cgi?id=703220
+https://git.gnome.org/browse/gtk+/commit?id=894b1ae76a32720f4bb3d39cf460402e3ce331d6
+https://codesearch.debian.net/results/height%20%5C*%20cairo_stride/page_0
 
-Download attachment "mount_panic.c" of type "application/octet-stream" (2220 bytes)
-
-Content of type "text/html" skipped
-
-Download attachment "thrsigdivert_panic.c" of type "application/octet-stream" (2741 bytes)
-
-Content of type "text/html" skipped
-
-Download attachment "thrsleep_panic.c" of type "application/octet-stream" (2507 bytes)
-
-Content of type "text/html" skipped
-
-Download attachment "tmpfs_mknod_panic.c" of type "application/octet-stream" (1906 bytes)
-
-Content of type "text/html" skipped
-
-Download attachment "ufs_getdents_panic.c" of type "application/octet-stream" (2744 bytes)
-
-Content of type "text/html" skipped
-
-Download attachment "unmount_panic.c" of type "application/octet-stream" (2122 bytes)
-
-Content of type "text/html" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (497 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
