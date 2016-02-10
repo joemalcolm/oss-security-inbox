@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5721" "Tuesday" "20" "March" "2018" "22:34:25" "+0100" "Guido Vranken" "guidovranken@gmail.com" "<CAO5O-E+iB2dy2BfQrLmCsNjXnuXjxAToPSETBfrJpe38TF7Dag@mail.gmail.com>" "124" "[oss-security] OpenSSL: bug in modular exponentiation" "^Date:" nil nil "3" "2018032021:34:25" "[oss-security] OpenSSL: bug in modular exponentiation" (number mark "        guidovranken Mar 20  124/5721  " thread-indent "\"[oss-security] OpenSSL: bug in modular exponentiation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1969" "Tuesday" "9" "February" "2016" "19:20:05" "-0800" "Seth Arnold" "seth.arnold@canonical.com" "<20160210032005.GC26858@hunt>" "58" "[oss-security] CVE Request: eom, gnome-photos, eog, gambas3, thunar, pinpoint, gtk+2.0" nil nil nil "2" "2016021003:20:05" "[oss-security] CVE Request: eom, gnome-photos, eog, gambas3, thunar, pinpoint, gtk+2.0" (number mark "U       seth.arnold@ Feb  9   58/1969  " thread-indent "\"[oss-security] CVE Request: eom, gnome-photos, eog, gambas3, thunar, pinpoint, gtk+2.0\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11941 invoked by uid 550); 20 Mar 2018 21:34:39 -0000
+Received: (qmail 7697 invoked by uid 550); 10 Feb 2016 03:20:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,165 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11899 invoked from network); 20 Mar 2018 21:34:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=WcfHtDQkRqGt7Ig4eTyq0VLQtYO5tW5GV1dgibw4+nA=;
-        b=UdBMOuU/dqvT1BMRz+dmcPk+IUDQ+7SXhuJcW/Io6iZuXd2kMuZH9Xd7apPknHreUd
-         pxVWf5OQL7buvbm3yz+BX/qWZV/fMy3hJW+wqoW25YZcshRon25FCeJEtAKsSxMnA82d
-         lvL0eDRWWQZLK/olWUo4O9QvUvgD0pzWg+rOXCTGPU2kgvNDMkMYLuKIipetW2+jHCa1
-         rVDgflc2G1vhe12fUEy7FUXeb5F8foYODQZLOWgKi/EqmeVoClWhYsxVq7jpwU7x14jJ
-         18MOJsnvnhxHnzuQTSDZAwQqpDuJC6JrhTVY4MjugOK5FTSkx3Npmmgkt8sTcXf48WFt
-         H/gQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=WcfHtDQkRqGt7Ig4eTyq0VLQtYO5tW5GV1dgibw4+nA=;
-        b=LONtTiqPXzchb50HPtw65mCB2luv+vPrujuNQH5f49nPPYG7Xl0e6FDpiWRXiQInFm
-         kOY5LGH9TtxUkAI0Ii1J534xCawrENCJO9tUxlN7gWqwe3C+XUCLz/erTh+saVSCQ7wr
-         X19lHB0t2Pcto+jtQWTMSrnLiMQuyhh7WwnZsdyYN2yYTjj4qjpOey2zqOSsfLN6cc6X
-         pgm/4Jn5s3pGwDkage6niyq6OCtfmz2snrmBzjwpCT/+oE5ZW7pJYNVUcNqi0kbEeAYm
-         yA0DTKMA4XFck7KGgsRGl2hHXCxGysaajKqPPeg3meDyKxK0SIal4nX1/1ukVLGry5Ry
-         eoQg==
-X-Gm-Message-State: AElRT7FSjkZjfPBvJImppCvNCRCj7Ac7grR7lDhhZrXyAqEX95lnQ0ZX
-	F76csrZpoOBkkAcMt1UPKPQ3B66lD3yX4xSMx/E2dkKy
-X-Google-Smtp-Source: AG47ELvrAyj2aWjxTFI7VrokAdYd5+oLL8GgW6U2KHApbIZJ7BGf73rTxboS5+AreHeiTx5KHH2Q3kC1viOb6Jt03gs=
-X-Received: by 10.167.128.143 with SMTP id v15mr14998570pff.36.1521581666159;
- Tue, 20 Mar 2018 14:34:26 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAO5O-E+iB2dy2BfQrLmCsNjXnuXjxAToPSETBfrJpe38TF7Dag@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 20 Mar 2018 22:34:25 +0100
-From: Guido Vranken <guidovranken@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] OpenSSL: bug in modular exponentiation
+Received: (qmail 7676 invoked from network); 10 Feb 2016 03:20:19 -0000
+Date: Tue, 9 Feb 2016 19:20:05 -0800
+From: Seth Arnold <seth.arnold@canonical.com>
 To: oss-security@lists.openwall.com
+Cc: security@ubuntu.com
+Message-ID: <20160210032005.GC26858@hunt>
+Mail-Followup-To: oss-security@lists.openwall.com, security@ubuntu.com
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="qtZFehHsKgwS5rPz"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Subject: [oss-security] CVE Request: eom, gnome-photos, eog, gambas3, thunar, pinpoint,
+ gtk+2.0
 
-My bignum fuzzer (https://github.com/guidovranken/bignum-fuzzer)
-running on Google's oss-fuzz recently found a bug in affecting
-constant-time modular exponentiation.
-OpenSSL does not treat this as a security vulnerability. This is a
-heads-up to developers who rely on the affected code so they can
-review the impact on their applications on a case-by-case basis.
+--qtZFehHsKgwS5rPz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-The bug is located in a function written in assembly language and the
-bug can only manifest on specific processors, most likely the same as
-CVE-2017-3738 (see https://www.openssl.org/news/vulnerabilities.html):
+Hello MITRE, all,
 
-"This only affects processors that support the AVX2 but not ADX
-extensions like Intel Haswell (4th generation)"
+Virgil Grigoras and Vlad Orlov discovered an integer overflow flaw in
+gtk+2.0 in image handling:
 
-As far as I know BoringSSL and LibreSSL are not affected.
+https://github.com/mate-desktop/eom/issues/93
 
-You can use the PoC below the line to see if your system is affected.
+Bert Massop discovered the same issue in the gtk+3.0 codebase:
 
-A system that is affected:
+https://bugzilla.gnome.org/show_bug.cgi?id=703220
 
-$ cat /proc/cpuinfo | grep "avx2\|adx" -o | sort -u
-avx2
-$ ./a.out
-result is 0
-result is 17976931348623159077293051907890247336179769789423065727343008115=
-773267580550096313270847732240753602112011387987139335765878976881441662249=
-284743063947412437776789342486548527630221960124609411945308295208500576883=
-815068234246288147391311054082723716335051068458629823994724593847971630483=
-5356083471597445343
+The fix replaces a direct height * cairo_stride multiplication with a call
+to g_malloc_n() which knows how to multiply correctly:
 
-A system that is not affected:
+https://git.gnome.org/browse/gtk+/commit?id=894b1ae76a32720f4bb3d39cf460402e3ce331d6
 
-$ cat /proc/cpuinfo | grep "avx2\|adx" -o | sort -u
-adx
-avx2
-$ ./a.out
-result is 0
-result is 0
+-  cairo_pixels = g_malloc (height * cairo_stride);
++  cairo_pixels = g_malloc_n (height, cairo_stride);
 
--------------------
+This same bug appears to be copy-and-pasted to at least:
+eom, gnome-photos, eog, gambas3, thunar, pinpoint, gtk+2.0
 
-#include <openssl/bn.h>
+https://codesearch.debian.net/results/height%20%5C*%20cairo_stride/page_0
 
-static void do_mod_exp(int consttime)
-{
-    BIGNUM *res, *A =3D NULL, *B =3D NULL, *C =3D NULL;
-    BN_CTX *ctx =3D BN_CTX_new();
-    char* bn_str =3D NULL;
+I haven't been able to find CVEs assigned for any of these issues.
 
-    res =3D BN_new();
-    BN_dec2bn(&A,
-"00000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000017976931=
-348623159077293051907890247336179769789423065727343008115773267580550096313=
-270847732240753602112011387987139335765878976881441662249284743063947412437=
-776789342486548527630221960124609411945308295208500576883815068234246288147=
-391311054082723716335051068458629823994724593847971630483535608347159744534=
-3");
-    BN_dec2bn(&B,
-"00000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000002222222=
-222222222222222222222222222222222222222222222222222222222222222222222222222=
-222222222222222222222222222222222222222222222222222222222222222222222222222=
-222222222222222222222222222222222222222222222222222222222222222222222222222=
-222222222222222222222222222222222222222222222222222222222222222222222222222=
-2");
-    BN_dec2bn(&C,
-"00000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000017976931=
-348623159077293051907890247336179769789423065727343008115773267580550096313=
-270847732240753602112011387987139335765878976881441662249284743063947412437=
-776789342486548527630221960124609411945308295208500576883815068234246288147=
-391311054082723716335051068458629823994724593847971630483535608347159744534=
-3");
+Thanks
 
-    if ( consttime ) {
-        BN_set_flags(A, BN_FLG_CONSTTIME);
-    }
-    BN_mod_exp(res, A, B, C, ctx);
-    bn_str =3D BN_bn2dec(res);
-    printf("result is %s\n", bn_str);
-    OPENSSL_free(bn_str);
-    BN_CTX_free(ctx);
-    BN_free(A);
-    BN_free(B);
-    BN_free(C);
-}
+Related links:
 
-int main(void)
-{
-    do_mod_exp(0);
-    do_mod_exp(1);
-    return 0;
-}
+https://bugs.launchpad.net/ubuntu/+source/gtk+2.0/+bug/1540811
+https://github.com/mate-desktop/eom/issues/93
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=799275
+https://bugzilla.gnome.org/show_bug.cgi?id=703220
+https://git.gnome.org/browse/gtk+/commit?id=894b1ae76a32720f4bb3d39cf460402e3ce331d6
+https://codesearch.debian.net/results/height%20%5C*%20cairo_stride/page_0
+
+--qtZFehHsKgwS5rPz
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJWuqxlAAoJEPMhclmdjS6XCloH/jOsrCLtqkFgtqWxQxx9cVUr
+3BZ4Knv26WsgU4ivaumHihdjY7LOch7EWJ1OzyXsUpkiLv4meV4NFi65kC+rVFPS
+mKe0dmttlFI92OuSBCJ0ta2IsIK0SkNwbgmeoUe9QUSIz7YnNDhSuYwuOzO7uSNJ
+79Q0O+CM2us6HrnLieEPNmFZq+xhyf86QIZ/5R394Wks1WOh0IdGl1b7xC+HwBlP
+Qc2V3zIYVHVGerNLIscRBYJCTzTcfTiHDA+qIJi/xlsuOcnvl3PUzhquRb8wcez/
+3G1X8ahdF6L8bx1t8g4gtiPvcIeVW9UdORx+5OmTQWEOkj/JuY762JQQpPaJqho=
+=Yv9r
+-----END PGP SIGNATURE-----
+
+--qtZFehHsKgwS5rPz--
