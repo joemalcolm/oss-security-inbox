@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2004" "Wednesday" "19" "September" "2018" "21:20:18" "+0200" "Solar Designer" "solar@openwall.com" "<20180919192018.GA6402@openwall.com>" "45" "Re: [oss-security] tdesktop 1.3.14: index out of range" nil nil nil "9" "2018091919:20:18" "[oss-security] tdesktop 1.3.14: index out of range" (number mark "U       solar@openwa Sep 19   45/2004  " thread-indent "\"Re: [oss-security] tdesktop 1.3.14: index out of range\"\n") "<CAG8b5tQvMF46=bzGDZR6OGzrMqMx7=ktZR1iOX=DJTpZzdi83w@mail.gmail.com>" ("<CAG8b5tQvMF46=bzGDZR6OGzrMqMx7=ktZR1iOX=DJTpZzdi83w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1789" "Wednesday" "10" "February" "2016" "11:33:37" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160210163337.F00B66C04ED@smtpvmsrv1.mitre.org>" "44" "[oss-security] Re: CVE Request: cacti: Authentication using web authentication as a user not in the,cacti database allows complete access" nil nil nil "2" "2016021016:33:37" "[oss-security] Re: CVE Request: cacti: Authentication using web authentication as a user not in the,cacti database allows complete access" (number mark "U       cve-assign@m Feb 10   44/1789  " thread-indent "\"[oss-security] Re: CVE Request: cacti: Authentication using web authentication as a user not in the,cacti database allows complete access\"\n") "<56BA3522.6020601@suse.com>" ("<56BA3522.6020601@suse.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23571 invoked by uid 550); 19 Sep 2018 19:20:36 -0000
+Received: (qmail 11594 invoked by uid 550); 10 Feb 2016 16:33:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,61 +12,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19901 invoked from network); 19 Sep 2018 19:20:20 -0000
-Date: Wed, 19 Sep 2018 21:20:18 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20180919192018.GA6402@openwall.com>
-References: <CAG8b5tQvMF46=bzGDZR6OGzrMqMx7=ktZR1iOX=DJTpZzdi83w@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAG8b5tQvMF46=bzGDZR6OGzrMqMx7=ktZR1iOX=DJTpZzdi83w@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] tdesktop 1.3.14: index out of range
+Received: (qmail 11573 invoked from network); 10 Feb 2016 16:33:50 -0000
+From: cve-assign@mitre.org
+To: astieger@suse.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <56BA3522.6020601@suse.com>
+Message-Id: <20160210163337.F00B66C04ED@smtpvmsrv1.mitre.org>
+Date: Wed, 10 Feb 2016 11:33:37 -0500 (EST)
+Subject: [oss-security] Re: CVE Request: cacti: Authentication using web authentication as a user not in the,cacti database allows complete access
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I'm posting this primarily to clarify why something as wrong-looking as
-this report got through moderation, and secondarily to ask that postings
-to oss-security should clearly describe security impact rather than
-leave people (even moderators) guessing why they're seeing this in here.
+> http://svn.cacti.net/viewvc/cacti/tags/0.8.8g/docs/CHANGELOG?revision=7788&view=markup
+> bug:0002656: Authentication using web authentication as a user not in the cacti database allows complete access
 
-On Wed, Sep 19, 2018 at 11:47:00PM +0530, Dhiraj Mishra wrote:
-> Affected Product: tdesktop-1.3.14 tested on Ubuntu 18.04 LTS x64
-> 
-> *Steps to reproduce:*
-> 1. Open Telegram
-> 2. Launch theme editor
-> 3. Save the file in some location
-> 4. The tdesktop then open "Edit color palette"
-> 5. Type "Hello World" in search <press enter>
-> 6. The tdesktop gets crash
-> 
-> Crashes, ASSERT failure in QVector<T>::operator[]: "index out of range",
-> file /usr/local/tdesktop/Qt-5.6.2/include/QtCore/qvector.h, line 431
-> Aborted (core dumped)
+> http://bugs.cacti.net/view.php?id=2656
+> Upstream fix is http://svn.cacti.net/viewvc?view=rev&revision=7770
+> https://bugzilla.suse.com/show_bug.cgi?id=965930
 
-FWIW, this doesn't look like a security issue to me, but I'm not
-familiar with tdesktop and don't consider it list moderators' job to
-distinguish security from non-security issues except in even more
-obvious cases.  In this case, I'm just 99% sure it's non-security.
+>> I would expect all access to be limited to what anonymous users can
+>> get, which is nothing in our cacti configuration.
 
-Maybe someone will see a way to make this cross a privilege boundary,
-which the above example doesn't appear to do.  Even with distribution of
-a malicious theme file (just guessing here as the example above is
-unclear on what file is involved nor on what exactly causes the crash)
-from one user to others, this doesn't appear to be a security issue as
-the impact would have been a mere crash (since the out of range index is
-properly detected), which looks irrelevant as a security attack in that
-scenario.
+>> The bug is apparently here in auth_login.php lines 81 to 88 which fail
+>> to check the query actually found any data or not.
 
-For this to be a security issue, a privilege boundary would need to be
-crossed _and_ either the impact needs to be worse than a mere crash or
-the attack would need to be performed without target user's interaction.
+>> if (!$user)
+>> auth_display_custom_error_message ... is not authorized to use Cacti ...
+>> exit;
 
-If someone finds a way to _avoid_ the detected "index out of range"
-condition yet have the program misbehave differently, that will be more
-valuable as a potential attack.
+Use CVE-2016-2313.
 
-Alexander
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWu2XZAAoJEL54rhJi8gl5JVwP/RVDp3Kf8RFhCQm9oTHcYVo+
+6RUPbnrR9e7j2V43m5n/bhgOyExkiXPh2IJtGIWEdYtf5CQDXU4oMttNCp2GeBhm
+UCO/Pwh1E3zPPJEMJwDoTAK9R3o0lw9A+HtXTb9ktzBLEsZFnsy1FNNBM9PRHN7e
+wbz1sGhJrIOQgYx/z8pGcK3r7Ae5JwCyFdoNnSa475ZwjMHYMjlCpb46mPjz6B/T
+8yfoBuF1yHg8D6CWgYnesgRfwydWH2SM4piunr9bsq8OP0TXYkqltOpnNScfXHjx
+T/NM4FssmZgDtCG8WwhvfxASbm9eYOcfo/O/WF/QgFcwlNSL0o9ZbIUZURPplwuH
+E5WT3qakfhmWshZPlLY6WdgvRSyRVh0aB6P45p4KCQx03C+gr3h8nFinDQZnyxWE
+JXcfRh6IU/eBvcJCJ/IMVUlNO5482F2ClIZjpqIOFZRa6EJBiqOpX9zhRCofugkj
+UXQSGePKtjFD6xpeB+ThlYyITj1b57jtZFjU3OQO8STZrZTtIKS1aEaCf12BXfOi
+A6qNPfdkoJ420rqmECesBhZkJ7URDLBym9XwR1uJ41NrdAm3v92CbO3X/TDO+mqV
+ZJpKkdl6fTicHZKWW5cqZ7OVsd+0llBvaDp/43G4xEVoQ8UQW2RQtuAh53tkgKz1
+FLopy3OuDwgPe/NKGpTQ
+=tvYz
+-----END PGP SIGNATURE-----
