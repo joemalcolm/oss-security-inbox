@@ -1,31 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/12/2
-Message-ID: <CANMVOuzgr=caMRG=US40q-yfmA5mGH7OakJMvrj4r1g_B3yGiQ@mail.gmail.com>
-Date: Fri, 11 Nov 2016 22:13:40 -0600
-From: "Brian 'geeknik' Carpenter" <brian.carpenter@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: libtiff: read outside buffer in _TIFFPrintField()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/10/4
+Message-ID: <4F45B0EA-41C2-4A0B-9B97-9DF10AA14E9D@bishopfox.com>
+Date: Wed, 10 Feb 2016 15:26:47 +0000
+From: Shubham Shah <sshah@...hopfox.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "cve-assign@...re.org" <cve-assign@...re.org>
+CC: Joe DeMesy <jdemesy@...hopfox.com>, Michael Morris <michael@...eux.com>
+Subject: CVE Request: Textual IRC Client <= 5.2.7 Remote Command Execution
 Content-Type: text/plain; charset=utf-8
 
-Hi, could you assign a CVE to the following issue in libtiff?
+Hi,
 
-http://bugzilla.maptools.org/show_bug.cgi?id=2590
+We would like to request a CVE for a remote command execution vulnerability in the Textual IRC client <= 5.2.7 for OS X. 
 
-Fixed per
->> 2016-11-11 Even Rouault <even.rouault at spatialys.com>
->> * libtiff/tif_dirread.c: in TIFFFetchNormalTag(), make sure that
->> values of tags with TIFF_SETGET_C16_ASCII / TIFF_SETGET_C32_ASCII
->> access are null terminated, to avoid potential read outside buffer
->> in _TIFFPrintField().
->>
->> /cvs/maptools/cvsroot/libtiff/ChangeLog,v <-- ChangeLog
->> new revision: 1.1154; previous revision: 1.1153
->> /cvs/maptools/cvsroot/libtiff/libtiff/tif_dirread.c,v <--
->> libtiff/tif_dirread.c
->> new revision: 1.203; previous revision: 1.202
+An attacker is able to send messages to users of the Textual IRC Client 5.2.7 and below in order to inject arbitrary JavaScript within Textual’s web view upon limited user interaction. Unspecified attack vectors could allow for an attacker to achieve remote command execution on a victim’s machine, through the Textual IRC client.
 
-Regards,
+The vendor has released a fix as seen in the following GitHub commit:
 
-Brian 'geeknik' Carpenter
-https://twitter.com/geeknik
+https://github.com/Codeux-Software/Textual/commit/422a6c8f7e750df506adaebb2db4bfa23f6aaa37
 
+A patch has been released by the vendor and this security vulnerability has been fixed in Textual 5.2.8 as seen in the release notes:
+
+https://www.codeux.com/textual/help/Release-Notes%3A-Version-5.2.8.kb
+
+The release notes will be updated to include any CVE’s assigned for this remote command execution vulnerability.
+
+This vulnerability was found by Shubham Shah and Joe DeMesy of Bishop Fox.
+
+Thanks,
+
+Shubham Shah
+Senior SECURITY ANALYST
+
+Email: sshah@...hopfox.com
+Phone: +61 0412 609 761
+Fax: (480) 383-6401
+
+WWW.BISHOPFOX.COM
+
+
+
+Content of type "text/html" skipped
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4512 bytes)
