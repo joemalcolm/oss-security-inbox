@@ -1,48 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/24/5
-Message-ID: <466B898A-FC0D-4106-A0AB-4DD755C3053E@nccgroup.trust>
-Date: Fri, 24 Jun 2016 18:53:53 +0000
-From: Jesse Hertz <Jesse.Hertz@...group.trust>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Linux CVE-2016-4997 (local privilege escalation) and CVE-2016-4998 (out of bounds memory access) 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/11/3
+Message-Id: <20160211160945.927E16C016A@smtpvmsrv1.mitre.org>
+Date: Thu, 11 Feb 2016 11:09:45 -0500 (EST)
+From: cve-assign@...re.org
+To: wmealing@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: Flaw in CXGB3 driver.
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-As part of a kernel fuzzing project by myself and my colleague Tim Newsham, we are disclosing two vulnerabilities which have been assigned CVEs. Full details of the fuzzing project (with analysis of the vulnerabilities) will be released next week.
+> The kernel would incorrectly misinterpret the congestion as an error
+> condition and incorrectly free/clean up the skb. When the device would
+> then send the skb's queued, these structures would be referenced and
+> may panic the system or allow an attacker to escalate privileges in a
+> use-after-free scenario.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1303532
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=67f1aee6f45059fd6b0f5b0ecb2c97ad0451f6b3
 
-These issues are fixed in the following commits
+>> iw_cxgb3: Fix incorrectly returning error on success
 
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ce683e5f9d04 <http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ce683e5f9d04>
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6e94e0cfb088 <http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6e94e0cfb088>
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=bdf533de6968 <http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=bdf533de6968>
+>> The cxgb3_*_send() functions return NET_XMIT_ values, which are
+>> positive integers values. So don't treat positive return values
+>> as an error.
 
-And have now been integrated into stable kernel releases: 3.14.73, 4.4.14, and 4.6.3.
+Use CVE-2015-8812.
 
-Theses issues occurs in the same codepaths as, but are distinct from, a similar vulnerability: CVE-2016-3134 (https://bugs.chromium.org/p/project-zero/issues/detail?id=758 <https://bugs.chromium.org/p/project-zero/issues/detail?id=758>).
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-#########
-
-CVE-2016-4997: Corrupted offset allows for arbitrary decrements in compat IPT_SO_SET_REPLACE setsockopt
-
-Risk: High
-
-Impact: Kernel memory corruption, leading to elevation of privileges or kernel code execution. This occurs in a compat_setsockopt() call that is normally restricted to root, however, Linux 3/4 kernels that support user and network namespaces can allow an unprivileged user to trigger this functionality. This is exploitable from inside a container.
-
-##########
-
-CVE-2016-4998: Out of bounds reads when processing IPT_SO_SET_REPLACE setsockopt
-
-Risk: Medium
-
-Impact: Out of bounds heap memory access, leading to a Denial of Service (or possibly heap disclosure or further impact). This occurs in a setsockopt() call that is normally restricted to root, however, Linux 3/4 kernels that support user and network namespaces can allow an unprivileged user to trigger this functionality. This is exploitable from inside a container.
-
-##########
-
-
-Best,
--jh
-
-Content of type "text/html" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (497 bytes)
+iQIcBAEBCAAGBQJWvLGDAAoJEL54rhJi8gl57ccP/i7P/Xbr+IaRUk+au68bEyZN
+sHQgp11Wtr/HqXIiWStT8RKXvtawLfaV85TvrbfjGk/nqnkVHbHoN2cdxC2uJ7xY
+8wxTxFqp/Wbficv8WqgB0u5f0TF/1TqHAqKf96KP3CriXrCOtkOc1hx74NhmFjot
+pcET5/eAuQo6/AjlY7TYQeSz+3G9AOXzLsFEb3Lx5LabeKPM0tgjzWJ1IJW5kHLh
+XL84Gg13K0Bmbu3XNj2a5yljPjCRv3qUChPuSd28u46Kks6KbYcmhYZJZ6kylgGR
+IlqygWH5G7q/sKLDrqii/QUe4nu1tKevAd7XwMpghiVSb46+YrsAXIkpSnR8/cPd
+9gZypJTefYhE4DWjSCMCoQLuYua0tTBy7ux0ddRNBPPIg2fvmEYQh+k2L7fHSFAR
+PZwqzB9m96LUlmrlN5JNdpJ17KofwEe31DO0OqIR3oDM+YekmvkeH26Mqf9ptYO+
+AsLkK3ETCgbaF+qFdj0w/zUWn0gDjh4jZ8cqFg5K6KmPPXGI7NNIGPucqPsgreav
+5ZypVYSxiy9PDYribiTjPFiWjP39I4DGXfkWrCtAvYSk8XZ9R+RMV8SdX4ESEguY
+7j0U0QCrAz8FQ9jZbB5IYXJFGDfifA5ZfGlAGat6ErFAZu7dubuwu9cCPV7FdrTf
+7OzqpxKgRFFRMU/A8fGk
+=uNQt
+-----END PGP SIGNATURE-----
