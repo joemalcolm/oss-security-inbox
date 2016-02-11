@@ -1,38 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/06/4
-Message-ID: <20160506131455.GA17272@lorien.valinor.li>
-Date: Fri, 6 May 2016 15:14:55 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: Ben Hutchings <benh@...ian.org>
-Subject: CVE Requests: Linux: BPF flaws (one use-after-free / local root privilege escalation)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/11/6
+Message-Id: <20160211210237.884E272E025@smtpvbsrv1.mitre.org>
+Date: Thu, 11 Feb 2016 16:02:37 -0500 (EST)
+From: cve-assign@...re.org
+To: gustavo.grieco@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE requests: Multiple vulnerabilities in GraphicsMagick parsing and processing SVG files
 Content-Type: text/plain; charset=utf-8
 
-A use-after-free flaw via double-fdput in bpf was recently fixed in
-Linux. Details:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=808
+> We recently tested the last release of GraphicsMagick (1.3.23)
 
-Fixed via:
-https://git.kernel.org/linus/8358b02bf67d3a5d8a825070e1aa73f25fb2e4c7
+> AddressSanitizer: heap-buffer-overflow
+> WRITE of size 8
+>     #0 0x5a892b in TracePoint magick/render.c:5125
+> 
+> AddressSanitizer: stack-buffer-overflow
+> WRITE of size 1
+>     #0 0x60ba3a in GetToken magick/utility.c:2638
+> 
+> AddressSanitizer: heap-buffer-overflow on address
+> WRITE of size 8
+>     #0 0x93c004 in GetTransformTokens coders/svg.c:361
 
-And as well reported/forwarded in Debian:
-https://bugs.debian.org/823603
+Use CVE-2016-2317 for this set of three issues.
 
-Could you please assign a CVE for this issue?
 
-The following two might as well warrant a CVE (Ben Hutchings CC'ed has
-already applied those to the packaging repository in Debian):
+> AddressSanitizer: SEGV on unknown address 0x000000000000
+>     #0 0x59866a in DrawImage magick/render.c:2999
+> 
+> AddressSanitizer: SEGV on unknown address 0x000000000000
+>     #0 0x945793 in SVGStartElement coders/svg.c:1757
+> 
+> AddressSanitizer: SEGV on unknown address 0x000000000000
+>     #0 0x5a396c in TraceArcPath magick/render.c:4550
 
-bpf: fix refcnt overflow:
-https://git.kernel.org/linus/92117d8443bc5afacc8d5ba82e541946310f106e
+Use CVE-2016-2318 for this set of three issues.
 
-bpf: fix check_map_func_compatibility logic
-https://git.kernel.org/linus/6aff67c85c9e5a4bc99e5211c1bac547936626ca
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Not sure though if the later one has a security impact. The bug
-allowed generic map functions to be applied to special map types
-(program, perf events) that did not support them properly.
-
-Regards,
-Salvatore
+iQIcBAEBCAAGBQJWvPYNAAoJEL54rhJi8gl55cQP/1ueHEBup/X4TOOAKln/6MVO
+QcV/hhBnq6kGVbw/YM0zgTogAqJQUS9HOWrMAf09o9xs44k8A8D3hR4OV+vaQAAg
+hKgtqqEcj5Tl6bf8FPlxNFW4ZuA6XsNJTxwCUNGy//QDD1Ozqy4GxxCL82Sp0zZT
+fp/isPP7uaOrOMc/A+c5z6ak4NN6LEJYY8Ze4x/kqLSSbPEi5pyrBBJQLHhdLYTF
+tpQ9NYR63SkKkJCgJbAh9pZTVLmdQ8SMbV7YYKnLxuQN2Jjhbjs6KKkiL3vntxFe
+0yw7S+oH3c7pCyQIA43mJYqLNj1Ij4ZIJqnpaCFsUEk/bPMnzjGUtGZGsm6KZMkM
+qHDiukkRnVpF9vGtTVPu3aUZ13EJWzUoVln8QPr3rSKavHXTTiFdG7WvL2ThEEZd
+1tzMpi3IrhGe01ISv5JK/qxcJHBrEDr89tOPnwdsi9A3NeLfgxQz1myhesG+8uk0
+zwcmFsR/nz36s2udFTjRxe4a/mHKaYurXtYr6+sB55sHs/qLJb00BX0cP3Kv9ga/
+VbCRMuN4SciVkd3o/b7NGY/YeW9lYYVgvd/bzfPivOVMjywkDmpbkvhbo/TJNg/1
+DSTX/g1o5cBI6QKXYNoz4p6Pa+NwJStsdbo76gkyfh5OPxe/HdPlBDgfQz6lVRgC
+rOktkYCy3VMBOzVl2KEH
+=uMbR
+-----END PGP SIGNATURE-----
