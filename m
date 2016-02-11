@@ -1,25 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/14/2
-Message-ID: <alpine.LFD.2.20.1610141145160.5203@wniryva>
-Date: Fri, 14 Oct 2016 11:48:36 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/11/8
+Message-ID: <56BCF924.5020703@familie-kuntze.de>
+Date: Thu, 11 Feb 2016 22:12:04 +0100
+From: Noel Kuntze <noel@...ilie-kuntze.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: STARTTLS for this list?
 Content-Type: text/plain; charset=utf-8
 
-  Hello John,
+On 11.02.2016 22:05, Alex Gaynor wrote:
+> Hi all,
+>
+> Not sure if anyone saw, but gmail has been rolling out UI indicators for
+> MTAs which don't use TLS:
+> https://gmailblog.blogspot.com/2016/02/making-email-safer-for-you-posted-by.html
+>
+> I was surprised to see this indicator on mail from oss-security. Does
+> anyone know who has the keys to `list.openwall.com` so they can turn on
+> STARTTLS for outbound email?
+>
+> Alex
+Why bother? The content isn't confidential in any way. It's an open mailing list that anyone can read.
+If you're worried about authenticity, SPF and other technologies take care of that on the server side
+and you can use PGP just fine to sign your messages and ensure it by yourself that way.
 
-+-- On Thu, 13 Oct 2016, John Haxby wrote --+
-| On 13/10/16 13:46, Vladis Dronov wrote:
-| > https://bugzilla.redhat.com/show_bug.cgi?id=1373499 (reproducer, patch)
-| 
-| This bug isn't accessible.   Do you think you could post the reproducer
-| or open the bug please?
+-- 
 
-Please see this one:
-  -> https://bugzilla.redhat.com/show_bug.cgi?id=1373966
+Mit freundlichen Grüßen/Kind Regards,
+Noel Kuntze
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+GPG Key ID: 0x63EC6658
+Fingerprint: 23CA BB60 2146 05E7 7278 6592 3839 298F 63EC 6658
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
