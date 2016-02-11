@@ -1,71 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/07/5
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0B96E30@EX02.corp.qihoo.net>
-Date: Thu, 7 Apr 2016 10:16:58 +0000
-From: 张开翔 <zhangkaixiang@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-3622 libtiff: Divide By Zero in the tiff2rgba tool
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/11/1
+Message-ID: <929915505.18990807.1455190810330.JavaMail.zimbra@redhat.com>
+Date: Thu, 11 Feb 2016 06:40:10 -0500 (EST)
+From: Wade Mealing <wmealing@...hat.com>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Cc: cve-assign@...re.org
+Subject: Linux kernel: Flaw in CXGB3 driver.
 Content-Type: text/plain; charset=utf-8
 
-Details
+Gday,
 
-=======
+I would like a CVE for the following issue:
 
+A flaw was found in the CXGB3 kernel driver when the network was considered congested.  The kernel would incorrectly misinterpret the congestion as an error condition and incorrectly free/clean up the skb. When the device would then send the skb's queued, these structures would be referenced and may panic the system or allow an attacker to escalate privileges in a use-after-free scenario.
 
+The bug and the problematic free is shown shown in the patch[1]: 
 
-Product: libtiff
+----
 
-Affected Versions: <= 4.0.6
+The cxgb3_*_send() functions return NET_XMIT_ values, which are
+positive integers values. So don't treat positive return values
+as an error.
+----
 
-Vulnerability Type: Illegel read
+Thanks,
 
-Vendor URL: http://www.libtiff.org/
+Wade Mealing
+Red Hat Product Security Team
 
-CVE ID: CVE-2016-3631
+== References:
 
-Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
+Upstream fix commit[1]:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=67f1aee6f45059fd6b0f5b0ecb2c97ad0451f6b3
 
-
-
-Introduction
-
-Illegal read occurs in the cpStrips and cpTiles function in thumbnail.c in thumbnail allows attackers to exploit this issue to cause denial-of-service.
-
-
-
-libtiff/tools/thumbnail.c:314.
-313  for (s = 0; s < ns; s++) {
-314    if (bytecounts[s] > (uint64) bufsize) {
-315         buf = (unsigned char *)_TIFFrealloc(buf, (tmsize_t)bytecounts[s]);
-316         if (!buf)
-317             goto bad;
-318         bufsize = (tmsize_t)bytecounts[s];
-319      }
-320      if (TIFFReadRawStrip(in, s, buf, (tmsize_t)bytecounts[s]) < 0 ||
-321         TIFFWriteRawStrip(out, s, buf, (tmsize_t)bytecounts[s]) < 0) {
-322         _TIFFfree(buf);
-323         return 0;
-324      }
-325  }
-
-gdb  --args  thumbnail  cpStrips.tif  tmpout.tif
-……
-Program received signal SIGSEGV, Segmentation fault.
-0x0804c7bf in cpStrips (out=<optimized out>, in=0x8164530) at thumbnail.c:314
-314          if (bytecounts[s] > (uint64) bufsize) {
-(gdb) bt
-#0  0x0804c7bf in cpStrips (out=<optimized out>, in=0x8164530) at thumbnail.c:314
-#1  cpIFD (out=<optimized out>, in=<optimized out>) at thumbnail.c:378
-#2  main (argc=3, argv=0xbffff384) at thumbnail.c:124
-(gdb) p *bytecounts
-
-Cannot access memory at address 0x42900001
-
-References:
-[1] http://www.remotesensing.org/libtiff/
-[2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
-
-
-Thank you!
-
-Best Regards,
+Red Hat bug:
+https://bugzilla.redhat.com/show_bug.cgi?id=1303532
