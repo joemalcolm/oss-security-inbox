@@ -1,45 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/7
-Message-Id: <20160511153609.3FE896C0591@smtpvmsrv1.mitre.org>
-Date: Wed, 11 May 2016 11:36:09 -0400 (EDT)
-From: cve-assign@...re.org
-To: amaris@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Mishandling the first propagated copy being a slave - Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/11/7
+Message-ID: <CAFRnB2V=ZFt83v6sBnYOj8-nwfRk-G-pf6bB9y9RS250mz_zSQ@mail.gmail.com>
+Date: Thu, 11 Feb 2016 16:05:53 -0500
+From: Alex Gaynor <alex.gaynor@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: STARTTLS for this list?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi all,
 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=5ec0811d30378ae104f250bfc9b3640242d81e3f
+Not sure if anyone saw, but gmail has been rolling out UI indicators for
+MTAs which don't use TLS:
+https://gmailblog.blogspot.com/2016/02/making-email-safer-for-you-posted-by.html
 
-> This oops happens with the namespace_sem held and can be triggered by
-> non-root users.
+I was surprised to see this indicator on mail from oss-security. Does
+anyone know who has the keys to `list.openwall.com` so they can turn on
+STARTTLS for outbound email?
 
-> The reason why the first source mount is special is that its
-> mnt_parent is not a mount in the dest_mnt propagation tree
+Alex
 
-Use CVE-2016-4581.
+-- 
+"I disapprove of what you say, but I will defend to the death your right to
+say it." -- Evelyn Beatrice Hall (summarizing Voltaire)
+"The people's good is the highest law." -- Cicero
+GPG Key fingerprint: 125F 5C67 DFE9 4084
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXM1DhAAoJEHb/MwWLVhi2yPoP/R3beZrIgZLWH0/Uu2iaYt9E
-EGKHQS52T05fD8d1hSwEdGUNmQ+s/44PBThQIdKig76Hm5lW8yUN9Ed59waCIVyq
-E3ctFFcXYyGvwtlnO1BSH2RMXyZ0P6QbJiKGcCsIw3L83CAk4oaxm2WRkf0edMan
-BmlnZqI+oMxMa+tMokoMfU8q6EDdFFag9CFmAp+03ThmZgj/tkUTXXY+zJm7LMzM
-9+d4CTXIb9Bi7s4t9ae6gJHQGqd74Ox+Uzpf9/ZcyNV7L5E9cGQmMIjtgp155SRv
-v413/IsXoCsl55v5HDcOqbZHcpC+VTfEb8JvdZ/QzecvoezsATEbO6N2QcT4xtbU
-r7Rh8nc8/am81j7EXHR+cOOIowiRxYdG5Qoe5k4A+/2FFcOGJyL4e0ZoJ0mSDbiv
-zqmiy25PQIR3H+tA1WNA/G1cUX4LDH0stGpUU0GfUaz6jpvtZ4nsZdRVxWI6ftK5
-Ej3P5Te+N+UA2fJFgcQj6a8Tj7boYkWCsLa1tyQPVm05XWGOtoHObMHEVaOtoteB
-5/oV2baUQwWcO+RfV/cr4jvjKRnufEUBl4e6BwmOtVvBPcHMgVWaQL7RLoxUc3GP
-KAa/NjOWOAVE4bSBJ8cnkCeBz4DrTPMTxb8YmcoLBM0EljUNVsOJg9Oqcj3m0hv3
-uAQCWLpNqGpd+HsL+jmQ
-=agbV
------END PGP SIGNATURE-----
