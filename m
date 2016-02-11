@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2851" "Sunday" "2" "July" "2017" "21:22:46" "+0200" "Kristian Fiskerstrand" "k_f@gentoo.org" "<10ee2c35-ee9d-47d4-0822-011eed60fb5e@gentoo.org>" "64" "Re: [oss-security] accepting new members to (linux-)distros lists" "^Date:" nil nil "7" "2017070219:22:46" "[oss-security] accepting new members to (linux-)distros lists" (number mark "        k_f@gentoo.o Jul  2   64/2851  " thread-indent "\"Re: [oss-security] accepting new members to (linux-)distros lists\"\n") "<20170702172722.GA14846@openwall.com>" ("<20170628200239.GA25525@openwall.com>" "<20170630132209.GA4625@openwall.com>" "<20170630195516.GB1011@hunt>" "<20170630201642.GA9159@openwall.com>" "<e6ea9fe9-1b52-11c3-fcce-bc13d3b7fd6a@windriver.com>" "<20170701140735.GA10593@openwall.com>" "<JDxm3O7NWomNLVgdcsS4bAEEjCWg6EXBzYrfpZkg9d7XEMLDZMtjnnGSLch-kPujtlaLX7Zlg96uQznDA33KitamLs68gnrjAw77uWCWIM8=@itk.swiss>" "<20170702172722.GA14846@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2068" "Thursday" "11" "February" "2016" "22:12:04" "+0100" "Noel Kuntze" "noel@familie-kuntze.de" "<56BCF924.5020703@familie-kuntze.de>" "58" "Re: [oss-security] STARTTLS for this list?" "^Date:" nil nil "2" "2016021121:12:04" "[oss-security] STARTTLS for this list?" (number mark "        noel@familie Feb 11   58/2068  " thread-indent "\"Re: [oss-security] STARTTLS for this list?\"\n") "<CAFRnB2V=ZFt83v6sBnYOj8-nwfRk-G-pf6bB9y9RS250mz_zSQ@mail.gmail.com>" ("<CAFRnB2V=ZFt83v6sBnYOj8-nwfRk-G-pf6bB9y9RS250mz_zSQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5592 invoked by uid 550); 2 Jul 2017 19:42:55 -0000
+Received: (qmail 16337 invoked by uid 550); 11 Feb 2016 21:12:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,89 +11,92 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24274 invoked from network); 2 Jul 2017 19:23:07 -0000
-References: <20170628200239.GA25525@openwall.com>
- <20170630132209.GA4625@openwall.com> <20170630195516.GB1011@hunt>
- <20170630201642.GA9159@openwall.com>
- <e6ea9fe9-1b52-11c3-fcce-bc13d3b7fd6a@windriver.com>
- <20170701140735.GA10593@openwall.com>
- <JDxm3O7NWomNLVgdcsS4bAEEjCWg6EXBzYrfpZkg9d7XEMLDZMtjnnGSLch-kPujtlaLX7Zlg96uQznDA33KitamLs68gnrjAw77uWCWIM8=@itk.swiss>
- <20170702172722.GA14846@openwall.com>
-Message-ID: <10ee2c35-ee9d-47d4-0822-011eed60fb5e@gentoo.org>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.0
+Received: (qmail 16319 invoked from network); 11 Feb 2016 21:12:16 -0000
+References: <CAFRnB2V=ZFt83v6sBnYOj8-nwfRk-G-pf6bB9y9RS250mz_zSQ@mail.gmail.com>
+Message-ID: <56BCF924.5020703@familie-kuntze.de>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
 MIME-Version: 1.0
-In-Reply-To: <20170702172722.GA14846@openwall.com>
-Content-Type: multipart/signed; micalg=pgp-sha512;
+In-Reply-To: <CAFRnB2V=ZFt83v6sBnYOj8-nwfRk-G-pf6bB9y9RS250mz_zSQ@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="4hV43LPhNPc0ktF8PDr4N64GIoGxJPhKw"
-Date: Sun, 2 Jul 2017 21:22:46 +0200
-From: Kristian Fiskerstrand <k_f@gentoo.org>
+ boundary="p5xap6LDb7nAjoRsaO8fOmNLUlxo4fGVu"
+X-Provags-ID: V03:K0:gjX/G1X7K9fKu1FqWSWOUuUbnhpr7CreB1HuGS2IuyVnQ/Ggk5R
+ 6i+NOHo5+pvXys1Ijdz2XCxWfbfzHqe0eYylGh7+ViZ9Cx0APEeXCuAd6N3dVZviqc1RbCJ
+ 6lv3i3Lt84pabW7Eu8T15KAaphdIfvVDNHzCQKkIFWDUPaZPgEm56LhbeQG8aDIF+0ojrcF
+ 0PUKNyx1oADz3jHJbxccw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0Y8e6os/k3s=:bux2GFtOQfT+HZIDAVmxFq
+ nPgfz1Va+RpPwqbC1r4p+It3qVsZ9DGgbLohOmzboJiiEZQajVx9vMqtEW76c3ELAzmxcQSmB
+ arrpSW51nlzz1txb322LgsPnmw1MI+wuVS2zHq7hHOlRaQ7dKpQaWSSa0vlQ/5D153zo14705
+ GLrQuNAv2EGktbHljrqC1hq0aiBZNQLALrX/oATqtXbRUwEmCaaeziqYEe+QaBnOj86MDjaae
+ kNH+wd5Yd1iJxFlmisM4Qapz/an4+lTuxLnADqVCkUkVnhsD2RPa+7dqYWhPxDew4stJocmsO
+ WlwQPDN1qfocSUwVQnkjfqSTm6cJhmHpxzxzsHG2CD0lI3FtwbdMb48HilHhY6RsnHpxvPs9j
+ VUVNywW3kL0U3xEKq3YoahP8ED8LtkkQiMzjaZcwT+GjdfhCxTlTGPEjCKvZy0dPDeUml4gfa
+ a9ZeQZB3e6joFHS5T0rtl6PzAEhtQ06EYc0rwrMgVSrz3BqrjhmptESWgNnvpavfUWl/qiNVm
+ MgFb67UMC0/a+JMFaBL8/9+D1ltDjugBZggK+GAvivg1+E7cRnuR8kUfOh/pO/WHpf9X22ffO
+ yqKqoAL3FwbLP2SKXqSQ8M1vGP1vbnR98fwnpxn61zooCKE/CBYKHF8WceKzM9JS6H47gVVTK
+ LXtdnqr4/fvKJs4x0gdz1JzzWrhopxlB75M3cj64DST663Y3cxXTSOBFuw6dQrKJ2tKA=
+Date: Thu, 11 Feb 2016 22:12:04 +0100
+From: Noel Kuntze <noel@familie-kuntze.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] accepting new members to (linux-)distros lists
-To: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>
+Subject: Re: [oss-security] STARTTLS for this list?
+To: oss-security@lists.openwall.com
 
---4hV43LPhNPc0ktF8PDr4N64GIoGxJPhKw
-Content-Type: multipart/mixed; boundary="l9vhNptWDE3CIag5Fbe9JG07bqG702vHB";
- protected-headers="v1"
-From: Kristian Fiskerstrand <k_f@gentoo.org>
-Reply-To: k_f@gentoo.org
-To: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>
-Message-ID: <10ee2c35-ee9d-47d4-0822-011eed60fb5e@gentoo.org>
-Subject: Re: [oss-security] accepting new members to (linux-)distros lists
-References: <20170628200239.GA25525@openwall.com>
- <20170630132209.GA4625@openwall.com> <20170630195516.GB1011@hunt>
- <20170630201642.GA9159@openwall.com>
- <e6ea9fe9-1b52-11c3-fcce-bc13d3b7fd6a@windriver.com>
- <20170701140735.GA10593@openwall.com>
- <JDxm3O7NWomNLVgdcsS4bAEEjCWg6EXBzYrfpZkg9d7XEMLDZMtjnnGSLch-kPujtlaLX7Zlg96uQznDA33KitamLs68gnrjAw77uWCWIM8=@itk.swiss>
- <20170702172722.GA14846@openwall.com>
-In-Reply-To: <20170702172722.GA14846@openwall.com>
-
---l9vhNptWDE3CIag5Fbe9JG07bqG702vHB
+--p5xap6LDb7nAjoRsaO8fOmNLUlxo4fGVu
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
 
-On 07/02/2017 07:27 PM, Solar Designer wrote:
-> (*) I admit there are things we probably could do better with greater
-> effort.  For example, we could rewrite from scratch and release as Open
-> Source the encrypted mailing list software, which is currently an awful
-> hack.  I wouldn't oppose doing that piece of software development under
-> a separate funded project, if capable people were available for that.
-> However, I am worried that most teams tasked to work on something like
-> this would produce a complex monster, which wouldn't otherwise be
-> directly comparable (as in: is it better or worse? is it more or less
-> secure?) to the current hack.
-
-To have it mentioned as part of the discussion at least; has something
-like http://schleuder2.nadir.org/documentation/v2.2/concept.html even
-been considered? and if considered and found not appropriate, the
-rationale for it is likely interesting as well.
+On 11.02.2016 22:05, Alex Gaynor wrote:
+> Hi all,
+>
+> Not sure if anyone saw, but gmail has been rolling out UI indicators for
+> MTAs which don't use TLS:
+> https://gmailblog.blogspot.com/2016/02/making-email-safer-for-you-posted-=
+by.html
+>
+> I was surprised to see this indicator on mail from oss-security. Does
+> anyone know who has the keys to `list.openwall.com` so they can turn on
+> STARTTLS for outbound email?
+>
+> Alex
+Why bother? The content isn't confidential in any way. It's an open mailing=
+ list that anyone can read.
+If you're worried about authenticity, SPF and other technologies take care =
+of that on the server side
+and you can use PGP just fine to sign your messages and ensure it by yourse=
+lf that way.
 
 --=20
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+
+Mit freundlichen Gr=C3=BC=C3=9Fen/Kind Regards,
+Noel Kuntze
+
+GPG Key ID: 0x63EC6658
+Fingerprint: 23CA BB60 2146 05E7 7278 6592 3839 298F 63EC 6658
 
 
---l9vhNptWDE3CIag5Fbe9JG07bqG702vHB--
 
---4hV43LPhNPc0ktF8PDr4N64GIoGxJPhKw
+--p5xap6LDb7nAjoRsaO8fOmNLUlxo4fGVu
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-iQEzBAEBCgAdFiEEtOrRIMf4mkrqRycHJQt6/tY3nYUFAllZSAcACgkQJQt6/tY3
-nYXVOQgAodYTCSAbDq49cLIFx8kcTdxgTCmoMYsEJ2y461PbgP0cFVyw+JLQpN4/
-LOHjkGOW0OXJxaxMtXYCkuUfPlzu5l+NrKefZ0nvLSbTG7OJ+zJ5PpcNIViDri1o
-GajZtw8/S5xC8Eg2brOZDt4prW31LWpMzeQopBeicmTSNFBpWXNW/aX4FUIaOx6K
-rVQqil4dU4GbPCdJGQoEXjBtzATm0ig/TRGdj0tspjLrDE90gP6YcNn7zIjif9+9
-n3btUAv+jdESXL3rPjNONfGKZsmm0AJrfoqqQRTt8Y7xz2TxnRufe2aiQ1zS3eN0
-hwYqY3hc1pJkWgBpTU6+NqNbdvEolw==
-=8WRW
+iQIcBAEBCAAGBQJWvPkkAAoJEDg5KY9j7GZYBYMP/RMar1jMTOMni4bc1XDRpgmc
+//2v+TFcYIlxvfsZbR/6z/PFUeaantUZfRQcBMD298sg0lMOasFB1gM6C1s6W9ar
+QghTk8I7jnKyAUQmYGuCf9XsWjRv85BlZePpL6AA8L2qPm3wTukZNfiEjviF0yLY
+xYpAX0SamVH8db05ItQNOQTSDuEvHJ/l2HaXz3oUERC0MORXrUWD+5ASCrZ2MLr0
+KxJbHnJmLtecmtXFiOroaXM8Ki5/wxAmKm7MK6gAyK622eyxJqx/h4Fu2xv5qjfI
+uIoRm1uLoaxGN0KInsy3UW2ItI5WH0z92foKnOH1SFnLelyBNt7rB1duHM6BXo2+
+hPWfE4QBUpf9UU58khxXP3e9lFI+EoSgpla6KqVt10AQHlpOvSWGI1YB5jVJOFXu
+pM840alFo7Q9OrMMBc0QYynXnUq9+n8bqSLUr6Zeiu7aa/6A4a+ZhXmOBrFPQflX
+2W3GS8qmRC0nJVEecQj7AHHswAsDv3QC5hrSg/t1I+LrVT4g5L2hK79jSwV1TsN6
+zxuSta+h3enDPHwcNGe7a23/JBVbG1kMcvMT3KFRkWgRLXr+W11ZQ80JzJnAZsjK
+vVoYuVeS3z8nnbL5S1zH8Ppw4GcDR5/2cYvGOF6f4FOr/1xWrv2AFRnSc2z/SGyU
+ZZS9XGsQfvgBTL7QS3vm
+=B/nC
 -----END PGP SIGNATURE-----
 
---4hV43LPhNPc0ktF8PDr4N64GIoGxJPhKw--
+--p5xap6LDb7nAjoRsaO8fOmNLUlxo4fGVu--
