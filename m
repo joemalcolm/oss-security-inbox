@@ -1,43 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/22/5
-Message-ID: <41532875.k1hQz0ZxHK@x2>
-Date: Fri, 22 Jan 2016 11:57:42 -0500
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/11/5
+Message-ID: <CAMYtjApOfw38CzUPTh0LCce7dnV6GCCcT5jw41WmSgEiGEg2Jg@mail.gmail.com>
+Date: Thu, 11 Feb 2016 20:51:35 +0100
+From: Pere Orga <pere@...a.cat>
 To: oss-security@...ts.openwall.com
-Cc: Andrew Gallagher <andrewg@...rewg.com>
-Subject: Re: Re: Prime example of a can of worms
+Cc: Drupal Security Team <security@...pal.org>
+Subject: CVE requests for Drupal contributed modules (2016-004, 2016-005)
 Content-Type: text/plain; charset=utf-8
 
-On Thursday, January 21, 2016 06:43:16 PM Andrew Gallagher wrote:
-> On Thu, 21 Jan 2016 10:15:55 -0500 Steve Grubb wrote:
-> > Hallway discussions mentioned that ECC is dead due to trust issues
-> > and fuzzy IP issues which slowed vendor uptake. There was a mention
-> > of RSA officially being allowed to go to 16k key sizes.
-> 
-> Was there any mention of the relative ease of quantum attacks against
-> ECC compared to classically-equivalent RSA? 
+Hi
 
-Yes. At one time ECC looked good because it offered comparable strength with 
-fewer operations so it was faster in the age of slower CPUs. Now, the threat 
-has changed and people are looking over the not too distant future at how best 
-to provide some resistance in the face of a very different landscape. Things 
-that are computationally expensive start looking better. The slide on page 9 
-kind of shows the concern. The leftover part of rectangle X not covered by 
-rectangle Z means spilled secrets.
+Please can I have CVE IDs assigned to the following vulnerabilities:
 
-To my mind, one of the things that we as an open source community need to 
-think hard about is how we are going to protect data in the Quantum computing 
-age. If many of the new QR algorithms get patented, where does that leave us? 
-Its kinda like ECC all over again except this time the consequences are much 
-more dire because there may not be any IP unencumbered algorithm to jump to. I 
-certainly hope that won't be the case.
+Embedded Media Field - Access Bypass - DRUPAL-SA-CONTRIB-2016-004
+https://www.drupal.org/node/2666446
 
--Steve
+CAS - Information Disclosure - DRUPAL-SA-CONTRIB-2016-005
+https://www.drupal.org/node/2666448
 
+Many thanks
 
-> [1] That was suggested on a couple of discussion groups as a possible
-> motivation for the newly rekindled RSA love.
-> 
-> [1] http://arxiv.org/abs/quant-ph/0301141
-
-Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
+Regards
+-- 
+Pere Orga on behalf of the Drupal Security team
