@@ -1,26 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/4
-Message-ID: <20161010081221.GA20544@lorien.valinor.li>
-Date: Mon, 10 Oct 2016 10:12:21 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Leo Famulari <leo@...ulari.name>, "john.haxby@...cle.com" <john.haxby@...cle.com>
-Subject: Re: Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/11/4
+Message-ID: <alpine.LFD.2.20.1602112225350.16884@wniryva>
+Date: Thu, 11 Feb 2016 22:26:58 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: bugtraq@...urityfocus.com, fulldisclosure@...lists.org
+Subject: Re: HTTPS Only (Open Source, Python)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
++-- On Thu, 11 Feb 2016, David Leo wrote --+
+| If browser tries to access HTTP address,
+| you will have three options:
+| try HTTPS,
+| Google Cache,
+| or copy-and-paste the address.
+| 
+| There is no option to "temporarily bypass HTTPS Only".
+| You can always do that in another browser.
+| 
+| Project Home Page:
+| https://httpsonly.github.io/
 
-On Mon, Oct 10, 2016 at 08:01:15AM +0000, Sona Sarmadi wrote:
-> Hi Chet,
-> 
-> > > Thanks for the patch! Do you plan to add it to the bash-4.3-patches
-> > > series [0]?
-> > 
-> > This went out as bash-4.3 patch 47.
-> 
-> Where can we find patch 47 for bash-4.3? 
+Browsers too are moving there:
+  -> https://blog.mozilla.org/security/2015/04/30/deprecating-non-secure-http/
 
-See: https://ftp.gnu.org/pub/gnu/bash/bash-4.3-patches/bash43-047
-
-Regards,
-Salvatore
+(just to note)
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
