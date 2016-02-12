@@ -1,81 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/15/2
-Message-Id: <20160915051926.430853AE020@smtpvbsrv1.mitre.org>
-Date: Thu, 15 Sep 2016 01:19:26 -0400 (EDT)
-From: cve-assign@...re.org
-To: matt@....asn.au
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for Dropbear SSH <2016.74
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/12/2
+Message-ID: <20160212023031.GA4879@openwall.com>
+Date: Fri, 12 Feb 2016 05:30:31 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: STARTTLS for this list?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, Feb 11, 2016 at 06:05:26PM -0800, Seth Arnold wrote:
+> It doesn't seem like a top priority to me: STARTTLS solves one set of
+> problems and introduces a much larger set of problems. I'm not sure any of
+> the solved problems are actually pressing problems to a public mail list.
 
-> The first one has different exposure for
-> client/server parts so I assume it should have separate
-> CVEs?
+That's my current feeling, too - for this mailing list at this time.
 
-We don't feel that it's a case of independent mistakes in the client
-and server. The type of exposure is not, by itself, relevant to the
-number of CVEs.
+> Hosting a mail list is already miserable enough (for example, I don't
+> think mail From: google addresses actually makes to Google users;
 
+You're right - as discussed before, it does not, because of DMARC.
+(This applies to senders from google.com and some other Google domains,
+but luckily not yet to senders from gmail.com.  However, recipients at
+gmail.com are also affected whenever someone posts from google.com.
+Also, Yahoo's free e-mail and a few others are affected.)
 
-> - Security: Message printout was vulnerable to format string injection.
-> 
->   If specific usernames including "%" symbols can be created on a system
->   (validated by getpwnam()) then an attacker could run arbitrary code as root
->   when connecting to Dropbear server.
-> 
->   A dbclient user who can control username or host arguments could potentially
->   run arbitrary code as the dbclient user. This could be a problem if scripts
->   or webpages pass untrusted input to the dbclient program.
->   https://secure.ucc.asn.au/hg/dropbear/rev/b66a483f3dcb
+Working around this is actually planned (especially as Google intends to
+extend this to Gmail senders).  STARTTLS currently is not.
 
-Use CVE-2016-7406 for all of this.
+> also, I
+> don't know how the moderators manage to keep this list spam-free with zero
+> mistakes, either false positives or false negatives.) --
 
+It's a combination of scripting and manual message moderation.  There
+are occasional mistakes (I posted about a badly delayed wrong-charset
+message not so long ago), but they are few (at least that I'm aware of).
+I think we manage pretty well, considering that most messages arrive to
+the list within minutes.
 
-> - Security: dropbearconvert import of OpenSSH keys could run arbitrary code as
->   the local dropbearconvert user when parsing malicious key files
->   https://secure.ucc.asn.au/hg/dropbear/rev/34e6127ef02e
+> adding a half-dozen
+> more reasons why mail delivery can fail is surely not fun.
 
-Use CVE-2016-7407. (Admittedly, we do not completely understand
-whether this is identical to a code problem previously found in
-PuTTY.)
+Right.  And supporting TLS, even if only client-side, also adds to the
+server's attack surface.  That said, we might be forced to, eventually.
 
+I am actually in favor of opportunistic encryption in general.
 
-> - Security: dbclient could run arbitrary code as the local dbclient user if
->   particular -m or -c arguments are provided. This could be an issue where
->   dbclient is used in scripts.
->   https://secure.ucc.asn.au/hg/dropbear/rev/eed9376a4ad6
-
-Use CVE-2016-7408.
-
-
-> - Security: dbclient or dropbear server could expose process memory to the
->   running user if compiled with DEBUG_TRACE and running with -v
->   https://secure.ucc.asn.au/hg/dropbear/rev/6a14b1f6dc04
-
-Use CVE-2016-7409.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX2i6BAAoJEHb/MwWLVhi2JT0P/RAN6ZPGdz5CQVvwxeZktmlW
-0YO1CqcbjygdvN05/9gH0SDi4y+tKd1EEDsUoC9D40QKj1z2gACSbjdaxr3p8QSE
-M9ifpotk7+9Qr6mjD+HXDWc+4gQTXH7SzLNiEv3PR/bu3lgc7+jRGU0bQRYSG8Vs
-aYwGioFpu6QT57a+fdoaTEffz323eK3EY3CwQLGzKKJX7njeNos9H4nkv63KtU+z
-dp5487NPuGxJmuC3XWpD9fwZSy4+vpIOD74zvf9POnwb04jQxHSJanhJ82vmFH/f
-//MbplQeZzqz4ahcdLi5Gl6oXoLqn0f1nB4hJF5qHkuSXCN3ZSSM6+vbS4PZFpGP
-7kVQFcV1RZmOVPLb+sMPWFARfQs/tkJ/aBtNbo8Pz/22jZaJBvIu3jm/qI60CaMi
-CgWjBRYzJc8G3R5CkPJhEsdZmiRvEKgKukA1deQK/rn7pIskRecXomiM0NgdOsE/
-Lds+20GxqOUA61we6rT5SDdSG2Cvmcp5cFxx+aZNeSIp3zBjQQ7er1p/41KZHPt/
-Ro6ButS2P2/uJO/wyoCTYSpVgevxUT/fjhqBqRv8kviCYQIBt8h/WVrf/7aAPUFT
-u7zs4V+/GkIX3tfy4NF+wi1JfLBAFLI5qeOnEgsIabuKODklyfZJ/P2Y8/csNo/8
-HvkiTNnp74e393zYdSmH
-=1PAi
------END PGP SIGNATURE-----
+Alexander
