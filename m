@@ -1,26 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/30/2
-Message-ID: <20161030153744.1fc6348e@pc1>
-Date: Sun, 30 Oct 2016 15:37:44 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss security list <oss-security@...ts.openwall.com>, cve-assign@...re.org
-Subject: gajim otr plugin cleartext leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/12/3
+Message-ID: <CACn5sdTz=fkOBg1O+kxrSjmK3Z9ALie7UrboKtEb5cSCrvPc5w@mail.gmail.com>
+Date: Fri, 12 Feb 2016 11:04:14 -0300
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: out-of-bounds write with cpio 2.11
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+A patch is available here:
 
-https://trac-plugins.gajim.org/ticket/145
-This probably deserves some attention and a CVE.
+https://lists.gnu.org/archive/html/bug-cpio/2016-01/msg00005.html
 
+2016-01-19 13:45 GMT-03:00 Gustavo Grieco <gustavo.grieco@...il.com>:
 
-Commit with fix:
-https://trac-plugins.gajim.org/changeset/c7c2e519ed63377bc943dd01c4661b0fe49321ae
+> Hello,
+>
+> An out-of-bounds write in cpio 2.11 was found in the parsing of cpio files
+> (other version are probably affected).  Find attached a test case to
+> reproduce it. The ASAN report is here:
+>
+> =================================================================
+> ==5480==ERROR: AddressSanitizer: heap-buffer-overflow on address
+> 0x60200000edd0 at pc 0x41f187 bp 0x7fffffffdc50 sp 0x7fffffffdc48
+> WRITE of size 2 at 0x60200000edd0 thread T0
+>     #0 0x41f186 in cpio_safer_name_suffix
+> /home/g/Codigo/cpio-2.11+dfsg/src/util.c:1392
+>     #1 0x40b3d7 in process_copy_in
+> /home/g/Codigo/cpio-2.11+dfsg/src/copyin.c:1391
+>     #2 0x416754 in main /home/g/Codigo/cpio-2.11+dfsg/src/main.c:739
+>     #3 0x7ffff6b5eec4 in __libc_start_main
+> (/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
+>     #4 0x403408 (/home/g/Codigo/cpio-2.11+dfsg/src/cpio+0x403408)
+>
+> 0x60200000edd1 is located 0 bytes to the right of 1-byte region
+> [0x60200000edd0,0x60200000edd1)
+> allocated by thread T0 here:
+>     #0 0x7ffff6f567ef in __interceptor_malloc
+> (/usr/lib/x86_64-linux-gnu/libasan.so.1+0x547ef)
+>     #1 0x440f3e in xmalloc /home/g/Codigo/cpio-2.11+dfsg/gnu/xmalloc.c:47
+>     #2 0x409c74 in read_in_new_ascii
+> /home/g/Codigo/cpio-2.11+dfsg/src/copyin.c:1166
+>     #3 0x408a26 in read_in_header
+> /home/g/Codigo/cpio-2.11+dfsg/src/copyin.c:1043
+>     #4 0x40b354 in process_copy_in
+> /home/g/Codigo/cpio-2.11+dfsg/src/copyin.c:1361
+>     #5 0x416754 in main /home/g/Codigo/cpio-2.11+dfsg/src/main.c:739
+>     #6 0x7ffff6b5eec4 in __libc_start_main
+> (/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
+>
+> SUMMARY: AddressSanitizer: heap-buffer-overflow
+> /home/g/Codigo/cpio-2.11+dfsg/src/util.c:1392 cpio_safer_name_suffix
+> Shadow bytes around the buggy address:
+>   0x0c047fff9d60: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c047fff9d70: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c047fff9d80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c047fff9d90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+> =>0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa[01]fa fa fa 06 fa
+>   0x0c047fff9dc0: fa fa 05 fa fa fa 00 04 fa fa 00 04 fa fa 00 04
+>   0x0c047fff9dd0: fa fa 00 04 fa fa 00 04 fa fa 00 04 fa fa 00 04
+>   0x0c047fff9de0: fa fa 00 04 fa fa 00 04 fa fa 00 04 fa fa 00 04
+>   0x0c047fff9df0: fa fa 00 04 fa fa 00 04 fa fa 00 04 fa fa fd fa
+>   0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+> Shadow byte legend (one shadow byte represents 8 application bytes):
+>   Addressable:           00
+>   Partially addressable: 01 02 03 04 05 06 07
+>   Heap left redzone:       fa
+>   Heap right redzone:      fb
+>   Freed heap region:       fd
+>   Stack left redzone:      f1
+>   Stack mid redzone:       f2
+>   Stack right redzone:     f3
+>   Stack partial redzone:   f4
+>   Stack after return:      f5
+>   Stack use after scope:   f8
+>   Global redzone:          f9
+>   Global init order:       f6
+>   Poisoned by user:        f7
+>   Contiguous container OOB:fc
+>   ASan internal:           fe
+> ==5480==ABORTING
+>
+>
+> This issue was found using QuickFuzz.
+>
+> Regards,
+> Gus.
+>
+>
 
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
-
-Content of type "application/pgp-signature" skipped
