@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1399" "Thursday" "14" "May" "2020" "14:26:30" "+0000" "Andrea Cosentino" "ancosen1985@yahoo.com" "<958786245.110814.1589466390992@mail.yahoo.com>" "58" "[oss-security] Re: [SECURITY] New security advisory CVE-2020-11972 released for Apache Camel" nil nil nil "5" "2020051414:26:30" "[oss-security] Re: [SECURITY] New security advisory CVE-2020-11972 released for Apache Camel" (number mark "U       ancosen1985@ May 14   58/1399  " thread-indent "\"[oss-security] Re: [SECURITY] New security advisory CVE-2020-11972 released for Apache Camel\"\n") "<1595268569.108006.1589466246962@mail.yahoo.com>" ("<1595268569.108006.1589466246962.ref@mail.yahoo.com>" "<1595268569.108006.1589466246962@mail.yahoo.com>") nil nil nil nil nil nil nil "[oss-security] Re: [SECURITY] New security advisory CVE-2020-11972 released for Apache Camel" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3456" "Friday" "12" "February" "2016" "11:04:14" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdTz=fkOBg1O+kxrSjmK3Z9ALie7UrboKtEb5cSCrvPc5w@mail.gmail.com>" "86" "[oss-security] Re: CVE request: out-of-bounds write with cpio 2.11" "^Date:" nil nil "2" "2016021214:04:14" "[oss-security] Re: CVE request: out-of-bounds write with cpio 2.11" (number mark "        gustavo.grie Feb 12   86/3456  " thread-indent "\"[oss-security] Re: CVE request: out-of-bounds write with cpio 2.11\"\n") "<CACn5sdTx4m+mrn6i59Cz4iiAzpbxg=3Qrp6yHxyoaZp8YrS=ZA@mail.gmail.com>" ("<CACn5sdTx4m+mrn6i59Cz4iiAzpbxg=3Qrp6yHxyoaZp8YrS=ZA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20133 invoked by uid 550); 14 May 2020 14:28:21 -0000
+Received: (qmail 15757 invoked by uid 550); 12 Feb 2016 14:04:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,101 +11,126 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14214 invoked from network); 14 May 2020 14:26:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1589466394; bh=omFwwEViH66RbRiiC1Nr6/njqHykToxlj56+Ohkxz7w=; h=Date:From:Reply-To:To:In-Reply-To:References:Subject:From:Subject; b=gXM4pTO76+exLWjixhtOaKBbdnDoRD94lvadPQKopteDuvDUxZv7RXDLWmIokgV9VHHSsS7pIUhPbscHlbz1IPFkVjtv3BYW6iqUV4uBDjcqg+NaUU+b4Rtwfxw3BuvbP3JXSI0AHld1lJeF0blL311FZqYyx8cr7mJi7CSIrd/zfj6lzZIOOB9LiCc7HhCYxTMHXYOdNyIGd+hcmDHxWDPYWAG0YjcbwslT5Xn1thtwXJEHwd4zQ76wY0Dto6rKdrUk2hAxlV+LuiFLOvuSWDKGqnyiwwAgg6zEZ9xXsUPlXkTkg0F8kZB8y9NYuIrP+GHS+uL3Z0Am+oRqdQVB7w==
-X-YMail-OSG: jDSSKTwVM1mZMKDo1fulpdgxFqrJNL2BIEnlpW.p2SKQj2FGxOrA.IluUZaoBSJ
- I.XSYQOSj0z70uOlihn8SnJI45GDgv5Tco2PHceEUz2TLHsYWsJgyOf4Chl1.3A.XV38WlpJ76Qr
- _TeUpRCdNbs1L6BG2MxPJS2doC2k_G4txOlKr.EWQ1kcNUDq2Z781DWknzvhLWXCByUs6avRE71X
- gxQsoaNqONCEB2wqtejfFNDdqSxc.K8bwAu.xM0rxwTgl8ZZXg.tULxAXNEcp217CHLF2E._9QI7
- .vLMyIgfkUcFuEPhYZBzUa3yKiMziY8hDGVAmgjZGTWuRXo0xwVkjRUZtEUfiIIxAd7OcVflw4F1
- z_CnzM3tfjBeXciwsaGhBfcv8fb.yCCReOO_vDpalWp1JpvzEjqNjhE4Z_q.XMXcphuXk5AN4UwA
- C.AQnoqGPdEjEaJ_l08Cl1WssmRg1nLkC5nJZ4qiDAZh.xQ50a9B71i1c5cRfpeiB6pZbH1FfUD9
- DjBxz4bVoaYssb2_8WqxpIp6GygQBwE4fxozKP.99SHjDNoE6pIHtUDQkSqkREF4QE4YWUpeDXOc
- JznYpbB4fhPam92GPY997ZvGFxBfc.NxaGL4.jHWBEnvuTijH7Tr9aZqUxwss5wvvqm_w3d74UdN
- VNwtGgy9liq5qIRKGszzFpDHOmn2IMspsZD.8BtzcJkG9YQBXuu1er_ztz5_G4Y_XtO5spibg61k
- 9FRj.Kulyw5hkbfKRmvV1Ap.jjaKOPGhFXyfnWSh59XInJcKglZGZI2ngF8XoNhzl8tr3LU4VDbw
- zNREaNyLjYK4Nz7adOreDe3pd2G2FVAt33UwiSZCxe85EErfFZLN0lLcQfCOo3MfJrcqvpmnavCc
- v_j_8d26fL9Sz5o96Qs_vVzf9tdsbbMLwgzB1mOZQbLbNMBW4g3i0LA0IqN5pXtDE1MDSwidBS7d
- pdn.k9zktz2Huzk6tcYWb4asga18r87FZY2rNgrxeqixSQnikWSmvUkvABz.ADG6YxliGtzMMt9q
- K4x2pZACCovcZYY8gJ.eE51UYLb1Sg8uVZNhlK6R.EazT5zzhHbgm9pTnGZJ4GymqrFwBQhjVn.J
- ExPTwJYkdf0p6D.cWw6yR_gRZecMiTkZnJhBtJ_wrfrpVILnZPPDyhIT32qqRK6ACwYOZa5BYUmF
- naGXasPa4J6YXyzXx25qiwZ3tlQWFV1WbfTQuIMRuYhJcov6pow0QSYh6vy1ifRIbLCMTenjxgaY
- kWzgYJ01IXV5dppeKfwsGWwvJwQ0OT_DgrnvmMLsBu79apJipaiT4ZvBpWcSUl3fdXKL4kxHs.Fr
- AHyfZUKWMN0nmTmz_a3cYH_oFak2UcBOWGlshkp4Ej5usoR25icSugCZFPDbTL002GJsruG_1Ytq
- l7xWMQA--
-Date: Thu, 14 May 2020 14:26:30 +0000 (UTC)
-From: Andrea Cosentino <ancosen1985@yahoo.com>
-To: "dev@camel.apache.org" <dev@camel.apache.org>, 
-	"users@camel.apache.org" <users@camel.apache.org>, 
-	Apache Security Team <security@apache.org>, 
-	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, 
-	"Colm O. HEigeartaigh" <coheigea@apache.org>
-Message-ID: <958786245.110814.1589466390992@mail.yahoo.com>
-In-Reply-To: <1595268569.108006.1589466246962@mail.yahoo.com>
-References: <1595268569.108006.1589466246962.ref@mail.yahoo.com> <1595268569.108006.1589466246962@mail.yahoo.com>
+Received: (qmail 15728 invoked from network); 12 Feb 2016 14:04:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=zvBNnu6SjrdBn5gz1Ngy8ZfA0IiBBGPx4kJudCNrXno=;
+        b=jzWKic4PnncfKp/yQB3JWw2o6d3sVynN9/EqsrVQoTKRqfUIyWygKW0nVbYUyq3lO/
+         RudgZC1idbzDja89zcKRawpG8jUxxpO4fFRXtUHCa3KT5OG8/9inX4g0xEf9mRGGdt5w
+         nr1kpX3p8+auwQSeiR2FJL7UpC72an3mqC/c3yeL44naINzlYtEq/WmWqQF1Pgi0QcDr
+         ohwg8axrXEI0WCe3bDnV78OnMMWMS2AyW5fBSNf3CXKWAm7mibG8o3e02v2zp1GVkFzj
+         h/IBC/26IQUgwZS8yhKOE5qWTfItIHeZ2g7rvG0Autu/vk8dcO2Sol6gPoJO07+mx1XU
+         e6jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type;
+        bh=zvBNnu6SjrdBn5gz1Ngy8ZfA0IiBBGPx4kJudCNrXno=;
+        b=hWEoCmlY6MhsUU5HHPayhfe9ImikcptJkpvSuODkNRCeGyi7nhz8QbZh0qikqgRLcc
+         HpLUvoVG/0iIDpNtaGG4eX4yG/8YexV0jMs7mbQJnYKz6+PFxpp6PJtg3XKUXjZ4ECbb
+         mIt7i1fzlfjTV5nBB/FcNwQ477627ZIyyYqcM1f1Y7vyjk1eHLGjU15yrR2/wCAesfJp
+         1UBD20jckiyEOIrwym0jlZJgHG4l7FPaSzscak3Y6eVmvpP8aIbPNFtesYh5T18i/rIW
+         8ChZKMRYHPwYxUdSEq0jDO728jIw3EcGR9/5dKw0zPMYOEIiXXDDmka2QhHtEq3v+UZW
+         aUig==
+X-Gm-Message-State: AG10YOQPJIHhTgQiddAaaSUqOqeU4yFeTFFfCH86O6YDoc42wQn3FikLhhSDlT9AHluL+3JZbREvivQHImdBGQ==
 MIME-Version: 1.0
+X-Received: by 10.25.28.195 with SMTP id c186mr625755lfc.22.1455285854907;
+ Fri, 12 Feb 2016 06:04:14 -0800 (PST)
+In-Reply-To: <CACn5sdTx4m+mrn6i59Cz4iiAzpbxg=3Qrp6yHxyoaZp8YrS=ZA@mail.gmail.com>
+References: <CACn5sdTx4m+mrn6i59Cz4iiAzpbxg=3Qrp6yHxyoaZp8YrS=ZA@mail.gmail.com>
+Message-ID: <CACn5sdTz=fkOBg1O+kxrSjmK3Z9ALie7UrboKtEb5cSCrvPc5w@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a114023c06db5b8052b932496
+Date: Fri, 12 Feb 2016 11:04:14 -0300
+From: Gustavo Grieco <gustavo.grieco@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request: out-of-bounds write with cpio 2.11
+To: oss-security@lists.openwall.com
+
+--001a114023c06db5b8052b932496
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: WebService/1.1.15941 YMailNorrin Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36
-Subject: [oss-security] Re: [SECURITY] New security advisory CVE-2020-11972 released for
- Apache Camel
 
-Let me add the credit too
+A patch is available here:
 
-Credit: This issue was discovered by Colm O. HEigeartaigh <coheigea at apac=
-he dot org> from Apache Software Foundation
+https://lists.gnu.org/archive/html/bug-cpio/2016-01/msg00005.html
 
---
-Andrea Cosentino=C2=A0
-----------------------------------
-Apache Camel PMC Chair
-Apache Karaf Committer
-Apache Servicemix PMC Member
-Email: ancosen1985@yahoo.com
-Twitter: @oscerd2
-Github: oscerd
+2016-01-19 13:45 GMT-03:00 Gustavo Grieco <gustavo.grieco@gmail.com>:
 
+> Hello,
+>
+> An out-of-bounds write in cpio 2.11 was found in the parsing of cpio files
+> (other version are probably affected).  Find attached a test case to
+> reproduce it. The ASAN report is here:
+>
+> =================================================================
+> ==5480==ERROR: AddressSanitizer: heap-buffer-overflow on address
+> 0x60200000edd0 at pc 0x41f187 bp 0x7fffffffdc50 sp 0x7fffffffdc48
+> WRITE of size 2 at 0x60200000edd0 thread T0
+>     #0 0x41f186 in cpio_safer_name_suffix
+> /home/g/Codigo/cpio-2.11+dfsg/src/util.c:1392
+>     #1 0x40b3d7 in process_copy_in
+> /home/g/Codigo/cpio-2.11+dfsg/src/copyin.c:1391
+>     #2 0x416754 in main /home/g/Codigo/cpio-2.11+dfsg/src/main.c:739
+>     #3 0x7ffff6b5eec4 in __libc_start_main
+> (/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
+>     #4 0x403408 (/home/g/Codigo/cpio-2.11+dfsg/src/cpio+0x403408)
+>
+> 0x60200000edd1 is located 0 bytes to the right of 1-byte region
+> [0x60200000edd0,0x60200000edd1)
+> allocated by thread T0 here:
+>     #0 0x7ffff6f567ef in __interceptor_malloc
+> (/usr/lib/x86_64-linux-gnu/libasan.so.1+0x547ef)
+>     #1 0x440f3e in xmalloc /home/g/Codigo/cpio-2.11+dfsg/gnu/xmalloc.c:47
+>     #2 0x409c74 in read_in_new_ascii
+> /home/g/Codigo/cpio-2.11+dfsg/src/copyin.c:1166
+>     #3 0x408a26 in read_in_header
+> /home/g/Codigo/cpio-2.11+dfsg/src/copyin.c:1043
+>     #4 0x40b354 in process_copy_in
+> /home/g/Codigo/cpio-2.11+dfsg/src/copyin.c:1361
+>     #5 0x416754 in main /home/g/Codigo/cpio-2.11+dfsg/src/main.c:739
+>     #6 0x7ffff6b5eec4 in __libc_start_main
+> (/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
+>
+> SUMMARY: AddressSanitizer: heap-buffer-overflow
+> /home/g/Codigo/cpio-2.11+dfsg/src/util.c:1392 cpio_safer_name_suffix
+> Shadow bytes around the buggy address:
+>   0x0c047fff9d60: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c047fff9d70: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c047fff9d80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c047fff9d90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+> =>0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa[01]fa fa fa 06 fa
+>   0x0c047fff9dc0: fa fa 05 fa fa fa 00 04 fa fa 00 04 fa fa 00 04
+>   0x0c047fff9dd0: fa fa 00 04 fa fa 00 04 fa fa 00 04 fa fa 00 04
+>   0x0c047fff9de0: fa fa 00 04 fa fa 00 04 fa fa 00 04 fa fa 00 04
+>   0x0c047fff9df0: fa fa 00 04 fa fa 00 04 fa fa 00 04 fa fa fd fa
+>   0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+> Shadow byte legend (one shadow byte represents 8 application bytes):
+>   Addressable:           00
+>   Partially addressable: 01 02 03 04 05 06 07
+>   Heap left redzone:       fa
+>   Heap right redzone:      fb
+>   Freed heap region:       fd
+>   Stack left redzone:      f1
+>   Stack mid redzone:       f2
+>   Stack right redzone:     f3
+>   Stack partial redzone:   f4
+>   Stack after return:      f5
+>   Stack use after scope:   f8
+>   Global redzone:          f9
+>   Global init order:       f6
+>   Poisoned by user:        f7
+>   Contiguous container OOB:fc
+>   ASan internal:           fe
+> ==5480==ABORTING
+>
+>
+> This issue was found using QuickFuzz.
+>
+> Regards,
+> Gus.
+>
+>
 
-
-
-
-
-On Thursday, May 14, 2020, 04:24:12 PM GMT+2, Andrea Cosentino <ancosen1985=
-@yahoo.com.invalid> wrote:=20
-
-
-
-
-
-A new security advisory has been released for Apache Camel, that is fixed in
-the recent 2.25.1 and 3.2.0 releases.
-
-CVE-2020-11972: Apache Camel RabbitMQ enables Java deserialization by defau=
-lt
-
-Severity: MEDIUM
-
-Vendor: The Apache Software Foundation
-
-Versions Affected: Camel 2.25.0, Camel 3.0.0 to 3.1.0. The unsupported Came=
-l 2.x (2.24 and earlier) versions may be also affected.
-
-Description: Apache Camel RabbitMQ enables Java deserialization by default
-
-Mitigation: 2.x users should upgrade to 2.25.1, 3.x users should upgrade to=
- 3.2.0 The JIRA tickets: https://issues.apache.org/jira/browse/CAMEL-14711 =
-refers to the various commits that resovoled the issue, and have more detai=
-ls.
-
-On behalf of the Apache Camel PMC
-
---
-Andrea Cosentino=C2=A0
-----------------------------------
-Apache Camel PMC Chair
-Apache Karaf Committer
-Apache Servicemix PMC Member
-Email: ancosen1985@yahoo.com
-Twitter: @oscerd2
-Github: oscerd
+--001a114023c06db5b8052b932496--
