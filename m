@@ -1,52 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/27/15
-Message-ID: <87d1lyiuhk.fsf@camandro.org>
-Date: Wed, 27 Jul 2016 23:31:03 +0100
-From: Luis Henriques <henrix@...andro.org>
-To: Wade Mealing <wmealing@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2016-5400 - linux kernel: denial of service in airspy USB driver.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/12/4
+Message-ID: <CAAeBhPeigEx=_NuqYzTJuCe3=xLnvcx7DOe+0fYE66CNy7oeZQ@mail.gmail.com>
+Date: Fri, 12 Feb 2016 09:58:47 -0500
+From: David Leo <httpsonly.github.io@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: bugtraq@...urityfocus.com, fulldisclosure@...lists.org
+Subject: Re: HTTPS Only (Open Source, Python)
 Content-Type: text/plain; charset=utf-8
 
-Wade Mealing <wmealing@...hat.com> writes:
+Yes, Mozilla said, "Gradually phasing out access to browser features
+for non-secure websites", in April 2015. After more than six months,
+they have done nothing useful.
 
-> Hit send too early,
+The Chrome team wanted the same stuff:
+https://www.chromium.org/Home/chromium-security/marking-http-as-non-secure
+Again, nothing significant has been achieved yet.
+
+And there is HTTPS Everywhere, with SO MANY rules:
+https://www.eff.org/https-everywhere/atlas/
+It's still able to access HTTP by default, but there is "Block all
+HTTP requests". The problem: nothing happens when browser tries HTTP -
+there should be warning(it's incorrect behavior) and options(try
+HTTPS, Google Cache, etc). People complained, months ago:
+https://github.com/EFForg/https-everywhere/issues/1329
+
+So I made this project, because I have lost patience a long time ago.
+
+Best Wishes,
+
+On Thu, Feb 11, 2016 at 11:56 AM, P J P <ppandit@...hat.com> wrote:
+> +-- On Thu, 11 Feb 2016, David Leo wrote --+
+> | If browser tries to access HTTP address,
+> | you will have three options:
+> | try HTTPS,
+> | Google Cache,
+> | or copy-and-paste the address.
+> |
+> | There is no option to "temporarily bypass HTTPS Only".
+> | You can always do that in another browser.
+> |
+> | Project Home Page:
+> | https://httpsonly.github.io/
 >
+> Browsers too are moving there:
+>   -> https://blog.mozilla.org/security/2015/04/30/deprecating-non-secure-http/
 >
-> Upstream patch:
-> https://git.linuxtv.org/media_tree.git/commit/?id=eca2d34b9d2ce70165a50510659838e28ca22742
->
-
-I believe the above commit isn't really related with CVE-2016-5400;
-the following commit in mainline claims to fix this issue:
-
-commit aa93d1fee85c890a34f2510a310e55ee76a27848
-Author: James Patrick-Evans <james@...-e.com>
-Date:   Fri Jul 15 16:40:45 2016 +0100
-
-    media: fix airspy usb probe error path
-
-Cheers,
--- 
-Luís
-
-
-> Maintainer has yet to send to LKML.
->
->
-> On Mon, Jul 25, 2016 at 10:50 AM, Wade Mealing <wmealing@...hat.com> wrote:
->> Hello All,
->>
->> A flaw was found in the linux kernel's implementation of the airspy
->> USB device driver in which a leak was found when a subdev or SDR are
->> plugged into the host.
->>
->> An attacker can create an targeted USB device which can emulate 64 of
->> these devices. Then by emulating an additional device which
->> continuously connects and disconnects, each connection attempt will
->> leak memory which can not be recovered.
->>
->> This issue was assigned CVE-2016-5400.
->>
->> Wade Mealing
->> Red Hat Product Security Team
+> (just to note)
+> --
+> Prasad J Pandit / Red Hat Product Security Team
+> 47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
