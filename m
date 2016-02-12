@@ -1,58 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/13/3
-Message-Id: <20160413134614.8D19C332076@smtpvbsrv1.mitre.org>
-Date: Wed, 13 Apr 2016 09:46:14 -0400 (EDT)
-From: cve-assign@...re.org
-To: cuoq@...st-in-soft.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Infinite loops parsing malicious DER certificates in libtasn1 4.7
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/12/1
+Message-ID: <20160212020526.GE25680@hunt>
+Date: Thu, 11 Feb 2016 18:05:26 -0800
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: STARTTLS for this list?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, Feb 11, 2016 at 04:05:53PM -0500, Alex Gaynor wrote:
+> Not sure if anyone saw, but gmail has been rolling out UI indicators for
+> MTAs which don't use TLS:
+> https://gmailblog.blogspot.com/2016/02/making-email-safer-for-you-posted-by.html
 
-> The libtasn1 library, in its 4.7 version, can loop for a long time or
-> indefinitely when it is used to parse DER representations of X509
-> certificates, leading to a denial of service. Some of these loops may
-> in addition increase heap or stack usage, leading to more issues.
-> 
-> These issues were found by Pascal Cuoq and Miod Vallat using american
-> fuzzy lop. They are fixed in libtasn1 version 4.8. ...
-> http://ftp.gnu.org/gnu/libtasn1/libtasn1-4.8.tar.gz
+This seems like shouting at the wrong person about a problem they can't
+address. What is the average gmail user supposed to do with this
+information? While it draws a parallel to the lock icon in browsers to
+indicate HTTPS is used I think this overstates how "secure" an email is
+just because it was sent over one hop using STARTTLS.
 
-We can assign a CVE ID for this entry in the libtasn1-4.8.tar.gz NEWS
-file:
+If Google actually feels STARTTLS is important enough to users to show
+them an icon then they should use this as step one and announce step two
+is requiring STARTTLS on a specific date. That only works, of course,
+if they announce their intention _and_ a date.
 
-  Noteworthy changes in release 4.8 (released 2016-04-11) [stable]
+> I was surprised to see this indicator on mail from oss-security. Does
+> anyone know who has the keys to `list.openwall.com` so they can turn on
+> STARTTLS for outbound email?
 
-  Fixes to avoid an infinite recursion when decoding without
-  the ASN1_DECODE_FLAG_STRICT_DER flag. Reported by Pascal Cuoq.
+That'd be "listadmin [at] oss [dash] security [dot] openwall [dot] org"
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security
 
-Use CVE-2016-4008.
+Probably Alexander. :)
 
-If there were unrelated problems that needed to be resolved with a
-different solution approach (e.g., an infinite "while" loop within one
-function) and require any additional CVE IDs, please let us know.
+It doesn't seem like a top priority to me: STARTTLS solves one set of
+problems and introduces a much larger set of problems. I'm not sure any of
+the solved problems are actually pressing problems to a public mail list.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Hosting a mail list is already miserable enough (for example, I don't
+think mail From: google addresses actually makes to Google users; also, I
+don't know how the moderators manage to keep this list spam-free with zero
+mistakes, either false positives or false negatives.) -- adding a half-dozen
+more reasons why mail delivery can fail is surely not fun.
 
-iQIcBAEBCAAGBQJXDk1DAAoJEL54rhJi8gl5wEsP/i8eqMazPJysJYMWPBXtBGtG
-SnJ1GT00Dm44hRCxq9S+zgn5H8Eb+jQ5rmqv6BLxos3ZbZzLODBD3Z3qh/NJpKhJ
-E7eBHOKo/+3PdDAZoulYMZCOrdPel/Ro0R2dM1EsvY30nYsGr8MHZGt+mpi6tBww
-cnseL43mxodK37cOa2UtERoLZ80VEjg8zcJOuXN8P8rLBVSxOhEo/4QxNkUZ58UX
-dwB/VikBnbyYwlVBd0Z736/snSZC0mFC/QeQhTw5eO5b93g2zPsJAkhyCwNwcEXe
-KdbyAJB//x4SUJR7UyAzXnI6VQT0AHUMSkHpd3tQPtJY9DdVmxOOBBG53kApg/My
-cfAVn/yEIJtpLRdCaeooyKdE6RgzbS8UMP1Bh7Aki1kbr+tyXU1bA6sUwkYcXL0C
-973xz5f3g1hNdfcUGzLTjUNxsVmD1bjUy13HAikfUAh4G12kDVjJZRpV2Uug/yMQ
-t+tHTAho5VRnYOxz/Jt8hYHCoy47gX4e/l4E2z63TJO3uARlgvx84H51VO13irRf
-ust0bks3yrY60GXStuIXEIwL6sRiS3vJhQLOHY3uRF/piDuVIlUMfYmEVtcJ0TAW
-HpXQeeGNrkUoGhpLJTSywU1ahnADbRYgr524OB1ClE0aPIKhADNj6+oeDaofREJ/
-w1qcvLfEUel2zWryIKeg
-=cjc1
------END PGP SIGNATURE-----
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
