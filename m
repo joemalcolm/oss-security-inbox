@@ -1,90 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/12
-Message-ID: <56CD77F0.6060607@treenet.co.nz>
-Date: Wed, 24 Feb 2016 22:29:20 +1300
-From: Amos Jeffries <squid3@...enet.co.nz>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: CVE request: Squid HTTP Caching Proxy multiple denial of service issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/13/2
+Message-ID: <56BED1B0.30900@eng.utah.edu>
+Date: Fri, 12 Feb 2016 23:48:16 -0700
+From: Scotty Bauer <sbauer@....utah.edu>
+To: oss-security@...ts.openwall.com
+Subject: Re: Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I assume most severe linux bugs are going through the distros list which does exactly as you describe in your mail...
 
-Hi,
+http://oss-security.openwall.org/wiki/mailing-lists/distros
 
- Several remotely triggerable denial of service issues have been found
-in Squid proxy.
-
-Our Advisory is at:
-<http://www.squid-cache.org/Advisories/SQUID-2016_2.txt>
-
-
-First issue;
- the proxy contains a String object class with 64KB content limits.
-Some code paths do not bounds check before appending to these String
-and overflow leads to an assertion which terminates all client
-transactions using the proxy, including those unrelated to the limit
-being exceeded.
-
-A PoC has already been published for one attack vector using HTTP
-"Vary" response header. When the Vary pattern presented by a server
-expands to more than 64KB the DoS is triggered. For example:
- Vary: Cookie,Cookie,Cookie,Cookie,...
-However, there are currently 4 known distinct vectors (types of
-remotely provided input) with varying degrees of difficulty to trigger
-the assertion.
-
-Patch URLs that workaround 3 of those vectors (though not fully solve)
-are:
-<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13991.p
-atch>
-<http://www.squid-cache.org/Versions/v4/changesets/squid-4-14552.patch>
-
-This patch fixes the other related variant of the basic problem.
-Though this instance is not triggerable from outside a controlled CDN
-environment:
-<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13993.p
-atch>
-<http://www.squid-cache.org/Versions/v4/changesets/squid-4-14549.patch>
-
-
-
-Secondary issue;
-
-Error handling for malformed HTTP responses can lead to a second
-assertion with the same effects as the first issue. It is not easily
-triggered in Squid-3 or normally in Squid-4.
-
-However fixing the String issue makes it become easily triggerable in
-Squid-4, and we do have a history of the assertion itself being
-reported as occuring already but been unable to identify the vectors
-code path to replicate it yet. So believe it can be achieved
-independent of the String issues, even if we are unable so far to
-identify how.
-
-Patch URLs for this are:
-<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13990.p
-atch>
-<http://www.squid-cache.org/Versions/v4/changesets/squid-4-14548.patch>
-
-
-
-Amos Jeffries
-Squid Software Foundation
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (MingW32)
-
-iQIcBAEBAgAGBQJWzXfvAAoJEGvSOzfXE+nLrlYQAKgzaFQYieSDXeG6a3eqqXF0
-fBsk8OBWUq/VRvKrXETHVNjR0YKvufPOnUVSlwXmqyXyx7aQsKkMNFUlLvF+6jnW
-B4FKyjxAYhM86PLHFroqB5/B0M9M9snc4OMR/NEKqtxkSw9Dhec4TZe6K6OZAaQR
-Y7nKfyoTnMPJKBYyHPnIc8XPD2+7svRnjdAuAYrBBqUahu6h1+yLeBC6c3+nCjnG
-g2r9e7GkEjro7oYrdayPcgazO4/mQL7dz8Q8fW/KWvhfTHfpoxUouwSvInORs1eD
-FrbtS8VPgm0uVPA6iDqM+gNyvP1zp9dbhTNYsonPngEFDvm1BG5myZ7DpCusu1qM
-l3BfqPzNe6yBx5QQkK+dhX4o2+8heY5BgogAynJ+Hffsq0AsgFWFWb3+NyU2ZBqb
-QpRZD5L8L4GCkL5+22LcCgnn2PpDDHssF98ytCVjSwV3JDd/AcxzE+EviW+KvVU7
-3LlAXPDSD+ZTcSfQCZA9LzT1oO7ulx/gnrLrFegD6pcgiOQp4EUiRAZC8ejjHDbY
-CGV5yKlmIlGx4uK8g/t2WdXtPynMPVcydpB6EvZKyDyTjpBYbIs2sbR8hzz1xN/A
-nHCEYHibq0qHZypiUANJHSKv2emzgPZvfDe6A38+5xHbe5vDs4SpmJS8lvaU0bA0
-14b3HRYcnS4i8Tun7Jss
-=mNRl
------END PGP SIGNATURE-----
+On 02/12/2016 10:52 PM, halfdog wrote:
+> Hello List,
+> 
+> As just written in a mail to another list, this might also be
+> interesting for discussion here.:
+> 
+> As it would be the most natural thing for e.g. NSA, China, ... (those
+> with capabilities to monitor large amount of network traffic) to just
+> record all mails from large-scale Linux distribution collaboration and
+> issue tracking systems containing the keyword "security", and as this is
+> very cheap way to get to near-zero day material, I would assume, that
+> this is already done. This is like serving them zero days on a golden
+> plate.
+> 
+> Hence really critical security material perhaps should not go to such
+> platforms, e.g. Ubuntu Launchpad, or the platform should be modified to
+> send security issues only in encrypted mails without talkative title,
+> members without mail public key registered should get only message "Bug
+> [Number]: Info changed" including the HTTPS link to the issue in the
+> platform.
+> 
+> What do you think?
+> 
+> Does someone have a link to anyone having access to the selector lists
+> leaked by Snowden to ask them, which of the distros are already in scope
+> or otherwise to discard this e-mail as pure paranoia?
+> 
+> Kind regards,
+> hd
+> 
+> 
