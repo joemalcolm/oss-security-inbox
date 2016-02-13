@@ -1,57 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/25/7
-Message-ID: <9846A6064BD102419D06814DD0D78DE112854418@CIO-TNC-D2MBX02.osuad.osu.edu>
-Date: Thu, 25 Feb 2016 14:20:58 +0000
-From: "Cantor, Scott" <cantor.2@....edu>
-To: "c-dev@...ces.apache.org" <c-dev@...ces.apache.org>, "c-users@...ces.apache.org" <c-users@...ces.apache.org>, "security@...che.org" <security@...che.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "bugtraq@...urityfocus.com" <bugtraq@...urityfocus.com>
-CC: Gustavo Grieco <gustavo.grieco@...g.fr>
-Subject: CVE-2016-0729: Apache Xerces-C XML Parser Crashes on Malformed Input
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/13/7
+Message-ID: <56BF5EF8.7070203@openwall.com>
+Date: Sat, 13 Feb 2016 19:51:04 +0300
+From: Alexander Cherepanov <ch3root@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: snprintf return value misuse in a lot of projects
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 2016-02-13 17:11, Yuriy M. Kaminskiy wrote:
+> I noticed dangerous pattern in a lot of projects, where snprintf(3)
+> return value is used without checking, with potentially disasterous
+> consequences:
 
-CVE-2016-0729: Apache Xerces-C XML Parser Crashes on Malformed Input
+It's kinda a known. E.g., some such patterns are listed in 
+https://sourceware.org/ml/libc-alpha/2013-10/msg00686.html .
 
-Severity: Critical
+The same problem is with strlcpy.
 
-Vendor: The Apache Software Foundation
+> And there are yet another very common pattern:
+>
+>    p += snprintf(p, end-p,[....]);
+>    p += snprintf(p, end-p,[....]);
+>    p += snprintf(p, end-p,[....]);
+>    ...
+>
+> which may be 'barely safe' by posix (if you'd read `man 3posix snprintf`,
+> you'd expect 2nd line is [somewhat] safe (end-p is negative, then
+> casted to size_t and produce value larger than (size_t)INT_MAX, that
+> should result in error EOVERFLOW), and third and following will dance
+> around last byte, likely remaining safe), but it is TOTALLY
+> broken on glibc, as glibc's snprintf DOES NOT follow posix, and accepts
+> *any* size.
 
-Versions Affected: Apache Xerces-C XML Parser library versions
-prior to V3.1.3
+For a glibc discussion please see 
+https://sourceware.org/bugzilla/show_bug.cgi?id=14771 .
 
-Description: The Xerces-C XML parser mishandles certain kinds of malformed
-input documents, resulting in buffer overlows during processing and error
-reporting. The overflows can manifest as a segmentation fault or as memory
-corruption during a parse operation. The bugs allow for a denial of service
-attack in many applications by an unauthenticated attacker, and could
-conceivably result in remote code execution.
+As for POSIX, the requirement of EOVERFLOW for a big second parameter is 
+a (rejected) bug in POSIX -- http://austingroupbugs.net/view.php?id=761 
+. A closely related bug -- http://austingroupbugs.net/view.php?id=1020 .
 
-Mitigation: Applications that are using library versions older than
-V3.1.3 should upgrade as soon as possible. Distributors of older versions
-should apply the patches from this subversion revision:
+ISO C describes the size parameter of snprintf as a limit to the number 
+of output characters written, without any connections to the size of the 
+buffer. Thus, the following examples are valid in ISO C:
 
-http://svn.apache.org/viewvc?view=revision&revision=1727978
+   char s[10];
+   snprintf(s, 20, "abc");
+   snprintf(s, SIZE_MAX, "%s", "abc");
 
-Credit: This issue was reported by Gustavo Grieco.
+OTOH POSIX describes the size parameter as the actual size of the buffer 
+(bug 1020) and requires to reject buffers of size larger than INT_MAX 
+(bug 761).
 
-References:
-http://xerces.apache.org/xerces-c/secadv/CVE-2016-0729.txt
+Even though POSIX contradicts ISO C in this question (while formally 
+deferring to ISO C) there is a sentiment that the POSIX approach is 
+better for safety/security. (E.g., it was expressed during the recent 
+discussion about strlcpy/strlcat in the glibc mailing list.)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+As it turned out, the same problem affects the fread function, with the 
+Linux kernel instead of POSIX contradicting ISO C. See 
+https://sourceware.org/bugzilla/show_bug.cgi?id=19165 and 
+https://sourceware.org/ml/libc-alpha/2016-02/msg00274.html .
 
-iQIcBAEBCAAGBQJWzlsyAAoJEDeLhFQCJ3liUAsP/Rr4rBKVPxOw3+5JDiQWT27y
-/TT1kLFV+u6LtuBL3q6rwOIANquEMP1nJPVuYtceNF66xHi7eX6HZ8jZch6T+uvZ
-Bt+kUTOfG4PW1RLm83W1kof58PTI5mIYBWofAQzXm9TSyvoHF5GXWqzNyGOKauYN
-pto5xvJzEN5gM7DjbXF8OoIesNVaqCnr+9A2WmCCdNGNzSQLlUVDg9kDvXUdDvHD
-+TXHDfgP8OSEYl5e3B3P5OV6SzUi2xdATR6zQgb1QANJy7FoK/FOP5+2J8ccultu
-mXlVHpsGlPoIi85nyKVykK3hTT4DyhqSwCa9ek3D5i7lIEk2dXxeevh90is3y/Al
-0GSUoG7yXbfe7xmlcUUghdYeYBP6JSOiOqAREUsKfY6nYo4XpGwvJRz/Xgk7iw9y
-p39sCIKuJBpqe1Vgy8ONeTFc0WZkkriq23n2oZ4zxoOImF5k44f01olZhA/wmE1P
-Wi6Qrafn6myUtp1TAXWoakfxJo0DgHfH6fazlmYSPHIyfLShrAcG6aETDn92KsDp
-gy4a5ulP/qpkncJrF2+XeM1wgQSTpUln2664fSwRw5whqg/PW/qGx+/1sltwOSQe
-l4bvQhr9xvkv+W++aPFgmJF3HW0Gnsglty6KQAcQ/RqheZ+/vL9buCqWw2xg4bkN
-BQJ4QvN4uaHIUxhzVfiL
-=vI5o
------END PGP SIGNATURE-----
+Perhaps this is a topic that will benefit from input from a wider community.
+
+-- 
+Alexander Cherepanov
