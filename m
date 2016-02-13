@@ -1,24 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/22/5
-Message-ID: <20160922140609.GA31107@pisco.westfalen.local>
-Date: Thu, 22 Sep 2016 16:06:09 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/13/1
+Message-ID: <9d8ff9da-5b07-588e-f2c5-38ba1e46b27c@halfdog.net>
+Date: Sat, 13 Feb 2016 05:52:44 +0000
+From: halfdog <me@...fdog.net>
 To: oss-security@...ts.openwall.com
-Cc: "cve-assign@...re.org" <cve-assign@...re.org>
-Subject: Re: CVE Request: VLC: Potential divide-by-zero issue
+Subject: Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 22, 2016 at 07:12:32AM +0000, ajax secure wrote:
-> Hi
-> 
-> Xiangkun Jia has discovered a divide-by-zero in VLC, which makes the application crashed and may be caused by buffer overflow. The fix is in
-> 
-> http://git.videolan.org/?p=vlc/vlc-2.2.git;a=commit;h=85a64e10d665edf8a29526543b5c6fd4923437fd
-> 
-> Can you assign a CVE for this issue? Thank you.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Crashes without the potential for code injection in enduser applications
-usually don't receive CVE ID assignments.
+Hello List,
 
-Cheers,
-        Moritz
+As just written in a mail to another list, this might also be
+interesting for discussion here.:
+
+As it would be the most natural thing for e.g. NSA, China, ... (those
+with capabilities to monitor large amount of network traffic) to just
+record all mails from large-scale Linux distribution collaboration and
+issue tracking systems containing the keyword "security", and as this is
+very cheap way to get to near-zero day material, I would assume, that
+this is already done. This is like serving them zero days on a golden
+plate.
+
+Hence really critical security material perhaps should not go to such
+platforms, e.g. Ubuntu Launchpad, or the platform should be modified to
+send security issues only in encrypted mails without talkative title,
+members without mail public key registered should get only message "Bug
+[Number]: Info changed" including the HTTPS link to the issue in the
+platform.
+
+What do you think?
+
+Does someone have a link to anyone having access to the selector lists
+leaked by Snowden to ask them, which of the distros are already in scope
+or otherwise to discard this e-mail as pure paranoia?
+
+Kind regards,
+hd
+
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iEYEARECAAYFAla+xKUACgkQxFmThv7tq+7nNACeMwrk+Sej12e02R0r8hETDC06
+xzMAn00wxLheHNo6rgI9eEwI+jS2bygl
+=9VEH
+-----END PGP SIGNATURE-----
