@@ -1,60 +1,116 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/4
-Message-ID: <CAE8hE=qj7XjN16XP67ij-1J4L6da=O6=ByYPORJCG27d131Rjg@mail.gmail.com>
-Date: Mon, 14 Nov 2016 09:42:23 -0500
-From: Chaim Sanders <chaim@...imsanders.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/13/6
+Message-ID: <m3k2m8d7k9.fsf@gmail.com>
+Date: Sat, 13 Feb 2016 17:11:02 +0300
+From: yumkam@...il.com (Yuriy M. Kaminskiy)
 To: oss-security@...ts.openwall.com
-Subject: OWASP Core Rule Set v3.0.0 (final) Released.
+Subject: snprintf return value misuse in a lot of projects
 Content-Type: text/plain; charset=utf-8
 
-Happy Monday fellow Open Source Security aficionados,
+Hello!
 
-I am pleased to share with you the release of the OWASP Core Rule Set (CRS)
-Version 3.0.0 (stable). For those who are unaware, the OWASP CRS is a set
-of generic rules designed to protect users against threats to web
-applications. The rule set is most often deployed in conjunction with an
-existing Web Application Firewall like ModSecurity
-<https://modsecurity.org/>.
+Not sure if this is right place (feel free to forward elsewhere), but
+this may be important:
 
-This latest version features many changes that help make CRS a valuable
-part of a Defense in Depth strategy for protecting you web application.
-Some of these include:
+I noticed dangerous pattern in a lot of projects, where snprintf(3)
+return value is used without checking, with potentially disasterous
+consequences:
 
-·  Improved and More Precise Detection Coverage
+   p += snprintf(p, end-p,[....]);
+   *p++ = '\n';
 
-·  Reduced False Positives and the Introduction of Paranoia Levels
+or
 
-·  Anomaly Scoring Mode by Default
+   len = snprintf(p, [...]);
+   write(fd, p, len);
 
-·  Simplified User Experience
+and alike.
 
-·  New Remote Code Execution Rules
+When formatted string will overflow supplied buffer, or some error
+happens, snprintf() returns value *LARGER* (or equal) than buffer size,
+or -1.
 
-·  Improved Layout, Documentation, and Testing
+Obviously, in above patterns this would end up in disaster - with DoS or
+host memory exposure at minimum (2nd) and buffer overflow with
+possible code execution (1st).
 
-With this new release we are seeing on the order of 90-95% fewer false
-positives in production environments. This is a large improvement that
-should make CRS more accessible to the masses and we hope you all find it
-useful as well. We are always looking for feedback, feel free to test and
-report any issues to us.
+And there are yet another very common pattern:
+
+  p += snprintf(p, end-p,[....]);
+  p += snprintf(p, end-p,[....]);
+  p += snprintf(p, end-p,[....]);
+  ...
+  
+which may be 'barely safe' by posix (if you'd read `man 3posix snprintf`,
+you'd expect 2nd line is [somewhat] safe (end-p is negative, then
+casted to size_t and produce value larger than (size_t)INT_MAX, that
+should result in error EOVERFLOW), and third and following will dance
+around last byte, likely remaining safe), but it is TOTALLY
+broken on glibc, as glibc's snprintf DOES NOT follow posix, and accepts
+*any* size.
+
+So, that's again buffer overflow with possible code execution.
+
+BTW, somewhat safer variant of above code:
+     p += snprintf(p, end-p, "%s", str);
+     if(p >=end) {...}
+or
+     p += snprintf(p, min(end-p, 0), "%s", str);
+
+(with check after each snprintf) is not completely safe either: imagine
+32-bit machine,
+
+     p  =(char*)0xfffffff0;
+     end=(char*)0xfffffff5;
+     str="11111111111111111111111";
+
+(that said, I doubt it is practically exploitable in most cases).
+
+Safe variants: (verbose)
+
+     char *p = buf;
+     char *end = buf + sizeof(buf);
+     ...
+     int rc = snprintf(p, end-p,...);
+     if (rc < 0) {
+          /* return -errno; assert(rc >= 0);... handle error, optional */;
+          /* or safely *do nothing*; most importantly: don't advance pointer! */
+     } else if (rc >= end-p) {
+          /* return -EOVERFLOW; assert(rc < end-p);... handle overflow, optional */;
+          p = end; /* move next pointer to end of buffer, mandatory for NDEBUG */
+     } else {
+          /* normal case */
+          p += rc;
+     }
+     ...
+     if (p == end) { /* maybe handle overflow once in the end */ }
+     
+or (minimized):
+
+     int n = 0;
+     ...
+     int rc = snprintf(buf+n, sizeof(buf)-n,...);
+     /* ignores errors and handles overflows in a safe way */
+     n += min(sizeof(buf)-n, max(0, rc));
+     ...
+     if (n == sizeof(buf)) { /* maybe handle overflow once in the end */ }
+
+Quick search on https://codesearch.debian.net/ shows over 500 cases of
+definite misuse ( [-+]=\s*v?snprintf ) and 2 times more of code that
+requires review ( [=]\s*v?snprintf ).
 
 
+P.S. That said, in most cases, the use of sprintf->snprintf replacement was
+pure cargo cult, buffer size was sufficient to fit any possible string,
+overflow can never happen, and this flaw is not really exploitable. (And
+it makes whole expedition on fixing those bugs rather boring thing).
 
-To download a copy or to submit any issue, please visit our Github
-<https://github.com/SpiderLabs/owasp-modsecurity-crs> (
-https://github.com/SpiderLabs/owasp-modsecurity-crs/releases/tag/v3.0.0).
-If you are seeking additional information about the release, please check
-out this accompanying blog post <http://goo.gl/f4uxlq>. The OWASP CRS team
-is truly excited and pleased with this release, there are even rumors this
-new rule set is being made into a movie <https://modsecurity.org/crs/poster>
-
+However, in some cases overflow possible and exploitable (there were
+reason why people tried to replace sprintf with snprintf, right?).
 
 
-
-Chaim Sanders, on behalf of the Core Rules Set development team.
-
--- 
--- 
-Chaim Sanders
-http://www.ChaimSanders.com
+P.P.S. I often found similar sequences in formatting logging code
+(vsnprintf); if you can remotely feed oversized log entry (typical limit
+is 1k or 4k), and there are one of above dangerous patterns, then it is
+likely exploitable.
 
