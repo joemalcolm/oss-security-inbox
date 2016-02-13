@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2066" "Monday" "18" "March" "2019" "22:42:19" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1903182209050.22468@tvnag.unkk.fr>" "60" "[oss-security] [SECURITY ADVISORIES] libssh2" "^Date:" nil nil "3" "2019031821:42:19" "[oss-security] [SECURITY ADVISORIES] libssh2" (number mark "        daniel@haxx. Mar 18   60/2066  " thread-indent "\"[oss-security] [SECURITY ADVISORIES] libssh2\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY ADVISORIES] libssh2" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3518" "Saturday" "13" "February" "2016" "17:11:02" "+0300" "Yuriy M. Kaminskiy" "yumkam@gmail.com" "<m3k2m8d7k9.fsf@gmail.com>" "107" "[oss-security] snprintf return value misuse in a lot of projects" "^Date:" nil nil "2" "2016021314:11:02" "[oss-security] snprintf return value misuse in a lot of projects" (number mark "        yumkam@gmail Feb 13  107/3518  " thread-indent "\"[oss-security] snprintf return value misuse in a lot of projects\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32612 invoked by uid 550); 18 Mar 2019 21:42:34 -0000
+Received: (qmail 13562 invoked by uid 550); 13 Feb 2016 14:15:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,78 +11,125 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32575 invoked from network); 18 Mar 2019 21:42:33 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-X-X-Sender: dast@giant.haxx.se
-Message-ID: <alpine.DEB.2.20.1903182209050.22468@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Date: Mon, 18 Mar 2019 22:42:19 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
+Received: (qmail 13488 invoked from network); 13 Feb 2016 14:15:17 -0000
+X-Injected-Via-Gmane: http://gmane.org/
+Message-ID: <m3k2m8d7k9.fsf@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: ppp37-190-56-5.pppoe.spdop.ru
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+Cancel-Lock: sha1:6HYjkWn8E8CCA97pnYP7LQspcwg=
+Date: Sat, 13 Feb 2016 17:11:02 +0300
+From: yumkam@gmail.com (Yuriy M. Kaminskiy)
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [SECURITY ADVISORIES] libssh2
-To: libssh2 development <libssh2-devel@cool.haxx.se>,
-        oss-security@lists.openwall.com
+Subject: [oss-security] snprintf return value misuse in a lot of projects
+To: oss-security@lists.openwall.com
 
 Hello!
 
-I'm writing you to announce the release of nine separate security advisories 
-concerning libssh2.
+Not sure if this is right place (feel free to forward elsewhere), but
+this may be important:
 
-All these fixes are also included in the brand new libssh2 1.8.1 release, just 
-shipped and available on https://www.libssh2.org/
+I noticed dangerous pattern in a lot of projects, where snprintf(3)
+return value is used without checking, with potentially disasterous
+consequences:
 
-CVE-2019-3855
-  Possible integer overflow in transport read allows out-of-bounds write
-  URL: https://www.libssh2.org/CVE-2019-3855.html
-  Patch: https://libssh2.org/1.8.0-CVE/CVE-2019-3855.patch
+   p += snprintf(p, end-p,[....]);
+   *p++ = '\n';
 
-CVE-2019-3856
-  Possible integer overflow in keyboard interactive handling allows
-  out-of-bounds write
-  URL: https://www.libssh2.org/CVE-2019-3856.html
-  Patch: https://libssh2.org/1.8.0-CVE/CVE-2019-3856.patch
+or
 
-CVE-2019-3857
-  Possible integer overflow leading to zero-byte allocation and out-of-bounds
-  write
-  URL: https://www.libssh2.org/CVE-2019-3857.html
-  Patch: https://libssh2.org/1.8.0-CVE/CVE-2019-3857.patch
+   len = snprintf(p, [...]);
+   write(fd, p, len);
 
-CVE-2019-3858
-  Possible zero-byte allocation leading to an out-of-bounds read
-  URL: https://www.libssh2.org/CVE-2019-3858.html
-  Patch: https://libssh2.org/1.8.0-CVE/CVE-2019-3858.patch
+and alike.
 
-CVE-2019-3859
-  Out-of-bounds reads with specially crafted payloads due to unchecked use of
-  `_libssh2_packet_require` and `_libssh2_packet_requirev`
-  URL: https://www.libssh2.org/CVE-2019-3859.html
-  Patch: https://libssh2.org/1.8.0-CVE/CVE-2019-3859.patch
+When formatted string will overflow supplied buffer, or some error
+happens, snprintf() returns value *LARGER* (or equal) than buffer size,
+or -1.
 
-CVE-2019-3860
-  Out-of-bounds reads with specially crafted SFTP packets
-  URL: https://www.libssh2.org/CVE-2019-3860.html
-  Patch: https://libssh2.org/1.8.0-CVE/CVE-2019-3860.patch
+Obviously, in above patterns this would end up in disaster - with DoS or
+host memory exposure at minimum (2nd) and buffer overflow with
+possible code execution (1st).
 
-CVE-2019-3861
-  Out-of-bounds reads with specially crafted SSH packets
-  URL: https://www.libssh2.org/CVE-2019-3861.html
-  Patch: https://libssh2.org/1.8.0-CVE/CVE-2019-3861.patch
+And there are yet another very common pattern:
 
-CVE-2019-3862
-  Out-of-bounds memory comparison
-  URL: https://www.libssh2.org/CVE-2019-3862.html
-  Patch: https://libssh2.org/1.8.0-CVE/CVE-2019-3862.patch
+  p += snprintf(p, end-p,[....]);
+  p += snprintf(p, end-p,[....]);
+  p += snprintf(p, end-p,[....]);
+  ...
+  
+which may be 'barely safe' by posix (if you'd read `man 3posix snprintf`,
+you'd expect 2nd line is [somewhat] safe (end-p is negative, then
+casted to size_t and produce value larger than (size_t)INT_MAX, that
+should result in error EOVERFLOW), and third and following will dance
+around last byte, likely remaining safe), but it is TOTALLY
+broken on glibc, as glibc's snprintf DOES NOT follow posix, and accepts
+*any* size.
 
-CVE-2019-3863
-  Integer overflow in user authenicate keyboard interactive allows
-  out-of-bounds writes
-  URL: https://www.libssh2.org/CVE-2019-3863.html
-  Patch: https://libssh2.org/1.8.0-CVE/CVE-2019-3863.txt
+So, that's again buffer overflow with possible code execution.
 
--- 
+BTW, somewhat safer variant of above code:
+     p += snprintf(p, end-p, "%s", str);
+     if(p >=end) {...}
+or
+     p += snprintf(p, min(end-p, 0), "%s", str);
 
-  / daniel.haxx.se
+(with check after each snprintf) is not completely safe either: imagine
+32-bit machine,
+
+     p  =(char*)0xfffffff0;
+     end=(char*)0xfffffff5;
+     str="11111111111111111111111";
+
+(that said, I doubt it is practically exploitable in most cases).
+
+Safe variants: (verbose)
+
+     char *p = buf;
+     char *end = buf + sizeof(buf);
+     ...
+     int rc = snprintf(p, end-p,...);
+     if (rc < 0) {
+          /* return -errno; assert(rc >= 0);... handle error, optional */;
+          /* or safely *do nothing*; most importantly: don't advance pointer! */
+     } else if (rc >= end-p) {
+          /* return -EOVERFLOW; assert(rc < end-p);... handle overflow, optional */;
+          p = end; /* move next pointer to end of buffer, mandatory for NDEBUG */
+     } else {
+          /* normal case */
+          p += rc;
+     }
+     ...
+     if (p == end) { /* maybe handle overflow once in the end */ }
+     
+or (minimized):
+
+     int n = 0;
+     ...
+     int rc = snprintf(buf+n, sizeof(buf)-n,...);
+     /* ignores errors and handles overflows in a safe way */
+     n += min(sizeof(buf)-n, max(0, rc));
+     ...
+     if (n == sizeof(buf)) { /* maybe handle overflow once in the end */ }
+
+Quick search on https://codesearch.debian.net/ shows over 500 cases of
+definite misuse ( [-+]=\s*v?snprintf ) and 2 times more of code that
+requires review ( [=]\s*v?snprintf ).
+
+
+P.S. That said, in most cases, the use of sprintf->snprintf replacement was
+pure cargo cult, buffer size was sufficient to fit any possible string,
+overflow can never happen, and this flaw is not really exploitable. (And
+it makes whole expedition on fixing those bugs rather boring thing).
+
+However, in some cases overflow possible and exploitable (there were
+reason why people tried to replace sprintf with snprintf, right?).
+
+
+P.P.S. I often found similar sequences in formatting logging code
+(vsnprintf); if you can remotely feed oversized log entry (typical limit
+is 1k or 4k), and there are one of above dangerous patterns, then it is
+likely exploitable.
+
