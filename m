@@ -1,49 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/10
-Message-Id: <20160818034250.D3AA3ABC96C@smtpvmsrv1.mitre.org>
-Date: Wed, 17 Aug 2016 23:42:50 -0400 (EDT)
-From: cve-assign@...re.org
-To: idler1984@...il.com
-Cc: cve-assign@...re.org, anarcheuz@...il.com, oss-security@...ts.openwall.com
-Subject: Re: CVE Request - Samsung Exynos fimg2d NULL Pointer Dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/13/3
+Message-ID: <eea2203a-128e-cbfd-9647-5eeb3479fd82@halfdog.net>
+Date: Sat, 13 Feb 2016 08:02:59 +0000
+From: halfdog <me@...fdog.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> I'd like to request CVE for the following vulnerability fixed in
-> Samsung Exynos fimg2d driver for Android:
+Scotty Bauer wrote:
+> I assume most severe linux bugs are going through the distros list 
+> which does exactly as you describe in your mail...
 > 
-> Security bulletin: http://security.samsungmobile.com/smrupdate.html#SMR-AUG-2016
-> 
-> SVE-2016-6382: fimg2d NULL Pointer Dereference
-> 
-> Affected versions: L(5.0/5.1), M(6.0) devices with Exynos7420 chipset
+> http://oss-security.openwall.org/wiki/mailing-lists/distros
 
-> The vulnerability exists due to a null pointer dereference on fimg2d driver.
-> The patch verifies if the object is null before dereferencing it.
+That is true, so the distros list can be proud to have adopted a
+secure procedure already. But at least some of the issues going to be
+communicated on distros list were handled in various bug tracking and
+collaboration platforms up to the point, that severe security impact
+is confirmed. I would guess that quite a number of issues stays in
+that state for about 2-6 month before making it to distros list and
+beginning of the maximum 2 weeks final embargo time.
 
-Use CVE-2016-6604.
+Data communicated in the final 2 weeks is secured but I am worried
+about the 6 month centralized, structured and unencrypted
+communication before that, which might be not so hard to tap into.
+
+> On 02/12/2016 10:52 PM, halfdog wrote:
+>> Hello List,
+>> 
+>> As just written in a mail to another list, this might also be 
+>> interesting for discussion here.:
+>> 
+>> As it would be the most natural thing for e.g. NSA, China, ... 
+>> (those with capabilities to monitor large amount of network 
+>> traffic) to just record all mails from large-scale Linux 
+>> distribution collaboration and issue tracking systems containing 
+>> the keyword "security", and as this is very cheap way to get to 
+>> near-zero day material, I would assume, that this is already
+>> done. This is like serving them zero days on a golden plate.
+>> 
+>> Hence really critical security material perhaps should not go to 
+>> such platforms, e.g. Ubuntu Launchpad, or the platform should be 
+>> modified to send security issues only in encrypted mails without 
+>> talkative title, members without mail public key registered
+>> should get only message "Bug [Number]: Info changed" including
+>> the HTTPS link to the issue in the platform.
+>> 
+>> What do you think?
+>> 
+>> Does someone have a link to anyone having access to the selector 
+>> lists leaked by Snowden to ask them, which of the distros are 
+>> already in scope or otherwise to discard this e-mail as pure 
+>> paranoia?
+>> 
+>> Kind regards, hd
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXtShzAAoJEHb/MwWLVhi2leUP/02zyUfHhnmwTrd8RwCoGMDL
-nm+W6AToaFzif7Ihn4qTcRR2v5YCQkBx10mj+BJ5JrS48/Gh6h2A3zfP0VpkdpVi
-cROaCDhuYWDAEoKvgcFjvKLQbCUrEGUvUJzhToKj7cv95j237m7kXJfmc33tftla
-vipSUQTRqiBxSvnFIp/3xiA05N2dLi+4Yw7IN9FqwMkGse1n+4BhcE2iLgP/OoBq
-EUS/qn2xszN9jw5DcGlsZ5nFZMlm8Ru5pgaHERN785aNSZU1LlWTdZhvJlgmeiIw
-m/zHoV71T/4fh/FP2z+2EjW59lI/kQmJNKon/88EoNlCNTZQ+sQmgNNykYhvF9QP
-lBP1gCvVryHBDKKVwni7HjoMSMEtgbK3da/pqvR551bhWYt1f8xJUDyEol643GW6
-ViH/wjtA2L/BLFmmbPSX1jedgFCRYZ1pdV1vrJ+MgyAK+fi7ioLvIt/L1ygy5sTI
-pQHCRpzSgM0YsPhcS0QvTNoskA2XOltcW0KOgy3xg3EJvZVK2FppD850xXOOHSb8
-ykUJzg9WKzIcg/yJe2eb2Yeo8VdbI2lZTaRWRKFTNM1AdrHe4ZpFldDosAzHvZwH
-DrFsF+TbDXFJO8ke3WW0xTvTRwZumGfYaIYKuotQaunBTWvQUHt/yBJy+z+8hSRg
-dk1NFu/a5sPs6/cN5efe
-=5c4e
+iEYEARECAAYFAla+4ysACgkQxFmThv7tq+7OMQCdGl91twyyWt1jQ/Ta5v71UMQh
+37AAnRLRa8nOpBVaP6R4g6r7A7BtcSYE
+=QM3G
 -----END PGP SIGNATURE-----
