@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3440" "Tuesday" "7" "February" "2017" "13:09:52" "+0000" "Peter Grandi" "pg@lxkern.for.sabi.co.UK" "<22681.50976.676169.341220@tree.ty.sabi.co.uk>" "70" "[oss-security] a simple replacement for setuid and confinement systems" nil nil nil "2" "2017020713:09:52" "[oss-security] a simple replacement for setuid and confinement systems" (number mark "U       pg@lxkern.fo Feb  7   70/3440  " thread-indent "\"[oss-security] a simple replacement for setuid and confinement systems\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2621" "Saturday" "13" "February" "2016" "23:03:06" "+0100" "Kristian Fiskerstrand" "kristian.fiskerstrand@sumptuouscapital.com" "<56BFA81A.30601@sumptuouscapital.com>" "65" "Re: [oss-security] Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software" "^Date:" nil nil "2" "2016021322:03:06" "[oss-security] Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software" (number mark "        kristian.fis Feb 13   65/2621  " thread-indent "\"Re: [oss-security] Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software\"\n") "<20160213141513.06096f21@pc1>" ("<9d8ff9da-5b07-588e-f2c5-38ba1e46b27c@halfdog.net>" "<20160213141513.06096f21@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19798 invoked by uid 550); 7 Feb 2017 17:38:05 -0000
+Received: (qmail 27696 invoked by uid 550); 13 Feb 2016 21:56:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,96 +11,111 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26011 invoked from network); 7 Feb 2017 13:10:14 -0000
+Received: (qmail 27678 invoked from network); 13 Feb 2016 21:56:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sumptuouscapital-com.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-type;
+        bh=QJAV5VxJ8wSofYWLBYelGtwUz1Bvzej3TwwQ838GbK0=;
+        b=aJxKHkkWiebCbbC4flv5+FlLemNHJCjb+/XVJotrDcTQ3zo21HjzNk0dRjS29seac4
+         H1KverYN1xSA3CnkFctscNxkMRu5MqYRzbyaWBWEHRAA6lTeKYkb0htTIjCi5YQBZJPu
+         JQGk3n3jl6yEp94RlCsoeiUYj/WF51RbjAUN3VNdv+N8/WnrLpoRRHh6hBVmqa1ispTA
+         aliIIhRVfJbGZU3JZh3eqbBu2nfo4cXxYte9VoU4wTjgipAOHVWcbip/a30WXV7y/ZG/
+         QHfjVrtvhUTiICx9aJcwG5X7s8cVtpojDpFOekPlv572v3yn+R2SORRcFnNTkEz9Y4Uw
+         A3+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-type;
+        bh=QJAV5VxJ8wSofYWLBYelGtwUz1Bvzej3TwwQ838GbK0=;
+        b=BW3eAEA5yQTXfE8NxCFXXMw0ryWx7mCQqQaBA9/J8Hd+NKzHjnn9DQtT4E2D85iT5b
+         WepiNaBAr0M8RowJRnMI2siNePafseNvxfX55NRntNqs03p5SCd4zSeKfi72bF8HoRvd
+         pNETTMsxUhXisHwIROkuowtmtpv9eudMwrR9uYBQCzd7hjLQEgJKt7Ux58VvyQyvt7bl
+         ZdBU60esskyrolFRfalAvTx5cwMWHZbB+wvL10j5w9Px+gU9/I8qd15EJdgrXOM9C8Md
+         Wg/pXyT6xfvSXHSwubdAZ0T7+ro3wJkur/Ph6a8l7BvvBNRMmFwgE69a0NPGLNALGbQW
+         hTGg==
+X-Gm-Message-State: AG10YOQfgL7Hz80WkUxQUd1Y64XlaIaqPGj4g3fPRnbzVcSOizRZqx9fEF/ekgkBqVXJYQ==
+X-Received: by 10.25.18.25 with SMTP id h25mr2912036lfi.165.1455400606764;
+        Sat, 13 Feb 2016 13:56:46 -0800 (PST)
+References: <9d8ff9da-5b07-588e-f2c5-38ba1e46b27c@halfdog.net>
+ <20160213141513.06096f21@pc1>
+Message-ID: <56BFA81A.30601@sumptuouscapital.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Message-ID: <22681.50976.676169.341220@tree.ty.sabi.co.uk>
-Date: Tue, 7 Feb 2017 13:09:52 +0000
-To: OSS Security <oss-security@lists.openwall.com>
-X-Mailer: VM 8.1.2 under 24.3.1 (x86_64-pc-linux-gnu)
-From: pg@lxkern.for.sabi.co.UK (Peter Grandi)
-X-Disclaimer: This message contains only personal opinions
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - azure.uno.uk.net
-X-AntiAbuse: Original Domain - lists.openwall.com
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - lxkern.for.sabi.co.uk
-X-Get-Message-Sender-Via: azure.uno.uk.net: authenticated_id: sabity@sabi.unospace.net
-X-Authenticated-Sender: azure.uno.uk.net: sabity@sabi.unospace.net
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-Subject: [oss-security] a simple replacement for setuid and confinement systems
+In-Reply-To: <20160213141513.06096f21@pc1>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="a4bRtLDpJsE0JxpD96jWQRFhwJfgMniGg"
+Date: Sat, 13 Feb 2016 23:03:06 +0100
+From: Kristian Fiskerstrand <kristian.fiskerstrand@sumptuouscapital.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Thoughts about security of Linux distributor
+ collaboration platforms, bugtrackers for opensource software
+To: oss-security@lists.openwall.com
 
-This message is "for the public record" so if in the future
-someone tries to patent something like the below mechanism this
-message can be cited as prior art.
+--a4bRtLDpJsE0JxpD96jWQRFhwJfgMniGg
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-The mechanism would be to add to each process, along with its
-"effective" id (user/group) what I would now call a preventive id
-with the following rules:
+On 02/13/2016 02:15 PM, Hanno B=C3=B6ck wrote:
+> On Sat, 13 Feb 2016 05:52:44 +0000 halfdog <me@halfdog.net> wrote:
+>=20
+>> Hence really critical security material perhaps should not go to
+>> such platforms, e.g. Ubuntu Launchpad, or the platform should be
+>> modified to send security issues only in encrypted mails without
+>> talkative title, members without mail public key registered
+>> should get only message "Bug [Number]: Info changed" including
+>> the HTTPS link to the issue in the platform.
+>=20
+> This is roughly what mozilla does and I like it a lot. They have a
+> bug tracker over https and you can add a PGP key. If you don't add
+> a PGP key and report a security bug you won't get updates via mail=20
+> unencrypted.
+>=20
 
-  * The access given to a program is that common to both the
-    effective id and the preventive id (the intersection of the
-    permissions for the effective and preventive ids), which can
-    be no access.
-  * Both effective and preventive id are inherited on fork.
-  * On exec the preventive id (user/group) of a process is set
-    to the id of the executed file.
-  * Files are created as in regular UNIX/Linux semantics with the
-    effective id of the creating process.
-  * A program in a process may set the preventive id to the same
-    value as the effective id (or to any value if the preventive
-    id is zero). This results in the current UNIX/Linux non-set-id
-    semantics.
-  * A program in a process may set the effective id to the same
-    value as the preventive id (or to any value if the effective
-    id is zero). This results in the the current UNIX/Linux set-id
-    semantics.
-  * If the effective id of a process and its preventive id are
-    different, the process is "confined" to the set of resources
-    accessible by both. Therefore a user that does not fully trust
-    an executable can give access to just the resources it
-    strictly needs to access, by setting permissions so that the
-    id of the file containing the executable can access only
-    those resources.
+Sadly the bugzilla implementation, or rather the perl module they are
+using for it, is flawed and encrypts to the first public key it
+considers viable [0,1] irrespective of usage flags [2], resulting in
+un-decryptable emails unless modifying the OpenPGP certificate
+presented to secureEmail. I'd really like to see this fixed, but I'm
+not sure if the scope is proper for a project such as GSoC. I actually
+just wrote up a slight summary of such a project on [3]
 
-Note: there are some other details to take care of, like
-apposite rules for access to a process via a debugger. The logic
-of the mechanism is that it is safe to let a process operate
-under the preventive id of its executable, because the program
-logic of the executable is under the control of the owner of the
-executable, and that should not be subverted.
+[0] https://bugzilla.mozilla.org/show_bug.cgi?id=3D790487
+[1] https://github.com/btrott/Crypt-OpenPGP/issues/9
+[2] http://tools.ietf.org/html/rfc4880#section-5.2.3.21
+[3]
+https://download.sumptuouscapital.com/GSoC/perl-bugzilla-openpgp-potential-=
+gsoc-project.txt
 
-The overall logic is that in the UNIX/Linux semantics for a
-process to work across two protection domains it must play between
-the user and group ids; but it is simpler and more general to have
-the two protection domains identified directly by two separate ids
-for the running process.
+--=20
+----------------------------
+Kristian Fiskerstrand
+Blog: https://blog.sumptuouscapital.com
+Twitter: @krifisk
+----------------------------
+Public OpenPGP key at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+----------------------------
+Aquila non capit muscas
+The eagle does not hunt flies
 
-The mechanism above is not quite backwards compatible with the
-UNIX/Linux semantics because it makes changes in the effective or
-preventive ids depend on explicit process actions, but it can be
-revised to be backwards compatible with the following alternative
-rules:
 
-  * Only if exec if for an executable file with the "sticky" bit
-    set the preventive id of the process is set to the id of that
-    executable file. The sticky bit in effect becomes the
-    confinement bit.
-  * If exec is for an executable file with the set-id (user/group)
-    bit set, then the effective id of the process is set to the
-    preventive id after this has been set to the id of the
-    executable file.
-  * This is probably not strictly necessary because almost all
-    system-provided executables on a typical UNIX/Linux system are
-    in files owned by id 0, so preventive ids would be 0 thus
-    resulting in no confinement like in traditional UNIX/Linux
-    semantics.
+--a4bRtLDpJsE0JxpD96jWQRFhwJfgMniGg
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-Note: the implementation of either variant of the mechanism is
-trivial, and in particular adding preventive id fields to a
-process does not require backward incompatible changes as process
-attributes are not persistent.
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBCgAGBQJWv6geAAoJECULev7WN52FUfQIAKEy+r/0K/HWqxKFyzTUdRSF
+N1gncGHLtWWHuMPYmDSHPWb0uJHnPd5RM1C9/N1d6mOLwk9Mf4wfPR6g5LrwtC3j
+XfJSvLEflxAQWaeoyeTgp2Rii7sdCoVxhiij0rDA4oTlZa6YEY+IuGUhOfmZCJFD
+eeyDXa1lnL92BawLCL4Q3ekIhzxfpa5HV4CkbHVili/TXMV/q6RvjTAHG1PSGR2f
++vaOhcNLBtiRub4aY/uwvsl6HmHbmgaqz+wkP2nM8sS+mnj2Hm4XXVqLeVxdn6SN
++aNHz2fLesx4L5CkpXUiUkwov4VRuGN8plEkpNluUAh+MRIaqC0KTy0ZnSLD9uc=
+=6NcT
+-----END PGP SIGNATURE-----
+
+--a4bRtLDpJsE0JxpD96jWQRFhwJfgMniGg--
