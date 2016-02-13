@@ -1,4 +1,9 @@
-Received: (qmail 30363 invoked by uid 550); 30 Nov 2023 09:44:20 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2354" "Saturday" "13" "February" "2016" "19:51:04" "+0300" "Alexander Cherepanov" "ch3root@openwall.com" "<56BF5EF8.7070203@openwall.com>" "58" "Re: [oss-security] snprintf return value misuse in a lot of projects" "^Date:" nil nil "2" "2016021316:51:04" "[oss-security] snprintf return value misuse in a lot of projects" (number mark "        ch3root@open Feb 13   58/2354  " thread-indent "\"Re: [oss-security] snprintf return value misuse in a lot of projects\"\n") "<m3k2m8d7k9.fsf@gmail.com>" ("<m3k2m8d7k9.fsf@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 12274 invoked by uid 550); 13 Feb 2016 16:51:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,71 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30339 invoked from network); 30 Nov 2023 09:44:20 -0000
-Date: Thu, 30 Nov 2023 10:44:08 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: Alex Murray <alex.murray@canonical.com>
-Cc: oss-security@lists.openwall.com
-Message-ID: <ZWhZaaGx_OalvQYM@kasco.suse.de>
-References: <ZVc0QDRY04pR81cs@kasco.suse.de>
- <CAB=ivF-hcDEN3_tXk+4rUUwXpVAKYcmt+efkUpGgedPiA4CDyg@mail.gmail.com>
- <ZVn7eWAIy-zhDFJ0@dojo.mi.org>
- <ZVthevPKLmczR1-B@kasco.suse.de>
- <874jh4dscg.fsf@canonical.com>
+Received: (qmail 12256 invoked from network); 13 Feb 2016 16:51:16 -0000
+References: <m3k2m8d7k9.fsf@gmail.com>
+X-Enigmail-Draft-Status: N1110
+Message-ID: <56BF5EF8.7070203@openwall.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="t0KhWIJ+bT/BvCRJ"
-Content-Disposition: inline
-In-Reply-To: <874jh4dscg.fsf@canonical.com>
-Authentication-Results: smtp-out2.suse.de;
-	dkim=none;
-	dmarc=fail reason="No valid SPF, No valid DKIM" header.from=suse.de (policy=none);
-	spf=softfail (smtp-out2.suse.de: 2a07:de40:b281:104:10:150:64:97 is neither permitted nor denied by domain of mgerstner@suse.de) smtp.mailfrom=mgerstner@suse.de
-Subject: Re: [oss-security] hplip: security issues in `hpps` program due to
- fixed /tmp path usage in prnt/hpps/hppsfilter.c
+In-Reply-To: <m3k2m8d7k9.fsf@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Date: Sat, 13 Feb 2016 19:51:04 +0300
+From: Alexander Cherepanov <ch3root@openwall.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] snprintf return value misuse in a lot of projects
+To: oss-security@lists.openwall.com
 
---t0KhWIJ+bT/BvCRJ
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Date: Thu, 30 Nov 2023 10:44:08 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: Alex Murray <alex.murray@canonical.com>
-Cc: oss-security@lists.openwall.com
-Subject: Re: [oss-security] hplip: security issues in `hpps` program due to
- fixed /tmp path usage in prnt/hpps/hppsfilter.c
+On 2016-02-13 17:11, Yuriy M. Kaminskiy wrote:
+> I noticed dangerous pattern in a lot of projects, where snprintf(3)
+> return value is used without checking, with potentially disasterous
+> consequences:
 
-Hello Alex,
+It's kinda a known. E.g., some such patterns are listed in 
+https://sourceware.org/ml/libc-alpha/2013-10/msg00686.html .
 
-On Thu, Nov 30, 2023 at 10:28:55AM +1030, Alex Murray wrote:
-> I just wanted to follow-up on this to see if a CVE was ever assigned?
+The same problem is with strlcpy.
 
-I did not get any news neither in the private Launchpad issue for the
-hplip project, nor after contacting hp-security-alert@hp.com, as was
-suggested by others in this thread.
+> And there are yet another very common pattern:
+>
+>    p += snprintf(p, end-p,[....]);
+>    p += snprintf(p, end-p,[....]);
+>    p += snprintf(p, end-p,[....]);
+>    ...
+>
+> which may be 'barely safe' by posix (if you'd read `man 3posix snprintf`,
+> you'd expect 2nd line is [somewhat] safe (end-p is negative, then
+> casted to size_t and produce value larger than (size_t)INT_MAX, that
+> should result in error EOVERFLOW), and third and following will dance
+> around last byte, likely remaining safe), but it is TOTALLY
+> broken on glibc, as glibc's snprintf DOES NOT follow posix, and accepts
+> *any* size.
 
-Best Regards
+For a glibc discussion please see 
+https://sourceware.org/bugzilla/show_bug.cgi?id=14771 .
 
-Matthias
+As for POSIX, the requirement of EOVERFLOW for a big second parameter is 
+a (rejected) bug in POSIX -- http://austingroupbugs.net/view.php?id=761 
+. A closely related bug -- http://austingroupbugs.net/view.php?id=1020 .
 
---t0KhWIJ+bT/BvCRJ
-Content-Type: application/pgp-signature; name="signature.asc"
+ISO C describes the size parameter of snprintf as a limit to the number 
+of output characters written, without any connections to the size of the 
+buffer. Thus, the following examples are valid in ISO C:
 
------BEGIN PGP SIGNATURE-----
+   char s[10];
+   snprintf(s, 20, "abc");
+   snprintf(s, SIZE_MAX, "%s", "abc");
 
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmVoWWkACgkQFMQFyXGS
-NVP8NBAAmfUnkaeogF4DAXSHgxrDNnGupU9fS0Ki4hDUgeRz/47bjPPLPR+6Jzrr
-LKOlWOCRBWmfV2hU5wayjOzwBt4/N4xprSG6755otVU9eAlhWhs6bx1513ebdKWC
-a+wRGuY5cwrpPubSHJj3233fhRC7588p0X13jYi6pdXEzwb8taNftEnD0b5Ol7gC
-Xhwud3K4CrVUONPOkUvhMgLRqf1KJXNukU+qcRHZzIY2JszCI8FF33S9nQusB+kS
-AW9WVz+WpMQJ9Sk284rJinNkWkNY80jbSTey8UJpHU0mB/OggyRw8OP+UJ4XMm6B
-KFdSUbrwTO6VAFTgS1vzjeeIIv2rMeUOgxXBQapX1+KYK+juxpvZfeQniBmCsKs9
-YjL0hEhM7wUqjL1JqnhqaDu9meWceEWbB+ibDvMYdEAeLR6+S1JOwr0lx/fGT6Xk
-4xGfBqV3P+FjHzu5tvzMP/6OZ4J23ZfL32UhDRDYhm+MoMNoblmZIOamA0GFPbBD
-b5A8fuM1PDWbYcOrmZQfaKFBfkwMERQbEeNfM5YcLu+UAL3nzJnVMsCPAWAeg3yM
-LamKtlRUcj2vCHBXB4hudGyYcDq4kmmMdvDaV+qOkRCkD8VsH75QrsCl51lxINHO
-t6OsSHL4lCYZulPtcga/uathQOWijuOt5NpUCswrGRpsiCvrkAM=
-=+8+t
------END PGP SIGNATURE-----
+OTOH POSIX describes the size parameter as the actual size of the buffer 
+(bug 1020) and requires to reject buffers of size larger than INT_MAX 
+(bug 761).
 
---t0KhWIJ+bT/BvCRJ--
+Even though POSIX contradicts ISO C in this question (while formally 
+deferring to ISO C) there is a sentiment that the POSIX approach is 
+better for safety/security. (E.g., it was expressed during the recent 
+discussion about strlcpy/strlcat in the glibc mailing list.)
+
+As it turned out, the same problem affects the fread function, with the 
+Linux kernel instead of POSIX contradicting ISO C. See 
+https://sourceware.org/bugzilla/show_bug.cgi?id=19165 and 
+https://sourceware.org/ml/libc-alpha/2016-02/msg00274.html .
+
+Perhaps this is a topic that will benefit from input from a wider community.
+
+-- 
+Alexander Cherepanov
