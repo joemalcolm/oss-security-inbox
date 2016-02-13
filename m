@@ -1,40 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/10/6
-Message-ID: <20160510162457.GA30154@sisay.ephaone.org>
-Date: Tue, 10 May 2016 18:24:58 +0200
-From: Michael Scherer <misc@...b.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/13/4
+Message-ID: <87d1s07qby.fsf@mid.deneb.enyo.de>
+Date: Sat, 13 Feb 2016 13:22:09 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: BitKeeper /tmp vulns
+Subject: Re: Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 10, 2016 at 09:31:27AM -0600, Kurt Seifried wrote:
-> Not found by me, mentioned on HackerNews:
-> 
-> https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/bk.sh#L485
+* halfdog:
 
-Just to clarify, the vuln was not mentioned on HN, just the new about it being
-under a free license. Then I did a git clone, and grep /tmp and pointed on internal 
-IRC that, as usual, there is a ton of /tmp issue (and then Kurt did see and asked where I did see it,
-and answered on HN (to the question "bk is now opensource").
- 
-> BitKeeper is under Apache license so here it is.
-> 
-> Also a quick look at the source shows a ton of other potential /tmp/ vulns,
-> CC'ing bitkeeper security
+> Data communicated in the final 2 weeks is secured but I am worried
+> about the 6 month centralized, structured and unencrypted
+> communication before that, which might be not so hard to tap into.
 
-for example:
-https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/utils/bk_version#L1563 
+We generally avoid sitting on vulnerabilities for extended periods.
 
-There is also a few here:
-https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/utils/extractor.c
-
-but that's the installation script, so unlikely to be exploitable.
-
-Or in apply-patch, etc.
-
-But there is also a few projects that are bundled (like zlib), and a few scripts that
-are used only at installation and/or build time, so classifying everything is more 
-work than what I have time to devote for the project.
-
--- 
-Michael Scherer
+I doubt many open-source communities would turn away contributors
+based on their employment or nationality.  I would find that extremely
+discriminatory.  If people are willing to help, you welcome them, and
+eventually, this can lead to sharing sensitive security information
+with them.
