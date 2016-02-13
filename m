@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2050" "Friday" "5" "November" "2021" "23:11:42" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" nil "67" "Re: [oss-security] Linux kernel: isdn: cpai: array-index-out-of-bounds in detach_capi_ctr in drivers/isdn/capi/kcapi.c" nil nil nil "11" nil nil (number mark "U       butterflyhua Nov  5   67/2050  " thread-indent "\"Re: [oss-security] Linux kernel: isdn: cpai: array-index-out-of-bounds in detach_capi_ctr in drivers/isdn/capi/kcapi.c\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: isdn: cpai: array-index-out-of-bounds in detach_capi_ctr in drivers/isdn/capi/kcapi.c" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2616" "Saturday" "13" "February" "2016" "14:15:13" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20160213141513.06096f21@pc1>" "63" "Re: [oss-security] Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software" "^Date:" nil nil "2" "2016021313:15:13" "[oss-security] Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software" (number mark "        hanno@hboeck Feb 13   63/2616  " thread-indent "\"Re: [oss-security] Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software\"\n") "<9d8ff9da-5b07-588e-f2c5-38ba1e46b27c@halfdog.net>" ("<9d8ff9da-5b07-588e-f2c5-38ba1e46b27c@halfdog.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7821 invoked by uid 550); 5 Nov 2021 15:22:07 -0000
+Received: (qmail 9304 invoked by uid 550); 13 Feb 2016 13:14:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,109 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 9282 invoked from network); 13 Feb 2016 13:14:35 -0000
+Message-ID: <20160213141513.06096f21@pc1>
+In-Reply-To: <9d8ff9da-5b07-588e-f2c5-38ba1e46b27c@halfdog.net>
+References: <9d8ff9da-5b07-588e-f2c5-38ba1e46b27c@halfdog.net>
+X-Mailer: Claws Mail 3.13.2 (GTK+ 2.24.29; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-25230-1455369262-0001-2"
+Date: Sat, 13 Feb 2016 14:15:13 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32749 invoked from network); 5 Nov 2021 15:12:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=LrINZOqmoipaH42Q2j1iO0FW7Pq8iimvLzlFNFZn2XQ=;
-        b=VE+v+HDUVw7FV4Cke3L1QJjJGyEj32V1GD2InYnbTGpWazElcyKG7hBCCijwB9k0fr
-         phHdO58nudfyE4dde5q8SvGhix0CSt16FBRtKLAG0AM+1Crg+FgeHeztUmMcKiGfUU9Z
-         ZNRia9x1tT7AIjoTH2/UWIMYxYoNBfsGeGMokEqBDvOv3fblxjInqjJXAdtSno69hUdL
-         jt9HXLA/ztywoR+XYl+IsNZnHjsssLPFu8yMiGyhOJYmcGkG8FToc1gv/c+QXYP4+51G
-         keef3mWQnSbPRkijp6teNcdBgL6YkfC2ynmEO6nbaqu3lNPT8vhWLka76nwyWpZ+4u4I
-         y3wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=LrINZOqmoipaH42Q2j1iO0FW7Pq8iimvLzlFNFZn2XQ=;
-        b=vwYhka15nbnZjse1CrHPk4hLiWVibT0yE5iftkzBKPKPKpnRxjnoKbS5qapuHd7zSK
-         W1V71X/umLCVv4j4qFofw9CfIBW0+BBzcCwkKNv+jSPhNN7rXDFL2MOs9WEgS1RJeQ5Q
-         WL9cPlf2bEslPf8NABc7J/KLthKiMxyi8pdWAzgTkiBYjvChEzxrdVZufiXM+FTgWJ06
-         ahAuz1eYnRY9n7nqtargNdmxGs1RmvgE90NZAV8DdBND9+nBn/tw6Ywi4DKTIhW7AvB6
-         clQBpXgQXcCEKvPcEM7m5/5xl22OtmWcACJfGhowBs2RYQDjyq89qdlRruqxT8noszsD
-         UjkQ==
-X-Gm-Message-State: AOAM533PPkvo8X+OaUl/GRKi9jbNL6zXbpog/gQDh59QNHLQ3NCoTRj1
-	RyprRZcsUVtWumqjbQYZdImStpKtprW6+oHasM9WBKFvdNLnwpM9
-X-Google-Smtp-Source: ABdhPJzavkGLC+NT0LalILNMQYD4FBAxeyuhEz/ab+wZ8QbQeAjf3poxOrMCBb/KO0k5Q5zng5PTkgtTz2Ec8dYRat8=
-X-Received: by 2002:a25:ad03:: with SMTP id y3mr28481828ybi.212.1636125113149;
- Fri, 05 Nov 2021 08:11:53 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAFcO6XNFySfp80uRssnz5jhgndpCvmgNbSE88ttMhXdZzqcfhw@mail.gmail.com>
-In-Reply-To: <CAFcO6XNFySfp80uRssnz5jhgndpCvmgNbSE88ttMhXdZzqcfhw@mail.gmail.com>
-From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
-Date: Fri, 5 Nov 2021 23:11:42 +0800
-Message-ID: <CAFcO6XPZGdhZ6p=iy2=HS2LcwRw30B2=dgevmrnU1hQM14qwXg@mail.gmail.com>
+Subject: Re: [oss-security] Thoughts about security of Linux distributor
+ collaboration platforms, bugtrackers for opensource software
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] Linux kernel: isdn: cpai: array-index-out-of-bounds
- in detach_capi_ctr in drivers/isdn/capi/kcapi.c
 
-Hi, the Mitre has assigned CVE-2021-43389 to this issue.
+--=_zucker.schokokeks.org-25230-1455369262-0001-2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-43389
+On Sat, 13 Feb 2016 05:52:44 +0000
+halfdog <me@halfdog.net> wrote:
 
-Regards,
-  butt3rflyh4ck.
+> Hence really critical security material perhaps should not go to such
+> platforms, e.g. Ubuntu Launchpad, or the platform should be modified
+> to send security issues only in encrypted mails without talkative
+> title, members without mail public key registered should get only
+> message "Bug [Number]: Info changed" including the HTTPS link to the
+> issue in the platform.
 
+This is roughly what mozilla does and I like it a lot. They have a bug
+tracker over https and you can add a PGP key. If you don't add a PGP
+key and report a security bug you won't get updates via mail
+unencrypted.
 
-On Tue, Oct 19, 2021 at 11:21 PM butt3rflyh4ck
-<butterflyhuangxx@gmail.com> wrote:
->
-> Hi, there is an array-index-out-bounds bug in detach_capi_ctr in
-> drivers/isdn/capi/kcapi.c and I reproduce it on 5.15.0-rc2+.
->
-> #Root Cause
-> we can call CMTPCONNADD ioctl and it would invoke
-> do_cmtp_sock_ioctl(), it would call cmtp_add_connection().
-> The chain of call is as follows.
-> ioctl(CMTPCONNADD)
->    ->cmtp_sock_ioctl()
->          -->do_cmtp_sock_ioctl()
->             --->cmtp_add_connection()
->                 ---->kthread_run()
->                 ---->cmtp_attach_device()
-> the function would add a cmtp session to a controller.
->
-> The cmtp_add_connection() would add a cmtp session to a controller
-> and run a kernel thread to process cmtp.
->
->         __module_get(THIS_MODULE);
->         session->task = kthread_run(cmtp_session, session, "kcmtpd_ctr_%d",
->                                                                 session->num);
->
-> During this process, the kernel thread would call detach_capi_ctr()
-> to detach a register controller. if the controller
-> was not attached yet, detach_capi_ctr() would
-> trigger an array-index-out-bounds bug.
->
->
-> #analyze
-> https://lore.kernel.org/netdev/CAFcO6XOvGQrRTaTkaJ0p3zR7y7nrAWD79r48=L_BbOyrK9X-vA@mail.gmail.com/
->
-> #patch
-> The patch is available upstream now.
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=1f3e2e97c003f80c4b087092b225c8787ff91e4d
->
-> #Timeline
-> *2021/9/24 - Vulnerability reported to netdev@vger.kernel.org.
-> *2021/9/24 - Vulnerability confirmed.
-> *2021/10/8 - Vulnerability patched.
-> *2021/10/9 - Vulnerability reported to secalert@redhat.com and confirmed
-> *2021/10/19 - Opened on oss-security@lists.openwall.com.
->
-> #Credit
-> Active Defense Lab of Venustech.
->
->
-> Regards,
->  butt3rflyh4ck.
->
-> --
-> Active Defense Lab of Venustech
+I think this is definitely an area that could need improvement. A lot
+of projects don't have any reasonable way to securely report bugs. And
+some actively discourage reporting bgus in a secure way (apache has
+some note on their webpage that you may send your reports encrypted to
+some people, but have to expect longer delays if you do so instead of
+using the "normal" unencrypted way).
+One problem is also that e.g. the github bugtracker (and I think many
+other bugtrackers as well) doesn't consider sensitive bug reports.
 
+But I also agree with Florian: Part of the problem can be mitigated by
+not keeping things under the hood for too long. I'm often disappointed
+with slow reaction times.
 
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
 
---
-Active Defense Lab of Venustech
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
+
+--=_zucker.schokokeks.org-25230-1455369262-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCgAGBQJWvyxhAAoJEKWIAHK7tR5CejAP/RrlgDinXJjjGlBEuRBTbkwG
+7tzOSmQeqeK4GcoECezUB2nYA1pMWI+xOyN/BkHRlxJ80PUjwlKAcBwu/flWbV9V
+K59nfMlrlFLU8+Z4VuDUu4ex5ZURskUu4BzFkBNnjtP2zQ9bgu+MtMFNoTnFaFIi
+yno4AK6qQRxT5eqzVsk7NdtgLgI62qn+I3sUZdV2/cIkxsYj+09LkHPSkpPoncb1
+9KkI1uO6sEcHeDantN5iRb98cA0NmhTB/f8ZIqpM9PBqEXWp5V4k6S0437FfmuJa
+4QQbli+acU8ll6Tnw3apih3KMhsj4gre0Hy5cZTDpxr4x9VvvQHAtYCTXZSKxTHu
+JlEqJQpQ7izLNNkcwgWLsZ/vHTNqxRIpTRxY4ujpj20DMHFYrCb+f2nykEenwppL
+sGXpo8WKqCDg4M9LFsfJCjE6cTJkXYXvs95hMqNv/RLTaG/bkCc77aqCmXQ8fFeW
++l7M/szfdxoZ1dXpwCwgaJ2YaRcDI//1Sk09Ob+VDUXCvSl8u0fT86qgSvnC893y
+1H5qteHO9AphBK0Y3IuvSSkDbbsKcCbUxSvEyY2WvEnKGVhQi41qIJmBpkQwRkAN
+FgBLZN9kCWk6CZRBYe0exJRduEgGEiCMgAs0B4JjrZmYe2+r0LxkR629i0xucLuv
+rwNnraSZaK7aeqwU6XbS
+=M5//
+-----END PGP SIGNATURE-----
+
+--=_zucker.schokokeks.org-25230-1455369262-0001-2--
