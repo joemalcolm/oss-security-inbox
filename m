@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1074" "Tuesday" "21" "April" "2020" "10:29:05" "+0300" "Henri Salo" "henri@nerv.fi" "<20200421072905.GA210610@ryzen.bugs.fi>" "26" "Re: [oss-security] re2c: heap overflow in Scanner::fill (scanner.cc)" nil nil nil "4" "2020042107:29:05" "[oss-security] re2c: heap overflow in Scanner::fill (scanner.cc)" (number mark "U       henri@nerv.f Apr 21   26/1074  " thread-indent "\"Re: [oss-security] re2c: heap overflow in Scanner::fill (scanner.cc)\"\n") "<1842330.usQuhbGJ8B@spectre>" ("<1842330.usQuhbGJ8B@spectre>") nil nil nil nil nil nil nil "Re: [oss-security] re2c: heap overflow in Scanner::fill (scanner.cc)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["566" "Saturday" "13" "February" "2016" "13:22:09" "+0100" "Florian Weimer" "fw@deneb.enyo.de" "<87d1s07qby.fsf@mid.deneb.enyo.de>" "13" "Re: [oss-security] Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software" "^Date:" nil nil "2" "2016021312:22:09" "[oss-security] Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software" (number mark "        fw@deneb.eny Feb 13   13/566   " thread-indent "\"Re: [oss-security] Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software\"\n") "<eea2203a-128e-cbfd-9647-5eeb3479fd82@halfdog.net>" ("<9d8ff9da-5b07-588e-f2c5-38ba1e46b27c@halfdog.net>" "<56BED1B0.30900@eng.utah.edu>" "<eea2203a-128e-cbfd-9647-5eeb3479fd82@halfdog.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7659 invoked by uid 550); 21 Apr 2020 07:29:23 -0000
+Received: (qmail 8176 invoked by uid 550); 13 Feb 2016 12:22:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,31 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7638 invoked from network); 21 Apr 2020 07:29:22 -0000
-X-Virus-Scanned: Debian amavisd-new at nerv.fi
-Date: Tue, 21 Apr 2020 10:29:05 +0300
-From: Henri Salo <henri@nerv.fi>
-To: Agostino Sarubbo <ago@gentoo.org>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20200421072905.GA210610@ryzen.bugs.fi>
-References: <1842330.usQuhbGJ8B@spectre>
+Received: (qmail 8156 invoked from network); 13 Feb 2016 12:22:21 -0000
+References: <9d8ff9da-5b07-588e-f2c5-38ba1e46b27c@halfdog.net>
+	<56BED1B0.30900@eng.utah.edu>
+	<eea2203a-128e-cbfd-9647-5eeb3479fd82@halfdog.net>
+In-Reply-To: <eea2203a-128e-cbfd-9647-5eeb3479fd82@halfdog.net> (halfdog's
+	message of "Sat, 13 Feb 2016 08:02:59 +0000")
+Message-ID: <87d1s07qby.fsf@mid.deneb.enyo.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; x-action=pgp-signed
-In-Reply-To: <1842330.usQuhbGJ8B@spectre>
-Subject: Re: [oss-security] re2c: heap overflow in Scanner::fill (scanner.cc)
+Content-Type: text/plain
+Date: Sat, 13 Feb 2016 13:22:09 +0100
+From: Florian Weimer <fw@deneb.enyo.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+* halfdog:
 
-On Sun, Apr 19, 2020 at 04:59:48PM +0200, Agostino Sarubbo wrote:
-> http://blogs.gentoo.org/ago/2020/04/19/re2c-heap-overflow-in-scannerfill-scanner-cc/
+> Data communicated in the final 2 weeks is secured but I am worried
+> about the 6 month centralized, structured and unencrypted
+> communication before that, which might be not so hard to tap into.
 
-Use CVE-2020-11958.
+We generally avoid sitting on vulnerabilities for extended periods.
 
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAl6eoL8ACgkQJ633pE6q
-dXQjNxAArR8FasEqoCZe3REbzgztybaAqsagPsZ8hFGJMOM3Lfug5D8VeMVKGPO/
-yI5ADpOjEZyJsRhM/E7vxyd7inLq5IJuUSvux36SNzCAW3i0gFJqHjHEkX0Z63rO
-4hL81wZ+jc0K61C2s583vyfZSuuJksb1rtn8rTNbyfDVWETnXGC3YVTgu+AvKZqH
-a3y/OF4jyhw9ho0bf/onRTmk3/0tPEJxs7x5ZfwE7TSTJLaNJEcKt1CPIs8fo0KC
-QMGsUURJxuaMKJCU7owESzojlEZn3XEjingC5E5MOpQmeTocYH5JSB0q4vJk2UTp
-jolwX8eR9O5GbDob8xbtqMVc7JEwsnelxd8ChPRBrmulgjdW77yDu70GBL9weHdv
-+a3NcqwJ7LGOVwQyE/tYkh7OYV7PSMCPsb0Qs0Dwdrd8yrVybTq8sh1AsjvaYrgy
-J6Xg2vNX9VOlRjhEER0Saf2ChoaAZEDuhClRJKdcFOCHptc2bB1tIACEGdSvG+5R
-CD0FyOZb/bpQGd0NwtAPajdZs7aXw2aaFIo0f91r55e7tk7bBZ2jYvXcMVQp3DXF
-FwvPit1JqLHgECPxT2aAtSWXwDv57pZjbh1OB0vFz+x0O3BNkGYGZbBLqTwcEPQC
-VpTH6uKcOIAG7JyN2cdAH+7cDjlxrdeDO82VmAZLLLW1iFGaL9I=
-=/3xD
------END PGP SIGNATURE-----
+I doubt many open-source communities would turn away contributors
+based on their employment or nationality.  I would find that extremely
+discriminatory.  If people are willing to help, you welcome them, and
+eventually, this can lead to sharing sensitive security information
+with them.
