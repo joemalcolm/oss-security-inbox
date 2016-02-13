@@ -1,89 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/18
-Message-ID: <CABEk9Yz0mijhgKqKEugbvfAdqJKRcn6-HYyET3MA-D2EROo0tw@mail.gmail.com>
-Date: Wed, 4 May 2016 09:12:52 -0400
-From: Kangjie Lu <kangjielu@...il.com>
-To: oss-security@...ts.openwall.com, Taesoo Kim <taesoo@...ech.edu>,  Chengyu Song <csong84@...ech.edu>, Insu Yun <insu@...ech.edu>
-Subject: CVE Request: information leak in wilc1000 module of Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/13/5
+Message-ID: <20160213141513.06096f21@pc1>
+Date: Sat, 13 Feb 2016 14:15:13 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Sat, 13 Feb 2016 05:52:44 +0000
+halfdog <me@...fdog.net> wrote:
 
-In the milc1000 module (drivers/staging/wilc1000/wilc_wfi_cfgoperations.c),
-The 6-bytes stack object “mac” is not initialized but leaked via “nla_put”.
-This bug may result in leaks of sensitive kernel stack data.
+> Hence really critical security material perhaps should not go to such
+> platforms, e.g. Ubuntu Launchpad, or the platform should be modified
+> to send security issues only in encrypted mails without talkative
+> title, members without mail public key registered should get only
+> message "Bug [Number]: Info changed" including the HTTPS link to the
+> issue in the platform.
 
-The patch of this bug has been accepted by Linux kernel maintainer and will
-be
-merged in the next kernel release (see the message bellow).
+This is roughly what mozilla does and I like it a lot. They have a bug
+tracker over https and you can add a PGP key. If you don't add a PGP
+key and report a security bug you won't get updates via mail
+unencrypted.
 
-Fix info:
-*http://www.spinics.net/lists/linux-wireless/msg150352.html
-<http://www.spinics.net/lists/linux-wireless/msg150352.html>*
-git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/staging.git
+I think this is definitely an area that could need improvement. A lot
+of projects don't have any reasonable way to securely report bugs. And
+some actively discourage reporting bgus in a secure way (apache has
+some note on their webpage that you may send your reports encrypted to
+some people, but have to expect longer delays if you do so instead of
+using the "normal" unencrypted way).
+One problem is also that e.g. the github bugtracker (and I think many
+other bugtrackers as well) doesn't consider sensitive bug reports.
 
-Could you please assign a CVE to it?
+But I also agree with Florian: Part of the problem can be mitigated by
+not keeping things under the hood for too long. I'm often disappointed
+with slow reaction times.
 
-Thanks,
-Kangjie Lu
+-- 
+Hanno Böck
+https://hboeck.de/
 
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
----------- Forwarded message ----------
-From: <gregkh@...uxfoundation.org>
-Date: Wed, May 4, 2016 at 1:57 AM
-Subject: patch "staging: wilc1000: fix infoleak in wilc_wfi_cfgoperations"
-added to staging-testing
-To: kangjielu@...il.com, gregkh@...uxfoundation.org, kjlu@...ech.edu
-
-
-
-This is a note to let you know that I've just added the patch titled
-
-    staging: wilc1000: fix infoleak in wilc_wfi_cfgoperations
-
-to my staging git tree which can be found at
-    git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/staging.git
-in the staging-testing branch.
-
-The patch will show up in the next release of the linux-next tree
-(usually sometime within the next 24 hours during the week.)
-
-The patch will be merged to the staging-next branch sometime soon,
-after it passes testing, and the merge window is open.
-
-If you have any questions about this process, please let me know.
-
-
->From d13829686bba3e06e2217f044beb8fd5a9abf792 Mon Sep 17 00:00:00 2001
-From: Kangjie Lu <kangjielu@...il.com>
-Date: Tue, 3 May 2016 21:36:11 -0400
-Subject: staging: wilc1000: fix infoleak in wilc_wfi_cfgoperations
-
-"mac" is an array allocated in stack without being initialized,
-and will be sent out via "nla_put". The dump_station() is supposed
-to initialize the mac address; otherwise, sensitive data in kernel
-stack will be leaked. To fix this, copy the mac address to it.
-
-Signed-off-by: Kangjie Lu <kjlu@...ech.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
----
- drivers/staging/wilc1000/wilc_wfi_cfgoperations.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/staging/wilc1000/wilc_wfi_cfgoperations.c
-b/drivers/staging/wilc1000/wilc_wfi_cfgoperations.c
-index 85031f75d7ee..4b041356f823 100644
---- a/drivers/staging/wilc1000/wilc_wfi_cfgoperations.c
-+++ b/drivers/staging/wilc1000/wilc_wfi_cfgoperations.c
-@@ -1804,6 +1804,7 @@ static int dump_station(struct wiphy *wiphy, struct
-net_device *dev,
-
-        wilc_get_rssi(vif, &sinfo->signal);
-
-+       memcpy(mac, priv->au8AssociatedBss, ETH_ALEN);
-        return 0;
- }
-
---
-2.8.2
-
+Content of type "application/pgp-signature" skipped
