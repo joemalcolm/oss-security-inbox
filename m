@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["611" "Thursday" "29" "September" "2016" "16:18:44" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1609291617400.13997@tvnag.unkk.fr>" "25" "[oss-security] Re: [SECURITY ADVISORY] c-ares: single byte out of buffer write" nil nil nil "9" "2016092914:18:44" "[oss-security] Re: [SECURITY ADVISORY] c-ares: single byte out of buffer write" (number mark "U       daniel@haxx. Sep 29   25/611   " thread-indent "\"[oss-security] Re: [SECURITY ADVISORY] c-ares: single byte out of buffer write\"\n") "<alpine.DEB.2.20.1609291125510.13997@tvnag.unkk.fr>" ("<alpine.DEB.2.20.1609291125510.13997@tvnag.unkk.fr>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1441" "Sunday" "14" "February" "2016" "12:56:07" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160214175607.920DE332019@smtpvbsrv1.mitre.org>" "38" "[oss-security] Re: CVE Request: Linux: Incorrect branch fixups for eBPF allow arbitrary read" nil nil nil "2" "2016021417:56:07" "[oss-security] Re: CVE Request: Linux: Incorrect branch fixups for eBPF allow arbitrary read" (number mark "U       cve-assign@m Feb 14   38/1441  " thread-indent "\"[oss-security] Re: CVE Request: Linux: Incorrect branch fixups for eBPF allow arbitrary read\"\n") "<20160214145217.GA20931@eldamar.local>" ("<20160214145217.GA20931@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19965 invoked by uid 550); 29 Sep 2016 14:18:58 -0000
+Received: (qmail 26366 invoked by uid 550); 14 Feb 2016 17:56:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,44 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19854 invoked from network); 29 Sep 2016 14:18:57 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Thu, 29 Sep 2016 16:18:44 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: c-ares hacking <c-ares@cool.haxx.se>
-cc: oss-security@lists.openwall.com
-In-Reply-To: <alpine.DEB.2.20.1609291125510.13997@tvnag.unkk.fr>
-Message-ID: <alpine.DEB.2.20.1609291617400.13997@tvnag.unkk.fr>
-References: <alpine.DEB.2.20.1609291125510.13997@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Subject: [oss-security] Re: [SECURITY ADVISORY] c-ares: single byte out of buffer write
+Received: (qmail 26348 invoked from network); 14 Feb 2016 17:56:19 -0000
+From: cve-assign@mitre.org
+To: carnil@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, benh@debian.org
+In-Reply-To: <20160214145217.GA20931@eldamar.local>
+Message-Id: <20160214175607.920DE332019@smtpvbsrv1.mitre.org>
+Date: Sun, 14 Feb 2016 12:56:07 -0500 (EST)
+Subject: [oss-security] Re: CVE Request: Linux: Incorrect branch fixups for eBPF allow arbitrary read
 
-On Thu, 29 Sep 2016, Daniel Stenberg wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> INFO
-> ----
+> https://git.kernel.org/linus/a1b14d27ed0965838350f1377ff97c93ee383492
+> bpf: fix branch offset adjustment on backjumps after patching ctx expansion
 >
-> The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-> CVE-2016-5180 to this issue.
->
-> AFFECTED VERSIONS
-> -----------------
->
-> This flaw exists in the following c-ares versions.
->
-> - Affected versions: libcurl 1.0.0 to and including 1.11.0
-> - Not affected versions: c-ares >= 1.12.0
+> for backward jumps it fails to account the delta
+> 
+> kernel/bpf/verifier.c
+> adjust_branches
+> 
+> -    else if (i > pos && i + insn->off + 1 < pos)
+> +    else if (i > pos + delta && i + insn->off + 1 <= pos + delta)
 
-Sorry for being sloppy. I meant to write c-ares above and not libcurl. This 
-was a copy and paste error that is already fixed in the web version of this 
-advisory at
+Use CVE-2016-2383.
 
-  https://c-ares.haxx.se/adv_20160929.html
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
--- 
-
-  / daniel.haxx.se
+iQIcBAEBCAAGBQJWwL70AAoJEL54rhJi8gl5Jm8P/2Udihf4a42tyljgF5jr87kl
+aUWEEeTtvsEnhD1Mk2nGG9uRF4KOETFAI0iUITnfiiVWmAZETRisjhpVBcXd6Dfe
+DgjHcF7JjMczf0bbJ885CzGWyTwyGN4L8O6OQjgSAGFhFxsaK5AUCZ/aH2H+4bD+
+PsCT3n9p4+wEe6QwLyZlxmjbogH5AUv1cFlzk39eirEioJIKY8wqnVnSDxlGmGCS
+a6k+wIyNf7l3yJIM87sf2bseA983D9UWug1fmOOp1smwCzHiQLiPzRbcALnWKHmU
+VL/ppkTvSFtLkdZwwd7AXI0VYpCJjjb5C3rD1xSLtgKc1z9sIUXclliT45GADek6
+x9oZrpjH1OH9Xb3GHAC7QFdhG7GG5fZFh3jlRQFh7JjbCMRIY1iDlDiLDXRvitl2
+uyOVIZoVCk6Ph6ZCnkOKDlHhUE7tgtsqq5I+e9CB+g+5hxMiHVnYp27UvRV/2Nhe
+mOV2gp1axOmcmZn3fPwpdws+t0fJGS/8gP/ls5i9p5pWzwIg0ceU+CSyykzIbB7P
+7F253iad+u7erOYU1YiW89+sh/luifSpcVsaX7wlNlX8QIq7ev4xQs7N5/DfRRws
+my2KZsS/P5gH+7I8ywKo5JSE7AyagdBKOz7J/nMCiaIz//JPxH2da44jFHFoRTMD
+ds9lmT7rXJWkZ6I3XWb9
+=Ry66
+-----END PGP SIGNATURE-----
