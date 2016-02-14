@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1714" "Wednesday" "18" "January" "2017" "11:35:22" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<a23b9a5939ad4e50a10dcc1e65d6305e@imshyb01.MITRE.ORG>" "39" "[oss-security] Re: CVE request Qemu: audio: memory leakage in ac97 device" nil nil nil "1" "2017011816:35:22" "[oss-security] Re: CVE request Qemu: audio: memory leakage in ac97 device" (number mark "U       cve-assign@m Jan 18   39/1714  " thread-indent "\"[oss-security] Re: CVE request Qemu: audio: memory leakage in ac97 device\"\n") "<alpine.LFD.2.20.1701180043410.31247@wniryva>" ("<alpine.LFD.2.20.1701180043410.31247@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1483" "Sunday" "14" "February" "2016" "12:57:44" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160214175744.C280F332032@smtpvbsrv1.mitre.org>" "40" "[oss-security] Re: CVE Request: Linux: ALSA: usb-audio: double-free triggered by invalid USB descriptor" nil nil nil "2" "2016021417:57:44" "[oss-security] Re: CVE Request: Linux: ALSA: usb-audio: double-free triggered by invalid USB descriptor" (number mark "U       cve-assign@m Feb 14   40/1483  " thread-indent "\"[oss-security] Re: CVE Request: Linux: ALSA: usb-audio: double-free triggered by invalid USB descriptor\"\n") "<20160214153152.GA27269@eldamar.local>" ("<20160214153152.GA27269@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9678 invoked by uid 550); 18 Jan 2017 16:35:35 -0000
+Received: (qmail 3557 invoked by uid 550); 14 Feb 2016 17:57:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,54 +12,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9654 invoked from network); 18 Jan 2017 16:35:34 -0000
-From: <cve-assign@mitre.org>
-To: <ppandit@redhat.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
-	<liqiang6-s@360.cn>
-In-Reply-To: <alpine.LFD.2.20.1701180043410.31247@wniryva>
-Message-ID: <a23b9a5939ad4e50a10dcc1e65d6305e@imshyb01.MITRE.ORG>
-Date: Wed, 18 Jan 2017 11:35:22 -0500
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE request Qemu: audio: memory leakage in ac97 device
+Received: (qmail 3530 invoked from network); 14 Feb 2016 17:57:56 -0000
+From: cve-assign@mitre.org
+To: carnil@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, benh@debian.org
+In-Reply-To: <20160214153152.GA27269@eldamar.local>
+Message-Id: <20160214175744.C280F332032@smtpvbsrv1.mitre.org>
+Date: Sun, 14 Feb 2016 12:57:44 -0500 (EST)
+Subject: [oss-security] Re: CVE Request: Linux: ALSA: usb-audio: double-free triggered by invalid USB descriptor
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> [] Quick Emulator(Qemu) built with the ac97 audio device emulation support is
-> vulnerable to a memory leakage issue. It could occur while doing a device
-> unplug operation; Doing so repeatedly would result in leaking host memory,
-> affecting other services on the host.
-> 
-> A privileged user inside guest could use this flaw to cause a DoS and/or
-> potentially crash the Qemu process on the host.
-> 
-> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg01740.html
-> http://git.qemu.org/?p=qemu.git;a=commit;h=12351a91da97b414eec8cdb09f1d9f41e535a401
+> https://git.kernel.org/linus/07d86ca93db7e5cdf4743564d98292042ec21af7
+> https://lkml.org/lkml/2016/2/13/11
+> ALSA: usb-audio: avoid freeing umidi object twice
+>
+> The 'umidi' object will be free'd on the error path by snd_usbmidi_free()
+> when tearing down the rawmidi interface. So we shouldn't try to free it
+> in snd_usbmidi_create()
 
-Use CVE-2017-5525 for this (i.e., a memory consumption issue, not an
-information disclosure issue).
+> sound/usb/midi.c
+> snd_usbmidi_create
+> 
+> -   snd_usbmidi_free(umidi);
+
+Use CVE-2016-2384.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYf5h/AAoJEHb/MwWLVhi23fIP/0fuLRdLp9NZ5o5pn6LmGfEX
-dENdnZplDoWUTCRSkDPVW5tNDT/Ksz+OyQ45jhmAgyGjZgMKCkg8xErRoOe9M24+
-i2Er+2jeoR1TNaFmmPf2oakdEhU5IBtEj9LhJHq2CqvtNtscf2TOFi5LAzXKmaeM
-MoO43kn0OX8LlWn8CuHy5LpXAXVjVl0JG1D1+koKQFjKMnSfxCGmgePZHMIwSFIO
-FEYgLTC03l65YmzSrd20exYMua4fNgLq2KC9cR/29TM5YuT9flr/n13sS2oQcCs1
-QIxgvlOhMh9B1JKK14aZvPpRELHRnJcDBSq4dFSPxYb1yqC5d+9VvksyzJ4sK+uX
-3WuDCddLgFPHgQHAVfkkvD8hCpGEjjCJbtfLdar1NGwPgWjkBLgdgljpEToVUXOU
-KqkgEl3ZwoEc/dY0bndvoRy5ttEDGjWpZpGNrmF7jSLXVFOZrJ3QEtyj8uieH2v1
-ugvg2RYPb7ucAZssUe3hFOOj8mprIrTAkKoPs7HI7+r8ECsh1DXdKzo2J8awp/87
-7/7X/TVbVgVgXLAf9W1HYmnIZXX68ryAvfjfb7lvTJYV6LMsv++XmIuwkYh6/O9y
-OcfBV9TkMzPtoLNnh6cOFBzQphVwS5slC/cjSkT08ppubh9hOLFiu+VaWeLtcq59
-dMKgDbKn6VcQhjxWKqg1
-=6yzY
+iQIcBAEBCAAGBQJWwL7rAAoJEL54rhJi8gl5aVwP/0NkRkHIt/v2RbQ3hDt/zD7S
+gP6sasJfZV2T5GyqoCzqZ87gtgdBhgphX2YNS7s+BFwxvRHLmY9wXVYFpQgVzaNn
+6mvSfz1rrWfjmpIAkcqWrH+LcDsXB4jfnRqu/n3VBPvm7dPdFDydNl87fqzzUxuE
+mzOx+nJZu8fGfOJZCEQM1OCkGCOZwxNtH4XPdhkjuzfBrCUhWOKHwc2yfwsBcBv/
+tsfthuJpffxLm3Dr3HFrkr9CJS/JPUBxNXZHYrHP359id2NZkoq2wp0i4y9DWhwg
+ddHIEdeqO5U6gZB+WolAZL284O5WnVdbHzjZO4Gx6Ik240Ab5rQWmX4WJabSnDwf
+pMr7k5LZWc4lWSE7vJ9Akrz0ZFkZsfqNaCV1RjitRgXQ+F4sm76PaQj/0vAieeaJ
+38JOc4sDQYcvhRvMVjyNyAaaB78fdsoOGkwt7sZR7q+syUDkRaFdrNaeerYk+8Gx
+ojPmweX0ELnw1taN/CwEfBJ6LDDBJfuZmYyPjABKjdaHIvAHzOdZRAez1HDdLX6C
+9hDt/Zq4foSJdZsIpvwDUOUzmLf4tEkBofbQXtz/H7mVrcimNIHInvXHdwLxghop
+XjflF9+S+3n0I+QsJ6p0mNQXm+O0+PiR7ppEZhTqt+GOCGWZEIzJoK4xz8cU0BAV
+Xrgkzti6q4qA2mCEvj+H
+=EO2f
 -----END PGP SIGNATURE-----
