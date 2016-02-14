@@ -1,33 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/05/1
-Message-ID: <CA+s3sfGjsnd+JiDyx+i9xWX6J4DoK=bQUEn64Z8jP2ava1cLYw@mail.gmail.com>
-Date: Tue, 05 Apr 2016 17:19:31 +0000
-From: Jason Buberel <jbuberel@...gle.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE request - Go - DLL loading, Big int
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/14/2
+Message-ID: <20160214153152.GA27269@eldamar.local>
+Date: Sun, 14 Feb 2016 16:31:52 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: Ben Hutchings <benh@...ian.org>
+Subject: CVE Request: Linux: ALSA: usb-audio: double-free triggered by invalid USB descriptor
 Content-Type: text/plain; charset=utf-8
 
-OSS-Security,
+Hi
 
-The Go open source project has identified two security issues that we
-believe warrant the issuing of a new release:
+There is a double-free flaw in the ALSA USB MIDI driver:
 
-1. On Windows, Go loads system DLLs by name with LoadLibrary, making it
-vulnerable to DLL preloading attacks. Notably, if a user launched a Go
-executable from their Downloads folder and malicious DLLs were in their
-Downloads folder. This is being address in the following CL:
-https://golang.org/cl/21428
+> The 'umidi' object will be free'd on the error path by snd_usbmidi_free()
+> when tearing down the rawmidi interface. So we shouldn't try to free it
+> in snd_usbmidi_create() after having registered the rawmidi interface.
 
-2. Go has an infinite loop in several big integer routines that makes Go
-programs vulnerable to remote denial of service attacks.  Programs using
-HTTPS client authentication or the Go ssh server libraries are both exposed
-to this vulnerability. This is being addressed in the following CL:
-https://golang.org/cl/21533
+This was fixed in https://git.kernel.org/linus/07d86ca93db7e5cdf4743564d98292042ec21af7
 
-We will release two new versions - Go 1.6.1 and 1.5.4 - both of which will
-address these two issues.
+https://lkml.org/lkml/2016/2/13/11
+
+Could you assign a CVE for this issue?
 
 Regards,
-Jason Buberel
-PM, Go
-
+Salvatore
