@@ -1,45 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/28/6
-Message-ID: <20161228165828.GA2779@openwall.com>
-Date: Wed, 28 Dec 2016 17:58:28 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Marcus Bointon <marcus@...chromedia.co.uk>
-Subject: Re: PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit (CVE-2016-10045) (Bypass of the CVE-2016-1033 patch)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/14/4
+Message-Id: <20160214175607.920DE332019@smtpvbsrv1.mitre.org>
+Date: Sun, 14 Feb 2016 12:56:07 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, benh@...ian.org
+Subject: Re: CVE Request: Linux: Incorrect branch fixups for eBPF allow arbitrary read
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 28, 2016 at 03:03:39AM -0200, Dawid Golunski wrote:
-> PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit
-> (CVE-2016-10045) (Bypass for the CVE-2016-1033 patch)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Marcus has just released 5.2.21 with a fix for CVE-2016-10045.  The fix
-stops using escapeshellarg()'s result, and instead sanity-checks the
-string's characters:
-
-+            // All other characters have a special meaning in at least one common shell, including = and +.
-+            // Full stop (.) has a special meaning in cmd.exe, but its impact should be negligible here.
-+            // Note that this does permit non-Latin alphanumeric characters based on the current locale.
-+            if (!ctype_alnum($c) && strpos('@...', $c) === false) {
-+                return false;
-
-I think the use current locale is weird (an explicit check for
-[a-zA-Z0-9] would have been more appropriate), but overall hopefully
-this is a working fix now.
-
-I suggest also sanity-checking the string length, for good measure.
-Maybe in another update.
-
-> This was reported responsibly to the vendor & assigned a CVEID on the
-> 26th of December.
-> The vendor has been working on a new patch which would fix the problem but
-> not break the RFC too badly. The patch should be published very soon.
+> https://git.kernel.org/linus/a1b14d27ed0965838350f1377ff97c93ee383492
+> bpf: fix branch offset adjustment on backjumps after patching ctx expansion
+>
+> for backward jumps it fails to account the delta
 > 
-> I'm releasing this as a 0day without the new patch available publicly
-> as a potential bypass was publicly discussed on oss-sec with Solar
-> Designer in the PHPMailer < 5.2.18 thread, so holding the advisory
-> further would serve no purpose.
+> kernel/bpf/verifier.c
+> adjust_branches
+> 
+> -    else if (i > pos && i + insn->off + 1 < pos)
+> +    else if (i > pos + delta && i + insn->off + 1 <= pos + delta)
 
-Yeah.  I did think for a moment before posting in here yesterday, but
-for a number of reasons chose to go ahead with the public discussion.
+Use CVE-2016-2383.
 
-Alexander
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWwL70AAoJEL54rhJi8gl5Jm8P/2Udihf4a42tyljgF5jr87kl
+aUWEEeTtvsEnhD1Mk2nGG9uRF4KOETFAI0iUITnfiiVWmAZETRisjhpVBcXd6Dfe
+DgjHcF7JjMczf0bbJ885CzGWyTwyGN4L8O6OQjgSAGFhFxsaK5AUCZ/aH2H+4bD+
+PsCT3n9p4+wEe6QwLyZlxmjbogH5AUv1cFlzk39eirEioJIKY8wqnVnSDxlGmGCS
+a6k+wIyNf7l3yJIM87sf2bseA983D9UWug1fmOOp1smwCzHiQLiPzRbcALnWKHmU
+VL/ppkTvSFtLkdZwwd7AXI0VYpCJjjb5C3rD1xSLtgKc1z9sIUXclliT45GADek6
+x9oZrpjH1OH9Xb3GHAC7QFdhG7GG5fZFh3jlRQFh7JjbCMRIY1iDlDiLDXRvitl2
+uyOVIZoVCk6Ph6ZCnkOKDlHhUE7tgtsqq5I+e9CB+g+5hxMiHVnYp27UvRV/2Nhe
+mOV2gp1axOmcmZn3fPwpdws+t0fJGS/8gP/ls5i9p5pWzwIg0ceU+CSyykzIbB7P
+7F253iad+u7erOYU1YiW89+sh/luifSpcVsaX7wlNlX8QIq7ev4xQs7N5/DfRRws
+my2KZsS/P5gH+7I8ywKo5JSE7AyagdBKOz7J/nMCiaIz//JPxH2da44jFHFoRTMD
+ds9lmT7rXJWkZ6I3XWb9
+=Ry66
+-----END PGP SIGNATURE-----
