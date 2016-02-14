@@ -1,52 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/7
-Message-Id: <20160929103643.3204E332002@smtpvbsrv1.mitre.org>
-Date: Thu, 29 Sep 2016 06:36:43 -0400 (EDT)
-From: cve-assign@...re.org
-To: aacid@....org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: kdesu vulnerability: need CVE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/14/3
+Message-ID: <56C09A15.8060108@debian.org>
+Date: Sun, 14 Feb 2016 16:15:33 +0100
+From: Paul Gevers <elbrus@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: cacti: Authentication using web authentication as a user, not in the,cacti database allows complete access
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+[Sorry for breaking the thread, I don't have access to the original mail]
 
-> The problem is that you could sneak an unicode string terminator in the kdesu invocation
-> and the label showing which command will be executed ended there but we did execute the whole thing,
-> that is,
-> 
->    echo Hi@; whoami > /tmp/filebyroot
-> 
-> If @ is the unicode string terminator would only tell the user kdesu would execute "echo Hi"
-> but would create the /tmp/filebyroot file as root
-> 
-> The fix is already available at
-> https://github.com/KDE/kde-cli-tools/commit/5eda179a099ba68a20dc21dc0da63e85a565a171
+Just a note regarding the proposed patch for CVE-2016-2313.
 
->> Make sure people are not trying to sneak invisible characters on the kdesu label
->> kdesu.cpp
+As I already noted in the original upstream bug report¹, I am not
+convinced that the "bug" was not (accidental) mis-configuration. I am
+convinced that the proposed patch is wrong and told upstream about it.
+The patch prevents features of cacti that allow an authenticated user
+who is not in the cacti database to get *specified* access to cacti. I
+don't know how many setups are using this feature, but the patch is a
+regression for those setups. The patch does not change anything in the
+configuration tab in the UI, so this at least leads to a confusing
+situation.
 
-Use CVE-2016-7787.
+Paul
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+¹ http://bugs.cacti.net/view.php?id=2656
 
-iQIcBAEBCAAGBQJX7O5eAAoJEHb/MwWLVhi2ZJYP/3z7JAGJAtY4YkSyMy97A+q/
-B5s3hRzWrvpZesyNf80sCuY0PvTnoMiS80nOWYlYVyERbr/1hVh7YQ+GLzpEs/ud
-KPhYqhPVNO/tC9ELW1LkAwaYKI4zJXf7yZFIgsuCZI1tgriRf+ehS40eg3tBnCoF
-d03nbntQH5ADVZH+KxnnaKMZFfBRQDcMBP7XTcrfXCN5czju13TEWTYKPtL1s4rm
-UlyeDQzJ9n+ou6NpNo9HfY+4QILw6mOHrxGl/SczeFgdCCJBwLvXiMAQXi8lLe0z
-TmB7eCT1E8Bm7gpGQJUlcoD1PCBRHq1k6hCiTRLupkmYXHGjwWzJRMKqnnG5Stej
-0/W5jLd7NQwm003RLwePVWvDw6TVbdZY6tJIMXqkYXc+Qqxx71TtY6/P4U/97Va3
-8O8vovP1Xxbui1Xx9dUTU+F/XiG4kjV21XsN+5gAlWFA22v0gGKEvdY4uze5kNH6
-dwxj2xTdJKEHIr8cPQeBOBxd46sIChmQWywO9uMMfwUoDS3xHkyq3WkCoI5YalnO
-Dx8l5erpytJA8or3hKld0BIk2MTpJI/0zdyl0JqXuleIBjtlAFRMuyclg4n6S9Ek
-VXRNWAslPgl+mPquZnyKxCKHfvpgk7ZT5qbU4iqOAv1CabODk+024XrdhHDzCTOQ
-/T8u7gshajO1VsGhTTey
-=Zeft
------END PGP SIGNATURE-----
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
