@@ -1,51 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/09/1
-Message-ID: <4c5b757cd61e46109f711186e2474d6d@imshyb02.MITRE.ORG>
-Date: Fri, 9 Dec 2016 00:13:41 -0500
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liq3ea@...il.com>, <psirt@...wei.com>
-Subject: Re: CVE request Qemu: display: cirrus_vga: a divide by zero in cirrus_do_copy
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/14/5
+Message-Id: <20160214175744.C280F332032@smtpvbsrv1.mitre.org>
+Date: Sun, 14 Feb 2016 12:57:44 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, benh@...ian.org
+Subject: Re: CVE Request: Linux: ALSA: usb-audio: double-free triggered by invalid USB descriptor
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is
-> vulnerable to a divide by zero issue. It could occur while copying VGA data
-> when cirrus graphics mode was set to be VGA.
-> 
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> instance on the host, resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-12/msg00442.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1334398
-> http://git.qemu.org/?p=qemu.git;a=commit;h=4299b90e9ba9ce5ca9024572804ba751aa1a7e70
+> https://git.kernel.org/linus/07d86ca93db7e5cdf4743564d98292042ec21af7
+> https://lkml.org/lkml/2016/2/13/11
+> ALSA: usb-audio: avoid freeing umidi object twice
+>
+> The 'umidi' object will be free'd on the error path by snd_usbmidi_free()
+> when tearing down the rawmidi interface. So we shouldn't try to free it
+> in snd_usbmidi_create()
 
-Use CVE-2016-9921 for the "'cirrus_get_bpp' returns zero(0), which
-could lead to a divide by zero" issue.
+> sound/usb/midi.c
+> snd_usbmidi_create
+> 
+> -   snd_usbmidi_free(umidi);
 
-Use CVE-2016-9922 for the "blit pitch values" issue.
+Use CVE-2016-2384.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYSjxDAAoJEHb/MwWLVhi2KvEP+wd+MdU2D7RZ4WVw/3M+G17C
-1D/KdgtB4D8i+Dx5AkCwFBFY85bZxMPCGe4gGxno/3MyzhxIik6AZ0jPOw2yOeI6
-jCp2S1gwowMs7jFexlG4nEQy3b+rBbjbGEvL0TSDyIKhvFdi8g+izv5u//49NvRi
-U1zNoHOzscgSlswSt+M8kYnKUDsfznisqjrCXc0F5cqksB9fcCf7bXWGjh5iAe4b
-vl0uO+5zQgCafAduS/+EQtDJheW9ussbAoLlJvVAfRQo9Ue7l3iZhyT1ty5gf4AO
-UH4kFYCuYMrQecbfYbKszS2ZZ4pF5hPXF9iXH+758n5ICyhk4h4q5dxwRtrEe7vC
-rT9lww4agFnrV9++TiUtB8UyldibNgxidEAsWxnkHS8mHPOB3ClPlHgr0FOekEkp
-hounmHanE8K/e66J79DESxX2GaFmLi1AbkF4x8ZeYF3I3dyjfEsNFEbPePwYp/1d
-OBjjebavjtJef22GzQsaqWw9OXnkaqRYCKmH8PatX4msjzLCeBJ4jOKXTSExzFxs
-KJiWx/5lXOb86VlrjVbTA/kJNxIjNHl3b1hBGz6rTrfkHeRs+W9OHgMBRNL4GHxP
-04DmwoQrRIG6fuvhTEjHU87vzf527BoqlAn/EgSzIQWKzkfIqUGiiWypvwVIftfQ
-r3ilsSTK4Ga5P42dkDYZ
-=Q5bc
+iQIcBAEBCAAGBQJWwL7rAAoJEL54rhJi8gl5aVwP/0NkRkHIt/v2RbQ3hDt/zD7S
+gP6sasJfZV2T5GyqoCzqZ87gtgdBhgphX2YNS7s+BFwxvRHLmY9wXVYFpQgVzaNn
+6mvSfz1rrWfjmpIAkcqWrH+LcDsXB4jfnRqu/n3VBPvm7dPdFDydNl87fqzzUxuE
+mzOx+nJZu8fGfOJZCEQM1OCkGCOZwxNtH4XPdhkjuzfBrCUhWOKHwc2yfwsBcBv/
+tsfthuJpffxLm3Dr3HFrkr9CJS/JPUBxNXZHYrHP359id2NZkoq2wp0i4y9DWhwg
+ddHIEdeqO5U6gZB+WolAZL284O5WnVdbHzjZO4Gx6Ik240Ab5rQWmX4WJabSnDwf
+pMr7k5LZWc4lWSE7vJ9Akrz0ZFkZsfqNaCV1RjitRgXQ+F4sm76PaQj/0vAieeaJ
+38JOc4sDQYcvhRvMVjyNyAaaB78fdsoOGkwt7sZR7q+syUDkRaFdrNaeerYk+8Gx
+ojPmweX0ELnw1taN/CwEfBJ6LDDBJfuZmYyPjABKjdaHIvAHzOdZRAez1HDdLX6C
+9hDt/Zq4foSJdZsIpvwDUOUzmLf4tEkBofbQXtz/H7mVrcimNIHInvXHdwLxghop
+XjflF9+S+3n0I+QsJ6p0mNQXm+O0+PiR7ppEZhTqt+GOCGWZEIzJoK4xz8cU0BAV
+Xrgkzti6q4qA2mCEvj+H
+=EO2f
 -----END PGP SIGNATURE-----
