@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3295" "Wednesday" "11" "November" "2015" "11:49:51" "+0100" "Moritz Bechler" "mbechler@eenterphace.org" "<56431D4F.7090006@eenterphace.org>" "63" "Re: [oss-security] Assign CVE for common-collections remote code execution on deserialisation flaw" "^Date:" nil nil "11" "2015111110:49:51" "[oss-security] Assign CVE for common-collections remote code execution on deserialisation flaw" (number mark "        mbechler@een Nov 11   63/3295  " thread-indent "\"Re: [oss-security] Assign CVE for common-collections remote code execution on deserialisation flaw\"\n") "<20151111002307.GP1213@sentinelchicken.org>" ("<1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>" "<5640442C.1050501@redhat.com>" "<20151109215303.GN1213@sentinelchicken.org>" "<5641360D.8070102@eenterphace.org>" "<20151111002307.GP1213@sentinelchicken.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1712" "Monday" "15" "February" "2016" "12:09:55" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160215170955.33F4D6CC060@smtpvmsrv1.mitre.org>" "40" "[oss-security] Re: CVE request: foomatic-rip unhtmlify() buffer overflow vulnerability" nil nil nil "2" "2016021517:09:55" "[oss-security] Re: CVE request: foomatic-rip unhtmlify() buffer overflow vulnerability" (number mark "U       cve-assign@m Feb 15   40/1712  " thread-indent "\"[oss-security] Re: CVE request: foomatic-rip unhtmlify() buffer overflow vulnerability\"\n") "<20160215104458.56184e27@redhat.com>" ("<20160215104458.56184e27@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30231 invoked by uid 550); 11 Nov 2015 13:07:14 -0000
+Received: (qmail 28245 invoked by uid 550); 15 Feb 2016 17:10:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,87 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5826 invoked from network); 11 Nov 2015 10:50:03 -0000
-References: <1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>
- <5640442C.1050501@redhat.com> <20151109215303.GN1213@sentinelchicken.org>
- <5641360D.8070102@eenterphace.org>
- <20151111002307.GP1213@sentinelchicken.org>
-Openpgp: url=hkp-x://random.sks.keyserver.penguin.de
-X-Enigmail-Draft-Status: N1110
-Message-ID: <56431D4F.7090006@eenterphace.org>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-MIME-Version: 1.0
-In-Reply-To: <20151111002307.GP1213@sentinelchicken.org>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-Date: Wed, 11 Nov 2015 11:49:51 +0100
-From: Moritz Bechler <mbechler@eenterphace.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Assign CVE for common-collections remote code
- execution on deserialisation flaw
-To: oss-security@lists.openwall.com
+Received: (qmail 28225 invoked from network); 15 Feb 2016 17:10:07 -0000
+From: cve-assign@mitre.org
+To: scorneli@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20160215104458.56184e27@redhat.com>
+Message-Id: <20160215170955.33F4D6CC060@smtpvmsrv1.mitre.org>
+Date: Mon, 15 Feb 2016 12:09:55 -0500 (EST)
+Subject: [oss-security] Re: CVE request: foomatic-rip unhtmlify() buffer overflow vulnerability
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> 1. Most vulnerabilities require a "source" of untrusted data, and a 
-> "sink" in the code where that data is used unsafely.  In my
-> experience, most vulnerabilities are best corrected by making the
-> "sink" safe.  For example: output encoding in HTML or prepared
-> statements in SQL.  While many people preach input validation (or
-> *gag* "sanitization"), this is not how most classes of bugs are fixed
-> reliably.
-The problem here is that the amount of potential "sinks" is incredibly
-large - everything on your classpath. No objection here to hardening the
-specific instance, but thinking one will be safe afterwards is a
-misconception. Like someone else put it, it's a game of whack-a-mole.
-
-> 2. There's absolutely no reason serialization can't be done safely.
-> It's absurd to think otherwise, given the fact that developers
-> regularly serialize/marshal/pickle objects into a wide variety of
-> formats, accept these from untrusted sources, deserialize them and
-> aren't made vulnerable by it.  Examples: JSON from websites, XML in
-> SOAP, ...  Any advice telling developers that "you shouldn't
-> deserialized objects from untrusted sources" must apply only to
-> software that has a flawed deserialization design.
-Sure, as long as nobody does any funny stuff in their default
-constructors, setters or getters. But the difference there is that these
-unmarshallers (at least the ones I know of) only act on a very specific
-set of classes you mostly control.
-Looking at the flawed deserialization design at hand...
-
-> 3. Java *does* provide a way to distinguish those to be trusted during
-> deserialization from all other classes.  Trusted classes implement
-> Serializable.  If you implement Serializable, you've been added to a
-> white list of code that should be safe.  If you've added a "sink" to
-> your Serializable objects, then that's a vulnerability.  Not only is
-> it a "sink", but validating the input prior to deserialization is
-> nearly impossible, which means you can't filter it at the "source"
-> even if you wanted to.  
-And that's the assumption you are making. There is no such statement in
-the Serializable definition, neither is anywhere defined what is
-acceptable behavior for a readObject method and neither forbids the
-collection API to do something dangerous in a getter (which in OpenJDK
-seems to generally be an acceptable call).
-Serializable is inherited, so the base class can give guarantees about
-it's children - don't think so.
-
-Serialization is also used for passivation in trusted contexts where
-different rules apply and checking all this code is an unnecessary
-effort. In fact I would guess that the majority of the classes out there
-are solely Serializable for that purpose. These concepts don't mix well
-and the mixture unnecessarily increases the attack surface.
-
+> A buffer-overflow vulnerability was discovered in the unhtmlify()
+> function of foomatic-rip. The function did not properly calculate
+> buffer sizes, possibly leading to a heap-based memory corruption. A
+> remote, unauthenticated attacker could exploit this flaw to cause
+> foomatic-rip to crash or possibly execute arbitrary code.
 > 
-> So I do agree with you that Oracle could do a much better job here.
-> They could give us better tools and better ways to whitelist the kinds
-> of objects we're willing to accept.  Good luck convincing them of
-> that.  Last I checked, they still think XMLDecoder is ok.
-> 
+> https://bugs.linuxfoundation.org/show_bug.cgi?id=515
+> https://bugzilla.redhat.com/show_bug.cgi?id=1218297
 
-Maybe forcing them to take a position on the RMI implementation will be
-of some use. They clearly assume deserialization is safe there and fun
-fact, even use it for the authentication crendentials.
+Use CVE-2010-5325.
 
+(Although https://bugzilla.redhat.com/show_bug.cgi?id=1218297#c2
+also has a mention of "an off-by-one-ish problem" in addition to the
+larger problem, there will not be multiple CVE IDs for this.)
 
-Moritz
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWwgUSAAoJEL54rhJi8gl5uykQAJzaoeYlGDOykAPG4FKygAuW
+j4WKh5JltgiHBp4Fd22pr02A+LrIU0gH0iAEPU6lA8484P6YnWHvs3OMmYa4FRJT
+ct9Nxf6Zjm3tewnhROTcx3pb8Xv5ooUtlvjDQ7S1HY2WrQ3+r/VGykGoupYNZFwC
+HCNHW/HKaw33/eidUpaigRaCR9ftH24YjOa46bp6OJr+C3PGeR9GjE/umv6inJHz
+byM+evEmzubiUYnahIzUyPjCYFjW+YyHfb9juoWWmNfVbLG+YqL3sbt8HeMI4y2W
+dPXGgHkrm/B1GY1D/IO2rA3JGRrC7LSg6v0Tq33BbealBzwsdrwGQJewSEuJKnyc
+fujBb3FnYQwbzcWL/XIxwwVnN/FldDuub+JpaesIY+pHhWf96KjJn5UmhYYRI0NE
+I2EgKDhSzidCu3IdcCd7Ei2bKER8VRiq6EEnxy40o5QUTip2UTsroup9/NggIGo8
+FZcXWRTMRKIWexMsUW5Fkmh4NobzLKAbYCDOaCy1vs8usysE0xeXh9gPB6+qLbtv
+cR9FKMTqFRSQ5AXQ0YhSCnbxx3pP/5VAw7rnfFlEPHasAPdNyYNVSrNIUbPfIZTw
+nSZ3x88l4jGgB4X4ydBM/fUSJ22A24fuu9tXAcvfsr2zNGWgrj676lbqAzFT51PC
+qq3z5dhfv6awjdCptaC7
+=kqIA
+-----END PGP SIGNATURE-----
