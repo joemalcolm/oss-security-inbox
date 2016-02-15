@@ -1,38 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/13/1
-Message-ID: <CALJHwhSGK2YxVqSz3zKJRbd1_mL1Yso_SUFE_5ZZ9-QKVD25Tg@mail.gmail.com>
-Date: Wed, 13 Apr 2016 21:18:16 +1000
-From: Wade Mealing <wmealing@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Linux kernel: incorrect restoration of machine specific registers from signal handler.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/15/3
+Message-ID: <alpine.LNX.2.02.1602151453500.8788@v8.schaltsekun.de>
+Date: Mon, 15 Feb 2016 14:59:19 +0100 (CET)
+From: Roman Drahtmueller <draht@...altsekun.de>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: harlowja@...il.com, smoser@...ckies.net
+Subject: Re: cloud-init follows symlinks for ssh authorized_keys
 Content-Type: text/plain; charset=utf-8
 
-A flaw was found in the linux kernel which could cause a kernel panic
-when restoring machine specific registers on ppc platform.  Incorrect
-transactional memory state registers could inadvertently change the
-call path on return from userspace and cause the kernel to enter an
-unknown state in the transactional memory handling code and panic in a
-BUG_ON() defensively.
+[...]
+> Again, os.path.isdir follows symlinks, and so do chown and chmod, and
+> also the functions underlying write_file. By the way there are some
+> more race condition situations happening in the latter function, among
+> others, in which directories can be removed or changed around after
+> the "ensure" check. Whether or not that constitutes a security issue
+> remains to be seen.
+> 
+> Anyway, make of this what you will. Is this a vector? Is this not a
+> vector? It's certainly not very robust code in any case.
 
-QMEU guests can also modify the same machine specific register values
-via set_one_reg and guests may invoke the same unknown state and
-callpath.  Since the fix is in the same location I would argue that
-this is the same flaw.
+Wouldn't it be a problem in the set-up much earlier if an unprivileged 
+user can write to a different user's directories? 
+A symlink for $HOME/.ssh/authorized_keys may have a practicacl purpose, 
+such as a system-wide file for functional users.
+>From this viewpoint, it doesn't matter if the check is racey or not. 
 
-This only both big endian and little endian ppc platforms, it does not
-affect non powerpc platforms.
+The path walk with the checks if path components to $HOME/.ssh are 
+writeable for users other than the target user is much more useful in 
+this context, while it is not necessary either.
 
-Thanks,
+> 
+> Regards,
+> Jason
 
-Wade Mealing
-Red Hat Product Security
-
-References:
-
-Upstream fixes:
-https://git.kernel.org/cgit/linux/kernel/git/powerpc/linux.git/commit/?h=fixes&id=d2b9d2a5ad5ef04ff978c9923d19730cb05efd55
-
-https://git.kernel.org/cgit/linux/kernel/git/powerpc/linux.git/commit/?h=fixes&id=7f821fc9c77a9b01fe7b1d6e72717b33d8d64142
-
-Red Hat Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=1326540
+Roman.
