@@ -1,101 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/24
-Message-ID: <0c4d4271-436b-044a-0023-a5131e6b5978@canonical.com>
-Date: Mon, 5 Dec 2016 16:18:37 -0600
-From: Tyler Hicks <tyhicks@...onical.com>
-To: "Steven M. Schweda" <sms@...inode.info>, oss-security@...ts.openwall.com
-Cc: security@...ntu.com, Info-ZIP-Dev@...tley.com
-Subject: Re: CVE Request: Info-Zip zipinfo buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/15/7
+Message-Id: <20160215170955.33F4D6CC060@smtpvmsrv1.mitre.org>
+Date: Mon, 15 Feb 2016 12:09:55 -0500 (EST)
+From: cve-assign@...re.org
+To: scorneli@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: foomatic-rip unhtmlify() buffer overflow vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 12/05/2016 03:50 PM, Steven M. Schweda wrote:
-> From: Tyler Hicks <tyhicks@...onical.com>
-> 
->    Thanks for the (thorough, helpful) report.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I appreciate it but Alexis deserves most of the credit.
+> A buffer-overflow vulnerability was discovered in the unhtmlify()
+> function of foomatic-rip. The function did not properly calculate
+> buffer sizes, possibly leading to a heap-based memory corruption. A
+> remote, unauthenticated attacker could exploit this flaw to cause
+> foomatic-rip to crash or possibly execute arbitrary code.
+> 
+> https://bugs.linuxfoundation.org/show_bug.cgi?id=515
+> https://bugzilla.redhat.com/show_bug.cgi?id=1218297
 
-> 
->> Alexis Vanden Eijnde has discovered a zipinfo buffer overflow and
->> reported it here:
->>
->>   https://launchpad.net/bugs/1643750
->>
->> It is very similar to, but different than, this `unzip -l` crasher:
->>
->>   http://www.openwall.com/lists/oss-security/2014/11/03/5
-> 
->    It is.  And the easy fix is also very similar (and should appear in
-> the next UnZip release, version 6.1e beta):
+Use CVE-2010-5325.
 
-Thanks for the quick fix. Is there a public code repository available so
-that we can reference a specific commit that fixes this issue?
+(Although https://bugzilla.redhat.com/show_bug.cgi?id=1218297#c2
+also has a mention of "an off-by-one-ish problem" in addition to the
+larger problem, there will not be multiple CVE IDs for this.)
 
-> 
-> ALP $ gdiff zipinfo.c;39 zipinfo.c
-> 2568c2568,2579
-> <         sprintf(&methbuf[1], "%03u", G.crec.compression_method);
-> ---
->>         /* 2016-12-05 SMS.
->>          * https://launchpad.net/bugs/1643750
->>          * Unexpectedly large compression methods overflow
->>          * &methbuf[].  Use the old, three-digit decimal format
->>          * for values which fit.  Otherwise, sacrifice the "u",
->>          * and use four-digit hexadecimal.
->>          */
->>         if (G.crec.compression_method <= 999) {
->>             sprintf( &methbuf[ 1], "%03u", G.crec.compression_method);
->>         } else {
->>             sprintf( &methbuf[ 0], "%04X", G.crec.compression_method);
->>         }
-> 
->    Typical output (pre-release UnZip 6.1e beta, with some minor,
-> unrelated report format changes from UnZip 6.0):
-> 
->    Old:
-> 
-> ALP $ unzip6l -Z PoZ.zip
-> Archive:  ALP$DKC0:[UTILITY.SOURCE.ZIP.test_mthd_ovflo]PoZ.zip;1
-> Zip file size: 154 bytes, number of entries: 1
-> -rw-rw-r--  3.0 unx        2 tx u65535 16-Nov-21 19:07 a
->                                 ^^^^^^
-> 1 file, 2 bytes uncompressed, 2 bytes compressed:  0.0%
-> 
->    New/next:
-> 
-> ALP $ unzipx -Z PoZ.zip
-> Archive:  ALP$DKC0:[UTILITY.SOURCE.ZIP.test_mthd_ovflo]PoZ.zip;1
-> Archive size: 154 bytes; Members: 1
-> -rw-rw-r--  3.0 unx        2 tx FFFF 16-Nov-21 19:07 a
->                                 ^^^^
-> Members: 1; Bytes uncompressed: 2, compressed: 2, 0.0%
-> Directories: 0, Files: 1, Links: 0
-> 
->> The zipinfo buffer overflow occurs due to a flaw in zipinfo.c's
->> zi_short() function:
->> [...]
-> 
->    Yeah.  We should have noticed this whan the "unzip -l" complaint was
-> made.
-> 
->> Please assign a CVE. Also, consider assigning a CVE to the related
->> `unzip -l` issue from 2014. Thank you!
-> 
->    Is that something I should do?  (I normally get reports with CVEs; I
-> have never created one.)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Nope. As you probably noticed, MITRE just assigned a CVE. It likely
-helped that you confirmed the issue. Thanks again!
-
-Tyler
-
-> 
-> ------------------------------------------------------------------------
-> 
->    Steven M. Schweda               sms@...inode-info
-> 
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+iQIcBAEBCAAGBQJWwgUSAAoJEL54rhJi8gl5uykQAJzaoeYlGDOykAPG4FKygAuW
+j4WKh5JltgiHBp4Fd22pr02A+LrIU0gH0iAEPU6lA8484P6YnWHvs3OMmYa4FRJT
+ct9Nxf6Zjm3tewnhROTcx3pb8Xv5ooUtlvjDQ7S1HY2WrQ3+r/VGykGoupYNZFwC
+HCNHW/HKaw33/eidUpaigRaCR9ftH24YjOa46bp6OJr+C3PGeR9GjE/umv6inJHz
+byM+evEmzubiUYnahIzUyPjCYFjW+YyHfb9juoWWmNfVbLG+YqL3sbt8HeMI4y2W
+dPXGgHkrm/B1GY1D/IO2rA3JGRrC7LSg6v0Tq33BbealBzwsdrwGQJewSEuJKnyc
+fujBb3FnYQwbzcWL/XIxwwVnN/FldDuub+JpaesIY+pHhWf96KjJn5UmhYYRI0NE
+I2EgKDhSzidCu3IdcCd7Ei2bKER8VRiq6EEnxy40o5QUTip2UTsroup9/NggIGo8
+FZcXWRTMRKIWexMsUW5Fkmh4NobzLKAbYCDOaCy1vs8usysE0xeXh9gPB6+qLbtv
+cR9FKMTqFRSQ5AXQ0YhSCnbxx3pP/5VAw7rnfFlEPHasAPdNyYNVSrNIUbPfIZTw
+nSZ3x88l4jGgB4X4ydBM/fUSJ22A24fuu9tXAcvfsr2zNGWgrj676lbqAzFT51PC
+qq3z5dhfv6awjdCptaC7
+=kqIA
+-----END PGP SIGNATURE-----
