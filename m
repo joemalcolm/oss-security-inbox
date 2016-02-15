@@ -1,51 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/13/11
-Message-ID: <20161013161041.GR25134@suse.de>
-Date: Thu, 13 Oct 2016 18:10:41 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org
-Subject: CVE Request: another recursion in GRE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/15/5
+Message-ID: <CAAeBhPfv200duAxCKnYkABgyt-34u_cP_YrrRajPWZ-Md+H9GA@mail.gmail.com>
+Date: Sun, 14 Feb 2016 22:07:21 -0500
+From: David Leo <httpsonly.github.io@...il.com>
+To: fulldisclosure@...lists.org, bugtraq@...urityfocus.com,  oss-security@...ts.openwall.com
+Subject: Browser Security Tool: HTTPS Only (Why, How, Open Source, Python)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+(@moderators The original post was too brief. This one has details.)
 
-While debugging the issue CVE-2016-7039, SUSE engineer Michal Kubecek also spotted
-a similar problem fixed earlier this year.
+Summary
 
-If a packet has the layout: | IPv4 header | GRE header | IPv4 header | GRE header | ...
-depending on left over stack it could run the kernel out of stack due to
-recursion and so crash the kernel.
-This might be hard to hit with regular Ethernet MTUs, but easier with Jumbo frames.
+This tool completely locks browser - just HTTPS, nothing else. This
+tool is extremely simple - less than 100 lines of code(Python and
+JavaScript).
 
-Michal has a testcase in 
-https://bugzilla.suse.com/show_bug.cgi?id=1001486#c5
+Why
 
+Firefox Add-on Firesheep Brings Hacking to the Masses
+http://www.pcworld.com/article/208727/Firesheep_Brings_Hacking_to_the_Masses.html
+"Firesheep is basically a packet sniffer that can analyze all the
+unencrypted Web traffic"
+(Quite a while ago, it's become a "casual game")
 
-As far as I see fixed in 4.6, introduced in 3.13 (bf5a755f).
+Yes, Mozilla said, "Gradually phasing out access to browser features
+for non-secure websites", in April 2015. After more than six months,
+they have done nothing useful.
 
-commit fac8e0f579695a3ecbc4d3cac369139d7f819971
-Author: Jesse Gross <jesse@...nel.org>
-Date:   Sat Mar 19 09:32:01 2016 -0700
+The Chrome team wanted the same stuff:
+https://www.chromium.org/Home/chromium-security/marking-http-as-non-secure
+Again, nothing significant has been achieved yet.
 
-    tunnels: Don't apply GRO to multiple layers of encapsulation.
-    
-    When drivers express support for TSO of encapsulated packets, they
-    only mean that they can do it for one layer of encapsulation.
-    Supporting additional levels would mean updating, at a minimum,
-    more IP length fields and they are unaware of this.
-    
-    No encapsulation device expresses support for handling offloaded
-    encapsulated packets, so we won't generate these types of frames
-    in the transmit path. However, GRO doesn't have a check for
-    multiple levels of encapsulation and will attempt to build them.
-    
-    UDP tunnel GRO actually does prevent this situation but it only
-    handles multiple UDP tunnels stacked on top of each other. This
-    generalizes that solution to prevent any kind of tunnel stacking
-    that would cause problems.
-    
-    Fixes: bf5a755f ("net-gre-gro: Add GRE support to the GRO stack")
-    Signed-off-by: Jesse Gross <jesse@...nel.org>
-    Signed-off-by: David S. Miller <davem@...emloft.net>
+And there is HTTPS Everywhere, with SO MANY rules:
+https://www.eff.org/https-everywhere/atlas/
+It's still able to access HTTP by default, but there is "Block all
+HTTP requests". The problem: nothing happens when browser tries HTTP -
+there should be warning(it's incorrect behavior) and options(try
+HTTPS, Google Cache, etc). People complained, months ago:
+https://github.com/EFForg/https-everywhere/issues/1329
 
-Ciao, Marcus
+How
+
+PAC(Proxy auto-config) is used:
+If it's HTTPS, that's fine.
+If it's HTTP, user gets warning and options(try HTTPS, Google Cache -
+it has HTTPS, etc).
+Anything else, it goes to 0.0.0.0
+
+It's a simple tool that does one job, and does it very well.
+
+URLs
+
+https://httpsonly.github.io/
+https://github.com/httpsonly/httpsonly
+
+Best Wishes,
