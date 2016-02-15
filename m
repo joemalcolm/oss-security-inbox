@@ -1,52 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/28/12
-Message-Id: <20160928201933.246876C542B@smtpvmsrv1.mitre.org>
-Date: Wed, 28 Sep 2016 16:19:33 -0400 (EDT)
-From: cve-assign@...re.org
-To: pere@...a.cat
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Requests for Drupal Core - SA-CORE-2016-004
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/15/6
+Message-ID: <20160215151847.GA25532@openwall.com>
+Date: Mon, 15 Feb 2016 18:18:47 +0300
+From: Solar Designer <solar@...nwall.com>
+To: David Leo <httpsonly.github.io@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Browser Security Tool: HTTPS Only (Why, How, Open Source, Python)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Sun, Feb 14, 2016 at 10:07:21PM -0500, David Leo wrote:
+> (@moderators The original post was too brief. This one has details.)
 
-> https://www.drupal.org/SA-CORE-2016-004
+As a moderator for oss-security, I was torn between rejecting this
+message and using it as an example of what (not) to post in here.
+I chose the latter.
 
-> Users without "Administer comments" can set comment visibility on
-> nodes they can edit
+There are few tool announcements in here.  I think we want more, but I
+also think we want them to be more relevant to this particular list and
+very infrequent for any one particular tool.  For most, it should be
+just one initial announcement and that's all - no updates - unless the
+tool is particularly relevant (e.g., a static analyzer, a fuzzer, or a
+generic privsep library) or the update is particularly major (especially
+if it's been years since the previous announcement).
 
-Use CVE-2016-7570.
+To make this policy explicit, and to actually invite the desirable kind
+of content, I've just added this:
 
+"Occasional announcements of Open Source security tools (and relevant
+features of non-security tools) are acceptable, but only for initial
+announcements and major updates (not for minor updates).  Especially
+desirable are news on tools/features aimed to enhance security of other
+Open Source software."
 
-> Cross-site Scripting in http exceptions
+to:
 
-Use CVE-2016-7571.
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
+We also previously had:
 
-> Full config export can be downloaded without administrative permissions
+"Please don't cross-post messages to oss-security and other mailing
+lists at once, especially not to high-volume lists such as LKML and
+netdev, as this tends to result in threads that wander partially or
+fully off-topic (e.g., Linux kernel coding style detail may end up being
+discussed in comments to a patch posted to LKML, but it would be
+off-topic for oss-security).  If you feel that something needs to be
+posted to oss-security and to another list, please make separate
+postings.  You may mention the other posting(s) in your oss-security
+posting, and even link to other lists' archives."
 
-Use CVE-2016-7572.
+We generally don't reject oss-security postings for CC's to other lists,
+in part because the problem (if any) is usually not with the original
+posting's content, but with the follow-ups that the CC's invite from
+other lists, which we have no control of (even if we reject the message,
+it may get through to the CC'ed lists).  However, we ask that senders
+please avoid CC's (except to upstream developers, etc., which is OK).
+While having Bugtraq or/and FD CC'ed is not as bad as having LKML CC'ed
+(due to those lists also having a security focus, unlike LKML), it is
+not welcome.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+(For LKML in particular, it's totally different for the kernel-hardening
+list, also hosted by Openwall.  On that list, CC'ing LKML is the norm.)
 
-iQIcBAEBCAAGBQJX7CVvAAoJEHb/MwWLVhi2BdYQAIBhKIpY/Uq+mCbHDidgRMra
-g9tgf7Jit9kDtGhS93eafrBhFVsiZgNPa7F3kPxsVivbPL2fzyAM5QLIuh9FK9dB
-PrsubVdejpqpEXTcAPvgiB1nxkqLsYqf5uFlUBSYkgDuSYdf5AVt4xZ2u7hh+PEO
-zlkS3Y+8hteaR1k/Oy/LXR8+QeHYD4126AhocIEX7yooyQLEDC6zaU7BvgWVXpY3
-Sv8dDMQ7eUk+UBgEfih33/+spqMrVKQJcKcIDP5yIH+hCaYTEK8atHJIIFQL1R0b
-cjEshwhdDCAFnqn5qtxTdZTQlx5PZGD0aZCiuVzr/5eNE61UGnVfmkQMMu8mDJkQ
-kivhXiH2A7noNPd6S3SWRbNIfP5HXta30BcSWQwZKAPERnNFbFwLs/L1Lzf7MiL1
-D4Cccl+j3Bvval90rrKDYHcbavKnvLraEms5TWWUB/fwTMVUlgGstRd/RmyPRMnm
-TBfsNn62LidMEDQfiJdtPgcoM6lPeEs/FxrClRu/B4FcGRYduxFOSWuLod53rr+8
-TFWEsHF7+PdGiz4WjeSHMh9it8Mw15qlvcnYegsPiNkbCx0cYH4BYaPMx8oEEVNR
-zf4eAfW+2ne4QaL9MiK7x/aMV+n2BkNBloYLRz5pk4exEtVmf8l0Hzh88uUtLebo
-sPe3L9lN2+vXKIalxg0Q
-=/g1W
------END PGP SIGNATURE-----
+Alexander
