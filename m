@@ -1,59 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/02/14
-Message-Id: <20160602214746.6F1FE8BC0C8@smtpvmsrv1.mitre.org>
-Date: Thu,  2 Jun 2016 17:47:46 -0400 (EDT)
-From: cve-assign@...re.org
-To: gustavo.grieco@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: DoS in multiple versions of GraphicsMagick
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/15/1
+Message-ID: <20160215104458.56184e27@redhat.com>
+Date: Mon, 15 Feb 2016 10:44:58 +0100
+From: Stefan Cornelius <scorneli@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE request: foomatic-rip unhtmlify() buffer overflow vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> We recently tested GraphicsMagick with our tool and found two issues that
-> causes DoS:
+A buffer-overflow vulnerability was discovered in the unhtmlify()
+function of foomatic-rip. The function did not properly calculate
+buffer sizes, possibly leading to a heap-based memory corruption. A
+remote, unauthenticated attacker could exploit this flaw to cause
+foomatic-rip to crash or possibly execute arbitrary code.
 
-> * Infinite loop caused by converting a circularly defined svg file.
+This is a rather old bug, which was fixed upstream a long time ago.
 
-Use CVE-2016-5240.
+Fixed in:
+rev 239 of the HEAD branch and rev 225 of the 4.0.x branch
 
->> http://www.openwall.com/lists/oss-security/2016/05/01/6
+References:
 
->> It is worth noting that ImageMagick's built-in SVG renderer has the 
->> same problem with "circular.svg" (specify the input file name like 
->> "msvg:circular.svg").
+Upstream bug:
+https://bugs.linuxfoundation.org/show_bug.cgi?id=515
 
-We feel that this ImageMagick issue is also within the scope of the
-CVE-2016-5240 ID.
+RH bug:
+https://bugzilla.redhat.com/show_bug.cgi?id=1218297
 
-
-> * Arithmetic exception converting a svg file caused by a X%0 operation in
-> magick/render.c:3800
-> 
->     (long) (y-fill_pattern->tile_info.y) % fill_pattern->rows,
-
-Use CVE-2016-5241.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXUKjzAAoJEHb/MwWLVhi2VZ8QAIIB/LpzpI+nMhnzoBeIwbwV
-lTDnRhiXdrSyGaCAa2bZSJLtYG+XmIW79T14CesmHxNXQSqHjE8Q/bcqrQUUW73U
-BewXqemI6q596Z7Oqs83u/pEAG8PqPrCnZsJ2olMm+2DbBRXiHMT3vy0UhRJB31z
-N/ez9h1IU/6VBVsViYG/S4KMEJZDxz14YQBn17JiV7JlvTsZ0xRpm8rmPX1r/FOU
-CBnc9JI52byeF1iiWbMjW01C2izy52oCiC4DVH6NXDTmN8umMqr9yDzznn3ZwHWC
-eKAjuv4i8pEhM7slR+iuzbPfo75AoeG0QSUIMv6c7Jcwo7G35WnSdPXYc9mPcCTs
-yoG7PaKl2Zy3axly2IbEx/cr/U3ht8qf3SlnbiVpcGl9kjY24CiNwZ4Dsv5yXQiZ
-zb/dWF+BijpvGWkQVsHSnFAbKBSVma7MALD08l99DLo0ZliKBBkypLPiGYno2bW0
-MlOwDtAbWcUZI/kK/EhvFHhzEe9lyV+qItDrqzyusbp6PNN/FRThbW0D+S0TQiEr
-sL9pIeu9aYoi5df9CqLYCSKfQgysSdN8L+/I+ggt3jO9MbQbAcXXvdH9Pb2eVgvm
-qXdW0iVfb5TLMbSEYmDOBAsXqKWXHg3VOVp0XbUwVCGtIRVbr3T91CZnL1aocAVp
-Uh6pny8WNsV2FRwJ2f8L
-=UjQN
------END PGP SIGNATURE-----
+Thanks,
+-- 
+Stefan Cornelius / Red Hat Product Security
