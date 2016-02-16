@@ -1,21 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/14/5
-Message-ID: <20160914092135.GA16607@inutil.org>
-Date: Wed, 14 Sep 2016 11:21:35 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/16/1
+Message-ID: <56C27FE3.5030104@treenet.co.nz>
+Date: Tue, 16 Feb 2016 14:48:19 +1300
+From: Amos Jeffries <squid3@...enet.co.nz>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: ADOdb PDO driver: incorrect quoting may allow SQL injection
+Cc: cve-assign@...re.org
+Subject: CVE request: Squid HTTP Caching Proxy 3.5.13, 4.0.4, 4.0.5 denial of service
 Content-Type: text/plain; charset=utf-8
 
-> > I noticed that in your original e-mail to this list, you did not cc
-> > cve-assign.
-> 
-> That's true, but I never did in the past, as this mailing list is (or was?)
-> monitored by mitre, so posting here has been sufficient until now. 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-That said, I really hope that MITRE will continue to use this list for CVE 
-assignments. List members have often followed up with information on CVE
-requests which noone would be able to provide for the web-based approach.
+Hi,
 
-Cheers,
-        Moritz
+A remotely triggerable denial of service has been found in Squid
+proxy. The proxy incorrectly handles server TLS failure which almost
+always results in crashing the entire proxy. Denying service for all
+other clients using it.
+
+Our Advisory will be at:
+<http://www.squid-cache.org/Advisories/SQUID-2016_1.txt>
+"
+ This problem allows any trusted client to perform a denial of
+ service attack on the Squid service regardless of whether TLS or
+ SSL is configured for use in the proxy.
+
+ Misconfigured client or server software may trigger this issue
+ to perform a denial of service unintentionally.
+
+ However, the bug is exploitable only if Squid is built using the
+ --with-openssl option.
+"
+
+Versions 3.5.13, 4.0.4 and 4.0.5 are affected.
+
+Patch for 3.5 is
+<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13981.p
+atch>.
+
+Patch for 4.0 is
+<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13981.p
+atch>.
+Though as a beta release we would prefer people update straight to the
+new package.
+
+
+Amos Jeffries
+Squid Software Foundation
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (MingW32)
+
+iQIcBAEBAgAGBQJWwn/jAAoJEGvSOzfXE+nLJS8QAKK0bSpcXZspbBIwbxSFsI2p
+17XwSshlT9KkN1fp044iQJ53+DoIOggQQjtZ09ed9jiwSnt0rEOuuUG7Ebk9h3eM
+SK59Yxzf44uJzRiRS51ayjfWjI1xeV12HW/fV9jdPEo5Z1aaqKxOXf1ZA9IU3qQr
+rGht9HUapR0D6cB9EM2T65Td6Ea5ZPx8rMVuIVAhCKIWzC6tiK9bfDF/Ul+YJ6SF
+W56gPQpqCI37Aua+ALL79JHjO6DdYZGVnmvzDvwSlhumxMPDPUzx0FHrcHuuRDDc
+ADQ69n7TYaOikxaHCoBH0QZg8uYYezHQcw+S/+vwtLU3mFB8ue0POIScG9uLmH5t
+mAaiHGnrk6D4yrxEO8DH6b0kFUr9JaqxjAdr4dwa6/Vsw4Ba/PuelEZJTGDQizRZ
+hFWQgRsGSX7fP1CnujtCa1k1urNP5aE+weVYlR/jkSYFZIx9PwjwS5ppo2mOq3Si
+aQoRGly8/5tklO1HsQ1wGoz3nB4bi/gQS1usHuQdqwdVnrerApCyQnFinkh/EH5G
+g8EsDPBwMvypKnwu8853qQD+XV7MQ9eh4blR4FIsj9fzllJ+iLQsdd9I5FqPaD7e
+5HJ+NiAFAwvfnHY5SIo6KAbINLEzEHLn3lTiJugBhElf7JawczMaYOqI8QF0+MEd
+s0AMJfVT0EFiDXZ56g7M
+=p6ME
+-----END PGP SIGNATURE-----
