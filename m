@@ -1,52 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/16/1
-Message-Id: <20160616112936.69EE16C0570@smtpvmsrv1.mitre.org>
-Date: Thu, 16 Jun 2016 07:29:36 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/16/5
+Message-Id: <20160216144628.DD5EE34E018@smtpvbsrv1.mitre.org>
+Date: Tue, 16 Feb 2016 09:46:28 -0500 (EST)
 From: cve-assign@...re.org
-To: wuninsu@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, Yeongjin.jang@...ech.edu
-Subject: Re: CVE Request: heap overflow in Python zipimport module
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, zuozhi.fzz@...baba-inc.com
+Subject: Re: CVE request Qemu: usb: multiple eof_timers in ohci leads to null pointer dereference
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://bugs.python.org/issue26171
-
->> Issue #26171: Fix possible integer overflow and heap corruption in
->> zipimporter.get_data().
-
->> Modules/zipimport.c
-
-> In Python zipimport module,
-> if compress != 0, then bytes_size = data_size + 1
-> data_size is not sanitized, so if data_size = -1,
-> then it overflows and becomes 0.
+> Qemu emulator built with the USB OHCI emulation support is vulnerable to a
+> null pointer dereference issue. It could occur when OHCI transitions to a
+> OHCI_USB_OPERATIONAL state, leading to creation of multiple eof timers. A
+> privileged user inside guest could use this flaw to crash the Qemu process on
+> the host, resulting in DoS.
 > 
-> In that case, python allocates small heap, but after that in freed, it
-> overflows heap.
+> https://lists.gnu.org/archive/html/qemu-devel/2016-02/msg03374.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1304794
 
-Use CVE-2016-5636.
+>> When transitioning an OHCI controller to the OHCI_USB_OPERATIONAL
+>> state, it creates an eof timer object in 'ohci_bus_start'.
+>> It does not check if one already exists. This results in memory
+>> leakage and null dereference issue. Add a check to avoid it.
+
+Use CVE-2016-2391.
+
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/usb/hcd-ohci.c but
+that may be an expected place for a later update.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXYox2AAoJEHb/MwWLVhi2x50QAJ+aesIW4gTI+XVrFayusyC0
-G4WiCKzHxZMQy33b8nQKjtGiRAlyzOFNUY7xQ6l5AwtB28gJzYG9b5IxFcY3psPB
-cRAQ0j1lOOFdsLFslkhu9CegJynWIljvWM2S3qlI7PEddstCO9OD9Zb2Jsyidb2g
-Yp/0hdOjEs+WZ8IyDOG0S3BgXcCgaAeviQjixfWrGkxMAA1yzjuUZQXzINXGdiYn
-+p4ysB9o1walp2Yyq1dmk7zx3Sgj3T8Puu9Ir5ol/QzGRSYONwD8pE7M+ueDLQxH
-c+HMpMPxBq3Rm6EbTKWukHplXRtmV5tCbqjIwkRtZIDPG9ktJO92LenXKMdFsemj
-/O+1HoX7osq6q37EouqNhJR8/jPzqRh5t6v4Njit9/lKCz3KwizfW5i3O/6+KT+8
-j1KPj+vr9fvOlRgDSYdSsjKr5d2SlrmQpUGmS1c+ER9XGMU3dPfDI2wqFhM/S8Vs
-RR7XJhr4D/eVEH7daanTbuP8bEXDnASZfTns5x3MVbejgp38MTZBGcgX6fpfoWOa
-JbaR9dFQWAx6u9rxyhuKDEwW1QM659GF+cww41nBErmdbSBsDVnGxfy4jXv9ieKO
-rpW/re2MYama/wkmxN5y+/6b771/RPCRxQbVQBP1rMj5dxQebfDrwHE8frzc/DD2
-6Kv46gZBWtKJQnHPkgON
-=0doi
+iQIcBAEBCAAGBQJWwzU6AAoJEL54rhJi8gl5lwgP/A9qJ0XBRrulTbKeVQ/An+Vd
+rgu6xMleEk4DlX/V7WP28GYsrMcsL1Eqr6PBozcC2oEDQRuBeHCmym1A2uu8UEcP
+FAukVUGglNSa7tv7lCJFSHDfiaEAS3BUfQhkVf5FIF7HbTfV+pqtIJXB4QvzrFkJ
+Y8mrW58rEXWxcTnZANNVhU24i5abvxZACa79wHnhiashR+teQC8JCb4orgMk/1ZQ
+uni2BFgpLD1ZVsVw/ZGwfK+fhHqMPN0fmjGtyGhxvmooIEreolH5wjcPZMe2zUjv
+KtcFJ9eK1HocWSso3NYj4EpbInF9KQzENv/cgtKxRhe0Jz5SYk/i2kFN+aV3l/T0
+4vwShU644Y44c8wR8yAq17DQXDRA2h5BrBRuSfntTMGdnkF1Zg9m6fqMGu+HFZJs
+go6+dSDPmVrW8pfcLlW7vtiDK8+iKLHhPMlR//AfrYt+n3Q2wbAc6U+xtjDN6Cwk
+bb4jIurHR21E/jmvql1fbS4tVwALCZ5cMNk62QMQjBHgWtj6sFRqMPu9DbdE0u4x
+CNKbhbKsUlpuBBTAjw2h3V96DGZmIqn1V5BlFc6WktwLEAICIQ6Wm97S1pA5nK+2
+KT0kPeQDmw4QL9AsuOFWqqJjsT1kxcv45+mD6WVc3GdGE8l3Rb3qpU2ipsG2osui
+oUKlYtWgzaNVBADmTzbr
+=9tAj
 -----END PGP SIGNATURE-----
