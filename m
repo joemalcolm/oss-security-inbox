@@ -1,56 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/26/7
-Message-Id: <20160726192112.03BBD72E01E@smtpvbsrv1.mitre.org>
-Date: Tue, 26 Jul 2016 15:21:12 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE request Qemu: scsi: esp: oob write access while reading ESP command
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/16/9
+Message-ID: <CALq7B37=jC3u8v6hE_n1-2279aVwacRH0cJP9tcYh9Ehc2gdKQ@mail.gmail.com>
+Date: Wed, 17 Feb 2016 01:33:58 +0530
+From: Sandeep Kamble <sandeepk.l337@...il.com>
+To: fulldisclosure@...lists.org
+Cc: bugtraq@...urityfocus.com, listadmin@...urityfocus.com,  oss-security@...ts.openwall.com
+Subject: Umbraco - The open source ASP.NET CMS Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+[image: Vulnerable Umbraco]
+<http://blog.securelayer7.net/wp-content/uploads/2016/02/download.png>
 
-> Quick Emulator(Qemu) built with the ESP/NCR53C9x controller emulation support
-> is vulnerable to an OOB write access issue. It could occur while doing DMA
-> read into ESP command buffer 's->cmdbuf'; It could write past the 's->cmdbuf'
-> area, if it was transferring more than 16 bytes in esp_do_dma().
->
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> resulting in DoS OR potentially leverage it to execute arbitrary code with
-> privileges of the Qemu process on the host.
->
-> Upstream patches:
-> -----------------
->    -> http://git.qemu.org/?p=qemu.git;a=commit;h=926cde5f3e4d2504ed161ed0cb771ac7cad6fd11
->    -> http://git.qemu.org/?p=qemu.git;a=commit;h=cc96677469388bad3d66479379735cf75db069e3
+Recently I got an assignment where I had to work on the Umbraco application
+- a free Open Source Content Management System built on the ASP.NET
+platform and is used by more than 2,25,000 websites. While performing the
+security testing of this application, I discovered serious vulnerabilities
+within this application, allowing to perform SSRF attack, CSRF Bypass
+attack, and persistent XSS. The CVE number yet to be assigned to these
+vulnerabilities. It would be strongly recommended to update the CMS to
+latest version.
 
->> scsi: esp: make cmdbuf big enough for maximum CDB size
->>
->> Increase the command buffer size to 32, which is maximum when
->> 's->do_cmd' is set, and add a check on 'len' to avoid OOB access.
+*SSRF Vulnerability*
 
-Use CVE-2016-6351.
+Let me get start with Server side request forgery (ssrf) attack found
+within the feedproxy.aspx. Those who new to SSRF, please follow this link.
+<https://cwe.mitre.org/data/definitions/918.html>
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+I started off playing with the feedproxy.aspx, it is intersting page in
+Umbraco . the feedproxy.aspx is used to access the external resources using
+the URL GET parameter.
 
-iQIcBAEBCAAGBQJXl7ePAAoJEHb/MwWLVhi2DkcP/0Cve7oqMMMa06UgbrOLGj1S
-eXWNyPD1oL112rkjfYNjTQZwKVb4nmZoKGoibqcnlZLJkzH88Cvpl0tF1YVKPfoG
-TsvXjXfiABZTeFGUfKJfjQEp9YeIuosAMfp2Dj/Cpe5WK0NYF6ZakqG1A9gWzNvv
-dRqlB6eoaqjWKgycTGcRiqcHfIflaGnI8W+syumDQQ6y873ILk9WdLcA9AZnvDUs
-4/EITZCHaEBDNOoK8jP+FcctPNwYSGwfqcDxrT/h6bb7zpd5yT6JQWu0EZPetzVV
-RPFE8/Owf+OIwNJtqbz+lKRV6vi1G0gB824rEupY1ZUWTPRNTl/FNuuhfpVdIklu
-WhKZJKP76RIzC9HChsbpPfzxYbg7GxMr+XWp24X2EptIfZJmvVA4Y3C99+b2wvLb
-y8AMwTZzKLLuOunAQ+4/10n21u+3EZxeJvMgUD5BipoZnEwoPgkKD+2sHtKNnXaH
-imEZ0f789i1mrIx673rXowjoReXRGQUic/yhRAWnsbnz3Jz6xclbmrPN6W2XZScH
-XPV0e1/u3AqZJ7ZQgbospB8Co06mYWJfYfnPFQIniVSf8sf32Rs+wUKsT0+V8NzW
-o4qi7w/kX40Zy1K+DTNfCRa44nH7OFirt0CpQxrKuDo1mhn94nAWdJ5hMx1LfA0G
-bjCLFVM2rEcNXi7FM6Fi
-=Rrsy
------END PGP SIGNATURE-----
+http://local/Umbraco/feedproxy.aspx?url=http://bobsite/index
+
+once you change the URL to the
+http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:80/index, you able
+to access the localhost application of the server.
+
+Using this payload change the port number to perform port scanning of the
+server. It will be helpful to find the more details of the server.
+For example:
+
+http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:25/index
+http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:8080/index
+
+If the port number is closed, you will find the error message on the
+feedproxy.aspx page. Umbraco assigned bug ID U4-7457
+<http://issues.umbraco.org/issue/U4-7457> and fixed the issue.
+
+*CSRF Bypass Vulnerability*
+
+The Umbraco assigned bug ID U4-7459
+<http://issues.umbraco.org/issue/U4-7459>, It was discovered that Umbraco
+enabled sensitive actions, such as editing a user account information was
+vulnerable to CSRF vulnerability.
+The vulnerable code in templates.asmx.cs on the line number 75, it is
+executing save operation without verifying the actual CSRF token.
+In the file SetAngularAntiForgeryTokensAttributes.cs, on line number 25,
+function allowing empty CSRF value, the CSRF vulnerability is triggering.
+
+Find the more details on this fix on the below given link:
+
+https://github.com/umbraco/Umbraco-CMS/commit/18c3345e47663a358a042652e697b988d6a380eb
+
+*Persistent XSS Vulnerability*
+
+It is found that Umbraco is also vulnerable to Persistent XSS in content
+type editor. Umbraco has been assigned bug ID U4-7461.. This vulnerability
+existed in the name field of the media page, the developer data edit page,
+and the form page.[image: XSS Vulnerability in Umbraco]
+<http://blog.securelayer7.net/wp-content/uploads/2016/02/3-1.png>
+
+[image: XSS Vulneraiblity in Umbraco]
+<http://blog.securelayer7.net/wp-content/uploads/2016/02/1.png>
+
+[image: XSS Vulnerability Umbraco]
+<http://blog.securelayer7.net/wp-content/uploads/2016/02/2.png>
+
+To mitigate these vulnerabilities, it is recommended to update Umbraco to
+the version V7.4.0.
+
