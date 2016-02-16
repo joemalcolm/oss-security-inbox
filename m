@@ -1,34 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/22/4
-Message-ID: <1317626822.2210899.1474545527129.JavaMail.zimbra@redhat.com>
-Date: Thu, 22 Sep 2016 07:58:47 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: kernel: ACPI table override is allowed when securelevel is enabled
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/16/2
+Message-ID: <alpine.LFD.2.20.1602161702480.9762@wniryva>
+Date: Tue, 16 Feb 2016 17:06:13 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Zuozhi Fzz <zuozhi.fzz@...baba-inc.com>
+Subject: CVE request Qemu: usb: multiple eof_timers in ohci leads to null pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+   Hello,
 
-A vulnerability was found in the RHEL7 kernel. When RHEL7 is booted with UEFI Secure Boot enabled,
-securelevel is set. The kernel uses the state of securelevel to prevent userspace from inserting
-untrusted privileged code at runtime.
+Qemu emulator built with the USB OHCI emulation support is vulnerable to a 
+null pointer dereference issue. It could occur when OHCI transitions to a 
+OHCI_USB_OPERATIONAL state, leading to creation of multiple eof timers. A 
+privileged user inside guest could use this flaw to crash the Qemu process on 
+the host, resulting in DoS.
 
-The ACPI tables provided by firmware can be overwritten using the initrd. From the kernel documentation:
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-02/msg03374.html
 
-  If the ACPI_INITRD_TABLE_OVERRIDE compile option is true, it is possible to
-  override nearly any ACPI table provided by the BIOS with an instrumented,
-  modified one.
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1304794
 
-RHEL7 has CONFIG_ACPI_INITRD_TABLE_OVERRIDE kernel config option enabled, and will load ACPI tables
-appended to the initrd, even if booted with UEFI Secure Boot enabled and securelevel set.
+This issue was discovered by Zuozhi Fzz of Alibaba Inc.
 
-Upstream patch: https://github.com/mjg59/linux/commit/a4a5ed2835e8ea042868b7401dced3f517cafa76
-
-The securelevel patchset was not accepted to an upstream kernel, see http://www.zdnet.com/article/matthew-garrett-is-not-forking-linux/
-and https://linux.slashdot.org/story/15/10/06/1553233/matthew-garrett-forks-the-linux-kernel ,it is
-maintained now by MJG: https://github.com/mjg59/linux .
-
-CVE-2016-3699 was assigned to this security flaw internally by the Red Hat.
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
