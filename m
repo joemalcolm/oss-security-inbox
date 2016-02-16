@@ -1,22 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/18
-Message-ID: <4390861.xVIGMPyf1X@blackgate>
-Date: Wed, 09 Nov 2016 18:05:16 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: Henri Salo <henri@...v.fi>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/16/10
+Message-Id: <20160216222342.CCC126FC01D@smtpvmsrv1.mitre.org>
+Date: Tue, 16 Feb 2016 17:23:42 -0500 (EST)
+From: cve-assign@...re.org
+To: sandeepk.l337@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Umbraco - The open source ASP.NET CMS Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 09 November 2016 19:02:59 Henri 
-Salo wrote:
-> On Wed, Nov 09, 2016 at 03:48:27PM +0100, 
-Agostino Sarubbo wrote:
-> > 2016-08-13: bug discovered
-> > 2016-10-20: bug reported to upstream
-> > 2016-11-07: blog post about the issue
-> 
-> Did upstream respond anything related to these 
-cases?
-No.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+> http://issues.umbraco.org/issue/U4-7457
+> SSRF
+
+> the feedproxy.aspx is used to access the external resources using
+> the URL GET parameter.
+
+> http://local/Umbraco/feedproxy.aspx?url=http://bobsite/index
+> 
+> once you change the URL to the
+> http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:80/index, you able
+> to access the localhost application of the server.
+> 
+> Using this payload change the port number to perform port scanning of the
+> server. It will be helpful to find the more details of the server.
+> For example:
+> 
+> http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:25/index
+> http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:8080/index
+> 
+> If the port number is closed, you will find the error message on the
+> feedproxy.aspx page.
+
+Use CVE-2015-8813.
+
+
+> http://issues.umbraco.org/issue/U4-7459
+> https://github.com/umbraco/Umbraco-CMS/commit/18c3345e47663a358a042652e697b988d6a380eb
+> 
+> enabled sensitive actions, such as editing a user account information was
+> vulnerable to CSRF vulnerability.
+> The vulnerable code in templates.asmx.cs on the line number 75, it is
+> executing save operation without verifying the actual CSRF token.
+> In the file SetAngularAntiForgeryTokensAttributes.cs, on line number 25,
+> function allowing empty CSRF value, the CSRF vulnerability is triggering.
+
+Use CVE-2015-8814.
+
+
+> http://issues.umbraco.org/issue/U4-7461
+> 
+> It is found that Umbraco is also vulnerable to Persistent XSS in content
+> type editor.
+> 
+> name field of the media page, the developer data edit page,
+> and the form page.
+
+Use CVE-2015-8815. The MITRE CVE team did not separately assess
+whether each of these pages is exploitable in a way that crosses a
+privilege boundary. The vendor assigned "Category Security" to
+U4-7461.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWw6BZAAoJEL54rhJi8gl5OwkQAJOUaiKrak34v5F9QnGj9We7
+S/Wx5m2wioCLGOFFkHfhQf2YRJ65rUiTVyhlkmDaVy2RLLfeYrKPUob/nvC3y2Ii
+laEftMrC5B20O5awUwvVX8eMg2fmei6ZHW1RU9wozbHsUw/Hnr3JvzAD2PFuAE42
+jAOsdzr49dnimQNSpGEctYCt/PIq0oz5DDpIDKQQZI3LPJMI6oCThVY8Ve4I1fUC
+uN0EGff/nMGgf67xQlM3CnqIRY46yI8R4Rsjbt83l5GTk1vCiBIjipJve3R8nXju
+1Lrlw4C2w1tDj/6JOfKyFgQfoUZeQ8eAcGoEf3oYe0aeDbqyuw9unB9qyb6suM9F
+E2gnlmNRjZmhvZponsnl5wm0DDaDz7ZTq5TNaduNHVk2hZE7j563S+WJQoR6SI/X
++dmUmr1pwChcl5cSwVo8+uGHKbRtcQw8hg6cc2pi70JQVa0Ok3DYEeWKDbVfEScg
+t5BN2r5KxYowWhkk3MWbQ/KnCMrda+40R5b2ukyXTE+WNJ4/dwj5VcciCMe93N8A
+PMr2FkgbleY1IPA2txB8Bl1p1evmIZHn6F9xLppi8jsTKULN8dcngqDvYS1MmDfv
+hOLshZrWyqmkwWDb6iCVGugXauHzy4eZ39F1Mrn4FL5S1efNYYKPZsJjGv0kObq5
+X9y0OPq94oGSHgY7aScR
+=7Nnm
+-----END PGP SIGNATURE-----
