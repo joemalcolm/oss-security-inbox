@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1677" "Wednesday" "2" "November" "2016" "16:52:09" "-0600" "Seth Arnold" "seth.arnold@canonical.com" "<20161102225209.GG7908@hunt>" "44" "Re: [oss-security] Stack guard canary massaging" nil nil nil "11" "2016110222:52:09" "[oss-security] Stack guard canary massaging" (number mark "U       seth.arnold@ Nov  2   44/1677  " thread-indent "\"Re: [oss-security] Stack guard canary massaging\"\n") "<14b76703-8185-dadb-7605-10496331452c@redhat.com>" ("<14b76703-8185-dadb-7605-10496331452c@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1945" "Tuesday" "16" "February" "2016" "14:48:19" "+1300" "Amos Jeffries" "squid3@treenet.co.nz" "<56C27FE3.5030104@treenet.co.nz>" "56" "[oss-security] CVE request: Squid HTTP Caching Proxy 3.5.13, 4.0.4, 4.0.5 denial of service" nil nil nil "2" "2016021601:48:19" "[oss-security] CVE request: Squid HTTP Caching Proxy 3.5.13, 4.0.4, 4.0.5 denial of service" (number mark "U       squid3@treen Feb 16   56/1945  " thread-indent "\"[oss-security] CVE request: Squid HTTP Caching Proxy 3.5.13, 4.0.4, 4.0.5 denial of service\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20133 invoked by uid 550); 2 Nov 2016 22:52:25 -0000
+Received: (qmail 15440 invoked by uid 550); 16 Feb 2016 01:48:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,62 +12,74 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20115 invoked from network); 2 Nov 2016 22:52:24 -0000
-Date: Wed, 2 Nov 2016 16:52:09 -0600
-From: Seth Arnold <seth.arnold@canonical.com>
+Received: (qmail 15422 invoked from network); 16 Feb 2016 01:48:37 -0000
 To: oss-security@lists.openwall.com
-Message-ID: <20161102225209.GG7908@hunt>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <14b76703-8185-dadb-7605-10496331452c@redhat.com>
+Cc: cve-assign@mitre.org
+From: Amos Jeffries <squid3@treenet.co.nz>
+X-Enigmail-Draft-Status: N1110
+Message-ID: <56C27FE3.5030104@treenet.co.nz>
+Date: Tue, 16 Feb 2016 14:48:19 +1300
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="kjpMrWxdCilgNbo1"
-Content-Disposition: inline
-In-Reply-To: <14b76703-8185-dadb-7605-10496331452c@redhat.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: Re: [oss-security] Stack guard canary massaging
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE request: Squid HTTP Caching Proxy 3.5.13, 4.0.4, 4.0.5 denial of
+ service
 
---kjpMrWxdCilgNbo1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-[keeping only oss-security]
+Hi,
 
-On Mon, Oct 31, 2016 at 11:48:45AM +0100, Florian Weimer wrote:
-> This is an elaborate way of setting ret.bytes[0] =3D '\0'.
->=20
-> The intent (determined from an old commit message) is to make it harder to
-> obtain the canary value through a read buffer overflow of a NUL-terminated
-> string: The read overflow will stop at the NUL byte and not include the
-> random canary value, reducing the risk of inappropriate disclosure.
+A remotely triggerable denial of service has been found in Squid
+proxy. The proxy incorrectly handles server TLS failure which almost
+always results in crashing the entire proxy. Denying service for all
+other clients using it.
 
-StackGuard used a fixed canary value: CR LF 0x00 0xFF. This was based on
-the observation that most unsafe stack buffer manipulations were from
-string operations, and most string-handling functions would trip up on at
-least one of these values, making it difficult to write the canary with
-the functions that were used.
+Our Advisory will be at:
+<http://www.squid-cache.org/Advisories/SQUID-2016_1.txt>
+"
+ This problem allows any trusted client to perform a denial of
+ service attack on the Squid service regardless of whether TLS or
+ SSL is configured for use in the proxy.
 
-ftp://gcc.gnu.org/pub/gcc/summit/2003/Stackguard.pdf
+ Misconfigured client or server software may trigger this issue
+ to perform a denial of service unintentionally.
 
-I suspect the leading 0x00 here is for much the same reason, to trip up
-string writing operations more than string reading.
+ However, the bug is exploitable only if Squid is built using the
+ --with-openssl option.
+"
 
-Thanks
+Versions 3.5.13, 4.0.4 and 4.0.5 are affected.
 
---kjpMrWxdCilgNbo1
-Content-Type: application/pgp-signature; name="signature.asc"
+Patch for 3.5 is
+<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13981.p
+atch>.
 
+Patch for 4.0 is
+<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13981.p
+atch>.
+Though as a beta release we would prefer people update straight to the
+new package.
+
+
+Amos Jeffries
+Squid Software Foundation
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v2.0.22 (MingW32)
 
-iQEcBAEBAgAGBQJYGm4ZAAoJEPMhclmdjS6XkBsH/i9N02+WNWzIRiAqwtNXjoCk
-SwRvdDoTrxyvmfEaeq6luKMKLArWlo5A+N8u9brRACdcT4GvASHS/CgwsAnKklf+
-eza5k0XZPg8qfKtoZWCRKHwRWtx6/aAUQloTOoovDEVY5Ul+wo4fFQyc3Mkcg6D8
-i9djQD1M+fgoU/iQngpR0Rt2Dfg1SpdaagMJ2e01lJcCQ/oF04tlZQyU3FHjjfNY
-kYsnFCyt7v4Bkdd7F/wBRV6DCEEPeqYw0FhAey3eeCvCSn2ToXzauIz3HuHNoZ/M
-kG1Nxob1azCKqEDYLxR0J2DNCP1kZbhLgu5BtVfFiBRjaGDe+MCsKQKV4wpnsKY=
-=gHkJ
+iQIcBAEBAgAGBQJWwn/jAAoJEGvSOzfXE+nLJS8QAKK0bSpcXZspbBIwbxSFsI2p
+17XwSshlT9KkN1fp044iQJ53+DoIOggQQjtZ09ed9jiwSnt0rEOuuUG7Ebk9h3eM
+SK59Yxzf44uJzRiRS51ayjfWjI1xeV12HW/fV9jdPEo5Z1aaqKxOXf1ZA9IU3qQr
+rGht9HUapR0D6cB9EM2T65Td6Ea5ZPx8rMVuIVAhCKIWzC6tiK9bfDF/Ul+YJ6SF
+W56gPQpqCI37Aua+ALL79JHjO6DdYZGVnmvzDvwSlhumxMPDPUzx0FHrcHuuRDDc
+ADQ69n7TYaOikxaHCoBH0QZg8uYYezHQcw+S/+vwtLU3mFB8ue0POIScG9uLmH5t
+mAaiHGnrk6D4yrxEO8DH6b0kFUr9JaqxjAdr4dwa6/Vsw4Ba/PuelEZJTGDQizRZ
+hFWQgRsGSX7fP1CnujtCa1k1urNP5aE+weVYlR/jkSYFZIx9PwjwS5ppo2mOq3Si
+aQoRGly8/5tklO1HsQ1wGoz3nB4bi/gQS1usHuQdqwdVnrerApCyQnFinkh/EH5G
+g8EsDPBwMvypKnwu8853qQD+XV7MQ9eh4blR4FIsj9fzllJ+iLQsdd9I5FqPaD7e
+5HJ+NiAFAwvfnHY5SIo6KAbINLEzEHLn3lTiJugBhElf7JawczMaYOqI8QF0+MEd
+s0AMJfVT0EFiDXZ56g7M
+=p6ME
 -----END PGP SIGNATURE-----
-
---kjpMrWxdCilgNbo1--
