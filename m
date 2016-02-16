@@ -1,58 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/3
-Message-ID: <alpine.GSO.2.20.1605032020420.23612@freddy.simplesystems.org>
-Date: Tue, 3 May 2016 20:42:30 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security@...ts.openwall.com
-Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/16/8
+Message-Id: <20160216181617.3A8856C0774@smtpvmsrv1.mitre.org>
+Date: Tue, 16 Feb 2016 13:16:17 -0500 (EST)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, luodalongde@...il.com
+Subject: Re: CVE request Qemu: usb: null pointer dereference in remote NDIS control message handling
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 3 May 2016, Seth Arnold wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> On Wed, May 04, 2016 at 12:05:16AM +0000, Brandon Dees wrote:
->> is it appropriate to ask if the same issues are present in GraphicsMagick
->> as well?
->
-> I haven't investigated deeply but it seems very plausible to me:
-> Here's the delegates.xml work-alike:
-> https://sourceforge.net/p/graphicsmagick/code/ci/default/tree/config/delegates.mgk.in
->
-> This appears to be executed via:
-> https://sourceforge.net/p/graphicsmagick/code/ci/default/tree/magick/delegate.c
-> which tries to escape arguments using UnixShellTextEscape(). This function
-> appears to replace \`"$ chars with backslash-escaped versions. I'm not
-> sure this is a safe mechanism either.
+> Qemu emulator built with the USB Net device emulation support is vulnerable to
+> a NULL pointer dereference issue. It could occur while processing remote NDIS
+> control message packets, when the USB configuration descriptor object is null.
+> 
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> instance resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-02/msg02553.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1302299
 
-Please provide me with a working exploit.
+>> When processing remote NDIS control message packets, the USB Net
+>> device emulator checks to see if the USB configuration descriptor
+>> object is of RNDIS type(2). But it does not check if it is null,
+>> which leads to a null dereference error. Add check to avoid it.
 
-Be aware that this quoting method is only used for the few 
-delegates.mgk rules which require shell-like syntax to work. 
-Otherwise the external program is run using execvp() without a shell.
+Use CVE-2016-2392.
 
-I am aware that the handling for Microsoft Windows is not quite secure 
-and in fact Windows concatentates all the spawnvp() vector arguments 
-into one long string and each program parses command line arguments 
-using its own algorithm without a secure quoting mechanism so 
-command-line programs can never possibly be secured.
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/usb/dev-network.c but
+that may be an expected place for a later update.
 
-In order to achieve the best security with GraphicsMagick (with some 
-possible loss of function due to missing file formats), please define 
-this environment variable:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-   MAGICK_CODER_STABILITY=PRIMARY
-
-Use 'gm convert -list formats' and check the second column of output 
-to see what formats are classified as Primary, Stable, and Unstable. 
-Primary formats are considered common and trustworthy.
-
-There is also a way that C/C++ programs using the libraries can bless 
-the files which will be accessed before the access occurs (not yet 
-controlled by a configuration file).
-
-Thanks,
-
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+iQIcBAEBCAAGBQJWw2azAAoJEL54rhJi8gl5P9kP/Rs4ZAE8ZXhvH4ToA3otZhpg
+wAh8ottOV8upMXJbpvsAorv3GNZ8mhV54fda4PUACFFO7sBt6vC8TU+9jy8r9Ey2
+4anpNmRyEh7Dhb5DayV5SAIst5scurFfjM6xRiLq2TYkYTDsgV/hwG3a5h1gQ9yn
+VyrmPpSkQi5RFU74HWn0ZAfFa+/ohsClTEy6pWORNtznzd2Ie5Pzwunjda3Wofxc
+cGr+xfh+pFUTIFhyWL1E6N1aoRaj7eYjB/b+23qKo6uAjgYYg9KB4WkbblUSMvOM
+J5Tin3cbQI8E5EAe5N0oR5KKDYrmsSL6LxUnl+kctnxg19M35jSAWm6Mb9z7X/wn
+b1q6PZ1/P1PegIheyaI8SwmJGJpB7s1uaanPPQEWuF9IdmDUoacBKcuSHZgHfBaJ
+R4EQ7gpomp7+pEva4HxRuRPHFyrY8Cc9fZaPig8Oz3SwlhkcJEcREqgxzWEUE/K4
+6gMdIPWQ3x/trX+Q+FbG0sdcPJ3kEXVVqdxcNAFk8A3oiWYptNAWVUWzKZQlk4tY
+SbaMcp3T6ZBdv5d3v2jI6Au3ReZrJsfpslcYZ+57QXvaxGdkfa/eIe6irPWHUt7c
+F2qVi29w7MN9KLzs4VYsu11Yu4dWFlfui4/BGJF0uFGn3V++nXnmA/5fPzmKcn2G
+FJMS80TAffgwEurUNih2
+=XXSy
+-----END PGP SIGNATURE-----
