@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2068" "Thursday" "10" "November" "2016" "01:03:26" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<17fb8fbcd0f649ae912cfbb78670eb5e@imshyb02.MITRE.ORG>" "49" "[oss-security] Re: jasper: use after free in jas_realloc (jas_malloc.c)" nil nil nil "11" "2016111006:03:26" "[oss-security] Re: jasper: use after free in jas_realloc (jas_malloc.c)" (number mark "U       cve-assign@m Nov 10   49/2068  " thread-indent "\"[oss-security] Re: jasper: use after free in jas_realloc (jas_malloc.c)\"\n") "<1812600.W4HMrhroht@blackgate>" ("<1812600.W4HMrhroht@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2830" "Tuesday" "16" "February" "2016" "17:23:42" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160216222342.CCC126FC01D@smtpvmsrv1.mitre.org>" "76" "[oss-security] Re: Umbraco - The open source ASP.NET CMS Multiple Vulnerabilities" "^Cc:" nil nil "2" "2016021622:23:42" "[oss-security] Re: Umbraco - The open source ASP.NET CMS Multiple Vulnerabilities" (number mark "        cve-assign@m Feb 16   76/2830  " thread-indent "\"[oss-security] Re: Umbraco - The open source ASP.NET CMS Multiple Vulnerabilities\"\n") "<CALq7B37=jC3u8v6hE_n1-2279aVwacRH0cJP9tcYh9Ehc2gdKQ@mail.gmail.com>" ("<CALq7B37=jC3u8v6hE_n1-2279aVwacRH0cJP9tcYh9Ehc2gdKQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5898 invoked by uid 550); 10 Nov 2016 06:03:55 -0000
+Received: (qmail 29913 invoked by uid 550); 16 Feb 2016 22:23:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,89 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 29892 invoked from network); 16 Feb 2016 22:23:54 -0000
+In-Reply-To: <CALq7B37=jC3u8v6hE_n1-2279aVwacRH0cJP9tcYh9Ehc2gdKQ@mail.gmail.com>
+Message-Id: <20160216222342.CCC126FC01D@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue, 16 Feb 2016 17:23:42 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5828 invoked from network); 10 Nov 2016 06:03:46 -0000
-From: <cve-assign@mitre.org>
-To: <ago@gentoo.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <1812600.W4HMrhroht@blackgate>
-Message-ID: <17fb8fbcd0f649ae912cfbb78670eb5e@imshyb02.MITRE.ORG>
-Date: Thu, 10 Nov 2016 01:03:26 -0500
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: jasper: use after free in jas_realloc (jas_malloc.c)
+Subject: [oss-security] Re: Umbraco - The open source ASP.NET CMS Multiple Vulnerabilities
+To: sandeepk.l337@gmail.com
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://blogs.gentoo.org/ago/2016/11/07/jasper-use-after-free-in-jas_realloc-jas_malloc-c
-> 
-> A crafted image, maybe posted in the past as testcase for another bug, causes
-> in the 1.900.18 version a use-after-free.
-> 
-> AddressSanitizer: heap-use-after-free
-> READ of size 8
-> 
->     #0 0x7fce4229d29c in jas_realloc ... jasper-1.900.18/src/libjasper/base/jas_malloc.c:182:21
->     #1 0x7fce422a5e38 in mem_resize ... jasper-1.900.18/src/libjasper/base/jas_stream.c:1001:14
+> http://issues.umbraco.org/issue/U4-7457
+> SSRF
 
-> https://github.com/mdadams/jasper/commit/634ce8e8a5accc0fa05dd2c20d42b4749d4b2735
+> the feedproxy.aspx is used to access the external resources using
+> the URL GET parameter.
 
->> There were a number of potential problems due to the possibility
->> of integer overflow.
->> Changed some integral types to the larger types size_t or ssize_t.
->> For example, the function mem_resize now takes the buffer size parameter
->> as a size_t.
->> Added a new function jas_stream_memopen2, which takes a
->> buffer size specified as a size_t instead of an int.
+> http://local/Umbraco/feedproxy.aspx?url=http://bobsite/index
+> 
+> once you change the URL to the
+> http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:80/index, you able
+> to access the localhost application of the server.
+> 
+> Using this payload change the port number to perform port scanning of the
+> server. It will be helpful to find the more details of the server.
+> For example:
+> 
+> http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:25/index
+> http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:8080/index
+> 
+> If the port number is closed, you will find the error message on the
+> feedproxy.aspx page.
 
-Use CVE-2016-9262 for everything fixed by
-634ce8e8a5accc0fa05dd2c20d42b4749d4b2735.
+Use CVE-2015-8813.
+
+
+> http://issues.umbraco.org/issue/U4-7459
+> https://github.com/umbraco/Umbraco-CMS/commit/18c3345e47663a358a042652e697b988d6a380eb
+> 
+> enabled sensitive actions, such as editing a user account information was
+> vulnerable to CSRF vulnerability.
+> The vulnerable code in templates.asmx.cs on the line number 75, it is
+> executing save operation without verifying the actual CSRF token.
+> In the file SetAngularAntiForgeryTokensAttributes.cs, on line number 25,
+> function allowing empty CSRF value, the CSRF vulnerability is triggering.
+
+Use CVE-2015-8814.
+
+
+> http://issues.umbraco.org/issue/U4-7461
+> 
+> It is found that Umbraco is also vulnerable to Persistent XSS in content
+> type editor.
+> 
+> name field of the media page, the developer data edit page,
+> and the form page.
+
+Use CVE-2015-8815. The MITRE CVE team did not separately assess
+whether each of these pages is exploitable in a way that crosses a
+privilege boundary. The vendor assigned "Category Security" to
+U4-7461.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYJA0ZAAoJEHb/MwWLVhi2Cx0P/jXkv48yuOWoFzruQ3Lnx4BY
-20iq9b2hapEg0DnX7tQteIxmW82S5ZIvxbfATQAB+4st71nu9JK2pI0K7Jaskbke
-CHz4JmoMJM8FYEAEvLvAivzG9rlOHSVSt6Cu3cVAqKpwhZrb3WaRhivCXjXVXqVY
-SQoXbma5pxLN8EfpjNlHKEGxwgwtBE8Tnx2+d0dO5V889qOMi7Yo4KJ52Jdpm4we
-l6o535FKnEocZMOH6ewaAuMUiRrY79thYAhfxfRx3eLPZTNeIRp7WwSDhnMCtnyt
-C18ikqc+psPMkXlzl1kRPoLTXi+E+D9Eb7QM/XnMJL4262dcUOtlFUXxrhgKbbjU
-oNO+91i0zWV3jeUUqkV9DFRs1C8KoXNY+1Fz7bmC93/D7xWlXDr+L7PEiorwmEx0
-ExnxZNtO/CpjsgddGg5VKYwi9RAy8S+08HDgStSk/GSnUC+dRTv4jBmNm+59bbDH
-cYHEPcCY6mp0g1iIjceuz9NY9cblRIK55VvfGQ4toY32kUAwAcxvqnpEm1NJkOPC
-Rhzpu8viodwUUSKGa9KzYsKCJW7Ux+aiquDK0sD5tU5/WSgHzIbz6LwspGo1pyhv
-k5ldUcjA6GWrdTBoqDkFEpEMFR7vEFth0rfnke1N7r7XtyrUbIdFfskox67MFh2U
-xQEuzd1WU+k/MSvv7fh4
-=7lP7
+iQIcBAEBCAAGBQJWw6BZAAoJEL54rhJi8gl5OwkQAJOUaiKrak34v5F9QnGj9We7
+S/Wx5m2wioCLGOFFkHfhQf2YRJ65rUiTVyhlkmDaVy2RLLfeYrKPUob/nvC3y2Ii
+laEftMrC5B20O5awUwvVX8eMg2fmei6ZHW1RU9wozbHsUw/Hnr3JvzAD2PFuAE42
+jAOsdzr49dnimQNSpGEctYCt/PIq0oz5DDpIDKQQZI3LPJMI6oCThVY8Ve4I1fUC
+uN0EGff/nMGgf67xQlM3CnqIRY46yI8R4Rsjbt83l5GTk1vCiBIjipJve3R8nXju
+1Lrlw4C2w1tDj/6JOfKyFgQfoUZeQ8eAcGoEf3oYe0aeDbqyuw9unB9qyb6suM9F
+E2gnlmNRjZmhvZponsnl5wm0DDaDz7ZTq5TNaduNHVk2hZE7j563S+WJQoR6SI/X
++dmUmr1pwChcl5cSwVo8+uGHKbRtcQw8hg6cc2pi70JQVa0Ok3DYEeWKDbVfEScg
+t5BN2r5KxYowWhkk3MWbQ/KnCMrda+40R5b2ukyXTE+WNJ4/dwj5VcciCMe93N8A
+PMr2FkgbleY1IPA2txB8Bl1p1evmIZHn6F9xLppi8jsTKULN8dcngqDvYS1MmDfv
+hOLshZrWyqmkwWDb6iCVGugXauHzy4eZ39F1Mrn4FL5S1efNYYKPZsJjGv0kObq5
+X9y0OPq94oGSHgY7aScR
+=7Nnm
 -----END PGP SIGNATURE-----
