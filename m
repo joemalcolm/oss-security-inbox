@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["722" "Wednesday" "24" "July" "2019" "09:26:18" "+0200" "=?UTF-8?B?U3RpZyBSb2hkZSBEw7hzc2luZw==?=" "srdo@apache.org" "<CAG09ER2cYOo+cN+BVotmxugxaMq_ogswvuQ+Z+8W2LahK-DyPg@mail.gmail.com>" "19" "[oss-security] [CVE-2019-0202] Apache Storm Logviewer file system access vulnerability" nil nil nil "7" "2019072407:26:18" "[oss-security] [CVE-2019-0202] Apache Storm Logviewer file system access vulnerability" (number mark "U       srdo@apache. Jul 24   19/722   " thread-indent "\"[oss-security] [CVE-2019-0202] Apache Storm Logviewer file system access vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-0202] Apache Storm Logviewer file system access vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1944" "Tuesday" "16" "February" "2016" "09:46:28" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160216144628.DD5EE34E018@smtpvbsrv1.mitre.org>" "45" "[oss-security] Re: CVE request Qemu: usb: multiple eof_timers in ohci leads to null pointer dereference" nil nil nil "2" "2016021614:46:28" "[oss-security] Re: CVE request Qemu: usb: multiple eof_timers in ohci leads to null pointer dereference" (number mark "U       cve-assign@m Feb 16   45/1944  " thread-indent "\"[oss-security] Re: CVE request Qemu: usb: multiple eof_timers in ohci leads to null pointer dereference\"\n") "<alpine.LFD.2.20.1602161702480.9762@wniryva>" ("<alpine.LFD.2.20.1602161702480.9762@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14136 invoked by uid 550); 24 Jul 2019 08:06:21 -0000
+Received: (qmail 3581 invoked by uid 550); 16 Feb 2016 14:46:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,37 +12,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28290 invoked from network); 24 Jul 2019 07:26:50 -0000
-X-Gm-Message-State: APjAAAUFdhJa7YCQ6RC6VR5EyCyQ/cSXTXsfkSqci4HfK8U5/8MICEcg
-	ur0bKFiJ5QxcM+uVe86OeEWbOougyN/QhJaF1ZU=
-X-Google-Smtp-Source: APXvYqzPsBeQmOIhaKJeWrIqqlRohzfGyf97mZ9qYj//MkhSdFSK/+V7z2LFWiQQHU1dyjTbLU3vA84r7Gyr2vc1MxU=
-X-Received: by 2002:a9d:7a82:: with SMTP id l2mr60141475otn.120.1563953189274;
- Wed, 24 Jul 2019 00:26:29 -0700 (PDT)
-MIME-Version: 1.0
-From: =?UTF-8?Q?Stig_Rohde_D=C3=B8ssing?= <srdo@apache.org>
-Date: Wed, 24 Jul 2019 09:26:18 +0200
-X-Gmail-Original-Message-ID: <CAG09ER2cYOo+cN+BVotmxugxaMq_ogswvuQ+Z+8W2LahK-DyPg@mail.gmail.com>
-Message-ID: <CAG09ER2cYOo+cN+BVotmxugxaMq_ogswvuQ+Z+8W2LahK-DyPg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000004ac6ff058e683ab6"
-Subject: [oss-security] [CVE-2019-0202] Apache Storm Logviewer file system access vulnerability
+Received: (qmail 3560 invoked from network); 16 Feb 2016 14:46:41 -0000
+From: cve-assign@mitre.org
+To: ppandit@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, zuozhi.fzz@alibaba-inc.com
+In-Reply-To: <alpine.LFD.2.20.1602161702480.9762@wniryva>
+Message-Id: <20160216144628.DD5EE34E018@smtpvbsrv1.mitre.org>
+Date: Tue, 16 Feb 2016 09:46:28 -0500 (EST)
+Subject: [oss-security] Re: CVE request Qemu: usb: multiple eof_timers in ohci leads to null pointer dereference
 
---0000000000004ac6ff058e683ab6
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-[CVEID]:CVE-2019-0202[PRODUCT]:Apache Storm[VERSION]:Apache Storm
-0.9.1-incubating to 1.2.2[PROBLEMTYPE]:CWE-200: Information
-Exposure[DESCRIPTION]:The Apache Storm Logviewer daemon exposes
-HTTP-accessible endpoints to read/search log files on hosts running
-Storm.
-              In Apache Storm versions 0.9.1-incubating to 1.2.2, it
-is possible to read files off the
-              host's file system that were not intended to be
-accessible via these endpoints.
+> Qemu emulator built with the USB OHCI emulation support is vulnerable to a
+> null pointer dereference issue. It could occur when OHCI transitions to a
+> OHCI_USB_OPERATIONAL state, leading to creation of multiple eof timers. A
+> privileged user inside guest could use this flaw to crash the Qemu process on
+> the host, resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-02/msg03374.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1304794
 
-Mitigation: Upgrade to Apache Storm 1.2.3 or later.
+>> When transitioning an OHCI controller to the OHCI_USB_OPERATIONAL
+>> state, it creates an eof timer object in 'ohci_bus_start'.
+>> It does not check if one already exists. This results in memory
+>> leakage and null dereference issue. Add a check to avoid it.
 
-Credit: Stig Rohde D=C3=B8ssing for discovery and fix
+Use CVE-2016-2391.
 
---0000000000004ac6ff058e683ab6--
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/usb/hcd-ohci.c but
+that may be an expected place for a later update.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWwzU6AAoJEL54rhJi8gl5lwgP/A9qJ0XBRrulTbKeVQ/An+Vd
+rgu6xMleEk4DlX/V7WP28GYsrMcsL1Eqr6PBozcC2oEDQRuBeHCmym1A2uu8UEcP
+FAukVUGglNSa7tv7lCJFSHDfiaEAS3BUfQhkVf5FIF7HbTfV+pqtIJXB4QvzrFkJ
+Y8mrW58rEXWxcTnZANNVhU24i5abvxZACa79wHnhiashR+teQC8JCb4orgMk/1ZQ
+uni2BFgpLD1ZVsVw/ZGwfK+fhHqMPN0fmjGtyGhxvmooIEreolH5wjcPZMe2zUjv
+KtcFJ9eK1HocWSso3NYj4EpbInF9KQzENv/cgtKxRhe0Jz5SYk/i2kFN+aV3l/T0
+4vwShU644Y44c8wR8yAq17DQXDRA2h5BrBRuSfntTMGdnkF1Zg9m6fqMGu+HFZJs
+go6+dSDPmVrW8pfcLlW7vtiDK8+iKLHhPMlR//AfrYt+n3Q2wbAc6U+xtjDN6Cwk
+bb4jIurHR21E/jmvql1fbS4tVwALCZ5cMNk62QMQjBHgWtj6sFRqMPu9DbdE0u4x
+CNKbhbKsUlpuBBTAjw2h3V96DGZmIqn1V5BlFc6WktwLEAICIQ6Wm97S1pA5nK+2
+KT0kPeQDmw4QL9AsuOFWqqJjsT1kxcv45+mD6WVc3GdGE8l3Rb3qpU2ipsG2osui
+oUKlYtWgzaNVBADmTzbr
+=9tAj
+-----END PGP SIGNATURE-----
