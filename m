@@ -1,46 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/15/4
-Message-Id: <20160915054101.4E3A28BC3EB@smtpvmsrv1.mitre.org>
-Date: Thu, 15 Sep 2016 01:41:01 -0400 (EDT)
-From: cve-assign@...re.org
-To: chenruiqi@....cn
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: XSS vulns in b2evolution v6.7.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/16/7
+Message-ID: <alpine.LFD.2.20.1602162208400.13313@wniryva>
+Date: Tue, 16 Feb 2016 22:14:14 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Qinghao Tang <luodalongde@...il.com>
+Subject: CVE request Qemu: usb: null pointer dereference in remote NDIS control message handling
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+   Hello,
 
-> forum with some evil code
-> https://github.com/b2evolution/b2evolution/commit/9a4ab85439d1b838ee7b8eeebbf59174bb787811
+Qemu emulator built with the USB Net device emulation support is vulnerable to 
+a NULL pointer dereference issue. It could occur while processing remote NDIS 
+control message packets, when the USB configuration descriptor object is null.
 
-Use CVE-2016-7149.
+A privileged user inside guest could use this flaw to crash the Qemu process 
+instance resulting in DoS.
+
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-02/msg02553.html
+
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1302299
+
+This issue was discovered by Qinghao Tang of 360.cn Marvel Team.
 
 
-> Edit the "Short site name"
-> https://github.com/b2evolution/b2evolution/commit/dd975fff7fce81bf12f9c59edb1a99475747c83c
-
-Use CVE-2016-7150.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX2jQYAAoJEHb/MwWLVhi2uiIP/2drloezwZ44oHZCA4fFelrs
-IQxqLq8IISpHE+EMLJL2fr+9+Etjkte+D1gD0IhUSwM8gBLT5l0QoKJKQG5shpmH
-uzCvz8lebBIEs+MExRDNg/yaN8L15u/Fw/CHwP6axSZK0WId0cJh8aIJ7vXHTecl
-iyFBiUT/bQo+EqTnzIWfDOyiAx+0xoGJUd8URQCroJGf0j4ZwmeOPjdy0NdGDavR
-p+DY4A18FENakMUpLx5hFGudCQCCoLk648lKsVfSqq9gDKrDiUSOmvNMBn6n80Vs
-q3YhFfbr4hGo4Degw6HBRJyOShzr/UpuYsYuEEut2g3DRVX8vCtNv04D6yA0ChUj
-dylwLceHC+D5lXdQEayNUtKuKrDQCR/MqzFfS6DRCghbBnObt3mdxuoSivxLX5gN
-fASKsXcPe+n9SVTJya/RG6svo0rxJD6oa0h3QQinE3bDF4+uQ10A6IpsFdzVDRew
-VtSCAzVktXMG+qU+ld2F/iu7ArLmvCtsu/Sxs1EP/iJKIkkIFkOiEOXLBU+Ye0kt
-fCmXRI2SKReJgv67KvXZJxA7t+p+9++gaHOUpcrvHESv8HiFs+swBMwLmCSLxHYv
-pqbwfpQ46+tj7MkW6D/+irj2fdgOjiStxq+7o/Mwd2uh5oEo3LFKnP4ciz0ajSUT
-B3LOjIAhuRfXD4XkcDlX
-=4IsD
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
