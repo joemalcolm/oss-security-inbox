@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3067" "Saturday" "6" "February" "2016" "14:42:36" "+0100" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdSpUpBuZK6dXCFfpjWvaSd0NLzEqhfJNacGzMq4VvyWFw@mail.gmail.com>" "73" "[oss-security] CVE request: Out-of-bound read in the parsing of gif files using GraphicsMagick 1.3.18" nil nil nil "2" "2016020613:42:36" "[oss-security] CVE request: Out-of-bound read in the parsing of gif files using GraphicsMagick 1.3.18" (number mark "U       gustavo.grie Feb  6   73/3067  " thread-indent "\"[oss-security] CVE request: Out-of-bound read in the parsing of gif files using GraphicsMagick 1.3.18\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1266" "Tuesday" "16" "February" "2016" "23:07:10" "-0500" "David Leo" "httpsonly.github.io@gmail.com" "<CAAeBhPcExxcYUmgHX-SN=8agBKL=0t8utAx5qdAr-fSLW9wGZg@mail.gmail.com>" "34" "Re: [oss-security] Browser Security Tool: HTTPS Only (Why, How, Open Source, Python)" "^Date:" nil nil "2" "2016021704:07:10" "[oss-security] Browser Security Tool: HTTPS Only (Why, How, Open Source, Python)" (number mark "        httpsonly.gi Feb 16   34/1266  " thread-indent "\"Re: [oss-security] Browser Security Tool: HTTPS Only (Why, How, Open Source, Python)\"\n") "<20160215191330.GA11450@gremlin.ru>" ("<CAAeBhPfv200duAxCKnYkABgyt-34u_cP_YrrRajPWZ-Md+H9GA@mail.gmail.com>" "<20160215191330.GA11450@gremlin.ru>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3114 invoked by uid 550); 6 Feb 2016 13:42:48 -0000
+Received: (qmail 28607 invoked by uid 550); 17 Feb 2016 14:29:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,111 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3092 invoked from network); 6 Feb 2016 13:42:47 -0000
+Received: (qmail 9897 invoked from network); 17 Feb 2016 04:07:21 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=cJOxccMH37Ze7++sfZmyn1KbWDWueXjswN6RuLcTF/E=;
-        b=eTqWxmigJBBani5Ah401YplLH2udr/pGDWTZ45S7pjXn3Q1/Z/v1fTb5DtsQFmN0wE
-         bymWbYvQemEa4tHPrOItetnld66Ou3zgfO370NUt4I2pF7ONVWJYWDut4rpoiepafMEY
-         TwzKrMklfR1ACxq+rc+Q6ASf6SXtLFMbT6aHkmL3K0i5k8/OsKqdqrPw10FXdG5acaGx
-         mRveubP7FxZGQjDipkiGcoZKLYqtRzYlL1HU8tRSbXnOaQ3faEkjNad5LYcFjiPP8o+l
-         +Wt990lZQ48IMq0gv6B2K1lkN/rDRJ3JdG+bXoeJD6WDN/sb/ZUHyqRxMOCySFcBjq0s
-         tXwg==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=Whj0JKgOLg/U/33YlVhXqf0wwPEiKhZa0s91ooLnGbs=;
+        b=lyShh9+XP/fV6lNYqdN4hMepYQIhjGQOaaFuY7KaHrLIi9GJVBuyjq8DoQzkD+BXO5
+         w7SrvCq44QWNv5Lgg9qn0V1/eK39nQXieOEEbMEU3QfokYCKai6GLxfNqvP6r8fpvO/X
+         IvWNAvbnJdB7VegPk6quDwuy6UO7OTcZC7R23jgc6kRoVMUMtR+GRf1nShARVb2ACCcq
+         vTwc9nVWleu9G+9uDazY5IZBBmAFw/vorggKNyxShuleAWP+CfYl8mIBtIDqymlzUMrr
+         hNb7TXKKVQaFve2Swm0FJHdQRrqrKVnGByzvVvSVK7Ip1nnChoYgNVvIekGbaOm/By84
+         zF6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=cJOxccMH37Ze7++sfZmyn1KbWDWueXjswN6RuLcTF/E=;
-        b=kGmA0dzE/ki7pekkL9Ku2RS+AebLAxH3HkCJegkk2iCwfS0VoJjTlMRcjccLRDGP7N
-         VBw0LfdGN3Vvu/l1Y5yvIpbsLdzD6P9neDf+K3qP9K7QngXTAzC+xIYheSL4BUYZFdfL
-         aCuXkOHoU0gfVcFTnA7E0Hv0edGPlfqO+R8eZEnlZyUsEphFWHNOJUfFGayPTQqqYJJe
-         4BF2TvGQcvjK83BK1AOUKTieU6pWiB1CHJnbjSpz3YlvN9rfSmKAOhwXXcBW0jQTz+Mb
-         055Ndu85aP+rk8b001ydLV8OXiU6y1m0IIPTO1c8yJEN5JuMFye07h9gObpe3VKwqqZ3
-         7kFQ==
-X-Gm-Message-State: AG10YOQ2D5IJ8JVPgNIUzWyg5Lz0kMhdJjtejTnAOX902YOl58yEUhfNqdoP8ildIG9sAK/BtZ2IwXXeQ3lTIQ==
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type:content-transfer-encoding;
+        bh=Whj0JKgOLg/U/33YlVhXqf0wwPEiKhZa0s91ooLnGbs=;
+        b=R0giSQuomEGD5NwRZ5zv0ovppnnp/ADyMj1Hkqk31CDTq4hXaUkGpE25u0FpYaz9us
+         j2WlWIN23ilD4LOpWCOnc+GdCCH8FFXHVoL4uDco1Yg48zVOHoD8BXIQQLLEpmbuIBha
+         HPkrXZBBvUZ6FfQ+pOgsRyua4F2UqseZlqtArawCzkER+GyuKSn243nX95hgoe9/1Jhk
+         H2SOh3Pba+QJcPBbQFZBGB36N5IyD9bGF1eRxY8SEJUWq/m/rscdxByQPDxrqVMbVq+/
+         GKwRPz98zriiF8mKfyiEdlbPQ9KGKzygukbV1vgT6BDqABcWuM39Y2ULg/wq2epjgyAt
+         0dCQ==
+X-Gm-Message-State: AG10YOQ0vA/hUQj3IvUFxrG821MP7sROQixR5anrucXhqkeLBXQ05IIuH7PZwrT3idZ0qhqhwHkXZvolPjzHcg==
 MIME-Version: 1.0
-X-Received: by 10.112.184.133 with SMTP id eu5mr6627415lbc.99.1454766156334;
- Sat, 06 Feb 2016 05:42:36 -0800 (PST)
-Date: Sat, 6 Feb 2016 14:42:36 +0100
-Message-ID: <CACn5sdSpUpBuZK6dXCFfpjWvaSd0NLzEqhfJNacGzMq4VvyWFw@mail.gmail.com>
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a11c3cb34faceec052b1a2320
-Subject: [oss-security] CVE request: Out-of-bound read in the parsing of gif files using
- GraphicsMagick 1.3.18
-
---001a11c3cb34faceec052b1a2320
+X-Received: by 10.25.28.209 with SMTP id c200mr9578826lfc.29.1455682030815;
+ Tue, 16 Feb 2016 20:07:10 -0800 (PST)
+In-Reply-To: <20160215191330.GA11450@gremlin.ru>
+References: <CAAeBhPfv200duAxCKnYkABgyt-34u_cP_YrrRajPWZ-Md+H9GA@mail.gmail.com>
+	<20160215191330.GA11450@gremlin.ru>
+Message-ID: <CAAeBhPcExxcYUmgHX-SN=8agBKL=0t8utAx5qdAr-fSLW9wGZg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 16 Feb 2016 23:07:10 -0500
+From: David Leo <httpsonly.github.io@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Browser Security Tool: HTTPS Only (Why, How, Open
+ Source, Python)
+To: oss-security@lists.openwall.com
 
-Hi,
+Obviously you never read https://httpsonly.github.io/
 
-We found a read out-of-bound in the parsing of gif files using
-GraphicsMagick. This issue was tested in Ubuntu 14.04 (x86_64) using
-GraphicsMagick 1.3.18. Find attached a specially crafted file to reproduce
-this issue. The AddressSanitizer report showing the faulty code is here:
+1. The "Other Interesting Tools" section has tools to easily switch
+proxy of your browser(FoxyProxy, etc). You want HTTPS-Only internet,
+that's what this tool does; you want normal internet, just click that
+FoxyProxy icon(yes, it's really easy).
 
-$ ./gm identify overflow.gif
-=================================================================
-==3173==ERROR: AddressSanitizer: heap-buffer-overflow on address
-0x6210000037be at pc 0x0000007e5f56 bp 0x7fffffffa940 sp 0x7fffffffa938
-READ of size 1 at 0x6210000037be thread T0
-    #0 0x7e5f55 in DecodeImage coders/gif.c:276
-    #1 0x7ebdac in ReadGIFImage coders/gif.c:1075
-    #2 0x490fc6 in ReadImage magick/constitute.c:1600
-    #3 0x48fcd0 in PingImage magick/constitute.c:1363
-    #4 0x43fc25 in IdentifyImageCommand magick/command.c:8350
-    #5 0x4427b9 in MagickCommand magick/command.c:8840
-    #6 0x47c4d6 in GMCommandSingle magick/command.c:17253
-    #7 0x47c79c in GMCommand magick/command.c:17306
-    #8 0x40c8c5 in main utilities/gm.c:61
-    #9 0x7ffff3739ec4 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
-    #10 0x40c7d8
-(/home/vagrant/repos/graphicsmagick-1.3.18/utilities/gm+0x40c7d8)
-AddressSanitizer can not describe address in more detail (wild memory
-access suspected).
-SUMMARY: AddressSanitizer: heap-buffer-overflow coders/gif.c:276 DecodeImage
-Shadow bytes around the buggy address:
-  0x0c427fff86a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff86b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff86c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff86d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff86e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x0c427fff86f0: fa fa fa fa fa fa fa[fa]fa fa fa fa fa fa fa fa
-  0x0c427fff8700: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff8710: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff8720: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff8730: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff8740: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-==3173==ABORTING
+2. The "What HTTPS Doesn=E2=80=99t Do" section has very clear words about
+HTTPS limitations. Even though it's from US government, it's actually
+very clear words.
 
-This issue is caused by the use of unintialized memory in DecodeImage and
-fortunately it was fixed here:
+Best Wishes,
 
-http://marc.info/?l=graphicsmagick-commit&m=142283721604323&w=2
-
-Regards,
-Gus.
-
---001a11c3cb34faceec052b1a2320--
+On Mon, Feb 15, 2016 at 2:13 PM,  <gremlin@gremlin.ru> wrote:
+> On 2016-02-14 22:07:21 -0500, David Leo wrote:
+>
+>  > This tool completely locks browser - just HTTPS, nothing else.
+>
+> That means, it causes effective DoS with "ssl_error_no_cypher_overlap"
+> (as it's called by Firefox) for approx. 60% of all sites.
+>
+> In most cases, HTTPS is either misused or abused. But the ${subject}
+> does both misuse and abuse: it forces HTTPS even for unauthenticated
+> connections (are there any real reasons to use HTTPS instead of E2EE
+> for protecting the information which is publicly available?), while
+> not making any use of a clients' certificates.
+>
+> Ds: PoS
+> Rp: >& /dev/null
+>
+>
+> --
+> Alexey V. Vissarionov aka Gremlin from Kremlin
+> GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8
