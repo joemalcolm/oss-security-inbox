@@ -1,51 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/22/1
-Message-ID: <20160622092838.GA9075@openwall.com>
-Date: Wed, 22 Jun 2016 12:28:38 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/17/6
+Message-ID: <2ECE9D9EEF1F524185270138AE23265954F00D33@S0MSMAIL112.arc.local>
+Date: Wed, 17 Feb 2016 15:39:13 +0000
+From: Fiedler Roman <Roman.Fiedler@....ac.at>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Feedback and mentoring (reviewer) for logdata-anomaly-miner
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 10, 2016 at 02:46:23PM -0700, John Johansen wrote:
-> This is a forward notification of a local priv escalation flaw from
-> security@...nel.org to the OSS security list. The CRD was for
-> 2016-06-08 14:00:00 UTC. Patches attached to the email.
-> 
-> The flaw in eCryptfs was assigned CVE-2016-1583.
+Hello List,
 
-The Project Zero issue is now public:
+We want to share a part of a log-data analysis pipeline tool as open source
+Debian package. As we are especially interested in feedback from security
+engineers, we want to have it easily to install and remove on common
+distributions to lower the barrier for testing.
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=836
+<?Timesaver: in short, who is interested in package review, mentoring?
+Others may stop reading here. ?>
 
-and it includes an exploit, which I've re-attached.  (The rest of the
-files, including the crasher, were already posted in here by John.)
+Motivation: Have toolset to allow construction of lightweight and very
+flexible processing pipelines for purposes ranging from simple value checks
+(e.g. like logcheck on single machine but with data streaming operation (not
+batch), O(log(n)) instead of O(n) CPU resources due to tree-shaped parsing
+models, mail alerting with exponential backoff, ...) but also to find
+atypical sequences of commands (correlation based whitelisting of logdata -
+AECID approach) or analyse action sequences in normal operation, that could
+be exploited in malicious environments (blacklisting approach, e.g. to fully
+automate detection of issues similar to those reported by us last year [1],
+[2], [3]). This should all run smoothly with limited resources and limited
+risks even on production machines, e.g. to set intelligent probes on those
+machines.
 
-> Subject: [PATCH 2/3] ecryptfs: forbid opening files without mmap handler
+The package contains the initial standalone version of the distributed
+mining component, ported from Java. The idea is to distribute the
+security-critical core as reviewed lightweight package to allow simple
+update in case security issues were found. Rulesets and configuration
+packages for complex scenarios will follow in separate packages. As they do
+not contain root-executed code, review requirements are far less strict.
 
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=2f36db71009304b3f0b95afacd8eba1f9f046b87
+Configuration format of unprivileged analysis pipeline is currently plain
+Python. This will be augmented with configuration generators/better
+generation format as soon as it becomes clear, if there is a community use
+for it and which usecases are most relevant for them. (we use it for
+research and have no problem with current semi-automatic config generation
+for that purpose).
 
-> Subject: [PATCH 1/3] proc: prevent stacking filesystems on top
+Is there someone on this list also mentoring for Debian, e.g. on [4] to
+review and mentor the code in [5], especially regarding security
+implications? Apart from the packaging and standard distribution-related
+issues, I would be glad to point to all the problematic spots with security
+impact I already known, hopefully to detect all security weaknesses before
+publication of the package.
 
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=e54ad7f1ee263ffa5a2de9c609d58dfa27b21cd9
+Kind Regards,
+Roman Fiedler
 
-> Subject: [PATCH 3/3] sched: panic on corrupted stack end
+[1] https://bugs.launchpad.net/ubuntu/+source/lxc/+bug/1476662
+[2] https://bugs.launchpad.net/ubuntu/+source/lxc/+bug/1475050
+[3] https://bugs.launchpad.net/ubuntu/+source/lxc/+bug/1470842
+[4] http://mentors.debian.net/
+[5] http://mentors.debian.net/package/logdata-anomaly-miner
+[6] https://launchpad.net/logdata-anomaly-miner
+[7]
+http://bazaar.launchpad.net/~roman-fiedler/logdata-anomaly-miner/roman-fiedl
+er/view/head:/source/root/usr/share/doc/aminer/Readme.txt
 
-Not committed?
+PS: See [6] for package description, [7] for intro, manpage attached (nroff
+-man AMiner.1)
 
-Andy Lutomirski is working on virtually mapped stacks with guard pages
-so that kernel stack overflows would be detected:
+DI Roman Fiedler
+Scientist
+Digital Safety & Security Department
+Assistive Healthcare Information Technology
 
-http://www.openwall.com/lists/kernel-hardening/2016/06/15/1
-http://www.openwall.com/lists/kernel-hardening/2016/06/20/14
+AIT Austrian Institute of Technology GmbH
+Reininghausstraße 13/1 | 8020 Graz | Austria
+T +43(0) 50550 2957 | M +43(0) 664 8561599 | F +43(0) 50550 2950
+roman.fiedler@....ac.at | http://www.ait.ac.at/
 
-Linus wants the 1.5us overhead on task creation to be reduced before
-this gets merged:
+FN: 115980 i HG Wien  |  UID: ATU14703506
+http://www.ait.ac.at/Email-Disclaimer
 
-http://www.openwall.com/lists/kernel-hardening/2016/06/21/10
+Download attachment "AMiner.1" of type "application/octet-stream" (4018 bytes)
 
-Alexander
-
-View attachment "exploit-description.txt" of type "text/plain" (11816 bytes)
-
-Download attachment "exploit.tar.gz" of type "application/x-gzip" (6377 bytes)
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (6344 bytes)
