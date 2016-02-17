@@ -1,81 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/12/4
-Message-ID: <309844657.20160112120356@fl7.de>
-Date: Tue, 12 Jan 2016 12:03:56 +0100
-From: Benjamin Daniel Mussler <sec@...fl7.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/17/9
+Message-ID: <20160217221921.GB24130@port70.net>
+Date: Wed, 17 Feb 2016 23:19:21 +0100
+From: Szabolcs Nagy <nsz@...t70.net>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: CVE Request: Vtiger CRM 6.4 Authenticated Remote Code Execution
+Subject: Address Sanitizer local root
 Content-Type: text/plain; charset=utf-8
 
+There is an alarming trend that Address Sanitizer and related
+compiler instrumentations from compiler-rt are used as a hardening
+solution and run in production.
 
-Please assign a CVE. Thanks.
+Even though these are debugging and testing tools, there is
+no clear warning against production use in their documentation:
+http://clang.llvm.org/docs/
+And it's obvious how a tool that catches UB can be misunderstood
+as a hardening tool:
 
+This analysis concluded that ASan can be used for protection
+to stop certain attacks:
+http://scarybeastsecurity.blogspot.dk/2014/09/using-asan-as-protection.html
+The Tor project distributes ASan "hardened" binaries:
+https://blog.torproject.org/blog/tor-browser-55a4-hardened-released
+And there are various projects for full Linux distro instrumentation:
+http://balintreczey.hu/blog/progress-report-on-hardened1-linux-amd64-a-potential-debian-port-with-pie-asan-ubsan-and-more/
+https://blog.hboeck.de/archives/879-Safer-use-of-C-code-running-Gentoo-with-Address-Sanitizer.html
+(the later was presented at FOSDEM 2016: https://fosdem.org/2016/schedule/event/csafecode/ )
 
-Vtiger CRM 6.4 Authenticated Remote Code Execution
+While these are interesting projects, ASan should not be
+used for hardening in production systems in its current form,
+so at least the language ("hardening", "protection", "safe")
+should be fixed.
 
-1. Summary
-2. Vulnerability Details
-3. References
+My simple local root exploit is that ASan uses a lot
+of environment variables without checking for secure
+execution of setuid binaries:
 
-########## 1. Summary ##########
+ASAN_OPTIONS='verbosity=2 log_path=foo' ./suid.exe
 
-Vtiger CRM  <https://www.vtiger.com/open-source/> is a CRM application.
+will write to foo.$PID using escalated priviledge, so a
+normal user may be able to clobber arbitrary root owned files
+(by creating foo.{1,2,3,..} symlinks to it) which can lead
+to local root on an "ASan hardened" Linux distribution:
 
-Vtiger CRM version 6.4 (“Open Source” branch; released on 2015-10-16) is
-vulnerable to Authenticated Remote Code Execution.
+ASAN_OPTIONS='suppressions="/foo
+root:passwdhash:12345:0:::::
+bar" log_path=foo' ./suid.exe
 
-This vulnerability is different than CVE-2015-6000 (in fact it is a
-result of an insufficient fix for CVE-2015-6000).
+can easily clobber /etc/shadow with
 
+AddressSanitizer: failed to read suppressions file '/foo
+root:passwdhash:12345:0:::::
+bar'
 
-########## 2. Vulnerability Details ##########
+if there is any setuid root executable built with ASan.
 
-Vtiger CRM allows for the upload of a "company logo" from within the
-administrative interface.
+(This is not a problem for testing where the env var based
+configuration is convenient and I haven't checked if any
+of the current ASan distro efforts have setuid executables
+with instrumentation, but I still find it a security bug
+given the improper advertisment of the sanitizer tools:
+this can lead to problems if the documentation is not fixed.)
 
-Multiple flaws in the Settings_Vtiger_CompanyDetailsSave_Action class
-allow attackers to upload files with (almost) arbitrary contents,
-including PHP code passing commands to the underlying operating system.
+Beyond this trivial issue there are plenty reliability
+problems in the sanitizer runtimes that i think deserve
+at least a warning. It can crash conforming applications
+because
 
-The previously mentioned vulnerability, CVE-2015-6000, was partially
-caused by an insufficient file type check, relying on the MIME type
-("Content-Type") sent by the client.
+- the shadow map overlaps with something
+- ulimit -v
+- overcommit is turned off
+- it allocates memory but aborts on failure
+- it interposes __tls_get_addr with non-as-safe code.
+- it uses initial-exec TLS.
+- it handles "deadly" signals like SIGBUS
+  (often used by applications using mmaped files).
+- the c runtime is updated and incompatible
+  (with the various interposition hacks)
+- does not handle c11 thread creation
 
-In an attempt to mitigate the resulting security issues, the following
-"mime type check" was added with a Vtiger CRM 6.3 security patch
-(released on 2015-10-06) and Vtiger CRM 6.4 (released on 2015-10-16):
+some of the features reduce security:
 
-//mime type check
-$mimeType = mime_content_type($logoDetails['tmp_name']);
-$mimeTypeContents = explode('/', $mimeType);
-if (!$logoDetails['size'] || $mimeTypeContents[0] != 'image' || !in_array($mimeTypeContents[1], Settings_Vtiger_CompanyDetails_Model::$logoSupportedFormats)) {
-    $saveLogo = false;
-}
+- heuristic introspective unwind
+- nice diagnositc messages at undefined behaviour
+- interpositions in general (UB according to POSIX)
 
-However, an attacker may choose to embed malicious PHP code within a
-valid image file, for example as EXIF data of a JPEG file. Once the
-server has received the attacker's JPEG file, mime_content_type() will
-process it, correctly consider it to be a valid image file, and return
-the MIME type "image/jpeg" -- which passes Vtiger's "mime type check".
+other limitations:
 
-Because Vtiger allows users to freely choose the name of an uploaded
-file, even if the file's extension does not match the previously
-determined MIME type, an attacker can upload the image file with a
-".php" extension.
+- static linking is not supported
 
-Vtiger CRM then saves the uploaded file's contents with the
-client-specified file name in the publicly accessible "test/logo/"
-directory.
+(This is for ASan only, I briefly looked at thread
+sanitizer, which seemed even worse for reliability
+and safe stack that is in fact advertised for hardening
+but it has plenty reliability problems, needs further
+analysis.)
 
-The code can then be run by accessing the location of the uploaded file
-(“<Vtiger URL>/test/logo/<attacker-specified file name>”).
-
-
-########## 3. References ##########
-
-Source: <http://b.fl7.de/2016/01/vtiger-crm-6.4-auth-rce.html>
-
-Description of CVE-2015-6000:
-<http://b.fl7.de/2015/09/vtiger-crm-authenticated-rce-cve-2015-6000.html>
-Content of type "application/pgp-signature" skipped
+I believe some of the problems can be fixed by
+implementing the runtimes in the libc instead of
+second guessing libc behaviour with fragile
+heuristics from a compiler runtime.   This would solve
+most of the runtime aborts.  I can see an easy way to do
+this with musl libc (because a non-host musl is easy to
+distribute and link against), but non-trivial with glibc.
+In either case I don't see a solution to the shadow map
+commit charge unless the kernel is modified.  So I cannot
+recommend even a careful reimplementation in libc for
+production use for reliable systems.
