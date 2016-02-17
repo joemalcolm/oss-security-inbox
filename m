@@ -1,32 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/15
-Message-ID: <20160505145032.0f3a564a@pc1>
-Date: Thu, 5 May 2016 14:50:32 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/17/7
+Message-ID: <56C4B3B5.3010701@gmail.com>
+Date: Wed, 17 Feb 2016 18:53:57 +0100
+From: Manuel Mancera <sinkmanu@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: broken RSA keys
+Cc: security@...ian.org
+Subject: CVE Request: graphite-web: open redirect
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 5 May 2016 08:42:13 -0400
-Stanislav Datskovskiy <stas@...er-os.org> wrote:
+Hello,
 
-> Where, exactly, did you get your public keys? Would you consider
-> sharing? Quite a few of your moduli are not in my SKS dumps.
+I found and reported an open redirect vulnerability in graphite-web. 
+Through this vulnerability an attacker could redirect to a legitimate user to a malicious website. 
 
-I highly doubt that the keyserver dumps are different (except a few
-days +-). I got mine from this URL:
-http://stueve.us/keydump/
+https://github.com/graphite-project/graphite-web/issues/1441
+<https://blog.filippo.io/bleichenbacher-06-signature-forgery-in-python-rsa/>
 
-Wild speculation: There are several ways in which keys can be
-different. There are v2, v3 and v4 keys (see rfc 4880) and there are
-master keys and subkeys. My parser code should handle all of them.
-Maybe whatever you do doesn't support all key variants?
+Can you assign a CVE for this issue?
 
--- 
-Hanno Böck
-https://hboeck.de/
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+Regards,
 
-Content of type "application/pgp-signature" skipped
+Manuel Mancera
+
+
