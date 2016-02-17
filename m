@@ -1,26 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/02/4
-Message-ID: <f77747a7-7882-0be4-06ff-0db15495f742@dovecot.fi>
-Date: Fri, 2 Dec 2016 09:02:33 +0200
-From: Aki Tuomi <aki.tuomi@...ecot.fi>
-To: oss-security@...ts.openwall.com
-Subject: Important vulnerability in Dovecot (CVE-2016-8652)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/17/1
+Message-ID: <1455701432.2704.1.camel@trustmatta.com>
+Date: Wed, 17 Feb 2016 10:30:32 +0100
+From: Florent Daigniere <florent.daigniere@...stmatta.com>
+To: oss-security@...ts.openwall.com, sandeepk.l337@...il.com
+Cc: cve-assign@...re.org
+Subject: Re: Re: Umbraco - The open source ASP.NET CMS Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Important vulnerability in Dovecot (CVE-2016-8652)
-CVSS score: 7.4 (CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:N/I:N/A:H)
-Affected version(s): 2.2.25.1 up to 2.2.26.1
-Fixed in: 2.2.27.1rc1
+On Tue, 2016-02-16 at 17:23 -0500, cve-assign@...re.org wrote:
+> > http://issues.umbraco.org/issue/U4-7457
+> > SSRF
+> 
+> > the feedproxy.aspx is used to access the external resources using
+> > the URL GET parameter.
+> 
+> > http://local/Umbraco/feedproxy.aspx?url=http://bobsite/index
+> > 
+> > once you change the URL to the
+> > http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:80/index, 
+> > you able
+> > to access the localhost application of the server.
+> > 
+> > Using this payload change the port number to perform port scanning
+> > of the
+> > server. It will be helpful to find the more details of the server.
+> > For example:
+> > 
+> > http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:25/index
+> > http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:8080/index
+> > 
+> > If the port number is closed, you will find the error message on
+> > the
+> > feedproxy.aspx page.
+> 
+> Use CVE-2015-8813.
+> 
 
-Short summary: Dovecot auth component can be crashed by remote user when
-auth-policy component is activated.
+How different is it from CVE-2012-1301 ? Have they re-introduced it?
 
-If auth-policy component has been activated in Dovecot, then remote user
-can use SASL authentication to crash auth component.
-
-Workaround is to disable auth-policy component until fix is in place.
-This can be done by commenting out all auth_policy_* settings.
-
-Aki Tuomi
-Dovecot oy
-
+Florent
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
