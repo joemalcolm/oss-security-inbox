@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1679" "Saturday" "23" "September" "2017" "21:23:15" "+0200" "Marcus Meissner" "meissner@suse.de" "<20170923192315.GA17252@suse.de>" "41" "Re: [oss-security] Why send bugs embargoed to distros?" "^Date:" nil nil "9" "2017092319:23:15" "[oss-security] Why send bugs embargoed to distros?" (number mark "        meissner@sus Sep 23   41/1679  " thread-indent "\"Re: [oss-security] Why send bugs embargoed to distros?\"\n") "<20170923134418.6e460656@pc1>" ("<20170923134418.6e460656@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["775" "Wednesday" "17" "February" "2016" "19:13:14" "+0100" "Manuel Mancera" "sinkmanu@gmail.com" "<56C4B83A.3060609@gmail.com>" "29" "[oss-security] Re: CVE Request: graphite-web: open redirect" nil nil nil "2" "2016021718:13:14" "[oss-security] Re: CVE Request: graphite-web: open redirect" (number mark "U       sinkmanu@gma Feb 17   29/775   " thread-indent "\"[oss-security] Re: CVE Request: graphite-web: open redirect\"\n") "<56C4B406.8020404@gmail.com>" ("<56C4B406.8020404@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25876 invoked by uid 550); 23 Sep 2017 19:23:28 -0000
+Received: (qmail 26498 invoked by uid 550); 17 Feb 2016 18:19:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25858 invoked from network); 23 Sep 2017 19:23:28 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20170923192315.GA17252@suse.de>
-References: <20170923134418.6e460656@pc1>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170923134418.6e460656@pc1>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Date: Sat, 23 Sep 2017 21:23:15 +0200
-From: Marcus Meissner <meissner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Why send bugs embargoed to distros?
+Received: (qmail 21773 invoked from network); 17 Feb 2016 18:13:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-type;
+        bh=2Ioi90sBab92khYXCIHNjrllw4ayaKbqID6QJWxGs2U=;
+        b=fkBfPF2TieZy3/eJqXVjXg8PYAGUtdd6ccuazcBLCrDNxkGSU6NfkkY4tj3dS8E4+G
+         cLbBP8glIPVS1sTobjJNsJwjXQLst4k4kEAySX/a03SpgwiesmaEqIvzGqMzm5WoSpmO
+         wk0fUDBva4Pr894goYd28Gy6rgs7ld/Q4cPWDVNE/l/wHb6ZtWSFcMEo9VSn+zRPSEtM
+         WiiWCcOilZl4RwBJavq9VAeh1AUDP/bPrV7Q4Dz9Ip1XWe24Bu3Hs1RKeHKKDfe6EMHY
+         p2tPS+R+1HhxhLJFUmEAxXiKjpKGi/I8I8YfFl72dkQ7AsUj+bzg077FCNw2WIAXTBH/
+         vfZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-type;
+        bh=2Ioi90sBab92khYXCIHNjrllw4ayaKbqID6QJWxGs2U=;
+        b=SIVGu/QcXfKO+peqVNzzkTnmqn2ekMYQfQXjkECeQKYL+jvCErv85Tphyqa3Ahij3A
+         gZVpDoAQdx8hBCe49BWuW7O/p+4dEK2OIRWPm7eBPCtF+V/3XpnB5sWyx8TFms07NxAm
+         C/8gI8LWtoQlCo62SkHcBHNNkqqyhQJlscWLapmbuD8EetWG7EiFk2NSyMewLLVVg5vH
+         sanMuBd6cn8gCfg+cdVNwn/Q2mauxckFMvQIUEFB1FR76vt/sdHH9cN4p72ki2ZgmTG7
+         +nhnZt3fvR77rwgQWukMBR6G0nK7/h1F80P+bUFsugU9vDsvXiS4Ny/ELzhs+b+MLzxk
+         H5jA==
+X-Gm-Message-State: AG10YOTIvmoDZjqCKSs2OoV7EI1071uBM0EJx8yDyde2nTtIqM6ARkwM9V0oMycGhhwPUA==
+X-Received: by 10.194.77.35 with SMTP id p3mr3237855wjw.91.1455732796008;
+        Wed, 17 Feb 2016 10:13:16 -0800 (PST)
 To: oss-security@lists.openwall.com
+References: <56C4B406.8020404@gmail.com>
+Cc: security@debian.org
+From: Manuel Mancera <sinkmanu@gmail.com>
+Message-ID: <56C4B83A.3060609@gmail.com>
+Date: Wed, 17 Feb 2016 19:13:14 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
+MIME-Version: 1.0
+In-Reply-To: <56C4B406.8020404@gmail.com>
+Content-Type: multipart/alternative;
+ boundary="------------080205090503000308020006"
+Subject: [oss-security] Re: CVE Request: graphite-web: open redirect
 
-On Sat, Sep 23, 2017 at 01:44:18PM +0200, Hanno Böck wrote:
-> Hi,
-> 
-> A few days have passed since the optionsbleed disclosure. Some
-> interesting things have surfaced, e.g. the fact that it was apparently
-> discovered already in 2014, but nobody noticed it was a security bug.
-> 
-> 
-> But I'd like to discuss something else:
-> I had informed the distros mailing list one week earlier about the
-> upcoming disclosure with a bug description and links to the already
-> available patch.
-> My understanding is that the purpose of the distros list is that
-> updates can be prepared so after a disclosure the time between "vuln is
-> known" and "patch is available" is short.
-> However from all I can see this largely didn't happen.
-> 
-> Debian+Ubuntu took more than a day after disclosure to fix. According
-> to the Debian bug tracker the bug got only opened after the public
-> disclosure[2]. I see no sign that any work on a fix began before the
-> disclosure.
-> 
-> If I can trust Red Hat's CVE tracker [3] there still are no fixed
-> packages available. Also I haven't found any info about updated
+--------------080205090503000308020006
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 
-https://www.suse.com/security/cve/CVE-2017-9798/
+Sorry, the email was sent with HTML format and with a wrong link, the
+link with the vulnerability is:
+https://github.com/graphite-project/graphite-web/issues/1441
 
-We have released openSUSE Leap and SUSE Linux Enterprise 12 SP2/SP3 updates.
 
-Where did you look and not find this?
+Regards,
 
-SUSE has rated the issue as moderate severity (bordering on important),
-as exploitability seems difficult and not targetable.
+On 17/02/16 18:55, Manuel Mancera wrote:
+> Hello,
+>
+> I found and reported an open redirect vulnerability in graphite-web. 
+> Through this vulnerability an attacker could redirect to a legitimate user to a malicious website. 
+>
+> https://github.com/graphite-project/graphite-web/issues/1441
+> <https://blog.filippo.io/bleichenbacher-06-signature-forgery-in-python-rsa/>
+>
+> Can you assign a CVE for this issue?
+>
+>
+> Regards,
+>
+> Manuel Mancera
 
-So we were not targeting a "same as CRD day release" as with other more
-severe issues, but have now released updates in the next days after the CRD.
 
-In general predisclosure is useful for us, same as for the others for 
-evaluation and preparation of critical security issues.
-
-Ciao, Marcus
+--------------080205090503000308020006--
