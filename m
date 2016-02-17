@@ -1,75 +1,124 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/8
-Message-ID: <20161110171551.GB22569@tunkki>
-Date: Thu, 10 Nov 2016 19:15:51 +0200
-From: Henri Salo <henri@...v.fi>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE request: MyBB multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/17/3
+Message-Id: <E1aW1DA-00065m-A8@xenbits.xen.org>
+Date: Wed, 17 Feb 2016 12:28:04 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 170 (CVE-2016-2271) - VMX: guest user mode may crash guest with non-canonical RIP
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Hello MITRE,
+            Xen Security Advisory CVE-2016-2271 / XSA-170
+                              version 3
 
-Could you assign CVEs for following MyBB vulnerabilities, thank you.
+      VMX: guest user mode may crash guest with non-canonical RIP
 
-Fixed in 1.8.6
-https://blog.mybb.com/2015/09/07/mybb-1-8-6-1-6-18-merge-system-1-8-6-release/
+UPDATES IN VERSION 3
+====================
 
-Medium Risk: Forum password bypass in xmlhttp.php – reported by Devilshakerz
-Low Risk: SQL Injection in Grouppromotions module (ACP) – reported by Devilshakerz
-Low Risk: Possible XSS Injection in the error handler – reported by FooBar123
-Low Risk: Possible XSS issues in old upgrade files – reported by FooBar123
-Low Risk: Possible Full Path Disclosure in publicly accessible error log files – reported by Devilshakerz
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+VMX refuses attempts to enter a guest with an instruction pointer which
+doesn't satisfy certain requirements.  In particular, the instruction
+pointer needs to be canonical when entering a guest currently in 64-bit
+mode.  This is the case even if the VM entry information specifies an
+exception to be injected immediately (in which case the bad instruction
+pointer would possibly never get used for other than pushing onto the
+exception handler's stack).  Provided the guest OS allows user mode to
+map the virtual memory space immediately below the canonical/non-
+canonical address boundary, a non-canonical instruction pointer can
+result even from normal user mode execution. VM entry failure, however,
+is fatal to the guest.
+
+IMPACT
+======
+
+Malicious HVM guest user mode code may be able to crash the guest.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions are affected.
+
+Only systems using Intel or Cyrix CPUs are affected. ARM and AMD
+systems are unaffected.
+
+Only HVM guests are affected.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this vulnerability.
+
+Running HVM guests on only AMD hardware will also avoid this
+vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Ling Liu of Qihoo 360 Inc.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch works around this issue.  Note
+that it does so in a way which isn't architecturally correct, but no
+better solution has been found (nor suggested by Intel).
+
+xsa170.patch           xen-unstable, Xen 4.6.x
+xsa170-4.5.patch       Xen 4.5.x, Xen 4.4.x
+xsa170-4.3.patch       Xen 4.3.x
+
+$ sha256sum xsa170*
+77b4b14b2c93da5f68e724cf74e1616f7df2e78305f66d164b3de2d980221a9a  xsa170.patch
+b35679bf7a35615d827efafff8d13c35ceec1184212e3c8ba110722b9ae8426f  xsa170-4.3.patch
+1df068fb439c7edc1e86dfa9ea3b9ae99b58cdc3ac874b96cdf63b26ef9a6b98  xsa170-4.5.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
-Fixed in 1.8.7
-https://blog.mybb.com/2016/03/11/mybb-1-8-7-merge-system-1-8-7-release/
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-Medium risk: Possible SQL Injection in moderation tool – reported by jamslater
-Low risk: Missing permission check in newreply.php – reported by StefanT
-Low risk: Possible XSS Injection on login – reported by Devilshakerz
-Low risk: Possible XSS Injection in member validation – reported by Tim Coen
-Low risk: Possible XSS Injection in User CP – reported by Tim Coen
-Low risk: Possible XSS Injection in Mod CP logs – reported by Starpaul20
-Low risk: Possible XSS Injection when editing users in Mod CP – reported by Tim Coen
-Low risk: Possible XSS Injection when pruning logs in ACP – reported by Devilshakerz
-Low risk: Possibility of retrieving database details through templates – reported by Tim Coen
-Low risk: Disclosure of ACP path when sending mails from ACP – reported by sarisisop
-Low risk: Low adminsid & sid entropy – reported by Devilshakerz
-Low risk: Clickjacking in ACP – reported by DingjieYang
-Low risk: Missing directory listing protection in upload directories – reported by Tim Coen
-
-
-Fixed in 1.8.8
-https://blog.mybb.com/2016/10/17/mybb-1-8-8-merge-system-1-8-8-release/
-
-Medium risk: Style import CSS overwrite on Windows servers – reported by patryk
-Medium risk: SQL Injection in the users data handler – reported by afinepl
-Medium risk: SSRF attack in fetch_remote_file() – reported by dawid_golunski
-Medium risk: Possible short name access to ACP backups on Windows servers – reported by kevinoclam
-Low risk: Stored XSS in the ACP – reported by patryk
-Low risk: Loose comparison false positives – reported by Devilshakerz
-Low risk: Possible XSS injection in ACP users module – reported by afinepl
-
-- -- 
-Henri Salo
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBAgAGBQJYJKtHAAoJECet96ROqnV0LXgQAKrMRH9ArhiKKdS5UNsAdAtP
-KWc/UEhW1TS/GXbXJ/byUS1EE4BP8KfzwPsVHsM4KDWx/bIVGjx8HK9sUA0lK1Uq
-FFqzQieoAOex8gKS/yHWm4zuY7x2EVNSSl+pR0srnNJt8O1/GmYluDNgIj1BYIuK
-ZdZSF7NuAilp7XG9Z9rxWl1yLtPH81rLhBkQDIR1xOyPruGCLxmAJ5Se059wTNfe
-0wquNr2PisunO1PDmZ0nFTrmTfWWBzV2I3/UFYID9Z0vWd+gpZ6aSyGNFXLsQaS2
-oRQwtlejxBy2updbDFkkTOB0PJN2ctA+Q5N3ueB+Vw+8Mamql54SlA0CJSe1s5/5
-/4BxbOlB0Ju8HthyTWX8V4rugFj2rLNZxHOUaRel/aH83lLfLjjfxiX2mGla5KJH
-zn5dmT4ADJRv5QPx9FubNv4R+YSh0keQsDuK+WIv4qw/I7WVPtLAc98NrSh0JRj5
-KewS04rndPEk3E+T35i/KsC0D26Yr5h1seWfkCsv0lQ6lwFaS6opojKWNflvVkVy
-dSIamrkKazi0w//VxrlVeA4kyZW17zflU00/yOyts5po05qSngPGqVZt5if6elor
-G+NMTt3Dnt8OKzyuqwmCcnhkVwbAbx80ruDKGWcy5YAlKM/44x9hXdO2HcIFAbUf
-rK8ZN9KBcR6VlQjXYqz2
-=Cuu9
+iQEcBAEBAgAGBQJWxGa0AAoJEIP+FMlX6CvZ3rkIAIo+pvKqkNbHjalgGpP4BVe7
++7tuVnL74wt5Dt4AuOFyPLnEaHbp5UkIKK++eP/urFCz5+/LbOqcWnfiQdWMLQ/t
+17NX2CMSYUCwUAkMMjvbKvGM3W8AJ85naIQho9KQSPbY1/Q51jDS5bLT06B2iRr4
+njML2ii2OhOTGAvC2XmnidFNvLGQxlfeeC75O9dbCFENSYn5WbdmHonTnK8qm22H
+eEvLlzg4D6yAmEaqHHZJ3bz1qtTw5FDNm/0tdZ1LO7lMuK01nMHSMmWG/Agc7219
+lQH22N0+YTtgQKf65QciEThEnvTeDpeq84m64GqVhwzwssl1JrywrSsVkaQOnKA=
+=Ca+d
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa170.patch" of type "application/octet-stream" (3187 bytes)
+
+Download attachment "xsa170-4.3.patch" of type "application/octet-stream" (3139 bytes)
+
+Download attachment "xsa170-4.5.patch" of type "application/octet-stream" (3189 bytes)
