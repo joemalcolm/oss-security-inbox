@@ -1,48 +1,155 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/21/3
-Message-Id: <20160321145841.81C8F332081@smtpvbsrv1.mitre.org>
-Date: Mon, 21 Mar 2016 10:58:41 -0400 (EDT)
-From: cve-assign@...re.org
-To: gustavo.grieco@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Stack exhaustion in libxml2 parsing xml files in recover mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/17/2
+Message-Id: <E1aW1D5-00063u-Tl@xenbits.xen.org>
+Date: Wed, 17 Feb 2016 12:28:00 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 154 (CVE-2016-2270) - x86: inconsistent cachability flags on guest mappings
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> gdb --args xmllint --recover no-recover.xml
+            Xen Security Advisory CVE-2016-2270 / XSA-154
+                              version 3
 
-> Program received signal SIGSEGV, Segmentation fault.
-> _int_malloc (av=0x7ffff7826760 <main_arena>, bytes=2) at malloc.c:3302
+          x86: inconsistent cachability flags on guest mappings
 
-Use CVE-2016-3627.
+UPDATES IN VERSION 3
+====================
 
-> It was reported to the libxml2 bug tracker some
-> time ago but the maintainers are quite busy, so they haven't fixed it.
+Clarify cumbersome Resolution wording.
 
-It's typically useful to mention the bug number even if it isn't
-currently a public bug, in case correlation is needed later.
+The patch now adds a command line option to overcome the possible
+performance regression.  Add patch backports.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+Clarify origin of assertion (at start of patch description) that
+inconsistent cacheability is a problem only for mmio pages.
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+Multiple mappings of the same physical page with different cachability
+setting can cause problems.  While one category (risk of using stale
+data) affects only guests themselves (and hence avoiding this can be
+left for them to control), the other category being Machine Check
+exceptions can be fatal to entire hosts.  According to the information
+we were able to gather, only mappings of MMIO pages may surface this
+second category, but even for them there were cases where the
+hypervisor did not properly enforce consistent cachability.
+
+IMPACT
+======
+
+A malicious guest administrator might be able to cause a reboot,
+denying service to the entire host.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions are affected.
+
+Only x86 guests given control over some physical device can trigger
+this vulnerability.
+
+x86 systems are vulnerable.  ARM systems are not vulnerable.
+
+The vulnerability depends on the system response to mapping the same
+memory with different cacheability.  On some systems this is harmless;
+on others, depending on CPU and chipset, it may be fatal.
+
+MITIGATION
+==========
+
+Not handing physical devices to guests will also avoid this issue.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+We believe that the attached patch fixes the issue.  However, no
+formal description of CPU behaviour in particular use cases has been
+provided by Intel.  There has been no response from AMD.
+
+We are aware of a potential performance regression with this patch on
+some systems - even if no hardware passthrough is configured.  This is
+due to the behaviour of some drivers and peripherals that is beyond
+the scope of this security fix.  The patch adds a command line option
+"mmio-relax" to overcome this possible regression for Domain 0 or all
+para-virtual guests.  Note however that enabling this workaround will
+reinstate the security issue these patches aim to address.
+
+xsa154.patch        xen-unstable
+xsa154-4.6.patch    Xen 4.6.x
+xsa154-4.5.patch    Xen 4.5.x
+xsa154-4.4.patch    Xen 4.4.x
+xsa154-4.3.patch    Xen 4.3.x
+
+$ sha256sum xsa154*
+bbe7fba38ee30c00ef850fa6419c769e88b5669164d447f50b1ebbe333573152  xsa154.patch
+011a4e33c0e476c52fe44253d50e01a1185948fd1b2a8e645274b25da6030d71  xsa154-4.3.patch
+92d475bbc344127faa4f0183a9ccca9e975c7d24eb5772bf0a0a0a2e019144c6  xsa154-4.4.patch
+b13737e71f22185b94ab25c07afd521add1a7e3886326c719d5df4d42f3f87f4  xsa154-4.5.patch
+eec88c2a57466f83a81844cb7025f70c2b671d07a75d85487d4ed73cdabbb020  xsa154-4.6.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patch described above (or others which are
+substantially similar) is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
+
+However deployment of the mitigations described above is NOT permitted
+(except where all the affected systems and VMs are administered and
+used only by organisations which are members of the Xen Project
+Security Issues Predisclosure List).  Specifically, deployment on
+public cloud systems is NOT permitted.
+
+This is because the configuration change would be visible to the guest,
+which could lead to the rediscovery of the vulnerability.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBCAAGBQJW8AsWAAoJEL54rhJi8gl58g4P/i/POnAJzcVBHPdk0svtHKl+
-+510uhal1JlA6r3y3AiDnqsaRM5TMzuzYs+0l9EA8ydM9nx0UMAOkA/1tHVl48P1
-cJcMMoHj/dv/pBBsAaSuJEr2VttXOn4gCuhhVOJQBc1g4sMYUNEdsn3dJ9HbyI6W
-sL2fkuGxXCMTl5at94lLJI+Hij8t+VrDSmS+0e+W7AvL4uDuyYH6b4Bcp4BmlX8l
-m52hCy9Y72MoSHeituWXLZZ75EIWdwy8ftTmjxpO08ZPR2YjUIiwDYBZKvfWCpFt
-aQc/FJrvygTbXtfvT6WUli8qrz1Q2EzYV5c1/jGSfh+0YaNJkvDdLsRlCE0qMm4L
-TnoZmD2boumgRmCLAwmqQrkCZeSh6I8ET/I6NHhor8f0LXEuVGOjjN1IJCJ2wRT7
-QGp7iejweiDoL1EioQg2pZij4BmG8jxy4XtJRZUBtJzt8yYfIP//z5Lm+3MwO7Uq
-UCscXaI0xpLAP4WW/kQTij9wVBnByu61USK7z96dytNcxYqmQhFhaBbUcT3phqwe
-JhwGxCONz1wDJG028cXD/r1DX/s/3dHLKWbSrg6zjETaBNTkuIgQBO6SJ9tPcRht
-/7T/LPgsNvuqydPksZWan1ytstfOhEDrl2pexJBgnwpt6QlsZnKtIScHDn3PNBND
-rpeM6ZE03EVFPNQRk0sK
-=1y/J
+iQEcBAEBAgAGBQJWxGayAAoJEIP+FMlX6CvZ9KwH/3z+9b7OjgpuIsOf0giZ5y99
+yKoORWxQjcosYLQRQXvH62xtz0xRng+E3p+MeUm2qPUUuHFiqxSpZOAvW61C6DQL
+l5KNNHlIjWB3N0YVmvgRbf3WMbeX1DCsEJEIFxZUQQs3fgGAiOfIEOwRL2FIhJ5Y
+wP/z59fCuWs5lHoV0iAY3gkZHDd09JspCRQq8UGAc+X5jHF6fIOhUjZCS9KRQMJ5
+p69ysdMj96fY5eKqwka/EXzvKMJUsQ42u5RQoYR5FhLx1UBi2otdcdbloKNseksA
+7Wbf6j8Mz9NWVhvdZtnR/CNH8m5V7d78HsnGv7zNQCiMW+wg/k53yzHcw550P4w=
+=5V3D
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa154.patch" of type "application/octet-stream" (13272 bytes)
+
+Download attachment "xsa154-4.3.patch" of type "application/octet-stream" (11895 bytes)
+
+Download attachment "xsa154-4.4.patch" of type "application/octet-stream" (11906 bytes)
+
+Download attachment "xsa154-4.5.patch" of type "application/octet-stream" (12122 bytes)
+
+Download attachment "xsa154-4.6.patch" of type "application/octet-stream" (13247 bytes)
