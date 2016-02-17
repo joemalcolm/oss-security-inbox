@@ -1,106 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/02/11
-Message-ID: <315780479.31616770.1456942566400.JavaMail.zimbra@redhat.com>
-Date: Wed, 2 Mar 2016 13:16:06 -0500 (EST)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: Re: CVE request -- linux kernel: pipe: limit the per-user amount of pages allocated in pipes
-Content-Type: text/plain; charset=utf-8
-
-Hello,
-Let me try to comment the below: 
-
->> However, the commit indicates that there isn't a mandatory behavior
->> change ("The limit are controlled by two new sysctls :
->> pipe-user-pages-soft, and pipe-user-pages-hard. Both may be disabled
->> by setting them to zero.") -- suggesting a possible interpretation as
->> a design enhancement, not a vulnerability fix.
-
-I believe, there is a behavior change, as the default values of
-pipe-user-pages-soft and pipe-user-pages-hard:
-
-+unsigned long pipe_user_pages_hard;                                   # is 0
-+unsigned long pipe_user_pages_soft = PIPE_DEF_BUFFERS * INR_OPEN_CUR; # is 16k pages == 64MiB
-
-allows only 64MiB of unread data fed into the pipes per user. The previous
-unrestricted behavior is possible if only both pipe-user-pages-soft and
-pipe-user-pages-hard is set to zero.
-
->> Also, the discussion
->> doesn't directly comment on whether the "filling large pipes" scenario
->> has a security impact that is otherwise unavailable to the attacker,
->> e.g., it doesn't discuss the difference between the attacker choosing
->> to fill 4000 pipes and the attacker choosing to use mmap.
-
-An attacker using this method consumes a kernel memory, which is not
-directly accounted to any per-user limit. Indirectly an attacker is
-limited by max-open-files and max-processes per-user limits, but their
-defaults on modern distributions allow attacker to consume approx. 4TiB
-or more of the kernel memory.
-
-I believe that in other way (surely, not counting yet-unfixed flaws of
-this type) an attacker cannot unrestrictedly consume the kernel memory.
-For example, mmap()ed memory mentioned is accounted to per-user virtual
-memory limit:
-
-$ uname -r
-4.4.0-0.rc6.git0.1.fc24.x86_64
-
-$ ulimit -v 612000
-$ ./mmaptest            # just mmap()s 512 MiB
-addr=0x7f1142992000
-
-$ ulimit -v 512000
-$ ./mmaptest            # fails to mmap() 512 MiB due to ulimit
-mmap(): Cannot allocate memory
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
-
-
------ Original Message -----
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/17/5
+Message-Id: <20160217144805.4E680332030@smtpvbsrv1.mitre.org>
+Date: Wed, 17 Feb 2016 09:48:05 -0500 (EST)
 From: cve-assign@...re.org
-To: vdronov@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Sent: Wednesday, March 2, 2016 6:00:31 PM
-Subject: [oss-security] Re: CVE request -- linux kernel: pipe: limit the per-user amount of pages allocated in pipes
+To: florent.daigniere@...stmatta.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, sandeepk.l337@...il.com
+Subject: Re: Umbraco - The open source ASP.NET CMS Multiple Vulnerabilities
+Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=759c01142a5d0f364a462346168a56de28a80f52
+> How different is it from CVE-2012-1301 ?
 
-> The result is an OOM condition and oom-killer is not able to help
-> much, as the memory for the pipe data is a kernel memory and a memory
-> footprint of offensive processes is small.
+See the
+https://github.com/umbraco/Umbraco-CMS/commit/924a016ffe7ae7ea6d516c07a7852f0095eddbce
+commit. The vendor added
 
-We feel that this should most likely have a CVE ID. The discussion
-outlines a realistic problem "it is possible for a single process to
-cause an OOM condition by filling large pipes with data that are never
-read. A typical process filling 4000 pipes with 1 MB of data will use
-4 GB of memory" and the need for a CVE ID does not depend on the
-details of the solution approach. Also, there doesn't seem to be any
-general opposition to addressing the problem (e.g., see the
-https://lkml.org/lkml/2016/1/19/674 post).
+   && requestUri.Port == 80
 
-However, the commit indicates that there isn't a mandatory behavior
-change ("The limit are controlled by two new sysctls :
-pipe-user-pages-soft, and pipe-user-pages-hard. Both may be disabled
-by setting them to zero.") -- suggesting a possible interpretation as
-a design enhancement, not a vulnerability fix. Also, the discussion
-doesn't directly comment on whether the "filling large pipes" scenario
-has a security impact that is otherwise unavailable to the attacker,
-e.g., it doesn't discuss the difference between the attacker choosing
-to fill 4000 pipes and the attacker choosing to use mmap.
+to address the 127.0.0.1:25 and 127.0.0.1:8080 attack vectors
+mentioned by Sandeep Kamble. This is not the same as the question of
+whether, or when, the earlier discovery of a different attack
+methodology:
 
-Is there anyone who believes 759c01142a5d0f364a462346168a56de28a80f52
-must not have a CVE ID?
+  http://seclists.org/fulldisclosure/2012/Apr/65
+  http://umbraco.com/umbraco/dashboard/FeedProxy.aspx?url=http://en.wikipedia.org/wiki/Open_proxy
 
-> The commit says: "Mitigates: CVE-2013-4312 (Linux 2.0+)"
-
-Regardless of any answers to the above question, it is not going to be
-useful to use CVE-2013-4312 to refer to
-759c01142a5d0f364a462346168a56de28a80f52.
+was addressed. Accordingly, the new ID CVE-2015-8813 is needed for the
+SSRF vulnerability involving non-80 port numbers.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -110,17 +38,17 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW1xqUAAoJEL54rhJi8gl5sFcQAJjoPTO/xZL8sFOwfACRAXWD
-ycctDOyagiKIwnf9qyqSw18CTTskA2bRJTlhGywu3XnEKq/yAyYfj2+bNQ5OdvmT
-sQT+JTASckJIDnjqXefSxHZMbBTPOITyEZ52cZSRF8NvWyos1GUBxZRXE6Y1Nrx3
-VF1pNDpbbjJtPpwQ81atxUInE9TDeG0o7BUcX5wP/Q4yIdjU1nZ2MdrYYK4Sn2H2
-2/DECleX8EG8oUrPGxm64OXxmAOxB3E3Vigc0LC6OBindvU6VhjyeKzuKduu4W+m
-6GkIllgEzkBGlwqXTmLvbeB+TpnHU3w6ZdnAynmJHwV+AmivFOPHsJhOXlrAKz7S
-KRIkAgeSHOjqK6rg3V3+/az33v9yzl3dQGEmZYs3d/bX94A2q8Z/ECNOfMHk0uH3
-BbveT32coxxqOjAT4NrOVfWsQtiz2B2hSQek8URYYNuONKI/Qmc6Dk/lnTK5K4jO
-l3/tAqNM/avKbp6Q5rJ+JBZX/nH7x05bNx2klPVB1yZyBn6F+RbJYauQMerEcMUa
-ChSVYfUi7+k9ogqk/7/b8EhJiLK92CmBfsUFTIvuI+UUq0fQNMKGXvmYYJHHKOi/
-DJcKAIid0FLbXXi1YsCrFJu2NrvS0UiKOUeF/D0rVdm3emYGTIWbQOkvuDAsUs7e
-8mWQWhBXp+LU6fTUHdZi
-=pIDG
+iQIcBAEBCAAGBQJWxIdUAAoJEL54rhJi8gl5zuEP/3DwlNaP5H+cDd2MC0Nh4LYB
+zGn/lJv20cPAIhn8pBYAkQjpJhbbQmuFc4iael57H1E1rZ/2tkNC25OhQfHpi6mR
+ayok6XyWttguUb1gsoJJR1gsYxc8oH12Wj6Uhq+vhnFO3FoEpHnk3pFvdKiFQ5kc
+zjywXUKqwDbyzdNv8y2tvTxrNFooDQXXmP1d84HkGeuWl1R22pNzIGcJ94P31Rha
+AXayg5NBdD88nu/d1mNfuoh3MHVWgRVoDcZV/TBDZrXUO0l9HRgyignfXtczpE0H
+o/fAKBfAyQGlvqjjCu44DjpELyN3m4EopxifYnQ4tRX7BfuHs7hbZO3uG7oTZJUN
+6j+lwoo/jXvnJV0+hq7lzO2X43qK+ZTGMMs88HArhnQ2k6PGqZVm1lvgTpLT8C2p
+YU3FROSPg4aztIGoqAqk+aZfAolts2UV2e7oRMCiKohdD03UNc68AsFuIG/WTlGw
+BF79uRCAUnBSsjK/Jl00nhMAxEtPNveLFJLNg0kZ9ZZdtJ0Ditb5ivud1S4153yV
+/h3hvpPIUDJKr0LMrrn2S4HikTFtGqeB/unKyfvh3iQRmiSpxBu9zhQkaw5tbHMs
+zN92b+o2ifvi4cOyXS6ckVREvmhLnlyV+dtVAeZKS85s4JljbhWHmS/OE/5kBwNN
+w0/ED5xiMkc1RSqdA5da
+=KXUT
 -----END PGP SIGNATURE-----
