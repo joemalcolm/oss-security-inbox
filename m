@@ -1,4 +1,9 @@
-Received: (qmail 9805 invoked by uid 550); 19 Apr 2026 21:11:58 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["17159" "Wednesday" "17" "February" "2016" "12:28:04" "+0000" "Xen.org security team" "security@xen.org" "<E1aW1DA-00065m-A8@xenbits.xen.org>" "345" "[oss-security] Xen Security Advisory 170 (CVE-2016-2271) - VMX: guest user mode may crash guest with non-canonical RIP" "^CC:" nil nil "2" "2016021712:28:04" "[oss-security] Xen Security Advisory 170 (CVE-2016-2271) - VMX: guest user mode may crash guest with non-canonical RIP" (number mark "        security@xen Feb 17  345/17159 " thread-indent "\"[oss-security] Xen Security Advisory 170 (CVE-2016-2271) - VMX: guest user mode may crash guest with non-canonical RIP\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 26089 invoked by uid 550); 17 Feb 2016 12:28:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,99 +11,363 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 24168 invoked from network); 19 Apr 2026 20:46:52 -0000
-Date: Sun, 19 Apr 2026 22:46:43 +0200
-From: Matthias Ferdinand <ml.oss-security@mfedv.net>
-To: oss-security@lists.openwall.com
-Message-ID: <aeU_M_lpglZoXOqI@xoff>
-References: <82bd2839-9db9-4ab4-9a7a-915e225a4450@oracle.com>
- <20260410025803.GA20948@openwall.com>
- <aeILrE9J6sYYPmEh@xoff>
- <545dcd82-c8f3-4702-ae81-8b5207791d95@gentoo.org>
- <87mrz1tbu3.fsf@gentoo.org>
+Received: (qmail 26038 invoked from network); 17 Feb 2016 12:28:26 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+X-Mailer: MIME-tools 5.505 (Entity 5.505)
+Message-Id: <E1aW1DA-00065m-A8@xenbits.xen.org>
+CC: Xen.org security team <security@xen.org>
+Date: Wed, 17 Feb 2016 12:28:04 +0000
+From: Xen.org security team <security@xen.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Xen Security Advisory 170 (CVE-2016-2271) - VMX: guest user mode
+ may crash guest with non-canonical RIP
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-In-Reply-To: <87mrz1tbu3.fsf@gentoo.org>
-Subject: Re: [oss-security] Go 1.26.2 and Go 1.25.9 are released with 10
- security fixes
+Content-Transfer-Encoding: 7bit
 
-[ hopefully, discussing binary releases is not off-topic ]
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Sat, Apr 18, 2026 at 12:18:44AM +0100, Sam James wrote:
-> Eli Schwartz <eschwartz@gentoo.org> writes:
-> 
-> > On 4/17/26 6:30 AM, Matthias Ferdinand wrote:
-> >> Perhaps the message did not spread wide enough. Or are many Go programs
-> >> just not affected?
+            Xen Security Advisory CVE-2016-2271 / XSA-170
+                              version 3
 
-> For serious issues, it may make sense for projects distributing binaries
-> (provided they know it was built by a buggy compiler) in the same way
-> they might do for a vulnerable OpenSSL DLL in their Windows offering.
+      VMX: guest user mode may crash guest with non-canonical RIP
+
+UPDATES IN VERSION 3
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+VMX refuses attempts to enter a guest with an instruction pointer which
+doesn't satisfy certain requirements.  In particular, the instruction
+pointer needs to be canonical when entering a guest currently in 64-bit
+mode.  This is the case even if the VM entry information specifies an
+exception to be injected immediately (in which case the bad instruction
+pointer would possibly never get used for other than pushing onto the
+exception handler's stack).  Provided the guest OS allows user mode to
+map the virtual memory space immediately below the canonical/non-
+canonical address boundary, a non-canonical instruction pointer can
+result even from normal user mode execution. VM entry failure, however,
+is fatal to the guest.
+
+IMPACT
+======
+
+Malicious HVM guest user mode code may be able to crash the guest.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions are affected.
+
+Only systems using Intel or Cyrix CPUs are affected. ARM and AMD
+systems are unaffected.
+
+Only HVM guests are affected.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this vulnerability.
+
+Running HVM guests on only AMD hardware will also avoid this
+vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Ling Liu of Qihoo 360 Inc.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch works around this issue.  Note
+that it does so in a way which isn't architecturally correct, but no
+better solution has been found (nor suggested by Intel).
+
+xsa170.patch           xen-unstable, Xen 4.6.x
+xsa170-4.5.patch       Xen 4.5.x, Xen 4.4.x
+xsa170-4.3.patch       Xen 4.3.x
+
+$ sha256sum xsa170*
+77b4b14b2c93da5f68e724cf74e1616f7df2e78305f66d164b3de2d980221a9a  xsa170.patch
+b35679bf7a35615d827efafff8d13c35ceec1184212e3c8ba110722b9ae8426f  xsa170-4.3.patch
+1df068fb439c7edc1e86dfa9ea3b9ae99b58cdc3ac874b96cdf63b26ef9a6b98  xsa170-4.5.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
-> > $ emerge @golang-rebuild
-> > ...
-> > fixing. It is regular like clockwork, so do people really need an
-> > invitation to do so?
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-Personally, I am guilty of not compiling packages myself (except for
-some pkgsrc) and using mostly distributions in binary package form
-(Debian, Ubuntu, Alma). Also, many projects on github release binary
-packages. Doing a fresh release with no change except for the compiler
-used (and some new release version or build number) may make sense for
-those projects with affected binaries.
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
+iQEcBAEBAgAGBQJWxGa0AAoJEIP+FMlX6CvZ3rkIAIo+pvKqkNbHjalgGpP4BVe7
++7tuVnL74wt5Dt4AuOFyPLnEaHbp5UkIKK++eP/urFCz5+/LbOqcWnfiQdWMLQ/t
+17NX2CMSYUCwUAkMMjvbKvGM3W8AJ85naIQho9KQSPbY1/Q51jDS5bLT06B2iRr4
+njML2ii2OhOTGAvC2XmnidFNvLGQxlfeeC75O9dbCFENSYn5WbdmHonTnK8qm22H
+eEvLlzg4D6yAmEaqHHZJ3bz1qtTw5FDNm/0tdZ1LO7lMuK01nMHSMmWG/Agc7219
+lQH22N0+YTtgQKf65QciEThEnvTeDpeq84m64GqVhwzwssl1JrywrSsVkaQOnKA=
+=Ca+d
+-----END PGP SIGNATURE-----
 
-> > IIRC it is possible to determine which packages actually need rebuilding
-> > for any given CVE, but to do so you need to locally extract the entire
-> > recursive deps-included source code of every package, and run some
-> > arcane undocumented `go ....` invocation. Functionally, what you're
-> > doing is checking which programs link to an internal static library
-> > distributed with the go compiler. (This is not exactly correct, but it
-> > is a useful mental model.)
+--=separator
+Content-Type: application/octet-stream; name="xsa170.patch"
+Content-Disposition: attachment; filename="xsa170.patch"
+Content-Transfer-Encoding: base64
 
-Don't know enough Go to check affectedness of any project myself, but if
-it is that difficult it makes me worry even more :-) In the original
-advisory I did not see any mention if/how these issues propagate into
-compiled applications, and I only started worrying after reading the
-blog post about the memory safety issues and seeing that some projects
-had started issuing updates.
+eDg2L1ZNWDogc2FuaXRpemUgcklQIGJlZm9yZSByZS1lbnRlcmluZyBndWVz
+dAoKLi4uIHRvIHByZXZlbnQgZ3Vlc3QgdXNlciBtb2RlIGFycmFuZ2luZyBm
+b3IgYSBndWVzdCBjcmFzaCAoZHVlIHRvCmZhaWxlZCBWTSBlbnRyeSkuIChP
+biB0aGUgQU1EIHN5c3RlbSBJIGNoZWNrZWQsIGhhcmR3YXJlIGlzIGRvaW5n
+CmV4YWN0bHkgdGhlIGNhbm9uaWNhbGl6YXRpb24gYmVpbmcgYWRkZWQgaGVy
+ZS4pCgpOb3RlIHRoYXQgZml4aW5nIHRoaXMgaW4gYW4gYXJjaGl0ZWN0dXJh
+bGx5IGNvcnJlY3Qgd2F5IHdvdWxkIGJlIHF1aXRlCmEgYml0IG1vcmUgaW52
+b2x2ZWQ6IE1ha2luZyB0aGUgeDg2IGluc3RydWN0aW9uIGVtdWxhdG9yIGNo
+ZWNrIGFsbApicmFuY2ggdGFyZ2V0cyBmb3IgdmFsaWRpdHksIHBsdXMgZGVh
+bGluZyB3aXRoIGludmFsaWQgcklQIHJlc3VsdGluZwpmcm9tIHVwZGF0ZV9n
+dWVzdF9laXAoKSBvciBpbmNvbWluZyBkaXJlY3RseSBkdXJpbmcgYSBWTSBl
+eGl0LiBUaGUgb25seQp3YXkgdG8gZ2V0IHRoZSBsYXR0ZXIgcmlnaHQgd291
+bGQgYmUgYnkgbm90IGhhdmluZyBoYXJkd2FyZSBkbyB0aGUKaW5qZWN0aW9u
+LgoKTm90ZSBmdXJ0aGVyIHRoYXQgdGhlcmUgYXJlIGEgdHdvIGVhcmx5IHJl
+dHVybnMgZnJvbQp2bXhfdm1leGl0X2hhbmRsZXIoKTogT25lICh0aHJvdWdo
+IHZteF9mYWlsZWRfdm1lbnRyeSgpKSBsZWFkcyB0bwpkb21haW5fY3Jhc2go
+KSBhbnl3YXksIGFuZCB0aGUgb3RoZXIgY292ZXJzIHJlYWwgbW9kZSBvbmx5
+IGFuZCBjYW4KbmVpdGhlciBvY2N1ciB3aXRoIGEgbm9uLWNhbm9uaWNhbCBy
+SVAgbm9yIHJlc3VsdCBpbiBhbiBhbHRlcmVkIHJJUCwKc28gd2UgZG9uJ3Qg
+bmVlZCB0byBmb3JjZSB0aG9zZSBwYXRocyB0aHJvdWdoIHRoZSBjaGVja2lu
+ZyBsb2dpYy4KClRoaXMgaXMgWFNBLTE3MC4KClJlcG9ydGVkLWJ5OiDliJjk
+u6QgPGxpdWxpbmctaXRAMzYwLmNuPgpTaWduZWQtb2ZmLWJ5OiBKYW4gQmV1
+bGljaCA8amJldWxpY2hAc3VzZS5jb20+ClJldmlld2VkLWJ5OiBBbmRyZXcg
+Q29vcGVyIDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29tPgpUZXN0ZWQtYnk6
+IEFuZHJldyBDb29wZXIgPGFuZHJldy5jb29wZXIzQGNpdHJpeC5jb20+Cgot
+LS0gYS94ZW4vYXJjaC94ODYvaHZtL3ZteC92bXguYworKysgYi94ZW4vYXJj
+aC94ODYvaHZtL3ZteC92bXguYwpAQCAtMjk2OCw3ICsyOTY4LDcgQEAgc3Rh
+dGljIGludCB2bXhfaGFuZGxlX2FwaWNfd3JpdGUodm9pZCkKIHZvaWQgdm14
+X3ZtZXhpdF9oYW5kbGVyKHN0cnVjdCBjcHVfdXNlcl9yZWdzICpyZWdzKQog
+ewogICAgIHVuc2lnbmVkIGxvbmcgZXhpdF9xdWFsaWZpY2F0aW9uLCBleGl0
+X3JlYXNvbiwgaWR0dl9pbmZvLCBpbnRyX2luZm8gPSAwOwotICAgIHVuc2ln
+bmVkIGludCB2ZWN0b3IgPSAwOworICAgIHVuc2lnbmVkIGludCB2ZWN0b3Ig
+PSAwLCBtb2RlOwogICAgIHN0cnVjdCB2Y3B1ICp2ID0gY3VycmVudDsKIAog
+ICAgIF9fdm1yZWFkKEdVRVNUX1JJUCwgICAgJnJlZ3MtPnJpcCk7CkBAIC0z
+NTY2LDYgKzM1NjYsNDEgQEAgdm9pZCB2bXhfdm1leGl0X2hhbmRsZXIoc3Ry
+dWN0IGNwdV91c2VyXwogb3V0OgogICAgIGlmICggbmVzdGVkaHZtX3ZjcHVf
+aW5fZ3Vlc3Rtb2RlKHYpICkKICAgICAgICAgbnZteF9pZHR2X2hhbmRsaW5n
+KCk7CisKKyAgICAvKgorICAgICAqIFZNIGVudHJ5IHdpbGwgZmFpbCAoY2F1
+c2luZyB0aGUgZ3Vlc3QgdG8gZ2V0IGNyYXNoZWQpIGlmIHJJUCAoYW5kCisg
+ICAgICogckZMQUdTLCBidXQgd2UgZG9uJ3QgaGF2ZSBhbiBpc3N1ZSB0aGVy
+ZSkgZG9lc24ndCBtZWV0IGNlcnRhaW4KKyAgICAgKiBjcml0ZXJpYS4gQXMg
+d2UgbXVzdCBub3QgYWxsb3cgbGVzcyB0aGFuIGZ1bGx5IHByaXZpbGVnZWQg
+bW9kZSB0byBoYXZlCisgICAgICogc3VjaCBhbiBlZmZlY3Qgb24gdGhlIGRv
+bWFpbiwgd2UgY29ycmVjdCBySVAgaW4gdGhhdCBjYXNlIChhY2NlcHRpbmcK
+KyAgICAgKiB0aGlzIG5vdCBiZWluZyBhcmNoaXRlY3R1cmFsbHkgY29ycmVj
+dCBiZWhhdmlvciwgYXMgdGhlIGluamVjdGVkICNHUAorICAgICAqIGZhdWx0
+IHdpbGwgdGhlbiBub3Qgc2VlIHRoZSBjb3JyZWN0IFtpbnZhbGlkXSByZXR1
+cm4gYWRkcmVzcykuCisgICAgICogQW5kIHNpbmNlIHdlIGtub3cgdGhlIGd1
+ZXN0IHdpbGwgY3Jhc2gsIHdlIGNyYXNoIGl0IHJpZ2h0IGF3YXkgaWYgaXQK
+KyAgICAgKiBhbHJlYWR5IGlzIGluIG1vc3QgcHJpdmlsZWdlZCBtb2RlLgor
+ICAgICAqLworICAgIG1vZGUgPSB2bXhfZ3Vlc3RfeDg2X21vZGUodik7Cisg
+ICAgaWYgKCBtb2RlID09IDggPyAhaXNfY2Fub25pY2FsX2FkZHJlc3MocmVn
+cy0+cmlwKQorICAgICAgICAgICAgICAgICAgIDogcmVncy0+cmlwICE9IHJl
+Z3MtPl9laXAgKQorICAgIHsKKyAgICAgICAgc3RydWN0IHNlZ21lbnRfcmVn
+aXN0ZXIgc3M7CisKKyAgICAgICAgZ3ByaW50ayhYRU5MT0dfV0FSTklORywg
+IkJhZCBySVAgJWx4IGZvciBtb2RlICV1XG4iLCByZWdzLT5yaXAsIG1vZGUp
+OworCisgICAgICAgIHZteF9nZXRfc2VnbWVudF9yZWdpc3Rlcih2LCB4ODZf
+c2VnX3NzLCAmc3MpOworICAgICAgICBpZiAoIHNzLmF0dHIuZmllbGRzLmRw
+bCApCisgICAgICAgIHsKKyAgICAgICAgICAgIF9fdm1yZWFkKFZNX0VOVFJZ
+X0lOVFJfSU5GTywgJmludHJfaW5mbyk7CisgICAgICAgICAgICBpZiAoICEo
+aW50cl9pbmZvICYgSU5UUl9JTkZPX1ZBTElEX01BU0spICkKKyAgICAgICAg
+ICAgICAgICBodm1faW5qZWN0X2h3X2V4Y2VwdGlvbihUUkFQX2dwX2ZhdWx0
+LCAwKTsKKyAgICAgICAgICAgIC8qIE5lZWQgdG8gZml4IHJJUCBuZXZlcnRo
+ZWxlc3MuICovCisgICAgICAgICAgICBpZiAoIG1vZGUgPT0gOCApCisgICAg
+ICAgICAgICAgICAgcmVncy0+cmlwID0gKGxvbmcpKHJlZ3MtPnJpcCA8PCAo
+NjQgLSBWQUREUl9CSVRTKSkgPj4KKyAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAoNjQgLSBWQUREUl9CSVRTKTsKKyAgICAgICAgICAgIGVsc2UKKyAg
+ICAgICAgICAgICAgICByZWdzLT5yaXAgPSByZWdzLT5fZWlwOworICAgICAg
+ICB9CisgICAgICAgIGVsc2UKKyAgICAgICAgICAgIGRvbWFpbl9jcmFzaCh2
+LT5kb21haW4pOworICAgIH0KIH0KIAogdm9pZCB2bXhfdm1lbnRlcl9oZWxw
+ZXIoY29uc3Qgc3RydWN0IGNwdV91c2VyX3JlZ3MgKnJlZ3MpCg==
 
-A vulnerability in the build chain of course takes more time to assess
-and solve for all binaries in a binary distribution. Or you could just
-issue package updates for all Go applications (as proposed by Eli
-Schwarz).
-Not sure if I would really to want to see either every project/package
-using Go listed under the existing CVEs, or a new CVE issued for each
-just for increased visibility. I just wondered why the impact on
-binaries and binary packages is not being discussed more broadly
-(anywhere, not just oss-security).
+--=separator
+Content-Type: application/octet-stream; name="xsa170-4.3.patch"
+Content-Disposition: attachment; filename="xsa170-4.3.patch"
+Content-Transfer-Encoding: base64
 
-https://security-tracker.debian.org/tracker/CVE-2026-... only lists
-golang packages as affected, with some as already fixed and released,
-e.g.  https://security-tracker.debian.org/tracker/CVE-2026-33810 (DNS
-contraints).
+eDg2L1ZNWDogc2FuaXRpemUgcklQIGJlZm9yZSByZS1lbnRlcmluZyBndWVz
+dAoKLi4uIHRvIHByZXZlbnQgZ3Vlc3QgdXNlciBtb2RlIGFycmFuZ2luZyBm
+b3IgYSBndWVzdCBjcmFzaCAoZHVlIHRvCmZhaWxlZCBWTSBlbnRyeSkuIChP
+biB0aGUgQU1EIHN5c3RlbSBJIGNoZWNrZWQsIGhhcmR3YXJlIGlzIGRvaW5n
+CmV4YWN0bHkgdGhlIGNhbm9uaWNhbGl6YXRpb24gYmVpbmcgYWRkZWQgaGVy
+ZS4pCgpOb3RlIHRoYXQgZml4aW5nIHRoaXMgaW4gYW4gYXJjaGl0ZWN0dXJh
+bGx5IGNvcnJlY3Qgd2F5IHdvdWxkIGJlIHF1aXRlCmEgYml0IG1vcmUgaW52
+b2x2ZWQ6IE1ha2luZyB0aGUgeDg2IGluc3RydWN0aW9uIGVtdWxhdG9yIGNo
+ZWNrIGFsbApicmFuY2ggdGFyZ2V0cyBmb3IgdmFsaWRpdHksIHBsdXMgZGVh
+bGluZyB3aXRoIGludmFsaWQgcklQIHJlc3VsdGluZwpmcm9tIHVwZGF0ZV9n
+dWVzdF9laXAoKSBvciBpbmNvbWluZyBkaXJlY3RseSBkdXJpbmcgYSBWTSBl
+eGl0LiBUaGUgb25seQp3YXkgdG8gZ2V0IHRoZSBsYXR0ZXIgcmlnaHQgd291
+bGQgYmUgYnkgbm90IGhhdmluZyBoYXJkd2FyZSBkbyB0aGUKaW5qZWN0aW9u
+LgoKTm90ZSBmdXJ0aGVyIHRoYXQgdGhlcmUgYXJlIGEgdHdvIGVhcmx5IHJl
+dHVybnMgZnJvbQp2bXhfdm1leGl0X2hhbmRsZXIoKTogT25lICh0aHJvdWdo
+IHZteF9mYWlsZWRfdm1lbnRyeSgpKSBsZWFkcyB0bwpkb21haW5fY3Jhc2go
+KSBhbnl3YXksIGFuZCB0aGUgb3RoZXIgY292ZXJzIHJlYWwgbW9kZSBvbmx5
+IGFuZCBjYW4KbmVpdGhlciBvY2N1ciB3aXRoIGEgbm9uLWNhbm9uaWNhbCBy
+SVAgbm9yIHJlc3VsdCBpbiBhbiBhbHRlcmVkIHJJUCwKc28gd2UgZG9uJ3Qg
+bmVlZCB0byBmb3JjZSB0aG9zZSBwYXRocyB0aHJvdWdoIHRoZSBjaGVja2lu
+ZyBsb2dpYy4KClRoaXMgaXMgWFNBLTE3MC4KClJlcG9ydGVkLWJ5OiDliJjk
+u6QgPGxpdWxpbmctaXRAMzYwLmNuPgpTaWduZWQtb2ZmLWJ5OiBKYW4gQmV1
+bGljaCA8amJldWxpY2hAc3VzZS5jb20+ClJldmlld2VkLWJ5OiBBbmRyZXcg
+Q29vcGVyIDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29tPgpUZXN0ZWQtYnk6
+IEFuZHJldyBDb29wZXIgPGFuZHJldy5jb29wZXIzQGNpdHJpeC5jb20+Cgot
+LS0gYS94ZW4vYXJjaC94ODYvaHZtL3ZteC92bXguYworKysgYi94ZW4vYXJj
+aC94ODYvaHZtL3ZteC92bXguYwpAQCAtMjQ4Niw3ICsyNDg2LDcgQEAgdm9p
+ZCB2bXhfaGFuZGxlX0VPSV9pbmR1Y2VkX2V4aXQoc3RydWN0CiAKIHZvaWQg
+dm14X3ZtZXhpdF9oYW5kbGVyKHN0cnVjdCBjcHVfdXNlcl9yZWdzICpyZWdz
+KQogewotICAgIHVuc2lnbmVkIGludCBleGl0X3JlYXNvbiwgaWR0dl9pbmZv
+LCBpbnRyX2luZm8gPSAwLCB2ZWN0b3IgPSAwOworICAgIHVuc2lnbmVkIGlu
+dCBleGl0X3JlYXNvbiwgaWR0dl9pbmZvLCBpbnRyX2luZm8gPSAwLCB2ZWN0
+b3IgPSAwLCBtb2RlOwogICAgIHVuc2lnbmVkIGxvbmcgZXhpdF9xdWFsaWZp
+Y2F0aW9uLCBpbnN0X2xlbiA9IDA7CiAgICAgc3RydWN0IHZjcHUgKnYgPSBj
+dXJyZW50OwogCkBAIC0yOTk4LDYgKzI5OTgsNDAgQEAgdm9pZCB2bXhfdm1l
+eGl0X2hhbmRsZXIoc3RydWN0IGNwdV91c2VyXwogb3V0OgogICAgIGlmICgg
+bmVzdGVkaHZtX3ZjcHVfaW5fZ3Vlc3Rtb2RlKHYpICkKICAgICAgICAgbnZt
+eF9pZHR2X2hhbmRsaW5nKCk7CisKKyAgICAvKgorICAgICAqIFZNIGVudHJ5
+IHdpbGwgZmFpbCAoY2F1c2luZyB0aGUgZ3Vlc3QgdG8gZ2V0IGNyYXNoZWQp
+IGlmIHJJUCAoYW5kCisgICAgICogckZMQUdTLCBidXQgd2UgZG9uJ3QgaGF2
+ZSBhbiBpc3N1ZSB0aGVyZSkgZG9lc24ndCBtZWV0IGNlcnRhaW4KKyAgICAg
+KiBjcml0ZXJpYS4gQXMgd2UgbXVzdCBub3QgYWxsb3cgbGVzcyB0aGFuIGZ1
+bGx5IHByaXZpbGVnZWQgbW9kZSB0byBoYXZlCisgICAgICogc3VjaCBhbiBl
+ZmZlY3Qgb24gdGhlIGRvbWFpbiwgd2UgY29ycmVjdCBySVAgaW4gdGhhdCBj
+YXNlIChhY2NlcHRpbmcKKyAgICAgKiB0aGlzIG5vdCBiZWluZyBhcmNoaXRl
+Y3R1cmFsbHkgY29ycmVjdCBiZWhhdmlvciwgYXMgdGhlIGluamVjdGVkICNH
+UAorICAgICAqIGZhdWx0IHdpbGwgdGhlbiBub3Qgc2VlIHRoZSBjb3JyZWN0
+IFtpbnZhbGlkXSByZXR1cm4gYWRkcmVzcykuCisgICAgICogQW5kIHNpbmNl
+IHdlIGtub3cgdGhlIGd1ZXN0IHdpbGwgY3Jhc2gsIHdlIGNyYXNoIGl0IHJp
+Z2h0IGF3YXkgaWYgaXQKKyAgICAgKiBhbHJlYWR5IGlzIGluIG1vc3QgcHJp
+dmlsZWdlZCBtb2RlLgorICAgICAqLworICAgIG1vZGUgPSB2bXhfZ3Vlc3Rf
+eDg2X21vZGUodik7CisgICAgaWYgKCBtb2RlID09IDggPyAhaXNfY2Fub25p
+Y2FsX2FkZHJlc3MocmVncy0+cmlwKQorICAgICAgICAgICAgICAgICAgIDog
+cmVncy0+cmlwICE9IHJlZ3MtPl9laXAgKQorICAgIHsKKyAgICAgICAgc3Ry
+dWN0IHNlZ21lbnRfcmVnaXN0ZXIgc3M7CisKKyAgICAgICAgZ2RwcmludGso
+WEVOTE9HX1dBUk5JTkcsICJCYWQgcklQICVseCBmb3IgbW9kZSAldVxuIiwg
+cmVncy0+cmlwLCBtb2RlKTsKKworICAgICAgICB2bXhfZ2V0X3NlZ21lbnRf
+cmVnaXN0ZXIodiwgeDg2X3NlZ19zcywgJnNzKTsKKyAgICAgICAgaWYgKCBz
+cy5hdHRyLmZpZWxkcy5kcGwgKQorICAgICAgICB7CisgICAgICAgICAgICBp
+ZiAoICEoX192bXJlYWQoVk1fRU5UUllfSU5UUl9JTkZPKSAmIElOVFJfSU5G
+T19WQUxJRF9NQVNLKSApCisgICAgICAgICAgICAgICAgaHZtX2luamVjdF9o
+d19leGNlcHRpb24oVFJBUF9ncF9mYXVsdCwgMCk7CisgICAgICAgICAgICAv
+KiBOZWVkIHRvIGZpeCBySVAgbmV2ZXJ0aGVsZXNzLiAqLworICAgICAgICAg
+ICAgaWYgKCBtb2RlID09IDggKQorICAgICAgICAgICAgICAgIHJlZ3MtPnJp
+cCA9IChsb25nKShyZWdzLT5yaXAgPDwgKDY0IC0gVkFERFJfQklUUykpID4+
+CisgICAgICAgICAgICAgICAgICAgICAgICAgICAgKDY0IC0gVkFERFJfQklU
+Uyk7CisgICAgICAgICAgICBlbHNlCisgICAgICAgICAgICAgICAgcmVncy0+
+cmlwID0gcmVncy0+X2VpcDsKKyAgICAgICAgfQorICAgICAgICBlbHNlCisg
+ICAgICAgICAgICBkb21haW5fY3Jhc2godi0+ZG9tYWluKTsKKyAgICB9CiB9
+CiAKIHZvaWQgdm14X3ZtZW50ZXJfaGVscGVyKHZvaWQpCg==
 
-https://ubuntu.com/security/CVE-2026-... are still showing "Needs
-evaluation" for the golang packages, but they contain a comment by Marc
-Deslauriers: "Packages built using golang need to be rebuilt once the
-vulnerability has been fixed."
+--=separator
+Content-Type: application/octet-stream; name="xsa170-4.5.patch"
+Content-Disposition: attachment; filename="xsa170-4.5.patch"
+Content-Transfer-Encoding: base64
 
-Alpine has bumped build numbers, as Chad Dougherty wrote here
-    From: Chad Dougherty <crd477@icloud.com>
-     Not an advisory, but Alpine did this:
-     https://git.alpinelinux.org/aports/commit/?h=3.23-stable&id=f43ed43f4d329cb8cbca59b90c9560ab9e6d8f42
-Alpine also had fresh releases on 2026-04-15, including some updates
-"rebuild with Go ..."
+eDg2L1ZNWDogc2FuaXRpemUgcklQIGJlZm9yZSByZS1lbnRlcmluZyBndWVz
+dAoKLi4uIHRvIHByZXZlbnQgZ3Vlc3QgdXNlciBtb2RlIGFycmFuZ2luZyBm
+b3IgYSBndWVzdCBjcmFzaCAoZHVlIHRvCmZhaWxlZCBWTSBlbnRyeSkuIChP
+biB0aGUgQU1EIHN5c3RlbSBJIGNoZWNrZWQsIGhhcmR3YXJlIGlzIGRvaW5n
+CmV4YWN0bHkgdGhlIGNhbm9uaWNhbGl6YXRpb24gYmVpbmcgYWRkZWQgaGVy
+ZS4pCgpOb3RlIHRoYXQgZml4aW5nIHRoaXMgaW4gYW4gYXJjaGl0ZWN0dXJh
+bGx5IGNvcnJlY3Qgd2F5IHdvdWxkIGJlIHF1aXRlCmEgYml0IG1vcmUgaW52
+b2x2ZWQ6IE1ha2luZyB0aGUgeDg2IGluc3RydWN0aW9uIGVtdWxhdG9yIGNo
+ZWNrIGFsbApicmFuY2ggdGFyZ2V0cyBmb3IgdmFsaWRpdHksIHBsdXMgZGVh
+bGluZyB3aXRoIGludmFsaWQgcklQIHJlc3VsdGluZwpmcm9tIHVwZGF0ZV9n
+dWVzdF9laXAoKSBvciBpbmNvbWluZyBkaXJlY3RseSBkdXJpbmcgYSBWTSBl
+eGl0LiBUaGUgb25seQp3YXkgdG8gZ2V0IHRoZSBsYXR0ZXIgcmlnaHQgd291
+bGQgYmUgYnkgbm90IGhhdmluZyBoYXJkd2FyZSBkbyB0aGUKaW5qZWN0aW9u
+LgoKTm90ZSBmdXJ0aGVyIHRoYXQgdGhlcmUgYXJlIGEgdHdvIGVhcmx5IHJl
+dHVybnMgZnJvbQp2bXhfdm1leGl0X2hhbmRsZXIoKTogT25lICh0aHJvdWdo
+IHZteF9mYWlsZWRfdm1lbnRyeSgpKSBsZWFkcyB0bwpkb21haW5fY3Jhc2go
+KSBhbnl3YXksIGFuZCB0aGUgb3RoZXIgY292ZXJzIHJlYWwgbW9kZSBvbmx5
+IGFuZCBjYW4KbmVpdGhlciBvY2N1ciB3aXRoIGEgbm9uLWNhbm9uaWNhbCBy
+SVAgbm9yIHJlc3VsdCBpbiBhbiBhbHRlcmVkIHJJUCwKc28gd2UgZG9uJ3Qg
+bmVlZCB0byBmb3JjZSB0aG9zZSBwYXRocyB0aHJvdWdoIHRoZSBjaGVja2lu
+ZyBsb2dpYy4KClRoaXMgaXMgWFNBLTE3MC4KClJlcG9ydGVkLWJ5OiDliJjk
+u6QgPGxpdWxpbmctaXRAMzYwLmNuPgpTaWduZWQtb2ZmLWJ5OiBKYW4gQmV1
+bGljaCA8amJldWxpY2hAc3VzZS5jb20+ClJldmlld2VkLWJ5OiBBbmRyZXcg
+Q29vcGVyIDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29tPgpUZXN0ZWQtYnk6
+IEFuZHJldyBDb29wZXIgPGFuZHJldy5jb29wZXIzQGNpdHJpeC5jb20+Cgot
+LS0gYS94ZW4vYXJjaC94ODYvaHZtL3ZteC92bXguYworKysgYi94ZW4vYXJj
+aC94ODYvaHZtL3ZteC92bXguYwpAQCAtMjY3NSw3ICsyNjc1LDcgQEAgdm9p
+ZCB2bXhfaGFuZGxlX0VPSV9pbmR1Y2VkX2V4aXQoc3RydWN0CiB2b2lkIHZt
+eF92bWV4aXRfaGFuZGxlcihzdHJ1Y3QgY3B1X3VzZXJfcmVncyAqcmVncykK
+IHsKICAgICB1bnNpZ25lZCBsb25nIGV4aXRfcXVhbGlmaWNhdGlvbiwgZXhp
+dF9yZWFzb24sIGlkdHZfaW5mbywgaW50cl9pbmZvID0gMDsKLSAgICB1bnNp
+Z25lZCBpbnQgdmVjdG9yID0gMDsKKyAgICB1bnNpZ25lZCBpbnQgdmVjdG9y
+ID0gMCwgbW9kZTsKICAgICBzdHJ1Y3QgdmNwdSAqdiA9IGN1cnJlbnQ7CiAK
+ICAgICBfX3ZtcmVhZChHVUVTVF9SSVAsICAgICZyZWdzLT5yaXApOwpAQCAt
+MzIxOSw2ICszMjE5LDQxIEBAIHZvaWQgdm14X3ZtZXhpdF9oYW5kbGVyKHN0
+cnVjdCBjcHVfdXNlcl8KIG91dDoKICAgICBpZiAoIG5lc3RlZGh2bV92Y3B1
+X2luX2d1ZXN0bW9kZSh2KSApCiAgICAgICAgIG52bXhfaWR0dl9oYW5kbGlu
+ZygpOworCisgICAgLyoKKyAgICAgKiBWTSBlbnRyeSB3aWxsIGZhaWwgKGNh
+dXNpbmcgdGhlIGd1ZXN0IHRvIGdldCBjcmFzaGVkKSBpZiBySVAgKGFuZAor
+ICAgICAqIHJGTEFHUywgYnV0IHdlIGRvbid0IGhhdmUgYW4gaXNzdWUgdGhl
+cmUpIGRvZXNuJ3QgbWVldCBjZXJ0YWluCisgICAgICogY3JpdGVyaWEuIEFz
+IHdlIG11c3Qgbm90IGFsbG93IGxlc3MgdGhhbiBmdWxseSBwcml2aWxlZ2Vk
+IG1vZGUgdG8gaGF2ZQorICAgICAqIHN1Y2ggYW4gZWZmZWN0IG9uIHRoZSBk
+b21haW4sIHdlIGNvcnJlY3QgcklQIGluIHRoYXQgY2FzZSAoYWNjZXB0aW5n
+CisgICAgICogdGhpcyBub3QgYmVpbmcgYXJjaGl0ZWN0dXJhbGx5IGNvcnJl
+Y3QgYmVoYXZpb3IsIGFzIHRoZSBpbmplY3RlZCAjR1AKKyAgICAgKiBmYXVs
+dCB3aWxsIHRoZW4gbm90IHNlZSB0aGUgY29ycmVjdCBbaW52YWxpZF0gcmV0
+dXJuIGFkZHJlc3MpLgorICAgICAqIEFuZCBzaW5jZSB3ZSBrbm93IHRoZSBn
+dWVzdCB3aWxsIGNyYXNoLCB3ZSBjcmFzaCBpdCByaWdodCBhd2F5IGlmIGl0
+CisgICAgICogYWxyZWFkeSBpcyBpbiBtb3N0IHByaXZpbGVnZWQgbW9kZS4K
+KyAgICAgKi8KKyAgICBtb2RlID0gdm14X2d1ZXN0X3g4Nl9tb2RlKHYpOwor
+ICAgIGlmICggbW9kZSA9PSA4ID8gIWlzX2Nhbm9uaWNhbF9hZGRyZXNzKHJl
+Z3MtPnJpcCkKKyAgICAgICAgICAgICAgICAgICA6IHJlZ3MtPnJpcCAhPSBy
+ZWdzLT5fZWlwICkKKyAgICB7CisgICAgICAgIHN0cnVjdCBzZWdtZW50X3Jl
+Z2lzdGVyIHNzOworCisgICAgICAgIGdkcHJpbnRrKFhFTkxPR19XQVJOSU5H
+LCAiQmFkIHJJUCAlbHggZm9yIG1vZGUgJXVcbiIsIHJlZ3MtPnJpcCwgbW9k
+ZSk7CisKKyAgICAgICAgdm14X2dldF9zZWdtZW50X3JlZ2lzdGVyKHYsIHg4
+Nl9zZWdfc3MsICZzcyk7CisgICAgICAgIGlmICggc3MuYXR0ci5maWVsZHMu
+ZHBsICkKKyAgICAgICAgeworICAgICAgICAgICAgX192bXJlYWQoVk1fRU5U
+UllfSU5UUl9JTkZPLCAmaW50cl9pbmZvKTsKKyAgICAgICAgICAgIGlmICgg
+IShpbnRyX2luZm8gJiBJTlRSX0lORk9fVkFMSURfTUFTSykgKQorICAgICAg
+ICAgICAgICAgIGh2bV9pbmplY3RfaHdfZXhjZXB0aW9uKFRSQVBfZ3BfZmF1
+bHQsIDApOworICAgICAgICAgICAgLyogTmVlZCB0byBmaXggcklQIG5ldmVy
+dGhlbGVzcy4gKi8KKyAgICAgICAgICAgIGlmICggbW9kZSA9PSA4ICkKKyAg
+ICAgICAgICAgICAgICByZWdzLT5yaXAgPSAobG9uZykocmVncy0+cmlwIDw8
+ICg2NCAtIFZBRERSX0JJVFMpKSA+PgorICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICg2NCAtIFZBRERSX0JJVFMpOworICAgICAgICAgICAgZWxzZQor
+ICAgICAgICAgICAgICAgIHJlZ3MtPnJpcCA9IHJlZ3MtPl9laXA7CisgICAg
+ICAgIH0KKyAgICAgICAgZWxzZQorICAgICAgICAgICAgZG9tYWluX2NyYXNo
+KHYtPmRvbWFpbik7CisgICAgfQogfQogCiB2b2lkIHZteF92bWVudGVyX2hl
+bHBlcihjb25zdCBzdHJ1Y3QgY3B1X3VzZXJfcmVncyAqcmVncykK
 
-Arch linux appears not to have recompiled Go applications (or at least
-not all of them, only checked restic)
-
-repo.almalinux.org does not show updated golang versions, so probably
-no recompiled Go applications either.
-
-
-Matthias
+--=separator--
