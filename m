@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2054" "Tuesday" "21" "June" "2016" "08:00:53" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160621120053.0711D72E27D@smtpvbsrv1.mitre.org>" "50" "[oss-security] Re: CVE request for PHP bug #68978: \"XSS in header() with Internet Explorer\" (2015)" nil nil nil "6" "2016062112:00:53" "[oss-security] Re: CVE request for PHP bug #68978: \"XSS in header() with Internet Explorer\" (2015)" (number mark "U       cve-assign@m Jun 21   50/2054  " thread-indent "\"[oss-security] Re: CVE request for PHP bug #68978: \"XSS in header() with Internet Explorer\" (2015)\"\n") "<16A71325-B291-4AE5-8689-54374BA32C8F@nextcloud.com>" ("<16A71325-B291-4AE5-8689-54374BA32C8F@nextcloud.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1826" "Wednesday" "17" "February" "2016" "10:30:32" "+0100" "Florent Daigniere" "florent.daigniere@trustmatta.com" "<1455701432.2704.1.camel@trustmatta.com>" "55" "Re: [oss-security] Re: Umbraco - The open source ASP.NET CMS Multiple Vulnerabilities" "^Cc:" nil nil "2" "2016021709:30:32" "[oss-security] Re: Umbraco - The open source ASP.NET CMS Multiple Vulnerabilities" (number mark "        florent.daig Feb 17   55/1826  " thread-indent "\"Re: [oss-security] Re: Umbraco - The open source ASP.NET CMS Multiple Vulnerabilities\"\n") "<20160216222342.CCC126FC01D@smtpvmsrv1.mitre.org>" ("<20160216222342.CCC126FC01D@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13928 invoked by uid 550); 21 Jun 2016 12:01:05 -0000
+Received: (qmail 10132 invoked by uid 550); 17 Feb 2016 09:30:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 10104 invoked from network); 17 Feb 2016 09:30:13 -0000
+Authentication-Results: filter.trustmatta.local; dkim=pass
+	reason="1024-bit key; unprotected key"
+	header.d=trustmatta.com header.i=@trustmatta.com header.b=JpQ4aesa;
+	dkim-adsp=pass; dkim-atps=neutral
+X-Spam-ASN:  
+Message-ID: <1455701432.2704.1.camel@trustmatta.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trustmatta.com;
+	s=dkim2015; t=1455701398;
+	bh=hsPHSQ0W6p0LIzCNI0HALXfRASJhYhBnOIXcxGutuq8=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References;
+	b=JpQ4aesaQoPl2yTlmrAz5MiOAkx8gtEwNLIM3IelGA4IOWe+hP/C3CWAHoC/XnboM
+	 zrNsOrSz6oee+x1VVWErqq1OledFIpuO59j/c8hDtB4eZY1UFUvkfdqkSx2P4j/Ldi
+	 yX75c3SHgKwT3itjfpEtU27I6uW30LIXO8jgD3SA=
+In-Reply-To: <20160216222342.CCC126FC01D@smtpvmsrv1.mitre.org>
+References: <20160216222342.CCC126FC01D@smtpvmsrv1.mitre.org>
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-bLL1TBQm88HYnujf3rma"
+Mime-Version: 1.0
+X-Envelope-From: <florent.daigniere@trustmatta.com>
+Cc: cve-assign@mitre.org
+Date: Wed, 17 Feb 2016 10:30:32 +0100
+From: Florent Daigniere <florent.daigniere@trustmatta.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13907 invoked from network); 21 Jun 2016 12:01:05 -0000
-From: cve-assign@mitre.org
-To: lukas@nextcloud.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <16A71325-B291-4AE5-8689-54374BA32C8F@nextcloud.com>
-Message-Id: <20160621120053.0711D72E27D@smtpvbsrv1.mitre.org>
-Date: Tue, 21 Jun 2016 08:00:53 -0400 (EDT)
-Subject: [oss-security] Re: CVE request for PHP bug #68978: "XSS in header() with Internet Explorer" (2015)
+Subject: Re: [oss-security] Re: Umbraco - The open source ASP.NET CMS
+ Multiple Vulnerabilities
+To: oss-security@lists.openwall.com, sandeepk.l337@gmail.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--=-bLL1TBQm88HYnujf3rma
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> PHP security bug #68978 (https://bugs.php.net/bug.php?id=68978) also
-> warrants a CVE identifier:
+On Tue, 2016-02-16 at 17:23 -0500, cve-assign@mitre.org wrote:
+> > http://issues.umbraco.org/issue/U4-7457
+> > SSRF
+>=20
+> > the feedproxy.aspx is used to access the external resources using
+> > the URL GET parameter.
+>=20
+> > http://local/Umbraco/feedproxy.aspx?url=3Dhttp://bobsite/index
+> >=20
+> > once you change the URL to the
+> > http://local/Umbraco/feedproxy.aspx?url=3Dhttp://127.0.0.1:80/index,=20
+> > you able
+> > to access the localhost application of the server.
+> >=20
+> > Using this payload change the port number to perform port scanning
+> > of the
+> > server. It will be helpful to find the more details of the server.
+> > For example:
+> >=20
+> > http://local/Umbraco/feedproxy.aspx?url=3Dhttp://127.0.0.1:25/index
+> > http://local/Umbraco/feedproxy.aspx?url=3Dhttp://127.0.0.1:8080/index
+> >=20
+> > If the port number is closed, you will find the error message on
+> > the
+> > feedproxy.aspx page.
+>=20
+> Use CVE-2015-8813.
+>=20
 
->> The filtering in header() function is not sufficient and this can
->> lead to header injection and content injection (XSS) when the client
->> is Internet Explorer (in every tested version).
+How different is it from=C2=A0CVE-2012-1301 ? Have they re-introduced it?
 
->> IE accepts %0A%20 or %0D%0A%20 as separator in HTTP while other
->> browser treat the new line beginning with space as the continuation
->> of the previous header. This can lead to header injection or content
->> injection (basically, XSS) in IE.
+Florent=
 
-> PHP's documentation (http://php.net/manual/en/function.header.php)
-> explicitly states that since version 5.2.1 PHP natively prevents
-> header injections:
+--=-bLL1TBQm88HYnujf3rma
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
 
->> This function now prevents more than one header to be sent at once
->> as a protection against header injection attacks.
-
-> My understanding is that the corresponding upstream commit can be
-> found at
-> https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b
-
-Use CVE-2015-8935.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXaSwPAAoJEHb/MwWLVhi2PwAP/RxDG+I/240T4Bof1AeJd/0e
-h4da07InmmtISwUyEQJQVJMnZt+A0ewrwn+Ipdm8haaqwO3fsIrm0eRk2HR8VZQE
-Wf7cq1FIPaIwCTaAAEBOpMhXN3/A/GnOJC8gzKFZIvbDTFbs8F6kE6JBB3E52B07
-G940pVZtWNjhyeloo543q2Xt0eFy1CmFqxsf3vTQHgXU1y+twgpW9fd1kbyfz70t
-Cj53kZW8jcShxLzCc6nDeT91sBWM54v24h8zAiUCLMLCDvahfYzfOqqXRZHhEhcc
-sSkft1FdBO8ED4FXZ8r1n6hRdMrrbi2Y0DNxCxoEm77Yz6gqMg267RqxHbLdBVK+
-5f2WOc1Xhy3K09ORxjlu0fgqnSp9MhEwaQqo1oOu9xgQNvjKbn4gulSTH68St35h
-6zISQrWWYO/T9g/G+dEF/K/oNrjwfvhLdiGd4Np4GA/Z3rmBREXNCpjZ8lYQzZrk
-YoGWg5xSCkcy0W9uh0H6A/d9aDRKxixATbOx7HvaxeAB6jd7Xgr4Jlq7bbLPu1qu
-IqPrlNfES06j/06CFtdee6iPcBLz80gM/A5yxQ5fi/+nakkhb7PWYBQc9ilkChkq
-3DLtFno9zuERUN1skN2lsfSB8/dCWuhtzlCJFAENgw7BE3CkSDQ/x6oW7ELSK39k
-mP+W41Ni4/lIlRuf8zZn
-=0A1M
+iQEcBAABCAAGBQJWxD24AAoJEOrF6/B6qcKjGjUH/2H0LuWLD3w+KF1gXXXAJsrM
++RsQZBFGApQaKFHmDPdmO2NpHTX+0ZA1iy9yU3CGvWZB3nN85G8krGySxH47zFlm
+Gqu5jaWCY9BZLKBQaX0HclCPTcrfv/rzJSE9DG111KFWSsa3RMn06wbDRIH9vOdX
+P9X1p+uei5LGRgWoWidUZ6uYDqH2evPlo/+FU98PqQPrsdgj4lTPspSDHlm9xgYL
+Akgnhl+I0aX5njX1foDthOKv5xmyGyTWYz80HVUb9hmMeKk6ddOqskZCJtizSYRa
+JlDGLC8Ud2p+Pd81Fk1gwZwdGD1YYxnAJOGwxCRofPCF+PUGQp2y79eI0z1/cgs=
+=/MqE
 -----END PGP SIGNATURE-----
+
+--=-bLL1TBQm88HYnujf3rma--
