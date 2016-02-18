@@ -1,72 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/07/6
-Message-ID: <568EA307.7070605@redhat.com>
-Date: Thu, 7 Jan 2016 17:40:23 +0000
-From: Tristan Cacqueray <tdecacqu@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2016-001] Nova host data leak through snapshot (CVE-2015-7548)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/18/15
+Message-ID: <56C649A7.7080105@gmail.com>
+Date: Thu, 18 Feb 2016 16:45:59 -0600
+From: Austin English <austinenglish@...il.com>
+To: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Re: CVE request for wget
 Content-Type: text/plain; charset=utf-8
 
-===================================================
-OSSA-2016-001: Nova host data leak through snapshot
-===================================================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-:Date: January 07, 2016
-:CVE: CVE-2015-7548
+On 12/24/2015 12:05 PM, Austin English wrote:
+> On Tue, Nov 3, 2015 at 10:19 PM, Austin English
+> <austinenglish@...il.com> wrote:
+>> And 1.7 is now out as well: 
+>> https://tails.boum.org/news/version_1.7/index.en.html
+>> 
+>> With the fix included and documented
+>> 
+>> On Mon, Nov 2, 2015 at 2:37 AM, Austin English
+>> <austinenglish@...il.com> wrote:
+>>> 
+>>> The fix has been released in 1.7-rc1, 
+>>> https://tails.boum.org/news/test_1.7-rc1/index.en.html
+>>> 
+>>> On Mon, Oct 26, 2015 at 3:21 PM, Austin English
+>>> <austinenglish@...il.com> wrote:
+>>>> 
+>>>> On Thu, Oct 1, 2015 at 6:10 PM, Seth Arnold
+>>>> <seth.arnold@...onical.com> wrote:
+>>>>> On Thu, Oct 01, 2015 at 06:57:26PM -0400,
+>>>>> cve-assign@...re.org wrote:
+>>>>>> If there is any additional Tails vulnerability related to
+>>>>>> this, another CVE ID may be needed. For example,
+>>>>>> 
+>>>>>> https://lists.gnu.org/archive/html/bug-wget/2015-08/msg00050.html
+>>>>>>
+>>>>>>
+>>>>>> 
+says
+>>>>>> 
+>>>>>> to be 100% sure, you should add --passive-ftp to your
+>>>>>> command line. If you don't do that, your /etc/wgetrc or
+>>>>>> ~/.wgetrc could include --no-passive-ftp (or passiveftp =
+>>>>>> off).
+>>>>>> 
+>>>>>> If Tails is supposed to try to ensure that, perhaps
+>>>>>> there's a requirement to have something like:
+>>>>>> 
+>>>>>> alias wget="wget --passive-ftp"
+>>>>>> 
+>>>>>> in a system-wide location (possibly /etc/bash.bashrc).
+>>>>>> The concept of CVE IDs for "failure of a torify step"
+>>>>>> issues is new, and we aren't sure of the best approach.
+>>>>> 
+>>>>> I suspect using a bash alias in a site-wide config might
+>>>>> then qualify for another CVE in the future, along the lines
+>>>>> of "programs that spawn wget via system(3), popen(3), or
+>>>>> exec family of functions can use unsafe active mode by
+>>>>> accident". If Tails is in the business of fixing these
+>>>>> things for safety, removing active ftp support from tools
+>>>>> seems like better fix.
+>>>>> 
+>>>>> Thanks
+>>>> 
+>>>> A fix has been applied to Tails git:
+>>>> 
+>>>> https://labs.riseup.net/code/projects/tails/repository/revisions/b9
+fd6312435d55dd0bc0b6abdb7994da4d66e2b2
+>>>>
+>>>>
+>>>> 
+In short, the wget binary is moved to /usr/lib/wget/wget, and a
+>>>> wrapper script is put in place in /usr/bin/wget. The wrapper
+>>>> ensures that wget is called via torsocks, and additionally,
+>>>> also forces --passive-ftp.
+>>>> 
+>>>> Moving wget to /usr/lib/wget/wget gets the potentially
+>>>> dangerous wget binary out of $PATH. A dedicated attacker
+>>>> could check if /usr/bin/wget is a script and then parse it to
+>>>> find the actual binary, but that would need to be a very
+>>>> dedicated attacker and at that point, there are more feasible
+>>>> attacks available.
+> 
+> This CVE has been fixed in a released version for quite some time, 
+> what is needed to get this published/resolved?
 
+Ping.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-Affects
-~~~~~~~
-- Nova: <=2015.1.2, ==12.0.0
-
-
-Description
-~~~~~~~~~~~
-Matthew Booth from Red Hat reported a vulnerability in Nova instance
-snapshot. By overwriting the disk inside an instance with a malicious
-image and requesting a snapshot, an authenticated user would be able
-to read an arbitrary file from the compute host. Note that the host
-file needs to be readable by the nova user to be exposed except when
-using lvm for instance storage, when all files readable by root are
-exposed. Only setups using libvirt to spawn instances are vulnerable.
-Of these, setups which use filesystem storage, and do not set
-"use_cow_images = False" in Nova configuration are not affected.
-Setups which use ceph or lvm for instance storage, and setups which
-use filesystem storage with "use_cow_images = False" are all affected.
-
-
-Patches
-~~~~~~~
-- https://review.openstack.org/264819 (Kilo)
-- https://review.openstack.org/264820 (Kilo)
-- https://review.openstack.org/264821 (Kilo)
-- https://review.openstack.org/264815 (Liberty)
-- https://review.openstack.org/264816 (Liberty)
-- https://review.openstack.org/264817 (Liberty)
-- https://review.openstack.org/264812 (Mitaka)
-- https://review.openstack.org/264813 (Mitaka)
-- https://review.openstack.org/264814 (Mitaka)
-
-
-Credits
-~~~~~~~
-- Matthew Booth from Red Hat (CVE-2015-7548)
-
-
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/bugs/1524274
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7548
-
-
-Notes
-~~~~~
-- This fix will be included in future 2015.1.3 (kilo) and 12.0.1
-(liberty) releases.
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+iQIcBAEBCAAGBQJWxkmbAAoJEBT71+qgQZN7RpsP/1awlNnGYkiY5EZtywc+6zYV
+/dIyEtmuQI41Yk2eVCImgXgHK4ZDd8YjOxI9Ad7SOoCVp83qEfHJmshWbihREefA
+8ScXQ8LXs/F1265ylx26kOyWptqt2UbRaHUSadFGolE/B5im8D574kI1VBxTT7Uh
+Qr/aoCRDysIloEAo354mzn8kxDQeyMcG1+UaLXPMRKvuSy4btYszY4dQpC9HYQiK
+2UWqJda5r8AN38u0xtr1W6W+lYrO0HXqA5PRyHXlCEmdTpnhm+boUaBt+0XMQf/s
+58nUjDEnt3l4R0U2U7Mph9Wv9zFVezIPyFavh9tdUi+Z9wDAvB0MGeSg3nub7DEw
+2blC9tmy+FLooZ6DONYupLsrtE66Ugpj330ZLgZP2M/PXsEWd28U/lZs0SPN7WdB
+UMKCrAjhmpJiVISae0/OABj+Ht2seeJC9a0z8PucrcFdQrc2nVaq3Rl0D9NDi4//
+Rfj1jG1OdZpeBsHtApMRoNJ1EcWDddokjachvQgIWWM2H/G4XPfq9Y1SCvQ8W8NQ
+9ek1m5XyRvkoAFngR30hfSpBEToRqS1CYMWcKnu03Ab+D56Mi78fFmbV99LmxIYX
+I6uzb6BvAFDcEzn4x3xe9VJWIw4nc7obB+zgnMiWpMRlQz5TYjxIbb7+tBvJWDoK
+HhSjXSFqiDRWRl8swuoN
+=m327
+-----END PGP SIGNATURE-----
