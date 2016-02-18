@@ -1,49 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/18/10
-Message-Id: <20160918170654.46FF36C5824@smtpvmsrv1.mitre.org>
-Date: Sun, 18 Sep 2016 13:06:54 -0400 (EDT)
-From: cve-assign@...re.org
-To: felixk3y@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request : Exponent CMS 2.3.9 SQL injection vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/18/9
+Message-ID: <20160218110831.17429da5@pc1>
+Date: Thu, 18 Feb 2016 11:08:31 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Address Sanitizer local root
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> 1)
-> https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/addressbook/controllers/addressController.php#L166-L175
+Thanks a lot for your analysis.
+
+On Wed, 17 Feb 2016 23:19:21 +0100
+Szabolcs Nagy <nsz@...t70.net> wrote:
+
+> https://blog.hboeck.de/archives/879-Safer-use-of-C-code-running-Gentoo-with-Address-Sanitizer.html
+> (the later was presented at FOSDEM 2016:
+> https://fosdem.org/2016/schedule/event/csafecode/ )
 > 
-> 2)
-> https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/blog/controllers/blogController.php#L192-L195
-> 
-> 3)
-> https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/core/controllers/expCommentController.php#L129-L134
-> 
-> https://github.com/exponentcms/exponent-cms/commit/e916702a91a6342bbab483a2be2ba2f11dca3aa3
+> While these are interesting projects, ASan should not be
+> used for hardening in production systems in its current form,
+> so at least the language ("hardening", "protection", "safe")
+> should be fixed.
 
-Use CVE-2016-7400 for all of the SQL injection issues fixed in
-e916702a91a6342bbab483a2be2ba2f11dca3aa3.
+Given that this is my work (I did the asanized Gentoo and the FOSDEM
+talk) I think I should answer.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+I hope I have made it clear that whether using asan for production
+purposes makes any sense was an open question to me. I have placed
+warnings that this is experimental and I didn't recommend any production
+use right now.
 
-iQIcBAEBCAAGBQJX3shoAAoJEHb/MwWLVhi2SKgP/0ROz868/9VNunPODC3o0SNo
-DH/VdQ0h1DRDwWBA4R1Lc16Qlsee4m8gInD+8e0LtKWc07OMzg+VqHICTdW3COUd
-Cd+nXTMRmr9T/TIsvfN/tEch23o36/z4d1kA9QDgODELvNW3EsQXwDePMlWbRi80
-7u2Y6uf7gshQmq95fSlsbawkj+0813X5XvCxX22wXZWGCQhlAP9ejxv1Q+Z4qbyu
-JEY5DXYubfEjXsv1AIKyoiAGSGesO3MeXoGXYnPFd8V18NJNZiz4xHe0hurYVhuH
-LNBnsZKO7whSciiUgcXKopbzkKloMEVEdHlu+HZ63eALvMWcKxQrxGlcKTVBWcOs
-CKUlsTjnD7liEZk46HIiVVSUFLnxCR/Q3koR0tgfBRNJQ9zpoMxNwxFKEi0366/Y
-MHDYKuYUvefMTDQJhtVYYNANCC+LQxdeBwfQsVFZnp/2JbCGDs5OSlUwl7WFTVh2
-nI7kF8lqUpDIni5VhYAniEUedGToFMgusDQaWCLWV34Tyhm5XfGn7bMZVr3HLPn9
-wTsfRJnItjgerHSpnezcSc+i4dALBINpjxYyqJCbRMmIx/pwlI77W/fShgXq6VLh
-0eJmP32P3sRV+sGYYphMSUQuyA9Lv3YA9oEuct1/gcGyQDzqhd1HklhbX2/UpykW
-ftRu2RktzIYSf/3CC5oL
-=rC1I
------END PGP SIGNATURE-----
+I was aware about the performance and memory costs of asan, and I was
+aware that there are risks involved, but it appeared to me that
+balancing issues out it would still be a security win and might
+therefore be an option for some highly security sensitive environments.
+Your mail makes it clear to me that I was in error and at least in its
+current form asan is probably not suitable for secure use at all.
+I will add a note to my blogpost and the Gentoo wiki with a link to
+your mail to make this clear.
+
+
+Appart from that I wonder whether this should have any consequences for
+asan and which ones. Would it be desirable to:
+a) Try to fix security issues like the one you presented with suid
+binaries? (not sure what the best fix would be, maybe detect suid
+binaries and drop privileges back to user [not sure if that's even
+possible]).
+b) Leave issues unfixed and declare that asan is just not good for
+production use. In this case I agree that the asan documentation should
+probably include some more obvious warnings / explanations of the
+risks involved.
+c) Some other variant, like splitting asan into two different variants.
+One could imagine having a new cflag that would enable asan, but
+disable some of the ASAN_OPTIONS things like logging (however thinking
+about this I don't like it - if I imagine running asan on some kind of
+server I would want to be able to log issues).
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
