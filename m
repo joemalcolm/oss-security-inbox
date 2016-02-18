@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7035" "Tuesday" "14" "May" "2019" "08:54:18" "+0000" "halfdog" "me@halfdog.net" nil "150" nil nil nil nil "5" nil nil (number mark "U       me@halfdog.n May 14  150/7035  " thread-indent "\"Re: [oss-security] fprintd: found storing user fingerprints without encryption\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] fprintd: found storing user fingerprints without encryption" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3720" "Thursday" "18" "February" "2016" "16:45:59" "-0600" "Austin English" "austinenglish@gmail.com" "<56C649A7.7080105@gmail.com>" "97" "Re: [oss-security] Re: CVE request for wget" nil nil nil "2" "2016021822:45:59" "[oss-security] Re: CVE request for wget" (number mark "U       austinenglis Feb 18   97/3720  " thread-indent "\"Re: [oss-security] Re: CVE request for wget\"\n") "<CACC5Q1cpNSrJ-OqwKEj_tO3BZRtppzYZ1yxzf_D-a2YZWN9-tA@mail.gmail.com>" ("<CACC5Q1eQ8jf-nxub=viXgnSt6pZGzSzbV=RD2YXV76NVHw7WTQ@mail.gmail.com>" "<20151001225726.9EF7AB2E0A6@smtpvbsrv1.mitre.org>" "<20151001231046.GB16643@hunt>" "<CACC5Q1dPzS3C_9L_vVx4scx7UaE38OqXcC0g6zFPE-Eb-tYRSw@mail.gmail.com>" "<CACC5Q1dRGnLHyxwEznn5Hm+Pym_ijXAsQuAT=AD16zaeUWSLgw@mail.gmail.com>" "<CACC5Q1f5f2j6GCpBidR44=HY=2UAwZEJhtV+adJa1i7TK+76SQ@mail.gmail.com>" "<CACC5Q1cpNSrJ-OqwKEj_tO3BZRtppzYZ1yxzf_D-a2YZWN9-tA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21984 invoked by uid 550); 14 May 2019 08:54:22 -0000
+Received: (qmail 3767 invoked by uid 550); 18 Feb 2016 22:46:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,167 +12,146 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21966 invoked from network); 14 May 2019 08:54:21 -0000
-From: halfdog <me@halfdog.net>
-To: oss-security@lists.openwall.com
-In-reply-to: <CAPZbWncFa4YvkvGUEYW5L=50-brSWt_aBKthkCzC+5zd4Vk+WQ@mail.gmail.com>
-References: <CAPZbWnf64OLnNjuJuzmmsVNSi8tOPX+Kaiy0Evd47dw+NQP3NQ@mail.gmail.com> <CAPZbWne7ggvhAc3q22e1kYgmiQi7L+OTTmzXh8YBybZrcDHvjg@mail.gmail.com> <alpine.LNX.2.02.1905081051030.29468@i8.fpunygfrxha.qr> <6fe9f0a9-01d6-369c-5146-23c7a6d9555c@thermi.consulting> <CAPZbWnfDh0dZ8wpnLN7OsXAkKrBPyfnt52Cnz=74t4XCVXG3BQ@mail.gmail.com> <dc36d64e-ac76-29f7-5d54-225b54c2d707@thermi.consulting> <CAPZbWnfVUF-YR21kg=1c7Yh8wW=QBhOd0hW+2pvMjf+eyA=KUg@mail.gmail.com> <CAPZbWncGi8L7OkotuHnajwKutYEmPnY8oYc6gwG8yeMY0wPTNA@mail.gmail.com> <alpine.LNX.2.02.1905081352280.25606@i8.fpunygfrxha.qr> <872-1557480054.563908@mmCb.bu1W.zlxn> <CAPZbWnfSknrMDTR+5wjGO6Bgcym8uLa60etn7NXab987tE7quQ@mail.gmail.com> <CAPZbWncFa4YvkvGUEYW5L=50-brSWt_aBKthkCzC+5zd4Vk+WQ@mail.gmail.com>
-Comments: In-reply-to Seong-Joong Kim <sungjungk@gmail.com>
-   message dated "Sat, 11 May 2019 09:20:12 +0900."
+Received: (qmail 3747 invoked from network); 18 Feb 2016 22:46:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=C3vJj51bbxt06+0PSFwcOFxQBEruReXWwonowLg7HRw=;
+        b=VavF4aMTTlMhB3nYMtV3OgE19/Z5gH9sI+gxS6FBTCNiXOWGc8Ywl/HeOsN6bScCGx
+         aGb5azqKktTVc9n7/JjJnKWPwFATCZ55k3qpwG/5BNa6GFf+2OZQ8UW8RBDiIuRHaoR5
+         lhvPlsDbfe439lLwD/y7OmHQ/Nz2CMsZOLQ5f1L92aWsVzkyxQXKEWHKTHQu2Ax2KwmD
+         cn4BRXD5pxGXi1Ppv/nCWiMt1sku85iucOZWtRqF7VJBetQfcdLnp0y00a2YbBXnGrHd
+         TkgVk9W6U08hLElNGcSUGfQAfEAIAWZutEL1NnGBiAVPf5tx171tzYGkMe72mMXZfSsR
+         ZXAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=C3vJj51bbxt06+0PSFwcOFxQBEruReXWwonowLg7HRw=;
+        b=AzIKxMAFyxG6L7HJi6bjfXY9QaTVUvdx3+0k4EVoPoFZLz6S5FUkTWJEDAKZ72qmKY
+         TG+hzniQaqvCYgodJtM4U2LyeQsP5AWJnKRQKZ1Is67UPxMxzFkl5IfNjKrVysHd+cgN
+         Oowqzk79KmwuHOwbXu1Im+p62aG7Ft6gqgT1dTrc3dmXEIsD7B857FwPJfXKbatGOUCC
+         dmerPfI2gzk0Ge2qdWN3Ybh82tYSRTM2eZV/42kQo/Yaql2lm/oUBjqdp/LI7yzLiUud
+         ZIUbE0i8QELZuV7EMSHZD30gyGlz2tkQUmzcBA+PNxbWRAmjUPYmlPi3iLtauPHoa8Qr
+         BVlw==
+X-Gm-Message-State: AG10YOTuNJj7kZNrIsRzq09ffRtjOlKzMLne1ZzwGhK8IyJ8Ab7Bltm9Q3tborrJ7gFQ3w==
+X-Received: by 10.140.99.69 with SMTP id p63mr11740291qge.97.1455835562028;
+        Thu, 18 Feb 2016 14:46:02 -0800 (PST)
+To: cve-assign@mitre.org, oss-security@lists.openwall.com
+References: <CACC5Q1eQ8jf-nxub=viXgnSt6pZGzSzbV=RD2YXV76NVHw7WTQ@mail.gmail.com>
+ <20151001225726.9EF7AB2E0A6@smtpvbsrv1.mitre.org>
+ <20151001231046.GB16643@hunt>
+ <CACC5Q1dPzS3C_9L_vVx4scx7UaE38OqXcC0g6zFPE-Eb-tYRSw@mail.gmail.com>
+ <CACC5Q1dRGnLHyxwEznn5Hm+Pym_ijXAsQuAT=AD16zaeUWSLgw@mail.gmail.com>
+ <CACC5Q1f5f2j6GCpBidR44=HY=2UAwZEJhtV+adJa1i7TK+76SQ@mail.gmail.com>
+ <CACC5Q1cpNSrJ-OqwKEj_tO3BZRtppzYZ1yxzf_D-a2YZWN9-tA@mail.gmail.com>
+From: Austin English <austinenglish@gmail.com>
+Message-ID: <56C649A7.7080105@gmail.com>
+Date: Thu, 18 Feb 2016 16:45:59 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-Date: Tue, 14 May 2019 08:54:18 +0000
-Message-ID: <2958-1557824058.656142@_q-Y.dRjQ.knDW>
-Subject: Re: [oss-security] fprintd: found storing user fingerprints without encryption
+In-Reply-To: <CACC5Q1cpNSrJ-OqwKEj_tO3BZRtppzYZ1yxzf_D-a2YZWN9-tA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Re: CVE request for wget
 
-Seong-Joong Kim writes:
-> Additionally,  I think that fingerprint reader is widely used
-> on laptop, rather than standalone product for PC. It is hard
-> to find standalone product in supporting device officially,
-> except for Digital Persona U.are.U and Eikon Touch series.
-> (see https://fprint.freedesktop.org/supported-devices.html)
-> Most of them are forms of fingerprint module or no longer sell
-> the standalone product.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Lack of external fingerprint readers with very short unsecured
-biometric data path from reader to smart-card is most likely
-due to the weak security of fingerprint data. Therefore this
-device would fulfill highest biometric data storage and processing
-requirements but using biometric data of nearly lowest security
-value (latent fingerprints, high resolution (press) images of
-fingers, reconstruction of fingerprint from biometric templates,
-ease of printing fingerprints and spoofing alive-detection, ...).
-Therefore external devices for fingerprint processing should
-be rare. The situation is different when looking at other biometric
-methods.
+On 12/24/2015 12:05 PM, Austin English wrote:
+> On Tue, Nov 3, 2015 at 10:19 PM, Austin English
+> <austinenglish@gmail.com> wrote:
+>> And 1.7 is now out as well: 
+>> https://tails.boum.org/news/version_1.7/index.en.html
+>> 
+>> With the fix included and documented
+>> 
+>> On Mon, Nov 2, 2015 at 2:37 AM, Austin English
+>> <austinenglish@gmail.com> wrote:
+>>> 
+>>> The fix has been released in 1.7-rc1, 
+>>> https://tails.boum.org/news/test_1.7-rc1/index.en.html
+>>> 
+>>> On Mon, Oct 26, 2015 at 3:21 PM, Austin English
+>>> <austinenglish@gmail.com> wrote:
+>>>> 
+>>>> On Thu, Oct 1, 2015 at 6:10 PM, Seth Arnold
+>>>> <seth.arnold@canonical.com> wrote:
+>>>>> On Thu, Oct 01, 2015 at 06:57:26PM -0400,
+>>>>> cve-assign@mitre.org wrote:
+>>>>>> If there is any additional Tails vulnerability related to
+>>>>>> this, another CVE ID may be needed. For example,
+>>>>>> 
+>>>>>> https://lists.gnu.org/archive/html/bug-wget/2015-08/msg00050.html
+>>>>>>
+>>>>>>
+>>>>>> 
+says
+>>>>>> 
+>>>>>> to be 100% sure, you should add --passive-ftp to your
+>>>>>> command line. If you don't do that, your /etc/wgetrc or
+>>>>>> ~/.wgetrc could include --no-passive-ftp (or passiveftp =
+>>>>>> off).
+>>>>>> 
+>>>>>> If Tails is supposed to try to ensure that, perhaps
+>>>>>> there's a requirement to have something like:
+>>>>>> 
+>>>>>> alias wget="wget --passive-ftp"
+>>>>>> 
+>>>>>> in a system-wide location (possibly /etc/bash.bashrc).
+>>>>>> The concept of CVE IDs for "failure of a torify step"
+>>>>>> issues is new, and we aren't sure of the best approach.
+>>>>> 
+>>>>> I suspect using a bash alias in a site-wide config might
+>>>>> then qualify for another CVE in the future, along the lines
+>>>>> of "programs that spawn wget via system(3), popen(3), or
+>>>>> exec family of functions can use unsafe active mode by
+>>>>> accident". If Tails is in the business of fixing these
+>>>>> things for safety, removing active ftp support from tools
+>>>>> seems like better fix.
+>>>>> 
+>>>>> Thanks
+>>>> 
+>>>> A fix has been applied to Tails git:
+>>>> 
+>>>> https://labs.riseup.net/code/projects/tails/repository/revisions/b9
+fd6312435d55dd0bc0b6abdb7994da4d66e2b2
+>>>>
+>>>>
+>>>> 
+In short, the wget binary is moved to /usr/lib/wget/wget, and a
+>>>> wrapper script is put in place in /usr/bin/wget. The wrapper
+>>>> ensures that wget is called via torsocks, and additionally,
+>>>> also forces --passive-ftp.
+>>>> 
+>>>> Moving wget to /usr/lib/wget/wget gets the potentially
+>>>> dangerous wget binary out of $PATH. A dedicated attacker
+>>>> could check if /usr/bin/wget is a script and then parse it to
+>>>> find the actual binary, but that would need to be a very
+>>>> dedicated attacker and at that point, there are more feasible
+>>>> attacks available.
+> 
+> This CVE has been fixed in a released version for quite some time, 
+> what is needed to get this published/resolved?
 
-But still security could be improved getting rid of at least
-unencrypted/unprotected storage of the fingerprint templates
-for comparison, e.g. in schemes like: using notebook fingerprint
-reader, performing biometric template generation on notebook
-main processor (if attacker has already access to the processor,
-RAM at this moment, the fingerprint data for unlocking is usually
-of no great value any more), submit the biometric data to the
-secure element for comparison (a NFC smart card, inserted smart
-card or USB dongle) and use the then unlocked key data to perform
-e.g. decryption. Therefore the biometric data is only left unsecured
-on weak hardware from ackquisition to processing but not on disk.
+Ping.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-> Currently, most of major vendors' laptops, including Dell,
-> HP and Lenovo, have been equipped with both embedded fingerprint
-> module and TPM. Thus, I suggested implementing interfaces to
-> talk with hardware security module.
-
-If I understand correctly, TPMs usually cannot be loaded with
-special purpose secure applets, e.g. to perform the fingerprint
-comparison on chip. If current TPMs are already capable, this
-would be really the way to go for the average customer (average
-security usecases/requirements).
-
-I personally would not like that solution too much and would
-appreciate something where the key data is not located within
-the device or at least require two simultaneous factors to unlock
-the TPM, e.g. a passphrase + biometric data.
-
-Otherwise you can just use the fingerprints on the stolen laptop
-to recover the biometric data - unless you are working with gloves
-all the time :-)
-
-If your master key storage can be removed easily, e.g. an USB-dongle
-(mind the max number of plug/unplug cycles for common connectors),
-theft of key storage and device at the same time will be quite
-rare. Apart from that, the key store can also be used to perform
-emergency locking/shutdown of the device, e.g. by unplugging it.
-
-hd
-
-> 2019년 5월 10일 (금) 오후 7:31, Seong-Joong Kim
-> <sungjungk@gmail.com>님이 작성:
->
->> I think my initial suggestion is not really good enough.
->>
->> Currently, there is no way to defend this issue except for
->> supporting hardware, such as TPM or USB token, rather than
->> encryption by software in Linux environment.
->>
->> If necessary, how about implementing interfaces to talk with
->> hardware security module, such as TPM or PKCS#11 compatible
->> devices.
->>
->> Otherwise, users should avoid using fingerprint
->> authentication/identification.
->>
->> Any idea?
->>
->> Sincerely,
->>
->> 2019년 5월 10일 (금) 오후 6:22, halfdog
->> <me@halfdog.net>님이 작성:
->>
->>> Roman Drahtmueller writes: > [...] > > > I am not insisting
->>> that encryption key should be on the disk or is > > encrypted
->>> with a static key that is embedded in the binary. > > Instead,
->>> we can make fprintd to use a TPM, if available. > > > The
->>> problem persists: The encryption key must be available for
->>> the FP > data to be accessible, and so it is for an attacker.
->>> It doesn't matter > where you store the key. > > A TPM (and,
->>> transitively, products that encrypt with TPM-sealed or >
->>> TPM-bound key material) is good for the situation where the
->>> system is > physically stolen while powered down (or the
->>> drive fails). But that's not > our problem here.
->>>
->>> Therefore dedicated tamper-proof IC-designs+embedded software
->>> exist, that perform the biometry template storage and matching
->>> on the chip (MoC). There are some vendors out there providing
->>> such hardware + MoC-algorithms, but mainly fingerprint and
->>> some iris biometry variants seem certified so far. These
->>> are intended for access cards or USB-tokens in two or more-factor
->>> authentication schemes in a 1-to-1 match fashion, not as
->>> centralized 1-to-many matching schemes also deployed rarely
->>> (e.g. in Japan where they really like biometrics as long
->>> as you do not have to touch the biometry reader ...).
->>>
->>> > [...] > > > Otherwise, but even though it is not perfect,
->>> it would be better to apply > > the fingerprint data protection,
->>> such as keyring or access control, rather > > than raw fingerprint
->>> template. > > FYI, Windows Hello might use Next Generation
->>> Cryptography (called CNG) to > > protect and store user private
->>> data and encryption keys. > > There are not many options
->>> left to solve the stored credential problem, > and it should
->>> be clear that saving a file, encrypted or not, is not the
->>> > solution. > > One possible solution is to use a hash algorithm,
->>> potentially cost-based, > to derive a bit string (that is
->>> suitable for comparison with the > persisted authoritative
->>> string) from the output of a fingerprint reader.
->>>
->>> At the momenent I do not know of any algorithms providing
->>> sufficient entropy binary hash data from fingerprints in
->>> a reliable way. Changing extraction to deliver more entropy
->>> results in higher FNR during authentication step later on,
->>> I think.
->>>
->>> > [...]
->>>
->>> When working on a project to provide highest security MoC
->>> solutions with Linux (for other type of biometry, not
->>> fingerprints), Nitrokey was offering an open-source USB-token
->>> hardware (even the PCBs are open source, if I remember correctly).
->>> That platform seemed closest to be a good starting point
->>> for developing such an open source MoC biometry solution
->>> as they sell also one part with a certified tamper proof
->>> trusted element that seemed to allow performing biometry
->>> template storage and comparison on chip if programmed correctly.
->>>
->>> Time in the project was too limited to explore, if that hardware
->>> would REALLY allow to upgrade it to a powerful, highly secure
->>> but still affordable open source biometry system for use
->>> by journalists, human rights activists, NGOs ... and nerds,
->>> e.g. for password+biometry secured full disk encryption schemes.
->>>
->>> > [...]
->>>
->>> hd
->>>
->>>
-
+iQIcBAEBCAAGBQJWxkmbAAoJEBT71+qgQZN7RpsP/1awlNnGYkiY5EZtywc+6zYV
+/dIyEtmuQI41Yk2eVCImgXgHK4ZDd8YjOxI9Ad7SOoCVp83qEfHJmshWbihREefA
+8ScXQ8LXs/F1265ylx26kOyWptqt2UbRaHUSadFGolE/B5im8D574kI1VBxTT7Uh
+Qr/aoCRDysIloEAo354mzn8kxDQeyMcG1+UaLXPMRKvuSy4btYszY4dQpC9HYQiK
+2UWqJda5r8AN38u0xtr1W6W+lYrO0HXqA5PRyHXlCEmdTpnhm+boUaBt+0XMQf/s
+58nUjDEnt3l4R0U2U7Mph9Wv9zFVezIPyFavh9tdUi+Z9wDAvB0MGeSg3nub7DEw
+2blC9tmy+FLooZ6DONYupLsrtE66Ugpj330ZLgZP2M/PXsEWd28U/lZs0SPN7WdB
+UMKCrAjhmpJiVISae0/OABj+Ht2seeJC9a0z8PucrcFdQrc2nVaq3Rl0D9NDi4//
+Rfj1jG1OdZpeBsHtApMRoNJ1EcWDddokjachvQgIWWM2H/G4XPfq9Y1SCvQ8W8NQ
+9ek1m5XyRvkoAFngR30hfSpBEToRqS1CYMWcKnu03Ab+D56Mi78fFmbV99LmxIYX
+I6uzb6BvAFDcEzn4x3xe9VJWIw4nc7obB+zgnMiWpMRlQz5TYjxIbb7+tBvJWDoK
+HhSjXSFqiDRWRl8swuoN
+=m327
+-----END PGP SIGNATURE-----
