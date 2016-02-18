@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["917" "Tuesday" "11" "October" "2016" "09:03:36" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkJ5Dc6JwjZsb9EbhbYKDJe4vwXmpe9usRHepZp7GQF5MQ@mail.gmail.com>" "22" "[oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems" "^Date:" nil nil "10" "2016101116:03:36" "[oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems" (number mark "        taviso@googl Oct 11   22/917   " thread-indent "\"[oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems\"\n") "<CAJ_zFkL0F5i-=14bDxN3_PDAvNqQT8PMNGmmij60DLuaHj+meA@mail.gmail.com>" ("<CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>" "<CAJ_zFkL0F5i-=14bDxN3_PDAvNqQT8PMNGmmij60DLuaHj+meA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["365" "Thursday" "18" "February" "2016" "22:13:03" "+0100" "Pere Orga" "pere@orga.cat" "<CAMYtjAq5Mb+gVHxmYYMJqxvx0=VR_fAEePODPVgNJfrOGZA9Kg@mail.gmail.com>" "16" "[oss-security] CVE requests for Drupal contributed modules (2016-006, 2016-007)" nil nil nil "2" "2016021821:13:03" "[oss-security] CVE requests for Drupal contributed modules (2016-006, 2016-007)" (number mark "U       pere@orga.ca Feb 18   16/365   " thread-indent "\"[oss-security] CVE requests for Drupal contributed modules (2016-006, 2016-007)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11751 invoked by uid 550); 11 Oct 2016 16:04:10 -0000
+Received: (qmail 20217 invoked by uid 550); 18 Feb 2016 21:13:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11733 invoked from network); 11 Oct 2016 16:04:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=HVsP69i68LC3PXrxqhgnCIIBUPve+J7krn11YFh1gYE=;
-        b=hM7Dlzkgdu2xT4XvnCnmHSAqjIxirewklKO+Oqdpqc/H425Xq1McU4YAdGZ+f6nkZu
-         HKYsYwvAGd6SESruZx/Ew+h5m36E/NJsVLElu8w+tVPbqNgRvW5Mhx2Mq2X495wtj6Uy
-         BviPsL3eMHd2gPNHzMSBW6iux/jOpHKV6BU37U1dtvd9RMSdqisUEMPBS8A98qqUTH+Z
-         OoKQCGVtcFfxNPH1Z2UbX1FTChFPtA7Mg5HmO6S0z6IQ24qEuEj1QSqGOZo46W73njrO
-         8qq/MsEdzKvmj2bwes4fbCaXCWNco/LKj+3UOKe7CT5Im+O/j2Xxgif451WtfBtJtAx6
-         59SQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=HVsP69i68LC3PXrxqhgnCIIBUPve+J7krn11YFh1gYE=;
-        b=aw6IgA2npCPq1HuPskwsLGcGXN/bVKXmtcbr3JSilCf3bqfjGJDAtgLZu16bp6NVtJ
-         LHGguG8VrQMhugtKG5j/c0yLRPzUinNVlW6GYPkjZr9pT3xP+xJBzqpGEvPkkHJOLWeN
-         E00GU4goETIdj60OFG0wq72q/AvKX8luitawHQdOIoi+wJRcEZjfrlIeog80F8MyRDOI
-         jW2am1ER6HG1rmI9UNE2/1ZTbSr9rE+GJLJ1vU4lO3P6qUQ5msUlMrXWSBfQiIG/cSqJ
-         OHbMxU6wLtHvSs8duKK34YRlGTJgVZF5WssAPnrHCkTv1iZunAIUfhmc/VyqyTstLnb3
-         M5lw==
-X-Gm-Message-State: AA6/9RnY4AiM0JTwOTypLvxnM2r8Q+v0K4z84OTs0PZV7RAYKK+QMUKl2B/C56FCZ4JKIP+who6eygcDH/05ZPfK
-X-Received: by 10.31.234.194 with SMTP id i185mr3767321vkh.127.1476201837266;
- Tue, 11 Oct 2016 09:03:57 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CAJ_zFkL0F5i-=14bDxN3_PDAvNqQT8PMNGmmij60DLuaHj+meA@mail.gmail.com>
-References: <CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>
- <CAJ_zFkL0F5i-=14bDxN3_PDAvNqQT8PMNGmmij60DLuaHj+meA@mail.gmail.com>
-Message-ID: <CAJ_zFkJ5Dc6JwjZsb9EbhbYKDJe4vwXmpe9usRHepZp7GQF5MQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 11 Oct 2016 09:03:36 -0700
-From: Tavis Ormandy <taviso@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
+Received: (qmail 20193 invoked from network); 18 Feb 2016 21:13:51 -0000
+X-Gm-Message-State: AG10YOSyWWRdmMe/NVdGaGyGV9csF9CgkctZ377vtM9wk+lzf8P/nAsocbNqXcorQWfLdcwiW1ygUF8F3g91ow==
+X-Received: by 10.28.109.150 with SMTP id b22mr5867091wmi.27.1455830002594;
+ Thu, 18 Feb 2016 13:13:22 -0800 (PST)
+MIME-Version: 1.0
+From: Pere Orga <pere@orga.cat>
+Date: Thu, 18 Feb 2016 22:13:03 +0100
+X-Gmail-Original-Message-ID: <CAMYtjAq5Mb+gVHxmYYMJqxvx0=VR_fAEePODPVgNJfrOGZA9Kg@mail.gmail.com>
+Message-ID: <CAMYtjAq5Mb+gVHxmYYMJqxvx0=VR_fAEePODPVgNJfrOGZA9Kg@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Cc: Drupal Security Team <security@drupal.org>
+Content-Type: text/plain; charset=UTF-8
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator3111.hostgator.com
+X-AntiAbuse: Original Domain - lists.openwall.com
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - orga.cat
+X-BWhitelist: no
+X-Source-IP: 74.125.82.50
+X-Exim-ID: 1aWVt7-000E1K-3A
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: mail-wm0-f50.google.com [74.125.82.50]:35421
+X-Source-Auth: pere@orga.cat
+X-Email-Count: 2
+X-Source-Cap: bmV0b2w7bmV0b2w7Z2F0b3IzMTExLmhvc3RnYXRvci5jb20=
+Subject: [oss-security] CVE requests for Drupal contributed modules (2016-006, 2016-007)
 
-On Wed, Oct 5, 2016 at 1:12 PM, Tavis Ormandy <taviso@google.com> wrote:
-> On Wed, Oct 5, 2016 at 9:13 AM, Tavis Ormandy <taviso@google.com> wrote:
->> bug: type confusion in .initialize_dsc_parser allows remote code execution
->> id: http://bugs.ghostscript.com/show_bug.cgi?id=697190
->> repro: http://bugs.ghostscript.com/show_bug.cgi?id=697190#c0
->> patch: http://git.ghostscript.com/?p=ghostpdl.git;h=875a0095f37626a721c7ff57d606a0f95af03913
->
-> It was pointed out to me that my testcase doesn't work on the 9.0x
-> versions, because it doesn't allow encoding 64-bit integers, but it's
-> still exploitable.
->
+Hi
 
-Here is a different type confusion bug, originally I thought it was
-just a NULL dereference, but after seeing the patch it does look
-exploitable.
+Please can I have CVE IDs assigned to the following vulnerabilities:
 
-patch: http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=f5c7555c303
-repro: clear 16#41414141 .sethalftone5
+Commerce Authorize.Net SIM/DPM Payment Methods - Access Bypass -
+DRUPAL-SA-CONTRIB-2016-006
+https://www.drupal.org/node/2670632
 
-Please assign a CVE for this one.
+Nodejs - Access bypass - DRUPAL-SA-CONTRIB-2016-007
+https://www.drupal.org/node/2670636
 
-Tavis.
+Many thanks
+
+Regards
+-- 
+Pere Orga on behalf of the Drupal Security team
