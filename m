@@ -1,4 +1,9 @@
-Received: (qmail 5753 invoked by uid 550); 16 Feb 2024 19:07:17 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5292" "Thursday" "18" "February" "2016" "14:39:47" "+0100" "Balint Reczey" "balint@balintreczey.hu" "<56C5C9A3.6090800@balintreczey.hu>" "124" "Re: [oss-security] Address Sanitizer local root" nil nil nil "2" "2016021813:39:47" "[oss-security] Address Sanitizer local root" (number mark "U       balint@balin Feb 18  124/5292  " thread-indent "\"Re: [oss-security] Address Sanitizer local root\"\n") "<20160218110831.17429da5@pc1>" ("<20160217221921.GB24130@port70.net>" "<20160218110831.17429da5@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11341 invoked by uid 550); 18 Feb 2016 13:55:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,158 +12,168 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5732 invoked from network); 16 Feb 2024 19:07:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=message-id : date :
- subject : to : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=corp-2023-11-20;
- bh=lFaRVhAjKmZhfyYOBUloH02X7AiuytSDnvMsb0LBpXU=;
- b=JIUDnOAZyebYyKtpTsod4WbZqyRkgdHs3mTmMUuo9GRfMYolEuyh7qlOHf+dXZmTmwic
- vJcW7rVdgL/YDLKJroFhjQz0Jriqsg+gA1FTc4onD+z09MqLuPHYz9PtwBRLb+8s8WZU
- bsr5msW/syK1Z92UjprVr2+I5GVh9ednfpyc4w6OfZeHvPjXS2JxNmLCWe64NkeZvZ90
- vOmnvYc2D2tvBHpE+xd3PePLPViutEn/JfLyVqSXaNW5g+r42XqCJdUrXC5o1zfg/yMF
- MIIiHsqvmFChAkvvkZUycbnMvUfWe6dyo/daVnDHTE+vPHjQpk4j0YnRVzqWZQNsqDyh NQ== 
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=dfiY6UcrQqQ07btgL9dnaflHHhIxyjC1BKnTOfGnz9SARBSHtbdgNNYbUntXWT1FqSVtB8t30KTKATzi18gZKTHlGao44sFeMbmrPHlr03dFjF9Tb6rnsAYP6PZEptRKS1NA/6CDuoTroEL62TOvuafZOx70plC1zbHxtqxOa7C83y2SPx0Lg3801RpvRHenzfzRHn9XMQowSczyLVnGSFffSl+mM1eUThhvHnzC+01VY1RLYYXY98IYHlR6VFXLG/g9CDfc9Drz8k1W1SzSpqyHMROU2x9gfeynU1rS9GnaSl1LXIIwMTEJ79zJH7evIFS6rB26HJg3bX7EJeePdQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lFaRVhAjKmZhfyYOBUloH02X7AiuytSDnvMsb0LBpXU=;
- b=T14W4+nR0+iLE4Z4f7IA3Wm2xgDKv5ppJ3tlmfh+D2L0nRnOtPaA2Pg1Sp/xg4nv/WIr2NalnFVMpdY5WB0cdzA+VA3VrcRnDtmwIChxSFBLJ2/jDGT5GE9T2UyuLys8A5BO9T/z1YSTsYdeBXMpJhB7Jmiva/6VauxS7cJ/5SW4l2/c6E5jxFUXa4n2RuTZVnjy9uZ6l5gHe0uJc8V9CVZO4/YSjt0o4+16TsgaRNn6W2zuVQRNjM1OO6eWK7RRlS40ty24aFVrPR3fqPspT8+pAFDQfKF8BGv0tdzvCBWSLLwh7czA6E3GIDNhl0hkGJKku08GLfCxmoIZYtB7gA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+Received: (qmail 28147 invoked from network); 18 Feb 2016 13:40:12 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lFaRVhAjKmZhfyYOBUloH02X7AiuytSDnvMsb0LBpXU=;
- b=YQqX7Is4yIN66Jog9AOui/3M8uy+IKiB5CdzMJIo09/XAsOCw/GB/GIX+nXCuF5LQSm2jc9OZAsCGvjw+55VqETccW9ZP1NkC9afUL1NwOummugpwAbUB27X0mp6NJK/Z4yZcwMI1AuFdg2sbLnCGIHcFcgBXFPLv9d0QPPeHKE=
-Message-ID: <e8c3ae93-ea1d-42cb-aa77-20f71782f638@oracle.com>
-Date: Fri, 16 Feb 2024 11:10:08 -0800
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
+        d=gmail.com; s=20120113;
+        h=sender:subject:to:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to;
+        bh=GHgHkgdZy/5w9TtRM9FxRGFGJ+8V2rHpvxZ75B9dK0o=;
+        b=cEeEhbQ3LqCAzUhRbt6lzRKlWgsWGVn84sXvGYZ5TaJeEGGTmnKhRIg+C9cwj9V2ML
+         yIvzxQrwa5WkimbOCLpENKQD8xfwhpLRhEtOy89rdcXUNBuUUXttktJoPZptvcC7I1ws
+         hThyKJLMbjd5/BlmIsLXisxCSh6Wc3uWG5XCUAXyzfb3IlyyynSEnUgUQTKHJy3E56Rp
+         v0/DXMGbjw7+NfcQXbrJK7TxeJPscZko8ZLfVTHFVgEzeiZK04+RSpmPYBYoQum8iVIP
+         ncDUPPXiixxQvqBcGMkyL0vFiwAHjkgdw7hRxVIaZWDVS7qTGCj7iI3xpsqo/05QrnVh
+         g0zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:subject:to:references:from:message-id
+         :date:user-agent:mime-version:in-reply-to;
+        bh=GHgHkgdZy/5w9TtRM9FxRGFGJ+8V2rHpvxZ75B9dK0o=;
+        b=EiNv6N05TIFWGKHPjPfuhlqsThpGiI6dbLFbKm+gTvjVSFUhUPY3qu5p0XCK+iDJsr
+         AheI3QCsg7L7XhTGDZH/Oq/NxCkkCAzbDqek8wbL3tDvz3rVhp3Z607emdG0ltON4YIB
+         WK4xvUrNrvUnZ848Sp+W2m5b1BqrLuDXy4wdR4ugGlBYOszx06dz8O2xHNIJA5x2IlpS
+         LVG8DYlGS6RflAO+rmzkrwD+smQglgKWaBnibPuFQJIbmyAEl3BL6vDZSmn/bRX3jHTH
+         qNAKBa0zFjLQgE9byrcF1BVezuptkhcVtH7BsSJgn9WHvi7rnhjqzfQwzy+UG6GgfwZH
+         rdUA==
+X-Gm-Message-State: AG10YOQnbuaEtS6zYy9DG5b+sTxWU551/biCyfZetmlPEJOGGQBumwcyMkvPWw6KKdB2Tw==
+X-Received: by 10.28.96.85 with SMTP id u82mr3328001wmb.81.1455802801121;
+        Thu, 18 Feb 2016 05:40:01 -0800 (PST)
+Sender: =?UTF-8?B?UsOpY3pleSBCw6FsaW50?= <rbalint@gmail.com>
 To: oss-security@lists.openwall.com
-References: <8f2901ed-401d-441a-bcf5-f23eda0d9e88@nlnetlabs.nl>
- <bf47ae9d-4a0f-4446-b224-c8c7f08e44e2@oracle.com>
- <20240213215209.GA4099@openwall.com> <20240213223436.GA4355@openwall.com>
-From: Alan Coopersmith <alan.coopersmith@oracle.com>
-Autocrypt: addr=alan.coopersmith@oracle.com; keydata=
- xsDiBEab+moRBACDH5yKqS3wcc5bdxY7PBNuwKvF5TKMfagmSvuRDtZjjIIWaA/nZ1KboV9G
- q5g7kP7+Kfu+Qgd8u65eVsWwmPW10fXvj3aCU53glx2EdGdrHcgiyH2gEQfPiyBw+trIppWF
- RV0IDXSLMA1FNC92t2nSG/VFHaPTVwcgkIRSfcXDvwCglGdEa6f4uLqoNHP+m4yYnzapFuMD
- /R4+2AJDAvEWKDdYCGZzlawjAmmWyXrmT7/C/mx98qUR473l4buXjHgDkkXXlHqdzil1vK85
- PhrKzNJDCCmlHUJNz+QwiAMOLwpD+kwVPb57RG7y+a5JQ5+jtVw4RlUxZIk/wj2An9YBO3A5
- vR7PdjM32ZJCN2+aM4dYfNzQxQKTA/47icvBaBVTl9rztjg2pd2Aqpc1P/GsIYLGj7XjnnJv
- GAENBHSH1QjpZMJGCTS9oJ+B0/wrIr+pA+MdFgYAb6ojMQJOO6UChjWWSGjMFcs/CeXhxlLB
- ido3DtAETbNTwO6OEfAvdosvTdhJFnwvZlJ+zZGGy5CrF2Fd9PUe9tmASc0uQWxhbiBDb29w
- ZXJzbWl0aCA8YWxhbi5jb29wZXJzbWl0aEBvcmFjbGUuY29tPsKCBBMRCgBCAhsDBgsJCAcD
- AgYVCAIJCgsEFgIDAQIeAQIXgAIZARYhBEoZPAbTXnxnD6TvC6L7nggfLRMOBQJkQs2eBQkn
- DNS0AAoJEKL7nggfLRMO1esAnR4FVD60BpDY/bJp5RC1VXhOVlo4AKCJgsQeVeGLxDlMuhAm
- bcCkOjafqc7BTQRGm/pvEAgAmnlpSWGjmtSGlLqKTuymwBAU9G7Jw8ow27QngXS/86g/PTzm
- yhXzK0uPgeoIaTZlqaHWNKCWJnC6T2btXtaDHH6cElrClYNf94os5sSt8PBDh184W+NtctAy
- Y2dA1pQYhYs8/eXwa4E4cyrrQG75M+CHrbu9Se0vlERARCpNcjNYLpTXRCwNuUvAi905VJ0Y
- XnGX83WbJfNIq+uxnBa2gVzwb2/2FwKOG03Wyb1vs6NznWJle9x61y8/LlEDoBRbfIQTFp51
- R0ue8gX2yMVgh8lYVViHYCBq+cat7p8X41Xa/fN/HfBFPsf3/+bhggNgmaBmDJBxxd6BPB8Y
- EireiwADBgf/UWIxQwwRLkiXPacOoh34MJYQIBTrCC8gVFxetlbEPEH5mueZMJegAPTF52l8
- 6REenxdNVz/0xT7BD6VlHHY5DowlbRca4W8eb3gpkX/wfNYDYCHtTifT7ewumTrNZx5mrbNk
- 0XTJVOPAP3z7E0rVD2w/xo4p22DzIwfeGKwpHqt1b6Z9fmrRDwaiXaFmwUf+rIiGc/OFcOSe
- 46HwTmIyTOt6NVdQSf75jOPbdeM/n1I5svOdWTLEj6QEj2q9UQ98UEPJuMdaotyBFwKlcDOO
- LMSL793fWINrYSskdXhHjaht5wWqI+egO2JfciI/vP1+bEzhpY9llGq+r7WG3nCSf8JJBBgR
- AgAJBQJGm/pvAhsMAAoJEKL7nggfLRMOgugAoIdhGnD9d/IS6fDVgv+4xnOXvyohAJ0VVxc1
- uoPzepWFbgvLuHIMvyjRog==
-In-Reply-To: <20240213223436.GA4355@openwall.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BYAPR07CA0084.namprd07.prod.outlook.com
- (2603:10b6:a03:12b::25) To DS7PR10MB5005.namprd10.prod.outlook.com
- (2603:10b6:5:3ac::15)
+References: <20160217221921.GB24130@port70.net> <20160218110831.17429da5@pc1>
+From: Balint Reczey <balint@balintreczey.hu>
+Message-ID: <56C5C9A3.6090800@balintreczey.hu>
+Date: Thu, 18 Feb 2016 14:39:47 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.5.0
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS7PR10MB5005:EE_|CY5PR10MB6237:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4884bb1e-fadc-4309-f1b9-08dc2f22e528
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 
-	hkh/BK+vCitq4b3lhpQ4XoIJalmo6OZCATt0NKH6XEfQgf+DoVad4w9g4eHbIXvaHD+/UCpaBux66KAdlIwaX0FvQ3wR5hh2PJRGLd6NN2Ih9BM5eakY8o5vi09/EQFwm+y2rGvF10ECPZQmFpYGR9pZTEVGTHJdW+BGwCJ09mkc2ulyVxh6fZnpRb/mzG6dsXucH9PsVPcKuLZ9pqKfOUOK8J/SQJXyNO5/Ti7altu58+AZp0WuUMdsR4ngHX1vW1F0uXK+s07d6CzvTXzFowEInQp1HxIKXxO9Q/BbEb0L6KbDh0P8wccr3xinWHrmpmKAEbxqTeNoAyGN37va8tm239jEqu7kygp9rNSrcN3iR3zZ216acsm6pQovbwWkFbE9I9hBpVMq0YtAJmm4rxD7oSIYLO6X062dU7WXwhgXzS6QVatUObR43TEJtV89BN2A1vJWmzUUt5y8Njd5BjdV0lOjJAX9lha8u6eTP/jIfjl9DqknM0EX3HWHV8Ns/YBowDkpB1vVU1e1rXgJqMeHZk8+c+/UcCuFo+cXaUs=
-X-Forefront-Antispam-Report: 
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR10MB5005.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(346002)(39860400002)(396003)(366004)(376002)(230922051799003)(186009)(451199024)(64100799003)(1800799012)(31686004)(2906002)(5660300002)(4744005)(44832011)(26005)(66946007)(8676002)(41300700001)(2616005)(66556008)(8936002)(66476007)(53546011)(6916009)(966005)(6506007)(316002)(478600001)(6486002)(6512007)(86362001)(31696002)(38100700002)(36756003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 
-	=?utf-8?B?WmVJV3pOdTBGVGM5Mmk1UnRmRkhCUUxFYkpjVHdOR2Z5eExRcnBPSDBWMC9j?=
- =?utf-8?B?N0czeVFxdjZjRktaVVc4SHhTVlI5K2ZuZFE3QXVKblJ4SlZSZlozdWd1d0Yr?=
- =?utf-8?B?WjVPYW51YXZyRHo5c2ZRek9lZVhQNy9ZaTEvWHdYbjJmWEx1VDBlODhQZ2px?=
- =?utf-8?B?Y04wZ1JhSjdwVytzZmk1eTE4dWlwQWlKWVpHb1ZBWWhHL2ZhMlZKblFSUjdB?=
- =?utf-8?B?alRLZFRUZXdxbCtLV1ZyVldVeWJBQ2lWZnZYdm5SakhjUUM1TmZVbVc1TW5p?=
- =?utf-8?B?MHNzdHo0Y1JuNDVoNU5sb01HYWtOQmVhNkxkNFgxUm5HY1pTSVl1TU5oK2pW?=
- =?utf-8?B?OGxGNmdwdE5TTkMyMkpCSWRTdTVIcW8xM2pYZitRMk9qbWtVdTc5UnRSSmsv?=
- =?utf-8?B?VTl2UWRZY1RLVmY2b0tTQmFHTkVwV3kwaXVtVktMbmtaYzdCWmNxVEY4RFdH?=
- =?utf-8?B?OUM3eExRbkdKaWJjd1F3WVdjck9ZOWJxajFTeUVYcFdkbTZOOHhFQlpKQUkx?=
- =?utf-8?B?bXdMbDA1R090dU5yYXpiSFNsNlVBamdhVFdZKzkvOW5zY3k0MGlZT3hPMzAx?=
- =?utf-8?B?V3VEaG5xVWxiMlcreEoyblROMVZvVThmTFNObXNnRUx2anVWa045b3FKTE9n?=
- =?utf-8?B?eDVzbzYwWU00Uno3a0hPYmxzTWZuRWV2ZTJmTXMzZnhYRlIyNTFOcHFqOUVL?=
- =?utf-8?B?b0pXY1hkODVNWGZPUngxMURvUXVzVERnQ0JacDNId1RqdWF4T054cXBjaWdh?=
- =?utf-8?B?SDVhT05TR1MrelhKUUpZSTVuLzQxZWRicWltUDFTMHBHRE5WbXhDalN1b0pl?=
- =?utf-8?B?UVc5amp0UU1NT2tHNUdoSEI2UGxQTUtwdnpCenpLK09DSHlKcjBHYlBUNXFY?=
- =?utf-8?B?UlpycWRZVWZxN2RsdDhjSXRYU2hlbHlHQ1hPbmplY0dTZVRVOTY1cUNvMlhL?=
- =?utf-8?B?L21HcHZGMGpzdy8rbE5yUS9BdFQycGl5YU51TDZlV2p2YkRsQWI0QXZqODNx?=
- =?utf-8?B?OXBJeWxxUm5NSnViNjR3Z1ZnNnhDVHFuUXg1VlVvUmtaVExrVDBLR01UTFZ5?=
- =?utf-8?B?L01NUDR3YkVrS1B0ME5lWW54MnlsUHoyTTBhd2dsMmcvVnVyak9xV1lFR3py?=
- =?utf-8?B?ZlJPR3FuK2liWnNKNjFHNjloU0pQYWxmUDlnSW42SVVhN3dwemlmaHVyNS9j?=
- =?utf-8?B?TXBuMER0WnRRN0ZGZmtNVEZZUm9PdVpRbnJscHJSUDNpbmJGUHpTNW9zVCt3?=
- =?utf-8?B?QlVoN3JNOEl3OXBwdVp4eWs3RVB2bmFCdzFlcDBOejNaOXhRbDVRZVVBRjRs?=
- =?utf-8?B?MHRXeEIyT2d0NWsxWVhLV2g3NlJkTm1KejMxMmZxcS9ZS3FuYlZpYlZVRzNF?=
- =?utf-8?B?d1Z1eWpEeDREem1HNkRUOFNZRHhnZ0tONHBJSHNQaUdETDNiczQ1bURmQnBP?=
- =?utf-8?B?aGRwbmEvM0RXSUg4bk52eFdVNjJUM2JEOGVKK0xGaldGUjFDMUhCbVQ5THJt?=
- =?utf-8?B?K1o3VTN0bEpySEVwcjNmN1Q3TUdzUkdhTk16eDBGTDdNZlpORnFYVCt3bWJ1?=
- =?utf-8?B?T0oydUY4QjJuSWNYcmdRZ3hhK1ZKMUtVeTF1SGl3NW1sazBlQk9FRnI5UWo0?=
- =?utf-8?B?K2VreU9tWEM5OEtTbXo0MS9vVW9YNjVSeGh3MVp6Z0ViTWtaS1gzNEpWSVhv?=
- =?utf-8?B?RWowRUkwbE81dnk5QmtkY0N5cnlYSzhZT3M5L2JHQnF5MWJFWG5KVDJEY2JH?=
- =?utf-8?B?WEcwcDJOUGpRYWw0d3NadzdBbUYzUnZDd2JNcVBwZldrSDU4QnlweW42V2N3?=
- =?utf-8?B?aWMyRkFZeDdaRm9tZnR2Ym12cU94VFIzRkJZQlppc0RIWkZZd3c2NkliTjhO?=
- =?utf-8?B?TG56NFMySU54K3JOOUhJTjZLM2FqSTh3cG1tNXhGckhXVlB5Rngyd3pOMTAw?=
- =?utf-8?B?K2ZJQnB6SGE3ekNZZUlwRTFyVjh4STFNQ2g4ZzVjSlUxTUZoQmtNQTlVeUo2?=
- =?utf-8?B?TlB5MjBlWXhGNDdrOStFcWRUQ3Q4SkxobDVwNk8weWxYMkdTMVN5NDNBcFph?=
- =?utf-8?B?S3FBMEthclJJYm1UUlc4NWozc2RyTU05NjJxRzNWUm8rM0FBTEwra3VScEdl?=
- =?utf-8?B?dGlqcm1QN1VCU1VWWkpkMGFsRTFhb3haSEpvOUsyRVI4eXRXNzM1cCswS3hF?=
- =?utf-8?B?V0E9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
-	+qntjwy8/qpLqcVhinZiSD868STVyLOWC2QS5o27vRqWtvgitM3g9OOQ47LChTcld0S94xGIS3agVbhUtj1MWoXCR59MRHmd5lN5yVeFWbE9ag/GC9KfXrsRdRVQU4HnSlwXZF4H48QPmTeGBrL5dosop3U23CmtGHlZE07e+1UnCVnj9eeRuiRkqcTcxyxlRbDGp4vO0wiW+uVisp9KWUlJt4lQR22pqbn87zXJF6jqVgWWG1UXglTzZkZYJr6Gt0vMw77ePZ8DYaS2c4VFG0J2JCMbzWIH3qc/ms/rjLRulkWqNXBfZjiyRqP4myYL+eLSJGZJhKuYEnVNw2lyNao07F6azm8R4eFybfNlbvdM3KXc1fyfSBVbfXmGIz0zCHdaCWCipe63aKsvixq7UOl5F5NfjbTUFWVtvvS1XvDyvwo0fRsamZc8s7jo1/ql5YxmnrBSkRznVobFOCwY3zyUBrWrYLdEEJMlEgMwXORyPmDOCYx7vb/urquIumNUw/eNLEspClvK1SQPcgznarHciJN1k0+8olEovsEWEH2kU6ThCqVaHVVsZbL0XTKRu7HCebmuC1bLuEKfnAgRUol8Upt9ubHtXYe1TussWwc=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4884bb1e-fadc-4309-f1b9-08dc2f22e528
-X-MS-Exchange-CrossTenant-AuthSource: DS7PR10MB5005.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Feb 2024 19:10:10.1327
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: bYm2ZKTw4dxKqYXiGGctRXocXP/SfcGyatRGhNMuGVVrILjgbcM2KTzot45NIejLgiwvhcuAzDvdm7GFsqobB5AU3WuqYt8dYh/ULrM4kvs=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR10MB6237
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-16_18,2024-02-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 bulkscore=0
- mlxlogscore=999 malwarescore=0 mlxscore=0 spamscore=0 suspectscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2402160149
-X-Proofpoint-GUID: qWKbWP9duui0zRqDizvqRGVqN8Xk-i2f
-X-Proofpoint-ORIG-GUID: qWKbWP9duui0zRqDizvqRGVqN8Xk-i2f
-Subject: Re: [oss-security] Unbound: disclosure of CVE-2023-50387 and
- CVE-2023-50868 DNSSEC validation vulnerabilities
+In-Reply-To: <20160218110831.17429da5@pc1>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="0FQtvamoN32praTi2KvnGEAnNIsKvbV9o"
+Subject: Re: [oss-security] Address Sanitizer local root
 
-On 2/13/24 14:34, Solar Designer wrote:
-> It's not great that we're adding to a thread on Unbound, but since we
-> already started...
+--0FQtvamoN32praTi2KvnGEAnNIsKvbV9o
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Sorry, in hindsight I probably should have started a new thread.
+Hi,
 
-For those who want more details on the CVE-2023-50387 flaw itself,
-the researchers have now published their paper at
-https://www.athene-center.de/en/keytrap (see the PDF link in the
-"Technical Report" section).
+On 02/18/2016 11:08 AM, Hanno B=C3=B6ck wrote:
+> Hi,
+>=20
+> Thanks a lot for your analysis.
+I would like to thank you for your analysis, too.
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@oracle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+>=20
+> On Wed, 17 Feb 2016 23:19:21 +0100
+> Szabolcs Nagy <nsz@port70.net> wrote:
+>=20
+>> https://blog.hboeck.de/archives/879-Safer-use-of-C-code-running-Gentoo-w=
+ith-Address-Sanitizer.html
+>> (the later was presented at FOSDEM 2016:
+>> https://fosdem.org/2016/schedule/event/csafecode/ )
+>>
+>> While these are interesting projects, ASan should not be
+>> used for hardening in production systems in its current form,
+>> so at least the language ("hardening", "protection", "safe")
+>> should be fixed.
+>=20
+> Given that this is my work (I did the asanized Gentoo and the FOSDEM
+> talk) I think I should answer.
+I'm the other guy, working on the special Debian port:
+http://balintreczey.hu/blog/progress-report-on-hardened1-linux-amd64-a-pote=
+ntial-debian-port-with-pie-asan-ubsan-and-more/
 
+>=20
+> I hope I have made it clear that whether using asan for production
+> purposes makes any sense was an open question to me. I have placed
+> warnings that this is experimental and I didn't recommend any production
+> use right now.
+>=20
+> I was aware about the performance and memory costs of asan, and I was
+> aware that there are risks involved, but it appeared to me that
+> balancing issues out it would still be a security win and might
+> therefore be an option for some highly security sensitive environments.
+> Your mail makes it clear to me that I was in error and at least in its
+> current form asan is probably not suitable for secure use at all.
+> I will add a note to my blogpost and the Gentoo wiki with a link to
+> your mail to make this clear.
+I was in a situation similar to Hanno's and I added notes about the
+potential risks and limitations linking to this thread.
+
+>=20
+>=20
+> Appart from that I wonder whether this should have any consequences for
+> asan and which ones. Would it be desirable to:
+> a) Try to fix security issues like the one you presented with suid
+> binaries? (not sure what the best fix would be, maybe detect suid
+> binaries and drop privileges back to user [not sure if that's even
+> possible]).
+> b) Leave issues unfixed and declare that asan is just not good for
+> production use. In this case I agree that the asan documentation should
+> probably include some more obvious warnings / explanations of the
+> risks involved.
+> c) Some other variant, like splitting asan into two different variants.
+> One could imagine having a new cflag that would enable asan, but
+> disable some of the ASAN_OPTIONS things like logging (however thinking
+> about this I don't like it - if I imagine running asan on some kind of
+> server I would want to be able to log issues).
+>=20
+ASAN and UBSAN were excellent for finding and fixing bugs in the
+Debian toolchain and now I'm thinking about splitting the effort
+into a QA focused version with ASAN and full UBSAN to find as many
+bugs as possible and a hardening-focused one with trap-only UBSAN,
+PIE, and other security-related features which are safe to use on
+production systems but speed-wise are still tolerable.
+The hardening-focused one should be able to run on
+Grsecurity-enabled kernel.
+
+I would also be interested in experimenting with a hardening-focused
+version based on musl if it integrates ASAN features to libc.
+Creating such new ports became much easier thanks to the fixes to
+Debian's tools.
+
+The hardened1-linux-amd64 port is not officially accepted to Debian
+and the exact features it would provide can be changed. Ideally
+it would ship a libc with an ABI enforcing safety measures (making
+it ABI-incompatible with standard libc) and compiler defaults to
+help writing secure programs. At the moment don't see such a libc
+variant but musl + ASAN parts could be a good candidate or
+SoftBoundCETS was also suggested to be used. I would like choose
+a technology which runs on all CPU architectures, but if it can
+be sped up by for example intel's MPX then it is a plus.
+
+Comments are welcome!
+
+Cheers,
+Balint
+
+
+[1] https://lists.debian.org/debian-devel/2014/04/msg00400.html
+
+
+--0FQtvamoN32praTi2KvnGEAnNIsKvbV9o
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJWxcmsAAoJEPZk0la0aRp9Ub4P/0RV4dE5ak39+9RoPFgiwfyx
+Xthsas58/INvysW0Wl7ZwBqOB3ROsTzC+aN5Bv7S+qkECijqhzlDEf6HsyKn5gy+
+P3TRsJwPDerRm+oXLTPdQShRCF95V3FgK5E4PlD7kZVItCoY5heuEW0NRAqUD4RH
+kC54WC4NLpPijQ1jH84uLkU/Gux+JhZxGFhgP6kBL6M+hrhREDnAQLuw8KtqI8Ha
+lxaG/njU9T7EdIAINBeLp4uYrVutfCDS/sgl3TkAOOapyOuaeTd9IE86oXoyV+0D
+RRgvElo8Wd5/Zgs9vtbP35trVE92pynWdRUr1v8jBZtzxS8qDHNt21EOk8pt/emW
+Jlg7T2ab1lNr8LynxMQe8leOWM5+B49o0A5Yp7M5fa76m5xfiivR1hH4cVLG9fbC
+TKWTVBOAedd9ghvhPWalJA+ad/yj3HNtJraJ0K6HFfObtKaWLDTpyg/AesAnNmKB
+1rDAiLXuAUyThftGozJAhS4gVHdY0ETZzcIkd0CO5RtjNSpKV3UGNSPO+dGJaY8b
+xYrVJU4b2UuxRhUu02yQKx5V8WUHQ40RDnEtSKwU0zKCQFTrAenxUejmX3TBVlC4
+vranYrywXWHrHAde7QQRIAI+QfzvXvAboD/b9KUVemrlqj4xJgFWVjEYlIA2Nedp
+eW4vVYtuoOfrEjT/Okqb
+=WsB7
+-----END PGP SIGNATURE-----
+
+--0FQtvamoN32praTi2KvnGEAnNIsKvbV9o--
