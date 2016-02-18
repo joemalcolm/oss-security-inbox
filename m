@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["834" "Friday" "11" "November" "2016" "22:13:40" "-0600" "Brian 'geeknik' Carpenter" "brian.carpenter@gmail.com" "<CANMVOuzgr=caMRG=US40q-yfmA5mGH7OakJMvrj4r1g_B3yGiQ@mail.gmail.com>" "26" "[oss-security] CVE Request: libtiff: read outside buffer in _TIFFPrintField()" nil nil nil "11" "2016111204:13:40" "[oss-security] CVE Request: libtiff: read outside buffer in _TIFFPrintField()" (number mark "U       brian.carpen Nov 11   26/834   " thread-indent "\"[oss-security] CVE Request: libtiff: read outside buffer in _TIFFPrintField()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3496" "Thursday" "18" "February" "2016" "11:08:31" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20160218110831.17429da5@pc1>" "86" "Re: [oss-security] Address Sanitizer local root" "^Date:" nil nil "2" "2016021810:08:31" "[oss-security] Address Sanitizer local root" (number mark "        hanno@hboeck Feb 18   86/3496  " thread-indent "\"Re: [oss-security] Address Sanitizer local root\"\n") "<20160217221921.GB24130@port70.net>" ("<20160217221921.GB24130@port70.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17829 invoked by uid 550); 12 Nov 2016 13:57:56 -0000
+Received: (qmail 32392 invoked by uid 550); 18 Feb 2016 10:07:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,102 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 32368 invoked from network); 18 Feb 2016 10:07:49 -0000
+Message-ID: <20160218110831.17429da5@pc1>
+In-Reply-To: <20160217221921.GB24130@port70.net>
+References: <20160217221921.GB24130@port70.net>
+X-Mailer: Claws Mail 3.13.2 (GTK+ 2.24.29; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-21551-1455790057-0001-2"
+Date: Thu, 18 Feb 2016 11:08:31 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21947 invoked from network); 12 Nov 2016 04:14:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=QCJrfyfg1qKwmKIwq5d1afn1YuPBcCVVW/ckgISvHCo=;
-        b=YrE1/5h6gbOjlwwX624B3q/B1GRvYzTcbTW6SlJPjlb3/UU19i47bcBvmSM8Cwszk6
-         poQXjDHRya5K6XEqWl2oOPXmBhAN+YYAvEDc2wsA+JxYbTxSBD3qBe0c8w34oI8359W4
-         fH0r24NUDKW8HxhQiG4wk6HFJFG4oO7ZsD2op2+J28bdhZ7nHBbDcrSvdGsFDylANcQm
-         zSv3rpgYBb0XRK5ZAzB3hstERKdJk+w2lPFMh/i8pta5gEj1gLmzIQ7MNy1XwjGDjAJu
-         JPTjNejsfHch/3Gd0cjtxwA39pLdIWhVgGp4lF3imwlJLegFx6lbgQisAzyFyhqXMduw
-         I9Ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=QCJrfyfg1qKwmKIwq5d1afn1YuPBcCVVW/ckgISvHCo=;
-        b=SRcD0hSsBzVfNN3Fu2KSV/lJh/M4dzosrV/yLwQlrlDE+g8nKvDIKAbUzvY3PrMNqk
-         PFkM5YVHnyd/xk48KN+1VeJ6k41sP4XBiEWBwmPkW6WqkFyXd8mKTlkhg3t5cgLxqbaf
-         3w9LWBkved8VNb16av5OT7mbsMf+KhgEDPxmk2Zw4NVqRlOrAblxPe1qyiDB7auGHXO8
-         H9/51ei+SZIvx5kIcQsmM0ozXnKYV8V4w3KcSAh+LrCMlqaVOWFhZ6KolAKCC63fqD/3
-         VQC5itZ1fw3MO9YqXNz9PzOFO0FRL3h6DI8zKHaSSdfisqJJk9qY/fS3ASUEGX1/viIS
-         e9IA==
-X-Gm-Message-State: ABUngvcQnOyIIxVoPqGpyesMjytmteRxt/Q9ifhHq3nYZQD354puii4sqK4nU5HKM2GZ7YTyMhGIxLH+Vwbf/g==
-X-Received: by 10.55.19.97 with SMTP id d94mr7696296qkh.200.1478924060737;
- Fri, 11 Nov 2016 20:14:20 -0800 (PST)
-MIME-Version: 1.0
-From: "Brian 'geeknik' Carpenter" <brian.carpenter@gmail.com>
-Date: Fri, 11 Nov 2016 22:13:40 -0600
-Message-ID: <CANMVOuzgr=caMRG=US40q-yfmA5mGH7OakJMvrj4r1g_B3yGiQ@mail.gmail.com>
+Subject: Re: [oss-security] Address Sanitizer local root
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a114009c04a4944054112d738
-Subject: [oss-security] CVE Request: libtiff: read outside buffer in _TIFFPrintField()
 
---001a114009c04a4944054112d738
+--=_zucker.schokokeks.org-21551-1455790057-0001-2
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi, could you assign a CVE to the following issue in libtiff?
+Hi,
 
-http://bugzilla.maptools.org/show_bug.cgi?id=2590
+Thanks a lot for your analysis.
 
-Fixed per
->> 2016-11-11 Even Rouault <even.rouault at spatialys.com>
->> * libtiff/tif_dirread.c: in TIFFFetchNormalTag(), make sure that
->> values of tags with TIFF_SETGET_C16_ASCII / TIFF_SETGET_C32_ASCII
->> access are null terminated, to avoid potential read outside buffer
->> in _TIFFPrintField().
->>
->> /cvs/maptools/cvsroot/libtiff/ChangeLog,v <-- ChangeLog
->> new revision: 1.1154; previous revision: 1.1153
->> /cvs/maptools/cvsroot/libtiff/libtiff/tif_dirread.c,v <--
->> libtiff/tif_dirread.c
->> new revision: 1.203; previous revision: 1.202
+On Wed, 17 Feb 2016 23:19:21 +0100
+Szabolcs Nagy <nsz@port70.net> wrote:
 
-Regards,
+> https://blog.hboeck.de/archives/879-Safer-use-of-C-code-running-Gentoo-wi=
+th-Address-Sanitizer.html
+> (the later was presented at FOSDEM 2016:
+> https://fosdem.org/2016/schedule/event/csafecode/ )
+>=20
+> While these are interesting projects, ASan should not be
+> used for hardening in production systems in its current form,
+> so at least the language ("hardening", "protection", "safe")
+> should be fixed.
 
-Brian 'geeknik' Carpenter
-https://twitter.com/geeknik
+Given that this is my work (I did the asanized Gentoo and the FOSDEM
+talk) I think I should answer.
 
---001a114009c04a4944054112d738--
+I hope I have made it clear that whether using asan for production
+purposes makes any sense was an open question to me. I have placed
+warnings that this is experimental and I didn't recommend any production
+use right now.
+
+I was aware about the performance and memory costs of asan, and I was
+aware that there are risks involved, but it appeared to me that
+balancing issues out it would still be a security win and might
+therefore be an option for some highly security sensitive environments.
+Your mail makes it clear to me that I was in error and at least in its
+current form asan is probably not suitable for secure use at all.
+I will add a note to my blogpost and the Gentoo wiki with a link to
+your mail to make this clear.
+
+
+Appart from that I wonder whether this should have any consequences for
+asan and which ones. Would it be desirable to:
+a) Try to fix security issues like the one you presented with suid
+binaries? (not sure what the best fix would be, maybe detect suid
+binaries and drop privileges back to user [not sure if that's even
+possible]).
+b) Leave issues unfixed and declare that asan is just not good for
+production use. In this case I agree that the asan documentation should
+probably include some more obvious warnings / explanations of the
+risks involved.
+c) Some other variant, like splitting asan into two different variants.
+One could imagine having a new cflag that would enable asan, but
+disable some of the ASAN_OPTIONS things like logging (however thinking
+about this I don't like it - if I imagine running asan on some kind of
+server I would want to be able to log issues).
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
+
+--=_zucker.schokokeks.org-21551-1455790057-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCgAGBQJWxZgfAAoJEKWIAHK7tR5CeCsQAJq6ZmHrNN9F6Aj7IO/MZ5BV
+tF/mVZC1CVTzljr/ud94tm1AwsnkqtMTTX6UkJwnFAjeQ9n3xeFqWlM7h8+ql/db
+X3CWgM/0L43UksJ5+2l42C3dfR9Kpl76xJjSgUN5JhcD8U6fwGxo2jb+Sey0SBia
+AW11UHDo/k0CqVPsAHHwUxXbElm3q+Wnm3Dv51OVxUzYvNbDajZfzhPWhcd2Aolp
+Xfh5dbjxA1MpqQzCQx6Vg5v8LK2DYo7ckSuOKX4hAY2xcI5G89wNFVG8RJGZmGKf
+TLDHIPnAORQPcBhMb7VA6JX0v8P51T5gpZSgRMRdHjbR73iFRVhfcpnzZFd4oFM8
+Ls2J26PgL+H+TjiT1oB872Fhc+/Sj4RNiEBNaPbvqxSeMxDuKKTTWwddjb3fq7pA
+GuIIbdu58PX21Sxe6nMj4juB4RClTF0F3BJYcUesGMQYzs1pjiwhuGH1Ps+eOuOo
+DAFFOorsKqfuQvgjuNPiYlzuf/Gi+9EHjmXBH1Wh1+P67KDii3CytNMl4f5RBSOX
+U8ceWJfdXOLEMp2J3s7lx7be+kJGnb1liQ6IKBBf6bEEVpPCyRCuk+22ueSE6LiT
+Pw9pai8SpjrCBuFEZTy4mYp3Z8htrJFlBzfo8nKKMGcxPZcOVzPXkDksW7zMXO5E
+onWhGLf+qDsQ9VrR08AP
+=SWyv
+-----END PGP SIGNATURE-----
+
+--=_zucker.schokokeks.org-21551-1455790057-0001-2--
