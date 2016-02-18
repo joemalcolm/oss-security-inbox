@@ -1,42 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/19
-Message-ID: <20161208231415.GA4588@suse.de>
-Date: Fri, 9 Dec 2016 00:14:15 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Linux Kernel use-after-free in SCSI generic device interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/18/6
+Message-ID: <1455764639.23773.4.camel@gmail.com>
+Date: Wed, 17 Feb 2016 22:03:59 -0500
+From: Daniel Micay <danielmicay@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Address Sanitizer local root
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
+On Wed, 2016-02-17 at 17:24 -0800, Konstantin Serebryany wrote:
+> Sadly MPX is too slow, too memory-hungry, and does not protect from
+> use-after-free at all.
 
-This is CVE-2016-9576.
+MPX is definitely problematic (performance, memory usage, false
+positives with some atomic data structures, false positives without
+using it everywhere - essentially a new ABI) but I don't think the lack
+of coverage for lifetime issues is a major issue.
 
-This original post from  Dmitry Vyukov <dvyukov @ google . com> has a kasan/syzkaller report:
-https://marc.info/?l=linux-scsi&m=148010092224801&w=2
+The malloc implementation can do a good job at mitigating lifetime
+issues though. It can't detect 100% of UAF issues, but it can force
+usage of pointers to fault (via proper junk filling) and detect write
+after free via a comparable quarantine technique + validating that the
+junk data is unaltered when allocations leave the quarantine. It can be
+just as good at detecting double-free.
 
-https://gist.githubusercontent.com/dvyukov/80cd94b4e4c288f16ee4c787d404118b/raw/10536069562444da51b758bb39655b514ff93b45/gistfile1.txt
+See the follow-up email:
 
-which in turn turned out to be a kernel memory read or
-potentially even a kernel memory write, in using the scatter gather
-write mode of the /dev/sg* scsi generic devices.
+http://www.openwall.com/lists/oss-security/2016/02/18/3
 
-The affected code is in Linux down to 2.6.something (problem might require splice() to be exploitable).
-
-Linus has committed a fix for this to mainline:
-
-commit a0ac402cfcdc904f9772e1762b3fda112dcc56a0
-Author: Linus Torvalds <torvalds@...ux-foundation.org>
-Date:   Tue Dec 6 16:18:14 2016 -0800
-
-    Don't feed anything but regular iovec's to blk_rq_map_user_iov
-
-    In theory we could map other things, but there's a reason that function
-    is called "user_iov".  Using anything else (like splice can do) just
-    confuses it.
-
-    Reported-and-tested-by: Johannes Thumshirn <jthumshirn@...e.de>
-    Cc: Al Viro <viro@...IV.linux.org.uk>
-    Signed-off-by: Linus Torvalds <torvalds@...ux-foundation.org>
-
-
-Ciao, Marcus
+It's extremely painful to actually debug the aborts and faults produced
+from this kind of hardening, so it doesn't really displace ASan at all
+even for the bits where it can be as reliable, and it doesn't cover the
+read-after-free case in the same way.
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
