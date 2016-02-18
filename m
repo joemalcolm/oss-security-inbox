@@ -1,50 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/3
-Message-ID: <416950326.31158071.1456852194971.JavaMail.zimbra@redhat.com>
-Date: Tue, 1 Mar 2016 12:09:54 -0500 (EST)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request -- linux kernel: pipe: limit the per-user amount of pages allocated in pipes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/18/13
+Message-ID: <56C60726.8080802@gmail.com>
+Date: Thu, 18 Feb 2016 19:02:14 +0100
+From: Manuel Mancera <sinkmanu@...il.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com, security@...ian.org
+Subject: Re: CVE Request: graphite-web: open redirect
 Content-Type: text/plain; charset=utf-8
 
-Hello,
 
-If possible, we would like to obtain a CVE-ID for the flaw currently
-handled in the upstream commit:
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=759c01142a5d0f364a462346168a56de28a80f52
+> > https://github.com/graphite-project/graphite-web/issues/1441 > > > two OpenRedirects in /webapp/graphite/account/views.py > > >
+Proof of Concept: > > >    
+http://graphiteSite/account/logout?nextPage=https://www.google.com > >
+Is there a response from the author of the code indicating that this >
+is a vulnerability? Open redirects to http/https are not universally >
+considered vulnerabilities for all vendors and products, e.g., > >  
+https://sites.google.com/site/bughunteruniversity/nonvuln/open-redirect
+> > is probably the most well-known counterargument. >
 
-The commit says: "Mitigates: CVE-2013-4312 (Linux 2.0+)", but it looks
-like CVE-2013-4312 is for the different, though similar flaw which was
-addressed recently:
+The authors did not answer.
 
-"The Linux kernel before 4.4.1 allows local users to bypass file-
-descriptor limits and cause a denial of service (memory consumption)
-by sending each descriptor over a UNIX socket before closing it,
-related to net/unix/af_unix.c and net/unix/garbage.c."
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4312
+> > >     http://graphiteSite/account/update > >         POST:
+nextPage=https://www.google.com > > What is the threat model for this
+open redirect issue that requires a > POST request? Often, an attacker's
+ability to make a client submit a > POST request with an
+attacker-controlled parameter means that the > client is executing
+JavaScript code from an attacker-controlled site, > and in that case the
+JavaScript can send the browser to an arbitrary > http/https URL without
+any realistic ability of the client user to > predict that that might
+occur. Is there a way in which the existence > of
+http://graphiteSite/account/update helps the attacker to accomplish >
+the redirect? >
 
-As the root cause of this flaw is different (unrestricted kernel memory
-allocation for pipes) I believe another CVE id is needed.
+Yes, exist multiple XSS vulnerabilities described in the CVE-2013-5943
+[1]. Some XSS were fixed but other not (I found a persistent XSS [2]).
+Any user identified in the application could inject javascript code that
+could be executed in the victim. Is not possible get the cookie in
+javascript because has the "HTTPOnly" flag.
 
-Description:
+> > Also, inside the logout and update functions, the session should be checked. > > What vulnerability are you reporting here? Are /account/logout and
+> /account/update vulnerable to CSRF? >
 
-On no-so-small systems, it is possible for a single process to cause an OOM condition
-by filling large pipes with data that are never read. A typical process filling 4096
-pipes with 1 MB of data will use 4 GB of memory. On small systems it may be tricky to
-set the pipe max size to prevent this from happening. The result is an OOM condition
-and oom-killer is not able to help much, as the memory for the pipe data is a kernel
-memory and a memory footprint of offensive processes is small. 
+Yes, both are vulnerable to CSRF (and all the edit graphs are vulnerable
+too, deleted included).
 
-Upstream patch:
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=759c01142a5d0f364a462346168a56de28a80f52
 
-Red Hat Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=1313428
+[1] https://www.cvedetails.com/cve/CVE-2013-5943/
+[2] https://github.com/graphite-project/graphite-web/pull/1470
 
-Discussion threads:
-https://www.spinics.net/lists/linux-fsdevel/msg92912.html | https://lkml.org/lkml/2015/12/28/150
-https://www.spinics.net/lists/linux-fsdevel/msg93317.html | https://lkml.org/lkml/2016/1/11/310
-https://www.spinics.net/lists/linux-fsdevel/msg93601.html | https://lkml.org/lkml/2016/1/18/171
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
