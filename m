@@ -1,48 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/23
-Message-ID: <CAGoY5PK+Y9PwBH7x2N4DCdJ9cxu6M4kHMYA52KAFn=Ly5_Y=0g@mail.gmail.com>
-Date: Thu, 8 Sep 2016 17:34:09 +0300
-From: Vahagn Vardanyan <vvvaagn@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/18/14
+Message-ID: <CAMYtjAq5Mb+gVHxmYYMJqxvx0=VR_fAEePODPVgNJfrOGZA9Kg@mail.gmail.com>
+Date: Thu, 18 Feb 2016 22:13:03 +0100
+From: Pere Orga <pere@...a.cat>
 To: oss-security@...ts.openwall.com
-Subject: multiple crashes in radare2/radiff2
+Cc: Drupal Security Team <security@...pal.org>
+Subject: CVE requests for Drupal contributed modules (2016-006, 2016-007)
 Content-Type: text/plain; charset=utf-8
 
-Hi there
+Hi
 
-I created report
-https://bugs.chromium.org/p/project-zero/issues/detail?id=933&can=1&q=&sort=-id
-but got invalid status, Tavis Ormandy recommend for I will resend to
-this email :-)
+Please can I have CVE IDs assigned to the following vulnerabilities:
 
-Please tell how I can send crashes archive, thank you
+Commerce Authorize.Net SIM/DPM Payment Methods - Access Bypass -
+DRUPAL-SA-CONTRIB-2016-006
+https://www.drupal.org/node/2670632
 
+Nodejs - Access bypass - DRUPAL-SA-CONTRIB-2016-007
+https://www.drupal.org/node/2670636
 
-Radare2 (https://github.com/radare/radare2) is a complete framework
-for reverse-engineering and analyzing binaries. Radare2 use
-Radare2 also have radiff2 tools, which use can compare 2 binary files.
+Many thanks
 
-Usage: radiff2 [-abcCdjrspOxvV] [-g sym] [-t %] [file] [file]
-
-With use afl & address-sanitize founded multiple crashes (crashes.zip)
-and small test is a small_test
-
-
-for test it, I wrote small program
-
-/* hello.c */
-#include <stdio.h>
-
-int main (void)
-{
-	printf ("Hello World\n");
-}
-
-compile it with
-
-clang hello.c
-
-and get a.out file.
-
-for reproduce need call radiff2 with next parameters
-./radiff2 -g sym a.out 	small_test
-
+Regards
+-- 
+Pere Orga on behalf of the Drupal Security team
