@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["978" "Wednesday" "5" "July" "2017" "22:12:11" "-0400" "Jeffrey Walton" "noloader@gmail.com" "<CAH8yC8nDE3RG1yeWg3WbH1eZSJqTi9kdHfFL6Hfq_7cGZPEnDg@mail.gmail.com>" "24" "Re: [oss-security] systemd fails to parse user that should run service" nil nil nil "7" "2017070602:12:11" "[oss-security] systemd fails to parse user that should run service" (number mark "U       noloader@gma Jul  5   24/978   " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>" ("<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2094" "Thursday" "18" "February" "2016" "23:19:10" "+0000" "Darren Martyn" "darren.martyn@xiphosresearch.co.uk" "<56C6516E.7040808@xiphosresearch.co.uk>" "55" "[oss-security] Re: Address Sanitizer local root" nil nil nil "2" "2016021823:19:10" "[oss-security] Re: Address Sanitizer local root" (number mark "U       darren.marty Feb 18   55/2094  " thread-indent "\"[oss-security] Re: Address Sanitizer local root\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25660 invoked by uid 550); 6 Jul 2017 02:20:39 -0000
+Received: (qmail 5121 invoked by uid 550); 18 Feb 2016 23:19:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,65 +12,95 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19585 invoked from network); 6 Jul 2017 02:12:24 -0000
+Received: (qmail 4041 invoked from network); 18 Feb 2016 23:19:26 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=TIw+jfz8wjHnNaANjYJCUz1Zre3+lDhBbu1wBd0cEug=;
-        b=fFKs0wS/6D7o/06Zb0eM6feWfN7xuBEAtZXHxQMr0C+8e8qDyWowN09SttR4Xbez+B
-         brvX0ocnAQfsmRHsSRk6wqVYkkhu31NYAYj0CrZFRBP32oeA9a4YPPAimQoY6UX/QFdj
-         Plr7yoaSSLRTJc/+ob4i8konKaPlfzxmgsFOWIMsxsRKSsEi3FmQrar5EdkZmvgE17nE
-         scMvtnoysRMz0MDA4vFtY9g4PrmzgRu/0riVl2tF7kFCDne5vZBIXfIViS/5BbyHUGYk
-         J58H0FMk3gygPJ7LZF96Dgyz5Ud6qeipRm++RsLy9vKhWCt9JRuvWXTuCBiGoaDKFCsI
-         hzTg==
+        d=xiphosresearch-co-uk.20150623.gappssmtp.com; s=20150623;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type;
+        bh=1EyFnBmdnt/RmFTOqnNUaiodDtGAIZi6gCcmV/p5wdw=;
+        b=rdsO7llLq64eQ7fgrgVompvuBzT2JpOdButTpY8RHzKDgNSW4matl37/J6XPbhdBTd
+         hDPIdhQNGxEkEzwAPH1nnJPr8NNbLPr7X3SRWAS2R9CrgAISZ8zR1nO2Ej1lhXmBnWkO
+         74ZQWBfqhaJKIMlyx+Ac7bZSqiItsNI/643KcDU+kmfMncrRNWbgd9IIUyTKj2OLbw+h
+         LSKSHbBPIpoDDqlcFJ2UngYssuOcfWcjejtfvHiLjgRQhuO3El0kISYw3dgBEvtBhCwI
+         sIw3e54Zm0oV8Uu0fJ/j+P7srJ5c2Aiwa/2bh3o6lHbOxq+7ggYj2Pf7oToah/OAtSID
+         dnFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:content-transfer-encoding;
-        bh=TIw+jfz8wjHnNaANjYJCUz1Zre3+lDhBbu1wBd0cEug=;
-        b=Bo/EbtJR2ywew8nFUlSsGYZfWVZfA46H4I3HhKTjpVlTdJCHbPL+CgsR9I7fDCm5RB
-         GakDrU/h/qFwfSwqM3kzy4gfADLZA9Lt71v0KVVKxasVIf0c9NBkB7h8SQrOrpB5mMIK
-         r4H69pNJ9I/PfRsdPVoGuWoZ1RWWA1EcxwU/L5P9OYk7UlKyllfA0yYcQz28gvqhSFG3
-         TcVH3b5OtuRJvxQPUyfKCH6omMuVYjk7/b7DvCCksbAmi+KErGDiohO7NQzwHK9mK1UI
-         9r1Cp3xBZrnzg+VUVi0ILEwxIEGcyDG1MGhjELgNqUROav/l1jGHib5ADAI5CHl48HkS
-         2ABA==
-X-Gm-Message-State: AIVw1107+xUJUKAkJU4Fqt9XpZBIlYSsqDavuVskRrpBmA0CD9grTGCY
-	iILPeCgWDzfgG9Gbx8Ypawoe981T8ZYVIQw=
-X-Received: by 10.202.193.133 with SMTP id r127mr9273348oif.117.1499307131701;
- Wed, 05 Jul 2017 19:12:11 -0700 (PDT)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :subject:content-type;
+        bh=1EyFnBmdnt/RmFTOqnNUaiodDtGAIZi6gCcmV/p5wdw=;
+        b=HVsx+5BYBMgTbiy/UWUr73BPpIWMFAZ1g1yOB25/xBFnFCD2HurZ9NqpcsXw2m7y38
+         ahMmvwbLskXfLRACiyjCgr7tYeA4r+tQYpzXeXcy0tuHTH/fl+M6Hconkbl6PbHBUcB1
+         NEq2eUUIpqoSomXnQ1FZHi4dcF3jU+7Akzj85ELTnpeUf3CIaGZdFOJXuS3ZCVy73biO
+         XWYmmXURntWDn4aRqW78mIt9IdxF965s5On1+rvm1iIQQYyDe9vaO6XjKClpijP9px9k
+         5J+QjilY0JIpget5xDxzI3w57nzKsIodNcFUpeW/qT3kyRuUakvELrUjoESGv5JhO5BL
+         9V+w==
+X-Gm-Message-State: AG10YOTTW6cDJhswCWbsouRed0JcRGRF8zYFYpPyf/dAIXxa3jAzNxdq75kUO2i0a/v94w==
+X-Received: by 10.194.133.1 with SMTP id oy1mr9626021wjb.119.1455837555090;
+        Thu, 18 Feb 2016 15:19:15 -0800 (PST)
+Message-ID: <56C6516E.7040808@xiphosresearch.co.uk>
+Date: Thu, 18 Feb 2016 23:19:10 +0000
+From: Darren Martyn <darren.martyn@xiphosresearch.co.uk>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
 MIME-Version: 1.0
-In-Reply-To: <VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>
-References: <VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>
-From: Jeffrey Walton <noloader@gmail.com>
-Date: Wed, 5 Jul 2017 22:12:11 -0400
-Message-ID: <CAH8yC8nDE3RG1yeWg3WbH1eZSJqTi9kdHfFL6Hfq_7cGZPEnDg@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="Q9OGSwIJqBqExVLQKQ0fosjIW9V3e2BaT"
+Subject: [oss-security] Re: Address Sanitizer local root
+
+--Q9OGSwIJqBqExVLQKQ0fosjIW9V3e2BaT
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] systemd fails to parse user that should run service
 
-On Sun, Jul 2, 2017 at 5:08 AM, Daniel Skowro=C5=84ski <daniel@dsinf.net> w=
-rote:
-> Just wanted to bring attention to issue with systemd not doing what is ex=
-pected when parsing User that should run service.
-> When it fails to parse string starting with digit it fails back to root c=
-ausing obvious threat to security.
->
-> See discussion with developer on github: https://github.com/systemd/syste=
-md/issues/6237
+Hi List,
+Figured I would add this to the thread to keep it amusing.
 
-Point 1 from https://github.com/systemd/systemd/issues/6237#issuecomment-31=
-2479534
-seems to be a problem:
+Here is a fully functioning local root by clobbering /etc/ld.so.preload
+instead of /etc/shadow (which breaks things spectacularly). I am using a
+fairly messy "symlink spray"/"symlink carpet bombing" technique.
 
-> systemd is not the one coming up with the restrictions on user names,
-> and while some distributions are less restrictive, many do enforce the
-> same restrictions as we do. In order to make systemd unit files
-> portable between systems we'll hence enforce something that
-> resembles more the universally accepted set, rather than accept the
-> most liberal set possible.
+Simply point it at a setuid-root binary compiled with asan and away it
+goes.
 
-systemd is effectively setting policy where it has no business doing so.
+Video: https://www.youtube.com/watch?v=3DjhSIm3auQMk
+PoC Code: https://gist.github.com/0x27/9ff2c8fb445b6ab9c94e
 
-Jeff
+Development/Testing was done on a Debian 8.3 VM that was last updated
+last week.
+
+Now, I wonder - what can actually be done to mitigate against this,
+besides "don't use ASAN in production"?
+Is there something that can be done ASAN-side?
+Because due to how ld.so.preload is parsed so, uh, forgivingly, all the
+attacker needs to control is one line in the output file. Could it check
+for symlinks before writing the log?
+
+Regards,
+Darren.
+
+
+--Q9OGSwIJqBqExVLQKQ0fosjIW9V3e2BaT
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJWxlFxAAoJEKbzl+ujn+tWX5YP/iHeDCcGSFcLW5tHqZ56iV1Z
+3n/Bm+XxornYiIeXwG9BJM4KhXD50nhjSqGkBFZHYJWpjLd2oc0YkiahT9Jf9Hf2
+9A6h2NBBb31yTkQbUdu5QhePfZGkNb+rA9rR1WOsNALB/Y6JXK/WhthfckhlW3SS
+rWGKJcc5VRTo93gSh/CCWt+T5sVHDpAy1MLMRvMKPv5iij5hDeP3b4CX9WOaB2yH
+UdsiVkI36cIroYYRjYORETUz0j/iB32VkwyicX8h5OU7J5KroB+3nMjXlmkIBIL+
+L4o3QTF+Ap5nfYGyO8F+ebvhL2IAzSMI9IIWRwGvAwoJf4P33hlXm9jqyMEZ20aH
+HleP1yN4UECdwIeSS55+BiRF2pPlE5L1rwrtdH1TiaRlLr3v0qrQwsw2HaO4Al3t
+jmxvXdHTbYkPhDYCJ4Bib4U6Gu23+3i2bqxLxuV7NPrCgxZfZp6Cm3ASLP2fB5lD
+QnaB063HOFKpD1GT7JS9ozZrrIOKY1W8zJnnY4MrmAKrWdXJseJV2JqoxDsKkwvu
+2LQ7G+jauxI4j0Mw9htVIe7VmbXYqlPdLoOZL97qw/D28HSp8zmF0L0wwEXiOjHn
+9Krzsxs79ouGm0F4ZT9nj7PiuG0SHJOSwnvUrAhng7geNPRsTBNhPxR35GNL3kcy
+bePLhpoqsEjgw6cg12rq
+=b8E8
+-----END PGP SIGNATURE-----
+
+--Q9OGSwIJqBqExVLQKQ0fosjIW9V3e2BaT--
