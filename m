@@ -1,71 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/6
-Message-ID: <DEB54FAB-6270-4AA8-AFF4-74F5A33920E4@360.cn>
-Date: Fri, 8 Apr 2016 05:05:42 +0000
-From: 王梅 <wangmei@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-3945 libtiff: Out-of-bounds Write in the tiff2rgba tool
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/18/10
+Message-ID: <CAAnPYQ51o02n9uDUCCRi6JgP7a=h_Tqnm1dmD+_4DOZhP5-Gqw@mail.gmail.com>
+Date: Thu, 18 Feb 2016 10:37:42 +0000
+From: Gynvael Coldwind <gynvael@...dwind.pl>
+To: oss-security@...ts.openwall.com
+Subject: Re: Address Sanitizer local root
 Content-Type: text/plain; charset=utf-8
 
-Details
-=======
+Just a random fun addition to the topic - there were exploitation
+challenges on CTFs with ASANafied binaries in the past, and they in fact
+were exploitable.
+One example:
+http://int3pids.blogspot.ch/2015/04/confidence-2015-teaser-quarantine-write.html
 
-Product: libtiff
-Affected Versions: <= 4.0.6
-Vulnerability Type:  Out-of-bounds Write
-Vendor URL: http://www.remotesensing.org/libtiff/
-CVE ID: CVE-2016-3945
-Credit: Mei Wang of the Cloud Security Team, Qihoo 360
+On Wed, Feb 17, 2016 at 11:23 PM Szabolcs Nagy <nsz@...t70.net> wrote:
 
-Introduction
-============
-
-When libtiff 4.0.6 tiff2rgba handle malicious tif file(width= 8388640, height=31) and set param -b will cause illegal write. The vulnerability exist in function cvt_by_strip (also exist in cvt_by_tile ) without checking the buffer allocate result. An attacker may control the write address and/or value to result in denial-of-service or command execution.
-
-
-
-
-gdb tiff2rgba
-
-(gdb) r -b sample/test.tif 1.tif
-
-Starting program: /usr/local/bin/tiff2rgba -b sample/test.tif 1.tif
-TIFFFetchNormalTag: Warning, ASCII value for tag "DocumentName" contains null byte in value; value incorrectly truncated during reading due to implementation limitations.
-TIFFFetchNormalTag: Warning, IO error during reading of "YResolution"; tag ignored.
-LZWDecode: Not enough data at scanline 0 (short 67108864 bytes).
-
-Breakpoint 2, gtStripContig (img=0x7fffffffdd90, raster=0x7ffff7fce010, w=8388640, h=32) at tif_getimage.c:946
-946                     (*put)(img, raster+y*w, 0, y, w, nrow, fromskew, toskew, buf + pos);
-(gdb) p *put
-$5 = {void (TIFFRGBAImage *, uint32 *, uint32, uint32, uint32, uint32, int32, int32, unsigned char *)} 0x7ffff7b98a5e <put2bitcmaptile>
-(gdb) p *(raster+y*w)
-Cannot access memory at address 0x800035fcef90
-(gdb) c
-Continuing.
-
-Program received signal SIGSEGV, Segmentation fault.
-0x00007ffff7b98ae7 in put2bitcmaptile (img=0x7fffffffdd90, cp=0x800035fcef94, x=0, y=31, w=8388640, h=31, fromskew=0, toskew=-16777280,
-    pp=0x7ffff1288011 '\377' <repeats 11 times>, "\303\300\377\377\377\377\377\377\024?\377\377\377\360\003") at tif_getimage.c:1233
-1233            UNROLL4(w, bw = PALmap[*pp++], *cp++ = *bw++);
-(gdb) bt
-#0  0x00007ffff7b98ae7 in put2bitcmaptile (img=0x7fffffffdd90, cp=0x800035fcef94, x=0, y=31, w=8388640, h=31, fromskew=0, toskew=-16777280,
-    pp=0x7ffff1288011 '\377' <repeats 11 times>, "\303\300\377\377\377\377\377\377\024?\377\377\377\360\003") at tif_getimage.c:1233
-#1  0x00007ffff7b98055 in gtStripContig (img=0x7fffffffdd90, raster=0x7ffff7fce010, w=8388640, h=32) at tif_getimage.c:946
-#2  0x00007ffff7b96ce7 in TIFFRGBAImageGet (img=0x7fffffffdd90, raster=0x7ffff7fce010, w=8388640, h=32) at tif_getimage.c:500
-#3  0x00007ffff7ba11da in TIFFReadRGBAStrip (tif=0x604930, row=0, raster=0x7ffff7fce010) at tif_getimage.c:2816
-#4  0x0000000000401693 in cvt_by_strip (in=0x604930, out=0x604010) at tiff2rgba.c:290
-#5  0x0000000000401e58 in tiffcvt (in=0x604930, out=0x604010) at tiff2rgba.c:502
-#6  0x00000000004011b5 in main (argc=4, argv=0x7fffffffe408) at tiff2rgba.c:126
-
-
-References:
-[1] http://www.remotesensing.org/libtiff/
-[2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
-
-
-Thank you!
-Best Regards,
-
-
-Mei
+> There is an alarming trend that Address Sanitizer and related
+> compiler instrumentations from compiler-rt are used as a hardening
+> solution and run in production.
+>
+> Even though these are debugging and testing tools, there is
+> no clear warning against production use in their documentation:
+> http://clang.llvm.org/docs/
+> And it's obvious how a tool that catches UB can be misunderstood
+> as a hardening tool:
+>
+> This analysis concluded that ASan can be used for protection
+> to stop certain attacks:
+> http://scarybeastsecurity.blogspot.dk/2014/09/using-asan-as-protection.html
+> The Tor project distributes ASan "hardened" binaries:
+> https://blog.torproject.org/blog/tor-browser-55a4-hardened-released
+> And there are various projects for full Linux distro instrumentation:
+>
+> http://balintreczey.hu/blog/progress-report-on-hardened1-linux-amd64-a-potential-debian-port-with-pie-asan-ubsan-and-more/
+>
+> https://blog.hboeck.de/archives/879-Safer-use-of-C-code-running-Gentoo-with-Address-Sanitizer.html
+> (the later was presented at FOSDEM 2016:
+> https://fosdem.org/2016/schedule/event/csafecode/ )
+>
+> While these are interesting projects, ASan should not be
+> used for hardening in production systems in its current form,
+> so at least the language ("hardening", "protection", "safe")
+> should be fixed.
+>
+> My simple local root exploit is that ASan uses a lot
+> of environment variables without checking for secure
+> execution of setuid binaries:
+>
+> ASAN_OPTIONS='verbosity=2 log_path=foo' ./suid.exe
+>
+> will write to foo.$PID using escalated priviledge, so a
+> normal user may be able to clobber arbitrary root owned files
+> (by creating foo.{1,2,3,..} symlinks to it) which can lead
+> to local root on an "ASan hardened" Linux distribution:
+>
+> ASAN_OPTIONS='suppressions="/foo
+> root:passwdhash:12345:0:::::
+> bar" log_path=foo' ./suid.exe
+>
+> can easily clobber /etc/shadow with
+>
+> AddressSanitizer: failed to read suppressions file '/foo
+> root:passwdhash:12345:0:::::
+> bar'
+>
+> if there is any setuid root executable built with ASan.
+>
+> (This is not a problem for testing where the env var based
+> configuration is convenient and I haven't checked if any
+> of the current ASan distro efforts have setuid executables
+> with instrumentation, but I still find it a security bug
+> given the improper advertisment of the sanitizer tools:
+> this can lead to problems if the documentation is not fixed.)
+>
+> Beyond this trivial issue there are plenty reliability
+> problems in the sanitizer runtimes that i think deserve
+> at least a warning. It can crash conforming applications
+> because
+>
+> - the shadow map overlaps with something
+> - ulimit -v
+> - overcommit is turned off
+> - it allocates memory but aborts on failure
+> - it interposes __tls_get_addr with non-as-safe code.
+> - it uses initial-exec TLS.
+> - it handles "deadly" signals like SIGBUS
+>   (often used by applications using mmaped files).
+> - the c runtime is updated and incompatible
+>   (with the various interposition hacks)
+> - does not handle c11 thread creation
+>
+> some of the features reduce security:
+>
+> - heuristic introspective unwind
+> - nice diagnositc messages at undefined behaviour
+> - interpositions in general (UB according to POSIX)
+>
+> other limitations:
+>
+> - static linking is not supported
+>
+> (This is for ASan only, I briefly looked at thread
+> sanitizer, which seemed even worse for reliability
+> and safe stack that is in fact advertised for hardening
+> but it has plenty reliability problems, needs further
+> analysis.)
+>
+> I believe some of the problems can be fixed by
+> implementing the runtimes in the libc instead of
+> second guessing libc behaviour with fragile
+> heuristics from a compiler runtime.   This would solve
+> most of the runtime aborts.  I can see an easy way to do
+> this with musl libc (because a non-host musl is easy to
+> distribute and link against), but non-trivial with glibc.
+> In either case I don't see a solution to the shadow map
+> commit charge unless the kernel is modified.  So I cannot
+> recommend even a careful reimplementation in libc for
+> production use for reliable systems.
+>
 
