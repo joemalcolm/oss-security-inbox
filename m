@@ -1,34 +1,157 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/14/3
-Message-ID: <20160814105011.GQ3971@scully.more-magic.net>
-Date: Sun, 14 Aug 2016 12:50:11 +0200
-From: Peter Bex <peter@...e-magic.net>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE request for buffer overrun in CHICKEN process-execute and process-spawn posix procedures
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/18/12
+Message-ID: <CAP145phfThRsRxGh22n=W=xinBn7ark09EBME-s+YdJNDwTS9A@mail.gmail.com>
+Date: Thu, 18 Feb 2016 16:46:48 +0100
+From: Robert Święcki <robert@...ecki.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Address Sanitizer local root
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+2016-02-18 11:37 GMT+01:00 Gynvael Coldwind <gynvael@...dwind.pl>:
+> Just a random fun addition to the topic - there were exploitation
+> challenges on CTFs with ASANafied binaries in the past, and they in fact
+> were exploitable.
+> One example:
+> http://int3pids.blogspot.ch/2015/04/confidence-2015-teaser-quarantine-write.html
 
-I would like to request a CVE for a buffer overrun that
-was detected in CHICKEN Scheme's "process-execute" and
-"process-spawn" procedures from the posix unit.
+Also, a more general observation on the example (a set-uid bin)
+mentioned in the original post.
 
-CHICKEN preallocated an argument array of ARG_MAX items (or 256 if
-that was undefined), and an environment array of ENV_MAX items
-(or 1024 if that was undefined), and did not verify that the arguments
-or environment lists were less than this size, resulting in a buffer
-overrun if these lists were longer.
+Writing an always-correctly-behaving suid binary is a truly
+non-trivial task (a true mine trap), and I would go even to such
+claim, that the task should not be attempted (at least in cases, where
+such binary could be potentially widely distributed as a part of a
+popular OS distro) by anybody who is not a seasoned system developer
+with good understanding of the OS kernel and user-land libraries. Or,
+at least, if there's no chance that such developer (or even a few) can
+security-review the code.
 
-The full announcement can be found here:
-http://lists.nongnu.org/archive/html/chicken-announce/2016-08/msg00001.html
+Potential attacker controls a lot when running set-uid apps
 
-The bugfix also fixed a memory leak in the same piece of code, which
-could potentially be used to cause resource exhaustion/denial of
-service situation.  Does this warrant another CVE?
+- signals
+- resource limits
+- file-descriptors
+- certain timers
+- environment variables
+- system-specific features (bpf filters, dumpability flags and many more...)
 
-The bug affects all releases of CHICKEN up to and including 4.11.
+And each and every of those cases (not sure about system-specific
+features) has been successfully used to attack set-uid binaries in the
+past.
 
-Cheers,
-Peter Bex
+Linking-in any kind of library beyond the standard libc (incl. ASAN)
+with a set-uid should generally trigger a complete security review of
+such library for any kind of misbehavior that can be exploited by a
+potential attacker. Just because such attacker would have almost
+unrestricted power over an execution environment of set-uid binaries.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+> On Wed, Feb 17, 2016 at 11:23 PM Szabolcs Nagy <nsz@...t70.net> wrote:
+>
+>> There is an alarming trend that Address Sanitizer and related
+>> compiler instrumentations from compiler-rt are used as a hardening
+>> solution and run in production.
+>>
+>> Even though these are debugging and testing tools, there is
+>> no clear warning against production use in their documentation:
+>> http://clang.llvm.org/docs/
+>> And it's obvious how a tool that catches UB can be misunderstood
+>> as a hardening tool:
+>>
+>> This analysis concluded that ASan can be used for protection
+>> to stop certain attacks:
+>> http://scarybeastsecurity.blogspot.dk/2014/09/using-asan-as-protection.html
+>> The Tor project distributes ASan "hardened" binaries:
+>> https://blog.torproject.org/blog/tor-browser-55a4-hardened-released
+>> And there are various projects for full Linux distro instrumentation:
+>>
+>> http://balintreczey.hu/blog/progress-report-on-hardened1-linux-amd64-a-potential-debian-port-with-pie-asan-ubsan-and-more/
+>>
+>> https://blog.hboeck.de/archives/879-Safer-use-of-C-code-running-Gentoo-with-Address-Sanitizer.html
+>> (the later was presented at FOSDEM 2016:
+>> https://fosdem.org/2016/schedule/event/csafecode/ )
+>>
+>> While these are interesting projects, ASan should not be
+>> used for hardening in production systems in its current form,
+>> so at least the language ("hardening", "protection", "safe")
+>> should be fixed.
+>>
+>> My simple local root exploit is that ASan uses a lot
+>> of environment variables without checking for secure
+>> execution of setuid binaries:
+>>
+>> ASAN_OPTIONS='verbosity=2 log_path=foo' ./suid.exe
+>>
+>> will write to foo.$PID using escalated priviledge, so a
+>> normal user may be able to clobber arbitrary root owned files
+>> (by creating foo.{1,2,3,..} symlinks to it) which can lead
+>> to local root on an "ASan hardened" Linux distribution:
+>>
+>> ASAN_OPTIONS='suppressions="/foo
+>> root:passwdhash:12345:0:::::
+>> bar" log_path=foo' ./suid.exe
+>>
+>> can easily clobber /etc/shadow with
+>>
+>> AddressSanitizer: failed to read suppressions file '/foo
+>> root:passwdhash:12345:0:::::
+>> bar'
+>>
+>> if there is any setuid root executable built with ASan.
+>>
+>> (This is not a problem for testing where the env var based
+>> configuration is convenient and I haven't checked if any
+>> of the current ASan distro efforts have setuid executables
+>> with instrumentation, but I still find it a security bug
+>> given the improper advertisment of the sanitizer tools:
+>> this can lead to problems if the documentation is not fixed.)
+>>
+>> Beyond this trivial issue there are plenty reliability
+>> problems in the sanitizer runtimes that i think deserve
+>> at least a warning. It can crash conforming applications
+>> because
+>>
+>> - the shadow map overlaps with something
+>> - ulimit -v
+>> - overcommit is turned off
+>> - it allocates memory but aborts on failure
+>> - it interposes __tls_get_addr with non-as-safe code.
+>> - it uses initial-exec TLS.
+>> - it handles "deadly" signals like SIGBUS
+>>   (often used by applications using mmaped files).
+>> - the c runtime is updated and incompatible
+>>   (with the various interposition hacks)
+>> - does not handle c11 thread creation
+>>
+>> some of the features reduce security:
+>>
+>> - heuristic introspective unwind
+>> - nice diagnositc messages at undefined behaviour
+>> - interpositions in general (UB according to POSIX)
+>>
+>> other limitations:
+>>
+>> - static linking is not supported
+>>
+>> (This is for ASan only, I briefly looked at thread
+>> sanitizer, which seemed even worse for reliability
+>> and safe stack that is in fact advertised for hardening
+>> but it has plenty reliability problems, needs further
+>> analysis.)
+>>
+>> I believe some of the problems can be fixed by
+>> implementing the runtimes in the libc instead of
+>> second guessing libc behaviour with fragile
+>> heuristics from a compiler runtime.   This would solve
+>> most of the runtime aborts.  I can see an easy way to do
+>> this with musl libc (because a non-host musl is easy to
+>> distribute and link against), but non-trivial with glibc.
+>> In either case I don't see a solution to the shadow map
+>> commit charge unless the kernel is modified.  So I cannot
+>> recommend even a careful reimplementation in libc for
+>> production use for reliable systems.
+>>
+
+
+
+-- 
+Robert Święcki
