@@ -1,118 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/21/6
-Message-Id: <E1cJfaM-0003vY-CB@xenbits.xenproject.org>
-Date: Wed, 21 Dec 2016 12:01:30 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 202 (CVE-2016-10024) - x86 PV guests may be able to mask interrupts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/18/3
+Message-ID: <1455755877.23003.33.camel@gmail.com>
+Date: Wed, 17 Feb 2016 19:37:57 -0500
+From: Daniel Micay <danielmicay@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Address Sanitizer local root
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> The use-after-free and double-free detection is based on the same
+> quarantine technique in Valgrind. It can only detect the issues before
+> allocations are flushed out of the quarantine by memory pressure. It
+> does mitigate many vulnerabilities but comparable double-free
+> detection
+> could be done in malloc without the drawbacks (two flat arrays
+> providing
+> a ring buffer for a FIFO quarantine + a hash table). The same thing
+> applies to write-after-free but not use-after-free, since that would
+> require instrumentation in the code. A write-after-free can be
+> detected
+> by filling allocations with junk and then checking for it when it's
+> flushed from the quarantine rather than instrumentation. It doesn't
+> need
+> to do the whole allocation to be useful, so there's a large range of
+> tuning for performance. The junk data could come from a stream cipher
+> seeded from the address if desired, but it doesn't seem important.
 
-            Xen Security Advisory CVE-2016-10024 / XSA-202
-                               version 3
+There's an initial implementation of this in CopperheadOS if anyone is
+curious about it.
 
-             x86 PV guests may be able to mask interrupts
+FIFO quarantine:
 
-UPDATES IN VERSION 3
-====================
+https://github.com/CopperheadOS/platform_bionic/commit/bf8248f5644bc5f1fef36e8d9fd011334d08b994
 
-Public release.
+Double-free detection via an open-addressed hash table:
 
-ISSUE DESCRIPTION
-=================
+https://github.com/CopperheadOS/platform_bionic/commit/aa2038b668ace4546207e674850abbb3d6e1f392
 
-Certain PV guest kernel operations (page table writes in particular)
-need emulation, and use Xen's general x86 instruction emulator.  This
-allows a malicious guest kernel which asynchronously modifies its
-instruction stream to effect the clearing of EFLAGS.IF from the state
-used to return to guest context.
+Junk validation (upstreamed):
 
-IMPACT
-======
+https://github.com/robertbachmann/openbsd-libc/commit/00d2b970cb5791312ff38817feb1f8e015cca564
 
-A malicious guest kernel administrator can cause a host hang or
-crash, resulting in a Denial of Service.
+Remaining portion of the junk validation feature:
 
-VULNERABLE SYSTEMS
-==================
+https://github.com/CopperheadOS/platform_bionic/commit/49fb2a0464a3e93fcf138802b1691dcccc4816f7
 
-All Xen versions are vulnerable.
-
-Only x86 PV guests can exploit the vulnerability.
-
-Neither ARM guests nor x86 HVM guests can exploit the vulnerability.
-
-MITIGATION
-==========
-
-Running only HVM guests will avoid the vulnerability.
-
-For PV guests the vulnerability can be avoided if the guest kernel is
-controlled by the host rather than guest administrator, provided that
-further steps are taken to prevent the guest administrator from loading
-code into the kernel (e.g. by disabling loadable modules etc) or from
-using other mechanisms which allow them to run code at kernel privilege.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa202.patch           xen-unstable, Xen 4.8.x, Xen 4.7.x
-xsa202-4.6.patch       Xen 4.6.x, Xen 4.5.x
-xsa202-4.4.patch       Xen 4.4.x
-
-$ sha256sum xsa202*
-057be742acfef200ba6f094a5dce486dd1c4e15013afe3efc963523ce2ec9cbb  xsa202.patch
-cd53dc8b761dc7eb60998ea2419c98af926aa62b4317dbef15f597f5554f9015  xsa202-4.4.patch
-e007187639f5392a9256979504d50eff0ae38309a61524ea42c4150fab38b6f4  xsa202-4.6.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJYWm8TAAoJEIP+FMlX6CvZlekIALNmG5XBvAvY3Hpjwr/h+bh6
-AJNof+4jH7WUsyV8NyJxBOtAxDBeGsQ5csoryIt8CoqPfL6lph5Y0eUMAa+aOGYB
-FyMtWlKhyhoCjXcxhBCSAuHKldXyroZtzb6mx01nZSC8PbOCrnRzIGm/JLlnVS7b
-WBol9ID3DRWlI42gwpzDh3l/64Rioyyk1I26Kqal56+CT9iPk/b2UwqVb9oGQPI0
-iq8Lki5NAKwOQdRxQKEFnWMuwK2bJsuayM3K0Cl/DBckvcOstMkP543btZDZA/Uy
-AiAOrTcBeDPmOoUVRpjwNEsFiiNeGgXV1R+FOcoZfWLdTKsn2igOtUkEekwVdAs=
-=SNhC
------END PGP SIGNATURE-----
-
-Download attachment "xsa202.patch" of type "application/octet-stream" (2691 bytes)
-
-Download attachment "xsa202-4.4.patch" of type "application/octet-stream" (2265 bytes)
-
-Download attachment "xsa202-4.6.patch" of type "application/octet-stream" (2535 bytes)
+It would mix well with a dynamic bounds checking implementation like
+Intel MPX since it covers the lifetime issues fairly well. There would
+need to be the ability to extend the default quarantine size to make it
+more useful but that's simple enough. There's also the standard OpenBSD
+randomized quarantine, which it doesn't interfere with. Detecting read-
+after-free beyond cases where a pointer to protected data (from the junk
+filling) will guarantee  a crash really needs some form of hardware
+acceleration too. I think the cost of having huge memory usage via
+enormous deterministic mappings is too high.
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
