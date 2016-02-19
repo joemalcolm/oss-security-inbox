@@ -1,47 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/30/2
-Message-ID: <d0a531106d1d42538bf7ef4f0a967999@imshyb02.MITRE.ORG>
-Date: Wed, 30 Nov 2016 03:32:02 -0500
-From: <cve-assign@...re.org>
-To: <wmealing@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: cve-request: linux kernel - memory leak in xfs attribute mechanism.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/19/7
+Message-Id: <20160219200520.2D1413321C7@smtpvbsrv1.mitre.org>
+Date: Fri, 19 Feb 2016 15:05:20 -0500 (EST)
+From: cve-assign@...re.org
+To: mouzannar@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, yarolig@...il.com, security@...ian.org
+Subject: Re: CVE request: didiwiki path traversal vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> I'd like to request a CVE for the following flaw found in the XFS
-> attribute management code where over-eager error handling could create
-> a memory leak (not in information leak) and perhaps with enough
-> dedication and patience a local attacker could eventually leak
-> available system memory, creating a DOS attack.
-> 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=2e83b79b2d6c78bf1b4aa227938a214dcbddc83f
+>>> https://github.com/OpenedHand/didiwiki/pull/1/files
+>>> https://github.com/yarolig/didiwiki/commit/5e5c796617e1712905dc5462b94bd5e6c08d15ea
+>>> curl http://localhost:8000/api/page/get?page=/etc/passwd
 
->> xfs_attr_list.c error paths
+>> We can assign a CVE ID if there is going to be a DSA.
 
-Use CVE-2016-9685.
+> The Debian Security team is planning on publishing a DSA
+
+Use CVE-2013-7448.
+
+There is no CVE ID for the theoretical C:\file.txt attack on Windows.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYPo4nAAoJEHb/MwWLVhi28zQP+gNf6cDnL0kfFhu2r+F4hgOp
-mqETw6UhqoMyu9dpzbVbspbpNApm7obx/0iDeSw9/sK56os+SfeABQs9iFL1hhFf
-3m2MftWhlysDsudg7532n7DU10hOW873Y8v5lKF9Qaoaxy4RUs/XIHaWMZ2P/Q1l
-Madkq8XS9+k2pzXkYpY9o9w0vAHXE0WhdGvvlP3v4imxkncT/HdRPxmWv+j+s0/7
-ZWoW/5OoiIT/aVfgk8e8NagOrr0CMwkZ4WiE+xrVjC2SfpWKmpv9bPo/kCrkqo3O
-0oja1LcvAH/cK7HfldfotR+/Jh7zDKPTeQRlmJ4Aty/4Mmd+Uxb++fanMd+EHboJ
-aBExW7FWIzahaBKdRUuW4uvKFq5ZyFoYYgX9TuxCy0/ulMMyo7nlCFb95Y39z9QJ
-RcJ9hg3M2uL1ZEOdQsMAuwR6Yjn4SrwNvRGO4F6wvY+iG3PAt4DoETgeOp5ps26j
-yLIL7rhjDT6MTQTEDD+x7AZ0/+WpxUg1rdoqnh+Ycbea1cTkEhTIU1Qy75Lyzku2
-UEjHMPT0iaxw3X57N0L2saJFqoETPJqVSznCp+wErq8wrZneLLDOyaYMjQ4czN9f
-wKXqWwOtJERpUuH/Nfl6USjE3zO8l/C/2gxYDjGSl29x/HmhZzrXCSCk/u0uvIfX
-IDSrtpNfMwhIrRbEE9aY
-=TBNQ
+iQIcBAEBCAAGBQJWx3R3AAoJEL54rhJi8gl56FIQAKhiDXHz+ZfYJW3Q8yQsOTGY
+NCWQd87pKkg9glEACwCi/G+xbuPAW2MabkvYu5EPVvggtiIl0HHcVal+NCg4k8wW
+1ObCjslioox7lU4O/AZMiSfv7RwfadM2Bsg16jKIo1E6MmkaTcFepOwJK3G5NWuA
+HavNfY28wH1XzGp5SH6TDW343dXaJb9yzOBsGxn5UlEbs5piS5tiPe11+l1vO/eW
+rEA2USyXgtsSxu/vJruGzYxRiztwDaiJkT9n6avTKTcwO2Y7qkVeeDxzLAOG1iq2
+zM6Xvc2ejB5qmMBU0Oo75CE1MdcXZKhQ/62+zs3JrlKamD+8MoObW4YUWUKHQmLm
+/XOQ+lbFYhNkuaPz/xvZwiCT68acVuaSQomEge2bcDHPbAALO2v6WYubGlZO/h1g
+NARKJsPHYJfV4zIqtslReCbPAGW4caWkCnfJXLm0AqlGWXIKrjx2U/XtDCm00fy+
+4AA4b2THlYjFkvnzQaZzpkYjZH8V15VgockWctCUHmiY8HVQR8SDagNB0vcNN7yU
+e10DNt2PVwzS2iXewwx4P7sZmEPampGD3cOlH1bQklA4qBMcd2erRdoeL8N+aWAs
+XBBcuZVFHXNP6F4HAg/1ZM1sxxFmirFnQ9TTsCk8Lu6pT4XJWYk7s83e3yrwjslc
+AKbuwf1evPPl83oPO1Bs
+=jQSe
 -----END PGP SIGNATURE-----
