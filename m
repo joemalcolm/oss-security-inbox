@@ -1,47 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/28/5
-Message-ID: <CAP3WMuR0Fztm3EMKT_-4+7Avo25Mf2TrYsXEqi9LOFzPAm0hJQ@mail.gmail.com>
-Date: Wed, 28 Dec 2016 11:47:11 +0000
-From: Oleksandr Rudyy <orudyy@...il.com>
-To: "users@...d.apache.org" <users@...d.apache.org>, "dev@...d.apache.org" <dev@...d.apache.org>,  "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: [CVE-2016-8741] Apache Qpid Broker for Java - Information Leakage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/19/6
+Message-ID: <CADk+ZPONm_qyZX1UAw-UP=f0NUt6Nr-FLm6Dp5O4d-Rf18m2-w@mail.gmail.com>
+Date: Fri, 19 Feb 2016 14:40:55 -0500
+From: Ignace Mouzannar <mouzannar@...il.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com,  Александр Измайлов <yarolig@...il.com>,  security@...ian.org
+Subject: Re: CVE request: didiwiki path traversal vulnerability
 Content-Type: text/plain; charset=utf-8
 
-[CVE-2016-8741] Apache Qpid Broker for Java - Information Leakage
+Hi,
 
-Vendor: The Apache Software Foundation
+Thanks you for your reply.
 
-Versions Affected: Apache Qpid Broker for Java versions 6.0.1,
-                   6.0.2, 6.0.3, 6.0.4, 6.0.5, and 6.1.0
+On Fri, Feb 19, 2016 at 10:49 AM,  <cve-assign@...re.org> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+>> https://github.com/OpenedHand/didiwiki/pull/1/files
+>> curl http://localhost:8000/api/page/get?page=/etc/passwd
+>
+> We aren't sure about the need for CVE IDs for this product because it
+> doesn't seem to advertise any security properties, e.g.,
+>
+>   https://github.com/OpenedHand/didiwiki/blob/master/README
+>   "Its probably not very secure at all."
+>
+> We can assign a CVE ID if there is going to be a DSA.
 
-Description:
+The Debian Security team is planning on publishing a DSA, as this
+package is available in the (old)stable version of Debian.
 
-The Qpid Broker for Java can be configured to use different so
-called AuthenticationProviders to handle user authentication.
+> One concern is that the design may not be intended for environments
+> with untrusted clients, and many other issues may be found. Also, we
+> aren't sure about the patch:
+>
+> +   if (!isalnum(page_name[0]))
+> +        return FALSE;
+> +
+> +    if (strstr(page_name, ".."))
+> +         return FALSE;
+>
+> e.g., what about C:\file.txt if it's possible to build this on Windows.
 
-Among the choices are the SCRAM-SHA-1 and SCRAM-SHA-256
-AuthenticationProvider types.
+I admit not having looked into Windows (I am the package maintainer on
+Debian). For the record, didiwiki has not been packaged for Windows,
+and upstream has been MIA for a while now. So I'm not sure it is
+usable/used on Windows,
 
-It was discovered that these AuthenticationProviders prematurely
-terminate the SCRAM SASL negotiation if the provided user name
-does not exist thus allowing remote attacker to determine the
-existence of user accounts.
-
-The Vulnerability does not apply to AuthenticationProviders other
-than SCRAM-SHA-1 and SCRAM-SHA-256.
-
-Resolution:
-
-Users should upgrade the Qpid Broker for Java to version 6.0.6,
-6.1.1, or later (recommended).
-
-Mitigation:
-
-If upgrading is not possible, the vulnerability can be mitigated
-by using an AuthenticationProvider other than SCRAM-SHA-1 and
-SCRAM-SHA-256.
-
-References:
-
-https://issues.apache.org/jira/browse/QPID-7599
-
+Cheers,
+ Ignace M
