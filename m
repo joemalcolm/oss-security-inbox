@@ -1,28 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/14
-Message-ID: <20160408092855.GD8144@suse.de>
-Date: Fri, 8 Apr 2016 11:28:55 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: systemd / journald created world readable journal files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/19/8
+Message-ID: <20160219201103.GI9349@oevtugenva.nrevsny.pk>
+Date: Fri, 19 Feb 2016 15:11:03 -0500
+From: Rich Felker <dalias@...c.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Address Sanitizer local root
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Feb 17, 2016 at 10:03:59PM -0500, Daniel Micay wrote:
+> On Wed, 2016-02-17 at 17:24 -0800, Konstantin Serebryany wrote:
+> > Sadly MPX is too slow, too memory-hungry, and does not protect from
+> > use-after-free at all.
+> 
+> MPX is definitely problematic (performance, memory usage, false
+> positives with some atomic data structures, false positives without
+> using it everywhere - essentially a new ABI) but I don't think the lack
+> of coverage for lifetime issues is a major issue.
+> 
+> The malloc implementation can do a good job at mitigating lifetime
+> issues though. It can't detect 100% of UAF issues, but it can force
+> usage of pointers to fault (via proper junk filling) and detect write
+> after free via a comparable quarantine technique + validating that the
+> junk data is unaltered when allocations leave the quarantine. It can be
+> just as good at detecting double-free.
+> 
+> See the follow-up email:
+> 
+> http://www.openwall.com/lists/oss-security/2016/02/18/3
+> 
+> It's extremely painful to actually debug the aborts and faults produced
+> from this kind of hardening, so it doesn't really displace ASan at all
+> even for the bits where it can be as reliable, and it doesn't cover the
+> read-after-free case in the same way.
 
-systemd-journald from systemd v213 started creating world readable journals, allowing
-local users to read sensitive system log entries.
+As long as the aborts/faults happen at the earliest point where the
+wrong program behavior can be detected, I see no way they are "more
+painful to debug" than having ASan or similar introspectively print
+crash info. Attaching a debugger should get you equally useful
+information.
 
-While spotted by our users in
-https://bugzilla.suse.com/show_bug.cgi?id=972612
-the problem was present and fixed in upstream systemd git...
-
-Introduced by this commit in v213:
-https://github.com/systemd/systemd/commit/a606871da508995f5ede113a8fc6538afd98966c
-
-Fixed for volatile journals was done by this commit in v214:
-https://github.com/systemd/systemd/commit/176f2acf8dee45fee832fd2ab07243f63783a238
-
-Fixed for the current persistent journal by this commit in v229:
-https://github.com/systemd/systemd/commit/afae249efa4774c6676738ac5de6aeb4daf4889f
-
-Ciao, Marcus
+Rich
