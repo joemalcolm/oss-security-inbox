@@ -1,46 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/03/5
-Message-Id: <20160603151158.0CB287BC0B2@smtpvmsrv1.mitre.org>
-Date: Fri,  3 Jun 2016 11:11:58 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/19/5
+Message-Id: <20160219154945.8C75F6C05D3@smtpvmsrv1.mitre.org>
+Date: Fri, 19 Feb 2016 10:49:45 -0500 (EST)
 From: cve-assign@...re.org
-To: kangjielu@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, taesoo@...ech.edu, csong84@...ech.edu
-Subject: Re: CVE Request: rds: fix an infoleak in rds_inc_info_copy
+To: mouzannar@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, yarolig@...il.com, security@...ian.org
+Subject: Re: CVE request: didiwiki path traversal vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> There was an infoleak vulnerability in function
-> rds_inc_info_copy of file net/rds/recv.c.
-> The last field "flags" of object "minfo" is not initialized.
-> Copying this object out may leak kernel stack data.
-> Assign 0 to it to avoid leak.
-> 
-> https://patchwork.ozlabs.org/patch/629110/
-> https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=4116def2337991b39919f3b448326e21c40e0dbb
+> https://github.com/OpenedHand/didiwiki/pull/1/files
+> curl http://localhost:8000/api/page/get?page=/etc/passwd
 
-Use CVE-2016-5244.
+We aren't sure about the need for CVE IDs for this product because it
+doesn't seem to advertise any security properties, e.g.,
+
+  https://github.com/OpenedHand/didiwiki/blob/master/README
+  "Its probably not very secure at all."
+
+We can assign a CVE ID if there is going to be a DSA.
+
+One concern is that the design may not be intended for environments
+with untrusted clients, and many other issues may be found. Also, we
+aren't sure about the patch:
+
++   if (!isalnum(page_name[0]))
++        return FALSE;
++   
++    if (strstr(page_name, ".."))
++         return FALSE;
+
+e.g., what about C:\file.txt if it's possible to build this on Windows.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXUZw/AAoJEHb/MwWLVhi2aiUP/07OBwM0MtVy/t1KcZL8v7DD
-vIAzXg1kSR91f+gtrWhJCblBVwd86MnuLFxEersj7sVhNi+Cxt+LS952cCdXvjqu
-ELT1u3iZyOfW2h5kUrZIQKJgPggdbEikR6dRl+rsd/qAIzFvdqE0PFxXU1EIfkHi
-lKYdwS8X/Tnw3mo2D5pMXa3K1dIbq5XZZNIvvlYD/owgzu6z9k9eRmwDe+HRZOIW
-euBGQ/Wx1gD3/DfNot0rXguVP9C43079FVCrr8LIcQh2ogszb4coYIU2+KYObbbk
-+ZrOXkHY+n6B2sy2kirqoN01G8YThfc7Hcl9qsYB2ZuaHJdCMRAgP/nhY8kgytDF
-ivIqbx01dJQ+ce+T/J9hjkWNE8FN5QvcLAypZcVRsHC/fuue1GUD0jQpGLbSJUBY
-GoQ1pPiz7aojimx41dh0hGO2N0WQyzujo5OLCiHi2IQ+Mv/9Qtduh+2wfRxGMjWU
-ydLveWg4kj2Ao2eqn/j6XOpSu6vE1fB1qX8+VBRO+o44g2p8Y7nM0MskYhZ3ayAY
-sy/nuBTBO4W0Q+xwjh1bIJkC1KraLYXPoHdhmviWIAd95xO5+5Uqy6jtwTjiATQx
-wCFEB0e+zqHF+XJJfYk9oBb4H/jzpZvJdl5xMtHT+nLuDYz3kmL5InTGBufRD6p2
-eyF4kMXone5kZVbr/kTB
-=O3Ht
+iQIcBAEBCAAGBQJWxzknAAoJEL54rhJi8gl57ogQAJA6Xt9qMW2rW+xJRgPptQSu
+dImNhpj3wK1MccZge209MPhXQfRnbY7jvm0UjcFLBcbgmp6mXOnqgM0PHte58FYX
+80VO1zj22aH5EyG8e1c/S18nKl7yRFhU56xXSYsmSBWU/1azhuTNX6hKhu1/kr0U
+PSfkIgXaFhm7j1rj824/dBtTMVXa/nA4c/wDKTjkGkWld1l4V/7ZraaUiu28OZat
+s/oiZcgG2cDHKhsh+fJ8tVin6wQE7+ydTJeVUQLrJqemD1Wnghthin5LDqnK77tP
+Cq3R15bQjunn7dHz56BIE68aFhQoAjunv1GlHS5im5W3u3dRi4r9aRDQNiNO7WZL
+NV0vflWiMmyNqNExOk9y3VOuTGBQ/BpbkW/YAMwyvzjRoMesuAE2fv6QdHXEs0j+
+q7B4NiWmAcUPstyZpBoqq7iZm5c7OBaWmujs5k1jxOuRzsGfjY4pKUpc+4R1ydKm
++brG4jZa4rdBZbE9OB1fURVkgH4GqgOSGVdiPys/GbPk02YvUHQn28qg22b6aS+4
+u8Xx5O2cTyzLyQIzVmqUUAS6CSmFFM5KiTZTTzW2W1tCzXwjnx3cQTPPH0IlSaR0
+pPctHFMCXX2ghOikyNA4mrZuxUDCGYQHILD2QBOsEgBz8mr+eadz9DXh6zpaffp1
+NRFKU2HYn0DCATgFJCdv
+=GYQp
 -----END PGP SIGNATURE-----
