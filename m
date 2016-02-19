@@ -1,108 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/10
-Message-Id: <E1c99mQ-00087x-6f@xenbits.xenproject.org>
-Date: Tue, 22 Nov 2016 12:02:30 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 194 (CVE-2016-9384) - guest 32-bit ELF symbol table load leaking host data
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/19/9
+Message-ID: <1455916403.769.9.camel@gmail.com>
+Date: Fri, 19 Feb 2016 16:13:23 -0500
+From: Daniel Micay <danielmicay@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Address Sanitizer local root
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> As long as the aborts/faults happen at the earliest point where the
+> wrong program behavior can be detected, I see no way they are "more
+> painful to debug" than having ASan or similar introspectively print
+> crash info. Attaching a debugger should get you equally useful
+> information.
 
-            Xen Security Advisory CVE-2016-9384 / XSA-194
-                              version 3
+The aborts and faults tend to happen later than the ASan detection would
+kick in though, other than the double-free case. For example, writes to
+freed memory only get detected when the junk data is validated later on
+(i.e. when an allocation is flushed from the FIFO quarantine), and it
+can be quite hard to debug from there. Use of freed memory often crashes
+right away with junk filling (pointer accesses) but it can end up
+causing subtler issues or crashes far away from the source.
 
-           guest 32-bit ELF symbol table load leaking host data
-
-UPDATES IN VERSION 3
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-Along with their main kernel binary, unprivileged guests may arrange
-to have their Xen environment load (kernel) symbol tables for their
-use.  The ELF image metadata created for this purpose has a few unused
-bytes when the symbol table binary is in 32-bit ELF format.  These
-unused bytes were not properly cleared during symbol table loading.
-
-IMPACT
-======
-
-A malicious unprivileged guest may be able to obtain sensitive
-information from the host.
-
-The information leak is small and not under the control of the guest,
-so effectively exploiting this vulnerability is probably difficult.
-
-VULNERABLE SYSTEMS
-==================
-
-Only Xen version 4.7 is affected.  Xen versions 4.6 and earlier are not
-affected.
-
-The vulnerability is not exposed to x86 HVM guests, unless the host
-toolstack has configured to load the guest with a non-default loader,
-rather than hvmloader.
-
-MITIGATION
-==========
-
-There is no known mitigation.
-
-CREDITS
-=======
-
-This issue was discovered by Roger Pau Monné of Citrix.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa194.patch           xen-unstable, Xen 4.7.x
-
-$ sha256sum xsa194*
-4dad65417d9ff3c86e763d3c88cf8de79b58a9981d531f641ae0dd0dcedce911  xsa194.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJYNDLYAAoJEIP+FMlX6CvZqAoH/39GSWwDpYnflz3TcFyQUViM
-j36XzzStWya71ewaXiguUbTHHg6mK47pK4EA/3zFwerczz/5yQzhlToitPkP/8WE
-5Qbg9Wyg4STylzeKaiTvLzqUK6XSiJ4oKZwLsnU7tFPLcb6FBMm9t3bzg9NECaft
-/6zYj1SVCvoLJB/gtgbwrz2MCjVZQZ9Q2+mpirvu0ePQRD73M0cwfj1ncqjUkFd9
-ZNdk14gmxOk1/wWAm/oD1QKUWmjpzByT5dbGcMV3OxGs1V2Px+o4c1u1t/agldr0
-wC2LvCK9IED9JcBaH/M85TTAGR7GqfU8l9x3ep97GkrUpquX4OGFt7na28M1YUQ=
-=Gc8O
------END PGP SIGNATURE-----
-
-Download attachment "xsa194.patch" of type "application/octet-stream" (5732 bytes)
+It's much easier to find the bugs than it would be without this, but if
+your goal is implementing hardening features, it's not very fun to need
+hundreds of fixes for use-after-frees across common software. It makes
+sense to go at it with ASan or Valgrind first to clear out the obvious
+problems and then worry about exploit mitigations. A surprising amount
+of software has all kinds of memory corruption in the *common* code
+paths.
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
