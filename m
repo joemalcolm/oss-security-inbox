@@ -1,44 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/24/10
-Message-ID: <CAKws9z1PtHH8r9p-knF=OvKrj6WS57B8vvstY=f7oicfXX8Z3Q@mail.gmail.com>
-Date: Sun, 24 Jan 2016 18:40:37 -0500
-From: Scott Arciszewski <scott@...agonie.com>
-To: oss-security@...ts.openwall.com,  Assign a CVE Identifier <cve-assign@...re.org>
-Subject: PSA: Don't use RNCryptor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/19/1
+Message-ID: <20160219010730.GF9349@oevtugenva.nrevsny.pk>
+Date: Thu, 18 Feb 2016 20:07:30 -0500
+From: Rich Felker <dalias@...c.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Address Sanitizer local root
 Content-Type: text/plain; charset=utf-8
 
-I've discovered that several people are promoting a cryptography library
-called RNCryptor on Stack Exchange websites.
+On Thu, Feb 18, 2016 at 11:19:10PM +0000, Darren Martyn wrote:
+> Hi List,
+> Figured I would add this to the thread to keep it amusing.
+> 
+> Here is a fully functioning local root by clobbering /etc/ld.so.preload
+> instead of /etc/shadow (which breaks things spectacularly). I am using a
+> fairly messy "symlink spray"/"symlink carpet bombing" technique.
+> 
+> Simply point it at a setuid-root binary compiled with asan and away it
+> goes.
+> 
+> Video: https://www.youtube.com/watch?v=jhSIm3auQMk
+> PoC Code: https://gist.github.com/0x27/9ff2c8fb445b6ab9c94e
+> 
+> Development/Testing was done on a Debian 8.3 VM that was last updated
+> last week.
+> 
+> Now, I wonder - what can actually be done to mitigate against this,
+> besides "don't use ASAN in production"?
+> Is there something that can be done ASAN-side?
+> Because due to how ld.so.preload is parsed so, uh, forgivingly, all the
+> attacker needs to control is one line in the output file. Could it check
+> for symlinks before writing the log?
 
-Last year, I found that it failed to compare MACs in constant-time (which
-is rule #1 of the cryptography coding standards, by the way). This is not
-only a remotely exploitable cryptographic side-channel that allows for MAC
-forgeries that result in chosen-ciphertext attacks, but it's also a sign of
-poor security engineering that promises more vulnerabilities will be
-discovered in other components.
+Fixing this whole class of bugs is trivial -- just don't process
+environment vars or other invoker-controlled input when run suid. For
+most things you would want to call secure_getenv (glibc) or issetugid
+(BSD) to achieve this but for sanitizer libs it may make more sense to
+just access the aux vector directly and check AT_SECURE and related
+items.
 
-Today, I spend two minutes looking through the C and Python versions and
-discovered they are also susceptible to timing attack vulnerabilities.
+Of course there's a lot more state that the attacker invoking a suid
+binary controlls -- resource limits, open file descriptors,
+controlling ttys, signal state, etc. This also needs to be dealt with.
 
-*
-https://github.com/RNCryptor/RNCryptor-C/blob/ca238ab862205abdcb2e2ae173d2695037639154/rncryptor_c.c#L429
-*
-https://github.com/RNCryptor/RNCryptor-python/blob/71031f243bcba2aaa7bca4ff9a4c01358427b476/RNCryptor.py#L87
+On a more general level, the kind of diagnostic introspection the
+sanitizer libs do is just unsafe in general. Once you have a
+known-compromised process state, the only thing safe to do is inducing
+program termination asap. Processing complex data structures is
+unsafe. Unwinding is unsafe. Function calls (especially via GOT/PLT)
+and even normal system calls (on i386 where the vdso syscall pointer
+is stored just after the thread stack) are unsafe. For hardening
+purposes you need either an inline __builtin_trap() (and hope nobody's
+catching SIGILL/SIGSEGV/SIGABRT) or ideally an inline [rt_sigprocmask,
+getpid, kill] syscall sequence. Analysis of the crashing process, if
+desired, should be left to an external debugger, not put in the
+sanitizer libs just because it's "convenient".
 
-And of course, my original finding:
-https://github.com/RNCryptor/RNCryptor-php/blob/f7ab514209fe476c4aa83a1df1fe9bb655e9e9b0/lib/RNCryptor/Decryptor.php#L99
-
-I'd like to take this opportunity to tell every programmer and information
-security professional that reads this mailing list: DON'T USE RNCRYPTOR.
-
-If you need portable, highly secure cryptography, there is no better answer
-than libsodium:
-https://paragonie.com/blog/2015/11/choosing-right-cryptography-library-for-your-php-project-guide
-
-(If you're interested in seeing the Stack Exchange discussion:
-http://stackoverflow.com/a/34969963/2224584)
-
-Scott Arciszewski
-Chief Development Officer
-Paragon Initiative Enterprises <https://paragonie.com>
-
+Rich
