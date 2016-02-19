@@ -1,29 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/7
-Message-ID: <alpine.LFD.2.20.1610101653450.27939@wniryva>
-Date: Mon, 10 Oct 2016 16:56:22 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request: Qemu: 9pfs: host memory leakage in v9fs_read 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/19/2
+Message-ID: <CAAnPYQ4OJfyD9CWXVihRBDMkXU44edzWSm9mUUn5S7-tDb0hGg@mail.gmail.com>
+Date: Fri, 19 Feb 2016 02:28:47 +0000
+From: Gynvael Coldwind <gynvael@...dwind.pl>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Address Sanitizer local root
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+And if that fails, there's always the ASAN_SYMBOLIZER_PATH environment
+variable, which just makes the ASANified binary execute the executable you
+give it (
+http://clang.llvm.org/docs/AddressSanitizer.html#symbolizing-the-reports) ;)
 
-Quick Emulator(Qemu) built with the virtio-9p back-end support is vulnerable 
-to a memory leakage issue. It could occur while doing a I/O read operation in 
-v9fs_read() routine.
 
-A privileged user/process inside guest could use this flaw to crash the Qemu 
-process instance resulting in Dos.
+On Fri, Feb 19, 2016 at 12:19 AM Darren Martyn <
+darren.martyn@...hosresearch.co.uk> wrote:
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg07127.html
+> Hi List,
+> Figured I would add this to the thread to keep it amusing.
+>
+> Here is a fully functioning local root by clobbering /etc/ld.so.preload
+> instead of /etc/shadow (which breaks things spectacularly). I am using a
+> fairly messy "symlink spray"/"symlink carpet bombing" technique.
+>
+> Simply point it at a setuid-root binary compiled with asan and away it
+> goes.
+>
+> Video: https://www.youtube.com/watch?v=jhSIm3auQMk
+> PoC Code: https://gist.github.com/0x27/9ff2c8fb445b6ab9c94e
+>
+> Development/Testing was done on a Debian 8.3 VM that was last updated
+> last week.
+>
+> Now, I wonder - what can actually be done to mitigate against this,
+> besides "don't use ASAN in production"?
+> Is there something that can be done ASAN-side?
+> Because due to how ld.so.preload is parsed so, uh, forgivingly, all the
+> attacker needs to control is one line in the output file. Could it check
+> for symlinks before writing the log?
+>
+> Regards,
+> Darren.
+>
+>
 
-This issue was reported by Li Qiang of 360.cn Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
