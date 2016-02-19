@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["436" "Wednesday" "9" "December" "2015" "18:08:02" "+0800" "xiaoqixue_1" "xiaoqixue_1@163.com" "<245dc37c.114c5.15186364547.Coremail.xiaoqixue_1@163.com>" "8" "[oss-security] CVE request - Linux kernel - Fix handling of stored error in a negatively instantiated user key" nil nil nil "12" "2015120910:08:02" "[oss-security] CVE request - Linux kernel - Fix handling of stored error in a negatively instantiated user key" (number mark "U       xiaoqixue_1@ Dec  9    8/436   " thread-indent "\"[oss-security] CVE request - Linux kernel - Fix handling of stored error in a negatively instantiated user key\"\n") "<273719694.18743924.1449624723028.JavaMail.zimbra@redhat.com>" ("<273719694.18743924.1449624723028.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1463" "Friday" "19" "February" "2016" "15:05:20" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160219200520.2D1413321C7@smtpvbsrv1.mitre.org>" "37" "[oss-security] Re: CVE request: didiwiki path traversal vulnerability" nil nil nil "2" "2016021920:05:20" "[oss-security] Re: CVE request: didiwiki path traversal vulnerability" (number mark "U       cve-assign@m Feb 19   37/1463  " thread-indent "\"[oss-security] Re: CVE request: didiwiki path traversal vulnerability\"\n") "<CADk+ZPONm_qyZX1UAw-UP=f0NUt6Nr-FLm6Dp5O4d-Rf18m2-w@mail.gmail.com>" ("<CADk+ZPONm_qyZX1UAw-UP=f0NUt6Nr-FLm6Dp5O4d-Rf18m2-w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20240 invoked by uid 550); 9 Dec 2015 10:08:22 -0000
+Received: (qmail 4069 invoked by uid 550); 19 Feb 2016 20:05:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,38 +12,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20220 invoked from network); 9 Dec 2015 10:08:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=CrPI8
-	JHZwlpdJYuFG6ZkoOO6xFyFPYPajFCzNHKjwNQ=; b=DRgjl2d7P1R6f6JREIOTe
-	VzQpWblZHM0VSYalj3DVZrz1KrCqoI9Mx2CEwp1AyF6qziLHoN7/Nkz61v71OU3S
-	flLfJjBzvNr5s9rcFI9LuNI1jbgpAf6RfrQ2RQ2NgLNaaAtVYSu7ZFkaHAD2AqFs
-	5MEf7+mjAi7nFzyFFutRdY=
-X-Originating-IP: [166.111.131.12]
-Date: Wed, 9 Dec 2015 18:08:02 +0800 (CST)
-From: xiaoqixue_1  <xiaoqixue_1@163.com>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
- 20150911(74783.7961) Copyright (c) 2002-2015 www.mailtech.cn 163com
-In-Reply-To: <273719694.18743924.1449624723028.JavaMail.zimbra@redhat.com>
-References: <273719694.18743924.1449624723028.JavaMail.zimbra@redhat.com>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
-MIME-Version: 1.0
-Message-ID: <245dc37c.114c5.15186364547.Coremail.xiaoqixue_1@163.com>
-X-CM-TRANSID:YcGowADnXA2D_WdW++wBAA--.4525W
-X-CM-SenderInfo: 50ld015l0xvsqr6rljoofrz/1tbiGQPLvVXlPyP4MAAAsI
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-Subject: [oss-security] CVE request - Linux kernel - Fix handling of stored
- error in a negatively instantiated user key
+Received: (qmail 4046 invoked from network); 19 Feb 2016 20:05:32 -0000
+From: cve-assign@mitre.org
+To: mouzannar@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, yarolig@gmail.com, security@debian.org
+In-Reply-To: <CADk+ZPONm_qyZX1UAw-UP=f0NUt6Nr-FLm6Dp5O4d-Rf18m2-w@mail.gmail.com>
+Message-Id: <20160219200520.2D1413321C7@smtpvbsrv1.mitre.org>
+Date: Fri, 19 Feb 2016 15:05:20 -0500 (EST)
+Subject: [oss-security] Re: CVE request: didiwiki path traversal vulnerability
 
-CgoKYSBvdXQgb2YgYm91bmQgcmVhZCBidWcgaXMgZm91bmQgaW7CoCAgbGF0
-ZXN0IHJlbGVhc2UgdmVyc2lvbiBkd2FyZi0yMDE1MTExNCBieSBYaWFvIFFp
-eHVlIGFuZCBMaXV5dWUuCsKgYW5kIHdlIGhhdmUgdGVzdGVkIHRoZSBvdGhl
-ciB2ZXJzaW9uIGR3YXJmLTIwMTQwODA1IHdoaWNoIGlzIGFsc28gYWZmZWN0
-ZWQuCgoKUmVkIEhhdCBCdWd6aWxsYToKaHR0cHM6Ly9idWd6aWxsYS5yZWRo
-YXQuY29tL3Nob3dfYnVnLmNnaT9pZD0xMjg5Mzg1CgoKVXBzdHJlYW0gcGF0
-Y2ggYXBwbGllZCBpbiBsaWJkd2FyZi0yMDE1MTExNC0yLmZjMjQgYnVpbGQu
-CsKgCiA=
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+>>> https://github.com/OpenedHand/didiwiki/pull/1/files
+>>> https://github.com/yarolig/didiwiki/commit/5e5c796617e1712905dc5462b94bd5e6c08d15ea
+>>> curl http://localhost:8000/api/page/get?page=/etc/passwd
+
+>> We can assign a CVE ID if there is going to be a DSA.
+
+> The Debian Security team is planning on publishing a DSA
+
+Use CVE-2013-7448.
+
+There is no CVE ID for the theoretical C:\file.txt attack on Windows.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWx3R3AAoJEL54rhJi8gl56FIQAKhiDXHz+ZfYJW3Q8yQsOTGY
+NCWQd87pKkg9glEACwCi/G+xbuPAW2MabkvYu5EPVvggtiIl0HHcVal+NCg4k8wW
+1ObCjslioox7lU4O/AZMiSfv7RwfadM2Bsg16jKIo1E6MmkaTcFepOwJK3G5NWuA
+HavNfY28wH1XzGp5SH6TDW343dXaJb9yzOBsGxn5UlEbs5piS5tiPe11+l1vO/eW
+rEA2USyXgtsSxu/vJruGzYxRiztwDaiJkT9n6avTKTcwO2Y7qkVeeDxzLAOG1iq2
+zM6Xvc2ejB5qmMBU0Oo75CE1MdcXZKhQ/62+zs3JrlKamD+8MoObW4YUWUKHQmLm
+/XOQ+lbFYhNkuaPz/xvZwiCT68acVuaSQomEge2bcDHPbAALO2v6WYubGlZO/h1g
+NARKJsPHYJfV4zIqtslReCbPAGW4caWkCnfJXLm0AqlGWXIKrjx2U/XtDCm00fy+
+4AA4b2THlYjFkvnzQaZzpkYjZH8V15VgockWctCUHmiY8HVQR8SDagNB0vcNN7yU
+e10DNt2PVwzS2iXewwx4P7sZmEPampGD3cOlH1bQklA4qBMcd2erRdoeL8N+aWAs
+XBBcuZVFHXNP6F4HAg/1ZM1sxxFmirFnQ9TTsCk8Lu6pT4XJWYk7s83e3yrwjslc
+AKbuwf1evPPl83oPO1Bs
+=jQSe
+-----END PGP SIGNATURE-----
