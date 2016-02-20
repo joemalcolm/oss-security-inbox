@@ -1,40 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/25/10
-Message-ID: <20161025175111.75784zabcvhv5ig4@webmail.alunos.dcc.fc.up.pt>
-Date: Tue, 25 Oct 2016 17:51:11 +0200
-From: up201407890@...nos.dcc.fc.up.pt
-To: "Yves-Alexis Perez" <corsac@...ian.org>
-Cc: oss-security@...ts.openwall.com, netblue30 <netblue30@...oo.com>, team@...urity.debian.org, cve-assign@...re.org
-Subject: Re: CVE-2016-7545 -- SELinux sandbox escape
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/20/1
+Message-ID: <CANO=Ty1UU7mCg_suEkOh3QYzPPEOQ2sRhk1zq2+R1mANb7kFyA@mail.gmail.com>
+Date: Fri, 19 Feb 2016 21:36:02 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE for nodejs hawk
 Content-Type: text/plain; charset=utf-8
 
-Quoting "Yves-Alexis Perez" <corsac@...ian.org>:
+https://nodesecurity.io/advisories/77
 
-> On Sun, 2016-09-25 at 13:49 +0200, up201407890@...nos.dcc.fc.up.pt wrote:
->> When executing a program via the SELinux sandbox, the nonpriv session
->> can escape to the parent session by using the TIOCSTI ioctl to push
->> characters into the terminal's input buffer, allowing an attacker to
->> escape the sandbox.
->
-> Hi,
->
-> it seems that firejail was affected by the same vulnerability, which  
-> was fixed
-> in 0.9.44 with  
-> https://github.com/netblue30/firejail/commit/46dc2b34f1fbbc4597
-> b4ff9f6a3cb28b2d500d1b
->
-> The commit log reuses the CVE-2016-7545 number, but I guess a new one should
-> be assigned since they don't share the same codebase?
->
-> Regards,
-> --
-> Yves-Alexis Perez - Debian Security
+Regular Expression Denial of Service
 
-Think so, CC'ing mitre.
+January 19th, 2016
 
+CVE-PENDING • Credit: Adam Baldwin
 
-----------------------------------------------------------------
-This message was sent using IMP, the Internet Messaging Program.
+Specifically crafted long headers or uris can cause a minor denial of
+service when using hawk versions less than 4.1.1.
 
+"The Regular expression Denial of Service (ReDoS) is a Denial of Service
+attack, that exploits the fact that most Regular Expression implementations
+may reach extreme situations that cause them to work very slowly
+(exponentially related to input size). An attacker can then cause a program
+using a Regular Expression to enter these extreme situations and then hang
+for a very long time."
+
+===
+
+Does Mitre know about this? Can we please have a CVE assigned for this?
+Thanks.
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
