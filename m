@@ -1,47 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/20/2
-Message-Id: <20161020052809.33BEA52E006@smtpvbsrv1.mitre.org>
-Date: Thu, 20 Oct 2016 01:28:09 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: imagemagick: memory allocation failure in AcquireMagickMemory (memory.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/20/5
+Message-ID: <20160220221414.GA7116@openwall.com>
+Date: Sun, 21 Feb 2016 01:14:14 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Multiple XSS vulnerabilities in Refinery CMS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Fri, Feb 19, 2016 at 09:07:30PM +0530, Shravan Kumar wrote:
+> I would like to publically disclose  Multiple XSS Vulnerabilities Found in
+> Refinery CMS.
 
-> https://blogs.gentoo.org/ago/2016/10/17/imagemagick-memory-allocation-failure-in-acquiremagickmemory-memory-c/
-> 
-> AddressSanitizer failed to allocate 0x99ad49000 bytes of LargeMmapAllocator
-> 
-> #9 0x7fe5713b3b3b in AcquireMagickMemory ... ImageMagick-7.0.3-0/MagickCore/memory.c:460:10
-> 
-> https://github.com/ImageMagick/ImageMagick/commit/aea6c6507f55632829e6432f8177a084a57c9fcc
+As a moderator, I have to note that we have two inappropriate postings
+here - a link to an external PDF (in fact, the same one in two messages)
+and no detail in message body.  I also have to admit that, although this
+kind of postings were frowned upon in the past, the "List Content
+Guidelines" did not explicitly discourage them.  This is now corrected:
 
->> coders/rle.c
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
-Use CVE-2016-8862.
+"At least the most essential part of your message (e.g., vulnerability
+detail or a PoC exploit) should in fact be in the message itself (and in
+plain text), rather than only included by reference to an external
+resource.  Posting links to relevant external resources as well is
+acceptable, but posting only links is not."
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Going forward, PDF-only postings like this may be rejected.
 
-iQIcBAEBCAAGBQJYCFVwAAoJEHb/MwWLVhi2mAsP/1YzJifP793z4w614RoTUA7b
-jUkA+sQqO1K9QCLbLxu2WQim5i/NUQoA6PndyleVK/xUfBLoluPpgIc+goGJI8GX
-IPIas9M30+donfLhxuwvK68rrxxk6F1ISvsSs7ib8vtcb6jPrIuwH1FJurnAwHas
-XSEDMSnwO+kad7wKmshC+GnMwyEi5uj2lXjQxxFF0WiwCJB8Stso8ryPSEGFk6cX
-3zzPDMlg7q1A76uAU002yKzkHwB6QeYG6QzrewBv0fDNyQ3VgLNQDPw7FTz8yFF2
-5A1YfXb5kTodLjzO3ICg/bBGOBctuBueeIay9wNzBIjeXPIHn6cAJkqdHY3UiMSO
-ZUXKwqOwbuvnV9HRVaMjraAzY/wGndn6h8lDqfYWs03AdnaL882+iNuDXh5vTX/u
-iBT+YQKnx8SGykWOscRAW296WCgJ+xNTU+mEuk/SzjFzxNKRsyeTdcRiJOPzdPHx
-5yxxeOdQd4FSYOUL+V29PuLcBivoNI8ZJ+qgsxornsBB/iw+dp9dRQ/i4jGBnamr
-IDW0VSjSl09nO1cNKgnOFvcTGZFblWd2b/2FQPbDMrMUnMa4mKq+PkuDC+FAOh90
-y5OliXNX9mYrmVUtg1SYxJzaQzbs+eumSOK473tyF3sncYldCyZqS3G1ye8F7+4X
-zIVVHtg4Fh4pITfRPJlH
-=4WTn
------END PGP SIGNATURE-----
+And, doing Shravan's homework this one time, I've attached a plain text
+export of the content from the PDF file.  Unfortunately, this does not
+capture some of the detail and isn't formatted well (it might even be
+partially incorrect, showing some deleted text or such).  Sorry about
+that - not my job.  Shravan, on future occasions, please prepare a
+proper plain text description of whatever you post in here.
+
+Alexander
+
+View attachment "Penetration-testing-report--open-source-Ruby-on-rails-Refinery-CMS.txt" of type "text/plain" (7363 bytes)
