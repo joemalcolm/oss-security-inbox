@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2104" "Wednesday" "21" "June" "2017" "16:48:14" "-0600" "Jeff Law" "law@redhat.com" "<8e3931f4-b5b1-817d-eaed-0b88eac70f05@redhat.com>" "45" "Re: [oss-security] Qualys Security Advisory - The Stack Clash" "^Date:" nil nil "6" "2017062122:48:14" "[oss-security] Qualys Security Advisory - The Stack Clash" (number mark "        law@redhat.c Jun 21   45/2104  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - The Stack Clash\"\n") "<594AE554.22038.7198001A@pageexec.freemail.hu>" ("<20170619152843.GC7769@localhost.localdomain>" "<14558692.afnJ5aRU9J@wanheda>" "<cbf49fff-2cd8-cb8c-59b8-07c2b7c37b0f@redhat.com>" "<594AE554.22038.7198001A@pageexec.freemail.hu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1065" "Friday" "19" "February" "2016" "21:36:02" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty1UU7mCg_suEkOh3QYzPPEOQ2sRhk1zq2+R1mANb7kFyA@mail.gmail.com>" "35" "[oss-security] CVE for nodejs hawk" "^Date:" nil nil "2" "2016022004:36:02" "[oss-security] CVE for nodejs hawk" (number mark "U       kseifried@re Feb 19   35/1065  " thread-indent "\"[oss-security] CVE for nodejs hawk\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1924 invoked by uid 550); 21 Jun 2017 22:48:28 -0000
+Received: (qmail 28342 invoked by uid 550); 20 Feb 2016 04:36:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1900 invoked from network); 21 Jun 2017 22:48:27 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 4501A4E4FC
-Authentication-Results: ext-mx09.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx09.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=law@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 4501A4E4FC
-References: <20170619152843.GC7769@localhost.localdomain>
- <14558692.afnJ5aRU9J@wanheda>
- <cbf49fff-2cd8-cb8c-59b8-07c2b7c37b0f@redhat.com>
- <594AE554.22038.7198001A@pageexec.freemail.hu>
-Message-ID: <8e3931f4-b5b1-817d-eaed-0b88eac70f05@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.0
+Received: (qmail 28319 invoked from network); 20 Feb 2016 04:36:14 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=VxViCp44J9PIivD+h154PYR1E4BUNFYbl3rMrPNjNvg=;
+        b=kMVBaTBWy9f+Qjcy81XzsOfe4eUAWDBSJBgUWCBWVGGZqjoenbQNbQoSV5VCDuZJ+k
+         ipy7+HN21rolLTwDnxjRAK1W3r0hS6ktiZeWZjj4VEjXZY33diGaTyDj60hTY1JiPlOd
+         957YuPEsjAMBsg6ms0uKF6iXk+bT+pg8UZLVxw8IxF+/R3+HH7p5MJPMJ5D1+aOlFYvN
+         LGHdmWoYDMvVWafDIOhbrFVZhb5nBgsj/bmk5iJEb7p40hu1Gq99fyhd6lbYvDvu9Uuz
+         J4OfZ8cSgdUEG1Z5l5LTaBO2xxj/At1TRyD6vPyu4q0xB47znJDQbEGbpqbU3bJM2XM6
+         AZyQ==
+X-Gm-Message-State: AG10YOSdoSPV1VRu+l/2G4VuwJLCfh/wU450HtYSWw/MH1UiAkNBGI8BByQvY3n7wTXUkBE0JieBA/IHG/cvgH68
 MIME-Version: 1.0
-In-Reply-To: <594AE554.22038.7198001A@pageexec.freemail.hu>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Wed, 21 Jun 2017 22:48:15 +0000 (UTC)
-Date: Wed, 21 Jun 2017 16:48:14 -0600
-From: Jeff Law <law@redhat.com>
+X-Received: by 10.13.241.199 with SMTP id a190mr9576463ywf.47.1455942962356;
+ Fri, 19 Feb 2016 20:36:02 -0800 (PST)
+Message-ID: <CANO=Ty1UU7mCg_suEkOh3QYzPPEOQ2sRhk1zq2+R1mANb7kFyA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=94eb2c03272015e746052c2c2307
+Date: Fri, 19 Feb 2016 21:36:02 -0700
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Qualys Security Advisory - The Stack Clash
-To: oss-security@lists.openwall.com, PaX Team <pageexec@freemail.hu>,
- Agostino Sarubbo <ago@gentoo.org>
+Subject: [oss-security] CVE for nodejs hawk
+To: oss-security <oss-security@lists.openwall.com>
 
-On 06/21/2017 03:29 PM, PaX Team wrote:
-> On 21 Jun 2017 at 10:22, Jeff Law wrote:
-> 
->> On 06/21/2017 04:46 AM, Agostino Sarubbo wrote:
->>> On Monday 19 June 2017 08:28:43 Qualys Security Advisory wrote:
->>>> III. Solutions
->>>> - Recompile all userland code (ld.so, libraries, binaries) with GCC's
->>>>   "-fstack-check" option, which prevents the stack-pointer from moving
->>>>   into another memory region without accessing the stack guard-page (it
->>>>   writes one word to every 4KB page allocated on the stack).
->>>
->>> For the record, Gentoo Hardened enables by default -fstack-check=specific
->> And if you were to look at the generated code, you'll see that it
->> happily skips 2-3 pages of probes in prologues as well as within alloca
->> spaces.  It's a false sense of security.
-> 
-> Gentoo Hardened uses the grsecurity kernel which enforces a 64kB heap-stack
-> gap by default (it's also user adjustable). are you saying that the gcc
-> probes are not sufficient to prevent jumping over that range?
-With a 64k guard, you should be OK and protected.  -fstack-check will
-consistently skip 8218 bytes on x86 (8192 on most architectures).  Even
-if you combined the skipped space from the prologue and the skipped
-space in the dynamic area, you're only at just over 16k -- and it's not
-clear the two skipped areas could be combined like that anyway.
+--94eb2c03272015e746052c2c2307
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
+https://nodesecurity.io/advisories/77
 
-Given the larger guard you should be in good shape.  Sorry to have
-sounded alarmist without having full information about your
-configuration, particularly WRT the expanded guard page.
+Regular Expression Denial of Service
 
+January 19th, 2016
+
+CVE-PENDING =E2=80=A2 Credit: Adam Baldwin
+
+Specifically crafted long headers or uris can cause a minor denial of
+service when using hawk versions less than 4.1.1.
+
+"The Regular expression Denial of Service (ReDoS) is a Denial of Service
+attack, that exploits the fact that most Regular Expression implementations
+may reach extreme situations that cause them to work very slowly
+(exponentially related to input size). An attacker can then cause a program
+using a Regular Expression to enter these extreme situations and then hang
+for a very long time."
+
+=3D=3D=3D
+
+Does Mitre know about this? Can we please have a CVE assigned for this?
+Thanks.
+
+--=20
 
 --
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
 
-There's one theoretical approach I'm aware of that one could use the
-skip the guard in your situation.  I'm not aware of any code in practice
-that would have the right properties to trigger *and* triggering would
-require a particular optimization that neither LLVM nor GCC perform to
-the best my knowledge (nor are they likely to as the optimization would
-not likely improve any hot path performance).
-
-We'll be making that theoretical attack significantly harder to exploit
-as part of the upstream GCC work around a new -fstack-check implementation.
-
-
-Jeff
+--94eb2c03272015e746052c2c2307--
