@@ -1,72 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/08/2
-Message-ID: <etPan.57a899a7.19a79846.1a64@mirantis.com>
-Date: Mon, 8 Aug 2016 17:39:35 +0300
-From: Kirill Zaitsev <kzaitsev@...antis.com>
-To: oss-security@...ts.openwall.com
-Subject: RCE vulnerability in Openstack Murano using insecure YAML tags (CVE-2016-4972)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/21/1
+Message-ID: <CAHYtTq=UM+eVYgTFyG1OQMKt9ecz3Uo3vKV1vEEfy+VnTEr2pQ@mail.gmail.com>
+Date: Sun, 21 Feb 2016 19:56:58 +0000
+From: Carlos Santana <csantana23@...il.com>
+To: ASF Security Team <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Cc: "private@...dova.apache.org" <private@...dova.apache.org>, security@...roid.com
+Subject: [Update 2/20/16 CVE-2015-5256] Apache Cordova vulnerable to improper application of whitelist restrictions on Android
 Content-Type: text/plain; charset=utf-8
 
-==============================================================
-RCE vulnerability in Openstack Murano using insecure YAML tags
-==============================================================
+*Updated 02/20/2016*
 
-:Date: June 23, 2016
-:CVE: CVE-2016-4972
+Apache Cordova has re-visited CVE-2015-5256 "Apache Cordova vulnerable to
+improper application of whitelist restrictions on Android”. Upon further
+investigation we found that the vulnerability is more limited than was
+previously understood.
+We are lowering the severity to Low, and updating the description, affected
+versions, and upgrade path.
 
+The updated text of the CVE is included below:
 
-Affects
-~~~~~~~
-- Murano: <=2015.1.1; <=1.0.2; ==2.0.0
-- Murano-dashboard: <=2015.1.1; <=1.0.2; ==2.0.0
-- Python-muranoclient: <=0.7.2; >=0.8.0<=0.8.4
+Apache Cordova PMC
+--------------------------
+private@...dova.apache.org
 
+____
 
-Description
-~~~~~~~~~~~
-Kirill Zaitsev from Mirantis reported a vulnerability in OpenStack
-Murano applications processing. Using extended YAML tags in Murano
-application YAML files, an attacker can perform a Remote Code
-Execution attack.
+*Updated 02/20/2016*
 
-Vulnerability has been verified in all currently supported branches.
-Further examination of code suggest, that it is also present in kilo and
-juno versions of murano.
+CVE-2015-5256: Apache Cordova vulnerable to improper application of
+whitelist restrictions on Android
 
-Patches
-~~~~~~~
-- https://review.openstack.org/#/c/333444/ (Liberty)
-- https://review.openstack.org/#/c/333425/ (Liberty)
-- https://review.openstack.org/#/c/333432/ (Liberty)
-- https://review.openstack.org/#/c/333443/ (Mitaka)
-- https://review.openstack.org/#/c/333424/ (Mitaka)
-- https://review.openstack.org/#/c/333439/ (Mitaka)
-- https://review.openstack.org/#/c/333423/ (Newton)
-- https://review.openstack.org/#/c/333440/ (Newton)
-- https://review.openstack.org/#/c/333428/ (Newton)
+Severity: Low
 
+Versions Affected:
+Cordova Android with whitelist functionality
 
-Credits
-~~~~~~~
-- Kirill Zaitsev from Mirantis (CVE-2016-4972)
+Description:
 
+Android applications created using Apache Cordova that use a remote server
+contain a vulnerability where whitelist restrictions for urls using
+protocols http and https are not properly applied.  Whitelist cannot block
+network redirects from a whitelisted remote website to a non-whitelisted
+website.
 
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/python-muranoclient/+bug/1586078
-- https://bugs.launchpad.net/murano/+bug/1586079
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4972
+Upgrade path:
 
-Notes
-~~~~~
-- Fixes for this bug are going to be included in the upcoming releases
-  of murano 1.0.3(liberty), 2.0.1(mitaka), 3.0.0(newton) and   
-  python-muranoclient 0.7.3(liberty), 0.8.5(mitaka), 0.9.0(newton)
+There is no specific software patch for this vulnerability. Developers that
+are concerned about this should make sure to only whitelist trusted
+websites, and make sure that whitelisted websites don’t redirect to a
+malicious website.
+Developers using should also use SSL, as well as Content Security
+Policy(CSP) to further mitigate this issue. It’s always recommended for
+developers to upgrade to the latest version of Cordova Android.
 
 
---   
-Kirill Zaitsev
-Murano Project Technical Lead
-Content of type "text/html" skipped
+Credit: Muneaki Nishimura of Sony Digital Network Applications, Inc
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
