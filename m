@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4797" "Friday" "17" "June" "2016" "15:35:19" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160617193519.1646CABC216@smtpvmsrv1.mitre.org>" "182" "[oss-security] Re: Many invalid memory access issues in libarchive" "^Cc:" nil nil "6" "2016061719:35:19" "[oss-security] Re: Many invalid memory access issues in libarchive" (number mark "        cve-assign@m Jun 17  182/4797  " thread-indent "\"[oss-security] Re: Many invalid memory access issues in libarchive\"\n") "<20160617145146.710ad5de@pc1>" ("<20160617145146.710ad5de@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1716" "Sunday" "21" "February" "2016" "19:56:58" "+0000" "Carlos Santana" "csantana23@gmail.com" "<CAHYtTq=UM+eVYgTFyG1OQMKt9ecz3Uo3vKV1vEEfy+VnTEr2pQ@mail.gmail.com>" "56" "[oss-security] [Update 2/20/16 CVE-2015-5256] Apache Cordova vulnerable to improper application of whitelist restrictions on Android" nil nil nil "2" "2016022119:56:58" "[oss-security] [Update 2/20/16 CVE-2015-5256] Apache Cordova vulnerable to improper application of whitelist restrictions on Android" (number mark "U       csantana23@g Feb 21   56/1716  " thread-indent "\"[oss-security] [Update 2/20/16 CVE-2015-5256] Apache Cordova vulnerable to improper application of whitelist restrictions on Android\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5396 invoked by uid 550); 17 Jun 2016 19:35:37 -0000
+Received: (qmail 23953 invoked by uid 550); 21 Feb 2016 21:33:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,195 +11,96 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5336 invoked from network); 17 Jun 2016 19:35:31 -0000
-In-Reply-To: <20160617145146.710ad5de@pc1>
-Message-Id: <20160617193519.1646CABC216@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri, 17 Jun 2016 15:35:19 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 30416 invoked from network); 21 Feb 2016 19:57:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=M7G/u0QTWECPHiGk93cLAuSnQOQ3LxzypfQ3H62YCyQ=;
+        b=glkITfYtG5kRnHTaxt8VOhvNuwt1DZ6tjnKDt+Jm+gcxVxPx82nGaFMXPl6pRIaioQ
+         9IRQZrxmbvGw+YMXTRtQcf+WDaBeIbFxJqfeL/P8vT/+KmXDewy54j12Z4qp4e9U0ebY
+         HsZpdP/CztialjOo40pRVF8jTWfHQucw1IZHthnwALK8baPgI5afWBVjMVXDO3tU/UWx
+         a53+HTMQtT+ZWyPKVHIXEQxrShdhBxraHXecnCMHjZB65pUF1IwmS9wnJycWfYWOXUqH
+         M5xbbxug5vi+qcS11/JgPd6DgPnExH1ixhhGumtjNJ9BhwiIVb/et/1xCz4p8X0Sd0Oa
+         Wa9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-type;
+        bh=M7G/u0QTWECPHiGk93cLAuSnQOQ3LxzypfQ3H62YCyQ=;
+        b=SduXlAew4YK3/Kgu8bwcloHkcZNLft8M0S1sI+r6a6Xk3kNbFJ+2hayWEu4nSZb1gF
+         txklaQoz7GYR14xcok5B7uYe0QhgO3/9YyNLaAFF5sTr2Bifd5glSJkNMk+F9DTCyfNX
+         0OppqO+1aJeBMmn9wEYBXB7y9IA/jlhTOet0cHVu1zzV4lzf9AOY6kjrQiRTLxQFjjr1
+         Vk7dP0hqtfQK12bVPngRuiRnk4pN7bsWRXBge4l2MR09OxWak8CMhaCE2SocvaxojFUO
+         ILEp0KyMBAeQcM3lG1dQ8/4Am7vpvOqk4j9zUPA3J/t3o0awrGUlNgkMigOx4USWYDg1
+         gfkQ==
+X-Gm-Message-State: AG10YORNv4753fn7dzajeMs0emf+8q3TE+r9LNzDVmHlMNz65PZNBo7KI6BQSHM8JA7qciN6NHQes6HZi1Afiw==
+X-Received: by 10.31.130.6 with SMTP id e6mr17197390vkd.49.1456084628131; Sun,
+ 21 Feb 2016 11:57:08 -0800 (PST)
+MIME-Version: 1.0
+Message-ID: <CAHYtTq=UM+eVYgTFyG1OQMKt9ecz3Uo3vKV1vEEfy+VnTEr2pQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a1143d0e405d5b6052c4d1f46
+Cc: "private@cordova.apache.org" <private@cordova.apache.org>, security@android.com
+Date: Sun, 21 Feb 2016 19:56:58 +0000
+From: Carlos Santana <csantana23@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Many invalid memory access issues in libarchive
-To: hanno@hboeck.de
+Subject: [oss-security] [Update 2/20/16 CVE-2015-5256] Apache Cordova vulnerable to improper
+ application of whitelist restrictions on Android
+To: ASF Security Team <security@apache.org>, oss-security@lists.openwall.com, 
+	bugtraq@securityfocus.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--001a1143d0e405d5b6052c4d1f46
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> https://blog.fuzzing-project.org/47-Many-invalid-memory-access-issues-in-libarchive.html
+*Updated 02/20/2016*
 
-> libarchive version 3.2.0 (released on April 30th) fixed a large number
-> of memory access bugs that I reported to them a while ago.
+Apache Cordova has re-visited CVE-2015-5256 "Apache Cordova vulnerable to
+improper application of whitelist restrictions on Android=E2=80=9D. Upon fu=
+rther
+investigation we found that the vulnerability is more limited than was
+previously understood.
+We are lowering the severity to Low, and updating the description, affected
+versions, and upgrade path.
 
-> https://github.com/libarchive/libarchive/issues/503
-> Unclear invalid memory read in CPIO parser
+The updated text of the CVE is included below:
 
->> hit end-of-file when trying to read a cpio header
+Apache Cordova PMC
+--------------------------
+private@cordova.apache.org
 
-Use CVE-2015-8915.
+____
 
+*Updated 02/20/2016*
 
-> https://github.com/libarchive/libarchive/issues/504
-> Null pointer access in RAR parser
+CVE-2015-5256: Apache Cordova vulnerable to improper application of
+whitelist restrictions on Android
 
-Use CVE-2015-8916.
+Severity: Low
 
-There is not a second ID for the "it assumes this is a multivolume
-archive" discussion in the
-https://github.com/libarchive/libarchive/issues/504#issuecomment-198683221
-comment.
+Versions Affected:
+Cordova Android with whitelist functionality
 
+Description:
 
-> https://github.com/libarchive/libarchive/issues/505
-> Null pointer access in CAB parser
+Android applications created using Apache Cordova that use a remote server
+contain a vulnerability where whitelist restrictions for urls using
+protocols http and https are not properly applied.  Whitelist cannot block
+network redirects from a whitelisted remote website to a non-whitelisted
+website.
 
->> The real problem though is that the filename in the cabinet is set to
->> 0x97. This single character is not a valid utf8 character and
->> therefore the conversion fails.
+Upgrade path:
 
-Use CVE-2015-8917.
+There is no specific software patch for this vulnerability. Developers that
+are concerned about this should make sure to only whitelist trusted
+websites, and make sure that whitelisted websites don=E2=80=99t redirect to=
+ a
+malicious website.
+Developers using should also use SSL, as well as Content Security
+Policy(CSP) to further mitigate this issue. It=E2=80=99s always recommended=
+ for
+developers to upgrade to the latest version of Cordova Android.
 
 
-> https://github.com/libarchive/libarchive/issues/506
-> Overlapping memcpy in CAB parser
+Credit: Muneaki Nishimura of Sony Digital Network Applications, Inc
 
-Use CVE-2015-8918.
-
-
-> https://github.com/libarchive/libarchive/issues/510
-> Heap out of bounds read in LHA/LZH parser
-
-Use CVE-2015-8919.
-
-
-> https://github.com/libarchive/libarchive/issues/511
-> Stack out of bounds read in ar parser
-
-Use CVE-2015-8920.
-
-
-> https://github.com/libarchive/libarchive/issues/512
-> Global out of bounds read in mtree parser
-
-Use CVE-2015-8921.
-
-
-> https://github.com/libarchive/libarchive/issues/513
-> Null pointer access in 7z parser
-
-Use CVE-2015-8922.
-
-
-> https://github.com/libarchive/libarchive/issues/514
-> Unclear crashes in ZIP parser
-
->> Issue here was reading a size field as a signed number
->> and then using that as an offset.
-
-Use CVE-2015-8923.
-
-
-> https://github.com/libarchive/libarchive/issues/515
-> Heap out of bounds read in TAR parser
-
-Use CVE-2015-8924.
-
-
-> https://github.com/libarchive/libarchive/issues/516
-> Unclear invalid memory read in mtree parser
-
->> Fix escaped newline parsing
-
-Use CVE-2015-8925.
-
-
-> https://github.com/libarchive/libarchive/issues/518
-> Null pointer access in RAR parser
-
-Use CVE-2015-8926.
-
-
-> https://github.com/libarchive/libarchive/issues/523
-> Heap out of bounds read when reading password for malformed ZIP
-
-Use CVE-2015-8927.
-
-
-> https://github.com/libarchive/libarchive/issues/550
-> Heap out of bounds read in mtree parser
-
-Use CVE-2015-8928.
-
-
-> I also reported a couple of lower severity issues (leaks, hangs,
-> undefined behavior issues):
-
-> https://github.com/libarchive/libarchive/issues/517
-> Memory leak in TAR parser
-
-Use CVE-2015-8929.
-
-
-> https://github.com/libarchive/libarchive/issues/522
-> Endless loop in ISO parser
-
-Use CVE-2015-8930.
-
-
-> https://github.com/libarchive/libarchive/issues/539
-> Undefined behavior / signed integer overflow in mtree parser
-
->> We run on a lot of platforms that don't use glibc
-
-Use CVE-2015-8931.
-
-
-> https://github.com/libarchive/libarchive/issues/540
-> Use after free in test suite
-
-This does not have a CVE ID. The vendor response was "Looks like this
-is just a bug in the test. The test runs a set of checks twice but
-doesn't correctly reset in between." The code change is in the
-libarchive/test/test_archive_read_add_passphrase.c file.
-
-
-> https://github.com/libarchive/libarchive/issues/547
-> Undefined behavior / invalid shiftleft in TAR parser
-
-Use CVE-2015-8932.
-
-
-> https://github.com/libarchive/libarchive/issues/548
-> Undefined behavior / signed integer overflow in TAR parser
-
-Use CVE-2015-8933.
-
-
-> Unfortunately one out of bounds heap read bug in the RAR parser (sample
-> file) remained unfixed. I hope a fix will find its way into the next
-> version.
-
-> https://github.com/libarchive/libarchive/issues/521
-
-Use CVE-2015-8934.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXZFBlAAoJEHb/MwWLVhi2IvcQAJLbWv3xlaskqSfuSLpe58Q8
-fitvzzYGjb3vz/A6HFkIoPImxyokCMCljw0IQbeRLamFuwhaDnswDpLE2kdspX90
-8z7lnmoZvK29d0bmlPlOSrkHHwBM7d0J5AtxL+VdNCZ+l+75e1oKUQNxd5Vkugll
-3KQzmBr2ZO9bRhlrTfviY/D5T+dH0H/PnjO5kL2FaSPQylam2CRRWv2O6N8BWDCY
-qOibiC4Tz269lawxcM1mxJIvFVuXaomKGaXp1+F91cuUfV1/t7aUAMlSjUc3ASL4
-6rkWAy8WDlk24ZKG7mLv8t5V+fcDxLNNJLryWuRB8IqcBgFRuac3QPtvm2dw4j2Q
-7ioHgjCISvfmh08a341SIG1vMdBfq+lCgp3IGom3mjSf38I/x0dcxCIXAd3ZMSVr
-ApguzBuW6mTW8Xr/Eiqa8QyJ9HbvZS/Io5Qp/ki3O0LAKrHf2cLyzd/M1aNZFBK+
-AmPlK39wuxDGDNZPIBV0v5eVvAq3ljE8XhdrGN8wxq5+UAeUDsaIOksWRFWXmji2
-iEHhReLq3Z3zCEIoo9UADeOwrh36Ucq7P+EgmTd3YmX1H21tT2cIuRCdj095rzJV
-dVTMARdB7vs60X5kXj1dVl5GLEaVa2wZ7AP34AutJI8WNbn86eL0Tcw/vRvv2Jxl
-TCeZY1uY1URj4l8tvMpU
-=TTkk
------END PGP SIGNATURE-----
+--001a1143d0e405d5b6052c4d1f46--
