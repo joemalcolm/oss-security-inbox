@@ -1,52 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/23/2
-Message-ID: <20160823053842.GB21570@1wt.eu>
-Date: Tue, 23 Aug 2016 07:38:42 +0200
-From: Willy Tarreau <w@....eu>
-To: Marcus Meissner <meissner@...e.de>
-Cc: oss-security@...ts.openwall.com, Adam Maris <amaris@...hat.com>, Greg KH <greg@...ah.com>, cve-assign@...re.org, security@...nel.org
-Subject: Re: Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/22/3
+Message-ID: <alpine.LFD.2.20.1602222116400.26144@wniryva>
+Date: Mon, 22 Feb 2016 21:20:28 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Qinghao Tang <luodalongde@...il.com>
+Subject: CVE request Qemu: usb: integer overflow in remote NDIS control message handling
 Content-Type: text/plain; charset=utf-8
 
-Hi Marcus,
+   Hello,
 
-On Mon, Aug 22, 2016 at 05:24:49PM +0200, Marcus Meissner wrote:
-> Hi,
-> 
-> This seems a bit sore topic, and Mitre does not want to chime in.
-> 
-> Perhaps we need to add more criteria to select CVE assignment.
-> 
-> - simple DOS (e.g. NULL ptr dereference) when plugging in: No CVE
-> - code execution (use after free, write overflows) when plugging in: Assign CVE
+Qemu emulator built with the USB Net device emulation support is vulnerable to 
+an integer overflow issue. It could occur while processing remote NDIS control 
+message packets. As the incoming informationBufferOffset & Length combination 
+could cross the integer range.
 
-I'd classify it differently : something where a bug allows someone
-unauthorized to do something he couldn't do differently needs a CVE.
-That includes memory corruption, code execution, privilege increases,
-local DoS/panic/oops by just executing an exploit, etc. Here we're
-speaking about someone plugging some hardware into an open port which
-immediately takes the whole system down. Sure, the faulty code makes
-this possible. But the hardware is purposely designed for this. I can
-also design some hardware which takes the system down and possibly even
-fries it without involving the code at all. So once this device is
-built, if we assign a CVE, nobody will fix it and it will not even
-apply to any specific OS. Oh, after just one Google request I found
-that I was not the first one to think about it, it already exists :
+A privileged user inside guest could use this flaw to leak host memory bytes 
+to guest or crash the Qemu process instance resulting in DoS.
 
-   http://arstechnica.com/security/2015/10/usb-killer-flash-drive-can-fry-your-computers-innards-in-seconds/
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-02/msg03658.html
 
-> That said, this leaves malicious USB devices posing as regular keyboards 
-> for text injection unclassified ... 
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1303120
 
-You can't differenciate them from a real keyboard operated by someone
-typing from memory. It already happened to me at least once to enter
-some hex shell code via a keyboard connected to a KVM to try to recover
-access to a remote machine where the password was lost. How is this
-different from having an AVR-based Digispark, Trinklet or whatever
-allowing you to emulate a keyboard to inject code sequences ? I had
-one adding "+ +" to the user's .rhosts 1 minute after being plugged
-in some time ago (just as a proof of concept). The OS is not at fault
-here, only the user accepting to plug whatever into their system.
+This issue was discovered by Qinghao Tang of 360.cn Marvel Team, China.
 
-Cheers,
-Willy
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
