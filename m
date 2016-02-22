@@ -1,59 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/07/11
-Message-Id: <20160107235525.A35F6332283@smtpvbsrv1.mitre.org>
-Date: Thu,  7 Jan 2016 18:55:25 -0500 (EST)
-From: cve-assign@...re.org
-To: xiaoqixue_1@....com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request --  NULL dereference in libdwarf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/22/4
+Message-ID: <87fuwkmj7e.fsf@prune.linuxpenguins.xyz>
+Date: Tue, 23 Feb 2016 10:14:13 +1100
+From: Brian May <brian@...uxpenguins.xyz>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: imagemagick: request for CVEs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> we report  a NULL dereference in libdwarf  which is found by Qixue Xiao.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1294264
+Debian has been tracking a number of security issues in imagemagick, and
+as a Debian-LTS maintainer I have been advised to try to obtain CVEs for
+these issue. On investigation some of these issues have already had CVE
+requests however as far as I can tell, CVEs were not assigned (apologies
+if I missed something), and I am not sure why.
 
->> https://bugzilla.redhat.com/show_bug.cgi?id=1294264#c2
+As there are no CVEs allocated, I have used the temp ids given by Debian
+for now.
 
->> The problem is that the debug_abbrev section is marked as NOBITS in
->> the ELF file - in other words as a zero-init section rather than a
->> section with contents in the file.
+https://security-tracker.debian.org/tracker/source-package/imagemagick
 
->> That is clearly bogus, but obviously shouldn't crash
 
->>> http://www.prevanders.net/dwarf.html
 
->>> Work In Progress 2015-12-30
+TEMP-0773834-5EB6CF: multiple vulnerabilities found by Google
 
->>> Thanks to Tom Hughes for bringing a problem reading a
->>> badly-damaged (fuzzed) elf object to my attention: now libdwarf
->>> gets an error not a coredump.
+CVE was already requested here:
+http://www.openwall.com/lists/oss-security/2014/12/24/1
 
->>>> https://github.com/tomhughes/libdwarf/commit/11750a2838e52953013e3114ef27b3c7b1780697
 
-Use CVE-2015-8750.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+TEMP-0806441-76CD60: Integer and Buffer overflow in coders/icon.c
 
-iQIcBAEBCAAGBQJWjvojAAoJEL54rhJi8gl5BwoP/2yl38aXiRB772a3+OhHyfsa
-1DiUFglVG5/1QnLAcG3jOzTnXxHje7f3pTKbCv2csbBtiQmAMDT70OKSCxA2E96q
-rbpKnysRbfT8AYZ76mSQCKE1tPwE+ZBG730DrHyhsUWm+cTLh+gYUX6tV7BFPbU2
-mQOhI00YpFZ8U/20W1ri8cAHvQ4CJCi2Ta2EViZ4Y7v58fbapeI3MUnR0DifKlUj
-ob1tpmfIL3N1OAFFo9vYNGM6xgxfuZoVbNOUoAYeXagsAsHfivpDwhSeeZNCeUsf
-58qfI9OhYZWj6xHopPDQ8K1QD+e9g9VpnUepgB319OssgI6pcjG49i4tNVva4JO3
-jTNQ+UpvbeoLYOOr80FtYjr51CfwgX3XkcZvz/wsSulLDPhTeqKZz4Q69JKCC2Ib
-R2Oby2Hs9476yj28jF9Sg9Ekf2y2vVpqfv5JhQy08Nhx43xUurhgCsBUhixoHgwQ
-5E7NT+iMQtRiJN2Ucu/2mK9A9z6RYmEAmaHQx/aRWUfLFNeoynWE/1xJ/3tUvPJT
-FsVP8bI6OAq0VDzqNhMJIDTOLlQjfLo6gUTEmuiuW0jjWh5NUV96EJBaZSfQsoFx
-//oSh9MOJfiQlfPhb7ws+l/Ae13QwUeOVZ77jkWKxgPlxC2ZzMtQJrsx0MVI+7wM
-s9ovDcDoapmCIhtkv/JQ
-=oEHA
------END PGP SIGNATURE-----
+CVE was already requested here:
+http://www.openwall.com/lists/oss-security/2015/10/07/2
+
+
+
+TEMP-0806441-CB092C: Double free in coders/pict.c:2000
+
+CVE was already requested here:
+http://www.openwall.com/lists/oss-security/2015/10/07/2
+
+
+
+TEMP-0811308-B63DA1 is multiple issues; each should have its own
+CVE. Not sure if the momory leaks or the "PixelColor off by one" are
+security issues, have included them here for sake of being complete:
+
+
+  - Memory Leaks
+    http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=28791
+    Upstream fix: https://github.com/ImageMagick/ImageMagick/commit/9043f3d1fb76c8f4f158d75dc6e2455c43d2f1de
+
+
+
+  - Out of bounds error in SpliceImage
+    http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=28466
+    Upstream fix: https://github.com/ImageMagick/ImageMagick/commit/7b1cf5784b5bcd85aa9293ecf56769f68c037231
+
+
+
+  - Prevent null pointer access in magick/constitute.c
+    https://github.com/ImageMagick/ImageMagick/pull/34
+    Upstream fix: https://github.com/ImageMagick/ImageMagick/commit/5b4bebaa91849c592a8448bc353ab25a54ff8c44
+
+
+
+  - PixelColor off by one on i386
+    https://github.com/ImageMagick/ImageMagick/issues/54
+    Upstream fix:
+    https://github.com/ImageMagick/ImageMagick/commit/8f424002488d9f5ece29228d8ede0e39d838f38b
+    https://github.com/ImageMagick/ImageMagick/commit/0e560d16873c166005eeb79bcca13b9f74177732
+    https://github.com/ImageMagick/ImageMagick/commit/95c8394eaacc8c2f272177269416daf0b2ba004f
+    
+
+
+  - Fixed memory leak when reading incorrect PSD files
+    Upstream fix: https://github.com/ImageMagick/ImageMagick/commit/bd9f1e7d1bd2c8e2cf7895d133c5c5b5cd3526b6
+
+
+Regards
+-- 
+Brian May <brian@...uxpenguins.xyz>
+https://linuxpenguins.xyz/brian/
