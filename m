@@ -1,27 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/06/10
-Message-ID: <alpine.LFD.2.20.1612070035380.7820@wniryva>
-Date: Wed, 7 Dec 2016 00:46:26 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liq3ea@...il.com>
-Subject: CVE request: Qemu: usb: ehci: memory leakage in ehci_init_transfer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/23/1
+Message-ID: <19v12kg0000000000qejsu001cct70x6gmj6e1g64o30c1g64o38e1g@mail.gmail.com>
+Date: Mon, 22 Feb 2016 23:54:11 +0000
+From: security@...roid.com
+To: Carlos Santana <csantana23@...il.com>
+Cc: bugtraq@...urityfocus.com, oss-security@...ts.openwall.com,  "private@...dova.apache.org" <private@...dova.apache.org>, ASF Security Team <security@...che.org>
+Subject: RE: [4-3801000010480] [Update 2/20/16 CVE-2015-5256] Apache Cordova vulnerable to improper application of whitelist restrictions on Android
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
 
-Quick Emulator(Qemu) built with the USB EHCI Emulation support is vulnerable 
-to a memory leakage issue. It could occur while processing packet data in 
-'ehci_init_transfer'.
+Hi
+Thank you for the notification.
+We will assign this to our dev team to review.
+It will be tracked as AndroidID-27299922.
 
-A guest user/process could use this issue to leak host memory, resulting in 
-DoS for a host.
+Thanks,
+Quan
 
-Upstream patch:
----------------
-   -> http://git.qemu.org/?p=qemu.git;a=commitdiff;h=791f97758e223de3290592d169f
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+On 02/21/16 11:56:58 csantana23@...il.com wrote:
+
+
+*Updated 02/20/2016*
+
+Apache Cordova has re-visited CVE-2015-5256 "Apache Cordova vulnerable to
+improper application of whitelist restrictions on Android”. Upon further
+investigation we found that the vulnerability is more limited than was
+previously understood.
+We are lowering the severity to Low, and updating the description, affected
+versions, and upgrade path.
+
+The updated text of the CVE is included below:
+
+Apache Cordova PMC
+--------------------------
+private@...dova.apache.org
+
+____
+
+*Updated 02/20/2016*
+
+CVE-2015-5256: Apache Cordova vulnerable to improper application of
+whitelist restrictions on Android
+
+Severity: Low
+
+Versions Affected:
+Cordova Android with whitelist functionality
+
+Description:
+
+Android applications created using Apache Cordova that use a remote server
+contain a vulnerability where whitelist restrictions for urls using
+protocols http and https are not properly applied.  Whitelist cannot block
+network redirects from a whitelisted remote website to a non-whitelisted
+website.
+
+Upgrade path:
+
+There is no specific software patch for this vulnerability. Developers that
+are concerned about this should make sure to only whitelist trusted
+websites, and make sure that whitelisted websites don’t redirect to a
+malicious website.
+Developers using should also use SSL, as well as Content Security
+Policy(CSP) to further mitigate this issue. It’s always recommended for
+developers to upgrade to the latest version of Cordova Android.
+
+
+Credit: Muneaki Nishimura of Sony Digital Network Applications, Inc
+
