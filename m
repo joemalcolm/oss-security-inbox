@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2895" "Friday" "25" "October" "2019" "14:37:59" "+0000" "Pascal Cuoq" "cuoq@trust-in-soft.com" "<327D945D-1D11-4629-98BC-8E8C4BE3683D@trust-in-soft.com>" "51" "Re: [oss-security] Formal verification of open source software" "^Date:" nil nil "10" "2019102514:37:59" "[oss-security] Formal verification of open source software" (number mark "        cuoq@trust-i Oct 25   51/2895  " thread-indent "\"Re: [oss-security] Formal verification of open source software\"\n") "<CAGUWgD_5HCt1T7ck4ai1=8Tn4L5nnGDiEvGdTdt_jMTD0ziK=A@mail.gmail.com>" ("<CAGUWgD_5HCt1T7ck4ai1=8Tn4L5nnGDiEvGdTdt_jMTD0ziK=A@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Formal verification of open source software" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1989" "Monday" "22" "February" "2016" "08:09:22" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160222130922.7E3A252E0AB@smtpvbsrv1.mitre.org>" "46" "[oss-security] Re: CVE Request -- Buffer overflow in Python-Pillow and PIL" "^Cc:" nil nil "2" "2016022213:09:22" "[oss-security] Re: CVE Request -- Buffer overflow in Python-Pillow and PIL" (number mark "        cve-assign@m Feb 22   46/1989  " thread-indent "\"[oss-security] Re: CVE Request -- Buffer overflow in Python-Pillow and PIL\"\n") "<009C89DE-A7D7-4E3E-875A-13C4A916676D@soroos.net>" ("<009C89DE-A7D7-4E3E-875A-13C4A916676D@soroos.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27711 invoked by uid 550); 25 Oct 2019 14:38:12 -0000
+Received: (qmail 15693 invoked by uid 550); 22 Feb 2016 13:09:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27693 invoked from network); 25 Oct 2019 14:38:11 -0000
-Thread-Topic: [oss-security] Formal verification of open source software
-Thread-Index: AQHViyffdoXZs2iP5E+Wt3QLiLXNzadrbUgs
-Message-ID: <327D945D-1D11-4629-98BC-8E8C4BE3683D@trust-in-soft.com>
-References: <CAGUWgD_5HCt1T7ck4ai1=8Tn4L5nnGDiEvGdTdt_jMTD0ziK=A@mail.gmail.com>
-In-Reply-To: <CAGUWgD_5HCt1T7ck4ai1=8Tn4L5nnGDiEvGdTdt_jMTD0ziK=A@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-Content-Type: multipart/alternative;
-	boundary="_000_327D945D1D11462998BC8E8C4BE3683Dtrustinsoftcom_"
-MIME-Version: 1.0
-Date: Fri, 25 Oct 2019 14:37:59 +0000
-From: Pascal Cuoq <cuoq@trust-in-soft.com>
+Received: (qmail 15672 invoked from network); 22 Feb 2016 13:09:34 -0000
+In-Reply-To: <009C89DE-A7D7-4E3E-875A-13C4A916676D@soroos.net>
+Message-Id: <20160222130922.7E3A252E0AB@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Mon, 22 Feb 2016 08:09:22 -0500 (EST)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Formal verification of open source software
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Subject: [oss-security] Re: CVE Request -- Buffer overflow in Python-Pillow and PIL
+To: eric@soroos.net
 
---_000_327D945D1D11462998BC8E8C4BE3683Dtrustinsoftcom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-SGVsbG8sDQoNCkkgd29yayBmb3IgdGhlIGNvbXBhbnkgdGhhdCBkaWQgYSBy
-ZXBvcnQgb24gUG9sYXJTU0wsIGFzIGl0IHdhcyBjYWxsZWQNCnRoZW4uICBX
-ZSBoYXZlIGFwcGxpZWQgc2ltaWxhciB0ZWNoIHRvIG90aGVyIG9wZW4tc291
-cmNlIGNvbXBvbmVudHMsDQphdCBsZWFzdCBwYXJ0aWFsbHksIGFuZCBpZGVu
-dGlmaWVkIHNvbWUgaW50ZXJlc3RpbmcgYnVncyBpbiB0aGUgcHJvY2Vzcy4N
-CkZvciBzb21lIG9mIHRoZSBjb21wb25lbnRzIHRoZSBmb3JtYWwgZ3VhcmFu
-dGVlIG1heSBiZSBhcyBsb3cgYXM6DQoNCiJ3aGVuIGV4ZWN1dGluZyB0aGUg
-cHJvdmlkZWQgdGVzdHMsIG9yIGZ1enplci1nZW5lcmF0ZWQgdGVzdHMsIGZv
-ciBhbGwNCnBvc3NpYmxlIHJlc3VsdHMgb2YgY2FsbHMgdG8gbWFsbG9jIChz
-dWNjZXNzIG9yIGZhaWx1cmUpLA0KdGhlIHJlc3VsdCBvZiBleGVjdXRpb24g
-ZG9lcyBub3QgZGVwZW5kIG9uIHRoZSBtZW1vcnkgbGF5b3V0DQphbmQgdGhl
-IGV4ZWN1dGlvbiBpcyBmcmVlIG9mIHVuZGVmaW5lZCBiZWhhdmlvciAoZm9y
-IGEgcHJldHR5IHN0cmljdA0KZGVmaW5pdGlvbiBvZiB1bmRlZmluZWQgYmVo
-YXZpb3IpIi4NCg0KRm9yIHNvbWUgb3RoZXIgc29mdHdhcmUgY29tcG9uZW50
-cywgdGhlIGd1YXJhbnRlZSBpcyBtb3JlIHdoYXQgeW91DQp3b3VsZCBleHBl
-Y3QgZnJvbSBmb3JtYWwgbWV0aG9kcywgdGhhdCBpcywgZm9yIGFsbCBvZiAo
-YmlsbGlvbnMgb2YpDQppbnB1dHMgZm9yIG9uZSBvciBzZXZlcmFsIHNwZWNp
-ZmljIHVzYWdlIHBhdHRlcm5zIG9mIHRoZQ0KbGlicmFyeS4gUGxlYXNlIGxv
-b2sgYXQgdGhlIFBvbGFyU1NMIHJlcG9ydCBmb3IgYW4gZXhhbXBsZSBvZiB3
-aGF0DQp0aGlzIG1lYW5zLiBJdCBkb2VzIG5vdCBtYWtlIHNlbnNlIHRvIGNs
-YWltIHRoYXQgYSBDICpsaWJyYXJ5KiBpcw0KZm9ybWFsbHkgdmVyaWZpZWQg
-d2l0aG91dCBxdWFsaWZpY2F0aW9uLCBiZWNhdXNlIGFueSBub250cml2aWFs
-DQpDIGZ1bmN0aW9uIGlzIHVuc2FmZSB3aGVuIHVzZWQgd3JvbmdseS4gSXQg
-Y2FuIG9ubHkgYmUgdmVyaWZpZWQgc2FmZQ0KZm9yIG9uZSBvciBzZXZlcmFs
-IHdheXMgb2YgdXNpbmcgaXQsIHdoaWNoIHRoZSBwZXJzb24gZG9pbmcgdGhl
-DQp2ZXJpZmljYXRpb24gdXN1YWxseSBkZWZpbmVzLCBhbmQgd2hpY2ggbWF5
-IG5vdCBjb3ZlciBhbGwgcG9zc2libGUNCndheXMgdGhlIGxpYnJhcnkgaXMg
-dXNlZCBpbiBwcmFjdGljZS4NCg0KT3BlblNTTDogd2UgaGF2ZSBoYWQgc29t
-ZSBvcGVuIGJ1Z3MgZm9yIGZ1bmN0aW9ucyB0aGF0IGNvdWxkIGFsbG9jYXRl
-DQooYW5kIHRodXMgZmFpbCkgYnV0IHdlcmUgcmV0dXJuaW5nIHZvaWQgd2l0
-aG91dCByZXBvcnRpbmcgc3VjY2VzcyBvcg0KZmFpbHVyZSwgc28gdGhhdCB0
-aGVpciBjYWxsZXJzIHdvdWxkIGRlcmVmZXJlbmNlIE5VTEwgb3Igd29yc2Uu
-DQpUaGV5IHdlcmUgcmVwb3J0ZWQgYXQgdGhlIHRpbWUgT3BlblNTTCBidWcg
-cmVwb3J0cyB3ZXJlIGlnbm9yZWQgaW4gbWFqb3JpdHksDQpidXQgSSB0aGlu
-ayBhbGwgdGhlIHRoaW5ncyB3ZSByZXBvcnRlZCBoYXZlIGJlZW4gZml4ZWQg
-bm93Lg0KDQp6bGliOiBodHRwczovL3RydXN0LWluLXNvZnQuY29tL2F1ZGl0
-aW5nLXpsaWIvDQoNCnRpbnktQUVTMTI4LUM6IGh0dHBzOi8vdHJ1c3QtaW4t
-c29mdC5jb20vdGhlLXNvY2lvbG9neS1vZi1vcGVuLXNvdXJjZS1zZWN1cml0
-eS1maXhlcy1jb250aW51ZWQvDQoNCmxpYndlYnA6IGh0dHBzOi8vdHJ1c3Qt
-aW4tc29mdC5jb20vb3V0LW9mLWJvdW5kcy1wb2ludGVycy1hLWNvbW1vbi1w
-YXR0ZXJuLWFuZC1ob3ctdG8tYXZvaWQtaXQvDQoNClNRTGl0ZTogaHR0cHM6
-Ly9ibG9nLnJlZ2Voci5vcmcvYXJjaGl2ZXMvMTI5Mg0KDQpUaGVyZSBhcmUg
-bW9yZSwgYnV0IHRoZXNlIGFyZSB0aGUgb25lcyB0aGF0IGNvbWUgdG8gbWlu
-ZCBmb3Igd2hpY2gNCmEgYml0IG9mIHdyaXRldXAgaXMgYXZhaWxhYmxlLg0K
-DQrigItQYXNjYWwNCg0K
+> There is a buffer overflow in PcdDecode.c, where the decoder writes
+> assuming 4 bytes per pixel into a 3 byte per pixel wide buffer,
+> allowing writing 768 bytes off the end of the buffer. This overwrites
+> objects in Python's stack, leading to a crash.
+> 
+> https://github.com/python-pillow/Pillow/pull/1706
 
---_000_327D945D1D11462998BC8E8C4BE3683Dtrustinsoftcom_--
+>> The shuffle buffer is initialized to 24bpp, and the pcd decoder offsets 32bpp. 
+>> 
+>> https://github.com/python-pillow/Pillow/commits/master/libImaging/PcdDecode.c
+>> https://github.com/python-pillow/Pillow/commit/ae453aa18b66af54e7ff716f4ccb33adca60afd4
+>> 
+>> https://github.com/python-pillow/Pillow/commits/3.1.x/libImaging/PcdDecode.c
+>> https://github.com/python-pillow/Pillow/commit/5bdf54b5a76b54fb00bd05f2d733e0a4173eefc9
+>> 
+>> http://www.pythonware.com/products/pil/
+>> http://effbot.org/downloads/Imaging-1.1.7.tar.gz
+
+Use CVE-2016-2533 for the issue in Python-Pillow before 3.1.1, and in
+PIL 1.1.7 and earlier.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWywf+AAoJEL54rhJi8gl5j6cP/iiw4DS9vVwXkNhF3pUswbPd
+yZiMUUwHpVIj+v1ezok6HOc/bRVZzndnhDbQq1i41XbQuY7372t0lntXodsurJeW
+SIPaOYc8EG3U8MZecjtOlE/c1RHX6F7dfC0xRa/Pw5fl8NW1uaLqt3H/CAJaZjdO
+BEN9z6n8G7SGEg1pQz2y2eDO5Aj5mxhj36MudmaOfiGeH+QVzU/Zbaab6OwC/+QI
+topn6yVN2xrCE7mdZEzCSYtomMBD4V6LF3dWqNX9W9VA5epBzdi08erIiANPYQmY
+H7IuSiXD8slJg3rlqYJpGzB1rH/O1eQLKc2l+tWxdaSqPeHAce0EXLz/ToH27NWa
+aJCUOHcyjKXmQZjtAGH6WzubMWXYxYa0SJ7Eu1N+mrV410SxrA1H/R7+nfXmtaDB
+PaffvhOVo0bYcZQHdW4tUxgVASu/ug1euDR2joWhTMQiUXpNOcmRr7Q7CKx5phXa
+dI63MhmozSkQAI6oex1Fc5DQ5a/hdcn+SKNlefk5DMh0q3soNwfrWw3UZuGcy4fW
+G0slb1Z4Bpa1YoLwVnv3WFiYOPX4LHj/sgfe26pV9lbSG/ZlilSuSsfMUiD2Jqmt
+rBxLVNj0yk3lMFw71Map8c18UTgj0VFzLtptfilvTdRuY2PMZUzR6qeX6uJVEFqn
+erSrFhvQDHOx5YtXBj8p
+=bQgu
+-----END PGP SIGNATURE-----
