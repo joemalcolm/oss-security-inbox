@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3043" "Saturday" "3" "June" "2017" "18:58:13" "+0200" "Solar Designer" "solar@openwall.com" "<20170603165813.GA20708@openwall.com>" "66" "[oss-security] TIOCSTI not going away" "^Cc:" nil nil "6" "2017060316:58:13" "[oss-security] TIOCSTI not going away" (number mark "        solar@openwa Jun  3   66/3043  " thread-indent "\"[oss-security] TIOCSTI not going away\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["796" "Monday" "22" "February" "2016" "21:20:28" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1602222116400.26144@wniryva>" "24" "[oss-security] CVE request Qemu: usb: integer overflow in remote NDIS control message handling" "^cc:" nil nil "2" "2016022215:50:28" "[oss-security] CVE request Qemu: usb: integer overflow in remote NDIS control message handling" (number mark "U       ppandit@redh Feb 22   24/796   " thread-indent "\"[oss-security] CVE request Qemu: usb: integer overflow in remote NDIS control message handling\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13918 invoked by uid 550); 3 Jun 2017 16:59:30 -0000
+Received: (qmail 29808 invoked by uid 550); 22 Feb 2016 15:50:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,82 +11,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13496 invoked from network); 3 Jun 2017 16:59:13 -0000
-Message-ID: <20170603165813.GA20708@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Cc: Karel Zak <kzak@redhat.com>
-Date: Sat, 3 Jun 2017 18:58:13 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 29790 invoked from network); 22 Feb 2016 15:50:51 -0000
+X-X-Sender: pjp@javelin
+Message-ID: <alpine.LFD.2.20.1602222116400.26144@wniryva>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+cc: Qinghao Tang <luodalongde@gmail.com>
+Date: Mon, 22 Feb 2016 21:20:28 +0530 (IST)
+From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] TIOCSTI not going away
-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request Qemu: usb: integer overflow in remote NDIS control
+ message handling
+To: oss security list <oss-security@lists.openwall.com>
 
-Hi,
+   Hello,
 
-Many su-like programs can be used to run other programs with reduced (or
-otherwise different, rather than strictly elevated) privileges.  This
-includes su itself (such as when su'ing from root to a user), as well as
-various container entry commands, etc.
+Qemu emulator built with the USB Net device emulation support is vulnerable to 
+an integer overflow issue. It could occur while processing remote NDIS control 
+message packets. As the incoming informationBufferOffset & Length combination 
+could cross the integer range.
 
-Many (probably most) of those got it wrong at first, keeping the same
-tty across the privilege boundary.  Numerous such issues were reported:
+A privileged user inside guest could use this flaw to leak host memory bytes 
+to guest or crash the Qemu process instance resulting in DoS.
 
-https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=tiocsti
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-02/msg03658.html
 
-http://www.openwall.com/lists/oss-security/2011/06/02/3
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1303120
 
-http://www.openwall.com/lists/oss-security/2012/11/05/8
+This issue was discovered by Qinghao Tang of 360.cn Marvel Team, China.
 
-http://www.openwall.com/lists/oss-security/2016/02/25/6
-http://www.openwall.com/lists/oss-security/2016/02/27/1
-http://www.openwall.com/lists/oss-security/2016/09/25/1
-
-This list is not exhaustive.
-
-Some programs got it right IIRC as of the first time I looked (maybe
-right from the start): SimplePAMApps su, vzctl.
-
-On LKML, CC'ed to the kernel-hardening mailing list, Matt Brown has been
-pushing for the upstream Linux kernel to introduce an option (likely to
-be disabled by default) that would block the TIOCSTI ioctl.  Alan Cox
-repeatedly NAK'ed this:
-
-http://www.openwall.com/lists/kernel-hardening/2017/05/
-
-Sorry there's no one specific message/thread to link to - there were
-multiple patch revisions, and multiple NAKs with different wording.
-
-Alan's reasoning is that userspace apps like this have to be allocating
-a new pty anyway, and the kernel change wouldn't help much since TIOCSTI
-isn't the only way to cause trouble (although per my reading of the
-examples given, other ways/troubles are either not exactly as bad or not
-exactly as generic).  Alan also suggested that all of the affected
-userspace apps have already been fixed.  I think that's still very far
-from true.  In fact, just 2 days ago util-linux 2.30 was released with
-the issue still deliberately not fixed:
-
-https://marc.info/?l=util-linux-ng&m=149640144016887
-
-| CVE-2016-2779 - This security issue is NOT FIXED yet.  It is possible to
-|   disable the ioctl TIOCSTI by setsid() only.  Unfortunately, setsid()
-|   has well-defined use cases in su(1) and runuser(1) and any changes
-|   would introduce regressions.  It seems we need a better way -- ideally
-|   another ioctl to disable TIOCSTI without setsid() or in a userspace
-|   implemented pty container (planned as experimental su(1) feature).
-
-I am posting this message primarily to let maintainers of userspace
-su-like programs know that they should in fact proceed to implement
-allocation of a separate pty, if they don't do that already.  Do not
-wait for the kernel to do some magic thing because it's been NAK'ed, it
-wouldn't fully address the issue, and it wouldn't be enabled by default.
-
-Another point Alan brought up is that if a program is careless enough
-not to allocate a new pty, it's probably also careless enough not to
-close any fd's that might be open in the parent shell or by the program
-itself.  Let's also not miss this reminder and review/correct/harden
-these same programs in this respect as well.
-
-Alexander
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
