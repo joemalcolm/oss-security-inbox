@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1417" "Sunday" "29" "January" "2017" "17:34:44" "+0100" "Martin Pitt" "mpitt@debian.org" "<20170129163444.GA1097@donald>" "42" "[oss-security] Requesting CVE for calibre file disclosure" nil nil nil "1" "2017012916:34:44" "[oss-security] Requesting CVE for calibre file disclosure" (number mark "U       mpitt@debian Jan 29   42/1417  " thread-indent "\"[oss-security] Requesting CVE for calibre file disclosure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["222" "Tuesday" "23" "February" "2016" "06:39:57" "+0700" "Hans Jerry Illikainen" "hji@dyntopia.com" "<m1ziuspb5e.darpa@darpa.mil>" "10" "[oss-security] php: stack overflow when decompressing tar archives" "^Date:" nil nil "2" "2016022223:39:57" "[oss-security] php: stack overflow when decompressing tar archives" (number mark "        hji@dyntopia Feb 23   10/222   " thread-indent "\"[oss-security] php: stack overflow when decompressing tar archives\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18268 invoked by uid 550); 29 Jan 2017 16:56:23 -0000
+Received: (qmail 18173 invoked by uid 550); 22 Feb 2016 23:39:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28265 invoked from network); 29 Jan 2017 16:34:51 -0000
-Date: Sun, 29 Jan 2017 17:34:44 +0100
-From: Martin Pitt <mpitt@debian.org>
-To: oss-security@lists.openwall.com
-Cc: Kovid Goyal <kovid@kovidgoyal.net>,
-	Antoine =?iso-8859-1?Q?Beaupr=E9?= <anarcat@debian.org>
-Message-ID: <20170129163444.GA1097@donald>
+Received: (qmail 18152 invoked from network); 22 Feb 2016 23:39:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dyntopia-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:subject:date:message-id:mime-version:content-type;
+        bh=KLPKtkyp8PB6Lnjca2nEllXH810DYXFp7Dh8JMwldWo=;
+        b=Jbc7iQy+pd6J0JashnrYzBC/1GTUhVhGcKdjEc9NKftyoyv2G2pYjssdrxEakUmztR
+         Nt4+IA6sJBPhMMg7EmSLyzd/3dMmneEaHDWnG0OPriNCg59DL4NojNsLKv9r+0Bki6EL
+         B9dEXJtBGRrv2Omznp+s2KjQHtoUi5nGjiSzbYSDlsetEPrl75t8wyVMWc338cqCEVoN
+         c5BM76CIsJZmZBW9qv1U59IT7N6erjx/04+jHN4z/FdzCZ1uRSuJyjoQ5F+PvECljCDF
+         fWnNA4/P6aPmdkREMEi4PAwK4OWmtYtWm/F6f8giAhIVsg8i/oZ8tHCbTCD6g3frcv1i
+         rLRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-type;
+        bh=KLPKtkyp8PB6Lnjca2nEllXH810DYXFp7Dh8JMwldWo=;
+        b=MPV1grqSprOlkPvcNGGpG4PTdUr5b4LRhO97IFuwRr9ekT+fZCb6nsFi8atj+mguI6
+         jDzIeZPgbhdqnVAxkauS68M8ehiNLu/7bsunsdzsESNnYmoPD9rewq6vUmB3VvltA0ss
+         7jG8PM1ltq7rDPtk7dnnjDAGKlhdCYyoM0ff44VcLalnY91+TWyw6assoNJWsscWKGZx
+         Ijh3Uh18H8d+AddK1EFdKhyBvbuY5+whxPSai377JfdBSAYyvJmccGXrAAmX8hMGgThJ
+         eUjDF3vzLirma7VnmEjy+KX9e6sqW1xbUf8ffSiA4Xnrf9El0I73nQUXrIYRDV4JNUb1
+         aqag==
+X-Gm-Message-State: AG10YOQqei5MJ5w0w/nB1U4VBb2X4xOKE/qG40Dl0MCtA7rHJC3Aj32/j2RmYDdaREhK1w==
+X-Received: by 10.28.63.200 with SMTP id m191mr14416228wma.21.1456184354475;
+        Mon, 22 Feb 2016 15:39:14 -0800 (PST)
+Message-ID: <m1ziuspb5e.darpa@darpa.mil>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="a8Wt8u1KmwUX3Y2C"
-Content-Disposition: inline
-User-Agent: Mutt/1.7.1 (2016-10-04)
-Subject: [oss-security] Requesting CVE for calibre file disclosure
+Content-Type: text/plain
+Date: Tue, 23 Feb 2016 06:39:57 +0700
+From: Hans Jerry Illikainen <hji@dyntopia.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] php: stack overflow when decompressing tar archives
+To: oss-security@lists.openwall.com
 
---a8Wt8u1KmwUX3Y2C
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Hi,
 
-Hello all,
+it seems that no CVE has been assigned this issue which may be of
+interest to anybody shipping PHP older than 5.5.32, 5.6.18 or 7.0.3
+without FORTIFY:
 
-Calibre 2.75 fixed what looks like a local data disclosure vulnerability:
+https://bugs.php.net/bug.php?id=71488
 
-  https://github.com/kovidgoyal/calibre/commit/3a89718664cb8c
-
-@Kovid: Would you mind making the original Launchpad bug
-https://launchpad.net/bugs/1651728 public?
-
-@osssec: Can you please assign a CVE on this one?
-
-Thanks to Antoine for pointing this out, this deserves an update in stable
-distro releases.
-
-Martin
-
---a8Wt8u1KmwUX3Y2C
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJYjhmdAAoJENFO8V2v4RNHEoUP/j9YpvYGBHdy8+Sz4ppRmmQz
-6Xd0AE1c+Z092fqEdFi1h1xrJNra7oDEJzLfNuWhhi1zstBvs3WvpLdCqkv7TvBt
-jls37dLr/R88cVB/FJRlqpgbTOprvk1bKDDrohhDKtCMbh5j2L7Xb9qsDmEn5aEp
-j5vKHZ3ldZKggXTZCWcwRR4TCdwDyWFG31/218BNZzKZIOKedS5WJaVxnWQLdGso
-WhSSR00/XYjuiIaSiYvuuH9Rf2ThRO8SrokXnfXWroQSJZht633GIZ8Ex98goGcM
-LWHSeHRARJ3rKPMXsUvoYoI7Qsqtv7W8Zb/paXr8hVl3eKqjgBYSLdkVpaTteS0J
-Nffo1VD6+LRXM+804Z3YXZInrQ/IIptX0pPqLhr0ymJt4eN/FoVGfFjGaz2U0fZQ
-JLf/qYB+usVpws7Uj4QMNoXJ5saeiQsJXTJoxTKQiwQl0CB3dZQxLX7NRvZ1xOEb
-0boivZqppPAfyOMb52l/8eRYvjQXuUxFE3pzJoCyBr1nNJQThyuy27aH+2VOjP3S
-WIBbxqYl4ueo16JYaKKTdzZD2bqDZjm8JMIDH3eqf29hEkMvDFYK353QJ8/ze7CT
-Yt2L6SBJrX0uTyVK8HC6Ps8BmunlCBA0unr0i/9HMEhiLTcmbhSg22k+JmGdV387
-h0WKZ0MCUGQDOKiJuDwA
-=nyb9
------END PGP SIGNATURE-----
-
---a8Wt8u1KmwUX3Y2C--
+-- 
+Hans Jerry Illikainen
