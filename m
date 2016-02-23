@@ -1,50 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/4
-Message-ID: <20161122111332.4a850849@pc1>
-Date: Tue, 22 Nov 2016 11:13:32 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: WordPress (all versions): SPOF, RCE, and Negligence
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/23/9
+Message-ID: <CANO=Ty05gsBU3rX==c8L6V8OAQrUKStOasxfdpZk5ygCH=EKWg@mail.gmail.com>
+Date: Tue, 23 Feb 2016 11:11:36 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: libssh/libssh2 bits and bytes confusion
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+CVE-2016-0739 libssh: Diffie-Hellman bits/bytes confusion bug
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2016-0739
 
-Sorry, but I find a lot of your statements very questionable.
+CVE-2016-0787 libssh2: Diffie-Hellman bits/bytes confusion bug
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2016-0787
 
-On Mon, 21 Nov 2016 11:54:33 -0500
-Scott Arciszewski <scott@...agonie.com> wrote:
-
-> Consequently, the WordPress update server is one of the largest single
-> points of failure (SPOF) on the Internet.
-
-Yeah, just like the update servers from Microsoft (which are definitely
-a bigger POF). Or Apple. Or Google. Or Samsung. Or Mozilla.
-
-Granted, having signatures as an additional protection on top of TLS
-improves security, but it's an unfortunate fact that update
-infrastructure is a big attack surface and a complicated problem.
-Signatures can only change a single point of failure to two points of
-failure.
-The solution is probably something along the lines of transparency logs
-and for binary software reproducible builds, but nobody has anything in
-that space that works today.
-
-Wordpress could do better in terms of security with some issues, e.g. I
-find it disappointing that they don't seem to show any interest in
-deploying CSP.
-But the fact that Wordpress has auto updates at all imho puts it
-in front of every other CMS out there in terms of security.
-For all the others they basically expect their users to manually
-install updates, sometimes within hours as could've been seen with
-every RCE in joomla or drupal that was discovered in the past.
-Wordpress having an auto update has probably protected millions of
-webpages from being compromised.
-
-
+TL;DR: bits/bytes confusion resulted in truncated Diffie-Hellman secret
+length in certain configs.
 
 -- 
-Hanno Böck
-https://hboeck.de/
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
