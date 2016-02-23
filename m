@@ -1,42 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/07/2
-Message-ID: <20161107084646.GA16344@tunkki>
-Date: Mon, 7 Nov 2016 10:46:46 +0200
-From: Henri Salo <henri@...v.fi>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE request: cJSON buffer out of bound read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/1
+Message-ID: <19v6ql8000000000g7bogu006eqhjow6gmj6e1g64o30c1g64o38e1g@mail.gmail.com>
+Date: Tue, 23 Feb 2016 23:57:13 +0000
+From: security@...roid.com
+To: Carlos Santana <csantana23@...il.com>
+Cc: bugtraq@...urityfocus.com, oss-security@...ts.openwall.com,  "private@...dova.apache.org" <private@...dova.apache.org>, ASF Security Team <security@...che.org>
+Subject: RE: [4-3801000010480] [Update 2/20/16 CVE-2015-5256] Apache Cordova vulnerable to improper application of whitelist restrictions on Android
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Oct 02, 2016 at 08:06:25PM +0800, Marco Grassi wrote:
-> I would like to report a buffer out of bound read problem in cJSON, which
-> is a embeddable JSON parser, used (I imagine) in embedded devices, or even
-> bigger stuff like the ps4 (
-> http://doc.dl.playstation.net/doc/ps4-oss/cjson.html).
-> 
-> patch:
-> https://github.com/DaveGamble/cJSON/commit/94df772485c92866ca417d92137747b2e3b0a917
-> 
-> issue:
-> https://github.com/DaveGamble/cJSON/issues/30
-> 
-> Poc with the malformed string
-> 
-> #include <stdio.h>
-> #include <stdint.h>
-> #include <fcntl.h>
-> #include "cJSON.h"
-> 
-> static const char *my_json = "\"000000000000000000\\";
-> 
-> int main(int argc, const char * argv[]) {
->     cJSON * root = cJSON_Parse(my_json);
->     char * rendered = cJSON_Print(root);
->     printf("%s\n", rendered);
->     return 0;
-> }
 
-MITRE can you assign a CVE identifier for this vulnerability, thank you?
+Hi,
 
--- 
-Henri Salo
+Our engineering team reviewed this issue and realized this was reported to
+us back in Sept 2015 by JP Cert.
+
+Thank you,
+Quan
+
+
+On 02/22/16 15:54:11 security@...roid.com wrote:
+
+Hi
+Thank you for the notification.
+We will assign this to our dev team to review.
+It will be tracked as AndroidID-27299922.
+
+Thanks,
+Quan
+
+
+On 02/21/16 11:56:58 csantana23@...il.com wrote:
+
+
+*Updated 02/20/2016*
+
+Apache Cordova has re-visited CVE-2015-5256 "Apache Cordova vulnerable to
+improper application of whitelist restrictions on Android”. Upon further
+investigation we found that the vulnerability is more limited than was
+previously understood.
+We are lowering the severity to Low, and updating the description, affected
+versions, and upgrade path.
+
+The updated text of the CVE is included below:
+
+Apache Cordova PMC
+--------------------------
+private@...dova.apache.org
+
+____
+
+*Updated 02/20/2016*
+
+CVE-2015-5256: Apache Cordova vulnerable to improper application of
+whitelist restrictions on Android
+
+Severity: Low
+
+Versions Affected:
+Cordova Android with whitelist functionality
+
+Description:
+
+Android applications created using Apache Cordova that use a remote server
+contain a vulnerability where whitelist restrictions for urls using
+protocols http and https are not properly applied.  Whitelist cannot block
+network redirects from a whitelisted remote website to a non-whitelisted
+website.
+
+Upgrade path:
+
+There is no specific software patch for this vulnerability. Developers that
+are concerned about this should make sure to only whitelist trusted
+websites, and make sure that whitelisted websites don’t redirect to a
+malicious website.
+Developers using should also use SSL, as well as Content Security
+Policy(CSP) to further mitigate this issue. It’s always recommended for
+developers to upgrade to the latest version of Cordova Android.
+
+
+Credit: Muneaki Nishimura of Sony Digital Network Applications, Inc
+
