@@ -1,28 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/08/3
-Message-ID: <20160108140715.GA25718@eldamar.local>
-Date: Fri, 8 Jan 2016 15:07:15 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: WordPress: cross-site scripting vulnerability fixed in new 4.4.1 release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/23/10
+Message-ID: <alpine.DEB.2.20.1602232249280.6588@tvnag.unkk.fr>
+Date: Tue, 23 Feb 2016 22:51:20 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: oss-security@...ts.openwall.com
+Subject: libssh2 Truncated Difffie-Hellman secret length
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hey all,
 
-On 6th of January 2016, a new release of WordPress was posted,
-https://wordpress.org/news/2016/01/wordpress-4-4-1-security-and-maintenance-release/
+This advisory was posted earlier today to the libssh2 project's mailing list. 
+There's still an ongoing discussion about a possibly amended patch.
 
-> WordPress versions 4.4 and earlier are affected by a cross-site
-> scripting vulnerability that could allow a site to be compromised.
-> This was reported by Crtc4L.
 
-There is no reference to the fix, but the change seems to be
+Truncated Difffie-Hellman secret length
+=======================================
 
-https://core.trac.wordpress.org/changeset/36185
+Project libssh2 Security Advisory, February 23rd 2016 -
+[Permalink](https://www.libssh2.org/adv_20160223.html)
 
-Cf. as well https://twitter.com/brutelogic/status/685105483397619713
+VULNERABILITY
+-------------
 
-Can a CVE be assigned for this WordPress issue?
+During the SSHv2 handshake when libssh2 is to get a suitable value for 'group
+order' in the Diffle Hellman negotiation, it would pass in number of *bytes*
+to a function that expected number of *bits*. This would result in the library
+generating numbers using only an 8th the number of random bits than what were
+intended: 128 or 256 bits instead of 1023 or 2047
 
-Regards,
-Salvatore
+Using such drastically reduced amount of random bits for Diffie Hellman
+weakended the handshake security significantly.
+
+There are no known exploits of this flaw at this time.
+
+INFO
+----
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-0787 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: all versions to and including 1.6.0
+- Not affected versions: libssh2 >= 1.7.0
+
+libssh2 is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+libssh2 1.7.0 makes sure that there's a convertion done from number of bytes
+to number of bits when the internal `_libssh2_bn_rand` function is called.
+
+A patch for this problem is available at:
+
+     https://www.libssh2.org/CVE-2016-0787.patch
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+A - Upgrade to libssh2 1.7.0
+
+B - Apply the patch and rebuild libssh2
+
+TIME LINE
+---------
+
+It was first reported to the libssh2 project on February 7 2016 by Andreas
+Schneider.
+
+libssh2 1.7.0 was released on February 23rd 2016, coordinated with the
+publication of this advisory.
+
+CREDITS
+-------
+
+Reported by Andreas Schneider.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
