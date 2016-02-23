@@ -1,4 +1,9 @@
-Received: (qmail 31829 invoked by uid 550); 15 Feb 2023 14:30:00 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3650" "Tuesday" "23" "February" "2016" "19:17:54" "+0300" "Solar Designer" "solar@openwall.com" "<20160223161754.GA23263@openwall.com>" "89" "Re: [oss-security] Access to /dev/pts devices via pt_chown and user namespaces" "^Date:" nil nil "2" "2016022316:17:54" "[oss-security] Access to /dev/pts devices via pt_chown and user namespaces" (number mark "        solar@openwa Feb 23   89/3650  " thread-indent "\"Re: [oss-security] Access to /dev/pts devices via pt_chown and user namespaces\"\n") "<8fc639ad-daef-1a6f-facf-140eb61aeee5@halfdog.net>" ("<8fc639ad-daef-1a6f-facf-140eb61aeee5@halfdog.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11453 invoked by uid 550); 23 Feb 2016 16:17:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,52 +11,106 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11432 invoked from network); 23 Feb 2016 16:17:57 -0000
+Message-ID: <20160223161754.GA23263@openwall.com>
+References: <8fc639ad-daef-1a6f-facf-140eb61aeee5@halfdog.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8fc639ad-daef-1a6f-facf-140eb61aeee5@halfdog.net>
+User-Agent: Mutt/1.4.2.3i
+Date: Tue, 23 Feb 2016 19:17:54 +0300
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5841 invoked from network); 15 Feb 2023 03:19:54 -0000
-Authentication-Results: apache.org; auth=none
-X-Gm-Message-State: AO0yUKUj9ZzH7YtTsLGn20X9SJACbC2EQnDKltyIkJTejMSlwMFRKGPW
-	HpYM+DZZ4bmN/0/EW1kPI8lh6XPvr5GfD4oFI/k=
-X-Google-Smtp-Source: AK7set+6wvJg5k21TXgfgBZ4dcUHuipkabpj7JZkGK9bdagmQFmsWjGhB+QVb+Ro8RfSnc4MmjwuAxGEC472F5d6oo8=
-X-Received: by 2002:a17:906:110a:b0:8ae:1078:722f with SMTP id
- h10-20020a170906110a00b008ae1078722fmr331511eja.9.1676431173674; Tue, 14 Feb
- 2023 19:19:33 -0800 (PST)
-MIME-Version: 1.0
-From: Zhang Yonglun <zhangyonglun@apache.org>
-Date: Wed, 15 Feb 2023 11:19:22 +0800
-X-Gmail-Original-Message-ID: <CA+ZBtZ6UjvTNKgO6K6Auqxfoue+WzS41BGzN=i6KGuiVurvS+g@mail.gmail.com>
-Message-ID: <CA+ZBtZ6UjvTNKgO6K6Auqxfoue+WzS41BGzN=i6KGuiVurvS+g@mail.gmail.com>
+Subject: Re: [oss-security] Access to /dev/pts devices via pt_chown and user namespaces
 To: oss-security@lists.openwall.com
-Cc: dev@shenyu.apache.org
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2022-42735: Apache ShenYu Admin ultra vires
 
-Severity: low
+On Tue, Feb 23, 2016 at 12:03:54PM +0000, halfdog wrote:
+> Sending content from [0] also to oss-security as requested last time:
 
-Description:
+Thank you.  This public disclosure is very late, though.  I didn't
+realize you were still holding some of your findings on this.
 
-Improper Privilege Management vulnerability in Apache Software
-Foundation Apache ShenYu.
+> With Ubuntu Wily and earlier, /usr/lib/pt_chown was used to change
+> ownership of slave pts devices in /dev/pts to the same uid holding the
+> master file descriptor for the slave.
 
-ShenYu Admin allows low-privilege low-level administrators create
-users with higher privileges than their own.
+I think pt_chown is only needed for legacy BSD pty's, and no longer
+needed for Unix 98 pty's that Linux systems use these days.  Perhaps it
+should be dropped from upstream glibc by now.  e.g. on Owl we haven't
+been installing it SUID ever (as it was already legacy 15 years ago),
+and we haven't been packaging it at all since 2005.
 
-This issue affects Apache ShenYu: 2.5.0.
+> In my opinion, this security bug should be fixed two-fold: At first,
+> kernel should prevent the TIOCGPTN ioctl when invoked called by a
+> process within one namespace but acting on a filedescriptor from a
+> devpts instance mounted in a different namespace. Additionally
+> pt_chown should check via readlink and stat, that the passed file
+> descriptor really was from the /dev/ptmx or /dev/pts/ptmx device
+> present in the same namespace as the /dev/pts/[num] device is
+> residing. This of course is only relevant if pt_chown is going to
+> survive on recent namespace aware systems.
 
-Work Arounds:
+I think the primary fixes should be different: disable unprivileged user
+namespaces by default, and drop pt_chown.
 
-Upgrade to Apache ShenYu 2.5.1 or apply patch
-https://github.com/apache/shenyu/pull/3958.
+> Timeline:
+> =========
+> 
+>     20151220: Discovery
+>     20151227: Report at Ubuntu Launchpad1529486
+>     20160104: Report to distros list
+>     20160122: Patch to disable unprivileged userns due to this and
+> other issues LKML
+>     20160222: CRD and publication
 
-Credit:
+Ouch.  As you're aware, everything you report to distros must be made
+public in at most 2 weeks.  Unfortunately, I didn't keep track of this,
+and I don't recall if your report to distros included the detail you're
+disclosing just today.  I thought you had already disclosed whatever was
+on distros here:
 
-xxhzz (finder)
+http://www.openwall.com/lists/oss-security/2016/01/19/17
 
-References:
+Now I see you were asking for advice on further handling of these issues
+in there, and got no replies. :-(
 
-https://shenyu.apache.org
-https://www.cve.org/CVERecord?id=CVE-2022-42735
+I think going forward, you shouldn't make any use of the distros list,
+and should post to oss-security right away.
 
---
+> References:
+> ===========
+> 
+> [0]
+> http://www.halfdog.net/Security/2015/PtChownArbitraryPtsAccessViaUserNamespace/
+> [1]
+> http://www.halfdog.net/Security/2016/OverlayfsOverFusePrivilegeEscalation/
 
-Zhang Yonglun
-Apache ShenYu & ShardingSphere
+In [0], "LKML" points to:
+
+https://lkml.org/lkml/2016/1/22/7
+
+Unfortunately, that archive of LKML is currently broken (doesn't display
+the actual message to me), so I don't know what exactly this was.
+
+I did, however, watch the discussion CC'ed to kernel-hardening, where
+Kees Cook proposed "sysctl: allow CLONE_NEWUSER to be disabled":
+
+http://www.openwall.com/lists/kernel-hardening/2016/01/22/19
+http://www.openwall.com/lists/kernel-hardening/2016/01/22/20
+http://www.openwall.com/lists/kernel-hardening/2016/01/22/21
+
+Unfortunately, this was NAK'ed by the maintainer, Eric W. Biederman:
+
+http://www.openwall.com/lists/kernel-hardening/2016/01/23/4
+http://www.openwall.com/lists/kernel-hardening/2016/01/25/11
+http://www.openwall.com/lists/kernel-hardening/2016/01/26/7
+
+Eric suggested "a per user limit on the number of user namespaces users
+may create".  There was some further discussion after that point, but no
+clear outcome.  Last message posted on January 28.
+
+If there's no clear decision upstream, distros must do what they must -
+disable unprivileged userns ASAP, in whatever way they can.
+
+Alexander
