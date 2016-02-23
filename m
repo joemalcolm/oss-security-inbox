@@ -1,25 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/18
-Message-ID: <20161208201200.25774.134A28B2@matica.foolinux.mooo.com>
-Date: Thu, 8 Dec 2016 12:14:43 -0800
-From: Ian Zimmerman <itz@...mate.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: imagemagick: heap-based buffer overflow in IsPixelMonochrome (pixel-accessor.h)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/23/11
+Message-Id: <20160223231218.2F0D272E00C@smtpvbsrv1.mitre.org>
+Date: Tue, 23 Feb 2016 18:12:18 -0500 (EST)
+From: cve-assign@...re.org
+To: jsegitz@...e.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Security bugs in Linux kernel sound subsystem
 Content-Type: text/plain; charset=utf-8
 
-On 2016-10-15 22:45, cve-assign@...re.org wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> > https://blogs.gentoo.org/ago/2016/10/07/
-> > imagemagick-heap-based-buffer-overflow-in-ispixelmonochrome-pixel-accessor-h/
+> Dmitry Vyukov reported a series of kernel bugs in ALSA core that have been
+> triggered by syzkaller fuzzer. These can allow a user to DoS the system.
 
-> Use CVE-2016-8678.
+CVE-2016-2543
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=030e2c78d3a91dd0d27fef37e91950dde333eba1
 
-Since there seems to be at least a bit of controversy about this, I
-think a pointer to the upstream issue may be helpful:
 
-https://github.com/ImageMagick/ImageMagick/issues/272
 
--- 
-Please *no* private Cc: on mailing lists and newsgroups
-Personal signed mail: please _encrypt_ and sign
-Don't clear-text sign: http://cr.yp.to/smtp/8bitmime.html
+CVE-2016-2544
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=3567eb6af614dac436c4b16a8d426f9faed639b3
+
+
+
+CVE-2016-2545
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ee8413b01045c74340aa13ad5bdf905de32be736
+
+
+
+CVE-2016-2546
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=af368027a49a751d6ff4ee9e3f9961f35bb4fede
+
+
+
+CVE-2016-2547
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b5a663aa426f4884c71cd8580adae73f33570f0d
+"A slave timer instance might be still accessible in a racy way while
+operating the master instance as it lacks of locking. Since the master
+operation is mostly protected with timer->lock, we should cope with it
+while changing the slave instance, too."
+
+
+CVE-2016-2548
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b5a663aa426f4884c71cd8580adae73f33570f0d
+"some linked lists (active_list and ack_list) of slave instances
+aren't unlinked immediately at stopping or closing, and this may lead
+to unexpected accesses."
+
+
+CVE-2016-2549
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=2ba1fe7a06d3624f9a7586d672b55f08f7c670f3
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWzOZUAAoJEL54rhJi8gl5YskP+QGN1GKhr14+DmEYJ6iVUnbE
+Sz2ZPVWcjHQ2aMmbqN86nHsUoju+hXpAM6EEpZ/AIw+yPBqiZfuRtyT9c7F8rKUt
+FQuBMzWa7kAHlx5r94qtNz1NQdZ8B8utsSVQ/Dt9b/bpPui3LYMEWM3ZwsxY5s0J
+dMGvai7y4y6ipqEFe2XfjP/JUMPU0XTSWeMcZKxNq0oaC7HzYdj7lSxr0uEbdZtJ
+jkSSZXnQFzvILtykzFPFCZoTSYtfs49i3ojk25aMDNMv30LbTrKU9Rbg8kvJmnaA
+ad327/wXtHfGv1y2VyzfiQMZQd59whIjOP6N+GFvCmE11h1K5TF7DBp0ko6H9aIN
+PGOGKhW9vrt9VNmxNcD34lP4WonIPHqo6H0KAx/admAXKJOzwQWlBwhTv1vPfDly
+zOAqnELRuKXN1vNatLsvec3CTF96y+brCgKkLpZX+fFmuC3t/4gi7DMoP3AQJeEG
+N/GGxtZ2EBlNTEbKq65XIjNU3xgI4RGYxTvZs636rDXI4I5vIuX78afLFC/kjWbP
+nSXxsFtCn6Amj9ZPrpzdvYpR0MtwC2kn8DfRPFcMyIFvWt5XKW0koq5rErOpDozr
+xuTG6W1gK5ROvoGk15Ht82D8rltgv7/Pggyoevw9eyp4AckyFUQzJ5ihnmSZeQ/0
+wKFVHjVNZCm0tfXoKnXA
+=v4ix
+-----END PGP SIGNATURE-----
