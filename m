@@ -1,61 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/01/1
-Message-Id: <20161001014635.7AE08332038@smtpvbsrv1.mitre.org>
-Date: Fri, 30 Sep 2016 21:46:35 -0400 (EDT)
-From: cve-assign@...re.org
-To: cbuissar@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: pacemaker DoS when pacemaker remote is in use
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/23/6
+Message-ID: <20160223161754.GA23263@openwall.com>
+Date: Tue, 23 Feb 2016 19:17:54 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Access to /dev/pts devices via pt_chown and user namespaces
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Feb 23, 2016 at 12:03:54PM +0000, halfdog wrote:
+> Sending content from [0] also to oss-security as requested last time:
 
-> Last February was reported a vulnerability against pacemaker when pacemaker
-> remote is in use, allowing a remote, unauthenticated, attacker to launch a
-> DoS attack.
-> 
-> If a corosync node is connected to a pacemaker_remote node, the
-> connection can be trivially killed simply by connecting to the remote on its
-> standard TCP port (typically 3121):
-> 
-> 2016-02-18T18:06:45.258661+00:00 d52-54-77-77-77-01 crmd[2637]:    error:
-> Unexpected pacemaker_remote client takeover. Disconnecting
-> 
-> Takeover is allowed in order to support migration of the remote primitive from
-> one corosync node to another, but since this is a trivial denial of service
-> attack, it should only be allowed once a valid authkey is provided.
-> 
-> The flaw has been fixed in Pacemaker-1.1.15
-> 
-> Bug 5269 - DoS: valid authkey should be required for takeover of a Pacemaker remote
-> http://bugs.clusterlabs.org/show_bug.cgi?id=5269
-> 
-> Fix: remote: cl#5269 - Notify other clients of a new connection only if the handshake has completed (bsc#967388)
-> https://github.com/ClusterLabs/pacemaker/commit/5ec24a2642bd0854b884d1a9b51d12371373b410
->> lrmd/tls_backend.c
+Thank you.  This public disclosure is very late, though.  I didn't
+realize you were still holding some of your findings on this.
 
-Use CVE-2016-7797.
+> With Ubuntu Wily and earlier, /usr/lib/pt_chown was used to change
+> ownership of slave pts devices in /dev/pts to the same uid holding the
+> master file descriptor for the slave.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+I think pt_chown is only needed for legacy BSD pty's, and no longer
+needed for Unix 98 pty's that Linux systems use these days.  Perhaps it
+should be dropped from upstream glibc by now.  e.g. on Owl we haven't
+been installing it SUID ever (as it was already legacy 15 years ago),
+and we haven't been packaging it at all since 2005.
 
-iQIcBAEBCAAGBQJX7xUaAAoJEHb/MwWLVhi28DcP/jUPa6znvw/gipgp+uU2k22l
-/jbc1F3ISC0VjsA6pZFYPKH/693gTNWjxstCYDB6OEAOx5oDl4Es3FqYBbCjwLb1
-t8Vl4obIttPV8Kc6v7p6yvr4p+ghXbCiVfljpQJCSA0cESzRa5cyN0H8zOIzZnvs
-vF2z7cohAciS8Q79lOSkXGZDnWPIIL1yvLMzabLQDsO0nVpCJriH395ui5u+OozS
-+F4UuKNpYR4QRrW4uM3Y3Mxk5obspGJMtXgsi6hWKFcK9WGfwbO3nqv9LMnp+aJ1
-+2VkNTt3JfXYnswZ7Lbgh1fnaRvJJ9Xgp5p7bzVAA1s9bIae9T9mF/z7D5woVipd
-MCq5qtIV7rPzZqZnpuOWEbGCUTB8sUr8QTWXAZmFpy9JOPslFTu4GHAIZvga5xTl
-iBN1/MATIkacDed6fGVjDxWDef7y4si/om62DCeTKhwr51BOej0oCM+meam9ladT
-0GQRTVYhfctLVa6R4j4dh7DH77Z+3cd5d5CN5NT6Rv58CUhVqUgoCtdhd98j77ia
-Tvq2PMjd8YZvWVX2hENdBdbNhkkhs7vSf6W2Mf+U7tKnnjUQqug+7nXm5O+0QQRy
-S0+5pZyTDA+Nud+x9Zp62Ezc05BjbiTOOl2wLgn8uERUlTmfCR7rjxdJuG9uXZNa
-UZxQ9GHnN9+B5qd/UJOx
-=7VcV
------END PGP SIGNATURE-----
+> In my opinion, this security bug should be fixed two-fold: At first,
+> kernel should prevent the TIOCGPTN ioctl when invoked called by a
+> process within one namespace but acting on a filedescriptor from a
+> devpts instance mounted in a different namespace. Additionally
+> pt_chown should check via readlink and stat, that the passed file
+> descriptor really was from the /dev/ptmx or /dev/pts/ptmx device
+> present in the same namespace as the /dev/pts/[num] device is
+> residing. This of course is only relevant if pt_chown is going to
+> survive on recent namespace aware systems.
+
+I think the primary fixes should be different: disable unprivileged user
+namespaces by default, and drop pt_chown.
+
+> Timeline:
+> =========
+> 
+>     20151220: Discovery
+>     20151227: Report at Ubuntu Launchpad1529486
+>     20160104: Report to distros list
+>     20160122: Patch to disable unprivileged userns due to this and
+> other issues LKML
+>     20160222: CRD and publication
+
+Ouch.  As you're aware, everything you report to distros must be made
+public in at most 2 weeks.  Unfortunately, I didn't keep track of this,
+and I don't recall if your report to distros included the detail you're
+disclosing just today.  I thought you had already disclosed whatever was
+on distros here:
+
+http://www.openwall.com/lists/oss-security/2016/01/19/17
+
+Now I see you were asking for advice on further handling of these issues
+in there, and got no replies. :-(
+
+I think going forward, you shouldn't make any use of the distros list,
+and should post to oss-security right away.
+
+> References:
+> ===========
+> 
+> [0]
+> http://www.halfdog.net/Security/2015/PtChownArbitraryPtsAccessViaUserNamespace/
+> [1]
+> http://www.halfdog.net/Security/2016/OverlayfsOverFusePrivilegeEscalation/
+
+In [0], "LKML" points to:
+
+https://lkml.org/lkml/2016/1/22/7
+
+Unfortunately, that archive of LKML is currently broken (doesn't display
+the actual message to me), so I don't know what exactly this was.
+
+I did, however, watch the discussion CC'ed to kernel-hardening, where
+Kees Cook proposed "sysctl: allow CLONE_NEWUSER to be disabled":
+
+http://www.openwall.com/lists/kernel-hardening/2016/01/22/19
+http://www.openwall.com/lists/kernel-hardening/2016/01/22/20
+http://www.openwall.com/lists/kernel-hardening/2016/01/22/21
+
+Unfortunately, this was NAK'ed by the maintainer, Eric W. Biederman:
+
+http://www.openwall.com/lists/kernel-hardening/2016/01/23/4
+http://www.openwall.com/lists/kernel-hardening/2016/01/25/11
+http://www.openwall.com/lists/kernel-hardening/2016/01/26/7
+
+Eric suggested "a per user limit on the number of user namespaces users
+may create".  There was some further discussion after that point, but no
+clear outcome.  Last message posted on January 28.
+
+If there's no clear decision upstream, distros must do what they must -
+disable unprivileged userns ASAP, in whatever way they can.
+
+Alexander
