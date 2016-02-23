@@ -1,34 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/03/9
-Message-ID: <alpine.LFD.2.20.1603031632120.7999@wniryva>
-Date: Thu, 3 Mar 2016 16:34:42 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Liu Ling <liuling-it@....cn>
-Subject: CVE request Qemu: net: out of bounds read in net_checksum_calculate
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/23/7
+Message-ID: <20160223164136.GA24225@altlinux.org>
+Date: Tue, 23 Feb 2016 19:41:36 +0300
+From: "Dmitry V. Levin" <ldv@...linux.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Access to /dev/pts devices via pt_chown and user namespaces
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Tue, Feb 23, 2016 at 07:17:54PM +0300, Solar Designer wrote:
+> On Tue, Feb 23, 2016 at 12:03:54PM +0000, halfdog wrote:
+> > Sending content from [0] also to oss-security as requested last time:
+> 
+> Thank you.  This public disclosure is very late, though.  I didn't
+> realize you were still holding some of your findings on this.
+> 
+> > With Ubuntu Wily and earlier, /usr/lib/pt_chown was used to change
+> > ownership of slave pts devices in /dev/pts to the same uid holding the
+> > master file descriptor for the slave.
+> 
+> I think pt_chown is only needed for legacy BSD pty's, and no longer
+> needed for Unix 98 pty's that Linux systems use these days.  Perhaps it
+> should be dropped from upstream glibc by now.
 
-Qemu emulator built with the IP checksum routines is vulnerable to an OOB read 
-access issue. It could occur while computing checksum for TCP/UDP packets, as 
-the function uses payload length from the packet without checking against the 
-data buffer size.
+Just for the record, pt_chown is not enabled by default in upstream glibc
+starting with glibc-2.18, one has to specify --enable-pt_chown configure
+option explicitly to build pt_chown.
 
-A user inside guest could use this flaw to read excessive bytes or crash the 
-Qemu process resulting in DoS.
+glibc documentation clearly states that "the use of pt_chown introduces
+additional security risks to the system and you should enable it only
+if you understand and accept those risks":
+https://www.gnu.org/software/libc/manual/html_node/Configuring-and-compiling.html#index-grantpt-1
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-03/msg00671.html
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1296567
+-- 
+ldv
 
-This issue was discovered by Ling Liu of Qihoo 360 Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Content of type "application/pgp-signature" skipped
