@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2767" "Friday" "16" "September" "2016" "15:00:53" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20160916150053.76622e04@hboeck.de>" "75" "[oss-security] Out of bounds heap bugs in glib, heap buffer overflow in gnome-session" "^Date:" nil nil "9" "2016091613:00:53" "[oss-security] Out of bounds heap bugs in glib, heap buffer overflow in gnome-session" (number mark "U       hanno@hboeck Sep 16   75/2767  " thread-indent "\"[oss-security] Out of bounds heap bugs in glib, heap buffer overflow in gnome-session\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["776" "Tuesday" "23" "February" "2016" "06:56:25" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20160223055624.GA29670@lorien.valinor.li>" "21" "[oss-security] CVE Request: Linux: unix: correctly track in-flight fds in sending process user_struct sockets" "^Date:" nil nil "2" "2016022305:56:25" "[oss-security] CVE Request: Linux: unix: correctly track in-flight fds in sending process user_struct sockets" (number mark "        carnil@debia Feb 23   21/776   " thread-indent "\"[oss-security] CVE Request: Linux: unix: correctly track in-flight fds in sending process user_struct sockets\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32721 invoked by uid 550); 16 Sep 2016 13:01:06 -0000
+Received: (qmail 7274 invoked by uid 550); 23 Feb 2016 05:56:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,90 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32697 invoked from network); 16 Sep 2016 13:01:06 -0000
-Message-ID: <20160916150053.76622e04@hboeck.de>
-X-Mailer: Claws Mail 3.14.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-14226-1474030856-0001-2"
-Date: Fri, 16 Sep 2016 15:00:53 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Received: (qmail 7256 invoked from network); 23 Feb 2016 05:56:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=ap+EUf3pCK1u3e0HiThJWaT1WUHb4HUoVrGe+rWGpFk=;
+        b=Y24Ar+3AkVK7srMkVSFYlGFNO0Usea+3kWMJI2F1aiWZ7iiVwU40Q7J/Xcml8L8gkR
+         b1pMrIiv1A43o7ATElPgESu8tdK7iTim5ovVTiqPTTgy5oBukx2aPa4zJFmVs/vrI1rE
+         QwOpO4NBiZphToq0GtPXR56aw04HWHT5T/tNAhP47pcEn5lqO5ZcXA6MrzwYbkpUaK/Y
+         1Fuw1T+HCbYBK87V8R3XORL2JSZy9t3RmwNY74hM29F9kGXBLg9zmNlOcUhw3ujt/Lng
+         nLQgis9SWqR9hT0yrXyLO173aWNh9PE86kqAlh6fV9HFhtEZ0RgHto3x3KS/QWMIj/LN
+         ZrMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-type:content-disposition:user-agent;
+        bh=ap+EUf3pCK1u3e0HiThJWaT1WUHb4HUoVrGe+rWGpFk=;
+        b=hvYNJaesDPf6/GB5Xc+DY8fYeT12opgIvB0mT9dQbl6ELwflBjbX82RRvBeMW+pkiN
+         RTfXkO2zGjkI7tLtrAe5cWXgZ3V2Sm5wcftAvMlsoW3qp+HbG95iwT6sT14fEyFu7osR
+         BPmMvQLy82Wwu9yttuMBbQ64+EpF2cFlQWUhOvOf7RNoJBcsiKwJJFVd6YwmeiyiBg5H
+         LdN2qTwshw2Lrj9Oic5t+rOacxwj7yikUOzNY4GjuwMFYKqls0HhXHNbHCefwV2u5Za/
+         FFHCYzwH4S5Fll8mPzuDn03jfwNm97CVFC+S/uBBp4zYw+JfkrRJ/2UdMGhnpraUM4eP
+         wk7g==
+X-Gm-Message-State: AG10YORkk7SQ6m+J1fE1qP7QmGaAC76jmGVIqqol7iYlN+wQSsdpIyQcsL7ECgLzQhTMEg==
+X-Received: by 10.55.192.89 with SMTP id o86mr16391610qki.31.1456206987820;
+        Mon, 22 Feb 2016 21:56:27 -0800 (PST)
+Message-ID: <20160223055624.GA29670@lorien.valinor.li>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Date: Tue, 23 Feb 2016 06:56:25 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Out of bounds heap bugs in glib, heap buffer overflow in
- gnome-session
-To: oss-security@lists.openwall.com
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: [oss-security] CVE Request: Linux: unix: correctly track in-flight fds in sending
+ process user_struct sockets
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
 
---=_zucker.schokokeks.org-14226-1474030856-0001-2
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-https://blog.fuzzing-project.org/53-Out-of-bounds-heap-bugs-in-glib,-heap-b=
-uffer-overflow-in-gnome-session.html
+A new (denial-of-service) issue was fixed in Linux introduced by the
+commit 712f4aad406bb1ed67f3f98d04c044191f0ff593[1], which was part of
+commits to address CVE-2013-4312.
 
-By testing GNOME-related packages with Address Sanitizer I recently
-discovered several trivial to find bugs.
+David Herrmann reported that the original commit "incorrectly
+accounted the number of in-flight fds over a unix domain socket to the
+original opener of the file-descriptor. This allows another process to
+arbitrary deplete the original file-openers resource limit for the
+maximum of open files."
 
-Two out of bounds bugs in the glib library were uncovered by running
-the test suite with Address Sanitizer enabled. One heap buffer overflow
-in the parameter parsing of gnome-session was uncovered by trying to
-start GNOME. Given that these bugs weren't discovered earlier means
-that most likely nobody ever used Address Sanitizer to test GNOME
-components.
+This was fixed in 415e3d3e90ce9e18727e8843ae343eda5a58fad6[2].
 
-I strongly recommend to GNOME and to other software communities to use
-Address Sanitizer testing in order to improve the quality of their
-software.
+Can you please assign a CVE for this issue?
 
-Out of bounds read in g_unichar_iswide_bsearch() / glib
-https://bugzilla.gnome.org/show_bug.cgi?id=3D766211
-Upstream bug report (again reported here)
-https://git.gnome.org/browse/glib/commit/?id=3Dbcbd8d7
-Commit / fix
-Fixed in 2.48.2.
+ [1] https://git.kernel.org/linus/712f4aad406bb1ed67f3f98d04c044191f0ff593 (v4.5-rc1)
+ [2] https://git.kernel.org/linus/415e3d3e90ce9e18727e8843ae343eda5a58fad6 (v4.5-rc4)
 
-Out of bounds read in token_stream_prepare() / glib
-https://bugzilla.gnome.org/show_bug.cgi?id=3D762417
-Upstream bug report
-https://git.gnome.org/browse/glib/commit/glib/gvariant-parser.c?id=3Daead1c=
-046dd39748cca449b55ec300ba5f025365
-Commit / fix
-Fixed in 2.48.0.
-
-Heap buffer overflow in gnome-session
-https://bugzilla.gnome.org/show_bug.cgi?id=3D768441
-Upstream bug report
-https://git.gnome.org/browse/gnome-session/commit/?h=3Dgnome-3-20&id=3D634a=
-b70d9f03b1650be4b8259091ca3036f0fbf9
-Commit / fix
-Fixed in 3.20.2.
-
-
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
-
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
-
---=_zucker.schokokeks.org-14226-1474030856-0001-2
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIbBAEBCAAGBQJX2+0FAAoJEKWIAHK7tR5CRnoP9R2nLZBsNKkKA9B0cH0Wd+gg
-kEIaQXSqUd2UoUYT4HWtSj6ZA63JsdkvJcOclym3+I4+B1tsZk2H56R06tcMddLK
-sH9jJf7z+qUiLRSJh83bYfNXFqZIeSctDbdD387AHuR2a5XOxro22HpTJc0yfBnO
-gSm+uIiXX9FjznAYjReDpBUvloeOCCkyekHvnuM+L6WoTEGl6qRLdi8rH13C5Jl7
-w5bUcesqFk6PpW9nq5/BXxOO0hbls8C5ITp6G4yuTkoYAgl/91ojIUZxs0kwrlMh
-ilE9REBqP51Q0LsGyekQD29q/H9mDZWbqo9U66p6fresKaiXy30v6kL3S6JZyZM2
-qtTCFSiLocyuL5TRvP0suRT6LUFBdSmHTHARiIn8WBXqGLhYv0Pt+PkEO3iinkYX
-/0IxXfzkctYUgvAzMPX5a7u1G7SqsmsRDdDzvH2OT7IdzTUwkKa72JbHDtXAAau0
-7IjQr4h5her5/3GMwpdos8OEU0SfVr9xeDUYElkT6wAng19RJ2MiEz1XBPPYNx3v
-cqawUN8iGCjxDmZufpov3j1Lagy0BoVnDLYIDqk4ZXfFv5biBr4m62J1lPc83mL7
-Vqgd7ga4U+PGE23fL2wuHzMsv8/w7uNqlyK51iBYEv728n7Kif2pk6Yz3CWX+4+t
-s/qQHh4+PAXR+whKvF8=
-=Gm3l
------END PGP SIGNATURE-----
-
---=_zucker.schokokeks.org-14226-1474030856-0001-2--
+Regards,
+Salvatore
