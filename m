@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2124" "Tuesday" "2" "February" "2016" "14:37:17" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160202193717.ED51C7BC0FE@smtpvmsrv1.mitre.org>" "46" "[oss-security] Re: Socat security advisory 8 - Stack overflow in parser" "^Cc:" nil nil "2" "2016020219:37:17" "[oss-security] Re: Socat security advisory 8 - Stack overflow in parser" (number mark "        cve-assign@m Feb  2   46/2124  " thread-indent "\"[oss-security] Re: Socat security advisory 8 - Stack overflow in parser\"\n") "<56AF7B26.9010700@dest-unreach.org>" ("<56AF7B26.9010700@dest-unreach.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2534" "Tuesday" "23" "February" "2016" "18:12:18" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160223231218.2F0D272E00C@smtpvbsrv1.mitre.org>" "66" "[oss-security] Re: Security bugs in Linux kernel sound subsystem" "^Cc:" nil nil "2" "2016022323:12:18" "[oss-security] Re: Security bugs in Linux kernel sound subsystem" (number mark "        cve-assign@m Feb 23   66/2534  " thread-indent "\"[oss-security] Re: Security bugs in Linux kernel sound subsystem\"\n") "<20160119083335.GD24547@suse.de>" ("<20160119083335.GD24547@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15884 invoked by uid 550); 2 Feb 2016 19:37:30 -0000
+Received: (qmail 19725 invoked by uid 550); 23 Feb 2016 23:12:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,39 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15859 invoked from network); 2 Feb 2016 19:37:29 -0000
-In-Reply-To: <56AF7B26.9010700@dest-unreach.org>
-Message-Id: <20160202193717.ED51C7BC0FE@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org
-Date: Tue,  2 Feb 2016 14:37:17 -0500 (EST)
+Received: (qmail 19676 invoked from network); 23 Feb 2016 23:12:30 -0000
+In-Reply-To: <20160119083335.GD24547@suse.de>
+Message-Id: <20160223231218.2F0D272E00C@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue, 23 Feb 2016 18:12:18 -0500 (EST)
 From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Socat security advisory 8 - Stack overflow in parser
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Security bugs in Linux kernel sound subsystem
+To: jsegitz@suse.com
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
->   This vulnerability can only be exploited when an attacker is able to
->   inject data into socat's command line.
->   A vulnerable scenario would be a CGI script that reads data from
->   clients and uses (parts of) this data as hostname for a Socat
->   invocation.
+> Dmitry Vyukov reported a series of kernel bugs in ALSA core that have been
+> triggered by syzkaller fuzzer. These can allow a user to DoS the system.
 
-This was sent to the oss-security list as a published advisory, not as
-a CVE ID request. Is there anyone (e.g., a Linux distribution) who is
-planning to re-announce this to a different audience in a way that
-would make a CVE ID especially useful? Note that there will be a
-CVE ID for the simultaneously released "security advisory 7."
+CVE-2016-2543
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=030e2c78d3a91dd0d27fef37e91950dde333eba1
 
-At this point, the MITRE CVE team does not see a realistic
-exploitation scenario (for security advisory 8) that would be best
-categorized as a socat problem that requires a socat CVE ID. For
-example, "a CGI script that reads data from clients and uses (parts
-of) this data as hostname for a Socat invocation" might be better
-categorized as an SSRF vulnerability in that CGI script (and
-potentially site-specific unless such a CGI script already exists in
-packaged code).
+
+
+CVE-2016-2544
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=3567eb6af614dac436c4b16a8d426f9faed639b3
+
+
+
+CVE-2016-2545
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ee8413b01045c74340aa13ad5bdf905de32be736
+
+
+
+CVE-2016-2546
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=af368027a49a751d6ff4ee9e3f9961f35bb4fede
+
+
+
+CVE-2016-2547
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b5a663aa426f4884c71cd8580adae73f33570f0d
+"A slave timer instance might be still accessible in a racy way while
+operating the master instance as it lacks of locking. Since the master
+operation is mostly protected with timer->lock, we should cope with it
+while changing the slave instance, too."
+
+
+CVE-2016-2548
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b5a663aa426f4884c71cd8580adae73f33570f0d
+"some linked lists (active_list and ack_list) of slave instances
+aren't unlinked immediately at stopping or closing, and this may lead
+to unexpected accesses."
+
+
+CVE-2016-2549
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=2ba1fe7a06d3624f9a7586d672b55f08f7c670f3
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -53,17 +73,17 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWsQPRAAoJEL54rhJi8gl58g4QAJY2pF4cO5bxQA7rfwlGajZq
-/ZL6f4v59/LZpe9Vpa+HTUwXGe+cRv68Zvgp37K1gWqnmazIwgCmJGIZ3BvVJ019
-v/AizZt7aCOZf8X2VTK82ylQU56bcOdmXCKZ9Xb9OHukIpK918bILOPb+t2HmqCe
-jOHNyzMRou9R/23qan8WQzW78JmK1D8E2DjHZbdHDkKm83j2z+CKI2H2hHkaYOy+
-QHqMiJuo6PMPLObxPmF1HY8cqN+EIl2LPt0VShAr2uYjlyB3eCpY2kdfJQUSQ6FW
-RxBa5bue+X0fv8IenUEtQsEcVJgS5jWwPavE7mrR8fkeyjJM+WGyilf2/iXuofBx
-zasCOaH82xteaIGoXW99OmLhFjMDPCIcN6lD33xu/GtF/Xg9OBbYeMfsjb1FoLsf
-w6lRyW3PyRRDTzZoeLpRhacK759eJvBBDL8JUqeJTsKOhKdnbOD47wHYrVboypbC
-ZAcS8Jnl8wrTslP6iscad32J6plr8pIzoyo8iOks6oKx1BnaZTQn99MOHt7GBBN6
-7Io9JMcjDcael9iDIlM7Gwv+AzAUqDZuKZ6CIPPwbVklVQYM7zTBx4Ch2+7KB8yt
-5r8y5GgzFO29ryA6T+cBwFDFcAFsJf6D0t5qV39mELAi49R6Qw/GI7huLsi54W9B
-0fUfuGVElnJEWu8NEth2
-=FQZ0
+iQIcBAEBCAAGBQJWzOZUAAoJEL54rhJi8gl5YskP+QGN1GKhr14+DmEYJ6iVUnbE
+Sz2ZPVWcjHQ2aMmbqN86nHsUoju+hXpAM6EEpZ/AIw+yPBqiZfuRtyT9c7F8rKUt
+FQuBMzWa7kAHlx5r94qtNz1NQdZ8B8utsSVQ/Dt9b/bpPui3LYMEWM3ZwsxY5s0J
+dMGvai7y4y6ipqEFe2XfjP/JUMPU0XTSWeMcZKxNq0oaC7HzYdj7lSxr0uEbdZtJ
+jkSSZXnQFzvILtykzFPFCZoTSYtfs49i3ojk25aMDNMv30LbTrKU9Rbg8kvJmnaA
+ad327/wXtHfGv1y2VyzfiQMZQd59whIjOP6N+GFvCmE11h1K5TF7DBp0ko6H9aIN
+PGOGKhW9vrt9VNmxNcD34lP4WonIPHqo6H0KAx/admAXKJOzwQWlBwhTv1vPfDly
+zOAqnELRuKXN1vNatLsvec3CTF96y+brCgKkLpZX+fFmuC3t/4gi7DMoP3AQJeEG
+N/GGxtZ2EBlNTEbKq65XIjNU3xgI4RGYxTvZs636rDXI4I5vIuX78afLFC/kjWbP
+nSXxsFtCn6Amj9ZPrpzdvYpR0MtwC2kn8DfRPFcMyIFvWt5XKW0koq5rErOpDozr
+xuTG6W1gK5ROvoGk15Ht82D8rltgv7/Pggyoevw9eyp4AckyFUQzJ5ihnmSZeQ/0
+wKFVHjVNZCm0tfXoKnXA
+=v4ix
 -----END PGP SIGNATURE-----
