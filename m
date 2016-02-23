@@ -1,19 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/22/5
-Message-ID: <m1ziuspb5e.darpa@darpa.mil>
-Date: Tue, 23 Feb 2016 06:39:57 +0700
-From: Hans Jerry Illikainen <hji@...topia.com>
-To: oss-security@...ts.openwall.com
-Subject: php: stack overflow when decompressing tar archives
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/23/2
+Message-ID: <20160223055624.GA29670@lorien.valinor.li>
+Date: Tue, 23 Feb 2016 06:56:25 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: Linux: unix: correctly track in-flight fds in sending process user_struct sockets
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-it seems that no CVE has been assigned this issue which may be of
-interest to anybody shipping PHP older than 5.5.32, 5.6.18 or 7.0.3
-without FORTIFY:
+A new (denial-of-service) issue was fixed in Linux introduced by the
+commit 712f4aad406bb1ed67f3f98d04c044191f0ff593[1], which was part of
+commits to address CVE-2013-4312.
 
-https://bugs.php.net/bug.php?id=71488
+David Herrmann reported that the original commit "incorrectly
+accounted the number of in-flight fds over a unix domain socket to the
+original opener of the file-descriptor. This allows another process to
+arbitrary deplete the original file-openers resource limit for the
+maximum of open files."
 
--- 
-Hans Jerry Illikainen
+This was fixed in 415e3d3e90ce9e18727e8843ae343eda5a58fad6[2].
+
+Can you please assign a CVE for this issue?
+
+ [1] https://git.kernel.org/linus/712f4aad406bb1ed67f3f98d04c044191f0ff593 (v4.5-rc1)
+ [2] https://git.kernel.org/linus/415e3d3e90ce9e18727e8843ae343eda5a58fad6 (v4.5-rc4)
+
+Regards,
+Salvatore
