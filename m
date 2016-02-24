@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["585" "Friday" "25" "February" "2022" "00:18:19" "+0100" "=?UTF-8?B?SnVhbiBQYWJsbyBTYW50b3MgUm9kcsOtZ3Vleg==?=" "juanpablo@apache.org" nil "22" "[oss-security] [CVE-2022-24947] Apache JSPWiki CSRF Account Takeover" nil nil nil "2" nil nil (number mark "U       juanpablo@ap Feb 25   22/585   " thread-indent "\"[oss-security] [CVE-2022-24947] Apache JSPWiki CSRF Account Takeover\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2022-24947] Apache JSPWiki CSRF Account Takeover" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2082" "Tuesday" "23" "February" "2016" "22:38:48" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160224033848.CA26C72E028@smtpvbsrv1.mitre.org>" "47" "[oss-security] Re: CVE Request: Linux kernel USB hub invalid memory access in hub_activate()" nil nil nil "2" "2016022403:38:48" "[oss-security] Re: CVE Request: Linux kernel USB hub invalid memory access in hub_activate()" (number mark "U       cve-assign@m Feb 23   47/2082  " thread-indent "\"[oss-security] Re: CVE Request: Linux kernel USB hub invalid memory access in hub_activate()\"\n") "<66113B714EAB624BABB47E2DDD1ED3BF6DFC5D5B@IRSMSX106.ger.corp.intel.com>" ("<66113B714EAB624BABB47E2DDD1ED3BF6DFC5D5B@IRSMSX106.ger.corp.intel.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 31806 invoked by uid 550); 25 Feb 2022 11:57:19 -0000
+Received: (qmail 20208 invoked by uid 550); 24 Feb 2016 03:39:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,43 +12,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26497 invoked from network); 24 Feb 2022 23:18:44 -0000
-X-Gm-Message-State: AOAM533OO/q4cceWsgRSdkOJdnskLeGvXJJV5slY34caZd29IJF1c86J
-	RIZOvyFvQ+c3vVrkEjdPE7leOLNjnRRewcq2/1o=
-X-Google-Smtp-Source: ABdhPJzGRBjLjc9MfvbjSEDnA1stA95cIL+fzGNQ8j+jAy9fmX1gC0SW7ETaovYjp7BnfkgFiqOiuHvj7q6LpWVCBc4=
-X-Received: by 2002:a05:6638:f95:b0:314:58f9:5896 with SMTP id
- h21-20020a0566380f9500b0031458f95896mr3899009jal.228.1645744710127; Thu, 24
- Feb 2022 15:18:30 -0800 (PST)
-MIME-Version: 1.0
-From: =?UTF-8?Q?Juan_Pablo_Santos_Rodr=C3=ADguez?= <juanpablo@apache.org>
-Date: Fri, 25 Feb 2022 00:18:19 +0100
-X-Gmail-Original-Message-ID: <CAMufup4RPMw8n=oq0apLMBStng9gEm+3yVs6P15-fA394WM3tQ@mail.gmail.com>
-Message-ID: <CAMufup4RPMw8n=oq0apLMBStng9gEm+3yVs6P15-fA394WM3tQ@mail.gmail.com>
-To: announce@apache.org, user@jspwiki.apache.org, dev@jspwiki.apache.org, 
-	Paulos Yibelo <habte.yibelo@gmail.com>, Apache Security Team <security@apache.org>, 
-	oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] [CVE-2022-24947] Apache JSPWiki CSRF Account Takeover
+Received: (qmail 20190 invoked from network); 24 Feb 2016 03:39:00 -0000
+From: cve-assign@mitre.org
+To: alexandru.cornea@intel.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, costel.maxim@intel.com, stern@rowland.harvard.edu
+In-Reply-To: <66113B714EAB624BABB47E2DDD1ED3BF6DFC5D5B@IRSMSX106.ger.corp.intel.com>
+Message-Id: <20160224033848.CA26C72E028@smtpvbsrv1.mitre.org>
+Date: Tue, 23 Feb 2016 22:38:48 -0500 (EST)
+Subject: [oss-security] Re: CVE Request: Linux kernel USB hub invalid memory access in hub_activate()
 
-Severity
-Critical
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Vendor
-The Apache Software Foundation
+> Quickly plugging in and unplugging a USB hub can lead to a null
+> pointer dereference in kernel (local denial of service) or the USB
+> port to which the hub is connected becomes unusable, for kernel
+> versions 2.6.32 < 4.4. The issue occurs when the USB hub gets
+> disconnected before or while the routine for USB hub activation is
+> running - hub_activate() function.
+> 
+> Bug reported on the kernel USB mailing list:
+> http://www.spinics.net/lists/linux-usb/msg132311.html
+> 
+> Issue is fixed in kernel 4.4, by commit:
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=e50293ef9775c5f1cf3fcc093037dd6a8c5684ea
 
-Versions Affected
-Apache JSPWiki up to 2.11.1
+>> This patch fixes the problem by taking a reference to the usb_hub at
+>> the start of hub_activate() and releasing it at the end (when the work
+>> is finished), and by locking the hub interface while the work routine
+>> is running. It also adds a check at the start of the routine to see if
+>> the hub has already been disconnected, in which nothing should be
+>> done.
 
-Description
-Apache JSPWiki user preferences form is vulnerable to CSRF attacks,
-which can lead to account takeover.
+Use CVE-2015-8816.
 
-Mitigation
-Apache JSPWiki users should upgrade to 2.11.2 or later. Installations
->= 2.7.0 can also enable user management workflows' manual approval to
-mitigate the issue.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Credit
-This issue was discovered initially by Cristian Borlovan from Ounce
-Labs Security (ref. JSPWIKI-79), and later on and independently from
-this by Paulos Yibelo, from Octagon Networks.
+iQIcBAEBCAAGBQJWzSUDAAoJEL54rhJi8gl5mokQAJjfrH2LsZTYKCaO4JWi60x9
+l+CQdmkmlwGwr+jc+ijq6IuXroeNCJ9qKoGx+0u6Rl6XjRU9pTnga1NhIuRuO4SB
+8vUcoZa4upHCtPzgHDZ0xKjR890UlUzIzi5WCqbZsqR3DzU9KK62qAh54C5idoLw
+JBs3Jm6sf+LSRMwJs9nlSsTE+OlbgqaPOmzUcEs1vuxROffYLeh8FL4On3iEbL7G
+LPEO/yIkqOAltYAoBGlMHnFXcaeXr9UNRKTJ5KkxCV+rR68Nvu5/lQDdNB7xEdZn
+iL1Zg81+uJj6A7xHq21SRj4HtOEgsqGvSp1yxRmi6M1LeTEt95HL7Y1vc0NWKOza
+N4D9AeHneUz+/DwzBTBWFoSF3qrkcQU9BjN9VZes+DH4PFlSRERdT31gDmiEzmv3
+ohh3dc0AT0P7WL2mR3fA2RvtbC0B4I6BgKjSGoQ4em25dk6CJkamIZnZvkXKVAiK
+9TOWbOJcFX5YwBKhwMF8Sjrt8VXnyLXaP7k3R1QiLcvLZEnuIrp+9FTyoVghCdcx
+UaYeC6XQ10Fsj7DP06YYpTjAyzyY9T6I1sWYgYWUz/I1G2hUUvalDdkNqDaP0qgw
+15BnBjNFqywSDIf2ecsMviDbPfbauHrXWG72SgsvHTiCmlMu9PxPbDLvCGcsZbEA
+RYaRhm3fjTEoCcb/0Qb7
+=gSr5
+-----END PGP SIGNATURE-----
