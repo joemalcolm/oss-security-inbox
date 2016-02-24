@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["407" "Wednesday" "16" "December" "2015" "10:50:39" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1512161049320.11043@wniryva>" "10" "Re: [oss-security] Re: CVE request Qemu: net: vmxnet3: host memory leakage" nil nil nil "12" "2015121605:20:39" "[oss-security] Re: CVE request Qemu: net: vmxnet3: host memory leakage" (number mark "U       ppandit@redh Dec 16   10/407   " thread-indent "\"Re: [oss-security] Re: CVE request Qemu: net: vmxnet3: host memory leakage\"\n") "<20151215181339.56C3442E8EB@smtpvbsrv1.mitre.org>" ("<20151215181339.56C3442E8EB@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1556" "Tuesday" "23" "February" "2016" "22:33:50" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160224033350.2DD1872E033@smtpvbsrv1.mitre.org>" "37" "[oss-security] Re: CVE Request: Linux: unix: correctly track in-flight fds in sending process user_struct sockets" nil nil nil "2" "2016022403:33:50" "[oss-security] Re: CVE Request: Linux: unix: correctly track in-flight fds in sending process user_struct sockets" (number mark "U       cve-assign@m Feb 23   37/1556  " thread-indent "\"[oss-security] Re: CVE Request: Linux: unix: correctly track in-flight fds in sending process user_struct sockets\"\n") "<20160223055624.GA29670@lorien.valinor.li>" ("<20160223055624.GA29670@lorien.valinor.li>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23966 invoked by uid 550); 16 Dec 2015 05:20:58 -0000
+Received: (qmail 9861 invoked by uid 550); 24 Feb 2016 03:34:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,28 +12,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23947 invoked from network); 16 Dec 2015 05:20:57 -0000
-Date: Wed, 16 Dec 2015 10:50:39 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: cve-assign@mitre.org, luodalongde@gmail.com
-In-Reply-To: <20151215181339.56C3442E8EB@smtpvbsrv1.mitre.org>
-Message-ID: <alpine.LFD.2.20.1512161049320.11043@wniryva>
-References: <20151215181339.56C3442E8EB@smtpvbsrv1.mitre.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-Subject: Re: [oss-security] Re: CVE request Qemu: net: vmxnet3: host memory
- leakage
+Received: (qmail 9843 invoked from network); 24 Feb 2016 03:34:03 -0000
+From: cve-assign@mitre.org
+To: carnil@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20160223055624.GA29670@lorien.valinor.li>
+Message-Id: <20160224033350.2DD1872E033@smtpvbsrv1.mitre.org>
+Date: Tue, 23 Feb 2016 22:33:50 -0500 (EST)
+Subject: [oss-security] Re: CVE Request: Linux: unix: correctly track in-flight fds in sending process user_struct sockets
 
-+-- On Tue, 15 Dec 2015, cve-assign@mitre.org wrote --+
-| >> I've added a check in vmxnet3_deactivate_device() to avoid double free.
-| 
-| We think this may mean that the double free existed only in an early
-| version of the patch, and did not exist in any shipped QEMU code.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Yes, that's right. Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=415e3d3e90ce9e18727e8843ae343eda5a58fad6
+
+>> unix: correctly track in-flight fds in sending process user_struct
+
+>> The commit referenced in the Fixes tag incorrectly accounted the
+>> number of in-flight fds over a unix domain socket to the original
+>> opener of the file-descriptor. This allows another process to
+>> arbitrary deplete the original file-openers resource limit for the
+>> maximum of open files.
+
+Use CVE-2016-2550.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWzSRFAAoJEL54rhJi8gl5/bYP/0SCfyofv9HhFwaE/EYSj1/K
+y607Cnxoe/9PPbLn1MxUQNCIBKvLUNR+tZqV9GUc1MrmbbKfOmyNKx0CMIl32Ewn
+1S1OamdeEIQa+wZt2N2bhHFEBy7vUXl0+TGwbuSoqX/UsBcx9Rt7gCvgmb/FKvXV
+UcCJB9T8zWEgCb179u8EWCNQ0qpC3PL8JNvymYjsVsc8BBKO053ZfvezBPm9eehD
+J7vod7f4hzR3S1N74dwwGivNvGZj9XkX7QeRDG8lsT1hRbvtycMrR8Mxs5dnhrYT
+9VnMuuSvdgllRCy+i/cDn3a2GNciCbt3rmlAcsUK/R+a/1kJJ6VGEPlCpWeZyZsp
+jH7Pg4C9sy5j76RORH0uzp/ENvLtLHoGGY2kU8lAou7iEnQ1p35cXqpVNd2xOHas
+HxypzRSO1t6x78hR9ZtbNT9wp3NZiDFADwhOE0nku7rUCEdLIl/ra0gByFwY/lbz
+91Rea30jRVhp9mE21NBA2e7a3/QRU+xLIObuZDLu4HVEs9efh8GYmh0BveQsi9h7
+5B4wiVZSb5rvdq5gN2/l65TXLN/CMQr+s0o7CZKobj6kDMZw7oCjffuLg4jP7rmN
+QELmA4GOdF5lhirAZaFpqDwZy6uUYEahOlIxLO2fF9uaABOSf/kqQan3kcYdy8Mb
+Yjf9+hopybnTS3V71UmI
+=bAtP
+-----END PGP SIGNATURE-----
