@@ -1,60 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/22/6
-Message-Id: <20160122185407.D525752E002@smtpvbsrv1.mitre.org>
-Date: Fri, 22 Jan 2016 13:54:07 -0500 (EST)
-From: cve-assign@...re.org
-To: feld@...d.me
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: imlib2 may need some CVEs assigned
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/25/4
+Message-ID: <56CDF5E0.7080402@oracle.com>
+Date: Wed, 24 Feb 2016 10:26:40 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com
+CC: "X.Org Security Team" <xorg-security@...ts.x.org>
+Subject: Re: [Pixman] create_bits(): Cast the result of height * stride to size_t
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 02/24/16 04:10 AM, Gustavo Grieco wrote:
+>   Hi,
+>
+> There is an (old) integer overflow in create_bits in the pixman library.
+> Patch and details are available here:
+>
+> https://web.archive.org/web/20141227044037/http://lists.freedesktop.org/archives/pixman/2014-April/003244.html
 
-> imlib2 1.4.7's changelog seems to indicate fixes for issues that should
-> probably have some CVEs assigned
-> 
-> https://git.enlightenment.org/legacy/imlib2.git/tree/ChangeLog
+The quoted patch was applied to the master branch of the pixman git repo as:
 
-We feel that the best approach for now is to assign CVE IDs for the
-three cases in which the changelog suggests that a crash would occur.
+https://cgit.freedesktop.org/pixman/commit/?id=857e40f3d2bc2cfb714913e0cd7e6184cf69aca3
 
-> https://git.enlightenment.org/legacy/imlib2.git/commit/?h=v1.4.7&id=39641e74a560982fbf93f29bf96b37d27803cb56
-> GIF loader: Fix segv on images without colormap.
+and to the pixman-0.32 branch as:
 
-Use CVE-2014-9762.
+https://cgit.freedesktop.org/pixman/commit/?id=50d7b5fa8ea2ae119f35c20ab0dd0413d5103cbb
 
+It is included in pixman 0.32.6 and later releases.
 
-> https://git.enlightenment.org/legacy/imlib2.git/commit/?h=v1.4.7&id=c21beaf1780cf3ca291735ae7d58a3dde63277a2
-> Prevent division-by-zero crashes
-
-Use CVE-2014-9763.
-
-
-> https://git.enlightenment.org/legacy/imlib2.git/commit/?h=v1.4.7&id=1f9b0b32728803a1578e658cd0955df773e34f49
-> Fix segfault when opening input/queue/id:000007,src:000000,op:flip1,pos:51 with feh
-
-Use CVE-2014-9764.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWonoYAAoJEL54rhJi8gl5aFcQAJIhYKuGQbyH9RK1mzgqFx7n
-hs5b4vQgKmysd0O5+063aZdDh0JwDUn6HCXl9gYDrGyo5QusrqyTI/A1YxRNGwtP
-DXdUSbdQOoLrZoRKFngo0p5jiDO8nBjvNQCtXiI/ilh2uEopeUKfEFAJlpOf4JGA
-5TWpq9mh+2GSHRtRkQb/PeMLADz4z7ur6FmADcngWwZ1HAAYvRBkumhuNrgmwuYi
-gfNwZQnb66wTlvZ9Tqx4JIRDCWNlIo7ZYkbYOYi3zWJMX2l7eb+RK0jPsDc6SiCf
-0J9kl5JqNHQ0+hu/FnNf3nV8FCdiCqnP9AXkMHNqvF+KDO6iqaKDDlqd0H/F93sF
-Rp5dWO8NreG6pTG4KgfccuXx7veZAi6GJcezveoj9GHBNbWG0o7cLPusfHOGi/QQ
-iln+BakiJl7XOL9O1ngcS/UOlvKspi6EYTYB0bksgePOdKawqtvSPNW23fPqEhJ8
-FF1KLwK/c53wNbl3YWNEcZW5fN1CN1jeGuRvbKd3G1OGV59sHGD0Qt0c6DzIqTJP
-zuJaNdreCbnZiKn8SZF/+fNvHMYS+alIr1XSm1cdbAxmvqSwzIBre0gUNfUqOjWQ
-BcpiklApxD+eHv3n9dOrHD9PSYss3QvFDpofvYBUjUzYz/CGnf317Pm4hccIdnbR
-jX1Yexx+h29NgMWslfvG
-=bde7
------END PGP SIGNATURE-----
+-- 
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
