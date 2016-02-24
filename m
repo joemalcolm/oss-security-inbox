@@ -1,48 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/11/13
-Message-ID: <CANO=Ty3y2K8-_OSDEKnfx6k2Fv+PQBY+B7Y6hMMO4tWc=8UchQ@mail.gmail.com>
-Date: Fri, 11 Mar 2016 09:46:39 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>, "Boyle, Stephen V." <sboyle@...re.org>
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/3
+Message-Id: <20160224033848.CA26C72E028@smtpvbsrv1.mitre.org>
+Date: Tue, 23 Feb 2016 22:38:48 -0500 (EST)
+From: cve-assign@...re.org
+To: alexandru.cornea@...el.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, costel.maxim@...el.com, stern@...land.harvard.edu
+Subject: Re: CVE Request: Linux kernel USB hub invalid memory access in hub_activate()
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 11, 2016 at 9:01 AM, Carlos Alberto Lopez Perez <
-clopez@...lia.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> On 07/03/16 09:10, Markus Vervier wrote:
-> > It seems to me MITRE currently wants to improve CVE quality but does not
-> > have the resources
-> > to do a real and fair validation.
->
-> According to Wikipedia [1], Mitre has 7,613 employees and a revenue of
-> US$ 1.421 billion.
->
-> I fail to understand how a corporation of that size lacks resources for
-> improving anything they really want to improve.
->
-> ---
-> [1] https://en.wikipedia.org/wiki/Mitre_Corporation
->
->
-So I don't know the exact details but broadly speaking Mitre handle a lot
-of US government projects, and one of Mitre's mandates is cyber security,
-so under that mandate the us Gov (specifically the DHS as I understand it)
-has funded several projects, such as CVE. So CVE is something Mite
-administers, and is paid to do so through US Gov funding. It's not like CVE
-is some profitable product that Mitre sells. So Mitre has to work within
-the funding constraints of the government, it's not like they can trivially
-allocate 10 million a year to it internally.
+> Quickly plugging in and unplugging a USB hub can lead to a null
+> pointer dereference in kernel (local denial of service) or the USB
+> port to which the hub is connected becomes unusable, for kernel
+> versions 2.6.32 < 4.4. The issue occurs when the USB hub gets
+> disconnected before or while the routine for USB hub activation is
+> running - hub_activate() function.
+> 
+> Bug reported on the kernel USB mailing list:
+> http://www.spinics.net/lists/linux-usb/msg132311.html
+> 
+> Issue is fixed in kernel 4.4, by commit:
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=e50293ef9775c5f1cf3fcc093037dd6a8c5684ea
 
-CC'ing Stephen Boyle, if I said something completely wrong please, please
-correct me =).
+>> This patch fixes the problem by taking a reference to the usb_hub at
+>> the start of hub_activate() and releasing it at the end (when the work
+>> is finished), and by locking the hub interface while the work routine
+>> is running. It also adds a check at the start of the routine to see if
+>> the hub has already been disconnected, in which nothing should be
+>> done.
 
+Use CVE-2015-8816.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+iQIcBAEBCAAGBQJWzSUDAAoJEL54rhJi8gl5mokQAJjfrH2LsZTYKCaO4JWi60x9
+l+CQdmkmlwGwr+jc+ijq6IuXroeNCJ9qKoGx+0u6Rl6XjRU9pTnga1NhIuRuO4SB
+8vUcoZa4upHCtPzgHDZ0xKjR890UlUzIzi5WCqbZsqR3DzU9KK62qAh54C5idoLw
+JBs3Jm6sf+LSRMwJs9nlSsTE+OlbgqaPOmzUcEs1vuxROffYLeh8FL4On3iEbL7G
+LPEO/yIkqOAltYAoBGlMHnFXcaeXr9UNRKTJ5KkxCV+rR68Nvu5/lQDdNB7xEdZn
+iL1Zg81+uJj6A7xHq21SRj4HtOEgsqGvSp1yxRmi6M1LeTEt95HL7Y1vc0NWKOza
+N4D9AeHneUz+/DwzBTBWFoSF3qrkcQU9BjN9VZes+DH4PFlSRERdT31gDmiEzmv3
+ohh3dc0AT0P7WL2mR3fA2RvtbC0B4I6BgKjSGoQ4em25dk6CJkamIZnZvkXKVAiK
+9TOWbOJcFX5YwBKhwMF8Sjrt8VXnyLXaP7k3R1QiLcvLZEnuIrp+9FTyoVghCdcx
+UaYeC6XQ10Fsj7DP06YYpTjAyzyY9T6I1sWYgYWUz/I1G2hUUvalDdkNqDaP0qgw
+15BnBjNFqywSDIf2ecsMviDbPfbauHrXWG72SgsvHTiCmlMu9PxPbDLvCGcsZbEA
+RYaRhm3fjTEoCcb/0Qb7
+=gSr5
+-----END PGP SIGNATURE-----
