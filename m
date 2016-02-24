@@ -1,31 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/03/8
-Message-ID: <20160303113530.07c90b61@pc1>
-Date: Thu, 3 Mar 2016 11:35:30 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/13
+Message-ID: <CACn5sdRX-tyOuVDXfTeFXfen6hq54e_zMVhsd5_TYW1XsHHk+w@mail.gmail.com>
+Date: Wed, 24 Feb 2016 09:10:37 -0300
+From: Gustavo Grieco <gustavo.grieco@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: According to www.virustotal.com, lists.debian.org are hosting attachment .DOC virus
+Subject: [Pixman] create_bits(): Cast the result of height * stride to size_t
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 3 Mar 2016 10:44:22 +0200
-Georgi Guninski <guninski@...inski.com> wrote:
+ Hi,
 
-> According to www.virustotal.com, lists.debian.org 
-> are hosting attachment .DOC virus.
+There is an (old) integer overflow in create_bits in the pixman library.
+Patch and details are available here:
 
-This is a public mailing list archive. Of course it is possible that
-someone send a mail with a virus attached to a public list. There is
-nothing Debian can do against that.
+https://web.archive.org/web/20141227044037/http://lists.freedesktop.org/archives/pixman/2014-April/003244.html
 
-Looks like they have already removed the file.
+Please, assign a CVE to this issue.
 
-But a Word macro won't pose any risk to Debian users :-)
+Regards,
+Gustavo.
 
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
