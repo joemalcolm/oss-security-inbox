@@ -1,51 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/24/2
-Message-Id: <6565BB80-B75B-4CE3-819D-84CCE79F0CA3@gmail.com>
-Date: Fri, 24 Jun 2016 08:54:08 -0500
-From: Brandon Perry <bperry.volatile@...il.com>
-To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
-Subject: libical 0.47 SEGV on unknown address
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/12
+Message-ID: <56CD77F0.6060607@treenet.co.nz>
+Date: Wed, 24 Feb 2016 22:29:20 +1300
+From: Amos Jeffries <squid3@...enet.co.nz>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: CVE request: Squid HTTP Caching Proxy multiple denial of service issues
 Content-Type: text/plain; charset=utf-8
 
-Hello lists
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Attached is a test case for causing a crash in libical 0.47 (shipped with Thunderbird) and this was also tested against 1.0 (various versions shipped with various email clients).
+Hi,
 
+ Several remotely triggerable denial of service issues have been found
+in Squid proxy.
 
-=================================================================
-==24662==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000008 (pc 0x0000004fbb80 bp 0x7ffd68d966f0 sp 0x7ffd68d96520 T0)
-    #0 0x4fbb7f in icalproperty_new_clone (/root/tmp/new_parse/parse_string047_asan+0x4fbb7f)
-    #1 0x4f44e6 in icalparser_add_line (/root/tmp/new_parse/parse_string047_asan+0x4f44e6)
-    #2 0x4efabe in icalparser_parse (/root/tmp/new_parse/parse_string047_asan+0x4efabe)
-    #3 0x4f9c1f in icalparser_parse_string (/root/tmp/new_parse/parse_string047_asan+0x4f9c1f)
-    #4 0x4eb7ef in main (/root/tmp/new_parse/parse_string047_asan+0x4eb7ef)
-    #5 0x7fb657683a3f in __libc_start_main /build/glibc-ryFjv0/glibc-2.21/csu/libc-start.c:289
-    #6 0x444ae8 in _start (/root/tmp/new_parse/parse_string047_asan+0x444ae8)
-
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV ??:0 icalproperty_new_clone
-==24662==ABORTING
+Our Advisory is at:
+<http://www.squid-cache.org/Advisories/SQUID-2016_2.txt>
 
 
+First issue;
+ the proxy contains a String object class with 64KB content limits.
+Some code paths do not bounds check before appending to these String
+and overflow leads to an assertion which terminates all client
+transactions using the proxy, including those unrelated to the limit
+being exceeded.
 
-I am posting this to Full Disclosure/OSS instead of reporting it because I have opened a handful of libical bugs in the Mozilla bug tracker, alerted security@...illa.org <mailto:security@...illa.org>, and worked to show how and where to reproduce the bugs in Thunderbird, but Mozilla hasn’t shown any care at all about the bugs. Perhaps if I give a sample to the community of the bugs in the bug reports, Mozilla will take the bug reports more seriously. This bug attached had not been reported yet.
+A PoC has already been published for one attack vector using HTTP
+"Vary" response header. When the Vary pattern presented by a server
+expands to more than 64KB the DoS is triggered. For example:
+ Vary: Cookie,Cookie,Cookie,Cookie,...
+However, there are currently 4 known distinct vectors (types of
+remotely provided input) with varying degrees of difficulty to trigger
+the assertion.
 
-While list members likely will not have access to these bugs, I am listing them here in case someone on the list can make something happen.
+Patch URLs that workaround 3 of those vectors (though not fully solve)
+are:
+<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13991.p
+atch>
+<http://www.squid-cache.org/Versions/v4/changesets/squid-4-14552.patch>
 
-https://bugzilla.mozilla.org/show_bug.cgi?id=1275400 <https://bugzilla.mozilla.org/show_bug.cgi?id=1275400> (Opened a month ago. After Tyson reproed the bug in libical, no responses).
+This patch fixes the other related variant of the basic problem.
+Though this instance is not triggerable from outside a controlled CDN
+environment:
+<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13993.p
+atch>
+<http://www.squid-cache.org/Versions/v4/changesets/squid-4-14549.patch>
 
-The following three bugs are distinct heap over-reads in libical (tested against libical 0.47 and 1.0) which have had little to no reception by Mozilla.
 
-https://bugzilla.mozilla.org/show_bug.cgi?id=1280832 <https://bugzilla.mozilla.org/show_bug.cgi?id=1280832>
-https://bugzilla.mozilla.org/show_bug.cgi?id=1281041 <https://bugzilla.mozilla.org/show_bug.cgi?id=1281041>
-https://bugzilla.mozilla.org/show_bug.cgi?id=1281043 <https://bugzilla.mozilla.org/show_bug.cgi?id=1281043>
 
-My roommate mentioned Thunderbird being a second-class citizen in the Mozilla world, so if this is the case, this should be made explicit in regards to bug bounty expectations.
+Secondary issue;
 
-Content of type "text/html" skipped
+Error handling for malformed HTTP responses can lead to a second
+assertion with the same effects as the first issue. It is not easily
+triggered in Squid-3 or normally in Squid-4.
 
-Download attachment "segv.ics.bug" of type "application/octet-stream" (8183 bytes)
+However fixing the String issue makes it become easily triggerable in
+Squid-4, and we do have a history of the assertion itself being
+reported as occuring already but been unable to identify the vectors
+code path to replicate it yet. So believe it can be achieved
+independent of the String issues, even if we are unable so far to
+identify how.
 
-Content of type "text/html" skipped
+Patch URLs for this are:
+<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13990.p
+atch>
+<http://www.squid-cache.org/Versions/v4/changesets/squid-4-14548.patch>
 
-Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
+
+
+Amos Jeffries
+Squid Software Foundation
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (MingW32)
+
+iQIcBAEBAgAGBQJWzXfvAAoJEGvSOzfXE+nLrlYQAKgzaFQYieSDXeG6a3eqqXF0
+fBsk8OBWUq/VRvKrXETHVNjR0YKvufPOnUVSlwXmqyXyx7aQsKkMNFUlLvF+6jnW
+B4FKyjxAYhM86PLHFroqB5/B0M9M9snc4OMR/NEKqtxkSw9Dhec4TZe6K6OZAaQR
+Y7nKfyoTnMPJKBYyHPnIc8XPD2+7svRnjdAuAYrBBqUahu6h1+yLeBC6c3+nCjnG
+g2r9e7GkEjro7oYrdayPcgazO4/mQL7dz8Q8fW/KWvhfTHfpoxUouwSvInORs1eD
+FrbtS8VPgm0uVPA6iDqM+gNyvP1zp9dbhTNYsonPngEFDvm1BG5myZ7DpCusu1qM
+l3BfqPzNe6yBx5QQkK+dhX4o2+8heY5BgogAynJ+Hffsq0AsgFWFWb3+NyU2ZBqb
+QpRZD5L8L4GCkL5+22LcCgnn2PpDDHssF98ytCVjSwV3JDd/AcxzE+EviW+KvVU7
+3LlAXPDSD+ZTcSfQCZA9LzT1oO7ulx/gnrLrFegD6pcgiOQp4EUiRAZC8ejjHDbY
+CGV5yKlmIlGx4uK8g/t2WdXtPynMPVcydpB6EvZKyDyTjpBYbIs2sbR8hzz1xN/A
+nHCEYHibq0qHZypiUANJHSKv2emzgPZvfDe6A38+5xHbe5vDs4SpmJS8lvaU0bA0
+14b3HRYcnS4i8Tun7Jss
+=mNRl
+-----END PGP SIGNATURE-----
