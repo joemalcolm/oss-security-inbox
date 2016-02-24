@@ -1,37 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/21/5
-Message-ID: <20160421172959.GA8640@openwall.com>
-Date: Thu, 21 Apr 2016 20:30:00 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/10
+Message-ID: <20160224070111.GA8044@perpetual.pseudorandom.co.uk>
+Date: Wed, 24 Feb 2016 07:01:11 +0000
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: list mail bounces; libtiff
+Subject: Re: Access to /dev/pts devices via pt_chown and user namespaces
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, 24 Feb 2016 at 05:43:04 +0000, halfdog wrote:
+> Dmitry V. Levin wrote:
+> > Just for the record, pt_chown is not enabled by default in upstream
+> > glibc starting with glibc-2.18, one has to specify
+> > --enable-pt_chown configure option explicitly to build pt_chown.
+> 
+> Thanks for that information. So for pt_chown, this could hopefully be
+> just an Ubuntu issue.
 
-About 10 of you have e-mailed the list admins about "ezmlm warning"
-messages that some of you received today, so I'll reply to all in here
-(expecting that more of you are wondering, but haven't e-mailed us).
+And Debian 8 (but not the future Debian 9, at least on Linux kernels), and
+probably other distributions where backward compat was a concern.
 
-Yes, there was a mail delivery problem from oss-security on April 8,
-resolved on April 9.
+<https://bugs.debian.org/717544> has some interesting background. The
+Debian and Ubuntu glibc maintainers tried turning off pt_chown in 2014,
+but had to turn it back on because it caused too many regressions: in
+particular "mount -t devpts devpts-foo chroot-foo/dev/pts" apparently
+alters the mount options for the "real" /dev/pts, not just the one being
+mounted in the chroot (presumably losing the noexec,nosuid,gid=5 and
+mode=620 or mode=600 options that are expected in Debian). I don't know
+whether the default mount options were subsequently altered in util-linux
+and/or the kernel as suggested on that bug, or whether manually mounting
+devpts is just not going to be a supported action in Debian 9.
 
-Several of the messages were initially queued up, and when the problem
-was resolved and they were finally attempted to be delivered, they could
-not be delivered to some of you, as well as to some of the third-party
-archives, presumably because of those servers' use of greylisting (or
-any other intermittent errors).  Crucially, there was not a second
-delivery attempt because of those messages' age in the queue.  Indeed,
-this is incompatible with greylisting, and in hindsight we should have
-temporarily increased the allowable queue age before resolving the
-initial problem.
-
-The official archive has the full set of messages posted on April 8:
-
-http://www.openwall.com/lists/oss-security/2016/04/08/
-
-Specifically, the multiple notifications about different libtiff
-vulnerabilities were affected, so if libtiff is relevant to you please
-review the above archive page.
-
-Alexander
+    S
