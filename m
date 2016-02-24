@@ -1,58 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/2
-Message-ID: <cf096ccb-33de-6288-f5fc-cd62afcfeeac@gmail.com>
-Date: Thu, 17 Nov 2016 19:54:20 -0500
-From: Jacobo Avariento <spinfoo.vuln@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: john.haxby@...cle.com, osssecurity@...edaemon.net
-Subject: Re: CVE-2016-4484: - Cryptsetup Initrd root Shell
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/15
+Message-Id: <20160224155524.A145E72E03D@smtpvbsrv1.mitre.org>
+Date: Wed, 24 Feb 2016 10:55:24 -0500 (EST)
+From: cve-assign@...re.org
+To: gustavo.grieco@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: [Pixman] create_bits(): Cast the result of height * stride to size_t
 Content-Type: text/plain; charset=utf-8
 
-Good debate.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Actually when using full disk encryption, to lock the BIOS and GRUB must
-be mandatory, otherwise you are protecting your confidentiality but not
-your integrity. Even with a password in GRUB with an unprotected BIOS
-you can also boot from a USB device and access encrypted partitions,
-delete them, etc.
+> There is an (old) integer overflow in create_bits in the pixman library.
 
-Just to mention another method complimentary to the "rd.shell=0" a
-similar behaviour to this "flaw" can be achieved using at the boot
-sequence "rd.break=pre-udev", this also gives you a root shell with
-access to the hard disk.
+> https://web.archive.org/web/20141227044037/http://lists.freedesktop.org/archives/pixman/2014-April/003244.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=972647
 
-Regards
+Use CVE-2014-9766.
 
 
-On 11/17/2016 02:15 PM, John Haxby wrote:
-> On 17/11/16 17:50, Jason Cooper wrote:
->> Hi John,
->>
->> On Thu, Nov 17, 2016 at 04:56:06PM +0000, John Haxby wrote:
->>>> On 17/11/16 16:39, Jason Cooper wrote:
->>>>>> However, the golden rule still applies.  Physical access trumps all
->>>>>> defensive measures.  The absolute best you can do is detect that
->>>>>> physical access occurred.  From there, you're hoping there are no
->>>>>> hardware implants or other devices outside the scope of software
->>>>>> security.
->>>> I agree.  However, it ought be to be harder than leaning on the enter
->>>> key to break into a system.  You lock your doors even though it doesn't
->>>> stop a determined burglar?
->> Yes, as I said before, non-deterministic failure modes are bad.  This
->> CVE is a bug in the initrd script and needs to be fixed.  What I
->> disagree with, and still do, is the "sky is falling!" nature of the
->> alert.
-> Yup.  I agree there, but that's down to the publicity its received.  We
-> can't do much but grin and bear that.   Red Hat have given this a CVSS2
-> score of 7.2 which reflects the _potential_ severity but marked it as
-> "moderate" which reflects the actual effect.   It's most serious for
-> people like me who have an encrypted root but no grub password (and no
-> rd.shell=0) but, no, the sky is not falling.
->
-> jch
->
+003244.html has this linked discussion, which is not part of the
+definition of the CVE-2014-9766 ID:
 
--- 
-https://github.com/spinfoo
-https://pa.linkedin.com/in/jacoboavariento
+  https://bugs.freedesktop.org/show_bug.cgi?id=69014
+  https://lists.freedesktop.org/archives/pixman/2013-September/002915.html
+  https://bugs.freedesktop.org/attachment.cgi?id=85448
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWzdF9AAoJEL54rhJi8gl5BlIQALu4bdEqoZE/fTlEJSOXQj2s
+4ZWZYb120yISoKjK3kHfGfDtJMi/JeEkXkMTkQjulreq/wYHBHnBeGBxJBw1laae
+7JtS8ULmmR8+WBd/X1ZTmfZ4VhwYcJn0utXaN7su0QK6a3YfG7DasL1Paywf1z6E
+eDMXRJgDE2ml3sHTyodAFvfHbYcpMK7EQao7HJA7o49Vr0NcNJVmW+pYqu0Hq0N+
+j+WilQ4eYiw1I6GgXxiQQlOKFKdnKmflOJXEJp8qMr8iokP9OX5ewN7d/007uZNA
+3gCzt7tpsBACzjx/01exaUdKOFDxHB+l1vglHiC2aFlLN46U637DiJpL0OMN+soF
+AYV0vRGIfxKZOSpSk4398gbX10kv2ew9uOG9UbzkRqneZmdXWqZXPMJ2eH/H2doV
+hdNpt7B+6mgKQpYZZI3OrMilj5ZXfGNc4R2RSt0ViTfabn6D5gYynTrE+Jh37mgZ
+phfBvReUZIP108iAgdxOOi2pLRuUYU4ayeDmQkhNQPaokoAyxkOdy7eorJC8yRD5
+HJ/sL6zKuLJkfaBrsr5zbOe3DD2VqtFQ/mGp0kgAjcKpgdvFyR5IG3n0JiBS+p8c
+Q/CC7tb/gFLJYR9fReUmeJJ4xIY6dzUaXRaxocWuSts8sOgwwyUEiIdDdEK3vxu2
+Gew7VEXZN1T9nBktQhgY
+=IpY0
+-----END PGP SIGNATURE-----
