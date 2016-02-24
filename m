@@ -1,68 +1,161 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/20/4
-Message-ID: <alpine.GSO.2.20.1605200827380.7756@freddy.simplesystems.org>
-Date: Fri, 20 May 2016 08:52:31 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/4
+Message-ID: <685fc01b-1728-6c0c-5193-a7fd0a73cfe3@halfdog.net>
+Date: Wed, 24 Feb 2016 05:27:38 +0000
+From: halfdog <me@...fdog.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
+Subject: Re: Access to /dev/pts devices via pt_chown and user namespaces
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 19 May 2016, John Lightsey wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Solar Designer wrote:
+>> With Ubuntu Wily and earlier, /usr/lib/pt_chown was used to
+>> change ownership of slave pts devices in /dev/pts to the same uid
+>> holding the master file descriptor for the slave.
+> 
+> I think pt_chown is only needed for legacy BSD pty's, and no
+> longer needed for Unix 98 pty's that Linux systems use these days.
+> Perhaps it should be dropped from upstream glibc by now.  e.g. on
+> Owl we haven't been installing it SUID ever (as it was already
+> legacy 15 years ago), and we haven't been packaging it at all since
+> 2005.
+
+That is nice, that this was done already for OWL. Is there a checklist
+or perhaps even a tool, that can be run, to detect, which weak
+programs, compile time settings or runtime settings might be applied
+to a given Linux setup?
+
+Vulnerability scanners do that, is there some kind of consensus, which
+scanner implementation might already suit our needs best and hence
+could be filled with test scripts?
+
+With such procedure in place, I would find it a little bit
+non-cooperative, if just one distribution fixes a weakness, but does
+not tell others. This should put soft pressure on all of us to have
+this list up to date. In my opinion, this procedure should also
+include, that each distribution just with the slightest aim to provide
+secure Linux installation should run this tool and give single line
+risk argument for each of the points found (e.g. pt_chown needed for
+legacy XXX-server - then community would know reason and perhaps where
+to start fixing). If distros do not want to do run the analysis and
+annotate it, those reports should be collected to build some kind of
+distro-ranking where community will anotate.
+
+So
+a) should we put such a framework (tool) and procedure in place?
+b) is there already both in place?
+c) if not, which framework would suite best?
+d) already a procedure in place?
+
+>> In my opinion, this security bug should be fixed two-fold: At
+>> first, kernel should prevent the TIOCGPTN ioctl when invoked
+>> called by a process within one namespace but acting on a
+>> filedescriptor from a devpts instance mounted in a different
+>> namespace. Additionally pt_chown should check via readlink and
+>> stat, that the passed file descriptor really was from the
+>> /dev/ptmx or /dev/pts/ptmx device present in the same namespace
+>> as the /dev/pts/[num] device is residing. This of course is only
+>> relevant if pt_chown is going to survive on recent namespace
+>> aware systems.
+> 
+> I think the primary fixes should be different: disable unprivileged
+> user namespaces by default, and drop pt_chown.
+
+I did not know, that pt_chown is completely obsolete by itself. So
+pt_chown should be dead. About unprivileged userns: That is also why I
+proposed deactivation on distro-list. I just do not get it, why there
+is so much resistance to make it configurable.
+
+>> Timeline: =========
+>> 
+>> 20151220: Discovery 20151227: Report at Ubuntu Launchpad1529486 
+>> 20160104: Report to distros list 20160122: Patch to disable
+>> unprivileged userns due to this and other issues LKML 20160222:
+>> CRD and publication
+> 
+> Ouch.  As you're aware, everything you report to distros must be
+> made public in at most 2 weeks.  Unfortunately, I didn't keep track
+> of this, and I don't recall if your report to distros included the
+> detail you're disclosing just today.  I thought you had already
+> disclosed whatever was on distros here:
+> 
+> http://www.openwall.com/lists/oss-security/2016/01/19/17
+> 
+> Now I see you were asking for advice on further handling of these
+> issues in there, and got no replies. :-(
+> 
+> I think going forward, you shouldn't make any use of the distros
+> list, and should post to oss-security right away.
+
+OK, I will do that, of course leaving out the exploit code for 2
+weeks, so that this disclosure procedure has similar timing for
+exploit availability compared to sharing via distro-list.
+
+>> References: ===========
+>> 
+>> [0] 
+>> http://www.halfdog.net/Security/2015/PtChownArbitraryPtsAccessViaUserNamespace/
+>>
+>> 
+[1]
+>> http://www.halfdog.net/Security/2016/OverlayfsOverFusePrivilegeEscalation/
 >
-> This is the list I'm working off of. For RedHat and Debian, I only
-> checked the ImageMagick updates.
->
-> CVE-2016-3718 - SSRF via HTTP and FTP coders
-> ImageMagick: Not fixed
-> GraphicsMagick: Not fixed
-> RedHat: Fixed
-> Debian: Fixed
+>> 
+> In [0], "LKML" points to:
+> 
+> https://lkml.org/lkml/2016/1/22/7
+> 
+> Unfortunately, that archive of LKML is currently broken (doesn't
+> display the actual message to me), so I don't know what exactly
+> this was.
 
-The above topic is worthy of discussion.  What is a security issue in 
-some contexts is normal and necessary in others.
+Strange, did not notice, that they are not serving.
 
-> No CVE assigned - Heap overflow in PICT parser
-> ImageMagick: Fixed
-> GraphicsMagick: ??
-> RedHat: Not fixed
-> Debian: Not fixed
-> Reference: http://www.openwall.com/lists/oss-security/2016/05/11/3
+> I did, however, watch the discussion CC'ed to kernel-hardening,
+> where Kees Cook proposed "sysctl: allow CLONE_NEWUSER to be
+> disabled":
 
-The GraphicsMagick development code is not vulnerable to this one. 
-GraphicsMagick may have been vulnerable in the past.
+[This is exactly the same discussion.]
 
-> No CVE assigned - Out of bounds read in the PSD parser
-> ImageMagick: Fixed
-> GraphicsMagick: ??
-> RedHat: Not fixed
-> Debian: Not fixed
-> Reference: http://www.openwall.com/lists/oss-security/2016/05/11/3
+> http://www.openwall.com/lists/kernel-hardening/2016/01/22/19 
+> http://www.openwall.com/lists/kernel-hardening/2016/01/22/20 
+> http://www.openwall.com/lists/kernel-hardening/2016/01/22/21
+> 
+> Unfortunately, this was NAK'ed by the maintainer, Eric W.
+> Biederman:
+> 
+> http://www.openwall.com/lists/kernel-hardening/2016/01/23/4 
+> http://www.openwall.com/lists/kernel-hardening/2016/01/25/11 
+> http://www.openwall.com/lists/kernel-hardening/2016/01/26/7
+> 
+> Eric suggested "a per user limit on the number of user namespaces
+> users may create".  There was some further discussion after that
+> point, but no clear outcome.  Last message posted on January 28.
 
-The GraphicsMagick development code is not vulnerable to this one.
-GraphicsMagick may have been vulnerable in the past.
+Yes, I read that. But why? Does Linux kernel team fear to annoy some
+developers, that put their own blood into getting unprivileged USERNS
+working, by now again disabling part of their work by default?
 
-> Are there other formats that are unsafe and should be removed using the
-> policy configuration files?
+It just seems to me, that the discussion is not on the technical
+matter, how to introduce an effective switch quickly. Otherwise some
+primitive scheme with forward compatibility should be chosen right
+immediately. (e.g. "off" for complete disable "on" for complete enable
+and all other variants, e.g. userlist, maxlevels, ... later on). Slow
+action might be seen by some folks as irresponsible regarding
+security, hence harming the idea of Linux as free and secure operating
+system.
 
-In interest of full-disclosure, the GraphicsMagick project has fixed 
-approximately 45 CVE-worthy issues since the last release, not 
-including issues covered by CVE-2016-2317 and CVE-2016-2318 (which are 
-fixed in the development code).  Many of the test files are published 
-in full open view on bug trackers or other places.
+hd
 
-In a similar time-frame, the ImageMagick project has been provided a 
-great many files (likely more than 100) which crash the software and 
-many of these files are published in full open view on bug trackers or 
-other places.  Commits and other records show that problems are being 
-fixed.
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-When fixed versions are released, OS distributions which continue to 
-provide 3-year old releases are exposing users to releases with 
-perhaps hundreds of fixed vulnerabilities which can be triggered using 
-publically available files.
-
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+iEYEARECAAYFAlbNPz4ACgkQxFmThv7tq+63AQCfTpcIQC6eNCQprZ+BJrTVnV28
++PMAnRtc87eyPU8pHy58lF2TJIiQJH/2
+=0+3d
+-----END PGP SIGNATURE-----
