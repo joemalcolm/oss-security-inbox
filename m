@@ -1,30 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/27/3
-Message-Id: <6EB473C2-2849-4E3E-99B0-BAF01AFD8718@beckweb.net>
-Date: Wed, 27 Jul 2016 14:35:03 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/6
+Message-ID: <56CD45EE.1000901@oracle.com>
+Date: Tue, 23 Feb 2016 21:55:58 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Jenkins plugin 'Cucumber Reports' 1.3.0 to 2.5.1 disabled XSS protection mechanism
+Subject: Re: Access to /dev/pts devices via pt_chown and user namespaces
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 02/23/16 09:27 PM, halfdog wrote:
+> That is nice, that this was done already for OWL. Is there a checklist
+> or perhaps even a tool, that can be run, to detect, which weak
+> programs, compile time settings or runtime settings might be applied
+> to a given Linux setup?
 
-Please assign a CVE to this issue:
+Something like OpenSCAP perhaps?
 
-Cucumber Reports Plugin disables Content-Security-Policy for archived and workspace files
+https://www.open-scap.org/
 
-Jenkins 1.641 and 1.625.3 introduced Content-Security-Policy HTTP headers as protection against Cross-Site Scripting attacks using workspace files and archived artifacts served using DirectoryBrowserSupport (SECURITY-95). The Cucumber Reports Plugin disabled this XSS protection until Jenkins was restarted whenever a Cucumber Report was viewed by any user to work around the Content-Security-Policy limitations.
-
-Affected versions
-Cucumber Reports Plugin 1.3.0 to 2.5.1 (inclusive).
-
-Fix
-Users of Cucumber Reports Plugin should update it to version 2.6.0 or newer.
-
-Advisory:
-https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2016-07-27
-
-Thanks!
-
-Daniel
-
+-- 
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
