@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["593" "Monday" "16" "December" "2019" "11:33:02" "+0530" "P J P" "ppandit@redhat.com" nil "20" nil nil nil nil "12" nil nil (number mark "U       ppandit@redh Dec 16   20/593   " thread-indent "\"[oss-security] CVE-2019-19332 Kernel: kvm: OOB memory write via kvm_dev_ioctl_get_cpuid\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-19332 Kernel: kvm: OOB memory write via kvm_dev_ioctl_get_cpuid" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["865" "Wednesday" "24" "February" "2016" "14:08:27" "-0500" "=?UTF-8?B?RmVybmFuZG8gTXXDsW96?=" "fernando@null-life.com" "<CAEr-gPHk8Q5dSh1rOmKiGEQ97X=JrAypPcVvv+NrzReuOHMoyg@mail.gmail.com>" "26" "[oss-security] CVE Request: bash-completion: dequote command injection" "^Date:" nil nil "2" "2016022419:08:27" "[oss-security] CVE Request: bash-completion: dequote command injection" (number mark "        fernando@nul Feb 24   26/865   " thread-indent "\"[oss-security] CVE Request: bash-completion: dequote command injection\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30120 invoked by uid 550); 16 Dec 2019 06:03:24 -0000
+Received: (qmail 31791 invoked by uid 550); 24 Feb 2016 19:08:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30102 invoked from network); 16 Dec 2019 06:03:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1576476191;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=8imKFiXD8O5tcpl8okoCnOyr53X7lcWGQkPTn7Rrotc=;
-	b=Woe2aQ6B1KYKEtfQHmT575Okwln9ZZTCGLJb4vSoB1vbd3VLtEwscxK4RxN4TcDjFhWVYs
-	y3/nXLJiGTJ77ZooZALWOy5qakIhpk/gGx6iPBazZwH6y4jASb/dcy5ttleyUQaXHJHDXL
-	rYG5Okf14RVCeNRbtY4SnOpH0d8MPzE=
-Date: Mon, 16 Dec 2019 11:33:02 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@kaapi
-To: oss security list <oss-security@lists.openwall.com>
-Message-ID: <nycvar.YSQ.7.76.1912161126040.314293@xnncv>
+Received: (qmail 31767 invoked from network); 24 Feb 2016 19:08:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=null-life-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=j3qMgbqoJj2+wM/lTl51B9fFeM64RHTnayJAGlpGzUY=;
+        b=SH0YxIa3mqUPlqMd8DA6SR4ZjG3v3VKjVD0YSA7vXSWWTvXn3MVEFe7+34IqqBR8Br
+         lwzTvWnVBGvd1vBdHecBU29zb3JSJUONqsFXFfuXD4wgA2xvzuweR66npo9vOOx8JXnQ
+         zdowAeCHE0axnf7iYzM1566x2UPqpVUERlU8sJk0v4kAgsRAqMokOha4rbuNcoRRjB6O
+         XWBqBxTWeTwRykwW8lxbzbp/g+W5F8FEz6BmhYeOITHvzzN96y01cd7pLuBcvJtAO5MX
+         C7hp/6j3EibWaLKeEuQII7HRBd1b41mN2MZSb8PnqU8hR6MvFJX+vMfkxT18Ncl0bUV/
+         X7jQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=j3qMgbqoJj2+wM/lTl51B9fFeM64RHTnayJAGlpGzUY=;
+        b=X+7/yFRknlDFFKAp2uZM0isHiotsZWlLQO/64qqyqcMp5iRSBUWFwjpG8SqrY2FPKk
+         +jCXrDIE6/SJV6q8nt/qnbDW3yN1Eyu2pIhpdEUMJML8VME9m2pWUYEkbEOFV7Rt75c9
+         cSz+LdB+ufprkBxbF1gAssdxxDl+sVQ4I/EFtgZM3lr5AzQusFD5C8Rm4vxA6Tn6ASKR
+         ZpA9aAWRq4aF1FMjrdiqq5e8x0ipl40KGov4i+pXS43V6uPeE59Xzq3HyWF0oJRqbQj1
+         2tNercsEFjnAa2L17qojrisq+Q8nS41V8ZUn47YNVepTYHC3S//ovjFsVkTVmZAQxhAE
+         WdEQ==
+X-Gm-Message-State: AG10YOSBw1LshZ2+cHakjHrd9nZo94pq8iCpc3w2BjC02H2nr/GItQlg8Ka76o69LlpaBONtO1JLnUjxq5D0kQ==
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
-X-MC-Unique: 4xeuraWAMeK0qrb1SNl09g-1
-X-Mimecast-Spam-Score: 0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Received: by 10.31.12.3 with SMTP id 3mr30540106vkm.28.1456340907660; Wed,
+ 24 Feb 2016 11:08:27 -0800 (PST)
+X-Originating-IP: [190.171.87.217]
+Message-ID: <CAEr-gPHk8Q5dSh1rOmKiGEQ97X=JrAypPcVvv+NrzReuOHMoyg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] CVE-2019-19332 Kernel: kvm: OOB memory write via
- kvm_dev_ioctl_get_cpuid
+Date: Wed, 24 Feb 2016 14:08:27 -0500
+From: =?UTF-8?Q?Fernando_Mu=C3=B1oz?= <fernando@null-life.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: bash-completion: dequote command injection
+To: oss-security@lists.openwall.com
 
-   Hello,
+Marcelo Echeverria and Fernando Mu=C3=B1oz discovered that the dequote
+function included in bash-completion allows to execute arbitrary
+commands since it uses the eval function to call printf and perform
+the actual dequoting. bash-completion is included on Debian, Ubuntu
+OpenSuse [1] and probably other distros.
 
-An out-of-bounds memory write issue was found in the way Linux kernel's KVM=
-=20
-hypervisor handled 'KVM_GET_EMULATED_CPUID' ioctl(2) request to get cpuid=20
-features emulated by the KVM hypervisor. A user/process able to access=20
-'/dev/kvm' device could use this flaw to crash the system resulting in DoS=
-=20
-issue.
+# type dequote
+dequote is a function
+dequote()
+{
+    eval printf %s "$1" 2> /dev/null
+}
 
-It was found by Syzkaller
-   -> https://lore.kernel.org/kvm/000000000000ea5ec20598d90e50@google.com/
+# dequote ';id'
+uid=3D0(root) gid=3D0(root) groups=3D0(root)
 
-'CVE-2019-19332' was assigned by Red Hat Inc.
+- Issue reported to maintainers on 24/02/2016 [2]
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+While researching we noted that this security problem was first
+identified on 2014 [3] however nobody reported the issue to
+bash-completion at that time.
 
+
+[1] https://lists.gnu.org/archive/html/bug-bash/2014-04/msg00057.html
+[2] https://github.com/scop/bash-completion/issues/6
+[3] https://lists.gnu.org/archive/html/bug-bash/2014-04/msg00058.html
