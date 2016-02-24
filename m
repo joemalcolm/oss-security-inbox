@@ -1,51 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/15/12
-Message-Id: <20160915220008.70B7972E020@smtpvbsrv1.mitre.org>
-Date: Thu, 15 Sep 2016 18:00:08 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/2
+Message-Id: <20160224033350.2DD1872E033@smtpvbsrv1.mitre.org>
+Date: Tue, 23 Feb 2016 22:33:50 -0500 (EST)
 From: cve-assign@...re.org
-To: noloader@...il.com
+To: carnil@...ian.org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Does a documentation bug elevate to CVE status? - Crypto++
+Subject: Re: CVE Request: Linux: unix: correctly track in-flight fds in sending process user_struct sockets
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> did not tell users that they must define -DNDEBUG when using alternate
-> build systems, like Autotools or CMake
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=415e3d3e90ce9e18727e8843ae343eda5a58fad6
 
-> machinery could engage that
-> egresses the sensitive information to the file system (core files and
-> the like). On some platforms, like Ubuntu with Apport, Apple with
-> CrashReporter, and Windows with Windows Error Reporting, the sensitive
-> information is egressed to a third party
+>> unix: correctly track in-flight fds in sending process user_struct
 
-Use CVE-2016-7420 for this Crypto++ (aka cryptopp) vulnerability.
+>> The commit referenced in the Fixes tag incorrectly accounted the
+>> number of in-flight fds over a unix domain socket to the original
+>> opener of the file-descriptor. This allows another process to
+>> arbitrary deplete the original file-openers resource limit for the
+>> maximum of open files.
 
-In general, documentation bugs can have CVEs. Maybe the easiest
-example to find is CVE-2010-4179.
-http://www.openwall.com/lists/oss-security/2015/11/10/12 is another
-example of how misleading documentation can have a CVE.
+Use CVE-2016-2550.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX2xl8AAoJEHb/MwWLVhi2cUUP/RAYclh+VWjbrJskPz/HaJUL
-lL8Pveg4jRTcU+CYN5R5sBoPajPAEthbv+UyWg7H3d2vW905yh2sy5hUnKj6weuG
-v8pFDXEqWXY4OKaaXRVp9FcDd5pFR+YWHAGddzilWuOTyIZ6KOQeiKo8GG/og5/d
-2YanGHpD884MGB189SB+LZcUv/NjYl5X4ONIM4nR/t3KlpRA9kWYBi0o9KwSrStS
-jb3kK3ZiKw60WmVuwfRbvklb8zDSvxhMRpiqrOju2HgiY5E0ajZOhQQwEoNdcnlO
-HA0IYW5BJO83coM8a7c1z3RRrmncJucZL8uxcPistwKhZyWFnvAKnp2zpNnmGM2S
-z3CcTK1h7U+434xCNcKXTWFnMr4+WWIS9N8NfYyAFbGY+5nZ/G2Dpro9ObQQIikG
-zzrwdVgdWxrXKUeP5mfqM5F0GDhKNZIK1nKX++7S/y4HO4xBJAwyHKXRg42S4yX0
-yfUbknygpqKrJGIG1EjOzUqmlgS2nsclq6nJRv5YuJgTqRh6ZQC7b/Zwr+Sil8tP
-ZLu4kv1IVv52Z5jjk1pUfHe6AW2lfu82iUzKFZaW0m9MUaq9ULNL3+CSkUBM4oxv
-ay2L+gKNE4SExGYj7brfYkm/1r5d7eo7WIrINrbdz6XojOKKbCAs4nTlvKQoVn9m
-esrwC4mjLKJ8/DHt7D7X
-=du18
+iQIcBAEBCAAGBQJWzSRFAAoJEL54rhJi8gl5/bYP/0SCfyofv9HhFwaE/EYSj1/K
+y607Cnxoe/9PPbLn1MxUQNCIBKvLUNR+tZqV9GUc1MrmbbKfOmyNKx0CMIl32Ewn
+1S1OamdeEIQa+wZt2N2bhHFEBy7vUXl0+TGwbuSoqX/UsBcx9Rt7gCvgmb/FKvXV
+UcCJB9T8zWEgCb179u8EWCNQ0qpC3PL8JNvymYjsVsc8BBKO053ZfvezBPm9eehD
+J7vod7f4hzR3S1N74dwwGivNvGZj9XkX7QeRDG8lsT1hRbvtycMrR8Mxs5dnhrYT
+9VnMuuSvdgllRCy+i/cDn3a2GNciCbt3rmlAcsUK/R+a/1kJJ6VGEPlCpWeZyZsp
+jH7Pg4C9sy5j76RORH0uzp/ENvLtLHoGGY2kU8lAou7iEnQ1p35cXqpVNd2xOHas
+HxypzRSO1t6x78hR9ZtbNT9wp3NZiDFADwhOE0nku7rUCEdLIl/ra0gByFwY/lbz
+91Rea30jRVhp9mE21NBA2e7a3/QRU+xLIObuZDLu4HVEs9efh8GYmh0BveQsi9h7
+5B4wiVZSb5rvdq5gN2/l65TXLN/CMQr+s0o7CZKobj6kDMZw7oCjffuLg4jP7rmN
+QELmA4GOdF5lhirAZaFpqDwZy6uUYEahOlIxLO2fF9uaABOSf/kqQan3kcYdy8Mb
+Yjf9+hopybnTS3V71UmI
+=bAtP
 -----END PGP SIGNATURE-----
