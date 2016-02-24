@@ -1,48 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/26/8
-Message-ID: <20160126203428.GA30775@eldamar.local>
-Date: Tue, 26 Jan 2016 21:34:28 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: limingxing@....cn, cve-assign@...re.org
-Subject: Re: Re: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/18
+Message-Id: <20160224193156.848ECB2E070@smtpvbsrv1.mitre.org>
+Date: Wed, 24 Feb 2016 14:31:56 -0500 (EST)
+From: cve-assign@...re.org
+To: hji@...topia.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: php: stack overflow when decompressing tar archives
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Tue, Jan 26, 2016 at 12:49:12PM -0500, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
+> issue which may be of
+> interest to anybody shipping PHP older than 5.5.32, 5.6.18 or 7.0.3
+> without FORTIFY:
 > 
-> > HTMLparser.c line:2517 :
-> > 
-> >        return(xmlDictLookup(ctxt->dict, ctxt->input->cur - len, len));
-> > 
-> > "ctxt->input->cur - len"  cause Out-of-bounds Read.
-> > 
-> > heap-buffer-overflow
-> > READ of size 1
-> 
-> Use CVE-2016-2073.
-> 
-> 
-> > From: Salvatore Bonaccorso
-> > 
-> > While checking upstream bugzilla to see if that was reported I noticed
-> > 
-> > https://bugzilla.gnome.org/show_bug.cgi?id=749115
-> > 
-> > Does this have the same root cause?
-> 
-> The CVE-2016-2073 PoC is an '&' followed by three characters, one of
-> which is a 0273 character. The PoC in 749115 has an unexpected
-> character immediately after a "<!DOCTYPE html" substring. We feel that
-> the CVE-2016-2073 report can have that unique ID on the basis of (at
-> least) a different attack methodology. CVE assignment for 749115 is
-> also possible unless 749115 already has a CVE ID.
+> https://bugs.php.net/bug.php?id=71488
 
-Thank you for the clarification. Can you assign an additional CVE for
-the 749115 issue?
+(Just for simplicity, the following comments only mention PHP 7.x -
+there may be analogous statements about PHP 5.x. This does not mean
+that a PHP 5.x issue from 71488 has a different CVE ID.)
 
-Regards,
-Salvatore
+Use CVE-2016-2554 for the issue that was fixed in the 7.0.3 release.
+We understand that this was in the:
+
+  http://git.php.net/?p=php-src.git;a=commit;h=07c7df68bd68bbe706371fccc77c814ebb335d9e
+
+commit. This commit has most of the changes that were made in
+ext/phar/tar.c between the 7.0.2 release and the 7.0.3 release. There
+was also a change from "if (entry.filename_len == UINT_MAX)" to "if
+(entry.filename_len == UINT_MAX || entry.filename_len == 0)" that may
+be unrelated.
+
+The "2016-02-01 15:01 UTC" comment in 71488 seems to discuss an
+additional concern. If there is a remaining vulnerability that was not
+fixed in 7.0.3, that vulnerability is not covered by the CVE-2016-2554
+ID.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJWzgR/AAoJEL54rhJi8gl5yOsP/A/7iIQnhsYqIUyBBNf6f9xs
+8Tyo9X0zvp+Bz0IkiqIjwVkqRHc5wCxlsGK79L+nXVdByZfV39ifkmRjlQmMFSqQ
+WOeHmMfnRowVbeQ/H/2PcnBIPxibVa0Q0bsRpCBZhftoGeKZl+1gVT3MPa1Cy20U
+m/PNKDHgpcE2Lf3C8mRCOPHOW/rTixIoslWx6y8791whIb+pthhiCSHISSx/JtES
+a1U5IJxte5dO1jJbE7326iO5PWrpIp1O23pUjo361+90oetUyIM1CKr2eNvnuLgO
+yeQNMrB5byNZLdwLygKMcRXlXmFYIQdzSPICcx7VJVrCRT52go7oAcIUjX7eMGwj
+CtesDMcMFG89phT6KjyPpoTNcYbxbGnkW4X6xFfSxEydWxmbU8jlREY9ZkW9VByz
+ylXfz4jxGzjnDP+chxi0YjCTf6rAtO8wdUwcofrj9zd2g7IXre0ZXETUw3Agbj0w
+CPkJxvZTNYJ58bo8QPaHRU1Gf4ZeSLuqmjQRrrIugQRVbS8tC5jsSgljDtTCXItw
+yERkYr5zK5dAdcfxcVIbg/O2rJLis3x9DXOHrAmJhKbH6vt8QKGV3vIy9rZ2ZZOx
+Wtb8SijhbGwb3C9ZMO6aYmT0q483Dpw1pRd9DgkNzkDNunN3qF2CSTV/xT8qVqyz
+U5FwJlkLo7BXcPqar61M
+=hnVy
+-----END PGP SIGNATURE-----
