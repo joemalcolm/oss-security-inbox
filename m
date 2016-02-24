@@ -1,170 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/18
-Message-ID: <CAARAU449Y-_3UVN4URvLmNAWuXmm43TeMo_UyTMpE862Zv_3ng@mail.gmail.com>
-Date: Mon, 19 Sep 2016 18:02:40 -0400
-From: Mike Santillana <michael.santillana@...ork.com>
-To: Reed Loden <reed@...dloden.com>
-Cc: oss-security@...ts.openwall.com, "'Apple' via" <infosec@...ork.com>
-Subject: Re: CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/5
+Message-ID: <42e97a56-3538-0864-ee40-2494df567745@halfdog.net>
+Date: Wed, 24 Feb 2016 05:43:04 +0000
+From: halfdog <me@...fdog.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Access to /dev/pts devices via pt_chown and user namespaces
 Content-Type: text/plain; charset=utf-8
 
-Hi Reed,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Yes this has been submitted via HackerOne as well.
+Dmitry V. Levin wrote:
+> On Tue, Feb 23, 2016 at 07:17:54PM +0300, Solar Designer wrote:
+>> On Tue, Feb 23, 2016 at 12:03:54PM +0000, halfdog wrote:
+>>> Sending content from [0] also to oss-security as requested last
+>>> time:
+>> 
+>> Thank you.  This public disclosure is very late, though.  I
+>> didn't realize you were still holding some of your findings on
+>> this.
+>> 
+>>> With Ubuntu Wily and earlier, /usr/lib/pt_chown was used to
+>>> change ownership of slave pts devices in /dev/pts to the same
+>>> uid holding the master file descriptor for the slave.
+>> 
+>> I think pt_chown is only needed for legacy BSD pty's, and no
+>> longer needed for Unix 98 pty's that Linux systems use these
+>> days.  Perhaps it should be dropped from upstream glibc by now.
+> 
+> Just for the record, pt_chown is not enabled by default in upstream
+> glibc starting with glibc-2.18, one has to specify
+> --enable-pt_chown configure option explicitly to build pt_chown.
 
-Thanks
+Thanks for that information. So for pt_chown, this could hopefully be
+just an Ubuntu issue. Should we assign an CVE for that?
 
+On the other hand, the TIOCGPTN ioctl still is problematic with
+USERNS, also for other tools. I just started with pt_chown for
+demonstration because it is SUID, perhaps there are other programs
+using this ioctl.
 
-*WeWork | Mike Santillana*
-Security Engineer
-845-709-5655
-www.wework.com
+Should information about this risk/attack method just be added to the
+kernel docs/man-page of TIOCGPTN or is it a separate vulnerability
+with need for addressing (another CVE?).
 
-Create Your Life's Work
+> glibc documentation clearly states that "the use of pt_chown
+> introduces additional security risks to the system and you should
+> enable it only if you understand and accept those risks": 
+> https://www.gnu.org/software/libc/manual/html_node/Configuring-and-compiling.html#index-grantpt-1
 
-On Mon, Sep 19, 2016 at 4:55 PM, 'Reed Loden' via Information Security <
-infosec@...ork.com> wrote:
+Another
+> 
+argument for having some community check tool + procedure
+(sketched in mail before) to make mistakes only once (when not
+everyone is reading all the docs).
 
-> Was Ruby actually notified of this outside of the GitHub issue? Not sure
-> they are monitoring that repository for security issues, so could have been
-> missed.
->
-> https://www.ruby-lang.org/en/security/ defines their security reporting
-> processes.
->
-> ~reed
->
-> On Mon, Sep 19, 2016 at 12:20 PM, Mike Santillana <
-> michael.santillana@...ork.com> wrote:
->
->> Product: Ruby's OpenSSL Library
->> Version: Tested on 2.3.1 (latest)
->> Bug: IV Reuse
->> Impact: Depends on the usage of the library
->>
->> Hello,
->>
->> An IV reuse bug was discovered in Ruby's OpenSSL library when using
->> aes-gcm. When encrypting data with aes-*-gcm, if the IV is set before
->> setting the key, the cipher will default to using a static IV. This
->> creates
->> a static nonce and since aes-gcm is a stream cipher, this can lead to
->> known
->> cryptographic issues.
->>
->> The documentation does not appear to specify the order of operations when
->> setting the key and IV [1]. As an example, see the following insecure code
->> snippet below:
->>
->> Vulnerable Code:
->>
->> def encrypt(plaintext)
->>     cipher = OpenSSL::Cipher.new('aes-256-gcm')
->>     iv = cipher.random_iv # Notice here the IV is set before the key
->>     cipher.key = '11111111111111111111111111111111'
->>     cipher.auth_data = ""
->>     ciphertext = cipher.update(plaintext) + cipher.final
->>     tag = cipher.auth_tag
->>
->>     puts "[+] Encrypting: #{plaintext}"
->>     puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
->> #{bin2hex(tag)} | #{bin2hex(ciphertext)}"
->> end
->>
->> A developer that uses the code above may incorrectly assume that their
->> code
->> is secure from the pitfalls associated with IV reuse in aes-*-gcm, since
->> the ‘cipher.random_iv’ method is used. According to the documentation,
->> this
->> should generate a random IV each time the encryption method is called.
->>
->> When the code above is run with the same key and same plaintext message,
->> the following results are obtained:
->>
->> Output:
->> # Run 1
->> ./gcm_encrypt.rb 'This is some secret message.'
->> [+] Encrypting: This is some secret message.
->> [+] CipherMessage (IV | Tag | Ciphertext): e32594080cca2b37f7d7e968 |
->> 8c676db7551cf046266252ee776ecaa9 | 81092d16b62902d9985656253891dc
->> 800a5bb48fb1c4ad0b7bdf6054
->>
->> # Run 2
->> ./gcm_encrypt.rb 'This is some secret message.'
->> [+] Encrypting: This is some secret message.
->> [+] CipherMessage (IV | Tag | Ciphertext): 431d70714f5e5f876d1c7830 |
->> 8c676db7551cf046266252ee776ecaa9 | 81092d16b62902d9985656253891dc
->> 800a5bb48fb1c4ad0b7bdf6054
->>
->> Notice that in the output above a unique IV is returned for both runs, but
->> with the same ciphertext. This proves that even though the random_iv
->> method
->> is called, the code is defaulting to a static IV. If an attacker can
->> retrieve multiple ciphertext messages, it is possible to decrypt the
->> ciphertexts by applying the same attack one would use in a two-time pad
->> (XOR ciphertexts and crib drag).
->>
->> Next review the following code snippet and output, which depicts a secure
->> implementation of the code:
->>
->> Valid Code:
->>
->> def encrypt(plaintext)
->>     cipher = OpenSSL::Cipher.new('aes-256-gcm')
->>     cipher.key = '11111111111111111111111111111111'
->>     iv = cipher.random_iv # Notice here the IV is set after the key
->>     cipher.auth_data = ""
->>     ciphertext = cipher.update(plaintext) + cipher.final
->>     tag = cipher.auth_tag
->>
->>     puts "[+] Encrypting: #{plaintext}"
->>     puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
->> #{bin2hex(tag)} | #{bin2hex(ciphertext)}"
->> end
->>
->> Output:
->> # Run 1
->> ./gcm_encrypt.rb 'This is some secret message.'
->> [+] Encrypting: This is some secret message.
->> [+] CipherMessage (IV | Tag | Ciphertext): 8beb4aa05533e90f4f4eddd3 |
->> ea1b015958a9b8bd2aafa61887309caf | 19574a9c9869b92140a57a5fd43a14
->> 9a5eaa7e5beefdff5d56cc4136
->>
->> # Run 2
->> ./gcm_encrypt.rb 'This is some secret message.'
->> [+] Encrypting: This is some secret message.
->> [+] CipherMessage (IV | Tag | Ciphertext): 87361b3f1e32291602ac7b40 |
->> bce7093daa10cc9d2fad0f2b91e077f2 | 47f9a5ba55631204233ace70f169e6
->> 65846e877dca11a6e13a659540
->>
->> Notice that this time both the IV and ciphertexts are both different for
->> the same plaintext. This is the intended result a developer would expect
->> to
->> happen when using this library.
->>
->> It should be noted that when I went to Ruby's github page to report this
->> bug, I noticed a developer also independently encountered this weird
->> phenomenon [2]. Since it has already been brought up to the Ruby team, I
->> have not created a new ticket.
->>
->> References:
->>  [1]
->> https://ruby-doc.org/stdlib-2.0.0/libdoc/openssl/rdoc/OpenSS
->> L/Cipher.html#class-OpenSSL::Cipher-label-Authenticated+
->> Encryption+and+Associated+Data+-28AEAD-29
->>  [2] https://github.com/ruby/openssl/issues/49
->>
->> I'd like to to request a CVE ID for this issue.
->>
->> Thanks
->>
->> *WeWork | Mike Santillana*
->> Security Engineer
->> 845-709-5655
->> www.wework.com
->>
->> Create Your Life's Work
->>
->
->
+hd
 
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iEYEARECAAYFAlbNQt0ACgkQxFmThv7tq+7cYwCeIz3bGFV7lJwTS6naQrzLfAoc
+h7EAnioQTLYVtsNJ5jX0+hiW9QekLUVg
+=B5H+
+-----END PGP SIGNATURE-----
