@@ -1,4 +1,9 @@
-Received: (qmail 9463 invoked by uid 550); 19 Apr 2024 10:08:54 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1746" "Wednesday" "24" "February" "2016" "14:58:03" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty27nHy0Mz0E=d648Z+BBA7nqMdF-EgL__GUqMqPBn1NYQ@mail.gmail.com>" "54" "Re: [oss-security] CVE Request: bash-completion: dequote command injection" "^Date:" nil nil "2" "2016022421:58:03" "[oss-security] CVE Request: bash-completion: dequote command injection" (number mark "        kseifried@re Feb 24   54/1746  " thread-indent "\"Re: [oss-security] CVE Request: bash-completion: dequote command injection\"\n") "<CAEr-gPHxfhxNZu0eGuZLvDWmjQjTw3d1BsTZyFKES=Zm6d+LUQ@mail.gmail.com>" ("<CAEr-gPHk8Q5dSh1rOmKiGEQ97X=JrAypPcVvv+NrzReuOHMoyg@mail.gmail.com>" "<56CE1991.2030906@redhat.com>" "<CAEr-gPHxfhxNZu0eGuZLvDWmjQjTw3d1BsTZyFKES=Zm6d+LUQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 28129 invoked by uid 550); 24 Feb 2016 21:58:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,69 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14324 invoked from network); 19 Apr 2024 02:17:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713493051; x=1714097851; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:references:subject:to
-         :mime-version:user-agent:reply-to:from:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VLcSY1cqepGvS9Se4Wv3QfWDXMCrH3odmG5fcY3k9+k=;
-        b=l5J7FStsTh4S9jYOBUK6rsACJ65avbUIOgYdQL3oMj7ifjEI3cJJu1eAGmbDlsQbEn
-         mct8II9An3ndMjotyOpUjt4EK9Gnk3VX9gyYuS0hz0D+lvRgShIw1NgIHR4mIiLsjsKP
-         trORInoZNf9bdDTbWFNLnahuOVQ+5+qpS69dYAgib0JbvnPnzvEfkcdXYQJ3rm+Xt6sf
-         4gDdIyj+5fr6f8QbV1tJPTAqJPt/zKvLjS1D2zsXGeNQEZ4EkAecXkNDO3jdeRGNSzRO
-         PLHESBvgibIsFhKq3wkM4P8OeKomEDx5UA5Pcjas/zGGL8fRgMeDkKLpK1/ToLfg4qPL
-         s3aA==
+Received: (qmail 28111 invoked from network); 24 Feb 2016 21:58:14 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713493051; x=1714097851;
-        h=content-transfer-encoding:in-reply-to:references:subject:to
-         :mime-version:user-agent:reply-to:from:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VLcSY1cqepGvS9Se4Wv3QfWDXMCrH3odmG5fcY3k9+k=;
-        b=K7PnMQOkEx47UqoUQmvCYBHaBIVrvWyqp8L30KcsX1ANPNupsWCFRBq3SoNF2VOyUV
-         5P42/44RJwKu8WUoZd5Ye2VtQVL+PmTytgn3dYzljsXRRQE91n+jO0RhKO55X+B3NjDJ
-         sSsT8XsKPXQH/zGhJiumPYQlhelxzjV6J4M9Kzqr9tJAuB72hKdKX3YlDMFpcfZMDYfD
-         PPdxRkYEGGzALf//MltAACCV6Q8Fi4OKdnbtL3h6srCYoIn8iKHVwiXQBtrQqCU7SlXM
-         OP5Uh/Q2Td4/6eK4KnuAAgTbQfyJi+TO0IChrkvdJbGkZPqV/9PD13krc1fE6mmN4BTJ
-         bEmg==
-X-Gm-Message-State: AOJu0Yx1KDoXwKrlDyaI/ILUftl2MHOWt2dBTk44V0vy53lfcBrAg7hH
-	vgKUbFN6PbH1GDaQZCGdO7yVLWWVwoqMOMmckui5VvAJgoJcDi5/FXDdfQ==
-X-Google-Smtp-Source: AGHT+IFXBDCVo8vIQ0yEqTApv/r39V/5f0t5xRYFHcImG8TxJGHw+qlAZts8VcZu/BEhVAV9Anzy7Q==
-X-Received: by 2002:a05:6830:12cc:b0:6eb:6046:ff17 with SMTP id a12-20020a05683012cc00b006eb6046ff17mr786382otq.36.1713493050927;
-        Thu, 18 Apr 2024 19:17:30 -0700 (PDT)
-Message-ID: <6621D438.5080005@gmail.com>
-Date: Thu, 18 Apr 2024 21:17:28 -0500
-From: Jacob Bachmeyer <jcb62281@gmail.com>
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.22) Gecko/20090807 MultiZilla/1.8.3.4e SeaMonkey/1.1.17 Mnenhy/0.7.6.0
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type;
+        bh=Q3BW3KrjKPIsn0pavaYssifsmuJyu29Cz3Eg4E4W2UU=;
+        b=JF9GH8+MYOtfpq2iqt5Xcc2wYHmEsU+XyXIU0Hr2qGGxuoT09sRK32QfrOuxH6yGSi
+         wqj5X88xR4hz5KxNt3EbmBs+G2Chq+UWbNcKncj/QiA3Hob+tZcDgdP+GH1hXgTs7sLj
+         5y246NeurgoEV4ZBdHF8D1+UAdX21b6ErqV217SsnAFSX8naV/y2W08AGLd7VaTEaWBV
+         +faIj5p90pqPIEWZ84lUUqd4mqDDX0yCCdwQFsFNlIOB9CJO7pqBHOOllxlwpTcQ+D9h
+         LbqfcgQRlPWM+YbS9MlvFtRhe4a/7sYmbY1F4APJthxSKRPb+babwsfY1LXCWKaDambR
+         KAEg==
+X-Gm-Message-State: AG10YORsrPIM+F38P2/r/uaDx1RvYvGV5+LRO3MRQXJqNfnK33a7eQkagLcr5XtV0i/itslyczWvk/NMuD81qN4u
 MIME-Version: 1.0
-To: oss-security@lists.openwall.com
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de> <ed2715be-e7a0-4a7f-a3fd-7041f6c6fa49@fu-berlin.de> <Zgmn06K3C-nY83YH@codewreck.org> <20240331202502.GA21116@openwall.com> <20240416225900.GA23474@openwall.com> <661F3331.3020408@gmail.com> <4eaf6a34fd8459284e1a6967c68db93f@ucc.asn.au>
-In-Reply-To: <4eaf6a34fd8459284e1a6967c68db93f@ucc.asn.au>
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh
- server compromise
+X-Received: by 10.13.206.2 with SMTP id q2mr23404004ywd.76.1456351083304; Wed,
+ 24 Feb 2016 13:58:03 -0800 (PST)
+In-Reply-To: <CAEr-gPHxfhxNZu0eGuZLvDWmjQjTw3d1BsTZyFKES=Zm6d+LUQ@mail.gmail.com>
+References: <CAEr-gPHk8Q5dSh1rOmKiGEQ97X=JrAypPcVvv+NrzReuOHMoyg@mail.gmail.com>
+	<56CE1991.2030906@redhat.com>
+	<CAEr-gPHxfhxNZu0eGuZLvDWmjQjTw3d1BsTZyFKES=Zm6d+LUQ@mail.gmail.com>
+Message-ID: <CANO=Ty27nHy0Mz0E=d648Z+BBA7nqMdF-EgL__GUqMqPBn1NYQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a114da67efd5aca052c8b28cb
+Date: Wed, 24 Feb 2016 14:58:03 -0700
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE Request: bash-completion: dequote command injection
+To: oss-security <oss-security@lists.openwall.com>
 
-Matt Johnston wrote:
-> On 2024-04-17 10:25 am, Jacob Bachmeyer wrote:
+--001a114da67efd5aca052c8b28cb
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+I think in this case it's pretty simply "dequoting should not result in
+code execution" much like the various deserialization flaws (they should
+deserialize the data, not execute random stuff).
+
+On Wed, Feb 24, 2016 at 2:56 PM, Fernando Mu=C3=B1oz <fernando@null-life.co=
+m>
+wrote:
+
+> Hello Eric,
 >
->> see that particular slowdown?  (Not the backdoor initialization making
->> sshd take longer to start up---a running sshd taking longer to reject
->> a session for a nonexistent account, unless Andres Freund forgot to
->> tell us that he was running sshd from inetd and thereby including sshd
->> startup latency in his measurements.)
+> I never mentioned privilege escalation.
 >
-> Recent OpenSSH always re-execs for each incoming connection (for fresh 
-> ASLR) so it's always similar to inetd startup.
+> This issue how ever could appear when a different application uses
+> user input and calls "dequote" function that not only dequotes, but
+> also executes it as a command. If mitre doesn't consider it CVE worth,
+> that's OK!
+>
+> Regards.
+>
+>
+>
+> On Wed, Feb 24, 2016 at 3:58 PM, Eric Blake <eblake@redhat.com> wrote:
+> > On 02/24/2016 12:08 PM, Fernando Mu=C3=B1oz wrote:
+> >> Marcelo Echeverria and Fernando Mu=C3=B1oz discovered that the dequote
+> >> function included in bash-completion allows to execute arbitrary
+> >> commands since it uses the eval function to call printf and perform
+> >> the actual dequoting. bash-completion is included on Debian, Ubuntu
+> >> OpenSuse [1] and probably other distros.
+> >
+> > But what is the privilege escalation?  This is no different than
+> > incorrectly using 'eval' in a shell script - you may have buggy code,
+> > and have an easy-to-trigger bug, but if you can't escalate privileges,
+> > how it is a CVE?
+> >
+> > --
+> > Eric Blake   eblake redhat com    +1-919-301-3266
+> > Libvirt virtualization library http://libvirt.org
+> >
+>
 
-Aha!  That explains it.  There may not be another backdoor after all:  
-if sshd always reinitializes by exec, it would incur the full startup 
-delay for each connection, and the backdoor may actually be inert if the 
-client requests publickey auth.
-
-Thank you for filling in the missing detail.
 
 
--- Jacob
+--=20
 
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a114da67efd5aca052c8b28cb--
