@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1031" "Friday" "29" "January" "2021" "02:10:20" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" "<CAFcO6XMDdVx8uoM8-dJf=AP5t+Tva-J2sOE+gV4F11dvU99yrg@mail.gmail.com>" "31" "[oss-security] Linux kernel: linux-block: nbd: use-after-free Read in nbd_queue_rq" nil nil nil "1" "2021012818:10:20" "[oss-security] Linux kernel: linux-block: nbd: use-after-free Read in nbd_queue_rq" (number mark "U       butterflyhua Jan 29   31/1031  " thread-indent "\"[oss-security] Linux kernel: linux-block: nbd: use-after-free Read in nbd_queue_rq\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel: linux-block: nbd: use-after-free Read in nbd_queue_rq" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1675" "Wednesday" "24" "February" "2016" "13:58:57" "-0700" "Eric Blake" "eblake@redhat.com" "<56CE1991.2030906@redhat.com>" "41" "Re: [oss-security] CVE Request: bash-completion: dequote command injection" "^Date:" nil nil "2" "2016022420:58:57" "[oss-security] CVE Request: bash-completion: dequote command injection" (number mark "        eblake@redha Feb 24   41/1675  " thread-indent "\"Re: [oss-security] CVE Request: bash-completion: dequote command injection\"\n") "<CAEr-gPHk8Q5dSh1rOmKiGEQ97X=JrAypPcVvv+NrzReuOHMoyg@mail.gmail.com>" ("<CAEr-gPHk8Q5dSh1rOmKiGEQ97X=JrAypPcVvv+NrzReuOHMoyg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27771 invoked by uid 550); 28 Jan 2021 19:24:46 -0000
+Received: (qmail 5307 invoked by uid 550); 24 Feb 2016 20:59:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3769 invoked from network); 28 Jan 2021 18:10:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=hX2CAqsEtXAODysRG3788NbNc6Etsf6f0QhQJQdOTuY=;
-        b=qyEPbsNDlfKXx4RknC4P2ofLnS4faoliICgw3CDIMyfqRw2lDAtvaCLmzlwlu5Xhaw
-         buo5HkPNHAbGqvGrpe0GHoJ9iVhIeJPqRPJwnOzhC6iswBzxNz2pzNE7z9VY8s+9sXTL
-         oK1PpjZ/rLbuzo7R7BwTFdxz5HvHv8Yq4pfYxERSEb+if+b+oVAiS4kZI89JO7zU4sjQ
-         rFXwdi5rAe6Dj+9YEGiRWhk6NDiiVkRulzjSPdu9ByxaUvd6mNwKMFx/Mz+wsEHYpbjd
-         uZAKkVJ4/9AXUTVke/QNVDfBNuZfTfY3u52RA15juinruudJsvE5zowxKyX/dwZS+RaS
-         CVgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=hX2CAqsEtXAODysRG3788NbNc6Etsf6f0QhQJQdOTuY=;
-        b=cv5ZtaDqPVxK1uXDhhoCTVFqPkKZ+MmHEvA543YClB1RkzKJ0/qhdmFTrFSBdw3l9s
-         J40KIyfBW/+SPgVCrPmpuIZtIClU3d5IgH5zOE6vcJwceZV6LVZx2cpbuVTwNBQ6jyFI
-         HeBfc3FmL53/E/uk+z/DO6gclz0W9KH1Tk379XN/vIjmEK4+cyoSPum6K25hGGT5r00s
-         k54RrI1+/e5h5acKaz16qFAP5U7RKehx5JWchWaIJQrkWm/7CnmdQvOt662RHlKaR5B0
-         vxA+zOp9ATW/Lp5aLYWG7tpNOdUv3EfuDvJgSF7f2j7eY7UsArb8bK2O3ZalE14CpVnS
-         yqsA==
-X-Gm-Message-State: AOAM5311pEmteL9jTP/mRenXBuCDyBf82a4e/7fzo3pYwZiQc9ix2aPj
-	sybUV+LUE0DmDTeRc/BFvV1YvudoFU0gG7OnnAtGR+KUt1A=
-X-Google-Smtp-Source: ABdhPJxG4xlkwCj45RNi2pXJZe8FISsct918c50LCkkvstyE4AU/WeCIjwvAAYyg8KxJNMfQ2rZrw+g6M7StfZMB2qI=
-X-Received: by 2002:a25:3bd2:: with SMTP id i201mr615854yba.302.1611857431060;
- Thu, 28 Jan 2021 10:10:31 -0800 (PST)
+Received: (qmail 5268 invoked from network); 24 Feb 2016 20:59:12 -0000
+References: <CAEr-gPHk8Q5dSh1rOmKiGEQ97X=JrAypPcVvv+NrzReuOHMoyg@mail.gmail.com>
+Openpgp: url=http://people.redhat.com/eblake/eblake.gpg
+Organization: Red Hat, Inc.
+Message-ID: <56CE1991.2030906@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
 MIME-Version: 1.0
-From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
-Date: Fri, 29 Jan 2021 02:10:20 +0800
-Message-ID: <CAFcO6XMDdVx8uoM8-dJf=AP5t+Tva-J2sOE+gV4F11dvU99yrg@mail.gmail.com>
+In-Reply-To: <CAEr-gPHk8Q5dSh1rOmKiGEQ97X=JrAypPcVvv+NrzReuOHMoyg@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="EcLFL5Cu0fIo9hleD3qpbwWH1W50FH0Fj"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+Date: Wed, 24 Feb 2016 13:58:57 -0700
+From: Eric Blake <eblake@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE Request: bash-completion: dequote command
+ injection
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Linux kernel: linux-block: nbd: use-after-free Read in nbd_queue_rq
 
-Hi, I reported a use-after-free Read bug in ndb_queue_rq() in
-drivers/block/nbd.c and reproduced in linux-5.11.0-rc4+ too.
+--EcLFL5Cu0fIo9hleD3qpbwWH1W50FH0Fj
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Root Cause:
+On 02/24/2016 12:08 PM, Fernando Mu=C3=B1oz wrote:
+> Marcelo Echeverria and Fernando Mu=C3=B1oz discovered that the dequote
+> function included in bash-completion allows to execute arbitrary
+> commands since it uses the eval function to call printf and perform
+> the actual dequoting. bash-completion is included on Debian, Ubuntu
+> OpenSuse [1] and probably other distros.
 
-There is a race condition in nbd ioctl.
-NBD_SET_SIZE_BLOCKS ioctl will call nbd_size_set(), it will change the
-block size.
-NBD_SET_SOCK ioctl will call nbd_add_socket() and it will invoke
-krealloc() to update a block, free and realloc a new one.
-But nbd_queue_rq() is in runtime. and calls nbd_handle_cmd(), there
-will use config->sock. there accesses to config->socks without any locking.
+But what is the privilege escalation?  This is no different than
+incorrectly using 'eval' in a shell script - you may have buggy code,
+and have an easy-to-trigger bug, but if you can't escalate privileges,
+how it is a CVE?
 
-Patch for this issue:
-https://lore.kernel.org/linux-block/24dff677353e2e30a71d8b66c4dffdbdf77c4dbd.1611595239.git.josef@toxicpanda.com/
-
-CVE assigned:
-not assigned.
-
-Timeline:
-*2021/1/25  - Vulnerability reported to security@kernel.org.
-*2020/1/26  - Vulnerability confirmed and patched.
-*2020/1/28 - Vulnerability reported to linux-distros@vs.openwall.org.
-*2021/1/29 - Opened on oss-security@lists.openwall.com.
-
-Credit:
-This issue was discovered by the ADLab of venustech.
+--=20
+Eric Blake   eblake redhat com    +1-919-301-3266
+Libvirt virtualization library http://libvirt.org
 
 
-Regards,
- butt3rflyh4ck.
+--EcLFL5Cu0fIo9hleD3qpbwWH1W50FH0Fj
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+Comment: Public key at http://people.redhat.com/eblake/eblake.gpg
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQEcBAEBCAAGBQJWzhmSAAoJEKeha0olJ0NqLbYH/A61k0CN/yXtU2XZ3ufODF8U
+529TNFwLAw8Z63yLlD8deIJhuepxcW5UsAK06DX4Zch+l7m9J0hNx1oNUe83IVJ8
+3xSLG8eV9dDXVgZC6d7jYr7XSIkM90Lp+jTbqeg9WXe/FkTmv+SV7CJ7Nd6TqkII
+fupunYEOpJf8ta7Lo71VW9n+UxQ+L0f4z9ofJRNnGngdeJIFTbs0AR2l2tnb7iSH
+C5gJgpmwIkUth5lsNEikJCbT/zFKb4Z5HS6NlNM1oCMVnyyMowbboyr9hJOsFfD7
+nEdMgFfYxxPgl0xJFPPEHtmN0AMvsX3m1upTpJK6USC3/PGvCyXx7XG39b5Cq+8=
+=VVHU
+-----END PGP SIGNATURE-----
+
+--EcLFL5Cu0fIo9hleD3qpbwWH1W50FH0Fj--
