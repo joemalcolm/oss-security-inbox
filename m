@@ -1,59 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/04/2
-Message-ID: <2647eeea4a76427993d6495bb8c17943@imshyb02.MITRE.ORG>
-Date: Fri, 4 Nov 2016 03:05:16 -0400
-From: <cve-assign@...re.org>
-To: <dmoppert@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request:  XXE in perl Image::Info and XML::Twig
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/21
+Message-ID: <CAEr-gPHxfhxNZu0eGuZLvDWmjQjTw3d1BsTZyFKES=Zm6d+LUQ@mail.gmail.com>
+Date: Wed, 24 Feb 2016 16:56:09 -0500
+From: Fernando Muñoz <fernando@...l-life.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: bash-completion: dequote command injection
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello Eric,
 
->> XML-Twig: expand_external_ents fails to work as documented
+I never mentioned privilege escalation.
 
-> https://rt.cpan.org/Public/Bug/Display.html?id=118097
-> https://bugzilla.redhat.com/show_bug.cgi?id=1379553
+This issue how ever could appear when a different application uses
+user input and calls "dequote" function that not only dequotes, but
+also executes it as a command. If mitre doesn't consider it CVE worth,
+that's OK!
 
-> This option (which defaults to 0) is supposed to control XXE parsing
-> documents with XML::Twig, but it has no effect and XXE always takes
-> place.
-
-Use CVE-2016-9180.
+Regards.
 
 
->> Image-Info: XXE in SVG files
 
-> https://rt.cpan.org/Public/Bug/Display.html?id=118099
-> https://bugzilla.redhat.com/show_bug.cgi?id=1379556
-> 
-> This was promptly fixed in 1.38_50 / 1.39.
-
-Use CVE-2016-9181.
-
-118099 suggests that this was exploitable only when XML::LibXML was installed,
-but the CVE is for Image::Info::SVG, not for XML::LibXML.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYHDIEAAoJEHb/MwWLVhi2cowP/3KQY1byhquXjsu4Nem8qz4H
-Tb7YWpeCUxIKbrqA60DEVfPKY0ges1vQ1JCzYlElU3/VAMe7ZWrTAnuxwangQCZI
-RZcVMDOcdJJGSjOyPUhdr2MLbCwl0U8U6z2ZeLGJh1aN6DqcE4XZtmNbjPNU7ea/
-uvEzHZEh5SL0tyM30fCrSsPARqYtlbMt0o6uPbfg9wi71Pkcmz+451CF8BhM8bdl
-mLd7EWQHxHnF4Y3kSCYkLsAULDTgGEzu97i+m68nkwPII8EpwjKF1wXbRKgU2fjA
-bgTYC7j/em9VYHAjVzPKTwIJ0MiAsqS+HDywyoqc6uCgV0OQ8qaKvBu4v3d28tbt
-HyBKWK/cMwYSGg6hiOsfrGU8mSk3mKD9NFgdHjllnS12Xo6QHln9BXfUnhZDRzMt
-PuOtBeq7jWsSCp1C0dbwMpPD2zCHlaHmSwBabk2s1F7GQtgZogM5bZZxO1099b1D
-Lq+BOpDRwezSOKcu1ITRO1qUJ63ECtvUK1K/9Lv/AWFkXVANoBEv0tlABmsj2WUB
-zIy0bOQo7a8n8lRY/ECJvK/C3HLQU2RPdE0lXw2bldr+MSNhV1zNoQypJgzxwxtT
-5TFsQXMwrJ91vJmRH2gjNykX74ItPcOppL+ws2yAv1ZVTaxDbUk5yhSj7JFbkuUQ
-rpHTnlXvLA8UmaYREUnj
-=M28z
------END PGP SIGNATURE-----
+On Wed, Feb 24, 2016 at 3:58 PM, Eric Blake <eblake@...hat.com> wrote:
+> On 02/24/2016 12:08 PM, Fernando Muñoz wrote:
+>> Marcelo Echeverria and Fernando Muñoz discovered that the dequote
+>> function included in bash-completion allows to execute arbitrary
+>> commands since it uses the eval function to call printf and perform
+>> the actual dequoting. bash-completion is included on Debian, Ubuntu
+>> OpenSuse [1] and probably other distros.
+>
+> But what is the privilege escalation?  This is no different than
+> incorrectly using 'eval' in a shell script - you may have buggy code,
+> and have an easy-to-trigger bug, but if you can't escalate privileges,
+> how it is a CVE?
+>
+> --
+> Eric Blake   eblake redhat com    +1-919-301-3266
+> Libvirt virtualization library http://libvirt.org
+>
