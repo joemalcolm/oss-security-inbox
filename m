@@ -1,64 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/03/2
-Message-ID: <CAPGxrc9YpXo-DHd-oSOker5MhCAH1QoCW-6O4JE+pZScG79vng@mail.gmail.com>
-Date: Wed, 3 Aug 2016 13:14:50 +0800
-From: redrain root <rootredrain@...il.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: CVE request:Heap overflow vulns in MuPDF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/22
+Message-ID: <CANO=Ty27nHy0Mz0E=d648Z+BBA7nqMdF-EgL__GUqMqPBn1NYQ@mail.gmail.com>
+Date: Wed, 24 Feb 2016 14:58:03 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: bash-completion: dequote command injection
 Content-Type: text/plain; charset=utf-8
 
-Title: Heap overflow vulns in MuPDF
-Author: Yu Hong, yu.hong@...itin.com;Zheng Jihong,jihong.zheng@...itin.com
-Data: 2016-08-01
-Dowload Site: http://ghostscript.com/download;http://mupdf.com/downloads/
-Vendor: Ghostscript
-----------------------------------------------------------
-Vulnerability:
-Recently,I found a heap overflow vulnerability that cause this crash .
-I thought it a dangerous vulnerability because there are so many function
-point in the heap and the program have important the function "system".
+I think in this case it's pretty simply "dequoting should not result in
+code execution" much like the various deserialization flaws (they should
+deserialize the data, not execute random stuff).
 
-The location of this vulnerability is at "pdf_load_mesh_params" function,at
- "source/pdf/pdf-shade.c" .
+On Wed, Feb 24, 2016 at 2:56 PM, Fernando Muñoz <fernando@...l-life.com>
+wrote:
 
-obj = pdf_dict_get(ctx, dict, PDF_NAME_Decode);
-if (pdf_array_len(ctx, obj) >= 6)
-{
-n = (pdf_array_len(ctx, obj) - 4) / 2;
-shade->u.m.x0 = pdf_to_real(ctx, pdf_array_get(ctx, obj, 0));
-shade->u.m.x1 = pdf_to_real(ctx, pdf_array_get(ctx, obj, 1));
-shade->u.m.y0 = pdf_to_real(ctx, pdf_array_get(ctx, obj, 2));
-shade->u.m.y1 = pdf_to_real(ctx, pdf_array_get(ctx, obj, 3));
-for (i = 0; i < n; i++)
-{
-shade->u.m.c0[i] = pdf_to_real(ctx, pdf_array_get(ctx, obj, 4 + i * 2));
-shade->u.m.c1[i] = pdf_to_real(ctx, pdf_array_get(ctx, obj, 5 + i * 2));
-}
-}
+> Hello Eric,
+>
+> I never mentioned privilege escalation.
+>
+> This issue how ever could appear when a different application uses
+> user input and calls "dequote" function that not only dequotes, but
+> also executes it as a command. If mitre doesn't consider it CVE worth,
+> that's OK!
+>
+> Regards.
+>
+>
+>
+> On Wed, Feb 24, 2016 at 3:58 PM, Eric Blake <eblake@...hat.com> wrote:
+> > On 02/24/2016 12:08 PM, Fernando Muñoz wrote:
+> >> Marcelo Echeverria and Fernando Muñoz discovered that the dequote
+> >> function included in bash-completion allows to execute arbitrary
+> >> commands since it uses the eval function to call printf and perform
+> >> the actual dequoting. bash-completion is included on Debian, Ubuntu
+> >> OpenSuse [1] and probably other distros.
+> >
+> > But what is the privilege escalation?  This is no different than
+> > incorrectly using 'eval' in a shell script - you may have buggy code,
+> > and have an easy-to-trigger bug, but if you can't escalate privileges,
+> > how it is a CVE?
+> >
+> > --
+> > Eric Blake   eblake redhat com    +1-919-301-3266
+> > Libvirt virtualization library http://libvirt.org
+> >
+>
 
 
 
-the length of array return from "pdf_array_len"  not be checked. But the
-max size of "shade->u.m.C0/C1" is defined as a macro(32 as default). So if
-I make a pdf which have a large decode array. This code will cause a heap
-overflow .
+-- 
 
-And the overflow data could be control, And on the memory I overflow , I
-found a struct which full of function point. Maybe I can let it point to
-got table for a chance to call "system"
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-issue:
-http://bugs.ghostscript.com/show_bug.cgi?id=696954
-
-fix code:
-http://git.ghostscript.com/?p=mupdf.git;h=39b0f07dd960f34e7e6bf230ffc3d87c41ef0f2e
-
-PoC:
-
-reference attachment
-
---from redrain 祝好
-
-Content of type "text/html" skipped
-
-Download attachment "p.pdf" of type "application/pdf" (10751 bytes)
