@@ -1,39 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/20/5
-Message-ID: <20160220221414.GA7116@openwall.com>
-Date: Sun, 21 Feb 2016 01:14:14 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/11
+Message-ID: <20160224080303.GA1667@altlinux.org>
+Date: Wed, 24 Feb 2016 11:03:04 +0300
+From: "Dmitry V. Levin" <ldv@...linux.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple XSS vulnerabilities in Refinery CMS
+Subject: Re: Access to /dev/pts devices via pt_chown and user namespaces
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 19, 2016 at 09:07:30PM +0530, Shravan Kumar wrote:
-> I would like to publically disclose  Multiple XSS Vulnerabilities Found in
-> Refinery CMS.
+On Wed, Feb 24, 2016 at 07:01:11AM +0000, Simon McVittie wrote:
+[...]
+> <https://bugs.debian.org/717544> has some interesting background. The
+> Debian and Ubuntu glibc maintainers tried turning off pt_chown in 2014,
+> but had to turn it back on because it caused too many regressions: in
+> particular "mount -t devpts devpts-foo chroot-foo/dev/pts" apparently
+> alters the mount options for the "real" /dev/pts, not just the one being
+> mounted in the chroot (presumably losing the noexec,nosuid,gid=5 and
+> mode=620 or mode=600 options that are expected in Debian). I don't know
+> whether the default mount options were subsequently altered in util-linux
+> and/or the kernel as suggested on that bug, or whether manually mounting
+> devpts is just not going to be a supported action in Debian 9.
 
-As a moderator, I have to note that we have two inappropriate postings
-here - a link to an external PDF (in fact, the same one in two messages)
-and no detail in message body.  I also have to admit that, although this
-kind of postings were frowned upon in the past, the "List Content
-Guidelines" did not explicitly discourage them.  This is now corrected:
+Linux kernel, starting with version 2.6.29, allows multiple instances
+of devpts filesystem (assuming that CONFIG_DEVPTS_MULTIPLE_INSTANCES
+is enabled) when "newinstance" mount option is specified for devpts.
+The feature is primarily to support containers, but also addresses
+the issue: 
+https://www.kernel.org/doc/Documentation/filesystems/devpts.txt
 
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
-"At least the most essential part of your message (e.g., vulnerability
-detail or a PoC exploit) should in fact be in the message itself (and in
-plain text), rather than only included by reference to an external
-resource.  Posting links to relevant external resources as well is
-acceptable, but posting only links is not."
+-- 
+ldv
 
-Going forward, PDF-only postings like this may be rejected.
-
-And, doing Shravan's homework this one time, I've attached a plain text
-export of the content from the PDF file.  Unfortunately, this does not
-capture some of the detail and isn't formatted well (it might even be
-partially incorrect, showing some deleted text or such).  Sorry about
-that - not my job.  Shravan, on future occasions, please prepare a
-proper plain text description of whatever you post in here.
-
-Alexander
-
-View attachment "Penetration-testing-report--open-source-Ruby-on-rails-Refinery-CMS.txt" of type "text/plain" (7363 bytes)
+Content of type "application/pgp-signature" skipped
