@@ -1,68 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/15
-Message-ID: <4314977.YHaczL6dzr@blackgate>
-Date: Wed, 09 Nov 2016 15:49:31 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/17
+Message-ID: <20160224191054.GD19242@ubuntumail>
+Date: Wed, 24 Feb 2016 19:10:54 +0000
+From: Serge Hallyn <serge.hallyn@...ntu.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: libming: listmp3: divide-by-zero in printMP3Headers (listmp3.c)
+Subject: Re: Access to /dev/pts devices via pt_chown and user namespaces
 Content-Type: text/plain; charset=utf-8
 
-If it is suitable for a CVE please assign one. Thanks.
+Quoting Dmitry V. Levin (ldv@...linux.org):
+> On Wed, Feb 24, 2016 at 07:01:11AM +0000, Simon McVittie wrote:
+> [...]
+> > <https://bugs.debian.org/717544> has some interesting background. The
+> > Debian and Ubuntu glibc maintainers tried turning off pt_chown in 2014,
+> > but had to turn it back on because it caused too many regressions: in
+> > particular "mount -t devpts devpts-foo chroot-foo/dev/pts" apparently
+> > alters the mount options for the "real" /dev/pts, not just the one being
+> > mounted in the chroot (presumably losing the noexec,nosuid,gid=5 and
+> > mode=620 or mode=600 options that are expected in Debian). I don't know
+> > whether the default mount options were subsequently altered in util-linux
+> > and/or the kernel as suggested on that bug, or whether manually mounting
+> > devpts is just not going to be a supported action in Debian 9.
+> 
+> Linux kernel, starting with version 2.6.29, allows multiple instances
+> of devpts filesystem (assuming that CONFIG_DEVPTS_MULTIPLE_INSTANCES
+> is enabled) when "newinstance" mount option is specified for devpts.
+> The feature is primarily to support containers, but also addresses
+> the issue: 
+> https://www.kernel.org/doc/Documentation/filesystems/devpts.txt
 
-Description:
-libming is a Flash (SWF) output library. It can be used from PHP, Perl, Ruby, 
-Python, C, C++, Java, and probably more on the way..
+The problem is that while it's possible to mount a newinstance, it
+is also still possible to mount the host instance and change the
+settings.  Any rogue piece of userspace in a non-user-namespaced
+container is able to do so and mess up the host.  If new devpts
+mounts always did newinstance, then I think things would have been
+different.  But the mere availability of newinstance mounts does not
+solve this.
 
-A fuzzing revealed a divide by zero in listmp3. The bug does not reside in any 
-shared object but if you have a web application that calls directly the 
-listmp3 binary to parse untrusted mp3, then you are affected.
+(When the newinstance was being implemented the authors really did want
+to make it so that future mounts would remount the 'namespaced' version,
+(i.e. mount -t devpts -o newinstance /mnt; mount -t devpts /dev/pts
+would result in /mnt's superblock being used for /dev/pts), but there
+just wasn't a good way to figure out which mount that would be.)
 
-The complete ASan output:
-
-# listmp3 $FILE
-ASAN:DEADLYSIGNAL
-=================================================================
-==29561==ERROR: AddressSanitizer: FPE on unknown address 0x0000004f19e8 (pc 
-0x0000004f19e8 bp 0x000000000000 sp 0x7ffdf0ab6340 T0)
-    #0 0x4f19e7 in printMP3Headers /var/tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/listmp3.c:172:54
-    #1 0x4f1bee in main /var/tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/listmp3.c:191:3
-    #2 0x7f49407a361f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #3 0x418ae8 in getenv (/usr/bin/listmp3+0x418ae8)
-
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: FPE /var/tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/listmp3.c:172:54 in printMP3Headers
-==29561==ABORTING
-
-Affected version:
-0.4.7
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00045-libming-fpe-printMP3Headers
-
-Timeline:
-2016-08-13: bug discovered
-2016-10-20: bug reported to upstream
-2016-11-09: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/09/libming-listmp3-divide-by-zero-in-printmp3headers-listmp3-c
+-serge
