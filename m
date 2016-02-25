@@ -1,28 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/26/1
-Message-ID: <20160326072555.GA8119@eldamar.local>
-Date: Sat, 26 Mar 2016 08:25:55 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: CVE Request: pcre: Segmentation fault on certain input to regular expressions with nested alternatives when JIT is used
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/25/3
+Message-ID: <56CEDD29.5050809@oracle.com>
+Date: Thu, 25 Feb 2016 10:53:29 +0000
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: bash-completion: dequote command injection
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On 24/02/16 21:58, Kurt Seifried wrote:
+> I think in this case it's pretty simply "dequoting should not result in
+> code execution" much like the various deserialization flaws (they should
+> deserialize the data, not execute random stuff).
 
-In Debian the following issue was reported (test case contained)
+My immediate assumption was that an unprivileged user could leave
+something lying around that root could complete on.
 
-https://bugs.debian.org/819050
+Within bash-completion, most of the uses of dequote are to find a config
+file so there'd be a degree of social engineering to persuade root to
+use a config file of your choice.   The other main use seems to be in
+_parse_help() and _parse_usage() which parse gnu-style help and
+bsd-style usage respectively and that might not need as much social
+engineering to exploit.  I didn't investigate further.
 
+Whether or not this turns out to be exploitable at all in
+bash-completion, I do agree with Kurt though.
 
-On certain input when processed for regular expressions with nested
-alternatives and JIT is used, pcre3 can segfault, affecting in this
-case suricata leading to at least a denial of service.
+jch
 
-The problem was addressed upstream with commit:
-http://vcs.pcre.org/pcre?view=revision&revision=1475
+> 
+> On Wed, Feb 24, 2016 at 2:56 PM, Fernando Muñoz <fernando@...l-life.com>
+> wrote:
+> 
+>> Hello Eric,
+>>
+>> I never mentioned privilege escalation.
+>>
+>> This issue how ever could appear when a different application uses
+>> user input and calls "dequote" function that not only dequotes, but
+>> also executes it as a command. If mitre doesn't consider it CVE worth,
+>> that's OK!
+>>
+>> Regards.
+>>
+>>
+>>
+>> On Wed, Feb 24, 2016 at 3:58 PM, Eric Blake <eblake@...hat.com> wrote:
+>>> On 02/24/2016 12:08 PM, Fernando Muñoz wrote:
+>>>> Marcelo Echeverria and Fernando Muñoz discovered that the dequote
+>>>> function included in bash-completion allows to execute arbitrary
+>>>> commands since it uses the eval function to call printf and perform
+>>>> the actual dequoting. bash-completion is included on Debian, Ubuntu
+>>>> OpenSuse [1] and probably other distros.
+>>>
+>>> But what is the privilege escalation?  This is no different than
+>>> incorrectly using 'eval' in a shell script - you may have buggy code,
+>>> and have an easy-to-trigger bug, but if you can't escalate privileges,
+>>> how it is a CVE?
+>>>
+>>> --
+>>> Eric Blake   eblake redhat com    +1-919-301-3266
+>>> Libvirt virtualization library http://libvirt.org
+>>>
+>>
+> 
+> 
+> 
 
-Can you assign a CVE for this issue?
-
-Regards,
-Salvatore
