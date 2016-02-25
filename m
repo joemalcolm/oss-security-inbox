@@ -1,47 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/8
-Message-ID: <bb3afc7b-f1ad-4102-1c47-af1080fe5cff@redhat.com>
-Date: Thu, 28 Jul 2016 11:08:30 -0400
-From: Daniel J Walsh <dwalsh@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: cve request: systemd-machined: information exposure for docker containers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/25/7
+Message-ID: <9846A6064BD102419D06814DD0D78DE112854418@CIO-TNC-D2MBX02.osuad.osu.edu>
+Date: Thu, 25 Feb 2016 14:20:58 +0000
+From: "Cantor, Scott" <cantor.2@....edu>
+To: "c-dev@...ces.apache.org" <c-dev@...ces.apache.org>, "c-users@...ces.apache.org" <c-users@...ces.apache.org>, "security@...che.org" <security@...che.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "bugtraq@...urityfocus.com" <bugtraq@...urityfocus.com>
+CC: Gustavo Grieco <gustavo.grieco@...g.fr>
+Subject: CVE-2016-0729: Apache Xerces-C XML Parser Crashes on Malformed Input
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+CVE-2016-0729: Apache Xerces-C XML Parser Crashes on Malformed Input
 
-On 07/28/2016 10:42 AM, Simon McVittie wrote:
-> On Thu, 28 Jul 2016 at 08:34:35 -0400, Daniel J Walsh wrote:
->> Lennart is wrong when he states that this only effects "user"
->> containers, any container that registers with
->> machinectl, will have this information revealed to non privileged user
->> processes.
-> *Which* unprivileged user processes?
->
-> If the unprivileged user processes are not in a container, they can get a
-> significant amount of the same information by reading the host's /proc.
->
-> If the unprivileged user processes are in a container or other confinement
-> that prevents them from looking at the host's /proc, then one of the other
-> things that confinement can/should prevent is unfiltered access to the host
-> system's D-Bus system bus, which is how machinectl talks to systemd-machined.
->
-> Lennart also points out on the systemd bug that the
-> methods in question can be access-controlled (at your
-> own risk, the policy language is horrible) by modifying
-> /etc/dbus-1/system.d/org.freedesktop.machine1.conf. They don't appear to
-> be mediated by /usr/share/polkit-1/actions/org.freedesktop.machine1.policy
-> too, but they could be; that would be an enhancement request for systemd
-> upstream.
->
-> I think the bottom line here is that if the author of a container integration
-> tool chooses to publish information in a central registry (systemd-machined),
-> then they shouldn't be surprised to find the central registry's security model
-> getting applied to that information.
->
->     S
-So we can add documentation to oci-register-machine that if you use it,
-this information
-will not be available to the system.  If you don't want this information
-revealed you can
-uninstall the package, but tools like journalctl -M will no longer work
-for docker/runc containers.
+Severity: Critical
+
+Vendor: The Apache Software Foundation
+
+Versions Affected: Apache Xerces-C XML Parser library versions
+prior to V3.1.3
+
+Description: The Xerces-C XML parser mishandles certain kinds of malformed
+input documents, resulting in buffer overlows during processing and error
+reporting. The overflows can manifest as a segmentation fault or as memory
+corruption during a parse operation. The bugs allow for a denial of service
+attack in many applications by an unauthenticated attacker, and could
+conceivably result in remote code execution.
+
+Mitigation: Applications that are using library versions older than
+V3.1.3 should upgrade as soon as possible. Distributors of older versions
+should apply the patches from this subversion revision:
+
+http://svn.apache.org/viewvc?view=revision&revision=1727978
+
+Credit: This issue was reported by Gustavo Grieco.
+
+References:
+http://xerces.apache.org/xerces-c/secadv/CVE-2016-0729.txt
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJWzlsyAAoJEDeLhFQCJ3liUAsP/Rr4rBKVPxOw3+5JDiQWT27y
+/TT1kLFV+u6LtuBL3q6rwOIANquEMP1nJPVuYtceNF66xHi7eX6HZ8jZch6T+uvZ
+Bt+kUTOfG4PW1RLm83W1kof58PTI5mIYBWofAQzXm9TSyvoHF5GXWqzNyGOKauYN
+pto5xvJzEN5gM7DjbXF8OoIesNVaqCnr+9A2WmCCdNGNzSQLlUVDg9kDvXUdDvHD
++TXHDfgP8OSEYl5e3B3P5OV6SzUi2xdATR6zQgb1QANJy7FoK/FOP5+2J8ccultu
+mXlVHpsGlPoIi85nyKVykK3hTT4DyhqSwCa9ek3D5i7lIEk2dXxeevh90is3y/Al
+0GSUoG7yXbfe7xmlcUUghdYeYBP6JSOiOqAREUsKfY6nYo4XpGwvJRz/Xgk7iw9y
+p39sCIKuJBpqe1Vgy8ONeTFc0WZkkriq23n2oZ4zxoOImF5k44f01olZhA/wmE1P
+Wi6Qrafn6myUtp1TAXWoakfxJo0DgHfH6fazlmYSPHIyfLShrAcG6aETDn92KsDp
+gy4a5ulP/qpkncJrF2+XeM1wgQSTpUln2664fSwRw5whqg/PW/qGx+/1sltwOSQe
+l4bvQhr9xvkv+W++aPFgmJF3HW0Gnsglty6KQAcQ/RqheZ+/vL9buCqWw2xg4bkN
+BQJ4QvN4uaHIUxhzVfiL
+=vI5o
+-----END PGP SIGNATURE-----
