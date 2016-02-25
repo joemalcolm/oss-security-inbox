@@ -1,21 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/16
-Message-ID: <7830cad706e7061be3fe25de4f5116d3@aplu.fr>
-Date: Wed, 04 May 2016 14:23:39 +0200
-From: Aymeric <mulx@...u.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/25/8
+Message-ID: <CACn5sdT9ezjtWQdgO0Lv=QRVEyiZ5Ot8wf+4Ch+-8KrgoJqp+w@mail.gmail.com>
+Date: Thu, 25 Feb 2016 14:18:07 -0300
+From: Gustavo Grieco <gustavo.grieco@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Dotclear 2.9.1 XSS vulnerability by SVG
+Subject: CVE request: reads out-of-bounds with cpio 2.11
 Content-Type: text/plain; charset=utf-8
-
-On 2016-05-04 08:46, limingxing wrote:
-> Hello,
-> We find an vulnerability about Dotclear 2.9.1 XSS vulnerability by SVG
-> [zip]
 
 Hello,
 
-FYI, I forwarded your email to their dev mailing list.
-Please, if you found any other vulnerability on dotclear, at least add 
-them to cc security(@)dotclear.net (http://dev.dotclear.org/2.0/).
+Two reads out-of-bounds in cpio 2.11 were found in the parsing of cpio
+files (other version are probably affected).  Find attached a test case to
+reproduce them. The ASAN report of the first one is here:
 
-Bye
+$ ./cpio -i < overflow.cpio
+
+./cpio: warning: skipped 8 bytes of junk
+=================================================================
+==31838==ERROR: AddressSanitizer: heap-buffer-overflow on address
+0x60200000edb2 at pc 0x7fb81910ba28 bp 0x7fffa1c286d0 sp 0x7fffa1c27e80
+READ of size 2 at 0x60200000edb2 thread T0
+    #0 0x7fb81910ba27 in strchr
+(/usr/lib/x86_64-linux-gnu/libasan.so.2+0x6ea27)
+    #1 0x407174 in path_contains_symlink
+/home/vagrant/repos/cpio-2.11+dfsg/src/copyin.c:718
+    #2 0x40bce0 in process_copy_in
+/home/vagrant/repos/cpio-2.11+dfsg/src/copyin.c:1524
+    #3 0x4165c6 in main /home/vagrant/repos/cpio-2.11+dfsg/src/main.c:746
+    #4 0x7fb818cf9ec4 in __libc_start_main
+(/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
+    #5 0x403408  (/home/vagrant/repos/cpio-2.11+dfsg/src/cpio+0x403408)
+
+0x60200000edb2 is located 0 bytes to the right of 2-byte region
+[0x60200000edb0,0x60200000edb2)
+allocated by thread T0 here:
+    #0 0x7fb81913176a in realloc
+(/usr/lib/x86_64-linux-gnu/libasan.so.2+0x9476a)
+    #1 0x43da22 in xrealloc
+/home/vagrant/repos/cpio-2.11+dfsg/gnu/xmalloc.c:59
+    #2 0x40b5ab in process_copy_in
+/home/vagrant/repos/cpio-2.11+dfsg/src/copyin.c:1437
+    #3 0x4165c6 in main /home/vagrant/repos/cpio-2.11+dfsg/src/main.c:746
+    #4 0x7fb818cf9ec4 in __libc_start_main
+(/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
+
+and the second one is here:
+
+$ ./cpio -t < overflow.cpio
+
+./cpio: warning: skipped 8 bytes of junk
+=================================================================
+==3962==ERROR: AddressSanitizer: heap-buffer-overflow on address
+0x60200000edb2 at pc 0x7f705ab831b1 bp 0x7ffc620c3f70 sp 0x7ffc620c3720
+READ of size 3 at 0x60200000edb2 thread T0
+    #0 0x7f705ab831b0  (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x5e1b0)
+    #1 0x7f705ab837b7 in __interceptor_vprintf
+(/usr/lib/x86_64-linux-gnu/libasan.so.2+0x5e7b7)
+    #2 0x7f705ab838a9 in __interceptor_printf
+(/usr/lib/x86_64-linux-gnu/libasan.so.2+0x5e8a9)
+    #3 0x403d55 in list_file
+/home/vagrant/repos/cpio-2.11+dfsg/src/copyin.c:180
+    #4 0x40b958 in process_copy_in
+/home/vagrant/repos/cpio-2.11+dfsg/src/copyin.c:1478
+    #5 0x4165c6 in main /home/vagrant/repos/cpio-2.11+dfsg/src/main.c:746
+    #6 0x7f705a781ec4 in __libc_start_main
+(/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
+    #7 0x403408  (/home/vagrant/repos/cpio-2.11+dfsg/src/cpio+0x403408)
+
+0x60200000edb2 is located 0 bytes to the right of 2-byte region
+[0x60200000edb0,0x60200000edb2)
+allocated by thread T0 here:
+    #0 0x7f705abb976a in realloc
+(/usr/lib/x86_64-linux-gnu/libasan.so.2+0x9476a)
+    #1 0x43da22 in xrealloc
+/home/vagrant/repos/cpio-2.11+dfsg/gnu/xmalloc.c:59
+    #2 0x40b5ab in process_copy_in
+/home/vagrant/repos/cpio-2.11+dfsg/src/copyin.c:1437
+    #3 0x4165c6 in main /home/vagrant/repos/cpio-2.11+dfsg/src/main.c:746
+    #4 0x7f705a781ec4 in __libc_start_main
+(/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
+
+These issues were found using QuickFuzz.
+
+Regards,
+Gustavo.
+
+Content of type "text/html" skipped
+
+Download attachment "overflow.cpio" of type "application/x-cpio" (282 bytes)
