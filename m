@@ -1,42 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/15/10
-Message-ID: <a7284f2aa7864398ab266074ca61b417@imshyb02.MITRE.ORG>
-Date: Thu, 15 Dec 2016 12:46:09 -0500
-From: <cve-assign@...re.org>
-To: <carnil@...ian.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: FlightGear: Allows the route manager to overwrite arbitrary files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/26/6
+Message-ID: <CALCETrWner1C6Niczzx-mRay_YVb4fxS7xXLx66v1p+7tkU73g@mail.gmail.com>
+Date: Fri, 26 Feb 2016 12:28:23 -0800
+From: Andy Lutomirski <luto@...nel.org>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Partial SMAP bypass on 64-bit Linux kernels
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi all-
 
-> https://bugs.debian.org/848114
-> https://sourceforge.net/p/flightgear/flightgear/ci/280cd523686fbdb175d50417266d2487a8ce67d2/
+Those of you using 64-bit Linux kernels on SMAP-capable systems (which
+are still very rare in the server space) with ia32 emulation enabled
+will want to backport:
 
->> + SGPath authorizedPath = fgValidatePath(path, true /* write */);
+https://git.kernel.org/cgit/linux/kernel/git/tip/tip.git/commit/?h=x86/urgent&id=3d44d51bd339766f0178f0cf2e8d048b4a4872aa
 
-Use CVE-2016-9956.
+That patch fixes a bug that exposed a fairly large kernel code surface
+to a straightforward SMAP bypass.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Credit to Brian Gerst who noticed the bug.
 
-iQIcBAEBCAAGBQJYUtTdAAoJEHb/MwWLVhi2FvQQALOQ9koKeFNAWXn9+FVyNjUP
-GZkG+4gC5q/33B1IY4UIF08TQuXGz2diPgORmkS2jRKPWz0LBQvgI0UhPUJZR48v
-MjtR6x2kvHDb2JtXMBhmySZTvwez9MJ8XosoXsmemAY1m8BgmffxgI8xExXjPpph
-B08bDQAB8tspqiONLaGT+fWyeObid0LnZg0TPxif3pdkW8k2ZpfQog7AtV/ShMqK
-o9aGvozIOG4nRXbHORhJroS6RfBbiblblMDt6mD1U9MWi6EXOamvG2tvEeSqWwda
-wCuoocCPWifL+ythFF73emldNTl8E84z3PjEvPIb3wW5QTnc2v8j58J2Nga5A/AJ
-PCOVkB2cUa2gHsUpLZ6ahr8bjPV41FErgP0r7c72Pk0O1o+eieMKg5nzW56941h7
-0c6ilhNHLN1uYXeelfLzM1Y3XqH4RdyDE24tAOP+b/kw8aEOj3WWpwWI1kPeooaD
-vJ70dXWn5sRWiUVknptQAV8v71o/C8Ah0rE6ArnP4i7uF6LTBc85fv+ye3xP8y9e
-iA5Q6HwkT/aJfW0jFPhCNg84wgxn+n13pyEppQ5ojjPJtzbaMHsI1AN294Y/FYYM
-//cDvlr14sPIht1DXa94/gFBY1Sebkg3mk3AIYvVEEvCcq7Vmyo1htOeyraH0Kdc
-ihaXPExomG2PvjS3JIjV
-=JSzX
------END PGP SIGNATURE-----
+This bug is present in all kernels from 3.10 on AFAICT.  Kernels
+before 3.10 don't support SMAP in the first place.  32-bit kernels are
+not affected (but why would you be running a 32-bit kernel on
+SMAP-capable hardware in the first place?).
+
+--Andy
