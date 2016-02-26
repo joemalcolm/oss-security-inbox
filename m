@@ -1,4 +1,9 @@
-Received: (qmail 7680 invoked by uid 550); 2 Jul 2024 13:08:41 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1327" "Friday" "26" "February" "2016" "02:05:45" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160226070545.6416DABC030@smtpvmsrv1.mitre.org>" "35" "[oss-security] Re: CVE Request: pkexec tty hijacking via TIOCSTI ioctl" nil nil nil "2" "2016022607:05:45" "[oss-security] Re: CVE Request: pkexec tty hijacking via TIOCSTI ioctl" (number mark "U       cve-assign@m Feb 26   35/1327  " thread-indent "\"[oss-security] Re: CVE Request: pkexec tty hijacking via TIOCSTI ioctl\"\n") "<20160225121511.17881tlkjezvzolc@webmail.alunos.dcc.fc.up.pt>" ("<20160225121511.17881tlkjezvzolc@webmail.alunos.dcc.fc.up.pt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13538 invoked by uid 550); 26 Feb 2016 07:05:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,63 +12,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30049 invoked from network); 1 Jul 2024 23:47:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
-	s=2; t=1719877662;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=oXUZUWN22ItAxgFy46SnSSHj+KJJsmQcdR7pzpwYY1E=;
-	b=g0Z0Rn07ytaSt9LpgC3uF5LVDIJWLPAiYLOzVPHMe/Nuw28zZ/nxzujsi0D31DiWOnr+up
-	/TaiTLkt7UwycYusPmZAn40iQt4i40jI0pBEwv6+PF/xxYows8xIuQKi2I+NzLSiZJfque
-	spm914EmNO8VqodF6GTln1TIP5+xll/rrztJp5nEq9OWPRhedJ0Y+blufaqtpfoS+/d+vk
-	ch5FAoumIfZPVP536hvUa2S+SjP83xEr/yl2wF2bwXPr4VN6V1tuTOUCOcKgqXNde5CVUr
-	AG1ZFbyGxs9jpyGKDlcMVekaWzFd2/XlcXcg1MYJStTxxSIe/jwHQr+rKXPgBQ==
-Date: Tue, 2 Jul 2024 08:47:22 +0900
-From: Dominique Martinet <asmadeus@codewreck.org>
-To: Damien Miller <djm@cvs.openbsd.org>, oss-security@lists.openwall.com
-Message-ID: <ZoNACurP_90GPyp5@codewreck.org>
-References: <d2ed9e542682bf82@cvs.openbsd.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <d2ed9e542682bf82@cvs.openbsd.org>
-Subject: Re: [oss-security] Announce: OpenSSH 9.8 released
+Received: (qmail 13520 invoked from network); 26 Feb 2016 07:05:56 -0000
+From: cve-assign@mitre.org
+To: up201407890@alunos.dcc.fc.up.pt
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20160225121511.17881tlkjezvzolc@webmail.alunos.dcc.fc.up.pt>
+Message-Id: <20160226070545.6416DABC030@smtpvmsrv1.mitre.org>
+Date: Fri, 26 Feb 2016 02:05:45 -0500 (EST)
+Subject: [oss-security] Re: CVE Request: pkexec tty hijacking via TIOCSTI ioctl
 
-Damien Miller wrote on Mon, Jul 01, 2024 at 02:10:04AM -0600:
-> OpenSSH 9.8 has just been released. It will be available from the
-> mirrors listed at https://www.openssh.com/ shortly.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Thanks for all the work towards this release.
+> When executing a program via "pkexec --user nonpriv program" the
+> nonpriv session can
+> escape to the parent session by using the TIOCSTI ioctl to push
+> characters into the
+> terminal's input buffer
 
-Just a paperwork question as I couldn't find the information anywhere,
-was there any CVE assigned to the 2nd security issue?
+> https://bugzilla.redhat.com/show_bug.cgi?id=1300746
 
-I'm asking because I tried updating the alpine package[1], and given the
-first issue is a slightly different problem on musl it probably needs a
-different label than CVE-2024-6387 ; I'm honestly still not quite sure
-how all this works after all these years but at the very least a search
-on cve.mitre.org[2] didn't turn up anything, so I assume redhat (who
-issued the first CVE) didn't process the second problem?
+Use CVE-2016-2568.
 
-(although to be fair the non-safety is still a problem on alpine, so
-that CVE might still apply, it's just no longer a free/malloc race with
-syslog but something that hasn't been studied as extensively... labeling
-is hard.)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-[1] https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests/68482#note_417509
-[2] https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=openssh
-
-Damien Miller wrote on Mon, Jul 01, 2024 at 02:10:04AM -0600:
-> 1) Race condition in sshd(8)
-
-Looking at other announces I assume CVE-2024-6387 is specific to this.
-
-> 2) Logic error in ssh(1) ObscureKeystrokeTiming
-
-I couldn't find anything on this one.
-
-
-Thanks,
--- 
-Dominique Martinet | Asmadeus
+iQIcBAEBCAAGBQJWz+EkAAoJEL54rhJi8gl5pE4QAJm2/2l0HyDMz50E1G/f7ZSB
+2VdigMvP/55H7rk6x6y8S6DJdU87qlZR5tnozh9Ay52k9z0Rt7K4lozsOno+z+oV
+c+yXObgNK8J6BwfaKP8lsCxPVorhdXI98NRS/j2poT91nOjmxmff0TcKN3MHpn6x
+HZ4OxDAkm5B9hl43Ue32xPrMilbG/Ch1yblKJDTUA3vlIY+txhORBr2ZDXYTBdu1
+i0tKjUC6hRub1Yu79SHuwtc0aFdggY7ZbzpAyOeOSHcz7EczWZd4dN4oD33a3xbt
+DdXsLl6VQ2QKOm2AVbgTwcq13L4g9rOcpRN2o1zuGpbYn9e4ebvLeqbBPO4hlpW8
+FxCdOpbOPsU4oikwf/EPNUPGQVEV2DPszIDp5/y31NUQb5DEz8sGUEA7lti2Na2w
+Y+/AnnR1oeMSXsK42Pyfak7WVaGJfllSJ1LKJHxD4XoGVjMMZlWpWYtwrm5reu9v
+IxVpYa+lwdmyzbWu9+w+y/wHEnvzq4vrVpyDXHk2833EtXsqDssvRjKn0NNy7BSN
+o3XAC0Goj3j1ld0e6AefkHn9GioODWXuSoZr3tvy7GNMLl52/huLCOdBYxTvCpoE
+oQDuhvcwRGRijclxOCmZ5mlnCGvB/u0o7bq+gxj1E757iY5NSoXMQGK3CFUlz56K
+rHWOpmcUoiZd/kWV8hTY
+=1vcI
+-----END PGP SIGNATURE-----
