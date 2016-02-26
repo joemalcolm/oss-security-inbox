@@ -1,51 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/16/4
-Message-Id: <20160716143058.3247F6C0D94@smtpvmsrv1.mitre.org>
-Date: Sat, 16 Jul 2016 10:30:58 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/26/3
+Message-Id: <20160226070545.6416DABC030@smtpvmsrv1.mitre.org>
+Date: Fri, 26 Feb 2016 02:05:45 -0500 (EST)
 From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, taffit@...ian.org
-Subject: Re: CVE Request: Zend Framework: Potential SQL injection in ORDER and GROUP statements of Zend_Db_Select
+To: up201407890@...nos.dcc.fc.up.pt
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: pkexec tty hijacking via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> The Zend Framework project released security advisory ZF2016-02 to
-> address a potential SQL injection in ORDER and GROUP statements of
-> Zend_Db_Select.
+> When executing a program via "pkexec --user nonpriv program" the
+> nonpriv session can
+> escape to the parent session by using the TIOCSTI ioctl to push
+> characters into the
+> terminal's input buffer
 
-> https://github.com/zendframework/zf1/commit/bf3f40605be3d8f136a07ae991079a7dcb34d967
-> https://framework.zend.com/security/advisory/ZF2016-02
+> https://bugzilla.redhat.com/show_bug.cgi?id=1300746
 
->> This security fix can be considered as an improvement of the previous
->> ZF2014-04.
-
-Use CVE-2016-6233.
-
-This vulnerability exists because of an incomplete fix for
-CVE-2014-4914. (The CVE ID assignment for ZF2014-04 was in the
-http://www.openwall.com/lists/oss-security/2014/07/11/4 post.)
+Use CVE-2016-2568.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXikTFAAoJEHb/MwWLVhi2eLUP/2dZUfNgmcqUgI0D7zGFOjAC
-AZfk2kVe0S6dvMtcga6G+O+XEib8cgZldvak7uCC0UH3XGuUc9HWPnaVvTX8SBKE
-w+CMG7jWqSNNdWOF05m+yh7xlci2I/RV+Tu5Gm6jmLcpMbCnlHoibQsbAiWmGRgJ
-KCv1ktT/yMx9LPHPZVOR1MtJUBbv8adJzOkywJYiEYzDf7H61CUNEHi51hR/8mCu
-2NcOLAi4rIlWYvHuUiNOtnd8ZKYk56QwLVo7HZ9XaMDlvBf1XDxm8VrAX3kZmLKv
-4WHKnk37H7W2XHw4KBksBNsZ/KANFk0wjsvWz3etsiUdm2JNvOKOjyURNraEEa4q
-VtwYCNB7CuB9tnuykO1qRm+dI5iGLUja5xRkSXzz/DHbnFpVp/4+kS3JRwWyGk8J
-ESzifKuJLNMIwS1/LWKwjP0kIbfpoP7CixtBHIcayJIF8VRAQZJrVBPzHZHXbDnQ
-TzeAOTRaXqrxcsY1YhKJVgmN0IdQ8RcIWsrvKnZMY+whBd21/lghOFi2Ony6ycVf
-ZvCKSAIWpufGA7y+ZHlDacyp3z1At0FdjU2b1Uqkp6CaX2h7V06nMlJhgMxWvOll
-4x32KeSL6YaNIgYMx/PgrMbzqUbZH3442myXFM5BA1AmD3HkDtGNsxcbBbF06ii2
-DpO/xTBvwbInmtUy/sWA
-=p31W
+iQIcBAEBCAAGBQJWz+EkAAoJEL54rhJi8gl5pE4QAJm2/2l0HyDMz50E1G/f7ZSB
+2VdigMvP/55H7rk6x6y8S6DJdU87qlZR5tnozh9Ay52k9z0Rt7K4lozsOno+z+oV
+c+yXObgNK8J6BwfaKP8lsCxPVorhdXI98NRS/j2poT91nOjmxmff0TcKN3MHpn6x
+HZ4OxDAkm5B9hl43Ue32xPrMilbG/Ch1yblKJDTUA3vlIY+txhORBr2ZDXYTBdu1
+i0tKjUC6hRub1Yu79SHuwtc0aFdggY7ZbzpAyOeOSHcz7EczWZd4dN4oD33a3xbt
+DdXsLl6VQ2QKOm2AVbgTwcq13L4g9rOcpRN2o1zuGpbYn9e4ebvLeqbBPO4hlpW8
+FxCdOpbOPsU4oikwf/EPNUPGQVEV2DPszIDp5/y31NUQb5DEz8sGUEA7lti2Na2w
+Y+/AnnR1oeMSXsK42Pyfak7WVaGJfllSJ1LKJHxD4XoGVjMMZlWpWYtwrm5reu9v
+IxVpYa+lwdmyzbWu9+w+y/wHEnvzq4vrVpyDXHk2833EtXsqDssvRjKn0NNy7BSN
+o3XAC0Goj3j1ld0e6AefkHn9GioODWXuSoZr3tvy7GNMLl52/huLCOdBYxTvCpoE
+oQDuhvcwRGRijclxOCmZ5mlnCGvB/u0o7bq+gxj1E757iY5NSoXMQGK3CFUlz56K
+rHWOpmcUoiZd/kWV8hTY
+=1vcI
 -----END PGP SIGNATURE-----
