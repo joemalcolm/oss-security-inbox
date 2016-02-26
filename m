@@ -1,34 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/02/4
-Message-ID: <8737ke7byg.fsf@mid.deneb.enyo.de>
-Date: Sun, 02 Oct 2016 22:06:15 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: NSPR 4.12, NSS 3.22.1 and PR_GetEnvSecure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/26/4
+Message-Id: <20160226162825.48EF752E001@smtpvbsrv1.mitre.org>
+Date: Fri, 26 Feb 2016 11:28:25 -0500 (EST)
+From: cve-assign@...re.org
+To: gustavo.grieco@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: reads out-of-bounds with cpio 2.11
 Content-Type: text/plain; charset=utf-8
 
-It seems this was never disclosed properly; there are still a couple
-of hidden Mozilla bugs about this.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The NSS 3.22.1 announcement
+> Two reads out-of-bounds in cpio 2.11 were found in the parsing of cpio
+> files
 
-  <https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_3.22.1_release_notes>
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 2
 
-mentions one:
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 3
 
-  bug 1194680: NSS has been changed to use the PR_GetEnvSecure
-    function that was made available in NSPR 4.12
+We think this may be similar to the
+http://www.openwall.com/lists/oss-security/2015/11/17/4 and
+http://www.openwall.com/lists/oss-security/2015/11/03/11 cases in
+which the product isn't a library, and typically doesn't need to
+remain running after bad input is encountered.
 
-The story behind this is that NSS uses environment variables to
-configure lots of things, some of which refer to file system
-locations.  Others can be degrade the operation of NSS in various
-ways, forcing compatibility modes and so on.
+More specifically, we don't know of cases where the relevant cpio
+source code (e.g., copyin.c) has been adapted for use in a library for
+a long-running process in a different product that also operates on
+untrusted input, although this might be plausible because a variety of
+products may want cpio support.
 
-Previously, these environment variables were not ignored SUID
-binaries.  NSPR 4.12 and NSS 3.22.1 introduce a new API,
-PR_GetEnVSecure, to address this.  It's a very thin wrapper around
-glibc's secure_getenv and similar functions on other systems.
+A CVE ID may be available if the upstream response indicates that the
+out-of-bounds reads allow the attacker to change the flow of control.
 
-Both NSPR and NSS need to be upgraded to address this; even if you run
-s/PR_GetEnvSecure/secure_getenv/ on the NSS sources, some unprotected
-environment variable lookups remain in NSPR.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJW0HyHAAoJEL54rhJi8gl53eYQAJ+w0oXuIIhSxfJl0amDoBCf
+nqNdQ9xPq+bHvgDDFwkGdEzutLwDWIG0FmytRbiqXG/u5me4XDQXQ465Kag8n0sG
+Lzs3dFMDnjz5pd4C7oKx/JhIEjI6rD5oooTqN3xMrPGezaXsz+nL/8AUtFShqGL3
+bTIOY0xx4VpR0iTfRu14NpHpB4ocf0OVvSgKHy70H+4TDyM8PKqXSQidkuuHjM8M
+lhZeMsu5cyBYo2pDqlIHQ4gBhh5+gYDAcUd5Y+C/+DltH2lJjYCRw+KW6utt9/hQ
+dBzd2VXkNZoFHOnj5AIR2U1ROvpU9eSCxMUPdmKxqrXXOvvxDDaFGaFfHXG0eNR2
+n9A67ekWCgUya5wR4nb23olzxvR9GVqkwtRJrZ5z6t/Qrl13LiJArzQRiMdhyydi
+tkeDw28dHaU2i3XiwZr8x8QSiKx00N5Q0eWOjrigvpbVJVoHQEF2ruIsWm/1L3A/
+iJf0JvD2tt1Qh0sNWn+sf+qVnNIywlsRVFP6tiwfsP+cDBqIzH2TyOonDm2tjKeY
+P/SmiUEm4Btrd6TJnc0uFI3q4p7hfpWbZRC9hgzJKA/k6LUdLuDEUznej7WIHXiQ
+c8LaZOWsC7cON+4GalayNZnovrE4MCKo4gWMxuecD9/Xv14eE5gpxx8BUL/bM7Ig
+HX6rsYGYOtDvyyLZqY1o
+=pd0F
+-----END PGP SIGNATURE-----
