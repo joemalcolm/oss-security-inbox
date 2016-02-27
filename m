@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["24417" "Thursday" "17" "December" "2015" "12:42:15" "+0000" "Xen.org security team" "security@xen.org" "<E1a9Xst-0001w5-Ru@xenbits.xen.org>" "471" "[oss-security] Xen Security Advisory 157 (CVE-2015-8551,CVE-2015-8552) - Linux pciback missing sanity checks leading to crash" nil nil nil "12" "2015121712:42:15" "[oss-security] Xen Security Advisory 157 (CVE-2015-8551,CVE-2015-8552) - Linux pciback missing sanity checks leading to crash" (number mark "U       security@xen Dec 17  471/24417 " thread-indent "\"[oss-security] Xen Security Advisory 157 (CVE-2015-8551,CVE-2015-8552) - Linux pciback missing sanity checks leading to crash\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1470" "Saturday" "27" "February" "2016" "18:34:20" "+0100" "Jakub Wilk" "jwilk@debian.org" "<20160227173409.GA3663@jwilk.net>" "32" "Re: [oss-security] Access to /dev/pts devices via pt_chown and user namespaces" "^Date:" nil nil "2" "2016022717:34:20" "[oss-security] Access to /dev/pts devices via pt_chown and user namespaces" (number mark "        jwilk@debian Feb 27   32/1470  " thread-indent "\"Re: [oss-security] Access to /dev/pts devices via pt_chown and user namespaces\"\n") "<20160224070111.GA8044@perpetual.pseudorandom.co.uk>" ("<8fc639ad-daef-1a6f-facf-140eb61aeee5@halfdog.net>" "<20160223161754.GA23263@openwall.com>" "<20160223164136.GA24225@altlinux.org>" "<42e97a56-3538-0864-ee40-2494df567745@halfdog.net>" "<20160224070111.GA8044@perpetual.pseudorandom.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19950 invoked by uid 550); 17 Dec 2015 12:43:14 -0000
+Received: (qmail 23842 invoked by uid 550); 27 Feb 2016 17:34:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,489 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17578 invoked from network); 17 Dec 2015 12:42:37 -0000
-Date: Thu, 17 Dec 2015 12:42:15 +0000
-Message-Id: <E1a9Xst-0001w5-Ru@xenbits.xen.org>
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 23821 invoked from network); 27 Feb 2016 17:34:35 -0000
+Message-ID: <20160227173409.GA3663@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <8fc639ad-daef-1a6f-facf-140eb61aeee5@halfdog.net>
+ <20160223161754.GA23263@openwall.com>
+ <20160223164136.GA24225@altlinux.org>
+ <42e97a56-3538-0864-ee40-2494df567745@halfdog.net>
+ <20160224070111.GA8044@perpetual.pseudorandom.co.uk>
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.428 (Entity 5.428)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security@xen.org>
-Subject: [oss-security] Xen Security Advisory 157 (CVE-2015-8551,CVE-2015-8552) - Linux
- pciback missing sanity checks leading to crash
-
---=separator
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20160224070111.GA8044@perpetual.pseudorandom.co.uk>
+User-Agent: Mutt/1.5.23.1 (2014-03-12)
+Date: Sat, 27 Feb 2016 18:34:20 +0100
+From: Jakub Wilk <jwilk@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Access to /dev/pts devices via pt_chown and user
+ namespaces
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* Simon McVittie <smcv@debian.org>, 2016-02-24, 07:01:
+>>>Just for the record, pt_chown is not enabled by default in upstream 
+>>>glibc starting with glibc-2.18, one has to specify --enable-pt_chown 
+>>>configure option explicitly to build pt_chown.
+>>
+>>Thanks for that information. So for pt_chown, this could hopefully be 
+>>just an Ubuntu issue.
+>
+>And Debian 8 (but not the future Debian 9, at least on Linux kernels), 
+>and probably other distributions where backward compat was a concern.
+>
+><https://bugs.debian.org/717544> has some interesting background. The 
+>Debian and Ubuntu glibc maintainers tried turning off pt_chown in 2014, 
+>but had to turn it back on because it caused too many regressions: in 
+>particular "mount -t devpts devpts-foo chroot-foo/dev/pts" apparently 
+>alters the mount options for the "real" /dev/pts, not just the one 
+>being mounted in the chroot (presumably losing the noexec,nosuid,gid=5 
+>and mode=620 or mode=600 options that are expected in Debian). I don't 
+>know whether the default mount options were subsequently altered in 
+>util-linux and/or the kernel as suggested on that bug, or whether 
+>manually mounting devpts is just not going to be a supported action in 
+>Debian 9.
 
-        Xen Security Advisory CVE-2015-8551,CVE-2015-8552 / XSA-157
-                                 version 3
+grantpt() was fixed so that it works even when /dev/pts mount options 
+are "wrong":
+https://sourceware.org/ml/libc-alpha/2015-12/msg00151.html
 
-         Linux pciback missing sanity checks leading to crash
+This is going to be backported to Debian 8 (jessie):
+https://bugs.debian.org/816023
 
-UPDATES IN VERSION 3
-====================
-
-Removed CVE-2015-8553 from the title of this advisory.  We will issue
-an update to XSA-120 which documents the assignment of CVE-2015-8553
-to the XSA-120 v5+ addendum patch.
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-Xen PCI backend driver does not perform proper sanity checks on the
-device's state.
-
-Which in turn allows the generic MSI code (called by Xen PCI backend) to be
-called incorrectly leading to hitting BUG conditions or causing NULL pointer
-exceptions in the MSI code.  (CVE-2015-8551)
-
-To exploit this the guest can craft specific sequence of XEN_PCI_OP_*
-operations which will trigger this.
-
-Furthermore the frontend can also craft an continous stream of
-XEN_PCI_OP_enable_msi which will trigger an continous
-stream of WARN() messages triggered by the MSI code leading to the logging
-in the initial domain to exhaust disk space.  (CVE-2015-8552)
-
-Lastly there is also missing check to verify whether the device has
-memory decoding enabled set at the start of the day leading the initial
-domain "accesses to the respective MMIO or I/O port ranges would - - on PCI
-Express devices - [which can] lead to Unsupported Request responses.
-The treatment of such errors is platform specific." (from XSA-120).
-Note that if XSA-120 'addendum' patch (re CVE-2015-8553) has been
-applied this particular sub-issue is not exploitable.
-
-IMPACT
-======
-
-Malicious guest administrators can cause denial of service.  If driver
-domains are not in use, the impact is a host crash.
-
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
-
-VULNERABLE SYSTEMS
-==================
-
-This bug affects systems using Linux as the driver domain, including
-non-disaggregated systems using Linux as dom0.
-
-Linux versions v3.1 and onwards are vulnerable due to supporting PCI
-pass-through backend driver.
-
-PV and HVM guests which have been granted access to physical PCI devices
-(`PCI passthrough') can take advantage of this vulnerability.
-
-Furthermore, the vulnerability is only applicable when the
-passed-through PCI devices are MSI-capable or MSI-X. (Most modern devices
-are).
-
-MITIGATION
-==========
-
-Not using PCI passthrough for PV and HVM guests. Note that for HVM guests
-QEMU is used for PCI passthrough - however  the toolstack sets up also
-the 'PV' PCI which the guest can utilize if it chooses to do so.
-
-CREDITS
-=======
-
-This issue was discovered by Konrad Rzeszutek Wilk of Oracle.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Linux 4.3:
-xsa157-0001-xen-pciback-Return-error-on-XEN_PCI_OP_enable_msi-wh.patch
-xsa157-0002-xen-pciback-Return-error-on-XEN_PCI_OP_enable_msix-w.patch
-xsa157-0003-xen-pciback-Do-not-install-an-IRQ-handler-for-MSI-in.patch
-xsa157-0004-xen-pciback-For-XEN_PCI_OP_disable_msi-x-only-disabl.patch
-xsa157-0005-xen-pciback-Don-t-allow-MSI-X-ops-if-PCI_COMMAND_MEM.patch
-
-$ sha256sum xsa157*
-0cb2d1729f17e640e33f11945f2e12eba85071238fab2dcc42f81b5d942c159b  xsa157-0001-xen-pciback-Return-error-on-XEN_PCI_OP_enable_msi-wh.patch
-9bcb240a49a5cd48428cc9c01ee480297999b93f6977fdddd79ec715648aa244  xsa157-0002-xen-pciback-Return-error-on-XEN_PCI_OP_enable_msix-w.patch
-7c39b33d0e2d751970bbe56f463661c50aa5e4addc8eee35b80e9e1378e97b02  xsa157-0003-xen-pciback-Do-not-install-an-IRQ-handler-for-MSI-in.patch
-1acfd6f4ea13db6a146d547640f50d0ad40480b914b021760a518ac82e8e4c71  xsa157-0004-xen-pciback-For-XEN_PCI_OP_disable_msi-x-only-disabl.patch
-b864620709e4b55a908dd6955a090ca03a9a07cfb31b66e2e5211ab8f0c77e68  xsa157-0005-xen-pciback-Don-t-allow-MSI-X-ops-if-PCI_COMMAND_MEM.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJWcqy7AAoJEIP+FMlX6CvZr/gH+gKO6HcnCeZGPthmt7tKiHxn
-oa/VjgDMxIGVHerP0HRXTbletj7XOWhdDNrHNa7JQQXkjXiE+zmLRTVum/ghIxKO
-OMSiRtLFm6pkWmOXJI5kvOLDxt1aEECLG0lU9okbk7YmhZE65L4ysIsOGydfzAIn
-niKsCnMCxv2MDz5WtFy4okwE+dYJA/MrPfJ1kdJK2y26elxNv895HmwUG8vG042e
-NKsqBXWqF8Li2GgrtuXCmUAjHeEFXkouCCh7XVSZo70Zr1kVtFpifeNyz2V72qqh
-XRDmYkY5TJy+CD8tSIb82CcPU1JA7X5hFm1AuzYHeYT3+hxG0glcELGde+655Ig=
-=i8jn
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream;
- name="xsa157-0001-xen-pciback-Return-error-on-XEN_PCI_OP_enable_msi-wh.patch"
-Content-Disposition: attachment;
- filename="xsa157-0001-xen-pciback-Return-error-on-XEN_PCI_OP_enable_msi-wh.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSBlM2RlNGE0NGNmZTE5NmUxNjJkZGVmZmQ2Mzc5ZTVjNGU3NWZmMWQ3
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBLb25yYWQgUnplc3p1
-dGVrIFdpbGsgPGtvbnJhZC53aWxrQG9yYWNsZS5jb20+CkRhdGU6IEZyaSwg
-MyBBcHIgMjAxNSAxMTowODoyMiAtMDQwMApTdWJqZWN0OiBbUEFUQ0ggdjIg
-WFNBMTU3IDEvNV0geGVuL3BjaWJhY2s6IFJldHVybiBlcnJvciBvbgogWEVO
-X1BDSV9PUF9lbmFibGVfbXNpIHdoZW4gZGV2aWNlIGhhcyBNU0kgb3IgTVNJ
-LVggZW5hYmxlZAoKVGhlIGd1ZXN0IHNlcXVlbmNlIG9mOgoKIGEpIFhFTl9Q
-Q0lfT1BfZW5hYmxlX21zaQogYikgWEVOX1BDSV9PUF9lbmFibGVfbXNpCiBj
-KSBYRU5fUENJX09QX2Rpc2FibGVfbXNpCgpyZXN1bHRzIGluIGhpdHRpbmcg
-YW4gQlVHX09OIGNvbmRpdGlvbiBpbiB0aGUgbXNpLmMgY29kZS4KClRoZSBN
-U0kgY29kZSB1c2VzIGFuIGRldi0+bXNpX2xpc3QgdG8gd2hpY2ggaXQgYWRk
-cyBNU0kgZW50cmllcy4KVW5kZXIgdGhlIGFib3ZlIGNvbmRpdGlvbnMgYW4g
-QlVHX09OKCkgY2FuIGJlIGhpdC4gVGhlIGRldmljZQpwYXNzZWQgaW4gdGhl
-IGd1ZXN0IE1VU1QgaGF2ZSBNU0kgY2FwYWJpbGl0eS4KClRoZSBhKSBhZGRz
-IHRoZSBlbnRyeSB0byB0aGUgZGV2LT5tc2lfbGlzdCBhbmQgc2V0cyBtc2lf
-ZW5hYmxlZC4KVGhlIGIpIGFkZHMgYSBzZWNvbmQgZW50cnkgYnV0IGFkZGlu
-ZyBpbiB0byBTeXNGUyBmYWlscyAoZHVwbGljYXRlIGVudHJ5KQphbmQgZGVs
-ZXRlcyBhbGwgb2YgdGhlIGVudHJpZXMgZnJvbSBtc2lfbGlzdCBhbmQgcmV0
-dXJucyAod2l0aCBtc2lfZW5hYmxlZAppcyBzdGlsbCBzZXQpLiAgYykgcGNp
-X2Rpc2FibGVfbXNpIHBhc3NlcyB0aGUgbXNpX2VuYWJsZWQgY2hlY2tzIGFu
-ZCBoaXRzOgoKQlVHX09OKGxpc3RfZW1wdHkoZGV2X3RvX21zaV9saXN0KCZk
-ZXYtPmRldikpKTsKCmFuZCBibG93cyB1cC4KClRoZSBwYXRjaCBhZGRzIGEg
-c2ltcGxlIGNoZWNrIGluIHRoZSBYRU5fUENJX09QX2VuYWJsZV9tc2kgdG8g
-Z3VhcmQKYWdhaW5zdCB0aGF0LiBUaGUgY2hlY2sgZm9yIG1zaXhfZW5hYmxl
-ZCBpcyBub3Qgc3RyaWNseSBuZWNjZXNzYXJ5LgoKVGhpcyBpcyBwYXJ0IG9m
-IFhTQS0xNTcuCgpDQzogc3RhYmxlQHZnZXIua2VybmVsLm9yZwpSZXZpZXdl
-ZC1ieTogRGF2aWQgVnJhYmVsIDxkYXZpZC52cmFiZWxAY2l0cml4LmNvbT4K
-UmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4K
-U2lnbmVkLW9mZi1ieTogS29ucmFkIFJ6ZXN6dXRlayBXaWxrIDxrb25yYWQu
-d2lsa0BvcmFjbGUuY29tPgotLS0KIGRyaXZlcnMveGVuL3hlbi1wY2liYWNr
-L3BjaWJhY2tfb3BzLmMgfCA3ICsrKysrKy0KIDEgZmlsZSBjaGFuZ2VkLCA2
-IGluc2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQgYS9k
-cml2ZXJzL3hlbi94ZW4tcGNpYmFjay9wY2liYWNrX29wcy5jIGIvZHJpdmVy
-cy94ZW4veGVuLXBjaWJhY2svcGNpYmFja19vcHMuYwppbmRleCBjNGEwNjY2
-Li41Y2U1NzNhIDEwMDY0NAotLS0gYS9kcml2ZXJzL3hlbi94ZW4tcGNpYmFj
-ay9wY2liYWNrX29wcy5jCisrKyBiL2RyaXZlcnMveGVuL3hlbi1wY2liYWNr
-L3BjaWJhY2tfb3BzLmMKQEAgLTE0NCw3ICsxNDQsMTIgQEAgaW50IHhlbl9w
-Y2lia19lbmFibGVfbXNpKHN0cnVjdCB4ZW5fcGNpYmtfZGV2aWNlICpwZGV2
-LAogCWlmICh1bmxpa2VseSh2ZXJib3NlX3JlcXVlc3QpKQogCQlwcmludGso
-S0VSTl9ERUJVRyBEUlZfTkFNRSAiOiAlczogZW5hYmxlIE1TSVxuIiwgcGNp
-X25hbWUoZGV2KSk7CiAKLQlzdGF0dXMgPSBwY2lfZW5hYmxlX21zaShkZXYp
-OworCWlmIChkZXYtPm1zaV9lbmFibGVkKQorCQlzdGF0dXMgPSAtRUFMUkVB
-RFk7CisJZWxzZSBpZiAoZGV2LT5tc2l4X2VuYWJsZWQpCisJCXN0YXR1cyA9
-IC1FTlhJTzsKKwllbHNlCisJCXN0YXR1cyA9IHBjaV9lbmFibGVfbXNpKGRl
-dik7CiAKIAlpZiAoc3RhdHVzKSB7CiAJCXByX3dhcm5fcmF0ZWxpbWl0ZWQo
-IiVzOiBlcnJvciBlbmFibGluZyBNU0kgZm9yIGd1ZXN0ICV1OiBlcnIgJWRc
-biIsCi0tIAoyLjEuMAoK
-
---=separator
-Content-Type: application/octet-stream;
- name="xsa157-0002-xen-pciback-Return-error-on-XEN_PCI_OP_enable_msix-w.patch"
-Content-Disposition: attachment;
- filename="xsa157-0002-xen-pciback-Return-error-on-XEN_PCI_OP_enable_msix-w.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSAxOWIzM2I3MGQ0MjNkZGZlYTFkYWY3NjE1ZWI3ZjYwNTM3MWExODQx
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBLb25yYWQgUnplc3p1
-dGVrIFdpbGsgPGtvbnJhZC53aWxrQG9yYWNsZS5jb20+CkRhdGU6IE1vbiwg
-MiBOb3YgMjAxNSAxODowNzo0NCAtMDUwMApTdWJqZWN0OiBbUEFUQ0ggdjIg
-WFNBMTU3IDIvNV0geGVuL3BjaWJhY2s6IFJldHVybiBlcnJvciBvbgogWEVO
-X1BDSV9PUF9lbmFibGVfbXNpeCB3aGVuIGRldmljZSBoYXMgTVNJIG9yIE1T
-SS1YIGVuYWJsZWQKClRoZSBndWVzdCBzZXF1ZW5jZSBvZjoKCiAgYSkgWEVO
-X1BDSV9PUF9lbmFibGVfbXNpeAogIGIpIFhFTl9QQ0lfT1BfZW5hYmxlX21z
-aXgKCnJlc3VsdHMgaW4gaGl0dGluZyBhbiBOVUxMIHBvaW50ZXIgZHVlIHRv
-IHVzaW5nIGZyZWVkIHBvaW50ZXJzLgoKVGhlIGRldmljZSBwYXNzZWQgaW4g
-dGhlIGd1ZXN0IE1VU1QgaGF2ZSBNU0ktWCBjYXBhYmlsaXR5LgoKVGhlIGEp
-IGNvbnN0cnVjdHMgYW5kIFN5c0ZTIHJlcHJlc2VudGF0aW9uIG9mIE1TSSBh
-bmQgTVNJIGdyb3Vwcy4KVGhlIGIpIGFkZHMgYSBzZWNvbmQgc2V0IG9mIHRo
-ZW0gYnV0IGFkZGluZyBpbiB0byBTeXNGUyBmYWlscyAoZHVwbGljYXRlIGVu
-dHJ5KS4KJ3BvcHVsYXRlX21zaV9zeXNmcycgZnJlZXMgdGhlIG5ld2x5IGFs
-bG9jYXRlZCBtc2lfaXJxX2dyb3VwcyAobm90ZSB0aGF0CmluIGEpIHBkZXYt
-Pm1zaV9pcnFfZ3JvdXBzIGlzIHN0aWxsIHNldCkgYW5kIGFsc28gZnJlZSdz
-IEFMTCBvZiB0aGUKTVNJLVggZW50cmllcyBvZiB0aGUgZGV2aWNlICh0aGUg
-b25lcyBhbGxvY2F0ZWQgaW4gc3RlcCBhKSBhbmQgYikpLgoKVGhlIHVud2lu
-ZCBjb2RlOiAnZnJlZV9tc2lfaXJxcycgZGVsZXRlcyBhbGwgdGhlIGVudHJp
-ZXMgYW5kIHRyaWVzIHRvCmRlbGV0ZSB0aGUgcGRldi0+bXNpX2lycV9ncm91
-cHMgKHdoaWNoIGhhc24ndCBiZWVuIHNldCB0byBOVUxMKS4KSG93ZXZlciB0
-aGUgcG9pbnRlcnMgaW4gdGhlIFN5c0ZTIGFyZSBhbHJlYWR5IGZyZWVkIGFu
-ZCB3ZSBoaXQgYW4KTlVMTCBwb2ludGVyIGZ1cnRoZXIgb24gd2hlbiAnc3Ry
-bGVuJyBpcyBhdHRlbXB0ZWQgb24gYSBmcmVlZCBwb2ludGVyLgoKVGhlIHBh
-dGNoIGFkZHMgYSBzaW1wbGUgY2hlY2sgaW4gdGhlIFhFTl9QQ0lfT1BfZW5h
-YmxlX21zaXggdG8gZ3VhcmQKYWdhaW5zdCB0aGF0LiBUaGUgY2hlY2sgZm9y
-IG1zaV9lbmFibGVkIGlzIG5vdCBzdHJpY2x5IG5lY2Nlc3NhcnkuCgpUaGlz
-IGlzIHBhcnQgb2YgWFNBLTE1NwoKQ0M6IHN0YWJsZUB2Z2VyLmtlcm5lbC5v
-cmcKUmV2aWV3ZWQtYnk6IERhdmlkIFZyYWJlbCA8ZGF2aWQudnJhYmVsQGNp
-dHJpeC5jb20+ClJldmlld2VkLWJ5OiBKYW4gQmV1bGljaCA8amJldWxpY2hA
-c3VzZS5jb20+ClNpZ25lZC1vZmYtYnk6IEtvbnJhZCBSemVzenV0ZWsgV2ls
-ayA8a29ucmFkLndpbGtAb3JhY2xlLmNvbT4KLS0tCiBkcml2ZXJzL3hlbi94
-ZW4tcGNpYmFjay9wY2liYWNrX29wcy5jIHwgNyArKysrKysrCiAxIGZpbGUg
-Y2hhbmdlZCwgNyBpbnNlcnRpb25zKCspCgpkaWZmIC0tZ2l0IGEvZHJpdmVy
-cy94ZW4veGVuLXBjaWJhY2svcGNpYmFja19vcHMuYyBiL2RyaXZlcnMveGVu
-L3hlbi1wY2liYWNrL3BjaWJhY2tfb3BzLmMKaW5kZXggNWNlNTczYS4uYTEw
-NzkyOCAxMDA2NDQKLS0tIGEvZHJpdmVycy94ZW4veGVuLXBjaWJhY2svcGNp
-YmFja19vcHMuYworKysgYi9kcml2ZXJzL3hlbi94ZW4tcGNpYmFjay9wY2li
-YWNrX29wcy5jCkBAIC0yMDYsOSArMjA2LDE2IEBAIGludCB4ZW5fcGNpYmtf
-ZW5hYmxlX21zaXgoc3RydWN0IHhlbl9wY2lia19kZXZpY2UgKnBkZXYsCiAJ
-aWYgKHVubGlrZWx5KHZlcmJvc2VfcmVxdWVzdCkpCiAJCXByaW50ayhLRVJO
-X0RFQlVHIERSVl9OQU1FICI6ICVzOiBlbmFibGUgTVNJLVhcbiIsCiAJCSAg
-ICAgICBwY2lfbmFtZShkZXYpKTsKKwogCWlmIChvcC0+dmFsdWUgPiBTSF9J
-TkZPX01BWF9WRUMpCiAJCXJldHVybiAtRUlOVkFMOwogCisJaWYgKGRldi0+
-bXNpeF9lbmFibGVkKQorCQlyZXR1cm4gLUVBTFJFQURZOworCisJaWYgKGRl
-di0+bXNpX2VuYWJsZWQpCisJCXJldHVybiAtRU5YSU87CisKIAllbnRyaWVz
-ID0ga21hbGxvYyhvcC0+dmFsdWUgKiBzaXplb2YoKmVudHJpZXMpLCBHRlBf
-S0VSTkVMKTsKIAlpZiAoZW50cmllcyA9PSBOVUxMKQogCQlyZXR1cm4gLUVO
-T01FTTsKLS0gCjIuMS4wCgo=
-
---=separator
-Content-Type: application/octet-stream;
- name="xsa157-0003-xen-pciback-Do-not-install-an-IRQ-handler-for-MSI-in.patch"
-Content-Disposition: attachment;
- filename="xsa157-0003-xen-pciback-Do-not-install-an-IRQ-handler-for-MSI-in.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSBhYTQ4MzE0YzYwZGExMDM1YThlNmNjMDViZWMxMjgzOGEwNzRkZTk4
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBLb25yYWQgUnplc3p1
-dGVrIFdpbGsgPGtvbnJhZC53aWxrQG9yYWNsZS5jb20+CkRhdGU6IE1vbiwg
-MiBOb3YgMjAxNSAxNzoyNDowOCAtMDUwMApTdWJqZWN0OiBbUEFUQ0ggdjIg
-WFNBMTU3IDMvNV0geGVuL3BjaWJhY2s6IERvIG5vdCBpbnN0YWxsIGFuIElS
-USBoYW5kbGVyIGZvcgogTVNJIGludGVycnVwdHMuCgpPdGhlcndpc2UgYW4g
-Z3Vlc3QgY2FuIHN1YnZlcnQgdGhlIGdlbmVyaWMgTVNJIGNvZGUgdG8gdHJp
-Z2dlcgphbiBCVUdfT04gY29uZGl0aW9uIGR1cmluZyBNU0kgaW50ZXJydXB0
-IGZyZWVpbmc6CgogZm9yIChpID0gMDsgaSA8IGVudHJ5LT5udmVjX3VzZWQ7
-IGkrKykKICAgICAgICBCVUdfT04oaXJxX2hhc19hY3Rpb24oZW50cnktPmly
-cSArIGkpKTsKClhlbiBQQ0kgYmFja2VkIGluc3RhbGxzIGFuIElSUSBoYW5k
-bGVyIChyZXF1ZXN0X2lycSkgZm9yCnRoZSBkZXYtPmlycSB3aGVuZXZlciB0
-aGUgZ3Vlc3Qgd3JpdGVzIFBDSV9DT01NQU5EX01FTU9SWQoob3IgUENJX0NP
-TU1BTkRfSU8pIHRvIHRoZSBQQ0lfQ09NTUFORCByZWdpc3Rlci4gVGhpcyBp
-cwpkb25lIGluIGNhc2UgdGhlIGRldmljZSBoYXMgbGVnYWN5IGludGVycnVw
-dHMgdGhlIEdTSSBsaW5lCmlzIHNoYXJlZCBieSB0aGUgYmFja2VuZCBkZXZp
-Y2VzLgoKVG8gc3VidmVydCB0aGUgYmFja2VuZCB0aGUgZ3Vlc3QgbmVlZHMg
-dG8gbWFrZSB0aGUgYmFja2VuZAp0byBjaGFuZ2UgdGhlIGRldi0+aXJxIGZy
-b20gdGhlIEdTSSB0byB0aGUgTVNJIGludGVycnVwdCBsaW5lLAptYWtlIHRo
-ZSBiYWNrZW5kIGFsbG9jYXRlIGFuIGludGVycnVwdCBoYW5kbGVyLCBhbmQg
-dGhlbiBjb21tYW5kCnRoZSBiYWNrZW5kIHRvIGZyZWUgdGhlIE1TSSBpbnRl
-cnJ1cHQgYW5kIGhpdCB0aGUgQlVHX09OLgoKU2luY2UgdGhlIGJhY2tlbmQg
-b25seSBjYWxscyAncmVxdWVzdF9pcnEnIHdoZW4gdGhlIGd1ZXN0CndyaXRl
-cyB0byB0aGUgUENJX0NPTU1BTkQgcmVnaXN0ZXIgdGhlIGd1ZXN0IG5lZWRz
-IHRvIGNhbGwKWEVOX1BDSV9PUF9lbmFibGVfbXNpIGJlZm9yZSBhbnkgb3Ro
-ZXIgb3BlcmF0aW9uLiBUaGlzIHdpbGwKY2F1c2UgdGhlIGdlbmVyaWMgTVNJ
-IGNvZGUgdG8gc2V0dXAgYW4gTVNJIGVudHJ5IGFuZApwb3B1bGF0ZSBkZXYt
-PmlycSB3aXRoIHRoZSBuZXcgUElSUSB2YWx1ZS4KClRoZW4gdGhlIGd1ZXN0
-IGNhbiB3cml0ZSB0byBQQ0lfQ09NTUFORCBQQ0lfQ09NTUFORF9NRU1PUlkK
-YW5kIGNhdXNlIHRoZSBiYWNrZW5kIHRvIHNldHVwIGFuIElSUSBoYW5kbGVy
-IGZvciBkZXYtPmlycQood2hpY2ggaW5zdGVhZCBvZiB0aGUgR1NJIHZhbHVl
-IGhhcyB0aGUgTVNJIHBpcnEpLiBTZWUKJ3hlbl9wY2lia19jb250cm9sX2lz
-cicuCgpUaGVuIHRoZSBndWVzdCBkaXNhYmxlcyB0aGUgTVNJOiBYRU5fUENJ
-X09QX2Rpc2FibGVfbXNpCndoaWNoIGVuZHMgdXAgdHJpZ2dlcmluZyB0aGUg
-QlVHX09OIGNvbmRpdGlvbiBpbiAnZnJlZV9tc2lfaXJxcycKYXMgdGhlcmUg
-aXMgYW4gSVJRIGhhbmRsZXIgZm9yIHRoZSBlbnRyeS0+aXJxIChkZXYtPmly
-cSkuCgpOb3RlIHRoYXQgdGhpcyBjYW5ub3QgYmUgZG9uZSB1c2luZyBNU0kt
-WCBhcyB0aGUgZ2VuZXJpYwpjb2RlIGRvZXMgbm90IG92ZXItd3JpdGUgZGV2
-LT5pcnEgd2l0aCB0aGUgTVNJLVggUElSUSB2YWx1ZXMuCgpUaGUgcGF0Y2gg
-aW5oaWJpdHMgc2V0dGluZyB1cCB0aGUgSVJRIGhhbmRsZXIgaWYgTVNJIG9y
-Ck1TSS1YIChmb3Igc3ltbWV0cnkgcmVhc29ucykgY29kZSBoYWQgYmVlbiBj
-YWxsZWQgc3VjY2Vzc2Z1bGx5LgoKUC5TLgpYZW4gUENJQmFjayB3aGVuIGl0
-IHNldHMgdXAgdGhlIGRldmljZSBmb3IgdGhlIGd1ZXN0IGNvbnN1bXB0aW9u
-CmVuZHMgdXAgd3JpdHRpbmcgMCB0byB0aGUgUENJX0NPTU1BTkQgKHNlZSB4
-ZW5fcGNpYmtfcmVzZXRfZGV2aWNlKS4KWFNBLTEyMCBhZGRlbmR1bSBwYXRj
-aCByZW1vdmVkIHRoYXQgLSBob3dldmVyIHdoZW4gdXBzdHJlYW1pbmcgc2Fp
-ZAphZGRlbmR1bSB3ZSBmb3VuZCB0aGF0IGl0IGNhdXNlZCBpc3N1ZXMgd2l0
-aCBxZW11IHVwc3RyZWFtLiBUaGF0CmhhcyBub3cgYmVlbiBmaXhlZCBpbiBx
-ZW11IHVwc3RyZWFtLgoKVGhpcyBpcyBwYXJ0IG9mIFhTQS0xNTcKCkNDOiBz
-dGFibGVAdmdlci5rZXJuZWwub3JnClJldmlld2VkLWJ5OiBEYXZpZCBWcmFi
-ZWwgPGRhdmlkLnZyYWJlbEBjaXRyaXguY29tPgpTaWduZWQtb2ZmLWJ5OiBL
-b25yYWQgUnplc3p1dGVrIFdpbGsgPGtvbnJhZC53aWxrQG9yYWNsZS5jb20+
-Ci0tLQogZHJpdmVycy94ZW4veGVuLXBjaWJhY2svcGNpYmFja19vcHMuYyB8
-IDcgKysrKysrKwogMSBmaWxlIGNoYW5nZWQsIDcgaW5zZXJ0aW9ucygrKQoK
-ZGlmZiAtLWdpdCBhL2RyaXZlcnMveGVuL3hlbi1wY2liYWNrL3BjaWJhY2tf
-b3BzLmMgYi9kcml2ZXJzL3hlbi94ZW4tcGNpYmFjay9wY2liYWNrX29wcy5j
-CmluZGV4IGExMDc5MjguLjViYjc2YzAgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMv
-eGVuL3hlbi1wY2liYWNrL3BjaWJhY2tfb3BzLmMKKysrIGIvZHJpdmVycy94
-ZW4veGVuLXBjaWJhY2svcGNpYmFja19vcHMuYwpAQCAtNzAsNiArNzAsMTMg
-QEAgc3RhdGljIHZvaWQgeGVuX3BjaWJrX2NvbnRyb2xfaXNyKHN0cnVjdCBw
-Y2lfZGV2ICpkZXYsIGludCByZXNldCkKIAkJZW5hYmxlID8gImVuYWJsZSIg
-OiAiZGlzYWJsZSIpOwogCiAJaWYgKGVuYWJsZSkgeworCQkvKgorCQkgKiBU
-aGUgTVNJIG9yIE1TSS1YIHNob3VsZCBub3QgaGF2ZSBhbiBJUlEgaGFuZGxl
-ci4gT3RoZXJ3aXNlCisJCSAqIGlmIHRoZSBndWVzdCB0ZXJtaW5hdGVzIHdl
-IEJVR19PTiBpbiBmcmVlX21zaV9pcnFzLgorCQkgKi8KKwkJaWYgKGRldi0+
-bXNpX2VuYWJsZWQgfHwgZGV2LT5tc2l4X2VuYWJsZWQpCisJCQlnb3RvIG91
-dDsKKwogCQlyYyA9IHJlcXVlc3RfaXJxKGRldl9kYXRhLT5pcnEsCiAJCQkJ
-eGVuX3BjaWJrX2d1ZXN0X2ludGVycnVwdCwgSVJRRl9TSEFSRUQsCiAJCQkJ
-ZGV2X2RhdGEtPmlycV9uYW1lLCBkZXYpOwotLSAKMi4xLjAKCg==
-
---=separator
-Content-Type: application/octet-stream;
- name="xsa157-0004-xen-pciback-For-XEN_PCI_OP_disable_msi-x-only-disabl.patch"
-Content-Disposition: attachment;
- filename="xsa157-0004-xen-pciback-For-XEN_PCI_OP_disable_msi-x-only-disabl.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSA1OWE0MDM3NTBkMzc5NmI0NTM3NjA0MWE0ODQzZmNkZTQzNmFlMzdl
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBLb25yYWQgUnplc3p1
-dGVrIFdpbGsgPGtvbnJhZC53aWxrQG9yYWNsZS5jb20+CkRhdGU6IFdlZCwg
-MSBBcHIgMjAxNSAxMDo0OTo0NyAtMDQwMApTdWJqZWN0OiBbUEFUQ0ggdjIg
-WFNBMTU3IDQvNV0geGVuL3BjaWJhY2s6IEZvciBYRU5fUENJX09QX2Rpc2Fi
-bGVfbXNpW3x4XQogb25seSBkaXNhYmxlIGlmIGRldmljZSBoYXMgTVNJKFgp
-IGVuYWJsZWQuCgpPdGhlcndpc2UganVzdCBjb250aW51ZSBvbiwgcmV0dXJu
-aW5nIHRoZSBzYW1lIHZhbHVlcyBhcwpwcmV2aW91c2x5IChyZXR1cm4gb2Yg
-MCwgYW5kIG9wLT5yZXN1bHQgaGFzIHRoZSBQSVJRIHZhbHVlKS4KClRoaXMg
-ZG9lcyBub3QgY2hhbmdlIHRoZSBiZWhhdmlvciBvZiBYRU5fUENJX09QX2Rp
-c2FibGVfbXNpW3x4XS4KClRoZSBwY2lfZGlzYWJsZV9tc2kgb3IgcGNpX2Rp
-c2FibGVfbXNpeCBoYXZlIHRoZSBjaGVja3MgZm9yCm1zaV9lbmFibGVkIG9y
-IG1zaXhfZW5hYmxlZCBzbyB0aGV5IHdpbGwgZXJyb3Igb3V0IGltbWVkaWF0
-ZWx5LgoKSG93ZXZlciB0aGUgZ3Vlc3QgY2FuIHN0aWxsIGNhbGwgdGhlc2Ug
-b3BlcmF0aW9ucyBhbmQgY2F1c2UKdXMgdG8gZGlzYWJsZSB0aGUgJ2Fja19p
-bnRyJy4gVGhhdCBtZWFucyB0aGUgYmFja2VuZCBJUlEgaGFuZGxlcgpmb3Ig
-dGhlIGxlZ2FjeSBpbnRlcnJ1cHQgd2lsbCBub3QgcmVzcG9uZCB0byBpbnRl
-cnJ1cHRzIGFueW1vcmUuCgpUaGlzIHdpbGwgbGVhZCB0byAoaWYgdGhlIGRl
-dmljZSBpcyBjYXVzaW5nIGFuIGludGVycnVwdCBzdG9ybSkKZm9yIHRoZSBM
-aW51eCBnZW5lcmljIGNvZGUgdG8gZGlzYWJsZSB0aGUgaW50ZXJydXB0IGxp
-bmUuCgpOYXR1cmFsbHkgdGhpcyB3aWxsIG9ubHkgaGFwcGVuIGlmIHRoZSBk
-ZXZpY2UgaW4gcXVlc3Rpb24KaXMgcGx1Z2dlZCBpbiBvbiB0aGUgbW90aGVy
-Ym9hcmQgb24gc2hhcmVkIGxldmVsIGludGVycnVwdCBHU0kuCgpUaGlzIGlz
-IHBhcnQgb2YgWFNBLTE1NwoKQ0M6IHN0YWJsZUB2Z2VyLmtlcm5lbC5vcmcK
-UmV2aWV3ZWQtYnk6IERhdmlkIFZyYWJlbCA8ZGF2aWQudnJhYmVsQGNpdHJp
-eC5jb20+ClNpZ25lZC1vZmYtYnk6IEtvbnJhZCBSemVzenV0ZWsgV2lsayA8
-a29ucmFkLndpbGtAb3JhY2xlLmNvbT4KLS0tCiBkcml2ZXJzL3hlbi94ZW4t
-cGNpYmFjay9wY2liYWNrX29wcy5jIHwgMzMgKysrKysrKysrKysrKysrKysr
-KystLS0tLS0tLS0tLS0tCiAxIGZpbGUgY2hhbmdlZCwgMjAgaW5zZXJ0aW9u
-cygrKSwgMTMgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy94
-ZW4veGVuLXBjaWJhY2svcGNpYmFja19vcHMuYyBiL2RyaXZlcnMveGVuL3hl
-bi1wY2liYWNrL3BjaWJhY2tfb3BzLmMKaW5kZXggNWJiNzZjMC4uNjQ4YzA5
-YyAxMDA2NDQKLS0tIGEvZHJpdmVycy94ZW4veGVuLXBjaWJhY2svcGNpYmFj
-a19vcHMuYworKysgYi9kcml2ZXJzL3hlbi94ZW4tcGNpYmFjay9wY2liYWNr
-X29wcy5jCkBAIC0xODUsMjAgKzE4NSwyMyBAQCBzdGF0aWMKIGludCB4ZW5f
-cGNpYmtfZGlzYWJsZV9tc2koc3RydWN0IHhlbl9wY2lia19kZXZpY2UgKnBk
-ZXYsCiAJCQkgIHN0cnVjdCBwY2lfZGV2ICpkZXYsIHN0cnVjdCB4ZW5fcGNp
-X29wICpvcCkKIHsKLQlzdHJ1Y3QgeGVuX3BjaWJrX2Rldl9kYXRhICpkZXZf
-ZGF0YTsKLQogCWlmICh1bmxpa2VseSh2ZXJib3NlX3JlcXVlc3QpKQogCQlw
-cmludGsoS0VSTl9ERUJVRyBEUlZfTkFNRSAiOiAlczogZGlzYWJsZSBNU0lc
-biIsCiAJCSAgICAgICBwY2lfbmFtZShkZXYpKTsKLQlwY2lfZGlzYWJsZV9t
-c2koZGV2KTsKIAorCWlmIChkZXYtPm1zaV9lbmFibGVkKSB7CisJCXN0cnVj
-dCB4ZW5fcGNpYmtfZGV2X2RhdGEgKmRldl9kYXRhOworCisJCXBjaV9kaXNh
-YmxlX21zaShkZXYpOworCisJCWRldl9kYXRhID0gcGNpX2dldF9kcnZkYXRh
-KGRldik7CisJCWlmIChkZXZfZGF0YSkKKwkJCWRldl9kYXRhLT5hY2tfaW50
-ciA9IDE7CisJfQogCW9wLT52YWx1ZSA9IGRldi0+aXJxID8geGVuX3BpcnFf
-ZnJvbV9pcnEoZGV2LT5pcnEpIDogMDsKIAlpZiAodW5saWtlbHkodmVyYm9z
-ZV9yZXF1ZXN0KSkKIAkJcHJpbnRrKEtFUk5fREVCVUcgRFJWX05BTUUgIjog
-JXM6IE1TSTogJWRcbiIsIHBjaV9uYW1lKGRldiksCiAJCQlvcC0+dmFsdWUp
-OwotCWRldl9kYXRhID0gcGNpX2dldF9kcnZkYXRhKGRldik7Ci0JaWYgKGRl
-dl9kYXRhKQotCQlkZXZfZGF0YS0+YWNrX2ludHIgPSAxOwogCXJldHVybiAw
-OwogfQogCkBAIC0yNjQsMjMgKzI2NywyNyBAQCBzdGF0aWMKIGludCB4ZW5f
-cGNpYmtfZGlzYWJsZV9tc2l4KHN0cnVjdCB4ZW5fcGNpYmtfZGV2aWNlICpw
-ZGV2LAogCQkJICAgc3RydWN0IHBjaV9kZXYgKmRldiwgc3RydWN0IHhlbl9w
-Y2lfb3AgKm9wKQogewotCXN0cnVjdCB4ZW5fcGNpYmtfZGV2X2RhdGEgKmRl
-dl9kYXRhOwogCWlmICh1bmxpa2VseSh2ZXJib3NlX3JlcXVlc3QpKQogCQlw
-cmludGsoS0VSTl9ERUJVRyBEUlZfTkFNRSAiOiAlczogZGlzYWJsZSBNU0kt
-WFxuIiwKIAkJCXBjaV9uYW1lKGRldikpOwotCXBjaV9kaXNhYmxlX21zaXgo
-ZGV2KTsKIAorCWlmIChkZXYtPm1zaXhfZW5hYmxlZCkgeworCQlzdHJ1Y3Qg
-eGVuX3BjaWJrX2Rldl9kYXRhICpkZXZfZGF0YTsKKworCQlwY2lfZGlzYWJs
-ZV9tc2l4KGRldik7CisKKwkJZGV2X2RhdGEgPSBwY2lfZ2V0X2RydmRhdGEo
-ZGV2KTsKKwkJaWYgKGRldl9kYXRhKQorCQkJZGV2X2RhdGEtPmFja19pbnRy
-ID0gMTsKKwl9CiAJLyoKIAkgKiBTUi1JT1YgZGV2aWNlcyAod2hpY2ggZG9u
-J3QgaGF2ZSBhbnkgbGVnYWN5IElSUSkgaGF2ZQogCSAqIGFuIHVuZGVmaW5l
-ZCBJUlEgdmFsdWUgb2YgemVyby4KIAkgKi8KIAlvcC0+dmFsdWUgPSBkZXYt
-PmlycSA/IHhlbl9waXJxX2Zyb21faXJxKGRldi0+aXJxKSA6IDA7CiAJaWYg
-KHVubGlrZWx5KHZlcmJvc2VfcmVxdWVzdCkpCi0JCXByaW50ayhLRVJOX0RF
-QlVHIERSVl9OQU1FICI6ICVzOiBNU0ktWDogJWRcbiIsIHBjaV9uYW1lKGRl
-diksCi0JCQlvcC0+dmFsdWUpOwotCWRldl9kYXRhID0gcGNpX2dldF9kcnZk
-YXRhKGRldik7Ci0JaWYgKGRldl9kYXRhKQotCQlkZXZfZGF0YS0+YWNrX2lu
-dHIgPSAxOworCQlwcmludGsoS0VSTl9ERUJVRyBEUlZfTkFNRSAiOiAlczog
-TVNJLVg6ICVkXG4iLAorCQkgICAgICAgcGNpX25hbWUoZGV2KSwgb3AtPnZh
-bHVlKTsKIAlyZXR1cm4gMDsKIH0KICNlbmRpZgotLSAKMi4xLjAKCg==
-
---=separator
-Content-Type: application/octet-stream;
- name="xsa157-0005-xen-pciback-Don-t-allow-MSI-X-ops-if-PCI_COMMAND_MEM.patch"
-Content-Disposition: attachment;
- filename="xsa157-0005-xen-pciback-Don-t-allow-MSI-X-ops-if-PCI_COMMAND_MEM.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSBlOWFiOWUwNGVkNzZlZjA2YjRiYTlhMzBiMzcyNGNhNTYzZmRmMWZh
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBLb25yYWQgUnplc3p1
-dGVrIFdpbGsgPGtvbnJhZC53aWxrQG9yYWNsZS5jb20+CkRhdGU6IE1vbiwg
-MiBOb3YgMjAxNSAxODoxMzoyNyAtMDUwMApTdWJqZWN0OiBbUEFUQ0ggdjIg
-WFNBMTU3IDUvNV0geGVuL3BjaWJhY2s6IERvbid0IGFsbG93IE1TSS1YIG9w
-cyBpZgogUENJX0NPTU1BTkRfTUVNT1JZIGlzIG5vdCBzZXQuCgpjb21taXQg
-ZjU5ODI4MmY1MSAoIlBDSTogRml4IHRoZSBOSVUgTVNJLVggcHJvYmxlbSBp
-biBhIGJldHRlciB3YXkiKQp0ZWFjaGVzIHVzIHRoYXQgZGVhbGluZyB3aXRo
-IE1TSS1YIGNhbiBiZSB0cm91Ymxlc29tZS4KCkZ1cnRoZXIgY2hlY2tzIGlu
-IHRoZSBNU0ktWCBhcmNoaXRlY3R1cmUgc2hvd3MgdGhhdCBpZiB0aGUKUENJ
-X0NPTU1BTkRfTUVNT1JZIGJpdCBpcyB0dXJuZWQgb2YgaW4gdGhlIFBDSV9D
-T01NQU5EIHdlCm1heSBub3QgYmUgYWJsZSB0byBhY2Nlc3MgdGhlIEJBUiAo
-c2luY2UgdGhleSBhcmUgbWVtb3J5IHJlZ2lvbnMpLgoKU2luY2UgdGhlIE1T
-SS1YIHRhYmxlcyBhcmUgbG9jYXRlZCBpbiB0aGVyZS4uIHRoYXQgY2FuIGxl
-YWQKdG8gdXMgY2F1c2luZyBQQ0llIGVycm9ycy4gSW5oaWJpdCB1cyBwZXJm
-b3JtaW5nIGFueQpvcGVyYXRpb24gb24gdGhlIE1TSS1YIHVubGVzcyB0aGUg
-TUVNT1JZIGJpdCBpcyBzZXQuCgpOb3RlIHRoYXQgWGVuIGh5cGVydmlzb3Ig
-d2l0aDoKIng4Ni9NU0ktWDogYWNjZXNzIE1TSS1YIHRhYmxlIG9ubHkgYWZ0
-ZXIgaGF2aW5nIGVuYWJsZWQgTVNJLVgiCndpbGwgcmV0dXJuOgp4ZW5fcGNp
-YmFjazogMDAwMDowYTowMC4xOiBlcnJvciAtNiBlbmFibGluZyBNU0ktWCBm
-b3IgZ3Vlc3QgMyEKCldoZW4gdGhlIGdlbmVyaWMgTVNJIGNvZGUgdHJpZXMg
-dG8gc2V0dXAgdGhlIFBJUlEgd2l0aG91dApNRU1PUlkgYml0IHNldC4gV2hp
-Y2ggbWVhbnMgd2l0aCBsYXRlciB2ZXJzaW9ucyBvZiBYZW4KKDQuNikgdGhp
-cyBwYXRjaCBpcyBub3QgbmVjY2Vzc2FyeS4KClRoaXMgaXMgcGFydCBvZiBY
-U0EtMTU3CgpDQzogc3RhYmxlQHZnZXIua2VybmVsLm9yZwpSZXZpZXdlZC1i
-eTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTaWduZWQtb2Zm
-LWJ5OiBLb25yYWQgUnplc3p1dGVrIFdpbGsgPGtvbnJhZC53aWxrQG9yYWNs
-ZS5jb20+Ci0tLQogZHJpdmVycy94ZW4veGVuLXBjaWJhY2svcGNpYmFja19v
-cHMuYyB8IDggKysrKysrKy0KIDEgZmlsZSBjaGFuZ2VkLCA3IGluc2VydGlv
-bnMoKyksIDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQgYS9kcml2ZXJzL3hl
-bi94ZW4tcGNpYmFjay9wY2liYWNrX29wcy5jIGIvZHJpdmVycy94ZW4veGVu
-LXBjaWJhY2svcGNpYmFja19vcHMuYwppbmRleCA2NDhjMDljLi5lZGI5MzU3
-IDEwMDY0NAotLS0gYS9kcml2ZXJzL3hlbi94ZW4tcGNpYmFjay9wY2liYWNr
-X29wcy5jCisrKyBiL2RyaXZlcnMveGVuL3hlbi1wY2liYWNrL3BjaWJhY2tf
-b3BzLmMKQEAgLTIxMiw2ICsyMTIsNyBAQCBpbnQgeGVuX3BjaWJrX2VuYWJs
-ZV9tc2l4KHN0cnVjdCB4ZW5fcGNpYmtfZGV2aWNlICpwZGV2LAogCXN0cnVj
-dCB4ZW5fcGNpYmtfZGV2X2RhdGEgKmRldl9kYXRhOwogCWludCBpLCByZXN1
-bHQ7CiAJc3RydWN0IG1zaXhfZW50cnkgKmVudHJpZXM7CisJdTE2IGNtZDsK
-IAogCWlmICh1bmxpa2VseSh2ZXJib3NlX3JlcXVlc3QpKQogCQlwcmludGso
-S0VSTl9ERUJVRyBEUlZfTkFNRSAiOiAlczogZW5hYmxlIE1TSS1YXG4iLApA
-QCAtMjIzLDcgKzIyNCwxMiBAQCBpbnQgeGVuX3BjaWJrX2VuYWJsZV9tc2l4
-KHN0cnVjdCB4ZW5fcGNpYmtfZGV2aWNlICpwZGV2LAogCWlmIChkZXYtPm1z
-aXhfZW5hYmxlZCkKIAkJcmV0dXJuIC1FQUxSRUFEWTsKIAotCWlmIChkZXYt
-Pm1zaV9lbmFibGVkKQorCS8qCisJICogUENJX0NPTU1BTkRfTUVNT1JZIG11
-c3QgYmUgZW5hYmxlZCwgb3RoZXJ3aXNlIHdlIG1heSBub3QgYmUgYWJsZQor
-CSAqIHRvIGFjY2VzcyB0aGUgQkFScyB3aGVyZSB0aGUgTVNJLVggZW50cmll
-cyByZXNpZGUuCisJICovCisJcGNpX3JlYWRfY29uZmlnX3dvcmQoZGV2LCBQ
-Q0lfQ09NTUFORCwgJmNtZCk7CisJaWYgKGRldi0+bXNpX2VuYWJsZWQgfHwg
-IShjbWQgJiBQQ0lfQ09NTUFORF9NRU1PUlkpKQogCQlyZXR1cm4gLUVOWElP
-OwogCiAJZW50cmllcyA9IGttYWxsb2Mob3AtPnZhbHVlICogc2l6ZW9mKCpl
-bnRyaWVzKSwgR0ZQX0tFUk5FTCk7Ci0tIAoyLjEuMAoK
-
---=separator--
+-- 
+Jakub Wilk
