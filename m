@@ -1,28 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/26/5
-Message-ID: <d47bb80.ff77.1527e58ea1c.Coremail.xiaoqixue_1@163.com>
-Date: Tue, 26 Jan 2016 22:31:42 +0800 (CST)
-From: xiaoqixue_1  <xiaoqixue_1@....com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/27/3
+Message-ID: <20160227173409.GA3663@jwilk.net>
+Date: Sat, 27 Feb 2016 18:34:20 +0100
+From: Jakub Wilk <jwilk@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: a bug in gif2rgb.c in giflib-5.1.2
+Subject: Re: Access to /dev/pts devices via pt_chown and user namespaces
 Content-Type: text/plain; charset=utf-8
 
+* Simon McVittie <smcv@...ian.org>, 2016-02-24, 07:01:
+>>>Just for the record, pt_chown is not enabled by default in upstream 
+>>>glibc starting with glibc-2.18, one has to specify --enable-pt_chown 
+>>>configure option explicitly to build pt_chown.
+>>
+>>Thanks for that information. So for pt_chown, this could hopefully be 
+>>just an Ubuntu issue.
+>
+>And Debian 8 (but not the future Debian 9, at least on Linux kernels), 
+>and probably other distributions where backward compat was a concern.
+>
+><https://bugs.debian.org/717544> has some interesting background. The 
+>Debian and Ubuntu glibc maintainers tried turning off pt_chown in 2014, 
+>but had to turn it back on because it caused too many regressions: in 
+>particular "mount -t devpts devpts-foo chroot-foo/dev/pts" apparently 
+>alters the mount options for the "real" /dev/pts, not just the one 
+>being mounted in the chroot (presumably losing the noexec,nosuid,gid=5 
+>and mode=620 or mode=600 options that are expected in Debian). I don't 
+>know whether the default mount options were subsequently altered in 
+>util-linux and/or the kernel as suggested on that bug, or whether 
+>manually mounting devpts is just not going to be a supported action in 
+>Debian 9.
 
+grantpt() was fixed so that it works even when /dev/pts mount options 
+are "wrong":
+https://sourceware.org/ml/libc-alpha/2015-12/msg00151.html
 
+This is going to be backported to Debian 8 (jessie):
+https://bugs.debian.org/816023
 
-
-We find a memory allocation whose size could be zero in gif2rgb.c. 
-and It will result to several memory out of bound read and write. the bug in gif2rgb.c:386 :
-
-386 if ((ScreenBuffer = (GifRowType *) 
-387 malloc(GifFile->SHeight * sizeof(GifRowType))) == NULL) 
-388 GIF_EXIT("Failed to allocate memory required, aborted.");
-
-
-Please see "http://sourceforge.net/p/giflib/bugs/82/" for more details.
-
-
-
-
-the bug was found by Qixue Xiao at Tsinghua University.
+-- 
+Jakub Wilk
