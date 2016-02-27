@@ -1,91 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/12/3
-Message-ID: <CACn5sdTz=fkOBg1O+kxrSjmK3Z9ALie7UrboKtEb5cSCrvPc5w@mail.gmail.com>
-Date: Fri, 12 Feb 2016 11:04:14 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: out-of-bounds write with cpio 2.11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/27/2
+Message-Id: <20160227134425.4F5F26C012D@smtpvmsrv1.mitre.org>
+Date: Sat, 27 Feb 2016 08:44:25 -0500 (EST)
+From: cve-assign@...re.org
+To: up201407890@...nos.dcc.fc.up.pt
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: util-linux runuser tty hijacking via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
-A patch is available here:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-https://lists.gnu.org/archive/html/bug-cpio/2016-01/msg00005.html
+> When executing a program via "runuser -u nonpriv program" the
+> nonpriv session can
+> escape to the parent session by using the TIOCSTI ioctl to push
+> characters into the
+> terminal's input buffer
 
-2016-01-19 13:45 GMT-03:00 Gustavo Grieco <gustavo.grieco@...il.com>:
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=815922
 
-> Hello,
->
-> An out-of-bounds write in cpio 2.11 was found in the parsing of cpio files
-> (other version are probably affected).  Find attached a test case to
-> reproduce it. The ASAN report is here:
->
-> =================================================================
-> ==5480==ERROR: AddressSanitizer: heap-buffer-overflow on address
-> 0x60200000edd0 at pc 0x41f187 bp 0x7fffffffdc50 sp 0x7fffffffdc48
-> WRITE of size 2 at 0x60200000edd0 thread T0
->     #0 0x41f186 in cpio_safer_name_suffix
-> /home/g/Codigo/cpio-2.11+dfsg/src/util.c:1392
->     #1 0x40b3d7 in process_copy_in
-> /home/g/Codigo/cpio-2.11+dfsg/src/copyin.c:1391
->     #2 0x416754 in main /home/g/Codigo/cpio-2.11+dfsg/src/main.c:739
->     #3 0x7ffff6b5eec4 in __libc_start_main
-> (/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
->     #4 0x403408 (/home/g/Codigo/cpio-2.11+dfsg/src/cpio+0x403408)
->
-> 0x60200000edd1 is located 0 bytes to the right of 1-byte region
-> [0x60200000edd0,0x60200000edd1)
-> allocated by thread T0 here:
->     #0 0x7ffff6f567ef in __interceptor_malloc
-> (/usr/lib/x86_64-linux-gnu/libasan.so.1+0x547ef)
->     #1 0x440f3e in xmalloc /home/g/Codigo/cpio-2.11+dfsg/gnu/xmalloc.c:47
->     #2 0x409c74 in read_in_new_ascii
-> /home/g/Codigo/cpio-2.11+dfsg/src/copyin.c:1166
->     #3 0x408a26 in read_in_header
-> /home/g/Codigo/cpio-2.11+dfsg/src/copyin.c:1043
->     #4 0x40b354 in process_copy_in
-> /home/g/Codigo/cpio-2.11+dfsg/src/copyin.c:1361
->     #5 0x416754 in main /home/g/Codigo/cpio-2.11+dfsg/src/main.c:739
->     #6 0x7ffff6b5eec4 in __libc_start_main
-> (/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
->
-> SUMMARY: AddressSanitizer: heap-buffer-overflow
-> /home/g/Codigo/cpio-2.11+dfsg/src/util.c:1392 cpio_safer_name_suffix
-> Shadow bytes around the buggy address:
->   0x0c047fff9d60: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
->   0x0c047fff9d70: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
->   0x0c047fff9d80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
->   0x0c047fff9d90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
->   0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-> =>0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa[01]fa fa fa 06 fa
->   0x0c047fff9dc0: fa fa 05 fa fa fa 00 04 fa fa 00 04 fa fa 00 04
->   0x0c047fff9dd0: fa fa 00 04 fa fa 00 04 fa fa 00 04 fa fa 00 04
->   0x0c047fff9de0: fa fa 00 04 fa fa 00 04 fa fa 00 04 fa fa 00 04
->   0x0c047fff9df0: fa fa 00 04 fa fa 00 04 fa fa 00 04 fa fa fd fa
->   0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-> Shadow byte legend (one shadow byte represents 8 application bytes):
->   Addressable:           00
->   Partially addressable: 01 02 03 04 05 06 07
->   Heap left redzone:       fa
->   Heap right redzone:      fb
->   Freed heap region:       fd
->   Stack left redzone:      f1
->   Stack mid redzone:       f2
->   Stack right redzone:     f3
->   Stack partial redzone:   f4
->   Stack after return:      f5
->   Stack use after scope:   f8
->   Global redzone:          f9
->   Global init order:       f6
->   Poisoned by user:        f7
->   Contiguous container OOB:fc
->   ASan internal:           fe
-> ==5480==ABORTING
->
->
-> This issue was found using QuickFuzz.
->
-> Regards,
-> Gus.
->
->
+Use CVE-2016-2779.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJW0aedAAoJEL54rhJi8gl5pAoQAKWMwUdm+ZVBG7mMq8qqlCSQ
+an4Xqnp7s8vlogDY3NDBvVYazYVtg5Ajh9fSrWtNJeRcRkfiOw856XYNyN3mXcvn
+JXD2XMllsy+UsynMKzt4rlp6qlUCa26s4q60q6eDhoZRkRu/YjpitlnJwB6o2+yJ
+J8rZ3gZgzBL9ydfn0e+dOTdHrrpkM6mnKl1i6XKiHAdCz9AXqEn+rWVpsp6tfg8p
+Xnjr7VYQYBqELHzX4w7wuyMsc1zSSFd4X2dqT50ypNbRVh+UjZLR5bO4NNIILFB4
+YJGuGIKKc6rkGgNrNa7CM7Ll0f2O+i1Bpb4Iv+39ACT5TRXuFGwh2O//ZRCeLVbl
+edEhEnc60xcJAGnf47bA11thDvgxS11sc/tI++2bW3jYARRzybSS6Ym0hvGP/lGE
+8VycZrUMMDKKTXWu7mXxqTnbIDh91y1jVpdfZ077Qf9maEzpTM89zXuMc2GTbylY
+on8ZoRqxNto++aejWpILRvno9iA7jxXj68ex4Lb8IFNJeQNoKYaZRs/OxM62RmUV
+GAK/HrGbhM/A2/6AvFbrYEdXIbEzbFJqbLuZ0p/+sQZzQuoD9p992Cm2+yjPkoC0
+CJOzwgm9GSPYzvLmIOGWw/7n+H+a2HRGxKzscwc6GP2fmSfYdyfcCS76fcKlx30N
+uTHZfWSO+IA9Kz9tUgc2
+=L3QX
+-----END PGP SIGNATURE-----
