@@ -1,53 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/21/10
-Message-ID: <CANO=Ty3-BtPv8QhWdvMDhW_mp0=xd+ysGC=GeoSsr-bR79BwGQ@mail.gmail.com>
-Date: Mon, 21 Nov 2016 14:00:58 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Scott Gravelle <scottg@...rezzio.com>
-Subject: Re: Multiple XSS vulnerabilities affecting five WordPress Plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/28/10
+Message-ID: <1586796749.30137780.1456687267516.JavaMail.zimbra@redhat.com>
+Date: Sun, 28 Feb 2016 14:21:07 -0500 (EST)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Re: CVE request -- linux kernel: visor: crash on invalid USB device descriptors in treo_attach() in visor driver
 Content-Type: text/plain; charset=utf-8
 
-One aspect of this is the quality of CVE requests. Well formed requests are
-easy and fast to process. Poorly formed requests take more time (I'm not
-speaking about these WordPress issues in specific, but more in general
-terms).
+Hello,
 
-We (MITRE and the CVE board as well as efforts like the DWF) are also
-making significant changes to CVE, how they are assigned, CNAs, federation,
-the technology and more that should result in much easier and faster
-assignments.
+>> We don't really understand "An upstream patch" here.
+Indeed, the correct commit is cac9b50b0d. I'm sorry for the error.
 
-Also there are problems with OVE, for example what counting rules does it
-use? Where is the database of data? To be honest OVE is a nice idea, but
-falls very short of what people need from a vulnerability identifier.
+We will use CVE-2016-2782, thank you.
 
-On Mon, Nov 21, 2016 at 1:28 PM, Henri Salo <henri@...v.fi> wrote:
-
-> On Mon, Nov 21, 2016 at 04:56:13PM +0000, Scott Gravelle wrote:
-> > Any plans to get CVEs assigned to these vulnerabilities you guys found?
-> Our
-> > vulnerability scanner does not have a feature to filter off OVE
->
-> Maybe you should start handling OVE and other IDs too. Two reasons:
->
-> 1) MITRE is not always assigning CVEs for WordPress plugin and theme
-> vulnerabilities for unknown reason. It's not like the CVEs are running out
-> 2) MITRE is not assigning CVEs to all software that has previously
-> received a
-> CVE, silently dropping the software to out-of-scope area. Example case:
-> http://www.openwall.com/lists/oss-security/2016/11/10/6
->
-> --
-> Henri Salo
->
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
 
 
+----- Original Message -----
+From: cve-assign@...re.org
+To: vdronov@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Sent: Sunday, February 28, 2016 7:41:39 PM
+Subject: [oss-security] Re: CVE request -- linux kernel: visor: crash on invalid USB device descriptors in treo_attach() in visor driver
 
--- 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+> A local kernel crash on invalid USB device requiring the visor driver was reported.
+> The treo_attach() function of the [visor] driver, which is called during the driver
+> initialization process, was dereferencing the bulk-in and interrupt-in urbs without
+> first making sure they had been allocated by the core. Due to an incomplete sanity
+> check, the visor driver tries to dereference null-pointers, which results in crash.
+> 
+> References:
+> 
+> Red Hat public Bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1312670
+> 
+> An upstream patch: http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=cb3232138e37129e88240a98a1d2aba2187ff57c
 
+We don't really understand "An upstream patch" here. We think you mean
+the patch is
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=cac9b50b0d75a1d50d6c056ff65c005f3224c8e0
+instead. In any case, use CVE-2016-2782 for the reported treo_attach
+vulnerability.
+
+
+> this flaw is very similar to already existing
+> CVE-2015-7566 (https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7566).
+> This is the same type of a flaw, which just exists in the different function
+> treo_attach() (instead of clie_5_attach()), so probably we can use the same
+> CVE-2015-7566 for this.
+
+We're not going to change or expand the meaning of CVE-2015-7566
+several weeks later.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJW0z65AAoJEL54rhJi8gl56wkP/Aoe0dtizrz4nd4CopPTiDOD
+g+x7UmKmjqlAIlJ6nKwGLmv7by9yvOjZnKnaxQOU/EG+wSL3GpSnVojsrNVZSQGu
+V5iacBA2GW0a4kd8g7bBnK4ViXuoeJII31LfEYVIrAUXXL9h+fOZSjjy4/L+kk1m
+VFSCVIa2jbzHvJr+iNIs0oWFmXQjcuzyFzsOOjbgAvtBFEOL4JW+LAW7qMp8mXTR
++DpMkaG1JqjzO+Qcj931kNN0MAc5SZBs5+vB0kcI7+g5bKpN01qITvME2szk1iZg
+GRrVyYKzfc16KcjWjbWJNr6i8TuyE/8UvYOmr9c9DNZjM2yAObBpYehrVApTmAmj
+yp/pc+QAFUDGMvalgAwtlEie/c+0cihTGN/BkftFd5/RW8JM6Tm3xcl2/ktK6OGC
+X5L6Mm+q73oVK+YEj3ky5kHYkEsjSrTfN+RrdqE/8r7gNoDhjbaiI4fbq41iFWru
+33XexHwVjtVBJboJ5nKQHBpfUdksQ7gY+6rI9rah4Njt2K2EWwzY+Ibw79d+9i8M
+yJ2grJC/rOzNIDAyU0nyiSWibxEq2HvqmWyfc6CxBgfbXgcTbHxcgWHvTjVuBUfb
+VcDYFPggg/sxehevY34lcbQCJG/GGWihdNuJ2dY/4jOBqLgjlsGNES/lTd6GXjFF
+9IbRRVCzbBb3fap+Ol1N
+=6+yK
+-----END PGP SIGNATURE-----
