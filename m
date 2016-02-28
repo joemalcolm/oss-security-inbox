@@ -1,31 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/10/2
-Message-ID: <20160110143712.GA13963@eldamar.local>
-Date: Sun, 10 Jan 2016 15:37:12 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: Damyan Ivanov <dmn@...ian.org>
-Subject: CVE Request: FireBird RDBMS: authenticated clients crash FireBird when running gbak with invalid parameter
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/28/2
+Message-ID: <56D2E491.1000505@gmail.com>
+Date: Sun, 28 Feb 2016 17:14:09 +0500
+From: "Alexander E. Patrakov" <patrakov@...il.com>
+To: oss-security@...ts.openwall.com, up201407890@...nos.dcc.fc.up.pt
+Cc: cve-assign@...re.org
+Subject: Re: Re: CVE Request: util-linux runuser tty hijacking via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+27.02.2016 18:44, cve-assign@...re.org пишет:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+>> When executing a program via "runuser -u nonpriv program" the
+>> nonpriv session can
+>> escape to the parent session by using the TIOCSTI ioctl to push
+>> characters into the
+>> terminal's input buffer
+>
+>> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=815922
+>
+> Use CVE-2016-2779.
 
-The FireBird RDBMS can be crashed remotely by an authenticated client
-by invoking gbak via the service manager using invalid command line
-switch and lead to denial of service.
+One more case:
 
-The issue was introduced in version 2.5.5.
+chroot --userspec=someuser:somegroup / /path/to/test
 
-Upstream report:
-http://tracker.firebirdsql.org/browse/CORE-5068
+This also runs "id" at the end.
 
-Upstream fix: 
-http://sourceforge.net/p/firebird/code/62783/
-
-Debian bug:
-https://bugs.debian.org/810599
-
-Can a CVE be assigned for his issue?
-
-Regards,
-Salvatore
+-- 
+Alexander E. Patrakov
