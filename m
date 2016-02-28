@@ -1,95 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/7
-Message-ID: <BY2PR15MB0728301B880CC40FFD658066E98A0@BY2PR15MB0728.namprd15.prod.outlook.com>
-Date: Wed, 16 Mar 2016 03:00:00 +0000
-From: Justin Yackoski <jyackoski@...pto-nite.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-2117 memory disclosure to ethernet due to unchecked scatter/gather IO
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/28/1
+Message-ID: <CAP145pjL_=W0C_3NvHxkJ2girfx3wS-7i-epRxwcmDmd7J3E1Q@mail.gmail.com>
+Date: Sun, 28 Feb 2016 05:28:32 +0100
+From: Robert Święcki <robert@...ecki.net>
+To: oss-security@...ts.openwall.com
+Subject: AMD newest ucode 0x06000832 for Piledriver-based CPUs seems to behave in a problematic way
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-2117 memory disclosure to ethernet due to unchecked scatter/gather IO
+Since this was re-discovered on LKML, and as this might be important
+for some Linux users, especially those who do malware analysis under
+kvm or run server farms with VPSes, I decided to re-post it here.
 
+AMD newest public ucode 0x06000832 for Piledriver-based CPUs (newer
+AMD FX, and Opteron 3300/4300/6300 series) seems to be broken. Under
+certain conditions it allows unprivileged users running under qemu VMs
+to affect the host Linux kernel in a problematic manner: the CPU
+starts to behave in an erratic way, and it leads to CPU execution flow
+of the host kernel (the one running on bare metal) to be changed.
+Visible effects vary: kernel trying to execute its own heap/bss,
+crashing on stack-protector code, or jumping into random addresses,
+including those addresses mapped in in the qemu guest system
+(potential vm escape, although this case is so rare, as it depends on
+timing, that I wasn't able to create a reliable exploit for this
+scenario).
 
-Affects:
+My poc works only under qemu-kvm. Xen and kvmtools seem not to be
+affected by it because there's some missing functionality in them my
+poc make use of. But, there was recently another thread started on
+LKML, which make me think those hypervisors can also be affected
+(although it's just a speculation), because those crashes were not
+likely induced by the technique I used in my poc, and the initial
+cause seem identical (i.e. very specific CPU microcode version
+required).
 
-In-tree Linux ethernet drivers:
+In any case, here's my LKML post with some more details:
+https://lkml.org/lkml/2016/2/26/876 - and here's the whole thread in
+which the problem was re-discovered by Jiri Slaby -
+https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg1085821.html
 
-atheros/atlx/atl2.c  confirmed in versions 3.8 thru 4.5 (possibly earlier)
+Last communication I got from AMD (I contacted them couple of week
+back with details) was "We are working on the final testing of a new
+microcode patch to replace 0x06000832.", but got no ETA for it yet.
 
-* see description for more details on other potential less severe impacts
+I recommend not updating your CPU microcode to 0x06000832 if possible
+(with amd-ucode-like packages), i.e. if your BIOS delivers some
+earlier version. Unfortunately there's nothing I can reasonably
+recommend to those whose machines run with BIOS which delivers
+0x06000832, except maybe for not running any potentially malicious
+payloads in your kvm VMs or downgrading your BIOS if possible.
 
+PS. There's a very similar bug report which can be found on vmware kb
+pages - https://kb.vmware.com/selfservice/microsites/search.do?language=en_US&cmd=displayKC&externalId=2061211
+- which might or might not be related to this problem (and points to a
+specific errata #). From its description, it seems the bug was somehow
+patched in their OS kernel. That's just a speculation, but if it's the
+same problem, then maybe there's some way of preventing this in the
+Linux kernel as well.
 
-Description:
-
-When scatter/gather IO is enabled (NETIF_F_SG), the ethernet driver may be passed a
-
-list of buffers containing the packet to be sent, rather than a single contiguous buffer
-
-in order to improve performance.  If a driver claims to support scatter/gather but does
-
-a simple memcpy, dma_map_single, or similar call from skb->data to skb->len the result
-
-is that the outgoing packet will be sent containing the first full fragment followed by
-
-whatever kernel memory was at the end of that first fragment.  This data is likely to be
-
-other data from other skb's, but other sensitive data has been seen.  If hardware
-
-checksumming is enabled, the resulting ethernet frame will be valid other than containing
-
-the disclosed memory.
-
-
-This bug is remotely exploitable in the atl2 driver whenever scatter/gather IO is triggered,
-
-which can be done in some common applications (pcap samples available upon request).
-
-
-Note that this bug was originally found in an out of tree driver (CVE-2016-2553), and may
-
-go unnoticed in similar drivers until the right conditions for scatter/gather IO are hit.
-
-
-Apart from the atl2 driver that can be remotely exploited, other in-tree drivers are not
-
-remotely exploitable but a local privileged user with access to kernel runtime memory
-
-may be able to cause a driver that does not check for skb fragments to start to behave
-
-improperly.
-
-
-Mitigation:
-
-1) If using atl2 driver run the following at each boot (not confirmed due to lack of hardware
-
-          availability):
-
-    ethtool -K <ethX> sg off
-
-2) Other drivers that don't expect scatter/gather, ensure appropriate local permissions.
-
-
-Recommended fixes:
-
-1) remove NETIF_F_SG from atl2.c
-
-2) if an ethernet driver does not handle scatter/gather, consider a run-time check for
-
-     fragments in the ndo_start_xmit handler rather than a compile time-assumption for maximum
-
-     security.
-
-
-Patches:
-
-None available currently, although in atl2 simply remove the NETIF_F_SG identifier from the
-
-hw_features of the net device structure.
-
-
-Credits:
-
-Justin Yackoski @ Cryptonite
-
-
+-- 
+Robert Święcki
