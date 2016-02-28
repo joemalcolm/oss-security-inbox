@@ -1,26 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/10/6
-Message-Id: <20160210202003.2D418B2E0D7@smtpvbsrv1.mitre.org>
-Date: Wed, 10 Feb 2016 15:20:03 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/28/6
+Message-Id: <20160228155614.9D9FC6C05FA@smtpvmsrv1.mitre.org>
+Date: Sun, 28 Feb 2016 10:56:14 -0500 (EST)
 From: cve-assign@...re.org
-To: seth.arnold@...onical.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...ntu.com
-Subject: Re: CVE Request: eom, gnome-photos, eog, gambas3, thunar, pinpoint, gtk+2.0
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: AMD newest ucode 0x06000832 for Piledriver-based CPUs seems to behave in a problematic way
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://bugzilla.gnome.org/show_bug.cgi?id=703220
->> Reported: 2013-06-27 23:17 UTC by Bert Massop
->> Memory allocation integer overflow in gdk_cairo_set_source_pixbuf on large pixbufs
+> ... leads to CPU execution flow
+> of the host kernel (the one running on bare metal) to be changed.
 
-> https://bugs.launchpad.net/ubuntu/+source/gtk+2.0/+bug/1540811
-> https://github.com/mate-desktop/eom/issues/93
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=799275
-> https://git.gnome.org/browse/gtk+/commit?id=894b1ae76a32720f4bb3d39cf460402e3ce331d6
+[ see also
+https://www.reddit.com/r/linux/comments/47s8a8/new_amd_microcode_vulnerability_from_unprivileged/ ]
 
-Use CVE-2013-7447.
+We don't think we can send any related AMD CVE ID or IDs here because
+this microcode isn't an open-source product:
+
+  https://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/tree/LICENSE.amd-ucode
+  "You may not reverse engineer, decompile, or disassemble this Software
+  or any portion thereof."
+
+CVE IDs for AMD products are available from cve-assign@...re.org (we
+understand that the 0x06000832 information is directly relevant to use
+of open-source products; also, it's at least conceivable that someone
+will announce a security update to an open-source product with a
+workaround for the behavior, or for the existence, of 0x06000832).
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -30,17 +38,17 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWu5rcAAoJEL54rhJi8gl5JEoQAJvhxa+JfBRfWSeMuAkMjHZ/
-e2Sl1CSTNy/bSbJ+vZFxgNDSah/QRCW3wteA/wPpOubufPPklbDav9tycaVop3Wb
-hA1W5RFdHyxt0mUmGdLJd23nnyZ16OanMhMeIUhnzz0z5gY+rITFs2d7twK+k5To
-BIpbEjF/LjFyuP809v3vmdjY5vOET9X5cE6Vf4h0ewo7jCYRjtTSeYSTzZK07fTI
-dChHQ1TS8iw9kHZE7/BfsOcfm3zyPVKdgAb8C0d73/byLZs+CNdiOli0jP0V8BkO
-2335Kh1PNZgyg3/Q/13lgzuQD46WPUlWv+bz12yXzO6GpVTxp9ff9yVX5x2LCwL4
-oMVQ0OohIW0o7sdwBxv4wembusboImoae0aV8ID24y8poRVGtTlCevZoLbp7d0zr
-lOiOJGopzy2lin4i10yUhkZb+V1aCKb8KTQJX0r8LrbQl0TvYSqv18t5jueMbeIB
-Qg2emOFVc45eStz/zJI+PV4ly8smKOcWPiJOp47xHb4SlgdC409xJaak1FoGgiVX
-PdXvp6Fh1v96DUG0WXb+MqKSsJSbMqrj/PNtYC7fzFPrezVcjG3WDVx+EcqVAMvh
-mRkq+OjbhYEm3D69ZgoMgkVbDrgqEwFKZLkNfnpvQKjvJeA8vlhJadfZ/iuHY8MC
-mQn7uQO0hFn4AwX4s53z
-=wp1h
+iQIcBAEBCAAGBQJW0xgeAAoJEL54rhJi8gl5KEwP/iy02HVY+3QifTREEpq93md0
+9hN9WwBItTU48PH0bYOHe7POBC0K5hmxhC9CE5iA53h+d9OiLnXxfQRjQUnrmylx
+78ZvZ0r7kmUoB6KcOgYXKXeEWleIpD3ca9eUAhEuIZjYbE7fxL3OJXW+cQ4IYL7P
+hGdpOajzckWRemiN3ELjQc2Lnitj6ef8suHbrHnQLaMHPjufaowJ/mPa3gtZgtC8
+0gAw2MGiyxHQ4GFDOWNmBICbTwiJWwRtMOJdSHX63zn518038MeLal/9UcQlcxPC
+Fi1oVTteJC2oh7iYhTjRXy8hYcGC7Wdefyg0rqQ4WgCkysYvOeYbpiREmG71e0mG
+9QsDCSKvnyolDBC+9aSsFFtC022kRzmdRCGBokPAaiXduXRYxcDJPUd07YBtIw5y
+5zfe/Z7wmKDiM+tDmVsUFqbW0Q0jccbBM/WsHJfAV2feYIDMC/gO1moPASeKbLrm
+ZYD+jc6k2CDq7NQZNTsCzOhUAM1rr2BQmuG1ZOxwkP5Tnv7Iku1X559vIdVZ3n7c
+ZxegRoUXMmCJalpzRCrRYtwL0ipvNvPAbwZ04hxiqQhlENLyBL/bAWRK90wYjlsS
+pUBjlSxsrJ21hm9CnoPonhkdMNCv+aFS5LTY+0WQ6uRXbjrRJ3cluS0ZGJ86HR22
+ZzYJ6UNbLzaxIdLe9qGe
+=Logq
 -----END PGP SIGNATURE-----
