@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1328" "Sunday" "10" "December" "2017" "16:31:53" "-0500" "Phil Pennock" "oss-security-phil@spodhuis.org" "<20171210213153.GA8106@tower.spodhuis.org>" "27" "Re: [oss-security] Re: Recommendations GnuPG-2 replacement" nil nil nil "12" "2017121021:31:53" "[oss-security] Re: Recommendations GnuPG-2 replacement" (number mark "U       oss-security Dec 10   27/1328  " thread-indent "\"Re: [oss-security] Re: Recommendations GnuPG-2 replacement\"\n") "<e990a29d-04a4-bf5b-d743-087867d56256@ruhr-uni-bochum.de>" ("<780d4f26-0803-6ef8-3a21-bcf8ea480a29@ruhr-uni-bochum.de>" "<20171210041530.GA81842@tower.spodhuis.org>" "<e990a29d-04a4-bf5b-d743-087867d56256@ruhr-uni-bochum.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2353" "Sunday" "28" "February" "2016" "16:23:44" "+0100" "Aurelien Jarno" "aurelien@aurel32.net" "<20160228152344.GA711@aurel32.net>" "58" "[oss-security] Re: pt_chown timeline, CVE request [was: Access to /dev/pts devices via pt_chown and user namespaces]" nil nil nil "2" "2016022815:23:44" "[oss-security] Re: pt_chown timeline, CVE request [was: Access to /dev/pts devices via pt_chown and user namespaces]" (number mark "U       aurelien@aur Feb 28   58/2353  " thread-indent "\"[oss-security] Re: pt_chown timeline, CVE request [was: Access to /dev/pts devices via pt_chown and user namespaces]\"\n") "<20160228145356.GA30050@pc.thejh.net>" ("<8fc639ad-daef-1a6f-facf-140eb61aeee5@halfdog.net>" "<20160228145356.GA30050@pc.thejh.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25891 invoked by uid 550); 10 Dec 2017 23:56:27 -0000
+Received: (qmail 9972 invoked by uid 550); 28 Feb 2016 15:24:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,55 +12,80 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1581 invoked from network); 10 Dec 2017 21:32:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=spodhuis.org; s=d201711; h=In-Reply-To:Content-Type:MIME-Version:References
-	:Message-ID:Subject:To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding
-	:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=ZUFcRo6Z4lJ1rWo+N/csGGTR91tXE0E+5LDePVa1P2I=; b=YCohzyX5FfFgF3aeXFLcapyRwW
-	1R304+1SNhFGDop0g3dqd180hVeYu19ooqjJRgzJgQSm/JMTAI1Gm0wKyDV6NONTmPH5KWszXyyaD
-	jYjD/BsbIP6LZzzQAIYrcJWuDZYX+2o2whIsH0lUI2pI+aA/Ykij5cbfFWYMcaXZOcRA8zKjC55eE
-	FDEJkLEN2kpJ4EgExGLHCH+60w7C;
-Date: Sun, 10 Dec 2017 16:31:53 -0500
-From: Phil Pennock <oss-security-phil@spodhuis.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20171210213153.GA8106@tower.spodhuis.org>
-References: <780d4f26-0803-6ef8-3a21-bcf8ea480a29@ruhr-uni-bochum.de>
- <20171210041530.GA81842@tower.spodhuis.org>
- <e990a29d-04a4-bf5b-d743-087867d56256@ruhr-uni-bochum.de>
+Received: (qmail 9954 invoked from network); 28 Feb 2016 15:23:59 -0000
+Date: Sun, 28 Feb 2016 16:23:44 +0100
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Jann Horn <jann@thejh.net>
+Cc: oss-security@lists.openwall.com, security@kernel.org,
+	security@ubuntu.com, security@debian.org,
+	Florian Weimer <fw@deneb.enyo.de>
+Message-ID: <20160228152344.GA711@aurel32.net>
+References: <8fc639ad-daef-1a6f-facf-140eb61aeee5@halfdog.net>
+ <20160228145356.GA30050@pc.thejh.net>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="MGYHOYXEY6WxJCY8"
+Content-Disposition: inline
+In-Reply-To: <20160228145356.GA30050@pc.thejh.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: [oss-security] Re: pt_chown timeline, CVE request [was: Access to /dev/pts devices
+ via pt_chown and user namespaces]
+
+--MGYHOYXEY6WxJCY8
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e990a29d-04a4-bf5b-d743-087867d56256@ruhr-uni-bochum.de>
-OpenPGP: url=https://www.security.spodhuis.org/PGP/keys/0x4D1E900E14C1CC04.asc
-Subject: Re: [oss-security] Re: Recommendations GnuPG-2 replacement
+Content-Transfer-Encoding: quoted-printable
 
-On 2017-12-10 at 14:16 +0100, Marcus Brinkmann wrote:
-> Another idea I am contemplating is running my own little keyserver that
-> does only email verification.  It's like registering for a website, but
-> without a website.  People are familiar with the concept, it gives at
-> least the assurance that somebody (me) verified the email address, and
-> it allows revocation.
+On 2016-02-28 15:53, Jann Horn wrote:
+> As others figured out in the private bug discussion, pt_chown is
+> already not installed as setuid binary by glibc anymore.
+> That it is present in Debian and Ubuntu is because of a distro patch
+> in Debian, which Debian applied to work around the bug that the
 
-Prior art to consider and inform your decisions:
+To be correct, it's not really a patch, but rather a configure option.
 
- * 0x9710B89BCA57AD7C -- PGP Global Directory Verification Key
-   + Now part of Symantec; upload key, do verification steps via email,
-     get signature
- * 0x2BAE3CF6DAFFB000 -- ct magazine -- pgpCA@ct.heise.de
-   + Some years back a German technical magazine apparently made a big
-     push to get people using OpenPGP and had their own verification
-     service
- * WKS in the current (>= 2.1.15) GnuPG releases, built with optional
-   ./configure flag, <https://wiki.gnupg.org/WKS>
-   + Software to be run by the mail-provider for a given domain, to act
-     as a trusted introducer and move away from the public keyservers.
-     Like finger:// but without shell access to set .pubkey|.plan files.
-     Requires a fair bit of setup, if nothing ships with support
-     out-of-the-box.  Is one of the auto-key-locate options for GnuPG,
-     under name `wkd`.  KMail has built-in support
+> "[PATCH] devpts: Sensible /dev/ptmx & force newinstance" patch is
+> supposed to fix. So with a fix for that issue applied, Debian and
+> Ubuntu should be able to just drop the distro patch, fixing the
+> vuln by removing pt_chown.
 
-Good luck!
--Phil
+Note that in the meantime we have developed an alternative workaround
+on the glibc side, which allows to not break systems with multiple
+/dev/pts mounts, though the result is not POSIX compliant:
+
+  https://sourceware.org/git/?p=3Dglibc.git;a=3Dcommit;h=3D77356912e83601fd=
+0240d22fe4d960348b82b5c3
+
+This commit is included in glibc 2.23, and on the Debian side we have
+backported it to glibc 2.21 and to 2.22, and pushed the result to the
+users. We have also backported it to 2.19 (Debian jessie), but not
+pushed it to users yet (it is in progress).
+
+Aurelien
+
+--=20
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                 http://www.aurel32.net
+
+--MGYHOYXEY6WxJCY8
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJW0xEAAAoJELqceAYd3Yybd1EP/R8KY754riD7+32HNSuv+zrx
+9d9DYeyp9RNHlyeJLJW5uVUFHEUEVtb4LPQT5VlsjTTnRibErEH71Zim7XgA56ca
+bJM1EP+ZNBmyk7EAI4z7vziZvG49MTgHC9V1Wpqrc5F8mJgRIr7rQJveyMuNTOKD
+n0kxB4Aqg7R1gy+l0iusYQE4LFODw1s+o5atg2mAioLRVbz/ZZ94vsXbjrv1BLKg
+9ahkkUp0zqwNMRczX8TV8SaBWvNBorMzd2tguu5abu801QhlewNMlV34Xj1hzbvY
+o6ZyNCJaee3472fLdoj/JJWklJ7LHNZVOz+lov1CVf4Om6E9SE/O6BhD2oFfRONZ
+C7eu1k6mcKurS3SN3ol8Cze3fYq4Qldy0diBsw/kxPpJQR+XW4BCeY4zPQnHBdtS
+Y6Su4WO3+yIzIEFtRR0YRxEoq8ahOGC8h5JvYLf5XcxUKubxs7FIFarXbzK9k8M/
+cVUFIsOEUX3l7lO/bZWu9YcjsrznPAhwOST1OJDrnv8miNt6Si/9jjiMWwrPlbOs
+FR+PPVZUCNVeanoa90eYrLoxikCKCx9erzGdFlL/jdFWhgGQzsnS/XmiSRbaSqY8
+EdxDNjQ4nd3p3UVm4Fzo3WZ71VblJBBOujV5doYSnFZnw7cjDmBa60P5BmmiJ4ko
+xt7NEC1OqbSpDvaJNiVz
+=dHvR
+-----END PGP SIGNATURE-----
+
+--MGYHOYXEY6WxJCY8--
