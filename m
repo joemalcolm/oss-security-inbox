@@ -1,24 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/13
-Message-Id: <20160301191235.EDA1852E01C@smtpvbsrv1.mitre.org>
-Date: Tue,  1 Mar 2016 14:12:35 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/28/3
+Message-Id: <20160228144434.560A96C05CF@smtpvmsrv1.mitre.org>
+Date: Sun, 28 Feb 2016 09:44:34 -0500 (EST)
 From: cve-assign@...re.org
-To: kseifried@...hat.com
+To: patrakov@...il.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE's for SSLv2 support
+Subject: Re: CVE Request: util-linux runuser tty hijacking via TIOCSTI ioctl -- chroot
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> If a crypto library (e.g. OpenSSL, NSS) supports AND enables SSLv2 by
-> default should it receive a CVE?
+> When executing a program via "chroot --userspec=someuser:somegroup / /path/to/test" the
+> nonpriv session can
+> escape to the parent session by using the TIOCSTI ioctl to push
+> characters into the
+> terminal's input buffer
 
-There's no general answer to that question. CVE ID assignments are not
-based on outsiders making guesses about the expectations of a product's
-customers. For example, there might be a crypto library intended for
-communication on isolated networks to high-value embedded devices that
-support only SSLv2, and cannot and will not ever be updated.
+Use CVE-2016-2781.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -28,17 +27,17 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW1ekCAAoJEL54rhJi8gl5dQEQAK5x43W8Q157sNT4gUg8rQtS
-U0UlnjmsT1S40FlNiwZpK5IPkE7hdeTeiWUoFMsvc13vtlfpwfHCBfb05B5fcQBP
-2b3ssj49aH5yXVxnGE2ab6W5c63wN2jkbBBihVBXZ8SB9h4tNNSey+7dJrLyMqi0
-Um76Tv5htBbpm+6UtlgN7zV3tT9MIe6bZI/b7xxuf23nM8/mBvc1nX8dpCFF16og
-ks9d9A1Rnn79xCvWZ++jR8PRlmFwmLym/PEQulJ6k4WQdOECH78ytYWg9MG7EuIg
-6PbKloy7u36+ZgrUXxYnydoH834H6yOQIPro7hARFA0fpkbmydBJKnP4letuVS5w
-S89g15c2ymxIyKaKy+qT31LEKBGf+N6vPoPNL/IWeRh+8GmSyWkWF7Rx0CboFCTs
-7+Ft9T+0Lfi6bYkYqAFUVe8gBkM84tLR+4HXgkANLAfhLEsKaCYqAkNYlbDvCXtB
-RyFZHcVhp8XYWx7b5YN3BBB5VWK/fS8y8ilHaf143Bkbn+Yu6yrFb+DIAYhKPPAI
-1CURZksBwzSSjiprsExD4dODDJGzl/0khHdkDkdZp7o9drt3D4VkKGgkBPoG5NFk
-cX1XQc6o3Hv72oYFLyatCA5H8k9HZLEUjl8cYuf/QIvfwJwjlLqZ+HrPWvs2SY5C
-K4C7mIXfd9Iem6DqXfNK
-=ylcp
+iQIcBAEBCAAGBQJW0wd3AAoJEL54rhJi8gl5cBYP/1WlCfCDNUNstoYutxRFNeWv
+wifaesCbmqteWa0W1z50I+VMZW4mZ4LSIk3s2t0981iuQzWuzGY1CHFO1O9YCG4z
+yBBtMBSLEp5Erdlga/e0gCStvH/TW7cXKNbWEd/nrQPYzmBKd+ZoVODHzH/01rSj
+7wMbk48GAe1Kp2JM6FTh738gRfP7dsM+uuEbN5QO6k54dNM0K5zPEd0CJuwomGJO
+ilOsuMoPjBIDhZ/3n6E+g3qIk/1ztJhoVi9E6Xm7+41+PqPSL4HMl1mLjLp/iG55
+zORhghkOUGsHxqho8SBM/uKT/n4O4+6Ep/kr55gzInTi17FfAlzhmbLz4Nv9TAT3
+XsN933yToX78F1gWgw4Xy/go7iK920rCfGHeP0GTGWLm9Zm3yqS4raQcl+qwJ4kE
+P8fYjvyF7t3meeipCqwzgW+hSCX4z6QVuiIv+E752sB5r6D+VRKApvf8+qI6Okly
+6v4+Gq6OCACPN1TulMWZ+0TzI1baiOZ70KJM9FjGSCjA9q21xUhpVcLRJvJk6NwM
+ie0AC/SH8AVedX+ld0zVlSn5WCOM1+mFH7SV268pcpUgKwgkfNUMicdRR6UvBM8U
+8F5wM6lQiKfyixoRCaWDD5ERdQRxqErPJB1o721tg0865LN2LZaieXWsKAE5R/v6
+mxir1GW4UEKpLSCT1jd8
+=ckDP
 -----END PGP SIGNATURE-----
