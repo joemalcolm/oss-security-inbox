@@ -1,4 +1,9 @@
-Received: (qmail 17589 invoked by uid 550); 15 Jan 2024 13:32:39 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1141" "Sunday" "28" "February" "2016" "12:24:58" "-0500" "Vladis Dronov" "vdronov@redhat.com" "<569930062.30129018.1456680298679.JavaMail.zimbra@redhat.com>" "26" "[oss-security] CVE request -- linux kernel: visor: crash on invalid USB device descriptors in treo_attach() in visor driver" nil nil nil "2" "2016022817:24:58" "[oss-security] CVE request -- linux kernel: visor: crash on invalid USB device descriptors in treo_attach() in visor driver" (number mark "U       vdronov@redh Feb 28   26/1141  " thread-indent "\"[oss-security] CVE request -- linux kernel: visor: crash on invalid USB device descriptors in treo_attach() in visor driver\"\n") "<1896285770.30128486.1456679748415.JavaMail.zimbra@redhat.com>" ("<1896285770.30128486.1456679748415.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 8121 invoked by uid 550); 28 Feb 2016 17:25:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,101 +12,45 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1401 invoked from network); 15 Jan 2024 12:31:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
-	t=1705321960; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:mime-version:mime-version:
-	 content-type:content-type; bh=O8dalUh9xfnYUuwaGUMaHuzU1F4z+1JOgHxNMOCYoyM=;
-	b=prnobKe2tUkQThgqLua6FNeW5EuhbCHWeDzlEy1kPp9c1SQIyGYogJpVM48onKTG7JHDY7
-	0eIFa3Lr/0oM74IwIiGwI9dPYcotklohMBiEx0TWLHF8hDIuGxg8EUFp3bf0R5NYTA9IKj
-	/anZh2fQQd20TOz3mxKb/Cxyyk/ULmyl0XSIeonr0sKsGNaLYZbZMyTleXwW0ygl5Yusts
-	s91jeyKw5rJVSt788WO+JDRC2Ruz/Z/loIxbmh7H65AHGn0KgpITnfbd3zkLjXiIGpOKWk
-	p/hTPCC0wxB4v0kKDugATpiOeYIgwUT5mMVwL2qHkQiR34vNdnrctHr+cKbFIw==
-Date: Mon, 15 Jan 2024 12:32:40 +0000
-From: Tomas Mraz <tomas@openssl.org>
+Received: (qmail 8098 invoked from network); 28 Feb 2016 17:25:11 -0000
+Date: Sun, 28 Feb 2016 12:24:58 -0500 (EST)
+From: Vladis Dronov <vdronov@redhat.com>
 To: oss-security@lists.openwall.com
-Message-ID: <ZaUl6BUti/D6QUSw@openssl.org>
+Message-ID: <569930062.30129018.1456680298679.JavaMail.zimbra@redhat.com>
+In-Reply-To: <1896285770.30128486.1456679748415.JavaMail.zimbra@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Subject: [oss-security] OpenSSL Security Advisory
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.67.112.16]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF44 (Linux)/8.0.6_GA_5922)
+Thread-Topic: CVE request -- linux kernel: visor: crash on invalid USB device descriptors in treo_attach() in visor driver
+Thread-Index: 3EnYO3wTjSVSE1TZAm4Eqpn2T4eCCw==
+Subject: [oss-security] CVE request -- linux kernel: visor: crash on invalid USB device
+ descriptors in treo_attach() in visor driver
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-OpenSSL Security Advisory [15th January 2024]
-=============================================
+If possible, we would like to obtain a CVE-ID for the following issue.
 
-Excessive time spent checking invalid RSA public keys (CVE-2023-6237)
-=====================================================================
+Let me please, note, that this flaw is very similar to already existing
+CVE-2015-7566 (https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7566).
+This is the same type of a flaw, which just exists in the different function
+treo_attach() (instead of clie_5_attach()), so probably we can use the same
+CVE-2015-7566 for this.
 
-Severity: Low
+Description:
 
-Issue summary: Checking excessively long invalid RSA public keys may take
-a long time.
+A local kernel crash on invalid USB device requiring the visor driver was reported.
+The treo_attach() function of the [visor] driver, which is called during the driver
+initialization process, was dereferencing the bulk-in and interrupt-in urbs without
+first making sure they had been allocated by the core. Due to an incomplete sanity
+check, the visor driver tries to dereference null-pointers, which results in crash. 
 
-Impact summary: Applications that use the function EVP_PKEY_public_check()
-to check RSA public keys may experience long delays. Where the key that
-is being checked has been obtained from an untrusted source this may lead
-to a Denial of Service.
+References:
 
-When function EVP_PKEY_public_check() is called on RSA public keys,
-a computation is done to confirm that the RSA modulus, n, is composite.
-For valid RSA keys, n is a product of two or more large primes and this
-computation completes quickly. However, if n is an overly large prime,
-then this computation would take a long time.
+Red Hat public Bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1312670
 
-An application that calls EVP_PKEY_public_check() and supplies an RSA key
-obtained from an untrusted source could be vulnerable to a Denial of Service
-attack.
+An upstream patch: http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=cb3232138e37129e88240a98a1d2aba2187ff57c
 
-The function EVP_PKEY_public_check() is not called from other OpenSSL
-functions however it is called from the OpenSSL pkey command line
-application. For that reason that application is also vulnerable if used
-with the "-pubin" and "-check" options on untrusted data.
-
-The OpenSSL SSL/TLS implementation is not affected by this issue.
-
-The OpenSSL 3.0 and 3.1 FIPS providers are affected by this issue.
-
-OpenSSL versions 3.0.0 to 3.0.12, 3.1.0 to 3.1.4 and 3.2.0 are vulnerable to
-this issue.
-
-OpenSSL versions 1.1.1 and 1.0.2 are not affected by this issue.
-
-Due to the low severity of this issue we are not issuing new releases of
-OpenSSL at this time. The fix will be included in the next releases when they
-become available. The fix is also available in commit 0b0f7abf (for 3.2),
-commit a830f551 (for 3.1) and commit 18c02492 (for 3.0) in the OpenSSL git
-repository.
-
-This issue was reported on 2nd November 2023 by OSS-Fuzz. The fix was
-developed by Tomas Mraz.
-
-General Advisory Notes
-======================
-
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20240115.txt
-
-Note: the online version of the advisory may be updated with additional details
-over time.
-
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/secpolicy.html
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmWlJXsACgkQUnRmohyn
-nm067Q//X41VgBUcS9YWimbkD7Pj1nWIhgOUOTaXcBTkroNOjgiJOBuqnOKJorj6
-N0KuAA9d+Jq3xVFbwFNiZZDl2O3Az8nmW9Yg63xyoZNXeB/80ZhUCcxX+mrnKeSt
-XUJ8y5bSLuFrDsSp1Ew+xnfAo8DXn3DhRwHKi9Ww0kwdAN5+j84mtnGC3MfTAdLN
-2WAnRY/AJGL4dACB2HEMz0zv6wU8QtV0hQUOwsDus8zw+6jkdOWpnadmqzA884MS
-qJsKFLUN+ca64E0VsjLzHipJK464Qdyp1QIm7QG6hZtb3IDjb6oK4zo1M7bGvR+O
-Wt6NKUMUovVYX6h3/e+Qpki0RS2rdxqbjTcXms2ijq/70iNrhP5p7nMfQWUkQM9G
-QDwV0E+5OvOh1t1eHnn7MjGhUGEhTGeGXJ/oACt96i47lzYtobovi2y+B0fRhsuf
-L8CPrArteBsFcPDyS/1Z/88HmOtDa9QhCawvAv9j8pwZgBxR0BV9fqsG4i+Mshdl
-h88J/Xbd5+Gzp1Zt8F2eQlYk8xL3aPrIOmuYym3wbiXXXSRI894jyae7+AV2WItK
-1FBVXw4wlh+ZPOaAOMEirxYMZ5+6c2wYyd9XEHlw+J6vjU+/CtM0Z2SYg/b56dkJ
-ko/9Dor3UF6JjWdfOZqZXEOk8Rk20VHF9lDllJk8Xu2GAO5Wuug=
-=UUwr
------END PGP SIGNATURE-----
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
