@@ -1,74 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/02/3
-Message-ID: <5309095AF4F10E2D.C7403B94-0E12-4BBF-9F83-04F9E21584CD@mail.outlook.com>
-Date: Fri, 2 Sep 2016 02:48:30 +0000 (UTC)
-From: Diogo Monica <diogo.monica@...ker.com>
-To: oss-security <oss-security@...ts.openwall.com>,  oss-security@...ts.openwall.com
-Subject: Re: Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/28/9
+Message-Id: <20160228184139.BC0FC3320B7@smtpvbsrv1.mitre.org>
+Date: Sun, 28 Feb 2016 13:41:39 -0500 (EST)
+From: cve-assign@...re.org
+To: vdronov@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request -- linux kernel: visor: crash on invalid USB device descriptors in treo_attach() in visor driver
 Content-Type: text/plain; charset=utf-8
 
-Can you please describe how this vulnerability makes a worker node be able to administer the swarm?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> A local kernel crash on invalid USB device requiring the visor driver was reported.
+> The treo_attach() function of the [visor] driver, which is called during the driver
+> initialization process, was dereferencing the bulk-in and interrupt-in urbs without
+> first making sure they had been allocated by the core. Due to an incomplete sanity
+> check, the visor driver tries to dereference null-pointers, which results in crash.
+> 
+> References:
+> 
+> Red Hat public Bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1312670
+> 
+> An upstream patch: http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=cb3232138e37129e88240a98a1d2aba2187ff57c
+
+We don't really understand "An upstream patch" here. We think you mean
+the patch is
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=cac9b50b0d75a1d50d6c056ff65c005f3224c8e0
+instead. In any case, use CVE-2016-2782 for the reported treo_attach
+vulnerability.
 
 
+> this flaw is very similar to already existing
+> CVE-2015-7566 (https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7566).
+> This is the same type of a flaw, which just exists in the different function
+> treo_attach() (instead of clie_5_attach()), so probably we can use the same
+> CVE-2015-7566 for this.
 
+We're not going to change or expand the meaning of CVE-2015-7566
+several weeks later.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-On Thu, Sep 1, 2016 at 7:12 PM -0700, "Kurt Seifried" <kseifried@...hat.com> wrote:
-
-
-
-
-
-
-
-
-
-
-On Thu, Sep 1, 2016 at 5:17 PM, Diogo Mónica 
-wrote:
-
-> A few weeks ago (Aug 4, 2016), a CVE (CVE-2016-6595) describing a DoS on
-> docker swarm got issued. We believe this not a real issue, and would like
-> to have the CVE rescinded.
->
-> The person reporting this "vulnerability" is exhausting the resources of a
-> remote manager by doing hundreds of join/leave operations without removing
-> the state that is left by old nodes. At some point the manager obviously
-> stops being able to accept new nodes, since it runs out of memory.
->
-> Given that both for Docker swarm and for Docker Swarmkit nodes are
-> *required* to provide a secret token (it's actually the only mode of
-> operation), this means that no adversary can simply join nodes and exhaust
-> manager resources.
->
-> We can't do anything about a manager running out of memory and not being
-> able to add new legitimate nodes to the system. This is merely a resource
-> provisioning issue, and definitely not a CVE worthy vulnerability.
->
-
-I checked the documentation and it looks like a worker node is only
-supposed to work and is not supposed to be able to administer the swarm. As
-such this is a trust boundary violation, and needs a CVE.
-
-
-
-> Thank you,
-> --
-> Diogo Mónica
->
-
-
-
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
-
-
-
-
-
+iQIcBAEBCAAGBQJW0z65AAoJEL54rhJi8gl56wkP/Aoe0dtizrz4nd4CopPTiDOD
+g+x7UmKmjqlAIlJ6nKwGLmv7by9yvOjZnKnaxQOU/EG+wSL3GpSnVojsrNVZSQGu
+V5iacBA2GW0a4kd8g7bBnK4ViXuoeJII31LfEYVIrAUXXL9h+fOZSjjy4/L+kk1m
+VFSCVIa2jbzHvJr+iNIs0oWFmXQjcuzyFzsOOjbgAvtBFEOL4JW+LAW7qMp8mXTR
++DpMkaG1JqjzO+Qcj931kNN0MAc5SZBs5+vB0kcI7+g5bKpN01qITvME2szk1iZg
+GRrVyYKzfc16KcjWjbWJNr6i8TuyE/8UvYOmr9c9DNZjM2yAObBpYehrVApTmAmj
+yp/pc+QAFUDGMvalgAwtlEie/c+0cihTGN/BkftFd5/RW8JM6Tm3xcl2/ktK6OGC
+X5L6Mm+q73oVK+YEj3ky5kHYkEsjSrTfN+RrdqE/8r7gNoDhjbaiI4fbq41iFWru
+33XexHwVjtVBJboJ5nKQHBpfUdksQ7gY+6rI9rah4Njt2K2EWwzY+Ibw79d+9i8M
+yJ2grJC/rOzNIDAyU0nyiSWibxEq2HvqmWyfc6CxBgfbXgcTbHxcgWHvTjVuBUfb
+VcDYFPggg/sxehevY34lcbQCJG/GGWihdNuJ2dY/4jOBqLgjlsGNES/lTd6GXjFF
+9IbRRVCzbBb3fap+Ol1N
+=6+yK
+-----END PGP SIGNATURE-----
