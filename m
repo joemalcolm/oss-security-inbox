@@ -1,40 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/19/7
-Message-ID: <alpine.GSO.2.20.1605191228070.15930@freddy.simplesystems.org>
-Date: Thu, 19 May 2016 12:42:24 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security@...ts.openwall.com
-Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/28/5
+Message-ID: <20160228152344.GA711@aurel32.net>
+Date: Sun, 28 Feb 2016 16:23:44 +0100
+From: Aurelien Jarno <aurelien@...el32.net>
+To: Jann Horn <jann@...jh.net>
+Cc: oss-security@...ts.openwall.com, security@...nel.org, security@...ntu.com, security@...ian.org, Florian Weimer <fw@...eb.enyo.de>
+Subject: Re: pt_chown timeline, CVE request [was: Access to /dev/pts devices via pt_chown and user namespaces]
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 19 May 2016, Jeremy Stanley wrote:
->> As an example Ubuntu 14.04.4 LTS (which is supposed to be getting
->> security updates) has not provided ImageMagick or GraphicsMagick
->> package updates in 3 years.
-> [...]
->
-> Seems to be in progress? https://launchpad.net/bugs/1578398
+On 2016-02-28 15:53, Jann Horn wrote:
+> As others figured out in the private bug discussion, pt_chown is
+> already not installed as setuid binary by glibc anymore.
+> That it is present in Debian and Ubuntu is because of a distro patch
+> in Debian, which Debian applied to work around the bug that the
 
-That is good to hear.
+To be correct, it's not really a patch, but rather a configure option.
 
-OS distribution response seems to be good for software like ISC named 
-and OpenSSH but seems to be very poor for this trivial shell-exploit 
-issue which impacts a great many (perhaps more than a million) Linux, 
-*BSD, Solaris, and OS-X users.  Perhaps this is because the developers 
-of such packages are used to providing advance notice and a 
-well-formed response and distribution maintainers are practiced and 
-ready.
+> "[PATCH] devpts: Sensible /dev/ptmx & force newinstance" patch is
+> supposed to fix. So with a fix for that issue applied, Debian and
+> Ubuntu should be able to just drop the distro patch, fixing the
+> vuln by removing pt_chown.
 
-Most people using a graphical desktop (e.g Gnome and KDE) are exposed 
-to the issue since ImageMagick (and often GraphicsMagick) is a common 
-dependency and clicking on a file in a graphical file manager (or 
-delivered as an email attachment) is likely to expose the user to the 
-problem.  Servers processing uploaded images are exposed to the issue 
-but server applications often take additional precautions which might 
-protect from the problem.  Desktop users are entirely exposed.
+Note that in the meantime we have developed an alternative workaround
+on the glibc side, which allows to not break systems with multiple
+/dev/pts mounts, though the result is not POSIX compliant:
 
-Bob
+  https://sourceware.org/git/?p=glibc.git;a=commit;h=77356912e83601fd0240d22fe4d960348b82b5c3
+
+This commit is included in glibc 2.23, and on the Debian side we have
+backported it to glibc 2.21 and to 2.22, and pushed the result to the
+users. We have also backported it to 2.19 (Debian jessie), but not
+pushed it to users yet (it is in progress).
+
+Aurelien
+
 -- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@...el32.net                 http://www.aurel32.net
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
