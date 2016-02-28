@@ -1,35 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/11/9
-Message-ID: <CACn5sdQQfx9-dMHcLhiW87jFt=OGL=sLW4sFci_YKpq+R+m0ow@mail.gmail.com>
-Date: Thu, 11 Feb 2016 22:56:36 +0100
-From: Gustavo Grieco <gustavo.grieco@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/28/7
+Message-ID: <569930062.30129018.1456680298679.JavaMail.zimbra@redhat.com>
+Date: Sun, 28 Feb 2016 12:24:58 -0500 (EST)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: use-after-free in tidy-html5
+Subject: CVE request -- linux kernel: visor: crash on invalid USB device descriptors in treo_attach() in visor driver
 Content-Type: text/plain; charset=utf-8
 
-This issue was fixed. In case you are interested in the patch, it is here:
+Hello,
 
-https://github.com/htacg/tidy-html5/pull/368
+If possible, we would like to obtain a CVE-ID for the following issue.
 
-2016-01-25 14:57 GMT+01:00 Gustavo Grieco <gustavo.grieco@...il.com>:
+Let me please, note, that this flaw is very similar to already existing
+CVE-2015-7566 (https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7566).
+This is the same type of a flaw, which just exists in the different function
+treo_attach() (instead of clie_5_attach()), so probably we can use the same
+CVE-2015-7566 for this.
 
-> Hi,
->
-> The tidy-html5 developers are still not sure how to fix this security
-> issue. Any feedback is appreciated.
->
-> Thanks!
->
-> 2016-01-03 20:24 GMT-03:00 Gustavo Grieco <gustavo.grieco@...il.com>:
->
->> A use-after-free was discovered in tidy-html5 (5.1.25) using afl.
->> Technical details are available here:
->>
->> https://github.com/htacg/tidy-html5/issues/341
->>
->> Regards,
->> Gus
->>
->
->
+Description:
 
+A local kernel crash on invalid USB device requiring the visor driver was reported.
+The treo_attach() function of the [visor] driver, which is called during the driver
+initialization process, was dereferencing the bulk-in and interrupt-in urbs without
+first making sure they had been allocated by the core. Due to an incomplete sanity
+check, the visor driver tries to dereference null-pointers, which results in crash. 
+
+References:
+
+Red Hat public Bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1312670
+
+An upstream patch: http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=cb3232138e37129e88240a98a1d2aba2187ff57c
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
