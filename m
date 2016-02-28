@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4331" "Sunday" "30" "August" "2015" "21:47:56" "+0800" "Jing Wang" "justqdjing@gmail.com" "<CAFWG0-jEReuEiRzX_Toj0LAXv9i-YaP=Szg6hMzHMCRrxShAOA@mail.gmail.com>" "140" "[oss-security] Winmail Server 4.2 Reflected XSS (Cross-site Scripting) Web Application 0-Day Security Bug" nil nil nil "8" "2015083013:47:56" "[oss-security] Winmail Server 4.2 Reflected XSS (Cross-site Scripting) Web Application 0-Day Security Bug" (number mark "        justqdjing@g Aug 30  140/4331  " thread-indent "\"[oss-security] Winmail Server 4.2 Reflected XSS (Cross-site Scripting) Web Application 0-Day Security Bug\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["520" "Sunday" "28" "February" "2016" "17:14:09" "+0500" "Alexander E. Patrakov" "patrakov@gmail.com" "<56D2E491.1000505@gmail.com>" "22" "Re: [oss-security] Re: CVE Request: util-linux runuser tty hijacking via TIOCSTI ioctl" "^Cc:" nil nil "2" "2016022812:14:09" "[oss-security] Re: CVE Request: util-linux runuser tty hijacking via TIOCSTI ioctl" (number mark "U       patrakov@gma Feb 28   22/520   " thread-indent "\"Re: [oss-security] Re: CVE Request: util-linux runuser tty hijacking via TIOCSTI ioctl\"\n") "<20160227134425.4F5F26C012D@smtpvmsrv1.mitre.org>" ("<20160227134425.4F5F26C012D@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5915 invoked by uid 550); 30 Aug 2015 13:48:17 -0000
+Received: (qmail 26367 invoked by uid 550); 28 Feb 2016 12:14:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,166 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5830 invoked from network); 30 Aug 2015 13:48:08 -0000
+Received: (qmail 26341 invoked from network); 28 Feb 2016 12:14:24 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=SdQQmsVUxBOIbuo+CYbssbx74yeAaOWBJPinUW8eDBg=;
-        b=NnfEoIwdraM+E4CoW30y51em3Dhm6nsAgm1dbAhz0AaPPhydBJIR8lUrbbpy6o7t5L
-         n/rGdsz8PFrFgI7c71iYwV6mni6gX3hUsO7Dg26bPpRFlWhV7TpwjYV693LzGSuTOAGQ
-         t6LmiEeWAGoMUKAvsvj7M9Fctz8W/5FIpc2BHYiRa2lvX4V9FF5tTG5Hks4pMRqDOJ7R
-         tpqyCLigQq375qUz9T8Z2yplEaB18WIPkTwvFyM5GNEVLPBT53al+QiHmITg0EVj+lBK
-         ecOSng9eN+9I8MQTY+0/C56N4iGiVZwSRFYgVbbayAl0xHVDjnZ8RCep6r4aXnquKzbd
-         7iEw==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=thjrgp2rBfGDPF6RSFeIfgWOxAcOkrcXDN+m23V5zC8=;
+        b=QTrwgbkUYjM2Hl9uV3Wr4/V2f+HW7oe0BQIE0a01avlSuNl8GuxJl0Ynclie6pV+4Q
+         QqbJsRJQIpqkJA0hBv+EgxJHuU6eul+DNBpcnBQ2ASGLwqVy9tccyT++dmyf/r7AseSc
+         GGvF4rqa5QLpsRp9WnL8UJD9qtVuz2FkozwI+343L6yYkqk7m1NfppMtvXahlKIREp2g
+         IW5bqUh6ZFLLWcD0QoQ2grKDuHn0wBrSZ1KeXb52vEaNIeYHB83vxgl1tFuI7zS0T/EN
+         uJ3RNsKHWOu+XHjf2mKf1LcwOQuP4G5rjuckqLno2vCcEJaqdmhjyqta6GLDTUa20oSX
+         p5bQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=thjrgp2rBfGDPF6RSFeIfgWOxAcOkrcXDN+m23V5zC8=;
+        b=ZnkpkFF+gmB/bptj3XK3TCrro6q4OylGof7pd0PBSbnJPnnkKMCWQfTnMH/r/yPPXO
+         HqToVXipAdIU6GloEL4QcRfs2XCdkDnCNIOU4GFncrjTN3YJyrIDysVHEgnoSQjT1UVo
+         H4NQn3P7Tv/o+lYG2Khq8bWZjbpLNaDXJnZODVfe2qobDX0Y3qbpITDVNfCAESNfbqQg
+         8LxWozlj3mWoTJco8kY+1XR6+Wk+CBewaQv0WPy/p5m7nwCtUhL2b8F+KFAQJcYVoEQF
+         sRizxYksM1sB8CbQEql1JVEn1F3V0GhezEZ1bRhSoJWsEuGTK99cRCZ06EyTX//HU3B9
+         X5dA==
+X-Gm-Message-State: AD7BkJIG1W22IqmpvYG3r5/OEdQO5e3pb8d5rXialKKeF8Y9WvrvTzDhXAwM0lApyI9uxg==
+X-Received: by 10.194.92.68 with SMTP id ck4mr9920137wjb.144.1456661652666;
+        Sun, 28 Feb 2016 04:14:12 -0800 (PST)
+References: <20160227134425.4F5F26C012D@smtpvmsrv1.mitre.org>
+Message-ID: <56D2E491.1000505@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
 MIME-Version: 1.0
-X-Received: by 10.50.141.198 with SMTP id rq6mr1610246igb.54.1440942476501;
- Sun, 30 Aug 2015 06:47:56 -0700 (PDT)
-Message-ID: <CAFWG0-jEReuEiRzX_Toj0LAXv9i-YaP=Szg6hMzHMCRrxShAOA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=089e0122f724742a3a051e8790c1
-Date: Sun, 30 Aug 2015 21:47:56 +0800
-From: Jing Wang <justqdjing@gmail.com>
+In-Reply-To: <20160227134425.4F5F26C012D@smtpvmsrv1.mitre.org>
+Content-Type: text/plain; charset=windows-1251; format=flowed
+Content-Transfer-Encoding: 8bit
+Cc: cve-assign@mitre.org
+Date: Sun, 28 Feb 2016 17:14:09 +0500
+From: "Alexander E. Patrakov" <patrakov@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Winmail Server 4.2 Reflected XSS (Cross-site Scripting) Web
- Application 0-Day Security Bug
-To: fulldisclosure@seclists.org, oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: CVE Request: util-linux runuser tty hijacking
+ via TIOCSTI ioctl
+To: oss-security@lists.openwall.com, up201407890@alunos.dcc.fc.up.pt
 
---089e0122f724742a3a051e8790c1
-Content-Type: text/plain; charset=UTF-8
+27.02.2016 18:44, cve-assign@mitre.org пишет:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+>> When executing a program via "runuser -u nonpriv program" the
+>> nonpriv session can
+>> escape to the parent session by using the TIOCSTI ioctl to push
+>> characters into the
+>> terminal's input buffer
+>
+>> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=815922
+>
+> Use CVE-2016-2779.
 
-*Winmail Server 4.2 Reflected XSS (Cross-site Scripting) Web Application
-0-Day Security Bug*
+One more case:
 
+chroot --userspec=someuser:somegroup / /path/to/test
 
+This also runs "id" at the end.
 
-Exploit Title: Winmail Server badlogin.php &lid parameter Reflected XSS Web
-Security Vulnerability
-Product: Winmail Server
-Vendor: Winmail Server
-Vulnerable Versions: 4.2   4.1
-Tested Version: 4.2   4.1
-Advisory Publication: August 24, 2015
-Latest Update: August 30, 2015
-Vulnerability Type: Cross-Site Scripting [CWE-79]
-CVE Reference:
-Impact CVSS Severity (version 2.0):
-CVSS v2 Base Score: 4.3 (MEDIUM) (AV:N/AC:M/Au:N/C:N/I:P/A:N) (legend)
-Impact Subscore: 2.9
-Exploitability Subscore: 8.6
-CVSS Version 2 Metrics:
-Access Vector: Network exploitable; Victim must voluntarily interact with
-attack mechanism
-Access Complexity: Medium
-Authentication: Not required to exploit
-Impact Type: Allows unauthorized modification
-Discover and Reporter: Wang Jing [School of Physical and Mathematical
-Sciences (SPMS), Nanyang Technological University (NTU), Singapore]
-(@justqdjing)
-
-
-
-
-
-
-
-
-
-*Suggestion Details:*
-
-
-*(1) Vendor & Product Description:*
-
-
-*Vendor:*
-Winmail Server
-
-
-
-*Product & Vulnerable Versions:*
-Winmail Server
-4.2   4.1
-
-
-
-*Vendor URL & Download:*
-Product can be obtained from here,
-http://www.magicwinmail.net/download.asp
-
-
-
-
-*Product Introduction Overview:*
-"Winmail Server is an enterprise class mail server software system offering
-a robust feature set, including extensive security measures. Winmail Server
-supports SMTP, POP3, IMAP, Webmail, LDAP, multiple domains, SMTP
-authentication, spam protection, anti-virus protection, SSL security,
-Network Storage, remote access, Web-based administration, and a wide array
-of standard email options such as filtering, signatures, real-time
-monitoring, archiving, and public email folders. Winmail Server can be
-configured as a mail server or gateway for ISDN, ADSL, FTTB and cable modem
-networks, beyond standard LAN and Internet mail server configurations."
-
-
-
-
-
-
-
-
-*(2) Vulnerability Details:*
-Winmail Server web application has a computer security problem. Hackers can
-exploit it by reflected XSS cyber attacks. This may allow a remote attacker
-to create a specially crafted request that would execute arbitrary script
-code in a user's browser session within the trust relationship between
-their browser and the server.
-
-Several other similar products 0-day vulnerabilities have been found by
-some other bug hunter researchers before. Winmail Server has patched some
-of them. "scip AG was founded in 2002. We are driven by innovation,
-sustainability, transparency, and enjoyment of our work. We are completely
-self-funded and are thus in the comfortable position to provide completely
-independent and neutral services. Our staff consists of highly specialized
-experts who focus on the topic information security and continuously
-further their expertise through advanced training". Scip has recorded
-similar XSS bugs, such as scipID 26980.
-
-
-
-*(2.1) *The code flaw occurs at "&lid" parameter in "badlogin.php" page. In
-fact, CVE-2005-3692 mentions that "&retid" parameter in "badlogin.php" page
-is vulnerable to XSS attacks. But it does not mention "&lid" parameter".
-The scipID of the bug is 26980. Bugtraq (SecurityFocus) ID is 15493. OSVDB
-ID is 20926.
-
-
-
-
-
-
-
-*References:*
-http://tetraph.com/security/xss-vulnerability/winmail-server-4-2-reflected-xss/
-http://securityrelated.blogspot.com/2015/08/winmail-server-42-reflected-xss.html
-http://seclists.org/fulldisclosure/2015/May/103
-http://marc.info/?l=full-disclosure&m=143110916812709&w=4
-http://permalink.gmane.org/gmane.comp.security.fulldisclosure/2028
-http://webtech.lofter.com/post/1cd3e0d3_6eef8c8
-http://whitehatpost.blog.163.com/blog/static/242232054201573091630996/
-https://hackertopic.wordpress.com/2015/08/25/winmail-server-4-2-reflected-xss/
-http://whitehatview.tumblr.com/post/118853357881/tetraph-cve-2014-9468-instantasp
-http://marc.info/?l=full-disclosure&m=142649827629327&w=4
-https://packetstormsecurity.com/files/132029/SITEFACT-CMS-2.01-Cross-Site-Scripting.html
-
-
-
-
-
-
---
-Jing Wang,
-Division of Mathematical Sciences (MAS),
-School of Physical and Mathematical Sciences (SPMS),
-Nanyang Technological University (NTU), Singapore.
-http://www.tetraph.com/wangjing/
-https://twitter.com/justqdjing
-
---089e0122f724742a3a051e8790c1--
+-- 
+Alexander E. Patrakov
