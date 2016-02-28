@@ -1,24 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/26/1
-Message-ID: <20160526002711.GB26856@hunt>
-Date: Wed, 25 May 2016 17:27:11 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/28/4
+Message-ID: <20160228145356.GA30050@pc.thejh.net>
+Date: Sun, 28 Feb 2016 15:53:56 +0100
+From: Jann Horn <jann@...jh.net>
 To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com
-Subject: CVE Requests: libimobiledevice and libusbmuxd
+Cc: security@...nel.org, security@...ntu.com, security@...ian.org, Aurelien Jarno <aurelien@...el32.net>, Florian Weimer <fw@...eb.enyo.de>
+Subject: pt_chown timeline, CVE request [was: Access to /dev/pts devices via pt_chown and user namespaces]
 Content-Type: text/plain; charset=utf-8
 
-Hello MITRE, all,
+Because this can realistically lead to a privilege escalation to root,
+I would like to request CVE identifier allocation if that hasn't
+already happened.
 
-Please assign CVE(s) to libimobiledevice and libusbmuxd; both libraries
-accidentally bound a listening IPv4 TCP socket to INADDR_ANY rather than
-INADDR_LOOPBACK:
+On Tue, Feb 23, 2016 at 12:03:54PM +0000, halfdog wrote:
+> The logic above is severely flawed, when there can be more than one
+> master/slave pair having the same number and thus same name. But this
+> condition can be easily created by creating an user namespace,
+> mounting devpts with the newinstance option, create master and slave
+> pts pairs until the number overlaps with a target pts outside the
+> namespace on the host, where there is interest to gain ownership and
+> then invoke pt_chown.
+[...]
+> In my opinion, this security bug should be fixed two-fold: At first,
+> kernel should prevent the TIOCGPTN ioctl when invoked called by a
+> process within one namespace but acting on a filedescriptor from a
+> devpts instance mounted in a different namespace.
 
-https://github.com/libimobiledevice/libimobiledevice/commit/df1f5c4d70d0c19ad40072f5246ca457e7f9849e
-https://github.com/libimobiledevice/libusbmuxd/commit/4397b3376dc4e4cb1c991d0aed61ce6482614196
+As mentioned in the private discussion about the bug (I think), that
+only works if you assume that there are no chroot directories with
+other devpts instances mounted in the init namespace or so.
 
-I do not know who to credit with discovery.
 
-Thanks
+> Additionally
+> pt_chown should check via readlink and stat, that the passed file
+> descriptor really was from the /dev/ptmx or /dev/pts/ptmx device
+> present in the same namespace as the /dev/pts/[num] device is
+> residing.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+> This of course is only relevant if pt_chown is going to
+> survive on recent namespace aware systems.
+
+As others figured out in the private bug discussion, pt_chown is
+already not installed as setuid binary by glibc anymore.
+That it is present in Debian and Ubuntu is because of a distro patch
+in Debian, which Debian applied to work around the bug that the
+"[PATCH] devpts: Sensible /dev/ptmx & force newinstance" patch is
+supposed to fix. So with a fix for that issue applied, Debian and
+Ubuntu should be able to just drop the distro patch, fixing the
+vuln by removing pt_chown.
+
+
+> Timeline:
+> =========
+> 
+>     20151220: Discovery
+>     20151227: Report at Ubuntu Launchpad1529486
+>     20160104: Report to distros list
+>     20160122: Patch to disable unprivileged userns due to this and
+> other issues LKML
+>     20160222: CRD and publication
+
+I also discovered this. Let me share my timeline:
+
+2015-07-28: reported to security@...ian.org
+[some discussion]
+2015-12-04: Florian Weimer suggests public disclosure
+2015-12-05: I report the issue to security@...nel.org, security@...ntu.com,
+  security@...ian.org, Aurelien Jarno <aurelien@...el32.net>,
+  Florian Weimer <fw@...eb.enyo.de> and ask whether anyone can fix it
+2015-12-05 until 2015-12-19: the issue is discussed and fix approaches
+  are considered, mostly by kernel developers, privately
+2015-12-11: Parts of this land on LKML for the first time in the
+  "[PATCH] devpts: Sensible /dev/ptmx & force newinstance" email from
+  Eric W. Biederman to LKML and the participants of the private email
+  thread (https://lkml.org/lkml/2015/12/11/760), and in the following
+  public discussion, it's possible to see mentions of the security issue.
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
