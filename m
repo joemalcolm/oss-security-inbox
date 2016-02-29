@@ -1,126 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/08/5
-Message-ID: <CAJt9-x7_03rk-ogT2EVgzs3NeNTF9EZRTbQfaFjn3CJMGDrqgg@mail.gmail.com>
-Date: Fri, 8 Jan 2016 15:40:14 +0000
-From: Matthew Wild <mwild1@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-1231, CVE-2016-1232: Prosody XMPP server multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/29/5
+Message-Id: <20160229212648.BCC2B6C082B@smtpvmsrv1.mitre.org>
+Date: Mon, 29 Feb 2016 16:26:48 -0500 (EST)
+From: cve-assign@...re.org
+To: amaris@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Heap buffer overflow in pcretest
 Content-Type: text/plain; charset=utf-8
 
-Two vulnerabilities have been discovered and fixed in the Prosody XMPP
-server. Details below.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-CVE-2016-1231 prosody: path traversal vulnerability in the built-in
-HTTP server's file-serving module
--------------
+> Heap-based buffer overread caused by specially crafted input triggering
+> infinite loop in pcretest.c 
 
-Project: Prosody XMPP server
-URL: https://prosody.im/
-Affected versions:
-    0.9.x (before 0.9.9), 0.10 (unreleased)
-Affected Prosody modules:
-    mod_http_files (and community modules that depend on it)
-Fixed versions:
-    0.9.9, 0.10 nightly build 196, trunk nightly build 608
+Can you clarify the threat model for an infinite loop caused by the
+pcretest.c source code?
 
-Description
------------
+Our understanding is that pcretest and pcre2test are standalone
+command-line programs; they are not normally linked into applications
+that use the PCRE library. This type of bug in pcretest or pcre2test
+might not have any common associated use case in which an unattended
+process receives untrusted patterns, and uses a huge amount of CPU time
+before anyone notices. In other words, a person who has any awareness
+of running pcretest or pcre2test could observe the long run time, and
+could apparently recover from the bug by removing the problematic
+patterns from the set of input patterns, and then running the program
+again. Obviously, some infinite-loop issues have CVE ID assignments
+but they are almost always issues in which the use case is
+realistically unattended (kernel, daemons, CGI scripts, web browsers,
+network-monitoring tools, general-purpose library code, etc.).
 
-A flaw was found in Prosody's HTTP file-serving module (mod_http_files)
-that allows it to serve requests outside of the configured public root
-directory. This could allow attackers access to private files including
-sensitive data.
+If a pattern can result in code execution when pcretest or pcre2test
+is executed with untrusted input, then a CVE ID could be considered.
 
-Affected configurations
------------------------
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-The default configuration has mod_http_files disabled, and is not
-vulnerable. Additionally, configurations where mod_http_files serves
-files at the root URL (e.g. not /files/ prefix, using http_paths) are
-not vulnerable.
-
-Temporary mitigation
---------------------
-
-Disable mod_http_files and any community modules that depend on it.
-
-Advice
-------
-
-All users should upgrade to 0.9.9, or check their OS distribution for
-security updates. Users of development branches (0.10, trunk) should
-upgrade to the latest nightly builds.
-
-Credits
--------
-
-The flaw was discovered by Kim Alvefur, a member of the Prosody team.
-
-//////////////////////////
-
-CVE-2016-1232 prosody: using a weak PRNG to generate the
-authentication secret used when verifying server-to-server connections
-using the dialback method.
--------------
-
-Project: Prosody XMPP server
-URL: https://prosody.im/
-Affected versions:
-    All
-Affected Prosody modules:
-    mod_dialback
-Fixed versions:
-    0.9.9, 0.10 nightly build 196, trunk nightly build 608
-
-Description
------------
-
-It was discovered that Prosody's generation of the secret token for
-server-to-server dialback authentication relied upon a weak random
-number generator that was not cryptographically secure. This allows an
-attacker to guess at probable values of the secret key. A successful
-guess allows impersonation of the affected domain to other servers on
-the network.
-
-Affected configurations
------------------------
-
-Configurations with mod_dialback loaded (default configuration) are
-affected.
-
-Servers with s2s_secure_auth = true will not be susceptible to incoming
-attempts to spoof other domains on the network. However if mod_dialback
-is loaded, a server's domain's may still be spoofed by an attacker in
-connections to other servers.
-
-Not affected are configurations with a strong custom dialback_secret set
-(though periodically regenerating the dialback_secret is still
-advisable).
-
-Temporary mitigation
---------------------
-
-Set the 'dialback_secret' option in your configuration file to a long
-random string.
-
-A strong dialback_secret can be generated (for example) using the
-command:
-
-head -c 32 /dev/urandom | base64
-
-Alternatively disable mod_dialback by adding it to your modules_disabled
-option in your configuration file. In this case communication with
-servers that only support dialback or have untrusted certificates will
-not be possible.
-
-Advice
-------
-
-All users should upgrade to 0.9.9, or check their OS distribution for
-security updates. Users of development branches (0.10, trunk) should
-upgrade to the latest nightly builds.
-
-Credits
--------
-
-The flaw was discovered and reported by Thijs Alkemade.
+iQIcBAEBCAAGBQJW1LMNAAoJEL54rhJi8gl5JIsP/jgsHL19qJdWD8LwgxXqlhSp
+4WhvoC0kxG/vwKLMKMWh/ofKvV4qF5JY7lpX3s5JFsoZ4FZbizGiPFOYCcF7q/d+
+lwBUmyalBjzqaQReuFvS+TZaNVgVUzlaJ40E0E6d3NoTfZCrD28N+ciVzDKpS2SX
+Fz0svDJMYANQz5Yl15uRMC+3RNkQtLoomxXpO3IhQwboCbmEE2XJUXU0xXBATVHf
+qhzyGsMGa8GRdtKzPY4vYMuGnbfVkCbNzitxjIvFS8zbWtx+ZtqIRiPEFJgwYdRN
+F6REM9tSIDtobLp31+PJrez4AVDT28khm7xjOmcEjtG4zBWQ2iJ/LiuqJzpjWOPR
+NWZjghKZ3pMRIa8h7ygKWHhaYwD9AeSFD3yfyh9gMMqpx65a+QZF7sUlSOkO9bWA
+NOsr3U8c0Vfnf+gsk+SznvaQGTfrL2orKrYh8fIpO8HKiUQwxKUYbvuuHnJJg9Mf
+p+FLM9DploIuGcig4lZ00wi4JzQzCoQdjSpsYMf9xG7pTJzj2qjR3P74RSMax/CY
+bkLGz7J0eE+Ztfxantgajl4jOW0nBx9XcJjV2hstvwYVNkDkrWXw93zbPlMVAajm
+hQ+sEJyJN1ggENvM+pyGDVC2e03eeh1WOiQyzR9Y4hbQ+HXkphhQqLsp6FYs3ymA
+OvK05MdCdUMXe0k14PeN
+=mSgo
+-----END PGP SIGNATURE-----
