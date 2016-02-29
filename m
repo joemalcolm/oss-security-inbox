@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["962" "Wednesday" "19" "June" "2019" "17:13:38" "-0800" "Michael McNally" "mcnally@isc.org" "<f4082239-934b-1bdd-2125-0ad609ed5058@isc.org>" "31" "[oss-security] ISC disclosed BIND vulnerability CVE-2019-6471." nil nil nil "6" "2019062001:13:38" "[oss-security] ISC disclosed BIND vulnerability CVE-2019-6471." (number mark "U       mcnally@isc. Jun 19   31/962   " thread-indent "\"[oss-security] ISC disclosed BIND vulnerability CVE-2019-6471.\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] ISC disclosed BIND vulnerability CVE-2019-6471." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["468" "Monday" "29" "February" "2016" "10:15:39" "+0100" "Adam Maris" "amaris@redhat.com" "<56D40C3B.3090806@redhat.com>" "19" "[oss-security] CVE request: Heap buffer overflow in pcretest" nil nil nil "2" "2016022909:15:39" "[oss-security] CVE request: Heap buffer overflow in pcretest" (number mark "U       amaris@redha Feb 29   19/468   " thread-indent "\"[oss-security] CVE request: Heap buffer overflow in pcretest\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5416 invoked by uid 550); 20 Jun 2019 01:13:52 -0000
+Received: (qmail 18357 invoked by uid 550); 29 Feb 2016 09:15:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,47 +12,36 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5370 invoked from network); 20 Jun 2019 01:13:51 -0000
+Received: (qmail 18334 invoked from network); 29 Feb 2016 09:15:54 -0000
 To: oss-security@lists.openwall.com
-From: Michael McNally <mcnally@isc.org>
-Message-ID: <f4082239-934b-1bdd-2125-0ad609ed5058@isc.org>
-Date: Wed, 19 Jun 2019 17:13:38 -0800
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.7.1
+Cc: cve-assign@mitre.org
+From: Adam Maris <amaris@redhat.com>
+Message-ID: <56D40C3B.3090806@redhat.com>
+Date: Mon, 29 Feb 2016 10:15:39 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] ISC disclosed BIND vulnerability CVE-2019-6471.
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+Subject: [oss-security] CVE request: Heap buffer overflow in pcretest
 
-Today ISC disclosed a vulnerability in our BIND software.
+Heap-based buffer overread caused by specially crafted input triggering
+infinite loop in pcretest.c was found affecting pcre 8.38. pcretest went
+into loop if global matching was requested with an ovector size less than 2.
 
-Information about the vulnerability can be found in the ISC Knowledge
-Base:
+Upstream bug:
 
-   CVE-2019-6471:  A race condition when discarding malformed
-   packets can cause BIND to exit with an assertion failure
-   https://kb.isc.org/docs/cve-2019-6471
+https://bugs.exim.org/show_bug.cgi?id=3D1777
 
-New maintenance releases of BIND released today contain the fix
-for the vulnerability along with other bug fixes and feature
-improvements.  They may be downloaded from the ISC web site's
-download page (https://www.isc.org/downloads)
+Upstream fix:
 
-   -  9.11.8
-   -  9.12.4-P2
-   -  9.14.3
-   -  9.15.1
+http://vcs.pcre.org/pcre?view=3Drevision&revision=3D1637
 
-With the public disclosure of these vulnerabilities, parties which
-had been given advance notice concerning them are released from
-non-disclosure and packagers and redistributors are encouraged to
-publish updated packages containing fixes.
+Regards,
 
-If you have additional questions, please direct them to
-security-officer@isc.org
+--=20
+Adam Mari=C5=A1, Red Hat Product Security
+1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
 
-Thank you,
 
-Michael McNally
-ISC Security Officer
