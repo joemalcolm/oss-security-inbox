@@ -1,32 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/3
-Message-ID: <alpine.LFD.2.20.1611221311230.12350@wniryva>
-Date: Tue, 22 Nov 2016 13:16:46 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Owen Hofmann <osh@...gle.com>
-Subject: CVE-2016-8630 kernel: kvm: x86: NULL pointer dereference duringinstruction decode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/29/2
+Message-ID: <56D49C6C.9090201@eenterphace.org>
+Date: Mon, 29 Feb 2016 20:30:52 +0100
+From: Moritz Bechler <mbechler@...terphace.org>
+To: oss-security@...ts.openwall.com
+Subject: Java Deserialization continued, Analysis Tooling and (potentially) bypassing Application Level Filtering
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi,
 
-Linux kernel built with the Kernel-based Virtual Machine (CONFIG_KVM) support 
-is vulnerable to a null pointer dereference flaw. It could occur on x86 
-platform, when emulating an undefined instruction.
+sharing some results from my research on deserialization
+(vulnerabilities, or rather gadgets):
 
-A user/process could use this flaw to crash the host kernel resulting in DoS.
+- a static bytecode analyzer that traces invocations reachable
+from deserialization that helps (high FP rate, obviously) with finding
+gadget chains even when more complex interactions are involved:
+<https://github.com/mbechler/serianalyzer>
 
-Upstream patch:
----------------
-   -> https://git.kernel.org/linus/d9092f52d7e61dd1557f2db2400ddb430e85937e
+- through it discovered a few more RCE gadgets most notably ones in
+Hibernate
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1393350
+- and MyFaces (actually that's RCE via EL injection via deserialization)
+that one is only usable in a JSF context - but MyFaces also performs
+unsafe deserization when org.apache.myfaces.USE_ENCRYPTION=false (yes,
+also with server side state saving, and while being totally unnecessary
+they are unwilling to fix this:
+<https://issues.apache.org/jira/browse/MYFACES-4021>).
 
-CVE-2016-8630 was assigned to this issue by Red Hat Inc.
+- and a method for bypassing application level filtering. Basically you
+can open up JRMP (RMI) listeners and connections via various gadgets
+(in the standard library) which then again use a standard
+ObjectInputStream and can be used to exploit otherwise filtered gadgets.
+Jenkins just fixed this sepecific vector (CVE-2016-0788) but this
+potentially affects anybody that is using application level filters
+(i.e. filtering ObjectInputStreams) and either is using blacklisting or
+a too broad whitelist.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+These are all now available in my ysoserial branch
+<https://github.com/mbechler/ysoserial>
+
+
+regards
+
+Moritz
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
