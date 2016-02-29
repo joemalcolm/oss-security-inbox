@@ -1,43 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/17/3
-Message-ID: <CACHnxzxf43GJp=bBNvCUi-4ELt7UA6i9vWm_pKW-nG4g2s0DTg@mail.gmail.com>
-Date: Thu, 17 Mar 2016 11:42:59 -0400
-From: Christopher Shannon <christopher.l.shannon@...il.com>
-To: users@...ivemq.apache.org
-Cc: dev@...ivemq.apache.org, security@...che.org,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: Re: [ANNOUNCE] CVE-2016-0782: ActiveMQ Web Console - Cross-Site Scripting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/29/3
+Message-ID: <CAC9YFzf4JBQW5oSk49xAqWv9EwqVU+i_5vcAj5A8gkWw2Tu9Cw@mail.gmail.com>
+Date: Mon, 29 Feb 2016 19:31:17 +0000
+From: Rafael Mendonça França <rafaelmfranca@...il.com>
+To: "rubyonrails-security@...glegroups.com" <rubyonrails-security@...glegroups.com>, security@...e.de,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "ruby-security-ann@...glegroups.com" <ruby-security-ann@...glegroups.com>
+Subject: [CVE-2016-2098] Possible remote code execution vulnerability in Action Pack
 Content-Type: text/plain; charset=utf-8
 
-Thanks for pointing that out, I have fixed the announcement.
+There is a possible remote code execution vulnerability in Action Pack.
+This vulnerability has been assigned the CVE identifier CVE-2016-2098.
 
-On Thu, Mar 17, 2016 at 11:25 AM, Derek Mahar <derek.mahar@...il.com> wrote:
+Versions Affected:  3.2.x, 4.0.x, 4.1.x, 4.2.x
+Not affected:       5.0+
+Fixed Versions:     3.2.22.2, 4.1.14.2, 4.2.5.2
 
-> The security advisory announcement claims that ActiveMQ 5.13.1 and
-> older versions are affected and that ActiveMQ 5.13.2 fixes the issues.
->
-> On 10 March 2016 at 07:45, Christopher Shannon
-> <christopher.l.shannon@...il.com> wrote:
-> > There following security vulnerability was reported against Apache
-> > ActiveMQ 5.13.0 and older versions.
-> >
-> > Please check the following document and see if you’re affected by the
-> issue.
-> >
-> >
-> http://activemq.apache.org/security-advisories.data/CVE-2016-0782-announcement.txt
-> >
-> > Apache ActiveMQ 5.13.1 and newer with appropriate fixes was released and
-> > available for upgrade.
->
->
->
-> --
-> Derek Mahar
-> 1.514.316.6736 Home
-> 1.514.316.7348 Mobile
-> 1.514.461.3650 x230 Work
-> 102-1365 boulevard René-Lévesque Est
-> Montréal QC H2L 2M1
-> Canada
->
+Impact
+------
+Applications that pass unverified user input to the `render` method in a
+controller or a view may be vulnerable to a code injection.
 
+Impacted code will look like this:
+
+```ruby
+class TestController < ApplicationController
+  def show
+    render params[:id]
+  end
+end
+```
+
+An attacker could use the request parameters to coerce the above example
+to execute arbitrary ruby code.
+
+All users running an affected release should either upgrade or use one of the
+workarounds immediately.
+
+Releases
+--------
+The FIXED releases are available at the normal locations.
+
+Workarounds
+-----------
+A workaround to this issue is to not pass arbitrary user input to the `render`
+method. Instead, verify that data before passing it to the `render` method.
+
+For example, change this:
+
+```ruby
+def show
+  render params[:id]
+end
+```
+
+To this:
+
+```ruby
+def show
+  render verify_id(params[:id])
+end
+
+private
+def verify_id(id)
+  # add verification logic particular to your application here
+end
+```
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided a patch for
+it. It is in git-am format and consist of a single changeset.
+
+* 3-2-secure_inline_with_params.patch - Patch for 3.2 series
+* 4-1-secure_inline_with_params.patch - Patch for 4.1 series
+* 4-2-secure_inline_with_params.patch - Patch for 4.2 series
+
+Credits
+-------
+Thanks to both Tobias Kraze from makandra and joernchen of Phenoelit
+for reporting this!
+
+Content of type "text/html" skipped
+
+Download attachment "4-2-secure_inline_with_params.patch" of type "application/octet-stream" (3693 bytes)
+
+Download attachment "3-2-secure_inline_with_params.patch" of type "application/octet-stream" (5472 bytes)
+
+Download attachment "4-1-secure_inline_with_params.patch" of type "application/octet-stream" (3697 bytes)
