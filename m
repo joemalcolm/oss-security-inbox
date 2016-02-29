@@ -1,29 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/06/11
-Message-ID: <alpine.LFD.2.20.1612070140070.9956@wniryva>
-Date: Wed, 7 Dec 2016 01:46:22 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liq3ea@...il.com>
-Subject: CVE request Qemu: 9pfs: memory leakage via proxy/handle callbacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/29/4
+Message-ID: <CAC9YFzc4t0yBuKuZP_7=ciMba2ML0UmnRvJ8O+L+4oeTFKMGYQ@mail.gmail.com>
+Date: Mon, 29 Feb 2016 19:31:20 +0000
+From: Rafael Mendonça França <rafaelmfranca@...il.com>
+To: "rubyonrails-security@...glegroups.com" <rubyonrails-security@...glegroups.com>, security@...e.de,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "ruby-security-ann@...glegroups.com" <ruby-security-ann@...glegroups.com>
+Subject: [CVE-2016-2097] Possible Information Leak Vulnerability in Action View.
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Possible Information Leak Vulnerability in Action View.
 
-Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
-File System(9pfs) support, is vulnerable to memory leakage issue. It could 
-occur via its '9p-handle' or '9p-proxy' backend drivers as they do not free 
-their respective allocated data objects.
+There is a possible directory traversal and information leak vulnerability in
+Action View. This was meant to be fixed on CVE-2016-0752. However the
+3.2 patch was not covering
+all the scenarios. This vulnerability has been assigned the CVE identifier
+CVE-2016-2097.
 
-A privileged user inside guest could use this flaw to leak host memory, thus 
-affecting other services on the host and/or potentially crash the Qemu process 
-on the host.
+Versions Affected:  3.2.x, 4.0.x, 4.1.x
+Not affected:       4.2+
+Fixed Versions:     3.2.22.2, 4.1.14.2
 
-Upstream patches:
------------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-11/msg03278.html
+Impact
+------
+Applications that pass unverified user input to the `render` method in a
+controller may be vulnerable to an information leak vulnerability.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Impacted code will look something like this:
+
+```ruby
+def index
+  render params[:id]
+end
+```
+
+Carefully crafted requests can cause the above code to render files from
+unexpected places like outside the application's view directory, and can
+possibly escalate this to a remote code execution attack.
+
+All users running an affected release should either upgrade or use one of the
+workarounds immediately.
+
+Releases
+--------
+The FIXED releases are available at the normal locations.
+
+Workarounds
+-----------
+A workaround to this issue is to not pass arbitrary user input to the `render`
+method. Instead, verify that data before passing it to the `render` method.
+
+For example, change this:
+
+```ruby
+def index
+  render params[:id]
+end
+```
+
+To this:
+
+```ruby
+def index
+  render verify_template(params[:id])
+end
+
+private
+def verify_template(name)
+  # add verification logic particular to your application here
+end
+```
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for
+it. It is in git-am format and consist of a single changeset.
+
+* 3-2-render_data_leak_2.patch - Patch for 3.2 series
+* 4-1-render_data_leak_2.patch - Patch for 4.1 series
+
+Credits
+-------
+Thanks to both Jyoti Singh and Tobias Kraze from makandra for
+reporting this and working with us in the patch!
+
+Content of type "text/html" skipped
+
+Download attachment "4-1-render_data_leak_2.patch" of type "application/octet-stream" (9444 bytes)
+
+Download attachment "3-2-render_data_leak_2.patch" of type "application/octet-stream" (15632 bytes)
