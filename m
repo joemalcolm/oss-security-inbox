@@ -1,24 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/26/15
-Message-Id: <94b6bfdb-3b5e-459d-8e74-054325ee56f7@googlegroups.com>
-Date: Mon, 26 Sep 2016 11:53:49 -0700 (PDT)
-From: Tim Graham <timograham@...il.com>
-To: django-announce <django-announce@...glegroups.com>
-Cc: django-users@...glegroups.com, django-developers@...glegroups.com, oss-security@...ts.openwall.com
-Subject: [ANNOUNCE] Django security releases issued: 1.9.10 and 1.8.15
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/10
+Message-Id: <20160301182222.6CE67ABC04B@smtpvmsrv1.mitre.org>
+Date: Tue,  1 Mar 2016 13:22:22 -0500 (EST)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, donghai.zdh@...baba-inc.com
+Subject: Re: CVE request Qemu: OOB access in address_space_rw leads to segmentation fault
 Content-Type: text/plain; charset=utf-8
 
-Today the Django team issued 1.9.10 and 1.8.15 as part of our security 
-process. These releases address a security issue, and we encourage all 
-users to upgrade as soon as possible.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Details are available on the Django project weblog:
+> https://bugzilla.redhat.com/show_bug.cgi?id=1300771
 
-https://www.djangoproject.com/weblog/2016/sep/26/security-releases/
+We understand that the listed patches are to be used together, but the
+changes were announced at different times and thus multiple CVE IDs
+are needed.
 
-As a reminder, we ask that potential security issues be reported via 
-private email to security@...ngoproject.com and not via Django's Trac 
-instance or the django-developers list. Please see 
-https://www.djangoproject.com/security for further information.
 
-Content of type "text/html" skipped
+> Qemu emulator built to use 'address_space_translate' to map an address to a
+> MemoryRegionSection is vulnerable to an OOB r/w access issue. It could occur
+> while doing pci_dma_read/write calls. Affects Qemu versions >= 1.6.0 and <=
+> 2.3.1.
+> 
+> A privileged user inside guest could use this flaw to crash the guest instance
+> resulting in DoS.
+
+
+> http://git.qemu.org/?p=qemu.git;a=commit;h=c3c1bb99d1c11978d9ce94d1bdcf0705378c1459
+> https://lists.gnu.org/archive/html/qemu-stable/2016-01/msg00060.html
+> http://git.qemu.org/?p=qemu.git;a=commit;h=23820dbfc79d1c9dce090b4c555994f2bb6a69b3
+
+There are all about the same code changes, originally written in March
+2015. The issue appears to have security relevance on its own. Use
+CVE-2015-8817.
+
+
+> http://git.qemu.org/?p=qemu.git;a=commit;h=e4a511f8cc6f4a46d409fb5c9f72c38ba45f8d83
+
+As far as we can tell, this is a functionality fix, not a security
+fix. It doesn't have a CVE ID. (We understand that it does belong in
+the listed set of upstream commits anyway.)
+
+> http://git.qemu.org/?p=qemu.git;a=commit;h=965eb2fcdfe919ecced6c34803535ad32dc1249c
+
+As far as we can tell, this one isn't really a security fix and may
+have introduced new bugs that were addressed later. It also doesn't
+have a CVE ID. (We understand that it does belong in the listed set of
+upstream commits anyway.)
+
+
+> http://git.qemu.org/?p=qemu.git;a=commit;h=b242e0e0e2969c044a318e56f7988bbd84de1f63
+
+This one is from July 2015 and has security relevance on its own. Use
+CVE-2015-8818.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJW1dx+AAoJEL54rhJi8gl5kRYP+gPGf5B/RxtIMXDz9rDXSzKI
+NjjHaDbMTwQKlQkQ1qsJnpYUHRrJNoXM2xiRxZxhQv19d8EHKELIJMQ5gfzxMtIn
+2NGfWRUQLdBl50Zz8A87xCq7bHsFfFqBffnSMmyjK0ATurQqqrvlJFuH4cAXWrlK
+/nTtNHPrSm8yt7GEs2lxYd99A4z0RJyd5gufnGNpvKNkEfeAXA9uS7/oZ5WzUjfX
+oS+V+YiEKXJQwmbYJoabYbSF630EWXm7q+QSAD59S31UJFzbM5CV3Da+/2dY9ylB
+wna90ypywVCvcDqaOLbT1hWJ6ivMIdTty5MyuHr9mMee0VlbBeEnbFh4uP29H3Vf
+yJLFAg5NxvdF4sh/qqs2xdMnEZkx2VcC3R406mxyEMPQRLwiideLZh7oMltwCK0+
+RT3P6Rco4ENiiqgknuh3IfeRq8J7OYt7hr0hK8y/ym8U+ndGXgfcQAS7WGJWRMBL
+pI7qyJjuSD4LC1EpS9u/CVm+NRR8Xkp0gC6aEIqM/raSD0zI3SU2pAaXosCR4JBp
+gRSLtodPrVkiV87tEwUasTLkIkELxQE4m6hJEAnmYChmZDwtxthFNo6u4mQQFzqd
+nuh8vvHAPexzlBKaWQkA1e/4VZL7jU0scDioW477y0+eTIADCRYHntfAocE/6rGW
+zFZH4qIgz5hD2SjXLxiR
+=EOgU
+-----END PGP SIGNATURE-----
