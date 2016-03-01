@@ -1,4 +1,9 @@
-Received: (qmail 25904 invoked by uid 550); 11 May 2022 06:40:41 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1505" "Tuesday" "1" "March" "2016" "12:25:24" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty0RLssvD7QB__g0Cm=cpXb3dOWhZK=anOqdMuVOEtSb=g@mail.gmail.com>" "39" "[oss-security] Re: CVE's for SSLv2 support" "^Cc:" nil nil "3" "2016030119:25:24" "[oss-security] Re: CVE's for SSLv2 support" (number mark "        kseifried@re Mar  1   39/1505  " thread-indent "\"[oss-security] Re: CVE's for SSLv2 support\"\n") "<20160301191235.EDA1852E01C@smtpvbsrv1.mitre.org>" ("<CANO=Ty0ZOjCGL-iXCZ46FbSQ3i+fpGHBB6X1x2Agy9jftQ3ozA@mail.gmail.com>" "<20160301191235.EDA1852E01C@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11847 invoked by uid 550); 1 Mar 2016 19:25:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,99 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25845 invoked from network); 11 May 2022 06:40:41 -0000
-Date: Wed, 11 May 2022 08:40:29 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <o384s4p8-o2pp-6or4-7989-9n2ps04062so@unkk.fr>
-X-fromdanielhimself: yes
+Received: (qmail 11829 invoked from network); 1 Mar 2016 19:25:36 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=2v8DOssxJBpzCL/i7mqXL6yY0XxrnKkM5/LYuRV1dlI=;
+        b=cU4BEpisW+QP/WTy36T9PPJGc9JnBbjKOwAqWvofRNqy8ZqCmrV7tkPOQl1nWrM+d0
+         vIqsc8g/76wzEp2oa5GbJJX/eH/lC3a87h1lv3lCInfnzxjsGajHpJb84UBemXXrFmUG
+         Lp4MeTdf9sb1cg3YGobwBcCwRr3xY+5cbBKAXtqt9xy4f3toYR90fvfVEsnDzcj7wXTL
+         3luOe6+AxtVMr1wMF0h0B3JurEFy7i8imMzDusKnYwW0gVFnquiT3tc7RTUEzUzdlMi9
+         Cqa6GvNYLY8fNSgeguES3ibELHISHKXdMkKZ0rZ1qNga/btoboABrx8ra35O6MC2qVYC
+         YQ3g==
+X-Gm-Message-State: AD7BkJKX0rlbC90z9fHOnNbUQn1m8fGfRCnr3E28WrG7df/Z7qNmKdsQsjq6RYstL7pJKdactO4jS41bqSVQB1w4
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="-39887073-2093096271-1652251229=:2358810"
-Subject: [oss-security] [SECURITY ADVISORY] curl: CERTINFO never-ending busy-loop
+X-Received: by 10.13.192.130 with SMTP id b124mr13864684ywd.218.1456860324796;
+ Tue, 01 Mar 2016 11:25:24 -0800 (PST)
+In-Reply-To: <20160301191235.EDA1852E01C@smtpvbsrv1.mitre.org>
+References: <CANO=Ty0ZOjCGL-iXCZ46FbSQ3i+fpGHBB6X1x2Agy9jftQ3ozA@mail.gmail.com>
+	<20160301191235.EDA1852E01C@smtpvbsrv1.mitre.org>
+Message-ID: <CANO=Ty0RLssvD7QB__g0Cm=cpXb3dOWhZK=anOqdMuVOEtSb=g@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a114e46a025d655052d01baf9
+Cc: oss-security <oss-security@lists.openwall.com>
+Date: Tue, 1 Mar 2016 12:25:24 -0700
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE's for SSLv2 support
+To: CVE ID Requests <cve-assign@mitre.org>
 
----39887073-2093096271-1652251229=:2358810
-Content-Type: text/plain; format=flowed; charset=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
+--001a114e46a025d655052d01baf9
+Content-Type: text/plain; charset=UTF-8
 
-CERTINFO never-ending busy-loop
-===============================
+On Tue, Mar 1, 2016 at 12:12 PM, <cve-assign@mitre.org> wrote:
 
-Project curl Security Advisory, May 11 2022 -
-[Permalink](https://curl.se/docs/CVE-2022-27781.html)
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+> > If a crypto library (e.g. OpenSSL, NSS) supports AND enables SSLv2 by
+> > default should it receive a CVE?
+>
+> There's no general answer to that question. CVE ID assignments are not
+> based on outsiders making guesses about the expectations of a product's
+> customers. For example, there might be a crypto library intended for
+> communication on isolated networks to high-value embedded devices that
+> support only SSLv2, and cannot and will not ever be updated.
+>
+>
+I guess my confusion is: what would be the downside to assigning a CVE in
+such a case, such a "false positive" would be easily explained ("yes we
+support SSLv2, but only for use on closed network"[1]) but more to the
+point by drawing a line in the sand of "SSLv2 is worth a CVE" we'd be much
+more easily able to track which products are using SSLv2 by default (and
+thus putting us at risk). From your web page "CVE is a dictionary of
+publicly known information security vulnerabilities and exposures."
 
-VULNERABILITY
--------------
+Does SSLv2 not pretty much exactly fit this definition now?
 
-libcurl provides the `CURLOPT_CERTINFO` option to allow applications to
-request details to be returned about a TLS server's certificate chain.
+[1] which begs the question why they're even using SSLv2 but I digress =)
 
-Due to an erroneous function, a malicious server could make libcurl built with
-NSS get stuck in a never-ending busy-loop when trying to retrieve that
-information.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This flaw was introduced in [commit
-f6c335d63f](https://github.com/curl/curl/commit/f6c335d63f), shipped in curl
-7.34.0 when libcurl added support for CERTINFO using NSS.
-
-This feature is not accessible from the command line tool.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2022-27781 to this issue.
-
-CWE-835: Loop with Unreachable Exit Condition ('Infinite Loop')
-
-Severity: Low
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.34.0 to and including 7.83.0
-- Not affected versions: curl < 7.34.0 and curl >= 7.83.1
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-A [fix for CVE-2022-27781](https://github.com/curl/curl/commit/5c7da89d404bf59)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 7.83.1
-
-  B - Apply the patch to your local version
-
-  C - Do not use the `CURLOPT_CERTINFO` option
-
-TIMELINE
---------
-
-This issue was reported to the curl project on April 30, 2022. We contacted
-distros@openwall on May 5.
-
-libcurl 7.83.1 was released on May 11 2022, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-This issue was reported by Florian Kohnhäuser. Patched by Daniel Stenberg.
-
-Thanks a lot!
 
 -- 
 
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
----39887073-2093096271-1652251229=:2358810--
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a114e46a025d655052d01baf9--
