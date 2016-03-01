@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3015" "Friday" "23" "August" "2019" "04:40:30" "+0100" "Eddie Chapman" "eddie@ehuk.net" "<df75b26c-da5c-e1be-7602-030370bdff3f@ehuk.net>" "56" "Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" "^Date:" nil nil "8" "2019082303:40:30" "[oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" (number mark "        eddie@ehuk.n Aug 23   56/3015  " thread-indent "\"Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2\"\n") "<20190822211311.1d435223@jabberwock.cb.piermont.com>" ("<CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>" "<C1E053CF-5359-43A3-8572-BE6CDFDCC2B1@oracle.com>" "<20190822093122.GQ6086@suse.de>" "<ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>" "<CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>" "<20190822135753.10d124a4@jabberwock.cb.piermont.com>" "<9c8ef246-0e75-793b-6995-51e50a730701@ehuk.net>" "<20190822150054.1a7ef060@jabberwock.cb.piermont.com>" "<e690b8e0-0f3e-6370-8b1c-41baa4e13a71@ehuk.net>" "<20190822211311.1d435223@jabberwock.cb.piermont.com>") nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1143" "Tuesday" "1" "March" "2016" "12:31:38" "-0800" "Seth Arnold" "seth.arnold@canonical.com" "<20160301203138.GA13572@hunt>" "34" "Re: [oss-security] Re: CVE's for SSLv2 support" "^Date:" nil nil "3" "2016030120:31:38" "[oss-security] Re: CVE's for SSLv2 support" (number mark "        seth.arnold@ Mar  1   34/1143  " thread-indent "\"Re: [oss-security] Re: CVE's for SSLv2 support\"\n") "<20160301184339.B62C3ABC04A@smtpvmsrv1.mitre.org>" ("<CANO=Ty3qgsHtaivrfwoB=ZdbgyE=z5+Q+HkhazE06ppDbw63RQ@mail.gmail.com>" "<20160301184339.B62C3ABC04A@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1576 invoked by uid 550); 23 Aug 2019 04:07:19 -0000
+Received: (qmail 15784 invoked by uid 550); 1 Mar 2016 20:31:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,92 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18215 invoked from network); 23 Aug 2019 03:40:42 -0000
-DKIM-Filter: OpenDKIM Filter v2.10.3 schatzi.steelbluetech.co.uk 59567BFEAF
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ehuk.net; s=default;
-	t=1566531630; bh=UDUqpgEGU7llEXkgaVJtIn+6RYksMzqV7tUgPXuGBbM=;
-	h=Reply-To:Subject:To:References:From:Date:In-Reply-To:From;
-	b=qn4eaqNWrHkOPkVIsBuSI6yNhvHFZgku7cLfkparDVlzETeL9gYAyIB9WtmjvB++U
-	 EV2k4IAjVm1KZzkCaTwv0D0X7XNiq0npkn8qPqvLGdhj7e6FF5BN05YWIem+AYw5OS
-	 XRo6qN3V3rN54kiXYPi2hbQjGNiJ8cvH6q3tWFkQ=
-References: <CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>
- <C1E053CF-5359-43A3-8572-BE6CDFDCC2B1@oracle.com>
- <20190822093122.GQ6086@suse.de>
- <ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>
- <CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>
- <20190822135753.10d124a4@jabberwock.cb.piermont.com>
- <9c8ef246-0e75-793b-6995-51e50a730701@ehuk.net>
- <20190822150054.1a7ef060@jabberwock.cb.piermont.com>
- <e690b8e0-0f3e-6370-8b1c-41baa4e13a71@ehuk.net>
- <20190822211311.1d435223@jabberwock.cb.piermont.com>
-Message-ID: <df75b26c-da5c-e1be-7602-030370bdff3f@ehuk.net>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+Received: (qmail 15763 invoked from network); 1 Mar 2016 20:31:52 -0000
+Message-ID: <20160301203138.GA13572@hunt>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <CANO=Ty3qgsHtaivrfwoB=ZdbgyE=z5+Q+HkhazE06ppDbw63RQ@mail.gmail.com>
+ <20160301184339.B62C3ABC04A@smtpvmsrv1.mitre.org>
 MIME-Version: 1.0
-In-Reply-To: <20190822211311.1d435223@jabberwock.cb.piermont.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-Date: Fri, 23 Aug 2019 04:40:30 +0100
-From: Eddie Chapman <eddie@ehuk.net>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="h31gzZEtNLTqOjlF"
+Content-Disposition: inline
+In-Reply-To: <20160301184339.B62C3ABC04A@smtpvmsrv1.mitre.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Date: Tue, 1 Mar 2016 12:31:38 -0800
+From: Seth Arnold <seth.arnold@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB
- subsystem x2
+Subject: Re: [oss-security] Re: CVE's for SSLv2 support
 To: oss-security@lists.openwall.com
 
-On 23/08/2019 02:13, Perry E. Metzger wrote:
-> On Thu, 22 Aug 2019 20:33:54 +0100 Eddie Chapman <eddie@ehuk.net>
-> wrote:
->> On 22/08/2019 20:00, Perry E. Metzger wrote:
->>> You can argue anything you like. Power charging points have
->>> popped up around the world, and you're not in a position to stop
->>> them. Furthermore, I'll note that over the air exploitable bugs in
->>> things like WiFi stacks and Bluetooth stacks have also appeared
->>> over time; perhaps it's foolish to have your phone on at all, and
->>> yet people will continue to turn their phones on, and even to use
->>> them.
->>
->> Well, I certainly am not deluded enough to think I have the power
->> to stop power charging points popping up everywhere :-) Or to stop
->> people making mistakes. Just because something is possible and
->> everyone else does it doesn't make something less stupid.
->>
->> It's a similar principle with wifi/bluetooth, which is why I avoid
->> connecting even to a family member's wifi access point unless it's
->> absolutely necessary.
-> 
-> I think the fact that you avoid connecting to WiFi access points,
-> even ones owned by family members, unless absolutely necessary, may
-> demonstrate that your model of what does and does not constitute
-> a ordinary user behavior might not be the same as other
-> people's. Most people do use WiFi in a variety of places, and most
-> people do charge off of USB ports they have not personally vetted.
-> 
-> Given this, I think fixing bugs that might lead to privilege
-> escalation, even if they require physical connection of USB devices,
-> does indeed seem reasonable.
+--h31gzZEtNLTqOjlF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Yep, my behaviour with these things I'd say is quite unusual compared to 
-  most people's. But I wouldn't say I'm particularly paranoid. By the 
-way my reasons for not trusting wifi access points in general is not 
-because I'm worried about wifi protocols. I'm worried about what might 
-be running on the never-been-updated access point from 
-doesnt-really-care-after-its-shipped manufacturer, that's been connected 
-to the internet for a long time, with a root password of london1982 or 
-such like, and a web interface listening on the wan port. Combined with 
-the fact I don't fully trust my handset's ability to defend itself while 
-connected to said access point, due to its difficult to keep up-to-date 
-OS and heavily locked down firmware. I feel somewhat safer connecting 
-with my laptop. But that's all veering far off topic.
+On Tue, Mar 01, 2016 at 01:43:39PM -0500, cve-assign@mitre.org wrote:
+> MITRE does not assign CVE IDs to track whether the universe of
+> products has similar or dissimilar time scales in adapting to
+> technology changes.
 
-What I do find very interesting is the question of what is CVE-worthy, 
-particularly with regards to USB flaws in the kernel. The wider question 
-of should the CVE process be driven, to whatever extent, by most 
-people's behaviour, even if that behaviour is ill-advised for whatever 
-reason (simply unaware of/don't care about the risks in most cases).
+While I can appreciate that MITRE would be in an untenable position to
+arbitrate trends on six-month timescales, SSLv2's replacement was released
+nearly twenty years ago.
 
-By the way, I'm not arguing that people should not put any effort into 
-fixing these issues, I believe a flaw is always worth fixing, nothing is 
-too trivial to submit a patch to a kernel mailing list for.
+Please reconsider this position.
 
-Rest my case :-)
+Thanks
+
+--h31gzZEtNLTqOjlF
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJW1fwqAAoJEPMhclmdjS6X778H/iH3FeMMKBraph1HT/U/gmVD
+HGokxx0oc2GKC2GuYii5FhapZai0O/+aO5cVFdDhrCM7F2doszYq/lJ+Y2UD4AwA
+A5h8hO7IsQyh98ywjlG8zM5I+XgJWgBnu0HsyukX0xQFkI7IgTc2i5LqUeMWdhLM
+vTk+MNH9ig+c4EQqb0aRa7gtKv1+sRmCYB4CCASAq3HHdDAliPi7wdJLOlUBBvWs
+vtcNlSTfLKqSm0tymB122z0a3EG2Tt2+fbGeEYLLrruWM9u/i/LDRO1IwOFhsRTb
+/ufOKM6k0eZP7hk2R38Sziwnw73E7vVANUcd5dY5/+M0IQGjcd6OgyMlc/ypfas=
+=Hp7S
+-----END PGP SIGNATURE-----
+
+--h31gzZEtNLTqOjlF--
