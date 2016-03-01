@@ -1,60 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/18
-Message-ID: <CANO=Ty01JdpAZ8rtXhrOyzZ7EKCV65kzkVQid4420Q6K3mhugw@mail.gmail.com>
-Date: Tue, 19 Jan 2016 13:55:31 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: CVE ID Requests <cve-assign@...re.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE for node.js websockets (ws)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/2
+Message-ID: <20160301161155.GA4786@eldamar.local>
+Date: Tue, 1 Mar 2016 17:11:55 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: Ben Hutchings <benh@...ian.org>
+Subject: CVE Request: Linux: aio write triggers integer overflow in some network protocols
 Content-Type: text/plain; charset=utf-8
 
-Ping, is there a CVE for this yet?
+Hi
 
-On Tue, Jan 12, 2016 at 1:39 AM, <cve-assign@...re.org> wrote:
+We would like to request a CVE for the following issue in the Linux
+kernel:
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
-> > CVE-PENDING - Credit: Feross Aboukhadijeh / Mathias Buss
->
-> > If not who is sitting on it?
->
-> In our experience, the string "CVE-PENDING" has little or no
-> correlation with whether anyone has done any type of CVE request.
->
-> We'll interpret it as a new request to MITRE unless someone else
-> happens to have received a request.
->
-> - --
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
->
-> iQIcBAEBCAAGBQJWlLsuAAoJEL54rhJi8gl5i4EQAKA7AGwYRYJDipd7vpWlnaqb
-> Wv7BkC2i1oDLUbb9xQX9AMTGyQD90Q0XP72EUeSqDUHNRAXobcAavVRmbk14Hib3
-> TqL/ckDnwWpXMgRyyyhVTLkr4ajl/T0B+QgAN4UhE5ts0YPqeJnWK2ZTxl+yfYny
-> KYhOH3bIQEEuH77XjzsN9dZAI/UnupQRAGFzwGVI4HngxUz2RQdCDrIe0Vk5L/+V
-> bL34Gm0h4Ij4/K15FS4DGeuYHTKtBM1uPHt9DKDdqkjy9YxYm3gX4ALh3dtKesnf
-> vScCIXXs1M5XGM4oREinaDLwN1ZqV29xzpQ6NWfVPZ/eADLHwRVLCtk/nK/IDeUp
-> SAqgWYpCXZluq3KNJLbIwlk9Cw4NpBdzqq3QC2ey5Hy4Dznix+Qq0hXjAzRq/3KB
-> ZXqXgQhtcpnWTaOF9j4823UzZtDHY+UbpIkGv/BstWxtaFOwWCLA9pcuhj2VoUal
-> voHIJiObb9ji325bD2jsQadmAMGG2tDVU8HkvVXmyCmz28b3jyw0/BoAWcUWfyRa
-> qy17X1WGUkWVR3UbW69qMgv5zD+dwv2cZHbP1urylgxVO15mPqwuhSwRjP1DuJU2
-> HXZNp3F3oU6y3Zf+9dwaC1vThDlrM/qq731sh/b3A7DAftpXAjkbHzCOwziM/rcs
-> 8dm8oDFJmGuW1J/mkWaI
-> =mvzn
-> -----END PGP SIGNATURE-----
->
+https://git.kernel.org/linus/4c185ce06dca14f5cea192f5a2c981ef50663f2b (v4.1-rc1)
 
+For the linux-stable:
 
+https://git.kernel.org/cgit/linux/kernel/git/stable/linux-stable.git/commit?id=c4f4b82694fe48b02f7a881a1797131a6dad1364
 
--- 
+For an upcoming Linux DSA in Debian we would use something like:
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+> Ben Hawkes of Google Project Zero reported that the AIO interface
+> permitted reading or writing 2 GiB of data or more in a single
+> chunk, which could lead to an integer overflow when applied to
+> certain filesystems, socket or device types.  The full security
+> impact has not been evaluated.
 
+The issue was initially already addressed via
+
+https://git.kernel.org/linus/a70b52ec1aaeaf60f4739edb1b422827cb6f3893 (v3.5-rc1)
+
+but then opened again due to
+
+https://git.kernel.org/linus/41ef4eb8eef8d06bc1399e7b00c940d771554711 (v3.10-rc1)
+
+Can you please assign a CVE id for this issue?
+
+Regards,
+Salvatore
