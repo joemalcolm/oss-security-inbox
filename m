@@ -1,18 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/29/8
-Message-ID: <1454093476.3461.19.camel@gmail.com>
-Date: Fri, 29 Jan 2016 13:51:16 -0500
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/4
+Message-Id: <7dc04e47-533c-46cb-b9e0-eee3367e6f81@googlegroups.com>
+Date: Tue, 1 Mar 2016 09:19:47 -0800 (PST)
+From: Tim Graham <timograham@...il.com>
+To: django-announce <django-announce@...glegroups.com>
+Cc: django-developers@...glegroups.com, django-users@...glegroups.com,  oss-security@...ts.openwall.com
+Subject: [ANNOUNCE] Django security releases issued: 1.9.3 and 1.8.10
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2016-01-29 at 17:45 +0000, Scott Herbert wrote:
-> That would be nice sure, but given that IoT vendors are rushing so
-> fast to market that their doing things like sending login credentials
-> via http, I think we're a long way from having them secure their
-> products from scanning let alone anything else.
+Today the Django team issued 1.9.3 and 1.8.10 as part of our security 
+process. This releases address two security issues, and we encourage all 
+users to upgrade as soon as possible.
 
-Many of them are going to be using the Android-based Brillo so there's a
-central point to make changes like this (AOSP).
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Details are available on the Django project weblog:
+
+https://www.djangoproject.com/weblog/2016/mar/01/security-releases/
+
+As a reminder, we ask that potential security issues be reported via 
+private email to security@...ngoproject.com and not via Django's Trac 
+instance or the django-developers list. Please see 
+https://www.djangoproject.com/security for further information.
+
+Content of type "text/html" skipped
