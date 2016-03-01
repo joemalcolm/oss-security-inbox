@@ -1,70 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/23/8
-Message-ID: <20160823200444.rcze3xsa6vjxyiws@eldamar.local>
-Date: Tue, 23 Aug 2016 22:04:44 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/15
+Message-ID: <20160301193144.GM14166@sentinelchicken.org>
+Date: Tue, 1 Mar 2016 11:31:44 -0800
+From: Tim <tim-security@...tinelchicken.org>
 To: oss-security@...ts.openwall.com
-Cc: Howard Guo <hguo@...e.com>, Marcus Meissner <meissner@...e.de>, CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: cracklib: Stack-based buffer overflow when parsing large GECOS field
+Cc: kseifried@...hat.com, cve-assign@...re.org
+Subject: Re: Re: CVE's for SSLv2 support
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-On Tue, Aug 16, 2016 at 03:34:54PM +0530, Huzaifa Sidhpurwala wrote:
-> Hi All,
-> 
-> A security flaw was reported to us by CSG Labs, details as follows:
-> 
-> A stack-based overflow was found in the way cracklib, a library used to
-> stop users from choosing easy to guess passwords, handled large GECOS
-> field in the /etc/passwd file. When an application compiled against the
-> cracklib libary, such as "passwd" is used to parse the GECOS field, it
-> could cause the application to crash or execute arbitary code with the
-> permissions of the user running such an application.
-> 
-> To trigger the flaw, you need a specially-crafted "long" GECOS field,
-> which can be done by a local user on the system. The attacker then needs
-> to run some utility which uses cracklib to process this long GECOS field
-> on the system. (such as "passwd" application which runs suid root)
-> 
-> All versions of the cracklib library shipped with Red Hat Enterprise
-> Linux are compiled with FORTIFY_SOURCE, which detects the
-> buffer-overflow and aborts the application safely.
-> 
-> Therefore the maximum impact of this flaw is application crash.
-> 
-> However, there may be other applications, distributions which dont
-> compile cracklib with FORTIFY_SOURCE, and this can lead to easy code
-> exec or even privsec.
-> 
-> A proposed patch is available at:
-> https://bugzilla.redhat.com/attachment.cgi?id=1188599
-> 
-> This flaw was assigned CVE-2016-6318 and it was previously disclosed via
-> linux-distros mailing list.
 
-In the SuSE Bugzilla, it was noted that there is still another buffer
-overflow present, cf. 
+> For example, there might be a crypto library intended for
+> communication on isolated networks to high-value embedded devices that
+> support only SSLv2, and cannot and will not ever be updated.
 
-https://bugzilla.novell.com/show_bug.cgi?id=992966#c14
+Just because there is no easy fix for a vulnerability, does that mean
+it isn't a vulnerability?
 
-and the patch
-
-https://build.opensuse.org/request/show/419768
-
-> - Add patch 0004-overflow-processing-long-words.patch
->  to fix a new buffer overflow identified together with bsc#992966.
-[...]
-> The input word is guaranteed to be at most STRINGSIZE-1 in length.
-> One of the mangle operations involves duplicating the input word,
-> resulting in a string twice the length to be accommodated by both
-> area variables.
-
-https://build.opensuse.org/package/view_file/Base:System/cracklib/0004-overflow-processing-long-words.patch
-
-was applied.
-
-Should that possibly get a further CVE id for reference?
-
-Regards,
-Salvatore
+tim
