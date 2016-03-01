@@ -1,37 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/26/5
-Message-ID: <CAKG8Do6j938c8Qkdp0MfqyYwOfdTt9FAgPs251cWVu5Bq65cCw@mail.gmail.com>
-Date: Wed, 26 Oct 2016 17:09:42 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-4455: subscription-manager: incorrect permisions in /var/lib/rhsm/
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/5
+Message-ID: <CANO=Ty3qgsHtaivrfwoB=ZdbgyE=z5+Q+HkhazE06ppDbw63RQ@mail.gmail.com>
+Date: Tue, 1 Mar 2016 10:33:17 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>, CVE ID Requests <cve-assign@...re.org>
+Subject: CVE's for SSLv2 support
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+So there is this proposed RFC:
 
-This is to disclose the following CVE:
+https://tools.ietf.org/html/rfc6176
 
-CVE-2016-4455: subscription-manager: incorrect permissions in /var/lib/rhsm/
-Description :
+TL;DR: SSLv2 needs to be shot.
 
-It was found that subscription-manager assigned incorrect permissions to
-content in /var/lib/rhsm/, causing an information disclosure flaw. An
-unprivileged local attacker could use this flaw to access sensitive data
-that could later be used for a social engineering attack.
+Now we have yet another significant SSLv2 problem, DROWN, bad enough in
+fact that Red Hat has now disabled SSLv2 in OpenSSL by default (already
+done in NSS/GnuTLS), so from my vendor perspective, we're treating SSLv2
+support as a security problem, the solution of which is to remove said
+support.
 
-Upstream patch :
-https://github.com/candlepin/subscription-manager/commit/9dec31
-
-Impact : Low
-CVSSv2 scoring : 1.7 - AV:L/AC:L/Au:S/C:P/I:N/A:N
-CVSSv3 scoring : 3.3 - AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N
-
-Reported by : Robert Scheck
-
-Best regards,
+But more generally, should we look at assigning CVE's for support of SSLv2,
+much like we would for products supporting DES or other known insecure
+cryptographic algorithms, hashes, digests and protocols? My personal vote
+is for yes.
 
 
--- 
-Cedric Buissart,
-Product Security
+
+
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
