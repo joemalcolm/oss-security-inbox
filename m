@@ -1,62 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/13/4
-Message-ID: <20161013101019.uiaqlniqatzmc6j4@perpetual.pseudorandom.co.uk>
-Date: Thu, 13 Oct 2016 11:10:19 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/7
+Message-ID: <CAPiURgVCtTu3h0TM=5QBKjTQ62g6GLdDve3pcg29PDtRC1O1FQ@mail.gmail.com>
+Date: Tue, 1 Mar 2016 09:55:03 -0800
+From: Grant Ridder <shortdudey123@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: bubblewrap LPE
+Cc: CVE ID Requests <cve-assign@...re.org>
+Subject: Re: CVE's for SSLv2 support
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 12 Oct 2016 at 15:12:47 +0200, Sebastian Krahmer wrote:
-> /usr/bin/bwrap may be installed mode 04755 or with cap_sys_admin and other
-> file caps. I dont know if there are any dists already shipping it that way,
-> but the Makefile and some RedHat spec files contain file caps for it.
+Link to RedHat announcement:
+https://access.redhat.com/security/vulnerabilities/drown
 
-It needs to be setuid root (or CAP_SYS_ADMIN, which might as well be setuid
-root) to be useful on any distribution whose kernel doesn't normally allow
-unprivileged users to open user-namespaces; in particular, Debian, RHEL,
-and backports to older/LTS Ubuntu (but not current Ubuntu).
+I am trying to follow the scope of this issue.  RedHat says "TLS servers
+which support SSLv2 are vulnerable".  Can't tell if this means that
+services with SSLv2 capabilities are vulnerable or only ones with it
+enabled.
 
-> For some reason it sets the PR_SET_DUMPABLE flag, as seen below. The comment about
-> it looks strange to me. If thats really true, suid programs shouldn't
-> be forced to play with the dumpable flag to achieve their goal.
+-Grant
 
-I assume the developers of Bubblewrap wouldn't have done this if the
-kernel (or at least *a* kernel they care about) didn't require it.
-But hopefully becoming dumpable can be restricted to smaller sections
-of the code.
+On Tue, Mar 1, 2016 at 9:39 AM, Loganaden Velvindron <loganaden@...il.com>
+wrote:
 
-If it's only for write_uid_gid_map(), then one way would be for that
-function to fork(), with the child making itself dumpable and writing
-the map files, and the parent just waiting for the child?
+> On Tue, Mar 1, 2016 at 5:33 PM, Kurt Seifried <kseifried@...hat.com>
+> wrote:
+>
+> > So there is this proposed RFC:
+> >
+> > https://tools.ietf.org/html/rfc6176
+> >
+> > TL;DR: SSLv2 needs to be shot.
+> >
+> > Now we have yet another significant SSLv2 problem, DROWN, bad enough in
+> > fact that Red Hat has now disabled SSLv2 in OpenSSL by default (already
+> > done in NSS/GnuTLS), so from my vendor perspective, we're treating SSLv2
+> > support as a security problem, the solution of which is to remove said
+> > support.
+> >
+> > But more generally, should we look at assigning CVE's for support of
+> SSLv2,
+> > much like we would for products supporting DES or other known insecure
+> > cryptographic algorithms, hashes, digests and protocols? My personal vote
+> > is for yes.
+> >
+> >
+> >
+> >
+> Btw, FreeBSD has done some work there:
+>
+> https://wiki.freebsd.org/LibreSSL/PatchingPorts#SSLv2.2FSSLv3_method_failures
+>
+> Linking with LibreSSL would help uncover those cases, and assign CVEs :)
+>
+>
+> >
+> >
+> > --
+> > Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> > PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> > Red Hat Product Security contact: secalert@...hat.com
+> >
+>
 
-> Once the dumpable flag is set, there is a chance we could attach to the process,
-> once the remaining caps are dropped and the whole process runs as user.
-
-I have reported this to
-<https://github.com/projectatomic/bubblewrap/issues/107>.
-
-I believe the intention is that none of the operations that can pass over
-the privilege separation socket are problematic, because they only affect
-the sandboxed processes, and if you can ptrace bwrap then you can certainly
-ptrace and subvert the sandboxed processes too. SETUP_SET_HOSTNAME clearly
-doesn't match that intention, *if* Bubblewrap didn't unshare the UTS namespace
-beforehand; Bubblewrap does insist that --hostname can't be used without
---unshare-uts, but you're right that a user outside the sandbox can ptrace
-it and bypass that check by making it behave as though --hostname had been
-used.
-
-As a quick temporary fix for Debian, I'm reverting the addition of
-SETUP_SET_HOSTNAME.
-
-Am I right in thinking that this pseudocode would fix it while reinstating
-the feature?
-
-    case PRIV_SEP_OP_SET_HOSTNAME:
-      if (!opt_unshare_uts)
-        die_with_error ("Refusing to set hostname in original namespace");
-      else if (!sethostname (... as before))
-        die_with_error (... as before);
-
-Thanks,
-    S
