@@ -1,39 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/1
-Message-ID: <CAJ_zFkKcsBVfV8AT3yUhAcMUSE-A89saZdfGMM822q43MsVLWw@mail.gmail.com>
-Date: Wed, 28 Sep 2016 16:03:08 -0700
-From: Tavis Ormandy <taviso@...gle.com>
-To: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: ImageMagick identify "d:" hangs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/3
+Message-ID: <416950326.31158071.1456852194971.JavaMail.zimbra@redhat.com>
+Date: Tue, 1 Mar 2016 12:09:54 -0500 (EST)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request -- linux kernel: pipe: limit the per-user amount of pages allocated in pipes
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 28, 2016 at 3:15 PM, Bob Friesenhahn
-<bfriesen@...ple.dallas.tx.us> wrote:
-> On Wed, 28 Sep 2016, Tavis Ormandy wrote:
->>
->>
->> (/etc/passwd) /dumpname load 256 string filenameforall
->> $ convert test.gif png:test.png
->> <creates a file called test.png containing first line of /etc/passwd>
->>
->> Also seems to work with gm convert.
->
->
-> It is good that you did not single out just one using program.
->
-> This issue seems to afflict any program which invokes Ghostscript in general
-> and not just *Magick.  However, 'convert' does offer to write a rendered
-> result to an output file.
->
+Hello,
 
-I think I see the problem, ghostscript broke -dSAFER then they fixed
-it later but didn't allocate a CVE, so the distros never updated.
+If possible, we would like to obtain a CVE-ID for the flaw currently
+handled in the upstream commit:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=759c01142a5d0f364a462346168a56de28a80f52
 
-http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ae930279498a5961fcf5d70ffe86864883609cbc
+The commit says: "Mitigates: CVE-2013-4312 (Linux 2.0+)", but it looks
+like CVE-2013-4312 is for the different, though similar flaw which was
+addressed recently:
 
-I think it should be fixed in gs 9.10 or later (Debian appears to be
-on 9.06), but you can still enumerate filenames (just not the
-content).
+"The Linux kernel before 4.4.1 allows local users to bypass file-
+descriptor limits and cause a denial of service (memory consumption)
+by sending each descriptor over a UNIX socket before closing it,
+related to net/unix/af_unix.c and net/unix/garbage.c."
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4312
 
-Tavis
+As the root cause of this flaw is different (unrestricted kernel memory
+allocation for pipes) I believe another CVE id is needed.
+
+Description:
+
+On no-so-small systems, it is possible for a single process to cause an OOM condition
+by filling large pipes with data that are never read. A typical process filling 4096
+pipes with 1 MB of data will use 4 GB of memory. On small systems it may be tricky to
+set the pipe max size to prevent this from happening. The result is an OOM condition
+and oom-killer is not able to help much, as the memory for the pipe data is a kernel
+memory and a memory footprint of offensive processes is small. 
+
+Upstream patch:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=759c01142a5d0f364a462346168a56de28a80f52
+
+Red Hat Bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=1313428
+
+Discussion threads:
+https://www.spinics.net/lists/linux-fsdevel/msg92912.html | https://lkml.org/lkml/2015/12/28/150
+https://www.spinics.net/lists/linux-fsdevel/msg93317.html | https://lkml.org/lkml/2016/1/11/310
+https://www.spinics.net/lists/linux-fsdevel/msg93601.html | https://lkml.org/lkml/2016/1/18/171
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
