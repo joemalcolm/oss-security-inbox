@@ -1,38 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/02/8
-Message-ID: <20160202202746.GA27418@hunt>
-Date: Tue, 2 Feb 2016 12:27:46 -0800
-From: Seth Arnold <seth.arnold@...onical.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: Socat security advisory 7 - Created new 2048bit DH modulus
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/9
+Message-ID: <20160301181812.GY13281@symphytum.spacehopper.org>
+Date: Tue, 1 Mar 2016 18:18:12 +0000
+From: Stuart Henderson <stu@...cehopper.org>
+To: oss-security@...ts.openwall.com
+Cc: CVE ID Requests <cve-assign@...re.org>
+Subject: Re: CVE's for SSLv2 support
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 02, 2016 at 02:36:06PM -0500, cve-assign@...re.org wrote:
-> useful. Our question is about whether anyone needs two CVE IDs.
-> 
-> A CVE ID must be for a specific vulnerability (although we realize
-> that the CVE ID may often be used to track the update). Here, there
-> can be a CVE ID for the "was not prime" finding in the sense that p is
-> supposed to be prime, and a non-prime value is an implementation error
-> regardless of any other details of the situation. With the currently
-> published information, we do not see a way to generate a second CVE ID
-> for something related to "no indication of how these parameters were
-> chosen" or "cannot be ruled out."
+On 2016/03/01 17:39, Loganaden Velvindron wrote:
+> Btw, FreeBSD has done some work there:
+> https://wiki.freebsd.org/LibreSSL/PatchingPorts#SSLv2.2FSSLv3_method_failures
 
-Ubuntu won't issue an Ubuntu Security Notice for the socat issue (because
-socat is in our "universe" archive); however, we wouldn't find it useful
-to have a second CVE assigned for "no indication of how these parameters
-were chosen" or "cannot be ruled out".
+Debian did most of that work for SSLv2 years ago. Quite a lot was
+upstreamed and a bunch more in patches, this really made it easier
+to disable SSLv2 support in OpenSSL when we did it in OpenBSD.
 
-This is one area where distro needs don't 100% align with MITRE's: one CVE
-per line of code is sufficient for us but not for MITRE. When in doubt I'd
-suggest to limit the number of CVEs issued just on the principle of less
-work for everyone. When it's clear, of course, do what you must; we're
-lucky we get to use CVEs to identify issues, and some slight duplication
-(from our perspective) is a price well worth paying to use CVE's many
-positive benefits.
+> Linking with LibreSSL would help uncover those cases, and assign CVEs :)
 
-Thanks
+There shouldn't be all that many left for SSLv2. There are a number
+of patches in OpenBSD ports for SSLv*3* removal, some upstreamed -
+if OS/distros are already going through ABI change pain at this
+point to drop SSLv2, why not go the whole hog and drop v3 as well
+while you're at it?
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
