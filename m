@@ -1,31 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/03/2
-Message-ID: <1456968329.26654.16.camel@bonedaddy.net>
-Date: Thu, 03 Mar 2016 09:25:30 +0800
-From: Paul Wise <pabs3@...edaddy.net>
-To: cve@...re.org, oss-security@...ts.openwall.com
-Subject: Mitre, reserved CVEs and oss-security?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/8
+Message-ID: <20160301175939.GA8873@gremlin.ru>
+Date: Tue, 1 Mar 2016 20:59:39 +0300
+From: gremlin@...mlin.ru
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE's for SSLv2 support
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On 2016-03-01 10:33:17 -0700, Kurt Seifried wrote:
 
-I think it would be a good idea for Mitre to remove the RESERVED mark
-from CVEs that have been released for use by people mailing issues to
-the oss-security to get CVE numbers. The CVE database could then point
-at the oss-security mailing list archives as a reference for the issue.
+ > https://tools.ietf.org/html/rfc6176
+ > TL;DR: SSLv2 needs to be shot.
 
-Any thoughts?
+Yes, with SSLv3 and TLS 1.0 being the next.
 
-For example CVE-2016-2515 could refer to one of these posts:
+ > Now we have yet another significant SSLv2 problem, DROWN, bad
+ > enough in fact that Red Hat has now disabled SSLv2 in OpenSSL
+ > by default (already done in NSS/GnuTLS), so from my vendor
+ > perspective, we're treating SSLv2 support as a security problem,
+ > the solution of which is to remove said support.
 
-http://www.openwall.com/lists/oss-security/2016/02/20/1
-http://www.openwall.com/lists/oss-security/2016/02/20/2
+The problem is more wide, as it's in the use of insecure algorithms.
+
+ > But more generally, should we look at assigning CVE's for
+ > support of SSLv2, much like we would for products supporting
+ > DES or other known insecure cryptographic algorithms, hashes,
+ > digests and protocols? My personal vote is for yes.
+
+Yes. Including, but not limited to:
+1. RSA keys of less than 4096 bits (a minimum of 8192 should be
+recommended).
+2. Non-EC discrete logarithm based algos (DSA, old GOST 34.10-94).
+2. EC-based algos with keys of less than 256 bits (as for me, I'd
+consider 1024 bits to be an absolute minimum: chips are cheap, but
+the energy is still expensive).
+3. Symmetric ciphers in any mode other than CFB or counter-based.
+4. Symmetric ciphers with key size of less than 256 bits.
+5. Hash functions of less than 256 bits.
+
 
 -- 
-bye,
-pabs
+Alexey V. Vissarionov aka Gremlin from Kremlin
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8
 
-http://bonedaddy.net/pabs3/
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Content of type "application/pgp-signature" skipped
