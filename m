@@ -1,52 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/13/1
-Message-ID: <CAAYo3BupQw4M1Ct5nO4UVC87TmQatCdcxbmZpaiyckMb8ws4sQ@mail.gmail.com>
-Date: Wed, 13 Jul 2016 11:25:58 +1000
-From: David Black <dblack@...assian.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/17
+Message-ID: <20160301203138.GA13572@hunt>
+Date: Tue, 1 Mar 2016 12:31:38 -0800
+From: Seth Arnold <seth.arnold@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for the Play Framework
+Subject: Re: Re: CVE's for SSLv2 support
 Content-Type: text/plain; charset=utf-8
 
-In version 2.5.0 of the Play Framework a CSRF bypass that depends upon
-an implementation bug in chrome's beacon api[0][1] was fixed.
+On Tue, Mar 01, 2016 at 01:43:39PM -0500, cve-assign@...re.org wrote:
+> MITRE does not assign CVE IDs to track whether the universe of
+> products has similar or dissimilar time scales in adapting to
+> technology changes.
 
-The issue was that the Play Framework's CSRF implementation could be
-bypassed in chrome in certain situations using Beacon requests because
-the framework assumed that it is only possible to send what is
-considered a simple request cross-domain. In other words the framework
-assumed that POST requests with a content-type of
-application/x-www-form-urlencoded or text/plain or multipart/form-data
-need to have CSRF checks applied and requests with any other
-content-type need not be checked.
+While I can appreciate that MITRE would be in an untenable position to
+arbitrate trends on six-month timescales, SSLv2's replacement was released
+nearly twenty years ago.
 
-The Beacon (sendBeacon) https://w3c.github.io/beacon/ implementation
-in chrome[0][1] currently allows requests to be sent cross-domain with
-non-simple content-types. That is, it is possible to send a post
-request with a content-type of "application/json" (or any arbitrary
-content type of an attacker's choice) from an attacker's site (e.g.
-https://attacker.com) to https://example.com in chrome through
-executing the following javascript:
+Please reconsider this position.
 
-var payload = '{"key": "value"}';
-navigator.sendBeacon('https://example.com', new Blob([payload], {type:
-'application/json'}));
+Thanks
 
-
-The fix can be found at
-https://github.com/playframework/playframework/pull/5608 in commit
-7e52bd5f37a4b7b8fd154551d31940a125d81054
-(https://github.com/playframework/playframework/pull/5608/commits/7e52bd5f37a4b7b8fd154551d31940a125d81054).
-
-
-
-Can a CVE be assigned for this issue?
-
-
-[0] - https://bugs.chromium.org/p/chromium/issues/detail?id=490015#c8
-[1] https://github.com/w3c/beacon/pull/23/ clarified when
-implementations of the Beacon API need to first make a CORS preflight
-request (when non-simple content-types are sent cross-domain using the
-beacon api then a CORS preflight request needs to be sent first).
-
--- 
-David Black / Security Engineer.
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
