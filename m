@@ -1,35 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/20/6
-Message-ID: <CABQu4+4X=WBhODKjSM1-Pgm-Ujnc2Lxw5rXAUOojbCaDjphbhg@mail.gmail.com>
-Date: Tue, 20 Dec 2016 22:00:12 +0100
-From: Sylvain SARMEJEANNE <sylvain.sarmejeanne.ml@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Smack: TLS SecurityMode.required not always enforced, leading to striptls attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/12
+Message-ID: <CANO=Ty0ZOjCGL-iXCZ46FbSQ3i+fpGHBB6X1x2Agy9jftQ3ozA@mail.gmail.com>
+Date: Tue, 1 Mar 2016 11:53:37 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: CVE ID Requests <cve-assign@...re.org>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE's for SSLv2 support
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Ok let me simplify:
 
-I reported a vulnerability in the Smack XMPP library where the security of
-the TLS connection is not always enforced. By stripping the "starttls"
-feature from the server response with a man-in-the-middle tool, an attacker
-can force the client to authenticate in clear text even if the
-"SecurityMode.required" TLS setting has been set. This is a race condition
-issue so the attack will work after a few tries.
+If a crypto library (e.g. OpenSSL, NSS) supports AND enables SSLv2 by
+default should it receive a CVE? Essentially we'd be saying "SSLv2 is so
+bad, that supporting/enabling it by default in a crypto library is CVE
+worthy" (essentially under the CVE assignment for "product makes a security
+claim that it fails to do properly").
 
-The vulnerability affects at least all 4.1.x versions and is fixed in Smack
-4.1.9.
-
-References:
-https://community.igniterealtime.org/blogs/ignite/2016/11/22/smack-
-security-advisory-2016-11-22
-https://issues.igniterealtime.org/browse/SMACK-739
-https://github.com/igniterealtime/Smack/commit/
-a9d5cd4a611f47123f9561bc5a81a4555fe7cb04
-https://github.com/igniterealtime/Smack/commit/
-059ee99ba0d5ff7758829acf5a9aeede09ec820b
-
-Could you assign a CVE for this?
-Thanks!
-
-Sylvain
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
