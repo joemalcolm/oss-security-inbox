@@ -1,40 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/3
-Message-Id: <20160314042126.947CE6C0064@smtpvmsrv1.mitre.org>
-Date: Mon, 14 Mar 2016 00:21:26 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/11
+Message-Id: <20160301184339.B62C3ABC04A@smtpvmsrv1.mitre.org>
+Date: Tue,  1 Mar 2016 13:43:39 -0500 (EST)
 From: cve-assign@...re.org
-To: vdronov@...hat.com
+To: kseifried@...hat.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request -- linux kernel: crash on invalid USB device descriptors (cypress_m8 driver)
+Subject: Re: CVE's for SSLv2 support
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> http://seclists.org/bugtraq/2016/Mar/55
-> https://bugzilla.redhat.com/show_bug.cgi?id=1283368
+> much like we would for products supporting DES or other known insecure
+> cryptographic algorithms, hashes, digests and protocols?
 
-Use CVE-2016-3137.
+It's unclear what the word "we" means here. If Red Hat at some point
+wrote code that ships in a Red Hat product and, upon internal review,
+Red Hat discovers that it supports (for example) DES, then Red Hat can
+choose to assign a CVE ID if Red Hat is announcing a required security
+update to remove DES for reasons of Red Hat policy or perceived
+expectations of Red Hat customers.
+
+MITRE does not assign CVE IDs to track whether the universe of
+products has similar or dissimilar time scales in adapting to
+technology changes.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW5jwFAAoJEL54rhJi8gl5t8sQAI7rxYTDvSrr2jTTFWfq5Qow
-NoykGdUmQuh6BUliglY1vofsL/zaqDFM5q5tfW85Kn057oLa5MbQr9VRLoJ3ORbP
-6onk5S6juiAswUMN6PI/rIQ/eGZGMvSk389UoEDypFgXNtya7HIHLzj/W9ytjtVa
-3Ob+3MxqUMNYe1dNMLiqsUKz/4PWOuxpTezxtp3R+gdgKdMJo5XMzgt7YMGPgkt9
-L8ZxSNwwsK5jrG/67EU/rsjcCQZoXSY2A+v1TIEmOyPbIeaII3Kolw+6GnKrW7eF
-EWkqZZzmH3lVuM1Lq8QB32NIYMtO2pN+Dqr0BkP7VxIAaoy0t+UVuEEkeD37zD6p
-Ea0dxIlDZn2Ph50ggCDN+H1E2GjZVWntFoU2qyflruy1gDqDF/OOj4izF7Wyn7qH
-E3GuXkTOU3v0ztiFZURUBH/WCWQnyR2EgVhFPChJ1skABennflbkMcA3rF6Oks8p
-3lejOFoFq+mHsPY2U7OMy0xrWcpjHXxhwGJ3W8+pvp953BsQ4JmWJ+0d0VxYwRmt
-gPQ3RzxZHbAaX7IPthLmzyNOKzg5D3+V+ncdI9UI3v+2mm7Pf7yMWPcseQcONgVO
-WtOPQ7tiAwJYS7GQ9zXEPN8eaWbiRq/jdQxaKO32MnjGgFZhtFUi1qwHcemE0VGf
-fYMqN7qxKMzGNs1Smr+e
-=vhrS
+iQIcBAEBCAAGBQJW1eJFAAoJEL54rhJi8gl5XpEP/2WyAGm+dz+xLncacnp1fnOr
+iBa0db4eAkxG52l4kUO0Z01/xJD95LvdGiBTOBlfFJ9BUubVIoNvKRq3FrDzB2+s
+VxuJSEpgD++Y5SW9TmpUs/BinM/SgUZdj03z2d74V15IB60s+p4WdszG+zrKt0Pq
+YmPIouVAq3Fzb+ovCvGs0kjNuLmMWI3OntH6xWM+OHdNLbwzhSihbIP4BzolBnm5
+dLnLmQdrElD8nXrVWqfHIPOBvaiz297jYBEFT6dztbfdTR5GreS/GqgAS4qiBwl+
+ZTnqVdVBNx7pbEzkMJcFZznm7HKS7lTegiRq32BC5sLXbppDEUy0eNZIArkpeVCr
+Pb2QNGrt6xF0ueRmyO/FyestW1dV3a77ry8xjY9trozB6yvOf+WR7t40x/Ovt13U
+oEARKy7m3P/f2nV6gnfvtBhrEq8fm0VCVQiEZaXk6fs5NUHCC72ex0ewq3qBAc4o
+lvP4O1fqLQYf4gtSZz46raR0Tear6m3kn3rJEEznNwP562v4cL1vrxnX2bn5z9Ad
+t81pUaILikYB7Ft5+/+pdE/kcVR7m4B6NPq6JojXU7ECZjydgpZcGk16ILVlNTar
+UNY1Okh+QOg5Y5weCeMzpTQD4CsXUyLJuDu2tmaLvPKBu8x+dnsBoVt9Lbstefbr
+qRfdvYK+lXat94W+DxPh
+=QGDB
 -----END PGP SIGNATURE-----
