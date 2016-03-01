@@ -1,52 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/20/1
-Message-ID: <573E2514.7080509@electronsweatshop.com>
-Date: Thu, 19 May 2016 16:41:56 -0400
-From: Randy Barlow <randy@...ctronsweatshop.com>
-To: oss-security@...ts.openwall.com
-Subject: Pulp 2.8.3 Released to address multiple CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/13
+Message-Id: <20160301191235.EDA1852E01C@smtpvbsrv1.mitre.org>
+Date: Tue,  1 Mar 2016 14:12:35 -0500 (EST)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE's for SSLv2 support
 Content-Type: text/plain; charset=utf-8
 
-Pulp 2.8.3 has been released to address multiple CVEs:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-CVE-2016-3111 (Low Impact):
-pulp.spec generates its RSA keys for message signing insecurely
-https://pulp.plan.io/issues/1837
+> If a crypto library (e.g. OpenSSL, NSS) supports AND enables SSLv2 by
+> default should it receive a CVE?
 
-CVE-2016-3112 (Moderate Impact):
-Pulp consumer private keys are world-readable
-https://pulp.plan.io/issues/1834
+There's no general answer to that question. CVE ID assignments are not
+based on outsiders making guesses about the expectations of a product's
+customers. For example, there might be a crypto library intended for
+communication on isolated networks to high-value embedded devices that
+support only SSLv2, and cannot and will not ever be updated.
 
-CVE-2016-3107 (Moderate Impact):
-Node certificate containing private key stored in world-readable file
-https://pulp.plan.io/issues/1833
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-CVE-2016-3108 (Moderate Impact):
-Insecure temporary file used when generating certificate for Pulp Nodes
-https://pulp.plan.io/issues/1830
-
-CVE-2016-3106 (Low Impact):
-Insecure creation of temporary directory when generating new CA key
-https://pulp.plan.io/issues/1827
-
-Additionally, CVE-2013-7450[0] was announced during this release cycle
-even though it was fixed in Pulp 2.3.0. Users who have upgraded from
-Pulp < 2.3.0 may still be vulnerable, action may be required.
-
-Users should read the release notes[1] and the mailing list
-announcement[2] to learn more.
-
-Thanks to Florian Weimer, Sander Bos, and Jeremy Cline for reporting
-these issues and submitting patches.
-
-
-[0] https://bugzilla.redhat.com/show_bug.cgi?id=1003326
-[1]
-http://pulp.readthedocs.io/en/latest/user-guide/release-notes/2.8.x.html#pulp-2-8-3
-[2] https://www.redhat.com/archives/pulp-list/2016-May/msg00054.html
-
--- 
-Randy Barlow
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQIcBAEBCAAGBQJW1ekCAAoJEL54rhJi8gl5dQEQAK5x43W8Q157sNT4gUg8rQtS
+U0UlnjmsT1S40FlNiwZpK5IPkE7hdeTeiWUoFMsvc13vtlfpwfHCBfb05B5fcQBP
+2b3ssj49aH5yXVxnGE2ab6W5c63wN2jkbBBihVBXZ8SB9h4tNNSey+7dJrLyMqi0
+Um76Tv5htBbpm+6UtlgN7zV3tT9MIe6bZI/b7xxuf23nM8/mBvc1nX8dpCFF16og
+ks9d9A1Rnn79xCvWZ++jR8PRlmFwmLym/PEQulJ6k4WQdOECH78ytYWg9MG7EuIg
+6PbKloy7u36+ZgrUXxYnydoH834H6yOQIPro7hARFA0fpkbmydBJKnP4letuVS5w
+S89g15c2ymxIyKaKy+qT31LEKBGf+N6vPoPNL/IWeRh+8GmSyWkWF7Rx0CboFCTs
+7+Ft9T+0Lfi6bYkYqAFUVe8gBkM84tLR+4HXgkANLAfhLEsKaCYqAkNYlbDvCXtB
+RyFZHcVhp8XYWx7b5YN3BBB5VWK/fS8y8ilHaf143Bkbn+Yu6yrFb+DIAYhKPPAI
+1CURZksBwzSSjiprsExD4dODDJGzl/0khHdkDkdZp7o9drt3D4VkKGgkBPoG5NFk
+cX1XQc6o3Hv72oYFLyatCA5H8k9HZLEUjl8cYuf/QIvfwJwjlLqZ+HrPWvs2SY5C
+K4C7mIXfd9Iem6DqXfNK
+=ylcp
+-----END PGP SIGNATURE-----
