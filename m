@@ -1,64 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/20/3
-Message-ID: <14ffaef2-f635-7267-9976-7a9329468099@lightbend.com>
-Date: Wed, 20 Jul 2016 09:15:26 -0700
-From: Will Sargent <will.sargent@...htbend.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for the Play Framework
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/14
+Message-ID: <CANO=Ty0RLssvD7QB__g0Cm=cpXb3dOWhZK=anOqdMuVOEtSb=g@mail.gmail.com>
+Date: Tue, 1 Mar 2016 12:25:24 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: CVE ID Requests <cve-assign@...re.org>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE's for SSLv2 support
 Content-Type: text/plain; charset=utf-8
 
-> > In version 2.5.0 of the Play Framework a CSRF bypass that depends upon
-> > an implementation bug in chrome's beacon api was fixed.
+On Tue, Mar 1, 2016 at 12:12 PM, <cve-assign@...re.org> wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
 >
-> We think additional information would help in deciding whether this is
-> commonly recognized as a Play Framework vulnerability (which would
-> have a CVE ID) or Play Framework security hardening (which would not
-> have a CVE ID). Our understanding thus far is:
+> > If a crypto library (e.g. OpenSSL, NSS) supports AND enables SSLv2 by
+> > default should it receive a CVE?
 >
->   - Play Framework is not an Atlassian product
+> There's no general answer to that question. CVE ID assignments are not
+> based on outsiders making guesses about the expectations of a product's
+> customers. For example, there might be a crypto library intended for
+> communication on isolated networks to high-value embedded devices that
+> support only SSLv2, and cannot and will not ever be updated.
 >
->   - https://github.com/playframework/playframework/pull/5527#discussion-diff-51786858
->     says "In order to make Play's CSRF filter more resilient to
->     browser plugin vulnerabilities and new extensions, the default
->     configuration for the CSRF filter has been made far more
->     conservative."
 >
->   - Chromium issue 490015 has some debate about whether it is a
->     Chrome/Chromium vulnerability, e.g., "The issue is whether it's
->     the browser responsibility to act as a nanny to weak websites, or
->     we should leave weak websites as sacrifice for great justice."
->     versus "To be clear, this is a security bug ... There is a
->     security bug in Chrome, but no action is being done."
->
-> Typically, it would be best not to have a CVE for Play Framework if
-> the essence of the Play Framework problem is "the product did not
-> proactively add workarounds for all browser-level vulnerabilities that
-> might be discovered later."
+I guess my confusion is: what would be the downside to assigning a CVE in
+such a case, such a "false positive" would be easily explained ("yes we
+support SSLv2, but only for use on closed network"[1]) but more to the
+point by drawing a line in the sand of "SSLv2 is worth a CVE" we'd be much
+more easily able to track which products are using SSLv2 by default (and
+thus putting us at risk). From your web page "CVE is a dictionary of
+publicly known information security vulnerabilities and exposures."
 
-Thanks for your review -- Play is proactive about security, but does
-rely on the integrity of the browser to implement key security features
-(CORS, Same Origin Policy, security headers, etc) for that functionality.
+Does SSLv2 not pretty much exactly fit this definition now?
 
-Regarding your other questions, Play Framework ("Play" for short) is an
-open source project -- the source code is owned and licensed by
-Lightbend.  You can read more about it here:
-
-https://www.playframework.com/community-process#Implementation-decisions
-
-For reference, there is a mailing list for reporting vulnerabilities at
-security@...yframework.org.
-
-The mailing list for receiving Play Framework security announcements is
-at https://groups.google.com/forum/#!forum/play-framework-security
-
-And the HTML page for viewing Play security advisories reports is at
-https://www.playframework.com/security/vulnerability
-
-Thanks,
-Will Sargent
-Lightbend, Play Team
+[1] which begs the question why they're even using SSLv2 but I digress =)
 
 
+-- 
 
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
