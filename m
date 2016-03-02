@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1057" "Monday" "22" "October" "2018" "23:16:00" "+0200" "Florian Weimer" "fweimer@redhat.com" "<87zhv5znqn.fsf@oldenburg.str.redhat.com>" "23" "Re: [oss-security] GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions" "^Cc:" nil nil "10" "2018102221:16:00" "[oss-security] GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions" (number mark "        fweimer@redh Oct 22   23/1057  " thread-indent "\"Re: [oss-security] GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions\"\n") "<DM5PR13MB14208A0909CAD197E6D1BADEAEF40@DM5PR13MB1420.namprd13.prod.outlook.com>" ("<DM5PR13MB14208A0909CAD197E6D1BADEAEF40@DM5PR13MB1420.namprd13.prod.outlook.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["737" "Wednesday" "2" "March" "2016" "16:03:54" "+0100" "Martin Grigorov" "mgrigorov@apache.org" "<CAMomwMoURA8sQJajmjdAA21BWY1mQguJb_mmqWprRK77-0huxg@mail.gmail.com>" "31" "[oss-security] [CVE-2015-7520] Apache Wicket XSS vulnerability" "^Date:" nil nil "3" "2016030215:03:54" "[oss-security] [CVE-2015-7520] Apache Wicket XSS vulnerability" (number mark "        mgrigorov@ap Mar  2   31/737   " thread-indent "\"[oss-security] [CVE-2015-7520] Apache Wicket XSS vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26098 invoked by uid 550); 22 Oct 2018 21:16:16 -0000
+Received: (qmail 21730 invoked by uid 550); 2 Mar 2016 15:06:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26076 invoked from network); 22 Oct 2018 21:16:15 -0000
-References: <DM5PR13MB14208A0909CAD197E6D1BADEAEF40@DM5PR13MB1420.namprd13.prod.outlook.com>
-In-Reply-To: <DM5PR13MB14208A0909CAD197E6D1BADEAEF40@DM5PR13MB1420.namprd13.prod.outlook.com>
-	(Andrew Sandoval's message of "Mon, 22 Oct 2018 15:07:55 +0000")
-Message-ID: <87zhv5znqn.fsf@oldenburg.str.redhat.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.3 (gnu/linux)
+Received: (qmail 20118 invoked from network); 2 Mar 2016 15:04:49 -0000
+X-Gm-Message-State: AD7BkJJ0h3/1mwrEupONTuoVOLnSo81FZhY8TTCXM/vfEuI16og8W5Zjqh45ZB+0pA409rTFBzauuQNg/zBCkg==
+X-Received: by 10.28.184.78 with SMTP id i75mr429966wmf.22.1456931074327; Wed,
+ 02 Mar 2016 07:04:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.42]); Mon, 22 Oct 2018 21:16:03 +0000 (UTC)
-Cc: "oss-security\@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 22 Oct 2018 23:16:00 +0200
-From: Florian Weimer <fweimer@redhat.com>
+X-Gmail-Original-Message-ID: <CAMomwMoURA8sQJajmjdAA21BWY1mQguJb_mmqWprRK77-0huxg@mail.gmail.com>
+Message-ID: <CAMomwMoURA8sQJajmjdAA21BWY1mQguJb_mmqWprRK77-0huxg@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a114b243c25cd84052d12332d
+Date: Wed, 2 Mar 2016 16:03:54 +0100
+From: Martin Grigorov <mgrigorov@apache.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] GCC Compiler Induced Vulnerability - affects programs compiled with GCC 7 and 8 containing nested functions
-To: Andrew Sandoval <ASandoval@webroot.com>
+Subject: [oss-security] [CVE-2015-7520] Apache Wicket XSS vulnerability
+To: announce@wicket.apache.org, 
+	"users@wicket.apache.org" <users@wicket.apache.org>, "dev@wicket.apache.org" <dev@wicket.apache.org>, 
+	"security@apache.org" <security@apache.org>, oss-security@lists.openwall.com, 
+	bugtraq@securityfocus.com
 
-* Andrew Sandoval:
+--001a114b243c25cd84052d12332d
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> Will Webroot communicate this to the public?
-> Webroot believes in responsible disclosure and will work with third parties to
-> ensure that the vulnerability is addressed before a public announcement. We
-> are happy to work with your communications team on announcement timing.
+Severity: Important
 
-This is already public because oss-security is a public mailing list.
+Vendor: The Apache Software Foundation
 
-Most GNU/Linux distributions ensure that only very special binaries
-(such as some versions of the Ada compiler) enable executable stacks.
-In our experience, if the toolchain produces a binary that requests an
-executable stack, it is more likely due to manually written assembler
-files without the required stack executability markup section, and not
-due to nested C functions whose address escapes.  Without scanning built
-binaries for these discrepancies, such cases could easily be missed.
+Versions Affected: Apache Wicket 1.5.x, 6.x and 7.x
 
-Please also note that an executable stack is not a vulnerability itself,
-and it is not directly exploitable.  (The same applies to the lack of
-Intel CET support in binaries.)
+Description:
 
-Thanks,
-Florian
+It is possible for JavaScript statements to break out of a RadioGroup=E2=80=
+=99s and
+CheckBoxMultipleChoice=E2=80=99s =E2=80=9Cvalue=E2=80=9D attribute of <inpu=
+t> elements
+
+This might pose a security threat if the written JavaScript contains user
+provided data.
+
+The application developers are recommended to upgrade to:
+
+- Apache Wicket 1.5.15
+- Apache Wicket 6.22.0
+- Apache Wicket 7.2.0
+
+Credit: This issue was reported by Canh Ngo!
+
+Apache Wicket Team
+
+--001a114b243c25cd84052d12332d--
