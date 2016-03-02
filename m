@@ -1,47 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/13
-Message-ID: <CAGDGa53U+Nq3nZv-u7azf--UuHdex0PmXB6tmaRct81scV5y7Q@mail.gmail.com>
-Date: Wed, 11 May 2016 16:28:57 -0300
-From: Oliveira Lima <oliveiralimajr@...il.com>
-To: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Request CVE ID for Simple Photo Gallery 1.8.0 - Stored XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/02/9
+Message-Id: <20160302165826.F2E3034E00C@smtpvbsrv1.mitre.org>
+Date: Wed,  2 Mar 2016 11:58:26 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, benh@...ian.org
+Subject: Re: CVE Request: Linux: aio write triggers integer overflow in some network protocols
 Content-Type: text/plain; charset=utf-8
 
-request CVE ID for Simple Photo Gallery <= 1.8.0 - Stored Cross-Site
-Scripting (XSS)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Description
-***********************
+> https://git.kernel.org/linus/4c185ce06dca14f5cea192f5a2c981ef50663f2b
+> https://git.kernel.org/cgit/linux/kernel/git/stable/linux-stable.git/commit?id=c4f4b82694fe48b02f7a881a1797131a6dad1364
 
-The plugin allows the execution of malicious codes on name input of the
-gallery and album.
+> For an upcoming Linux DSA in Debian we would use something like:
 
-Proof of Concept URL
-***************************
+>> Ben Hawkes of Google Project Zero reported that the AIO interface
+>> permitted reading or writing 2 GiB of data or more in a single
+>> chunk, which could lead to an integer overflow when applied to
+>> certain filesystems, socket or device types. The full security
+>> impact has not been evaluated.
 
-http://www.rootlabs.com.br/xss-simple-photo-gallery/
+Use CVE-2015-8830.
 
-Report Timeline
-************************
-26-April-2016- Reported
-27-April-2016- Vendor Response
-27 -April-2016- Vendor Fixed
-28-April-2016- Public disclosed
 
-Vendo Reference
-*****************
-https://br.wordpress.org/plugins/simple-photo-gallery/changelog/
+> The issue was initially already addressed via
+> 
+> https://git.kernel.org/linus/a70b52ec1aaeaf60f4739edb1b422827cb6f3893 (v3.5-rc1)
 
-References
-*****************
+>> vfs: make AIO use the proper rw_verify_area() area helpers
 
-<https://br.wordpress.org/plugins/simple-photo-gallery/changelog/>
-http://www.rootlabs.com.br/xss-simple-photo-gallery/
-https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
+>> We had for some reason overlooked the AIO interface, and it didn't use
+>> the proper rw_verify_area() helper function that checks (for example)
+>> mandatory locking on the file, and that the size of the access doesn't
+>> cause us to overflow the provided offset limits etc.
 
--- 
-Oliveira Lima Jr
-rootlabs.com.br
-Linkedin <http://br.linkedin.com/pub/oliveira-lima-junior/2b/48/285/>
-@oliveiralimajr <https://twitter.com/oliveiralimajr>
+Use CVE-2012-6701.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJW1xpIAAoJEL54rhJi8gl54+gP/3xs5oGqviUpGoHB48CvNPoS
+KGbJaCaOxh7eIaGE3m5igl3qV8oyCHjWdzz8QzC3nxDvzjafbDIOupIa+qo1tBUb
+iwdcLROQQSLH0D+8zq7Oe5R67DfrG324TFNyCk04qbf2wezcRn/LCibtr3U4KWTo
+8164s6WfTAToIRUauu4r+4DXvtgyEQnRHOaJ42eUP9CJKdyB9GO0hV6IxI1RKBqr
+GA8kgdJC2cEPQUrvNzmEdlLPsUmbd8BaQWzokG97B6bsPhIFBeNmblhF/LKbi2CH
++TMxgxROXUsiNfG8KC9QzB+7AjoAy6Krp6uUIeMRcoz4uIi9cUhukzz2qGDfboMf
+jXeS5qMq2bM+8VwXT+ywtqFBox/OKrE4C7raXFloRuwBaw7sxdAUJzVfDvH6BjIm
+BC/wobWPub6R9aUZuj2o7LExonJSRNJgQkeouzq3IPOwTUwDqI3/p+R3v7xkaeVE
+h4LbAWqrHXcRdEk+mevUJRSvlB0lECzV7AZ5kEkzI+nxfjdl9hYv+5pNjSUuX5dY
+VbZXrmpeyLpxWLi71JKxEpEru6ur2M0iL4RFt1jp6V3VX0L/zoxUkQBiOwsizklW
+vwgWPxbFdB6w5V4VJleOMwNBsknncGwgvVAW7Vlk5T0jKWQN5bpOrhmfViQba/59
+/cclvsCg9+nqVesGsKd8
+=0V4z
+-----END PGP SIGNATURE-----
