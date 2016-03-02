@@ -1,66 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/13/5
-Message-Id: <20160413150530.9016D3AE19B@smtpvbsrv1.mitre.org>
-Date: Wed, 13 Apr 2016 11:05:30 -0400 (EDT)
-From: cve-assign@...re.org
-To: wmealing@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux kernel: incorrect restoration of machine specific registers from signal handler.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/02/2
+Message-ID: <CAComcpPtkMh2t-19KoUFydMdJXHAgqiCB1m2HSNd3Rfe2WyXhQ@mail.gmail.com>
+Date: Tue, 1 Mar 2016 21:03:57 -0700
+From: Bob Beck <beck@...nbsd.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security <oss-security@...ts.openwall.com>, CVE ID Requests <cve-assign@...re.org>
+Subject: Re: Re: CVE's for SSLv2 support
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+> 1) the SSL/TLS protocols encrypt the and the data cannot be read by an
+> attacker
+> 2) the SSL/TLS protocols ensure the data is not altered in transit by an
+> attacker without detection
 
-> Upstream fixes:
+When used correctly..  SSLv2 is not.
 
-We feel that the two listed git.kernel.org commits should have
-separate CVE IDs.
+>
+> Additionally depending on how you configure the servers there are claims
+> that you are talking to the correct server/client (e.g. using certificates)
+> but that is not germane to this discussion.
+>
+> SSLv2 is obviously NOT capable of ensuring claim #1 (that data is encrypted
+> and cannot be read by an attacker), due to a wide variety of issues, and I
+> have no doubt more will be found if people keep looking. Hence my thinking
+> is that ANY and ALL use of SSLv2 is CVE worthy, especially when considering
+> that many devices/manufacturers are less than transparent about their
+> configurations/security issues.
 
-> QMEU guests can also modify the same machine specific register values
-> via set_one_reg and guests may invoke the same unknown state and
-> callpath. Since the fix is in the same location I would argue that
-> this is the same flaw.
-
-We do not feel that there's a need for any separate CVE IDs that are
-specific to this QEMU observation.
-
-
-> https://git.kernel.org/cgit/linux/kernel/git/powerpc/linux.git/commit/?h=fixes&id=d2b9d2a5ad5ef04ff978c9923d19730cb05efd55
-> 
-> Currently we allow both the MSR T and S bits to be set by userspace on
-> a signal return. Unfortunately this is a reserved configuration and
-> will cause a TM Bad Thing exception if attempted
-
-Use CVE-2015-8844.
-
-
-> https://git.kernel.org/cgit/linux/kernel/git/powerpc/linux.git/commit/?h=fixes&id=7f821fc9c77a9b01fe7b1d6e72717b33d8d64142
-> 
-> This tm_reclaim() now causes a TM Bad Thing exception as this state
-> has already been saved and the processor is no longer in TM suspend
-> mode.
-
-Use CVE-2015-8845.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXDl+gAAoJEL54rhJi8gl5T7wP/2/ntgW7kmLWhFqlfS0C8LXy
-YP6YBfdnxTQ65Cl8E5kJMZpRKmkqgQ7lXQ4Kb7yttyFSK5nQkN9AOyFXapOsKTlD
-7MTkmM4BIhPv0kKB+Sl1jhMvXw+ZJyue/NLhj2YwX5UKI2Ud/7n7tvdsCINXuH4o
-xgGgnGiLG4rCsyxmwoguglyvkEG0brURXgG+HVTSG5JHY+DjdD7ggWujrj+WwVZP
-fEBT4HaI59PzbgY1KsToj7nIMg3RGv1OHJ507x+t45wHUjVT7kAlgunLUdJ9Gkxt
-OJOctE1oBfgRH0cHUUdPFBVvP6S1HUXZ7HZTFpGS17+FjQ3z1J76OwZDu6CKzxKb
-M9bon4o3AHmduqOyH5vfu68pkwWHV5EAhihk8Az2jRwqVEgG57thhCk22NmXaiYT
-kdgJIrgiHognvjk6yckrjO7JbApHnTYGCXPPcTUtHsihb2eXMl7s5W0O6aOcWkDY
-HnbkamRgl1KHBJJTyG8st5jfa6jq/boo2JZUu2W1mEaH/dMTrGCuDtVupXtb38sO
-6E+3MtZj5a/KU+7d+eio355/oxDJ9Txnv2ykx8tzQftO9gYBCpA3xc/frU3AwQeA
-pBeVnmwxuybREBCeburjFvHyHOtW+hLSCP1zk7dNMI9z6Yj/CZcDmjFIbzRqAVOr
-34oxYUiS76IsBIuX/CCS
-=hKPj
------END PGP SIGNATURE-----
+While you certainly won't see me defending SSLv2 (I think we were the
+first to delete it outright)
+there are many other things that currently fall into that category..
+I'm agreeing with your sentiment
+but if you are to consider usage of SSLv2 as CVE worthy, then you will
+need to do the same for SSH version 1,
+among other things.   So while I certainly appreciate and even agree
+with your sentiment, it seems rather timed
+politically based on a decision made by one implementaiton of SSL/TLS
+that reflects a decision made by most other
+implementations long ago.   So far from me to say what CVE's should
+and shouldn't be used for and issued for, but
+if this is the road we're going down can I please have permission to
+use your above quoted paragraph
+with s/SSLv2/SSH V1/g to request a CVE for *usage or support* of SSH
+version 1? You said it perfectly.
