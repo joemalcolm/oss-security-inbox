@@ -1,53 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/30/6
-Message-ID: <57c860d2be484157a6976154f0dbb8a1@imshyb02.MITRE.ORG>
-Date: Sun, 30 Oct 2016 15:40:41 -0400
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
-Subject: Re: CVE request Qemu: 9pfs: memory leakage when creating extended attribute
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/02/3
+Message-ID: <CANO=Ty0okTGt0pWufnY4ncChi03Z-xM-MsDO9-=DmJ-dbeJJ0g@mail.gmail.com>
+Date: Tue, 1 Mar 2016 21:16:05 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Bob Beck <beck@...nbsd.org>
+Cc: oss-security <oss-security@...ts.openwall.com>, CVE ID Requests <cve-assign@...re.org>
+Subject: Re: Re: CVE's for SSLv2 support
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Mar 1, 2016 at 9:03 PM, Bob Beck <beck@...nbsd.org> wrote:
 
-> Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9
-> File System(9pfs) support, is vulnerable to memory leakage issue. It could
-> occur while creating extended attribute via 'Txattrcreate' message.
-> 
-> A privileged user inside guest could use this flaw to leak host memory, thus
-> affecting other services on the host and/or potentially crash the Qemu process
-> on the host.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg01861.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1389550
-> http://git.qemu.org/?p=qemu.git;a=commit;h=ff55e94d23ae94c8628b0115320157c763eb3e06
+> > 1) the SSL/TLS protocols encrypt the and the data cannot be read by an
+> > attacker
+> > 2) the SSL/TLS protocols ensure the data is not altered in transit by an
+> > attacker without detection
+>
+> When used correctly..  SSLv2 is not.
 
->> The 'fs.xattr.value' field in V9fsFidState object doesn't consider the
->> situation that this field has been allocated previously. Every time, it
->> will be allocated directly.
 
-Use CVE-2016-9102.
+> >
+> > Additionally depending on how you configure the servers there are claims
+> > that you are talking to the correct server/client (e.g. using
+> certificates)
+> > but that is not germane to this discussion.
+> >
+> > SSLv2 is obviously NOT capable of ensuring claim #1 (that data is
+> encrypted
+> > and cannot be read by an attacker), due to a wide variety of issues, and
+> I
+> > have no doubt more will be found if people keep looking. Hence my
+> thinking
+> > is that ANY and ALL use of SSLv2 is CVE worthy, especially when
+> considering
+> > that many devices/manufacturers are less than transparent about their
+> > configurations/security issues.
+>
+> While you certainly won't see me defending SSLv2 (I think we were the
+> first to delete it outright)
+> there are many other things that currently fall into that category..
+> I'm agreeing with your sentiment
+> but if you are to consider usage of SSLv2 as CVE worthy, then you will
+> need to do the same for SSH version 1,
+> among other things.   So while I certainly appreciate and even agree
+> with your sentiment, it seems rather timed
+> politically based on a decision made by one implementaiton of SSL/TLS
+> that reflects a decision made by most other
+> implementations long ago.   So far from me to say what CVE's should
+> and shouldn't be used for and issued for, but
+> if this is the road we're going down can I please have permission to
+> use your above quoted paragraph
+> with s/SSLv2/SSH V1/g to request a CVE for *usage or support* of SSH
+> version 1? You said it perfectly.
+>
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+I would be totally fine with that, SSH protocol v1 is long overdue for
+"needs to be taken out back and shot along with whoever enabled it by
+default". From OpenSSH's sshd_config:
 
-iQIcBAEBCAAGBQJYFkttAAoJEHb/MwWLVhi2xs4QAJlln60/IgqnAibO5sPIrDV8
-IpxLE3wpjyOipSnO9tAQNTy80dZFrKhNTh+MsZYI28ttFrJlL6Upx2Vfx6YknnN/
-v7B+Obih4Z+V9O1q4j9mldmEIjIJ4pBylRjnB/jn4Kq+Mios5lPZjs9OJqry55KQ
-1BOqC+WaZSs+FuyMU9fRp3/VTZIEKIXp4BHZ/qBx7pGwcUtGllqmuUmQAluiQDEA
-8WAX1nuMld09naulyEjR4cdYhDb8nTLMYq2ZOc/epOomcVbChXGByrkMGK1K7RZO
-JfSLV9ptmR1w3g2PRSIOUQrMEnvkQrHbHgyy95cfnUBRG/gVbihIb5DW7dF6VEZ6
-bzylN3jSBKoOd8mb6oIG1qlhGnQ01Rok8wIcE4RGIz55BcPK8K62tSdirasfQ0dG
-ZWG37889erHjd7SUJs4H6fxz+JfUXeZXZ5YeJCY1eKaTly4IvZy2P2k4LmE5NmvT
-fYcp+8QNV/ukSZ2Ws0496mmqe50/CGfX3he4QmdCAkTv6TikbTO9m19bEyxk8yKl
-0OQvcVSYGnfXJ2WNC/6pPhPY1pTP/hamp2f7THdM9XrkwJANKzoAbCPYKlN46bSv
-rMkL0xHWWfxFVebTINJ77aYCNV6nA1xy+12aPitusmcbNFJVCb3MUHA1POEjamFL
-1f6bLO4tTEun2gK4MLKm
-=YQ2j
------END PGP SIGNATURE-----
+# The default requires explicit activation of protocol 1
+
+I think that says it all.
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
