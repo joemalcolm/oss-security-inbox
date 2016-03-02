@@ -1,4 +1,9 @@
-Received: (qmail 25958 invoked by uid 550); 18 Nov 2024 03:49:20 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["640" "Wednesday" "2" "March" "2016" "20:57:44" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1603022054390.31146@wniryva>" "21" "[oss-security] CVE request Qemu: net: ne2000: infinite loop in ne2000_receive" nil nil nil "3" "2016030215:27:44" "[oss-security] CVE request Qemu: net: ne2000: infinite loop in ne2000_receive" (number mark "U       ppandit@redh Mar  2   21/640   " thread-indent "\"[oss-security] CVE request Qemu: net: ne2000: infinite loop in ne2000_receive\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 10217 invoked by uid 550); 2 Mar 2016 15:28:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,36 +12,36 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 16181 invoked from network); 18 Nov 2024 02:43:14 -0000
-DKIM-Signature: a=rsa-sha256; b=T0Jydh+KmdG5C0GHPGgZyV+P4sqtXZf0tyVPnTrxp1sYfuUqP8CIuQEbTtbp0PXECYsfz+jTOOZxpYjwtWcc3IM+VGR01/y58W5Yea78XL0elPzaf4ZEPAWYgF6zJ/IQBIprxpHTkbKCJvcy5J57WQ0T9vJz575cxDyhpHiZd79WsuomNR9dM7HM7ctsIeeRFSfXPYFCBXsePHc9rFUwu1ijQvrB3uCLig04yru9df9Aql04IJe02neZ+KOKIfgtCbCzlsCR6Vq0HnysNhRFKlXWsTgZpWyT7lVSfei0FqbIVV8y3nABvoOJVQQhVjtUyvWPXSQ29SwKK1n+eRiGUw==; s=purelymail2; d=spwhitton.name; v=1; bh=RAOw+FdQ/xNxgKStF5qf7LuGN6zX6Nddw4NYELkY8FY=; h=Received:Received:From:To:Subject:Date;
-DKIM-Signature: a=rsa-sha256; b=sbA+D2j+Gd36J7cRcELASwCjG92IZNum0mpO/0RZBtylT+uklonhWwjAMKJwlbpzcBfZmolHna0OXT4cC+qPLDgi3K3rR6wL62gjlZ57lTTS18ULP5OG6IQxfJHC7e6Ms+fUtTerSXoCfBpOMlX8pOqEoUXsYLWftWuhiD5JBH5Qo/GOoLsBe0misFvRiITmw88zpFZ3IM6ilzAaKIyKvf2QSbfNIasfb6UqOW4qkHCdVNrmBHheP4taYf1tB7TehlC8vIsdUVmTKj9QChy4Eg/BbC6DN44OaxmCCV1YT8g3kaq6Jh+w92Z7c0FEb11tKsX9v6KJykjhjKL52oWbXg==; s=purelymail2; d=purelymail.com; v=1; bh=RAOw+FdQ/xNxgKStF5qf7LuGN6zX6Nddw4NYELkY8FY=; h=Feedback-ID:Received:Received:From:To:Subject:Date;
-Feedback-ID: 20115:3760:null:purelymail
-X-Pm-Original-To: oss-security@lists.openwall.com
-From: Sean Whitton <spwhitton@spwhitton.name>
-To: "David A. Wheeler" <dwheeler@dwheeler.com>
-Cc: oss-security@lists.openwall.com
-In-Reply-To: <F60236E0-F65A-4441-9E62-64EE55016B2C@dwheeler.com> (David
-	A. Wheeler's message of "Wed, 6 Nov 2024 10:44:55 -0500")
-References: <20241106041215.GA4432@openwall.com>
-	<F60236E0-F65A-4441-9E62-64EE55016B2C@dwheeler.com>
-Date: Mon, 18 Nov 2024 10:42:57 +0800
-Message-ID: <87cyit5kjy.fsf@melete.silentflame.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Received: (qmail 10172 invoked from network); 2 Mar 2016 15:28:01 -0000
+Date: Wed, 2 Mar 2016 20:57:44 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Yang Hongke <yanghongke@huawei.com>
+Message-ID: <alpine.LFD.2.20.1603022054390.31146@wniryva>
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: Re: [oss-security] shell wildcard expansion (un)safety
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+Subject: [oss-security] CVE request Qemu: net: ne2000: infinite loop in ne2000_receive
 
-Hello,
+   Hello,
 
-On Wed 06 Nov 2024 at 10:44am -05, David A. Wheeler wrote:
+Qemu emulator built with the NE2000 NIC emulation support is vulnerable to an 
+infinite loop issue. It could occur when receiving packets over the network. A 
+privileged user inside guest could use this flaw to crash the Qemu instance 
+resulting in DoS.
 
-> Long ago I wrong a really long essay about POSIX filename issues.
-> Some people here may find it interesting:
-> https://dwheeler.com/essays/fixing-unix-linux-filenames.html
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-02/msg06126.html
 
-This essay and related ones on your website are invaluable for people
-trying to write POSIX sh.  I certainly found them so.
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1303106
 
--- 
-Sean Whitton
+This issue was discovered by Hongke Yang of Huawei Technologies Co. Ltd.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
