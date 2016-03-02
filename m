@@ -1,44 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/17/7
-Message-ID: <20160817165819.GA24935@openwall.com>
-Date: Wed, 17 Aug 2016 19:58:19 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Werner Koch <wk@...pg.org>
-Subject: Libgcrypt and GnuPG 1.4 RNG output prediction
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/02/1
+Message-ID: <CANO=Ty2FD92Oj-ebOJ=dJnO-+Y1zxNJNwW6HUR5mXH+8G64_ag@mail.gmail.com>
+Date: Tue, 1 Mar 2016 17:31:50 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Bob Beck <beck@...nbsd.org>
+Cc: oss-security <oss-security@...ts.openwall.com>, CVE ID Requests <cve-assign@...re.org>
+Subject: Re: Re: CVE's for SSLv2 support
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, Mar 1, 2016 at 2:23 PM, Bob Beck <beck@...nbsd.org> wrote:
 
-This was just announced on gnupg-announce and Twitter @gnupg, and I
-think it should also be in here:
+> On Tue, Mar 1, 2016 at 12:12 PM,  <cve-assign@...re.org> wrote:
+> > -----BEGIN PGP SIGNED MESSAGE-----
+> > Hash: SHA256
+> >
+> >> If a crypto library (e.g. OpenSSL, NSS) supports AND enables SSLv2 by
+> >> default should it receive a CVE?
+> >
+> > There's no general answer to that question. CVE ID assignments are not
+> > based on outsiders making guesses about the expectations of a product's
+> > customers. For example, there might be a crypto library intended for
+> > communication on isolated networks to high-value embedded devices that
+> > support only SSLv2, and cannot and will not ever be updated.
+>
+>
+> What.. like... I have an embedded high value device that only supports
+> TELNET to access it.. OMG please give me a CVE?
+>
+> replace SSLV2 in the above sentence with telnet or ssh v1 for that
+> matter and you have the same issue.
+>
 
-https://lists.gnupg.org/pipermail/gnupg-announce/2016q3/000395.html
+That is a perfect example actually. Telnet makes no security claims,
+explicit, implied or otherwise. It's a simple clear text protocol. In fact
+if you want to secure it you can use SSL enabled Telnet (in fact I remember
+fighting with it prior to the wide spread existence of SSH and then
+OpenSSH).
 
-> Felix Drre and Vladimir Klebanov from the Karlsruhe Institute of
-> Technology found a bug in the mixing functions of Libgcrypt's random
-> number generator: An attacker who obtains 4640 bits from the RNG can
-> trivially predict the next 160 bits of output.  This bug exists since
-> 1998 in all GnuPG and Libgcrypt versions.
-> 
-> 
-> Impact
-> ======
-> All Libgcrypt and GnuPG versions released before 2016-08-17 are affected
-> on all platforms.
-> 
-> A first analysis on the impact of this bug in GnuPG shows that existing
-> RSA keys are not weakened.  For DSA and Elgamal keys it is also unlikely
-> that the private key can be predicted from other public information.
-> This needs more research and I would suggest _not to_ overhasty revoke
-> keys.
+SSL and TLS both makes explicit and implicit claims about security, most
+notably at a minimum:
 
-Also off Twitter:
+1) the SSL/TLS protocols encrypt the and the data cannot be read by an
+attacker
+2) the SSL/TLS protocols ensure the data is not altered in transit by an
+attacker without detection
 
-<@rgacogne> @gnupg @solardiz The CVE number (CVE-2016-6316) seems to have been used to track another security issue rubygem-actionview, is that correct?
+Additionally depending on how you configure the servers there are claims
+that you are talking to the correct server/client (e.g. using certificates)
+but that is not germane to this discussion.
 
-There does in fact appear to be a CVE ID clash, with:
+SSLv2 is obviously NOT capable of ensuring claim #1 (that data is encrypted
+and cannot be read by an attacker), due to a wide variety of issues, and I
+have no doubt more will be found if people keep looking. Hence my thinking
+is that ANY and ALL use of SSLv2 is CVE worthy, especially when considering
+that many devices/manufacturers are less than transparent about their
+configurations/security issues.
 
-http://www.openwall.com/lists/oss-security/2016/08/11/6
 
-Alexander
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
