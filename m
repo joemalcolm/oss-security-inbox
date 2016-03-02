@@ -1,32 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/19/1
-Message-ID: <20161018230613.GH19318@oevtugenva.nrevsny.pk>
-Date: Tue, 18 Oct 2016 19:06:13 -0400
-From: Rich Felker <dalias@...c.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/02/13
+Message-ID: <20160302235547.GB21900@boyd>
+Date: Wed, 2 Mar 2016 17:55:48 -0600
+From: Tyler Hicks <tyhicks@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: musl@...ts.openwall.com, Ville Laurikari <ville@...rikari.net>
-Subject: CVE Request - TRE & musl libc regex integer overflows in buffer size computations
+Cc: Miklos Szeredi <miklos@...redi.hu>, Colin Ian King <colin.king@...onical.com>, security@...ntu.com
+Subject: CVE-2015-1339: Linux Kernel: memory exhaustion via CUSE driver
 Content-Type: text/plain; charset=utf-8
 
-Due to incorrect use of integer types and missing overflow checks in
-the tre_tnfa_run_parallel function's buffer overflow logic, the TRE
-regex implementation (both original version and the one used in musl
-libc) are subject to integer overflows in buffer size computation.
+Colin Ian King discovered a kernel memory leak in the CUSE driver using
+stress-ng. A local denial of service, via memory exhaustion, is possible
+if the attacker has sufficient privileges to repeatedly open /dev/cuse
+for reading.
 
-If the caller passes to regcomp a regular expression whose internal
-representation requires a large number of states and/or a large number
-of tags, too little space will be allocated during regexec, resulting
-in out-of-bound memory writes.
+In Ubuntu, /dev/cuse is only readable by root so this flaw was deemed to
+have a very low impact. I'm unsure of the default permissions in other
+distributions.
 
-An attacker who controls the regular expression and/or the string
-being searched can potentially exploit these writes to achieve
-controlled heap corruption.
+CVE-2015-1339 was assigned to the issue.
 
-All versions of the TRE library and musl libc are affected. The
-attached patch fixes the issue in musl and should be easy to adapt for
-use with original TRE. musl git master is fixed as of commit
-c3edc06d1e1360f3570db9155d6b318ae0d0f0f7.
+Introduced in 4.2: https://git.kernel.org/linus/cc080e9e9be16ccf26135d366d7d2b65209f1d56
+Fixed in 4.4: https://git.kernel.org/linus/2c5816b4beccc8ba709144539f6fdd764f8fa49c
 
-Rich
+Tyler
 
-View attachment "0001-fix-missing-integer-overflow-checks-in-regexec-buffe.patch" of type "text/plain" (2685 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
