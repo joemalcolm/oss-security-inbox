@@ -1,84 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/31/5
-Message-ID: <20160731172448.GA3127@fear.qoop.org>
-Date: Sun, 31 Jul 2016 12:24:48 -0500
-From: "Joshua J. Drake" <oss-security-dbduaf@...p.org>
-To: oss-security@...ts.openwall.com
-Cc: lazytyped <lazytyped@...il.com>
-Subject: Re: Re: Use after free in my_login() function of DBD::mysql (Perl module)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/02/8
+Message-ID: <alpine.LFD.2.20.1603022054390.31146@wniryva>
+Date: Wed, 2 Mar 2016 20:57:44 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Yang Hongke <yanghongke@...wei.com>
+Subject: CVE request Qemu: net: ne2000: infinite loop in ne2000_receive
 Content-Type: text/plain; charset=utf-8
 
-Certainly buffer overread and related errors can sometimes be security
-vulnerabilities. The biggest question that differentiates those cases from
-non-security bugs (aka "lame bugs") is whether or not the the out-of-bounds
-data can actually be accessed by an attacker (directly or otherwise).If the
-data is read (and thus would cause an ASAN failure) then it's conceivable that
-nothing is actually done with the out of bound data at all... Writes are
-generally easier to make assumptions about.
+   Hello,
 
-In the future, Maybe it would help to partner with someone more experienced to
-determine severity before public disclosure. Also, asking the list for its
-collective advice might also prove fruitful (instead of asking for a CVE
-straight away).
+Qemu emulator built with the NE2000 NIC emulation support is vulnerable to an 
+infinite loop issue. It could occur when receiving packets over the network. A 
+privileged user inside guest could use this flaw to crash the Qemu instance 
+resulting in DoS.
 
-Don't be afraid to be more explicit. If you don't know -- just say "I don't
-know if attackers can get anything out of this, but similar bugs like" .. <real quote>"use
-after free's can be serious and potentially lead to malfunction and security
-issues."</real quote> "Do you see any potential for abuse by attackers?"A
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-02/msg06126.html
 
-Also, realize that this type of inquiry will help both you and the developer
-learn about security bugs and in general will lead to improved awareness to all
-parties that happen across your communications.
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1303106
 
-Again, just my $0.02 when I read this thread.
+This issue was discovered by Hongke Yang of Huawei Technologies Co. Ltd.
 
-Joshua
-
-On Sat, Jul 30, 2016 at 10:27:09AM -0400, Hanno Böck wrote:
-> On Fri, 29 Jul 2016 20:42:03 -0700
-> lazytyped <lazytyped@...il.com> wrote:
-> 
-> > Well, AddressSanitizer should have told you whether the access is a
-> > read access (as I suspect) or a write access. A bit of code
-> > inspection (or follow up from the code maintainer) should add to the
-> > picture.
-> 
-> It's my (maybe poor / limited) understanding that most use after free
-> bugs are actually reads, but still can lead to code execution, e.g. if
-> the read includes function pointers. This is probably not the case in
-> this example (but I previously had an example where I thought it's not
-> exploitable for similar reasons, and later got told by people who
-> understand this stuff much better that they disagree).
-> 
-> > It would be great if we could get a bit more triaging by the owner of
-> > the code or the submitter before declaring the bug one thing or the
-> > other (especially in these days of projects like yours that bring in
-> > a lot of reports -- and don't get me wrong, this is a very valuable
-> > effort).
-> 
-> I understand your wish here, but I am afraid it doesn't match up well
-> with the reality we are in.
-> 
-> I had similar discussions before, but I think there is a very obvious
-> problem here: The tools we use to find these bugs (asan+afl) are dead
-> simple and there are a lot of people out there using them, finding and
-> reporting bugs. The number of people with a detailed knowledge of
-> memory corruption on the other hand is small.
-> 
-> Generally this is a good thing, as it means more people finding bugs.
-> But we have a large number of people who can use the tools to find
-> these bug classes, but who aren't neccessarily able to judge the
-> severity. And that definitely includes me (although I learned a lot in
-> the past year, but I've been accused both in over and underplaying bugs
-> in the past).
-> My approach to this is that I simply try to choose my wording that it
-> matches what I know and if I can't say anything reasonable about
-> exploitability I simply don't.
-> 
-> As for CVEs, it's my impression that MITRE right now has a policy that
-> they give one for almost any memory safety issue and that they don't
-> require an explicit exploit scenario. E.g. my impression is that buffer
-> overreads, as long as they aren't simply in a command line tool, almost
-> always get CVEs.
-
-Download attachment "signature.asc" of type "application/pgp-signature" (812 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
