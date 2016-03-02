@@ -1,52 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/12/7
-Message-Id: <20160412114157.5C4CD332042@smtpvbsrv1.mitre.org>
-Date: Tue, 12 Apr 2016 07:41:57 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/02/10
+Message-Id: <20160302170031.C79B634E007@smtpvbsrv1.mitre.org>
+Date: Wed,  2 Mar 2016 12:00:31 -0500 (EST)
 From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, oleksandr.bazhaniuk@...el.com
-Subject: Re: CVE Request: Qemu: net: buffer overflow in MIPSnet emulator
+To: vdronov@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request -- linux kernel: pipe: limit the per-user amount of pages allocated in pipes
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Qemu emulator built with the MIPSnet controller emulator is vulnerable to a
-> buffer overflow issue. It could occur while receiving network packets in
-> mipsnet_receive(), if the guest NIC is configured to accept large(MTU)
-> packets.
-> 
-> A remote user/process could use this flaw to crash the Qemu process on a host,
-> resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-04/msg01131.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1326082
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=759c01142a5d0f364a462346168a56de28a80f52
 
-Use CVE-2016-4002.
+> The result is an OOM condition and oom-killer is not able to help
+> much, as the memory for the pipe data is a kernel memory and a memory
+> footprint of offensive processes is small.
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/mipsnet.c but
-that may be an expected place for a later update.
+We feel that this should most likely have a CVE ID. The discussion
+outlines a realistic problem "it is possible for a single process to
+cause an OOM condition by filling large pipes with data that are never
+read. A typical process filling 4000 pipes with 1 MB of data will use
+4 GB of memory" and the need for a CVE ID does not depend on the
+details of the solution approach. Also, there doesn't seem to be any
+general opposition to addressing the problem (e.g., see the
+https://lkml.org/lkml/2016/1/19/674 post).
+
+However, the commit indicates that there isn't a mandatory behavior
+change ("The limit are controlled by two new sysctls :
+pipe-user-pages-soft, and pipe-user-pages-hard. Both may be disabled
+by setting them to zero.") -- suggesting a possible interpretation as
+a design enhancement, not a vulnerability fix. Also, the discussion
+doesn't directly comment on whether the "filling large pipes" scenario
+has a security impact that is otherwise unavailable to the attacker,
+e.g., it doesn't discuss the difference between the attacker choosing
+to fill 4000 pipes and the attacker choosing to use mmap.
+
+Is there anyone who believes 759c01142a5d0f364a462346168a56de28a80f52
+must not have a CVE ID?
+
+> The commit says: "Mitigates: CVE-2013-4312 (Linux 2.0+)"
+
+Regardless of any answers to the above question, it is not going to be
+useful to use CVE-2013-4312 to refer to
+759c01142a5d0f364a462346168a56de28a80f52.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXDN1xAAoJEL54rhJi8gl5ry0P/jlvWbrq0ApLur2hfkVyI7OC
-mWpOzrpRMpdonxLuRamQ1iESb7xh0hz4GL1KsBw9opthx6Cciry6gMCqWcPR7wbF
-GpxtUu5VbdkmKkXq4XQ6fiXEYBJgw0C0veGSBWLWzZRZJ7x/ty5UpepDG6r6jeX3
-hJiZMXfr03yfr8hh5jYdKBzr9HgLoqPt3Ra2KvmAh6FxlR7RT15i8hrMSHe7ZJcI
-89ZUhi0wgmgwejpjajIGvM3yRhUsFbw7MbvT4559cdoA3SL6zft93YGVnpUV9T7i
-T9j0loFjvFGb9gbO8QvOWzTQBsRpCl4U5Y/iCNGn/vRMcXQGHPluhkX9jMTThAd1
-BjKpGkcqBAnq7/fCG25O9BcEju7vvUHUkFlK7f8kGiHycPumPo9KALDcngIRVH7p
-xpM8roLcR4zLLVEnPXwVfWJGBL6tWAmP2RXhg31T6eL9X6iSOuT04GIo5I0KsT9F
-FJg7Ds0pKjqCR9XGh9Cdk1L3RZuUjPeGkPDIDwPORAtwua4V70TY+H76T1fcq3Os
-/DTgDukCB6ON2vHMaoIAFRUFwUo7Jrx60iakD3LfgnGzlQrQ0gwP0Cs8Z58uITzS
-oRwvHTeER1IQv9qhYotPJ0KstRVDfCKsn+QoS+dap1tzYFbsadzByM2u+lcb4ej0
-i3Sdbgv4KP8ADHtv5jB6
-=Q3kp
+iQIcBAEBCAAGBQJW1xqUAAoJEL54rhJi8gl5sFcQAJjoPTO/xZL8sFOwfACRAXWD
+ycctDOyagiKIwnf9qyqSw18CTTskA2bRJTlhGywu3XnEKq/yAyYfj2+bNQ5OdvmT
+sQT+JTASckJIDnjqXefSxHZMbBTPOITyEZ52cZSRF8NvWyos1GUBxZRXE6Y1Nrx3
+VF1pNDpbbjJtPpwQ81atxUInE9TDeG0o7BUcX5wP/Q4yIdjU1nZ2MdrYYK4Sn2H2
+2/DECleX8EG8oUrPGxm64OXxmAOxB3E3Vigc0LC6OBindvU6VhjyeKzuKduu4W+m
+6GkIllgEzkBGlwqXTmLvbeB+TpnHU3w6ZdnAynmJHwV+AmivFOPHsJhOXlrAKz7S
+KRIkAgeSHOjqK6rg3V3+/az33v9yzl3dQGEmZYs3d/bX94A2q8Z/ECNOfMHk0uH3
+BbveT32coxxqOjAT4NrOVfWsQtiz2B2hSQek8URYYNuONKI/Qmc6Dk/lnTK5K4jO
+l3/tAqNM/avKbp6Q5rJ+JBZX/nH7x05bNx2klPVB1yZyBn6F+RbJYauQMerEcMUa
+ChSVYfUi7+k9ogqk/7/b8EhJiLK92CmBfsUFTIvuI+UUq0fQNMKGXvmYYJHHKOi/
+DJcKAIid0FLbXXi1YsCrFJu2NrvS0UiKOUeF/D0rVdm3emYGTIWbQOkvuDAsUs7e
+8mWQWhBXp+LU6fTUHdZi
+=pIDG
 -----END PGP SIGNATURE-----
