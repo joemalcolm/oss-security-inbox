@@ -1,55 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/9
-Message-ID: <20161010121518.tnvomatyp65fwoyz@perpetual.pseudorandom.co.uk>
-Date: Mon, 10 Oct 2016 13:15:18 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: fd.o #98157: dbus format string vulnerability fixed in 1.10.12
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/03/7
+Message-ID: <20160303102809.GH20296@bendel.debian.org>
+Date: Thu, 3 Mar 2016 10:28:09 +0000
+From: Cord Beermann <cord@...ian.org>
+To: "Adam D. Barratt" <adam@...m-barratt.org.uk>
+Cc: oss-security@...ts.openwall.com, cypherpunks@...nks.org, debian-legal@...ts.debian.org, listmaster@...ts.debian.org
+Subject: Re: According to www.virustotal.com, lists.debian.org are hosting attachment .DOC virus
 Content-Type: text/plain; charset=utf-8
 
-Bug tracked as: https://bugs.freedesktop.org/show_bug.cgi?id=98157
-Versions affected: dbus >= 1.4.0
-Mitigated in: dbus >= 1.9.10, 1.8.x >= 1.8.16, 1.6.x >= 1.6.30
-Fixed in: dbus >= 1.11.6, 1.10.x >= 1.10.12, 1.8.x >= 1.8.22
-Exploitable by: local users
-Impact: unknown, possibly arbitrary code execution
-Reporter: Simon McVittie, Collabora Ltd.
+Hallo! Du (Adam D. Barratt) hast geschrieben:
 
-D-Bus <http://www.freedesktop.org/wiki/Software/dbus/> is an
-asynchronous inter-process communication system, commonly used
-for system services or within a desktop session on Linux and other
-operating systems.
+> If you want an answer from those who deal with lists, you have to ask them.
+> debian-legal@ is just another mailing list.
 
-A format string vulnerability in the reference bus implementation,
-dbus-daemon, could potentially allow local users to cause arbitrary
-code execution or denial of service.
+The file has been removed. 
 
-In versions of dbus-daemon that are also vulnerable to CVE-2015-0245,
-this format string vulnerability is available to all local users.
-These versions should be patched or updated immediately.
-
-In versions of dbus-daemon where CVE-2015-0245 was already fixed, this
-is not believed to be exploitable in practice, because the relevant
-message is ignored unless it comes from the owner of the bus name
-org.freedesktop.systemd1. On the system bus, this bus name is only
-allowed to be owned by uid 0; it is intended to be owned by systemd,
-and no mechanism is currently known by which an attacker who does not
-already have root privileges could induce systemd to send messages
-that would trigger the format string vulnerability.
-
-Patching or updating dbus-daemon is strongly recommended. A minimal
-patch is attached to this advisory.
-
-Please reference fd.o #98157 or
-<https://bugs.freedesktop.org/show_bug.cgi?id=98157> in any notices
-that refer to this vulnerability.
-
-Regards,
-    S
+Yours,
+        Cord, Debian Listmaster of the day
 -- 
-Simon McVittie
-Collabora Ltd. <https://www.collabora.com/> / Debian <https://www.debian.org/>
-
-View attachment "0001-dbus_activation_systemd_failure-do-not-use-non-liter.patch" of type "text/x-diff" (2079 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+https://lists.debian.org
