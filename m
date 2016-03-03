@@ -1,31 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/10/1
-Message-ID: <CAJ_zFkLW1NM5Gp2bmuLjw45A+ffSFquNrEjxXxtZ4KNXO2US0w@mail.gmail.com>
-Date: Fri, 9 Sep 2016 15:57:35 -0700
-From: Tavis Ormandy <taviso@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: multiple crashes in radare2/radiff2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/03/3
+Message-ID: <CANO=Ty1YVJf505LzrJ7UtG5YpBys1gabo4Bd0e5h95PUP62Wxg@mail.gmail.com>
+Date: Wed, 2 Mar 2016 21:55:19 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>,  cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>
+Cc: cve@...re.org
+Subject: Re: Mitre, reserved CVEs and oss-security?
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 8, 2016 at 4:08 PM, Solar Designer <solar@...nwall.com> wrote:
+On Wed, Mar 2, 2016 at 6:25 PM, Paul Wise <pabs3@...edaddy.net> wrote:
+
+> Hi all,
 >
-> Hi,
+> I think it would be a good idea for Mitre to remove the RESERVED mark
+> from CVEs that have been released for use by people mailing issues to
+> the oss-security to get CVE numbers. The CVE database could then point
+> at the oss-security mailing list archives as a reference for the issue.
 >
-> On Thu, Sep 08, 2016 at 05:34:09PM +0300, Vahagn Vardanyan wrote:
-> > I created report
-> > https://bugs.chromium.org/p/project-zero/issues/detail?id=933&can=1&q=&sort=-id
+> Any thoughts?
 >
-> Going to this URL, I am asked to login to a Google account (which I
-> didn't).  Can you please post the contents of your report and Tavis'
-> reply (as well as any other relevant replies) as a reply to this same
-> thread here on oss-security?
+> For example CVE-2016-2515 could refer to one of these posts:
+>
+> http://www.openwall.com/lists/oss-security/2016/02/20/1
+> http://www.openwall.com/lists/oss-security/2016/02/20/2
 
-I'm not involved at all.
 
-AFAICT, the reporter was trying to create issues in our private issue
-tracker, and then emailed me asking why the issues were being
-automatically closed.
+I had suggested this in past (several years ago to the original Steven),
+and again in this email last November:
 
-Trying to be helpful, I suggested using oss-security instead.
+https://cve.mitre.org/data/board/archives/2015-11/msg00018.html
 
-Tavis.
+my understanding is it's a no go due to two main factors:
+
+1) CVE database lacks a good update mechanism to inform people of updated
+entries
+2) CVE entries must be "complete" before being added (e.g. researched/full
+write up/etc.).
+
+I could of course be wrong, we never actually got a response from Mitre on
+my November email about this.
+
+I'd be happy to bring it up on the board list again (CC'ed). Mitre can you
+enlighten us please?
+
+
+>
+>
+> --
+> bye,
+> pabs
+>
+> http://bonedaddy.net/pabs3/
+>
+>
+
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
