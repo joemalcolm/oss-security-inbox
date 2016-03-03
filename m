@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1033" "Sunday" "2" "August" "2015" "18:27:47" "-0700" "Reed Loden" "reed@reedloden.com" "<CALPTtNWPoVzCkrFVuR4StNgR_srWdadQsTVyL7=EgYYJFmPHWg@mail.gmail.com>" "32" "[oss-security] Re: CVE request: Command injection in ruby gem ruby-saml <1.0.0" nil nil nil "8" "2015080301:27:47" "[oss-security] Re: CVE request: Command injection in ruby gem ruby-saml <1.0.0" (number mark "U       reed@reedlod Aug  2   32/1033  " thread-indent "\"[oss-security] Re: CVE request: Command injection in ruby gem ruby-saml <1.0.0\"\n") "<CALPTtNV-ib_gojFXZOdb5OYb7efUgKg4tPSWuryJBvLCBCE5nQ@mail.gmail.com>" ("<CALPTtNV-ib_gojFXZOdb5OYb7efUgKg4tPSWuryJBvLCBCE5nQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3195" "Thursday" "3" "March" "2016" "10:09:27" "+0100" "Heiko Schlittermann" "hs@schlittermann.de" "<20160303090927.GG11024@jumper.schlittermann.de>" "97" "[oss-security] Exim CVE-2016-1531 fixed" "^Date:" nil nil "3" "2016030309:09:27" "[oss-security] Exim CVE-2016-1531 fixed" (number mark "        hs@schlitter Mar  3   97/3195  " thread-indent "\"[oss-security] Exim CVE-2016-1531 fixed\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11639 invoked by uid 550); 3 Aug 2015 01:28:19 -0000
+Received: (qmail 3850 invoked by uid 550); 3 Mar 2016 09:09:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +11,123 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11552 invoked from network); 3 Aug 2015 01:28:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=reedloden.com; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=v0iVjNXhTfKBsXaoPv9QrAh2Tg1umBhIHrnXP1dBe/8=;
-        b=dLuIUEmWqK+kJx0CmFuhRfIIxdDsfuVtV3GRjrG7u6rjz5r23F+XC9wgYbi5+Aql4L
-         ZI//QsIHIkISGjVje5P3DyGj/LcccknMW7H21hMQ7e3HrFofiNMyBYwXu7SRgOpWJtTE
-         sSLsDJbbi7dn6IekU7/Be7AP/iRu0tsyKQsZs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-type;
-        bh=v0iVjNXhTfKBsXaoPv9QrAh2Tg1umBhIHrnXP1dBe/8=;
-        b=aDqOpKX6HOPFdo00we8N6kjVKFKUtAvAtW5a4dmGa89Bfb/9fhP61RWHLbx5RKX5Gl
-         YjNm0xyx5dizGDUEnAAYRkPZg26il1nACK2UmTxDRYOlUo1ra/KkUsJxhXYT+dfwXVRU
-         K/CCh2nm8JVyX8x9SR/35kNYTq4omZtc1Ic94rxi6X8hXKv8OQNoZ/106zDNhA/thkMQ
-         IAorGh/W7qd9IV/GtBsAl8EFH3d9FpGp2Tg+mAs5KCBOB70cCSOu/6s0QV/3nRnsdCcb
-         kmeOY/kzZwzsk3PePmX8i35cDNS8sIVNOagfGsao1EOdXinE7LL72uv7YdQ0iCYjwWKr
-         Yy0w==
-X-Gm-Message-State: ALoCoQliAMBPUaj0HhQzv/nnRwWBkndD1DRsMeIGPMIAiGultbMXlU0Qr1kz81UopHRsGGFfoXfr
-X-Received: by 10.50.109.233 with SMTP id hv9mr19673197igb.92.1438565286575;
- Sun, 02 Aug 2015 18:28:06 -0700 (PDT)
+Received: (qmail 3823 invoked from network); 3 Mar 2016 09:09:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=schlittermann.de; s=dd201504; h=Content-Type:MIME-Version:Message-ID:
+	Subject:To:From:Date; bh=NzM+mvYipbp+1Wh8FWVsCP3saYmog6gfCjCHrFVniU0=; b=BCGf
+	GV2fvum5isH9R2+5N6vAKkX6eklCX5/zF2lNYsLsN1f/Rk9eFfPe8FWFW9f5aFamzh/oiq5zRws7F
+	gxMJCUkDk/tYacj2EqbG7vgiBUulBHm+TNMEBW9dhddk5Y4/Fsd5s55t9gF2vUUb1EcH3vGuTcSEs
+	Hu6YIR4kn2rqQ=;
+Message-ID: <20160303090927.GG11024@jumper.schlittermann.de>
 MIME-Version: 1.0
-In-Reply-To: <CALPTtNV-ib_gojFXZOdb5OYb7efUgKg4tPSWuryJBvLCBCE5nQ@mail.gmail.com>
-References: <CALPTtNV-ib_gojFXZOdb5OYb7efUgKg4tPSWuryJBvLCBCE5nQ@mail.gmail.com>
-Message-ID: <CALPTtNWPoVzCkrFVuR4StNgR_srWdadQsTVyL7=EgYYJFmPHWg@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=089e0122e6bce49ef7051c5e140a
-Date: Sun, 2 Aug 2015 18:27:47 -0700
-From: Reed Loden <reed@reedloden.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="c7hkjup166d4FzgN"
+Content-Disposition: inline
+Organization: schlittermann -- internet & unix support
+X-Phone: +49.172.7909055
+X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
+X-GPG-Key-ID: F69376CE
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Date: Thu, 3 Mar 2016 10:09:27 +0100
+From: Heiko Schlittermann <hs@schlittermann.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: Command injection in ruby gem ruby-saml <1.0.0
-To: oss-security@lists.openwall.com, 
-	Assign a CVE Identifier <cve-assign@mitre.org>
+Subject: [oss-security] Exim CVE-2016-1531 fixed
+To: oss-security <oss-security@lists.openwall.com>
 
---089e0122e6bce49ef7051c5e140a
-Content-Type: text/plain; charset=UTF-8
+--c7hkjup166d4FzgN
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Any update on a CVE assignment for this?
+Hello,
 
-~reed
+We've fixed CVE-2016-1531. The fix was announced to the public
+via exim-{maintainers,dev,users} mailing lists, via the
+about Wed, 2 Mar 2016 19:10 GMT, the announcement to exim-announce
+followed about one hour later.
 
-On Thu, Jul 9, 2015 at 11:18 AM, Reed Loden <reed@reedloden.com> wrote:
+Known distro maintainers and Exim contributors got access to the fix
+on Monday, 29 Feb 2016 at 14:00 GMT.
 
-> A follow-up to my previous CVE request. Looked into "Fix xpath injection
-> on xml_security.rb" some more.
->
-> https://github.com/onelogin/ruby-saml/pull/225#issuecomment-120084288
->
->
-> https://github.com/onelogin/ruby-saml/commit/1b4e3dd6d2d44efa629144b2180842456bfb2a0f#diff-661b9d9743a3ff77661f224c6191165cL242
->
-> Looks like lack of prepared statements allow for possible command
-> injection, leading to arbitrary code execution (via something like eval()).
->
-> Related to https://github.com/onelogin/ruby-saml/pull/183 /
-> http://osvdb.org/show/osvdb/117903 (which doesn't seem to have a CVE
-> assigned either as far as I can tell). Reference for that is
-> https://security.dxw.com/advisories/publicly-exploitable-command-injection-in-ruby-saml-0-7-2-library-can-root-the-host/
-> .
->
-> ~reed
->
->
->
+Some *BSD portability issues where fixed on Tue Mar 1 late evening.
 
---089e0122e6bce49ef7051c5e140a--
+The announcement we sent to the above mentioned lists:
+
+Security fix for CVE-2016-1531
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D
+
+All installations having Exim set-uid root and using 'perl_startup' are
+vulnerable to a local privilege escalation. Any user who can start an
+instance of Exim (and this is normally *any* user) can gain root
+privileges.
+
+New options
+-----------
+
+We had to introduce two new configuration options:
+
+    keep_environment =3D
+    add_environment =3D
+
+Both options are empty per default. That is, Exim cleans the complete
+environment on startup. This affects Exim itself and any subprocesses,
+as transports, that may call other programs via some alias mechanisms,
+as routers (queryprogram), lookups, and so on.
+
+** THIS MAY BREAK your existing installation **
+
+If both options are not used in the configuration, Exim issues a warning
+on startup. This warning disappears if at least one of these options is
+used (even if set to an empty value).
+
+keep_environment should contain a list of trusted environment variables.
+(Do you trust PATH?). This may be a list of names and REs.
+
+    keep_environment =3D ^LDAP_ : FOO_PATH
+
+To add (or override) variables, you can use add_environment:
+
+    add_environment =3D <; PATH=3D/sbin:/usr/sbin
+
+
+New behaviour
+-------------
+
+Now Exim changes it's working directory to / right after startup,
+even before reading it's configuration. (Later Exim changes it's working
+directory to $spool_directory, as usual.)
+
+Exim only accepts an absolute configuration file path now, when using
+the -C option.
+
+
+Thank you for your understanding.
+
+
+    Best regards from Dresden/Germany
+    Viele Gr=C3=BC=C3=9Fe aus Dresden
+    Heiko Schlittermann
+--=20
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+
+--c7hkjup166d4FzgN
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCgAGBQJW1/9HAAoJEGoXY4qgRQz12KcH/2qfSrSHHwo20Vxi4kuXEdvF
+qiOhZfNSdasqu6URMnk7FVpq2wyHp6Fgu1EOXP6dbpD7S7hREOyl4ErEj/osazzM
+8x9C/72sq5mN+IMtyajqnc+Pdjqa24aJW9xPKTRrNA/9H0+sTSeMSzbNaKLfquqw
+B6GNJa+mpUW81GtG7GyWJ35fS6lHaumf4BITH9jyhZ3aYOLoe5OEETdPJbd4rW4a
+sjDLWK+f0uIs0DsWrIf+iwfhF37c8YB8+gOC+jn+n+pupFMWqMi3YRkQbI/D95RI
+jwE5KzYs45MKz5YO8LPYpvjsFQCIFdyc+v0IXHxFrDemEV+NVzJb/ZhY7IGhtxQ=
+=SBx6
+-----END PGP SIGNATURE-----
+
+--c7hkjup166d4FzgN--
