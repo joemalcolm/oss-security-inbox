@@ -1,67 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/02/5
-Message-ID: <CAEsznC6_Aeq_2HZNQdF=Z-daGkiR8GmHozqy+ZZfDLicHqZqww@mail.gmail.com>
-Date: Fri, 2 Sep 2016 11:42:31 +0300
-From: Lior Kaplan <kaplanlior@...il.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com, "security@....net" <security@....net>
-Subject: CVE assignment for PHP 5.6.25 and 7.0.10
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/03/4
+Message-ID: <20160303084422.GD2384@sivokote.iziade.m$>
+Date: Thu, 3 Mar 2016 10:44:22 +0200
+From: Georgi Guninski <guninski@...inski.com>
+To: oss-security@...ts.openwall.com, cypherpunks@...nks.org, debian-legal@...ts.debian.org
+Subject: According to www.virustotal.com, lists.debian.org are hosting attachment .DOC virus
 Content-Type: text/plain; charset=utf-8
 
-Hello Mitre team,
+According to www.virustotal.com, lists.debian.org 
+are hosting attachment .DOC virus.
 
-Please consider CVE assignment for the following issues in PHP.
+Would someone confirm or deny this?
 
-Shared between PHP 5.6.25 and 7.0.10:
+Warning:  DO NOT OPEN THE .DOC!
+Discalimer: Nothing personal against Debian
 
-Core:
+https://lists.debian.org/debian-consultants/2016/01/msg00000.html
+links to:
 
-Bug #72663 <https://bugs.php.net/bug.php?id=72663> Create an Unexpected
-Object and Don't Invoke __wakeup() in Deserialization
-Bug #72681 <https://bugs.php.net/bug.php?id=72681> PHP Session Data
-Injection Vulnerability
+https://lists.debian.org/debian-consultants/2016/01/docyrW4BlUhzH.doc
 
-GD:
+Submitting the last .doc URL at:
+https://www.virustotal.com
+and then going to:
+Go to downloaded file analysis
+gives:
+https://www.virustotal.com/en/file/c7210dc26e00a0d9f9bf8fb3b4850d52b62bb5836a7fa34bb669fc1b1553005e/analysis/1456991242/
 
-Bug #72697 <https://bugs.php.net/bug.php?id=72697> select_colors write
-out-of-bounds
-Bug #72730 <https://bugs.php.net/bug.php?id=72730> imagegammacorrect allows
-arbitrary write access
+SHA256: 	c7210dc26e00a0d9f9bf8fb3b4850d52b62bb5836a7fa34bb669fc1b1553005e
+File name: 	docyrW4BlUhzH.doc
+Detection ratio: 	17 / 54
 
+the first few results are:
+AVG 	W97M/Downloader 	20160303
+AVware 	Trojan-Downloader.O97M.Adnel.n (v) 	20160303
+AegisLab 	W97M.Gen!c 	20160303
+Arcabit 	HEUR.VBA.Trojan.e 	20160303
+Avast 	VBA:Downloader-ABC [Trj] 	20160303
+ESET-NOD32 	VBA/TrojanDownloader.Agent.AOM 	20160303
 
-EXIF:
+and some report it as clean.
 
-Bug #72627 <https://bugs.php.net/bug.php?id=72627> Memory Leakage In
-exif_process_IFD_in_TIFF
-
-
-
-WDDX:
-
-Bug #72749 <https://bugs.php.net/bug.php?id=72749> wddx_deserialize allows
-illegal memory access
-Bug #72750 <https://bugs.php.net/bug.php?id=72750> wddx_deserialize null
-dereference
-Bug #72790 <https://bugs.php.net/bug.php?id=72790> wddx_deserialize null
-dereference with invalid xml
-Bug #72799 <https://bugs.php.net/bug.php?id=72799> wddx_deserialize null
-dereference in php_wddx_pop_element
-
-
-PHP 7.0.10 only:
-
-Core:
-
-Bug #72742 <https://bugs.php.net/bug.php?id=72742> memory allocator fails
-to realloc small block to large one
-
-
-cURL:
-
-Bug #72674 <https://bugs.php.net/bug.php?id=72674> Heap overflow in
-curl_escape
-
-Thanks,
-
-Kaplan
-
+The .doc is downloadable with the same checksum.
