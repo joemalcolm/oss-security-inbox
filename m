@@ -1,141 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/08/5
-Message-ID: <2016110813073850221313@gmail.com>
-Date: Tue, 8 Nov 2016 13:07:43 +0800
-From: "tyrande000@...il.com" <tyrande000@...il.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: secalert <secalert@...hat.com>,  zhangqian-c <zhangqian-c@....cn>
-Subject: CVE-2016-8632 -- Linux kernel: tipc_msg_build() doesn't validate MTU that can trigger heap overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/03/11
+Message-ID: <20160303130737.GN22595@suse.de>
+Date: Thu, 3 Mar 2016 14:07:37 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org
+Subject: CVE-2004-0230 additions and Linux Kernel fix
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
- 
-Recently I found a flaw in the TIPC networking subsystem which could allow for memory corruption and possible privilege escalation (CVE-2016-8632).
-I made this post to oss-sec for outlining the flaw and letting people know the CVE.
- 
-First upstream patch(it hasn't been pushed upstream yet):
-https://www.mail-archive.com/netdev@vger.kernel.org/msg133205.html
- 
- 
-VULNERABILITY
------------------------
-Recently i took a glance for function tipc_msg_build() at net/tipc/msg.c:244 on linux kernel 4.8.1.
-It seems like tipc_msg_build() doesn't validate the parameter pktmax(MTU) passed from tipc_sendmcast(), and if I could change this value lower than (INT_H_SIZE + mhsz), It maybe can trigger heap overflow in skb->data.
- 
-static int tipc_sendmcast(struct  socket *sock, struct tipc_name_seq *seq,
-                  struct msghdr *msg, size_t dsz, long timeo) 
-{
-         . . .
- 
-new_mtu:
-         mtu = tipc_bcast_get_mtu(net);
-         rc = tipc_msg_build(mhdr, msg, 0, dsz, mtu, &pktchain);
- 
-         . . .
-}
- 
-int tipc_msg_build(struct tipc_msg *mhdr, struct msghdr *m,
-                      int offset, int dsz, int pktmax, struct sk_buff_head *list)
-{
-         int mhsz = msg_hdr_sz(mhdr);
-         int msz = mhsz + dsz;
-         int pktno = 1;
-         int pktsz;
-         int pktrem = pktmax;
-         int drem = dsz;
-         struct tipc_msg pkthdr;
-         struct sk_buff *skb;
-         char *pktpos;
-         int rc;
- 
-         msg_set_size(mhdr, msz);
- 
-         . . .
- 
-         /* Prepare first fragment */
-         skb = tipc_buf_acquire(pktmax);
-         if (!skb)
-                   return -ENOMEM;
-         skb_orphan(skb);
-         __skb_queue_tail(list, skb);
-         pktpos = skb->data;
-         skb_copy_to_linear_data(skb, &pkthdr, INT_H_SIZE);
-         pktpos += INT_H_SIZE;
-         pktrem -= INT_H_SIZE;
-         skb_copy_to_linear_data_offset(skb, INT_H_SIZE, mhdr, mhsz);
-         pktpos += mhsz;
-         pktrem -= mhsz;
- 
-         . . .
-}
- 
-The MTU value can obtained from tipc_bcast_get_mtu(), and this value can be settled by tipc_link_set_mtu(), I search around withing the source code of 4.8.1, founded that only tipc_bcbase_select_primary() invokes tipc_link_set_mtu().
- 
-static void tipc_bcbase_select_primary(struct net *net)
-{
-         . . .
- 
-         for (i = 0; i < MAX_BEARERS; i++) {
-                   if (!bb->dests[i])
-                            continue;
- 
-                   mtu = tipc_bearer_mtu(net, i);
-                   if (mtu < tipc_link_mtu(bb->link))
-                            tipc_link_set_mtu(bb->link, mtu);
- 
-                   . . .
-         }
-}
- 
-int tipc_bearer_mtu(struct net *net, u32 bearer_id)
-{
-         int mtu = 0;
-         struct tipc_bearer *b;
- 
-         rcu_read_lock();
-         b = rcu_dereference_rtnl(tipc_net(net)->bearer_list[bearer_id]);
-         if (b)
-                   mtu = b->mtu;
-         rcu_read_unlock();
-         return mtu;
-}
- 
-Obviously tipc_bearer_mtu() return MTU value by object tipc_bearer which directly inherited from net device MTU.(eth0 MTU on my situation)
- 
- 
-INFO
--------
-Red Hat Product Security has assigned CVE-2016-8632 to this vulnerability.
-This issue may cause memory corruption and even escalate privilege if we layout the appropriate heap space by any user with CAP_NET_ADMIN.
- 
- 
-AFFECTED VERSION
------------------------
-I use kernel 4.6.2 x86_64 to reproduce the issue, but it also seems like vulnerable in the latest kernel version(4.9-rc4).
+Hi,
 
+CVE-2004-0230 is an old standing TCP protocol issue complained about by shitty network vulnerability scanners (I am looking at you Nessus).
 
-SOLUTION
----------------
-First upstream patch:
-https://www.mail-archive.com/netdev@vger.kernel.org/msg133205.html
- 
- 
-CREDITS
-------------
-This vulnerability was found by Qian Zhang from MarvelTeam Qihoo 360.
- 
- 
-On Mon, Nov 7, 2016 at 9:29 AM, Red Hat Product Security <secalert@...hat.com> wrote:
- 
->Gday,
- 
->I've asked our team to assign you one from the internal pool. Please, use CVE-2016-8632.
->The next step is usually making a post explaining this issue to OSS-sec list. Ben (upstream) mentions that this patch is already public ( https://www.mail-archive.com/netdev@vger.kernel.org/msg133205.html ) I was planning to unembargo this flaw.
- 
->The next step as we discussed would be for you to make a post to oss-sec outlining the flaw and letting people know the CVE. Please make the post to oss-sec explaining the flaw and referencing the first upstream patch.
->https://www.mail-archive.com/netdev@vger.kernel.org/msg133205.html
- 
->Thanks, let me know if I can help.
- 
->Wade Mealing
- 
+There has been however some progress since 2004...
+
+It has new references to add:
+
+RFC 5961 was written to address this CVE: https://tools.ietf.org/html/rfc5961
+
+And the Linux Kernel has implemented this in
+
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=282f23c6ee343126156dd41218b22ece96d747e3
+
+commit 282f23c6ee343126156dd41218b22ece96d747e3
+Author: Eric Dumazet <edumazet@...gle.com>
+Date:   Tue Jul 17 10:13:05 2012 +0200
+
+    tcp: implement RFC 5961 3.2
+    
+    Implement the RFC 5691 mitigation against Blind
+    Reset attack using RST bit.
+    
+    Idea is to validate incoming RST sequence,
+    to match RCV.NXT value, instead of previouly accepted
+    window : (RCV.NXT <= SEG.SEQ < RCV.NXT+RCV.WND)
+    
+    If sequence is in window but not an exact match, send
+    a "challenge ACK", so that the other part can resend an
+    RST with the appropriate sequence.
+    
+    Add a new sysctl, tcp_challenge_ack_limit, to limit
+    number of challenge ACK sent per second.
+    
+    Add a new SNMP counter to count number of challenge acks sent.
+    (netstat -s | grep TCPChallengeACK)
+    
+    Signed-off-by: Eric Dumazet <edumazet@...gle.com>
+    Cc: Kiran Kumar Kella <kkiran@...adcom.com>
+    Signed-off-by: David S. Miller <davem@...emloft.net>
+
+Ciao, Marcus
