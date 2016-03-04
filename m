@@ -1,70 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/20/17
-Message-ID: <569FEAAD.1090800@redhat.com>
-Date: Wed, 20 Jan 2016 20:14:37 +0000
-From: Tristan Cacqueray <tdecacqu@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2016-004] Swift proxy-server DoS through Large Object (CVE-2016-0737, CVE-2016-0738)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/04/6
+Message-ID: <6C149CB0AE53E944A358EC6730D07C7442EC599128@TUS1XCHEVSPIN35.SYMC.SYMANTEC.COM>
+Date: Fri, 4 Mar 2016 12:25:57 -0800
+From: Mike Prosser <mprosser@...antec.com>
+To: 'Art Manion' <amanion@...t.org>, Kurt Seifried <kseifried@...hat.com>, cve-editorial-board-list <cve-editorial-board-list@...TS.MITRE.ORG>, oss-security <oss-security@...ts.openwall.com>
+Subject: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-==========================================================
-OSSA-2016-004: Swift proxy-server DoS through Large Object
-==========================================================
+While it would have an impact for sure on our community, I think the biggest impact would be on customers since CVEs have become a Vulnerability Name when calling support with concerns....rather than just a common tracking reference.  
 
-:Date: January 20, 2016
-:CVE: CVE-2016-0737 (client to proxy), CVE-2016-0738 (proxy to server)
+-Mike
+Symantec Software Security Group
 
 
-Affects
-~~~~~~~
-- Swift: >=2.2.1 <= 2.3.0, >= 2.4.0 <= 2.5.0
+-----Original Message-----
+From: owner-cve-editorial-board-list@...ts.mitre.org [mailto:owner-cve-editorial-board-list@...ts.mitre.org] On Behalf Of Art Manion
+Sent: Friday, March 04, 2016 1:08 PM
+To: Kurt Seifried <kseifried@...hat.com>; cve-editorial-board-list <cve-editorial-board-list@...TS.MITRE.ORG>; oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 
+On 2016-03-04 13:24, Kurt Seifried wrote:
+> So I've now heard from several security researchers that they are 
+> unable to get CVEs for issues that need CVEs (e.g. widely used 
+> hardware/software with flaws that have real world impacts and need to 
+> be properly tracked. This has definitely resulted in issues being 
+> publicized with no CVE that then makes it much harder to track and 
+> deal with these issues.
 
-Description
-~~~~~~~~~~~
-Romain LE DISEZ from OVH and Örjan Persson from Kiliaro independently
-reported two vulnerabilities in Swift Large Object. By repeatedly
-requesting and interrupting connections to a Large Object (Dynamic or
-Static) URL, a remote attacker may exhausts Swift proxy-server
-resources, potentially resulting in a denial of service. Note that
-there are two distinct bugs that can exhaust proxy resources, one for
-client connection (client to proxy), one for servers connection (proxy
-to server). All Swift setup are affected.
+I think it's been said on this list previously -- these are two separate
+activities:
 
+1. Assigning IDs
 
-Patches
-~~~~~~~
-- https://review.openstack.org/217750 (client to proxy) (Kilo)
-- https://review.openstack.org/270234 (proxy to server) (Kilo)
-- https://review.openstack.org/270235 (proxy to server) (Liberty)
-- https://review.openstack.org/270233 (proxy to server) (Mitaka)
+2. Analysis, deconfliction, write-up
 
+Binding these together results in delay, because #2 takes considerably more calendar time and effort.  Another result is a limited but fairly high quality set of entries (once #2 is complete).
 
-Credits
-~~~~~~~
-- Romain LE DISEZ from OVH (CVE-2016-0737)
-- Örjan Persson from Kiliaro (CVE-2016-0738)
+I share Kurt's concern that CVE is not meeting a researcher/disclosure use case of having IDs for vulnerabilities, and that the community will at some point stop bothering with CVE.
 
+I'm not sure how bad such an outcome would be, or what impact that would have on CVE.
 
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/bugs/1466549 (client to proxy)
-- https://bugs.launchpad.net/bugs/1493303 (proxy to server)
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-0737 (client
-  to proxy)
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-0738 (proxy to
-  server)
-
-
-Notes
-~~~~~
-- The client to proxy issue (CVE-2016-0737) is already fixed in Liberty
-- The remaining fix will be included in future 2.3.1 (Kilo) and 2.5.1
-  (Liberty) releases.
-
--- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+ - Art
