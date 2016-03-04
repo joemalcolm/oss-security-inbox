@@ -1,49 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/09/2
-Message-Id: <20160709143603.3DE4F6C1D65@smtpvmsrv1.mitre.org>
-Date: Sat,  9 Jul 2016 10:36:03 -0400 (EDT)
-From: cve-assign@...re.org
-To: john.johansen@...onical.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: apparmor: oops in apparmor_setprocattr()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/04/4
+Message-ID: <CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com>
+Date: Fri, 4 Mar 2016 11:24:44 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>,  oss-security <oss-security@...ts.openwall.com>
+Subject: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+So I've now heard from several security researchers that they are unable to
+get CVEs for issues that need CVEs (e.g. widely used hardware/software with
+flaws that have real world impacts and need to be properly tracked. This
+has definitely resulted in issues being publicized with no CVE that then
+makes it much harder to track and deal with these issues.
 
-> http://marc.info/?l=linux-kernel&m=146793642811929&w=2
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=30a46a4647fd1df9cf52e43bf467f0d9265096ca
+I'm also worryingly hearing about people that may have given up asking for
+CVEs and publicizing their work at all, but of course cannot easily confirm
+this as I don't have any access on insight into what cve-assign@...re.org
+is actually doing/who they are talking to.
 
->> Note: it may be possible to get a local privilege escalation out of this 
->> bug.
+I finally was able to get a researcher willing to "go on the record" as it
+were, with thanks to Hanno Böck for stepping up.
 
->>> apparmor: fix oops, validate buffer size in apparmor_setprocattr()
-    
->>> When proc_pid_attr_write() was changed to use memdup_user apparmor's
->>> (interface violating) assumption that the setprocattr buffer was always
->>> a single page was violated.
+My main concern is this, if this tiered coverage (
+https://cve.mitre.org/cve/data_sources_product_coverage.html) is the new
+way forwards we will have significantly less CVE coverage in a time where
+security issues are literally exploding and becoming much more of a problem
+leading to a situation where I fear that CVE will not be as useful anymore.
+As CVE is the cornerstone of our industry for identifying vulnerabilities
+and making it much easier to track and search for them I think it's
+critical that we re-examine this tier'ed coverage policy that Mitre
+arbitrarily decided to enact (there was a brief discussion at
+https://cve.mitre.org/data/board/archives/2016-01/msg00015.html with some
+concerns raised and not really addressed).
 
-Use CVE-2016-6187.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+---------- Forwarded message ----------
+From: Hanno Böck <hanno@...eck.de>
+Date: Fri, Mar 4, 2016 at 10:35 AM
+Subject: Fw: CVE request: nonce reuse in GCM implementation of Radware Load
+balancers
+To: Kurt Seifried <kseifried@...hat.com>
 
-iQIcBAEBCAAGBQJXgQtrAAoJEHb/MwWLVhi2z0wQAIz473jwzdiwtT1tVaOHxuLj
-5ptbSsvbr9tiMfiiyKzvxI3bDvXr/6GRI8bfxYq/m+tPA3C9N15pW/7CJqcNW5FH
-W7aUiGHqikPMb+nEulObtl8Ib2xnkCmA3vB8WMARavvQzFjlZ2llx20cAOKtO07F
-pBkhK1/RHiYVHI7eareqsB9KCrgibiiO58OhrYHtOJhcgGwOPE4Hr1jeg3je53dp
-PQWXNOah9lQ9aUV2hXKArDRlEWehH4CTC8fM4Lr5v7Hw3tTa2LAQoOC/dPSdYiJJ
-i5KwtXQlSjEbDElg7VBdspA5jntIGKq3XCC9pep0wHh8XtbPNOiJwKSs196nxny/
-uS9ChoS4MFWgpNe2MY7wANAWlqNdcnicyQpiiYsyy/W3luumd3LaYayiITjzWPGM
-wu29GhYRIcRhaJ3BBzdGKLITCpqrOdlHRkJONYgzfZyFTND7bbC0JkJ70x/JOPww
-S16HjC3BEtH+H/3pnYLtZ+PnZ36vdP01Dbp3oRuICcloMSXm5d9eeMQX5JhUq2ms
-xLrr0kxwo0fxYAS6C8lR7fAX/ueCY980AcPRWlMzZbeHxsfK+1CMN8Of233PTxx6
-WpvN5iSg8OydurewOJKHUdrYERON/afF/FcfqN3vNDHM9oDHXMKlcp0s7APMZf7K
-EBChJPlAsaURokHYcm0L
-=roE2
------END PGP SIGNATURE-----
+
+This was the issue I requested a CVE for:
+https://kb.radware.com/Questions/SecurityAdvisory/Public/Security-Advisory-Explicit-Initialization-Vector-f
+
+(And currently I'd apprechiate if you don't make a big buzz out of this
+issue, because we're preparing a paper on it by the end of march where
+we'll disclose a bunch of similar issues)
+
+Begin forwarded message:
+
+Date: Thu, 11 Feb 2016 02:58:06 +0000
+From: CVE ID Requests <cve-assign@...re.org>
+To: Hanno Böck <hanno@...eck.de>
+Cc: CVE ID Requests <cve-assign@...re.org>
+Subject: RE: CVE request: nonce reuse in GCM implementation of Radware
+Load balancers
+
+
+Thank you for your request.
+
+Your request is outside the scope of CVE's published priorities. As
+such, it will not be assigned a CVE-ID by MITRE or another CVE CNA at
+this time.
+
+CVE-ID assignments are made according to the priorities published at
+http://cve.mitre.org/cve/data_sources_product_coverage.html. Processing
+of CVE-ID requests for non-prioritized products can occur at any time,
+but the CVE-ID assignments may be delayed.
+
+If you feel that our assessment is in error, or that the product or
+products in question should be included within the CVE published
+priorities, please provide MITRE with your justification(s).
+
+--
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+
+
+--
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
+Content of type "text/html" skipped
+
+Content of type "application/pgp-signature" skipped
