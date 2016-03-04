@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1210" "Saturday" "21" "October" "2017" "15:57:52" "-0400" "Robert Watson" "robertcwatson1@gmail.com" "<CAOfWR+E5EBSOe5kbSFh2zwUXKAahDXi6Dpax6dr9FLVkT1pY3g@mail.gmail.com>" "33" "Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync" "^Date:" nil nil "10" "2017102119:57:52" "[oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync" (number mark "        robertcwatso Oct 21   33/1210  " thread-indent "\"Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync\"\n") "<20171021105847.GA16973@openwall.com>" ("<20171017162507.e7lx6fbnleugoxxa@waldi.eu.org>" "<CAOfWR+EHYftu3Hqbu0qGvk_kk3au-Gkj_WEH95syC3n-QuNnxg@mail.gmail.com>" "<CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com>" "<CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>" "<20171019194428.GK20315@hunt>" "<CAOfWR+H_UbXfxh=oECSqUEcLmAh+RZciH61q0E5LqskWSOYWKA@mail.gmail.com>" "<CABMkiz6X3N8X7nq8eCnNGVUEx8jzd7hNLk3W_8OdW0Pg+UvSYQ@mail.gmail.com>" "<CAOfWR+Ga88eCNj-cQiBBXzM=S+xBfE5fsbgBWXMWSnN=8_4rFw@mail.gmail.com>" "<20171021105847.GA16973@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3412" "Friday" "4" "March" "2016" "16:56:13" "-0500" "Adam Caudill" "adam@adamcaudill.com" "<CAFJuDmNWWkHoh5brvTgZNYzNeH3ZbueHDBYC=WG7P1H7fJbKOA@mail.gmail.com>" "67" "Re: [oss-security] RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies" "^Cc:" nil nil "3" "2016030421:56:13" "[oss-security] RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies" (number mark "        adam@adamcau Mar  4   67/3412  " thread-indent "\"Re: [oss-security] RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies\"\n") "<6C149CB0AE53E944A358EC6730D07C7442EC599128@TUS1XCHEVSPIN35.SYMC.SYMANTEC.COM>" ("<CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com>" "<56D9DD1F.1030302@cert.org>" "<6C149CB0AE53E944A358EC6730D07C7442EC599128@TUS1XCHEVSPIN35.SYMC.SYMANTEC.COM>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13698 invoked by uid 550); 21 Oct 2017 20:21:45 -0000
+Received: (qmail 14279 invoked by uid 550); 4 Mar 2016 21:56:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,80 +11,108 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27885 invoked from network); 21 Oct 2017 19:58:44 -0000
+Received: (qmail 14261 invoked from network); 4 Mar 2016 21:56:44 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=mF6Hl7KwR4yXN1lyQcTqtdOj8vds0TrkZP2n/7/dG8g=;
-        b=XVw64L4SxuDF8l16tLT1EGIk3wo5tsXBLgDIZpqjeNROo154tWuSvsYptKb9QPrTKO
-         JwBggsA+HPqCfHFmFaPSyUbAYM2vrZAuMRmHuwvFbKca3SLWCvZLA/oBt0aCzaVgku05
-         3aCqZH8qnv7nnENgsBmyBYVoNph7EiLBSdsyqGil6txeAWf2MjsEI5OkpQJNja9+aV4g
-         eo4hL4cKv+Uj6gXQldZrnEYX+07w22KAU18QIK2ZOnfL4/BhDOdIioRGonoMSXUnKdQ/
-         xeREBayB1Ghq7X3ETedG4F1UImOS+hwzmETE4NUoOto/3e0qyc7NNtohqpbtl5HEG5Rj
-         IZ+g==
+        d=adamcaudill.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=/ksSmRCC9cvmKLlt/Hy3ZsyFO3brFJW+CJpF+F30xmA=;
+        b=L53pu/Yh9fQ42b1O0FY1QrgLQTgsRFxpl8KIqC4sC3FkNu2ySsHKLYQRSLJzLUNx9/
+         0hVFZp4RIlujtwFkIDcuzwxXiFy4SMw34n6W5Vz33QiKUN0AZf2eCjCe4sJitvgBiaHO
+         Ii3EWgHc63sQjOe/pZ9S1ybRvf0SjNigGh6Fo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
+        d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=mF6Hl7KwR4yXN1lyQcTqtdOj8vds0TrkZP2n/7/dG8g=;
-        b=Is+FCy32B4CElq+Dnmf9I1P/Mx+Ou+xE3dwGxhl0YvJK/Ce52ksKxqP9W4MJSWVOau
-         VXW0Uy3Vltes075+i0VGR8UlilS+7G8AwNy8uxK9oS7C0we5KvWgwpmuESjRM4aQsfIY
-         J68naKYpV7QswN6/5CMUg8zuSf9E9f9+QxZXXolrdzU93zicdTXoNBTjDYRwU2ApqoFO
-         yJErX1U0JKQzb+OP9Y9VGTDLtNRkn3div75bvTPOWCmW0ChiUwI5g5NRjTwmawj95kJE
-         OsiLdiGoGGFeZgoPQ0/cX+WMSHvdZQ/HdJWsMNRb0+b5g1veWBZkB3SZ8QXjrML89RY+
-         KfKw==
-X-Gm-Message-State: AMCzsaWnXEROu41ekykY+Nk0KHXzxL2g+YbAOKosRanERorEVyFGfaYW
-	t3f2iLSXdrDWKbZty/al5ZoXdDGxuxQ48PNZ6Ko=
-X-Google-Smtp-Source: ABhQp+TZwaj8d2qnCc08/lt4ajTgV0EtbaNmBHDwEdjvyHgCnlPOCpQE8VGihM9S2LEnftRidEJLGrYaxJ0sVy7ir2Q=
-X-Received: by 10.28.157.83 with SMTP id g80mr2049887wme.9.1508615913298; Sat,
- 21 Oct 2017 12:58:33 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=/ksSmRCC9cvmKLlt/Hy3ZsyFO3brFJW+CJpF+F30xmA=;
+        b=L4cp8TUyyfBISNA4932W0+u06GjkyffSaPqM/yewIQ2c3TvuHzwBArr9YQAIi39JMM
+         15Q03a0mxmDJ4buhRRbzANlxB4FqgpTMu1jVDFbZHkLVf/KStsJQMtonvN2CZZbEgoGg
+         cdetGh5+w7WOnYuW7FocCBoq/1y/Xvys2eWimY5ZdH6l68Qw8zPkuInWHD4P2G6u1Q2E
+         JMKd8hsiGWzLIeJsAH0toiOuoiSX+6LK9N33wHxkb4aOUbJlq5csLS7A6YhhpK0Up7ts
+         ZvKWhnsZD6QaDIRK54dZ2Zsaa3LRk/BEw9EXtLW7/H0DOa7cFTv6cVCbVZXGH1FYrIoE
+         Bn6Q==
+X-Gm-Message-State: AD7BkJLpIafkVqzprBw8zvcUSVAfuypl4lW65w4Ni6xQvdKkuBYrTa9JV5g+wUjy4Mmr0cAnhSmu3nP0g5R4dw==
+X-Received: by 10.25.25.143 with SMTP id 137mr3881932lfz.86.1457128593289;
+ Fri, 04 Mar 2016 13:56:33 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20171021105847.GA16973@openwall.com>
-References: <20171017162507.e7lx6fbnleugoxxa@waldi.eu.org> <CAOfWR+EHYftu3Hqbu0qGvk_kk3au-Gkj_WEH95syC3n-QuNnxg@mail.gmail.com>
- <CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com>
- <CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>
- <20171019194428.GK20315@hunt> <CAOfWR+H_UbXfxh=oECSqUEcLmAh+RZciH61q0E5LqskWSOYWKA@mail.gmail.com>
- <CABMkiz6X3N8X7nq8eCnNGVUEx8jzd7hNLk3W_8OdW0Pg+UvSYQ@mail.gmail.com>
- <CAOfWR+Ga88eCNj-cQiBBXzM=S+xBfE5fsbgBWXMWSnN=8_4rFw@mail.gmail.com> <20171021105847.GA16973@openwall.com>
-Message-ID: <CAOfWR+E5EBSOe5kbSFh2zwUXKAahDXi6Dpax6dr9FLVkT1pY3g@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Sat, 21 Oct 2017 15:57:52 -0400
-From: Robert Watson <robertcwatson1@gmail.com>
+In-Reply-To: <6C149CB0AE53E944A358EC6730D07C7442EC599128@TUS1XCHEVSPIN35.SYMC.SYMANTEC.COM>
+References: <CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com>
+ <56D9DD1F.1030302@cert.org> <6C149CB0AE53E944A358EC6730D07C7442EC599128@TUS1XCHEVSPIN35.SYMC.SYMANTEC.COM>
+Message-ID: <CAFJuDmNWWkHoh5brvTgZNYzNeH3ZbueHDBYC=WG7P1H7fJbKOA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Art Manion <amanion@cert.org>, Kurt Seifried <kseifried@redhat.com>, 
+	cve-editorial-board-list <cve-editorial-board-list@lists.mitre.org>
+Date: Fri, 4 Mar 2016 16:56:13 -0500
+From: Adam Caudill <adam@adamcaudill.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in
- Debian mirror script ftpsync
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] RE: Concerns about CVE coverage shrinking - direct
+ impact to researchers/companies
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-Thank You for tolerating my questions. I've read the wikis and pages
-you've suggested, and am attempting to format this reply as required.
-Please advise if anything is still wrong.
+CVE clearly plays an important role - customers and clients rely on
+them, researchers need them to coordinate with vendors - they play an
+important role in so many parts of vulnerability disclosure and
+management - yet as Kurt points out, researchers request CVEs, and the
+requests are rejected because of this coverage policy (assuming the
+researcher gets a response; anyone that has watched this list has seen
+the issues with requests not being responded to). By rejecting these
+requests, and leaving legitimate vulnerabilities in software with a
+significant user base without a CVE, it makes work for difficult for
+researchers, for vendors, and for customers.
+
+The level of frustration in the research community has been growing,
+with steady calls for a new CVE-like solution that is designed to
+address these needs in a more effective way. I greatly appreciate the
+work that has been done, but at this point CVE is becoming less
+useful, less relevant - if this isn't addressed, my expectation is
+that a CVE-like solution will be adopted by the community, and
+researchers will begin moving away from requesting CVEs.
+
+At least one (very prolific) researcher has already moved to
+self-assigning CVE-like IDs that are outside of the normal CVE range
+to address this issue. Others are trying to create their own
+registries, and as Kurt points out, some are just not requesting IDs
+of any sort now.
+
+This is a legitimate problem, the frustration level is growing, some
+type of solution is needed.
+
+--Adam Caudill
+http://adamcaudill.com
 
 
-On Sat, Oct 21, 2017 at 6:58 AM, Solar Designer <solar@openwall.com> wrote:
+On Fri, Mar 4, 2016 at 3:25 PM, Mike Prosser <mprosser@symantec.com> wrote:
+> While it would have an impact for sure on our community, I think the biggest impact would be on customers since CVEs have become a Vulnerability Name when calling support with concerns....rather than just a common tracking reference.
+>
+> -Mike
+> Symantec Software Security Group
 >
 >
-> On Fri, Oct 20, 2017 at 11:08:14PM +0000, Robert Watson wrote:
-> > Okay, so a script adds a symlink to /etc/shadow or something else
-> > confidential. Unless they're root, what good does it do them? They can't
-> > read it.
+> -----Original Message-----
+> From: owner-cve-editorial-board-list@lists.mitre.org [mailto:owner-cve-editorial-board-list@lists.mitre.org] On Behalf Of Art Manion
+> Sent: Friday, March 04, 2016 1:08 PM
+> To: Kurt Seifried <kseifried@redhat.com>; cve-editorial-board-list <cve-editorial-board-list@LISTS.MITRE.ORG>; oss-security <oss-security@lists.openwall.com>
+> Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 >
-> I think this specific question had already been addressed by Ben in:
+> On 2016-03-04 13:24, Kurt Seifried wrote:
+>> So I've now heard from several security researchers that they are
+>> unable to get CVEs for issues that need CVEs (e.g. widely used
+>> hardware/software with flaws that have real world impacts and need to
+>> be properly tracked. This has definitely resulted in issues being
+>> publicized with no CVE that then makes it much harder to track and
+>> deal with these issues.
 >
-> http://www.openwall.com/lists/oss-security/2017/10/18/12
-> ...
-
-I didn't see how revealing configuration details was anything more
-than "security by obscurity" but that's not a discussion for this
-forum. Mea Culpa.
-
-> While we're at it, I also recommend that you avoid top-posting and
-> over-quoting.  Here's how to format your messages better:
-
-Believe it or not, this is first occasion using the "Plain text"
-feature in the browser version of Gmail and editing the included text.
-Was using Google Inbox on a tablet before. I write programs. Really
-pretty naive when it comes to skillfully using software.
-
-Will use this in the future.
-
-Robert
+> I think it's been said on this list previously -- these are two separate
+> activities:
+>
+> 1. Assigning IDs
+>
+> 2. Analysis, deconfliction, write-up
+>
+> Binding these together results in delay, because #2 takes considerably more calendar time and effort.  Another result is a limited but fairly high quality set of entries (once #2 is complete).
+>
+> I share Kurt's concern that CVE is not meeting a researcher/disclosure use case of having IDs for vulnerabilities, and that the community will at some point stop bothering with CVE.
+>
+> I'm not sure how bad such an outcome would be, or what impact that would have on CVE.
+>
+>  - Art
