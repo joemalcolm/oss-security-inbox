@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["334" "Thursday" "5" "December" "2019" "12:44:56" "+0200" "Georgi Guninski" "gguninski@gmail.com" "<CAGUWgD_w0P2mM5Q60S3b5D5djnPsSmwTR6VTtZ1Y3Q7=UhN7Pw@mail.gmail.com>" "12" "Re: [oss-security] Authentication vulnerabilities in OpenBSD" "^Date:" nil nil "12" "2019120510:44:56" "[oss-security] Authentication vulnerabilities in OpenBSD" (number mark "        gguninski@gm Dec  5   12/334   " thread-indent "\"Re: [oss-security] Authentication vulnerabilities in OpenBSD\"\n") "<20191204204020.GB7012@localhost.localdomain>" ("<20191204204020.GB7012@localhost.localdomain>") nil nil nil nil nil nil nil "Re: [oss-security] Authentication vulnerabilities in OpenBSD" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["746" "Friday" "4" "March" "2016" "19:02:51" "+0100" "Pere Orga" "pere@orga.cat" "<CAMYtjArgn4pT2z2gVpwvQh7L40d11Q-A47fJtPboi27b+4BX-A@mail.gmail.com>" "30" "[oss-security] CVE requests for Drupal contributed modules (from 2016-009 to 2016-014)" "^Cc:" nil nil "3" "2016030418:02:51" "[oss-security] CVE requests for Drupal contributed modules (from 2016-009 to 2016-014)" (number mark "        pere@orga.ca Mar  4   30/746   " thread-indent "\"[oss-security] CVE requests for Drupal contributed modules (from 2016-009 to 2016-014)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 16344 invoked by uid 550); 5 Dec 2019 10:53:42 -0000
+Received: (qmail 3538 invoked by uid 550); 4 Mar 2016 18:07:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5944 invoked from network); 5 Dec 2019 10:45:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=D7Y5sy3QpucruZKmM34ufmkVZpQcWcqBhswJBHe0XhU=;
-        b=IZhvw1+srjj9EnpGfwkCtMaUqAa2Dy9Q5MpIwg4/jcv1UPQr6YJXbz0J7fvCPGCF8Y
-         xISzpTkBfGQiH/2JKxInTEv8TXM4PZsEuDit3nKR8GxG/ciQYharaFCMowNUwSR7v6DQ
-         gb6NkDJ4F6h2bgT20GKT+Q0+GqP075SbN23eUnImrioJss3mdbxeFduYZM65REO5szEe
-         UbgMje19W9EVfgifxN5WXS0/sMALMJRd4X6y3yS0F7MM2wzMRJ5HKYJ2v7SOJbTsCIzC
-         tKakvHB+J9L9lxgvqu1PoOh36ETj/oUmlgtQ7hhl1BSYvv/6ft2r7EAinoGYGkzzfzPQ
-         YNsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=D7Y5sy3QpucruZKmM34ufmkVZpQcWcqBhswJBHe0XhU=;
-        b=uhSEbrzeOrJJQ42LM+Oio5ONZlGg65X2G79dtDsazaqU9c0kG/5ecr7rKNl/heihtS
-         7miGgD2gAKjYmhyZq30j4tJfZ681Vnkn4c3SonWgGxPDMCslSnBxEUQOauisMRy2EfDR
-         M6opQRYtx8fxOUw2FYWZ9JEPYFRmUm3joqbtI+cD07BXzcguyxG1FJA0jqVzhoTJYfez
-         yfSnYrqIfeX83la2O6V2sIBdVKZwHJFzBtO1tiAYpTbhG4qTR8ZBvD9fUYC8eQ4mVcyX
-         bKOhEvt3g7WxnjV9kM8XzuEI2a3f29U7fMyQlGlwfBtGQ43YVHGThc+MqOH28mMggn1b
-         oSww==
-X-Gm-Message-State: APjAAAWms0Yg3MXt1lwQ8JpjsBfCbeNA1wvKM7QAgn7R2z7aQHDyiTPy
-	Nag0gVIGpOy04IesmEfKTB7j4X1hoc48kVav3NvfwIjb55U=
-X-Google-Smtp-Source: APXvYqwsG4GjMH18cWIQHqGbiUfeazlX3ODAx2SxNTwcsqSa5e9tPpRz1isnXB/8R8yLW1GvM0b314I+SSbn7N7QiIs=
-X-Received: by 2002:a5d:9eda:: with SMTP id a26mr6024032ioe.238.1575542708298;
- Thu, 05 Dec 2019 02:45:08 -0800 (PST)
+Received: (qmail 3520 invoked from network); 4 Mar 2016 18:07:38 -0000
+X-Gm-Message-State: AD7BkJI9y7Oo1IskjbV2urXIuZO6xktq1TG4Sygv6vQN/dMn7s/xGukY2twmvBBt/YNZ2u4jM9A+ndo7CUWgDA==
+X-Received: by 10.28.226.6 with SMTP id z6mr225301wmg.44.1457114590934; Fri,
+ 04 Mar 2016 10:03:10 -0800 (PST)
 MIME-Version: 1.0
-References: <20191204204020.GB7012@localhost.localdomain>
-In-Reply-To: <20191204204020.GB7012@localhost.localdomain>
-Message-ID: <CAGUWgD_w0P2mM5Q60S3b5D5djnPsSmwTR6VTtZ1Y3Q7=UhN7Pw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Thu, 5 Dec 2019 12:44:56 +0200
-From: Georgi Guninski <gguninski@gmail.com>
+X-Gmail-Original-Message-ID: <CAMYtjArgn4pT2z2gVpwvQh7L40d11Q-A47fJtPboi27b+4BX-A@mail.gmail.com>
+Message-ID: <CAMYtjArgn4pT2z2gVpwvQh7L40d11Q-A47fJtPboi27b+4BX-A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator3111.hostgator.com
+X-AntiAbuse: Original Domain - lists.openwall.com
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - orga.cat
+X-BWhitelist: no
+X-Source-IP: 74.125.82.50
+X-Exim-ID: 1abu4G-0005ba-MQ
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: mail-wm0-f50.google.com [74.125.82.50]:34017
+X-Source-Auth: pere@orga.cat
+X-Email-Count: 2
+X-Source-Cap: bmV0b2w7bmV0b2w7Z2F0b3IzMTExLmhvc3RnYXRvci5jb20=
+Cc: Drupal Security Team <security@drupal.org>
+Date: Fri, 4 Mar 2016 19:02:51 +0100
+From: Pere Orga <pere@orga.cat>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Authentication vulnerabilities in OpenBSD
+Subject: [oss-security] CVE requests for Drupal contributed modules (from 2016-009 to 2016-014)
 To: oss-security@lists.openwall.com
 
-On Wed, Dec 4, 2019 at 10:51 PM Qualys Security Advisory <qsa@qualys.com> wrote:
->
->
-> Qualys Security Advisory
->
-> Authentication vulnerabilities in OpenBSD
->
+Hi
 
-openbsd doesn't count these as remote holes in default install, right?
+Please can I have CVE IDs assigned to the following vulnerabilities:
 
-Their front page still says:
-Only two remote holes in the default install, in a heck of a long time!
+
+Prepopulate - Access Bypass - SA-CONTRIB-2016-009
+https://www.drupal.org/node/2679503
+
+USASearch - Access Bypass - SA-CONTRIB-2016-010
+https://www.drupal.org/node/2679509
+
+Google Analytics Counter - CSRF - SA-CONTRIB-2016-011
+https://www.drupal.org/node/2679515
+
+Hubspot CTA - Cross Site Scripting (XSS) - SA-CONTRIB-2016-012
+https://www.drupal.org/node/2679539
+
+Node Notify - Cross Site Scripting (XSS) - SA-CONTRIB-2016-013
+Node Notify - CSRF - SA-CONTRIB-2016-013
+https://www.drupal.org/node/2679541
+
+Fieldable Panels Panes - Access Bypass - SA-CONTRIB-2016-014
+https://www.drupal.org/node/2679589
+
+
+Thanks
+
+Regards
+-- 
+Pere Orga on behalf of the Drupal Security team
