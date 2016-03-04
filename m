@@ -1,62 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/19
-Message-ID: <CANO=Ty066x7DZU+hsdKLLMbD-18h5Okza6T3G=udCKjggGfqfA@mail.gmail.com>
-Date: Mon, 14 Mar 2016 09:31:38 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Re: CVE-Request - GNU Awk.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/04/7
+Message-ID: <CAFJuDmNWWkHoh5brvTgZNYzNeH3ZbueHDBYC=WG7P1H7fJbKOA@mail.gmail.com>
+Date: Fri, 4 Mar 2016 16:56:13 -0500
+From: Adam Caudill <adam@...mcaudill.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Cc: Art Manion <amanion@...t.org>, Kurt Seifried <kseifried@...hat.com>,  cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>
+Subject: Re: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-Is a SIGSEGV on it's own enough to justify a CVE? For some apps the answer
-would be yes (e.g. a single threaded network service that crashes out). For
-something like gawk I'm not so sure, it's a local utility that shouldn't
-really be processing network data/untrusted data, but then I would have
-said the same thing about bash (and then shellshock happened). I'm inclined
-to err on the side of caution and give it an identifier, if nothing else
-people using gawk on potentially dangerous input are more likely to see
-this issue and check their scripts/etc. If Mitre doesn't give it a CVE I
-can assign a DWF identifier to it.
+CVE clearly plays an important role - customers and clients rely on
+them, researchers need them to coordinate with vendors - they play an
+important role in so many parts of vulnerability disclosure and
+management - yet as Kurt points out, researchers request CVEs, and the
+requests are rejected because of this coverage policy (assuming the
+researcher gets a response; anyone that has watched this list has seen
+the issues with requests not being responded to). By rejecting these
+requests, and leaving legitimate vulnerabilities in software with a
+significant user base without a CVE, it makes work for difficult for
+researchers, for vendors, and for customers.
+
+The level of frustration in the research community has been growing,
+with steady calls for a new CVE-like solution that is designed to
+address these needs in a more effective way. I greatly appreciate the
+work that has been done, but at this point CVE is becoming less
+useful, less relevant - if this isn't addressed, my expectation is
+that a CVE-like solution will be adopted by the community, and
+researchers will begin moving away from requesting CVEs.
+
+At least one (very prolific) researcher has already moved to
+self-assigning CVE-like IDs that are outside of the normal CVE range
+to address this issue. Others are trying to create their own
+registries, and as Kurt points out, some are just not requesting IDs
+of any sort now.
+
+This is a legitimate problem, the frustration level is growing, some
+type of solution is needed.
+
+--Adam Caudill
+http://adamcaudill.com
 
 
-On Mon, Mar 14, 2016 at 7:55 AM, Yuriy M. Kaminskiy <yumkam@...il.com>
-wrote:
-
-> On 14.03.2016 15:26, Tomas Hoger wrote:
+On Fri, Mar 4, 2016 at 3:25 PM, Mike Prosser <mprosser@...antec.com> wrote:
+> While it would have an impact for sure on our community, I think the biggest impact would be on customers since CVEs have become a Vulnerability Name when calling support with concerns....rather than just a common tracking reference.
 >
->> On Mon, 14 Mar 2016 06:32:28 +0000 Steve Kemp wrote:
->>
->>    I reported two DoS bugs against GNU Awk to the debian
->>>   bug tracker recently, both of which are denial of service
->>>   attacks causing NULL-pointer deferences.
->>>
->>>    It would be useful to have a CVE identifiers assigned.
->>>
->>
->> Why should these get a CVE?  As you state in one of your reports:
->>
->>    While I appreciate that passing untrusted code to gawk is not a
->>    common thing to do, I do not believe that it should be possible to
->>    trigger a segfault though.
->>
->> Why should that be considered a valid / safe use case at all?  If
->> something makes awk run untrusted programs, there's code execution
->> problem already:
->>
->>    echo | awk '{ system("id") }'
->>
->
-> What if someone generates awk script using data from untrusted source, and
-> avoids all theoretically-dangerous constructs (like system()), but their
-> filter miss something theoretically-innocent that can trigger SIGSEGV (or
-> worse) due to bug in gawk.
+> -Mike
+> Symantec Software Security Group
 >
 >
-
-
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+> -----Original Message-----
+> From: owner-cve-editorial-board-list@...ts.mitre.org [mailto:owner-cve-editorial-board-list@...ts.mitre.org] On Behalf Of Art Manion
+> Sent: Friday, March 04, 2016 1:08 PM
+> To: Kurt Seifried <kseifried@...hat.com>; cve-editorial-board-list <cve-editorial-board-list@...TS.MITRE.ORG>; oss-security <oss-security@...ts.openwall.com>
+> Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+>
+> On 2016-03-04 13:24, Kurt Seifried wrote:
+>> So I've now heard from several security researchers that they are
+>> unable to get CVEs for issues that need CVEs (e.g. widely used
+>> hardware/software with flaws that have real world impacts and need to
+>> be properly tracked. This has definitely resulted in issues being
+>> publicized with no CVE that then makes it much harder to track and
+>> deal with these issues.
+>
+> I think it's been said on this list previously -- these are two separate
+> activities:
+>
+> 1. Assigning IDs
+>
+> 2. Analysis, deconfliction, write-up
+>
+> Binding these together results in delay, because #2 takes considerably more calendar time and effort.  Another result is a limited but fairly high quality set of entries (once #2 is complete).
+>
+> I share Kurt's concern that CVE is not meeting a researcher/disclosure use case of having IDs for vulnerabilities, and that the community will at some point stop bothering with CVE.
+>
+> I'm not sure how bad such an outcome would be, or what impact that would have on CVE.
+>
+>  - Art
