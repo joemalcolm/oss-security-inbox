@@ -1,49 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/30/3
-Message-ID: <b45e0575bb6e4d4d820c28b90e946018@imshyb02.MITRE.ORG>
-Date: Fri, 30 Dec 2016 12:57:19 -0500
-From: <cve-assign@...re.org>
-To: <carnil@...ian.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <benh@...ian.org>, <meissner@...e.de>
-Subject: Re: Linux Kernel use-after-free in SCSI generic device interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/04/1
+Message-ID: <alpine.LFD.2.20.1603041532360.19054@wniryva>
+Date: Fri, 4 Mar 2016 15:34:36 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request Qemu: rng-random: arbitrary stack based allocation leading to corruption
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+   Hello,
 
->> Linus has committed a fix for this to mainline:
->>
->> commit a0ac402cfcdc904f9772e1762b3fda112dcc56a0
+Qemu emulator built with the Pseudo Random Number Generator(PRNG) back-end 
+support is vulnerable to an arbitrary stack based allocation and memory 
+corruption via random bytes issue. It could occur when a guest requests for 
+entropy for random number generation.
 
-> whilst the originally identified
-> commit does partly address the issue, the completed fix for the sg and
-> bsg driver appears to be 128394eff343fc6d2f32172f03e24829539c5835.
+A user/process inside guest could use this flaw to crash the Qemu process 
+resulting in DoS.
 
-Use CVE-2016-10088 for the vulnerability that remains after
-a0ac402cfcdc904f9772e1762b3fda112dcc56a0.
+Upstream patch:
+---------------
+   -> http://git.qemu.org/?p=qemu.git;a=commit;h=60253ed1e6ec6d8e5ef2efe7bf755f475dce9956
 
-The a0ac402cfcdc904f9772e1762b3fda112dcc56a0 code change is in 4.8.14,
-but the 128394eff343fc6d2f32172f03e24829539c5835 code change is not.
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1314676
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYZp9JAAoJEHb/MwWLVhi2fIIP/RHrAePUQrejGdzGBsGEVGEr
-eU0RWwNYthutvvKOV0L96oOdLjbjkptp3Q4CWdcny1F39G7e2r7kgt0isSsnveJu
-TubQ87XWPslY0jzooSGhreGoPB31pmueFZDuVt0f1eYGwXQdWCRH9z59jPyOFQaV
-CLVekCk5ms1pfvhKbNig6YEuuqSD6RSqEcDw3c4SwAuD/rzxwQtElOP7xo3YlH+z
-tho/AngjFq7hVvzpNfOP75rPHWS0TTatMYyr8NqOTZI+6WukwvC3uXGT21lKzD8J
-rzH8sJ7Hv+p/I2gUDCzINcQ9BdzT0uu3la5KbdhCxjZbkMH24sZ1M4IflzxnzwiQ
-HZicaQMG7RY4Q/QRDBnssI7LSFxKhZ/puh7gRsCHtRexEUQy3veGNFfTOyga/TgB
-5ITNA0g6Y0AFIQS2B2eF5+4g+A21LryqZhsBJP4C8knVae9MwaRgnJ0qdAc/MObc
-s1Oxx63jJbd2wqHO0ybTPG41CnUuBNIVB90HGwLPDw0o06IZq1S7vbG/X/IkVfxC
-PtE8fwNCKpR1GW8n7sPTWDMrs7qMHfxKp8ES0u+HXW2cs6jcz4CJigMfDj+uQHO0
-uJJYwROyfO07RV9MS1R4+kpHq/5XrEx7ka/YjSwMulIHdALJjBSpL3sipOTzNrxa
-lxseS32rE8umc+Pgz32C
-=9EjT
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
