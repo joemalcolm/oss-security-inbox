@@ -1,52 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/31/3
-Message-ID: <7af25344ac544162af359607a4bf34e4@imshyb02.MITRE.ORG>
-Date: Sat, 31 Dec 2016 12:12:14 -0500
-From: <cve-assign@...re.org>
-To: <carnil@...ian.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <daved@...siol.usyd.edu.au>, <jf@...kes.org>, <willi@...ian.org>, <security@...ian.org>
-Subject: Re: CVE Request: UnRTF: stack-based buffer overflows in cmd_* functions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/04/2
+Message-ID: <CACn5sdQdKGVFgWPdYpZ6PY0P4gJr6+GQM=STpoFM_T31wugZvQ@mail.gmail.com>
+Date: Fri, 4 Mar 2016 10:59:22 -0300
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: tidy-html5: infinite loop parsing an html file
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+A DoS parsing a html file was discovered in tidy-html5 (affecting 5.1.25
+and last revisions) using afl. Technical details are available here:
 
->> I've found a Stack-based buffer overflow in unrtf 0.21.9, which
->> affects three functions including: cmd_expand, cmd_emboss and
->> cmd_engrave.
+https://github.com/htacg/tidy-html5/issues/380
 
->> Apparently writing a negative integer to the buffer can trigger the
->> overflow (Minus sign needs an extra byte).
+Regards,
+Gustavo.
 
-> https://bugs.debian.org/849705
-
->>> I guess that you can just add a package patch to increate the str[] buffer
->>> size, something like
->>> 
->>> - char str[10];
->>> + char str[15];
-
-Use CVE-2016-10091 (for all of the 849705 report).
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYZ+YzAAoJEHb/MwWLVhi2I1wQAKZleo2oQTznb6H4Ktghax2F
-jJ8ZchpRw9miiQogbGzSHNVFOiR5Ap0O9Kxusy9ndflduYur3Q3ipdLrONVnR+Tp
-RMMRNfBcWZi3g3DI6q10WeJ1jswoz2wYljICYIZWAHULvj34Y8Gj8fpFqq8Wr4SQ
-TBDSyF4RyXRNgwBaYiT3VeHQgbYwz7krzLTytmllQ+I8eG9Ehi4p4eNYLKLvUqqL
-5zNTnAresR9GytTl2uCyWJN9c+IBr18lZ3BbYnYY9EJZztZLnIRbQPF7mp1ZV4M3
-d5xmq2Ota/vl/xUVpn42tq7ZR2tqnKvCOah0aCZsQTBz3MWmajITaAKH6tW8uvdy
-xxzvDvhN6YFdafrWBfZREdiJab6zprK5P5ErpDoj3/WJukMYVGOmCJWky8JuBI7i
-tT7OElaJOUoAk0VrcZoWKAGlxrNjQXbfCBUn+xawUgeLYBmUMlBFeoBg1XpZDpl/
-4iuwY55s0nOq+JTtvNswl1uDRh4lJI2JQYm4KNCC6sFgWnuXitTkWUYw+K5vndnX
-XXLTUj7KoPbg67Q4kKYS7J8wEJxAXFQ6WJZklfzQ0Y81IDuFJMGCyaBnljy2NN84
-0uCUp3J39jGFk34j4/HiBFEcBxj1YfBEGuCKfjSj/Ey/to6ECqTR2AhF1TSwfhpt
-uvY0H3jZ2y/XLDXoUiGr
-=K2dj
------END PGP SIGNATURE-----
