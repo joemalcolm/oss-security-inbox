@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7296" "Monday" "6" "July" "2015" "12:49:45" "+0200" "Stefan Cornelius" "scorneli@redhat.com" "<20150706124945.3b70a6fa@redhat.com>" "120" "Re: [oss-security] Re: CVE Request: Multiple vulnerabilities in freexl 1.0.0g" nil nil nil "7" "2015070610:49:45" "[oss-security] Re: CVE Request: Multiple vulnerabilities in freexl 1.0.0g" (number mark "        scorneli@red Jul  6  120/7296  " thread-indent "\"Re: [oss-security] Re: CVE Request: Multiple vulnerabilities in freexl 1.0.0g\"\n") "<20150327234801.AB6AC6C003B@smtpvmsrv1.mitre.org>" ("<CABfY0L1Y2CYFQ-Hd-kohtzLKDy9aFFKmQM_drwsiR3MpEZ+KJA@mail.gmail.com>" "<20150327234801.AB6AC6C003B@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["686" "Friday" "4" "March" "2016" "15:34:36" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1603041532360.19054@wniryva>" "22" "[oss-security] CVE request Qemu: rng-random: arbitrary stack based allocation leading to corruption" "^Date:" nil nil "3" "2016030410:04:36" "[oss-security] CVE request Qemu: rng-random: arbitrary stack based allocation leading to corruption" (number mark "        ppandit@redh Mar  4   22/686   " thread-indent "\"[oss-security] CVE request Qemu: rng-random: arbitrary stack based allocation leading to corruption\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13976 invoked by uid 550); 6 Jul 2015 10:50:14 -0000
+Received: (qmail 9801 invoked by uid 550); 4 Mar 2016 10:04:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,141 +11,39 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13945 invoked from network); 6 Jul 2015 10:50:13 -0000
-Message-ID: <20150706124945.3b70a6fa@redhat.com>
-In-Reply-To: <20150327234801.AB6AC6C003B@smtpvmsrv1.mitre.org>
-References: <CABfY0L1Y2CYFQ-Hd-kohtzLKDy9aFFKmQM_drwsiR3MpEZ+KJA@mail.gmail.com>
-	<20150327234801.AB6AC6C003B@smtpvmsrv1.mitre.org>
+Received: (qmail 9780 invoked from network); 4 Mar 2016 10:04:52 -0000
+X-X-Sender: pjp@javelin
+Message-ID: <alpine.LFD.2.20.1603041532360.19054@wniryva>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: base64
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-Cc: jodie.cunningham@gmail.com, oss-security@lists.openwall.com,
-        a.furieri@lqt.it
-Date: Mon, 6 Jul 2015 12:49:45 +0200
-From: Stefan Cornelius <scorneli@redhat.com>
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Fri, 04 Mar 2016 10:04:40 +0000 (UTC)
+Date: Fri, 4 Mar 2016 15:34:36 +0530 (IST)
+From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE Request: Multiple vulnerabilities in
- freexl 1.0.0g
-To: cve-assign@mitre.org
+Subject: [oss-security] CVE request Qemu: rng-random: arbitrary stack based allocation
+ leading to corruption
+To: oss security list <oss-security@lists.openwall.com>
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkVEIE1FU1NBR0UtLS0tLQ0KSGFzaDogU0hB
-MjU2DQoNCk9uIEZyaSwgMjcgTWFyIDIwMTUgMTk6NDg6MDEgLTA0MDAgKEVE
-VCkNCmN2ZS1hc3NpZ25AbWl0cmUub3JnIHdyb3RlOg0KDQo+IC0tLS0tQkVH
-SU4gUEdQIFNJR05FRCBNRVNTQUdFLS0tLS0NCj4gSGFzaDogU0hBMQ0KPiAN
-Cj4gPj4gIzQ6IEZyZWVYTCAxLjAuMGcgZGlkIG5vdCBwcm9wZXJseSBjaGVj
-ayByZXF1ZXN0cyBmb3Igd29ya2Jvb2sNCj4gPj4gbWVtb3J5IGFsbG9jYXRp
-b24uIEEgc3BlY2lhbGx5IGNyYWZ0ZWQgaW5wdXQgZmlsZSBjb3VsZCBjYXVz
-ZSBhDQo+ID4+IERlbmlhbCBvZiBTZXJ2aWNlLCBvciBwb3NzaWJseSB3cml0
-ZSBvbnRvIHRoZSBzdGFjay4NCj4gDQo+ID4gVGhpcyB2dWxuZXJhYmlsaXR5
-IGlzIHJlbGF0ZWQgdG8gdGhlIG1pc3NpbmcgIj4gMTAyNCAqIDEwMjQiIHRl
-c3QgaW4NCj4gPiB0aGUgcGFyc2VfU1NUIGZ1bmN0aW9uLg0KPiANCj4gVXNl
-IENWRS0yMDE1LTI3NzYuDQo+IA0KPiANCj4gPj4+ICMyOiBBIGZsYXcgd2Fz
-IGZvdW5kIGluIHRoZSBmdW5jdGlvbiBhbGxvY2F0ZV9jZWxscygpLiBBIHNw
-ZWNpYWxseQ0KPiA+Pj4gY3JhZnRlZCBmaWxlIHdpdGggaW52YWxpZCB3b3Jr
-Ym9vayBkaW1lbnNpb25zIGNvdWxkIHBvc3NpYmx5DQo+ID4+PiByZXN1bHQg
-aW4gc3RhY2sgY29ycnVwdGlvbiBuZWFyIGZyZWV4bC5jOjEwNzQNCj4gDQo+
-ID4+IERvZXMgdGhpcyByZWZlciB0byB0aGUgbWlzc2luZyAiPT0gTlVMTCIg
-dGVzdHMgd2l0aGluIHRoZQ0KPiA+PiBhbGxvY2F0ZV9jZWxscyBmdW5jdGlv
-bj8NCj4gDQo+ID4gWWVzDQo+IA0KPiA+PiBJcyBhIE5VTEwgcG9pbnRlciBk
-ZXJlZmVyZW5jZSBnb2luZyB0byBvY2N1cg0KPiA+PiBiZWZvcmUgdGhlIGNv
-ZGUgcmVhY2hlcyBhIHBvaW50IHdoZXJlIHRoZXJlIGNhbiBiZSBzdGFjaw0K
-PiA+PiBjb3JydXB0aW9uPw0KPiANCj4gPiBJIGRvbid0IGJlbGlldmUgc28u
-IEl0IGxvb2tzIGxpa2UgdGhlc2UgYXJlIGluaXRpYWxpemVkIGFzIE5VTEws
-IGFuZA0KPiA+IGlmIHRoZXkgYXJlIHN0aWxsIE5VTEwgYXQgdGhpcyBwb2lu
-dCBpbiBleGVjdXRpb24gdGhlbiB3ZSBhc3N1bWUgdGhlDQo+ID4gaW5wdXQg
-ZmlsZSB3YXMgbWFsZm9ybWVkIGFuZCBleGl0IHdpdGggdGhlIGFwcHJvcHJp
-YXRlIHJldHVybiBjb2RlLg0KPiANCj4gSW4gdGhhdCBjYXNlLCB3ZSBkb24n
-dCBrbm93IHdoYXQgdnVsbmVyYWJpbGl0eSB5b3UgbWVhbiBmb3IgIzIuDQo+
-IA0KPiBCZXR3ZWVuIHRoZSB1bnBhdGNoZWQgY29kZSBhbmQgdGhlIHBhdGNo
-ZWQgY29kZSwgdGhlIG9ubHkgY2hhbmdlIGluDQo+IHRoZSBhbGxvY2F0ZV9j
-ZWxscyBmdW5jdGlvbiBpcyB0aGUgYWRkaXRpb24gb2YgY2hlY2tzIGZvciB3
-aGV0aGVyDQo+IHdvcmtib29rIG9yIHdvcmtib29rLT5hY3RpdmVfc2hlZXQg
-aXMgTlVMTC4gSW4gdGhlIHVucGF0Y2hlZCBjb2RlLCBpZg0KPiBlaXRoZXIg
-b2YgdGhlc2Ugd2VyZSBOVUxMLCB3b3JrYm9vay0+YWN0aXZlX3NoZWV0LT5y
-b3dzIHdvdWxkIHJlc3VsdA0KPiBpbiBhIE5VTEwgcG9pbnRlciBkZXJlZmVy
-ZW5jZS4gQXMgZmFyIGFzIHdlIGtub3csIHRoaXMgb3V0Y29tZSBpcyBub3QN
-Cj4gdHlwaWNhbGx5IGRlc2NyaWJlZCBhcyAic3RhY2sgY29ycnVwdGlvbi4i
-DQo+IA0KPiBJZiB0aGUgZGVzaWduIG9mIHRoZSBhbGxvY2F0ZV9jZWxscyBm
-dW5jdGlvbiB3YXMgc3VwcG9zZWQgdG8NCj4gYW50aWNpcGF0ZSB0aGF0IGNh
-bGxlcnMgbWlnaHQgcHJvdmlkZSBhIE5VTEwgdmFsdWUgZm9yIHdvcmtib29r
-IG9yDQo+IHdvcmtib29rLT5hY3RpdmVfc2hlZXQsIHRoZW4gdGhlIHVucGF0
-Y2hlZCBjb2RlIGhhZCBhIHZ1bG5lcmFiaWxpdHkgaW4NCj4gdGhlIGFsbG9j
-YXRlX2NlbGxzIGZ1bmN0aW9uIHRoYXQgbWlnaHQgbG9vc2VseSBiZSBkZXNj
-cmliZWQgYXMgYSAiTlVMTA0KPiBwb2ludGVyIGRlcmVmZXJlbmNlIHZ1bG5l
-cmFiaWxpdHkuIg0KPiANCj4gV2UgdGhpbmsgeW91IG1heSBtZWFuIHRoYXQs
-IGluIHNvbWUgY2FzZXMsIHN0YWNrIGNvcnJ1cHRpb24gaGFzDQo+IG9jY3Vy
-cmVkIGJlY2F1c2Ugb2YgaW52YWxpZCB3b3JrYm9vayBkaW1lbnNpb25zIGJl
-Zm9yZSB0aGUNCj4gYWxsb2NhdGVfY2VsbHMgZnVuY3Rpb24gaXMgY2FsbGVk
-LiBJbiBzb21lIG9yIGFsbCBvZiB0aGVzZSBjYXNlcywgYQ0KPiBzaWRlIGVm
-ZmVjdCBvZiB0aGUgc3RhY2sgY29ycnVwdGlvbiBpcyB0aGF0IGVpdGhlciB3
-b3JrYm9vayBvcg0KPiB3b3JrYm9vay0+YWN0aXZlX3NoZWV0IGlzIE5VTEwu
-IFRoZSBwYXRjaGVkIGNvZGUsIGluc3RlYWQgb2YNCj4gcHJldmVudGluZyB0
-aGUgc3RhY2sgY29ycnVwdGlvbiAob3IgZGV0ZWN0aW5nIHRoZSBzdGFjayBj
-b3JydXB0aW9uDQo+IGJlZm9yZSBjYWxsaW5nIGFsbG9jYXRlX2NlbGxzKSwg
-Y2hvb3NlcyB0byB1c2UgdGhlc2UgIj09IE5VTEwiIHRlc3RzDQo+IHRvIGlu
-ZmVyIHRoYXQgc3RhY2sgY29ycnVwdGlvbiBoYXMgb2NjdXJyZWQuIElzIHRo
-aXMgY29ycmVjdD8NCg0KSGksDQoNCkl0IHNlZW1zIGxpa2UgdGhpcyBzdGls
-bCBoYXMgbm8gQ1ZFLCBhcHBhcmVudGx5IGJlY2F1c2UgdGhlIGV4YWN0DQpk
-ZXRhaWxzIG9mIHRoaXMgaXNzdWUgYXJlIHVuY2xlYXIuIEknbGwgdHJ5IHRv
-IGNsZWFyIHVwIHRoZSBzaXR1YXRpb24NCmFuZCB3aWxsIGFsc28gcHJvdmlk
-ZSBkZXRhaWxzIGZvciBhbm90aGVyLCBuZXcgaXNzdWUgYmVsb3cuDQoNCkZ1
-cnRoZXIgaW5mbyBmb3IgImlzc3VlICMyIjoNCj09PT09PT09PT09PT09PT09
-PT09PT09PT09PT0NClRoZSBjb21tb25fb3BlbigpIGZ1bmN0aW9uIGluaXRp
-YWxpemVzIHRoZSB3b3JrYm9vayAoYXQgdGhhdCBwb2ludCwNCm1vc3QgaW50
-ZXJlc3RpbmcgbWVtYmVycyBhcmUgTlVMTCkuIEEgYml0IGZ1cnRoZXIgZG93
-biwgaXQgcGFyc2VzDQphbGwgdGhlIGJpZmYgcmVjb3JkcyB2aWEgdGhlIGxv
-b3AgYXJvdW5kIHJlYWRfYmlmZl9uZXh0X3JlY29yZCgpOg0KPiAgd2hpbGUg
-KDEpDQo+ICAgIHsNCj4JaW50IHJldCA9IHJlYWRfYmlmZl9uZXh0X3JlY29y
-ZCAod29ya2Jvb2ssIHN3YXAsICZlcnJjb2RlKTsNCj4JaWYgKHJldCA9PSAt
-MSkNCj4JICAgIGJyZWFrOwkvKiBFT0YgKi8NCj4JaWYgKHJldCA9PSAwKQ0K
-PgkgICAgZ290byBzdG9wOw0KPiAgICB9DQoNCg0KQWZ0ZXIgcGFyc2luZyBh
-bGwgdGhlIHJlY29yZHMsIHRoZSB3b3JrYm9vay0+Zmlyc3Rfc2hlZXQgbWVt
-YmVyDQpwb2ludHMgdG8gc29tZXRoaW5nIHZhbGlkLCBidXQgd29ya2Jvb2st
-PmFjdGl2ZV9zaGVldCBkb2VzIG5vdCwNCml0J3Mgc3RpbGwgTlVMTC4NCmNv
-bW1vbl9vcGVuKCkgaGFzIGEgY2hlY2sgZm9yIGZpcnN0X3NoZWV0LCBidXQg
-c2luY2UgdGhlDQphbGxvY2F0ZV9jZWxscygpIGZ1bmN0aW9uIG9wZXJhdGVz
-IG9uIHRoZSB3b3JrYm9vay0+YWN0aXZlX3NoZWV0DQptZW1iZXIsIHNvIHdl
-IHVsdGltYXRlbHkgZ2V0IGEgTlVMTCBwb2ludGVyIGRlcmVmZXJlbmNlIGlu
-DQphbGxvY2F0ZV9jZWxscygpLiBJJ3ZlIG5vdCBzZWVuIGFueSBpbmRpY2F0
-aW9uIG9mIGEgc3RhY2sNCmNvcnJ1cHRpb24uDQoNCj4gICAgIHBfc2hlZXQg
-PSB3b3JrYm9vay0+Zmlyc3Rfc2hlZXQ7DQo+ICAgICB3aGlsZSAocF9zaGVl
-dCkNCj4gICAgICAgew0KPiAJICBpZiAocF9zaGVldC0+dmFsaWRfZGltZW5z
-aW9uID09IDApDQo+IAkgICAgew0KPiAJCS8qIHNldHRpbmcgU2hlZXQgZGlt
-ZW5zaW9ucyAqLw0KPiAJCWludCByZXQ7DQo+IAkJcF9zaGVldC0+cm93cyAr
-PSAxOw0KPiAJCXBfc2hlZXQtPmNvbHVtbnMgKz0gMTsNCj4gCQlyZXQgPSBh
-bGxvY2F0ZV9jZWxscyAod29ya2Jvb2spOw0KDQpEb2VzIHRoYXQgY2xlYXIg
-dGhlIHNpdHVhdGlvbiB1cCBlbm91Z2ggdG8gYXNzaWduIGEgQ1ZFIHRvIHRo
-aXM/DQoNCk5ldyBpc3N1ZTogYWxsb2NhdGVfY2VsbHMoKSBpbnRlZ2VyIG92
-ZXJmbG93DQo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PQ0KDQpUaGVyZSdzIGFuIGludGVnZXIgb3ZlcmZsb3cgaW4gdGhl
-IGFsbG9jYXRlX2NlbGxzKCkgZnVuY3Rpb24NCndoZW4gdHJ5aW5nIHRvIGFs
-bG9jYXRlIHRoZSBtZW1vcnkgZm9yIHdvcmtzaGVldCB3aXRoIHNwZWNpYWxs
-eQ0KY3JhZnRlZCByb3cvY29sdW1uIGRpbWVuc2lvbnMuIFRoaXMgY2FuIGJl
-IGV4cGxvaXRlZCB0byBjYXVzZSBhDQpoZWFwIG1lbW9yeSBjb3JydXB0aW9u
-LiBUaGUgbW9zdCBsaWtlbHkgb3V0Y29tZSBvZiB0aGlzIGlzIGEgY3Jhc2gN
-CndoZW4gdHJ5aW5nIHRvIGluaXRpYWxpemUgdGhlIGNlbGxzIGxhdGVyIGlu
-IHRoZSBmdW5jdGlvbi4NCj4gd29ya2Jvb2stPmFjdGl2ZV9zaGVldC0+Y2Vs
-bF92YWx1ZXMgPQ0KPiAJbWFsbG9jIChzaXplb2YgKGJpZmZfY2VsbF92YWx1
-ZSkgKg0KPiAJCSh3b3JrYm9vay0+YWN0aXZlX3NoZWV0LT5yb3dzICoNCj4g
-CQkgd29ya2Jvb2stPmFjdGl2ZV9zaGVldC0+Y29sdW1ucykpOw0KDQpJJ3Zl
-IG5vdCBhc3NpZ25lZCBhIENWRSB0byB0aGlzLCBzbyBJJ20gaGVyZWJ5IHJl
-cXVlc3Rpbmcgb25lIChtYWlubHkNCmJlY2F1c2UgdGhpcyB0aHJlYWQgaXMg
-YSBiaXQgb2xkIGFuZCB0aGUgcHJvYmxlbSBpcyBmYWlybHkgY2xvc2UgdG8g
-dGhlDQpwYXRjaGVkIGNvZGUsIHNvIHRoZXJlIG1heSBiZSBhIHNsaW0gY2hh
-bmNlIHRoYXQgc29tZWJvZHkgZWxzZSBub3RpY2VkDQp0aGlzIGluZGVwZW5k
-ZW50bHkgYW5kIHJlcXVlc3RlZCBhIENWRSBmb3IgdGhpcyBpbiBwcml2YXRl
-KS4NCg0KSSd2ZSBDQ2VkIHRoZSBtYWludGFpbmVyIHRvIHRoaXMgbWFpbC4N
-Cg0KVGhhbmtzIGFuZCBraW5kIHJlZ2FyZHMsDQotIC0tIA0KU3RlZmFuIENv
-cm5lbGl1cyAvIFJlZCBIYXQgUHJvZHVjdCBTZWN1cml0eQ0KLS0tLS1CRUdJ
-TiBQR1AgU0lHTkFUVVJFLS0tLS0NClZlcnNpb246IEdudVBHIHYyDQoNCmlR
-RWNCQUVCQ0FBR0JRSlZtbDFLQUFvSkVFVHdpWUNqVlNtUGlQQUgvMExjQmgv
-RUJGSnZaQVJlYmM1dXlCTmcNCmF6SGZ1cmRrR0JTU09ua1NieXdlUEdkSjBo
-eHR0emFhTHRtdTVIL3BuSlRrc1c4TGdlSUM1My8rL0JpODNZTlgNCmhNdlJp
-aVZaQmhsMXFibnZVOTVCdXlrb0xtYWV0Q3QwQ2t3Y25mRm03RnF4NStyK2xl
-RS9SWEVHbTRENk55UFINCmpmeUVPVDIvWTczNk9NL2NBU1NhRThndzB5cFdh
-ZGE0NHJSZkxpc3ZGazFhZlBwMlJQWTBycVVIcENYYUQ2VmsNCk5SOTZMbGkv
-WFpTL2czcDF3RVFNc29BK0RaYnV1N0lxRnU4OVBaYkV2ck9PYXdFSVpjbi9i
-ZWM4M3ZSUVZxK1QNCndMWXB4YWd2emtRMEZJUEhMRnVUU00rL09Dd1dHZ3pp
-NEFHVmltdnQyTzNvUXFvNkJNd045YXZwNFI5Tjl2bz0NCj1vKzFhDQotLS0t
-LUVORCBQR1AgU0lHTkFUVVJFLS0tLS0NCg==
+   Hello,
+
+Qemu emulator built with the Pseudo Random Number Generator(PRNG) back-end 
+support is vulnerable to an arbitrary stack based allocation and memory 
+corruption via random bytes issue. It could occur when a guest requests for 
+entropy for random number generation.
+
+A user/process inside guest could use this flaw to crash the Qemu process 
+resulting in DoS.
+
+Upstream patch:
+---------------
+   -> http://git.qemu.org/?p=qemu.git;a=commit;h=60253ed1e6ec6d8e5ef2efe7bf755f475dce9956
+
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1314676
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
