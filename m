@@ -1,31 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/12/3
-Message-ID: <3412231.rSTmOYfSpU@sarpedon>
-Date: Mon, 11 Jan 2016 10:25:11 +0000
-From: Tim Brown <tmb@...35.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Discuss: Daily/weekly cron jobs best practices
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/04/5
+Message-ID: <56D9DD1F.1030302@cert.org>
+Date: Fri, 4 Mar 2016 14:08:15 -0500
+From: Art Manion <amanion@...t.org>
+To: Kurt Seifried <kseifried@...hat.com>, cve-editorial-board-list <cve-editorial-board-list@...TS.MITRE.ORG>, oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 06 January 2016 23:06:20 halfdog wrote:
+On 2016-03-04 13:24, Kurt Seifried wrote:
+> So I've now heard from several security researchers that they are unable
+> to get CVEs for issues that need CVEs (e.g. widely used
+> hardware/software with flaws that have real world impacts and need to be
+> properly tracked. This has definitely resulted in issues being
+> publicized with no CVE that then makes it much harder to track and deal
+> with these issues.
 
-> Are there more variants, arguments? In my opinion, b) is a good
-> trade-off between maintainability and security.
+I think it's been said on this list previously -- these are two separate
+activities:
 
-Create scripts with secure permissions, write only to properly secured 
-locations and execute as dedicated users with minimal privileges. Yes, there 
-will still be problems but a lot of the most significant pain points go away.
+1. Assigning IDs
 
-> Currently the cron scripts seem to be a weak point. I looked at the 8
-> daily scripts on my machine, 2 of them belonged to the "daemon"
-> example class from above and both were vulnerable to daemon to root
-> privilege escalation, see e.g. [1].
+2. Analysis, deconfliction, write-up
 
-Not uncommon, we pop almost every UNIX box we touch this way, I assume you've 
-seen unix-privesc-check?
+Binding these together results in delay, because #2 takes considerably
+more calendar time and effort.  Another result is a limited but fairly
+high quality set of entries (once #2 is complete).
 
-Tim
--- 
-Tim Brown
-<mailto:tmb@...35.com>
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+I share Kurt's concern that CVE is not meeting a researcher/disclosure
+use case of having IDs for vulnerabilities, and that the community will
+at some point stop bothering with CVE.
+
+I'm not sure how bad such an outcome would be, or what impact that would
+have on CVE.
+
+ - Art
+
+
