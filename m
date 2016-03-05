@@ -1,82 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/3
-Message-ID: <alpine.DEB.2.20.1611020806410.375@tvnag.unkk.fr>
-Date: Wed, 2 Nov 2016 08:07:22 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl case insensitive password comparison
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/05/7
+Message-ID: <20160305172039.GA20796@openwall.com>
+Date: Sat, 5 Mar 2016 20:20:39 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-editorial-board-list <cve-editorial-board-list@...TS.MITRE.ORG>
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-case insensitive password comparison
-====================================
+On Fri, Mar 04, 2016 at 02:08:15PM -0500, Art Manion wrote:
+> I think it's been said on this list previously -- these are two separate
+> activities:
+> 
+> 1. Assigning IDs
 
-Project cURL Security Advisory, November 2, 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20161102B.html)
+Problem solved:
 
-VULNERABILITY
--------------
+http://www.openwall.com/ove
 
-When re-using a connection, curl was doing case insensitive comparisons of
-user name and password with the existing connections.
+> 2. Analysis, deconfliction, write-up
 
-This means that if an unused connection with proper credentials exists for a
-protocol that has connection-scoped credentials, an attacker can cause that
-connection to be reused if s/he knows the case-insensitive version of the
-correct password.
+Having IDs is of some use even without or before all of that.
 
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-8616 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-This flaw exists in the following curl versions.
-
-- Affected versions: curl 7.7 to and including 7.50.3
-- Not affected versions: curl < 7.7 and curl >= 7.51.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.51.0, these functions will deny negative string lengths from
-being used.
-
-A [patch for CVE-2016-8616](https://curl.haxx.se/CVE-2016-8616.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.51.0
-
-  B - Apply the patch to your version and rebuild
-
-TIME LINE
----------
-
-It was first reported to the curl project on September 23 by Cure53.
-
-We contacted distros@...nwall on October 19.
-
-curl 7.51.0 was released on November 2 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-This vulnerability was found during a Secure Open Source audit performed by
-Cure53.
-
--- 
-
-  / daniel.haxx.se
+Alexander
