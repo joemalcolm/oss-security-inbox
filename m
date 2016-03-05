@@ -1,42 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/12
-Message-ID: <1481193767048.41772@b.360.cn>
-Date: Thu, 8 Dec 2016 10:41:35 +0000
-From: 陈瑞琦 <chenruiqi@...60.cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE Request: file inclusion(traversal/manipulation) in modx revolution 2.5.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/05/11
+Message-ID: <CAFGhKbxmdh=rjvzWE2QRh_c_Wwq7mVm2JYhN=Q_LTw1USq-XeA@mail.gmail.com>
+Date: Sat, 5 Mar 2016 20:49:13 +0000
+From: Charlemagne Lasse <charlemagnelasse@...il.com>
+To: dcoffin@...ercom.net
+Cc: darktable-dev@...ts.darktable.org, exact-image@...ctcode.de,  rene@...ctcode.de, xbmc-addons@...ts.sourceforge.net,  rawstudio-users@...studio.org, Gábor Horváth <ghorvath@....bme.hu>,  Anders Brander <anders@...nder.dk>, ufraw-devel@...ts.sourceforge.net,  oss-security@...ts.openwall.com
+Subject: Re: Missing fixes for CVEs in upstream dcraw
 Content-Type: text/plain; charset=utf-8
 
-I found a file inclusion(traversal/manipulation) vuln in modx revolution 2.5.1
+Thanks for the answer.
+
+It is a rather odd decision to ignore an existing fix for
+CVE-2013-1438. This also means that dcraw cannot be used when any
+untrusted person has access (or he can DoS a service).
+
+Rene Rebe, is it possible to disable dcraw support in the
+perl/php/python bindings of exactimage to work around this problem on
+webservices?
 
 
-Title: Path travel in modx version 2.5.1
-Author: Chen Ruiqi, Chenruiqi@...60.cn, @Codesafe Team
-Download Site: www.modx.com<http://www.modx.com/>
-Vendor: modx
-Vendor Contact: security@...x.com
---------------------------------------------------------------------------------------------------------
-Discription:
-MODX (originally MODx) is a free, open source content management system and web application framework for publishing content on the world wide web and intranets. MODX is licensed under the GPL, is written in the PHP programming language, and supports MySQL and Microsoft SQL Server as the database. It was awarded Packt Publishing's Most Promising Open Source Content Management System in 2007.[1](wiki)
------------------------------------------------------------------------------------------------------------
-Vulnerability:
-By using relative paths and guessing locations on a server modx is installed on, an attacker can get the file system structure and delete any folder from a target server that the process running modx has permission. The attacker needs administrator privileges on the modx site to perform this attack.
 
---------------------------------------------------------------------------------------------------------
-
-Fix:
-
-https://github.com/modxcms/revolution/pull/13177
-
-update to version 2.5.2
-
-
-Could you assign CVE ID for this?
-
-
-Thank you
-
-Chen Ruiqi
-Codesafe Team
-
-
+2016-03-05 2:34 GMT+00:00  <dcoffin@...ll.cybercom.net>:
+> Hi Guys,
+>
+>      CVE-2015-3885 was fixed in v9.26 and CVE-2015-8366 will
+> be fixed in v9.27.  Overrunning an automatic array is how most
+> hijacks happen, and overrunning a malloc'd buffer is probably
+> not good either.
+>
+>      CVE-2013-1438 seems designed to prevent dcraw from entering
+> an infinite or very time-consuming loop.  I'm not interested in
+> this because there are infinitely many ways to create a loop in
+> a TIFF file, and solving the Halting Problem is beyond the scope
+> of dcraw.
+>                                 Dave Coffin  3/4/2016
+>
+> On Sat, Feb 27, 2016 at 02:28:18PM +0000, Charlemagne Lasse wrote:
+>> Hi,
+>>
+>> it looks like there are a number of CVE against dcraw. All of them were
+>> fixed in the downstream project libRAW but none of them were fixed by
+>> you in the upstream project dcraw. When can we expect that these are
+>> fixed in dcraw? The list of CVE's I know about are:
+>>
+>> CVE-2015-8366
+>> https://github.com/LibRaw/LibRaw/commit/89d065424f09b788f443734d44857289489ca9e2
+>>
+>> CVE-2015-3885
+>> https://bugzilla.redhat.com/attachment.cgi?id=1027072
+>>
+>> CVE-2013-1438
+>> https://sourceforge.net/p/ufraw/bugs/361/attachment/0001-CVE-2013-1438-fix-various-security-issues.patch
+>>
+>> Several other downstream projects may still be affected. I've Cc'ed the
+>> ones which I know
+>>
+>> darktable
+>> exactimage
+>> kodi/xbmc
+>> rawstudio
+>> rawtherapee
+>> ufraw
+>>
+>> Thanks
