@@ -1,97 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/21/7
-Message-ID: <1512070.Ry1Vm5FAnA@willoughby>
-Date: Wed, 21 Sep 2016 17:28:31 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/05/3
+Message-Id: <1C0D6550-6BC4-48B9-9DCB-1B8B98028045@curphey.com>
+Date: Fri, 4 Mar 2016 18:09:21 -0800
+From: mark@...phey.com
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: libav: divide-by-zero in sbr_make_f_master (aacsbr.c)
+Cc: Art Manion <amanion@...t.org>, Kurt Seifried <kseifried@...hat.com>, cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>
+Subject: Re: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-If it is suitable for a CVE please assign one. 
-Thanks.
+Long time listener, first time caller.....
 
-Description:
-Libav is an open source set of tools for audio and video processing.
+I stated OWASP.org in 2002. I am happy to put some skin in the game and setup a 503c with the right open-source governance structure (read: for the right reasons) and financially bootstrap (build a site and pay for one dedicated full time employee for at least the first year) to get this off the ground. Not what will be needed long term but enough to  start the journey .....
 
-A fuzzing with an mp3 file as input discovered a divide-by-zero in 
-sbr_make_f_master.
+Experience with OWASP was you need a few "mavens" so Kurt, Hanno and others would need to step up and be on a 'founders board' to make it successful etc but ..
 
-The complete ASan output:
-# avconv -i $FILE -f null -
-avconv version 11.7, Copyright (c) 2000-2016 the Libav developers
-  built on Aug 16 2016 15:34:42 with clang version 3.8.1 
-(tags/RELEASE_381/final)
-[mpeg @ 0x61a00001f280] Format detected only with low score of 25, 
-misdetection possible!
-[aac @ 0x619000000580] Sample rate index in program config element does not 
-match the sample rate index configured by the container.
-[aac @ 0x619000000580] SBR was found before the first channel element.
-ASAN:DEADLYSIGNAL
-=================================================================
-==29103==ERROR: AddressSanitizer: FPE on unknown address 0x7fbd80295491 (pc 
-0x7fbd80295491 bp 0x7ffde63eb2f0 sp 0x7ffde63eafa0 T0)
-    #0 0x7fbd80295490 in sbr_make_f_master /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/aacsbr.c:338:57
-    #1 0x7fbd80295490 in sbr_reset /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/aacsbr.c:1045
-    #2 0x7fbd80295490 in ff_decode_sbr_extension /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/aacsbr.c:1093
-    #3 0x7fbd801efe1b in decode_extension_payload /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/aacdec.c:2196:15
-    #4 0x7fbd801efe1b in aac_decode_frame_int /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/aacdec.c:2866
-    #5 0x7fbd801d3bbb in aac_decode_frame /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/aacdec.c:2959:15
-    #6 0x7fbd823ed42a in avcodec_decode_audio4 /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/utils.c:1657:15
-    #7 0x7fbd83f00b20 in try_decode_frame /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavformat/utils.c:1914:19
-    #8 0x7fbd83ef76e2 in avformat_find_stream_info /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavformat/utils.c:2276:9
-    #9 0x50d195 in open_input_file /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv_opt.c:726:11
-    #10 0x50b625 in open_files /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv_opt.c:2127:15
-    #11 0x50af81 in avconv_parse_options /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv_opt.c:2164:11
-    #12 0x541414 in main /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv.c:2630:11
-    #13 0x7fbd7e77f61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #14 0x41d098 in _init (/usr/bin/avconv+0x41d098)
+If that's of interest let me know, if not someone needs to do it....too important not to. 
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: FPE /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/aacsbr.c:338:57 in 
-sbr_make_f_master
-==29103==ABORTING
+Sent from my iPhone
 
-Affected version:
-11.7
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Timeline:
-2016-08-15: bug discovered
-2016-08-16: bug reported to upstream
-2016-09-21: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/09/21/libav-divide-by-zero-in-sbr_make_f_master-aacsbr-c/
-
---
-Agostino
+> On Mar 4, 2016, at 5:45 PM, Zach W. <kestrel@...linux.us> wrote:
+> 
+> I agree. I've been in the same boat as Hanno. In one case, I even sent a
+> request to both oss-sec and cve-assign about an open source platform
+> called OSMC, and got a response off-list that was just like the one seen
+> in Kurt's original email. I asked for clarification and for them to
+> address both me and the list and I never got a response. That was over a
+> month ago.
+> 
+> I'm sure Hanno and I are not the only ones. Thank you Kurt for bringing
+> this up.
+> 
+> Zach W.
+> 
+> On 3/4/2016 4:07 PM, Tim wrote:
+>>> The level of frustration in the research community has been growing,
+>>> with steady calls for a new CVE-like solution that is designed to
+>>> address these needs in a more effective way. I greatly appreciate the
+>>> work that has been done, but at this point CVE is becoming less
+>>> useful, less relevant - if this isn't addressed, my expectation is
+>>> that a CVE-like solution will be adopted by the community, and
+>>> researchers will begin moving away from requesting CVEs.
+>> 
+>> The CVE system is clearly breaking down.
+>> 
+>> I think we need a system that is less moderated and more content
+>> driven.  I imagine a simple site, which looks like a stripped-down bug
+>> tracker.  Let's suppose it acts like this:
+>> 
+>> * Any researcher can post "claims" about vulnerabilities.  This
+>>  assigns an identifier immediately.
+>> 
+>> * Claims about vulnerabilities may be reviewed, eventually, by an
+>>  authority whose job it is to be sure the claim is associated
+>>  properly with a real product/version and that the product owners are
+>>  notified through an automated process (e.g. "security@...").
+>> 
+>> * Product owners can respond to claims, which will appear along side
+>>  the claim.  Links to patches or refutations can be included.
+>> 
+>> * No moderation required.  Let the public decide if they believe the
+>>  researcher or vendor.  If a moderator does bother to look over the
+>>  content, they could deduplicate/link issues together and address any
+>>  confusion, but beyond that, it isn't their job to decide what is a
+>>  vulnerability and what isn't.
+>> 
+>> * All information posted in this system exists publicly forever.
+>>  Links to external content (that isn't well represented in the
+>>  posting) are frowned upon, since the Internet Archive clearly can't
+>>  keep up with everything.  We need an archive that doesn't go away.
+>> 
+>> 
+>> Ok, beat it up.
+>> 
+>> tim
+> 
+> 
