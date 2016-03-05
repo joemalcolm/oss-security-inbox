@@ -1,34 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/12/11
-Message-ID: <alpine.LFD.2.20.1601122319510.1476@wniryva>
-Date: Tue, 12 Jan 2016 23:24:36 +0530 (IST)
-From: P J P <ppandit@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/05/10
+Message-ID: <20160305205322.GA23295@openwall.com>
+Date: Sat, 5 Mar 2016 23:53:22 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-cc: cve-assign@...re.org, donghai.zdh@...baba-inc.com
-Subject: Re: Re: CVE request Qemu: nvram: OOB r/w access in processing firmware configurations
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-+-- On Tue, 12 Jan 2016, cve-assign@...re.org wrote --+
-| Use CVE-2016-1714.
+On Sat, Mar 05, 2016 at 03:25:49PM -0500, Adam Caudill wrote:
+> I very much like the idea of being able to get an ID instantly - it
+> greatly simplifies an otherwise time consuming process. That said, I
+> can see some issues with OVE:
+> 
+> * No Lookup - For a customer, going from OVE to what it represents
+> could be complicated. It depends entirely on the researcher or vendor
+> publishing a reference for that ID.
 
-  Thank you.
- 
-| Note that http://git.qemu.org/?p=qemu.git;a=blob;f=hw/nvram/fw_cfg.c
-| has:
-| 
-|   static void fw_cfg_write(FWCfgState *s, uint8_t value)
-|   {
-|       /* nothing, write support removed in QEMU v2.4+ */
-|   }
-| 
-| and has no fw_cfg_read function.
+... or on any third-party doing it.  I expect that various existing
+vulnerability databases will start listing OVE IDs along with other IDs
+they're currently listing.  Whatever IDs are available for an issue.
 
-  That's right. This issue affects Qemu versions prior to 2.4. Above change 
-was made immediately after the release of v2.3.
+Of course, the information will need to be available to those
+third-party databases from somewhere - but this can be the researcher's
+or the vendor's disclosure, as you say.  Until such disclosure, a
+customer would not even be aware of the ID, let alone want to look it up.
 
- -> http://git.qemu.org/?p=qemu.git;a=commit;h=023e3148567ac898c7258138f8e86c3c2bb40d07
+> * Invalid Entries - As noted, there's no way to see if a given ID is
+> considered valid, and while there is value to just having an ID, this
+> model makes later curation more difficult. With no information behind
+> the ID, there's no opportunity to later expand into a more complete
+> solution.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+I think there is such opportunity, it's just possibly more difficult.
+
+> Here is what I would like to see:
+
+This sounds similar to what Tim wanted.  Feel free to implement that.
+I think if such a thing appears, there may still be interest in a
+bare-bones solution, which OVE currently is.  I have no current plans to
+expand OVE into a more complete solution.
+
+> * Simple ID Request - Data required should be minimal, though I think
+> a few basic items are needed. Perhaps vendor, product, version(s),
+> title, and contact information.
+
+A drawback is that such requests become somewhat security-sensitive, if
+for yet unpublished issues.  This is already a major concern with CVE,
+where information may be subject to unjustified risk for the purpose of
+merely getting an ID assigned.
+
+OVE currently side-steps the issue.
+
+Alexander
