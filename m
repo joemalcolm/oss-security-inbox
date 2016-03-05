@@ -1,54 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/12/1
-Message-Id: <20161012040737.9D9D152E019@smtpvbsrv1.mitre.org>
-Date: Wed, 12 Oct 2016 00:07:37 -0400 (EDT)
-From: cve-assign@...re.org
-To: ludo@....org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, wingo@...ox.com, mhw@...ris.org
-Subject: Re: CVE request: GNU Guile <= 2.0.12: Thread-unsafe umask modification
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/05/2
+Message-ID: <56DA3A44.8030001@trylinux.us>
+Date: Fri, 4 Mar 2016 17:45:40 -0800
+From: "Zach W." <kestrel@...linux.us>
+To: oss-security@...ts.openwall.com
+Cc: Art Manion <amanion@...t.org>, Kurt Seifried <kseifried@...hat.com>, cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>
+Subject: Re: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+I agree. I've been in the same boat as Hanno. In one case, I even sent a
+request to both oss-sec and cve-assign about an open source platform
+called OSMC, and got a response off-list that was just like the one seen
+in Kurt's original email. I asked for clarification and for them to
+address both me and the list and I never got a response. That was over a
+month ago.
 
-> The mkdir procedure of GNU Guile, an implementation of the Scheme
-> programming language, temporarily changed the process' umask to zero.
-> During that time window, in a multithreaded application, other threads
-> could end up creating files with insecure permissions. For example,
-> mkdir without the optional mode argument would create directories
-> as 0777.
-> 
-> This can be worked around by always passing the optional mode argument
-> to Guile's mkdir procedure.
-> 
-> This will be fixed in Guile 2.0.13, to be released shortly.
-> 
-> Patch: http://git.savannah.gnu.org/cgit/guile.git/commit/?h=stable-2.0&id=245608911698adb3472803856019bdd5670b6614
-> Upstream bug report: http://bugs.gnu.org/24659
+I'm sure Hanno and I are not the only ones. Thank you Kurt for bringing
+this up.
 
->> changes the process' umask globally for a short duration
+Zach W.
 
-Use CVE-2016-8605.
+On 3/4/2016 4:07 PM, Tim wrote:
+>> The level of frustration in the research community has been growing,
+>> with steady calls for a new CVE-like solution that is designed to
+>> address these needs in a more effective way. I greatly appreciate the
+>> work that has been done, but at this point CVE is becoming less
+>> useful, less relevant - if this isn't addressed, my expectation is
+>> that a CVE-like solution will be adopted by the community, and
+>> researchers will begin moving away from requesting CVEs.
+>
+> The CVE system is clearly breaking down.
+>
+> I think we need a system that is less moderated and more content
+> driven.  I imagine a simple site, which looks like a stripped-down bug
+> tracker.  Let's suppose it acts like this:
+>
+> * Any researcher can post "claims" about vulnerabilities.  This
+>   assigns an identifier immediately.
+>
+> * Claims about vulnerabilities may be reviewed, eventually, by an
+>   authority whose job it is to be sure the claim is associated
+>   properly with a real product/version and that the product owners are
+>   notified through an automated process (e.g. "security@...").
+>
+> * Product owners can respond to claims, which will appear along side
+>   the claim.  Links to patches or refutations can be included.
+>
+> * No moderation required.  Let the public decide if they believe the
+>   researcher or vendor.  If a moderator does bother to look over the
+>   content, they could deduplicate/link issues together and address any
+>   confusion, but beyond that, it isn't their job to decide what is a
+>   vulnerability and what isn't.
+>
+> * All information posted in this system exists publicly forever.
+>   Links to external content (that isn't well represented in the
+>   posting) are frowned upon, since the Internet Archive clearly can't
+>   keep up with everything.  We need an archive that doesn't go away.
+>
+>
+> Ok, beat it up.
+>
+> tim
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX/baaAAoJEHb/MwWLVhi2DcYQAKDqyMz9vFBIQlUp04fqGCLm
-+2Edb5JItWj6y0x7F8rt+LM/jfxTHFq+HxH7pRQS59rERvAbhhUFU2Q+AhUeZRM9
-mpzxr0bGwlDGatdSLQbgrD5+BGCi/FrtIg3ggQxoGXMaKLWu6yjNg7c+l6Bp37ic
-h/XZ5Ur2M4dfaDnn1WGWdtAbcLbBKevglzKpbYcrgU4mokPiZ/Axzhp4zuxbvXP4
-uVKgVQTOeFcp2NstpDdzhomSvIdya1owA6DJd1HsiTgCtV1oKJ6Qy0T5uQ5sUplX
-6/ecG+gbebj1M52AFsmYMFuG3r6Ho9u1NB4CCzW27yuwmZU9w8gAHrMBlNxu8EZl
-M/xCgLr8JO8ve5zxwvdNdfadBtsXUgS2n0HgEMHQXOn+a2wrC+fBTG41OvC3qre4
-x3GkXOdC8IhAVXO2OVxUl7oo57nahSKct7Q8+Mh3BQ5PnzC2IqpYdN0riC6G/pCy
-YXS1ySEYB1nzQGdP+5VCLCOu0jKpQ2Bp/byOBljKHTc7mv/s1HEpke3n8/FNwuFq
-1nxFlNU0WzmpEpzYhAd7S2CxeDBhO2HVKeg9eCAdnMmRpytlQhKQN/S5wwRxcZOr
-3QCwcJldiufM7wv2D0jmiUR05AbWsG6Hj1femNoP3rxgOQIoYjwdEFpsDFKcSEMq
-DtztboX+z/tA/saF7SWP
-=ZBNv
------END PGP SIGNATURE-----
