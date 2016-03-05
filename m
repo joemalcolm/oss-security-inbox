@@ -1,37 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/09/3
-Message-ID: <5709825C.8090807@vorlons.info>
-Date: Sun, 10 Apr 2016 00:29:48 +0200
-From: Matthias Geerdsen <matthias@...lons.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/05/6
+Message-ID: <mpro.o3kthj03q98290o77.taviso@cmpxchg8b.com>
+Date: Sat, 5 Mar 2016 09:20:07 -0800
+From: Tavis Ormandy <taviso@...xchg8b.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: imlib2 integer overflow
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Kurt Seifried <kseifried@...hat.com> wrote:
 
-Hi,
+> So I've now heard from several security researchers that they are unable
+> to get CVEs for issues that need CVEs (e.g. widely used hardware/software
+> with flaws that have real world impacts and need to be properly tracked.
+> This has definitely resulted in issues being publicized with no CVE that
+> then makes it much harder to track and deal with these issues.
+> 
+> I'm also worryingly hearing about people that may have given up asking for
+> CVEs and publicizing their work at all, but of course cannot easily
+> confirm this as I don't have any access on insight into what
+> cve-assign@...re.org is actually doing/who
+> they are talking to.
+> 
 
-please assign a CVE ID for the following integer overflow issue in
-imlib2:
-<https://git.enlightenment.org/legacy/imlib2.git/commit/?id=143f299>
 
-Debian bug report:
-<https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=820206>
+That's also the case for me, I gave up trying to assign CVE's a long time
+ago. It's not that Mitre are not adding value, I can see the benefit of a
+carefully curated list. The problem is that they're a big bottleneck in what
+is an already painful process. I started the process of becoming a CNA once
+to try and alleviate some of the delays, but that process was even more
+painful and I gave up after a few months (this was a long time ago).
 
-RedHat bug report:
-<https://bugzilla.redhat.com/show_bug.cgi?id=1324774>
+I'd only start using CVE identifiers again if they're assigned instantly,
+and the curation is non-blocking.
 
-Cheers
-Matthias
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Tavis.
 
-iQEcBAEBCAAGBQJXCYJWAAoJEDVYuxv9Aw7qI6EH/3WeMQrJQFAvCoOZxbn3vBD6
-WMbfW0blNxl0pWcf3aUwiGgP6wFKRA9qk0FXuOCFckWD37Pcj8/nRZjsJHe+uPP1
-nlOeBx54wIRL6I8lekHlbFk638RtXXt5iEptAlB96DzfkW0Fpjwdr+TOq5Dt/6yW
-ZrsyM1P03ctDHCehkkckUbFruDInP/hzHepGky6Zrb8R30PsTASj3fyci4X9X4V5
-J4RSKAh++a3SyyLD83H6N5GeckKKwEnXe5b1NqUe+YcCqu86pmM4PQIbgyR/Y0iI
-PmldH5ztWgMhOEikis0N2QIgYDSyAb/6Yfu3krQW3Tt/6GBPk9J/WLlK5WbNvQk=
-=M0bU
------END PGP SIGNATURE-----
