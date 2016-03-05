@@ -1,54 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/02/4
-Message-ID: <CAComcpOd1_+qxMnTdJYLM2dP0W=E95Kn6OZ4yYuUS72EQLBpiQ@mail.gmail.com>
-Date: Tue, 1 Mar 2016 14:23:39 -0700
-From: Bob Beck <beck@...nbsd.org>
-To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com, cve-assign@...re.org
-Subject: Re: Re: CVE's for SSLv2 support
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/05/12
+Message-Id: <1F770735-1836-4A8A-B8E2-14B39E77EB78@exactcode.de>
+Date: Sat, 5 Mar 2016 22:28:05 +0100
+From: René Rebe <rene@...ctcode.de>
+To: Charlemagne Lasse <charlemagnelasse@...il.com>
+Cc: rawstudio-users@...studio.org, Gábor Horváth <ghorvath@....bme.hu>, Anders Brander <anders@...nder.dk>, dcoffin@...ercom.net, darktable-dev@...ts.darktable.org, ExactImage developers mailing list <exact-image@...ctcode.de>, xbmc-addons@...ts.sourceforge.net, ufraw-devel@...ts.sourceforge.net, oss-security@...ts.openwall.com
+Subject: Re: [exact-image] Missing fixes for CVEs in upstream dcraw
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 1, 2016 at 12:12 PM,  <cve-assign@...re.org> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
->> If a crypto library (e.g. OpenSSL, NSS) supports AND enables SSLv2 by
->> default should it receive a CVE?
->
-> There's no general answer to that question. CVE ID assignments are not
-> based on outsiders making guesses about the expectations of a product's
-> customers. For example, there might be a crypto library intended for
-> communication on isolated networks to high-value embedded devices that
-> support only SSLv2, and cannot and will not ever be updated.
+Hi Charles,
 
+I do not remember adding anything special to just disable dcraw.
 
-What.. like... I have an embedded high value device that only supports
-TELNET to access it.. OMG please give me a CVE?
+The most straight forward would be to comment it out in the Makefile via NOT_SRCS while building.
 
-replace SSLV2 in the above sentence with telnet or ssh v1 for that
-matter and you have the same issue.
+If you the CVE has a test case I can include the test case and fix in the exact-iamge source tree.
 
+Greetings,
+	René
 
->
-> - --
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
->
-> iQIcBAEBCAAGBQJW1ekCAAoJEL54rhJi8gl5dQEQAK5x43W8Q157sNT4gUg8rQtS
-> U0UlnjmsT1S40FlNiwZpK5IPkE7hdeTeiWUoFMsvc13vtlfpwfHCBfb05B5fcQBP
-> 2b3ssj49aH5yXVxnGE2ab6W5c63wN2jkbBBihVBXZ8SB9h4tNNSey+7dJrLyMqi0
-> Um76Tv5htBbpm+6UtlgN7zV3tT9MIe6bZI/b7xxuf23nM8/mBvc1nX8dpCFF16og
-> ks9d9A1Rnn79xCvWZ++jR8PRlmFwmLym/PEQulJ6k4WQdOECH78ytYWg9MG7EuIg
-> 6PbKloy7u36+ZgrUXxYnydoH834H6yOQIPro7hARFA0fpkbmydBJKnP4letuVS5w
-> S89g15c2ymxIyKaKy+qT31LEKBGf+N6vPoPNL/IWeRh+8GmSyWkWF7Rx0CboFCTs
-> 7+Ft9T+0Lfi6bYkYqAFUVe8gBkM84tLR+4HXgkANLAfhLEsKaCYqAkNYlbDvCXtB
-> RyFZHcVhp8XYWx7b5YN3BBB5VWK/fS8y8ilHaf143Bkbn+Yu6yrFb+DIAYhKPPAI
-> 1CURZksBwzSSjiprsExD4dODDJGzl/0khHdkDkdZp7o9drt3D4VkKGgkBPoG5NFk
-> cX1XQc6o3Hv72oYFLyatCA5H8k9HZLEUjl8cYuf/QIvfwJwjlLqZ+HrPWvs2SY5C
-> K4C7mIXfd9Iem6DqXfNK
-> =ylcp
-> -----END PGP SIGNATURE-----
+On Mar 5, 2016, at 21:49, Charlemagne Lasse <charlemagnelasse@...il.com> wrote:
+
+> 
+> Thanks for the answer.
+> 
+> It is a rather odd decision to ignore an existing fix for
+> CVE-2013-1438. This also means that dcraw cannot be used when any
+> untrusted person has access (or he can DoS a service).
+> 
+> Rene Rebe, is it possible to disable dcraw support in the
+> perl/php/python bindings of exactimage to work around this problem on
+> webservices?
+> 
+> 
+> 
+> 2016-03-05 2:34 GMT+00:00  <dcoffin@...ll.cybercom.net>:
+>> Hi Guys,
+>> 
+>>     CVE-2015-3885 was fixed in v9.26 and CVE-2015-8366 will
+>> be fixed in v9.27.  Overrunning an automatic array is how most
+>> hijacks happen, and overrunning a malloc'd buffer is probably
+>> not good either.
+>> 
+>>     CVE-2013-1438 seems designed to prevent dcraw from entering
+>> an infinite or very time-consuming loop.  I'm not interested in
+>> this because there are infinitely many ways to create a loop in
+>> a TIFF file, and solving the Halting Problem is beyond the scope
+>> of dcraw.
+>>                                Dave Coffin  3/4/2016
+>> 
+>> On Sat, Feb 27, 2016 at 02:28:18PM +0000, Charlemagne Lasse wrote:
+>>> Hi,
+>>> 
+>>> it looks like there are a number of CVE against dcraw. All of them were
+>>> fixed in the downstream project libRAW but none of them were fixed by
+>>> you in the upstream project dcraw. When can we expect that these are
+>>> fixed in dcraw? The list of CVE's I know about are:
+>>> 
+>>> CVE-2015-8366
+>>> https://github.com/LibRaw/LibRaw/commit/89d065424f09b788f443734d44857289489ca9e2
+>>> 
+>>> CVE-2015-3885
+>>> https://bugzilla.redhat.com/attachment.cgi?id=1027072
+>>> 
+>>> CVE-2013-1438
+>>> https://sourceforge.net/p/ufraw/bugs/361/attachment/0001-CVE-2013-1438-fix-various-security-issues.patch
+>>> 
+>>> Several other downstream projects may still be affected. I've Cc'ed the
+>>> ones which I know
+>>> 
+>>> darktable
+>>> exactimage
+>>> kodi/xbmc
+>>> rawstudio
+>>> rawtherapee
+>>> ufraw
+>>> 
+>>> Thanks
+> 
+> 
+> 
+> ----------------------------------------------------------- 
+> If you wish to unsubscribe from this mailing, send mail to
+> lists@...ctcode.de with a subject of: unsubscribe exact-image
+
+-- 
+ ExactCODE GmbH, Lietzenburger Str. 42, DE-10789 Berlin
+ DE Legal: Amtsgericht Berlin (Charlottenburg) HRB 105123B, Tax-ID#: DE251602478
+ Managing Director: René Rebe
+ http://exactcode.com | http://exactscan.com | http://ocrkit.com | http://t2-project.org | http://rene.rebe.de
+
