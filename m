@@ -1,104 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/19/2
-Message-Id: <20161019005732.6BA9C52E006@smtpvbsrv1.mitre.org>
-Date: Tue, 18 Oct 2016 20:57:32 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, huzaifas@...hat.com
-Subject: Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/05/5
+Message-id: <CF7B4754-5468-4F2C-B60E-E35EA3166BF9@me.com>
+Date: Sat, 05 Mar 2016 11:57:33 -0500
+From: Larry Cashdollar <larry0@...com>
+To: oss-security@...ts.openwall.com
+Cc: Art Manion <amanion@...t.org>, Kurt Seifried <kseifried@...hat.com>, cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>
+Subject: Re: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+I've been using this https://github.com/distributedweaknessfiling/CNA-Registry or asking RedHat for open source CVEs. 
 
-> I think it's safe to say an amplification of 1:10 or more qualifies as a
-> problem, I'm not sure what the exact amplification ratio to qualify for a
-> CVE is (1:3, 1:7?) but I think 1:10 or more should definitely qualify.
+On Mar 4, 2016, at 9:09 PM, mark@...phey.com wrote:
 
-The MITRE CVE Team has commented on this in the past in the
-http://www.openwall.com/lists/oss-security/2016/06/10/4 post. Although
-there have been relevant changes since then (such as expansion of the
-CVE CNA program), we're still not sure that it generally makes sense
-to define magic numbers (such as a magic minimum number for the
-amplification ratio) that everyone always must use to decide whether a
-CVE is useful.
+Long time listener, first time caller.....
 
-For example, if an organization is a CNA for its own products and sees
-an amplification ratio of 1:1.1, but this violates the intended
-security policy of a product and was supposed to be 1:0.9, then they
-can assign a CVE ID. If they're recommending that their customers
-install a patch, then it could make a lot of sense to have a CVE ID,
-so that their customers can use the ID in patch management.
+I stated OWASP.org in 2002. I am happy to put some skin in the game and setup a 503c with the right open-source governance structure (read: for the right reasons) and financially bootstrap (build a site and pay for one dedicated full time employee for at least the first year) to get this off the ground. Not what will be needed long term but enough to  start the journey .....
 
-However, some CNA organizations assign CVE IDs to arbitrary vendors'
-products based on claims of demonstrated negative impact: this is
-where amplification may pose more difficulty for CVE. As it stands
-today, a CVE ID requester can claim that 1:1.1 has a demonstrated
-negative impact, and (at least in theory) they will get a CVE ID. This
-type of CNA currently can't make up their own arbitrary rules, such as
-"1:10 is a negative impact but 1:9 isn't."
+Experience with OWASP was you need a few "mavens" so Kurt, Hanno and others would need to step up and be on a 'founders board' to make it successful etc but ..
 
-There are at least three different scenarios:
+If that's of interest let me know, if not someone needs to do it....too important not to. 
 
- 1. Amplification only exists because of a server-side coding error,
-    and fixing that error has no adverse impact on clients and
-    requires no client-side changes. For example: for the protocol in
-    question, the client simply never needs an unauthenticated UDP
-    request to result in a larger UDP reply.
+Sent from my iPhone
 
- 2. Amplification is not caused by a coding error, but it is possible
-    to reduce the amplification ratio without completely breaking the
-    ability of clients to communicate with servers.
+> On Mar 4, 2016, at 5:45 PM, Zach W. <kestrel@...linux.us> wrote:
+> 
+> I agree. I've been in the same boat as Hanno. In one case, I even sent a
+> request to both oss-sec and cve-assign about an open source platform
+> called OSMC, and got a response off-list that was just like the one seen
+> in Kurt's original email. I asked for clarification and for them to
+> address both me and the list and I never got a response. That was over a
+> month ago.
+> 
+> I'm sure Hanno and I are not the only ones. Thank you Kurt for bringing
+> this up.
+> 
+> Zach W.
+> 
+> On 3/4/2016 4:07 PM, Tim wrote:
+>>> The level of frustration in the research community has been growing,
+>>> with steady calls for a new CVE-like solution that is designed to
+>>> address these needs in a more effective way. I greatly appreciate the
+>>> work that has been done, but at this point CVE is becoming less
+>>> useful, less relevant - if this isn't addressed, my expectation is
+>>> that a CVE-like solution will be adopted by the community, and
+>>> researchers will begin moving away from requesting CVEs.
+>> 
+>> The CVE system is clearly breaking down.
+>> 
+>> I think we need a system that is less moderated and more content
+>> driven.  I imagine a simple site, which looks like a stripped-down bug
+>> tracker.  Let's suppose it acts like this:
+>> 
+>> * Any researcher can post "claims" about vulnerabilities.  This
+>> assigns an identifier immediately.
+>> 
+>> * Claims about vulnerabilities may be reviewed, eventually, by an
+>> authority whose job it is to be sure the claim is associated
+>> properly with a real product/version and that the product owners are
+>> notified through an automated process (e.g. "security@...").
+>> 
+>> * Product owners can respond to claims, which will appear along side
+>> the claim.  Links to patches or refutations can be included.
+>> 
+>> * No moderation required.  Let the public decide if they believe the
+>> researcher or vendor.  If a moderator does bother to look over the
+>> content, they could deduplicate/link issues together and address any
+>> confusion, but beyond that, it isn't their job to decide what is a
+>> vulnerability and what isn't.
+>> 
+>> * All information posted in this system exists publicly forever.
+>> Links to external content (that isn't well represented in the
+>> posting) are frowned upon, since the Internet Archive clearly can't
+>> keep up with everything.  We need an archive that doesn't go away.
+>> 
+>> 
+>> Ok, beat it up.
+>> 
+>> tim
+> 
+> 
 
- 3. Amplification is not caused by a coding error, and it is not
-    possible to reduce the amplification ratio without completely
-    breaking the ability of clients to communicate with servers. The
-    only options are to mitigate attacks (as in
-    https://capec.mitre.org/data/definitions/490.html) or to change
-    the protocol.
-
-If someone can request a CVE ID for any of these three scenarios,
-should we encourage them to be most liberal with CVE ID requests in
-scenario 1, and most conservative with CVE ID requests in scenario 3?
-Or do we ideally want to enumerate everything, even a 1:1.1 ratio
-that's baked into a protocol design, and can't be fixed without
-changing every client and server?
-
-Finally, do we want CVEs for all types of amplification, or only
-amplification that can be used for DoS attacks against unrelated third
-parties? For example, there's a class of amplification issues
-affecting automated error reporting. This can exist in server-side
-code in which exception handlers (something like "constraint
-violation: length_a > length_b") are able to send outbound network
-traffic to a vendor's server. Here, there can be cases where an
-attacker sends an unauthenticated hundred-byte packet to a customer's
-server, and the customer's server then immediately sends a
-million-byte system-health report to the vendor. The attacker
-generally can repeat this, although there might be a rate limit.
-Suppose that the customer wants to send these reports, and the vendor
-wants to receive these reports, and (maybe?) the intervening ISPs can
-handle the load. Would this be a CVE because of the huge amplification
-ratio, or is amplification a CVE only in certain special cases?
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYBsQAAAoJEL54rhJi8gl56W0P/jtr8bg19CgitqtWv8GwYdKz
-KiVIsAqVZqu3IYnnBIpwyFQDvSo+utqAn7/heUU7V18JMxsUttPNJVArwLpZZ57s
-71HYDuqlhDtqLL2HkwU7bU2XtCbUiO/LAAlnFuKxsbHMoYlkz+Dgfcd5gtdbJhcG
-WmLcRRgDSZV3w7yWghBThCGAgjRWU3Pw0qqo1p/a+abR8By3NGI1yRiwhj5Jxc/u
-NYRQLwqbQIu1qH9OJXcOf8TnB1lytTCwKk0u3hXXyIWNSDdRAYQv4712Af7sSuVh
-+jYOGu3mhrOBjamtZNDMrJ9riFTRnoIbOSE+mCL/Kp+rTq22NX+rY3pkh/VfvCC2
-/jF4aO1HUjxHKEmKauVoTAO10w6FPzlRmOMj7kM22oy568MD6LygWspNc9c/LvJX
-N/hEazu2NiUX3wNsLsA4z1mLUebtjjBoL/BgAAkJ1S1aoK2JEn9y5rK4wf1vCbia
-XkwHxoLu0BMznTIOHiP72G1YZs2FJd/pNw9iFvi6GRxPdLRR8Tr9FCRjv4V7mvRg
-E8rgYe3Vlz8Y9A1SYwmLLTKqqNgB/GnQNU3qKlUjmAfGiK2VGjvHah3BcOY4Gutq
-xcyb4Hdy/kyvxOQo6iHpabZPxYHGKVIM+CRTClnEqQM2OWiMxmv/pfVv8sL71uTJ
-VMx2oAIYBoExovJrb2pG
-=xNIJ
------END PGP SIGNATURE-----
