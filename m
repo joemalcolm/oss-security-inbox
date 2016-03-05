@@ -1,56 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/24/2
-Message-ID: <f5c9f4082b3b452386402eadd517b3cd@imshyb02.MITRE.ORG>
-Date: Wed, 23 Nov 2016 21:58:26 -0500
-From: <cve-assign@...re.org>
-To: <oss-security@...ts.openwall.com>
-CC: <cve-assign@...re.org>
-Subject: Re: CVE Request: gstreamer plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/05/8
+Message-ID: <20160305174103.GE6474@more-magic.net>
+Date: Sat, 5 Mar 2016 18:41:03 +0100
+From: Peter Bex <peter@...e-magic.net>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Cgit XSS "vulnerability" has no CVE?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi there,
 
-> https://scarybeastsecurity.blogspot.com/2016/11/0day-exploit-advancing-exploitation.html
-> gstreamer decoder for the FLIC file format
+I just noticed that cgit versions before v0.12 contain a bug in
+the "txt2html" filter script:
+https://git.zx2c4.com/cgit/commit/filters/html-converters/txt2html?id=13c2d3df0440ce04273de3149631a9bd97490c6e
 
-> To get an out-of-bounds write, the attacker simply has to specify a
-> start_line value greater than the number of lines in the output canvas
-> (bug 1)
+It seems this is the mailing list thread in which the fix was
+posted (unfortunately, the attachment was dropped):
+https://lists.zx2c4.com/pipermail/cgit/2015-August/002561.html
 
-Use CVE-2016-9634.
+The release notes for v0.12 mention the fix, but there seems to be no
+CVE for it: https://lists.zx2c4.com/pipermail/cgit/2016-January/002817.html
 
+This allows for an XSS attack by anyone with write access: If you can
+push to a git repository for which the "txt2html" converter is activate,
+you can create a README or README.txt and insert arbitrary HTML.
 
-> Or they could specify a skip count that goes past the end of the last
-> line of the output canvas (bug 2)
+Please note that the recommended "about-formatting.sh" filter will also
+allow unfiltered HTML files, Markdown or ReST documents, so that's
+arguably by design.  But it's definitely a surprise for people like
+myself who would expect all files to be filtered for safe HTML like
+GitHub or Bitbucket do.  And of course, in cases where an administrator
+tries to add *restricted* README support by allowing only plaintext
+files through the txt2html filter, this would definitely be undesired.
 
-Use CVE-2016-9635.
+Finally, the about-formatting.sh may be shipped by default, but the
+default value of the "about-filter" is empty, and it seems that the
+installation script does *not* supply a default configuration file
+which could override that, so it has to be explicitly enabled by
+the user (or the distro's package).
 
+Anyway, all in all, I think this is probably worth a CVE because it's
+so non-obvious.
 
-> Or they could specify a write count that goes past the end of the last
-> line of the output buffer (bug 3)
+Cheers,
+Peter Bex
 
-Use CVE-2016-9636.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYNlcQAAoJEHb/MwWLVhi27goP/iFEWViR3EL1uQvw8r0pKrhG
-sn1xsANxTN2AFDs4OfXahfoC/zvmuTPbfJ9DeL0LhpIAMslQxd8JmnFHpnmQn6ah
-zwImr913g1OPR7WPwsTpFzK9geS75Mnq4YNiH8JFAIrW37vgimWhS/31mytFuRJR
-fRnqeKU33NCKwELK/vR0ZxTc8hy5bAVvjhGKYB94xZbgjCNLTc3PwsIMFLbY6aSf
-8k0w1xdumIFD6bw+x9jnNH+Rnv6fT3GPSDYsBajNZDIrgO7mcPlKEfv4t4+HYTHT
-Tnh3omqIFOrXnyKurZ+Qc0e2+zgusyhRJWRda1M2T+//cmGxNF58z+mtATlPRIaJ
-Dd8Ri8V/VWXdHRvmGHhFgzIG+LWBYd0VEttJE7PFJ5xzIy5kEoM6tGcacFsZn9Wp
-rlBrVi1Q+mp3jIdSxMu0KQvGzs/9gyQldoZDCxOQ3U0n3MaumBbdQmKU9Fj8PPoF
-f1OD6hBHc+Q42z30993GpjypiDy5WPINxN24ikRQyQha5qVT0BSCdYYph9Z70I3d
-lOrCF7x1LM5Gyr2biYyfdA4utAyqaBP0VqFI1gR3DByfN17WXSauVuxl6c7zS+hf
-03+ixlUk+65BsFDlmC+ep0BUKwLUn7vaIY3+t0QZMwTDDoGOGcK3/pfq3TYAgaCl
-r6UZUBI35WgyoCj0VoyY
-=xMfa
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
