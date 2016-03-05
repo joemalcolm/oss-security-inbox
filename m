@@ -1,35 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/20/2
-Message-ID: <alpine.LFD.2.20.1605201212030.30609@wniryva>
-Date: Fri, 20 May 2016 12:15:55 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2016-4440 Kernel: kvm: vmx: incorrect state update leading to MSR access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/05/13
+Message-ID: <20160305224306.GE1250@sentinelchicken.org>
+Date: Sat, 5 Mar 2016 14:43:06 -0800
+From: Tim <tim-security@...tinelchicken.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
 
-Linux kernel built with the Kernel-based virtual machine(CONFIG_KVM) along 
-with Hyper-v Synthetic Interrupt Controller(SynIC) support is vulnerable to an 
-undue APIC register access issue. In that a guest with SynIC enabled, could 
-gain access to host's Machine Specific Registers(MSR).
+> Of course, the information will need to be available to those
+> third-party databases from somewhere - but this can be the researcher's
+> or the vendor's disclosure, as you say.  Until such disclosure, a
+> customer would not even be aware of the ID, let alone want to look it up.
 
-A privileged user inside guest could use this flaw to crash the host kernel 
-resulting in DoS OR potentially leverage it to escalate privileges on the 
-host.
+The trouble with third-party databases is that they aren't a reliable
+archive of information.  I can't tell you how many times I've found a
+vulnerability scanner detecting an issue, and I go back to get more
+details to understand the risk, only to find all the technical details
+have been taken offline.  It is a major gap in the security
+community's (and IT industry's) tool set that we don't have a
+reliable, single archive of vulnerability information.  It is a huge
+waste of time looking up every bug.  And when I say "reliable" I
+merely mean the information won't go away tomorrow (like the old FD
+did so suddenly).  I don't mean the information must always be true or
+validated, just available.
 
-Upstream patch:
----------------
-   -> http://permalink.gmane.org/gmane.comp.emulators.kvm.devel/152191
+Providing something like this is clearly a significant undertaking and
+isn't something most security companies can make any real money at.
+*Maybe* a well-thought-out non-profit could accomplish this and still
+make ends meet by providing bulk feeds for a small subscription fee.
+Obviously a government has the resources to do this, if not always the
+competence.  Currently my government is just "letting the Internet
+burn", as they say, so I'm not optimistic that DHS or whatever is
+going to step up.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1337806
-   -> http://comments.gmane.org/gmane.comp.emulators.kvm.devel/152100
 
-'CVE-2016-4440' has been assigned to this issue by Red Hat Inc.
+> A drawback is that such requests become somewhat security-sensitive, if
+> for yet unpublished issues.  This is already a major concern with CVE,
+> where information may be subject to unjustified risk for the purpose of
+> merely getting an ID assigned.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+That's a good point.  As a researcher, I want an ID very early in the
+process (before going public) so I can refer to it when interacting
+with a vendor and draft my advisory in advance.  One *could* accept
+submissions "to be released on date ...", but then any database like
+that will become a target.
+
+So instead, this hypothetical web app could require only basic
+information about the products affected up front, and then allow
+arbitrary additions of content later.  (Note I said additions, not
+changes).  I think it should also allow anonymous submission, perhaps
+only with validation of email addresses (which could be burners).  It's
+all too easy for researchers to become victim of idiotic libel
+lawsuits.  (Which then leads one to wonder what legal defenses the
+hosting org needs...)
+
+Cheers,
+tim
