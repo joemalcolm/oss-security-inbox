@@ -1,4 +1,9 @@
-Received: (qmail 17420 invoked by uid 550); 18 Dec 2025 21:05:33 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1822" "Saturday" "5" "March" "2016" "20:49:13" "+0000" "Charlemagne Lasse" "charlemagnelasse@gmail.com" "<CAFGhKbxmdh=rjvzWE2QRh_c_Wwq7mVm2JYhN=Q_LTw1USq-XeA@mail.gmail.com>" "55" "[oss-security] Re: Missing fixes for CVEs in upstream dcraw" nil nil nil "3" "2016030520:49:13" "[oss-security] Re: Missing fixes for CVEs in upstream dcraw" (number mark "U       charlemagnel Mar  5   55/1822  " thread-indent "\"[oss-security] Re: Missing fixes for CVEs in upstream dcraw\"\n") "<20160305023423.GA20136@shell.cybercom.net>" ("<CAFGhKbyhOpRC-P6EEJuiWNz5Fb46GiYzrSNGaouy0-0hV5_b2Q@mail.gmail.com>" "<20160305023423.GA20136@shell.cybercom.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28011 invoked by uid 550); 5 Mar 2016 20:54:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,132 +12,100 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 16354 invoked from network); 18 Dec 2025 21:05:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=nodmarc.schlittermann.de; s=2020-06-19; h=In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:To:From:Date:Cc:
-	Content-Description:Content-ID:Content-Transfer-Encoding:Resent-Cc:Resent-To;
-	bh=9eW9WR3HQAhU4i3Umm4k+dEhsAl+yzTsHKdmQ1XAffo=; b=Wnefj7J2Df3fkO/pxvUPbmn5mm
-	MCaQmdJWL38mJYOhh86XHNSlldJBOXnnVqM9VNpZ84UmmFWBhdsK9/jFHnfmhoZe5YfRJr8ZaoVdm
-	E8hfPG3pkrE7JoDPoAiKOd+2CIAZ6UqLyLTlj0SJzzae5TLE+hQYBEK+h4+yEYR4lH8IblvNrtIca
-	1D4U2JZ+AylQo888ZSpIvDpF8V4wiIt6yaM/8MnrkX3RtvHkOpFSHAuFffK2dqW4jVBTCp5XIKBlv
-	8GUPxbZRa07sECpOv3cyb/EHSReD+TkaClXLUwGBhKTwF6z5U5/en5kfnMr5tFQES5kJETUlZeTdq
-	jL5VUnAA==;
-Date: Thu, 18 Dec 2025 22:05:23 +0100
-From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
-To: oss-security <oss-security@lists.openwall.com>
-Message-ID: <aURskyC_etNY3SI9@jumper.schlittermann.de>
-Mail-Followup-To: oss-security <oss-security@lists.openwall.com>
-References: <aTlswbw7mu0DyFec@jumper.schlittermann.de>
- <aTrbpVe2BkcRT6L9@jumper.schlittermann.de>
- <aT6ayYIIGv8i5vFu@jumper.schlittermann.de>
+Received: (qmail 16363 invoked from network); 5 Mar 2016 20:49:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=NxUB5kgnYDfCuuRcxccQQmQK4A8eqAJWNzXGbKOCBQk=;
+        b=GsgfIKTdztltkgu5n8CW6FyKkAuRaCzfq4alBaJ5s/CDIoWmBamWjadattQXOBqa2U
+         WoKEsGiCou6M55nX4RJ/fhRrZ9uXD6AWpI8auzoFAdcoSr1GIL9sUEK8Iuresh78kn9p
+         XXyWT+q6u5eH7dp9gsHn1M0BoN2q8X/NcOon8pgijqCW+b+cljC0nTrJSQ1f0Y3YzR9A
+         +OXDPSiKLKmVYY2qraLw9g1gbaeqYW7bnAF9DKGX4jkAuqhBFISMizzvmFvWIjXYwyLp
+         qINjOdDOVp1xfxDl7+wpD6coqDIffFzbKYHyLbenj4UphH786ZcvNlKuLViyXnr8Prmi
+         JK8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=NxUB5kgnYDfCuuRcxccQQmQK4A8eqAJWNzXGbKOCBQk=;
+        b=MESwnzS8lGmtN52I6hJiwvtNmKwqJY0oB2ST/lLzlG30+MlgwZFhWQF+ejt4i/v9bp
+         01H8C8pKLdadZICZBRUl5UdfNkOfqiTNNgBInq4gR2OFnJ7IxVJWi3cfiOdCrnn9nWuW
+         5/WegOKrog8U/oPLpiSqEGPTu4M/Khi1yK7sjfA3yuVM459szIcdq8unbeP1/4D4ReGq
+         p2mz9G/R5HqbhCUoFIcivdU6qxC6wFkSnR8twC6nPwOOFnJKj/JOtX/WKsw3RUL1sc0B
+         gmLHmqHWfWIbA0zCgzE6D4NwZSUeDf+E3L25QBjPJkxlyhlPKlpEaeKizIJJPTqhC4VK
+         IyLw==
+X-Gm-Message-State: AD7BkJJLKkqIhUp84PDeah8wODay6lJ746wZ/vS4Xhwy/H6jxPCOh14JafPrzYRqDuLPDNURKd0arg1DGgKspQ==
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="LesflmYWuqrXSfTh"
-Content-Disposition: inline
-In-Reply-To: <aT6ayYIIGv8i5vFu@jumper.schlittermann.de>
-Organization: schlittermann -- internet & unix support
-X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
- QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
- y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
- X?H&`
-X-Telegram: @HeikoSchlittermann
-X-Threema: T5RPWMSS
-X-Signal: +49.172.7909055
-X-Phone: +49.172.7909055
-X-SMS: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-Subject: [oss-security] Release: CVE-2025-67896: EXIM-Security-2025-12-09.1: Exim 4.99.1
- released
+X-Received: by 10.28.96.197 with SMTP id u188mr5423290wmb.102.1457210953550;
+ Sat, 05 Mar 2016 12:49:13 -0800 (PST)
+In-Reply-To: <20160305023423.GA20136@shell.cybercom.net>
+References: <CAFGhKbyhOpRC-P6EEJuiWNz5Fb46GiYzrSNGaouy0-0hV5_b2Q@mail.gmail.com>
+	<20160305023423.GA20136@shell.cybercom.net>
+Date: Sat, 5 Mar 2016 20:49:13 +0000
+Message-ID: <CAFGhKbxmdh=rjvzWE2QRh_c_Wwq7mVm2JYhN=Q_LTw1USq-XeA@mail.gmail.com>
+From: Charlemagne Lasse <charlemagnelasse@gmail.com>
+To: dcoffin@cybercom.net
+Cc: darktable-dev@lists.darktable.org, exact-image@exactcode.de, 
+	rene@exactcode.de, xbmc-addons@lists.sourceforge.net, 
+	rawstudio-users@rawstudio.org, =?UTF-8?B?R8OhYm9yIEhvcnbDoXRo?= <ghorvath@hit.bme.hu>, 
+	Anders Brander <anders@brander.dk>, ufraw-devel@lists.sourceforge.net, 
+	oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] Re: Missing fixes for CVEs in upstream dcraw
 
---LesflmYWuqrXSfTh
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks for the answer.
 
-According to our previous CRD announcement we released
-Exim 4.99.1 on 2025-12-17 at 15:00 UTC.
+It is a rather odd decision to ignore an existing fix for
+CVE-2013-1438. This also means that dcraw cannot be used when any
+untrusted person has access (or he can DoS a service).
 
-Credits to Andrew Fasano <andrew.fasano@nist.gov>, for pointing out the
-issue.
-
-His original report can be found here: https://code.exim.org/exim/exim/src/=
-commit/d46a6727798fc48d1756190a6d46d19216348c25/doc/doc-txt/exim-security-2=
-025-12-09.1/report.txt
-
-Short version: Exim configurations using SQLite lookups or using SQLite
-hint dbs where vulnerable to SQL injection attacks, which could lead to
-heap corruption. Distro Exim packages usually do not use SQLite hint dbs (It
-is a build time option. Grep the output of `exim -bV` for "Hints DB".)
-But many packages allow SQLite lookups in the runtime config (Grep the outp=
-ut of `exim -bV`
-for "Lookups".)
+Rene Rebe, is it possible to disable dcraw support in the
+perl/php/python bindings of exactimage to work around this problem on
+webservices?
 
 
-The original release announcement, as sent to exim-announce@lists.exim.org:
---------------------------------------------------------------------------
 
-Dear Exim users and maintainers,
-
-we are pleased to announce the availability of release 4.99.1 of Exim.
-
-This is a security release. It fixes CVE-2025-67896 (aka
-EXIM-Security-2025-12-09.1), which was introduced with 4.99. Older Exim
-versions may or may not be vulnerable and are not activly maintained
-anymore by the Exim maintainers. (To the best of our knowledge, 4.98.2=C2=B9
-should be safe.)
-
-Configurations using SQlite for lookups and hintdb were vulnerable.
-Details: https://code.exim.org/exim/exim/src/branch/exim-4.99+fixes/doc/doc=
--txt/exim-security-2025-12-09.1/report.txt
-
-Exim 4.99.1 is available:
-
- * as tarball
-   * https://ftp.exim.org/pub/exim/exim4/
-   * https://code.exim.org/exim/exim/releases
-
- * directly from Git: https://code.exim.org/exim/exim
-   tag: exim-4.99.1
-
-The signatures on the release tarballs and Git tag should be
-
- *  The release files are signed by key DD98D92359DE9E3C2663F291697F0EDD680=
-=3D
-99F6F
-    "Heiko Schlittermann (Dresden) <hs@schlittermann.de>"
-    aka "Heiko Schlittermann (Exim MTA Maintainer) <heiko@exim.org>"
-
-=C2=B9) The original announcement mentioned a wrong version number.
-
-    Best regards from Dresden/Germany
-    Viele Gr=C3=BC=C3=9Fe aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
-
---LesflmYWuqrXSfTh
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE3ZjZI1nenjwmY/KRaX8O3WgJn28FAmlEbHwACgkQaX8O3WgJ
-n29cQQ/+OaqhOLnRtlhqOMdU7ncTWR8J9SaUiMIFNfWvEPkYzIO84GW1ErqMgn/q
-/A7GxCu5raRnCZ0L41pNVb1zd0VSe32P/ZxKb5M+27K8SSKKyrkrXpf15R51TFMU
-UcZ3YsNZBeJufRxOIpYnmg4uMp8dge3AzPV/2GCwfT6CHr2v4yHET6g991s7Rzoz
-MoQO0tVDvCYbLM6+L1DsbxAk6oi52rw5HO6ox5CEamUPeXz25yeX2BuKmop4pXTJ
-oqXZiGON1q2UwGhcThomvdvitnjkpGhkPGJKz1rPmTUmKn/NArCS7P5Q8YjOVZGx
-IZctfDBSbpMGt0HtCoThVjoSV+aLdqRL3j3sxYl7XPUZjamXYaalJHXYsjxqAzbS
-1OfRDU5ZklhbREReQye8TPXW7Oy/NAglGL8hUMf9bb1ZvWEUdbRys4bYHSWkPsu+
-Lv4tdchzLkMF9T3N+1fKokJFR0/9DhbVaBzVH0YiC+Y6WTi1zUd5rmG8Eua+3xNT
-demnLvpsN6ALH20d3e/LLrOxnXliMdXn43dOY3ABWr2gHTF/ztvrEYvBh0CN5RBU
-gGoSgEiM+fJRYLefponwFa+zn4g8+yN3QWD2uDJbVAoNd+JGCHsCGPbGDlrzRVBw
-O0kdOHMXJneWXuhVwNOxxBaupqKJowWjYEItzw5jGbbFiVWuCEQ=
-=zv8h
------END PGP SIGNATURE-----
-
---LesflmYWuqrXSfTh--
+2016-03-05 2:34 GMT+00:00  <dcoffin@shell.cybercom.net>:
+> Hi Guys,
+>
+>      CVE-2015-3885 was fixed in v9.26 and CVE-2015-8366 will
+> be fixed in v9.27.  Overrunning an automatic array is how most
+> hijacks happen, and overrunning a malloc'd buffer is probably
+> not good either.
+>
+>      CVE-2013-1438 seems designed to prevent dcraw from entering
+> an infinite or very time-consuming loop.  I'm not interested in
+> this because there are infinitely many ways to create a loop in
+> a TIFF file, and solving the Halting Problem is beyond the scope
+> of dcraw.
+>                                 Dave Coffin  3/4/2016
+>
+> On Sat, Feb 27, 2016 at 02:28:18PM +0000, Charlemagne Lasse wrote:
+>> Hi,
+>>
+>> it looks like there are a number of CVE against dcraw. All of them were
+>> fixed in the downstream project libRAW but none of them were fixed by
+>> you in the upstream project dcraw. When can we expect that these are
+>> fixed in dcraw? The list of CVE's I know about are:
+>>
+>> CVE-2015-8366
+>> https://github.com/LibRaw/LibRaw/commit/89d065424f09b788f443734d44857289489ca9e2
+>>
+>> CVE-2015-3885
+>> https://bugzilla.redhat.com/attachment.cgi?id=1027072
+>>
+>> CVE-2013-1438
+>> https://sourceforge.net/p/ufraw/bugs/361/attachment/0001-CVE-2013-1438-fix-various-security-issues.patch
+>>
+>> Several other downstream projects may still be affected. I've Cc'ed the
+>> ones which I know
+>>
+>> darktable
+>> exactimage
+>> kodi/xbmc
+>> rawstudio
+>> rawtherapee
+>> ufraw
+>>
+>> Thanks
