@@ -1,18 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/16
-Message-ID: <56DDEE49.1090904@redhat.com>
-Date: Mon, 7 Mar 2016 22:10:33 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/05/1
+Message-ID: <20160305000740.GB1250@sentinelchicken.org>
+Date: Fri, 4 Mar 2016 16:07:40 -0800
+From: Tim <tim-security@...tinelchicken.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2016-1234 in glibc glob with GLOB_ALTDIRFUNC
+Cc: Art Manion <amanion@...t.org>, Kurt Seifried <kseifried@...hat.com>, cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>
+Subject: Re: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-Alexander Cherepanov discovered that the glob implementation in glibc
-does not correctly handle overlong names in struct dirent buffers when
-GLOB_ALTDIRFUNC is used.
 
-Upstream bug report:
+> The level of frustration in the research community has been growing,
+> with steady calls for a new CVE-like solution that is designed to
+> address these needs in a more effective way. I greatly appreciate the
+> work that has been done, but at this point CVE is becoming less
+> useful, less relevant - if this isn't addressed, my expectation is
+> that a CVE-like solution will be adopted by the community, and
+> researchers will begin moving away from requesting CVEs.
 
-  <https://sourceware.org/bugzilla/show_bug.cgi?id=CVE-2016-1234>
 
-Florian
+The CVE system is clearly breaking down.
+
+I think we need a system that is less moderated and more content
+driven.  I imagine a simple site, which looks like a stripped-down bug
+tracker.  Let's suppose it acts like this:
+
+* Any researcher can post "claims" about vulnerabilities.  This
+  assigns an identifier immediately.
+
+* Claims about vulnerabilities may be reviewed, eventually, by an
+  authority whose job it is to be sure the claim is associated
+  properly with a real product/version and that the product owners are
+  notified through an automated process (e.g. "security@...").
+
+* Product owners can respond to claims, which will appear along side
+  the claim.  Links to patches or refutations can be included.
+
+* No moderation required.  Let the public decide if they believe the
+  researcher or vendor.  If a moderator does bother to look over the
+  content, they could deduplicate/link issues together and address any
+  confusion, but beyond that, it isn't their job to decide what is a
+  vulnerability and what isn't.
+
+* All information posted in this system exists publicly forever.
+  Links to external content (that isn't well represented in the
+  posting) are frowned upon, since the Internet Archive clearly can't
+  keep up with everything.  We need an archive that doesn't go away.
+
+
+Ok, beat it up.
+
+tim
