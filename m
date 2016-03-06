@@ -1,52 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/10/1
-Message-Id: <20160410142159.7B3713AE074@smtpvbsrv1.mitre.org>
-Date: Sun, 10 Apr 2016 10:21:59 -0400 (EDT)
-From: cve-assign@...re.org
-To: matthias@...lons.info
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: imlib2 integer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/06/2
+Message-ID: <CADLX=aEKUrGPtwetOuaJ=udOq=tA6AL9ozc=S2YCq1C5yFO7MQ@mail.gmail.com>
+Date: Sun, 6 Mar 2016 12:58:46 +0530
+From: Rahul Pratap Singh <techno.rps@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> https://git.enlightenment.org/legacy/imlib2.git/commit/?id=143f2993d7ccb73b26bb83abac6fa86f443981f9
-> 
-> Make IMAGE_DIMENSIONS_OK() more restrictive
-> Prevents invalid reads and unreasonably large memory allocations
-
-> Invalid read of size 1
+I am also sailing on the same boat. Thanks for raising this question. I
+reported multiple advisories to oss-sec and cve-assign. Never got even a
+single reply. Even, I saw, CVE-ID was assigned to same product for similar
+vulnerability few years back. Now, I eschew requesting CVE.
 
 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=820206
-> imlib2: potentially exploitable integer overflows
+Regards,
+Rahul Pratap Singh
 
+On Sun, Mar 6, 2016 at 11:57 AM, <gremlin@...mlin.ru> wrote:
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1324774
-> imlib2: exploitable integer overflow in _imlib_SaveImage
+> On 2016-03-05 20:20:39 +0300, Solar Designer wrote:
+>
+>  >> I think it's been said on this list previously -- these are
+>  >> two separate activities:
+>  >> 1. Assigning IDs
+>
+>  > Problem solved:
+>  > http://www.openwall.com/ove
+>
+> Hmmm... sorry to say, but I've garbaged 21 IDs by simply visiting
+> this page and reloading it twice just to see what would happen :-)
+>
+> So I'd suggest adding a BRB (Big Red Button) for those who actually
+> need an ID, and displaying some statistics ("1234 IDs were assigned
+> today") for everyone else.
+>
+> Style suggestion:
+>
+> [form action='.' method='post']
+> [input style='background:red;color:white;padding:16px;font-size:32px'
+> name='request' value='GET ID' type='submit']
+> [/form]
+>
+> Looks nice for me.
+>
+>  >> 2. Analysis, deconfliction, write-up
+>  > Having IDs is of some use even without or before all of that.
+>
+> Yes. So prepare for the above link to become really popular.
+>
+>
+> --
+> Alexey V. Vissarionov aka Gremlin from Kremlin
+> GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8
+>
 
-Use CVE-2014-9771.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXCl65AAoJEL54rhJi8gl5jHAP/18fovC2vayH3h8K29nxAn2c
-yA320vfDlnq9l7zdHYT0paBlU8cInmCX1YS0E+1gkaPtwPWfcbKzMtl73MIddWc9
-6ADdSyQYs6hRMiPGy8D4VI2o2M3wxCIRRprjZrMx1mOl61qu9DIdmIkdDFTUuvuv
-wsir9F6i+ENgfNvW0YHgmFcJrJ1YfOr7tfRKnm1xRi+5PkSukqqrKmc26UX94i7/
-o5d227DsX77cUP6seN2XZnvHL1UZhCvLT1O2NS5h6q1z5L/BnFLOwnOz7psaPlv/
-nFy7QKp6hWfAzPjaMuS52+DUdl9Py2nE9m/+lMArW5akilLoQ2P1O7BVnBCsiSQy
-X2JO8n9iwHe/gF4Md6y7Xty1y1QcOqPzzK4yGosUeOhsL+1rgt6CrqgoniddGkfX
-BKlbrhgOsS7apWnT3BHGLDz1HAIh1hr10a8o7dDnicC1iFYJxf3UZmGl9lmR6NPY
-AZM5+zi4L1mVmwdQK95dIkKH9gcbt2Q3Lkc4Js4hftmFyU9BgiYO2Z/jrSkfsgiY
-K79ysPGxjqav/1anOoJgQc9ygNBKeirDa5dnz8Op6ncvAjxGq8twgZF7vgDQ0NTT
-wf5v/KalMsT5hsDmWEUMi8KD/feKuSprMdK9zbCw+bzN6jjYriQzoCHLeoMUbaKI
-7e4XGMXRnZFMN08WUd6Z
-=AZsh
------END PGP SIGNATURE-----
