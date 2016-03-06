@@ -1,77 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/17/1
-Message-Id: <20160317152301.48ABE6C0675@smtpvmsrv1.mitre.org>
-Date: Thu, 17 Mar 2016 11:23:01 -0400 (EDT)
-From: cve-assign@...re.org
-To: pere@...a.cat
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...pal.org
-Subject: Re: CVE requests for Drupal contributed modules (from 2016-009 to 2016-014)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/06/7
+Message-ID: <CAFHyJTqHw=Cjg6C-u4eUyUVe9bcntn+LombQ+fnosgXBy79OZA@mail.gmail.com>
+Date: Sun, 6 Mar 2016 15:47:19 +0000
+From: "op7ic \\x00" <op7ica@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+agree, the vanity hunting is going to be there but I suppose as with any
+bug ID that is going to happen.
+But beyond that I don't think it matters as much. In the end of the day if
+somebody can use OVI or OVE to identify their bug then at least we got some
+level of reference to look it up on google.
 
-> Prepopulate - Access Bypass - SA-CONTRIB-2016-009
-> https://www.drupal.org/node/2679503
+I was toying with 4digit IDs that would be random enough, thats a
+possiblity too, the only problem is that there is a overhead of doing DB
+sorting and lookups to make sure their don't clash. Thats why ovi uses
+sequential numbers - its just easier to manage.
 
->> The Prepopulate module does not adequately prevent a user from
->> overwriting arbitrary parts of $_REQUEST. It also does not prevent
->> pre-populating certain fields that are not displayed or manipulating
->> markup fields to alter elements of the user interface.
+Cheers,
 
->> Versions affected
 
->>    Prepopulate 7.x-2.x versions prior to 7.x-2.1.
 
->>> http://cgit.drupalcode.org/prepopulate/commit/prepopulate.module?id=16cdb63cc3b256dd785e029ec17f92ddf80cc443
+On Sun, Mar 6, 2016 at 3:09 PM, Solar Designer <solar@...nwall.com> wrote:
 
-Use CVE-2016-3187 for the issue associated with deleting the
-"parse_str(base64_decode($_REQUEST['pp']), $_REQUEST);" lines, and use
-CVE-2016-3188 for the issue associated with changing the value of
-$limited_types. (The 16cdb63cc3b256dd785e029ec17f92ddf80cc443 commit
-message does not seem closely related to the
-16cdb63cc3b256dd785e029ec17f92ddf80cc443 code changes.)
+> On Sun, Mar 06, 2016 at 12:39:46PM +0000, op7ic x00 wrote:
+> > www.freeovi.com  -> it does have big `blue' button.
+>
+> Oh, I wasn't aware of it, and a Google search for "freeovi" or "ovi id"
+> finds only irrelevant stuff now.  I think it was not publicized enough.
+> Also, there's a name clash of "freeovi" with some old Nokia maps stuff.
+>
+> As to the button (non-)issue, I brought it to Twitter poll.  Of course,
+> it's not the same crowd as oss-security, but I want to get an overall
+> picture of how strongly people feel in favor of not wasting IDs, without
+> spamming this list with "+1" replies:
+>
+> https://twitter.com/solardiz/status/706488297242140672
+>
+> In fact, there are pretty strong results after a few minutes already.
+>
+> One of my concerns was that people would be hunting for vanity OVE IDs.
+> I didn't want to encourage waste of time on that, nor attempts to
+> increase the counter up to a pretty-looking number.  The latter is one
+> of the reasons why I chose to include the full date rather than just the
+> year - this makes numbers like 7777 less valuable, since there's one of
+> each of those every day.  (Another reason to include the full date is
+> that it may sometimes provide some insight into disclosure timelines,
+> even if not reliably.  I suspect some people won't like that, though.)
+> I think OVI, if it gains popularity and is not adjusted, is far more
+> "vulnerable" to such vanity ID hunting.
+>
+> Also, having the IDs increase up to a few thousand on each normal day
+> may discourage deliberate/malicious attempts to do so, and people trying
+> to skip IDs on such days and come back for lower IDs tomorrow.
+>
+> However, there appears to be a psychological aspect with spilling
+> unrequested IDs on the page.  It makes many people feel sorry.  I think
+> I underestimated that.
+>
+> (Another workaround would be to use randomized yet 4-digit IDs, but
+> being able to get some sequential IDs is very nice for assigning them to
+> related vulnerabilities.  This is why the page currently spills 10 IDs
+> at once on a second page load from the same IP address, and a few times
+> more, as long as the current ID is sufficiently below 9999 to allow for
+> this generosity.)
+>
+> Alexander
+>
 
-Our understanding is that the Prepopulate module was packaged in, for
-example, Fedora 23. The prepopulate-6.x-2.2.tar.gz file shipped in
-drupal6-prepopulate-2.2-4.fc23.src.rpm apparently does not have the
-16cdb63cc3b256dd785e029ec17f92ddf80cc443 changes. Thus, we feel that
-the best available information is that CVE-2016-3187 and CVE-2016-3188
-affects or affected, at least, Fedora 23.
-
-(For example, see the
-http://fedora.mirror.lstn.net/releases/23/Everything/source/SRPMS/d/drupal6-prepopulate-2.2-4.fc23.src.rpm
-package file.)
-
-(We understand that Drupal 6 end-of-life was last month according to
-the https://www.drupal.org/drupal-6-eol post. We also understand that
-http://pkgs.fedoraproject.org/cgit/rpms/drupal6-prepopulate.git/commit?id=d77963c300289b6be29b5dc08d0662fc698068f4
-exists. However, drupal6-prepopulate-2.2-4.fc23 may still be in use on
-many Fedora 23 systems.)
-
-We may be sending a separate reply about the USASearch, Google
-Analytics Counter, Hubspot CTA, Node Notify, and Fieldable Panels
-Panes issues.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJW6srrAAoJEL54rhJi8gl5J/4P/0g7s1pjL7lsg4sc3vN41r6v
-+1i0ucO28tfGhM13QxqNfR1RqUZ3W40dlWz2Lum6NvudbkGZaY+Jzph4BT9RW1n2
-80ruiuamYF3escBnWvssSdIjwl2ibwsKFzzjyrvArdcZpnI6pwGFWPKLbN4pGyoz
-WSi+Ow067aqeSJVonW98AlxF4udVTrQJQi1wmhiW0jOE+7zk1rAwkVUgLlWCDJLB
-dVnopSr/FN2ewTkkJrAfBSfqQBGe7XNrnYCzefdBv7JgAARzkPc1jJzdC8oy3AIL
-TiyDVo6O/fi4j4pd01TVUc8Yh7kGilDdk7BPyptH4KPrGG8yS8SmLY2WSoR3gpa8
-iBvw6o9X0HuXFo9IGrSBsd6LUt/+dYkqOH4JN2dxj9rxKlqv+4zlGHqM8mP/xGaw
-4tCy7ekDTpEEQNSSzZDLtrDtaYbtHztC2EQ+fUp8iTmh1OKayWPGHNj/+unChR+q
-0QqQt483QarClETgwUtVQCwqUBT90nS0RFvG5FKCAGRurfWXR0b0jXtQPmECZj6k
-wlJinmq4yAPfHVEjm1/5pGANAcihuLUxVdvpw8ZbsAJRSg2wEvxSCILb4Av+OaxF
-o5q0Nlekcn3FxKNz4hpr+ra5CWy7i/KDhjAuH6rarNMWA2sDLOM18TjyL9Pax0xy
-etw4zEaMsg3o2WgpI6qS
-=huG5
------END PGP SIGNATURE-----
