@@ -1,4 +1,9 @@
-Received: (qmail 17876 invoked by uid 550); 3 May 2023 21:55:27 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2118" "Sunday" "6" "March" "2016" "13:39:40" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160306183940.531F1332047@smtpvbsrv1.mitre.org>" "48" "[oss-security] Re: CVE request -- linux kernel: pipe: limit the per-user amount of pages allocated in pipes" nil nil nil "3" "2016030618:39:40" "[oss-security] Re: CVE request -- linux kernel: pipe: limit the per-user amount of pages allocated in pipes" (number mark "U       cve-assign@m Mar  6   48/2118  " thread-indent "\"[oss-security] Re: CVE request -- linux kernel: pipe: limit the per-user amount of pages allocated in pipes\"\n") "<416950326.31158071.1456852194971.JavaMail.zimbra@redhat.com>" ("<416950326.31158071.1456852194971.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 23843 invoked by uid 550); 6 Mar 2016 18:39:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,42 +12,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17854 invoked from network); 3 May 2023 21:55:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
-	t=1683150914; bh=qRID5aHHrQ95fVICTKMxjKBosbphDpk1l1BOMhUzlwE=;
-	h=Subject:From:To:Date:In-Reply-To:References;
-	b=tIj+DkRIlLBp2a8VeFfdfOmJyPxn5v8RD3PaB65vIW7vs9D9g0evFck5aT7bpWbt1
-	 iIhM854hpRw6GaYVQlVuiD5n7dmEtQMnWvI2ilCy1j/e7BAZMOSDw0KdJEsWN4rmze
-	 y8TCEwr2f9CBdY8+RmqX1D4H5D0JHexkYY7e2YKM=
-Message-ID: <d98ab3d26a1aeffb7542ba96b4bb73a5761b052e.camel@orlitzky.com>
-From: Michael Orlitzky <michael@orlitzky.com>
-To: oss-security@lists.openwall.com
-Date: Wed, 03 May 2023 17:55:13 -0400
-In-Reply-To: <336b0af3-572e-b601-a856-b09d0930d40e@eenterphace.org>
-References: <20230418154630.eoheygqyom3c7ovw@stig.io>
-	 <20230429100407.3yqdy2vtzokv3t5l@stig.io>
-	 <6d30fdfb-ad9a-2839-9ad1-93ff478a8459@thirddimension.net>
-	 <30B5E64A-3EEE-4676-979C-A5A39373F46B@dwheeler.com>
-	 <8038fdf3-2532-9a54-caf9-7c0d40262f52@thirddimension.net>
-	 <336b0af3-572e-b601-a856-b09d0930d40e@eenterphace.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4 
-MIME-Version: 1.0
-Subject: Re: [oss-security] Perl's HTTP::Tiny has insecure TLS cert default,
- affecting CPAN.pm and other modules
+Received: (qmail 23822 invoked from network); 6 Mar 2016 18:39:52 -0000
+From: cve-assign@mitre.org
+To: vdronov@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <416950326.31158071.1456852194971.JavaMail.zimbra@redhat.com>
+Message-Id: <20160306183940.531F1332047@smtpvbsrv1.mitre.org>
+Date: Sun,  6 Mar 2016 13:39:40 -0500 (EST)
+Subject: [oss-security] Re: CVE request -- linux kernel: pipe: limit the per-user amount of pages allocated in pipes
 
-On Wed, 2023-05-03 at 22:40 +0200, Moritz Bechler wrote:
->=20
-> while one may criticize that CVEs have been assigned both for the=20
-> insecure default and (some of the) insecure usages, at least one of=20
-> these is a legitimate case, in terms of CVEs likely the latter. And when=
-=20
-> it comes to defaming projects, at least in my book, choosing, keeping=20
-> and defending bad defaults speaks to much more than a CVE being assigned.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-They're both bad defaults. One explicitly does no authentication, while
-the other uses a corrupt and misunderstood process that can create a
-false sense of security. We disagree on which is worse, but neither
-viewpoint is ludicrous.
+>>> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=759c01142a5d0f364a462346168a56de28a80f52
 
+>>> The result is an OOM condition and oom-killer is not able to help
+>>> much, as the memory for the pipe data is a kernel memory and a memory
+>>> footprint of offensive processes is small.
+
+>> We feel that this should most likely have a CVE ID. The discussion
+>> outlines a realistic problem "it is possible for a single process to
+>> cause an OOM condition by filling large pipes with data that are never
+>> read. A typical process filling 4000 pipes with 1 MB of data will use
+>> 4 GB of memory" and the need for a CVE ID does not depend on the
+>> details of the solution approach. Also, there doesn't seem to be any
+>> general opposition to addressing the problem (e.g., see the
+>> https://lkml.org/lkml/2016/1/19/674 post).
+
+> An attacker using this method consumes a kernel memory, which is not
+> directly accounted to any per-user limit.
+
+> ... mmap()ed memory mentioned is accounted to per-user virtual
+> memory limit
+
+Use CVE-2016-2847.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJW3HjSAAoJEL54rhJi8gl5eMgP+gOBxp5qeeziz74rHT2eRoMg
+lvhaCWZD7NM43WbU12ShG9WgeYC/qfrIbf6oraUUMiw7DjBktYhJowAqx0j9/Xjv
+YQpaeMz2udLLV2R3ncNmt8xnCnuTkyyhjky/ZfZZNOr+ibHX+Rwy9Fzgcdr9NAzM
+zW18cZOEbz6KBu9xJq0YyOMHJ0IV99cuj6BAj/JCXL1+acD//W0XP/tPa1lodkYG
+a6k1RdXkOsykf+wiskpCZPu8WcRGYd8H5e4FZX0K6/S369czGJcdM9fWJ/t1j2pQ
+f5cQXi4rhZyfwdjwkFXIVHGepz/M9Po4zAG3CyVKOOLe2OAAt6SR9h2uGZ4IexsA
+2jVExyY0aD4M3epQUX5s67bNEoVfGFAbNw3ApL/7nOI9QWgxV40MBZ6tcNiG7cIv
+R2pY4MGWun8A3WW+jIcwqMTFroXFFawQR9Q+DimRsUed5Ubp2kgjJlszTjB3/BuA
+EaNHfGoSRDoJnGGHeoMQ1RFlLlqVjKs49HiSrSlrKLpJK03LZAk7/jBt0fR5Scoh
+EhXHra0YacZ/BWT/SLZlHZRMpeu8cDI+lD/xOFsQiUCsW3nlKLNVFNj8J7Gj2ZLP
+mSA2rVjbqpg269AwImxIjoxz1ugfzgivbCcNuOMZ6PGm0Ety3IgCkEcDPXKCk97M
+ARbZts5OALO7hv3U4yWQ
+=yIPt
+-----END PGP SIGNATURE-----
