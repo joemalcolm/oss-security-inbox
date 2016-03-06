@@ -1,48 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/15/8
-Message-Id: <20160215172332.A316442E1E3@smtpvbsrv1.mitre.org>
-Date: Mon, 15 Feb 2016 12:23:32 -0500 (EST)
-From: cve-assign@...re.org
-To: stelios@...sus-labs.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, miconda@...il.com, oriolc@...tele.com, jesusr@...tele.com
-Subject: Re: CVE Request: Kamailio 4.3.4 SEAS Module Heap overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/06/3
+Message-ID: <20160306102959.GA26781@openwall.com>
+Date: Sun, 6 Mar 2016 13:29:59 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Sun, Mar 06, 2016 at 09:27:00AM +0300, gremlin@...mlin.ru wrote:
+> On 2016-03-05 20:20:39 +0300, Solar Designer wrote:
+>  > Problem solved:
+>  > http://www.openwall.com/ove
+> 
+> Hmmm... sorry to say, but I've garbaged 21 IDs by simply visiting
+> this page and reloading it twice just to see what would happen :-)
 
-> a (remotely exploitable) heap overflow vulnerability was found in
-> Kamailio v4.3.4. We have notified the developers and they have addressed
-> this through commit:
-> https://github.com/kamailio/kamailio/commit/f50c9c853e7809810099c970780c30b0765b0643
+A few people said they felt sorry about that, but I think this is
+actually OK.
 
->> seas: safety check for target buffer size before copying message in encode_msg()
+> So I'd suggest adding a BRB (Big Red Button) for those who actually
+> need an ID,
 
->> avoid buffer overflow for large SIP messages
+I had thought of that and decided to do without it for now.  (Also
+considered captcha.)  I like to emphasize how very easy it is to obtain
+OVE IDs.  Not even having to click a button serves that goal well.
 
->> modules/seas/encode_msg.c
+I don't mind adding a button a bit later, though.  We'll see.
 
-Use CVE-2016-2385.
+> and displaying some statistics ("1234 IDs were assigned
+> today") for everyone else.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+This is currently available through OVE IDs themselves - they are
+sequential, starting with 0001 at midnight UTC.
 
-iQIcBAEBCAAGBQJWwghNAAoJEL54rhJi8gl5cv4P/RRMA3ZoAj5Yju7JaOUObi6l
-kUmdSs/qqg4N2oz4YXmSvZOkZTFPOsDNuFNaho7wslnd654mCWCC8yvIWOlnBOhK
-tC9al/blgwVIUpPk2RwR+5H1V5iIyYRL6V7kZ/SKlpemBevSvLgIf7xvHjgCcvzU
-D0qmlWcaRT7wlhrWWD6Zyxez1dMTBzuvYZBfpz4xdYVrppSdOCPbsMdH2+IzChyd
-8q/MwVgdPE+9FG+UZe0qqDy7zASNsFR5kCo/A6mMjdl5XfAHTt+ANn40XtKRkawd
-8i2Ob8x7tyjv2yhCAa1L/FO5eqQzTR0UcSB9toLJjSNXNqDZvWPVzh/bsW32amr1
-+GGqEvv1haFyKT6jOHN5t9xQoyEEb5LstadBrRTLU6h8EDIWza1zAG/PVBPyF2pb
-i1O/3NwEu7T7bdVV8y0SbqlgPtan7PxxKI4i8Q9HUdh5tnnd923DLI2IZB+lVkZe
-rrSPBiBdA/biCUJkxe6nlA4LOZpbjhiTrttWG1xpSPDpPgu3HwSVvN8/meIPnNjH
-6N3oxg/ZmbK5CI0RXEQ6zzoseIxiTZJdkJG5rcUxVdcs8UNMErNw7/9EumJAHdUW
-EnPKqSHYFxFC7oGURwTsw0M/NgD8WFIvWj6b7qhS5ITFyhrgwytJGcp/aLK+csJt
-WhelUxp3alZJF+dIhKKy
-=Il5r
------END PGP SIGNATURE-----
+>  > Having IDs is of some use even without or before all of that.
+> 
+> Yes. So prepare for the above link to become really popular.
+
+As it is, it should survive quite a few thousand of unique IPs per day
+(and yes, it temporarily records per IP address statistics, and it has
+per-IP and per-netblock limits), before (gradually) denying service for
+the rest of the day.  It might or might not survive a Slashdot-alike
+event, but even if not then waiting a day for the next batch of IDs is
+quicker than waiting weeks for CVE IDs.
+
+BTW, there is not a hard-coded limit of 9999.  There is logic in place
+to try and keep the daily IDs within 9999 (the service becomes less
+generous as the 4-digit space gets closer to being exhausted), but if
+the requests and unique IPs are too numerous this may be crossed anyway,
+resulting in 5- or 6-digit IDs (and going back to 4-digit the next day).
+
+Alexander
