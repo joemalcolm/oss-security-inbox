@@ -1,46 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/03/5
-Message-ID: <20161103103435.GF17110@redhat.com>
-Date: Thu, 3 Nov 2016 11:34:35 +0100
-From: Jan Pokorný <jpokorny@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/06/11
+Message-ID: <56DC7B1E.4050507@oracle.com>
+Date: Sun, 06 Mar 2016 10:46:54 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2016-7035 - pacemaker - improper IPC guarding
+CC: Art Manion <amanion@...t.org>, Kurt Seifried <kseifried@...hat.com>, cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>
+Subject: Re: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-Following issue is being publicly disclosed today:
+On 03/ 4/16 04:07 PM, Tim wrote:
+> * No moderation required.  Let the public decide if they believe the
+>    researcher or vendor.  If a moderator does bother to look over the
+>    content, they could deduplicate/link issues together and address any
+>    confusion, but beyond that, it isn't their job to decide what is a
+>    vulnerability and what isn't.
 
-A vulnerability has been found in pacemaker, a software package for
-high-availability clustering.
-
-It was discovered that at some not so uncommon circumstances, some
-pacemaker daemons could be talked to, via libqb-facilitated IPC, by
-unprivileged clients due to flawed authorization decision.  Depending
-on the capabilities of affected daemons, this might equip unauthorized
-user with local privilege escalation or up to cluster-wide remote
-execution of possibly arbitrary commands when such user happens to
-reside at standard or remote/guest cluster node, respectively.
-
-The original vulnerability was introduced in an attempt to allow
-unprivileged IPC clients to clean up the file system materialized
-leftovers in case the server (otherwise responsible for the lifecycle
-of these files) crashes.  While the intended part of such behavior is
-now effectively voided (along with the unintended one), a best-effort
-fix to address this corner case systemically at libqb is coming along
-(https://github.com/ClusterLabs/libqb/pull/231).
-
-Affected versions:  1.1.10-rc1 (2013-04-17) - 1.1.15 (2016-06-21)
-Impact:             Important
-CVSSv3 ranking:     8.8 : AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H
-
-Credits for independent findings, in chronological order:
-  Jan "poki" Pokorný, of Red Hat
-  Alain Moulle, of ATOS/BULL
-
-
-Patch for the issue, which is applicable on all affected versions:
-https://github.com/ClusterLabs/pacemaker/pull/1166/commits/5a20855d6054ebaae590c09262b328d957cc1fc2
+If the site displays *any* user-submitted text, you need at least enough
+moderation to filter out spammers & trolls.
 
 -- 
-Jan (Poki)
-
-Content of type "application/pgp-signature" skipped
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	  X.Org Security Response Team - xorg-security@...ts.x.org
