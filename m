@@ -1,54 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/06/3
-Message-ID: <0d0061c0-7c51-98cd-e62b-073743e31d25@redhat.com>
-Date: Mon, 6 Jun 2016 15:54:13 +0200
-From: Adam Maris <amaris@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/06/5
+Message-Id: <110FE574-DEEC-4308-90BE-A83A5C53421A@gmail.com>
+Date: Sun, 6 Mar 2016 12:39:46 +0000
+From: "op7ic \\x00" <op7ica@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: CVE requests: DoS in librsvg parsing SVGs with circular definitions
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
+www.freeovi.com  -> it does have big ‘blue’ button. 
 
 
-On 15/05/16 09:05, Gustavo Grieco wrote:
-> 2016-05-11 0:36 GMT+02:00 Brian May <brian@...uxpenguins.xyz>:
->> Just did a git bisect against the source. Assuming I got this right, the
->> following commits fixed the issue.
-> Thanks for taking the time to do the git bisect!
->
->>>> They affect the following functions:
->>>> * rsvg_cairo_pop_discrete_layer - rsvg_cairo_pop_render_stack -
->>>> rsvg_cairo_generate_mask: reproducible using circular-1.svg
->>> Use CVE-2016-4347.
->> Fixed in:
->>
->> commit a51919f7e1ca9c535390a746fbf6e28c8402dc61
->> Author: Benjamin Otte <otte@...hat.com>
->> Date:   Wed Oct 7 08:45:37 2015 +0200
->>
->>     rsvg: Add rsvg_acquire_node()
->>
->>     This function does proper recursion checks when looking up resources
->>     from URLs and thereby helps avoiding infinite loops when cyclic
->>     references span multiple types of elements.
->
-> I think CVE-2016-4347 and CVE-2015-7558 (stack exhaustion due to
-> cyclic dependency, reported here:
-> http://www.openwall.com/lists/oss-security/2015/12/21/5) are in fact,
-> the same issue. This is probably my fault (sorry!).
->
-> MITRE: We should reject the the newly assigned one?
->
-> Regards,
-> Gustavo.
-
-CC'ing MITRE in case they missed this question. We confirm it is a
-duplication. Which CVE should be rejected?
-
-Thanks!
-
--- 
-Adam Mariš, Red Hat Product Security
-1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
-
+> On Mar 6, 2016, at 6:27 AM, gremlin@...mlin.ru wrote:
+> 
+> On 2016-03-05 20:20:39 +0300, Solar Designer wrote:
+> 
+>>> I think it's been said on this list previously -- these are
+>>> two separate activities:
+>>> 1. Assigning IDs
+> 
+>> Problem solved:
+>> http://www.openwall.com/ove
+> 
+> Hmmm... sorry to say, but I've garbaged 21 IDs by simply visiting
+> this page and reloading it twice just to see what would happen :-)
+> 
+> So I'd suggest adding a BRB (Big Red Button) for those who actually
+> need an ID, and displaying some statistics ("1234 IDs were assigned
+> today") for everyone else.
+> 
+> Style suggestion:
+> 
+> [form action='.' method='post']
+> [input style='background:red;color:white;padding:16px;font-size:32px'
+> name='request' value='GET ID' type='submit']
+> [/form]
+> 
+> Looks nice for me.
+> 
+>>> 2. Analysis, deconfliction, write-up
+>> Having IDs is of some use even without or before all of that.
+> 
+> Yes. So prepare for the above link to become really popular.
+> 
+> 
+> -- 
+> Alexey V. Vissarionov aka Gremlin from Kremlin
+> GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8
 
