@@ -1,40 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/19
-Message-ID: <CAMYtjArOz_yU+97VWT+E7a8u3v+ekb3Y-nZiARLc4arrgHvSew@mail.gmail.com>
-Date: Wed, 24 Feb 2016 21:35:17 +0100
-From: Pere Orga <pere@...a.cat>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/06/14
+Message-Id: <20160306213346.BF6846C0559@smtpvmsrv1.mitre.org>
+Date: Sun,  6 Mar 2016 16:33:46 -0500 (EST)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Cc: Drupal Security Team <security@...pal.org>
-Subject: CVE requests for Drupal core (SA-CORE-2016-001)
+Cc: cve-assign@...re.org
+Subject: Re: Aufs Union Filesystem Privilege Escalation In User Namespaces
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Please can I have CVE IDs assigned to the following Drupal
-vulnerabilities (see https://www.drupal.org/SA-CORE-2016-001):
+> http://www.halfdog.net/Security/2016/AufsPrivilegeEscalationInUserNamespaces/
 
-File upload access bypass and denial of service (File module - Drupal 7 and 8)
-Brute force amplification attacks via XML-RPC (XML-RPC server - Drupal 6 and 7)
-Open redirect via path manipulation (Base system - Drupal 6, 7 and 8)
-Form API ignores access restrictions on submit buttons (Form API - Drupal 6)
-HTTP header injection using line breaks (Base system - Drupal 6)
-Open redirect via double-encoded 'destination' parameter (Base system
-- Drupal 6)
-Reflected file download vulnerability (System module - Drupal 6 and 7)
-Saving user accounts can sometimes grant the user all roles (User
-module - Drupal 6 and 7)
-Email address can be matched to an account (User module - Drupal 7 and 8)
-Session data truncation can lead to unserialization of user provided
-data (Base system - Drupal 6)
+> AUFS Over Fuse: Loss of Nosuid
 
+> Those files can be exposed
+> using aufs including the problematic SUID properties.
 
-And also for the FileField contributed module:
+>     Mount aufs on top of fuse
+>     Execute the SUID binary via aufs from outside the namespace
 
-FileField - Denial of Service
-https://www.drupal.org/node/2674854
+> In my optionion the workarounds should be to restrict access to fuse
+> also only to the mount namespace where it was created.
+
+> https://sourceforge.net/p/aufs/mailman/message/34864744/
+
+>> test mnt_ns in open(2) for fuse branch
+
+Use CVE-2016-2853.
 
 
+> AUFS Xattr Setgid Privilege Escalation
 
-Regards
--- 
-Pere Orga on behalf of the Drupal Security team
+> Due to inheritance of Posix ACL information (xattrs) when aufs is
+> copying files and not cleaning those additional and unintended ACL
+> attribues, SGID directories may become user writable
+
+> https://sourceforge.net/p/aufs/mailman/message/34864744/
+
+>> copy-up resets ACL
+
+Use CVE-2016-2854.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJW3KG9AAoJEL54rhJi8gl5uk0P/j2vNmJ1Q5x3eWMfnlfoobCr
++GjgC7LPHk6Y1t3P1Rvkd1+Di7oqABso7FnZrHmfRuCk8txuzxOx/nAhQ7Jw8ROJ
+607J36pYSWoCvkOo6tGdrisfaqDT+z0RmVVw8jhecZUE4n8m2BwLcHhMVHBehoDp
+nOhzwMvxMNjNWw+qhVPFFOUM2gOxv1NQFdQ9YBflMgszb+8LW7AdTQgHrKuwCose
+2ynF0JwbeVdtIcOPyqVlUNJOvqclOVEPQOyd7Y6P1v4ykDPhfI8pgObyLU9Kt6vL
+MY1lCmKGfkuM0/nGlTlvF5jhKqUPJeBzVsjnY7/uI2/zxDSboTsFGCaOx8nbL3Ut
+diKtUDaKmQwn8Tm00JPWBm7cFPVdtGsQTfosfbbZC4rjerzV831dh69zTA+hn79k
+nrH9QeRGPSZVh/sl3WzP2QvlWNoFyBUPUrb4Q+oOS8ttC5cnOwuynHyva951ZBC0
+B9223w347nise9fclv3tYr1XIRV/o0wmn6N39aQUdNOhplNGu5lqflwC/rIz2rYB
+eubUoXGBsBB/dSBSLEFhGt2oQZVqtEH9b0FjFpSI0jpKwPR0U2Mt/OKGPnlRznvI
+20w2wZBh4nxtsxSOcTP8MRqPwWgo695vdKviDPXLd7JXQ8v5ctozY1RypVKPJus8
+8E6zCgbi02SxlmhHG+5l
+=6N7V
+-----END PGP SIGNATURE-----
