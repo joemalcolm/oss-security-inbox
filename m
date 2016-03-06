@@ -1,4 +1,9 @@
-Received: (qmail 30301 invoked by uid 550); 15 Jun 2023 13:10:43 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2038" "Sunday" "6" "March" "2016" "09:27:00" "+0300" "gremlin@gremlin.ru" "gremlin@gremlin.ru" "<20160306062700.GA25289@gremlin.ru>" "62" "Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies" "^Date:" nil nil "3" "2016030606:27:00" "[oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies" (number mark "        gremlin@grem Mar  6   62/2038  " thread-indent "\"Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies\"\n") "<20160305172039.GA20796@openwall.com>" ("<CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com>" "<56D9DD1F.1030302@cert.org>" "<20160305172039.GA20796@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 17585 invoked by uid 550); 6 Mar 2016 06:27:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,211 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 17564 invoked from network); 6 Mar 2016 06:27:14 -0000
+Message-ID: <20160306062700.GA25289@gremlin.ru>
+References: <CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com> <56D9DD1F.1030302@cert.org> <20160305172039.GA20796@openwall.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=x-unknown;
+	protocol="application/pgp-signature"; boundary="mYCpIKhGyMATD0i+"
+Content-Disposition: inline
+In-Reply-To: <20160305172039.GA20796@openwall.com>
+OpenPGP: id=8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8
+X-PGP-PubKey: 0xEF3B1FA8
+X-PGP-Fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
+Date: Sun, 6 Mar 2016 09:27:00 +0300
+From: gremlin@gremlin.ru
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32178 invoked from network); 15 Jun 2023 11:57:05 -0000
-DKIM-Filter: OpenDKIM Filter v2.10.3 mail.census 52148336D12C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=census-labs.com;
-	s=D8BFA4EC-CF6E-11EB-AFC5-2C27CB7A6FA6; t=1686830213;
-	bh=9poFCYTyYxMu83OQifFCJDdSrVBYbAe1+HNPmOaCsnQ=;
-	h=Message-ID:Date:MIME-Version:To:From;
-	b=Yx8QqjZlJ6DDGf+M6VVCMEo+8WE77kgAD+DYPVhmKCr6xR9j4fLI8/a0VHg9dpZF2
-	 ODmRdplUznXhwbhmpnzFPl4cGaF1608D7b0niVQx0Wc+8Ylm0cl7WYZ+MJ1MFEAZrl
-	 Hq1AdtXcE7VZGDNmMrA0qcZRZIWBvygctSiAUQAwxY1DKWOEH85l29VHFYKqRJFCf5
-	 Xs9BllMz0KV3k7yfVqfyZMuxIRfbioOvbnFvuu4xDHXX5enVAuLqIuiNsCpCfVbxS0
-	 u70OGvBoF63872bY4Om6vUVh0ja0NSUqVEaExyq37fgPV6mbT5Fme/cytZOHoi/4n5
-	 iuFg9GuZU8mkw==
-Message-ID: <c179150b-68ee-9689-abc9-906a9a7229b3@census-labs.com>
-Date: Thu, 15 Jun 2023 12:56:52 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Content-Language: en-US
+Subject: Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies
 To: oss-security@lists.openwall.com
-From: Brian McDermott <bmcdermott@census-labs.com>
-Autocrypt: addr=bmcdermott@census-labs.com; keydata=
- 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 qw==
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------oeth5hadWFS5si9uj3XKXYTd"
-Subject: [oss-security] CVE-2023-1672: race condition in Tang exposes private keys to other
- processes
 
---------------oeth5hadWFS5si9uj3XKXYTd
-Content-Type: multipart/mixed; boundary="------------9NkTXRohICatJ8vD0tmWVh0c";
- protected-headers="v1"
-From: Brian McDermott <bmcdermott@census-labs.com>
-To: oss-security@lists.openwall.com
-Message-ID: <c179150b-68ee-9689-abc9-906a9a7229b3@census-labs.com>
-Subject: CVE-2023-1672: race condition in Tang exposes private keys to other
- processes
-
---------------9NkTXRohICatJ8vD0tmWVh0c
-Content-Type: multipart/mixed; boundary="------------N20V8mQyBMPCNBdR6xGIA1ya"
-
---------------N20V8mQyBMPCNBdR6xGIA1ya
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-
-SGVsbG8gYWxsLA0KDQpUYW5nIChodHRwczovL2dpdGh1Yi5jb20vbGF0Y2hz
-ZXQvdGFuZykgaXMgYW4gb3BlbiBzb3VyY2UgcHJvamVjdCB0aGF0IA0KaXMg
-dXNlZCB0byBiaW5kIGRhdGEgdG8gbmV0d29yayBwcmVzZW5jZS4gSXQgaXMg
-Y29tbW9ubHkgdXNlZCBhbG9uZyB3aXRoIA0KQ2xldmlzIGNsaWVudHMgdG8g
-cHJvdmlkZSBmb3IgdW5hdHRlbmRlZCBMVUtTIGRlY3J5cHRpb24gb2Ygc2Vy
-dmVyIA0Kc3RvcmFnZSB2b2x1bWVzIHdpdGhpbiB0aGUgcmVhbG1zIG9mIGEg
-bmV0d29yaywgd2hlcmUgYSB0cnVzdGVkIFRhbmcgDQpzZXJ2ZXIgaXMgc2l0
-dWF0ZWQuDQoNCkNFTlNVUyBpZGVudGlmaWVkIHRoYXQgdGhlIFRhbmcgc29m
-dHdhcmUgaW4gdmVyc2lvbnMgMTEsIDEyIGFuZCAxMyAoYW5kIA0KcG9zc2li
-bHkgcHJldmlvdXMgdmVyc2lvbnMpIGlzIHZ1bG5lcmFibGUgdG8gYSBmb3Jt
-IG9mIHJhY2UgY29uZGl0aW9uLCANCndoZXJlIHRoZSBUYW5nIHByaXZhdGUg
-a2V5cyBiZWNvbWUgZXhwb3NlZCBmb3IgYSBzbWFsbCB0aW1lIHdpbmRvdyB0
-byANCm90aGVyIHVzZXJzIG9uIHRoZSBzYW1lIGhvc3QuIFRoZSBpc3N1ZSBp
-cyB0cmFja2VkIGFzIENWRS0yMDIzLTE2NzIuIA0KTW9yZSBpbmZvcm1hdGlv
-biByZWdhcmRpbmcgdGhlIHZ1bG5lcmFiaWxpdHkgY2FuIGJlIGZvdW5kIGhl
-cmU6IA0KaHR0cHM6Ly9jZW5zdXMtbGFicy5jb20vbmV3cy8yMDIzLzA2LzE1
-L3JhY2UtdGFuZy8NCg0KVXNlcnMgYXJlIHJlY29tbWVuZGVkIHRvIHVwZ3Jh
-ZGUgdG8gVGFuZyB2ZXJzaW9uIDE0IHdoZXJlIHRoZSBpc3N1ZSBoYXMgDQpi
-ZWVuIHN1ZmZpY2llbnRseSBhZGRyZXNzZWQuDQoNCkJlc3QgcmVnYXJkcywN
-Cg0KQnJpYW4gTWNEZXJtb3R0DQoNCi0tIA0KQnJpYW4gTWNEZXJtb3R0DQpK
-ciBJVCBTZWN1cml0eSBQcm9mZXNzaW9uYWwgSW50ZXJuDQpBZGQ6IFNZTkdS
-T1UgQVZFTlVFIDEyOCwgQXRoZW5zIDExNzQ1LCBHcmVlY2UNCk1vYjogKzMw
-IDY5NDQgNDM1NTQxDQpUZWw6ICszMCAyMTAgMjIwODk4OS05MA0KaHR0cHM6
-Ly9jZW5zdXMtbGFicy5jb20gLS0gSVQgU2VjdXJpdHkgV29ya3MNCg0KQ09O
-RklERU5USUFMSVRZIE5PVElDRQ0KVGhlIGNvbnRlbnRzIG9mIHRoaXMgZW1h
-aWwgbWVzc2FnZSBhbmQgYW55IGF0dGFjaG1lbnRzIGFyZSBpbnRlbmRlZCBz
-b2xlbHkgZm9yIHRoZQ0KYWRkcmVzc2VlKHMpIGFuZCBtaWdodCBjb250YWlu
-IGNvbmZpZGVudGlhbCBhbmQvb3IgcHJpdmlsZWdlZCBpbmZvcm1hdGlvbiBh
-bmQgbWlnaHQNCmJlIGxlZ2FsbHkgcHJvdGVjdGVkIGZyb20gZGlzY2xvc3Vy
-ZS4gSWYgeW91IGFyZSBub3QgdGhlIGludGVuZGVkIHJlY2lwaWVudCBvZiB0
-aGlzDQptZXNzYWdlIG9yIHRoaXMgbWVzc2FnZSBoYXMgYmVlbiBhZGRyZXNz
-ZWQgdG8geW91IGluIGVycm9yLCBwbGVhc2UgaW1tZWRpYXRlbHkgbm90aWZ5
-DQp0aGUgc2VuZGVyIGFuZCBkZWxldGUgYW55IGNvcGllcyBvZiBpdDsgeW91
-IGFyZSBoZXJlYnkgbm90aWZpZWQgdGhhdCBhbnkgdXNlLCBjb3B5aW5nDQpv
-ciBzdG9yYWdlIG9mIHRoaXMgbWVzc2FnZSBvciBpdHMgYXR0YWNobWVudHMg
-aXMgc3RyaWN0bHkgcHJvaGliaXRlZC4NCg0K
-
---------------N20V8mQyBMPCNBdR6xGIA1ya
-Content-Type: application/pgp-keys; name="OpenPGP_0x68BA3525BB668B19.asc"
-Content-Disposition: attachment; filename="OpenPGP_0x68BA3525BB668B19.asc"
-Content-Description: OpenPGP public key
+--mYCpIKhGyMATD0i+
+Content-Type: text/plain; charset=koi8-r
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
------BEGIN PGP PUBLIC KEY BLOCK-----=0A=
-=0A=
-xsFNBGPiarYBEADXuDc4yIlcM6Vxqt2XV6guBW7FQv0jbBHlgDytSmXF6vS5yG8j=0A=
-m3OQI4XR7B4ty4hoSvo363Wh6Xsjz9iKS+61An74A/DCgBb/T7ZcOCiUnRTxxfKv=0A=
-NGYCKXvKBtMM3vf3uGcJw5FhRCf/dlYSPEwKSObt0L4Vi4p2BvvsCGRHG8DdCGdl=0A=
-SUzZlHufqJsdt/qocEhBxiEskyYapy5tpH3HCeqIjuhdcGt3FuT1LxLZTuMzDhsZ=0A=
-6CFj+z2H4xANkNNHAvOy9VTwzSC0VoYbymcoQYx8ehTLda588+lU2S0fwOmpjtSw=0A=
-z/YYNjvDvrH6AV0ERPANy+kLVEYuOoNt2XdUGsvJRny20n/dFAb3Skcy4ZSqJmNc=0A=
-q37z/26OblW4APZNCir5EZ3EdS5Rkonl4FAX6gWm0d3yKSSS2ymgvLNKfUCbp0Fl=0A=
-eHgpkDhC8G2ARKjV+5GS3EkdEUzKfTins0LfGJ8Qd+vZpvH0kiMKESi5p75WfF54=0A=
-bRpLEdjoZazpfPt/LRFVn+FOmt91P1qM5yKzam6fz3W6LWwcdJDOcmnWhLl9lhKr=0A=
-2AI0LWYAfhtITBZHsI7PL6E1OBmQptyQ9SrlZkjilNVx5kM2LijqBxEuNvftZQVH=0A=
-VIAw/PVk2zYWbWvgmwXKVLcp+h3hRoJhwjywuf2G6B2zVwKkoS7sAwIQywARAQAB=0A=
-zSxCcmlhbiBNY0Rlcm1vdHQgPGJtY2Rlcm1vdHRAY2Vuc3VzLWxhYnMuY29tPsLB=0A=
-jQQTAQgANxYhBDHUwsbPq+rjjRVUhmi6NSW7ZosZBQJj4mq3BQkHhM4AAhsDBAsJ=0A=
-CAcFFQgJCgsFFgIDAQAACgkQaLo1JbtmixlZig/8D1fbYJCXN5LGfiXxOcmYjRCB=0A=
-sV2jmSrwk+8b8S1SzmXKNh6aTEfVbKcLGps1Bt1nYTTmt+MxiUA+O5AFTnfRn5bj=0A=
-PVHpwIQoKFokSk5tcwecoUly3FslokVMPJwLIA2vdQOgXWlwcewo7RTXwPd07nIi=0A=
-hHPyWcGMV8Ct4/tifJt2rGeRMXm2ZfQXFTd5DTjpBirg1h+WYVrlOv+YZc8labCc=0A=
-MThk2OcLrPnsB542Q/g76AnreO1TqranJmSnQxa9BquESC9vhRBi0iLcgoFJE0F0=0A=
-6qUNfn0tNPPKIYSuFh15MmDvsvDgG5nkVmysbghPa2WHt1CzoI0tcOk94mx95x61=0A=
-pLalt/wGW2Qax9IPwgBs4l+NMvQ7/ZjW6nHnaxvEQJOkEvNSGP/in3HoguCJmQ9T=0A=
-yf1ZHLxTb+whSOlzJaq8d0AM/Djz5prGr3GiWoDBePoxBQuSqbtC+2XeIY60xgT/=0A=
-aLcrCL1sD5NArqP4p5OaXfVZuMVQyTFzcu1B4wY2f8mNxXUItenJleLFashlGPYJ=0A=
-47P3wgt+RAkN/v1y4udGit0OH1o7QouUv+Q14QNcuq9ZUyFM75gi+FWLJgt3ifE9=0A=
-QuMNmib1uegb3uBYsFWT3qKVJhmB7fw1QY7R2igWQyT31GJQHBRgw8uC6p70vOua=0A=
-cin+CBjZSoIqCddP9Z3OwU0EY+JquAEQALD1jg5q5Ee+8dXv6GiruWaEho677RYZ=0A=
-P/Rs8cqS3AMjwf1PDt2TD9qikybatX5F/KY0JfVYTFfo7CQu+/aTUevsuICLFMER=0A=
-WShsN1sXkZxdJJ/JtzkPoX8P/GjNlhrNFiQOcABGattvhg7VBnhJEYw9ffzLT167=0A=
-lULiXI4tPcG9sGzsz1jFfcBBtv1lWwDmltfKP440/uUS+Y2H8T361LOp5VHNu7c3=0A=
-SQhmHx2iiTpFfPofvcRVhSYpn5rfVK2sF3OcU4W+JfnF+bp87Vs+riH793HDmPEj=0A=
-SOMFNdIuuflsy5ZOo/l+khZhEds3G4DphKSsILp/y2hOIYN89helVV/C+zv+blPu=0A=
-whGZekq/+RVFHUuD+jI0T98+KoO73IycbgcbgmlLn+aWPdQZZ+6JEU10mWcSFfCF=0A=
-gqQr1dZMz4KOcW6AE9j/QPT5A/6KYdR3GUKIQGm7VxexOHt8o4B3EyMYq0yPXbx6=0A=
-t+jee5i4vbUW+qXC8dyuRDJQVnwfUTyBFMAmFnGp2sW6UEcleiTKkaz6UBXfqjgI=0A=
-Kbkpo0+XA40rA8KuBvnSEuvqdW7H/efRh0s4V30MHIYoXXbET+6Vt1JzaECJlxOM=0A=
-523DY4dJPtp39y4IMG5680Pc2N2R595P+X/b70HSvnrb2gd9t+vh77vMrHY47CgP=0A=
-sXQpX/OECV8pABEBAAHCwXwEGAEIACYWIQQx1MLGz6vq440VVIZoujUlu2aLGQUC=0A=
-Y+JquQUJB4TOAAIbDAAKCRBoujUlu2aLGYFzD/95SNxalP9sdmAy1CIpQYWhayJz=0A=
-lYXeTGZAFT7jSqTuxq0gBPCEJC2sCSjtQoDMo+XtiqG6e3uqrwkOPxNbahxyoTii=0A=
-5nqj1f53Ny3G2Vyallvyalc9zfD9hpoo23ORF8qb+RfDTX4eHiwbzWXcr7UjsZli=0A=
-2M5KWsJX4Vto6+u1vdHv+FliaBkOTI4Q+MBu/rRr+fIoSWmS7ZGJMsrFI4cxULG2=0A=
-qKsXnRN3kJZuKMG29ujEVLhpFQtZzN+PPYhNH/ksFtBL/u6hzjfEX994UhARzumZ=0A=
-jQcsdw/PNm5eh6hVpx12KfhPB6Z+mWuTCM5PCls1tVCB9va+5DA8fp37fUMWRpiT=0A=
-TtefDc+U7GfNv1ieOhGpnn6dX57FTM4DPXkObiS/1uS1NdUDxnPER0C1WiL7uUHr=0A=
-QudZKuKxeAgcnKj/UVJ3ZEc8AqFXw1IJJDjN5L+1K/XAYx4IifnPXbVYWSJ/CXFr=0A=
-yuSR5rI61l19qghwuSoTamrtI37lIJmHCnfWElHNM+C1y6L4bU6Mn9jPwvki4MMu=0A=
-aBhcBB8VtfoJuXcDkBOFUV8H05Z5MZms9dfCh5zcPphH0rK559WJXHEW9MAERX1U=0A=
-t5wLtSi+YaU/COONMwnvljZBsEGX1skqAFmaZi38BBAoLqqdVHfZJG7CJvttAORQ=0A=
-jm/F0HlZ8gNbO0A8qw=3D=3D=0A=
-=3DIwqr=0A=
------END PGP PUBLIC KEY BLOCK-----=0A=
+On 2016-03-05 20:20:39 +0300, Solar Designer wrote:
 
---------------N20V8mQyBMPCNBdR6xGIA1ya--
+ >> I think it's been said on this list previously -- these are
+ >> two separate activities:
+ >> 1. Assigning IDs
 
---------------9NkTXRohICatJ8vD0tmWVh0c--
+ > Problem solved:
+ > http://www.openwall.com/ove
 
---------------oeth5hadWFS5si9uj3XKXYTd
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+Hmmm... sorry to say, but I've garbaged 21 IDs by simply visiting
+this page and reloading it twice just to see what would happen :-)
+
+So I'd suggest adding a BRB (Big Red Button) for those who actually
+need an ID, and displaying some statistics ("1234 IDs were assigned
+today") for everyone else.
+
+Style suggestion:
+
+[form action=3D'.' method=3D'post']
+[input style=3D'background:red;color:white;padding:16px;font-size:32px'
+name=3D'request' value=3D'GET ID' type=3D'submit']
+[/form]
+
+Looks nice for me.
+
+ >> 2. Analysis, deconfliction, write-up
+ > Having IDs is of some use even without or before all of that.
+
+Yes. So prepare for the above link to become really popular.
+
+
+--=20
+Alexey V. Vissarionov aka Gremlin from Kremlin
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8
+
+--mYCpIKhGyMATD0i+
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
 
-wsF5BAABCAAjFiEEMdTCxs+r6uONFVSGaLo1JbtmixkFAmSK/IQFAwAAAAAACgkQaLo1Jbtmixkh
-KBAAiqeINdBsN3Dl70o4cc/SPG155SWLmXRKprDkmhwa9953rRLzU6KsKyEYS1EPIOZw9Qp1dNJH
-igIDiv1yJQygIKib2tCNRTaysogW0k9w9vUJjrAyzbakXhTcxfyp/mpVQ4KZeUzBcYrhIAEZGSBe
-AfS8YFCPpjgyjRYvooleWuuvulnh1bra5OjkPzcJddFu2rfqZQFE2S0SJDk44gLGu1lzRvuvNNV+
-P/+3+SV1F2iMyU1M4GafFF79uvsxJIx7LCdM1tSBB2UMmZDLOqWLp/b21oCMdPCeoTz58rGDtGs9
-Ex1KCNgA14iwDayxeAF4tw9smkZ5aW3VLhihXQEKne8dSHNzeYLdjJcqcnAwVWVtHSy6T1ayXm/S
-7zaPjXKX734P4auCdNwnXT+3HcVp4oBZGFCQ6BRg/slnlkni+87wCNB2gOd+55XJZje4pXdZUiOx
-tUws26RMtCzj1IDg97f+aHxewBTFSV5HDpLvYMN8cRyHJCTDCylLo4Ip3IGlZfLfLweFlm0cGIRH
-e7nl2CQZUcwnFFxX2HtaLil3A/XS71XZIcVchFa2jRjzTN8+5MuOpVAgrWF2Vsqg3SJcDIgg8BjT
-RQbk2WOvjGcBQDfNk9XM0uEpPiMF16Gue2kQ//MaYS2dgzocGjjR6FV+lMpIGrej/8StD8fh84/S
-ODA=
-=yR1Y
+iQIcBAEBCgAGBQJW2820AAoJEJCdrEXvOx+oThYQAIdzHV7mZqomJmm8y7f4yxsA
+HTcv9eWM/tYcOGDgm60nfW0VrKDFtIh85uyAYbf9C2fgNtlb/wxyPP5EOKuv64+f
+vjKDnye08wc4N1Knv2us7t1ch3jTyXjSgmD1pCE+n4GAk+oC6cM1VbYf3V5sBvoR
+PKxBVpjDZCkIzvpt0VzxCsTPZ9kVkIRtBn/KvBwsQhZuy9xI7cV+3sFn9VyIlp3S
+Ht+1/Uhk/lZGM4dUCvDFT8iebiEW/HTZEcvQKavlA04cuqjHOj7BTEpYWjgNNWe+
+Qfv0Oin8bhIopcl+7Yqsb+dxYBM9ioEniLc7ksYAbd6V+G4XmXmLsTQKHOaAInZk
+7JkC9jIAe0e3v3zHPnBFiOvJBBzT65xg5xplkKjTpJ2yItlbuiquUwMj81YU5HBR
+m8qQa266fUf8zmVCtSmwqj8BHiUdNjSRaBf6D3DZocL7B/nAJSZQZgCgydI884ST
+EtUb+hKs23NDj9w1nmSDBdJSEDFtkDQUGMU+B3zQRIAnEYtNFnNnQbByFT2wG5rA
+66yvXQxnDT7ymhiQHui60xY7i0E5kr5BqZgtqQjG11dyTU2iWgPSG+cUoii77mhO
+xlmz+u+lgpSUnKoZxeya9zA4Lw0JQphEOgntdEzTLyOxdawpKCo6JFVHHrW7K2k+
+SDY5pbvE3fIDbH1Rd6BW
+=OKPI
 -----END PGP SIGNATURE-----
 
---------------oeth5hadWFS5si9uj3XKXYTd--
+--mYCpIKhGyMATD0i+--
