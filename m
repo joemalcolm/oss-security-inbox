@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4806" "Thursday" "9" "August" "2018" "14:51:20" "+0200" "Solar Designer" "solar@openwall.com" "<20180809125120.GA2475@openwall.com>" "103" "Re: [oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)" "^Cc:" nil nil "8" "2018080912:51:20" "[oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)" (number mark "        solar@openwa Aug  9  103/4806  " thread-indent "\"Re: [oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)\"\n") "<zNUITbiErWCUUDg_EPIWn8eZBFHlC7rwJsZ8XinnBTSFr6OydsAZUvPs8nXHKBxi0DJFw8K2KmePb8dysPMxfPcOURSJ6QR2HcKgaVRmmTs=@itk.swiss>" ("<CACdnJuvnc9iwaK6n9T_+PO0CUz9HYErQQ6eY+sJZM_o_h9tfaw@mail.gmail.com>" "<zNUITbiErWCUUDg_EPIWn8eZBFHlC7rwJsZ8XinnBTSFr6OydsAZUvPs8nXHKBxi0DJFw8K2KmePb8dysPMxfPcOURSJ6QR2HcKgaVRmmTs=@itk.swiss>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2973" "Sunday" "6" "March" "2016" "15:47:19" "+0000" "op7ic \\\\x00" "op7ica@gmail.com" "<CAFHyJTqHw=Cjg6C-u4eUyUVe9bcntn+LombQ+fnosgXBy79OZA@mail.gmail.com>" "66" "Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies" "^Date:" nil nil "3" "2016030615:47:19" "[oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies" (number mark "        op7ica@gmail Mar  6   66/2973  " thread-indent "\"Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies\"\n") "<20160306150917.GA29105@openwall.com>" ("<CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com>" "<56D9DD1F.1030302@cert.org>" "<20160305172039.GA20796@openwall.com>" "<20160306062700.GA25289@gremlin.ru>" "<110FE574-DEEC-4308-90BE-A83A5C53421A@gmail.com>" "<20160306150917.GA29105@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9983 invoked by uid 550); 9 Aug 2018 12:53:49 -0000
+Received: (qmail 9968 invoked by uid 550); 6 Mar 2016 15:51:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,121 +11,111 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7562 invoked from network); 9 Aug 2018 12:51:39 -0000
-Message-ID: <20180809125120.GA2475@openwall.com>
-References: <CACdnJuvnc9iwaK6n9T_+PO0CUz9HYErQQ6eY+sJZM_o_h9tfaw@mail.gmail.com> <zNUITbiErWCUUDg_EPIWn8eZBFHlC7rwJsZ8XinnBTSFr6OydsAZUvPs8nXHKBxi0DJFw8K2KmePb8dysPMxfPcOURSJ6QR2HcKgaVRmmTs=@itk.swiss>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <zNUITbiErWCUUDg_EPIWn8eZBFHlC7rwJsZ8XinnBTSFr6OydsAZUvPs8nXHKBxi0DJFw8K2KmePb8dysPMxfPcOURSJ6QR2HcKgaVRmmTs=@itk.swiss>
-User-Agent: Mutt/1.4.2.3i
-Cc: Matthew Garrett <mjg59@google.com>
-Date: Thu, 9 Aug 2018 14:51:20 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 7466 invoked from network); 6 Mar 2016 15:47:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to;
+        bh=M/CCIcSx23H4WS1VnXpeht6wM1l0NzA36VbeaG2qZIU=;
+        b=LZbCJqsmVlm9QMBAOMk1B4XBR3Jmimh+EcNXFf0xsA0TjaG679ivJA9U62UjzX99bM
+         xj+Y3uaeVhOzq9Uq6bfR/r3x30qMMCY1efLTWR0MLPA6KHd+hJ5ybAfXsc3oYZMsi5qM
+         5jnCUJJtdXlO/PB3AeDhwElBwE+7QkD76M9Vc09AabDvTDLxHt3D7ujQmfuVR7pqqNDW
+         i4J7NbE7jG0Jz7ABtNhVmrD2N0wQYFfqSu1oJcoq+zd3fLsW8q1sKgrF4m9Tw+Vlje92
+         BpGeC010+Y45VU97qaETE4HoLQQhP+7qZy8hC7aVq6m/WXkMEqzDZ9+Ooma9n6ajugcx
+         1cDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to;
+        bh=M/CCIcSx23H4WS1VnXpeht6wM1l0NzA36VbeaG2qZIU=;
+        b=cNOsa5+hOeRKD+vEACxQn1IPZsLQO8OGcUZq86oGfBbn8JeCjXbg+w4m4qca/35c7c
+         2Z9K8EF3DTN7kWw06jQr3nAz4TfeAAqs1MXJ6an7NMhl1r8nZMKamKa37DSwGeF2shME
+         yE08oAGqhB0fMVr/pH+XIfaodM7upYWyHoZ32IYCASOu5VFkpi4pQlHTCQvxdjTjULlO
+         Nnmxys4DesMC9Nq8XRGeEXcDn46dDDjrFnMJkeGLqTR2rX45JKsakcvsqwDlqe+AMhYv
+         zN7mHmWUCGBIams91HGMqwS/V7mffZ62O8zBzv99v4G/gFhgJjleVgVNvbAwgquoR7qn
+         5JQw==
+X-Gm-Message-State: AD7BkJIn1py0cXsIjI/yNbPVmeIvvfTRBMdVTZrH0BZM5VWASQD9FiPPVoHO9RrM4084MmnPV9hcvPy5Nrp7JA==
+MIME-Version: 1.0
+X-Received: by 10.112.134.202 with SMTP id pm10mr6009052lbb.36.1457279240001;
+ Sun, 06 Mar 2016 07:47:20 -0800 (PST)
+In-Reply-To: <20160306150917.GA29105@openwall.com>
+References: <CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com>
+	<56D9DD1F.1030302@cert.org>
+	<20160305172039.GA20796@openwall.com>
+	<20160306062700.GA25289@gremlin.ru>
+	<110FE574-DEEC-4308-90BE-A83A5C53421A@gmail.com>
+	<20160306150917.GA29105@openwall.com>
+Message-ID: <CAFHyJTqHw=Cjg6C-u4eUyUVe9bcntn+LombQ+fnosgXBy79OZA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=089e01160724705f4b052d6343df
+Date: Sun, 6 Mar 2016 15:47:19 +0000
+From: "op7ic \\x00" <op7ica@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)
+Subject: Re: [oss-security] Concerns about CVE coverage shrinking - direct
+ impact to researchers/companies
 To: oss-security@lists.openwall.com
 
-Hi,
+--089e01160724705f4b052d6343df
+Content-Type: text/plain; charset=UTF-8
 
-A co-moderator had rejected Stiepan's message since it "does not provide
-any additional content to oss-security readers".  I'm also unhappy about
-that, as well as about the focus on legal aspects in Stiepan's postings
-in here in general.  However, the message raises an on-topic question
-(the request for more detail) and brings up an on-topic issue (the
-semi-embargo potentially causing harm).  I feel strongly about us not
-getting into censorship, and I feel that rejecting this message would be
-it.  So I went for the effort of manually restoring the already-rejected
-message into the moderation queue, then approved it.
+agree, the vanity hunting is going to be there but I suppose as with any
+bug ID that is going to happen.
+But beyond that I don't think it matters as much. In the end of the day if
+somebody can use OVI or OVE to identify their bug then at least we got some
+level of reference to look it up on google.
 
-On Thu, Aug 09, 2018 at 07:12:27AM +0000, Stiepan wrote:
-> Could you please provide some more details on the issue?
+I was toying with 4digit IDs that would be random enough, thats a
+possiblity too, the only problem is that there is a overhead of doing DB
+sorting and lookups to make sure their don't clash. Thats why ovi uses
+sequential numbers - its just easier to manage.
 
-I agree that more detail must have been posted in here, especially given
-that such detail was on linux-distros.
+Cheers,
 
-The issue is now also public via CERT:
 
-https://www.kb.cert.org/vuls/id/962459
 
-which links to:
+On Sun, Mar 6, 2016 at 3:09 PM, Solar Designer <solar@openwall.com> wrote:
 
-https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=1a4f14bab1868b443f0dd3c55b689a478f82e72e
+> On Sun, Mar 06, 2016 at 12:39:46PM +0000, op7ic x00 wrote:
+> > www.freeovi.com  -> it does have big `blue' button.
+>
+> Oh, I wasn't aware of it, and a Google search for "freeovi" or "ovi id"
+> finds only irrelevant stuff now.  I think it was not publicized enough.
+> Also, there's a name clash of "freeovi" with some old Nokia maps stuff.
+>
+> As to the button (non-)issue, I brought it to Twitter poll.  Of course,
+> it's not the same crowd as oss-security, but I want to get an overall
+> picture of how strongly people feel in favor of not wasting IDs, without
+> spamming this list with "+1" replies:
+>
+> https://twitter.com/solardiz/status/706488297242140672
+>
+> In fact, there are pretty strong results after a few minutes already.
+>
+> One of my concerns was that people would be hunting for vanity OVE IDs.
+> I didn't want to encourage waste of time on that, nor attempts to
+> increase the counter up to a pretty-looking number.  The latter is one
+> of the reasons why I chose to include the full date rather than just the
+> year - this makes numbers like 7777 less valuable, since there's one of
+> each of those every day.  (Another reason to include the full date is
+> that it may sometimes provide some insight into disclosure timelines,
+> even if not reliably.  I suspect some people won't like that, though.)
+> I think OVI, if it gains popularity and is not adjusted, is far more
+> "vulnerable" to such vanity ID hunting.
+>
+> Also, having the IDs increase up to a few thousand on each normal day
+> may discourage deliberate/malicious attempts to do so, and people trying
+> to skip IDs on such days and come back for lower IDs tomorrow.
+>
+> However, there appears to be a psychological aspect with spilling
+> unrequested IDs on the page.  It makes many people feel sorry.  I think
+> I underestimated that.
+>
+> (Another workaround would be to use randomized yet 4-digit IDs, but
+> being able to get some sequential IDs is very nice for assigning them to
+> related vulnerabilities.  This is why the page currently spills 10 IDs
+> at once on a second page load from the same IP address, and a few times
+> more, as long as the current ID is sufficiently below 9999 to allow for
+> this generosity.)
+>
+> Alexander
+>
 
-which includes the following detail:
-
----
-Juha-Matti Tilli reported that malicious peers could inject tiny
-packets in out_of_order_queue, forcing very expensive calls
-to tcp_collapse_ofo_queue() and tcp_prune_ofo_queue() for
-every incoming packet.
-
-With tcp_rmem[2] default of 6MB, the ooo queue could
-contain ~7000 nodes.
-
-This patch series makes sure we cut cpu cycles enough to
-render the attack not critical.
-
-We might in the future go further, like disconnecting
-or black-holing proven malicious flows.
----
-
-The CERT Vulnerability Note also talks about a related issue in FreeBSD.
-
-Partial timeline for this issue as I became aware of it is as follows:
-
-2018/07/23 - the commit referenced above
-2018/07/23 - notification from CERT to some distros
-2018/07/23 - grsecurity tweet linking to the commit
-2018/07/27 - posting to linux-distros
-2018/08/06 - CERT Vulnerability Note published
-2018/08/08 - posting to oss-security
-
-Of course, I am unhappy about this semi-embargo, and even more unhappy
-about the semi-violation of linux-distros list policy on only having
-non-public issues in there.  However, with CERT involved and with
-related issues affecting more than just Linux, there was little I could
-do, short of playing full BOFH and breaking the semi-embargo for
-everyone.  While I think that would have been for the general public's
-benefit overall, I didn't feel about it strongly enough to actually do
-it this time.  I apologize for letting this happen.  (At the same time,
-I did force another semi-public issue to oss-security right away since
-that one didn't involve coordination with so many parties.)
-
-It appears that everyone involved, including the CERT people, Matthew,
-and others commenting on the linux-distros thread, were unhappy about
-the publication delay.  No one I saw said that they wanted the delay.
-Yet somehow CERT didn't pull the trigger sooner.  I guess two weeks
-feels very soon for CERT as it is, even if it is a very long embargo for
-linux-distros.  Also, I guess the discoverer/reporter of the issue had a
-say on it behind the scenes, and other related issues and non-Linux were
-considered in CERT's decision-making.
-
-I am also unhappy about the two-day delay between publication of the
-CERT Vulnerability Note and the mandatory posting to oss-security (it's
-mandatory since the issue was on linux-distros).  I've been pinging
-off-list to make this happen at all, and would have probably made the
-posting myself if it didn't happen for another day.
-
-> About the same period, our secure e-mail provider suffered an unprecedented DDoS with some e-mail messages never reaching us.
-> Since this has business impact,
-
-This is almost certainly unrelated.  (And I dropped the CC's to
-ProtonMail and ITU on this reply, not to spam them with further
-discussion of the unrelated issue.)
-
-> we consider legal action against the opaque Linux-distros vulnerability-disclosure-among-friends-for-fun-and-profit scheme, that we exposed at the ITU earlier this year. This is digital divide in the works, with real impact for non-club-members.
-
-Personally, I strongly oppose legal threats (let alone action) in our
-community.  The way I see it, what we have is primarily a matter of
-different opinions on how to handle security issues best, and most
-people are genuinely acting the way they think works best for everyone
-affected.  With many parties involved in coordinating a disclosure, it
-usually becomes difficult.  There isn't necessarily a right or wrong
-here.  But whoever brings legal action is definitely wrong.
-
-Ironically, Stiepan had also suggested (here on oss-security a while
-ago) that we apply for funding for running the (linux-)distros list (and
-I explained in a reply why we shouldn't).
-
-Alexander
+--089e01160724705f4b052d6343df--
