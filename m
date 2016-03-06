@@ -1,24 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/01/6
-Message-Id: <cd843cd1-250f-46d5-b5ab-afddb8aecfae@googlegroups.com>
-Date: Tue, 1 Nov 2016 07:50:21 -0700 (PDT)
-From: Tim Graham <timograham@...il.com>
-To: django-announce <django-announce@...glegroups.com>
-Cc: django-developers@...glegroups.com, django-users@...glegroups.com, oss-security@...ts.openwall.com
-Subject: [ANNOUNCE] Django security releases issued: 1.10.3, 1.9.11, and 1.8.16
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/06/9
+Message-Id: <8BB58F16-D629-48CB-96C6-3EA7406BA6A6@fearnothingproductions.net>
+Date: Sun, 6 Mar 2016 09:16:40 -0800
+From: Robert Paprocki <rpaprocki@...rnothingproductions.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-Today the Django team issued 1.10.3, 1.9.11, and 1.8.16 as part of our 
-security process. These releases address two security issues, and we 
-encourage all users to upgrade as soon as possible.
+This thread should be the definition of Munroe's Law. Like Goodwin's Law, which states that the longer an online conversation continues, the probability that it will involve Nazi analogies reaches 1, Munroe's Law says that eventually any conversation about an existing standard reaches no conclusions other than to create a new standard. 
 
-Details are available on the Django project weblog:
+https://xkcd.com/927
 
-https://www.djangoproject.com/weblog/2016/nov/01/security-releases/
+> On Mar 6, 2016, at 08:16, Solar Designer <solar@...nwall.com> wrote:
+> 
+>> On Sun, Mar 06, 2016 at 03:47:19PM +0000, op7ic x00 wrote:
+>> agree, the vanity hunting is going to be there but I suppose as with any
+>> bug ID that is going to happen.
+>> But beyond that I don't think it matters as much. In the end of the day if
+>> somebody can use OVI or OVE to identify their bug then at least we got some
+>> level of reference to look it up on google.
+> 
+> Right.
+> 
+>> I was toying with 4digit IDs that would be random enough, thats a
+>> possiblity too, the only problem is that there is a overhead of doing DB
+>> sorting and lookups to make sure their don't clash. Thats why ovi uses
+>> sequential numbers - its just easier to manage.
+> 
+> Oh, you (would) use an actual database backend?  OVE currently uses a C
+> program with a tiny binary data file (to keep track of per-IP and
+> per-netblock consumption of IDs, as well as the current date and ID),
+> and the file is wiped clean (by this same program) on first access after
+> midnight.  I wrote this yesterday in response to the thread in here.
+> 
+> For random IDs, if we wanted those, there are shuffling algorithms that
+> don't require storage yet guarantee unique numbers (until the target
+> range is exhausted) - they're good e.g. for IP ID and DNS sequence
+> numbers - although checking against an array of 10k numbers is almost
+> instant anyway (as far as this application is concerned).
+> 
+> Anyway, this is getting off-topic.
+> 
+> Alexander
 
-As a reminder, we ask that potential security issues be reported via 
-private email to security@...ngoproject.com and not via Django's Trac 
-instance or the django-developers list. Please see 
-https://www.djangoproject.com/security for further information.
-
-Content of type "text/html" skipped
