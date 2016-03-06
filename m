@@ -1,124 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/03/7
-Message-ID: <20161103152654.6200bbfd@ivy-bridge>
-Date: Thu, 3 Nov 2016 15:26:54 +0000
-From: Steve Grubb <sgrubb@...hat.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-5195 "Dirty COW" Linux kernel privilege escalation vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/06/12
+Message-ID: <CAN0s7yS36t6L-xuwAqXH493TsmcQT5rb2LJ-Z3FYA8AsFE_+sw@mail.gmail.com>
+Date: Sun, 6 Mar 2016 21:12:03 +0200
+From: Elad Alfassa <elad@...oraproject.org>
+To: oss-security@...ts.openwall.com
+Subject: Transmission BT 2.90 Mac malware. Website compromised?
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 26 Oct 2016 21:13:57 +0200
-Solar Designer <solar@...nwall.com> wrote:
+Hello oss-security.
 
-> On Fri, Oct 21, 2016 at 02:31:04AM +0200, Solar Designer wrote:
-> > This was brought to the linux-distros list (and briefly
-> > inadvertently to the distros list, although discussion continued on
-> > linux-distros only) on October 13 and it was made public yesterday,
-> > so it must be in here as well.  Unfortunately, no one posted about
-> > it in here so far (the person who brought this to [linux-]distros
-> > must have done so!), and I don't have time to make a proper posting
-> > (with full detail in the message itself, as per oss-security list
-> > content guidelines), but I figured it's better for me to post
-> > something than nothing at all.
-> > 
-> > Red Hat's description:
-> > 
-> > "A race condition was found in the way the Linux kernel's memory
-> > subsystem handled the copy-on-write (COW) breakage of private
-> > read-only memory mappings.  An unprivileged local user could use
-> > this flaw to gain write access to otherwise read-only memory
-> > mappings and thus increase their privileges on the system."  
-> 
-> A lot was said about this vulnerability in lots of places, so I won't
-> dare to try and repeat all or post it in here (sorry!)  Many exploits
-> exist now, as summarized at:
-> 
-> https://github.com/dirtycow/dirtycow.github.io/wiki/PoCs
-> 
-> The exploits vary in whether they use /proc/self/mem (newer kernels
-> only)
+According to these three links,
+https://www.reddit.com/r/netsec/comments/498bb7/transmissionbt_290_for_osx_contains_malware/
+http://www.cnbc.com/2016/03/06/reuters-america-apple-users-targeted-in-first-known-mac-ransomware-campaign.html
+https://forum.transmissionbt.com/viewtopic.php?f=4&t=17834
 
-I am curious. Can anyone think of a good reason why /proc/self/mem
-_should_ be writable? I can understand the needs of debuggers to access
-other processes. But writing to yourself just doesn't seem like a
-normal use. PTRACE_POKEDATA should be covered by yama
-security controls. I wonder if /proc/self/mem should also be under the
-yama security control. Thoughts?
+and the project homepage https://www.transmissionbt.com/
 
--Steve
+The mac build of version 2.90 of the popular Transmission bittorent
+client was infected by malware. However, there's not much information
+about the source of the actual malware:
 
-> or PTRACE_POKEDATA (both newer and older kernels) and in what
-> they target: generic read-only write, SUID root program, libc, or
-> vDSO. All of them (that I've seen) also use MADV_DONTNEED.
-> 
-> vDSO appears to be the scariest target in that it allows for sandbox
-> or container escape without requiring any other sharing with the
-> outside world (no shared files, no KSM).  Some kernels have sysctl's
-> (varying across kernel versions and architectures) that allow to
-> disable vDSO on a live system, but keep in mind that already-started
-> processes retain their vDSOs and may in many scenarios be used for
-> the attack.  Also, disabling vDSO does nothing to prevent attacks
-> targeting something else (same sandbox/container or other page
-> sharing with the outside).
-> 
-> Luckily, many sandboxes exclude /proc and ptrace, which so far
-> prevents all of these exploits from working.
-> 
-> Surprisingly (to me), the published exploits appear to work as-is even
-> on systems with only one logical CPU (except on RHEL5 and alikes,
-> where 2+ CPUs appear to be needed, but don't count on this).
-> 
-> Here are a couple of challenges by me (and whoever is behind the
-> DirtyCow website kindly backed these with prizes of t-shirts priced at
-> thousands of dollars each):
-> 
-> 1. Exploit DirtyCow without MADV_DONTNEED.
-> 
-> 2. Exploit DirtyCow on RHEL5 with only 1 logical CPU.
-> 
-> and here's a new obvious one I add just now:
-> 
-> 3. Exploit DirtyCow without /proc/self/mem _and_ without PTRACE_POKE*.
-> 
-> Bonus points if you achieve several of these in one exploit.
-> 
-> Many distros have released updates by now.  This includes RHEL7 &
-> RHEL6, but (as far as I can tell) not yet RHEL5.  Since these legacy
-> kernels still matter to me and possibly to others, attached are two
-> patches for RHEL5'ish OpenVZ kernels, which should be reusable on
-> other RHEL5-alikes.
-> 
-> rhel5-owl-dirtycow.diff is what went into the kernel updates we
-> released for Owl a couple of days ago - it is a mitigation for
-> MADV_DONTNEED and PTRACE_POKE*, protecting both through write-locking
-> mmap_sem (thus, against each other as well as against other code
-> paths that read-lock mmap_sem).
-> 
-> rhel5-openvz-dirtycow.diff is interdiff between OpenVZ's older
-> "-408.el5.028stab120.2" kernels and "-408.el5.028stab120.3" they just
-> released today.  Unlike the mitigation in Owl, this is a backport of
-> the fix from newer kernels.  I have yet to test this one myself.  (I
-> briefly tried to produce a backport as well, but gave up after my
-> half-baked attempts failed testing.  I see this patch does at least
-> one thing that I missed in my backport attempts.  Kudos to OpenVZ
-> project, who had also released updates for their newer kernels.)
-> 
-> These two patches can also be reasonably used together.  (I think
-> we'll do just that in Owl, assuming that OpenVZ's fix passes our
-> testing. And yes, Owl is essentially a legacy system now, arguably
-> having served its purpose years ago, but we still maintain it for
-> some deployments.)
-> 
-> > https://access.redhat.com/security/cve/cve-2016-5195
-> > https://bugzilla.redhat.com/show_bug.cgi?id=1384344
-> > https://security-tracker.debian.org/tracker/CVE-2016-5195
-> > http://www.v3.co.uk/v3-uk/news/2474845/linux-users-urged-to-protect-against-dirty-cow-security-flaw
-> > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=19be0eaffa3ac7d8eb6784ad9bdbc7d67ed8e619
-> > https://lkml.org/lkml/2016/10/19/860
-> > https://dirtycow.ninja
-> > https://github.com/dirtycow/dirtycow.github.io/wiki/VulnerabilityDetails
-> > https://twitter.com/DirtyCOWVuln  
-> 
-> Alexander
+* How did it get to the official download location? Was it a
+compromised server or someone with access abusing it to distribute
+malware? What steps did the transmission project take to ensure that
+the attacker no longer has access to their server? When were the
+infected files uploaded to the server? And, most importantly, are
+builds for other platforms and source code archive download affected
+in any way?
 
+Transmission is included in many Linux distributions (default in some
+of them). If the source code archives (which are not signed, there's
+only a checksum on their website, but if it was compromised then it's
+not exactly useful) used by these distributions to build Transmission
+were tampered with as well this might mean malicious code is already
+inside the Transmission packages in these distributions. While the
+malware mentioned in the link above is Mac specific, it is still
+possible that other downloads have been infected by different types of
+malware.
+
+Since I couldn't find any security related email address or mailing
+list for the transmission project specifically, I'm sending this to
+oss-security in hopes that relevant people will see this and will shed
+more light on this story.
+
+-- 
+-Elad.
