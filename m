@@ -1,64 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/08/4
-Message-ID: <CANO=Ty3S0SmpoUVj5ZiQL9RF99PL7Kxt4SpDJQt2D_1SDwQmsw@mail.gmail.com>
-Date: Fri, 8 Jul 2016 07:55:40 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: CVE ID Requests <cve-assign@...re.org>
-Subject: Re: On anonymous CVE assignments
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/06/10
+Message-Id: <20160306183940.531F1332047@smtpvbsrv1.mitre.org>
+Date: Sun,  6 Mar 2016 13:39:40 -0500 (EST)
+From: cve-assign@...re.org
+To: vdronov@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request -- linux kernel: pipe: limit the per-user amount of pages allocated in pipes
 Content-Type: text/plain; charset=utf-8
 
-I'm hoping to make this better with the DWF by including more meta data in
-the CVE data (e.g. affected products/versions) which will make it much
-easier to automate notification in the future (e.g. "if affected product ==
-php then email security@....net" or whatever). Part of the problem is that
-for an org like MITRE or the DWF to do all the coordination around security
-issues (as opposed to straight up CVE assignments) is highly labor
-intensive and difficult to scale.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Also if projects don't like "Surprise" CVEs one way to deal with that is to
-request the CVE's themselves when they know something is a security
-vulnerability. Also making it easy to contact them helps, the harder you
-make it for a security researcher to deal with you, the less likely they
-are to.
+>>> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=759c01142a5d0f364a462346168a56de28a80f52
 
-On Fri, Jul 8, 2016 at 7:39 AM, Lior Kaplan <kaplanlior@...il.com> wrote:
+>>> The result is an OOM condition and oom-killer is not able to help
+>>> much, as the memory for the pipe data is a kernel memory and a memory
+>>> footprint of offensive processes is small.
 
-> Hi,
->
-> I'm sorry for sending this to the cve-assign mail, but I think this is
-> important to how CVE assignment process should work and the importance of
-> cooperating with the upstream projects.
->
-> In the past year+ I've been dealing with CVE assignment and the PHP
-> project. During this period we managed to work closer with the Linux
-> distributions and also to improve the internal process regarding CVE
-> requests.
->
-> I've blogged about a recent problem I encountered with is request and
-> assignment of CVE for issues almost a year old without any public info
-> about this ("anonymous requests"). Meaning that me, being part of upstream
-> (incl. the security team), don't even know we've got CVE assigned and can
-> update things on our side (and also other relevant upstreams such as
-> libgd).
->
-> More details at
-> https://liorkaplan.wordpress.com/2016/07/07/anonymous-cve-requests/
->
-> I'll be happy to be referred to the right forum to further discuss this.
-> Till then, I hope you'll take these remakes into consideration, so the
-> whole eco system could work more smoothly.
->
-> Kaplan
-> The PHP project
->
+>> We feel that this should most likely have a CVE ID. The discussion
+>> outlines a realistic problem "it is possible for a single process to
+>> cause an OOM condition by filling large pipes with data that are never
+>> read. A typical process filling 4000 pipes with 1 MB of data will use
+>> 4 GB of memory" and the need for a CVE ID does not depend on the
+>> details of the solution approach. Also, there doesn't seem to be any
+>> general opposition to addressing the problem (e.g., see the
+>> https://lkml.org/lkml/2016/1/19/674 post).
 
+> An attacker using this method consumes a kernel memory, which is not
+> directly accounted to any per-user limit.
 
+> ... mmap()ed memory mentioned is accounted to per-user virtual
+> memory limit
 
--- 
+Use CVE-2016-2847.
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
+iQIcBAEBCAAGBQJW3HjSAAoJEL54rhJi8gl5eMgP+gOBxp5qeeziz74rHT2eRoMg
+lvhaCWZD7NM43WbU12ShG9WgeYC/qfrIbf6oraUUMiw7DjBktYhJowAqx0j9/Xjv
+YQpaeMz2udLLV2R3ncNmt8xnCnuTkyyhjky/ZfZZNOr+ibHX+Rwy9Fzgcdr9NAzM
+zW18cZOEbz6KBu9xJq0YyOMHJ0IV99cuj6BAj/JCXL1+acD//W0XP/tPa1lodkYG
+a6k1RdXkOsykf+wiskpCZPu8WcRGYd8H5e4FZX0K6/S369czGJcdM9fWJ/t1j2pQ
+f5cQXi4rhZyfwdjwkFXIVHGepz/M9Po4zAG3CyVKOOLe2OAAt6SR9h2uGZ4IexsA
+2jVExyY0aD4M3epQUX5s67bNEoVfGFAbNw3ApL/7nOI9QWgxV40MBZ6tcNiG7cIv
+R2pY4MGWun8A3WW+jIcwqMTFroXFFawQR9Q+DimRsUed5Ubp2kgjJlszTjB3/BuA
+EaNHfGoSRDoJnGGHeoMQ1RFlLlqVjKs49HiSrSlrKLpJK03LZAk7/jBt0fR5Scoh
+EhXHra0YacZ/BWT/SLZlHZRMpeu8cDI+lD/xOFsQiUCsW3nlKLNVFNj8J7Gj2ZLP
+mSA2rVjbqpg269AwImxIjoxz1ugfzgivbCcNuOMZ6PGm0Ety3IgCkEcDPXKCk97M
+ARbZts5OALO7hv3U4yWQ
+=yIPt
+-----END PGP SIGNATURE-----
