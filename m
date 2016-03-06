@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1248" "Wednesday" "2" "September" "2015" "02:45:25" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150902064525.D877813A1AD@smtpvmsrv1.mitre.org>" "31" "[oss-security] Re: CVE REJECT CVE-2015-3287" nil nil nil "9" "2015090206:45:25" "[oss-security] Re: CVE REJECT CVE-2015-3287" (number mark "        cve-assign@m Sep  2   31/1248  " thread-indent "\"[oss-security] Re: CVE REJECT CVE-2015-3287\"\n") "<CANO=Ty1z+6T=r0mef55Hd1tHfiDVLT77MaD9ddVvOnNKx5td0w@mail.gmail.com>" ("<CANO=Ty1z+6T=r0mef55Hd1tHfiDVLT77MaD9ddVvOnNKx5td0w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1850" "Sunday" "6" "March" "2016" "13:29:59" "+0300" "Solar Designer" "solar@openwall.com" "<20160306102959.GA26781@openwall.com>" "44" "Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies" "^Date:" nil nil "3" "2016030610:29:59" "[oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies" (number mark "        solar@openwa Mar  6   44/1850  " thread-indent "\"Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies\"\n") "<20160306062700.GA25289@gremlin.ru>" ("<CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com>" "<56D9DD1F.1030302@cert.org>" "<20160305172039.GA20796@openwall.com>" "<20160306062700.GA25289@gremlin.ru>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 29900 invoked by uid 550); 2 Sep 2015 06:45:38 -0000
+Received: (qmail 9388 invoked by uid 550); 6 Mar 2016 10:30:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,44 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29880 invoked from network); 2 Sep 2015 06:45:37 -0000
-In-Reply-To: <CANO=Ty1z+6T=r0mef55Hd1tHfiDVLT77MaD9ddVvOnNKx5td0w@mail.gmail.com>
-Message-Id: <20150902064525.D877813A1AD@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@openafs.org, security@samba.org
-Date: Wed,  2 Sep 2015 02:45:25 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 9360 invoked from network); 6 Mar 2016 10:30:02 -0000
+Message-ID: <20160306102959.GA26781@openwall.com>
+References: <CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com> <56D9DD1F.1030302@cert.org> <20160305172039.GA20796@openwall.com> <20160306062700.GA25289@gremlin.ru>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20160306062700.GA25289@gremlin.ru>
+User-Agent: Mutt/1.4.2.3i
+Date: Sun, 6 Mar 2016 13:29:59 +0300
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE REJECT CVE-2015-3287
-To: kseifried@redhat.com
+Subject: Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Sun, Mar 06, 2016 at 09:27:00AM +0300, gremlin@gremlin.ru wrote:
+> On 2016-03-05 20:20:39 +0300, Solar Designer wrote:
+>  > Problem solved:
+>  > http://www.openwall.com/ove
+> 
+> Hmmm... sorry to say, but I've garbaged 21 IDs by simply visiting
+> this page and reloading it twice just to see what would happen :-)
 
-> can you please REJECT CVE-2015-3287 and assign a NEW CVE for the
-> OpenAFS issue
+A few people said they felt sorry about that, but I think this is
+actually OK.
 
-Yes, CVE-2015-6587 replaces CVE-2015-3287 for the OPENAFS-SA-2015-006
-"Buffer overflow in OpenAFS vlserver" issue.
+> So I'd suggest adding a BRB (Big Red Button) for those who actually
+> need an ID,
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+I had thought of that and decided to do without it for now.  (Also
+considered captcha.)  I like to emphasize how very easy it is to obtain
+OVE IDs.  Not even having to click a button serves that goal well.
 
-iQIcBAEBCAAGBQJV5pnlAAoJEL54rhJi8gl5RzYP/ircTB/gJxBjTBW6AtalWYTi
-Ks9J87FqDMbIeU+qm+gchPsEckCCgmr9fXWWug9YHgIQkpC1EuAqTQYy25TPFpwo
-zQEFSrJsrKlbBV/07ozNpZoEOVjOqwA9OCQNK9RyzuEmwxWKVuUXzZ2O8fmbPtRH
-Wg8ftzPdzFfLHPcXmxk19d7PVyzmSX16N6I77EApU8+SLVjbvZ+MyshycAeb9Cuc
-+r+CqG/MEhOo05EWNDieBxyosJK1erv4MZ7k6IKZZBXjLBVoAKyhzkmwxTBydFA0
-HSJUbtK38pZGQXmli6BbXmmpy84NHXmrNRAQdFgBeE++L2Zp4jVp973q6aMP4Cev
-Sd+pxwviuwz1TYQs89x6Qb7lRS0qD/hRfg7+acxYoMNq2siNSKs2twB+cpee/aDS
-/IUpx6/8HDHTyPsMArUGOrnVxNmOSYHpUZVJUD9m79QA9phRIDd/5qJyLFua/Ub1
-pZUiJXK9WZXqebhKe8buxUIkA2NRgh4mJICGnpCjKOOmdCu21Zj6f6ddV+PgjMFs
-lNg440RRgVsk9qlNX6cn9lZ7z4P3ZvTDaqrq1LGTyw7rVcYL3HYTexVnRA5rxlyA
-PugpvUGoiVj6dNgbMbSgSLAda+XoZ+oMpEWBWbZBo5MctcbHi26OHePPmoc48AG2
-l5+t5J4hhe1QeAKps07w
-=xmzw
------END PGP SIGNATURE-----
+I don't mind adding a button a bit later, though.  We'll see.
+
+> and displaying some statistics ("1234 IDs were assigned
+> today") for everyone else.
+
+This is currently available through OVE IDs themselves - they are
+sequential, starting with 0001 at midnight UTC.
+
+>  > Having IDs is of some use even without or before all of that.
+> 
+> Yes. So prepare for the above link to become really popular.
+
+As it is, it should survive quite a few thousand of unique IPs per day
+(and yes, it temporarily records per IP address statistics, and it has
+per-IP and per-netblock limits), before (gradually) denying service for
+the rest of the day.  It might or might not survive a Slashdot-alike
+event, but even if not then waiting a day for the next batch of IDs is
+quicker than waiting weeks for CVE IDs.
+
+BTW, there is not a hard-coded limit of 9999.  There is logic in place
+to try and keep the daily IDs within 9999 (the service becomes less
+generous as the 4-digit space gets closer to being exhausted), but if
+the requests and unique IPs are too numerous this may be crossed anyway,
+resulting in 5- or 6-digit IDs (and going back to 4-digit the next day).
+
+Alexander
