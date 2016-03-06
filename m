@@ -1,27 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/28/10
-Message-ID: <CAMYtjAr7Lezwt7K7JxF=_mJmmc9=GfzxtW3d=TbL3wV2+dJ=0w@mail.gmail.com>
-Date: Wed, 28 Sep 2016 21:51:03 +0200
-From: Pere Orga <pere@...a.cat>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/06/6
+Message-ID: <20160306150917.GA29105@openwall.com>
+Date: Sun, 6 Mar 2016 18:09:17 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Drupal Security Team <security@...pal.org>
-Subject: CVE Requests for Drupal Core - SA-CORE-2016-004
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Sun, Mar 06, 2016 at 12:39:46PM +0000, op7ic x00 wrote:
+> www.freeovi.com  -> it does have big `blue' button.
 
-Please can I have CVE IDs assigned to the following Drupal
-vulnerabilities (see https://www.drupal.org/SA-CORE-2016-004):
+Oh, I wasn't aware of it, and a Google search for "freeovi" or "ovi id"
+finds only irrelevant stuff now.  I think it was not publicized enough.
+Also, there's a name clash of "freeovi" with some old Nokia maps stuff.
 
-Users without "Administer comments" can set comment visibility on
-nodes they can edit
-Cross-site Scripting in http exceptions
-Full config export can be downloaded without administrative permissions
+As to the button (non-)issue, I brought it to Twitter poll.  Of course,
+it's not the same crowd as oss-security, but I want to get an overall
+picture of how strongly people feel in favor of not wasting IDs, without
+spamming this list with "+1" replies:
 
-Versions affected are all Drupal 8.x versions prior to 8.1.10.
+https://twitter.com/solardiz/status/706488297242140672
 
-Thanks
+In fact, there are pretty strong results after a few minutes already.
 
--- 
-Pere Orga on behalf of the Drupal Security team
+One of my concerns was that people would be hunting for vanity OVE IDs.
+I didn't want to encourage waste of time on that, nor attempts to
+increase the counter up to a pretty-looking number.  The latter is one
+of the reasons why I chose to include the full date rather than just the
+year - this makes numbers like 7777 less valuable, since there's one of
+each of those every day.  (Another reason to include the full date is
+that it may sometimes provide some insight into disclosure timelines,
+even if not reliably.  I suspect some people won't like that, though.)
+I think OVI, if it gains popularity and is not adjusted, is far more
+"vulnerable" to such vanity ID hunting.
 
+Also, having the IDs increase up to a few thousand on each normal day
+may discourage deliberate/malicious attempts to do so, and people trying
+to skip IDs on such days and come back for lower IDs tomorrow.
+
+However, there appears to be a psychological aspect with spilling
+unrequested IDs on the page.  It makes many people feel sorry.  I think
+I underestimated that.
+
+(Another workaround would be to use randomized yet 4-digit IDs, but
+being able to get some sequential IDs is very nice for assigning them to
+related vulnerabilities.  This is why the page currently spills 10 IDs
+at once on a second page load from the same IP address, and a few times
+more, as long as the current ID is sufficiently below 9999 to allow for
+this generosity.)
+
+Alexander
