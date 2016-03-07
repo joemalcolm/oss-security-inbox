@@ -1,4 +1,9 @@
-Received: (qmail 32289 invoked by uid 550); 2 May 2024 13:04:12 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1581" "Sunday" "6" "March" "2016" "22:02:33" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160307030233.A4BCC52E014@smtpvbsrv1.mitre.org>" "38" "[oss-security] Re: CVE request Qemu: rng-random: arbitrary stack based allocation leading to corruption" nil nil nil "3" "2016030703:02:33" "[oss-security] Re: CVE request Qemu: rng-random: arbitrary stack based allocation leading to corruption" (number mark "U       cve-assign@m Mar  6   38/1581  " thread-indent "\"[oss-security] Re: CVE request Qemu: rng-random: arbitrary stack based allocation leading to corruption\"\n") "<alpine.LFD.2.20.1603041532360.19054@wniryva>" ("<alpine.LFD.2.20.1603041532360.19054@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 15545 invoked by uid 550); 7 Mar 2016 03:02:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,56 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13630 invoked from network); 2 May 2024 09:15:57 -0000
-Authentication-Results: apache.org; auth=none
-X-Forwarded-Encrypted: i=1; AJvYcCV6SprFyuTV+WnyL6XkFVIq4zygq6jaaZLPeCK1lT1Q+T8XFVXaSNIma67Tn09T2fz1pZwN275kv9qwyicVsT05Cg4nfjpkPFyMyPehojcl
-X-Gm-Message-State: AOJu0Yw90P1shQrmc0i8cjE2diavUCdPaNc4Mgzl0Gj4b5TShdzSgNeJ
-	NXpgzmvARv8wPfgWoMdPHD0SYhZlUizF51D55lnGn/Ii8BFJCP3oUdKKh6TQ7oZRpWp/khPwtFy
-	CwIVgKOncwS8PAB9lU4nZxv15FdA=
-X-Google-Smtp-Source: AGHT+IEe1x/fXsrvCFKYmtR4wREcsfsE7yyvLiDsJ/PcgtqTeEfEbiLkqTLgZwXtAmZV0BI3gNDvYutAaiXc+89UY3o=
-X-Received: by 2002:a05:6122:1785:b0:4d4:126b:2c8 with SMTP id
- o5-20020a056122178500b004d4126b02c8mr5774615vkf.9.1714641346239; Thu, 02 May
- 2024 02:15:46 -0700 (PDT)
-MIME-Version: 1.0
-From: YuanSheng Wang <membphis@apache.org>
-Date: Thu, 2 May 2024 17:15:10 +0800
-X-Gmail-Original-Message-ID: <CAKzgDd3JhyCMip9hKAAHaobS=n0u+ifB=qK74RT=3P25t2xuEg@mail.gmail.com>
-Message-ID: <CAKzgDd3JhyCMip9hKAAHaobS=n0u+ifB=qK74RT=3P25t2xuEg@mail.gmail.com>
-To: announce@apache.org, "dev@apisix.apache.org" <dev@apisix.apache.org>, 
-	Apache Security Team <security@apache.org>, oss-security@lists.openwall.com, 
-	Brandon Arp <brandonarp@gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000005c2ecf0617750c03"
-Subject: [oss-security] CVE-2024-32638: Apache APISIX: Forward-Auth Request Smuggling
+Received: (qmail 15524 invoked from network); 7 Mar 2016 03:02:45 -0000
+From: cve-assign@mitre.org
+To: ppandit@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <alpine.LFD.2.20.1603041532360.19054@wniryva>
+Message-Id: <20160307030233.A4BCC52E014@smtpvbsrv1.mitre.org>
+Date: Sun,  6 Mar 2016 22:02:33 -0500 (EST)
+Subject: [oss-security] Re: CVE request Qemu: rng-random: arbitrary stack based allocation leading to corruption
 
---0000000000005c2ecf0617750c03
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Severity: low
+> Qemu emulator built with the Pseudo Random Number Generator(PRNG) back-end
+> support is vulnerable to an arbitrary stack based allocation and memory
+> corruption via random bytes issue. It could occur when a guest requests for
+> entropy for random number generation.
+> 
+> A user/process inside guest could use this flaw to crash the Qemu process
+> resulting in DoS.
+> 
+> http://git.qemu.org/?p=qemu.git;a=commit;h=60253ed1e6ec6d8e5ef2efe7bf755f475dce9956
+> https://bugzilla.redhat.com/show_bug.cgi?id=1314676
 
-Affected versions:
+Use CVE-2016-2858.
 
-- Apache APISIX 3.8.0, 3.9.0
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Description:
-
-Inconsistent Interpretation of HTTP Requests ('HTTP Request Smuggling')
-vulnerability in Apache APISIX when using `forward-auth` plugin.
-
-This issue affects Apache APISIX: from 3.8.0, 3.9.0 .
-
-Users are recommended to upgrade to version 3.8.1, 3.9.1 or higher, which
-fixes the issue.
-
-Credit:
-
-Discovered and reported by Brandon Arp and Bruno Green of Topsort.
-
-Regards.
-
--- 
-
-*MembPhis*
-My GitHub: https://github.com/membphis
-Apache APISIX: https://github.com/apache/apisix
-
---0000000000005c2ecf0617750c03--
+iQIcBAEBCAAGBQJW3O35AAoJEL54rhJi8gl5acsQAMefBsEuYvfXohM+VMnzH9/9
+qzD/KVyihYS9iqwifB/oETNIBWV/A4ltyC4nMBy//ImoJCEzZJIvr7hB17vQj19e
+V2DuIu2/nV9UZssqcZnZegWaaVE65/gNcT7h7rHu7EUXWChgB0ZowLTRUlq37QWs
+Sx5lAc131dWrxeioz9QY7e3DFYCquNGHvE/sYmNgtIZcr7mROkTeHk83p33DVgbG
+dqB6Hu5wyXoiD8+jBNrwgaSYwhg7C6/qNEisWyZmLODSN/8J8+di+9zcgT8KFpX8
+TEvj/NvansVZcR3bJfm6QYeFiDi/r7lSPJNO3siPO6HgD6yR/qYhIDILqb2o7/MI
+lmd5toI6FGC4ZZgumXsIrTjkvDt1yHrgmJZFYQs2dMVdNdsWMB9jXNmC9wqV2Oq7
+1gltAcv1WxlgC7OqZYwFUbux3FvFWKuJXwtLP9OnkA/ki8r7SQAE5en7to8y5SLZ
+dMA6CsymQi3Sz4y6M8k0bckKBDmPbFHOQfrSI6MWbgWYv0ye5+9d/3dRzVUZivNO
+pLV8VAUtIJ5oKFR5hGKrRLCqKBpRHnns26/M8eqw31vURCtTJ8NogVspYWW44xPL
+hdeUJg/OBwvHi1XxKzLbMW6+PFdq4iXtYlagu/oaAGG3uFwJXp0S1vobpXtbhKBu
+MiU4kIAeWzk3hS1cb2GM
+=qXaI
+-----END PGP SIGNATURE-----
