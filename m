@@ -1,40 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/05/4
-Message-ID: <568B8AD7.3000905@suse.com>
-Date: Tue, 5 Jan 2016 10:20:23 +0100
-From: Andreas Stieger <astieger@...e.com>
-To: oss-security@...ts.openwall.com, carnil@...ian.org
-Cc: cve-assign@...re.org, elbrus@...ian.org
-Subject: Re: Re: CVE Request: cacti: SQL injection vulnerability in graphs_new.php
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/12
+Message-ID: <CAHmME9q6vctff8ZAyL-Ats_DMPKi=aazUBWX86fdKNNH5c7OfQ@mail.gmail.com>
+Date: Mon, 7 Mar 2016 18:52:04 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Cgit XSS "vulnerability" has no CVE?
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-
-On 01/05/2016 12:58 AM, cve-assign@...re.org wrote:
-> > Another SQL injection vulnerability via graphs_new.php in cacti was
-> > found, reported to the bug http://bugs.cacti.net/view.php?id=2652
->
-> http://bugs.cacti.net/view.php?id=2652 is CVE-2015-8604.
-
-Check against a possible duplicate assignment with CVE-2015-8377?
-
-http://seclists.org/fulldisclosure/2015/Dec/att-57/cacti_sqli%281%29.txt
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1291222
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-8377
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8377
-
-
-Andreas
-
-
--- 
-Andreas Stieger <astieger@...e.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG Nürnberg)
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+At the moment, none of those example filters are XSS-safe. I think
+I'll likely rewrite them for the next version to use a framework for
+that. But there's never been any guarantee for those filters, and
+they've never been provided as anything but potential example filters
+for people to tweak and change.
