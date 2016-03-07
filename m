@@ -1,33 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/3
-Message-Id: <20160818033217.E5376B2E013@smtpvbsrv1.mitre.org>
-Date: Wed, 17 Aug 2016 23:32:17 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/3
+Message-Id: <20160307025938.A687152E014@smtpvbsrv1.mitre.org>
+Date: Sun,  6 Mar 2016 21:59:38 -0500 (EST)
 From: cve-assign@...re.org
 To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE request: Qemu net: vmxnet3: use after free while writing
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liuling-it@....cn
+Subject: Re: CVE request Qemu: net: out of bounds read in net_checksum_calculate
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support is
-> vulnerable to a use-after-free issue. It could occur while writing to the
-> device once it's disabled.
+> Qemu emulator built with the IP checksum routines is vulnerable to an OOB read
+> access issue. It could occur while computing checksum for TCP/UDP packets, as
+> the function uses payload length from the packet without checking against the
+> data buffer size.
 > 
-> A privileged user inside guest could use this issue to crash the Qemu
-> instance resulting in DoS.
+> A user inside guest could use this flaw to read excessive bytes or crash the
+> Qemu process resulting in DoS.
 > 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg01602.html
+> https://lists.gnu.org/archive/html/qemu-devel/2016-03/msg00671.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1296567
 
->> Vmxnet3 device emulator does not check if the device is active,
->> before using it for write. It leads to a use after free issue,
->> if the vmxnet3_io_bar0_write routine is called after the device is
->> deactivated. Add check to avoid it.
->> 
->> http://git.qemu.org/?p=qemu.git;a=commit;h=6c352ca9b4ee3e1e286ea9e8434bd8e69ac7d0d8
+Use CVE-2016-2857.
 
-Use CVE-2016-6833.
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=net/checksum.c but
+that may be an expected place for a later update.
 
 - -- 
 CVE Assignment Team
@@ -37,17 +36,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXtSdZAAoJEHb/MwWLVhi2yw0P/2UheT3YiLmXjnFeSLmHVpXp
-0MnPeMcnm4DYFmUZPTWgX9zJ4aR4hIsdsHjLE7MGxOfJ8WJpz8jRyr6E5KbJdnar
-yngQY4ibNZr9iejomCLtWiAzKzbv99LDtWel77ox1zmIPzGzuzESzx0J7S958n1X
-VXvDuNeEqSZhjueM92CzpZSywy3hiJolemnpzRXlzlhqsSykdoP5GriS58P9As8g
-3zRfQ5XQAEZ2WIJ3kOTXtsbpyZrVeWwAfU44Ls/N/yXK0MsVjdZctU381ZYuCYQV
-SUHKJhKlGeJB5qXk0DbuZ+/AdvDMAgFDd/XDVQYTB7/E9Gr9qi1STMnx6THjcIp+
-SXrEQoarAqldiYvu+p755Lq1zZ5NBwjoLqQYXGuM2lVi/14LPFDnsbDCAYUQQdfB
-7qRmiMSOujb5jXc1N0OVZLV/xIW3BMRB6O64jV+qGDFS4jXA8+ix8ay1l59pRa/h
-ByZE5eX6OQ+8Y1LXVydMn6jfU8wiow1NbQsG69wtFyEh9VSOaLQdHxj1vGaIH9mx
-A5aHzVeQAs6/I1u7e8dMtN7ZK5RKlhV71eYJ2kGnFK2HiPlCEdXtkBXlVdbgWGc9
-lv2LNUqp6qZNqR26PeJiTKfhnC+HIJrbbarHWp3grpB8E74kcnJgFll8ME0u2nzz
-6O5RnbATL0/ZH1uiz0YP
-=rso/
+iQIcBAEBCAAGBQJW3O3wAAoJEL54rhJi8gl56hUP/RyxPOoTlX09iR6D5mvAkzdX
+OZSZuybX3W9X4kkZj4+TXUEAQxEBY7AN1j2QY3uPwb9N9QVXUF827vy+WLiXV0SG
+dIYHazeMKeGd5fLthf/DI1PFXxtezOkPkBmE33jlX8bn5O9zpcoSATSl8HKqQQCh
+iMdgOf1q1Y7rzz+qQrCbXZTKk7R9j5Q3hLkX8TaMlhdo9sUZwAaxiEuRIbGeuqds
+7Id2nu1wfeOy4tptpEzfSYp6d8E9t2VHpnNnL3U5iFrdwc6SnKuKu0okwEIpnHJ3
+mDb2FH2SPj2SWO4rdsJh/9WIzL6IvfELwq2tLp5aAsIDIsEgF68/0eawGID9wBDL
++Am7yUyqvogKrFfWYRNo74adbRRsO5Jzda8+MMFvuCGctIHRZCXUSNd7GOHCdkia
+FMB7pcfAAZN/GPfAdVHpEZfk4aZqmy3iF28z7kOhFSalw74QQXTbAcoZiybyOJmh
+ADcEnIoDfvWhxUG3DBocf05a+5Pp1qLNbvYl9NzBEDkNJxcgVQEnMr4gN/QyFXDI
+At/gfwOEh3oCDN3mGvUk9d1lIDuu7yARXVcAPsrePHbpB9bmFLEgQRw0SCg+ezFe
+QgdYHQ2dquUBcuTcIrT5wDVGgKNwuCyf+h3PZwMXhIFEcTZJyQgldfJXXiXHfpX+
+Ggfm4NI0fXZ8NtgMHo2P
+=ObQr
 -----END PGP SIGNATURE-----
