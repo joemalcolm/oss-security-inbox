@@ -1,76 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/11/2
-Message-Id: <20160411044052.49C493320CF@smtpvbsrv1.mitre.org>
-Date: Mon, 11 Apr 2016 00:40:52 -0400 (EDT)
-From: cve-assign@...re.org
-To: matthias@...lons.info
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: libcrypto++ - Timing Attack Counter Measure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/14
+Message-ID: <20160307184611.GH6474@more-magic.net>
+Date: Mon, 7 Mar 2016 19:46:11 +0100
+From: Peter Bex <peter@...e-magic.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Cgit XSS "vulnerability" has no CVE?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Mon, Mar 07, 2016 at 06:53:33PM +0100, Jason A. Donenfeld wrote:
+> On Sat, Mar 5, 2016 at 6:41 PM, Peter Bex <peter@...e-magic.net> wrote:
+> > This allows for an XSS attack by anyone with write access: If you can
+> > push to a git repository for which the "txt2html" converter is activate,
+> > you can create a README or README.txt and insert arbitrary HTML.
+> 
+> The XSS situation in those release notes does not cover what you've
+> described here. You're conflating two separate things.
 
-> https://github.com/weidai11/cryptopp/issues/146
+Thanks for clarifying this.  For some reason I expected this to be about
+the same issue.
 
->> This counter measure seems to be removed by the compiler.
+On Mon, Mar 07, 2016 at 06:52:04PM +0100, Jason A. Donenfeld wrote:
+> At the moment, none of those example filters are XSS-safe. I think
+> I'll likely rewrite them for the next version to use a framework for
+> that.
 
->> security bug
+Good to hear that!
 
-For "removed by the compiler" issues, sometimes the CVE is associated
-with the upstream source code, and sometimes the CVE is associated
-with a specific binary package that chose to compile in a way that was
-unintended by the source-code authors. We feel that the former is the
-best choice here.
-https://github.com/weidai11/cryptopp/blob/master/Readme.txt says "The
-following compilers are supported for this release ... GCC 3.3 - 5.2."
-https://github.com/weidai11/cryptopp/blob/master/GNUmakefile mentions
-the possibility of gcc -O3:
+> But there's never been any guarantee for those filters, and
+> they've never been provided as anything but potential example filters
+> for people to tweak and change.
 
-  # Aligned access required at -O3 for GCC
-  ...
-  ifeq ($(findstring -O3,$(CXXFLAGS)),-O3
+Even so, I think a warning would have been appropriate.  The text issue
+is a bit more surprising, as one might certainly expect that to be safe,
+though a quick inspection of the code should be enough to know what's
+going on.
 
-issues/146 mentions "Debian compiles Crypto++ with the following
-flags: -Wdate-time -D_FORTIFY_SOURCE=2 -g -O2 ...."
+Considering that it's been "fixed", I thought a CVE might be useful to
+trigger distros to include the patch.  Without a CVE, distros like
+Debian and RedHat will keep using the unpatched version, which is a
+shame if such an easy fix is available.
 
-The gcc man page mentions:
+Cheers,
+Peter
 
-  -O3 Optimize yet more.  -O3 turns on all optimizations specified by -O2
-
-Thus, roughly speaking, it seems that all of Crypto++ had an
-expectation of working with any recent version of gcc, even if (for
-example) -O2 or -O3 is used. The "code to avoid timing attacks"
-doesn't meet this expectation, and thus it's a vulnerability in
-Crypto++. (It is not a vulnerability in the packaging within Debian or
-any other distribution, and it is not a vulnerability in gcc.)
-
-Use CVE-2016-3995 for this Crypto++ vulnerability.
-
-(As a side note, Crypto++ is packaged for Fedora in the
-cryptopp package, e.g., see the
-http://pkgs.fedoraproject.org/cgit/rpms/cryptopp.git/tree/cryptopp.spec
-page.)
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXCykdAAoJEL54rhJi8gl5gbMQAJzlqJxGZuh3bjUZSgxAdDOz
-J7N+b2+vrYGHWqyEaxjjrfetLA5XNKcUKrLuT66Y1Zm0JrFg2pcEM35/dzjl81A0
-KnLED6Q+q7LP+GXkuRh0LWYc8eUvmdlhjbY0Xb8NqkOSZD1uBkf6z2FNUr6yyoHF
-m+HnSN4RYOXSwpROAY+JfKAmPzcJpDpziJA24y4tLMgKvK6Jbx08mGQjJCYMoZ3l
-zX/KDQsmORPXwFbSNLIy20I5D6TTf8mNH18wkDFYKaiqSej7L+wXTOSEKkicnWtD
-JQPkQzWq/6rb8uCtddg1GCSHk27OS54NxQMD18ETSXLPIjcsYzGzFAiKWXE44nGu
-PckfsBzFTWuyjDKdjspE7RUIq+S3tpyUHjgbTgolK+q6RSvAvPFCXvCjn0SAhBzO
-NPQecA9nXCV1oWd0d7a/OGrOaYGhnN8msDEamAVVIheyuQD6ySKCbrZjhPd9LQ/+
-mPdZr5o7bW9121hB9nfcbHB6q/RTQusX91aa7R5sypPxIox7TG/TjAfSzp2fFIIk
-dwhSZxbgDIyFceSw3Ne9yLRKJlegfwdHxlnhmO7/0X3GPSjG2b7clbhYieoirGrY
-xhblDTjW49BikosQPEbc2LGP/9Awp5uokQBJ11BjAvEz9Qz+hqUQ1FWPcVwahlcg
-URJpnBTtEN+FY6/u3+0W
-=ztqN
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
