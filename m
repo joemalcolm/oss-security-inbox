@@ -1,59 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/16/4
-Message-ID: <20160116114544.GA19210@tunkki>
-Date: Sat, 16 Jan 2016 13:45:44 +0200
-From: Henri Salo <henri@...v.fi>
-To: Rahul Pratap Singh <techno.rps@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Commentator WordPress Plugin 2.5.2 XSS Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/16
+Message-ID: <56DDEE49.1090904@redhat.com>
+Date: Mon, 7 Mar 2016 22:10:33 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-1234 in glibc glob with GLOB_ALTDIRFUNC
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Alexander Cherepanov discovered that the glob implementation in glibc
+does not correctly handle overlong names in struct dirent buffers when
+GLOB_ALTDIRFUNC is used.
 
-On Wed, Jan 13, 2016 at 07:42:12PM +0530, Rahul Pratap Singh wrote:
-> I would request you to assign CVE id to this issue.
-> 
-> file: commentator.php
-> 
-> line:441
-> $provider_name = $_REQUEST["provider"];
-> line:544
-> <div id="commentator-social-signin" class="commentator-<?php echo
-> $provider_name; ?>">
->
-> /wp-admin/admin-ajax.php?action=commentator_social_signin&provider=facebook">%20<IMG%20SRC=axc%20onerror=alert(1)>
-> 
-> https://0x62626262.files.wordpress.com/2016/01/commentatorxsspoc.png
-> http://codecanyon.net/item/commentator-wordpress-plugin/6425752
-> https://0x62626262.wordpress.com/2016/01/13/commentator-wordpress-plugin-xss-vulnerability
-> 
-> Fix: Update to 2.5.3
+Upstream bug report:
 
-Are you sure that this plugin is open source software? There is a plugin named
-"commentator" in the WordPress Plugin Directory[1,2], but it seems to be
-different codebase (might be older version) and last update is 2012-10-28. Item
-in codecanyon.net requires paid license.
+  <https://sourceware.org/bugzilla/show_bug.cgi?id=CVE-2016-1234>
 
-1: http://plugins.svn.wordpress.org/commentator/trunk/
-2: http://plugins.svn.wordpress.org/commentator/trunk/readme.txt
-
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJWmi1oAAoJECet96ROqnV0W9MQAM7/GMMtvzWRATSgzTXJhcw3
-HnNwxM37fwyUOxxkAiwI0Qhb5btrZ4mnIK1oOpHZ1d55le/6GBdvxG28lmN9KZBs
-8iiv26hX1D/+tDyXWLtRaZUwC46Mx7geoNoH55dk+MWip1LdhIDjc7eqvB26GT04
-nq8y5gPHUv6VEtS/rgLzW6VVrATVxCTOvHMEzvxgbkHmntDRIaVsDk+krQ8HnlUM
-U7x0REkQmvhM+lAascIaS0vYLz+Had1+Us4F+cA88FPpA2UGzXvRXOcoyYLGu5H+
-99RgnTP1x1Lk6/1E5NYfSnyNwsS8wFsxw8SlUEbRJaEqFJSYjhHq0ho+yVTC9ekx
-z2y0AfOZ/5xjsUZkJgJOwV9ovXVwhe1S55ChmgJRsQ20wc0w8qSgQVd+7+PEiMvb
-ZJxie5x0vsc9X8jQPPBrYCA9RfDIQnNeYcebdECZm/zg0IvGBTKqu2ZSht8ndymC
-W8yZop/BkXO9Ge1SLW2jpRkTJG6moH/k7b0X4Lim1GtaAi21hdUvgOZ8LLQnWk0G
-AphLO8mSauqyEU5sY2g3zHMVbIGzjuQ8Iw2So1WNLdoxss5lm75YEhCij0bpVXSb
-7bCLrlvxPtbphuEA2Mb8R9jPQ7xI66EqjOu+yZfyUnfY27Co7sCUGUnkLGoxfhHU
-t0yWufUCj9ZCW7lfA01K
-=dsWg
------END PGP SIGNATURE-----
+Florian
