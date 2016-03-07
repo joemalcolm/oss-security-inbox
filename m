@@ -1,30 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/28
-Message-ID: <572A871B.5070303@openwall.com>
-Date: Thu, 5 May 2016 02:34:51 +0300
-From: Alexander Cherepanov <ch3root@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: broken RSA keys
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/15
+Message-ID: <CAHmME9rN4hQn+sNv_TRVoeDVbovxb4=_SHQ12oBpqPXyZjyEfA@mail.gmail.com>
+Date: Mon, 7 Mar 2016 20:29:37 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Cgit XSS "vulnerability" has no CVE?
 Content-Type: text/plain; charset=utf-8
 
-On 2016-05-04 15:42, Solar Designer wrote:
-> Now to the point: some of the keys do look to me like they're a result
-> of software bugs in key generation.  Specifically, as it was noticed and
-> noted by many before, Phuctor's list of broken keys includes many with
-> non-prime e of the form intended_e*(2^32+1) - that is, with the 32-bit
-> value duplicated across 64 bits.  (I wrote it that way to show that all
-> such e's are non-prime.)
+On Mon, Mar 7, 2016 at 7:46 PM, Peter Bex <peter@...e-magic.net> wrote:
+> Considering that it's been "fixed", I thought a CVE might be useful to
+> trigger distros to include the patch.  Without a CVE, distros like
+> Debian and RedHat will keep using the unpatched version, which is a
+> shame if such an easy fix is available.
 
-Indeed. From 225 keys listed at http://phuctor.nosuchlabs.com/phuctored, 
-152 ones have modulus and exponent divisible by 2**32+1:
-
-$ curl -s http://phuctor.nosuchlabs.com/phuctored |
- >   perl -Mbigint -ln0e 'print join " ", map { $_ % (2**32 + 1) } ($1, 
-$2) while m{RSA Modulus .N.:.*?<td>(\d+)<.*?<td>(\d+)<}sg' |
- >   grep -c '^0 0$'
-152
-
-Modulus and exponent are divisible by 2**32+1 or not simultaneously.
-
--- 
-Alexander Cherepanov
+Considering so many of the other example filters have the same
+problem, I don't think this will buy much. However, after I revamp the
+example filters into a nice "one stop" solution for lots of filetypes,
+we can start promoting that various places for its security benefits.
