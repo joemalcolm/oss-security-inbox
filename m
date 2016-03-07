@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3418" "Saturday" "28" "September" "2019" "02:34:28" "+0200" "Heiko Schlittermann" "hs@nodmarc.schlittermann.de" nil "104" nil "^Cc:" nil nil "9" nil nil (number mark "        hs@nodmarc.s Sep 28  104/3418  " thread-indent "\"[oss-security] Exim CVE-2019-16928 RCE using a heap-based buffer overflow\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Exim CVE-2019-16928 RCE using a heap-based buffer overflow" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["865" "Monday" "7" "March" "2016" "13:04:50" "+0100" "=?UTF-8?B?U2FsdmEgUGVpcsOz?=" "speirofr@gmail.com" "<CAJpd-bGtYj8mL9crn8LoO0cB05EVQpsjQQnB-OENr2cMu3CxOA@mail.gmail.com>" "28" "[oss-security] CVE Request: The minissdpd (v 1.2.20130907-3) is affected by an improper validation of array index weakness" "^Date:" nil nil "3" "2016030712:04:50" "[oss-security] CVE Request: The minissdpd (v 1.2.20130907-3) is affected by an improper validation of array index weakness" (number mark "U       speirofr@gma Mar  7   28/865   " thread-indent "\"[oss-security] CVE Request: The minissdpd (v 1.2.20130907-3) is affected by an improper validation of array index weakness\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26027 invoked by uid 550); 28 Sep 2019 00:34:41 -0000
+Received: (qmail 13412 invoked by uid 550); 7 Mar 2016 12:05:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,140 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26006 invoked from network); 28 Sep 2019 00:34:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=schlittermann.de; s=dd201504; h=Content-Type:MIME-Version:Message-ID:
-	Subject:Cc:To:From:Date:Content-Description:Content-ID:
-	Content-Transfer-Encoding:In-Reply-To:References:Resent-Cc:Resent-To;
-	bh=N1SI9f0OHTUvOH9n8hPrPKZcjbGGsRA2TUoG+oDHD48=; b=O6htMnbSIbS6QeCYDGmeHgzYct
-	qy9hkStGEXPsOZcy1NpIR4m/g+JWmP02+G/pWsVLtW+7prr++GWLEXgQIP0ToE9u1EjpuOtcoQrCb
-	lOZy1nhyZS95g2sIAN22xUJJnnP04+1GYpdmfuY3Vih32lkwfwGi2Tv5e/7Ov6US/uyc=;
-Message-ID: <20190928003428.GI16334@jumper.schlittermann.de>
-Mail-Followup-To: oss-security <oss-security@lists.openwall.com>,
-	exim-users@exim.org, exim-maintainers@exim.org
+Received: (qmail 13391 invoked from network); 7 Mar 2016 12:05:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=8MDr7aBTlQVoAl93ewrx377wfJ5KpL3v6JTV1frM24c=;
+        b=hrRvtoF6BeYHmWAMX7oWuu5F4Eo71gClVHyaDBoE1qWoKMZLTRr+lUckCdnACmtt3A
+         fx+KG3rR+/e9+gizsUYzhws2CRUoAVfga8UsJ8nikCvDDFvaEe8tpqns5UkefvKyM6v2
+         tfUiL6LmALGf9ADbB/+v47YkrL6MpmYDjwTfXdaspTMo01fP7zkxRs2W0EiTSggvuQgQ
+         E9YQOawWvlyRqAnk7ANaPrSMSJuXLx2NJ3mD/51eirIb1DBbuL1q3meyGRu7jzxa6RRD
+         /uzgHmccYGxb55aVDF/jLkCL9R3qss0BpSZffo77jSFEJn+EM/Y4sWOmIdmGAc3UDuhE
+         nCzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=8MDr7aBTlQVoAl93ewrx377wfJ5KpL3v6JTV1frM24c=;
+        b=a00G0O5pxf/eQlxz4DAfEb1BPtmnwy4/GRybabc6jQvEk6DUJVNWcMEdx6O06co27D
+         DMtiwE1uBGtjzWi+4Kab9PrAVRMOlV1QiM1HFNWkuHbGmziDNVb2QqjawNHodfVE21BJ
+         DXfefsgNzRttDJLF75Pz/56z1tboJEkqRSWXRbvYanhILKDepeL8G5iTvdNG4AXpotMW
+         ETRR2pWF7NxDN2fg51T8UGis8cCUtlv1pz2cWi2mb2QrzW5Vl4gFHojvemXDFSAQ5ZGf
+         MFLodnISpjY7OloMpmodTWfA7w7IIfracowswzkZ/lcRdNmvI1hA29h2X51mjdg6+5Fz
+         qIUA==
+X-Gm-Message-State: AD7BkJIzW+GpLU18nty0XILd8b++tls6l1p/ixIRerEEYxzNJIPI6rwgNhRkhoWCuU4JZZw9yLTBx22oyWbu4g==
+X-Received: by 10.194.242.202 with SMTP id ws10mr22345426wjc.3.1457352309896;
+ Mon, 07 Mar 2016 04:05:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ubBGeysJ7fFOU9Y9"
-Content-Disposition: inline
-Organization: schlittermann -- internet & unix support
-X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
- QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
- y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
- X?H&`
-X-Telegram: @HeikoSchlittermann
-X-Threema: T5RPWMSS
-X-Phone: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: exim-users@exim.org, exim-maintainers@exim.org
-Date: Sat, 28 Sep 2019 02:34:28 +0200
-From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
+X-Google-Sender-Auth: 6XzDTjFj0VLJ5Q9poasRYcZOOGw
+Message-ID: <CAJpd-bGtYj8mL9crn8LoO0cB05EVQpsjQQnB-OENr2cMu3CxOA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=089e01419b02be7c04052d7446ab
+Date: Mon, 7 Mar 2016 13:04:50 +0100
+From: =?UTF-8?B?U2FsdmEgUGVpcsOz?= <speirofr@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Exim CVE-2019-16928 RCE using a heap-based buffer overflow
-To: oss-security <oss-security@lists.openwall.com>
+Sender: saoret.one@gmail.com
+Subject: [oss-security] CVE Request: The minissdpd (v 1.2.20130907-3) is affected by an
+ improper validation of array index weakness
+To: oss-security@lists.openwall.com
 
---ubBGeysJ7fFOU9Y9
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+--089e01419b02be7c04052d7446ab
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-CVE ID:     CVE-2019-16928
-Date:       2019-09-27 (CVE assigned)
-Version(s): from 4.92 up to and including 4.92.2
-Reporter:   areuu@outlook.com
-Reference:  https://bugs.exim.org/show_bug.cgi?id=3D2449
-Issue:      Heap-based buffer overflow in string_vformat,
-            remote code execution seems to be possible
+Hi everyone,
 
-Conditions to be vulnerable
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
+A vulnerability in the minissdpd daemon has been found that affects
+minissdpd version 1.2.20130907-3 available in Debian and Ubuntu.
+The vulnerability can be exploited by a local unprivileged user
+with write access to /var/run/minissdpd.sock to crash the minissdpd
+daemon that runs with superuser privileges.
 
-All versions from (and including) 4.92 up to (and including) 4.92.2 are
-vulnerable.
+More details at:
+https://speirofr.appspot.com/files/advisory/SPADV-2016-02.md
+https://bugs.debian.org/cgi-bin/pkgreport.cgi?pkg=3Dminissdpd;dist=3Dunstab=
+le.
 
-Details
-=3D=3D=3D=3D=3D=3D=3D
+Is there a CVE for this? If not, could one be assigned, please?
 
-There is a heap-based buffer overflow in string_vformat (string.c).
-The currently known exploit uses a extraordinary long EHLO string to
-crash the Exim process that is receiving the message. While at this
-mode of operation Exim already dropped its privileges, other paths to
-reach the vulnerable code may exist.
+Regards,
+Salva Peir=C3=B3
 
-Mitigation
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-There is - beside updating the server - no known mitigation.
-
-Fix
-=3D=3D=3D
-
-We plan to publish a new security release (*will* be 4.92.3) of Exim
-during the next 48 hours, ideally before monday 8.00 UTC. (We're still
-running regression tests.) We'll send another notification as soon as
-the new release is available.
-
-Distros may have already picked the patch mentioned below and may have
-already released a fixed version. Please check your distribution's
-changelogs.
-
-If you can't wait, please use use our git repository http://git.exim.org/ex=
-im.git,
-checkout the branch exim-4.92.2+fixes and use the commit 478effbfd9c3cc5a62=
-7fc671d4bf94d13670d65f
-
-A direct link to the commit is:
-https://git.exim.org/exim.git/patch/478effbfd9c3cc5a627fc671d4bf94d13670d65f
-
-which basically does:
-
---- a/src/src/string.c
-+++ b/src/src/string.c
-@@ -1132,7 +1132,7 @@ store_reset(g->s + (g->size =3D g->ptr + 1));
- Arguments:
-   g            the growable-string
-   p            current end of data
--  count                amount to grow by
-+  count                amount to grow by, offset from p
- */
-
- static void
-@@ -1590,7 +1590,7 @@ while (*fp)
-        }
-       else if (g->ptr >=3D lim - width)
-        {
--       gstring_grow(g, g->ptr, width - (lim - g->ptr));
-+       gstring_grow(g, g->ptr, width);
-        lim =3D g->size - 1;
-        gp =3D CS g->s + g->ptr;
-        }
-
-We thank you for using Exim.
-
-    Best regards from Dresden/Germany
-    Viele Gr=C3=BC=C3=9Fe aus Dresden
-    Heiko Schlittermann
 --
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+Salva Peir=C3=B3 @ https://speirofr.appspot.com
+CS Researcher & Software Engineer
+Universitat Polit=C3=A8cnica de Val=C3=A8ncia, Spain.
 
---ubBGeysJ7fFOU9Y9
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAl2OqosACgkQr0zGdqa2
-wULb1wf8CAlT3aRbwxEHnAhmRTerpjQROPx2XzUi3LuKXSBHYU2ex+xTggYICQOB
-5mMJOO0MYpkTwOd8Jc95OPDgUeYZwos6b1m5/34ivZ9G2p2t/ln3lH7h7IE3IMcn
-1rVpyLqtlSplfdVsXV75wdB1U+R3edKKevRMbXxQ0qeKoHmaOIVfs84CZwJujE/6
-/ecSMXdgP7CFxklaPbLmVV8Q3kHfNziLglEO9UGEcsbTSKaIgO8FoYKB/e9nT475
-dmq+aUPiEEaZvnwOpCg9ihORRcrrC1aXq4ddl072C0PZsZh+dJPWgoLNOEm8iP82
-NRV2IcEsaGZTSwzLV2XkqsMP8BfBVw==
-=HRIQ
------END PGP SIGNATURE-----
-
---ubBGeysJ7fFOU9Y9--
+--089e01419b02be7c04052d7446ab--
