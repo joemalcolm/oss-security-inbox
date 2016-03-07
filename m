@@ -1,73 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/2
-Message-ID: <56E0DE5E.9000100@redhat.com>
-Date: Thu, 10 Mar 2016 02:39:26 +0000
-From: Tristan Cacqueray <tdecacqu@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/11
+Message-ID: <20160307162430.GG1250@sentinelchicken.org>
+Date: Mon, 7 Mar 2016 08:24:30 -0800
+From: Tim <tim-security@...tinelchicken.org>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2016-007.1] Nova host data leak through resize/migration (CVE-2016-2140) ERRATA
+Cc: mark@...phey.com
+Subject: CVE Replacement Via Blockchains (was: Concerns about CVE coverage shrinking - direct impact to researchers/companies)
 Content-Type: text/plain; charset=utf-8
 
-=============================================================
-OSSA-2016-007.1: Nova host data leak through resize/migration
-=============================================================
 
-:Date: March 08, 2016
-:CVE: CVE-2016-2140
-
-
-Affects
-~~~~~~~
-- Nova: <=2015.1.3, >=12.0.0 <=12.0.2
-
-
-Description
-~~~~~~~~~~~
-Matthew Booth from Red Hat reported a vulnerability in Nova instance
-resize/migration. By overwriting an ephemeral or root disk with a
-malicious image before requesting a resize, an authenticated user may
-be able to read arbitrary files from the compute host. Only setups
-using libvirt driver with raw storage and setting "use_cow_images =
-False" (not default) are affected.
-
-
-Errata
-~~~~~~
-The former fix did not take into account the usage of non-disk-image
-backends and caused a regression for this use-case. This update
-provides an additional fix for that issue.
-
-
-Patches
-~~~~~~~
-- https://review.openstack.org/289960 - original (Kilo)
-- https://review.openstack.org/290847 - errata   (Kilo)
-- https://review.openstack.org/289958 - original (Liberty)
-- https://review.openstack.org/290843 - errata   (Liberty)
-- https://review.openstack.org/289957 - original (Mitaka)
-- https://review.openstack.org/290715 - errata   (Mitaka)
-
-
-Credits
-~~~~~~~
-- Matthew Booth from Red Hat (CVE-2016-2140)
-
-
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/bugs/1548450
-- https://bugs.launchpad.net/bugs/1555287
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-2140
-
-
-OSSA History
-~~~~~~~~~~~~
-- 2016-03-09 - Errata 1
-- 2016-03-08 - Original Version
-
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+> ... to make following proposal
+> 
+> RFC: "Distributed Cryptoenhanced Vulnerability Enumeration (DCVE)":
+> 
+> To address the points mentioned before, assume we would take the a
+> blockchain database [0] approach to handle most of the issues for us.
+> 
+> a) Chain layout: Start a chain every year, so it will not grow arbitrary
+> large. The root entry is the PGP key of chain manager (some group, board
+> - - does not be the ones running the data systems)
+> 
+> b) Chain hosting: as the information is easy to distribute,
+> cryptographically secured, redundant, any number of volunteers can host
+> them.
+> 
+> c) Entry: A "permitted contributor" signature is made using one of the
+> previous keys already recorded onto the key of the new contributor.
+> 
+> d) Proof of work: To add elements perform calculation (1
+> non-parallelizable CPU-h? - this is also the minimal delay for updates),
+> thus limiting the amount of garbage to be added by adversaries.
+> 
+> e) Unique IDs: The unique ID for a DCVE entry is the SHA256-hash of the
+> first element dealing with that issue.
+> 
+> f) Updates: The entry may be updated by anyone, but usually one may want
+> to filter out all entries not from the creator. The creator may later on
+> approve foreign entry by adding a linking the record (or the key of the
+> contributor) to the chain by himself.
+> 
+> g) Related material: To keep chain entries small (16kb?), they may
+> reference external material via http(s)-URLs. If it is a single file,
+> checksum information can be added. When important material is found,
+> anyone feeling the need to mirror it can create an update to that entry
+> and add the reference to the mirrored data.
+> 
+> h) Sensitive information: Each DVCE chain may contain also encrypted
+> messages. The key can be added later on to the chain, thus making the
+> previously recorded information public.
+> 
+> i) Non-repudiation (create): Each added entry has to be signed with the
+> key of the creator)
+> 
+> j) Non-repudiation (read): When important for the creator, giving read
+> access to one encrypted DCVE-chain should only happen after receiving a
+> signed access-request.
+> 
+> k) Prioritizing: to ease sifting through the important entries, any
+> contributor can add a rating entry to DVCE chains to give opinion to
+> their risk but also the quality of the chain (thus contributors may
+> build a reputation, making it easier to get heard).
+> 
+> Any thoughts on the idea itself?
+> How to realize: summer of code?
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+This is a really nice idea.  Especially the part about agreeing not to
+take legal action in order to read the content.  It may not be legally
+enforcable everywhere, but it certainly helps and would allow the
+block chains to be mirrored anywhere it does apply.
+
+There are a variety of technical issues to be solved, but it seems
+doable.  For instance, you'd need some kind of layman's web front-end
+that gives people access to everything, with appropriate disclaimers
+on it, but all sounds doable.  The up-front work would be significant,
+but once it is out there, the hosting and moderation work could be
+made minimal with the right design.
+
+Mark: Does this sound interesting to you?  With your expertise in
+getting projects started, maybe this is something you'd be interested
+in helping get off the ground.
+
+tim
