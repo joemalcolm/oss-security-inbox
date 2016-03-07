@@ -1,28 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/15/3
-Message-ID: <alpine.LFD.2.20.1612151224140.6050@wniryva>
-Date: Thu, 15 Dec 2016 12:27:19 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2016-9588 Kernel: kvm: nVMX: uncaught software exceptions in L1 guest lead to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/10
+Message-ID: <33006C99F5A5194A9B7A7715DFA3E383EB84DCEF@ALA-MBA.corp.ad.wrs.com>
+Date: Mon, 7 Mar 2016 15:28:03 +0000
+From: "Radzykewycz, T (Radzy)" <radzy@...driver.com>
+To: Amos Jeffries <squid3@...enet.co.nz>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: [security-vendor] Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
 
-Linux kernel built with the KVM virtualisation support(CONFIG_KVM), with 
-nested virtualisation(nVMX) feature enabled(nested=1), is vulnerable to an 
-uncaught exceptions issue. It could occur if a L2 guest was to throw an 
-exception which is not handled by L1 guest.
+________________________________________
+> From: Amos Jeffries [squid3@...enet.co.nz]
+> Sent: Sunday, March 06, 2016 5:47 PM
+> To: oss-security@...ts.openwall.com
+> Subject: [security-vendor] Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies
+> 
+> On 7/03/2016 9:39 a.m., Gsunde Orangen wrote:
+> > I totally agree.
+> > The concern addressed by Kurt initially is fully valid (for both
+> > researchers and for companies that are not on Mitre's product/sources
+> > list), so a new (better: additional) solution is required.
+> > However, creating a new standard independently of CVE would be too
+> > disruptive and be a disservice to the software industry.
+> > I'd propose to work out a new solution together with Mitre, whilst
+> > keeping the CVE IDs as today.
+> > Since 2014, virtually unlimited number of CVE IDs can be assigned per
+> > year [1], so a solution could be that
+> >  - Mitre continues to assign 4 and 5 digit IDs as today
+> >  - 6 digit IDs are reserved for the new process (hosted outside Mitre)
+> > If more than one million vulnerabilities need to be addressed in one
+> > year, we could follow the rule (odd digits -> Mitre, even digits ->
+> > "other process")
+> > From Mitre's POC, this "other process" would become a "CNA", just with
+> > its own policy and process definition, not prescribed by Mitre.
+> > It would soon become clear to everyone (and all tools and products that
+> > rely on CVE) where to look at for the authoritative vulnerability
+> > information.
+> 
+> 
+> While reading this whole thread I have been thinking along very similar
+> but slightly different lines.
+> 
+> Right now as a vendor 'security desk' I/we have the situation where we
+> have to allocate an internal reference ID anyway while awaiting Mitre
+> assignment. These IDs are not spread so widely as CVE in the early
+> stages, so we end up with other vendors and downstream distributions not
+> quite in the same discussion loop allocating their own temporary numbers
+> for the same issue. And some do anyway just because thats the way they
+> operate.
+> (Those aware of the history might recall this was the exact same
+> situation which caused CVE to be created and centralized through Mitre
+> in the first place.)
+> 
+> Having an easily self-assigned OVI number does sound nice. At least for
+> use as a temporary ID that can be publicly shared before the proper
+> analysis can be completed by Mitre for a CVE, which can then sub-link.
+> 
+> AYJ
 
-A L1 guest user could use this flaw to crash the guest resulting in DoS.
+Seems like it would be a very simple change, if Mitre were willing
+to do it, to have vulnerability reporters include an OVE or OVI
+tracking number with every report.  That way, there would be
+a number to track from the initial report, and still have the
+benefits of a significant review for CVE identifiers.
 
-Upstream patch
---------------
-   -> https://www.spinics.net/lists/kvm/msg142495.html
+If Mitre were willing to make it mandatory, I think that might
+be best.  But even if not, that wouldn't prohibit researchers
+from doing this, though it would be more ad-hoc.
 
-'CVE-2016-9588' has been assigned to this issue by Red Hat Inc.
+Enjoy!
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+				-- radzy
