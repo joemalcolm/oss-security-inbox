@@ -1,62 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/5
-Message-ID: <569E6B9D.90904@redhat.com>
-Date: Tue, 19 Jan 2016 17:00:13 +0000
-From: Tristan Cacqueray <tdecacqu@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/1
+Message-ID: <56DCDDCD.8070600@treenet.co.nz>
+Date: Mon, 7 Mar 2016 14:47:57 +1300
+From: Amos Jeffries <squid3@...enet.co.nz>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2016-003] Heat denial of service through template-validate (CVE-2015-5295)
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-===============================================================
-OSSA-2016-003: Heat denial of service through template-validate
-===============================================================
-
-:Date: January 19, 2016
-:CVE: CVE-2015-5295
-
-
-Affects
-~~~~~~~
-- Heat: <=2015.1.2, ==5.0.0
-
-
-Description
-~~~~~~~~~~~
-Steven Hardy from Red Hat reported a vulnerability in Heat template
-validation. By referencing a local file like /dev/zero, an
-authenticated user may trick the heat engine service to load arbitrary
-local file content resulting in a Denial of Service attack through
-memory exhaustion. Note that the file content is not written back to
-the user, though the user can determine if a file exists and if it is
-readable by heat-engine. All Heat setups are affected.
-
-
-Patches
-~~~~~~~
-- https://review.openstack.org/269692 (Kilo)
-- https://review.openstack.org/269691 (Liberty)
-- https://review.openstack.org/269689 (Mitaka)
+On 7/03/2016 9:39 a.m., Gsunde Orangen wrote:
+> I totally agree.
+> The concern addressed by Kurt initially is fully valid (for both
+> researchers and for companies that are not on Mitre's product/sources
+> list), so a new (better: additional) solution is required.
+> However, creating a new standard independently of CVE would be too
+> disruptive and be a disservice to the software industry.
+> I'd propose to work out a new solution together with Mitre, whilst
+> keeping the CVE IDs as today.
+> Since 2014, virtually unlimited number of CVE IDs can be assigned per
+> year [1], so a solution could be that
+>  - Mitre continues to assign 4 and 5 digit IDs as today
+>  - 6 digit IDs are reserved for the new process (hosted outside Mitre)
+> If more than one million vulnerabilities need to be addressed in one
+> year, we could follow the rule (odd digits -> Mitre, even digits ->
+> "other process")
+> From Mitre's POC, this "other process" would become a "CNA", just with
+> its own policy and process definition, not prescribed by Mitre.
+> It would soon become clear to everyone (and all tools and products that
+> rely on CVE) where to look at for the authoritative vulnerability
+> information.
 
 
-Credits
-~~~~~~~
-- Steven Hardy from Red Hat (CVE-2015-5295)
+While reading this whole thread I have been thinking along very similar
+but slightly different lines.
+
+Right now as a vendor 'security desk' I/we have the situation where we
+have to allocate an internal reference ID anyway while awaiting Mitre
+assignment. These IDs are not spread so widely as CVE in the early
+stages, so we end up with other vendors and downstream distributions not
+quite in the same discussion loop allocating their own temporary numbers
+for the same issue. And some do anyway just because thats the way they
+operate.
+(Those aware of the history might recall this was the exact same
+situation which caused CVE to be created and centralized through Mitre
+in the first place.)
+
+Having an easily self-assigned OVI number does sound nice. At least for
+use as a temporary ID that can be publicly shared before the proper
+analysis can be completed by Mitre for a CVE, which can then sub-link.
+
+AYJ
 
 
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/bugs/1496277
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5295
 
 
-Notes
-~~~~~
-- This fix will be included in future 2015.1.3 (kilo) and 5.0.1
-  (liberty) releases.
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (835 bytes)
