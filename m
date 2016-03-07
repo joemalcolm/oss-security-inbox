@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["877" "Wednesday" "16" "September" "2020" "23:57:52" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.78.906.2009162354330.10832@xnncv>" "27" "[oss-security] CVE-2020-25084 QEMU: usb: use-after-free issue while setting up packet" nil nil nil "9" "2020091618:27:52" "[oss-security] CVE-2020-25084 QEMU: usb: use-after-free issue while setting up packet" (number mark "U       ppandit@redh Sep 16   27/877   " thread-indent "\"[oss-security] CVE-2020-25084 QEMU: usb: use-after-free issue while setting up packet\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-25084 QEMU: usb: use-after-free issue while setting up packet" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4710" "Sunday" "6" "March" "2016" "21:03:38" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160307020338.CD55A6C0709@smtpvmsrv1.mitre.org>" "105" "[oss-security] Re: Access to /dev/pts devices via pt_chown and user namespaces" nil nil nil "3" "2016030702:03:38" "[oss-security] Re: Access to /dev/pts devices via pt_chown and user namespaces" (number mark "U       cve-assign@m Mar  6  105/4710  " thread-indent "\"[oss-security] Re: Access to /dev/pts devices via pt_chown and user namespaces\"\n") "<8fc639ad-daef-1a6f-facf-140eb61aeee5@halfdog.net>" ("<8fc639ad-daef-1a6f-facf-140eb61aeee5@halfdog.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19617 invoked by uid 550); 16 Sep 2020 18:28:15 -0000
+Received: (qmail 32283 invoked by uid 550); 7 Mar 2016 02:03:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +12,117 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19598 invoked from network); 16 Sep 2020 18:28:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1600280883;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
-	bh=BDaGJespaJqQaLhBWuSS5/nsmTb2d2ECCjiTNUX+/ac=;
-	b=cKK+Q5H0sv/MNf4crPW602pfY6v3S/p1gxdMS+/5SiXo0+EOpahncv9nSZrEQamSdvlM1B
-	cOolPNW7rQWDxu1XryUEmxqoDYV/3K45mM0KaM9IcOFAUXYJkJ/Z4NA2kA2X0eH5nlBgEX
-	r+xVwxhVdPxS/ZCshxXYqxVeC6Izbsg=
-X-MC-Unique: 5fQuZFZaOqu91DE3FOhxBA-1
-Date: Wed, 16 Sep 2020 23:57:52 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@kaapi
-To: oss security list <oss-security@lists.openwall.com>
-cc: bugs-syssec@rub.de
-Message-ID: <nycvar.YSQ.7.78.906.2009162354330.10832@xnncv>
-MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=ppandit@redhat.com
-X-Mimecast-Spam-Score: 0.001
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] CVE-2020-25084 QEMU: usb: use-after-free issue while setting up
- packet
+Received: (qmail 32231 invoked from network); 7 Mar 2016 02:03:50 -0000
+From: cve-assign@mitre.org
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+In-Reply-To: <8fc639ad-daef-1a6f-facf-140eb61aeee5@halfdog.net>
+Message-Id: <20160307020338.CD55A6C0709@smtpvmsrv1.mitre.org>
+Date: Sun,  6 Mar 2016 21:03:38 -0500 (EST)
+Subject: [oss-security] Re: Access to /dev/pts devices via pt_chown and user namespaces
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-An use-after-free issue was found in USB(xHCI/eHCI) controller emulators of 
-QEMU. It occurs while setting up USB packet, as usb_packet_map() routine may 
-return an error, which was not checked. A guest user/process may use this flaw 
-to crash the QEMU process resulting in DoS scenario.
+> http://www.halfdog.net/Security/2015/PtChownArbitraryPtsAccessViaUserNamespace/
 
-Upstream patches:
------------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-08/msg08050.html
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-08/msg08043.html
+> http://www.openwall.com/lists/oss-security/2016/02/23/3
 
-References:
------------
-   -> https://ruhr-uni-bochum.sciebo.de/s/NNWP2GfwzYKeKwE?path=%2Fxhci_uaf_2
-
-* This issue was reported by Sergej Schumilo, Cornelius Aschermann, Simon
-   Wrner of Ruhr-University Bochum.
-
-* 'CVE-2020-25084' assigned via https://cveform.mitre.org
+> ... condition can be easily created by creating an user namespace,
+> mounting devpts with the newinstance option, create master and slave
+> pts pairs until the number overlaps with a target pts outside the
+> namespace on the host, where there is interest to gain ownership and
+> then invoke pt_chown.
+> 
+> ... intercept all keystrokes and display faked output from
+> commands never really executed.
 
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+>> http://www.openwall.com/lists/oss-security/2016/02/23/7
 
+>> glibc documentation clearly states that "the use of pt_chown introduces
+>> additional security risks to the system and you should enable it only
+>> if you understand and accept those risks":
+>> https://www.gnu.org/software/libc/manual/html_node/Configuring-and-compiling.html#index-grantpt-1
+
+
+>>> http://www.openwall.com/lists/oss-security/2016/02/24/5
+
+>>> So for pt_chown, this could hopefully be
+>>> just an Ubuntu issue. Should we assign an CVE for that?
+
+>>>> http://www.openwall.com/lists/oss-security/2016/02/24/10
+>>>> And Debian 8
+
+We think this is currently the best option. Use CVE-2016-2856. This
+CVE is about the specific pt_chown finding in the
+PtChownArbitraryPtsAccessViaUserNamespace document. Also, we do not
+want this to be considered an upstream glibc vulnerability.
+
+(In addition, this CVE is not about whether the pt_chown program
+should exist at all, or about whether all users should be able to
+create user namespaces. Each of those is an important security topic,
+but the importance is a consequence of multiple issues that could be
+associated with multiple CVEs.)
+
+The initial CVE-2016-2856 description might look roughly like:
+
+   pt_chown in the glibc package before 2.19-18+deb8u4 on Debian
+   jessie lacks a namespace check associated with file-descriptor
+   passing, which allows local users to capture keystrokes and spoof
+   data, and possibly gain privileges, via pts read and write
+   operations, related to debian/sysdeps/linux.mk. NOTE: this is not
+   considered a vulnerability in the upstream GNU C Library because
+   the upstream documentation has a clear security recommendation
+   against the --enable-pt_chown option.
+
+See the
+http://anonscm.debian.org/cgit/pkg-glibc/glibc.git/commit/?h=jessie&id=09f7764882a81e13e7b5d87d715412283a6ce403
+and
+http://anonscm.debian.org/cgit/pkg-glibc/glibc.git/commit/?h=jessie&id=11475c083282c1582c4dd72eecfcb2b7d308c958
+commits. Here, Debian jessie is just an example; a similar statement
+might be made about Ubuntu Wily Werewolf, etc. The
+09f7764882a81e13e7b5d87d715412283a6ce403 commit can be associated with
+(at least) two CVE IDs that motivated the change: CVE-2013-2207 (which
+is directly mentioned there) and the new CVE-2016-2856.
+
+
+>>> On the other hand, the TIOCGPTN ioctl still is problematic with
+>>> USERNS, also for other tools. I just started with pt_chown for
+>>> demonstration because it is SUID, perhaps there are other programs
+>>> using this ioctl.
+>>> 
+>>> Should information about this risk/attack method just be added to the
+>>> kernel docs/man-page of TIOCGPTN or is it a separate vulnerability
+>>> with need for addressing (another CVE?).
+
+We don't feel that enough information has been sent to reach a
+conclusion about whether the "kernel should prevent the TIOCGPTN ioctl
+when invoked called by a process within one namespace but acting on a
+filedescriptor from a devpts instance mounted in a different
+namespace" recommendation should have a CVE ID. We could, for example,
+assign separate CVE IDs to other affected applications (if any)
+instead.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJW3ODUAAoJEL54rhJi8gl5zaUP/RRwv6Npic0DYvGFwqCQZq9v
+hH5QeGvA6ZYCETdAfsN73wmZ9GlhiXMWwTprDf4Zq3r5yfTzfFzrN7f5hu1hTOPa
+/Eonam4l+OML+IymPl85e0wqifeVyJAQj1mk1KYB9tk5jBYcxxARpI3RRt7iC0Jp
++HLo7ayQcEmIE+6XxcVW0C4A5ahBFq75mceqPdJmluNmcBQxx5RHGvJPVeAAAEQA
+ccFyqR1lCHlU29WifN99KUjrBzIzR/WzJFvmyL+g8fD7/nA4iT08S8wQf9HbPncv
+puFdPn0q23bRwHtH0uOjpdG6V4rWFgSreZW8r+U6xeDYO1yk+uVL1I99s+/0iquH
+ghlU4JtbKt8v4nBobh8JGrwdncdpvvS5ojZ9KPVgeBPhe1LAUQRKqiiaAsjRtlDl
+tCdIsTnMYV530D9ykw6c82am7Y2ZAW9Tiov6Ug9fHsItAaWMiNzl+AXSMZ6qRPSK
+vw0zLIOn4xh9dMKr9VbXN1WX/i/aR6Nbn2ZE7rSF8UlPlff83UeFYhVJ+20iAMXq
+sDINreZzpcXRITlsX7h7BDumyrYbNcwNgQMqp9YYV35nA8i4FJubGGHzUAlhrdIh
+UF7k+w7nmFN/kgsE0I6Lyi1Ow04F1KvsJfM4+aV/032liDxle7XPl6sZwsOlH7p0
+uUXK4WJDDt3SBJQIap5W
+=YYhd
+-----END PGP SIGNATURE-----
