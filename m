@@ -1,20 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/08/1
-Message-ID: <20160608072829.GA3711@suse.de>
-Date: Wed, 8 Jun 2016 09:28:29 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org
-Subject: CVE Request: wireshark releases
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/8
+Message-ID: <9922e24a-9aa0-4979-997c-c1b1b16487b4@email.android.com>
+Date: Mon, 07 Mar 2016 11:28:48 +0000
+From: Simon Ward <simon+oss-sec@...ah.co.uk>
+To: oss-security@...ts.openwall.com,Adam Caudill <adam@...mcaudill.com>
+CC: cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 5 March 2016 20:25:49 GMT+00:00, Adam Caudill <adam@...mcaudill.com> wrote:
+>Here is what I would like to see:
+>
+>* Simple ID Request - Data required should be minimal, though I think
+>a few basic items are needed. Perhaps vendor, product, version(s),
+>title, and contact information. Optionally, the requestor should be
+>able to provide their GPG public key, a detailed description,
+>reference URL(s), etc. The ID should then be instantly issued, and
+>given a status of assigned.
 
-Please assign CVEs to the current wireshark releases (if not done so).
+While I like the idea of being able to trivially get a global identifier for a vulnerability I find those with no information,. i.e. Unknown attack vector and impacts, useless. There's no good way to prioritise these: if you assume the worst case you get drowned in a sea of vulnerabilities you have to investigate.
 
-Wireshark 2.0.4
-https://www.wireshark.org/lists/wireshark-announce/201606/msg00000.html
-
-Wireshark 1.12.12
-https://www.wireshark.org/lists/wireshark-announce/201606/msg00001.html
-
-Ciao, Marcus
+Simon
+-- 
+Sent from Kaiten Mail. Please excuse my brevity.
