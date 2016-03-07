@@ -1,47 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/12/1
-Message-ID: <2c7b2749-74fb-8913-8f2a-c33933d2c9c0@apache.org>
-Date: Mon, 12 Dec 2016 09:42:20 +0000
-From: Mark Thomas <markt@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2016-8745 Apache Tomcat Information Disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/13
+Message-ID: <CAHmME9rcosK0SkpG5pdbq4jfqCYJ4t3_y-Y8j1vEwNwzibkRWg@mail.gmail.com>
+Date: Mon, 7 Mar 2016 18:53:33 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Cgit XSS "vulnerability" has no CVE?
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-8745 Apache Tomcat Information Disclosure
+On Sat, Mar 5, 2016 at 6:41 PM, Peter Bex <peter@...e-magic.net> wrote:
+> This allows for an XSS attack by anyone with write access: If you can
+> push to a git repository for which the "txt2html" converter is activate,
+> you can create a README or README.txt and insert arbitrary HTML.
 
-Severity: Important
-
-Vendor: The Apache Software Foundation
-
-Versions Affected:
-Apache Tomcat 9.0.0.M1 to 9.0.0.M13
-Apache Tomcat 8.5.0 to 8.5.8
-Earlier versions are not affected.
-
-Description
-The refactoring of the Connector code for 8.5.x onwards introduced a
-regression in the error handling of the send file code for the NIO HTTP
-connector. An error during send file processing resulted in the current
-Processor object being added to the Processor cache multiple times. This
-in turn meant that the same Processor could be used for concurrent
-requests. Sharing a Processor can result in information leakage between
-requests including, not not limited to, session ID and the response body.
-
-Mitigation
-Users of the NIO HTTP connector with the affected versions should apply
-one of the following mitigations
-- Switch to the NIO2 HTTP or APR HTTP connector
-- Disable send file
-- Upgrade to Apache Tomcat 9.0.0.M15 or later
-  (Apache Tomcat 9.0.0.M14 has the fix but was not released)
-- Upgrade to Apache Tomcat 8.5.9 or later
-
-Credit:
-This issue was reported publicly as Bug 60409 [1] and the security
-implications identified by the Tomcat security team.
-
-References:
-[1] https://bz.apache.org/bugzilla/show_bug.cgi?id=60409
-[2] http://tomcat.apache.org/security-9.html
-[3] http://tomcat.apache.org/security-8.html
-
+The XSS situation in those release notes does not cover what you've
+described here. You're conflating two separate things.
