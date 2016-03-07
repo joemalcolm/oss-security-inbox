@@ -1,31 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/19/9
-Message-ID: <1455916403.769.9.camel@gmail.com>
-Date: Fri, 19 Feb 2016 16:13:23 -0500
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Address Sanitizer local root
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/5
+Message-Id: <20160307030449.013306C0719@smtpvmsrv1.mitre.org>
+Date: Sun,  6 Mar 2016 22:04:49 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Dotclear: XSS vulnerability in comments managment page and media exclusion control enforcement
 Content-Type: text/plain; charset=utf-8
 
-> As long as the aborts/faults happen at the earliest point where the
-> wrong program behavior can be detected, I see no way they are "more
-> painful to debug" than having ASan or similar introspectively print
-> crash info. Attaching a debugger should get you equally useful
-> information.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The aborts and faults tend to happen later than the ASan detection would
-kick in though, other than the double-free case. For example, writes to
-freed memory only get detected when the junk data is validated later on
-(i.e. when an allocation is flushed from the FIFO quarantine), and it
-can be quite hard to debug from there. Use of freed memory often crashes
-right away with junk filling (pointer accesses) but it can end up
-causing subtler issues or crashes far away from the source.
+> Dotclear, a web publishing software, fixed a cross-site scripting
+> vulnerability in 2.8.2. Additionally the media exlusion control in the
+> media manager was furhter enforced:
+> 
+> https://dotclear.org/blog/post/2015/10/25/Dotclear-2.8.2
 
-It's much easier to find the bugs than it would be without this, but if
-your goal is implementing hardening features, it's not very fun to need
-hundreds of fixes for use-after-frees across common software. It makes
-sense to go at it with ASan or Valgrind first to clear out the obvious
-problems and then worry about exploit mitigations. A surprising amount
-of software has all kinds of memory corruption in the *common* code
-paths.
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+> The XSS vulnerability was fixed with
+> 
+> https://hg.dotclear.org/dotclear/rev/65e65154dadf
+> 
+> admin/comments.php
+> -  form::hidden(array('author'),preg_replace('/%/','%%',$author)).
+> +  form::hidden(array('author'),html::escapeHTML(preg_replace('/%/','%%',$author))).
+
+Use CVE-2015-8831.
+
+
+> The second mentioned issue was addressed with
+> 
+> https://hg.dotclear.org/dotclear/rev/198580bc3d80
+> 
+> inc/core/class.dc.core.php
+> -  array('media_exclusion','string','/\.php[0-9]*$/i',
+> +  array('media_exclusion','string','/\.(phps?|pht(ml)?|phl)[0-9]*$/i',
+
+Use CVE-2015-8832.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJW3O4DAAoJEL54rhJi8gl5MnsQALSILA8PaHLFRRQbrXcz43e/
+PGGgyWrqqZQY5KvfLkDmcTSR7D9JuIFfQa0jU6I88h62PZ0jk8nWwrWdozOchgZW
+fyO2Zbdh3BMO3RW+hMnTpKVq66WvSFSs1vFIAG6y44RY7ddWCjVLWYw1r7MJnnNW
+gzyqH4QrMUFMr3eki8rWOWXX4gCZ104D25eChC406M08QGBO77xSYn5llK68CraS
+2HRFuVtUleHMgS/JkBS6VWd2dBYNQPaHtIUM+THvDePh9HV+J4jrS24qc6cDEsHR
+uFP/8oAn47ob8sJeSfdZp4Rqq8r12aOFsHReCQa69N/gaXtLdEFAuKJSx+yCClAR
+v0XcmlWUeum/3zr+/vTBXj+K+IESHPOWZl6YxuW125c1KgSba2rkeuORT/nq4R1l
+vraRd479fpA22+s5ii81EjxtEgGMKT/woHdxlJRgJeBCtiuXRYcoanS4QmNfw00C
+wasOMNYaaYwJtBOMDEgCLFZlvO3/7EuWPFZidoKTGc58o4fwz3TXEG7Ez8rVL9EF
+CaIzjl9wx5MLaLQhj6G8SgM3+mtDPN7/yLfDj0E7nhSsY9Sr98NXdlBIvrEbkNGK
+FBOFE/xQxzNKSDQI7+p+7pQ5drpIK/53GwcgVw4dbepNgJNn6DQVzDhiN92o+Kwx
+vMgmqdP5oqnZIf7Ya+V7
+=0vja
+-----END PGP SIGNATURE-----
