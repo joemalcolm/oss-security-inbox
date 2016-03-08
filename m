@@ -1,31 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/14/7
-Message-ID: <CAKG8Do5XPLJTJR9iaTRMOtFFZYan_Eeaf7KxxLWDgWiUQDsEbw@mail.gmail.com>
-Date: Tue, 14 Jun 2016 16:12:25 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/08/6
+Message-ID: <56DF4BF7.8010904@redhat.com>
+Date: Tue, 8 Mar 2016 22:02:31 +0000
+From: Tristan Cacqueray <tdecacqu@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: [OSSA 2016-007] Nova host data leak through resize/migration (CVE-2016-2140)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 03/08/2016 08:16 PM, Tristan Cacqueray wrote:
+> ===========================================================
+> OSSA-2016-007: Nova host data leak through resize/migration
+> ===========================================================
+> 
+> :Date: March 08, 2016
+> :CVE: CVE-2016-2140
+> 
+> 
+> Affects
+> ~~~~~~~
+> - Nova: <=2015.1.3, >=12.0.0 <=12.0.2
+> 
+> 
+> Description
+> ~~~~~~~~~~~
+> Matthew Booth from Red Hat reported a vulnerability in Nova instance
+> resize/migration. By overwriting an ephemeral or root disk with a
+> malicious image before requesting a resize, an authenticated user may
+> be able to read arbitrary files from the compute host. Only setups
+> using libvirt driver with raw storage and setting "use_cow_images =
+> False" (not default) are affected.
+> 
+> 
+> Patches
+> ~~~~~~~
+> - https://review.openstack.org/289960 (Kilo)
+> - https://review.openstack.org/289958 (Liberty)
+> - https://review.openstack.org/289957 (Mitaka)
+> 
+> 
+> Credits
+> ~~~~~~~
+> - Matthew Booth from Red Hat (CVE-2016-2140)
+> 
+> 
+> References
+> ~~~~~~~~~~
+> - https://bugs.launchpad.net/bugs/1548450
+> - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-2140
+> 
+> 
+> Notes
+> ~~~~~
+> - This fix will be included in future 2015.1.3 (kilo) and 12.0.3
+>   (liberty) releases.
 
-I would like to request a CVE for a Python header injection flaw in
-urrlib2/urllib/httplib/http.client.
+There is a typo in the note, this fix will be included in future
+2015.1.4 (kilo). Further advisories will drop that note entirely, use
+http://releases.openstack.org/ to check stable version number including
+the fix.
 
-HTTPConnection.putheader() allows unsafe characters, which can be used to
-inject additional headers.
-
-Upstream bug with reproducer :
-https://bugs.python.org/issue22928
-
-
-Kind regards,
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
 
--- 
-Cedric Buissart,
-Product Security
 
-Purkynova 99
-Brno 612 45
 
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
