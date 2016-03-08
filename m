@@ -1,27 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/1
-Message-ID: <20160504010039.GB2319@hunt>
-Date: Tue, 3 May 2016 18:00:39 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Brandon Dees <brandon@...tta.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/08/3
+Message-ID: <56DE8CD3.9010004@gmail.com>
+Date: Tue, 8 Mar 2016 09:26:59 +0100
+From: FEIST Josselin <josselin.feist@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request : Use-after-free in accel-ppp
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 04, 2016 at 12:05:16AM +0000, Brandon Dees wrote:
-> is it appropriate to ask if the same issues are present in GraphicsMagick
-> as well?
+Hi,
 
-I haven't investigated deeply but it seems very plausible to me:
-Here's the delegates.xml work-alike:
-https://sourceforge.net/p/graphicsmagick/code/ci/default/tree/config/delegates.mgk.in
+For information, the vuln was fixed on release 1.10.1
+The fix:
+https://sourceforge.net/p/accel-ppp/code/ci/74c8c4a91551fe91e224c29882fac55250fc94e3/
 
-This appears to be executed via:
-https://sourceforge.net/p/graphicsmagick/code/ci/default/tree/magick/delegate.c
-which tries to escape arguments using UnixShellTextEscape(). This function
-appears to replace \`"$ chars with backslash-escaped versions. I'm not
-sure this is a safe mechanism either.
+Best regards,
+Josselin Feist
 
-Thanks
+#### timeline ####
+- 18/01/2016: Vuln reported (affect 1.10.0)
+- 04/03/2016: Vuln fixed (release 1.10.1)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+
+
+On 10/02/2016 22:23, FEIST Josselin wrote:
+> Hi,
+>
+> A use-after-free in accel-ppp was reported one month ago. accel-ppp is a
+> VPN server (https://accel-ppp.org)
+> Since I got no news from the dev (neither by email or through the
+> forum), I would suggest to use this service carefully.
+>
+> More details about the vuln here :
+> http://accel-ppp.org/forum/viewtopic.php?f=18&t=581
+>
+> The vuln was found with the help of the analyzer GUEB.
+>
+> Best regards,
+> Josselin Feist
+>
+
