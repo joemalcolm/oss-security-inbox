@@ -1,74 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/10/4
-Message-Id: <20160610123434.D865C13B51E@smtpvmsrv1.mitre.org>
-Date: Fri, 10 Jun 2016 08:34:34 -0400 (EDT)
-From: cve-assign@...re.org
-To: huzaifas@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/08/5
+Message-ID: <56DF3327.9000704@redhat.com>
+Date: Tue, 8 Mar 2016 20:16:39 +0000
+From: Tristan Cacqueray <tdecacqu@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA 2016-007] Nova host data leak through resize/migration (CVE-2016-2140)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+===========================================================
+OSSA-2016-007: Nova host data leak through resize/migration
+===========================================================
 
-> I would like to request a CVE for the protocol flaw in IKEv1, details below:
-
-> https://www.kb.cert.org/vuls/id/419128
-> https://blogs.akamai.com/2016/02/ikeikev2-ripe-for-ddos-abuse.html
-
-> https://bugzilla.redhat.com/show_bug.cgi?id=1308508
-> https://github.com/libreswan/libreswan/commit/152d6d95632d8b9477c170f1de99bcd86d7fb1d6
-> https://lists.libreswan.org/pipermail/swan-dev/2016-March/001394.html
-
-> Can a CVE id be please assigned to this?
-
-CVE IDs are not assigned to UDP protocols solely on the basis of an
-observed amplification-attack risk. A CVE ID can exist if the UDP
-reply traffic simply cannot ever have any legitimate purpose for users
-of a protocol. The general case of the interaction between UDP
-amplification and CVE was discussed between MITRE and CERT in 2013;
-this may be the reason that no CVE ID is listed in the
-https://www.kb.cert.org/vuls/id/419128 document.
-
-We can, however, assign a CVE ID to a vendor's announcement of a
-required security update, such as on the https://libreswan.org/ home
-page:
-
-  "libreswan 3.16 vulnerable to DDOS attack. Please upgrade to 3.17"
-
-Use CVE-2016-5361 for this issue only in the libreswan codebase.
+:Date: March 08, 2016
+:CVE: CVE-2016-2140
 
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1308508#c6
+Affects
+~~~~~~~
+- Nova: <=2015.1.3, >=12.0.0 <=12.0.2
 
-> This is tracked via upstream bug:
 
-> https://bugs.libreswan.org/show_bug.cgi?id=262
+Description
+~~~~~~~~~~~
+Matthew Booth from Red Hat reported a vulnerability in Nova instance
+resize/migration. By overwriting an ephemeral or root disk with a
+malicious image before requesting a resize, an authenticated user may
+be able to read arbitrary files from the compute host. Only setups
+using libvirt driver with raw storage and setting "use_cow_images =
+False" (not default) are affected.
 
-We don't think that Bug 262 tracks this "one update to libreswan IKEv1
-to reduce amplification caused by retransmits" issue. Bug 262 is about
-a possible functionality problem in the 3.17 release, It is marked
-"Importance: Low enhancement."
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Patches
+~~~~~~~
+- https://review.openstack.org/289960 (Kilo)
+- https://review.openstack.org/289958 (Liberty)
+- https://review.openstack.org/289957 (Mitaka)
 
-iQIcBAEBCAAGBQJXWrL9AAoJEHb/MwWLVhi2DokP/05yJL+xl3qdCOdoJ3Y+QqhR
-2B2ktnsgySAPkPSaBQCQd2PcRTedM+yRzXTqOiBsiPm1PrB85YOemhLn37H4bwM2
-C17TMsrwXa2tnPQAxjqZNP6j6fg2Y0Cw2/odUsXdV0ZR9VxtePQUI0GBKq5RBmJn
-BtCfHlQFf145H9MO8tUJ3LNxu076JmfAy33q25Ha7/bU46H6HiiybSB4UOUziiDL
-0OEAbCMKVDEorTW0Cu9OcdhVFi3u13WO3GUmTIGaXVboMnq0N1Swdlg7V18XSikZ
-P61tdEBVA9565cEKR+OnAG4nC5uFZ8Sri0FJCPS21nbQ8J0srOtlBBZt55+W5SzX
-0JPLSc6maxtDH8XVYLHHlLyMYCFkUmMztifnEzV2WAulrzW5fZZyo6hkSo1dMQ3S
-uLfm8bvfwopIYRGCeTPesDIQIPoqSy9lfh01Z9GJ2G59Jg8SZIPIzH09h7ft4OYv
-cK79yb5v/XdyNH3PUHTEmEm4wkQeJY/X2TFob5iGCxOSmKUs+rWMMliVIJd22K25
-2e0Y2nOv1Z4PTS2+c2uncswFPP1IQmSN9/jP8sIKXeg+NjthgzUJ7V69iMyFkkLZ
-dZVGvK3VGm5qM1Zmh7AG7iIjj0IRIHEIh7TJD/LmFqCDC6Qkjm4gVXbXiAZjsr2R
-8pFYiRXpWVYsrwtR+nBs
-=L6xn
------END PGP SIGNATURE-----
+
+Credits
+~~~~~~~
+- Matthew Booth from Red Hat (CVE-2016-2140)
+
+
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/bugs/1548450
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-2140
+
+
+Notes
+~~~~~
+- This fix will be included in future 2015.1.3 (kilo) and 12.0.3
+  (liberty) releases.
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
