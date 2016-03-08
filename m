@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3156" "Tuesday" "2" "February" "2016" "10:56:22" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20160202105622.08d2d62c@pc1>" "80" "[oss-security] Miscomputations of elliptic curve scalar multiplications in Nettle" "^Date:" nil nil "2" "2016020209:56:22" "[oss-security] Miscomputations of elliptic curve scalar multiplications in Nettle" (number mark "        hanno@hboeck Feb  2   80/3156  " thread-indent "\"[oss-security] Miscomputations of elliptic curve scalar multiplications in Nettle\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2670" "Tuesday" "8" "March" "2016" "22:02:31" "+0000" "Tristan Cacqueray" "tdecacqu@redhat.com" "<56DF4BF7.8010904@redhat.com>" "86" "Re: [oss-security] [OSSA 2016-007] Nova host data leak through resize/migration (CVE-2016-2140)" nil nil nil "3" "2016030822:02:31" "[oss-security] [OSSA 2016-007] Nova host data leak through resize/migration (CVE-2016-2140)" (number mark "U       tdecacqu@red Mar  8   86/2670  " thread-indent "\"Re: [oss-security] [OSSA 2016-007] Nova host data leak through resize/migration (CVE-2016-2140)\"\n") "<56DF3327.9000704@redhat.com>" ("<56DF3327.9000704@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26190 invoked by uid 550); 2 Feb 2016 09:55:54 -0000
+Received: (qmail 23572 invoked by uid 550); 8 Mar 2016 22:02:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,94 +11,107 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26131 invoked from network); 2 Feb 2016 09:55:49 -0000
-Message-ID: <20160202105622.08d2d62c@pc1>
-X-Mailer: Claws Mail 3.13.2 (GTK+ 2.24.29; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-21899-1454406936-0001-2"
-Date: Tue, 2 Feb 2016 10:56:22 +0100
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Miscomputations of elliptic curve scalar multiplications in Nettle
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Received: (qmail 22526 invoked from network); 8 Mar 2016 22:02:05 -0000
+To: oss-security@lists.openwall.com
+References: <56DF3327.9000704@redhat.com>
+From: Tristan Cacqueray <tdecacqu@redhat.com>
+Message-ID: <56DF4BF7.8010904@redhat.com>
+Date: Tue, 8 Mar 2016 22:02:31 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
+MIME-Version: 1.0
+In-Reply-To: <56DF3327.9000704@redhat.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="DiLIiGBRus21nqFj9E4uLRaek8PJaX3T0"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+Subject: Re: [oss-security] [OSSA 2016-007] Nova host data leak through
+ resize/migration (CVE-2016-2140)
 
---=_zucker.schokokeks.org-21899-1454406936-0001-2
-Content-Type: text/plain; charset=UTF-8
+--DiLIiGBRus21nqFj9E4uLRaek8PJaX3T0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-https://blog.fuzzing-project.org/38-Miscomputations-of-elliptic-curve-scala=
-r-multiplications-in-Nettle.html
+On 03/08/2016 08:16 PM, Tristan Cacqueray wrote:
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> OSSA-2016-007: Nova host data leak through resize/migration
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> :Date: March 08, 2016
+> :CVE: CVE-2016-2140
+>=20
+>=20
+> Affects
+> ~~~~~~~
+> - Nova: <=3D2015.1.3, >=3D12.0.0 <=3D12.0.2
+>=20
+>=20
+> Description
+> ~~~~~~~~~~~
+> Matthew Booth from Red Hat reported a vulnerability in Nova instance
+> resize/migration. By overwriting an ephemeral or root disk with a
+> malicious image before requesting a resize, an authenticated user may
+> be able to read arbitrary files from the compute host. Only setups
+> using libvirt driver with raw storage and setting "use_cow_images =3D
+> False" (not default) are affected.
+>=20
+>=20
+> Patches
+> ~~~~~~~
+> - https://review.openstack.org/289960 (Kilo)
+> - https://review.openstack.org/289958 (Liberty)
+> - https://review.openstack.org/289957 (Mitaka)
+>=20
+>=20
+> Credits
+> ~~~~~~~
+> - Matthew Booth from Red Hat (CVE-2016-2140)
+>=20
+>=20
+> References
+> ~~~~~~~~~~
+> - https://bugs.launchpad.net/bugs/1548450
+> - http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2016-2140
+>=20
+>=20
+> Notes
+> ~~~~~
+> - This fix will be included in future 2015.1.3 (kilo) and 12.0.3
+>   (liberty) releases.
 
-The Nettle library is a library for basic cryptographic functions. Its
-most prominent user is GnuTLS.
+There is a typo in the note, this fix will be included in future
+2015.1.4 (kilo). Further advisories will drop that note entirely, use
+http://releases.openstack.org/ to check stable version number including
+the fix.
 
-Through fuzzing of elliptic curve scalar multiplications (multiplying a
-point on an elliptic curve with a scalar number) I discovered two carry
-propagation bugs that would lead the cauculations to produce wrong
-results. They affect the NIST P-256 and P-384 curves. The P-256 bug is
-in the C code and affects multiple architectures. The P-384 bug is in
-the assembly code and only affects 64 bit x86.
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
-While analyzing these bugs Nettle developer Niels M=C3=B6ller discovered
-another carry propagation bug in P-256 that was fixed in the same
-commit. Nettle 3.2 fixes all three bugs.
 
-The impact is currently unclear, but miscalculations in cryptographic
-functions should generally be considered security issues. I'd like to
-encourage cryptographers to try to analyze whether these bugs can lead
-to cryptographic breaks.
 
-https://github.com/hannob/bignum-fuzz/blob/master/point-fuzz.c
-I have published a code example on how to fuzz elliptic curve
-multiplications. It can compare the output of OpenSSL with either
-Nettle or NSS. It currently works only with prime field curves, but it
-can probably be adapted to other curves.
 
-P-256 bug:
-https://lists.lysator.liu.se/pipermail/nettle-bugs/2015/003028.html
-Mailing list post with code sample
-https://git.lysator.liu.se/nettle/nettle/commit/c71d2c9d20eeebb985e3872e455=
-0137209e3ce4d
-Commit / fix for P-256 bug
 
-P-384 bug:
-https://lists.lysator.liu.se/pipermail/nettle-bugs/2015/003024.html
-Mailing list post with code sample
-https://git.lysator.liu.se/nettle/nettle/commit/fa269b6ad06dd13c901dbd84a12=
-e52b918a09cd7
-Commit / fix for P-384 bug
-
-https://lists.gnu.org/archive/html/info-gnu/2016-01/msg00006.html
-Nettle 3.2 release notes
-
---=20
-Hanno B=C3=B6ck
-http://hboeck.de/
-
-mail/jabber: hanno@hboeck.de
-GPG: BBB51E42
-
---=_zucker.schokokeks.org-21899-1454406936-0001-2
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
+--DiLIiGBRus21nqFj9E4uLRaek8PJaX3T0
+Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2
 
-iQIcBAEBCgAGBQJWsH1GAAoJEKWIAHK7tR5CE+YQAIlBVeDVWMKBNe7rwQpYeoGr
-GgnQw1VnQNBEqCC16MEOexTe00z/F3uGS99qPweitT310Iq3vk3jxc/TUrKVzgEE
-HLHeKry/Zz/ndqJi7y5mhCyOXc4u88t7Dgp3nNhlJRSduz9HrIygQY03Wr7gl+F6
-ThNyqwCd2NxnGh+aZ+D14SfAOUkNHGbO15BPjM2WWUQDrypKEjg9nZ70eIl0Q24g
-QWGAnu3C3vBkBoCi3tSz4BsfFdahyba8tTlioPi7vVlKNu4Syfbeez0bLcwfl/nD
-gxZs1f0LAlh3m4WpsaG3hf4DKJDNMVORXU4dbWeG3vexnAzztpnwG17iMInhFhLO
-HT2yqjqJbTEGQIFSPpS53m21gvXT3egUlAeXNSjYIUbjFENzoqCGJ0UDG+8GvJ/W
-8pXP5MkD+BrW+z+GoZF/DTFwOq+9L+dpoGEIXlBxDemgQpSHbTF9vxDT2mpSBl8o
-raMtABmAbNA8UToqrZTunZ9xjMjdJhLuK+hBYuMGG1Xv6BN3pNm66kLCnCBWQ5Wo
-co0gJr7RfywLxqn8w3HTdQhP+R02ykFpUABn6I7/bGw+rkz5lGUm0EgS6sgzSGax
-DsXHJBKKXY3Q4HcOjJYf9Hq70c3i0Y8uW46Fsil8CAa6mKCwmCm35KRBji3nRE2z
-RyksHqEKeByQ/h9E9m4m
-=anyR
+iQEcBAEBCAAGBQJW30v3AAoJECK5oFySXMXYe7gH/A5jdfaFA6hFGAeg1oBnonbj
+wiTCKK9YzDp4+xFUt9us8cWuVqAo4UhL67ZEZL+bekRgX4aRx04Jo4LLmRvR54nH
+Kx6BtloHSkAOCEnIVxSt4Mqq99uRDn8HRuSSgew4jMTfxIXR2+O+VA3VZgYfN+48
+liWlX0rCcqhJTJSCvyx5MdDIdLwO8k2u5Pa20Us2pPwd4+nU9wlyYlmr5LcBbTke
+NwsLsLse/xMrThdo0esmn5HBUsyMDWN4Uf9F+uyhOmp/DQK/OZHlwcEAPxP2daQS
+JloDGC5nTi3QOJn4lslrjOd4k7+SMDyVjqvB0RxwE0E3tnzfi/R4YZMZe9reOcg=
+=ykjy
 -----END PGP SIGNATURE-----
 
---=_zucker.schokokeks.org-21899-1454406936-0001-2--
+--DiLIiGBRus21nqFj9E4uLRaek8PJaX3T0--
