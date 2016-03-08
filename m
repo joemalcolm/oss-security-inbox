@@ -1,27 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/03/3
-Message-ID: <CABEk9YwUfe0s1iWLqyfVOv6=NA-PBnaSGMhL-DnVX9LbV5DENA@mail.gmail.com>
-Date: Fri, 3 Jun 2016 15:30:02 +0200
-From: Kangjie Lu <kangjielu@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Taesoo Kim <taesoo@...ech.edu>, Chengyu Song <csong84@...ech.edu>
-Subject: CVE Request: rds: fix an infoleak in rds_inc_info_copy
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/08/4
+Message-ID: <A19277CE-0378-4415-A28E-7BB8F7CE00A9@uah.es>
+Date: Tue, 8 Mar 2016 15:43:02 +0000
+From: Hoz de la Hoz Enrique de la <enrique.delahoz@....es>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE request: simpleSAMLphp 1.14 information leakage
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi all,
 
-There was an infoleak vulnerability in function
-rds_inc_info_copy of file net/rds/recv.c.
-The last field "flags" of object "minfo" is not initialized.
-Copying this object out may leak kernel stack data.
-Assign 0 to it to avoid leak.
+Is it possible to get a CVE for this?
+https://simplesamlphp.org/security/201603-01
 
-Fix info:
-https://patchwork.ozlabs.org/patch/629110/
-
-Please help assign a CVE to this vulnerability.
-
-
-Thanks,
-Kangjie Lu
-
+Thanks in advance.
