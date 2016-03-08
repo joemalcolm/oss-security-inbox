@@ -1,64 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/29/6
-Message-Id: <20160429144911.5DD178BC4E6@smtpvmsrv1.mitre.org>
-Date: Fri, 29 Apr 2016 10:49:11 -0400 (EDT)
-From: cve-assign@...re.org
-To: cuoq@...st-in-soft.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: buffer overflow and information leak in OCaml < 4.03.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/08/2
+Message-ID: <CAF50zSoHrRWRy5aZ0GBG8RYwjzs4y1tWw_PfvEJaa-n7f+O+FA@mail.gmail.com>
+Date: Mon, 7 Mar 2016 18:31:22 -0700
+From: distributed weaknessfiling <distributedweaknessfiling@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Distributed Weakness Filing (DWF) System
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+So in the interests of full disclosure and transparency I (Kurt Seifried)
+am writing this email as an individual and member of the DWF System, and
+not as an employee of Red Hat. Please note that although I have a day job
+at Red Hat I also (like many information security people) work on other
+projects in my personal life, either because they are not work related, or
+because it's simply not appropriate to work on the project as part of my
+day job (in this case it's less about Red Hat, and more about the fact that
+as a Red Hat Employee I am a member of the CVE Editorial Board).
 
-> OCaml versions 4.02.3 and earlier have a runtime bug that, on 64-bit
-> platforms, causes sizes arguments to an internal memmove call to be
-> sign-extended from 32 to 64-bits before being passed to the memmove
-> function.
-> 
-> This leads arguments between 2GiB and 4GiB to be interpreted as larger
-> than they are (specifically, a bit below 2^64), causing a buffer
-> overflow.
-> 
-> Arguments between 4GiB and 6GiB are interpreted as 4GiB smaller than
-> they should be, causing a possible information leak.
-> 
-> This commit fixes the bug:
-> https://github.com/ocaml/ocaml/commit/659615c7b100a89eafe6253e7a5b9d84d0e8df74#diff-a97df53e3ebc59bb457191b496c90762
-> The function caml_bit_string is called indirectly from such functions
-> as String.copy. String.copy for instance is supposed to be a "safe"
-> function for which OCaml's memory safety guarantees apply.
+I have increasingly noticed problems with Mitre's handling of the CVE
+database. This has come to a head now that I have multiple, confirmed,
+public reports of security researchers being unable to get CVE numbers
+assigned to them in a timely manner, if at all. As such the solution is
+simple:
 
-Use CVE-2015-8869.
+We need a distributed, scale out method for assigning vulnerability
+identifiers that is as compatible with the existing CVE system as possible.
+Not just in terms of format but in terms of process and usage. As such I
+took on the task, creating the DWF system and getting a number of other
+people involved (Larry Cashdollar, Zachary Wikholm, Josh Bressers, etc.).
+My goal is to create a simple system for assigning vulnerability
+identifiers that relies on the community and not a single entity or
+organization. Additionally I want to reduce the time and effort needed to
+get identifiers, something best achieved by pushing assigning out to as
+close to the vulnerability discover/handling as possible.
 
-(We consider this a single "to be sign-extended from 32 to 64" issue
-even though there are two different types of impacts. Also, the
-structure of the code change ("Int_val" replaced by "Long_val") is the
-same everywhere. We did not consider it worthwhile to sort through the
-possible "independently encountered" aspects as mentioned, for
-example, in the
-https://github.com/ocaml/ocaml/commit/659615c7b100a89eafe6253e7a5b9d84d0e8df74#commitcomment-14040616
-comment.)
+With this in mind we have created a system that has several main components:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+1) Documentation and Guidelines for how this whole thing works (
+https://github.com/distributedweaknessfiling/DWF-Documentation/)
 
-iQIcBAEBCAAGBQJXI3NXAAoJEHb/MwWLVhi2RdEQAI71I2vgUNPxtIPV5muuzuT/
-BGlgZLTiWI6HgmFvV7mRtNonvKockAP150f7cArfGgsG13DVViE45IYCk4WHacnW
-aTfRtbPYBZ+eawApm1tWmSxXi4Idt2sSBPXxnA46vwKUZo3oDG8p0oxEanZ1O1Y6
-v+zAL4vVNq+IdSnpPzwM368C/gc1KDBM0uLu7qVoV6E2qHriWXpWpEZ7MGqab5Dv
-2/8ZhpdAnZDVzMSzGbKY+h1k1JjwWnIx3WmWzU65JKF3ccDtLyWy+LaRT5D63d/K
-f5orQDKfJyxc9UQIa+TH4waYQZ64f1xb5haTZaQv8tJVxlwVKD0vVk/eVrlN/r1e
-XXbtknwlMcWLf30hKqzOcDwAfWf2rPtUk5h6PotFVR42esLTTDg7BlIjYFilBXw0
-AlVyDrZ4cBlnd3ZeeyJW2moEoErRlnYFrqdijjIBmHPokoPVAOUcfcU2saBfkFqP
-suYLBcMHrpvitrr4V5yu5T2ZYZI9DtEse+z3Oe+wupCemyfoXXcGvX7Kwz0j4oIk
-bFDuuKtNpo4do+2JkCwbczGwIGAyW20rBbyJqkMMGI1c3VlY/rzn8hES3ltKjVND
-1WShu2c9wwyIhhYUKuacdx8RvuZinNBAlmkWdpNUI33XsVXmdRiEhjB+RGyvqv/X
-a2JgvU+8pOLRMJsRX7CA
-=BBAV
------END PGP SIGNATURE-----
+2) DWF Numbering authorities that can self assign DWF numbers, or assign on
+behalf of people that need DWF numbers but are not a numbering authority (
+https://github.com/distributedweaknessfiling/DNA-Registry)
+
+3) A database of DWF entries (
+https://github.com/distributedweaknessfiling/DWF-Database)
+
+4) A database of artifacts, files and related files for DWF entries (so
+that when websites disappear the required content is hopefully still
+available) (
+https://github.com/distributedweaknessfiling/DWF-Database-Artifacts)
+
+There are 4 primary ways to get a DWF identifier:
+
+1) If you already have a CVE identifier you can map it directly to DWF,
+e.g. CVE-2000-1234 maps directly to DWF-2000-1234.
+
+2) If you are a DWF Numbering Authority (DNA) (
+https://github.com/distributedweaknessfiling/DNA-Registry) you can self
+assign a DWF to the issue(s).
+
+3) You can request a DWF from a DNA, this is ideal if the DNA is associated
+with the flawed software, or the DNA will assist in the handling of the
+security vulnerability.
+
+4) You can request a DWF directly either via PULL request in GitHUB to the
+DWF Database (https://github.com/distributedweaknessfiling/DWF-Database) or
+by emailing us at distributedweaknessfiling@...il.com.
+Please note that the DWF would be happy to work with any and all entities
+(including Mitre!) with respect to making DWF better, or helping integrate
+the efforts of others.
+
+https://distributedweaknessfiling.org
+
+-Kurt Seifried
+
