@@ -1,75 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/28/12
-Message-Id: <20160128205008.2154F185EB@minotaur.apache.org>
-Date: Thu, 28 Jan 2016 20:50:08 +0000 (UTC)
-From: khorgath@...che.org (Sushanth Sowmyan)
-To: security@...che.org
-Cc: announce@...che.org,, bugtraq@...urityfocus.com, dev@...e.apache.org, khorgath@...che.org, of@...ebbe.de, oss-security@...ts.openwall.com, security@...e.apache.org, user@...e.apache.org
-Subject: CVE-2015-7521: Apache Hive authorization bug disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/09/8
+Message-ID: <20160309202145.0273729d@pc1>
+Date: Wed, 9 Mar 2016 20:21:45 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Heap use after free in Pidgin-OTR plugin
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+https://blog.fuzzing-project.org/39-Heap-use-after-free-in-Pidgin-OTR-plugin.html
 
-CVE-2015-7521: Apache Hive authorization bug disclosure
+The pidgin-otr plugin version 4.0.2 fixes a heap use after free error.
+The bug is triggered when a user tries to authenticate a buddy and
+happens in the function create_smp_dialog.
 
-Severity: Important
+The bug was discovered with Address Sanitizer. This is yet another
+example why all C/C++ code should be tested with Address Sanitizer
+enabled.
 
-Vendor: The Apache Software Foundation
+This bug was already independently discovered and reported in the otr
+bug tracker.
+https://bugs.otr.im/issues/88
 
-Versions Affected:
-Apache Hive 1.0.0 - 1.0.1
-Apache Hive 1.1.0 - 1.1.1
-Apache Hive 1.2.0 - 1.2.1
+Independend of this bug another more severe bug in Libotr itself was
+also disclosed today, please make sure you update both libotr (4.1.1)
+and the pidgin-otr plugin (4.0.2).
+https://www.x41-dsec.de/lab/advisories/x41-2016-001-libotr/
 
-Description:
+Upstream bug report (contains Address Sanitizer stack trace):
+https://bugs.otr.im/issues/128
+Commit / fix:
+https://bugs.otr.im/projects/pidgin-otr/repository/revisions/aaf551b9dd5cbba8c4abaa3d4dc7ead860efef94
 
-Some partition-level operations exist that do not explicitly also
-authorize privileges of the parent table. This can lead to issues when
-the parent table would have denied the operation, but no denial occurs
-because the partition-level privilege is not checked by the
-authorization framework, which defines authorization entities only
-from the table level upwards.
+-- 
+Hanno Böck
+https://hboeck.de/
 
-This issue is known to affect Hive clusters protected by both Ranger
-as well as SqlStdHiveAuthorization.
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-Mitigation:
-
-For Hive 1.0, 1.1 and 1.2, a separate jar is being made available,
-which users can put in their ${HIVE_HOME}/lib/, and this provides a hook for
-administrators to add to their hive-site.xml, by setting
-hive.semantic.analyzer.hook=org.apache.hadoop.hive.ql.parse.ParentTableAuthorizationHook .
-This parameter is a comma-separated-list and this hook can be
-appended to an existing list if one already exists in the setup. You
-will then want to make sure that you protect the
-hive.semantic.analyzer.hook parameter from being changed at runtime by
-adding it to hive.conf.restricted.list.
-
-This jar and associated source tarball are available for download
-over at : https://hive.apache.org/downloads.html
-along with their gpg-signed .asc signatures, as well as the md5sums
-for verification in the hive-parent-auth-hook/ directory.
-
-This issue has already been patched in all Hive branches that are
-affected, and any future release will not need these mitigation steps.
-
-Credit: This issue was discovered by Olaf Flebbe of science+computing ag.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
-
-iQIVAwUBVqpoih6tt4FFMLreAQKkbA//f+r+DDDKiYPbymTXjOhCUqDIDirtiT2A
-OZHBn3LTNad3eQPZ6qrYadbw30iJpU+SCMtN+gO7F27TJRIdBfk/g9HjrG9i/uLb
-q4a/uzHEGbFFnfz61gXERtvyqHP/7RzbUz/WNBvCGitJJL2AZ/j3oTvUxc4r3fbC
-mVXSCtkY7fj28fbi9/jhj/go9Qr7aL0Tk/Tkb6RQ97YwoZVZTvPTFh7ALmX+f2Qh
-0qPMg7phL9clTXR/cNGRA8LUFRbDuTahP5hptHmE2KgGQJK5fjKwvisoH6lvVKnh
-iv5UFs9jjcvPd1MpuBDRfHj/RA0L8emkDzz2/36XKM0AFyEB5gHf4U7ZT7AVj1P/
-xwdxgNJZcqgRfSabkNIbNhEcYLVx9H2btIIAgkdDnu2HaxzCBErjRcv6hj7bbG5N
-5NHQDcnjzj86u2D7XiA4hXPLnQE6JNJyc7cLaU4xRV18QiN9KzpDJQpIot0GvXs1
-7q2+I6H6AxDxeotSCmQnwEE5NCVxl3ivUCKA8tA0jxEzhm8QE/bTaeM00OwJ+7wl
-ruDdGkfF3b854U4Fyzh14WCGy1b74wjc79iOt8tJfLEh9kdRNbA5Jb7QZYNpCJ4n
-Eb5lxZv5MQFyBvbJCttz59jgzxCcmunkyNZamGRGugmR3Dwu9jOQRCk2s+4pouCf
-20RJ9WEkoXY=
-=Q0SZ
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
