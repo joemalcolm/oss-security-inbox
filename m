@@ -1,56 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/7
-Message-Id: <20160504053355.82E858BC11B@smtpvmsrv1.mitre.org>
-Date: Wed,  4 May 2016 01:33:55 -0400 (EDT)
-From: cve-assign@...re.org
-To: gustavo.grieco@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: out-of-bounds read parsing an XML in libxml2 using recover mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/09/5
+Message-Id: <E1adjOu-0005MK-Kx@rmm6prod02.runbox.com>
+Date: Wed, 09 Mar 2016 14:04:04 -0500 (EST)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+CC: "kseifried" <kseifried@...hat.com>
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+All - I've chatted with some of the people who fund the CVE work at MITRE.
+I've learned that CVEs *are* being issued, but obviously that is happening too slowly.
 
-> We found an out-of-bounds read parsing a specially crafted xml in libxml2
-> if recover mode is used.
+They're having a meeting tomorrow (March 10) to try to figure out what
+the problems are and how to fix it.  I don't know what they'll do.
+However, I'm hopeful that  this will mean that the CVE work will get
+back on track soon.
 
-> xmllint -recover
-
-> AddressSanitizer: heap-buffer-overflow ...
-> READ of size 1
-
-> in xmlBufAttrSerializeTxtContent
-> at xmlsave.c:2057
-
-Use CVE-2016-4483 for this buffer over-read issue.
-
-(As far as we can tell, xmlsave.c is not specific to the xmllint program, e.g.,
-
-  libxml2_la_SOURCES = SAX.c entities.c encoding.c error.c parserInternals.c  \
-  ...
-                  xmlwriter.c legacy.c chvalid.c pattern.c xmlsave.c \
-
-in the Makefile.in file.)
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXKYjwAAoJEHb/MwWLVhi2XyQP/0HHmJWg4qK6CZ3MP51QXnpN
-moUDMdEST1oGlOSjfQcZ0i/i3yesk0qqfG2V1E+uH0Yu5FS78ud2mc+5/SZnjFzj
-RO71qkIUN8vrXSJRJ2CZrySAa6Z3VM5P3NZQHq1pZ/BF2fzwgFATwLb+476+BDOu
-tAIFMhWVH4TQ3YtG5dGrgDjCPK2LJCFockvvtjsYElfZQkTDKapk8/JjbZxmMcFY
-QPvM4YqCXrJ6i+LCO+LERFW51xZso6o32HqeeizfuT5Q+XTfx1Kd+t/VasVcGp77
-k8AqhNJSNFnDFUCmN+fQN093q7GQQG80spKwYSOXfP9ZGb7g/jP5IRv1kbmtdDof
-eKKA2gQr7XMiGlqMxEUPFkVXYcX37oH1BMcjS7erw6+zE+EI6seW+6gWxK8Ke/Hg
-ycklozYz9ZsvrqS2cfR5kdG5EmNvgatYQ3pivZmjfp3V4W+dwXTxeNh4oiEF3YJv
-mhgdi3WqeH0z8ibyU75GVeZh3WHbcB4yNlyqeNOOcosvy6O2DNlA4LDqK7ouriGF
-AB0t+sy289WdDKHIPRVwTMlZkNaqtiuR5MUVKeYHH6y+qiqwdv4y69y5opBd+caP
-2rAYNJx8e/lbBF6EvXVfQZdgzfLP644tv7+rsJwi5K7J0Nbvn6rkI6/nQIDRKNKe
-sNb0SV4CM2Tym0y40PGq
-=meeO
------END PGP SIGNATURE-----
+--- David A. Wheeler
