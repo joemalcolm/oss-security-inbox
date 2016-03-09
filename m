@@ -1,71 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/23/1
-Message-ID: <19v12kg0000000000qejsu001cct70x6gmj6e1g64o30c1g64o38e1g@mail.gmail.com>
-Date: Mon, 22 Feb 2016 23:54:11 +0000
-From: security@...roid.com
-To: Carlos Santana <csantana23@...il.com>
-Cc: bugtraq@...urityfocus.com, oss-security@...ts.openwall.com,  "private@...dova.apache.org" <private@...dova.apache.org>, ASF Security Team <security@...che.org>
-Subject: RE: [4-3801000010480] [Update 2/20/16 CVE-2015-5256] Apache Cordova vulnerable to improper application of whitelist restrictions on Android
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/09/13
+Message-Id: <20160309231638.532136C0402@smtpvmsrv1.mitre.org>
+Date: Wed,  9 Mar 2016 18:16:38 -0500 (EST)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Heap use after free in Pidgin-OTR plugin
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hi
-Thank you for the notification.
-We will assign this to our dev team to review.
-It will be tracked as AndroidID-27299922.
+> https://blog.fuzzing-project.org/39-Heap-use-after-free-in-Pidgin-OTR-plugin.html
+> 
+> The pidgin-otr plugin version 4.0.2 fixes a heap use after free error.
+> The bug is triggered when a user tries to authenticate a buddy and
+> happens in the function create_smp_dialog.
+> 
+> This bug was already independently discovered and reported in the otr
+> bug tracker.
+> https://bugs.otr.im/issues/88
+> 
+> Upstream bug report (contains Address Sanitizer stack trace):
+> https://bugs.otr.im/issues/128
+> Commit / fix:
+> https://bugs.otr.im/projects/pidgin-otr/repository/revisions/aaf551b9dd5cbba8c4abaa3d4dc7ead860efef94
 
-Thanks,
-Quan
+>> gtk-dialog.c
 
+Use CVE-2015-8833.
 
-On 02/21/16 11:56:58 csantana23@...il.com wrote:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-*Updated 02/20/2016*
-
-Apache Cordova has re-visited CVE-2015-5256 "Apache Cordova vulnerable to
-improper application of whitelist restrictions on Android”. Upon further
-investigation we found that the vulnerability is more limited than was
-previously understood.
-We are lowering the severity to Low, and updating the description, affected
-versions, and upgrade path.
-
-The updated text of the CVE is included below:
-
-Apache Cordova PMC
---------------------------
-private@...dova.apache.org
-
-____
-
-*Updated 02/20/2016*
-
-CVE-2015-5256: Apache Cordova vulnerable to improper application of
-whitelist restrictions on Android
-
-Severity: Low
-
-Versions Affected:
-Cordova Android with whitelist functionality
-
-Description:
-
-Android applications created using Apache Cordova that use a remote server
-contain a vulnerability where whitelist restrictions for urls using
-protocols http and https are not properly applied.  Whitelist cannot block
-network redirects from a whitelisted remote website to a non-whitelisted
-website.
-
-Upgrade path:
-
-There is no specific software patch for this vulnerability. Developers that
-are concerned about this should make sure to only whitelist trusted
-websites, and make sure that whitelisted websites don’t redirect to a
-malicious website.
-Developers using should also use SSL, as well as Content Security
-Policy(CSP) to further mitigate this issue. It’s always recommended for
-developers to upgrade to the latest version of Cordova Android.
-
-
-Credit: Muneaki Nishimura of Sony Digital Network Applications, Inc
-
+iQIcBAEBCAAGBQJW4K5zAAoJEL54rhJi8gl5qJIP/0TSzlXZQnc69Kt5bNsE2ovq
+VwQkjUo4BiwB5ewuoSyNjDtEIrqOFSVesEFRFK33QfLCVELk7NtRf4QCMHgW6TuZ
+HiK3grAbg8PtbcvMsKQTlo55BrZ5YBovXAsYmMeBmuZ7pp8wNYjAMvtjnnlwBesF
+20nxsVSjVmQUAwUSgtrdQXMqXlNltcsq8HhXOSkTBFxTk/R6J/KfoW33EfcxFv0s
+5zy/SU/sU6rI/0Gy4t4pPs/c2j7ApA9SmYfBel6xpdnCb2u3GSczz7O6+jEcRNzB
+IqxvAOMkeIGHc0QHOd9naYkW2gyIP3Y0s4fTydzHrfU/aQ1ICWH0FHAcmcJIRKvF
+diV7f1td8yzDlbk+TAsrp5RyxhzkagIJLeJhASYguPz5yELqS6cYqb4ie5LageNd
+UBji9ulEPgHaAmQPMOZH6oJZE9YO9HKWJ3HOmEQ11DrbHlXkYA6ez0oLu53gRxB9
+wuyo01YH7hF+FhMxRUL7RYNwyj06dBhohlWj8rRPIAhlrp7Pc/WAsAR1c3FJgCwk
+2FmfpJ6BrCMumP+6EAGpbXegbBTMCOrvgpLc7UBYNnb+PvGyfwChLBSTIwrKzhga
+FyH4O8lnB925tHofpCK0OEWWHOi0N6JKlChLKwEt1eMhUk7SnRsqNjyAdV1Kqk1u
+bHI5urvjRUc0ka/E3oiK
+=o1S3
+-----END PGP SIGNATURE-----
