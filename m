@@ -1,58 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/19/8
-Message-Id: <20160819134816.658D36C568E@smtpvmsrv1.mitre.org>
-Date: Fri, 19 Aug 2016 09:48:16 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/09/2
+Message-ID: <2733178.4axvx009n6@sarpedon>
+Date: Wed, 09 Mar 2016 15:59:25 +0000
+From: Tim Brown <tmb@...35.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE request: MatrixSSL lack of RSA-CRT hardening
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Sunday 06 March 2016 21:39:54 Gsunde Orangen wrote:
 
->> Date: Wed, 29 Jun 2016 09:08:49 +0200
+> I totally agree.
+> The concern addressed by Kurt initially is fully valid (for both
+> researchers and for companies that are not on Mitre's product/sources
+> list), so a new (better: additional) solution is required.
+> However, creating a new standard independently of CVE would be too
+> disruptive and be a disservice to the software industry.
 
-> https://github.com/matrixssl/matrixssl/blob/master/CHANGES.md
+Quite, as much as I appreciate the options presented over the last few days, I 
+don't think any of them are the winning horse.
 
->> Version 3.8.3 April 2016
->> 
->> BUG FIXES
+(To paraphase) if MITRE does not exist then it must be reinvented however the 
+days of multiple competing indexes of vulns should be avoided if possible. We 
+only have to look at the AV community to see how that degenerates. This one of 
+the main reasons that when we open sourced out disclosure tool kit, we 
+explicitly mandated the use of CVEs for tracking.
 
-> ##Side Channel Vulnerability on RSA Cipher Suites
-> A Bleichenbacher variant attack, where certain information is leaked
-> from the results of a RSA private key operation has been reported by a
-> security researcher. The code has been updated to error without
-> providing any information on the premaster contents.
+> I'd propose to work out a new solution together with Mitre, whilst
+> keeping the CVE IDs as today.
 
-Use CVE-2016-6883.
+As would I however, even with pointers from SC about who to poke within MITRE 
+we came up short tracking a warm body down for (~7) months (even one that was 
+willing to say no). That being said, we have now located a new warm body at 
+MITRE who has made themselves known to us, I am more than happy to approach 
+them about the following:
 
+> Since 2014, virtually unlimited number of CVE IDs can be assigned per
+> year [1], so a solution could be that
+>  - Mitre continues to assign 4 and 5 digit IDs as today
+>  - 6 digit IDs are reserved for the new process (hosted outside Mitre)
+> If more than one million vulnerabilities need to be addressed in one
+> year, we could follow the rule (odd digits -> Mitre, even digits ->
+> "other process")
+> 
+> >From Mitre's POC, this "other process" would become a "CNA", just with
+> 
+> its own policy and process definition, not prescribed by Mitre.
+> It would soon become clear to everyone (and all tools and products that
+> rely on CVE) where to look at for the authoritative vulnerability
+> information.
+> 
+> And yes: OWASP.org could certainly be a perfect host for that new "CNA"
+> - as Mark offered earlier ;-)
 
-> ##Access Violation on Malicious TLS Record
-> TLS cipher suites with CBC mode in TLS 1.1 and 1.2 could have an access
-> violation (read beyond memory) with a maliciously crafted message.
+Indeed, such a project requires a vendor neutral host. If OWASP are up for it, 
+then I would gladly support them running with the above proposal, if not then 
+a good faith alternative ought to be sought.
 
-Use CVE-2016-6884.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXtwzzAAoJEHb/MwWLVhi2xmgP/iD9XBpR+o52Gs61DvmXISo6
-dD2oDK7BZLV4VDNgQxYVE+s1cr4vjInh6F5AFp0DfV/ThhplpblJzyMC9V/8R5x7
-ifZmpJACnrBvsoObFy2gu/4AxNgN6CBT+x5HBehZLsp/v+IPEQoo+QSagRtpnqye
-XHg6epkDcGJELzyfr+QLKU7bXEZJ5NLCoMMudFqE9iPOOPVluybsk/r5jLCwzp5y
-R82f/C040qjIZtkrwvKukoWFR6cpuhNYTqxYPNK5HIk1XDsXik1DmXfUnklV5u8h
-/yzd1QHQiS1ajFQz49qlYpWK7qz6JNwjnX07Oqg4MUT1rVTB0GpZwIPllcgcLMfU
-f6wtY2KfarJLpI/+XuwPSCqAO1yblyHr21Z0EEOa/QwpOnXQEDbv4wPKNBU+QjDj
-/F88xB7HE5DFsWi/TDqTG3H0RKqauVPBiExwimNwvsG1c3v7iCBOmvCK2h5OWBOq
-SVUBXhoce+4/QSorL1Q3qsxRWdtjUV0MYmts/r/sJj8aR6pBe2vDEtg79aimaxSd
-cQS7Lgnul2zMb1cGm/AzoS5YSjwn16V9iOMbKCHy9jXh/qc+Rp5ZtdsM9ZkgO/Gb
-NcqjLyLM72SgdX2ewCbFgP7g7YfwWKyz3tUjKi/hQjr5bM/uUoZInQKuEF/B+vB7
-HShanqXyyZFlrLWiy6+R
-=jgkP
------END PGP SIGNATURE-----
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
