@@ -1,49 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/21/5
-Message-Id: <20160621202707.249988BC11C@smtpvmsrv1.mitre.org>
-Date: Tue, 21 Jun 2016 16:27:07 -0400 (EDT)
-From: cve-assign@...re.org
-To: meissner@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: 2015 squidguard reflected XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/09/12
+Message-ID: <CANO=Ty0T=HkGovAZzYhvOSZKWCTaQtM1EDuUTZmEBZDA_5Wx1A@mail.gmail.com>
+Date: Wed, 9 Mar 2016 13:55:45 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "Timothy D. Morgan" <tim-security@...tinelchicken.org>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, Mar 9, 2016 at 1:34 PM, Timothy D. Morgan <
+tim-security@...tinelchicken.org> wrote:
 
-> http://www.squidguard.org/Downloads/CHANGELOG
->         2015-02-01      Fixed a cross site vulnerability in squidGuard.cgi
-> 
-> http://www.squidguard.org/Downloads/Patches/1.4/Readme.Patch-20150201
+>
+>
+> > All - I've chatted with some of the people who fund the CVE work at
+> MITRE.
+> > I've learned that CVEs *are* being issued, but obviously that is
+> happening too slowly.
+> >
+> > They're having a meeting tomorrow (March 10) to try to figure out what
+> > the problems are and how to fix it.  I don't know what they'll do.
+> > However, I'm hopeful that  this will mean that the CVE work will get
+> > back on track soon.
+>
+>
+> Thanks David for finding the right people and raising the issue with
+> them.  I'm sure media coverage is probably helping as well:
+>
+> http://www.theregister.co.uk/2016/03/09/hackers_spin_up_alternative_cve_system_as_bugs_go_unchecked/
+>
+> Suppose MITRE fixes their issues tomorrow and the CVE goes back to the
+> way it was.  Is that really want we need going forward?  A system
+> that's based on sending emails between humans and posting only
+> one-line descriptions with a series of links (half of which are broken
+> after a short time)?  A system which tries to distribute the load by
+> using "big" software vendors, many of whom have a vested interest in
+> limiting what vulnerabilities get published in their software?
+>
+> It seems like we can do better than this.  Infosec hasn't been
+> "working" for some time.  Perhaps we need better tools to help us get
+> ahead of the game.
+>
 
-> +$url =~ s/</&lt;/g ;
-> +$url =~ s/>/&gt;/g ;
+Even if Mitre had unlimited funding there will be a need for the community
+to be involved, especially if we're going to make sure that CVE/DWF cover
+important flaws (of which there are thousands right now, and we haven't
+even dealt with the IoT or non english software markets like China....).
 
-Use CVE-2015-8936.
+Putting on my info security economics hat:
 
-(We posted http://www.openwall.com/lists/oss-security/2016/06/20/6 in
-error. We will adjust our process to try to avoid sending "Thank you
-for your submission" to the oss-security list.)
+And I suspect the solution to this is the same as Open Source, we scale
+out, build a community and process that works and change as needed. DWF is
+one such effort. We aim to reduce the cost of vulnerability identification,
+and vulnerability coordination so that there's more less negative incentive
+(cost in time and effort) to do this right.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+As I've repeatedly stated the DWF wants to work with CVE/Mitre if possible,
+forking vulnerability identification will create additional costs
+(retooling all the systems and process that rely on CVE) so I want to
+minimize that as much as possible, the goal is to make things better and
+easier, not to add another standard for the sake of itself.
 
-iQIcBAEBCAAGBQJXaaI4AAoJEHb/MwWLVhi2n3kQAJ/b21J8D3SDHZzjiBC8sQXE
-lG+FE6FN8HWUNn0/LVk2vX+M7MTN92rT24mrBDLx92/ujWWzFdyA8IL6Xvt/ES4Y
-NUyyw/lFHgi0wE0LUz+6lae/VF5f/sztyZhufuuMmZ3onFc7i06h3tR9B5sNZJpw
-UFQIgTmIoppoja7xzEcq7cplAKACxsTcbRdvD/nBJ4pA+vJ+YOv8B+X9fy4pfh5J
-K9pGuBpHqgAYTXUZOULuBDtDs6Mow1zoqTFZ4wp+8M3tlGCF9aIuGOvVG0Zx+GFr
-nP7PjHn1M2prs0i/7Mp0bolrfyxBlfHalkFYcNAg6Zo8buqobSh7GPiQ/ITlrK+J
-Aude8FZ+Oj4HdpPsd87Vtd/csedF+lMKhOjLYceLQsUrutoczmUax68g797Q+UiB
-0ubq8jOZu/3okbW7RUitop0hn/HZq7YK5+GkOgHYT9t1qgZVsDIfo/mKhDhyHoFy
-yT72LFhieAjL0UFX8fYRWfe+B8lEMfVRXiLCg4SXtoOfUUeWiMsxlvuO72USr9gQ
-Kku3/a1bgN3rGypyQgVyQKGQnnTqvu/LLitbelDy2CO6J2DggfI2rNTugfrzTaJg
-zovyqf4K73nzh43qjOn0uTMN3nXziTIJ5ZJE8CzbYjdCvvtm5X8fUG5q1YGcxWuE
-dix1vSNOFPwRL377PWm6
-=MSpr
------END PGP SIGNATURE-----
+
+>
+> --
+> tim
+> @ecbftw
+>
+
+
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
