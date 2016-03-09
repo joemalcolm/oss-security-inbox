@@ -1,47 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/9
-Message-ID: <346ddf0f760c46afbf449b57d983a533@imshyb02.MITRE.ORG>
-Date: Mon, 14 Nov 2016 13:38:49 -0500
-From: <cve-assign@...re.org>
-To: <ml@...kweb.net>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: Jenkins remote code execution vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/09/9
+Message-ID: <alpine.NEB.2.11.1603091401200.15253@t1.m.reedmedia.net>
+Date: Wed, 9 Mar 2016 14:02:46 -0600 (CST)
+From: "Jeremy C. Reed" <security-officer@....org>
+To: oss-security@...ts.openwall.com
+cc: security-officer@....org
+Subject: ISC BIND vulnerabilities are now public (CVE-2016-1285,  CVE-2016-1286, CVE-2016-2088)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Please be advised that ISC announced security advisories for
+vulnerabilities in ISC BIND.
 
-> An unauthenticated remote code execution vulnerability was discovered in the
-> Jenkins continuous integration and continuous delivery automation server.
-> A serialized Java object transferred to the Jenkins CLI can make Jenkins
-> connect to an attacker-controlled LDAP server, which in turn can send a
-> serialized payload leading to code execution
+CVE-2016-1285: An error parsing input received by the rndc control
+channel can cause an assertion failure in sexpr.c or alist.c. All
+versions since 9.2.0 are affected.
+https://kb.isc.org/article/AA-01352
 
-> SECURITY-360
-> https://www.deepsec.net/speaker.html#PSLOT250
-> https://groups.google.com/d/msg/jenkinsci-advisories/-fc-w9tNEJE/GRvEzWoJBgAJ
+CVE-2016-1286: A problem parsing resource record signatures for
+DNAME resource records can lead to an assertion failure in resolver.c
+or db.c. All versions since 9.0.0 are affected.
+https://kb.isc.org/article/AA-01353
 
-Use CVE-2016-9299.
+CVE-2016-2088: A response containing multiple DNS cookies causes
+servers with cookie support enabled to exit with an assertion
+failure in resolver.c. This affects the 9.10.x versions.
+https://kb.isc.org/article/AA-01351
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYKgMyAAoJEHb/MwWLVhi2+8oP/iLya15YFTRIbVFuxyzuANEG
-vlfWPWWVW2mfhcdgOn93b8yEQRmQ84If3dKg4zseNVjAow7/i1nkuJi1OldEDOP8
-/CKgbqDQtsULut+DG5T1zrJHFEUr5TADqhGZbE655WYUBrr9oy8yUew6FCYH15Ln
-FD0ARaAPtJBoQBZnq0x78hvupF9ijHc4Sc3npCI9zeZyPDCwQ3pUJE3PYwCllRkQ
-x5UuKjOBSwJQQcsDIxWuy+r1WjMxjkIoTKxCyqyxzsw/TsV9EVLsSRefNpJZK3G4
-0vb8L1fggJSyPWRKfULQCK3HHmZwMpJH+75wWE8qoSxlF6O/3N0VNouSHyNrWphI
-0vffAcCM+yLEzoMmCYkc/HAcLWqxHh1DWs2vadzmgXLCD5SsqhsS28cStNK6Hws3
-AH4GOQqg+PCAplTuUNNqgccY9DGvt9u+p38yVF6TzrdKcp8njYPBrpAAhi84LV6A
-0XI/9LhTpWBIbelxFGnX6SlIQwMqV6dHJGOdkP1842g5mZYI3nYktgBIpCW6NVsk
-8aAUgKtYh6rx3eHQztPpKSt6Rg/C3UeGC3JWpZ5ezFgiGbaZ+bGf2/OMmWb/rHmC
-PnPvLFfz+CroC86xweByLtEE5ZC9NBUmmvIuEM7cfRMEbqmnJYYdJqZghAs3nLD5
-84K/xajQ/Jf83/QE1An1
-=FuwO
------END PGP SIGNATURE-----
+
+Jeremy C. Reed
+ISC Security Officer
+
