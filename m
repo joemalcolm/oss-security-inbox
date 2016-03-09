@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3550" "Friday" "27" "March" "2015" "02:54:17" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150327065417.2BB7D6C00F9@smtpvmsrv1.mitre.org>" "94" "[oss-security] Re: CVE Request: Multiple vulnerabilities in freexl 1.0.0g" nil nil nil "3" "2015032706:54:17" "[oss-security] Re: CVE Request: Multiple vulnerabilities in freexl 1.0.0g" (number mark "        cve-assign@m Mar 27   94/3550  " thread-indent "\"[oss-security] Re: CVE Request: Multiple vulnerabilities in freexl 1.0.0g\"\n") "<CABfY0L0rR1xe+C7CjcoUEMfO8x7VajEFUE4RaEP6WBSi+WdEPA@mail.gmail.com>" ("<CABfY0L0rR1xe+C7CjcoUEMfO8x7VajEFUE4RaEP6WBSi+WdEPA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2235" "Wednesday" "9" "March" "2016" "20:21:45" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20160309202145.0273729d@pc1>" "61" "[oss-security] Heap use after free in Pidgin-OTR plugin" "^Date:" nil nil "3" "2016030919:21:45" "[oss-security] Heap use after free in Pidgin-OTR plugin" (number mark "        hanno@hboeck Mar  9   61/2235  " thread-indent "\"[oss-security] Heap use after free in Pidgin-OTR plugin\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30429 invoked by uid 550); 27 Mar 2015 06:54:30 -0000
+Received: (qmail 5446 invoked by uid 550); 9 Mar 2016 19:22:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,107 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30411 invoked from network); 27 Mar 2015 06:54:29 -0000
-In-Reply-To: <CABfY0L0rR1xe+C7CjcoUEMfO8x7VajEFUE4RaEP6WBSi+WdEPA@mail.gmail.com>
-Message-Id: <20150327065417.2BB7D6C00F9@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri, 27 Mar 2015 02:54:17 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 5144 invoked from network); 9 Mar 2016 19:21:53 -0000
+Message-ID: <20160309202145.0273729d@pc1>
+X-Mailer: Claws Mail 3.13.2 (GTK+ 2.24.29; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-25641-1457551301-0001-2"
+Date: Wed, 9 Mar 2016 20:21:45 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Multiple vulnerabilities in freexl 1.0.0g
-To: jodie.cunningham@gmail.com
+Subject: [oss-security] Heap use after free in Pidgin-OTR plugin
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--=_zucker.schokokeks.org-25641-1457551301-0001-2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> I found multiple issues in the library FreeXL 1.0.0g.
-> The vendor has corrected these issues in FreeXL 1.0.1 , and a diff for
-> the four issues is available here:
+https://blog.fuzzing-project.org/39-Heap-use-after-free-in-Pidgin-OTR-plugi=
+n.html
 
-We don't feel that this has information in a usable format for making
-all of the CVE assignments. Listing four flaw descriptions with four
-reproducers does not necessarily imply a specific number of CVE IDs.
-We are not going to run the product with the reproducers to gather
-additional information.
+The pidgin-otr plugin version 4.0.2 fixes a heap use after free error.
+The bug is triggered when a user tries to authenticate a buddy and
+happens in the function create_smp_dialog.
 
-We have:
+The bug was discovered with Address Sanitizer. This is yet another
+example why all C/C++ code should be tested with Address Sanitizer
+enabled.
 
-  https://www.gaia-gis.it/fossil/freexl/fdiff?v1=2e167b337481dda3&v2=61618ce51a9b0c15&sbs=1
-  https://www.gaia-gis.it/fossil/freexl/artifact/61618ce51a9b0c15
+This bug was already independently discovered and reported in the otr
+bug tracker.
+https://bugs.otr.im/issues/88
 
-> #1:  A flaw was found in the way FreeXL reads sectors from the input
-> file.  A specially crafted file could possibly result in stack
-> corruption near freexl.c:3752.
-> 
-> Reproducer: https://www.dropbox.com/s/3htzndywvtmomlx/freexl_9f74b0e8?dl=0
+Independend of this bug another more severe bug in Libotr itself was
+also disclosed today, please make sure you update both libotr (4.1.1)
+and the pidgin-otr plugin (4.0.2).
+https://www.x41-dsec.de/lab/advisories/x41-2016-001-libotr/
 
-Here, it seems very likely that what is meant is the missing "if
-(workbook->sector_end <= (workbook->p_in - workbook->sector_buf))"
-test in the unpatched code. In other words, the product did not verify
-that the calculation of the unsigned "chunk" value occurred as
-expected.
+Upstream bug report (contains Address Sanitizer stack trace):
+https://bugs.otr.im/issues/128
+Commit / fix:
+https://bugs.otr.im/projects/pidgin-otr/repository/revisions/aaf551b9dd5cbb=
+a8c4abaa3d4dc7ead860efef94
 
-Use CVE-2015-2753.
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
 
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
 
+--=_zucker.schokokeks.org-25641-1457551301-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
 
-> #3: A flaw was found in the way FreeXL handles a premature EOF. A
-> specially crafted input file could possibly result in stack corruption
-> near freexl.c:1131
-> 
-> Reproducer: https://www.dropbox.com/s/66srfory903w6cl/freexl_d7273f72?dl=0
-
-This refers to the missing "if ((workbook->p_in -
-workbook->fat->miniStream) + workbook->record_size > (int)
-workbook->size)" test in the unpatched code (i.e., the test with the
-"unexpected EOF" comment in the patched code).
-
-Use CVE-2015-2754.
-
-
-> #2: A flaw was found in the function allocate_cells(). A specially
-> crafted file with invalid workbook dimensions could possibly result in
-> stack corruption near freexl.c:1074
-> 
-> Reproducer: https://www.dropbox.com/s/dcnbbntf7lp03yn/freexl_c9be2aa7?dl=0
-
-Does this refer to the missing "== NULL" tests within the
-allocate_cells function? Is a NULL pointer dereference going to occur
-before the code reaches a point where there can be stack corruption?
-
-Or does it refer to the missing "> 1024 * 1024" test in the parse_SST
-function?
-
-
-> #4: FreeXL 1.0.0g did not properly check requests for workbook memory
-> allocation. A specially crafted input file could cause a Denial of
-> Service, or possibly write onto the stack.
-> 
-> Reproducer (ulimit -Sv 128000):
-> https://www.dropbox.com/s/gh61gzaf8jj30hj/freexl_6889d18b?dl=0
-
-Does this refer to the change from the "return ret;" code to the
-"errcode = ret; goto stop;" code?
-
-Or does it refer to one of the two possibilities listed above for #2?
-
-"check requests for workbook memory allocation" could also conceivably
-refer to tests of the return value of malloc, but no such tests were
-added in the patch.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v2
 
-iQEcBAEBAgAGBQJVFP2TAAoJEKllVAevmvmsEg0H/Ar1L1wjmjxYJNCLNEUCrVXG
-aAdaTbufStUIy3LSG66MPklDClK3xwlS73Sor04ZpOybMbR2NFdTipwGOlufFmk0
-GsgPvl9J7HgKtFNUyppvvdu+NCjBSuKhBKLuTcnIDLFborD8XHWlsl4fwIS+WpKM
-djAVpq9lT4X2gevZXU+yxbalpYSIlitOtkIdQuydaU4G/914A1o/CZre9Efn3jAZ
-sYXQr8aZLzkCjzj/y/pINlvySQ9zwzzYnG1VjYuNsv15+JdiTT0ZSHZB6it4UQ5k
-rZI1n0dH5gHrlv/Aq9kzr1OjBFwTienVH0nbSb79DKkGr1Rr49KYsRh56WbMNsw=
-=Vze4
+iQIcBAEBCgAGBQJW4HfJAAoJEKWIAHK7tR5CMIoP/2AbUGKvWwWvijiQE39Qf9kq
+MGVJHKNigJTLxs/XtJtu2crOXtLEH70B3B7pfzkIcT1x+u4IFULKoBYjbxA6JV9u
+zVhntIJ9MMQ1rQ0muKQUKHpfBVTuMWy16JKs++vI9kDmPVv9VQ1O0d539VMAAG7/
+bpqDHfi8JGNcntZeXfU7PBdC5PSPqhBKHD8esDU0UDPpCR3ZHRE+w4p8qU9TcK+T
+lACswK0cUanFXzopjJ0OnNde846Q5i0K5Nq4Elfg0mjpm6MrK4FX32TKRpOoJ55n
+8qaLCbRng1zgL+Te7pejTcthxt6eRNBoh8MF1haY7y0iOeYpFCG8NIUW9xSDxD9Y
+G4iAb+uCTEhg5FNeE/k/mXPsg1RyjgBk2Da8awgi7B+ExjX3McgEYJGv4I4yMjW+
+JojtXZLapoif7Uk91NJmfs1PGDAfz0pZl9hZ/M6jJZ5NcK8lB/NRo3pihxp3U3bS
+StRS1IvqrlSxLjucw75wpX6skgJlWitaPb3QBqKmBWvMmTPTmrmaQUTir/0vYp8Z
+xaTUkRJdg9TVezZRl9drrRYAz/DraM2PyN5ILfWTCmxtd5nU8y+7piVgXoEd/J2G
+1Bl/0Oze7Fe+iDjus/Ia88XI+PIpvjPV9iSlRWB8Qkoxk+yKZtvyufW1HS0LXZAn
+msHp7W/fZ+hqRNoa0R0K
+=HBv9
 -----END PGP SIGNATURE-----
+
+--=_zucker.schokokeks.org-25641-1457551301-0001-2--
