@@ -1,50 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/04/6
-Message-Id: <20160104165801.C12373323FC@smtpvbsrv1.mitre.org>
-Date: Mon,  4 Jan 2016 11:58:01 -0500 (EST)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request Qemu: net: vmxnet3: incorrect l2 header validation leads to a crash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/09/6
+Message-ID: <CANO=Ty1cSnXsM01ebMNTvKLeaoPy0t7Mucb9EFAprr95rXFvSw@mail.gmail.com>
+Date: Wed, 9 Mar 2016 12:06:26 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "David A. Wheeler" <dwheeler@...eeler.com>,  cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, Mar 9, 2016 at 12:04 PM, David A. Wheeler <dwheeler@...eeler.com>
+wrote:
 
-> Qemu emulator built with a VMWARE VMXNET3 paravirtual NIC emulator support is
-> vulnerable to crash issue. It occurs when a guest sends a Layer-2 packets
-> smaller than 22 bytes.
-> 
-> A privileged(CAP_SYS_RAWIO) guest user could use this flaw to crash the Qemu
-> process instance resulting in DoS.
-> 
-> http://git.qemu.org/?p=qemu.git;a=commit;h=a7278b36fcab9af469563bd7b9dadebe2ae25e48
-> https://bugzilla.redhat.com/show_bug.cgi?id=1270871
+> All - I've chatted with some of the people who fund the CVE work at MITRE.
+> I've learned that CVEs *are* being issued, but obviously that is happening
+> too slowly.
+>
+> They're having a meeting tomorrow (March 10) to try to figure out what
+> the problems are and how to fix it.  I don't know what they'll do.
+> However, I'm hopeful that  this will mean that the CVE work will get
+> back on track soon.
+>
+> --- David A. Wheeler
+>
 
->> 'tx_pkt->packet_type' hasn't been assigned for such packets, and
->> 'vmxnet3_on_tx_done_update_stats()' expects it to be properly set.
+This is literally the first I'm hearing of this, will any board members be
+present?
 
-Use CVE-2015-8744.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+-- 
 
-iQIcBAEBCAAGBQJWiqQOAAoJEL54rhJi8gl58u0QAJHr+J/tR96tT+LyDMUQWhaP
-Si58acKWZEkk9nV55TwaS6uJw0VriHu1QRB7gtU5VYWNPI6rRZk3sc52hoKJyLe9
-GA1c4bvCekExsnUOIIV5MNcqa2o53uQCRfhtcfNTVwSn31tgmJud5PT3xIuJH5z6
-cDR94YqJGdrOGbCxm7CH9NlGLQsy8cCXzMcCezkGogGxv16jg614PWjwOEvemEgT
-Fbc03MHFquCULWF5QD0ZU0TIoFXQcS6KGtc2kvCmUEu6uPH+8NIUdj0bAOu47Yje
-wzzOFf/dIoa0zO3trrSa1qznFlK/kyWmF2Ls3qZgojrc1IP79yCl9Q9ZoIE6NzF2
-p8zzMoabvC8SzoRlCg2pJjJkmAyJR/bNbgw523/rvSz9q+6QzEtkYnNE26brITb3
-v7GIJlfT9W+qrylm5nu01bb0U42E+uB/lA+M8s1ZpjPjQps2tUufr/XE/EGqdJvB
-Za+tNNVPZeFGOEYIBYSrdhdKQQOkBLA0p7Ebcf8ZnHrPFEF7v14yRBgnlywf2kHD
-wK6y91YEji25WjIIQQgmgaXmixUcwzS+y52ET0gEKcAO07IYKnOUexd+fMV2YBEW
-aAC0Ch2xpR6bBn3SJye5avUIbML7B1M4VQlpSUZwn46DFir5dqHf0ssdYasO+DBU
-eF6FHB0afcV5gGrTIozR
-=O+Vj
------END PGP SIGNATURE-----
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
