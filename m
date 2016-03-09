@@ -1,4 +1,9 @@
-Received: (qmail 24248 invoked by uid 550); 3 Jul 2022 16:05:37 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["877" "Wednesday" "9" "March" "2016" "12:06:26" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty1cSnXsM01ebMNTvKLeaoPy0t7Mucb9EFAprr95rXFvSw@mail.gmail.com>" "30" "Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies" "^Cc:" nil nil "3" "2016030919:06:26" "[oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies" (number mark "        kseifried@re Mar  9   30/877   " thread-indent "\"Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies\"\n") "<E1adjOu-0005MK-Kx@rmm6prod02.runbox.com>" ("<CANO=Ty3pi9EBe-yARnJamWb1hW9p0Bztmj_Gr9SyWyXDqfCLDQ@mail.gmail.com>" "<E1adjOu-0005MK-Kx@rmm6prod02.runbox.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 9422 invoked by uid 550); 9 Mar 2016 19:06:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,71 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 9401 invoked from network); 9 Mar 2016 19:06:37 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=QKD40VKJ0F747TsoX/iyT8cTIDr8BBJKUXwmHSLIS/g=;
+        b=UQ0LihL1m6Nd76CTxtMcy3HRwwbxWnWD6iI7IFcpmpplITg4kr4oZUHaQil8EOAKam
+         Q1kAS8QDOAnYt8OHtAfuygf5ow59BUMtb97hgDNu5CsY4dwHXeQ1dKe18kDr4/IdEB/1
+         ArDlaHz6bQx2NYCvgP+xhwpE8hmJlZ014W2aiueJJZx/vrXHrPer1Ab96JJXW9znq+rv
+         fczmugTEcRXsrMLgtWOnf7ZMBQr3/IvyJRJxTK+Ls75oNpgP9RxArCrVsYU1htwf0AhD
+         CC8eJe3Ye4BcfuTYYhNLUgM0fOUBhrEr1N3tTDLh8F79XfjJ05V8O03+yDF+VNWCxAlz
+         cCzA==
+X-Gm-Message-State: AD7BkJLmt2lgHBRR4gwsHYKmDqqRJFtNsCyn1IZTEq6dSygCUwUFjGhY7z+vkBv6M1UQmW+8sOL/V7EObBJZKVyQ
+MIME-Version: 1.0
+X-Received: by 10.13.235.7 with SMTP id u7mr19646889ywe.97.1457550386276; Wed,
+ 09 Mar 2016 11:06:26 -0800 (PST)
+In-Reply-To: <E1adjOu-0005MK-Kx@rmm6prod02.runbox.com>
+References: <CANO=Ty3pi9EBe-yARnJamWb1hW9p0Bztmj_Gr9SyWyXDqfCLDQ@mail.gmail.com>
+	<E1adjOu-0005MK-Kx@rmm6prod02.runbox.com>
+Message-ID: <CANO=Ty1cSnXsM01ebMNTvKLeaoPy0t7Mucb9EFAprr95rXFvSw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=94eb2c0873060467e8052da2650d
+Cc: oss-security <oss-security@lists.openwall.com>
+Date: Wed, 9 Mar 2016 12:06:26 -0700
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24100 invoked from network); 3 Jul 2022 16:05:14 -0000
-Date: Sun, 3 Jul 2022 18:05:08 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Cc: Hugues ANGUELKOV <hanguelkov@randorisec.fr>
-Message-ID: <20220703160508.GA17310@openwall.com>
-References: <20220702193746.GA12948@openwall.com> <20220702215539.GA14413@openwall.com> <YsDMw8o0g0IjrwzK@itl-email> <20220703125516.GA15346@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220703125516.GA15346@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Linux kernel: Netfilter heap buffer overflow in nft_set_elem_init
+Subject: Re: [oss-security] Concerns about CVE coverage shrinking - direct
+ impact to researchers/companies
+To: "David A. Wheeler" <dwheeler@dwheeler.com>, 
+	cve-editorial-board-list <cve-editorial-board-list@lists.mitre.org>
 
-Proposed fix by the maintainer:
+--94eb2c0873060467e8052da2650d
+Content-Type: text/plain; charset=UTF-8
 
-https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=7e6bc1f6cabcd30aba0b11219d8e01b952eacbb6
+On Wed, Mar 9, 2016 at 12:04 PM, David A. Wheeler <dwheeler@dwheeler.com>
+wrote:
 
-netdev thread leading to there starts here:
+> All - I've chatted with some of the people who fund the CVE work at MITRE.
+> I've learned that CVEs *are* being issued, but obviously that is happening
+> too slowly.
+>
+> They're having a meeting tomorrow (March 10) to try to figure out what
+> the problems are and how to fix it.  I don't know what they'll do.
+> However, I'm hopeful that  this will mean that the CVE work will get
+> back on track soon.
+>
+> --- David A. Wheeler
+>
 
-https://lists.openwall.net/netdev/2022/07/02/86
+This is literally the first I'm hearing of this, will any board members be
+present?
 
-> ----- Forwarded message from Hugues ANGUELKOV <hanguelkov@randorisec.fr> -----
 
-> One of our collaborators at RandoriSec, Arthur Mongodin found a 
-> vulnerability within the netfilter subsystem during his internship.
-> Successful exploitation of this bug leads to a Local Privilege 
-> Escalation (LPE) to the `root` user, as tested on Ubuntu server 22.04 
-> (Linux 5.15.0-39-generic).
-> This vulnerability is a heap buffer overflow due to a weak check and has 
-> been introduced within the commit 
-> [fdb9c405e35bdc6e305b9b4e20ebc141ed14fc81](https://github.com/torvalds/linux/commit/fdb9c405e35bdc6e305b9b4e20ebc141ed14fc81), 
-> it affects the Linux kernel since the version 5.8 and is still present 
-> today.
+-- 
 
-The fix commit above says it Fixes an older commit from 2015
-(7d7402642eaf), but the bug was likely only exposed later, by the 2020
-commit referenced in RandoriSec's message above.  Quoting from:
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
 
-https://patchwork.ozlabs.org/project/netfilter-devel/patch/20220702191029.238563-1-pablo@netfilter.org/
-
-   Insufficient validation of element datatype and length in
-   nft_setelem_parse_data(). At least commit 7d7402642eaf updates
-   maximum element data area up to 64 bytes when only 16 bytes
-   where supported at the time. Support for larger element size
-   came later in fdb9c405e35b though. Picking this older commit
-   as Fixes: tag to be safe than sorry.
-
-> The vulnerable code path can be reached if the kernel is built with the 
-> configuration `CONFIG_NETFILTER`, `CONFIG_NF_TABLES` enabled.
-> To exploit the vulnerability, an attacker may need to obtain an 
-> unprivileged user namespace to gain the capability `CAP_NET_ADMIN` 
-> (`CONFIG_USER_NS` and `CONFIG_NET_NS` enabled, and 
-> `kernel.unprivileged_userns_clone = 1`).
-
-Another scenario is the attacker having (or gaining by other means)
-"root" access inside a pre-existing container with CAP_NET_ADMIN.  This
-does not require unprivileged user namespaces as the container may have
-been started by host root.
-
-> we can 
-> suggest the August, 15th 2022 as a potential date for public disclosure.
-
-FWIW, an embargo this long wouldn't have been accepted by linux-distros.
-The latest this issue could be disclosed publicly is July 15th.
-
-Alexander
+--94eb2c0873060467e8052da2650d--
