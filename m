@@ -1,54 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/22
-Message-ID: <8aa9957b29ca4fc4a2502885a96db887@imshyb02.MITRE.ORG>
-Date: Mon, 5 Dec 2016 17:15:50 -0500
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liq3ea@...il.com>
-Subject: Re: CVE request: Qemu: display: virtio-gpu-3d: information leakage in virgl_cmd_get_capset_info
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/09/3
+Message-ID: <CANO=Ty3pi9EBe-yARnJamWb1hW9p0Bztmj_Gr9SyWyXDqfCLDQ@mail.gmail.com>
+Date: Wed, 9 Mar 2016 09:10:04 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, Mar 9, 2016 at 8:59 AM, Tim Brown <tmb@...35.com> wrote:
 
-> Quick Emulator built with the Virtio GPU Device emulator support is vulnerable
-> to an information leakage issue. It could occur while processing
-> 'VIRTIO_GPU_CMD_GET_CAPSET_INFO' command.
-> 
-> A guest user/process could use this flaw to leak contents of the host memory
-> bytes.
-> 
-> https://lists.nongnu.org/archive/html/qemu-devel/2016-11/msg00019.html
+> On Sunday 06 March 2016 21:39:54 Gsunde Orangen wrote:
+>
+>
+> Quite, as much as I appreciate the options presented over the last few
+> days, I
+> don't think any of them are the winning horse.
+>
 
->> In virgl_cmd_get_capset_info dispatch function, the 'resp' hasn't
->> been full initialized before writing to the guest. This will leak
->> the 'resp.padding' and 'resp.hdr.padding' fieds to the guest.
+It's simple. The winning horse is CVE. Or something that is fully CVE
+compatible, like DWF.
 
-Use CVE-2016-9845.
+To put it bluntly DWF is as close to 100% CVE compatible as it can be:
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/display/virtio-gpu-3d.c but
-that may be an expected place for a later update.
+Numerically DWF can generally be mapped directly to CVE with no conflict,
+if you spot a conflict between CVE and DWF please notify us so we can fix
+it.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+If you already have a CVE identifier you can map it directly to DWF, e.g.
+CVE-2000-1234 maps directly to DWF-2000-1234.
 
-iQIcBAEBCAAGBQJYReVgAAoJEHb/MwWLVhi24FUP/2ilkbP1yXJnQcYM4TMeEG2x
-rzsLbOdftyTIQmSs0o71LKngtkAtCQaq4F9fW2N0/ujJyOyIGA/frcFwbky9x1Ch
-mOSH8eZcKPT7rENJ0E8IRYcRlaXtyLe8p1nR/SWCerw4fCZORHAKxffSJX8H64Y0
-qJyDwpJ1ws2YJ6eoU892mPygvh7QT6fphBAyiz4bTNCk5yGRTjYDrkoeGfz6fjjP
-BWy5P+8Pv0937Gl3z1h9Fqbo87ab3nQ5b0VdWSmNDuheam0/gBLZkRiDmGy6mxca
-niUv/7kv8xKV0IafzBwW+X8LY+kbcsA/oPWUkKdhGMyUTLb8WGO4iUpgT3HaD3Om
-9M0kZzBGYSIuhmZj1EW0PXxXQAdaDk1Y2IHqLrY1DSM3t78yfAPRKbIDAI9hPVW9
-RUuHtIVH7FSpckejg+UEBlheOM3k4z5pv03m3gkKk2IjUnSo5hDVGgVMjGQheKvV
-1S4q9zr57+DAq8ugIv0vfRWv7ty3yRgqEfJv8ijXAg4cLQqzS8DyXZMvuD9GKnMl
-UWroxU8MoE4MC2wbpGUfMnXpsCxltha80tW3VYj10XiHRHYp1HqambvlEfEBB6wc
-X4jX/HNnbcQqdKRn7MUHg2B+Kn5HXFCaVPWxPJKV4bk6FFX4S3VpKd1j9fe9O71o
-lLdrMfpXM7v/fBTScHVo
-=Boh/
------END PGP SIGNATURE-----
+https://github.com/distributedweaknessfiling/DWF-Documentation
+
+Also the SPLIT/MERGE and general process for numbering authorities are
+similar, if not nearly identical. I can say this with some authority having
+assigned close to 5,000 CVE's =).
+
+
+> As would I however, even with pointers from SC about who to poke within
+> MITRE
+> we came up short tracking a warm body down for (~7) months (even one that
+> was
+> willing to say no). That being said, we have now located a new warm body at
+> MITRE who has made themselves known to us, I am more than happy to approach
+> them about the following:
+>
+
+So to put it bluntly: good luck. In my role as  a Red Hat employee I'm on
+the CVE Editorial board and I can't get answers out of them. I'm now
+posting things like:
+
+====
+Can someone from Mitre at least confirm that they have seen this email?
+It's been over a week now with no reply from Mitre on anything:
+
+https://cve.mitre.org/data/board/archives/2016-03/msg00000.html
+https://cve.mitre.org/data/board/archives/2016-03/msg00006.html
+https://cve.mitre.org/data/board/archives/2016-03/msg00008.html
+====
+
+
+
+>
+> Indeed, such a project requires a vendor neutral host. If OWASP are up for
+> it,
+> then I would gladly support them running with the above proposal, if not
+> then
+> a good faith alternative ought to be sought.
+>
+
+Or better yet a community led effort, like DWF that is also willing to work
+with Mitre (whether or not Mitre returns the favor remains to be seen).
+
+
+>
+> Tim
+> --
+> Tim Brown
+> <mailto:tmb@...35.com>
+>
+
+
+
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.comTo put it bluntly,
+
