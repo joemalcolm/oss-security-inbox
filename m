@@ -1,79 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/23/2
-Message-ID: <CAEsznC7fwbsJ3JudAY4fkh3k_4TfHwaSkgZ9CB=xRQ_1Y5HDdg@mail.gmail.com>
-Date: Thu, 23 Jun 2016 10:58:34 +0300
-From: Lior Kaplan <kaplanlior@...il.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE for PHP 5.5.37 issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/09/11
+Message-ID: <20160309203420.GJ1250@sentinelchicken.org>
+Date: Wed, 9 Mar 2016 12:34:20 -0800
+From: "Timothy D. Morgan" <tim-security@...tinelchicken.org>
+To: oss-security@...ts.openwall.com
+Cc: kseifried <kseifried@...hat.com>
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-PHP 5.5.37 is near its release, please review these following issues for
-CVE:
-
-GD:
-  . Fixed bug #72339 (Integer Overflow in _gd2GetHeader() resulting in
-    heap overflow). (Pierre)
-
-https://bugs.php.net/bug.php?id=72339
-http://git.php.net/?p=php-src.git;a=commitdiff;h=7722455726bec8c53458a32851d2a87982cf0eac
 
 
-GD:
-  . Fixed bug #72446 (Integer Overflow in gdImagePaletteToTrueColor()
-resulting
-    in heap overflow). (Pierre)
-
-https://bugs.php.net/bug.php?id=72446
-http://git.php.net/?p=php-src.git;a=commitdiff;h=c395c6e5d7e8df37a21265ff76e48fe75ceb5ae6
-
-
-- mbstring:
-   . Fixed bug #72402 (_php_mb_regex_ereg_replace_exec - double free).
-(Stas)
-
-https://bugs.php.net/bug.php?id=72402
-http://git.php.net/?p=php-src.git;a=commitdiff;h=5b597a2e5b28e2d5a52fc1be13f425f08f47cb62
+> All - I've chatted with some of the people who fund the CVE work at MITRE.
+> I've learned that CVEs *are* being issued, but obviously that is happening too slowly.
+> 
+> They're having a meeting tomorrow (March 10) to try to figure out what
+> the problems are and how to fix it.  I don't know what they'll do.
+> However, I'm hopeful that  this will mean that the CVE work will get
+> back on track soon.
 
 
-- mcrypt:
-   . Fixed bug #72455 (Heap Overflow due to integer overflows). (Stas)
+Thanks David for finding the right people and raising the issue with
+them.  I'm sure media coverage is probably helping as well:
+  http://www.theregister.co.uk/2016/03/09/hackers_spin_up_alternative_cve_system_as_bugs_go_unchecked/
 
-https://bugs.php.net/bug.php?id=72455
-http://git.php.net/?p=php-src.git;a=commitdiff;h=6c5211a0cef0cc2854eaa387e0eb036e012904d0
+Suppose MITRE fixes their issues tomorrow and the CVE goes back to the
+way it was.  Is that really want we need going forward?  A system
+that's based on sending emails between humans and posting only
+one-line descriptions with a series of links (half of which are broken
+after a short time)?  A system which tries to distribute the load by
+using "big" software vendors, many of whom have a vested interest in
+limiting what vulnerabilities get published in their software?
 
+It seems like we can do better than this.  Infosec hasn't been
+"working" for some time.  Perhaps we need better tools to help us get
+ahead of the game.
 
-- SPL:
-  . Fixed bug #72262 (int/size_t confusion in SplFileObject::fread). (Stas)
-
-https://bugs.php.net/bug.php?id=72262
-http://git.php.net/?p=php-src.git;a=commitdiff;h=7245bff300d3fa8bacbef7897ff080a6f1c23eba
-
-
-- SPL:
-  . Fixed bug #72433 (Use After Free Vulnerability in PHP's GC algorithm and
-    unserialize). (Dmitry)
-
-https://bugs.php.net/bug.php?id=72433
-http://git.php.net/?p=php-src.git;a=commitdiff;h=3f627e580acfdaf0595ae3b115b8bec677f203ee
-
-
-- WDDX:
-  . Fixed bug #72340 (Double Free Courruption in wddx_deserialize). (Stas)
-
-https://bugs.php.net/bug.php?id=72340
-http://git.php.net/?p=php-src.git;a=commitdiff;h=a44c89e8af7c2410f4bfc5e097be2a5d0639a60c
-
-
-- zip:
-  . Fixed bug #72434 (ZipArchive class Use After Free Vulnerability in
-PHP's GC
-    algorithm and unserialize). (Dmitry)
-
-https://bugs.php.net/bug.php?id=72434
-http://git.php.net/?p=php-src.git;a=commitdiff;h=f6aef68089221c5ea047d4a74224ee3deead99a6
-
-Kaplan
-
+--
+tim
+@ecbftw
