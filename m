@@ -1,35 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/04/5
-Message-ID: <CACMN7ixDqDyOZGLEvsMUVHBiJ6crq8zdy+2mNfRooNhnk7CJ1g@mail.gmail.com>
-Date: Thu, 4 Aug 2016 16:27:12 -0700
-From: Sravya Tirukkovalur <sravya@...che.org>
-To: dev <dev@...try.apache.org>, security@...che.org,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: CVE-2016-0760: Hive builtin functions “reflect”, “reflect2”, and “java_method” are not blocked in Apache Sentry
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/2
+Message-ID: <56E0DE5E.9000100@redhat.com>
+Date: Thu, 10 Mar 2016 02:39:26 +0000
+From: Tristan Cacqueray <tdecacqu@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA 2016-007.1] Nova host data leak through resize/migration (CVE-2016-2140) ERRATA
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-0760: Hive builtin functions “reflect”, “reflect2”, and
-“java_method” are not blocked in Apache Sentry
+=============================================================
+OSSA-2016-007.1: Nova host data leak through resize/migration
+=============================================================
 
-Severity: Very Important
+:Date: March 08, 2016
+:CVE: CVE-2016-2140
 
-Vendor:
-The Apache Software Foundation
 
-Versions Affected:
-Sentry 1.5.1 and 1.6.0
+Affects
+~~~~~~~
+- Nova: <=2015.1.3, >=12.0.0 <=12.0.2
 
-Description:
-Some functions in Hive which allow arbitrary code to be executed are
-not blacklisted properly in some versions of Sentry, which would allow
-authenticated
-users to potentially use these functions for malicious purposes.
 
-Mitigation:
-Upgrade to 1.7.0 (or)
-Workaround - Users can explicitly configure the blacklist
-functions in the hive configuration by setting the property
-"hive.server2.builtin.udf.blacklist" to "reflect,reflect2,java_method"
+Description
+~~~~~~~~~~~
+Matthew Booth from Red Hat reported a vulnerability in Nova instance
+resize/migration. By overwriting an ephemeral or root disk with a
+malicious image before requesting a resize, an authenticated user may
+be able to read arbitrary files from the compute host. Only setups
+using libvirt driver with raw storage and setting "use_cow_images =
+False" (not default) are affected.
 
-Credit:
-This issue was discovered by ﻿Ryan Pridgeon of Cloudera.
 
+Errata
+~~~~~~
+The former fix did not take into account the usage of non-disk-image
+backends and caused a regression for this use-case. This update
+provides an additional fix for that issue.
+
+
+Patches
+~~~~~~~
+- https://review.openstack.org/289960 - original (Kilo)
+- https://review.openstack.org/290847 - errata   (Kilo)
+- https://review.openstack.org/289958 - original (Liberty)
+- https://review.openstack.org/290843 - errata   (Liberty)
+- https://review.openstack.org/289957 - original (Mitaka)
+- https://review.openstack.org/290715 - errata   (Mitaka)
+
+
+Credits
+~~~~~~~
+- Matthew Booth from Red Hat (CVE-2016-2140)
+
+
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/bugs/1548450
+- https://bugs.launchpad.net/bugs/1555287
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-2140
+
+
+OSSA History
+~~~~~~~~~~~~
+- 2016-03-09 - Errata 1
+- 2016-03-08 - Original Version
+
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
