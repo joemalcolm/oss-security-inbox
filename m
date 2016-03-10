@@ -1,89 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/2
-Message-ID: <alpine.DEB.2.20.1611020805310.375@tvnag.unkk.fr>
-Date: Wed, 2 Nov 2016 08:06:35 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl cookie injection for other servers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/11
+Message-ID: <CACHnxzxreiNXbWu0P-sv0A=PTwAGss-cwqsYbd3hpw2LpRZv9Q@mail.gmail.com>
+Date: Thu, 10 Mar 2016 07:46:01 -0500
+From: Christopher Shannon <christopher.l.shannon@...il.com>
+To: dev@...ivemq.apache.org, users@...ivemq.apache.org, security@...che.org,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [ANNOUNCE] CVE-2016-0734: ActiveMQ Web Console - Clickjacking
 Content-Type: text/plain; charset=utf-8
 
-cookie injection for other servers
-==================================
+There following security vulnerability was reported against Apache
+ActiveMQ 5.13.1 and older versions.
 
-Project cURL Security Advisory, November 2, 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20161102A.html)
+Please check the following document and see if you’re affected by the issue.
 
-VULNERABILITY
--------------
+http://activemq.apache.org/security-advisories.data/CVE-2016-0734-announcement.txt
 
-If cookie state is written into a cookie jar file that is later read back and
-used for subsequent requests, a malicious HTTP server can inject new cookies
-for arbitrary domains into said cookie jar.
+Apache ActiveMQ 5.13.2 and newer with appropriate fixes was released and
+available for upgrade.
 
-The issue pertains to the function that loads cookies into memory, which reads
-the specified file into a fixed-size buffer in a line-by-line manner using the
-`fgets()` function. If an invocation of fgets() cannot read the whole line
-into the destination buffer due to it being too small, it truncates the
-output. This way, a very long cookie (name + value) sent by a malicious server
-would be stored in the file and subsequently that cookie could be read
-partially and crafted correctly, it could be treated as a different cookie for
-another server.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-8615 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-This flaw exists in the following curl versions.
-
-- Affected versions: curl 7.1 to and including 7.50.3
-- Not affected versions: curl >= 7.51.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.51.0, these functions will deny negative string lengths from
-being used.
-
-A [patch for CVE-2016-8615](https://curl.haxx.se/CVE-2016-8615.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.51.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Do not use the `CURLOPT_COOKIEFILE` (or `-b`) option.
-
-TIME LINE
----------
-
-It was first reported to the curl project on September 23 by Cure53.
-
-We contacted distros@...nwall on October 19.
-
-curl 7.51.0 was released on November 2 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-This vulnerability was found during a Secure Open Source audit performed by
-Cure53.
-
--- 
-
-  / daniel.haxx.se
