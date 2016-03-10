@@ -1,23 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/10
-Message-ID: <73d6ef38-3520-6229-5701-abc842cfa97f@geeklan.co.uk>
-Date: Wed, 14 Dec 2016 15:17:57 +0000
-From: Sevan Janiyan <venture37@...klan.co.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/3
+Message-ID: <56E112D4.1070302@oracle.com>
+Date: Wed, 09 Mar 2016 22:23:16 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: why many CVEs are ** RESERVED ** on Mitre
+Subject: Re: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
+On 03/ 9/16 04:22 PM, Carlos Alberto Lopez Perez wrote:
+> On 06/03/16 19:46, Alan Coopersmith wrote:
+>> On 03/ 4/16 04:07 PM, Tim wrote:
+>>> * No moderation required.  Let the public decide if they believe the
+>>>     researcher or vendor.  If a moderator does bother to look over the
+>>>     content, they could deduplicate/link issues together and address any
+>>>     confusion, but beyond that, it isn't their job to decide what is a
+>>>     vulnerability and what isn't.
+>>
+>> If the site displays *any* user-submitted text, you need at least enough
+>> moderation to filter out spammers & trolls.
+>>
+>
+> I don't think you need that level of moderation if you implement basic
+> measures against spammers like requiring the creation of an account with
+> e-mail verification.
+>
+> Just look to all the public bugzillas out there that allow commenting
+> (mozilla, webkit, redhat, gnome, etc). I don't think they have a problem
+> with spam. But you have to create an account first to do any comment.
 
+I'm one of the admins of the public bugzilla at bugs.freedesktop.org, and
+I've had to deal with spam there, and I've seen reports of spams in other
+public bugzillas for open source projects.
 
-On 14/12/2016 15:09, Kurt Seifried wrote:
-> I would suggest you consider getting involved in helping create CVEs if it
-> is such an important resource, rather then just being a somewhat classic
-> "Free rider"
-> 
-> https://en.wikipedia.org/wiki/Free_rider_problem
+github requires account creation as well, and I'm sure we've all seen out
+of control comment threads there that had to be locked down to stop abuse.
 
-Would creating CVEs help with the reservations of already disclosed CVEs?
+-- 
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	  X.Org Security Response Team - xorg-security@...ts.x.org
 
-
-
-Sevan
