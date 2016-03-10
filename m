@@ -1,70 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/18/2
-Message-Id: <20160218002253.DAAF452E03D@smtpvbsrv1.mitre.org>
-Date: Wed, 17 Feb 2016 19:22:53 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/16
+Message-Id: <20160310173652.D548D33201D@smtpvbsrv1.mitre.org>
+Date: Thu, 10 Mar 2016 12:36:52 -0500 (EST)
 From: cve-assign@...re.org
-To: sinkmanu@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...ian.org
-Subject: Re: CVE Request: graphite-web: open redirect
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Announce: Portable OpenSSH 7.2p2 released
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://github.com/graphite-project/graphite-web/issues/1441
+>  * sshd(8): sanitise X11 authentication credentials to avoid xauth
+>    command injection when X11Forwarding is enabled.
 > 
-> two OpenRedirects in /webapp/graphite/account/views.py
+> http://www.openssh.com/txt/x11fwd.adv
 > 
-> Proof of Concept:
+> The contents of the credential's components (authentication
+> scheme and credential data) were not sanitised to exclude
+> meta-characters such as newlines.
 
->     http://graphiteSite/account/logout?nextPage=https://www.google.com
-
-Is there a response from the author of the code indicating that this
-is a vulnerability? Open redirects to http/https are not universally
-considered vulnerabilities for all vendors and products, e.g.,
-
-  https://sites.google.com/site/bughunteruniversity/nonvuln/open-redirect
-
-is probably the most well-known counterargument.
+Use CVE-2016-3115.
 
 
->     http://graphiteSite/account/update
->         POST: nextPage=https://www.google.com
+We also noticed this very recent entry in the Dropbear SSH changelog:
 
-What is the threat model for this open redirect issue that requires a
-POST request? Often, an attacker's ability to make a client submit a
-POST request with an attacker-controlled parameter means that the
-client is executing JavaScript code from an attacker-controlled site,
-and in that case the JavaScript can send the browser to an arbitrary
-http/https URL without any realistic ability of the client user to
-predict that that might occur. Is there a way in which the existence
-of http://graphiteSite/account/update helps the attacker to accomplish
-the redirect?
+> https://matt.ucc.asn.au/dropbear/CHANGES
+> 
+> 2016.72 - 9 March 2016
+> 
+> - Validate X11 forwarding input. Could allow bypass of authorized_keys command= restrictions,
+>   found by github.com/tintinweb. Thanks for Damien Miller for a patch.
 
-> Also, inside the logout and update functions, the session should be checked.
-
-What vulnerability are you reporting here? Are /account/logout and
-/account/update vulnerable to CSRF?
+Use CVE-2016-3116.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWxQ5TAAoJEL54rhJi8gl56toP/RgPonDpkFFnaK3k2vIfRsMy
-nnQzTUpalPdY3EbOv8LAhNy66ayVnUrL8ksQWtv6Y/ISU9R48ChAZGOARsbD0YTH
-bN2Lnvzni5AO6NXdaNXeqyKyTKz04uB3UgTAnZRWJuLmGUXFKBD/9GZgaiykw2v3
-lqPLExJdGYVncuSaKDzuh/Cqt6x6WDdL7zJK9XoqtqelrqCKCx3Evb7Zp2g6qAEd
-0nnp/RyYl3X84ym2w1gxAl/O7yavHKlxT53dWB0thsy6t0DZC5STj9bYn5sgLGtj
-V6c2xpVO39FpCJpjJrc41f6jr3G8cq7AY93HIpJA33E2P1B8PLiaOjgjCUAYG8Q+
-fO8EEWf4hpSGcwCHvWI+/RNdMNTW/IYlnqhTwmJ8tujHfb6tqw0eKqxCZEUL5pFV
-QHunbNM+UCMOZxqyGoiI/Hcvaj1iwjD1yUVHNyVkC5RjH3zvtU7lFm/ectUP5htx
-cws4bX47qlHCk0S6W+B4ea/6u4Ul8mlW/F2yxa/ZP3IINjCUuyB5CbFey3MLXcoL
-f5UYLEAgodYcVv4MuzYuccaEon/FVyL+i5jkZysMl/z6d7UnFAc8hdRMAdxw67wn
-87naZl4uxLk74bBAkjMAiu4CT5TQ2+3d8USisYzI5c1UVLnzpTFYef7DipWQ5l1a
-ZpcBByiMZgHSvw7WyKU0
-=14sK
+iQIcBAEBCAAGBQJW4bBqAAoJEL54rhJi8gl5tQEP/3580WbVSVM7XSOW3IyR5+GY
+ZoMmlEAafKV4BtSc/U/vlbvYSyLTQq7a2RPw8hWQrbjT8GPnE6YAxhYLC338eTIs
+UK0ETcZ04qbEglkvf3DFhWCdqrfQ9N8Qls00pebPa5nlIhUx8tf/qRt39Kle9hfJ
+T9Ni64gWYXIcRp2jXSlAeTHwuPqjZJpwLj1J18L+LKBytU07fxgaebdpeo9enakm
+z9ytFZZ95ibkvOr7aSLJ9QCLhD1pp1Lyuw0dWrcjcz7VZXMyvvAQTJ4aFKLWI/Zl
+Ygo8zBh0dKx82cGD1GyMRGtpryjYoNsq4FKKbe71qbCt2qVapHV9g0AZDf6AOZ2W
+vJ3j5md74cPllo06vuMpm8JhJQwOAqCe5wZG4WvOKy9h8ELy1DUlP+V6TFiF3GOm
+8ehk58oVAu8Isgex3I4uNkTf4vhlufut5TkC+JJAA3klJFVrgq57pSk2PSTpGZR2
+//RudkF3fjivbndn20CRF7Qb1TUh4aQj96+r/yxBYZk18717ACO/MBO/SgCs9DiE
+VOl2Hpo+sDyhenEinwFFu1uJebSQqiAnHAKmWbpKAYWdDErcuN6PE00uYr/RAUW0
+qFo8E6bjy8emNL/Zw16x+dYb41Khh8KJp0ROobxbdbUBTlXUgSX6d301X0ZAVNXT
+JyxLlvwg5t1U9NgpiTEX
+=Wyah
 -----END PGP SIGNATURE-----
