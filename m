@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2521" "Wednesday" "1" "February" "2017" "11:56:16" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20170201115616.08660970@pc1>" "80" "[oss-security] Multiple memory access issues in gstreamer" nil nil nil "2" "2017020110:56:16" "[oss-security] Multiple memory access issues in gstreamer" (number mark "U       hanno@hboeck Feb  1   80/2521  " thread-indent "\"[oss-security] Multiple memory access issues in gstreamer\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1671" "Thursday" "10" "March" "2016" "05:12:01" "-0700" "Damien Miller" "djm@openbsd.org" "<bffeab9e56b0b9ef@openbsd.org>" "46" "[oss-security] Announce: Portable OpenSSH 7.2p2 released" "^Date:" nil nil "3" "2016031012:12:01" "[oss-security] Announce: Portable OpenSSH 7.2p2 released" (number mark "        djm@openbsd. Mar 10   46/1671  " thread-indent "\"[oss-security] Announce: Portable OpenSSH 7.2p2 released\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17696 invoked by uid 550); 1 Feb 2017 10:56:32 -0000
+Received: (qmail 15438 invoked by uid 550); 10 Mar 2016 12:16:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,95 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11695 invoked from network); 10 Mar 2016 12:12:13 -0000
+Message-Id: <bffeab9e56b0b9ef@openbsd.org>
+Date: Thu, 10 Mar 2016 05:12:01 -0700 (MST)
+From: Damien Miller <djm@openbsd.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17666 invoked from network); 1 Feb 2017 10:56:30 -0000
-Date: Wed, 1 Feb 2017 11:56:16 +0100
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Subject: [oss-security] Announce: Portable OpenSSH 7.2p2 released
 To: oss-security@lists.openwall.com
-Message-ID: <20170201115616.08660970@pc1>
-X-Mailer: Claws Mail 3.14.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] Multiple memory access issues in gstreamer
 
-Hi,
+Portable OpenSSH 7.2p2 has just been released. It will be available
+from the mirrors listed at http://www.openssh.com/ shortly.
 
-https://gstreamer.freedesktop.org/releases/1.10/#1.10.3
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support. OpenSSH also includes
+transitional support for the legacy SSH 1.3 and 1.5 protocols that
+may be enabled at compile-time.
 
-gstreamer 1.10.3 got released, from the release notes:
-"Various fixes for crashes, assertions, deadlocks and memory leaks on
-fuzzed input files and in other situations"
+Once again, we would like to thank the OpenSSH community for
+their continued support of the project, especially those who
+contributed code or patches, reported bugs, tested snapshots or
+donated to the project. More information on donations may be found
+at: http://www.openssh.com/donations.html
 
-Here they are (at least the ones I reported):
+Changes since OpenSSH 7.2p1
+===========================
 
-https://bugzilla.gnome.org/show_bug.cgi?id=3D775450
-gst-plugins-good/aacparse: invalid memory read in
-gst_aac_parse_sink_setcaps
+This release fixes a security bug:
 
-https://bugzilla.gnome.org/show_bug.cgi?id=3D775451
-gst-plugins-good/qtdemux: out of bounds read in qtdemux_tag_add_str_full
+ * sshd(8): sanitise X11 authentication credentials to avoid xauth
+   command injection when X11Forwarding is enabled.
 
-https://bugzilla.gnome.org/show_bug.cgi?id=3D777262
-gst-plugins-base/riff-media: floating point exception in
-gst_riff_create_audio_caps
+   Full details of the vulnerability are available at:
+   http://www.openssh.com/txt/x11fwd.adv
 
-https://bugzilla.gnome.org/show_bug.cgi?id=3D777263
-gstreamer core/datetime: out of bounds read in
-gst_date_time_new_from_iso8601_string()
+Checksums:
+==========
 
-https://bugzilla.gnome.org/show_bug.cgi?id=3D777265
-gst-plugins-base/riff: stack overflow in gst_riff_create_audio_caps
+ - SHA1 (openssh-7.2p2.tar.gz) = 70e35d7d6386fe08abbd823b3a12a3ca44ac6d38
+ - SHA256 (openssh-7.2p2.tar.gz) = pyeB0aBDh2oiT/GwAy2qQJTYdWWmhSh1nBwsq1SCVIw=
 
-https://bugzilla.gnome.org/show_bug.cgi?id=3D777469
-gst-plugins-good/qtdemux: out of bounds heap read in
-qtdemux_parse_samples
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available as RELEASE_KEY.asc from
+the mirror sites.
 
+Reporting Bugs:
+===============
 
-https://bugzilla.gnome.org/show_bug.cgi?id=3D777500
-gst-plugins-good/avidemux: gst_avi_demux_parse_ncdt heap out of bounds
-read
+- Please read http://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@openssh.com
 
-https://bugzilla.gnome.org/show_bug.cgi?id=3D777502
-gst-plugins-base/samiparse: heap oob in html_context_handle_element
+OpenSSH is brought to you by Markus Friedl, Niels Provos, Theo de
+Raadt, Kevin Steves, Damien Miller, Darren Tucker, Jason McIntyre,
+Tim Rice and Ben Lindstrom.
 
-https://bugzilla.gnome.org/show_bug.cgi?id=3D777503
-gst-plugins-bad/mxfdemux: use after free in gst_mini_object_unref /
-gst_tag_list_unref / gst_mxf_demux_update_essence_tracks
-
-https://bugzilla.gnome.org/show_bug.cgi?id=3D777525
-gst-plugins-base: floating point exception in gst_riff_create_audio_caps
-(different than #777262)
-
-https://bugzilla.gnome.org/show_bug.cgi?id=3D777532
-gst-plugins-good/avidemux: invalid memory read in
-gst_avi_demux_parse_ncdt
-
-https://bugzilla.gnome.org/show_bug.cgi?id=3D777937
-gst-plugins-ugly/asfdemux: invalid memory read in
-gst_asf_demux_process_ext_stream_props()
-
-
-
-And more that didn't make it into 1.10.3:
-
-https://bugzilla.gnome.org/show_bug.cgi?id=3D777955
-gst-plugins-ugly/asfdemux: out of bounds read in
-gst_asf_demux_process_ext_content_desc
-
-https://bugzilla.gnome.org/show_bug.cgi?id=3D777957
-gst-plugins-bad/mpegdemux: Invalid memory read in gst_ps_demux_parse_psm
-
-
-(example files are always attached or linked in the bug reports)
-
-I also reported multiple other issues like memory leaks or hangs which
-I consider have no security relevance.
-
-
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
-
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
