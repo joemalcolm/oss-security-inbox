@@ -1,18 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/26/11
-Message-ID: <ca1aba26-a8e0-57b4-7bd7-7ff1bf26ceb6@oracle.com>
-Date: Mon, 26 Sep 2016 17:59:57 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/14
+Message-ID: <20160310170710.GM1250@sentinelchicken.org>
+Date: Thu, 10 Mar 2016 09:07:11 -0800
+From: Tim <tim-security@...tinelchicken.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-7545 -- SELinux sandbox escape
+Subject: Re: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-On 26/09/16 17:54, Jakub Wilk wrote:
-> Are there any use cases for TIOCSTI other than producing exploits?
+> > I'm one of the admins of the public bugzilla at bugs.freedesktop.org, and
+> > I've had to deal with spam there, and I've seen reports of spams in other
+> > public bugzillas for open source projects.
+> > 
+> > github requires account creation as well, and I'm sure we've all seen out
+> > of control comment threads there that had to be locked down to stop abuse.
+> > 
+> 
+> Then the next level is to require not only e-mail validation but also to
+> solve a captcha for creating a new account.
+> 
+> Or even harder, to require any account with less than 10 comments to
+> solve a captcha for any new comment. That way the annoyance for legit
+> users is temporal (up to the 10th comment), meanwhile for spammers is
+> not, because their account is probably going to be blocked before they
+> reach the 10th comment and have to start again with a new account.
+> 
+> I'm not saying that some level of moderation is required. Of course it
+> is. But I think that if proper antispam measures are implemented, then
+> the level of moderation required is relatively low, and can be done by
+> the bugzilla admins without much effort.
 
-Yes.  Admitedly a long time ago, but I used to use it to run commands in
-a nominated shell (window).   In some ways it was a pre-cursor to what
-now tends to be done by dbus, but TIOCSTI does occasionally have uses
-other than producing exploits.
 
-jch
+Right, this is my thinking as well.  If you create very high barriers
+to automated spamming, and protect against DDoS, then the level of
+manual spam should be low enough that minimal moderation would be
+required.  Of course you could also start white listing people who
+have posted more than N approved comments, etc.  And apply some
+bayesian filters on new postings from unknown people.  It's all
+doable, and likely less work than what the CVE moderators have to do
+now.  The hard work is building the system initially and finding a way
+to get enough volunteers involved for distributed hosting and
+moderation.
+
+tim
