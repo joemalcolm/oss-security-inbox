@@ -1,160 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/11
-Message-ID: <20160504094225.GA12893@openwall.com>
-Date: Wed, 4 May 2016 12:42:25 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: David Moreno Montero <dmoreno@...albits.com>, Zachary Grafton <zachary.grafton@...il.com>, Remi Birot-Delrue <asgeir@...e.fr>
-Subject: libonion 0.8 contains security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/6
+Message-ID: <etPan.56e0cfd4.9be1f21.1ae@MonkeyBook>
+Date: Wed, 9 Mar 2016 20:37:24 -0500
+From: John Scott <jms3rd@...il.com>
+To: oss-security@...ts.openwall.com, cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>,  "Boyle, Stephen V." <sboyle@...re.org>, "David A. Wheeler" <dwheeler@...eeler.com>
+Subject: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Could this process be a whole lot less opaque? It seems there are more smart people outside the room who would love to participate, help, etc. than are inside MITRE.
+Maybe this whole thing could be turned into a public/private partnership with one of the larger  groups, OSI, Linux Foundation, etc. 
+js
 
-onion is "C library to create simple HTTP servers and Web Applications."
+-------------------------------------------
+John Scott
+ 240.401.6574
+< jms3rd@...il.com >
+http://powdermonkey.blogs.com
+@johnmscott
 
-http://coralbits.com/libonion/
+On March 9, 2016 at 3:29:42 PM, Boyle, Stephen V. (sboyle@...re.org) wrote:
 
-Version 0.8 was released recently:
+Hi Kurt and David,  
 
-https://github.com/davidmoreno/onion/tree/onion-0-8
+The CVE team is holding a series of internal meetings related to the referenced issues, including one tomorrow. There is not a meeting with the Editorial Board (or a subset of Editorial Board members) scheduled for or being held tomorrow.  
 
-Changes in this version, as well as in the master branch, include some
-security fixes.
+We would like to propose an Editorial Board meeting to address issues related to CVE operations, scalability, and community feedback, as was first suggested by Kent Landfield on January 5, 2016. (Full discussion thread available at: http://common-vulnerabilities-and-exposures-cve-editorial-board.1128451.n5.nabble.com/CVE-Advancements-tt81.html)  
 
-In particular, when the library is built with Linux epoll support and is
-used in the pool of threads mode, as invoked with onion_new(O_POOL),
-there was a file descriptor and data race condition between handling of
-epoll events and timeout events.  The code is using EPOLLONESHOT to
-avoid epoll event vs. epoll event races, but it is detecting and
-handling timeouts manually, operating on the same file descriptors and
-shared data structures (connection slots) that epoll operates on.  It's
-only after I figured this out, with some help from David Moreno Montero
-(onion upstream), and came up with a workaround, based on Rich Felker's
-idea, that I found this had previously been observed and reported as a
-GitHub issue by MoZhonghua on July 30, 2015:
+The internal meetings referenced above will enable us to come to that Editorial Board meeting with specific recommendations and proposed next steps.  
 
-https://github.com/davidmoreno/onion/issues/116
+Best Regards,  
+The MITRE CVE Team  
 
-Apparently, the issue was easily unintentionally triggerable, without
-even a stress-test, with onion's default hard-coded epoll_wait()
-maxevents of 10.  I was using maxevents of 1 for unrelated reasons (and
-this has since become the default), which made the problem much harder
-to trigger: it took over 30 million HTTP requests at 10k requests/second
-for me to trigger the problem in my stress-testing of an onion-using
-application.  However, this very first crash I triggered, running the
-application under gdb, resulted in attempted execution of a portion of
-an HTTP request or response as code: the freed memory where a connection
-slot structure had been was reused in such a way that a data pointer
-appeared just where the handler function pointer had been.  On another
-occasion, with a later upstream revision with a partial workaround in
-place, I had it crash on attempting to make the handler function call
-over the pointer, which was directly replaced with data.  The latter
-condition was more likely exploitable on modern systems (where the
-malloc()'ed HTTP request and response data is non-executable, so need to
-use borrowed rather than injected code).
+-----Original Message-----  
+From: Kurt Seifried [mailto:kseifried@...hat.com]  
+Sent: Wednesday, March 09, 2016 2:06 PM  
+To: David A. Wheeler <dwheeler@...eeler.com>; cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>  
+Cc: oss-security <oss-security@...ts.openwall.com>  
+Subject: Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies  
 
-A mitigating factor is that unless a given application (or a wrapper)
-has respawn functionality, there's only one chance to try exploiting the
-bug.  Another mitigating factor is that epoll, especially with the
-specific features used by the code, only exists on modern Linux (so
-having this code run on a system with executable malloc()'ed data and
-without ASLR is unlikely).
+On Wed, Mar 9, 2016 at 12:04 PM, David A. Wheeler <dwheeler@...eeler.com>  
+wrote:  
 
-This issue is currently believed to be worked around for good with this
-pull request, included in 0.8:
+> All - I've chatted with some of the people who fund the CVE work at MITRE.  
+> I've learned that CVEs *are* being issued, but obviously that is happening  
+> too slowly.  
+>  
+> They're having a meeting tomorrow (March 10) to try to figure out what  
+> the problems are and how to fix it. I don't know what they'll do.  
+> However, I'm hopeful that this will mean that the CVE work will get  
+> back on track soon.  
+>  
+> --- David A. Wheeler  
+>  
 
-https://github.com/davidmoreno/onion/pull/167
+This is literally the first I'm hearing of this, will any board members be  
+present?  
 
-The important commits are:
 
-commit 4e111f30c1adf0ba0d5814a24f904dea35310a37
-Author: Solar Designer <solar@...nwall.com>
-Date:   Sun Mar 27 19:16:04 2016 +0300
+--  
 
-    Complete the implementation of Rich Felker's idea (partially introduced
-    with commit c80c46d5ff842291f0cce3917e7b8340c43d4315) to shutdown()
-    rather than close() on timeout, so that the fd is held until after
-    another one-shot epoll event arrives.  This way, we don't close the fd
-    (thereby not freeing it for possible reuse just yet) and don't free the
-    slot asynchronously to a possible event for the same slot on another
-    thread.  When we do receive another event for the shutdown() fd, we
-    expect that no concurrent event is being processed for the same fd and
-    the same slot due to the one-shot property of the epoll instance.
-    In other words, we postpone the potential fd and slot memory reuse until
-    after we're out of the asynchronous timeout handling and into the
-    per-slot synchronous one-shot event handling.
+--  
+Kurt Seifried -- Red Hat -- Product Security -- Cloud  
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993  
+Red Hat Product Security contact: secalert@...hat.com  
 
-    Handle timeouts in busy servers more optimally: check for them once per
-    second (and per thread for now) rather than once per event.
-
-commit 0ba14e54ab2c8bee9de68b98db084220cccb2234
-Author: Solar Designer <solar@...nwall.com>
-Date:   Sun Mar 27 19:31:52 2016 +0300
-
-    On the first call to onion_poller_slot_new(), pre-allocate memory for
-    all slots based on the maximum number of fd's allowed for the program
-    (the currently effective limit for RLIMIT_NOFILE, or 1000000 at most).
-    This assumes that the first call to onion_poller_slot_new() doesn't need
-    to be MT-safe (it is expected to be for a listening fd).
-
-    Rationale:
-    1. Reduced impact of premature slot memory reuse bugs (now accessing a
-    reused slot rather than arbitrarily reused memory) in case any are left
-    or are reintroduced later or a new kernel version doesn't fully enforce
-    the epoll one-shot property.
-    2. Performance improvement (one calloc()/free() less per connection).
-
-I've just assigned OVE-20160504-0004 to the onion pre-0.8 epoll event
-vs. timeout handling race conditions.
-
-There may still be issues with fd's getting closed on error by other
-parts of onion, which would trigger races in the poller again.  In that
-case, the additional change to memory allocation as described above
-should help reduce the impact.  Once identified, these issues would need
-their own fixes (and their own tracking IDs, if anyone cares).
-
-Another likely security issue fixed in 0.8 was found and fixed by
-Zachary Grafton:
-
-https://github.com/davidmoreno/onion/pull/161
-
-commit 2e54d367b804f8a803c700065b17edd70afdf615
-Author: Zachary Grafton <zachary.grafton@...il.com>
-Date:   Tue Mar 15 08:57:28 2016 -0400
-
-    Fix issue with html quoting and a buffer overflow.
-
-    We were incorrectly calculating the size of the new string, &amp; is 5
-    characters and not 4. This creates a buffer overflow condition in
-    onion_html_quote.
-
-I've just assigned OVE-20160504-0005 to this issue.
-
-There's also, with unclear security relevance/impact, but potentially
-just as bad:
-
-commit c4f137f2d4c0b09657ae105ae6f133e9cec481a1
-Author: Remi Birot-Delrue <asgeir@...e.fr>
-Date:   Sat Apr 16 18:20:04 2016 +0200
-
-    Fix bugs in onion_response_vprintf.
-
-    For input (format string + arguments) larger than 512 bytes:
-    - A null byte was written at the end of input;
-    - the variadic list was used a second time without initialization, causing segfaults.
-
-I've just assigned OVE-20160504-0006 to this issue.
-
-There are probably more.  Basically, if you're using onion, consider
-upgrading to 0.8 now.
-
-FWIW, my current opinion of onion is: friendly and helpful upstream,
-healthy community, but I wish code quality were much better.
-
-There's a good list of other embeddable HTTP server libraries at:
-
-https://www.gnu.org/software/libmicrohttpd/
-
-(scroll down to "Alternatives"), as well as indeed libmicrohttpd itself.
-
-Alexander
