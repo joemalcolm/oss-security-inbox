@@ -1,67 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/17
-Message-ID: <20160504124248.GA15148@openwall.com>
-Date: Wed, 4 May 2016 15:42:48 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: broken RSA keys
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/5
+Message-ID: <20160310094228.GD4470@suse.de>
+Date: Thu, 10 Mar 2016 10:42:28 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>, security@....net, cve-assign@...re.org
+Subject: CVE Request: PHP last release security issues
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-As many of you know, the projects factorable.net and Phuctor have
-identified some weak RSA keys in the wild - on (key)servers or submitted
-to those projects.  This does not necessarily mean that the weak keys
-were generated as such in all cases - it can as well be that keys got
-mangled later.  (In fact, this has spurred heated debate and insults.
-Luckily, that's not the primary topic of my message, so I don't have to
-refer to it more directly risking to bring that controversy in here.
-Let's just not go into that direction at all.)
+PHP released a round of security updates, but no CVEs have apparently been assigned.
 
-Now to the point: some of the keys do look to me like they're a result
-of software bugs in key generation.  Specifically, as it was noticed and
-noted by many before, Phuctor's list of broken keys includes many with
-non-prime e of the form intended_e*(2^32+1) - that is, with the 32-bit
-value duplicated across 64 bits.  (I wrote it that way to show that all
-such e's are non-prime.)
+from http://php.net/ChangeLog-7.php#7.0.4
 
-When looking into this a few days ago, I found that OpenSSL 0.9.5a (and
-earlier?), which was current in year 2000, had a bug that would result
-in behavior just like this on some 64-bit platforms:
+	https://bugs.php.net/bug.php?id=71610	Type Confusion Vulnerability - SOAP / make_http_soap_request()
 
-http://marc.info/?l=openssl-users&m=95961024500509
+from http://php.net/ChangeLog-5.php#5.6.19
+and http://php.net/ChangeLog-5.php#5.5.33
 
-I've also checked libgcrypt's code since its commit history start in
-1997 and to latest.  Its RSA e setup looks OK to me: it uses libgcrypt's
-own *mpi*_set_ui(), which just set first limb without going to bit level.
+	https://bugs.php.net/bug.php?id=71498	Out-of-Bound Read in phar_parse_zipfile()
+	https://bugs.php.net/bug.php?id=71587	Use-After-Free / Double-Free in WDDX Deserialize
 
-Additionally, both Phuctor's list and Hanno Bock's list of GCDs include
-many small factors that also exhibit 32-bit value duplication.  To me,
-this speaks in favor of there being a bignum library bug like this.
-A bug that not only duplicates the least significant 32 bits onto the
-next 32 bits, but also keeps the rest of the limbs at all-zeroes.  There
-are even weirder examples, though - e.g., one of Phuctor's factors is
-0x115CFF61CFECFF61BE9, where we see three 32-bit limbs satisfying:
+There are more bugs in the release announcements with trigger words like
+integer overflow or use-after-free, but several if not all of those need
+specific PHP code, so basically self-exploitation.
 
-limb[1] = limb[0] + limb[2]
+Perhaps the PHP security team can fill in if I missed some or one of the above is not an issue.
 
-and also limb[2] is small and thus likely didn't come from a CSPRNG, but
-possibly from uninitialized memory.
-
-We may want to review other RSA and general bignum libraries for bugs
-that would match these patterns, although that's probably not any easier
-than just reviewing them for any bugs in related code paths.  It is
-likely that something more recent than OpenSSL 0.9.5a still has a bug of
-this sort (besides, that OpenSSL bug can't explain the 3-limb
-relationship in a factor, above).  Indeed, that "something" might turn
-out not to be open source, but we would care about and would be
-reviewing the open source libraries and programs - hence posting in here
-for now.  Any volunteers?  Please post to these thread about whatever
-you've reviewed, even if you came to the conclusion it probably isn't
-buggy (like I did for libgcrypt's e setup).
-
-Alexander
-
-P.S. I've attached the OpenSSL bug posting from 2000, for archival.
-
-View attachment "openssl-rsa-e-bug.txt" of type "text/plain" (1559 bytes)
+Ciao, Marcus
