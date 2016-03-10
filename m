@@ -1,39 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/12/1
-Message-ID: <CALJHwhTAvhAB0DPe2m7h1X_uoz9R5adTOpr-YVXUd6pX3WVNyg@mail.gmail.com>
-Date: Tue, 12 Jul 2016 14:33:54 +1000
-From: Wade Mealing <wmealing@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-5389: linux kernel - challange ack information leak.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/20
+Message-ID: <CANO=Ty3Gws1VO5CVr_sAw4Kzjk=1uO+xi3KjdabH7-o6yv0ikg@mail.gmail.com>
+Date: Thu, 10 Mar 2016 12:34:52 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+On Thu, Mar 10, 2016 at 12:25 PM, Tim <tim-security@...tinelchicken.org>
+wrote:
 
-Red Hat Product Security has been made aware of an important issue in
-the Linux kernel's implementation of challenge ACKS as specified in
-RFC 5961. An attacker which knows a connections client IP, server IP
-and server port can abuse the challenge ACK mechanism
-to determine the accuracy of a normally 'blind' attack on the client or server.
+> > It's git. You can trivially keep an entire copy the databases trivially.
+> It
+> > can be hosted in many places. We'd have to redo the issue tracking, but
+> > bugtracking systems are not exactly hard anymore.
+>
+> I see that as only one component of having a distributed database.
+> Who's running the cron job that constantly pulls down updates from the
+> github server?  How do you ensure it's synced up when a legal threat
+> causes the main repo to go black?
+>
 
-Successful exploitation of this flaw could allow a remote attacker to
-inject or control a TCP stream contents in a connection between a
-Linux device and its connected client/server.
+Whoever wants to. It's public. Can you give me a real world example of this
+BTW, or are we just worrying about things that pretty much never happen in
+real life, but make for fun email threads?
 
-* This does NOT mean that cryptographic information is exposed.
-* This is not a Man in the Middle (MITM) attack.
 
-This was reported to Red Hat by Yue Cao, part of the Cyber Security
-Group in the University of California
+> > See above. That's the whole point of the artifacts database. Please
+> reread
+> > my original email maybe?
+>
+> > I am of course open to feedback, but please actually go to
+> > https://github.com/distributedweaknessfiling/ and see what we're doing
+> > first before assuming we aren't doing certain things (like making sure
+> the
+> > artifacts associated with a security vuln don't disappear).
+>
+> I did look.  Sorry I missed the artifacts.  The git repos and
+> documentation make it far from obvious where that info lies.
 
-Thanks,
+Ok so is "A database of artifacts, files and related files for DWF
+> entries (so that when websites disappear the required content is
+> hopefully still available)" in an email the sum of your documentation
+> on that right now?  Just want to be sure I didn't miss something else.
+>
 
-Wade Mealing
-Red Hat Product Security Team
+Not clear what your question is.
 
-Red Hat Bugzilla:
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1354708
+> Do you have ideas on how to capture vendor advisories?  Vendors are
+> almost certainly, in 99% of cases, going to ignore the DWF for a long
+> time.  Perhaps forever.  We're currently lucky to get many of them to
+> even include a CVE # in their own advisory.  How can that information
+> be captured without moderators having to do all the work?  Have you
+> thought about how we can deal with the copyright issues associated
+> with copying vendor content directly into the DWF for archival?
+>
 
-Patch:
+Vendors can submit them, to get your DWF # officially in the database you
+also need to be willing to post the artifacts. So that's the big carrot for
+a lot of researchers (official recognition which they can then use on their
+resume/etc.).
 
-https://www.mail-archive.com/netdev@vger.kernel.org/msg118677.html
+
+>
+> What I'm thinking is that perhaps there's a way to make vendors *want*
+> to post information.  Also, perhaps there could be a way to license
+>
+
+Well with CVE we've already crossed that bridge for the ones that care,
+they (like Red Hat) post CVEs, the vendors that don't care, well, they'll
+continue to not care until customers speak up. One hope I have is that
+getting more identifiers for issues that researchers find will give
+customers the data they need to make informed decisions and maybe pressure
+companies into behaving better.
+
+
+> DWF numbering in such a way that vendors implicitly agree that the DWF
+> can re-publish.  Or maybe there's a way to work with the Internet
+> Archive to have third-party URLs archived automatically when they are
+> first posted.  See:
+>  https://archive-it.org/learn-more/
+>
+> tim
+>
+
+
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
