@@ -1,38 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/24/8
-Message-ID: <CAPVVMa_M_c8_kTWep-19+kTDZ6Www-JwqHn5SYhkgvcFvDoFEA@mail.gmail.com>
-Date: Tue, 24 May 2016 06:09:35 -0600
-From: Tim Bain <tbain@...mni.duke.edu>
-To: ActiveMQ Users <users@...ivemq.apache.org>
-Cc: dev@...ivemq.apache.org,  Apache Security Response Team <security@...che.org>, bugtraq@...urityfocus.com,  oss-security@...ts.openwall.com
-Subject: Re: [ANNOUNCE] CVE-2016-3088: ActiveMQ Fileserver web application vulnerabilities﻿
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/19
+Message-ID: <56E1CB2B.7020109@trylinux.us>
+Date: Thu, 10 Mar 2016 11:29:47 -0800
+From: "Zach W." <kestrel@...linux.us>
+To: oss-security@...ts.openwall.com
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-Does the range of versions specified mean that the issue is already
-addressed in 5.13.3, or was its omission from the range an oversight?
+Hello Tim,
 
-Tim
-On May 24, 2016 2:41 AM, "Dejan Bosanac" <dejan@...httale.net> wrote:
+This is all great info.
 
-> There's a security vulnerability reported against Apache
-> ActiveMQ 5.13.2 and older versions.
+Can you please add this to the feedback on the repo?
+
+Zach W.
+On 3/10/2016 11:25 AM, Tim wrote:
+>> It's git. You can trivially keep an entire copy the databases trivially. It
+>> can be hosted in many places. We'd have to redo the issue tracking, but
+>> bugtracking systems are not exactly hard anymore.
+> I see that as only one component of having a distributed database.
+> Who's running the cron job that constantly pulls down updates from the
+> github server?  How do you ensure it's synced up when a legal threat
+> causes the main repo to go black?  
 >
-> Please check the following document and see if you’re affected by the
-> issue.
+>> See above. That's the whole point of the artifacts database. Please reread
+>> my original email maybe?
+>> I am of course open to feedback, but please actually go to
+>> https://github.com/distributedweaknessfiling/ and see what we're doing
+>> first before assuming we aren't doing certain things (like making sure the
+>> artifacts associated with a security vuln don't disappear).
+> I did look.  Sorry I missed the artifacts.  The git repos and
+> documentation make it far from obvious where that info lies.
+>
+> Ok so is "A database of artifacts, files and related files for DWF
+> entries (so that when websites disappear the required content is
+> hopefully still available)" in an email the sum of your documentation
+> on that right now?  Just want to be sure I didn't miss something else.
 >
 >
-> http://activemq.apache.org/security-advisories.data/CVE-2016-3088-announcement.txt
+> Do you have ideas on how to capture vendor advisories?  Vendors are
+> almost certainly, in 99% of cases, going to ignore the DWF for a long
+> time.  Perhaps forever.  We're currently lucky to get many of them to
+> even include a CVE # in their own advisory.  How can that information
+> be captured without moderators having to do all the work?  Have you
+> thought about how we can deal with the copyright issues associated
+> with copying vendor content directly into the DWF for archival?
 >
-> Vulnerability is similar to the one reported in CVE-2015-1830 (
+> What I'm thinking is that perhaps there's a way to make vendors *want*
+> to post information.  Also, perhaps there could be a way to license
+> DWF numbering in such a way that vendors implicitly agree that the DWF
+> can re-publish.  Or maybe there's a way to work with the Internet
+> Archive to have third-party URLs archived automatically when they are
+> first posted.  See:
+>  https://archive-it.org/learn-more/
 >
-> http://activemq.apache.org/security-advisories.data/CVE-2015-1830-announcement.txt
-> ).
-> The fileserver web application will be removed in 5.14.0 release and users
-> are advised not to use it and disable it in older versions.
->
-> Regards
-> --
-> Dejan Bosanac
-> about.me/dejanb
->
+> tim
 
