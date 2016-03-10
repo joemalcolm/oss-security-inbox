@@ -1,21 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/14
-Message-ID: <CAHzNyaB1R5s4PN3v6DgZori6Txv6tV_6WOgkcjWmLpMYafvgYQ@mail.gmail.com>
-Date: Thu, 8 Dec 2016 16:00:04 +0100
-From: Casper Thomsen <ct@...arhaus.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/8
+Message-Id: <bffeab0724ff5bab@openbsd.org>
+Date: Thu, 10 Mar 2016 05:10:52 -0700 (MST)
+From: Damien Miller <djm@...nbsd.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Ruby:HTTP Header injection in 'net/http'
+Subject: OpenSSH Security Advisory: xauth command injection
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jun 25, 2016 at 6:18 AM, redrain root <rootredrain@...il.com> wrote:
-> I would like to report a HTTP Header injection vulnerability in
-> 'net/http' that allows attackers to inject arbitrary headers in
-> request even create a new evil request.
+OpenSSH Security Advisory: x11fwd.adv
 
-By the way, this was fixed in Excon back then.
+This document may be found at: http://www.openssh.com/txt/x11fwd.adv
 
-https://github.com/excon/excon/compare/4aa6548313188f3fa6ba6f556f49aead107b5881...107111759c945d2cac9b57ba5716e1b9a9055126
+1. Affected configurations
 
-Regards,
--- 
-Casper Thomsen
+        All versions of OpenSSH prior to 7.2p2 with X11Forwarding
+	enabled.
+
+2. Vulnerability
+
+	Missing sanitisation of untrusted input allows an
+	authenticated user who is able to request X11 forwarding
+	to inject commands to xauth(1).
+
+	Injection of xauth commands grants the ability to read
+	arbitrary files under the authenticated user's privilege,
+	Other xauth commands allow limited information leakage,
+	file overwrite, port probing and generally expose xauth(1),
+	which was not written with a hostile user in mind, as an
+	attack surface.
+
+	xauth(1) is run under the user's privilege, so this
+	vulnerability offers no additional access to unrestricted
+	accounts, but could circumvent key or account restrictions
+	such as sshd_config ForceCommand, authorized_keys
+	command="..." or restricted shells.
+
+3. Mitigation
+
+        Set X11Forwarding=no in sshd_config. This is the default.
+
+	For authorized_keys that specify a "command" restriction,
+	also set the "restrict" (available in OpenSSH >=7.2) or
+	"no-x11-forwarding" restrictions.
+
+4. Details
+
+        As part of establishing an X11 forwarding session, sshd(8)
+	accepts an X11 authentication credential from the client.
+	This credential is supplied to the xauth(1) utility to
+	establish it for X11 applications that the user subsequently
+	runs.
+
+	The contents of the credential's components (authentication
+	scheme and credential data) were not sanitised to exclude
+	meta-characters such as newlines. An attacker could
+	therefore supply a credential that injected commands to
+	xauth(1). The attacker could then use a number of xauth
+	commands to read or overwrite arbitrary files subject to
+	file permissions, connect to local ports or perform attacks
+	on xauth(1) itself.
+
+	OpenSSH 7.2p2 implements a whitelist of characters that
+	are permitted to appear in X11 authentication credentials.
+
+5. Credit
+
+        This issue was identified by github.com/tintinweb and
+	communicated to the OpenSSH developers on March 3rd, 2016.
+
+6. Fix
+
+        Portable OpenSSH 7.2p2 contains a fix for this vulnerability.
+
+	Patches for supported OpenBSD releases (5.7, 5.8 and 5.9) have
+	been committed to the -STABLE branches and are available on the
+	errata pages:
+
+	http://www.openbsd.org/errata57.html
+	http://www.openbsd.org/errata58.html
+	http://www.openbsd.org/errata59.html
