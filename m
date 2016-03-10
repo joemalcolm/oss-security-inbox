@@ -1,66 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/29/7
-Message-Id: <20160729170334.5334AB2E0A7@smtpvbsrv1.mitre.org>
-Date: Fri, 29 Jul 2016 13:03:34 -0400 (EDT)
-From: cve-assign@...re.org
-To: huzaifas@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: nettle's RSA code is vulnerable to cache sharing related attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/17
+Message-ID: <CANO=Ty2OU8mLGaEwsgYEYraOYvXggXiWYr5t_NsAcvkGMg5vRw@mail.gmail.com>
+Date: Thu, 10 Mar 2016 11:09:36 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, Mar 10, 2016 at 10:33 AM, Timothy D. Morgan <
+tim-security@...tinelchicken.org> wrote:
 
-> The following whitepaper talks about libgcrypt's RSA code being
-> vulnerable to a cache timing attack, which the paper claims is fixed in
-> 1.6.3.
+>
+> Hi Kurt,
+>
+> I don't mean to ignore what you guys have been working on.  It is
+> arguably the most mature of the alternatives so far, and we need
+> people experimenting with real tools right now.  All I was trying to
+> point out was that we should keep this discussion going even if MITRE
+> gets their act together in the short term.
+>
+> More comments below.
 
-As far as we can tell, your message did not provide a link to a
-whitepaper, and any attachment did not arrive either through direct
-email or in any of the oss-security list archives.
 
-> It seems nettle is also vulnerable to this flaw. Which was confirmed by
-> upstream via:
-> https://lists.lysator.liu.se/pipermail/nettle-bugs/2016/003093.html
-> 
-> The above link also contains a proposed patch, will be committed soon.
+> Looking at DWF, it seems to have a few advantages over CVE,
+> particularly for researchers, but it's hardly what I would hope for as
+> a solution for the public.  Please view this as *constructive*
+> criticism:
+>
+> * It is unclear to me on how the system is currently "distributed".
+>   Yeah, it's in git, but that basically means it is just hosted on
+>   GitHub.  What if GitHub's policies change tomorrow on distribution
+>   of vulnerability information?  I imagine you've thought about this,
+>   so I'm probably just pointing out the obvious.
+>
 
-We think the commit already occurred:
+It's git. You can trivially keep an entire copy the databases trivially. It
+can be hosted in many places. We'd have to redo the issue tracking, but
+bugtracking systems are not exactly hard anymore.
 
-  https://git.lysator.liu.se/nettle/nettle/commit/3fe1d6549765ecfb24f0b80b2ed086fdc818bff3
 
-> I would like to request a CVE id for the flaw in nettle.
+> * There's no facility to describe anything about the vulnerabilites in
+>   the DWF-database.  As you've probably seen from my past emails, I'm
+>   arguing for a system that tracks more than just metadata and links.
+>   (DWF doesn't appear to have links or even simple descriptions.)
+>
 
-Use CVE-2016-6489 for the vulnerability that was fixed in
-3fe1d6549765ecfb24f0b80b2ed086fdc818bff3.
+Correct, that is intentional. The database is just the ID and
+assignee/requester/etc. THe Database schema would never be close to
+correct/complete so I decided not to have one. The Artifacts Database
+contains all that data, there will be a JSON file(s) with some semi
+structured data (e.g. OSVDB, X-Force IDs, original researcher/etc.) and
+then any artifacts (e.g. a copy of a security report, patch file,
+whatever).
 
-At this point, we are not assigning any CVE IDs for potential
-"incomplete fix" issues mentioned in the 003093.html post, such as
-"The CRT code used for RSA signing uses other functions which may
-leak, in particular division functions with branches depending on
-secret data ... exponents use a normalized size field (so top limb is
-non-zero). This might still leak information about the top exponent
-bits ... Mini-gmp builds don't try to be side-channel silent."
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+> The "end user" (sys admins, pentesters, other auditors) need a
+> database of vulnerability information that is actually useful and
+> isn't going to go away.   Tomorrow your vuln scanner finds a box
+> missing a patch in obscure software X from 5 years ago.  All patch
+> info and researcher info has been taken offline.  How do you
+> represent that risk to your management?  If the software is no longer
+> supported by the vendor, but it is still in production in your org,
+> how do you argue for funds to replace the software?  THIS HAPPENS ALL
+> OF THE TIME.
+>
 
-iQIcBAEBCAAGBQJXm4v1AAoJEHb/MwWLVhi2e1gP+wSLsNAZzwAJjOhLjYX2vzob
-CjfELfdo2uvAJvfydPIUD+T4j0gnHuSAPXJEtXwC9VdRPla5J202B2admS2wnKk+
-AXy14vW3trEYvcs4Gp7uqMMoS6K1Qb+rnbOOTsYKcirUk8Ml6yuHS9wDugUwrlyg
-G9VipRYFZCSz0pqiz4Lv1mc4ViMz7uQbUZ9oPWthwr8RDhJebdXlab1Co5FwPf8s
-IUOrubPlH/rSGsJ/zSWE3HsP8Qcfe3Mg7Rph4mqYiv/amefRcABjyKSo2lgGUcdZ
-RoM148KjY+3ys5hEwgYGv4PL7lkm698/lShsgBjyTlyQYpCRHMywBzK9ZorgZA49
-Mt+bghgMJEPilWxzwVsoQ53vPjs4IH4p8O1ba0NeBYfX/Crd9q25NMV7FCzzkO1R
-H8yRdITvBg9DmDifvWJT9mlnKmtkHEg3sPYr0QSVWI5qUKo4v1XYnNrr9K88rUUq
-+ai5/h13gN2hIQW6sc+S/01jO30X4rfL6+REhqz3ri8mi3LRLxj1n8ElaQEO/ulh
-USC88qdZpMDIwLl5e3WL11CjZ9EbtxGaFLwzScCm5cFXPPqZmVp1h7iX90380ItT
-rRzJ9sfCew+bWFly7l60oefy+OP8u2mIbUMK+dzzm5dkcu+n67uMWB3Rb2/64OpO
-WDByvQZt5Gaz6zeYp81s
-=Z0L4
------END PGP SIGNATURE-----
+See above. That's the whole point of the artifacts database. Please reread
+my original email maybe?
+
+
+> We literally need a way to copy/paste vendor and researcher
+> advisories, when the bug is first published, into a central database.
+> (Of course there's copyright/IP concerns there, but if it is valuable
+> to the community, that can be worked out.)  You can argue that this
+> archival should be handled by third-party databases, but pretty much
+> all of them are commercial and many have gone offline years after
+> inception.
+>
+
+See above. That's the whole point of the artifacts database. Please reread
+my original email maybe?
+
+
+> I recognize you're just getting this started, but I feel when building
+> a new system, it's always best to tackle the hard problems first.
+>
+
+I am of course open to feedback, but please actually go to
+https://github.com/distributedweaknessfiling/ and see what we're doing
+first before assuming we aren't doing certain things (like making sure the
+artifacts associated with a security vuln don't disappear).
+
+
+>
+> Best,
+> tim
+> @ecbftw
+>
+
+
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
