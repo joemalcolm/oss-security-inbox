@@ -1,59 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/23/6
-Message-ID: <c96b9b40-d80a-828e-0019-1ebc7aeddfb8@canonical.com>
-Date: Wed, 23 Nov 2016 10:53:20 -0600
-From: Tyler Hicks <tyhicks@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/12
+Message-ID: <56E17B10.1090800@igalia.com>
+Date: Thu, 10 Mar 2016 14:48:00 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
 To: oss-security@...ts.openwall.com
-Cc: Roman Fiedler <roman.fiedler@....ac.at>, Stéphane Graber <stgraber@...ntu.com>, "Eric W. Biederman" <ebiederm@...ssion.com>
-Subject: Security issue in LXC (CVE-2016-8649) with additional Linux kernel implications
+Subject: Re: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-Roman Fiedler from AIT discovered that a malicious root user in an LXC
-container can ptrace the connecting lxc-attach process and then
-manipulate it.
+On 10/03/16 07:23, Alan Coopersmith wrote:
+> On 03/ 9/16 04:22 PM, Carlos Alberto Lopez Perez wrote:
+>> On 06/03/16 19:46, Alan Coopersmith wrote:
+>>> On 03/ 4/16 04:07 PM, Tim wrote:
+>>>> * No moderation required.  Let the public decide if they believe the
+>>>>     researcher or vendor.  If a moderator does bother to look over the
+>>>>     content, they could deduplicate/link issues together and address
+>>>> any
+>>>>     confusion, but beyond that, it isn't their job to decide what is a
+>>>>     vulnerability and what isn't.
+>>>
+>>> If the site displays *any* user-submitted text, you need at least enough
+>>> moderation to filter out spammers & trolls.
+>>>
+>>
+>> I don't think you need that level of moderation if you implement basic
+>> measures against spammers like requiring the creation of an account with
+>> e-mail verification.
+>>
+>> Just look to all the public bugzillas out there that allow commenting
+>> (mozilla, webkit, redhat, gnome, etc). I don't think they have a problem
+>> with spam. But you have to create an account first to do any comment.
+> 
+> I'm one of the admins of the public bugzilla at bugs.freedesktop.org, and
+> I've had to deal with spam there, and I've seen reports of spams in other
+> public bugzillas for open source projects.
+> 
+> github requires account creation as well, and I'm sure we've all seen out
+> of control comment threads there that had to be locked down to stop abuse.
+> 
 
-CVE-2016-8649
-https://github.com/lxc/lxc/commit/81f466d05f2a89cb4f122ef7f593ff3f279b165c
-https://launchpad.net/bugs/1639345
+Then the next level is to require not only e-mail validation but also to
+solve a captcha for creating a new account.
 
-CVE-2016-8649 was assigned to the issue that allows an attacker inside
-of an unprivileged container to use an inherited file descriptor, of the
-host's /proc, to access the rest of the host's filesystem via the
-openat() family of syscalls. The file descriptor is needed to write to
-/proc/<PID>/attr/current or /proc/<PID>/attr/exec to set the
-AppArmor/SELinux label of the attached process. The LXC upstream
-developers have developed a patch to protect against this attack by only
-passing a file descriptor of either the current or exec file itself.
+Or even harder, to require any account with less than 10 comments to
+solve a captcha for any new comment. That way the annoyance for legit
+users is temporal (up to the 10th comment), meanwhile for spammers is
+not, because their account is probably going to be blocked before they
+reach the 10th comment and have to start again with a new account.
 
-
-There's also an additional attack where a malicious root user in an
-unprivileged container can ptrace the connecting lxc-attach process and
-bypass the AppArmor/SELinux confinement completely and/or prevent
-lxc-attach from dropping privileges (privileges equal to the user that
-initial ran lxc-attach). To fix that issue, a kernel patch is needed to
-prevent such a ptrace operation. The LXC upstream developers report that
-the following patch from Eric Biederman prevents this attack:
-
-https://git.kernel.org/cgit/linux/kernel/git/ebiederm/user-namespace.git/commit/?h=for-next&id=2e41414828bb0b066bde2f156cfa848c38531edf
-
-The kernel patch has not yet been merged and, as far as I know, is not
-associated with any CVE. The Ubuntu Kernel team reports that it fixes
-the disputed CVE-2015-8709, in addition to the issue described above,
-but I do not believe that they are the same issue.
-
-I'm not sure if a CVE should be assigned for this kernel issue. At
-this point, I don't understand the full impact of that kernel change
-well enough to put together a meaningful CVE request. Suggestions/ideas
-are welcome.
-
-The LXC fix for CVE-2016-8649 that withholds the /proc fd from the
-connecting lxc-attach process mitigates the kernel issue in that it,
-even though the malicious root user in the container can bypass MAC
-confinement and/or prevent privilege dropping, there's no obvious way to
-access or modify the host filesystem.
-
-Tyler
-
+I'm not saying that some level of moderation is required. Of course it
+is. But I think that if proper antispam measures are implemented, then
+the level of moderation required is relatively low, and can be done by
+the bugzilla admins without much effort.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
