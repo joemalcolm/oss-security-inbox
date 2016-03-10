@@ -1,80 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/19/2
-Message-Id: <20160719045707.047D072E00A@smtpvbsrv1.mitre.org>
-Date: Tue, 19 Jul 2016 00:57:07 -0400 (EDT)
-From: cve-assign@...re.org
-To: huzaifas@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Requests: HarfBuzz - Chromium CVE issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/9
+Message-Id: <bffeab9e56b0b9ef@openbsd.org>
+Date: Thu, 10 Mar 2016 05:12:01 -0700 (MST)
+From: Damien Miller <djm@...nbsd.org>
+To: oss-security@...ts.openwall.com
+Subject: Announce: Portable OpenSSH 7.2p2 released
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Portable OpenSSH 7.2p2 has just been released. It will be available
+from the mirrors listed at http://www.openssh.com/ shortly.
 
->> Would it be OK to keep CVE-2016-2052 for
->> 63ef0b41dc48d6112d1918c1b1de9de8ea90adb5 (which is really a "before
->> 1.0.6" issue as stated in that CVE), and assign one new ID for
->> f96664974774bfeb237a7274f512f64aaafb201e (the "before 1.0.5" issue)?
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support. OpenSSH also includes
+transitional support for the legacy SSH 1.3 and 1.5 protocols that
+may be enabled at compile-time.
 
-> Sure, i dont mind as long as its communicated well etc!
+Once again, we would like to thank the OpenSSH community for
+their continued support of the project, especially those who
+contributed code or patches, reported bugs, tested snapshots or
+donated to the project. More information on donations may be found
+at: http://www.openssh.com/donations.html
 
-f96664974774bfeb237a7274f512f64aaafb201e is now CVE-2015-8947. We
-will also communicate this at
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8947 within
-about a day or two.
+Changes since OpenSSH 7.2p1
+===========================
 
-> This means that, if you dont have motivation for investigating the
-> individual issues, it is ok to assign CVEs to multiple unrelated issues?
-> 
-> It so, that means everyone is free to do the above mentioned.
+This release fixes a security bug:
 
-Not everyone is free to do it: the decision belongs to whoever is
-responsible for assigning CVE IDs to that product at that point in
-time. Keep in mind that no one is forcing Google to have a public bug
-report stating "Update harfbuzz to 1.0.6 ... There are a few security
-bugs fixed between 1.0.5 and 1.0.6." Google could have decided to
-announce only that "we occasionally update Chrome's components to the
-latest upstream version for any reason or no reason." Because that
-public bug report existed, it gave MITRE the opportunity to put a
-HarfBuzz entry into the CVE corpus. This is presumably of some value
-to other vendors that ship HarfBuzz, even though it is not optimal.
-The information readily available to us was that the product name was
-HarfBuzz, the vulnerable version was 1.0.5, the fixed version was
-1.0.6, and the type of problem was denial of service. Going beyond
-that requires expensive analysis, given that HarfBuzz issue 139 is
-described as "This in an umbrella issue for setting up regular fuzzing
-for harfbuzz and fixing the bugs that we find with fuzzing." The
-earlier portion of this thread indicates that you contributed
-significant analysis effort to report "i realized that there are
-atleast 3 issues in here which are CVE worthy," and yet one of the
-cited issues was about unreleased code that was corrected during the
-development cycle within one day.
+ * sshd(8): sanitise X11 authentication credentials to avoid xauth
+   command injection when X11Forwarding is enabled.
 
-This is not solely a question of whether a third party has motivation
-to do some analysis: it is also a question of whether it is typically
-feasible for third parties to understand everything. Ultimately, it
-would work better if the direct developers of the code recognized
-value in CVE, and made the CVE requests and/or assignments themselves.
+   Full details of the vulnerability are available at:
+   http://www.openssh.com/txt/x11fwd.adv
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Checksums:
+==========
 
-iQIcBAEBCAAGBQJXjbJ0AAoJEHb/MwWLVhi2qQIP/iBE1Xl8MqVUG9qWqHSizoY8
-4lZ2DrwitzSNElSZ6xcGVu4iMkyIhwfL2nxm3KRrbaYUPnr/GK3IU/K7heannEHU
-3JMLOaJnm2frsZXqXm7FwiFnVFBxWUSMzRZecbw72YyxO4muKSuCv0tOudyatUrJ
-BfdmngAkQZl1xSEQFQ4lU5hK9X/nIg5SlORHDvM0GghZqB+6gCMCMDfo9hjZJv3v
-32gRj0igA81nG1WMQQkHvR+pDiZ0XpFB/gictZa/q1G4y8iu5Tsp49Ru1yLcnpw3
-sUCpYRcENPBI71Y+PjAaooDVOwKjJeyK5qgDfNhbfViuwiotYffBYvmXZ7C0og2K
-CsWkgNLgACdPRP5YrOGgkaq5G8mPfW5i1N6NKkRNbyKRu0Vx0EO/V2wT1wcB/8AV
-I9fcY0/7Nu1WNg2ZFj+VFLivLH/MVgSSxYltGAx6L6Yzwsb5xScLlmHpFY8vFT25
-N55JLwqNk1Xm/+XufshEO4MZWRSelmQLs3Q4WJlXYerQC1QnZB44XFIoXvUNzXRf
-JuZoYBFk8/kOr+b7f5xqTO02Dsj/ogboMAQGGJyW3OLW1gaHRMNrGTtFttahSPhC
-NJZy4VRSQxgfVUkTaOsB7vpqKuqLQA8FLxQNoGV2KIu3rmCR06EcwpcnSmMpmEo9
-LmvoqV0EBi9pkcVuaxCw
-=e3xo
------END PGP SIGNATURE-----
+ - SHA1 (openssh-7.2p2.tar.gz) = 70e35d7d6386fe08abbd823b3a12a3ca44ac6d38
+ - SHA256 (openssh-7.2p2.tar.gz) = pyeB0aBDh2oiT/GwAy2qQJTYdWWmhSh1nBwsq1SCVIw=
+
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available as RELEASE_KEY.asc from
+the mirror sites.
+
+Reporting Bugs:
+===============
+
+- Please read http://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@...nssh.com
+
+OpenSSH is brought to you by Markus Friedl, Niels Provos, Theo de
+Raadt, Kevin Steves, Damien Miller, Darren Tucker, Jason McIntyre,
+Tim Rice and Ben Lindstrom.
+
