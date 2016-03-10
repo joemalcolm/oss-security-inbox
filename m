@@ -1,28 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/10/1
-Message-ID: <8dce1875-f41f-ebdb-707d-267ede9ae655@redhat.com>
-Date: Fri, 10 Jun 2016 10:32:01 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>
-Subject: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/4
+Message-ID: <20160310092549.GB4470@suse.de>
+Date: Thu, 10 Mar 2016 10:25:49 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org
+Subject: CVE Request: Linux Kernel: Linux netfilter IPT_SO_SET_REPLACE memory corruption
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-I would like to request a CVE for the protocol flaw in IKEv1, details below:
+>From the P0 team at Google:
 
-https://www.kb.cert.org/vuls/id/419128
-https://blogs.akamai.com/2016/02/ikeikev2-ripe-for-ddos-abuse.html
+https://code.google.com/p/google-security-research/issues/detail?id=758
 
-While the reporter says that IKEv1 and IKEv2 both are affected, we have
-reasons to believe that IKEv2 may not be affected:
+A memory corruption vulnerability exists in the IPT_SO_SET_REPLACE ioctl in the netfilter code for iptables support. This ioctl is can be triggered by an unprivileged user on PF_INET sockets when unprivileged user namespaces are available (CONFIG_USER_NS=y). Android does not enable this option, but desktop/server distributions and Chrome OS will commonly enable this to allow for containers support or sandboxing.
+...
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1308508#c2
+I think this needs a CVE.
 
-Can a CVE id be please assigned to this?
-
-Thanks!
-
-
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+Ciao, Marcus
