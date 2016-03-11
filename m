@@ -1,55 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/09/1
-Message-ID: <alpine.LFD.2.20.1601091310350.6880@wniryva>
-Date: Sat, 9 Jan 2016 13:18:58 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Qinghao Tang <luodalongde@...il.com>
-Subject: Qemu: ide: ahci use-after-free vulnerability in aio port commands
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/11/7
+Message-ID: <899891185.35543085.1457700821820.JavaMail.zimbra@redhat.com>
+Date: Fri, 11 Mar 2016 07:53:41 -0500 (EST)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request -- linux kernel: crash on invalid USB device descriptors (cdc_acm driver)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
+If possible, we would like to obtain a CVE-ID for the securuty
+flaw (kernel panic on connecting fake usb device) described in:
 
-   Hello,
+http://seclists.org/bugtraq/2016/Mar/54
 
-Qemu emulator built with the IDE AHCI Emulation support is vulnerable to a use 
-after free(kind of) issue. It could occur after processing AHCI Native Command 
-Queuing(NCQ) AIO commands.
+https://bugzilla.redhat.com/show_bug.cgi?id=1283366
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-instance or might potentially execute arbitrary code with privileges of the 
-Qemu process on the host.
-
-Upstream fix:
-- -------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg01184.html
-
-Reference:
-- ----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1288532
-
-This issue was discovered by Mr Qinghao Tang of Qihoo 360 Marvel Team.
-
-Thank you.
-- --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJWkLtqAAoJEN0TPTL+WwQf5mAQAL1fjaFzwWBYPcDeqo3V7cFv
-qi+SQmltTf5GAbLPYXnzvfJpJeE7r6vsaEkOklgMTLceBysCjyfvjU+yEJHxMQcD
-B4ZgbqcCANXRNlmNgeL2+nXCkOs1W8Af9XeJ7KL53PP6vRMaLt3seEYZ5wsm2YUq
-yBQRd1PTayNhho8rJnZZA7bert87hZGKcRYcClqwddzW92d+y2Y8MkymjJxJQljB
-TJPBCWTHiFqwV8iLhDffcCmXdd2I0XnghX0ZzYG1bK6Dl6zIXfI91nyFFDEwxgeI
-R5tHx9bPvATl15AQZVkfuLPAh7KjH+JRPuDrM8d3HW6fyC04yS0Z4XQKZvRBVbtk
-fdvVK1kWhdTVXlulCu7M86jr61KeY7Vkkp9bNkRa5nF+yrSSvf/SKtmfRH9UJt4R
-NGhlXxoZgwyDyRM2dcthKQHnms0qPyU/giyillrbr42wKbpyzasFZKQDWW5QfsGY
-LjiV+Cj30ETINgO08i2aIMyyWVdAihpqiP5qk+LtnRiFYpsevGPVYZhF99aDMgmA
-2wmHVRtPfeSClPIJiK9b83GH45cZfZQ7SCYkLX1QoAK2C10SCUBUl1GHAS+hjmBC
-5wXTas9aooRxfxYyEqC5/cRCZmmKo8hJfFPjg3U8hZ8OTFsbrJB8glpUveYCM60k
-Eq47WaH27GAV/oKSWtkl
-=0a5q
------END PGP SIGNATURE-----
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
