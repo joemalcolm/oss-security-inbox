@@ -1,62 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/10
-Message-ID: <578D140E.1040206@mvista.com>
-Date: Mon, 18 Jul 2016 10:38:22 -0700
-From: akuster <akuster@...sta.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-5321: libtiff 4.0.6 DumpModeDecode(): Ddos
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/11/12
+Message-ID: <20160311172515.5af76630@pc1>
+Date: Fri, 11 Mar 2016 17:25:15 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Several out of bounds reads in ProFTPD
 Content-Type: text/plain; charset=utf-8
 
+https://blog.fuzzing-project.org/40-Several-out-of-bounds-reads-in-ProFTPD.html
 
-Hello,
+The latest releases of ProFTPD 1.3.5a and 1.3.6rc2 fix several out of
+bounds read issues. I discovered these issues by running the test suite
+with Address Sanitizer enabled.
 
-If I am not mistaken, this maybe the fix for this CVE.
+An invalid off by one read can happen in the function pr_fs_dircat().
+This affects both 1.3.5a and 1.3.6rc1 and earlier.
+http://bugs.proftpd.org/show_bug.cgi?id=4194
+Upstream bug report
+https://github.com/proftpd/proftpd/commit/f99ef850a05f46c56be8deae97e59efa50575e69
+Git commit / fix
 
-https://github.com/vadz/libtiff/commit/d9783e4a1476b6787a51c5ae9e9b3156527589f0
+An invalid off by one read can happen in the string handling function
+pr_ascii_ftp_to_crlf(). This code is not present in the stable 1.3.5
+release series and only affects 1.3.6 release candidates before rc2.
+http://bugs.proftpd.org/show_bug.cgi?id=4195
+Upstream bug report
+https://github.com/proftpd/proftpd/pull/145
+Git commit / fix
 
-can someone confirm
+A missing null termination of a string causes an out of bounds memory
+read in a test. This does not affect the ProFTPD code itself, it's just
+an issue in the test suite.
+http://bugs.proftpd.org/show_bug.cgi?id=4193
+Upstream bug report
+https://github.com/proftpd/proftpd/commit/d9f9d469ce1da09c7935f509797d488fa2d08697
+Git commit / fix
 
-regards,
-Armin
+-- 
+Hanno Böck
+https://hboeck.de/
 
-On 06/14/2016 07:35 PM, 张开翔 wrote:
-> Details
-> =======
-> 
-> Product: libtiff
-> Affected Versions: <= 4.0.6
-> Vulnerability Type: illegel read
-> Vendor URL: http://www.remotesensing.org/libtiff/
-> Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
-> CVE ID: CVE-2016-5321
-> Tested system version:
->        fedora23 32bit
->        fedora23 64bit
->        CentOS Linux release 7.1.1503 64bit
-> 
-> 
-> Introduction
-> =======
-> 
-> It was always corrupted when I use tiffcrop command followed by a crafted TIFF image.The vulnerbility exists in fuction DumpModeDecode() whitout checking the value of output parameters, Attackers could exploit this issue to cause denial-of-service.
-> 
-> 
-> Here is the stack info:
-> gdb –args ./tiffcrop DumpModeDecode.tif tmpout.tif
-> --- ---
-> __memcpy_ssse3_back () at ../sysdeps/x86_64/multiarch/memcpy-ssse3-back.S:2709
-> 2709                   movdqu    %xmm0, 36(%rdi)
-> Program received signal SIGSEGV, Segmentation fault.
-> __memcpy_ssse3_back () at ../sysdeps/x86_64/multiarch/memcpy-ssse3-back.S:2709
-> 2709                   movdqu    %xmm0, 36(%rdi)
-> (gdb) bt
-> #0  __memcpy_ssse3_back () at ../sysdeps/x86_64/multiarch/memcpy-ssse3-back.S:2709
-> #1  0x00007ffff7ad6a79 in DumpModeDecode (tif=0x662010, buf=<optimized out>, cc=52, s=<optimized out>) at tif_dumpmode.c:103
-> #2  0x00007ffff7ba3739 in TIFFReadEncodedTile (tif=tif@...ry=0x662010, tile=8, buf=0x0, size=52, size@...ry=-1) at tif_read.c:668
-> #3  0x00007ffff7ba3a01 in TIFFReadTile (tif=tif@...ry=0x662010, buf=<optimized out>, x=x@...ry=0, y=y@...ry=0, z=z@...ry=0, s=s@...ry=8) at tif_read.c:641
-> #4  0x0000000000443e41 in readSeparateTilesIntoBuffer (bps=208, spp=9, tl=1, tw=2, imagewidth=2, imagelength=1, obuf=0x662ce0 "\200\177\335\367\377\177", in=0x662010) at tiffcrop.c:994
-> #5  loadImage (in=in@...ry=0x662010, image=image@...ry=0x7fffffff7960, dump=dump@...ry=0x7fffffffc270, read_ptr=read_ptr@...ry=0x7fffffff7920) at tiffcrop.c:6079
-> #6  0x0000000000403209 in main (argc=<optimized out>, argv=<optimized out>) at tiffcrop.c:2278
-> (gdb) p buf
-> $6 = 0x0
-> 
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
