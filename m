@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3534" "Wednesday" "24" "June" "2020" "08:43:34" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.2006240842180.4820@tvnag.unkk.fr>" "103" "[oss-security] [SECURITY ADVISORY] curl: overwrite local file with -J" nil nil nil "6" "2020062406:43:34" "[oss-security] [SECURITY ADVISORY] curl: overwrite local file with -J" (number mark "U       daniel@haxx. Jun 24  103/3534  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: overwrite local file with -J\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY ADVISORY] curl: overwrite local file with -J" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1691" "Friday" "11" "March" "2016" "17:01:17" "+0100" "Carlos Alberto Lopez Perez" "clopez@igalia.com" "<56E2EBCD.2060808@igalia.com>" "44" "Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies" "^Date:" nil nil "3" "2016031116:01:17" "[oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies" (number mark "        clopez@igali Mar 11   44/1691  " thread-indent "\"Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies\"\n") "<56DD3786.2040408@x41-dsec.de>" ("<CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com>" "<56DD3786.2040408@x41-dsec.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 29789 invoked by uid 550); 24 Jun 2020 06:43:47 -0000
+Received: (qmail 32625 invoked by uid 550); 11 Mar 2016 16:01:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,123 +11,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29716 invoked from network); 24 Jun 2020 06:43:46 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Wed, 24 Jun 2020 08:43:34 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
-Message-ID: <alpine.DEB.2.20.2006240842180.4820@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
+Received: (qmail 32605 invoked from network); 11 Mar 2016 16:01:44 -0000
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2AaAwDa6uJW/5tjdVtdGQEBAQESAQGDDVK7Fw6BbSGFbAKBMDgUAQEBAQEBAWQnhEIBAQQjVRELGAkWCwICCQMCAQIBRRMIAogkAQmuEo8eAQEIAgEVBASGGIRCgTcBg06CNIE6BY1BigKDGoFmbYgPgU6NNI5xHgFDghAggTWKASWBFAEBAQ
+X-IPAS-Result: A2AaAwDa6uJW/5tjdVtdGQEBAQESAQGDDVK7Fw6BbSGFbAKBMDgUAQEBAQEBAWQnhEIBAQQjVRELGAkWCwICCQMCAQIBRRMIAogkAQmuEo8eAQEIAgEVBASGGIRCgTcBg06CNIE6BY1BigKDGoFmbYgPgU6NNI5xHgFDghAggTWKASWBFAEBAQ
+X-IronPort-AV: E=Sophos;i="5.24,321,1454972400"; 
+   d="asc'?scan'208";a="98682099"
+References: <CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com>
+ <56DD3786.2040408@x41-dsec.de>
+Openpgp: id=B5D2B50BC48EC7F1EE90D9AB965089CE6B95F882;
+ url=http://key.neutrino.es
+X-Enigmail-Draft-Status: N1110
+Organization: Igalia S.L.
+Message-ID: <56E2EBCD.2060808@igalia.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl: overwrite local file with -J
+In-Reply-To: <56DD3786.2040408@x41-dsec.de>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="I43AVu90GxsR8vf3NuJaIWW7m42xf1RNM"
+Date: Fri, 11 Mar 2016 17:01:17 +0100
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Concerns about CVE coverage shrinking - direct
+ impact to researchers/companies
+To: oss-security@lists.openwall.com
 
-curl overwrite local file with -J
-=================================
+--I43AVu90GxsR8vf3NuJaIWW7m42xf1RNM
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Project curl Security Advisory, June 24th 2020 -
-[Permalink](https://curl.haxx.se/docs/CVE-2020-8177.html)
+On 07/03/16 09:10, Markus Vervier wrote:
+> It seems to me MITRE currently wants to improve CVE quality but does not
+> have the resources
+> to do a real and fair validation.
 
-VULNERABILITY
--------------
+According to Wikipedia [1], Mitre has 7,613 employees and a revenue of
+US$ 1.421 billion.
 
-curl can be tricked my a malicious server to overwrite a local file when using
-`-J` (`--remote-header-name`) and `-i` (`--head`) in the same command line.
+I fail to understand how a corporation of that size lacks resources for
+improving anything they really want to improve.
 
-The command line tool offers the `-J` option that saves a remote file using
-the file name present in the `Content-Disposition:` response header. curl then
-refuses to overwrite an existing local file using the same name, if one
-already exists in the current directory.
+---
+[1] https://en.wikipedia.org/wiki/Mitre_Corporation
 
-The `-J` flag is designed to save a response body, and so it doesn't work
-together with `-i` and there's logic that forbids it. However, the check is
-flawed and doesn't properly check for when the options are used in the
-reversed order: first using `-J` and then `-i` were mistakenly accepted.
 
-The result of this mistake was that incoming HTTP headers could overwrite a
-local file if one existed, as the check to avoid the local file was done first
-when body data was received, and due to the mistake mentioned above, it could
-already have received and saved headers by that time.
+--I43AVu90GxsR8vf3NuJaIWW7m42xf1RNM
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-The saved file would only get response headers added to it, as it would abort
-the saving when the first body byte arrives. A malicious server could however
-still be made to send back virtually anything as headers and curl would save
-them like this, until the first CRLF-CRLF sequence appears.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+Comment: You can fetch my GnuPG key from http://key.neutrino.es
 
-(Also note that `-J` needs to be used in combination with `-O` to have any
-effect.)
+iQIcBAEBCgAGBQJW4uvNAAoJEJZQic5rlfiC3g8P/Ap2ftWc8UptR68LC2lgxCks
+eVgQWb5U0ysGrptnhudinmANypDUetXBgcRM460e5efpR9AvVn26wlAzILRgdxhM
+HpnG8huy9pWlOizoXxUCxP1RYRXlkN9lafXYw7kxAmoROx8VgkkfIoGG7UNqFiu8
+HE9lihy0nEazGJTNHPPSR9j0jLyDsxb/8CZD+a5DtDDjkqWvZxOjb/ZwA5K5WlDp
+rEMP/AMKjbraj3dV9d16+KujUMXYFjUotFPAIbfLSMOleL91t1G6hmROPejxEt/z
+lExAMBpprLx0t6E+XcYVmy26oNqW5ulfwhVfv7qo7kU4EnRw4D+1YBA7OBZ673o2
+uGBod1UKPShbIsOG3mcbnjYo5CBaNK1b/OhqhYCabILH8+s/GESwxW7n9SiEbgCn
+95aueWMTHHmFtPu5ba2xlG4OKnk4gyDxCL80RdUVLyUpgs75dt2rtLgQ9HXVB8xW
+3WkF8AwyIU6Iz68CRIfuvuDKfkmqxp1P4QZHoUi4R8EWCMtmhIbhnGmY8d73RytI
+RuJjWrIL4OOAaVJd1cVVSLxjQar52yhBz3yZplUPG991RjG5eSyk/eCZqSO8IgSK
+KceQVJJBIvHqi/epxFRJAHkmu18aiYzL7l9lsdr4lLJ5gWlX/Z5op7RvhnSqOw3m
+a6wOdFh+1p+PadnFkxQL
+=XEMH
+-----END PGP SIGNATURE-----
 
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-Users should be aware and *never* run curl with the `-J` option in their
-`$HOME` or other sensitive directories, independently of this flaw. Using curl
-that way allows curl to create any file name it likes (i.e. what the remote
-server suggests) and it can confuse or trick users if allowed to save files
-that can mistakenly be assumed to be "locally made" or part of the system
-rather than provided by a potentially malicious remote party.
-
-This bug was brought in commit
-[80675818e0417b](https://github.com/curl/curl/commit/80675818e0417b) when `-J`
-was introduced to curl, first shipped in curl 7.20.0.
-
-This flaw can happen to users of the curl tool but **not** for applications
-using libcurl.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2020-8177 to this issue.
-
-CWE-641: Improper Restriction of Names for Files and Other Resources
-
-Severity: 4.7 (Medium)
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.20.0 to and including 7.70.0
-- Not affected versions: curl < 7.20.0 and curl >= 7.71.0
-
-THE SOLUTION
-------------
-
-A [fix for CVE-2020-8177](https://github.com/curl/curl/commit/8236aba58542c5f.patch)
-
-RECOMMENDATIONS
---------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.71.0
-
-  B - Apply the patch on your curl version and rebuild
-
-  C - Do not use `-J` (in a directory with pre-existing files)
-
-TIMELINE
---------
-
-This issue was first reported to the curl project on May 30, 2020.
-
-This advisory was posted on June 24th 2020.
-
-CREDITS
--------
-
-This issue was reported by sn on hackerone. Patched by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se | Commercial curl support up to 24x7 is available!
-                   | Private help, bug fixes, support, ports, new features
-                   | https://www.wolfssl.com/contact/
+--I43AVu90GxsR8vf3NuJaIWW7m42xf1RNM--
