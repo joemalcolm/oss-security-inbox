@@ -1,27 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/20
-Message-ID: <56CE1991.2030906@redhat.com>
-Date: Wed, 24 Feb 2016 13:58:57 -0700
-From: Eric Blake <eblake@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: bash-completion: dequote command injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/11/10
+Message-ID: <56E2D563.2070106@igalia.com>
+Date: Fri, 11 Mar 2016 15:25:39 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org
+Cc: bugtraq@...urityfocus.com, oss-security@...ts.openwall.com
+Subject: WebKitGTK+ Security Advisory WSA-2016-0002
 Content-Type: text/plain; charset=utf-8
 
-On 02/24/2016 12:08 PM, Fernando Muñoz wrote:
-> Marcelo Echeverria and Fernando Muñoz discovered that the dequote
-> function included in bash-completion allows to execute arbitrary
-> commands since it uses the eval function to call printf and perform
-> the actual dequoting. bash-completion is included on Debian, Ubuntu
-> OpenSuse [1] and probably other distros.
+------------------------------------------------------------------------
+WebKitGTK+ Security Advisory                               WSA-2016-0002
+------------------------------------------------------------------------
 
-But what is the privilege escalation?  This is no different than
-incorrectly using 'eval' in a shell script - you may have buggy code,
-and have an easy-to-trigger bug, but if you can't escalate privileges,
-how it is a CVE?
+Date reported      : March 11, 2016
+Advisory ID        : WSA-2016-0002
+Advisory URL       : http://webkitgtk.org/security/WSA-2016-0002.html
+CVE identifiers    : CVE-2016-1723, CVE-2016-1724, CVE-2016-1725,
+                     CVE-2016-1726, CVE-2016-1727, CVE-2016-1728.
 
--- 
-Eric Blake   eblake redhat com    +1-919-301-3266
-Libvirt virtualization library http://libvirt.org
+Several vulnerabilities were discovered on WebKitGTK+.
+
+CVE-2016-1723
+    Versions affected: WebKitGTK+ before 2.10.5.
+    Credit to Apple.
+    WebKit, as used in Apple iOS before 9.2.1 and Safari before 9.0.3,
+    allows remote attackers to execute arbitrary code or cause a denial
+    of service (memory corruption) via a crafted web site, a different
+    vulnerability than CVE-2016-1725 and CVE-2016-1726.
+
+CVE-2016-1724
+    Versions affected: WebKitGTK+ before 2.10.5.
+    Credit to Apple.
+    WebKit, as used in Apple iOS before 9.2.1, Safari before 9.0.3, and
+    tvOS before 9.1.1, allows remote attackers to execute arbitrary code
+    or cause a denial of service (memory corruption) via a crafted web
+    site, a different vulnerability than CVE-2016-1727.
+
+CVE-2016-1725
+    Versions affected: WebKitGTK+ before 2.10.5.
+    Credit to Apple.
+    WebKit, as used in Apple iOS before 9.2.1 and Safari before 9.0.3,
+    allows remote attackers to execute arbitrary code or cause a denial
+    of service (memory corruption) via a crafted web site, a different
+    vulnerability than CVE-2016-1723 and CVE-2016-1726.
+
+CVE-2016-1726
+    Versions affected: WebKitGTK+ before 2.10.8.
+    Credit to Apple.
+    WebKit, as used in Apple iOS before 9.2.1 and Safari before 9.0.3,
+    allows remote attackers to execute arbitrary code or cause a denial
+    of service (memory corruption) via a crafted web site, a different
+    vulnerability than CVE-2016-1723 and CVE-2016-1725.
+
+CVE-2016-1727
+    Versions affected: WebKitGTK+ before 2.10.5.
+    Credit to Apple.
+    WebKit, as used in Apple iOS before 9.2.1, Safari before 9.0.3, and
+    tvOS before 9.1.1, allows remote attackers to execute arbitrary code
+    or cause a denial of service (memory corruption) via a crafted web
+    site, a different vulnerability than CVE-2016-1724.
+
+CVE-2016-1728
+    Versions affected: WebKitGTK+ before 2.10.5.
+    Credit to an anonymous researcher coordinated via Joe Vennix.
+    The Cascading Style Sheets (CSS) implementation in Apple iOS before
+    9.2.1 and Safari before 9.0.3 mishandles the "a:visited button"
+    selector during height processing, which makes it easier for remote
+    attackers to obtain sensitive browser-history information via a
+    crafted web site.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (605 bytes)
+We recommend updating to the last stable version of WebKitGTK+. It is
+the best way of ensuring that you are running a safe version of
+WebKitGTK+. Please check our website for information about the last
+stable releases.
+
+Further information about WebKitGTK+ Security Advisories can be found
+at: http://webkitgtk.org/security.html
+
+The WebKitGTK+ team,
+March 11, 2016
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
