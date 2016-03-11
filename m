@@ -1,52 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/27/6
-Message-ID: <20160127154041.GA9254@eldamar.local>
-Date: Wed, 27 Jan 2016 16:40:41 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: Linux: NULL pointer dereference netfilter/nf_nat_redirect.c in nf_nat_redirect_ipv4 function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/11/2
+Message-ID: <271b95c2-2dde-1083-f4f8-a4afab81340c@halfdog.net>
+Date: Fri, 11 Mar 2016 06:32:42 +0000
+From: halfdog <me@...fdog.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hello List,
 
->From https://bugzilla.redhat.com/show_bug.cgi?id=1300731 
-> Kernel NULL pointer dereference vulnerability was found in
-> netfilter/nf_nat_redirect.c in nf_nat_redirect_ipv4 function introduced by
-> commit 8b13eddfdf04cbfa561725cfc42d6868fe896f56 ("netfilter: refactor NAT
-> redirect IPv4 to use it from nf_tables").
-> 
-> Vulnerable code:
-> 
-> unsigned int
-> nf_nat_redirect_ipv4(struct sk_buff *skb,
-> ...
-> {
-> ...
-> 		rcu_read_lock();
-> 		indev = __in_dev_get_rcu(skb->dev);
-> 		if (indev != NULL) {
-> 			ifa = indev->ifa_list;
-> 			newdst = ifa->ifa_local; <---
-> 		}
-> 		rcu_read_unlock();
-> ...
-> }
-> 
-> 'ifa' is not checked before access and can be accessed even if it's NULL.
-> Crash might happen when packets that need to be redirected somehow arrive on an
->  interface which hasn't been yet fully configured.
-> 
-> Patch and crash report:
-> 
-> https://lkml.org/lkml/2015/12/2/618
+I have started to create a wiki page to go deeper on the ideas from
 
-This was introduced in:
-https://git.kernel.org/linus/8b13eddfdf04cbfa561725cfc42d6868fe896f56 (v3.19-rc1)
+http://www.openwall.com/lists/oss-security/2016/03/06/4
 
-Fixed by:
-https://git.kernel.org/linus/94f9cd81436c85d8c3a318ba92e236ede73752fc (v4.4-rc1)
+posted in this thread, but it is yet in the earliest phase (a mess). I
+would give anyone willing to contribute full access to the wiki on
 
-Can you assign a CVE to track this issue?
+https://github.com/halfdog/DistributedCryptoenhancedVulnerabilityEnumeration/wiki
 
-Regards,
-Salvatore
+(hope github supports that).
+
+hd
+
+-- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
