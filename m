@@ -1,4 +1,9 @@
-Received: (qmail 27688 invoked by uid 550); 9 Nov 2024 00:03:12 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2079" "Friday" "11" "March" "2016" "11:49:15" "+0800" "Paul Wise" "pabs3@bonedaddy.net" "<1457668155.3681.17.camel@bonedaddy.net>" "57" "[oss-security] debbugs for cve-assign@mitre.org?" nil nil nil "3" "2016031103:49:15" "[oss-security] debbugs for cve-assign@mitre.org?" (number mark "U       pabs3@boneda Mar 11   57/2079  " thread-indent "\"[oss-security] debbugs for cve-assign@mitre.org?\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 16053 invoked by uid 550); 11 Mar 2016 03:49:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,84 +12,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5913 invoked from network); 8 Nov 2024 22:02:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731103353; x=1731708153; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CdIqXP0PeTxB8j5Xqxc4WDPJijGF37ZJ+spzxZDGFws=;
-        b=BiOaDQepYH135ZR21p8vjAojkkmwQVwtWRztHLws2RiKItefM+l6/SOF5z2J3XKyjQ
-         PCgoY0+ttMa4GSB5Rup5HpswygtNWrsFasMu8OgKEwgAb2ebUOAvcpltIbde8CwCxMYz
-         iQfUeh5o2Zlr6WO/oZWr/N9JXcBY58vflMuGLZDWLnjSE0ImirDFqvzomi4ARfBjTqAt
-         3XtHPCczLTPC2aBb27dsO/1nWIX1EFykrT0y71gcas47MnXy7/fFTykSLcg2UaZdL19Z
-         pKINzlRRIQRcAdG6XLHWqKTc5pRN/aN8uWWPrgrGaphwgJGwJPZBz/C9AJnlfmc4vFqy
-         VZqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731103353; x=1731708153;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CdIqXP0PeTxB8j5Xqxc4WDPJijGF37ZJ+spzxZDGFws=;
-        b=RUCUyt2NyVqWLdRw5P316eHekWBgMugrrfSZruaegvhm7e53UyWTZN/CyeU0LIyc8v
-         Z8RykKY9VnDh5hKdoBcjJBeAkd5ViA2POedkOP8Goke/cggKENtW8vEIkxAQGhkwhjlP
-         EUUD5KcMnHDdXqIXEOpzGYt2vyx51qLg93PUvXbVdEjEYss6m8kLYX3HFbx3PLbDuyKn
-         tmUJmIqbj/KrYYHtihPei8ZV6yiNkkD1SPw18A22nG1OKjegfoOro52AwVCBIUQ3SEkG
-         VlG4vpFfEF/A7ta1zUToDQKN6utH2bmGVSIHA8LsquAsofrz/D0c6rKinZKzEU11apHv
-         sTsw==
-X-Gm-Message-State: AOJu0Yzfh8FCi1sZfNsJ9jW7vVu4oB9HSHX3mHBuLi10bNPA0DIV/Lyt
-	NOgRDfnAYzFi0Pbud4dqq0ypR8o3vTzgQo9EafVRr07DfKwD4/B9plftvqai/aPG4PCbHHN6n+h
-	dF1z0SqgUeXMbMCWs2b4wRfx7ZgNgjg==
-X-Google-Smtp-Source: AGHT+IG+igZRjx8itOPFTuz8FWZZtDh5foiJ2VOL7HFzYMljE33uI/lZSqoJr8xN3dEYrC7OCx94hi7w6GcQIEyrBZs=
-X-Received: by 2002:a05:6402:3547:b0:5cb:acfa:61ee with SMTP id
- 4fb4d7f45d1cf-5cf0a441833mr3330538a12.23.1731103352558; Fri, 08 Nov 2024
- 14:02:32 -0800 (PST)
-MIME-Version: 1.0
-References: <20241106041215.GA4432@openwall.com> <CAGUWgD_T4vUhBfkmjm+8ELcuiOD9dx1vSC4HnKG88Py7ip+zPw@mail.gmail.com>
-In-Reply-To: <CAGUWgD_T4vUhBfkmjm+8ELcuiOD9dx1vSC4HnKG88Py7ip+zPw@mail.gmail.com>
-From: Dominik Czarnota <dominik.b.czarnota@gmail.com>
-Date: Fri, 8 Nov 2024 23:02:21 +0100
-Message-ID: <CABEVAa0+EE0M3Q2wwpOSX0-VCw95xSjZV-1S4u7hSYY9K=YK7w@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000006619f606266de88c"
-Subject: Re: [oss-security] shell wildcard expansion (un)safety
+Received: (qmail 16030 invoked from network); 11 Mar 2016 03:49:33 -0000
+Message-ID: <1457668155.3681.17.camel@bonedaddy.net>
+From: Paul Wise <pabs3@bonedaddy.net>
+To: oss-security <oss-security@lists.openwall.com>, cve <cve@mitre.org>
+Date: Fri, 11 Mar 2016 11:49:15 +0800
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-qUBR4mlhFt/NQn29YGaj"
+X-Mailer: Evolution 3.18.5.1-1 
+Mime-Version: 1.0
+Subject: [oss-security] debbugs for cve-assign@mitre.org?
 
---0000000000006619f606266de88c
+--=-qUBR4mlhFt/NQn29YGaj
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-This is known since even earlier by the article/disclosure =E2=80=9Eunix wi=
-ldcards
-gone wild=E2=80=9D:
-https://seclists.org/fulldisclosure/2014/Jun/136
+Hi all,
 
-The original article link seems to not work but it can be seen e.g. here:
-https://github.com/Gandosha/gandosha.github.io/blob/master/DefenseCode_Unix=
-_WildCards_Gone_Wild.txt
+I would like to suggest using debbugs for=C2=A0cve-assign@mitre.org.
 
-It shows that in some cases this can lead to code execution, e.g. with =E2=
-=80=9Etar
-*=E2=80=9D
+debbugs is based on email so it is the lowest friction for researchers
+and doesn't change their workflow except they now get an immediate CVE
+after sending a detailed report to the submission address.
 
-On Fri, 8 Nov 2024 at 18:47, Georgi Guninski <gguninski@gmail.com> wrote:
+The Debian project doesn't have much of a problem with spam other than
+spammers occasionally harvesting bug email addresses and replying to
+them. This could be mitigated by not putting bug number email addresses
+on the bug reports. Debian does that for transparency though. Spammers
+haven't learnt to file bug reports yet though.
 
-> This is known since at least 2019, but the distro list can't tell
-> vulnerability from a rant [1] [2]
->
-> `grep text -- *` is not portable solution, since not all warez recognize
-> --.
->
-> e.g.:
->
-> $find . --
-> find: unknown predicate `--'
->
->
-> [1] Shell wildcards considered dangerous?
-> https://seclists.org/oss-sec/2019/q4/133
->
-> [2]
-> https://www.linkedin.com/pulse/careful-wildcards-linux-rm-georgi-guninski=
--ieaif
->
+One thing that would need adding is support for private bugs and
+authenticated commands to change bugs between public and private.
 
---0000000000006619f606266de88c--
+One other thing that would need adding is some support for the CVE ID
+syntax. Nice URLs could be provided by mod_rewrite.
+
+debbugs is also used by the GNU project.
+
+--=20
+bye,
+pabs
+
+http://bonedaddy.net/pabs3/
+
+
+--=-qUBR4mlhFt/NQn29YGaj
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIcBAABCgAGBQJW4kA7AAoJEDEWul6f+mmjvK4QAI7nvcjR1qP8R5F9B2llN28Q
+HSvOHGR+ZKc2GdvVuK81aIKHxgaTd/SAHQ2ui5vAQC0oVnY1k4ZSUbAnfFRHRRnX
+Sl6QG+Gx/AQ9u9MPOaTGiAwy1xuJX9MJpsKaFsjMJOhsXC4xfCqAsEs0xhr+EEwF
+NMR4jW5BtKrK1fq6i7+0YQMTCx3A+dqOp8d/YM29asxxBIBrs49fnSULDo5SXmp2
+S65/HBVmvEH7FaHrYaolcjcv8RLGs+Ffe0361hcFDQu67TSDCbdfwqfiCAmwgwTv
+cGKG6eWF2XkTMn1hkhdSMA51wwj8kB15pD1Qpe5Q97IpGqAaoQDjO89U49i6ialP
+R7BrlazQpY700oks8ZbjxPSxjpMNGMusChxb4cE2ObMRHMdZXZjsS74HRmYCWiPb
+sprnsLG1WG63h1x/tnU8KXxgJxoQVmc36WOjRBCsEHsHurM9VHHHgNTY2PJT0sXr
+VnDmuamP7SsJ2+bjuq/mj60s9gLqoFsZQ/Pr+3BQ/f3XB61Zeyp/XqGYkq9IMlZy
+NEikh3zmRcrBTuh46T623vpO7vmRRerBfiNZuITiz8CNHC/Gc1Z5BZmPIwfk5E4o
++AmC7lAABj6iMd7O9w0gl3x2GawtaY89o/E1VSwuiNbZE9D+q9y1waWH3gPmfrjj
+WQO9i43nCDfD7JwqV9cR
+=OWcm
+-----END PGP SIGNATURE-----
+
+--=-qUBR4mlhFt/NQn29YGaj--
+
