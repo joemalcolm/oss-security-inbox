@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["338" "Thursday" "13" "July" "2017" "23:21:51" "+0700" "Maxim Solodovnik" "solomax@apache.org" "<CAJmbs8hXVqrKdGi92K=m08wJ0iaZunMan5cZ=XYuhuLErx0j9Q@mail.gmail.com>" "13" "[oss-security] CVE-2017-7663 - Apache OpenMeetings - XSS in chat" nil nil nil "7" "2017071316:21:51" "[oss-security] CVE-2017-7663 - Apache OpenMeetings - XSS in chat" (number mark "U       solomax@apac Jul 13   13/338   " thread-indent "\"[oss-security] CVE-2017-7663 - Apache OpenMeetings - XSS in chat\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["301" "Friday" "11" "March" "2016" "07:53:41" "-0500" "Vladis Dronov" "vdronov@redhat.com" "<899891185.35543085.1457700821820.JavaMail.zimbra@redhat.com>" "10" "[oss-security] CVE request -- linux kernel: crash on invalid USB device descriptors (cdc_acm driver)" "^Date:" nil nil "3" "2016031112:53:41" "[oss-security] CVE request -- linux kernel: crash on invalid USB device descriptors (cdc_acm driver)" (number mark "        vdronov@redh Mar 11   10/301   " thread-indent "\"[oss-security] CVE request -- linux kernel: crash on invalid USB device descriptors (cdc_acm driver)\"\n") "<292940415.35541547.1457700538281.JavaMail.zimbra@redhat.com>" ("<292940415.35541547.1457700538281.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24271 invoked by uid 550); 13 Jul 2017 16:22:12 -0000
+Received: (qmail 16330 invoked by uid 550); 11 Mar 2016 12:53:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,36 +11,30 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24252 invoked from network); 13 Jul 2017 16:22:12 -0000
-X-Gm-Message-State: AIVw111H0JDnugKnBMOgcLXEQAlqDd7e9UMyXQTxdC4jgLMQvttcJxJx
-	ovwEEuYGvM10n56zzFMnjqQvE7z4QA==
-X-Received: by 10.84.191.129 with SMTP id a1mr11140707pld.272.1499962911844;
- Thu, 13 Jul 2017 09:21:51 -0700 (PDT)
+Received: (qmail 16204 invoked from network); 11 Mar 2016 12:53:54 -0000
+Message-ID: <899891185.35543085.1457700821820.JavaMail.zimbra@redhat.com>
+In-Reply-To: <292940415.35541547.1457700538281.JavaMail.zimbra@redhat.com>
 MIME-Version: 1.0
-From: Maxim Solodovnik <solomax@apache.org>
-Date: Thu, 13 Jul 2017 23:21:51 +0700
-X-Gmail-Original-Message-ID: <CAJmbs8hXVqrKdGi92K=m08wJ0iaZunMan5cZ=XYuhuLErx0j9Q@mail.gmail.com>
-Message-ID: <CAJmbs8hXVqrKdGi92K=m08wJ0iaZunMan5cZ=XYuhuLErx0j9Q@mail.gmail.com>
-To: Openmeetings user-list <user@openmeetings.apache.org>, dev <dev@openmeetings.apache.org>, 
-	security@openmeetings.apache.org, 
-	Joe Basirico <jbasirico@securityinnovation.com>, 
-	Sharath Unni <sunni@securityinnovation.com>, 
-	Dinesh Shetty <dshetty@securityinnovation.com>, oss-security@lists.openwall.com, 
-	bugtraq@securityfocus.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2017-7663 - Apache OpenMeetings - XSS in chat
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.67.112.16]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF44 (Linux)/8.0.6_GA_5922)
+Thread-Topic: CVE request -- linux kernel: crash on invalid USB device descriptors (cdc_acm driver)
+Thread-Index: i3VjuR3vfkKHYB+3wGgsTOOayrRLVw==
+Date: Fri, 11 Mar 2016 07:53:41 -0500 (EST)
+From: Vladis Dronov <vdronov@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request -- linux kernel: crash on invalid USB device
+ descriptors (cdc_acm driver)
+To: oss-security@lists.openwall.com
 
-Severity: High
+Hello,
+If possible, we would like to obtain a CVE-ID for the securuty
+flaw (kernel panic on connecting fake usb device) described in:
 
-Vendor: The Apache Software Foundation
+http://seclists.org/bugtraq/2016/Mar/54
 
-Versions Affected: Apache OpenMeetings 3.2.0
+https://bugzilla.redhat.com/show_bug.cgi?id=1283366
 
-Description: Both global and Room chat are vulnerable to XSS attack
-CVE-2017-7663
-
-The issue was fixed in 3.3.0
-All users are recommended to upgrade to Apache OpenMeetings 3.3.0
-
-Credit: This issue was identified by Security Innovation
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
