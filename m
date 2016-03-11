@@ -1,32 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/06/8
-Message-ID: <20160506193041.GA4287@eldamar.local>
-Date: Fri, 6 May 2016 21:30:41 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: ikiwiki: HTML-escape error messages to prevent cross-site scripting attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/11/8
+Message-ID: <1863394064.35544340.1457701361457.JavaMail.zimbra@redhat.com>
+Date: Fri, 11 Mar 2016 08:02:41 -0500 (EST)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request -- linux kernel: crash on invalid USB device descriptors (wacom driver)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hello,
+If possible, we would like to obtain a CVE-ID for the securuty
+flaw (kernel panic on connecting fake usb device) described in:
 
-Release 3.20160506 of ikiwiki, a wiki compiler, fixed a cross-site
-scripting vulnerability. It has been fixed with the following commit:
+http://seclists.org/bugtraq/2016/Mar/60
 
-http://source.ikiwiki.branchable.com/?p=source.git;a=commitdiff;h=32ef584dc5abb6ddb9f794f94ea0b2934967bba7
+https://bugzilla.redhat.com/show_bug.cgi?id=1283375
+https://bugzilla.redhat.com/show_bug.cgi?id=1283377
 
-> Subject: [PATCH] HTML-escape error messages (OVE-20160505-0012)
-> 
-> The instance in cgierror() is a potential cross-site scripting attack,
-> because an attacker could conceivably cause some module to raise an
-> exception that includes attacker-supplied HTML in its message, for
-> example via a crafted filename. (OVE-20160505-0012)
-> 
-> The instances in preprocess() is just correctness. It is not a
-> cross-site scripting attack, because an attacker could equally well
-> write the desired HTML themselves; the sanitize hook is what
-> protects us from cross-site scripting here.
+This security flaw is specific for Red Hat Enterprise Linux 7
+(RHEL7).
 
-Could you please assign a CVE identifier for this issue.
-
-Regards,
-Salvatore
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
