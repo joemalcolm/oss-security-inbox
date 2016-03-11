@@ -1,42 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/03/2
-Message-Id: <20160203075205.40EBC13A62A@smtpvmsrv1.mitre.org>
-Date: Wed,  3 Feb 2016 02:52:05 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/11/14
+Message-Id: <20160311164948.43B626C0A8B@smtpvmsrv1.mitre.org>
+Date: Fri, 11 Mar 2016 11:49:48 -0500 (EST)
 From: cve-assign@...re.org
-To: wmliang.tw@...il.com
+To: hanno@...eck.de
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: FFmpeg issue
+Subject: Re: ProFTPD before 1.3.5b/1.3.6rc2 uses 1024 bit Diffie Hellman parameters for TLS even if user sets manual parameters
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Id like to request CVE for the following issue in ffmpeg 2.8.5 release
+> The ProFTPD daemon supports TLS encrypted connections via the mod_tls
+> module. This module has a configuration option
+> TLSDHParamFile
+> to specify user-defined Diffie Hellman parameters.
 > 
-> Fixes out of array read
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=0aada30510d809bccfd539a90ea37b61188f2cb4
+> Versions older than 1.3.5b / 1.3.6rc2 had a bug that would cause the
+> software to ignore the parameters and use Diffie Hellman key exchanges
+> with 1024 bit:
+> http://bugs.proftpd.org/show_bug.cgi?id=4230
+> 
+> As 1024 bit DH is considered dangerously small these days and breakable
+> by a powerful attacker I think this should be considered a security
+> vulnerability.
 
-Use CVE-2016-2213.
+> https://github.com/proftpd/proftpd/pull/226
+
+>> This logic should hopefully address the bug, where the principle of
+>> least surprise was violated because a DH (4096 bits), larger than the
+>> configured server cert (of 2048 bits), was not selected.
+
+Use CVE-2016-3125. This CVE is for the "principle of least surprise"
+violation in which the administrator configured a security-relevant
+setting to one value, but the product's behavior used a potentially
+worse value. This CVE is not specifically about whether 1024 is
+"dangerous" or about whether 1024 should be configurable at all.
+
+
+> The release notes[1] are confusing, as they mention only problems with
+> keys smaller than 2048 bit, but I was also able to reproduce this issue
+> with 4096 bit keys.
+> [1] http://proftpd.org/docs/RELEASE_NOTES-1.3.5b
+
+We are not sure why this would be confusing.
+
+"SSH RSA hostkeys smaller than 2048 bits now work properly" in those
+release notes corresponds to an entirely different issue, described
+at:
+
+  http://bugs.proftpd.org/show_bug.cgi?id=4097
+  https://forums.proftpd.org/smf/index.php/topic,11579.0.html
+
+This 2048-bit issue does not have a CVE ID. Very roughly, the 2048-bit
+issue seems to be about "it is possible for the administrator to
+configure the product so that it is easier for a client to cause a DoS
+to that client's own session."
+
+The CVE-2016-3125 issue corresponds only to the third 1.3.5b item,
+i.e., "Fixed selection of DH groups from TLSDHParamFile."
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWsbAmAAoJEL54rhJi8gl5u8oQAKgMRIgKbEkFvMntdaoiJ4N6
-Vke1upXtwqKeYdXDheXg6T4hri4PJnSNS6jr3tx0BU34QPxY3XHKdK0jpK+eaBcN
-2RfE1Zzo6QB+OeWYU7JCoT+4CnvKqlyRqV9lnqkizB4fQG4nSFaNpha7VDywBgY1
-jEeekjaK/ZGDB8h9ROteAMw1l4zouATTXdHKt87E0BhDiImgVOkM1GHRTe/NoKFC
-N9668J0uCqVAOW6sygNMwRXLdlXn1cHwXjoes0afQh9bk+en5FrP512R9VTKSjz+
-TvURr5H2CP61of03Q5+F2TaE/GS1uQL3EW9CM6iqnzpjdnmaFdGDtZ/qVTDrBH2a
-odxR0VSY32gBfu6HuCM39QxXwu3oTb90o13CQCHcl3L3C9EJvMkxs14SFzwIalc8
-Dvasdkt06yaxLg/ONh0p424vvPvZa9spWEvmgJDNACEnzT/T7sv/Qu/jHdUMohNj
-jOObhcdfWNfnUcRFgwak/e+aYpOemsCjFKJ8DicChlpmpgMAOpezrImY+AkeJ94j
-TA5MZGdlSpvrtpPuyaLOe2HC6TdR3Vx3Pz/MDOD1qOw1K/xIYaYNYoC+xyexxQ0t
-KsUn5iF1/b4thsFOMpgVwSELilWRH4ZBSN701npN3wFfN2sEcLtSXPqG+5JOsSqR
-ApvycT2lDPBpdqv6Qa1U
-=wAwZ
+iQIcBAEBCAAGBQJW4vYgAAoJEL54rhJi8gl5IIQP/2ccSsJoIyFt59U4UhjPrko6
+V+9Lr8l67O0Dx46ByJmeK3eUalk2R80QWT92O3b2aGPyjE/uqllrFFxRrPmj9ReX
+rhd8RDjEq7hW90ODCAeLfsct7a25/Sb8DSFFrb0Qy1DvrFSloCLAaG3cV6ud1sFr
+3mF2xMxlprCRijlQk40Je74BHuCptgwdo9rx4SbTx5oZAvaD1svCqKQ6D6sZv05E
+EVCWdFO24e2vdulagtRPtv57gLWKMdgbV5lrmXTrudUNhmoiyN5bfSRQgOizu0g7
+B+1U3s5gjNNbChEO0HRZs90QZKUZcBsRhiijT6J8289LqAOYFNXjrjdciia1fD6p
+WNARS69UWDSGkJV8PL/ZNDt21mnnwoqgwvWAx39abFaKgomjhdjoiQHWO0AibAKl
+6v/CCnSGPf84VWV/dEK3r2H8Zu3/C4AoSPJPKT48dCGIj70uVsxOv26ueOsGazBj
+nC9hHcDv39s6YXfTFsW3eAdM9eHjpxHVr8RSdTwqOWNdVAh3wHO7H/NHxjgMn2Sd
+bKGU1FTvQ/InTn8AzXZlzCkS0l3qQBZMPRPSOVJLgw+GsO/5qKvgfzXbE3cHIgN+
+YJDQAkklpvjcK2vg2NE9BH4a70q9oGMyGEo7SSIOAuWtFRIRn0m1+pfZ73/hXYE4
+lJDpyWFeYDFTV0CnDDqh
+=ErAX
 -----END PGP SIGNATURE-----
