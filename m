@@ -1,44 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/10/4
-Message-ID: <4F45B0EA-41C2-4A0B-9B97-9DF10AA14E9D@bishopfox.com>
-Date: Wed, 10 Feb 2016 15:26:47 +0000
-From: Shubham Shah <sshah@...hopfox.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "cve-assign@...re.org" <cve-assign@...re.org>
-CC: Joe DeMesy <jdemesy@...hopfox.com>, Michael Morris <michael@...eux.com>
-Subject: CVE Request: Textual IRC Client <= 5.2.7 Remote Command Execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/11/3
+Message-ID: <20160311110954.7e04e562@pc1>
+Date: Fri, 11 Mar 2016 11:09:54 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: ProFTPD before 1.3.5b/1.3.6rc2 uses 1024 bit Diffie Hellman parameters for TLS even if user sets manual parameters
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-We would like to request a CVE for a remote command execution vulnerability in the Textual IRC client <= 5.2.7 for OS X. 
+The ProFTPD daemon supports TLS encrypted connections via the mod_tls
+module. This module has a configuration option
+TLSDHParamFile
+to specify user-defined Diffie Hellman parameters.
 
-An attacker is able to send messages to users of the Textual IRC Client 5.2.7 and below in order to inject arbitrary JavaScript within Textual’s web view upon limited user interaction. Unspecified attack vectors could allow for an attacker to achieve remote command execution on a victim’s machine, through the Textual IRC client.
+Versions older than 1.3.5b / 1.3.6rc2 had a bug that would cause the
+software to ignore the parameters and use Diffie Hellman key exchanges
+with 1024 bit:
+http://bugs.proftpd.org/show_bug.cgi?id=4230
 
-The vendor has released a fix as seen in the following GitHub commit:
+The release notes[1] are confusing, as they mention only problems with
+keys smaller than 2048 bit, but I was also able to reproduce this issue
+with 4096 bit keys. But anyway, it is fixed in the latest versions for
+all key sizes I have tested.
 
-https://github.com/Codeux-Software/Textual/commit/422a6c8f7e750df506adaebb2db4bfa23f6aaa37
+As 1024 bit DH is considered dangerously small these days and breakable
+by a powerful attacker I think this should be considered a security
+vulnerability.
 
-A patch has been released by the vendor and this security vulnerability has been fixed in Textual 5.2.8 as seen in the release notes:
+[1] http://proftpd.org/docs/RELEASE_NOTES-1.3.5b
 
-https://www.codeux.com/textual/help/Release-Notes%3A-Version-5.2.8.kb
+-- 
+Hanno Böck
+https://hboeck.de/
 
-The release notes will be updated to include any CVE’s assigned for this remote command execution vulnerability.
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-This vulnerability was found by Shubham Shah and Joe DeMesy of Bishop Fox.
-
-Thanks,
-
-Shubham Shah
-Senior SECURITY ANALYST
-
-Email: sshah@...hopfox.com
-Phone: +61 0412 609 761
-Fax: (480) 383-6401
-
-WWW.BISHOPFOX.COM
-
-
-
-Content of type "text/html" skipped
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4512 bytes)
+Content of type "application/pgp-signature" skipped
