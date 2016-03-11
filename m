@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5257" "Thursday" "8" "October" "2020" "14:36:42" "+0200" "Daniel Beck" "ml@beckweb.net" "<E9AC7759-6DB8-4293-A90A-58174CDC637F@beckweb.net>" "156" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "10" "2020100812:36:42" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Oct  8  156/5257  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1469" "Friday" "11" "March" "2016" "21:16:24" "+0100" "Nico Golde" "oss-security+ml@ngolde.de" "<20160311201624.GE42706@coredump>" "42" "[oss-security] two udhcpc (busybox) issues" nil nil nil "3" "2016031120:16:24" "[oss-security] two udhcpc (busybox) issues" (number mark "U       oss-security Mar 11   42/1469  " thread-indent "\"[oss-security] two udhcpc (busybox) issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22438 invoked by uid 550); 8 Oct 2020 12:36:54 -0000
+Received: (qmail 16211 invoked by uid 550); 11 Mar 2016 20:16:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,173 +12,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22416 invoked from network); 8 Oct 2020 12:36:53 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.15\))
-Message-Id: <E9AC7759-6DB8-4293-A90A-58174CDC637F@beckweb.net>
-Date: Thu, 8 Oct 2020 14:36:42 +0200
+Received: (qmail 16155 invoked from network); 11 Mar 2016 20:16:37 -0000
+Date: Fri, 11 Mar 2016 21:16:24 +0100
+From: Nico Golde <oss-security+ml@ngolde.de>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.104.15)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1602160613;af925302;
-X-HE-SMSGID: 1kQVA2-0008Rc-Am
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Message-ID: <20160311201624.GE42706@coredump>
+Mail-Followup-To: oss-security@lists.openwall.com
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="mxv5cy4qt+RJ9ypb"
+Content-Disposition: inline
+X-Mailer: netcat 1.10
+X-GPG: 0xA0A0AAAA
+Subject: [oss-security] two udhcpc (busybox) issues
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+--mxv5cy4qt+RJ9ypb
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The following releases contain fixes for security vulnerabilities:
+This is probably only relevant for the embedded space. Sharing two issues I=
+=20
+found in busybox' dhcp client implementation:
 
-* Active Choices Plugin 2.5
-* Audit Trail Plugin 3.7
-* couchdb-statistics Plugin 0.4
-* Role-based Authorization Strategy Plugin 3.1
+CVE-2016-2147 / OOB heap write due to integer underflow
+https://git.busybox.net/busybox/commit/?id=3Dd474ffc68290e0a83651c4432eeabf=
+a62cd51e87
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+CVE-2016-2148 / heap overflow in OPTION_6RD parsing
+https://git.busybox.net/busybox/commit/?id=3D352f79acbd759c14399e39baef21fc=
+4ffe180ac2
 
-* Maven Cascade Release Plugin
-* Nerrvana Plugin
-* Persona Plugin
-* Release Plugin
-* Shared Objects Plugin
-* SMS Notification Plugin
+Cheers,
+Nico
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2020-10-08/
+--mxv5cy4qt+RJ9ypb
+Content-Type: application/pgp-signature
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG/MacGPG2 v2
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+iQIcBAEBCgAGBQJW4yeXAAoJEM1LKvOgoKqqCuUQALrKcgJZbu4RgFfkxV8wI6lu
+v+RxEdlDJvdJ6Qn0gxZKfLqP/DfXNzS7pkGyzojE00b39zOZNNSjeiMe7CrX/DCU
+GBiFrCl0JkYlddpVbEu8zDeuIq+drqUpyBrVH3AMAC0dgSffNjKN8lxrMpnQ+W7n
+j2UMa9vLGRR8W6/NBTNRqGQoaRw3GxO9gqDQdX/u7WohAzZ+9TBV9H0v3SbncpkJ
+Z/jRtOFZnHCCWyDCZNkZe4De35IEGpkJuzumCAAaQJFMKJnzJTvx45EQZm4jfW84
+iPZCuUp12yLNzedkQvl1Y96+r2MW6Dfw55oIWj8+qKEfJECyEjPkyC9asnn37BSJ
+FGWQXcB0aob73lT0YVWklbBbdcAeV5oB5Pyq6liUda9SfCZOrBt1U0eWeItbBEzH
+pBPQrCe6jWx1bgu4mclmMT1GyxfMgMEoRfsWkzqFI3Kw/wXSLJAgNFK2dSXlP1IL
+m7QJfjHm22dFpRwxWV99vHQwysN4L6RVN8QnUKRvosExjOP5ddE7E38tCZBsbKpX
+sJ7eeJkaZLvCboQCOzMli6xikSc0gI3I4aMcrglzUQ1WE0na9W7MKayhiksf5w2o
+fK8m+Lvs6XQeI2SV8xwC41+1HOCq9KqbLP03FWfNjnzwAPtzopXYLQPKaZD5wEUX
+6dqtm4gKgLft4wYPXCuy
+=WpLP
+-----END PGP SIGNATURE-----
 
----
-
-SECURITY-1767 / CVE-2020-2286
-Role-based Authorization Strategy Plugin 2.12 and newer uses a cache to
-speed up permission lookups.
-
-In Role-based Authorization Strategy Plugin 3.0 and earlier this cache is
-not invalidated properly when an administrator changes the permission
-configuration. This can result in permissions being granted long after the
-configuration was changed to no longer grant them.
-
-
-SECURITY-1815 / CVE-2020-2287
-Audit Trail Plugin logs requests whose URL path matches an admin-configured
-regular expression.
-
-A discrepancy between the behavior of the plugin and the Stapler web
-framework in parsing URL paths allows attackers to craft URLs that would
-bypass request logging in Audit Trail Plugin 3.6 and earlier.
-
-
-SECURITY-1846 / CVE-2020-2288
-Audit Trail Plugin uses regular expressions to match requested URLs whose
-dispatch should be logged.
-
-In Audit Trail Plugin 3.6 and earlier, the default regular expression
-pattern could be bypassed in many cases by adding a suffix to the URL that
-would be ignored during request handling.
-
-
-SECURITY-1954 / CVE-2020-2289
-Active Choices Plugin 2.4 and earlier does not escape the name and
-description of build parameters.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Job/Configure permission.
-
-
-SECURITY-2008 / CVE-2020-2290
-Active Choices Plugin 2.4 and earlier does not escape `List` and `Map`
-return values of sandboxed scripts for _Reactive Reference Parameter_.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Job/Configure permission.
-
-
-SECURITY-2065 / CVE-2020-2291
-couchdb-statistics Plugin 0.3 and earlier stores its server password
-unencrypted in its global configuration file
-`org.jenkinsci.plugins.couchstats.CouchStatsConfig.xml` on the Jenkins
-controller as part of its configuration.
-
-This password can be viewed by users with access to the Jenkins controller
-file system.
-
-
-SECURITY-1928 / CVE-2020-2292
-Release Plugin 2.10.2 and earlier does not escape the release version in
-the badge tooltip.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Release/Release permission.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2046 / CVE-2020-2293
-Persona Plugin 2.4 and earlier allows users with Overall/Read permission to
-read arbitrary files on the Jenkins controller.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2049 / CVE-2020-2294 (permission check) & CVE-2020-2295 (CSRF)
-Maven Cascade Release Plugin 1.3.2 and earlier does not perform permission
-checks in several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to start cascade builds
-and layout builds, and reconfigure the plugin.
-
-Additionally, these endpoints do not require POST requests, resulting in a
-cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2052 / CVE-2020-2296
-Shared Objects Plugin 0.44 and earlier does not require POST requests for
-an HTTP endpoint, resulting in a cross-site request forgery (CSRF)
-vulnerability.
-
-This vulnerability allows attackers to configure shared objects.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2054 / CVE-2020-2297
-SMS Notification Plugin 1.2 and earlier stores an access token unencrypted
-in its global configuration file
-`com.hoiio.jenkins.plugin.SMSNotification.xml` on the Jenkins controller as
-part of its configuration.
-
-This access token can be viewed by users with access to the Jenkins
-controller file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2097 / CVE-2020-2298
-Nerrvana Plugin 1.02.06 and earlier does not configure its XML parser to
-prevent XML external entity (XXE) attacks.
-
-This allows attackers with Overall/Read permission to have Jenkins parse a
-crafted HTTP request with XML data that uses external entities for
-extraction of secrets from the Jenkins controller or server-side request
-forgery.
-
-Additionally, XML parsing is exposed as a form validation endpoint that
-does not require POST requests, allowing exploitation by users without
-Overall/Read permission via CSRF.
-
-As of publication of this advisory, there is no fix.
-
-
-
+--mxv5cy4qt+RJ9ypb--
