@@ -1,26 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/21/10
-Message-ID: <20161221205952.GA81339@wopr>
-Date: Wed, 21 Dec 2016 12:59:52 -0800
-From: Kurt H Maier <khm@...ops.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/11/6
+Message-ID: <599690879.35543080.1457700817227.JavaMail.zimbra@redhat.com>
+Date: Fri, 11 Mar 2016 07:53:37 -0500 (EST)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-9963 Exim private information leak
+Subject: CVE request -- linux kernel: crash on invalid USB device descriptors (cypress_m8 driver)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 20, 2016 at 11:59:35PM +0100, Heiko Schlittermann wrote:
-> Heiko Schlittermann <hs@...littermann.de> (So 18 Dez 2016 18:59:25 CET):
-> …
-> > On Dec, 25th we will make the details and the above mentioned releases
-> > available to the public.
-> 
-> To be more precise: On Dec, 25th, at 10.00 UTC we'll push the changes to the public
-> Git repository git://git.exim.org/exim.git and upload the tar balls into the 
-> FTP area ftp://ftp.exim.org/pub/exim/exim4
+Hello,
+If possible, we would like to obtain a CVE-ID for the securuty
+flaw (kernel panic on connecting fake usb device) described in:
 
-Just so we're absolutely clear:
+http://seclists.org/bugtraq/2016/Mar/55
 
-You are releasing the fix for a currently-undisclosed security
-vulnerability on the day most of the Western world's IT staff is on
-holiday?
+https://bugzilla.redhat.com/show_bug.cgi?id=1283368
 
-khm
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
