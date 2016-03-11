@@ -1,48 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/23/6
-Message-ID: <CY1PR17MB0313FFDC60CA5F5ABE1EFB90DBC80@CY1PR17MB0313.namprd17.prod.outlook.com>
-Date: Fri, 23 Sep 2016 09:48:07 +0000
-From: Hu Chaojian <chaojianhu@...mail.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE request Qemu: hw: net: Fix a heap overflow in xlnx.xps-ethernetlite
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/11/13
+Message-ID: <CANO=Ty3y2K8-_OSDEKnfx6k2Fv+PQBY+B7Y6hMMO4tWc=8UchQ@mail.gmail.com>
+Date: Fri, 11 Mar 2016 09:46:39 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>, "Boyle, Stephen V." <sboyle@...re.org>
+Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
 Content-Type: text/plain; charset=utf-8
 
-The .receive callback of xlnx.xps-ethernetlite doesn't check the length
+On Fri, Mar 11, 2016 at 9:01 AM, Carlos Alberto Lopez Perez <
+clopez@...lia.com> wrote:
 
-of data before calling memcpy. As a result, the NetClientState object in
-heap will be overflowed. Attackers may leverage it to execute arbitrary
+> On 07/03/16 09:10, Markus Vervier wrote:
+> > It seems to me MITRE currently wants to improve CVE quality but does not
+> > have the resources
+> > to do a real and fair validation.
+>
+> According to Wikipedia [1], Mitre has 7,613 employees and a revenue of
+> US$ 1.421 billion.
+>
+> I fail to understand how a corporation of that size lacks resources for
+> improving anything they really want to improve.
+>
+> ---
+> [1] https://en.wikipedia.org/wiki/Mitre_Corporation
+>
+>
+So I don't know the exact details but broadly speaking Mitre handle a lot
+of US government projects, and one of Mitre's mandates is cyber security,
+so under that mandate the us Gov (specifically the DHS as I understand it)
+has funded several projects, such as CVE. So CVE is something Mite
+administers, and is paid to do so through US Gov funding. It's not like CVE
+is some profitable product that Mitre sells. So Mitre has to work within
+the funding constraints of the government, it's not like they can trivially
+allocate 10 million a year to it internally.
 
-code with privileges of the qemu process on the host.
-
-
-Upstream patches:
-
-https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg01598.html
-https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg01877.html<https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg01598.htmlhttps://lists.gnu.org/archive/html/qemu-devel/2016-08/msg01877.html>
-
-This issue was discovered by chaojianhu<chaojianhu@...mail.com>
-
-Thanks,
-
-Chaojian Hu
-
-
--------------------------------------------------------------------------------------------
-
-p.s.
-
-Alistair (the code maintainer) have requested a cve id for this vulnerability.
-
-
->>Hello chaojianhu,
-
->>I created a CVE, but I can't access it. Do you know how to expose the CVE?
-
->>https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-7161
-
->>Thanks,
-
->>Alistair
+CC'ing Stephen Boyle, if I said something completely wrong please, please
+correct me =).
 
 
-But there seems a small problem.
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
