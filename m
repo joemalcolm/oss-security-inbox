@@ -1,30 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/02/2
-Message-ID: <CAOSkqBWUb9ri_NaQqRfKi=Gz-rDRB28K7LcGincXgR6hHji+mw@mail.gmail.com>
-Date: Sun, 3 Jan 2016 06:08:35 +0800
-From: Guanxing Wen <wengx522@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: "cve-assign@...re.org" <cve-assign@...re.org>
-Subject: CVE Request: PCRE Library Heap Overflow Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/11/16
+Message-ID: <20160311201624.GE42706@coredump>
+Date: Fri, 11 Mar 2016 21:16:24 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: two udhcpc (busybox) issues
 Content-Type: text/plain; charset=utf-8
 
-Hello MITRE,
+This is probably only relevant for the embedded space. Sharing two issues I 
+found in busybox' dhcp client implementation:
 
-PCRE is a regular expression C library inspired by the regular expression
-capabilities in the Perl programming language. The PCRE library is
-incorporated into a number of prominent programs, such as Adobe Flash,
-Apache, Nginx, PHP, KDE/Konqueror.
+CVE-2016-2147 / OOB heap write due to integer underflow
+https://git.busybox.net/busybox/commit/?id=d474ffc68290e0a83651c4432eeabfa62cd51e87
 
-PCRE library is prone to a vulnerability which leads to Heap Overflow.
-During the compilation of a malformed regular expression, more data is
-written on the malloced block than the expected size output by
-compile_regex. Carefully crafted my lead to code execution in the context
-of affected applications.
+CVE-2016-2148 / heap overflow in OPTION_6RD parsing
+https://git.busybox.net/busybox/commit/?id=352f79acbd759c14399e39baef21fc4ffe180ac2
 
-Reference:
-https://bugs.exim.org/show_bug.cgi?id=1767
+Cheers,
+Nico
 
-Please allocate a CVE-ID for this.
-
-Wen Guanxing from Venustech ADLAB
-
+Content of type "application/pgp-signature" skipped
