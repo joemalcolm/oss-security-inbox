@@ -1,43 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/17
-Message-Id: <20160316194617.64E2142E018@smtpvbsrv1.mitre.org>
-Date: Wed, 16 Mar 2016 15:46:17 -0400 (EDT)
-From: cve-assign@...re.org
-To: winsonliu@...cent.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request - OpenJPEG : Out-Of-Bounds Read in sycc422_to_rgb function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/12/1
+Message-ID: <20160312102544.GA17695@tunkki>
+Date: Sat, 12 Mar 2016 12:25:44 +0200
+From: Henri Salo <henri@...v.fi>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: XSS in WP Super Cache < 1.4.3
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> A specially crafted JPEG2000 image file can force Out-Of-Bounds Read
+On Sun, Apr 05, 2015 at 09:07:23AM +0200, Hanno Böck wrote:
+> https://wordpress.org/plugins/wp-super-cache/changelog/
+> 
+> 1.4.3
+> Security release fixing an XSS bug in the settings page. Props Marc
+> Montpas from Sucuri.
 
-> opj_decompress -o image.pgm -i oob_sycc422_to_rgb.j2k
+Also post http://www.openwall.com/lists/oss-security/2015/04/05/2 notes that
+this might be related commit:
 
-> Program received signal SIGSEGV, Segmentation fault.
+https://plugins.trac.wordpress.org/changeset/1127138
 
-Use CVE-2016-3183.
+This case seems to be still unassigned. Is it possible to get a CVE assigned for
+this vulnerability, thank you? WP Super Cache does have over million active
+installations according to the WordPress Plugin Directory. Is there a reason
+that this never got assigned? If additional information is needed I can provide
+it.
 
 - -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+Henri Salo
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW6bbPAAoJEL54rhJi8gl5ZG0QAMvFedBeok1d3Y5AzP83yCMW
-moXc10NZwmWICRH+GWTFXr5dnKuPkK6Ia0DRQmptKBnQgBUfMJEH3ARp0b94W1GN
-FPPbegyZaHNRba5i/UX1T9020v55rYxVjs0997QJWSnXWSbO+G900IbkXgIaU+cs
-wv07+21oh9iwmVCgd5pkgOPD4Z2QHA30JfAZe4OVT4NwgdryVnEGr8vHvXeJU1P9
-MG8ouU8RXyMmbr/mklhbHmuaL/iGq8b7q5YrdW2AELBnsVf5XNmH9S4X9bss0Zge
-eOuPN9o3KYQcUnxFF2iQncw7zoQHlh/vZEZY+6E3II/QqbUUGM7l9j1xOAQCKPrf
-S6xP4r5xgoHyy9a8USTLkQhMqjn84oHStEohmqHgF1NfD2il4lJpK97irkZn33pY
-Y5uin3hM70h8DCZBfG02BfjrL0mMCwbIXpWHX0lsmPRl5MNIsfoyqdwNF4hLM2J2
-vrAjFxV1eZV696EaH1BhNeIjc6h2hufISWFpqkTP6d1/XHp08cej90BQaAJ9rTCQ
-ozg9qJ/eeeACYwVbtD8z24a71wWqwqEa68XhO2wzQ/4KhUWcf1f90rt1SpcMo4jV
-TmC6R53XqH9SbpkwLFsxmABvaS3scFjEylWlm6evQWGynzpKqp5ecn9wAu7cxy9F
-4+FZb84Nk+ai1gcGtuyx
-=laRf
+iQIcBAEBAgAGBQJW4+6oAAoJECet96ROqnV06qcQALfVi9MrvjGYPY7cpEMhG/It
+P2RMSKofO2ksRY/Lzs2O5TLnlggNcQX00K+3dhcUrnPrKVFpWLNvodhddy+1Z5Zn
+0VCAOESlhaa7vhMVWKaOV8dzzO1ykfjOPZma5Ml1MOZSEwxTxCjScBPbKgFtTsNG
+ApZC8KQqkF6tPP6leKvfhtPj56bSuuFsdcY7VsNhmvPcQl41F3YA2TEEw/22C+/p
+496D+rmxkfI+bUei9p3L7KRbo+EBt9Jv0x3YrIUWVYHegjb1ETvcvN4RmTiSeu9U
+XmusNg6+Ej83HPkJvZmM0Pyu7aAGqfRC788yI+tWojjlOci3qHI3bG2W8J7eHjyj
+Qffifk3QpRX3r/UYFpovAst8gAsEfIKRze1SC+o6P1jRiS7zfufSCeSxj4vdcNA/
+DAE2VQ7sgsuS1DmiENpHv5mHsVAtkb5QpjYVq+jK7fZHYPgq5DkwCyG987Z/Rv9S
+72IDqPcHh5zsCiBRm1Fsi/6rX1KRNrAk4rD09Cd6+wU8ulXM8d/JPst6XpNynGl7
+BQONyCNNGZdRy+JGXF0lZ5We1DQ7eHXEB+jkNnXP4JS7UefkoKBO2rjSKfVOWk2l
+pN7VCCyaKsqKvSTtyEQ88Ipb7oIdGLVvHIzqdcWtnwwqwfvGjoHCerFdgdBZfH5c
+GGscrRUOdTPqmpKSDjaV
+=tCbo
 -----END PGP SIGNATURE-----
