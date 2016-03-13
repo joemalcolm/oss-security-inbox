@@ -1,35 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/15
-Message-ID: <alpine.LFD.2.20.1610102309280.30612@wniryva>
-Date: Mon, 10 Oct 2016 23:25:55 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Sabrina Dubroca <sdubroca@...hat.com>
-Subject: CVE-2016-7039 Kernel: net: unbounded recursion in the vlan GRO processing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/13/2
+Message-ID: <CAC1DjbY5DcefwkS8ba0iJj6sE8EM10PBE9YsyE59U9_MCmP8tg@mail.gmail.com>
+Date: Sun, 13 Mar 2016 11:01:33 +0200
+From: Dmitry Kasyanov <dkasyanov@...udlinux.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: PHP-5.5.33: Out-of-Bound Read in phar_parse_zipfile
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+An out-of-bounds read vulnerability was found in PHAR's
+phar_parse_zipfile() function.
 
-Linux kernel built with the 802.1Q/802.1ad VLAN(CONFIG_VLAN_8021Q) OR Virtual 
-eXtensible Local Area Network(CONFIG_VXLAN) with Transparent Ethernet 
-Bridging(TEB) GRO support, is vulnerable to a stack overflow issue. It could 
-occur while receiving large packets via GRO path; As an unlimited recursion 
-could unfold in both VLAN and TEB modules, leading to a stack corruption in 
-the kernel.
+Vulnerable code:
 
-A remote user could use this flaw to cause kernel panic by sending malicious 
-packets to a server that has GRO enabled.
+ext/phar/zip.c:
 
-Please see a proposed patch to fix this issue attached herein.
+int phar_parse_zipfile(php_stream *fp, char *fname, int fname_len,
+char *alias, int alias_len, phar_archive_data** pphar, char **error)
+/* {{{ */
+{
+phar_zip_dir_end locator;
+char buf[sizeof(locator) + 65536];
+...
+while ((p=(char *) memchr(p + 1, 'P', (size_t) (size - (p + 1 -
+buf)))) != NULL) {
+if (!memcmp(p + 1, "K\5\6", 3)) {
+memcpy((void *)&locator, (void *) p, sizeof(locator));
+if (PHAR_GET_16(locator.centraldisk) != 0 ||
+PHAR_GET_16(locator.disknumber) != 0) {
+/* split archives not handled */
+php_stream_close(fp);
+if (error) {
+spprintf(error, 4096, "phar error: split archives spanning multiple
+zips cannot be processed in zip-based phar \"%s\"", fname);
+}
+return FAILURE;
+}
+...
 
-'CVE-2016-7039' has been assigned to this issue by Red Hat Inc.
+The above code block tries to determine where in buf is "PK\x05\x06",
+which is actually "End of central directory record" structure of zip
+file. Then it copies 0x16 bytes from there to `phar_zip_dir_end
+locator`. If "PK\x05\x06" signature is located at end of `buf`
+variable, it will read out-of-bound `buf` variable and copy to
+`locator`.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1375944
+Details available at PHP bug tracker:
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
-View attachment "upstream-0001-net-add-recursion-limit-to-GRO.patch" of type "text/plain" (8015 bytes)
+https://bugs.php.net/bug.php?id=71498
+
+Patch:
+
+https://git.php.net/?p=php-src.git;a=commit;h=a6fdc5bb27b20d889de0cd29318b3968aabb57bd
+
+
+-- 
+Dmitry Kasyanov  |  Developer
+dkasyanov@...udlinux.com
