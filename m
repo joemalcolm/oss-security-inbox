@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6566" "Thursday" "8" "September" "2016" "03:13:15" "+0000" "=?gb2312?B?d2luc29ubGl1KMH1v8Yp?=" "winsonliu@tencent.com" "<1F2D4DA31CA62740BFF46830A0E6A4F7066E5805@EXMBX-TJ002.tencent.com>" "111" "[oss-security] CVE Request: OpenJPEG Heap Buffer Overflow Issue" nil nil nil "9" "2016090803:13:15" "[oss-security] CVE Request: OpenJPEG Heap Buffer Overflow Issue" (number mark "U       winsonliu@te Sep  8  111/6566  " thread-indent "\"[oss-security] CVE Request: OpenJPEG Heap Buffer Overflow Issue\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1389" "Sunday" "13" "March" "2016" "11:01:33" "+0200" "Dmitry Kasyanov" "dkasyanov@cloudlinux.com" "<CAC1DjbY5DcefwkS8ba0iJj6sE8EM10PBE9YsyE59U9_MCmP8tg@mail.gmail.com>" "49" "[oss-security] CVE Request: PHP-5.5.33: Out-of-Bound Read in phar_parse_zipfile" nil nil nil "3" "2016031309:01:33" "[oss-security] CVE Request: PHP-5.5.33: Out-of-Bound Read in phar_parse_zipfile" (number mark "U       dkasyanov@cl Mar 13   49/1389  " thread-indent "\"[oss-security] CVE Request: PHP-5.5.33: Out-of-Bound Read in phar_parse_zipfile\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21759 invoked by uid 550); 8 Sep 2016 03:15:37 -0000
+Received: (qmail 22164 invoked by uid 550); 13 Mar 2016 09:01:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,132 +12,84 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21710 invoked from network); 8 Sep 2016 03:15:30 -0000
-From: =?gb2312?B?d2luc29ubGl1KMH1v8Yp?= <winsonliu@tencent.com>
-To: oss-security <oss-security@lists.openwall.com>
-CC: cve-assign <cve-assign@mitre.org>
-Thread-Topic: CVE Request: OpenJPEG Heap Buffer Overflow Issue
-Thread-Index: AdIJfu89NF/CYQzBRZqvEkGPw8dDhQ==
-Date: Thu, 8 Sep 2016 03:13:15 +0000
-Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F7066E5805@EXMBX-TJ002.tencent.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.4.75.28]
-Content-Type: multipart/alternative;
-	boundary="_000_1F2D4DA31CA62740BFF46830A0E6A4F7066E5805EXMBXTJ002tence_"
+Received: (qmail 22146 invoked from network); 13 Mar 2016 09:01:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=cloudlinux-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:date:message-id:subject:from:to;
+        bh=yLsJ4yXp4IcqyWn1w3r3ElMgs7jKOdLzA8xPl6F/D6E=;
+        b=RFaix+HDJf1FpqLwzIFAu5BYVybGy0pavaCuO9VJAuZIWbY6B61/UJMotOfW574Xa2
+         SHGJqsPWm6SzfBmUDdESMZ0uHVytW/Y5N1qvu3dHco/SWn3M7di830limlDHTLSZpBQd
+         CO+laKlxznMonuSriUEk638fVf/zJrn5XcjQmeajM9ycaqt7jt91FkjC4DWMk8NgTEnv
+         sV627tB6GUSzow/yWOFOljQBfNFRdM7cKPmR8YRxR4eEdA+QwJ+I3tO/IdjOakEfSL86
+         nS2W3h7B3xr9YREgAHz11wdFEBU57iZsNo8GDwI6PAspoFIYSwRRYsBps7FVQPQ8DueM
+         AQ6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
+        bh=yLsJ4yXp4IcqyWn1w3r3ElMgs7jKOdLzA8xPl6F/D6E=;
+        b=I2ajqqyoYajtKWax/bG+41f1AzEtAqCgSQyqjwyHFh/sgI5dq5tY+27E4d2UWNXet+
+         LJMWI4srT+xp2KMv3US87TLfuPM7RBNUQABLNAK4thtkduatm+2T1vP4rRTIcsyfCxhL
+         4vveuMYm2tKo5dPakBoieG1VCWYv4lywHnio6nqUtZun1JHZ//8HLYZNv0myXsk85Y9T
+         SqRaWP5OcgCrhhOW9Yd5/qWD3lebuLHO8pm5LcCpoePtViwt83CkFZViz6Ur8Dfr0lV+
+         BRfCpldMvXW1RZP380sr8Qntkxfpb77ISC3rx3K0bp8zPb3fQjO1BM4bV+swQ1WBbGb3
+         vPYA==
+X-Gm-Message-State: AD7BkJIzsJSU0b0yrasHMd/6m8zhF2PEdKE9Bo3mKA2Bf1nfqSfbvu5giGbxpeNGPEEf0lWReSq5YdvySBSkyA==
 MIME-Version: 1.0
-Subject: [oss-security] CVE Request: OpenJPEG Heap Buffer Overflow Issue
+X-Received: by 10.31.15.4 with SMTP id 4mr17098371vkp.10.1457859693592; Sun,
+ 13 Mar 2016 01:01:33 -0800 (PST)
+Date: Sun, 13 Mar 2016 11:01:33 +0200
+Message-ID: <CAC1DjbY5DcefwkS8ba0iJj6sE8EM10PBE9YsyE59U9_MCmP8tg@mail.gmail.com>
+From: Dmitry Kasyanov <dkasyanov@cloudlinux.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] CVE Request: PHP-5.5.33: Out-of-Bound Read in phar_parse_zipfile
 
---_000_1F2D4DA31CA62740BFF46830A0E6A4F7066E5805EXMBXTJ002tence_
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+An out-of-bounds read vulnerability was found in PHAR's
+phar_parse_zipfile() function.
 
-SGksDQoNClRoaXMgaXMgS2UgZnJvbSBUZW5jZW50J3MgWHVhbnd1IExBQi4g
-SSByZXBvcnRlZCBhIHNlY3VyaXR5IGlzc3VlIG9mIE9wZW5KUEVHIHNvbWUg
-ZGF5cyBhZ28gYW5kIGl0IGhhcyBiZWVuIGZpeGVkIG5vdy4gVGhlIGZpeCBp
-cyBhdmFpbGFibGUgYXQgaHR0cHM6Ly9naXRodWIuY29tL3VjbG91dmFpbi9v
-cGVuanBlZy9jb21taXQvZTA3ODE3MmIxYzNmOThkMjIxOWMzNzA3NmIyMzhm
-Yjc1OWM3NTFlYSAuIENvdWxkIHlvdSBwbGVhc2UgYXNzaWduIGEgQ1ZFIG51
-bWJlciBmb3IgaXQ/DQoNClRoYW5rcy4NCg0KUmVnYXJkcywNCktlDQpUZW5j
-ZW50J3MgWHVhbnd1IExBQg0KDQoNCkRFU0NSSVBUSU9ODQo9PT09PT09PT09
-PT09PQ0KQSBIZWFwIEJ1ZmZlciBPdmVyZmxvdyAoT3V0LW9mLUJvdW5kcyBX
-cml0ZSkgaXNzdWUgd2FzIGZvdW5kIGluIGZ1bmN0aW9uIG9wal9kd3RfaW50
-ZXJsZWF2ZV92IG9mIGR3dC5jLiBUaGlzIHZ1bG5lcmFiaWxpdHkgYWxsb3dz
-IHJlbW90ZSBhdHRhY2tlcnMgdG8gZXhlY3V0ZSBhcmJpdHJhcnkgY29kZSBv
-biB2dWxuZXJhYmxlIGluc3RhbGxhdGlvbnMgb2YgT3BlbkpQRUcuDQoNCg0K
-Q1JFRElUDQo9PT09PT09PT09PT09PQ0KVGhpcyB2dWxuZXJhYmlsaXR5IHdh
-cyBkaXNjb3ZlcmVkIGJ5IEtlIExpdSBvZiBUZW5jZW50J3MgWHVhbnd1IExB
-Qi4NCg0KDQpURVNURUQgVkVSU0lPTg0KPT09PT09PT09PT09PT0NCk1hc3Rl
-ciB2ZXJzaW9uIG9mIE9wZW5KUEVHICg0YTJhODY5KQ0KDQoNCkVYQ0VQVElP
-TiBMT0cNCj09PT09PT09PT09PT09DQo9PTU1NzY9PUVSUk9SOiBBZGRyZXNz
-U2FuaXRpemVyOiBoZWFwLWJ1ZmZlci1vdmVyZmxvdyBvbiBhZGRyZXNzIDB4
-YjRmMDE5N2MgYXQgcGMgMHhiNzQ4ZjdlMyBicCAweGJmOWMxZDM4IHNwIDB4
-YmY5YzFkMzANCldSSVRFIG9mIHNpemUgNCBhdCAweGI0ZjAxOTdjIHRocmVh
-ZCBUMA0KICAgICMwIDB4Yjc0OGY3ZTIgaW4gb3BqX2R3dF9pbnRlcmxlYXZl
-X3Ygc3JjL2xpYi9vcGVuanAyL2R3dC5jOjI2ODo3DQogICAgIzEgMHhiNzQ3
-NjFlZSBpbiBvcGpfZHd0X2RlY29kZV90aWxlIHNyYy9saWIvb3BlbmpwMi9k
-d3QuYzo2MDk6NA0KICAgICMyIDB4Yjc0NzQxMDggaW4gb3BqX2R3dF9kZWNv
-ZGUgc3JjL2xpYi9vcGVuanAyL2R3dC5jOjQ3Nzo5DQogICAgIzMgMHhiNzcz
-MjllMiBpbiBvcGpfdGNkX2R3dF9kZWNvZGUgc3JjL2xpYi9vcGVuanAyL3Rj
-ZC5jOjE2MTk6MzENCiAgICAjNCAweGI3NzJmZmNjIGluIG9wal90Y2RfZGVj
-b2RlX3RpbGUgc3JjL2xpYi9vcGVuanAyL3RjZC5jOjEzMDY6MjANCiAgICAj
-NSAweGI3NGU5YTBlIGluIG9wal9qMmtfZGVjb2RlX3RpbGUgc3JjL2xpYi9v
-cGVuanAyL2oyay5jOjgxMzQ6MTUNCiAgICAjNiAweGI3NTc1MzU0IGluIG9w
-al9qMmtfZGVjb2RlX3RpbGVzIHNyYy9saWIvb3BlbmpwMi9qMmsuYzo5NzYx
-OjIzDQogICAgIzcgMHhiNzRjZWU0YyBpbiBvcGpfajJrX2V4ZWMgc3JjL2xp
-Yi9vcGVuanAyL2oyay5jOjczNTA6NDMNCiAgICAjOCAweGI3NTA1NzhiIGlu
-IG9wal9qMmtfZGVjb2RlIHNyYy9saWIvb3BlbmpwMi9qMmsuYzo5OTU5OjE1
-DQogICAgIzkgMHhiNzVjYTBkZSBpbiBvcGpfanAyX2RlY29kZSBzcmMvbGli
-L29wZW5qcDIvanAyLmM6MTQ5Mjo4DQogICAgIzEwIDB4Yjc2MzRlYjggaW4g
-b3BqX2RlY29kZSBzcmMvbGliL29wZW5qcDIvb3BlbmpwZWcuYzo0MTI6MTAN
-CiAgICAjMTEgMHg4MTQwMzA0IGluIG1haW4gc3JjL2Jpbi9qcDIvb3BqX2Rl
-Y29tcHJlc3MuYzoxMzMyOjEwDQogICAgIzEyIDB4YjcxY2JhZjIgaW4gX19s
-aWJjX3N0YXJ0X21haW4gL2J1aWxkL2VnbGliYy1YNGJuQnovZWdsaWJjLTIu
-MTkvY3N1L2xpYmMtc3RhcnQuYzoyODcNCiAgICAjMTMgMHg4MDc4MWViIGlu
-IF9zdGFydCAoYmluL29wal9kZWNvbXByZXNzKzB4ODA3ODFlYikNCg0KMHhi
-NGYwMTk3YyBpcyBsb2NhdGVkIDQgYnl0ZXMgdG8gdGhlIGxlZnQgb2YgMTAy
-OC1ieXRlIHJlZ2lvbiBbMHhiNGYwMTk4MCwweGI0ZjAxZDg0KQ0KYWxsb2Nh
-dGVkIGJ5IHRocmVhZCBUMCBoZXJlOg0KICAgICMwIDB4ODExMDk0OSBpbiBf
-X2ludGVyY2VwdG9yX3Bvc2l4X21lbWFsaWduIChiaW4vb3BqX2RlY29tcHJl
-c3MrMHg4MTEwOTQ5KQ0KICAgICMxIDB4Yjc3NTMzZGMgaW4gb3BqX2FsaWdu
-ZWRfYWxsb2NfbiBzcmMvbGliL29wZW5qcDIvb3BqX21hbGxvYy5jOjYxOjcN
-CiAgICAjMiAweGI3NzUyZWQzIGluIG9wal9hbGlnbmVkX21hbGxvYyBzcmMv
-bGliL29wZW5qcDIvb3BqX21hbGxvYy5jOjIwODoxMA0KICAgICMzIDB4Yjc0
-NzRkMDggaW4gb3BqX2R3dF9kZWNvZGVfdGlsZSBzcmMvbGliL29wZW5qcDIv
-ZHd0LmM6NTc2OjIyDQogICAgIzQgMHhiNzQ3NDEwOCBpbiBvcGpfZHd0X2Rl
-Y29kZSBzcmMvbGliL29wZW5qcDIvZHd0LmM6NDc3OjkNCiAgICAjNSAweGI3
-NzMyOWUyIGluIG9wal90Y2RfZHd0X2RlY29kZSBzcmMvbGliL29wZW5qcDIv
-dGNkLmM6MTYxOTozMQ0KICAgICM2IDB4Yjc3MmZmY2MgaW4gb3BqX3RjZF9k
-ZWNvZGVfdGlsZSBzcmMvbGliL29wZW5qcDIvdGNkLmM6MTMwNjoyMA0KICAg
-ICM3IDB4Yjc0ZTlhMGUgaW4gb3BqX2oya19kZWNvZGVfdGlsZSBzcmMvbGli
-L29wZW5qcDIvajJrLmM6ODEzNDoxNQ0KICAgICM4IDB4Yjc1NzUzNTQgaW4g
-b3BqX2oya19kZWNvZGVfdGlsZXMgc3JjL2xpYi9vcGVuanAyL2oyay5jOjk3
-NjE6MjMNCiAgICAjOSAweGI3NGNlZTRjIGluIG9wal9qMmtfZXhlYyBzcmMv
-bGliL29wZW5qcDIvajJrLmM6NzM1MDo0Mw0KICAgICMxMCAweGI3NTA1Nzhi
-IGluIG9wal9qMmtfZGVjb2RlIHNyYy9saWIvb3BlbmpwMi9qMmsuYzo5OTU5
-OjE1DQogICAgIzExIDB4Yjc1Y2EwZGUgaW4gb3BqX2pwMl9kZWNvZGUgc3Jj
-L2xpYi9vcGVuanAyL2pwMi5jOjE0OTI6OA0KICAgICMxMiAweGI3NjM0ZWI4
-IGluIG9wal9kZWNvZGUgc3JjL2xpYi9vcGVuanAyL29wZW5qcGVnLmM6NDEy
-OjEwDQogICAgIzEzIDB4ODE0MDMwNCBpbiBtYWluIHNyYy9iaW4vanAyL29w
-al9kZWNvbXByZXNzLmM6MTMzMjoxMA0KICAgICMxNCAweGI3MWNiYWYyIGlu
-IF9fbGliY19zdGFydF9tYWluIC9idWlsZC9lZ2xpYmMtWDRibkJ6L2VnbGli
-Yy0yLjE5L2NzdS9saWJjLXN0YXJ0LmM6Mjg3DQoNClNVTU1BUlk6IEFkZHJl
-c3NTYW5pdGl6ZXI6IGhlYXAtYnVmZmVyLW92ZXJmbG93IHNyYy9saWIvb3Bl
-bmpwMi9kd3QuYzoyNjggb3BqX2R3dF9pbnRlcmxlYXZlX3YNClNoYWRvdyBi
-eXRlcyBhcm91bmQgdGhlIGJ1Z2d5IGFkZHJlc3M6DQogIDB4MzY5ZTAyZDA6
-IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZh
-IGZhDQogIDB4MzY5ZTAyZTA6IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZh
-IGZhIGZhIGZhIGZhIGZhIGZhIGZhDQogIDB4MzY5ZTAyZjA6IGZhIGZhIGZh
-IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhDQogIDB4
-MzY5ZTAzMDA6IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZh
-IGZhIGZhIGZhIGZhDQogIDB4MzY5ZTAzMTA6IGZhIGZhIGZhIGZhIGZhIGZh
-IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhDQo9PjB4MzY5ZTAzMjA6
-IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZh
-W2ZhXQ0KICAweDM2OWUwMzMwOiAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAw
-MCAwMCAwMCAwMCAwMCAwMCAwMCAwMA0KICAweDM2OWUwMzQwOiAwMCAwMCAw
-MCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMA0KICAw
-eDM2OWUwMzUwOiAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAw
-MCAwMCAwMCAwMCAwMA0KICAweDM2OWUwMzYwOiAwMCAwMCAwMCAwMCAwMCAw
-MCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMA0KICAweDM2OWUwMzcw
-OiAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAw
-MCAwMA0KU2hhZG93IGJ5dGUgbGVnZW5kIChvbmUgc2hhZG93IGJ5dGUgcmVw
-cmVzZW50cyA4IGFwcGxpY2F0aW9uIGJ5dGVzKToNCiAgQWRkcmVzc2FibGU6
-ICAgICAgICAgICAwMA0KICBQYXJ0aWFsbHkgYWRkcmVzc2FibGU6IDAxIDAy
-IDAzIDA0IDA1IDA2IDA3DQogIEhlYXAgbGVmdCByZWR6b25lOiAgICAgICBm
-YQ0KICBIZWFwIHJpZ2h0IHJlZHpvbmU6ICAgICAgZmINCiAgRnJlZWQgaGVh
-cCByZWdpb246ICAgICAgIGZkDQogIFN0YWNrIGxlZnQgcmVkem9uZTogICAg
-ICBmMQ0KICBTdGFjayBtaWQgcmVkem9uZTogICAgICAgZjINCiAgU3RhY2sg
-cmlnaHQgcmVkem9uZTogICAgIGYzDQogIFN0YWNrIHBhcnRpYWwgcmVkem9u
-ZTogICBmNA0KICBTdGFjayBhZnRlciByZXR1cm46ICAgICAgZjUNCiAgU3Rh
-Y2sgdXNlIGFmdGVyIHNjb3BlOiAgIGY4DQogIEdsb2JhbCByZWR6b25lOiAg
-ICAgICAgICBmOQ0KICBHbG9iYWwgaW5pdCBvcmRlcjogICAgICAgZjYNCiAg
-UG9pc29uZWQgYnkgdXNlcjogICAgICAgIGY3DQogIENvbnRhaW5lciBvdmVy
-ZmxvdzogICAgICBmYw0KICBBcnJheSBjb29raWU6ICAgICAgICAgICAgYWMN
-CiAgSW50cmEgb2JqZWN0IHJlZHpvbmU6ICAgIGJiDQogIEFTYW4gaW50ZXJu
-YWw6ICAgICAgICAgICBmZQ0KICBMZWZ0IGFsbG9jYSByZWR6b25lOiAgICAg
-Y2ENCiAgUmlnaHQgYWxsb2NhIHJlZHpvbmU6ICAgIGNiDQo9PTU1NzY9PUFC
-T1JUSU5HDQo=
+Vulnerable code:
 
---_000_1F2D4DA31CA62740BFF46830A0E6A4F7066E5805EXMBXTJ002tence_--
+ext/phar/zip.c:
+
+int phar_parse_zipfile(php_stream *fp, char *fname, int fname_len,
+char *alias, int alias_len, phar_archive_data** pphar, char **error)
+/* {{{ */
+{
+phar_zip_dir_end locator;
+char buf[sizeof(locator) + 65536];
+...
+while ((p=(char *) memchr(p + 1, 'P', (size_t) (size - (p + 1 -
+buf)))) != NULL) {
+if (!memcmp(p + 1, "K\5\6", 3)) {
+memcpy((void *)&locator, (void *) p, sizeof(locator));
+if (PHAR_GET_16(locator.centraldisk) != 0 ||
+PHAR_GET_16(locator.disknumber) != 0) {
+/* split archives not handled */
+php_stream_close(fp);
+if (error) {
+spprintf(error, 4096, "phar error: split archives spanning multiple
+zips cannot be processed in zip-based phar \"%s\"", fname);
+}
+return FAILURE;
+}
+...
+
+The above code block tries to determine where in buf is "PK\x05\x06",
+which is actually "End of central directory record" structure of zip
+file. Then it copies 0x16 bytes from there to `phar_zip_dir_end
+locator`. If "PK\x05\x06" signature is located at end of `buf`
+variable, it will read out-of-bound `buf` variable and copy to
+`locator`.
+
+Details available at PHP bug tracker:
+
+https://bugs.php.net/bug.php?id=71498
+
+Patch:
+
+https://git.php.net/?p=php-src.git;a=commit;h=a6fdc5bb27b20d889de0cd29318b3968aabb57bd
+
+
+-- 
+Dmitry Kasyanov  |  Developer
+dkasyanov@cloudlinux.com
