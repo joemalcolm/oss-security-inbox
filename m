@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/16/1
-Message-ID: <20160516075324.GA10354@eldamar.local>
-Date: Mon, 16 May 2016 09:53:24 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/22
+Message-ID: <CAMhPm6NxrFTnfdJbT3RkC7rHiUYaXL-EmFREv0Cpued00Dii=g@mail.gmail.com>
+Date: Mon, 14 Mar 2016 19:37:01 +0000
+From: Bart de Water <bart@...nilocode.nl>
 To: oss-security@...ts.openwall.com
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: CVE Request: gdk-pixbuf: Additional fixes to protect against overlows in pixops_* functions (similar to CVE-2015-7674)
+Subject: CVE request: DoS vulnerability in Ruby gem Paperclip
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-On Thu, May 12, 2016 at 11:23:02AM +0200, Salvatore Bonaccorso wrote:
-> Hi
-> 
-> CVE-2015-7674, an interger overflow flaw in the pixops_scale_nearest
-> function, was fixed by
-> 
-> https://git.gnome.org/browse/gdk-pixbuf/commit/?id=e9a5704edaa9aee9498f1fbf6e1b70fcce2e55aa
-> 
-> There is another commit in the gdk-pixbuf repository to fix overflows
-> in the pixops_composite_nearest, pixops_composite_color_nearest and
-> pixops_process functions:
-> 
-> https://git.gnome.org/browse/gdk-pixbuf/commit/?id=dbfe8f70471864818bf458a39c8a99640895bd22
-> 
-> Can you aassing an additional CVE for this since the scope for
-> CVE-2015-7674 was for the pixops_scale_nearest function?
+I believe there's a denial of service vulnerability in Paperclip version
+4.2.2 through 4.3.5: it's possible to cause a DoS by uploading files with a
+spoofed media type, because it causes megabytes of logging (data from the
+mime-types gem) to be written. See
+https://cwe.mitre.org/data/definitions/779.html for more information.
 
-I realise I did not made that clear: The two commits were not fixed in
-the same release, the initial one resulting in CVE-2015-7674 is
-contained in 2.32.1, wereas the second commit came later in 2.33.1.
+It seems to be introduced in this commit
+https://github.com/thoughtbot/paperclip/commit/9aee4112f36058cd28d5fe4a006d6981bd1eda57
+in
+version 4.2.2 and it's fixed in 4.3.6 (released yesterday) with this pull
+request: https://github.com/thoughtbot/paperclip/pull/2126
 
-Regards,
-Salvatore
+Thanks,
+Bart de Water
+
