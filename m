@@ -1,33 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/3
-Message-ID: <alpine.LFD.2.20.1609161502430.28695@wniryva>
-Date: Fri, 16 Sep 2016 15:05:36 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: liqiang6-s@....cn
-Subject: CVE Request: Qemu: scsi: pvscsi: infinite loop when processing IO requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/8
+Message-Id: <20160314043135.C858372E003@smtpvbsrv1.mitre.org>
+Date: Mon, 14 Mar 2016 00:31:35 -0400 (EDT)
+From: cve-assign@...re.org
+To: dkasyanov@...udlinux.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: PHP-5.5.33: Out-of-Bound Read in phar_parse_zipfile
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Quick Emulator(Qemu) built with the VMWARE PVSCSI paravirtual SCSI bus 
-emulation support is vulnerable to an infinite loop issue. It could occur 
-while processing SCSI IO requests.
+> If "PK\x05\x06" signature is located at end of `buf`
+> variable, it will read out-of-bound `buf` variable and copy to
+> `locator`.
+> 
+> https://bugs.php.net/bug.php?id=71498
+> https://git.php.net/?p=php-src.git;a=commit;h=a6fdc5bb27b20d889de0cd29318b3968aabb57bd
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS.
+Use CVE-2016-3142.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg03609.html
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1376731
-
-This issue was reported by Li Qiang of 360.cn Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+iQIcBAEBCAAGBQJW5j5TAAoJEL54rhJi8gl5DhgQAIB326lNzHLeRy16mjDXg0Dm
+JkKHcv92P5w3NQUOyZbO0HkRqxCrlEcf5x6qhO0ShhuAe4m/3qS0HHugKHbabALV
+nsFSUjoiodWChNdFS9qHznv2sPUvuNujbJludULqNKSHbZm7sqwrOHIos6TXEqWr
+/9ALj350BvarXe4f12esAWWLYyFoqhY09EheHd3TU8IxK0Rk9uCUDNNrfju4e/Q1
+fmHe2zMBvJ8bKVqazp6FSg0hkigSkZyMQ7Iz3NePrIGcKe7t1nMcP9T6T5oAmtHy
+hfmnplpJ/cBjUFDwYCp467CdIm7pH9d/5GgoewCXMH8LJv4MPR/aVxSyPDVExFy3
+8q1eH1ziIr/NjMYTmIB9y6OtSaW6A8Qh9oU9trXgTihQzR3ZY/G5iDB/w8EZ7lcn
+3iPUkWC2SQBUqZUY3xSTViF/uI5CvbkAmSbExJmj1b4XCd1lzKo+LxQ2dvAKEGuk
+Iy7WYUO/toCVAOrnB2acBGp4dY8CJWPPKol7rDVctBS2DHzp/oHokpA9m5Q0x+91
+AUUbgQbb+/Tpo+YvDq3LZ1+cEgWH4Ge3HvjjdJczNZ+gmCv1Mte8vk4zwRGwyPwG
+BfngJsGqwnU6SJnXahIuRF+OMpeLY4mgMHxSrvoQSJIe3c+wtVz+GOWr7jgOHxZH
+k4UsurZYNZpUmtXRpAkZ
+=+dfJ
+-----END PGP SIGNATURE-----
