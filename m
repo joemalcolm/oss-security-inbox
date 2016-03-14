@@ -1,46 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/26/6
-Message-Id: <20160526182059.BF3EE7BC09E@smtpvmsrv1.mitre.org>
-Date: Thu, 26 May 2016 14:20:59 -0400 (EDT)
-From: cve-assign@...re.org
-To: seth.arnold@...onical.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...ntu.com
-Subject: Re: CVE Requests: libimobiledevice and libusbmuxd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/21
+Message-ID: <alpine.GSO.2.20.1603141257140.12737@freddy.simplesystems.org>
+Date: Mon, 14 Mar 2016 13:01:38 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Re: CVE-Request - GNU Awk.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Mon, 14 Mar 2016, Kurt Seifried wrote:
 
-> Please assign CVE(s) to libimobiledevice and libusbmuxd; both libraries
-> accidentally bound a listening IPv4 TCP socket to INADDR_ANY rather than
-> INADDR_LOOPBACK:
-> 
-> https://github.com/libimobiledevice/libimobiledevice/commit/df1f5c4d70d0c19ad40072f5246ca457e7f9849e
-> https://github.com/libimobiledevice/libusbmuxd/commit/4397b3376dc4e4cb1c991d0aed61ce6482614196
+> Is a SIGSEGV on it's own enough to justify a CVE? For some apps the answer
+> would be yes (e.g. a single threaded network service that crashes out). For
+> something like gawk I'm not so sure, it's a local utility that shouldn't
 
-Use CVE-2016-5104 for this vulnerability in both products. We did not
-investigate how these products were developed, but it is clear that
-these were not independent mistakes in separately written code.
+I don't see a security issue here.  It is just a bug.  In order for it 
+to be a security issue, it needs to be caused by external data input 
+into the program (e.g data processed by the awk script).  This would 
+also apply to a network service which has a bug and crashes due to 
+something other than specific external input (e.g. resource leak).
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXRzuDAAoJEHb/MwWLVhi2o4UP/Axr1qTym6sYJgBkuyLRvVDe
-hPsp7oZxBpD7XsyB9sgVLfcS831/bVJDOZMM8gBmF+U3XFUwsxrG/0Eeiy6Ye809
-07tA1DwQVzkdEVoFI5zyqP3XhZoyCux6oouEfT4Q/SbLzZMP8erMPs9G0+BIdNDz
-tzCen2Ey3hnXdYzm9Sl2Py3yvYt1XXtAVPoc1OOq/P1dYToDrWeWW1wW2eHWLr0L
-UlzidNHiPFUWz7VtO3aydSMkOq7nmFL9qjup2CS0+5COi5hTvy+GhV1k+IubvD/Z
-C0SBru8ldqnXwA/b920nHm/IFuYwwaUx9r09dsFTeEawG9CNd4y2SgH9fd6fdHi2
-QpZwBPsLJQvDCzWGaALUGfeWFFPjDk8ZmnVuRlrvDPHqW2jE+t3y7K4Zk8lPR8tP
-Pj6sAyxVosE24u3aq+kMpTgfDu+DC3qQXxiU9j5c0oOCy8IoDBSTeWaMa+4kCiPp
-h0+el4k55Zkm2wlD8v1Qe7qo+Cm6ALk2A+S4m05mXh8J17GXw9A1ZAkEBsnpkYcw
-xiK+qYIxUCfexMi/GfdngmKHnHaUiH4F2HZvyUOw9pdIVI3wZs0E/J428a/ZfPF3
-hKr3p60rZIrYGf9QmMaPqAo83MVnS0G29fMEO8pbRamDWewm+oBKX9KiUjKmzxmg
-2QIZO/45MdzfAHHPmr2i
-=ZCZK
------END PGP SIGNATURE-----
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
