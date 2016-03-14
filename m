@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["10080" "Tuesday" "17" "December" "2019" "15:32:49" "+0100" "Daniel Beck" "ml@beckweb.net" nil "255" nil nil nil nil "12" nil nil (number mark "U       ml@beckweb.n Dec 17  255/10080 " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1335" "Monday" "14" "March" "2016" "00:31:35" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160314043135.C858372E003@smtpvbsrv1.mitre.org>" "34" "[oss-security] Re: CVE Request: PHP-5.5.33: Out-of-Bound Read in phar_parse_zipfile" nil nil nil "3" "2016031404:31:35" "[oss-security] Re: CVE Request: PHP-5.5.33: Out-of-Bound Read in phar_parse_zipfile" (number mark "U       cve-assign@m Mar 14   34/1335  " thread-indent "\"[oss-security] Re: CVE Request: PHP-5.5.33: Out-of-Bound Read in phar_parse_zipfile\"\n") "<CAC1DjbY5DcefwkS8ba0iJj6sE8EM10PBE9YsyE59U9_MCmP8tg@mail.gmail.com>" ("<CAC1DjbY5DcefwkS8ba0iJj6sE8EM10PBE9YsyE59U9_MCmP8tg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 8010 invoked by uid 550); 17 Dec 2019 14:33:01 -0000
+Received: (qmail 24219 invoked by uid 550); 14 Mar 2016 04:31:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,272 +12,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7990 invoked from network); 17 Dec 2019 14:33:00 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Message-Id: <882ACAE9-0DFE-4639-AF88-6A29B5A215E3@beckweb.net>
-Date: Tue, 17 Dec 2019 15:32:49 +0100
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.104.11)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1576593180;b35fc012;
-X-HE-SMSGID: 1ihDu5-0004J6-94
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
-
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
-
-The following releases contain fixes for security vulnerabilities:
-
-* Build Failure Analyzer Plugin 1.24.2
-* Gerrit Trigger Plugin 2.30.2
-* Maven Release Plugin 0.16.2
-* Pipeline Aggregator View Plugin 1.9
-* Redgate SQL Change Automation Plugin 2.0.4
-* Rundeck Plugin 3.6.6
-* Spira Importer Plugin 3.2.4
-
-Additionally, we announce unresolved security issues in the following
-plugins:
-
-* Alauda DevOps Pipeline Plugin
-* Alauda Kubernetes Suport Plugin
-* buildgraph-view Plugin
-* Mantis Plugin
-* Mission Control Plugin
-* RapidDeploy Plugin
-* SCTMExecutor Plugin
-* Team Concert Plugin
-* WebSphere Deployer Plugin
-* Weibo Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2019-12-17/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-1681 / CVE-2019-16549 (XXE) & CVE-2019-16550 (CSRF)
-Maven Release Plug-in Plugin retrieves XML from Nexus repository manager
-APIs. Maven Release Plug-in Plugin 0.16.1 and earlier does not configure
-the XML parser to prevent XML external entity (XXE) attacks. While Jenkins
-users without Overall/Administer permission are not allowed to configure a
-custom Nexus URL, this could still be exploited via man-in-the-middle
-attacks, especially if it's not an HTTPS URL.
-
-Additionally, a connection test form validation method does not require
-POST requests, resulting in a cross-site request forgery vulnerability.
-Combined, these two vulnerabilities allow attackers to have Jenkins parse
-crafted XML documents that use external entities for extraction of secrets
-from the Jenkins master, server-side request forgery, or denial-of-service
-attacks.
-
-
-SECURITY-1527 / CVE-2019-16551 (CSRF) & CVE-2019-16552 (missing permission =
-check)
-Gerrit Trigger Plugin 2.30.1 and earlier does not perform permission checks
-in methods performing form validation. This allows users with Overall/Read
-access to perform connection tests, connecting to an HTTP URL or SSH server
-using attacker-specified credentials, or determine whether files with an
-attacker-specified path exist on the Jenkins master file system.
-
-Additionally, these form validation methods do not require POST requests,
-resulting in a CSRF vulnerability.
-
-
-SECURITY-1651 / CVE-2019-16553 (CSRF) & CVE-2019-16554 (missing permission =
-check)
- & CVE-2019-16555 (resource consumption)
-Build Failure Analyzer Plugin 1.24.1 and earlier does not perform a
-permission check in a method performing form validation. This allows users
-with Overall/Read access to supply a computationally expensive regular
-expression that will hang the request handling thread.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a CSRF vulnerability.
-
-
-SECURITY-1593 / CVE-2019-16564
-Pipeline Aggregator View Plugin 1.8 and earlier does not escape the
-information shown on the view it provides, such as stage names or job
-names.
-
-This results in a stored cross-site scripting vulnerability exploitable by
-users able to configure jobs, define pipeline stages, or otherwise affect
-the information shown by Pipeline Aggregator View Plugin.
-
-
-SECURITY-1636 / CVE-2019-16556
-Rundeck Plugin 3.6.5 and earlier stores credentials as part of its global
-configuration file `org.jenkinsci.plugins.rundeck.RundeckNotifier.xml` and
-job `config.xml` files on the Jenkins master. These URLs could be viewed by
-users with Extended Read permission (in the case of job `config.xml` files)
-or access to the master file system.
-
-
-SECURITY-1598 / CVE-2019-16557
-Redgate SQL Change Automation Plugin 2.0.3 and earlier stores credentials
-unencrypted in job `config.xml` files on the Jenkins master as part of its
-build step configuration. These credentials can be viewed by users with
-Extended Read permission or access to the master file system.
-
-
-SECURITY-1580 / CVE-2019-16558
-Spira Importer Plugin 3.2.3 and earlier unconditionally disables SSL/TLS
-certificate validation for the entire Jenkins master JVM.
-
-
-SECURITY-1371 / CVE-2019-16559 (permission check) & CVE-2019-16560 (CSRF)
-WebSphere Deployer Plugin 1.6.1 and earlier does not perform permission
-checks in methods performing form validation. This allows users with
-Overall/Read access to perform connection tests, determine whether files
-with an attacker-specified path exist on the Jenkins master file system,
-and obtain limited information about the Jenkins and plugin configuration
-based on the responses. The latter include the ability to set plugin
-configuration options.
-
-Additionally, these form validation methods do not require POST requests,
-resulting in a CSRF vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1581 / CVE-2019-16561
-WebSphere Deployer Plugin 1.6.1 and earlier allows users with Overall/Read
-access to disable SSL/TLS certificate and hostname validation for the
-entire Jenkins master JVM, or specify a new Java keystore from a file
-stored on the Jenkins master filesystem.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1591 / CVE-2019-16562
-buildgraph-view Plugin 1.8 and earlier does not escape the description of
-builds shown in its view.
-
-This results in a stored cross-site scripting vulnerability that can be
-exploited by users able to change the build description.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1592 / CVE-2019-16563
-Mission Control Plugin 0.9.16 and earlier does not escape job display names
-and build names in the view it provides.
-
-This results in a stored cross-site scripting vulnerability that can be
-exploited by users able to change these properties.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1605 (1) / CVE-2019-16565 (CSRF) & CVE-2019-16566 (missing permiss=
-ion check)
-Team Concert Plugin 1.3.0 and earlier does not perform permission checks on
-a method implementing form validation. This allows users with Overall/Read
-access to Jenkins to connect to an attacker-specified URL using
-attacker-specified credentials IDs obtained through another method,
-capturing credentials stored in Jenkins.
-
-Additionally, the form validation method does not require POST requests,
-resulting in a CSRF vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1605 (2) / CVE-2019-16567
-Team Concert Plugin 1.3.0 and earlier provides a list of applicable
-credential IDs to allow users configuring the plugin to select the one to
-use.
-
-This functionality does not correctly check permissions, allowing any user
-with Overall/Read permission to get a list of valid credentials IDs. Those
-can be used as part of an attack to capture the credentials using another
-vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1521 / CVE-2019-16568
-SCTMExecutor Plugin 2.2 and earlier stores Silk Central credentials in the
-global Jenkins configuration and in job `config.xml` files.
-
-While these credentials are stored encrypted on disk, they are transmitted
-in plain text as part of the configuration form. This can result in
-exposure of these credentials through browser extensions, cross-site
-scripting vulnerabilities, and similar situations.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1603 / CVE-2019-16569
-Mantis Plugin 0.26 and earlier does not require POST requests on a
-connection test method, resulting in a CSRF vulnerability. This allows
-attackers to have Jenkins connect to Mantis-related paths on an
-attacker-specified web server using attacker-specified credentials.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1604 / CVE-2019-16570 (CSRF) & CVE-2019-16571 (missing permission =
-check)
-RapidDeploy Plugin 4.1 and earlier does not perform a permission check on
-form validation methods. This allows users with Overall/Read access to
-Jenkins to connect to RapidDeploy-related paths on an attacker-specified
-web server.
-
-Additionally, these form validation methods do not require POST requests,
-resulting in a CSRF vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1597 / CVE-2019-16572
-Weibo Plugin 1.0.1 and earlier stores a credential unencrypted in its
-global configuration file `org.jenkinsci.plugins.weibo.WeiboNotifier.xml`
-on the Jenkins master. This credential can be viewed by users with access
-to the master file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1600 / CVE-2019-16573 (CSRF) & CVE-2019-16574 (missing permission =
-check)
-Alauda DevOps Pipeline Plugin 2.3.2 and earlier does not perform permission
-checks on a method implementing form validation. This allows users with
-Overall/Read access to Jenkins to connect to Kubernetes-related paths on an
-attacker-specified web server using attacker-specified credentials IDs
-obtained through another method, capturing token credentials managed by
-Alauda DevOps Pipeline Plugin.
-
-Additionally, the form validation method does not require POST requests,
-resulting in a CSRF vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1602 / CVE-2019-16575 (CSRF) & CVE-2019-16576 (missing permission =
-check)
-Alauda Kubernetes Suport Plugin 2.3.0 and earlier does not require POST
-requests on a connection test method, resulting in a CSRF vulnerability.
-This allows attackers to have Jenkins connect to Kubernetes-related paths
-on an attacker-specified web server using attacker-specified credentials
-IDs obtained through another method, capturing 'Secret Text' credentials
-stored in Jenkins.
-
-Additionally, if no credentials ID is specified, the connection uses the
-default Kubernetes token from
-`/var/run/secrets/kubernetes.io/serviceaccount/token`.
-
-As of publication of this advisory, there is no fix.
-
-
+Received: (qmail 24195 invoked from network); 14 Mar 2016 04:31:47 -0000
+From: cve-assign@mitre.org
+To: dkasyanov@cloudlinux.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAC1DjbY5DcefwkS8ba0iJj6sE8EM10PBE9YsyE59U9_MCmP8tg@mail.gmail.com>
+Message-Id: <20160314043135.C858372E003@smtpvbsrv1.mitre.org>
+Date: Mon, 14 Mar 2016 00:31:35 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: PHP-5.5.33: Out-of-Bound Read in phar_parse_zipfile
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> If "PK\x05\x06" signature is located at end of `buf`
+> variable, it will read out-of-bound `buf` variable and copy to
+> `locator`.
+> 
+> https://bugs.php.net/bug.php?id=71498
+> https://git.php.net/?p=php-src.git;a=commit;h=a6fdc5bb27b20d889de0cd29318b3968aabb57bd
+
+Use CVE-2016-3142.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJW5j5TAAoJEL54rhJi8gl5DhgQAIB326lNzHLeRy16mjDXg0Dm
+JkKHcv92P5w3NQUOyZbO0HkRqxCrlEcf5x6qhO0ShhuAe4m/3qS0HHugKHbabALV
+nsFSUjoiodWChNdFS9qHznv2sPUvuNujbJludULqNKSHbZm7sqwrOHIos6TXEqWr
+/9ALj350BvarXe4f12esAWWLYyFoqhY09EheHd3TU8IxK0Rk9uCUDNNrfju4e/Q1
+fmHe2zMBvJ8bKVqazp6FSg0hkigSkZyMQ7Iz3NePrIGcKe7t1nMcP9T6T5oAmtHy
+hfmnplpJ/cBjUFDwYCp467CdIm7pH9d/5GgoewCXMH8LJv4MPR/aVxSyPDVExFy3
+8q1eH1ziIr/NjMYTmIB9y6OtSaW6A8Qh9oU9trXgTihQzR3ZY/G5iDB/w8EZ7lcn
+3iPUkWC2SQBUqZUY3xSTViF/uI5CvbkAmSbExJmj1b4XCd1lzKo+LxQ2dvAKEGuk
+Iy7WYUO/toCVAOrnB2acBGp4dY8CJWPPKol7rDVctBS2DHzp/oHokpA9m5Q0x+91
+AUUbgQbb+/Tpo+YvDq3LZ1+cEgWH4Ge3HvjjdJczNZ+gmCv1Mte8vk4zwRGwyPwG
+BfngJsGqwnU6SJnXahIuRF+OMpeLY4mgMHxSrvoQSJIe3c+wtVz+GOWr7jgOHxZH
+k4UsurZYNZpUmtXRpAkZ
+=+dfJ
+-----END PGP SIGNATURE-----
