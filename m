@@ -1,25 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/06/3
-Message-ID: <20161006011626.GC5763@sin.redhat.com>
-Date: Thu, 6 Oct 2016 11:46:27 +1030
-From: Doran Moppert <dmoppert@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: openjpeg: incorrect fix for CVE-2013-6045 (was Re: openjpeg CVE-2016-3181, CVE-2016-3182 .. and CVE-2013-6045)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/3
+Message-Id: <20160314042126.947CE6C0064@smtpvmsrv1.mitre.org>
+Date: Mon, 14 Mar 2016 00:21:26 -0400 (EDT)
+From: cve-assign@...re.org
+To: vdronov@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request -- linux kernel: crash on invalid USB device descriptors (cypress_m8 driver)
 Content-Type: text/plain; charset=utf-8
 
-> > Do you specifically know of a distribution that still has that patch?
-> 
-> Red Hat Enterprise Linux and Ubuntu LTS seem to be still carrying the
-> original patch.  Possibly others, but these are the only ones I've
-> identified.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I should have included this reference:
+> http://seclists.org/bugtraq/2016/Mar/55
+> https://bugzilla.redhat.com/show_bug.cgi?id=1283368
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1382202
+Use CVE-2016-3137.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
--- 
-Doran Moppert
-Red Hat Product Security
-
-Content of type "application/pgp-signature" skipped
+iQIcBAEBCAAGBQJW5jwFAAoJEL54rhJi8gl5t8sQAI7rxYTDvSrr2jTTFWfq5Qow
+NoykGdUmQuh6BUliglY1vofsL/zaqDFM5q5tfW85Kn057oLa5MbQr9VRLoJ3ORbP
+6onk5S6juiAswUMN6PI/rIQ/eGZGMvSk389UoEDypFgXNtya7HIHLzj/W9ytjtVa
+3Ob+3MxqUMNYe1dNMLiqsUKz/4PWOuxpTezxtp3R+gdgKdMJo5XMzgt7YMGPgkt9
+L8ZxSNwwsK5jrG/67EU/rsjcCQZoXSY2A+v1TIEmOyPbIeaII3Kolw+6GnKrW7eF
+EWkqZZzmH3lVuM1Lq8QB32NIYMtO2pN+Dqr0BkP7VxIAaoy0t+UVuEEkeD37zD6p
+Ea0dxIlDZn2Ph50ggCDN+H1E2GjZVWntFoU2qyflruy1gDqDF/OOj4izF7Wyn7qH
+E3GuXkTOU3v0ztiFZURUBH/WCWQnyR2EgVhFPChJ1skABennflbkMcA3rF6Oks8p
+3lejOFoFq+mHsPY2U7OMy0xrWcpjHXxhwGJ3W8+pvp953BsQ4JmWJ+0d0VxYwRmt
+gPQ3RzxZHbAaX7IPthLmzyNOKzg5D3+V+ncdI9UI3v+2mm7Pf7yMWPcseQcONgVO
+WtOPQ7tiAwJYS7GQ9zXEPN8eaWbiRq/jdQxaKO32MnjGgFZhtFUi1qwHcemE0VGf
+fYMqN7qxKMzGNs1Smr+e
+=vhrS
+-----END PGP SIGNATURE-----
