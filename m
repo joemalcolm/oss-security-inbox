@@ -1,31 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/5
-Message-Id: <20160818033529.60118ABC95B@smtpvmsrv1.mitre.org>
-Date: Wed, 17 Aug 2016 23:35:29 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/5
+Message-Id: <20160314042536.C674F52E003@smtpvbsrv1.mitre.org>
+Date: Mon, 14 Mar 2016 00:25:36 -0400 (EDT)
 From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE Request Qemu: Information leak in vmxnet3_complete_packet
+To: vdronov@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request -- linux kernel: crash on invalid USB device descriptors (wacom driver)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support is
-> vulnerable to an information leakage issue. It could occur while processing
-> transmit(tx) queue, when it reaches the end of packet.
+> http://seclists.org/bugtraq/2016/Mar/60
+> https://bugzilla.redhat.com/show_bug.cgi?id=1283375
+> https://bugzilla.redhat.com/show_bug.cgi?id=1283377
 > 
-> A privileged user inside guest could use this leak host memory bytes to a
-> guest.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg02108.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1366369
+> This security flaw is specific for Red Hat Enterprise Linux 7
+> (RHEL7).
 
-Use CVE-2016-6836.
-
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/vmxnet3.c but
-that may be an expected place for a later update.
+Use CVE-2016-3139.
 
 - -- 
 CVE Assignment Team
@@ -35,17 +28,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXtSaEAAoJEHb/MwWLVhi2NPQP/jEAHJPU608e4Z/Oq5WhrH8e
-DMg3XVb8R8PvNlJ5IFAB6RLIYHDxZWJrA13XUV+bSz2rYV+8wSRGYsSLqhztOU8G
-NXuEO1a1bxeQI/Y/6IuZyuIJph5nvKJKx49pWZEMtLfTTk5NDvHO13GQxoHM9st8
-0RhDvPQ91fHhvDIIzFJOdvpn7LwEKCebtEb97mMmUza2d7QQIfgM2nSPAZwmbbHu
-kySYOO+Y0JkotjQCNRLg4ylBhr2u3P7V524HYIPvJy5Us4neNYk4876yHknOhmET
-JH9lVBVT5gb8vRNu6N6yw4cLia4CJGoZUgn7GFiKldIEZ8dDVyjdJ0VpTzCyIxbb
-o3w2iZbxUT34ZrUtZ7HNeX0eLwlDD/WH4SgQYl4VYr0wHffpE3w2luEBQh81xOLy
-lMZmSOpvYoL1OOS9+I7jsNBd6QzOzBMRQxLSyAVktFhgZCzp1Y+PDywFmdDXJJ/I
-qZ1e2kAWm+FfmOQ/ZKaqI0PEPpSKrONWJh/nEVy+HBTmCuOkGCDJMus3AKxEb5DP
-EYWvcZq7wWysQ6dcv/XpBt4sueKTUGhJOSK4EUP7ruUCH05O3sNduUU7eZKmMSJQ
-ZaC3drLG9yPRHQGHCwf+pL0RY05I3n34StIPRmVP4urOgUHdAOJ3yqQPOgrMwC4S
-p7oeXAQw0bpbfTAVXsgl
-=gIck
+iQIcBAEBCAAGBQJW5jz1AAoJEL54rhJi8gl5McgQAIHTUV/sauiPO/x3asecOjjg
+8JywnKa4p1Hj+yc/VzDqPAfBciwVPD9g1qEXG/t1HE95yfLFx3ZcF4JA8026UpQE
+lpK2thpIDt7EQ41cbmuq8GwhJsHZCZPT2Xerk/SC0bGmKnfo34ksJDIvuMjFjdcW
+p5PbcuqL42B3So+02G6CtLr80u/wmDS4KxmJwmnBt4sisS1EUJB+uXPzNjAXeFdf
+OsbGSOm3m7YoqSxVlVDOnz0OPPusYmUiD93DEzfK22Mak16PdzRr4+8DTOUrMYxd
+77BI4TUMHQf+jB9/WWNctiS6cvSST3DbppfX7odgVEDeWQoneGt7wH39VpZD0lmx
+qEl+2Hul8MntEIUIp7ToeFxeL6vugarwV7Zc3P93y68EgvvtarzBNm/rZvRpUlhX
+0dk0yhL4rK44/MsOYY7pZtuxqAgECgjlJpfN9zIdjtMBHcuI0LULevQ0dB3Fgf/s
+F/RtuTbh7afV/qubtNMuBgLlB4hzHPmJBEpE8VojGVk+K8Wx8g+mV8jsobYLU5Ph
+j4UC85gDh8oHRvucXxNZqLiqVVWwNZR9lImDKpzIYGTTIcVNd5F6vYz2Z40TYikV
+TbRuZAXRpy2ajO6mEQDYwlEKON6g12jRHvJ25KVo54n2CP+nyIj4iFyX1D6SGenC
+osv/QC87lr+vOSk6EfAX
+=TM86
 -----END PGP SIGNATURE-----
