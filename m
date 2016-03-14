@@ -1,38 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/19/3
-Message-ID: <57163964.3010804@fabiopires.pt>
-Date: Tue, 19 Apr 2016 14:57:56 +0100
-From: Fábio Pires <mail@...iopires.pt>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/17
+Message-ID: <1457959506.22729.0@ssh.steve.org.uk>
+Date: Mon, 14 Mar 2016 12:45:06 +0000
+From: Steve Kemp <steve@...ve.org.uk>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Insecure Direct Object Reference in OSTicket attachments
+Subject: Re: CVE-Request - GNU Awk.
 Content-Type: text/plain; charset=utf-8
 
-Hey guys,
+> Why should these get a CVE?  As you state in one of your reports:
+> 
+> > While I appreciate that passing untrusted code to gawk is not a
+> > common thing to do, I do not believe that it should be possible to
+> > trigger a segfault though.
+> 
+> Why should that be considered a valid / safe use case at all?  If
+> something makes awk run untrusted programs, there's code execution
+> problem already:
 
-Can you assign a CVE ID for this Insecure Direct Object Reference in
-OSTicket attachments ?
+  While I suspect there is virtually no situation whereby a service
+ would allow the upload/processing of arbitrary awk in the wild, I
+ do believe that no (semi)valid program should terminate the intepreter
+ with a segfault.
 
-https://labs.integrity.pt/advisories/insecure-direct-object-reference-in-osticket-attachments/
+  That is the reason why I believe that that it is worthy of an
+ identifier.  Though I will avoid making future requests for similar
+ issues if I'm alone in that belief!
 
-References:
-
-    https://github.com/osTicket/osTicket-1.8/issues/2615
-    https://github.com/osTicket/osTicket-1.8/pull/2618
-
-
-Regards
+Steve
 -- 
--- 
-*Fábio Pires*
-*Country*: Portugal
-*www.fabiopires.pt
-<http://www.fabiopires.pt/>**<https://www.linkedin.com/in/fabiolspires>*
-==
-This email was signed automatically with PGP. If you want to exchange
-encrypted messages, please search for my PGP key:
-*Key*: 0x33524373
+http://www.steve.org.uk/
 
-
-Content of type "text/html" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
