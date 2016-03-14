@@ -1,25 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/25/7
-Message-ID: <20161025105508.GG8134@suse.de>
-Date: Tue, 25 Oct 2016 12:55:08 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: libwmf: memory allocation failure in wmf_malloc (api.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/15
+Message-ID: <20160314132652.4530b528@redhat.com>
+Date: Mon, 14 Mar 2016 13:26:52 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: Steve Kemp <steve@...ve.org.uk>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-Request - GNU Awk.
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 25, 2016 at 12:48:25PM +0200, Agostino Sarubbo wrote:
-> On Tuesday 25 October 2016 11:41:14 Marcus Meissner wrote:
-> > Hi,
-> > 
-> > can you send the reproducer too please.
-> > 
-> > Ciao, Marcus
-> 
-> https://github.com/asarubbo/poc/blob/master/00015-libwmf-memalloc-wmf_malloc
-> 
-> Since your previous comment, all blog posts will have a link to the 
-> reproducer.
+On Mon, 14 Mar 2016 06:32:28 +0000 Steve Kemp wrote:
 
-Thank you! This is very helpful for us distributors :)
+>   I reported two DoS bugs against GNU Awk to the debian
+>  bug tracker recently, both of which are denial of service
+>  attacks causing NULL-pointer deferences.
+> 
+>   It would be useful to have a CVE identifiers assigned.
 
-Ciao, Marcus
+Why should these get a CVE?  As you state in one of your reports:
+
+  While I appreciate that passing untrusted code to gawk is not a
+  common thing to do, I do not believe that it should be possible to
+  trigger a segfault though.
+
+Why should that be considered a valid / safe use case at all?  If
+something makes awk run untrusted programs, there's code execution
+problem already:
+
+  echo | awk '{ system("id") }'
+
+-- 
+Tomas Hoger / Red Hat Product Security
