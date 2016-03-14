@@ -1,95 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/11
-Message-Id: <E1bhy0m-0000vj-TN@xenbits.xenproject.org>
-Date: Thu, 08 Sep 2016 12:00:56 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 188 (CVE-2016-7154) - use after free in FIFO event channel code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/6
+Message-Id: <20160314042747.2E64052E002@smtpvbsrv1.mitre.org>
+Date: Mon, 14 Mar 2016 00:27:47 -0400 (EDT)
+From: cve-assign@...re.org
+To: vdronov@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request -- linux kernel: crash on invalid USB device descriptors (digi_acceleport driver)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-            Xen Security Advisory CVE-2016-7154 / XSA-188
-                              version 3
+> http://seclists.org/bugtraq/2016/Mar/61
+> https://bugzilla.redhat.com/show_bug.cgi?id=1283378
 
-               use after free in FIFO event channel code
+Use CVE-2016-3140.
 
-UPDATES IN VERSION 3
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-When the EVTCHNOP_init_control operation is called with a bad guest
-frame number, it takes an error path which frees a control structure
-without also clearing the corresponding pointer.  Certain subsequent
-operations (EVTCHNOP_expand_array or another EVTCHNOP_init_control),
-upon finding the non-NULL pointer, continue operation assuming it
-points to allocated memory.
-
-IMPACT
-======
-
-A malicious guest administrator can crash the host, leading to a DoS.
-Arbitrary code execution (and therefore privilege escalation), and
-information leaks, cannot be excluded.
-
-VULNERABLE SYSTEMS
-==================
-
-Only Xen 4.4 is vulnerable.  Xen versions 4.5 and later as well as Xen
-versions 4.3 and earlier are not vulnerable.
-
-MITIGATION
-==========
-
-There is no mitigation available.
-
-CREDITS
-=======
-
-This issue was discovered by Mikhail Gorobets of Advanced Threat
-Research, Intel Security.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa188.patch           Xen 4.4.x
-
-$ sha256sum xsa188*
-9f374c2e1437ad71369f41275e7b333e7b7691a783ba693ee567c899bd78c722  xsa188.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBAgAGBQJX0VLuAAoJEIP+FMlX6CvZNjYH/RVxqYegZpfj0aiT5pai/a0i
-PgPSoMccGoSSVTXzivXUTZS3fTIqfTpd4SQHu2Q2dUqbb6zcPqd3NzF7Jl9IMwLk
-JHZwPYXOsZ0D6thFAMYFpjHOWXv7+1Mw7Np82PaA2yAUad+kxUORiJeL1RAE6zG/
-xsAR7PTl2mK1Ae9lqDtKLijn0cnicAYoKiSlta8M0T5Sp79CT3xsfHiBbaWUBCcI
-gmOW76RUbfOwn2kmhFJ4X5bwSzEhM93pQu7hJCmuwAADc8ezEEFv2lsUm5W8hkmW
-a8V2nuqM+prbxY8JI3XbKJm5YrmHQpnX4FiBn13DZeUsaukT4Q1EltP1z/XvJto=
-=jzF5
+iQIcBAEBCAAGBQJW5j1nAAoJEL54rhJi8gl5PeAQAKRXQU49edyEmO9wPRGDZrFa
+GmBBtFJPkjBCEYJlmWzf/f/NkiPfJ8tIPCDvICX5YyiZI47c/vhs3JFzroFKnPoe
+YrIpLfTATVoVjYne9f5OtdM1VMKadN/zkARck/D/DG9YXtgOX9f9N66Le0noyWt5
+5eKUhzN4zas81LZX+q2WA9uipmRny+W+NruUT8MxFo3v0tWI7o2uZ0ChP4TuRg2U
+TGXb/Np6N8hBOa/g/yuBxOrx3HlQ3pXpTD4yOkVw8jA0pAmhR3ZVEi7Z1G+h86b5
+x/Fm/LJSX+IsIYQrIwhEeJDoRc14Okg5Gau/a+BA2o38wj1E4rEsCB6EW7GXCqx9
+ftPGvj7dyIQvECeD6o6Ea02RPDvu9ppvbbDDBImq9Z4adEX/O4aEXXpVf8g+8vjT
+CV0lKf0aV/a+lxg961X/qWRDYpZNeXCLVgcrVbVcWZl7XqeUwUk0SorxKW7irI9o
+Boh8RYvwRsHiTc95S68Yuq9anlDSkDXJ0jxXwRiLp5l5wGzTcxIvULSGNGbfGTMW
+29TCNcSMfJSddkyiMa6A7G4SfVxO4JJaYWo15XEwGf2H7giT65ZT1f+UB4R+kc3p
+sTKT8/0xh/k93BtzHP4PouYOo0WzltRuusK+4SWq+D/3NY2unD6q/GSR4PFoq1Hp
+q/ltj2gXcq1yuZk/JZPc
+=sofM
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa188.patch" of type "application/octet-stream" (833 bytes)
