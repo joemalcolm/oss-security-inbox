@@ -1,58 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/21/1
-Message-ID: <CAHYtTq=UM+eVYgTFyG1OQMKt9ecz3Uo3vKV1vEEfy+VnTEr2pQ@mail.gmail.com>
-Date: Sun, 21 Feb 2016 19:56:58 +0000
-From: Carlos Santana <csantana23@...il.com>
-To: ASF Security Team <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Cc: "private@...dova.apache.org" <private@...dova.apache.org>, security@...roid.com
-Subject: [Update 2/20/16 CVE-2015-5256] Apache Cordova vulnerable to improper application of whitelist restrictions on Android
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/19
+Message-ID: <CANO=Ty066x7DZU+hsdKLLMbD-18h5Okza6T3G=udCKjggGfqfA@mail.gmail.com>
+Date: Mon, 14 Mar 2016 09:31:38 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Re: CVE-Request - GNU Awk.
 Content-Type: text/plain; charset=utf-8
 
-*Updated 02/20/2016*
-
-Apache Cordova has re-visited CVE-2015-5256 "Apache Cordova vulnerable to
-improper application of whitelist restrictions on Android”. Upon further
-investigation we found that the vulnerability is more limited than was
-previously understood.
-We are lowering the severity to Low, and updating the description, affected
-versions, and upgrade path.
-
-The updated text of the CVE is included below:
-
-Apache Cordova PMC
---------------------------
-private@...dova.apache.org
-
-____
-
-*Updated 02/20/2016*
-
-CVE-2015-5256: Apache Cordova vulnerable to improper application of
-whitelist restrictions on Android
-
-Severity: Low
-
-Versions Affected:
-Cordova Android with whitelist functionality
-
-Description:
-
-Android applications created using Apache Cordova that use a remote server
-contain a vulnerability where whitelist restrictions for urls using
-protocols http and https are not properly applied.  Whitelist cannot block
-network redirects from a whitelisted remote website to a non-whitelisted
-website.
-
-Upgrade path:
-
-There is no specific software patch for this vulnerability. Developers that
-are concerned about this should make sure to only whitelist trusted
-websites, and make sure that whitelisted websites don’t redirect to a
-malicious website.
-Developers using should also use SSL, as well as Content Security
-Policy(CSP) to further mitigate this issue. It’s always recommended for
-developers to upgrade to the latest version of Cordova Android.
+Is a SIGSEGV on it's own enough to justify a CVE? For some apps the answer
+would be yes (e.g. a single threaded network service that crashes out). For
+something like gawk I'm not so sure, it's a local utility that shouldn't
+really be processing network data/untrusted data, but then I would have
+said the same thing about bash (and then shellshock happened). I'm inclined
+to err on the side of caution and give it an identifier, if nothing else
+people using gawk on potentially dangerous input are more likely to see
+this issue and check their scripts/etc. If Mitre doesn't give it a CVE I
+can assign a DWF identifier to it.
 
 
-Credit: Muneaki Nishimura of Sony Digital Network Applications, Inc
+On Mon, Mar 14, 2016 at 7:55 AM, Yuriy M. Kaminskiy <yumkam@...il.com>
+wrote:
+
+> On 14.03.2016 15:26, Tomas Hoger wrote:
+>
+>> On Mon, 14 Mar 2016 06:32:28 +0000 Steve Kemp wrote:
+>>
+>>    I reported two DoS bugs against GNU Awk to the debian
+>>>   bug tracker recently, both of which are denial of service
+>>>   attacks causing NULL-pointer deferences.
+>>>
+>>>    It would be useful to have a CVE identifiers assigned.
+>>>
+>>
+>> Why should these get a CVE?  As you state in one of your reports:
+>>
+>>    While I appreciate that passing untrusted code to gawk is not a
+>>    common thing to do, I do not believe that it should be possible to
+>>    trigger a segfault though.
+>>
+>> Why should that be considered a valid / safe use case at all?  If
+>> something makes awk run untrusted programs, there's code execution
+>> problem already:
+>>
+>>    echo | awk '{ system("id") }'
+>>
+>
+> What if someone generates awk script using data from untrusted source, and
+> avoids all theoretically-dangerous constructs (like system()), but their
+> filter miss something theoretically-innocent that can trigger SIGSEGV (or
+> worse) due to bug in gawk.
+>
+>
+
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
