@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1347" "Tuesday" "15" "March" "2016" "19:40:36" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160315234036.61BDBB2E19E@smtpvbsrv1.mitre.org>" "40" "[oss-security] Re: please assign CVE for cacti bug 2667: SQL Injection Vulnerability" nil nil nil "3" "2016031523:40:36" "[oss-security] Re: please assign CVE for cacti bug 2667: SQL Injection Vulnerability" (number mark "U       cve-assign@m Mar 15   40/1347  " thread-indent "\"[oss-security] Re: please assign CVE for cacti bug 2667: SQL Injection Vulnerability\"\n") "<56E19B88.3000908@debian.org>" ("<56E19B88.3000908@debian.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1560" "Monday" "14" "March" "2016" "08:37:23" "+0100" "Marcus Meissner" "meissner@suse.de" "<20160314073723.GB8335@suse.de>" "48" "Re: [oss-security] CVE request" "^Date:" nil nil "3" "2016031407:37:23" "[oss-security] CVE request" (number mark "        meissner@sus Mar 14   48/1560  " thread-indent "\"Re: [oss-security] CVE request\"\n") "<CAOp4FwRWuPyzunFn_oB+Azu+dh+TPxZap-UJL41aniG4to_neA@mail.gmail.com>" ("<CAOp4FwRWuPyzunFn_oB+Azu+dh+TPxZap-UJL41aniG4to_neA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 29846 invoked by uid 550); 15 Mar 2016 23:41:25 -0000
+Received: (qmail 31975 invoked by uid 550); 14 Mar 2016 07:37:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 31957 invoked from network); 14 Mar 2016 07:37:35 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20160314073723.GB8335@suse.de>
+References: <CAOp4FwRWuPyzunFn_oB+Azu+dh+TPxZap-UJL41aniG4to_neA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOp4FwRWuPyzunFn_oB+Azu+dh+TPxZap-UJL41aniG4to_neA@mail.gmail.com>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Date: Mon, 14 Mar 2016 08:37:23 +0100
+From: Marcus Meissner <meissner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29823 invoked from network); 15 Mar 2016 23:41:24 -0000
-From: cve-assign@mitre.org
-To: elbrus@debian.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <56E19B88.3000908@debian.org>
-Message-Id: <20160315234036.61BDBB2E19E@smtpvbsrv1.mitre.org>
-Date: Tue, 15 Mar 2016 19:40:36 -0400 (EDT)
-Subject: [oss-security] Re: please assign CVE for cacti bug 2667: SQL Injection Vulnerability
+Subject: Re: [oss-security] CVE request
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> http://bugs.cacti.net/view.php?id=2667
+On Mon, Mar 14, 2016 at 11:19:29AM +0400, Loganaden Velvindron wrote:
+> Hi guys,
 > 
-> case TREE_ITEM_TYPE_HEADER:
+> Is there a CVE assigned to this yet ?
 > 
-> where id=" . $_GET["parent_id"]);
+> https://guidovranken.wordpress.com/2016/03/01/public-disclosure-malformed-private-keys-lead-to-heap-corruption-in-b2i_pvk_bio/
 
-> POC && EXP
-> /tree.php?action=item_edit&tree_id=2&parent_id=8%20and%20sleep(1)
+I brought this to the openssl team and they claim it is not a security issue.
 
->> tree.php
->> 
->> +  input_validate_input_number(get_request_var("parent_id"));
+https://www.mail-archive.com/openssl-dev@openssl.org/msg43102.html
+https://www.mail-archive.com/openssl-dev@openssl.org/msg43119.html
 
-Use CVE-2016-3172.
+This has been fixed in commit 5f57abe2b15 (master version, similar
+commits in other branches):
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+commit 5f57abe2b150139b8b057313d52b1fe8f126c952
+Author:     Dr. Stephen Henson <st...@openssl.org>
+AuthorDate: Thu Mar 3 23:37:36 2016 +0000
+Commit:     Dr. Stephen Henson <st...@openssl.org>
+CommitDate: Fri Mar 4 01:20:04 2016 +0000
 
-iQIcBAEBCAAGBQJW6J0SAAoJEL54rhJi8gl5wSMQAKCXHxaRSnS5tv4i/uuP5VgQ
-SCXTR1VCtGN+L40tk9PTdMZCOQVbztdlWApRJd9pQByKHL1uCO1msyR7JowOsMFk
-7lQGhOT5n1xlaAmEwXzlGGflFU7/CNUNYn8ywR8vTYR8KMCuVTqACGU+KhokzHao
-1d9RG/rdTS/n5dPCa/IQfyGq8+eaYM972FrwqWjYHUPRVVF3/AYPwv6bhgdYFUwA
-gmy70yIs9OYS+AZskqd1ViYwyqkrvh1A9SH9lM+g5oGVj74bXXqR35iRml86njr8
-+cD8hpI9ngcz2J+XYEiQFNr1uTGhPCWHrAgkvEvAp521VFegJN/Lp84It1Nfq80P
-URK6fu9FC7K5lEseiIK4rcge3ETcDqi8dSmgRODLtUz5WKOBOfIBRT1oJFOHNH70
-FRyjLXSIEGVFb/oL7bkpffsucI4DLq0BpYGGex2wGT+puts6OGKdThKbSWlOxRDJ
-vUaWf5XospQa9rdSxOzVk5qh4hXx23v02hS3+rvmoznFHvaOFhMKaBVso1ZA3dSx
-MlBVVNBQzVXm+iFr/DgWOilFy5x06KtkmzrImItPJwSANwTr2/txA+z+sdE7liiA
-SDP/WUSadyPCBtdylQcq6AS8GH6/I3Wqx5/iz87Ou7UlkUjGXa+LNbPFKRd903/w
-dnhgQ7X5YlApn7+ywcfE
-=6K3M
------END PGP SIGNATURE-----
+    Sanity check PVK file fields.
+
+    PVK files with abnormally large length or salt fields can cause an
+    integer overflow which can result in an OOB read and heap corruption.
+    However this is an rarely used format and private key files do not
+    normally come from untrusted sources the security implications not
+    significant.
+
+    Fix by limiting PVK length field to 100K and salt to 10K: these
+should be
+    more than enough to cover any files encountered in practice.
+
+    Issue reported by Guido Vranken.
+
+    Reviewed-by: Rich Salz <rs...@openssl.org>
+
+
+As per the notes in the commit we do not see the security implications
+as significant and therefore we are treating this as a bug and will not
+be issuing a CVE.
+
+Matt
+-- 
+
+
+
+Ciao, Marcus
