@@ -1,48 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/10/2
-Message-ID: <20160210032005.GC26858@hunt>
-Date: Tue, 9 Feb 2016 19:20:05 -0800
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/20
+Message-ID: <56E6E3ED.6050903@igalia.com>
+Date: Mon, 14 Mar 2016 17:16:45 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com
-Subject: CVE Request: eom, gnome-photos, eog, gambas3, thunar, pinpoint, gtk+2.0
+Subject: Re: WebKitGTK+ Security Advisory WSA-2016-0002
 Content-Type: text/plain; charset=utf-8
 
-Hello MITRE, all,
+On 14/03/16 13:29, Tomas Hoger wrote:
+> On Fri, 11 Mar 2016 15:25:39 +0100 Carlos Alberto Lopez Perez wrote:
+> 
+>> Advisory ID        : WSA-2016-0002
+>> Advisory URL       : http://webkitgtk.org/security/WSA-2016-0002.html
+>> CVE identifiers    : CVE-2016-1723, CVE-2016-1724, CVE-2016-1725,
+>>                      CVE-2016-1726, CVE-2016-1727, CVE-2016-1728.
+>>
+>> Several vulnerabilities were discovered on WebKitGTK+.
+> 
+> Are further details of these issues available anywhere?  WSA only
+> re-uses Mitre CVE descriptions derived form Apple advisories, but is
+> there info which bugs/commits these CVEs correspond to?
+> 
 
-Virgil Grigoras and Vlad Orlov discovered an integer overflow flaw in
-gtk+2.0 in image handling:
+Per policy [1], the details of security bugs in WebKit and their fixes
+are available only to members of the WebKit Security Group.
 
-https://github.com/mate-desktop/eom/issues/93
+If you have a legitimate reason that you need to know specific details
+about any of this bugs, then you should state the reason in a inquiry
+directed to security@...kit.org rather than to this mailing list.
 
-Bert Massop discovered the same issue in the gtk+3.0 codebase:
 
-https://bugzilla.gnome.org/show_bug.cgi?id=703220
+[1] https://webkit.org/security-policy/
 
-The fix replaces a direct height * cairo_stride multiplication with a call
-to g_malloc_n() which knows how to multiply correctly:
 
-https://git.gnome.org/browse/gtk+/commit?id=894b1ae76a32720f4bb3d39cf460402e3ce331d6
 
--  cairo_pixels = g_malloc (height * cairo_stride);
-+  cairo_pixels = g_malloc_n (height, cairo_stride);
-
-This same bug appears to be copy-and-pasted to at least:
-eom, gnome-photos, eog, gambas3, thunar, pinpoint, gtk+2.0
-
-https://codesearch.debian.net/results/height%20%5C*%20cairo_stride/page_0
-
-I haven't been able to find CVEs assigned for any of these issues.
-
-Thanks
-
-Related links:
-
-https://bugs.launchpad.net/ubuntu/+source/gtk+2.0/+bug/1540811
-https://github.com/mate-desktop/eom/issues/93
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=799275
-https://bugzilla.gnome.org/show_bug.cgi?id=703220
-https://git.gnome.org/browse/gtk+/commit?id=894b1ae76a32720f4bb3d39cf460402e3ce331d6
-https://codesearch.debian.net/results/height%20%5C*%20cairo_stride/page_0
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
