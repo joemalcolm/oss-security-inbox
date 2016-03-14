@@ -1,23 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/8
-Message-ID: <573351D6.8000504@gmail.com>
-Date: Wed, 11 May 2016 23:37:58 +0800
-From: Baozeng Ding <sploving1@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/9
+Message-ID: <20160314063228.GA12829@steve.org.uk>
+Date: Mon, 14 Mar 2016 06:32:28 +0000
+From: Steve Kemp <steve@...ve.org.uk>
 To: oss-security@...ts.openwall.com
-Cc: g.nault@...halink.fr
-Subject: CVE Requests: Linux: use-after-free issue for ppp channel
+Subject: CVE-Request - GNU Awk.
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
-    The ppp channel did not take reference on its network namespace when 
-it was registered and unregistered, which causes a use-after-free issue. 
-Details:
-https://lkml.org/lkml/2016/3/17/569
-Fixed via:
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1f461dcdd296eecedaffffc6bae2bfa90bd7eb89 
 
+  I reported two DoS bugs against GNU Awk to the debian
+ bug tracker recently, both of which are denial of service
+ attacks causing NULL-pointer deferences.
 
-Could you please assign a CVE for this issue? Thanks.
+  It would be useful to have a CVE identifiers assigned.
 
-Best Regards,
-Baozeng
+  The two issues can be demonstrated like so :
+
+    echo | gawk  '{ print( @olower( "steve" ) ) }'
+
+    echo | gawk 'for (i = ) in foo bar baz'
+
+  There are potential patches and further diagnostics on
+ the bug reports themselves which are respectively:
+
+    https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=816271
+
+    https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=816277
+
+Steve
+-- 
+# Git Based DNS Hosting
+https://www.dns-api.com
