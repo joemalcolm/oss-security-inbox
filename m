@@ -1,47 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/18/7
-Message-Id: <20160118184959.5815B42E00B@smtpvbsrv1.mitre.org>
-Date: Mon, 18 Jan 2016 13:49:59 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/4
+Message-Id: <20160314042352.2D22D52E003@smtpvbsrv1.mitre.org>
+Date: Mon, 14 Mar 2016 00:23:52 -0400 (EDT)
 From: cve-assign@...re.org
-To: limingxing@....cn
+To: vdronov@...hat.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Out-of-bounds Read in the OpenJpeg's opj_j2k_update_image_data and opj_tgt_reset function
+Subject: Re: CVE request -- linux kernel: crash on invalid USB device descriptors (cdc_acm driver)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> opj_j2k_update_image_data
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 4
+> http://seclists.org/bugtraq/2016/Mar/54
+> https://bugzilla.redhat.com/show_bug.cgi?id=1283366
 
-Use CVE-2016-1923.
-
-
-> opj_tgt_reset
-> AddressSanitizer: SEGV on unknown address
-
-Use CVE-2016-1924.
+Use CVE-2016-3138.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWnTLyAAoJEL54rhJi8gl5TpEP/2nGFLYuk37FXlViClyDElMB
-c03MAy9ToQjW1iLnnRNoLn9nqO15yvxLu28l0hzXnag01v9xaOy4Z8TJWRvXqB3V
-Jn4SU3xD7mnaHbzo0ObU1ywWvXaA3TVbFMmGu2Y4uFDW7/B/ZZFacYwAfT930mg/
-pUWsO8i9QS+7wA899E9RjeewTtskyKXLXXlNaATJEl2hjG8flXUCdB3KN4dsTHl4
-wNX+MWm9NwsSxyMG+3Uj4o6Ec5nhNeF5qqSYuPJtQQOcZZEHR1/sa7mq/7WO60Gx
-ChRoKx2shlKxq8nUkMgDyKIbmXY2l6Lj9y9VyrwnOs7cimqh6F3MoZZ082JMjYX9
-5NRVu3U7eFL3iDkDVKrUto3OiUHCDM7hyLEquFsU3DfcWEXGZC2DH27CjonuA/qV
-VcKrlcB0WH1don4JoBiOh+2keu6Jt9W+W5PEDTjvu1BI2yqaZO+NCsjciNJ1Aiis
-V/ly2mAp/tFpuAJCXWMGBKCCsyzgUcHnUBrKi2xHnY9sXzBUJ1ppO+n+ZI0anO7B
-U70ekz7IvDK2L9YbxP673hTgCst2WM9o+c1GeCSacYL5gB0xMwXRQvKwYgDlVu4c
-A1as0YquprR0pMpjeKlqyilnIRJAzK20tUIfUoSjqjopKZFWrcbInpWqjFUyoSoI
-gcc50NDQB0Wxi2hfVDxk
-=TVQP
+iQIcBAEBCAAGBQJW5jxiAAoJEL54rhJi8gl5WFUP/3z33WUQmeerUw1jHWIod9pA
+WITQqeozGRGSZkaGTSLmAVB+xIgLoyVCAMvCJCeR24DD6gix63EVEFK7R9JUH9wd
+qL8FmZFc9fG+waPA1yk1ZPhmzkX74SE3rtKR2IP5ECN0PnbKNpmrXqn95SXaIW0J
+mJbbU+N1E57F8g7kAU0GUUmAbOWEjtUVgVLALgqNxfROHkd2br9Y5POxWkctkgaj
+VB4JHO9C8ALFStpMtz+Li+1nZzULn6FHN+w4LL63oIRanLWHoJzI1qbaBY3bv5WX
+LmH9KlYF7vId44gjJky3iX6cS0k0ipRAsTKXNFG1XYbId0GKsqMwCyZvRjL59WqL
+LyP/G2KjpyeGxQkXHjohoIBpDlRBypHiNiH6Gdb7Gcyky9IbqR6Bt5da/vduDxmO
+bk53EXO29RHKFLc7yjRQSbu/V7b1cvmAY+mDTObDRDuTg7OVIR8tbhJo++zCMOhy
+NE0jjM1oTEnJVF0nQ4cYdOd63+z3SW8bclHmwd+8Z24K1o8EHYyVbCgvdPHufLfg
+VasXW4y8SCyZHJnyfgeUEeoSUCpLdJBN2kUW5KPylIaO3t/4o+N9h99KbdiHGjd2
+9cfMuplZOQvs6zxluMCowMJnXLIDJEs6jEc7+p0pRf4or6e+ICyVFdBwkxMfW7lZ
+w7ySycQbyZ/euZb7iKoZ
+=5QI+
 -----END PGP SIGNATURE-----
