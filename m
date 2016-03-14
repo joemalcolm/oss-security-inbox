@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2640" "Monday" "11" "April" "2016" "00:40:52" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160411044052.49C493320CF@smtpvbsrv1.mitre.org>" "66" "[oss-security] Re: CVE request: libcrypto++ - Timing Attack Counter Measure" nil nil nil "4" "2016041104:40:52" "[oss-security] Re: CVE request: libcrypto++ - Timing Attack Counter Measure" (number mark "U       cve-assign@m Apr 11   66/2640  " thread-indent "\"[oss-security] Re: CVE request: libcrypto++ - Timing Attack Counter Measure\"\n") "<570AB371.1000109@vorlons.info>" ("<570AB371.1000109@vorlons.info>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1110" "Monday" "14" "March" "2016" "00:29:41" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160314042941.7237252E003@smtpvbsrv1.mitre.org>" "29" "[oss-security] Re: CVE Request: PHP-5.5.33: Use after free in WDDX Deserialize when processing XML data" nil nil nil "3" "2016031404:29:41" "[oss-security] Re: CVE Request: PHP-5.5.33: Use after free in WDDX Deserialize when processing XML data" (number mark "U       cve-assign@m Mar 14   29/1110  " thread-indent "\"[oss-security] Re: CVE Request: PHP-5.5.33: Use after free in WDDX Deserialize when processing XML data\"\n") "<CAC1DjbY+tj0CN399O33MyG6Zx7B4d-iNtz=Us=bMtjXWjD54fQ@mail.gmail.com>" ("<CAC1DjbY+tj0CN399O33MyG6Zx7B4d-iNtz=Us=bMtjXWjD54fQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21897 invoked by uid 550); 11 Apr 2016 04:41:05 -0000
+Received: (qmail 14320 invoked by uid 550); 14 Mar 2016 04:29:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,58 +12,21 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21876 invoked from network); 11 Apr 2016 04:41:04 -0000
+Received: (qmail 14296 invoked from network); 14 Mar 2016 04:29:54 -0000
 From: cve-assign@mitre.org
-To: matthias@vorlons.info
+To: dkasyanov@cloudlinux.com
 Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <570AB371.1000109@vorlons.info>
-Message-Id: <20160411044052.49C493320CF@smtpvbsrv1.mitre.org>
-Date: Mon, 11 Apr 2016 00:40:52 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: libcrypto++ - Timing Attack Counter Measure
+In-Reply-To: <CAC1DjbY+tj0CN399O33MyG6Zx7B4d-iNtz=Us=bMtjXWjD54fQ@mail.gmail.com>
+Message-Id: <20160314042941.7237252E003@smtpvbsrv1.mitre.org>
+Date: Mon, 14 Mar 2016 00:29:41 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: PHP-5.5.33: Use after free in WDDX Deserialize when processing XML data
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://github.com/weidai11/cryptopp/issues/146
+> https://bugs.php.net/bug.php?id=71587
 
->> This counter measure seems to be removed by the compiler.
-
->> security bug
-
-For "removed by the compiler" issues, sometimes the CVE is associated
-with the upstream source code, and sometimes the CVE is associated
-with a specific binary package that chose to compile in a way that was
-unintended by the source-code authors. We feel that the former is the
-best choice here.
-https://github.com/weidai11/cryptopp/blob/master/Readme.txt says "The
-following compilers are supported for this release ... GCC 3.3 - 5.2."
-https://github.com/weidai11/cryptopp/blob/master/GNUmakefile mentions
-the possibility of gcc -O3:
-
-  # Aligned access required at -O3 for GCC
-  ...
-  ifeq ($(findstring -O3,$(CXXFLAGS)),-O3
-
-issues/146 mentions "Debian compiles Crypto++ with the following
-flags: -Wdate-time -D_FORTIFY_SOURCE=2 -g -O2 ...."
-
-The gcc man page mentions:
-
-  -O3 Optimize yet more.  -O3 turns on all optimizations specified by -O2
-
-Thus, roughly speaking, it seems that all of Crypto++ had an
-expectation of working with any recent version of gcc, even if (for
-example) -O2 or -O3 is used. The "code to avoid timing attacks"
-doesn't meet this expectation, and thus it's a vulnerability in
-Crypto++. (It is not a vulnerability in the packaging within Debian or
-any other distribution, and it is not a vulnerability in gcc.)
-
-Use CVE-2016-3995 for this Crypto++ vulnerability.
-
-(As a side note, Crypto++ is packaged for Fedora in the
-cryptopp package, e.g., see the
-http://pkgs.fedoraproject.org/cgit/rpms/cryptopp.git/tree/cryptopp.spec
-page.)
+Use CVE-2016-3141.
 
 - -- 
 CVE Assignment Team
@@ -73,17 +36,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXCykdAAoJEL54rhJi8gl5gbMQAJzlqJxGZuh3bjUZSgxAdDOz
-J7N+b2+vrYGHWqyEaxjjrfetLA5XNKcUKrLuT66Y1Zm0JrFg2pcEM35/dzjl81A0
-KnLED6Q+q7LP+GXkuRh0LWYc8eUvmdlhjbY0Xb8NqkOSZD1uBkf6z2FNUr6yyoHF
-m+HnSN4RYOXSwpROAY+JfKAmPzcJpDpziJA24y4tLMgKvK6Jbx08mGQjJCYMoZ3l
-zX/KDQsmORPXwFbSNLIy20I5D6TTf8mNH18wkDFYKaiqSej7L+wXTOSEKkicnWtD
-JQPkQzWq/6rb8uCtddg1GCSHk27OS54NxQMD18ETSXLPIjcsYzGzFAiKWXE44nGu
-PckfsBzFTWuyjDKdjspE7RUIq+S3tpyUHjgbTgolK+q6RSvAvPFCXvCjn0SAhBzO
-NPQecA9nXCV1oWd0d7a/OGrOaYGhnN8msDEamAVVIheyuQD6ySKCbrZjhPd9LQ/+
-mPdZr5o7bW9121hB9nfcbHB6q/RTQusX91aa7R5sypPxIox7TG/TjAfSzp2fFIIk
-dwhSZxbgDIyFceSw3Ne9yLRKJlegfwdHxlnhmO7/0X3GPSjG2b7clbhYieoirGrY
-xhblDTjW49BikosQPEbc2LGP/9Awp5uokQBJ11BjAvEz9Qz+hqUQ1FWPcVwahlcg
-URJpnBTtEN+FY6/u3+0W
-=ztqN
+iQIcBAEBCAAGBQJW5j3gAAoJEL54rhJi8gl5mF0P+gJGRd7gKQIEY0r/pKdf18Ay
+SC8hAOCPDGfg8rYkPDUDBaoCjgkM29T9AuZJ3pCkfys3vzE2/G4XCRB8EysowGBj
+0jlaVZE54TrvnVXdZ8rsAFOz0m29pjjGwYXIsxZLjDoBxGOtU0PBAdz9zCbyP4ws
+BoTHvwRsMGa8dcRqUnFoLMlBd0lSteVFiv8d3w2tEu+vIRhr//VUn1dGvb94l65n
+TgP+oMqE9PPr4S8MdUvMFd6XzuoCj8nQ5MJXce2aJzPdQnkgNOa4U+cGLQDykAX2
+fHQXjguU/2N1+F6xAy7ydh9ywpNpDFla01ayvbIFC3aXtiA5ONdcYunB9lMWoq04
+wK0FhxH0/UD/Msp6jBjWQdvFlAuQJwuDqiuD8Dcs/Am+4PMAtP06gl06aIqjEk88
+NXktFkkzHSfoczzkwSRp6J023bLdrTykcXsk3O5/hsrB4XsrlERGYT5TgqknAriK
+zPIh5IKK88u5UfrilGfYZgIQYt2++j+4ZKoYIl/q/3NzTmCt+/zKelLFQSFwR4FX
+RuPiWSMIqqchsesgHDgFSnvoAsP3d0hqcX2RBjwhBvxdpVG2LhGJgK91hrey14L1
+xaK4fAq4W2mx+yC12qgWZYQVz5EYQpR+qti8mv1sexKuAbyUx6YXUEMN6eglubQs
+dV7j9iBVgzYJGlDGLuZe
+=DTa5
 -----END PGP SIGNATURE-----
