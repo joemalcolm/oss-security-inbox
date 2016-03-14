@@ -1,89 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/13
-Message-ID: <CAP9m6YcPrs7yaOHAHeN9cr_EhOJKHu2tptVwTm=ngTZrN7VZfQ@mail.gmail.com>
-Date: Thu, 5 May 2016 08:36:29 -0400
-From: Stanislav Datskovskiy <stas@...er-os.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: broken RSA keys
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/2
+Message-Id: <20160314041925.CFCD36C06B0@smtpvmsrv1.mitre.org>
+Date: Mon, 14 Mar 2016 00:19:25 -0400 (EDT)
+From: cve-assign@...re.org
+To: vdronov@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request -- linux kernel: crash on invalid USB device descriptors (mct_u232 driver)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA256
 
+> http://seclists.org/bugtraq/2016/Mar/57
+> https://bugzilla.redhat.com/show_bug.cgi?id=1283370
 
-On Thu, May 5, 2016 at 4:17 AM, Solar Designer <solar@...nwall.com> wrote:
-> When a modulus is (mangled?) such that each of its 64-bit limbs consists
-> of two matching 32-bit limbs, it is necessarily a multiple of 2^32+1.
-> That's because it can be represented as:
->
-> N = {an an ... a1 a1 a0 a0} = (2^32+1) * {0 an ... 0 a1 0 a0}
->
-> where the {...} notation means concatenated 32-bit limbs (or base 2^32
-> digits, if you will).  From this, it follows that pairwise GCDs of such
-> moduli will also have 2^32+1 as a factor, and this is what ultimately
-> causes the 32-bit limb patterns in the GCDs.  As Alexander Cherepanov
-> correctly pointed out, even the seemingly slightly more complex 32-bit
-> limb patterns in the GCDs are merely indication of them being multiples
-> of 2^32+1.  There's probably nothing else to see here.
+Use CVE-2016-3136.
 
-Mircea Popescu (trilema.com) and I figured this out last May.
-But the conclusion 'nothing to see here, move along' does not follow.
-
->> 1) We presently know of 165 keys containing 'mirrored' moduli.
->
-> This is similar but not the same as the number Alexander Cherepanov
-> posted after analyzing your data:
-
-The 165, as described in the linked piece on Mircea's site, were obtained
-by filtering an SKS dump specifically for the mirrored-32 pattern. Last May.
-Said dump is about 95% of the way through Phuctor at the moment, so it
-stands to reason that all of them will appear in it soon.
-
-> Is your definition of "mirrored" different from "divisible by 2**32+1",
-> or does something else (what?) cause the 165 vs. 152 discrepancy?
-
-See above.
-
-> Are all of the "politically interesting" targets' keys (at least those
-> you explicitly listed in 2 above) "mirrored" (and don't have valid
-> self-signatures, as you say)?
-
-DISA's key appears to be well-formed.
-
-> Makes sense, but why would they similarly mangle the exponent as well?
-> As Alexander Cherepanov wrote, if I understand him correctly, there's
-> 100% overlap between keys with such moduli and with such exponents.
-
-Presently I do not know why the perpetrator found it necessary to mangle
-the exponent.
-
-> As I understand it, the description at evil32.com in particular is about
-> generating valid (and not necessarily weak) keypairs that would happen
-> to have the intended 32-bit key id.  This is more computationally
-> intensive than the "mirroring", but it is fast enough, is an
-> older-known(?) and more obvious attack, and it doesn't expose the
-> encrypted data to other/unintended attackers (OK, the "evil guys" might
-> not care either way).  So it is a little bit surprising (but just a
-> little) that someone would go for the "mirroring" instead.
->
-> Alexander
-
-I haven't any notion of why this particular mutilation was chosen.
-But the particular list of victims is sufficient to rule out 'software bug'
-in my mind as an intellectually-honest explanation.
-
-
-Yours,
-- -S
-
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+Version: GnuPG v1
 
-iQEcBAEBCgAGBQJXKz47AAoJELmCKKABq//HLToH/Re+2x5wXZp/RpJBP4Ca5juU
-OeXzto0GIVYgC4bO+IWchpyBM9I2O5SAZvv1+oDyCs/H3dZV/SG5uCTEow/Xtseu
-rMbfBrObxZSQiysfR9c3/xlLdpaY/Djj43TpSmzIJZhUDVf1CPO8PSOLiQEAVctQ
-omysFkfHHpT/FWBtGOq7Ew3xA9Jj4qcQVgST+4cKXuNfpMQCd6+6wJoQGvn8WInJ
-b0Ut5V0v88DzsvSlRe4BxHvZxi/0zHr4L/7sLeSdJ6z2WOG3tEKS7Fpe5qh5PVXc
-Jkd/+K//ShVOMd8yw3Ha45/3F5LFVO6sN0WM50qQAUoTguQA6GCiiFtP9pORKgU=
-=tFtl
+iQIcBAEBCAAGBQJW5juCAAoJEL54rhJi8gl5Tr0QAIu+JtKmgPJmMnpbYec30V37
+Z5C9exfkhN6yT+4hVNxK6eTIVt/SnyUZRxOFC1KMJLqcJQiEGqZrY/G0JzTQDouS
+boTkDqaEmCYq+vH4vMZlSyGJ9VL8DG8p2YRL6lkZB1AUAN6K5E4h3F8MDs9SBbg3
+j+ftqQk7dtsar1Q8PsbjqMfLrk/AmR/oMK04NwihHyt+GazRRBWrjtg0xs2oFEvo
+Pbza7R3j/B28H/dpeIw0EqZQNHGjOrFFXPULTo0jPI4rvT+WsmAXTwaQ0w/IoFsX
+c0KdFdWIivEWUFJEz2JI460YBfTz8A17UZ8LKxDParwuj7hMhvIWhxVC+mSupJPF
+xvLHGv5fLKtZ0skwgXv18GGzEVrJFNyO7iCqQyQCCb3zBHgTY5WXjIqv94q/uNOi
+yhbCmmRzZS950qwb6gSPT0BeBMdAxoXICkohY/+VOfny7Xykj+NKNHQE5H+s1FJD
+xhH1a6tj660f6lIJoLm7l9jagebm6qCxTIoL7PLmXBoVfjw3Tt0tUJY1p5wIjhK5
+IQJcpvkntnhibuoMUEdOjaJBrWHhjlfyuxnIz05WHiLDso61FPYw4ywpqVguil2F
+o3G91EDuhWlDBO/yBbJsLzRZ6KapaYUJ6ooGgq0LeIgVsJwGbe3AHZ2i44CGneB8
+DvMXvPLrID6vy47/DG1w
+=Odi0
 -----END PGP SIGNATURE-----
