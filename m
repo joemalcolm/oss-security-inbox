@@ -1,54 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/03/1
-Message-Id: <1478131133.3496639.775671145.5782B090@webmail.messagingengine.com>
-Date: Wed, 02 Nov 2016 16:58:53 -0700
-From: Cedric Staub <css@....bio>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: multiple issues in go-jose package
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/1
+Message-Id: <20160314041632.96CC352E004@smtpvbsrv1.mitre.org>
+Date: Mon, 14 Mar 2016 00:16:32 -0400 (EDT)
+From: cve-assign@...re.org
+To: meissner@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Linux Kernel: Linux netfilter IPT_SO_SET_REPLACE memory corruption
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I'd like to request CVE numbers for three issues in go-jose
-(https://github.com/square/go-jose):
+> https://code.google.com/p/google-security-research/issues/detail?id=758
+> 
+> A memory corruption vulnerability exists in the IPT_SO_SET_REPLACE
+> ioctl in the netfilter code for iptables support. This ioctl is can be
+> triggered by an unprivileged user on PF_INET sockets when unprivileged
+> user namespaces are available (CONFIG_USER_NS=y). Android does not
+> enable this option, but desktop/server distributions and Chrome OS
+> will commonly enable this to allow for containers support or
+> sandboxing.
+> [ Correction: IPT_SO_SET_REPLACE is reached via setsockopt, not ioctl ]
 
+> one for the issue above,
+> which has been proposed to be addressed by
+> http://marc.info/?l=netfilter-devel&m=145757134822741&w=2
 
-1. Invalid curve attack for ECDH-ES algorithm
-
-When deriving a shared key using ECDH-ES for an encrypted message, go-
-jose neglected to check that the received public key on a message is on
-the same curve as the static private key of the receiver, thus making it
-vulnerable to an invalid curve attack.
-
-Upstream patch:
-https://github.com/square/go-jose/commit/c7581939a3656bb65e89d64da0a52364a33d2507
-
-
-2. Exploiting multiple signatures
-
-The go-jose library supports messages with multiple signatures. However,
-when validating a signed message the API did not indicate which
-signature was valid, which could potentially lead to confusion. For
-example, users of the library might mistakenly read protected header
-values from an attached signature that was different from the one
-originally validated.
-
-Upstream patch:
-https://github.com/square/go-jose/commit/2c5656adca9909843c4ff50acf1d2cf8f32da7e6
+Use CVE-2016-3134.
 
 
-3. CBC-HMAC integer overflow on 32-bit architectures
+> one for the unsigned integer overflow on 32bit kernels
+> mentioned as an aside at the end of the original report. Proposed
+> fix is http://marc.info/?l=netfilter-devel&m=145757136822750&w=2
 
-An integer overflow could lead to authentication bypass for CBC-HMAC
-encrypted ciphertexts on 32-bit architectures.
+Use CVE-2016-3135.
 
-Upstream patch:
-https://github.com/square/go-jose/commit/789a4c4bd4c118f7564954f441b29c153ccd6a96
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-All of the above issues were reported by Quan Nguyen from Google's
-Information Security Engineering Team.
- 
-Thanks,
-Cedric
-
+iQIcBAEBCAAGBQJW5jqTAAoJEL54rhJi8gl5l38P/jfH0iB3klwlzPEfSJLcn6eB
+v/BrY5uicvrZG05V2tcN003AWTvolbkZsBOlAwRO6jGl/mj20DQfuRsjT6ZfXZ0J
+YEYnObv3f0rkH7lewbPg6wcA2Gp2xX6B5ts+IsHOzMcJ+/rD1GtEn1XJoEAtYxSQ
+XaSvbgup7Jh6wr5hQnt8z3kqtzjHD57zuwBp3QweJbX4W2wK/Xb2WZNashQSh/As
+xYWphcFmhdUJZH0l7fl03ru77On+HmDzWNLKbW+TTQ/M7n0MiPSP+X4k3wjM5jEd
+WOxoa1oasQjGpD9RLphVy1/rF03vwyW3i/Wm3d9vmDDB7hrKxyUGO2wL8ngWQSTx
+v2VY1/IEwUjigokXvNDPTCqOHz+opSOanZiD1XgBUEyrZdcNTEG2zR9VrxRdlT2C
+JImh5ncEaYHxeD+i2q0EajfcJt0YHvS3I2mvhlYk7iKJa/ZTRso4JXPt6HmDMrn8
+svXwT3fWKePRL/lIIxdEN4vIOi1L80Np3S4eDHbtHuWUuS2wj6mHIJ92jvcCq8IU
+moSoMHskkmAwI2YjUMzD6BD2O2JDATW/E3xQjpWfU+HrhIQQpEKvxBjNw5Pvl6ei
+3cHUgehRgfBfFLE9qofuFS5xACMi1XueIs2NQBnf1nn8koEF5PKFusRUxqZjySq1
+BmFYYhLN+jgPq2t2nf6D
+=iUM4
+-----END PGP SIGNATURE-----
