@@ -1,25 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/16
-Message-ID: <D2FB613B.47927%arshan.dabirsiaghi@contrastsecurity.com>
-Date: Tue, 1 Mar 2016 20:09:52 +0000
-From: Arshan Dabirsiaghi <arshan.dabirsiaghi@...trastsecurity.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE request: Kryo (Java serialization API)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/18
+Message-ID: <nc6fs4$ta1$1@ger.gmane.org>
+Date: Mon, 14 Mar 2016 16:55:14 +0300
+From: "Yuriy M. Kaminskiy" <yumkam@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-Request - GNU Awk.
 Content-Type: text/plain; charset=utf-8
 
-The Kryo serialization API (https://github.com/EsotericSoftware/kryo)
-doesn¹t enforce whitelisting by default, and thus allows side effects from
-constructors and finalizer methods in attacker-chosen types when
-deserializing. With the right gadgets available on the classpath, these
-side effects could lead to DoS, memory corruption, and possibly RCE.
+On 14.03.2016 15:26, Tomas Hoger wrote:
+> On Mon, 14 Mar 2016 06:32:28 +0000 Steve Kemp wrote:
+>
+>>    I reported two DoS bugs against GNU Awk to the debian
+>>   bug tracker recently, both of which are denial of service
+>>   attacks causing NULL-pointer deferences.
+>>
+>>    It would be useful to have a CVE identifiers assigned.
+>
+> Why should these get a CVE?  As you state in one of your reports:
+>
+>    While I appreciate that passing untrusted code to gawk is not a
+>    common thing to do, I do not believe that it should be possible to
+>    trigger a segfault though.
+>
+> Why should that be considered a valid / safe use case at all?  If
+> something makes awk run untrusted programs, there's code execution
+> problem already:
+>
+>    echo | awk '{ system("id") }'
 
-https://www.contrastsecurity.com/security-influencers/serialization-must-di
-e-act-1-kryo
-https://github.com/EsotericSoftware/kryo/issues/398
-
-Thanks,
---
-
-Arshan Dabirsiaghi | Chief Scientist
-Contrast Security, Inc. <http://www.contrastsecurity.com/>
+What if someone generates awk script using data from untrusted source, 
+and avoids all theoretically-dangerous constructs (like system()), but 
+their filter miss something theoretically-innocent that can trigger 
+SIGSEGV (or worse) due to bug in gawk.
 
