@@ -1,45 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/28/5
-Message-Id: <20160128063729.1D3D26C0056@smtpvmsrv1.mitre.org>
-Date: Thu, 28 Jan 2016 01:37:29 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/15/7
+Message-Id: <20160315170216.6AB906C445F@smtpvmsrv1.mitre.org>
+Date: Tue, 15 Mar 2016 13:02:16 -0400 (EDT)
 From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Heap buffer overflow in fgetwln function of libbsd
+To: vvs@...tuozzo.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, solar@...nwall.com, gorcunov@...tuozzo.com, davem@...emloft.net, khorenko@...tuozzo.com
+Subject: Re: CVE request: ipv4: Don't do expensive useless work during inetdev destroy
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> this check is off by one, therefore an out of bounds write happens.
-> 
-> https://blog.fuzzing-project.org/36-Heap-buffer-overflow-in-fgetwln-function-of-libbsd.html
-> https://bugs.freedesktop.org/show_bug.cgi?id=93881
-> http://cgit.freedesktop.org/libbsd/commit/?id=c8f0723d2b4520bdd6b9eb7c3e7976de726d7ff7
+> Destroy of network interface with huge number of ipv4 addresses
+> keeps rtnl_lock for a very long time (up to hour).
+> It blocks many network related operations,
 
-> fgetwln.c
+>> in this scenerio we do two pointless things which can
+>> be very expensive
 
-Use CVE-2016-2090.
+> The problem is especially important for containers,
+> container owner have enough permission to enable this trigger
+
+> http://git.kernel.org/cgit/linux/kernel/git/davem/net-next.git/patch/?id=fbd40ea0180a2d328c5adc61414dc8bab9335ce2
+
+Use CVE-2016-3156.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWqbaKAAoJEL54rhJi8gl59xkP/04TTXdnPf8d7KiSwvOPJ3qO
-coK4/oALkMFfzC8qgYjtZeZMXj1EEDJJdTdiZXF2EKCMVQc3U0qmpsTFYHZHw7tJ
-Goa5m9byhMUV3w16uaFLcf+tSsPQzePWmAVP/oSIfHweiN11Zz4h/Zvn7JLd2b/I
-lTn3ThjC1HlS7LwGcqmj9QAUq2vrWBs34afIOmUd166vdZdZPNTZ4sKAOitWmMo6
-IPV0BEv/EBO0RolGd/A/GdCXGcqrcTSKAJVHsUoiaPUSPJFzG4XavgqOf/i9Ky+b
-cal2LDTQQrIwSXw3eqCFtpLfhAkAnHQhUIW/3wysUmEq52b+tko8+4A6EF9/dw6g
-xpPRhBHO+iP5qQ0PfkGO6QxGtFL+S9su6IU+UE9kCIgCvqQLeKTpD/ZrH9BEw+zX
-SbxkdqW+Oa57+2kzvBEO3NfxqhcPavrZnPQ9uf00biPa3rO7z9D1IRLAZPqb3mx2
-xQGN39/RglFaPWKpvMFqV6ZxaM5oRZqkWag8wSOSkImAfsE1KujqmtCw182Jnpwh
-Z7gjSxfAjuN5RlSez5WTRfOKT6JpOoh4LduX+uhw8hdXj3tCj9ibmxf63NQ7t2nU
-+tPSZ/7k2NChu2i2lfPrSQTP/F6rEABjq/7osfNQlaWTonIA1Q+G794j7ioveVCf
-HiAK2pUK75NFHSOvy+qT
-=qJqt
+iQIcBAEBCAAGBQJW6D2BAAoJEL54rhJi8gl5aPcQAI4vToE8HwKoXoPHrBvLzjkC
+d9CewviuH6iRvsAy7hsZ4XqYTVUe+aP9F+jZU9s+X77Sx2M4OcS3NMm7Q9a0MfKC
++ns7JxOPw2T/Lb+fEykx5W+RSLF/gF+UK/CGlEdxP3dQ1jpDwVYEUHYMC3fXxipa
+95caC/UkdeK/pm5mIPZx0LaGPuSsGk2R+/sIdwKglcOY0nHEOHfzkWFAwisSStN2
+WUerlquTggA7qX+5vX0Q5COKIzmJOpHnzsdJRk1XeJpCKRGacdWmd41rVeNX+yjc
+jMYc2dXeTwm5pUhb86eX4aeK9hWOq55Fa+STwZRLZ/XreUxovoRat9ClMGujwHpI
+DatEqVuoX6fWzLNgZk+6DVP615WPlKKrbEGiyQ0n6ffBGsrEoUK4eKhqy9LiSsVF
+cdvrpbJZsB8Uu2zTvqYY9Qg8JV49UcdfZRnfzFOVNZtjy9Y7m/OLl0f+8VYVW++r
+yRxEyEHeIA4pOUprA+YrOHrYLqhbddUo/ESLd4MhCJQK3TldsNJ5yoEHb5pGCtxN
+EF2RYDnChUCBzV9tWKXU4sp39wqDJMJwEoUPAC73aCppmnaqWB76ARs2QEe8PejS
+hIqiJACuLIEkeCH/tgQ98kiQyPceLDJm7Vp1G0FAg5Qtj/nQlg3ajTdg0J5Jgm4p
+/q/uXiSvBR9uhsC28/tT
+=lo4r
 -----END PGP SIGNATURE-----
