@@ -1,4 +1,9 @@
-Received: (qmail 12214 invoked by uid 550); 16 May 2024 16:11:01 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7914" "Tuesday" "15" "March" "2016" "19:02:25" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160315230225.A672D6C400B@smtpvmsrv1.mitre.org>" "198" "[oss-security] Re: CVE requests for Drupal core (SA-CORE-2016-001)" nil nil nil "3" "2016031523:02:25" "[oss-security] Re: CVE requests for Drupal core (SA-CORE-2016-001)" (number mark "U       cve-assign@m Mar 15  198/7914  " thread-indent "\"[oss-security] Re: CVE requests for Drupal core (SA-CORE-2016-001)\"\n") "<CAMYtjArOz_yU+97VWT+E7a8u3v+ekb3Y-nZiARLc4arrgHvSew@mail.gmail.com>" ("<CAMYtjArOz_yU+97VWT+E7a8u3v+ekb3Y-nZiARLc4arrgHvSew@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1464 invoked by uid 550); 15 Mar 2016 23:02:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,106 +12,210 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30318 invoked from network); 16 May 2024 16:02:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
-	t=1715875341; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:mime-version:mime-version:
-	 content-type:content-type; bh=Y2riKiuVDMx8ws1TWNKzyvSzN4RhhkBqYt+g1cSWzC8=;
-	b=tb7RpaDWvTDge70sd802hSF3X+2kivUJKY0eQGs8D41ndWObPW8KRwi8SEzjPGxaDxRmx6
-	6iTiCJ84SHNK1biKvMekHjBGWaOiJEEVr5WP+u2a11qoXjgUE6rsq5SkDrdy8Ru/uNczIZ
-	DXvpcZ5kQRIgdIZUeLT8V2PJUgms0cwp/acUpfSTilZuhst0V0ojevikQwXXr071jrpLCJ
-	yVjcjr9ltmxjX+Y4RMaafVI1sm5Aj0fb7KWmg/geqmneBM3UgsqM9X+REaVIv9CkXkAqBV
-	U+2Us9p/LWbbcgCD+bHegB2WUuIQdAoZg8p3sn/s6E5AgU+1oQ+BlSqiqBjdjg==
-Date: Thu, 16 May 2024 16:02:21 +0000
-From: Tomas Mraz <tomas@openssl.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ZkYuDd4PG0e89Qfy@openssl.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Subject: [oss-security] OpenSSL Security Advisory [corrected CVE id]
+Received: (qmail 1435 invoked from network); 15 Mar 2016 23:02:37 -0000
+From: cve-assign@mitre.org
+To: pere@orga.cat
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@drupal.org
+In-Reply-To: <CAMYtjArOz_yU+97VWT+E7a8u3v+ekb3Y-nZiARLc4arrgHvSew@mail.gmail.com>
+Message-Id: <20160315230225.A672D6C400B@smtpvmsrv1.mitre.org>
+Date: Tue, 15 Mar 2016 19:02:25 -0400 (EDT)
+Subject: [oss-security] Re: CVE requests for Drupal core (SA-CORE-2016-001)
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-OpenSSL Security Advisory [16th May 2024]
-=========================================
+> https://www.drupal.org/SA-CORE-2016-001
 
-Excessive time spent checking DSA keys and parameters (CVE-2024-4603)
-=====================================================================
+> File upload access bypass and denial of service (File module - Drupal
+> 7 and 8 - Moderately Critical)
+> 
+> A vulnerability exists in the File module that allows a malicious user
+> to view, delete or substitute a link to a file that the victim has
+> uploaded to a form while the form has not yet been submitted and
+> processed. If an attacker carries out this attack continuously, all
+> file uploads to a site could be blocked by deleting all temporary
+> files before they can be saved.
+> 
+> This vulnerability is mitigated by the fact that the attacker must
+> have permission to create content or comment and upload files as part
+> of that process.
 
-Severity: Low
+Use CVE-2016-3162.
 
-Issue summary: Checking excessively long DSA keys or parameters may be very
-slow.
 
-Impact summary: Applications that use the functions EVP_PKEY_param_check()
-or EVP_PKEY_public_check() to check a DSA public key or DSA parameters may
-experience long delays. Where the key or parameters that are being checked
-have been obtained from an untrusted source this may lead to a Denial of
-Service.
+> Brute force amplification attacks via XML-RPC (XML-RPC server - Drupal
+> 6 and 7 - Moderately Critical)
+> 
+> The XML-RPC system allows a large number of calls to the same method
+> to be made at once, which can be used as an enabling factor in brute
+> force attacks (for example, attempting to determine user passwords by
+> submitting a large number of password variations at once).
+> 
+> This vulnerability is mitigated by the fact that you must have enabled
+> a module that provides an XML-RPC method that is vulnerable to
+> brute-forcing. There are no such modules in Drupal 7 core, but Drupal
+> 6 core is vulnerable via the Blog API module. It is additionally
+> mitigated if flood control protection is in place for the method in
+> question.
 
-The functions EVP_PKEY_param_check() or EVP_PKEY_public_check() perform
-various checks on DSA parameters. Some of those computations take a long time
-if the modulus ("p" parameter) is too large.
+Use CVE-2016-3163.
 
-Trying to use a very large modulus is slow and OpenSSL will not allow using
-public keys with a modulus which is over 10,000 bits in length for signature
-verification. However the key and parameter check functions do not limit
-the modulus size when performing the checks.
 
-An application that calls EVP_PKEY_param_check() or EVP_PKEY_public_check()
-and supplies a key or parameters obtained from an untrusted source could be
-vulnerable to a Denial of Service attack.
+> Open redirect via path manipulation (Base system - Drupal 6, 7 and 8 -
+> Moderately Critical)
+> 
+> In Drupal 6 and 7, the current path can be populated with an external
+> URL. This can lead to Open Redirect vulnerabilities.
+> 
+> This vulnerability is mitigated by the fact that it would only occur
+> in combination with custom code, or in certain cases if a user submits
+> a form shown on a 404 page with a specially crafted URL.
+> 
+> For Drupal 8 this is a hardening against possible browser flaws
+> handling certain redirect paths.
 
-These functions are not called by OpenSSL itself on untrusted DSA keys so
-only applications that directly call these functions may be vulnerable.
+Use CVE-2016-3164.
 
-Also vulnerable are the OpenSSL pkey and pkeyparam command line applications
-when using the "-check" option.
 
-The OpenSSL SSL/TLS implementation is not affected by this issue.
+> Form API ignores access restrictions on submit buttons (Form API -
+> Drupal 6 - Critical)
+> 
+> An access bypass vulnerability was found that allows input to be
+> submitted, for example using JavaScript, for form button elements that
+> a user is not supposed to have access to because the button was
+> blocked by setting #access to FALSE in the server-side form
+> definition.
+> 
+> This vulnerability is mitigated by the fact that the attacker must
+> have access to submit a form that has such buttons defined for it (for
+> example, a form that both administrators and non-administrators can
+> access, but where administrators have additional buttons available to
+> them).
 
-The OpenSSL 3.0 and 3.1 FIPS providers are affected by this issue.
+Use CVE-2016-3165.
 
-OpenSSL 3.3, 3.2, 3.1 and 3.0 are vulnerable to this issue.
 
-OpenSSL 1.1.1 and 1.0.2 are not affected by this issue.
+> HTTP header injection using line breaks (Base system - Drupal 6 -
+> Moderately Critical)
+> 
+> A vulnerability in the drupal_set_header() function allows an HTTP
+> header injection attack to be performed if user-generated content is
+> passed as a header value on sites running PHP versions older than
+> 5.1.2. If the content contains line breaks the user may be able to set
+> arbitrary headers of their own choosing.
+> 
+> This vulnerability is mitigated by the fact that most hosts have newer
+> versions of PHP installed, and that it requires a module to be
+> installed on the site that allows user-submitted data to appear in
+> HTTP headers.
 
-Due to the low severity of this issue we are not issuing new releases of
-OpenSSL at this time. The fix will be included in the next releases when they
-become available. The fix is also available in commit 53ea0648 (for 3.3),
-commit da343d06 (for 3.2), commit 9c39b385 (for 3.1) and commit 3559e868
-(for 3.0) in the OpenSSL git repository.
+Use CVE-2016-3166. (This issue has a CVE ID because the Drupal vendor
+has issued a security advisory. A different vendor, in response to
+a similar report, could choose to take the position that PHP 5.1.x
+is obsolete, and the product offers no expectation of correct
+behavior with 5.1.x.)
 
-OSSfuzz first detected and automatically reported this issue on 13th February
-2024 using a fuzzer recently added to OpenSSL written by Kurt Roeckx. The fix
-was developed by Tomas Mraz.
 
-General Advisory Notes
-======================
+> Open redirect via double-encoded 'destination' parameter (Base system
+> - Drupal 6 - Moderately Critical)
+> 
+> The drupal_goto() function in Drupal 6 improperly decodes the contents
+> of $_REQUEST['destination'] before using it, which allows the
+> function's open redirect protection to be bypassed and allows an
+> attacker to initiate a redirect to an arbitrary external URL.
+> 
+> This vulnerability is mitigated by that fact that the attack is not
+> possible for sites running on PHP 5.4.7 or greater.
 
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20240516.txt
+Use CVE-2016-3167. (This issue has a CVE ID because the Drupal vendor
+has issued a security advisory. A different vendor, in response to
+a similar report, could choose to take the position that PHP 5.4.x
+is obsolete, and the product offers no expectation of correct
+behavior with 5.4.x.)
 
-Note: the online version of the advisory may be updated with additional details
-over time.
 
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/secpolicy.html
+> Reflected file download vulnerability (System module - Drupal 6 and 7
+> - Moderately Critical)
+> 
+> Drupal core has a reflected file download vulnerability that could
+> allow an attacker to trick a user into downloading and running a file
+> with arbitrary JSON-encoded content.
+> 
+> This vulnerability is mitigated by the fact that the victim must be a
+> site administrator and that the full version of the attack only works
+> with certain web browsers.
+
+Use CVE-2016-3168.
+
+
+> Saving user accounts can sometimes grant the user all roles (User
+> module - Drupal 6 and 7 - Less Critical)
+> 
+> Some specific contributed or custom code may call Drupal's user_save()
+> API in a manner different than Drupal core. Depending on the data that
+> has been added to a form or the array prior to saving, this can lead
+> to a user gaining all roles on a site.
+> 
+> This issue is mitigated by the fact that it requires contributed or
+> custom code that calls user_save() with an explicit category and code
+> that loads all roles into the array.
+
+Use CVE-2016-3169.
+
+
+> Email address can be matched to an account (User module - Drupal 7 and
+> 8 - Less Critical)
+> 
+> In certain configurations where a user's email addresses could be used
+> to log in instead of their username, links to "have you forgotten your
+> password" could reveal the username associated with a particular email
+> address, leading to an information disclosure vulnerability.
+> 
+> This issue is mitigated by the fact that it requires a contributed
+> module to be installed that permits logging in with an email address,
+> and that it is only relevant on sites where usernames are typically
+> chosen to hide the users' real-life identities.
+
+Use CVE-2016-3170.
+
+
+> Session data truncation can lead to unserialization of user provided
+> data (Base system - Drupal 6 - Less Critical)
+> 
+> On certain older versions of PHP, user-provided data stored in a
+> Drupal session may be unserialized leading to possible remote code
+> execution.
+> 
+> This issue is mitigated by the fact that it requires an unusual set of
+> circumstances to exploit and depends on the particular Drupal code
+> that is running on the site. It is also believed to be mitigated by
+> upgrading to PHP 5.4.45, 5.5.29, 5.6.13, or any higher version.
+
+Use CVE-2016-3171.
+
+
+We may be sending a separate reply about the "And also for the
+FileField contributed module" part.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQIzBAEBCAAdFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmZGLbUACgkQUnRmohyn
-nm27iRAAkvc/HNdfAY3l6kBJ2GVUbvPLODxFhzpei5DW1JxUojQwPXe3cXZlBs9D
-PDtw85WX4IPULvcrq7BeGxOs4hDR1xkUfzr/5b0t7a9olFy1oYE/and0qpQx3AzP
-eS7O9b001ssXtAs43aO6S4H0L5+3lRXPnLhyDfeh4odty4fbSIP8apLXtmaTKt6P
-hdm+JLJdrx92aKjraKBcc1YKl2HgCBNRsxBnimKJzZGZVokUZsF0mIZ/G1SZVs0J
-W4usEF1JuRD2vAUWcSDU92tZd0Bkz55SjVC7NVPqvqSUAo04f3LhZj1c7rMjSD5p
-zjbG6c4PiCC08LRCHRtZUu56Kp1tBYy+X7zZrzDiPF1R/TY9pYYA1JKS6EvbBb/d
-8IB3cxeeTzW0StnuxKmOchrMsGJtizh9hGIhy7yzjbQ8oMkhcRsUlbZDQwiHvCUk
-qgXP2v0pnqBmVEBfqCBvUOKAy19XMVOUH69JBsuMEPIKzx2k7Y5QvVKZNq3DtboA
-lOc0zkfLbtXrNZFDUDqpq2megmVbVlTw619NQE51jN/LPzo7b+fdw1cHTTnQE2Gt
-rSQYZnklb0fmfQQJOl4HpCK16SfVebPYU4hRDJ1Yqk6jcClFbit1F7Fz6Ypjv4nM
-iTOJAAoat2jQhmqg2VTpuUQGjRMAADvKlpABL4dTYCvJv6RMXTk=
-=Efz1
+iQIcBAEBCAAGBQJW6JQLAAoJEL54rhJi8gl5ySQQAI4bneFzYhM+2x9p8M9zDwF0
+qZbMerp4yXeB+w4ejBBUv73k03xXveRwOabDiT0N4Rub/njlUUhmqtOLHuOZ21WU
+wYPGYxZHEVLmsiDCYu6W55aE114CywC+uWEay6o6Nk55y5EGRrZzwQjYPwSJdbl+
+/D4ArePHQkw5+mclilaFVKvhd8t01AVaH8x5cyfGYTZVJRjL6O6032fEbTgGcz6c
+mEZ2cpHZYsOAvn5I0i0SKq5xTK3UK+mzt23n8toP2k2E9bFOjqIej49hQMsIKF0O
+ixZn1J08J5stumLUDPMcu1L1kwr5/6+C24f5Um67q0zlL5W6jshpUUzXXe4nxBom
+vr9cC2hqMk1tkjBmKvylS7BLk5VblL8rSsUjZ6UxbL+gvusdblPnTpzvw1ldlG61
+fgp5e27yOFYKuOrd6/OO79zmJFGWo+mRweumJOZpKdP8H4x58IMF5eZSzFhVSuzS
+EVKFKOHVwPVF1nQ3j81KyDxe4vNtCCjIy6eKJyctkHMn8Q21VlkTGjvDVcO8qfOA
+oUV/JKn2ad/Pl4TN4LDT6KDss6zHCM+EvlX+mLdy4Oa13rs+N29Ek5VxLGjaEe9p
+77yXCYPIO64dxUqlU+/bKH3f/fRBDv0fjLt3nWUol0e26RTmAbIn/T6xRdFCB2Qb
+infW+eF3l8hqc0Y9K27J
+=f4nY
 -----END PGP SIGNATURE-----
