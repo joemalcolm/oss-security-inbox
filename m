@@ -1,43 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/16/1
-Message-Id: <D1821A56-55CB-44C2-93AD-B2A42DF71DCD@patg.net>
-Date: Tue, 15 Nov 2016 23:11:46 -0500
-From: Patrick Galbraith <patg@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/15/2
+Message-ID: <20160315125138.GT4944@frisco.mine.nu>
+Date: Tue, 15 Mar 2016 13:51:38 +0100
+From: Sébastien Delafond <seb@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2016-1249: Out-of-bounds read by DBD::mysql >= version 2.9003
+Cc: cve-assign@...re.org
+Subject: CVE request - SPIP: 2 vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
-======
+on behalf of the Debian Security Team, I'd like to request 2 CVEs for
+SPIP. Both are present in 3.x before 3.0.22 and 2.x before 2.1.19:
 
-SECURITY ADVISORY - Out-of-bounds read by DBD::mysql
+  * PHP code injection when handling content. This is fixed in
+    https://core.spip.net/projects/spip/repository/revisions/22911
+    (defining the function itself is enoug, as the global mechanism for
+    filters in SPIP automatically tries to lookup and filtre_foo_dist if
+    it exists)
 
-Out-of-bounds read by DBD::mysql
+  * Objects injection when deserializing untrusted input. This is fixed
+    in https://core.spip.net/projects/spip/repository/revisions/22903
 
-A vulnerability was discovered that can lead to an out-of-bounds read
-when using server side prepared statements with an unaligned number of
-placeholders in WHERE condition and output fields in SELECT expression.
+Cheers,
 
-Project name and URL — DBD::mysql Perl MySQL client driver, http://search.cpan.org/~capttofu/DBD-mysql/lib/DBD/mysql.pm <http://search.cpan.org/~capttofu/DBD-mysql/lib/DBD/mysql.pm>
-Versions known to be affected — 2.9004 and later (2005 and later)
-Versions known to be not affected — 2.9003 and earlier (before 2005)
-Version containing Fix — 4.039 and later (current)
-Link to fix: https://github.com/perl5-dbi/DBD-mysql/commit/793b72b1a0baa5070adacaac0e12fd995a6fbabe <https://github.com/perl5-dbi/DBD-mysql/commit/793b72b1a0baa5070adacaac0e12fd995a6fbabe>
-
-Type of vulnerability and its impact — could lead to out-of-bounds read when using server-side prepared statement support in the driver
-
-CVE identifier — CVE-2016-1249
-
-Planned release — availability: immediately
-
-Mitigating factors — This problem is only exposed when the user uses server-side prepared statement support, which is NOT default behavior and was turned off back for all drivers per MySQL AB decision in 2006 due to issues with server-side prepared statements in the server. The behavior of the driver is normally emulated.
-
-Work-arounds — Use the default driver setting which is using emulated prepared statements
-
-Credit — Many thanks to Pali Rohár for discovering and fixing the vulnerability.
-
-======
-
-Content of type "text/html" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (188 bytes)
+--Seb
