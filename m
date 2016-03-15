@@ -1,65 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/18/7
-Message-Id: <20160218035444.2ED678BC081@smtpvmsrv1.mitre.org>
-Date: Wed, 17 Feb 2016 22:54:44 -0500 (EST)
-From: cve-assign@...re.org
-To: mmc@...areup.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request - OkHttp Certificate Pining Bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/15/3
+Message-ID: <56E80973.80606@virtuozzo.com>
+Date: Tue, 15 Mar 2016 16:09:07 +0300
+From: Vasily Averin <vvs@...tuozzo.com>
+To: oss-security@...ts.openwall.com
+Cc: Solar Designer <solar@...nwall.com>, Cyrill Gorcunov <gorcunov@...tuozzo.com>, "David S. Miller" <davem@...emloft.net>, Konstantin Khorenko <khorenko@...tuozzo.com>
+Subject: CVE request: ipv4: Don't do expensive useless work during inetdev destroy
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Destroy of network interface with huge number of ipv4 addresses
+keeps rtnl_lock for a very long time (up to hour).
+It blocks many network related operations,
+including for example creation of new incoming ssh connections.
 
-> A vulnerability was discovered in OkHttp that allows an attacker to bypass
-> certificate pinning. OkHttp did not validate that the pinned certificate
-> was in the chain to a trusted certificate authority.
-> 
-> This resulted in an attacker being able to present a certificate chain with
-> a certificate issued by one trusted certificate authority, and additionally
-> including the pinned certificate authority. Because the pinned certificate
-> was present, and the certificate was issued by a trusted certificate
-> authority, the server's certificate was accepted. However, it should not
-> have been accepted as the pinned certificate was not in the trust chain.
-> 
-> This allows an attacker to obtain a certificate from a non-pinned but
-> trusted CA, then have OkHttp connect to that server, bypassing certificate
-> pinning.
+The problem is especially important for containers,
+container owner have enough permission to enable this trigger
+and then can block network access on whole host node.
 
-We found this wording to be somewhat confusing, but we believe we
-understand what was meant, so the CVE ID is included below.
+The problem is fixed in net-next git by patch fbd40ea0180a2d328c5adc61414dc8bab9335ce2
+(http://git.kernel.org/cgit/linux/kernel/git/davem/net-next.git/patch/?id=fbd40ea0180a2d328c5adc61414dc8bab9335ce2)
 
-Essentially, we think "attacker being able to present a certificate
-chain with a certificate issued by one trusted certificate authority,
-and additionally including the pinned certificate authority" was
-intended to state "attacker being able to present a certificate chain
-with a certificate issued by one trusted certificate authority, and
-additionally include the pinned certificate." The use of "including"
-instead of "include" in that sentence seemed to imply that "including
-the pinned certificate authority" was a phrase describing the server
-end-entity certificate: that would not make sense.
+From: David Miller <davem@...emloft.net>
+ipv4: Don't do expensive useless work during inetdev destroy.
 
-Use CVE-2016-2402.
+When an inetdev is destroyed, every address assigned to the interface
+is removed.  And in this scenerio we do two pointless things which can
+be very expensive if the number of assigned interfaces is large:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+1) Address promotion.  We are deleting all addresses, so there is no
+   point in doing this.
 
-iQIcBAEBCAAGBQJWxUAUAAoJEL54rhJi8gl5GcEP/iubChgKfa8SqskoVdCi9+P1
-yBMrAZRqU2vfyiq+ZtLyr9K+0WbgliFot1RSxP/wXzvAt1zZo0dZyYsxdH6LhDi+
-B6ACYVorpRxEsZ4U35wf1E892LRoeSXMDsjm//7vRvMkCssLanFtgcCO3sJ68uxe
-URLFX+CsoJ82BsyqA4tm3HMQsfbSk6WN2pnf5ZkMy366FslbAkyR0PYM/kFfNBtm
-Hd/J+M6lKzi5ZchxeeEX+h91iGkVg9HUcrvHyMwwR4nxnI0xCMscLoYrqbuacbe1
-BCLW5+UYI1011soo5UBsbRXCRNAyL9JeMXmonpqPkXP41PlpOmFfwX7y+hCAzGnn
-mW22iXY/YERYTKnote8VGaWxV0h6gthagyZWaY03AA/T4371aD+37xMzqKAAjWrO
-3FuFo9B1ppYTjCmRRPHaQD5ccFJZmap1IWTsaHcJxEyNlHZ3YiyB5V2Nn8aZpSgC
-1OoNodfBsC2fb+SkjXpEIpN8Aodw71ZQByFDjE65q20ZPYqbmUiOZgFlQ2mEYamO
-EBv/LXxPKMRGC2vHSqkVu9qfh71s48bCKqhyz42HU0WnQyhsdgi0A2KdaVBBkDVz
-81HTJUssP5UGoThf1xN5/y0nsHK0/VLhCV8oeEXd0WHiwrfzLARDiOrwhIDML0cD
-o2JbErxSMlMhZSdwjTuU
-=VVYc
------END PGP SIGNATURE-----
+2) A full nf conntrack table purge for every address.  We only need to
+   do this once, as is already caught by the existing
+   masq_dev_notifier so masq_inet_event() can skip this.
+
+Reported-by: Solar Designer <solar@...nwall.com>
+Signed-off-by: David S. Miller <davem@...emloft.net>
+Tested-by: Cyrill Gorcunov <gorcunov@...nvz.org>
+
