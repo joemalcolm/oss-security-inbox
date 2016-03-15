@@ -1,30 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/07/4
-Message-ID: <87wpm1wixw.fsf@redhat.com>
-Date: Tue, 07 Jun 2016 09:34:51 +0200
-From: Martin Prpic <mprpic@...hat.com>
-To: "oss-security\@lists.openwall.com" <oss-security@...ts.openwall.com>
-cc: "Mitre CVE assign department" <cve-assign@...re.org>
-Subject: Please reject duplicate CVE for libxml2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/15/1
+Message-ID: <CAJpd-bG6nP=mA6dCaQfTcKrhGSQOxPJg=SM0Ao34thtidyHZKQ@mail.gmail.com>
+Date: Tue, 15 Mar 2016 12:09:42 +0100
+From: Salva Peiró <speirofr@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: The minissdpd (v 1.2.20130907-3) is affected by an improper validation of array index weakness
 Content-Type: text/plain; charset=utf-8
 
-Hi, it seems two CVEs were assigned for the same issue in libxml2:
+Is there a CVE for this? If not, could one be assigned, please?
 
-http://seclists.org/oss-sec/2016/q1/683
-http://seclists.org/oss-sec/2016/q2/214
+The affected version is
+minissdpd version: 1.2.20130907-3
 
-Daniel Veillard reported to us that these issues are the same and fixed
-by:
+The bug is reported at
+https://bugs.debian.org/816759
 
-https://git.gnome.org/browse/libxml2/commit/?id=bdd66182ef53fe1f7209ab6535fda56366bd7ac9
+The fixes are applied upstream at
+https://github.com/miniupnp/miniupnp/commit/b238cade9a173c6f751a34acf8ccff838a62aa47#diff-00d21a1eaced371eee67e083a3ff866c
 
-The upstream bug is:
+  DECODELENGTH_CHECKLIMIT(l, p, buf + n);
+- if(p+l > buf+n) {
++ if(l > (unsigned)(buf+n-p)) {
+  syslog(LOG_WARNING, "bad request (length encoding l=%u n=%u)",
+         l, (unsigned)n);
+  goto error;
 
-https://bugzilla.gnome.org/show_bug.cgi?id=762100
+https://github.com/miniupnp/miniupnp/commit/140ee8d2204b383279f854802b27bdb41c1d5d1a#diff-00d21a1eaced371eee67e083a3ff866c
 
-Can CVE-2016-4483 please be rejected as a duplicate of CVE-2016-3627?
 
-Thank you!
++ memset(newserv, 0, sizeof(struct service)); /* set pointers to NULL */
+  if(containsForbiddenChars(p, l)) {
+  syslog(LOG_ERR, "bad request (st contains forbidden chars)");
+  goto error;
 
--- 
-Martin Prpič / Red Hat Product Security
+Regards,
+Salva Peiró
+--
+Salva Peiró @ https://speirofr.appspot.com
+CS Researcher & Software Engineer
+Universitat Politècnica de València, Spain.
+
+On Mon, Mar 7, 2016 at 1:04 PM, Salva Peiró <speirofr@...il.com> wrote:
+
+> Hi everyone,
+>
+> A vulnerability in the minissdpd daemon has been found that affects
+> minissdpd version 1.2.20130907-3 available in Debian and Ubuntu.
+> The vulnerability can be exploited by a local unprivileged user
+> with write access to /var/run/minissdpd.sock to crash the minissdpd
+> daemon that runs with superuser privileges.
+>
+> More details at:
+> https://speirofr.appspot.com/files/advisory/SPADV-2016-02.md
+> https://bugs.debian.org/cgi-bin/pkgreport.cgi?pkg=minissdpd;dist=unstable.
+>
+> Is there a CVE for this? If not, could one be assigned, please?
+>
+> Regards,
+> Salva Peiró
+>
+> --
+> Salva Peiró @ https://speirofr.appspot.com
+> CS Researcher & Software Engineer
+> Universitat Politècnica de València, Spain.
+>
+>
+
