@@ -1,52 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/4
-Message-Id: <20161008153116.ADD9242E066@smtpvbsrv1.mitre.org>
-Date: Sat,  8 Oct 2016 11:31:16 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE request Qemu: usb: hcd-ehci: memory leak in ehci_process_itd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/15/8
+Message-ID: <CAAsmaPbQvEhYDc8bznLoi2TBbfKk_7uNSGHtHZLpbzUCX5RCsw@mail.gmail.com>
+Date: Tue, 15 Mar 2016 15:27:05 -0500
+From: Tim Zingelman <tez@...src.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: please assign CVE for cacti bug 2667: SQL Injection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+This seems to fix it...
 
-> Qemu emulator(Qemu) built with the USB EHCI emulation support is vulnerable to
-> a memory leakage flaw. It could occur while processing isochronous transfer
-> descriptors(iTD), with buffer page select(PG) index that falls beyond buffer
-> page array area.
-> 
-> A privileged user inside guest could use this flaw to leak Qemu memory bytes
-> leading to a DoS on the host.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg06609.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1382668
+diff -u tree.php.orig tree.php
+--- tree.php.orig       2016-03-15 15:15:37.646641203 -0500
++++ tree.php    2016-03-15 15:19:45.966120414 -0500
+@@ -153,6 +153,7 @@
+        /* ================= input validation ================= */
+        input_validate_input_number(get_request_var("id"));
+        input_validate_input_number(get_request_var("tree_id"));
++       input_validate_input_number(get_request_var("parent_id"));
+        /* ==================================================== */
 
-Use CVE-2016-7995.
+        if (!empty($_GET["id"])) {
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/usb/hcd-ehci.c but
-that may be an expected place for a later update.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX+RAjAAoJEHb/MwWLVhi2+GkP/iijvoEQc43FUbjFUHUX7hGF
-U63WmvG3sLBr1ZkUGs/ycPfc/jFQJDnqFrbLANsLAM/hrDb/sii942XTTSS2YAAi
-+sB4Nhc10DXFRxIfHLezshzQTlKR7qlQQ147ySaTDDOYqcgJoj94tjy22JE7xnVB
-0JGsaKkkuZUHlAkkwnT3BIOD3saTUTXTiolxnTwDNQZ0Yq5jm++4S4wrmpVgyw+o
-Hv8d9fJkdPvDiLmwMh72XFYE01JnFRbbE9ETdv4DTFBX1NChIFC9BjJnD7vZa/7d
-qvxYk3EwM53FWiFFxAGQlkdAGmZGMLnRNs6oxeIZSXByqDN4FW4iBveuE9wgBbF2
-NzfkWXNiBChQj2QXbOorgZxrV80BjnN/B+k3501UiWjNy0a5JrEmnP6HVSt209qR
-iyNIn9o2CnAkvgnTFmX/n7e8FYAr77EhNCAJ9ti5/xlwxsOyIe/73jf6t6+B0E2J
-3XgflusB1EVIiIorRXE8z2PZUDhdI1YaPFWsg09wDeuNuMEmfW8rHEwPS46qCDiD
-MYOkhYQakPHJuPLFbM4l62tJxuN9jYf75bmgNU2+LbQFGibcnnn9v02Tl/vMMoLv
-lpr2EABB1UOg155JKFFKa2+SwssuoqNmIcDdUO0Y6gv3OYSAi38iIgG/AcCk2/m8
-vscLmA0alX3tOSdBSEtL
-=1cxH
------END PGP SIGNATURE-----
+On Thu, Mar 10, 2016 at 10:06 AM, Paul Gevers <elbrus@...ian.org> wrote:
+> Hi
+>
+> I just found the description below about an sql vulnerability in the
+> cacti bug tracker: http://bugs.cacti.net/view.php?id=2667
+>
+> Can a CVE be assigned for this issue?
+> Thanks
+>
+> ==========================
+> Advisory: Cacti SQL Injection Vulnerability
+> Author: Do9gy of Tencent Security Platform Department
+> Affected Version: 0.8.8.g(the latest version & the older versions)
+> ==========================
+> Vulnerability Description
+> ==========================
+>
+> Recetly, I found a SQL Injection Vulnerability in ‘Cacti-0.8.8g'
+> program, Cacti is widely used in many companies.
+> Vulnerable file: /cacti/tree.php:
+> line 208:
+> ==========================================================================================================================================
+>     switch ($current_type) {
+>     case TREE_ITEM_TYPE_HEADER:
+>         $i = 0;
+>         /* it's nice to default to the parent sorting style for new items */
+>         if (empty($_GET["id"])) {
+>             $default_sorting_type = db_fetch_cell("select
+> sort_children_type from graph_tree_items where id=" . $_GET["parent_id"]);
+>         }else{
+>             $default_sorting_type = TREE_ORDERING_NONE;
+>         }
+>
+> ==========================================================================================================================================
+>
+> The parameter parent_id is used without any validation.
+> ==========================
+> POC && EXP
+> ==========================
+> 1. Login
+>
+> 2.
+> http://target/cacti-0.8.8g/tree.php?action=item_edit&tree_id=2&parent_id=8%20and%20sleep(1)
+> [^]
+>
+> 3. mysql log: select sort_children_type from graph_tree_items where id=8
+> and sleep(1)
+>
+>
