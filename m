@@ -1,74 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/27/14
-Message-Id: <20160727213606.5DA3D6C02CA@smtpvmsrv1.mitre.org>
-Date: Wed, 27 Jul 2016 17:36:06 -0400 (EDT)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Ruining the Magic of Magento's Encryption Library
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/15/9
+Message-ID: <CACLE=7OEtfjRELpFyehAAZaNbQ8LanYLmHs8rHKLGphvteXadg@mail.gmail.com>
+Date: Tue, 15 Mar 2016 22:24:14 +0100
+From: Romain Manni-Bucau <rmannibucau@...che.org>
+To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Cc: security@...che.org
+Subject: [ANNOUNCE][CVE-2016-0779] Apache TomEE 1.7.4 and 7.0.0-M3 releases
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Note: resending this mail since it seems some recipients have been rejected
 
-We wanted to provide at least one CVE ID for this report, because
-there are some CVE use cases in which it's of interest to track
-whether a code review exists, even if there isn't yet a specific
-association with patch management.
+The Apache Team Team is pleased to announce the availability of:
 
-> Magento, one of the largest open source e-commerce platforms, ships a
-> broken cryptography library that clueless developers are probably using to
-> encrypt your credit card information for their client's customers.
+Apache TomEE 7.0.0-M3 and 1.7.4
 
-It's possible that some CVE ID assignments could be made for
-third-party applications that use this library.
-http://openwall.com/lists/oss-security/2016/07/19/3 doesn't directly
-discuss what parts of the cryptography code are reachable in default
-or typical deployments of Magento. We haven't been able to find
-documentation that describes how independent developers were expected
-to use the library code.
-http://devdocs.magento.com/guides/v2.1/ext-best-practices/extension-coding/security-performance-data-bp.html
-has general comments such as "Avoid using low-level functionality" and
-"Always encrypt sensitive data or configurations." Finally, there are
-no recent Crypt.php or Encryptor.php commits on the
-https://github.com/magento/magento2/tree/develop/lib/internal/Magento/Framework/Encryption
-page.
+When downloading, please verify signatures using the KEYS file available at:
+http://www.apache.org/dist/tomee
 
-Given the above, we will initially focus on
+Maven artifacts are also available in the central Maven repository.
 
-  https://github.com/magento/magento2/blob/6ea7d2d85cded3fa0fbcf4e7aa0dcd4edbf568a6/lib/internal/Magento/Framework/Encryption/Crypt.php#L64-L69
-  https://github.com/magento/magento2/blob/6ea7d2d85cded3fa0fbcf4e7aa0dcd4edbf568a6/lib/internal/Magento/Framework/Encryption/Crypt.php#L83
+The releases are primarily security releases to address CVE-2016-0779, EJBd
+protocol allows to exploit 0-day vulnerability in all previous releases.
 
-http://php.net/manual/en/function.rand.php says "rand - Generate a
-random integer ... This function does not generate cryptographically
-secure values, and should not be used for cryptographic purposes."
 
-Use CVE-2016-6485 for the incorrect choice of the rand function within
-the
+The Apache TomEE Team
 
-  $initVector .= $abc[rand(0, strlen($abc) - 1)];
-
-line.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXmSjCAAoJEHb/MwWLVhi2KmsQAJ2YBrxx5yz6GSUWaa+UuAXm
-0GGgPwkR3sCFo+1oABrgQqqoIaNyn7F/swUV5WzBxYd7FfDC7/I805sVACemVaej
-txtcPNVPzVy75uezC6hcEK17gC/Vx2NSyFItp7UTzm5YslZwfBXKXuBV3+9nWChi
-bJ0NjaptH3WoWGUtb8M3OcQiq7S5DDbvUgG+VZE7BBbbb6Q+/APkCf2R5NhAY7yx
-2bmGGg7LHAjCAlfJf0tT6Jj9Fi+sDAmyNGn6uNYajOM9t4ywlBaQl6A30+6hiJSM
-s7SqMd/WRLsOpION1l3nYLi32D/Uf5JxDffQJdrQ41mXZ5fIrpwbAAXv8Nb8x7QK
-Cn/4sUQ7tg/7XsBODGBEDXuPo5yYQrp8cLEKCzW7lq05G+ZXW9kVIplcpUyaI8iy
-qTuIG68OlsGxitA03cLHjQaVMio6JcLejr3Jmyq8peAcNH5WAOMhyehgOOmp8oxC
-9m/UmJeu7OZDqGVpM2b4jyBpaU75mMbysOibPu3zaHVD9OtsGevFtNYeVVtun5dT
-V1sHc/Fn6cPfVgaFPSHxBG4o6/Og++5wvQ6eGntd6zKIaA7Dzd20Okv/GkNxyoom
-sqLAQ5EmW4n+Msl15rYUFFjXHv0iZWBZ5eAtuZczdBHV9WY2T63X9zgrB3vPXLQT
-S1aJi4ZDOqOe86EYoLdH
-=DJ+Z
------END PGP SIGNATURE-----
