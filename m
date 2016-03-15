@@ -1,25 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/16
-Message-Id: <20160316194504.51EDC52E00D@smtpvbsrv1.mitre.org>
-Date: Wed, 16 Mar 2016 15:45:04 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/15/11
+Message-Id: <20160315234036.61BDBB2E19E@smtpvbsrv1.mitre.org>
+Date: Tue, 15 Mar 2016 19:40:36 -0400 (EDT)
 From: cve-assign@...re.org
-To: winsonliu@...cent.com
+To: elbrus@...ian.org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request - OpenJPEG : Heap Corruption in opj_free function
+Subject: Re: please assign CVE for cacti bug 2667: SQL Injection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> A specially crafted JPEG2000 image file can force Heap Corruption
+> http://bugs.cacti.net/view.php?id=2667
+> 
+> case TREE_ITEM_TYPE_HEADER:
+> 
+> where id=" . $_GET["parent_id"]);
 
-> opj_decompress -o image.pgm -i heap_corruption.jp2
+> POC && EXP
+> /tree.php?action=item_edit&tree_id=2&parent_id=8%20and%20sleep(1)
 
-> double free or corruption (!prev)
+>> tree.php
+>> 
+>> +  input_validate_input_number(get_request_var("parent_id"));
 
-> Program received signal SIGABRT, Aborted.
-
-Use CVE-2016-3182.
+Use CVE-2016-3172.
 
 - -- 
 CVE Assignment Team
@@ -29,17 +34,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW6bbKAAoJEL54rhJi8gl5cT0P/1zG9ClKvDPqrs3koMEs3sHB
-d6DE0+J17YePaQQEKef5n+i1vuGtgxTg9FceCbK282Wbqh4Grrm0J/5fCtowO/VT
-tvibyIcAFfoDIfWFKDNgl/Qcg5aadifGXnae9vR0gl/Zq64GjwW8TsJ7vfaehXDX
-X75wcxVzEWblhIXM8hkN7uC2gr4y5BV1L0TNzxpqsgqhwZIC9cOgjJYwhDsIjYgf
-3uFex3fnjaQIoCfOkaRVPCT5/bSKyEzVVGLUcXHlKqV+7YNLy89Gx+Fa6EV6s6Yp
-aIB9nQw9pryJeQhgMYXA0ZOytPnzoB1imRyl0yxgYV/Y1AX5Iqkp6WJDhHnwQ7Iq
-GOB7/HaHxBxz56foASSrqdO0AhyqSwaSnXdzFwPkrz+tD0coeakgTY5OqHYfyCOz
-61+2x2wdZrQeaWB3DtEX7LaDdYrg0MkP5itZOaCjIS2yTjOlR2g2WThPVY6rYi+h
-z1ET+0XJKiXpi1c3EeC2zbtbA83mxbSOM3ByZmcd9Itix6k6sHRgW8BP5o52VcjQ
-B+or7PbrqSvcbykd5KGQ73OkOqF1CF8QGXLumw/0jJJQHjH9dypnvAOLdLmXdQWJ
-vO3wGHYck2MV0JHHbwPt+3WMk3+4ARTB6+VASFL7mZcr+dQkNTkCA/32n/k2hDr/
-nKUX80QMch2y3XOLq3nB
-=t6zO
+iQIcBAEBCAAGBQJW6J0SAAoJEL54rhJi8gl5wSMQAKCXHxaRSnS5tv4i/uuP5VgQ
+SCXTR1VCtGN+L40tk9PTdMZCOQVbztdlWApRJd9pQByKHL1uCO1msyR7JowOsMFk
+7lQGhOT5n1xlaAmEwXzlGGflFU7/CNUNYn8ywR8vTYR8KMCuVTqACGU+KhokzHao
+1d9RG/rdTS/n5dPCa/IQfyGq8+eaYM972FrwqWjYHUPRVVF3/AYPwv6bhgdYFUwA
+gmy70yIs9OYS+AZskqd1ViYwyqkrvh1A9SH9lM+g5oGVj74bXXqR35iRml86njr8
++cD8hpI9ngcz2J+XYEiQFNr1uTGhPCWHrAgkvEvAp521VFegJN/Lp84It1Nfq80P
+URK6fu9FC7K5lEseiIK4rcge3ETcDqi8dSmgRODLtUz5WKOBOfIBRT1oJFOHNH70
+FRyjLXSIEGVFb/oL7bkpffsucI4DLq0BpYGGex2wGT+puts6OGKdThKbSWlOxRDJ
+vUaWf5XospQa9rdSxOzVk5qh4hXx23v02hS3+rvmoznFHvaOFhMKaBVso1ZA3dSx
+MlBVVNBQzVXm+iFr/DgWOilFy5x06KtkmzrImItPJwSANwTr2/txA+z+sdE7liiA
+SDP/WUSadyPCBtdylQcq6AS8GH6/I3Wqx5/iz87Ou7UlkUjGXa+LNbPFKRd903/w
+dnhgQ7X5YlApn7+ywcfE
+=6K3M
 -----END PGP SIGNATURE-----
