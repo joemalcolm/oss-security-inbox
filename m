@@ -1,81 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/20/5
-Message-ID: <5184269.v1vKSl7Lqd@blackgate>
-Date: Thu, 20 Oct 2016 09:43:40 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/3
+Message-ID: <0dae3f4d-39b1-82aa-2ac7-8da5738a1e0d@laposte.net>
+Date: Wed, 16 Mar 2016 02:58:22 +0100
+From: Laël Cellier <lael.cellier@...oste.net>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: jasper: NULL pointer dereference in jpc_tsfb_synthesize (jpc_tsfb.c)
+Subject: Re: server and client side remote code execution through a buffer overflow in all git versions before 2.7.1 (unpublished ᴄᴠᴇ-2016-2324 and ᴄᴠᴇ‑2016‑2315)
 Content-Type: text/plain; charset=utf-8
 
-Description:
-jasper is an open-source initiative to provide a free software-based reference 
-implementation of the codec specified in the JPEG-2000 Part-1 standard.
+GitHub talks about a simple memory corruption because I was unable to 
+proof a ʀᴄᴇ. While I’m sure the affected variables aren’t at the end of 
+allocated heap, I definitely lack the required skills to produce a proof 
+for remote code execution 
+http://security.stackexchange.com/q/117394/36301 (I can put arbitrary 
+data in paths but I don’t know how to exploit a heap overflow even 
+without aslr and dep). Being too lazy, I didn’t get the required mark to 
+go at the university which could have taught it (I had to go at an 
+another one). So I won’t write it.
 
-Another round of fuzzing on an updated version (1.900.5) revealed another NULL 
-pointer access
-
-The complete ASan output:
-
-# imginfo -f $FILE
-warning: trailing garbage in marker segment (14 bytes)
-warning: not enough tile data (15 bytes)
-warning: bad segmentation symbol
-warning: bad segmentation symbol
-ASAN:DEADLYSIGNAL
-=================================================================
-==7144==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
-0x7f6d3c37d0b0 bp 0x7ffdc7407a90 sp 0x7ffdc7407a30 T0)
-    #0 0x7f6d3c37d0af in jpc_tsfb_synthesize /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jpc/jpc_tsfb.c:152:4
-    #1 0x7f6d3c2f5140 in jpc_dec_tiledecode /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jpc/jpc_dec.c:1068:3
-    #2 0x7f6d3c2e5c40 in jpc_dec_process_sod /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jpc/jpc_dec.c:623:7
-    #3 0x7f6d3c2ef294 in jpc_dec_decode /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jpc/jpc_dec.c:390:10
-    #4 0x7f6d3c2ef294 in jpc_decode /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jpc/jpc_dec.c:254
-    #5 0x7f6d3c2bd061 in jp2_decode /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jp2/jp2_dec.c:215:21
-    #6 0x7f6d3c24df39 in jas_image_decode /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/base/jas_image.c:380:16
-    #7 0x4f1686 in main /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/appl/imginfo.c:188:16
-    #8 0x7f6d3b35c61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                        
-    #9 0x418e68 in _init (/usr/bin/imginfo+0x418e68)                                                                                                                                                                                                                           
-
-AddressSanitizer can not provide additional info.                                                                                                                                                                                                                              
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jpc/jpc_tsfb.c:152:4 in 
-jpc_tsfb_synthesize                                                                                                                           
-==7144==ABORTING
-
-Affected version:
-1.900.5
-
-Fixed version:
-1.900.9
-
-Commit fix:
-https://github.com/mdadams/jasper/commit/2e82fa00466ae525339754bb3ab0a0474a31d4bd
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Timeline:
-2016-10-19: bug discovered
-2016-10-19: bug reported to upstream
-2016-10-20: upstream released the patch and 1.900.9
-2016-10-20: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/10/20/jasper-null-pointer-dereference-in-jpc_tsfb_synthesize-jpc_tsfb-c/
-
+If someone is interested in producing such proof … Please do it 
