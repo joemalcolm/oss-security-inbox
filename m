@@ -1,104 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/14
-Message-ID: <2777400.XtlcyMQHst@blackgate>
-Date: Wed, 09 Nov 2016 15:48:27 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/4
+Message-ID: <e21515e4-86af-f35e-b03c-071bf423c0e2@laposte.net>
+Date: Wed, 16 Mar 2016 03:10:28 +0100
+From: Laël Cellier <lael.cellier@...oste.net>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)
+Subject: Re: server and client side remote code execution through a buffer overflow in all git versions before 2.7.1 (unpublished ᴄᴠᴇ-2016-2324 and ᴄᴠᴇ‑2016‑2315)
 Content-Type: text/plain; charset=utf-8
 
-If it is suitable for a CVE please assign one. Thanks.
-
-Description:
-libming is a Flash (SWF) output library. It can be used from PHP, Perl, Ruby, 
-Python, C, C++, Java, and probably more on the way..
-
-A fuzzing revealed a global buffer overflow in listmp3. The bug does not 
-reside in any shared object but if you have a web application that calls 
-directly the listmp3 binary to parse untrusted mp3, then you are affected.
-
-The complete ASan output:
-
-# listmp3 $FILE
-==29519==ERROR: AddressSanitizer: global-buffer-overflow on address 
-0x000000722e0c at pc 0x0000004f1a99 bp 0x7ffe42b1d7f0 sp 0x7ffe42b1d7e8
-READ of size 4 at 0x000000722e0c thread T0
-    #0 0x4f1a98 in printMP3Headers /var/tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/listmp3.c:128:20
-    #1 0x4f1bee in main /var/tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/listmp3.c:191:3
-    #2 0x7fe262a4761f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #3 0x418ae8 in getenv (/usr/bin/listmp3+0x418ae8)
-
-0x000000722e0c is located 52 bytes to the left of global variable 
-'mp2_samplerate_table' defined in 'listmp3.c:44:5' (0x722e40) of size 12
-0x000000722e0c is located 0 bytes to the right of global variable 
-'mp1_samplerate_table' defined in 'listmp3.c:43:5' (0x722e00) of size 12
-SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/listmp3.c:128:20 in printMP3Headers
-Shadow bytes around the buggy address:
-  0x0000800dc570: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0000800dc580: 00 00 00 00 00 00 00 00 00 00 00 04 f9 f9 f9 f9
-  0x0000800dc590: 00 00 00 00 00 00 00 04 f9 f9 f9 f9 00 00 00 00
-  0x0000800dc5a0: 00 00 00 04 f9 f9 f9 f9 00 00 00 00 00 00 00 04
-  0x0000800dc5b0: f9 f9 f9 f9 00 00 00 00 00 00 00 04 f9 f9 f9 f9
-=>0x0000800dc5c0: 00[04]f9 f9 f9 f9 f9 f9 00 04 f9 f9 f9 f9 f9 f9
-  0x0000800dc5d0: 00 04 f9 f9 f9 f9 f9 f9 00 00 00 00 00 00 00 00
-  0x0000800dc5e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0000800dc5f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0000800dc600: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0000800dc610: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2                                                                                                                                                                                                                                                  
-  Stack right redzone:     f3                                                                                                                                                                                                                                                  
-  Stack partial redzone:   f4                                                                                                                                                                                                                                                  
-  Stack after return:      f5                                                                                                                                                                                                                                                  
-  Stack use after scope:   f8                                                                                                                                                                                                                                                  
-  Global redzone:          f9                                                                                                                                                                                                                                                  
-  Global init order:       f6                                                                                                                                                                                                                                                  
-  Poisoned by user:        f7                                                                                                                                                                                                                                                  
-  Container overflow:      fc                                                                                                                                                                                                                                                  
-  Array cookie:            ac                                                                                                                                                                                                                                                  
-  Intra object redzone:    bb                                                                                                                                                                                                                                                  
-  ASan internal:           fe                                                                                                                                                                                                                                                  
-  Left alloca redzone:     ca                                                                                                                                                                                                                                                  
-  Right alloca redzone:    cb                                                                                                                                                                                                                                                  
-==29519==ABORTING                                                                                                                                                                                                                                                              
-frame 1: MP25 layer 1, 8000 Hz, 0kbps, mono, length=0, protect off
-
-Affected version:
-0.4.7
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00034-libming-globaloverflow-printMP3Headers
-
-Timeline:
-2016-08-13: bug discovered
-2016-10-20: bug reported to upstream
-2016-11-07: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/07/libming-listmp3-global-buffer-overflow-in-printmp3headers-listmp3-c
+In addition to 
+http://thread.gmane.org/gmane.comp.version-control.git/286253 I also 
+forgot a part of the patches were here 
+http://thread.gmane.org/gmane.comp.version-control.git/286008
