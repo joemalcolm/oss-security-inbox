@@ -1,32 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/10/5
-Message-Id: <20160910202626.F00E06DC1F4@smtpvmsrv1.mitre.org>
-Date: Sat, 10 Sep 2016 16:26:26 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/17
+Message-Id: <20160316194617.64E2142E018@smtpvbsrv1.mitre.org>
+Date: Wed, 16 Mar 2016 15:46:17 -0400 (EDT)
 From: cve-assign@...re.org
-To: ago@...too.org
+To: winsonliu@...cent.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: libav: out-of-bounds stack read
+Subject: Re: CVE request - OpenJPEG : Out-Of-Bounds Read in sycc422_to_rgb function
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://blogs.gentoo.org/ago/2016/08/20/libav-stack-based-buffer-overflow-in-aac_sync-aac_parser-c/
+> A specially crafted JPEG2000 image file can force Out-Of-Bounds Read
 
->> libav: stack-based buffer overflow in aac_sync (aac_parser.c)
+> opj_decompress -o image.pgm -i oob_sycc422_to_rgb.j2k
 
->> The ASan report may be confused because it mentions get_bits, but the issue is in aac_sync.
+> Program received signal SIGSEGV, Segmentation fault.
 
->> AddressSanitizer: stack-buffer-overflow
->> READ of size 4
-
->> https://git.libav.org/?p=libav.git;a=commit;h=fb1473080223a634b8ac2cca48a632d037a0a69d
-
->> aac_parser: add required padding for GetBitContext buffer
-
->> libavcodec/aac_parser.c
-
-Use CVE-2016-7393 for this buffer over-read issue.
+Use CVE-2016-3183.
 
 - -- 
 CVE Assignment Team
@@ -36,17 +27,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX1GwHAAoJEHb/MwWLVhi2uWkQAJkvHeVw5VLDmUS2J/yTGh5g
-+GZPqtoYlIY9rkV164NnkAI7Sd+Zu187c4LRwCsPz9QfrV/Uaar48VszuuQMuUgB
-omLJG623GRRx/bt2DzIbTmFhI3NEjwATgi29CAd3LmvcMliJUlNib2d40ueQ910c
-7Fj3foeYOmodKgOhT0BMR5Gqx82EmItTKxjPyPaBcrkA23fnabcv1JmDlqhpNldz
-IQByGqnnuFD4mTg5rLnEUE4lErGKBenrj8VjVjL63u+Wf+aBLXo3HMemY+c5zF4P
-rU9AGOIfMPjbiWXAkFZEACO7fY/BQV6qZEeJoRJB2Q1FCMC24amt9ATsopgEk6ik
-2+G1KY1BB0RBJnRsuvnhx87XB4aQ2Er/qEonCLFX4fJCqN4voFLHOiNYPa4CxPEY
-jXI75or7n3zUldlXeXdMnuK5dkz9Pxbz4iyIEzQJIlucSOXsRDaVwf/nABKVm07W
-AsAxcOLYJNqh9djM0gxqO4jGaD6keasr55iU4rRd5tb7APhAlt//Ju+1Um6iPQ0U
-CntH7QgVQgGDOQ6HI0R6llDZZzgQ6gw6wP7W/aZt8Xcc/6V+YK7E/46xFjTgwPtC
-7cn/Qp4MHupIyRMZsLcb8Y+ohx4sdmVvBT4N73U/RCcDuBKjE8E1HUS85Eal0C+w
-Xu6+BEm9Zwypmubgek8H
-=JK5t
+iQIcBAEBCAAGBQJW6bbPAAoJEL54rhJi8gl5ZG0QAMvFedBeok1d3Y5AzP83yCMW
+moXc10NZwmWICRH+GWTFXr5dnKuPkK6Ia0DRQmptKBnQgBUfMJEH3ARp0b94W1GN
+FPPbegyZaHNRba5i/UX1T9020v55rYxVjs0997QJWSnXWSbO+G900IbkXgIaU+cs
+wv07+21oh9iwmVCgd5pkgOPD4Z2QHA30JfAZe4OVT4NwgdryVnEGr8vHvXeJU1P9
+MG8ouU8RXyMmbr/mklhbHmuaL/iGq8b7q5YrdW2AELBnsVf5XNmH9S4X9bss0Zge
+eOuPN9o3KYQcUnxFF2iQncw7zoQHlh/vZEZY+6E3II/QqbUUGM7l9j1xOAQCKPrf
+S6xP4r5xgoHyy9a8USTLkQhMqjn84oHStEohmqHgF1NfD2il4lJpK97irkZn33pY
+Y5uin3hM70h8DCZBfG02BfjrL0mMCwbIXpWHX0lsmPRl5MNIsfoyqdwNF4hLM2J2
+vrAjFxV1eZV696EaH1BhNeIjc6h2hufISWFpqkTP6d1/XHp08cej90BQaAJ9rTCQ
+ozg9qJ/eeeACYwVbtD8z24a71wWqwqEa68XhO2wzQ/4KhUWcf1f90rt1SpcMo4jV
+TmC6R53XqH9SbpkwLFsxmABvaS3scFjEylWlm6evQWGynzpKqp5ecn9wAu7cxy9F
+4+FZb84Nk+ai1gcGtuyx
+=laRf
 -----END PGP SIGNATURE-----
