@@ -1,29 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/08/6
-Message-ID: <20160108162259.GB2667@pisco.westfalen.local>
-Date: Fri, 8 Jan 2016 17:22:59 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Mitre CVE assign department <cve-assign@...re.org>
-Subject: Re: CVE Request: freeradius: the EAP-PWD module performs insufficient validation on packets received from an EAP peer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/18
+Message-Id: <20160316204230.64F63B2E03F@smtpvbsrv1.mitre.org>
+Date: Wed, 16 Mar 2016 16:42:30 -0400 (EDT)
+From: cve-assign@...re.org
+To: meissner@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@....net
+Subject: Re: CVE Request: PHP last release security issues
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 04, 2015 at 10:41:52AM +0530, Huzaifa Sidhpurwala wrote:
-> On 07/31/2015 12:04 PM, Huzaifa Sidhpurwala wrote:
-> > The FreeRADIUS project has reported a flaw that affects the EAP-PWD
-> > module of the freeradius package versions 3.0 up to 3.0.8. This module
-> > is not enabled by default, so administrators must have manually enabled
-> > it for their servers to be vulnerable.
-> > 
-> > Reference:
-> > http://freeradius.org/security.html#eap-pwd-2015
-> > 
-> > Can a CVE id be please assigned to this flaw?
-> > 
-> > 
-> Copying cve-assign this time to see if this gets picked up :)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This seems to have fallen through the cracks?
+> https://bugs.php.net/bug.php?id=71610
 
-Cheers,
-        Moritz
+>> Type Confusion Vulnerability - SOAP / make_http_soap_request()
+
+>> Due to an insufficient validation of the cookies field when making SOAP http request
+
+>> https://github.com/php/php-src/blob/master/ext/soap/php_http.c
+
+>> There is lack of validation of 2nd/3rd elements in cookies array.
+>>
+>> and a type confusion occurs when they are no longer string.
+
+>> [2016-02-22 07:48 UTC] stas@....net
+>> Fix added to security repo as eaf4e77190d402ea014207e9a7d5da1a4f3727ba
+
+> https://git.php.net/?p=php-src.git;a=commit;h=eaf4e77190d402ea014207e9a7d5da1a4f3727ba
+
+>> + Z_TYPE_P(tmp) != IS_STRING ||
+
+>> + Z_TYPE_P(tmp) != IS_STRING ||
+
+Use CVE-2016-3185.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJW6cSpAAoJEL54rhJi8gl52JoP/iUez71uL5TXvf0ai43DamFe
+SeZ1FX93kZDkAtfgwrxif3IAXEuX0HlSJeLyuJx2pYDU4GzNEJlT7a+vUm5RK5Nt
+EoJRHI30Wpn6JB7UsV4SkYt0ZyRUjGS3849BuepBAAENyNkKhu0dyrbDXVvmfiVJ
+ELrFg+mNgAhRd5zsBhM63BaExC6a80gpahv/AN75Rz6qU5d8DDx4Q2c7dchme1sT
+mXz9cThT5Zs4kLo9T88QBd3jmsOwVZFqEsBkLCQBBrjNEZoCJlg+G8WAvaKPzPoh
+kV4Ni5qLI+ioW9eEVQQaSMZOYlOcPinqkDIKHk/1ileoTFrd97hKeEjHKwfjT2HT
+2vH3MAiE/yfGEpwqu+RPGPkvcKwo3js+djKOmA6d/jMwSf0ksw+MtJye0CcoEYNn
+iqgIJJgLGokzZ3qalJNXtGSDfxKwyYFpPTYGjLF8YERMFWfOWoNxetgJeT0Zc3pG
+4fz7Gz6MBUnl3eyFICw5bUtz2/kf9RddfzX5YZh2LytSCij+vvkBM4k2xAVFT8+T
+HJY6Ed3X+CGpwGTtd4aWdDRQk3R88xJ0kd1WO8bfFmAW+1zo2iRavYT7loZN1ErV
+KmLpeig/zoog/1yaQQwva43mNVaybTG7NYXbIxQCeohSbm8j5Rd7HbMfpN3WCPfm
+7CpwiKmNIpRcXm7hh1+n
+=bWUM
+-----END PGP SIGNATURE-----
