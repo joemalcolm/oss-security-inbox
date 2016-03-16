@@ -1,48 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/15/6
-Message-Id: <20161015164912.E7B5F52E013@smtpvbsrv1.mitre.org>
-Date: Sat, 15 Oct 2016 12:49:12 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: libgd: Stack Buffer Overflow in GD dynamicGetbuf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/10
+Message-ID: <CANO=Ty343o1sxiZpedxfPOROwbPU3iBr4wva=SqduCKpL8EM=w@mail.gmail.com>
+Date: Wed, 16 Mar 2016 07:34:39 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>, lael.cellier@...oste.net
+Cc: website@...se.com
+Subject: Re: Re: server and client side remote code execution through a buffer overflow in all git versions before 2.7.1 (unpublished ᴄᴠᴇ-2016-2324 and ᴄᴠᴇ‑2016‑2315)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+One thing to keep in mind, once the source code is updated publicly the cat
+is usually out of the bag (people that read the code commit can understand
+the security implications typically). So as far as I'm concerned that while
+inconvenient, what you did isn't really all that wrong (ideally git
+upstream should have notified distros with a heads up, but again, that's an
+optional step).
 
-> On the PHP bug tracker Emmanuel Law reported a flaw in the libgd
-> library in dynamicGetbuf. The PHP bug report is at (cannot quote the
-> full report for the list archive, sinc a bit long):
-> 
-> https://bugs.php.net/bug.php?id=73280
-> 
-> It has been reported upstream apparently (not via the issue tracker)
-> and fixed in upstream as with commit:
-> 
-> https://github.com/libgd/libgd/commit/53110871935244816bbb9d131da0bccff734bfe9
+If you need help handling a vulnerability/coordinating the embargo/etc you
+can reach out to Red Hat and we can at least point you in the right
+direction, if not directly help ourselves (e.g. if we ship it we're more
+than happy to help!), secalert@...hat.com for that.
 
-Use CVE-2016-8670.
+On Wed, Mar 16, 2016 at 4:47 AM, Laël Cellier <lael.cellier@...oste.net>
+wrote:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+> Oh………………………… Big mistake. I might advertised too soon.
+>
+> I saw changes were pushed in master, so I thought the next version (which
+> was 2.7.1) would be the one which will include the fix.
+>
+> But as pointed out on
+> https://security-tracker.debian.org/tracker/CVE-2016-2324 no versions
+> including the fixes were released yet, and even 2.7.3 still include
+> path_name(). I didn’t checked the code (Sorrrry).
+>
+>
+> So the only way to fix it is to draw your compilers and compile the
+> current master branch at https://git.kernel.org/cgit/git/git.git/.
+>
+> Or do like github did by using the patches at
+> http://thread.gmane.org/gmane.comp.version-control.git/286253 and
+> http://thread.gmane.org/gmane.comp.version-control.git/286008
+>
+>
+> I’m really sorry…
+>
 
-iQIcBAEBCAAGBQJYAls+AAoJEHb/MwWLVhi2Yd4QALCxw5Y5ssKyrdOrL/zMqkyM
-Z7f28GAeF9mBXlsCONMOUKEqlMust0szGm/qWpBq9BV4OzPK5LRgqtNMhW0u0Z2M
-ZjJ0oJNC6XygJoM55fv2c7Ehd+ej1+wP+iSk8sow8i0y1IN34hPcMFA6Yk0jLcZa
-HBgPrIG3S6o2I4SL7mW5MTyWk0YefskJ+bgsPRMf9aDAHyPfq1UTInNAyyhXaygV
-9c2J6Tn2cLhZWk1E8vIzm3jeWsP1N19DOlqW3jcQqgifPV2Xtsjet+pIH5wHy+Zw
-sNp7pAD3gkCnjyQHacvDEx16HDgNN0MLPIyW2zk5m8+cgwclC2/wybsoOX1zhB53
-hFSmpU0NueGhbKm64lIg7H/nE5Tvpo+C5KHzNmJulXgU9HddAwWQJOgPVVxaape4
-ZvlerrSGWGS65nv6S19AcJYdVRZRCle35bezUzzXA7/45WvGXUqxpyDT2M0EU3US
-TKc6f5HlnY6LSUKdKsvTUO1LPwsZ4hKXbdRthaIVpOEvtt03mAa58skKjtedR/29
-UJ0TmKc2/l7vVqmPk/6VWXHMXJnNKMUTBoa9N8os2PBib2iPV4Dt686IVgWEwg5x
-i3aUovCSC5MFH9xWxpHG5HUHrhelz2WjNPwCwgyR0XNY9NaMpYC8zrh/3kkFF0uc
-q0yGUgrVc+MlwVg9GxOX
-=j63U
------END PGP SIGNATURE-----
+
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
