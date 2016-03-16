@@ -1,160 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/01/7
-Message-ID: <2076188.WoL3bP8qxZ@arcadia>
-Date: Thu, 01 Dec 2016 17:03:08 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: libming: listswf: heap-based buffer overflow in _iprintf (outputtxt.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/13
+Message-Id: <20160316174622.56D53132E53B@smtpvbsrv1.mitre.org>
+Date: Wed, 16 Mar 2016 13:46:22 -0400 (EDT)
+From: cve-assign@...re.org
+To: speirofr@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: The minissdpd (v 1.2.20130907-3) is affected by an improper validation of array index weakness
 Content-Type: text/plain; charset=utf-8
 
-If suitable for a CVE please assign one. Thanks.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Description:
-libming is a Flash (SWF) output library. It can be used from PHP, Perl, Ruby, 
-Python, C, C++, Java, and probably more on the way..
-
-A fuzzing revealed an overflow in listswf. The bug does not reside in any 
-shared object but if you have a web application that calls directly the 
-listswf binary to parse untrusted swf, then you are affected.
-
-The complete ASan output:
-
-# listswf $FILE
-header indicates a filesize of 18446744072727653119 but filesize is 165
-File version: 128
-File size: 165
-Frame size: (-4671272,-4672424)x(-4703645,4404051)
-Frame rate: 142.777344 / sec.
-Total frames: 2696
-
-Offset: 25 (0x0019)
-Block type: 67 (Unknown Block Type)
-Block length: 24
+> http://speirofr.appspot.com/files/advisory/SPADV-2016-02.md
+> 
+> https://bugs.debian.org/816759
 
 
-0000: 00 97 6b ba 06 91 6f 98  7a 38 01 00 a6 e3 80 2c    ..k...o. z8.....,
-0010: 77 25 d3 d3 1a 19 80 7f                            w%.....
+> https://github.com/miniupnp/miniupnp/commit/b238cade9a173c6f751a34acf8ccff838a62aa47
+
+>> The problem is the incorrect validation ... that does not consider
+>> negative length values
+
+> - if(p+l > buf+n) {
+> + if(l > (unsigned)(buf+n-p)) {
+
+Use CVE-2016-3178.
 
 
+> https://github.com/miniupnp/miniupnp/commit/140ee8d2204b383279f854802b27bdb41c1d5d1a
 
-Offset: 51 (0x0033)
-Block type: 24 (SWF_PROTECT)
-Block length: 1                                                                                                                                                                                
-                                                                                                                                                                                               
-=================================================================                                                                                                                              
-==3132==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x60200000eff1 at pc 0x000000499d10 bp 0x7ffc34a55e10 sp 0x7ffc34a555c0                                                       
-READ of size 2 at 0x60200000eff1 thread T0                                                                                                                                                     
-    #0 0x499d0f in printf_common /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors_format.inc:545       
-    #1 0x499a9d in printf_common /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors_format.inc:545       
-    #2 0x49abfa in __interceptor_vfprintf /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:1321    
-    #3 0x509dd7 in vprintf /usr/include/bits/stdio.h:38:10                                                                                                                                     
-    #4 0x509dd7 in _iprintf /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/outputtxt.c:144                                                                                            
-    #5 0x51f1f5 in outputSWF_PROTECT /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/outputtxt.c:1873:5                                                                                
-    #6 0x51c35b in outputBlock /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/outputtxt.c:2933:4                                                                                      
-    #7 0x527e83 in readMovie /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/main.c:277:4                                                                                              
-    #8 0x527e83 in main /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/main.c:350                                                                                                     
-    #9 0x7f0f1ff6861f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                        
-    #10 0x419b38 in _init (/usr/bin/listswf+0x419b38)                                                                                                                                          
-                                                                                                                                                                                               
-0x60200000eff1 is located 0 bytes to the right of 1-byte region 
-[0x60200000eff0,0x60200000eff1)                                                                                                
-allocated by thread T0 here:                                                                                                                                                                   
-    #0 0x4d28f8 in malloc /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64                                                       
-    #1 0x59b9ab in readBytes /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/read.c:201:17                                                                                             
-    #2 0x592864 in parseSWF_PROTECT /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/parser.c:2668:26                                                                                   
-    #3 0x5302cb in blockParse /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/blocktypes.c:145:14                                                                                      
-    #4 0x527d4f in readMovie /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/main.c:265:11                                                                                             
-    #5 0x527d4f in main /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/main.c:350                                                                                                     
-    #6 0x7f0f1ff6861f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                        
-                                                                                                                                                                                               
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/sys-
-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors_format.inc:545 
-in printf_common                                                                                                                                                                      
-Shadow bytes around the buggy address:
-  0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9de0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x0c047fff9df0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa[01]fa
-  0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==3132==ABORTING
+>> the error handling code ... attempts to free the undefined memory
+>> contents
 
-Affected version:
-0.4.7
+> + memset(newserv, 0, sizeof(struct service)); /* set pointers to NULL */
 
-Fixed version:
-N/A
+Use CVE-2016-3179.
 
-Commit fix:
-N/A
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00077-libming-heapoverflow-_iprintf
-
-Timeline:
-2016-11-24: bug discovered and reported to upstream
-2016-12-01: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/12/01/libming-listswf-heap-based-buffer-overflow-in-_iprintf-outputtxt-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+iQIcBAEBCAAGBQJW6ZuJAAoJEL54rhJi8gl5+zcP/1oXalzOckVO1akQQK2c/xSP
+FyC7bnNx0JYfA85zkZoy5PLOypFlLtLoOUOsCgjeVCjQ6KVBQGMustr/qkMH9ooW
+AHuOHRyvwIUtMP5PO3ffgetNqoQeLr0kEwyDH7dXtF35VOVhtrylzxVq9MlySboe
+Y64R5ZMN5EhbU9cE/uwyTpMnAfbgyKPClgf4N1vxgiAB9pzQm+6wTpVKr1O3+j3g
+PFPymfnjZzpbSVzLskj4I6hoywoG1x0Mvd0QfDLgSX+xZ3Z1AGw+efSZrqovlNoP
+ybM9nkhagW878NK4xiD4Wv0I5gRrhW+UElxNvvRKYgSL9qL2gmj1E6hVdhWULy9p
+d9U/zpVcdjLKxNgnyJmQFzc3cEtgWhQfENEKqEq8G4Vdm5d4yrNlaaAiPUkvBzRu
+su4XE8z/EcUfaN3iHNvBiu3PX2Oo1l9GhxE1f1DfjbhDqxN86tAOlzmjK5AS0uY8
+2NQ2zxDPffqwVvgUThmnA+0Jre9i//uiGiIqi1O5Pj6UkRzmObPwY39YmVJ/pssS
+BepEvpJbrgLxyhWdhqfEYSyNKcnJzkq/Kr+YPJER1zjy9BLpdDA/jmXclN15gWpj
+j+Wxap24GneDKxpNZXuaYqOKcMdoAEca55k2BDjZbKRCxImTugByf1yGwz89cRDV
+Wvd/xLNzXI4eTnWsa4d1
+=RWDk
+-----END PGP SIGNATURE-----
