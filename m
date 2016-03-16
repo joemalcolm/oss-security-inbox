@@ -1,4 +1,9 @@
-Received: (qmail 32711 invoked by uid 550); 30 Sep 2023 09:37:05 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2971" "Wednesday" "16" "March" "2016" "19:03:44" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160316230344.72F466DC015@smtpvmsrv1.mitre.org>" "70" "[oss-security] Re: Three CVE requests for PHP" "^Cc:" nil nil "3" "2016031623:03:44" "[oss-security] Re: Three CVE requests for PHP" (number mark "        cve-assign@m Mar 16   70/2971  " thread-indent "\"[oss-security] Re: Three CVE requests for PHP\"\n") "<20160316205050.GB2990@pisco.westfalen.local>" ("<20160316205050.GB2990@pisco.westfalen.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3963 invoked by uid 550); 16 Mar 2016 23:03:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,80 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 3945 invoked from network); 16 Mar 2016 23:03:56 -0000
+In-Reply-To: <20160316205050.GB2990@pisco.westfalen.local>
+Message-Id: <20160316230344.72F466DC015@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Wed, 16 Mar 2016 19:03:44 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30087 invoked from network); 30 Sep 2023 00:57:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
-	t=1696035452; bh=AcbW7W0aWPDuIYd2m7T/aswnjWYitVzHKDuNEcvdCmw=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=p92RJ7WmhT+fjv5GBsiqWyz++0pyH2WG5Q7OtZGNNh4eOpYdbDk1zSR2ZDVy3qyeY
-	 ZTrWtsiEz0UsD/RKoqM5c95T1hoKEcto1NLjeYRP/woY5x1eWtAISHWevtGMuPR7FK
-	 EAXFFsNg9nmMXbOXlUhod7iiRAZAxkQA+7fewbw1dQWqjT3cdhZVbuIUOoZTC2gUji
-	 hyMUTBsZzn02c18qYDHxcCjx31gd2l/obKdpcWRRf7mp9miuU8LwQnb+NZ8dUnVJ+9
-	 lHc1KRo8VMuPER24SJOJXXlHxs+jEOnKjzfdjrm6xMg52bB8kpnXWCEdIGOsVvvbH8
-	 5cRd/xOtGPb6w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
-	t=1696035452; bh=AcbW7W0aWPDuIYd2m7T/aswnjWYitVzHKDuNEcvdCmw=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=p92RJ7WmhT+fjv5GBsiqWyz++0pyH2WG5Q7OtZGNNh4eOpYdbDk1zSR2ZDVy3qyeY
-	 ZTrWtsiEz0UsD/RKoqM5c95T1hoKEcto1NLjeYRP/woY5x1eWtAISHWevtGMuPR7FK
-	 EAXFFsNg9nmMXbOXlUhod7iiRAZAxkQA+7fewbw1dQWqjT3cdhZVbuIUOoZTC2gUji
-	 hyMUTBsZzn02c18qYDHxcCjx31gd2l/obKdpcWRRf7mp9miuU8LwQnb+NZ8dUnVJ+9
-	 lHc1KRo8VMuPER24SJOJXXlHxs+jEOnKjzfdjrm6xMg52bB8kpnXWCEdIGOsVvvbH8
-	 5cRd/xOtGPb6w==
-Date: Sat, 30 Sep 2023 09:57:13 +0900
-From: Dominique Martinet <asmadeus@codewreck.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ZRdyaYEi9YOZUXAg@codewreck.org>
-References: <bd99e07a-8d8c-4652-9089-7c0fc2e86409@oracle.com>
- <ZRXlPoozp5n+cWv1@itl-email>
- <22398fb96f04bf431b3ed0e4778e1cfcd64046ea.camel@orlitzky.com>
- <7f60d2e7-59ca-13cd-9da1-473bd70dd5bb@juniper.net>
- <3708d220187cfe4a2f03f53067edfd15f1cbf8b5.camel@orlitzky.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <3708d220187cfe4a2f03f53067edfd15f1cbf8b5.camel@orlitzky.com>
-Subject: [oss-security] Rust programs in distrbutions (Was: CVE-2023-5217: Heap buffer
- overflow in vp8 encoding in libvpx)
+Subject: [oss-security] Re: Three CVE requests for PHP
+To: jmm@debian.org
 
-Michael Orlitzky wrote on Fri, Sep 29, 2023 at 07:51:12PM -0400:
-> > There are workarounds like putting all of your Rust code in a single dynamic
-> > library, but that's obviously not ideal or always feasible. You can also avoid
-> > the Rust build tool "cargo" and directly compile dependencies to shared
-> > libraries with "rustc", but it's not easy to compile Rust code without "cargo".
-> 
-> This is the biggest problem. Cargo is the standard way to build rust
-> projects. Nobody is shipping a ./configure script for their rust
-> project. Cargo is what's documented. It's what everyone uses. It's
-> baked into all of the tools, the books, the domain names, the clever
-> puns. It's also a bundling tool.
-> 
-> Without ABI stability, the cargo approach was necessary to avoid
-> constant breakage. It's unreasonable to expect end users to track down
-> every rust program they're using and rebuild them all manually every
-> time a library is rebuilt with a newer version of rust. Instead, it was
-> decided that the blessed way to build and distribute rust projects
-> would be to bundle the world along with them.
-> 
-> Except, now, this is embarrassing: the only way for people to get
-> security updates is to track down every rust program they're using and
-> rebuild them all manually. This further presupposes that someone is
-> actually looking for security vulnerabilities in the old versions of
-> libraries bundled on everyone's systems. And that every rust upstream
-> is aware of every vulnerability in every dependency it bundles. None of
-> that happens.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-For what it's worth, fedora is working very hard to improve this:
-they're still rebuilding each crate everytime it's a dependency for a
-program, but they're shipping each crate (source) only once, so when a
-lib is updated there's the tooling to rebuild everything that depends on
-it.
-(And, if said program no longer compiles, maintainers get the fun of
-fixing it or contacting upstream to report the problem, hoping they're
-OK with distributions basically ignoring the Cargo.lock... But I think
-it's better from a distribution point of view that e.g. nixos that does
-respect the Cargo.lock, as that means dependencies never get updated if
-the upstream doesn't pay attention as you pointed out)
+> ZipArchive::extractTo allows for directory traversal when creating directories
+> https://bugs.php.net/bug.php?id=70350
+> https://github.com/facebook/hhvm/commit/65c95a01541dd2fbc9c978ac53bed235b5376686
 
--- 
-Dominique Martinet | Asmadeus
+Use CVE-2014-9767 for this issue that was apparently disclosed in
+https://bugs.php.net/bug.php?id=67996 in 2014. The issue could be
+relevant in cases where, for example:
+
+  - a parent directory is on a filesystem that can't support many
+    inodes, and the attacker can cause a DoS by creating thousands of
+    empty directories there
+
+  - a parent directory is served by the web server and allows a full
+    directory listing, and the attacker can therefore post spam in the
+    form of directory names
+
+
+> https://bugs.php.net/bug.php?id=70385
+> https://bugs.php.net/bug.php?id=70312
+
+These were mentioned here 6 months ago in the
+http://www.openwall.com/lists/oss-security/2015/09/08/8 and earlier
+posts. We don't see any issue with re-opening the discussion at this
+point, but could you please provide new information or a
+counterargument?
+
+For example, in 70385, is the security concern that someone may deploy
+a web application that accepts arbitrary untrusted TIFF files and is
+intended to print EXIF values, but would realistically instead print
+the contents of other memory locations associated with a different
+client's session?
+
+In 70312, the "[2015-08-21 02:00 UTC]" comment says 'I'm sorry but I
+cannot change the bug type. It is not "Security".' Was it supposed to
+have been categorized as a security bug, or is the discussion from 6
+months ago applicable:
+
+  This might be primarily an interoperability bug. 70312 doesn't attempt
+  to show that the hashes produced by PHP's HAVAL implementation had
+  weaker security properties than those produced by a correct
+  implementation. (One might also argue that applications requiring
+  especially good hash properties should not be using HAVAL at all.)
+
+?
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJW6eWGAAoJEL54rhJi8gl52vwQAJKFdLmLfg4LSaa+Z07OnbH+
+nUuELFK3Y2d4q/cxj5Uy/uQSDh1ufVmOhLEu0aajVfIqSiVxyzxQ3BjRKTIvprtf
+Nennjbzwm9agJVyP2szFphJzvlrJrhKHkXU3jT1616tHl7ZFWcuthz4Fk3z0873k
+2cJ6c6ek3sRK+Vv5WoNw1iFjkPu7qAQloX+x2ZxvT01zeElp2zrz7JJ4y1AGv6nb
+54Wl334PCwuf0F/vV5G/GO3XQJdB5daQVMQ8OyRQVkn5KnqCDI8ceD0aG+Q1JZed
+seV2eo2lwhYzddd3cV03/R1zKUFXisUZEdjjnas5EXHdl/rdcN+clmYTNqjL6UaM
+Mo6PTOdN/egwAJC481zOdNjKWu2h8KT3XCXP1SLw6y0FC1IOeELnJqcFjEej1lDx
+nGWcw3AuHmf7+Iq4vw/16EB2ETTtM3GYEq2nFgxAImPSjtdLR6UznWV5ZHCwtWC/
+RaGDY4ZGK2iKRMdCshOCeh0wp9f5D9pnZA89PygH+yThzjD5v9Y51EuBHVN3FUcP
+ZpIRFLVJJ5Vx+PibCXygHpD9DHN3PHEbdEMGP6hDeokLON9CrN8Uu6XzwbLDrQxM
+sTrn1AgElznVv5o4N3HwxcmDQwANG71EQeKwaV01gSEX/v2X9evV4I4AMfGv0d7k
+CAqu4MIzM9VyDkcLYcF/
+=mvYU
+-----END PGP SIGNATURE-----
