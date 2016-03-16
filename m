@@ -1,34 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/6
-Message-ID: <20160913185508.1351b147@hboeck.de>
-Date: Tue, 13 Sep 2016 18:55:08 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: "vul@...safe" <vul@...safe.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Heapoverflow in giflib5.1.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/19
+Message-ID: <20160316205050.GB2990@pisco.westfalen.local>
+Date: Wed, 16 Mar 2016 21:50:50 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Three CVE requests for PHP
 Content-Type: text/plain; charset=utf-8
 
 Hi,
+please assign CVE IDs (these need to be CVE-2015-XXXX) for these
+vulnerabilities fixed in the PHP implementations by php.net and HHVM.
+These are all fixed in PHP 5.6.13, PHP 5.5.29, PHP 5.4.45 and HHVM 3.12.1.
 
-On Tue, 13 Sep 2016 23:20:08 +0800
-"vul@...safe" <vul@...safe.com> wrote:
+1. Buffer over-read in exif_read_data with TIFF IFD tag byte value of 32 bytes
+https://bugs.php.net/bug.php?id=70385
+https://github.com/facebook/hhvm/commit/06f3fc8091d8da793552db0e4d9a0d4add9c0bcc
 
-> With Address Sanitizer there is aa heap overflow in giflib 5.1.4
-> More details are available at:
-> https://sourceforge.net/p/giflib/bugs/102/
+2 ZipArchive::extractTo allows for directory traversal when creating directories
+https://bugs.php.net/bug.php?id=70350
+https://github.com/facebook/hhvm/commit/65c95a01541dd2fbc9c978ac53bed235b5376686
 
-Two notes:
-* This is a bug *only* in the gif2rgb command line tool, not in giflib
-  itself.
-* I reported this before. The giflib maintainer claimed multiple times
-  that he has fixed it, yet he hasn't. See:
-https://sourceforge.net/p/giflib/bugs/79/
+3. HAVAL gives wrong hashes in specific cases
+https://bugs.php.net/bug.php?id=70312
+https://github.com/facebook/hhvm/commit/918b174fa1e9924a9ecaecb08efcfdcab3db6151
 
--- 
-Hanno Böck
-https://hboeck.de/
+Cheers,
+        Moritz
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
 
-Content of type "application/pgp-signature" skipped
+
+
+
+
