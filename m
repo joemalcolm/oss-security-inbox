@@ -1,41 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/12/6
-Message-ID: <CADLX=aGFnZANOuiTC=hp1F7_Kw26NLk0TD6QnRqgEcPPd30vLQ@mail.gmail.com>
-Date: Tue, 12 Jan 2016 21:02:42 +0530
-From: Rahul Pratap Singh <techno.rps@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: WP Symposium Pro Social Network Plugin 16.1 XSS Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/5
+Message-ID: <20160316094336.44ade7ea@redhat.com>
+Date: Wed, 16 Mar 2016 09:43:36 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: Gsunde Orangen <gsunde.orangen@...il.com>
+Cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: Re: Announce: Portable OpenSSH 7.2p2 released
 Content-Type: text/plain; charset=utf-8
 
-##FULL DISCLOSURE
+On Fri, 11 Mar 2016 12:34:58 +0100 Gsunde Orangen wrote:
 
-#Product : WP Symposium Pro Social Network plugin
-#Home page Link : https://wordpress.org/plugins/wp-symposium-pro
-#Version : 16.1
-#Date : 12/Jan/2016
+> It should be noted, that the new openSSH 7.2p2 also includes the fix for
+> CVE-2016-1908 as it had been assigned here:
+> http://seclists.org/oss-sec/2016/q1/115
+> 
+> * SECURITY: Eliminate the fallback from untrusted X11-forwarding to
+>   trusted forwarding for cases when the X server disables the
+>   SECURITY extension. Reported by Thomas Hoger.
 
-XSS Vulnerability:
+7.2p2 includes the fix, but it's not the first version that includes
+it.  I see it documented in 7.2 release:
 
-Description:
+http://www.openssh.com/txt/release-7.2
 
-“user_id” parameter is not sanitized, that leads to reflected xss.
+ * ssh(1): eliminate fallback from untrusted X11 forwarding to
+   trusted forwarding when the X server disables the SECURITY
+   extension.
 
-POC:
+and patches included in 7.2p1 already.
 
-https://0x62626262.files.wordpress.com/2016/01/wpsymposiumpro16_1xsspoc.png
-
-Fix:
-Update to version 16.01.01
-
-Disclosure Timeline:
-
-reported to vendor : 12/1/2016
-vendor response : 12/1/2016
-vendor acknowledged : 12/1/2016
-vendor deployed a patch: 12/1/2016
-
-Pub Ref:
-http://www.wpsymposiumpro.com/wp-symposium-pro-16-01-01-security-release/
-https://wordpress.org/plugins/wp-symposium-pro/
-https://0x62626262.wordpress.com/2016/01/12/wp-symposium-pro-social-network-plugin-xss-vulnerability
-
+-- 
+Tomas Hoger / Red Hat Product Security
