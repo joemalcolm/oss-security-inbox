@@ -1,47 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/2
-Message-Id: <20160224033350.2DD1872E033@smtpvbsrv1.mitre.org>
-Date: Tue, 23 Feb 2016 22:33:50 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux: unix: correctly track in-flight fds in sending process user_struct sockets
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/9
+Message-ID: <a4b9fc1a-0d82-98fe-3835-7fec48f3ac4b@laposte.net>
+Date: Wed, 16 Mar 2016 11:47:31 +0100
+From: Laël Cellier <lael.cellier@...oste.net>
+To: oss-security@...ts.openwall.com, website@...se.com
+Subject: Re: server and client side remote code execution through a buffer overflow in all git versions before 2.7.1 (unpublished ᴄᴠᴇ-2016-2324 and ᴄᴠᴇ‑2016‑2315)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Oh………………………… Big mistake. I might advertised too soon.
 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=415e3d3e90ce9e18727e8843ae343eda5a58fad6
+I saw changes were pushed in master, so I thought the next version 
+(which was 2.7.1) would be the one which will include the fix.
 
->> unix: correctly track in-flight fds in sending process user_struct
+But as pointed out on 
+https://security-tracker.debian.org/tracker/CVE-2016-2324 no versions 
+including the fixes were released yet, and even 2.7.3 still include 
+path_name(). I didn’t checked the code (Sorrrry).
 
->> The commit referenced in the Fixes tag incorrectly accounted the
->> number of in-flight fds over a unix domain socket to the original
->> opener of the file-descriptor. This allows another process to
->> arbitrary deplete the original file-openers resource limit for the
->> maximum of open files.
 
-Use CVE-2016-2550.
+So the only way to fix it is to draw your compilers and compile the 
+current master branch at https://git.kernel.org/cgit/git/git.git/.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Or do like github did by using the patches at 
+http://thread.gmane.org/gmane.comp.version-control.git/286253 and 
+http://thread.gmane.org/gmane.comp.version-control.git/286008
 
-iQIcBAEBCAAGBQJWzSRFAAoJEL54rhJi8gl5/bYP/0SCfyofv9HhFwaE/EYSj1/K
-y607Cnxoe/9PPbLn1MxUQNCIBKvLUNR+tZqV9GUc1MrmbbKfOmyNKx0CMIl32Ewn
-1S1OamdeEIQa+wZt2N2bhHFEBy7vUXl0+TGwbuSoqX/UsBcx9Rt7gCvgmb/FKvXV
-UcCJB9T8zWEgCb179u8EWCNQ0qpC3PL8JNvymYjsVsc8BBKO053ZfvezBPm9eehD
-J7vod7f4hzR3S1N74dwwGivNvGZj9XkX7QeRDG8lsT1hRbvtycMrR8Mxs5dnhrYT
-9VnMuuSvdgllRCy+i/cDn3a2GNciCbt3rmlAcsUK/R+a/1kJJ6VGEPlCpWeZyZsp
-jH7Pg4C9sy5j76RORH0uzp/ENvLtLHoGGY2kU8lAou7iEnQ1p35cXqpVNd2xOHas
-HxypzRSO1t6x78hR9ZtbNT9wp3NZiDFADwhOE0nku7rUCEdLIl/ra0gByFwY/lbz
-91Rea30jRVhp9mE21NBA2e7a3/QRU+xLIObuZDLu4HVEs9efh8GYmh0BveQsi9h7
-5B4wiVZSb5rvdq5gN2/l65TXLN/CMQr+s0o7CZKobj6kDMZw7oCjffuLg4jP7rmN
-QELmA4GOdF5lhirAZaFpqDwZy6uUYEahOlIxLO2fF9uaABOSf/kqQan3kcYdy8Mb
-Yjf9+hopybnTS3V71UmI
-=bAtP
------END PGP SIGNATURE-----
+
+I’m really sorry…
