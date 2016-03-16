@@ -1,48 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/6
-Message-Id: <20160504052840.69F508BC11E@smtpvmsrv1.mitre.org>
-Date: Wed,  4 May 2016 01:28:40 -0400 (EDT)
-From: cve-assign@...re.org
-To: kangjielu@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, taesoo@...ech.edu, csong84@...ech.edu, insu@...ech.edu
-Subject: Re: CVE Request: information leak in devio of Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/8
+Message-ID: <c82384d8-0058-ae6b-81ee-b4b8d35ad22b@laposte.net>
+Date: Wed, 16 Mar 2016 10:17:35 +0100
+From: Laël Cellier <lael.cellier@...oste.net>
+To: Chris Williams <cwilliams@...pub.com>, oss-security@...ts.openwall.com
+Subject: Re: Exploitability of Git's CVE-2016-2315
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-> In the USB module (drivers/usb/core/devio.c), The stack object "ci" has a
-> total
-> size of 8 bytes. Its last 3 bytes are padding bytes which are not
-> initialized and
-> leaked to userland
-> 
-> http://www.spinics.net/lists/linux-usb/msg140243.html
-> 
-> https://git.kernel.org/cgit/linux/kernel/git/next/linux-next.git/log/drivers/usb/core/devio.c
-> (not yet there; probably soon)
+> Hi Laël,
+>
+> Congrats on the GitHub bounty for the Git bug. I have a quick question about CVE-2016-2315: is it feasibly exploitable? Do you have to push a very large repository with very long strings to overflow the signed integer in path_name()?
+>
+> Many thanks,
+>
+> C.
+>
+Yes, you have to create a repository path which is larger than 2³¹.
 
-Use CVE-2016-4482.
+However, you have the control at what place the remote code execution 
+should happen in the buffer. git objects are zlib compressed and git 
+Servers tend to allow downloading over https or (even better ssh) which 
+use zlib compression. This allow compress data twice (compressing a 
+second time tend to be efficient in zlib if the data is well compressible).
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+If you find well zlib compressible data which you can combine with 
+assembly, you’ll probably be able to reduce network data to 
+200Mb. GitHub told they change their message if they could run the proof 
+on 
+https://github-enterprise.s3.amazonaws.com/hyperv/releases/github-enterprise-2.4.1.vhd 
+or 
+https://github-enterprise.s3.amazonaws.com/kvm/updates/github-enterprise-kvm-2.4.1.pkg 
+or 
+https://github-enterprise.s3.amazonaws.com/kvm/releases/github-enterprise-2.4.1.qcow2 
+or 
+https://github-enterprise.s3.amazonaws.com/esx/releases/github-enterprise-2.4.1.ova 
+or 
+https://github-enterprise.s3.amazonaws.com/xen/releases/github-enterprise-2.4.1.vhd
 
-iQIcBAEBCAAGBQJXKYeVAAoJEHb/MwWLVhi2HVgP/1PZ63KIkqDmy/qRT0FjYG13
-L5SvXGvwD/uo9GEf5Ml27JTEnJ3GAGno0Rvo8x44739X4KJijhoJYiqhxg2gmakM
-aXtuCjLVry5RBak+VZbclmKIIei+WNuPIhzBJ9PGIP0hxmMJtXgGxq41HZGJbQYj
-RzrQlJcmu7TixXCpPwxPFP+APMQaiB7i8M4x+lNfBSDs42eeqBlJJdCP7OCk3Bw/
-ROHI9+UaUko5tbvL/sFQoiA/53BKW2/iGT+X9belfRc93guZibKmlBxtgw3TKnKH
-MTSGnHiPmkGGcQU8R3QEiBdFvUuPeJvlkSjP3sLW4oYm+MC+HcJX2u90uYzzb0xJ
-EW/9jq4gt9X8UNRRGZEAaJTw/lSYocDWB7pF7DVEu1Gxuv7pQlUNtwvu3PAFRJfF
-ulVqU8Cp9S/rOEoAIxSoaUbH8mHSVFwo9sASn1KIeMZzHkjZs2wvLu8MMW2g8R2j
-Oj+lgNmGAqw4AUXY9GlqG0Z6CUMxZRWUoGyeLKceDK2dlQv390YgZOoeWvbONU1N
-DC6qV9F/i+EYwWgS8LN1m6Kly0nPRsH0COPfZA8+APoVvtetBMMgDCG93sGbE12j
-SEI/tu19i118D3Nq1kQWhXQh1xpsgKy+X9gMxWJAbHuzdYX5Jwn0wJqctEXjNVaz
-Plv7PbXJ7DAoP8bNb/Ry
-=3AUJ
------END PGP SIGNATURE-----
+I used python gitdb to confirm the server side memory corruption. This 
+allowed me to leverage the bug.
+However, without a push command I can use, I had to build an ssh network 
+payload from the generated packfile (the ꜱꜱʜ protocol is simpler than 
+the ʜᴛᴛᴘꜱ one) that I could use with
+ssh -C -o compressionlevel=9 git@...hub.com git-receive-pack the/repo.git
+
+Creating an ʜᴛᴛᴘꜱ version should possible, however curl doesn’t know 
+about ʜᴛᴛᴘ compression for uploading. So this require to pre compress 
+the payload and trick ʜᴛᴛᴘ headers
+
+The git:// protocol doesn’t support compression, so only the packfile 
+compression remains.
