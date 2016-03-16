@@ -1,36 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/10/1
-Message-ID: <739916702.1278914.1470855609597.JavaMail.zimbra@redhat.com>
-Date: Wed, 10 Aug 2016 15:00:09 -0400 (EDT)
-From: CAI Qian <caiqian@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: cve request: systemd-machined: information exposure for docker containers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/12
+Message-Id: <20160316164539.43CF5EBC143@smtpvmsrv1.mitre.org>
+Date: Wed, 16 Mar 2016 12:45:39 -0400 (EDT)
+From: cve-assign@...re.org
+To: josselin.feist@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request : Use-after-free in gifcolor
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+> Two possible consecutives calls to EGifCloseFile at line 122 and 124,
+> with the same first parameter (GifFile) could lead to two calls to
+> free
 
------ Original Message -----
-> From: "Daniel J Walsh" <dwalsh@...hat.com>
-> To: oss-security@...ts.openwall.com
-> Sent: Wednesday, August 3, 2016 3:27:00 AM
-> Subject: Re: [oss-security] cve request: systemd-machined: information exposure for docker containers
-> 
-> 
-> 
-> On 08/01/2016 12:24 PM, Shiz wrote:
-> >> On 28 Jul 2016, at 16:42, Simon McVittie <smcv@...ian.org> wrote:
-> >>
-> >> *Which* unprivileged user processes?
-> >>
-> >> If the unprivileged user processes are not in a container, they can get a
-> >> significant amount of the same information by reading the host's /proc.
-> > Except if a host is running with hidepid={1,2}, which is not entirely
-> > uncommon
-> > especially in hardened systems. In that regard it /does/ qualify as
-> > infoleak.
-> >
-> > - Shiz
-> Then simply rpm -e oci-register-machine
-> 
-Except people can't do that in OSes like atomic host.
-   CAI Qian
+> this is also a use-after-free
+
+> A fix could be simply to remove the second call to EGifCloseFile.
+
+Use CVE-2016-3177.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJW6Y0hAAoJEL54rhJi8gl5ghwP/joKr1pUl7IDb/5LAWOMQxeQ
+h00wAoH0AkMb/hI3GXTdbALXzVGSZ8OT6BKQerR9raYTZeUyWi65+xmPdS3yXDQW
+q+y1hsksxX3ugU3drcBNnlTxXqHKVIYRUwyqXYclVbMmd8hwqNBqc6dvpwiqGnEb
+CALN799cMf2wjBFajkN6BWxdj0uULjtdCE6FfwVBkwusaEQrFaQj8qa07VjpyPQy
+cqfnx0w3fraDm9bZ0h7vZtPKT6l8+GOp9ZuEOFacPz7wROyftNalSra9wRmaqEcr
+A7TU6xqu1+FUcwN4mK9IDQvWQup3bxZ7xg9Vu2ckQ0dLJjyrmLBccFcajicGV0wN
+twblpPYjUss53bjgUBNfSLZFvZcEQTuzlyPiXXPxkO35fypS5pZ7bGkkW1JXo37v
+HjYyvwO2kSBg5dXxmMqW4fXdzND/nSPTl9q7PKwL6hb7GpXudaPFAETPuQPpx6RK
+EnXpQkeYIn15lGgjJrYhOywMZajNT0yO597w3jQ0B+z/wkrVp3Nr6k854mApM/cc
+rech7Ff6XGvPTDUARhwV+gR8izkEOsumd397mQMPMdiHDBwEU2i0+kkBqAaWX0/O
+duoNOSJjdrIQYTHh4MXFgynFDU+PocFCv07UcFHAmhns48d5LdOahPQxm9PRLB/H
+buvp1GGX8I2tnLoTbdfX
+=qHvQ
+-----END PGP SIGNATURE-----
