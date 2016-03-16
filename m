@@ -1,58 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/12/9
-Message-ID: <CALJHwhQTKMaC6kp33J+1nmBPUqL7-Ppzb1V=7B+ffNfDyWsdoQ@mail.gmail.com>
-Date: Fri, 13 May 2016 00:01:56 +1000
-From: Wade Mealing <wmealing@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-0758 - Linux kernel - Flaw in ASN.1 DER decoder for x509 certificate DER files.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/15
+Message-Id: <20160316194342.BC8FE6C4055@smtpvmsrv1.mitre.org>
+Date: Wed, 16 Mar 2016 15:43:42 -0400 (EDT)
+From: cve-assign@...re.org
+To: winsonliu@...cent.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request - OpenJPEG : Out-Of-Bounds Read in opj_tcd_free_tile function
 Content-Type: text/plain; charset=utf-8
 
-An issue with ASN.1 DER decoder was reported that could lead to memory
-corruptions, possible privilege escalation, or complete local denial
-of service via x509 certificate DER files.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Tags with indefinite length can be used to corrupt the _dp and _len
-pointers in asn1_find_indefinite_length() in lib/asn1_decoder.c
+> A specially crafted JPEG2000 image file can force Out-Of-Bounds Read
 
-The vulnerable code:
+> opj_decompress -o image.pgm -i oob_opj_tcd_free_tile.jp2
 
-...
-next_tag:
-        if (unlikely(datalen - dp < 2)) {
-                if (datalen == dp)
-                        goto missing_eoc;
-                goto data_overrun_error;
-        }
-...
-        n = len - 0x80;
-        if (unlikely(n > sizeof(size_t) - 1))
-                goto length_too_long;
-        if (unlikely(n > datalen - dp))
-                goto data_overrun_error;
-        for (len = 0; n > 0; n--) {
-                len <<= 8;
-                len |= data[dp++];
-        }
-        dp += len;
-        goto next_tag;
-...
+> precision 31 is larger than 16
 
-The dp can be corrupted and the check at next_tag is not sufficient to
-prevent this.
+> Program received signal SIGSEGV, Segmentation fault.
 
-Red Hat would like to thank Philip Pettersson of Samsung for reporting
-this issue to Red Hat.
+Use CVE-2016-3181.
 
-Thanks,
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Wade Mealing
-Red Hat Product Security Team
-
-
-References:
-
-Upstream fix:
-https://lkml.org/lkml/2016/5/12/270
-
-Red hat Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=1300257
+iQIcBAEBCAAGBQJW6bbDAAoJEL54rhJi8gl5zMcP/12As0D1ZFaAB/OX9zTMWPRM
+ttAJ3Pd3BAkPH9K+hoGzIwY4Net+ClIP3E4yLYWqqfcuoDbbh0X7t0ZpVVs+nP6V
+9oLkNTEeSD/5eyFWPcz1niXGi/Gx1KvbihsS3vcR7/cGpHzly8EDrXAytS1EbWkr
+PSynB3gE2w1nnO8/Oq1toRhoSqKk9+5U3KAaI7tDl6tkilBs+edT1AxLwfAC8T80
+3JThnjBr1Ee6HW4f5PZhkDUpVHFFdltsVCKkPZwgEdYRcDac8/Ia7nMnFGmRrcH7
+mDdI/d/peHyAdR1E8ageG/GZOOm5P6vF9fn8GZZyRbMSHMOueLOpc1jlXF/GArPx
+TQO4UhWj4QUP1NEfDe3nH/tHPV12Z4TqtNSy5Ea6EP6+Wzn16851G27WpYlFV65o
+tbAKDrDX6in4Y3j/HMCc9VG/IPPVwZPwefQVPTLPVe+JaKZmbuD68RgREA/3thBd
+gHIZsSgBuLoXGVnFwYCzJ7J/NFmJhuFBTCiPp5GEnFPTH9l3VuhO2jictuWzyc1H
+/GKGwZOL4U8i7xDlwVDmaio0uSHtB6VoIvIAprK7dauevop/hjIhsVVhJvxImcR+
+QGRnn228hS5dHZ+j01ErisFBLpqfcWazRnnNuPxvpVIBG4BIgraWj7g8cyPLVJji
+YwftmPV2DEwNLl5q1zPA
+=felc
+-----END PGP SIGNATURE-----
