@@ -1,38 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/09/3
-Message-ID: <56BA3522.6020601@suse.com>
-Date: Tue, 9 Feb 2016 19:51:14 +0100
-From: Andreas Stieger <astieger@...e.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE Request: cacti: Authentication using web authentication as a user not in the,cacti database allows complete access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/20
+Message-Id: <20160316230344.72F466DC015@smtpvmsrv1.mitre.org>
+Date: Wed, 16 Mar 2016 19:03:44 -0400 (EDT)
+From: cve-assign@...re.org
+To: jmm@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Three CVE requests for PHP
 Content-Type: text/plain; charset=utf-8
 
-Could a CVE ID please assigned for the following issue:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-http://svn.cacti.net/viewvc/cacti/tags/0.8.8g/docs/CHANGELOG?revision=7788&view=markup
--bug:0002656: Authentication using web authentication as a user not in the
-cacti database allows complete access
-http://bugs.cacti.net/view.php?id=2656 Classified by upstream as a security fix.
-Upstream fix is http://svn.cacti.net/viewvc?view=rev&revision=7770
-https://bugzilla.suse.com/show_bug.cgi?id=965930
+> ZipArchive::extractTo allows for directory traversal when creating directories
+> https://bugs.php.net/bug.php?id=70350
+> https://github.com/facebook/hhvm/commit/65c95a01541dd2fbc9c978ac53bed235b5376686
 
-Accessing cacti using a user name not the cacti database fills the log with
-database error messages and allows complete access to everything, including the
-user administration pages. The bug is in auth_login.php which fails to check
-the query actually found any data or not.
+Use CVE-2014-9767 for this issue that was apparently disclosed in
+https://bugs.php.net/bug.php?id=67996 in 2014. The issue could be
+relevant in cases where, for example:
 
-Fixed in tagged but (as of writing) unreleased 0.8.8g.
+  - a parent directory is on a filesystem that can't support many
+    inodes, and the attacker can cause a DoS by creating thousands of
+    empty directories there
 
-Thanks,
-Andreas
-
--- 
-Andreas Stieger <astieger@...e.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG Nürnberg)
+  - a parent directory is served by the web server and allows a full
+    directory listing, and the attacker can therefore post spam in the
+    form of directory names
 
 
+> https://bugs.php.net/bug.php?id=70385
+> https://bugs.php.net/bug.php?id=70312
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+These were mentioned here 6 months ago in the
+http://www.openwall.com/lists/oss-security/2015/09/08/8 and earlier
+posts. We don't see any issue with re-opening the discussion at this
+point, but could you please provide new information or a
+counterargument?
+
+For example, in 70385, is the security concern that someone may deploy
+a web application that accepts arbitrary untrusted TIFF files and is
+intended to print EXIF values, but would realistically instead print
+the contents of other memory locations associated with a different
+client's session?
+
+In 70312, the "[2015-08-21 02:00 UTC]" comment says 'I'm sorry but I
+cannot change the bug type. It is not "Security".' Was it supposed to
+have been categorized as a security bug, or is the discussion from 6
+months ago applicable:
+
+  This might be primarily an interoperability bug. 70312 doesn't attempt
+  to show that the hashes produced by PHP's HAVAL implementation had
+  weaker security properties than those produced by a correct
+  implementation. (One might also argue that applications requiring
+  especially good hash properties should not be using HAVAL at all.)
+
+?
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJW6eWGAAoJEL54rhJi8gl52vwQAJKFdLmLfg4LSaa+Z07OnbH+
+nUuELFK3Y2d4q/cxj5Uy/uQSDh1ufVmOhLEu0aajVfIqSiVxyzxQ3BjRKTIvprtf
+Nennjbzwm9agJVyP2szFphJzvlrJrhKHkXU3jT1616tHl7ZFWcuthz4Fk3z0873k
+2cJ6c6ek3sRK+Vv5WoNw1iFjkPu7qAQloX+x2ZxvT01zeElp2zrz7JJ4y1AGv6nb
+54Wl334PCwuf0F/vV5G/GO3XQJdB5daQVMQ8OyRQVkn5KnqCDI8ceD0aG+Q1JZed
+seV2eo2lwhYzddd3cV03/R1zKUFXisUZEdjjnas5EXHdl/rdcN+clmYTNqjL6UaM
+Mo6PTOdN/egwAJC481zOdNjKWu2h8KT3XCXP1SLw6y0FC1IOeELnJqcFjEej1lDx
+nGWcw3AuHmf7+Iq4vw/16EB2ETTtM3GYEq2nFgxAImPSjtdLR6UznWV5ZHCwtWC/
+RaGDY4ZGK2iKRMdCshOCeh0wp9f5D9pnZA89PygH+yThzjD5v9Y51EuBHVN3FUcP
+ZpIRFLVJJ5Vx+PibCXygHpD9DHN3PHEbdEMGP6hDeokLON9CrN8Uu6XzwbLDrQxM
+sTrn1AgElznVv5o4N3HwxcmDQwANG71EQeKwaV01gSEX/v2X9evV4I4AMfGv0d7k
+CAqu4MIzM9VyDkcLYcF/
+=mvYU
+-----END PGP SIGNATURE-----
