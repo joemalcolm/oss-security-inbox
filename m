@@ -1,81 +1,157 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/19
-Message-Id: <16120515504112_2020046C@antinode.info>
-Date: Mon, 5 Dec 2016 15:50:41 -0600 (CST)
-From: "Steven M. Schweda" <sms@...inode.info>
-To: tyhicks@...onical.com, oss-security@...ts.openwall.com
-Cc: security@...ntu.com, Info-ZIP-Dev@...tley.com
-Subject: CVE Request: Info-Zip zipinfo buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/14
+Message-Id: <E1agGk8-0004TL-Uh@xenbits.xenproject.org>
+Date: Wed, 16 Mar 2016 19:04:28 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 171 (CVE-2016-3157) - I/O port access privilege escalation in x86-64 Linux
 Content-Type: text/plain; charset=utf-8
 
-From: Tyler Hicks <tyhicks@...onical.com>
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-   Thanks for the (thorough, helpful) report.
+            Xen Security Advisory CVE-2016-3157 / XSA-171
+                              version 4
 
-> Alexis Vanden Eijnde has discovered a zipinfo buffer overflow and
-> reported it here:
-> 
->   https://launchpad.net/bugs/1643750
-> 
-> It is very similar to, but different than, this `unzip -l` crasher:
-> 
->   http://www.openwall.com/lists/oss-security/2014/11/03/5
+         I/O port access privilege escalation in x86-64 Linux
 
-   It is.  And the easy fix is also very similar (and should appear in
-the next UnZip release, version 6.1e beta):
+UPDATES IN VERSION 4
+====================
 
-ALP $ gdiff zipinfo.c;39 zipinfo.c
-2568c2568,2579
-<         sprintf(&methbuf[1], "%03u", G.crec.compression_method);
----
->         /* 2016-12-05 SMS.
->          * https://launchpad.net/bugs/1643750
->          * Unexpectedly large compression methods overflow
->          * &methbuf[].  Use the old, three-digit decimal format
->          * for values which fit.  Otherwise, sacrifice the "u",
->          * and use four-digit hexadecimal.
->          */
->         if (G.crec.compression_method <= 999) {
->             sprintf( &methbuf[ 1], "%03u", G.crec.compression_method);
->         } else {
->             sprintf( &methbuf[ 0], "%04X", G.crec.compression_method);
->         }
+Clarify Vulnerable Systems section.
 
-   Typical output (pre-release UnZip 6.1e beta, with some minor,
-unrelated report format changes from UnZip 6.0):
+Public release.
 
-   Old:
+ISSUE DESCRIPTION
+=================
 
-ALP $ unzip6l -Z PoZ.zip
-Archive:  ALP$DKC0:[UTILITY.SOURCE.ZIP.test_mthd_ovflo]PoZ.zip;1
-Zip file size: 154 bytes, number of entries: 1
--rw-rw-r--  3.0 unx        2 tx u65535 16-Nov-21 19:07 a
-                                ^^^^^^
-1 file, 2 bytes uncompressed, 2 bytes compressed:  0.0%
+IRET and POPF do not modify EFLAGS.IOPL when executed by code at a
+privilege level other than zero.  Since PV Xen guests run at privilege
+level 3 (for 64-bit ones; 32-bit ones run at privilege level 1), to
+compensate for this the context switching of EFLAGS.IOPL requires the
+guest to make use of a dedicated hypercall (PHYSDEVOP_set_iopl).  The
+invocation of this hypercall, while present in the 32-bit context
+switch path, is missing from its 64-bit counterpart.
 
-   New/next:
+IMPACT
+======
 
-ALP $ unzipx -Z PoZ.zip
-Archive:  ALP$DKC0:[UTILITY.SOURCE.ZIP.test_mthd_ovflo]PoZ.zip;1
-Archive size: 154 bytes; Members: 1
--rw-rw-r--  3.0 unx        2 tx FFFF 16-Nov-21 19:07 a
-                                ^^^^
-Members: 1; Bytes uncompressed: 2, compressed: 2, 0.0%
-Directories: 0, Files: 1, Links: 0
+User mode processes not supposed to be able to access I/O ports may
+be granted such permission, potentially resulting in one or more of
+in-guest privilege escalation, guest crashes (Denial of Service), or
+in-guest information leaks.
 
-> The zipinfo buffer overflow occurs due to a flaw in zipinfo.c's
-> zi_short() function:
-> [...]
+VULNERABLE SYSTEMS
+==================
 
-   Yeah.  We should have noticed this whan the "unzip -l" complaint was
-made.
+All upstream x86-64 Linux versions operating as PV Xen guests are
+vulnerable.
 
-> Please assign a CVE. Also, consider assigning a CVE to the related
-> `unzip -l` issue from 2014. Thank you!
+ARM systems are not vulnerable.  x86 HVM guests are not vulnerable.
+32-bit Linux guests are not vulnerable.
 
-   Is that something I should do?  (I normally get reports with CVEs; I
-have never created one.)
+x86-64 Linux versions derived from linux-2.6.18-xen.hg (XenoLinux) are
+not vulnerable.
 
-------------------------------------------------------------------------
+We believe that non-Linux guests are not vulnerable, as we are not
+aware of any with an analogous bug.
 
-   Steven M. Schweda               sms@...inode-info
+MITIGATION
+==========
+
+Running only HVM or 32-bit PV guests will avoid this issue.
+
+CREDITS
+=======
+
+This issue was discovered by Andy Lutomirski.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue for the indicated Linux
+versions.
+
+xsa171.patch           Linux 4.5-rc7, Linux 4.4.x
+
+$ sha256sum xsa171*
+5d47ead1212c735b444ac8f82e7f311cda3473fe3847e576c3772ce020265dfd  xsa171.patch
+$
+
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+The patch is a change to the domU, ie, to the guest, not to hosts.
+
+
+Where the guest kernel is provided by the host administrator
+- ------------------------------------------------------------
+
+Deployment of the patch by the host administrator is NOT permitted
+(except where all the affected systems and VMs are administered and
+used only by organisations which are members of the Xen Project
+Security Issues Predisclosure List).  Specifically, deployment on
+public cloud systems is NOT permitted.
+
+This is because a the cloud guest administrator is almost certainly in
+a position to see the changes that are made by to the kernel even if
+the kernel is provided by the host administrator.
+
+Deployment is permitted only AFTER the embargo ends.
+
+
+Where the guest kernel is provided by the guest administrator
+- -------------------------------------------------------------
+
+Deployment of the patch (or another which is substantially similar) by
+the guest administrator is permitted during the embargo ONLY if
+ (i) the host administrator organisation is also a member of the Xen
+     Project Security Issues Predisclosure List.
+ (ii) all the guest's users are also members of predisclosure list.
+     (guest users includes administrators of Linux containers running
+     within the guest).
+
+Restriction (i) is because the host administrator can see changes that
+made to the kernel by a guest administrator.  Restriction (ii) is
+because it is difficult to fully conceal the Linux kernel from
+unprivileged guest user processes.
+
+If the host is not operated by a member of the predisclosure list, or
+the guest has users outside the predisclousre list, deployment is
+permitted only AFTER the embargo ends.
+
+
+In any case
+- -----------
+
+Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, or whose situation is not clearly covered
+above, please contact the Xen Project Security Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJW6a4ZAAoJEIP+FMlX6CvZEs4H/12hKU3NzqfHZb/wOW9PeT4Z
+yhGQ2mkVE6FATW15b+/+Lr4N2nIUHa40BtWjPyEOQR4UXJrZr3R5HL/wINRO7c6M
+5XNjDyHqmfhOAsHWsrTB0a3CP2wWNNQ6LiBN5AuiUwoqiJiZPLhKCeEi99F+rFFK
+IINyOgd4XSeGRkb96GfZcPbizbO3wqiREfBIAjECYchBARv7JVGr3my6R3YBYdTn
+VtBratEPdkEmAEn0LtdiQlnjPib5O3paiaIDk41IPbPu1WPiozt3RJSqJUSwu+al
+A3qe9cBGz0NyghdYkXQjvaPP+1Q3BjyJC4hgGLo+yqyODPdaFAJZ0mjR/e0uajs=
+=F9Nz
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa171.patch" of type "application/octet-stream" (2095 bytes)
