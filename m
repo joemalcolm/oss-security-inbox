@@ -1,447 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/22/2
-Message-Id: <20160922051720.E6D8C6C09A8@smtpvmsrv1.mitre.org>
-Date: Thu, 22 Sep 2016 01:17:20 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, roucaries.bastien@...il.com, team@...urity.debian.org, luciano@...ian.org
-Subject: Re: CVE Requests: Various ImageMagick issues (as reported in the Debian BTS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/2
+Message-ID: <0c221798-c6e3-962d-ae71-fb143223eda1@laposte.net>
+Date: Wed, 16 Mar 2016 02:31:27 +0100
+From: Laël Cellier <lael.cellier@...oste.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: server and client side remote code execution through a buffer overflow in all git versions before 2.7.1 (unpublished ᴄᴠᴇ-2016-2324 and ᴄᴠᴇ‑2016‑2315)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> Date: Sun, 7 Aug 2016 17:12:15 +0200
-
-> off-by-one error leading to segfault:
->	Debian Bug: https://bugs.debian.org/832455
->	Additional references:
->	----------------------
->	https://github.com/ImageMagick/ImageMagick/commit/a54fe0e8600eaf3dc6fe717d3c0398001507f723
-
-Use CVE-2016-7513.
-
-
-> out-of-bounds read in coders/psd.c:
->	Debian Bug: https://bugs.debian.org/832457
->	Additional references:
->	----------------------
->	https://bugs.launchpad.net/bugs/1533442
->	https://github.com/ImageMagick/ImageMagick/issues/83
->	https://github.com/ImageMagick/ImageMagick/commit/198fffab4daf8aea88badd9c629350e5b26ec32f
->	https://github.com/ImageMagick/ImageMagick/commit/6f1879d498bcc5cce12fe0c5decb8dbc0f608e5d
->	https://github.com/ImageMagick/ImageMagick/commit/e14fd0a2801f73bdc123baf4fbab97dec55919eb
->	https://github.com/ImageMagick/ImageMagick/commit/280215b9936d145dd5ee91403738ccce1333cab1
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 1
-
-Use CVE-2016-7514.
-
-
-> rle file handling for corrupted file:
->	Debian Bug: https://bugs.debian.org/832461
->	Additional references:
->	----------------------
->	https://bugs.launchpad.net/bugs/1533445
->	https://github.com/ImageMagick/ImageMagick/issues/82
->	https://github.com/ImageMagick/ImageMagick/commit/2ad6d33493750a28a5a655d319a8e0b16c392de1
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 1
-
-Use CVE-2016-7515.
-
-
-> buffer overflow in sun file handling:
->	Debian Bug: https://bugs.debian.org/832464
->	Additional references:
->	----------------------
->	http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26838
->	https://github.com/ImageMagick/ImageMagick/commit/78f82d9d1c2944725a279acd573a22168dc6e22a
->	https://github.com/ImageMagick/ImageMagick/commit/bd96074b254c6607a0f7731e59f923ad19d5a46d
->	https://github.com/ImageMagick/ImageMagick/commit/450bd716ed3b9186dd10f9e60f630a3d9eeea2a4
-
-Use CVE-2015-8957.
-
-
-> potential DOS in sun file handling due to malformed files:
->	Debian Bug: https://bugs.debian.org/832465
->	Additional references:
->	----------------------
->	http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26857
->	https://github.com/ImageMagick/ImageMagick/commit/b8f17d08b7418204bf8a05a5c24e87b2fc395b75
->	https://github.com/ImageMagick/ImageMagick/commit/1aa0c6dab6dcef4d9bc3571866ae1c1ddbec7d8f
->	https://github.com/ImageMagick/ImageMagick/commit/6b4aff0f117b978502ee5bcd6e753c17aec5a961
->	https://github.com/ImageMagick/ImageMagick/commit/8ea44b48a182dd46d018f4b4f09a5e2ee9638105
-
-Use CVE-2015-8958.
-
-
-> out of bounds problem in rle, pict, viff and sun files:
->	Debian Bug: https://bugs.debian.org/832467
-
->	https://bugs.launchpad.net/bugs/1533452
->	https://github.com/ImageMagick/ImageMagick/issues/77
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 4
-> viff.c
-
-Use CVE-2016-7516.
-
-
->	https://bugs.launchpad.net/bugs/1533449
->	https://github.com/ImageMagick/ImageMagick/issues/80
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 1
-> pict.c
-
-Use CVE-2016-7517.
-
-
->	https://bugs.launchpad.net/bugs/1533447
->	https://github.com/ImageMagick/ImageMagick/issues/81
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 1
-> sun.c
-
-Use CVE-2016-7518.
-
-
->	https://bugs.launchpad.net/bugs/1533445
->	https://github.com/ImageMagick/ImageMagick/issues/82
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 1
-> rle.c
-
-Use CVE-2016-7519.
-
-
-> heap overflow in hdr file handling:
->	Debian Bug: https://bugs.debian.org/832469
->	Additional references:
->	----------------------
->	https://bugs.launchpad.net/bugs/1537213
->	https://github.com/ImageMagick/ImageMagick/issues/90
->	https://github.com/ImageMagick/ImageMagick/commit/14e606db148d6ebcaae20f1e1d6d71903ca4a556
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 1
-
-Use CVE-2016-7520.
-
-
-> heap buffer overflow in psd file handling:
->	Debian Bug: https://bugs.debian.org/832474
->	Additional references:
->	----------------------
->	https://bugs.launchpad.net/bugs/1537418
->	https://github.com/ImageMagick/ImageMagick/issues/92
->	https://github.com/ImageMagick/ImageMagick/commit/30eec879c8b446b0ea9a3bb0da1a441cc8482bc4
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 1
-
-Use CVE-2016-7521.
-
-
-> out of bound access for malformed psd file:
->	Debian Bug: https://bugs.debian.org/832475
->	Additional references:
->	----------------------
->	https://bugs.launchpad.net/bugs/1537419
->	https://github.com/ImageMagick/ImageMagick/issues/93
->	https://github.com/ImageMagick/ImageMagick/commit/4b1b9c0522628887195bad3a6723f7000b0c9a58
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 2
-
-Use CVE-2016-7522.
-
-
-> meta file out of bound access:
->	Debian Bug: https://bugs.debian.org/832478
->	Additional references:
->	----------------------
->	https://bugs.launchpad.net/bugs/1537420
->	https://github.com/ImageMagick/ImageMagick/issues/96
->	https://github.com/ImageMagick/ImageMagick/commit/f8c318d462270b03e77f082e2a3a32867cacd3c6
->	https://github.com/ImageMagick/ImageMagick/commit/5a34d7ac889bd6645f6cfd164636e3efb56dbb2f
-
-We are not sure that we understand this set of references.
-bugs/1537420 does not link to issues/96.
-
-We will assign separate CVE IDs for these pairs of references:
-
-> https://bugs.launchpad.net/bugs/1537420
-> https://github.com/ImageMagick/ImageMagick/issues/94
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 1
-> meta.c:496
-
-Use CVE-2016-7523.
-
-
-> https://bugs.launchpad.net/bugs/1537422
-> https://github.com/ImageMagick/ImageMagick/issues/96
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 1
-> meta.c:465
-
-Use CVE-2016-7524.
-
-
-> heap buffer overflow in psd file coder:
->	Debian Bug: https://bugs.debian.org/832480
->	Additional references:
->	----------------------
->	https://bugs.launchpad.net/bugs/1537424
->	https://github.com/ImageMagick/ImageMagick/issues/98
->	https://github.com/ImageMagick/ImageMagick/commit/5f16640725b1225e6337c62526e6577f0f88edb8
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 1
-
-Use CVE-2016-7525.
-
-
-> out of bound access in wpg file coder:
->	Debian Bug: https://bugs.debian.org/832482
->	Additional references:
->	----------------------
->	https://bugs.launchpad.net/bugs/1539050
->	https://bugs.launchpad.net/bugs/1542115
->	https://github.com/ImageMagick/ImageMagick/issues/102
->	https://github.com/ImageMagick/ImageMagick/issues/122
->	https://github.com/ImageMagick/ImageMagick/commit/b6ae2f9e0ab13343c0281732d479757a8e8979c7
->	https://github.com/ImageMagick/ImageMagick/commit/d9b2209a69ee90d8df81fb124eb66f593eb9f599
->	https://github.com/ImageMagick/ImageMagick/commit/a251039393f423c7858e63cab6aa98d17b8b7a41
-
-We will assign separate CVE IDs for these subsets of the references:
-
->	https://bugs.launchpad.net/bugs/1539050
->	https://github.com/ImageMagick/ImageMagick/issues/102
->	https://github.com/ImageMagick/ImageMagick/commit/b6ae2f9e0ab13343c0281732d479757a8e8979c7
->	https://github.com/ImageMagick/ImageMagick/commit/d9b2209a69ee90d8df81fb124eb66f593eb9f599
-> AddressSanitizer: heap-buffer-overflow
-> WRITE of size 2
-
-Use CVE-2016-7526.
-
-
->	https://bugs.launchpad.net/bugs/1542115
->	https://github.com/ImageMagick/ImageMagick/issues/122
->	https://github.com/ImageMagick/ImageMagick/commit/a251039393f423c7858e63cab6aa98d17b8b7a41
-> AddressSanitizer: global-buffer-overflow
-> READ of size 4096
-
-Use CVE-2016-7527.
-
-
-> out of bound access for viff file coder:
->	Debian Bug: https://bugs.debian.org/832483
->	Additional references:
->	----------------------
->	https://bugs.launchpad.net/bugs/1537425
->	https://github.com/ImageMagick/ImageMagick/issues/99
->	https://github.com/ImageMagick/ImageMagick/commit/ca0c886abd6d3ef335eb74150cd23b89ebd17135
-> AddressSanitizer: SEGV on unknown address
-
-Use CVE-2016-7528.
-
-
-> out of bound access in xcf file coder:
->	Debian Bug: https://bugs.debian.org/832504
->	Additional references:
->	----------------------
->	https://bugs.launchpad.net/bugs/1539051
->	https://bugs.launchpad.net/bugs/1539052
->	https://github.com/ImageMagick/ImageMagick/issues/104
->	https://github.com/ImageMagick/ImageMagick/issues/103
->	https://github.com/ImageMagick/ImageMagick/commit/a2e1064f288a353bc5fef7f79ccb7683759e775c
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 1
-
-Use CVE-2016-7529.
-
-
-> out of bound in quantum handling:
->	Debian Bug: https://bugs.debian.org/832506
->	Additional references:
->	----------------------
->	https://bugs.launchpad.net/bugs/1539067
->	https://bugs.launchpad.net/bugs/1539053
->	https://github.com/ImageMagick/ImageMagick/issues/105
->	https://github.com/ImageMagick/ImageMagick/commit/63346f34f9d19179599b5b256e5e8d3dda46435c
->	https://github.com/ImageMagick/ImageMagick/commit/c4e63ad30bc42da691f2b5f82a24516dd6b4dc70
->	https://github.com/ImageMagick/ImageMagick/issues/110
->	https://github.com/ImageMagick/ImageMagick/commit/b5ed738f8060266bf4ae521f7e3ed145aa4498a3
-> AddressSanitizer: heap-buffer-overflow
-> WRITE of size 1
-
-Use CVE-2016-7530.
-
-
-> pbd file out of bound access:
->	Debian Bug: https://bugs.debian.org/832633
->	Additional references:
->	----------------------
->	https://bugs.launchpad.net/bugs/1539061
->	https://bugs.launchpad.net/bugs/1542112
->	https://github.com/ImageMagick/ImageMagick/issues/107
-> AddressSanitizer: heap-buffer-overflow
-> WRITE of size 28
-> WRITE of size 1
-
-Use CVE-2016-7531.
-
-
-> Fix handling of corrupted psd file:
->	Debian Bug: https://bugs.debian.org/832776
->	Additional references:
->	----------------------
->	https://bugs.launchpad.net/bugs/1539066
->	https://github.com/ImageMagick/ImageMagick/issues/109
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 5632
-
-Use CVE-2016-7532.
-
-
-> wpg file out of bound for corrupted file:
->	Debian Bug: https://bugs.debian.org/832780
->	Additional references:
->	----------------------
->	https://bugs.launchpad.net/bugs/1542114
->	https://github.com/ImageMagick/ImageMagick/issues/120
->	https://github.com/ImageMagick/ImageMagick/commit/bef1e4f637d8f665bc133a9c6d30df08d983bc3a
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 1
-
-Use CVE-2016-7533.
-
-
-> out of bound access in generic decoder:
->	Debian Bug: https://bugs.debian.org/832785
->	Additional references:
->	----------------------
->	https://bugs.launchpad.net/bugs/1542785
->	https://github.com/ImageMagick/ImageMagick/issues/126
->	https://github.com/ImageMagick/ImageMagick/commit/430403b0029b37decf216d57f810899cab2317dd
-> AddressSanitizer: heap-buffer-overflow
-> WRITE of size 2
-
-Use CVE-2016-7534.
-
-
-> out of bound access for corrupted psd file:
->	Debian Bug: https://bugs.debian.org/832787
->	Additional references:
->	----------------------
->	https://bugs.launchpad.net/bugs/1545180
->	https://github.com/ImageMagick/ImageMagick/issues/128
-> AddressSanitizer: heap-buffer-overflow
-> WRITE of size 1
-
-Use CVE-2016-7535.
-
-
-> SEGV reported in corrupted profile handling:
->	Debian Bug: https://bugs.debian.org/832789
->	Additional references:
->	----------------------
->	https://bugs.launchpad.net/bugs/1545367
->	https://github.com/ImageMagick/ImageMagick/issues/130
->	https://github.com/ImageMagick/ImageMagick/commit/478cce544fdf1de882d78381768458f397964453
-> AddressSanitizer: SEGV on unknown address
-
-Use CVE-2016-7536.
-
-
-> out of bound access for corrupted pdb file:
->	Debian Bug: https://bugs.debian.org/832791
->	Additional references:
->	----------------------
->	https://bugs.launchpad.net/bugs/1553366
->	https://github.com/ImageMagick/ImageMagick/issues/143
->	https://github.com/ImageMagick/ImageMagick/commit/424d40ebfcde48bb872eba75179d3d73704fdf1f
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 128
-
-Use CVE-2016-7537.
-
-
-> SIGABRT for corrupted pdb file:
->	Debian Bug: https://bugs.debian.org/832793
->	Additional references:
->	----------------------
->	https://bugs.launchpad.net/bugs/1556273
->	https://github.com/ImageMagick/ImageMagick/issues/148
->	https://github.com/ImageMagick/ImageMagick/commit/53c1dcd34bed85181b901bfce1a2322f85a59472
-> AddressSanitizer: heap-buffer-overflow
-> WRITE of size 65700
-
-Use CVE-2016-7538.
-
-
-> DOS due to corrupted DDS files:
->	Debian Bug: https://bugs.debian.org/832944
->	Additional references:
->	----------------------
->	http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26861
->	https://github.com/ImageMagick/ImageMagick/commit/93ab016764c7f787829d9065440d86f5609765110
-
-This has a stray '9' character. It is supposed to be:
-https://github.com/ImageMagick/ImageMagick/commit/3ab016764c7f787829d9065440d86f5609765110
-
->	https://github.com/ImageMagick/ImageMagick/commit/9b428b7af688fe319320aed15f2b94281d1e37b4
-
-Use CVE-2015-8959 for this entire coders/dds.c report from 2015.
-
-
-> DOS due to corrupted DDS files:
->	Debian Bug: https://bugs.debian.org/832942
->	Additional references:
->	----------------------
->	https://github.com/ImageMagick/ImageMagick/commit/21eae25a8db5fdcd112dbcfcd9e5c37e32d32e2f
->	https://github.com/ImageMagick/ImageMagick/commit/d7325bac173492b358417a0ad49fabad44447d52
->	https://github.com/ImageMagick/ImageMagick/commit/504ada82b6fa38a30c846c1c29116af7290decb2
-
-Use CVE-2014-9907 for this entire coders/dds.c report from 2014.
-
-
-> potential DOS by not releasing memory:
->	Debian Bug: https://bugs.debian.org/833101
->	Additional references:
->	----------------------
->	Fixed by: https://github.com/ImageMagick/ImageMagick/commit/4e81ce8b07219c69a9aeccb0f7f7b927ca6db74c
->	http://www.imagemagick.org/discourse-server/viewtopic.php?f=2&t=28946
-
-Use CVE-2016-7539.
-
-
-> writing to rgf format aborts:
->	Debian Bug: https://bugs.debian.org/827643
->	Additional references:
->	----------------------
->	https://bugs.launchpad.net/bugs/1594060
->	https://github.com/ImageMagick/ImageMagick/pull/223
-
-Use CVE-2016-7540.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX42gvAAoJEHb/MwWLVhi2ItEP/0xGPlLZNqqWzGSq/xBspzMX
-bwnMiwZrZXwKktNqOzhi4AhwLFPJzF74nVFf/DX1p5ZkmwfIlIdzFfYfPAlMDPH1
-A/NLVnuDGmPOGblStiv92LbIBYXk8Rib1ise+37ekwsG6qa0RIk8VfSS+PTXUa62
-4bec1cH+mWKaC5o27jOcWqaGoV2anFicXKiwQfj93HYtiauXN00dzWOtkGK/Av/q
-NlAe5pABEu8vVgIaXC7ZsHpAMNxlZSU015KffjgdAaXh/NK7g5Pkg9Zj0bo/A72q
-5JHYCU7QMJBgnc6QDXC6vM+9DMOmWSzbaYH/5MFF1y897HqaIHhBef1yeg/kRtkX
-ojzMsVzMls8jdFnRH+05lp63YfL9WKGsXe9o0rQcEX+wWg5rePaJNDLhVc04iSG0
-26MjVd/Dd+uhDSLBZpf31tDCjO6rBMO17kl606OUI2isxmUUPogB4iT1tNeM5QtW
-FqHaH+/i+DArcNI5yWIRf2OmFSfWKjkzJ7IRWvXpCJ1Kbwc8WbJgRqF0r6zVuAq5
-gJjgtQUdjoQMhpsPDQkOKjxsCoqBFwv/a6wNeA0o/ov9z6ue8gz9PY/9sxUsgt7N
-+mMHvGwWg9/CXVxPTZyNjA5ViJUwG/wrl7Hd6Ri5kJqaUNMtX6uB9+BXfFLkUn8Q
-Kpv5aJqNL+N3osUfnMd4
-=GSns
------END PGP SIGNATURE-----
+Concerning the reply to ᴄᴠᴇ details. (as you can check without the 
+quotes, the pgp signature is correct and belong to mitre) (it was 
+originally posted on the git‑security mailing list).
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+>>>> int nlen = strlen(name); // the size is converted to a positive number
+>>>> (the correct size was allocated previously with an unsigned long). I
+>>>> got 705804100
+>>> (i.e., inconsistent use of signed versus unsigned).
+>>>
+>>> Use CVE-2016-2315.
+>> Yes, I think this is really the root of the issue ... It's
+>> not just signed versus unsigned, though, but also truncation on 64-bit
+>> systems (size_t down to int).
+>
+> OK, so more generally CVE-2016-2315 is the issue that "int" is the
+> wrong data type for that nlen assignment.
+>
+>
+>> Related ... is
+>> integer overflow due to a loop which adds more to "len".
+>>
+>> I think that should potentially have a separate CVE (as it was_not_
+>> fixed by 34fa79a6, and in fact there is not a published fix yet).
+>
+> Use CVE-2016-2324 for this integer overflow.
+>
+> - -- CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available throughhttp://cve.mitre.org/cve/request_id.html  ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQIcBAEBCAAGBQJWvN/aAAoJEL54rhJi8gl5uAYP/izpW1/dYi3/UB0FFp3J6iz0
+> pOpLy0TgZbfGCvrLAg2xlOxkY8ENEsX1JLKkIwAh0ViaLmKD+4xucgT5DIlpk2fl
+> 0eAH8Hxcl2Nn8vOYx5orA6vTJ+S5pVGGSONk448cUDut9F4NBF0ngZ1GnAzQGI1d
+> kbvA7aEz9jqUZGcnihoz84DeHwxZAw037MG1Yd/QW0eyHEC9w2fHEVF6GyHxfcMG
+> eDowkjefIkmwYlMTbzv9l8v7rc6T7fFSrWe9xYc61rSEkYM5U1Eq2xHEIku6kYQT
+> ns+0R+pZgwXakbUe9cJEjHQprGFw0iYtRdBZIDjSeiWZwWBjR9GUkFz/HXo2MdKV
+> esN1lpF1x9MqFWjkHlxyCJOEAR1yzClYWU7RodyFeBIfdpc+7BM/I4Mr2b77O+Oi
+> hUMBsfbZSPBz0+dBLlijFOBCkf+dvULc6DXM/yBJyYebY8EyUmtvw89u4dXefsZJ
+> bvkYw6ltNgXYEovlg+Zp5HDtY5wBeJl/00XRK/Yqtl96Rgmc59jOvnO6j2487cEH
+> x4KzwEP7PNDad954iMNQAIv2DLr+6/dGh1LEIoJeWV6kgHR2fM6roY1Ky6Dhc3HS
+> BDD/i2d53+Ydej4+xAs7ABe0SRnONPZLvGXfTg1Xf3A1DQ3ctBEU8WTgoDeoNGF1
+> 0VRlf18y1csVeTrRhfyX
+> =mJKj
+> -----END PGP SIGNATURE-----
+>
+But more generally, individual patches are here 
+http://thread.gmane.org/gmane.comp.version-control.git/286253
+And the affected versions are 2.7.0 and below. 2.7.1 is the first 
+version which is safe to use. sid, you can relax the 2.7.3 in gitlab
+This is the matter of pushing one or several crafted tree objects if the 
+target is a server, or making a client cloning a crafted repository 
+containing such objects.
+
+Users of gerrit are also affected due to gerrit‑gc (so even probably 
+google’s servers). But as the frontend is Jgit, the installed git 
+version number is hidden (so the only way is to exploit remote code 
+execution). (and this was because wikmedia used gerrit they were 
+threat). Because gerrit‑gc rely on git, not on Jgit.
+
+And for fun, a switch to java git might not be a good bet. Because I 
+also probably found a server side memory leak in Jgit which can be 
+triggered with a simple clone access (which I would be able to confirm 
+once that vendor get that 
+http://www.materiel.net/carte-reseau/intel-dual-band-wireless-ac-7260-desktop-7260hmwdtx1-r-114087.html 
+again (so they can ship it to me, so I can replace the one that died)).
+
+Concerning github, I already told they fixed github enterprise in 
+December, and of course they did for the main site at the same time : 
+https://bounty.github.com
