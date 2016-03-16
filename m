@@ -1,33 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/26/5
-Message-ID: <8a0125dd564a421ea358674b196666b5@imshyb02.MITRE.ORG>
-Date: Sat, 26 Nov 2016 17:50:48 -0500
-From: <cve-assign@...re.org>
-To: <gustavo.grieco@...il.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: resource exhaustion in regex expression handling in WebKit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/16
+Message-Id: <20160316194504.51EDC52E00D@smtpvbsrv1.mitre.org>
+Date: Wed, 16 Mar 2016 15:45:04 -0400 (EDT)
+From: cve-assign@...re.org
+To: winsonliu@...cent.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request - OpenJPEG : Heap Corruption in opj_free function
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Trying to parse and execute this regex code in WebKit:
-> 
-> [ about 170 instances of "($" and then "{-2,16}" and then about
->   170 instances of "+)" ]
-> 
-> will consume large amounts of memory (8GB or more), after a few seconds.
-> This seems to be a case of CWE-400 (uncontrolled resource consumption).
-> 
-> Chrome and Firefox based browsers are *not* affected.
+> A specially crafted JPEG2000 image file can force Heap Corruption
 
-Use CVE-2016-9643.
+> opj_decompress -o image.pgm -i heap_corruption.jp2
 
+> double free or corruption (!prev)
 
-> asked to MITRE about another issue related with uncontrolled resource
-> consumption in Firefox loading a SVG but receive no response.
+> Program received signal SIGABRT, Aborted.
 
-We have just answered that on its own thread.
+Use CVE-2016-3182.
 
 - -- 
 CVE Assignment Team
@@ -37,17 +29,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYOg/tAAoJEHb/MwWLVhi2jXMP+wXfT6g+wyocbXiiIbflNo9x
-Aj8TQ9PP7ZTO2akx4xOdep+Jpulg2K5ACWG/PDqy+oPV3ouJDyT0xzUTYK0MLFWa
-oDe460NUGm92UkG9VSkzSe5RYN7tawxzYfoaSulJf4gd6bDUSRPxB+rDEWeX6mCT
-q/VKySkcs7wAtZd6N9W/NPg0+Jeo/qgCeU0wf1Uz8c+1WvF7c2ooqyYTq36Z434F
-gT4GshSEqGmi3PCKomzSEmaRYeGhREy7J82/b7JHYgmMDnwDJWNqg/MXhzE6VjP4
-uRSEAYaKksVsWI+CtxLNeiBSZAyEV2Gd2hSthd/xSAQfJ9lAK+rxJN38cIl0NIL5
-4tgyNHGYtOYIjiFKtil0T3DE3IlLlWFJAa2ICkpqDoFjPDBQXxbKcwG4TM5DTMBe
-Fqe7WK3SXZNd5imt296L0lBry50v7/xjyIstUR8QoPJBJ0AGHJw8uCRjps0zZK6k
-nzbKM0LZdgTmf7zdxjGIEjhLIkGCxXJdGGVQMFb80EHgwM+LfTDD1KTAodB+1oRd
-UJeaRv0EqndpAOKlxHhMDGxk7n4Tz34luKaav9abaJ4mo8F1Sho4UgRVZtlik+EQ
-Wm3g/BeTqjj2JkBvQwrQNVn5VA75tE+Xp5ZnjnQTPSuqwBNvQjPU+EoeStadSP57
-ALKxkr8D5RHlAGNzIVoQ
-=eJl5
+iQIcBAEBCAAGBQJW6bbKAAoJEL54rhJi8gl5cT0P/1zG9ClKvDPqrs3koMEs3sHB
+d6DE0+J17YePaQQEKef5n+i1vuGtgxTg9FceCbK282Wbqh4Grrm0J/5fCtowO/VT
+tvibyIcAFfoDIfWFKDNgl/Qcg5aadifGXnae9vR0gl/Zq64GjwW8TsJ7vfaehXDX
+X75wcxVzEWblhIXM8hkN7uC2gr4y5BV1L0TNzxpqsgqhwZIC9cOgjJYwhDsIjYgf
+3uFex3fnjaQIoCfOkaRVPCT5/bSKyEzVVGLUcXHlKqV+7YNLy89Gx+Fa6EV6s6Yp
+aIB9nQw9pryJeQhgMYXA0ZOytPnzoB1imRyl0yxgYV/Y1AX5Iqkp6WJDhHnwQ7Iq
+GOB7/HaHxBxz56foASSrqdO0AhyqSwaSnXdzFwPkrz+tD0coeakgTY5OqHYfyCOz
+61+2x2wdZrQeaWB3DtEX7LaDdYrg0MkP5itZOaCjIS2yTjOlR2g2WThPVY6rYi+h
+z1ET+0XJKiXpi1c3EeC2zbtbA83mxbSOM3ByZmcd9Itix6k6sHRgW8BP5o52VcjQ
+B+or7PbrqSvcbykd5KGQ73OkOqF1CF8QGXLumw/0jJJQHjH9dypnvAOLdLmXdQWJ
+vO3wGHYck2MV0JHHbwPt+3WMk3+4ARTB6+VASFL7mZcr+dQkNTkCA/32n/k2hDr/
+nKUX80QMch2y3XOLq3nB
+=t6zO
 -----END PGP SIGNATURE-----
