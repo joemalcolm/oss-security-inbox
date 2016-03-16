@@ -1,45 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/22/1
-Message-ID: <CAFkM3a+tCC+PgnDtQ8HEvz3CNp_7C4Tmr8NxomgpznGpBKnkUw@mail.gmail.com>
-Date: Thu, 22 Sep 2016 11:37:40 +0800
-From: 王畅 <fyth.cnss@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: XSS Vulnerability in Exponent CMS 2.3.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/7
+Message-ID: <BY2PR15MB0728301B880CC40FFD658066E98A0@BY2PR15MB0728.namprd15.prod.outlook.com>
+Date: Wed, 16 Mar 2016 03:00:00 +0000
+From: Justin Yackoski <jyackoski@...pto-nite.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-2117 memory disclosure to ethernet due to unchecked scatter/gather IO
 Content-Type: text/plain; charset=utf-8
 
-Hi, I reported a Cross Site Scripting vulnerability to the
-ExponentCMS team on a few days ago:
-vulnerability:
+CVE-2016-2117 memory disclosure to ethernet due to unchecked scatter/gather IO
 
 
-/framework/modules/file/connector/uploader.php
+Affects:
 
-line 85-86:
-```
+In-tree Linux ethernet drivers:
 
-$funcNum = $_GET['CKEditorFuncNum'] ;
-echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction(".$funcNum.",
-'".$url."', '".$message."');</script>";
+atheros/atlx/atl2.c  confirmed in versions 3.8 thru 4.5 (possibly earlier)
 
-```
-
-"$_GET['CKEditorFuncNum']"  was printed out without any sanitization.
+* see description for more details on other potential less severe impacts
 
 
-PoC:http://exponentcms.org/framework/modules/file/connector/uploader.php?CKEditorFuncNum=[removed]<svg/onload=alert(1)>
+Description:
+
+When scatter/gather IO is enabled (NETIF_F_SG), the ethernet driver may be passed a
+
+list of buffers containing the packet to be sent, rather than a single contiguous buffer
+
+in order to improve performance.  If a driver claims to support scatter/gather but does
+
+a simple memcpy, dma_map_single, or similar call from skb->data to skb->len the result
+
+is that the outgoing packet will be sent containing the first full fragment followed by
+
+whatever kernel memory was at the end of that first fragment.  This data is likely to be
+
+other data from other skb's, but other sensitive data has been seen.  If hardware
+
+checksumming is enabled, the resulting ethernet frame will be valid other than containing
+
+the disclosed memory.
 
 
-And Now, this vulnerability have been
-fixed.https://exponentcms.lighthouseapp.com/projects/61783/changesets/3f06b07755f35b96eff05ed3e3e1df2b907cade1
+This bug is remotely exploitable in the atl2 driver whenever scatter/gather IO is triggered,
 
-https://github.com/exponentcms/exponent-cms/commit/3f06b07755f35b96eff05ed3e3e1df2b907cade1
+which can be done in some common applications (pcap samples available upon request).
 
 
-This issue was reported by Wang Chang of silence.com.cn Inc. and I would like
-to request a CVE for this issue (if not done so).
+Note that this bug was originally found in an out of tree driver (CVE-2016-2553), and may
 
-Thank you.
----------------------------------http://www.silence.com.cn
-wangchang#silence.com.cn
-PKAV Team
+go unnoticed in similar drivers until the right conditions for scatter/gather IO are hit.
+
+
+Apart from the atl2 driver that can be remotely exploited, other in-tree drivers are not
+
+remotely exploitable but a local privileged user with access to kernel runtime memory
+
+may be able to cause a driver that does not check for skb fragments to start to behave
+
+improperly.
+
+
+Mitigation:
+
+1) If using atl2 driver run the following at each boot (not confirmed due to lack of hardware
+
+          availability):
+
+    ethtool -K <ethX> sg off
+
+2) Other drivers that don't expect scatter/gather, ensure appropriate local permissions.
+
+
+Recommended fixes:
+
+1) remove NETIF_F_SG from atl2.c
+
+2) if an ethernet driver does not handle scatter/gather, consider a run-time check for
+
+     fragments in the ndo_start_xmit handler rather than a compile time-assumption for maximum
+
+     security.
+
+
+Patches:
+
+None available currently, although in atl2 simply remove the NETIF_F_SG identifier from the
+
+hw_features of the net device structure.
+
+
+Credits:
+
+Justin Yackoski @ Cryptonite
+
 
