@@ -1,168 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/29/2
-Message-Id: <E1aksJq-0004UH-Qn@xenbits.xenproject.org>
-Date: Tue, 29 Mar 2016 12:00:22 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 172 (CVE-2016-3158,CVE-2016-3159) - broken AMD FPU FIP/FDP/FOP leak workaround
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/17/1
+Message-Id: <20160317152301.48ABE6C0675@smtpvmsrv1.mitre.org>
+Date: Thu, 17 Mar 2016 11:23:01 -0400 (EDT)
+From: cve-assign@...re.org
+To: pere@...a.cat
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...pal.org
+Subject: Re: CVE requests for Drupal contributed modules (from 2016-009 to 2016-014)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-     Xen Security Advisory CVE-2016-3158,CVE-2016-3159 / XSA-172
-                              version 3
+> Prepopulate - Access Bypass - SA-CONTRIB-2016-009
+> https://www.drupal.org/node/2679503
 
-              broken AMD FPU FIP/FDP/FOP leak workaround
+>> The Prepopulate module does not adequately prevent a user from
+>> overwriting arbitrary parts of $_REQUEST. It also does not prevent
+>> pre-populating certain fields that are not displayed or manipulating
+>> markup fields to alter elements of the user interface.
 
-UPDATES IN VERSION 3
-====================
+>> Versions affected
 
-Public release.
+>>    Prepopulate 7.x-2.x versions prior to 7.x-2.1.
 
-ISSUE DESCRIPTION
-=================
+>>> http://cgit.drupalcode.org/prepopulate/commit/prepopulate.module?id=16cdb63cc3b256dd785e029ec17f92ddf80cc443
 
-There is a workaround in Xen to deal with the fact that AMD CPUs don't
-load the x86 registers FIP (and possibly FCS), FDP (and possibly FDS),
-and FOP from memory (via XRSTOR or FXRSTOR) when there is no pending
-unmasked exception.  (See XSA-52.)
+Use CVE-2016-3187 for the issue associated with deleting the
+"parse_str(base64_decode($_REQUEST['pp']), $_REQUEST);" lines, and use
+CVE-2016-3188 for the issue associated with changing the value of
+$limited_types. (The 16cdb63cc3b256dd785e029ec17f92ddf80cc443 commit
+message does not seem closely related to the
+16cdb63cc3b256dd785e029ec17f92ddf80cc443 code changes.)
 
-However, this workaround does not cover all possible input cases.
-This is because writes to the hardware FSW.ES bit, which the current
-workaround is based on, are ignored; instead, the CPU calculates
-FSW.ES from the pending exception and exception mask bits.  Xen
-therefore needs to do the same.
+Our understanding is that the Prepopulate module was packaged in, for
+example, Fedora 23. The prepopulate-6.x-2.2.tar.gz file shipped in
+drupal6-prepopulate-2.2-4.fc23.src.rpm apparently does not have the
+16cdb63cc3b256dd785e029ec17f92ddf80cc443 changes. Thus, we feel that
+the best available information is that CVE-2016-3187 and CVE-2016-3188
+affects or affected, at least, Fedora 23.
 
-Note that part of said workaround was the subject of XSA-52.
+(For example, see the
+http://fedora.mirror.lstn.net/releases/23/Everything/source/SRPMS/d/drupal6-prepopulate-2.2-4.fc23.src.rpm
+package file.)
 
-This can leak register contents from one guest to another.  The
-registers in question are the FPU instruction and data pointers and
-opcode.
+(We understand that Drupal 6 end-of-life was last month according to
+the https://www.drupal.org/drupal-6-eol post. We also understand that
+http://pkgs.fedoraproject.org/cgit/rpms/drupal6-prepopulate.git/commit?id=d77963c300289b6be29b5dc08d0662fc698068f4
+exists. However, drupal6-prepopulate-2.2-4.fc23 may still be in use on
+many Fedora 23 systems.)
 
-IMPACT
-======
+We may be sending a separate reply about the USASearch, Google
+Analytics Counter, Hubspot CTA, Node Notify, and Fieldable Panels
+Panes issues.
 
-A malicious domain is able to obtain address space usage and timing
-information, about another domain, at a fairly low rate.
-
-The leaked address information might be used to help defeat address
-space randomisation in order to enable another attack.  The leaked
-address and timing information forms a low-bandwidth covert channel
-which might be used to gain information about the operation of a
-target guest.
-
-The affected FPU facility would not normally be used by cryptographic
-operations, as it does not provide cryptographically-relevant SIMD
-functions.
-
-It appears to us very unlikely that the leak might directly compromise
-sensitive information such as cryptographic keys, although (without
-knowledge of the guest software) this cannot be ruled out.  (This is
-notwithstanding the contrary statement in `Impact' in XSA-52.)
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions 4.0 and onwards are vulnerable.  Any kind of guest can
-exploit the vulnerability.
-
-The vulnerability is exposed only on AMD x86 systems.  Intel and ARM
-systems do not expose this vulnerability.
-
-Both PV and HVM guests are affected.
-
-MITIGATION
-==========
-
-The vulnerability can be avoided if the guest kernel is controlled by
-the host rather than guest administrator, provided that further steps
-are taken to prevent the guest administrator from loading code into
-the kernel (e.g. by disabling loadable modules etc) or from using
-other mechanisms which allow them to run code at kernel privilege.
-
-On Xen versions 4.3 and earlier, turning off XSAVE support via the
-"no-xsave" hypervisor command line option will avoid the vulnerability.
-
-On Xen versions 4.4 and onwards there is no other known mitigation.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich from SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa172.patch           xen-unstable, Xen 4.6.x, Xen 4.5.x, Xen 4.4.x
-xsa172-4.3.patch       Xen 4.3.x
-
-$ sha256sum xsa172*
-f18282fcb794b8772bc3af51d56860050071bd62a5a909b8f2fc2018e2958154  xsa172.patch
-6aac179620afcdbdab041163239019bc35b0e243f3bd16673caaec7d5a4d97ec  xsa172-4.3.patch
-$
-
-NOTE REGARDING CVE
-==================
-
-CVE-2016-3158 is for the code change which is required for all
-versions (but which is sufficient only on Xen 4.3.x, and insufficient
-on later versions).  Ie for the second hunk in xsa172.patch (the only
-hunk in xsa172-4.3.patch), which patches the function xrstor.
-
-CVE-2016-3159 is for the code change which is applicable for later
-versions only, but which must always be combined with the code change
-for CVE-2016-3158.  Ie for the first hunk in xsa172.patch, which
-patches the function fpu_fxrstor.
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the PATCH or the TRUSTED KERNEL MITIGATION (or others
-which are substantially similar) is permitted during the embargo, even
-on public-facing systems with untrusted guest users and
-administrators.
-
-However deployment of the "no-xsave" MITIGATION is NOT permitted
-(except where all the affected systems and VMs are administered and
-used only by organisations which are members of the Xen Project
-Security Issues Predisclosure List).  Specifically, deployment on
-public cloud systems is NOT permitted.
-
-This is because such a host configuration change would be guest-visible
-which could lead to the rediscovery of the vulnerability.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJW9BUjAAoJEIP+FMlX6CvZh0sH/RMRw5mKOjz4IPUFVlxXvJYr
-4BYbJyitDX6uX6Hdp8XosqrMfTqpDWNYzTPS4UMOmSZq0JSSSeRDB5esM3otQSzl
-Vnq8toyl2IeDZAZ7KhLTOUGF1libSGyE32MCLP32XOwbAaWRD01ld71M4P2+Cmuz
-JFqgfRQxgqzcrfZP74CqfbAdU9sxIq5Py6BHBdSOlKuZMF7RPZbIpy2KwdAmIUZJ
-IXnwlWvXvg5Uq3RfzRPJ10EaaQhIajgSxGGOViVXEVObY48jbcXFB3xTTT49CMB2
-GqNK+CjUTVvfTFe2jFYu1Uscwot85tgsu09zui3Jleml1dhs6eIM4vKcLG96g1E=
-=ojN8
+iQIcBAEBCAAGBQJW6srrAAoJEL54rhJi8gl5J/4P/0g7s1pjL7lsg4sc3vN41r6v
++1i0ucO28tfGhM13QxqNfR1RqUZ3W40dlWz2Lum6NvudbkGZaY+Jzph4BT9RW1n2
+80ruiuamYF3escBnWvssSdIjwl2ibwsKFzzjyrvArdcZpnI6pwGFWPKLbN4pGyoz
+WSi+Ow067aqeSJVonW98AlxF4udVTrQJQi1wmhiW0jOE+7zk1rAwkVUgLlWCDJLB
+dVnopSr/FN2ewTkkJrAfBSfqQBGe7XNrnYCzefdBv7JgAARzkPc1jJzdC8oy3AIL
+TiyDVo6O/fi4j4pd01TVUc8Yh7kGilDdk7BPyptH4KPrGG8yS8SmLY2WSoR3gpa8
+iBvw6o9X0HuXFo9IGrSBsd6LUt/+dYkqOH4JN2dxj9rxKlqv+4zlGHqM8mP/xGaw
+4tCy7ekDTpEEQNSSzZDLtrDtaYbtHztC2EQ+fUp8iTmh1OKayWPGHNj/+unChR+q
+0QqQt483QarClETgwUtVQCwqUBT90nS0RFvG5FKCAGRurfWXR0b0jXtQPmECZj6k
+wlJinmq4yAPfHVEjm1/5pGANAcihuLUxVdvpw8ZbsAJRSg2wEvxSCILb4Av+OaxF
+o5q0Nlekcn3FxKNz4hpr+ra5CWy7i/KDhjAuH6rarNMWA2sDLOM18TjyL9Pax0xy
+etw4zEaMsg3o2WgpI6qS
+=huG5
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa172.patch" of type "application/octet-stream" (1657 bytes)
-
-Download attachment "xsa172-4.3.patch" of type "application/octet-stream" (1090 bytes)
