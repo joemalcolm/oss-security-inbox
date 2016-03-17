@@ -1,23 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/24/3
-Message-ID: <CACn5sdTyH2a6dbw4JDvUGHK39AzhWNxfrTLpaftkjDYmQjAu9A@mail.gmail.com>
-Date: Sun, 24 Apr 2016 10:44:39 +0200
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: jq: stack exhaustion using jv_dump_term() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/18/1
+Message-ID: <b5d0ce97-9763-2da4-8deb-2ef4d7c94abc@laposte.net>
+Date: Fri, 18 Mar 2016 00:20:27 +0100
+From: Laël Cellier <lael.cellier@...oste.net>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: server and client side remote code execution through a buffer overflow in all git versions before 2.7.1 (unpublished ᴄᴠᴇ-2016-2324 and ᴄᴠᴇ‑2016‑2315)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 16/03/2016 16:40, Stefan Cornelius wrote:
+> Hi,
+>
+> I'm Stefan Cornelius of Red Hat Product Security. Obviously, we're
+> currently working on the Git security issues.
+>
+> In one of the emails to oss-sec you mention that you have some kind of
+> reproducer for CVE-2016-2315.
+>
+> Would you please be kind enough to share this reproducer with us?
+Unfortunately, I can currently only share early work based on a modified 
+version of gitdb which can’t create a packfile (Maybe I will be able to 
+upload the full gitdb version in a few weeks). You can find it as an 
+attachment along an example file.
 
-A crash caused by stack exhaustion parsing a JSON was found. It affects, at
-least version 1.5 as well as the last git revision. Technical details and a
-reproducer are available here:
+This email contains a vulnerable version of git with libasan 
+https://github.com/google/sanitizers and no optimizations which helped 
+me to identify the issue. When I pushed that large repository, libasan 
+printed a stack trace which ended on strcpy() in path_name.c (just cat 
+2GB.txt in a terminal)
 
-https://github.com/stedolan/jq/issues/1136
+Either way once you have packfile, you need to create a network payload. 
+Since my vector was ssh I used the good vim editor on the packfile in 
+order to add the missing informations (nul bytes included) (since 
+everything is text based outside the packfile).
+Doing it manually was much faster than trying to create a script. I 
+included an example for ssh which will fill ram if cloned or pushed 
+(without doing anything related to the vulnerability). It should help 
+demonstrating how to produce one for triggering rce.
 
-This crash was found by QuickFuzz working with Radamsa (that caused the
-extreme mutation)
-
-Regards,
-Gustavo.
-
+For those who don’t want to try it. I included a crafted repo ready for 
+use which will crash affected versions. It will help distributions 
+testing their own patches.
+Of course everything I did was about strcpy() and don’t contains 
+executable code (though putting some shoud be easy). For other 
+vulnerabilities based on that size_t to int truncation, just ask Peff at 
+GitHub, inc. He did is own testing.
+> It would help us tremendously. We will not share the reproducer with
+> third parties and will only use it for our internal testing.
+On the contrary, please make them widely available so other 
+distributions can test their own patches faster.
+> Thank you very much and kind regards,
+regards,
+The attachments being too large, you can download them on 
+http://ytrezq.sdfeu.org/git/reproducer.zip
