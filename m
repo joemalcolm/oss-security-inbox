@@ -1,34 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/01/4
-Message-Id: <20160401180020.A22A86C402D@smtpvmsrv1.mitre.org>
-Date: Fri,  1 Apr 2016 14:00:20 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/17/5
+Message-Id: <20160317182754.6BA383AE057@smtpvbsrv1.mitre.org>
+Date: Thu, 17 Mar 2016 14:27:54 -0400 (EDT)
 From: cve-assign@...re.org
-To: jsegitz@...e.com
+To: gustavo.grieco@...il.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: ext4 data corruption due to punch hole races
+Subject: Re: [cairo] Out-of-bounds read in _fill_xrgb32_lerp_opaque_spans
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> issues in the Linux kernel with security implications
+> There is an out-of-bounds read in _fill_xrgb32_lerp_opaque_spans in cairo
+> (crashing software that parses and renderizes a svg, for instance).
+> 
+> https://mail.gnome.org/archives/gnome-announce-list/2015-March/msg00047.html
+> 
+>   * Fix crash in _fill_xrgb32_lerp_opaque_spans when a span length is
+>     negative.
+> 
+> https://cgit.freedesktop.org/cairo/patch/src/cairo-image-compositor.c?id=5c82d91a5e15d29b1489dcb413b24ee7fdf59934
 
-> When punching holes into a file races with the page fault of the same
-> area, it is possible that freed blocks remain referenced from page cache
-> pages mapped to process' address space. Thus modification of these blocks
-> can corrupt data someone else is now storing in those blocks (which
-> obviously has security implications if you can trick filesystem into
-> storing some important file in those blocks).
-
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ea3d7209ca01da209cda6f0dea8be9cc4b7a933b
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=17048e8a083fec7ad841d88ef0812707fbc7e39f
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=32ebffd3bbb4162da5ff88f9a35dd32d0a28ea70
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=011278485ecc3cd2a3954b5d4c73101d919bf1fa
-> https://bugzilla.suse.com/show_bug.cgi?id=972174
-
-We feel that these can be covered by one ID: use CVE-2015-8839. Also,
-it seems that 17048e8a083fec7ad841d88ef0812707fbc7e39f is not really a
-vulnerability fix on its own.
+Use CVE-2016-3190.
 
 - -- 
 CVE Assignment Team
@@ -38,17 +31,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW/rawAAoJEL54rhJi8gl5+PsQAMi/qwF/Xrfi23k+CxQToLnI
-XL3CyhTTVGv/Y/K5L4UvhDDm+R6+OAzx87Hd3dtD9OWW8lksrG1AlH/kxehf/KY2
-K2M0shbmayzs/on98JR6pNWEfOHpPdFCloTp7QLuEfHj84OeS8Vlu+x9Ohe7qQA9
-nNkxMNfMT3QuCnw2rSSyi1hzlaWMyJokCNcV2YpKyJwu8xRd86DCd4QjYh1baOYT
-qja2wjHELmAMb0FNorWYLITwJIOS/gCWxxEdY1gHWyof4Je6mj5Qre6IQku5XcQ7
-smkOA0+kwIgAv9IF7znkwTu4LR5pS7Y/XRXMd4sVIq3ULoBEbHz/6EPUnZ3s5qKW
-O7KYktRsDdOvjYb4U4y9dXCO4Hf/AAuWN0AYI9c6XFIGRFvZkRZSgTv7qp2wBZNb
-kodD0QS8mtcWA9s9g9f0bFl/AioaQSjqH3o1dxXj+4+WMYzu46vGhf6Dux1KoIeM
-tibrt1zPuW0f/eDPyTVDufXEA7eOzRdc4JsODerL8qpnk89H+tYqbFGi/c5Y7ynQ
-1YxW1rKFXF0fxBryCSWiDSVSip6cQB4vC8QGa0qMn+Ht4wlg21WoT26E/CHu8Sou
-etu6yZndZdLKTNZcIpku0Ye4KCmMr2h6gK7z2feyCfOyTdukkO/DS2aLrSkZLfd+
-OCqmLLHyRkBvQjqIMvuR
-=bqmP
+iQIcBAEBCAAGBQJW6va/AAoJEL54rhJi8gl55wMP+wdDN0WUoBXS6Yt/8taiUQu6
+iMKjMjEYZgd9vEgywQSRwmU4gEdAHWYDI23kKxNifiRAnSpyKeAKk31Y4NFxUMqu
+bNsqmKVNNSZpC05K7mw3Akqng0EnZDS3p+Kxbbu5N8w8h/1CcHxlxnmYMf2qJ0zH
+f5pn9bUskiWwL+WnxreqfrDR+x4iaixCfA8H52eyctb/6IeJc3awUTLkVYPtFEdK
+xoPqhcZThFy5W+LVtP/+XXulFKoYPGGBkcolh6rurnhygmaZtrXe1NjtSR+Eb1qt
+oPa2XiB5gofaXxtxq+QZmy2hQX+YKh+xoeAbpG/s8UPjOKi337BCw9jQlJGQzGpv
+OoGDqc/F3rS11Wj5OGfTIoxGP7xkgZp9Zlgk38V3FaPbYnC/juzW6OQIozi/64Br
+qF7h9cKl7QVQ+s1dqcAzuUk9ikpMy3tAV1OU+qexShBHPCwVn4/WSJ2H4PU3X/Bh
+PHVwuFfoFWUrVqKsGKREsLpGIWxe8loEtFF4MjubSVMnhUUbpaQcli9ILy/yPC7G
+QFVB6PklecJQ56k1Rk3eV5IFiAN3HDfT08shv1jWVHeVsOCWRCmGNKJdJKH2oL23
+X8JvWB6R9fqMbjTb3krde1xe59vRsZzGRtjaPWwbqEmYOIsPyPIw6pQZP7GyJvC2
+bRx6I2/qIfvVIUcsImnq
+=DUiy
 -----END PGP SIGNATURE-----
