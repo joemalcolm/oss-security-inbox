@@ -1,51 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/14/5
-Message-ID: <b84b5a3f-9e85-e3f2-fbbd-95dac3a76518@enea.com>
-Date: Sun, 14 Aug 2016 21:36:39 +0200
-From: Sona Sarmadi <sona.sarmadi@...a.com>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2016-5696: linux kernel - challange ack information leak.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/17/3
+Message-ID: <CACHnxzxf43GJp=bBNvCUi-4ELt7UA6i9vWm_pKW-nG4g2s0DTg@mail.gmail.com>
+Date: Thu, 17 Mar 2016 11:42:59 -0400
+From: Christopher Shannon <christopher.l.shannon@...il.com>
+To: users@...ivemq.apache.org
+Cc: dev@...ivemq.apache.org, security@...che.org,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: Re: [ANNOUNCE] CVE-2016-0782: ActiveMQ Web Console - Cross-Site Scripting
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Thanks for pointing that out, I have fixed the announcement.
 
-This vulnerability is currently only fixed in mainline kernels (4.7 &
-4.8). Does anyone know if there is any work ongoing to backport this fix
-to the  older versions?
+On Thu, Mar 17, 2016 at 11:25 AM, Derek Mahar <derek.mahar@...il.com> wrote:
 
-Thanks
-//Sona
-
-
-On 2016-07-12 06:33, Wade Mealing wrote:
-> Gday,
+> The security advisory announcement claims that ActiveMQ 5.13.1 and
+> older versions are affected and that ActiveMQ 5.13.2 fixes the issues.
 >
-> Red Hat Product Security has been made aware of an important issue in
-> the Linux kernel's implementation of challenge ACKS as specified in
-> RFC 5961. An attacker which knows a connections client IP, server IP
-> and server port can abuse the challenge ACK mechanism
-> to determine the accuracy of a normally 'blind' attack on the client or server.
+> On 10 March 2016 at 07:45, Christopher Shannon
+> <christopher.l.shannon@...il.com> wrote:
+> > There following security vulnerability was reported against Apache
+> > ActiveMQ 5.13.0 and older versions.
+> >
+> > Please check the following document and see if you’re affected by the
+> issue.
+> >
+> >
+> http://activemq.apache.org/security-advisories.data/CVE-2016-0782-announcement.txt
+> >
+> > Apache ActiveMQ 5.13.1 and newer with appropriate fixes was released and
+> > available for upgrade.
 >
-> Successful exploitation of this flaw could allow a remote attacker to
-> inject or control a TCP stream contents in a connection between a
-> Linux device and its connected client/server.
 >
-> * This does NOT mean that cryptographic information is exposed.
-> * This is not a Man in the Middle (MITM) attack.
 >
-> This was reported to Red Hat by Yue Cao, part of the Cyber Security
-> Group in the University of California
+> --
+> Derek Mahar
+> 1.514.316.6736 Home
+> 1.514.316.7348 Mobile
+> 1.514.461.3650 x230 Work
+> 102-1365 boulevard René-Lévesque Est
+> Montréal QC H2L 2M1
+> Canada
 >
-> Thanks,
->
-> Wade Mealing
-> Red Hat Product Security Team
->
-> Red Hat Bugzilla:
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=1354708
->
-> Patch:
->
-> https://www.mail-archive.com/netdev@vger.kernel.org/msg118677.html
 
