@@ -1,20 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/29/3
-Message-Id: <4DEA83BF-D7C9-40F2-AD63-BC9C9B3910AE@hojmark.org>
-Date: Fri, 29 Jan 2016 08:33:52 +0100
-From: Asbjorn Hojmark <lists@...mark.org>
-To: Ask Bjørn Hansen <ask@...pool.org>
-Cc: Luca BRUNO <lucab@...ian.org>, oss-security@...ts.openwall.com, pool@...ts.ntp.org, team@...urity.debian.org, secalert@...hat.com
-Subject: Re: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/17/2
+Message-ID: <CABtfiZbb8y9uuQT8=zrAaTi8znTjXXBqGPZBdDa4yxiaw3OO-g@mail.gmail.com>
+Date: Thu, 17 Mar 2016 11:25:28 -0400
+From: Derek Mahar <derek.mahar@...il.com>
+To: users@...ivemq.apache.org
+Cc: dev@...ivemq.apache.org, security@...che.org,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: Re: [ANNOUNCE] CVE-2016-0782: ActiveMQ Web Console - Cross-Site Scripting
 Content-Type: text/plain; charset=utf-8
 
+The security advisory announcement claims that ActiveMQ 5.13.1 and
+older versions are affected and that ActiveMQ 5.13.2 fixes the issues.
 
-> I might just be too cynical, but it also feels like something we should come to expect. Anyone who's looked at traffic to an Internet facing IPv4 address have seen much worse.
+On 10 March 2016 at 07:45, Christopher Shannon
+<christopher.l.shannon@...il.com> wrote:
+> There following security vulnerability was reported against Apache
+> ActiveMQ 5.13.0 and older versions.
+>
+> Please check the following document and see if you’re affected by the issue.
+>
+> http://activemq.apache.org/security-advisories.data/CVE-2016-0782-announcement.txt
+>
+> Apache ActiveMQ 5.13.1 and newer with appropriate fixes was released and
+> available for upgrade.
 
-I (too) might just be too cynical, or in this business too long, but I feel that if you communicate on the global Internet, you should expect to be probed. If you’re not ready to be probed, your machine shouldn’t be on the Net. Really.
 
-One can probe the entire v4 Internet in minutes, so being probed should not be new to any device on it. The fact that the v6 address space takes ... slightly longer ;) to probe should not make one lazy and rely on security by obscurity, hoping that your machine will not be seen.
 
-That being said, I do agree that the NTP pool should try to only provide the services that it ‘advertises’. I just hope everyone realises that with volounteers running the servers and the pool, that will be very difficult to enforce.
-
--A
+-- 
+Derek Mahar
+1.514.316.6736 Home
+1.514.316.7348 Mobile
+1.514.461.3650 x230 Work
+102-1365 boulevard René-Lévesque Est
+Montréal QC H2L 2M1
+Canada
