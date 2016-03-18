@@ -1,81 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/16/9
-Message-ID: <CALq7B37=jC3u8v6hE_n1-2279aVwacRH0cJP9tcYh9Ehc2gdKQ@mail.gmail.com>
-Date: Wed, 17 Feb 2016 01:33:58 +0530
-From: Sandeep Kamble <sandeepk.l337@...il.com>
-To: fulldisclosure@...lists.org
-Cc: bugtraq@...urityfocus.com, listadmin@...urityfocus.com,  oss-security@...ts.openwall.com
-Subject: Umbraco - The open source ASP.NET CMS Multiple Vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/18/3
+Message-ID: <56EC8580.9000308@pipping.org>
+Date: Fri, 18 Mar 2016 23:47:28 +0100
+From: Sebastian Pipping <sebastian@...ping.org>
+To: oss-security@...ts.openwall.com
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: expat hash collision fix too predictable?
 Content-Type: text/plain; charset=utf-8
 
-[image: Vulnerable Umbraco]
-<http://blog.securelayer7.net/wp-content/uploads/2016/02/download.png>
+Hi!
 
-Recently I got an assignment where I had to work on the Umbraco application
-- a free Open Source Content Management System built on the ASP.NET
-platform and is used by more than 2,25,000 websites. While performing the
-security testing of this application, I discovered serious vulnerabilities
-within this application, allowing to perform SSRF attack, CSRF Bypass
-attack, and persistent XSS. The CVE number yet to be assigned to these
-vulnerabilities. It would be strongly recommended to update the CMS to
-latest version.
 
-*SSRF Vulnerability*
+Thanks to Andreas for the hint on gettimeofday.
+For those interested, a short- to mid-term approach patch to this issue 
+is currently being discussed at:
 
-Let me get start with Server side request forgery (ssrf) attack found
-within the feedproxy.aspx. Those who new to SSRF, please follow this link.
-<https://cwe.mitre.org/data/definitions/918.html>
+   https://bugzilla.redhat.com/show_bug.cgi?id=1197087
 
-I started off playing with the feedproxy.aspx, it is intersting page in
-Umbraco . the feedproxy.aspx is used to access the external resources using
-the URL GET parameter.
+Best
 
-http://local/Umbraco/feedproxy.aspx?url=http://bobsite/index
 
-once you change the URL to the
-http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:80/index, you able
-to access the localhost application of the server.
 
-Using this payload change the port number to perform port scanning of the
-server. It will be helpful to find the more details of the server.
-For example:
-
-http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:25/index
-http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:8080/index
-
-If the port number is closed, you will find the error message on the
-feedproxy.aspx page. Umbraco assigned bug ID U4-7457
-<http://issues.umbraco.org/issue/U4-7457> and fixed the issue.
-
-*CSRF Bypass Vulnerability*
-
-The Umbraco assigned bug ID U4-7459
-<http://issues.umbraco.org/issue/U4-7459>, It was discovered that Umbraco
-enabled sensitive actions, such as editing a user account information was
-vulnerable to CSRF vulnerability.
-The vulnerable code in templates.asmx.cs on the line number 75, it is
-executing save operation without verifying the actual CSRF token.
-In the file SetAngularAntiForgeryTokensAttributes.cs, on line number 25,
-function allowing empty CSRF value, the CSRF vulnerability is triggering.
-
-Find the more details on this fix on the below given link:
-
-https://github.com/umbraco/Umbraco-CMS/commit/18c3345e47663a358a042652e697b988d6a380eb
-
-*Persistent XSS Vulnerability*
-
-It is found that Umbraco is also vulnerable to Persistent XSS in content
-type editor. Umbraco has been assigned bug ID U4-7461.. This vulnerability
-existed in the name field of the media page, the developer data edit page,
-and the form page.[image: XSS Vulnerability in Umbraco]
-<http://blog.securelayer7.net/wp-content/uploads/2016/02/3-1.png>
-
-[image: XSS Vulneraiblity in Umbraco]
-<http://blog.securelayer7.net/wp-content/uploads/2016/02/1.png>
-
-[image: XSS Vulnerability Umbraco]
-<http://blog.securelayer7.net/wp-content/uploads/2016/02/2.png>
-
-To mitigate these vulnerabilities, it is recommended to update Umbraco to
-the version V7.4.0.
+Sebastian
 
