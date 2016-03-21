@@ -1,81 +1,192 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/23/9
-Message-Id: <20160623185512.F3E8552E016@smtpvbsrv1.mitre.org>
-Date: Thu, 23 Jun 2016 14:55:12 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Requests: WordPress: 4.5.3 maintenance and security release: several issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/21/1
+Message-ID: <CAB_jSYwVGQrFsH6syD=az8-4Moazj5de0xvRrYnAiRuhaG=Tgw@mail.gmail.com>
+Date: Mon, 21 Mar 2016 14:32:15 +0800
+From: Marina Glancy <marina@...dle.com>
+To: oss-security@...ts.openwall.com
+Subject: moodle security release
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+The following security notifications have now been made public. Thanks
+to OSS members for their cooperation.
 
-> https://wordpress.org/news/2016/06/wordpress-4-5-3/
+Marina Glancy
+Development Process Manager
+e: marina@...dle.com
+p: +61 8 9467 4167 w: moodle.com
 
->  - redirect bypass in the customizer, reported by Yassine Aboukir;
+==============================================================================
+MSA-16-0003: Incorrect capability check when displaying users emails in
+Participants list
 
-Use CVE-2016-5832.
+Description:       Teachers who otherwise were not supposed to see students'
+                   emails could see them in the participants list
+Issue summary:     Incorrect capability check when displaying users emails in
+                   Participants list
+Severity/Risk:     Minor
+Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
+                   and earlier unsupported versions
+Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
+Reported by:       Matt Jenner
+Issue no.:         MDL-52433
+CVE identifier:    CVE-2016-2151
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52433
 
+==============================================================================
+MSA-16-0004: XSS from profile fields from external db
 
->  - XSS problem via attachment name reported by Jouko Pynnonen
+Description:       Moodle traditionally trusted content from external DB
+                   however it was decided that external datasources may not be
+                   aware of web security practices and data could cause
+                   problems after importing to Moodle
+Issue summary:     XSS from profile fields from external db
+Severity/Risk:     Minor
+Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
+                   and earlier unsupported versions
+Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
+Reported by:       Jay Knight
+Issue no.:         MDL-50705
+CVE identifier:    CVE-2016-2152
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-50705
 
-Use CVE-2016-5833.
+==============================================================================
+MSA-16-0005: Reflected XSS in mod_data advanced search
 
+Description:       User with higher permissions could be tricked into clicking
+                   a link which would result in XSS attack
+Issue summary:     Reflected XSS in mod_data advanced search
+Severity/Risk:     Minor
+Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
+                   and earlier unsupported versions
+Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
+Reported by:       Ian Song
+Issue no.:         MDL-52727
+Workaround:        Educate staff to always use only modern browsers that block
+                   such attacks by default
+CVE identifier:    CVE-2016-2153
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52727
 
->  - XSS problem via attachment name reported by Divyesh Prajapati
+==============================================================================
+MSA-16-0006: Hidden courses are shown to students in Event Monitor
 
-Use CVE-2016-5834.
+Description:       Users without capability to view hidden courses but with
+                   capability to subscribe to Event Monitor rules could see
+                   the names of hidden courses
+Issue summary:     Hidden courses are shown to students in Event Monitor
+Severity/Risk:     Minor
+Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10
+Versions fixed:    3.0.3, 2.9.5 and 2.8.11
+Reported by:       Roger
+Issue no.:         MDL-51167
+Workaround:        Revoke capability to subscribe to Event Monitor rules from
+                   regular users
+CVE identifier:    CVE-2016-2154
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-51167
 
+==============================================================================
+MSA-16-0007: Non-Editing Instructor role can edit exclude checkbox in Single
+View
 
->  - revision history information disclosure, reported independently by
->    John Blackbourn from the WordPress security team and by Dan Moen from
->    the Wordfence Research Team;
+Description:       Incorrect capability check in Single View grade report
+                   could result in giving a teacher extra permission
+Issue summary:     Non-Editing Instructor role can edit exclude checkbox in
+                   Single View
+Severity/Risk:     Minor
+Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10
+Versions fixed:    3.0.3, 2.9.5 and 2.8.11
+Reported by:       Mark McKay
+Issue no.:         MDL-52378
+CVE identifier:    CVE-2016-2155
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52378
 
-Use CVE-2016-5835 (for both reports).
+==============================================================================
+MSA-16-0008: External function get_calendar_events return events that pertains
+to hidden activities
 
+Description:       Users without capability to view hidden acitivites could
+                   still see associated calendar events via web services
+Issue summary:     External function get_calendar_events return events that
+                   pertains to hidden activities
+Severity/Risk:     Minor
+Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
+                   and earlier unsupported versions
+Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
+Reported by:       Juan Leyva
+Issue no.:         MDL-52808
+CVE identifier:    CVE-2016-2156
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52808
 
->  - oEmbed denial of service reported by Jennifer Dodd from Automattic;
+==============================================================================
+MSA-16-0009: CSRF in Assignment plugin management page
 
-Use CVE-2016-5836.
+Description:       CSRF possible on admin page, however exploit unlikely
+                   benefit anybody and can easily be reversed
+Issue summary:     CSRF in Assignment plugin management page
+Severity/Risk:     Minor
+Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
+                   and earlier unsupported versions
+Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
+Reported by:       Paul Holden
+Issue no.:         MDL-53031
+CVE identifier:    CVE-2016-2157
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-53031
 
+==============================================================================
+MSA-16-0010: Enumeration of category details possible without authentication
 
->  - unauthorized category removal from a post, reported by David Herrera
->    from Alley Interactive;
+Description:       Despite force login setting guests could still access
+                   course category details
+Issue summary:     Enumeration of category details possible without
+                   authentication
+Severity/Risk:     Minor
+Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
+                   and earlier unsupported versions
+Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
+Reported by:       Krista Koivisto
+Issue no.:         MDL-52774
+CVE identifier:    CVE-2016-2158
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52774
 
-Use CVE-2016-5837.
+==============================================================================
+MSA-16-0011: Add no referrer to links with _blank target attribute
 
+Description:       Improve security when following external links that were
+                   added with _blank target
+Issue summary:     Add no referrer to links with _blank target attribute
+Severity/Risk:     Minor
+Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
+                   and earlier unsupported versions
+Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
+Reported by:       Hugh Davenport
+Issue no.:         MDL-52651
+CVE identifier:    CVE-2016-2190
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52651
 
->  - password change via stolen cookie, reported by Michael Adams from the
->    WordPress security team;
+==============================================================================
+MSA-16-0012: External function mod_assign_save_submission does not check due
+dates
 
-Use CVE-2016-5838.
+Description:       Students were able to add assignment submissions after the
+                   due date through web service
+Issue summary:     External function mod_assign_save_submission does not check
+                   due dates
+Severity/Risk:     Minor
+Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
+                   and earlier unsupported versions
+Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
+Reported by:       Juan Leyva
+Issue no.:         MDL-52901
+CVE identifier:    CVE-2016-2159
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52901
 
-
->  - and some less secure sanitize_file_name edge cases reported by Peter
->    Westwood of the WordPress security team.
-
-Use CVE-2016-5839.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXbDAaAAoJEHb/MwWLVhi2vRsP/1cTw1/gyBFvOVlNRD4gUscp
-sVM6giF0Zex+dI8/mbpN+MVKaRVQyboyYkmIjsrpm8CkUZP+u04cxcoqcaoUOuSX
-IFr2IciixkO5oEJo8sBQdWYrkqUkUdUDqpbaVhjWF3R1/TtkPZSuFuSxcDZjSp6k
-OlRdC9kg325QJ7P6apqatAS2mnOM5N46SciRPZzuXZWBAtFlDYlBUAFmSjZri7cn
-+Wv5XgLa7Tr4sgDm7SYm4J7Uq5zxm/+iFyVCbIGoTsc9/J1ueSjuqQUNxfTa9exq
-d69CzHODuv97Uh1RkeaD0vWNRujH0IfiRTi4boC/6t5QyhVUwuIUcFnWt3JMEVL5
-Zy72e9BrVCEnEOjmRNVHLtH1g5IE88qZmDMLlmDTS8B+9sR2YzqY4pxVvRSIWiLD
-GKR7UI0FOQw7L2tMcuVdTUmjDj3szeSVdrbBNqltwFGIWOVoM4YQgMbvMOLmTPUg
-1Z1WcHLBbIkUTBExOgreTynbw6qNj07Ke58FJ48HOJokDNZu1OTYS/9DipIJfeuZ
-Iz6Agxrwe/56RY4Hw0v+t73QDw5NWymRcjUIH5CRXlWaF90lte1+WD+26tqdrOce
-bUTZCtSVC4p4EaJMVBlTAhHakt/jLNlSGo+E/X1+dyBZIN2gJBM6WgM0SevoFzNq
-wejdTa3fpDC0Nxv+829x
-=QXFm
------END PGP SIGNATURE-----
+==============================================================================
