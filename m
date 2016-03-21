@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1202" "Wednesday" "19" "October" "2016" "19:30:04" "-0400" "Rich Felker" "dalias@libc.org" "<20161019233004.GJ19318@brightrain.aerifal.cx>" "30" "[oss-security] Re: CVE Request - TRE & musl libc regex integer overflows in buffer size computations" nil nil nil "10" "2016101923:30:04" "[oss-security] Re: CVE Request - TRE & musl libc regex integer overflows in buffer size computations" (number mark "U       dalias@libc. Oct 19   30/1202  " thread-indent "\"[oss-security] Re: CVE Request - TRE & musl libc regex integer overflows in buffer size computations\"\n") "<20161019213412.5EE6E8BC62F@smtpvmsrv1.mitre.org>" ("<20161018230613.GH19318@brightrain.aerifal.cx>" "<20161019213412.5EE6E8BC62F@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1496" "Monday" "21" "March" "2016" "10:58:41" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160321145841.81C8F332081@smtpvbsrv1.mitre.org>" "38" "[oss-security] Re: CVE request: Stack exhaustion in libxml2 parsing xml files in recover mode" "^Cc:" nil nil "3" "2016032114:58:41" "[oss-security] Re: CVE request: Stack exhaustion in libxml2 parsing xml files in recover mode" (number mark "        cve-assign@m Mar 21   38/1496  " thread-indent "\"[oss-security] Re: CVE request: Stack exhaustion in libxml2 parsing xml files in recover mode\"\n") "<CACn5sdSPZ7+z-LGK1PBrmv6ozCVHhNA6XCrQpJc-YR09ickhAA@mail.gmail.com>" ("<CACn5sdSPZ7+z-LGK1PBrmv6ozCVHhNA6XCrQpJc-YR09ickhAA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 29971 invoked by uid 550); 19 Oct 2016 23:34:30 -0000
+Received: (qmail 3246 invoked by uid 550); 21 Mar 2016 14:58:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 3222 invoked from network); 21 Mar 2016 14:58:53 -0000
+In-Reply-To: <CACn5sdSPZ7+z-LGK1PBrmv6ozCVHhNA6XCrQpJc-YR09ickhAA@mail.gmail.com>
+Message-Id: <20160321145841.81C8F332081@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Mon, 21 Mar 2016 10:58:41 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27696 invoked from network); 19 Oct 2016 23:30:22 -0000
-Date: Wed, 19 Oct 2016 19:30:04 -0400
-From: Rich Felker <dalias@libc.org>
-To: cve-assign@mitre.org
-Cc: oss-security@lists.openwall.com, ville@laurikari.net
-Message-ID: <20161019233004.GJ19318@brightrain.aerifal.cx>
-References: <20161018230613.GH19318@brightrain.aerifal.cx>
- <20161019213412.5EE6E8BC62F@smtpvmsrv1.mitre.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161019213412.5EE6E8BC62F@smtpvmsrv1.mitre.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: Rich Felker <dalias@aerifal.cx>
-Subject: [oss-security] Re: CVE Request - TRE & musl libc regex integer overflows in buffer
- size computations
+Subject: [oss-security] Re: CVE request: Stack exhaustion in libxml2 parsing xml files in recover mode
+To: gustavo.grieco@gmail.com
 
-On Wed, Oct 19, 2016 at 05:34:12PM -0400, cve-assign@mitre.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
-> 
-> > Due to incorrect use of integer types and missing overflow checks in
-> > the tre_tnfa_run_parallel function's buffer overflow logic, the TRE
-> > regex implementation (both original version and the one used in musl
-> > libc) are subject to integer overflows in buffer size computation.
-> 
-> > at least the num_states*num_tags multiplication can clearly
-> > overflow in practice. for safety, check them all, and use the proper
-> > type, size_t, rather than int.
-> 
-> Use CVE-2016-8859 for this entire report. We do not see a sensible way
-> in which the issue of an incorrect data type could be separated from
-> the issue of unchecked multiplication.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Agreed.
+> gdb --args xmllint --recover no-recover.xml
 
-> > -    buf = xmalloc((unsigned)total_bytes);
-> > +    buf = calloc(total_bytes, 1);
-> 
-> If this is a security fix, it would need a separate CVE ID.
+> Program received signal SIGSEGV, Segmentation fault.
+> _int_malloc (av=0x7ffff7826760 <main_arena>, bytes=2) at malloc.c:3302
 
-It's not, just something I did at the same time as fixing the bogus
-cast (which would be unsafe after the type fix) in this line. In
-musl's version of the code, xmalloc is just malloc, and malloc+memset
-was a sloppy way of writing calloc that I cleaned up.
+Use CVE-2016-3627.
 
-Rich
+> It was reported to the libxml2 bug tracker some
+> time ago but the maintainers are quite busy, so they haven't fixed it.
+
+It's typically useful to mention the bug number even if it isn't
+currently a public bug, in case correlation is needed later.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJW8AsWAAoJEL54rhJi8gl58g4P/i/POnAJzcVBHPdk0svtHKl+
++510uhal1JlA6r3y3AiDnqsaRM5TMzuzYs+0l9EA8ydM9nx0UMAOkA/1tHVl48P1
+cJcMMoHj/dv/pBBsAaSuJEr2VttXOn4gCuhhVOJQBc1g4sMYUNEdsn3dJ9HbyI6W
+sL2fkuGxXCMTl5at94lLJI+Hij8t+VrDSmS+0e+W7AvL4uDuyYH6b4Bcp4BmlX8l
+m52hCy9Y72MoSHeituWXLZZ75EIWdwy8ftTmjxpO08ZPR2YjUIiwDYBZKvfWCpFt
+aQc/FJrvygTbXtfvT6WUli8qrz1Q2EzYV5c1/jGSfh+0YaNJkvDdLsRlCE0qMm4L
+TnoZmD2boumgRmCLAwmqQrkCZeSh6I8ET/I6NHhor8f0LXEuVGOjjN1IJCJ2wRT7
+QGp7iejweiDoL1EioQg2pZij4BmG8jxy4XtJRZUBtJzt8yYfIP//z5Lm+3MwO7Uq
+UCscXaI0xpLAP4WW/kQTij9wVBnByu61USK7z96dytNcxYqmQhFhaBbUcT3phqwe
+JhwGxCONz1wDJG028cXD/r1DX/s/3dHLKWbSrg6zjETaBNTkuIgQBO6SJ9tPcRht
+/7T/LPgsNvuqydPksZWan1ytstfOhEDrl2pexJBgnwpt6QlsZnKtIScHDn3PNBND
+rpeM6ZE03EVFPNQRk0sK
+=1y/J
+-----END PGP SIGNATURE-----
