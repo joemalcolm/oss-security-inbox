@@ -1,23 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/13/10
-Message-Id: <20160713175736.AFF4A33202D@smtpvbsrv1.mitre.org>
-Date: Wed, 13 Jul 2016 13:57:36 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/21/3
+Message-Id: <20160321145841.81C8F332081@smtpvbsrv1.mitre.org>
+Date: Mon, 21 Mar 2016 10:58:41 -0400 (EDT)
 From: cve-assign@...re.org
-To: misc@...b.org
+To: gustavo.grieco@...il.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: openshift-node is logging private RSA keys to the systemd journal
+Subject: Re: CVE request: Stack exhaustion in libxml2 parsing xml files in recover mode
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://github.com/openshift/origin/issues/3951
+> gdb --args xmllint --recover no-recover.xml
 
->> https://github.com/openshift/origin/issues/3951#issuecomment-126726391
+> Program received signal SIGSEGV, Segmentation fault.
+> _int_malloc (av=0x7ffff7826760 <main_arena>, bytes=2) at malloc.c:3302
 
->> the root cause is storing the cert/key as envvars in the pod, which is what needs to stop.
+Use CVE-2016-3627.
 
-Use CVE-2015-8945.
+> It was reported to the libxml2 bug tracker some
+> time ago but the maintainers are quite busy, so they haven't fixed it.
+
+It's typically useful to mention the bug number even if it isn't
+currently a public bug, in case correlation is needed later.
 
 - -- 
 CVE Assignment Team
@@ -27,17 +32,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXhoC1AAoJEHb/MwWLVhi25jYP/A8sFCUCZLYD7GOYjUi3NIEP
-KiPk/F0SQjzbtwLAHdZHD+X3XYp2z70f0ZESEXv9sO2ltH0lviuxrZQxODU0WM3R
-ZKvq51ooXyxsD1k2Df/EwNW4ll69f388ulg2mZnsuR4mkzspJPQfiGQjP3Ant8jT
-o9/uNEnw7AQmTPDLDgyAykZxJgdaGs2Mof2MO5vvP9XwdDJAJJTITfOK+bZmxD0t
-wJR11mQvtRr5nyefj+0zaoJG0mZBkC6P5ZMxIWNzubOnUQLlMf8EfWcarVLUknNp
-yS0SLF1dCgjfPWfrx2csMiJpxCsrZvwcMWIlwWhjSRDuNgq7+0tsRvKcHDObjNri
-qtIJyq/85bXiAbrRInQDl402okH7T+SzoKhIldna2bxD710SRpgV/LIfy+yiAPgY
-JZUSWSRNhIsA0ms7TtV8aYudc7WP6Ur6d8hAZ+M+DMdwSy6ZJrCjDtSFVVUsNhB3
-mTN4dtpIdqKuTJTwfGioTkCNtMvr4wTbny+Ss0+yXqTu2n4Os73UZKtcj6v9bWty
-6v03/VTIA7VIzoqcB03SX++qCCYR1e5U3Z3jWCP+0Hfemaph+s59NxbyX8on4JyM
-tYVBT0RSzxP7Wl50Eu05hyYVjhRyH2sdxTzwyF8zvDOGoloS8XL1WmNB3zu1v6D2
-sQpXbT9+W/HTOZMO1DPA
-=8aCU
+iQIcBAEBCAAGBQJW8AsWAAoJEL54rhJi8gl58g4P/i/POnAJzcVBHPdk0svtHKl+
++510uhal1JlA6r3y3AiDnqsaRM5TMzuzYs+0l9EA8ydM9nx0UMAOkA/1tHVl48P1
+cJcMMoHj/dv/pBBsAaSuJEr2VttXOn4gCuhhVOJQBc1g4sMYUNEdsn3dJ9HbyI6W
+sL2fkuGxXCMTl5at94lLJI+Hij8t+VrDSmS+0e+W7AvL4uDuyYH6b4Bcp4BmlX8l
+m52hCy9Y72MoSHeituWXLZZ75EIWdwy8ftTmjxpO08ZPR2YjUIiwDYBZKvfWCpFt
+aQc/FJrvygTbXtfvT6WUli8qrz1Q2EzYV5c1/jGSfh+0YaNJkvDdLsRlCE0qMm4L
+TnoZmD2boumgRmCLAwmqQrkCZeSh6I8ET/I6NHhor8f0LXEuVGOjjN1IJCJ2wRT7
+QGp7iejweiDoL1EioQg2pZij4BmG8jxy4XtJRZUBtJzt8yYfIP//z5Lm+3MwO7Uq
+UCscXaI0xpLAP4WW/kQTij9wVBnByu61USK7z96dytNcxYqmQhFhaBbUcT3phqwe
+JhwGxCONz1wDJG028cXD/r1DX/s/3dHLKWbSrg6zjETaBNTkuIgQBO6SJ9tPcRht
+/7T/LPgsNvuqydPksZWan1ytstfOhEDrl2pexJBgnwpt6QlsZnKtIScHDn3PNBND
+rpeM6ZE03EVFPNQRk0sK
+=1y/J
 -----END PGP SIGNATURE-----
