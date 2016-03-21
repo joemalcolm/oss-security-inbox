@@ -1,110 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/12
-Message-ID: <CANO=Ty33aP09VUvRTYncYLOt0ZFNRBw4-PJMau93s7R9SO9H9w@mail.gmail.com>
-Date: Fri, 15 Jan 2016 10:34:40 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: corsac@...ian.org, CVE ID Requests <cve-assign@...re.org>
-Subject: Re: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/21/4
+Message-ID: <D31580E7.2725E%grant.murphy@hpe.com>
+Date: Mon, 21 Mar 2016 17:44:46 +0000
+From: "Murphy, Grant" <grant.murphy@....com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "gustavo.grieco@...il.com" <gustavo.grieco@...il.com>
+CC: "cve-assign@...re.org" <cve-assign@...re.org>
+Subject: Re: Re: CVE request: Stack exhaustion in libxml2 parsing xml files in recover mode
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 15, 2016 at 10:10 AM, <cve-assign@...re.org> wrote:
+On 3/21/16, 7:58 AM, "cve-assign@...re.org" <cve-assign@...re.org> wrote:
+
+>-----BEGIN PGP SIGNED MESSAGE-----
+>Hash: SHA256
 >
-> >> eliminate fallback from untrusted X11 forwarding to trusted forwarding
-> >> when the X server disables the SECURITY extension; Reported by Thomas
-> >> Hoger
+>> gdb --args xmllint --recover no-recover.xml
 >
-> MITRE is not assigning a CVE ID for
-> ed4ce82dbfa8a3a3c8ea6fa0db113c71e234416c at this time. First, the
-> (misspelled) reporter name suggests that the issue might have already
-> had a CVE ID assigned by Red Hat before the issue became public. Also,
-> http://www.openssh.com/txt/release-7.1p2 does not announce this as a
-> security fix. Finally, the wording suggests that it could possibly be
-> an interoperability fix, not a security fix.
+>> Program received signal SIGSEGV, Segmentation fault.
+>> _int_malloc (av=0x7ffff7826760 <main_arena>, bytes=2) at malloc.c:3302
 >
+>Use CVE-2016-3627.
+>
+>> It was reported to the libxml2 bug tracker some
+>> time ago but the maintainers are quite busy, so they haven't fixed it.
+>
+>It's typically useful to mention the bug number even if it isn't
+>currently a public bug, in case correlation is needed later.
 
-This issue is public on our BZ:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1298741
-
-It was discovered that OpenSSH client did not correctly handle
-situations when untrusted X11 forwarding was requested and generation
-of the untrusted authentication cookie failed.  The ssh client
-continued by generating fake authentication cookie and allowed remote
-X clients to connect the local X server.  The decision if client
-connection was accepted was delegated to the X server which, depending
-on its configuration, could allow clients to open trusted X
-connection.  This would lead to remote X clients having more
-privileged access to the local X server than intended.
-
-This problem can occur when X server does not include or enable X
-Security extension (for X.org X server, this extension is not compiled
-in by default since 2007) and when it has authentication methods
-besides MIT cookies enabled (e.g. localuser authentication allowing
-all X connections from a local user who owns the X session).
-
-Both of these conditions are satisfied on Red Hat Enterprise Linux 7
-and current Fedora versions.  The X server does not have X Security
-extension compiled in and 'xhost +si:localuser:`id -un`' is run from
-the xinit scripts.  Therefore remote X clients are granted trusted
-access to the local X server when 'ssh -X' is used, as if 'ssh -Y' was
-actually used.
-
-The X server on Red Hat Enterprise Linux 6 includes X Security
-extension (as of RHSA-2013:1620 -
-http://rhn.redhat.com/errata/RHSA-2013-1620.html - which was released
-as part of Red Hat Enterprise Linux 6.5) and hence does not fall back
-to the use of fake authentication cookie.
-
-This issue was corrected upstream in version 7.1p2:
-http://www.openssh.com/txt/release-7.1p2
-
-Upstream commit:
-https://anongit.mindrot.org/openssh.git/commit/?id=ed4ce82dbfa8a3a3c8ea6fa0db113c71e234416c
-
-which needs to be applied after:
-https://anongit.mindrot.org/openssh.git/commit/?id=f98a09cacff7baad8748c9aa217afd155a4d493f
-
-=============
-
-We reported it upstream but we did NOT assign a CVE to this issue (I
-think because we're not affected it was going to be left to upstream).
-This issue does appear to need a CVE, however since it is public now
-I'll leave that up to Mitre.
-
-
+Looks like it was reported here:
+https://bugzilla.gnome.org/show_bug.cgi?id=762100
 
 >
-> - --
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
+>- -- 
+>CVE Assignment Team
+>M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+>[ A PGP key is available for encrypted communications at
+>  http://cve.mitre.org/cve/request_id.html ]
+>-----BEGIN PGP SIGNATURE-----
+>Version: GnuPG v1
 >
-> iQIcBAEBCAAGBQJWmSeMAAoJEL54rhJi8gl5QX4P/A53KsJzi3RcvrjKkL/noIW1
-> aIe6dGR+F1ORULFbUxUUsNBCk9Kbn4wh5ILJG4NKrMbf96D0Fhc9HHC9PMR5/E4y
-> tQdwDLwqpn57k+ma/tiWnO4BewPvu6F67jITus5SPYJHVs6yruGJCZCmxfD8rIjd
-> Y2Of21fkCmQTz86EQ0OBHmTZGbme63xP9FEEqS/AZDKmDfb/6HWeFpHf9hvoU/sj
-> PDXoUL72veUt/w44qeQCl0nIFEw+c3bkH10lnsyJPXUk0n50fX8+cibt/jVthLZP
-> xR349ILvgIHCWvLCjIwUxsH14+01h7n5Bpm/ydwYzCP1asZ5bsu/xkcVmzU0LHKd
-> cAlrBTCWurKappKLd1YlXiTtm+WgvGs6zLhjxacDOFm8HldR9Hkul5ppKLRdEHmR
-> Y4tcP43C7O+LiTsEoLt9RLn8jNfpYu1Ps3cubvz8Q3H3ckTavlR1ovu/QY/h4ZY+
-> EeG6yELDdSwt8a993YwPx5Eex+T5hCZFxt8sMWVAUY5CS6nmYoI3k1JhFZy4W3tD
-> fmKZUFzbdHjpJmDDuJIjKiwQqZqGt8yBRSutz7JAo2eCyQ78JYKa6MaFz4Db/V/f
-> SX/wBfSSp+sTi/HbN51eAvxn9KejXGOYeCYs/sKpKaORSEuxSsIB6VrlvpHAqsZG
-> hPVegxqsnYuZ01x6cvP6
-> =x5zR
-> -----END PGP SIGNATURE-----
->
-
-
-
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+>iQIcBAEBCAAGBQJW8AsWAAoJEL54rhJi8gl58g4P/i/POnAJzcVBHPdk0svtHKl+
+>+510uhal1JlA6r3y3AiDnqsaRM5TMzuzYs+0l9EA8ydM9nx0UMAOkA/1tHVl48P1
+>cJcMMoHj/dv/pBBsAaSuJEr2VttXOn4gCuhhVOJQBc1g4sMYUNEdsn3dJ9HbyI6W
+>sL2fkuGxXCMTl5at94lLJI+Hij8t+VrDSmS+0e+W7AvL4uDuyYH6b4Bcp4BmlX8l
+>m52hCy9Y72MoSHeituWXLZZ75EIWdwy8ftTmjxpO08ZPR2YjUIiwDYBZKvfWCpFt
+>aQc/FJrvygTbXtfvT6WUli8qrz1Q2EzYV5c1/jGSfh+0YaNJkvDdLsRlCE0qMm4L
+>TnoZmD2boumgRmCLAwmqQrkCZeSh6I8ET/I6NHhor8f0LXEuVGOjjN1IJCJ2wRT7
+>QGp7iejweiDoL1EioQg2pZij4BmG8jxy4XtJRZUBtJzt8yYfIP//z5Lm+3MwO7Uq
+>UCscXaI0xpLAP4WW/kQTij9wVBnByu61USK7z96dytNcxYqmQhFhaBbUcT3phqwe
+>JhwGxCONz1wDJG028cXD/r1DX/s/3dHLKWbSrg6zjETaBNTkuIgQBO6SJ9tPcRht
+>/7T/LPgsNvuqydPksZWan1ytstfOhEDrl2pexJBgnwpt6QlsZnKtIScHDn3PNBND
+>rpeM6ZE03EVFPNQRk0sK
+>=1y/J
+>-----END PGP SIGNATURE-----
 
