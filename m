@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1367" "Monday" "14" "May" "2018" "12:29:51" "+0200" "Christian Brabandt" "cb@256bit.org" "<20180514102951.GD18567@256bit.org>" "34" "Re: [oss-security] PGP/MIME and S/MIME mail clients vulnerabilities" "^Date:" nil nil "5" "2018051410:29:51" "[oss-security] PGP/MIME and S/MIME mail clients vulnerabilities" (number mark "        cb@256bit.or May 14   34/1367  " thread-indent "\"Re: [oss-security] PGP/MIME and S/MIME mail clients vulnerabilities\"\n") "<6770b401c944860c2288ebf7738f40010d938b33.camel@debian.org>" ("<6770b401c944860c2288ebf7738f40010d938b33.camel@debian.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3031" "Tuesday" "22" "March" "2016" "23:58:39" "+0300" "Solar Designer" "solar@openwall.com" "<20160322205839.GA30835@openwall.com>" "58" "Re: [oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption" "^Date:" nil nil "3" "2016032220:58:39" "[oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption" (number mark "        solar@openwa Mar 22   58/3031  " thread-indent "\"Re: [oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption\"\n") "<20150609112639.GA20540@openwall.com>" ("<20150606113057.GA23470@openwall.com>" "<20150609112639.GA20540@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1949 invoked by uid 550); 14 May 2018 10:30:03 -0000
+Received: (qmail 24549 invoked by uid 550); 22 Mar 2016 20:58:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1923 invoked from network); 14 May 2018 10:30:03 -0000
-Message-ID: <20180514102951.GD18567@256bit.org>
-References: <6770b401c944860c2288ebf7738f40010d938b33.camel@debian.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Received: (qmail 24531 invoked from network); 22 Mar 2016 20:58:45 -0000
+Message-ID: <20160322205839.GA30835@openwall.com>
+References: <20150606113057.GA23470@openwall.com> <20150609112639.GA20540@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6770b401c944860c2288ebf7738f40010d938b33.camel@debian.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Date: Mon, 14 May 2018 12:29:51 +0200
-From: Christian Brabandt <cb@256bit.org>
+In-Reply-To: <20150609112639.GA20540@openwall.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Tue, 22 Mar 2016 23:58:39 +0300
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] PGP/MIME and S/MIME mail clients vulnerabilities
+Subject: Re: [oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption
 To: oss-security@lists.openwall.com
 
-
-On Mo, 14 Mai 2018, Yves-Alexis Perez wrote:
-
-> I guess most people have already saw  this, but just in case, it seems that a
-> vulnerability in PGP/MIME and S/MIME handling in various mail clients will be
-> published tomorrow.
+On Tue, Jun 09, 2015 at 02:26:39PM +0300, Solar Designer wrote:
+> On Sat, Jun 06, 2015 at 02:30:57PM +0300, Solar Designer wrote:
+> > The possibility of "struct iovec *iov" going out of range and the
+> > subsequent out of bounds metadata accesses feel much more severe than
+> > the out of bounds accesses to actual data in the userspace.
+> > "iov->iov_base += copy;" and "iov->iov_len -= copy;" might then be
+> > corrupting kernel memory.  It feels relatively unimportant what the
+> > resulting values of iov_base and iov_len will be for their intended
+> > purpose, since we use copy_from_user() / copy_to_user() on them anyway.
+> > It feels more important that these "+=" and "-=" operators directly
+> > modify individual words in kernel memory, albeit only slightly(?) out of
+> > bounds of the original iov array.  So maybe it's this risk that needs
+> > to be evaluated further.
 > 
-> Debian Security team didn't get any private information yet, but there have
-> been multiple twitter threads and blog posts published already:
+> Upon a closer look, it appears that this is in fact the impact Red Hat
+> had in mind as well.  I was not reading closely enough.  The "Doc Text"
+> field at https://bugzilla.redhat.com/show_bug.cgi?id=1202855 says:
 > 
-> https://twitter.com/seecurity/status/995906576170053633
-> https://arstechnica.com/information-technology/2018/05/critical-pgp-and-smime-
-> bugs-can-reveal-encrypted-e-mails-uninstall-now/
-> https://www.eff.org/deeplinks/2018/05/attention-pgp-users-new-vulnerabilities-
-> require-you-take-action-now
+> "It was found that the Linux kernel's implementation of vectored pipe
+> read and write functionality did not take into account the I/O vectors
+> that were already processed when retrying after a failed atomic access
+> operation, potentially resulting in memory corruption due to an I/O
+> vector array overrun."
 > 
-> GnuPG has posted a tweet (https://twitter.com/gnupg/status/995931083584757760)
-> indicating it's likely a vulnerability in mail clients themselves and not in
-> the protocol, and which is related to HTML mail handling.
-> 
-> The vulnerabilities apparently enable an attacker to decrypt previous mails,
-> but my (wild) guess is that the attack actually requests decryption from the
-> mail client (which has access to the private key), rather than by actually
-> decrypting itself.
+> So we're on the same page regarding "I/O vector array overrun" (rather
+> than I/O data overrun) being the security issue here.
 
-Looks like details have just been published:
-https://efail.de/
+Apparently, this vulnerability is being used to root older Android
+devices, and as a result it has just been fixed for older Android:
 
-Best,
-Christian
--- 
-Ein Flirt ohne tiefere Absicht ist ungefähr so sinnvoll wie ein
-Fahrplan ohne Eisenbahn.
-		-- William Somerset Maugham
+https://source.android.com/security/advisory/2016-03-18.html
+
+"Google has become aware of a rooting application using an unpatched
+local elevation of privilege vulnerability in the kernel on some Android
+devices (CVE-2015-1805).  For this application to affect a device, the
+user must first install it.  We already block installation of rooting
+applications that use this vulnerability - both within Google Play and
+outside of Google Play - using Verify Apps, and have updated our systems
+to detect applications that use this specific vulnerability.
+
+To provide a final layer of defense for this issue, partners were
+provided with a patch for this issue on March 16, 2016.  Nexus updates
+are being created and will be released within a few days.  Source code
+patches for this issue have been released to the Android Open Source
+Project (AOSP) repository."
+
+The advisory above includes a bit more information, including links to
+AOSP commits, but no information on how the vulnerability is exploited,
+nor even the names of the "rooting applications".
+
+I heard of this from a tweet by @DaveManouchehri, asking for "the APK
+(or name) of the app that's exploiting CVE-2015-1805" - unfortunately, I
+have no answer.
+
+The primary reason I am posting this is so that other distros know the
+vulnerability was apparently shown to be exploitable.
+
+Alexander
