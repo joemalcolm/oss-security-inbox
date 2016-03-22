@@ -1,40 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/4
-Message-ID: <87shsjcs42.fsf@mid.deneb.enyo.de>
-Date: Thu, 29 Sep 2016 05:17:01 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/22/3
+Message-ID: <20160322220554.GA4736@boyd>
+Date: Tue, 22 Mar 2016 17:05:54 -0500
+From: Tyler Hicks <tyhicks@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: ImageMagick identify "d:" hangs
+Cc: meissner@...e.de, cve-assign@...re.org, security@....net
+Subject: Re: Re: CVE Request: PHP last release security issues
 Content-Type: text/plain; charset=utf-8
 
-* Tavis Ormandy:
+On 2016-03-16 16:42:30, cve-assign@...re.org wrote:
+> > https://bugs.php.net/bug.php?id=71610
+> 
+> >> Type Confusion Vulnerability - SOAP / make_http_soap_request()
+> 
+> >> Due to an insufficient validation of the cookies field when making SOAP http request
+> 
+> >> https://github.com/php/php-src/blob/master/ext/soap/php_http.c
+> 
+> >> There is lack of validation of 2nd/3rd elements in cookies array.
+> >>
+> >> and a type confusion occurs when they are no longer string.
+> 
+> >> [2016-02-22 07:48 UTC] stas@....net
+> >> Fix added to security repo as eaf4e77190d402ea014207e9a7d5da1a4f3727ba
+> 
+> > https://git.php.net/?p=php-src.git;a=commit;h=eaf4e77190d402ea014207e9a7d5da1a4f3727ba
+> 
+> >> + Z_TYPE_P(tmp) != IS_STRING ||
+> 
+> >> + Z_TYPE_P(tmp) != IS_STRING ||
+> 
+> Use CVE-2016-3185.
 
-> On Wed, Sep 28, 2016 at 3:15 PM, Bob Friesenhahn
-> <bfriesen@...ple.dallas.tx.us> wrote:
->> On Wed, 28 Sep 2016, Tavis Ormandy wrote:
->>>
->>>
->>> (/etc/passwd) /dumpname load 256 string filenameforall
->>> $ convert test.gif png:test.png
->>> <creates a file called test.png containing first line of /etc/passwd>
->>>
->>> Also seems to work with gm convert.
->>
->>
->> It is good that you did not single out just one using program.
->>
->> This issue seems to afflict any program which invokes Ghostscript in general
->> and not just *Magick.  However, 'convert' does offer to write a rendered
->> result to an output file.
->>
->
-> I think I see the problem, ghostscript broke -dSAFER then they fixed
-> it later but didn't allocate a CVE, so the distros never updated.
->
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ae930279498a5961fcf5d70ffe86864883609cbc
->
-> I think it should be fixed in gs 9.10 or later (Debian appears to be
-> on 9.06), but you can still enumerate filenames (just not the
-> content).
+I see a similar bug and fix in the PHP 5.x branch:
 
-Is anyone investigating this and taking care of CVE assignment already?
+  https://bugs.php.net/bug.php?id=70081
+  https://git.php.net/?p=php-src.git;a=commitdiff;h=c96d08b27226193dd51f2b50e84272235c6aaa69
+
+Note that the bug was filed in 2015. It was fixed in 5.6.12:
+
+  https://secure.php.net/ChangeLog-5.php#5.6.12
+
+Does CVE-2016-3185 cover the issue in 5.x, as well?
+
+Tyler 
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
