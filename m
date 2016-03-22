@@ -1,20 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/17
-Message-ID: <20161205191435.GA29500@openwall.com>
-Date: Mon, 5 Dec 2016 20:14:35 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/22/5
+Message-ID: <20160322234759.GA530@openwall.com>
+Date: Wed, 23 Mar 2016 02:47:59 +0300
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-8740: Apache HTTPD 2.4.17-2.4.23: Server memory can be exhausted and service denied when HTTP/2 is used
+Subject: Re: CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Dec 05, 2016 at 01:56:54PM -0500, Leo Famulari wrote:
-> On Mon, Dec 05, 2016 at 07:22:10PM +0100, Solar Designer wrote:
-> > Patch against 2.4.23 release source:
-> 
-> I think you forgot to forward the patch.
+On Tue, Mar 22, 2016 at 03:04:50PM -0600, Scotty Bauer wrote:
+> Kingroot is the application it was discovered in by the Zimperium folks.
 
-You're right, re-attached it now.
+Thanks.  Meanwhile, @idl3r tweeted what is claimed to be and looks like
+a relevant but possibly incomplete PoC for this bug:
+
+<idl3r> Sent a proposal about CVE-2015-1805 to CSW but got no response. Didn't know you guys found it too :D @jduck @ZIMPERIUM
+<@idl3r> @jduck Here is a rough PoC if you'd like to try, better success rate is also possible https://github.com/idl3r/testcode/blob/master/test2.c
+
+I've attached this file, for archival.
+
+The default target_addr looks like it was being tested on a specific
+kernel for AArch64, but there's nothing very arch specific in here.
+The SELinux mode check suggests that target_addr is probably meant to
+hit that one variable in the kernel, although there are many other
+relevant targets.
 
 Alexander
 
-View attachment "CVE-2016-8740-2.4.23.diff" of type "text/plain" (1228 bytes)
+View attachment "CVE-2015-1805.c" of type "text/x-c" (6951 bytes)
