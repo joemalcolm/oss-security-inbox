@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6844" "Monday" "27" "November" "2017" "21:26:12" "+0100" "Solar Designer" "solar@openwall.com" "<20171127202612.GA18592@openwall.com>" "132" "Re: [oss-security] Security risk of server side text editing ..." "^Cc:" nil nil "11" "2017112720:26:12" "[oss-security] Security risk of server side text editing ..." (number mark "        solar@openwa Nov 27  132/6844  " thread-indent "\"Re: [oss-security] Security risk of server side text editing ...\"\n") "<540058ee-2c54-161a-1530-ff1b05673d25@Z5T1.com>" ("<201711171035.vAHAZFC3003212@masaka.moolenaar.net>" "<20171122221706.GA26704@openwall.com>" "<63829CA0-BA0A-433E-8DAC-EE1D232F4639@redhat.com>" "<540058ee-2c54-161a-1530-ff1b05673d25@Z5T1.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1523" "Tuesday" "22" "March" "2016" "15:04:50" "-0600" "Scotty Bauer" "sbauer@eng.utah.edu" "<56F1B372.9070401@eng.utah.edu>" "34" "Re: [oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption" "^Date:" nil nil "3" "2016032221:04:50" "[oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption" (number mark "        sbauer@eng.u Mar 22   34/1523  " thread-indent "\"Re: [oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption\"\n") "<20160322205839.GA30835@openwall.com>" ("<20150606113057.GA23470@openwall.com>" "<20150609112639.GA20540@openwall.com>" "<20160322205839.GA30835@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 10126 invoked by uid 550); 27 Nov 2017 20:31:16 -0000
+Received: (qmail 5375 invoked by uid 550); 22 Mar 2016 21:05:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,150 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 6041 invoked from network); 27 Nov 2017 20:26:31 -0000
-Message-ID: <20171127202612.GA18592@openwall.com>
-References: <201711171035.vAHAZFC3003212@masaka.moolenaar.net> <20171122221706.GA26704@openwall.com> <63829CA0-BA0A-433E-8DAC-EE1D232F4639@redhat.com> <540058ee-2c54-161a-1530-ff1b05673d25@Z5T1.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <540058ee-2c54-161a-1530-ff1b05673d25@Z5T1.com>
-User-Agent: Mutt/1.4.2.3i
-Cc: Bram@moolenaar.net
-Date: Mon, 27 Nov 2017 21:26:12 +0100
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 5354 invoked from network); 22 Mar 2016 21:05:14 -0000
+References: <20150606113057.GA23470@openwall.com>
+ <20150609112639.GA20540@openwall.com> <20160322205839.GA30835@openwall.com>
+Message-ID: <56F1B372.9070401@eng.utah.edu>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+MIME-Version: 1.0
+In-Reply-To: <20160322205839.GA30835@openwall.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-UCE-Score: -1.9 (-)
+Date: Tue, 22 Mar 2016 15:04:50 -0600
+From: Scotty Bauer <sbauer@eng.utah.edu>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Security risk of server side text editing ...
+Subject: Re: [oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun
+ leading to memory corruption
 To: oss-security@lists.openwall.com
 
-Kurt, Scott -
 
-On Mon, Nov 27, 2017 at 02:10:54PM -0500, Scott Court wrote:
-> Here's the summary you asked for. As far as I've been able to tell,
-> there are three vulnerabilities being discussed here:
 
-Thank you for trying to do the right thing, but I'm concerned that with
-the "multiple vulnerabilities in Vim" approach we can identify lots of
-them and "fix" lots of them yet not achieve a sensible goal - in fact,
-we already started down that path.
-
->     1. CVE-2017-1000382
-
-Kurt assigned this one to:
-
-"Please use CVE-2017-1000382 for VIM version 8.0.1187 (and other versions
-most likely) ignores umask when creating a swap file
-(\"[ORIGINAL_FILENAME].swp\") resulting in files that may be world readable
-or otherwise accessible in ways not intended by the user running the vi
-binary."
-
-While ignoring of umask might be the CVE-worthy issue here, in practice
-most of the files Hanno found were probably from systems that had most
-distros' default non-root user umask of 022 or 002 anyway.
-
-So fixing this CVE as worded does little to address Hanno's findings.
-
-> This vulnerability was discovered by Hanno Bock. When editing a text
-> file in Vim, a .swp file is created in the same directory (if you edit
-> "foo", the swap file will be ".foo.swp"). Hanno pointed out that this
-> could create a security vulnerability on PHP enabled webservers as follows:
+On 03/22/2016 02:58 PM, Solar Designer wrote:
+> Apparently, this vulnerability is being used to root older Android
+> devices, and as a result it has just been fixed for older Android:
 > 
-> If a user goes to edit a .php file in the public_html directory (say
-> "foo.php"), a swap file will be created in the public_html directory
-> called ".foo.php.swp". This then exposes the contents of the PHP script
-> foo.php to the world. All someone has to do is go to
-> "http://example.com/.foo.php.swp" and he can view the .swp file which
-> contains the contents of the original foo.php file.
+> https://source.android.com/security/advisory/2016-03-18.html
 > 
-> Hanno pointed out that this causes a problem with Wordpress sites if the
-> site administrator edits the wp-config.php file in Vim: he exposes all
-> of the database credentials. This is made worse if Vim crashes while he
-> is editing it as then the .wp-config.php.swp file sticks around. He
-> claims he has found 750 websites that are vulnerable to this.
-
-This is a good summary of the actual issue that we should address, but
-the CVE is only partially related to it.  Fixing the CVE (as described)
-means honoring the umask, but it would do little to reduce the number of
-vulnerable sites Hanno would find.  Improving Vim to always use 0600
-might or might not be considered a fix for the CVE (maybe 0600 & ~umask
-would be, even if anything stricter than 0600 breaks the functionality),
-but it would do much more to address Hanno's findings (only leaving out
-the special case of the web server running as the same (pseudo-)user who
-edits the files, which I expect is less common than editing with umask
-022 or 002).
-
-So let's focus on what actually matters rather than on what fits a CVE.
-
->     2. Vim .swp file group (Doesn't have a CVE ID)
+> "Google has become aware of a rooting application using an unpatched
+> local elevation of privilege vulnerability in the kernel on some Android
+> devices (CVE-2015-1805).  For this application to affect a device, the
+> user must first install it.  We already block installation of rooting
+> applications that use this vulnerability - both within Google Play and
+> outside of Google Play - using Verify Apps, and have updated our systems
+> to detect applications that use this specific vulnerability.
 > 
-> This vulnerability was discovered by me. When Vim creates a .swp file,
-> the .swp file is created with the owner and group set to the editor and
-> editor's primary group respectively. The .swp file is the set to the
-> same permissions as the original file (i.e. chmod 640). This creates a
-> security vulnerability when the editor's primary group is not the same
-> as the original file's group.
+> To provide a final layer of defense for this issue, partners were
+> provided with a patch for this issue on March 16, 2016.  Nexus updates
+> are being created and will be released within a few days.  Source code
+> patches for this issue have been released to the Android Open Source
+> Project (AOSP) repository."
 > 
-> For example, say the root user's primary group is "users", which every
-> user is a member of. If root goes to edit /etc/shadow, the
-> /etc/.shadow.swp file is created with permissions 640 and user:group set
-> to root:users. The original /etc/shadow file had user:group set to
-> root:shadow though; this now exposes the /etc/shadow file (which mind
-> you contains hashes of every user's password) to every user on the system.
+> The advisory above includes a bit more information, including links to
+> AOSP commits, but no information on how the vulnerability is exploited,
+> nor even the names of the "rooting applications".
 > 
-> Originally, I thought this was an extension of CVE-2017-1000382 so I
-> didn't bother trying to get a CVE ID for it; however, upon looking at it
-> for a second time, it seems that this is indeed a different
-> vulnerability. It is possible to patch this vulnerability without
-> patching CVE-2017-1000382.
+> I heard of this from a tweet by @DaveManouchehri, asking for "the APK
+> (or name) of the app that's exploiting CVE-2015-1805" - unfortunately, I
+> have no answer.
 
-I agree this is a separate issue from ignoring the umask, and is
-probably a CVE-worthy vulnerability as well (if the first CVE is in fact
-limited to the umask), but for practical purposes there's just one thing
-to change in response to both issues: make those files 0600.
+Kingroot is the application it was discovered in by the Zimperium folks. 
 
->     3. Vim.tiny race condition (Doesn't have a CVE ID as far as I know)
-> 
-> I'm not quite sure who discovered this vulnerability (I don't use or
-> follow vim.tiny); however, it has been discussed on here so I will
-> include my limited knowledge of it for completeness sake. This is a race
-> condition in which a world writable SUID binary is temporarily created.
-> This could (or course) theoretically allow an arbitrary user to write to
-> that binary and execute arbitrary code as root; however, there is debate
-> as to whether or not doing this is actually feasible.
 
-This not a vulnerability in Vim, and is not CVE-worthy.  Most programs,
-text editors included, are unsafe to use on pathnames in untrusted
-directories, period.  We might want to harden Vim to make it less unsafe
-when misused like that, but calling that a vulnerability and those
-changes a fix would encourage the misuses and further misunderstandings.
 
-If I understand correctly, the specific example posted by Roman relied
-on a file being replaced with a symlink, so this falls in the above
-category - misuse of Vim in an untrusted directory.
-
-OTOH, as an exception, Vim can and should be made safe when editing a
-file with an untrusted owner if that file (the specific hard link to it
-corresponding to the pathname being edited) is located in a trusted
-directory (including all of its parent directories) - e.g., /var/run/foo
-where only foo itself is under a potential attacker's control.  If Vim
-would sometimes copy the SUID/SGID bits from such file to another
-(temporary) file that does not yet have the user and group ownership
-also already copied to it (which would have already been racy as well),
-then that's a concern and is something that should be fixed - again, by
-simply setting those files' permissions to 0600 (no need for any fancy
-logic).  I don't know, and am not too interested, whether such an issue
-currently exists (I think it does not, as I saw code masking the
-permissions to 0777), nor whether it's CVE-worthy (it might be if it
-exists).  I care more about the trivial proper change we should make in
-response to all of these non-misuse issues at once, without needing to
-enumerate and categorize them.
-
-If upstream approaches this differently, distros should throw the fancy
-logic out and hard-code 0600.
-
-> I believe these are the three big ones
-
-Thanks, but I think enumerating and categorizing them is a distraction,
-except to the extent necessary for us to get on the same page and make
-the trivial change. ;-)
-
-Alexander
