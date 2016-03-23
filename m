@@ -1,50 +1,223 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/10/4
-Message-Id: <20160410142541.E5CD63AE190@smtpvbsrv1.mitre.org>
-Date: Sun, 10 Apr 2016 10:25:41 -0400 (EDT)
-From: cve-assign@...re.org
-To: matthias@...lons.info
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: imlib2 - GIF loader: OOB read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/23/1
+Message-ID: <CAMYtjAoCwmhiH4Ut7003D_PGaGSR7PezhSKfBGgZcLrmOcRpTg@mail.gmail.com>
+Date: Wed, 23 Mar 2016 12:35:20 +0100
+From: Pere Orga <pere@...a.cat>
+To: oss-security@...ts.openwall.com
+Cc: Drupal Security Team <security@...pal.org>
+Subject: Remaining CVE IDs for Drupal contributed modules (2014)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi
 
-> https://git.enlightenment.org/legacy/imlib2.git/commit/?id=37a96801663b7b4cd3fbe56cc0eb8b6a17e766a8
-> GIF loader: Fix out-of-bound reads from colormap
+Some of the following vulnerabilities may not have a CVE id assigned
+due to product scope changes. Because I don't know what these changes
+are (and failed to find them in https://cve.mitre.org) I am requesting
+CVE ids for all Drupal vulnerabilities that currently don't have a CVE
+id requested nor assigned.
 
+Please can I have CVE IDs assigned to the following vulnerabilities:
 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=785369
-> libimlib2: GIF loader: out-of-bounds read
+SA-CONTRIB-2014-004 - Secure Cookie Data - Faulty Hashing
+https://www.drupal.org/node/2179099
 
-> Invalid read of size 1
-> 
-> cmap->Colors gets accessed on index 8, but just 0 to 3 would be valid
-> 
-> security implications (DoS and potential host memory exposure)
+SA-CONTRIB-2014-005 - Leaflet - Access bypass
+https://www.drupal.org/node/2179103
 
-Use CVE-2016-3994.
+SA-CONTRIB-2014-007 - Services - Access bypass
+https://www.drupal.org/node/2184843
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+SA-CONTRIB-2014-009 - Tagadelic - Information Disclosure
+https://www.drupal.org/node/2187453
 
-iQIcBAEBCAAGBQJXCl7MAAoJEL54rhJi8gl5qXoP/0ixra6R9i1HUALR2iOJEtnk
-vTfbn05noKq8NqhXJzqn49tK9OFDsWwufGGL5I/3lr0mzJmeQcp780LR182wcBd7
-Mgdp7haeNTMCtNTuLglV0Z5umbfxCiAO0vMcpv8aDsGccm6o2cvc1q6iAivHgVmi
-rmH22yPtjktiazNdTBfoiDgKfrW7KZ0vEawIdaQmL7dbt4YYriMVmAfKc2izAFUk
-lL/SYhPNU3IuGwXzzFFWA1xq3wTWUVVf9bYg2/Tsq2BZsfI1ryVfjqK1GCAwHBX8
-+d+V38D9PbI7sYQ0SvmsJQAS71ZYEyPadc9D+Kzf1I8d8fRFa/4ftog4auZbpvWj
-QnLGs1ezV0hPeZA602gOMe9+ts2N+dW3nF2+rz/n0BwBsZ0yHZ2kf6OrbeqdUEcb
-d3br+E2l9OsJ7EpJeSzG/lmJ1InCz50/pYjIU0Ig3UgZqkVpAHX7cQurLZeJq2ws
-0SLKufxR8mVio+KId3csyBGtRBIBpYDBO6dNTR0A+5jdwoyoWn/b63z8cqL4+3oJ
-11f0PlZZBZjjCY5ESg/oyFqvdS6c23UKirzab3SGF7tEvZUx90FC/alsD3uEa0Eq
-eWp5wvsGd6U20qta4bku5QkFxZ8DgTtQv8loKwRiUp8218d5IjzL60D9hFAJ4Hcv
-DnHFzuNitwKiQx8vjCbw
-=lelm
------END PGP SIGNATURE-----
+SA-CONTRIB-2014-010 - Services - Access Bypass and Privilege Escalation
+https://www.drupal.org/node/2189509
+
+SA-CONTRIB-2014-011 - Push Notifications - Information Disclosure
+https://www.drupal.org/node/2189643
+
+SA-CONTRIB-2014-013 - Chaos tool suite (ctools) - Access Bypass
+https://www.drupal.org/node/2194589
+
+SA-CONTRIB-2014-014 - Webform Validation - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2194621
+
+SA-CONTRIB-2014-015 - FileField - Access Bypass
+https://www.drupal.org/node/2194639
+
+SA-CONTRIB-2014-017- Image Resize Filter - Denial of Service (DOS)
+https://www.drupal.org/node/2194655
+
+SA-CONTRIB-2014-022 - Slickgrid - Access bypass
+https://www.drupal.org/node/2200491
+
+SA-CONTRIB-2014-024 - Content Lock - CSRF
+https://www.drupal.org/node/2205807
+
+SA-CONTRIB-2014-025 - Open Omega - Access Bypass
+https://www.drupal.org/node/2205877
+
+SA-CONTRIB-2014-026 - Mime Mail - Access bypass
+https://www.drupal.org/node/2205991
+
+SA-CONTRIB-2014-028 - Masquerade - Access bypass
+https://www.drupal.org/node/2211401
+
+SA-CONTRIB-2014-029 - Mime Mail - Access Bypass
+https://www.drupal.org/node/2211419
+
+SA-CONTRIB-2014-030 - SexyBookmarks - Information Disclosure
+https://www.drupal.org/node/2216269
+
+SA-CONTRIB-2014-031 - Webform Template - Access Bypass
+https://www.drupal.org/node/2216607
+
+SA-CONTRIB-2014-032 - Xapian integration - Access Bypass
+https://www.drupal.org/node/2221403
+
+SA-CONTRIB-2014-035 - CAS Server - Access Bypass
+https://www.drupal.org/node/2231663
+
+SA-CONTRIB-2014-039 - Revisioning - Access Bypass
+https://www.drupal.org/node/2236807
+
+SA-CONTRIB-2014-041 - Block Search - SQL Injection
+https://www.drupal.org/node/2242463
+
+SA-CONTRIB-2014-042 - Internationalization - Access Bypass
+https://www.drupal.org/node/2248073
+
+SA-CONTRIB-2014-045 - Drupal Commons - Access Bypass
+https://www.drupal.org/node/2248171
+
+SA-CONTRIB-2014-048 - Field API Pane Editor (FAPE) - Access bypass
+https://www.drupal.org/node/2254943
+
+SA-CONTRIB-2014-049 - Organic Groups (OG) - Access Bypass
+https://www.drupal.org/node/2261245
+
+SA-CONTRIB-2014-050 - Commerce Postfinance ePayment - Access Bypass
+https://www.drupal.org/node/2267381
+
+SA-CONTRIB-2014-051 - Realname Registration - Information Disclosure
+https://www.drupal.org/node/2267481
+
+SA-CONTRIB-2014-053 - Field API Tab Editor (FATE) - Access bypass
+https://www.drupal.org/node/2267539
+
+SA-CONTRIB-2014-054 - Views - Access Bypass
+https://www.drupal.org/node/2271809
+
+SA-CONTRIB-2014-055 - Require Login - Access bypass
+https://www.drupal.org/node/2271837
+
+SA-CONTRIB-2014-056 - Commerce Moneris - Information Disclosure
+https://www.drupal.org/node/2271823
+
+SA-CONTRIB-2014-057 - Password policy - General logic error
+https://www.drupal.org/node/2271839
+
+SA-CONTRIB-2014-058 - Webserver Auth - Access Bypass
+https://www.drupal.org/node/2275675
+
+SA-CONTRIB-2014-060- Petitions - Cross Site Request Forgery (CSRF)
+https://www.drupal.org/node/2284571
+
+SA-CONTRIB-2014-062 - Passsword Policy - Access Bypass (7x)
+SA-CONTRIB-2014-062 - Passsword Policy - Access Bypass (6.x)
+https://www.drupal.org/node/2288341
+
+SA-CONTRIB-2014-064 -Course - Access bypass
+https://www.drupal.org/node/2288403
+
+SA-CONTRIB-2014-066 - Node Access Keys - Access Bypass
+https://www.drupal.org/node/2296495
+
+SA-CONTRIB-2014-068 - Pane - XSS
+https://www.drupal.org/node/2296783
+
+SA-CONTRIB-2014-070 - Password Policy - Access Bypass
+https://www.drupal.org/node/2304213
+
+SA-CONTRIB-2014-079 - RedHen CRM - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2324679
+
+SA-CONTRIB-2014-086 - Custom BreadCrumbs - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2336263
+
+SA-CONTRIB-2014-088 - Mollom - Cross-site scripting (XSS)
+https://www.drupal.org/node/2340029
+
+SA-CONTRIB-2014-089 - Geofield Yandex Maps - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2340039
+
+SA-CONTRIB-2014-090 - Speech recognition - Cross Site Scripting (XSS)
+SA-CONTRIB-2014-090 - Speech recognition - Cross Site Request Forgery (CSRF)
+https://www.drupal.org/node/2340063
+
+SA-CONTRIB-2014-091 - Survey Builder - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2340069
+
+SA-CONTRIB-2014-094 - Webform Patched - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2344369
+
+SA-CONTRIB-2014-095 - Safeword - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2344383
+
+SA-CONTRIB-2014-096 - OAuth2 Client - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2352747
+
+SA-CONTRIB-2014-097 - nodeaccess - Access Bypass
+https://www.drupal.org/node/2352757
+
+SA-CONTRIB-2014-098 - CKEditor - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2357029
+
+SA-CONTRIB-2014-101 - Ubercart - Cross Site Request Forgery
+https://www.drupal.org/node/2361613
+
+SA-CONTRIB-2014-102 - Document - Cross Site Scripting
+https://www.drupal.org/node/2361617
+
+SA-CONTRIB-2014-103 - Passwordless - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2365645
+
+SA-CONTRIB-2014-104 - Addressfield Tokens - Cross Site Scripting
+https://www.drupal.org/node/2365673
+
+SA-CONTRIB-2014-106 - Commerce Authorize.Net SIM/DPM Payment Methods -
+Access Bypass
+https://www.drupal.org/node/2365809
+
+SA-CONTRIB-2014-107 - Scheduler - Cross Site Scripting
+https://www.drupal.org/node/2373961
+
+SA-CONTRIB-2014-109 - Freelinking - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2373981
+
+SA-CONTRIB-2014-115 - Form Builder - Cross-Site Scripting (XSS)
+https://www.drupal.org/node/2378441
+
+SA-CONTRIB-2014-118 - Administer Users by Role - Access Bypass
+https://www.drupal.org/node/2390687
+
+SA-CONTRIB-2014-119 - Google Analytics - Information disclosure
+https://www.drupal.org/node/2390689
+
+SA-CONTRIB-2014-120 - Piwik Web Analytics - Information disclosure
+https://www.drupal.org/node/2390695
+
+SA-CONTRIB-2014-123 - Postal Code - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2390857
+
+SA-CONTRIB-2014-125 - Organic Groups Menu - Access bypass
+https://www.drupal.org/node/2390899
+
+SA-CONTRIB-2014-128 - Organic Groups Menu - Access bypass
+https://www.drupal.org/node/2395049
+
+Many thanks
+
+Regards
+-- 
+Pere Orga on behalf of the Drupal Security team
