@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["29593" "Wednesday" "5" "May" "2021" "09:39:22" "-0700" "Aaron Patterson" "aaron.patterson@gmail.com" nil "553" "[oss-security] [CVE-2021-22885] Possible Information Disclosure / Unintended Method Execution in Action Pack" nil nil nil "5" nil nil (number mark "U       aaron.patter May  5  553/29593 " thread-indent "\"[oss-security] [CVE-2021-22885] Possible Information Disclosure / Unintended Method Execution in Action Pack\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2021-22885] Possible Information Disclosure / Unintended Method Execution in Action Pack" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6809" "Wednesday" "23" "March" "2016" "12:35:20" "+0100" "Pere Orga" "pere@orga.cat" "<CAMYtjAoCwmhiH4Ut7003D_PGaGSR7PezhSKfBGgZcLrmOcRpTg@mail.gmail.com>" "213" "[oss-security] Remaining CVE IDs for Drupal contributed modules (2014)" nil nil nil "3" "2016032311:35:20" "[oss-security] Remaining CVE IDs for Drupal contributed modules (2014)" (number mark "U       pere@orga.ca Mar 23  213/6809  " thread-indent "\"[oss-security] Remaining CVE IDs for Drupal contributed modules (2014)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9232 invoked by uid 550); 5 May 2021 16:43:07 -0000
+Received: (qmail 3722 invoked by uid 550); 23 Mar 2016 11:36:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,592 +12,245 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5926 invoked from network); 5 May 2021 16:39:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=BgVaNnIabpXaBnSBM0QgTNq+L6NKNh+2FmfThEWtLTc=;
-        b=kjGMY2kafaWRrrbv1CdaSZ4wp+ZKGFae42tXvDZnSSjj7pHDbM/OvPwTE+0R0ZEkPV
-         AG2AN21n1hA9oRd0SVSL2YQ9itUU9OIMOUoZzVv5Q5T3utRwcTax9HDR1PkJmeznefPt
-         kWWHARGbQGtPw19kZL0fXsvM6gK9fwePwYLB34o1rgktsFNM0K9UYA8yquTMYJWToaho
-         1+r6xLy+WoqMpsmKkcXOhSU/WjGpmXvNncwxnPAA+fCG9WwrfNkkbk4MxjB7jkIw2PqO
-         2gBm8s2NmGy1QIImyVfWE7EpGdibgeRMhPJwkuUOcxqbpUpNkZ+9AzXlNcvro/4I85KZ
-         6UFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=BgVaNnIabpXaBnSBM0QgTNq+L6NKNh+2FmfThEWtLTc=;
-        b=WCaKsndkQ+Aw2J2pVh/RtEQSL/RP8jv3sWlkVVHoWON33jM/AXEf/FSXiD09TsHLo0
-         lreywnmf5pSv542WSjUufbXLkdvIVQo+JxrBA0UsndLuQMdEgVPHaSyf7xk6IYenP7Ph
-         zi5WQQ/8jt/xAtIoF7/X0uzqhWYgMIxVVGzcCRKzIxtWaVFEdZsLfuf9w7NTV0brRHwr
-         U0l7wt3BoFKkI8Zd0BJh2ZFHDFRLG//SVeHCSza4pV5fUGZqa1PsLYnTLYoVGjPANrfJ
-         U8o++nVeJoicaczWqJfHfqSuGNhAkD29nbXPOzWP09Qou99/apK+V9RuO5zvjgS4Mh4C
-         ggAg==
-X-Gm-Message-State: AOAM533yyFfAH3liEzL1UZf8uppl34EmIHysIP+ouyOF/72cxBRCfFvt
-	bS5b9VirHCp3K88+iB+/1tYHapwoSvytHIvQxJo=
-X-Google-Smtp-Source: ABdhPJx/odZAK+4FrGv+a1WVa6Zvt2GDAasK6OjlTqxvy9kqj+cYNQcoJdNaeZka5cS1+OO23Z0cBzVsJBoIzBdnkeI=
-X-Received: by 2002:a05:6402:36d:: with SMTP id s13mr33811844edw.103.1620232774076;
- Wed, 05 May 2021 09:39:34 -0700 (PDT)
+Received: (qmail 3656 invoked from network); 23 Mar 2016 11:35:54 -0000
+X-Gm-Message-State: AD7BkJLQ1Xk6wQn93eFbVqsBoIdjQ5A/f3d5BBZd2D3Kj+UXZzcqQXLon9wmFN8Nk4AOCOprP6pmzz6aBsSFRQ==
+X-Received: by 10.140.20.197 with SMTP id 63mr2655758qgj.18.1458732939736;
+ Wed, 23 Mar 2016 04:35:39 -0700 (PDT)
 MIME-Version: 1.0
-From: Aaron Patterson <aaron.patterson@gmail.com>
-Date: Wed, 5 May 2021 09:39:22 -0700
-Message-ID: <CALBaBG9_=RQ5S940L3kvUzsSPvva-wVHDgP4hy6U+nC08aE=TA@mail.gmail.com>
-To: ruby-security-ann@googlegroups.com, rubyonrails-security@googlegroups.com, 
-	oss-security@lists.openwall.com
-Content-Type: multipart/mixed; boundary="000000000000f3f3af05c197d6e1"
-Subject: [oss-security] [CVE-2021-22885] Possible Information Disclosure / Unintended Method
- Execution in Action Pack
+From: Pere Orga <pere@orga.cat>
+Date: Wed, 23 Mar 2016 12:35:20 +0100
+X-Gmail-Original-Message-ID: <CAMYtjAoCwmhiH4Ut7003D_PGaGSR7PezhSKfBGgZcLrmOcRpTg@mail.gmail.com>
+Message-ID: <CAMYtjAoCwmhiH4Ut7003D_PGaGSR7PezhSKfBGgZcLrmOcRpTg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: Drupal Security Team <security@drupal.org>
+Content-Type: text/plain; charset=UTF-8
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator3111.hostgator.com
+X-AntiAbuse: Original Domain - lists.openwall.com
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - orga.cat
+X-BWhitelist: no
+X-Source-IP: 209.85.192.51
+X-Exim-ID: 1aih4e-0009sK-QW
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: mail-qg0-f51.google.com [209.85.192.51]:33213
+X-Source-Auth: pere@orga.cat
+X-Email-Count: 2
+X-Source-Cap: bmV0b2w7bmV0b2w7Z2F0b3IzMTExLmhvc3RnYXRvci5jb20=
+Subject: [oss-security] Remaining CVE IDs for Drupal contributed modules (2014)
 
---000000000000f3f3af05c197d6e1
-Content-Type: multipart/alternative; boundary="000000000000f3f3ae05c197d6df"
+Hi
 
---000000000000f3f3ae05c197d6df
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Some of the following vulnerabilities may not have a CVE id assigned
+due to product scope changes. Because I don't know what these changes
+are (and failed to find them in https://cve.mitre.org) I am requesting
+CVE ids for all Drupal vulnerabilities that currently don't have a CVE
+id requested nor assigned.
 
-There is a possible information disclosure / unintended method execution
-vulnerability in Action Pack which has been assigned the CVE identifier
-CVE-2021-22885.
+Please can I have CVE IDs assigned to the following vulnerabilities:
 
-Versions Affected:  >=3D 2.0.0.
-Not affected:       < 2.0.0.
-Fixed Versions:     6.1.3.2, 6.0.3.7, 5.2.4.6, 5.2.6
+SA-CONTRIB-2014-004 - Secure Cookie Data - Faulty Hashing
+https://www.drupal.org/node/2179099
 
-Impact
-------
-There is a possible information disclosure / unintended method execution
-vulnerability in Action Pack when using the `redirect_to` or
-`polymorphic_url`
-helper with untrusted user input.
+SA-CONTRIB-2014-005 - Leaflet - Access bypass
+https://www.drupal.org/node/2179103
 
-Vulnerable code will look like this:
+SA-CONTRIB-2014-007 - Services - Access bypass
+https://www.drupal.org/node/2184843
 
-```
-redirect_to(params[:some_param])
-```
+SA-CONTRIB-2014-009 - Tagadelic - Information Disclosure
+https://www.drupal.org/node/2187453
 
-All users running an affected release should either upgrade or use one of
-the
-workarounds immediately.
+SA-CONTRIB-2014-010 - Services - Access Bypass and Privilege Escalation
+https://www.drupal.org/node/2189509
 
-Releases
---------
-The FIXED releases are available at the normal locations.
+SA-CONTRIB-2014-011 - Push Notifications - Information Disclosure
+https://www.drupal.org/node/2189643
 
-Workarounds
------------
-To work around this problem, it is recommended to use an allow list for
-valid
-parameters passed from the user.  For example:
+SA-CONTRIB-2014-013 - Chaos tool suite (ctools) - Access Bypass
+https://www.drupal.org/node/2194589
 
-```
-private def check(param)
-  case param
-  when "valid"
-    param
-  else
-    "/"
-  end
-end
+SA-CONTRIB-2014-014 - Webform Validation - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2194621
 
-def index
-  redirect_to(check(params[:some_param]))
-end
-```
+SA-CONTRIB-2014-015 - FileField - Access Bypass
+https://www.drupal.org/node/2194639
 
-Or force the user input to be cast to a string like this:
+SA-CONTRIB-2014-017- Image Resize Filter - Denial of Service (DOS)
+https://www.drupal.org/node/2194655
 
-```
-def index
-  redirect_to(params[:some_param].to_s)
-end
-```
+SA-CONTRIB-2014-022 - Slickgrid - Access bypass
+https://www.drupal.org/node/2200491
 
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided
-patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
+SA-CONTRIB-2014-024 - Content Lock - CSRF
+https://www.drupal.org/node/2205807
 
-* 5-2-information-disclosure.patch - Patch for 5.2 series
-* 6-0-information-disclosure.patch - Patch for 6.0 series
-* 6-1-information-disclosure.patch - Patch for 6.1 series
+SA-CONTRIB-2014-025 - Open Omega - Access Bypass
+https://www.drupal.org/node/2205877
 
-Please note that only the 5.2, 6.0, and 6.1 series are supported at
-present. Users
-of earlier unsupported releases are advised to upgrade as soon as possible
-as we
-cannot guarantee the continued availability of security fixes for
-unsupported
-releases.
+SA-CONTRIB-2014-026 - Mime Mail - Access bypass
+https://www.drupal.org/node/2205991
 
-Credits
--------
+SA-CONTRIB-2014-028 - Masquerade - Access bypass
+https://www.drupal.org/node/2211401
 
-Thanks to Benoit C=C3=B4t=C3=A9-Jodoin from Shopify for reporting this.
+SA-CONTRIB-2014-029 - Mime Mail - Access Bypass
+https://www.drupal.org/node/2211419
 
---=20
-Aaron Patterson
-http://tenderlovemaking.com/
+SA-CONTRIB-2014-030 - SexyBookmarks - Information Disclosure
+https://www.drupal.org/node/2216269
 
---000000000000f3f3ae05c197d6df
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+SA-CONTRIB-2014-031 - Webform Template - Access Bypass
+https://www.drupal.org/node/2216607
 
-<div dir=3D"ltr"><div dir=3D"ltr"><div>There is a possible information disc=
-losure / unintended method execution</div><div>vulnerability in Action Pack=
- which has been assigned the CVE identifier</div><div>CVE-2021-22885.</div>=
-<div><br></div><div>Versions Affected: =C2=A0&gt;=3D 2.0.0.</div><div>Not a=
-ffected: =C2=A0 =C2=A0 =C2=A0 &lt; 2.0.0.</div><div>Fixed Versions: =C2=A0 =
-=C2=A0 6.1.3.2, 6.0.3.7, 5.2.4.6, 5.2.6</div><div><br></div><div>Impact</di=
-v><div>------</div><div>There is a possible information disclosure / uninte=
-nded method execution</div><div>vulnerability in Action Pack when using the=
- `redirect_to` or `polymorphic_url`</div><div>helper with untrusted user in=
-put.</div><div><br></div><div>Vulnerable code will look like this:</div><di=
-v><br></div><div>```</div><div>redirect_to(params[:some_param])</div><div>`=
-``</div><div><br></div><div>All users running an affected release should ei=
-ther upgrade or use one of the</div><div>workarounds immediately.</div><div=
-><br></div><div>Releases</div><div>--------</div><div>The FIXED releases ar=
-e available at the normal locations.</div><div><br></div><div>Workarounds</=
-div><div>-----------</div><div>To work around this problem, it is recommend=
-ed to use an allow list for valid</div><div>parameters passed from the user=
-.=C2=A0 For example:</div><div><br></div><div>```</div><div>private def che=
-ck(param)</div><div>=C2=A0 case param</div><div>=C2=A0 when &quot;valid&quo=
-t;</div><div>=C2=A0 =C2=A0 param</div><div>=C2=A0 else</div><div>=C2=A0 =C2=
-=A0 &quot;/&quot;</div><div>=C2=A0 end</div><div>end</div><div><br></div><d=
-iv>def index</div><div>=C2=A0 redirect_to(check(params[:some_param]))</div>=
-<div>end</div><div>```</div><div><br></div><div>Or force the user input to =
-be cast to a string like this:</div><div><br></div><div>```</div><div>def i=
-ndex</div><div>=C2=A0 redirect_to(params[:some_param].to_s)</div><div>end</=
-div><div>```</div><div><br></div><div>Patches</div><div>-------</div><div>T=
-o aid users who aren&#39;t able to upgrade immediately we have provided pat=
-ches for</div><div>the two supported release series. They are in git-am for=
-mat and consist of a</div><div>single changeset.</div><div><br></div><div>*=
- 5-2-information-disclosure.patch - Patch for 5.2 series</div><div>* 6-0-in=
-formation-disclosure.patch - Patch for 6.0 series</div><div>* 6-1-informati=
-on-disclosure.patch - Patch for 6.1 series</div><div><br></div><div>Please =
-note that only the 5.2, 6.0, and 6.1 series are supported at present. Users=
-</div><div>of earlier unsupported releases are advised to upgrade as soon a=
-s possible as we</div><div>cannot guarantee the continued availability of s=
-ecurity fixes for unsupported</div><div>releases.</div><div><br></div><div>=
-Credits</div><div>-------</div><div><br></div><div>Thanks to Benoit C=C3=B4=
-t=C3=A9-Jodoin from Shopify for reporting this.</div><div><br></div>-- <br>=
-<div dir=3D"ltr" class=3D"gmail_signature">Aaron Patterson<br><a href=3D"ht=
-tp://tenderlovemaking.com/" target=3D"_blank">http://tenderlovemaking.com/<=
-/a></div></div></div>
+SA-CONTRIB-2014-032 - Xapian integration - Access Bypass
+https://www.drupal.org/node/2221403
 
---000000000000f3f3ae05c197d6df--
+SA-CONTRIB-2014-035 - CAS Server - Access Bypass
+https://www.drupal.org/node/2231663
 
---000000000000f3f3af05c197d6e1
-Content-Type: application/octet-stream; 
-	name="5-2-information-disclosure.patch"
-Content-Disposition: attachment; filename="5-2-information-disclosure.patch"
-Content-Transfer-Encoding: base64
-Content-ID: <f_kobor2gs0>
-X-Attachment-Id: f_kobor2gs0
+SA-CONTRIB-2014-039 - Revisioning - Access Bypass
+https://www.drupal.org/node/2236807
 
-RnJvbSAzZWI5ZTc0YzI4Nzc1MGE5ZmUxMWY3MDBmYzk2ZDNiZTFlODNhYTM1
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBHYW5ub24gTWNHaWJi
-b24gPGdhbm5vbi5tY2dpYmJvbkBzaG9waWZ5LmNvbT4KRGF0ZTogVGh1LCAx
-OCBGZWIgMjAyMSAxMzoxNzowOCAtMDUwMApTdWJqZWN0OiBbUEFUQ0hdIFBy
-ZXZlbnQgc3RyaW5nIHBvbHltb3JwaGljIHJvdXRlIGFyZ3VtZW50cwoKdXJs
-X2ZvciBzdXBwb3J0cyBidWlsZGluZyBwb2x5bW9ycGhpYyBVUkxzIHZpYSBh
-biBhcnJheQpvZiBhcmd1bWVudHMgKHVzdWFsbHkgc3ltYm9scyBhbmQgcmVj
-b3JkcykuIElmIGFuIGFycmF5IGlzIHBhc3NlZCwKc3RyaW5ncyBjYW4gcmVz
-dWx0IGluIHVud2FudGVkIHJvdXRlIGhlbHBlciBjYWxscy4KCkNWRS0yMDIx
-LTIyODg1Ci0tLQogYWN0aW9ucGFjay9DSEFOR0VMT0cubWQgICAgICAgICAg
-ICAgICAgICAgICAgIHwgMTAgKysrKysKIC4uLi9yb3V0aW5nL3BvbHltb3Jw
-aGljX3JvdXRlcy5yYiAgICAgICAgICAgICB8IDEyICsrKy0tCiBhY3Rpb25w
-YWNrL3Rlc3QvY29udHJvbGxlci9yZWRpcmVjdF90ZXN0LnJiICAgfCA0NSAr
-KysrKysrKysrKysrKysrKysrCiAuLi4vYWN0aXZlcmVjb3JkL3BvbHltb3Jw
-aGljX3JvdXRlc190ZXN0LnJiICAgfCAyMiArKysrKystLS0KIDQgZmlsZXMg
-Y2hhbmdlZCwgNzkgaW5zZXJ0aW9ucygrKSwgMTAgZGVsZXRpb25zKC0pCgpk
-aWZmIC0tZ2l0IGEvYWN0aW9ucGFjay9DSEFOR0VMT0cubWQgYi9hY3Rpb25w
-YWNrL0NIQU5HRUxPRy5tZAppbmRleCBhZDgwNmVjYWI5Li4wODhkYTJkNTU2
-IDEwMDY0NAotLS0gYS9hY3Rpb25wYWNrL0NIQU5HRUxPRy5tZAorKysgYi9h
-Y3Rpb25wYWNrL0NIQU5HRUxPRy5tZApAQCAtMSwzICsxLDEzIEBACisqICAg
-UHJldmVudCBzdHJpbmcgcG9seW1vcnBoaWMgcm91dGUgYXJndW1lbnRzLgor
-CisgICAgYHVybF9mb3JgIHN1cHBvcnRzIGJ1aWxkaW5nIHBvbHltb3JwaGlj
-IFVSTHMgdmlhIGFuIGFycmF5CisgICAgb2YgYXJndW1lbnRzICh1c3VhbGx5
-IHN5bWJvbHMgYW5kIHJlY29yZHMpLiBJZiBhIGRldmVsb3BlciBwYXNzZXMg
-YQorICAgIHVzZXIgaW5wdXQgYXJyYXksIHN0cmluZ3MgY2FuIHJlc3VsdCBp
-biB1bndhbnRlZCByb3V0ZSBoZWxwZXIgY2FsbHMuCisKKyAgICBDVkUtMjAy
-MS0yMjg4NQorCisgICAgKkdhbm5vbiBNY0dpYmJvbioKKwogIyMgUmFpbHMg
-NS4yLjQuNSAoRmVicnVhcnkgMTAsIDIwMjEpICMjCiAKICogICBObyBjaGFu
-Z2VzLgpkaWZmIC0tZ2l0IGEvYWN0aW9ucGFjay9saWIvYWN0aW9uX2Rpc3Bh
-dGNoL3JvdXRpbmcvcG9seW1vcnBoaWNfcm91dGVzLnJiIGIvYWN0aW9ucGFj
-ay9saWIvYWN0aW9uX2Rpc3BhdGNoL3JvdXRpbmcvcG9seW1vcnBoaWNfcm91
-dGVzLnJiCmluZGV4IDZkYTg2OWMwYzIuLjg0Yjc4ZTFjYjIgMTAwNjQ0Ci0t
-LSBhL2FjdGlvbnBhY2svbGliL2FjdGlvbl9kaXNwYXRjaC9yb3V0aW5nL3Bv
-bHltb3JwaGljX3JvdXRlcy5yYgorKysgYi9hY3Rpb25wYWNrL2xpYi9hY3Rp
-b25fZGlzcGF0Y2gvcm91dGluZy9wb2x5bW9ycGhpY19yb3V0ZXMucmIKQEAg
-LTI4OCwxMCArMjg4LDEyIEBAIGRlZiBoYW5kbGVfbGlzdChsaXN0KQogCiAg
-ICAgICAgICAgICBhcmdzID0gW10KIAotICAgICAgICAgICAgcm91dGUgPSBy
-ZWNvcmRfbGlzdC5tYXAgeyB8cGFyZW50fAorICAgICAgICAgICAgcm91dGUg
-PSByZWNvcmRfbGlzdC5tYXAgZG8gfHBhcmVudHwKICAgICAgICAgICAgICAg
-Y2FzZSBwYXJlbnQKLSAgICAgICAgICAgICAgd2hlbiBTeW1ib2wsIFN0cmlu
-ZworICAgICAgICAgICAgICB3aGVuIFN5bWJvbAogICAgICAgICAgICAgICAg
-IHBhcmVudC50b19zCisgICAgICAgICAgICAgIHdoZW4gU3RyaW5nCisgICAg
-ICAgICAgICAgICAgcmFpc2UoQXJndW1lbnRFcnJvciwgIlBsZWFzZSB1c2Ug
-c3ltYm9scyBmb3IgcG9seW1vcnBoaWMgcm91dGUgYXJndW1lbnRzLiIpCiAg
-ICAgICAgICAgICAgIHdoZW4gQ2xhc3MKICAgICAgICAgICAgICAgICBhcmdz
-IDw8IHBhcmVudAogICAgICAgICAgICAgICAgIHBhcmVudC5tb2RlbF9uYW1l
-LnNpbmd1bGFyX3JvdXRlX2tleQpAQCAtMjk5LDEyICszMDEsMTQgQEAgZGVm
-IGhhbmRsZV9saXN0KGxpc3QpCiAgICAgICAgICAgICAgICAgYXJncyA8PCBw
-YXJlbnQudG9fbW9kZWwKICAgICAgICAgICAgICAgICBwYXJlbnQudG9fbW9k
-ZWwubW9kZWxfbmFtZS5zaW5ndWxhcl9yb3V0ZV9rZXkKICAgICAgICAgICAg
-ICAgZW5kCi0gICAgICAgICAgICB9CisgICAgICAgICAgICBlbmQKIAogICAg
-ICAgICAgICAgcm91dGUgPDwKICAgICAgICAgICAgIGNhc2UgcmVjb3JkCi0g
-ICAgICAgICAgICB3aGVuIFN5bWJvbCwgU3RyaW5nCisgICAgICAgICAgICB3
-aGVuIFN5bWJvbAogICAgICAgICAgICAgICByZWNvcmQudG9fcworICAgICAg
-ICAgICAgd2hlbiBTdHJpbmcKKyAgICAgICAgICAgICAgcmFpc2UoQXJndW1l
-bnRFcnJvciwgIlBsZWFzZSB1c2Ugc3ltYm9scyBmb3IgcG9seW1vcnBoaWMg
-cm91dGUgYXJndW1lbnRzLiIpCiAgICAgICAgICAgICB3aGVuIENsYXNzCiAg
-ICAgICAgICAgICAgIEBrZXlfc3RyYXRlZ3kuY2FsbCByZWNvcmQubW9kZWxf
-bmFtZQogICAgICAgICAgICAgZWxzZQpkaWZmIC0tZ2l0IGEvYWN0aW9ucGFj
-ay90ZXN0L2NvbnRyb2xsZXIvcmVkaXJlY3RfdGVzdC5yYiBiL2FjdGlvbnBh
-Y2svdGVzdC9jb250cm9sbGVyL3JlZGlyZWN0X3Rlc3QucmIKaW5kZXggNDYx
-ZTYyNzE1NC4uMTczZGJhNmUwYSAxMDA2NDQKLS0tIGEvYWN0aW9ucGFjay90
-ZXN0L2NvbnRyb2xsZXIvcmVkaXJlY3RfdGVzdC5yYgorKysgYi9hY3Rpb25w
-YWNrL3Rlc3QvY29udHJvbGxlci9yZWRpcmVjdF90ZXN0LnJiCkBAIC0xMDgs
-NiArMTA4LDE0IEBAIGRlZiByZWRpcmVjdF90b19uaWwKICAgICByZWRpcmVj
-dF90byBuaWwKICAgZW5kCiAKKyAgZGVmIHJlZGlyZWN0X3RvX3BvbHltb3Jw
-aGljCisgICAgcmVkaXJlY3RfdG8gWzppbnRlcm5hbCwgV29ya3Nob3AubmV3
-KDUpXQorICBlbmQKKworICBkZWYgcmVkaXJlY3RfdG9fcG9seW1vcnBoaWNf
-c3RyaW5nX2FyZ3MKKyAgICByZWRpcmVjdF90byBbImludGVybmFsIiwgV29y
-a3Nob3AubmV3KDUpXQorICBlbmQKKwogICBkZWYgcmVkaXJlY3RfdG9fcGFy
-YW1zCiAgICAgcmVkaXJlY3RfdG8gQWN0aW9uQ29udHJvbGxlcjo6UGFyYW1l
-dGVycy5uZXcoc3RhdHVzOiAyMDAsIHByb3RvY29sOiAiamF2YXNjcmlwdCIs
-IGY6ICIlMEFldmFsKG5hbWUpIikKICAgZW5kCkBAIC0zMTAsNiArMzE4LDQz
-IEBAIGRlZiB0ZXN0X3JlZGlyZWN0X3RvX3JlY29yZAogICAgIGVuZAogICBl
-bmQKIAorICBkZWYgdGVzdF9wb2x5bW9ycGhpY19yZWRpcmVjdAorICAgIHdp
-dGhfcm91dGluZyBkbyB8c2V0fAorICAgICAgc2V0LmRyYXcgZG8KKyAgICAg
-ICAgbmFtZXNwYWNlIDppbnRlcm5hbCBkbworICAgICAgICAgIHJlc291cmNl
-cyA6d29ya3Nob3BzCisgICAgICAgIGVuZAorCisgICAgICAgIEFjdGl2ZVN1
-cHBvcnQ6OkRlcHJlY2F0aW9uLnNpbGVuY2UgZG8KKyAgICAgICAgICBnZXQg
-Ijpjb250cm9sbGVyLzphY3Rpb24iCisgICAgICAgIGVuZAorICAgICAgZW5k
-CisKKyAgICAgIGdldCA6cmVkaXJlY3RfdG9fcG9seW1vcnBoaWMKKyAgICAg
-IGFzc2VydF9lcXVhbCAiaHR0cDovL3Rlc3QuaG9zdC9pbnRlcm5hbC93b3Jr
-c2hvcHMvNSIsIHJlZGlyZWN0X3RvX3VybAorICAgICAgYXNzZXJ0X3JlZGly
-ZWN0ZWRfdG8gWzppbnRlcm5hbCwgV29ya3Nob3AubmV3KDUpXQorICAgIGVu
-ZAorICBlbmQKKworICBkZWYgdGVzdF9wb2x5bW9ycGhpY19yZWRpcmVjdF93
-aXRoX3N0cmluZ19hcmdzCisgICAgd2l0aF9yb3V0aW5nIGRvIHxzZXR8Cisg
-ICAgICBzZXQuZHJhdyBkbworICAgICAgICBuYW1lc3BhY2UgOmludGVybmFs
-IGRvCisgICAgICAgICAgcmVzb3VyY2VzIDp3b3Jrc2hvcHMKKyAgICAgICAg
-ZW5kCisKKyAgICAgICAgQWN0aXZlU3VwcG9ydDo6RGVwcmVjYXRpb24uc2ls
-ZW5jZSBkbworICAgICAgICAgIGdldCAiOmNvbnRyb2xsZXIvOmFjdGlvbiIK
-KyAgICAgICAgZW5kCisgICAgICBlbmQKKworICAgICAgZXJyb3IgPSBhc3Nl
-cnRfcmFpc2VzKEFyZ3VtZW50RXJyb3IpIGRvCisgICAgICAgIGdldCA6cmVk
-aXJlY3RfdG9fcG9seW1vcnBoaWNfc3RyaW5nX2FyZ3MKKyAgICAgIGVuZAor
-ICAgICAgYXNzZXJ0X2VxdWFsKCJQbGVhc2UgdXNlIHN5bWJvbHMgZm9yIHBv
-bHltb3JwaGljIHJvdXRlIGFyZ3VtZW50cy4iLCBlcnJvci5tZXNzYWdlKQor
-ICAgIGVuZAorICBlbmQKKwogICBkZWYgdGVzdF9yZWRpcmVjdF90b19uaWwK
-ICAgICBlcnJvciA9IGFzc2VydF9yYWlzZShBY3Rpb25Db250cm9sbGVyOjpB
-Y3Rpb25Db250cm9sbGVyRXJyb3IpIGRvCiAgICAgICBnZXQgOnJlZGlyZWN0
-X3RvX25pbApkaWZmIC0tZ2l0IGEvYWN0aW9udmlldy90ZXN0L2FjdGl2ZXJl
-Y29yZC9wb2x5bW9ycGhpY19yb3V0ZXNfdGVzdC5yYiBiL2FjdGlvbnZpZXcv
-dGVzdC9hY3RpdmVyZWNvcmQvcG9seW1vcnBoaWNfcm91dGVzX3Rlc3QucmIK
-aW5kZXggNGI5MzFmNzkzZi4uZjQxNTgxZDc4OCAxMDA2NDQKLS0tIGEvYWN0
-aW9udmlldy90ZXN0L2FjdGl2ZXJlY29yZC9wb2x5bW9ycGhpY19yb3V0ZXNf
-dGVzdC5yYgorKysgYi9hY3Rpb252aWV3L3Rlc3QvYWN0aXZlcmVjb3JkL3Bv
-bHltb3JwaGljX3JvdXRlc190ZXN0LnJiCkBAIC00NjAsMTIgKzQ2MCw2IEBA
-IGRlZiB0ZXN0X3dpdGhfYXJyYXlfY29udGFpbmluZ19zaW5nbGVfbmFtZQog
-ICAgIGVuZAogICBlbmQKIAotICBkZWYgdGVzdF93aXRoX2FycmF5X2NvbnRh
-aW5pbmdfc2luZ2xlX3N0cmluZ19uYW1lCi0gICAgd2l0aF90ZXN0X3JvdXRl
-cyBkbwotICAgICAgYXNzZXJ0X3VybCAiaHR0cDovL2V4YW1wbGUuY29tL3By
-b2plY3RzIiwgWyJwcm9qZWN0cyJdCi0gICAgZW5kCi0gIGVuZAotCiAgIGRl
-ZiB0ZXN0X3dpdGhfYXJyYXlfY29udGFpbmluZ19zeW1ib2xzCiAgICAgd2l0
-aF90ZXN0X3JvdXRlcyBkbwogICAgICAgYXNzZXJ0X3VybCAiaHR0cDovL2V4
-YW1wbGUuY29tL3Nlcmllcy9uZXciLCBbOm5ldywgOnNlcmllc10KQEAgLTYy
-MCw2ICs2MTQsMjIgQEAgZGVmIHRlc3RfbmVzdGVkX3JvdXRpbmdfdG9fYV9t
-b2RlbF9kZWxlZ2F0ZQogICAgIGVuZAogICBlbmQKIAorICBkZWYgdGVzdF9z
-dHJpbmdfcm91dGVfYXJndW1lbnRzCisgICAgd2l0aF9hZG1pbl90ZXN0X3Jv
-dXRlcyBkbworICAgICAgZXJyb3IgPSBhc3NlcnRfcmFpc2VzKEFyZ3VtZW50
-RXJyb3IpIGRvCisgICAgICAgIHBvbHltb3JwaGljX3VybChbImFkbWluIiwg
-QHByb2plY3RdKQorICAgICAgZW5kCisKKyAgICAgIGFzc2VydF9lcXVhbCgi
-UGxlYXNlIHVzZSBzeW1ib2xzIGZvciBwb2x5bW9ycGhpYyByb3V0ZSBhcmd1
-bWVudHMuIiwgZXJyb3IubWVzc2FnZSkKKworICAgICAgZXJyb3IgPSBhc3Nl
-cnRfcmFpc2VzKEFyZ3VtZW50RXJyb3IpIGRvCisgICAgICAgIHBvbHltb3Jw
-aGljX3VybChbQHByb2plY3QsICJiaWQiXSkKKyAgICAgIGVuZAorCisgICAg
-ICBhc3NlcnRfZXF1YWwoIlBsZWFzZSB1c2Ugc3ltYm9scyBmb3IgcG9seW1v
-cnBoaWMgcm91dGUgYXJndW1lbnRzLiIsIGVycm9yLm1lc3NhZ2UpCisgICAg
-ZW5kCisgIGVuZAorCiAgIGRlZiB3aXRoX25hbWVzcGFjZWRfcm91dGVzKG5h
-bWUpCiAgICAgd2l0aF9yb3V0aW5nIGRvIHxzZXR8CiAgICAgICBzZXQuZHJh
-dyBkbwotLSAKMi4zMC4wCgo=
+SA-CONTRIB-2014-041 - Block Search - SQL Injection
+https://www.drupal.org/node/2242463
 
---000000000000f3f3af05c197d6e1
-Content-Type: application/octet-stream; 
-	name="6-1-information-disclosure.patch"
-Content-Disposition: attachment; filename="6-1-information-disclosure.patch"
-Content-Transfer-Encoding: base64
-Content-ID: <f_kobor2hz2>
-X-Attachment-Id: f_kobor2hz2
+SA-CONTRIB-2014-042 - Internationalization - Access Bypass
+https://www.drupal.org/node/2248073
 
-RnJvbSAwMzAzMTg3ODQ2ODNmNzZkZjRjOTE2ZDVhMzhiMDdkYmYxZjJhZWM1
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBHYW5ub24gTWNHaWJi
-b24gPGdhbm5vbi5tY2dpYmJvbkBzaG9waWZ5LmNvbT4KRGF0ZTogVGh1LCAx
-OCBGZWIgMjAyMSAxMzoxNzowOCAtMDUwMApTdWJqZWN0OiBbUEFUQ0hdIFBy
-ZXZlbnQgc3RyaW5nIHBvbHltb3JwaGljIHJvdXRlIGFyZ3VtZW50cwoKdXJs
-X2ZvciBzdXBwb3J0cyBidWlsZGluZyBwb2x5bW9ycGhpYyBVUkxzIHZpYSBh
-biBhcnJheQpvZiBhcmd1bWVudHMgKHVzdWFsbHkgc3ltYm9scyBhbmQgcmVj
-b3JkcykuIElmIGFuIGFycmF5IGlzIHBhc3NlZCwKc3RyaW5ncyBjYW4gcmVz
-dWx0IGluIHVud2FudGVkIHJvdXRlIGhlbHBlciBjYWxscy4KCkNWRS0yMDIx
-LTIyODg1Ci0tLQogYWN0aW9ucGFjay9DSEFOR0VMT0cubWQgICAgICAgICAg
-ICAgICAgICAgICAgIHwgMTAgKysrKysKIC4uLi9yb3V0aW5nL3BvbHltb3Jw
-aGljX3JvdXRlcy5yYiAgICAgICAgICAgICB8IDEyICsrKy0tCiBhY3Rpb25w
-YWNrL3Rlc3QvY29udHJvbGxlci9yZWRpcmVjdF90ZXN0LnJiICAgfCA0NSAr
-KysrKysrKysrKysrKysrKysrCiAuLi4vYWN0aXZlcmVjb3JkL3BvbHltb3Jw
-aGljX3JvdXRlc190ZXN0LnJiICAgfCAyMiArKysrKystLS0KIDQgZmlsZXMg
-Y2hhbmdlZCwgNzkgaW5zZXJ0aW9ucygrKSwgMTAgZGVsZXRpb25zKC0pCgpk
-aWZmIC0tZ2l0IGEvYWN0aW9ucGFjay9DSEFOR0VMT0cubWQgYi9hY3Rpb25w
-YWNrL0NIQU5HRUxPRy5tZAppbmRleCA5ZjU3OTY1ZjQzLi4zZDBhNzA4N2Jh
-IDEwMDY0NAotLS0gYS9hY3Rpb25wYWNrL0NIQU5HRUxPRy5tZAorKysgYi9h
-Y3Rpb25wYWNrL0NIQU5HRUxPRy5tZApAQCAtMSwzICsxLDEzIEBACisqICAg
-UHJldmVudCBzdHJpbmcgcG9seW1vcnBoaWMgcm91dGUgYXJndW1lbnRzLgor
-CisgICAgYHVybF9mb3JgIHN1cHBvcnRzIGJ1aWxkaW5nIHBvbHltb3JwaGlj
-IFVSTHMgdmlhIGFuIGFycmF5CisgICAgb2YgYXJndW1lbnRzICh1c3VhbGx5
-IHN5bWJvbHMgYW5kIHJlY29yZHMpLiBJZiBhIGRldmVsb3BlciBwYXNzZXMg
-YQorICAgIHVzZXIgaW5wdXQgYXJyYXksIHN0cmluZ3MgY2FuIHJlc3VsdCBp
-biB1bndhbnRlZCByb3V0ZSBoZWxwZXIgY2FsbHMuCisKKyAgICBDVkUtMjAy
-MS0yMjg4NQorCisgICAgKkdhbm5vbiBNY0dpYmJvbioKKwogIyMgUmFpbHMg
-Ni4xLjMuMSAoTWFyY2ggMjYsIDIwMjEpICMjCiAKICogICBObyBjaGFuZ2Vz
-LgpkaWZmIC0tZ2l0IGEvYWN0aW9ucGFjay9saWIvYWN0aW9uX2Rpc3BhdGNo
-L3JvdXRpbmcvcG9seW1vcnBoaWNfcm91dGVzLnJiIGIvYWN0aW9ucGFjay9s
-aWIvYWN0aW9uX2Rpc3BhdGNoL3JvdXRpbmcvcG9seW1vcnBoaWNfcm91dGVz
-LnJiCmluZGV4IGU5OGU0YWFhNjYuLjc3NDk5YmYxNTcgMTAwNjQ0Ci0tLSBh
-L2FjdGlvbnBhY2svbGliL2FjdGlvbl9kaXNwYXRjaC9yb3V0aW5nL3BvbHlt
-b3JwaGljX3JvdXRlcy5yYgorKysgYi9hY3Rpb25wYWNrL2xpYi9hY3Rpb25f
-ZGlzcGF0Y2gvcm91dGluZy9wb2x5bW9ycGhpY19yb3V0ZXMucmIKQEAgLTI4
-NywxMCArMjg3LDEyIEBAIGRlZiBoYW5kbGVfbGlzdChsaXN0KQogCiAgICAg
-ICAgICAgICBhcmdzID0gW10KIAotICAgICAgICAgICAgcm91dGUgPSByZWNv
-cmRfbGlzdC5tYXAgeyB8cGFyZW50fAorICAgICAgICAgICAgcm91dGUgPSBy
-ZWNvcmRfbGlzdC5tYXAgZG8gfHBhcmVudHwKICAgICAgICAgICAgICAgY2Fz
-ZSBwYXJlbnQKLSAgICAgICAgICAgICAgd2hlbiBTeW1ib2wsIFN0cmluZwor
-ICAgICAgICAgICAgICB3aGVuIFN5bWJvbAogICAgICAgICAgICAgICAgIHBh
-cmVudC50b19zCisgICAgICAgICAgICAgIHdoZW4gU3RyaW5nCisgICAgICAg
-ICAgICAgICAgcmFpc2UoQXJndW1lbnRFcnJvciwgIlBsZWFzZSB1c2Ugc3lt
-Ym9scyBmb3IgcG9seW1vcnBoaWMgcm91dGUgYXJndW1lbnRzLiIpCiAgICAg
-ICAgICAgICAgIHdoZW4gQ2xhc3MKICAgICAgICAgICAgICAgICBhcmdzIDw8
-IHBhcmVudAogICAgICAgICAgICAgICAgIHBhcmVudC5tb2RlbF9uYW1lLnNp
-bmd1bGFyX3JvdXRlX2tleQpAQCAtMjk4LDEyICszMDAsMTQgQEAgZGVmIGhh
-bmRsZV9saXN0KGxpc3QpCiAgICAgICAgICAgICAgICAgYXJncyA8PCBwYXJl
-bnQudG9fbW9kZWwKICAgICAgICAgICAgICAgICBwYXJlbnQudG9fbW9kZWwu
-bW9kZWxfbmFtZS5zaW5ndWxhcl9yb3V0ZV9rZXkKICAgICAgICAgICAgICAg
-ZW5kCi0gICAgICAgICAgICB9CisgICAgICAgICAgICBlbmQKIAogICAgICAg
-ICAgICAgcm91dGUgPDwKICAgICAgICAgICAgIGNhc2UgcmVjb3JkCi0gICAg
-ICAgICAgICB3aGVuIFN5bWJvbCwgU3RyaW5nCisgICAgICAgICAgICB3aGVu
-IFN5bWJvbAogICAgICAgICAgICAgICByZWNvcmQudG9fcworICAgICAgICAg
-ICAgd2hlbiBTdHJpbmcKKyAgICAgICAgICAgICAgcmFpc2UoQXJndW1lbnRF
-cnJvciwgIlBsZWFzZSB1c2Ugc3ltYm9scyBmb3IgcG9seW1vcnBoaWMgcm91
-dGUgYXJndW1lbnRzLiIpCiAgICAgICAgICAgICB3aGVuIENsYXNzCiAgICAg
-ICAgICAgICAgIEBrZXlfc3RyYXRlZ3kuY2FsbCByZWNvcmQubW9kZWxfbmFt
-ZQogICAgICAgICAgICAgZWxzZQpkaWZmIC0tZ2l0IGEvYWN0aW9ucGFjay90
-ZXN0L2NvbnRyb2xsZXIvcmVkaXJlY3RfdGVzdC5yYiBiL2FjdGlvbnBhY2sv
-dGVzdC9jb250cm9sbGVyL3JlZGlyZWN0X3Rlc3QucmIKaW5kZXggN2YxYzQx
-Nzg3YS4uZTIxOGVmMzVlNCAxMDA2NDQKLS0tIGEvYWN0aW9ucGFjay90ZXN0
-L2NvbnRyb2xsZXIvcmVkaXJlY3RfdGVzdC5yYgorKysgYi9hY3Rpb25wYWNr
-L3Rlc3QvY29udHJvbGxlci9yZWRpcmVjdF90ZXN0LnJiCkBAIC0xMTYsNiAr
-MTE2LDE0IEBAIGRlZiByZWRpcmVjdF90b19uaWwKICAgICByZWRpcmVjdF90
-byBuaWwKICAgZW5kCiAKKyAgZGVmIHJlZGlyZWN0X3RvX3BvbHltb3JwaGlj
-CisgICAgcmVkaXJlY3RfdG8gWzppbnRlcm5hbCwgV29ya3Nob3AubmV3KDUp
-XQorICBlbmQKKworICBkZWYgcmVkaXJlY3RfdG9fcG9seW1vcnBoaWNfc3Ry
-aW5nX2FyZ3MKKyAgICByZWRpcmVjdF90byBbImludGVybmFsIiwgV29ya3No
-b3AubmV3KDUpXQorICBlbmQKKwogICBkZWYgcmVkaXJlY3RfdG9fcGFyYW1z
-CiAgICAgcmVkaXJlY3RfdG8gQWN0aW9uQ29udHJvbGxlcjo6UGFyYW1ldGVy
-cy5uZXcoc3RhdHVzOiAyMDAsIHByb3RvY29sOiAiamF2YXNjcmlwdCIsIGY6
-ICIlMEFldmFsKG5hbWUpIikKICAgZW5kCkBAIC0zNDYsNiArMzU0LDQzIEBA
-IGRlZiB0ZXN0X3JlZGlyZWN0X3RvX3JlY29yZAogICAgIGVuZAogICBlbmQK
-IAorICBkZWYgdGVzdF9wb2x5bW9ycGhpY19yZWRpcmVjdAorICAgIHdpdGhf
-cm91dGluZyBkbyB8c2V0fAorICAgICAgc2V0LmRyYXcgZG8KKyAgICAgICAg
-bmFtZXNwYWNlIDppbnRlcm5hbCBkbworICAgICAgICAgIHJlc291cmNlcyA6
-d29ya3Nob3BzCisgICAgICAgIGVuZAorCisgICAgICAgIEFjdGl2ZVN1cHBv
-cnQ6OkRlcHJlY2F0aW9uLnNpbGVuY2UgZG8KKyAgICAgICAgICBnZXQgIjpj
-b250cm9sbGVyLzphY3Rpb24iCisgICAgICAgIGVuZAorICAgICAgZW5kCisK
-KyAgICAgIGdldCA6cmVkaXJlY3RfdG9fcG9seW1vcnBoaWMKKyAgICAgIGFz
-c2VydF9lcXVhbCAiaHR0cDovL3Rlc3QuaG9zdC9pbnRlcm5hbC93b3Jrc2hv
-cHMvNSIsIHJlZGlyZWN0X3RvX3VybAorICAgICAgYXNzZXJ0X3JlZGlyZWN0
-ZWRfdG8gWzppbnRlcm5hbCwgV29ya3Nob3AubmV3KDUpXQorICAgIGVuZAor
-ICBlbmQKKworICBkZWYgdGVzdF9wb2x5bW9ycGhpY19yZWRpcmVjdF93aXRo
-X3N0cmluZ19hcmdzCisgICAgd2l0aF9yb3V0aW5nIGRvIHxzZXR8CisgICAg
-ICBzZXQuZHJhdyBkbworICAgICAgICBuYW1lc3BhY2UgOmludGVybmFsIGRv
-CisgICAgICAgICAgcmVzb3VyY2VzIDp3b3Jrc2hvcHMKKyAgICAgICAgZW5k
-CisKKyAgICAgICAgQWN0aXZlU3VwcG9ydDo6RGVwcmVjYXRpb24uc2lsZW5j
-ZSBkbworICAgICAgICAgIGdldCAiOmNvbnRyb2xsZXIvOmFjdGlvbiIKKyAg
-ICAgICAgZW5kCisgICAgICBlbmQKKworICAgICAgZXJyb3IgPSBhc3NlcnRf
-cmFpc2VzKEFyZ3VtZW50RXJyb3IpIGRvCisgICAgICAgIGdldCA6cmVkaXJl
-Y3RfdG9fcG9seW1vcnBoaWNfc3RyaW5nX2FyZ3MKKyAgICAgIGVuZAorICAg
-ICAgYXNzZXJ0X2VxdWFsKCJQbGVhc2UgdXNlIHN5bWJvbHMgZm9yIHBvbHlt
-b3JwaGljIHJvdXRlIGFyZ3VtZW50cy4iLCBlcnJvci5tZXNzYWdlKQorICAg
-IGVuZAorICBlbmQKKwogICBkZWYgdGVzdF9yZWRpcmVjdF90b19uaWwKICAg
-ICBlcnJvciA9IGFzc2VydF9yYWlzZShBY3Rpb25Db250cm9sbGVyOjpBY3Rp
-b25Db250cm9sbGVyRXJyb3IpIGRvCiAgICAgICBnZXQgOnJlZGlyZWN0X3Rv
-X25pbApkaWZmIC0tZ2l0IGEvYWN0aW9udmlldy90ZXN0L2FjdGl2ZXJlY29y
-ZC9wb2x5bW9ycGhpY19yb3V0ZXNfdGVzdC5yYiBiL2FjdGlvbnZpZXcvdGVz
-dC9hY3RpdmVyZWNvcmQvcG9seW1vcnBoaWNfcm91dGVzX3Rlc3QucmIKaW5k
-ZXggNDVmNzE3M2QyNC4uYmRlMTkxMTQxNyAxMDA2NDQKLS0tIGEvYWN0aW9u
-dmlldy90ZXN0L2FjdGl2ZXJlY29yZC9wb2x5bW9ycGhpY19yb3V0ZXNfdGVz
-dC5yYgorKysgYi9hY3Rpb252aWV3L3Rlc3QvYWN0aXZlcmVjb3JkL3BvbHlt
-b3JwaGljX3JvdXRlc190ZXN0LnJiCkBAIC00NjQsMTIgKzQ2NCw2IEBAIGRl
-ZiB0ZXN0X3dpdGhfYXJyYXlfY29udGFpbmluZ19zaW5nbGVfbmFtZQogICAg
-IGVuZAogICBlbmQKIAotICBkZWYgdGVzdF93aXRoX2FycmF5X2NvbnRhaW5p
-bmdfc2luZ2xlX3N0cmluZ19uYW1lCi0gICAgd2l0aF90ZXN0X3JvdXRlcyBk
-bwotICAgICAgYXNzZXJ0X3VybCAiaHR0cDovL2V4YW1wbGUuY29tL3Byb2pl
-Y3RzIiwgWyJwcm9qZWN0cyJdCi0gICAgZW5kCi0gIGVuZAotCiAgIGRlZiB0
-ZXN0X3dpdGhfYXJyYXlfY29udGFpbmluZ19zeW1ib2xzCiAgICAgd2l0aF90
-ZXN0X3JvdXRlcyBkbwogICAgICAgYXNzZXJ0X3VybCAiaHR0cDovL2V4YW1w
-bGUuY29tL3Nlcmllcy9uZXciLCBbOm5ldywgOnNlcmllc10KQEAgLTYyNCw2
-ICs2MTgsMjIgQEAgZGVmIHRlc3RfbmVzdGVkX3JvdXRpbmdfdG9fYV9tb2Rl
-bF9kZWxlZ2F0ZQogICAgIGVuZAogICBlbmQKIAorICBkZWYgdGVzdF9zdHJp
-bmdfcm91dGVfYXJndW1lbnRzCisgICAgd2l0aF9hZG1pbl90ZXN0X3JvdXRl
-cyBkbworICAgICAgZXJyb3IgPSBhc3NlcnRfcmFpc2VzKEFyZ3VtZW50RXJy
-b3IpIGRvCisgICAgICAgIHBvbHltb3JwaGljX3VybChbImFkbWluIiwgQHBy
-b2plY3RdKQorICAgICAgZW5kCisKKyAgICAgIGFzc2VydF9lcXVhbCgiUGxl
-YXNlIHVzZSBzeW1ib2xzIGZvciBwb2x5bW9ycGhpYyByb3V0ZSBhcmd1bWVu
-dHMuIiwgZXJyb3IubWVzc2FnZSkKKworICAgICAgZXJyb3IgPSBhc3NlcnRf
-cmFpc2VzKEFyZ3VtZW50RXJyb3IpIGRvCisgICAgICAgIHBvbHltb3JwaGlj
-X3VybChbQHByb2plY3QsICJiaWQiXSkKKyAgICAgIGVuZAorCisgICAgICBh
-c3NlcnRfZXF1YWwoIlBsZWFzZSB1c2Ugc3ltYm9scyBmb3IgcG9seW1vcnBo
-aWMgcm91dGUgYXJndW1lbnRzLiIsIGVycm9yLm1lc3NhZ2UpCisgICAgZW5k
-CisgIGVuZAorCiAgIGRlZiB3aXRoX25hbWVzcGFjZWRfcm91dGVzKG5hbWUp
-CiAgICAgd2l0aF9yb3V0aW5nIGRvIHxzZXR8CiAgICAgICBzZXQuZHJhdyBk
-bwotLSAKMi4zMC4wCgo=
+SA-CONTRIB-2014-045 - Drupal Commons - Access Bypass
+https://www.drupal.org/node/2248171
 
---000000000000f3f3af05c197d6e1
-Content-Type: application/octet-stream; 
-	name="6-0-information-disclosure.patch"
-Content-Disposition: attachment; filename="6-0-information-disclosure.patch"
-Content-Transfer-Encoding: base64
-Content-ID: <f_kobor2he1>
-X-Attachment-Id: f_kobor2he1
+SA-CONTRIB-2014-048 - Field API Pane Editor (FAPE) - Access bypass
+https://www.drupal.org/node/2254943
 
-RnJvbSBmMjAyMjQ5YmRkNzAxZjkwOGE1N2Q3MzNlNjMzZDM2NmE5ODJmOGNl
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBHYW5ub24gTWNHaWJi
-b24gPGdhbm5vbi5tY2dpYmJvbkBzaG9waWZ5LmNvbT4KRGF0ZTogVGh1LCAx
-OCBGZWIgMjAyMSAxMzoxNzowOCAtMDUwMApTdWJqZWN0OiBbUEFUQ0hdIFBy
-ZXZlbnQgc3RyaW5nIHBvbHltb3JwaGljIHJvdXRlIGFyZ3VtZW50cwoKdXJs
-X2ZvciBzdXBwb3J0cyBidWlsZGluZyBwb2x5bW9ycGhpYyBVUkxzIHZpYSBh
-biBhcnJheQpvZiBhcmd1bWVudHMgKHVzdWFsbHkgc3ltYm9scyBhbmQgcmVj
-b3JkcykuIElmIGFuIGFycmF5IGlzIHBhc3NlZCwKc3RyaW5ncyBjYW4gcmVz
-dWx0IGluIHVud2FudGVkIHJvdXRlIGhlbHBlciBjYWxscy4KCkNWRS0yMDIx
-LTIyODg1Ci0tLQogYWN0aW9ucGFjay9DSEFOR0VMT0cubWQgICAgICAgICAg
-ICAgICAgICAgICAgIHwgMTAgKysrKysKIC4uLi9yb3V0aW5nL3BvbHltb3Jw
-aGljX3JvdXRlcy5yYiAgICAgICAgICAgICB8IDEyICsrKy0tCiBhY3Rpb25w
-YWNrL3Rlc3QvY29udHJvbGxlci9yZWRpcmVjdF90ZXN0LnJiICAgfCA0NSAr
-KysrKysrKysrKysrKysrKysrCiAuLi4vYWN0aXZlcmVjb3JkL3BvbHltb3Jw
-aGljX3JvdXRlc190ZXN0LnJiICAgfCAyMiArKysrKystLS0KIDQgZmlsZXMg
-Y2hhbmdlZCwgNzkgaW5zZXJ0aW9ucygrKSwgMTAgZGVsZXRpb25zKC0pCgpk
-aWZmIC0tZ2l0IGEvYWN0aW9ucGFjay9DSEFOR0VMT0cubWQgYi9hY3Rpb25w
-YWNrL0NIQU5HRUxPRy5tZAppbmRleCAzNTFlZGQ5MjlmLi5kMmNjYTljYWRl
-IDEwMDY0NAotLS0gYS9hY3Rpb25wYWNrL0NIQU5HRUxPRy5tZAorKysgYi9h
-Y3Rpb25wYWNrL0NIQU5HRUxPRy5tZApAQCAtMSwzICsxLDEzIEBACisqICAg
-UHJldmVudCBzdHJpbmcgcG9seW1vcnBoaWMgcm91dGUgYXJndW1lbnRzLgor
-CisgICAgYHVybF9mb3JgIHN1cHBvcnRzIGJ1aWxkaW5nIHBvbHltb3JwaGlj
-IFVSTHMgdmlhIGFuIGFycmF5CisgICAgb2YgYXJndW1lbnRzICh1c3VhbGx5
-IHN5bWJvbHMgYW5kIHJlY29yZHMpLiBJZiBhIGRldmVsb3BlciBwYXNzZXMg
-YQorICAgIHVzZXIgaW5wdXQgYXJyYXksIHN0cmluZ3MgY2FuIHJlc3VsdCBp
-biB1bndhbnRlZCByb3V0ZSBoZWxwZXIgY2FsbHMuCisKKyAgICBDVkUtMjAy
-MS0yMjg4NQorCisgICAgKkdhbm5vbiBNY0dpYmJvbioKKwogIyMgUmFpbHMg
-Ni4wLjMuNiAoTWFyY2ggMjYsIDIwMjEpICMjCiAKICogICBObyBjaGFuZ2Vz
-LgpkaWZmIC0tZ2l0IGEvYWN0aW9ucGFjay9saWIvYWN0aW9uX2Rpc3BhdGNo
-L3JvdXRpbmcvcG9seW1vcnBoaWNfcm91dGVzLnJiIGIvYWN0aW9ucGFjay9s
-aWIvYWN0aW9uX2Rpc3BhdGNoL3JvdXRpbmcvcG9seW1vcnBoaWNfcm91dGVz
-LnJiCmluZGV4IGUzMzIyZTk5YWIuLjZmMGY1YzQ1MTEgMTAwNjQ0Ci0tLSBh
-L2FjdGlvbnBhY2svbGliL2FjdGlvbl9kaXNwYXRjaC9yb3V0aW5nL3BvbHlt
-b3JwaGljX3JvdXRlcy5yYgorKysgYi9hY3Rpb25wYWNrL2xpYi9hY3Rpb25f
-ZGlzcGF0Y2gvcm91dGluZy9wb2x5bW9ycGhpY19yb3V0ZXMucmIKQEAgLTI4
-NiwxMCArMjg2LDEyIEBAIGRlZiBoYW5kbGVfbGlzdChsaXN0KQogCiAgICAg
-ICAgICAgICBhcmdzID0gW10KIAotICAgICAgICAgICAgcm91dGUgPSByZWNv
-cmRfbGlzdC5tYXAgeyB8cGFyZW50fAorICAgICAgICAgICAgcm91dGUgPSBy
-ZWNvcmRfbGlzdC5tYXAgZG8gfHBhcmVudHwKICAgICAgICAgICAgICAgY2Fz
-ZSBwYXJlbnQKLSAgICAgICAgICAgICAgd2hlbiBTeW1ib2wsIFN0cmluZwor
-ICAgICAgICAgICAgICB3aGVuIFN5bWJvbAogICAgICAgICAgICAgICAgIHBh
-cmVudC50b19zCisgICAgICAgICAgICAgIHdoZW4gU3RyaW5nCisgICAgICAg
-ICAgICAgICAgcmFpc2UoQXJndW1lbnRFcnJvciwgIlBsZWFzZSB1c2Ugc3lt
-Ym9scyBmb3IgcG9seW1vcnBoaWMgcm91dGUgYXJndW1lbnRzLiIpCiAgICAg
-ICAgICAgICAgIHdoZW4gQ2xhc3MKICAgICAgICAgICAgICAgICBhcmdzIDw8
-IHBhcmVudAogICAgICAgICAgICAgICAgIHBhcmVudC5tb2RlbF9uYW1lLnNp
-bmd1bGFyX3JvdXRlX2tleQpAQCAtMjk3LDEyICsyOTksMTQgQEAgZGVmIGhh
-bmRsZV9saXN0KGxpc3QpCiAgICAgICAgICAgICAgICAgYXJncyA8PCBwYXJl
-bnQudG9fbW9kZWwKICAgICAgICAgICAgICAgICBwYXJlbnQudG9fbW9kZWwu
-bW9kZWxfbmFtZS5zaW5ndWxhcl9yb3V0ZV9rZXkKICAgICAgICAgICAgICAg
-ZW5kCi0gICAgICAgICAgICB9CisgICAgICAgICAgICBlbmQKIAogICAgICAg
-ICAgICAgcm91dGUgPDwKICAgICAgICAgICAgIGNhc2UgcmVjb3JkCi0gICAg
-ICAgICAgICB3aGVuIFN5bWJvbCwgU3RyaW5nCisgICAgICAgICAgICB3aGVu
-IFN5bWJvbAogICAgICAgICAgICAgICByZWNvcmQudG9fcworICAgICAgICAg
-ICAgd2hlbiBTdHJpbmcKKyAgICAgICAgICAgICAgcmFpc2UoQXJndW1lbnRF
-cnJvciwgIlBsZWFzZSB1c2Ugc3ltYm9scyBmb3IgcG9seW1vcnBoaWMgcm91
-dGUgYXJndW1lbnRzLiIpCiAgICAgICAgICAgICB3aGVuIENsYXNzCiAgICAg
-ICAgICAgICAgIEBrZXlfc3RyYXRlZ3kuY2FsbCByZWNvcmQubW9kZWxfbmFt
-ZQogICAgICAgICAgICAgZWxzZQpkaWZmIC0tZ2l0IGEvYWN0aW9ucGFjay90
-ZXN0L2NvbnRyb2xsZXIvcmVkaXJlY3RfdGVzdC5yYiBiL2FjdGlvbnBhY2sv
-dGVzdC9jb250cm9sbGVyL3JlZGlyZWN0X3Rlc3QucmIKaW5kZXggN2YxYzQx
-Nzg3YS4uZTIxOGVmMzVlNCAxMDA2NDQKLS0tIGEvYWN0aW9ucGFjay90ZXN0
-L2NvbnRyb2xsZXIvcmVkaXJlY3RfdGVzdC5yYgorKysgYi9hY3Rpb25wYWNr
-L3Rlc3QvY29udHJvbGxlci9yZWRpcmVjdF90ZXN0LnJiCkBAIC0xMTYsNiAr
-MTE2LDE0IEBAIGRlZiByZWRpcmVjdF90b19uaWwKICAgICByZWRpcmVjdF90
-byBuaWwKICAgZW5kCiAKKyAgZGVmIHJlZGlyZWN0X3RvX3BvbHltb3JwaGlj
-CisgICAgcmVkaXJlY3RfdG8gWzppbnRlcm5hbCwgV29ya3Nob3AubmV3KDUp
-XQorICBlbmQKKworICBkZWYgcmVkaXJlY3RfdG9fcG9seW1vcnBoaWNfc3Ry
-aW5nX2FyZ3MKKyAgICByZWRpcmVjdF90byBbImludGVybmFsIiwgV29ya3No
-b3AubmV3KDUpXQorICBlbmQKKwogICBkZWYgcmVkaXJlY3RfdG9fcGFyYW1z
-CiAgICAgcmVkaXJlY3RfdG8gQWN0aW9uQ29udHJvbGxlcjo6UGFyYW1ldGVy
-cy5uZXcoc3RhdHVzOiAyMDAsIHByb3RvY29sOiAiamF2YXNjcmlwdCIsIGY6
-ICIlMEFldmFsKG5hbWUpIikKICAgZW5kCkBAIC0zNDYsNiArMzU0LDQzIEBA
-IGRlZiB0ZXN0X3JlZGlyZWN0X3RvX3JlY29yZAogICAgIGVuZAogICBlbmQK
-IAorICBkZWYgdGVzdF9wb2x5bW9ycGhpY19yZWRpcmVjdAorICAgIHdpdGhf
-cm91dGluZyBkbyB8c2V0fAorICAgICAgc2V0LmRyYXcgZG8KKyAgICAgICAg
-bmFtZXNwYWNlIDppbnRlcm5hbCBkbworICAgICAgICAgIHJlc291cmNlcyA6
-d29ya3Nob3BzCisgICAgICAgIGVuZAorCisgICAgICAgIEFjdGl2ZVN1cHBv
-cnQ6OkRlcHJlY2F0aW9uLnNpbGVuY2UgZG8KKyAgICAgICAgICBnZXQgIjpj
-b250cm9sbGVyLzphY3Rpb24iCisgICAgICAgIGVuZAorICAgICAgZW5kCisK
-KyAgICAgIGdldCA6cmVkaXJlY3RfdG9fcG9seW1vcnBoaWMKKyAgICAgIGFz
-c2VydF9lcXVhbCAiaHR0cDovL3Rlc3QuaG9zdC9pbnRlcm5hbC93b3Jrc2hv
-cHMvNSIsIHJlZGlyZWN0X3RvX3VybAorICAgICAgYXNzZXJ0X3JlZGlyZWN0
-ZWRfdG8gWzppbnRlcm5hbCwgV29ya3Nob3AubmV3KDUpXQorICAgIGVuZAor
-ICBlbmQKKworICBkZWYgdGVzdF9wb2x5bW9ycGhpY19yZWRpcmVjdF93aXRo
-X3N0cmluZ19hcmdzCisgICAgd2l0aF9yb3V0aW5nIGRvIHxzZXR8CisgICAg
-ICBzZXQuZHJhdyBkbworICAgICAgICBuYW1lc3BhY2UgOmludGVybmFsIGRv
-CisgICAgICAgICAgcmVzb3VyY2VzIDp3b3Jrc2hvcHMKKyAgICAgICAgZW5k
-CisKKyAgICAgICAgQWN0aXZlU3VwcG9ydDo6RGVwcmVjYXRpb24uc2lsZW5j
-ZSBkbworICAgICAgICAgIGdldCAiOmNvbnRyb2xsZXIvOmFjdGlvbiIKKyAg
-ICAgICAgZW5kCisgICAgICBlbmQKKworICAgICAgZXJyb3IgPSBhc3NlcnRf
-cmFpc2VzKEFyZ3VtZW50RXJyb3IpIGRvCisgICAgICAgIGdldCA6cmVkaXJl
-Y3RfdG9fcG9seW1vcnBoaWNfc3RyaW5nX2FyZ3MKKyAgICAgIGVuZAorICAg
-ICAgYXNzZXJ0X2VxdWFsKCJQbGVhc2UgdXNlIHN5bWJvbHMgZm9yIHBvbHlt
-b3JwaGljIHJvdXRlIGFyZ3VtZW50cy4iLCBlcnJvci5tZXNzYWdlKQorICAg
-IGVuZAorICBlbmQKKwogICBkZWYgdGVzdF9yZWRpcmVjdF90b19uaWwKICAg
-ICBlcnJvciA9IGFzc2VydF9yYWlzZShBY3Rpb25Db250cm9sbGVyOjpBY3Rp
-b25Db250cm9sbGVyRXJyb3IpIGRvCiAgICAgICBnZXQgOnJlZGlyZWN0X3Rv
-X25pbApkaWZmIC0tZ2l0IGEvYWN0aW9udmlldy90ZXN0L2FjdGl2ZXJlY29y
-ZC9wb2x5bW9ycGhpY19yb3V0ZXNfdGVzdC5yYiBiL2FjdGlvbnZpZXcvdGVz
-dC9hY3RpdmVyZWNvcmQvcG9seW1vcnBoaWNfcm91dGVzX3Rlc3QucmIKaW5k
-ZXggNzI0MTI5YTdkOS4uM2FlM2MyNmVjZCAxMDA2NDQKLS0tIGEvYWN0aW9u
-dmlldy90ZXN0L2FjdGl2ZXJlY29yZC9wb2x5bW9ycGhpY19yb3V0ZXNfdGVz
-dC5yYgorKysgYi9hY3Rpb252aWV3L3Rlc3QvYWN0aXZlcmVjb3JkL3BvbHlt
-b3JwaGljX3JvdXRlc190ZXN0LnJiCkBAIC00NjQsMTIgKzQ2NCw2IEBAIGRl
-ZiB0ZXN0X3dpdGhfYXJyYXlfY29udGFpbmluZ19zaW5nbGVfbmFtZQogICAg
-IGVuZAogICBlbmQKIAotICBkZWYgdGVzdF93aXRoX2FycmF5X2NvbnRhaW5p
-bmdfc2luZ2xlX3N0cmluZ19uYW1lCi0gICAgd2l0aF90ZXN0X3JvdXRlcyBk
-bwotICAgICAgYXNzZXJ0X3VybCAiaHR0cDovL2V4YW1wbGUuY29tL3Byb2pl
-Y3RzIiwgWyJwcm9qZWN0cyJdCi0gICAgZW5kCi0gIGVuZAotCiAgIGRlZiB0
-ZXN0X3dpdGhfYXJyYXlfY29udGFpbmluZ19zeW1ib2xzCiAgICAgd2l0aF90
-ZXN0X3JvdXRlcyBkbwogICAgICAgYXNzZXJ0X3VybCAiaHR0cDovL2V4YW1w
-bGUuY29tL3Nlcmllcy9uZXciLCBbOm5ldywgOnNlcmllc10KQEAgLTYyNCw2
-ICs2MTgsMjIgQEAgZGVmIHRlc3RfbmVzdGVkX3JvdXRpbmdfdG9fYV9tb2Rl
-bF9kZWxlZ2F0ZQogICAgIGVuZAogICBlbmQKIAorICBkZWYgdGVzdF9zdHJp
-bmdfcm91dGVfYXJndW1lbnRzCisgICAgd2l0aF9hZG1pbl90ZXN0X3JvdXRl
-cyBkbworICAgICAgZXJyb3IgPSBhc3NlcnRfcmFpc2VzKEFyZ3VtZW50RXJy
-b3IpIGRvCisgICAgICAgIHBvbHltb3JwaGljX3VybChbImFkbWluIiwgQHBy
-b2plY3RdKQorICAgICAgZW5kCisKKyAgICAgIGFzc2VydF9lcXVhbCgiUGxl
-YXNlIHVzZSBzeW1ib2xzIGZvciBwb2x5bW9ycGhpYyByb3V0ZSBhcmd1bWVu
-dHMuIiwgZXJyb3IubWVzc2FnZSkKKworICAgICAgZXJyb3IgPSBhc3NlcnRf
-cmFpc2VzKEFyZ3VtZW50RXJyb3IpIGRvCisgICAgICAgIHBvbHltb3JwaGlj
-X3VybChbQHByb2plY3QsICJiaWQiXSkKKyAgICAgIGVuZAorCisgICAgICBh
-c3NlcnRfZXF1YWwoIlBsZWFzZSB1c2Ugc3ltYm9scyBmb3IgcG9seW1vcnBo
-aWMgcm91dGUgYXJndW1lbnRzLiIsIGVycm9yLm1lc3NhZ2UpCisgICAgZW5k
-CisgIGVuZAorCiAgIGRlZiB3aXRoX25hbWVzcGFjZWRfcm91dGVzKG5hbWUp
-CiAgICAgd2l0aF9yb3V0aW5nIGRvIHxzZXR8CiAgICAgICBzZXQuZHJhdyBk
-bwotLSAKMi4zMC4wCgo=
+SA-CONTRIB-2014-049 - Organic Groups (OG) - Access Bypass
+https://www.drupal.org/node/2261245
 
---000000000000f3f3af05c197d6e1--
+SA-CONTRIB-2014-050 - Commerce Postfinance ePayment - Access Bypass
+https://www.drupal.org/node/2267381
+
+SA-CONTRIB-2014-051 - Realname Registration - Information Disclosure
+https://www.drupal.org/node/2267481
+
+SA-CONTRIB-2014-053 - Field API Tab Editor (FATE) - Access bypass
+https://www.drupal.org/node/2267539
+
+SA-CONTRIB-2014-054 - Views - Access Bypass
+https://www.drupal.org/node/2271809
+
+SA-CONTRIB-2014-055 - Require Login - Access bypass
+https://www.drupal.org/node/2271837
+
+SA-CONTRIB-2014-056 - Commerce Moneris - Information Disclosure
+https://www.drupal.org/node/2271823
+
+SA-CONTRIB-2014-057 - Password policy - General logic error
+https://www.drupal.org/node/2271839
+
+SA-CONTRIB-2014-058 - Webserver Auth - Access Bypass
+https://www.drupal.org/node/2275675
+
+SA-CONTRIB-2014-060- Petitions - Cross Site Request Forgery (CSRF)
+https://www.drupal.org/node/2284571
+
+SA-CONTRIB-2014-062 - Passsword Policy - Access Bypass (7x)
+SA-CONTRIB-2014-062 - Passsword Policy - Access Bypass (6.x)
+https://www.drupal.org/node/2288341
+
+SA-CONTRIB-2014-064 -Course - Access bypass
+https://www.drupal.org/node/2288403
+
+SA-CONTRIB-2014-066 - Node Access Keys - Access Bypass
+https://www.drupal.org/node/2296495
+
+SA-CONTRIB-2014-068 - Pane - XSS
+https://www.drupal.org/node/2296783
+
+SA-CONTRIB-2014-070 - Password Policy - Access Bypass
+https://www.drupal.org/node/2304213
+
+SA-CONTRIB-2014-079 - RedHen CRM - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2324679
+
+SA-CONTRIB-2014-086 - Custom BreadCrumbs - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2336263
+
+SA-CONTRIB-2014-088 - Mollom - Cross-site scripting (XSS)
+https://www.drupal.org/node/2340029
+
+SA-CONTRIB-2014-089 - Geofield Yandex Maps - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2340039
+
+SA-CONTRIB-2014-090 - Speech recognition - Cross Site Scripting (XSS)
+SA-CONTRIB-2014-090 - Speech recognition - Cross Site Request Forgery (CSRF)
+https://www.drupal.org/node/2340063
+
+SA-CONTRIB-2014-091 - Survey Builder - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2340069
+
+SA-CONTRIB-2014-094 - Webform Patched - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2344369
+
+SA-CONTRIB-2014-095 - Safeword - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2344383
+
+SA-CONTRIB-2014-096 - OAuth2 Client - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2352747
+
+SA-CONTRIB-2014-097 - nodeaccess - Access Bypass
+https://www.drupal.org/node/2352757
+
+SA-CONTRIB-2014-098 - CKEditor - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2357029
+
+SA-CONTRIB-2014-101 - Ubercart - Cross Site Request Forgery
+https://www.drupal.org/node/2361613
+
+SA-CONTRIB-2014-102 - Document - Cross Site Scripting
+https://www.drupal.org/node/2361617
+
+SA-CONTRIB-2014-103 - Passwordless - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2365645
+
+SA-CONTRIB-2014-104 - Addressfield Tokens - Cross Site Scripting
+https://www.drupal.org/node/2365673
+
+SA-CONTRIB-2014-106 - Commerce Authorize.Net SIM/DPM Payment Methods -
+Access Bypass
+https://www.drupal.org/node/2365809
+
+SA-CONTRIB-2014-107 - Scheduler - Cross Site Scripting
+https://www.drupal.org/node/2373961
+
+SA-CONTRIB-2014-109 - Freelinking - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2373981
+
+SA-CONTRIB-2014-115 - Form Builder - Cross-Site Scripting (XSS)
+https://www.drupal.org/node/2378441
+
+SA-CONTRIB-2014-118 - Administer Users by Role - Access Bypass
+https://www.drupal.org/node/2390687
+
+SA-CONTRIB-2014-119 - Google Analytics - Information disclosure
+https://www.drupal.org/node/2390689
+
+SA-CONTRIB-2014-120 - Piwik Web Analytics - Information disclosure
+https://www.drupal.org/node/2390695
+
+SA-CONTRIB-2014-123 - Postal Code - Cross Site Scripting (XSS)
+https://www.drupal.org/node/2390857
+
+SA-CONTRIB-2014-125 - Organic Groups Menu - Access bypass
+https://www.drupal.org/node/2390899
+
+SA-CONTRIB-2014-128 - Organic Groups Menu - Access bypass
+https://www.drupal.org/node/2395049
+
+Many thanks
+
+Regards
+-- 
+Pere Orga on behalf of the Drupal Security team
