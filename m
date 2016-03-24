@@ -1,82 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/06/7
-Message-Id: <1452088437.1365.2@smtp.gmail.com>
-Date: Wed, 06 Jan 2016 14:53:57 +0100
-From: Guillaume Ayoub <guillaume.ayoub@...ea.fr>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for radicale
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/25/6
+Message-ID: <alpine.LRH.2.20.1603250947150.31257@namei.org>
+Date: Fri, 25 Mar 2016 09:55:41 +1100 (AEDT)
+From: James Morris <jmorris@...ei.org>
+To: linux-security-module@...r.kernel.org
+cc: linux-kernel@...r.kernel.org, lwn@....net, fedora-selinux-list@...hat.com, selinux@...ho.nsa.gov, ubuntu-hardened@...ts.ubuntu.com, Linux Security Summit Program Committee <lss-pc@...ts.linuxfoundation.org>, netfilter-devel@...r.kernel.org, linux-crypto@...r.kernel.org, Audit-ML <linux-audit@...hat.com>, gentoo-hardened@...too.org, keyrings@...ux-nfs.org, tpmdd-devel@...ts.sourceforge.net, kernel-hardening@...ts.openwall.com, oss-security@...ts.openwall.com
+Subject: [ANNOUNCE] Linux Security Summit 2016 - CFP
 Content-Type: text/plain; charset=utf-8
 
-(Sorry if this mail is not in the original thread, I wasn't following 
-the mailing-list before today)
+==========================================================================
+                 ANNOUNCEMENT AND CALL FOR PARTICIPATION
 
-Hi,
-
-I'm the main developer of Radicale, I've merged the different fixes, 
-but I'm not the author of these fixes. So, I know the software quite 
-well, but I'm definitely no security expert.
-
-
-That being said, here are for me the 3 real independent vulnerabilities 
-reported and fixed in 1.1:
-
-1. "The multifilesystem backend allows access to arbitrary files on all 
-platforms."
-
-This storage backend is not the default backend used, it's even marked 
-as "not ready for production" in the configuration file. But when used, 
-this backend could allow anybody to read/write anything anywhere, by 
-sending requests with particular paths and contents.
-
-2. "Prevent regex injection in rights management."
-
-If an attacker is able to authenticate with a user name like .*, he can 
-bypass read/write limitations imposed by regex-based rules, including 
-the built-in rules called owner_write (read for everybody, write for 
-the owner of the calendar) and owner_only (read and write for the owner 
-of the calendr).
-
-3. "On MS Windows the filesystem backend allows access to the first 
-level of files on a drive."
-
-The filesystem backend is the default storage backend. When used, it 
-converts paths like /c:/filename/dummy to c:\filename, and allowing 
-anybody to read/write anything anywhere, by sending requests with 
-particular paths and contents.
+                       LINUX SECURITY SUMMIT 2016
+                              25-26 AUGUST
+                            TORONTO, CANADA
+                           
+==========================================================================
 
 
-For me, the other ones are theoretical vulnerabilities, but I'm not 
-sure that they can lead to real life consequences:
+DESCRIPTION
 
-- "Paths like .., ../.. or // are not sanitized correctly". But when 
-translated into a filesystem path, I think that it could only enable to 
-read/write files in the default storage directory, like "normal" 
-requests do.
+  The Linux Security Summit (LSS) is a technical forum for collaboration
+  between Linux developers, researchers, and end users.  Its primary aim
+  is to foster community efforts in analyzing and solving Linux security
+  challenges.
 
-- "The program crashes if a path doesn't start with base_prefix instead 
-of showing an error message." It was actually raising an exception, but 
-didn't "crash". That's bad for sure, but not related to security.
-
-- "Improve the regex used for well-known URIs." It wasn't really 
-harmful because of Radicale's code at this moment, but may have become 
-a problem later.
-
-- "Decouple the daemon from its parent environment." Always a good 
-idea, but I can't find a related possible attack.
-
-- "Avoid race condition in PID file creation." No possible attack for 
-me.
-
-- "Prevent crafted HTTP request from calling arbitrary functions". In 
-real life, no way to attack because of the signature of the other 
-methods, but may have enabled an attacker to call a method called "a" 
-by sending an HTTP "a" request, if "a" had had the good signature.
+  The format of the summit will be:
+  
+    * Refereed presentations
+    * Discussion topics
+    * Subsystem reports
+    * Breakout development sessions 
 
 
-Hope that it helps!
+WEB SITE
 
-Regards,
--- 
-Guillaume Ayoub
-Kozea - Directeur associé
+  http://events.linuxfoundation.org/events/linux-security-summit
+
+
+TWITTER
+
+  For event updates and announcements, follow:
+
+  https://twitter.com/LinuxSecSummit
+
+
+DATES / LOCATION
+
+  The Linux Security Summit for 2016 will be held  August 25th and 26th
+  in Toronto, Canada.  It will be co-located with LinuxCon.
+
+  The Linux Security Summit CFP is now open, and will close on June 10th.
+  
+  Accepted speakers will be notified by June 17th.
+
+
+WHO SHOULD ATTEND
+
+  We're seeking a diverse range of attendees, and welcome participation
+  by people involved in Linux security development, operations, and research.
+
+  The LSS is a unique global event which provides the opportunity to present
+  and discuss your work or research with key Linux security community
+  members and maintainers.  It’s also useful for those who wish to keep up
+  with the latest in Linux security development, and to provide input to
+  the development process.
+
+
+CALL FOR PARTICIPATION
+
+  The program committee currently seeks proposals for:
+
+  * Refereed Presentations:
+      45 minutes in length, including at least 10 minutes of discussion.
+      One-page abstracts are encouraged.
+
+  * Discussion Topics:
+      30 minutes in length.
+ 
+  Topic areas include, but are not limited to:
+  
+    * Kernel self-protection
+    * Access control
+    * Cryptography and key management
+    * Integrity control
+    * Hardware security
+    * Trust systems
+    * Storage and file systems
+    * Virtualization and containers
+    * Case studies
+    * Identity management
+    * Code analysis
+    * Security analytics
+    * Secure development and operational practices
+    * Emerging technologies, threats & techniques 
+    
+  Proposals should be submitted via the event web site:
+
+    http://events.linuxfoundation.org/events/linux-security-summit/program/cfp
+
+
+PROGRAM COMMITTEE
+
+  The Linux Security Summit for 2016 is organized by:
+
+    * James Morris, Oracle
+    * Serge Hallyn, Canonical
+    * Paul Moore, Red Hat
+    * Stephen Smalley, NSA
+    * Elena Reshetova, Intel
+    * Herbert Xu, Red Hat
+    * John Johansen, Canonical
+    * Kees Cook, Google
+    * Casey Schaufler, Intel
+    * Mimi Zohar, IBM
+
+  The program committee may be contacted as a group via email:
+
+    lss-pc@...ts.linuxfoundation.org
+
+   
 
