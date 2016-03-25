@@ -1,81 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/8
-Message-Id: <bffeab0724ff5bab@openbsd.org>
-Date: Thu, 10 Mar 2016 05:10:52 -0700 (MST)
-From: Damien Miller <djm@...nbsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/25/8
+Message-ID: <nd3k26$2sr$1@ger.gmane.org>
+Date: Fri, 25 Mar 2016 16:04:38 +0100
+From: Jörg Schaible <joerg.schaible@....de>
 To: oss-security@...ts.openwall.com
-Subject: OpenSSH Security Advisory: xauth command injection
+Subject: CVE request - XStream: XXE vulnerability
 Content-Type: text/plain; charset=utf-8
 
-OpenSSH Security Advisory: x11fwd.adv
+Hi all,
 
-This document may be found at: http://www.openssh.com/txt/x11fwd.adv
+XStream (x-stream.github.io) is a Java library to marshal Java objects into 
+XML and back. For this purpose it supports a lot of different XML parsers. 
+Some of those can also process external entities which was enabled by 
+default.
 
-1. Affected configurations
+An attacker could therefore provide manipulated XML as input to access data 
+on the file system, see 
+https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing
 
-        All versions of OpenSSH prior to 7.2p2 with X11Forwarding
-	enabled.
+Since XStream 1.4.9 all parsers are configured to ignore external entities 
+by default as far as such behavior is configurable:
+http://x-stream.github.io/changes.html#1.4.9
 
-2. Vulnerability
+Luckily XStream's default parser Xpp3 does not parse entities at all. 
+However, all application that use XStream >= 1.4.8 explicitly with parsers 
+based on StAX, W3C DOM, Dom4J, JDOM or JDOM2 were affected unless the 
+parsers had been properly configured manually.
 
-	Missing sanitisation of untrusted input allows an
-	authenticated user who is able to request X11 forwarding
-	to inject commands to xauth(1).
+Applications using XOM or explicitly BEA's old StAX reference parser are 
+still vulnerable, we found no way to deactivate processing of external 
+entities for those two.
 
-	Injection of xauth commands grants the ability to read
-	arbitrary files under the authenticated user's privilege,
-	Other xauth commands allow limited information leakage,
-	file overwrite, port probing and generally expose xauth(1),
-	which was not written with a hostile user in mind, as an
-	attack surface.
+Regards,
+Jörg
 
-	xauth(1) is run under the user's privilege, so this
-	vulnerability offers no additional access to unrestricted
-	accounts, but could circumvent key or account restrictions
-	such as sshd_config ForceCommand, authorized_keys
-	command="..." or restricted shells.
+On behalf of the XStream community
 
-3. Mitigation
-
-        Set X11Forwarding=no in sshd_config. This is the default.
-
-	For authorized_keys that specify a "command" restriction,
-	also set the "restrict" (available in OpenSSH >=7.2) or
-	"no-x11-forwarding" restrictions.
-
-4. Details
-
-        As part of establishing an X11 forwarding session, sshd(8)
-	accepts an X11 authentication credential from the client.
-	This credential is supplied to the xauth(1) utility to
-	establish it for X11 applications that the user subsequently
-	runs.
-
-	The contents of the credential's components (authentication
-	scheme and credential data) were not sanitised to exclude
-	meta-characters such as newlines. An attacker could
-	therefore supply a credential that injected commands to
-	xauth(1). The attacker could then use a number of xauth
-	commands to read or overwrite arbitrary files subject to
-	file permissions, connect to local ports or perform attacks
-	on xauth(1) itself.
-
-	OpenSSH 7.2p2 implements a whitelist of characters that
-	are permitted to appear in X11 authentication credentials.
-
-5. Credit
-
-        This issue was identified by github.com/tintinweb and
-	communicated to the OpenSSH developers on March 3rd, 2016.
-
-6. Fix
-
-        Portable OpenSSH 7.2p2 contains a fix for this vulnerability.
-
-	Patches for supported OpenBSD releases (5.7, 5.8 and 5.9) have
-	been committed to the -STABLE branches and are available on the
-	errata pages:
-
-	http://www.openbsd.org/errata57.html
-	http://www.openbsd.org/errata58.html
-	http://www.openbsd.org/errata59.html
