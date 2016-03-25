@@ -1,34 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/08/12
-Message-ID: <CAFeDd5a0aBM-wafxZu7m7NFPcOZyMBV-2ufbiDi_7MLWyqm-Eg@mail.gmail.com>
-Date: Wed, 8 Jun 2016 23:24:44 +0300
-From: Billy Brumley <bbrumley@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/25/3
+Message-ID: <CAJmbs8jiQ3sp4b9BEsJsHy2j4eywP_xYZeVD9nOhgs1VwKPSqw@mail.gmail.com>
+Date: Fri, 25 Mar 2016 15:56:57 +0600
+From: Maxim Solodovnik <solomax@...che.org>
+To: Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  security@...nmeetings.apache.org, security@...che.org,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [CVE-2016-2163] Stored Cross Site Scripting in Event description
 Content-Type: text/plain; charset=utf-8
 
->> Are we sure that a "low" rating is justified?
->> DSA is basically dead, until the constant time switch is flicked. The
->> only countermeasure so far is turning it off.
->
-> Maybe I should be a little more verbose on this:
-> 1) attacker recovers the DSA host key.
-> 2) attacker mitm-attacks client connections to the server and recovers the user's private key by exploiting the vulnerable openssl on the client side
-> 3) ...
->
-> The same principles apply when the computational burden is reversed for client auth, aren't they?
+Severity: Moderate
 
-Are you talking about the SSH target?
+Vendor: The Apache Software Foundation
 
-If so, the realistic scenario is a user with legitimate credentials
-logging into a server to steal the DSA host key locally with cache
-timings.
+Versions Affected: Apache OpenMeetings 1.9.x - 3.0.7
 
-I don't think client-side enters into the equation for this vuln. You
-need an active attacker initiating handshakes. That's my 2c -- we
-didn't consider client-side victim much in this work.
+Description:
+When creating an event, it is possible to create clickable URL links in
+the event description. These links will be present inside the event details
+once a participant enters the room via the event. It is possible to create a
+link like "javascript:alert('xss')", which will execute once the link is
+clicked. As the link is placed within an <a> tag, the actual link is not
+visible to the end user which makes it hard to tell if the link is
+legit or not.
 
-If it's the TLS target, you need local access or manage to co-locate
-in cloud scenarios. Not as realistic as the SSH case IMO.
+All users are recommended to upgrade to Apache OpenMeetings 3.1.1
 
-BBB
+Credit: This issue was identified by Andreas Lindh
+
+
+Apache OpenMeetings Team
