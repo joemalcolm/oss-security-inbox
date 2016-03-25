@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2220" "Monday" "8" "May" "2017" "11:34:18" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty0BX4m57asPzCzr2mcKP96VjYc2j12FxwrOy28ggbapGg@mail.gmail.com>" "50" "Re: [oss-security] Re: remote DoS via CPU exhaustion in anon FTP server glob expansion" "^Date:" nil nil "5" "2017050817:34:18" "[oss-security] Re: remote DoS via CPU exhaustion in anon FTP server glob expansion" (number mark "        kseifried@re May  8   50/2220  " thread-indent "\"Re: [oss-security] Re: remote DoS via CPU exhaustion in anon FTP server glob expansion\"\n") "<CADSkJJU9JJ--uWnYD0yTMXuK3EHvpcCUC9GSxzq4X7f3Ogd0dA@mail.gmail.com>" ("<CADSkJJWpn3Z6VermSdq9f2ckxQ59BUXDZ4y=_A0gSQKv7YZ+zg@mail.gmail.com>" "<CADSkJJU9JJ--uWnYD0yTMXuK3EHvpcCUC9GSxzq4X7f3Ogd0dA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4123" "Friday" "25" "March" "2016" "22:44:53" "+0300" "Solar Designer" "solar@openwall.com" "<20160325194453.GA18823@openwall.com>" "91" "Re: [oss-security] [ANNOUNCE] Linux Security Summit 2016 - CFP" nil nil nil "3" "2016032519:44:53" "[oss-security] [ANNOUNCE] Linux Security Summit 2016 - CFP" (number mark "U       solar@openwa Mar 25   91/4123  " thread-indent "\"Re: [oss-security] [ANNOUNCE] Linux Security Summit 2016 - CFP\"\n") "<alpine.LRH.2.20.1603250947150.31257@namei.org>" ("<alpine.LRH.2.20.1603250947150.31257@namei.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15882 invoked by uid 550); 8 May 2017 17:34:32 -0000
+Received: (qmail 10000 invoked by uid 550); 25 Mar 2016 19:45:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,82 +11,109 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15857 invoked from network); 8 May 2017 17:34:31 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=FlgK+ijYPBWQ/L1LbHTz8aL6RVgpC+8EbIbrLJCPihM=;
-        b=XScajpnzw0zWzwsmFs9YEVExQBCiNZd+UUyTiS7dgI5qEa02HMbDC4YWu9ZfZGejCl
-         AykYzX7ws4bGDGek8sd84GxMX1tPH46uGhxLabaUkSubURnt9b7mLUQO8I2wewq4ahzF
-         dDyuKrNk2jUdVusBmcozmQIYeHxE+CR5ISKNUz8+KMxO7Fv83o1/7O7oZFgyl2eOLGLD
-         o1X388+SOhOovkrcY5mSfS7mlz96LNVQ/cDsS/zUS7AEo0uLXe1oglIkkDvST36LUHsi
-         9G1gbctWMKf3DoODiuZ8g8BTJbKA/NUCGMjjHcIjAK7MIZYWkSnaoGnDHEs37pPshPfU
-         Wc6g==
-X-Gm-Message-State: AN3rC/5xkE+899C8C76lTj5Ab7z08S+zuOCy52mbZ8V8hiZyvEorfIAk
-	hNZXJsa842P8jqRKxZebwRxXOYlLl405bIw=
-X-Received: by 10.157.6.80 with SMTP id 74mr15840671otn.93.1494264859444; Mon,
- 08 May 2017 10:34:19 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CADSkJJU9JJ--uWnYD0yTMXuK3EHvpcCUC9GSxzq4X7f3Ogd0dA@mail.gmail.com>
-References: <CADSkJJWpn3Z6VermSdq9f2ckxQ59BUXDZ4y=_A0gSQKv7YZ+zg@mail.gmail.com>
- <CADSkJJU9JJ--uWnYD0yTMXuK3EHvpcCUC9GSxzq4X7f3Ogd0dA@mail.gmail.com>
-Message-ID: <CANO=Ty0BX4m57asPzCzr2mcKP96VjYc2j12FxwrOy28ggbapGg@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=94eb2c0934b625e0f5054f06a6fa
-Date: Mon, 8 May 2017 11:34:18 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: remote DoS via CPU exhaustion in anon FTP
- server glob expansion
-To: oss-security <oss-security@lists.openwall.com>
+Received: (qmail 9969 invoked from network); 25 Mar 2016 19:45:01 -0000
+Date: Fri, 25 Mar 2016 22:44:53 +0300
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Cc: James Morris <jmorris@namei.org>
+Message-ID: <20160325194453.GA18823@openwall.com>
+References: <alpine.LRH.2.20.1603250947150.31257@namei.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.LRH.2.20.1603250947150.31257@namei.org>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] [ANNOUNCE] Linux Security Summit 2016 - CFP
 
---94eb2c0934b625e0f5054f06a6fa
-Content-Type: text/plain; charset=UTF-8
+On Fri, Mar 25, 2016 at 09:55:41AM +1100, James Morris wrote:
+>                  ANNOUNCEMENT AND CALL FOR PARTICIPATION
+> 
+>                        LINUX SECURITY SUMMIT 2016
 
-Just a note on how CVE works: CVE is for specific vulnerabilities. E.g. If
-you find a specific XSS in a product for example, or a globbing problem in
-an FTP server that allows someone to crash it by ls */*/*....*/*/*.
-Alternatively there can be CVE's for protocol level flaws (e.g. where the
-specification itself was flawed), or for security technologies that aren't
-secure anymore (e.g. DES, 56bit keyspace just isn't big enough anymore with
-a modern laptop, let alone access to cloud GPU systems) to name a few more
-general cases.
+Those who have been on oss-security for a while surely are wondering why
+this CFP was accepted, despite of our policy to reject any and all CFPs.
+No, this one didn't get through because of a moderation bypass, as was
+the case for some others (and usually the senders were removed from the
+moderation bypass as a result).  I actually approved it, for the first
+time in several years of no approved CFPs, and now I have to explain why.
 
-Also for DoS type attacks it can be a gray area, e.g. "send a ping of
-death, system crashes" is clearly a problem, but "open X Million
-connections and system gets slow" is... well... normal behavior for most
-things. In the case of globbing where do we go from "it simply takes a long
-time for a complicated request" to "this is pathological behavior and needs
-to be fixed" (it takes 1 second? 100 seconds? 100 minutes?).
+And no, this doesn't mean CFPs are now OK to send in here.  Please don't.
 
-In any event if there are specific instances of a given FTP server (or
-whatever) that can be crashed/made really non responsive by this class of
-attack then that is appropriate to ask for a CVE and would be given one.
+Normally, the boilerplate rejection message for non-spam (not off-topic)
+CFPs sent to oss-security is as follows:
 
-On Mon, May 8, 2017 at 7:10 AM, Russ Cox <rsc@swtch.com> wrote:
+---
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security says
+"Please don't post conference CFPs and (e-)magazine calls for articles."
 
-> On Mon, Apr 24, 2017 at 10:06 AM, Russ Cox <rsc@swtch.com> wrote:
-> > > Due to the widespread but limited ("only" CPU exhaustion) nature of
-> > the problem, I have not attempted any embargoed prenotification.
-> > I will forward this note directly to product-security@apple.com and
-> > bugs@pureftpd.org. I filled out the "DWF Open Source Request Form v2"
-> > for a CVE number for the generic problem, and I will reply here when
-> > I receive the number.
->
-> FYI, over the weekend I received notification (two weeks after applying)
-> that DWF has declined to issue a CVE number for this general problem.
-> Interested parties will have to obtain their own CVE numbers for specific
-> products.
->
-> Russ
->
+The list members have previously expressed that they do not want to see
+CFPs on the list.  While this one is more relevant than most that we
+receive, it'd require a followup posting to explain why an exception was
+made, and it might result in yet another (anti-)CFP discussion on the
+list, as well as in an increase of CFPs sent to us.  For now, we're just
+rejecting all CFPs as part of list policy.  I guess this CFP will also
+be posted to Bugtraq, full-disclosure, and other places - and that's
+just sufficient.
 
+That said, postings with links to papers, slides, videos on Open Source
+security topics (and on specific vulnerabilities in Open Source software) -
+perhaps after the conference - may be approved.
+---
 
+This time, I don't mind actually doing this "followup posting to explain
+why an exception was made" (as well as to discourage further CFPs sent
+in here).
 
--- 
+Linux Security Summit is relevant to both security and open source at
+once, unlike most other events which are focused on one or the other.
+Also new this year is Linux kernel self-protection appearing on and
+rising to the top of the desired topics list:
 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
+>   Topic areas include, but are not limited to:
+>   
+>     * Kernel self-protection
 
---94eb2c0934b625e0f5054f06a6fa--
+I just went and checked last year's - the trend was already there, but
+it was "System hardening" rather than literally "Kernel self-protection"
+that time:
+
+http://kernsec.org/wiki/index.php/Linux_Security_Summit_2015#Call_for_Participation
+
+This is arriving 15-20 years late, but better late than never.
+I welcome this change of focus.
+
+For those interested in the topic, I recommend joining the
+kernel-hardening mailing list:
+
+http://www.openwall.com/lists/kernel-hardening/
+
+The recent reincarnation of the project was announced here:
+
+http://www.openwall.com/lists/kernel-hardening/2015/11/05/1
+
+and since then the list is quite active again (~200 messages per month).
+
+As to further oss-security postings on LSS or/and other open source
+security events, please send in here primarily the outcomes of such
+events - info on decisions made (new projects started, etc.), links to
+papers, slides, videos.  Content that is actually useful to the majority
+of subscribers rather than to the few who would seriously consider
+attending a particular event (yet only learn of it from here).
+
+What I am seeing on most mailing lists that accept CFPs (and in
+oss-security moderation queue) is that conference organizers tend to
+send CFPs to lots of places, but then don't bother sharing the
+conference proceedings, slide decks, videos, etc. as widely... and next
+year there's another CFP.  For most subscribers, who don't actually
+attend most of these events, this is just noise.  So, once again, I'd
+like this skewed to generally useful content, please.
+
+For those who are active on oss-security, it's OK to mention a
+particular upcoming event (relevant only) in a brief P.S. below their
+signature (a few lines only) in some other on-topic message that you
+would be posting anyway (preferably in a short one, so the extra/bonus
+content is seen).  As long as this trick is not abused, we will likely
+be approving such messages for their main content, as usual.
+
+Alexander
