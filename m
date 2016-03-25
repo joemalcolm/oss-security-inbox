@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2128" "Wednesday" "17" "June" "2015" "11:10:43" "+0200" "Pierre Schweitzer" "pierre@reactos.org" "<55813993.3020307@reactos.org>" "66" "Re: [oss-security] PostgreSQL - Predictable cancel key" nil nil nil "6" "2015061709:10:43" "[oss-security] PostgreSQL - Predictable cancel key" (number mark "        pierre@react Jun 17   66/2128  " thread-indent "\"Re: [oss-security] PostgreSQL - Predictable cancel key\"\n") "<CACYkhxirraZ9g4HForJBSSTfckHXuinkrz3zwagW_jq0JKLUwA@mail.gmail.com>" ("<20150613093351.GF11230@mail.waldi.eu.org>" "<557E8DA5.6080707@reactos.org>" "<20150615182632.GA22032@mail.waldi.eu.org>" "<557FF729.9000109@reactos.org>" "<CACYkhxirraZ9g4HForJBSSTfckHXuinkrz3zwagW_jq0JKLUwA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["725" "Friday" "25" "March" "2016" "15:56:57" "+0600" "Maxim Solodovnik" "solomax@apache.org" "<CAJmbs8jiQ3sp4b9BEsJsHy2j4eywP_xYZeVD9nOhgs1VwKPSqw@mail.gmail.com>" "21" "[oss-security] [CVE-2016-2163] Stored Cross Site Scripting in Event description" nil nil nil "3" "2016032509:56:57" "[oss-security] [CVE-2016-2163] Stored Cross Site Scripting in Event description" (number mark "U       solomax@apac Mar 25   21/725   " thread-indent "\"[oss-security] [CVE-2016-2163] Stored Cross Site Scripting in Event description\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30128 invoked by uid 550); 17 Jun 2015 09:10:56 -0000
+Received: (qmail 7642 invoked by uid 550); 25 Mar 2016 10:35:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,83 +11,40 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30110 invoked from network); 17 Jun 2015 09:10:56 -0000
-Message-ID: <55813993.3020307@reactos.org>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
-MIME-Version: 1.0
-References: <20150613093351.GF11230@mail.waldi.eu.org> <557E8DA5.6080707@reactos.org> <20150615182632.GA22032@mail.waldi.eu.org> <557FF729.9000109@reactos.org> <CACYkhxirraZ9g4HForJBSSTfckHXuinkrz3zwagW_jq0JKLUwA@mail.gmail.com>
-In-Reply-To: <CACYkhxirraZ9g4HForJBSSTfckHXuinkrz3zwagW_jq0JKLUwA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Date: Wed, 17 Jun 2015 11:10:43 +0200
-From: Pierre Schweitzer <pierre@reactos.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] PostgreSQL - Predictable cancel key
-To: oss-security@lists.openwall.com
+Received: (qmail 10025 invoked from network); 25 Mar 2016 09:57:10 -0000
+X-Gm-Message-State: AD7BkJJIgofLweSY0YZDrOqHSjWqRLwHwSizD6ImE1DMAO+wN6J/4MxPMcjVoYmRLXqHGDgL1O2ByRB1eSrVxA==
+MIME-Version: 1.0
+X-Received: by 10.98.14.2 with SMTP id w2mr19715336pfi.35.1458899817302; Fri,
+ 25 Mar 2016 02:56:57 -0700 (PDT)
+Date: Fri, 25 Mar 2016 15:56:57 +0600
+X-Gmail-Original-Message-ID: <CAJmbs8jiQ3sp4b9BEsJsHy2j4eywP_xYZeVD9nOhgs1VwKPSqw@mail.gmail.com>
+Message-ID: <CAJmbs8jiQ3sp4b9BEsJsHy2j4eywP_xYZeVD9nOhgs1VwKPSqw@mail.gmail.com>
+From: Maxim Solodovnik <solomax@apache.org>
+To: Openmeetings user-list <user@openmeetings.apache.org>, dev <dev@openmeetings.apache.org>, 
+	security@openmeetings.apache.org, security@apache.org, 
+	oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] [CVE-2016-2163] Stored Cross Site Scripting in Event description
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: Moderate
 
-OK, got it. Thanks for the extra details!
+Vendor: The Apache Software Foundation
 
-Cheers,
+Versions Affected: Apache OpenMeetings 1.9.x - 3.0.7
 
-On 06/16/2015 01:04 PM, Michael Samuel wrote:
-> Hi,
-> 
-> On 16 June 2015 at 20:15, Pierre Schweitzer <pierre@reactos.org>
-> wrote:
-> 
->> Well, I've thought about it, but that's still one million seeds
->> and the cancel key you're looking for might have been generated
->> after several random() call. So, that means perhaps 10 millions
->> values to explore? (If we make the hypothesis that for a given
->> initialization, it will only draw 10 PRN)
->> 
-> 
-> This is CPU, maybe GPU territory. 2^15-2 * 10m =~ 2^38 work
-> offline.
-> 
-> 
->> How relevant would still be your cancel key once you found it?
-> 
-> 
-> In the postmaster mainloop:
-> 
-> ConnCreate() RandomSalt() -- the md5Salt craziness in the original
-> post BackendStartup() MyCancelKey = PostmasterRandom();
-> 
-> No other calls to random(), srandom() that I can see, and the other
-> calls to PostmasterRandom() are generating cancel keys for worker
-> procs.
-> 
-> So if you brute the md5Salt you have a pretty good chance of
-> guessing something that was/is/will be a cancel key of another
-> session.
-> 
-> Regards, Michael
-> 
+Description:
+When creating an event, it is possible to create clickable URL links in
+the event description. These links will be present inside the event details
+once a participant enters the room via the event. It is possible to create a
+link like "javascript:alert('xss')", which will execute once the link is
+clicked. As the link is placed within an <a> tag, the actual link is not
+visible to the end user which makes it hard to tell if the link is
+legit or not.
+
+All users are recommended to upgrade to Apache OpenMeetings 3.1.1
+
+Credit: This issue was identified by Andreas Lindh
 
 
-- -- 
-Pierre Schweitzer <pierre@reactos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJVgTmTAAoJEHVFVWw9WFsLPvQP/2wSyLB66VHajEtw+VQ49SKX
-PQgznRxQaALO37RMZl9iXt5vAWuvTaRaue8LgmXl9GBSc6FYhYwXNO/WLNyodHO9
-p8TAORnpGLvC8ncFjvK5Ier+t1/Fql9JUgIRO3pxHQuN8f7VK57GzobQzscNZK9I
-6+7rka8/0cajgD6v1Ug3tbzSxcXzUVBC2wKW+vrqq0+g5I4V3Pc8JcfHp9UW4cXG
-eDLtMUas/V2L2X8FDJiqHr+Y3nxB/Ijc3uXrI7DScyjvzr4KcCTtEN8+XRuOe5IQ
-Zko/bSao+z0ar7k+MJxWS8zrQlfhAXHMhoQlvJI5z8QHokf4Fx+qQcmbgj7yIwxE
-yQmXjeuwK1j7Qdu6L23/lmomRf7Ol861hbfVE8OWppAbAh7nSc6zd5aIVC0+KVQ0
-6XrbUJDqWH9v1uzu/y7jYVb8/h6W80CDhzKyAUYlGN2mif9rok3xc6fOK7zhizoY
-fOmGhpaLK2hdSorTluQYjyC8BpjeN4u6rQS3tDYKLgcxkIMFKs86QBqQ6t7C/po4
-eAyXZc54FkzAaPNKGNN3LWYS3BzneFCZHlb5TTRBm0icJec2HNjR9gyXQ7uSAbiL
-mtPKZP3lAh7UmnPqu43bbqddGG4b80+5Ec9d6cnUccHcxUMoTdFCSWBpExWxYuCb
-+s82K50ECPtZIBOqg64+
-=f/5m
------END PGP SIGNATURE-----
+Apache OpenMeetings Team
