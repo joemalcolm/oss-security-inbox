@@ -1,108 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/27/7
-Message-ID: <CADSYzst2mG3vRMWdXnCiHd8GLMB2Ttw-MAua2e26G1CQS5ayPw@mail.gmail.com>
-Date: Tue, 27 Dec 2016 13:08:52 -0200
-From: Dawid Golunski <dawid@...alhackers.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/25/4
+Message-ID: <CAJmbs8jvA+FVb08pKqfTWFPZLjJJadPRLfQfDvHscT240ULjoA@mail.gmail.com>
+Date: Fri, 25 Mar 2016 15:57:27 +0600
+From: Maxim Solodovnik <solomax@...che.org>
+To: Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  security@...nmeetings.apache.org, security@...che.org,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [CVE-2016-2164] Arbitrary file read via SOAP API
 Content-Type: text/plain; charset=utf-8
 
-I attached an updated advisory in a new thread.
+Severity: Critical
 
-For anyone looking for it on this thread, the latest version is at:
+Vendor: The Apache Software Foundation
 
-http://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CVE-2016-10033-Vuln.html
+Versions Affected: Apache OpenMeetings 1.9.x - 3.0.7
 
-On Mon, Dec 26, 2016 at 10:10 PM, Tracy Reed <treed@...raviolet.org> wrote:
-> Note that confining the http process using SELinux or similar MAC system
-> can go a long way to constraining and limiting the damage of inevitable
-> vulnerabilities such as this. Particularly since this is command
-> injection which is precisely what SELinux is good at limiting (as
-> opposed to SQL injection).
->
-> My shop has a policy that SELinux will be enabled on all web
-> applications and it has already saved us a few times despite being very
-> good at getting things patched up promptly.
->
-> On Sun, Dec 25, 2016 at 06:21:07PM PST, Dawid Golunski spake thusly:
->> PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
->>
->> Severity: CRITICAL
->>
->> Discovered by:
->> Dawid Golunski (@dawid_golunski)
->> https://legalhackers.com
->>
->>
->> PHPMailer
->> "Probably the world's most popular code for sending email from PHP!
->> Used by many open-source projects: WordPress, Drupal, 1CRM, SugarCRM, Yii,
->> Joomla! and many more"
->>
->> Desc:
->> An independent research uncovered a critical vulnerability in PHPMailer that
->> could potentially be used by (unauthenticated) remote attackers to achieve
->> remote arbitrary code execution in the context of the web server user and
->> remotely compromise the target web application.
->> To exploit the vulnerability an attacker could target common website
->> components such as contact/feedback forms, registration forms, password
->> email resets and others that send out emails with the help of a vulnerable
->> version of the PHPMailer class.
->>
->>
->> Patching:
->> Responsibly disclosed to PHPMailer team.
->> They've released a critical security release.
->> If you are using an affected release update to the 5.2.18 security
->> release as advised at:
->> https://github.com/PHPMailer/PHPMailer/blob/master/changelog.md
->>
->> Notes:
->> I know this is a bad timing and a short notice (for everyone probably ;)
->> I've spent most of my Christmas break working on this issue with
->> affected vendors.
->> This has been quite a rush as one of the vendors leaked excessive
->> information on this vulnerability at one point which could aid
->> potential attackers.
->>
->> I've released a limited advisory at the link below:
->>
->> https://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CVE-2016-10033-Vuln.html
->>
->> This is to give people a chance to immediately patch or at least be
->> aware of the issue before we get closer to a working day/end of
->> holiday for affected users to act on this issue.
->>
->> I'm planning to release the full advisory and a PoC exploit shortly so
->> that everyone is on the same page.
->>
->> Upcoming video PoC:
->>
->> https://legalhackers.com/videos/PHPMailer-Exploit-Remote-Code-Exec-Vuln-CVE-2016-10033-PoC.html
->>
->>
->> For updates follow:
->>
->> https://twitter.com/dawid_golunski
->>
->> I'll also send another email to the list once it is published.
->>
->> For now,
->> Patch it now before someone else patches it for you (through a reverse shell ;)
->>
->> --
->> Regards,
->> Dawid Golunski
->> https://legalhackers.com
->> t: @dawid_golunski
->
-> --
-> Tracy Reed
+Description:
+When attempting to upload a file via the API using the
+importFileByInternalUserId
+or importFile methods in the FileService, it is possible to read arbitrary
+files from the system. This is due to that Java's URL class is used without
+checking what protocol handler is specified in the API call.
+
+All users are recommended to upgrade to Apache OpenMeetings 3.1.1
+
+Credit: This issue was identified by Andreas Lindh
 
 
-
--- 
-Regards,
-Dawid Golunski
-https://legalhackers.com
-t: @dawid_golunski
+Apache OpenMeetings Team
