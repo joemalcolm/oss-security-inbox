@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1787" "Friday" "14" "July" "2017" "12:04:20" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty0kA2sgHgZj+w1Xg6Z2G9WGSexa_i59Hi2eo2PQeW=YPQ@mail.gmail.com>" "43" "Re: [oss-security] Estimate for the total number of exploitable bugs in large linux distro?" "^Date:" nil nil "7" "2017071418:04:20" "[oss-security] Estimate for the total number of exploitable bugs in large linux distro?" (number mark "        kseifried@re Jul 14   43/1787  " thread-indent "\"Re: [oss-security] Estimate for the total number of exploitable bugs in large linux distro?\"\n") "<20170714150537.3e2irp53kwj5xsn7@LykOS.localdomain>" ("<20170714093401.GB865@sivokote.iziade.m$>" "<20170714150537.3e2irp53kwj5xsn7@LykOS.localdomain>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["909" "Friday" "25" "March" "2016" "15:55:44" "+0600" "Maxim Solodovnik" "solomax@apache.org" "<CAJmbs8g6dx16mtu8B6V29Zpasf5D_kj5mDuKDYXCTGm87xqA9A@mail.gmail.com>" "28" "[oss-security] [CVE-2016-0784] ZIP file path traversal" nil nil nil "3" "2016032509:55:44" "[oss-security] [CVE-2016-0784] ZIP file path traversal" (number mark "U       solomax@apac Mar 25   28/909   " thread-indent "\"[oss-security] [CVE-2016-0784] ZIP file path traversal\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32548 invoked by uid 550); 14 Jul 2017 18:04:33 -0000
+Received: (qmail 7433 invoked by uid 550); 25 Mar 2016 10:35:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +11,48 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32524 invoked from network); 14 Jul 2017 18:04:32 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=tCjD86Ng0x82l+uKzMh7Gw/lykgRpKPETlOQFkflUtg=;
-        b=UlYHW9yiJ+vSVR0g26vezA42J20IYoBHFe3JgnmBfdNKd4fBMRBgzfFMC18MTIz/gV
-         OQN3GRaeQ18J96NXC3W8N4ZfI2Ff+XH9lirpnnA52rd3HQw8+NDqX89AhyLUOJlbdQIs
-         RfB9C0pFNlfAddeQfdWphMz+z+AODGvtDF5/Ou79cDbIsTL2Krc/lLNmRpG6vO0U1qTc
-         xxv4jsTTW9LwKP2FTbRKODyK2/gHzT5N5yn4ziVtn6spdyt9UvJfiWPT/0ogsWlwiBDb
-         tJXPcBKpwZzAUTe8GGioC0ZKKv1FdJKlSf+QDVMBvWADsBVKCqzcGntYHDcdhlm1bf+L
-         Mbwg==
-X-Gm-Message-State: AIVw112zhYPdJrnbAVwOdJ1DhnjyP/6lieV8C50HzitCTr7jPhMwHmiN
-	T2qE+lqW0wki24QGeiwY9t2JzXx1YsMQqttPAw==
-X-Received: by 10.55.162.213 with SMTP id l204mr11983265qke.65.1500055460647;
- Fri, 14 Jul 2017 11:04:20 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <20170714150537.3e2irp53kwj5xsn7@LykOS.localdomain>
-References: <20170714093401.GB865@sivokote.iziade.m$> <20170714150537.3e2irp53kwj5xsn7@LykOS.localdomain>
-Message-ID: <CANO=Ty0kA2sgHgZj+w1Xg6Z2G9WGSexa_i59Hi2eo2PQeW=YPQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="001a114d8a66e031ae05544ae0ec"
-Date: Fri, 14 Jul 2017 12:04:20 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Estimate for the total number of exploitable bugs
- in large linux distro?
-To: oss-security <oss-security@lists.openwall.com>
+Received: (qmail 9495 invoked from network); 25 Mar 2016 09:55:58 -0000
+X-Gm-Message-State: AD7BkJKHLcoeXYU3wuOuLwK9gYBjPlggcD3/cmqDubJd2EaujxaT2ZNRAibttHBZAER7cMTKhuc5nt29gpKsIA==
+MIME-Version: 1.0
+X-Received: by 10.66.155.232 with SMTP id vz8mr19627657pab.53.1458899744349;
+ Fri, 25 Mar 2016 02:55:44 -0700 (PDT)
+Date: Fri, 25 Mar 2016 15:55:44 +0600
+X-Gmail-Original-Message-ID: <CAJmbs8g6dx16mtu8B6V29Zpasf5D_kj5mDuKDYXCTGm87xqA9A@mail.gmail.com>
+Message-ID: <CAJmbs8g6dx16mtu8B6V29Zpasf5D_kj5mDuKDYXCTGm87xqA9A@mail.gmail.com>
+From: Maxim Solodovnik <solomax@apache.org>
+To: Openmeetings user-list <user@openmeetings.apache.org>, dev <dev@openmeetings.apache.org>, 
+	security@openmeetings.apache.org, security@apache.org, 
+	oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] [CVE-2016-0784] ZIP file path traversal
 
---001a114d8a66e031ae05544ae0ec
-Content-Type: text/plain; charset="UTF-8"
+Severity: Moderate
 
-> On Fri, Jul 14, 2017 at 12:34:01PM +0300, Georgi Guninski wrote:
-> > What is an estimate for the total number of exploitable bugs in large
-> > linux distro?
->
+Vendor: The Apache Software Foundation
 
-First you need to define "distribution". Do we go with "all" the packages
-shipped? Ok... what about things like firefox?
-https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=firefox 1500 CVEs... does
-that count to the distribtion count?  What about non-free in Debian? Anyone
-that ships Flash is also going to see their stats bumped way up.
+Versions Affected: Apache OpenMeetings 1.9.x - 3.1.0
 
-Now we need to define "exploitable bugs", for example an exploit chain, is
-that multiple bugs or do we count that as a single one for this discussion?
-There's a lot of /tmp flaws that are "exploitable" but I can pretty much
-guarantee nobody will ever bother.
+Description:
+The Import/Export System Backups functionality in the OpenMeetings
+Administration
+menu (http://domain:5080/openmeetings/#admin/backup) is vulnerable to path
+traversal via specially crafted file names within ZIP archives. By uploadin=
+g an
+archive containing a file named ../../../public/hello.txt will write
+the file =E2=80=9Chello.txt=E2=80=9D
+to the http://domain:5080/openmeetings/public/ directory. This could
+be used to, for example,
+overwrite the /usr/bin/convert file (or any other 3 rd party
+integrated executable)
+with a shell script, which would be executed the next time an image
+file is uploaded
+and imagemagick is invoked.
 
-I would then point out the only source of data anyone is mentioning is CVE.
-And CVE has counting rules. For example if you find 100 XSS flaws in a php
-app (because they forgot to use htmlspecialchars on output) in the same
-version we'll assign a single CVE, not 100. So how many bugs do you count
-this as?
+All users are recommended to upgrade to Apache OpenMeetings 3.1.1
 
-CVE is also incomplete. There's lots and lots of vulns with no CVE
-(something I'm trying to remediate with the DWF).
-
-I would suggest before anyone continue this thread they go read:
-
-https://media.blackhat.com/us-13/US-13-Martin-Buying-Into-The-Bias-Why-Vulnerability-Statistics-Suck-Slides.pdf
-
-it's largely a pointless discussion because the question isn't well
-defined, and we know for a fact we don't have good data to answer it
-(yet...).
+Credit: This issue was identified by Andreas Lindh
 
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
---001a114d8a66e031ae05544ae0ec--
+Apache OpenMeetings Team
