@@ -1,4 +1,9 @@
-Received: (qmail 9910 invoked by uid 550); 8 Apr 2026 15:44:18 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1159" "Saturday" "26" "March" "2016" "17:52:11" "+0300" "Solar Designer" "solar@openwall.com" "<20160326145211.GA22709@openwall.com>" "33" "Re: [oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption" "^Date:" nil nil "3" "2016032614:52:11" "[oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption" (number mark "        solar@openwa Mar 26   33/1159  " thread-indent "\"Re: [oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption\"\n") "<20160322205839.GA30835@openwall.com>" ("<20150606113057.GA23470@openwall.com>" "<20150609112639.GA20540@openwall.com>" "<20160322205839.GA30835@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 8110 invoked by uid 550); 26 Mar 2016 14:52:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,85 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 8086 invoked from network); 26 Mar 2016 14:52:15 -0000
+Message-ID: <20160326145211.GA22709@openwall.com>
+References: <20150606113057.GA23470@openwall.com> <20150609112639.GA20540@openwall.com> <20160322205839.GA30835@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20160322205839.GA30835@openwall.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Sat, 26 Mar 2016 17:52:11 +0300
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1414 invoked from network); 8 Apr 2026 05:51:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1775627481;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=KgGuKVG9y1pNFfI8WlvX3GBb7I5IEqV0hl5J6+TpDXo=;
-	b=TpkdxVRqfV9Ksw9od0mvm5S4P0NU0chfeyNKLqnQK+SKhhzu3XDKTSyekHEI1xLMlVAsmD
-	Wr8MolWCJ5lLshKWj/wpWtlKT7apXEUtXPqgoy4SWotrHXMpaBDh2U9evf+jwMuhv4482L
-	CzNhffuVi3JR0p/GhtvnrubV5wJcSE1ZPP24UNz8zn7EcGomnPfAJtaHFYU1FEC0J8SQv+
-	GH0tQY1n7mHGEGecjSBYjvWYYqcZqh1bYyrJrk+9rMVsQLu5KnzHpjDuPsJEFKUYbl67zf
-	bIm6CIfIVTb0kHLJE3T7UFb/LT00PEp/SFiv52F72rquA/prYDjUEhbzFyIW/Q==
-Message-ID: <c8c53c8b-acb6-48b0-bc32-166842dd18e9@cpansec.org>
-Date: Wed, 8 Apr 2026 06:51:21 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Robert Rothenberg <rrwo@cpansec.org>
-Content-Language: en-GB, en-ZA
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: rrwo@cpansec.org
-X-GND-Cause: dmFkZTG1GpAf42Z05RNqgtLC+AHdBviIwUf6A+tly3BOen9PwBHElRevqzFfTeyEQQU8jBpoVl36JpYDTtZHj/8/ZTHWJR+DvmXgE2uvaCjFa0nboyh2azrqPLLLajI+n6D7uLvmK6FZfJyl8APDiTL5uqy6pvAInb386UMRDyJBAzbuf5QHi/bTzLRzaaEcN59DS5O9FYkcXHhadB99XLRRpYtc3+uHKzwqKAIdQjfgSASkpAFBG3whgrqIuwkg6YzM8XKycBumuDY0PrOv7jvjzMId9XhEbwe7HFcGST/D3fZfBXLkpQOjE6vj0/oQ5hf2m7v98oH8bPaBJrm9BvUq3TLhRJ0WMZUfp+evpk2bduTQ32j9D5Zr4dPW/+Gs0aaeWr5avXMh7ErjVD5VOKclTezc4Hkn3ToTOLTKgL4r/SiMpDWW1kUgBxX6QprfiOYIjwE+fm3Hy5R6qamtptyQsKf6zhrgq8HC/Cl/f9gx82jCRWzuN4Zs4/lZKN1e3hGjEUBawsofC4QnT6PBksln3zBi1b9fYqybKqxfsYaPE7lLeLXNVy6Utl3V3LLic7jQCYhZ4s+KWBD8GZJfRenQgjDehHzhblhYVjJKWpccaaT/7dzn8tAl2b1eFMJ7Iq0kr9metXqZgC4X6DW+1MKYYCCQrYso/15BQ5LZ7VCZTtMtJw
-X-GND-State: clean
-X-GND-Score: 0
-Subject: [oss-security] CVE-2026-5082: Amon2::Plugin::Web::CSRFDefender versions from 7.00
- through 7.03 for Perl generate an insecure session id
+Subject: Re: [oss-security] CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption
+To: oss-security@lists.openwall.com
 
-========================================================================
-CVE-2026-5082                                        CPAN Security Group
-========================================================================
+On Tue, Mar 22, 2016 at 11:58:39PM +0300, Solar Designer wrote:
+> The primary reason I am posting this is so that other distros know the
+> vulnerability was apparently shown to be exploitable.
 
-         CVE ID:  CVE-2026-5082
-   Distribution:  Amon2-Plugin-Web-CSRFDefender
-       Versions:  from 7.00 through 7.03
+And that's not the end of the story:
 
-       MetaCPAN: https://metacpan.org/dist/Amon2-Plugin-Web-CSRFDefender
-       VCS Repo: https://github.com/tokuhirom/Amon2-Plugin-Web-CSRFDefender
+https://lwn.net/SubscriberLink/681062/b974fb24a6c4617b/
 
+"Posted Mar 25, 2016 13:23 UTC (Fri) by BenHutchings (subscriber, #37955) [Link]
 
-Amon2::Plugin::Web::CSRFDefender versions from 7.00 through 7.03 for
-Perl generate an insecure session id
+Unfortunately the fix by Seth Jennings for RHEL, later applied to
+stable branches, was still incorrect, leading to CVE-2016-0774. I hope
+AOSP picks up the second fix as well."
 
-Description
------------
-Amon2::Plugin::Web::CSRFDefender versions from 7.00 through 7.03 for
-Perl generate an insecure session id.
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2016-0774
 
-The generate_session_id function will attempt to read bytes from the
-/dev/urandom device, but if that is unavailable then it generates bytes
-using SHA-1 hash seeded with the built-in rand() function, the PID, and
-the high resolution epoch time.  The PID will come from a small set of
-numbers, and the epoch time may be guessed, if it is not leaked from
-the HTTP Date header. The built-in rand function is unsuitable for
-cryptographic usage.
+"Petr Matousek  2016-02-02 09:34:35 EST 
 
-Amon2::Plugin::Web::CSRFDefender versions before 7.00 were part of
-Amon2, which was vulnerable to insecure session ids due to
-CVE-2025-15604.
+It was found that the fix for CVE-2015-1805 incorrectly kept buffer
+offset and buffer length in sync on failed atomic read, potentially
+resulting in pipe buffer state corruption.
 
-Note that the author has deprecated this module.
+A local, unprivileged user could use this flaw to crash the system or
+leak kernel memory to user-space.
 
-Problem types
--------------
-- CWE-340 Generation of Predictable Numbers or Identifiers
-- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
+Upstream Linux kernel is not affected by this flaw as it was introduced
+by the Red Hat Enterprise Linux only fix for CVE-2015-1805.
 
-Solutions
----------
-Upgrade to Amon2::Plugin::Web::CSRFDefender version 7.04 or later.
+Acknowledgements:
 
+The security impact of this issue was discovered by Red Hat."
 
-References
-----------
-https://metacpan.org/release/TOKUHIROM/Amon2-Plugin-Web-CSRFDefender-7.03/source/lib/Amon2/Plugin/Web/CSRFDefender/Random.pm
-https://metacpan.org/release/TOKUHIROM/Amon2-Plugin-Web-CSRFDefender-7.04/changes
-https://www.cve.org/CVERecord?id=CVE-2025-15604
-
-
-
+Alexander
