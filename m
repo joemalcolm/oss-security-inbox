@@ -1,44 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/15/8
-Message-Id: <20161015165046.C3C9842E192@smtpvbsrv1.mitre.org>
-Date: Sat, 15 Oct 2016 12:50:46 -0400 (EDT)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Update on MatrixSSL miscalculation (incomplete fix for CVE-2016-6887)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/26/2
+Message-ID: <20160326145211.GA22709@openwall.com>
+Date: Sat, 26 Mar 2016 17:52:11 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Mar 22, 2016 at 11:58:39PM +0300, Solar Designer wrote:
+> The primary reason I am posting this is so that other distros know the
+> vulnerability was apparently shown to be exploitable.
 
-> https://blog.fuzzing-project.org/54-Update-on-MatrixSSL-miscalculation-incomplete-fix-for-CVE-2016-6887.html
-> 
-> This wasn't
-> really fixed, but only worked around by restricting the allowed size of
-> the modulus. Not surprisingly it is still possible to find inputs that
-> cause miscalculations
+And that's not the end of the story:
 
-Use CVE-2016-8671.
+https://lwn.net/SubscriberLink/681062/b974fb24a6c4617b/
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+"Posted Mar 25, 2016 13:23 UTC (Fri) by BenHutchings (subscriber, #37955) [Link]
 
-iQIcBAEBCAAGBQJYAltIAAoJEHb/MwWLVhi2zbEP/2dfjbYAydVRa5AoGGA7TPmb
-xILs2/DjLQhrk9/jLLwQ64Is/c9JrGHTSt7repvMcitLMAhDgVrlH+6LFa7z7inx
-WPx1eqz4hI84Rs8/56MlGSjXTjLEiTQm5curt42r8VnVy66P+kAYRYmgSn6viHti
-dnWeyY1nHM0Bj7xbh2rDS+WGiMdyKbD58JE1M9c/x40ypA7PHeyiOaEQiI0kkV/g
-GBV74nCAljX+4pznRutKPQTJr8gSo7KzBKCRMhZJUIMcIEWITHxZ4bhDSOvGE5ZV
-jtKDs4ALgYOh04IcYXam+TsnpO0TWtUE6IcbmvnBsnzKOt92sypRNQg/7ieMzvuk
-qqFPKi5yjR2jDkCi0AXpfciWEOFeJECbxoKS5Q8TIuToC/DbMndN57BuaSaL/g+6
-sffL7qTjUdYtOjOLjGt/pAUjWCYu6mkoxiT+naD/oBU1UVQsBgBuYCQ4z99Joa7D
-da22R9nUvL+khiic6nvQTCVMP2CqJji4TAoe6zbBTX7HxYGW53e7HvH0Lk7UAIF6
-nHgbB+3uf6PetCTA7lPkc/UHdFhYoV8VtpLQA4KOu2fqkGByhb8HifJvYS6YMZCt
-NH9CYar381eIYh5/w7+rzFLF0jTwxjKrbMrkcHPq3jvoBfRbHk+Fatbt1w6vv2Ww
-0RWeF3ma0TjarX46TTMB
-=PwKE
------END PGP SIGNATURE-----
+Unfortunately the fix by Seth Jennings for RHEL, later applied to
+stable branches, was still incorrect, leading to CVE-2016-0774. I hope
+AOSP picks up the second fix as well."
+
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2016-0774
+
+"Petr Matousek  2016-02-02 09:34:35 EST 
+
+It was found that the fix for CVE-2015-1805 incorrectly kept buffer
+offset and buffer length in sync on failed atomic read, potentially
+resulting in pipe buffer state corruption.
+
+A local, unprivileged user could use this flaw to crash the system or
+leak kernel memory to user-space.
+
+Upstream Linux kernel is not affected by this flaw as it was introduced
+by the Red Hat Enterprise Linux only fix for CVE-2015-1805.
+
+Acknowledgements:
+
+The security impact of this issue was discovered by Red Hat."
+
+Alexander
