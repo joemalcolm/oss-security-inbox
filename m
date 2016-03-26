@@ -1,43 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/27/5
-Message-ID: <5748641A.2050701@gmail.com>
-Date: Fri, 27 May 2016 16:13:30 +0100
-From: Lorenz Quack <quack.lorenz@...il.com>
-To: users@...d.apache.org, dev@...d.apache.org, "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [CVE-2016-3094] Apache Qpid Java Broker denial of service vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/26/1
+Message-ID: <20160326072555.GA8119@eldamar.local>
+Date: Sat, 26 Mar 2016 08:25:55 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: CVE Request: pcre: Segmentation fault on certain input to regular expressions with nested alternatives when JIT is used
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-3094: Apache Qpid Java Broker denial of service vulnerability
+Hi
 
-Severity: Important
+In Debian the following issue was reported (test case contained)
 
-Vendor: The Apache Software Foundation
+https://bugs.debian.org/819050
 
-Versions Affected: Qpid Java Broker versions 6.0.0, 6.0.1, and 6.0.2
 
-Description: A malformed authentication attempt may cause the broker to
-terminate.  The Qpid Java Broker supports a number of configurable
-authentication providers each supporting various SASL mechanisms. Some
-mechanisms need (or can be configured to accept) plain-text passwords
-being sent to the Broker (using the SASL "PLAIN" mechanism).  Where the
-broker has been configured to allow plain-text passwords for authentication
-it is possible for a client to send a malformed authentication attempt 
-which
-will lead the broker to terminate due to an uncaught Exception.
-Brokers configured to use authentication from the "PlainPasswordFile",
-"SimpleLDAP", or "Base64MD5PasswordFile" providers are vulnerable if the
-"PLAIN" mechanism is enabled (by default "PLAIN" will be disabled on
-non-TLS ports, but enabled on TLS connections).
+On certain input when processed for regular expressions with nested
+alternatives and JIT is used, pcre3 can segfault, affecting in this
+case suricata leading to at least a denial of service.
 
-Mitigation: Users should upgrade their Qpid Java Broker to version 6.0.3 or
-later.  If this is not possible, users can disable the PLAIN mechanism for
-their authentication manager on versions 0.32 and later by adding 
-"PLAIN" to
-the list of disabledMechanisms on their authentication provider object.
-Note that the SimpleLDAP authentication provider requires PLAIN and so this
-work around does not apply there.
+The problem was addressed upstream with commit:
+http://vcs.pcre.org/pcre?view=revision&revision=1475
 
-Credit: This issue was discovered by ﻿Alex Szczuczko of Red Hat, Inc.
+Can you assign a CVE for this issue?
 
-References: https://issues.apache.org/jira/browse/QPID-7271
-
+Regards,
+Salvatore
