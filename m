@@ -1,42 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/04/1
-Message-Id: <20160204002735.ECF8E6C0108@smtpvmsrv1.mitre.org>
-Date: Wed,  3 Feb 2016 19:27:35 -0500 (EST)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/27/2
+Message-ID: <20160327113907.GA4476@eldamar.local>
+Date: Sun, 27 Mar 2016 13:39:07 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Socat security advisory 7 - Created new 2048bit DH modulus
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: CVE Request: pcre: Segmentation fault on certain input to regular expressions with nested alternatives when JIT is used
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> Here, there
-> can be a CVE ID for the "was not prime" finding in the sense that p is
-> supposed to be prime, and a non-prime value is an implementation error
-> regardless of any other details of the situation.
+On Sat, Mar 26, 2016 at 08:25:55AM +0100, Salvatore Bonaccorso wrote:
+> Hi
+> 
+> In Debian the following issue was reported (test case contained)
+> 
+> https://bugs.debian.org/819050
+> 
+> 
+> On certain input when processed for regular expressions with nested
+> alternatives and JIT is used, pcre3 can segfault, affecting in this
+> case suricata leading to at least a denial of service.
+> 
+> The problem was addressed upstream with commit:
+> http://vcs.pcre.org/pcre?view=revision&revision=1475
+> 
+> Can you assign a CVE for this issue?
 
-Use CVE-2016-2217.
+Additional information for this request: The issue seems to have been
+introduced with http://vcs.pcre.org/pcre?view=revision&revision=1434
+in 8.35.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Note that upstream of suricata tracks the issue in suricata in
+conjunction with pcre 8.35 with
+https://redmine.openinfosecfoundation.org/issues/1693
+to issue a warning.
 
-iQIcBAEBCAAGBQJWspqCAAoJEL54rhJi8gl54asQAJaVltpP9gGDioAL29eb2xvR
-jdgwJd8ObLOq2jsmxaCvxYkFMxLXlf9XgHkcF09tH3DbxPsvf9ycUXxbYzJoYhAq
-lY1Hgre8wa4xkTQPe7iV51CBUj0ko0DzsrznMk535WgIrNLPHAESuB7ainr0helu
-ZZ7cCLouPJqQ6/gxnpE+zaBYYauWbaVh/mIKOzFNqTw30r+OOE/xp68W9+uoBCBR
-24HvHk9S7LZaN84DuCCWbkiOJ1HHVVMfaC51Ys/MkJOBO/HH3nlZxp2OXxxYvNv+
-Wes+AVl6CxdEwiEb0v+1PbbflTHGRPJ0wpS5iDLoeTxu5FJKgwbhJTrat9HYMPdM
-zeaBLInpOaWIUd7qeCYPhylpibZTyCpAgGzslSNSC30bOy1/ms+b6jIruCx1rK4f
-r1gOCQlQFtBsWivbNvfp3od0fPSd7uxoSg0BimflFoS06BtnnZCC5Jiie4ACQAFj
-5iXjPJtRF6iGw++0n3t/lsgE0Z921wtlCzrcez55pyusjS00FStl3LNNIIyrFO0v
-Kx8cQ81QzJe85ZAvzcs0zVUQTV55qo6wq0i04iobfoh3XSPw0sh4hO84ki7bi8nV
-hWrZjWPnUhPeoWcnjRg+qFhUY+rgBP1dChK6Jkulx8BFcA8detouO8BeJXmwqzQd
-tXUnpBjbBLwa7RDCFwjP
-=/kNY
------END PGP SIGNATURE-----
+Regards,
+Salvatore
