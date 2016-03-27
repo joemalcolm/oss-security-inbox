@@ -1,22 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/11/6
-Message-ID: <njhloh$llp$1@ger.gmane.org>
-Date: Sat, 11 Jun 2016 20:37:05 +0200
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/27/1
+Message-ID: <20160327113443.GA4418@eldamar.local>
+Date: Sun, 27 Mar 2016 13:34:43 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: MantisBT: XSS in custom fields management
+Cc: "cve-assign@...re.org >> Assign a CVE Identifier" <cve-assign@...re.org>
+Subject: Re: older fuseiso stuff
 Content-Type: text/plain; charset=utf-8
 
-On 2016-06-11 17:37, cve-assign wrote:
-> As far as we can tell, this is best interpreted as a single XSS
-> vulnerability
+Hi,
 
-That was indeed my expectation.
+On Mon, Feb 23, 2015 at 10:24:14AM +0100, Florian Weimer wrote:
+> On 02/07/2015 12:17 AM, Kurt Seifried wrote:
+> > https://bugzilla.redhat.com/show_bug.cgi?id=863102 
+> > https://bugzilla.redhat.com/show_bug.cgi?id=863091
+> > 
+> > may warrant a CVE
+> 
+> I opened up the dependent bugs which have more information:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=861358
+> https://bugzilla.redhat.com/show_bug.cgi?id=862211
+> 
+> Note that fuseiso is fairly broken and does not even support UDF, so
+> its usefulness is limited.  Newer systems have the unprivileged image
+> mounting functionality provided by udisks2, so a userspace
+> implementation of the ISO 9660 and UDF file systems is no longer needed.
 
-> Use CVE-2016-5364.
+Can two CVEs still be assigned for this issue to have an identifier
+for the issues?
 
-Thank you !
-
-Damien
-
-
+Regards,
+Salvatore
