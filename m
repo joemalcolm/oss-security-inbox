@@ -1,4 +1,9 @@
-Received: (qmail 3713 invoked by uid 550); 26 Aug 2022 06:57:42 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2971" "Monday" "28" "March" "2016" "13:12:44" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160328171244.795EE6C063B@smtpvmsrv1.mitre.org>" "68" "[oss-security] Re: CVE request - XStream: XXE vulnerability" nil nil nil "3" "2016032817:12:44" "[oss-security] Re: CVE request - XStream: XXE vulnerability" (number mark "U       cve-assign@m Mar 28   68/2971  " thread-indent "\"[oss-security] Re: CVE request - XStream: XXE vulnerability\"\n") "<nd3k26$2sr$1@ger.gmane.org>" ("<nd3k26$2sr$1@ger.gmane.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 20370 invoked by uid 550); 28 Mar 2016 17:12:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,97 +12,80 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3119 invoked from network); 25 Aug 2022 23:08:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=uci-edu.20210112.gappssmtp.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc;
-        bh=btkF8iBwI/SZHNzQOkxQ3Qq/NrdthFbad93AsSvbI08=;
-        b=qrJ8214o2Y3mGwLHnqNbpdPNcqcqwJtZhF5TTn3qAi0FNyFJmN7oVtefTEtxjwbZxU
-         +FukaI2xNA3cTJj12maQQ1ksUUjWFAfeZBhU4ikMVu2nXMecDXQJrpA4flTB5wRzTaBL
-         GAAkgbWe+BJ8dL1aM0r4Vit9GqIsyJZjg99jrqjC+q6HrU5jjVMW0jLOw2P17x/pjF95
-         2t+gByDxuWi/QbLn1vaRYOxtJ6WuarMLyYyCpHpfFvHopSrp5+LHblWmdzcvLvnmK7Zj
-         zJjliJco2Zhjpq2sXfJGmwzP8I4y8J6MphRtrDgIQfmnsskhNeccTEd8SpA8fLDXeLtX
-         O3vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc;
-        bh=btkF8iBwI/SZHNzQOkxQ3Qq/NrdthFbad93AsSvbI08=;
-        b=P5PaHonTpJxNNHWzQrcrpwiDDcLC1ac5m+KO/yN7htrX1WC6j/uFWwOVpTHyDi6Ogk
-         5+YK9bQ5dX6jPlet7/zXLFmdUltDGw3JqOtkJXDfg/0NEwDYbijomXi3sDAoqhTd+gU2
-         hx5eIy6Hb83S46kXNfNTWzmSfV/I8tIFK8EHxKeyK+fxmGHL0sbuhDx3xTbXlgqpVhrW
-         5kKRmHMtMVZUopDBgyR4vprKTkZCfVs0vR3RNrN9qlffd5gJpLLxQJEdOVrP2oFsqvL/
-         i2Flj1H+K4NopT5POiC2UZsbeNtbhoF7Vz5lpDb9t7Hz3Kwu/yyWxBApZ++UKaIedQ8a
-         F73g==
-X-Gm-Message-State: ACgBeo0XSUcQy8vvcg1utbtPeEhekgDxcUXENakqG0nIPAVh5dWVEOry
-	4MzBwF9l3mq4yKKL/ewjkcameQBql/zQHmwdjkVoOTUlOwwXIg==
-X-Google-Smtp-Source: AA6agR5kvjQ1LZltKTXuKYgPCzvql38leR+0ebMWGWK8C14AaIqm//sKDxEH6dyqeMZubrjPnzUontVqgpCbAn5xKiY=
-X-Received: by 2002:a05:6638:537:b0:349:b5d2:9182 with SMTP id
- j23-20020a056638053700b00349b5d29182mr2793251jar.5.1661468892015; Thu, 25 Aug
- 2022 16:08:12 -0700 (PDT)
-MIME-Version: 1.0
-From: Hsin-Wei Hung <hsinweih@uci.edu>
-Date: Fri, 26 Aug 2022 07:07:36 +0800
-Message-ID: <CABcoxUaK1ipxFP3==j+57mWXYadiHNd_eNgzKSxJ6Y0cM4WnyA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000001d465605e718df50"
-Subject: [oss-security] Linux kernel slab-out-of-bound read in bpf
+Received: (qmail 20352 invoked from network); 28 Mar 2016 17:12:56 -0000
+From: cve-assign@mitre.org
+To: joerg.schaible@gmx.de
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <nd3k26$2sr$1@ger.gmane.org>
+Message-Id: <20160328171244.795EE6C063B@smtpvmsrv1.mitre.org>
+Date: Mon, 28 Mar 2016 13:12:44 -0400 (EDT)
+Subject: [oss-security] Re: CVE request - XStream: XXE vulnerability
 
---0000000000001d465605e718df50
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hi,
+> XStream (x-stream.github.io) ... An attacker could therefore provide
+> manipulated XML as input to access data on the file system
+> 
+> Since XStream 1.4.9 all parsers are configured to ignore external entities
+> by default as far as such behavior is configurable:
+> http://x-stream.github.io/changes.html#1.4.9
 
-We found an issue in the bpf subsystem of the Linux kernel that can cause a
-slab-out-of-bound read. A bpf program calling bpf_tail_call with an index
-larger than the max_entries can potentially pass the verifier. After that,
-it will cause an out-of-bound access in the x86 JIT compiler. The root
-cause is that tnum_range over-approximates the range of concrete values.
-
-Affected kernel starts from v5.5 since commit, d2e4c1e6c294 (=E2=80=9Cbpf: =
-Constant
-map key tracking for prog array pokes=E2=80=9D)
-
-It has been fixed in commit, a657182a5c51 ("bpf: Don't use tnum_range on
-array range checking for poke descriptors") in bpf/bpf.git.
-
-The following code is a bpf PoC that can trigger the bug.
-
-#include "/usr/local/include/vmlinux.h"
-#include "/usr/include/bpf/bpf_helpers.h"
-
-#define __uint(name, val) int (*name)[val]
-#define __type(name, val) typeof(val) *name
-#define __array(name, val) typeof(val) *name[]
-
-#define SEC(name) \
-        _Pragma("GCC diagnostic push")                                  \
-        _Pragma("GCC diagnostic ignored \"-Wignored-attributes\"")      \
-        __attribute__((section(name), used))                            \
-        _Pragma("GCC diagnostic pop")
-
-#define DEFINE_BPF_MAP(the_map, TypeOfMap, MapFlags, TypeOfKey,
-TypeOfValue, MaxEntries) \
-        struct {                                                        \
-            __uint(type, TypeOfMap);                                    \
-            __uint(map_flags, (MapFlags));                              \
-            __uint(max_entries, (MaxEntries));                          \
-            __type(key, TypeOfKey);                                     \
-            __type(value, TypeOfValue);                                 \
-        } the_map SEC(".maps");
-
-DEFINE_BPF_MAP(map_0, BPF_MAP_TYPE_PROG_ARRAY, 0, uint32_t, uint32_t, 36);
-SEC("cgroup/sock_create")
-int func(struct bpf_sock *ctx) {
-        int64_t v0 =3D 49;
-        bpf_tail_call(ctx, &map_0, v0);
-        return 0;
-}
-char _license[] SEC("license") =3D "GPL";
+Use CVE-2016-3674 for the XStream vulnerability that was resolved by
+this change.
 
 
-Thanks,
-Hsin-Wei
+> Applications using XOM or explicitly BEA's old StAX reference parser are
+> still vulnerable, we found no way to deactivate processing of external
+> entities for those two.
 
---0000000000001d465605e718df50--
+These seem to be present in one or more Linux distributions and thus
+might have widespread deployment, e.g.,
+
+  http://pkgs.fedoraproject.org/cgit/rpms/xom.git
+  http://pkgs.fedoraproject.org/cgit/rpms/bea-stax.git
+
+Within the context of XStream itself, we do not feel that the
+XomDriver or BEAStaxDriver behavior should have a CVE stating that
+version 1.4.9 is vulnerable, because
+http://x-stream.github.io/faq.html#Security_XXEVulnerability
+explicitly documents the behavior, and XStream users could reasonably
+be expected to look at that FAQ document before choosing XomDriver or
+BEAStaxDriver for use with untrusted XML documents.
+
+However, that FAQ document might suggest that the underlying problems
+are upstream implementation errors, e.g., the design of these pieces
+of code would be reasonably expected to support ignoring all external
+entities but did not achieve that:
+
+  https://java.net/projects/xom/sources/svn/content/trunk/src/nu/xom/tests/BuilderTest.java
+  private static class NonEntityResolvingFilter extends XMLFilterImpl
+
+  https://repository.jboss.org/nexus/content/groups/public-jboss/stax/stax-src/1.2.0/stax-src-1.2.0.distribution-zip
+  src/com/bea/xml/stream/ConfigurationContextBase.java
+
+Does anyone want to request two CVE IDs for these two products? (We
+think that the StAX issue is more general than CVE-2013-7315.)
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJW+WWhAAoJEL54rhJi8gl5ASUP/iZGOTiraYf0lVA5xgjcfbN6
+7kqf5Oqlv/FH4Vrj5qe2irFrQ0bZuZbMoLtSUFWq/bBTPcxa8ITd/sJB6f9N5/tw
+P/EseQRf/HfpzSSKPjuOUNIMYoJ7ik2UAdeClndCiHZtHqvp4and+pXk3yM3J4fV
+BLXcecUhQf0qZuC4RIglK5VEe62hMiEMHSRglt7B1rNJimpBbID0ObNOUqKjjEQA
+sIwbAl0Mm9Vebennxb7uJB5gCEbZKhL9APJay5NzBp3fPB0a2upHSNZ6gouCBha1
+3CBqVdFQxYYEyQ0iB3A7kKTR7f5d8CtO8aBGwolkoH2dcRxpvMfdFV3EsxvDxiiZ
+p6IM+VFa/SgxOeaDhlVZeqtlGvzgTMNSdi9l34352RQuniloGBq/GQvwh54PaaQy
+netM0hUmKgR+O+WMC2gV+WFgTQYnUP94zx0D6P3Eq25S04RlQQIkK5aYP7iVsKRw
+lxZGgjnTUG5MgFSec+bjKqCDcSTCg/BQ2rKGWsAvKV0tjePauQ9OHohumNvSVaxo
+/ju9jZKNsKXBZPB6g1Tk8JG9WkifpdarfxAtlkBmbpJaqYbfIn6jlbYGE4ZD1ovl
+Q2TQ0GRfMW2c8vKhYUB/FDT7hEcRjAe6gH9SXGMV9q94zPsgF72EHOqG+srT6+tQ
+aHE6v/IZoJHc0cPvyGzy
+=g/fx
+-----END PGP SIGNATURE-----
