@@ -1,24 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/01/8
-Message-ID: <a27e61d789df4aff9f1f1f74cc307281@imshyb02.MITRE.ORG>
-Date: Tue, 1 Nov 2016 14:15:33 -0400
-From: <cve-assign@...re.org>
-To: <carnil@...ian.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: OTRS: execution of JavaScript in OTRS context by opening malicious attachment
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/28/1
+Message-Id: <20160328171244.795EE6C063B@smtpvmsrv1.mitre.org>
+Date: Mon, 28 Mar 2016 13:12:44 -0400 (EDT)
+From: cve-assign@...re.org
+To: joerg.schaible@....de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request - XStream: XXE vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Date: 2016-11-01
-> https://www.otrs.com/security-advisory-2016-02-security-update-otrs/
+> XStream (x-stream.github.io) ... An attacker could therefore provide
+> manipulated XML as input to access data on the file system
+> 
+> Since XStream 1.4.9 all parsers are configured to ignore external entities
+> by default as far as such behavior is configurable:
+> http://x-stream.github.io/changes.html#1.4.9
 
-> An attacker could trick an authenticated agent or customer into
-> opening a malicious attachment which could lead to the execution of
-> JavaScript in OTRS context.
+Use CVE-2016-3674 for the XStream vulnerability that was resolved by
+this change.
 
-Use CVE-2016-9139.
+
+> Applications using XOM or explicitly BEA's old StAX reference parser are
+> still vulnerable, we found no way to deactivate processing of external
+> entities for those two.
+
+These seem to be present in one or more Linux distributions and thus
+might have widespread deployment, e.g.,
+
+  http://pkgs.fedoraproject.org/cgit/rpms/xom.git
+  http://pkgs.fedoraproject.org/cgit/rpms/bea-stax.git
+
+Within the context of XStream itself, we do not feel that the
+XomDriver or BEAStaxDriver behavior should have a CVE stating that
+version 1.4.9 is vulnerable, because
+http://x-stream.github.io/faq.html#Security_XXEVulnerability
+explicitly documents the behavior, and XStream users could reasonably
+be expected to look at that FAQ document before choosing XomDriver or
+BEAStaxDriver for use with untrusted XML documents.
+
+However, that FAQ document might suggest that the underlying problems
+are upstream implementation errors, e.g., the design of these pieces
+of code would be reasonably expected to support ignoring all external
+entities but did not achieve that:
+
+  https://java.net/projects/xom/sources/svn/content/trunk/src/nu/xom/tests/BuilderTest.java
+  private static class NonEntityResolvingFilter extends XMLFilterImpl
+
+  https://repository.jboss.org/nexus/content/groups/public-jboss/stax/stax-src/1.2.0/stax-src-1.2.0.distribution-zip
+  src/com/bea/xml/stream/ConfigurationContextBase.java
+
+Does anyone want to request two CVE IDs for these two products? (We
+think that the StAX issue is more general than CVE-2013-7315.)
 
 - -- 
 CVE Assignment Team
@@ -28,17 +62,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYGNtQAAoJEHb/MwWLVhi2/HkP/2RHPdRmkxzC5t2KT2hb9KWK
-Jglp7NldyOvcz8Y2KHoXO77vA6rbzShsZPVY6vOmpQPFv/YKvyzdOICWW9kLObao
-5Q8O2KHBspIfky6NFlX4busIzBda6FXm1kmqyKNlt9iCMPZXyyo+qMP/rycUAso+
-8TXm2+/lAhSlpKncsfekbFD0ueDtSBsxt2SIjeq6VbAxH8j7RVKktIOTatvJM7iE
-ZiE+6OWmk4WcgztGZ+tSuqcsG92tmMWfMA6wjioeyFnfX2ngQ7XVZLYaV8aO/+lS
-aACNhQjPcs1bc0PKJ80p5O9QKmul8dmKZuygZ4GWz/+S5jvA80neNOgAfoGEg2FC
-xDmqgTaUaoaf/XExrx6tILD7icc3bF6cHWiOtQiPEtoQaNMVBFjMO5n/h5OCg4kT
-jOQVo+HTfalLg16BToR/I0BS9pJ/pfaUxxj6HWpxNJXjbDmnU9aptl7PWMVrwwVo
-VCsmf0wwqK46vSbHBK6hYUcEAw1Cir+p3K3oiX32cHP3n2D5xA+cnOTXulEeb86N
-DZUXk7BT4YznYubPuSLPWGtlPWn0hia3JgCCLVNnHyRsWmKsojk1xzxug+L6P1Lt
-xw6LwORGSUJ9bFv8YjtztNx7kJsMpoLFapwhGefhxia/NwcZQxAM1tzIIczG0vKZ
-ZIYWfSRilgv+4xulgEZ+
-=GDId
+iQIcBAEBCAAGBQJW+WWhAAoJEL54rhJi8gl5ASUP/iZGOTiraYf0lVA5xgjcfbN6
+7kqf5Oqlv/FH4Vrj5qe2irFrQ0bZuZbMoLtSUFWq/bBTPcxa8ITd/sJB6f9N5/tw
+P/EseQRf/HfpzSSKPjuOUNIMYoJ7ik2UAdeClndCiHZtHqvp4and+pXk3yM3J4fV
+BLXcecUhQf0qZuC4RIglK5VEe62hMiEMHSRglt7B1rNJimpBbID0ObNOUqKjjEQA
+sIwbAl0Mm9Vebennxb7uJB5gCEbZKhL9APJay5NzBp3fPB0a2upHSNZ6gouCBha1
+3CBqVdFQxYYEyQ0iB3A7kKTR7f5d8CtO8aBGwolkoH2dcRxpvMfdFV3EsxvDxiiZ
+p6IM+VFa/SgxOeaDhlVZeqtlGvzgTMNSdi9l34352RQuniloGBq/GQvwh54PaaQy
+netM0hUmKgR+O+WMC2gV+WFgTQYnUP94zx0D6P3Eq25S04RlQQIkK5aYP7iVsKRw
+lxZGgjnTUG5MgFSec+bjKqCDcSTCg/BQ2rKGWsAvKV0tjePauQ9OHohumNvSVaxo
+/ju9jZKNsKXBZPB6g1Tk8JG9WkifpdarfxAtlkBmbpJaqYbfIn6jlbYGE4ZD1ovl
+Q2TQ0GRfMW2c8vKhYUB/FDT7hEcRjAe6gH9SXGMV9q94zPsgF72EHOqG+srT6+tQ
+aHE6v/IZoJHc0cPvyGzy
+=g/fx
 -----END PGP SIGNATURE-----
