@@ -1,36 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/30/3
-Message-ID: <CAGB5yN=VtQWD15+7n9NoVVrJiZdwrvgXhpyU67ir2M78C2HfGw@mail.gmail.com>
-Date: Sat, 30 Jan 2016 08:27:10 +0100
-From: Claus Ibsen <claus.ibsen@...il.com>
-To: "users@...el.apache.org" <users@...el.apache.org>, dev <dev@...el.apache.org>,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  security <security@...che.org>
-Subject: CVE-2015-5344 - Apache Camel medium disclosure vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/28/3
+Message-ID: <D31EE434.14B879%vel@apache.org>
+Date: Mon, 28 Mar 2016 13:37:56 -0400
+From: Velmurugan Periasamy <vel@...che.org>
+To: "dev@...ger.incubator.apache.org" <dev@...ger.incubator.apache.org>, "user@...ger.incubator.apache.org" <user@...ger.incubator.apache.org>, <security@...che.org>, <oss-security@...ts.openwall.com>, <bugtraq@...urityfocus.com>
+CC: Velmurugan Periasamy <vel@...che.org>, <private@...ger.incubator.apache.org>
+Subject: CVE update (CVE-2016-0735) - Fixed in Ranger 0.5.2
 Content-Type: text/plain; charset=utf-8
 
-Apache Camel's XStream usage is vulnerable to Remote Code Execution attacks
+Hello:
 
-Apache Camel's camel-xstream component is vulnerable to Java object
-de-serialisation vulnerability.
-Such as de-serializing untrusted data can lead to security flaws as
-demonstrated in various similar reports about Java de-serialization
-issues.
+Here¹s a CVE update for Ranger 0.5.2 release. Please see below details.
 
-Please study this security vulnerability carefully!
-CVE-2015-5344 - [1]
+Thank you,
+Velmurugan Periasamy
 
-You can download the fixed Apache Camel 2.15.x and 2.16.x version from
-the Apache mirrors [2] or from the Central Maven repository.
+--------------------------------------------------------------------------
+CVE-2016-0735: Ranger policy excludes flags processing
+--------------------------------------------------------------------------
+Severity: Important
+Vendor: The Apache Software Foundation
+Versions Affected: 0.5.0/0.5.1 versions of Apache Ranger
+Users affected: All users that use Ranger to authorize HBase, Hive, and
+Knox.
+Description: In some cases, presence of an exclude policy at a
+resource-level can give the user access at its parent resource-level. For
+example, if a hive policy excludes access for a user to a particular column,
+then such a user would be able to alter the name of that table. Only a user
+who has access at the table level should be able to do so. Due to this bug
+however, the user is able to do the operation when an exclude policy is
+present at the column-level for that table.
+Mitigation: Users should upgrade to Ranger 0.5.2 version
+--------------------------------------------------------------------------
 
-[1] http://camel.apache.org/security-advisories.data/CVE-2015-5344.txt.asc?version=1&modificationDate=1454056803464&api=v2
-[2] http://camel.apache.org/download
 
 
-On behalf of the Camel PMC,
-Claus Ibsen
-
-
--- 
-Claus Ibsen
------------------
-http://davsclaus.com @davsclaus
-Camel in Action 2: https://www.manning.com/ibsen2
