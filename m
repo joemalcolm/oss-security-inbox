@@ -1,45 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/26/3
-Message-Id: <20160226070545.6416DABC030@smtpvmsrv1.mitre.org>
-Date: Fri, 26 Feb 2016 02:05:45 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/28/2
+Message-Id: <20160328171546.2A5806C03A1@smtpvmsrv1.mitre.org>
+Date: Mon, 28 Mar 2016 13:15:46 -0400 (EDT)
 From: cve-assign@...re.org
-To: up201407890@...nos.dcc.fc.up.pt
+To: carnil@...ian.org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: pkexec tty hijacking via TIOCSTI ioctl
+Subject: Re: CVE Request: pcre: Segmentation fault on certain input to regular expressions with nested alternatives when JIT is used
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> When executing a program via "pkexec --user nonpriv program" the
-> nonpriv session can
-> escape to the parent session by using the TIOCSTI ioctl to push
-> characters into the
-> terminal's input buffer
+> https://bugs.debian.org/819050
+> http://vcs.pcre.org/pcre?view=revision&revision=1475
+> https://redmine.openinfosecfoundation.org/issues/1693
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1300746
+Use CVE-2014-9769.
 
-Use CVE-2016-2568.
+https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-9769
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWz+EkAAoJEL54rhJi8gl5pE4QAJm2/2l0HyDMz50E1G/f7ZSB
-2VdigMvP/55H7rk6x6y8S6DJdU87qlZR5tnozh9Ay52k9z0Rt7K4lozsOno+z+oV
-c+yXObgNK8J6BwfaKP8lsCxPVorhdXI98NRS/j2poT91nOjmxmff0TcKN3MHpn6x
-HZ4OxDAkm5B9hl43Ue32xPrMilbG/Ch1yblKJDTUA3vlIY+txhORBr2ZDXYTBdu1
-i0tKjUC6hRub1Yu79SHuwtc0aFdggY7ZbzpAyOeOSHcz7EczWZd4dN4oD33a3xbt
-DdXsLl6VQ2QKOm2AVbgTwcq13L4g9rOcpRN2o1zuGpbYn9e4ebvLeqbBPO4hlpW8
-FxCdOpbOPsU4oikwf/EPNUPGQVEV2DPszIDp5/y31NUQb5DEz8sGUEA7lti2Na2w
-Y+/AnnR1oeMSXsK42Pyfak7WVaGJfllSJ1LKJHxD4XoGVjMMZlWpWYtwrm5reu9v
-IxVpYa+lwdmyzbWu9+w+y/wHEnvzq4vrVpyDXHk2833EtXsqDssvRjKn0NNy7BSN
-o3XAC0Goj3j1ld0e6AefkHn9GioODWXuSoZr3tvy7GNMLl52/huLCOdBYxTvCpoE
-oQDuhvcwRGRijclxOCmZ5mlnCGvB/u0o7bq+gxj1E757iY5NSoXMQGK3CFUlz56K
-rHWOpmcUoiZd/kWV8hTY
-=1vcI
+iQIcBAEBCAAGBQJW+WZwAAoJEL54rhJi8gl5UUMQAK5K0bPI6TnLrKmDruaFFOvL
+6HbVjk2StCQhBwj6OoHf8Ah65yimPA7vQtRh9sFCEpsnOiQ8us11Vd3IHTTZ2OdQ
+nK9HaTzBguC2hcBihlT74DeZzUO73/D68pkdHRnCpRQkI1nF/74W13dmWn4jSpaA
+AzkwnuwL2oj9zE//WsaviQeeqRMdM8jxOFxDowvQesXARqAk3O0lJNEaL4y1WVbb
+FNg/Db0yFEvIXbelIAn2G1KOGLeyZVLqC7IdtiKhIdBFW7ohUKDg2K1E3QnNgDi/
+NtyabaWAAT38spobBQMgimrCmGLB3N6wyuDR466sE+bkDOfjFefcCr8Qe7jOf6jO
+dvmKodKMJEJgAl/LbiTpAV/ZD7jQNjPW1Y2uYSCO0OMlQc9+ZS+3mLpLkhQvvJST
+bjvR0KkUiZ4PYOSIs3sOEUd5/Pinw4HG/+MLdcaxb9Sdk3QnvUGaqe3O8YNU8Yk4
+0u4X84/03AO7B3FfzTJgocAMB8EB+Dylkl/E1lAgKXbK6ishy2l0TGK/DmHYNvFt
+0iFAOu9D7NtaJm2aVnY0VOTNsaFU8A18OPZUep8ExVat9HSKaaaqLP24nC8Gch//
+2opjg6QgiXNkWozJbeFEhOeduu7IAMY5avWvvTYmTpTYguNSpjSVjGQJU6xWTP9n
+Qg6gO90O6DtG0KlpDtpF
+=pYvq
 -----END PGP SIGNATURE-----
