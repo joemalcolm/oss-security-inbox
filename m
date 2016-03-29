@@ -1,91 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/03/3
-Message-ID: <alpine.DEB.2.20.1608030900410.2418@tvnag.unkk.fr>
-Date: Wed, 3 Aug 2016 09:05:22 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY VULNERABILITY] curl: TLS session resumption client cert bypass 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/29/6
+Message-Id: <57514A3C-DBAD-4E5E-98EA-23E490629C02@dilger.ca>
+Date: Tue, 29 Mar 2016 16:56:11 -0600
+From: Andreas Dilger <adilger@...ger.ca>
+To: Yves-Alexis Perez <corsac@...ian.org>
+Cc: oss-security@...ts.openwall.com, Theodore Tso <tytso@...gle.com>, linux-ext4@...r.kernel.org
+Subject: Re: CVE Request - Linux kernel (multiple versions) ext2/ext3  filesystem DoS
 Content-Type: text/plain; charset=utf-8
 
-TLS session resumption client cert bypass
-=========================================
+On Mar 29, 2016, at 3:14 PM, Yves-Alexis Perez <corsac@...ian.org> wrote:
+> 
+> [dropping MITRE from CC since it's not about the CVE]
+> [adding ext and Theodore to CC]
+> 
+> On mar., 2016-03-29 at 19:24 +0200, Hugues ANGUELKOV wrote:
+>> Hello,
+>> 
+>> The linux kernel is prone to a Denial of service when mounting specially
+>> crafted ext2/ext3 (possibly ext4) filesystems. This occurs in the function
+>> ext4_handle_error who call the panic function on precise circumstance.
+> 
+> Did you contact the upstream maintainers about this? I'm adding them just in
+> case they're not already aware of that…
+> 
+>> This was tested on severals linux kernel version: 3.10, 3.18, 3.19, on
+>> real hardware and Xen DomU PV & HVM (the crash report attached is from a
+>> Fedora 3.18 PV DomU), from different distribution release: Ubuntu, CentOS,
+>> Fedora, Linux Mint, QubesOS.
+>> This a low security impact bug, because generally only root can mount
+>> image, however on Desktop (or possibly server?) system configured with
+>> automount the bug is easily triggable (think of android smartphone? Haven't
+>> test yet).
 
-Project cURL Security Advisory, August 3rd 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20160803A.html)
+It seems that the important point here is that the filesystem has
+"s_errors=EXT4_ERRORS_PANIC" set in the superblock?  I don't think
+the actual corruption that triggered the ext4_error() call is important,
+since there are any number of other failure cases that could generate
+a similar error.
 
-VULNERABILITY
--------------
+It seems practical to change s_errors at mount time from EXT4_ERRORS_PANIC
+to EXT4_ERRORS_RO for filesystems mounted by regular users.  The question
+is whether there is a way for the ext4 code to know this at mount time?
 
-libcurl would attempt to resume a TLS session even if the client certificate
-had changed. That is unacceptable since a server by specification is allowed
-to skip the client certificate check on resume, and may instead use the old
-identity which was established by the previous certificate (or no
-certificate).
+Cheers, Andreas
 
-libcurl supports by default the use of TLS session id/ticket to resume
-previous TLS sessions to speed up subsequent TLS handshakes. They are used
-when for any reason an existing TLS connection couldn't be kept alive to make
-the next handshake faster.
+>> The crafted image may be burn onto SD card or USB key to crash a large
+>> panel of linux box.
+>> 
+>> 
+>> [ 929.200197] EXT4-fs error (device loop0): ext4_iget:4058: inode #2: comm
+>> mount: bad extended attribute block 8390656
+>> [ 929.200226] Kernel panic - not syncing: EXT4-fs (device loop0): panic
+>> forced after error
+>> [ 929.200226]
+>> [ 929.200230] CPU: 1 PID: 980 Comm: mount Tainted: G O
+>> 3.18.17-8.pvops.qubes.x86_64 #1
+>> [ 929.200233] 0000000000000000 000000007533690c ffff88000ea07aa8
+>> ffffffff81722191
+>> [ 929.200237] 0000000000000000 ffffffff81a84108 ffff88000ea07b28
+>> ffffffff8171a462
+>> [ 929.200240] ffff880000000010 ffff88000ea07b38 ffff88000ea07ad8
+>> 000000007533690c
+>> [ 929.200244] Call Trace:
+>> [ 929.200249] [<ffffffff81722191>] dump_stack+0x46/0x58
+>> [ 929.200253] [<ffffffff8171a462>] panic+0xd0/0x204
+>> [ 929.200257] [<ffffffff812ae4d6>] ext4_handle_error.part.188+0x96/0xa0
+>> [ 929.200260] [<ffffffff812ae838>] __ext4_error_inode+0xa8/0x180
+>> [ 929.200264] [<ffffffff81292869>] ext4_iget+0x929/0xae0
+>> [ 929.200267] [<ffffffff812b31fb>] ext4_fill_super+0x18db/0x2b60
+>> [ 929.200270] [<ffffffff8120af20>] mount_bdev+0x1b0/0x1f0
+>> [ 929.200273] [<ffffffff812b1920>] ? ext4_calculate_overhead+0x3d0/0x3d0
+>> [ 929.200276] [<ffffffff812a3425>] ext4_mount+0x15/0x20
+>> [ 929.200278] [<ffffffff8120b879>] mount_fs+0x39/0x1b0
+>> [ 929.200282] [<ffffffff811afd95>] ? __alloc_percpu+0x15/0x20
+>> [ 929.200285] [<ffffffff8122754b>] vfs_kern_mount+0x6b/0x110
+>> [ 929.200287] [<ffffffff8122a38c>] do_mount+0x22c/0xb60
+>> [ 929.200290] [<ffffffff811aab96>] ? memdup_user+0x46/0x80
+>> [ 929.200292] [<ffffffff8122b002>] SyS_mount+0xa2/0x110
+>> [ 929.200295] [<ffffffff8172a609>] system_call_fastpath+0x12/0x17
+>> [ 929.200301] Kernel Offset: 0x0 from 0xffffffff81000000 (relocation
+>> range: 0xffffffff80000000-0xffffffff9fffffff)c
+>> 
+>> I cannot attach the PoC (2x2MB too large) nor sending it in plain text
+>> (they are filesystems), so I've uploaded it on this website of free file
+>> sharing ... (sorry for the inconvenient):
+>> poc.ext2 https://1fichier.com/?zbk2gohk8s
+>> poc.ext3 https://1fichier.com/?9r0c8agjfa
+>> 
+>> Can you assign a CVE for this?
+>> Thank for reading and your time.
+>> 
+>> Hugues ANGUELKOV.
+>> 
+>> 
+> --
+> Yves-Alexis
+> 
 
-We are not aware of any exploit of this flaw.
 
-INFO
-----
+Cheers, Andreas
 
-This flaw also affects the curl command line tool.
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-5419 to this issue.
 
-AFFECTED VERSIONS
------------------
 
-This flaw is relevant for all versions of curl and libcurl that support TLS
-and client certificates.
 
-- Affected versions: libcurl 7.1 to and including 7.50.0
-- Not affected versions: libcurl >= 7.50.1
 
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.50.1, TLS session resumption is disabled when a client certificate
-is used so that a subsequent connection attempt to the same server cannot risk
-getting a previously authenticated session resumed.
-
-A [patch for CVE-2016-5419](https://curl.haxx.se/CVE-2016-5419.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.50.1
-
-  B - Apply the patch to your version and rebuild
-
-  C - Set `CURLOPT_SSL_SESSIONID_CACHE` to 0L when using client certificates
-
-TIME LINE
----------
-
-It was first reported to the curl project in April 2016 by Bru Rom. We
-contacted distros@...nwall on July 31.
-
-libcurl 7.50.1 was released on August 3 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Contributions by Eric Rescorla and Ray Satiro. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
