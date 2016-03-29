@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2285" "Tuesday" "10" "October" "2017" "19:45:52" "+0200" "chbi@chbi.eu" "chbi@chbi.eu" "<508c1572-a532-24d3-7dd0-c8e2de74d56f@chbi.eu>" "108" "Re: [oss-security] Several Privilege Escalation issues in Kanboard <= 1.0.46" nil nil nil "10" "2017101017:45:52" "[oss-security] Several Privilege Escalation issues in Kanboard <= 1.0.46" (number mark "U       chbi@chbi.eu Oct 10  108/2285  " thread-indent "\"Re: [oss-security] Several Privilege Escalation issues in Kanboard <= 1.0.46\"\n") "<084a2018-ecd5-186d-dba2-0cc051001019@chbi.eu>" ("<084a2018-ecd5-186d-dba2-0cc051001019@chbi.eu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2820" "Tuesday" "29" "March" "2016" "19:24:25" "+0200" "Hugues ANGUELKOV" "hugues.anguelkov@etu.univ-nantes.fr" "<f4df42b35dd9a6c8c6851eba66b2b3f1.squirrel@webmail-etu.univ-nantes.fr>" "62" "[oss-security] CVE Request - Linux kernel (multiple versions) ext2/ext3  filesystem DoS" "^Cc:" nil nil "3" "2016032917:24:25" "[oss-security] CVE Request - Linux kernel (multiple versions) ext2/ext3 filesystem DoS" (number mark "        hugues.angue Mar 29   62/2820  " thread-indent "\"[oss-security] CVE Request - Linux kernel (multiple versions) ext2/ext3  filesystem DoS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 25954 invoked by uid 550); 10 Oct 2017 17:46:13 -0000
+Received: (qmail 16020 invoked by uid 550); 29 Mar 2016 17:25:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,128 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25936 invoked from network); 10 Oct 2017 17:46:12 -0000
-To: oss-security@lists.openwall.com
-References: <084a2018-ecd5-186d-dba2-0cc051001019@chbi.eu>
-From: chbi@chbi.eu
-Message-ID: <508c1572-a532-24d3-7dd0-c8e2de74d56f@chbi.eu>
-Date: Tue, 10 Oct 2017 19:45:52 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+Received: (qmail 15792 invoked from network); 29 Mar 2016 17:24:37 -0000
+X-Virus-Scanned: Debian amavisd-new at smtp2
+Message-ID: <f4df42b35dd9a6c8c6851eba66b2b3f1.squirrel@webmail-etu.univ-nantes.fr>
+User-Agent: SquirrelMail/1.4.17
 MIME-Version: 1.0
-In-Reply-To: <084a2018-ecd5-186d-dba2-0cc051001019@chbi.eu>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="mn5ptxrmJhIJT6st0Ir0cgOq2oM1xAmqu"
-Subject: Re: [oss-security] Several Privilege Escalation issues in Kanboard <=
- 1.0.46
-
---mn5ptxrmJhIJT6st0Ir0cgOq2oM1xAmqu
-Content-Type: multipart/mixed; boundary="kCLr5m8PxmwT0pgUPH3wcEtSNPJAnBcbv";
- protected-headers="v1"
-From: chbi@chbi.eu
+Content-Type: text/plain;charset=iso-8859-1
+Content-Transfer-Encoding: 8bit
+X-Priority: 3 (Normal)
+Importance: Normal
+Cc: cve-assign@mitre.org
+Date: Tue, 29 Mar 2016 19:24:25 +0200 (CEST)
+From: "Hugues ANGUELKOV" <hugues.anguelkov@etu.univ-nantes.fr>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request - Linux kernel (multiple versions) ext2/ext3 
+     filesystem DoS
 To: oss-security@lists.openwall.com
-Message-ID: <508c1572-a532-24d3-7dd0-c8e2de74d56f@chbi.eu>
-Subject: Re: [oss-security] Several Privilege Escalation issues in Kanboard <=
- 1.0.46
-References: <084a2018-ecd5-186d-dba2-0cc051001019@chbi.eu>
-In-Reply-To: <084a2018-ecd5-186d-dba2-0cc051001019@chbi.eu>
 
---kCLr5m8PxmwT0pgUPH3wcEtSNPJAnBcbv
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+Hello,
 
-
-> 1)
-CVE-2017-15199
-
-> 2)
-CVE-2017-15200
-
-> 3)
-CVE-2017-15202
-
-> 4)
-CVE-2017-15197
-
-> 5)
-CVE-2017-15198
-
-> 6)
-CVE-2017-15195
-
-> 7)
-CVE-2017-15201
-
-> 8)
-CVE-2017-15204
-
-> 9)
-CVE-2017-15196
-
-> 10)
-CVE-2017-15203
-
-> 11)
-CVE-2017-15212
-
-> 12)
-CVE-2017-15208
-
-> 13)
-CVE-2017-15207
-
-> 14)
-CVE-2017-15211
-
-> 15)
-CVE-2017-15206
-
-> 16)
-CVE-2017-15205
-
-> 17)
-CVE-2017-15210
-
-> 18)
-CVE-2017-15209
+The linux kernel is prone to a Denial of service when mounting specially
+crafted ext2/ext3 (possibly ext4) filesystems. This occurs in the function
+ext4_handle_error who call the panic function on precise circumstance.
+This was tested on severals linux kernel version: 3.10, 3.18, 3.19, on
+real hardware and Xen DomU PV & HVM (the crash report attached is from a
+Fedora 3.18 PV DomU), from different distribution release: Ubuntu, CentOS,
+Fedora, Linux Mint, QubesOS.
+This a low security impact bug, because generally only root can mount
+image, however on Desktop (or possibly server?) system configured with
+automount the bug is easily triggable (think of android smartphone?Haven't
+test yet).
+The crafted image may be burn onto SD card or USB key to crash a large
+panel of linux box.
 
 
-https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=3Dkanboard
+[ 929.200197] EXT4-fs error (device loop0): ext4_iget:4058: inode #2: comm
+mount: bad extended attribute block 8390656
+[ 929.200226] Kernel panic - not syncing: EXT4-fs (device loop0): panic
+forced after error
+[ 929.200226]
+[ 929.200230] CPU: 1 PID: 980 Comm: mount Tainted: G O
+3.18.17-8.pvops.qubes.x86_64 #1
+[ 929.200233] 0000000000000000 000000007533690c ffff88000ea07aa8
+ffffffff81722191
+[ 929.200237] 0000000000000000 ffffffff81a84108 ffff88000ea07b28
+ffffffff8171a462
+[ 929.200240] ffff880000000010 ffff88000ea07b38 ffff88000ea07ad8
+000000007533690c
+[ 929.200244] Call Trace:
+[ 929.200249] [<ffffffff81722191>] dump_stack+0x46/0x58
+[ 929.200253] [<ffffffff8171a462>] panic+0xd0/0x204
+[ 929.200257] [<ffffffff812ae4d6>] ext4_handle_error.part.188+0x96/0xa0
+[ 929.200260] [<ffffffff812ae838>] __ext4_error_inode+0xa8/0x180
+[ 929.200264] [<ffffffff81292869>] ext4_iget+0x929/0xae0
+[ 929.200267] [<ffffffff812b31fb>] ext4_fill_super+0x18db/0x2b60
+[ 929.200270] [<ffffffff8120af20>] mount_bdev+0x1b0/0x1f0
+[ 929.200273] [<ffffffff812b1920>] ? ext4_calculate_overhead+0x3d0/0x3d0
+[ 929.200276] [<ffffffff812a3425>] ext4_mount+0x15/0x20
+[ 929.200278] [<ffffffff8120b879>] mount_fs+0x39/0x1b0
+[ 929.200282] [<ffffffff811afd95>] ? __alloc_percpu+0x15/0x20
+[ 929.200285] [<ffffffff8122754b>] vfs_kern_mount+0x6b/0x110
+[ 929.200287] [<ffffffff8122a38c>] do_mount+0x22c/0xb60
+[ 929.200290] [<ffffffff811aab96>] ? memdup_user+0x46/0x80
+[ 929.200292] [<ffffffff8122b002>] SyS_mount+0xa2/0x110
+[ 929.200295] [<ffffffff8172a609>] system_call_fastpath+0x12/0x17
+[ 929.200301] Kernel Offset: 0x0 from 0xffffffff81000000 (relocation
+range: 0xffffffff80000000-0xffffffff9fffffff)c
+
+I cannot attach the PoC (2x2MB too large) nor sending it in plain text
+(they are filesystems), so I've uploaded it on this website of free file
+sharing ... (sorry for the inconvenient):
+poc.ext2 https://1fichier.com/?zbk2gohk8s
+poc.ext3 https://1fichier.com/?9r0c8agjfa
+
+Can you assign a CVE for this?
+Thank for reading and your time.
+
+Hugues ANGUELKOV.
 
 
---=20
-chbi
-https://chbi.eu
-
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
-
-
---kCLr5m8PxmwT0pgUPH3wcEtSNPJAnBcbv--
-
---mn5ptxrmJhIJT6st0Ir0cgOq2oM1xAmqu
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEPemRh0vp6uY8qNwgunuT+ZA3rn4FAlndB1cACgkQunuT+ZA3
-rn6VkhAAmUSSADzWPEgXB5c9d7WhaqK3eMM6J25B9h7FHULM3LfAITtazSB8jWp1
-1Xq5SApVmaFPKxPwAhrBZC97i4FenDAXS8sPuT4gM8VYo55T6fSx6mMYZA6/goIq
-pabv9J4j9YKkMyvS3L/fm6Q8mSmbSct9yjuORRCgeykuAoY1xz32dZVfYnkdsrRE
-VmyPN61GVGse94GJrQ2tWaSkpAqYwUTt7iOXi2GQCyG6DchM4IyUkFiW5/AzuHsJ
-h+ixG90dbrAMJ4VRLvkbYTmjC+eAMHbhZ78C6FDaC3Dbc1VgL0gWd9hkKwcApprq
-Y7TQHyhIjcL5JyKG+o7cIQtTzATIZyQ6BQTWvIr0BMMfv8/1BLh3fMvciwqGtF8b
-/1mYJqpOWvnwR1VVDf36cIwHlAVOVdPD7txFVId7Fc1xdaeITSMohdtXiSKmzF0k
-yHgPYWk05u2whp6OFuK8c+bxEGczU21x66WaYplaNV1JHwGhT2xgyQrulnXj4VDr
-03AtVafj0xcYX/sDOvRbFcjrOHNIqZ4l7sSASG6qnshEftg9vzFndlCa4QdfKQv6
-eiVih0KXSYg+r/nilihWUz27EMnEJvTE25cbh8sCk378229PijNvioXWlEyPyIRn
-iVvwEqAbA+IofhtpBRJy/HMWbJRL5+VyKJ1xzNBy6Yxrg74UcA8=
-=q0aG
------END PGP SIGNATURE-----
-
---mn5ptxrmJhIJT6st0Ir0cgOq2oM1xAmqu--
