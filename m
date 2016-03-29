@@ -1,96 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/05/8
-Message-Id: <20160905224519.95D836C0FBC@smtpvmsrv1.mitre.org>
-Date: Mon,  5 Sep 2016 18:45:19 -0400 (EDT)
-From: cve-assign@...re.org
-To: anarcat@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE ID request: certificate spoofing through crafted SASL message in inspircd, charybdis
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/29/3
+Message-ID: <20160329150003.GA11169@eldamar.local>
+Date: Tue, 29 Mar 2016 17:00:03 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: Partial SMAP bypass on 64-bit Linux kernels
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> inspircd published 2.0.23 that fixes an issue with SASL
-> authentication. The details are here:
+On Fri, Feb 26, 2016 at 12:28:23PM -0800, Andy Lutomirski wrote:
+> Hi all-
 > 
-> http://www.inspircd.org/2016/09/03/v2023-released.html
+> Those of you using 64-bit Linux kernels on SMAP-capable systems (which
+> are still very rare in the server space) with ia32 emulation enabled
+> will want to backport:
 > 
-> All versions are affected.
+> https://git.kernel.org/cgit/linux/kernel/git/tip/tip.git/commit/?h=x86/urgent&id=3d44d51bd339766f0178f0cf2e8d048b4a4872aa
+> 
+> That patch fixes a bug that exposed a fairly large kernel code surface
+> to a straightforward SMAP bypass.
+> 
+> Credit to Brian Gerst who noticed the bug.
+> 
+> This bug is present in all kernels from 3.10 on AFAICT.  Kernels
+> before 3.10 don't support SMAP in the first place.  32-bit kernels are
+> not affected (but why would you be running a 32-bit kernel on
+> SMAP-capable hardware in the first place?).
 
->> This release fixes a serious security vulnerability in m_sasl in
->> combination with any services that support SASL EXTERNAL. To be
->> vulnerable you must have m_sasl loaded, and have services which
->> support SASL EXTERNAL authentication.
->> 
->> This vulnerability allows any attacker to spoof certificate
->> fingerprints via crafted SASL messages to the IRCd. This allows any
->> user to login as any other user that they know the certificate
->> fingerprint of, and that user has services configured to accept SASL
->> EXTERNAL login requests for.
+@MITRE CVE assignment team: Would it make sense to have a CVE id
+assigned for this issue for better trackability? If so can you assign
+one?
 
->> https://github.com/inspircd/inspircd/commit/74fafb7f11b06747f69f182ad5e3769b665eea7a
-
->> https://www.irc.wiki/InspIRCd
-
->> InspIRCd is an IRC daemon written entirely from scratch, it is one
->> of the few IRC daemons to be written in C++
-
-Use CVE-2016-7142 for this issue only in the InspIRCd codebase.
-
-
->> This bug appears more widespread than just InspIRCd, and seems to
->> affect most or all other implementations of SASL EXTERNAL, including
->> Charybdis and UnrealIRCd.
-
-
-> It seems to also affect Charybdis, which fixed the issue in the
-> upcoming 3.5.3 release:
->
-> https://github.com/charybdis-ircd/charybdis/commit/818a3fda944b26d4814132cee14cfda4ea4aa824
-
-Use CVE-2016-7143 for this issue only in the Charybdis codebase.
-
-
->> https://forums.unrealircd.org/viewtopic.php?f=1&t=8588
->> 
->> Security: SASL security issue (UnrealIRCd 4.0.6 & 3.2.10.7 released)
->> 
->> A security issue was detected in a number of IRCd's, including
->> UnrealIRCd, regarding the way SASL is implemented.
->> 
->> An attacker can send an SSL fingerprint of his choice to services when
->> doing SASL authentication. An attacker can compromise a services
->> account if the user has an SSL fingerprint stored in services.
->> 
->> https://github.com/unrealircd/unrealircd/commit/f473e355e1dc422c4f019dbf86bc50ba1a34a766
-
-Use CVE-2016-7144 for this issue only in the UnrealIRCd codebase.
-
-(We realize that the file is m_sasl.c, the function is m_authenticate,
-and the array is parv in both the Charybdis case and the UnrealIRCd
-case, but we decided not to try to share a CVE ID between these two
-products.)
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXzfUcAAoJEHb/MwWLVhi2+TUQAJiZ9E61fr6h/APTcz7CWDAJ
-Hi1ixYOqZAVnGNevJ2Q7+kmg9h872ftwX7euCmMoLFBHPILaBhELbbnw5N1wa09u
-PfrQFf/3D0BwrKd50Pnu/N5+5PRJ6Oy7Oa5aaf1vdeQbbaQbO2P6YV5MrcB/NJoe
-Lh5GoLM3oqGS5qde+ep3RKLeOixu2KqopaP9JAH1e2a25m0Wva92tQVYqgGIxROa
-PPiRRRXFDbm8j9VZ4D4VBHlJhdjwjw85OT/WNxXx3wBbeJwdtI+1puS5OEhQFGsl
-Eh993vGHyTCvw2obVn2YnIng1qHfkdfe5lxjJBbE5/a6yFmNQAS/zUURBL01DPlI
-uhWYablVV9Vv8++gaezGtJd1OI60Kl0vPch44yzvDOeI5sQHjQNMMwQ2oe+gAlcv
-grrkVqtKd2hkNBh1NATA9MoTIErYZsWZCddGPo50IqHyqaZ5eyJaj0JELOF8E7q/
-2oe0UWuXcvcD+8oAZvbEVJuBUI+ZV+d6wcL4tEOcEG4gL5qDh0hOi8aY/u5zi+fb
-gLcjoBW9TzlGZy3f0CZ2N0s3v2xFai19JdSLzRM+TXzFHf4PQ5MoexWgk10UPdsk
-9OJXqTl0LqEMqTHPOLXw08mhgWaU55vRI3wCjnUyTY0GdmUZpLy3R8yWCJk5RUmy
-g5+Do/FYzRkh/k/3L73U
-=c9S9
------END PGP SIGNATURE-----
+Regards,
+Salvatore
