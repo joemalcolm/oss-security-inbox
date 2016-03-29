@@ -1,4 +1,9 @@
-Received: (qmail 24394 invoked by uid 550); 4 May 2026 22:33:29 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5281" "Tuesday" "29" "March" "2016" "16:56:11" "-0600" "Andreas Dilger" "adilger@dilger.ca" "<57514A3C-DBAD-4E5E-98EA-23E490629C02@dilger.ca>" "134" "Re: [oss-security] CVE Request - Linux kernel (multiple versions) ext2/ext3  filesystem DoS" "^Cc:" nil nil "3" "2016032922:56:11" "[oss-security] CVE Request - Linux kernel (multiple versions) ext2/ext3 filesystem DoS" (number mark "        adilger@dilg Mar 29  134/5281  " thread-indent "\"Re: [oss-security] CVE Request - Linux kernel (multiple versions) ext2/ext3  filesystem DoS\"\n") "<1459286067.2596.18.camel@debian.org>" ("<f4df42b35dd9a6c8c6851eba66b2b3f1.squirrel@webmail-etu.univ-nantes.fr>" "<1459286067.2596.18.camel@debian.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 9501 invoked by uid 550); 29 Mar 2016 23:03:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,190 +11,179 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 17796 invoked from network); 4 May 2026 19:51:38 -0000
+Received: (qmail 5717 invoked from network); 29 Mar 2016 22:56:27 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=redcoat-dev.20251104.gappssmtp.com; s=20251104; t=1777924289; x=1778529089; darn=lists.openwall.com;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4CKNbfieHxVx9IDEZYPNJ1vLxESmS8Bhp8Irkbe//co=;
-        b=y2EwdUoXB2PsdWiYBU+nvo7a8RKAB10qHQg4rB6QAsxajwAfpiixumkt1s0LyTG+rD
-         2pO9pMFURElzS0aUgSPquLwk+cKGvZbDMElhT6EziVj5l2HorwqFI79EbS7tWlVLhE93
-         EyQDB0Xp6z/cXCJzcOgMegT/2zOTw5GLc/22mGVBPYcR2eJdDO1/ui2pXP1oRxGp3vTM
-         eL1G7i93lOLpL6uII5qFjwn26MQ5wFDIepXbDRRctImEyrtyyHvdmtzkWL1mrIx+uKUE
-         HFmpvLUWN9+S/9/IUo91/BXoToIpEDiQRkC7Uf51NSqhFPlxvQ80uebi554bCZydC721
-         itpQ==
+        d=dilger-ca.20150623.gappssmtp.com; s=20150623;
+        h=subject:mime-version:from:in-reply-to:date:cc:message-id:references
+         :to;
+        bh=bdRfEubjsok0K6WmfIZHEbowBsi+sYxyJJyyTXFrDAA=;
+        b=ECWHuXj0P3Htpxx5JNFJhleFDp+aGD7HiCLzjEPREjWcvSYx/RI2dX68ZNwL4ptAQj
+         ej6b5HBP7TrawU+dd+giKsxotyhfOulI8Hjtk5oynx1Ys9C2BhnuwpOPTWRg0drjg0vB
+         QCdCbheAylkK1CSKjkkSZ9YFwtMaEmvGMwXe4n0VtrXMwWCCLQOxICmWVMsy8ZwIGvj5
+         LEOq+8ghKDQUSIcN8zapS6F9hi11Z/VY+rM53/tpbaA0jODRd1YWrPEl+JvY6IVkcE6o
+         7U4osxHMi4gMFjgJDRdMOty97Fr5Br9CAS+mU4TFiv9854Wq4xGrjcJZ1k66UUt3l7tU
+         6UEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777924289; x=1778529089;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4CKNbfieHxVx9IDEZYPNJ1vLxESmS8Bhp8Irkbe//co=;
-        b=buYQsVgfFALe34K2NBaIi8YxPFt5Gt6cG6C7s836Y474TDjiKy8vDaymR/6Jj6/4QK
-         YsGJnUS4yP+2yWLyNVDlCh0oOSMM64Z4Q16Fr9eZJcmn/CO6fUAH5gUPqMIRfvuoEFlT
-         d3urRmLXBK8A5qqFCAG0BZWH7zNN0f6+qkJn/1vooqPxQ4xEGdeoX7DpKVbXPrwRnjvE
-         6TxvW7XVProuWai8NkKb3N+Afv+xcli0F4XSVrsJmFN4jG0B4uB0FUPwQXxlDPiMpEb+
-         83bTXEPQX5R3wfufWWhGxJLecQzT/Ci2RYo2F/j7QWGCfNwwJK/LHWZhmSNmHOyC6VTs
-         ArdQ==
-X-Gm-Message-State: AOJu0Ywb7bgzkFS65apqIKImycSZ8YD4RHbpEYoTUnvMgnqqIxjyZKI9
-	ix5FIwE6VyAit4i0/+bkvxsc0nF6tzW2GeRAmajp9Tf8NRFI9aU5Dyy0FUYYOsXCzg7b7nqa7nP
-	v37WAb/s=
-X-Gm-Gg: AeBDievE4qgArlN51dMTIj73b7npQIU6X+qE82hW1n881IANrfncLfrk+v7ThbbX44E
-	264DZLT6JcV5T+fmB90RcbdfsS+LFnG0MkSO4XJrUKHH9LdeSSNZIOzYdH4C3Bn+7+SLaBXyk5K
-	e/tTqQeoNFhDcY/IV4Uk0vHfN5AYMt+/jBWj9FnxGpCXiG7Dp3K5jlnI/k4alSuBYe1owZDWM0s
-	Wj2KTA9+P/oIvA3zayrSuMTRU/MdcwobjDjys2NblXb9e3AZGOWYA9ivEyMME1ymlHsdtOj/uPq
-	YvlCj6FfjUor4k5EOtMQeM42qc88Pa94ZDHLY/sLnc0Tsw5LdwQwHW0EMJRBoCuE0HBEQWxTghc
-	wxSbGOOCqymrZ7ZaoQ6jopeJP/5PyPzE/tWQ0xHZewIN6JRge2QX9PqPY2RmquoAQs8fCt6EDWS
-	/PA9v464oUzQimmLLLihtJU9X/Q9FhrNKeaerwyxEpMLMsB7VxOewz+Jtnecx5Y/w=
-X-Received: by 2002:a05:600c:a11:b0:48a:53ea:1408 with SMTP id 5b1f17b1804b1-48d187d95b8mr142695e9.8.1777924288419;
-        Mon, 04 May 2026 12:51:28 -0700 (PDT)
-Mime-Version: 1.0
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:mime-version:from:in-reply-to:date:cc
+         :message-id:references:to;
+        bh=bdRfEubjsok0K6WmfIZHEbowBsi+sYxyJJyyTXFrDAA=;
+        b=KLY0lvVm4zJxNa9x4GTrRzd0yAi/903/0+tOoWeF7WofOb9ia86wMtWtF7TfE2rO/M
+         IPRb1vbh+kQfZvxCel2uRDH/7XlSKegYQnuBP6PCO7SS23S8qWvSfzLMIkeRVVwN/ggB
+         nIbbXKC9BYufRv9NILjghvTXWVjXZEwbkVUG+bCxbKnnEtytYfi0fFKKeAlbZhoQh1OM
+         QooBZ9t1ihDSIjpxe+1+l/4TO4Dj48UZNJUYiS/5JSCtXvvWaxgwwRpw3Yc1sECaaCei
+         YZ8iC4Ys+he0UnNNkgKb8A+Sgo7vj9rjt1XdqHtnKgWV67qbuBI3k7bvM3u2DHDQfsMg
+         Y9bA==
+X-Gm-Message-State: AD7BkJLn33xvc2kQ72eBhGTAybxmruhxNUOna88md4ei8xZLHH8MBbkvCkypMoxrz0TnoA==
+X-Received: by 10.107.3.34 with SMTP id 34mr5880590iod.17.1459292176119;
+        Tue, 29 Mar 2016 15:56:16 -0700 (PDT)
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Content-Type: multipart/signed; boundary="Apple-Mail=_F4A8B62D-5607-473B-AD03-C48DC1434B0F"; protocol="application/pgp-signature"; micalg=pgp-sha256
+X-Pgp-Agent: GPGMail 2.6b2
+In-Reply-To: <1459286067.2596.18.camel@debian.org>
+Message-Id: <57514A3C-DBAD-4E5E-98EA-23E490629C02@dilger.ca>
+References: <f4df42b35dd9a6c8c6851eba66b2b3f1.squirrel@webmail-etu.univ-nantes.fr> <1459286067.2596.18.camel@debian.org>
+X-Mailer: Apple Mail (2.3124)
+Cc: oss-security@lists.openwall.com,
+ Theodore Tso <tytso@google.com>,
+ linux-ext4@vger.kernel.org
+Date: Tue, 29 Mar 2016 16:56:11 -0600
+From: Andreas Dilger <adilger@dilger.ca>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE Request - Linux kernel (multiple versions) ext2/ext3  filesystem DoS
+To: Yves-Alexis Perez <corsac@debian.org>
+
+--Apple-Mail=_F4A8B62D-5607-473B-AD03-C48DC1434B0F
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 04 May 2026 20:51:27 +0100
-Message-Id: <DIA5K5Z7Z1L3.LBWL4N5QTAFI@redcoat.dev>
-From: "Emily Shepherd" <emily@redcoat.dev>
-To: <oss-security@lists.openwall.com>
-Cc: "Sam James" <sam@gentoo.org>, "Taeyang Lee" <0wn@theori.io>, "Brad
- Spengler" <spender@grsecurity.net>, "Solar Designer" <solar@openwall.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <afJorKIje4O6dXbH@netmeister.org> <87v7d4b7a3.fsf@gentoo.org>
- <87jytkb2gv.fsf@gentoo.org> <878qa0b1o9.fsf@gentoo.org>
- <2026050453-gamma-stuffing-8606@gregkh>
- <CACHV8XoX5vtjH3d1KKhQJ5_fr8qBRG7pnWFsLxw5UzngeoeA=Q@mail.gmail.com>
- <2026050435-c08cb4e9297e204898fa6911@gregkh>
-In-Reply-To: <2026050435-c08cb4e9297e204898fa6911@gregkh>
-Subject: Re: [oss-security] Precise disclosure contents for copyfail (Re:
- [oss-security] CVE-2026-31431: CopyFail: linux local privilege scalation)
+Content-Type: text/plain;
+	charset=utf-8
 
-On Mon May 4, 2026 at 6:38 PM BST, Greg KH wrote:
-> Once it lands in Linus's tree, our role is over.
+On Mar 29, 2016, at 3:14 PM, Yves-Alexis Perez <corsac@debian.org> wrote:
+>=20
+> [dropping MITRE from CC since it's not about the CVE]
+> [adding ext and Theodore to CC]
+>=20
+> On mar., 2016-03-29 at 19:24 +0200, Hugues ANGUELKOV wrote:
+>> Hello,
+>>=20
+>> The linux kernel is prone to a Denial of service when mounting specially
+>> crafted ext2/ext3 (possibly ext4) filesystems. This occurs in the functi=
+on
+>> ext4_handle_error who call the panic function on precise circumstance.
+>=20
+> Did you contact the upstream maintainers about this? I'm adding them just=
+ in
+> case they're not already aware of that=E2=80=A6
+>=20
+>> This was tested on severals linux kernel version: 3.10, 3.18, 3.19, on
+>> real hardware and Xen DomU PV & HVM (the crash report attached is from a
+>> Fedora 3.18 PV DomU), from different distribution release: Ubuntu, CentO=
+S,
+>> Fedora, Linux Mint, QubesOS.
+>> This a low security impact bug, because generally only root can mount
+>> image, however on Desktop (or possibly server?) system configured with
+>> automount the bug is easily triggable (think of android smartphone? Have=
+n't
+>> test yet).
 
-I would - respectfully - disagree. To clarify, I am aware that that is=20
-the process as defined currently, but I am not sure that is the best=20
-that process could be. You asked in a previous message what could have=20
-been done better, so assuming that was meant sincerely, I'll provide=20
-some thoughts.
+It seems that the important point here is that the filesystem has
+"s_errors=3DEXT4_ERRORS_PANIC" set in the superblock?  I don't think
+the actual corruption that triggered the ext4_error() call is important,
+since there are any number of other failure cases that could generate
+a similar error.
 
-The first hurdle a reporter must jump through is figuring out who to=20
-actually report to - the process as defined [1] suggests it should be=20
-the maintainer first, with the security team CC'd. There is also a handy=20
-script provided to figure out the correct maintainer, and an example=20
-given.
+It seems practical to change s_errors at mount time from EXT4_ERRORS_PANIC
+to EXT4_ERRORS_RO for filesystems mounted by regular users.  The question
+is whether there is a way for the ext4 code to know this at mount time?
 
-However, the example shows the script being called with a whole load of=20
-flags (`--no-l`, `--no-r`, etc) without description. These flags are not=20
-explained, or at the very least the importance of `--no-l` is not=20
-stressed. As this flag excludes mailing lists from the addresses the=20
-script will give back it is, presumably, essential to use when=20
-determining who to report security issues to.
+Cheers, Andreas
 
-I would also disagree with the rather casual assertion of the=20
-documentation that:
+>> The crafted image may be burn onto SD card or USB key to crash a large
+>> panel of linux box.
+>>=20
+>>=20
+>> [ 929.200197] EXT4-fs error (device loop0): ext4_iget:4058: inode #2: co=
+mm
+>> mount: bad extended attribute block 8390656
+>> [ 929.200226] Kernel panic - not syncing: EXT4-fs (device loop0): panic
+>> forced after error
+>> [ 929.200226]
+>> [ 929.200230] CPU: 1 PID: 980 Comm: mount Tainted: G O
+>> 3.18.17-8.pvops.qubes.x86_64 #1
+>> [ 929.200233] 0000000000000000 000000007533690c ffff88000ea07aa8
+>> ffffffff81722191
+>> [ 929.200237] 0000000000000000 ffffffff81a84108 ffff88000ea07b28
+>> ffffffff8171a462
+>> [ 929.200240] ffff880000000010 ffff88000ea07b38 ffff88000ea07ad8
+>> 000000007533690c
+>> [ 929.200244] Call Trace:
+>> [ 929.200249] [<ffffffff81722191>] dump_stack+0x46/0x58
+>> [ 929.200253] [<ffffffff8171a462>] panic+0xd0/0x204
+>> [ 929.200257] [<ffffffff812ae4d6>] ext4_handle_error.part.188+0x96/0xa0
+>> [ 929.200260] [<ffffffff812ae838>] __ext4_error_inode+0xa8/0x180
+>> [ 929.200264] [<ffffffff81292869>] ext4_iget+0x929/0xae0
+>> [ 929.200267] [<ffffffff812b31fb>] ext4_fill_super+0x18db/0x2b60
+>> [ 929.200270] [<ffffffff8120af20>] mount_bdev+0x1b0/0x1f0
+>> [ 929.200273] [<ffffffff812b1920>] ? ext4_calculate_overhead+0x3d0/0x3d0
+>> [ 929.200276] [<ffffffff812a3425>] ext4_mount+0x15/0x20
+>> [ 929.200278] [<ffffffff8120b879>] mount_fs+0x39/0x1b0
+>> [ 929.200282] [<ffffffff811afd95>] ? __alloc_percpu+0x15/0x20
+>> [ 929.200285] [<ffffffff8122754b>] vfs_kern_mount+0x6b/0x110
+>> [ 929.200287] [<ffffffff8122a38c>] do_mount+0x22c/0xb60
+>> [ 929.200290] [<ffffffff811aab96>] ? memdup_user+0x46/0x80
+>> [ 929.200292] [<ffffffff8122b002>] SyS_mount+0xa2/0x110
+>> [ 929.200295] [<ffffffff8172a609>] system_call_fastpath+0x12/0x17
+>> [ 929.200301] Kernel Offset: 0x0 from 0xffffffff81000000 (relocation
+>> range: 0xffffffff80000000-0xffffffff9fffffff)c
+>>=20
+>> I cannot attach the PoC (2x2MB too large) nor sending it in plain text
+>> (they are filesystems), so I've uploaded it on this website of free file
+>> sharing ... (sorry for the inconvenient):
+>> poc.ext2 https://1fichier.com/?zbk2gohk8s
+>> poc.ext3 https://1fichier.com/?9r0c8agjfa
+>>=20
+>> Can you assign a CVE for this?
+>> Thank for reading and your time.
+>>=20
+>> Hugues ANGUELKOV.
+>>=20
+>>=20
+> --
+> Yves-Alexis
+>=20
 
-> In the Linux kernel, all official maintainers are trusted, so=20
-> the consequences of accidentally including the wrong maintainer are=20
-> essentially a bit more noise for that person, i.e. nothing dramatic.
 
-Most other organisations treat security reports as strictly and=20
-absolutely need-to-know, even among trusted members of a team. Compare,=20
-for example, this stance with that of the "linux-distros" mailing list=20
-[2], which is far stronger:
+Cheers, Andreas
 
-> Aside from your participation in discussions with the reporter and on=20
-> the (linux-)distros lists (including possibly continuing to CC other=20
-> prior recipients of the information), the information you receive=20
-> through the (linux-)distros lists must not be made public, shared, nor=20
-> even hinted at anywhere beyond the need-to-know within your distro's=20
-> team except with the reporter's explicit approval, until the agreed=20
-> upon public disclosure date/time or substantially complete publication=20
-> by others. Neither you nor others you inform may use the information=20
-> for anything other than getting the issue fixed for your distro's=20
-> users and, only in rare extreme cases, for deployment of maximally=20
-> non-revealing changes to maintain security of your distro's=20
-> infrastructure most essential to the distro users' security in face of=20
-> the security issue being dealt with. The need-to-know condition is met=20
-> only if the person needs to participate in one of these two=20
-> activities.=20
 
-The conclusion I must reach, therefore, is it would be more secure if=20
-the process were simplified to *all* requests going to the security team=20
-address only, who then take responsibility for triaging and engaging the=20
-appropriate people.
 
-The submission process also places an extra-ordinarily high burden on=20
-the reporter, rather than the security team itself, to coordinate an=20
-appropriate response to bugs. As the process makes clear, the choice of=20
-when - or indeed if - to even inform linux-distros of an issue is left=20
-entirely up to the reporter, with a recommendation that they not be told=20
-at all until a fix is ready. It is, presumably, also the reporter's=20
-responsibility to monitor for a fix becoming ready.
 
-The process also states:
 
-> DO NOT contact the "linux-distros" mailing list UNTIL... you have read=20
-> the distros wiki page above and you fully understand the requirements=20
-> that contacting =E2=80=9Clinux-distros=E2=80=9D will impose on you and th=
-e kernel=20
-> community.
 
-Which is about as ominous and off-putting a statement that it would turn=20
-many organisations away from meaningfully engaging in the process at=20
-all.
+--Apple-Mail=_F4A8B62D-5607-473B-AD03-C48DC1434B0F
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
 
-The process also suggests that a CVE won't even be assigned for an issue=20
-unless the reporter - once again - takes the initiative for requesting=20
-one:
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - http://gpgtools.org
 
-> If a reporter wishes to have a CVE identifier assigned for a confirmed=20
-> issue, they can contact the kernel CVE assignment team to obtain one.
+iQIVAwUBVvsIDHKl2rkXzB/gAQhiaw//cakn6bzIj8DPGH4rY+H4dAcAOcsVySJH
+2enkXEdzXCHsNpTaWaS37e3n/7pbT1Z7uBt6bNbo0HX6ElwphSy/mntAYJFfL0M7
+nejcGjwdLuguT67HRv6JCB1KH7JqFbRbMnnFHEZqj5g8t2FoRHVi0weB9OBsFhDc
+IjYuW9icnAESglrkwRoXB2+3BVkokF3J4hSrh0lVPVndgs4LIDpq2Dh6ZvRJDb7h
+x/MlxjjfUgGQbIu7qj6BoSrfwpW6C/xV/eMrq+nwo9idq3dR99jl7h4rROr70yLP
+4SSe6pxK3ssQmpiMA/7oW+GorLNS9C7u6YZPzysP/gksIrKQD5KLtxH9LjMXTQtY
+LNa+jc2VIiAG+bRco95DWkwJjsmf0HFht7wovQ9wKewLDDBjKS5s3lyT65sRo7g/
+otKiLPOa3ASua7agFcNUsMAIGS12vWycfXHY75HCUcZghYuOwBYxbb2KxBuNFIFQ
+cGrkiY/Awy4wKALsS3k4lqWHGcN3isSJ7VbOGzqm4LrYo7shIEFcUVlVqfaR06HT
+lDqXtrTK6ncXkHEHwUYaFwP70ucxRGtk/OhO3mtZNyfflosJyxPuQl/Krbk6BTwF
+hnKiuZDIwUUBvxns5kaBGcazlbHClyuc86mNXpElMIndaU5j4z0pScxllrJmLnHR
+e6XjV1o70AQ=
+=7tcj
+-----END PGP SIGNATURE-----
 
-None of this is normal - why the Linux security team and CNA team even=20
-talking amongst themselves internally? Why is it an external party's=20
-job to coordinate that? The reality is the team best suited to knowing=20
-how, and being subtly trustworthy, to co-ordinate security responses is=20
-almost always the team within the project itself, not the good Samaritan=20
-who did the reporting.
-
-Finally the CVEs themselves; their descriptions are - frankly -=20
-appalling. The CVE description in this case was:
-
-> In the Linux kernel, the following vulnerability has been resolved:
->
-> crypto: algif_aead - Revert to operating out-of-place
->
-> This mostly reverts commit 72548b093ee3 except for the copying of
-> the associated data.
->
-> There is no benefit in operating in-place in algif_aead since the
-> source and destination come from different mappings. Get rid of
-> all the complexity added for in-place operation and just copy the
-> AD directly.=20
-
-This tells a user nothing. What is the threat? Don't know. When does it=20
-occur? Dunno. What impact did it have? *shrugs*. While I understand the
-potential need to be vague in the commit message of the fix itself to=20
-avoid drawing attention to it prior to the publication of the CVE, once=20
-we get to CVE stage the whole point is surely to be informative about=20
-the threat, who it effects, and how to mitigate against it. Compare any=20
-Linux CVE description with those raised by other CNAs and Linux's come=20
-up wanting every time.
-
-Ultimately, none of these points are theoretical. While I am frustrated=20
-with the reporters for not following the process as defined in this=20
-case, which has led to a pretty disastrous disclosure all round, the=20
-result is a prime example of what was always going to happen sooner or=20
-later with a disclosure process so opaque and seemingly hostile.
-
-At the end of the day I am aware that Linux is an open source project,=20
-and is maintained by volunteers, and I am therefore in no position to=20
-say what MUST [3] - or even what SHOULD - be done. Given you did ask for=20
-what could be better, however, I have given my thoughts, and I can=20
-observe that the process that we have today is not a particularly strong=20
-one.
-
-[1]: https://docs.kernel.org/process/security-bugs.html
-[2]: https://oss-security.openwall.org/wiki/mailing-lists/distros
-[3]: https://www.rfc-editor.org/rfc/rfc2119
+--Apple-Mail=_F4A8B62D-5607-473B-AD03-C48DC1434B0F--
