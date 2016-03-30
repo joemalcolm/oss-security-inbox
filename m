@@ -1,37 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/28/3
-Message-ID: <D31EE434.14B879%vel@apache.org>
-Date: Mon, 28 Mar 2016 13:37:56 -0400
-From: Velmurugan Periasamy <vel@...che.org>
-To: "dev@...ger.incubator.apache.org" <dev@...ger.incubator.apache.org>, "user@...ger.incubator.apache.org" <user@...ger.incubator.apache.org>, <security@...che.org>, <oss-security@...ts.openwall.com>, <bugtraq@...urityfocus.com>
-CC: Velmurugan Periasamy <vel@...che.org>, <private@...ger.incubator.apache.org>
-Subject: CVE update (CVE-2016-0735) - Fixed in Ranger 0.5.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/30/6
+Message-Id: <20160330135735.C05C56C084F@smtpvmsrv1.mitre.org>
+Date: Wed, 30 Mar 2016 09:57:35 -0400 (EDT)
+From: cve-assign@...re.org
+To: vdronov@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request -- linux kernel: crash on invalid USB device descriptors (ims-pcu driver)
 Content-Type: text/plain; charset=utf-8
 
-Hello:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Here¹s a CVE update for Ranger 0.5.2 release. Please see below details.
+> A device pretending to be a device driven by the ims-pcu driver,
+> but leaving out either of the two interfaces present on the genuine
+> device will crash the driver and possibly the kernel. Thus, DoS
+> with physical access is possible. Kernels since v3.10 are vulnerable.
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=971628
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=a0ad220c96692eda76b2e3fd7279f3dcd1d8a8ff
+> https://bugzilla.redhat.com/show_bug.cgi?id=1320060
 
-Thank you,
-Velmurugan Periasamy
+>> drivers/input/misc/ims-pcu.c
+>> ims_pcu_parse_cdc_data
 
---------------------------------------------------------------------------
-CVE-2016-0735: Ranger policy excludes flags processing
---------------------------------------------------------------------------
-Severity: Important
-Vendor: The Apache Software Foundation
-Versions Affected: 0.5.0/0.5.1 versions of Apache Ranger
-Users affected: All users that use Ranger to authorize HBase, Hive, and
-Knox.
-Description: In some cases, presence of an exclude policy at a
-resource-level can give the user access at its parent resource-level. For
-example, if a hive policy excludes access for a user to a particular column,
-then such a user would be able to alter the name of that table. Only a user
-who has access at the table level should be able to do so. Due to this bug
-however, the user is able to do the operation when an exclude policy is
-present at the column-level for that table.
-Mitigation: Users should upgrade to Ranger 0.5.2 version
---------------------------------------------------------------------------
+Use CVE-2016-3689.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
+iQIcBAEBCAAGBQJW+9rcAAoJEL54rhJi8gl5wvUQAJW92s9jIxSymkHknHHqylhW
+tnaKUdv0F4Fm5bIsSe0/eeXR6o6YkdJ0RxzPsPfzej2Ih8lofv2siQcFMMl6t2ea
+GzhKLnMpDFOXtq9sib9sDrObAWMNPdPYJaZEMt9v7Bv67AUNHNmjp2/WtwdMluJe
+Hls5Sz81XAgqWPgIYI+Y2JbOzeHBQpdcv9E5hOtIM/il+/9LT1hlDly6wNW58OZa
+LYyN2o7zHcBjN+1GjqKbwNETKjb/2JwRfxTZgEVt76FnMY+qIPOmMMTBCuPzQR6g
+jeCE0jeuZ5O6RDs9hf4eHE+f4oQ7ZA+CsStykp0nQ6EU6Ganzr6TQAlgFhJVjUlc
+jocWd+BpF6wUxdlbuy6IMHW7CLBHCgNqLiUVTZePgUEHr3iwxoBmPcvvgqzmihJ5
+cbaYfI7jMSR57WMDw0G670+In5ttZxDPeijqOMdcMp5R6unMajr5+WwoCbvp/k6J
+ij2EiKF3Ur1FPlSwg01qJE3Z/o67wMAO6G7mr8d/qLXtkDgrFe/XmKdRZWiZEm58
+GANKGWu+LYK5f+vK638ls+cCrXVLKziCQdQo+88EIHNt/80wohbcYNX+5n9OPNok
+SO9lrGknX4r979+2AyWYKqxhWToOK09TL6ZiiBUxodULusBAGwyTj2epAzAylUwC
+dthSTfy0M0szo3ktzMvd
+=ILXh
+-----END PGP SIGNATURE-----
