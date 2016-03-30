@@ -1,4 +1,9 @@
-Received: (qmail 19832 invoked by uid 550); 4 Oct 2024 12:27:46 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1312" "Wednesday" "30" "March" "2016" "01:17:00" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160330051700.10C40B2E014@smtpvbsrv1.mitre.org>" "36" "[oss-security] Re: older fuseiso stuff" "^Cc:" nil nil "3" "2016033005:17:00" "[oss-security] Re: older fuseiso stuff" (number mark "U       cve-assign@m Mar 30   36/1312  " thread-indent "\"[oss-security] Re: older fuseiso stuff\"\n") "<20160327113443.GA4418@eldamar.local>" ("<20160327113443.GA4418@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 19906 invoked by uid 550); 30 Mar 2016 05:17:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,75 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 19805 invoked from network); 30 Mar 2016 05:17:12 -0000
+In-Reply-To: <20160327113443.GA4418@eldamar.local>
+Message-Id: <20160330051700.10C40B2E014@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Wed, 30 Mar 2016 01:17:00 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 19792 invoked from network); 4 Oct 2024 12:27:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
-	t=1728044857; bh=2q3y1aGxxC5T8HXi+U+0v45nSRhRpMm5ca86WRo1CFM=;
-	h=From:To:Subject:MIME-Version:Date:Message-ID:Content-Type;
-	b=xjJMbwR5kR32NPpWkeZVQ8eWnz9tSUPjRluR0+u0flSI0wyDftYlzfv0bSQI/8w/O
-	 T5uclNRrenA6zVGFm6z9qk38PkzkqO+kXF7noTjDiAc5Cg+4YwaesIhsGeILbQcYZ+
-	 6ZYDY3FPPOI1JE3nCdufzsquAMXlu9pBmzEQmb2HYAulmb8RTHgmxbyawEvehtTty9
-	 1glTPFJyAknZFji0J2CYrgLa8bHxKYsV5v1qoe/z5NTSywYC5VOKubBAezQZMwYy6e
-	 1clrZS/aHIP1H+2v+8w4+bLIinubI5+GGb3UpBSDuMWeuPwhJOQ7hfcVL9pxc2nTc8
-	 LRn9wI4qzJCXA==
-From: larry0@me.com
-To: oss-security@lists.openwall.com
-MIME-Version: 1.0
-X-Mailer: Mail.Ru Mailer 1.0
-X-SenderField-ReMsg: 17279818982001526801
-Date: Fri, 04 Oct 2024 15:27:32 +0300
-X-Letter-Fingerprint: B6SaGdACfQmKjcgMQ0iZKHqStceA2Lq1
-X-Priority: 3 (Normal)
-Message-ID: <1728044852.266451931@f125.i.mail.ru>
-Content-Type: multipart/alternative;
-	boundary="--ALT--4c22e7b308054617aa7d4a689218856b1728044852"
-In-Reply-To: <c04ebb34-521b-42d1-bd50-c2ea9d0e78f7@app.fastmail.com>
-References: <175c118b-0771-425c-bc9d-d7da8ec5f40b@me.com>
- <c04ebb34-521b-42d1-bd50-c2ea9d0e78f7@app.fastmail.com>
-Authentication-Results: f191.i.mail.ru; auth=pass smtp.auth=larry0@me.com smtp.mailfrom=larry0@me.com
-X-Mailru-Src: fe
-X-7564579A: B8F34718100C35BD
-X-77F55803: 119C1F4DF6A9251C969CAEB1290DE2A916C3273DA75380A65414895432B1EA68AA58F7AA52DA7B4B7FEECB1FA3D91BC1791B66515356476FDA8209840CF9F61D83F5067A33008722
-X-7FA49CB5: 70AAF3C13DB70168C09775C1D3CA48CFE1713BA350DC5B2FB2086D80B0504778CF19DD082D7633A06830A0AE1C35374264CD17681C2FEB7A176DF2183F8FC7C059E9FDA37C8E6689C4224003CC836476101E9EAE1CD2240ABFD28B28ED4578739E625A9149C048EEC24E1E72F37C03A029508FF2E8683A3EB287FD4696A6DC2FA8DF7F3B2552694A4E2F5AFA99E116B42401471946AA11AF0E30A4C9C8E338DAC8F626AC60F7C5938F08D7030A58E5AD1A62830130A00468AEEEE3FBA3A834EE7353EFBB553375669EE6824C75C491FA2009C82DA5FA853FD6D10B08DBAD9F4D1DF9E95F17B0083B26EA987F6312C9EC4B6963042765DA4BC26CFBAC0749D213D2E47CDBA5A96583C09775C1D3CA48CF17B107DEF921CE79117882F4460429724CE54428C33FAD30A8DF7F3B2552694AC26CFBAC0749D213D2E47CDBA5A9658378DA827A17800CE71AE4D56B06699BBC9FA2833FD35BB23DF004C906525384302BEBFE083D3B9BA71A620F70A64A45A98AA50765F79006372E808ACE2090B5E1725E5C173C3A84C3C5EA940A35A165FF2DBA43225CD8A89F05DF73978FA004956D8C47C27EEC5E9FB5C8C57E37DE458BEDA766A37F9254B7
-X-C1DE0DAB: 0D63561A33F958A5E689F1E60BFBE8C78D061842665E03C6064A0C88EC71CD91F87CCE6106E1FC07E67D4AC08A07B9B04CB6874B0BCFF0B8CB5012B2E24CD356
-X-C8649E89: 1C3962B70DF3F0AD75DCE07D45A7499577DD89D51EBB7742DC8270968E61249B1004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D3455049D7B43D89D64C3B8FBD08C4216AFAE2E0FABE8953A3C67D2B24FA209A8F98A0D8171FAC9A6311D7E09C32AA3244CDB888F91BBADECDAA42057EBB31B5F80408A6A02710B7304BC4AF6B5DE6957CB5DA084F8E80FEBD386533F5C967D5B7A6DEFB659808BE026
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5+wYjsrrSY/u8Y3PrTqANeitKFiSd6Yd7yPpbiiZ/d5BsxIjK0jGQgCHUM3Ry2Lt2G3MDkMauH3h0dBdQGj+BB/iPzQYh7XS329fgu+/vnDh7w9vL7r1wArFbzOoMmjnQA==
-X-Mailru-MI: 80010000000000000800
-X-Mailru-Sender: 688466AD60A6312E5515A69CB34D3B56E7A454A42FB79047AA991965355E1F3EFF2A4E693A2E2139DB2C3BB88C2E5E6ACB0E562D0E9D40F1109A936D8A02D04098D56EB411B7666E3DDE9B364B0DF289AE208404248635DF
-X-Mras: Ok
-X-Proofpoint-GUID: ItaojUEMYqD0zVCvsi2ljxIvGFRC-NNL
-X-Proofpoint-ORIG-GUID: ItaojUEMYqD0zVCvsi2ljxIvGFRC-NNL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-04_09,2024-10-03_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 malwarescore=0
- suspectscore=0 spamscore=0 phishscore=0 mlxscore=0 mlxlogscore=999
- clxscore=1015 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2308100000 definitions=main-2410040091
-Subject: =?UTF-8?B?UmVbMl06IFtvc3Mtc2VjdXJpdHldIGN1cHMtYnJvd3NlZCB2dWxuZXJhYmxl?=
- =?UTF-8?B?IHRvIEREb1MgYW1wbGlmaWNhdGlvbiBhdHRhY2s=?=
+Subject: [oss-security] Re: older fuseiso stuff
+To: carnil@debian.org
 
-----ALT--4c22e7b308054617aa7d4a689218856b1728044852
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-CgpIZWxsbyBvc3Mtc2VjdXJpdHksCgoKVGh1cnNkYXksIE9jdG9iZXIgMywgMjAyNCBhdCAyOjU4
-4oCvUE0gLTA0OjAwIGZyb20gcGV0ZXJAN2JpdHMubmwgIDxwZXRlckA3Yml0cy5ubD46Cj5IZWxs
-bywKPgo+T24gVGh1LCBPY3QgMywgMjAyNCwgYXQgMTk6NTQsIExhcnJ5IENhc2hkb2xsYXIgd3Jv
-dGU6Cj4+IEkndmUgcmVxdWVzdGVkIGEgQ1ZFIElEIHRvIGJlIGFibGUgdG8gZGlzY2VybiBiZXR3
-ZWVuIHRoZSBSQ0UgYW5kIHRoZSBEb1MgdnVsbmVyYWJpbGl0eS4KPgo+SSByZXBvcnRlZCB0aGlz
-IGFzICBodHRwczovL2dpdGh1Yi5jb20vT3BlblByaW50aW5nL2N1cHMtZmlsdGVycy9zZWN1cml0
-eS9hZHZpc29yaWVzL0dIU0EtcnE4Ni1jN2c2LXIyaDggbGFzdCB3ZWVrLCBhbmQgaW4gdGhlIGVk
-aXRzIGF0IHRoZSB0b3AgKGJ5IHVwc3RyZWFtLCBhYm92ZSB0aGUgU3VtbWFyeSBoZWFkaW5nKSBp
-dCBsb29rcyBsaWtlIHRoZXkgZGlkIG5vdCB3YW50IChvciBkaWQgbm90IGNvbnNpZGVyKSB0byBy
-ZXF1ZXN0IGEgc2VwYXJhdGUgQ1ZFIGZvciB0aGlzLiBQbGVhc2UgZG8gY29vcmRpbmF0ZSB3aXRo
-IHRoZW0gaWYgeW91IGRlY2lkZSB0byBnbyBhaGVhZCB3aXRoIHRoaXMgcmVxdWVzdC4KPgo+KEkg
-ZGlkIG5vdGljZSwgYW5kIGNhbiBzZWUgdmFsdWUgaW4sIFdpbGwgRG9ybWFubidzIHN1Z2dlc3Rp
-b24gaW4gdGhlIG90aGVyIHRocmVhZCB0aGF0IGl0IG1pZ2h0IG1ha2Ugc2Vuc2UgdG8gaGF2ZSBt
-b3JlIGZpbmUtZ3JhaW5lZCBDVkVzIGZvciB0aGlzIGNvbGxlY3Rpb24gb2YgcHJvYmxlbXMuKQo+
-Cj4tLSAKPsKgwqBQZXRlciB2YW4gRGlqawo+wqDCoCBwZXRlckA3Yml0cy5ubApUaGlzIHZ1bG5l
-cmFiaWxpdHkgaGFzIGJlZW4gYXNzaWduZWQgQ1ZFLTIwMjQtNDc4NTAuCgpUaGFua3MsCkxhcnJ5
-IEMk
+>> > https://bugzilla.redhat.com/show_bug.cgi?id=863102
+>> https://bugzilla.redhat.com/show_bug.cgi?id=861358
 
-----ALT--4c22e7b308054617aa7d4a689218856b1728044852--
+Use CVE-2015-8836.
+
+
+>> > https://bugzilla.redhat.com/show_bug.cgi?id=863091
+>> https://bugzilla.redhat.com/show_bug.cgi?id=862211
+
+Use CVE-2015-8837.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJW+2DfAAoJEL54rhJi8gl5wJAQAKb0FzOkCsR3UnWtrLV+7SK2
+xqBNYAuyb1QHd9Umqa7xBYtjqVUa4s7NvlnrW1mQSWl2b7l0vJWmj4ZXzwAonCup
+DNKBqWCKI75OhbJxEiItWrgDf8Wy2f/ap28BpBOV8GsDEejFNdkwecsLBw+wCSOU
+FRxsVeWj/+FsgluWT1gfDXZMwaTeDV4Z+z4+cztiQOcgQZ6YErcd4MWoYfwc+LDR
+2UwssMoBSICpnmvgIkwfaS9RxNVJ7wXXndbuoB0Ds7jNbFA+3mSOouEW6QvHYMxN
+JDaYPt1A+mudL21u1hKSSyeage1KNP5Nijmp+grkk8k8+Z+rjBpmaHOoBesF4GYq
+viWz5tM8srrDkuBKyb4XL3905ylFbuIvw3GIOgBH57LNMrIQjrXYu2hHY4m8oEZh
+ZYNhm2tl99AYqEUJcsx5N/+/pXzcj0N5WE7rdWxEzeV93DZYf1KEZ83pDvJDlMb3
+MGwTmjEs94o0mf+XyFwLlDjJYF0FQG0Tmm8757YvbJImm+AoxsqTvBCTrEull35t
+NRwXPlKctVgJ6zPW9VML/VQZ3JAONOrNYEkFudU+mzLuF8jEssLMTyjd9/qpV8Zc
+hm0Fiit6szjD8kTjBwy9qMsZKA01wF2XdbpS2VG+j1+lGMITMZrVdGoGlca2ADsn
+HeJ+ekOW1M2SpDEVoL4l
+=c6+9
+-----END PGP SIGNATURE-----
