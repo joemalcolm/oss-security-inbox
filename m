@@ -1,58 +1,165 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/03/5
-Message-Id: <20160203171216.EA851332075@smtpvbsrv1.mitre.org>
-Date: Wed,  3 Feb 2016 12:12:16 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/30/7
+Message-ID: <m3zitgrmoh.fsf@gmail.com>
+Date: Wed, 30 Mar 2016 18:49:02 +0300
+From: yumkam@...il.com (Yuriy M. Kaminskiy)
+To: oss-security@...ts.openwall.com
+Subject: Re: Xen Security Advisory 172 (CVE-2016-3158, CVE-2016-3159) - broken AMD FPU FIP/FDP/FOP leak workaround
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Xen.org security team <security@....org> writes:
 
->> > From: Salvatore Bonaccorso
->> >
->> > While checking upstream bugzilla to see if that was reported I noticed
->> >
->> > https://bugzilla.gnome.org/show_bug.cgi?id=749115
->> >
->> > Does this have the same root cause?
->>
->> The CVE-2016-2073 PoC is an '&' followed by three characters, one of
->> which is a 0273 character. The PoC in 749115 has an unexpected
->> character immediately after a "<!DOCTYPE html" substring. We feel that
->> the CVE-2016-2073 report can have that unique ID on the basis of (at
->> least) a different attack methodology. CVE assignment for 749115 is
->> also possible unless 749115 already has a CVE ID.
+>      Xen Security Advisory CVE-2016-3158,CVE-2016-3159 / XSA-172
+>                               version 3
+>
+>               broken AMD FPU FIP/FDP/FOP leak workaround
+>
+> UPDATES IN VERSION 3
+> ====================
+>
+> Public release.
+>
+> ISSUE DESCRIPTION
+> =================
+>
+> There is a workaround in Xen to deal with the fact that AMD CPUs don't
+> load the x86 registers FIP (and possibly FCS), FDP (and possibly FDS),
+> and FOP from memory (via XRSTOR or FXRSTOR) when there is no pending
+> unmasked exception.  (See XSA-52.)
+>
+> However, this workaround does not cover all possible input cases.
+> This is because writes to the hardware FSW.ES bit, which the current
+> workaround is based on, are ignored; instead, the CPU calculates
+> FSW.ES from the pending exception and exception mask bits.  Xen
+> therefore needs to do the same.
+>
+> Note that part of said workaround was the subject of XSA-52.
+>
+> This can leak register contents from one guest to another.  The
+> registers in question are the FPU instruction and data pointers and
+> opcode.
+>
+> IMPACT
+> ======
+>
+> A malicious domain is able to obtain address space usage and timing
+> information, about another domain, at a fairly low rate.
+>
+> The leaked address information might be used to help defeat address
+> space randomisation in order to enable another attack.  The leaked
+> address and timing information forms a low-bandwidth covert channel
+> which might be used to gain information about the operation of a
+> target guest.
+>
+> The affected FPU facility would not normally be used by cryptographic
+> operations, as it does not provide cryptographically-relevant SIMD
+> functions.
 
-> ... Can you assign an additional CVE for
-> the 749115 issue?
+For the record: non-SIMD FPU is sometimes used in cryptography: e.g. nacl
+library[1] contains poly1305 and curve25519 implementation for
+x86_{32,64} that actively uses FPU (but, unless I missed something or
+misunderstood issue, it is likely not affected [attacker won't have
+anything from leaked instruction or data pointers, as code flow is
+not dependent on any secret data]).
 
-Use CVE-2015-8806 for 749115. (We don't know of any additional
-information about a CVE-2015-8806/CVE-2016-2073 interrelationship, or
-about other CVE IDs that could potentially apply to an 'unexpected
-character immediately after a "<!DOCTYPE html" substring' scenario.)
+(But if someone used similar technique, but was less accurate about
+avoiding *all* secret-dependent branches/addresses, they could be
+affected).
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+[1] https://nacl.cr.yp.to/
 
-iQIcBAEBCAAGBQJWsjQMAAoJEL54rhJi8gl5ygUQAM4hAERzVI/E9CpMfv6esYFh
-qu3drRJ0HyXvxCix9Qq1CvzegF3sFVUcvTjlz1gtNeZ4akP+k+U4VHwavU3yEuLN
-ALvOYERtEP+rv841VYXnWwyb717zYqcoy5H3mN3xIIetvLDhNjq2WDduLZTDXLYg
-szlt3pQpZIWdzURkfiZC05wcgi3JmRJG5rZQYI2gK2ijWW6yYI8Q+1R1fJT1mvO1
-Zp5Z+k6e3eaStEvR+8N9QXsLEL36EDb72B9KCF2Vu500g+cfTkA/KDGyM4h9dB1I
-6d2pENAtkt7ur42mMgU36VxZGF6thAtG2EaLJaD2U2DLh8DWwzqCtesBV0xK4u4z
-7KOKl9j46XmYvO6AbgrjdK1Ij0QWeOmDbNE3/gRfOTTLZrgH/uwWVx45e05SG9m/
-rs2Fb8zHkCfWrHJbBnKgh7biKYrnfg6oj/RELOf3mMdZZ8OVA015IIiI4zLPvdE3
-153o4nbiWs9rIXmFhNbuLB7FuCjg2mFl6Ffv7XgzL/BD6OIw5N53i1hxzmE+cV57
-JuUMZPCzfdQ75xyBm/UfMc7bpY4auLuegrSQYUkZI4HKaa+QVMdnSJOIA0RAAxsE
-9pkvHu9eF5s+j7X+M9u2xJxrwhLDRNolM10jkivTrgTjAPFYUdQ2ppfzJ0AUaYtQ
-UMHN8iEju9U93dGVuYRT
-=v0jI
------END PGP SIGNATURE-----
+> It appears to us very unlikely that the leak might directly compromise
+> sensitive information such as cryptographic keys, although (without
+> knowledge of the guest software) this cannot be ruled out.  (This is
+> notwithstanding the contrary statement in `Impact' in XSA-52.)
+>
+> VULNERABLE SYSTEMS
+> ==================
+>
+> Xen versions 4.0 and onwards are vulnerable.  Any kind of guest can
+> exploit the vulnerability.
+>
+> The vulnerability is exposed only on AMD x86 systems.  Intel and ARM
+> systems do not expose this vulnerability.
+>
+> Both PV and HVM guests are affected.
+>
+> MITIGATION
+> ==========
+>
+> The vulnerability can be avoided if the guest kernel is controlled by
+> the host rather than guest administrator, provided that further steps
+> are taken to prevent the guest administrator from loading code into
+> the kernel (e.g. by disabling loadable modules etc) or from using
+> other mechanisms which allow them to run code at kernel privilege.
+>
+> On Xen versions 4.3 and earlier, turning off XSAVE support via the
+> "no-xsave" hypervisor command line option will avoid the vulnerability.
+>
+> On Xen versions 4.4 and onwards there is no other known mitigation.
+>
+> CREDITS
+> =======
+>
+> This issue was discovered by Jan Beulich from SUSE.
+>
+> RESOLUTION
+> ==========
+>
+> Applying the appropriate attached patch resolves this issue.
+>
+> xsa172.patch           xen-unstable, Xen 4.6.x, Xen 4.5.x, Xen 4.4.x
+> xsa172-4.3.patch       Xen 4.3.x
+>
+> $ sha256sum xsa172*
+> f18282fcb794b8772bc3af51d56860050071bd62a5a909b8f2fc2018e2958154  xsa172.patch
+> 6aac179620afcdbdab041163239019bc35b0e243f3bd16673caaec7d5a4d97ec  xsa172-4.3.patch
+> $
+>
+> NOTE REGARDING CVE
+> ==================
+>
+> CVE-2016-3158 is for the code change which is required for all
+> versions (but which is sufficient only on Xen 4.3.x, and insufficient
+> on later versions).  Ie for the second hunk in xsa172.patch (the only
+> hunk in xsa172-4.3.patch), which patches the function xrstor.
+>
+> CVE-2016-3159 is for the code change which is applicable for later
+> versions only, but which must always be combined with the code change
+> for CVE-2016-3158.  Ie for the first hunk in xsa172.patch, which
+> patches the function fpu_fxrstor.
+>
+> DEPLOYMENT DURING EMBARGO
+> =========================
+>
+> Deployment of the PATCH or the TRUSTED KERNEL MITIGATION (or others
+> which are substantially similar) is permitted during the embargo, even
+> on public-facing systems with untrusted guest users and
+> administrators.
+>
+> However deployment of the "no-xsave" MITIGATION is NOT permitted
+> (except where all the affected systems and VMs are administered and
+> used only by organisations which are members of the Xen Project
+> Security Issues Predisclosure List).  Specifically, deployment on
+> public cloud systems is NOT permitted.
+>
+> This is because such a host configuration change would be guest-visible
+> which could lead to the rediscovery of the vulnerability.
+>
+> But: Distribution of updated software is prohibited (except to other
+> members of the predisclosure list).
+>
+> Predisclosure list members who wish to deploy significantly different
+> patches and/or mitigations, please contact the Xen Project Security
+> Team.
+>
+>
+> (Note: this during-embargo deployment notice is retained in
+> post-embargo publicly released Xen Project advisories, even though it
+> is then no longer applicable.  This is to enable the community to have
+> oversight of the Xen Project Security Team's decisionmaking.)
+>
+> For more information about permissible uses of embargoed information,
+> consult the Xen Project community's agreed Security Policy:
+>   http://www.xenproject.org/security-policy.html
+
