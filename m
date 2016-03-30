@@ -1,4 +1,9 @@
-Received: (qmail 7315 invoked by uid 550); 29 Dec 2022 12:38:10 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2493" "Wednesday" "30" "March" "2016" "16:43:04" "-0400" "Theodore Ts'o" "tytso@mit.edu" "<20160330204304.GD6207@thunk.org>" "51" "Re: [oss-security] CVE Request - Linux kernel (multiple versions) ext2/ext3  filesystem DoS" "^Cc:" nil nil "3" "2016033020:43:04" "[oss-security] CVE Request - Linux kernel (multiple versions) ext2/ext3 filesystem DoS" (number mark "        tytso@mit.ed Mar 30   51/2493  " thread-indent "\"Re: [oss-security] CVE Request - Linux kernel (multiple versions) ext2/ext3  filesystem DoS\"\n") "<57514A3C-DBAD-4E5E-98EA-23E490629C02@dilger.ca>" ("<f4df42b35dd9a6c8c6851eba66b2b3f1.squirrel@webmail-etu.univ-nantes.fr>" "<1459286067.2596.18.camel@debian.org>" "<57514A3C-DBAD-4E5E-98EA-23E490629C02@dilger.ca>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3595 invoked by uid 550); 31 Mar 2016 01:36:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,125 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15798 invoked from network); 29 Dec 2022 00:34:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:cc:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to; s=fm2; t=1672274036; x=
-	1672360436; bh=HKzN5hcxwK00PMUjeR7lAQ3Jmh4Ntcdoe9XK/6l4nS8=; b=K
-	uU2DTEC6dJVU/MTafBwiK90FTSOJgl5tSpZht1i4BXNKq9Yq6aJ2Zjh1FYrc2BiW
-	RZr1FMhXUePHWVF1CNPB8LE401eo/6hswf04ImGu0NXbA0Xlqk9XNkUmUJWXENgt
-	4fg7VvKTnjwyaAgILvhdZlC3dHR0bZWrfBM6PEp3EeH5UIaD8qNafAuimzAluyps
-	PNOeG3PNSr/s21Nh19NEJ96Y1TRAwSpk3wSPdEokqieBw8blw0IITdm4ATfh0ZnG
-	axYyisfZbGx088yiIo6IkOFzTkm4yD+WTn+gyEEJkrlpLRvOKxtcB/SRFR/srDwm
-	PgItKVhemVSwBnajDS1VA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1672274036; x=1672360436; bh=HKzN5hcxwK00PMUjeR7lAQ3Jmh4N
-	tcdoe9XK/6l4nS8=; b=nbBTGCxuJluFHfLQbvuyn26CJAZlADphWbP3fAKmB5cm
-	OlNAS3ejYqXupSip4nrph5f50FpRZIlrRX+Dbt9NuqLYv6171upXdK4KOgRZYnkZ
-	PHqjnSxNkz5o8TxpmK2sEyHAp+FXX9BkDtPZbsVjDDUdRj5J5lzXzaN3Hq0pCMk7
-	xvcdlW/47kPEFaHwXTdK7wE+l6trX/7SCED8FzlPwfviNgsCESH+d2lbVNeCAWbA
-	kjmulbVB+S7+iPWN0m5H/6P2CLIRcankUPF2HxqVRn1C5nMhqxGJq2yOEb1YopZR
-	qzWeruXTCS4TfJFwHncLTqh1RsBjvu4O9fEYC5S++w==
-X-ME-Sender: <xms:c-CsY-Jpa1cefYBF3gLbbVyD444BEkW7CHQJrDRAuDE2ch3OBB9B7Q>
-    <xme:c-CsY2I9K5pZG9dgbi1zR5EthzVlVuPNlc6ZELo4qSQLW-SK69vKWOdPvwKHd25wX
-    QDhAx93iIFhSD8>
-X-ME-Received: <xmr:c-CsY-uGRwdunNh1jImKb3EIEaHkicuBqOHwvTZFRoaZxqAgOdPH_IsTno5D>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrieefgddvgecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtre
-    ertddtjeenucfhrhhomhepffgvmhhiucforghrihgvucfqsggvnhhouhhruceouggvmhhi
-    sehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomheqnecuggftrfgrthhtvghrnh
-    epvdejteegkefhteduhffgteffgeffgfduvdfghfffieefieekkedtheegteehffelnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepuggvmhhise
-    hinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomh
-X-ME-Proxy: <xmx:dOCsYzYAM8wSDLQ6NQiOpdC-nywvJzLmC59JIpOLnQiH2Y1DCKvfpw>
-    <xmx:dOCsY1Zf8wV8efGGSHlL6Xf0FD-Sh9JWcqgGwSmPmLVP17KZw3Mj_Q>
-    <xmx:dOCsY_B3dShw-NkJGVnf4s3JPPI6XDfDNZ-K4MS8Vu5QxIon2D6gIA>
-    <xmx:dOCsY5Hr-nfY6YIDIvcr2GGDCXgMrkoE0aqRimOJ_-t7RrTyL1LY3A>
-Feedback-ID: iac594737:Fastmail
-Date: Wed, 28 Dec 2022 19:33:50 -0500
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: Theodore Ts'o <tytso@mit.edu>
-Cc: oss-security@lists.openwall.com,
-	Alejandro Colomar <alx.manpages@gmail.com>,
-	Michael Kerrisk <mtk.manpages@gmail.com>,
-	linux-kernel@vger.kernel.org, linux-man@vger.kernel.org
-Message-ID: <Y6zgcTndt4Ss6/6/@itl-email>
-References: <Y6SJDbKBk471KE4k@p183>
- <Y6TUJcr/IHrsTE0W@codewreck.org>
- <1a1963aa1036ba07@orthanc.ca>
- <20221228152458.6xyksrxunukjrtzx@mutt-hbsd>
- <Y6xzIR9P+a6uaaEx@itl-email>
- <20221228172517.l7h3m7wjfpxr3dzw@mutt-hbsd>
- <Y6yEv+6iYQQNaqi9@itl-email>
- <Y6y/0uzFlTpkw/VT@mit.edu>
+Received: (qmail 15651 invoked from network); 30 Mar 2016 20:43:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org; s=ef5046eb;
+	h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=2TuUgNDeebWmYwexXCJLlLCo5IZghhW8tLe0eC3cTwM=;
+	b=KteA5uDwLzj8xFc+VX+nlvvo1Cp1Rs+HfAmFzCSLG1UAIEfBtj6rlx77lKHm7QZTkjA03Tk4sgTdeVqCwFSR9fQnMEJHQWKzf1gREKTtcN+y3R/BQ/xC+PisO3w/VzDZz61gNNk/WPYT94ZSBghGpLe+wCs4OmjJTAkW5uNQ/C0=;
+Message-ID: <20160330204304.GD6207@thunk.org>
+References: <f4df42b35dd9a6c8c6851eba66b2b3f1.squirrel@webmail-etu.univ-nantes.fr>
+ <1459286067.2596.18.camel@debian.org>
+ <57514A3C-DBAD-4E5E-98EA-23E490629C02@dilger.ca>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="U1zMNkwBbrv0FFj2"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Y6y/0uzFlTpkw/VT@mit.edu>
-Subject: Re: [oss-security] [patch] proc.5: tell how to parse /proc/*/stat
- correctly
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <57514A3C-DBAD-4E5E-98EA-23E490629C02@dilger.ca>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+Cc: Yves-Alexis Perez <corsac@debian.org>, oss-security@lists.openwall.com,
+	Theodore Tso <tytso@google.com>, linux-ext4@vger.kernel.org
+Date: Wed, 30 Mar 2016 16:43:04 -0400
+From: Theodore Ts'o <tytso@mit.edu>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE Request - Linux kernel (multiple versions)
+ ext2/ext3  filesystem DoS
+To: Andreas Dilger <adilger@dilger.ca>
 
---U1zMNkwBbrv0FFj2
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 28 Dec 2022 19:33:50 -0500
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: Theodore Ts'o <tytso@mit.edu>
-Cc: oss-security@lists.openwall.com,
-	Alejandro Colomar <alx.manpages@gmail.com>,
-	Michael Kerrisk <mtk.manpages@gmail.com>,
-	linux-kernel@vger.kernel.org, linux-man@vger.kernel.org
-Subject: Re: [oss-security] [patch] proc.5: tell how to parse /proc/*/stat
- correctly
+On Tue, Mar 29, 2016 at 04:56:11PM -0600, Andreas Dilger wrote:
+> On Mar 29, 2016, at 3:14 PM, Yves-Alexis Perez <corsac@debian.org> wrote:
+> > 
+> > [dropping MITRE from CC since it's not about the CVE]
+> > [adding ext and Theodore to CC]
+> > 
+> > On mar., 2016-03-29 at 19:24 +0200, Hugues ANGUELKOV wrote:
+> >> Hello,
+> >> 
+> >> The linux kernel is prone to a Denial of service when mounting specially
+> >> crafted ext2/ext3 (possibly ext4) filesystems. This occurs in the function
+> >> ext4_handle_error who call the panic function on precise circumstance.
+> > 
+> > Did you contact the upstream maintainers about this? I'm adding them just in
+> > case they're not already aware of that…
+> > 
+> >> This was tested on severals linux kernel version: 3.10, 3.18, 3.19, on
+> >> real hardware and Xen DomU PV & HVM (the crash report attached is from a
+> >> Fedora 3.18 PV DomU), from different distribution release: Ubuntu, CentOS,
+> >> Fedora, Linux Mint, QubesOS.
+> >> This a low security impact bug, because generally only root can mount
+> >> image, however on Desktop (or possibly server?) system configured with
+> >> automount the bug is easily triggable (think of android smartphone? Haven't
+> >> test yet).
+> 
+> It seems that the important point here is that the filesystem has
+> "s_errors=EXT4_ERRORS_PANIC" set in the superblock?  I don't think
+> the actual corruption that triggered the ext4_error() call is important,
+> since there are any number of other failure cases that could generate
+> a similar error.
+> 
+> It seems practical to change s_errors at mount time from EXT4_ERRORS_PANIC
+> to EXT4_ERRORS_RO for filesystems mounted by regular users.  The question
+> is whether there is a way for the ext4 code to know this at mount time?
 
-On Wed, Dec 28, 2022 at 05:14:42PM -0500, Theodore Ts'o wrote:
-> On Wed, Dec 28, 2022 at 01:02:35PM -0500, Demi Marie Obenour wrote:
-> > > I think the argument I'm trying to make is to be flexible in
-> > > implementation, allowing for future needs and wants--that is "future
-> > > proofing".
-> >=20
-> > Linux should not have an XML, JSON, or YAML serializer.  Linux already
-> > does way too much; let=E2=80=99s not add one more thing to the list.
->=20
-> There's always Protobufs[1]!  :-)  And all of these are better than
-> ASN.1, for which Google already has a limited parser (for x.509
-> certificates).   :-)   :-)   :-)
->=20
-> 						- Ted
+You can mount the file system with "mount -o errors=continue" and this
+will override the default behavior specified in the super block.
 
-Cap=E2=80=99n Proto is better than Protobufs :-)
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+I would argue that a Desktop or server system that had automount
+should either (a) mount with -o errors=continue, or (b) force an fsck
+on the file system before mounting it.
 
---U1zMNkwBbrv0FFj2
-Content-Type: application/pgp-signature; name="signature.asc"
+So I think this is a particularly meaningless CVE, which is why I have
+zero respect for people who try to make any kind of conclusion based
+on CVE counts.   I certainly don't plan to do anything about this.
 
------BEGIN PGP SIGNATURE-----
+You might as well complain that since the system ships with a reboot
+command that can be executed by a clueless root user, that this is a
+potential DOS attack scenario deserving of a CVE....
 
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmOs4HEACgkQsoi1X/+c
-IsEIgQ/+Pco7jrnuvj7VgymwTpedg/FPOwiYyFGufCerhIOsAEicXgmVmAJL8nV9
-yzex5oy5B/e7gyykxdwOC9MCQU2rbP1VIlIfQ8oT3CzD+aHHheLOCh2AuX2xI5bX
-kpIj7ZMJNb2cvvCLN7ADgg3Z2vUQZWVYTzIkdfBus5S+AVBl5uOm6OihfmJu51OJ
-WQcCT79Z2bb41xFHTJdE2UZQ56Xg/nOwxPDO9xqt396dJGeweMd/WRM15eMJS/d5
-LmTvHuER0etr3UYr+GmRwO4btSnbhT1+WHZVdyOIK9Nm8oT3eDgMfJG7yEdgekId
-7/pGXZTwuBdil2fnojBu3VLC9YEbu1GGhKDQ14Ai9hPjia1S3yalpKTiqEyJg5oe
-H/RIEJMUZY5Km5DSypejrkyP8MOuUd5m6Jn2lnd+TsHAG/5+9iLXqCEKGqV457VL
-zdwOA8GjJmzXFX75bcefA98qpdcQ9b6DHn2MTJy/2YaRkI6bJdUmzyfSP3o854Mi
-o9uiR+MjXi8oEc3FclNyCfUtgvUywqXlgPe6kI1k4HoDdTvabXZdUZ2skLBrL96K
-Yfawnff9C2dBE5MQNSjSVtGhfoo8Mt07YYwCPUSB0s9rDyN8+IwNxYizQMYaf7yj
-Z+wN6R3ZpXBudktJ43W0NVYR2zpp3DEuNiyJt3fyZS3CFdmVjo8=
-=Hb8y
------END PGP SIGNATURE-----
-
---U1zMNkwBbrv0FFj2--
+	      	     	      		   - Ted
