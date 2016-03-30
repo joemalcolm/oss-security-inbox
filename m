@@ -1,44 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/4
-Message-Id: <20161016024912.B0B4442E02B@smtpvbsrv1.mitre.org>
-Date: Sat, 15 Oct 2016 22:49:12 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: libdwarf: heap-based buffer overflow in _dwarf_get_abbrev_for_code (dwarf_util.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/30/3
+Message-ID: <56FBBB41.9010405@census-labs.com>
+Date: Wed, 30 Mar 2016 14:40:49 +0300
+From: Stelios Tsampas <stelios@...sus-labs.com>
+To: oss-security@...ts.openwall.com
+Cc: fulldisclosure@...lists.org, bugtraq@...urityfocus.com
+Subject: CVE-2016-2385 Kamailio SEAS module heap buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Kamailio (successor of former OpenSER and SER) is an Open Source SIP
+Server released under GPL. It can be used to build large platforms for
+VoIP and realtime communications, presence, WebRTC, Instant messaging
+and other applications.
 
-> https://blogs.gentoo.org/ago/2016/10/04/libdwarf-heap-based-buffer-overflow-in-_dwarf_get_abbrev_for_code-dwarf_util-c/
+A heap overflow was found in Kamailio version 4.3.4 (possibly affecting
+earlier versions also). The heap overflow takes place in the encode_msg
+function of the SEAS module and can be triggered remotely if the module
+is enabled.
 
-> AddressSanitizer: heap-buffer-overflow ... READ of size 1
-> libdwarf/dwarf_util.c:624:43 in _dwarf_get_abbrev_for_code
+A technical analysis of the vulnerability can be found here:
+https://census-labs.com/news/2016/03/30/kamailio-seas-heap-overflow/
 
-> https://sourceforge.net/p/libdwarf/code/ci/268c1f18d1d28612af3b72d7c670076b1b88e51c/tree/libdwarf/dwarf_util.c?diff=0b28b923c3bd9827d1d904feed2abadde4fa5de2
+The vulnerability may allow an attacker to cause memory corruption,
+process termination or potentially remote code execution.
 
-Use CVE-2016-8680.
+This defect has been fixed in version 4.3.5 of Kamailio. Administrators
+of affected systems are strongly advised to upgrade Kamailio to the
+latest stable release.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Disclosure Timeline
+-------------------
+Vendor Contact:	        February 12th, 2016
+CVE assignment:	        February 15th, 2016
+Vendor Patch Release:	March 3rd, 2016
+Public Advisory:	March 30th, 2016
 
-iQIcBAEBCAAGBQJYAudXAAoJEHb/MwWLVhi2ohsP/1Cco5DxH5s7xrI2OQ5S3npL
-a4i0ykWBel0oObYzllOxCErUKsIRwgHuL59kMcKyYfiMf4StxpRRoCKXN0UJUPjG
-jzyvJCrDwv3/yPfioei4oixSqoonDPnnMso/5+mTJEE5Swo+iLIpH8JRUBQhmPNs
-JUl/NutBuTxlLqw9dXbo1Cb6JDrB1bRdlVXVonqqZ+ymk+RE3EtozsEA0ePKqnBK
-41BMl/uwO8Ue1pCbdIFGbhuQieFJbYKASWJV6gK6zyx8J+W6pRjT9b8yWvDVfejO
-kLLR0NyZni5powlZ8w+2Eyeb/zaLJlSQus+4vwEhTbbIMJkqtxCiFj46ksS2ty0Y
-1x6fbW1/fHd5251NQp8uTl+1u3mhHpat5D9UABq5tPutLDRsASGvzkPIDi3GLHbi
-M0I6lajCrptz3b6YgqyPOprAMlSUPS06T/9rcTC7I3GfGL/WN8klBgwmolrVdifj
-RjlvQxWFnVi1JDKSodj9hbxcz3g6IFOSKyACuvdXph+943c6yYm3ZFb6GVQtZbsI
-Zl9CvCmpM7rhE/Yc02EQeqPN73myVtdJHZiU3EAlxD9+ShlzmXoSkXrZoNucBb6x
-LaA3v+xv1hePJkxsC3Ut/S99F5R/A6s0XGLuDSIQlSCr/Qs9vyzr7GNygVHmTYFd
-jc7kJQ4SsHC12NUfqejb
-=cKdI
------END PGP SIGNATURE-----
+Regards,
+
+Stelios Tsampas
+
+IT Security Researcher
+CENSUS S.A.
+
