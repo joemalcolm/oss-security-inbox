@@ -1,28 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/10/11
-Message-ID: <CABEk9YwSrUa0qTO43n+kOqnaGc59hpkgsj=3ubNatMfwLcjJog@mail.gmail.com>
-Date: Tue, 10 May 2016 15:30:24 -0400
-From: Kangjie Lu <kangjielu@...il.com>
-To: oss-security@...ts.openwall.com, Chengyu Song <csong84@...ech.edu>,  Insu Yun <insu@...ech.edu>, Taesoo Kim <taesoo@...ech.edu>
-Subject: CVE Request: ALSA: Another information leak vulnerability in sound/core/timer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/30/2
+Message-ID: <56FB9D8E.9070104@redhat.com>
+Date: Wed, 30 Mar 2016 15:04:06 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Two flaws - libjpeg and libtiff
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi All,
 
-In function snd_timer_user_tinterrupt() of file sound/core/timer.c,
-the stack object “r1” has a total size of 32 bytes. Its field “event” and
-“val” both
-contain 4 bytes padding. These 8 bytes padding bytes are sent to user
-without
-being initialized.
+We have made two security flaws public today. They were privately
+reported to us by  Aladdin Mubaied. Details as follows:
 
-Fix info:
-*https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=e4ec8cc8039a7063e24204299b462bd1383184a5
-<https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=e4ec8cc8039a7063e24204299b462bd1383184a5>*
-Patch has been applied: http://comments.gmane.org/gmane.linux.kernel/2214250
+1. null pointer dereference in libjpeg library in cjpeg
+This is a flaw in the cjpeg utility available with the libjpeg library,
+details available at:
+https://bugzilla.redhat.com/show_bug.cgi?id=1318509
 
-Please help assign a CVE to this vulnerability.
+2. buffer-overflow in gif2tiff utility:
+This is bundled with libtiff, details available at:
+https://bugzilla.redhat.com/show_bug.cgi?id=1319503
 
-Thanks,
-Kangjie Lu
 
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
