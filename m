@@ -1,22 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/14/10
-Message-ID: <54ab75c6-2dc8-bdb2-4704-e0e9eecc2973@oracle.com>
-Date: Fri, 14 Oct 2016 13:23:36 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/30/5
+Message-ID: <56FBD8F1.4060603@redhat.com>
+Date: Wed, 30 Mar 2016 13:47:29 +0000
+From: Tristan Cacqueray <tdecacqu@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)
+Subject: [OSSA 2016-007.2] Nova host data leak through resize/migration (CVE-2016-2140) ERRATA #2
 Content-Type: text/plain; charset=utf-8
 
-On 14/10/16 12:13, Petr Matousek wrote:
->> > The other link to internal bug was posted by mistake. I am sorry for
->> > that. https://bugzilla.redhat.com/show_bug.cgi?id=1373966 has all the
->> > information we can share.
-> Scratch that. 1373966 is a Fedora bug so I opened it. It is accessible
-> now.
+=============================================================
+OSSA-2016-007.2: Nova host data leak through resize/migration
+=============================================================
 
-Manu thanks Petr.   Both answers were fine, but I'm glad I can get at
-the reproducer now.
+:Date: March 08, 2016
+:CVE: CVE-2016-2140
 
-thanks again.
 
-jch
+Affects
+~~~~~~~
+- Nova: <=2015.1.3, >=12.0.0 <=12.0.2
+
+
+Description
+~~~~~~~~~~~
+Matthew Booth from Red Hat reported a vulnerability in Nova instance
+resize/migration. By overwriting an ephemeral or root disk with a
+malicious image before requesting a resize, an authenticated user may
+be able to read arbitrary files from the compute host. Only setups
+using libvirt driver with raw storage and setting "use_cow_images =
+False" (not default) are affected.
+
+
+Errata
+~~~~~~
+The former fix did not take into account the usage of non-disk-image
+backends and caused a regression for this use-case. This update
+provides an additional fix for that issue. Moreover, the kilo backport
+caused a regression in live migration where the disk info file is JSON
+encoded. This second update provides an additional fix for
+stable/kilo.
+
+
+Patches
+~~~~~~~
+- https://review.openstack.org/289960 - original (Kilo)
+- https://review.openstack.org/290847 - errata (Kilo)
+- https://review.openstack.org/294205 - errata#2 (Kilo)
+- https://review.openstack.org/289958 - original (Liberty)
+- https://review.openstack.org/290843 - errata (Liberty)
+- https://review.openstack.org/289957 - original (Mitaka)
+- https://review.openstack.org/290715 - errata (Mitaka)
+
+
+Credits
+~~~~~~~
+- Matthew Booth from Red Hat (CVE-2016-2140)
+
+
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/bugs/1548450
+- https://bugs.launchpad.net/bugs/1555287
+- https://bugs.launchpad.net/bugs/1558697
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-2140
+
+
+Notes
+~~~~~
+- This fix will be included in future 2015.1.4 (kilo) and 12.0.3
+  (liberty) releases.
+
+
+OSSA History
+~~~~~~~~~~~~
+- 2016-03-30 - Errata 2
+- 2016-03-09 - Errata 1
+- 2016-03-08 - Original Version
+
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
