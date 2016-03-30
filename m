@@ -1,49 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/13/6
-Message-Id: <20160113175142.1E7576C09BD@smtpvmsrv1.mitre.org>
-Date: Wed, 13 Jan 2016 12:51:42 -0500 (EST)
-From: cve-assign@...re.org
-To: limingxing@....cn
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Out-of-bounds Read in the JasPer's jpc_pi_nextcprl() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/31/1
+Message-ID: <20160330204304.GD6207@thunk.org>
+Date: Wed, 30 Mar 2016 16:43:04 -0400
+From: Theodore Ts'o <tytso@....edu>
+To: Andreas Dilger <adilger@...ger.ca>
+Cc: Yves-Alexis Perez <corsac@...ian.org>, oss-security@...ts.openwall.com, Theodore Tso <tytso@...gle.com>, linux-ext4@...r.kernel.org
+Subject: Re: CVE Request - Linux kernel (multiple versions) ext2/ext3  filesystem DoS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> We find a vulnerability in the way JasPer's jpc_pi_nextcprl() function parsed certain JPEG 2000 image files.
-> I was successful in reproducing this issuel in the jasper-1.900.1-31.fc23.src.
+On Tue, Mar 29, 2016 at 04:56:11PM -0600, Andreas Dilger wrote:
+> On Mar 29, 2016, at 3:14 PM, Yves-Alexis Perez <corsac@...ian.org> wrote:
+> > 
+> > [dropping MITRE from CC since it's not about the CVE]
+> > [adding ext and Theodore to CC]
+> > 
+> > On mar., 2016-03-29 at 19:24 +0200, Hugues ANGUELKOV wrote:
+> >> Hello,
+> >> 
+> >> The linux kernel is prone to a Denial of service when mounting specially
+> >> crafted ext2/ext3 (possibly ext4) filesystems. This occurs in the function
+> >> ext4_handle_error who call the panic function on precise circumstance.
+> > 
+> > Did you contact the upstream maintainers about this? I'm adding them just in
+> > case they're not already aware of that…
+> > 
+> >> This was tested on severals linux kernel version: 3.10, 3.18, 3.19, on
+> >> real hardware and Xen DomU PV & HVM (the crash report attached is from a
+> >> Fedora 3.18 PV DomU), from different distribution release: Ubuntu, CentOS,
+> >> Fedora, Linux Mint, QubesOS.
+> >> This a low security impact bug, because generally only root can mount
+> >> image, however on Desktop (or possibly server?) system configured with
+> >> automount the bug is easily triggable (think of android smartphone? Haven't
+> >> test yet).
 > 
-> Starting program: ./jasper-1.900.1-31.fc23.src/jasper-1.900.1/src/appl/jasper -f ./jasper_poc/poc.jp2 -F temp.bmp -t jp2 -T bmp
-> warning: trailing garbage in marker segment (6 bytes)
+> It seems that the important point here is that the filesystem has
+> "s_errors=EXT4_ERRORS_PANIC" set in the superblock?  I don't think
+> the actual corruption that triggered the ext4_error() call is important,
+> since there are any number of other failure cases that could generate
+> a similar error.
 > 
-> Program received signal SIGSEGV, Segmentation fault.
-> jpc_pi_nextcprl (pi=0x80a4ab0) at jpc_t2cod.c:435
-> 435				  pi->xstep = pi->picomp->hsamp * (1 << (pirlvl->prcwidthexpn +
-> (gdb) bt
-> #0  jpc_pi_nextcprl (pi=0x80a4ab0) at jpc_t2cod.c:435
+> It seems practical to change s_errors at mount time from EXT4_ERRORS_PANIC
+> to EXT4_ERRORS_RO for filesystems mounted by regular users.  The question
+> is whether there is a way for the ext4 code to know this at mount time?
 
-Use CVE-2016-1867.
+You can mount the file system with "mount -o errors=continue" and this
+will override the default behavior specified in the super block.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+I would argue that a Desktop or server system that had automount
+should either (a) mount with -o errors=continue, or (b) force an fsck
+on the file system before mounting it.
 
-iQIcBAEBCAAGBQJWlos+AAoJEL54rhJi8gl5FlAP/0UvdOa/MOmWwDQeofST/PbE
-Ba+vQZcXSj58kD77fBaq6rfWbmlMGdK+F7hxyICV9ajWS/Pm+aXhXquF9vsqDsIR
-5//jE3TWvmUgxXebX8Qyqp8xGtJH2Gpaqz/bYiCf9RjUPhaPiQkNxTRl08p5yF4H
-DSoDZS8NLfOgI6gAPEsbQRM1XoJM+rzv0VUcDbOMcQGXxjMGN4EMKM4vml5svvLX
-2dn9BDAPMjTxPm62h1PLQFLCV7gyRmBN4Vu+Ya0HHob4jSb4NoPdxVPO9Jd1UdmJ
-y5KTpEYaTBhSrPtvXLS9UixUuUn/1ShkiQEZWpFJ7MUHcet2zRlm6sXj+xWssFbN
-5qW7mXgMZ3bECRKn+hFonj5Z0spZfvA6bQKZJKBTMIIEBdsI/C/Vti6DBSeiRhmT
-HiZmIHs31X+PpVQNrEw0AaCUEyp3GtYOWpuxXETyBdpsl9Ky5ubS5Hw2bPVNsjz6
-i291DcFlYvXlcLgh6JDJrKEYiOU+ZtYZWBpEK4XIPG0yvx1GTbeTnQJ2/yhCj7pU
-i69jRs3NkkG9snEOJbQv5n6ABTinrIB1PwxSYy9ekPIrbJnV+65TRf7wXTXvJ4Gi
-cebpJS8orRbgml1X4Azfc9bFoeZlpHBP90XhmZydvo6cGcYQS6ZQGI0p9uz7ssDF
-FcISpiPnRyny+eqg65Q3
-=FzZr
------END PGP SIGNATURE-----
+So I think this is a particularly meaningless CVE, which is why I have
+zero respect for people who try to make any kind of conclusion based
+on CVE counts.   I certainly don't plan to do anything about this.
+
+You might as well complain that since the system ships with a reboot
+command that can be executed by a clueless root user, that this is a
+potential DOS attack scenario deserving of a CVE....
+
+	      	     	      		   - Ted
