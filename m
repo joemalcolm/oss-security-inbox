@@ -1,4 +1,9 @@
-Received: (qmail 19476 invoked by uid 550); 23 Apr 2025 15:50:00 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1631" "Wednesday" "30" "March" "2016" "09:57:35" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160330135735.C05C56C084F@smtpvmsrv1.mitre.org>" "39" "[oss-security] Re: CVE request -- linux kernel: crash on invalid USB device descriptors (ims-pcu driver)" "^Cc:" nil nil "3" "2016033013:57:35" "[oss-security] Re: CVE request -- linux kernel: crash on invalid USB device descriptors (ims-pcu driver)" (number mark "        cve-assign@m Mar 30   39/1631  " thread-indent "\"[oss-security] Re: CVE request -- linux kernel: crash on invalid USB device descriptors (ims-pcu driver)\"\n") "<183593889.43262406.1459342377531.JavaMail.zimbra@redhat.com>" ("<183593889.43262406.1459342377531.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11277 invoked by uid 550); 30 Mar 2016 13:57:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,94 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 10235 invoked from network); 30 Mar 2016 13:57:47 -0000
+In-Reply-To: <183593889.43262406.1459342377531.JavaMail.zimbra@redhat.com>
+Message-Id: <20160330135735.C05C56C084F@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Wed, 30 Mar 2016 09:57:35 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7634 invoked from network); 23 Apr 2025 15:38:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1745422706; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=29K9eNgK2yQvKaJ9anC9VYsqPknYtseeuU2h06ASJVk=;
-	b=yUJBqCRveLy7oARnAj6ADwt6Ns6rhsKSx5RZWUb0C74M1SD2VbQyoxGdcX+Z4JmGkwusYK
-	PjzuUntWXVxq12wZJ0gm60/JGnRKGh7m2l/AC0iSeB8hXiU5DXCjKmBE0N5ur/dNt4ToXz
-	k56/LRWFJj30YQ7AUgt3euZt+T6uCm4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1745422706;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=29K9eNgK2yQvKaJ9anC9VYsqPknYtseeuU2h06ASJVk=;
-	b=ljVl8jAB+tTaGXtLkMKEzyOVP50gkCDB//J1HKfuYaNTKBdnHsRpUhlTUxW6NeUgGSQN5g
-	nZTFaKtK3Mnil3Aw==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=yUJBqCRv;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ljVl8jAB
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1745422706; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=29K9eNgK2yQvKaJ9anC9VYsqPknYtseeuU2h06ASJVk=;
-	b=yUJBqCRveLy7oARnAj6ADwt6Ns6rhsKSx5RZWUb0C74M1SD2VbQyoxGdcX+Z4JmGkwusYK
-	PjzuUntWXVxq12wZJ0gm60/JGnRKGh7m2l/AC0iSeB8hXiU5DXCjKmBE0N5ur/dNt4ToXz
-	k56/LRWFJj30YQ7AUgt3euZt+T6uCm4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1745422706;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=29K9eNgK2yQvKaJ9anC9VYsqPknYtseeuU2h06ASJVk=;
-	b=ljVl8jAB+tTaGXtLkMKEzyOVP50gkCDB//J1HKfuYaNTKBdnHsRpUhlTUxW6NeUgGSQN5g
-	nZTFaKtK3Mnil3Aw==
-Message-ID: <068a922d-d77d-45d2-9b18-e07e41c9a907@suse.de>
-Date: Wed, 23 Apr 2025 17:38:17 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com
-References: <575DB6B1-8A9A-46C6-AA2C-9D0695E1FF85@contoso.com>
-Content-Language: en-US
-From: Ricardo Branco <rbranco@suse.de>
-In-Reply-To: <575DB6B1-8A9A-46C6-AA2C-9D0695E1FF85@contoso.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] vulnerabilities in busybox tar and cpio tools
+Subject: [oss-security] Re: CVE request -- linux kernel: crash on invalid USB device descriptors (ims-pcu driver)
+To: vdronov@redhat.com
 
-I reported this one in busybox's netstat a year ago:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-https://bugs.busybox.net/show_bug.cgi?id=15922
+> A device pretending to be a device driven by the ims-pcu driver,
+> but leaving out either of the two interfaces present on the genuine
+> device will crash the driver and possibly the kernel. Thus, DoS
+> with physical access is possible. Kernels since v3.10 are vulnerable.
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=971628
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=a0ad220c96692eda76b2e3fd7279f3dcd1d8a8ff
+> https://bugzilla.redhat.com/show_bug.cgi?id=1320060
 
+>> drivers/input/misc/ims-pcu.c
+>> ims_pcu_parse_cdc_data
 
-The whole code needs a security audit for ANSI escapes like this.
+Use CVE-2016-3689.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Best,
-
-R
-
-
-On 4/23/25 4:11 PM, Ian Norton wrote:
-> https://bugs.busybox.net/show_bug.cgi?id=16018  (awaiting CVE)
->
-> Busybox's cpio and tar tools will print un-escaped filenames when listing and unpacking
-> cpio and tar files. Malicious files containing filenames with terminal escapes can be used
-> to mask or modify earlier or later files in the archive from anyone running busybox tar or cpio
-> from a terminal.
->
-> see also https://lists.busybox.net/pipermail/busybox/2024-July/090806.html
->
->
-> https://security-tracker.debian.org/tracker/CVE-2023-39810
->
-> A unpacking a cpio archive can escape the working directory. Due to #16018 it is possible to
-> mask these traversals from anyone using cpio to inspect a file before unpacking.
->
-> see also https://lists.busybox.net/pipermail/busybox/2024-July/090851.html
->
->
->
->
-> Any email and files/attachments transmitted with it are intended solely for the use of the individual or entity to whom they are addressed. If this message has been sent to you in error, you must not copy, distribute or disclose of the information it contains. Please notify Entrust immediately and delete the message from your system.
->
+iQIcBAEBCAAGBQJW+9rcAAoJEL54rhJi8gl5wvUQAJW92s9jIxSymkHknHHqylhW
+tnaKUdv0F4Fm5bIsSe0/eeXR6o6YkdJ0RxzPsPfzej2Ih8lofv2siQcFMMl6t2ea
+GzhKLnMpDFOXtq9sib9sDrObAWMNPdPYJaZEMt9v7Bv67AUNHNmjp2/WtwdMluJe
+Hls5Sz81XAgqWPgIYI+Y2JbOzeHBQpdcv9E5hOtIM/il+/9LT1hlDly6wNW58OZa
+LYyN2o7zHcBjN+1GjqKbwNETKjb/2JwRfxTZgEVt76FnMY+qIPOmMMTBCuPzQR6g
+jeCE0jeuZ5O6RDs9hf4eHE+f4oQ7ZA+CsStykp0nQ6EU6Ganzr6TQAlgFhJVjUlc
+jocWd+BpF6wUxdlbuy6IMHW7CLBHCgNqLiUVTZePgUEHr3iwxoBmPcvvgqzmihJ5
+cbaYfI7jMSR57WMDw0G670+In5ttZxDPeijqOMdcMp5R6unMajr5+WwoCbvp/k6J
+ij2EiKF3Ur1FPlSwg01qJE3Z/o67wMAO6G7mr8d/qLXtkDgrFe/XmKdRZWiZEm58
+GANKGWu+LYK5f+vK638ls+cCrXVLKziCQdQo+88EIHNt/80wohbcYNX+5n9OPNok
+SO9lrGknX4r979+2AyWYKqxhWToOK09TL6ZiiBUxodULusBAGwyTj2epAzAylUwC
+dthSTfy0M0szo3ktzMvd
+=ILXh
+-----END PGP SIGNATURE-----
