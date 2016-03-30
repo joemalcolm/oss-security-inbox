@@ -1,72 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/10
-Message-ID: <33006C99F5A5194A9B7A7715DFA3E383EB84DCEF@ALA-MBA.corp.ad.wrs.com>
-Date: Mon, 7 Mar 2016 15:28:03 +0000
-From: "Radzykewycz, T (Radzy)" <radzy@...driver.com>
-To: Amos Jeffries <squid3@...enet.co.nz>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: [security-vendor] Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/30/8
+Message-ID: <CACn5sdTHZPTK7+u1ANCU-T-czJ_vT_-VQp8CisHreKKPAPpazw@mail.gmail.com>
+Date: Wed, 30 Mar 2016 14:43:21 -0300
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Heap overflow in VLC 2.1.6 processing wav files
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-________________________________________
-> From: Amos Jeffries [squid3@...enet.co.nz]
-> Sent: Sunday, March 06, 2016 5:47 PM
-> To: oss-security@...ts.openwall.com
-> Subject: [security-vendor] Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies
-> 
-> On 7/03/2016 9:39 a.m., Gsunde Orangen wrote:
-> > I totally agree.
-> > The concern addressed by Kurt initially is fully valid (for both
-> > researchers and for companies that are not on Mitre's product/sources
-> > list), so a new (better: additional) solution is required.
-> > However, creating a new standard independently of CVE would be too
-> > disruptive and be a disservice to the software industry.
-> > I'd propose to work out a new solution together with Mitre, whilst
-> > keeping the CVE IDs as today.
-> > Since 2014, virtually unlimited number of CVE IDs can be assigned per
-> > year [1], so a solution could be that
-> >  - Mitre continues to assign 4 and 5 digit IDs as today
-> >  - 6 digit IDs are reserved for the new process (hosted outside Mitre)
-> > If more than one million vulnerabilities need to be addressed in one
-> > year, we could follow the rule (odd digits -> Mitre, even digits ->
-> > "other process")
-> > From Mitre's POC, this "other process" would become a "CNA", just with
-> > its own policy and process definition, not prescribed by Mitre.
-> > It would soon become clear to everyone (and all tools and products that
-> > rely on CVE) where to look at for the authoritative vulnerability
-> > information.
-> 
-> 
-> While reading this whole thread I have been thinking along very similar
-> but slightly different lines.
-> 
-> Right now as a vendor 'security desk' I/we have the situation where we
-> have to allocate an internal reference ID anyway while awaiting Mitre
-> assignment. These IDs are not spread so widely as CVE in the early
-> stages, so we end up with other vendors and downstream distributions not
-> quite in the same discussion loop allocating their own temporary numbers
-> for the same issue. And some do anyway just because thats the way they
-> operate.
-> (Those aware of the history might recall this was the exact same
-> situation which caused CVE to be created and centralized through Mitre
-> in the first place.)
-> 
-> Having an easily self-assigned OVI number does sound nice. At least for
-> use as a temporary ID that can be publicly shared before the proper
-> analysis can be completed by Mitre for a CVE, which can then sub-link.
-> 
-> AYJ
+We found a buffer overflow in the parsing and processing of wav files in
+VLC (version 2.1.6-0). It was tested in Ubuntu 14.04 (x86_64), but it will
+probably affects other versions as well. Fortunately, it seems to be fixed
+in the last release of VLC. Here you can see the gdb stack trace:
 
-Seems like it would be a very simple change, if Mitre were willing
-to do it, to have vulnerability reporters include an OVE or OVI
-tracking number with every report.  That way, there would be
-a number to track from the initial report, and still have the
-benefits of a significant review for CVE identifiers.
+__memcpy_sse2_unaligned () at
+../sysdeps/x86_64/multiarch/memcpy-sse2-unaligned.S:116
+116 ../sysdeps/x86_64/multiarch/memcpy-sse2-unaligned.S: No existe el
+archivo o el directorio.
+(gdb) bt
+#0 __memcpy_sse2_unaligned () at
+../sysdeps/x86_64/multiarch/memcpy-sse2-unaligned.S:116
+#1 0x00007ffff71436e9 in memcpy (__len=4290773038, __src=<optimized out>,
+__dest=<optimized out>) at /usr/include/x86_64-linux-gnu/bits/string3.h:51
+#2 AStreamPeekStream (s=<optimized out>, pp_peek=0x7fffea824988,
+i_read=4294967276) at input/stream.c:1115
+#3 0x00007fffdebb42b3 in ChunkFind (p_demux=p_demux@...ry=0x7fffd4c01828,
+fcc=fcc@...ry=0x7fffdebb576b "fmt ", pi_size=pi_size@...ry=0x7fffea824a3c)
+at wav.c:522
+#4 0x00007fffdebb4761 in Open (p_this=0x7fffd4c01828) at wav.c:166
+#5 0x00007ffff716d178 in module_load (obj=obj@...ry=0x7fffd4c01828,
+m=m@...ry=0x7b92b0, init=init@...ry=0x7ffff716d0d0 <generic_start>,
+args=args@...ry=0x7fffea824b50) at modules/modules.c:185
+#6 0x00007ffff716d72e in vlc_module_load (obj=obj@...ry=0x7fffd4c01828,
+capability=capability@...ry=0x7ffff71a4059 "demux", name=0x7ffff71a43bb "",
+name@...ry=0x7fffd4c018e0 "", strict=<optimized out>,
+probe=probe@...ry=0x7ffff716d0d0
+<generic_start>) at modules/modules.c:277
+#7 0x00007ffff716dc04 in module_need (obj=obj@...ry=0x7fffd4c01828,
+cap=cap@...ry=0x7ffff71a4059 "demux", name=name@...ry=0x7fffd4c018e0 "",
+strict=<optimized out>) at modules/modules.c:366
+#8 0x00007ffff712cfbe in demux_New (p_obj=p_obj@...ry=0x7fffd00009b8,
+p_parent_input=p_parent_input@...ry=0x7fffd00009b8,
+psz_access=<optimized out>, psz_demux=0x7ffff71b9ca5 "",
+psz_location=<optimized out>, s=<optimized out>, out=0x7fffd4000aa0,
+b_quick=false)
+at input/demux.c:188
+#9 0x00007ffff7139d5d in InputSourceInit (p_input=p_input@...ry=0x7fffd00009b8,
+in=<optimized out>, psz_mrl=<optimized out>,
+psz_forced_demux=psz_forced_demux@...ry=0x0,
+b_in_can_fail=b_in_can_fail@...ry=false) at input/input.c:2535
+#10 0x00007ffff713ab6b in Init (p_input=p_input@...ry=0x7fffd00009b8) at
+input/input.c:1225
+#11 0x00007ffff713e0e6 in Run (obj=0x7fffd00009b8) at input/input.c:521
+#12 0x00007ffff79a9182 in start_thread (arg=0x7fffea825700) at
+pthread_create.c:312
+#13 0x00007ffff74d247d in clone () at
+../sysdeps/unix/sysv/linux/x86_64/clone.S:111
 
-If Mitre were willing to make it mandatory, I think that might
-be best.  But even if not, that wouldn't prohibit researchers
-from doing this, though it would be more ad-hoc.
+It is evident that the memcpy operation has an abnormally large size
+parameter (4290773038). Find attached a test case to reproduce it.
 
-Enjoy!
+Regards,
+Gustavo.
 
-				-- radzy
+Content of type "text/html" skipped
