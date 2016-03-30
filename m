@@ -1,45 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/14
-Message-ID: <CACn5sdSaCfkaGyHKG3NkTMRg3bRzu2Zd5NVH8i15xG_skthTkQ@mail.gmail.com>
-Date: Tue, 19 Jan 2016 15:33:09 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/30/10
+Message-ID: <20160330192412.GC7963@hunt>
+Date: Wed, 30 Mar 2016 12:24:12 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: out-of-bounds write with cpio 2.11
+Subject: Re: Re: CVE request: Heap overflow in VLC 2.1.6 processing wav files
 Content-Type: text/plain; charset=utf-8
 
-2016-01-19 15:24 GMT-03:00 Hanno Böck <hanno@...eck.de>:
+On Wed, Mar 30, 2016 at 03:24:54PM -0300, Gustavo Grieco wrote:
+> For some reason, the attached test case did not go to the mailing list.
+> Let's try again..
+> 
+> 2016-03-30 14:43 GMT-03:00 Gustavo Grieco <gustavo.grieco@...il.com>:
+> 
+> > Hi,
+> >
+> > We found a buffer overflow in the parsing and processing of wav files in
+> > VLC (version 2.1.6-0). It was tested in Ubuntu 14.04 (x86_64), but it will
+> > probably affects other versions as well. Fortunately, it seems to be fixed
+> > in the last release of VLC. Here you can see the gdb stack trace:
 
-> On Tue, 19 Jan 2016 13:45:05 -0300
-> Gustavo Grieco <gustavo.grieco@...il.com> wrote:
->
-> > An out-of-bounds write in cpio 2.11 was found in the parsing of cpio
-> > files (other version are probably affected).  Find attached a test
-> > case to reproduce it. The ASAN report is here:
->
-> Is this a duplicate of CVE-2014-9112?
-> https://lists.gnu.org/archive/html/bug-cpio/2014-11/msg00007.html
+It didn't come through the second try either; it's attached to the bug
+report at:
+https://bugs.launchpad.net/ubuntu/+source/vlc/+bug/1533633
 
+Thanks
 
-I think it is not. I'm testing in Ubuntu 14.04 and CVE-2014-9112 seems to
-be fixed:
-
-http://people.canonical.com/~ubuntu-security/cve/2014/CVE-2014-9112.html
-
-
->
->
-> cpio is esentially unmaintained upstream.
->
-
-I agree.
-
-
->
-> --
-> Hanno Böck
-> http://hboeck.de/
->
-> mail/jabber: hanno@...eck.de
-> GPG: BBB51E42
->
-
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
