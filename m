@@ -1,4 +1,9 @@
-Received: (qmail 17413 invoked by uid 550); 14 Jul 2023 18:09:01 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1463" "Wednesday" "30" "March" "2016" "12:24:12" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20160330192412.GC7963@hunt>" "43" "Re: [oss-security] Re: CVE request: Heap overflow in VLC 2.1.6 processing wav files" nil nil nil "3" "2016033019:24:12" "[oss-security] Re: CVE request: Heap overflow in VLC 2.1.6 processing wav files" (number mark "U       seth.arnold@ Mar 30   43/1463  " thread-indent "\"Re: [oss-security] Re: CVE request: Heap overflow in VLC 2.1.6 processing wav files\"\n") "<CACn5sdQ1V7zLe=vy3msAAEF+vPpaYmftukhMBtRre=eKbk7MyQ@mail.gmail.com>" ("<CACn5sdTHZPTK7+u1ANCU-T-czJ_vT_-VQp8CisHreKKPAPpazw@mail.gmail.com>" "<CACn5sdQ1V7zLe=vy3msAAEF+vPpaYmftukhMBtRre=eKbk7MyQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1502 invoked by uid 550); 30 Mar 2016 19:24:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,211 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15952 invoked from network); 14 Jul 2023 18:07:20 -0000
-Date: Fri, 14 Jul 2023 20:06:56 +0200
-From: Solar Designer <solar@openwall.com>
-To: Tamas Koczka <poprdi@chromium.org>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20230714180656.GA30858@openwall.com>
-References: <CAEviOmOzG=KTzqee5hsrLUsCSL2ic7Kj-CzrBhEx7PxXx=5FKA@mail.gmail.com>
-Mime-Version: 1.0
+Received: (qmail 1482 invoked from network); 30 Mar 2016 19:24:26 -0000
+Date: Wed, 30 Mar 2016 12:24:12 -0700
+From: Seth Arnold <seth.arnold@canonical.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20160330192412.GC7963@hunt>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <CACn5sdTHZPTK7+u1ANCU-T-czJ_vT_-VQp8CisHreKKPAPpazw@mail.gmail.com>
+ <CACn5sdQ1V7zLe=vy3msAAEF+vPpaYmftukhMBtRre=eKbk7MyQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="s9fJI615cBHmzTOP"
+Content-Disposition: inline
+In-Reply-To: <CACn5sdQ1V7zLe=vy3msAAEF+vPpaYmftukhMBtRre=eKbk7MyQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Subject: Re: [oss-security] Re: CVE request: Heap overflow in VLC 2.1.6
+ processing wav files
+
+--s9fJI615cBHmzTOP
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAEviOmOzG=KTzqee5hsrLUsCSL2ic7Kj-CzrBhEx7PxXx=5FKA@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Our learnings from 42 Linux kernel exploits, we are limiting io_uring
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Wed, Mar 30, 2016 at 03:24:54PM -0300, Gustavo Grieco wrote:
+> For some reason, the attached test case did not go to the mailing list.
+> Let's try again..
+>=20
+> 2016-03-30 14:43 GMT-03:00 Gustavo Grieco <gustavo.grieco@gmail.com>:
+>=20
+> > Hi,
+> >
+> > We found a buffer overflow in the parsing and processing of wav files in
+> > VLC (version 2.1.6-0). It was tested in Ubuntu 14.04 (x86_64), but it w=
+ill
+> > probably affects other versions as well. Fortunately, it seems to be fi=
+xed
+> > in the last release of VLC. Here you can see the gdb stack trace:
 
-Thank you for bringing this to oss-security back then.  I have a few
-questions below that I think you could clarify for everyone.  I'll quote
-more of your message than I normally do since it's been a while.
+It didn't come through the second try either; it's attached to the bug
+report at:
+https://bugs.launchpad.net/ubuntu/+source/vlc/+bug/1533633
 
-On Fri, Jun 16, 2023 at 11:43:49AM +0200, Tamas Koczka wrote:
-> We've posted the following article to the Google Security Blog which
-> contains some of our learnings from 42 Linux kernel exploits we got so
-> far on our kCTF VRP and the actions we are taking based on these
-> learnings (tl;dr: we are limiting io_uring in our products):
-> 
-> =======================
-> In 2020[1], we integrated kCTF into Google's Vulnerability Rewards
-> Program (VRP) to support researchers evaluating the security of Google
-> Kubernetes Engine (GKE) and the underlying Linux kernel. As the Linux
-> kernel is a key component not just for Google, but for the Internet,
-> we started heavily investing in this area. We extended the VRP's scope
-> and maximum reward in 2021[2] (to $50k), then again in February
-> 2022[3] (to $91k), and finally in August 2022[4] (to $133k). In 2022,
-> we also summarized our learnings to date in our cookbook[5], and
-> introduced our experimental mitigations[6] for the most common
-> exploitation techniques.
-> 
-> In this post, we'd like to share our learnings and statistics about
-> the latest Linux kernel exploit submissions, how effective our
-> mitigations[7] are against them, what we do to protect our users, and,
-> finally, how we are changing our program to align incentives to the
-> areas we are most interested in.
-> 
-> = Learnings and Statistics =
-> 
-> Since its inception, the program has rewarded researchers with a total
-> of 1.8 million USD, and in the past year, there has been a clear
-> trend: 60% of the submissions[8] exploited the io_uring component of
-> the Linux kernel (we paid out around 1 million USD for io_uring
-> alone). Furthermore, io_uring vulnerabilities were used in all the
-> submissions which bypassed our mitigations.
-> 
-> = Limiting io_uring =
-> 
-> To protect our users, we decided to limit the usage of io_uring in
-> Google products:
-> 
->  * ChromeOS: We disabled[9] io_uring (while we explore new ways to sandbox it).
-> 
->  * Android: Our seccomp-bpf filter[10] ensures that io_uring is
-> unreachable to apps. Future Android releases will use SELinux to limit
-> io_uring access to a select few system processes[11].
-> 
->  * GKE AutoPilot: We are investigating disabling io_uring by default.
-> 
->  * It is disabled on production Google servers.
-> 
-> While io_uring brings performance benefits, and promptly reacts to
-> security issues with comprehensive security fixes (like
-> backporting[12] the 5.15 version to the 5.10 stable tree), it is a
-> fairly new part of the kernel. As such, io_uring continues to be
-> actively developed, but it is still affected by severe vulnerabilities
-> and also provides strong exploitation primitives. For these reasons,
-> we currently consider it safe only for use by trusted components.
+Thanks
 
-There's a recent write-up on an exploitation technique that also
-partially describes CVE-2023-21400, "a double free vulnerability in
-io_uring [...] found by Ye Zhang and [Nicolas Wu] last year, affecting
-kernel 5.10. [...] we exploit CVE-2023-21400 with Dirty Pagetable on
-Google Pixel 7."
+--s9fJI615cBHmzTOP
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-Dirty Pagetable: A Novel Exploitation Technique To Rule Linux Kernel
-https://yanglingxi1993.github.io/dirty_pagetable/dirty_pagetable.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-I wish this vulnerability and exploitation technique were properly
-brought to oss-security on its own, and in a context not limited to
-Google Pixel.  Maybe it will be once the full description is made
-public, as right now the write-up above omits vulnerability detail.
+iQEcBAEBAgAGBQJW/CfcAAoJEPMhclmdjS6Xrf4H/21sYmc8yKr4wvFhiIrE333v
+Gg1Im45jNFhBRA4iDWcenuJELOfZquzYWQWePJawk6cHIIXA8P8lTnWYJkEzVaMJ
+lMfIvBqrPlDBc+S8FZog++BNDXo6k7QtyMy7euRQJjZN/1CPbj10HpjLZ/wUMICh
+ocaJ0+ZpD5RFnstWqcq9nFlgIGTQ7Mcq/WHVpb72uUmndb6Bql2l+/hCEAabFqTB
+THR3Yxa1l1KQi9+dJ2tUIUaOgMRxPvcyhv337rJnI2QFb5ArRPOEunn+z8elkH4Q
+BFS9BFD1zpXrpp5Sz+cK7+gJ+RrDrVw9Veuz3C6HUc2Vv8KfG0L5UsnumBhtlnI=
+=R/X2
+-----END PGP SIGNATURE-----
 
-It appears that this got patched in the July 5 update for Google Pixel:
-
-Pixel Update Bulletin - July 2023
-Published July 5, 2023
-https://source.android.com/docs/security/bulletin/pixel/2023-07-01
-
-"For Google devices, security patch levels of 2023-07-05 or later
-address all issues in this bulletin and all issues in the July 2023
-Android Security Bulletin."
-
-"CVE-2023-21400	A-264663832 *	EoP	Moderate	Kernel io_uring"
-
-Nothing is mentioned about seccomp-bpf on either of the above web pages,
-although maybe it's factored into the Moderate severity rating?
-
-I understand that with vulnerability detail still not public you might
-not be able to tell much, but I am wondering whether there's any
-inconsistency here (seccomp-bpf on Android was meant to prevent this,
-but did not?) or just a misunderstanding or something else.  I wonder
-if a vulnerability in io_uring could be such that it's exploitable
-without io_uring access directly from the attacking app.
-
-> = Transparency =
-> 
-> Currently, we make vulnerability details public on our spreadsheet[8]
-> (which now also includes CVE details), and we have summarized
-> different exploitation techniques in our cookbook[5]. In the future,
-> to make our efforts more transparent and give faster feedback to the
-> community, we will ask researchers to open-source their
-> submissions[13], including the code they used.
-
-For archival and relevant discussions on linux-distros list policy, let
-me quote what [13] currently says:
-
-Quote start:
-> Note about making the exploit public
-> 
-> You can publish your exploit at any time you would like to, but we
-> recommend publishing the exploit 30 days after the vulnerability was
-> disclosed. This gives the industry time to apply patches. Read our
-> stance on the topic in Google's disclosure policy.
-> 
-> We only process submissions after the exploit is public (and we can only
-> issue rewards when the submission was processed), but not sooner than 30
-> days after the vulnerability disclosure.
-> 
-> If you publish sooner than 30 days, you won't get the reward faster. If
-> you want to delay the publication (disclose later than 30 days), you
-> could do that, but you would get the money later (we want to encourage
-> you to publish the exploit details sooner than later).
-> 
-> The above is about the exploit itself, not the vulnerability. We
-> automatically share some limited vulnerability details of the
-> submissions on our public submission spreadsheet, as a CVE, and as soon
-> as you submit the vulnerability details via the form.
-Quote end.
-
-In the above, do you mean 30 days after _public_ disclosure (or e.g.
-disclosure to Google, to upstream, or something else)?  I suggest you
-clarify this.
-
-> = Introducing kernelCTF =
-> 
-> To better align incentives with our areas of interest, we are shifting
-> our focus from GKE and kCTF to the latest stable kernel and our
-> mitigations. As a result, starting today we will handle kernel exploit
-> submissions under a new name, "kernelCTF," with its own reward
-> structure and submission process[14]. The maximum total payout for
-> kernelCTF is still $133,337 per submission. While the specific GKE
-> kernel configuration is still covered by the new kernelCTF, exploits
-> affecting non-kernel components like the full GKE stack (including
-> Kubernetes), the container runtime, and GKE itself, are now separately
-> eligible for vulnerability rewards under the kCTF VRP which is
-> returning to its original reward amounts and conditions.
-
-Are there separate bug bounty programs for ChromeOS and Android, which
-would also cover relevant Linux kernel issues?  If so, a Linux kernel
-bug can potentially be eligible for up to 4 Google bug bounty programs,
-right?  Are the program terms compatible?
-
-> = Conclusion =
-> 
-> Our goal remains the same: we are building a pipeline to analyze,
-> experiment, measure, and build security mitigations to make the Linux
-> kernel as safe as possible, with the help of the security community.
-> We hope that over time, we will be able to implement security
-> mitigations that make it more difficult to exploit Linux kernel
-> vulnerabilities.
-> 
-> With the name change, we have moved our communication channel to
-> #kernelctf on Discord[15], with a separate #kernelctf-announcements
-> channel[16]. Please join us there for the latest updates regarding
-> kernelCTF.
-> 
-> [1] https://security.googleblog.com/2020/05/expanding-our-work-with-open-source.html
-> [2] https://security.googleblog.com/2021/11/trick-treat-paying-leets-and-sweets-for.html
-> [3] https://security.googleblog.com/2022/02/roses-are-red-violets-are-blue-giving.html
-> [4] https://security.googleblog.com/2022/08/making-linux-kernel-exploit-cooking.html
-> [5] https://docs.google.com/document/d/1a9uUAISBzw3ur1aLQqKc5JOQLaJYiOP5pe_B4xCT1KA/edit
-> [6] https://security.googleblog.com/2022/08/making-linux-kernel-exploit-cooking.html#:~:text=The%20mitigations%20we%27ve%20built%20attempt%20to%20tackle%20the%20following%20exploit%20primitives
-> [7] https://github.com/thejh/linux/blob/slub-virtual/MITIGATION_README
-> [8] https://docs.google.com/spreadsheets/d/e/2PACX-1vS1REdTA29OJftst8xN5B5x8iIUcxuK6bXdzF8G1UXCmRtoNsoQ9MbebdRdFnj6qZ0Yd7LwQfvYC2oF/pubhtml
-> [9] https://chromium-review.googlesource.com/c/chromiumos/third_party/kernel/+/4228112
-> [10] https://cs.android.com/android/platform/superproject/+/master:bionic/libc/SECCOMP_ALLOWLIST_COMMON.TXT
-> [11] https://android-review.googlesource.com/c/platform/system/sepolicy/+/2302679
-> [12] https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=788d0824269bef539fe31a785b1517882eafed93
-> [13] https://google.github.io/security-research/kernelctf/rules#note-about-making-the-exploit-public
-> [14] https://google.github.io/security-research/kernelctf/rules
-> [15] https://discord.gg/A3qZcyaZ69
-> [16] https://discord.gg/AjGJ3acF2e
-> =======================
-> 
-> The article can also be read on our blog:
-> https://security.googleblog.com/2023/06/learnings-from-kctf-vrps-42-linux.html
-
-Thank you for your efforts, and for the transparency.
-
-Alexander
+--s9fJI615cBHmzTOP--
