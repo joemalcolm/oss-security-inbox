@@ -1,29 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/30/6
-Message-Id: <20160330135735.C05C56C084F@smtpvmsrv1.mitre.org>
-Date: Wed, 30 Mar 2016 09:57:35 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/30/11
+Message-Id: <20160330232023.E7D568BC026@smtpvmsrv1.mitre.org>
+Date: Wed, 30 Mar 2016 19:20:23 -0400 (EDT)
 From: cve-assign@...re.org
-To: vdronov@...hat.com
+To: gustavo.grieco@...il.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request -- linux kernel: crash on invalid USB device descriptors (ims-pcu driver)
+Subject: Re: CVE request: Heap overflow in VLC 2.1.6 processing wav files
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> A device pretending to be a device driven by the ims-pcu driver,
-> but leaving out either of the two interfaces present on the genuine
-> device will crash the driver and possibly the kernel. Thus, DoS
-> with physical access is possible. Kernels since v3.10 are vulnerable.
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=971628
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=a0ad220c96692eda76b2e3fd7279f3dcd1d8a8ff
-> https://bugzilla.redhat.com/show_bug.cgi?id=1320060
+>> https://bugs.launchpad.net/bugs/1533633
 
->> drivers/input/misc/ims-pcu.c
->> ims_pcu_parse_cdc_data
+> It is evident that the memcpy operation has an abnormally large size
+> parameter (4290773038).
 
-Use CVE-2016-3689.
+Use CVE-2016-3941.
 
 - -- 
 CVE Assignment Team
@@ -33,17 +26,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW+9rcAAoJEL54rhJi8gl5wvUQAJW92s9jIxSymkHknHHqylhW
-tnaKUdv0F4Fm5bIsSe0/eeXR6o6YkdJ0RxzPsPfzej2Ih8lofv2siQcFMMl6t2ea
-GzhKLnMpDFOXtq9sib9sDrObAWMNPdPYJaZEMt9v7Bv67AUNHNmjp2/WtwdMluJe
-Hls5Sz81XAgqWPgIYI+Y2JbOzeHBQpdcv9E5hOtIM/il+/9LT1hlDly6wNW58OZa
-LYyN2o7zHcBjN+1GjqKbwNETKjb/2JwRfxTZgEVt76FnMY+qIPOmMMTBCuPzQR6g
-jeCE0jeuZ5O6RDs9hf4eHE+f4oQ7ZA+CsStykp0nQ6EU6Ganzr6TQAlgFhJVjUlc
-jocWd+BpF6wUxdlbuy6IMHW7CLBHCgNqLiUVTZePgUEHr3iwxoBmPcvvgqzmihJ5
-cbaYfI7jMSR57WMDw0G670+In5ttZxDPeijqOMdcMp5R6unMajr5+WwoCbvp/k6J
-ij2EiKF3Ur1FPlSwg01qJE3Z/o67wMAO6G7mr8d/qLXtkDgrFe/XmKdRZWiZEm58
-GANKGWu+LYK5f+vK638ls+cCrXVLKziCQdQo+88EIHNt/80wohbcYNX+5n9OPNok
-SO9lrGknX4r979+2AyWYKqxhWToOK09TL6ZiiBUxodULusBAGwyTj2epAzAylUwC
-dthSTfy0M0szo3ktzMvd
-=ILXh
+iQIcBAEBCAAGBQJW/F7oAAoJEL54rhJi8gl5/fsP/0qZaXHxydl6ZJsxaqdac/Dy
+fWVmg594wITgIvtZFpLAZ5pQzGgskboaHJEBcTYkxgQIonJska7QVhNrHSusf2Q5
+ko1T1wkyioQu/en7CFTUBCr2OA5kOiAsSh4Z07zqjJanQHjQ9qvxwjcl+IzhNjJ7
+2ORdJA6NgfseN1m5G7WCos9HqiU+Z7Yah4g9UWkwInBrhU/ehVKAjcLUzH+wFPhQ
+SUx/IQ3hL6fSpY3sAJT2PPhm47Iswt3I6oXmVggMPhJ8rAJmlh51YJhuaPmMKPEI
+hj6X9byGBDhHMEosZzGptDK54Q9nd/CLSjGfW7W0Wzd5o5YOZKzFNgtHhFueCaVv
+CS7pqcmQRzzr6dRiAizjdss7EqJOLmnTGr42ZPQfH5uRg93N1KQyJcmQajkp2YpI
+2yy5hb8wBMfUek/dhCq+VGgwon37pQ46pR++uH3SeYLsmw9EopAKusWlMBqf8CF5
+/2BOHGey+MOKxnGBlGOzMQFseFeOfz1P0DgGvHcn3lOO/YYzmz8Jy94BsabeO58J
+/lnKvbw5rg7/8xYam8x3YKlXrxE1kZvkhr0/FGWL4TvlnRAQg8lNdfaJ+UwJewQ8
+DsJP8RzdLT7Mrwk+WInx3lCN4Gz44F27JvAVxv8KaN/M9ArDPLClUyCfDBMZCq4l
+u70+kK2KhEaAcjYB4cgR
+=SBqA
 -----END PGP SIGNATURE-----
