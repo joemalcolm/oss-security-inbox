@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1851" "Friday" "11" "November" "2016" "13:46:47" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<0424dad03c6545cfb4427d45c28d12ac@imshyb02.MITRE.ORG>" "47" "[oss-security] Re: CVE Request - Samsung Exynos fimg2d Multiple Issues" nil nil nil "11" "2016111118:46:47" "[oss-security] Re: CVE Request - Samsung Exynos fimg2d Multiple Issues" (number mark "U       cve-assign@m Nov 11   47/1851  " thread-indent "\"[oss-security] Re: CVE Request - Samsung Exynos fimg2d Multiple Issues\"\n") "<CACCOJE2A=1ruGLYkTe5n=nUKRJo6jaLH_-Q6e=F2vHFiUQg=vg@mail.gmail.com>" ("<CACCOJE2A=1ruGLYkTe5n=nUKRJo6jaLH_-Q6e=F2vHFiUQg=vg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1217" "Thursday" "31" "March" "2016" "13:19:36" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20160331201936.GA25397@hunt>" "40" "[oss-security] CVE Clarification: Mysqlnd / CVE-2015-3152" nil nil nil "3" "2016033120:19:36" "[oss-security] CVE Clarification: Mysqlnd / CVE-2015-3152" (number mark "U       seth.arnold@ Mar 31   40/1217  " thread-indent "\"[oss-security] CVE Clarification: Mysqlnd / CVE-2015-3152\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25764 invoked by uid 550); 11 Nov 2016 18:46:59 -0000
+Received: (qmail 28100 invoked by uid 550); 31 Mar 2016 20:19:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,62 +12,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25746 invoked from network); 11 Nov 2016 18:46:58 -0000
-From: <cve-assign@mitre.org>
-To: <idler1984@gmail.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
-	<anarcheuz@gmail.com>
-In-Reply-To: <CACCOJE2A=1ruGLYkTe5n=nUKRJo6jaLH_-Q6e=F2vHFiUQg=vg@mail.gmail.com>
-Message-ID: <0424dad03c6545cfb4427d45c28d12ac@imshyb02.MITRE.ORG>
-Date: Fri, 11 Nov 2016 13:46:47 -0500
+Received: (qmail 28082 invoked from network); 31 Mar 2016 20:19:50 -0000
+Date: Thu, 31 Mar 2016 13:19:36 -0700
+From: Seth Arnold <seth.arnold@canonical.com>
+To: cve-assign@mitre.org, oss-security@lists.openwall.com
+Message-ID: <20160331201936.GA25397@hunt>
+Mail-Followup-To: cve-assign@mitre.org, oss-security@lists.openwall.com
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE Request - Samsung Exynos fimg2d Multiple Issues
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="opJtzjQTFsWo+cga"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Subject: [oss-security] CVE Clarification: Mysqlnd / CVE-2015-3152
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--opJtzjQTFsWo+cga
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> Samsung Exynos fimg2d driver for Android:
-> 
-> http://security.samsungmobile.com/smrupdate.html#SMR-NOV-2016
+Hello MITRE, all,
 
-> SVE-2016-6736: Kernel Crash on /dev/fimg2d ioctl command
-> Affected versions: All devices with Exynos 5433/54xx/7420 chipsets
-> The fimg2d which is one of the graphic devices for Exynos chipsets
-> doesn.t have exception control routines to handle unexpected commands
-> and it can lead to kernel panic.
-> The patch prevents kernel panic by ignoring inappropriate commands at the state.
+Tomas Hoger asked if CVE-2015-3152 is appropriate for re-use with the php
+mysqlnd interface:
+https://marc.info/?l=oss-security&m=143750829604598
+http://www.openwall.com/lists/oss-security/2015/07/21/7
+Message-ID: <20150721215101.5b7c0a96@redhat.com>
 
-Use CVE-2016-9278.
+This association is already made at e.g.:
+https://bugs.launchpad.net/ubuntu/+source/php5/+bug/1564388
+
+I never saw a response to his question.
+
+Can we re-use this CVE for the different codbase? If not, can one please
+be assigned?
+
+Thanks
 
 
-> SVE-2016-6853: Use After Free in /dev/fimg2d
-> Affected versions: All devices with Exynos 5433/54xx/7420 chipsets
-> A use-after-free vulnerability in fimg2d allows attackers to gain
-> access to unauthorized data.
-> The patch with error handling was applied.
+--opJtzjQTFsWo+cga
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-Use CVE-2016-9279.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYJhG5AAoJEHb/MwWLVhi23s0P/0n2+8vVYSofET7+hqwCSpWU
-6AN45eYz6KoMwMlitjcOC6XYveqTE4L16qQyBPGQJZivKJJjOY+Uv768GUv5dGQB
-gtQ8cIEF2o2NdO2FhSwmOz91J7DiLzqU5T7OpixFtELMIGQYJmhR1e8VcgYA4WWn
-+MsC1MDIQfCZGaUHX8h9b9ySWkOsQqecJWrRbI6YnAWm2wNZedrUgySOqbYcoi3n
-VRZ9XY2B4zRCLXUSrWUwvaeFS1sIf+XK5yhbiF65ZS6h4o2qJg2vHxmn/IXrzZ3V
-hXBxXtD8GBi4dG+Xb0HIVDS+SqakGSSJ7wXItLNYSXXT0Zp//SJa/6/fR01JBY54
-5/4xVpnjofCssnil7S8ECvAQ8+sYKo3eZbueZbAZzvd0z+w6hpOMFab9bTQCr9IP
-Qmc25+xtbRVMhw6Om2k4LfuC2Pu7eOduBpUp9bvSUSmB3tkjoyoND3+PEm/0LWR/
-i36ZjShbvHFpQ4oV0mPoZuTeTb1JUfm3GZElzCSLwgL0SQYWjM2gh/7/ClGxEu66
-204gBBOzWJW0bmMfpV4AYxqhXu65TmDuEecppmTpeeak43SOerCJAJxvB+Hnng3W
-gxsnjPCkGaeCxszyLDAMt44DbVv4Y9KZe9wR9KaVQwrpznBVyRUvHC5jR2nmIcn5
-sAjbZqWX9mmuESv5Bk1k
-=cN7g
+iQEcBAEBAgAGBQJW/YZYAAoJEPMhclmdjS6XPrkH/iPrVoj39VwIX0kxvF9mBPjW
+2kLAWKV84iOJmDfhcMre4LFssxZ1DQwQG717VzoBR48DlxkLZgOAV76QXm82eAJI
+ib8DNWD3XXLRJFKKJbYKn/k5/Tb3fjki3D0kNm6PeTWrh5lEevl9OPBXBB7vvobh
+c4987BFe/A1yh+7SS5vkW5DXs5c6vT8TqgluISK3X1biVprzZxdqkxw8EHxcJxpX
+HUb0peWwgs233hmYHeBlRTTyYcgCMLU8Qo3bCJoJXU7HVnosMuCiZl0KIBK3J3PF
+izKO1E4iLxjXP9ZYICMtiGnJe7lXtQCSBb3zFX0LQSg7W6tQmGrlM0ytmw42vrE=
+=y4ou
 -----END PGP SIGNATURE-----
+
+--opJtzjQTFsWo+cga--
