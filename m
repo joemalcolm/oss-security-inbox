@@ -1,33 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/06/3
-Message-ID: <alpine.LFD.2.20.1609061716580.21893@wniryva>
-Date: Tue, 6 Sep 2016 17:18:50 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request: Qemu: scsi: pvscsi: infintie loop when building SG list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/31/6
+Message-ID: <2cc0c808c8ec740dc075b3b286598454.squirrel@webmail-etu.univ-nantes.fr>
+Date: Thu, 31 Mar 2016 17:37:19 +0200 (CEST)
+From: "Hugues ANGUELKOV" <hugues.anguelkov@....univ-nantes.fr>
+To: tytso@...ena.mit.edu
+Cc: kseifried@...hat.com, sandeen@...hat.com, oss-security@...ts.openwall.com
+Subject: Re: CVE Request - Linux kernel (multiple versions) ext2/ext3  filesystem DoS
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Date: Thu, 31 Mar 2016 08:53:17 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Andreas Dilger <adilger@...ger.ca>, Yves-Alexis Perez
+<corsac@...ian.org>,
+	Theodore Tso <tytso@...gle.com>, linux-ext4@...r.kernel.org
+Subject: Re: CVE Request - Linux kernel (multiple versions)
+ ext2/ext3 filesystem DoS
 
-Quick Emulator(Qemu) built with the VMWARE PVSCSI paravirtual SCSI bus 
-emulation support is vulnerable to an infinite loop issue. It could occur 
-while processing an IO request descriptor, building SG list.
+On Wed, Mar 30, 2016 at 2:43 PM, Theodore Ts'o <tytso@....edu> wrote:
+>
+>
+> You can mount the file system with "mount -o errors=continue" and this
+> will override the default behavior specified in the super block.
+>
+> I would argue that a Desktop or server system that had automount
+> should either (a) mount with -o errors=continue, or (b) force an fsck
+> on the file system before mounting it.
+>
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS.
+The problem is that:
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg00772.html
+a) means I'll be mounting filesystems with errors that I may want to know
+about (but not have my  system panic about)
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1373478
+b) fsck takes a long time on large disks (the smallest size of disk I buy
+for USB drives is 1TB, if I fsck every time I plug one in I'll die of old
+age).
 
-This issue was reported by Li Qiang of 360.cn Inc.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+>
+> So I think this is a particularly meaningless CVE, which is why I have
+> zero respect for people who try to make any kind of conclusion based
+> on CVE counts.   I certainly don't plan to do anything about this.
+>
+
+As for your comments on CVE counting even the then head of CVE @mitre told
+people not to rely on CVE counting for vulnerability stats:
+
+https://media.blackhat.com/us-13/US-13-Martin-Buying-Into-The-Bias-Why-Vulnerability-Statistics-Suck-Slides.pdf
+
+As for your comment on not fixing this: I think fundamentally I should be
+able to plug a file system in and try to mount it with default/reasonable
+options and NOT have my system panic. File system handling code, like any
+code that handles user supplied data should be able to handle garbage
+gracefully and securely. At worst it should try to mount and go "derp, it's
+messed up, maybe fsck it?"
+
+
+
+>
+>                                            - Ted
+>
+
+
+First of all, I would like to say I'm not a MIT genius nor a security
+engineer, just a chemistry student who were fuzzing his box on his free
+time. I'm not interested about getting CVE nor collecting them and I
+apologize if my mail have sound like that.
+I was just concerned about getting a better system where I can mount any
+file system without any crash/panic.
+But again I'm not a pro/engineer, and I know that I've got no credibility
+and it's certainly not with these kind of things I will get somes. Anyway,
+thanks for reading and all your work, now I'm gonna use this fucking DoS
+trick called "shutdown -h now" and stop reporting thing what I was
+thinking it was strange behaviour.
+Hugues.
+
