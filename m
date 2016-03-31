@@ -1,103 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/16/3
-Message-ID: <40abdc05-0c65-860b-f657-827ba790078d@redhat.com>
-Date: Tue, 16 Aug 2016 15:38:02 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: firewalld: Firewall configuration can be modified by any logged in user
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/31/9
+Message-ID: <56FD7412.2080905@igalia.com>
+Date: Thu, 31 Mar 2016 21:01:38 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK+ Security Advisory WSA-2016-0003
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+------------------------------------------------------------------------
+WebKitGTK+ Security Advisory                               WSA-2016-0003
+------------------------------------------------------------------------
 
-FirewallD provides dbus api for modification of configuration after user
-has been authenticated via polkit. This does not apply for 5 methods
-which can be called by any logged user using dbus api or firewall-cmd
-cli interface. Any predefined policy can be used, server or desktop.
+Date reported      : March 31, 2016
+Advisory ID        : WSA-2016-0003
+Advisory URL       : http://webkitgtk.org/security/WSA-2016-0003.html
+CVE identifiers    : CVE-2016-1778, CVE-2016-1779, CVE-2016-1781,
+                     CVE-2016-1782, CVE-2016-1783, CVE-2016-1785,
+                     CVE-2016-1786.
 
-list of concerned dbus methods in firewalld.py
-addPassthrough
-removePassthrough
-addEntry
-removeEntry
-setEntries
+Several vulnerabilities were discovered in WebKitGTK+.
 
-Any locally logged in user, could use the above firewalld commands to
-tamper or change the firewall settings.
+CVE-2016-1778
+    Versions affected: WebKitGTK+ before 2.10.5.
+    Credit to 0x1byte working with Trend Micro's Zero Day Initiative
+    (ZDI).
+    WebKit in Apple iOS before 9.3 and Safari before 9.1 allows remote
+    attackers to execute arbitrary code or cause a denial of service
+    (memory corruption) via a crafted web site.
 
-This flaw was introduced via the following commit:
-https://github.com/t-woerner/firewalld/commit/6b9867cd5c5e2c83adeec42666521a420e59ef11
+CVE-2016-1779
+    Versions affected: WebKitGTK+ before 2.10.5.
+    Credit to xisigr of Tencent's Xuanwu Lab (http://www.tencent.com).
+    WebKit in Apple iOS before 9.3 and Safari before 9.1 allows remote
+    attackers to bypass the Same Origin Policy and obtain physical-
+    location data via a crafted geolocation request.
 
-It affects all firewalld versions since 0.3.12
+CVE-2016-1781
+    Versions affected: WebKitGTK+ before 2.10.5.
+    Credit to Devdatta Akhawe of Dropbox, Inc.
+    WebKit in Apple iOS before 9.3 and Safari before 9.1 mishandles
+    attachment URLs, which makes it easier for remote web servers to
+    track users via unspecified vectors.
 
-We have assigned CVE-2016-5410 to this flaw and this issue was
-previously disclosed via the linux-distros mailing list.
+CVE-2016-1782
+    Versions affected: WebKitGTK+ before 2.10.5.
+    Credit to Muneaki Nishimura (nishimunea) of Recruit Technologies
+    Co.,Ltd.
+    WebKit in Apple iOS before 9.3 and Safari before 9.1 does not
+    properly restrict redirects that specify a TCP port number, which
+    allows remote attackers to bypass intended port restrictions via a
+    crafted web site.
 
+CVE-2016-1783
+    Versions affected: WebKitGTK+ before 2.10.5.
+    Credit to Mihai Parparita of Google.
+    WebKit in Apple iOS before 9.3, Safari before 9.1, and tvOS before
+    9.2 allows remote attackers to execute arbitrary code or cause a
+    denial of service (memory corruption) via a crafted web site.
 
-A proposed patch is enclosed with this email.
+CVE-2016-1785
+    Versions affected: WebKitGTK+ before 2.10.5.
+    Credit to an anonymous researcher.
+    The Page Loading implementation in WebKit in Apple iOS before 9.3
+    and Safari before 9.1 mishandles character encoding during access to
+    cached data, which allows remote attackers to bypass the Same Origin
+    Policy and obtain sensitive information via a crafted web site.
 
---- a/src/firewall/server/firewalld.py
-+++ a/src/firewall/server/firewalld.py
-@@ -61,8 +61,8 @@ class FirewallD(slip.dbus.service.Object):
-
-     persistent = True
-     """ Make FirewallD persistent. """
--    default_polkit_auth_required = config.dbus.PK_ACTION_INFO
--    """ Use config.dbus.PK_ACTION_INFO as a default """
-+    default_polkit_auth_required = config.dbus.PK_ACTION_CONFIG
-+    """ Use config.dbus.PK_ACTION_CONFIG as a default """
-
-     @handle_exceptions
-     def __init__(self, *args, **kwargs):
-@@ -2128,6 +2128,7 @@ class FirewallD(slip.dbus.service.Object):
-
-     # DIRECT PASSTHROUGH (tracked)
-
-+    @slip.dbus.polkit.require_auth(config.dbus.PK_ACTION_DIRECT)
-     @dbus_service_method(config.dbus.DBUS_INTERFACE_DIRECT,
-in_signature='sas',
-                          out_signature='')
-     @dbus_handle_exceptions
-@@ -2141,6 +2142,7 @@ class FirewallD(slip.dbus.service.Object):
-         self.fw.direct.add_passthrough(ipv, args)
-         self.PassthroughAdded(ipv, args)
-
-+    @slip.dbus.polkit.require_auth(config.dbus.PK_ACTION_DIRECT)
-     @dbus_service_method(config.dbus.DBUS_INTERFACE_DIRECT,
-in_signature='sas',
-                          out_signature='')
-     @dbus_handle_exceptions
-@@ -2256,6 +2258,7 @@ class FirewallD(slip.dbus.service.Object):
-
-     # set entries # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# # #
-
-+    @slip.dbus.polkit.require_auth(config.dbus.PK_ACTION_CONFIG)
-     @dbus_service_method(config.dbus.DBUS_INTERFACE_IPSET,
-in_signature='ss',
-                          out_signature='')
-     @dbus_handle_exceptions
-@@ -2268,6 +2271,7 @@ class FirewallD(slip.dbus.service.Object):
-         self.fw.ipset.add_entry(ipset, entry)
-         self.EntryAdded(ipset, entry)
-
-+    @slip.dbus.polkit.require_auth(config.dbus.PK_ACTION_CONFIG)
-     @dbus_service_method(config.dbus.DBUS_INTERFACE_IPSET,
-in_signature='ss',
-                          out_signature='')
-     @dbus_handle_exceptions
-@@ -2301,7 +2305,7 @@ class FirewallD(slip.dbus.service.Object):
-         log.debug1("ipset.getEntries('%s')" % ipset)
-         return self.fw.ipset.get_entries(ipset)
-
--    @slip.dbus.polkit.require_auth(config.dbus.PK_ACTION_INFO)
-+    @slip.dbus.polkit.require_auth(config.dbus.PK_ACTION_CONFIG)
-     @dbus_service_method(config.dbus.DBUS_INTERFACE_IPSET,
-in_signature='sas')
-     @dbus_handle_exceptions
-     def setEntries(self, ipset, entries, sender=None): # pylint:
-disable=W0613
+CVE-2016-1786
+    Versions affected: WebKitGTK+ before 2.10.5.
+    Credit to ma.la of LINE Corporation.
+    The Page Loading implementation in WebKit in Apple iOS before 9.3
+    and Safari before 9.1 mishandles HTTP responses with a 3xx (aka
+    redirection) status code, which allows remote attackers to spoof the
+    displayed URL, bypass the Same Origin Policy, and obtain sensitive
+    cached information via a crafted web site.
 
 
+We recommend updating to the last stable version of WebKitGTK+. It is
+the best way of ensuring that you are running a safe version of
+WebKitGTK+. Please check our website for information about the last
+stable releases.
 
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+Further information about WebKitGTK+ Security Advisories can be found
+at: http://webkitgtk.org/security.html
+
+The WebKitGTK+ team,
+March 31, 2016
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
