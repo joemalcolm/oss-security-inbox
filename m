@@ -1,21 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/21/2
-Message-ID: <20161021013642.GA23643@buzz.coreos.systems>
-Date: Thu, 20 Oct 2016 18:36:42 -0700
-From: Alex Crawford <alex.crawford@...eos.com>
-To: oss-security@...ts.openwall.com
-Subject: Requesting membership to linux-distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/31/3
+Message-ID: <56FD3718.2090502@redhat.com>
+Date: Thu, 31 Mar 2016 09:41:28 -0500
+From: Eric Sandeen <sandeen@...hat.com>
+To: "Theodore Ts'o" <tytso@....edu>, Andreas Dilger <adilger@...ger.ca>
+Cc: Yves-Alexis Perez <corsac@...ian.org>, oss-security@...ts.openwall.com, Theodore Tso <tytso@...gle.com>, linux-ext4@...r.kernel.org
+Subject: Re: CVE Request - Linux kernel (multiple versions) ext2/ext3 filesystem DoS
 Content-Type: text/plain; charset=utf-8
 
-Hello, I run the CoreOS Linux team for CoreOS, Inc [1]. I thought I
-requested membership in the past, but after double-checking I definitely
-did not. Shoot. DirtyCOW reminded me to actually get this set up. Is
-anything else needed from me?
+On 3/30/16 3:43 PM, Theodore Ts'o wrote:
+> On Tue, Mar 29, 2016 at 04:56:11PM -0600, Andreas Dilger wrote:
+>> On Mar 29, 2016, at 3:14 PM, Yves-Alexis Perez <corsac@...ian.org> wrote:
+>>>
+>>> [dropping MITRE from CC since it's not about the CVE]
+>>> [adding ext and Theodore to CC]
+>>>
+>>> On mar., 2016-03-29 at 19:24 +0200, Hugues ANGUELKOV wrote:
+>>>> Hello,
+>>>>
+>>>> The linux kernel is prone to a Denial of service when mounting specially
+>>>> crafted ext2/ext3 (possibly ext4) filesystems. This occurs in the function
+>>>> ext4_handle_error who call the panic function on precise circumstance.
+>>>
+>>> Did you contact the upstream maintainers about this? I'm adding them just in
+>>> case they're not already aware of that…
+>>>
+>>>> This was tested on severals linux kernel version: 3.10, 3.18, 3.19, on
+>>>> real hardware and Xen DomU PV & HVM (the crash report attached is from a
+>>>> Fedora 3.18 PV DomU), from different distribution release: Ubuntu, CentOS,
+>>>> Fedora, Linux Mint, QubesOS.
+>>>> This a low security impact bug, because generally only root can mount
+>>>> image, however on Desktop (or possibly server?) system configured with
+>>>> automount the bug is easily triggable (think of android smartphone? Haven't
+>>>> test yet).
+>>
+>> It seems that the important point here is that the filesystem has
+>> "s_errors=EXT4_ERRORS_PANIC" set in the superblock?  I don't think
+>> the actual corruption that triggered the ext4_error() call is important,
+>> since there are any number of other failure cases that could generate
+>> a similar error.
+>>
+>> It seems practical to change s_errors at mount time from EXT4_ERRORS_PANIC
+>> to EXT4_ERRORS_RO for filesystems mounted by regular users.  The question
+>> is whether there is a way for the ext4 code to know this at mount time?
+> 
+> You can mount the file system with "mount -o errors=continue" and this
+> will override the default behavior specified in the super block.
+> 
+> I would argue that a Desktop or server system that had automount
+> should either (a) mount with -o errors=continue, or (b) force an fsck
+> on the file system before mounting it.
+> 
+> So I think this is a particularly meaningless CVE, which is why I have
+> zero respect for people who try to make any kind of conclusion based
+> on CVE counts.   I certainly don't plan to do anything about this.
+> 
+> You might as well complain that since the system ships with a reboot
+> command that can be executed by a clueless root user, that this is a
+> potential DOS attack scenario deserving of a CVE....
 
-Thanks.
+First of all, yes, I have always been extremely skeptical of these
+"crafted image" CVEs.  However, I'm not sure the "store errors=panic
+in the superblock" was particularly well thought out either; it certainly
+does make for a tidy little timebomb.
 
--Alex
+While I really hate to give issues such as this a whole lot more
+credibility, I wonder about a higher level control, such as a sysctl,
+which could [dis]allow errors=panic at a system-wide level.  It could default
+to disallowing, and it's trivial to set it in sysctl.conf if you really
+want it enabled by default.
 
-[1]: https://coreos.com/
+In the end, errors=panic is really a debug option; a small hoop-jump to
+use it doesn't sound too bad to me.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+-Eric
+
+
+
