@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7168" "Wednesday" "9" "November" "2016" "15:48:27" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<2777400.XtlcyMQHst@blackgate>" "94" "[oss-security] libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)" nil nil nil "11" "2016110914:48:27" "[oss-security] libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)" (number mark "U       ago@gentoo.o Nov  9   94/7168  " thread-indent "\"[oss-security] libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3972" "Thursday" "31" "March" "2016" "09:47:34" "-0600" "Andreas Dilger" "adilger@dilger.ca" "<B942CDE1-651E-43D2-82F1-8E110D6EB228@dilger.ca>" "98" "Re: [oss-security] CVE Request - Linux kernel (multiple versions) ext2/ext3 filesystem DoS" "^Cc:" nil nil "3" "2016033115:47:34" "[oss-security] CVE Request - Linux kernel (multiple versions) ext2/ext3 filesystem DoS" (number mark "        adilger@dilg Mar 31   98/3972  " thread-indent "\"Re: [oss-security] CVE Request - Linux kernel (multiple versions) ext2/ext3 filesystem DoS\"\n") "<CANO=Ty1OcZ=ukxttq9A9M9ot78jDPzDmq4y1NGUMAQmSiveH_g@mail.gmail.com>" ("<f4df42b35dd9a6c8c6851eba66b2b3f1.squirrel@webmail-etu.univ-nantes.fr>" "<1459286067.2596.18.camel@debian.org>" "<57514A3C-DBAD-4E5E-98EA-23E490629C02@dilger.ca>" "<20160330204304.GD6207@thunk.org>" "<CANO=Ty1OcZ=ukxttq9A9M9ot78jDPzDmq4y1NGUMAQmSiveH_g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1725 invoked by uid 550); 9 Nov 2016 14:48:44 -0000
+Received: (qmail 22099 invoked by uid 550); 31 Mar 2016 15:47:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,110 +11,144 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 22073 invoked from network); 31 Mar 2016 15:47:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dilger-ca.20150623.gappssmtp.com; s=20150623;
+        h=subject:mime-version:from:in-reply-to:date:cc:message-id:references
+         :to;
+        bh=LaUbiyReqFdXndnUlqtfmWRxYi7JfLeKIcBqNXGvajM=;
+        b=QRBfKHMgwS045i3C98VfxfnvI/kV877cVaFDdo5SYC+IDU4OgDbUbAsSs4E1z4t8YZ
+         J0uFsSznY4GcH7rF0kc33A7ICXMCwZMyeu4wWzEas7xylmKW2JVQFRHBW4lMqafQ4Otc
+         RvrjfRhjL4OihyCTD97ZebW4MsEcZzx489yn4E7X8ZzXdhsY3xHhtPq6jfo2sc4Ox9Aq
+         aOVvEbUZH9BTk12WmKdUJcBS6ZFZTqTzTFrgWTofRzN/z/BUFgk3YmuFrU0XLL27p+To
+         Fz/kjgRn5Y9dOS7MWX9kgdZ4SuICfiYIYUuOPU0LdHsNU5nnlUiXq5PA2AN5rgW0FsU9
+         6zVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:mime-version:from:in-reply-to:date:cc
+         :message-id:references:to;
+        bh=LaUbiyReqFdXndnUlqtfmWRxYi7JfLeKIcBqNXGvajM=;
+        b=R+FPqqzE+3LNWgwh+8o2rq5RnW9Kdnhu0xTV0w9HbCw1qA0+zuzK6Jiyx8YiC5kVLE
+         tume8LhnCMMohTc5vhRTXZRntKKqjqybd8uxKM91Wu8qn9dFRVcbGsDiUQWF208Hw7Ik
+         uzWqQASsy8tiIKwVt9JdJu9XgitSBdDcfpxkU9et2a5SbSiXbgwI5kvkUsjrDrwvUEAf
+         hC6WKeeVN837u2C8W01XIEyesm8uUmUCQorWbSV73P36imwCFKzfvaoEyrrRw8JTwDWB
+         bp9S5rO+4ExKogt/xXavVvtnyM3IaRdGqwyOo1RWqKWUbApg6oj9hZn6LDqKpVKqX+PC
+         0/Yg==
+X-Gm-Message-State: AD7BkJI3uR3l5n3LRfQF3w7jnKz+WK6fLNL7T+U3JXLb1+syp8S2CjNIu6YOl3zo90SxWQ==
+X-Received: by 10.50.30.73 with SMTP id q9mr30789196igh.77.1459439259908;
+        Thu, 31 Mar 2016 08:47:39 -0700 (PDT)
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Content-Type: multipart/signed; boundary="Apple-Mail=_4AFB059B-0F04-429D-87A2-60C052AD286E"; protocol="application/pgp-signature"; micalg=pgp-sha256
+X-Pgp-Agent: GPGMail 2.6b2
+In-Reply-To: <CANO=Ty1OcZ=ukxttq9A9M9ot78jDPzDmq4y1NGUMAQmSiveH_g@mail.gmail.com>
+Message-Id: <B942CDE1-651E-43D2-82F1-8E110D6EB228@dilger.ca>
+References: <f4df42b35dd9a6c8c6851eba66b2b3f1.squirrel@webmail-etu.univ-nantes.fr> <1459286067.2596.18.camel@debian.org> <57514A3C-DBAD-4E5E-98EA-23E490629C02@dilger.ca> <20160330204304.GD6207@thunk.org> <CANO=Ty1OcZ=ukxttq9A9M9ot78jDPzDmq4y1NGUMAQmSiveH_g@mail.gmail.com>
+X-Mailer: Apple Mail (2.3124)
+Cc: oss-security <oss-security@lists.openwall.com>,
+ Yves-Alexis Perez <corsac@debian.org>,
+ Theodore Tso <tytso@google.com>,
+ linux-ext4@vger.kernel.org
+Date: Thu, 31 Mar 2016 09:47:34 -0600
+From: Andreas Dilger <adilger@dilger.ca>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1641 invoked from network); 9 Nov 2016 14:48:43 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Date: Wed, 09 Nov 2016 15:48:27 +0100
-Message-ID: <2777400.XtlcyMQHst@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.26-gentoo; KDE/4.14.24; x86_64; ; )
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)
+Subject: Re: [oss-security] CVE Request - Linux kernel (multiple versions) ext2/ext3 filesystem DoS
+To: Kurt Seifried <kseifried@redhat.com>
 
-If it is suitable for a CVE please assign one. Thanks.
+--Apple-Mail=_4AFB059B-0F04-429D-87A2-60C052AD286E
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-Description:
-libming is a Flash (SWF) output library. It can be used from PHP, Perl, Ruby, 
-Python, C, C++, Java, and probably more on the way..
+On Mar 31, 2016, at 8:53 AM, Kurt Seifried <kseifried@redhat.com> wrote:
+>=20
+>=20
+>=20
+> On Wed, Mar 30, 2016 at 2:43 PM, Theodore Ts'o <tytso@mit.edu> wrote:
+>=20
+>> You can mount the file system with "mount -o errors=3Dcontinue" and this
+>> will override the default behavior specified in the super block.
+>>=20
+>> I would argue that a Desktop or server system that had automount
+>> should either (a) mount with -o errors=3Dcontinue, or (b) force an fsck
+>> on the file system before mounting it.
+>=20
+> The problem is that:
+>=20
+> a) means I'll be mounting filesystems with errors that I may want to know=
+ about (but not have my  system panic about)
+>=20
+> b) fsck takes a long time on large disks (the smallest size of disk I buy=
+ for USB drives is 1TB, if I fsck every time I plug one in I'll die of old =
+age).
 
-A fuzzing revealed a global buffer overflow in listmp3. The bug does not 
-reside in any shared object but if you have a web application that calls 
-directly the listmp3 binary to parse untrusted mp3, then you are affected.
+Two options that I think are fairly straight forward to fix this:
+- add /sbin/mount.{ext2,ext3,ext4} helpers that add "errors=3Dremount-ro"
+  when a non-root user mounts the filesystem. I think "errors=3Dremount-ro"
+  is safer than "errors=3Dcontinue" since it blocks all later attempts to
+  modify the filesystem, otherwise there may be further corruption and
+  more risk of hitting an unhandled error condition.
+- add a check in ext4_fill_super() to change EXT4_ERRORS_PANIC superblock
+  option to EXT4_ERRORS_RO if mounted by a non-root user
 
-The complete ASan output:
+>> So I think this is a particularly meaningless CVE, which is why I have
+>> zero respect for people who try to make any kind of conclusion based
+>> on CVE counts.   I certainly don't plan to do anything about this.
+>=20
+> As for your comments on CVE counting even the then head of CVE @mitre tol=
+d people not to rely on CVE counting for vulnerability stats:
+>=20
+> https://media.blackhat.com/us-13/US-13-Martin-Buying-Into-The-Bias-Why-Vu=
+lnerability-Statistics-Suck-Slides.pdf
+>=20
+> As for your comment on not fixing this: I think fundamentally I should be=
+ able to plug a file system in and try to mount it with default/reasonable =
+options and NOT have my system panic. File system handling code, like any c=
+ode that handles user supplied data should be able to handle garbage gracef=
+ully and securely. At worst it should try to mount and go "derp, it's messe=
+d up, maybe fsck it?"
 
-# listmp3 $FILE
-==29519==ERROR: AddressSanitizer: global-buffer-overflow on address 
-0x000000722e0c at pc 0x0000004f1a99 bp 0x7ffe42b1d7f0 sp 0x7ffe42b1d7e8
-READ of size 4 at 0x000000722e0c thread T0
-    #0 0x4f1a98 in printMP3Headers /var/tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/listmp3.c:128:20
-    #1 0x4f1bee in main /var/tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/listmp3.c:191:3
-    #2 0x7fe262a4761f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #3 0x418ae8 in getenv (/usr/bin/listmp3+0x418ae8)
+I think this is a legitimate problem to fix.  The main question is how comp=
+lex
+it is to fix?  I just don't know enough about the increasing number of ways
+that userspace can mount a filesystem to know how to detect this correctly =
+in
+the kernel.
 
-0x000000722e0c is located 52 bytes to the left of global variable 
-'mp2_samplerate_table' defined in 'listmp3.c:44:5' (0x722e40) of size 12
-0x000000722e0c is located 0 bytes to the right of global variable 
-'mp1_samplerate_table' defined in 'listmp3.c:43:5' (0x722e00) of size 12
-SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/listmp3.c:128:20 in printMP3Headers
-Shadow bytes around the buggy address:
-  0x0000800dc570: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0000800dc580: 00 00 00 00 00 00 00 00 00 00 00 04 f9 f9 f9 f9
-  0x0000800dc590: 00 00 00 00 00 00 00 04 f9 f9 f9 f9 00 00 00 00
-  0x0000800dc5a0: 00 00 00 04 f9 f9 f9 f9 00 00 00 00 00 00 00 04
-  0x0000800dc5b0: f9 f9 f9 f9 00 00 00 00 00 00 00 04 f9 f9 f9 f9
-=>0x0000800dc5c0: 00[04]f9 f9 f9 f9 f9 f9 00 04 f9 f9 f9 f9 f9 f9
-  0x0000800dc5d0: 00 04 f9 f9 f9 f9 f9 f9 00 00 00 00 00 00 00 00
-  0x0000800dc5e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0000800dc5f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0000800dc600: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0000800dc610: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2                                                                                                                                                                                                                                                  
-  Stack right redzone:     f3                                                                                                                                                                                                                                                  
-  Stack partial redzone:   f4                                                                                                                                                                                                                                                  
-  Stack after return:      f5                                                                                                                                                                                                                                                  
-  Stack use after scope:   f8                                                                                                                                                                                                                                                  
-  Global redzone:          f9                                                                                                                                                                                                                                                  
-  Global init order:       f6                                                                                                                                                                                                                                                  
-  Poisoned by user:        f7                                                                                                                                                                                                                                                  
-  Container overflow:      fc                                                                                                                                                                                                                                                  
-  Array cookie:            ac                                                                                                                                                                                                                                                  
-  Intra object redzone:    bb                                                                                                                                                                                                                                                  
-  ASan internal:           fe                                                                                                                                                                                                                                                  
-  Left alloca redzone:     ca                                                                                                                                                                                                                                                  
-  Right alloca redzone:    cb                                                                                                                                                                                                                                                  
-==29519==ABORTING                                                                                                                                                                                                                                                              
-frame 1: MP25 layer 1, 8000 Hz, 0kbps, mono, length=0, protect off
+It may be that "non-root user" in the options above should be "removable me=
+dia"
+instead?  Knowing the intent of the user/sysadmin is difficult.
 
-Affected version:
-0.4.7
+Cheers, Andreas
 
-Fixed version:
-N/A
 
-Commit fix:
-N/A
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
 
-CVE:
-N/A
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00034-libming-globaloverflow-printMP3Headers
 
-Timeline:
-2016-08-13: bug discovered
-2016-10-20: bug reported to upstream
-2016-11-07: blog post about the issue
+--Apple-Mail=_4AFB059B-0F04-429D-87A2-60C052AD286E
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
 
-Note:
-This bug was found with American Fuzzy Lop.
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - http://gpgtools.org
 
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/07/libming-listmp3-global-buffer-overflow-in-printmp3headers-listmp3-c
+iQIVAwUBVv1Gl3Kl2rkXzB/gAQhdsQ/+IlxT8/4IkJhGqaW51LyKKjIbSg0hj/S0
+GN25lpc7vrrjHBsIWUVl+/CDoPeXFSrHpvfPdUmx+J3038RRbG/2BPD/MtHoAZTN
+gKVVNOKeSTzOQINtk1EO+vbDVMP8P3NIbl6T+EWs3GUt20gGcg+0IRAadAiuuUOV
+4QMuEQrjMti6jlAdmAVmhr0UoUjqU7H2JvwGqtMQjouTdPhyItSl8NtYDkbbK7Wo
+teNx7GyfgvguQYPJG2mcaqc4aX04En9xIow97DcxC8HC1GTkivSII7Bs6Qh6ZPnU
+ctupm1EdU+mEiWyrX0b3og9jNi47DszHdEf4aLmDa1ANdsWED5YydFl9PsvqcP/7
+CASZF83AcAXPW1oi9IvW6T+ecI4vRb8xx8APvotO0TEjGRCTzuD5PxG3KnBKRj7J
+flf3AsaqYoHBNsREFbeJ+ZndS9JGwt/D/s3G3AAYMtxt1+12W5AHDgNKGrEoWpGN
+z0gV03eon3Q1vqE6Khskusb8Y7B4qJmy7n+Z0pTfNBTF5zHTD9NMNFfoym9/PJKg
+7RDFAcA/d1tLsstVhdPgtiS9IZ30eTOCmq/9mHwUPQm0q/2edZadRsYVsiO+wOB9
+aKVnKt+lW5DioUvEvE7XrwuJFDd+PORkXJSXy7z1+g+IVC0QLE62r6WE4r11RWD1
+7GKBS+1ctSg=
+=jKeb
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_4AFB059B-0F04-429D-87A2-60C052AD286E--
