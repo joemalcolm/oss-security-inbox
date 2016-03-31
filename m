@@ -1,116 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/12/6
-Message-ID: <A962A2D04FAB5C4499FEFD15B642FA0A011EF049@EX02.corp.qihoo.net>
-Date: Fri, 12 Aug 2016 10:10:10 +0000
-From: 连一汉 <lianyihan@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: [CVE-2016-6671] ffmpeg buffer overflow when decoding swf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/31/4
+Message-ID: <CANO=Ty1OcZ=ukxttq9A9M9ot78jDPzDmq4y1NGUMAQmSiveH_g@mail.gmail.com>
+Date: Thu, 31 Mar 2016 08:53:17 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Andreas Dilger <adilger@...ger.ca>, Yves-Alexis Perez <corsac@...ian.org>,  Theodore Tso <tytso@...gle.com>, linux-ext4@...r.kernel.org
+Subject: Re: CVE Request - Linux kernel (multiple versions) ext2/ext3 filesystem DoS
 Content-Type: text/plain; charset=utf-8
 
+On Wed, Mar 30, 2016 at 2:43 PM, Theodore Ts'o <tytso@....edu> wrote:
+>
+>
+> You can mount the file system with "mount -o errors=continue" and this
+> will override the default behavior specified in the super block.
+>
+> I would argue that a Desktop or server system that had automount
+> should either (a) mount with -o errors=continue, or (b) force an fsck
+> on the file system before mounting it.
+>
 
-Hi , I’m Lian ,a security researcher in Qihoo 360.
+The problem is that:
 
-I found a vulnerability of ffmpeg .
+a) means I'll be mounting filesystems with errors that I may want to know
+about (but not have my  system panic about)
 
-This is a buffer overflow vulnerability when decoding swf, and has been assigned the CVE identifier CVE-2016-6671 .
-
-Version Affected:  <=3.1.1
-Fixed Version:        3.1.2
-
-Web site:    http://ffmpeg.org/security.html
-
-Vulnerability detail:
+b) fsck takes a long time on large disks (the smallest size of disk I buy
+for USB drives is 1TB, if I fsck every time I plug one in I'll die of old
+age).
 
 
-================== test command =======================
+>
+> So I think this is a particularly meaningless CVE, which is why I have
+> zero respect for people who try to make any kind of conclusion based
+> on CVE counts.   I certainly don't plan to do anything about this.
+>
+
+As for your comments on CVE counting even the then head of CVE @mitre told
+people not to rely on CVE counting for vulnerability stats:
+
+https://media.blackhat.com/us-13/US-13-Martin-Buying-Into-The-Bias-Why-Vulnerability-Statistics-Suck-Slides.pdf
+
+As for your comment on not fixing this: I think fundamentally I should be
+able to plug a file system in and try to mount it with default/reasonable
+options and NOT have my system panic. File system handling code, like any
+code that handles user supplied data should be able to handle garbage
+gracefully and securely. At worst it should try to mount and go "derp, it's
+messed up, maybe fsck it?"
+
+
+>
+>                                            - Ted
+>
 
 
 
-Ffmpeg -i poc.swf -b:v 640k -y output.ts
+-- 
 
-============== affected code and crash info =================
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-On libavcodec/rawdec.c :
-
-raw_decode()
-{
-…
-memcpy(context->palette->data, pal, avpkt->size - vid_size);                          // buffer overflow
-…
-}
-
-Back trace:
-        #0  0x00007f6a128955f7 in raise () from /lib64/libc.so.6
-#1  0x00007f6a12896ce8 in abort () from /lib64/libc.so.6
-#2  0x00000000004d0d86 in __sanitizer::Abort() ()
-    at /tmp/llvm-3.8.0rc3.src/utils/release/final/llvm.src/projects/compiler-rt/lib/sanitizer_common/sanitizer_posix_libcdep.cc:124
-#3  0x00000000004beb65 in __sanitizer::Die() ()
-    at /tmp/llvm-3.8.0rc3.src/utils/release/final/llvm.src/projects/compiler-rt/lib/sanitizer_common/sanitizer_common.cc:147
-#4  0x00000000004b8a22 in ~ScopedInErrorReport () at /tmp/llvm-3.8.0rc3.src/utils/release/final/llvm.src/projects/compiler-rt/lib/asan/asan_report.cc:709
-#5  0x00000000004b83d1 in ReportGenericError () at /tmp/llvm-3.8.0rc3.src/utils/release/final/llvm.src/projects/compiler-rt/lib/asan/asan_report.cc:1111
-#6  0x000000000049c0e2 in __interceptor_memcpy ()
-   at /tmp/llvm-3.8.0rc3.src/utils/release/final/llvm.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:438
-#7  0x0000000001444fdb in raw_decode (avctx=0x619000008c80, data=0x61500003c580, got_frame=0x7fff89caa048, avpkt=0x7fff89ca9a18)
-    at libavcodec/rawdec.c:381
-#8  0x00000000015e7f18 in avcodec_decode_video2 (avctx=0x619000008c80, picture=0x61500003c580, got_picture_ptr=0x7fff89caa048, avpkt=0x7fff89ca9ff0)
-    at libavcodec/utils.c:2224
-#9  0x00000000005285ee in decode_video (ist=0x61400001ba40, pkt=0x7fff89ca9ff0, got_output=0x7fff89caa048) at ffmpeg.c:2087
-#10 0x000000000051733a in process_input_packet (ist=0x61400001ba40, pkt=0x7fff89caa888, no_eof=0) at ffmpeg.c:2340
-#11 0x000000000051ec93 in process_input (file_index=0) at ffmpeg.c:4020
-#12 0x0000000000514763 in transcode_step () at ffmpeg.c:4108
-#13 0x000000000050d3f1 in transcode () at ffmpeg.c:4162
-#14 0x000000000050c2e9 in main (argc=6, argv=0x7fff89caad18) at ffmpeg.c:4355
-
-====================== patch ===========================
-
-Found-by: <lianyihan@....cn>
-Signed-off-by: Michael Niedermayer <michael@...dermayer.cc>
----
-libavcodec/rawdec.c | 25 +++++++++++++++++--------
-1 file changed, 17 insertions(+), 8 deletions(-)
-
-diff --git a/libavcodec/rawdec.c b/libavcodec/rawdec.c
-index 765e567..f97a839 100644
---- a/libavcodec/rawdec.c
-+++ b/libavcodec/rawdec.c
-@@ -365,20 +365,29 @@ static int raw_decode(AVCodecContext *avctx, void *da=
-ta, int *got_frame,
-     if (avctx->pix_fmt =3D=3D AV_PIX_FMT_PAL8) {
-         const uint8_t *pal =3D av_packet_get_side_data(avpkt, AV_PKT_DATA_=
-PALETTE,
-                                                      NULL);
--        if (pal) {
--            av_buffer_unref(&context->palette);
-+        int ret;
-+        if (!context->palette)
-             context->palette =3D av_buffer_alloc(AVPALETTE_SIZE);
--            if (!context->palette) {
--                av_buffer_unref(&frame->buf[0]);
--                return AVERROR(ENOMEM);
--            }
-+        if (!context->palette) {
-+            av_buffer_unref(&frame->buf[0]);
-+            return AVERROR(ENOMEM);
-+        }
-+        ret =3D av_buffer_make_writable(&context->palette);
-+        if (ret < 0) {
-+            av_buffer_unref(&frame->buf[0]);
-+            return ret;
-+        }
-+
-+        if (pal) {
-             memcpy(context->palette->data, pal, AVPALETTE_SIZE);
-             frame->palette_has_changed =3D 1;
-         } else if (context->is_nut_pal8) {
-             int vid_size =3D avctx->width * avctx->height;
--            if (avpkt->size - vid_size) {
-+            int pal_size =3D avpkt->size - vid_size;
-+
-+            if (avpkt->size > vid_size && pal_size <=3D AVPALETTE_SIZE) {
-                 pal =3D avpkt->data + vid_size;
--                memcpy(context->palette->data, pal, avpkt->size - vid_size=
-);
-+                memcpy(context->palette->data, pal, pal_size);
-                 frame->palette_has_changed =3D 1;
-             }
-         }
