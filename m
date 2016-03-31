@@ -1,32 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/16/2
-Message-ID: <alpine.LFD.2.20.1602161702480.9762@wniryva>
-Date: Tue, 16 Feb 2016 17:06:13 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Zuozhi Fzz <zuozhi.fzz@...baba-inc.com>
-Subject: CVE request Qemu: usb: multiple eof_timers in ohci leads to null pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/31/10
+Message-ID: <20160331201936.GA25397@hunt>
+Date: Thu, 31 Mar 2016 13:19:36 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: CVE Clarification: Mysqlnd / CVE-2015-3152
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hello MITRE, all,
 
-Qemu emulator built with the USB OHCI emulation support is vulnerable to a 
-null pointer dereference issue. It could occur when OHCI transitions to a 
-OHCI_USB_OPERATIONAL state, leading to creation of multiple eof timers. A 
-privileged user inside guest could use this flaw to crash the Qemu process on 
-the host, resulting in DoS.
+Tomas Hoger asked if CVE-2015-3152 is appropriate for re-use with the php
+mysqlnd interface:
+https://marc.info/?l=oss-security&m=143750829604598
+http://www.openwall.com/lists/oss-security/2015/07/21/7
+Message-ID: <20150721215101.5b7c0a96@...hat.com>
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-02/msg03374.html
+This association is already made at e.g.:
+https://bugs.launchpad.net/ubuntu/+source/php5/+bug/1564388
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1304794
+I never saw a response to his question.
 
-This issue was discovered by Zuozhi Fzz of Alibaba Inc.
+Can we re-use this CVE for the different codbase? If not, can one please
+be assigned?
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Thanks
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
