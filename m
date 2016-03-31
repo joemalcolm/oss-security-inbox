@@ -1,26 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/05/7
-Message-ID: <1451995511.3914.25.camel@debian.org>
-Date: Tue, 05 Jan 2016 13:05:11 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/31/2
+Message-ID: <56FCDD9C.7090000@cleal.org>
+Date: Thu, 31 Mar 2016 09:19:40 +0100
+From: Dominic Cleal <dominic@...al.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for radicale
+Cc: foreman-security@...glegroups.com
+Subject: CVE-2016-2100: Foreman private bookmarks can be viewed and edited
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+CVE-2016-2100: Foreman allows read and write access to search bookmarks
+set as 'private' to other users.
 
-multiple security fixes were done in radicale (a calendar/contact server) 1.1,
-released on dec 31st:
+Bookmarks can be stored for quick access to frequent searches in the
+Foreman web UI, which can be used to filter lists of hosts and other
+objects.  These are either marked private or public, however the UI and
+API for users to manage their bookmarks listed all bookmarks, including
+private bookmarks of other users.  This allowed them to be viewed,
+edited, or deleted.
 
-https://github.com/Kozea/Radicale/pull/343
-http://radicale.org/news/#2015-12-31@11:54:03
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=809920
+Affects: Foreman 0.3 or higher
+Fix released in Foreman 1.10.3 and Foreman 1.11.0-RC2
 
-Can CVE be assigned for those issues?
+Patch:
+https://github.com/theforeman/foreman/commit/a61344da14f73920b4bdc7ad8220e7a0ed998031
 
-Thank in advance,
+More information:
+http://theforeman.org/security.html#2016-2100
+http://projects.theforeman.org/issues/13828
+http://theforeman.org/
+
 -- 
-Yves-Alexis
+Dominic Cleal
+dominic@...al.org
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
