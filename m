@@ -1,31 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/19
-Message-ID: <20160929170403.7226d30f@hboeck.de>
-Date: Thu, 29 Sep 2016 17:04:03 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/31/5
+Message-ID: <20160331151128.GK26612@suse.de>
+Date: Thu, 31 Mar 2016 17:11:29 +0200
+From: Johannes Segitz <jsegitz@...e.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [SECURITY ADVISORY] c-ares: single byte out of buffer write
+Cc: cve-assign@...re.org
+Subject: ext4 data corruption due to punch hole races
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-Just quick:
-This is a very typical bug class that libfuzzer can find very well.
-libfuzzer is like afl, but for functions instead of executables.
+Jan Kara fixed some issues in the Linux kernel with security implications.
 
-I have attached a sample code for libfuzzer which shows how this works.
-(In case anyone cares: Consider it being public domain / CC0 / whatever
-licensing terms you like)
+https://bugzilla.suse.com/show_bug.cgi?id=972174
 
-Takes only a few seconds without any starting corpus to find this bug.
+"When punching holes into a file races with the page fault of the same
+area, it is possible that freed blocks remain referenced from page cache
+pages mapped to process' address space. Thus modification of these blocks
+can corrupt data someone else is now storing in those blocks (which
+obviously has security implications if you can trick filesystem into
+storing some important file in those blocks).
 
+This affects all the kernels where we support ext4 for writing. Relevant
+fixes upstream are commits ea3d7209ca01da209cda6f0dea8be9cc4b7a933b,
+17048e8a083fec7ad841d88ef0812707fbc7e39f,
+32ebffd3bbb4162da5ff88f9a35dd32d0a28ea70,
+011278485ecc3cd2a3954b5d4c73101d919bf1fa."
+
+Please assign CVE(s).
+
+Johannes
 -- 
-Hanno Böck
-https://hboeck.de/
+GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
+Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nürnberg)
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
-
-View attachment "libfuzzer-ares_create_query.cpp" of type "text/x-c++src" (434 bytes)
-
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
