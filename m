@@ -1,26 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/27/9
-Message-ID: <20160927205512.GA25156@jasmine>
-Date: Tue, 27 Sep 2016 16:55:12 -0400
-From: Leo Famulari <leo@...ulari.name>
-To: oss-security@...ts.openwall.com
-Cc: john.haxby@...cle.com, chet.ramey@...e.edu
-Subject: Re: Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/31/7
+Message-Id: <B942CDE1-651E-43D2-82F1-8E110D6EB228@dilger.ca>
+Date: Thu, 31 Mar 2016 09:47:34 -0600
+From: Andreas Dilger <adilger@...ger.ca>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security <oss-security@...ts.openwall.com>, Yves-Alexis Perez <corsac@...ian.org>, Theodore Tso <tytso@...gle.com>, linux-ext4@...r.kernel.org
+Subject: Re: CVE Request - Linux kernel (multiple versions) ext2/ext3 filesystem DoS
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 16, 2016 at 03:56:01PM -0400, Chet Ramey wrote:
-> > > I believe the fix in parse.y is this (Chet, please correct me if I'm wrong):
-> > 
-> > Yes, that is the current fix for this.  There are other ways to do it.
+On Mar 31, 2016, at 8:53 AM, Kurt Seifried <kseifried@...hat.com> wrote:
 > 
-> Here's a patch to bash-4.3 that will fix this.
+> 
+> 
+> On Wed, Mar 30, 2016 at 2:43 PM, Theodore Ts'o <tytso@....edu> wrote:
+> 
+>> You can mount the file system with "mount -o errors=continue" and this
+>> will override the default behavior specified in the super block.
+>> 
+>> I would argue that a Desktop or server system that had automount
+>> should either (a) mount with -o errors=continue, or (b) force an fsck
+>> on the file system before mounting it.
+> 
+> The problem is that:
+> 
+> a) means I'll be mounting filesystems with errors that I may want to know about (but not have my  system panic about)
+> 
+> b) fsck takes a long time on large disks (the smallest size of disk I buy for USB drives is 1TB, if I fsck every time I plug one in I'll die of old age).
 
-Hi Chet,
+Two options that I think are fairly straight forward to fix this:
+- add /sbin/mount.{ext2,ext3,ext4} helpers that add "errors=remount-ro"
+  when a non-root user mounts the filesystem. I think "errors=remount-ro"
+  is safer than "errors=continue" since it blocks all later attempts to
+  modify the filesystem, otherwise there may be further corruption and
+  more risk of hitting an unhandled error condition.
+- add a check in ext4_fill_super() to change EXT4_ERRORS_PANIC superblock
+  option to EXT4_ERRORS_RO if mounted by a non-root user
 
-Thanks for the patch! Do you plan to add it to the bash-4.3-patches
-series [0]?
+>> So I think this is a particularly meaningless CVE, which is why I have
+>> zero respect for people who try to make any kind of conclusion based
+>> on CVE counts.   I certainly don't plan to do anything about this.
+> 
+> As for your comments on CVE counting even the then head of CVE @mitre told people not to rely on CVE counting for vulnerability stats:
+> 
+> https://media.blackhat.com/us-13/US-13-Martin-Buying-Into-The-Bias-Why-Vulnerability-Statistics-Suck-Slides.pdf
+> 
+> As for your comment on not fixing this: I think fundamentally I should be able to plug a file system in and try to mount it with default/reasonable options and NOT have my system panic. File system handling code, like any code that handles user supplied data should be able to handle garbage gracefully and securely. At worst it should try to mount and go "derp, it's messed up, maybe fsck it?"
 
-[0]
-https://ftp.gnu.org/gnu/bash/bash-4.3-patches/
+I think this is a legitimate problem to fix.  The main question is how complex
+it is to fix?  I just don't know enough about the increasing number of ways
+that userspace can mount a filesystem to know how to detect this correctly in
+the kernel.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+It may be that "non-root user" in the options above should be "removable media"
+instead?  Knowing the intent of the user/sysadmin is difficult.
+
+Cheers, Andreas
+
+
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
