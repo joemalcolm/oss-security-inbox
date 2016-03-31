@@ -1,40 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/19/11
-Message-ID: <CAL8hw9GntQtNLmvKQ-gWZzd=yyy3Ypi_+wEXGPAZ7DDoERugfA@mail.gmail.com>
-Date: Tue, 19 Apr 2016 15:12:59 +0000
-From: Nathan Van Gheem <vangheem@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: Privilege escalation in webdav
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/31/11
+Message-Id: <20160331203125.94DE28BC0A1@smtpvmsrv1.mitre.org>
+Date: Thu, 31 Mar 2016 16:31:25 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Partial SMAP bypass on 64-bit Linux kernels
 Content-Type: text/plain; charset=utf-8
 
-I apologize, the relevant code is referenced at
-https://plone.org/security/20160419 not the link provided.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Tue, Apr 19, 2016 at 10:10 AM Nathan Van Gheem <vangheem@...il.com>
-wrote:
+> https://git.kernel.org/cgit/linux/kernel/git/tip/tip.git/commit/?h=x86/urgent&id=3d44d51bd339766f0178f0cf2e8d048b4a4872aa
+>
+> That patch fixes a bug that exposed a fairly large kernel code surface
+> to a straightforward SMAP bypass.
 
-> Can a CVE be assigned to this issue, please?
->
-> https://plone.org/security/20160419/privilege-escalation-in-webdav
->
-> A missing webdav security declaration would allow unauthorized webdav
-> access.
->
-> The relevant code is:
->
-> https://plone.org/security/20150910/
->
-> The vendor credits with the discovery: Thomas Mogensen
->
-> Thanks, let me know if you'd like more information.
->
-> --
-> Nathan Van Gheem
-> Director of Solutions Engineering
-> Wildcard Corp
->
--- 
-Nathan Van Gheem
-Director of Solutions Engineering
-Wildcard Corp
+>> From: Salvatore Bonaccorso <carnil@...ian.org>
+>> Date: Tue, 29 Mar 2016 17:00:03 +0200
 
+>> @MITRE CVE assignment team: Would it make sense to have a CVE id
+>> assigned for this issue for better trackability?
+
+We're going to approach this one in the same way as the issue that was
+later assigned CVE-2016-2847.
+
+Specifically, is there anyone who believes
+3d44d51bd339766f0178f0cf2e8d048b4a4872aa must not have a CVE ID?
+
+The situation, very roughly, seems to be that the upstream vendor has
+announced that the behavior is a bug. CLAC occurs at a correct place
+for some types of entries, but accidentally did not occur at a correct
+place in the case of entries through the int80 gate. Consequently,
+exploits of kernel vulnerabilities can cause more damage in some
+cases.
+
+However, it seems to be a bug in how the kernel responds to a
+post-exploitation attack pattern. This is not a topic area that
+commonly has CVE ID assignments. Access by the kernel to a user space
+page is not an action that "crosses a privilege boundary" in a
+traditional sense.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJW/YinAAoJEL54rhJi8gl5LXcQAJ71fH0G8ucsjSEuUOhrxA27
+4cklfaLGWRTExNNHVbHLKKt2kl2QakS5U37z3phkAoji3X7fhK2qBZNL5TLnVae6
+7wZ8j+oMZaQTob7mf5AN/WYA/C30MnjqpABPb8iiBdM+7utiVrZW5aOFiKdXyFfM
+sg1gmYuGzPdcxc0yYjfX4CLvaljUbnzB0ZQNqO8OuCyj8eKR94pbhXBhw1sIWmje
+07Km2qy3NzIZuZj0QC51yy05fPRf1kQUgsDLWGknnLNDGKc5iXA+o7yufDYF1468
+MFDYcMz7kOoDefxtakZRXfq430Bs6wzt0dvPMVo27fHTXwTqIV609rX76mXoJEoM
+7v+i5b9u+IWIpkOJyorB0pIP10Sd501uIjlfNUMVu1pGzF7iGmbkDWdyXVGx2RHZ
+JFD4VRK5KTMAFrb1CeO7JCNkNHoQp55Dj1qeZZUHoPFI7CpCkeIWU+m3NC2IiYTe
+F+eTeedFkPb7HPJ04QPY2821ETZfjVsii0ocMACQa5lQD5NwS3DIEy8dYmam3P90
+EIRqafs94Bc02u4gvskIqDHTPjep9x/x2ODtbE/fPfpjUwpIE2H4ymR2WD6Cvj7E
+EP0zmvip5Ec3kBx62r4yUFp6TQmf1EY7l2w+CdkotPFuuh+/L8Px8thg+hKV39Jo
+QxUGU9yWdo2caoenKZi2
+=ADv/
+-----END PGP SIGNATURE-----
