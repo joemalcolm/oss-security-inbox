@@ -1,32 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/14/3
-Message-ID: <8b02b17e-cc12-5145-9957-381c583aa76c@suse.com>
-Date: Wed, 14 Sep 2016 09:09:18 +0200
-From: Andreas Stieger <astieger@...e.com>
-To: Damien Regad <dregad@...tisbt.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: ADOdb PDO driver: incorrect quoting may allow SQL injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/01/4
+Message-Id: <20160401180020.A22A86C402D@smtpvmsrv1.mitre.org>
+Date: Fri,  1 Apr 2016 14:00:20 -0400 (EDT)
+From: cve-assign@...re.org
+To: jsegitz@...e.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: ext4 data corruption due to punch hole races
 Content-Type: text/plain; charset=utf-8
 
-Him
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On 09/14/16 08:32, Damien Regad wrote:
-> Should I assume from the silence that no CVE is required for this ? 
+> issues in the Linux kernel with security implications
 
-I noticed that in your original e-mail to this list, you did not cc
-cve-assign. Also note that there are new procedures, including a request
-form, in addition to the previous recommendation to contact a CNA
-https://cve.mitre.org/cve/request_id.html
+> When punching holes into a file races with the page fault of the same
+> area, it is possible that freed blocks remain referenced from page cache
+> pages mapped to process' address space. Thus modification of these blocks
+> can corrupt data someone else is now storing in those blocks (which
+> obviously has security implications if you can trick filesystem into
+> storing some important file in those blocks).
 
-Andreas
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ea3d7209ca01da209cda6f0dea8be9cc4b7a933b
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=17048e8a083fec7ad841d88ef0812707fbc7e39f
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=32ebffd3bbb4162da5ff88f9a35dd32d0a28ea70
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=011278485ecc3cd2a3954b5d4c73101d919bf1fa
+> https://bugzilla.suse.com/show_bug.cgi?id=972174
 
--- 
-Andreas Stieger <astieger@...e.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG Nürnberg)
+We feel that these can be covered by one ID: use CVE-2015-8839. Also,
+it seems that 17048e8a083fec7ad841d88ef0812707fbc7e39f is not really a
+vulnerability fix on its own.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+iQIcBAEBCAAGBQJW/rawAAoJEL54rhJi8gl5+PsQAMi/qwF/Xrfi23k+CxQToLnI
+XL3CyhTTVGv/Y/K5L4UvhDDm+R6+OAzx87Hd3dtD9OWW8lksrG1AlH/kxehf/KY2
+K2M0shbmayzs/on98JR6pNWEfOHpPdFCloTp7QLuEfHj84OeS8Vlu+x9Ohe7qQA9
+nNkxMNfMT3QuCnw2rSSyi1hzlaWMyJokCNcV2YpKyJwu8xRd86DCd4QjYh1baOYT
+qja2wjHELmAMb0FNorWYLITwJIOS/gCWxxEdY1gHWyof4Je6mj5Qre6IQku5XcQ7
+smkOA0+kwIgAv9IF7znkwTu4LR5pS7Y/XRXMd4sVIq3ULoBEbHz/6EPUnZ3s5qKW
+O7KYktRsDdOvjYb4U4y9dXCO4Hf/AAuWN0AYI9c6XFIGRFvZkRZSgTv7qp2wBZNb
+kodD0QS8mtcWA9s9g9f0bFl/AioaQSjqH3o1dxXj+4+WMYzu46vGhf6Dux1KoIeM
+tibrt1zPuW0f/eDPyTVDufXEA7eOzRdc4JsODerL8qpnk89H+tYqbFGi/c5Y7ynQ
+1YxW1rKFXF0fxBryCSWiDSVSip6cQB4vC8QGa0qMn+Ht4wlg21WoT26E/CHu8Sou
+etu6yZndZdLKTNZcIpku0Ye4KCmMr2h6gK7z2feyCfOyTdukkO/DS2aLrSkZLfd+
+OCqmLLHyRkBvQjqIMvuR
+=bqmP
+-----END PGP SIGNATURE-----
