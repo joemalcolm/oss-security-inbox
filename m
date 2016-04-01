@@ -1,59 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/17/2
-Message-Id: <20160917015114.28FD28BC7E7@smtpvmsrv1.mitre.org>
-Date: Fri, 16 Sep 2016 21:51:14 -0400 (EDT)
-From: cve-assign@...re.org
-To: marco.gra@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: linux kernel SCSI arcmsr driver: buffer overflow in arcmsr_iop_message_xfer()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/01/3
+Message-ID: <CAKZKFJA2nzgaEOGg=Keqv8OE7zunaYwWcqx8maBaZbj-J+95xQ@mail.gmail.com>
+Date: Fri, 1 Apr 2016 13:42:37 -0400
+From: Tute Costa <tute@...ughtbot.com>
+To: oss-security@...ts.openwall.com
+Subject: Cross-site request forgery (CSRF) vulnerability in administrate gem
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Cross-site request forgery (CSRF) vulnerability in administrate 0.1.4
+and earlier allows remote attackers to hijack the user's OAuth
+autorization code.
 
-> http://lxr.free-electrons.com/source/drivers/scsi/arcmsr/arcmsr_hba.c#L2399
-> 
-> the int32_t user_len is taken from the scsi command
-> 
-> user_len = pcmdmessagefld->cmdmessage.Length;
-> 
-> and used directly without sanitization in a memcpy to a heap buffer of
-> fixed size 1032
-> 
-> memcpy(ptmpuserbuffer, pcmdmessagefld->messagedatabuffer, user_len);
-> 
-> potentially causing kernel heap corruption and arbitrary kernel code execution.
-> 
-> The issue has been already acknowledged and patched in a development
-> branch:
-> http://marc.info/?l=linux-scsi&m=147394713328707&w=2
-> http://marc.info/?l=linux-scsi&m=147394796228991&w=2
+Versions Affected:  0.1.4 and below
+Fixed Versions:     0.1.5
 
-Use CVE-2016-7425.
+Impact
+------
 
-This is not yet available at
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/drivers/scsi/arcmsr/arcmsr_hba.c
-but may be there later.
+`Administrate::ApplicationController` actions didn't have CSRF
+protection. Remote attackers can hijack user's sessions and use any
+functionality that administrate exposes on their behalf.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Releases
+--------
 
-iQIcBAEBCAAGBQJX3KBcAAoJEHb/MwWLVhi2PsAQAJiBt13fFrxXEIx2r4qo9M9A
-z/lQ08hVmRkuCtR3hUPz6qRiLR6k6iWMdzE4m0ic2Nwckggoiv3S1siYdE/lO2q9
-ngVLJ3EgmchdCD/R13bSEMGA4RP4zMBAQCuf4m+7oOiMWiXhmUZiFgz3QEH1Uatw
-tRV+wJyTCkmTs3ooqXQW/JWXvs6kHxm5xY5qv3IGcMHNhMtpB19sRCLzFWIiSmxU
-T/VtuhLPRhtecxrZfHgyIumTNtbeycjm/zBfQ1/RRg5kDmGRGAC32hUN+zBYchyW
-NDlbveQqKhazRZ4tm7/HChH0Ah6ignen3GkyTMh8/ad69h/oEJ96TwLoBpxU+QL3
-rKcb+I75TBB50ixD9cAaD1cOeYLvYGdtMRw+d30M6u5P0qSXMQsof8F2bgwIVH3g
-9PiQFiSzJQeuXMxBpAJDsb0st4HiB0U7SeJYp1/eP0W4ojaZwBvcPqz84xoUPue8
-XYlLde7OP7wIH+NW5ttpS0KmM8iGpcO5Sd0xB6fHo3Ms33SM4DP5PcNNgRjfky9R
-ixlOUFp28vrIWUFRmlexqEgvGNMUWhwJOemsV/y3629MuhfASay2+4+xs0AMKpKa
-tsIRk7hKjhgbl3iHJdAedXPbJT8wwuCbQXm6mU628BWire9smJKsYwIp+HAPVkU9
-Q8bkubcBFrhLpuFa+/3b
-=bvH5
------END PGP SIGNATURE-----
+The 0.1.5 release is available at
+https://rubygems.org/gems/administrate and
+https://github.com/thoughtbot/administrate.
+
+Upgrade Process
+---------------
+
+Upgrade administrate version at least to 0.1.5.
+
+Workarounds
+-----------
+
+You can reopen Administrate's `ApplicationController` to add CSRF
+protection to your application:
+
+```ruby
+module Administrate
+  class ApplicationController < ActionController::Base
+    protect_from_forgery with: :exception
+  end
+end
+```
+
+Credits
+-------
+Thanks to Jason Yeo of SRC:CLR for finding and reporting this vulnerability.
