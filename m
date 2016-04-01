@@ -1,19 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/7
-Message-ID: <CACn5sdRcbHO_PyXNSzX3ccs-xxHhGTkMoj5Xi0O6LGZb1cTJyw@mail.gmail.com>
-Date: Mon, 9 May 2016 19:28:12 +0200
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-2099: use-after-free in Xerces 3.1.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/01/6
+Message-Id: <20160401220924.8B09373C090@smtpvmsrv1.mitre.org>
+Date: Fri,  1 Apr 2016 18:09:24 -0400 (EDT)
+From: cve-assign@...re.org
+To: squid3@...enet.co.nz
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Squid HTTP Proxy
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-We found a use-after-free in Xerces 3.1.3 parsing an xml file (also
-affecting older versions). Technical details and a patch are available
-here:
+> 1) A buffer overrun (on write(2)) has been found in Squid proxy 'pinger'
+> process that allows an attacker to craft ICMPv6 messages that will
+> either crash the child process (if the OS prootects against over-write)
+> or alter heap contents allowing the attacker to bypass CVE-2014-7142
+> protection and leak arbitrary heap data into the Squid log files. The
+> pinger is setuid root (though it does drop those privileges prior to
+> this attack being possible).
+> 
+> Patch for this issue is available at:
+> http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14015.patch
+> 
+> The upstream advisory will be at this URL:
+> http://www.squid-cache.org/Advisories/SQUID-2016_3.txt
 
-https://issues.apache.org/jira/browse/XERCESC-2066
+Use CVE-2016-3947.
 
-Regards,
-Gustavo.
+
+> 2) A secondary issue with the same Denial of Service effects as
+> CVE-2016-2569 has been found that is not covered by the existing fix.
+> All Squid-3.x versions up to and including 3.5.15, and 4.0.x versions up
+> to and including 4.0.7 are vulnerable to this issue independent of the
+> fix for CVE-2016-2569.
+> 
+> Patch for this is available at:
+> http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14016.patch
+> 
+> The upstream advisory will be at this URL:
+> http://www.squid-cache.org/Advisories/SQUID-2016_4.txt
+
+Use CVE-2016-3948.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJW/vEJAAoJEL54rhJi8gl5CDQQAKX+bY+PFOebFBtOrDhYR7tI
+4zbp+0MHv8pZjM+o6xW1tU1zYl/+VwCt2qv/O3R4Gt7JWZfOQthrwA1yzU3fNku7
+kI6aQZWVisiY6gsjI9Wj1Sfklehm9qSTDXyesMy+RB+oXNqhhR3l9B1GzLwMIcOH
+I4chWJNXKoU1o3YWp27cnfLg4QgLzQn7pKLx+rpuOh//oFwfuOkWf3cNLXrRYLew
+JDnwc3l+XmwHRtkX/E+su8ipC1dmxovtvqfQtjkjPmuosElSP3RgvtiMro3iK3MV
+WF6vM+dV7cAa//mZPd8GDzSeAPYLjiSovwhNWAmW4AlsEpUvGdO5SJ3HrThuhaku
+7Lwx9BoRjH2yNqZl23jsLnwTTL2U5DjDePjpVzfKtaIDh5ccam1zHui7g8/j6Hpa
+cmWlrlFhhB/FeUNR3EdYrPUF60AcapqJu4sQcpiMdPVFtDnxySj4XKe9yqbvNG3w
+OoFxeqOs4n9D2bEA5yTcF5DjbYN/EK08cz7pAi1kUjdbtcG6DeTprJpfvwzjleY5
+lx7NFYAJe1I0V7ZplDsUacMuN0AbPDqbkpZ46oWLkiDPassty66SLnVoepsMAlrh
+8WF3zq19oyjUMp5gsxUEonZ4f4cVVNlD+jL/BDdWrbRBSvtw+ceQAwCvkFnS20Sh
+NcYcZZpfjqharCUG2qxn
+=ZN5k
+-----END PGP SIGNATURE-----
