@@ -1,54 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/6
-Message-Id: <20160818033657.BE627B2E01B@smtpvbsrv1.mitre.org>
-Date: Wed, 17 Aug 2016 23:36:57 -0400 (EDT)
-From: cve-assign@...re.org
-To: marco.gra@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Linux tcp_xmit_retransmit_queue use after free on 4.8-rc1 / master
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/01/2
+Message-ID: <CAHfGB06cYfRQ2_he=Y8ijX9pezEF9KyaGyJKpE5okX-MWOgn8g@mail.gmail.com>
+Date: Thu, 31 Mar 2016 17:02:05 -0700
+From: Brian Wallace <bwall9809@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Christopher Truncer <ctruncer@...l-framework.com>
+Subject: CVE Request - Multiple remote command injection vulnerabilities in Veil-Evasion RPC
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> this program will cause a use after free of read 4 in
-> tcp_xmit_retransmit_queue or other tcp_ functions, often in another totally
-> unrelated process.
+Three remote code execution vulnerabilities have been discovered in
+Veil-Evasion's RPC, which is instantiated with `veil-evasion --rpc` or
+`python Veil-Evasion --rpc`.  Additionally, previous to version 2.25, this
+RPC allowed connections from any IP address instead of only "localhost",
+increasing the severity of the command injection vulnerabilities and
+allowing for remote exploitation.  This RPC public availability may also be
+considered a vulnerability itself, as it was unintended.
 
-> tested on master available at the
-> time of writing and on 4.8 rc1
+All issues have been reported to the developers of the Veil-Evasion
+project, and patches have been applied for version 2.25.  Issues are
+believed to affect versions of Veil-Evasion from 2.5.2 through 2.24.
 
-> [   21.446876] BUG: KASAN: use-after-free in
-> tcp_xmit_retransmit_queue+0xc75/0xdb0 at addr ffff88007a06d428
-> [   21.447953] Read of size 4 by task rsyslogd/1612
-> 
-> ...
-> 
-> ip6_dst_check+0x262/0x410
 
-> syscall(SYS_socket, 0xaul, 0x1ul, 0x0ul, 0, 0, 0);
+Remote command injection in "native/hyperion" module:
+This module allows for injection into a command line call to the hyperion
+utility.  A vulnerable version of the command line call can be found here:
+https://github.com/Veil-Framework/Veil-Evasion/blob/c30d2f085a1a1644395b64a6d151cb0ea5a19dfb/modules/payloads/native/hyperion.py#L42
+An attacker can control input to this field through the ORIGINAL_EXE
+field.  A sample RPC call exploiting this vulnerability is as follows (will
+create the file /tmp/victory):
+{"method": "generate", "params": ["payload=native/hyperion",
+"outputbase=base", "pwnstaller=N", "ORIGINAL_EXE=/tmp $(touch
+/tmp/victory)"],"id": 1}
+An attacker could use this vulnerability to execute any desired commands on
+the victim host.
 
-Use CVE-2016-6828.
+This issue is resolved in the following commit (version 2.25):
+https://github.com/Veil-Framework/Veil-Evasion/commit/cd9d95ad368959d1eee03a250ec61206a046829a
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXtSOaAAoJEHb/MwWLVhi2eVYP/17p3S7V79KaB1JBE+6KR5Kg
-OFGawnxE05zFw+/YmhzmeiQY+YDEvEyNVvIcMhEmSksFkQofVodzJGKZ78f0K8Tz
-GrhHn+s/uc4KJTxacJAIFYG8ZbEw24A3fnN8wU+nBkjzwOiwiz4wsP54MC43PLQz
-azZC2d47rXfHwr9whoUFik5vi2HvU8AesDbRIFOK1g1U35Z0J7PybcZjh5NE5loP
-/8zGlYR602bCq7PfAvoYW34Ui0kHRqDu0PaRiLlLVVrAVwDOd20ZZPfqcF9DOW85
-aF2vwlttTyL+Ogy1StraNtq06XWICOMULR4l9Y5Q30438icDEiH6yW/aOccctG3j
-CKC0QOfNtvPI4HtVjPUgx92icRHsxh+/VBED4WxnF3iHBzLMRT9EBxTHAS3MV4oM
-mZmSRQsMiP0cgcmi7KEeej5RWh9YvmSCfgrBTxXDnLr3vXbDJpDTA5jzXXXXpxAY
-tluapbNlEffKrW6aspd6FnqSze9N7zQA6LxWmmpL9bUAFNp3EcLNFLis+e9RLPYy
-5Kz/+x1sB1IDldHANp8QsAGk+GvWGGSauOuFyKKP3s84Y0Da3shCw/LuEweo0qFP
-uapf8CH6uD8ZR3P/9AfiftpX+q0YNITdfsp6XbKtVRgW3fgg44UyRHP5zGUwkJWT
-b0SEiC2X+uIfP1/0CTqd
-=dKqq
------END PGP SIGNATURE-----
+Remote command injection in "native/pescrambler" module:
+This module allows for injection into a command line call to the
+pescrambler utility. A vulnerable version of the command line call can be
+found here:
+https://github.com/Veil-Framework/Veil-Evasion/blob/c30d2f085a1a1644395b64a6d151cb0ea5a19dfb/modules/payloads/native/pe_scrambler.py#L42
+An attacker can control input to this field through the ORIGINAL_EXE
+field.  A sample RPC call exploiting this vulnerability is as follows (will
+create the file /tmp/victory):
+{"method": "generate", "params": ["payload=native/pe_scrambler",
+"outputbase=base", "pwnstaller=N", "ORIGINAL_EXE=/tmp $(touch
+/tmp/victory)"],"id": 1}
+An attacker could use this vulnerability to execute any desired commands on
+the victim host.
+
+This issue is resolved in the following commit (version 2.25):
+https://github.com/Veil-Framework/Veil-Evasion/commit/cd9d95ad368959d1eee03a250ec61206a046829a
+
+
+Remote command injection into "msfvenom" parameter:
+When msfvenom is used to generate shellcode, a user may supply options to
+the msfvenom command line call.  An attacker may use this to insert other
+commands to be executed.  The command line execution of msfvenom can be
+found here:
+https://github.com/Veil-Framework/Veil-Evasion/blob/c30d2f085a1a1644395b64a6d151cb0ea5a19dfb/modules/common/shellcode.py#L498
+Based on the functionality provided, the selected solution to the problem
+was to parse input as a shell script, and deny any input which appeared to
+include attempts at command injection.  An attacker can abuse this with the
+following RPC call in version 2.24 (different versions may require
+different modules depending on msfvenom support):
+{"method": "generate", "params": ["payload=c/shellcode_inject/flatc",
+"msfvenom=$(touch /tmp/victory)", "outputbase=base", "pwnstaller=N",
+"COMPILE_TO_EXE=Y", "INJECT_METHOD=Virtual", ], "id": 1}
+An attacker could use this vulnerability to execute any desired commands on
+the victim host.
+
+This issue was resolved in the following commit (version 2.25):
+https://github.com/Veil-Framework/Veil-Evasion/commit/be10ddddaeacf232cec9dca5e49461454237ee8a
+
+
+RPC unauthenticated public access:
+The RPC provided on port 4242 for Veil-Evasion is exposed to external IP
+addresses instead of only to localhost from its initial implementation up
+until 2.25 patched this issue.  Aside from the issues noted above, this
+would allow for an attacker to send commands to the Veil-Evasion RPC,
+generating payloads, and other available functionality which may not be
+desirable to unauthorized users.  The code causing the issue can be
+observed here:
+https://github.com/Veil-Framework/Veil-Evasion/commit/533d58721cef3f9d68303d628999d34d9ba3482b#diff-406918d36f7373d0d7e29279ceff3c8bR201
+
+This issue was resolved in the following commit (version 2.25):
+https://github.com/Veil-Framework/Veil-Evasion/commit/3cffe14ee5f9361697496ea045a95d62b38d52d4
+
+
+Vulnerabilities were discovered and reported by Brian Wallace
+bwall9809@...il.com.
+
+Chis Truncer (cc'd) is the primary developer for Veil-Evasion, and showed
+an exemplary response to the vulnerability reporting.
+
+CVEs for these issues have not been previously requested.
+
+A combined proof of concept in Python 2.7 is attached.
+
+This is my first request to this mailing list, so I apologize in advance
+for any misinterpretations of protocol.
+
+Thank you,
+Brian Wallace
+
+Content of type "text/html" skipped
+
+View attachment "poc.py" of type "text/x-python" (1118 bytes)
