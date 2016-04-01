@@ -1,67 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/06/14
-Message-Id: <20160306213346.BF6846C0559@smtpvmsrv1.mitre.org>
-Date: Sun,  6 Mar 2016 16:33:46 -0500 (EST)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Aufs Union Filesystem Privilege Escalation In User Namespaces
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/01/1
+Message-ID: <alpine.LFD.2.20.1604011151000.27413@wniryva>
+Date: Fri, 1 Apr 2016 11:55:26 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: cve-assign@...re.org
+Subject: Re: Re: Partial SMAP bypass on 64-bit Linux kernels
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
++-- On Thu, 31 Mar 2016, cve-assign@...re.org wrote --+
+| Specifically, is there anyone who believes
+| 3d44d51bd339766f0178f0cf2e8d048b4a4872aa must not have a CVE ID?
+...
+|However, it seems to be a bug in how the kernel responds to a
+|post-exploitation attack pattern.
 
-> http://www.halfdog.net/Security/2016/AufsPrivilegeEscalationInUserNamespaces/
-
-> AUFS Over Fuse: Loss of Nosuid
-
-> Those files can be exposed
-> using aufs including the problematic SUID properties.
-
->     Mount aufs on top of fuse
->     Execute the SUID binary via aufs from outside the namespace
-
-> In my optionion the workarounds should be to restrict access to fuse
-> also only to the mount namespace where it was created.
-
-> https://sourceforge.net/p/aufs/mailman/message/34864744/
-
->> test mnt_ns in open(2) for fuse branch
-
-Use CVE-2016-2853.
-
-
-> AUFS Xattr Setgid Privilege Escalation
-
-> Due to inheritance of Posix ACL information (xattrs) when aufs is
-> copying files and not cleaning those additional and unintended ACL
-> attribues, SGID directories may become user writable
-
-> https://sourceforge.net/p/aufs/mailman/message/34864744/
-
->> copy-up resets ACL
-
-Use CVE-2016-2854.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJW3KG9AAoJEL54rhJi8gl5uk0P/j2vNmJ1Q5x3eWMfnlfoobCr
-+GjgC7LPHk6Y1t3P1Rvkd1+Di7oqABso7FnZrHmfRuCk8txuzxOx/nAhQ7Jw8ROJ
-607J36pYSWoCvkOo6tGdrisfaqDT+z0RmVVw8jhecZUE4n8m2BwLcHhMVHBehoDp
-nOhzwMvxMNjNWw+qhVPFFOUM2gOxv1NQFdQ9YBflMgszb+8LW7AdTQgHrKuwCose
-2ynF0JwbeVdtIcOPyqVlUNJOvqclOVEPQOyd7Y6P1v4ykDPhfI8pgObyLU9Kt6vL
-MY1lCmKGfkuM0/nGlTlvF5jhKqUPJeBzVsjnY7/uI2/zxDSboTsFGCaOx8nbL3Ut
-diKtUDaKmQwn8Tm00JPWBm7cFPVdtGsQTfosfbbZC4rjerzV831dh69zTA+hn79k
-nrH9QeRGPSZVh/sl3WzP2QvlWNoFyBUPUrb4Q+oOS8ttC5cnOwuynHyva951ZBC0
-B9223w347nise9fclv3tYr1XIRV/o0wmn6N39aQUdNOhplNGu5lqflwC/rIz2rYB
-eubUoXGBsBB/dSBSLEFhGt2oQZVqtEH9b0FjFpSI0jpKwPR0U2Mt/OKGPnlRznvI
-20w2wZBh4nxtsxSOcTP8MRqPwWgo695vdKviDPXLd7JXQ8v5ctozY1RypVKPJus8
-8E6zCgbi02SxlmhHG+5l
-=6N7V
------END PGP SIGNATURE-----
+True, IIUC it seems more of hardening patch than an issue.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
