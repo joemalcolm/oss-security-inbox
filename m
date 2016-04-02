@@ -1,61 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/23/1
-Message-ID: <cb66c7f5-a882-5553-8657-a0bafdf14b2a@redhat.com>
-Date: Fri, 23 Sep 2016 01:08:17 +0000
-From: Tristan Cacqueray <tdecacqu@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2016-011] Nova may fail to delete images in resize state regression (CVE-2016-7498)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/02/1
+Message-ID: <1459602897.9149.3.camel@debian.org>
+Date: Sat, 02 Apr 2016 15:14:57 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com, Johannes Segitz <jsegitz@...e.com>,  Theodore Ts'o <tytso@....edu>, Ben Hutchings <ben@...adent.org.uk>
+Subject: Re: ext4 data corruption due to punch hole races
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-OSSA-2016-011: Nova may fail to delete images in resize state regression
-========================================================================
+On jeu., 2016-03-31 at 17:11 +0200, Johannes Segitz wrote:
+> Hello,
+> 
+> Jan Kara fixed some issues in the Linux kernel with security implications.
+> 
+> https://bugzilla.suse.com/show_bug.cgi?id=972174
+> 
+> "When punching holes into a file races with the page fault of the same
+> area, it is possible that freed blocks remain referenced from page cache
+> pages mapped to process' address space. Thus modification of these blocks
+> can corrupt data someone else is now storing in those blocks (which
+> obviously has security implications if you can trick filesystem into
+> storing some important file in those blocks).
+> 
+> This affects all the kernels where we support ext4 for writing. Relevant
+> fixes upstream are commits ea3d7209ca01da209cda6f0dea8be9cc4b7a933b,
+> 17048e8a083fec7ad841d88ef0812707fbc7e39f,
+> 32ebffd3bbb4162da5ff88f9a35dd32d0a28ea70,
+> 011278485ecc3cd2a3954b5d4c73101d919bf1fa."
+> 
 
-:Date: September 21, 2016
-:CVE: CVE-2016-7498
+Hey,
 
+any reason why those commits weren't CC: stable? If this really affects all
+kernels where ext4 writing is possible, that means basically all current
+stable kernels more or less, I guess?
 
-Affects
-~~~~~~~
-- Nova: ==13.0.0
-
-
-Description
-~~~~~~~~~~~
-Rajesh Tailor from Red Hat reported a vulnerability in Nova. If an
-authenticated user deletes an instance while it is in resize state, it
-will cause the original instance to not be deleted from the compute
-node it was running on. An attacker can use this to launch a denial of
-service attack. All Nova setups are affected.
-
-
-Patches
-~~~~~~~
-- https://review.openstack.org/327398 (Mitaka)
-- https://review.openstack.org/326262 (Newton)
-
-
-Credits
-~~~~~~~
-- Rajesh Tailor from Red Hat (CVE-2016-7498)
-
-
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/bugs/1589821
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-7498
-
-
-Notes
-~~~~~
-- This bug is similar to OSSA-2015-017 (CVE-2015-3280) and was
-  re-introduced in the first release of Mitaka version of Nova and it
-  was re-fixed in nova-13.1.0.
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
+Regards,
+-- 
+Yves-Alexis
 
 
 Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
