@@ -1,46 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/04/7
-Message-Id: <20161004183210.EA2B1B2E027@smtpvbsrv1.mitre.org>
-Date: Tue,  4 Oct 2016 14:32:10 -0400 (EDT)
-From: cve-assign@...re.org
-To: steve@...lectiveidea.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for code execution via gem name collission in bundler (was Re: CVE Request)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/02/2
+Message-ID: <20160402154634.GA3334@thunk.org>
+Date: Sat, 2 Apr 2016 11:46:34 -0400
+From: Theodore Ts'o <tytso@....edu>
+To: Yves-Alexis Perez <corsac@...ian.org>
+Cc: oss-security@...ts.openwall.com, Johannes Segitz <jsegitz@...e.com>, Ben Hutchings <ben@...adent.org.uk>
+Subject: Re: ext4 data corruption due to punch hole races
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Sat, Apr 02, 2016 at 03:14:57PM +0200, Yves-Alexis Perez wrote:
+> > "When punching holes into a file races with the page fault of the same
+> > area, it is possible that freed blocks remain referenced from page cache
+> > pages mapped to process' address space. Thus modification of these blocks
+> > can corrupt data someone else is now storing in those blocks (which
+> > obviously has security implications if you can trick filesystem into
+> > storing some important file in those blocks).
+> > 
+> > This affects all the kernels where we support ext4 for writing. Relevant
+> > fixes upstream are commits ea3d7209ca01da209cda6f0dea8be9cc4b7a933b,
+> > 17048e8a083fec7ad841d88ef0812707fbc7e39f,
+> > 32ebffd3bbb4162da5ff88f9a35dd32d0a28ea70,
+> > 011278485ecc3cd2a3954b5d4c73101d919bf1fa."
+> 
+> any reason why those commits weren't CC: stable? If this really affects all
+> kernels where ext4 writing is possible, that means basically all current
+> stable kernels more or less, I guess?
 
-> I'd like to request a CVE to track a security vulnerability found in
-> Bundler (bundler.io <http://bundler.io/>). Bundler allows the user to
-> specify sources from which Ruby gems are installed. If a secondary
-> source is specified, even if scoped to a specific gem, that source is
-> silently applied to all declared gems. This allows an attacker to
-> introduce arbitrary code into an application via gem name collision on
-> the secondary source, which will unexpectedly (and without warning)
-> take priority over the primary source.
+They weren't cc'ed stable because they're fairly complex patches,
+which (a) means they probably wouldn't auto-apply anyway, and (b)
+someone who does do the (probably manual) back port they would be
+*very* strongly advised to run them through a complete ext4 regression
+test series[1] to make sure the patches actually don't make things
+worse from a stability perspective.
 
-Use CVE-2016-7954.
+[1] http://thunk.org/gce-xfstests
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+I do spend *small* amount of work testing the stable kernels (3.10,
+3.14, 3.18, 4.1, 4.4) using gce-xfstests and backporting and testing
+patches that weren't cc'ed to stable for various reasons.  It's a
+pretty low priority task, though, and I'd really love to delegate this
+to someone else.  I just don't have the bandwidth to support back
+level kernels (this is why distributions get paid the big bucks), and
+note that even if I or someone else stepped up, this won't necessarily
+help Debian, which isn't on a one of the stable kernel versions.
 
-iQIcBAEBCAAGBQJX8/U7AAoJEHb/MwWLVhi2xrwP/RjNz+PRsrpnt6grFruRj6rH
-IvSdysqLU3/+gK2Q+1mXtdydmkn05PMLHrB58Os6hP+K5POjPnNjXsc+VfaoD83r
-S4wmDBs3H4l3XMrT+WHOqvZWsF74iDlTSFA35DNLFRW6Ad5IwPNuMcUBE8yqlMyK
-SQ6aU0BvwB7yygmeK6RBvDICsUthcyrTooXkmeDKe1EhRxgKXwdvFVeknKiCOneK
-hTMvNl6MyWU6BW3W0AelJG0mcndEu9Ai7DUf50mgCtuJCLay0wKLn8QrcYg7dWR8
-17xFYh8v3soNMNrWBhyKcJUxWPz/YhNKbqjvXnk4Q1BIiEaBmYL4/Mw08dj+nKmy
-2LTE+Kcx9vKHedo6lNT/Qxuug+S1czmbGESfygWACDpl2frB9YwVaU8MbFxZkfVj
-utU9+zrQBhRQXUw9ZMN83dJqqiC8956/IGWczI++rvp8cqrMETP91PueK23wE091
-SEzfASXty4n2HdD4AWwg0caECoDeUiDZP8UrQkkLDYu9Xlyeqw9C1vgiATTT3Uni
-bTFjnBhrohCXEh/uvoWJIqZZbO8DRQ0KWI6FlcDuDzubGrih0M4CM7KZ0bDRpwGC
-9VGbDtdGK0XPOzzHvPUr+GDSjwZCJ0aFTaxlxwa+ol15mLKyBWCkLHd/8NYHvM5E
-is4rHDl4O1P83Wx0+Er0
-=RpXj
------END PGP SIGNATURE-----
+If anyone is interested, please contact me.  Otherwise, I'll get to it
+eventually.
+
+						- Ted
