@@ -1,4 +1,9 @@
-Received: (qmail 1570 invoked by uid 550); 20 May 2026 09:52:06 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4206" "Saturday" "2" "April" "2016" "22:32:53" "-0400" "Theodore Ts'o" "tytso@mit.edu" "<20160403023253.GB3334@thunk.org>" "92" "Re: [oss-security] ext4 data corruption due to punch hole races" "^Cc:" nil nil "4" "2016040302:32:53" "[oss-security] ext4 data corruption due to punch hole races" (number mark "        tytso@mit.ed Apr  2   92/4206  " thread-indent "\"Re: [oss-security] ext4 data corruption due to punch hole races\"\n") "<1459647465.2704.96.camel@decadent.org.uk>" ("<20160331151128.GK26612@suse.de>" "<1459602897.9149.3.camel@debian.org>" "<20160402154634.GA3334@thunk.org>" "<1459647465.2704.96.camel@decadent.org.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 20160 invoked by uid 550); 3 Apr 2016 02:33:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,102 +11,120 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1543 invoked from network); 20 May 2026 09:52:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=iG2XuOq6zmHbi3ule8YGYCLcra2oCdg35KPjki59bPg=; b=vWf8Ctq0UvHlW5YZkyK1ulqU2i
-	auwnw0czt8Y+42kQ/G8uYzZ1XjtSkf/Cyj3rm8i1g24uZfvlWVBDYZ1CiYSfFVSBlM6HZbheyk0gA
-	dQVVSwzmERcqzH9zv5r80du0EachmlydEyZbiph8UQNHaxJMgjNAX+l0qteJClCqML8H3LW2N+aFz
-	GcW88CCWchFGao3LHMConLW/9YmnJ4zxjL7uez/1tBgD7sKfSWPBZPsOxz6DWfISqX2xH2HdHohQO
-	mCRwj1BIDuJPjLwn6EbchqTDV/TGpQkVBdeioVKbPD6d/vFBif9WDnQHdg18Lym63LJK59KTWuR4Y
-	CCJgucEQ==;
-Date: Wed, 20 May 2026 10:51:52 +0100
-From: Simon McVittie <smcv@debian.org>
-To: oss-security@lists.openwall.com
-Cc: arraybolt3@riseup.net
-Message-ID: <ag2EONSuspJdhYfd@definition.pseudorandom.co.uk>
-References: <20260518220116.170677b2@riseup.net>
- <agw1YBkrV6kcsdYr@definition.pseudorandom.co.uk>
- <20260519193042.3feb8374@gmail.com>
+Received: (qmail 20142 invoked from network); 3 Apr 2016 02:33:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org; s=ef5046eb;
+	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=uWwTONbHylQklWI0eXtQoiAbHH0dL+SD+FoXO7FTCic=;
+	b=F1KpxCXAV+8sJwyhfVxnzrSEOwGhv9nqatVh5DL/FwtwXICXSG3VrQgpoSy6p5PgtLOI87dOKFtNyHQkCwXy/vL2lGIvXjTAUBAKb7Rl7ax1NfAgt8T2koiU+oX4MdNqm6qeW5vfXHZh9DN9CwWR47Qf58rQj34kJzpwYxlT0sQ=;
+Message-ID: <20160403023253.GB3334@thunk.org>
+References: <20160331151128.GK26612@suse.de>
+ <1459602897.9149.3.camel@debian.org>
+ <20160402154634.GA3334@thunk.org>
+ <1459647465.2704.96.camel@decadent.org.uk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260519193042.3feb8374@gmail.com>
-X-Debian-User: smcv
-Subject: Re: [oss-security] On the issue of MIME handlers that execute
- arbitrary code (e.g. Wine)
+In-Reply-To: <1459647465.2704.96.camel@decadent.org.uk>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+Cc: Yves-Alexis Perez <corsac@debian.org>, oss-security@lists.openwall.com,
+	Johannes Segitz <jsegitz@suse.com>
+Date: Sat, 2 Apr 2016 22:32:53 -0400
+From: Theodore Ts'o <tytso@mit.edu>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] ext4 data corruption due to punch hole races
+To: Ben Hutchings <ben@decadent.org.uk>
 
-On Tue, 19 May 2026 at 19:30:42 -0400, Aaron Rainbolt wrote:
->I wonder if it would be worth proposing a change to whatever system
->component handles opening files (probably something in Glib, or
->xdg-utils, haven't researched that deeply yet)
+On Sun, Apr 03, 2016 at 02:37:45AM +0100, Ben Hutchings wrote:
+> Regardless of how difficult it is, we probably need to fix the bugs
+> somehow in Debian stable.  It looks like the commits are:
+> 
+> ea3d7209ca01 fix for PUNCH_HOLE (3.0+)
+> 17048e8a083f fix for default fallocate (all) and ZERO_RANGE (3.15+)
+> 32ebffd3bbb4 fix for COLLAPSE_RANGE (3.15+) and INSERT_RANGE (4.2+)
+> 011278485ecc fix for PUNCH_HOLE (3.0+) and ZERO_RANGE (3.15+)
+> 
+> So the third would not be needed for stable branches up to 3.14 but
+> otherwise they're all needed (at least in part) for all live stable
+> branches - right?
+> 
+> (As there are clearly multiple bugs here; why only one CVE ID?)
 
-It's a general-purpose specification that is designed to be implemented 
-by an unlimited number of packages, some of them desktop-specific:
+Commit ea3d7209ca01 fixes the only bug that could result in the
+overwriting of another file or directory (which could belong to
+someone else, or in the case of a directory could lead to a file
+system corruption.)
 
-* GLib, and via that, gio(1), xdg-desktop-portal and flatpak-xdg-utils'
-   xdg-open(1) reimplementation
-* some Qt/KDE library (I'm less familiar with the KDE world, so I don't
-   know whether this is done in the Qt layer or somewhere in kdelibs)
-* xdg-utils' xdg-open(1) (the reference implementation of that name)
-* Debian's mailcap package, which translates fd.o MIME handlers into
-   traditional mailcap(5) handlers
-* web browsers like Firefox and Chromium might reimplement it? not sure
-* ...
+The other bugs fixes races which could lead to the user's file being
+corrupted (some data regions getting replaced by zeros), but it's
+strictly speaking not a vulnerability per se, since the user would
+have to be trying very hard to hit the race, and it would only result
+in the user's own file being corrupted.  Hence, it's probably fair to
+consider them as not being vulernabilities, and hence not needing a
+CVE.
 
-so any change to how the spec is to be implemented would have to be 
-fd.o consensus and spread across all of those.
+Furthermore, very few applications call ZERO_RANGE, COLLAPSE_RANGE, or
+INSERT_RANGE at all, and those that do are not likely to be trying to
+issue racing writes or truncates while they operate on the file using
+these fallocate modes.  Hence, I'd consider them low priority bug
+fixes to backport.
 
-(xdg-utils' implementation of xdg-open(1) sometimes calls helper 
-utilities from GNOME, KDE, XFCE, etc., like GLib's gio(1), or sometimes 
-implements a sufficiently large subset of the .desktop spec itself in 
-shell script, depending how and where it's invoked - this is not great 
-from a maintainability or predictability point of view, but it does mean 
-that it can continue to take into account desktop-environment-specific 
-behaviours that pre-date the de facto standardization of MIME type 
-handlers and the URI scheme pseudo-MIME-types like 
-x-scheme-handler/http.)
+To the extent that ea3d7209ca01 could result in file system corruption
+or another user's file being corrupted, it's clearly the higher
+priority one to backport.  Using this as a viable exploit would be
+tricky, since you would have to try to hit the race while the other
+user was trying to allocate blocks to the file or directory that you
+are trying to corrupt.
 
->so that handlers cannot
->be registered for certain "dangerous" file types (i.e. ELF/PE/Mach-O
->executables, scripts in various languages, etc.)? The only real
->downside I can see to that is the inability to text editors to
->register themselves as handlers for script MIME types, and in those
->instances, the editor can register itself as the handler for another
->applicable, more generic MIME type (i.e. text/plain), then change its
->behavior based on the more detailed MIME type of the file after it
->opens it.
+Still, in a highly specialized circumstance where you had some ACL
+that was getting regularly updated at a predictable time interval
+(say, /root/.ssh/authorized_keys, from some contralized databased), if
+you could manage to arrange to allocate and punch holes in the same
+block group as the ACL file would be written to, it probably could be
+leveraged into a privilege escalation attack.  While I suspect that
+most cyber criminals and the NSA have zero days stocked up that would
+allow them to escalate a non-privileged shell up to root access that
+would be far easier and less noisy to exploit, it would be good to
+backport this commit.
 
-I think the ability to double-click on a script (shell, Python, etc.) 
-and have it open in a programmers' text editor would probably be 
-considered to be a requirement by desktop environments, although 
-associating a text editor with text/plain partially covers that.
+> > If anyone is interested, please contact me.  Otherwise, I'll get to it
+> > eventually.
+> 
+> Since I do most of the security backports for Debian, of course I am
+> interested.
 
-If it's no longer possible to associate an action with a script MIME 
-type specifically, then that would make it impossible to configure 
-text/plain to open in a quick/simple Notepad-like editor like 
-gnome-text-editor or KWrite, while having text/x-python3 open in a more 
-complicated IDE like GNOME Builder or Emacs, or a Python-specific 
-environment like IDLE. That seems like an unwelcome loss of 
-functionality, and perhaps too much - I don't think it's common to 
-associate these script file-types with something that will immediately 
-run them?
+That would be great, thanks!  It's been two months since the last time
+I've done a comprehensive test of the stable kernels.  Typically
+xfstests gets updated with repros of the more critical bugs, so I try
+to rerun xfstests on the stable kernels to make sure we haven't missed
+any critical backports.  The last time I did the survey, there is one
+upstream commit that still needs to be backported to the stable
+kernel:
 
-I'm not sure whether it still does, but GNOME's file-roller (primarily a 
-handler for zip, tar etc. archives) used to register a MIME handler for 
-PE DLLs and executables that would show the PE object's various sections 
-(data, executable code, resources) as pseudo-files that can be read and 
-extracted. I'm not sure whether that was ever practically useful or just 
-demo/"because we can" functionality, but in the past it has accidentally 
-mitigated the dangerous handlers discussed in this thread by being a 
-higher-priority handler for PE executables for GNOME users than the 
-dangerous one! Not allowing handlers for PE executables would have the 
-collateral damage of breaking its ability to have this file-type 
-association, which is relatively safe because it's treating the 
-executable as data in a specific format rather than executing anything.
+commit 3da40c7b089810ac9cf2bb1e59633f619f3a7312
+Author: Josef Bacik <jbacik@fb.com>
+Date:   Mon Jun 22 00:31:26 2015 -0400
 
-     smcv
+    ext4: only call ext4_truncate when size <= isize
+    
+    At LSF we decided that if we truncate up from isize we shouldn't trim
+    fallocated blocks that were fallocated with KEEP_SIZE and are past the
+    new i_size.  This patch fixes ext4 to do this.
+    
+    [ Completely reworked patch so that i_disksize would actually get set
+      when truncating up.  Also reworked the code for handling truncate so
+      that it's easier to handle. -- tytso ]
+    
+    Signed-off-by: Josef Bacik <jbacik@fb.com>
+    Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+    Reviewed-by: Lukas Czerner <lczerner@redhat.com>
+
+This is not security critical, but it makes ext4's behavior consistent
+with the other file systems, and it fixes an xfstest failure.  With
+this exception, the regression test runs were quite clean the last
+time I checked, about two months ago.
+
+Cheers,
+
+						 - Ted
