@@ -1,93 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/14/1
-Message-ID: <alpine.DEB.2.20.1609140812200.31085@tvnag.unkk.fr>
-Date: Wed, 14 Sep 2016 08:13:05 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY VULNERABILITY] curl escape and unescape integer overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/03/1
+Message-ID: <1459647465.2704.96.camel@decadent.org.uk>
+Date: Sun, 03 Apr 2016 02:37:45 +0100
+From: Ben Hutchings <ben@...adent.org.uk>
+To: Theodore Ts'o <tytso@....edu>, Yves-Alexis Perez <corsac@...ian.org>
+Cc: oss-security@...ts.openwall.com, Johannes Segitz <jsegitz@...e.com>
+Subject: Re: ext4 data corruption due to punch hole races
 Content-Type: text/plain; charset=utf-8
 
-curl escape and unescape integer overflows
-==========================================
+On Sat, 2016-04-02 at 11:46 -0400, Theodore Ts'o wrote:
+> On Sat, Apr 02, 2016 at 03:14:57PM +0200, Yves-Alexis Perez wrote:
+> > 
+> > > 
+> > > "When punching holes into a file races with the page fault of the same
+> > > area, it is possible that freed blocks remain referenced from page cache
+> > > pages mapped to process' address space. Thus modification of these blocks
+> > > can corrupt data someone else is now storing in those blocks (which
+> > > obviously has security implications if you can trick filesystem into
+> > > storing some important file in those blocks).
+> > > 
+> > > This affects all the kernels where we support ext4 for writing. Relevant
+> > > fixes upstream are commits ea3d7209ca01da209cda6f0dea8be9cc4b7a933b,
+> > > 17048e8a083fec7ad841d88ef0812707fbc7e39f,
+> > > 32ebffd3bbb4162da5ff88f9a35dd32d0a28ea70,
+> > > 011278485ecc3cd2a3954b5d4c73101d919bf1fa."
+> > any reason why those commits weren't CC: stable? If this really affects all
+> > kernels where ext4 writing is possible, that means basically all current
+> > stable kernels more or less, I guess?
+> They weren't cc'ed stable because they're fairly complex patches,
+> which (a) means they probably wouldn't auto-apply anyway, and (b)
+> someone who does do the (probably manual) back port they would be
+> *very* strongly advised to run them through a complete ext4 regression
+> test series[1] to make sure the patches actually don't make things
+> worse from a stability perspective.
 
-Project cURL Security Advisory, September 14, 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20160914.html)
+Regardless of how difficult it is, we probably need to fix the bugs
+somehow in Debian stable.  It looks like the commits are:
 
-VULNERABILITY
--------------
+ea3d7209ca01 fix for PUNCH_HOLE (3.0+)
+17048e8a083f fix for default fallocate (all) and ZERO_RANGE (3.15+)
+32ebffd3bbb4 fix for COLLAPSE_RANGE (3.15+) and INSERT_RANGE (4.2+)
+011278485ecc fix for PUNCH_HOLE (3.0+) and ZERO_RANGE (3.15+)
 
-The four libcurl functions `curl_escape()`, `curl_easy_escape()`,
-`curl_unescape` and `curl_easy_unescape` perform string URL percent escaping
-and unescaping. They accept custom string length inputs in signed integer
-arguments. (The functions having names without "easy" being the deprecated
-versions of the others.)
+So the third would not be needed for stable branches up to 3.14 but
+otherwise they're all needed (at least in part) for all live stable
+branches - right?
 
-The provided string length arguments were not properly checked and due to
-arithmetic in the functions, passing in the length 0xffffffff (2^32-1 or
-`UINT_MAX` or even just -1) would end up causing an allocation of zero bytes
-of heap memory that curl would attempt to write gigabytes of data into.
+(As there are clearly multiple bugs here; why only one CVE ID?)
 
-The use of 'int' for this input type in the API is of course unwise but has
-remained so in order to maintain the API over the years.
+> [1] http://thunk.org/gce-xfstests
+> 
+> I do spend *small* amount of work testing the stable kernels (3.10,
+> 3.14, 3.18, 4.1, 4.4) using gce-xfstests and backporting and testing
+> patches that weren't cc'ed to stable for various reasons.  It's a
+> pretty low priority task, though, and I'd really love to delegate this
+> to someone else.  I just don't have the bandwidth to support back
+> level kernels (this is why distributions get paid the big bucks), and
+> note that even if I or someone else stepped up, this won't necessarily
+> help Debian, which isn't on a one of the stable kernel versions.
 
-We are not aware of any exploit of this flaw.
+wheezy is: https://www.kernel.org/category/releases.html
 
-INFO
-----
+> If anyone is interested, please contact me.  Otherwise, I'll get to it
+> eventually.
 
-This flaw does not affect the curl command line tool.
+Since I do most of the security backports for Debian, of course I am
+interested.
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-7167 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-This flaw exists in the following libcurl versions.
-
-- Affected versions: libcurl 7.11.1 to and including 7.50.2
-- Not affected versions: libcurl < 7.11.1 and libcurl >= 7.50.3
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.50.3, these functions will deny negative string lengths from
-being used.
-
-A [patch for CVE-2016-7167](https://curl.haxx.se/CVE-2016-7167.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.50.3
-
-  B - Apply the patch to your version and rebuild
-
-  C - Make sure you don't pass in string lengths larger than `INT_MAX`
-      (typically 2^31) or negative values to the `curl_easy_(un)escape()`
-      functions!
-
-TIME LINE
----------
-
-It was first reported to the curl project on September 8 by the Mitre CVE
-Assignment Team based on the discussions in [PHP bug report
-72674](https://bugs.php.net/bug.php?id=72674).
-
-libcurl 7.50.3 was released on September 14 2016, coordinated with the
-publication of this advisory.
-
-CREDITS
--------
-
-Thanks to the Mitre CVE Assignment Team for reporting this to us.
+Ben.
 
 -- 
-
-  / daniel.haxx.se
+Ben Hutchings
+The two most common things in the universe are hydrogen and stupidity.
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
