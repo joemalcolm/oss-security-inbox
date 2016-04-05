@@ -1,54 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/19/10
-Message-ID: <alpine.GSO.2.20.1605191433400.15930@freddy.simplesystems.org>
-Date: Thu, 19 May 2016 14:51:58 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security@...ts.openwall.com
-Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/05/1
+Message-ID: <CA+s3sfGjsnd+JiDyx+i9xWX6J4DoK=bQUEn64Z8jP2ava1cLYw@mail.gmail.com>
+Date: Tue, 05 Apr 2016 17:19:31 +0000
+From: Jason Buberel <jbuberel@...gle.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE request - Go - DLL loading, Big int
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 19 May 2016, Simon McVittie wrote:
->
-> Having looked into it a bit for Debian, there are several factors:
->
-> * mitigations exist, like you said
+OSS-Security,
 
-The problem is that most users don't know about the problem, the 
-mitigations, or are even aware that they are using the software. 
-They do know about periodic application of security updates.
+The Go open source project has identified two security issues that we
+believe warrant the issuing of a new release:
 
-Regarding the comments from Kurt Seifried about the supposed perils of 
-MVG:
+1. On Windows, Go loads system DLLs by name with LoadLibrary, making it
+vulnerable to DLL preloading attacks. Notably, if a user launched a Go
+executable from their Downloads folder and malicious DLLs were in their
+Downloads folder. This is being address in the following CL:
+https://golang.org/cl/21428
 
-Unless ImageMagick is configured to use RSVG (as it often is), then it 
-will use its own built in SVG renderer by default (the built in one is 
-still available with a "MSVG:" prefix to the filename or possibly the 
-file extension).  The SVG renderer operates by translating the SVG 
-into MVG, including the URLs.  The translation is not secure in that 
-arbitrary MVG may be injected via SVG through text strings.  SVG is a 
-common file exchange format found on the web and often opened outside 
-of web browsers.
+2. Go has an infinite loop in several big integer routines that makes Go
+programs vulnerable to remote denial of service attacks.  Programs using
+HTTPS client authentication or the Go ssh server libraries are both exposed
+to this vulnerability. This is being addressed in the following CL:
+https://golang.org/cl/21533
 
-> * many of the upstream fixes in ImageMagick (and GraphicsMagick)
->  are really just mitigations too, and they remove features that someone
->  could conceivably have been using, which rather goes against the idea
->  of a stable release with a fixed feature-set
+We will release two new versions - Go 1.6.1 and 1.5.4 - both of which will
+address these two issues.
 
-Agreed.
+Regards,
+Jason Buberel
+PM, Go
 
-> Bob, if you would like distributions to pick up GraphicsMagick security
-> fixes in a timely way, it would probably be really useful to do an
-> upstream release - distributions are typically a lot more confident about
-
-I do plan to make a release, but want to make sure that the release is 
-of no less quality than other releases.  I want to remove the current 
-render/MVG "mitigation" regarding magick-specific syntax and provide a 
-"safer" operating mode which protects against magick-specific syntax 
-when it is used for formats with expected behavior like SVG.  The 
-"safer" mode may have general purpose value outside of MVG.
-
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
