@@ -1,132 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/26/4
-Message-id: <38EF50CD-F76B-4180-8E01-44ED395D68CA@me.com>
-Date: Tue, 26 Jul 2016 08:37:28 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: SQLi and Reflected XSS in Huge IT catalog extension v1.0.4 for Joomla
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/05/5
+Message-ID: <1459892278.30749.347.camel@ipfire.org>
+Date: Tue, 05 Apr 2016 22:37:58 +0100
+From: Michael Tremer <michael.tremer@...ire.org>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: CVE request: Remote command execution/XSS vulnerability after login in IPFire's web user interface
 Content-Type: text/plain; charset=utf-8
 
-Title: SQLi and XSS in Huge IT catalog extension v1.0.4 for Joomla
-Author: Larry W. Cashdollar, @_larry0
-Date: 2015-07-17
-Download Site: http://extensions.joomla.org/extensions/extension/e-commerce/shopping-cart/catalog
-Vendor: www.huge-it.com
-Vendor Notified: 2015-07-17, fixed in v1.0.5
-Vendor Contact: info@...e-it.com
-Description: This extension is designed to help you display the products in the most attractive way. Joomla Catalog Extension has a stylish design with convenient construction for displaying the product to the customers.
-Vulnerability:
-The attacker must be logged in with at least manager level access or access to the administrative panel to exploit this vulnerability.
+Hello,
 
-Reflected XSS in file ./views/submissions/tmpl/default.php via message_id parameter:
+I would like to request a CVE number for the following two issues in the web
+user interface of IPFire reported by Yann Cam [1].
 
-825:   <input type="hidden" id="message_id" value ="<?php echo $_GET['message_id']; ?>" />
+We currently have an upstream bug report [2] that is non-public at the moment
+and patches are under review by the reporter.
 
 
-SQL Injection 
+1) XSS in GET parameter in ipinfo.cgi
 
-in file ./models/submissions.php via id parameter
-59-        $query = $db->getQuery(true);
-60-        $id = JRequest::getVar('message_id');
-61-        $this-> updateReadInfo($id);
-62:        $query->select('*,#__huge_it_catalog_products.name as product_name, #__huge_it_catalog_asc_seller.id as  message_id');
-63-        $query->from('#__huge_it_catalog_asc_seller,#__huge_it_catalog_products');
-64-        $query->where('#__huge_it_catalog_asc_seller.product_id = #__huge_it_catalog_products.id and #__huge_it_catalog_asc_seller.id = "'.$id.'"');
-65-        $db->setQuery($query);
-in file ./models/comment.php via projectId parameter:
+A non-persistent XSS in GET param is available in the ipinfo.cgi. The injection
+can be URLencoded with certain browsers or blocked with Anti-XSS engine.
 
-56-        $db = JFactory::getDBO();
-57-       $id = JRequest::getVar('projectId'); 
-58-       $query = $db->getQuery(true);
-59:        $query->select('*,#__huge_it_catalog_reviews.id as comId, #__huge_it_catalog_reviews.name as author_name, #__huge_it_catalog_products.name as product_name')
-60-             ->from('#__huge_it_catalog_reviews, #__huge_it_catalog_products')
-61-         ->where('#__huge_it_catalog_reviews.product_id = #__huge_it_catalog_products.id and #__huge_it_catalog_products.id = "'.$id.'"');
-62-        $db->setQuery($query);
+This XSS works on IE and affect IPFire version <= 2.17 Core Update 99 for the
+moment.
+ 
+File /srv/web/ipfire/cgi-bin/ipinfo.cgi line 87 :
+    &Header::openbox('100%', 'left', $addr . ' (' . $hostname . ') : '.$whoisname);
+ 
 
-in file ./models/rating.php via projectId parameter:
+2) Remote command execution in proxy.cgi
 
-55-        return $results;
-56-    } 
-57-    
-58-    public  function getRatingById() {
-59-        $db = JFactory::getDBO();
-60:       $id = JRequest::getVar('projectId'); 
-61-       $query = $db->getQuery(true);
-62-        $query->select('*,#__huge_it_catalog_rating.id as ratId')
-63-             ->from('#__huge_it_catalog_rating, #__huge_it_catalog_products')
-64-         ->where('#__huge_it_catalog_rating.prod_id = #__huge_it_catalog_products.id and #__huge_it_catalog_products.id = "'.$id.'"');
-65-        $db->setQuery($query);
+Remote Command Execution in the proxy.cgi file. This file is protected from CSRF
+execution. Affected version <= 2.17 Core Update 99 for the moment.
 
-in file ./models/catalog.php via id parameter:
+File /srv/web/ipfire/cgi-bin/proxy.cgi line 4137 :
+    system("/usr/sbin/htpasswd -b $userdb $str_user $str_pass");
 
-45:        $id_cat = JRequest::getVar('id');
-46-        $query = $db->getQuery(true);
-47-        $query->select('#__huge_it_catalog_products.name as name,'
-48-                . '#__huge_it_catalog_products.id ,'
-49-                . '#__huge_it_catalogs.name as catName,'
-50-                . 'catalog_id,#__huge_it_catalog_products.description as productDescription,#__huge_it_catalog_products.parameters as productParameters,#__huge_it_catalogs.description,image_url,sl_url,sl_type,price,market_price,single_product_url_type,single_product_url_type,#__huge_it_catalog_products.link_target as productLinkTarget,#__huge_it_catalog_products.ordering,#__huge_it_catalog_products.published,published_in_sl_width');
-51-        $query->from(array('#__huge_it_catalogs' => '#__huge_it_catalogs', '#__huge_it_catalog_products' => '#__huge_it_catalog_products'));
-52-        $query->where('#__huge_it_catalogs.id = catalog_id')->where('catalog_id=' . $id_cat);
-53-        $query->order('ordering asc');
-54-       
-55-        $db->setQuery($query);
---
-63:        $id_cat = JRequest::getVar('id');
-64-        $query = $db->getQuery(true);
-65-        $query->select('*');
-66-        $query->from('#__huge_it_catalog_products');
-67-        $query->where('catalog_id=' . $id_cat);
-68-        $db->setQuery($query);
-69-        $results = $db->loadObjectList();
-70-        return $results;
-71-    }
-72-
-73-    public function save($data) {
---
-121:        $id_cat = JRequest::getVar('id');
-122-        $query = $db->getQuery(true);
-123-        $query->update('#__huge_it_catalogs')->set('name ="' . $name . '"')->where('id="' . $id_cat . '"');
-124-        $db->setQuery($query);
-125-        $db->execute();
-126-    }
-127-
-128-    function selectStyle() {
-129-        $db = JFactory::getDBO();
-130-        $data = JRequest::get('post');
-131-          $name = $data['name'];
---
-136:        $id_cat = JRequest::getVar('id');
-137-        $query = $db->getQuery(true);
-138-        
-139-        $query->update('#__huge_it_catalogs')
-140-              ->set('name ="' . $name . '"')
-141-              ->set('catalog_list_effects_s ="'.$catalog_effects_list.'"')
-142-              ->set('pagination_type ="'.$pagination_type.'"')
-143-              ->set('count_into_page ="'.$count_into_page.'"')
-144-              ->set('categories ="'.$allCategories.'"')
-145-              ->where('id="' . $id_cat . '"');
-146-        $db->setQuery($query);
---
+The $str_pass isn't sanitized before execution in command line. It's possible to
+change the "NCSA_PASS" and "NCSA_PASS_CONFIRM" post data with arbitrary data.
 
-via removeslide parameter:
 
-208:        $id_cat = JRequest::getVar('removeslide');
-209:        $id = JRequest::getVar('id');
-210-        $db = JFactory::getDBO();
-211-        $query = $db->getQuery(true);
-212-        $query->delete('#__huge_it_catalog_products')->where('id =' . $id_cat);
-213-        $db->setQuery($query);
-214-        $db->execute();
+Thank you,
+-Michael
 
-CVE-2016-1000119 XSS
-CVE-2016-1000120 SQLi
-
-Exploit Code:
-	• SQLi:
-	•  
-	• $ sqlmap  --load-cookies=cookies.txt -u "http://192.168.0.125/administrator/index.php?option=com_catalog&view=catalog&id=*" --dbms mysql 
-	•  
-	• XSS:
-	•  
-	• http://192.168.0.125/administrator/index.php?option=com_catalog&view=catalog&id=1--%20%22%3E%3Cscript%3Ealert(1);%3C/script%3E
-Advisory: http://www.vapidlabs.com/advisory.php?v=167
+[1] https://www.asafety.fr/data/20160403_-_IPFire_2.17_i586_Core_Update_99_Remote_Command_Execution.txt
+[2] https://bugzilla.ipfire.org/show_bug.cgi?id=11087
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
