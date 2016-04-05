@@ -1,47 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/29/1
-Message-ID: <217636066.6300862.1472459619099.JavaMail.zimbra@redhat.com>
-Date: Mon, 29 Aug 2016 04:33:39 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
-To: me@...fdog.net
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- linux kernel: Setting a POSIX ACL via setxattr doesn't clear the setgid bit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/05/4
+Message-ID: <5703B83B.30108@redhat.com>
+Date: Tue, 5 Apr 2016 15:06:03 +0200
+From: Andrej Nemec <anemec@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE Request - xchat/hexchat doesn't properly verify SSL certificates
 Content-Type: text/plain; charset=utf-8
 
-Hello,
- 
-Honestly, I do not see a relation between this patch and overlays. The patch
-touches the code of underlying filesystems. So, most probably, upperdir ACL
-issue is not fixed by this suggested patch.
+Hi,
+
+I noticed that this issue never got a CVE assigned.
+http://seclists.org/oss-sec/2015/q1/342
+
+Could one be assigned now, or was it deemed not CVE worthy?
+Thanks!
 
 Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
 
+-- 
+--
+Andrej Nemec, Red Hat Product Security
+3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
 
------ Original Message -----
-From: me@...fdog.net
-To: oss-security@...ts.openwall.com, "Vladis Dronov" <vdronov@...hat.com>
-Sent: Saturday, August 27, 2016 1:24:47 PM
-Subject: Re: [oss-security] CVE request -- linux kernel: Setting a POSIX ACL via setxattr doesn't clear the setgid bit
-
-Vladis Dronov writes:
-> Hello,
->
-> We would like to ask for a CVE-ID for the following securuty flaw.
->
-> When file permissions are modified via chmod(2) and the user is not in
-> the owning group or capable of CAP_FSETID, the setgid bit is cleared in
-> inode_change_ok().  Setting a POSIX ACL via setxattr(2) sets the file
-> permissions as well as the new ACL, but doesn't clear the setgid bit in
-> a similar way; this allows to bypass the check in chmod(2).
-> ...
-
-Does this also fix the upperdir ACL access gain from
-http://www.halfdog.net/Security/2016/UserNamespaceOverlayfsXattrSetgidPrivilegeEscalation/
-?
-
-The overlayfs upperdir part is already fixed, so the one would
-have to execute replacement commands for the steps already prohibited
-by the userns/overlayfs fixes.
-
-hd
