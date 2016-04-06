@@ -1,29 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/1
-Message-ID: <20160728073234.GA8817@lorien.valinor.li>
-Date: Thu, 28 Jul 2016 09:32:34 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: redis: World readable .rediscli_history
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/06/1
+Message-ID: <57050808.7000401@upv.es>
+Date: Wed, 6 Apr 2016 14:58:48 +0200
+From: Hector Marco-Gisbert <hecmargi@....es>
+To: fulldisclosure@...lists.org, full-disclosure@...ts.grok.org.uk, bugs@...uritytracker.com, bugtraq@...urityfocus.com, oss-security@...ts.openwall.com
+Subject: CVE-2016-3672 - Unlimiting the stack not longer disables ASLR
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi everyone,
 
->From the Debian bug report at https://bugs.debian.org/832460:
-> redis-cli stores its history in ~/.rediscli_history, this file is
-> created with permissions 0644. Home folders are world readable as well
-> in debian, so any user can access other users redis history, including
-> AUTH commands, which include credentials.
-> 
-> I've contacted upstream on 2016-05-30 without any reaction at all and
-> discovered this bug was first reported 3 years ago, still unfixed.
-> @RedisLabs keeps referring to their paid support on twitter.
-> 
-> Demo: `cat /home/*/.rediscli_history`
+We have fixed an old and very known weakness in the Linux ASLR implementation.
 
-Upstream report: https://github.com/antirez/redis/issues/3284
+The weakness allowed any user able to running 32-bit applications in a x86
+machine disable the ASLR by setting the RLIMIT_STACK resource to unlimited.
 
-Could you please assign a CVE for this issue in redis?
+This is a very old trick to disable ASLR, but unfortunately it was still present
+in current Linux systems.
 
-Regards,
-Salvatore
+Details at:
+http://hmarco.org/bugs/CVE-2016-3672-Unlimiting-the-stack-not-longer-disables-ASLR.html
+
+
+Best,
+Hector.
+
+
+
+-- 
+Dr. Hector Marco-Gisbert @ http://hmarco.org/
+Cyber Security Researcher @ http://cybersecurity.upv.es
+Universitat Politècnica de València (Spain)
