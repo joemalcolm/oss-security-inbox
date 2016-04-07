@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2244" "Wednesday" "20" "April" "2016" "11:47:01" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160420154701.DBEEE42E05D@smtpvbsrv1.mitre.org>" "60" "[oss-security] Re: CVE Request: Squid HTTP Caching Proxy multiple issues" nil nil nil "4" "2016042015:47:01" "[oss-security] Re: CVE Request: Squid HTTP Caching Proxy multiple issues" (number mark "U       cve-assign@m Apr 20   60/2244  " thread-indent "\"[oss-security] Re: CVE Request: Squid HTTP Caching Proxy multiple issues\"\n") "<57179246.30207@treenet.co.nz>" ("<57179246.30207@treenet.co.nz>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4724" "Thursday" "7" "April" "2016" "07:36:20" "+0000" "=?gb2312?B?zfXDtw==?=" "wangmei@360.cn" "<E7DB4D18-75AD-4610-8A9B-12DFB6FEE032@360.cn>" "81" "[oss-security] CVE-2016-3620 libtiff: Out-of-bounds Read in the bmp2tiff tool" nil nil nil "4" "2016040707:36:20" "[oss-security] CVE-2016-3620 libtiff: Out-of-bounds Read in the bmp2tiff tool" (number mark "U       wangmei@360. Apr  7   81/4724  " thread-indent "\"[oss-security] CVE-2016-3620 libtiff: Out-of-bounds Read in the bmp2tiff tool\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24541 invoked by uid 550); 20 Apr 2016 15:47:14 -0000
+Received: (qmail 23718 invoked by uid 550); 7 Apr 2016 07:59:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,72 +12,101 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24521 invoked from network); 20 Apr 2016 15:47:14 -0000
-From: cve-assign@mitre.org
-To: squid3@treenet.co.nz
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <57179246.30207@treenet.co.nz>
-Message-Id: <20160420154701.DBEEE42E05D@smtpvbsrv1.mitre.org>
-Date: Wed, 20 Apr 2016 11:47:01 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: Squid HTTP Caching Proxy multiple issues
+Received: (qmail 6090 invoked from network); 7 Apr 2016 07:36:33 -0000
+From: =?gb2312?B?zfXDtw==?= <wangmei@360.cn>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: CVE-2016-3620 libtiff: Out-of-bounds Read in the bmp2tiff tool
+Thread-Index: AQHRkKAtNv9jgpCjgUS2AbUIgQIWHg==
+Date: Thu, 7 Apr 2016 07:36:20 +0000
+Message-ID: <E7DB4D18-75AD-4610-8A9B-12DFB6FEE032@360.cn>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.18.25.162]
+Content-Type: multipart/alternative;
+	boundary="_000_E7DB4D1875AD46108A9B12DFB6FEE032360cn_"
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2016-3620 libtiff: Out-of-bounds Read in the bmp2tiff tool
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--_000_E7DB4D1875AD46108A9B12DFB6FEE032360cn_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-> http://www.squid-cache.org/Advisories/SQUID-2016_5.txt
-> 
-> A buffer overflow in the cachemgr.cgi tool reported by CESG (CESG REF:
-> 56397140 / VULNERABILITY ID: 394201) allows remote clients to perform an
-> indirect denial of service attack on the proxy administrator. It could
-> be used trivially to hide other activities from inspection. Or be used
-> to perform remote code execution on systems without overflow protection.
-> 
-> This bug was also independently reported by Yuriy M. Kaminskiy.
+RGV0YWlscw0KPT09PT09PQ0KDQpQcm9kdWN0OiBsaWJ0aWZmDQpBZmZlY3Rl
+ZCBWZXJzaW9uczogPD0gNC4wLjYNClZ1bG5lcmFiaWxpdHkgVHlwZTogT3V0
+LW9mLWJvdW5kcyBSZWFkDQpWZW5kb3IgVVJMOiBodHRwOi8vd3d3LmxpYnRp
+ZmYub3JnLw0KQ1ZFIElEOiBDVkUtMjAxNi0zNjIwDQpDcmVkaXQ6IE1laSBX
+YW5nIG9mIHRoZSBDbG91ZCBTZWN1cml0eSBUZWFtLCBRaWhvbyAzNjANCg0K
+SW50cm9kdWN0aW9uDQo9PT09PT09PT09PT0NCg0KIFpJUEVuY29kZSBmdW5j
+dGlvbiBpbiB0aWZfemlwLmMgaW4gYm1wMnRpZmYgYWxsb3dzIGF0dGFja2Vy
+cyB0byBjYXVzZSBhIGRlbmlhbCBvZiBzZXJ2aWNlIChPdXQtb2YtYm91bmRz
+IFJlYWQpIHZpYSBhIGNyYWZ0ZWQgYm1wIGltYWdlIHdpdGggcGFyYW0gLWMg
+emlwLg0KDQoNCi4vYm1wMnRpZmYgIC1jIHppcCAgLi9zYW1wbGUvYm1wMnRp
+ZmZfemlwLmJtcCAxLnRpZg0KDQo9PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KPT0x
+NDIyOD09IEVSUk9SOiBBZGRyZXNzU2FuaXRpemVyOiBoZWFwLWJ1ZmZlci1v
+dmVyZmxvdyBvbiBhZGRyZXNzIDB4N2Y1NjNiZjA1ODAwIGF0IHBjIDB4N2Y1
+NjM4ZDhlYjNmIGJwIDB4N2ZmZmNhNDEzYmIwIHNwIDB4N2ZmZmNhNDEzMzU4
+DQpSRUFEIG9mIHNpemUgMzI3NjggYXQgMHg3ZjU2M2JmMDU4MDAgdGhyZWFk
+IFQwDQogICAgIzAgMHg3ZjU2MzhkOGViM2UgKC9saWI2NC9saWJhc2FuLnNv
+LjArMHhlYjNlKQ0KICAgICMxIDB4N2Y1NjM4YjZhMTM2IGluIGZpbGxfd2lu
+ZG93ICgvbGliNjQvbGliei5zby4xKzB4MzEzNikNCiAgICAjMiAweDdmNTYz
+OGI2YWJiZiBpbiBkZWZsYXRlX3Nsb3cgKC9saWI2NC9saWJ6LnNvLjErMHgz
+YmJmKQ0KICAgICMzIDB4N2Y1NjM4YjZiYzZmIGluIGRlZmxhdGUgKC9saWI2
+NC9saWJ6LnNvLjErMHg0YzZmKQ0KICAgICM0IDB4NDljZmVkIGluIFpJUEVu
+Y29kZSAvaG9tZS9kYXpodWFuZy9hc2FuL2xpYnRpZmYtbWFzdGVyL2xpYnRp
+ZmYvdGlmX3ppcC5jOjI3Nw0KICAgICM1IDB4NDU2NjVlIGluIFRJRkZXcml0
+ZVNjYW5saW5lIC9ob21lL2Rhemh1YW5nL2FzYW4vbGlidGlmZi1tYXN0ZXIv
+bGlidGlmZi90aWZfd3JpdGUuYzoxNzMNCiAgICAjNiAweDQwNDUwZiBpbiBt
+YWluIC9ob21lL2Rhemh1YW5nL2FzYW4vbGlidGlmZi1tYXN0ZXIvdG9vbHMv
+Ym1wMnRpZmYuYzo3NzUNCiAgICAjNyAweDdmNTYzODRjNWFmNCBpbiBfX2xp
+YmNfc3RhcnRfbWFpbiAoL2xpYjY0L2xpYmMuc28uNisweDIxYWY0KQ0KICAg
+ICM4IDB4NDAxOWE4IGluIF9zdGFydCAoL2hvbWUvZGF6aHVhbmcvYXNhbi9s
+aWJ0aWZmLW1hc3Rlci90b29scy9ibXAydGlmZisweDQwMTlhOCkNCjB4N2Y1
+NjNiZjA1ODAwIGlzIGxvY2F0ZWQgMCBieXRlcyB0byB0aGUgcmlnaHQgb2Yg
+MTExNDExMi1ieXRlIHJlZ2lvbiBbMHg3ZjU2M2JkZjU4MDAsMHg3ZjU2M2Jm
+MDU4MDApDQphbGxvY2F0ZWQgYnkgdGhyZWFkIFQwIGhlcmU6DQogICAgIzAg
+MHg3ZjU2MzhkOTYxMjkgKC9saWI2NC9saWJhc2FuLnNvLjArMHgxNjEyOSkN
+CiAgICAjMSAweDQ1Yjc2MSBpbiBfVElGRm1hbGxvYyAvaG9tZS9kYXpodWFu
+Zy9hc2FuL2xpYnRpZmYtbWFzdGVyL2xpYnRpZmYvdGlmX3VuaXguYzozMTYN
+CiAgICAjMiAweDQwMzdjMyBpbiBtYWluIC9ob21lL2Rhemh1YW5nL2FzYW4v
+bGlidGlmZi1tYXN0ZXIvdG9vbHMvYm1wMnRpZmYuYzo2NzgNCiAgICAjMyAw
+eDdmNTYzODRjNWFmNCBpbiBfX2xpYmNfc3RhcnRfbWFpbiAoL2xpYjY0L2xp
+YmMuc28uNisweDIxYWY0KQ0KU1VNTUFSWTogQWRkcmVzc1Nhbml0aXplcjog
+aGVhcC1idWZmZXItb3ZlcmZsb3cgPz86MCA/Pw0KU2hhZG93IGJ5dGVzIGFy
+b3VuZCB0aGUgYnVnZ3kgYWRkcmVzczoNCiAgMHgwZmViNDc3ZDhhYjA6IDAw
+IDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAw
+DQogIDB4MGZlYjQ3N2Q4YWMwOiAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAw
+MCAwMCAwMCAwMCAwMCAwMCAwMCAwMA0KICAweDBmZWI0NzdkOGFkMDogMDAg
+MDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAN
+CiAgMHgwZmViNDc3ZDhhZTA6IDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAw
+IDAwIDAwIDAwIDAwIDAwIDAwIDAwDQogIDB4MGZlYjQ3N2Q4YWYwOiAwMCAw
+MCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMA0K
+PT4weDBmZWI0NzdkOGIwMDpbZmFdZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEg
+ZmEgZmEgZmEgZmEgZmEgZmEgZmENCiAgMHgwZmViNDc3ZDhiMTA6IGZhIGZh
+IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhDQog
+IDB4MGZlYjQ3N2Q4YjIwOiBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBm
+YSBmYSBmYSBmYSBmYSBmYSBmYQ0KICAweDBmZWI0NzdkOGIzMDogZmEgZmEg
+ZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmENCiAg
+MHgwZmViNDc3ZDhiNDA6IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZh
+IGZhIGZhIGZhIGZhIGZhIGZhDQogIDB4MGZlYjQ3N2Q4YjUwOiBmYSBmYSBm
+YSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYQ0KU2hh
+ZG93IGJ5dGUgbGVnZW5kIChvbmUgc2hhZG93IGJ5dGUgcmVwcmVzZW50cyA4
+IGFwcGxpY2F0aW9uIGJ5dGVzKToNCiAgQWRkcmVzc2FibGU6ICAgICAgICAg
+ICAwMA0KICBQYXJ0aWFsbHkgYWRkcmVzc2FibGU6IDAxIDAyIDAzIDA0IDA1
+IDA2IDA3DQogIEhlYXAgbGVmdCByZWR6b25lOiAgICAgZmENCiAgSGVhcCBy
+aWdoIHJlZHpvbmU6ICAgICBmYg0KICBGcmVlZCBIZWFwIHJlZ2lvbjogICAg
+IGZkDQogIFN0YWNrIGxlZnQgcmVkem9uZTogICAgZjENCiAgU3RhY2sgbWlk
+IHJlZHpvbmU6ICAgICBmMg0KICBTdGFjayByaWdodCByZWR6b25lOiAgIGYz
+DQogIFN0YWNrIHBhcnRpYWwgcmVkem9uZTogZjQNCiAgU3RhY2sgYWZ0ZXIg
+cmV0dXJuOiAgICBmNQ0KICBTdGFjayB1c2UgYWZ0ZXIgc2NvcGU6IGY4DQog
+IEdsb2JhbCByZWR6b25lOiAgICAgICAgZjkNCiAgR2xvYmFsIGluaXQgb3Jk
+ZXI6ICAgICBmNg0KICBQb2lzb25lZCBieSB1c2VyOiAgICAgIGY3DQogIEFT
+YW4gaW50ZXJuYWw6ICAgICAgICAgZmUNCj09MTQyMjg9PSBBQk9SVElORw0K
+DQpSZWZlcmVuY2VzOg0KWzFdIGh0dHA6Ly93d3cucmVtb3Rlc2Vuc2luZy5v
+cmcvbGlidGlmZi8NClsyXSBodHRwOi8vYnVnemlsbGEubWFwdG9vbHMub3Jn
+L2J1Z2xpc3QuY2dpP3Byb2R1Y3Q9bGlidGlmZg0KDQoNClRoYW5rIHlvdSEN
+CkJlc3QgUmVnYXJkcywNCg0KDQpNZWkNCg0K
 
-Use CVE-2016-4051.
-
-
-> http://www.squid-cache.org/Advisories/SQUID-2016_6.txt
-> 
-> Multiple on-stack buffer overflow from incorrect bounds calculation in
-> Squid ESI processing has been reported by CESG (CESG REF: 56284998 /
-> VULNERABILITY ID: 393536) which allows remote code execution or denial
-> of service if depending on the OS overflow protections which are active.
-
-Use CVE-2016-4052.
-
-
-> Further investigation has found that when compiler optimization is
-> applied incorrect use of assert() leads to information disclosure of
-> stack contents to remote clients
-
-Use CVE-2016-4053.
-
-
-> a second buffer overflow leads to
-> further remote code execution possibilities.
-
-Use CVE-2016-4054.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXF6OQAAoJEHb/MwWLVhi29fEP/ju9RKVTJw84FMDWFYFqKQ4S
-fZu5VoTRXPcpOUyjhBAVIJjDvFAB+5MxfGjIHxlmresgFtt5c7CnXaDQKHCZjxDr
-ytelqvMs3k0OX4yF/phpUXXFX/FhtNe80vQJ0LV5H80M43Fylx05DgAy7GA6jIyk
-9Cl3QSMFS/UOIGTMtL+k9k5AOn8A7W7cL2K6guUD8wihywJ6xw0mKkWDc8lXFzst
-+6Yeq0cgyI9BIw0IM3CRMPCHfqIuxABb7q2ntfeYrFDVKj99jiihsHKpmCtyNhU/
-vNfDrzpjcegLcqiBHGNwnSNPhK8cBGAuvQv1+9aHhKLL1oLxOr7unq5y2DbOokdb
-ci7jSL20xN0N8SnuCOrzufsaxOiWlsj4qfgWpNC8Lk9x0mrm5EqVctIXHgNuhS/R
-8Yj9uVZMtfCcUmwFlHb9Th+1O3yyayJU0cmAx1xn29hlcOmnBRWckZR14wGpNZ/I
-vIEVvLn0m7OZNiCxcqDtdXdJNLpbWFGxF7DMKkhqxaMJaW+e1r6I1ato1kMmL9cV
-NZYcjB0Z4c+lAN1c24xMl6Q4SYKCnL/qJ1juBQmTL+4XNh4ZlHbQaELqR0s1eg4G
-NbrRhJnXeP8RPUyLQiQvZP4eNryMokBnmwR3NPGy8Xlnl4OKm0zAQTE5tXbs4B5f
-JmGdXJ3LnchNfMvi7NVn
-=/12O
------END PGP SIGNATURE-----
+--_000_E7DB4D1875AD46108A9B12DFB6FEE032360cn_--
