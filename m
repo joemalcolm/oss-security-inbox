@@ -1,35 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/27/4
-Message-ID: <1e25987b-2310-a473-1a3b-be5489e52761@xinu.at>
-Date: Tue, 27 Dec 2016 12:02:43 +0100
-From: Florian Pritz <bluewind@...u.at>
-To: oss-security@...ts.openwall.com
-Subject: Re: PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/07/2
+Message-ID: <E7DB4D18-75AD-4610-8A9B-12DFB6FEE032@360.cn>
+Date: Thu, 7 Apr 2016 07:36:20 +0000
+From: 王梅 <wangmei@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-3620 libtiff: Out-of-bounds Read in the bmp2tiff tool
 Content-Type: text/plain; charset=utf-8
 
-On 27.12.2016 01:10, Tracy Reed wrote:
-> Particularly since this is command
-> injection which is precisely what SELinux is good at limiting (as
-> opposed to SQL injection).
+Details
+=======
 
-This is not strictly command injection. It is more similar to an
-unrestricted file upload vulnerability. The problem is that you can use
-the sendmail -X option to write a log file of the SMTP dialog (with an
-arbitrary path) that then contains e.g. php code which you can execute
-via a second request. php itself actually prevents you from peforming
-command injection because according to the documentation of the mail()
-function, the arguments are wrapped in escape_shellcmd() internally. It
-just doesn't prevent you from passing arbitrary arguments.
+Product: libtiff
+Affected Versions: <= 4.0.6
+Vulnerability Type: Out-of-bounds Read
+Vendor URL: http://www.libtiff.org/
+CVE ID: CVE-2016-3620
+Credit: Mei Wang of the Cloud Security Team, Qihoo 360
 
-The attack is described here:
-https://blog.ripstech.com/2016/roundcube-command-execution-via-email/
+Introduction
+============
 
-Also note that postfix' sendmail implementation does not support the -X
-option. Additionally I believe there are no other options in postfix'
-sendmail that are vulnerable to this issue, but feel free to verify this.
-
-Florian
+ ZIPEncode function in tif_zip.c in bmp2tiff allows attackers to cause a denial of service (Out-of-bounds Read) via a crafted bmp image with param -c zip.
 
 
+./bmp2tiff  -c zip  ./sample/bmp2tiff_zip.bmp 1.tif
 
-Download attachment "signature.asc" of type "application/pgp-signature" (859 bytes)
+=================================================================
+==14228== ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7f563bf05800 at pc 0x7f5638d8eb3f bp 0x7fffca413bb0 sp 0x7fffca413358
+READ of size 32768 at 0x7f563bf05800 thread T0
+    #0 0x7f5638d8eb3e (/lib64/libasan.so.0+0xeb3e)
+    #1 0x7f5638b6a136 in fill_window (/lib64/libz.so.1+0x3136)
+    #2 0x7f5638b6abbf in deflate_slow (/lib64/libz.so.1+0x3bbf)
+    #3 0x7f5638b6bc6f in deflate (/lib64/libz.so.1+0x4c6f)
+    #4 0x49cfed in ZIPEncode /home/dazhuang/asan/libtiff-master/libtiff/tif_zip.c:277
+    #5 0x45665e in TIFFWriteScanline /home/dazhuang/asan/libtiff-master/libtiff/tif_write.c:173
+    #6 0x40450f in main /home/dazhuang/asan/libtiff-master/tools/bmp2tiff.c:775
+    #7 0x7f56384c5af4 in __libc_start_main (/lib64/libc.so.6+0x21af4)
+    #8 0x4019a8 in _start (/home/dazhuang/asan/libtiff-master/tools/bmp2tiff+0x4019a8)
+0x7f563bf05800 is located 0 bytes to the right of 1114112-byte region [0x7f563bdf5800,0x7f563bf05800)
+allocated by thread T0 here:
+    #0 0x7f5638d96129 (/lib64/libasan.so.0+0x16129)
+    #1 0x45b761 in _TIFFmalloc /home/dazhuang/asan/libtiff-master/libtiff/tif_unix.c:316
+    #2 0x4037c3 in main /home/dazhuang/asan/libtiff-master/tools/bmp2tiff.c:678
+    #3 0x7f56384c5af4 in __libc_start_main (/lib64/libc.so.6+0x21af4)
+SUMMARY: AddressSanitizer: heap-buffer-overflow ??:0 ??
+Shadow bytes around the buggy address:
+  0x0feb477d8ab0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0feb477d8ac0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0feb477d8ad0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0feb477d8ae0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0feb477d8af0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0feb477d8b00:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0feb477d8b10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0feb477d8b20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0feb477d8b30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0feb477d8b40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0feb477d8b50: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:     fa
+  Heap righ redzone:     fb
+  Freed Heap region:     fd
+  Stack left redzone:    f1
+  Stack mid redzone:     f2
+  Stack right redzone:   f3
+  Stack partial redzone: f4
+  Stack after return:    f5
+  Stack use after scope: f8
+  Global redzone:        f9
+  Global init order:     f6
+  Poisoned by user:      f7
+  ASan internal:         fe
+==14228== ABORTING
+
+References:
+[1] http://www.remotesensing.org/libtiff/
+[2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
+
+
+Thank you!
+Best Regards,
+
+
+Mei
+
