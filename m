@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1150" "Saturday" "8" "May" "2021" "00:24:11" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" nil "40" "Re: [oss-security] Linux kernel: f2fs: out-of-bounds memory access bug" nil nil nil "5" nil nil (number mark "U       butterflyhua May  8   40/1150  " thread-indent "\"Re: [oss-security] Linux kernel: f2fs: out-of-bounds memory access bug\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: f2fs: out-of-bounds memory access bug" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4834" "Thursday" "7" "April" "2016" "07:39:43" "+0000" "=?gb2312?B?zfXDtw==?=" "wangmei@360.cn" "<BD973AA6-4933-4527-951F-0AEE2273D2C3@360.cn>" "83" "[oss-security] CVE-2016-3621 libtiff: Out-of-bounds Read in the bmp2tiff tool" nil nil nil "4" "2016040707:39:43" "[oss-security] CVE-2016-3621 libtiff: Out-of-bounds Read in the bmp2tiff tool" (number mark "U       wangmei@360. Apr  7   83/4834  " thread-indent "\"[oss-security] CVE-2016-3621 libtiff: Out-of-bounds Read in the bmp2tiff tool\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5985 invoked by uid 550); 7 May 2021 16:27:46 -0000
+Received: (qmail 24413 invoked by uid 550); 7 Apr 2016 07:59:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,80 +12,103 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3769 invoked from network); 7 May 2021 16:24:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=rtJJtj8HqgIp1F7y2/U5j0JoliiDLMMXdFu0Hq0Nh1Q=;
-        b=QR6bduCnlikuRFWibgU/tPjNLB9Zyopojk9qL30pFyY4sTWaDm0uvp6evgPAD/DYeD
-         WJNFAoCLV2lzWU1HuhuIe511zw8tQS8WtFzk0XndHumKkyUce3U9Mk/Jc47mb2K6EZVQ
-         Uy1PkuilAdYfaVrpYebP/rmbSxC0Q+mCTihybzb/X12ijtIZwJHV1xqnAsneCQgFlugn
-         A3Gv7uVnVN87wtnLQGy7QRFKYQ9dPwdNp2Z5S/yyliESiIO/R1V4TrHq3kNOQAAzCa4p
-         rPf1Vhb0TB7qKKPPm72hO2PSlfMEtJ69poLmdc2qraPeFpSlxv0tPmhVCb3NPCSeA6UE
-         X8sg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=rtJJtj8HqgIp1F7y2/U5j0JoliiDLMMXdFu0Hq0Nh1Q=;
-        b=gDDsIekK0//nfkpnaeLVVtjsfg9jBX6oq5GDlPM0OIQ0iOLEti9hbDj0ZNPQOwVLwd
-         YoUIcjiyOA1Xajjbly+vOXgFY0q5UlslGbmRDIT0RA25KUNKx8/vfxecoX+2oQSQ/XvK
-         WXj4FAKtIitNd+olQCWl2jTDB9hlf1vHrMNDoaTH61VV97iim50bW6q+8L4oEysPOefG
-         9bLUfnCWwdgxPdWbA3JLm4JsVXP8Qi94ZCu6+ABBqWOIGFgonE4+9vGjEHLlnkdBTn+1
-         vN/vP0+jrclW2cYWP9dtHidqxLz3N4zgH+aO5HU4WygdvrJhG32S5kcOi1ttzVllOwIL
-         Jubw==
-X-Gm-Message-State: AOAM530AmrqPsa2CP2kQjr82xqueTdw5pdXVL9jseUcTxA2CxCQ6SYU/
-	EIgS1rQ7AtThh6E5HHMEeMmEplIIzZ+viTql3eCPQbkC
-X-Google-Smtp-Source: ABdhPJwU5e+GBIjAJscXR7t/gmcEnJlzmjVMeutJGQ9zMQmsNGouCUkZgEiNhZhj6OAL/lFA/cba/cHKt/7htkiAmPI=
-X-Received: by 2002:a25:2944:: with SMTP id p65mr14479578ybp.90.1620404662733;
- Fri, 07 May 2021 09:24:22 -0700 (PDT)
+Received: (qmail 8190 invoked from network); 7 Apr 2016 07:39:55 -0000
+From: =?gb2312?B?zfXDtw==?= <wangmei@360.cn>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: CVE-2016-3621 libtiff: Out-of-bounds Read in the bmp2tiff tool
+Thread-Index: AQHRkKCmeT50YoqT9kik+CdwnSmDAQ==
+Date: Thu, 7 Apr 2016 07:39:43 +0000
+Message-ID: <BD973AA6-4933-4527-951F-0AEE2273D2C3@360.cn>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.18.25.162]
+Content-Type: multipart/alternative;
+	boundary="_000_BD973AA649334527951F0AEE2273D2C3360cn_"
 MIME-Version: 1.0
-References: <CAFcO6XO2k=X2H24tg_GTgoTQMLv=0ajAyuyeK0YKgvqiM5vPWg@mail.gmail.com>
-In-Reply-To: <CAFcO6XO2k=X2H24tg_GTgoTQMLv=0ajAyuyeK0YKgvqiM5vPWg@mail.gmail.com>
-From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
-Date: Sat, 8 May 2021 00:24:11 +0800
-Message-ID: <CAFcO6XOOjFd7XKuMVDyGXka+jdk3=RXFAe2a11SV20_JZzYHqw@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] Linux kernel: f2fs: out-of-bounds memory access bug
+Subject: [oss-security] CVE-2016-3621 libtiff: Out-of-bounds Read in the bmp2tiff tool
 
-The patch is for this issue in upstream linux:
+--_000_BD973AA649334527951F0AEE2273D2C3360cn_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-https://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs.git/commit/?h=dev&id=b862676e371715456c9dade7990c8004996d0d9e
+RGV0YWlscw0KPT09PT09PQ0KDQpQcm9kdWN0OiBsaWJ0aWZmDQpBZmZlY3Rl
+ZCBWZXJzaW9uczogPD0gNC4wLjYNClZ1bG5lcmFiaWxpdHkgVHlwZTogT3V0
+LW9mLWJvdW5kcyBSZWFkDQpWZW5kb3IgVVJMOiBodHRwOi8vd3d3LmxpYnRp
+ZmYub3JnLw0KQ1ZFIElEOiBDVkUtMjAxNi0zNjIxDQpDcmVkaXQ6IE1laSBX
+YW5nIG9mIHRoZSBDbG91ZCBTZWN1cml0eSBUZWFtLCBRaWhvbyAzNjANCg0K
+SW50cm9kdWN0aW9uDQo9PT09PT09PT09PT0NCg0KTFpXRW5jb2RlIGZ1bmN0
+aW9uIGluIHRpZl9sencuYyBpbiBibXAydGlmZiBhbGxvd3MgYXR0YWNrZXJz
+IHRvIGNhdXNlIGEgZGVuaWFsIG9mIHNlcnZpY2UgKE91dC1vZi1ib3VuZHMg
+UmVhZCkgdmlhIGEgY3JhZnRlZCBibXAgaW1hZ2Ugd2l0aCBwYXJhbSAtYyBs
+encuDQoNCg0KbGlidGlmZi1tYXN0ZXIvbGlidGlmZi90aWZfbHp3LmM6OTE1
+DQoNCjkxMCAgKi8NCjkxMSBQdXROZXh0Q29kZShvcCwgQ09ERV9DTEVBUik7
+DQo5MTIgZW50ID0gKmJwKys7IGNjLS07IGluY291bnQrKzsNCjkxMyB9DQo5
+MTQgd2hpbGUgKGNjID4gMCkgew0KOTE1IGMgPSAqYnArKzsgY2MtLTsgaW5j
+b3VudCsrOw0KOTE2IGZjb2RlID0gKChsb25nKWMgPDwgQklUU19NQVgpICsg
+ZW50Ow0KOTE3IGggPSAoYyA8PCBIU0hJRlQpIF4gZW50OyAvKiB4b3IgaGFz
+aGluZyAqLw0KDQoNCi4vYm1wMnRpZmYgIC1jIGx6dyAgLi9zYW1wbGUvYm1w
+MnRpZmZfbHp3LmJtcCAxLnRpZg0KDQo9PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0K
+PT0xMDQ1NT09IEVSUk9SOiBBZGRyZXNzU2FuaXRpemVyOiBoZWFwLWJ1ZmZl
+ci1vdmVyZmxvdyBvbiBhZGRyZXNzIDB4N2ZiY2QwNmQxYzAwIGF0IHBjIDB4
+NDgyN2FhIGJwIDB4N2ZmZWY4MTc0MWQwIHNwIDB4N2ZmZWY4MTc0MWMwDQpS
+RUFEIG9mIHNpemUgMSBhdCAweDdmYmNkMDZkMWMwMCB0aHJlYWQgVDANCiAg
+ICAjMCAweDQ4MjdhOSBpbiBMWldFbmNvZGUgL2hvbWUvZGF6aHVhbmcvYXNh
+bi9saWJ0aWZmLW1hc3Rlci9saWJ0aWZmL3RpZl9sencuYzo5MTUNCiAgICAj
+MSAweDQ1NjY1ZSBpbiBUSUZGV3JpdGVTY2FubGluZSAvaG9tZS9kYXpodWFu
+Zy9hc2FuL2xpYnRpZmYtbWFzdGVyL2xpYnRpZmYvdGlmX3dyaXRlLmM6MTcz
+DQogICAgIzIgMHg0MDQ1MGYgaW4gbWFpbiAvaG9tZS9kYXpodWFuZy9hc2Fu
+L2xpYnRpZmYtbWFzdGVyL3Rvb2xzL2JtcDJ0aWZmLmM6Nzc1DQogICAgIzMg
+MHg3ZmJjY2NjOTJhZjQgaW4gX19saWJjX3N0YXJ0X21haW4gKC9saWI2NC9s
+aWJjLnNvLjYrMHgyMWFmNCkNCiAgICAjNCAweDQwMTlhOCBpbiBfc3RhcnQg
+KC9ob21lL2Rhemh1YW5nL2FzYW4vbGlidGlmZi1tYXN0ZXIvdG9vbHMvYm1w
+MnRpZmYrMHg0MDE5YTgpDQoweDdmYmNkMDZkMWMwMCBpcyBsb2NhdGVkIDAg
+Ynl0ZXMgdG8gdGhlIHJpZ2h0IG9mIDE1NzM4ODgtYnl0ZSByZWdpb24gWzB4
+N2ZiY2QwNTUxODAwLDB4N2ZiY2QwNmQxYzAwKQ0KYWxsb2NhdGVkIGJ5IHRo
+cmVhZCBUMCBoZXJlOg0KICAgICMwIDB4N2ZiY2NkNTYzMTI5ICgvbGliNjQv
+bGliYXNhbi5zby4wKzB4MTYxMjkpDQogICAgIzEgMHg0NWI3NjEgaW4gX1RJ
+RkZtYWxsb2MgL2hvbWUvZGF6aHVhbmcvYXNhbi9saWJ0aWZmLW1hc3Rlci9s
+aWJ0aWZmL3RpZl91bml4LmM6MzE2DQogICAgIzIgMHg0MDM3YzMgaW4gbWFp
+biAvaG9tZS9kYXpodWFuZy9hc2FuL2xpYnRpZmYtbWFzdGVyL3Rvb2xzL2Jt
+cDJ0aWZmLmM6Njc4DQogICAgIzMgMHg3ZmJjY2NjOTJhZjQgaW4gX19saWJj
+X3N0YXJ0X21haW4gKC9saWI2NC9saWJjLnNvLjYrMHgyMWFmNCkNClNVTU1B
+Ulk6IEFkZHJlc3NTYW5pdGl6ZXI6IGhlYXAtYnVmZmVyLW92ZXJmbG93IC9o
+b21lL2Rhemh1YW5nL2FzYW4vbGlidGlmZi1tYXN0ZXIvbGlidGlmZi90aWZf
+bHp3LmM6OTE1IExaV0VuY29kZQ0KU2hhZG93IGJ5dGVzIGFyb3VuZCB0aGUg
+YnVnZ3kgYWRkcmVzczoNCiAgMHgwZmY4MWEwZDIzMzA6IDAwIDAwIDAwIDAw
+IDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwDQogIDB4MGZm
+ODFhMGQyMzQwOiAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAw
+MCAwMCAwMCAwMCAwMA0KICAweDBmZjgxYTBkMjM1MDogMDAgMDAgMDAgMDAg
+MDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDANCiAgMHgwZmY4
+MWEwZDIzNjA6IDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAw
+IDAwIDAwIDAwIDAwDQogIDB4MGZmODFhMGQyMzcwOiAwMCAwMCAwMCAwMCAw
+MCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMA0KPT4weDBmZjgx
+YTBkMjM4MDpbZmFdZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEg
+ZmEgZmEgZmEgZmENCiAgMHgwZmY4MWEwZDIzOTA6IGZhIGZhIGZhIGZhIGZh
+IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhDQogIDB4MGZmODFh
+MGQyM2EwOiBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBm
+YSBmYSBmYSBmYQ0KICAweDBmZjgxYTBkMjNiMDogZmEgZmEgZmEgZmEgZmEg
+ZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmENCiAgMHgwZmY4MWEw
+ZDIzYzA6IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZh
+IGZhIGZhIGZhDQogIDB4MGZmODFhMGQyM2QwOiBmYSBmYSBmYSBmYSBmYSBm
+YSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYQ0KU2hhZG93IGJ5dGUg
+bGVnZW5kIChvbmUgc2hhZG93IGJ5dGUgcmVwcmVzZW50cyA4IGFwcGxpY2F0
+aW9uIGJ5dGVzKToNCiAgQWRkcmVzc2FibGU6ICAgICAgICAgICAwMA0KICBQ
+YXJ0aWFsbHkgYWRkcmVzc2FibGU6IDAxIDAyIDAzIDA0IDA1IDA2IDA3DQog
+IEhlYXAgbGVmdCByZWR6b25lOiAgICAgZmENCiAgSGVhcCByaWdoIHJlZHpv
+bmU6ICAgICBmYg0KICBGcmVlZCBIZWFwIHJlZ2lvbjogICAgIGZkDQogIFN0
+YWNrIGxlZnQgcmVkem9uZTogICAgZjENCiAgU3RhY2sgbWlkIHJlZHpvbmU6
+ICAgICBmMg0KICBTdGFjayByaWdodCByZWR6b25lOiAgIGYzDQogIFN0YWNr
+IHBhcnRpYWwgcmVkem9uZTogZjQNCiAgU3RhY2sgYWZ0ZXIgcmV0dXJuOiAg
+ICBmNQ0KICBTdGFjayB1c2UgYWZ0ZXIgc2NvcGU6IGY4DQogIEdsb2JhbCBy
+ZWR6b25lOiAgICAgICAgZjkNCiAgR2xvYmFsIGluaXQgb3JkZXI6ICAgICBm
+Ng0KICBQb2lzb25lZCBieSB1c2VyOiAgICAgIGY3DQogIEFTYW4gaW50ZXJu
+YWw6ICAgICAgICAgZmUNCj09MTA0NTU9PSBBQk9SVElORw0KDQpSZWZlcmVu
+Y2VzOg0KWzFdIGh0dHA6Ly93d3cucmVtb3Rlc2Vuc2luZy5vcmcvbGlidGlm
+Zi8NClsyXSBodHRwOi8vYnVnemlsbGEubWFwdG9vbHMub3JnL2J1Z2xpc3Qu
+Y2dpP3Byb2R1Y3Q9bGlidGlmZg0KDQoNClRoYW5rIHlvdSENCkJlc3QgUmVn
+YXJkcywNCg0KDQpNZWkNCg0K
 
-Regards,
- butt3rflyh4ck.
-
-
-On Mon, Mar 29, 2021 at 12:00 AM butt3rflyh4ck
-<butterflyhuangxx@gmail.com> wrote:
->
-> Hi,
->
-> I reported an out of bounds memory access bug in get_next_net_page()
-> in fs/f2fs/node.c and reproduce in 5.12.0-rc3. Now the patch is out
-> and tested it in 5.12.0-rc4.
->
-> Root Cause:
->  the f2fs_flush_nat_entries()  function is called during the
-> checkpointing process,
-> when it flush dirty nats in nat entry sets, it will call
-> __flush_nat_entry_set(), but before call it,the legality of nids is
-> not correctly tested. If the nids is out of range, may access
-> out-of-bounds memory.
->
-> Some details and Patch for this issue:
-> https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg2520013.html
-> Now the patch is not available in upstream, CVE is not assigned.
->
-> Now announced on oss-security@lists.openwl.com.
->
-> This issue was discovered by the ADLab of venustech.
->
-> Regards,
->  butt3rflyh4ck.
-
-
-
--- 
-Active Defense Lab of Venustech
+--_000_BD973AA649334527951F0AEE2273D2C3360cn_--
