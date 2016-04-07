@@ -1,51 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/19/6
-Message-ID: <CADk+ZPONm_qyZX1UAw-UP=f0NUt6Nr-FLm6Dp5O4d-Rf18m2-w@mail.gmail.com>
-Date: Fri, 19 Feb 2016 14:40:55 -0500
-From: Ignace Mouzannar <mouzannar@...il.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com,  Александр Измайлов <yarolig@...il.com>,  security@...ian.org
-Subject: Re: CVE request: didiwiki path traversal vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/07/3
+Message-ID: <BD973AA6-4933-4527-951F-0AEE2273D2C3@360.cn>
+Date: Thu, 7 Apr 2016 07:39:43 +0000
+From: 王梅 <wangmei@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-3621 libtiff: Out-of-bounds Read in the bmp2tiff tool
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Details
+=======
 
-Thanks you for your reply.
+Product: libtiff
+Affected Versions: <= 4.0.6
+Vulnerability Type: Out-of-bounds Read
+Vendor URL: http://www.libtiff.org/
+CVE ID: CVE-2016-3621
+Credit: Mei Wang of the Cloud Security Team, Qihoo 360
 
-On Fri, Feb 19, 2016 at 10:49 AM,  <cve-assign@...re.org> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
->> https://github.com/OpenedHand/didiwiki/pull/1/files
->> curl http://localhost:8000/api/page/get?page=/etc/passwd
->
-> We aren't sure about the need for CVE IDs for this product because it
-> doesn't seem to advertise any security properties, e.g.,
->
->   https://github.com/OpenedHand/didiwiki/blob/master/README
->   "Its probably not very secure at all."
->
-> We can assign a CVE ID if there is going to be a DSA.
+Introduction
+============
 
-The Debian Security team is planning on publishing a DSA, as this
-package is available in the (old)stable version of Debian.
+LZWEncode function in tif_lzw.c in bmp2tiff allows attackers to cause a denial of service (Out-of-bounds Read) via a crafted bmp image with param -c lzw.
 
-> One concern is that the design may not be intended for environments
-> with untrusted clients, and many other issues may be found. Also, we
-> aren't sure about the patch:
->
-> +   if (!isalnum(page_name[0]))
-> +        return FALSE;
-> +
-> +    if (strstr(page_name, ".."))
-> +         return FALSE;
->
-> e.g., what about C:\file.txt if it's possible to build this on Windows.
 
-I admit not having looked into Windows (I am the package maintainer on
-Debian). For the record, didiwiki has not been packaged for Windows,
-and upstream has been MIA for a while now. So I'm not sure it is
-usable/used on Windows,
+libtiff-master/libtiff/tif_lzw.c:915
 
-Cheers,
- Ignace M
+910  */
+911 PutNextCode(op, CODE_CLEAR);
+912 ent = *bp++; cc--; incount++;
+913 }
+914 while (cc > 0) {
+915 c = *bp++; cc--; incount++;
+916 fcode = ((long)c << BITS_MAX) + ent;
+917 h = (c << HSHIFT) ^ ent; /* xor hashing */
+
+
+./bmp2tiff  -c lzw  ./sample/bmp2tiff_lzw.bmp 1.tif
+
+=================================================================
+==10455== ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7fbcd06d1c00 at pc 0x4827aa bp 0x7ffef81741d0 sp 0x7ffef81741c0
+READ of size 1 at 0x7fbcd06d1c00 thread T0
+    #0 0x4827a9 in LZWEncode /home/dazhuang/asan/libtiff-master/libtiff/tif_lzw.c:915
+    #1 0x45665e in TIFFWriteScanline /home/dazhuang/asan/libtiff-master/libtiff/tif_write.c:173
+    #2 0x40450f in main /home/dazhuang/asan/libtiff-master/tools/bmp2tiff.c:775
+    #3 0x7fbcccc92af4 in __libc_start_main (/lib64/libc.so.6+0x21af4)
+    #4 0x4019a8 in _start (/home/dazhuang/asan/libtiff-master/tools/bmp2tiff+0x4019a8)
+0x7fbcd06d1c00 is located 0 bytes to the right of 1573888-byte region [0x7fbcd0551800,0x7fbcd06d1c00)
+allocated by thread T0 here:
+    #0 0x7fbccd563129 (/lib64/libasan.so.0+0x16129)
+    #1 0x45b761 in _TIFFmalloc /home/dazhuang/asan/libtiff-master/libtiff/tif_unix.c:316
+    #2 0x4037c3 in main /home/dazhuang/asan/libtiff-master/tools/bmp2tiff.c:678
+    #3 0x7fbcccc92af4 in __libc_start_main (/lib64/libc.so.6+0x21af4)
+SUMMARY: AddressSanitizer: heap-buffer-overflow /home/dazhuang/asan/libtiff-master/libtiff/tif_lzw.c:915 LZWEncode
+Shadow bytes around the buggy address:
+  0x0ff81a0d2330: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ff81a0d2340: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ff81a0d2350: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ff81a0d2360: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ff81a0d2370: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0ff81a0d2380:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0ff81a0d2390: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0ff81a0d23a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0ff81a0d23b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0ff81a0d23c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0ff81a0d23d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:     fa
+  Heap righ redzone:     fb
+  Freed Heap region:     fd
+  Stack left redzone:    f1
+  Stack mid redzone:     f2
+  Stack right redzone:   f3
+  Stack partial redzone: f4
+  Stack after return:    f5
+  Stack use after scope: f8
+  Global redzone:        f9
+  Global init order:     f6
+  Poisoned by user:      f7
+  ASan internal:         fe
+==10455== ABORTING
+
+References:
+[1] http://www.remotesensing.org/libtiff/
+[2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
+
+
+Thank you!
+Best Regards,
+
+
+Mei
+
