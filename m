@@ -1,31 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/13/8
-Message-ID: <1215560150.734283.1476367628231.JavaMail.zimbra@redhat.com>
-Date: Thu, 13 Oct 2016 10:07:08 -0400 (EDT)
-From: CAI Qian <caiqian@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel - local DoS due to a page lock order bug in the XFS seek hole/data implementation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/07/1
+Message-ID: <865AFA5E-6CB2-4631-99E2-70C321F2FF9D@360.cn>
+Date: Thu, 7 Apr 2016 07:32:48 +0000
+From: 王梅 <wangmei@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-3619 libtiff: Out-of-bounds Read in the bmp2tiff tool
 Content-Type: text/plain; charset=utf-8
 
-Running the trinity syscall fuzzer inside a docker container as an non-privileged user below,
+Details
+=======
 
-$ trinity -g vfs --arch 64 --disable-fds=sockets --disable-fds=perf --disable-fds=epoll
---disable-fds=eventfd --disable-fds=pseudo --disable-fds=timerfd --disable-fds=memfd
---disable-fds=drm
+Product: libtiff
+Affected Versions: <= 4.0.6
+Vulnerability Type: Out-of-bounds Read
+Vendor URL: http://www.libtiff.org/
+CVE ID: CVE-2016-3619
+Credit: Mei Wang of the Cloud Security Team, Qihoo 360
 
-always trigger a deadlock/hang at the fdatasync() syscall within 30 minutes with traces
-(including sysrq-w info as well) like this, http://people.redhat.com/qcai/tmp/dmesg
+Introduction
+============
 
-This can be reproduced on any kernel post v4.4-rc1 as long as including this commit.
+ When bmp2tiff function DumpModeEncode handle malicious bmp file with param -c none will cause Out-of-bounds Read. An attacker could exploit this issue to cause a denial of service.
 
-fc0561cefc04e7803c0f6501ca4f310a502f65b8
-xfs: optimise away log forces on timestamp updates for fdatasync
 
-Reverted the above commit against the latest mainline allows the trinity to run more than
-10 hours without any deadlock/hang.
+ libtiff-master/libtiff/tif_dumpmode.c:62
 
-This had also been reported to the XFS maintainer and diagnosed as a page lock order bug
-in the XFS seek hole/data implementation and presumably is still working on a fix better
-than to revert the above commit.
+59                  * data buffer to avoid extra copy.
+ 60                  */
+ 61                 if (tif->tif_rawcp != pp)
+ 62                         _TIFFmemcpy(tif->tif_rawcp, pp, n);
+ 63                 tif->tif_rawcp += n;
+ 64                 tif->tif_rawcc += n;
+ 65                 pp += n;
+ 66                 cc -= n;
+ 67                 if (tif->tif_rawcc >= tif->tif_rawdatasize &&
+ 68                     !TIFFFlushData1(tif))
+ 69                         return (0);
 
-   CAI Qian
+./bmp2tiff  -c none  ./sample/bmp2tiff_none.bmp 1.tif
+
+=================================================================
+==16644== ERROR: AddressSanitizer: unknown-crash on address 0x7f6f7dbde800 at pc 0x7f6f7ab77b3f bp 0x7ffc82264d60 sp 0x7ffc82264508
+READ of size 3342336 at 0x7f6f7dbde800 thread T0
+    #0 0x7f6f7ab77b3e (/lib64/libasan.so.0+0xeb3e)
+    #1 0x45b96c in _TIFFmemcpy /home/dazhuang/asan/libtiff-master/libtiff/tif_unix.c:340
+    #2 0x4614c1 in DumpModeEncode /home/dazhuang/asan/libtiff-master/libtiff/tif_dumpmode.c:62
+    #3 0x45665e in TIFFWriteScanline /home/dazhuang/asan/libtiff-master/libtiff/tif_write.c:173
+    #4 0x40450f in main /home/dazhuang/asan/libtiff-master/tools/bmp2tiff.c:775
+    #5 0x7f6f7a2aeaf4 in __libc_start_main (/lib64/libc.so.6+0x21af4)
+    #6 0x4019a8 in _start (/home/dazhuang/asan/libtiff-master/tools/bmp2tiff+0x4019a8)
+0x7f6f7dcee800 is located 0 bytes to the right of 1114112-byte region [0x7f6f7dbde800,0x7f6f7dcee800)
+allocated by thread T0 here:
+    #0 0x7f6f7ab7f129 (/lib64/libasan.so.0+0x16129)
+    #1 0x45b761 in _TIFFmalloc /home/dazhuang/asan/libtiff-master/libtiff/tif_unix.c:316
+    #2 0x4037c3 in main /home/dazhuang/asan/libtiff-master/tools/bmp2tiff.c:678
+    #3 0x7f6f7a2aeaf4 in __libc_start_main (/lib64/libc.so.6+0x21af4)
+SUMMARY: AddressSanitizer: unknown-crash ??:0 ??
+Shadow bytes around the buggy address:
+  0x0fee6fb73cb0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0fee6fb73cc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0fee6fb73cd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0fee6fb73ce0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0fee6fb73cf0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0fee6fb73d00:[00]00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fee6fb73d10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fee6fb73d20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fee6fb73d30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fee6fb73d40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fee6fb73d50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:     fa
+  Heap righ redzone:     fb
+  Freed Heap region:     fd
+  Stack left redzone:    f1
+  Stack mid redzone:     f2
+  Stack right redzone:   f3
+  Stack partial redzone: f4
+  Stack after return:    f5
+  Stack use after scope: f8
+  Global redzone:        f9
+  Global init order:     f6
+  Poisoned by user:      f7
+  ASan internal:         fe
+==16644== ABORTING
+
+References:
+[1] http://www.remotesensing.org/libtiff/
+[2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
+
+
+Thank you!
+Best Regards,
+
+
+Mei
+
+
+
