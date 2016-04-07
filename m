@@ -1,34 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/12/15
-Message-ID: <56957991.40706@isc.org>
-Date: Tue, 12 Jan 2016 16:09:21 -0600
-From: ISC Security Officer <security-officer@....org>
-To: oss-security@...ts.openwall.com
-Cc: ISC Security Officer <security-officer@....org>
-Subject: ISC DHCP CVE-2015-8605: UDP payload length not properly checked
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/07/4
+Message-ID: <04F55884-564E-4A3E-8D22-AF3E17DA229E@360.cn>
+Date: Thu, 7 Apr 2016 07:43:32 +0000
+From: 王梅 <wangmei@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-3622 libtiff: Divide By Zero in the tiff2rgba tool
 Content-Type: text/plain; charset=utf-8
 
-Please be advised that ISC publicly announced a vulnerability in the
-DHCP software.
+Details
+=======
 
-CVE-2015-8605 is a denial-of-service vector which can potentially be
-exploited against ISC DHCP servers, clients, and relays.  All prior 4.x
-releases of ISC DHCP are vulnerable.  Additionally, ISC DHCP 3.x may
-also be vulnerable, but no testing has been done.
+Product: libtiff
+Affected Versions: <= 4.0.6
+Vulnerability Type: Divide By Zero
+Vendor URL: http://www.libtiff.org/
+CVE ID: CVE-2016-3622
+Credit: Mei Wang of the Cloud Security Team, Qihoo 360
 
-New releases of ISC DHCP, including security fixes for this
-vulnerability, are available at: www.isc.org/downloads/
+Introduction
+============
 
-Release notes can be obtained using the following links:
-
-ftp://ftp.isc.org/isc/dhcp/4.3.3-P1/dhcp-4.3.3-P1-RELNOTES
-ftp://ftp.isc.org/isc/dhcp/4.1-ESV-R12-P1/dhcp-4.1-ESV-R12-P1-RELNOTES
-
--- 
-Brian Conry
-ISC Support
-Acting Security Officer
+Division by zero occurs in the fpAcc function in tif_predict.c in tiff2rgba allows attackers to cause a denial of service via a crafted TIFF image.
 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
+libtiff-master/libtiff/tif_predict.c:381.
+
+377 fpAcc(TIFF* tif, uint8* cp0, tmsize_t cc)
+378 {
+379         tmsize_t stride = PredictorState(tif)->stride;
+380         uint32 bps = tif->tif_dir.td_bitspersample / 8;
+381         tmsize_t wc = cc / bps;
+382         tmsize_t count = cc;
+383         uint8 *cp = (uint8 *) cp0;
+384         uint8 *tmp = (uint8 *)_TIFFmalloc(cc);
+
+
+gdb tiff2rgba
+
+(gdb) r sample/tiff2rgba_1.tif  1.tif
+Starting program: /usr/local/bin/tiff2rgba sample/tiff2rgba_1.tif  1.tif
+TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not sorted in ascending order.
+sample/tiff2rgba_1.tif: Warning, Nonstandard tile length 1, convert file.
+TIFFFetchNormalTag: Warning, IO error during reading of "DocumentName"; tag ignored.
+TIFFFetchNormalTag: Warning, Incorrect count for "Orientation"; tag ignored.
+
+Program received signal SIGFPE, Arithmetic exception.
+0x00007ffff7baffe0 in fpAcc (tif=0x604930, cp0=0x6056b0 "", cc=4) at tif_predict.c:381
+381             tmsize_t wc = cc / bps;
+(gdb) p bps
+$1 = 0
+(gdb) bt
+#0  0x00007ffff7baffe0 in fpAcc (tif=0x604930, cp0=0x6056b0 "", cc=4) at tif_predict.c:381
+#1  0x00007ffff7bb0457 in PredictorDecodeTile (tif=0x604930, op0=0x6056b0 "", occ0=4, s=0) at tif_predict.c:453
+#2  0x00007ffff7bb4f9f in TIFFReadEncodedTile (tif=0x604930, tile=0, buf=0x6056b0, size=4) at tif_read.c:668
+#3  0x00007ffff7bb4e87 in TIFFReadTile (tif=0x604930, buf=0x6056b0, x=0, y=0, z=0, s=0) at tif_read.c:641
+#4  0x00007ffff7b972f1 in gtTileContig (img=0x7fffffffdd90, raster=0x605940, w=32, h=32) at tif_getimage.c:661
+#5  0x00007ffff7b96ce7 in TIFFRGBAImageGet (img=0x7fffffffdd90, raster=0x605940, w=32, h=32) at tif_getimage.c:500
+#6  0x00007ffff7b96ddd in TIFFReadRGBAImageOriented (tif=0x604930, rwidth=32, rheight=32, raster=0x605940, orientation=1, stop=0)
+    at tif_getimage.c:519
+#7  0x000000000040196c in cvt_whole_image (in=0x604930, out=0x604010) at tiff2rgba.c:386
+#8  0x0000000000401e6d in tiffcvt (in=0x604930, out=0x604010) at tiff2rgba.c:504
+#9  0x00000000004011b5 in main (argc=3, argv=0x7fffffffe418) at tiff2rgba.c:126
+
+
+References:
+[1] http://www.remotesensing.org/libtiff/
+[2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
+
+
+Thank you!
+Best Regards,
+
+
+Mei
+
