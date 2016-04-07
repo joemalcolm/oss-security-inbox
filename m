@@ -1,20 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/22/4
-Message-ID: <1458687604.4129.2.camel@gmail.com>
-Date: Tue, 22 Mar 2016 19:00:04 -0400
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/07/5
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0B96E30@EX02.corp.qihoo.net>
+Date: Thu, 7 Apr 2016 10:16:58 +0000
+From: 张开翔 <zhangkaixiang@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-3622 libtiff: Divide By Zero in the tiff2rgba tool
 Content-Type: text/plain; charset=utf-8
 
-> Apparently, this vulnerability is being used to root older Android
-> devices, and as a result it has just been fixed for older Android:
+Details
 
-Most new Android devices are also vulnerable to it. The Nexus 6, 9, 5X
-and 6P use 3.10, while older devices like the Nexus 5 use 3.4. There
-isn't a Nexus device with 3.18, only the Pixel C and very few third
-party devices.
+=======
 
-Google's kernels aren't based on the upstream stable branches and they
-missed this fix. They've surely missed a lot more too.
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+
+
+Product: libtiff
+
+Affected Versions: <= 4.0.6
+
+Vulnerability Type: Illegel read
+
+Vendor URL: http://www.libtiff.org/
+
+CVE ID: CVE-2016-3631
+
+Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
+
+
+
+Introduction
+
+Illegal read occurs in the cpStrips and cpTiles function in thumbnail.c in thumbnail allows attackers to exploit this issue to cause denial-of-service.
+
+
+
+libtiff/tools/thumbnail.c:314.
+313  for (s = 0; s < ns; s++) {
+314    if (bytecounts[s] > (uint64) bufsize) {
+315         buf = (unsigned char *)_TIFFrealloc(buf, (tmsize_t)bytecounts[s]);
+316         if (!buf)
+317             goto bad;
+318         bufsize = (tmsize_t)bytecounts[s];
+319      }
+320      if (TIFFReadRawStrip(in, s, buf, (tmsize_t)bytecounts[s]) < 0 ||
+321         TIFFWriteRawStrip(out, s, buf, (tmsize_t)bytecounts[s]) < 0) {
+322         _TIFFfree(buf);
+323         return 0;
+324      }
+325  }
+
+gdb  --args  thumbnail  cpStrips.tif  tmpout.tif
+……
+Program received signal SIGSEGV, Segmentation fault.
+0x0804c7bf in cpStrips (out=<optimized out>, in=0x8164530) at thumbnail.c:314
+314          if (bytecounts[s] > (uint64) bufsize) {
+(gdb) bt
+#0  0x0804c7bf in cpStrips (out=<optimized out>, in=0x8164530) at thumbnail.c:314
+#1  cpIFD (out=<optimized out>, in=<optimized out>) at thumbnail.c:378
+#2  main (argc=3, argv=0xbffff384) at thumbnail.c:124
+(gdb) p *bytecounts
+
+Cannot access memory at address 0x42900001
+
+References:
+[1] http://www.remotesensing.org/libtiff/
+[2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
+
+
+Thank you!
+
+Best Regards,
