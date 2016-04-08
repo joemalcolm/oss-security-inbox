@@ -1,44 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/17/6
-Message-ID: <CAKG8Do7icu-1yBEVZm4Rb9JnUP6Oxz2Rd__B+N_xbj88KTsE=A@mail.gmail.com>
-Date: Wed, 17 Aug 2016 18:03:05 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-4973 gcc: Targets using libssp for SSP are missing -D_FORTIFY_SOURCE functionality
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/13
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0B97375@EX02.corp.qihoo.net>
+Date: Fri, 8 Apr 2016 07:14:55 +0000
+From: 张开翔 <zhangkaixiang@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-3634 - libtiff illegel read
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Details
 
-This is to disclose the following CVE:
+=======
 
-CVE-2016-4973 gcc: Targets using libssp for SSP are missing
--D_FORTIFY_SOURCE functionality
 
-It was found that targets using gcc's libssp library for Stack Smashing
-Protection (among others: Cygwin, MinGW, newlib, RTEMS; but not Glibc,
-Bionic, NetBSD which provide SSP in libc), are missing the Object Size
-Checking feature, even when explicitly requested with _FORTIFY_SOURCE.
-Vulnerable binaries compiled against such targets do not benefit of such
-protection, increasing the chances of success of a buffer overflow attack.
 
-There is currently no upstream patch. Discussions on the subject & patch
-proposal can be found in the Red Hat corresponding bugzilla :
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2016-4973
+Product: libtiff
 
-Impact: Low
+Affected Versions: <= 4.0.6
 
-CVSSv3 scoring : 3.6 CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:C/C:N/I:L/A:N
+Vulnerability Type: Illegel read
 
-Note regarding the scoring : only the GCC flaw was taken into account, not
-its potential combination with a flaw in an affected binary.
+Vendor URL: http://www.remotesensing.org/libtiff/
 
-The flaw was reported by Yaakov Selkowitz (Red Hat)
+CVE ID: CVE-2016-3634
 
-Best regards,
+Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
 
-Cedric
 
--- 
-Cedric Buissart,
-Product Security
 
+Introduction
+
+Illegal read occurs in the tagCompare function in tif_dirinfo.c when using thumbnail command, which allows attackers to exploit this issue to cause denial-of-service.
+
+
+
+/libtiff/tif_dirinfo.c: 341
+
+tagCompare(const void* a, const void* b)
+
+337{
+
+338          const TIFFField* ta = *(const TIFFField**) a;
+
+339          const TIFFField* tb = *(const TIFFField**) b;
+
+340          /* NB: be careful of return values for 16-bit platforms */
+
+341          if (ta->field_tag != tb->field_tag)
+
+342                         return (int)ta->field_tag - (int)tb->field_tag;
+
+343          else
+
+344                         return (ta->field_type == TIFF_ANY) ?
+
+345                                         0 : ((int)tb->field_type - (int)ta->field_type);
+
+346}
+
+gdb  --args  thumbnail  tagCompare.tif  tmpout.tif
+…….
+Program received signal SIGSEGV, Segmentation fault.
+tagCompare (b=0x8164a84, a=<synthetic pointer>) at tif_dirinfo.c:341
+341        if (ta->field_tag != tb->field_tag)
+(gdb) bt
+#0  tagCompare (b=0x8164a84, a=<synthetic pointer>) at tif_dirinfo.c:341
+#1  bsearch (__compar=0x8067330 <tagCompare>, __size=4, __nmemb=153, __base=0x8164a60, __key=<synthetic pointer>) at /usr/include/i386-linux-gnu/bits/stdlib-bsearch.h:33
+#2  TIFFFindField (tif=0x8164530, tag=262, dt=TIFF_NOTYPE) at tif_dirinfo.c:518
+#3  0x08060e06 in TIFFVGetField (ap=0xbffff238 "\032\065\026\b\377\377\377\377_\314\376\267\350\372\", tag=262, tif=0x8164530) at tif_dir.c:1172
+#4  TIFFGetField (tif=0x8164530, tag=262) at tif_dir.c:1158
+#5  0x0804ae2f in generateThumbnail (out=<optimized out>, in=<optimized out>) at thumbnail.c:631
+#6  main (argc=3, argv=0xbffff374) at thumbnail.c:122
+(gdb) p tb
+$5 = (const TIFFField *) 0xffffffff
+
+References:
+[1] http://www.remotesensing.org/libtiff/
+
+
+Thank you!
+
+Best Regards,
