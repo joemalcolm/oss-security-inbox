@@ -1,27 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/11/5
-Message-ID: <590204934.12153620.1478870673670.JavaMail.zimbra@redhat.com>
-Date: Fri, 11 Nov 2016 08:24:33 -0500 (EST)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-8645: linux kernel: net: a BUG() statement can be hit in net/ipv4/tcp_input.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/09/1
+Message-ID: <57080D2F.4000407@apache.org>
+Date: Fri, 8 Apr 2016 21:57:35 +0200
+From: "jleroux@...che.org" <jleroux@...che.org>
+To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: CVE-2015-3268: Apache OFBiz information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+CVE-2015-3268: Apache OFBiz information disclosure vulnerability
 
-> I'm not aware of any fix as of now.
+==========================================
+Severity: Moderate
 
-Actiually, not. There is a patch being developed now, thanks, Eric:
+Vendor:
+The Apache Software Foundation
 
-http://marc.info/?l=linux-netdev&m=147881188232264&w=2
+Versions Affected:
+Apache OFBiz 13.07.02 and 13.07.01
+Apache OFBiz 12.04.05 and earlier releases in the series (12.04.*)
+The unsupported releases 11.04.*,  10.04.*  and 09.04 versions are also affected (Lilian Iatco reported he tried with r691692, which is early March 2008)
 
-http://marc.info/?t=147881111500001&r=1&w=2&n=2 # the whole thread
+Description:
+Stored Cross-Site Scripting Vulnerability affecting the description attribute of the display-entity element because it was not escaped.
 
-http://marc.info/?l=linux-netdev&m=147881236332369&w=2 # patch v2
+Mitigation:
+13.07.* users should upgrade to 13.07.03
+12.04.05 users should upgrade to 12.04.06
+You can find more information at https://issues.apache.org/jira/browse/OFBIZ-6506
 
-http://www.spinics.net/lists/netdev/msg403787.html
+Credit:
+This issue was discovered by Lilian Iatco and reported at https://issues.apache.org/jira/browse/OFBIZ-6506
 
-http://www.spinics.net/lists/netdev/msg403789.html # patch v2
+References:
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+http://ofbiz.apache.org/download.html#vulnerabilities
+
+==========================================
+
+Jacques
+
