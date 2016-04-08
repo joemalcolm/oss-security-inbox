@@ -1,53 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/14/10
-Message-Id: <20160114193552.C9EC86C0036@smtpvmsrv1.mitre.org>
-Date: Thu, 14 Jan 2016 14:35:52 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/15
+Message-Id: <20160408173332.997BE6C05DD@smtpvmsrv1.mitre.org>
+Date: Fri,  8 Apr 2016 13:33:32 -0400 (EDT)
 From: cve-assign@...re.org
-To: emmanuel.law@...il.com
+To: meissner@...e.de
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: [CVE Request] Multiple PHP issues
+Subject: Re: CVE Request: systemd / journald created world readable journal files
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Memory Read via gdImageRotateInterpolated Array Index Out of Bounds
-> https://bugs.php.net/bug.php?id=70976
+> Fixed for volatile journals was done by this commit in v214:
+> https://github.com/systemd/systemd/commit/176f2acf8dee45fee832fd2ab07243f63783a238
 
-Use CVE-2016-1903. As far as we can tell, the discussion at
-"2015-12-29 07:27 UTC" and later does not describe an additional
-vulnerability. The discussion seems to be about adapting the security
-patch for palette images so that it doesn't disrupt the handling of
-true color images.
+>> committed Jun 11, 2014
+
+Use CVE-2014-9770.
 
 
-> Heap BufferOver Flow in escapeshell functions
-> https://bugs.php.net/bug.php?id=71270
-> https://github.com/php/php-src/commit/2871c70efaaaa0f102557a17c727fd4d5204dd4b
+> Fixed for the current persistent journal by this commit in v229:
+> https://github.com/systemd/systemd/commit/afae249efa4774c6676738ac5de6aeb4daf4889f
 
-Use CVE-2016-1904 for both of the integer overflows in
-ext/standard/exec.c (the one in the php_escape_shell_cmd function and
-the one in the php_escape_shell_arg function).
+>> committed Nov 29, 2015
+
+Use CVE-2015-8842.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWl/gmAAoJEL54rhJi8gl5rm8QAMsiJK3V60k4bjWZFpShAFxz
-9vOic/LsFrjgRb1hM+4eauCT6usPxS/v2R802eEheuOlhLWdi2epl9l65knTm+ho
-uQMMYkBHPtdkRQMdf6A6XGBHNy7salXY4UTcBvoSvx8yqzsMyjgqDji3D+qWqhch
-QDErqGljVS5ZUrrXHvPkTwKmCjQtZFuvNFdPtE1B7/0K58hM+PM0ZPFTfyKNvK3/
-Vg75KOGlFz4H96kWsmvNQBOT0fMKKKDnQtg8yOiNJVMkJZiQnkNh3bMNaqqQW8KZ
-9ZmWuje1ZRHP7osGjggfn/P0Wpmxq2JXqNNe4mH2Zwr0iIUAOlvCNunfRM1MfYik
-wjwZ/tGifyEGxDdnKpu7MAb+9QAzqb6uKyTlr8DlJdrM72A68ygGc0CHQQHbstL6
-1u+3/zVELSzEq1j/UnZkgu22+LzqNXhJTUK6Hda0hnfH0gW1qUoC/zqlM5i7lG2T
-TPuduWSrXIDCB3UceOUwNSk36cWWtDhJj7K6nRRMTFAilvzfRGmeUXQ04/AhCLNM
-Pkleb6O6EXFZed5CqWJFUlTD4ak+aibUL8fdXARGfXDz/5wEgIwgvbBIP1MUvbVF
-/Mrb5HbHdrqADHXXd5CrgFkOcIuMhxZZb/RBnCwjM4oC9kht/0LYmpzydxdoFidQ
-4bSuxdlqC4cMe1yn/wWJ
-=WENK
+iQIcBAEBCAAGBQJXB+sEAAoJEL54rhJi8gl5zhMP/3C4F7RnZztSDKJ2HhG1zuUb
+eOEW8F9mh00jqV3DFBAhl5y+TGUdtiGobbcYzEImxvv4wy7NgiboXn+ENVZN49ci
+Vlw8wPsj3xmwq7x5rq3fsykmqa+iCtI3LFV6mEu3NnzPWd+5O96T1j+5yCVCnahN
+yfcBd4JxevTE46XPXk/Eb058pz6brT+gMJu0AZ0bpT5BAN5g7QuCeD1ZOpxDHxlS
+rfWLaj0gZL3ws+U4wSg4FSvLTJIOmxfFmF9ka/aNOZOU2ifI+1vmkd2rfaAEQhsQ
+Lrt16WGNnBemg5xpOoty5sowYF6t0oC8QKaquixAWholjoRTHBcQSdndqTTQ68S1
+hTocmbMYFKXUSJYG0uy6jhyPPRfrZNKtiCVx9Nk7ctYshM3hmETDVpbTZzndBrVU
+6VwxJckUYO3kpyejfBPz68r1OcW49ZJre6rM7qZNYl1/GESeYjzKXJ8LmpZZZc9Y
+yFuZmp5vKRiHttBuHYWd0qMRb7QWnHPnIcJCT63rcQ44HqNAqxw5coabZ2ATjKS1
+ZLuPGAuVlG+tF37obg+MC3+MJfd2XPTC0uFWIixy7jSMfKFooQx6ndwxnRK7swr2
+8X7E2D4RQvc9vzPyWGGL2SiGmezU7r6iq5s2gA6D+Givc+d3E+Ey21S6eEhyKF4I
+VGnOJyed8E7zg1AKTwc4
+=Rjwg
 -----END PGP SIGNATURE-----
