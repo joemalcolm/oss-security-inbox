@@ -1,77 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/20/6
-Message-ID: <57179246.30207@treenet.co.nz>
-Date: Thu, 21 Apr 2016 02:29:26 +1200
-From: Amos Jeffries <squid3@...enet.co.nz>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: CVE Request: Squid HTTP Caching Proxy multiple issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/14
+Message-ID: <20160408092855.GD8144@suse.de>
+Date: Fri, 8 Apr 2016 11:28:55 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: systemd / journald created world readable journal files
 Content-Type: text/plain; charset=utf-8
 
 Hi,
- several vulnerabilities have been reported in Squid proxy.
 
+systemd-journald from systemd v213 started creating world readable journals, allowing
+local users to read sensitive system log entries.
 
-A buffer overflow in the cachemgr.cgi tool reported by CESG (CESG REF:
-56397140 / VULNERABILITY ID: 394201) allows remote clients to perform an
-indirect denial of service attack on the proxy administrator. It could
-be used trivially to hide other activities from inspection. Or be used
-to perform remote code execution on systems without overflow protection.
+While spotted by our users in
+https://bugzilla.suse.com/show_bug.cgi?id=972612
+the problem was present and fixed in upstream systemd git...
 
-This bug was also independently reported by Yuriy M. Kaminskiy.
+Introduced by this commit in v213:
+https://github.com/systemd/systemd/commit/a606871da508995f5ede113a8fc6538afd98966c
 
-The cachemgr.cgi tool is vulnerable when built from;
-Squid-3.x up to and including 3.5.16,
-Squid-4.x up to and including 4.0.8, and
-Squid-2.x all versions.
+Fixed for volatile journals was done by this commit in v214:
+https://github.com/systemd/systemd/commit/176f2acf8dee45fee832fd2ab07243f63783a238
 
-Upstream report will be at:
- <http://www.squid-cache.org/Advisories/SQUID-2016_5.txt>
+Fixed for the current persistent journal by this commit in v229:
+https://github.com/systemd/systemd/commit/afae249efa4774c6676738ac5de6aeb4daf4889f
 
-Patches at:
- <http://www.squid-cache.org/Versions/v4/changesets/squid-4-14643.patch>
- <http://www.squid-cache.org/Versions/v3/3.5/changesets/SQUID-2016_5.patch>
- <http://www.squid-cache.org/Versions/v3/3.4/changesets/SQUID-2016_5.patch>
- <http://www.squid-cache.org/Versions/v3/3.3/changesets/SQUID-2016_5.patch>
- <http://www.squid-cache.org/Versions/v3/3.2/changesets/SQUID-2016_5.patch>
-
-
-
-Multiple on-stack buffer overflow from incorrect bounds calculation in
-Squid ESI processing has been reported by CESG (CESG REF: 56284998 /
-VULNERABILITY ID: 393536) which allows remote code execution or denial
-of service if depending on the OS overflow protections which are active.
-
-Further investigation has found that when compiler optimization is
-applied incorrect use of assert() leads to information disclosure of
-stack contents to remote clients and a second buffer overflow leads to
-further remote code execution possibilities.
-
-Squid-2.x are not vulnerable.
-Squid-3.x up to and including 3.5.16,
-Squid-4.x up to and including 4.0.8,
- when built with --enable-esi and used for either CDN reverse-proxy or
-TLS MITM are vulnerable.
-
-Upstream report will be at:
- <http://www.squid-cache.org/Advisories/SQUID-2016_6.txt>
-
-Patches at:
- <http://www.squid-cache.org/Versions/v4/changesets/squid-4-14648.patch>
- <http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14034.patch>
- <http://www.squid-cache.org/Versions/v3/3.4/changesets/squid-3.4-13235.patch>
- <http://www.squid-cache.org/Versions/v3/3.3/changesets/squid-3.3-12697.patch>
- <http://www.squid-cache.org/Versions/v3/3.2/changesets/squid-3.2-11841.patch>
-
-
-
-PS. Some of our mirrors may not be updated for up to 24hrs. The "www."
-in URLs can be replaced with "west." to fetch from a more up to date
-mirror directly if one has trouble.
-
-
-Amos Jeffries
-Squid Software Foundation
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (835 bytes)
+Ciao, Marcus
