@@ -1,4 +1,9 @@
-Received: (qmail 32294 invoked by uid 550); 11 Nov 2025 18:41:27 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3061" "Friday" "8" "April" "2016" "04:58:48" "+0000" "=?gb2312?B?zfXDtw==?=" "wangmei@360.cn" "<2F6C06FC-4F95-43BB-957C-8C7D30BB0BA4@360.cn>" "54" "[oss-security] CVE-2016-3624 libtiff: Out-of-bounds Write in the rgb2ycbcr tool" nil nil nil "4" "2016040804:58:48" "[oss-security] CVE-2016-3624 libtiff: Out-of-bounds Write in the rgb2ycbcr tool" (number mark "U       wangmei@360. Apr  8   54/3061  " thread-indent "\"[oss-security] CVE-2016-3624 libtiff: Out-of-bounds Write in the rgb2ycbcr tool\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 22211 invoked by uid 550); 8 Apr 2016 05:56:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,90 +12,75 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 9814 invoked from network); 11 Nov 2025 14:49:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1762872576;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=mzLSUtnDIEb7JwMZcdVp2HEdWg+v+06kX1WnGXuFPjQ=;
-	b=UyqC3VrkEEMPB7BeLoFVLpkCpJhBOYo04dm6S6hKyxrwTQzH1ZkpTRgXY4SAT70bMUSAqj
-	k59Swk39t9F9nEn1Zp/+KMv8RpPVMlU7Fxyh/Ler+G12YabXGPDMKEtiCAm76W46MhPxR7
-	//qZrHkiKgQesENGwJxNoUOhraf1rcA=
-X-MC-Unique: o1gyDCrUM_GK4pbfghzoWQ-1
-X-Mimecast-MFC-AGG-ID: o1gyDCrUM_GK4pbfghzoWQ_1762872573
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762872571; x=1763477371;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mzLSUtnDIEb7JwMZcdVp2HEdWg+v+06kX1WnGXuFPjQ=;
-        b=gLX3Y8UCS7cYWpTAr1FD3OfCX3FhCsXfd7APXo6e5M4hNIcrg8SloVmyEYVtzCLMpl
-         ljcRWZmKr0HDRKw+oIuEQo0He0TVB60d+OIAWJ73HJf8SaODP/2XkzOcEgc3MCXj1nwA
-         ISiHUGn/nIOuunt2iQk1Fzlr4Xc4xCUU0iNElEPJQ+dWHRdk7yKoijOpSsT/Mxzi7r1F
-         vPtf98qE4y/btlObt66iSd6VAtgAp27Xjcypj7PCTkca6WAzHUWgC1hmLt7PoMGvju1/
-         1KQSqb68jP/uIJv+Zl+CbE/1EyAkcBC1qP8G4CYE+3G5r2hBaPIaxeYBnBrdlDuvC6YD
-         CJGw==
-X-Forwarded-Encrypted: i=1; AJvYcCWn6p5dYvqsqs+XITuhoXsMWp1JgBMTEAN8g9gI211X2p7HH7Zkf4wM+6OPMVodHs1fiRE/wsD3ZIkW3mU=@lists.openwall.com
-X-Gm-Message-State: AOJu0YwV7VzZddqFdt0tgUrK7R3o6Q439uv8j7qEI8oaEj7pgU5rCoyn
-	/TXUQZm4j1KTiVCc9ejaDSQVK73EzRHSWCHwE3NATyGScgt2kpldVZQcFIT1YDG0Ke28SvqGL6L
-	IUf+KGDbgziurk+e49KnxmnY7H4d73mgNcJ2SwzemgFcZuOFv26T2nzwKkEZC/DEzyziVSZwWNs
-	otPOxsTVjd1BoblcWE+0vL1meUOxOo/9KO3MLXgKfTwCgxO6FXur5piXw=
-X-Gm-Gg: ASbGnctZXLusKzh29ifbtMg/Jx+XgS6YMrec4hmh4ELRZTZwtWvpyHKoOT0i0CLSOD3
-	cwYva35BSofjaHahX7EnxGeOI0b3eaGornTMtiPPnE5HpuvbRJiWoAS3rfU/4Ozs5EFhuKUbtJw
-	zWPYqO/N4kJqsk/aTXXM2C8fK3ooSdGmFfWjAZ7yLwP+atOTWEIRtmn9E=
-X-Received: by 2002:a05:6402:2793:b0:641:8d40:8672 with SMTP id 4fb4d7f45d1cf-6418d4088a6mr7392899a12.16.1762872571316;
-        Tue, 11 Nov 2025 06:49:31 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHc+i03sJ0W8PWKrrq1H0WeKIl57PDgX+2XnvsB4t6eq+chMudjS66IECC6vPBqVk0rcGzylYRn2l/gMH1mC+s=
-X-Received: by 2002:a05:6402:2793:b0:641:8d40:8672 with SMTP id
- 4fb4d7f45d1cf-6418d4088a6mr7392873a12.16.1762872570812; Tue, 11 Nov 2025
- 06:49:30 -0800 (PST)
+Received: (qmail 25640 invoked from network); 8 Apr 2016 04:59:01 -0000
+From: =?gb2312?B?zfXDtw==?= <wangmei@360.cn>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: CVE-2016-3624 libtiff: Out-of-bounds Write in the rgb2ycbcr
+ tool
+Thread-Index: AQHRkVNW7xgXFe4m6k+Cdjj6W0OBXA==
+Date: Fri, 8 Apr 2016 04:58:48 +0000
+Message-ID: <2F6C06FC-4F95-43BB-957C-8C7D30BB0BA4@360.cn>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.18.25.162]
+Content-Type: multipart/alternative;
+	boundary="_000_2F6C06FC4F9543BB957C8C7D30BB0BA4360cn_"
 MIME-Version: 1.0
-From: "Sage [They / Them] McTaggart" <amctagga@redhat.com>
-Date: Tue, 11 Nov 2025 09:49:19 -0500
-X-Gm-Features: AWmQ_bntrPqGu-4CYYyv3c6S70ajMY8Qpl1Uvs9wzjqZvSQaMTjbpyEXCf6qkqY
-Message-ID: <CABBoSti2LtHdkMw=dkx_0bAgfg6pnwnzLjGW_ung6cORPNzh5g@mail.gmail.com>
-To: =?UTF-8?B?546L55uI?= <wangying2023@ict.ac.cn>, 
-	oss-security@lists.openwall.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: h9PlphGoHAdvtK2R2bJOk_18YDdANbTUSy6XUlGSIPY_1762872573
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/alternative; boundary="0000000000005e3c42064352c12d"
-Subject: [oss-security] CVE-2024-47866 Ceph: RGW DoS via improper input validation.
+Subject: [oss-security] CVE-2016-3624 libtiff: Out-of-bounds Write in the rgb2ycbcr tool
 
---0000000000005e3c42064352c12d
-Content-Type: text/plain; charset="UTF-8"
+--_000_2F6C06FC4F9543BB957C8C7D30BB0BA4360cn_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-Hello all,
-A flaw was found in Ceph's RGW module. An attacker can use improper input
-validation to create a Denial Of Service within RGW. By using the argument
-`x-amz-copy-source` to put an object and specifying an empty string as its
-content , it will lead to the RGW daemon crashing, resulting in a DoS
-attack.
+RGV0YWlscw0KPT09PT09PQ0KDQpQcm9kdWN0OiBsaWJ0aWZmDQpBZmZlY3Rl
+ZCBWZXJzaW9uczogPD0gNC4wLjYNClZ1bG5lcmFiaWxpdHkgVHlwZTogIE91
+dC1vZi1ib3VuZHMgV3JpdGUNClZlbmRvciBVUkw6IGh0dHA6Ly93d3cucmVt
+b3Rlc2Vuc2luZy5vcmcvbGlidGlmZi8NCkNWRSBJRDogQ1ZFLTIwMTYtMzYy
+NA0KQ3JlZGl0OiBNZWkgV2FuZyBvZiB0aGUgQ2xvdWQgU2VjdXJpdHkgVGVh
+bSwgUWlob28gMzYwDQoNCkludHJvZHVjdGlvbg0KPT09PT09PT09PT09DQoN
+Ck91dC1vZi1ib3VuZHMgV3JpdGUgb2NjdXJyZWQgaW4gZnVuY3Rpb24gY3Z0
+Q2x1bXAgaW4gcmdiMnljYmNyIGFsbG93cyBhdHRhY2tlcnMgdG8gY2F1c2Ug
+YSBkZW5pYWwgb2Ygc2VydmljZSB3aGVuIHBhcmFtIHYgd2FzIHNldCB0byAt
+MS4NCg0KDQoNCmxpYnRpZmYtbWFzdGVyL2xpYnRpZmYvcmdiMnljYmNyLmM6
+MTkzDQoNCjE4NyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbHVtYUdy
+ZWVuW1RJRkZHZXRHKFJHQildICsNCjE4OCAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgbHVtYUJsdWVbVElGRkdldEIoUkdCKV07DQoxODkgICAgICAg
+ICAgICAgICAgICAgICAgICAgLyogYWNjdW11bGF0ZSBjaHJvbWluYW5jZSAq
+Lw0KMTkwICAgICAgICAgICAgICAgICAgICAgICAgIENiICs9IChUSUZGR2V0
+QihSR0IpIC0gWSkgKiBEMTsNCjE5MSAgICAgICAgICAgICAgICAgICAgICAg
+ICBDciArPSAoVElGRkdldFIoUkdCKSAtIFkpICogRDI7DQoxOTIgICAgICAg
+ICAgICAgICAgICAgICAgICAgLyogZW1pdCBsdW1pbmVuY2UgKi8NCjE5MyAg
+ICAgICAgICAgICAgICAgICAgICAgICAqb3ArKyA9IFYyQ29kZShZLA0KMTk0
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICByZWZCbGFja1doaXRlWzBd
+LCByZWZCbGFja1doaXRlWzFdLCAyNTUpOw0KMTk1ICAgICAgICAgICAgICAg
+ICB9DQoNCg0KDQpnZGIgcmdiMnljYmNyDQoNCihnZGIpIHIgLWMgbm9uZSAg
+LXIgLTEgIC1oIC0xICAtdiAtMSBzYW1wbGUvcmdiMnljYmNyX2N2dENsdW1w
+LnRpZiAxLnRpZg0KDQpQcm9ncmFtIHJlY2VpdmVkIHNpZ25hbCBTSUdTRUdW
+LCBTZWdtZW50YXRpb24gZmF1bHQuDQoweDAwMDAwMDAwMDA0MDE0NDAgaW4g
+Y3Z0Q2x1bXAgKG9wPTB4MSA8QWRkcmVzcyAweDEgb3V0IG9mIGJvdW5kcz4s
+IHJhc3Rlcj0weDdmZmZmNzI0OWY5MCwgY2g9MTUyLCBjdz02NTMxMiwgdz02
+NTMxMikNCiAgICBhdCByZ2IyeWNiY3IuYzoxOTMNCjE5MyAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgKm9wKysgPSBWMkNvZGUoWSwNCihnZGIpIHAg
+b3ANCiQ2ID0gKHVuc2lnbmVkIGNoYXIgKikgMHgxIDxBZGRyZXNzIDB4MSBv
+dXQgb2YgYm91bmRzPg0KKGdkYikgcCAqb3ANCkNhbm5vdCBhY2Nlc3MgbWVt
+b3J5IGF0IGFkZHJlc3MgMHgxDQooZ2RiKSBidA0KIzAgIDB4MDAwMDAwMDAw
+MDQwMTQ0MCBpbiBjdnRDbHVtcCAob3A9MHgxIDxBZGRyZXNzIDB4MSBvdXQg
+b2YgYm91bmRzPiwgcmFzdGVyPTB4N2ZmZmY3MjQ5ZjkwLCBjaD0xNTIsIGN3
+PTY1MzEyLCB3PTY1MzEyKQ0KICAgIGF0IHJnYjJ5Y2Jjci5jOjE5Mw0KIzEg
+IDB4MDAwMDAwMDAwMDQwMTc1NyBpbiBjdnRTdHJpcCAob3A9MHgwLCByYXN0
+ZXI9MHg3ZmZmZjcyNDlmOTAsIG5yb3dzPTE1Miwgd2lkdGg9NjUzMTIpIGF0
+IHJnYjJ5Y2Jjci5jOjI0NQ0KIzIgIDB4MDAwMDAwMDAwMDQwMThiNyBpbiBj
+dnRSYXN0ZXIgKHRpZj0weDYwNDAxMCwgcmFzdGVyPTB4N2ZmZmY0Y2FiMDEw
+LCB3aWR0aD02NTMxMiwgaGVpZ2h0PTE1MikgYXQgcmdiMnljYmNyLmM6MjY3
+DQojMyAgMHgwMDAwMDAwMDAwNDAxZjAzIGluIHRpZmZjdnQgKGluPTB4NjA1
+NTYwLCBvdXQ9MHg2MDQwMTApIGF0IHJnYjJ5Y2Jjci5jOjM1Mg0KIzQgIDB4
+MDAwMDAwMDAwMDQwMTA4YSBpbiBtYWluIChhcmdjPTExLCBhcmd2PTB4N2Zm
+ZmZmZmZlM2I4KSBhdCByZ2IyeWNiY3IuYzoxMjcNCg0KUmVmZXJlbmNlczoN
+ClsxXSBodHRwOi8vd3d3LnJlbW90ZXNlbnNpbmcub3JnL2xpYnRpZmYvDQpb
+Ml0gaHR0cDovL2J1Z3ppbGxhLm1hcHRvb2xzLm9yZy9idWdsaXN0LmNnaT9w
+cm9kdWN0PWxpYnRpZmYNCg0KDQpUaGFuayB5b3UhDQpCZXN0IFJlZ2FyZHMs
+DQoNCg0KTWVpDQoNCg==
 
-Our public advisory may be found at the following URL:
-https://github.com/ceph/ceph/security/advisories/GHSA-mgrm-g92q-f8h8
-
-We have assigned it a CVE of CVE-2024-47866 with a CVSS Score of 7.5
-CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
-It is fixed in an upstream PR[1] and will be backported promptly to other
-releases.
-In downstream Ceph, it will be patched in Ceph 8.1z4 [2] set to be released
-this week.
-
-[1]https://github.com/ceph/ceph/pull/65159
-[2] https://www.ibm.com/docs/en/storage-ceph/8.1.0?topic=release-notes-81
-
-Credits to: Ying Wang for discovery.
-
-Sage McTaggart
-IBM Product Security
-
-amct@redhat.com
-
-sagemct@ibm.com
-
-
-Pronouns:They/Them/Theirs
-
---0000000000005e3c42064352c12d--
-
+--_000_2F6C06FC4F9543BB957C8C7D30BB0BA4360cn_--
