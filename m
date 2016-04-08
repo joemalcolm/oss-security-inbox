@@ -1,62 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/16
-Message-ID: <CANO=Ty322LOtzmR3Dwi3ZtmKX1TPhyrBUu1xdnnG3BRkDo9_bg@mail.gmail.com>
-Date: Mon, 18 Jul 2016 14:27:03 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: A CGI application vulnerability for PHP, Go, Python and others
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/9
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0B97349@EX02.corp.qihoo.net>
+Date: Fri, 8 Apr 2016 07:10:54 +0000
+From: 张开翔 <zhangkaixiang@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-3632 - libtiff 4.0.6 illegel write
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 18, 2016 at 1:33 PM, Solar Designer <solar@...nwall.com> wrote:
+Details
 
-> On Mon, Jul 18, 2016 at 02:23:41PM -0400, Jan Schaumann wrote:
-> > Richard Rowe <arch.richard@...il.com> wrote:
-> >
-> > > The consequence is that an attacker can force a proxy of their choice
-> to be
-> > > used. This proxy receives the full request for anything sent over HTTP
-> > > using a vulnerable client. It can also act in a malicious way to tie up
-> > > server resources (a "reverse slowloris").
-> >
-> > I know you mentioned it on https://httpoxy.org/, but I think it's worth
-> > stressing explicitly again:  use of HTTPS for all requests made by the
-> > application, internal as well as external, defeats this vulnerability
-> > (provided certificates are actually verified).
->
-> Certificates being actually verified doesn't help against use of this
-> trick for host/port scanning or DoS attacks on third-parties.  What does
-> fully defeat this vulnerability is if the application or library only
-> checks a different env var like HTTPS_PROXY for HTTPS connections.  So I
-> guess whether use of HTTPS fully defeats or partially mitigates the
-> issue varies by the application or library invoked from a CGI program.
->
-> Alexander
->
+=======
 
-More to the point to quote myself:
 
-https://access.redhat.com/security/vulnerabilities/httpoxy
 
-==
-Please note that the "Proxy" header is not an official standard header, nor
-is it in the provisional header registry. The "Proxy" header should not be
-used by any standards compliant applications or clients.
-==
+Product: libtiff
 
-Case in point:
+Affected Versions: <= 4.0.6
 
-http://www.iana.org/assignments/message-headers/message-headers.xhtml
+Vulnerability Type: Illegel write
 
-You will note that the "Proxy" header is not there. It's a common
-convention to support it, and as it turns out, a bad one (seriously, in
-what use case do you want to let a client specify the proxy that a server
-then uses to handle outgoing requests?). We also asked several large web
-CDN firms to check their logs for the "Proxy" header, and none reported
-seeing it used in the wild. Literally the only use case for this header now
-is for attackers.
+Vendor URL:  http://www.remotesensing.org/libtiff/
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+CVE ID: CVE-2016-3632
 
+Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
+
+
+
+Introduction
+
+Illegal write occurs in the _TIFFVGetField function in tif_dirinfo.c when using thumbnail command, which allows attackers to exploit this issue to cause denial-of-service or may command excution.
+
+
+
+libtiff/tif_dir.c:1073
+1068                                          if (fip->field_type == TIFF_ASCII
+1069                                              || fip->field_readcount == TIFF_VARIABLE
+1070                                              || fip->field_readcount == TIFF_VARIABLE2
+1071                                              || fip->field_readcount == TIFF_SPP
+1072                                              || tv->count > 1) {
+1073                                                 *va_arg(ap, void **) = tv->value;
+1074                                                 ret_val = 1;
+
+gdb  --args  thumbnail  _ TIFFVGetField.tif  tmpout.tif
+……
+Program received signal SIGSEGV, Segmentation fault.
+_TIFFVGetField (tif=<optimized out>, tag=<optimized out>, ap=<optimized out>) at tif_dir.c:1073
+1073                                                                           *va_arg(ap, void **) = tv->value;
+Missing separate debuginfos, use: dnf debuginfo-install glibc-2.22-10.fc23.x86_64 libjpeg-turbo-1.4.1-2.fc23.x86_64
+(gdb) bt
+#0  _TIFFVGetField (tif=<optimized out>, tag=<optimized out>, ap=<optimized out>) at tif_dir.c:1073
+#1  0x00007ffff7a6b5e1 in TIFFGetField (tif=tif@...ry=0x60a930, tag=tag@...ry=326) at tif_dir.c:1158
+#2  0x00000000004034a1 in cpTag (type=TIFF_LONG, count=<optimized out>, tag=<optimized out>, out=<optimized out>, in=<optimized out>) at thumbnail.c:167
+#3  cpTags (out=<optimized out>, in=<optimized out>) at thumbnail.c:297
+#4  cpIFD (out=<optimized out>, in=<optimized out>) at thumbnail.c:373
+#5  main (argc=<optimized out>, argv=<optimized out>) at thumbnail.c:124
+(gdb) x/xw ap-4
+0xbffff2bc:        0x00000001
+
+References:
+[1] http://www.remotesensing.org/libtiff/
+
+
+Thank you!
+
+Best Regards,
