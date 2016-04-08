@@ -1,25 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/8
-Message-ID: <9922e24a-9aa0-4979-997c-c1b1b16487b4@email.android.com>
-Date: Mon, 07 Mar 2016 11:28:48 +0000
-From: Simon Ward <simon+oss-sec@...ah.co.uk>
-To: oss-security@...ts.openwall.com,Adam Caudill <adam@...mcaudill.com>
-CC: cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/10
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0B97359@EX02.corp.qihoo.net>
+Date: Fri, 8 Apr 2016 07:12:28 +0000
+From: 张开翔 <zhangkaixiang@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-3631 - libtiff 4.0.6 illegel read
 Content-Type: text/plain; charset=utf-8
 
-On 5 March 2016 20:25:49 GMT+00:00, Adam Caudill <adam@...mcaudill.com> wrote:
->Here is what I would like to see:
->
->* Simple ID Request - Data required should be minimal, though I think
->a few basic items are needed. Perhaps vendor, product, version(s),
->title, and contact information. Optionally, the requestor should be
->able to provide their GPG public key, a detailed description,
->reference URL(s), etc. The ID should then be instantly issued, and
->given a status of assigned.
+Details
 
-While I like the idea of being able to trivially get a global identifier for a vulnerability I find those with no information,. i.e. Unknown attack vector and impacts, useless. There's no good way to prioritise these: if you assume the worst case you get drowned in a sea of vulnerabilities you have to investigate.
+=======
 
-Simon
--- 
-Sent from Kaiten Mail. Please excuse my brevity.
+
+
+Product: libtiff
+
+Affected Versions: <= 4.0.6
+
+Vulnerability Type: Illegel read
+
+Vendor URL: http://www.libtiff.org/
+
+CVE ID: CVE-2016-3631
+
+Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
+
+
+
+Introduction
+
+Illegal read occurs in the cpStrips and cpTiles function in thumbnail.c in thumbnail allows attackers to exploit this issue to cause denial-of-service.
+
+
+
+libtiff/tools/thumbnail.c:314.
+313  for (s = 0; s < ns; s++) {
+314    if (bytecounts[s] > (uint64) bufsize) {
+315         buf = (unsigned char *)_TIFFrealloc(buf, (tmsize_t)bytecounts[s]);
+316         if (!buf)
+317             goto bad;
+318         bufsize = (tmsize_t)bytecounts[s];
+319      }
+320      if (TIFFReadRawStrip(in, s, buf, (tmsize_t)bytecounts[s]) < 0 ||
+321         TIFFWriteRawStrip(out, s, buf, (tmsize_t)bytecounts[s]) < 0) {
+322         _TIFFfree(buf);
+323         return 0;
+324      }
+325  }
+
+gdb  --args  thumbnail  cpStrips.tif  tmpout.tif
+……
+Program received signal SIGSEGV, Segmentation fault.
+0x0804c7bf in cpStrips (out=<optimized out>, in=0x8164530) at thumbnail.c:314
+314          if (bytecounts[s] > (uint64) bufsize) {
+(gdb) bt
+#0  0x0804c7bf in cpStrips (out=<optimized out>, in=0x8164530) at thumbnail.c:314
+#1  cpIFD (out=<optimized out>, in=<optimized out>) at thumbnail.c:378
+#2  main (argc=3, argv=0xbffff384) at thumbnail.c:124
+(gdb) p *bytecounts
+
+Cannot access memory at address 0x42900001
+
+References:
+[1] http://www.remotesensing.org/libtiff/
+
+
+Thank you!
+
+Best Regards,
+
