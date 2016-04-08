@@ -1,55 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/21/4
-Message-ID: <D31580E7.2725E%grant.murphy@hpe.com>
-Date: Mon, 21 Mar 2016 17:44:46 +0000
-From: "Murphy, Grant" <grant.murphy@....com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "gustavo.grieco@...il.com" <gustavo.grieco@...il.com>
-CC: "cve-assign@...re.org" <cve-assign@...re.org>
-Subject: Re: Re: CVE request: Stack exhaustion in libxml2 parsing xml files in recover mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/8
+Message-ID: <D0A51038-C8D7-4538-8FBE-5C4BB9BAD81C@360.cn>
+Date: Fri, 8 Apr 2016 07:00:50 +0000
+From: 王梅 <wangmei@....cn>
+To: Alan Coopersmith <alan.coopersmith@...cle.com>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2016-3619 libtiff: Out-of-bounds Read in the bmp2tiff tool
 Content-Type: text/plain; charset=utf-8
 
-On 3/21/16, 7:58 AM, "cve-assign@...re.org" <cve-assign@...re.org> wrote:
+Thanks for pointing out the mistake. 
 
->-----BEGIN PGP SIGNED MESSAGE-----
->Hash: SHA256
->
->> gdb --args xmllint --recover no-recover.xml
->
->> Program received signal SIGSEGV, Segmentation fault.
->> _int_malloc (av=0x7ffff7826760 <main_arena>, bytes=2) at malloc.c:3302
->
->Use CVE-2016-3627.
->
->> It was reported to the libxml2 bug tracker some
->> time ago but the maintainers are quite busy, so they haven't fixed it.
->
->It's typically useful to mention the bug number even if it isn't
->currently a public bug, in case correlation is needed later.
+CVE-2016-3619: https://bugzilla.redhat.com/show_bug.cgi?id=1316569
 
-Looks like it was reported here:
-https://bugzilla.gnome.org/show_bug.cgi?id=762100
 
->
->- -- 
->CVE Assignment Team
->M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
->[ A PGP key is available for encrypted communications at
->  http://cve.mitre.org/cve/request_id.html ]
->-----BEGIN PGP SIGNATURE-----
->Version: GnuPG v1
->
->iQIcBAEBCAAGBQJW8AsWAAoJEL54rhJi8gl58g4P/i/POnAJzcVBHPdk0svtHKl+
->+510uhal1JlA6r3y3AiDnqsaRM5TMzuzYs+0l9EA8ydM9nx0UMAOkA/1tHVl48P1
->cJcMMoHj/dv/pBBsAaSuJEr2VttXOn4gCuhhVOJQBc1g4sMYUNEdsn3dJ9HbyI6W
->sL2fkuGxXCMTl5at94lLJI+Hij8t+VrDSmS+0e+W7AvL4uDuyYH6b4Bcp4BmlX8l
->m52hCy9Y72MoSHeituWXLZZ75EIWdwy8ftTmjxpO08ZPR2YjUIiwDYBZKvfWCpFt
->aQc/FJrvygTbXtfvT6WUli8qrz1Q2EzYV5c1/jGSfh+0YaNJkvDdLsRlCE0qMm4L
->TnoZmD2boumgRmCLAwmqQrkCZeSh6I8ET/I6NHhor8f0LXEuVGOjjN1IJCJ2wRT7
->QGp7iejweiDoL1EioQg2pZij4BmG8jxy4XtJRZUBtJzt8yYfIP//z5Lm+3MwO7Uq
->UCscXaI0xpLAP4WW/kQTij9wVBnByu61USK7z96dytNcxYqmQhFhaBbUcT3phqwe
->JhwGxCONz1wDJG028cXD/r1DX/s/3dHLKWbSrg6zjETaBNTkuIgQBO6SJ9tPcRht
->/7T/LPgsNvuqydPksZWan1ytstfOhEDrl2pexJBgnwpt6QlsZnKtIScHDn3PNBND
->rpeM6ZE03EVFPNQRk0sK
->=1y/J
->-----END PGP SIGNATURE-----
+> 在 2016年4月8日，下午2:00，Alan Coopersmith <alan.coopersmith@...cle.com> 写道：
+> 
+> On 04/ 7/16 12:32 AM, 王梅 wrote:
+>> Details
+>> =======
+>> 
+>> Product: libtiff
+>> Affected Versions: <= 4.0.6
+>> Vulnerability Type: Out-of-bounds Read
+>> Vendor URL: http://www.libtiff.org/
+>> CVE ID: CVE-2016-3619
+>> Credit: Mei Wang of the Cloud Security Team, Qihoo 360
+> 
+>> References:
+>> [1] http://www.remotesensing.org/libtiff/
+>> [2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
+> 
+> Instead of pointing to a list of 305 bugs, please just provide a link to the bug
+> you filed for each issue so it's easier for distros to check the progress of the
+> fix.
+> 
+> -- 
+> 	-Alan Coopersmith-              alan.coopersmith@...cle.com
+> 	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
 
