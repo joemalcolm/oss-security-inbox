@@ -1,4 +1,9 @@
-Received: (qmail 5750 invoked by uid 550); 21 Jan 2025 20:12:37 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2338" "Friday" "8" "April" "2016" "07:12:28" "+0000" "=?gb2312?B?1cW/qs/o?=" "zhangkaixiang@360.cn" "<5EDB84F4B23F5B4DB6500A89258280E0B97359@EX02.corp.qihoo.net>" "41" "[oss-security] CVE-2016-3631 - libtiff 4.0.6 illegel read" nil nil nil "4" "2016040807:12:28" "[oss-security] CVE-2016-3631 - libtiff 4.0.6 illegel read" (number mark "U       zhangkaixian Apr  8   41/2338  " thread-indent "\"[oss-security] CVE-2016-3631 - libtiff 4.0.6 illegel read\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 27703 invoked by uid 550); 8 Apr 2016 08:14:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,112 +12,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5723 invoked from network); 21 Jan 2025 20:12:37 -0000
-Date: Tue, 21 Jan 2025 15:12:28 -0500
-From: Jan Schaumann <jschauma@netmeister.org>
-To: oss-security@lists.openwall.com
-Message-ID: <Z4__rJ3_SmmtEIsG@netmeister.org>
+Received: (qmail 19882 invoked from network); 8 Apr 2016 07:12:41 -0000
+From: =?gb2312?B?1cW/qs/o?= <zhangkaixiang@360.cn>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: CVE-2016-3631 - libtiff 4.0.6 illegel read
+Thread-Index: AdGRZfVzEnQBbCKBQNyYL72n0O/BJQ==
+Date: Fri, 8 Apr 2016 07:12:28 +0000
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0B97359@EX02.corp.qihoo.net>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.18.25.62]
+Content-Type: multipart/alternative;
+	boundary="_000_5EDB84F4B23F5B4DB6500A89258280E0B97359EX02corpqihoonet_"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Subject: [oss-security] Node.js security updates: CVE-2025-23083, CVE-2025-23084,
- CVE-2025-23085
+Subject: [oss-security] CVE-2016-3631 - libtiff 4.0.6 illegel read
 
-[Forwarding here because I seem to recall that the
-NodeJS team doesn't usually post their announcements
-to this list; I have no other affiliation with
-NodeJS.]
+--_000_5EDB84F4B23F5B4DB6500A89258280E0B97359EX02corpqihoonet_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-https://nodejs.org/en/blog/vulnerability/january-2025-security-releases
+RGV0YWlscw0KDQo9PT09PT09DQoNCg0KDQpQcm9kdWN0OiBsaWJ0aWZmDQoN
+CkFmZmVjdGVkIFZlcnNpb25zOiA8PSA0LjAuNg0KDQpWdWxuZXJhYmlsaXR5
+IFR5cGU6IElsbGVnZWwgcmVhZA0KDQpWZW5kb3IgVVJMOiBodHRwOi8vd3d3
+LmxpYnRpZmYub3JnLw0KDQpDVkUgSUQ6IENWRS0yMDE2LTM2MzENCg0KQ3Jl
+ZGl0OiBLYWl4aWFuZyBaaGFuZyBvZiB0aGUgQ2xvdWQgU2VjdXJpdHkgVGVh
+bSwgUWlob28gMzYwDQoNCg0KDQpJbnRyb2R1Y3Rpb24NCg0KSWxsZWdhbCBy
+ZWFkIG9jY3VycyBpbiB0aGUgY3BTdHJpcHMgYW5kIGNwVGlsZXMgZnVuY3Rp
+b24gaW4gdGh1bWJuYWlsLmMgaW4gdGh1bWJuYWlsIGFsbG93cyBhdHRhY2tl
+cnMgdG8gZXhwbG9pdCB0aGlzIGlzc3VlIHRvIGNhdXNlIGRlbmlhbC1vZi1z
+ZXJ2aWNlLg0KDQoNCg0KbGlidGlmZi90b29scy90aHVtYm5haWwuYzozMTQu
+DQozMTMgIGZvciAocyA9IDA7IHMgPCBuczsgcysrKSB7DQozMTQgICAgaWYg
+KGJ5dGVjb3VudHNbc10gPiAodWludDY0KSBidWZzaXplKSB7DQozMTUgICAg
+ICAgICBidWYgPSAodW5zaWduZWQgY2hhciAqKV9USUZGcmVhbGxvYyhidWYs
+ICh0bXNpemVfdClieXRlY291bnRzW3NdKTsNCjMxNiAgICAgICAgIGlmICgh
+YnVmKQ0KMzE3ICAgICAgICAgICAgIGdvdG8gYmFkOw0KMzE4ICAgICAgICAg
+YnVmc2l6ZSA9ICh0bXNpemVfdClieXRlY291bnRzW3NdOw0KMzE5ICAgICAg
+fQ0KMzIwICAgICAgaWYgKFRJRkZSZWFkUmF3U3RyaXAoaW4sIHMsIGJ1Ziwg
+KHRtc2l6ZV90KWJ5dGVjb3VudHNbc10pIDwgMCB8fA0KMzIxICAgICAgICAg
+VElGRldyaXRlUmF3U3RyaXAob3V0LCBzLCBidWYsICh0bXNpemVfdClieXRl
+Y291bnRzW3NdKSA8IDApIHsNCjMyMiAgICAgICAgIF9USUZGZnJlZShidWYp
+Ow0KMzIzICAgICAgICAgcmV0dXJuIDA7DQozMjQgICAgICB9DQozMjUgIH0N
+Cg0KZ2RiICAtLWFyZ3MgIHRodW1ibmFpbCAgY3BTdHJpcHMudGlmICB0bXBv
+dXQudGlmDQqhraGtDQpQcm9ncmFtIHJlY2VpdmVkIHNpZ25hbCBTSUdTRUdW
+LCBTZWdtZW50YXRpb24gZmF1bHQuDQoweDA4MDRjN2JmIGluIGNwU3RyaXBz
+IChvdXQ9PG9wdGltaXplZCBvdXQ+LCBpbj0weDgxNjQ1MzApIGF0IHRodW1i
+bmFpbC5jOjMxNA0KMzE0ICAgICAgICAgIGlmIChieXRlY291bnRzW3NdID4g
+KHVpbnQ2NCkgYnVmc2l6ZSkgew0KKGdkYikgYnQNCiMwICAweDA4MDRjN2Jm
+IGluIGNwU3RyaXBzIChvdXQ9PG9wdGltaXplZCBvdXQ+LCBpbj0weDgxNjQ1
+MzApIGF0IHRodW1ibmFpbC5jOjMxNA0KIzEgIGNwSUZEIChvdXQ9PG9wdGlt
+aXplZCBvdXQ+LCBpbj08b3B0aW1pemVkIG91dD4pIGF0IHRodW1ibmFpbC5j
+OjM3OA0KIzIgIG1haW4gKGFyZ2M9MywgYXJndj0weGJmZmZmMzg0KSBhdCB0
+aHVtYm5haWwuYzoxMjQNCihnZGIpIHAgKmJ5dGVjb3VudHMNCg0KQ2Fubm90
+IGFjY2VzcyBtZW1vcnkgYXQgYWRkcmVzcyAweDQyOTAwMDAxDQoNClJlZmVy
+ZW5jZXM6DQpbMV0gaHR0cDovL3d3dy5yZW1vdGVzZW5zaW5nLm9yZy9saWJ0
+aWZmLw0KDQoNClRoYW5rIHlvdSENCg0KQmVzdCBSZWdhcmRzLA0KDQo=
 
-Tuesday, January 21, 2025 Security Releases
-
-Security releases available
-
-Updates are now available for the 23.x, 22.x, 20.x,
-18.x Node.js release lines for the following issues.
-
-This security release includes the following
-dependency updates to address public vulnerabilities:
-
-* undici (v7.2.3, v6.21.1, v5.28.5) on v23.x, v22.x, .x, v18.x.
-
-
-Worker permission bypass via InternalWorker leak in
-diagnostics (CVE-2025-23083) - (high)
-
-With the aid of the diagnostics_channel utility, an
-event can be hooked into whenever a worker thread is
-created. This is not limited only to workers but also
-exposes internal workers, where an instance of them
-can be fetched, and its constructor can be grabbed and
-reinstated for malicious usage.
-
-This vulnerability affects Permission Model users
-(--permission) on Node.js v20, v22, and v23.
-
-Impact:
-
-    This vulnerability affects all users in active
-release lines: 20.x, 22.x, 23.x
-
-Thank you, to leodog896 for reporting this
-vulnerability and thank you RafaelGSS for fixing it.
-
-
-Path traversal by drive name in Windows environment
-(CVE-2025-23084) - (medium)
-
-A vulnerability has been identified in Node.js,
-specifically affecting the handling of drive names in
-the Windows environment. Certain Node.js functions do
-not treat drive names as special on Windows. As a
-result, although Node.js assumes a relative path, it
-actually refers to the root directory.
-
-On Windows, a path that does not start with the file
-separator is treated as relative to the current
-directory.
-
-This vulnerability affects Windows users of path.join
-API.
-
-Impact:
-
-    This vulnerability affects all users in active
-release lines: 18.x, 20.x, 22.x, 23.x
-
-Thank you, to taise for reporting this vulnerability
-and thank you tniessen for fixing it.
-
-
-GOAWAY HTTP/2 frames cause memory leak outside heap
-(CVE-2025-23085) - (medium)
-
-A memory leak could occur when a remote peer abruptly
-closes the socket without sending a GOAWAY
-notification. Additionally, if an invalid header was
-detected by nghttp2, causing the connection to be
-terminated by the peer, the same leak was triggered.
-This flaw could lead to increased memory consumption
-and potential denial of service under certain
-conditions.
-
-This vulnerability affects HTTP/2 Server users on
-Node.js v18.x, v20.x, v22.x and v23.x.
-
-Impact:
-
-    This vulnerability affects all users in active
-release lines: 18.x, 20.x, 22.x, 23.x
-
-Thank you, to newtmitch for reporting this
-vulnerability and thank you RafaelGSS for fixing it.
-Downloads and release details
-
-Node.js v18.20.6 - https://nodejs.org/en/blog/release/v18.20.6/
-Node.js v20.18.2 - https://nodejs.org/en/blog/release/v20.18.2/
-Node.js v22.13.1 - https://nodejs.org/en/blog/release/v22.13.1/
-Node.js v23.6.1 - https://nodejs.org/en/blog/release/v23.6.1/
-
+--_000_5EDB84F4B23F5B4DB6500A89258280E0B97359EX02corpqihoonet_--
