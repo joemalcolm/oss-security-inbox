@@ -1,51 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/26/3
-Message-ID: <20161226154650.4b40cca8@pc1>
-Date: Mon, 26 Dec 2016 15:46:50 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/3
+Message-ID: <72886774-4BBF-4ACF-B7BC-CB112FC7720C@360.cn>
+Date: Fri, 8 Apr 2016 04:56:22 +0000
+From: 王梅 <wangmei@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-3623 libtiff: Divide By Zero in the rgb2ycbcr tool
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Details
+=======
 
-Given I had plenty of time on the train to 33c3 I did a quick
-lookaround on what contains PHPMailer. As the details of the vuln
-aren't clear yet this doesn't necessarily mean they're vulnerable, just
-that they ship the affected code.
+Product: libtiff
+Affected Versions: <= 4.0.6
+Vulnerability Type: Divide By Zero
+Vendor URL: http://www.remotesensing.org/libtiff/
+CVE ID: CVE-2016-3623
+Credit: Mei Wang of the Cloud Security Team, Qihoo 360
 
-The most popular webapps that directly ship PHPmailer seem to be Joomla
-and Mantis. Both without an update yet.
-Wordpress also ships PHPmailer, but this confused me at first. They
-renamed it and it's called class-phpmailer.php (if you use some
-automatic detection for vulnerable PHPMailer versions - as I do in
-freewvs - you may miss that one). Also no update yet.
+Introduction
+============
 
-Drupal doesn't contain PHPMailer, although mentioned in the advisory.
-But there are probably plugins and extensions using it. I also saw it
-used in some wordpress themes.
+Division by zero occurs in rgb2ycbcr in libtiff-4.0.6 allows attackers to cause a denial of service when the param v or param h was set to 0.
 
-Owncloud and CMS Made Simple don't ship PHPMailer in their current
-versions, but in older versions. This may deserve some
-closer investigation if the files are leftover after updates and pose
-still a risk.
 
-Summary:
+libtiff-master/libtiff/rgb2ycbcr.c:256-257
 
-Affected popular Webapps with plain PHPMailer:
-Joomla
-Mantis
+250 cvtRaster(TIFF* tif, uint32* raster, uint32 width, uint32 height)
+251 {
+252         uint32 y;
+253         tstrip_t strip = 0;
+254         tsize_t cc, acc;
+255         unsigned char* buf;
+256         uint32 rwidth = roundup(width, horizSubSampling);
+257         uint32 rheight = roundup(height, vertSubSampling);
+258         uint32 nrows = (rowsperstrip > rheight ? rheight : rowsperstrip);
 
-Affected popular webapps with modified / renamed PHPMailer:
-Wordpress
 
-Affected popular webapps which contained PHPMailer in older versions:
-CMS Made Simple
-Owncloud
+gdb rgb2ycbcr
 
--- 
-Hanno Böck
-https://hboeck.de/
+(gdb)r -c zip  -r 0  -h 2  -v 0 ./sample/rgb2ycbcr_cvtRaster.tif 1.tif
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Program received signal SIGFPE, Arithmetic exception.
+0x00000000004017cd in cvtRaster (tif=0x604010, raster=0x7ffff4cab010, width=65312, height=152) at rgb2ycbcr.c:257
+257             uint32 rheight = roundup(height, vertSubSampling);
+(gdb) p height
+$1 = 152
+(gdb) p vertSubSampling
+$2 = 0
+
+(gdb) r -c zip  -r 0  -h 0  -v 2 ./sample/rgb2ycbcr_cvtRaster.tif 1.tif
+
+Program received signal SIGFPE, Arithmetic exception.
+0x0000000000401798 in cvtRaster (tif=0x604010, raster=0x7ffff4cab010, width=65312, height=152) at rgb2ycbcr.c:256
+256             uint32 rwidth = roundup(width, horizSubSampling);
+(gdb) p width
+$3 = 65312
+(gdb) p horizSubSampling
+$4 = 0
+
+References:
+[1] http://www.remotesensing.org/libtiff/
+[2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
+
+
+Thank you!
+Best Regards,
+
+
+Mei
+
