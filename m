@@ -1,54 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/05/10
-Message-ID: <20160305205322.GA23295@openwall.com>
-Date: Sat, 5 Mar 2016 23:53:22 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/11
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0B97367@EX02.corp.qihoo.net>
+Date: Fri, 8 Apr 2016 07:13:29 +0000
+From: 张开翔 <zhangkaixiang@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-3633 - libtiff 4.0.6 illegel read
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Mar 05, 2016 at 03:25:49PM -0500, Adam Caudill wrote:
-> I very much like the idea of being able to get an ID instantly - it
-> greatly simplifies an otherwise time consuming process. That said, I
-> can see some issues with OVE:
-> 
-> * No Lookup - For a customer, going from OVE to what it represents
-> could be complicated. It depends entirely on the researcher or vendor
-> publishing a reference for that ID.
+Details
 
-... or on any third-party doing it.  I expect that various existing
-vulnerability databases will start listing OVE IDs along with other IDs
-they're currently listing.  Whatever IDs are available for an issue.
+=======
 
-Of course, the information will need to be available to those
-third-party databases from somewhere - but this can be the researcher's
-or the vendor's disclosure, as you say.  Until such disclosure, a
-customer would not even be aware of the ID, let alone want to look it up.
 
-> * Invalid Entries - As noted, there's no way to see if a given ID is
-> considered valid, and while there is value to just having an ID, this
-> model makes later curation more difficult. With no information behind
-> the ID, there's no opportunity to later expand into a more complete
-> solution.
 
-I think there is such opportunity, it's just possibly more difficult.
+Product: libtiff
 
-> Here is what I would like to see:
+Affected Versions: <= 4.0.6
 
-This sounds similar to what Tim wanted.  Feel free to implement that.
-I think if such a thing appears, there may still be interest in a
-bare-bones solution, which OVE currently is.  I have no current plans to
-expand OVE into a more complete solution.
+Vulnerability Type: Illegel read
 
-> * Simple ID Request - Data required should be minimal, though I think
-> a few basic items are needed. Perhaps vendor, product, version(s),
-> title, and contact information.
+Vendor URL: http://www.libtiff.org/
 
-A drawback is that such requests become somewhat security-sensitive, if
-for yet unpublished issues.  This is already a major concern with CVE,
-where information may be subject to unjustified risk for the purpose of
-merely getting an ID assigned.
+CVE ID: CVE-2016-3633
 
-OVE currently side-steps the issue.
+Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
 
-Alexander
+
+
+Introduction
+
+Illegal read occurs in the _ setrow function in thumbnail.c when using thumbnail command, which allows attackers to exploit this issue to cause denial-of-service.
+
+
+/libtiff/tools/thumbnail.c:525
+523  for (y = 0; y < nrows; y++) {
+524      const uint8* src = rows[y] + off;
+525      acc += bits[*src++ & mask0];
+
+gdb  --args  thumbnail  setrow.tif  tmpout.tif
+……
+Program received signal SIGSEGV, Segmentation fault.
+0x08049de5 in setrow (row=0x8061d00 "", nrows=256, rows=0xbfffeba0) at thumbnail.c:525
+525                acc += bits[*src++ & mask0];
+(gdb) bt
+#0  0x08049de5 in setrow (row=0x8061d00 "", nrows=256, rows=0xbfffeba0) at thumbnail.c:525
+#1  0x0804a07a in setImage1 (br=0x804d9b8 "\377", rw=5242880, rh=5242880) at thumbnail.c:581
+#2  0x0804a121 in setImage (br=0x804d9b8 "\377", rw=5242880, rh=5242880) at thumbnail.c:591
+#3  0x0804a2db in generateThumbnail (in=0x804d530, out=0x804d008) at thumbnail.c:633
+#4  0x08048f5f in main (argc=3, argv=0xbffff134) at thumbnail.c:122
+(gdb) p *src
+Cannot access memory at address 0x8204988
+
+References:
+[1] http://www.remotesensing.org/libtiff/
+[2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
+
+
+Thank you!
+
+Best Regards,
