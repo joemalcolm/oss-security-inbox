@@ -1,47 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/23/3
-Message-ID: <3fc75fac762f4dc8acc9a7911df31e5b@imshyb02.MITRE.ORG>
-Date: Tue, 22 Nov 2016 19:17:13 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: libdwarf: negation overflow in dwarf_leb.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/4
+Message-ID: <2F6C06FC-4F95-43BB-957C-8C7D30BB0BA4@360.cn>
+Date: Fri, 8 Apr 2016 04:58:48 +0000
+From: 王梅 <wangmei@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-3624 libtiff: Out-of-bounds Write in the rgb2ycbcr tool
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Details
+=======
 
-> https://blogs.gentoo.org/ago/2016/11/19/libdwarf-negation-overflow-in-dwarf_leb-c
+Product: libtiff
+Affected Versions: <= 4.0.6
+Vulnerability Type:  Out-of-bounds Write
+Vendor URL: http://www.remotesensing.org/libtiff/
+CVE ID: CVE-2016-3624
+Credit: Mei Wang of the Cloud Security Team, Qihoo 360
 
-> dwarf_leb.c:306:19: runtime error: negation of -9223372036854775808 cannot be
-> represented in type 'Dwarf_Signed' (aka 'long long')
+Introduction
+============
 
-> https://sourceforge.net/p/libdwarf/code/ci/4f19e1050cd8e9ddf2cb6caa061ff2fec4c9b5f9/#diff-5
+Out-of-bounds Write occurred in function cvtClump in rgb2ycbcr allows attackers to cause a denial of service when param v was set to -1.
 
-> libdwarf/dwarf_leb.c 
-> dwarfdump/print_frames.c 
 
-Use CVE-2016-9558.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+libtiff-master/libtiff/rgb2ycbcr.c:193
 
-iQIcBAEBCAAGBQJYNN5vAAoJEHb/MwWLVhi2GfkP/jgNLEYfq0Q32Eo1nHbEkMUz
-w2mmoTJn9AUDZMrcBvO8ir4o8NXFrQBx2VbDgwWKH2ba8fXq2hlVGc3n3TDaLxp3
-QfqMowvu0dZw78L6sPWBEwsVh5wzmAQOV5ORoLJhe4vT+UQgTeze8uRtpiM8TxmQ
-09oSpDfZtlY1YCreHb5wgkZoBUxwu/wmFSFWw7LNh20fPfaVtfzn/wUbjnhfF6Et
-5yYhY6pcMnOmZoXqpbXvCNi3iLJHaWAVbbME3lL4shmG4ZnnYq/DmIGBqtu9t0zu
-gqvfT9ZqFkenxdTBAWKtwFY+4His6ORl3xwYUgxkNaINPDTew9lx49XvpYi20wB7
-SQSbc0pfY3vv+Xe3Svu8JtcFK/0QL1dBWns79OafFnF6Th721o1FNsz6vSWTp0TW
-01voipBiOq8tv3eF/oAGO9ENJv6l/GQXAy1vy0vfS4HXDechPxTNgG3jm1DrM/WH
-X2oezB+KKQdxGc03N48oewPy+GHcaZm48XdLkrCARBLaP2scTIeW62Xx1LrclaGX
-Frn8w5JDYe2CHuk6+h7XsY/WVdMDO9akjZiImuey/LJJ5Hja+VCYqeG3cLlLK72A
-drA2E9FBuphjZEy6qjYroy6X+vxQhFxuEQVC07yaygT/2ySSNP4ujRAQvQZKszSt
-kyslnffeY07X+QLx5GNi
-=00TY
------END PGP SIGNATURE-----
+187                             lumaGreen[TIFFGetG(RGB)] +
+188                             lumaBlue[TIFFGetB(RGB)];
+189                         /* accumulate chrominance */
+190                         Cb += (TIFFGetB(RGB) - Y) * D1;
+191                         Cr += (TIFFGetR(RGB) - Y) * D2;
+192                         /* emit luminence */
+193                         *op++ = V2Code(Y,
+194                             refBlackWhite[0], refBlackWhite[1], 255);
+195                 }
+
+
+
+gdb rgb2ycbcr
+
+(gdb) r -c none  -r -1  -h -1  -v -1 sample/rgb2ycbcr_cvtClump.tif 1.tif
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000401440 in cvtClump (op=0x1 <Address 0x1 out of bounds>, raster=0x7ffff7249f90, ch=152, cw=65312, w=65312)
+    at rgb2ycbcr.c:193
+193                             *op++ = V2Code(Y,
+(gdb) p op
+$6 = (unsigned char *) 0x1 <Address 0x1 out of bounds>
+(gdb) p *op
+Cannot access memory at address 0x1
+(gdb) bt
+#0  0x0000000000401440 in cvtClump (op=0x1 <Address 0x1 out of bounds>, raster=0x7ffff7249f90, ch=152, cw=65312, w=65312)
+    at rgb2ycbcr.c:193
+#1  0x0000000000401757 in cvtStrip (op=0x0, raster=0x7ffff7249f90, nrows=152, width=65312) at rgb2ycbcr.c:245
+#2  0x00000000004018b7 in cvtRaster (tif=0x604010, raster=0x7ffff4cab010, width=65312, height=152) at rgb2ycbcr.c:267
+#3  0x0000000000401f03 in tiffcvt (in=0x605560, out=0x604010) at rgb2ycbcr.c:352
+#4  0x000000000040108a in main (argc=11, argv=0x7fffffffe3b8) at rgb2ycbcr.c:127
+
+References:
+[1] http://www.remotesensing.org/libtiff/
+[2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
+
+
+Thank you!
+Best Regards,
+
+
+Mei
+
