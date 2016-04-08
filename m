@@ -1,4 +1,9 @@
-Received: (qmail 21803 invoked by uid 550); 9 Apr 2025 14:35:59 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5155" "Friday" "8" "April" "2016" "05:02:06" "+0000" "=?gb2312?B?zfXDtw==?=" "wangmei@360.cn" "<A9050F7D-C369-4835-9B4B-022B3631E17E@360.cn>" "88" "[oss-security] CVE-2016-3625 libtiff: Out-of-bounds Read in the tiff2bw tool" nil nil nil "4" "2016040805:02:06" "[oss-security] CVE-2016-3625 libtiff: Out-of-bounds Read in the tiff2bw tool" (number mark "U       wangmei@360. Apr  8   88/5155  " thread-indent "\"[oss-security] CVE-2016-3625 libtiff: Out-of-bounds Read in the tiff2bw tool\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 22457 invoked by uid 550); 8 Apr 2016 05:56:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,41 +12,108 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 18123 invoked from network); 9 Apr 2025 14:34:33 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Domenico Francesco Bruscino <brusdev@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <7bce2dc1-7971-de8c-67b8-d61c72336ae3@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 09 Apr 2025 14:34:10 +0000
+Received: (qmail 26551 invoked from network); 8 Apr 2016 05:02:19 -0000
+From: =?gb2312?B?zfXDtw==?= <wangmei@360.cn>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: CVE-2016-3625 libtiff: Out-of-bounds Read in the tiff2bw tool
+Thread-Index: AQHRkVPMj2GHVmmYVkCUeQ5JG4DMCQ==
+Date: Fri, 8 Apr 2016 05:02:06 +0000
+Message-ID: <A9050F7D-C369-4835-9B4B-022B3631E17E@360.cn>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.18.25.162]
+Content-Type: multipart/alternative;
+	boundary="_000_A9050F7DC36948359B4B022B3631E17E360cn_"
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-27391: Apache ActiveMQ Artemis: Passwords leaking from
- broker properties in the debug log 
+Subject: [oss-security] CVE-2016-3625 libtiff: Out-of-bounds Read in the tiff2bw tool
 
-Affected versions:
+--_000_A9050F7DC36948359B4B022B3631E17E360cn_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-- Apache ActiveMQ Artemis 1.5.1 before 2.40.0
+RGV0YWlscw0KPT09PT09PQ0KDQpQcm9kdWN0OiBsaWJ0aWZmDQpBZmZlY3Rl
+ZCBWZXJzaW9uczogPD0gNC4wLjYNClZ1bG5lcmFiaWxpdHkgVHlwZTogIE91
+dC1vZi1ib3VuZHMgUmVhZA0KVmVuZG9yIFVSTDogaHR0cDovL3d3dy5yZW1v
+dGVzZW5zaW5nLm9yZy9saWJ0aWZmLw0KQ1ZFIElEOiBDVkUtMjAxNi0zNjI1
+DQpDcmVkaXQ6IE1laSBXYW5nIG9mIHRoZSBDbG91ZCBTZWN1cml0eSBUZWFt
+LCBRaWhvbyAzNjANCg0KSW50cm9kdWN0aW9uDQo9PT09PT09PT09PT0NCg0K
+T3V0LW9mLWJvdW5kcyBSZWFkIG9jY3VycmVkIGluIHRpZl9yZWFkLmM6NTQ1
+IG9yIHRpZl9yZWFkLmM6NDAyIG9yIHRpZl9yZWFkLmM6NTYwIGluIHRpZmYy
+YncgYWxsb3dzIGF0dGFja2VycyB0byBjYXVzZSBhIGRlbmlhbCBvZiBzZXJ2
+aWNlIHZpYSBhIGNyYWZ0ZWQgVElGRiBpbWFnZS4NCg0KDQoNCmdkYiB0aWZm
+MmJ3DQoNCihnZGIpciBzYW1wbGUvdGlmZjJid18xLnRpZiAxLnRpZg0KDQpQ
+cm9ncmFtIHJlY2VpdmVkIHNpZ25hbCBTSUdTRUdWLCBTZWdtZW50YXRpb24g
+ZmF1bHQuDQoweDAwMDA3ZmZmZjdiYjRiM2EgaW4gVElGRkZpbGxTdHJpcCAo
+dGlmPTB4NjA0MDEwLCBzdHJpcD0wKSBhdCB0aWZfcmVhZC5jOjU0NQ0KNTQ1
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdGQtPnRkX3N0cmlw
+b2Zmc2V0W3N0cmlwXSA+ICh1aW50NjQpdGlmLT50aWZfc2l6ZSAtIGJ5dGVj
+b3VudCkgew0KTWlzc2luZyBzZXBhcmF0ZSBkZWJ1Z2luZm9zLCB1c2U6IGRl
+YnVnaW5mby1pbnN0YWxsIGdsaWJjLTIuMTctNzguZWw3Lng4Nl82NA0KKGdk
+YikgcCB0ZC0+dGRfc3RyaXBvZmZzZXRbc3RyaXBdDQpDYW5ub3QgYWNjZXNz
+IG1lbW9yeSBhdCBhZGRyZXNzIDB4MA0KKGdkYikgYnQNCiMwICAweDAwMDA3
+ZmZmZjdiYjRiM2EgaW4gVElGRkZpbGxTdHJpcCAodGlmPTB4NjA0MDEwLCBz
+dHJpcD0wKSBhdCB0aWZfcmVhZC5jOjU0NQ0KIzEgIDB4MDAwMDdmZmZmN2Ji
+NDExYSBpbiBUSUZGU2VlayAodGlmPTB4NjA0MDEwLCByb3c9MCwgc2FtcGxl
+PTApIGF0IHRpZl9yZWFkLmM6MjI4DQojMiAgMHgwMDAwN2ZmZmY3YmI0MmYy
+IGluIFRJRkZSZWFkU2NhbmxpbmUgKHRpZj0weDYwNDAxMCwgYnVmPTB4NjA3
+NmQwLCByb3c9MCwgc2FtcGxlPTApIGF0IHRpZl9yZWFkLmM6Mjk1DQojMyAg
+MHgwMDAwMDAwMDAwNDAxOTdlIGluIG1haW4gKGFyZ2M9MywgYXJndj0weDdm
+ZmZmZmZmZTQyOCkgYXQgdGlmZjJidy5jOjI1Mw0KKGdkYikNCg0KDQooZ2Ri
+KSByIHNhbXBsZS90aWZmMmJ3XzIudGlmIDEudGlmDQoNClByb2dyYW0gcmVj
+ZWl2ZWQgc2lnbmFsIFNJR1NFR1YsIFNlZ21lbnRhdGlvbiBmYXVsdC4NCjB4
+MDAwMDdmZmZmN2JiNDZlNCBpbiBUSUZGUmVhZFJhd1N0cmlwMSAodGlmPTB4
+NjA0MDEwLCBzdHJpcD0wLCBidWY9MHg2MDU2MjAsIHNpemU9MTAsIG1vZHVs
+ZT0weDdmZmZmN2JjZmE4MSA8bW9kdWxlLjM5MTc+ICJUSUZGRmlsbFN0cmlw
+IikgYXQgdGlmX3JlYWQuYzo0MDINCjQwMiAgICAgICAgICAgICAgICAgICAg
+IG1hPSh0bXNpemVfdCl0ZC0+dGRfc3RyaXBvZmZzZXRbc3RyaXBdOw0KKGdk
+YikgcCB0ZC0+dGRfc3RyaXBvZmZzZXRbc3RyaXBdDQpDYW5ub3QgYWNjZXNz
+IG1lbW9yeSBhdCBhZGRyZXNzIDB4MA0KKGdkYikgYnQNCiMwICAweDAwMDA3
+ZmZmZjdiYjQ2ZTQgaW4gVElGRlJlYWRSYXdTdHJpcDEgKHRpZj0weDYwNDAx
+MCwgc3RyaXA9MCwgYnVmPTB4NjA1NjIwLCBzaXplPTEwLCBtb2R1bGU9MHg3
+ZmZmZjdiY2ZhODEgPG1vZHVsZS4zOTE3PiAiVElGRkZpbGxTdHJpcCIpIGF0
+IHRpZl9yZWFkLmM6NDAyDQojMSAgMHgwMDAwN2ZmZmY3YmI0ZDczIGluIFRJ
+RkZGaWxsU3RyaXAgKHRpZj0weDYwNDAxMCwgc3RyaXA9MCkgYXQgdGlmX3Jl
+YWQuYzo2MTINCiMyICAweDAwMDA3ZmZmZjdiYjQxMWEgaW4gVElGRlNlZWsg
+KHRpZj0weDYwNDAxMCwgcm93PTAsIHNhbXBsZT0wKSBhdCB0aWZfcmVhZC5j
+OjIyOA0KIzMgIDB4MDAwMDdmZmZmN2JiNDJmMiBpbiBUSUZGUmVhZFNjYW5s
+aW5lICh0aWY9MHg2MDQwMTAsIGJ1Zj0weDYwNzZlMCwgcm93PTAsIHNhbXBs
+ZT0wKSBhdCB0aWZfcmVhZC5jOjI5NQ0KIzQgIDB4MDAwMDAwMDAwMDQwMTk3
+ZSBpbiBtYWluIChhcmdjPTMsIGFyZ3Y9MHg3ZmZmZmZmZmU0MjgpIGF0IHRp
+ZmYyYncuYzoyNTMNCg0KKGdkYikgciBzYW1wbGUvdGlmZjJid18zLnRpZiAx
+LnRpZg0KDQpQcm9ncmFtIHJlY2VpdmVkIHNpZ25hbCBTSUdTRUdWLCBTZWdt
+ZW50YXRpb24gZmF1bHQuDQpUSUZGRmlsbFN0cmlwICh0aWY9MHg2MDQwMTAs
+IHN0cmlwPTApIGF0IHRpZl9yZWFkLmM6NTYwDQo1NjAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgVElGRkVycm9yRXh0KHRpZi0+dGlm
+X2NsaWVudGRhdGEsIG1vZHVsZSwNCihnZGIpIGwNCjU1NSAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJnb3QgJUk2NHUg
+Ynl0ZXMsIGV4cGVjdGVkICVJNjR1IiwNCjU1NiAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICh1bnNpZ25lZCBsb25nKSBz
+dHJpcCwNCjU1NyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICh1bnNpZ25lZCBfX2ludDY0KSB0aWYtPnRpZl9zaXplIC0g
+dGQtPnRkX3N0cmlwb2Zmc2V0W3N0cmlwXSwNCjU1OCAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICh1bnNpZ25lZCBfX2lu
+dDY0KSBieXRlY291bnQpOw0KNTU5ICAgICAjZWxzZQ0KNTYwICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIFRJRkZFcnJvckV4dCh0aWYt
+PnRpZl9jbGllbnRkYXRhLCBtb2R1bGUsDQo1NjENCjU2MiAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJSZWFkIGVycm9y
+IG9uIHN0cmlwICVsdTsgIg0KNTYzICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgImdvdCAlbGx1IGJ5dGVzLCBleHBlY3Rl
+ZCAlbGx1IiwNCjU2NCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICh1bnNpZ25lZCBsb25nKSBzdHJpcCwNCihnZGIpIHAg
+dGQtPnRkX3N0cmlwb2Zmc2V0W3N0cmlwXQ0KQ2Fubm90IGFjY2VzcyBtZW1v
+cnkgYXQgYWRkcmVzcyAweDANCihnZGIpIGJ0DQojMCAgVElGRkZpbGxTdHJp
+cCAodGlmPTB4NjA0MDEwLCBzdHJpcD0wKSBhdCB0aWZfcmVhZC5jOjU2MA0K
+IzEgIDB4MDAwMDdmZmZmN2JiNDExYSBpbiBUSUZGU2VlayAodGlmPTB4NjA0
+MDEwLCByb3c9MCwgc2FtcGxlPTApIGF0IHRpZl9yZWFkLmM6MjI4DQojMiAg
+MHgwMDAwN2ZmZmY3YmI0MmYyIGluIFRJRkZSZWFkU2NhbmxpbmUgKHRpZj0w
+eDYwNDAxMCwgYnVmPTB4NjA3NjAwLCByb3c9MCwgc2FtcGxlPTApIGF0IHRp
+Zl9yZWFkLmM6Mjk1DQojMyAgMHgwMDAwMDAwMDAwNDAxOTdlIGluIG1haW4g
+KGFyZ2M9MywgYXJndj0weDdmZmZmZmZmZTQyOCkgYXQgdGlmZjJidy5jOjI1
+Mw0KDQpSZWZlcmVuY2VzOg0KWzFdIGh0dHA6Ly93d3cucmVtb3Rlc2Vuc2lu
+Zy5vcmcvbGlidGlmZi8NClsyXSBodHRwOi8vYnVnemlsbGEubWFwdG9vbHMu
+b3JnL2J1Z2xpc3QuY2dpP3Byb2R1Y3Q9bGlidGlmZg0KDQoNClRoYW5rIHlv
+dSENCkJlc3QgUmVnYXJkcywNCg0KDQpNZWkNCg0K
 
-Description:
-
-Insertion of Sensitive Information into Log File vulnerability in Apache Ac=
-tiveMQ Artemis. All the values of the broker properties are=C2=A0logged whe=
-n the org.apache.activemq.artemis.core.config.impl.ConfigurationImpl logger=
- has the=C2=A0debug level enabled.
-
-This issue affects Apache ActiveMQ Artemis: from 1.5.1 before 2.40.0. It ca=
-n be mitigated by restricting log access to only trusted users.
-
-Users are recommended to upgrade to version 2.40.0, which fixes the issue.
-
-Credit:
-
-Rafael Yanez Illescas <ryanezil@redhat.com> (finder)
-
-References:
-
-https://activemq.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2025-27391
-
+--_000_A9050F7DC36948359B4B022B3631E17E360cn_--
