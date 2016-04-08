@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2536" "Wednesday" "16" "September" "2015" "17:40:11" "+0800" "Qinghao Tang" "luodalongde@gmail.com" "<CAPcZBq6T5NHNfMPLoaH3OJ_ganGL+sDCQr0FeH2Mnihnceze8g@mail.gmail.com>" "142" "[oss-security] CVE-2015-5155 - openslp 1.2.1 ParseExtension() DoS vulnerability" nil nil nil "9" "2015091609:40:11" "[oss-security] CVE-2015-5155 - openslp 1.2.1 ParseExtension() DoS vulnerability" (number mark "        luodalongde@ Sep 16  142/2536  " thread-indent "\"[oss-security] CVE-2015-5155 - openslp 1.2.1 ParseExtension() DoS vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1010" "Friday" "8" "April" "2016" "21:57:35" "+0200" "jleroux@apache.org" "jleroux@apache.org" "<57080D2F.4000407@apache.org>" "32" "[oss-security] CVE-2015-3268: Apache OFBiz information disclosure vulnerability" nil nil nil "4" "2016040819:57:35" "[oss-security] CVE-2015-3268: Apache OFBiz information disclosure vulnerability" (number mark "U       jleroux@apac Apr  8   32/1010  " thread-indent "\"[oss-security] CVE-2015-3268: Apache OFBiz information disclosure vulnerability\"\n") "<57061BB1.1040108@les7arts.com>" ("<57061BB1.1040108@les7arts.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32225 invoked by uid 550); 16 Sep 2015 16:29:46 -0000
+Received: (qmail 19477 invoked by uid 550); 9 Apr 2016 07:05:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,167 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20264 invoked from network); 16 Sep 2015 09:40:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=qAxSDypQQjO/BNMpVIPtX8vz6sRwObzPQteNo3N1QzM=;
-        b=PcfOzmS5+wRrlXJrIbH4AJajCYWbm795DMQaaq8MvP2pd8nUZwV3nGtCG3Vf49zWSp
-         n3v/nl2AD7xvV1VbpzUfvZ3t+LlnLimInIxZbZkYYbMMOZKfyMx0IDX0r5qrCwW5U41A
-         1cYRr8/SErO4siuDDnHrHFx0/g81HXjFByyUlTzsWJ9wooHFV1nphCxiMROWh1lhd4YX
-         oSAJ9Gch1lNjC0DBhId8pQXR9TTjecUgEcpWIz2dF7V4BIfa5NZpCwP62ZwiSEwPupBY
-         x+G4nQLxNJ6DPCrKFvTXzJydzTSWHXeE5f4KVENVNfGYBD2Q9q/R2jwVSNzcsJdb8Chg
-         NGmg==
-MIME-Version: 1.0
-X-Received: by 10.180.90.107 with SMTP id bv11mr17418629wib.69.1442396411645;
- Wed, 16 Sep 2015 02:40:11 -0700 (PDT)
-Message-ID: <CAPcZBq6T5NHNfMPLoaH3OJ_ganGL+sDCQr0FeH2Mnihnceze8g@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=f46d043c81d4bdd4fc051fda1549
-Date: Wed, 16 Sep 2015 17:40:11 +0800
-From: Qinghao Tang <luodalongde@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2015-5155 - openslp 1.2.1 ParseExtension() DoS vulnerability
-To: secalert@redhat.com, oss-security@lists.openwall.com
+Received: (qmail 24402 invoked from network); 8 Apr 2016 19:57:47 -0000
+References: <57061BB1.1040108@les7arts.com>
+To: oss-security@lists.openwall.com, bugtraq@securityfocus.com
+From: "jleroux@apache.org" <jleroux@apache.org>
+X-Forwarded-Message-Id: <57061BB1.1040108@les7arts.com>
+Message-ID: <57080D2F.4000407@apache.org>
+Date: Fri, 8 Apr 2016 21:57:35 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.2
+MIME-Version: 1.0
+In-Reply-To: <57061BB1.1040108@les7arts.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2015-3268: Apache OFBiz information disclosure vulnerability
 
---f46d043c81d4bdd4fc051fda1549
-Content-Type: text/plain; charset=UTF-8
+CVE-2015-3268: Apache OFBiz information disclosure vulnerability
 
-HI there,
+==========================================
+Severity: Moderate
 
+Vendor:
+The Apache Software Foundation
 
+Versions Affected:
+Apache OFBiz 13.07.02 and 13.07.01
+Apache OFBiz 12.04.05 and earlier releases in the series (12.04.*)
+The unsupported releases 11.04.*,  10.04.*  and 09.04 versions are also affected (Lilian Iatco reported he tried with r691692, which is early March 2008)
 
-Greeting! This is Qinghao Tang from QIHU 360  company, China. I am a
-security researcher there.I'm writing to report a vulnerability in openslp.
+Description:
+Stored Cross-Site Scripting Vulnerability affecting the description attribute of the display-entity element because it was not escaped.
 
+Mitigation:
+13.07.* users should upgrade to 13.07.03
+12.04.05 users should upgrade to 12.04.06
+You can find more information at https://issues.apache.org/jira/browse/OFBIZ-6506
 
+Credit:
+This issue was discovered by Lilian Iatco and reported at https://issues.apache.org/jira/browse/OFBIZ-6506
 
-The function ParseExtension() in openslp 1.2.1 exists a vulnerability , an
-attacher can cause a denial of service (infinite loop) via a  packet with
-crafted "nextoffset" value and "extid" value.
+References:
 
+http://ofbiz.apache.org/download.html#vulnerabilities
 
-Let`s see how this issue  happened,the code below is from
-/openslp-1.2.1/common/slp_message.c:
+==========================================
 
-/*--------------------------------------------------------------------------*/
+Jacques
 
-int ParseExtension(SLPBuffer buffer, SLPMessage message)
-
-/* Parse extensions *after* all standard protocol fields are parsed
-*/
-
-/*--------------------------------------------------------------------------*/
-
-{
-
-    int             extid;
-
-    int             nextoffset;
-
-    int             result  = SLP_ERROR_OK;
-
-
-
-
-    nextoffset = message->header.extoffset;
-
-    while(nextoffset)
-
-    {
-
-        //here,buffer->start value is stable ,and we can
-control nextoffset,so we can control buffer->curpos
-
-        buffer->curpos = buffer->start + nextoffset;
-
-        if(buffer->curpos + 5 >= buffer->end)
-
-        {
-
-            /* Extension takes us past the end of the buffer */
-
-            result = SLP_ERROR_PARSE_ERROR;
-
-            goto CLEANUP;
-
-        }
-
-
-
-        extid = AsUINT16(buffer->curpos);
-
-        buffer->curpos += 2;
-
-
-        //here,wo can control nextoffset by make a crafted packet
-
-        nextoffset = AsUINT24(buffer->curpos);
-
-        buffer->curpos += 3;
-
-
-
-        switch(extid)
-
-        {
-
-        case SLP_EXTENSION_ID_REG_PID:
-
-            if(message->header.functionid == SLP_FUNCT_SRVREG)
-
-            {
-
-                /* check to see if buffer is large enough to contain the 4
-byte pid */
-
-                if(buffer->curpos + 4 > buffer->end)
-
-                {
-
-                    result = SLP_ERROR_PARSE_ERROR;
-
-                    goto CLEANUP;
-
-                }
-
-
-
-                message->body.srvreg.pid = AsUINT32(buffer->curpos);
-
-                buffer->curpos += 4;
-
-            }
-
-            break;
-
-
-        default:
-
-            if (extid >= 0x4000 && extid <= 0x7FFF )
-
-            {
-
-                /* This is a required extension.  We better error out */
-
-                result = SLP_ERROR_MESSAGE_NOT_SUPPORTED;
-
-                goto CLEANUP;
-
-            }
-
-            break;
-
-        }
-
-    }
-
-
-CLEANUP:
-
-
-
-    return result;
-
-}
-
---f46d043c81d4bdd4fc051fda1549--
