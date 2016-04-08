@@ -1,4 +1,9 @@
-Received: (qmail 17600 invoked by uid 550); 8 Dec 2022 16:01:52 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4224" "Friday" "8" "April" "2016" "05:05:42" "+0000" "=?gb2312?B?zfXDtw==?=" "wangmei@360.cn" "<DEB54FAB-6270-4AA8-AFF4-74F5A33920E4@360.cn>" "73" "[oss-security] CVE-2016-3945 libtiff: Out-of-bounds Write in the tiff2rgba tool" nil nil nil "4" "2016040805:05:42" "[oss-security] CVE-2016-3945 libtiff: Out-of-bounds Write in the tiff2rgba tool" (number mark "U       wangmei@360. Apr  8   73/4224  " thread-indent "\"[oss-security] CVE-2016-3945 libtiff: Out-of-bounds Write in the tiff2rgba tool\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 23869 invoked by uid 550); 8 Apr 2016 05:56:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,167 +12,94 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15973 invoked from network); 8 Dec 2022 16:00:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.de; i=@amazon.de; q=dns/txt; s=amazon201209;
-  t=1670515206; x=1702051206;
-  h=from:to:cc:subject:references:date:in-reply-to:
-   message-id:mime-version;
-  bh=uZt9FDPyGpeMgirEaYToW81GcKPBxSxydsE89IilZUM=;
-  b=edm/Ys1hO594pKo3jLLisb07SY4HZO2rQ0bp5Ml45tZspAgz5QXjV7q5
-   fkd4s38Ajqnlfd0LkGu/s6SRiUCDMO6ej5WomKsRLa4sMuAD9VxD+UQWs
-   lHQ3bMpn0/zogW6BiVMjGIM77JmVvWGQkVGqwMRqujwhbOOuOsBRpK254
-   Q=;
-X-IronPort-AV: E=Sophos;i="5.96,227,1665446400"; 
-   d="scan'208";a="1081611174"
-From: Pratyush Yadav <ptyadav@amazon.de>
-To: Xen.org security team <security@xen.org>
-CC: <xen-announce@lists.xen.org>, <xen-devel@lists.xen.org>,
-	<xen-users@lists.xen.org>, <oss-security@lists.openwall.com>, "Xen.org
- security team" <security-team-members@xen.org>
-References: <E1p2ZhW-0005Xe-FG@xenbits.xenproject.org>
-Date: Thu, 8 Dec 2022 16:59:44 +0100
-In-Reply-To: <E1p2ZhW-0005Xe-FG@xenbits.xenproject.org> (Xen org security
-	team's message of "Tue, 06 Dec 2022 15:17:42 +0000")
-Message-ID: <mafs0lenhlwcv.fsf@dev-dsk-ptyadav-1c-37607b33.eu-west-1.amazon.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+Received: (qmail 28377 invoked from network); 8 Apr 2016 05:05:55 -0000
+From: =?gb2312?B?zfXDtw==?= <wangmei@360.cn>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: CVE-2016-3945 libtiff: Out-of-bounds Write in the tiff2rgba
+ tool
+Thread-Index: AQHRkVRMGCge55o+1kq3WLla7Kmk9A==
+Date: Fri, 8 Apr 2016 05:05:42 +0000
+Message-ID: <DEB54FAB-6270-4AA8-AFF4-74F5A33920E4@360.cn>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.18.25.162]
+Content-Type: multipart/alternative;
+	boundary="_000_DEB54FAB62704AA8AFF474F5A33920E4360cn_"
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: Xen Security Advisory 424 v1 (CVE-2022-42328,CVE-2022-42329) -
- Guests can trigger deadlock in Linux netback driver
+Subject: [oss-security] CVE-2016-3945 libtiff: Out-of-bounds Write in the tiff2rgba tool
 
+--_000_DEB54FAB62704AA8AFF474F5A33920E4360cn_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-Hi,
+RGV0YWlscw0KPT09PT09PQ0KDQpQcm9kdWN0OiBsaWJ0aWZmDQpBZmZlY3Rl
+ZCBWZXJzaW9uczogPD0gNC4wLjYNClZ1bG5lcmFiaWxpdHkgVHlwZTogIE91
+dC1vZi1ib3VuZHMgV3JpdGUNClZlbmRvciBVUkw6IGh0dHA6Ly93d3cucmVt
+b3Rlc2Vuc2luZy5vcmcvbGlidGlmZi8NCkNWRSBJRDogQ1ZFLTIwMTYtMzk0
+NQ0KQ3JlZGl0OiBNZWkgV2FuZyBvZiB0aGUgQ2xvdWQgU2VjdXJpdHkgVGVh
+bSwgUWlob28gMzYwDQoNCkludHJvZHVjdGlvbg0KPT09PT09PT09PT09DQoN
+CldoZW4gbGlidGlmZiA0LjAuNiB0aWZmMnJnYmEgaGFuZGxlIG1hbGljaW91
+cyB0aWYgZmlsZSh3aWR0aD0gODM4ODY0MCwgaGVpZ2h0PTMxKSBhbmQgc2V0
+IHBhcmFtIC1iIHdpbGwgY2F1c2UgaWxsZWdhbCB3cml0ZS4gVGhlIHZ1bG5l
+cmFiaWxpdHkgZXhpc3QgaW4gZnVuY3Rpb24gY3Z0X2J5X3N0cmlwIChhbHNv
+IGV4aXN0IGluIGN2dF9ieV90aWxlICkgd2l0aG91dCBjaGVja2luZyB0aGUg
+YnVmZmVyIGFsbG9jYXRlIHJlc3VsdC4gQW4gYXR0YWNrZXIgbWF5IGNvbnRy
+b2wgdGhlIHdyaXRlIGFkZHJlc3MgYW5kL29yIHZhbHVlIHRvIHJlc3VsdCBp
+biBkZW5pYWwtb2Ytc2VydmljZSBvciBjb21tYW5kIGV4ZWN1dGlvbi4NCg0K
+DQoNCg0KZ2RiIHRpZmYycmdiYQ0KDQooZ2RiKSByIC1iIHNhbXBsZS90ZXN0
+LnRpZiAxLnRpZg0KDQpTdGFydGluZyBwcm9ncmFtOiAvdXNyL2xvY2FsL2Jp
+bi90aWZmMnJnYmEgLWIgc2FtcGxlL3Rlc3QudGlmIDEudGlmDQpUSUZGRmV0
+Y2hOb3JtYWxUYWc6IFdhcm5pbmcsIEFTQ0lJIHZhbHVlIGZvciB0YWcgIkRv
+Y3VtZW50TmFtZSIgY29udGFpbnMgbnVsbCBieXRlIGluIHZhbHVlOyB2YWx1
+ZSBpbmNvcnJlY3RseSB0cnVuY2F0ZWQgZHVyaW5nIHJlYWRpbmcgZHVlIHRv
+IGltcGxlbWVudGF0aW9uIGxpbWl0YXRpb25zLg0KVElGRkZldGNoTm9ybWFs
+VGFnOiBXYXJuaW5nLCBJTyBlcnJvciBkdXJpbmcgcmVhZGluZyBvZiAiWVJl
+c29sdXRpb24iOyB0YWcgaWdub3JlZC4NCkxaV0RlY29kZTogTm90IGVub3Vn
+aCBkYXRhIGF0IHNjYW5saW5lIDAgKHNob3J0IDY3MTA4ODY0IGJ5dGVzKS4N
+Cg0KQnJlYWtwb2ludCAyLCBndFN0cmlwQ29udGlnIChpbWc9MHg3ZmZmZmZm
+ZmRkOTAsIHJhc3Rlcj0weDdmZmZmN2ZjZTAxMCwgdz04Mzg4NjQwLCBoPTMy
+KSBhdCB0aWZfZ2V0aW1hZ2UuYzo5NDYNCjk0NiAgICAgICAgICAgICAgICAg
+ICAgICgqcHV0KShpbWcsIHJhc3Rlcit5KncsIDAsIHksIHcsIG5yb3csIGZy
+b21za2V3LCB0b3NrZXcsIGJ1ZiArIHBvcyk7DQooZ2RiKSBwICpwdXQNCiQ1
+ID0ge3ZvaWQgKFRJRkZSR0JBSW1hZ2UgKiwgdWludDMyICosIHVpbnQzMiwg
+dWludDMyLCB1aW50MzIsIHVpbnQzMiwgaW50MzIsIGludDMyLCB1bnNpZ25l
+ZCBjaGFyICopfSAweDdmZmZmN2I5OGE1ZSA8cHV0MmJpdGNtYXB0aWxlPg0K
+KGdkYikgcCAqKHJhc3Rlcit5KncpDQpDYW5ub3QgYWNjZXNzIG1lbW9yeSBh
+dCBhZGRyZXNzIDB4ODAwMDM1ZmNlZjkwDQooZ2RiKSBjDQpDb250aW51aW5n
+Lg0KDQpQcm9ncmFtIHJlY2VpdmVkIHNpZ25hbCBTSUdTRUdWLCBTZWdtZW50
+YXRpb24gZmF1bHQuDQoweDAwMDA3ZmZmZjdiOThhZTcgaW4gcHV0MmJpdGNt
+YXB0aWxlIChpbWc9MHg3ZmZmZmZmZmRkOTAsIGNwPTB4ODAwMDM1ZmNlZjk0
+LCB4PTAsIHk9MzEsIHc9ODM4ODY0MCwgaD0zMSwgZnJvbXNrZXc9MCwgdG9z
+a2V3PS0xNjc3NzI4MCwNCiAgICBwcD0weDdmZmZmMTI4ODAxMSAnXDM3Nycg
+PHJlcGVhdHMgMTEgdGltZXM+LCAiXDMwM1wzMDBcMzc3XDM3N1wzNzdcMzc3
+XDM3N1wzNzdcMDI0P1wzNzdcMzc3XDM3N1wzNjBcMDAzIikgYXQgdGlmX2dl
+dGltYWdlLmM6MTIzMw0KMTIzMyAgICAgICAgICAgIFVOUk9MTDQodywgYncg
+PSBQQUxtYXBbKnBwKytdLCAqY3ArKyA9ICpidysrKTsNCihnZGIpIGJ0DQoj
+MCAgMHgwMDAwN2ZmZmY3Yjk4YWU3IGluIHB1dDJiaXRjbWFwdGlsZSAoaW1n
+PTB4N2ZmZmZmZmZkZDkwLCBjcD0weDgwMDAzNWZjZWY5NCwgeD0wLCB5PTMx
+LCB3PTgzODg2NDAsIGg9MzEsIGZyb21za2V3PTAsIHRvc2tldz0tMTY3Nzcy
+ODAsDQogICAgcHA9MHg3ZmZmZjEyODgwMTEgJ1wzNzcnIDxyZXBlYXRzIDEx
+IHRpbWVzPiwgIlwzMDNcMzAwXDM3N1wzNzdcMzc3XDM3N1wzNzdcMzc3XDAy
+ND9cMzc3XDM3N1wzNzdcMzYwXDAwMyIpIGF0IHRpZl9nZXRpbWFnZS5jOjEy
+MzMNCiMxICAweDAwMDA3ZmZmZjdiOTgwNTUgaW4gZ3RTdHJpcENvbnRpZyAo
+aW1nPTB4N2ZmZmZmZmZkZDkwLCByYXN0ZXI9MHg3ZmZmZjdmY2UwMTAsIHc9
+ODM4ODY0MCwgaD0zMikgYXQgdGlmX2dldGltYWdlLmM6OTQ2DQojMiAgMHgw
+MDAwN2ZmZmY3Yjk2Y2U3IGluIFRJRkZSR0JBSW1hZ2VHZXQgKGltZz0weDdm
+ZmZmZmZmZGQ5MCwgcmFzdGVyPTB4N2ZmZmY3ZmNlMDEwLCB3PTgzODg2NDAs
+IGg9MzIpIGF0IHRpZl9nZXRpbWFnZS5jOjUwMA0KIzMgIDB4MDAwMDdmZmZm
+N2JhMTFkYSBpbiBUSUZGUmVhZFJHQkFTdHJpcCAodGlmPTB4NjA0OTMwLCBy
+b3c9MCwgcmFzdGVyPTB4N2ZmZmY3ZmNlMDEwKSBhdCB0aWZfZ2V0aW1hZ2Uu
+YzoyODE2DQojNCAgMHgwMDAwMDAwMDAwNDAxNjkzIGluIGN2dF9ieV9zdHJp
+cCAoaW49MHg2MDQ5MzAsIG91dD0weDYwNDAxMCkgYXQgdGlmZjJyZ2JhLmM6
+MjkwDQojNSAgMHgwMDAwMDAwMDAwNDAxZTU4IGluIHRpZmZjdnQgKGluPTB4
+NjA0OTMwLCBvdXQ9MHg2MDQwMTApIGF0IHRpZmYycmdiYS5jOjUwMg0KIzYg
+IDB4MDAwMDAwMDAwMDQwMTFiNSBpbiBtYWluIChhcmdjPTQsIGFyZ3Y9MHg3
+ZmZmZmZmZmU0MDgpIGF0IHRpZmYycmdiYS5jOjEyNg0KDQoNClJlZmVyZW5j
+ZXM6DQpbMV0gaHR0cDovL3d3dy5yZW1vdGVzZW5zaW5nLm9yZy9saWJ0aWZm
+Lw0KWzJdIGh0dHA6Ly9idWd6aWxsYS5tYXB0b29scy5vcmcvYnVnbGlzdC5j
+Z2k/cHJvZHVjdD1saWJ0aWZmDQoNCg0KVGhhbmsgeW91IQ0KQmVzdCBSZWdh
+cmRzLA0KDQoNCk1laQ0KDQo=
 
-I noticed one interesting thing about this patch but I'm not familiar
-enough with the driver to say for sure what the right thing is.
-
-On Tue, Dec 06 2022, Xen.org security team wrote:
-
-[...]
->
-> From cfdf8fd81845734b6152b4617746c1127ec52228 Mon Sep 17 00:00:00 2001
-> From: Juergen Gross <jgross@suse.com>
-> Date: Tue, 6 Dec 2022 08:54:24 +0100
-> Subject: [PATCH] xen/netback: don't call kfree_skb() with interrupts disabled
->
-> It is not allowed to call kfree_skb() from hardware interrupt
-> context or with interrupts being disabled. So remove kfree_skb()
-> from the spin_lock_irqsave() section and use the already existing
-> "drop" label in xenvif_start_xmit() for dropping the SKB. At the
-> same time replace the dev_kfree_skb() call there with a call of
-> dev_kfree_skb_any(), as xenvif_start_xmit() can be called with
-> disabled interrupts.
->
-> This is XSA-424 / CVE-2022-42328 / CVE-2022-42329.
->
-> Fixes: be81992f9086 ("xen/netback: don't queue unlimited number of packages")
-> Reported-by: Yang Yingliang <yangyingliang@huawei.com>
-> Signed-off-by: Juergen Gross <jgross@suse.com>
-> Reviewed-by: Jan Beulich <jbeulich@suse.com>
-> ---
->  drivers/net/xen-netback/common.h    | 2 +-
->  drivers/net/xen-netback/interface.c | 6 ++++--
->  drivers/net/xen-netback/rx.c        | 8 +++++---
->  3 files changed, 10 insertions(+), 6 deletions(-)
->
-> diff --git a/drivers/net/xen-netback/common.h b/drivers/net/xen-netback/common.h
-> index 1545cbee77a4..3dbfc8a6924e 100644
-> --- a/drivers/net/xen-netback/common.h
-> +++ b/drivers/net/xen-netback/common.h
-> @@ -386,7 +386,7 @@ int xenvif_dealloc_kthread(void *data);
->  irqreturn_t xenvif_ctrl_irq_fn(int irq, void *data);
->
->  bool xenvif_have_rx_work(struct xenvif_queue *queue, bool test_kthread);
-> -void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb);
-> +bool xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb);
->
->  void xenvif_carrier_on(struct xenvif *vif);
->
-> diff --git a/drivers/net/xen-netback/interface.c b/drivers/net/xen-netback/interface.c
-> index 650fa180220f..f3f2c07423a6 100644
-> --- a/drivers/net/xen-netback/interface.c
-> +++ b/drivers/net/xen-netback/interface.c
-> @@ -254,14 +254,16 @@ xenvif_start_xmit(struct sk_buff *skb, struct net_device *dev)
->  	if (vif->hash.alg == XEN_NETIF_CTRL_HASH_ALGORITHM_NONE)
->  		skb_clear_hash(skb);
->
-> -	xenvif_rx_queue_tail(queue, skb);
-> +	if (!xenvif_rx_queue_tail(queue, skb))
-> +		goto drop;
-> +
->  	xenvif_kick_thread(queue);
->
->  	return NETDEV_TX_OK;
->
->   drop:
->  	vif->dev->stats.tx_dropped++;
-
-Now tx_dropped is incremented on packet drop...
-
-> -	dev_kfree_skb(skb);
-> +	dev_kfree_skb_any(skb);
->  	return NETDEV_TX_OK;
->  }
->
-> diff --git a/drivers/net/xen-netback/rx.c b/drivers/net/xen-netback/rx.c
-> index 932762177110..0ba754ebc5ba 100644
-> --- a/drivers/net/xen-netback/rx.c
-> +++ b/drivers/net/xen-netback/rx.c
-> @@ -82,9 +82,10 @@ static bool xenvif_rx_ring_slots_available(struct xenvif_queue *queue)
->  	return false;
->  }
->
-> -void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb)
-> +bool xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb)
->  {
->  	unsigned long flags;
-> +	bool ret = true;
->
->  	spin_lock_irqsave(&queue->rx_queue.lock, flags);
->
-> @@ -92,8 +93,7 @@ void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb)
->  		struct net_device *dev = queue->vif->dev;
->
->  		netif_tx_stop_queue(netdev_get_tx_queue(dev, queue->id));
-> -		kfree_skb(skb);
-> -		queue->vif->dev->stats.rx_dropped++;
-
-... but earlier rx_dropped was incremented.
-
-Which one is actually correct? This line was added by be81992f9086b
-("xen/netback: don't queue unlimited number of packages"), which was the
-fix for XSA-392. I think incrementing tx_dropped is the right thing to
-do, as was done before XSA-392 but it would be nice if someone else
-takes a look at this as well.
-
-> +		ret = false;
->  	} else {
->  		if (skb_queue_empty(&queue->rx_queue))
->  			xenvif_update_needed_slots(queue, skb);
-> @@ -104,6 +104,8 @@ void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb)
->  	}
->
->  	spin_unlock_irqrestore(&queue->rx_queue.lock, flags);
-> +
-> +	return ret;
->  }
->
->  static struct sk_buff *xenvif_rx_dequeue(struct xenvif_queue *queue)
-
---
-Regards,
-Pratyush Yadav
-
-
-
-Amazon Development Center Germany GmbH
-Krausenstr. 38
-10117 Berlin
-Geschaeftsfuehrung: Christian Schlaeger, Jonathan Weiss
-Eingetragen am Amtsgericht Charlottenburg unter HRB 149173 B
-Sitz: Berlin
-Ust-ID: DE 289 237 879
-
-
-
+--_000_DEB54FAB62704AA8AFF474F5A33920E4360cn_--
