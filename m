@@ -1,30 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/8
-Message-ID: <alpine.LFD.2.20.1610101656300.27939@wniryva>
-Date: Mon, 10 Oct 2016 17:00:15 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request Qemu: 9pfs: potential NULL dereferencein 9pfs routines
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/5
+Message-ID: <A9050F7D-C369-4835-9B4B-022B3631E17E@360.cn>
+Date: Fri, 8 Apr 2016 05:02:06 +0000
+From: 王梅 <wangmei@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-3625 libtiff: Out-of-bounds Read in the tiff2bw tool
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Details
+=======
 
-Quick Emulator(Qemu) built with the virtio-9p back-end support is vulnerable 
-to a null pointer dereference issue. It could occur while doing an I/O vector 
-unmarshalling operation in v9fs_iov_vunmarshal() routine.
+Product: libtiff
+Affected Versions: <= 4.0.6
+Vulnerability Type:  Out-of-bounds Read
+Vendor URL: http://www.remotesensing.org/libtiff/
+CVE ID: CVE-2016-3625
+Credit: Mei Wang of the Cloud Security Team, Qihoo 360
 
-A privileged user/process inside guest could use this flaw to crash the Qemu 
-process instance resulting in Dos.
+Introduction
+============
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg07143.html
-
-This issue was reported by Li Qiang of 360.cn Inc.
+Out-of-bounds Read occurred in tif_read.c:545 or tif_read.c:402 or tif_read.c:560 in tiff2bw allows attackers to cause a denial of service via a crafted TIFF image.
 
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+gdb tiff2bw
+
+(gdb)r sample/tiff2bw_1.tif 1.tif
+
+Program received signal SIGSEGV, Segmentation fault.
+0x00007ffff7bb4b3a in TIFFFillStrip (tif=0x604010, strip=0) at tif_read.c:545
+545                                 td->td_stripoffset[strip] > (uint64)tif->tif_size - bytecount) {
+Missing separate debuginfos, use: debuginfo-install glibc-2.17-78.el7.x86_64
+(gdb) p td->td_stripoffset[strip]
+Cannot access memory at address 0x0
+(gdb) bt
+#0  0x00007ffff7bb4b3a in TIFFFillStrip (tif=0x604010, strip=0) at tif_read.c:545
+#1  0x00007ffff7bb411a in TIFFSeek (tif=0x604010, row=0, sample=0) at tif_read.c:228
+#2  0x00007ffff7bb42f2 in TIFFReadScanline (tif=0x604010, buf=0x6076d0, row=0, sample=0) at tif_read.c:295
+#3  0x000000000040197e in main (argc=3, argv=0x7fffffffe428) at tiff2bw.c:253
+(gdb)
+
+
+(gdb) r sample/tiff2bw_2.tif 1.tif
+
+Program received signal SIGSEGV, Segmentation fault.
+0x00007ffff7bb46e4 in TIFFReadRawStrip1 (tif=0x604010, strip=0, buf=0x605620, size=10, module=0x7ffff7bcfa81 <module.3917> "TIFFFillStrip") at tif_read.c:402
+402                     ma=(tmsize_t)td->td_stripoffset[strip];
+(gdb) p td->td_stripoffset[strip]
+Cannot access memory at address 0x0
+(gdb) bt
+#0  0x00007ffff7bb46e4 in TIFFReadRawStrip1 (tif=0x604010, strip=0, buf=0x605620, size=10, module=0x7ffff7bcfa81 <module.3917> "TIFFFillStrip") at tif_read.c:402
+#1  0x00007ffff7bb4d73 in TIFFFillStrip (tif=0x604010, strip=0) at tif_read.c:612
+#2  0x00007ffff7bb411a in TIFFSeek (tif=0x604010, row=0, sample=0) at tif_read.c:228
+#3  0x00007ffff7bb42f2 in TIFFReadScanline (tif=0x604010, buf=0x6076e0, row=0, sample=0) at tif_read.c:295
+#4  0x000000000040197e in main (argc=3, argv=0x7fffffffe428) at tiff2bw.c:253
+
+(gdb) r sample/tiff2bw_3.tif 1.tif
+
+Program received signal SIGSEGV, Segmentation fault.
+TIFFFillStrip (tif=0x604010, strip=0) at tif_read.c:560
+560                                     TIFFErrorExt(tif->tif_clientdata, module,
+(gdb) l
+555                                             "got %I64u bytes, expected %I64u",
+556                                             (unsigned long) strip,
+557                                             (unsigned __int64) tif->tif_size - td->td_stripoffset[strip],
+558                                             (unsigned __int64) bytecount);
+559     #else
+560                                     TIFFErrorExt(tif->tif_clientdata, module,
+561
+562                                             "Read error on strip %lu; "
+563                                             "got %llu bytes, expected %llu",
+564                                             (unsigned long) strip,
+(gdb) p td->td_stripoffset[strip]
+Cannot access memory at address 0x0
+(gdb) bt
+#0  TIFFFillStrip (tif=0x604010, strip=0) at tif_read.c:560
+#1  0x00007ffff7bb411a in TIFFSeek (tif=0x604010, row=0, sample=0) at tif_read.c:228
+#2  0x00007ffff7bb42f2 in TIFFReadScanline (tif=0x604010, buf=0x607600, row=0, sample=0) at tif_read.c:295
+#3  0x000000000040197e in main (argc=3, argv=0x7fffffffe428) at tiff2bw.c:253
+
+References:
+[1] http://www.remotesensing.org/libtiff/
+[2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
+
+
+Thank you!
+Best Regards,
+
+
+Mei
+
