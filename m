@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3409" "Saturday" "14" "January" "2017" "14:24:15" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<041947d7a15240b8b67cd44bbb198a8f@imshyb01.MITRE.ORG>" "88" "[oss-security] Re: CVE Request: Wordpress: 8 security issues in 4.7" nil nil nil "1" "2017011419:24:15" "[oss-security] Re: CVE Request: Wordpress: 8 security issues in 4.7" (number mark "U       cve-assign@m Jan 14   88/3409  " thread-indent "\"[oss-security] Re: CVE Request: Wordpress: 8 security issues in 4.7\"\n") "<CALy8Cw5KNydTryiDytu=AC88w06VpkEawB3ohsa8SOj0=1miZA@mail.gmail.com>" ("<CALy8Cw5KNydTryiDytu=AC88w06VpkEawB3ohsa8SOj0=1miZA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3266" "Friday" "8" "April" "2016" "07:10:54" "+0000" "=?gb2312?B?1cW/qs/o?=" "zhangkaixiang@360.cn" "<5EDB84F4B23F5B4DB6500A89258280E0B97349@EX02.corp.qihoo.net>" "57" "[oss-security] CVE-2016-3632 - libtiff 4.0.6 illegel write" nil nil nil "4" "2016040807:10:54" "[oss-security] CVE-2016-3632 - libtiff 4.0.6 illegel write" (number mark "U       zhangkaixian Apr  8   57/3266  " thread-indent "\"[oss-security] CVE-2016-3632 - libtiff 4.0.6 illegel write\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29721 invoked by uid 550); 14 Jan 2017 19:24:28 -0000
+Received: (qmail 11621 invoked by uid 550); 8 Apr 2016 07:11:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,102 +12,77 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29697 invoked from network); 14 Jan 2017 19:24:27 -0000
-From: <cve-assign@mitre.org>
-To: <csmall@debian.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <CALy8Cw5KNydTryiDytu=AC88w06VpkEawB3ohsa8SOj0=1miZA@mail.gmail.com>
-Message-ID: <041947d7a15240b8b67cd44bbb198a8f@imshyb01.MITRE.ORG>
-Date: Sat, 14 Jan 2017 14:24:15 -0500
+Received: (qmail 11458 invoked from network); 8 Apr 2016 07:11:17 -0000
+From: =?gb2312?B?1cW/qs/o?= <zhangkaixiang@360.cn>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: CVE-2016-3632 - libtiff 4.0.6 illegel write
+Thread-Index: AdGRZX57o5Rzj1kZSEuw1rIRTaKmLA==
+Date: Fri, 8 Apr 2016 07:10:54 +0000
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0B97349@EX02.corp.qihoo.net>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.18.25.62]
+Content-Type: multipart/alternative;
+	boundary="_000_5EDB84F4B23F5B4DB6500A89258280E0B97349EX02corpqihoonet_"
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE Request: Wordpress: 8 security issues in 4.7
+Subject: [oss-security] CVE-2016-3632 - libtiff 4.0.6 illegel write
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--_000_5EDB84F4B23F5B4DB6500A89258280E0B97349EX02corpqihoonet_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-> https://wordpress.org/news/2017/01/wordpress-4-7-1-security-and-maintenance-release/
-> https://codex.wordpress.org/Version_4.7.1
+RGV0YWlscw0KDQo9PT09PT09DQoNCg0KDQpQcm9kdWN0OiBsaWJ0aWZmDQoN
+CkFmZmVjdGVkIFZlcnNpb25zOiA8PSA0LjAuNg0KDQpWdWxuZXJhYmlsaXR5
+IFR5cGU6IElsbGVnZWwgd3JpdGUNCg0KVmVuZG9yIFVSTDogIGh0dHA6Ly93
+d3cucmVtb3Rlc2Vuc2luZy5vcmcvbGlidGlmZi8NCg0KQ1ZFIElEOiBDVkUt
+MjAxNi0zNjMyDQoNCkNyZWRpdDogS2FpeGlhbmcgWmhhbmcgb2YgdGhlIENs
+b3VkIFNlY3VyaXR5IFRlYW0sIFFpaG9vIDM2MA0KDQoNCg0KSW50cm9kdWN0
+aW9uDQoNCklsbGVnYWwgd3JpdGUgb2NjdXJzIGluIHRoZSBfVElGRlZHZXRG
+aWVsZCBmdW5jdGlvbiBpbiB0aWZfZGlyaW5mby5jIHdoZW4gdXNpbmcgdGh1
+bWJuYWlsIGNvbW1hbmQsIHdoaWNoIGFsbG93cyBhdHRhY2tlcnMgdG8gZXhw
+bG9pdCB0aGlzIGlzc3VlIHRvIGNhdXNlIGRlbmlhbC1vZi1zZXJ2aWNlIG9y
+IG1heSBjb21tYW5kIGV4Y3V0aW9uLg0KDQoNCg0KbGlidGlmZi90aWZfZGly
+LmM6MTA3Mw0KMTA2OCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgIGlmIChmaXAtPmZpZWxkX3R5cGUgPT0gVElGRl9BU0NJSQ0K
+MTA2OSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICB8fCBmaXAtPmZpZWxkX3JlYWRjb3VudCA9PSBUSUZGX1ZBUklBQkxF
+DQoxMDcwICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIHx8IGZpcC0+ZmllbGRfcmVhZGNvdW50ID09IFRJRkZfVkFSSUFC
+TEUyDQoxMDcxICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgIHx8IGZpcC0+ZmllbGRfcmVhZGNvdW50ID09IFRJRkZfU1BQ
+DQoxMDcyICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIHx8IHR2LT5jb3VudCA+IDEpIHsNCjEwNzMgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgKnZhX2FyZyhh
+cCwgdm9pZCAqKikgPSB0di0+dmFsdWU7DQoxMDc0ICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHJldF92YWwgPSAx
+Ow0KDQpnZGIgIC0tYXJncyAgdGh1bWJuYWlsICBfIFRJRkZWR2V0RmllbGQu
+dGlmICB0bXBvdXQudGlmDQqhraGtDQpQcm9ncmFtIHJlY2VpdmVkIHNpZ25h
+bCBTSUdTRUdWLCBTZWdtZW50YXRpb24gZmF1bHQuDQpfVElGRlZHZXRGaWVs
+ZCAodGlmPTxvcHRpbWl6ZWQgb3V0PiwgdGFnPTxvcHRpbWl6ZWQgb3V0Piwg
+YXA9PG9wdGltaXplZCBvdXQ+KSBhdCB0aWZfZGlyLmM6MTA3Mw0KMTA3MyAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICp2YV9hcmcoYXAsIHZvaWQg
+KiopID0gdHYtPnZhbHVlOw0KTWlzc2luZyBzZXBhcmF0ZSBkZWJ1Z2luZm9z
+LCB1c2U6IGRuZiBkZWJ1Z2luZm8taW5zdGFsbCBnbGliYy0yLjIyLTEwLmZj
+MjMueDg2XzY0IGxpYmpwZWctdHVyYm8tMS40LjEtMi5mYzIzLng4Nl82NA0K
+KGdkYikgYnQNCiMwICBfVElGRlZHZXRGaWVsZCAodGlmPTxvcHRpbWl6ZWQg
+b3V0PiwgdGFnPTxvcHRpbWl6ZWQgb3V0PiwgYXA9PG9wdGltaXplZCBvdXQ+
+KSBhdCB0aWZfZGlyLmM6MTA3Mw0KIzEgIDB4MDAwMDdmZmZmN2E2YjVlMSBp
+biBUSUZGR2V0RmllbGQgKHRpZj10aWZAZW50cnk9MHg2MGE5MzAsIHRhZz10
+YWdAZW50cnk9MzI2KSBhdCB0aWZfZGlyLmM6MTE1OA0KIzIgIDB4MDAwMDAw
+MDAwMDQwMzRhMSBpbiBjcFRhZyAodHlwZT1USUZGX0xPTkcsIGNvdW50PTxv
+cHRpbWl6ZWQgb3V0PiwgdGFnPTxvcHRpbWl6ZWQgb3V0Piwgb3V0PTxvcHRp
+bWl6ZWQgb3V0PiwgaW49PG9wdGltaXplZCBvdXQ+KSBhdCB0aHVtYm5haWwu
+YzoxNjcNCiMzICBjcFRhZ3MgKG91dD08b3B0aW1pemVkIG91dD4sIGluPTxv
+cHRpbWl6ZWQgb3V0PikgYXQgdGh1bWJuYWlsLmM6Mjk3DQojNCAgY3BJRkQg
+KG91dD08b3B0aW1pemVkIG91dD4sIGluPTxvcHRpbWl6ZWQgb3V0PikgYXQg
+dGh1bWJuYWlsLmM6MzczDQojNSAgbWFpbiAoYXJnYz08b3B0aW1pemVkIG91
+dD4sIGFyZ3Y9PG9wdGltaXplZCBvdXQ+KSBhdCB0aHVtYm5haWwuYzoxMjQN
+CihnZGIpIHgveHcgYXAtNA0KMHhiZmZmZjJiYzogICAgICAgIDB4MDAwMDAw
+MDENCg0KUmVmZXJlbmNlczoNClsxXSBodHRwOi8vd3d3LnJlbW90ZXNlbnNp
+bmcub3JnL2xpYnRpZmYvDQoNCg0KVGhhbmsgeW91IQ0KDQpCZXN0IFJlZ2Fy
+ZHMsDQo=
 
-> Remote code execution (RCE) in PHPMailer - No specific issue appears to
-> affect WordPress or any of the major plugins we investigated but, out of an
-> abundance of caution, we updated PHPMailer in this release. This issue was
-> reported to PHPMailer by Dawid Golunski and Paul Buonopane.
-> (this is an extra fix for the CVE-2016-10066 and CVE-2016-10045, I'll
-> leave it to you to decide if it is same ID or new)
-
-There is no new CVE ID for this.
-
-
-> The REST API exposed user data for all users who had authored a post of a
-> public post type. WordPress 4.7.1 limits this to only post types which have
-> specified that they should be shown within the REST API. Reported by
-> Krogsgard and Chris Jean.
-> https://github.com/WordPress/WordPress/commit/daf358983cc1ce0c77bf6d2de2ebbb43df2add60
-> https://www.wordfence.com/blog/2016/12/wordfence-blocks-username-harvesting-via-new-rest-api-wp-4-7/
-
-Use CVE-2017-5487.
-
-
-> Cross-site scripting (XSS) via the plugin name or version header on
-> update-core.php. Reported by Dominik Schilling of the WordPress Security
-> Team.
-> https://github.com/WordPress/WordPress/commit/c9ea1de1441bb3bda133bf72d513ca9de66566c2
-
-Use CVE-2017-5488.
-
-
-> Cross-site request forgery (CSRF) bypass via uploading a Flash file.
-> Reported by Abdullah Hussam.
-
-Use CVE-2017-5489.
-
-
-> Cross-site scripting (XSS) via theme name fallback. Reported by Mehmet Ince.
-> https://github.com/WordPress/WordPress/commit/ce7fb2934dd111e6353784852de8aea2a938b359
-> https://www.mehmetince.net/low-severity-wordpress/
-
-Use CVE-2017-5490.
-
-
-> Post via email checks mail.example.com if default settings aren't changed.
-> Reported by John Blackbourn of the WordPress Security Team.
-> https://github.com/WordPress/WordPress/commit/061e8788814ac87706d8b95688df276fe3c8596a
-
-Use CVE-2017-5491.
-
-
-> A cross-site request forgery (CSRF) was discovered in the accessibility
-> mode of widget editing. Reported by Ronnie Skansing.
-> https://github.com/WordPress/WordPress/commit/03e5c0314aeffe6b27f4b98fef842bf0fb00c733
-
-Use CVE-2017-5492.
-
-
-> Weak cryptographic security for multisite activation key. Reported by Jack.
-> https://github.com/WordPress/WordPress/commit/cea9e2dc62abf777e06b12ec4ad9d1aaa49b29f4
-
-Use CVE-2017-5493.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYenqIAAoJEHb/MwWLVhi2jUYQAIwBRRej7/Aye/tZr4L3hUuR
-Bz3Ynlle4j/dUj9LUKuhpZtN/q0LdOOzQsA/fefiSR4TYEyzDMFDGknG8O8kUNwq
-7ZKuLQD6npviVux7BbenXGWSmX4MVG9HFhlhLw8g+qljt172tumo79IO24M1PPeU
-H2G8QSb/pMbzVG1l0Aa6ASMBeL44eTdPuuAO7piPIepQXWKRe1e8HIiVti7ThLG3
-m/OjwGfelhrXZIGTzJRfD/ikiwaGawdH1MRD8u6y/2Hktcfo46kIeEt6FZdlJHEh
-mtxY51eKbLO0QZ9yx4956NO5q6zRsWMRb1yR617rJFfNfY56FdBUf+edk4bykewn
-ZqDQycScyXLrrPFR/SGbeCDJ90Bmis4MCby/tTfEy8hRIqWBL/Q0bRdBvcxKNikR
-Grtoz/3nhwyU87NMo9ClG8VnihS3Gk0NBxSXN8imzhUqIGZ+FqQMm1842KlgceE6
-w//N7ddXYkBOHmooNRFfMwma2YiygxGl0rFP/2f6Y9Px1mSnMo5WQStE7H8b+gDd
-Y4YxmhmAwMAd8zLn6WF9Zanw0n1cCNxRQRQtdWYn9x12Gmzl9TCwiOkgwHxmtxMT
-oPgLK21quQLwesauJ47ySTKnE4DV6x1yTqlFyt2F1vmFlwl9/fjIgdSAJ/1tNEAN
-1uM8IBDty3Mods/JZ9TA
-=0oyu
------END PGP SIGNATURE-----
+--_000_5EDB84F4B23F5B4DB6500A89258280E0B97349EX02corpqihoonet_--
