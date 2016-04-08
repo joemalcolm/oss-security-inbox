@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1452" "Saturday" "6" "July" "2019" "14:56:27" "+0200" "Solar Designer" "solar@openwall.com" "<20190706125627.GA22675@openwall.com>" "42" "Re: [oss-security] linux-distros membership application - Microsoft" "^Date:" nil nil "7" "2019070612:56:27" "[oss-security] linux-distros membership application - Microsoft" (number mark "        solar@openwa Jul  6   42/1452  " thread-indent "\"Re: [oss-security] linux-distros membership application - Microsoft\"\n") "<CAGUWgD_P+4h-uWvA7yD5nM6w_26nfkGt9rR2WhLd8uso+fa9Fg@mail.gmail.com>" ("<20190626141358.GK7898@sasha-vm>" "<20190627140321.GA29338@openwall.com>" "<20190627170508.GB11506@sasha-vm>" "<20190628125743.GA2187@openwall.com>" "<20190628170812.GG11506@sasha-vm>" "<21cb97a5-99a4-edc9-41ce-19ceb92e62bf@suse.de>" "<CAGUWgD_P+4h-uWvA7yD5nM6w_26nfkGt9rR2WhLd8uso+fa9Fg@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] linux-distros membership application - Microsoft" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1446" "Friday" "8" "April" "2016" "13:33:32" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160408173332.997BE6C05DD@smtpvmsrv1.mitre.org>" "40" "[oss-security] Re: CVE Request: systemd / journald created world readable journal files" nil nil nil "4" "2016040817:33:32" "[oss-security] Re: CVE Request: systemd / journald created world readable journal files" (number mark "U       cve-assign@m Apr  8   40/1446  " thread-indent "\"[oss-security] Re: CVE Request: systemd / journald created world readable journal files\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12004 invoked by uid 550); 6 Jul 2019 12:59:37 -0000
+Received: (qmail 22370 invoked by uid 550); 8 Apr 2016 17:33:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11751 invoked from network); 6 Jul 2019 12:59:15 -0000
-Message-ID: <20190706125627.GA22675@openwall.com>
-References: <20190626141358.GK7898@sasha-vm> <20190627140321.GA29338@openwall.com> <20190627170508.GB11506@sasha-vm> <20190628125743.GA2187@openwall.com> <20190628170812.GG11506@sasha-vm> <21cb97a5-99a4-edc9-41ce-19ceb92e62bf@suse.de> <CAGUWgD_P+4h-uWvA7yD5nM6w_26nfkGt9rR2WhLd8uso+fa9Fg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGUWgD_P+4h-uWvA7yD5nM6w_26nfkGt9rR2WhLd8uso+fa9Fg@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Sat, 6 Jul 2019 14:56:27 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] linux-distros membership application - Microsoft
-To: oss-security@lists.openwall.com
+Received: (qmail 22348 invoked from network); 8 Apr 2016 17:33:45 -0000
+From: cve-assign@mitre.org
+To: meissner@suse.de
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Message-Id: <20160408173332.997BE6C05DD@smtpvmsrv1.mitre.org>
+Date: Fri,  8 Apr 2016 13:33:32 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: systemd / journald created world readable journal files
 
-On Sat, Jul 06, 2019 at 03:02:22PM +0300, Georgi Guninski wrote:
-> I am against giving access to microsoft and blogged:
-> 
-> https://j.ludost.net/blog/archives/2019/07/06/on_microsoft_request_to_access_private_linux_bugs/index.html
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Let's keep most essential content of postings directly on the list
-rather than only via reference.  Copy-paste from the above URL:
+> Fixed for volatile journals was done by this commit in v214:
+> https://github.com/systemd/systemd/commit/176f2acf8dee45fee832fd2ab07243f63783a238
 
----
-Georgi Guninski's blog
+>> committed Jun 11, 2014
 
-Sat Jul 6 14:56:04 EEST 2019
-On Microsoft request to access private linux bugs
+Use CVE-2014-9770.
 
-According to theregister [1] m$ wants to access private
-linux bugs. Theregister mentions that in 2001 she called
-linux "cancer". Another example of anti-opensource behavior
-are the Halloween documents [2] from 1998 (some current
-decision makers and journos have not be born then. History
-is written by the winners).
 
-It is well known that microsoft is entirely money driven
-and she will sell Gates' first born and Ballmer might even
-deliver it.
+> Fixed for the current persistent journal by this commit in v229:
+> https://github.com/systemd/systemd/commit/afae249efa4774c6676738ac5de6aeb4daf4889f
 
-First, a hostile kernel contributor is danger for the
-future of linux kernel IMHO.
+>> committed Nov 29, 2015
 
-Unpopular suggestion for microsoft's request for private
-bugs: Find something that requires windows compatibility
-(say Wine, some cloud shit, whatever else). Tell microsoft:
-You want our bugs? We want your bugs. You show first.
+Use CVE-2015-8842.
 
-[1]:
-https://www.theregister.co.uk/2019/06/27/microsoft_linux_distro_list/
-[2]:
-https://en.wikipedia.org/w/index.php?title=Halloween_documents&oldid=895695365
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Posted by bugs for nothing and chix for free
----
-
-Alexander
+iQIcBAEBCAAGBQJXB+sEAAoJEL54rhJi8gl5zhMP/3C4F7RnZztSDKJ2HhG1zuUb
+eOEW8F9mh00jqV3DFBAhl5y+TGUdtiGobbcYzEImxvv4wy7NgiboXn+ENVZN49ci
+Vlw8wPsj3xmwq7x5rq3fsykmqa+iCtI3LFV6mEu3NnzPWd+5O96T1j+5yCVCnahN
+yfcBd4JxevTE46XPXk/Eb058pz6brT+gMJu0AZ0bpT5BAN5g7QuCeD1ZOpxDHxlS
+rfWLaj0gZL3ws+U4wSg4FSvLTJIOmxfFmF9ka/aNOZOU2ifI+1vmkd2rfaAEQhsQ
+Lrt16WGNnBemg5xpOoty5sowYF6t0oC8QKaquixAWholjoRTHBcQSdndqTTQ68S1
+hTocmbMYFKXUSJYG0uy6jhyPPRfrZNKtiCVx9Nk7ctYshM3hmETDVpbTZzndBrVU
+6VwxJckUYO3kpyejfBPz68r1OcW49ZJre6rM7qZNYl1/GESeYjzKXJ8LmpZZZc9Y
+yFuZmp5vKRiHttBuHYWd0qMRb7QWnHPnIcJCT63rcQ44HqNAqxw5coabZ2ATjKS1
+ZLuPGAuVlG+tF37obg+MC3+MJfd2XPTC0uFWIixy7jSMfKFooQx6ndwxnRK7swr2
+8X7E2D4RQvc9vzPyWGGL2SiGmezU7r6iq5s2gA6D+Givc+d3E+Ey21S6eEhyKF4I
+VGnOJyed8E7zg1AKTwc4
+=Rjwg
+-----END PGP SIGNATURE-----
