@@ -1,53 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/13
-Message-Id: <20160115183242.1A23733E005@smtpvbsrv1.mitre.org>
-Date: Fri, 15 Jan 2016 13:32:42 -0500 (EST)
-From: cve-assign@...re.org
-To: kseifried@...hat.com, corsac@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/7
+Message-ID: <570748E3.2090203@oracle.com>
+Date: Thu, 7 Apr 2016 23:00:03 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: wangmei@....cn
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2016-3619 libtiff: Out-of-bounds Read in the bmp2tiff tool
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 04/ 7/16 12:32 AM, 王梅 wrote:
+> Details
+> =======
+>
+> Product: libtiff
+> Affected Versions: <= 4.0.6
+> Vulnerability Type: Out-of-bounds Read
+> Vendor URL: http://www.libtiff.org/
+> CVE ID: CVE-2016-3619
+> Credit: Mei Wang of the Cloud Security Team, Qihoo 360
 
->>> https://anongit.mindrot.org/openssh.git/commit/?id=ed4ce82dbfa8a3a3c8ea6fa0db113c71e234416c
+> References:
+> [1] http://www.remotesensing.org/libtiff/
+> [2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
 
->>>> eliminate fallback from untrusted X11 forwarding to trusted forwarding
->>>> when the X server disables the SECURITY extension; Reported by Thomas
->>>> Hoger
+Instead of pointing to a list of 305 bugs, please just provide a link to the bug
+you filed for each issue so it's easier for distros to check the progress of the
+fix.
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1298741
-
->> would lead to remote X clients having more
->> privileged access to the local X server than intended
-
-> https://bugzilla.redhat.com/show_bug.cgi?id=1298741#c4
-
->> Actually, openssh-7.1p2 does not fix this issue and it will be as part
->> of the next release.
-
-Use CVE-2016-1908.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWmTrRAAoJEL54rhJi8gl5m7EP/2K8TEGoIsd6mqpyzdOhAcb0
-Wep2p3360yu03LOYxybP10LlW20aH5uaWeML9eMGZPuXqrmN20YiUWHBGEmXfU+a
-ySHLKxg1+OORMvxDOy7TKpQVePb8pkq5FNVIspY/LY08tyx8xwFt6ce9IbGhtoud
-RAkHpAAvRIk0n/dIKAT/LzMtlD/8ld0fx2nKm4AbFsk65bIF9zii7dKy4UQ+/q1V
-7bPQoEO5yv5P5h/A+E02FcXfUYuJaT+zo36Opvu3X3SmDUKAMFMjzlzSvrxkOAZZ
-kd7fPuGp7kkkvfA8G4vkpK6005VQ0H8aCbaqiuf6lek2Fk3jWLg8nCYiesSetXCm
-lJtUEeNd07DFU97hgfkW9hQmME3N1/BCR7fIeQeQ2PX6gdNmaqjZLtaAVyYiINEo
-yN9bwf2gD6s2jTzybLZgh8NPuiwzf90YbPVyI5pSmuwSbSH3P0FanDY4spzBsTwu
-9QsA2Z91Xwgb2uAk2y2Yv7vPliw4/AxMR6zOWRcvaht7p8ckswFCIPgpRjuJGN8C
-DaeiveJ2tzAsUtWknkw38bgOo7+Nq7RE8H+0IFGnZdcx++Hfzz8n0gE5T0atf7rs
-vFp2rbS07uq5cLXwGpfusR2pE7Zv1WwI8HkqwvnIM+6qRmpuYJTgj4QuxmSduUy5
-VzoKwYZR3d0WAtFLTQIy
-=EebB
------END PGP SIGNATURE-----
+-- 
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
