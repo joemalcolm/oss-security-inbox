@@ -1,45 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/01/6
-Message-Id: <20161001205813.074156C4B2D@smtpvmsrv1.mitre.org>
-Date: Sat,  1 Oct 2016 16:58:13 -0400 (EDT)
-From: cve-assign@...re.org
-To: marco.gra@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: imagemagick mogrify global buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/6
+Message-ID: <DEB54FAB-6270-4AA8-AFF4-74F5A33920E4@360.cn>
+Date: Fri, 8 Apr 2016 05:05:42 +0000
+From: 王梅 <wangmei@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-3945 libtiff: Out-of-bounds Write in the tiff2rgba tool
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Details
+=======
 
-> https://github.com/ImageMagick/ImageMagick/issues/280
-> https://github.com/ImageMagick/ImageMagick/commit/a7bb158b7bedd1449a34432feb3a67c8f1873bfa
-> 
-> AddressSanitizer: global-buffer-overflow
-> READ of size 4
+Product: libtiff
+Affected Versions: <= 4.0.6
+Vulnerability Type:  Out-of-bounds Write
+Vendor URL: http://www.remotesensing.org/libtiff/
+CVE ID: CVE-2016-3945
+Credit: Mei Wang of the Cloud Security Team, Qihoo 360
 
->> MagickCore/profile.c
+Introduction
+============
 
-Use CVE-2016-7799 for this buffer over-read issue.
+When libtiff 4.0.6 tiff2rgba handle malicious tif file(width= 8388640, height=31) and set param -b will cause illegal write. The vulnerability exist in function cvt_by_strip (also exist in cvt_by_tile ) without checking the buffer allocate result. An attacker may control the write address and/or value to result in denial-of-service or command execution.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX8CJPAAoJEHb/MwWLVhi2P6EQALYfi29fmCoymW+3x38u8m+3
-mrC+hPMgq8i729ec/SaUaSqy70Nixu2QoG/5uz8+M4sTuB9eQQpB4Hq1zM4dW4EB
-I0J9/wC4nGII32c3lusuN3UZ5tM0jEfiUlYJFIRm95KDaYkH8g9+NNcj2zkO9yLK
-I3s/PSilLuEsiHM/CLQDEoY3uXScELKq2RLCVwowl79Gs7fX3JNajH9Q87PS730e
-S7IcJmRkwo+VyIWfIA3vu+mVLp+esUuBdvmj1CNMZaNGsqFvdAjUvSGtyOOdNfvD
-y0J9n07GUxEl6BEoysBaZa4PEdOUuqTKzy7rfSMC16cxvEiix6LX96Znx9/59k73
-0CbjUZOrEMmXyornJszwl0iXcb4lviv2AcpcW9oDO+Ud96MDLlAfwdAqczyk15dS
-YIPZ0s8jtAJKP8Tl5oHTtDDU2t2h9iYeZCic1dTWloCzRkYoGEL2pPRdIqmIxrMp
-uf+3rCkN0uU4gU1U3p/hUbyiepi5ukHFmAvn9+llQ3Um+8v4Ki/yzOOolAyVl5aQ
-FZTlzn/1LLQYlrPsyNeJkCLDOcM1o0tRMYhCwagDF20KuU3J0zM/D+LwpSxchNIC
-C7D74ub/3Lw4YfRv+UYK8l0NgfkiFhTuro7AjoB1dKjmmQW/sy8LnG4IOF/PIUFX
-T/7CPx8PmTGY5SISkkMn
-=v71F
------END PGP SIGNATURE-----
+
+
+gdb tiff2rgba
+
+(gdb) r -b sample/test.tif 1.tif
+
+Starting program: /usr/local/bin/tiff2rgba -b sample/test.tif 1.tif
+TIFFFetchNormalTag: Warning, ASCII value for tag "DocumentName" contains null byte in value; value incorrectly truncated during reading due to implementation limitations.
+TIFFFetchNormalTag: Warning, IO error during reading of "YResolution"; tag ignored.
+LZWDecode: Not enough data at scanline 0 (short 67108864 bytes).
+
+Breakpoint 2, gtStripContig (img=0x7fffffffdd90, raster=0x7ffff7fce010, w=8388640, h=32) at tif_getimage.c:946
+946                     (*put)(img, raster+y*w, 0, y, w, nrow, fromskew, toskew, buf + pos);
+(gdb) p *put
+$5 = {void (TIFFRGBAImage *, uint32 *, uint32, uint32, uint32, uint32, int32, int32, unsigned char *)} 0x7ffff7b98a5e <put2bitcmaptile>
+(gdb) p *(raster+y*w)
+Cannot access memory at address 0x800035fcef90
+(gdb) c
+Continuing.
+
+Program received signal SIGSEGV, Segmentation fault.
+0x00007ffff7b98ae7 in put2bitcmaptile (img=0x7fffffffdd90, cp=0x800035fcef94, x=0, y=31, w=8388640, h=31, fromskew=0, toskew=-16777280,
+    pp=0x7ffff1288011 '\377' <repeats 11 times>, "\303\300\377\377\377\377\377\377\024?\377\377\377\360\003") at tif_getimage.c:1233
+1233            UNROLL4(w, bw = PALmap[*pp++], *cp++ = *bw++);
+(gdb) bt
+#0  0x00007ffff7b98ae7 in put2bitcmaptile (img=0x7fffffffdd90, cp=0x800035fcef94, x=0, y=31, w=8388640, h=31, fromskew=0, toskew=-16777280,
+    pp=0x7ffff1288011 '\377' <repeats 11 times>, "\303\300\377\377\377\377\377\377\024?\377\377\377\360\003") at tif_getimage.c:1233
+#1  0x00007ffff7b98055 in gtStripContig (img=0x7fffffffdd90, raster=0x7ffff7fce010, w=8388640, h=32) at tif_getimage.c:946
+#2  0x00007ffff7b96ce7 in TIFFRGBAImageGet (img=0x7fffffffdd90, raster=0x7ffff7fce010, w=8388640, h=32) at tif_getimage.c:500
+#3  0x00007ffff7ba11da in TIFFReadRGBAStrip (tif=0x604930, row=0, raster=0x7ffff7fce010) at tif_getimage.c:2816
+#4  0x0000000000401693 in cvt_by_strip (in=0x604930, out=0x604010) at tiff2rgba.c:290
+#5  0x0000000000401e58 in tiffcvt (in=0x604930, out=0x604010) at tiff2rgba.c:502
+#6  0x00000000004011b5 in main (argc=4, argv=0x7fffffffe408) at tiff2rgba.c:126
+
+
+References:
+[1] http://www.remotesensing.org/libtiff/
+[2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
+
+
+Thank you!
+Best Regards,
+
+
+Mei
+
