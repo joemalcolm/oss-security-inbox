@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["859" "Sunday" "29" "December" "2019" "18:47:27" "+0100" "Frank Morgner" "frankmorgner@gmail.com" nil "22" nil "^Cc:" nil nil "12" nil nil (number mark "        frankmorgner Dec 29   22/859   " thread-indent "\"[oss-security] OpenSC 0.20.0 released\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] OpenSC 0.20.0 released" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1277" "Friday" "8" "April" "2016" "07:00:50" "+0000" "=?gb2312?B?zfXDtw==?=" "wangmei@360.cn" "<D0A51038-C8D7-4538-8FBE-5C4BB9BAD81C@360.cn>" "21" "Re: [oss-security] CVE-2016-3619 libtiff: Out-of-bounds Read in the bmp2tiff tool" "^CC:" nil nil "4" "2016040807:00:50" "[oss-security] CVE-2016-3619 libtiff: Out-of-bounds Read in the bmp2tiff tool" (number mark "        wangmei@360. Apr  8   21/1277  " thread-indent "\"Re: [oss-security] CVE-2016-3619 libtiff: Out-of-bounds Read in the bmp2tiff tool\"\n") "<570748E3.2090203@oracle.com>" ("<865AFA5E-6CB2-4631-99E2-70C321F2FF9D@360.cn>" "<570748E3.2090203@oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 23754 invoked by uid 550); 29 Dec 2019 20:42:54 -0000
+Received: (qmail 30628 invoked by uid 550); 8 Apr 2016 07:03:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16311 invoked from network); 29 Dec 2019 17:47:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=LbtP3ocvRzQb7hA0yhwRYOPs5rsLbz27OrjVCXgnkSI=;
-        b=qsUf4r09k4z1zlONELaV1wxEB6AxxUcWndDDNb4i818a3YexvPOeNq9k0tkdPP+whq
-         rhabV1+N82WlCXmQ9wuo6V++CJclYcglvb7xTUDkRhLzl4rDifzhWX2PB5hNZAjD+78H
-         /SKCEw1Lk8WZQv3L3Mg+HHhO5wPuq9n3snY9G+YbI09xX4GV7UAldj62FxEmGOChOzqa
-         Z0Wf032q7rijqe7DJixMdUOxoaLYokl4d1DPbyrmGc52vMJ8voCK+L7NDexMNBkroKPb
-         6HNEWlFEQYuNM5pxMUonKeJMgYsOf/R5RPpDUB12aAlsBKvWU5EVdEaTxNwYwaj4yihA
-         WX/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=LbtP3ocvRzQb7hA0yhwRYOPs5rsLbz27OrjVCXgnkSI=;
-        b=CgNOXBsKSSK0gSciAoSpzETvwWLZYh0H/807vkHxXn9b7VYn7mnSDuODdyDmSAsvPU
-         oamLsy8Gy7ORuo4qiRh2GkGlcbp58czRI9RVGiEOIcYfdS5qtYTloRG4fqxnKGWdOwfG
-         hxPiM288LZ2X5zMVide5IHzx4dVBlnzTfBzzC4VcaFFngysw6Q6nbpck2ZFnvjU/CC80
-         to2UggMf4pJ5KrQwNjBZxreBsmSUR0QT13h/fpki8ikucv6x/VKtF9+YzXiqNV1GzGZ6
-         wOcm5DneqMuMFtC5egIP48/JFTDmBgVDcDlWgPI1lNbOeQ//pi6FJ/8SwS30CreDbgrU
-         imZw==
-X-Gm-Message-State: APjAAAUwegPiDpWrnLXAamLr7gCbiNjfJSL1updXPo10yinqPryFv5tp
-	xPeED0A4xDRt1yLZXNBUc4QDTRqNMXzg4A05Hmg=
-X-Google-Smtp-Source: APXvYqxLAUyposDkpo+JgA/e4mjqGC7925RC7bX6BQyn4sS5vIRJRpUHog0H3gqieKdFB0otP/4F8gwfEjHKHFZYyao=
-X-Received: by 2002:a92:405a:: with SMTP id n87mr54271197ila.299.1577641648515;
- Sun, 29 Dec 2019 09:47:28 -0800 (PST)
+Received: (qmail 29875 invoked from network); 8 Apr 2016 07:01:03 -0000
+Thread-Topic: [oss-security] CVE-2016-3619 libtiff: Out-of-bounds Read in
+ the bmp2tiff tool
+Thread-Index: AQHRkJ+v4jDdsS0J+0mSr+fpUswoY59/EG2AgAARAgA=
+Message-ID: <D0A51038-C8D7-4538-8FBE-5C4BB9BAD81C@360.cn>
+References: <865AFA5E-6CB2-4631-99E2-70C321F2FF9D@360.cn>
+ <570748E3.2090203@oracle.com>
+In-Reply-To: <570748E3.2090203@oracle.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.18.25.162]
+Content-Type: text/plain; charset="gb2312"
+Content-ID: <44FD41BFD9639C459D069CBFCC1F20C8@corp.qihoo.net>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Message-ID: <CAO8bUynPUPExH92au4cajrVW3xkHm3AjUnYzuHoS_fApMzc4bg@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000000af016059adb5235"
-Cc: oss-security@lists.openwall.com
-Date: Sun, 29 Dec 2019 18:47:27 +0100
-From: Frank Morgner <frankmorgner@gmail.com>
+CC: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Fri, 8 Apr 2016 07:00:50 +0000
+From: =?gb2312?B?zfXDtw==?= <wangmei@360.cn>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] OpenSC 0.20.0 released
-To: OpenSC Development <opensc-devel@lists.sourceforge.net>, 
-	opensc-announce@lists.sourceforge.net
+Subject: Re: [oss-security] CVE-2016-3619 libtiff: Out-of-bounds Read in the
+ bmp2tiff tool
+To: Alan Coopersmith <alan.coopersmith@oracle.com>
 
---0000000000000af016059adb5235
-Content-Type: text/plain; charset="UTF-8"
-
-Hi all!
-
-I'm happy to finally announce the new release 0.20.0 of OpenSC. You can
-read a full summary of the changes and get the release binaries on GitHub
-<https://github.com/OpenSC/OpenSC/releases/tag/0.20.0>.
-
-We've extended our continuous testing by fuzzing the code with OSS-Fuzz
-<https://google.github.io/oss-fuzz>. It is running billions of tests each
-weak and has found around 100 unique crashes, most notable the security
-issues tracked as CVE-2019-6502, CVE-2019-15946, CVE-2019-15945,
-CVE-2019-19480, CVE-2019-19481 and CVE-2019-19479. Getting our hands on all
-the problems reported by the fuzzing was very challenging. Special thanks
-to Jakub Jelen, who spend many hours on analyzing and fixing many of the
-issues.
-
-Regards,
-Frank Morgner.
-
---0000000000000af016059adb5235--
+VGhhbmtzIGZvciBwb2ludGluZyBvdXQgdGhlIG1pc3Rha2UuIA0KDQpDVkUt
+MjAxNi0zNjE5OiBodHRwczovL2J1Z3ppbGxhLnJlZGhhdC5jb20vc2hvd19i
+dWcuY2dpP2lkPTEzMTY1NjkNCg0KDQo+INTaIDIwMTbE6jTUwjjI1aOsz8LO
+5zI6MDCjrEFsYW4gQ29vcGVyc21pdGggPGFsYW4uY29vcGVyc21pdGhAb3Jh
+Y2xlLmNvbT4g0LS1wKO6DQo+IA0KPiBPbiAwNC8gNy8xNiAxMjozMiBBTSwg
+zfXDtyB3cm90ZToNCj4+IERldGFpbHMNCj4+ID09PT09PT0NCj4+IA0KPj4g
+UHJvZHVjdDogbGlidGlmZg0KPj4gQWZmZWN0ZWQgVmVyc2lvbnM6IDw9IDQu
+MC42DQo+PiBWdWxuZXJhYmlsaXR5IFR5cGU6IE91dC1vZi1ib3VuZHMgUmVh
+ZA0KPj4gVmVuZG9yIFVSTDogaHR0cDovL3d3dy5saWJ0aWZmLm9yZy8NCj4+
+IENWRSBJRDogQ1ZFLTIwMTYtMzYxOQ0KPj4gQ3JlZGl0OiBNZWkgV2FuZyBv
+ZiB0aGUgQ2xvdWQgU2VjdXJpdHkgVGVhbSwgUWlob28gMzYwDQo+IA0KPj4g
+UmVmZXJlbmNlczoNCj4+IFsxXSBodHRwOi8vd3d3LnJlbW90ZXNlbnNpbmcu
+b3JnL2xpYnRpZmYvDQo+PiBbMl0gaHR0cDovL2J1Z3ppbGxhLm1hcHRvb2xz
+Lm9yZy9idWdsaXN0LmNnaT9wcm9kdWN0PWxpYnRpZmYNCj4gDQo+IEluc3Rl
+YWQgb2YgcG9pbnRpbmcgdG8gYSBsaXN0IG9mIDMwNSBidWdzLCBwbGVhc2Ug
+anVzdCBwcm92aWRlIGEgbGluayB0byB0aGUgYnVnDQo+IHlvdSBmaWxlZCBm
+b3IgZWFjaCBpc3N1ZSBzbyBpdCdzIGVhc2llciBmb3IgZGlzdHJvcyB0byBj
+aGVjayB0aGUgcHJvZ3Jlc3Mgb2YgdGhlDQo+IGZpeC4NCj4gDQo+IC0tIA0K
+PiAJLUFsYW4gQ29vcGVyc21pdGgtICAgICAgICAgICAgICBhbGFuLmNvb3Bl
+cnNtaXRoQG9yYWNsZS5jb20NCj4gCSBPcmFjbGUgU29sYXJpcyBFbmdpbmVl
+cmluZyAtIGh0dHA6Ly9ibG9ncy5vcmFjbGUuY29tL2FsYW5jDQoNCg==
