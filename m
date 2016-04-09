@@ -1,33 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/04/1
-Message-ID: <alpine.LFD.2.20.1601041714500.15987@wniryva>
-Date: Mon, 4 Jan 2016 17:23:02 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Ling Liu <liuling-it@....cn>
-Subject: CVE request Qemu: net: ne2000: OOB r/w in ioport operations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/09/5
+Message-ID: <57098CB0.1000806@vorlons.info>
+Date: Sun, 10 Apr 2016 01:13:52 +0200
+From: Matthias Geerdsen <matthias@...lons.info>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: imlib2 - off-by-one OOB read in __imlib_MergeUpdate()
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Qemu emulator built with the NE2000 device emulation support is vulnerable to 
-an OOB r/w access issue. It could occur while performing 'ioport' r/w 
-operations.
+Hi,
 
-A privileged(CAP_SYS_RAWIO) user/process could use this flaw to leak or 
-corrupt Qemu memory bytes(3).
+please provide a CVE ID for this OOB read im imlib2.
 
-Upstream fix:
--------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg00050.html
+upstream commit:
+<https://git.enlightenment.org/legacy/imlib2.git/commit/?id=ce94edca1ccf
+be314cb7cd9453433fad404ec7ef>
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1264929
+Debian bug report:
+<https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=819818>
 
-This issue was discovered by Ling Liu of Qihoo 360 Inc.
+Cheers
+Matthias
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+iQEcBAEBCAAGBQJXCYynAAoJEDVYuxv9Aw7qwBMH/0nS/UoDHHfGflwqdHXvlEJv
+3thOfAYNmojCrrSUkqr8dKbHHltcDShTfmyfQVf8/S+l+aWe7z+K/d9osSI9Vkhw
+VWD44KaDfCTsjYwGxFpxPGneeBe2ZqX9WFJsaxofJUByKJzIILtf0y7m010/EZLP
+Rep3nO9W7xu7GV/FUjFopzqedDLOTYqDcvrmgsPzSKoycDGXmNB3Rltm1xCJEWka
+2yuGin4dB7YcQwAkOmjTZvsRTNg0sFocVWQoyfpQIpkHTJHRXRviUElSuP3dPnXm
+Xx2E8n6eemAGqgSKXtvcmIk78FYLEBxk8+w/ioTJH1jV4s2rrkQgnRFuH0YyiPo=
+=/orZ
+-----END PGP SIGNATURE-----
