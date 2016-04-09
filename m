@@ -1,49 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/29/5
-Message-ID: <1528e110c5f.11ff2dddc43704.3865822946264713459@fsck.pl>
-Date: Fri, 29 Jan 2016 16:47:07 +0100
-From: enki <enki@...k.pl>
-To: <oss-security@...ts.openwall.com>
-Cc: <oss-security@...ts.openwall.com>,  <pool@...ts.ntp.org>,  <linuxbrad@...il.com>,  <team@...urity.debian.org>,  "secalert" <secalert@...hat.com>
-Subject: Re: shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/09/4
+Message-ID: <570986F2.5020308@vorlons.info>
+Date: Sun, 10 Apr 2016 00:49:22 +0200
+From: Matthias Geerdsen <matthias@...lons.info>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: cronic - predictable temporary files
 Content-Type: text/plain; charset=utf-8
 
----- Wł. Pt, 29 sty 2016 15:21:01 +0100 Hazel  napisał(a) ---- 
->On 27 January 2016 at 14:43, Kurt Seifried <kseifried@...hat.com> wrote: 
->> On Wed, Jan 27, 2016 at 4:24 AM, Luca BRUNO <lucab@...ian.org> wrote: 
->> > For oss-sec crowd: is there anything we can do to improve the situation 
->> > and avoid 
->> > similar cases in the future? Should crowd-sourced and fundamental services 
->> > like this 
->> > be encouraged to move to a stronger WoT? 
->> 
->> [...] 
->> 
->> Sadly we can't really rely on the IoT device makers to fix this, they have 
->> basically 0 incentive to prevent scanners from hitting their products 
->> (they're already sold, to late for the customer to make an informed 
->> decision). 
-> 
->I hope you'll forgive me making a modest proposal here, but it seems 
->to me that there might be an opportunity here for Linux distributions 
->that are upstream of IoT vendors to modify their default configuration 
->to address this. 
-> 
->My somewhat off-the-cuff suggestion would be to... 
-> 
->1. Add an *additional, secondary* IPv6 address to external interfaces that is: 
->-> a. generated in accordance with the IPv6 Privacy Extensions (i.e. RFC 4941) 
->-> b. firewalled by default against all traffic except NTP in either direction 
-> 
->2. Configure the NTP *client* to use this secondary address as the 
->source for outgoing NTP traffic, instead of the default address? 
-> 
->...thereby avoiding revealing the primary address of the host to 
->would-be scanners? 
-> 
+Hi,
 
-I'd go even further and use the IPv6 privacy-enhanced address for all outgoing connections, not only NTP. It's only a matter of time before someone sets up a debian mirror for example that logs source addresses and launches scans against them.
+please assign a CVE ID for cronic [1] using predictable names for
+temporary files.
 
--- 
-enki@...k.pl
+Debian bug report:
+<https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=820331>
 
+Cheers
+Matthias
+
+[1] <http://habilis.net/cronic/>
