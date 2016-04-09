@@ -1,64 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/29/7
-Message-Id: <20160429150851.0723C8BC556@smtpvmsrv1.mitre.org>
-Date: Fri, 29 Apr 2016 11:08:51 -0400 (EDT)
-From: cve-assign@...re.org
-To: gustavo.grieco@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Mplayer/Mencoder integer overflow parsing gif files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/09/6
+Message-ID: <57099244.2010504@vorlons.info>
+Date: Sun, 10 Apr 2016 01:37:40 +0200
+From: Matthias Geerdsen <matthias@...lons.info>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: imlib2 - GIF loader: OOB read
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> A crash caused by an integer overflow parsing a gif was found in the last
-> revision of mplayer. It seems to affect older versions too. It was recently
-> fixed (r37857). Technical details and a reproducer are available here:
-> 
-> https://trac.mplayerhq.hu/ticket/2295
-> 
-> I verified that this issue affects mencoder
+Hi,
 
->> Fixed in r37857.
->> 
->> The gif demuxes assumes in many places that width*height is <=
->> INT_MAX; this is not true with the sample. Fixed by validating the
->> picture size.
+please assign a CVE ID to the OOB read issue in imlib2 reported in
+this Debian bug report:
+<https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=785369>
 
-Use CVE-2016-4352.
+upstream commit:
+<https://git.enlightenment.org/legacy/imlib2.git/commit
+/?id=37a96801663b7b4cd3fbe56cc0eb8b6a17e766a8>
 
-This code was added to libmpdemux/demux_gif.c between r37856 and r37857:
-
-   // Validate image size, most code in this demuxer assumes w*h <= INT_MAX
-   if ((int64_t)gif->SWidth * gif->SHeight > INT_MAX) {
-     mp_msg(MSGT_DEMUX, MSGL_ERR,
-            "[demux_gif] Unsupported picture size %dx%d.\n", gif->SWidth,
-            gif->SHeight);
-     if (DGifCloseFile(gif) == GIF_ERROR)
-       print_gif_error(NULL);
-     free(priv);
-     return NULL;
-   }
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+Cheers
+Matthias
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v2
 
-iQIcBAEBCAAGBQJXI3iYAAoJEHb/MwWLVhi2ndcQAIfNBWzI+O+D90r31xFgzNHh
-q5AYsp+VN48Z6f8Ctp6AVXWoD+I/KHC1AIBc5Pn9/ahDyQ+cv9ejMdizkohu7TpW
-q4vfeCsmp94pw2w8tKbT4wgI19mdERvWiFe03SD/1xpxaHc6gIZN4+zwmswyIJVq
-9UVl6cEbSD/NGDpudTwqNH2Tc6KPfpUTPDh05nHhdEYkoPepemS0E6dHZl0cnV38
-qFAF7EvF4h+1pQSfchVdtf58nPu5g7tuR7eudnqnq9g49PZlIOPBKB/cdra7ZON7
-eFvZp+0XZ3QtwvDiQ18uAHnobN2RdnonISfimOsd7zYDyoxtAttfOvBRaVRDtTBr
-U0hfDRA8g/d5JTmeLMcfm1NWG3+0nF90BVYjY7cziAVBAGoj17fo66mw6nM5Jn2A
-1T/9Cc/gqzIvlGlVQk/3KObdK0DbZvGxgFxo8pKTzrRo/thAS6Rp30X672pfGH1W
-DxWhbkJgnU+PmaW+86zrWsnHGqoX++bduSIxo/Y1jjigwetaTgCRHO6nFI0onWex
-dP0z76DjZ4jBAs7GzsFkv3ck/ZfaQ6MxjXjcR1yYZFeTp3WlD3VIZVuZwohg78wo
-IR/5QOoQjwoV5nbgH3l2f0h2pvrCJPvQiwbADzZJpklpg45D2Y8EIMtOQy64hZSz
-2kFgy6oWuYKbuQf49Wi4
-=oaGW
+iQEcBAEBCAAGBQJXCZI/AAoJEDVYuxv9Aw7qvgUIAJSsEx9NBfTlJzPFMaDVd2Nw
++bhCeG156zBKFM21lyRRDMexHDGdSmzIibGjZ5EFZbVjyE6osXG+bA3raRQ6obn+
+jpeVkzrE0LgOt7rLf0to+7lkM0VhWSqDuEbLC/d+OQbvmr8QsR2E0fsASspQuY+1
+8bZM+VuI4S3HcMBp5LiAa+gS0HakcD5CnwK1LQv2usJl8nm9m/RR9m5K9tJGypTz
+f06HBroF66WY+0XQu2w2Adu5ZYQKLZbxHsMhJETxp7WQyClD+/j7gN2YIzGzwpdm
+PW5AF6df9Y6GLps4Q8c/QmICCaw+Ep82U2/rup7My0el+SgaPL7U9WKuZRc6pUY=
+=sE0K
 -----END PGP SIGNATURE-----
