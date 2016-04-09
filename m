@@ -1,23 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/17/2
-Message-ID: <20161017085807.GH18601@suse.com>
-Date: Mon, 17 Oct 2016 10:58:07 +0200
-From: Johannes Segitz <jsegitz@...e.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/09/3
+Message-ID: <5709825C.8090807@vorlons.info>
+Date: Sun, 10 Apr 2016 00:29:48 +0200
+From: Matthias Geerdsen <matthias@...lons.info>
 To: oss-security@...ts.openwall.com
-Subject: Re: potrace: invalid memory access in findnext (decompose.c)
+Subject: CVE request: imlib2 integer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Oct 08, 2016 at 10:29:54PM +0200, Agostino Sarubbo wrote:
-> A crafted image revealed, through a fuzz testing, the presence of a invalid 
-> memory access.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Thanks for the report. Can you please post the reproducer?
+Hi,
 
-Johannes
--- 
-GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nürnberg)
+please assign a CVE ID for the following integer overflow issue in
+imlib2:
+<https://git.enlightenment.org/legacy/imlib2.git/commit/?id=143f299>
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Debian bug report:
+<https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=820206>
+
+RedHat bug report:
+<https://bugzilla.redhat.com/show_bug.cgi?id=1324774>
+
+Cheers
+Matthias
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBCAAGBQJXCYJWAAoJEDVYuxv9Aw7qI6EH/3WeMQrJQFAvCoOZxbn3vBD6
+WMbfW0blNxl0pWcf3aUwiGgP6wFKRA9qk0FXuOCFckWD37Pcj8/nRZjsJHe+uPP1
+nlOeBx54wIRL6I8lekHlbFk638RtXXt5iEptAlB96DzfkW0Fpjwdr+TOq5Dt/6yW
+ZrsyM1P03ctDHCehkkckUbFruDInP/hzHepGky6Zrb8R30PsTASj3fyci4X9X4V5
+J4RSKAh++a3SyyLD83H6N5GeckKKwEnXe5b1NqUe+YcCqu86pmM4PQIbgyR/Y0iI
+PmldH5ztWgMhOEikis0N2QIgYDSyAb/6Yfu3krQW3Tt/6GBPk9J/WLlK5WbNvQk=
+=M0bU
+-----END PGP SIGNATURE-----
