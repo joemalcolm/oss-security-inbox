@@ -1,32 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/25/11
-Message-ID: <CAJ_zFkJFCUiOb+S46jM87qundu4rYO1QhxQ85KJHb_zKVOggzQ@mail.gmail.com>
-Date: Tue, 25 Oct 2016 12:13:44 -0700
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/10/5
+Message-ID: <570AAC03.2030209@vorlons.info>
+Date: Sun, 10 Apr 2016 21:39:47 +0200
+From: Matthias Geerdsen <matthias@...lons.info>
 To: oss-security@...ts.openwall.com
-Cc: ago@...too.org, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: Re: jasper: memory allocation failure in jas_malloc (jas_malloc.c)
+Subject: CVE request: imlib2 - potential divide-by-zero in imlib_image_draw_ellipse().
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Oct 22, 2016 at 6:03 PM,  <cve-assign@...re.org> wrote:
->
->> https://blogs.gentoo.org/ago/2016/10/18/jasper-memory-allocation-failure-in-jas_malloc-jas_malloc-c
->>
->> AddressSanitizer failed to allocate 0x1000002000 bytes of LargeMmapAllocator
->>
->> 0x7f4f0474e170 in jas_malloc ... jasper-1.900.5/src/libjasper/base/jas_malloc.c:117:9
->> 0x7f4f04764b4f in bmp_getinfo ... jasper-1.900.5/src/libjasper/bmp/bmp_dec.c:297:25
->
-> Use CVE-2016-8886.
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I'm not sure I understand the concern here. Isn't it usually expected
-that the administrator configures appropriate ulimits, and the code
-should just handle allocation failure gracefully?
+Hi,
 
-If we are considering *not* implementing arbitrary hardcoded limits a
-security problem, that seems like a significant change in software
-design philosophy (I've heard it called the zero-one-infinity rule
-before).
+please provide a CVE ID for this issue in imlib2:
 
-Tavis.
+Debian bug report from 2011:
+<https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=639414>
+
+upstream commit:
+<https://git.enlightenment.org/legacy/imlib2.git/commit/?id=c94d83ccab15
+d5ef02f88d42dce38ed3f0892882>
+
+Thank you
+Matthias
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBCAAGBQJXCqv7AAoJEDVYuxv9Aw7qWuoH/2EkT0g/XwsRVMqCxjWAVsDe
+PCwFFvVJNoBB7HKKTqcmaBEEGWyxntzZfX9Fpn9BluqIUZegEkyZ6agzH87XNpYK
+gVP6CiKGoYdrq1OWZ12Af9sHD8abSFkcR4K3EtRNEa5oxbD7rh52cuMoB3Im/789
+/pCdMfZCiKraD8/ZTEwG/P9LcJUwRAF7vzkXU0kTUwj/RayP5PrwK01aQ0truzge
+1HSjI9Vt1FEiHQk4+Rk4OXNzNA68Vt047pduPglzQV8s0oszK7T1bhpxzEAOJ+kB
+zDBiF7H6He1siPJQz81af2dJwgQ/XjoBh2yroFyonr/oGshnWjEd1sxJo5qgAjQ=
+=mwpU
+-----END PGP SIGNATURE-----
