@@ -1,32 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/05/2
-Message-Id: <20160405183103.7EE3C6CC0DE@smtpvmsrv1.mitre.org>
-Date: Tue,  5 Apr 2016 14:31:03 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/10/4
+Message-Id: <20160410142541.E5CD63AE190@smtpvbsrv1.mitre.org>
+Date: Sun, 10 Apr 2016 10:25:41 -0400 (EDT)
 From: cve-assign@...re.org
-To: jbuberel@...gle.com
+To: matthias@...lons.info
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request - Go - DLL loading, Big int
+Subject: Re: CVE request: imlib2 - GIF loader: OOB read
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> 1. On Windows, Go loads system DLLs by name with LoadLibrary, making it
-> vulnerable to DLL preloading attacks. Notably, if a user launched a Go
-> executable from their Downloads folder and malicious DLLs were in their
-> Downloads folder. This is being address in the following CL:
-> https://golang.org/cl/21428
-
-Use CVE-2016-3958.
+> https://git.enlightenment.org/legacy/imlib2.git/commit/?id=37a96801663b7b4cd3fbe56cc0eb8b6a17e766a8
+> GIF loader: Fix out-of-bound reads from colormap
 
 
-> 2. Go has an infinite loop in several big integer routines that makes Go
-> programs vulnerable to remote denial of service attacks.  Programs using
-> HTTPS client authentication or the Go ssh server libraries are both exposed
-> to this vulnerability. This is being addressed in the following CL:
-> https://golang.org/cl/21533
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=785369
+> libimlib2: GIF loader: out-of-bounds read
 
-Use CVE-2016-3959.
+> Invalid read of size 1
+> 
+> cmap->Colors gets accessed on index 8, but just 0 to 3 would be valid
+> 
+> security implications (DoS and potential host memory exposure)
+
+Use CVE-2016-3994.
 
 - -- 
 CVE Assignment Team
@@ -36,17 +34,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXBAQSAAoJEL54rhJi8gl5QT4QAMUGgyvc+XBbUJ23+YsSUR+i
-B/VeVlRrgidEa1BTlz7vAXUujyk1IPK5LtaJwO3v1d61Q4h6iGU2u7BSM/DHSw/G
-tESzwtQo06F93waSmUfbWslaU+ccxTVpc+xxlxMeCNMLDZvN2fXt6OPTP7jMT47M
-GeYyfZwpuVhc0IwiIUKK17Xl9bZptMdMBDjctq93zGyLqtr8vhQHFB+0xcNeYUap
-rtNXETnH0Pgd1Ze/IPT9DPyi9jyctqYB2RTBA6SpM11spnNI7JdEBiAHOHQiwmwf
-mJZv+HO0M9kOnpH/8vaWEL2WYdjV65CTfP6bpkBhOgEkwVqpvzFmgJp3M+/0ZkpY
-pSQ+9GUbEvLLDT5JmJ4TCo0whDrcU7lWxTm7toEQsI86puHWlABJPN4/BXYipVuW
-DYjXT/eiiaes1j3tUUi2d5Id90cgLVA9c79yZ2GQoDQWlyZ4r8vmlkuw38Ve9OGt
-embQ9Zp615bldfz7eZg91jJfQsaGBOtkhCgskgadhoI3/rrJX1UmrOZbr52Ym1OC
-GuEWw2kl2vB4CwuULbnCdV852XkgpvZBBwERh/kYMHRmrBnk/dVjElAhDutCZwo6
-A58OZjBfbcpD2wfWyJjwFxucC/EegZ1KDErjvtmcBdXHbVCNKRIGcHhe4QffgZuO
-Sg3f+0X0FXX+/6BxURzG
-=RGJ+
+iQIcBAEBCAAGBQJXCl7MAAoJEL54rhJi8gl5qXoP/0ixra6R9i1HUALR2iOJEtnk
+vTfbn05noKq8NqhXJzqn49tK9OFDsWwufGGL5I/3lr0mzJmeQcp780LR182wcBd7
+Mgdp7haeNTMCtNTuLglV0Z5umbfxCiAO0vMcpv8aDsGccm6o2cvc1q6iAivHgVmi
+rmH22yPtjktiazNdTBfoiDgKfrW7KZ0vEawIdaQmL7dbt4YYriMVmAfKc2izAFUk
+lL/SYhPNU3IuGwXzzFFWA1xq3wTWUVVf9bYg2/Tsq2BZsfI1ryVfjqK1GCAwHBX8
++d+V38D9PbI7sYQ0SvmsJQAS71ZYEyPadc9D+Kzf1I8d8fRFa/4ftog4auZbpvWj
+QnLGs1ezV0hPeZA602gOMe9+ts2N+dW3nF2+rz/n0BwBsZ0yHZ2kf6OrbeqdUEcb
+d3br+E2l9OsJ7EpJeSzG/lmJ1InCz50/pYjIU0Ig3UgZqkVpAHX7cQurLZeJq2ws
+0SLKufxR8mVio+KId3csyBGtRBIBpYDBO6dNTR0A+5jdwoyoWn/b63z8cqL4+3oJ
+11f0PlZZBZjjCY5ESg/oyFqvdS6c23UKirzab3SGF7tEvZUx90FC/alsD3uEa0Eq
+eWp5wvsGd6U20qta4bku5QkFxZ8DgTtQv8loKwRiUp8218d5IjzL60D9hFAJ4Hcv
+DnHFzuNitwKiQx8vjCbw
+=lelm
 -----END PGP SIGNATURE-----
