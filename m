@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1861" "Monday" "18" "April" "2016" "12:12:41" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160418161241.6E4973AE019@smtpvbsrv1.mitre.org>" "45" "[oss-security] Re: CVE request - samsumg android phone msm_sensor_config function write some range kernel address with any value" nil nil nil "4" "2016041816:12:41" "[oss-security] Re: CVE request - samsumg android phone msm_sensor_config function write some range kernel address with any value" (number mark "U       cve-assign@m Apr 18   45/1861  " thread-indent "\"[oss-security] Re: CVE request - samsumg android phone msm_sensor_config function write some range kernel address with any value\"\n") "<CAODc34+BJ7bSmCJfe7g6jjAj+xDfj0ZyZCrUuiM7f_Gs1+XbYQ@mail.gmail.com>" ("<CAODc34+BJ7bSmCJfe7g6jjAj+xDfj0ZyZCrUuiM7f_Gs1+XbYQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1470" "Sunday" "10" "April" "2016" "10:24:23" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160410142423.B8E2B6C02B9@smtpvmsrv1.mitre.org>" "39" "[oss-security] Re: CVE request: imlib2 - off-by-one OOB read in __imlib_MergeUpdate()" nil nil nil "4" "2016041014:24:23" "[oss-security] Re: CVE request: imlib2 - off-by-one OOB read in __imlib_MergeUpdate()" (number mark "U       cve-assign@m Apr 10   39/1470  " thread-indent "\"[oss-security] Re: CVE request: imlib2 - off-by-one OOB read in __imlib_MergeUpdate()\"\n") "<57098CB0.1000806@vorlons.info>" ("<57098CB0.1000806@vorlons.info>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26303 invoked by uid 550); 18 Apr 2016 16:12:53 -0000
+Received: (qmail 9551 invoked by uid 550); 10 Apr 2016 14:24:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,37 +12,31 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26285 invoked from network); 18 Apr 2016 16:12:53 -0000
+Received: (qmail 9500 invoked from network); 10 Apr 2016 14:24:35 -0000
 From: cve-assign@mitre.org
-To: throber3@gmail.com
+To: matthias@vorlons.info
 Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CAODc34+BJ7bSmCJfe7g6jjAj+xDfj0ZyZCrUuiM7f_Gs1+XbYQ@mail.gmail.com>
-Message-Id: <20160418161241.6E4973AE019@smtpvbsrv1.mitre.org>
-Date: Mon, 18 Apr 2016 12:12:41 -0400 (EDT)
-Subject: [oss-security] Re: CVE request - samsumg android phone msm_sensor_config function write some range kernel address with any value
+In-Reply-To: <57098CB0.1000806@vorlons.info>
+Message-Id: <20160410142423.B8E2B6C02B9@smtpvmsrv1.mitre.org>
+Date: Sun, 10 Apr 2016 10:24:23 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: imlib2 - off-by-one OOB read in __imlib_MergeUpdate()
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
->             The v4l-subdev driver provides an ioctl system call
-> interface to user space clients for communication. When processing
-> this communication, the msm_sensor_config function uses the
-> user-supplied value gpio_config.gpio_name as an index to a buffer for
-> write operations without any boundary checks.
+> https://git.enlightenment.org/legacy/imlib2.git/commit/?id=ce94edca1ccfbe314cb7cd9453433fad404ec7ef
 > 
-> kernel/SM-G9008V_CHN_KK_Opensource/Kernel/drivers/media/platform/msm/camera_v2/sensor/msm_sensor.c
-> 
-> msm_sensor_config
-> 
->              fix:
->              http://security.samsungmobile.com/smrupdate.html#SMR-JAN-2016
->              SVE-2015-4958: msm_sensor_config security issues
+> -  (T(xx, y).used & T_USED) && (xx < tw); xx++, ww++);
+> +  (xx < tw) && (T(xx, y).used & T_USED); xx++, ww++);
 
->> A vulnerability using without checking the boundary of buffers can
->> lead to memory corruption. The applied patch avoids an illegal access
->> to memory by checking the boundary.
 
-Use CVE-2016-4038.
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=819818
+
+> Invalid read of size 1
+> T(xx, y) addresses one byte out of buffer
+> off-by-one error due to swapped condition order
+
+Use CVE-2016-3993.
 
 - -- 
 CVE Assignment Team
@@ -52,17 +46,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXFQcVAAoJEHb/MwWLVhi29+4QAJqIKrKg3nHrIRLo3As2XVYk
-XRR2wf3C5QNOiUxF9O8GNmjY7AFsmKt7PiqRJ2wlHhz1zk/+eTuun3DTaGvE16Ni
-ouaNJ+4CQExCOrXKaVfjvbIvg7eWKfh6BZpF0aimIF2I6YhDC8ndc9zT/1HZhwkM
-u44A+HlJWuS9a0msUImOatTr3HKpE1bmaFDmUwH9GkhHYm/6juypbXLXVeeyKS+1
-P7qyzF5pTl9ODwtY7zIu+wfL0x3oDkxg9Gi/JU1XIpfixxIeLmtp6UOFfE9+8Wgo
-HR9hITU61KLtjd/db+5l24KyqpTOQkhOCfxi1tm1bX5EozlfCGReLQMBK6toloKL
-isxDO1oUREc2gmoT2GXvMzqkqaVV5J5qZ69bKBX/Y2BPIZ+U7woVE7Ctdj0TTX1v
-Y5cLdude4R02gqmIEopW0EgkAW34pU2izlur5V006O01HuKpywPwdNAEJbAcbcT8
-fagMDmE+eQsyfjbrualJv/BfxlnmxMdhAzsUPzZbRVXnxGmwDlE/mtFvKsc1K4hc
-KrFCurxRAGufI1nXXZT1YY6DRStFKts2gSxJJbYoip49T8f8B+cUfD7rdDyBLGjr
-80f4dof6KZFXr9aoq6Dfn4c1+DtfSZUx59+nb8Dv1hK2cYQiP/ZfYFG3bPZ30jfu
-2Ha3vXCFz5R/FR0vUywf
-=pyJr
+iQIcBAEBCAAGBQJXCl7GAAoJEL54rhJi8gl59FEQAMW3yzAq1QQQYjdy7XOAw2Nf
+fSE86f1yzJY+cfK0k1107Rdva4b9AJ+qT6xw8a7Jn/HFIe7DHBgU+Vx6jO8AKKEI
+ugr1KRfuDHWslYS2naZTX9Y2RCfpL82rBET6ZfUFa6uUvN44Ns5fzVhzYtwxemps
+FuMYcVh/WUFBHaCi2kXHCzdGkCpV/d7bQ2YHeysMP/z2VKtglxXzyjOBnHaeERaM
+T+lUExknVIjPioH1M2sdFF2kxsTZx80/vJUS7EuIc5bbj5X6N0aWuJvWjB/N5isb
+eKvZ5RjNdlCCdCuCDxxj+VyCwi8gb0OY75IjIIS8Qm119OwFRts1UnrYI0hYfAnH
+R1I8KAmDOMLfsVgUYHlDqXL2c4IbDE4ZvYbZPKWRWo3FhKQHy9lLrjAt6lryWZWG
+3V13Pcf09x+zPhD0U3I0neiJDLUfI7QKztRhujjzhgbQsdv6dS0JFMQZ+Ebr0X1T
+AAVsp5WYJtwLM78QgMahlyqoVrPVtu2UBJ+iJ0hTA4OnyVqMFFwKajGV0LqIRrkJ
+oz08H2e2PrB+YjhLp3RHZPL7TejBsv1DAsU1RT63Lt1W0Lsxc+ho0tzNS+E+lLKZ
+K9cXJ7pdD5NsVj6hQu0+h2B76tRLLSfvt8TQo8UHecvFQ5MvujpIAtsM6AXLh1/X
+Ws91LdqvbB3pCAf2I2Vx
+=U68g
 -----END PGP SIGNATURE-----
