@@ -1,50 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/19/6
-Message-ID: <20160719093915.GA29047@suse.de>
-Date: Tue, 19 Jul 2016 11:39:15 +0200
-From: Sebastian Krahmer <krahmer@...e.com>
-To: oss-security@...ts.openwall.com
-Cc: ebiederm@...ssion.com
-Subject: subuid security patches for shadow package
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/10/3
+Message-Id: <20160410142423.B8E2B6C02B9@smtpvmsrv1.mitre.org>
+Date: Sun, 10 Apr 2016 10:24:23 -0400 (EDT)
+From: cve-assign@...re.org
+To: matthias@...lons.info
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: imlib2 - off-by-one OOB read in __imlib_MergeUpdate()
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The shadow package contains newuidmap and newgidmap suid
-binaries in order to allow users to take advantage of the
-userns feature of uid-mappings.
-
-I added patches here:
-
-https://bugzilla.suse.com/show_bug.cgi?id=979282
-
-they consist of:
-
-1) Removing getlogin() to find out about users.
-   It relies on utmp, which is not a trusted base of info (group writable).
-
-2) Cleaning up UID retrieval and computation. The 'long long' code was
-   totally unclear to me, as the numbers are converted to ulong right
-   afterwards anyway. Additionally there was a *int overflow*, which can be
-   tested via 'newuidmap $$ 0 10000 -1' (given that 10000 is listed as allowed)
-   which produces no error but tries to write large "count" values to the uid_map
-   file. Kernel may check for overflows itself, but it should not be allowed
-   by a suid binary to be written in the first place.
-
-Theoretically theres also a TOCTOU issue in newuidmap, since the
-st_uid fields of the stat on /proc/pid may change over time
-(suid being executed), but to my analsysis such twists have no gain
-for the attacker.
-
-Patch should be tested by upstream, since I am not sure what the
-getlogin() code (shared uids??) was about at all.
-
-Sebastian
+> https://git.enlightenment.org/legacy/imlib2.git/commit/?id=ce94edca1ccfbe314cb7cd9453433fad404ec7ef
+> 
+> -  (T(xx, y).used & T_USED) && (xx < tw); xx++, ww++);
+> +  (xx < tw) && (T(xx, y).used & T_USED); xx++, ww++);
 
 
--- 
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=819818
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.com - SuSE Security Team
+> Invalid read of size 1
+> T(xx, y) addresses one byte out of buffer
+> off-by-one error due to swapped condition order
 
+Use CVE-2016-3993.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXCl7GAAoJEL54rhJi8gl59FEQAMW3yzAq1QQQYjdy7XOAw2Nf
+fSE86f1yzJY+cfK0k1107Rdva4b9AJ+qT6xw8a7Jn/HFIe7DHBgU+Vx6jO8AKKEI
+ugr1KRfuDHWslYS2naZTX9Y2RCfpL82rBET6ZfUFa6uUvN44Ns5fzVhzYtwxemps
+FuMYcVh/WUFBHaCi2kXHCzdGkCpV/d7bQ2YHeysMP/z2VKtglxXzyjOBnHaeERaM
+T+lUExknVIjPioH1M2sdFF2kxsTZx80/vJUS7EuIc5bbj5X6N0aWuJvWjB/N5isb
+eKvZ5RjNdlCCdCuCDxxj+VyCwi8gb0OY75IjIIS8Qm119OwFRts1UnrYI0hYfAnH
+R1I8KAmDOMLfsVgUYHlDqXL2c4IbDE4ZvYbZPKWRWo3FhKQHy9lLrjAt6lryWZWG
+3V13Pcf09x+zPhD0U3I0neiJDLUfI7QKztRhujjzhgbQsdv6dS0JFMQZ+Ebr0X1T
+AAVsp5WYJtwLM78QgMahlyqoVrPVtu2UBJ+iJ0hTA4OnyVqMFFwKajGV0LqIRrkJ
+oz08H2e2PrB+YjhLp3RHZPL7TejBsv1DAsU1RT63Lt1W0Lsxc+ho0tzNS+E+lLKZ
+K9cXJ7pdD5NsVj6hQu0+h2B76tRLLSfvt8TQo8UHecvFQ5MvujpIAtsM6AXLh1/X
+Ws91LdqvbB3pCAf2I2Vx
+=U68g
+-----END PGP SIGNATURE-----
