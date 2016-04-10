@@ -1,85 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/26/6
-Message-ID: <A962A2D04FAB5C4499FEFD15B642FA0A012003B7@EX02.corp.qihoo.net>
-Date: Mon, 26 Sep 2016 06:42:38 +0000
-From: 连一汉 <lianyihan@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: [CVE-2016-6881] ffmpeg endless loop when dealing with craft swf file.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/10/1
+Message-Id: <20160410142159.7B3713AE074@smtpvbsrv1.mitre.org>
+Date: Sun, 10 Apr 2016 10:21:59 -0400 (EDT)
+From: cve-assign@...re.org
+To: matthias@...lons.info
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: imlib2 integer overflow
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> https://git.enlightenment.org/legacy/imlib2.git/commit/?id=143f2993d7ccb73b26bb83abac6fa86f443981f9
+> 
+> Make IMAGE_DIMENSIONS_OK() more restrictive
+> Prevents invalid reads and unreasonably large memory allocations
+
+> Invalid read of size 1
 
 
-I'm Lian ,a security researcher from Qihoo 360 .
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=820206
+> imlib2: potentially exploitable integer overflows
 
 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1324774
+> imlib2: exploitable integer overflow in _imlib_SaveImage
 
-I found a vulnerability of ffmpeg . And this could cause ffmpeg get into endless loop !
+Use CVE-2014-9771.
 
->
-
-> ================== target system ======================
-
->
-
-> ffmpeg version 3.1.2 Copyright (c)
-
->
-
-> Ffmpeg -i poc.swf -b:v 640k -y output.ts
-
->
-
-> ================== target web site ======================
-
->
-
-> https://ffmpeg.org/
-
->
-
-> ========================= key codes ======================
-
->
-
-> swfdec.c: line 121
-
->
-
-> zlib_refill()
-
-> {
-
-
-
-> retry:
-
-
-
-> ret = inflate(z, Z_NO_FLUSH); // ret is always 2 (Z_NEED_DICT) , and other variates will not been changed.
-
-
-
-> if (buf_size - z->avail_out == 0)
-
->  goto retry;
-
-
-
-
-
-Our understanding is that swfdec.c is part of the libavformat library and thus this issue may affect other applications that use that library.
-
-
-
-Use CVE-2016-6881.
-
-
-
---
-
+- -- 
 CVE Assignment Team
-
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA [ A PGP key is available for encrypted communications at
-
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
   http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
+iQIcBAEBCAAGBQJXCl65AAoJEL54rhJi8gl5jHAP/18fovC2vayH3h8K29nxAn2c
+yA320vfDlnq9l7zdHYT0paBlU8cInmCX1YS0E+1gkaPtwPWfcbKzMtl73MIddWc9
+6ADdSyQYs6hRMiPGy8D4VI2o2M3wxCIRRprjZrMx1mOl61qu9DIdmIkdDFTUuvuv
+wsir9F6i+ENgfNvW0YHgmFcJrJ1YfOr7tfRKnm1xRi+5PkSukqqrKmc26UX94i7/
+o5d227DsX77cUP6seN2XZnvHL1UZhCvLT1O2NS5h6q1z5L/BnFLOwnOz7psaPlv/
+nFy7QKp6hWfAzPjaMuS52+DUdl9Py2nE9m/+lMArW5akilLoQ2P1O7BVnBCsiSQy
+X2JO8n9iwHe/gF4Md6y7Xty1y1QcOqPzzK4yGosUeOhsL+1rgt6CrqgoniddGkfX
+BKlbrhgOsS7apWnT3BHGLDz1HAIh1hr10a8o7dDnicC1iFYJxf3UZmGl9lmR6NPY
+AZM5+zi4L1mVmwdQK95dIkKH9gcbt2Q3Lkc4Js4hftmFyU9BgiYO2Z/jrSkfsgiY
+K79ysPGxjqav/1anOoJgQc9ygNBKeirDa5dnz8Op6ncvAjxGq8twgZF7vgDQ0NTT
+wf5v/KalMsT5hsDmWEUMi8KD/feKuSprMdK9zbCw+bzN6jjYriQzoCHLeoMUbaKI
+7e4XGMXRnZFMN08WUd6Z
+=AZsh
+-----END PGP SIGNATURE-----
