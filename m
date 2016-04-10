@@ -1,29 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/14/3
-Message-ID: <56C09A15.8060108@debian.org>
-Date: Sun, 14 Feb 2016 16:15:33 +0100
-From: Paul Gevers <elbrus@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/10/6
+Message-ID: <570AB371.1000109@vorlons.info>
+Date: Sun, 10 Apr 2016 22:11:29 +0200
+From: Matthias Geerdsen <matthias@...lons.info>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: cacti: Authentication using web authentication as a user, not in the,cacti database allows complete access
+Subject: CVE request: libcrypto++ - Timing Attack Counter Measure
 Content-Type: text/plain; charset=utf-8
 
-[Sorry for breaking the thread, I don't have access to the original mail]
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Just a note regarding the proposed patch for CVE-2016-2313.
+Hi,
 
-As I already noted in the original upstream bug report¹, I am not
-convinced that the "bug" was not (accidental) mis-configuration. I am
-convinced that the proposed patch is wrong and told upstream about it.
-The patch prevents features of cacti that allow an authenticated user
-who is not in the cacti database to get *specified* access to cacti. I
-don't know how many setups are using this feature, but the patch is a
-regression for those setups. The patch does not change anything in the
-configuration tab in the UI, so this at least leads to a confusing
-situation.
+please provide a CVE ID for a timing attack issue in Crypto++ Library.
 
-Paul
+upstream issue including commits:
+https://github.com/weidai11/cryptopp/issues/146
 
-¹ http://bugs.cacti.net/view.php?id=2656
+Cheers
+Matthias
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+iQEcBAEBCAAGBQJXCrNrAAoJEDVYuxv9Aw7qN4YIAL69L2Bdb+liBWCnf3Mw6DAl
+YcbGn393GK4wI+bsEoW/Fri4qSiURU4j57JhODpqtd0s9ba2nwEx4r4ECxVF7Sku
+qvELYkoS8Vye7hPLejJxV8C48kykl0IZGWJqZnE2mz4FkPHhrayonko6GPVfIftV
+vEK8B9mUy1/TPNOodgtr3tsGrFJbrDHf09R63nZj9zMVgWCTgLaKTU9ofZQ03Ivr
+JDQODJRarKY+jEjnzceT2INnN9pSax1Lnns9d9fJBXWHBgnN89C/c4zz/kAJm4TQ
+jiJ0oedxeX6/YWURWuI3uJcoGkhai6GQBT6zFMqQ2tJMdkXjm1d/33PZLzyERLU=
+=A62v
+-----END PGP SIGNATURE-----
