@@ -1,27 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/15/2
-Message-ID: <20160315125138.GT4944@frisco.mine.nu>
-Date: Tue, 15 Mar 2016 13:51:38 +0100
-From: Sébastien Delafond <seb@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE request - SPIP: 2 vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/11/6
+Message-ID: <alpine.LFD.2.20.1604112359170.31458@wniryva>
+Date: Tue, 12 Apr 2016 00:01:48 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: "Bazhaniuk, Oleksandr" <oleksandr.bazhaniuk@...el.com>
+Subject: CVE Request: Qemu: net: buffer overflow in MIPSnet emulator
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+   Hello,
 
-on behalf of the Debian Security Team, I'd like to request 2 CVEs for
-SPIP. Both are present in 3.x before 3.0.22 and 2.x before 2.1.19:
+Qemu emulator built with the MIPSnet controller emulator is vulnerable to a 
+buffer overflow issue. It could occur while receiving network packets in 
+mipsnet_receive(), if the guest NIC is configured to accept large(MTU) 
+packets.
 
-  * PHP code injection when handling content. This is fixed in
-    https://core.spip.net/projects/spip/repository/revisions/22911
-    (defining the function itself is enoug, as the global mechanism for
-    filters in SPIP automatically tries to lookup and filtre_foo_dist if
-    it exists)
+A remote user/process could use this flaw to crash the Qemu process on a host, 
+resulting in DoS.
 
-  * Objects injection when deserializing untrusted input. This is fixed
-    in https://core.spip.net/projects/spip/repository/revisions/22903
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-04/msg01131.html
 
-Cheers,
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1326082
 
---Seb
+This issue was discovered by Oleksandr Bazhaniuk of Advanced Threat Research
+team at Intel Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
