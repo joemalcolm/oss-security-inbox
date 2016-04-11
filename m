@@ -1,29 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/04/6
-Message-ID: <20161004200121.711be7fd@pc1>
-Date: Tue, 4 Oct 2016 20:01:21 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: Steve Richert <steve@...lectiveidea.com>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE request for code execution via gem name collission in bundler (was Re: CVE Request)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/11/3
+Message-ID: <CFA7B491-4950-4B93-A00D-AD33B7EDD420@trust-in-soft.com>
+Date: Mon, 11 Apr 2016 08:42:15 +0000
+From: Pascal Cuoq <cuoq@...st-in-soft.com>
+To: "cve-assign@...re.org" <cve-assign@...re.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: Nikos Mavrogiannopoulos <n.mavrogiannopoulos@...il.com>
+Subject: Infinite loops parsing malicious DER certificates in libtasn1 4.7
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+The libtasn1 library, in its 4.7 version, can loop for a long time or indefinitely when it is used to parse DER representations of X509 certificates, leading to a denial of service. Some of these loops may in addition increase heap or stack usage, leading to more issues.
 
-For readability of this mailing list I think it should be good practice
-to say something meaningful in the subject.
-We have tons of CVE requests here all the time, therefore "CVE Request"
-is not meaningful.
+These issues were found by Pascal Cuoq and Miod Vallat using american fuzzy lop. They are fixed in libtasn1 version 4.8.
 
-I'm not the maintainer of this mailing list, but I'm sure everyone
-agrees that something mentioning the name of the affected product and a
-short indication of what kind of bug it is would be apprechiated.
+Proof of concept, using the test files distributed in http://ftp.gnu.org/gnu/libtasn1/libtasn1-4.8.tar.gz :
 
--- 
-Hanno Böck
-https://hboeck.de/
+~/libtasn1-4.8 $ asn1Decoding -v
+asn1Decoding (libtasn1) 4.7
+…
+~/libtasn1-4.8 $ asn1Decoding tests/pkix.asn tests/invalid-x509/id-000000.der PKIX1.Certificate
+tests/pkix.asn:332: Warning: VisibleString is a built-in ASN.1 type.
+tests/pkix.asn:334: Warning: NumericString is a built-in ASN.1 type.
+tests/pkix.asn:336: Warning: IA5String is a built-in ASN.1 type.
+tests/pkix.asn:338: Warning: TeletexString is a built-in ASN.1 type.
+tests/pkix.asn:340: Warning: PrintableString is a built-in ASN.1 type.
+tests/pkix.asn:342: Warning: UniversalString is a built-in ASN.1 type.
+tests/pkix.asn:345: Warning: BMPString is a built-in ASN.1 type.
+tests/pkix.asn:349: Warning: UTF8String is a built-in ASN.1 type.
+Parse: done.
+^C
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
 
-Content of type "application/pgp-signature" skipped
+
+
+
