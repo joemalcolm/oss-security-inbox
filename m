@@ -1,64 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/22
-Message-ID: <CAPGxrc-RbECjbYfpBZPHusDYo_B5BDrKKzRKQ1zwbaNN21wLqA@mail.gmail.com>
-Date: Fri, 9 Sep 2016 05:28:26 +0800
-From: redrain root <rootredrain@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/11/5
+Message-ID: <CACn5sdRB_hxr90kYdZnESVrCA99t6FOgGpBygXDeHzqcySCMZw@mail.gmail.com>
+Date: Mon, 11 Apr 2016 19:37:51 +0200
+From: Gustavo Grieco <gustavo.grieco@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request - Airmail URLScheme render and file:// xss vulnerability
+Subject: Large amount of uninitialized values in svg parsing and processing
 Content-Type: text/plain; charset=utf-8
 
-Airmail is a popular email client on iOS and OS X.
-I found a vulnerability in airmail of the latest version which could cause
-a file:// xss and arbitrary file read.
+Hi,
 
-Author: redrain, yu.hong@...itin.com
-Date: 2016-08-15
-Version: 3.0.2 and earlier
-Platform: OS X and iOS
-Site: http://airmailapp.com/
-Vendor: http://airmailapp.com/
-Vendor Notified: 2016-08-15
+A large amount of uninitialized values in the parsing and processing of svg
+files using librsvg and related libraries (e.g, libcairo) are causing
+undefined behaviors. Some of these issues are originated in librsvg, some
+in libcairo and others (libpixman maybe). Some relevant technical details
+are available here:
 
-Vulnerability:
-There is a file:// xss in airmail version 3.0.2 and earlier.
-The app can deal the URLscheme render with link detection, any user can
-edit the email content in reply with the evil code with the TL;DR.
+https://bugs.freedesktop.org/show_bug.cgi?id=92904
 
-Airmail implements its user interface using an embedded version of WebKit,
-furthermore Airmail on OS X will render any URI as a clickable HTML <a
-href= link. An attacker can create a simple JavaScript URI (e.g.,
-javascript:) which when clicked grants the attacker initial JavaScript
-execution (XSS) in the context of the application DOM.
-
-
-PoC:
-javascript://www.baidu.com/research?%0Aprompt(1)
-
-​
-
-Arbitrary file read:
-
-javascript://www.baidu.com/research?%0Afunction%20reqListene
-r%20()%20%7B%0A%20%20prompt(this.responseText)%3B%0A%7D%0Ava
-r%20oReq%20%3D%20new%20XMLHttpRequest()%3B%0AoReq.addEventLi
-stener(%22load%22%2C%20reqListener)%3B%0AoReq.open(
-%22GET%22%2C%20%22file%3A%2F%2F%2Fetc%2Fpasswd%22)%3B%0AoReq.send()%3B
-
-
-​
-Resolution:
-
-Airmail call the webkit to translate the html, javascript: and
-javascript://%0a%0d  are supported because of link detection in webkit
-info.plist.
-
-So we can just broke the URI, for example, add a “<blank>” behind the
-“javascript” OS X and iOS will not render this URI as a clickable HTML <a
-href=xxx>
-
-
-Could you assign CVE id for this?
+As a result of this, just browsing svg files using the open dialog of
+Firefox/Chromium can lead to unexpected or undefined behavior. Other
+applications using librsvg are likely affected.
 
 Regards,
-redrain
+Gus.
 
