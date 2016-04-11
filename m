@@ -1,28 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/27/4
-Message-ID: <CABfY0L3+qV-Q_L2awb-PSXzy=fPWyQFMkZwfbjHSXyxCkfrEbA@mail.gmail.com>
-Date: Tue, 26 Apr 2016 23:26:13 -0500
-From: Jodie Cunningham <jodie.cunningham@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/11/7
+Message-ID: <570BFDF5.4080908@vorlons.info>
+Date: Mon, 11 Apr 2016 21:41:41 +0200
+From: Matthias Geerdsen <matthias@...lons.info>
 To: oss-security@...ts.openwall.com
-Subject: Re: 3 bugs refer to buffer overflow in in libtiff 4.0.6
+Subject: CVE request: PHP issues fixed in 7.0.5, 5.6.20 and 5.5.34 releases
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 26, 2016 at 10:36 PM, PXO炳林 <271193918@...com> wrote:
->
-> Hello oss-security,
->
-> I did some test and found three bugs refer to buffer overflow: one stack
-> buffer overflow in thumbnail and two buffer overflows in bmp2tiff.
->
-> Please let me know whether CVE Identifier number could be assigned.
->
-> Overview:
->
-> Running each poc file crashes thumbnail and bmp2tiff made with
-> AddressSanitizer in tiff-4.0.6. I have attached poc and log files .
-> ------------------
-> From Debug_Orz
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+Hi,
+
+could you please provide CVE IDs for the following PHP issues fixed in
+the latest releases, as I have not yet seen any IDs yet:
+
+- -  Buffer over-write in finfo_open with malformed magic file
+https://bugs.php.net/bug.php?id=71527
+http://bugs.gw.com/view.php?id=522
+
+- - Integer overflow in php_raw_url_encode
+https://bugs.php.net/bug.php?id=71798
+https://git.php.net/?p=php-src.git;a=commit;h=95433e8e339dbb6b5d5541473c
+1661db6ba2c451
 
 
-Is there a patch upstream?
+- - php_snmp_error() Format String Vulnerability
+https://bugs.php.net/bug.php?id=71704
+https://git.php.net/?p=php-src.git;a=commit;h=6e25966544fb1d2f3d7596e060
+ce9c9269bbdcf8
+
+
+- - Invalid memory write in phar on filename containing \0 inside name
+https://bugs.php.net/bug.php?id=71860
+https://gist.github.com/smalyshev/80b5c2909832872f2ba2
+
+
+- - AddressSanitizer: negative-size-param (-1) in mbfl_strcut
+https://bugs.php.net/bug.php?id=71906
+https://gist.github.com/smalyshev/d8355c96a657cc5dba70
+
+
+Thanks a lot
+Matthias
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBCAAGBQJXC/3xAAoJEDVYuxv9Aw7qdY0H/2YZdBrOs6WHe9zISeehp8eX
+I5E0qdqrkXXbVxjvYH+Z8BHLS5nf+vwucCoCb+5UFKIzfmwuWGn6zwF61zbHUBcM
+8kLd635zX5SZROUVTYYy/bTtSD/vA3cHv4UsKHJCsUH+KkcuG3BCVVkUKiH8ayWE
+cfkbW4gIFHIT9JH+ciTmJ1poTc6bX0KPbchxGmfw5bgagTuntZr4JWbKbmQQugCg
+DYqZuldgAqZsx13klQTreFj5/ZXa4mrJPpIqkd+BV+VJlBij9qSTVnEB5FViN2tP
+VcW8mlAw6uCg35J7UJArShR8Ts4/TD8vU2anCUlLQKGwYuQOgBYQVV4DF5EskB0=
+=vqBF
+-----END PGP SIGNATURE-----
