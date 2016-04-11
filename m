@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["645" "Tuesday" "19" "September" "2017" "20:45:39" "-0400" "Luciano Bello" "luciano@debian.org" "<4b681520-4526-29ae-bc6a-d11a4a60d247@debian.org>" "10" "[oss-security] Re: [CVE-2017-14266] tcprewrite Heap-Based Buffer Overflow" nil nil nil "9" "2017092000:45:39" "[oss-security] Re: [CVE-2017-14266] tcprewrite Heap-Based Buffer Overflow" (number mark "U       luciano@debi Sep 19   10/645   " thread-indent "\"[oss-security] Re: [CVE-2017-14266] tcprewrite Heap-Based Buffer Overflow\"\n") "<1505821241.735634293@f27.my.com>" ("<cf41fea5-4180-fb43-b990-bed8a8c0e31c@debian.org>" "<1505821241.735634293@f27.my.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1549" "Monday" "11" "April" "2016" "00:39:01" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160411043901.70E186C017B@smtpvmsrv1.mitre.org>" "39" "[oss-security] Re: CVE request: imlib2 - potential divide-by-zero in imlib_image_draw_ellipse" nil nil nil "4" "2016041104:39:01" "[oss-security] Re: CVE request: imlib2 - potential divide-by-zero in imlib_image_draw_ellipse" (number mark "U       cve-assign@m Apr 11   39/1549  " thread-indent "\"[oss-security] Re: CVE request: imlib2 - potential divide-by-zero in imlib_image_draw_ellipse\"\n") "<570AAC03.2030209@vorlons.info>" ("<570AAC03.2030209@vorlons.info>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32341 invoked by uid 550); 20 Sep 2017 00:59:54 -0000
+Received: (qmail 12218 invoked by uid 550); 11 Apr 2016 04:39:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,46 +12,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18371 invoked from network); 20 Sep 2017 00:45:52 -0000
-From: Luciano Bello <luciano@debian.org>
-To: hosein.askari@aol.com
-Cc: team@security.debian.org, oss-security@lists.openwall.com
-References: <cf41fea5-4180-fb43-b990-bed8a8c0e31c@debian.org>
- <1505821241.735634293@f27.my.com>
-Message-ID: <4b681520-4526-29ae-bc6a-d11a4a60d247@debian.org>
-Date: Tue, 19 Sep 2017 20:45:39 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
-MIME-Version: 1.0
-In-Reply-To: <1505821241.735634293@f27.my.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - stanza.websitewelcome.com
-X-AntiAbuse: Original Domain - lists.openwall.com
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - debian.org
-X-BWhitelist: no
-X-Source-IP: 74.71.109.196
-X-Exim-ID: 1duT92-002GdF-07
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: cpe-74-71-109-196.nyc.res.rr.com ([192.168.1.21]) [74.71.109.196]:41650
-X-Source-Auth: i@lucianobello.com.ar
-X-Email-Count: 3
-X-Source-Cap: bHVjaWFub2I7Z3JhYmVudDtzdGFuemEud2Vic2l0ZXdlbGNvbWUuY29t
-X-Local-Domain: no
-Subject: [oss-security] Re: [CVE-2017-14266] tcprewrite Heap-Based Buffer Overflow
+Received: (qmail 12197 invoked from network); 11 Apr 2016 04:39:13 -0000
+From: cve-assign@mitre.org
+To: matthias@vorlons.info
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <570AAC03.2030209@vorlons.info>
+Message-Id: <20160411043901.70E186C017B@smtpvmsrv1.mitre.org>
+Date: Mon, 11 Apr 2016 00:39:01 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: imlib2 - potential divide-by-zero in imlib_image_draw_ellipse
 
-On 09/19/2017 07:40 AM, hosein.askari@aol.com wrote:
-> First of all, I realy appreciate for sen­ding me an email abo­ut the mentioned vul­nerability. I have examined the vulnerab­ility
-> again on Ubuntu 16.04 due to your sent email. I have not tri­ed this vulnerability on the distributio­ns that you mentione­d. 
-> The screenshot which illustrates differe­nt steps (POC) is se­nt via this email for your kind consider­ations and uploaded on this link:
-> https://www.photobox­.co.uk/my/photo/full­?photo_id=9959498468
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The link is 404ing. I might be creating the pcap wrongly. Can you make a
-input pcap available?
+> please provide a CVE ID for this issue in imlib2:
+> 
+> https://git.enlightenment.org/legacy/imlib2.git/commit/?id=c94d83ccab15d5ef02f88d42dce38ed3f0892882
 
-thanks! /luciano
+>> Attempting to draw a 2x1 ellipse with e.g. imlib_image_draw_ellipse(x, y, 2, 1) causes a divide-by-zero.
+
+> Debian bug report from 2011:
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=639414
+
+>> this bug has minor security implications (DoS for 
+>> applications that issue draw command based on untrusted input).
+
+Use CVE-2011-5326.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXCyibAAoJEL54rhJi8gl5VRgP/ipfgG1QiVj0ZOxfVHta2T3t
+yeIEMjWLpG9zFo1rGmJyDN/h0+UG/JSOQzM87l11INxceeUjHdN9FFSTDk3bN0rY
+r9a1rUwrPUc/CV8F9Y90lA6AQ69pwj73mf3ylu66H5C5wWBo5ZNvjyqxvNaInIgO
+o5SAKeiNMUdfjPryIK47GtBR/xp48Sl0GbG8S8GzYrhpA/lze39QG5RdmzYLJVWd
+ktMlt5jE+oomypwtiJpe+MvpXHHu92AaVbZ6xnmk3Gv5/dttumU47xXLjAHCmz2i
+cXJe4BVkB5hXWlQmg49V05Muivaec84blpN+OyRDfCnqWRp2dP6yBiWFBOJ/7KDX
+zcWagbUHUoHR2GefHt9FSkiI65J/HINYYefhpSrNZK9gJxiE/ouJQXMyFV3eNvWm
+IBGjoXR4wMcjuhx9W2bwRwTa9ILmWq375UVWm137cwOa/0QF0vo06qnFeuogtWlb
++OwV6m8/J+KZAYDQKR3viKOCTJGiUl/bB5CKdAGHpdXR1vbRqkydhc4tuLuQ64tn
+fLXLdpAFDl/xGkRxcJu+7Ww7QHTvwH2daTfcVfzYQ8SSFuOWDx5ii31CPr1BkoOl
+PcInntz6lAXdpgjqMaRUyP1QAD60H/la9/N6j2k4w1JN3EKKGsaZrQPhgN9aNNs2
+8v8DY7QKNuVdyqT8idPB
+=/w1g
+-----END PGP SIGNATURE-----
