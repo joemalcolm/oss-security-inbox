@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["357" "Monday" "26" "September" "2016" "17:59:57" "+0100" "John Haxby" "john.haxby@oracle.com" "<ca1aba26-a8e0-57b4-7bd7-7ff1bf26ceb6@oracle.com>" "9" "Re: [oss-security] CVE-2016-7545 -- SELinux sandbox escape" "^Date:" nil nil "9" "2016092616:59:57" "[oss-security] CVE-2016-7545 -- SELinux sandbox escape" (number mark "        john.haxby@o Sep 26    9/357   " thread-indent "\"Re: [oss-security] CVE-2016-7545 -- SELinux sandbox escape\"\n") "<20160926165409.ekk6dztdpttnnf67@jwilk.net>" ("<20160925134911.18991732ntfvg5a8@webmail.alunos.dcc.fc.up.pt>" "<20160926165409.ekk6dztdpttnnf67@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1449" "Monday" "11" "April" "2016" "08:42:15" "+0000" "Pascal Cuoq" "cuoq@trust-in-soft.com" "<CFA7B491-4950-4B93-A00D-AD33B7EDD420@trust-in-soft.com>" "36" "[oss-security] Infinite loops parsing malicious DER certificates in libtasn1 4.7" nil nil nil "4" "2016041108:42:15" "[oss-security] Infinite loops parsing malicious DER certificates in libtasn1 4.7" (number mark "U       cuoq@trust-i Apr 11   36/1449  " thread-indent "\"[oss-security] Infinite loops parsing malicious DER certificates in libtasn1 4.7\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26315 invoked by uid 550); 26 Sep 2016 17:00:13 -0000
+Received: (qmail 22457 invoked by uid 550); 11 Apr 2016 08:45:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,29 +11,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26293 invoked from network); 26 Sep 2016 17:00:12 -0000
-References: <20160925134911.18991732ntfvg5a8@webmail.alunos.dcc.fc.up.pt>
- <20160926165409.ekk6dztdpttnnf67@jwilk.net>
-Message-ID: <ca1aba26-a8e0-57b4-7bd7-7ff1bf26ceb6@oracle.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
-MIME-Version: 1.0
-In-Reply-To: <20160926165409.ekk6dztdpttnnf67@jwilk.net>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Source-IP: aserv0022.oracle.com [141.146.126.234]
-Date: Mon, 26 Sep 2016 17:59:57 +0100
-From: John Haxby <john.haxby@oracle.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2016-7545 -- SELinux sandbox escape
-To: oss-security@lists.openwall.com
+Received: (qmail 20345 invoked from network); 11 Apr 2016 08:41:07 -0000
+From: Pascal Cuoq <cuoq@trust-in-soft.com>
+To: "cve-assign@mitre.org" <cve-assign@mitre.org>,
+	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+CC: Nikos Mavrogiannopoulos <n.mavrogiannopoulos@gmail.com>
+Thread-Topic: Infinite loops parsing malicious DER certificates in libtasn1
+ 4.7
+Thread-Index: AQHRk84MiTMMHzEbo0uCA8h9UevDow==
+Date: Mon, 11 Apr 2016 08:42:15 +0000
+Message-ID: <CFA7B491-4950-4B93-A00D-AD33B7EDD420@trust-in-soft.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [86.246.37.11]
+Content-Type: multipart/alternative;
+	boundary="_000_CFA7B49149504B93A00DAD33B7EDD420trustinsoftcom_"
+MIME-Version: 1.0
+Subject: [oss-security] Infinite loops parsing malicious DER certificates in libtasn1 4.7
 
-On 26/09/16 17:54, Jakub Wilk wrote:
-> Are there any use cases for TIOCSTI other than producing exploits?
+--_000_CFA7B49149504B93A00DAD33B7EDD420trustinsoftcom_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
 
-Yes.  Admitedly a long time ago, but I used to use it to run commands in
-a nominated shell (window).   In some ways it was a pre-cursor to what
-now tends to be done by dbus, but TIOCSTI does occasionally have uses
-other than producing exploits.
+The libtasn1 library, in its 4.7 version, can loop for a long time or indef=
+initely when it is used to parse DER representations of X509 certificates, =
+leading to a denial of service. Some of these loops may in addition increas=
+e heap or stack usage, leading to more issues.
 
-jch
+These issues were found by Pascal Cuoq and Miod Vallat using american fuzzy=
+ lop. They are fixed in libtasn1 version 4.8.
+
+Proof of concept, using the test files distributed in http://ftp.gnu.org/gn=
+u/libtasn1/libtasn1-4.8.tar.gz :
+
+~/libtasn1-4.8 $ asn1Decoding -v
+asn1Decoding (libtasn1) 4.7
+=85
+~/libtasn1-4.8 $ asn1Decoding tests/pkix.asn tests/invalid-x509/id-000000.d=
+er PKIX1.Certificate
+tests/pkix.asn:332: Warning: VisibleString is a built-in ASN.1 type.
+tests/pkix.asn:334: Warning: NumericString is a built-in ASN.1 type.
+tests/pkix.asn:336: Warning: IA5String is a built-in ASN.1 type.
+tests/pkix.asn:338: Warning: TeletexString is a built-in ASN.1 type.
+tests/pkix.asn:340: Warning: PrintableString is a built-in ASN.1 type.
+tests/pkix.asn:342: Warning: UniversalString is a built-in ASN.1 type.
+tests/pkix.asn:345: Warning: BMPString is a built-in ASN.1 type.
+tests/pkix.asn:349: Warning: UTF8String is a built-in ASN.1 type.
+Parse: done.
+^C
+
+
+
+
+
+--_000_CFA7B49149504B93A00DAD33B7EDD420trustinsoftcom_--
