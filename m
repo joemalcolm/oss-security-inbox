@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4753" "Thursday" "1" "September" "2016" "03:42:43" "+0000" "=?utf-8?B?5byg5byA57+U?=" "zhangkaixiang@360.cn" "<5EDB84F4B23F5B4DB6500A89258280E0BEBCDB@EX02.corp.qihoo.net>" "81" "[oss-security] CVE Request: docker swarm node Dos occurs when join a cluster failed using local CA certificate" nil nil nil "9" "2016090103:42:43" "[oss-security] CVE Request: docker swarm node Dos occurs when join a cluster failed using local CA certificate" (number mark "U       zhangkaixian Sep  1   81/4753  " thread-indent "\"[oss-security] CVE Request: docker swarm node Dos occurs when join a cluster failed using local CA certificate\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["765" "Monday" "11" "April" "2016" "17:57:36" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1604111754560.8367@wniryva>" "25" "[oss-security] CVE request: Qemu: net: buffer overflow in stellaris_enet emulator" nil nil nil "4" "2016041112:27:36" "[oss-security] CVE request: Qemu: net: buffer overflow in stellaris_enet emulator" (number mark "U       ppandit@redh Apr 11   25/765   " thread-indent "\"[oss-security] CVE request: Qemu: net: buffer overflow in stellaris_enet emulator\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21552 invoked by uid 550); 1 Sep 2016 12:07:03 -0000
+Received: (qmail 26469 invoked by uid 550); 11 Apr 2016 12:27:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,103 +12,40 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30006 invoked from network); 1 Sep 2016 03:42:55 -0000
-From: =?utf-8?B?5byg5byA57+U?= <zhangkaixiang@360.cn>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: CVE Request: docker swarm node Dos occurs when join a cluster
- failed using local CA certificate
-Thread-Index: AdIEAd2z8Qxqf5jnQdeHq81Wul2Qsg==
-Date: Thu, 1 Sep 2016 03:42:43 +0000
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BEBCDB@EX02.corp.qihoo.net>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.18.25.62]
-Content-Type: multipart/alternative;
-	boundary="_000_5EDB84F4B23F5B4DB6500A89258280E0BEBCDBEX02corpqihoonet_"
+Received: (qmail 26442 invoked from network); 11 Apr 2016 12:27:57 -0000
+Date: Mon, 11 Apr 2016 17:57:36 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: "Bazhaniuk, Oleksandr" <oleksandr.bazhaniuk@intel.com>
+Message-ID: <alpine.LFD.2.20.1604111754560.8367@wniryva>
 MIME-Version: 1.0
-Subject: [oss-security] CVE Request: docker swarm node Dos occurs when join a cluster
- failed using local CA certificate
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+Subject: [oss-security] CVE request: Qemu: net: buffer overflow in stellaris_enet emulator
 
---_000_5EDB84F4B23F5B4DB6500A89258280E0BEBCDBEX02corpqihoonet_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+   Hello,
 
-RG9ja2VyIHN3YXJtIG1vZGUgaXMgdXNlZCB0byBmb3JtIGEgc3dhcm0sIGNv
-b3JkaW5hdGluZyB0YXNrcy4gT25jZSBhIG1hY2hpbmUgam9pbnMsIGl0IGJl
-Y29tZXMgYSBTd2FybSBOb2RlLiBOb2RlcyBjYW4gZWl0aGVyIGJlIHdvcmtl
-ciBub2RlcyBvciBtYW5hZ2VyIG5vZGVzLg0KSSBmb3VuZCBhIHZ1bG5lcmFi
-aWxpdHkgaW4gZG9ja2VyIG9mIHRoZSBsYXRlc3QgdmVyc2lvbiB3aGljaCBj
-b3VsZCBjYXVzZSBhIERlbmlhbCBvZiBTZXJ2aWNlLCBJIGNyZWF0ZWQgYSBD
-QSBjZXJ0aWZpY2F0ZSBhcyB0aGUgc2FtZSB3YXkgd2l0aCBkb2NrZXIsIGxv
-YWRpbmcgaXQgd2hlbg0KZXhlY3V0ZSB0aGUgY29tbWFuZCAiZG9ja2VyIHN3
-YXJtIGpvaW4gLS10b2tlbiBTV01US04tMS14eCBpcDpwb3J0IiwgaG93ZXZl
-ciAsIGRpc3RydXN0IGNlcnRpZmljYXRlIHJlc3VsdHMgdGhlIHN3YXJtIG1h
-bmdlciBmYWlsZWQgdG8gYXV0aGVudGljYXRlIGR1cmluZw0KVExTIGhhbmRz
-aGFrZSwgdHJhcHBpbmcgaW50byBpbmZpbml0ZSBsb29wIG9mIHNlc3Npb24g
-cmVidWlsZGluZyAsIHRodXMgYSByZW1vdGUgbm9kZSBjb3VsZCBub3Qgam9p
-biB0aGUgc3dhcm0gY2x1c3RlciBhbmQgZXZlbiBmb3JjZSB0byBsZWF2ZSBp
-cyBpbiB2YWluLCB0aGlzIGlzc3VlIHBlcnNpc3RzDQphZnRlciByZXN0YXJ0
-cyBkb2NrZXIgZGFlbW9uIG9uIHRoZSByZW1vdGUgbm9kZS4NCg0KIyBkb2Nr
-ZXIgdmVyc2lvbg0KQ2xpZW50Og0KVmVyc2lvbjogICAgICAxLjEyLjAtZGV2
-DQpBUEkgdmVyc2lvbjogIDEuMjUNCkdvIHZlcnNpb246ICAgZ28xLjYuMw0K
-R2l0IGNvbW1pdDogICA5YzFiZTU0LXVuc3VwcG9ydGVkDQpCdWlsdDogICAg
-ICAgIEZyaSBKdWwgMjkgMTU6NDA6NTIgMjAxNg0KT1MvQXJjaDogICAgICBs
-aW51eC9hbWQ2NA0KDQpTZXJ2ZXI6DQpWZXJzaW9uOiAgICAgIDEuMTIuMC1k
-ZXYNCkFQSSB2ZXJzaW9uOiAgMS4yNQ0KR28gdmVyc2lvbjogICBnbzEuNi4z
-DQpHaXQgY29tbWl0OiAgIDljMWJlNTQtdW5zdXBwb3J0ZWQNCkJ1aWx0OiAg
-ICAgICAgRnJpIEp1bCAyOSAxNTo0MDo1MiAyMDE2DQpPUy9BcmNoOiAgICAg
-IGxpbnV4L2FtZDY0DQoNCiMgZG9ja2VyIHN3YXJtIGluaXQNClN3YXJtIGlu
-aXRpYWxpemVkOiBjdXJyZW50IG5vZGUgKDIzbTZrc3I5Nndoc3Z1bzhsem9r
-ZW5qdTMpIGlzIG5vdyBhIG1hbmFnZXIuDQoNClRvIGFkZCBhIHdvcmtlciB0
-byB0aGlzIHN3YXJtLCBydW4gdGhlIGZvbGxvd2luZyBjb21tYW5kOg0KICAg
-IGRvY2tlciBzd2FybSBqb2luIFwNCiAgICAtLXRva2VuIFNXTVRLTi0xLTMw
-ZjZpYnpwc2NxaDA1cXFkb2c4NWt0cjhwdGN3N3R0bjR3eTVjd2l4eTF3ZmNo
-aGI5LWFsamV3dGRuNTcyN2cxcGxkeG5ldmpoNTEgXA0KICAgIHh4Lnh4Lnh4
-Lnh4OjIzNzcNCg0KVG8gYWRkIGEgbWFuYWdlciB0byB0aGlzIHN3YXJtLCBy
-dW4gdGhlIGZvbGxvd2luZyBjb21tYW5kOg0KICAgIGRvY2tlciBzd2FybSBq
-b2luIFwNCiAgICAtLXRva2VuIFNXTVRLTi0xLTMwZjZpYnpwc2NxaDA1cXFk
-b2c4NWt0cjhwdGN3N3R0bjR3eTVjd2l4eTF3ZmNoaGI5LTBwMDg2ejJzZGJu
-cHZvZ25qbXU3NmdwaTYgXA0KICAgIHh4Lnh4Lnh4Lnh4IDoyMzc3DQoNCkxv
-Z2luIGluIHJlbW90ZSBub2RlICxjcmVhdGUgYSBDQSBjZXJ0aWZpY2F0ZSBh
-bmQgcHJpdmF0ZSBrZXkgYXMgdGhlIGRvY2tlcuKAmXMgd2F5LCB0aGVuIHB1
-dHMgdGhlbSB0byAvdmFyL2xpYi9kb2NrZXIvc3dhcm0vY2VydGlmaWNhdGUN
-CmFuZCBuYW1lZCB3aXRoIOKAnGRvY2tlci1zd2FybS1jYS54eHjigJ0sIGV4
-ZWN1dGUgdGhlIGZvbGxvd2luZyBjb21tYW5kczoNCi0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQojIGRv
-Y2tlciBzd2FybSBqb2luIC0tdG9rZW4gU1dNVEtOLTEtMzBmNmlienBzY3Fo
-MDVxcWRvZzg1a3RyOHB0Y3c3dHRuNHd5NWN3aXh5MXdmY2hoYjktYWxqZXd0
-ZG41NzI3ZzFwbGR4bmV2amg1MSB4eC54eC54eC54eDoyMzc3DQpFcnJvciBy
-ZXNwb25zZSBmcm9tIGRhZW1vbjogVGltZW91dCB3YXMgcmVhY2hlZCBiZWZv
-cmUgbm9kZSB3YXMgam9pbmVkLiBBdHRlbXB0IHRvIGpvaW4gdGhlIGNsdXN0
-ZXIgd2lsbCBjb250aW51ZSBpbiB0aGUgYmFja2dyb3VuZC4gVXNlICJkb2Nr
-ZXIgaW5mbyIgY29tbWFuZCB0byBzZWUgdGhlIGN1cnJlbnQgc3dhcm0gc3Rh
-dHVzIG9mIHlvdXIgbm9kZQ0KDQpTb21lIGRlYnVnZ2luZyBpbmZvcm1hdGlv
-biBvZiBkb2NrZXIgZGFlbW9uLg0KICAgICAgICAtLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCnRp
-bWU9IjIwMTYtMDktMDFUMTE6MDc6MjEuMDMzMjA5MDI5KzA4OjAwIiBsZXZl
-bD1kZWJ1ZyBtc2c9Iigqc2Vzc2lvbikuc3RhcnQiIG1vZHVsZT1hZ2VudA0K
-dGltZT0iMjAxNi0wOS0wMVQxMTowNzoyNi4wNDM2NzEzOTkrMDg6MDAiIGxl
-dmVsPWVycm9yIG1zZz0iYWdlbnQ6IHNlc3Npb24gZmFpbGVkIiBlcnJvcj0i
-c2Vzc2lvbiBpbml0aWF0aW9uIHRpbWVkIG91dCIgbW9kdWxlPWFnZW50DQp0
-aW1lPSIyMDE2LTA5LTAxVDExOjA3OjI2LjA0MzcxNzI2NCswODowMCIgbGV2
-ZWw9ZGVidWcgbXNnPSJhZ2VudDogcmVidWlsZCBzZXNzaW9uIiBtb2R1bGU9
-YWdlbnQNCnRpbWU9IjIwMTYtMDktMDFUMTE6MDc6MjguOTMxNzI0MzMzKzA4
-OjAwIiBsZXZlbD1kZWJ1ZyBtc2c9Iigqc2Vzc2lvbikuc3RhcnQiIG1vZHVs
-ZT1hZ2VudA0KdGltZT0iMjAxNi0wOS0wMVQxMTowNzozMy45NDMwMjY2NjUr
-MDg6MDAiIGxldmVsPWVycm9yIG1zZz0iYWdlbnQ6IHNlc3Npb24gZmFpbGVk
-IiBlcnJvcj0ic2Vzc2lvbiBpbml0aWF0aW9uIHRpbWVkIG91dCIgbW9kdWxl
-PWFnZW50DQp0aW1lPSIyMDE2LTA5LTAxVDExOjA3OjMzLjk0MzQ3NDA1MSsw
-ODowMCIgbGV2ZWw9ZGVidWcgbXNnPSJhZ2VudDogcmVidWlsZCBzZXNzaW9u
-IiBtb2R1bGU9YWdlbnQNCuKApiDigKYNCiAgbm93IHRoYXQgd2UgY2Fu4oCZ
-dCBqb2luIHRoZSBzd2FybSBjbHVzdGVyLCBzbyBqdXN0IGxlYXZlIGl0LCAg
-YnV04oCmDQojIGRvY2tlciBzd2FybSBsZWF2ZSAtLWZvcmNlDQpFcnJvciBy
-ZXNwb25zZSBmcm9tIGRhZW1vbjogY29udGV4dCBkZWFkbGluZSBleGNlZWRl
-ZA0KDQogIE9rLCBub3RoaW5nIGNhbiBiZSBkb25lIHdpdGggc3dhcm0gbW9k
-ZSwgbmVpdGhlciBqb2luaW5nIG5vciBxdWl0aW5nDQoNClBsZWFzZSBhc3Np
-Z24gQ1ZFIElEcyBmb3IgdGhlIHNlY3VyaXR5IGlzc3VlID8NCg0KICBCZXN0
-IHJlZ2FyZHMmDQogIEthaXhpYW5nIFpoYW5nIG9mIHRoZSBDbG91ZCBTZWN1
-cml0eSBUZWFtLCBRaWhvbyAzNjANCg0K
+Qemu emulator built with the Luminary Micro Stellaris Ethernet Controller is 
+vulnerable to a buffer overflow issue. It could occur while receiving network 
+packets in stellaris_enet_receive(), if the guest NIC is configured to accept 
+large(MTU) packets.
 
---_000_5EDB84F4B23F5B4DB6500A89258280E0BEBCDBEX02corpqihoonet_--
+A remote user/process could use this flaw to crash the Qemu process on a host, 
+resulting in DoS.
+
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-04/msg01334.html
+
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1325884
+
+This issue was discovered by Oleksandr Bazhaniuk of Advanced Threat Research 
+team at Intel Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
