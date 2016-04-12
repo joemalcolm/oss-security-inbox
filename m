@@ -1,24 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/18
-Message-ID: <39a367af-c84d-01cb-36eb-6732edfbdac2@andrewg.com>
-Date: Thu, 18 Aug 2016 17:37:20 +0100
-From: Andrew Gallagher <andrewg@...rewg.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Libgcrypt and GnuPG 1.4 RNG output prediction
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/12/6
+Message-Id: <20160412113733.EA7506C0082@smtpvmsrv1.mitre.org>
+Date: Tue, 12 Apr 2016 07:37:33 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, oleksandr.bazhaniuk@...el.com
+Subject: Re: CVE request: Qemu: net: buffer overflow in stellaris_enet emulator
 Content-Type: text/plain; charset=utf-8
 
-On 17/08/16 19:32, Werner Koch wrote:
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Well this is an interesting glitch.
+> Qemu emulator built with the Luminary Micro Stellaris Ethernet Controller is
+> vulnerable to a buffer overflow issue. It could occur while receiving network
+> packets in stellaris_enet_receive(), if the guest NIC is configured to accept
+> large(MTU) packets.
+> 
+> A remote user/process could use this flaw to crash the Qemu process on a host,
+> resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-04/msg01334.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1325884
+> http://git.qemu.org/?p=qemu.git;a=commit;h=3a15cc0e1ee7168db0782133d2607a6bfa422d66
 
-Werner used PGP/MIME, but something appears to have deleted the first
-mime-boundary, rendering the message unparseable. If you view the
-source you can see the plaintext, but MIME mail clients (including the
-openwall mailing list archive) can't.
+Use CVE-2016-4001.
 
-A
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+iQIcBAEBCAAGBQJXDN1qAAoJEL54rhJi8gl5hf8P/A+5Vn01oCk1xlc8z4he/gN6
+4LJ95B1hUQKaIestlMoKghcO/xbOhiYb84Yb47+iBbQopHVL5PsW5/aGSM6dwlPS
+Kw+VMM0EJjveTDy/cY47IEBCrghcKeoE1PPmgzMBGI9lzMgYRI8atQkyBxG1dHSb
+I1UxOursYDnVN+xdn/qYRYrOVzqgfb8pvEQ4TBXemrCvHCdYJndEBSFoePWVIN3m
+C4d/nRmncflKdm61P+q/7R1NrYcvunky1xR4rIKsTfZbnNVcdvDmQ7EDqdFyF3VL
+OWtiOFfwgn+cp2047RgRGecsdYSs7oCsdS9xmoAFLYYyBKHN1Z0Eh8I/+FY6Deby
+lyyfPPkS+ruJMAmuBIySGNhj+leyFM1JQ8mCgpQt29Hx20/uPmjtb2bwlUiO4WPC
+qfgqLE5QKwycMsvHgenG3v7BxXsBrlxEd6e3w44Vegl2rNHJLZxRvaYFNy0pKG4J
+RXYglpULTs8n9whj9ULWiS5hCyXrHMpz9HNtMGomUnQT1YB2EYvVJZDc54/Ff8nZ
+m06EPebckrb+696feEqTDBCoNPyj//AvII5kJyFuJyN1ZjsmHmN5mr2ycHUXmvrm
+dAYUM2wGxiERaeKFGEs2AF7vQU78UNB5CoE+TJT/Ge1dAs3zwSY0HaciwQ30Np2A
+R82cpClaOw8Zl6bghbmF
+=1M6c
+-----END PGP SIGNATURE-----
