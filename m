@@ -1,51 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/20/3
-Message-Id: <20160920190834.6093EABC04D@smtpvmsrv1.mitre.org>
-Date: Tue, 20 Sep 2016 15:08:34 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE Request Qemu: usb: xhci memory leakage during device unplug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/12/2
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0B9BCD9@EX02.corp.qihoo.net>
+Date: Tue, 12 Apr 2016 07:19:43 +0000
+From: 张开翔 <zhangkaixiang@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-3990 : out-of-bounds write in horizontalDifference8() in tiffcp tool
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Details
 
-> Quick Emulator(Qemu) built with the USB xHCI controller emulation support is
-> vulnerable to a memory leakage issue. It could occur while doing a USB device
-> unplug operation; Doing so repeatedly would result in leaking host memory,
-> affecting other services on the host.
-> 
-> A privileged user inside guest could use this flaw to cause a DoS on the host
-> and/or potentially crash the Qemu process instance on the host.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg02773.html
-> http://git.qemu.org/?p=qemu.git;a=commit;h=b53dd4495ced2432a0b652ea895e651d07336f7e
-> 
-> If the xhci uses msix, it doesn't free the corresponding
-> memory, thus leading a memory leak. This patch avoid this.
+============
 
-Use CVE-2016-7466.
+Product: libtiff
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Affected Versions: <= 4.0.6
 
-iQIcBAEBCAAGBQJX4YgUAAoJEHb/MwWLVhi2ggQP/2DNMvmdNLOKphMe5SZwN1OG
-pYSTUN1hLW4abmL3deZExJCf/zVnF70tCcussvYPVi2TvheXLefPBeuMVoUAktm1
-1CdkDzpdQf/C+Ht48c2W/dh5LVvT90/ZQR/t7rKfttcM8efHjWFnCoYsgewyrTbv
-iZyVKCHG1Ww0Mobjh19eLKgwymCAF4fjT5bY8IItwCyNOXfj+MiKh4lH31Ja3RBw
-7jfJFfxRjjUippAukxuZ70EOlyGPxWO8Ln6/w2NVHYNPWKzjakc+8vXlv7bZi0bZ
-boJOPrVeoyGoQsoqDwshfOv7TSmvz2edCvn9zbL2I07Je8tn4goY02MLB0sxOS89
-dlasZ0MPEsmG+OrtDKDQ8C+tPAkXZ9egbFitp+bPSiFB8cLN3LyE99vhzIVe+IEZ
-jizMhnbGOpmLyXjDb7CfoCoZXbOxD4KHaSpLj1kS+tCdyWTRANoRccOVgMNOEnXL
-3568h8XWTLQ3tyUwEuRqeTSu889iBM453JwSGvWYxC8wyBHxI64uXddwsfHqrljF
-nM++SLFhiVouccTBOdG5My7KBoRKlK5nQ0/stiXU9ACFPuLnnbR+iDqrdBwEW6jR
-ycD6fgB3i0c6NXs17pWBGQup89UPpJjdEYFiukr1g0dUIH0u1Adf7EuzW9U+amJq
-QqiwCA/ontAPMEBeCNxA
-=RuAu
------END PGP SIGNATURE-----
+CVE ID: CVE-2016-3990
+
+Tested system: CentOS Linux release 7.1.1503 64bit
+
+Vulnerability Type: out-of-bounds write
+Vendor URL: http://www.remotesensing.org/libtiff/
+
+Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
+
+
+
+Introduction
+
+============
+
+An out-of-bounds write flaw was found in libtiff v4.0.6 when using tiffcp command to handle malicious tiff file. The vulnerability exist in function horizontalDifference8()
+
+without checking the buffer length.An attacker could control the head data of next heap which contains pre_size field and size filed to result in DoS or may command execution..
+
+
+Source info
+
+============
+1082           wp += n + stride - 1;     /* point to last one */
+1083           ip += n + stride - 1;       /* point to last one */
+1084           n -= stride;
+1085           while (n > 0) {
+1086              REPEAT(stride, wp[0] = CLAMP(ip[0]);
+1087                            wp[stride] -= wp[0];
+1088                            wp[stride] &= mask;
+1089                            wp--; ip--)
+1090              n -= stride;
+1091           }
+1092           REPEAT(stride, wp[0] = CLAMP(ip[0]); wp--; ip--)
+
+
+Debug info
+
+============
+gdb �Cargs ./tiffcp poc.tif src1.tif tmpout.tif
+--- --- ---
+Program received signal SIGSEGV, Segmentation fault.
+0x00007ffff6f943b9 in _int_free () from /lib64/libc.so.6
+(gdb) bt
+#0  0x00007ffff6f943b9 in _int_free () from /lib64/libc.so.6
+#1  0x00007ffff7a52721 in TIFFClose (tif=tif@...ry=0x625930) at tif_close.c:128
+#2  0x0000000000405160 in main (argc=3, argv=0x7fffffffe3b8) at tiffcp.c:305
+(gdb) x/2xg 0x625930-0x10
+0x625920:        0x00000000000000f0      0x0000000000000450
+(gdb) x/2xg 0x625930-0x10-0xf0
+0x625830:       0x0000000000040004     0x0000000003370424
+
+References:
+[1] http://www.remotesensing.org/libtiff/
+
+
+Thank you!
+
+Best Regards,
+
+Kaixiang Zhang
+--- ---
