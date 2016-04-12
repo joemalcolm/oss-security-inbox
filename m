@@ -1,41 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/10
-Message-Id: <20161016025812.1F72742E008@smtpvbsrv1.mitre.org>
-Date: Sat, 15 Oct 2016 22:58:12 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: potrace: memory allocation failure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/12/5
+Message-ID: <20160412091406.GB24278@beta.private.mielke.cc>
+Date: Tue, 12 Apr 2016 05:14:06 -0400
+From: Dave Mielke <dave@...lke.cc>
+To: Sebastian Krahmer <krahmer@...e.com>
+Cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE-Request for brltty auth bypass
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+[quoted lines by Sebastian Krahmer on 2016/04/12 at 09:49 +0200]
 
-> https://blogs.gentoo.org/ago/2016/08/29/potrace-memory-allocation-failure
+>I already contacted upstream (Cc) but so far no response.
 
-> AddressSanitizer failed to allocate 0x200003000 bytes of LargeMmapAllocator
+I'm just awaiting the patch to be actually tested. It'll certainly be included 
+as soon as I'm informed that the test has been successful. I apreciate your 
+patch, and am also sure that you can appreciate my wanting to wait for it to be 
+tested.
 
-Use CVE-2016-8686.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYAud7AAoJEHb/MwWLVhi2mLoP+gOHwdcHB9ST9f6s+cXdsw5L
-CNiHdy5X+nYHsvDCYqZq8v5x+wCcSzAKzdMyU/VhWMQVLWMKNKXfL+qm/EI67L9m
-+7CG8d0G1pWuES1ynTn078ZS/wxIkudo5keiyCWGLl6ckJp0YLcQhCVC1fARNh9T
-5bTetm3By5PzKGxvQO0NOOHo53Tn3bTZSf30fXqwb/qce2boMw1uD0eupRkqEwtN
-jGLQYVN+31RvhJe42ojZU3NaB7XOhxZURrejLVjgjp8hSOAvSKsqP4AsECO8Dckv
-9/MVc+duI35gecZ8gZHjPiMt1mlDvJrG+5fPXnbL0g7IG4VOiwCrzVkxiRGTsyE7
-Dcy/JGivXOZmq2ZzB6sWT7jvKVne9/5eOKTl40ldv0Gl4XnEgoKr8lADEA8C5/5p
-8+yWIj/wpap5TES5k32Yh24jkEYtOTxPwkwIvIZxIfyGqT2Tx/vG20EML7nC+gXd
-fxjUrXuHIjwFoBxQ7tzArv4V9/zheGVXozTjvKoNRYkzpHcE33Q9zDIBy9dUTdkL
-/8AALluIu/CQo3Rmfw//6IOVCUXCWmqyj1dWTJNI6Y9Cn7uyKmnDAhbwO82xC9NE
-4FOu0TtpHWqsFQeSNbAjK7RK0bM8oFK9zK0ECUzFkci5b9HqIWn8XluBPn//exQt
-DC56la9Lf9FJgtXtaUa0
-=PZwg
------END PGP SIGNATURE-----
+-- 
+Dave Mielke           | 2213 Fox Crescent | The Bible is the very Word of God.
+Phone: 1-613-726-0014 | Ottawa, Ontario   | http://Mielke.cc/bible/
+EMail: Dave@...lke.cc | Canada  K2A 1H7   | http://FamilyRadio.org/
