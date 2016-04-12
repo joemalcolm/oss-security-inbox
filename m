@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3691" "Monday" "6" "July" "2015" "22:57:07" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150707025707.0A6BD6C0020@smtpvmsrv1.mitre.org>" "98" "[oss-security] Re: CVE request for vulnerabilities fixed in roundcubemail 1.1.2 and 1.0.6" nil nil nil "7" "2015070702:57:07" "[oss-security] Re: CVE request for vulnerabilities fixed in roundcubemail 1.1.2 and 1.0.6" (number mark "U       cve-assign@m Jul  6   98/3691  " thread-indent "\"[oss-security] Re: CVE request for vulnerabilities fixed in roundcubemail 1.1.2 and 1.0.6\"\n") "<559A726C.9060904@suse.de>" ("<559A726C.9060904@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2908" "Tuesday" "12" "April" "2016" "07:19:43" "+0000" "=?gb2312?B?1cU=?==?gb2312?B?v6rP6A==?=" "zhangkaixiang@360.cn" "<5EDB84F4B23F5B4DB6500A89258280E0B9BCD9@EX02.corp.qihoo.net>" "51" "[oss-security] CVE-2016-3990 : out-of-bounds write in horizontalDifference8() in tiffcp tool" nil nil nil "4" "2016041207:19:43" "[oss-security] CVE-2016-3990 : out-of-bounds write in horizontalDifference8() in tiffcp tool" (number mark "U       zhangkaixian Apr 12   51/2908  " thread-indent "\"[oss-security] CVE-2016-3990 : out-of-bounds write in horizontalDifference8() in tiffcp tool\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25672 invoked by uid 550); 7 Jul 2015 02:57:18 -0000
+Received: (qmail 11634 invoked by uid 550); 12 Apr 2016 07:21:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,110 +12,73 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25654 invoked from network); 7 Jul 2015 02:57:17 -0000
-From: cve-assign@mitre.org
-To: astieger@suse.de
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <559A726C.9060904@suse.de>
-Message-Id: <20150707025707.0A6BD6C0020@smtpvmsrv1.mitre.org>
-Date: Mon,  6 Jul 2015 22:57:07 -0400 (EDT)
-Subject: [oss-security] Re: CVE request for vulnerabilities fixed in roundcubemail 1.1.2 and 1.0.6
+Received: (qmail 10146 invoked from network); 12 Apr 2016 07:20:00 -0000
+From: =?gb2312?B?1cW/qs/o?= <zhangkaixiang@360.cn>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: CVE-2016-3990 : out-of-bounds write in horizontalDifference8()
+ in tiffcp tool
+Thread-Index: AdGUi0xnbfbaVjpgQN6uMYDKaLUGLw==
+Date: Tue, 12 Apr 2016 07:19:43 +0000
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0B9BCD9@EX02.corp.qihoo.net>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.18.25.62]
+Content-Type: multipart/alternative;
+	boundary="_000_5EDB84F4B23F5B4DB6500A89258280E0B9BCD9EX02corpqihoonet_"
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2016-3990 : out-of-bounds write in horizontalDifference8() in
+ tiffcp tool
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--_000_5EDB84F4B23F5B4DB6500A89258280E0B9BCD9EX02corpqihoonet_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-> From https://roundcube.net/news/2015/06/05/updates-1.1.2-and-1.0.6-released/
+RGV0YWlscw0KDQo9PT09PT09PT09PT0NCg0KUHJvZHVjdDogbGlidGlmZg0K
+DQpBZmZlY3RlZCBWZXJzaW9uczogPD0gNC4wLjYNCg0KQ1ZFIElEOiBDVkUt
+MjAxNi0zOTkwDQoNClRlc3RlZCBzeXN0ZW06IENlbnRPUyBMaW51eCByZWxl
+YXNlIDcuMS4xNTAzIDY0Yml0DQoNClZ1bG5lcmFiaWxpdHkgVHlwZTogb3V0
+LW9mLWJvdW5kcyB3cml0ZQ0KVmVuZG9yIFVSTDogaHR0cDovL3d3dy5yZW1v
+dGVzZW5zaW5nLm9yZy9saWJ0aWZmLw0KDQpDcmVkaXQ6IEthaXhpYW5nIFpo
+YW5nIG9mIHRoZSBDbG91ZCBTZWN1cml0eSBUZWFtLCBRaWhvbyAzNjANCg0K
+DQoNCkludHJvZHVjdGlvbg0KDQo9PT09PT09PT09PT0NCg0KQW4gb3V0LW9m
+LWJvdW5kcyB3cml0ZSBmbGF3IHdhcyBmb3VuZCBpbiBsaWJ0aWZmIHY0LjAu
+NiB3aGVuIHVzaW5nIHRpZmZjcCBjb21tYW5kIHRvIGhhbmRsZSBtYWxpY2lv
+dXMgdGlmZiBmaWxlLiBUaGUgdnVsbmVyYWJpbGl0eSBleGlzdCBpbiBmdW5j
+dGlvbiBob3Jpem9udGFsRGlmZmVyZW5jZTgoKQ0KDQp3aXRob3V0IGNoZWNr
+aW5nIHRoZSBidWZmZXIgbGVuZ3RoLkFuIGF0dGFja2VyIGNvdWxkIGNvbnRy
+b2wgdGhlIGhlYWQgZGF0YSBvZiBuZXh0IGhlYXAgd2hpY2ggY29udGFpbnMg
+cHJlX3NpemUgZmllbGQgYW5kIHNpemUgZmlsZWQgdG8gcmVzdWx0IGluIERv
+UyBvciBtYXkgY29tbWFuZCBleGVjdXRpb24uLg0KDQoNClNvdXJjZSBpbmZv
+DQoNCj09PT09PT09PT09PQ0KMTA4MiAgICAgICAgICAgd3AgKz0gbiArIHN0
+cmlkZSAtIDE7ICAgICAvKiBwb2ludCB0byBsYXN0IG9uZSAqLw0KMTA4MyAg
+ICAgICAgICAgaXAgKz0gbiArIHN0cmlkZSAtIDE7ICAgICAgIC8qIHBvaW50
+IHRvIGxhc3Qgb25lICovDQoxMDg0ICAgICAgICAgICBuIC09IHN0cmlkZTsN
+CjEwODUgICAgICAgICAgIHdoaWxlIChuID4gMCkgew0KMTA4NiAgICAgICAg
+ICAgICAgUkVQRUFUKHN0cmlkZSwgd3BbMF0gPSBDTEFNUChpcFswXSk7DQox
+MDg3ICAgICAgICAgICAgICAgICAgICAgICAgICAgIHdwW3N0cmlkZV0gLT0g
+d3BbMF07DQoxMDg4ICAgICAgICAgICAgICAgICAgICAgICAgICAgIHdwW3N0
+cmlkZV0gJj0gbWFzazsNCjEwODkgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgd3AtLTsgaXAtLSkNCjEwOTAgICAgICAgICAgICAgIG4gLT0gc3RyaWRl
+Ow0KMTA5MSAgICAgICAgICAgfQ0KMTA5MiAgICAgICAgICAgUkVQRUFUKHN0
+cmlkZSwgd3BbMF0gPSBDTEFNUChpcFswXSk7IHdwLS07IGlwLS0pDQoNCg0K
+RGVidWcgaW5mbw0KDQo9PT09PT09PT09PT0NCmdkYiCoQ2FyZ3MgLi90aWZm
+Y3AgcG9jLnRpZiBzcmMxLnRpZiB0bXBvdXQudGlmDQotLS0gLS0tIC0tLQ0K
+UHJvZ3JhbSByZWNlaXZlZCBzaWduYWwgU0lHU0VHViwgU2VnbWVudGF0aW9u
+IGZhdWx0Lg0KMHgwMDAwN2ZmZmY2Zjk0M2I5IGluIF9pbnRfZnJlZSAoKSBm
+cm9tIC9saWI2NC9saWJjLnNvLjYNCihnZGIpIGJ0DQojMCAgMHgwMDAwN2Zm
+ZmY2Zjk0M2I5IGluIF9pbnRfZnJlZSAoKSBmcm9tIC9saWI2NC9saWJjLnNv
+LjYNCiMxICAweDAwMDA3ZmZmZjdhNTI3MjEgaW4gVElGRkNsb3NlICh0aWY9
+dGlmQGVudHJ5PTB4NjI1OTMwKSBhdCB0aWZfY2xvc2UuYzoxMjgNCiMyICAw
+eDAwMDAwMDAwMDA0MDUxNjAgaW4gbWFpbiAoYXJnYz0zLCBhcmd2PTB4N2Zm
+ZmZmZmZlM2I4KSBhdCB0aWZmY3AuYzozMDUNCihnZGIpIHgvMnhnIDB4NjI1
+OTMwLTB4MTANCjB4NjI1OTIwOiAgICAgICAgMHgwMDAwMDAwMDAwMDAwMGYw
+ICAgICAgMHgwMDAwMDAwMDAwMDAwNDUwDQooZ2RiKSB4LzJ4ZyAweDYyNTkz
+MC0weDEwLTB4ZjANCjB4NjI1ODMwOiAgICAgICAweDAwMDAwMDAwMDAwNDAw
+MDQgICAgIDB4MDAwMDAwMDAwMzM3MDQyNA0KDQpSZWZlcmVuY2VzOg0KWzFd
+IGh0dHA6Ly93d3cucmVtb3Rlc2Vuc2luZy5vcmcvbGlidGlmZi8NCg0KDQpU
+aGFuayB5b3UhDQoNCkJlc3QgUmVnYXJkcywNCg0KS2FpeGlhbmcgWmhhbmcN
+Ci0tLSAtLS0NCg==
 
-> Fix XSS vulnerability in _mbox argument handling
-> http://trac.roundcube.net/ticket/1490417
-> 
-> The XSS vulnerability can be triggered by appending malicious script
-> code to the _mbox parameter.
-> 
-> https://{YOURSERVER}/?_task=mail&_mbox=[XSS]
-> 
-> Commit:
-> 1.1: http://trac.roundcube.net/changeset/b782815dac/github
-> Not claimed to affect 1.0.
-
-Use CVE-2015-5381.
-
-
-> Fix security issue in contact photo handling
-> http://trac.roundcube.net/ticket/1490379
-> 
-> There is a potential for an arbitrary read from an authenticated user
-> who uploads a contact (vCard) with a specially crafted POST.
-> [...]
-> by supplying the "_alt" param in the POST. User must be authenticated.
-> [...]
-> I was able to read any file on disk (the apache has access to, e.g.
-> config/config.inc.php) using GET request
-> 
-> Commits:
-> 1.1: http://trac.roundcube.net/changeset/681ba6fc3/github
-> 1.0: http://trac.roundcube.net/changeset/6ccd4c54b/github
-
-Use CVE-2015-5382. For 1.1, the security fix for _alt seems to be
-announced in http://trac.roundcube.net/changeset/e84fafcec/github --
-do you mean that part of the _alt vulnerability was fixed in
-http://trac.roundcube.net/changeset/681ba6fc3/github and then a
-different part of the _alt vulnerability was fixed in
-http://trac.roundcube.net/changeset/e84fafcec/github (if so, then
-there would potentially be another CVE ID)?
-
-
-> Fix potential info disclosure issue by protecting directory access
-> http://trac.roundcube.net/ticket/1490378
-> 
-> The logs directory is not protected from browsing. Most log entries are
-> not bad, but one became evident on my host that was pretty nasty.
-> 
-> It looked like the following:
-> 
-> [25-Apr-2015 04:03:11 -0400]: <ijpv9kqo> DB Error: [1062]
->   Duplicate entry 'ijpv9kqofvpksxxxxxxxxxxxx' for key 'PRIMARY' (SQL Query: INSERT INTO `session` (`sess_id`
-> 
-> I obfuscated the sensitive fields, but this would be enough for a
-> non-credential user to view the file (via the webroot/logs/errors file),
-> and then replace their own cookies with the entry from above to log in
-> as a user that was listed there.
-> 
-> This seems to be a very rare occurrence, but considering that other
-> SQL/other actions might report other sensitive data into this file, it
-> might be worth automatically protecting this directory with an .htaccess
-> file, or prepending a php tag to avoid overt reading by any
-> unauthenticated user.
-> 
-> Commits:
-> http://trac.roundcube.net/changeset/012555c1c/github
-> 1.1: http://trac.roundcube.net/changeset/16640c7fb0c8/github
-> Not claimed to affect 1.0.
-
->> Add .htaccess files to deny access to config, temp, logs
-
-Use CVE-2015-5383. Note that
-http://trac.roundcube.net/browser/github/INSTALL states:
-
-  REQUIREMENTS
-  * .htaccess support allowing overrides for DirectoryIndex
-
-Thus, we wouldn't want to have a separate CVE ID for a scenario in
-which someone attempts to use Roundcube with nginx.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVmz8CAAoJEKllVAevmvmsLckIAL47aKRrnOeVXtXHMTUf+6/z
-w7Q6yHbobqqZRCd5eoXjS6eZZynhivrU07M78N9CBTGbDeIQW2HgKN9O0y/dXpsJ
-gRSzYxYDI/ZmZOPpzgVz8fdnShMSgBllTw7aW3LtzopLcQr1QBJ/j0JGp/CIyoPK
-dRV8uRVkiiM186+qQ87smaihvRf8kzjGVFb3+1xMmv2wJiTYO+0WG1efvBCEpwL+
-wOayt6VNgKPrr0MCdopzbng91YPPgyOmGPZnfPRS1iyFxvXJaFSU2BeYs8NVpXtl
-wXJc9Fe45Vn/6Rjo+uIIgai32Qk3+H23sE+Rki0eHjF8V3nUIBidH0SByBZslUY=
-=6Mwi
------END PGP SIGNATURE-----
+--_000_5EDB84F4B23F5B4DB6500A89258280E0B9BCD9EX02corpqihoonet_--
