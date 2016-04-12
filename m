@@ -1,19 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/09/5
-Message-Id: <E1adjOu-0005MK-Kx@rmm6prod02.runbox.com>
-Date: Wed, 09 Mar 2016 14:04:04 -0500 (EST)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-CC: "kseifried" <kseifried@...hat.com>
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/12/4
+Message-ID: <20160412074937.GA30265@suse.de>
+Date: Tue, 12 Apr 2016 09:49:37 +0200
+From: Sebastian Krahmer <krahmer@...e.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org, dave@...lke.cc
+Subject: CVE-Request for brltty auth bypass
 Content-Type: text/plain; charset=utf-8
 
-All - I've chatted with some of the people who fund the CVE work at MITRE.
-I've learned that CVEs *are* being issued, but obviously that is happening too slowly.
+Hi
 
-They're having a meeting tomorrow (March 10) to try to figure out what
-the problems are and how to fix it.  I don't know what they'll do.
-However, I'm hopeful that  this will mean that the CVE work will get
-back on track soon.
+brltty is using polkit to control access to system ressources
+("Write to the braille display").
+It is doing so by using the PID of the process connecting
+to the server socket. This is racy. The unix polkit subject
+is deprecated, but if its used, the UID should be specified
+as well, so it doesnt get looked up in /proc.
 
---- David A. Wheeler
+I already contacted upstream (Cc) but so far no response.
+You can find my (untested) proposed patch at:
+
+https://bugzilla.suse.com/show_bug.cgi?id=967436
+
+Its probably not the worst issue, but should be fixed
+nevertheless.
+
+Sebastian
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.com - SuSE Security Team
+
