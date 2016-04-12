@@ -1,29 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/19/2
-Message-ID: <d5b78405-740d-9ad8-3468-ebf402ed9237@securify.nl>
-Date: Sat, 19 Nov 2016 11:50:40 +0100
-From: Summer of Pwnage <lists@...urify.nl>
-To: oss-security@...ts.openwall.com
-Subject: Multiple XSS vulnerabilities affecting five WordPress Plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/12/7
+Message-Id: <20160412114157.5C4CD332042@smtpvbsrv1.mitre.org>
+Date: Tue, 12 Apr 2016 07:41:57 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, oleksandr.bazhaniuk@...el.com
+Subject: Re: CVE Request: Qemu: net: buffer overflow in MIPSnet emulator
 Content-Type: text/plain; charset=utf-8
 
-Please see attached advisories for more information. These issues were 
-found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
-project. Its goal is to contribute to the security of popular, widely 
-used OSS projects in a fun and educational way.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+> Qemu emulator built with the MIPSnet controller emulator is vulnerable to a
+> buffer overflow issue. It could occur while receiving network packets in
+> mipsnet_receive(), if the guest NIC is configured to accept large(MTU)
+> packets.
+> 
+> A remote user/process could use this flaw to crash the Qemu process on a host,
+> resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-04/msg01131.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1326082
 
+Use CVE-2016-4002.
 
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/mipsnet.c but
+that may be an expected place for a later update.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-
-View attachment "cross_site_scripting_in_all_in_one_wp_security___firewall_wordpress_plugin.txt" of type "text/plain" (4183 bytes)
-
-View attachment "cross_site_scripting_in_check_email_wordpress_plugin.txt" of type "text/plain" (4608 bytes)
-
-View attachment "cross_site_scripting_in_huge_it_portfolio_gallery_wordpress_plugin.txt" of type "text/plain" (3864 bytes)
-
-View attachment "persistent_cross_site_scripting_in_instagram_feed_plugin_via_csrf.txt" of type "text/plain" (6473 bytes)
-
-View attachment "stored_cross_site_scripting_in_wp_canvas___shortcodes_wordpress_plugin.txt" of type "text/plain" (3329 bytes)
+iQIcBAEBCAAGBQJXDN1xAAoJEL54rhJi8gl5ry0P/jlvWbrq0ApLur2hfkVyI7OC
+mWpOzrpRMpdonxLuRamQ1iESb7xh0hz4GL1KsBw9opthx6Cciry6gMCqWcPR7wbF
+GpxtUu5VbdkmKkXq4XQ6fiXEYBJgw0C0veGSBWLWzZRZJ7x/ty5UpepDG6r6jeX3
+hJiZMXfr03yfr8hh5jYdKBzr9HgLoqPt3Ra2KvmAh6FxlR7RT15i8hrMSHe7ZJcI
+89ZUhi0wgmgwejpjajIGvM3yRhUsFbw7MbvT4559cdoA3SL6zft93YGVnpUV9T7i
+T9j0loFjvFGb9gbO8QvOWzTQBsRpCl4U5Y/iCNGn/vRMcXQGHPluhkX9jMTThAd1
+BjKpGkcqBAnq7/fCG25O9BcEju7vvUHUkFlK7f8kGiHycPumPo9KALDcngIRVH7p
+xpM8roLcR4zLLVEnPXwVfWJGBL6tWAmP2RXhg31T6eL9X6iSOuT04GIo5I0KsT9F
+FJg7Ds0pKjqCR9XGh9Cdk1L3RZuUjPeGkPDIDwPORAtwua4V70TY+H76T1fcq3Os
+/DTgDukCB6ON2vHMaoIAFRUFwUo7Jrx60iakD3LfgnGzlQrQ0gwP0Cs8Z58uITzS
+oRwvHTeER1IQv9qhYotPJ0KstRVDfCKsn+QoS+dap1tzYFbsadzByM2u+lcb4ej0
+i3Sdbgv4KP8ADHtv5jB6
+=Q3kp
+-----END PGP SIGNATURE-----
