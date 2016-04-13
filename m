@@ -1,4 +1,9 @@
-Received: (qmail 12019 invoked by uid 550); 18 Aug 2022 07:26:26 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1094" "Wednesday" "13" "April" "2016" "21:18:16" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhSGK2YxVqSz3zKJRbd1_mL1Yso_SUFE_5ZZ9-QKVD25Tg@mail.gmail.com>" "29" "[oss-security] CVE Request: Linux kernel: incorrect restoration of machine specific registers from signal handler." nil nil nil "4" "2016041311:18:16" "[oss-security] CVE Request: Linux kernel: incorrect restoration of machine specific registers from signal handler." (number mark "U       wmealing@red Apr 13   29/1094  " thread-indent "\"[oss-security] CVE Request: Linux kernel: incorrect restoration of machine specific registers from signal handler.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 23969 invoked by uid 550); 13 Apr 2016 11:18:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,42 +12,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22225 invoked from network); 17 Aug 2022 20:43:06 -0000
-Authentication-Results: apache.org; auth=none
-X-Gm-Message-State: ACgBeo2C3i2u27WD0eAR+BEwOnBMYsTJ2Wl7YA5MX8vtRNLCO7xQKqbq
-	/uNh2yt6vvtrticNoBG1K4waEbfPwpmC01KKEqUVXQ==
-X-Google-Smtp-Source: AA6agR7DM0s+nWK1h7psoaYIuYnBipdTMNBV9oSBXTtBMWWlaFUO+x7571+/YYLd+FPD5NlsVUH5uKiJLdaB2y3uAS0=
-X-Received: by 2002:a05:622a:1ba4:b0:344:57a4:7f4c with SMTP id
- bp36-20020a05622a1ba400b0034457a47f4cmr20633qtb.146.1660768955362; Wed, 17
- Aug 2022 13:42:35 -0700 (PDT)
+Received: (qmail 23948 invoked from network); 13 Apr 2016 11:18:28 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
+        bh=E8VyFJbPBzf7RtF+G/ZfNOYOZ2Zw21ej46mtMtbV55A=;
+        b=PZn9AyLSXnhhWCSUhiixy1dov3I4HNLfvtAwU322sygIyoowKqjfJU2eYf4LpI88gL
+         T7imB3yAz3pOQ1A8xuXJ4m4HdNN3TF0TSkEk38q4iMMMhr+dm9p7itbfT2tve/qFKBCe
+         rl7Bn98uaJFAfLvDAOqyz/jqLfi7CzFu/qUXvsNH7rmbtD4hevUbZ+PFSAgDvn3NecDg
+         Z86FN6YFLncsRgm/355+Y95mX4lxw+OhZQfbSbmNVUt8XkWWcPxaMgoW1Eav651rYrRX
+         iZljQ2X9BzpP2UCHFYcXfRmtxeHKxZ59ZHkwJ1Csqo2KqTueNAXQMLg8x/LqNoJO0rAn
+         r6xw==
+X-Gm-Message-State: AOPr4FXyCyojrAALWgQdmwKiAzwAbHtW+qyj2C2wxNwK+TxylfMuwyfqyjY22cIAFkm6/Y3jR6ar/pKwpNsVKqjH
 MIME-Version: 1.0
-From: Justin Bertram <jbertram@apache.org>
-Date: Wed, 17 Aug 2022 15:42:09 -0500
-X-Gmail-Original-Message-ID: <CAF+kE=S3-PVFZA2zGQBBuFsAsosXwZ04ONy3g10-SJqGCZywEQ@mail.gmail.com>
-Message-ID: <CAF+kE=S3-PVFZA2zGQBBuFsAsosXwZ04ONy3g10-SJqGCZywEQ@mail.gmail.com>
-To: dev@activemq.apache.org, users@activemq.apache.org, 
-	Apache Security Team <security@apache.org>, oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000a3855f05e675e7da"
-Subject: [oss-security] CVE-2022-35278: Apache ActiveMQ Artemis: HTML Injection in ActiveMQ
- Artemis Web Console
+X-Received: by 10.194.112.167 with SMTP id ir7mr8958788wjb.14.1460546296816;
+ Wed, 13 Apr 2016 04:18:16 -0700 (PDT)
+Date: Wed, 13 Apr 2016 21:18:16 +1000
+Message-ID: <CALJHwhSGK2YxVqSz3zKJRbd1_mL1Yso_SUFE_5ZZ9-QKVD25Tg@mail.gmail.com>
+From: Wade Mealing <wmealing@redhat.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] CVE Request: Linux kernel: incorrect restoration of machine specific
+ registers from signal handler.
 
---000000000000a3855f05e675e7da
-Content-Type: text/plain; charset="UTF-8"
+A flaw was found in the linux kernel which could cause a kernel panic
+when restoring machine specific registers on ppc platform.  Incorrect
+transactional memory state registers could inadvertently change the
+call path on return from userspace and cause the kernel to enter an
+unknown state in the transactional memory handling code and panic in a
+BUG_ON() defensively.
 
-Description:
+QMEU guests can also modify the same machine specific register values
+via set_one_reg and guests may invoke the same unknown state and
+callpath.  Since the fix is in the same location I would argue that
+this is the same flaw.
 
-An attacker could show malicious content and/or redirect users to a
-malicious URL in the web console by using HTML in the name of an address or
-queue.
+This only both big endian and little endian ppc platforms, it does not
+affect non powerpc platforms.
 
-Mitigation:
+Thanks,
 
-Upgrade to Apache ActiveMQ Artemis 2.24.0.
+Wade Mealing
+Red Hat Product Security
 
-Credit:
+References:
 
-Apache ActiveMQ would like to thank Yash Pandya (Digital14), Rajatkumar
-Karmarkar (Digital14), and Likhith Cheekatipalle (Digital14) for reporting
-this issue.
+Upstream fixes:
+https://git.kernel.org/cgit/linux/kernel/git/powerpc/linux.git/commit/?h=fixes&id=d2b9d2a5ad5ef04ff978c9923d19730cb05efd55
 
---000000000000a3855f05e675e7da--
+https://git.kernel.org/cgit/linux/kernel/git/powerpc/linux.git/commit/?h=fixes&id=7f821fc9c77a9b01fe7b1d6e72717b33d8d64142
+
+Red Hat Bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=1326540
