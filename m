@@ -1,72 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/26/11
-Message-Id: <20160726213218.C0BD36C49F4@smtpvmsrv1.mitre.org>
-Date: Tue, 26 Jul 2016 17:32:18 -0400 (EDT)
-From: cve-assign@...re.org
-To: franco.costantini.20@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, gustavo.grieco@...g.fr
-Subject: Re: CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/13/1
+Message-ID: <CALJHwhSGK2YxVqSz3zKJRbd1_mL1Yso_SUFE_5ZZ9-QKVD25Tg@mail.gmail.com>
+Date: Wed, 13 Apr 2016 21:18:16 +1000
+From: Wade Mealing <wmealing@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Linux kernel: incorrect restoration of machine specific registers from signal handler.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+A flaw was found in the linux kernel which could cause a kernel panic
+when restoring machine specific registers on ppc platform.  Incorrect
+transactional memory state registers could inadvertently change the
+call path on return from userspace and cause the kernel to enter an
+unknown state in the transactional memory handling code and panic in a
+BUG_ON() defensively.
 
-> A write out-of-bounds parsing an ico file was found in gdk-pixbuf 2.30.7.
->  #0  0x00007fffd83b428c in OneLine32 (context=0x7fffe0029820) at io-ico.c:589
->  #1  OneLine (context=0x7fffe0029820) at io-ico.c:800
->  #2  gdk_pixbuf__ico_image_load_increment (data=0x7fffe0029820,
->      buf=0x7fffe001b852 "", size=0, error=0x7fffe9655b68) at io-ico.c:891
-> 
-> The affected function is here:
-> 
->  static void OneLine32 (struct ico_progressive_state *context)
-> {
->         gint X;
->         guchar *Pixels;
-> 
->         X = 0;
->         if (context->Header.Negative == 0)
->                 Pixels = (context->pixbuf->pixels +
->                           context->pixbuf->rowstride *
->                           (context->Header.height - context->Lines - 1));
->         else
->                 Pixels = (context->pixbuf->pixels +
->                           context->pixbuf->rowstride *
->                           context->Lines);
->         while (X < context->Header.width) {
->                 Pixels[X * 4 + 0] = context->LineBuf[X * 4 + 2];
->                 Pixels[X * 4 + 1] = context->LineBuf[X * 4 + 1];
->                 Pixels[X * 4 + 2] = context->LineBuf[X * 4 + 0];
->                 Pixels[X * 4 + 3] = context->LineBuf[X * 4 + 3];
->                 X++;
->         }
-> }
-> 
-> The value of context->Header.height in OneLine32 is a very large number
-> (probably it wasn't validated correctly). Such value is used to calculate
-> where to write, resulting in an overflow where Pixels is written.
+QMEU guests can also modify the same machine specific register values
+via set_one_reg and guests may invoke the same unknown state and
+callpath.  Since the fix is in the same location I would argue that
+this is the same flaw.
 
-Use CVE-2016-6352.
+This only both big endian and little endian ppc platforms, it does not
+affect non powerpc platforms.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Thanks,
 
-iQIcBAEBCAAGBQJXl9U9AAoJEHb/MwWLVhi28xQP/1zBqPYG123HPUFPnXTWGwze
-sGFujS/ujI5pnHeSG4mQtDVQmAbVwzhBFzzs1OfIsDFNDCvLiZdOJd7EJaTjnjK0
-S4yLI65ch0WFZj5ryloElr8Fz3SpPG0fe1pMP7Ozy+XcZQuk6DhWvfXoh7hT1L3g
-H2+Tk6VLnFukQ14+wFo0QrSg/sYdXnZw1bO7sD6RVuV0Kq/hNeZkk30pAElTe8j4
-DmdvGk24KYz7kEjJ7oBH12lLk+fkCar0p6ns34xqjxHmlwH/ZyQv/CFGyONiDuS0
-nKQ8sXAYdDUWNZXL+gCksa3xP7RrNckEU1tR7sgxJ05gYtJc2ynmtIzaKcNnPBqQ
-HZFsdCNH5Jhps7TQgKDO7P5ODfn4TV+npbk0m+9bMycm32ZQIMaJN3ogGCol9fMl
-HSSReoF8vqp8MN2jXk7/sSeethQBdQGztq0DumaTqAZQgT+hCbCuRGBHKjPWuKDc
-KJSmjYr6S0vh2uKPgpKp5K2YaFp7wyrFunpYpAlY39OoKmBAvfnH61Ot9zAPNwZk
-OVn6cXRKNALZvJcYQWpovJQafYXkQjvDZDNSFmf+2IlG63L+xe59s4wyDDFMrfdH
-NuVT245u/Tzry++Zpd7ngllQnmnXgU9/afi3BJ8kSbYtD4Yv7IBD4jL5BuE7IjUv
-RZAyaUwhZ7VlgAGBBpN/
-=7A2U
------END PGP SIGNATURE-----
+Wade Mealing
+Red Hat Product Security
+
+References:
+
+Upstream fixes:
+https://git.kernel.org/cgit/linux/kernel/git/powerpc/linux.git/commit/?h=fixes&id=d2b9d2a5ad5ef04ff978c9923d19730cb05efd55
+
+https://git.kernel.org/cgit/linux/kernel/git/powerpc/linux.git/commit/?h=fixes&id=7f821fc9c77a9b01fe7b1d6e72717b33d8d64142
+
+Red Hat Bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=1326540
