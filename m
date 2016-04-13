@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2718" "Wednesday" "22" "April" "2015" "22:10:37" "+0300" "Jouni Malinen" "j@w1.fi" "<20150422191037.GA25121@w1.fi>" "69" "[oss-security] wpa_supplicant P2P SSID processing vulnerability" nil nil nil "4" "2015042219:10:37" "[oss-security] wpa_supplicant P2P SSID processing vulnerability" (number mark "        j@w1.fi      Apr 22   69/2718  " thread-indent "\"[oss-security] wpa_supplicant P2P SSID processing vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1584" "Wednesday" "13" "April" "2016" "17:29:29" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160413212929.367C952E00A@smtpvbsrv1.mitre.org>" "37" "[oss-security] Re: CVE for nodejs node-uuid" "^Cc:" nil nil "4" "2016041321:29:29" "[oss-security] Re: CVE for nodejs node-uuid" (number mark "        cve-assign@m Apr 13   37/1584  " thread-indent "\"[oss-security] Re: CVE for nodejs node-uuid\"\n") "<CANO=Ty0Am2OcAtzS5jH=xsVOP3o6pzCGmwHWm9igWOCpACpBPg@mail.gmail.com>" ("<CANO=Ty0Am2OcAtzS5jH=xsVOP3o6pzCGmwHWm9igWOCpACpBPg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11937 invoked by uid 550); 22 Apr 2015 19:10:56 -0000
+Received: (qmail 3345 invoked by uid 550); 13 Apr 2016 21:29:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,84 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11876 invoked from network); 22 Apr 2015 19:10:50 -0000
-Message-ID: <20150422191037.GA25121@w1.fi>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Date: Wed, 22 Apr 2015 22:10:37 +0300
-From: Jouni Malinen <j@w1.fi>
+Received: (qmail 3327 invoked from network); 13 Apr 2016 21:29:40 -0000
+In-Reply-To: <CANO=Ty0Am2OcAtzS5jH=xsVOP3o6pzCGmwHWm9igWOCpACpBPg@mail.gmail.com>
+Message-Id: <20160413212929.367C952E00A@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Wed, 13 Apr 2016 17:29:29 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] wpa_supplicant P2P SSID processing vulnerability
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE for nodejs node-uuid
+To: kseifried@redhat.com
 
-Published: April 22, 2015
-Identifier: CVE-2015-1863
-Latest version available from: http://w1.fi/security/2015-1/
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+> node-uuid prior to 1.4.4 contained a bug that caused it to consistently
+> fall back to using Math.random instead of a more cryptographically sound
+> source of entropy, the native crypto module.
 
-Vulnerability
+> https://github.com/broofa/node-uuid/issues/108
+> https://github.com/broofa/node-uuid/issues/118
+> https://github.com/broofa/node-uuid/issues/122
+> https://github.com/broofa/node-uuid/commit/672f3834ed02c798aa021c618d0a5666c8da000d
 
-A vulnerability was found in how wpa_supplicant uses SSID information
-parsed from management frames that create or update P2P peer entries
-(e.g., Probe Response frame or number of P2P Public Action frames). SSID
-field has valid length range of 0-32 octets. However, it is transmitted
-in an element that has a 8-bit length field and potential maximum
-payload length of 255 octets. wpa_supplicant was not sufficiently
-verifying the payload length on one of the code paths using the SSID
-received from a peer device.
+Use CVE-2015-8851 for this implementation error related to an incorrect
+_global.require function call.
 
-This can result in copying arbitrary data from an attacker to a fixed
-length buffer of 32 bytes (i.e., a possible overflow of up to 223
-bytes). The SSID buffer is within struct p2p_device that is allocated
-from heap. The overflow can override couple of variables in the struct,
-including a pointer that gets freed. In addition about 150 bytes (the
-exact length depending on architecture) can be written beyond the end of
-the heap allocation.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-This could result in corrupted state in heap, unexpected program
-behavior due to corrupted P2P peer device information, denial of service
-due to wpa_supplicant process crash, exposure of memory contents during
-GO Negotiation, and potentially arbitrary code execution.
-
-Vulnerable versions/configurations
-
-wpa_supplicant v1.0-v2.4 with CONFIG_P2P build option enabled
-
-Attacker (or a system controlled by the attacker) needs to be within
-radio range of the vulnerable system to send a suitably constructed
-management frame that triggers a P2P peer device information to be
-created or updated.
-
-The vulnerability is easiest to exploit while the device has started an
-active P2P operation (e.g., has ongoing P2P_FIND or P2P_LISTEN control
-interface command in progress). However, it may be possible, though
-significantly more difficult, to trigger this even without any active
-P2P operation in progress.
-
-
-Acknowledgments
-
-Thanks to Google security team for reporting this issue and smart
-hardware research group of Alibaba security team for discovering it.
-
-
-Possible mitigation steps
-
-- Merge the following commits to wpa_supplicant and rebuild it:
-
-  P2P: Validate SSID element length before copying it (CVE-2015-1863)
-
-  This patch is available from http://w1.fi/security/2015-1/
-
-- Update to wpa_supplicant v2.5 or newer, once available
-
-- Disable P2P (control interface command "P2P_SET disabled 1" or
-  "p2p_disabled=1" in (each, if multiple interfaces used) wpa_supplicant
-  configuration file)
-
-- Disable P2P from the build (remove CONFIG_P2P=y)
-
--- 
-Jouni Malinen                                            PGP id EFC895FA
+iQIcBAEBCAAGBQJXDrmkAAoJEL54rhJi8gl5l0gQAIDwvPDZ85PcFP4eMHA0x66e
+wpum3DAs4MS9Mn8CRQJ4k6knxA3DKyEOid+/qbDr6RkamUyypg/2iQZsStBrj0iG
+quX5mM28n4+ODduHOyf/v1O0OrIFJgkXsw6Pp1avYb1RoNIhCMOL328V60hYk6Ny
+oFSwXCh8Tpf+Ns3rkiL5OeouoZO6aUT3HU81H6nRXYcjLNX4UJGgX3S/MRp/SVhf
++IEClIsIsUP1mbdLHSNr4rbYrOq1zZv1vLaEVbJBhCfKO4xFkPo4sjqRSeOTTXAx
+Cs2wD02/RnGVsa1SxFDYWwzdL36Al+bdsgL7ik14/qKGgkdGJWwfjz5oP1R4zRaL
+z7txlMhgViQu9Z3sFLfJTpxw/vUJCSaPWglrg38DNXxTbxTzbKho96G4FkXMtyAm
+yGyLJ+is+3lfQnP/ezq0hOg1gvbYRGCsSUfAtB8vQIcqNTTB+BnnG+sxaawPJzpN
+s85JViPn5mkjkxoX/w5Ciu/ztXPt8nRZl1xx/VMpyvDWKEEy4m7bK6joVHrtffFM
+vmyYquxQkpUpY4+WxaSj+6xx/v9jFko9PGfdLyoXexJuMO+WKjN3nPgvN+6EoVu4
+ISCOEl449+wCahTaa3Bxh/zRbs4rwA0VkK9jzQFmEGHfyJSAqaP+ekDrKtuaQPZx
+BkE4am/fDgUKoxnjvcTf
+=4elG
+-----END PGP SIGNATURE-----
