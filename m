@@ -1,105 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/17/1
-Message-ID: <dd1ccac7efd14056a7e709c020b52639@imshyb02.MITRE.ORG>
-Date: Thu, 17 Nov 2016 02:56:39 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: jasper: multiple assertion failures
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/13/3
+Message-Id: <20160413134614.8D19C332076@smtpvbsrv1.mitre.org>
+Date: Wed, 13 Apr 2016 09:46:14 -0400 (EDT)
+From: cve-assign@...re.org
+To: cuoq@...st-in-soft.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Infinite loops parsing malicious DER certificates in libtasn1 4.7
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> jas_seq.c:90: jas_matrix<= yend' failed.
-> Commit fix:
-> https://github.com/mdadams/jasper/commit/d91198abd00fc435a397fe6bad906a4c1748e9cf
-
-Use CVE-2016-9387.
-
-
-> ras_dec.c:330: int ras_getcmap(jas_stream_t *, ras_hdr_t *, ras_cmap_t *): Assertion `numcolors <= 256' failed.
-> Commit fix:
-> https://github.com/mdadams/jasper/commit/411a4068f8c464e883358bf403a3e25158863823
-
-Use CVE-2016-9388.
-
-
-> jpc_mct.c:146: void jpc_irct(jas_matrix_t *, jas_matrix_t *, jas_matrix_t *): Assertion `((c1)->numrows_) ==
-> numrows && ((c1)->numcols_) == numcols && ((c2)->numrows_) == numrows && ((c2)->numcols_) == numcols' failed.
-> Commit fix:
-> https://github.com/mdadams/jasper/commit/dee11ec440d7908d1daf69f40a3324b27cf213ba
+> The libtasn1 library, in its 4.7 version, can loop for a long time or
+> indefinitely when it is used to parse DER representations of X509
+> certificates, leading to a denial of service. Some of these loops may
+> in addition increase heap or stack usage, leading to more issues.
 > 
-> jpc_mct.c:233: void jpc_iict(jas_matrix_t *, jas_matrix_t *, jas_matrix_t *): Assertion `((c1)->numcols_) ==
-> numcols && ((c2)->numcols_) == numcols' failed.
-> Commit fix:
-> https://github.com/mdadams/jasper/commit/dee11ec440d7908d1daf69f40a3324b27cf213ba
+> These issues were found by Pascal Cuoq and Miod Vallat using american
+> fuzzy lop. They are fixed in libtasn1 version 4.8. ...
+> http://ftp.gnu.org/gnu/libtasn1/libtasn1-4.8.tar.gz
 
-Use CVE-2016-9389 for both of these reports.
+We can assign a CVE ID for this entry in the libtasn1-4.8.tar.gz NEWS
+file:
 
+  Noteworthy changes in release 4.8 (released 2016-04-11) [stable]
 
-> jas_seq.c:90: jas_matrix_t *jas_seq2d_create(int, int, int, int): Assertion `xstart <= xend && ystart <= yend' failed.
-> Commit fix:
-> https://github.com/mdadams/jasper/commit/ba2b9d000660313af7b692542afbd374c5685865
+  Fixes to avoid an infinite recursion when decoding without
+  the ASN1_DECODE_FLAG_STRICT_DER flag. Reported by Pascal Cuoq.
 
-Use CVE-2016-9390.
+Use CVE-2016-4008.
 
-
-> jpc_bs.c:197: long jpc_bitstream_getbits(jpc_bitstream_t *, int): Assertion `n >= 0 && n < 32' failed.
-> Commit fix:
-> https://github.com/mdadams/jasper/commit/1e84674d95353c64e5c4c0e7232ae86fd6ea813b
-
-Use CVE-2016-9391.
-
-
-> jpc_dec.c:1637: void calcstepsizes(uint_fast16_t, int, uint_fast16_t *): Assertion `!((expn + (numrlvls - 1) -
-> (numrlvls - 1 - ((bandno > 0) ? ((bandno + 2) / 3) : (0)))) & (~0x1f))' failed.
-> Commit fix:
-> https://github.com/mdadams/jasper/commit/f7038068550fba0e41e1d0c355787f1dcd5bf330
-
-Use CVE-2016-9392.
-
-
-> jpc_t2cod.c:297: int jpc_pi_nextrpcl(jpc_pi_t *): Assertion `pi->prcno pirlvl->numprcs' failed.
-> Commit fix:
-> https://github.com/mdadams/jasper/commit/f7038068550fba0e41e1d0c355787f1dcd5bf330
-
-Use CVE-2016-9393.
-
-
-> jas_seq.c:90: jas_matrix_t *jas_seq2d_create(int, int, int, int): Assertion `xstart <= xend && ystart <= yend' failed.
-> Commit fix:
-> https://github.com/mdadams/jasper/commit/f7038068550fba0e41e1d0c355787f1dcd5bf330
-
-Use CVE-2016-9394.
-
-
-> jas_seq.c:90: jas_matrix_t *jas_seq2d_create(int, int, int, int): Assertion `xstart <= xend && ystart <= yend' failed.
-> Commit fix:
-> https://github.com/mdadams/jasper/commit/d42b2388f7f8e0332c846675133acea151fc557a
-
-Use CVE-2016-9395.
-
-
-> jpc_t1cod.c:144: int JPC_NOMINALGAIN(int, int, int, int): Assertion `qmfbid == 0x01' failed.
-
-Use CVE-2016-9396.
-
-
-> jpc_dec.c:1817: void jpc_dequantize(jas_matrix_t *, jpc_fix_t): Assertion `absstepsize >= 0' failed.
-
-Use CVE-2016-9397.
-
-
-> jpc_math.c:94: int jpc_floorlog2(int): Assertion `x > 0' failed.
-
-Use CVE-2016-9398.
-
-
-> jpc_dec.c:1650: void calcstepsizes(uint_fast16_t, int, uint_fast16_t *): Assertion
-> `!((expn + (numrlvls - 1) - (numrlvls - 1 - ((bandno > 0) ? ((bandno + 2) / 3) : (0)))) & (~0x1f))' failed.
-
-Use CVE-2016-9399.
+If there were unrelated problems that needed to be resolved with a
+different solution approach (e.g., an infinite "while" loop within one
+function) and require any additional CVE IDs, please let us know.
 
 - -- 
 CVE Assignment Team
@@ -109,17 +42,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYLWJmAAoJEHb/MwWLVhi2/X4P/0FXYPvmgjnEkMsevaZ4e4WN
-p5xJtxvFqt64h2P1HMfUxq2/Hk155+Rxa8lEStWAk7vqlxaQbnID5fAAb1l0WmZb
-drM1wSytNCj+yNp8KairjOdGW7IZ7/dQF6mhhKpbGTLUBamWQ25oaFiBiQDQETGU
-ffSKcEz6Y6s0ORFsPx7zYkoPK7yPHn6bxrKoEH8ME0unC7G4X/5tXGVuTgo1vbbn
-lnoB03LeISRNt98Gz+drDmapOTM9XQrPZr+yelFOhPnjiPYbc/5loPUZjwWFiBdz
-zngADPcRVu/Xdd1hsst0vcMHQiDxPL2vwr42sNhPZGVINNcfLVHyxx/hqD1y9xBR
-Pbb1FXDqx+mi6gikgv4xLdvd9fpIMC7KW/+1eXfygYrdSIXG6viIUdx3Wy57bo/K
-NEAuzmMKvAcRYXnvHCeCJ/LChfFMeo9rHfnKEw/BObq2zMB4GZf/2lrquNBvwhag
-QqX28F681ylaQRdig9IJPF4vfOAUehic3m7JqsH41PLd6gXNlcqUVJs30iRg4QW7
-LaD07osrsqwvgAwLXxew259wOpqIWlNxOmSdkajoI1J711XZGwr76iDRoRIkGeMz
-l1HMrGsEylhNMRp+b7STQXsc6+tSM7Yk1ROhAzXWd8GIYk9djHAIJLf3FOGihYKK
-X09TP2040sTZwQA1EKB0
-=1nmb
+iQIcBAEBCAAGBQJXDk1DAAoJEL54rhJi8gl5wEsP/i8eqMazPJysJYMWPBXtBGtG
+SnJ1GT00Dm44hRCxq9S+zgn5H8Eb+jQ5rmqv6BLxos3ZbZzLODBD3Z3qh/NJpKhJ
+E7eBHOKo/+3PdDAZoulYMZCOrdPel/Ro0R2dM1EsvY30nYsGr8MHZGt+mpi6tBww
+cnseL43mxodK37cOa2UtERoLZ80VEjg8zcJOuXN8P8rLBVSxOhEo/4QxNkUZ58UX
+dwB/VikBnbyYwlVBd0Z736/snSZC0mFC/QeQhTw5eO5b93g2zPsJAkhyCwNwcEXe
+KdbyAJB//x4SUJR7UyAzXnI6VQT0AHUMSkHpd3tQPtJY9DdVmxOOBBG53kApg/My
+cfAVn/yEIJtpLRdCaeooyKdE6RgzbS8UMP1Bh7Aki1kbr+tyXU1bA6sUwkYcXL0C
+973xz5f3g1hNdfcUGzLTjUNxsVmD1bjUy13HAikfUAh4G12kDVjJZRpV2Uug/yMQ
+t+tHTAho5VRnYOxz/Jt8hYHCoy47gX4e/l4E2z63TJO3uARlgvx84H51VO13irRf
+ust0bks3yrY60GXStuIXEIwL6sRiS3vJhQLOHY3uRF/piDuVIlUMfYmEVtcJ0TAW
+HpXQeeGNrkUoGhpLJTSywU1ahnADbRYgr524OB1ClE0aPIKhADNj6+oeDaofREJ/
+w1qcvLfEUel2zWryIKeg
+=cjc1
 -----END PGP SIGNATURE-----
