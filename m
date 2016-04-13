@@ -1,37 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/17/1
-Message-ID: <8d3bc49e3cb55d99d9fa35c648f69451@mx.sdfeu.org>
-Date: Sun, 17 Apr 2016 16:25:31 +0200
-From: none <ytrezq@...-eu.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: cpio -- directory traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/13/4
+Message-Id: <20160413142040.A22F96C04FB@smtpvmsrv1.mitre.org>
+Date: Wed, 13 Apr 2016 10:20:40 -0400 (EDT)
+From: cve-assign@...re.org
+To: krahmer@...e.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-Request for brltty auth bypass
 Content-Type: text/plain; charset=utf-8
 
-On 2015-02-02 20:48, Vitezslav Cizek wrote:
->> * Dne Friday 16. January 2015, 03:44:25 [CET] Alexander Cherepanov 
->> napsal:
->>> cpio is susceptible to a directory traversal vulnerability via 
->>> symlinks.
->> 
->> Here's a patch we use in SUSE for some time.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> Thanks for sharing!
+> https://bugzilla.suse.com/show_bug.cgi?id=967436
 
->> It forbids to write over symlinks, similar to bsdtar.
+We don't know enough about the deployment of this product to decide
+whether a CVE is needed. As far as we can tell, the available
+information is:
 
-> Nice, this is a simple and easy approach. But I wonder if it's widely
-> acceptable. GNU tar follows symlinks which are not extracted from the
-> archive and, in 
-> http://www.openwall.com/lists/oss-security/2015/01/08/4,
-> Florian Weimer said: "If [the current directory] already contains
-> symbolic links, some users expect that those links are followed because
-> they have used symlinks to move part of the file system tree to
-> somewhere else (perhaps a large file system)."
+  - the last release was 5.3.1 on 2015-12-21
 
-A year later, I see this bug is still not fixed.
+  - the vulnerable code was not in that release
 
-What about using the ɢɴᴜ tar way in that case. I mean delay the creation 
-of symlinks until all fifo/device/regular files and directories are 
-created ? (instead of following the oder in the archive)
+  - the vulnerable code was added in
+    https://github.com/brltty/brltty/commit/e62b3c925d03239a372d425fb87b2cac65d8ef19
+    on 2016-01-28
 
+  - the vulnerable code was fixed in
+    https://github.com/brltty/brltty/commit/74affe7d1401f2b43ad32e18cb78704d22604ad7
+    on 2016-04-12
 
+  - SUSE Bug 967436 mentions the existence of home:mgorse:branches:hardware but
+    doesn't state that this was distributed to any SUSE customers
+
+  - https://github.com/brltty/brltty/blob/master/README doesn't seem to
+    have any suggestion that building the latest code from the master
+    branch was ever recommended for an end user
+
+We can assign a CVE ID if there's an assertion that it's reasonable to
+expect that someone was affected by this vulnerability. Otherwise, we
+feel it could be thought of as one of the millions of cases where
+potentially unfinished code is added to a master branch of something,
+with the expectation that it could be reviewed/revised at some point
+before it is released.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXDlUvAAoJEL54rhJi8gl5nf4P/0xGuraGsr0t2YArrabJsLhy
+psyPiii4a5IenxWfvuhysCRyR1em07qjyxZv10AwxRbAj9WdmIODlXybPnSq6lEc
+wzwkZT1VUKUrgbSOCHIY4S6qEgn4uGinTf0LiT72aAVPdtfUOaPatZLGVr/DWPwb
+qdDRE2e768JnbwCu6KEyHYTuOwAG6BX0vorYjdCpPLoxgt9jKccgX7GgTp7Chfj9
+ya8GM2nLvRVwP5RfD/so9OpxU7nFHT8jLnNh+JzqcPj5tUpDSn8miT05lavYQpBa
+Bttxapv57evtNTPtpk4cJ1efqNvFNsP9LNaWDWhD8xetlxHIpHtoamYfWohl/SB8
+6H9tPo2MtR8teoljJ/rsYJmqHDCG6jKJswdnFyxtdWq6KYf0sqGH4v7fMmENslKN
+8bUDYyUAZxyqNAX67sJHWDB7LzWGQKMTMdLaLQ/RU0JuNnHBs5ZTkqYno4R3r3Z8
+NKDPs01VivU6X53grCOeLKGcb8JdEHVfdICm2wVas7m80RWQVwlovrXXF9DoevUv
+uXt/8MwkEQOO7dWwDmXjkXODmxGCMGznCyPQecyIqa68M0B6I7SJAZeEg4SDQ1Tf
+6gXSfIbahurkkJKAy43ftI4RG42M6pElHXzNarV6fNK9q0a4jTYxyabrJPceRoi8
+dYBecJWP9YFfamGXYADJ
+=F6zB
+-----END PGP SIGNATURE-----
