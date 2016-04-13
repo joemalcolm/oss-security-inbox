@@ -1,30 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/11/4
-Message-ID: <alpine.LFD.2.20.1602112225350.16884@wniryva>
-Date: Thu, 11 Feb 2016 22:26:58 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: bugtraq@...urityfocus.com, fulldisclosure@...lists.org
-Subject: Re: HTTPS Only (Open Source, Python)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/13/8
+Message-Id: <20160413212929.367C952E00A@smtpvbsrv1.mitre.org>
+Date: Wed, 13 Apr 2016 17:29:29 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE for nodejs node-uuid
 Content-Type: text/plain; charset=utf-8
 
-+-- On Thu, 11 Feb 2016, David Leo wrote --+
-| If browser tries to access HTTP address,
-| you will have three options:
-| try HTTPS,
-| Google Cache,
-| or copy-and-paste the address.
-| 
-| There is no option to "temporarily bypass HTTPS Only".
-| You can always do that in another browser.
-| 
-| Project Home Page:
-| https://httpsonly.github.io/
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Browsers too are moving there:
-  -> https://blog.mozilla.org/security/2015/04/30/deprecating-non-secure-http/
+> node-uuid prior to 1.4.4 contained a bug that caused it to consistently
+> fall back to using Math.random instead of a more cryptographically sound
+> source of entropy, the native crypto module.
 
-(just to note)
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+> https://github.com/broofa/node-uuid/issues/108
+> https://github.com/broofa/node-uuid/issues/118
+> https://github.com/broofa/node-uuid/issues/122
+> https://github.com/broofa/node-uuid/commit/672f3834ed02c798aa021c618d0a5666c8da000d
+
+Use CVE-2015-8851 for this implementation error related to an incorrect
+_global.require function call.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXDrmkAAoJEL54rhJi8gl5l0gQAIDwvPDZ85PcFP4eMHA0x66e
+wpum3DAs4MS9Mn8CRQJ4k6knxA3DKyEOid+/qbDr6RkamUyypg/2iQZsStBrj0iG
+quX5mM28n4+ODduHOyf/v1O0OrIFJgkXsw6Pp1avYb1RoNIhCMOL328V60hYk6Ny
+oFSwXCh8Tpf+Ns3rkiL5OeouoZO6aUT3HU81H6nRXYcjLNX4UJGgX3S/MRp/SVhf
++IEClIsIsUP1mbdLHSNr4rbYrOq1zZv1vLaEVbJBhCfKO4xFkPo4sjqRSeOTTXAx
+Cs2wD02/RnGVsa1SxFDYWwzdL36Al+bdsgL7ik14/qKGgkdGJWwfjz5oP1R4zRaL
+z7txlMhgViQu9Z3sFLfJTpxw/vUJCSaPWglrg38DNXxTbxTzbKho96G4FkXMtyAm
+yGyLJ+is+3lfQnP/ezq0hOg1gvbYRGCsSUfAtB8vQIcqNTTB+BnnG+sxaawPJzpN
+s85JViPn5mkjkxoX/w5Ciu/ztXPt8nRZl1xx/VMpyvDWKEEy4m7bK6joVHrtffFM
+vmyYquxQkpUpY4+WxaSj+6xx/v9jFko9PGfdLyoXexJuMO+WKjN3nPgvN+6EoVu4
+ISCOEl449+wCahTaa3Bxh/zRbs4rwA0VkK9jzQFmEGHfyJSAqaP+ekDrKtuaQPZx
+BkE4am/fDgUKoxnjvcTf
+=4elG
+-----END PGP SIGNATURE-----
