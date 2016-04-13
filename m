@@ -1,49 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/03/4
-Message-ID: <CAPGxrc_N_=z12njMyN2WrSO74A9=ioEnppxs2YGExMn0qd6MJA@mail.gmail.com>
-Date: Thu, 3 Nov 2016 17:58:14 +0800
-From: redrain root <rootredrain@...il.com>
-To: dickey@...isible-island.net, oss-security@...ts.openwall.com,  fulldisclosure@...lists.org
-Cc: cve-assign@...re.org
-Subject: CVE request:Lynx invalid URL parsing with '?'
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/13/5
+Message-Id: <20160413150530.9016D3AE19B@smtpvbsrv1.mitre.org>
+Date: Wed, 13 Apr 2016 11:05:30 -0400 (EDT)
+From: cve-assign@...re.org
+To: wmealing@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Linux kernel: incorrect restoration of machine specific registers from signal handler.
 Content-Type: text/plain; charset=utf-8
 
-I can't find any bugtracker in lynx ,so i will disclose by this mail and
-sent to the author dickey@...isible-island.net.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-redrain (rootredrain@...il.com)
-Date:2016-11-03
-Version: 2.8.8pre.4、2.8.9dev.8 and earlier
-Platform: Linux and Windows
-Vendor: http://lynx.browser.org/
-Vendor Notified: 2016-11-03
+> Upstream fixes:
 
+We feel that the two listed git.kernel.org commits should have
+separate CVE IDs.
 
-VULNERABILITY
--------------------------
+> QMEU guests can also modify the same machine specific register values
+> via set_one_reg and guests may invoke the same unknown state and
+> callpath. Since the fix is in the same location I would argue that
+> this is the same flaw.
 
-Lynx doesn't parse the authority component of the URL correctly when the
-host
-name part ends with '?', and could instead be tricked into
-connecting to a different host.
-
-Passing in `*http://google.com?@...kdog.me/
-<http://google.com?@...kdog.me/>*` <http://example.com/#@evil.com/x.txt> would
-wrongly make lynx send a
-request to hackdog.me while your browser would connect to google.com given
-the same URL.
-
-PoC
-------------------------
-lynx  "http://google.com?@...kdog.me/"
+We do not feel that there's a need for any separate CVE IDs that are
+specific to this QEMU observation.
 
 
-SOLUTION
--------------------------
-follow the RFC and check for domains before send request.
+> https://git.kernel.org/cgit/linux/kernel/git/powerpc/linux.git/commit/?h=fixes&id=d2b9d2a5ad5ef04ff978c9923d19730cb05efd55
+> 
+> Currently we allow both the MSR T and S bits to be set by userspace on
+> a signal return. Unfortunately this is a reserved configuration and
+> will cause a TM Bad Thing exception if attempted
+
+Use CVE-2015-8844.
 
 
+> https://git.kernel.org/cgit/linux/kernel/git/powerpc/linux.git/commit/?h=fixes&id=7f821fc9c77a9b01fe7b1d6e72717b33d8d64142
+> 
+> This tm_reclaim() now causes a TM Bad Thing exception as this state
+> has already been saved and the processor is no longer in TM suspend
+> mode.
 
-Regards,
-redrain
+Use CVE-2015-8845.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXDl+gAAoJEL54rhJi8gl5T7wP/2/ntgW7kmLWhFqlfS0C8LXy
+YP6YBfdnxTQ65Cl8E5kJMZpRKmkqgQ7lXQ4Kb7yttyFSK5nQkN9AOyFXapOsKTlD
+7MTkmM4BIhPv0kKB+Sl1jhMvXw+ZJyue/NLhj2YwX5UKI2Ud/7n7tvdsCINXuH4o
+xgGgnGiLG4rCsyxmwoguglyvkEG0brURXgG+HVTSG5JHY+DjdD7ggWujrj+WwVZP
+fEBT4HaI59PzbgY1KsToj7nIMg3RGv1OHJ507x+t45wHUjVT7kAlgunLUdJ9Gkxt
+OJOctE1oBfgRH0cHUUdPFBVvP6S1HUXZ7HZTFpGS17+FjQ3z1J76OwZDu6CKzxKb
+M9bon4o3AHmduqOyH5vfu68pkwWHV5EAhihk8Az2jRwqVEgG57thhCk22NmXaiYT
+kdgJIrgiHognvjk6yckrjO7JbApHnTYGCXPPcTUtHsihb2eXMl7s5W0O6aOcWkDY
+HnbkamRgl1KHBJJTyG8st5jfa6jq/boo2JZUu2W1mEaH/dMTrGCuDtVupXtb38sO
+6E+3MtZj5a/KU+7d+eio355/oxDJ9Txnv2ykx8tzQftO9gYBCpA3xc/frU3AwQeA
+pBeVnmwxuybREBCeburjFvHyHOtW+hLSCP1zk7dNMI9z6Yj/CZcDmjFIbzRqAVOr
+34oxYUiS76IsBIuX/CCS
+=hKPj
+-----END PGP SIGNATURE-----
