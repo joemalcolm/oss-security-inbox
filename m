@@ -1,89 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/12/7
-Message-ID: <956e00cf-2553-d3fe-83f1-00e3c0b1075a@sysdream.com>
-Date: Wed, 12 Oct 2016 15:27:32 +0200
-From: Sysdream Labs <labs@...dream.com>
-To: oss-security@...ts.openwall.com
-Cc: fulldisclosure@...lists.org, spip-team-owner@...o.net
-Subject: CVE-2016-7981: SPIP 3.1.2 Reflected Cross-Site Scripting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/13/6
+Message-ID: <alpine.LFD.2.20.1604132336250.29012@wniryva>
+Date: Wed, 13 Apr 2016 23:38:26 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Donghai Zdh <donghai.zdh@...baba-inc.com>
+Subject: CVE request Qemu: i386: leakage of stack memory to guest in kvmvapic.c
 Content-Type: text/plain; charset=utf-8
 
-## SPIP 3.1.2 Reflected Cross-Site Scripting (CVE-2016-7981)
+   Hello,
 
-### Product Description
+Qemu emulator built with the Task Priority Register(TPR) optimizations for 
+32-bit Windows guests, is vulnerable to a information leakage issue. It could 
+occur while accessing Task Priority Register(TPR).
 
-SPIP is a publishing system for the Internet, which put importance on collaborative working, multilingual environments and ease of use. It is free software, distributed under the GNU/GPL licence.
+A privileged user/process inside guest could use this issue to leak host 
+memory bytes.
 
-### Vulnerability Description
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-04/msg01118.html
 
-The `var_url` parameter of the `valider_xml` file is not correctly sanitized and can be used to trigger a reflected XSS vulnerability.
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1313686
 
-**Access Vector**: remote
+This issue was discovered by Donghai Zdh of Alibaba Inc.
 
-**Security Risk**: medium
-
-**Vulnerability**: CWE-79
-
-**CVSS Base Score**: 6.8 (Medium)
-
-**CVE-ID**: CVE-2016-7981
-
-### Proof of Concept
-
-    http://spip-dev.srv/ecrire/?exec=valider_xml&var_url=%22%3E%3Ch1%3EXSS!%3C/h1%3E
-
-### Vulnerable code
-
-The `$url variable` is not properly sanitized in `valider_xml.php`, line 134 :
-
-    $res =
-      "<div style='text-align: center'>" . $err . "</div>" .
-      "<div style='margin: 10px; text-align: left'>" . $texte . '</div>';
-    $bandeau = "<a href='$url_aff'>$url</a>";
-
-The Cross-Site Scripting vulnerability is triggered on line 146 :
-
-    echo "<h1>", $titre, '<br>', $bandeau, '</h1>',
-
-
-### Timeline (dd/mm/yyyy)
-
-* 15/09/2016 : Initial discovery
-* 26/09/2016 : Contact with SPIP Team
-* 27/09/2016 : Answer from SPIP Team, sent advisory details
-* 27/09/2016 : Incorrect fix from SPIP Team.
-* 27/09/2016 : New proof of concept for bypassing fixes for XSS sent.
-* 27/09/2016 : Fixes issued for XSS (23185).
-* 30/09/2016 : SPIP 3.1.3 Released
-
-### Fixes
-
-* https://core.spip.net/projects/spip/repository/revisions/23200
-* https://core.spip.net/projects/spip/repository/revisions/23201
-* https://core.spip.net/projects/spip/repository/revisions/23202
-
-
-### Affected versions
-
-* Version <= 3.1.2
-
-### Credits
-
-* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
-
-
--- 
-SYSDREAM Labs <labs@...dream.com>
-
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
-
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
