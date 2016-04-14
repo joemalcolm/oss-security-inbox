@@ -1,62 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/27/7
-Message-ID: <5720DBF1.4010200@qrator.net>
-Date: Wed, 27 Apr 2016 18:34:09 +0300
-From: Evgeny Uskov <eu@...tor.net>
-To: oss-security@...ts.openwall.com
-Cc: noc@...tor.net
-Subject: CVE-2016-4049: Denial of Service Vulnerability in Quagga BGP Routing Daemon (bgpd)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/14/3
+Message-Id: <20160414151642.2DD166C0020@smtpvmsrv1.mitre.org>
+Date: Thu, 14 Apr 2016 11:16:42 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, donghai.zdh@...baba-inc.com
+Subject: Re: CVE request Qemu: i386: leakage of stack memory to guest in kvmvapic.c
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-About 3 months ago we found the following vulnerability in BGP daemon
-from Quagga routing software (bgpd): if the following conditions are
-satisfied:
- - regular dumping is enabled
- - bgpd instance has many BGP peers
-then BGP message packets that are big enough cause bgpd to crash.
-The situation when the conditions above are satisfied is quite common.
-Moreover, it is easy to craft a packet which is much "bigger" than a
-typical packet, and hence such crafted packet can much more likely cause
-the crash.
+> Qemu emulator built with the Task Priority Register(TPR) optimizations for
+> 32-bit Windows guests, is vulnerable to a information leakage issue. It could
+> occur while accessing Task Priority Register(TPR).
+> 
+> A privileged user/process inside guest could use this issue to leak host
+> memory bytes.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1313686
+> https://lists.gnu.org/archive/html/qemu-devel/2016-04/msg01118.html
 
-The reason of such behavior is as follows. The function
-bgp_dump_routes_func in bgpd/bgp_dump.c does not perform any size checks
-when writing data to bgp_dump_obuf. For each bgp_node table record it
-tries to dump all data to bgp_dump_obuf stream which is of limited size.
-If there is no free space in this stream, the assertion fails and bgpd
-crashes.
+>> When processing Task Priorty Register(TPR) access, it could leak
+>> automatic stack variable 'imm32' in patch_instruction().
+>> Initialise the variable to avoid it.
 
-The problem seems to be quite serious since it may occur if bgpd has
-many BGP peers announcing the same prefix (e.g. if bgpd is used as BGP
-reflector, on Internet Exchanges etc), and regular dumping is enabled.
-In our case "many" was equal to 20.
+Use CVE-2016-4020.
 
-The easiest way to reproduce the problem:
-1) add 150 BGP neighbors announcing the same prefix
-2) write "dump bgp routes-mrt bview.dat" command to the telnet console.
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/i386/kvmvapic.c but
+that may be an expected place for a later update.
 
-The easiest way to eliminate the problem is to create multiple MRT
-records if there is too much data for a prefix. Please see the attached
-file dump_fix.patch implementing such solution.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-We contacted Quagga developers and sent them patches of this
-vulnerability. They responded that they are going to apply these patches
-in the next patching round:
- - https://lists.quagga.net/pipermail/quagga-dev/2016-January/014699.html
- - https://lists.quagga.net/pipermail/quagga-dev/2016-February/014743.html
-However, the vulnerability is still not patched and it is unclear how
-long to wait.
-
-This issue has been assigned the name CVE-2016-4049.
-
---
-| Evgeny Uskov  | HLL l QRATOR
-| mob.: +7 916 319 33 20
-| skype: evgeny_uskov
-| mailto: eu@...tor.net
-| visit: www.qrator.net
-
-
-View attachment "dump_fix.patch" of type "text/x-patch" (6413 bytes)
+iQIcBAEBCAAGBQJXD7OfAAoJEL54rhJi8gl5NBYQAKBSeM2gEBAxQGcp0H36CMHx
+rLWnSGdlLDaM5bv0wnVZcLCu11AB2IXbNuAhYbqVRQXUVVNMjSdqGPLKA6wh2J0D
+jPf7ur2NZ+IkhYMQBbISQo+8OuHq/64BITfw+uIyEpwn/TpemTst0msVE9gTJ307
+0Rv96p7Fr4JhndHp270OdxysYnXl886pBSuh1aQOg0QSdZb1Ij1j85Q5+N6b8VbU
+mVyjRnAMTiVSFVqnED3qxZTJ9ZGrKVXbr470569D7PepR+L5kdG2lN/eeSiBSXKk
+iihqYwmlL21+7dCrJNWDe82UAkk6D1qjXibvpcT4+K890Fw1RSlLQiNNpbX/cVaY
+Tg4dA8txzW7IuU9dHuI8/x1Usg/XLf0YYUghtQ93wjVZqk+AkkZdh4kCwSA7q6QW
+wDWNagwX0FTmRmGPKvHLy5IRGOKhqmQ8IMSOG3/sWG0hbbTBK7xJxh/8hudjk66J
+NaeBosQw7AkUj9QTw/YZk6+yIPlbpEMiiJENMsmkq+cocp2qtu1XPNVf7yODe2Ap
+3B7OheWRaGq9SJZjAbK9PSnDGcZUmmjEHrpJn6m4CpjUWHTw4A1cfCiTgKQRibTO
+TMlR9QoYDL/GEzdm6hi8QrO1gjhIFahtU3jZyek27DF7pSd+UZ0MoizxpCLb5+5X
+kw7IG5V5vr0N+jlmOj64
+=9E7h
+-----END PGP SIGNATURE-----
