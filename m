@@ -1,4 +1,9 @@
-Received: (qmail 1791 invoked by uid 550); 23 Mar 2025 19:14:34 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7656" "Thursday" "14" "April" "2016" "13:03:47" "+0000" "Xen.org security team" "security@xen.org" "<E1aqgvz-0001Vr-5I@xenbits.xenproject.org>" "188" "[oss-security] Xen Security Advisory 174 (CVE-2016-3961) - hugetlbfs use may crash PV Linux guests" "^CC:" nil nil "4" "2016041413:03:47" "[oss-security] Xen Security Advisory 174 (CVE-2016-3961) - hugetlbfs use may crash PV Linux guests" (number mark "U       security@xen Apr 14  188/7656  " thread-indent "\"[oss-security] Xen Security Advisory 174 (CVE-2016-3961) - hugetlbfs use may crash PV Linux guests\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5518 invoked by uid 550); 14 Apr 2016 13:04:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,257 +11,206 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1764 invoked from network); 23 Mar 2025 19:14:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
-	content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=corp-2023-11-20; bh=wwxDyPWdSVla+rxp
-	EyuNdKnq2MAcmn0d9L+E63ho19g=; b=elfn4xorwmb/A6Udk91xg89XoIZWtz89
-	d/7vX1UAuxl4A+bCEfCQHg75pyUPdXH4QqV7SX9Pnc8rK5U8OnN78qBilQBJ1tGv
-	qW0RXTl2SfUCqmpLTOS/uBhVfzNt6RKYRc0eUiK0nIbAVyY6JCMVHatJXOWG8y+f
-	/aL+rPXKnWE6l6rj3qb0A7KAPFrTmHeXwgNCrSSf6MaeJa/4Wy2+SeuD2JxaNedl
-	DbgkPdLbaIvAi7R7EWKehgHPQHWibdgtg2yq41Tk2QXzXIcmx91cWThafwg7FOQy
-	/v0inW4cYeES00rGOWmNaXW0urdAepq4AvGc0U71ywIp6BPeUm8vRA==
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=KTpzInp7RzDm5/3dweWZRF9dYI5YPmkHdhA77gedoCDF4y8KBKV1jMl+R57xQnL9DS2hq2bYvW50HaIWIJEyhq2GvLRQyvQ0veYWnTgZ0cnyXfhORz8hFJKNAFhGEDx3IeEy8Vv7j70c0mJJzAqy1lV+PD6CVQDKKB7Kpts7toC+8Ux71FIZbG1VH2RAkywFCIaH/aPoAFSmwZfcozE0fCcnV/CaI3hl8OrLN2cBcsRb/Iul3ZOQD0Nz5EI7pRFeCkvmU8P9iNz3yqztZYrkd6ATtcfK//IKZ1L0OzcfUYiIVBObuAlJZ7bDw1nEhRghSiq64MmjoLtK65NppdHxtA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=wwxDyPWdSVla+rxpEyuNdKnq2MAcmn0d9L+E63ho19g=;
- b=UCuE/fs+sWhF+bb7p2l0dt8RoF8wSehUdN1Sd3JifUmloi5QFNAGHnDrnp3BViKAGmtj5xIF/DPDY4AM5qatOzWCAsA5Ej1R+2jjUNf6GO5dBiHYGpIph4wTPxIVOitj7rspdhwnUNOQc3ImSMKi7XFaNNqIK/V/urUIqhctsU9dhWB3m9nuBpe7K1Pm4BwtAYRfE5VZbdtO6jWO65jvIdKQb8oI2aVoCBJL4mYc/sWhREvEjyiLcl+j1PMoe9GLu9TU5mFKloCTRhQH3qbMWnjlXWyhwdrsOtFTwZeTalWtQ0dAOcv4+31LuP9PR4c9KByuD1anLk5+Zs6y3a3rtg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=wwxDyPWdSVla+rxpEyuNdKnq2MAcmn0d9L+E63ho19g=;
- b=Xtc/kG0TWRa7SlNRuhuR0C4P7bl2ajoYl7FcBHcbfs0lMRPV3wffQOoBTHMBwJ3Q6zx8FPL/g1VxvD8K/5eMxNJUecbk/cG1UQnPl5QWIRQumAuoQlnE1xRNgivdb5d7WUgqBvebKZA3ID2nTN53+LNKNJYhqQD6BYnfoL+g/ps=
-Message-ID: <097b20b8-b6ee-40a5-9116-2cdd4189ae77@oracle.com>
-Date: Sun, 23 Mar 2025 12:14:15 -0700
-User-Agent: Mozilla Thunderbird
-From: Alan Coopersmith <alan.coopersmith@oracle.com>
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-Autocrypt: addr=alan.coopersmith@oracle.com; keydata=
- xsDiBEab+moRBACDH5yKqS3wcc5bdxY7PBNuwKvF5TKMfagmSvuRDtZjjIIWaA/nZ1KboV9G
- q5g7kP7+Kfu+Qgd8u65eVsWwmPW10fXvj3aCU53glx2EdGdrHcgiyH2gEQfPiyBw+trIppWF
- RV0IDXSLMA1FNC92t2nSG/VFHaPTVwcgkIRSfcXDvwCglGdEa6f4uLqoNHP+m4yYnzapFuMD
- /R4+2AJDAvEWKDdYCGZzlawjAmmWyXrmT7/C/mx98qUR473l4buXjHgDkkXXlHqdzil1vK85
- PhrKzNJDCCmlHUJNz+QwiAMOLwpD+kwVPb57RG7y+a5JQ5+jtVw4RlUxZIk/wj2An9YBO3A5
- vR7PdjM32ZJCN2+aM4dYfNzQxQKTA/47icvBaBVTl9rztjg2pd2Aqpc1P/GsIYLGj7XjnnJv
- GAENBHSH1QjpZMJGCTS9oJ+B0/wrIr+pA+MdFgYAb6ojMQJOO6UChjWWSGjMFcs/CeXhxlLB
- ido3DtAETbNTwO6OEfAvdosvTdhJFnwvZlJ+zZGGy5CrF2Fd9PUe9tmASc0uQWxhbiBDb29w
- ZXJzbWl0aCA8YWxhbi5jb29wZXJzbWl0aEBvcmFjbGUuY29tPsKCBBMRCgBCAhsDBgsJCAcD
- AgYVCAIJCgsEFgIDAQIeAQIXgAIZARYhBEoZPAbTXnxnD6TvC6L7nggfLRMOBQJkQs2eBQkn
- DNS0AAoJEKL7nggfLRMO1esAnR4FVD60BpDY/bJp5RC1VXhOVlo4AKCJgsQeVeGLxDlMuhAm
- bcCkOjafqc7BTQRGm/pvEAgAmnlpSWGjmtSGlLqKTuymwBAU9G7Jw8ow27QngXS/86g/PTzm
- yhXzK0uPgeoIaTZlqaHWNKCWJnC6T2btXtaDHH6cElrClYNf94os5sSt8PBDh184W+NtctAy
- Y2dA1pQYhYs8/eXwa4E4cyrrQG75M+CHrbu9Se0vlERARCpNcjNYLpTXRCwNuUvAi905VJ0Y
- XnGX83WbJfNIq+uxnBa2gVzwb2/2FwKOG03Wyb1vs6NznWJle9x61y8/LlEDoBRbfIQTFp51
- R0ue8gX2yMVgh8lYVViHYCBq+cat7p8X41Xa/fN/HfBFPsf3/+bhggNgmaBmDJBxxd6BPB8Y
- EireiwADBgf/UWIxQwwRLkiXPacOoh34MJYQIBTrCC8gVFxetlbEPEH5mueZMJegAPTF52l8
- 6REenxdNVz/0xT7BD6VlHHY5DowlbRca4W8eb3gpkX/wfNYDYCHtTifT7ewumTrNZx5mrbNk
- 0XTJVOPAP3z7E0rVD2w/xo4p22DzIwfeGKwpHqt1b6Z9fmrRDwaiXaFmwUf+rIiGc/OFcOSe
- 46HwTmIyTOt6NVdQSf75jOPbdeM/n1I5svOdWTLEj6QEj2q9UQ98UEPJuMdaotyBFwKlcDOO
- LMSL793fWINrYSskdXhHjaht5wWqI+egO2JfciI/vP1+bEzhpY9llGq+r7WG3nCSf8JJBBgR
- AgAJBQJGm/pvAhsMAAoJEKL7nggfLRMOgugAoIdhGnD9d/IS6fDVgv+4xnOXvyohAJ0VVxc1
- uoPzepWFbgvLuHIMvyjRog==
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: BY5PR04CA0004.namprd04.prod.outlook.com
- (2603:10b6:a03:1d0::14) To DS7PR10MB5005.namprd10.prod.outlook.com
- (2603:10b6:5:3ac::15)
+Received: (qmail 5499 invoked from network); 14 Apr 2016 13:04:12 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS7PR10MB5005:EE_|BY5PR10MB4115:EE_
-X-MS-Office365-Filtering-Correlation-Id: 25f72a96-c3d9-4b63-d610-08dd6a3ee7a0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?VTJQdjNOTk5kUGIzWi9OSFpYdWhySWF1dGJqem9EQlFzbzhVc2N2Z1ZsMW5h?=
- =?utf-8?B?U2dYU00wWU9nRzNjbEpiRVN5cmhQSlMxM2JITzlxRHkzbzVacG4yOUhJVUIw?=
- =?utf-8?B?cmFDVk9GM2Z3N3RWQ2NoT2dHMncyb05oSnEvcVFla2oxcExscVpqSk5peVhn?=
- =?utf-8?B?RUdRMi80SXAyVmM0dWRaL1IzRUtjNzZsaWVKVy9odm5qOCtqazZRdW4zY0xS?=
- =?utf-8?B?Nk0yT1dmU3gwZDcrRENhU0pOQmlkMC9DWUp6RHFObGlTTS9jOGZhamVHN0kw?=
- =?utf-8?B?MDhuaDY1UGRkQWVlRXRrT1hyZ2ZWNkdwWlc2dVJnYUpKMUVCZTZWanlTSGI2?=
- =?utf-8?B?eHZJZ2pxcUFNRHN3ZFBHcjVqb1liek54QkdmOXJYalBIa0wxMHBkV1ZIQXJZ?=
- =?utf-8?B?cUNiTmlZNVF2cjFDQTF5Qkwwa1V3RnlTM0VBbUVjVHgrTklmQ1VwZEp1RVBl?=
- =?utf-8?B?TkNycFFmYjVUaThva2RrYjVqY2FtcXBqWXlPMnIrdm80OTJQRkJqN0pTdUh0?=
- =?utf-8?B?cXpGM0RselljRjZYKy9TdGZ5b1EyUDExeVlQRHNHVTNlczZMc1FpTHFEQ0E3?=
- =?utf-8?B?MlBsbUFnOEJwS3A0cUFYNzZmZmkrelY1S3BwYW9IN3MvVjh4WEVGVVRUYXZz?=
- =?utf-8?B?UGRpbElhV1FmS2xxd3FKMHMwNjJqV3lVYTU2SHZVZm43enArWmREQzJOVU5Y?=
- =?utf-8?B?MDRaYjVkQXRHeXRSVlBZK3lnWVBkaTl4Y2UyMWhPM0FxUkNHaE9yeWpROWpS?=
- =?utf-8?B?MWhFS1RDRjRMbURQSDVickJBU2pzSWpNL0Vha3dJeGZBZkcxVzZzazlxckdr?=
- =?utf-8?B?dnBhS2NTcmV3TmhXcUdWZGFEU3Z4QUtHWFY0Z2x3YU0zcEIxWjBzMCtXSmlB?=
- =?utf-8?B?OVd1OUZoU2J5azZwVXNwSjNES3Y4elUrREhUUUloOW1aMjUxZCt5U0ZwOXQ3?=
- =?utf-8?B?Wm01dWNzRlBlMEd3dWdLRE5MeVRVK1E0bU5udFpGaUNYQno5ck9xR3FQYUQ3?=
- =?utf-8?B?UDZEdzJmSmlDWmJsRVUxdFpsR2pCWkJ6RDZtYmtSbWp6WjFYYVVqZm5HZ1Zp?=
- =?utf-8?B?ZEFXdGthZzBCTE51emF5aWthZml0OUVXRWd3cmxzYnh2RU5CTmcrZzVxenZJ?=
- =?utf-8?B?dGswanN5T0swdFNjeE1wSU5TMkp1MG05UGUzWGlJQS9mQ2luUHJJWWR6M285?=
- =?utf-8?B?eCt5Ylh1a0d3UFNCdHlNR0daMGl0VS8raE9aanVzZGd2L1pUbG1yZWprU3p4?=
- =?utf-8?B?dDB3ZVlqdVRRbG9WRHlVRCtsa0ttR3pmRENYdW1RTEZHeFZ3SzdIYlMvY25v?=
- =?utf-8?B?TGxFSUdPU3dYdCtKd3lZQmRxZnFhTm9XWkdJTUdLeHA1VEtqdEJjeXQzNXEw?=
- =?utf-8?B?VVRHUTlxOWVGUzVxMUNsdkZ1Ui9EYVdmeVpVUVVqeVdVU2dKK20vWHRJV2dz?=
- =?utf-8?B?ZmJQRG10VkJpbWNnRXdHM2JGRkk1Q3pGNGh5T2xmMm9kSHcvUGl2bnNkcVBa?=
- =?utf-8?B?TjBDbXhrMGNLQzJZRitwY0t2VzBxNi8vNWtBU3REdDhUU1l0TEVrVFIrTS9v?=
- =?utf-8?B?MjFaRlZmVDByZzJBQWl6WXZRK0FBbjd1R2ZDYVFBU29rdUt5VkVFdnhyTHBv?=
- =?utf-8?B?clVVREZ6aVdHZERmTDduL25XbmE3Z3FJZWxkU0RCaGJPWUZZblhKV3lZdmhz?=
- =?utf-8?B?cyttbURQQkJ6VVhMaHdIZ3AzTEFQeVIyK1BXaTQ0MHZsaEZaYi9ZcTBqN1kx?=
- =?utf-8?B?S3YyaFpMM1hrMFZZbjhlSG13K1RQQkJVck1wM2tUczZpeG8zSjJFUWppNVk0?=
- =?utf-8?B?eU9RYkZ1bzIvQ3FVVzZZQkU1ZUxQMW5QdXBla2N1Zmp6TThiUUM0dWJQTk1i?=
- =?utf-8?B?cFN0YkhtcmdMd2grMHQ5Q3ZlUGROUERiM3plN3c0TjBMMmc9PQ==?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR10MB5005.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?dGpPaTREeVhJRXpCUzU5bGFDKzQvcTBxcmg0K25ucFVWdENOa2tFWXlSMGZX?=
- =?utf-8?B?bGRDdEdmVHlEbi94VlhCTDZMcjJYSFJ5MTU0VVZOVVZ6UkozY20ydURKSDYy?=
- =?utf-8?B?L0tYOVVPZ1JocU5CdzlkVHhqZjBRVUtUeFY0MTU4Q0RFak5kd0VVVlZiK3Ew?=
- =?utf-8?B?NjBKMG0xYndhODlEMDcxYVBHZTJJbk9nR05BOTk3MStwRUR3ZjlycUptVWdy?=
- =?utf-8?B?eEIxNW5WNFF1R3pEcEpDaXRvRmRjR0d5ZDBsYVI1dEdENmpsOERkTDVqbmI0?=
- =?utf-8?B?YjdncENheGE5UXVncUZWeElmMDNmMzZwMzNGdWZ2NkJDdC9NWEtBdWhlK05K?=
- =?utf-8?B?eFRjZk94OUZoTFVkYXczSlJPZGd6REZaY0RIYkU5QThPTnNRZEFTR2MvTUhy?=
- =?utf-8?B?SE5kaW54bWs4aUNhK0MvY0Z3Z1doN2NhYW9jUUxUTmN0VThRVFF4djJYTHFy?=
- =?utf-8?B?a2Z2VWhFRnRIY2VwT252b2JZTExwbTJWV3VzaWJpNERRV2VhVXdTS2cwY3Vh?=
- =?utf-8?B?NnRLRmFtWnVCUVRmUktWdUJRY1FMRXI4MDhIMW56ZkUrTkNLbXdFeG41aXpt?=
- =?utf-8?B?UFJoZVcrcGVDN045bWRFR2VJeldjRTF4bHFQMVMvcTRkbWhZZmJuenBZbUJk?=
- =?utf-8?B?VEF3aDNlenFIa2xhR2xFSkhyWHNZd0lPU3BEQUoyUjRnQ0Zkb0x3K3pvdUVt?=
- =?utf-8?B?OW1qZmlLdS9uSENodGRWemU1YnZ2Qi9HdW1pR1hESDh3aW1WZmltaUJUWDlK?=
- =?utf-8?B?QjRZd3AxTkRJMEFsR2hCcmFEL21vVFVjMy9LaTlQT1BwSTl1ZWZ1L0dvKzFR?=
- =?utf-8?B?UGhhSC8zRmdISjVSWEd2a2hPOC92VlQzYXFuK01kN0RsRkw5MVlsVXYzTmZD?=
- =?utf-8?B?UVpyTDNQYTNtd21lWXJnNm96TkJJbjVFdUR3QjZMTlpaVjg5RW5DVDk5OUVW?=
- =?utf-8?B?cHpVWWFDcm95Wlc5V01oYW1CR2ZKR011MUtKK0c3dWc2T0Z4eWlGWjQrTitq?=
- =?utf-8?B?U1NORzUrdWRRR3dzZ2lBTUtwTDBBODlOOUNwRVFCcEdyT2tFZnkyNGs5R3NI?=
- =?utf-8?B?dDhXTWZWbnRtNThUdVJPdmh5Vit6WERUeDdHdHNEWGJEVmdkcVNIbDY2Wjlh?=
- =?utf-8?B?dHFJUlFRT2plb1lUbDV1dktDeDcvUUNFRUtCNXhxV3Q3bU1QQ3hCSTlXNnZm?=
- =?utf-8?B?cXhzbDRSWG1QaWZuc2ZJNURWQkJvbTZ6Zm9OMk5lQ1V0WDZRUE9LSmluQXlo?=
- =?utf-8?B?L2xvYmF1TEx2TmN6KzBwcGFDdWNXdEJKbk16SGdiUmlUUEh2Z2UyaFJKNmY0?=
- =?utf-8?B?emFYT1c2Y21zMm5qU2RvMFRUd01hK3NLRDhucTR6b2k3ZGcyNmp3V0Rpb055?=
- =?utf-8?B?eEdSNFpPb0FKVkxGTzA1WUNTQzVKam4vbThEZmRrS25lL1VXTkd3NUNab09a?=
- =?utf-8?B?QjQ0WjNaYm9BcjZLUlVYK2JQeGZiZys1MEtCR05wSURoTXNPbUtsSnlNaEZz?=
- =?utf-8?B?bU9LV2Z4YVR0dXhmTWtvRXZLOGNmY1N6bVc0WHh6dDZkYlR1ZVkvSyt4Y1gy?=
- =?utf-8?B?OGhPYVFWNVMvOXcyNjFDV210WXZvbVEyTjgwbVN3UDhzR2NLOGd3dXJkK1Zi?=
- =?utf-8?B?bnA1aHJ1NE9VV1VPTW9TMExGdW1ER1BBQzUvYXdjNWhTbU01QUNuMmVsa3d3?=
- =?utf-8?B?Zy9nbXlDL2kxOFpFemhaK1VWOWwxT1Q2NmQ2YmNueWNZaklNbkNCSUtzejRm?=
- =?utf-8?B?ZDZqRjBsSmVPUTdvTGduVEdMc3UzN3h1L3h0OUUyVFZBTTE4Ym4xR25PQUlY?=
- =?utf-8?B?NXZWK0prV29rR2JRSk4zMHJTTmU2WVErUCt5KzRiL0NVZGlxYlBGNFhlQndF?=
- =?utf-8?B?U1I4bjlqMWF2Mm1sb2JiMVNxZytESmg4OFdEQzZhckhXNHp3STFRb0x1UzY4?=
- =?utf-8?B?OFpmSW1SRW9pM1RpWXBsQ1JScFM1MWlFU1JqR2UzY3FuSXF5WStjbnpMZTla?=
- =?utf-8?B?TXJDQ0NYRFJPSUtIYVBIb05udUNsamsrWnZicjd2ZWpyVlR2bkY0dGNCaTNm?=
- =?utf-8?B?MlVFdDcxd0RQWmRNWVEvTm0yaGxsWVdwbTNhTERoVHh5ZjdGL2NMMVFndSs0?=
- =?utf-8?B?WXhFNTlMTHg5clVQdTF1RlA2QmZPODcxVUZSSEg3MDdvZElMNXMzeml5TGZh?=
- =?utf-8?B?b0E9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	Rlw7qCD7jKdk9XOLjNmKk/iXZQNmbsYx4SM6jEwph2cCfpP6ZU7axHhUE6lIIB4a6iU5VmkF5Ssl5tm8AL6oOmM+4FeRxRYvIXckwhEqcYc47R2F6X7n90p4sF9TV/bDp5hgeoxUI9IAnGVxH1XMInhMk5MRvvm+QnWay7LcEcaOo9ez4q5WLXlycwA9gO2wIsL1mPp+aelmw1EPgIevRu3MQpunpI18PDsRjKP3zUMWjOiuTZWswv9E11nb4YppVKr+f+tqTuSX8utD0CVcj8PwmR0/OU81VtAshOvm4bH8EN0elUUdVjtZPh1XiJr0Hy6JcbHgvD59sywbTUieLc0LUE4Abwvctk5HoQlXB7t0y8/sr3l76BnDEPg3ekTcJl8iCFMVPpTELZPJC5BiZq99sAK6awYxssVemZ7JVOssfMbI8c9pbNyt94QkHoJ9NPsAw12nh5kjHshfB2aTLj7Twr20AX50wEMm/o+Yn0wyueEsZfpLMwv5dKlwc0hFd7JMG+qsunmnSwjUZYixIefmmlGB7x67IrqCk8utxvhcBkf1sxXV3UTq24+4meLF3QcnMMIeKEs+Oag4TlGMUkbjL8MYRYadefScchhDgP0=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 25f72a96-c3d9-4b63-d610-08dd6a3ee7a0
-X-MS-Exchange-CrossTenant-AuthSource: DS7PR10MB5005.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Mar 2025 19:14:16.4642
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ZZzw8x7ev9xdO+Tzk7vkk+mad02rFAhRqZ1W5J/uCBWkYDDkXVKG5nEDBjsEtPQ+YSjTJZHTUkYGhX0x/1EQJ0Ypln2iPk2EzyU93U7dNso=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR10MB4115
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-23_09,2025-03-21_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 bulkscore=0 suspectscore=0
- adultscore=0 malwarescore=0 spamscore=0 mlxlogscore=999 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2502280000
- definitions=main-2503230137
-X-Proofpoint-ORIG-GUID: OW1-Gh1nHOozYGV7nOhH9AnXSN4iz3yl
-X-Proofpoint-GUID: OW1-Gh1nHOozYGV7nOhH9AnXSN4iz3yl
-Subject: [oss-security] CVE-2025-29927: Authorization Bypass in Next.js
- Middleware
+X-Mailer: MIME-tools 5.505 (Entity 5.505)
+Message-Id: <E1aqgvz-0001Vr-5I@xenbits.xenproject.org>
+CC: Xen.org security team <security@xen.org>
+Date: Thu, 14 Apr 2016 13:03:47 +0000
+From: Xen.org security team <security@xen.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Xen Security Advisory 174 (CVE-2016-3961) - hugetlbfs use may
+ crash PV Linux guests
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
 
-https://nextjs.org/blog/cve-2025-29927 announces:
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-> Next.js version 15.2.3 has been released to address a security vulnerability
-> (CVE-2025-29927). Additionally, backported patches are available.
-> 
-> We recommend that all self-hosted Next.js deployments using "next start" and
-> "output: 'standalone'" should update immediately.
-> 
-> Continue reading for more details on the CVE.
-> 
-> Timeline
-> 
->     2025-02-27T06:03Z: Disclosure to Next.js team via GitHub private
->     		       vulnerability reporting
->     2025-03-14T17:13Z: Next.js team started triaging the report
->     2025-03-14T19:08Z: Patch pushed for Next.js 15.x
->     2025-03-14T19:26Z: Patch pushed for Next.js 14.x
->     2025-03-17T22:44Z: Next.js 14.2.25 released
->     2025-03-18T00:23Z: Next.js 15.2.3 released
->     2025-03-18T18:03Z: CVE-2025-29927 issued by GitHub
->     2025-03-21T10:17Z: Security Advisory published
->     2025-03-22T21:21Z: Next.js 13.5.9 released
->     2025-03-23T06:44Z: Next.js 12.3.5 released
-> 
-> Vulnerability details
-> 
-> Next.js uses an internal header "x-middleware-subrequest" to prevent recursive
-> requests from triggering infinite loops. The security report showed it was
-> possible to skip running Middleware, which could allow requests to skip
-> critical checks—such as authorization cookie validation—before reaching routes.
-> 
-> Impact scope
-> 
->   Affected
-> 
->     Self-hosted Next.js applications using Middleware ("next start" with
->      "output: 'standalone'")
->     This affects you if you rely on Middleware for auth or security checks,
->      which are not then validated later in your application.
->     Applications using Cloudflare can turn on a Managed WAF rule
-> 
->   Not affected
-> 
->     Applications hosted on Vercel
->     Applications hosted on Netlify
->     Applications deployed as static exports (Middleware not executed)
-> 
-> Patched versions
-> 
->     For Next.js 15.x, this issue is fixed in 15.2.3
->     For Next.js 14.x, this issue is fixed in 14.2.25
->     For Next.js 13.x, this issue is fixed in 13.5.9
->     For Next.js 12.x, this issue is fixed in 12.3.5
-> 
-> If patching to a safe version is infeasible, it is recommended that you prevent
-> external user requests which contain the "x-middleware-subrequest" header from
-> reaching your Next.js application.
-> 
-> Our security responsibility
-> 
-> Next.js has published 16 security advisories since 2016. Over time, we've
-> continued to improve how we gather, patch, and disclose vulnerabilities.
-> 
-> GitHub Security Advisories and CVEs are industry-standard approaches to
-> notifying users, vendors, and companies of vulnerabilities in software.
-> While we have published a CVE, we missed the mark on partner communications.
-> 
-> To help us more proactively work with partners depending on Next.js, and other
-> infrastructure providers, we are opening a partner mailing list. Please reach
-> out to partners@nextjs.org to be included.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+            Xen Security Advisory CVE-2016-3961 / XSA-174
+                              version 3
+
+                hugetlbfs use may crash PV Linux guests
+
+UPDATES IN VERSION 3
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+Huge (2Mb) pages are generally unavailable to PV guests.  Since x86
+Linux pvops-based kernels are generally multi purpose, they would
+normally be built with hugetlbfs support enabled.  Use of that
+functionality by an application in a PV guest would cause an
+infinite page fault loop, and an OOPS to occur upon an attempt to
+terminate the hung application.
+
+IMPACT
+======
+
+Depending on the guest kernel configuration, the OOPS could result
+in a kernel crash (guest DoS).
+
+VULNERABLE SYSTEMS
+==================
+
+All upstream x86 Linux versions operating as PV Xen guests are
+vulnerable.
+
+ARM systems are not vulnerable.  x86 HVM guests are not vulnerable.
+
+x86 Linux versions derived from linux-2.6.18-xen.hg (XenoLinux) are not
+vulnerable.
+
+Oracle Unbreakable Enterprise Kernels are not vulnerable.
+
+We believe that non-Linux guests are not vulnerable, as we are not
+aware of any with an analogous bug.
+
+MITIGATION
+==========
+
+Running only HVM guests will avoid this issue.
+
+Not enabling hugetlbfs use, by not altering the boot time default value
+of zero in /proc/sys/vm/nr_hugepages (which can only be written by the
+root user) will avoid this issue.
+
+It is possible that disabling (or not enabling) the "panic on OOPS"
+behavior (via use of the "oops=panic" command line option or the
+"panic_on_oops" sysctl) will also avoid this issue, by limiting the
+effect to an application crash.  We are not currently sure whether
+this is an effective mitigation, as we are not sure whether any locks
+or mutexes are held at the point of the crash.
+
+CREDITS
+=======
+
+This issue was discovered by Vitaly Kuznetsov from Red Hat.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa174.patch           Linux 4.5.x ... 3.10.x
+
+$ sha256sum xsa174*
+cbec70e183f76b4081ebba05c0a8105bd4952d164a2e5c40528c05bf8861ddef  xsa174.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of patches or mitigations is NOT permitted (except where
+all the affected systems and VMs are administered and used only by
+organisations which are members of the Xen Project Security Issues
+Predisclosure List).  Specifically, deployment on public cloud systems
+is NOT permitted.
+
+This is because such host configuration changes would be user mode
+visible, which could lead to the rediscovery of the vulnerability.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
-https://github.com/vercel/next.js/security/advisories/GHSA-f82v-jwr5-mffw adds:
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-> Credits
-> 
->     Allam Rachid (zhero;)
->     Allam Yasser (inzo_)
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
+iQEcBAEBAgAGBQJXD5UqAAoJEIP+FMlX6CvZtAEIAKUf33cM1Gs+Y8Yt+s3FLvqR
+RW9Ktbz0dqMfL+4govcvfbI5CdtB75ZWp6T4rrjGrtIvljEJWAERasKA0anIW00I
+5duFtbFN+nPlmdZUfGIW3G6kpveSstOICVxqKPn0chN7VuTZJvzogc9t9PTtvwpX
++UkzvUvMacu0u8H0mJFjcuS/xFeS5LaosOCrJwAWKP1je6fwc217MrYm8LH6vwGr
+K7yJVnEih0XGv5hy9ufwcF5SI0d4CSilcxfFAqKJkRwQ2SSbsF2BXN1j11Eqmua3
+ARif+g3qBH6uH+RT6bclUOUO3vCKcReBWjRCF+bbsdDMCmSLwdkQK8xtu7N/Tys=
+=u89I
+-----END PGP SIGNATURE-----
 
+--=separator
+Content-Type: application/octet-stream; name="xsa174.patch"
+Content-Disposition: attachment; filename="xsa174.patch"
+Content-Transfer-Encoding: base64
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@oracle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+eDg2L3hlbjogc3VwcHJlc3MgaHVnZXRsYmZzIGluIFBWIGd1ZXN0cwoKSHVn
+ZSBwYWdlcyBhcmUgbm90IG5vcm1hbGx5IGF2YWlsYWJsZSB0byBQViBndWVz
+dHMuIE5vdCBzdXBwcmVzc2luZwpodWdldGxiZnMgdXNlIHJlc3VsdHMgaW4g
+YW4gZW5kbGVzcyBsb29wIG9mIHBhZ2UgZmF1bHRzIHdoZW4gdXNlciBtb2Rl
+CmNvZGUgdHJpZXMgdG8gYWNjZXNzIGEgaHVnZXRsYmZzIG1hcHBlZCBhcmVh
+IChzaW5jZSB0aGUgaHlwZXJ2aXNvcgpkZW5pZXMgc3VjaCBQVEVzIHRvIGJl
+IGNyZWF0ZWQsIGJ1dCBlcnJvciBpbmRpY2F0aW9ucyBjYW4ndCBiZQpwcm9w
+YWdhdGVkIG91dCBvZiB4ZW5fc2V0X3B0ZV9hdCgpLCBqdXN0IGxpa2UgZm9y
+IHZhcmlvdXMgb2YgaXRzCnNpYmxpbmdzKSwgYW5kIC0gb25jZSBraWxsZWQg
+aW4gYW4gb29wcyBsaWtlIHRoaXM6CgprZXJuZWwgQlVHIGF0IC4uLi9mcy9o
+dWdldGxiZnMvaW5vZGUuYzo0MjghCmludmFsaWQgb3Bjb2RlOiAwMDAwIFsj
+MV0gU01QIApNb2R1bGVzIGxpbmtlZCBpbjogLi4uClN1cHBvcnRlZDogWWVz
+CkNQVTogMiBQSUQ6IDYwODggQ29tbTogaHVnZXRsYmZzIFRhaW50ZWQ6IEcg
+ICAgICAgIFcgICAgICAgICA0LjQuMC0yMDE2LTAxLTIwLXB2ICMyCkhhcmR3
+YXJlIG5hbWU6IC4uLgp0YXNrOiBmZmZmODgwODA1OTIwNWMwIHRpOiBmZmZm
+ODgwODAzYzg0MDAwIHRhc2sudGk6IGZmZmY4ODA4MDNjODQwMDAKUklQOiBl
+MDMwOls8ZmZmZmZmZmY4MTFjMzMzYj5dICBbPGZmZmZmZmZmODExYzMzM2I+
+XSByZW1vdmVfaW5vZGVfaHVnZXBhZ2VzKzB4MjViLzB4MzIwClJTUDogZTAy
+YjpmZmZmODgwODAzYzg3OWE4ICBFRkxBR1M6IDAwMDEwMjAyClJBWDogMDAw
+MDAwMDAwMDc3YTRkYiBSQlg6IGZmZmZlYTAwMWFjZmYwMDAgUkNYOiAwMDAw
+MDAwMDc4NDE3ZDM4ClJEWDogMDAwMDAwMDAwMDAwMDAwMCBSU0k6IDAwMDAw
+MDAwN2UxNTRmYTcgUkRJOiBmZmZmODgwODA1ZDcwOTYwClJCUDogMDAwMDAw
+MDAwMDAwMDk2MCBSMDg6IDAwMDAwMDAwMDAwMDAwMDAgUjA5OiAwMDAwMDAw
+MDAwMDAwMDAwClIxMDogMDAwMDAwMDAwMDAwMDAwMCBSMTE6IDAwMDAwMDAw
+MDAwMDAwMDEgUjEyOiAwMDAwMDAwMDAwMDAwMDAwClIxMzogZmZmZjg4MDgw
+NzQ4NjAxOCBSMTQ6IDAwMDAwMDAwMDAwMDAwMDAgUjE1OiBmZmZmODgwODAz
+Yzg3YWYwCkZTOiAgMDAwMDdmODVmYThiODcwMCgwMDAwKSBHUzpmZmZmODgw
+ODBiNjQwMDAwKDAwMDApIGtubEdTOjAwMDAwMDAwMDAwMDAwMDAKQ1M6ICBl
+MDMzIERTOiAwMDAwIEVTOiAwMDAwIENSMDogMDAwMDAwMDA4MDA1MDAzYgpD
+UjI6IDAwMDA3Zjg1ZmEwMDAwMDAgQ1IzOiAwMDAwMDAwMDAxYTBhMDAwIENS
+NDogMDAwMDAwMDAwMDA0MDY2MApTdGFjazoKIGZmZmY4ODAwMDAwMDBmYjAg
+ZmZmZjg4MDgwM2M4N2ExOCBmZmZmODgwODAzYzg3YWU4IGZmZmY4ODA4MDU5
+MjA1YzAKIGZmZmY4ODA4MDNjODdhZjAgZmZmZjg4MDgwM2M4N2FlOCBmZmZm
+ODgwODA3NDg2MDE4IDAwMDAwMDAwMDAwMDAwMDAKIGZmZmZmZmZmODFiZjZl
+NjAgZmZmZjg4MDgwNzQ4NjE2OCAwMDAwMDNmZmZmZmZmZmZmIDAwMDAwMDAw
+MDNjODc3NTgKQ2FsbCBUcmFjZToKIFs8ZmZmZmZmZmY4MTFjMzQxNT5dIGh1
+Z2V0bGJmc19ldmljdF9pbm9kZSsweDE1LzB4NDAKIFs8ZmZmZmZmZmY4MTE2
+N2IzZD5dIGV2aWN0KzB4YmQvMHgxYjAKIFs8ZmZmZmZmZmY4MTE2NTE0YT5d
+IF9fZGVudHJ5X2tpbGwrMHgxOWEvMHgxZjAKIFs8ZmZmZmZmZmY4MTE2NWIw
+ZT5dIGRwdXQrMHgxZmUvMHgyMjAKIFs8ZmZmZmZmZmY4MTE1MDUzNT5dIF9f
+ZnB1dCsweDE1NS8weDIwMAogWzxmZmZmZmZmZjgxMDc5ZmMwPl0gdGFza193
+b3JrX3J1bisweDYwLzB4YTAKIFs8ZmZmZmZmZmY4MTA2MzUxMD5dIGRvX2V4
+aXQrMHgxNjAvMHg0MDAKIFs8ZmZmZmZmZmY4MTA2MzdlYj5dIGRvX2dyb3Vw
+X2V4aXQrMHgzYi8weGEwCiBbPGZmZmZmZmZmODEwNmU4YmQ+XSBnZXRfc2ln
+bmFsKzB4MWVkLzB4NDcwCiBbPGZmZmZmZmZmODEwMGY4NTQ+XSBkb19zaWdu
+YWwrMHgxNC8weDExMAogWzxmZmZmZmZmZjgxMDAzMGU5Pl0gcHJlcGFyZV9l
+eGl0X3RvX3VzZXJtb2RlKzB4ZTkvMHhmMAogWzxmZmZmZmZmZjgxNDE3OGE1
+Pl0gcmV0aW50X3VzZXIrMHg4LzB4MTMKClRoaXMgaXMgWFNBLTE3NC4KClJl
+cG9ydGVkLWJ5OiBWaXRhbHkgS3V6bmV0c292IDx2a3V6bmV0c0ByZWRoYXQu
+Y29tPgpTaWduZWQtb2ZmLWJ5OiBKYW4gQmV1bGljaCA8amJldWxpY2hAc3Vz
+ZS5jb20+CkNjOiBzdGFibGVAdmdlci5rZXJuZWwub3JnCi0tLQp2MjogTWFr
+ZSBYZW4taW5zcGVjaWZpYywgYnkgdXNpbmcgY3B1X2hhc19wc2UuCgotLS0g
+YS9hcmNoL3g4Ni9pbmNsdWRlL2FzbS9odWdldGxiLmgKKysrIGIvYXJjaC94
+ODYvaW5jbHVkZS9hc20vaHVnZXRsYi5oCkBAIC00LDYgKzQsNyBAQAogI2lu
+Y2x1ZGUgPGFzbS9wYWdlLmg+CiAjaW5jbHVkZSA8YXNtLWdlbmVyaWMvaHVn
+ZXRsYi5oPgogCisjZGVmaW5lIGh1Z2VwYWdlc19zdXBwb3J0ZWQoKSBjcHVf
+aGFzX3BzZQogCiBzdGF0aWMgaW5saW5lIGludCBpc19odWdlcGFnZV9vbmx5
+X3JhbmdlKHN0cnVjdCBtbV9zdHJ1Y3QgKm1tLAogCQkJCQkgdW5zaWduZWQg
+bG9uZyBhZGRyLAo=
 
+--=separator--
