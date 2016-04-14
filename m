@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3469" "Wednesday" "29" "April" "2015" "16:00:58" "+0200" "Andrea Barisani" "lcars@ocert.org" "<20150429140058.GH23142@core.inversepath.com>" "97" "[oss-security] [oCERT-2015-003] MySQL SSL/TLS downgrade" nil nil nil "4" "2015042914:00:58" "[oss-security] [oCERT-2015-003] MySQL SSL/TLS downgrade" (number mark "        lcars@ocert. Apr 29   97/3469  " thread-indent "\"[oss-security] [oCERT-2015-003] MySQL SSL/TLS downgrade\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["801" "Thursday" "14" "April" "2016" "13:44:36" "-0400" "Naser Farhadi" "n4ser.farhadi@gmail.com" "<BF077EF2-CBB6-4357-A69C-94778080D73E@gmail.com>" "31" "[oss-security] Re: CVE request: OpenCart 2.1.0.2 to 2.2.0.0 - json_decode Function Remote Code Execution" nil nil nil "4" "2016041417:44:36" "[oss-security] Re: CVE request: OpenCart 2.1.0.2 to 2.2.0.0 - json_decode Function Remote Code Execution" (number mark "U       n4ser.farhad Apr 14   31/801   " thread-indent "\"[oss-security] Re: CVE request: OpenCart 2.1.0.2 to 2.2.0.0 - json_decode Function Remote Code Execution\"\n") "<68AD5BF8-0B12-4F1E-8DE0-49E36A769AC3@gmail.com>" ("<68AD5BF8-0B12-4F1E-8DE0-49E36A769AC3@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18045 invoked by uid 550); 29 Apr 2015 14:01:49 -0000
+Received: (qmail 29896 invoked by uid 550); 14 Apr 2016 17:47:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,115 +11,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17866 invoked from network); 29 Apr 2015 14:01:10 -0000
-Message-ID: <20150429140058.GH23142@core.inversepath.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-GPG-Key: 0x864C9B9E
-X-GPG-Fingerprint: 0A76 074A 02CD E989 CE7F  AC3F DA47 578E 864C 9B9E
-User-Agent: Mutt/1.5.20 (2009-06-14)
-Date: Wed, 29 Apr 2015 16:00:58 +0200
-From: Andrea Barisani <lcars@ocert.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [oCERT-2015-003] MySQL SSL/TLS downgrade
-To: oss-security@lists.openwall.com, ocert-announce@lists.ocert.org,
-        bugtraq@securityfocus.com
+Received: (qmail 27754 invoked from network); 14 Apr 2016 17:44:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:message-id:mime-version:subject:date:references:to:in-reply-to;
+        bh=SUoqDzGC5iwCIo49VY+7gYRF2AD/lBMvhczfFYq2Bvs=;
+        b=rVmybZiLcEPjDD3y8zv047DQWqXGvhvtYdo2m/JqHomdPlyCoGcnUJH4+80A0zaxDN
+         SOrBgzNkCJOjS0brsqBPBxCM8+LU+Busubepn1C9vITKJ8t2zwIqKeS1A0yFoTWHZXGs
+         V5VpMtt8ryiItEwmam9cJXKvya3GkrNYqllVJf4xm2Q6RWc0UKEemLM7dTB0gWxlfJSh
+         gOdwTryN8cUSR3OPKJo2yfOY8a1/mknxevBX4u0cqTulJ/HyJDPDHtabQbOOcSc4PLCi
+         kqdSCN2/i2w+CGGUgfjfyvgDyTU0VotNb9IFEoGNgwC9GrHuAI4IE8yKOlpVAQSGBZ02
+         D7zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:message-id:mime-version:subject:date
+         :references:to:in-reply-to;
+        bh=SUoqDzGC5iwCIo49VY+7gYRF2AD/lBMvhczfFYq2Bvs=;
+        b=OQIZL88dcikWlO4uaRXBgP3zw7x2q+Ehj768+HWgzpafH99U4czt6aBHqXn5N5fjnY
+         x0Nz/c389rAEQzdLyHr6JJiwBbDWb/GBxSCwAIvECDQCaeXfD8kbQcpmvt/a8vkRJ/e2
+         Nz5WO3TtrHFWxSphPSBcjAj4kLdw58iCj0our9NBm0/9u/XP5owzT/g95ZvUGVKF4pdr
+         /2PZSKQ2N+ar9vLFHiBOFp2xhsRWXS7caKAVbvhwklOVnLgKUljng/tjT5hFc1KfM+yO
+         6e45byVkBORPVfPIP4iN0TRoV27bkOS15TkRvouevjXJZTwV2kS7xII1+KiNNPdzOOHq
+         wpKw==
+X-Gm-Message-State: AOPr4FUMan4vnmwj/B2pQv3v3uzC2O6+zoYVtLgUe/CutlJbecZJWcVVsYA87JBkDhkFsQ==
+X-Received: by 10.112.219.101 with SMTP id pn5mr6674750lbc.62.1460655883018;
+        Thu, 14 Apr 2016 10:44:43 -0700 (PDT)
+From: Naser Farhadi <n4ser.farhadi@gmail.com>
+Content-Type: multipart/alternative; boundary="Apple-Mail=_31FEE6B5-6C0C-4E4C-8A7F-813BB4F38D60"
+Message-Id: <BF077EF2-CBB6-4357-A69C-94778080D73E@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Date: Thu, 14 Apr 2016 13:44:36 -0400
+References: <68AD5BF8-0B12-4F1E-8DE0-49E36A769AC3@gmail.com>
+To: oss-security@lists.openwall.com
+In-Reply-To: <68AD5BF8-0B12-4F1E-8DE0-49E36A769AC3@gmail.com>
+X-Mailer: Apple Mail (2.3124)
+Subject: [oss-security] Re: CVE request: OpenCart 2.1.0.2 to 2.2.0.0 - json_decode Function Remote Code Execution
+
+--Apple-Mail=_31FEE6B5-6C0C-4E4C-8A7F-813BB4F38D60
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
+
+Note:
+-----------------
+Exploit only works if PHP JSON extension is not installed.
+
+> On Apr 14, 2016, at 1:26 PM, Naser Farhadi <n4ser.farhadi@gmail.com> wrot=
+e:
+>=20
+> Hi
+>=20
+> OpenCart is prone to a remote code-execution vulnerability.
+>=20
+> https://www.exploit-db.com/exploits/39679/ <https://www.exploit-db.com/ex=
+ploits/39679/>
+> http://seclists.org/bugtraq/2016/Apr/61 <http://seclists.org/bugtraq/2016=
+/Apr/61>
+> https://github.com/opencart/opencart/issues/4220 <https://github.com/open=
+cart/opencart/issues/4220>
+>=20
+> Could a CVE please be assigned to this issue?
+>=20
+> Regards,
+> Naser
 
 
-#2015-003 MySQL SSL/TLS downgrade
 
-Description:
-
-The MySQL project is an open source relational database management system.
-
-A vulnerability has been reported concerning the impossibility for MySQL users
-(with any major stable version) to enforce an effective SSL/TLS connection
-that would be immune from man-in-the-middle (MITM) attacks performing a
-malicious downgrade.
-
-While the issue has been addressed in MySQL preview release 5.7.3 in December
-2013, it is perceived that the majority of MySQL users are not aware of this
-limitation and that the issue should be treated as a vulnerability.
-
-The vulnerability lies within the behaviour of the '--ssl' client option,
-which on affected versions it is being treated as "advisory". Therefore while
-the option would attempt an SSL/TLS connection to be initiated towards a
-server, it would not actually require it. This allows a MITM attack to
-transparently "strip" the SSL/TLS protection.
-
-The issue affects the ssl client option whether used directly or triggered
-automatically by the use of other ssl options ('--ssl-xxx') that imply
-'--ssl'.
-
-Such behavior is clearly indicated in MySQL reference manual as follows:
-
-  For the server, this option specifies that the server permits but does not require
-  SSL connections.
-
-  For a client program, this option permits but does not require the client to
-  connect to the server using SSL. Therefore, this option is not sufficient in
-  itself to cause an SSL connection to be used. For example, if you specify this
-  option for a client program but the server has not been configured to permit
-  SSL connections, an unencrypted connection is used.
-
-In a similar manner to the new '--ssl' option behaviour, users of the MySQL
-client library (Connector/C, libmysqlclient), as of MySQL 5.7.3, can take
-advantage of the MYSQL_OPT_SSL_ENFORCE option to enforce SSL/TLS connections.
-
-The vulnerability also affects the MySQL forks MariaDB and Percona Server, as
-the relevant 5.7.3 patch has not been pulled, at the time of this advisory, in
-their respective stable versions.
-
-Affected version:
-
-MySQL <= 5.7.2
-
-MySQl Connector/C (libmysqlclient) < 6.1.3
-
-Percona Server, all versions
-
-MariaDB, all versions
-
-Fixed version:
-
-MySQL >= 5.7.3
-
-MySQl Connector/C (libmysqlclient) >= 6.1.3
-
-Percona Server, N/A
-
-MariaDB, N/A
-
-Credit: vulnerability report from Adam Goodman, Principal Security Architect
-at Duo Security.
-
-CVE: CVE-2015-3152 (MariaDB, Percona)
-
-Timeline:
-
-2015-03-20: vulnerability report received
-2015-03-23: contacted Oracle Security
-2015-04-04: oCERT sets embargo date to April 29th
-2015-04-20: reporter confirms MariaDB is affected
-2015-04-22: contacted MariaDB and affected vendors, assigned CVEs
-2015-04-23: contacted Percona
-2015-04-29: advisory release
-
-References:
-https://github.com/mysql/mysql-server/commit/3bd5589e1a5a93f9c224badf983cd65c45215390
-http://mysqlblog.fivefarmers.com/2014/04/02/redefining-ssl-option
-http://dev.mysql.com/doc/relnotes/mysql/5.7/en/news-5-7-3.html
-https://mariadb.atlassian.net/browse/MDEV-7937
-https://bugs.launchpad.net/percona-server/+bug/1447527
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2015-003.html
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | OSS Computer Security Incident Response Team
-
-<lcars@ocert.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+--Apple-Mail=_31FEE6B5-6C0C-4E4C-8A7F-813BB4F38D60--
