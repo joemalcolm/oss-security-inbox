@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["807" "Thursday" "3" "November" "2016" "21:07:35" "-0400" "Thomas Dickey" "dickey@his.com" "<20161104010735.GA25615@vmw-debian7-64.jexium-island.net>" "29" "Re: [oss-security] CVE request:Lynx invalid URL parsing with '?'" "^Cc:" nil nil "11" "2016110401:07:35" "[oss-security] CVE request:Lynx invalid URL parsing with '?'" (number mark "        dickey@his.c Nov  3   29/807   " thread-indent "\"Re: [oss-security] CVE request:Lynx invalid URL parsing with '?'\"\n") "<CAPGxrc_N_=z12njMyN2WrSO74A9=ioEnppxs2YGExMn0qd6MJA@mail.gmail.com>" ("<CAPGxrc_N_=z12njMyN2WrSO74A9=ioEnppxs2YGExMn0qd6MJA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1587" "Thursday" "14" "April" "2016" "15:49:11" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160414194911.B5BA16C0485@smtpvmsrv1.mitre.org>" "44" "[oss-security] Re: CVE Request: imlib2: integer overflow resulting in insufficient heap allocation" "^Cc:" nil nil "4" "2016041419:49:11" "[oss-security] Re: CVE Request: imlib2: integer overflow resulting in insufficient heap allocation" (number mark "        cve-assign@m Apr 14   44/1587  " thread-indent "\"[oss-security] Re: CVE Request: imlib2: integer overflow resulting in insufficient heap allocation\"\n") "<20160414172353.GA5117@eldamar.local>" ("<20160414172353.GA5117@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24528 invoked by uid 550); 4 Nov 2016 12:09:52 -0000
+Received: (qmail 26120 invoked by uid 550); 14 Apr 2016 19:49:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28231 invoked from network); 4 Nov 2016 01:07:57 -0000
-X-ASG-Debug-ID: 1478221662-061c411a1b4e080001-Ebmqpw
-X-Barracuda-Envelope-From: tom@invisible-island.net
-X-Barracuda-RBL-Trusted-Forwarder: 216.194.196.20
-X-Barracuda-RBL-Trusted-Forwarder: 216.194.248.141
-X-Barracuda-Effective-Source-IP: static-71-246-219-82.washdc.fios.verizon.net[71.246.219.82]
-X-Barracuda-Apparent-Source-IP: 71.246.219.82
-X-Barracuda-RBL-IP: 71.246.219.82
-Message-ID: <20161104010735.GA25615@vmw-debian7-64.jexium-island.net>
-X-ASG-Orig-Subj: Re: [oss-security] CVE request:Lynx invalid URL parsing with '?'
-References: <CAPGxrc_N_=z12njMyN2WrSO74A9=ioEnppxs2YGExMn0qd6MJA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="dDRMvlgZJXvWKvBx"
-Content-Disposition: inline
-In-Reply-To: <CAPGxrc_N_=z12njMyN2WrSO74A9=ioEnppxs2YGExMn0qd6MJA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Barracuda-Connect: smtp-nf-202.his.com[216.194.196.20]
-X-Barracuda-Start-Time: 1478221662
-X-Barracuda-URL: https://spam.his.com:443/cgi-mod/mark.cgi
-X-Barracuda-Scan-Msg-Size: 340
-X-Virus-Scanned: by bsmtpd at his.com
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Spam-Score: 0.00
-X-Barracuda-Spam-Status: No, SCORE=0.00 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=7.0 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.34249
-	Rule breakdown below
-	 pts rule name              description
-	---- ---------------------- --------------------------------------------------
-Cc: dickey@his.com, oss-security@lists.openwall.com,
-	fulldisclosure@seclists.org, cve-assign@mitre.org
-Date: Thu, 3 Nov 2016 21:07:35 -0400
-From: Thomas Dickey <dickey@his.com>
+Received: (qmail 26102 invoked from network); 14 Apr 2016 19:49:23 -0000
+In-Reply-To: <20160414172353.GA5117@eldamar.local>
+Message-Id: <20160414194911.B5BA16C0485@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 14 Apr 2016 15:49:11 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE request:Lynx invalid URL parsing with '?'
-To: redrain root <rootredrain@gmail.com>
+Subject: [oss-security] Re: CVE Request: imlib2: integer overflow resulting in insufficient heap allocation
+To: carnil@debian.org
 
---dDRMvlgZJXvWKvBx
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Thu, Nov 03, 2016 at 05:58:14PM +0800, redrain root wrote:
-> I can't find any bugtracker in lynx ,so i will disclose by this mail and
-> sent to the author dickey@invisible-island.net.
+> an integer overflow in imlib2, which result in insufficient heap
+> allocation.
+> 
+> https://git.enlightenment.org/legacy/imlib2.git/commit/?id=7eba2e4c8ac0e20838947f10f29d0efe1add8227
 
-thanks (I'll put together a fix)
+>> there are a lot of code that allocates image data with something like
+>> 
+>>     malloc(w * h * sizeof(DATA32));
+>> 
+>> Obviously, on 32-bit machines this results in integer overflow,
+>> insufficient heap allocation, with [massive] out-of-bounds heap
+>> overwrite.
 
---=20
-Thomas E. Dickey <dickey@invisible-island.net>
-http://invisible-island.net
-ftp://invisible-island.net
+>> -  #define X_MAX_DIM 46340
 
---dDRMvlgZJXvWKvBx
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+>> +  #define X_MAX_DIM 32767
 
+Use CVE-2016-4024.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1
 
-iEYEARECAAYFAlgb31cACgkQcCNT4Pfkjtu4tQCeLLhkyOND1JDLfo5vOxVDEYmy
-0SEAni/SUU4vWDQbMRTUY0USyt9mfsSd
-=h7Wd
+iQIcBAEBCAAGBQJXD/NlAAoJEL54rhJi8gl5RfQQAL/khJP7I45NWzsmfikEOqry
+5+/yWayIM27k/4YauR/ijslSeQB6yH/qhqha0Xai2mMxJovHGOoY0fdMSyNLCqrG
+EkuGVhKk3mNo98jNUyUEGFNfYJwg5TuQyzXZi/qSrsaQLZ5IGZO3O9K+Io3xrbqb
+Qescx6U9+0V8H8UoSNNYmawYwCD/Iw1U05b4e8HI2eWg50NW/75GPO0mCyB+ymyr
+KCIsF69/iWft+i8JRZ1yvivL3QSb22ltwsxDXsZgtPedxW14MBlzakJ/HZOfkhV/
+/efcM/4jWyg48SxvBS+4JsaXuabH5xBrvq7OahABZrIL2EnDthe0MMUvEqgXS4im
+yiwzyPbZYubo0CBFMLCRrhdOE6MSUPEQnZM58jWfHSTzO9XOTHgFwCafRaocTw63
+Q6I7lW15ofV8xncQorRYzFhxxYp2aNFDgfGvYEUUQOUdKDtoDDNKWZIifZd/eZYj
++noTSvwIZv5lQUQkJdRQWlFCnkJC+sfkmZYGpbtCQgg0qq1pp5vifTeJ17lAlVQh
+Cv838A3tnimTqg1HKpATjY+rgm+Pdu14oTypcBHz3a0BEPfFqf6MMrS+oaCEyheX
+UehdlrK4HVJ9tDsZjQk4To0ouBXtmvkvLMCyY/AF9FR7maQykgtSArbTkHiyF75F
+aVqw/STiET+EoipSAhhm
+=3vdb
 -----END PGP SIGNATURE-----
-
---dDRMvlgZJXvWKvBx--
