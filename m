@@ -1,58 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/16
-Message-ID: <60807621cefd437d963b2700b2a0823b@imshyb02.MITRE.ORG>
-Date: Fri, 18 Nov 2016 18:59:06 -0500
-From: <cve-assign@...re.org>
-To: <pere@...a.cat>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE requests for Drupal core (SA-CORE-2016-005)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/14/7
+Message-Id: <BF077EF2-CBB6-4357-A69C-94778080D73E@gmail.com>
+Date: Thu, 14 Apr 2016 13:44:36 -0400
+From: Naser Farhadi <n4ser.farhadi@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: OpenCart 2.1.0.2 to 2.2.0.0 - json_decode Function Remote Code Execution
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Note:
+-----------------
+Exploit only works if PHP JSON extension is not installed.
 
-> https://www.drupal.org/SA-CORE-2016-005
-
-> Inconsistent name for term access query (Drupal 7 and Drupal 8)
->> information on taxonomy terms might have been disclosed to unprivileged users.
-
-Use CVE-2016-9449.
-
-
-> Incorrect cache context on password reset page (Drupal 8)
->> can lead to cache poisoning and unwanted content on the page.
-
-Use CVE-2016-9450.
-
-
-> Confirmation forms allow external URLs to be injected (Drupal 7)
-
-Use CVE-2016-9451.
+> On Apr 14, 2016, at 1:26 PM, Naser Farhadi <n4ser.farhadi@...il.com> wrote:
+> 
+> Hi
+> 
+> OpenCart is prone to a remote code-execution vulnerability.
+> 
+> https://www.exploit-db.com/exploits/39679/ <https://www.exploit-db.com/exploits/39679/>
+> http://seclists.org/bugtraq/2016/Apr/61 <http://seclists.org/bugtraq/2016/Apr/61>
+> https://github.com/opencart/opencart/issues/4220 <https://github.com/opencart/opencart/issues/4220>
+> 
+> Could a CVE please be assigned to this issue?
+> 
+> Regards,
+> Naser
 
 
-> Denial of service via transliterate mechanism (Drupal 8)
 
-Use CVE-2016-9452.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYL5R2AAoJEHb/MwWLVhi2eHMP/187U/8tTObfz9ZRePwupSLe
-lHzn32XSQia2CFMhow4H/E+w9LSjWZ9ngcRIsqgU2mwxmFCd0EPebrglnh1fpEe0
-KfpO8DeA4BFo4M0L8IAcPspqkDlCm+l8RgOWJlZLCRXwN6qWaIapJMiWx4R9ZmQf
-NOhsCnsJAGHzJGWSpttu9BJexQYrqgO4WOLmWeugyeh+iBwPRzM/Z9K1AEquwU5f
-+xsaoMn8r6nptBNu26VpirhEbtjwv0MAnChj9z4dA5JPq5LI+iRXS6ISIb2rgIH1
-IwpMefql0wZbRaCBldgRb6NPrWvyLQO8tS3de7INIhdyAuS/ekSXxM/udguUyXAN
-bPe5XaMVQdUJZl+lk+4Z0U8L04F8jwVHgo6aMnbXZ20WYgljcN247rShTtnM/2LV
-HgnGdbn69XtcoscfBgKcdJJi9BhgHhLWbG/6on0adrQyE5pgsizr6GIJ8QhMY4r1
-AbEyfFoRhNmCNLZN6goK2UBgPygId0Xy42XnACJBNPmhGMfb4VA40s/mfMiXQauN
-HbxSMrQetr0oXEkHc5KeHtzbL+x/PNhgk9D6+sZo4chI6DJ89/kpu04SMByVzASL
-g1BIaCCbYkGnxmW/XuC1TVMzHjzT6pFiHlxFH76nb0XzLraB5hw9bGK27oVtU3TE
-BhEpOnqCHmiD6Bg30S/5
-=TWzZ
------END PGP SIGNATURE-----
