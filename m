@@ -1,75 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/22
-Message-ID: <CAARZ5vpwcDbDCynB-8RUGZ07PodZF9hd2ctVddYG97+xaEiCbw@mail.gmail.com>
-Date: Fri, 6 May 2016 00:18:24 +0530
-From: Nitin Venkatesh <venkatesh.nitin@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-1236 - XSS Vulnerability in websvn 2.3.3-1.2+deb8u1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/14/5
+Message-ID: <20160414172353.GA5117@eldamar.local>
+Date: Thu, 14 Apr 2016 19:23:53 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: CVE Request: imlib2: integer overflow resulting in insufficient heap allocation
 Content-Type: text/plain; charset=utf-8
 
-# Summary:
-Vulnerability Type: Cross-site Scripting (XSS)
-Package: websvn
-Version: 2.3.3-1.2+deb8u1
-CVE: CVE-2016-1236
+Hi
 
-# Description:
-Having a directory or file in a repository with its filename containing a
-XSS payload will cause it to be executed in various parts of the
-application.
+Yuriy M. Kaminskiy discovered an integer overflow in imlib2, which
+result in insufficient heap allocation. The upstream fix is in
 
-# Steps to reproduce the issue:
-1. Clone a SVN repo that websvn has access to
-2. Create a directory/file with its filename containing the XSS payload,
-for example, "><img src=x onerror=alert(1)>
-3. Add and commit the changes (new directory/file).
-4. The payload is executed, when browsing the repository using websvn in
-the browser.
+https://git.enlightenment.org/legacy/imlib2.git/commit/?id=7eba2e4c8ac0e20838947f10f29d0efe1add8227
 
-# Suggested Patches:
-Please use at your own discretion, the following patches might not solve
-the issue entirely.
-The escape() function used in the suggested patch was written by the
-original developer and can be found in the include/command.php file.
+Can you assign a CVE for this issue?
 
-revision.php - Modified
-L148:
-+ 'path' => escape($change->path)
-- 'path' => $change->path,
-
-log.php - Added
-L326-328:
-+ $listing[$index]['revadded'] = escape($listing[$index]['revadded']);
-+ $listing[$index]['revdeleted'] = escape($listing[$index]['revdeleted']);
-+ $listing[$index]['revmodified'] = escape($listing[$index]['revmodified']);
-
-listing.php - Modified
-L126:
-+ $listing[$index]['filename'] = escape($file);
-- $listing[$index]['filename'] = $file;
-
-L140:
-+ $listing[$index]['compare_box'] = '<input type="checkbox"
-name="compare[]" value="'.escape($path.$file).'@...passrev.'"
-onclick="checkCB(this)" />';
-- $listing[$index]['compare_box'] = '<input type="checkbox"
-name="compare[]" value="'.$path.$file.'@...passrev.'"
-onclick="checkCB(this)" />';
-
-comp.php - Modified
-L384:
-+ $listing[$index]['newpath'] = escape($absnode);
-- $listing[$index]['newpath'] = $absnode;
-
-# Events Timeline:
-2016-04-29 - Discovered vulnerability
-2016-04-29 - Reported to Debian Security Team
-2016-04-30 - Acknowledgement received from Debian Security Team
-2016-05-01 - CVE-2016-1236 assigned to the issue
-2016-05-05 - Disclosing issue on oss-sec mailing list as advised
-
-# Disclaimer:
-Please use the information presented above responsibly, at your own
-discretion. I will in no way be responsible for how this information is
-used or misused.
-
+Regards,
+Salvatore
