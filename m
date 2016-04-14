@@ -1,48 +1,128 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/20/7
-Message-Id: <20160420143548.A83166C05E8@smtpvmsrv1.mitre.org>
-Date: Wed, 20 Apr 2016 10:35:48 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: perl: denial-of-service / Regexp-matching "hangs" indefinitely on illegal input using binmode :utf8 using 100%CPU
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/14/2
+Message-Id: <E1aqgvz-0001Vr-5I@xenbits.xenproject.org>
+Date: Thu, 14 Apr 2016 13:03:47 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 174 (CVE-2016-3961) - hugetlbfs use may crash PV Linux guests
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> A bug in perl can cause regular expressions an malformed UTF8 inputs
-> to go into a forever loop and consume 100% CPU. The issue was found to
-> drive a realworld web application into an infinite loop
-> 
-> https://rt.perl.org/Public/Bug/Display.html?id=123562
-> http://perl5.git.perl.org/perl.git/commit/22b433eff9a1ffa2454e18405a56650f07b385b5
-> https://bugs.debian.org/821848
+            Xen Security Advisory CVE-2016-3961 / XSA-174
+                              version 3
 
-Use CVE-2015-8853 for all of 22b433eff9a1ffa2454e18405a56650f07b385b5.
-We do not feel that there is enough information to pursue an
-interpretation of "I did this also in the similar areas of regexec.c"
-as requiring a separate CVE.
+                hugetlbfs use may crash PV Linux guests
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+UPDATES IN VERSION 3
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+Huge (2Mb) pages are generally unavailable to PV guests.  Since x86
+Linux pvops-based kernels are generally multi purpose, they would
+normally be built with hugetlbfs support enabled.  Use of that
+functionality by an application in a PV guest would cause an
+infinite page fault loop, and an OOPS to occur upon an attempt to
+terminate the hung application.
+
+IMPACT
+======
+
+Depending on the guest kernel configuration, the OOPS could result
+in a kernel crash (guest DoS).
+
+VULNERABLE SYSTEMS
+==================
+
+All upstream x86 Linux versions operating as PV Xen guests are
+vulnerable.
+
+ARM systems are not vulnerable.  x86 HVM guests are not vulnerable.
+
+x86 Linux versions derived from linux-2.6.18-xen.hg (XenoLinux) are not
+vulnerable.
+
+Oracle Unbreakable Enterprise Kernels are not vulnerable.
+
+We believe that non-Linux guests are not vulnerable, as we are not
+aware of any with an analogous bug.
+
+MITIGATION
+==========
+
+Running only HVM guests will avoid this issue.
+
+Not enabling hugetlbfs use, by not altering the boot time default value
+of zero in /proc/sys/vm/nr_hugepages (which can only be written by the
+root user) will avoid this issue.
+
+It is possible that disabling (or not enabling) the "panic on OOPS"
+behavior (via use of the "oops=panic" command line option or the
+"panic_on_oops" sysctl) will also avoid this issue, by limiting the
+effect to an application crash.  We are not currently sure whether
+this is an effective mitigation, as we are not sure whether any locks
+or mutexes are held at the point of the crash.
+
+CREDITS
+=======
+
+This issue was discovered by Vitaly Kuznetsov from Red Hat.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa174.patch           Linux 4.5.x ... 3.10.x
+
+$ sha256sum xsa174*
+cbec70e183f76b4081ebba05c0a8105bd4952d164a2e5c40528c05bf8861ddef  xsa174.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of patches or mitigations is NOT permitted (except where
+all the affected systems and VMs are administered and used only by
+organisations which are members of the Xen Project Security Issues
+Predisclosure List).  Specifically, deployment on public cloud systems
+is NOT permitted.
+
+This is because such host configuration changes would be user mode
+visible, which could lead to the rediscovery of the vulnerability.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBCAAGBQJXF5K9AAoJEHb/MwWLVhi2imAQAK01mTbjuVOPJ6g2APUntKXR
-80XiAZQBnqCUO4Khnt399G1dyUgI4GrY0CzBvh34b6ecx37NP+OgZBsT+Jh+xQuA
-EiiTiKb7foU7bf1R+b6aofyOiI0+ofG8i9i6fR/fSBcp93XHOTrWItc9H+W0Suiq
-AjUUMOpr71daYsNmRq4rqscXI2TfSHHgzJ5rrEeO0/v3wru4RffxXfbNEIcR5soL
-APjr/2AIWczHtZFKDeLZa0tGngrSrbN6Cx1psCw1zJ0ivAg5OX9l5dxHZMkI4nFt
-Mn2fOHh5jMh5UIjaroxAxwTP9baN/Wh4HdROirSJrErM4k5LJzjjIJwaG3rE9mfr
-9szFq+7zBjt7SlJEAOKiQrRNXYC1NM2SrKp3TXPI6KtREumuty0rH2kvv3xaoCut
-Ne5aNxGnVni3zxUgul0UW/Z8+ObsGoM8HhiKPy2CU7lmllWIXVmRcNAzQaPrX1D4
-owSBk2y1vgCkZ325BMgphUi82nFlqMMB+lb35KYbznhfPXwg0aSd7//9sIx3yYsJ
-BmMMDZ/c5gkyXve3HHzgijMroJZnazTocvqXE9o8Y9eM4R/uOCuEa3c4KxkHuPgu
-FKyWGbMZI8V0SlvMhhtXX3q+z77lTistWg0F1JA+eiIeBvBt3ZNFnuHpGUlasNZ3
-KKhEY+5zhUgRcbGgYQn+
-=/FX1
+iQEcBAEBAgAGBQJXD5UqAAoJEIP+FMlX6CvZtAEIAKUf33cM1Gs+Y8Yt+s3FLvqR
+RW9Ktbz0dqMfL+4govcvfbI5CdtB75ZWp6T4rrjGrtIvljEJWAERasKA0anIW00I
+5duFtbFN+nPlmdZUfGIW3G6kpveSstOICVxqKPn0chN7VuTZJvzogc9t9PTtvwpX
++UkzvUvMacu0u8H0mJFjcuS/xFeS5LaosOCrJwAWKP1je6fwc217MrYm8LH6vwGr
+K7yJVnEih0XGv5hy9ufwcF5SI0d4CSilcxfFAqKJkRwQ2SSbsF2BXN1j11Eqmua3
+ARif+g3qBH6uH+RT6bclUOUO3vCKcReBWjRCF+bbsdDMCmSLwdkQK8xtu7N/Tys=
+=u89I
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa174.patch" of type "application/octet-stream" (2621 bytes)
