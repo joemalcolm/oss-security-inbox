@@ -1,44 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/11/3
-Message-ID: <865310648.12141994.1478868686544.JavaMail.zimbra@redhat.com>
-Date: Fri, 11 Nov 2016 07:51:26 -0500 (EST)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-8645: linux kernel: net: a BUG() statement can be hit in net/ipv4/tcp_input.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/15/1
+Message-ID: <1850328.TsBv7S8R4o@ohm.usersys.redhat.com>
+Date: Fri, 15 Apr 2016 15:56:45 -0400
+From: Randy Barlow <rbarlow@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Cc: cve-assign@...re.org
+Subject: CVE request - Pulp < 2.3.0 shipped the same authentication CA key/cert to all users
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hello!
 
-Let me please inform that it was discovered by Marco
-Grassi <marco.gra@...il.com> (many thanks) that the
-Linux kernels since at least v4.0 are crashing in
-tcp_collapse() after making a number of certain syscalls.
+It was raised to my attention that a security issues that was resolved in 
+Pulp 3 years ago should have had a CVE assigned to it:
 
-RHEL-7 kernels (3.10.0-xxx) are not vulnerable. Also,
-the upstream kernels since v4.9-rc1 are not vulnerable too,
-as they have the commit c9c3321257. Unfortunately, this
-commit is not fix, but just a workaround. I'm not aware
-of any fix as of now.
+https://bugzilla.redhat.com/show_bug.cgi?id=1003326
 
-CVE-2016-8645 was assigned to this flaw internally by
-the Red Hat, please, use this CVE-ID in communications
-regarding this flaw.
+To summarize, all Pulp users used the same internal CA key and cert for 
+versions of Pulp < 2.3.0. This CA is used to generate a client certificate 
+during the /login API call, and is trusted by httpd to authenticate users.
 
-Discussion at stable@:
-
-http://www.spinics.net/lists/stable/msg150470.html
-
-Discussion at netdev@:
-
-http://www.spinics.net/lists/netdev/msg403701.html
-
-http://marc.info/?l=linux-netdev&m=147878925724283&w=2
-
-http://marc.info/?t=147878927800005&r=1&w=2 # the whole thread
-
-Red Hat public BZ:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1393904
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+Though the issue is now long resolved, we would like a CVE number 
+assigned to it for reference. Thanks!
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
