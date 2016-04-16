@@ -1,4 +1,9 @@
-Received: (qmail 30187 invoked by uid 550); 1 Feb 2024 23:55:19 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["964" "Saturday" "16" "April" "2016" "10:07:03" "+0200" "=?UTF-8?B?UsOpZ2lzIExlcm95?=" "regis.leroy@gmail.com" "<CABEc15Xut2gOVj1_Luzu-y7gwESwT5Q0n+dCtK6R+HOcR9cDDw@mail.gmail.com>" "21" "[oss-security] CVE request: Varnish 3 before 3.0.7 was vulnerable to HTTP Smuggling issues: Double Content Length and bad EOL" nil nil nil "4" "2016041608:07:03" "[oss-security] CVE request: Varnish 3 before 3.0.7 was vulnerable to HTTP Smuggling issues: Double Content Length and bad EOL" (number mark "U       regis.leroy@ Apr 16   21/964   " thread-indent "\"[oss-security] CVE request: Varnish 3 before 3.0.7 was vulnerable to HTTP Smuggling issues: Double Content Length and bad EOL\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 14050 invoked by uid 550); 16 Apr 2016 08:09:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,64 +12,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30157 invoked from network); 1 Feb 2024 23:55:19 -0000
-Date: Thu, 1 Feb 2024 23:57:35 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20240201235735.wkpef42uq3dc3ms3@yuggoth.org>
-References: <20240201123100.42ba1334.hanno@hboeck.de>
- <CAFRnB2UBm6VXnK3te6NaZ6AQWHjYWe8XSWdWN3CD6TWyYzfUZA@mail.gmail.com>
+Received: (qmail 12193 invoked from network); 16 Apr 2016 08:07:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to;
+        bh=NvxeIDf5/0xqJuaLuFLTN0xXfsp3MhPyPN5kCE01syU=;
+        b=n0PSL6FZT2L7T+JI4HaKMimRcXeIM6fE5xAQ4tX9pLJvNjNIiZgeLb0wxkmw4/LoTj
+         6kursTp3jrRU+FgsXg/QYhCn9jJtV0HVjPMRHiu4l9lbr44qXls+ONK3pTBC+8Mql1It
+         uUwrxHUFjM0DPIrODKpbA+D68WHIwmi2UjdbNB+hCq9Z3NIYlPqYOtOHANZtbHdEJVrx
+         vIvrzvGQo3k98jpfUQZJsVKfJi/jtOPAqJx8+nhW19Ds91HXXUT88kGQ/rPeVQkBGyHK
+         msc3Ms9TDnPzxSENW2dScG+jdJARAjDrW2xO70RZ8n1z86qsCjnBimIyV7QgWdYK+aK7
+         NHBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
+        bh=NvxeIDf5/0xqJuaLuFLTN0xXfsp3MhPyPN5kCE01syU=;
+        b=gM5Pk7FJsAxH+SHHJqQIi0O5cP/haKRVxqV0yyN9oKm+xlFoAyKHJkdahna3iDdLtX
+         iwTVggoTkTiTEl4P880cGhFYfIsEPueOyAv1oJeTd8+eB4GjF0DELZYfT4uYUIZ3nIWZ
+         pq+oj4nXwU5CrvBBflvEEwyLw32we6RhTGYhlfwFilWPY8XKKxgog8M/A3YINO3/8jpM
+         +tRTmBT4ZF9/2b30jXLfxG2NwqbgzYR/1r95UoYrpQWwUkp2F+UV9m1GL7seAuIjPJmm
+         F33/WCku9btuoYHPtUE8Zj5LieTZklq3XAvGCDJ4tXO6w4Om3IusluH1iLvNPHkmSKMM
+         DYag==
+X-Gm-Message-State: AOPr4FVzomDtrsiMd+J/VrinjCJ5P5Hx3xFxd7Bfn4i6HWXQ4Qqqph75GX43NghHN2PJLt4JCHsX6B+BN95FjQ==
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="7ofzgadypqfh7gnr"
-Content-Disposition: inline
-In-Reply-To: <CAFRnB2UBm6VXnK3te6NaZ6AQWHjYWe8XSWdWN3CD6TWyYzfUZA@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Subject: Re: [oss-security] Python standard library defaults to insecure TLS
- for mail protocols
+X-Received: by 10.157.33.161 with SMTP id s30mr13086551otb.27.1460794023507;
+ Sat, 16 Apr 2016 01:07:03 -0700 (PDT)
+Date: Sat, 16 Apr 2016 10:07:03 +0200
+Message-ID: <CABEc15Xut2gOVj1_Luzu-y7gwESwT5Q0n+dCtK6R+HOcR9cDDw@mail.gmail.com>
+From: =?UTF-8?B?UsOpZ2lzIExlcm95?= <regis.leroy@gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] CVE request: Varnish 3 before 3.0.7 was vulnerable to HTTP Smuggling
+ issues: Double Content Length and bad EOL
 
---7ofzgadypqfh7gnr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Varnish 4.x serie is not impacted. Flaws Fixed in version 3.0.7 in march 2015.
 
-On 2024-02-01 18:29:39 -0500 (-0500), Alex Gaynor wrote:
-[...]
-> I think it'd be reasonable to start a discussion on the Python
-> discourse about moving forward with fixing SMTP as well:
-> https://discuss.python.org/
-[...]
+Changelog is:
+ * Requests with multiple Content-Length headers will now fail.
+ * Stop recognizing a single CR (r) as a HTTP line separator. This
+opened up a possible cache poisoning attack in stacked installations
+where sslterminator/varnish/backend had different CR handling.
 
-In that case, you'll probably be pleasantly surprised that
-https://discuss.python.org/t/42313 has been going since nearly a
-month.
---=20
-Jeremy Stanley
+https://github.com/varnish/Varnish-Cache/commit/29870c8fe95e4e8a672f6f28c5fbe692bea09e9c
+https://github.com/varnish/Varnish-Cache/commit/85e8468bec9416bd7e16b0d80cb820ecd2b330c3
 
---7ofzgadypqfh7gnr
-Content-Type: application/pgp-signature; name="signature.asc"
+Combinations of theses two flaws in HTTP protocol handling allows for
+"HTTP Response Splitting" attacks
+when another actor in front of Varnish3 can transmit headers in this
+form (for example):
 
------BEGIN PGP SIGNATURE-----
+    Dummy: header\rContent-Length: 0\r\n
 
-iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmW8L+hfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
-QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
-WClOig//fUA+htqsWfxPbhFCUQHJF04EVFs3cOAF7Tj6w4XzwRx/htlGtYqqiAg4
-KZXnWebCwUFzAvqK3R4GPnhOjqDCdhYTZQB7S2wOfssH0eTMjyYYn4G8m3Wkob2f
-8X4pV4acZkt8ygijUaQJ0l0/DdzWdYmOj2cGNOeAHU2+qEjAT6ZjvYaExDnFUfWp
-2MUQwATNCJ0d3tCau5H7pMXGPvCjxQgJH463eiIE5NDd8Xg24HxdLlkuPYDC5WOX
-voz7+PlVsSe/EzFpMFSGhWbWHhO9iaMzBJyY9ES95h+0lshZiHNPj4qRhPi2Q+gJ
-s/N4fnIAQhz8oY6t/aith8BCmM8fTa3H0BZ4iQ6mWwbiC4u50bxrrSsubGSLGZWP
-AvUfHLPyiAOezDpWHFENSUnibf7xNcd0qGNf1usQqPUWEQ8s071Jz6dCW6mc7xkM
-IoQfj4BK4mcdRGUZ5rpJOPVQVSfcx8xwOtM0rE3mFAjWGpWcE3jkpnxyUci01NNS
-IEN3HDVYopJoUidEFlYlP78Pj89T3mQ377W+EVUyEUdwA4KeTMO6l0m9jUzEW/IC
-Rujudzx7HO0MiEXMY39YS94KISr4YI3xzzo8lvs/pMnYofOKzM/4tUOAE/j3vtgm
-BJImpQqpzltAUyd06pRw2XfP1ocRY6dvX5yCgMxVd4rXjX5CY48=
-=swdP
------END PGP SIGNATURE-----
-
---7ofzgadypqfh7gnr--
+This is a one year old issue, on the old last release of this serie.
+But we still find some installations. A CVE would maybe help removal
+of 3.x installations, or at least upgrades to 3.0.7.
