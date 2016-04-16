@@ -1,21 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/5
-Message-ID: <6a70d108.3e4.15795170728.Coremail.hongkun.zeng@dbappsecurity.com.cn>
-Date: Wed, 5 Oct 2016 21:44:56 +0800 (GMT+08:00)
-From: "Hongkun Zeng" <hongkun.zeng@...ppsecurity.com.cn>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE-2016-7903: Dotclear <= 2.10.2 Password Reset Address Spoof
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/16/5
+Message-ID: <CAOmn9FQVJ7QQf1rk4v8P07UoRpW-=L+k24dKCVP61fmpD_32mA@mail.gmail.com>
+Date: Sat, 16 Apr 2016 13:59:06 +0530
+From: shravan kumar <cor3sm4sh3r@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Reflected XSS Vulnerability in Wordpress Custom-metas plugin 1.5.1
 Content-Type: text/plain; charset=utf-8
 
-Vulnerability: Dotclear <= 2.10.2 Password Reset Address Spoof
-CVE: CVE-2016-7903
-Discovered by: Hongkun Zeng (http://www.dbappsecurity.com.cn/)
+Hello  ,
 
 
-Dotclear is an open source blog publishing application distributed under the GNU GPLv2.
+I would like to disclose a XSS vulnerability in Custom-metas plugin version
+1.5.1  .
+
+The Plugin can be found at https://wordpress.org/plugins/custom-metas/
 
 
-The vulnerability can be triggered only if the Host header is not part of the web server routing process (e.g. if several domains are served by the same web server). This can lead to phishing attacks because of the modification of the site's links. (A remote unauthenticated attacker can change the host in reset password address.)
+Reproduction steps:
+
+   - Install the plugin custom-metas
+   - Log in to wp-admin as administrator (tested on firefox)
+   - Pass the XSS payload as GET parameter to the
+   /wp-admin/admin.php?page=custom-metas&paged=<XSS payload here>
+   - example
+   http://targetip/WPinstallationdir/wp-admin/admin.php?page=custom-metas&paged=
+   "><script>alert(1);</script>
+   - you will see a alert box.
+
+Technical details:
+
+This vulnerability is due to display of unsanitized GET parameters, which
+are directly displayed on the page with-out any filters.
+
+The vulnerable page is
+
+/wp-content/plugins/custom-metas/tpl/meta-data-form-multiple.php
 
 
-Fix commit: https://hg.dotclear.org/dotclear/rev/bb06343f4247
+The Code responsible for the vulnerability is
+
+LINE 10
+ $currentPageNo = ( isset($_GET['paged']) && $_GET['paged'] != "")?
+$_GET['paged']:1;
+
+the currentPageNo variable is set using $_GET['paged'] .
+
+It is then displayed in unsafe manner i.e without any filters. in following
+line of code
+
+LINE 43
+
+<input type="text" size="2" value="<?php echo $currentPageNo;?>"
+name="paged" title="Current page" id="postCurrent" class="current-page" />
+of <span class="total-pages"><?php echo $tPostNumCount; ?></span>
+
+
+-- 
+Shravan Kumar
+
