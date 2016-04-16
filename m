@@ -1,49 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/21/3
-Message-ID: <a5198c929fcc47e99d32935f472d4c15@imshyb02.MITRE.ORG>
-Date: Wed, 21 Dec 2016 02:34:29 -0500
-From: <cve-assign@...re.org>
-To: <smcv@...ian.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: ikiwiki: authorization bypass when reverting changes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/16/1
+Message-ID: <CABEc15Xut2gOVj1_Luzu-y7gwESwT5Q0n+dCtK6R+HOcR9cDDw@mail.gmail.com>
+Date: Sat, 16 Apr 2016 10:07:03 +0200
+From: Régis Leroy <regis.leroy@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Varnish 3 before 3.0.7 was vulnerable to HTTP Smuggling issues: Double Content Length and bad EOL
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Varnish 4.x serie is not impacted. Flaws Fixed in version 3.0.7 in march 2015.
 
-> http://ikiwiki.info/bugs/rcs_revert_can_bypass_authorization_if_affected_files_were_renamed/
-> http://source.ikiwiki.branchable.com/?p=source.git;a=commitdiff;h=9cada49ed6ad24556dbe9861ad5b0a9f526167f9
-> 
-> on sites with the git and recentchanges
-> plugins and the CGI interface enabled, the revert links on the
-> RecentChanges page could revert changes on a page the logged-in user
-> cannot legitimately edit, if the change being reverted was made before
-> the page was renamed from a location that the logged-in user *could*
-> legitimately edit.
+Changelog is:
+ * Requests with multiple Content-Length headers will now fail.
+ * Stop recognizing a single CR (r) as a HTTP line separator. This
+opened up a possible cache poisoning attack in stacked installations
+where sslterminator/varnish/backend had different CR handling.
 
->> Tell `git revert` not to follow renames
+https://github.com/varnish/Varnish-Cache/commit/29870c8fe95e4e8a672f6f28c5fbe692bea09e9c
+https://github.com/varnish/Varnish-Cache/commit/85e8468bec9416bd7e16b0d80cb820ecd2b330c3
 
-Use CVE-2016-10026.
+Combinations of theses two flaws in HTTP protocol handling allows for
+"HTTP Response Splitting" attacks
+when another actor in front of Varnish3 can transmit headers in this
+form (for example):
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+    Dummy: header\rContent-Length: 0\r\n
 
-iQIcBAEBCAAGBQJYWjArAAoJEHb/MwWLVhi2dHoQAKYuv3K3dSIYf6WfYkYNZKu3
-DD2MvDMgpjGR+J6dwCPpjSBzrAqW8x9LaFViHCgMtOr61d7Wc53J6XqDkWephYPA
-b3Baarf6Yz1K0gq+nML8wzb2wYJtO7DVXIxM0+rpbNIf67EPUM66ZOGPRtd3rNhG
-sxqtGk2kNVtq2apkzwU4NoqzU2SvNwveaGyB25AqtQd+pBxTuciPzCR2IeXoYsed
-4t2cGeJDzF/briG/IxwFQb4w6Zy5dsqXucT/c3U0y4RwflmjTde6GwEcENvyp/Dv
-fgCBK1LnMP0pTWizNQNA12Xr8yirHFX0CrUGE+cEI60ZNrbQge/QForMTG2cJK5E
-rcP+FaKqrHj1ybFdRtgM3V/As84SjohoUahmKMATI0rVtFEAPPBa8A2b31whfcyR
-Ls2nq0VayB7/2ea2eSQQwXILDA+i5lKEqTW4S1IKIXFmszw1Sq1z6wHBBFZwK7rE
-gMnL+mPIsi7g3Lhzi+TWKw3ClNl7Owk0KebtYJdqikXnBKvlHjcDCuX2DHHQZsrT
-tk5LGOnVAajwySSNeXtTuCkE3BVGN7Q5pNIz8v/XdQwxjxohZVM2RX7B/smcauNW
-6gH2Xo3bSNycUJGTOjFIYw+bcnJ4qP64huw1BK5cIDAfW5Cw42NRhL4EdpkRGu3q
-PNKxWq1cMJz/knQ7PGUu
-=YLyN
------END PGP SIGNATURE-----
+This is a one year old issue, on the old last release of this serie.
+But we still find some installations. A CVE would maybe help removal
+of 3.x installations, or at least upgrades to 3.0.7.
