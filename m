@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4134" "Tuesday" "3" "May" "2016" "18:40:24" "+0200" "LSE-Advisories" "advisories@lsexperts.de" "<5728D478.3090005@lsexperts.de>" "127" "[oss-security] LSE Leading Security Experts GmbH - LSE-2016-02-03 - OXID eShop Path Traversal Vulnerability" nil nil nil "5" "2016050316:40:24" "[oss-security] LSE Leading Security Experts GmbH - LSE-2016-02-03 - OXID eShop Path Traversal Vulnerability" (number mark "U       advisories@l May  3  127/4134  " thread-indent "\"[oss-security] LSE Leading Security Experts GmbH - LSE-2016-02-03 - OXID eShop Path Traversal Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2084" "Monday" "18" "April" "2016" "01:23:12" "+0800" "Berry" "throber3@gmail.com" "<CAODc34+BJ7bSmCJfe7g6jjAj+xDfj0ZyZCrUuiM7f_Gs1+XbYQ@mail.gmail.com>" "57" "[oss-security] CVE request - samsumg android phone msm_sensor_config function write some range kernel address with any value" nil nil nil "4" "2016041717:23:12" "[oss-security] CVE request - samsumg android phone msm_sensor_config function write some range kernel address with any value" (number mark "U       throber3@gma Apr 18   57/2084  " thread-indent "\"[oss-security] CVE request - samsumg android phone msm_sensor_config function write some range kernel address with any value\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7196 invoked by uid 550); 3 May 2016 17:04:53 -0000
+Received: (qmail 28128 invoked by uid 550); 17 Apr 2016 18:38:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,154 +12,94 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14171 invoked from network); 3 May 2016 16:40:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lsexperts.de; h=
-	content-type:content-type:mime-version:date:date:message-id
-	:subject:subject:from:from; s=20150607; t=1462293625; x=
-	1464108026; bh=mPrQDtbUvpRVfrYMivwORsXno1m/FAPYCp2tGrZTlhk=; b=K
-	h7RYEJICL6TsS2tIba7AZQmLBtFxEPmdIJ94UN2HWWKYqGito9wXLXx3QYggvo5n
-	MJqk1ZQgYlNP9ZiAiRJKsyTVFBSBOTqn15XlNRVVfkAT58vtKnPuvZ3rqbx/OTxi
-	YW2fNyNTcR4kzLHPDlZyQoH92zSTvmEdNxTZdf3yeLUE0PUVEKJQ5CM+qqgjTxDz
-	4rY7W6NjmIYLL/v9M5pz6xwVN6OHMdnWbRz0ZJav4Sj46kGo6LfuTPXGuWd6izWe
-	wJguLCdYlB49P7M5xVeGtCqQYrbvaHK2BOxWFQfpO9eHWSuKHujfizkv1sZUy7If
-	17MSDimxS1oI7NsTkPM8Q==
-To: bugtraq@securityfocus.com, oss-security@lists.openwall.com,
- submissions@packetstormsecurity.org, fulldisclosure@seclists.org,
- bugs@securitytracker.com
-From: LSE-Advisories <advisories@lsexperts.de>
-Message-ID: <5728D478.3090005@lsexperts.de>
-Date: Tue, 3 May 2016 18:40:24 +0200
+Received: (qmail 21556 invoked from network); 17 Apr 2016 17:23:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc;
+        bh=8OBy6BzD0IVxR2eHFr5SNp4EN6rBazkUbd3aXQC9n+g=;
+        b=O8SEe2bEjUBlLL+4sT4ZG7fUGMGGxbL7B2UaKqpFSzE7f9xK5L+IX4w2LnBnwVlfec
+         hXRgnaG6AN2jD480jf3ua/zueT9X47zsNxkDmaaiXcuflnBk2NCkxnuf5t0nXOD9gXWQ
+         LjLhSjkR8ILVtkiCmSKoMHhBvCbDFsSy9xgLVmRuLM6preO57N0H1sk2mW0abo2x+idc
+         wQgX5IR1J0gM9ERqZKztp1eCFs/aknXzkQ7t22g85Tm/4784JlWvBg34QRb22DL80nQh
+         wu1PEjYJiZaoQ5jeT595WZnnM2Y+bfVo3pPVKh8S2IHr71oVSjomFXMa0kXxzTNJfsxt
+         Z46g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
+        bh=8OBy6BzD0IVxR2eHFr5SNp4EN6rBazkUbd3aXQC9n+g=;
+        b=NZgQ6zs64DhQLwqi4c2uc35HmDBz2kZXFkCRwvB+gVR/rniho/S+46Vg4voNRzLq/J
+         raoCxj9J0NojXtroYigUAh4gzFUgty7maXX0qLqwpDuF8ypLcKl9Vym52madzzbcuAKg
+         06lbF/OrgB65RG1ndqIiCCSZLkpVBDDj+1/+mnAMQRxYXA+QS2WKzrahsdR7sDSprAHs
+         6D3BE6ljB4gyyxoj5qPTDjZDFu+VnZmcgVbYjU+NtXEilpgAPqZJyhN0KYIMbExl9bg7
+         /4X9QTCAHUMdZLNs3ekURogWdElqu8GS+Ex6Qnkkm9sFbxuhaX0f0PqHBAtrWHJPl+7f
+         1UzQ==
+X-Gm-Message-State: AOPr4FX3QTp/1ihMK6L+OuZhXU7wq0MRBuVjeQowWQCfrlRVMZJi5Ok7LgmuDhsohqkLyI0xynYRf2IYlKhNww==
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="XAhOp6maKf0Fb9BvMt0X4Q1tbBoN4VvBB"
-Subject: [oss-security] LSE Leading Security Experts GmbH - LSE-2016-02-03 - OXID eShop Path
- Traversal Vulnerability
+X-Received: by 10.25.19.151 with SMTP id 23mr12878877lft.125.1460913792151;
+ Sun, 17 Apr 2016 10:23:12 -0700 (PDT)
+Date: Mon, 18 Apr 2016 01:23:12 +0800
+Message-ID: <CAODc34+BJ7bSmCJfe7g6jjAj+xDfj0ZyZCrUuiM7f_Gs1+XbYQ@mail.gmail.com>
+From: Berry <throber3@gmail.com>
+To: oss-security <oss-security@lists.openwall.com>
+Cc: cve-assign@mitre.org
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] CVE request - samsumg android phone msm_sensor_config function write
+ some range kernel address with any value
 
---XAhOp6maKf0Fb9BvMt0X4Q1tbBoN4VvBB
-Content-Type: multipart/mixed; boundary="ICeHk8hkobvJnVwT5kOP8Bks21UAs53L1"
-From: LSE-Advisories <advisories@lsexperts.de>
-To: bugtraq@securityfocus.com, oss-security@lists.openwall.com,
- submissions@packetstormsecurity.org, fulldisclosure@seclists.org,
- bugs@securitytracker.com
-Message-ID: <5728D478.3090005@lsexperts.de>
-Subject: LSE Leading Security Experts GmbH - LSE-2016-02-03 - OXID eShop Path
- Traversal Vulnerability
-
---ICeHk8hkobvJnVwT5kOP8Bks21UAs53L1
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-
-=3D=3D=3D LSE Leading Security Experts GmbH - Security Advisory 2016-02-03 =
-=3D=3D=3D
-
-OXID eShop Path Traversal Vulnerability
-------------------------------------------------------------------------
-
-Affected Versions
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Community Edition 4.9.7
-
-Issue Overview
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Vulnerability Type: path traversal, privilege escalation
-Version: Tested in Community Edition 4.9.7
-Technical Risk: high
-Likelihood of Exploitation: medium
-Vendor: OXID eSales AG
-Vendor URL: https://www.oxid-esales.com
-Credits: LSE Leading Security Experts GmbH employee Tim Herres
-Advisory URL: https://www.lsexperts.de/advisories/lse-2016-02-03.txt
-Advisory Status: Public
-CVE-Number: NA
-CVE URL: NA
-OVE-ID:OVE-20160419-0002
-OVI-ID:OVI-2016-7988
-CWE-ID: CWE-22
-CVSS 2.0: 3.5  (AV:N/AC:M/Au:S/C:P/I:N/A:N)
+            The v4l-subdev driver provides an ioctl system call
+interface to user space clients for communication. When processing
+this communication, the msm_sensor_config function uses the
+user-supplied value gpio_config.gpio_name as an index to a buffer for
+write operations without any boundary checks.
 
 
+              code:
+              //
+kernel/SM-G9008V_CHN_KK_Opensource/Kernel/drivers/media/platform/msm/camera_v2/sensor/msm_sensor.c
 
-Impact
-=3D=3D=3D=3D=3D=3D
-A missing file path validation allows an authenticated user with permission
-to add or edit products to read any file on the file system without permiss=
-ions.
+             int msm_sensor_config(struct msm_sensor_ctrl_t *s_ctrl,
+void __user *argp){
+                struct sensorb_cfg_data *cdata = (struct
+sensorb_cfg_data *)argp;
 
+                case CFG_SET_GPIO_STATE: {    //case 12:
+                  struct msm_sensor_gpio_config gpio_config;
+                  struct msm_camera_power_ctrl_t *data =
+&s_ctrl->sensordata->power_info;
+                  if (copy_from_user(&gpio_config,
+                         (void*)cdata->cfg.setting,
+                         sizeof(gpio_config))) {
+                    pr_err("%s:%d failed\n", __func__, __LINE__);
+                    rc = -EFAULT;
+                    break;
+                  }
+                  pr_info("%s: setting gpio: %d to %d\n", __func__,
 
+data->gpio_conf->gpio_num_info->gpio_num[gpio_config.gpio_name],
+                    gpio_config.config_val);
 
-Issue Description
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-While conducting an internal evaluation of the software, LSE Leading
-Security Experts GmbH discovered a path traversal vulnerability in the prod=
-uct
-downloads function. A user with permissions to change or add products may c=
-hange
-the Downloads name to a local file (e.g. "../../../config.inc.php"). This m=
-ay lead
-to a privilege escalation.
+                  gpio_set_value_cansleep(
 
-
-
-
-Temporary Workaround and Fix
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D
-Install latest update 4.9.8/5.2.8
-See http://wiki.oxidforge.org/Downloads/4.9.8_5.2.8
-
-
-Proof of Concept
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Create a new product in the backend. In the "Downloads" tab set "name of th=
-e uploaded
-file" to "../../../config.inc.php". Go to the frontend and buy the related =
-product.
-Move to "My account" and choose the download section. Download the file and=
- enjoy
-full database credentials.
-
-History
-=3D=3D=3D=3D=3D=3D=3D
-2016-02-05 Issue discovered
-2016-02-22 Vendor contacted
-2016-02-24 Vendor confirmed
-2016-05-03 Vendor released patch
-2016-05-03 Advisory release
+data->gpio_conf->gpio_num_info->gpio_num[gpio_config.gpio_name],
+                    gpio_config.config_val);  //control
+gpio_config.gpio_name and gpio_config.config_val
+                  break;
+                }
+                default:
+                  rc = -EFAULT;
+                  break;
+              }
 
 
-GPG Signature
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-This advisory is signed with the GPG key of the
-LSE Leading Security Experts GmbH advisories team.
-The key can be downloaded here: https://www.lsexperts.de/advisories-key-99E=
-3277C.asc
+            Affected versions:
+            KK(4.4) and L with APQ8084, MSM8974, and MSM8974pro chipset
 
+             fix:
+             http://security.samsungmobile.com/smrupdate.html#SMR-JAN-2016
+             SVE-2015-4958: msm_sensor_config security issues
 
+             we report this to samsung, samsung reply  to us if we
+want to get cve  request it by ourself.
 
---ICeHk8hkobvJnVwT5kOP8Bks21UAs53L1--
-
---XAhOp6maKf0Fb9BvMt0X4Q1tbBoN4VvBB
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJXKNR4AAoJEDgSCSGZ4yd8k0EP/j/fCLjwBo2FbMLy9tEykhtT
-IdTzJUvoOn03OAWeGzou+SlyAd2yavlbogsyBpyQrGp/l44AaVERjYsQR2BAvcYB
-veend/0ptLZZ66IzZd8t7oyS5KQUpEQaef8Y6PydNbPwVQzJn/Z53hXsYXJ/3AKj
-ZQHGRpDv8v//Qk6jw14rMmJt6s8H7Yij32e0cIRgHHIewyO4rUTp8JdheDbFY+nM
-AONt9hRSR85icZw33ADhx/nnLwvXu9XrJbjZYlsWIa7Z1Btna+IpNkWvDOg4Bypu
-ANljhbj9W/24AkxXaQqpT5s6PWsg8MPmKuQ2vcCa6XuAXHcZr9gptUi93eMgbeQd
-OBla/x6AN9jgvgkf67QLJFYKgxhIc80DxtJK33/gGOkdn+tq22TeI5C3+yFS3ods
-F1eD2UsjBOdIzLTV61l/R4p91TP+U9pnvzaEd6PIUAQCyk11ElAyTJ0+m1wVNRi6
-aG7kicWBLVNQpCL7YLWbvGp8Y7OkUx/esdZHObVCMZwYbZ8L51J+RgYvMGJtPleV
-unm297QVkNm6Dr/OJSMbCAzkryVGs/xbI6HCF4n0sosA8Lvi6tfXpKWzxBPJqH8G
-QTHN/cg8QRkG7Qefvnzb7NIm6tVjGZNufmMFJhLE9TtcRhCzQoLYFTALelS61tO4
-LLKV+znLcAy6LUKGIIbG
-=oz0h
------END PGP SIGNATURE-----
-
---XAhOp6maKf0Fb9BvMt0X4Q1tbBoN4VvBB--
+              Best regards,
+              Berry Cheng
