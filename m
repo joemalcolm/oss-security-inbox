@@ -1,51 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/2
-Message-Id: <20160115035548.BD2B06C04AB@smtpvmsrv1.mitre.org>
-Date: Thu, 14 Jan 2016 22:55:48 -0500 (EST)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for Kubernetes api server: patch operation should use patched object to check admission control
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/17/1
+Message-ID: <8d3bc49e3cb55d99d9fa35c648f69451@mx.sdfeu.org>
+Date: Sun, 17 Apr 2016 16:25:31 +0200
+From: none <ytrezq@...-eu.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: cpio -- directory traversal
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 2015-02-02 20:48, Vitezslav Cizek wrote:
+>> * Dne Friday 16. January 2015, 03:44:25 [CET] Alexander Cherepanov 
+>> napsal:
+>>> cpio is susceptible to a directory traversal vulnerability via 
+>>> symlinks.
+>> 
+>> Here's a patch we use in SUSE for some time.
 
-> CVE request for Kubernetes api server: patch operation should use patched
-> object to check admission control
-> 
-> https://github.com/kubernetes/kubernetes/issues/19479
+> Thanks for sharing!
 
->> https://github.com/kubernetes/kubernetes/pull/19481
+>> It forbids to write over symlinks, similar to bsdtar.
 
->> This changes the patch implementation to call the admission chain with
->> an Update using the patched object as the input. This allows all the
->> correct defaulters and field authorizer to run as expected.
+> Nice, this is a simple and easy approach. But I wonder if it's widely
+> acceptable. GNU tar follows symlinks which are not extracted from the
+> archive and, in 
+> http://www.openwall.com/lists/oss-security/2015/01/08/4,
+> Florian Weimer said: "If [the current directory] already contains
+> symbolic links, some users expect that those links are followed because
+> they have used symlinks to move part of the file system tree to
+> somewhere else (perhaps a large file system)."
 
-> TL;DR:  you can patch your resources and they'll always be allowed, so more
-> ram, disk, etc. CWE-285
+A year later, I see this bug is still not fixed.
 
-Use CVE-2016-1905.
+What about using the ɢɴᴜ tar way in that case. I mean delay the creation 
+of symlinks until all fifo/device/regular files and directories are 
+created ? (instead of following the oder in the archive)
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWmGy3AAoJEL54rhJi8gl53ZIQAKbPGrumv0Nk5rSbiloc/Kje
-zFL/7C6ADhN29J1zrelKsXBVh8GFYZNfDZrMGO7yhi3ckPCiLMA1qFU15iUuCUdM
-lKxRxRtnCajlmcOC6mDHsyOTkBLvW0iS0heIt/ATN3rcCGORNZ3eiAU0+/8Lp914
-lTQVH1dhjWtNTv9f1nay+aGkTfhz4fn2A1IcI6xwFiRaC3+o/BZPIzc4CI4zJ1fw
-NE0g9cQ68BFU75zXg5WjWon/Vc4FLosLgF/oRLD8iHu4nththGip+WlKbteuwUrC
-CExv/DGRfumpsDe5pZqjC8HJndWhXvjPG9Pkorsvvh7I2j3+qpooMsJmI6V5E85J
-kOqW1gEn4MXtTdcSWufXbcFC5Qn1LZ54QYKI47H9NKoNRRJyz8TEOF3Puap1FIxV
-ZCSlkv79FQhBLDXkAOWOj41YPPvWa8JCHAsirViZ2Uftt4vXFijoQfsCmrBCrGnI
-dcFPlSZwnczFz5rBy/df/5V69juDWQDd76ckGkUe33numpdENnNa6XztRfgO+ICL
-0l9PjfCz/ANQT/SrgvPalBMyuPYzh7P7o2AVxUM1fQxO7z+juip2xM/k+E3aucb4
-Urzy7whUTvcL1mnMX3gfnXWoSjgmDqsyXYfcD4QWU4WoaDDAw2E9P2LTEPCMqi6R
-c6TKbhJYZXuAatFdmgA1
-=ELu9
------END PGP SIGNATURE-----
