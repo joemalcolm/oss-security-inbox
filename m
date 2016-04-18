@@ -1,41 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/19/1
-Message-ID: <a8099639-6200-2e90-f14c-415791387826@isc.org>
-Date: Mon, 18 Jul 2016 19:42:17 -0800
-From: Michael McNally <mcnally@....org>
-To: oss-security@...ts.openwall.com
-Subject: ISC security issue CVE-2016-2775 (potential denial-of-service attack against lwres functionality in BIND)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/18/9
+Message-ID: <60D0FDCD56934588AF304C64AE3CB80D@W340>
+Date: Mon, 18 Apr 2016 19:02:13 +0200
+From: "Stefan Kanthak" <stefan.kanthak@...go.de>
+To: <oss-security@...ts.openwall.com>
+Cc: "CVE ID Requests" <cve-assign@...re.org>
+Subject: Re: CVE request: GnuPG classic & GnuPG modern
 Content-Type: text/plain; charset=utf-8
 
-Earlier today ISC disclosed a vulnerability affecting BIND (specifically
-affecting lightweight resolution functionality in BIND, NOT normal DNS
-resolution.  The bug affects the lwresd program or named if is configured
-to do lightweight resolution using the "lwres" configuration statement.)
+Kurt Seifried wrote:
 
-The defect was publicly disclosed as CVE-2016-2775 and the official
-vulnerability disclosure is here:
+> I suspect we're going to need a tiny bit more context around this request.
+> Like... what's the CVE for?
 
-  https://kb.isc.org/article/AA-01393/74/CVE-2016-2775
+Loading of multiple Windows system DLLs from the installers application
+directory instead of Windows' system directory, a.k.a. DLL hijacking.
 
-Ordinarily we try to give advance notice to packagers when we are
-preparing new releases of BIND.  Unfortunately our timetable for this
-incident changed in mid-course when the reporting party informed us
-that reproduction code was already available in a public bug repository.
+Well-known and well-documented for example in
+<https://cwe.mitre.org/data/definitions/426.html>
+<https://cwe.mitre.org/data/definitions/427.html>
+<https://capec.mitre.org/data/definitions/471.html>
 
-We apologize for the inconvenience caused by the acceleration of our
-disclosure timetable.
+On Windows 7:
+    uxtheme.dll, winmm.dll, samcli.dll, msacm32.dll, version.dll, sfc.dll,
+    sfc_os.dll, userenv.dll, profapi.dll, dwmapi.dll, mpr.dll
 
-New releases of BIND are available which fix the lwres issue
-(CVE-2016-2775) and include fixes for a few regressions which
-had been introduced in recent versions.  You can find them in
-the usual place on our site:
+On other versions of Windows: a similar list.
 
-  https://www.isc.org/downloads
+regards
+Stefan
 
-A standalone patch diff addressing only CVE-2016-2775 can be made
-available upon request to any parties who want only the lwres CVE
-fix and not the other regression fixes.  Contact security-officer@....org
-if you wish to request it.
-
-Michael McNally
-(for ISC Security Officer)
+> On Mon, Apr 18, 2016 at 4:49 AM, Stefan Kanthak <stefan.kanthak@...go.de>
+> wrote:
+> 
+>> Hi,
+>>
+>> please assign (1 or 2, as you like) CVEs for GnuPG classic and GnuPG
+>> modern.
+>>
+>> regards
+>> Stefan Kanthak
