@@ -1,74 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/07/10
-Message-ID: <20160107234606.GB18482@openwall.com>
-Date: Fri, 8 Jan 2016 02:46:06 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Fwd: Integer overflow in the JasPer's jas_matrix_create() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/18/3
+Message-ID: <alpine.LFD.2.20.1604181740160.24870@wniryva>
+Date: Mon, 18 Apr 2016 17:44:21 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: dushaobo@....cn
+Subject: Qemu: usb: Infinite loop vulnerability in usb_ehci using siTD process
 Content-Type: text/plain; charset=utf-8
 
-The following message didn't make it to the list in time, getting stuck
-in a temporary spam folder (so the moderators did not see it until I
-just happened to find it in there today).
+   Hello,
 
-I've also re-attached the PoC that was attached to the original message.
+Qemu emulator built with the USB EHCI emulation support is vulnerable to an 
+infinite loop issue. It occurs during communication between host controller 
+interface(EHCI) and a respective device driver. These two communicate via a 
+split isochronous transfer descriptor list(siTD) and an infinite loop unfolds 
+if there is a closed loop in this list.
 
-Apparently, the issue was also reported on December 24 here:
+A privileges used inside guest could use this flaw to consume excessive CPU 
+cycles & resources on the host.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1294039
+This issue is similar to CVE-2015-8558, but using siTD instead of iTD.
 
-The reason for the false spam detection turned out to be the Chinese
-gb2312 charset.  We expect only English messages on most Openwall
-mailing lists, so the following non-English charsets commonly seen in
-spam arriving to our lists are currently treated as spam indicators:
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-04/msg02691.html
 
-koi8-*
-windows-1251
-shift_jis
-iso-2022-jp
-big-5
-gb2312
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1325129
 
-These may or may not trigger spam detection depending on more factors,
-which is why some other messages by the same sender made it through.
+This issue are discovered by Du Shaobo of Qihoo 360 Inc.
 
-Unfortunately, this detection may sometimes be triggered on
-mostly-English messages that have one of these charsets specified for
-the message body (as it was in this case) or the message Subject.
-
-For now, my advice is to avoid using these non-English charsets when
-posting to English-only mailing lists.  We might reconsider the
-anti-spam settings, although so far they've been reasonably effective
-and such misdetection appears rare.
-
------ Forwarded message from limingxing <limingxing@....cn> -----
-
-From: limingxing <limingxing@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: ?????? <huangyonggang@....cn>
-Subject: Integer overflow in the JasPer's jas_matrix_create() function
-Date: Thu, 31 Dec 2015 02:05:38 +0000
-
-Hello,
-We find a vulnerability in the way JasPer's jas_matrix_create() function parsed certain JPEG 2000 image files. 
-
-jas_matrix_t *jas_matrix_create(int numrows, int numcols)
-{
-	.......
-
-	if (matrix->maxrows_ > 0) {
-		if (!(matrix->rows_ = jas_malloc(matrix->maxrows_ *
-		  sizeof(jas_seqent_t *)))) {
-
-        ................
-
-matrix->maxrows_ > 0 ,but matrix->maxrows_ *sizeof(jas_seqent_t *) can cause Integer overflow.
-
-Despite this library is used by many programs (http://www.ece.uvic.ca/~frodo/jasper/#overview), there is no one providing support.
-
-
-This vulnerability was found by Qihoo 360 Codesafe Team
-
------ End forwarded message -----
-
-Download attachment "poc.jp2" of type "application/octet-stream" (212 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
