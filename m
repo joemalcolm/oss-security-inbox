@@ -1,53 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/10/3
-Message-Id: <20160110174358.54BB66C000F@smtpvmsrv1.mitre.org>
-Date: Sun, 10 Jan 2016 12:43:58 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/18/7
+Message-Id: <20160418160131.5831A3320BD@smtpvbsrv1.mitre.org>
+Date: Mon, 18 Apr 2016 12:01:31 -0400 (EDT)
 From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, dmn@...ian.org
-Subject: Re: CVE Request: FireBird RDBMS: authenticated clients crash FireBird when running gbak with invalid parameter
+To: regis.leroy@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Varnish 3 before 3.0.7 was vulnerable to HTTP Smuggling issues: Double Content Length and bad EOL
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> The FireBird RDBMS can be crashed remotely by an authenticated client
-> by invoking gbak via the service manager using invalid command line
-> switch and lead to denial of service.
+> Changelog is:
+>  * Requests with multiple Content-Length headers will now fail.
+>  * Stop recognizing a single CR (r) as a HTTP line separator. This
+> opened up a possible cache poisoning attack in stacked installations
+> where sslterminator/varnish/backend had different CR handling.
 > 
-> http://tracker.firebirdsql.org/browse/CORE-5068
-> http://sourceforge.net/p/firebird/code/62783/
-> https://bugs.debian.org/810599
+> https://github.com/varnish/Varnish-Cache/commit/29870c8fe95e4e8a672f6f28c5fbe692bea09e9c
+> https://github.com/varnish/Varnish-Cache/commit/85e8468bec9416bd7e16b0d80cb820ecd2b330c3
+> 
+> Combinations of theses two flaws in HTTP protocol handling allows for
+> "HTTP Response Splitting" attacks
+> when another actor in front of Varnish3 can transmit headers in this
+> form (for example):
+> 
+>     Dummy: header\rContent-Length: 0\r\n
 
->> Typo in gbak's command line parameter causes Firebird process to crash
-
->> Bug happens only when backup\restore is made using services and when wrong switch is passed. 
-
->>> burp/burp.cpp
->>> - BURP_print(true, 137, sw.c_str());
->>> + BURP_error(137, true, sw.c_str());
-
-Use CVE-2016-1569.
+Use CVE-2015-8852. As far as we can tell,
+29870c8fe95e4e8a672f6f28c5fbe692bea09e9c is not independently
+exploitable and thus only a single ID is needed.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWkpewAAoJEL54rhJi8gl5JdUP/1Nf5ObCY4KGqcm2AAHx43a0
-8f9TWuE/FVfNNVVsfAHqLRacUte+KHvVCY7+UUiIYsXRymoJeKc+JqaqgDIhBW0L
-0/5FUiDt8YG4eGFLm3jDlfOz8em9Mk2lvOnFxh98rDwjn7HTh/B8rutnbIUeNE8X
-W5pKo/GzO3N68UcSZrJnzy6oPvO2aoWbt1fXiJEnvh9Ff2NEaPkFG4yE3fvPDmLO
-cR6O3ZCVJNhRJMEbayIqwpeTF6susR7BjRQBSB5XXR4weN9ulIXmKb29pJz9Ioqx
-WxrDPvD3Z4LaEMdFRkylEo4lTEiAJQVlSt316xFoqVmh7kPri7DdzJmU7920i7YH
-Gh8lOXO4yzW30ek3jRRs5FBbyrEUPjqwRP2ejnJ7fwB4jQwauSU98yt0MpEztOHr
-I59XcF0TpyEHe3fK8CLdeRMVVBveJKmsbmIUzzA37jLoYoZim1VuQB3CbSQPE7k5
-RBOGUWTa/npMrWkANojT5DTmfGb/oFfsculXDDc1svILWy+CQxxK8/qg4w8Gm+al
-XccUo7ZVV2JeNKX8F7Chmw6jPhWSpJgrl1i7HoXA/DRKUMnM+R13gXbcX/yR+dyO
-VWViItsI/eY/d7LRJ5vP8OHNJuYYxYmTF6dlXWXjemUMs9/m42qBaIzI+hGD9c8d
-iXS62wvm5sQXtNWmIm4P
-=tXFp
+iQIcBAEBCAAGBQJXFQRTAAoJEHb/MwWLVhi2JWQP/1KyFQ29uDWigwCEnW1lY/CX
+cyYnYNbRpsoXBIpkA6nCXJxD4IT3d5QXiWmtpelZy7A0CkdWLFa5dRJCC3wchn/J
+FE4xjsEFpvaiH5GJXwMpETfQ3dPxhXqpFCk8CFt9grirRZNSwziClSc3QF4nZXL5
+XfQMKWkgPE5e1kKbLGncqRyRsT9SY8PURfD6f1BPTZ9AhOUKrSXAIVrANRKhkbSV
+L5TIYxKKegFX/dn+c7lu+ur9TkvdOKHJ4NUPJE2G4UkbajPM9+YhYGJXa7z45+6D
+WJrPNUesSvxbaXQcmhxpbwWmcrnHCec7ONnp8GU047PqD/f2cRiudH0/qjmA3Lla
+t3tZwcRbCMIGEMzMDV82k6H+lh8KUxD+ZAyLpaWa/M+A8qCM7rTt06N0Sk+2bOD5
+LShXWIuWsfXqLhUmwI5irXdwoCPO8qqjawLpPSDxRSTmF0FJp5o3dMAZ9Bod0a4r
+wrC9eoClGb9yYy6Rp6Cu2S3SOLTgIrfNcWqiYKu4TzrlkrtuippLlrsmANeaFnVl
+j1E9hK2+UQI3+l77BufqIUyyOajksb8LMRfIpmH/YFfyXfP1SGcoXVdb8UcForxO
+Wu6muPmPTPrMpocn/sL5M6eGgcqFJ+X99BVzMSq4dn0V/Tn+EWR5kdjGxozkRn0O
+Y+bA2XlK2SlcdBVOOEi6
+=Y81M
 -----END PGP SIGNATURE-----
