@@ -1,101 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/12
-Message-ID: <4429782.ZdpFBnFWqz@blackgate>
-Date: Wed, 09 Nov 2016 15:45:30 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: libdwarf: memory allocation failure in do_decompress_zlib (dwarf_init_finish.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/18/8
+Message-Id: <20160418161241.6E4973AE019@smtpvbsrv1.mitre.org>
+Date: Mon, 18 Apr 2016 12:12:41 -0400 (EDT)
+From: cve-assign@...re.org
+To: throber3@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request - samsumg android phone msm_sensor_config function write some range kernel address with any value
 Content-Type: text/plain; charset=utf-8
 
-If it is suitable for a CVE please assign one. Thanks.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Description:
-libdwarf is a library to consume and produce DWARF debug information.
+>             The v4l-subdev driver provides an ioctl system call
+> interface to user space clients for communication. When processing
+> this communication, the msm_sensor_config function uses the
+> user-supplied value gpio_config.gpio_name as an index to a buffer for
+> write operations without any boundary checks.
+> 
+> kernel/SM-G9008V_CHN_KK_Opensource/Kernel/drivers/media/platform/msm/camera_v2/sensor/msm_sensor.c
+> 
+> msm_sensor_config
+> 
+>              fix:
+>              http://security.samsungmobile.com/smrupdate.html#SMR-JAN-2016
+>              SVE-2015-4958: msm_sensor_config security issues
 
-A fuzz on an updated version revealed a memory allocation failure.
+>> A vulnerability using without checking the boundary of buffers can
+>> lead to memory corruption. The applied patch avoids an illegal access
+>> to memory by checking the boundary.
 
-The complete ASan output:
+Use CVE-2016-4038.
 
-# dwarfdump $FILE
-==27994==WARNING: AddressSanitizer failed to allocate 0x62696c2f7273752f bytes 
-==27994==AddressSanitizer's allocator is terminating the process instead of 
-returning 0 
-==27994==If you don't like this behavior set allocator_may_return_null=1 
-==27994==AddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_allocator.cc:147 "((0)) != (0)" (0x0, 0x0) 
-   #0 0x4ca3ed in __asan::AsanCheckFailed(char const*, int, char const*, 
-unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67 
-   #1 0x4d0f23 in __sanitizer::CheckFailed(char const*, int, char const*, 
-unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:159 
-   #2 0x4cec76 in __sanitizer::ReportAllocatorCannotReturnNull() 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_allocator.cc:147 
-   #3 0x42204c in 
-__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
-__asan::AsanMapUnmapCallback>, 
-__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->, __sanitizer::LargeMmapAllocator >::ReturnNullOrDie() /var/tmp/portage/sys-
-devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1317 
-   #4 0x42204c in __asan::Allocator::Allocate(unsigned long, unsigned long, 
-__sanitizer::BufferedStackTrace*, __asan::AllocType, bool) 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:359 
-   #5 0x42204c in __asan::asan_malloc(unsigned long, 
-__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:718 
-   #6 0x4c0ab1 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:53 
-   #7 0x5b582e in do_decompress_zlib 
-/tmp/dwarf-20161021/libdwarf/dwarf_init_finish.c:1085:12 
-   #8 0x5b582e in _dwarf_load_section 
-/tmp/dwarf-20161021/libdwarf/dwarf_init_finish.c:1159 
-   #9 0x5bb479 in dwarf_srcfiles 
-/tmp/dwarf-20161021/libdwarf/./dwarf_line.c:336:11 
-   #10 0x5145cd in print_one_die_section 
-/tmp/dwarf-20161021/dwarfdump/print_die.c:812:28 
-   #11 0x512262 in print_infos 
-/tmp/dwarf-20161021/dwarfdump/print_die.c:371:16 
-   #12 0x4faafa in process_one_file 
-/tmp/dwarf-20161021/dwarfdump/dwarfdump.c:1371:9 
-   #13 0x4faafa in main /tmp/dwarf-20161021/dwarfdump/dwarfdump.c:654 
-   #14 0x7f578f45a61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289 
-   #15 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Affected version:
-20161021
-
-Fixed version:
-N/A
-
-Commit fix:
-https://sourceforge.net/p/libdwarf/code/ci/583f8834083b5ef834c497f5b47797e16101a9a6/
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00024-libdwarf-memalloc-do_decompress_zlib
-
-Timeline:
-2016-11-02: bug discovered and reported to upstream
-2016-11-05: upstream released a patch
-2016-11-07: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/07/libdwarf-memory-allocation-failure-in-do_decompress_zlib-dwarf_init_finish-c
+iQIcBAEBCAAGBQJXFQcVAAoJEHb/MwWLVhi29+4QAJqIKrKg3nHrIRLo3As2XVYk
+XRR2wf3C5QNOiUxF9O8GNmjY7AFsmKt7PiqRJ2wlHhz1zk/+eTuun3DTaGvE16Ni
+ouaNJ+4CQExCOrXKaVfjvbIvg7eWKfh6BZpF0aimIF2I6YhDC8ndc9zT/1HZhwkM
+u44A+HlJWuS9a0msUImOatTr3HKpE1bmaFDmUwH9GkhHYm/6juypbXLXVeeyKS+1
+P7qyzF5pTl9ODwtY7zIu+wfL0x3oDkxg9Gi/JU1XIpfixxIeLmtp6UOFfE9+8Wgo
+HR9hITU61KLtjd/db+5l24KyqpTOQkhOCfxi1tm1bX5EozlfCGReLQMBK6toloKL
+isxDO1oUREc2gmoT2GXvMzqkqaVV5J5qZ69bKBX/Y2BPIZ+U7woVE7Ctdj0TTX1v
+Y5cLdude4R02gqmIEopW0EgkAW34pU2izlur5V006O01HuKpywPwdNAEJbAcbcT8
+fagMDmE+eQsyfjbrualJv/BfxlnmxMdhAzsUPzZbRVXnxGmwDlE/mtFvKsc1K4hc
+KrFCurxRAGufI1nXXZT1YY6DRStFKts2gSxJJbYoip49T8f8B+cUfD7rdDyBLGjr
+80f4dof6KZFXr9aoq6Dfn4c1+DtfSZUx59+nb8Dv1hK2cYQiP/ZfYFG3bPZ30jfu
+2Ha3vXCFz5R/FR0vUywf
+=pyJr
+-----END PGP SIGNATURE-----
