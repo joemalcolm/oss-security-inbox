@@ -1,23 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/23/2
-Message-Id: <20160423134342.D846A3320C5@smtpvbsrv1.mitre.org>
-Date: Sat, 23 Apr 2016 09:43:42 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/18/5
+Message-Id: <20160418151135.DC4656C08A9@smtpvmsrv1.mitre.org>
+Date: Mon, 18 Apr 2016 11:11:35 -0400 (EDT)
 From: cve-assign@...re.org
-To: carnil@...ian.org
+To: rbarlow@...hat.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: jq: heap buffer overflow in tokenadd() function
+Subject: Re: CVE request - Pulp < 2.3.0 shipped the same authentication CA key/cert to all users
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://github.com/stedolan/jq/issues/995
-> https://github.com/stedolan/jq/commit/8eb1367ca44e772963e704a700ef72ae2e12babd
-> https://bugs.debian.org/802231
-> https://bugzilla.redhat.com/show_bug.cgi?id=1328747
+> https://github.com/pulp/pulp/pull/627
+> https://bugzilla.redhat.com/show_bug.cgi?id=1003326
 
-Use CVE-2015-8863 for this off-by-one error that leads to a heap-based
-buffer overflow.
+> I learned during our refactor this weekend that we have ca.{crt,key}
+> files in our git repository that our RPM packages and installs on
+> every Pulp installation. This is very bad.
+> 
+> To make matters worse, there is only a tiny paragraph in our docs that
+> mention quite casually that you should make your own SSL certificates.
+> This is putting our users at risk, particularly ones who don't know
+> the full depths of our use of CA certificates. This is particularly
+> bad due to the understated nature of the documentation telling users
+> that they can change the CA if they want to.
+> 
+> A very easy solution would be to have the %post% section of our spec
+> file autogenerate a new CA certificate and key when the package is
+> installed. This has the benefit of still making it easy to install
+> Pulp for newcomers, while also not putting those users at risk to man
+> in the middle attacks.
+
+Use CVE-2013-7450.
+
+(We're interpreting this as a request from the Pulp upstream vendor.
+In general, it would be hard for a third party to determine whether a
+"tiny paragraph" was generally recognized as a required part of the
+installation process.)
 
 - -- 
 CVE Assignment Team
@@ -27,17 +46,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXG3shAAoJEHb/MwWLVhi2ZK8P/iadMgPsxxPobYn4G1WMVt82
-P+JvHootEspQ1kJfPdQKbDNjgAn0oW774Nwn4pItBhDYhZ6WJ4hQsEMoOjZh6UEz
-Dt/W21djT6gcTXD6MlGRx6SCHf9jAzZibAFz5xjey41fLjmSoOR0gkrSPXAEgbYJ
-ChNb6mVBz1mc5DJg7tzgKwVy2StfL9RUyghNG+Jt1ieNCzrkK4Kcr/q7pPIIuSkX
-Rc/DviITdlBgUGkkA5BtsqUUk5f1h74rlRJPjH3J9q4vKgfkhF8bxXBCtSUeUz6x
-0UGfwbQ4JNZ0XB4mZolciyPFASkCtryIz7vujEo7FwsFnAI0khiE2qBxE0C5YpnO
-ijimXY9YE08TSoylK5UPUF1MyceRhN5foqBT84OB9M3wF/CWoTm7eGTbona5Npgj
-hXJrNKt13Wm7gCf6fuSq+tx3ZYdgGMEryH6LXSojNolR5AivJD8dZ51/7pvsOT9c
-kmy1X5oc/70U3FKzfHK29cCqgo33esUTkDYHZwkh0uIUCaBAGjLmotJ4f6iUmqjW
-u/r83UcRYxhD7CkIaMPRwvomVcg1/UEOKHBxUf4ggdLsGBCUG7Ir9rruxu1BxUKr
-oXJpvXmWSnIX99oZRYNic5hj96bJ/lS6Nzc4Cs92+7iLNbVte82wpARXkdKtUwo2
-D5jopjAn7dYKUHHCe3WP
-=AvmJ
+iQIcBAEBCAAGBQJXFPhHAAoJEHb/MwWLVhi207MP/3/VQ1gkERwBsXA06wuvGKLs
++yj8bThKbQoRfcoMaUJZi36ep1JZS0hQrPptujqpmhbZS5yFCDEivgq8aTtkdZpy
+7566asH0nm4smGReWHUpMHwWHLCUWwx3Sfdq66ETvE+ubXA2iCm/sw4QQjsN0t49
+HxUsBjPIEEGlngAs9Vxt9/c/ufAzqgr5BdTTDJ5202mvKI/b9YLLqIw5QT0Ni44G
+FcYXFseLI6Amuj04YXkwvMCyYVzRdfvsaIwmhtRlKj+lWnahHC084Ng9Bs2ztpbO
+j3Sfp0UWUWVbyudgTqi56hBNEmkqf40cvgfGBnD6lTyfBohbKsVAu5325rWdfc7+
+80UEqstAPECVtsER0Nqp7JBddXyAtaosjuCqWTx86txH4twYuq4m5k8mL+sRrVwB
+7O5uOm7BkC/5KuFOl5M3UvYn17AhMF7BSh6/lQFJZKK31oS9D2cYXdlwKsgWyKh3
+PeH1yTUrFvwLvFve1HcKPEwgl3vU5ZDHHZGBdXaEC9PB9ZtjMlOxPyjKQOjbTmU3
+gLuDYymW+KFwJqPGRfGKXRYQSjY5r3DsZU339qZ3Uw9O8QJc6XvZWczNpoej0SKX
+CLzHyrn6rFo8WGa1/a6uWtMssnEVGBVCZ0L8RyoAc5pCLOeOcGjDJjVJCZsdxgcF
+mit5sStdITcfq/DGsFwU
+=jmq0
 -----END PGP SIGNATURE-----
