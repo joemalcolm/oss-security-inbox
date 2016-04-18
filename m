@@ -1,63 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/11/6
-Message-Id: <20160211210237.884E272E025@smtpvbsrv1.mitre.org>
-Date: Thu, 11 Feb 2016 16:02:37 -0500 (EST)
-From: cve-assign@...re.org
-To: gustavo.grieco@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE requests: Multiple vulnerabilities in GraphicsMagick parsing and processing SVG files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/18/2
+Message-ID: <7510612AC6DE4FF2809D697069C10C6B@W340>
+Date: Mon, 18 Apr 2016 12:49:42 +0200
+From: "Stefan Kanthak" <stefan.kanthak@...go.de>
+To: <oss-security@...ts.openwall.com>, <security@...pg.org>
+Cc: <cve-assign@...re.org>, <wk@...pg.org>
+Subject: CVE request: GnuPG classic & GnuPG modern
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> We recently tested the last release of GraphicsMagick (1.3.23)
+please assign (1 or 2, as you like) CVEs for GnuPG classic and GnuPG modern.
 
-> AddressSanitizer: heap-buffer-overflow
-> WRITE of size 8
->     #0 0x5a892b in TracePoint magick/render.c:5125
-> 
-> AddressSanitizer: stack-buffer-overflow
-> WRITE of size 1
->     #0 0x60ba3a in GetToken magick/utility.c:2638
-> 
-> AddressSanitizer: heap-buffer-overflow on address
-> WRITE of size 8
->     #0 0x93c004 in GetTransformTokens coders/svg.c:361
-
-Use CVE-2016-2317 for this set of three issues.
-
-
-> AddressSanitizer: SEGV on unknown address 0x000000000000
->     #0 0x59866a in DrawImage magick/render.c:2999
-> 
-> AddressSanitizer: SEGV on unknown address 0x000000000000
->     #0 0x945793 in SVGStartElement coders/svg.c:1757
-> 
-> AddressSanitizer: SEGV on unknown address 0x000000000000
->     #0 0x5a396c in TraceArcPath magick/render.c:4550
-
-Use CVE-2016-2318 for this set of three issues.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWvPYNAAoJEL54rhJi8gl55cQP/1ueHEBup/X4TOOAKln/6MVO
-QcV/hhBnq6kGVbw/YM0zgTogAqJQUS9HOWrMAf09o9xs44k8A8D3hR4OV+vaQAAg
-hKgtqqEcj5Tl6bf8FPlxNFW4ZuA6XsNJTxwCUNGy//QDD1Ozqy4GxxCL82Sp0zZT
-fp/isPP7uaOrOMc/A+c5z6ak4NN6LEJYY8Ze4x/kqLSSbPEi5pyrBBJQLHhdLYTF
-tpQ9NYR63SkKkJCgJbAh9pZTVLmdQ8SMbV7YYKnLxuQN2Jjhbjs6KKkiL3vntxFe
-0yw7S+oH3c7pCyQIA43mJYqLNj1Ij4ZIJqnpaCFsUEk/bPMnzjGUtGZGsm6KZMkM
-qHDiukkRnVpF9vGtTVPu3aUZ13EJWzUoVln8QPr3rSKavHXTTiFdG7WvL2ThEEZd
-1tzMpi3IrhGe01ISv5JK/qxcJHBrEDr89tOPnwdsi9A3NeLfgxQz1myhesG+8uk0
-zwcmFsR/nz36s2udFTjRxe4a/mHKaYurXtYr6+sB55sHs/qLJb00BX0cP3Kv9ga/
-VbCRMuN4SciVkd3o/b7NGY/YeW9lYYVgvd/bzfPivOVMjywkDmpbkvhbo/TJNg/1
-DSTX/g1o5cBI6QKXYNoz4p6Pa+NwJStsdbo76gkyfh5OPxe/HdPlBDgfQz6lVRgC
-rOktkYCy3VMBOzVl2KEH
-=uMbR
------END PGP SIGNATURE-----
+regards
+Stefan Kanthak
