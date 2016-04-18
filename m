@@ -1,56 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/5
-Message-Id: <20160908065327.6DEBD6C1B17@smtpvmsrv1.mitre.org>
-Date: Thu,  8 Sep 2016 02:53:27 -0400 (EDT)
-From: cve-assign@...re.org
-To: winsonliu@...cent.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: OpenJPEG Heap Buffer Overflow Issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/18/10
+Message-ID: <20160418171550.GA53619@mail.corp.redhat.com>
+Date: Mon, 18 Apr 2016 13:15:51 -0400
+From: Randy Barlow <rbarlow@...hat.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request - Pulp < 2.3.0 shipped the same authentication CA key/cert to all users
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Mon, Apr 18, 2016 at 11:11:35AM -0400, cve-assign@...re.org wrote:
+> Use CVE-2013-7450.
 
-> I reported a security issue of OpenJPEG some days ago and it has been
-> fixed now. The fix is available at
-> https://github.com/uclouvain/openjpeg/commit/e078172b1c3f98d2219c37076b238fb759c751ea
-> 
-> A Heap Buffer Overflow (Out-of-Bounds Write) issue was found in
-> function opj_dwt_interleave_v of dwt.c. This vulnerability allows
-> remote attackers to execute arbitrary code on vulnerable installations
-> of OpenJPEG.
-> 
-> AddressSanitizer: heap-buffer-overflow
-> WRITE of size 4
+Thank you! I forgot to credit Sander Bos in my initial e-mail for
+bringing the lack of CVE for this issue to my attention.
 
-e078172b1c3f98d2219c37076b238fb759c751ea modifies tcd.c not dwt.c - is this
-still the correct commit?
+> (We're interpreting this as a request from the Pulp upstream vendor.
+> In general, it would be hard for a third party to determine whether a
+> "tiny paragraph" was generally recognized as a required part of the
+> installation process.)
 
-Also, is this the same vulnerability as the
-https://pdfium.googlesource.com/pdfium/+/b6befb2ed2485a3805cddea86dc7574510178ea9
-(aka Chromium bug 632622) issue that was already assigned CVE-2016-5157 in the
-https://googlechromereleases.blogspot.com/2016/08/stable-channel-update-for-desktop_31.html
-post?
+That's correct, I am a core contributor to the Pulp project.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+-- 
+Randy Barlow
+irc:   bowlofeggs
 
-iQIcBAEBCAAGBQJX0QmYAAoJEHb/MwWLVhi2JuIQAInY8Bed/W9wZwgmO4peepl7
-lOJptN9utdMwCdYEug6NzCFjpcUslSmrBQcNdXEGMoPw5rku/Hw73sHNbhdfM71I
-TDU2OEwzSNQeo+4m/3rXMlYyHwOqHMp3owHQnl5JWJRcz6hhmI/JpokWxKncthtb
-rpywwao89VJZJf5GLF7RQFXvHwlREP+D3XYrW0cbqEfOrUAQ7oxK5OaFCa30NWrh
-ISJ4iDalfTeWr7x98Bb3X6v40dL7bkUtuWHnqFN+LwuBJL2MlJ74XmsdIDrSXGOf
-grrpU1sMGZ+yJhbc+4n6JcTxXI6/AWOaKqn/pkCG8UkNL/LxzuaGmIYguGecYh7V
-2tc5e7IZ4IzCYNaRUKKLAtlfENMbOn8IqL0zFWXRoSzw7YcSw24s1A0hzEBiPonS
-cPWGhMYsu4bCmJmZZenuKNIKx/CuOZq+YgyFpXjowUxFGpZwOk9eVPnpmK8CRl7z
-kGaS33l9yElstG1gsPeGDxZYHtG09z/T/VrJWIHNieTMUOEO0LZf8+xG5bfXWC1A
-y5S6GCFOSM+8QrvPHgua4l8h7uAxbCVKlLqahOVhID83sCKKTWyxLGa+1FtPIsRH
-zTmEMeS0Q6JytXc7f2DitI9t/hEEh877xQLRWactOBmP19XdC+rCLcBZcoksK8UB
-2osVa1EkAYD9ZVrCOo0i
-=CVgG
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
