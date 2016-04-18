@@ -1,28 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/22
-Message-ID: <20160818184456.GA16393@sinister.codevat.com>
-Date: Thu, 18 Aug 2016 11:44:56 -0700
-From: Eric Pruitt <eric.pruitt@...il.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE request - slock, all versions NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/18/11
+Message-ID: <20160418180230.GB53619@mail.corp.redhat.com>
+Date: Mon, 18 Apr 2016 14:02:31 -0400
+From: Randy Barlow <rbarlow@...hat.com>
+To: Pulp Users <pulp-list@...hat.com>, OSS Security <oss-security@...ts.openwall.com>
+Subject: CVE-2013-7450: Pulp < 2.3.0 distributed the same CA key to all users
 Content-Type: text/plain; charset=utf-8
 
-The screen locking application slock (http://tools.suckless.org/slock/)
-calls crypt(3) and uses the return value for strcmp(3) without checking
-to see if the return value of crypt(3) was a NULL pointer. If the hash
-returned by (getspnam()->sp_pwdp) is invalid, crypt(3) will return NULL
-and set errno to EINVAL. This will cause slock to segfault which then
-leaves the machine unprotected. A couple of common scenarios where this
-might happen are:
+Versions of Pulp < 2.3.0 distributed the same certificate authority key and
+certificate to all Pulp users[0]. This CA is used by the /login API call
+(pulp-admin login uses this call) to generate and sign a client certificate.
+This client certificate is then used for subsequent API calls.
 
-- a machine using NSS for authentication; on the machine I discovered
-  this bug, (getspnam()->sp_pwdp) returns "*".
-- the user's account has been disabled for one reason or another; maybe
-  account expiry or password expiry.
+Due to this vulnerability, remote attackers are able to obtain the CA key
+from the Pulp git repository and use it to generate valid client certificates
+for any Pulp installations that use the default CA. The Pulp documentation
+did not emphasize the importance of replacing this CA for production
+deployments, so there may be users who use this common CA key in production
+environments.
 
-One approach to ensure slock will not run on machines without local
-hashes would be to check the return value of crypt("x", (...)->sp_pwdp)
-and verify that it returns a non NULL value before actually locking the
-screen.
+Users are urged to replace the CA certificate and key on any Pulp
+installations that began their life with a version less than 2.3.0. Upgrading
+alone is not sufficient, as Pulp upgrades do not replace existing CA key
+pairs. Versions of Pulp >= 2.3.0 do ship a utility (pulp-gen-ca-certificate)
+that is capable of generating a new CA keypair for you, but it should be
+noted that there are some known local attacks that this script is vulnerable
+to as well[1][2]. The best option is to generate your own CA certificate if
+you are concerned about these local attacks.
 
-Eric
+Thanks to Sander Bos for notifying the Pulp team that we had neglected to
+acquire a CVE for this vulnerability at the time of its discovery.
+
+
+[0] CVE-2013-7450: https://bugzilla.redhat.com/show_bug.cgi?id=1003326
+[1] CVE-2016-3095 (fixed in Pulp >= 2.8.2):
+    http://www.openwall.com/lists/oss-security/2016/04/06/3
+[2] CVE-2016-3106 (planned for Pulp 2.8.3):
+    https://pulp.plan.io/issues/1827
+
+-- 
+Randy Barlow
+irc:   bowlofeggs
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
