@@ -1,4 +1,9 @@
-Received: (qmail 27793 invoked by uid 550); 21 Jun 2023 21:49:51 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1926" "Monday" "18" "April" "2016" "12:01:31" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160418160131.5831A3320BD@smtpvbsrv1.mitre.org>" "45" "[oss-security] Re: CVE request: Varnish 3 before 3.0.7 was vulnerable to HTTP Smuggling issues: Double Content Length and bad EOL" nil nil nil "4" "2016041816:01:31" "[oss-security] Re: CVE request: Varnish 3 before 3.0.7 was vulnerable to HTTP Smuggling issues: Double Content Length and bad EOL" (number mark "U       cve-assign@m Apr 18   45/1926  " thread-indent "\"[oss-security] Re: CVE request: Varnish 3 before 3.0.7 was vulnerable to HTTP Smuggling issues: Double Content Length and bad EOL\"\n") "<CABEc15Xut2gOVj1_Luzu-y7gwESwT5Q0n+dCtK6R+HOcR9cDDw@mail.gmail.com>" ("<CABEc15Xut2gOVj1_Luzu-y7gwESwT5Q0n+dCtK6R+HOcR9cDDw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9922 invoked by uid 550); 18 Apr 2016 16:01:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,90 +12,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18180 invoked from network); 21 Jun 2023 21:41:44 -0000
-From: Taylor R Campbell <riastradh@NetBSD.org>
-To: oss-security@lists.openwall.com
-In-reply-to: <CAN5gJXqyLMcJD0Wnfy6B4OJKpaggjZGHN-nRkk8DDO=s=y6TLg@mail.gmail.com> (agc@pkgsrc.org)
-Date: Wed, 21 Jun 2023 21:41:30 +0000
-Sender: Taylor R Campbell <campbell@mumble.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <20230621214131.C670B6033F@jupiter.mumble.net>
-Subject: [oss-security] Re: PAM/Kerberos issue on NetBSD
+Received: (qmail 9901 invoked from network); 18 Apr 2016 16:01:42 -0000
+From: cve-assign@mitre.org
+To: regis.leroy@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CABEc15Xut2gOVj1_Luzu-y7gwESwT5Q0n+dCtK6R+HOcR9cDDw@mail.gmail.com>
+Message-Id: <20160418160131.5831A3320BD@smtpvbsrv1.mitre.org>
+Date: Mon, 18 Apr 2016 12:01:31 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: Varnish 3 before 3.0.7 was vulnerable to HTTP Smuggling issues: Double Content Length and bad EOL
 
-> Date: Tue, 20 Jun 2023 17:16:58 -0700
-> From: Alistair Crooks <agc@pkgsrc.org>
->=20
-> + Linux - not believed to be affected (would be good to get some
-> corroboration for this)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Linux pam_krb5[1] and sssd-krb5[2] are both affected by the same
-attack, but they have always been _documented_ to be affected; unlike
-BSD pam_krb5, it's just not news that they are affected.
+> Changelog is:
+>  * Requests with multiple Content-Length headers will now fail.
+>  * Stop recognizing a single CR (r) as a HTTP line separator. This
+> opened up a possible cache poisoning attack in stacked installations
+> where sslterminator/varnish/backend had different CR handling.
+> 
+> https://github.com/varnish/Varnish-Cache/commit/29870c8fe95e4e8a672f6f28c5fbe692bea09e9c
+> https://github.com/varnish/Varnish-Cache/commit/85e8468bec9416bd7e16b0d80cb820ecd2b330c3
+> 
+> Combinations of theses two flaws in HTTP protocol handling allows for
+> "HTTP Response Splitting" attacks
+> when another actor in front of Varnish3 can transmit headers in this
+> form (for example):
+> 
+>     Dummy: header\rContent-Length: 0\r\n
 
-(Side note: pam_krb5 (and sssd-krb5) is not and never has been the
-normal way to do Kerberos authentication in network services.  (E.g.,
-in sshd, you set `GSSAPIAuthentication yes' for that.)  pam_krb5 has
-always been an abuse of Kerberos as a method to check a password,
-which Kerberos was designed to avoid, through SSO.)
+Use CVE-2015-8852. As far as we can tell,
+29870c8fe95e4e8a672f6f28c5fbe692bea09e9c is not independently
+exploitable and thus only a single ID is needed.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-The pam_krb5 overview[3] says:
-
-> pam_authenticate does a complete authentication, including checking
-> the resulting TGT by obtaining a service ticket for the local host
-> if possible, but this requires read access to the system keytab.  If
-> the keytab doesn't exist, can't be read, or doesn't include the
-> appropriate credentials, the default is to accept the
-> authentication.  This can be controlled by setting
-> verify_ap_req_nofail to true in [libdefaults] in /etc/krb5.conf.
-
-The pam_krb5 man page[4] says:
-
-> If that keytab cannot be read or if no keys are found in it, the
-> default (potentially insecure) behavior is to skip this check.  If
-> you want to instead fail authentication if the obtained tickets
-> cannot be checked, set verify_ap_req_nofail to true in the
-> [libdefaults] section of /etc/krb5.conf.  Note that this will affect
-> applications other than this PAM module.
-
-The sssd-krb5 man page[5] says:
-
-> krb5_validate (boolean)
->    Verify with the help of krb5_keytab that the TGT obtained has not
->    been spoofed.  The keytab is checked for entries sequentially,
->    and the first entry with a matching realm is used for validation.
->    If no entry matches the realm, the last entry in the keytab is
->    used.  This process can be used to validate environments using
->    cross-realm trust by placing the appropriate keytab entry as the
->    last entry or the only entry in the keytab file.
->
->    Default: false=20
-
-Exception: Oracle Linux appears to ship an mit-krb5-based Kerberos
-modified to have default-secure settings instead of default-insecure,
-and provides instructions for setting verify_ap_req_nofail for
-insecure compatibility[6][7][8].
-
-
-The verify_ap_req_nofail option rates pretty high among the
-worst-named knobs I have ever seen, and has been confusing people for
-decades[9][10].  I filed an issue to make it default-secure in
-Heimdal[11]; this could pose compatibility issues, but sites that
-continue rely on the insecure option can always set it in their
-krb5.conf.
-
-
-[1] https://www.eyrie.org/~eagle/software/pam-krb5/
-[2] https://github.com/SSSD/sssd/tree/master/src/providers/krb5
-[3] https://www.eyrie.org/~eagle/software/pam-krb5/readme.html
-[4] https://www.eyrie.org/~eagle/software/pam-krb5/pam-krb5.html
-[5] https://linux.die.net/man/5/sssd-krb5
-[6] https://docs.oracle.com/cd/E26505_01/html/E27224/setup-148.html
-[7] https://docs.oracle.com/cd/E26505_01/html/816-5174/krb5.conf-4.html#REF=
-MAN4krb5.conf-4
-[8] https://docs.oracle.com/cd/E19253-01/816-4557/gihyu/
-[9] https://www.stacken.kth.se/lists/heimdal-discuss/2002-08/msg00001.html
-[10] https://mailman.mit.edu/pipermail/krbdev/2011-January/009778.html
-[11] https://github.com/heimdal/heimdal/issues/1129
+iQIcBAEBCAAGBQJXFQRTAAoJEHb/MwWLVhi2JWQP/1KyFQ29uDWigwCEnW1lY/CX
+cyYnYNbRpsoXBIpkA6nCXJxD4IT3d5QXiWmtpelZy7A0CkdWLFa5dRJCC3wchn/J
+FE4xjsEFpvaiH5GJXwMpETfQ3dPxhXqpFCk8CFt9grirRZNSwziClSc3QF4nZXL5
+XfQMKWkgPE5e1kKbLGncqRyRsT9SY8PURfD6f1BPTZ9AhOUKrSXAIVrANRKhkbSV
+L5TIYxKKegFX/dn+c7lu+ur9TkvdOKHJ4NUPJE2G4UkbajPM9+YhYGJXa7z45+6D
+WJrPNUesSvxbaXQcmhxpbwWmcrnHCec7ONnp8GU047PqD/f2cRiudH0/qjmA3Lla
+t3tZwcRbCMIGEMzMDV82k6H+lh8KUxD+ZAyLpaWa/M+A8qCM7rTt06N0Sk+2bOD5
+LShXWIuWsfXqLhUmwI5irXdwoCPO8qqjawLpPSDxRSTmF0FJp5o3dMAZ9Bod0a4r
+wrC9eoClGb9yYy6Rp6Cu2S3SOLTgIrfNcWqiYKu4TzrlkrtuippLlrsmANeaFnVl
+j1E9hK2+UQI3+l77BufqIUyyOajksb8LMRfIpmH/YFfyXfP1SGcoXVdb8UcForxO
+Wu6muPmPTPrMpocn/sL5M6eGgcqFJ+X99BVzMSq4dn0V/Tn+EWR5kdjGxozkRn0O
+Y+bA2XlK2SlcdBVOOEi6
+=Y81M
+-----END PGP SIGNATURE-----
