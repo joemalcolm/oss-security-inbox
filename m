@@ -1,10 +1,11 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/10/5
-Message-ID: <570AAC03.2030209@vorlons.info>
-Date: Sun, 10 Apr 2016 21:39:47 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/18/12
+Message-ID: <571550CC.1080801@vorlons.info>
+Date: Mon, 18 Apr 2016 23:25:32 +0200
 From: Matthias Geerdsen <matthias@...lons.info>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: imlib2 - potential divide-by-zero in imlib_image_draw_ellipse().
+Cc: cve-assign@...re.org
+Subject: CVE request: opam - missing certificate validation
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
@@ -12,25 +13,25 @@ Hash: SHA256
 
 Hi,
 
-please provide a CVE ID for this issue in imlib2:
+please assign a CVE ID for this missing certicate validation issue in
+ocaml:
 
-Debian bug report from 2011:
-<https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=639414>
+- - upstream commit:
+<https://github.com/ocaml/opam/commit/3d43295df3bb9e67e60801d319bf82c2c8
+a84d24>
+- - Debian bug: <https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=818081>
 
-upstream commit:
-<https://git.enlightenment.org/legacy/imlib2.git/commit/?id=c94d83ccab15
-d5ef02f88d42dce38ed3f0892882>
 
-Thank you
+Thanks
 Matthias
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2
 
-iQEcBAEBCAAGBQJXCqv7AAoJEDVYuxv9Aw7qWuoH/2EkT0g/XwsRVMqCxjWAVsDe
-PCwFFvVJNoBB7HKKTqcmaBEEGWyxntzZfX9Fpn9BluqIUZegEkyZ6agzH87XNpYK
-gVP6CiKGoYdrq1OWZ12Af9sHD8abSFkcR4K3EtRNEa5oxbD7rh52cuMoB3Im/789
-/pCdMfZCiKraD8/ZTEwG/P9LcJUwRAF7vzkXU0kTUwj/RayP5PrwK01aQ0truzge
-1HSjI9Vt1FEiHQk4+Rk4OXNzNA68Vt047pduPglzQV8s0oszK7T1bhpxzEAOJ+kB
-zDBiF7H6He1siPJQz81af2dJwgQ/XjoBh2yroFyonr/oGshnWjEd1sxJo5qgAjQ=
-=mwpU
+iQEcBAEBCAAGBQJXFVDHAAoJEDVYuxv9Aw7quJsH/RvH7BSmAFfLfWdm1PNsE8Uy
+zOI+bv/JDCKJlitDOX5SOyofXNG0RWzcEVQCHw6D52pgfkRIoFeFfPHYyaMtM3Zp
+jBLqEczh7CMNXq47c0TkEzlKg5y7i+Qk2sSBQYLBju+UxwzfTWV/J/1eEC7XHWug
+Vc+myOvp7+zm8vZKMXFvRiGozJfzEutTxMVuXjomlOqoJunWoF1fWVXaSKSLjUW0
+RRNZSeK+Y89l850RlIQ3KLvbdWIsSVWvqVtDEACyDIeIpyOtYnfJ2aN8ISa9vP2G
+1pBbh/r29ZUTmC9feqExlOw5rlL3zdcq8tedSS38F5tpANnEHgulZktxByPTJA4=
+=PALs
 -----END PGP SIGNATURE-----
