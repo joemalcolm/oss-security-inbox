@@ -1,24 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/10/8
-Message-ID: <CAGKXR4sFSLHEf0Eb2tRxLUMsZQbB6b77WJrEuJ_HKqnF4HmA6g@mail.gmail.com>
-Date: Wed, 10 Feb 2016 13:35:17 -0800
-From: Matthew McPherrin <mmc@...areup.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request - OkHttp Certificate Pining Bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/18/6
+Message-Id: <20160418154505.3B1773320BD@smtpvbsrv1.mitre.org>
+Date: Mon, 18 Apr 2016 11:45:05 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, dushaobo@....cn
+Subject: Re: Qemu: usb: Infinite loop vulnerability in usb_ehci using siTD process
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in OkHttp that allows an attacker to bypass
-certificate pinning. OkHttp did not validate that the pinned certificate
-was in the chain to a trusted certificate authority.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This resulted in an attacker being able to present a certificate chain with
-a certificate issued by one trusted certificate authority, and additionally
-including the pinned certificate authority. Because the pinned certificate
-was present, and the certificate was issued by a trusted certificate
-authority, the server's certificate was accepted. However, it should not
-have been accepted as the pinned certificate was not in the trust chain.
+> Qemu emulator built with the USB EHCI emulation support is vulnerable to an
+> infinite loop issue. It occurs during communication between host controller
+> interface(EHCI) and a respective device driver. These two communicate via a
+> split isochronous transfer descriptor list(siTD) and an infinite loop unfolds
+> if there is a closed loop in this list.
+> 
+> A privileged user inside guest could use this flaw to consume excessive CPU
+> cycles & resources on the host.
+> 
+> This issue is similar to CVE-2015-8558, but using siTD instead of iTD.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1325129
+> https://lists.gnu.org/archive/html/qemu-devel/2016-04/msg02691.html
 
-This allows an attacker to obtain a certificate from a non-pinned but
-trusted CA, then have OkHttp connect to that server, bypassing certificate
-pinning.
+Use CVE-2016-4037.
 
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/usb/hcd-ehci.c but
+that may be an expected place for a later update.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXFQCaAAoJEHb/MwWLVhi2nh0P/iCA8MRdrSfpTjtl3f3Y33KQ
+dS2Kl9K4SeLoSTlo2AsO2+SfW72MW8fvKqOocfsOjIyGfh4rTvU+SxVMM2j4VnmL
+/JQtfsrbyuHXjFrnwUdrd8OjMVsjbJVJkjE1kk+DZrI9xaQZjA0VlAvypYJi05Sd
+uu1k5rN/jjFFvPx7ZgfVDVra+OgqGmrdxgpWpdcwdA+TTXXn9yPwTZBkFbDYB+cn
+v4jlQPnd2aofX6TK0BCl1y3QGHMMwTJfjy5PGicmTFd1a3zmGbV64dnRKvyqZrr3
+HqXrXAwVMonStMvTjCi4L4QegP0t/Z86b9MbVCpt0Uk7dpwu/cAl3OoPxFB5hogY
+q0Na34hkDSbtWMmcCUKCJqatnRsC7C30FwzXVfA7+hWWs05mFHWVzgt5qqaIigr0
+KelHweWIwPUONmlSDTjY9+bqZhvkmtSqjradkKcEJ79llf64Ztl9GR9vV5fg8HXy
+rnxxVufTMXNAUeygbbul9zGv1bmUJiGGUAAxZVpjJZxKgr7ASSG9P0QOQ+BKWjAg
+j/uy5cTYVoso+9hsq40DNvDUxSYGm1S/FWuLzSxYveT00PyoMEQZMsTw8TpNY4ua
+/qBrIIVgUccZY9MSWHGB/0gGM1Fxz+LLsOEEX1LhRQk76z7u2gPSthoEh7AzMTYY
+cCsXHG7ryKLkktIUUu6i
+=NDYf
+-----END PGP SIGNATURE-----
