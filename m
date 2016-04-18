@@ -1,28 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/24/2
-Message-ID: <alpine.LFD.2.20.1610241606440.6422@wniryva>
-Date: Mon, 24 Oct 2016 16:10:24 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Andrew Henderson <hendersa@...ulus.org>
-Subject: CVE request Qemu: net: rtl8139: infinite loop while transmit in C+ mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/18/1
+Message-ID: <20160418100103.581@usenet.piggo.com>
+Date: Mon, 18 Apr 2016 08:05:30 +0000 (UTC)
+From: Sébastien Delafond <seb@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Varnish 3 before 3.0.7 was vulnerable to HTTP Smuggling issues: Double Content Length and bad EOL
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On 2016-04-16, Régis Leroy wrote:
+> Varnish 4.x serie is not impacted. Flaws Fixed in version 3.0.7 in march 2015.
+>
+> Changelog is:
+>  * Requests with multiple Content-Length headers will now fail.
+>  * Stop recognizing a single CR (r) as a HTTP line separator. This
+> opened up a possible cache poisoning attack in stacked installations
+> where sslterminator/varnish/backend had different CR handling.
+>
+> https://github.com/varnish/Varnish-Cache/commit/29870c8fe95e4e8a672f6f28c5fbe692bea09e9c
+> https://github.com/varnish/Varnish-Cache/commit/85e8468bec9416bd7e16b0d80cb820ecd2b330c3
+>
+> Combinations of theses two flaws in HTTP protocol handling allows for
+> "HTTP Response Splitting" attacks
+> when another actor in front of Varnish3 can transmit headers in this
+> form (for example):
+>
+>     Dummy: header\rContent-Length: 0\r\n
+>
+> This is a one year old issue, on the old last release of this serie.
+> But we still find some installations. A CVE would maybe help removal
+> of 3.x installations, or at least upgrades to 3.0.7.
 
-Quick Emulator(Qemu) built with the RTL8139 ethernet controller emulation 
-support is vulnerable to an infinite loop issue. It could occur while 
-transmitting packets in C+ mode of operation.
+Hi Mitre,
 
-A privileged user inside guest could use this flaw to consume excessive CPU 
-cycles on the host, resulting in DoS situation.
+the Debian Security team considers the issue serious enough to release
+a DSA, so we'd also appreciate if this could be assigned a CVE.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg05495.html
+Cheers,
 
+--Seb
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
