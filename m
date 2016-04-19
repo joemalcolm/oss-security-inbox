@@ -1,46 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/30/1
-Message-Id: <20160330051700.10C40B2E014@smtpvbsrv1.mitre.org>
-Date: Wed, 30 Mar 2016 01:17:00 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: older fuseiso stuff
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/19/5
+Message-ID: <20160419083512.GB18866@kroah.com>
+Date: Tue, 19 Apr 2016 17:35:12 +0900
+From: Greg KH <greg@...ah.com>
+To: Marcus Meissner <meissner@...e.de>, Ignat Korchagin <ignat.korchagin@...il.com>
+Cc: OSS Security List <oss-security@...ts.openwall.com>, security@...nel.org
+Subject: Re: CVE Request: Linux kernel: remote buffer overflow in usbip
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Apr 19, 2016 at 10:06:43AM +0200, Marcus Meissner wrote:
+> Hi,
+> 
+> https://github.com/torvalds/linux/commit/b348d7dddb6c4fbfc810b7a0626e8ec9e29f7cbb
+> 
+> commit b348d7dddb6c4fbfc810b7a0626e8ec9e29f7cbb
+> Author: Ignat Korchagin <ignat.korchagin@...il.com>
+> Date:   Thu Mar 17 18:00:29 2016 +0000
+> 
+>     USB: usbip: fix potential out-of-bounds write
+> 
+>     Fix potential out-of-bounds write to urb->transfer_buffer
+>     usbip handles network communication directly in the kernel. When receiving a
+>     packet from its peer, usbip code parses headers according to protocol. As
+>     part of this parsing urb->actual_length is filled. Since the input for
+>     urb->actual_length comes from the network, it should be treated as untrusted.
+>     Any entity controlling the network may put any value in the input and the
+>     preallocated urb->transfer_buffer may not be large enough to hold the data.
+>     Thus, the malicious entity is able to write arbitrary data to kernel memory.
+> 
+>     Signed-off-by: Ignat Korchagin <ignat.korchagin@...il.com>
+>     Signed-off-by: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
+> 
+> diff --git a/drivers/usb/usbip/usbip_common.c b/drivers/usb/usbip/usbip_common.c
+> index facaaf0..e40da77 100644
+> --- a/drivers/usb/usbip/usbip_common.c
+> +++ b/drivers/usb/usbip/usbip_common.c
+> @@ -741,6 +741,17 @@ int usbip_recv_xbuff(struct usbip_device *ud, struct urb *urb)
+>         if (!(size > 0))
+>                 return 0;
+> 
+> +       if (size > urb->transfer_buffer_length) {
+> +               /* should not happen, probably malicious packet */
+> +               if (ud->side == USBIP_STUB) {
+> +                       usbip_event_add(ud, SDEV_EVENT_ERROR_TCP);
+> +                       return 0;
+> +               } else {
+> +                       usbip_event_add(ud, VDEV_EVENT_ERROR_TCP);
+> +                       return -EPIPE;
+> +               }
+> +       }
+> +
+>         ret = usbip_recv(ud->tcp_socket, urb->transfer_buffer, size);
+>         if (ret != size) {
+>                 dev_err(&urb->dev->dev, "recv xbuf, %d\n", ret);
+> 
+> Our USB developer confirms:
+> https://bugzilla.suse.com/show_bug.cgi?id=975945
+> |The vulnerability is true. If an attacker can get a malicious package
+> |into the connection the kernel will accept all of the data in that
+> |package whether it fits into the buffer or not.
+> |You can scribble about 1k into RAM, albeit at an unpredictable location.
 
->> > https://bugzilla.redhat.com/show_bug.cgi?id=863102
->> https://bugzilla.redhat.com/show_bug.cgi?id=861358
+I think Ignat already asked for a CVE for this through some other
+channel, and was going to announce it in some manner.
 
-Use CVE-2015-8836.
+Ignat, did you do that?
 
+thanks,
 
->> > https://bugzilla.redhat.com/show_bug.cgi?id=863091
->> https://bugzilla.redhat.com/show_bug.cgi?id=862211
-
-Use CVE-2015-8837.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJW+2DfAAoJEL54rhJi8gl5wJAQAKb0FzOkCsR3UnWtrLV+7SK2
-xqBNYAuyb1QHd9Umqa7xBYtjqVUa4s7NvlnrW1mQSWl2b7l0vJWmj4ZXzwAonCup
-DNKBqWCKI75OhbJxEiItWrgDf8Wy2f/ap28BpBOV8GsDEejFNdkwecsLBw+wCSOU
-FRxsVeWj/+FsgluWT1gfDXZMwaTeDV4Z+z4+cztiQOcgQZ6YErcd4MWoYfwc+LDR
-2UwssMoBSICpnmvgIkwfaS9RxNVJ7wXXndbuoB0Ds7jNbFA+3mSOouEW6QvHYMxN
-JDaYPt1A+mudL21u1hKSSyeage1KNP5Nijmp+grkk8k8+Z+rjBpmaHOoBesF4GYq
-viWz5tM8srrDkuBKyb4XL3905ylFbuIvw3GIOgBH57LNMrIQjrXYu2hHY4m8oEZh
-ZYNhm2tl99AYqEUJcsx5N/+/pXzcj0N5WE7rdWxEzeV93DZYf1KEZ83pDvJDlMb3
-MGwTmjEs94o0mf+XyFwLlDjJYF0FQG0Tmm8757YvbJImm+AoxsqTvBCTrEull35t
-NRwXPlKctVgJ6zPW9VML/VQZ3JAONOrNYEkFudU+mzLuF8jEssLMTyjd9/qpV8Zc
-hm0Fiit6szjD8kTjBwy9qMsZKA01wF2XdbpS2VG+j1+lGMITMZrVdGoGlca2ADsn
-HeJ+ekOW1M2SpDEVoL4l
-=c6+9
------END PGP SIGNATURE-----
+greg k-h
