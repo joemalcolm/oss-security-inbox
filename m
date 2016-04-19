@@ -1,27 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/5
-Message-ID: <20161027083901.GA10554@lorien.valinor.li>
-Date: Thu, 27 Oct 2016 10:39:01 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/19/3
+Message-ID: <57163964.3010804@fabiopires.pt>
+Date: Tue, 19 Apr 2016 14:57:56 +0100
+From: Fábio Pires <mail@...iopires.pt>
 To: oss-security@...ts.openwall.com
-Cc: bperry.volatile@...il.com, cve-assign@...re.org
-Subject: Re: Re: Handful of libass issues
+Subject: CVE Request: Insecure Direct Object Reference in OSTicket attachments
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hey guys,
 
-On Tue, Oct 04, 2016 at 10:23:22PM -0400, cve-assign@...re.org wrote:
-> > The third is a huge memory allocation leading to a crash that wasn't
-> > fixed because a good solution is unavailable at the moment.
-> 
-> Use CVE-2016-7971.
+Can you assign a CVE ID for this Insecure Direct Object Reference in
+OSTicket attachments ?
 
-It looks from the discussion in
-https://github.com/libass/libass/pull/240 that this issue is disputed
-to be actually in libass.
+https://labs.integrity.pt/advisories/insecure-direct-object-reference-in-osticket-attachments/
 
-Should the CVE assignment be revisited, possibly rejected, according
-the upstream discussion?
+References:
 
-Regards,
-Salvatore
+    https://github.com/osTicket/osTicket-1.8/issues/2615
+    https://github.com/osTicket/osTicket-1.8/pull/2618
+
+
+Regards
+-- 
+-- 
+*Fábio Pires*
+*Country*: Portugal
+*www.fabiopires.pt
+<http://www.fabiopires.pt/>**<https://www.linkedin.com/in/fabiolspires>*
+==
+This email was signed automatically with PGP. If you want to exchange
+encrypted messages, please search for my PGP key:
+*Key*: 0x33524373
+
+
+Content of type "text/html" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
