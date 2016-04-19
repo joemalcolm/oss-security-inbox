@@ -1,4 +1,9 @@
-Received: (qmail 5629 invoked by uid 550); 24 Sep 2025 02:39:15 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2612" "Tuesday" "19" "April" "2016" "17:35:12" "+0900" "Greg KH" "greg@kroah.com" "<20160419083512.GB18866@kroah.com>" "61" "[oss-security] Re: CVE Request: Linux kernel: remote buffer overflow in usbip" "^Cc:" nil nil "4" "2016041908:35:12" "[oss-security] Re: CVE Request: Linux kernel: remote buffer overflow in usbip" (number mark "        greg@kroah.c Apr 19   61/2612  " thread-indent "\"[oss-security] Re: CVE Request: Linux kernel: remote buffer overflow in usbip\"\n") "<20160419080643.GA26432@suse.de>" ("<20160419080643.GA26432@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7444 invoked by uid 550); 19 Apr 2016 14:52:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,72 +11,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5207 invoked from network); 24 Sep 2025 02:39:09 -0000
-Date: Wed, 24 Sep 2025 04:37:39 +0200
-From: Solar Designer <solar@openwall.com>
-To: VMware PSIRT <vmware.psirt@broadcom.com>
-Cc: oss-security@lists.openwall.com, John Wolfe <john.wolfe@broadcom.com>
-Message-ID: <20250924023739.GA21012@openwall.com>
-References: <CADOAh9cRx64wR8a7X7918ma_nkYDXzQ8uK6Jsp0q4oe-ECr3Eg@mail.gmail.com> <20250513015957.GA29601@openwall.com>
-Mime-Version: 1.0
+Received: (qmail 9913 invoked from network); 19 Apr 2016 08:35:29 -0000
+Message-ID: <20160419083512.GB18866@kroah.com>
+References: <20160419080643.GA26432@suse.de>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250513015957.GA29601@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2025-22247 - Insecure file handling vulnerability in open-vm-tools
+In-Reply-To: <20160419080643.GA26432@suse.de>
+User-Agent: Mutt/1.6.0 (2016-04-01)
+Cc: OSS Security List <oss-security@lists.openwall.com>,
+	security@kernel.org
+Date: Tue, 19 Apr 2016 17:35:12 +0900
+From: Greg KH <greg@kroah.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Request: Linux kernel: remote buffer overflow in usbip
+To: Marcus Meissner <meissner@suse.de>,
+	Ignat Korchagin <ignat.korchagin@gmail.com>
 
-Hi,
-
-I'm sorry I just let this stay without a follow-up at the time.  I am
-CC'ing John Wolfe now, who authored the patch commit.
-
-I do think the fix was incomplete.  As someone wrote to me off-list at
-the time (didn't want to post publicly, so I post without attribution):
-
-> I let the oher person respond publicly, but the open-vm-tools runs in the VM as
-> a service and communicates with VMware. So it is both risk to the VM itself and
-> to the VMware ESXi (or vCenter).
-
-To me, this means that the risk of race conditions applies.
-
-Alexander
-
-On Tue, May 13, 2025 at 03:59:57AM +0200, Solar Designer wrote:
+On Tue, Apr 19, 2016 at 10:06:43AM +0200, Marcus Meissner wrote:
 > Hi,
 > 
-> Thank you very much VMware PSIRT for fixing and disclosing this issue.
+> https://github.com/torvalds/linux/commit/b348d7dddb6c4fbfc810b7a0626e8ec9e29f7cbb
 > 
-> I'm sorry I'm not familiar with open-vm-tools, but I thought we could
-> clarify the below for everyone in here:
+> commit b348d7dddb6c4fbfc810b7a0626e8ec9e29f7cbb
+> Author: Ignat Korchagin <ignat.korchagin@gmail.com>
+> Date:   Thu Mar 17 18:00:29 2016 +0000
 > 
-> On Mon, May 12, 2025 at 06:57:46PM +0530, VMware PSIRT wrote:
-> > A malicious actor with non-administrative privileges on a guest VM may
-> > tamper the local files to trigger insecure file operations within that VM.
+>     USB: usbip: fix potential out-of-bounds write
 > 
-> > https://github.com/vmware/open-vm-tools/tree/CVE-2025-22247.patch
+>     Fix potential out-of-bounds write to urb->transfer_buffer
+>     usbip handles network communication directly in the kernel. When receiving a
+>     packet from its peer, usbip code parses headers according to protocol. As
+>     part of this parsing urb->actual_length is filled. Since the input for
+>     urb->actual_length comes from the network, it should be treated as untrusted.
+>     Any entity controlling the network may put any value in the input and the
+>     preallocated urb->transfer_buffer may not be large enough to hold the data.
+>     Thus, the malicious entity is able to write arbitrary data to kernel memory.
 > 
-> The commit message says:
+>     Signed-off-by: Ignat Korchagin <ignat.korchagin@gmail.com>
+>     Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 > 
-> > Prevent usage of illegal characters in user names and file paths.
-> > Also, disallow unexpected symlinks in file paths.
+> diff --git a/drivers/usb/usbip/usbip_common.c b/drivers/usb/usbip/usbip_common.c
+> index facaaf0..e40da77 100644
+> --- a/drivers/usb/usbip/usbip_common.c
+> +++ b/drivers/usb/usbip/usbip_common.c
+> @@ -741,6 +741,17 @@ int usbip_recv_xbuff(struct usbip_device *ud, struct urb *urb)
+>         if (!(size > 0))
+>                 return 0;
 > 
-> Skimming the code changes, I see that the second part - "disallow
-> unexpected symlinks in file paths" - is implemented by calling
-> realpath() (or a Windows function on that platform) and seeing whether
-> that changed the pathname or (almost) not.  However, this will not
-> disallow a symlink that appears after the realpath() call but before
-> subsequent use of the pathname.
+> +       if (size > urb->transfer_buffer_length) {
+> +               /* should not happen, probably malicious packet */
+> +               if (ud->side == USBIP_STUB) {
+> +                       usbip_event_add(ud, SDEV_EVENT_ERROR_TCP);
+> +                       return 0;
+> +               } else {
+> +                       usbip_event_add(ud, VDEV_EVENT_ERROR_TCP);
+> +                       return -EPIPE;
+> +               }
+> +       }
+> +
+>         ret = usbip_recv(ud->tcp_socket, urb->transfer_buffer, size);
+>         if (ret != size) {
+>                 dev_err(&urb->dev->dev, "recv xbuf, %d\n", ret);
 > 
-> Is a race condition like this relevant, or is it irrelevant given the
-> way these tools are normally used?  In other words, is the filesystem
-> static when this code runs, or is it a live VM where "a malicious actor
-> with non-administrative privileges" may operate concurrently with this
-> code running?
-> 
-> Can you please clarify?
-> 
-> Thanks again,
-> 
-> Alexander
+> Our USB developer confirms:
+> https://bugzilla.suse.com/show_bug.cgi?id=975945
+> |The vulnerability is true. If an attacker can get a malicious package
+> |into the connection the kernel will accept all of the data in that
+> |package whether it fits into the buffer or not.
+> |You can scribble about 1k into RAM, albeit at an unpredictable location.
+
+I think Ignat already asked for a CVE for this through some other
+channel, and was going to announce it in some manner.
+
+Ignat, did you do that?
+
+thanks,
+
+greg k-h
