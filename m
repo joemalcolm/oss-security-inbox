@@ -1,103 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/6
-Message-ID: <CAH8yC8nJ5cqnEdkqRK1AfSM=kCNyFw=rahiWL86Xih5fO9afmQ@mail.gmail.com>
-Date: Mon, 19 Sep 2016 10:34:47 -0400
-From: Jeffrey Walton <noloader@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Fwd: CVE-2016-7420 (Info Disclosure due to assert), Crypto++ and down level remediation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/19/1
+Message-ID: <20160419080643.GA26432@suse.de>
+Date: Tue, 19 Apr 2016 10:06:43 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Cc: security@...nel.org
+Subject: CVE Request: Linux kernel: remote buffer overflow in usbip
 Content-Type: text/plain; charset=utf-8
 
----------- Forwarded message ----------
-From: Jeffrey Walton <noloader@...il.com>
-Date: Mon, Sep 19, 2016 at 10:32 AM
-Subject: CVE-2016-7420 (Info Disclosure due to assert), Crypto++ and
-down level remediation
-To: <redacted; maintainers and distros>
+Hi,
 
-Hi Everyone,
+https://github.com/torvalds/linux/commit/b348d7dddb6c4fbfc810b7a0626e8ec9e29f7cbb
 
-Crypto++ 5.6.5 will be released within a month or so to remediate the
-information disclosure from CVE-2016-742. Distros will need to patch
-Crypto++ 5.6.4 and below. The following provides more information and
-procedures we recommend for down level Crypto++.
+commit b348d7dddb6c4fbfc810b7a0626e8ec9e29f7cbb
+Author: Ignat Korchagin <ignat.korchagin@...il.com>
+Date:   Thu Mar 17 18:00:29 2016 +0000
 
-We re-engieered the "debugging and diagnostic" support area because
-documenting the behaviors did *not* reduce the risk; rather it simply
-moved the blame around. You can see the staged changes at
-https://github.com/weidai11/cryptopp/issues/277#issuecomment-247829210
-.
+    USB: usbip: fix potential out-of-bounds write
 
-We believe the best course of action for a distor is to make the
-asserts inert in Crypto++ 5.6.4 and below because they are expected to
-be removed by NDEBUG. However and simple sed and 's|<exp>||g' won't
-work as expected.
+    Fix potential out-of-bounds write to urb->transfer_buffer
+    usbip handles network communication directly in the kernel. When receiving a
+    packet from its peer, usbip code parses headers according to protocol. As
+    part of this parsing urb->actual_length is filled. Since the input for
+    urb->actual_length comes from the network, it should be treated as untrusted.
+    Any entity controlling the network may put any value in the input and the
+    preallocated urb->transfer_buffer may not be large enough to hold the data.
+    Thus, the malicious entity is able to write arbitrary data to kernel memory.
 
-If you have any problems or questions, then please email me or call
-me. My cell number is <redacted>. My home number is
-<redacted>. Distros get special treatment because they are so
-important to the ecosystem.
+    Signed-off-by: Ignat Korchagin <ignat.korchagin@...il.com>
+    Signed-off-by: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
 
-My apologies for the inconvenience and trouble this has caused.
+diff --git a/drivers/usb/usbip/usbip_common.c b/drivers/usb/usbip/usbip_common.c
+index facaaf0..e40da77 100644
+--- a/drivers/usb/usbip/usbip_common.c
++++ b/drivers/usb/usbip/usbip_common.c
+@@ -741,6 +741,17 @@ int usbip_recv_xbuff(struct usbip_device *ud, struct urb *urb)
+        if (!(size > 0))
+                return 0;
 
-Jeff
++       if (size > urb->transfer_buffer_length) {
++               /* should not happen, probably malicious packet */
++               if (ud->side == USBIP_STUB) {
++                       usbip_event_add(ud, SDEV_EVENT_ERROR_TCP);
++                       return 0;
++               } else {
++                       usbip_event_add(ud, VDEV_EVENT_ERROR_TCP);
++                       return -EPIPE;
++               }
++       }
++
+        ret = usbip_recv(ud->tcp_socket, urb->transfer_buffer, size);
+        if (ret != size) {
+                dev_err(&urb->dev->dev, "recv xbuf, %d\n", ret);
 
-**********
+Our USB developer confirms:
+https://bugzilla.suse.com/show_bug.cgi?id=975945
+|The vulnerability is true. If an attacker can get a malicious package
+|into the connection the kernel will accept all of the data in that
+|package whether it fits into the buffer or not.
+|You can scribble about 1k into RAM, albeit at an unpredictable location.
 
-To remediate CVE-2016-7420 in Crypto++ 5.6.4 and below, perform the following.
-
-1. Crypto++ 5.6.2 and below (Crypto++ 5.6.4 and 5.6.3 has it, so skip
-this step).
-
-    (a) Add CRYPTOPP_UNSED macro to config.h
-
-     #define CRYPTOPP_UNSED(x) ((void)(x))
-
-2. Change every assert() to CRYPTOPP_UNUSED()
-
-    (a) replace en masse
-    (b) find with sed or grep and 'assert[[:space:]]*('
-
-3. Verify changes
-
-    (a) cat *.h *.cpp | egrep -v '(<|>|//)' | grep assert
-    (b) should only see compile-time assert
-
-4. Test changes
-
-    (a) 'make clean && make -j 4'
-    (b) './cryptest.exe v'
-
-5. Update the package
-
-    (a) rebuild the library and package it
-          - all asserts rendered inert
-    (b) rebuild all dependent packages
-          - asserts in Crypto++ headers could cross-pollinate
-
-**********
-
-Procedures performed on Crypto++ 5.6.2:
-
-# Prepare
-$ git clone https://github.com/weidai11/cryptopp cryptopp-assert
-$ cd cryptopp-assert
-$ git checkout CRYPTOPP_5_6_2
-
-# Step 1 (Add)
-$ echo "#define CRYPTOPP_UNUSED(x) ((void)(x))" >> config.h
-
-# Step 2 (Replace)
-$ sed -i "" 's|assert[[:space:]]*(|CRYPTOPP_UNUSED(|g' *.h *.cpp
-
-# Step 3 (Verify)
-$ cat *.h *.cpp | egrep -v '(<|>|//)' | grep assert
-#define CRYPTOPP_COMPILE_ASSERT(assertion)
-CRYPTOPP_COMPILE_ASSERT_INSTANCE(assertion, __LINE__)
-#define CRYPTOPP_COMPILE_ASSERT_INSTANCE(assertion, instance)
-
-# Step 4 (Test)
-$ make clean && make -j 4
-$ ./cryptest.exe v   # Tail should report no failures
-
-# Step 5 (Repackage)
-...
+Ciao, Marcus
