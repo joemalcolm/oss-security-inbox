@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8262" "Saturday" "8" "October" "2016" "22:07:40" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<1975736.yU59nFIvqB@arcadia>" "133" "[oss-security] imagemagick: heap-based buffer overflow in IsPixelMonochrome (pixel-accessor.h)" nil nil nil "10" "2016100820:07:40" "[oss-security] imagemagick: heap-based buffer overflow in IsPixelMonochrome (pixel-accessor.h)" (number mark "U       ago@gentoo.o Oct  8  133/8262  " thread-indent "\"[oss-security] imagemagick: heap-based buffer overflow in IsPixelMonochrome (pixel-accessor.h)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["568" "Tuesday" "19" "April" "2016" "15:12:33" "+0000" "Nathan Van Gheem" "vangheem@gmail.com" "<CAL8hw9Gid=9bUYu+MYmUGpu2DJrXDG_qwJdM4nu3gLUKYBqDsQ@mail.gmail.com>" "26" "[oss-security] CVE Request: Bypass Restricted Python" nil nil nil "4" "2016041915:12:33" "[oss-security] CVE Request: Bypass Restricted Python" (number mark "U       vangheem@gma Apr 19   26/568   " thread-indent "\"[oss-security] CVE Request: Bypass Restricted Python\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15546 invoked by uid 550); 8 Oct 2016 20:07:31 -0000
+Received: (qmail 29703 invoked by uid 550); 19 Apr 2016 15:12:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,147 +12,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15477 invoked from network); 8 Oct 2016 20:07:30 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Date: Sat, 08 Oct 2016 22:07:40 +0200
-Message-ID: <1975736.yU59nFIvqB@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.20; x86_64; ; )
+Received: (qmail 28660 invoked from network); 19 Apr 2016 15:12:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=CExy7c5xBNf1K24ZKKtaaF3Kkd7SVT4WiDviaHoVNs8=;
+        b=fgIB9rDTq1MPyiwHiOOPDqGQmQojs6TefB7Zkc39TiDCMSqa1GXnJ7cbTXTUb3JIPM
+         iixJiKFfSj11RHcDOKd4Z3KPgvt2TH1m7FOv1g3Cjswvy7cNU/YEYkiKizI7hjW3g1Ti
+         gJD8DsqmYPFaXDpu+aSBtcTDmA34/lHcM5BRvOv47VS1j1w5eYWgmvZRACUr8+zxLlFm
+         auWJQuFpiaMuos2vi5c3dRahUkVrpF4Z+vspgSlniQDXxnsCEblckDLjkaUOzd5dsWYf
+         6/XJQ8xtmEiR9rd6nwbKqqzJaafjGtbIkKqiJIuk/+KJAIVRm/DyAqRPJFXQ+q8sZaY+
+         b+rQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=CExy7c5xBNf1K24ZKKtaaF3Kkd7SVT4WiDviaHoVNs8=;
+        b=YEi72TG5e3Ue+PSuScI4b0P/yOirPhz/nYj1Hlmu0xeXjnwKv/9CCTw0nMP2uybWSu
+         nK7krBX6ucqnIofpG8QhJHv0f1l9RYieOzyP8mMHm6nNBmTEbntPlPx5oAV+mx2Le00L
+         36Yr7ZzC+dHmYIHZi7zWQ4TFn5u+/euiDM2VAtDU2yqDnPpThRP3hTK6kl/cZR4vysv/
+         vW0Z4ExtT6/NEhbnw+D26EymfgHgxWQC5Qg9tkSDozkm7UrL/+Te/OaG4oI7FJJoaUxD
+         Ycv9Y0vmAxdrc3ndqZwBxRMjI4NSMXiAjoNLVDRyUUrEm8z+NQoAVYwWcDQvLCIXkuy7
+         C/FQ==
+X-Gm-Message-State: AOPr4FUbbAN/Ny1JljaKygiH//MPMu+W1zb5HEwXLrSu/CbrKvWNeRrhPs/h2Z2qQTg5vcf9nPAP+HR4+DE9xw==
+X-Received: by 10.107.176.15 with SMTP id z15mr2532053ioe.78.1461078762607;
+ Tue, 19 Apr 2016 08:12:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] imagemagick: heap-based buffer overflow in IsPixelMonochrome (pixel-accessor.h)
+From: Nathan Van Gheem <vangheem@gmail.com>
+Date: Tue, 19 Apr 2016 15:12:33 +0000
+Message-ID: <CAL8hw9Gid=9bUYu+MYmUGpu2DJrXDG_qwJdM4nu3gLUKYBqDsQ@mail.gmail.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Content-Type: multipart/alternative; boundary=001a1145295ea2585e0530d7e87c
+Subject: [oss-security] CVE Request: Bypass Restricted Python
 
-Description:
-imagemagick is a software suite to create, edit, compose, or convert bitmap 
-images.
+--001a1145295ea2585e0530d7e87c
+Content-Type: text/plain; charset=UTF-8
 
-A fuzzing with the upstream security policy enabled revealed a buffer overflow 
-read.
+Hi,
 
-The complete ASan output:
+Can a CVE be assigned to this issue, please?
 
-# identify $FILE
-==13198==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x61400000fbc0 at pc 0x7f7a28f71a91 bp 0x7fff6820aaa0 sp 0x7fff6820aa98                                                                                                                                      
-READ of size 10 at 0x61400000fbc0 thread T0                                                                                                                                                                                                                                    
-    #0 0x7f7a28f71a90 in IsPixelMonochrome /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/./MagickCore/pixel-
-accessor.h:557:24                                                                                                                            
-    #1 0x7f7a28f71a90 in IdentifyImageMonochrome /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/attribute.c:758                                                                                                                                
-    #2 0x7f7a28f71dc6 in IdentifyImageType /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/attribute.c:819:7                                                                                                                                    
-    #3 0x7f7a293216ce in IdentifyImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/identify.c:524:8                                                                                                                                         
-    #4 0x7f7a28924f86 in IdentifyImageCommand /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/identify.c:336:22                                                                                                                                 
-    #5 0x7f7a289ba26a in MagickCommandGenesis /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/mogrify.c:183:14                                                                                                                                  
-    #6 0x4f1fb5 in MagickMain /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:145:10                                                                                                                                                    
-    #7 0x4f1fb5 in main /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:176                                                                                                                                                             
-    #8 0x7f7a2785e61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                        
-    #9 0x419138 in _init (/usr/bin/magick+0x419138)                                                                                                                                                                                                                            
+https://plone.org/security/20160419/bypass-restricted-python
 
-0x61400000fbc0 is located 0 bytes to the right of 384-byte region 
-[0x61400000fa40,0x61400000fbc0)                                                                                                                                                                              
-allocated by thread T0 here:                                                                                                                                                                                                                                                   
-    #0 0x4c1105 in __interceptor_posix_memalign /var/tmp/portage/sys-
-devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/asan_malloc_linux.cc:124                                                                                                            
-    #1 0x7f7a293cac65 in AcquireAlignedMemory /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/memory.c:258:7
-    #2 0x7f7a28fb8e9d in AcquireCacheNexusPixels /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/cache.c:4634:33
-    #3 0x7f7a28fb8e9d in SetPixelCacheNexusPixels /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/cache.c:4746
-    #4 0x7f7a28fa9f9e in GetVirtualPixelsFromNexus /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/cache.c:2629:10
-    #5 0x7f7a28fd2a5e in GetCacheViewVirtualPixels /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/cache-
-view.c:664:10
-    #6 0x7f7a28f70e46 in IdentifyImageMonochrome /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/attribute.c:753:7
-    #7 0x7f7a28f71dc6 in IdentifyImageType /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/attribute.c:819:7
-    #8 0x7f7a293216ce in IdentifyImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/identify.c:524:8
-    #9 0x7f7a28924f86 in IdentifyImageCommand /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/identify.c:336:22
-    #10 0x7f7a289ba26a in MagickCommandGenesis /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/mogrify.c:183:14
-    #11 0x4f1fb5 in MagickMain /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:145:10
-    #12 0x4f1fb5 in main /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:176
-    #13 0x7f7a2785e61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+A user who can create or edit templates(usually only admins) can bypass
+Restricted Python.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/./MagickCore/pixel-
-accessor.h:557:24 in IsPixelMonochrome
-Shadow bytes around the buggy address:
-  0x0c287fff9f20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c287fff9f30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c287fff9f40: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-  0x0c287fff9f50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c287fff9f60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c287fff9f70: 00 00 00 00 00 00 00 00[fa]fa fa fa fa fa fa fa
-  0x0c287fff9f80: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
-  0x0c287fff9f90: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c287fff9fa0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c287fff9fb0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fa fa
-  0x0c287fff9fc0: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==13198==ABORTING
+The relevant code is:
 
-Affected version:
-Tested on 7.0.3.0 but 7.0.3.1/7.0.3.2 did not include any fix
+https://plone.org/security/20160419
 
-Fixed version:
-N/A
+The vendor credits with the discovery: Fred van Dijk and Maurits van Rees
 
-Commit fix:
-N/A
+Thanks, let me know if you'd like more information.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+-- 
+Nathan Van Gheem
+Director of Solutions Engineering
+Wildcard Corp
 
-CVE:
-N/A
-
-Timeline:
-2016-09-14: bug discovered
-2016-09-14: bug reported to upstream
-2016-10-07: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/10/07/imagemagick-heap-based-buffer-overflow-in-ispixelmonochrome-pixel-accessor-h/
-
-
+--001a1145295ea2585e0530d7e87c--
