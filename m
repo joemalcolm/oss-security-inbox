@@ -1,64 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/16/3
-Message-ID: <CAKws9z2psDS2P25SOykpaR0QUiMZd1Pe1q4Q3ia_YyXXh-ptGQ@mail.gmail.com>
-Date: Sat, 16 Jan 2016 03:15:53 -0500
-From: Scott Arciszewski <scott@...agonie.com>
-To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
-Subject: It essentially wins crypto vulnerability bingo! gilfether/phpcrypt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/19/6
+Message-ID: <CAOs+rJVMeTCh8J38eKABrf7WVd=HCv=q0doYkURsgh4bC6MsTw@mail.gmail.com>
+Date: Tue, 19 Apr 2016 10:09:32 +0100
+From: Ignat Korchagin <ignat.korchagin@...il.com>
+To: Greg KH <greg@...ah.com>
+Cc: Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>,  security@...nel.org
+Subject: Re: CVE Request: Linux kernel: remote buffer overflow in usbip
 Content-Type: text/plain; charset=utf-8
 
-Consider this email the spiritual successor to my most recent post on Full
-Disclosure (http://seclists.org/fulldisclosure/2016/Jan/50).
+Hello,
 
-Today, we're going to talk about this library:
-https://github.com/gilfether/phpcrypt/issues/6
+Yes, I contacted cve-assign@...re.org and they provided me with the
+following number:
+CVE-2016-3955
 
-Let's go down the list:
+Regards,
+Ignat
 
-- [x] Wrote their own block cipher implementation
-- [x] ...in PHP...
-- [x] ...and forgot to account for function overloading!
-- [x] Chosen-ciphertext attacks (The existence for which is almost implied
-by "PHP crypto". Almost.)
-- [x] Defaults to a weak random number generator (32 bits of entropy is
-enough for AES right?)
-- [x] Defaults to ECB mode (https://blog.filippo.io/the-ecb-penguin/)
-- [x] Offers a laundry list of ciphers available, some of which are stupid
-- [x] ...like SimpleXOR (remember JCrypt?), Vigenere, and Enigma!
-
-Yep, this is almost as bad as it gets. I've attempted to notify everyone on
-Github who used this library, but there might be some people who do that
-aren't on Github. Please spread the word: migrate away from homebrew PHP
-cryptography.
-
-Like most "pure PHP" cryptography projects, this code is pure security
-theater. There is no salvaging it.
-
-For PHP developers who would otherwise be left out in the rain by this
-disclosure, here are some PHP cryptography libraries that do it right:
-
-1. https://github.com/jedisct1/libsodium-php (HIGHLY recommended!)
-​2​
-. https://github.com/defuse/php-encryption (recommended!)
-3. https://github.com/paragonie/halite (requires #1)
-4. https://github.com/paragonie/EasyRSA (reluctantly included for people
-that really believe they need RSA)
-
-(Details:
-https://paragonie.com/blog/2015/11/choosing-right-cryptography-library-for-your-php-project-guide
-)
-
-Seriously, folks: Writing cryptography primitives or protocols is hazardous
-in any language. Even if you have a mathematics background.
-
-If you can't afford to hire a cryptography expert to audit your library
-before you publish it, you should seriously consider using one that the
-community has already reviewed for free.
-
-Scott Arciszewski
-Chief Development Officer
-Paragon Initiative Enterprises <https://paragonie.com>​
-
-P.S. MITRE, if you're not busy, could you slap a CVE on the issues? This
-library actually gets a fair bit of use (though hopefully not for long).
-
+2016-04-19 9:35 GMT+01:00 Greg KH <greg@...ah.com>:
+> On Tue, Apr 19, 2016 at 10:06:43AM +0200, Marcus Meissner wrote:
+>> Hi,
+>>
+>> https://github.com/torvalds/linux/commit/b348d7dddb6c4fbfc810b7a0626e8ec9e29f7cbb
+>>
+>> commit b348d7dddb6c4fbfc810b7a0626e8ec9e29f7cbb
+>> Author: Ignat Korchagin <ignat.korchagin@...il.com>
+>> Date:   Thu Mar 17 18:00:29 2016 +0000
+>>
+>>     USB: usbip: fix potential out-of-bounds write
+>>
+>>     Fix potential out-of-bounds write to urb->transfer_buffer
+>>     usbip handles network communication directly in the kernel. When receiving a
+>>     packet from its peer, usbip code parses headers according to protocol. As
+>>     part of this parsing urb->actual_length is filled. Since the input for
+>>     urb->actual_length comes from the network, it should be treated as untrusted.
+>>     Any entity controlling the network may put any value in the input and the
+>>     preallocated urb->transfer_buffer may not be large enough to hold the data.
+>>     Thus, the malicious entity is able to write arbitrary data to kernel memory.
+>>
+>>     Signed-off-by: Ignat Korchagin <ignat.korchagin@...il.com>
+>>     Signed-off-by: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
+>>
+>> diff --git a/drivers/usb/usbip/usbip_common.c b/drivers/usb/usbip/usbip_common.c
+>> index facaaf0..e40da77 100644
+>> --- a/drivers/usb/usbip/usbip_common.c
+>> +++ b/drivers/usb/usbip/usbip_common.c
+>> @@ -741,6 +741,17 @@ int usbip_recv_xbuff(struct usbip_device *ud, struct urb *urb)
+>>         if (!(size > 0))
+>>                 return 0;
+>>
+>> +       if (size > urb->transfer_buffer_length) {
+>> +               /* should not happen, probably malicious packet */
+>> +               if (ud->side == USBIP_STUB) {
+>> +                       usbip_event_add(ud, SDEV_EVENT_ERROR_TCP);
+>> +                       return 0;
+>> +               } else {
+>> +                       usbip_event_add(ud, VDEV_EVENT_ERROR_TCP);
+>> +                       return -EPIPE;
+>> +               }
+>> +       }
+>> +
+>>         ret = usbip_recv(ud->tcp_socket, urb->transfer_buffer, size);
+>>         if (ret != size) {
+>>                 dev_err(&urb->dev->dev, "recv xbuf, %d\n", ret);
+>>
+>> Our USB developer confirms:
+>> https://bugzilla.suse.com/show_bug.cgi?id=975945
+>> |The vulnerability is true. If an attacker can get a malicious package
+>> |into the connection the kernel will accept all of the data in that
+>> |package whether it fits into the buffer or not.
+>> |You can scribble about 1k into RAM, albeit at an unpredictable location.
+>
+> I think Ignat already asked for a CVE for this through some other
+> channel, and was going to announce it in some manner.
+>
+> Ignat, did you do that?
+>
+> thanks,
+>
+> greg k-h
