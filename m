@@ -1,23 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/06/11
-Message-ID: <56DC7B1E.4050507@oracle.com>
-Date: Sun, 06 Mar 2016 10:46:54 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/19/7
+Message-ID: <571642B1.4060407@integrity.pt>
+Date: Tue, 19 Apr 2016 15:37:37 +0100
+From: Filipe Reis <fr@...egrity.pt>
 To: oss-security@...ts.openwall.com
-CC: Art Manion <amanion@...t.org>, Kurt Seifried <kseifried@...hat.com>, cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>
-Subject: Re: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+Subject: CVE Request: Stored Cross-Site Scripting in TYPO3 Bookmarks
 Content-Type: text/plain; charset=utf-8
 
-On 03/ 4/16 04:07 PM, Tim wrote:
-> * No moderation required.  Let the public decide if they believe the
->    researcher or vendor.  If a moderator does bother to look over the
->    content, they could deduplicate/link issues together and address any
->    confusion, but beyond that, it isn't their job to decide what is a
->    vulnerability and what isn't.
+Hi,
 
-If the site displays *any* user-submitted text, you need at least enough
-moderation to filter out spammers & trolls.
+Can I have a CVE ID assigned to this Stored Cross-Site Scripting in 
+TYPO3 Bookmarks?
 
--- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	  X.Org Security Response Team - xorg-security@...ts.x.org
+https://labs.integrity.pt/advisories/cve-pending-stored-cross-site-scripting-in-typo3-bookmarks/
+
+References:
+
+      * https://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2016-006/
+
+
