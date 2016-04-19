@@ -1,26 +1,12 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/10/2
-Message-ID: <CAAtdryMeBm=+QAMNSDNQZXJCgsCM4Mw=05ye1kS6bw6L+VaajQ@mail.gmail.com>
-Date: Fri, 10 Jun 2016 16:10:29 +1000
-From: Sam Saffron <sam.saffron@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/19/4
+Message-ID: <CAOp4FwSKvWciC-4K3ob7kT5-Ytm2SkmgPbPEc0qJKL0NAtEHPA@mail.gmail.com>
+Date: Tue, 19 Apr 2016 18:37:34 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Ruby gem rack-mini-profiler CVE-2016-4442
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: CVE Request: imlib2: integer overflow resulting in insufficient heap allocation
 Content-Type: text/plain; charset=utf-8
 
-https://github.com/MiniProfiler/rack-mini-profiler
-
-https://rubygems.org/gems/rack-mini-profiler/
-
-Description: Carefully crafted requests can expose information about
-strings and objects allocated during the request for unauthorised
-users.
-
-Fixed in: https://github.com/MiniProfiler/rack-mini-profiler/commit/4273771d65f1a7411e3ef5843329308d0e2d257c
-
-Released public fix in version: 0.10.
-
-
-----
-
-I am not sure how to go about announcing this CVE, where else to I
-need to post this?
+I think that this shows how useful it is for any libc to have a
+function like OpenBSD's reallocarray(), which prevents these.
