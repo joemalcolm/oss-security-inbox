@@ -1,34 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/07/2
-Message-ID: <alpine.LFD.2.20.1601071625360.12689@wniryva>
-Date: Thu, 7 Jan 2016 16:29:15 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2015-7513 Kernel: kvm: divide by zero issue leads to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/19/8
+Message-ID: <CAL8hw9GTBixuPdUDvyanNNGPp3_tFAad=QWfFX3FEhjPyaAMhw@mail.gmail.com>
+Date: Tue, 19 Apr 2016 15:09:32 +0000
+From: Nathan Van Gheem <vangheem@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE Request: Privilege escalation in webdav
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+Can a CVE be assigned to this issue, please?
 
-Linux kernel built with the KVM virtualisation support(CONFIG_KVM) is 
-vulnerable to a divide by zero issue. It occurs in the KVM module's 
-Programmable Interval Timer(PIT) emulation, when PIT counters for channel 1 or 
-2 are set to zero(0) and a privileged user inside guest attempts to read 
-those.
+https://plone.org/security/20160419/privilege-escalation-in-webdav
 
-A privileged guest user with access to PIT I/O ports, could use this issue to 
-crash the host kernel resulting in DoS.
+A missing webdav security declaration would allow unauthorized webdav
+access.
 
-Upstream patch:
----------------
-   -> https://git.kernel.org/linus/0185604c2d82c560dab2f2933a18f797e74ab5a8
+The relevant code is:
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1284847
+https://plone.org/security/20150910/
 
-It requires host user to set the PIT channel counters to zero(0).
+The vendor credits with the discovery: Thomas Mogensen
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Thanks, let me know if you'd like more information.
+
+-- 
+Nathan Van Gheem
+Director of Solutions Engineering
+Wildcard Corp
+
