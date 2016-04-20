@@ -1,4 +1,9 @@
-Received: (qmail 13917 invoked by uid 550); 23 Feb 2023 17:49:17 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1661" "Wednesday" "20" "April" "2016" "10:35:48" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160420143548.A83166C05E8@smtpvmsrv1.mitre.org>" "38" "[oss-security] Re: CVE Request: perl: denial-of-service / Regexp-matching \"hangs\" indefinitely on illegal input using binmode :utf8 using 100%CPU" nil nil nil "4" "2016042014:35:48" "[oss-security] Re: CVE Request: perl: denial-of-service / Regexp-matching \"hangs\" indefinitely on illegal input using binmode :utf8 using 100%CPU" (number mark "U       cve-assign@m Apr 20   38/1661  " thread-indent "\"[oss-security] Re: CVE Request: perl: denial-of-service / Regexp-matching \"hangs\" indefinitely on illegal input using binmode :utf8 using 100%CPU\"\n") "<20160420091832.GA580@lorien.valinor.li>" ("<20160420091832.GA580@lorien.valinor.li>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1413 invoked by uid 550); 20 Apr 2016 14:36:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,34 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9324 invoked from network); 23 Feb 2023 17:44:08 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Jarek Potiuk <potiuk@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <6352d70e-c156-fb64-6b03-ca3f89331f88@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 23 Feb 2023 17:43:54 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-25693: Sqoop Apache Airflow Provider Remote Code
- Execution Vulnerability 
+Received: (qmail 1394 invoked from network); 20 Apr 2016 14:36:00 -0000
+From: cve-assign@mitre.org
+To: carnil@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20160420091832.GA580@lorien.valinor.li>
+Message-Id: <20160420143548.A83166C05E8@smtpvmsrv1.mitre.org>
+Date: Wed, 20 Apr 2016 10:35:48 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: perl: denial-of-service / Regexp-matching "hangs" indefinitely on illegal input using binmode :utf8 using 100%CPU
 
-Severity: moderate
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Description:
+> A bug in perl can cause regular expressions an malformed UTF8 inputs
+> to go into a forever loop and consume 100% CPU. The issue was found to
+> drive a realworld web application into an infinite loop
+> 
+> https://rt.perl.org/Public/Bug/Display.html?id=123562
+> http://perl5.git.perl.org/perl.git/commit/22b433eff9a1ffa2454e18405a56650f07b385b5
+> https://bugs.debian.org/821848
 
-Improper Input Validation vulnerability in the Apache Airflow Sqoop Provide=
-r.
+Use CVE-2015-8853 for all of 22b433eff9a1ffa2454e18405a56650f07b385b5.
+We do not feel that there is enough information to pursue an
+interpretation of "I did this also in the similar areas of regexec.c"
+as requiring a separate CVE.
 
-This issue affects Apache Airflow Sqoop Provider versions before 3.1.1.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Credit:
-
- L3yx of Syclover Security Team (finder)
-
-References:
-
-https://github.com/apache/airflow/pull/29500
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2023-25693
-
+iQIcBAEBCAAGBQJXF5K9AAoJEHb/MwWLVhi2imAQAK01mTbjuVOPJ6g2APUntKXR
+80XiAZQBnqCUO4Khnt399G1dyUgI4GrY0CzBvh34b6ecx37NP+OgZBsT+Jh+xQuA
+EiiTiKb7foU7bf1R+b6aofyOiI0+ofG8i9i6fR/fSBcp93XHOTrWItc9H+W0Suiq
+AjUUMOpr71daYsNmRq4rqscXI2TfSHHgzJ5rrEeO0/v3wru4RffxXfbNEIcR5soL
+APjr/2AIWczHtZFKDeLZa0tGngrSrbN6Cx1psCw1zJ0ivAg5OX9l5dxHZMkI4nFt
+Mn2fOHh5jMh5UIjaroxAxwTP9baN/Wh4HdROirSJrErM4k5LJzjjIJwaG3rE9mfr
+9szFq+7zBjt7SlJEAOKiQrRNXYC1NM2SrKp3TXPI6KtREumuty0rH2kvv3xaoCut
+Ne5aNxGnVni3zxUgul0UW/Z8+ObsGoM8HhiKPy2CU7lmllWIXVmRcNAzQaPrX1D4
+owSBk2y1vgCkZ325BMgphUi82nFlqMMB+lb35KYbznhfPXwg0aSd7//9sIx3yYsJ
+BmMMDZ/c5gkyXve3HHzgijMroJZnazTocvqXE9o8Y9eM4R/uOCuEa3c4KxkHuPgu
+FKyWGbMZI8V0SlvMhhtXX3q+z77lTistWg0F1JA+eiIeBvBt3ZNFnuHpGUlasNZ3
+KKhEY+5zhUgRcbGgYQn+
+=/FX1
+-----END PGP SIGNATURE-----
