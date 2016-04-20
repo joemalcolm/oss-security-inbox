@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1422" "Saturday" "2" "May" "2015" "16:40:14" "+0300" "Solar Designer" "solar@openwall.com" "<20150502134014.GA8226@openwall.com>" "30" "Re: [oss-security] CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam" nil nil nil "5" "2015050213:40:14" "[oss-security] CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam" (number mark "        solar@openwa May  2   30/1422  " thread-indent "\"Re: [oss-security] CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam\"\n") "<CADOUnBKNwkU=AMukgCB3N=SWaDzKv8DTb8Z-NmphK=GB+eNM6A@mail.gmail.com>" ("<CADOUnBK=jW36v6X2Q6EXLL35Wxqait7cWJR-adCFwRaMJtucPQ@mail.gmail.com>" "<20150502125329.GA6820@openwall.com>" "<CADOUnBKNwkU=AMukgCB3N=SWaDzKv8DTb8Z-NmphK=GB+eNM6A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2451" "Wednesday" "20" "April" "2016" "00:33:30" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160420043330.E3AA36C0122@smtpvmsrv1.mitre.org>" "65" "[oss-security] Re: CVE request: opam - missing certificate validation" nil nil nil "4" "2016042004:33:30" "[oss-security] Re: CVE request: opam - missing certificate validation" (number mark "U       cve-assign@m Apr 20   65/2451  " thread-indent "\"[oss-security] Re: CVE request: opam - missing certificate validation\"\n") "<571550CC.1080801@vorlons.info>" ("<571550CC.1080801@vorlons.info>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19742 invoked by uid 550); 2 May 2015 13:40:20 -0000
+Received: (qmail 19553 invoked by uid 550); 20 Apr 2016 04:33:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +11,78 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19717 invoked from network); 2 May 2015 13:40:20 -0000
-Message-ID: <20150502134014.GA8226@openwall.com>
-References: <CADOUnBK=jW36v6X2Q6EXLL35Wxqait7cWJR-adCFwRaMJtucPQ@mail.gmail.com> <20150502125329.GA6820@openwall.com> <CADOUnBKNwkU=AMukgCB3N=SWaDzKv8DTb8Z-NmphK=GB+eNM6A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CADOUnBKNwkU=AMukgCB3N=SWaDzKv8DTb8Z-NmphK=GB+eNM6A@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Cc: oss-security@lists.openwall.com, Vasily Kulikov <segoon@openwall.com>
-Date: Sat, 2 May 2015 16:40:14 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam
-To: Wen Xu <hotdog3645@gmail.com>
+Received: (qmail 19533 invoked from network); 20 Apr 2016 04:33:42 -0000
+From: cve-assign@mitre.org
+To: matthias@vorlons.info
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <571550CC.1080801@vorlons.info>
+Message-Id: <20160420043330.E3AA36C0122@smtpvmsrv1.mitre.org>
+Date: Wed, 20 Apr 2016 00:33:30 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: opam - missing certificate validation
 
-On Sat, May 02, 2015 at 09:18:23PM +0800, Wen Xu wrote:
-> Really sorry, what you said is all right. Actually we've successfully seen
-> the potential that we can take advantage of this bug to achieve privilege
-> escalation (root) on android (both 32bit/64bit)(>=4.3), even on android
-> 64bit, the list poison value is 0x200200 which can be mapped ;) That's why
-> we think this vulnerability is high-threat.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Oh, so Android 4.3+ enables ping sockets for all apps by default?
-I have mixed feelings about that.
+> https://github.com/ocaml/opam/commit/3d43295df3bb9e67e60801d319bf82c2c8a84d24
+> https://github.com/ocaml/opam/commit/5507426030a60c50f7479ac758d116b573fdbd5e
+> https://github.com/ocaml/opam/issues/55
+> https://github.com/ocaml/opam/issues/2006
 
-> For linux PC, the normal user
-> does not have the privilege to create a icmp(ping) socket, I agree with
-> your analysis including on PC, the dead value is 0xdead000000000000. And
-> also it does not exist in some versions and distributions, I write the mail
-> in a hurry and do not explain it in detail ;) Sorry for my mistakes again.
 
-I found no mistakes on your part - just too brief a message requiring
-further analysis to determine actual impact of the bug.  The bug does
-exist in all currently supported upstream kernel versions, as you say,
-even if its security relevance varies from none to full local privesc
-across archs and distros.
+> https://github.com/ocaml/opam/issues/2006#issue-57763563
 
-> So as you said MITRE could give us a CVE ID? That's nice, so where could I
-> get informed when it is given? ;)
+> This was added because of compatibility issues on many common
+> installations, in which curl didn't have access to a reasonable list
+> of root certificates (in particular for github). I am wondering if
+> this is still an issue now ?
+> 
+> We still double-check md5s of course.
 
-I expect they will post to oss-security.  Just give them some days.
 
-So, who's to post a patch to LKML to adjust default LIST_POISON*?  Vasily?
+> src/repository/opamDownload.ml
+> 
+> let curl_args = [
+> 
+> - CString "--insecure", None;
+> 
+> let wget_args = [
+> 
+> - CString "--no-check-certificate", None;
 
-Alexander
+
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=818081#15
+> 
+> This issue does not warrant a DSA, but may be good to fix it as well
+> in an upcoming jessie point release.
+
+We feel that this should not have a CVE ID because the removed curl
+and wget options had been intentional behavior. In other words, the
+vendor was not particularly interested in ensuring that the client was
+communicating with the correct web site. That required relying on
+third parties (maintainers of curl and wget) to maintain certificate
+data. Instead, the vendor was interested in whether the client was
+downloading the correct file. Achieving that can be independent.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXFwYcAAoJEHb/MwWLVhi2lS4P/3g0tuTBDJFhdPjGYs52WncH
+4oyAXUPboTN/1ED1D9bcmARcBjE1lik2yMoM4JU0nuwiCj9aPwkXofpt8TCp3As8
+haSrupzKzU0bpHeDVnTwXyc4a04CQ9WAaPDqDgPRViZN7AYKoyhF02zVxNN4jyXu
+CCPp3YsJCHLUvx5UFCFf5XevQBikINm1HuJiizoePHqrl5l6g0efsOulIpC4cGLo
+OobJanX3QNYNQe/bVfFS0R/tJysyDErSRLYzN3prhDDgoe/F1q1Unp/BKlEh0Cub
++y0tw420qnIAhebz2CD3jgO5rAv1RA8zXOETtNl/m93oG/lyJa9YDRTXxetuW3K6
+ulOQUrlM0l05cmsLKAYuqtPzeEyv6umfGhH/cG4NjHiaUlgXqihNdHRMjcQl5Bx8
+XZ6cAn9XHuMqYBDffuSRspsXIkCZYzwlS6CRqy4uyPN+HH33CB5NHfRAhZFiEDY6
+vK3cRgkcjrU6w6yQ43O8ttNiN6YpFocGXfImf/8FM1jcwBjsnl8IKufdZCKS+NJj
+8/2Atu+aCdbhEVV+i3iEeeL806c1fH92JKmZxWvkU4/6W8xVS2uITqmuVRhg++5n
+tjTH4TrCpi1yjOsl3+PfSSqSsmoVrPe+hHRCXRZYmQ86b+eZXGr2oQt3Cic4xx21
+FakLj9DAVjQBfk65+Jud
+=/IEH
+-----END PGP SIGNATURE-----
