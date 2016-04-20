@@ -1,77 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/5
-Message-ID: <CADSYzsu8-t0irpYmdcGrwDnzBNeYwp2Y8rs6yhDAL-a0OF+_xw@mail.gmail.com>
-Date: Mon, 14 Nov 2016 14:27:36 -0200
-From: Dawid Golunski <dawid@...alhackers.com>
-To: oss-security@...ts.openwall.com
-Subject: MySQL / MariaDB / Percona - Privilege Escalation / Race Condition Exploit [CVE-2016-6663 / CVE-2016-5616]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/20/2
+Message-Id: <20160420024949.BD5C552E005@smtpvbsrv1.mitre.org>
+Date: Tue, 19 Apr 2016 22:49:49 -0400 (EDT)
+From: cve-assign@...re.org
+To: vangheem@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Unauthorized disclosure of site content - Plone
 Content-Type: text/plain; charset=utf-8
 
-Vulnerability: MySQL / MariaDB / Percona - Privilege Escalation / Race Condition
-CVE-2016-6663 / (Oracle) CVE-2016-5616
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Discovered by:
-Dawid Golunski / https://legalhackers.com
-@dawid_golunski
+> https://plone.org/security/20160419/unauthorized-disclosure-of-site-content
+> 
+> A vulnerability that allows attackers to gain information about
+> unpublished site content.
+> 
+> An attacker can potentially gain information on the ID of private
+> content on your site.
 
-Affected versions:
+Use CVE-2016-4042.
 
-MariaDB
-< 5.5.52
-< 10.1.18
-< 10.0.28
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-MySQL
-<= 5.5.51
-<= 5.6.32
-<= 5.7.14
-
-Percona Server
-< 5.5.51-38.2
-< 5.6.32-78-1
-< 5.7.14-8
-
-Percona XtraDB Cluster
-< 5.6.32-25.17
-< 5.7.14-26.17
-< 5.5.41-37.0
-
-
-An independent research has revealed a race condition vulnerability which
-affects MySQl, MariaDB and PerconaDB databases.
-The vulnerability can allow a local system user with access to the affected
-database in the context of a low-privileged account
-(CREATE/INSERT/SELECT grants)
-to escalate their privileges and execute arbitrary code as the database system
-user (typically 'mysql').
-Successful exploitation would allow an attacker to gain full read/write access
-to all of the files (including configuration files) and databases belonging
-to the affected database server.
-The obtained level of access upon the exploitation, could be chained with
-the other privilege escalation vulnerabilities discovered by the author of
-this advisory (CVE-2016-6662 and CVE-2016-6664) to further escalate privileges
-from mysql user to root user and thus allow attackers to fully compromise the
-target server.
-
-For the latest / up-to-date advisory visit:
-
-https://legalhackers.com/advisories/MySQL-Maria-Percona-PrivEscRace-CVE-2016-6663-5616-Exploit.html
-
-A copy of the full advisory is also attached to this message as per
-the oss-sec guidelines (for those who still use dial-up I guess... :)
-
-PoC Video showing the exploitation of the race in a matter of seconds
-to get mysql shell and gaining a rootshell from there:
-http://legalhackers.com/videos/MySQL-MariaDB-PerconaDB-PrivEsc-Race-CVE-2016-6663-5616-6664-5617-Exploits.html
-
-More updates on the feed:
-https://twitter.com/dawid_golunski
-
-
--- 
-Regards,
-Dawid Golunski
-https://legalhackers.com
-t: @dawid_golunski
-
-View attachment "MySQL-Maria-Percona-PrivEscRace-CVE-2016-6663-5616-Exploit.txt" of type "text/plain" (26525 bytes)
+iQIcBAEBCAAGBQJXFu1pAAoJEHb/MwWLVhi2HUkP/jrs9EmPDg54irKy/PN2xoPc
+NccPVhxLw7geSyKwWmPcC1Wu6NtfJg/sk5qYjAlOX8yw2FyxRWMKa/KF6xlN43iy
+U5YqDScWr9tA0m9gd4PQnQqQGf/U6gOsRNjR2KHF073gMrunqsuWm4T0T2ZqjnbK
+B5Nn+iAKPmKu2Zj35gIJq9hcarHCP47Z3vCBm5DIslADU2+pbaJxP+tDzgDGIEmr
+m7rwqnro0rj5ZT/Do7Ovbm6ePCisZepN89UyR35YRuj1jO9At5CjEKe630Dy2EXA
+8zCmggs7SMClQgqrQExXJnXcEGDTcBJ+L50TjeT/3mfN2WY6R6ZBnmtudov3qa6U
+1VO67EHiebeJJUbQGrUMUO+QrKqe9KKrfL84Pbr4Kzc5O2aTSLmzJztFhdhnIdgu
+eDfOUK9EIJDVpbpul8Fm8d25H+qSc3PR9Nis8Tnqjw9+fKcACLkBclzbcfh4KLja
+3QR8xNE4Rfm+L9FdtVbCPVmAmBpE/DTr7H9retKiB87VcrchYlQLSQVHC6ncH48F
+CBi822SOEr/QVajvNaM0Rh2tNqeMP2jbu+LfR7HKK3KZRLB6zqfUDGpaKWxgCbX4
+pR9Z2Qxh4w4YY+C7I5AI9fFbVbm0KIzt5iWOwUhVNI8f9unVH7xa5nb8FWGTyp6x
+PldQHDZ2MPbq+TyWtFTI
+=pRwJ
+-----END PGP SIGNATURE-----
