@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1594" "Friday" "26" "July" "2019" "12:00:06" "+0200" "Solar Designer" "solar@openwall.com" "<20190726100006.GA19264@openwall.com>" "59" "Re: [oss-security] CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead" "^Date:" nil nil "7" "2019072610:00:06" "[oss-security] CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead" (number mark "        solar@openwa Jul 26   59/1594  " thread-indent "\"Re: [oss-security] CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead\"\n") "<20190722100013.GJ1168@jumper.schlittermann.de>" ("<20190722100013.GJ1168@jumper.schlittermann.de>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1498" "Tuesday" "19" "April" "2016" "22:51:13" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160420025113.512A752E005@smtpvbsrv1.mitre.org>" "37" "[oss-security] Re: CVE Request: Bypass Restricted Python - Plone" nil nil nil "4" "2016042002:51:13" "[oss-security] Re: CVE Request: Bypass Restricted Python - Plone" (number mark "U       cve-assign@m Apr 19   37/1498  " thread-indent "\"[oss-security] Re: CVE Request: Bypass Restricted Python - Plone\"\n") "<CAL8hw9Gid=9bUYu+MYmUGpu2DJrXDG_qwJdM4nu3gLUKYBqDsQ@mail.gmail.com>" ("<CAL8hw9Gid=9bUYu+MYmUGpu2DJrXDG_qwJdM4nu3gLUKYBqDsQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11294 invoked by uid 550); 26 Jul 2019 10:00:45 -0000
+Received: (qmail 24206 invoked by uid 550); 20 Apr 2016 02:51:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,76 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9848 invoked from network); 26 Jul 2019 10:00:18 -0000
-Message-ID: <20190726100006.GA19264@openwall.com>
-References: <20190722100013.GJ1168@jumper.schlittermann.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190722100013.GJ1168@jumper.schlittermann.de>
-User-Agent: Mutt/1.4.2.3i
-Date: Fri, 26 Jul 2019 12:00:06 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2019-13917 OVE-20190718-0006: Exim: security release ahead
-To: oss-security@lists.openwall.com
+Received: (qmail 24188 invoked from network); 20 Apr 2016 02:51:24 -0000
+From: cve-assign@mitre.org
+To: vangheem@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAL8hw9Gid=9bUYu+MYmUGpu2DJrXDG_qwJdM4nu3gLUKYBqDsQ@mail.gmail.com>
+Message-Id: <20160420025113.512A752E005@smtpvbsrv1.mitre.org>
+Date: Tue, 19 Apr 2016 22:51:13 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: Bypass Restricted Python - Plone
 
-On Mon, Jul 22, 2019 at 12:00:13PM +0200, Heiko Schlittermann wrote:
-> *** Note: EMBARGO is still in effect until July 25th, 10:00 UTC. ***
-> *** Distros must not publish any detail nor release updates yet. ***
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Somehow there isn't a proper message from Exim maintainers in here yet,
-but the release is out, so I feel I have to take over and post this for
-them:
+> https://plone.org/security/20160419/bypass-restricted-python
+> 
+> A user who can create or edit templates(usually only admins) can
+> bypass Restricted Python.
+> 
+> This vulnerability should only affect site administrators who have ZMI
+> access, or when you gave users permission to edit PloneFormGen
+> templates. Only Chameleon (five.pt) is affected. This package is used
+> by default in Plone 5, and can be added in Plone 4.
 
-https://lists.exim.org/lurker/message/20190725.090419.d506f736.en.html
-
----
-Author: Jeremy Harris
-Date: 2019-07-25 11:04 +200
-To: exim-announce, exim users
-Subject: [exim] CVE-2019-13917
-
-General release information
-===========================
-
-The code fix for this issue has been placed in the project
-public git repository; the project website will be updated
-in due course.
-
-
-CVE ID:     CVE-2019-13917
-OVE ID:     OVE-20190718-0006
-Date:       2019-07-18
-Credits:    Jeremy Harris
-Version(s): 4.85 up to and including 4.92
-Issue:      A local or remote attacker can execute programs with root
-            privileges - if you've an unusual configuration. For details
-            see below.
-
-
-
-Coordinated Release Date (CRD) for Exim 4.92.1:
-            Thu Jul 25 10:00:00 UTC 2019
-
-
-
-Contact:    security@???
-
-
-
-Details:
-A vulnerability was discovered in the "sort" expansion operator:
-The elements of the list were expanded, giving a possible attack
-if the list included data supplied by an attacker.
-
-If the effective configuration file for exim does not use sort
-then the system is trivially declarable as not being vulnerable.
-Use this command to check: "exim -bP config | grep sort".
+Use CVE-2016-4043.
 
 - -- 
-Cheers,
-Jeremy
----
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Alexander
+iQIcBAEBCAAGBQJXFu1xAAoJEHb/MwWLVhi2I9cP/0SBPz78iiLQw+BDo5O/Veu7
+uKDU4AWcY7G4BXvLpC8aOaTDN19o5RlAp/8cXgZBZ0e0jL4wxqDlakmn5enqDVlB
+FAMzNppGCKPbP7mMhjhp0Y09oqkEBDpcK8VTiYoLCEP8EkyBRVyL2GnM1Y2nRrXj
+RDg/lxskoIE9MnExPAMGzpzWzuQk5GVDSz0hh39IxgQhx0/7rhKSxhN6RT5GdrAx
+Uafip+Vb/ezJKe/TvSr9IDKJ3SZjKVa7nFqlsQaTTIve3MZ81H/4zCbn0X+V6MX6
+USLbOut1LywohvVLmegO/uf8w3arT+szDYThljp0HpraGHQDt/YRaYl4D3BjVcb0
+Q4xhaIWGTPnV5Axoh2yj2RVl6Yx8+sDMQvT6HANcpEU0wcPNvbouTu8EY0mAxToI
+g33vyCkidscrt3PFQuUVbfbxIqclncqKNtf9i7+0jCYQZEIbR7V44rqWwMVCJ1VZ
+a2UunPe0h2COZ0m7WifM2b82i8ox87l7qcw3CppysKOS20i1h4L8KkW2qkdcQJCm
+jng9DWicSo95sxjUBXajYvKHBCALHXqSiKiKq6Vu+vX+y79JW6lb3HRxJzpjhMg2
+imD3xLmh9jCmBiIKqm3oj/tweMlAX1b8llz7AUbkLu3TepzsGhTHNx+QngAg80Bh
+zlAz4kl1XvkyBWijKrEb
+=P6qe
+-----END PGP SIGNATURE-----
