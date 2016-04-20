@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2215" "Friday" "14" "July" "2017" "11:05:39" "-0400" "Santiago Torres" "torresariass@gmail.com" "<20170714150537.3e2irp53kwj5xsn7@LykOS.localdomain>" "59" "Re: [oss-security] Estimate for the total number of exploitable bugs in large linux distro?" "^Date:" nil nil "7" "2017071415:05:39" "[oss-security] Estimate for the total number of exploitable bugs in large linux distro?" (number mark "        torresariass Jul 14   59/2215  " thread-indent "\"Re: [oss-security] Estimate for the total number of exploitable bugs in large linux distro?\"\n") "<20170714093401.GB865@sivokote.iziade.m$>" ("<20170714093401.GB865@sivokote.iziade.m$>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4175" "Wednesday" "20" "April" "2016" "17:16:24" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160420211624.5E0486C0453@smtpvmsrv1.mitre.org>" "174" "[oss-security] various vulnerabilities in Node.js packages" nil nil nil "4" "2016042021:16:24" "[oss-security] various vulnerabilities in Node.js packages" (number mark "U       cve-assign@m Apr 20  174/4175  " thread-indent "\"[oss-security] various vulnerabilities in Node.js packages\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 10105 invoked by uid 550); 14 Jul 2017 15:39:45 -0000
+Received: (qmail 28612 invoked by uid 550); 20 Apr 2016 21:16:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,103 +11,186 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17796 invoked from network); 14 Jul 2017 15:05:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=sGhzKjyee80+IQKLO63Tm9SrqvwqyZ7A+Xk58giL2MI=;
-        b=O9AuOvWGJ1Cp+yrjF2mwFabRu1ldXTt8diAZgUBKtlPxdYZ1VAA285MPSOcj95eEEA
-         jmNrsvdrOTR6UQKHByUDKEa3dac7VJX2/8B74If8Pk6B+Eh//ixFNb7jH0MP7aauojhy
-         u1ApjRthgTbt5QLPXH6rFkmEtnp15vvR+fs9+DabxNKoRQ0LnFsDuA50LnRx/PELK+SI
-         0MJmI+fN1dLA/ZNl97dt7s8xtQVfM7LUO2COZ9QcFC6GGDA6PJchlg4qcPTOokxplzmi
-         9PQ96uca/WCZCrlryZ73EgEy2O2qt08RWT75YuiOLwVBFgb7aQ9N8o4byl8UGFqo8Y7s
-         /rdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=sGhzKjyee80+IQKLO63Tm9SrqvwqyZ7A+Xk58giL2MI=;
-        b=opnIQnvl43hXT5ZHt7GVr6Ozcp7WE1Z1F8HdsHzBr6ssOXulLjnoeCOJ/YVFc1TO8q
-         RlnQ1Br2b13+s4laWTXIzrC27dvf2b8eyPVk1ep8g17k/0qaiD4DeHJ+rsQCnvFHG37v
-         dxqUt7OrkTZvp7cEs6z45het5atKltmmcJl863gf2c0Z6d5mPCaqQRdefMRpQjDpzD+o
-         2itkFMYQraEApeSzudKE1LJiKEz7O3bbEvMySsgrwz4hRTT/g5Sp3At7iGlkN6i0EjO5
-         KqLcjydoqk4iwr6NDzezWLXbo5lgGCUzIPDYu0mDH/C0Acf45dZysvlB2kWzD3pfwPYS
-         FnWA==
-X-Gm-Message-State: AIVw110Yaz7W17BWbgTnAu7o3gL9AfAmOj2tnX/Snjsl3pLvmXJYjQtM
-	edrh4kPk3RWo1Rb7
-X-Received: by 10.55.31.150 with SMTP id n22mr12434911qkh.46.1500044740760;
-        Fri, 14 Jul 2017 08:05:40 -0700 (PDT)
-Message-ID: <20170714150537.3e2irp53kwj5xsn7@LykOS.localdomain>
-References: <20170714093401.GB865@sivokote.iziade.m$>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="eeu57hlz75t2ugyb"
-Content-Disposition: inline
-In-Reply-To: <20170714093401.GB865@sivokote.iziade.m$>
-Date: Fri, 14 Jul 2017 11:05:39 -0400
-From: Santiago Torres <torresariass@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Estimate for the total number of exploitable bugs
- in large linux distro?
+Received: (qmail 28588 invoked from network); 20 Apr 2016 21:16:35 -0000
+From: cve-assign@mitre.org
 To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Message-Id: <20160420211624.5E0486C0453@smtpvmsrv1.mitre.org>
+Date: Wed, 20 Apr 2016 17:16:24 -0400 (EDT)
+Subject: [oss-security] various vulnerabilities in Node.js packages
 
---eeu57hlz75t2ugyb
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Fri, Jul 14, 2017 at 12:34:01PM +0300, Georgi Guninski wrote:
-> What is an estimate for the total number of exploitable bugs in large
-> linux distro?
->=20
+The CVE Assignment Team received a request (on an unexpected mailing
+list) for CVE IDs for several Node.js packages. Because everything was
+open source and post-disclosure, we are sending IDs here instead.
 
-You may want to look at[1] for the case of ArchLinux. Do consider the
-caveat brought up by other people on the list: CVE numbers are not a 1:1
-mapping to bugs (or even exploitable bugs). For example, there are
-vendors that group all bugs discovered in a period (or with a conceputal
-similarity) under one CVE number, whereas others take mutliple
-variations of a bug and request an individual CVE for each. Needless to
-say, some bugs never get a CVE ;).
 
-> Also, does the total number decrease, increase or change in other way
-> over time?
+> https://nodesecurity.io/advisories/23
+> 
+> marked package before 0.3.4 for Node.js - ReDoS
 
-You could use the json api[2] on [1] to get a rolling count if you'd like
-to measure this (also pasted on [3]]):
+Use CVE-2015-8854.
 
->>> import json, requests
->>> response =3D requests.get("https://security.archlinux.org/vulnerable/js=
-on")
->>> data =3D json.loads(response.content)
->>> len(data)
-34
 
-Cheers!
--Santiago.
 
-[1] https://security.archlinux.org/vulnerable
-[2] https://security.archlinux.org/vulnerable/json
-[3] https://bpaste.net/show/faa58aab9b1e=20
+> https://nodesecurity.io/advisories/28
+> 
+> The qs module does not have an option or default for specifying object
+> depth and when parsing a string representing a deeply nested object
+> will block the event loop for long periods of time. An attacker could
+> leverage this to cause a temporary denial-of-service condition, for
+> example, in a web application, other requests would not be processed
+> while this blocking is occurring.
 
---eeu57hlz75t2ugyb
-Content-Type: application/pgp-signature; name="signature.asc"
+This does not have a CVE ID, as discussed in the
+http://www.openwall.com/lists/oss-security/2014/09/30/10 post.
+ 
 
+
+> https://nodesecurity.io/advisories/31
+> 
+> semver package before 4.3.2 for Node.js - ReDoS
+ 
+Use CVE-2015-8855.
+
+
+
+> https://nodesecurity.io/advisories/34
+> 
+> serve-index package before 1.6.3 for Node.js - XSS
+
+Use CVE-2015-8856.
+
+ 
+
+> https://nodesecurity.io/advisories/37
+> 
+> syntax-error
+
+Use CVE-2014-7192 as described in the
+http://www.openwall.com/lists/oss-security/2014/09/30/10 post and the
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7192 page.
+
+
+
+> https://nodesecurity.io/advisories/39
+> 
+> uglify-js package before 2.4.24 for Node.js - non-boolean comparison mishandling
+
+Use CVE-2015-8857.
+
+ 
+
+> https://nodesecurity.io/advisories/41
+> 
+> validator package before 1.1.0 for Node.js
+
+XSS filter bypass - nested tags               Use CVE-2013-7451.
+
+XSS filter bypass - javascript: URIs          Use CVE-2013-7452.
+
+XSS filter bypass - UI redressing             Use CVE-2013-7453.
+
+XSS filter bypass - nested forbidden strings  Use CVE-2013-7454.
+ 
+
+
+> https://nodesecurity.io/advisories/43
+> 
+> validator package before 2.0.0 for Node.js - XSS filter bypass - hex encoding
+
+Use CVE-2014-9772.
+
+
+
+> https://nodesecurity.io/advisories/46
+> 
+> ms package before 0.7.0 for Node.js - ReDoS
+
+Use CVE-2015-8315.
+
+ 
+
+> https://nodesecurity.io/advisories/48
+> 
+> uglify-js package before 2.6.0 for Node.js - ReDoS
+
+Use CVE-2015-8858.
+
+ 
+
+> https://nodesecurity.io/advisories/55
+> 
+> moment package before 2.11.2 for Node.js - ReDoS
+
+Use CVE-2016-4055.
+
+ 
+
+> https://nodesecurity.io/advisories/56
+> 
+> send package before 0.11.1 for Node.js - path disclosure
+
+Use CVE-2015-8859.
+
+ 
+
+> https://nodesecurity.io/advisories/57
+> 
+> tar package before 2.0.0 for Node.js - symlink mishandling
+
+Use CVE-2015-8860.
+
+ 
+
+> https://nodesecurity.io/advisories/61
+> 
+> handlebars package before 4.0.0 for Node.js - injection
+
+Use CVE-2015-8861.
+ 
+
+
+> https://nodesecurity.io/advisories/62
+> 
+> mustache package before 2.2.1 for Node.js - injection
+
+Use CVE-2015-8862.
+
+ 
+
+> https://nodesecurity.io/advisories/76
+
+is-my-json-valid - Use CVE-2016-2537 - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-2537
+
+
+
+> https://nodesecurity.io/advisories/77
+
+hawk - Use CVE-2016-2515 - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-2515
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAllo3b8ACgkQRo8SLOgW
-IpWJPw//Y4hhEOfMCfUH8Ep/BGB0UFtMIu9vr1g8bAo5N0B6lby8nrTSZCEgwo9b
-eG8KcNmF6v5+ApfqgGhayDZMFW1vJMgeRPr8khAlCOT8NOoccWVFAkAIsTyJZVPt
-bAT0QUttdDOBda/aJcDDqazSE7X4A9AABUY/ytu00JFWCbkS5fFMBEMb8mj7lrc0
-/sBfe3jJ5qm9Wtg2crX33OQHLFy+zwWWaN2TVf91MI5XQxL+w/dirqGrpxqb+Xsa
-N1WVOGFoKuiqqG0iEDmHjUd4pv3SaRZb0mKikLVF7vX52psqF0wd7J8mJBXLdH1u
-MRxSzjrNe+2lquyR1ug7/XV058C5shMZqP40ZbsuGmjn++/kwcRJaV0hLdYos99i
-2t0+iBXesylrBNIIXwCOc1C+qg9QkGkZHPj18YKI2g7u6f8pZXYyYi3FBe+efDnf
-kkxg87/uuF13OSIWdkojhllvK+R5dORWb7/vXVoXULDR9gkR1wR7/b6qQ4vVtbct
-781T+Tbcs0O4ooTmyrZR432L2YQIQyO9KU9CD/yMuZ5rr1iZPbfIGjlws4VHUkkY
-lHonO3YrOPeZB0imVlorG5Jwi1qYZyh75iMo3XDubtA0bu7A0zyMN/wzbNQXiHhx
-BZyJ68M6Txk1bA/nfvE72HtImY9SxaIt4PwqmnYZQZqjSzCbSp8=
-=dXbq
+iQIcBAEBCAAGBQJXF/CmAAoJEHb/MwWLVhi2r8wQAJnfaenGkAtx0d5Qg+wS13tq
+zqbibEgI5QY8ICMFCDuP5i3QFwTuRdD/jkgV0YC01jGh1t9HOscJ+s1QII9TDgNU
+t0bxFL3Gkltk3hWEmH1GcwxEr3NHm6lxgmqBFcXIwS6ogZCRgNVpQ+rOkwf38pSH
+9EBKNb3neQFmKjW1Vw49EK4Lt+frM0YEp3tk9goD2X3sYaPg7e7gXuKUs5aPjCwx
+Ay3JKl0t9R3iGoVlxOoR6mrHlyrEg8dD+G/1Qw6OgacoaX3yYYyCWfYCCvskMDUH
+uVzcDNG3sWKzSGZaMYuyj4m0vjJpZeP2RONF1/3I0syf2uFS2LNkj4N9PwWNgFqR
+mckFrRplxFI9JiLPfGJG1Tk/6giysexVMbb1cd+cnQymnWhsCKBbmxnVwjOosb04
+xNjsmH8N9T30oQo+nAlSxB559s1bcYdFJwHDna1GzGYU1oQSTlQuirkyAbGlkAgo
+kp5MLwhXls+kHGdF81GAde3CgRAJe1UVfWsvFEIsc0LqUBFpB9FFhJ1oynBsuY8h
+sQZ/1k+TrFYyks3ga72vp0yGwZ9XrcfDE1roBzE7MRwKBGY6Ar5pTLGFih9ILoBs
+WWpLX53tExs9h7NXKjvydX3NB+r8ii8VjH9B7zzH/+YXHCjKuZranAHmLYOq710a
+TPB0PkU+Ig4KgWAgKRMb
+=K29F
 -----END PGP SIGNATURE-----
-
---eeu57hlz75t2ugyb--
