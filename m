@@ -1,42 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/19/8
-Message-ID: <20160219201103.GI9349@oevtugenva.nrevsny.pk>
-Date: Fri, 19 Feb 2016 15:11:03 -0500
-From: Rich Felker <dalias@...c.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Address Sanitizer local root
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/20/9
+Message-Id: <20160420154701.DBEEE42E05D@smtpvbsrv1.mitre.org>
+Date: Wed, 20 Apr 2016 11:47:01 -0400 (EDT)
+From: cve-assign@...re.org
+To: squid3@...enet.co.nz
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Squid HTTP Caching Proxy multiple issues
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 17, 2016 at 10:03:59PM -0500, Daniel Micay wrote:
-> On Wed, 2016-02-17 at 17:24 -0800, Konstantin Serebryany wrote:
-> > Sadly MPX is too slow, too memory-hungry, and does not protect from
-> > use-after-free at all.
-> 
-> MPX is definitely problematic (performance, memory usage, false
-> positives with some atomic data structures, false positives without
-> using it everywhere - essentially a new ABI) but I don't think the lack
-> of coverage for lifetime issues is a major issue.
-> 
-> The malloc implementation can do a good job at mitigating lifetime
-> issues though. It can't detect 100% of UAF issues, but it can force
-> usage of pointers to fault (via proper junk filling) and detect write
-> after free via a comparable quarantine technique + validating that the
-> junk data is unaltered when allocations leave the quarantine. It can be
-> just as good at detecting double-free.
-> 
-> See the follow-up email:
-> 
-> http://www.openwall.com/lists/oss-security/2016/02/18/3
-> 
-> It's extremely painful to actually debug the aborts and faults produced
-> from this kind of hardening, so it doesn't really displace ASan at all
-> even for the bits where it can be as reliable, and it doesn't cover the
-> read-after-free case in the same way.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-As long as the aborts/faults happen at the earliest point where the
-wrong program behavior can be detected, I see no way they are "more
-painful to debug" than having ASan or similar introspectively print
-crash info. Attaching a debugger should get you equally useful
-information.
+> http://www.squid-cache.org/Advisories/SQUID-2016_5.txt
+> 
+> A buffer overflow in the cachemgr.cgi tool reported by CESG (CESG REF:
+> 56397140 / VULNERABILITY ID: 394201) allows remote clients to perform an
+> indirect denial of service attack on the proxy administrator. It could
+> be used trivially to hide other activities from inspection. Or be used
+> to perform remote code execution on systems without overflow protection.
+> 
+> This bug was also independently reported by Yuriy M. Kaminskiy.
 
-Rich
+Use CVE-2016-4051.
+
+
+> http://www.squid-cache.org/Advisories/SQUID-2016_6.txt
+> 
+> Multiple on-stack buffer overflow from incorrect bounds calculation in
+> Squid ESI processing has been reported by CESG (CESG REF: 56284998 /
+> VULNERABILITY ID: 393536) which allows remote code execution or denial
+> of service if depending on the OS overflow protections which are active.
+
+Use CVE-2016-4052.
+
+
+> Further investigation has found that when compiler optimization is
+> applied incorrect use of assert() leads to information disclosure of
+> stack contents to remote clients
+
+Use CVE-2016-4053.
+
+
+> a second buffer overflow leads to
+> further remote code execution possibilities.
+
+Use CVE-2016-4054.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXF6OQAAoJEHb/MwWLVhi29fEP/ju9RKVTJw84FMDWFYFqKQ4S
+fZu5VoTRXPcpOUyjhBAVIJjDvFAB+5MxfGjIHxlmresgFtt5c7CnXaDQKHCZjxDr
+ytelqvMs3k0OX4yF/phpUXXFX/FhtNe80vQJ0LV5H80M43Fylx05DgAy7GA6jIyk
+9Cl3QSMFS/UOIGTMtL+k9k5AOn8A7W7cL2K6guUD8wihywJ6xw0mKkWDc8lXFzst
++6Yeq0cgyI9BIw0IM3CRMPCHfqIuxABb7q2ntfeYrFDVKj99jiihsHKpmCtyNhU/
+vNfDrzpjcegLcqiBHGNwnSNPhK8cBGAuvQv1+9aHhKLL1oLxOr7unq5y2DbOokdb
+ci7jSL20xN0N8SnuCOrzufsaxOiWlsj4qfgWpNC8Lk9x0mrm5EqVctIXHgNuhS/R
+8Yj9uVZMtfCcUmwFlHb9Th+1O3yyayJU0cmAx1xn29hlcOmnBRWckZR14wGpNZ/I
+vIEVvLn0m7OZNiCxcqDtdXdJNLpbWFGxF7DMKkhqxaMJaW+e1r6I1ato1kMmL9cV
+NZYcjB0Z4c+lAN1c24xMl6Q4SYKCnL/qJ1juBQmTL+4XNh4ZlHbQaELqR0s1eg4G
+NbrRhJnXeP8RPUyLQiQvZP4eNryMokBnmwR3NPGy8Xlnl4OKm0zAQTE5tXbs4B5f
+JmGdXJ3LnchNfMvi7NVn
+=/12O
+-----END PGP SIGNATURE-----
