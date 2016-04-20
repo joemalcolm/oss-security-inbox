@@ -1,13 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/09/1
-Message-Id: <E1adg1a-0007xe-Bb@rmm6prod02.runbox.com>
-Date: Wed, 09 Mar 2016 10:27:46 -0500 (EST)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-CC: "cve-editorial-board-list" <cve-editorial-board-list@...ts.mitre.org>
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/20/1
+Message-Id: <20160420024831.4B62452E008@smtpvbsrv1.mitre.org>
+Date: Tue, 19 Apr 2016 22:48:31 -0400 (EDT)
+From: cve-assign@...re.org
+To: vangheem@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Privilege escalation in webdav - Plone
 Content-Type: text/plain; charset=utf-8
 
-FYI, I'm going to try to make some contacts to see what's going on with CVEs and what can be done.  No guarantees, but thought folks might want to know.  I don't have anything to do directly with CVEs, but clearly a lot of people (including me) depend on them.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
---- David A. Wheeler
+> https://plone.org/security/20160419/privilege-escalation-in-webdav
+> 
+> An missing webdav security declaration would allow unauthorized webdav
+> access.
+> 
+> Dexterity content is missing security declarations for webdav
+> requests. This only affects dexterity objects.
+
+Use CVE-2016-4041.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXFu1jAAoJEHb/MwWLVhi2XhYP/iEuDLHpK0yAlUanQ84JR7Vo
+5zjA4X6t1QjROK85TZ0rrL/BsFPjIFFFlF3ZxrmmB9cdH4ivcmCHJdFyiH9jQtAZ
+rnbvoiHv9f1/6Uk+FV2JdPUBM52f8Kn7AwFoAvq7qG+PMmStrSdzWWgoTi0YUC6E
+KjbguUminpBefepZAYJ+Y5QWeE6gD++7SUsqIG5GUzcBnRjp0GYAGiRmHmJLq2tm
+4aXMMnTgjRiKvyhbT/uwy9DknVDTUS2UOqwLlqF5XnN/VdBLWU9um1yj9mwtMUPe
+b2Gcz/dKiw2DSTB5DyPHiXla53fbnP5e3vDj50SXRzm9aVy31EmXD7WYmqmU7dnu
+Lg4xULG/eFklNqu71xCJeNrXBHlyS3LkYmeSMbvAUfMBuQkwzNzjD3ZsQUnrN5uF
+Qn6GuZdR8CB0zxL0pEMlPhR966/FioAA3mULL/4nb9y6S06WJK3rLGyNibIYSpLz
+LpYOqAC0/Ypy6+hZw8V7f74MX1NFdK2CdwQImbznpQsBPSdVLS4Q+Y8zzXO+Jost
+8Lu103QwF2qnCgtg3zF5QZoe+Pc9E2UK68qwT6b7X69AFqKIFEHIMjU6r+pmm8D5
+301MleHJvUC0ENJP8m/qLrbcLv0GLri9CNIjDWLEMX8/YhJuzTSvuIQaDd49A4VH
+W5gNwEwkSEmqpjCZ/Rjw
+=vUyo
+-----END PGP SIGNATURE-----
