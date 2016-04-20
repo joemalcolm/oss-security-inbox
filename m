@@ -1,25 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/11/5
-Message-ID: <CAMYtjApOfw38CzUPTh0LCce7dnV6GCCcT5jw41WmSgEiGEg2Jg@mail.gmail.com>
-Date: Thu, 11 Feb 2016 20:51:35 +0100
-From: Pere Orga <pere@...a.cat>
-To: oss-security@...ts.openwall.com
-Cc: Drupal Security Team <security@...pal.org>
-Subject: CVE requests for Drupal contributed modules (2016-004, 2016-005)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/20/5
+Message-ID: <20160420091832.GA580@lorien.valinor.li>
+Date: Wed, 20 Apr 2016 11:18:32 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: CVE Request: perl: denial-of-service / Regexp-matching "hangs" indefinitely on illegal input using binmode :utf8 using 100%CPU
 Content-Type: text/plain; charset=utf-8
 
 Hi
 
-Please can I have CVE IDs assigned to the following vulnerabilities:
+A bug in perl can cause regular expressions an malformed UTF8 inputs
+to go into a forever loop and consume 100% CPU. The issue was found to
+drive a realworld web application into an infinite loop"
 
-Embedded Media Field - Access Bypass - DRUPAL-SA-CONTRIB-2016-004
-https://www.drupal.org/node/2666446
+The Upstream bugreport about this issue:
 
-CAS - Information Disclosure - DRUPAL-SA-CONTRIB-2016-005
-https://www.drupal.org/node/2666448
+https://rt.perl.org/Public/Bug/Display.html?id=123562
 
-Many thanks
+Upstream commit:
 
-Regards
--- 
-Pere Orga on behalf of the Drupal Security team
+http://perl5.git.perl.org/perl.git/commitdiff/22b433eff9a1ffa2454e18405a56650f07b385b5
+(which e.g. has been as well cherry-picked back to the maint-5.22
+branch).
+
+It as well was reported in Debian as:
+
+https://bugs.debian.org/821848
+
+Could you assign a CVE for this issue?
+
+Regards,
+Salvatore
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
