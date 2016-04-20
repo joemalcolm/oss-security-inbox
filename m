@@ -1,41 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/19/2
-Message-ID: <573D9824.9040607@cleal.org>
-Date: Thu, 19 May 2016 11:40:36 +0100
-From: Dominic Cleal <dominic@...al.org>
-To: oss-security@...ts.openwall.com
-Cc: foreman-security@...glegroups.com
-Subject: CVE-2016-3728: remote code execution in Foreman smart proxy TFTP API
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/20/7
+Message-Id: <20160420143548.A83166C05E8@smtpvmsrv1.mitre.org>
+Date: Wed, 20 Apr 2016 10:35:48 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: perl: denial-of-service / Regexp-matching "hangs" indefinitely on illegal input using binmode :utf8 using 100%CPU
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-3728: remote code execution in Foreman smart proxy TFTP API
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The Foreman smart proxy TFTP API is vulnerable to arbitrary remote code
-execution, as it passes untrusted user input (the PXE template type) to
-the eval() function causing it to be executed.
+> A bug in perl can cause regular expressions an malformed UTF8 inputs
+> to go into a forever loop and consume 100% CPU. The issue was found to
+> drive a realworld web application into an infinite loop
+> 
+> https://rt.perl.org/Public/Bug/Display.html?id=123562
+> http://perl5.git.perl.org/perl.git/commit/22b433eff9a1ffa2454e18405a56650f07b385b5
+> https://bugs.debian.org/821848
 
-Thanks to Lukas Zapletal for reporting the issue to foreman-security.
+Use CVE-2015-8853 for all of 22b433eff9a1ffa2454e18405a56650f07b385b5.
+We do not feel that there is enough information to pursue an
+interpretation of "I did this also in the similar areas of regexec.c"
+as requiring a separate CVE.
 
-Mitigation: ensure trusted_hosts is set in
-/etc/foreman-proxy/settings.yml, HTTPS is in use and
-/etc/foreman-proxy/settings.d/tftp.yml is configured for https only (if
-enabled).
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Affects Foreman 0.2 and higher
-Fix released in Foreman 1.11.2, and due for 1.10.4
-
-Patch:
-https://github.com/theforeman/smart-proxy/commit/eef532aa668d656b9d61d9c6edf7c2505f3f43c7
-
-More information:
-http://theforeman.org/security.html#2016-3728
-http://projects.theforeman.org/issues/14931
-http://theforeman.org
-
--- 
-Dominic Cleal
-dominic@...al.org
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
+iQIcBAEBCAAGBQJXF5K9AAoJEHb/MwWLVhi2imAQAK01mTbjuVOPJ6g2APUntKXR
+80XiAZQBnqCUO4Khnt399G1dyUgI4GrY0CzBvh34b6ecx37NP+OgZBsT+Jh+xQuA
+EiiTiKb7foU7bf1R+b6aofyOiI0+ofG8i9i6fR/fSBcp93XHOTrWItc9H+W0Suiq
+AjUUMOpr71daYsNmRq4rqscXI2TfSHHgzJ5rrEeO0/v3wru4RffxXfbNEIcR5soL
+APjr/2AIWczHtZFKDeLZa0tGngrSrbN6Cx1psCw1zJ0ivAg5OX9l5dxHZMkI4nFt
+Mn2fOHh5jMh5UIjaroxAxwTP9baN/Wh4HdROirSJrErM4k5LJzjjIJwaG3rE9mfr
+9szFq+7zBjt7SlJEAOKiQrRNXYC1NM2SrKp3TXPI6KtREumuty0rH2kvv3xaoCut
+Ne5aNxGnVni3zxUgul0UW/Z8+ObsGoM8HhiKPy2CU7lmllWIXVmRcNAzQaPrX1D4
+owSBk2y1vgCkZ325BMgphUi82nFlqMMB+lb35KYbznhfPXwg0aSd7//9sIx3yYsJ
+BmMMDZ/c5gkyXve3HHzgijMroJZnazTocvqXE9o8Y9eM4R/uOCuEa3c4KxkHuPgu
+FKyWGbMZI8V0SlvMhhtXX3q+z77lTistWg0F1JA+eiIeBvBt3ZNFnuHpGUlasNZ3
+KKhEY+5zhUgRcbGgYQn+
+=/FX1
+-----END PGP SIGNATURE-----
