@@ -1,73 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/29/2
-Message-ID: <CAMXuLLrTpVCtAD+MeHRrxtweRM2TDLY0WhDN4VzhK73Goc7a3g@mail.gmail.com>
-Date: Tue, 29 Nov 2016 04:07:25 +0000
-From: Zhe Zhang <zhz@...che.org>
-To: Yongjun Zhang <yjzhangal@...che.org>, security@...che.org,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  general@...oop.apache.org
-Subject: Re: CVE-2016-5393: Apache Hadoop Privilege escalation vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/20/8
+Message-ID: <57179A2C.5030007@cleal.org>
+Date: Wed, 20 Apr 2016 16:03:08 +0100
+From: Dominic Cleal <dominic@...al.org>
+To: oss-security@...ts.openwall.com
+Cc: foreman-security@...glegroups.com
+Subject: CVE-2016-3693: Foreman application information leakage through templates
 Content-Type: text/plain; charset=utf-8
 
-Thanks for the note Yongjun! Does HADOOP-13434
-<https://issues.apache.org/jira/browse/HADOOP-13434> fix the problem?
+CVE-2016-3693: Foreman application information leakage through template
+rendering
 
-On Mon, Nov 28, 2016 at 4:04 PM Yongjun Zhang <yjzhangal@...che.org> wrote:
+A provisioning template containing `inspect` will expose sensitive
+information about the Rails controller and application when rendered
+when using Safemode rendering (the default setting). This includes the
+application secret token, possibly permitting a privilege escalation
+when the app is using signed cookies.
 
-> Hi,
->
-> Please see below the official announcement of a critical security
-> vulnerability that's discovered and subsequently fixed in Apache Hadoop
-> releases.
->
-> Thanks and best regards,
->
-> --Yongjun
->
-> ----------
->
-> CVE-2016-5393: Apache Hadoop Privilege escalation vulnerability
->
-> Severity: Critical
->
->
->
-> Vendor:
->
-> The Apache Software Foundation
->
->
->
-> Versions Affected:
->
-> Hadoop 2.6.x, 2.7.x
->
->
->
-> Description:
->
-> A remote user who can authenticate with the HDFS NameNode can possibly run
-> arbitrary commands as the hdfs user.
->
->
->
-> Mitigation:
->
-> 2.7.x users should upgrade to 2.7.3
->
-> 2.6.x users should upgrade to 2.6.5
->
->
->
-> Impact:
->
-> A remote user who can authenticate with the HDFS NameNode can possibly run
-> arbitrary commands with the same privileges as HDFS service.
->
->
->
-> Credit:
->
-> This issue was discovered by Freddie Rice.
->
-> ----------
->
+Thanks to Ivan Necas for reporting the issue.
 
+As a precaution, the security token may be regenerated with:
+
+  chown foreman /usr/share/foreman/config/initializers/local_secret_token.rb
+  foreman-rake security:generate_token
+  chown root /usr/share/foreman/config/initializers/local_secret_token.rb
+
+Mitigation: remove edit_provisioning_templates from untrusted users.
+
+Affects all known Foreman versions
+Fix released in Foreman 1.11.1 and safemode 1.2.4
+
+Patches:
+1. The safemode gem (https://rubygems.org/gems/safemode) was patched to
+disallow the inspect instance method:
+https://github.com/svenfuchs/safemode/commit/0f764a1720a3a68fd2842e21377c8bfad6d7126f
+2. Foreman was patched to use this in
+https://github.com/theforeman/foreman/commit/82f9b93c54f72c5814df6bab7fad057eab65b2f2
+
+More information:
+http://theforeman.org/security.html#2016-3693
+http://projects.theforeman.org/issues/14635
+http://theforeman.org/
+
+-- 
+Dominic Cleal
+dominic@...al.org
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
