@@ -1,50 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/05/3
-Message-Id: <20160105013047.A350C36E0DE@smtpvbsrv1.mitre.org>
-Date: Mon,  4 Jan 2016 20:30:47 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/20/3
+Message-Id: <20160420025113.512A752E005@smtpvbsrv1.mitre.org>
+Date: Tue, 19 Apr 2016 22:51:13 -0400 (EDT)
 From: cve-assign@...re.org
-To: ml@...ippo.io
+To: vangheem@...il.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: python-rsa signature forgery
+Subject: Re: CVE Request: Bypass Restricted Python - Plone
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> please assign a CVE to this signature forgery vulnerability in
-> python-rsa. It allows an attacker to fake signatures for arbitrary
-> messages for any key with low exponent "e" (like the common 3).
+> https://plone.org/security/20160419/bypass-restricted-python
 > 
-> https://blog.filippo.io/bleichenbacher-06-signature-forgery-in-python-rsa/
-> https://bitbucket.org/sybren/python-rsa/pull-requests/14/security-fix-bb06-attack-in-verify-by/diff
+> A user who can create or edit templates(usually only admins) can
+> bypass Restricted Python.
+> 
+> This vulnerability should only affect site administrators who have ZMI
+> access, or when you gave users permission to edit PloneFormGen
+> templates. Only Chameleon (five.pt) is affected. This package is used
+> by default in Plone 5, and can be added in Plone 4.
 
->> The python-rsa bug is not a vanilla BB'06, because the hash is
->> compared to all the data following the ASN.1 blob, but a simple
->> variant.
-
->>> Fix BB'06 attack in verify() by switching from parsing to comparison
-
-Use CVE-2016-1494.
+Use CVE-2016-4043.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWixxfAAoJEL54rhJi8gl5dXQP/3nTIh9mmGj+pMQ4S6RNwovk
-6M4IUz0RtOSf9W0BlqlCxtKrzC6E/aoYVUVnJARxKQupWbQBFrXBnwDk6/Rlfbgu
-25wyJ49aXDFHde96VBgjdGok2XJJHqm3Q/vlHJZcISA1KOos1ioOYHUHea9VIh6k
-KEc/dfnpObnnBgPMWZbQPk7WaJZj3QJHJYr/pzttUIBfbf6sHV5JuPje8Bz93ege
-g4MoHe7GdWPIMHwQYDjrgoG7FHowkArd3bcVskXUYrnFMwpCiSbmm/GfFzxy0bIL
-XtrQnnW+/qDzkBl++GaUkVdbS2l79LfMPbjjdmlm40Sef7T54M2fpM/f3AINcAzh
-dGt8+tJwUmtuUP7foseimKC7mJyH44DJK7Ydu40AYGZIQ/xMxniBA8hZaUeeLmP1
-xxuyK6LdwI4pzMSQBxs75IpnH38bGXpxdkLZmAgjjNfI17wC8t0fA7s/0evocxPJ
-Apw+aYqcwb3a41aZFhE2HkWZzvWFpxqf8G/LvDgaEck9aImahIHvL5m7pft0GBwj
-tR/q+LWPFhZrEXPxErn1zoPGZlNu8btOgWls2BaRX7ZA6Hd2fMEg3+XZ1LMqTolf
-5W9e8iycj8/xApHzN05XRj761keCkSEwuxKQGKvrvgV12YgICP8fY12Yi1gxv0fh
-Ks2yXevb3Odkh4wZBKdd
-=FYyY
+iQIcBAEBCAAGBQJXFu1xAAoJEHb/MwWLVhi2I9cP/0SBPz78iiLQw+BDo5O/Veu7
+uKDU4AWcY7G4BXvLpC8aOaTDN19o5RlAp/8cXgZBZ0e0jL4wxqDlakmn5enqDVlB
+FAMzNppGCKPbP7mMhjhp0Y09oqkEBDpcK8VTiYoLCEP8EkyBRVyL2GnM1Y2nRrXj
+RDg/lxskoIE9MnExPAMGzpzWzuQk5GVDSz0hh39IxgQhx0/7rhKSxhN6RT5GdrAx
+Uafip+Vb/ezJKe/TvSr9IDKJ3SZjKVa7nFqlsQaTTIve3MZ81H/4zCbn0X+V6MX6
+USLbOut1LywohvVLmegO/uf8w3arT+szDYThljp0HpraGHQDt/YRaYl4D3BjVcb0
+Q4xhaIWGTPnV5Axoh2yj2RVl6Yx8+sDMQvT6HANcpEU0wcPNvbouTu8EY0mAxToI
+g33vyCkidscrt3PFQuUVbfbxIqclncqKNtf9i7+0jCYQZEIbR7V44rqWwMVCJ1VZ
+a2UunPe0h2COZ0m7WifM2b82i8ox87l7qcw3CppysKOS20i1h4L8KkW2qkdcQJCm
+jng9DWicSo95sxjUBXajYvKHBCALHXqSiKiKq6Vu+vX+y79JW6lb3HRxJzpjhMg2
+imD3xLmh9jCmBiIKqm3oj/tweMlAX1b8llz7AUbkLu3TepzsGhTHNx+QngAg80Bh
+zlAz4kl1XvkyBWijKrEb
+=P6qe
 -----END PGP SIGNATURE-----
