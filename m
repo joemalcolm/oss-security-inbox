@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6421" "Sunday" "17" "July" "2016" "11:30:08" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160717153008.3C3C16C10F9@smtpvmsrv1.mitre.org>" "168" "[oss-security] Re: Multiple Bugs in OpenBSD Kernel" nil nil nil "7" "2016071715:30:08" "[oss-security] Re: Multiple Bugs in OpenBSD Kernel" (number mark "U       cve-assign@m Jul 17  168/6421  " thread-indent "\"[oss-security] Re: Multiple Bugs in OpenBSD Kernel\"\n") "<35D91F81-1E00-4305-8DED-848D88C8CD58@nccgroup.trust>" ("<35D91F81-1E00-4305-8DED-848D88C8CD58@nccgroup.trust>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1340" "Tuesday" "19" "April" "2016" "22:49:49" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160420024949.BD5C552E005@smtpvbsrv1.mitre.org>" "35" "[oss-security] Re: CVE Request: Unauthorized disclosure of site content - Plone" nil nil nil "4" "2016042002:49:49" "[oss-security] Re: CVE Request: Unauthorized disclosure of site content - Plone" (number mark "U       cve-assign@m Apr 19   35/1340  " thread-indent "\"[oss-security] Re: CVE Request: Unauthorized disclosure of site content - Plone\"\n") "<CAL8hw9EXLQs7QVJvR5NzeOHC0C3fWqoPptKJnvLerKmToOLrqQ@mail.gmail.com>" ("<CAL8hw9EXLQs7QVJvR5NzeOHC0C3fWqoPptKJnvLerKmToOLrqQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15884 invoked by uid 550); 17 Jul 2016 15:30:31 -0000
+Received: (qmail 15413 invoked by uid 550); 20 Apr 2016 02:50:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,160 +12,27 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15834 invoked from network); 17 Jul 2016 15:30:20 -0000
+Received: (qmail 14332 invoked from network); 20 Apr 2016 02:50:01 -0000
 From: cve-assign@mitre.org
-To: Jesse.Hertz@nccgroup.trust
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, na-disclosure@nccgroup.trust
-In-Reply-To: <35D91F81-1E00-4305-8DED-848D88C8CD58@nccgroup.trust>
-Message-Id: <20160717153008.3C3C16C10F9@smtpvmsrv1.mitre.org>
-Date: Sun, 17 Jul 2016 11:30:08 -0400 (EDT)
-Subject: [oss-security] Re: Multiple Bugs in OpenBSD Kernel
+To: vangheem@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAL8hw9EXLQs7QVJvR5NzeOHC0C3fWqoPptKJnvLerKmToOLrqQ@mail.gmail.com>
+Message-Id: <20160420024949.BD5C552E005@smtpvbsrv1.mitre.org>
+Date: Tue, 19 Apr 2016 22:49:49 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: Unauthorized disclosure of site content - Plone
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> mmap_panic: Malicious calls to mmap() can trigger an allocation panic
-> or trigger memory corruption.
+> https://plone.org/security/20160419/unauthorized-disclosure-of-site-content
+> 
+> A vulnerability that allows attackers to gain information about
+> unpublished site content.
+> 
+> An attacker can potentially gain information on the ID of private
+> content on your site.
 
-> http://seclists.org/oss-sec/2016/q3/att-68/mmap_panic_c.bin
-
->> When a user provides the __MAP_NOFAULT flag to mmap, the
->> kernel calls amap_alloc() which calls malloc() with a size derived 
->> from the user-passed size. This is called through
->> sys_mmap(), uvm_mmapfile() and uvm_map() without ever
->> validating the user-provided size. This can result in a panic
->> in malloc. For example when requesting a mapping of
->> 0x222.1111.0000 bytes, amap_alloc() will compute that it needs
->> 0x2221.1110 slots and amap_alloc1() will compute that it needs
->> 0x2221.1200 total slots and will call malloc() to allocate
->> 0x2.2211.2000 bytes resulting in a panic of
->> "panic: malloc: allocation too large, type = 98, size = 9161482240".
-
-Use CVE-2016-6239 for this general "too large" issue.
-
-
->> Besides causing a panic, the amap_alloc() code can also miscalculate 
->> the allocation size which would cause an undersized allocation in 
->> amap_alloc1(). This could lead to memory corruption later. There are 
->> two causes.
-
->> First amap_alloc() computes slots from a size_t size into
->> an integer slots variable:
->> If the original size is larger 0x1000.0000.0000 or larger it will
->> result in a truncated value of slots, resulting in an undersized amap.
-
-Use CVE-2016-6240 for this first "miscalculate" issue.
-
-
->> The second problem arises in amap_alloc1():
->> The number of slots is rounded up so that the slot entries fill
->> full pages. This rounding up happens in the integer "totalslots"
->> variable, and can overflow the original "slots" value. This
->> can happen when requesting an allocation of size 0xfff.ffff.0000,
->> for example. In this case amap_alloc() computes that
->> 0xffff.fff0 slots are needed and amap_alloc1() computes
->> that zero totalslots are needed, and allocates an amap of zero
->> bytes. If the amap->am_slots, amap->am_bckptr or amap->am_anon
->> fields are later accessed, it can lead to out-of-memory
->> reads and writes on the kernel allocation heap.
-
-Use CVE-2016-6241 for this second "miscalculate" issue.
-
-
-> kevent_panic: Any user can panic the kernel with the kevent system
-> call.
-
-> http://seclists.org/oss-sec/2016/q3/att-68/kevent_panic_c.bin
-
->> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/kern/kern_event.c.diff?r1=1.72&r2=1.73
->> 
->> If the original ident value is overly large, the value of "size" will
->> be correspondingly large, and can trigger an assertion in mallocarray().
->> This can be abused by any user to cause a kernel panic.
-
-Use CVE-2016-6242.
-
-
-> thrsleep_panic: Any user can panic the kernel with the __thrsleep
-> system call.
-
-> http://seclists.org/oss-sec/2016/q3/att-68/thrsleep_panic_c.bin
-
->> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/kern/kern_synch.c?rev=1.132&content-type=text/x-cvsweb-markup
->> 
->>         if (timespeccmp(tsp, &now, <))
->>         ...
->>         if (to_ticks > INT_MAX)
->>             to_ticks = INT_MAX;
->> 
->> This validation is insufficient. Some values of the user-provided
->> tsp can be in the future and still lead to a negative to_ticks value
->> after conversion. This condition triggers a panic in timeout_add 
-
-Use CVE-2016-6243.
-
-
-> thrsigdivert_panic: Any user can panic the kernel with the
-> __thrsigdivert system call.
-
-> http://seclists.org/oss-sec/2016/q3/att-68/thrsigdivert_panic_c.bin
-
->>         if (ts.tv_nsec < 0 || ts.tv_nsec >= 1000000000)
->>             timeinvalid = 1;
->>         ...
->>             if (to_ticks > INT_MAX)
->>                 to_ticks = INT_MAX;
->> 
->> 
->> This validation is insufficient. Some values of the user-provided
->> ts can lead to a negative to_ticks value after conversion. This 
->> condition triggers a panic in timeout_add
-
-Use CVE-2016-6244.
-
-
-> ufs_getdents_panic: Any user can panic the kernel with the getdents
-> system call.
-
-> http://seclists.org/oss-sec/2016/q3/att-68/ufs_getdents_panic_c.bin
-
->> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/ufs/ufs/ufs_vnops.c.diff?r1=1.128&r2=1.129
->> 
->> By providing an overly
->> large size, a caller can trigger a panic in the kernel
->> of "malloc: allocation too large" or "out of space in kmem_map".
-
-Use CVE-2016-6245.
-
-
-> mount_panic: Root users, or users on systems with kern.usermount set
-> to true, can trigger a kernel panic when mounting a tmpfs filesystem.
-
-> http://seclists.org/oss-sec/2016/q3/att-68/mount_panic_c.bin
-
->> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/tmpfs/tmpfs_vfsops.c.diff?r1=1.8&r2=1.9
->> 
->> The tmpfs filesystem allows the mounting user to specify a
->> username, a groupname or a device name for the root node of
->> the filesystem. A user that specifies a value of VNOVAL for
->> any of these fields will trigger an assert in tmpfs_alloc_node
-
-Use CVE-2016-6246.
-
-
-> unmount_panic: Root users, or users on systems with kern.usermount set
-> to true, can trigger a kernel panic when unmounting a filesystem.
-
-> http://seclists.org/oss-sec/2016/q3/att-68/unmount_panic_c.bin
-
->> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/kern/vfs_syscalls.c.diff?r1=1.261&r2=1.262
->> 
->> When the unmount system call is called with the MNT_DOOMED flag
->> set, it does not sync vnodes. This can lead to a condition where
->> there is still a vnode on the mnt_vnodelist, which triggers a
->> panic in dounmount
-
-Use CVE-2016-6247.
+Use CVE-2016-4042.
 
 - -- 
 CVE Assignment Team
@@ -175,17 +42,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXi6P4AAoJEHb/MwWLVhi2mOEP/08xXUSqCwZYw3SIDVtaR0Uz
-UJuvIKakjyuG0IBHUfOuZO1pdw15fj64UwuVF3vR4PAsMVYDp2N8iCSUa1OUHQ3Z
-qXQBqKsnunzk9Vz11Qkehju+rBJf10W0DxWW65MONwjWOKnzMghPCx0NRGGo/iP8
-usKpb2kOy9BIH1hGKl+MxUlKVf6x2sMoXLvaEab9TTY45MUB9iPmQ8sfrZokPu9D
-PCG2zq9/cZ8wnNdMU7kyfsjUMV8glPl4gw1NLehnuxyjD+qLAWkzL6CCPR441v8N
-9J+LCylCnaO/ucJghDnf7U2LkDioevPDSeRpR+SmGSO/2hha7P1mdvApuYHjUxso
-Tg5Ii17EwaVlGsWQr1Hmd8WeQmRb23N5PmpEATBdWi/kUTImEIBJ0JvrfNhIwEEs
-JD3BSrBGHvQtFAnAQtBsB2TgNGHveqhCMxKHeDvuJojnKRpdElwI2WlflKJ08Z4T
-LZcrMrmMSlbFHwgO7aG6XikTtu7mvjSoiAn0Qd9iKod4b1V55WnjzIf0sWFrZtg/
-WCi/i07pG+AxlV9AFJdP9WnjAVd/BCehAWt6K7gPsP1IN/xrK53X2b7H+KA46zEB
-F3ADwW8W3gPz7bsQDAf7R6kY6CHYFk2lSFOf4tXCLRi4qoyoqiJNr6zv5odSm/0w
-eNbK0SxfchFOCL0QvP/D
-=gRCL
+iQIcBAEBCAAGBQJXFu1pAAoJEHb/MwWLVhi2HUkP/jrs9EmPDg54irKy/PN2xoPc
+NccPVhxLw7geSyKwWmPcC1Wu6NtfJg/sk5qYjAlOX8yw2FyxRWMKa/KF6xlN43iy
+U5YqDScWr9tA0m9gd4PQnQqQGf/U6gOsRNjR2KHF073gMrunqsuWm4T0T2ZqjnbK
+B5Nn+iAKPmKu2Zj35gIJq9hcarHCP47Z3vCBm5DIslADU2+pbaJxP+tDzgDGIEmr
+m7rwqnro0rj5ZT/Do7Ovbm6ePCisZepN89UyR35YRuj1jO9At5CjEKe630Dy2EXA
+8zCmggs7SMClQgqrQExXJnXcEGDTcBJ+L50TjeT/3mfN2WY6R6ZBnmtudov3qa6U
+1VO67EHiebeJJUbQGrUMUO+QrKqe9KKrfL84Pbr4Kzc5O2aTSLmzJztFhdhnIdgu
+eDfOUK9EIJDVpbpul8Fm8d25H+qSc3PR9Nis8Tnqjw9+fKcACLkBclzbcfh4KLja
+3QR8xNE4Rfm+L9FdtVbCPVmAmBpE/DTr7H9retKiB87VcrchYlQLSQVHC6ncH48F
+CBi822SOEr/QVajvNaM0Rh2tNqeMP2jbu+LfR7HKK3KZRLB6zqfUDGpaKWxgCbX4
+pR9Z2Qxh4w4YY+C7I5AI9fFbVbm0KIzt5iWOwUhVNI8f9unVH7xa5nb8FWGTyp6x
+PldQHDZ2MPbq+TyWtFTI
+=pRwJ
 -----END PGP SIGNATURE-----
