@@ -1,51 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/12/4
-Message-ID: <20160912103527.GA3003@openwall.com>
-Date: Mon, 12 Sep 2016 12:35:27 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-6662 - MySQL Remote Root Code Execution / Privilege Escalation ( 0day )
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/21/3
+Message-ID: <57188B6D.7050401@sysdream.com>
+Date: Thu, 21 Apr 2016 09:12:29 +0100
+From: Sysdream Labs <labs@...dream.com>
+To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
+Subject: Wordpress iThemes Security (Better WP Security) Insecure Backup/Logfile Generation (predicatable filename)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 12, 2016 at 06:09:10AM -0300, Dawid Golunski wrote:
-> Vulnerability: MySQL Remote Root Code Execution / Privilege Escalation 0day
-> CVE: CVE-2016-6662
-> Severity: Critical
-> Affected MySQL versions (including the latest):
-> <= 5.7.15
-> <= 5.6.33
-> <= 5.5.52
+Wordpress iThemes Security (Better WP Security) Insecure Backup/Logfile Generation (predicatable filename)
+==========================================================================================================
 
-> http://legalhackers.com/advisories/MySQL-Exploit-Remote-Root-Code-Execution-Privesc-CVE-2016-6662.html
 
-Thank you for posting this.  For archival, and to comply with
-oss-security content guidelines, I am attaching a text/plain version of
-the above advisory (which includes a lot of detail not in your posting).
+Description
+===========
 
-Also, to add detail on the disclosure timeline: Dawid brought this to
-the distros list yesterday (Sunday).
+When using the "database backup/logging on filesystem" feature, iThemes security generates a weak filename allowing attackers to obtain the backup/log file if they know when the backup/log file was generated (timestamp).
 
-As I had pointed out in a reply on distros, it is not entirely clear
-what exact issue the CVE-2016-6662 identifier is for.  The advisory
-talks about multiple sysadmin practices, packaging issues, dangerous
-features of MySQL, and finally of safe_mysqld including the data
-directory in its search path for my.cnf.  I guess it would be most
-reasonable to have the CVE ID refer only to the latter aspect, but
-confirmation/clarification is needed.  As it is, it's unclear from the
-advisory what exact "vulnerabilities were patched by PerconaDB and
-MariaDB vendors" (the advisory says so), and it is unclear what Oracle
-and distros "fixing" CVE-2016-6662 would mean.
+**Access Vector**: remote
 
-Also, in this paragraph I guess the advisory wanted to refer to the
-upcoming CVE-2016-6663 (I have no idea what that issue is, beyond what
-the advisory says), like it does in a few other places:
+**Security Risk**: medium
 
-"It is worth to note that attackers could use one of the other vulnerabilities discovered
-by the author of this advisory which has been assigned a CVEID of CVE-2016-6662 and is
-pending disclosure. The undisclosed vulnerability makes it easy for certain attackers to
-create /var/lib/mysql/my.cnf file with arbitrary contents without the FILE privilege
-requirement."
+**Vulnerability**: CWE-330
 
-Alexander
+**CVSS Base Score**: 7.5
 
-View attachment "MySQL-Exploit-Remote-Root-Code-Execution-Privesc-CVE-2016-6662.txt" of type "text/plain" (35918 bytes)
+
+---------------
+Vulnerable code
+---------------
+
+The vulnerable code is located at core/modules/backup/class-itsec-backup.php, line 244 :
+
+        $file = 'backup-' . substr( sanitize_title( get_bloginfo( 'name' ) ), 0, 20 ) . '-' . $current_time . '-' . ITSEC_Lib::get_random( mt_rand( 5, 10 ) );
+
+In core/class-itsec-logger.php, line  :
+
+        $itsec_globals['settings']['log_info'] = substr( sanitize_title( get_bloginfo( 'name' ) ), 0, 20 ) . '-' . ITSEC_Lib::get_random( mt_rand( 0, 10 ) );
+
+
+In core/class-itsec-lib.php, function get_random, line 415:
+
+        public static function get_random( $length, $base32 = false, $special_chars = false ) {
+
+                if ( true === $base32 ) {
+
+                        $string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+
+                } else {
+
+                        $string = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+                        if ( true === $special_chars ) {
+
+                                $string .= '_)(*&^%$#@!~`:;<>,.?/{}[]|';
+
+                        }
+
+                }
+
+                return substr( str_shuffle( $string ), mt_rand( 0, strlen( $string ) - $length ), $length );
+
+        }
+
+
+The str_shuffle should *never* be used for generating secure strings as it uses the PHP rand() function and just shuffles the characters' position.
+
+--------
+Solution
+--------
+
+Make sure to generate non-predictable strings, using cryptographically secure generators. 
+Update iThemes Security to version >= 5.3.1
+
+Affected versions
+=================
+
+* iThemes Security <= 5.3.0
+
+Timeline (dd/mm/yyyy)
+=====================
+
+* 26/02/2016 : Initial contact with iThemes.
+* 26/02/2016 : iThemes confirms the vulnerabilities.
+* 29/02/2016 : iThemes publishes a new version (5.3.1) of iThemes Security that fixes the vulnerabilities.
+
+Credits
+=======
+
+* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
+
+
+
+-- 
+SYSDREAM Labs <labs@...dream.com>
+
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
+
+* Website: https://sysdream.com/
+* Twitter: @sysdream
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
