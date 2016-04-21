@@ -1,115 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/2
-Message-Id: <20160307020338.CD55A6C0709@smtpvmsrv1.mitre.org>
-Date: Sun,  6 Mar 2016 21:03:38 -0500 (EST)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/21/7
+Message-ID: <20160421174220.GA19359@eldamar.local>
+Date: Thu, 21 Apr 2016 19:42:20 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Access to /dev/pts devices via pt_chown and user namespaces
+Cc: security@....net, Lior Kaplan <kaplan@...ian.org>, Ondřej Surý <ondrej@...ian.org>
+Subject: Re: CVE request: PHP issues fixed in 7.0.5, 5.6.20 and 5.5.34 releases
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> http://www.halfdog.net/Security/2015/PtChownArbitraryPtsAccessViaUserNamespace/
-
-> http://www.openwall.com/lists/oss-security/2016/02/23/3
-
-> ... condition can be easily created by creating an user namespace,
-> mounting devpts with the newinstance option, create master and slave
-> pts pairs until the number overlaps with a target pts outside the
-> namespace on the host, where there is interest to gain ownership and
-> then invoke pt_chown.
+On Mon, Apr 11, 2016 at 09:41:41PM +0200, Matthias Geerdsen wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
 > 
-> ... intercept all keystrokes and display faked output from
-> commands never really executed.
+> Hi,
+> 
+> could you please provide CVE IDs for the following PHP issues fixed in
+> the latest releases, as I have not yet seen any IDs yet:
+> 
+> - -  Buffer over-write in finfo_open with malformed magic file
+> https://bugs.php.net/bug.php?id=71527
+> http://bugs.gw.com/view.php?id=522
+> 
+> - - Integer overflow in php_raw_url_encode
+> https://bugs.php.net/bug.php?id=71798
+> https://git.php.net/?p=php-src.git;a=commit;h=95433e8e339dbb6b5d5541473c
+> 1661db6ba2c451
+> 
+> 
+> - - php_snmp_error() Format String Vulnerability
+> https://bugs.php.net/bug.php?id=71704
+> https://git.php.net/?p=php-src.git;a=commit;h=6e25966544fb1d2f3d7596e060
+> ce9c9269bbdcf8
+> 
+> 
+> - - Invalid memory write in phar on filename containing \0 inside name
+> https://bugs.php.net/bug.php?id=71860
+> https://gist.github.com/smalyshev/80b5c2909832872f2ba2
+> 
+> 
+> - - AddressSanitizer: negative-size-param (-1) in mbfl_strcut
+> https://bugs.php.net/bug.php?id=71906
+> https://gist.github.com/smalyshev/d8355c96a657cc5dba70
 
+Can CVE identiers be assigned for those?
 
->> http://www.openwall.com/lists/oss-security/2016/02/23/7
+The recent Ubuntu USN 2952-1 as well fixed some other issues without
+CVE identifers, cf. http://www.ubuntu.com/usn/usn-2952-1/
 
->> glibc documentation clearly states that "the use of pt_chown introduces
->> additional security risks to the system and you should enable it only
->> if you understand and accept those risks":
->> https://www.gnu.org/software/libc/manual/html_node/Configuring-and-compiling.html#index-grantpt-1
+Regards,
+Salvatore
 
-
->>> http://www.openwall.com/lists/oss-security/2016/02/24/5
-
->>> So for pt_chown, this could hopefully be
->>> just an Ubuntu issue. Should we assign an CVE for that?
-
->>>> http://www.openwall.com/lists/oss-security/2016/02/24/10
->>>> And Debian 8
-
-We think this is currently the best option. Use CVE-2016-2856. This
-CVE is about the specific pt_chown finding in the
-PtChownArbitraryPtsAccessViaUserNamespace document. Also, we do not
-want this to be considered an upstream glibc vulnerability.
-
-(In addition, this CVE is not about whether the pt_chown program
-should exist at all, or about whether all users should be able to
-create user namespaces. Each of those is an important security topic,
-but the importance is a consequence of multiple issues that could be
-associated with multiple CVEs.)
-
-The initial CVE-2016-2856 description might look roughly like:
-
-   pt_chown in the glibc package before 2.19-18+deb8u4 on Debian
-   jessie lacks a namespace check associated with file-descriptor
-   passing, which allows local users to capture keystrokes and spoof
-   data, and possibly gain privileges, via pts read and write
-   operations, related to debian/sysdeps/linux.mk. NOTE: this is not
-   considered a vulnerability in the upstream GNU C Library because
-   the upstream documentation has a clear security recommendation
-   against the --enable-pt_chown option.
-
-See the
-http://anonscm.debian.org/cgit/pkg-glibc/glibc.git/commit/?h=jessie&id=09f7764882a81e13e7b5d87d715412283a6ce403
-and
-http://anonscm.debian.org/cgit/pkg-glibc/glibc.git/commit/?h=jessie&id=11475c083282c1582c4dd72eecfcb2b7d308c958
-commits. Here, Debian jessie is just an example; a similar statement
-might be made about Ubuntu Wily Werewolf, etc. The
-09f7764882a81e13e7b5d87d715412283a6ce403 commit can be associated with
-(at least) two CVE IDs that motivated the change: CVE-2013-2207 (which
-is directly mentioned there) and the new CVE-2016-2856.
-
-
->>> On the other hand, the TIOCGPTN ioctl still is problematic with
->>> USERNS, also for other tools. I just started with pt_chown for
->>> demonstration because it is SUID, perhaps there are other programs
->>> using this ioctl.
->>> 
->>> Should information about this risk/attack method just be added to the
->>> kernel docs/man-page of TIOCGPTN or is it a separate vulnerability
->>> with need for addressing (another CVE?).
-
-We don't feel that enough information has been sent to reach a
-conclusion about whether the "kernel should prevent the TIOCGPTN ioctl
-when invoked called by a process within one namespace but acting on a
-filedescriptor from a devpts instance mounted in a different
-namespace" recommendation should have a CVE ID. We could, for example,
-assign separate CVE IDs to other affected applications (if any)
-instead.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJW3ODUAAoJEL54rhJi8gl5zaUP/RRwv6Npic0DYvGFwqCQZq9v
-hH5QeGvA6ZYCETdAfsN73wmZ9GlhiXMWwTprDf4Zq3r5yfTzfFzrN7f5hu1hTOPa
-/Eonam4l+OML+IymPl85e0wqifeVyJAQj1mk1KYB9tk5jBYcxxARpI3RRt7iC0Jp
-+HLo7ayQcEmIE+6XxcVW0C4A5ahBFq75mceqPdJmluNmcBQxx5RHGvJPVeAAAEQA
-ccFyqR1lCHlU29WifN99KUjrBzIzR/WzJFvmyL+g8fD7/nA4iT08S8wQf9HbPncv
-puFdPn0q23bRwHtH0uOjpdG6V4rWFgSreZW8r+U6xeDYO1yk+uVL1I99s+/0iquH
-ghlU4JtbKt8v4nBobh8JGrwdncdpvvS5ojZ9KPVgeBPhe1LAUQRKqiiaAsjRtlDl
-tCdIsTnMYV530D9ykw6c82am7Y2ZAW9Tiov6Ug9fHsItAaWMiNzl+AXSMZ6qRPSK
-vw0zLIOn4xh9dMKr9VbXN1WX/i/aR6Nbn2ZE7rSF8UlPlff83UeFYhVJ+20iAMXq
-sDINreZzpcXRITlsX7h7BDumyrYbNcwNgQMqp9YYV35nA8i4FJubGGHzUAlhrdIh
-UF7k+w7nmFN/kgsE0I6Lyi1Ow04F1KvsJfM4+aV/032liDxle7XPl6sZwsOlH7p0
-uUXK4WJDDt3SBJQIap5W
-=YYhd
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
