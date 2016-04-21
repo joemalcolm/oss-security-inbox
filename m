@@ -1,117 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/19/7
-Message-ID: <6CEE412D-0C61-4835-B685-465BF38B6F7B@akamai.com>
-Date: Wed, 19 Oct 2016 16:27:37 +0000
-From: "Seaman, Chad" <cseaman@...mai.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "CVE ID Requests" <cve-assign@...re.org>
-CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-Subject: Re: Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/21/1
+Message-Id: <20160421145546.4E703332038@smtpvbsrv1.mitre.org>
+Date: Thu, 21 Apr 2016 10:55:46 -0400 (EDT)
+From: cve-assign@...re.org
+To: fr@...egrity.pt
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Stored Cross-Site Scripting in TYPO3 Bookmarks
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I’m a little late to the conversation but I did some fairly extensive research on this topic about 9 months ago, white paper here.
+> Can I have a CVE ID assigned to this Stored Cross-Site Scripting in
+> TYPO3 Bookmarks?
+> 
+> https://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2016-006/
 
-https://community.akamai.com/docs/DOC-5289
+>> Problem Description: Failing to properly encode incoming data, the
+>> bookmark toolbar is susceptible to Cross-Site Scripting.
 
-Regards,
-Chad
+> https://labs.integrity.pt/advisories/cve-pending-stored-cross-site-scripting-in-typo3-bookmarks/
 
-On 10/18/16, 10:58 PM, "Kurt Seifried" <kseifried@...hat.com> wrote:
+>> To replicate this issue we go to any page and click on "Create a
+>> bookmark to this page".
+>> 
+>> And now grab the POST request that is being passed to the server and
+>> change the "module" parameter to your payload.
 
-    On Tue, Oct 18, 2016 at 6:57 PM, <cve-assign@...re.org> wrote:
-    >
-    > There are at least three different scenarios:
-    >
-    >  1. Amplification only exists because of a server-side coding error,
-    >     and fixing that error has no adverse impact on clients and
-    >     requires no client-side changes. For example: for the protocol in
-    >     question, the client simply never needs an unauthenticated UDP
-    >     request to result in a larger UDP reply.
-    >
-    >  2. Amplification is not caused by a coding error, but it is possible
-    >     to reduce the amplification ratio without completely breaking the
-    >     ability of clients to communicate with servers.
-    >
-    >  3. Amplification is not caused by a coding error, and it is not
-    >     possible to reduce the amplification ratio without completely
-    >     breaking the ability of clients to communicate with servers. The
-    >     only options are to mitigate attacks (as in
-    >     https://capec.mitre.org/data/definitions/490.html) or to change
-    >     the protocol.
-    >
-    > If someone can request a CVE ID for any of these three scenarios,
-    > should we encourage them to be most liberal with CVE ID requests in
-    > scenario 1, and most conservative with CVE ID requests in scenario 3?
-    > Or do we ideally want to enumerate everything, even a 1:1.1 ratio
-    > that's baked into a protocol design, and can't be fixed without
-    > changing every client and server?
-    >
-    > Finally, do we want CVEs for all types of amplification, or only
-    > amplification that can be used for DoS attacks against unrelated third
-    > parties? For example, there's a class of amplification issues
-    > affecting automated error reporting. This can exist in server-side
-    > code in which exception handlers (something like "constraint
-    > violation: length_a > length_b") are able to send outbound network
-    > traffic to a vendor's server. Here, there can be cases where an
-    > attacker sends an unauthenticated hundred-byte packet to a customer's
-    > server, and the customer's server then immediately sends a
-    > million-byte system-health report to the vendor. The attacker
-    > generally can repeat this, although there might be a rate limit.
-    > Suppose that the customer wants to send these reports, and the vendor
-    > wants to receive these reports, and (maybe?) the intervening ISPs can
-    > handle the load. Would this be a CVE because of the huge amplification
-    > ratio, or is amplification a CVE only in certain special cases?
-    >
-    
-    So some additional comments/criteria:
-    
-    1) can this actually be exploited in practice in a reasonable manner (e.g.
-    a 1:1000 amplification I think we'd all agree is a realistic problem)
-    2) is this being actively used in the wild to exploit systems or cause DoS
-    situations? In the case of this IKEv1 issue it sounds like yes
-    
-    and my favorite "should this get a CVE test" question:
-    
-    3) can it be fixed in a way that still lets the service/clients work?
-    
-    If it can be fixed in a way that leaves the service/clients working ok then
-    chances are the old behavior is not something we want to live with anymore
-    and we need to get rid of it.
-    
-    
-    >
-    > - --
-    > CVE Assignment Team
-    > M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-    > [ A PGP key is available for encrypted communications at
-    >   http://cve.mitre.org/cve/request_id.html ]
-    > -----BEGIN PGP SIGNATURE-----
-    > Version: GnuPG v1
-    >
-    > iQIcBAEBCAAGBQJYBsQAAAoJEL54rhJi8gl56W0P/jtr8bg19CgitqtWv8GwYdKz
-    > KiVIsAqVZqu3IYnnBIpwyFQDvSo+utqAn7/heUU7V18JMxsUttPNJVArwLpZZ57s
-    > 71HYDuqlhDtqLL2HkwU7bU2XtCbUiO/LAAlnFuKxsbHMoYlkz+Dgfcd5gtdbJhcG
-    > WmLcRRgDSZV3w7yWghBThCGAgjRWU3Pw0qqo1p/a+abR8By3NGI1yRiwhj5Jxc/u
-    > NYRQLwqbQIu1qH9OJXcOf8TnB1lytTCwKk0u3hXXyIWNSDdRAYQv4712Af7sSuVh
-    > +jYOGu3mhrOBjamtZNDMrJ9riFTRnoIbOSE+mCL/Kp+rTq22NX+rY3pkh/VfvCC2
-    > /jF4aO1HUjxHKEmKauVoTAO10w6FPzlRmOMj7kM22oy568MD6LygWspNc9c/LvJX
-    > N/hEazu2NiUX3wNsLsA4z1mLUebtjjBoL/BgAAkJ1S1aoK2JEn9y5rK4wf1vCbia
-    > XkwHxoLu0BMznTIOHiP72G1YZs2FJd/pNw9iFvi6GRxPdLRR8Tr9FCRjv4V7mvRg
-    > E8rgYe3Vlz8Y9A1SYwmLLTKqqNgB/GnQNU3qKlUjmAfGiK2VGjvHah3BcOY4Gutq
-    > xcyb4Hdy/kyvxOQo6iHpabZPxYHGKVIM+CRTClnEqQM2OWiMxmv/pfVv8sL71uTJ
-    > VMx2oAIYBoExovJrb2pG
-    > =xNIJ
-    > -----END PGP SIGNATURE-----
-    >
-    
-    
-    
-    -- 
-    
-    --
-    Kurt Seifried -- Red Hat -- Product Security -- Cloud
-    PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-    Red Hat Product Security contact: secalert@...hat.com
-    
+Use CVE-2016-4056.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXGOkgAAoJEHb/MwWLVhi2FiQP/1qjggqrBC8qjEN+PgJPeIhf
+yLRSxbpXpmPJpaP/P5B/z71babzUFCYmzlyPLaDgvokdn4oLUHZL+C+FVpoS7nNr
+D6Wj35JWhwbgwN8bjvmtjH61K7viFHMG3M/kVx+edt8pRAYVgzwoiX0+f6epYoJX
+j9iEx76NRFeKLiNoolR27i/j3MirMaljPE3HBle9x3uIf7ClGPHGoORv2532gkU3
+TImXvpCbPHORGCM/2WZWeoYRvhMCnA21pPS8nZvptQ2o15Risno2A98np03H4iBj
+rIu3xV0U9wBMElp5ZooK5tiWhplkXKMnjZuATRfI8t6rBZbU5oW2/zUzWglPTgxt
+czJN2TnqWgxA+ZSEHVRHBEXU7OBy5daRIHFYKlfkUmA7n+LeHcQkJ4zaxnwqENLB
+LTwtxgZAzQEELy2ODqmxVs/oz6rsTZf2CknuRpLJUxtQ/6RSIhZC5ivdNV8pPMNY
+3e/peVhCjO0NXFGPjygB3EcfPdQ/fcuTMaNsvRV9MqvwTerWgixciXtoELa/FI92
+lzxsgb34paE/eAuQvDa3aPxwLk+OySXwKm4EQY2F1NW3ilFCx+Eh/Ajv/c3Jh4kM
+rTR0MHo1VEiM3xs/NXyVnKgPhx0mvS+M/o5Gi6sI7K+7z3P6e6+DkrFzB8W2TIk6
+EgycOanoaCIcW/KAQcc1
+=263O
+-----END PGP SIGNATURE-----
