@@ -1,24 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/15/1
-Message-ID: <1850328.TsBv7S8R4o@ohm.usersys.redhat.com>
-Date: Fri, 15 Apr 2016 15:56:45 -0400
-From: Randy Barlow <rbarlow@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Cc: cve-assign@...re.org
-Subject: CVE request - Pulp < 2.3.0 shipped the same authentication CA key/cert to all users
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/21/2
+Message-ID: <57188B65.4080501@sysdream.com>
+Date: Thu, 21 Apr 2016 09:12:21 +0100
+From: Sysdream Labs <labs@...dream.com>
+To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
+Subject: Wordpress iThemes Security (Better WP Security) Insecure Backup/Logfile Generation (access rights)
 Content-Type: text/plain; charset=utf-8
 
-Hello!
+Wordpress iThemes Security (Better WP Security) Insecure Backup/Logfile Generation (access rights)
+==================================================================================================
 
-It was raised to my attention that a security issues that was resolved in 
-Pulp 3 years ago should have had a CVE assigned to it:
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1003326
+Description
+===========
 
-To summarize, all Pulp users used the same internal CA key and cert for 
-versions of Pulp < 2.3.0. This CA is used to generate a client certificate 
-during the /login API call, and is trusted by httpd to authenticate users.
+A vulnerability has been found in iThemes Security backup function that may allow attackers to gain access to backup/log files.
 
-Though the issue is now long resolved, we would like a CVE number 
-assigned to it for reference. Thanks!
+
+By default, when using the "database backup on filesystem" feature, iThemes Security saves the backup files in a world-readable directory :
+
+wp-content/uploads/ithemes-security/backups
+
+The .htaccess file is generated during the plugin initial setup/update, only if the wp-content/uploads/ithemes-security/backups exists (or wp-content/uploads/ithemes-security/logs). Note that it does *NOT* exists by default.
+
+When running a backup, the ITSEC_Backup class creates the directory but *without* any .htaccess file inside.
+The same thing happens with log saving.
+
+If the webserver has directory listing enabled, then anybody can download the complete database backup or view the log files.
+
+
+**Access Vector**: remote
+
+**Security Risk**: high
+
+**Vulnerability**: CWE-219
+
+**CVSS Base Score**: 7.5
+
+---------------
+Vulnerable code
+---------------
+
+The vulnerable code is located in core/modules/backup/class-itsec-backup.php, line 246 :
+
+    if ( ! is_dir( $itsec_globals['ithemes_backup_dir'] ) ) {
+        @mkdir( trailingslashit( $itsec_globals['ithemes_dir'] ) . 'backups' );
+    }
+
+And in core/class-itsec-logger.php, line 31 :
+
+    //Make sure the logs directory was created
+    if ( ! is_dir( $itsec_globals['ithemes_log_dir'] ) ) {
+            @mkdir( trailingslashit( $itsec_globals['ithemes_dir'] ) . 'logs' );
+    }
+
+The application creates the backup/log directory, but *not* the .htaccess/index file inside.
+
+--------
+Solution
+--------
+
+Add a default index file file inside the backup folder when creating the directory or store the backups outside of the web root.
+
+Update iThemes Security to version >= 5.3.1
+
+Timeline (dd/mm/yyyy)
+=====================
+
+* 26/02/2016 : Initial contact with iThemes.
+* 26/02/2016 : iThemes confirms the vulnerabilities.
+* 29/02/2016 : iThemes publishes a new version (5.3.1) of iThemes Security that fixes the vulnerabilities.
+
+Credits
+=======
+
+* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
+
+
+
+-- 
+SYSDREAM Labs <labs@...dream.com>
+
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
+
+* Website: https://sysdream.com/
+* Twitter: @sysdream
+
+
 Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
