@@ -1,81 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/16/6
-Message-ID: <56C34D2A.9080708@treenet.co.nz>
-Date: Wed, 17 Feb 2016 05:24:10 +1300
-From: Amos Jeffries <squid3@...enet.co.nz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/21/8
+Message-ID: <57191209.7090902@canonical.com>
+Date: Thu, 21 Apr 2016 13:46:49 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: Squid HTTP Caching Proxy 3.5.13, 4.0.4, 4.0.5 denial of service
+Cc: security@....net, Lior Kaplan <kaplan@...ian.org>, Ondřej Surý <ondrej@...ian.org>
+Subject: Re: CVE request: PHP issues fixed in 7.0.5, 5.6.20 and 5.5.34 releases
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 17/02/2016 3:45 a.m., cve-assign@...re.org wrote:
->> http://www.squid-cache.org/Advisories/SQUID-2016_1.txt
+On 2016-04-21 01:42 PM, Salvatore Bonaccorso wrote:
+> Hi,
 > 
->> Patch for 3.5 is
->> <http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-1398
-1.patch>.
+> On Mon, Apr 11, 2016 at 09:41:41PM +0200, Matthias Geerdsen wrote:
+>> -----BEGIN PGP SIGNED MESSAGE-----
+>> Hash: SHA256
+>>
+>> Hi,
+>>
+>> could you please provide CVE IDs for the following PHP issues fixed in
+>> the latest releases, as I have not yet seen any IDs yet:
+>>
+>> - -  Buffer over-write in finfo_open with malformed magic file
+>> https://bugs.php.net/bug.php?id=71527
+>> http://bugs.gw.com/view.php?id=522
+>>
+>> - - Integer overflow in php_raw_url_encode
+>> https://bugs.php.net/bug.php?id=71798
+>> https://git.php.net/?p=php-src.git;a=commit;h=95433e8e339dbb6b5d5541473c
+>> 1661db6ba2c451
+>>
+>>
+>> - - php_snmp_error() Format String Vulnerability
+>> https://bugs.php.net/bug.php?id=71704
+>> https://git.php.net/?p=php-src.git;a=commit;h=6e25966544fb1d2f3d7596e060
+>> ce9c9269bbdcf8
+>>
+>>
+>> - - Invalid memory write in phar on filename containing \0 inside name
+>> https://bugs.php.net/bug.php?id=71860
+>> https://gist.github.com/smalyshev/80b5c2909832872f2ba2
+>>
+>>
+>> - - AddressSanitizer: negative-size-param (-1) in mbfl_strcut
+>> https://bugs.php.net/bug.php?id=71906
+>> https://gist.github.com/smalyshev/d8355c96a657cc5dba70
 > 
->> Patch for 4.0 is
->> <http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-1398
-1.patch>.
+> Can CVE identiers be assigned for those?
 > 
-> Is this correct or do you mean the 4.0 patch is
-> http://www.squid-cache.org/Versions/v4/changesets/squid-4-14538.patch 
-instead?
-> 
-
-Paste error on my part sorry.
-The squid-4-14538.patch URL is correct for 4.0.
-
-> 
->> A remotely triggerable denial of service has been found in Squid
->> proxy. The proxy incorrectly handles server TLS failure which almost
->> always results in crashing the entire proxy. Denying service for all
->> other clients using it.
-> 
->>   Bug 4437: Fix Segfault on Certain SSL Handshake Errors
-> 
->>   Squid after an unsuccessful try to connect to the remote server may
- make two
->>   concurrent retries to connect to the remote SSL server, calling twi
-ce the
->>   FwdState::retryOrBail() method, which may result to unexpected beha
-viour.
-> 
->>   Prevent this by just closing the connection to the remote SSL serve
-r inside
->>   FwdState::connectedToPeer method on error and instead of calling th
-e
->>   FwdState::retryOrBail method, just allow comm_close handler to retr
-y the
->>   connection if required.
-> 
->> src/FwdState.cc
-> 
-> Use CVE-2016-2390.
-> 
+> The recent Ubuntu USN 2952-1 as well fixed some other issues without
+> CVE identifers, cf. http://www.ubuntu.com/usn/usn-2952-1/
 > 
 
+FYI, here is information on the two issues that didn't have CVE numbers in the
+Ubuntu update:
 
-Thank you.
+1- libxml_disable_entity_loader setting is shared between threads
 
-Amos
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (MingW32)
+https://bugs.php.net/bug.php?id=64938
+https://bugs.launchpad.net/ubuntu/+source/php5/+bug/1509817
+http://framework.zend.com/security/advisory/ZF2015-06
+http://git.php.net/?p=php-src.git;a=commit;h=de31324c221c1791b26350ba106cc26bad23ace9
 
-iQIcBAEBAgAGBQJWw00oAAoJEGvSOzfXE+nLo0sP/jD7YAY3hL0EF/WLtzLG9OYf
-TIvltUwd28oVfjnqX8cqClEBebtc9hPZ0JSqzS9YNz2VhzsedaPmBNm2bPUcscyX
-dWw72Uu3H42hfpO7Xsizm6RIyE9SfJqB6h0zXZFSotAc3XcirNREGSWqO2Jp3TyX
-TpbbnkHpxGTo9gvyLrG++agsLECyDu03HAozz0Av4Jsgh8cJo8NSUQiGjTsmW8TS
-Se2AMQcJhEVi22TfDVNCJfltaUy7BcWe/7f2EefbJ/fuVTBXOZiAglYZr/PaC/T4
-MRUAI7Uh5CB5yVxvkrVZb6WP90+SdT1TnWFU1Z0kZxPgf4DXUaY3it0kmZJAlNDI
-Y6j/Qudqk85LGkjjOCb1CACLnb9tP1qddHc6J9tHuZdmmThVZt+5OIjxHhj5scRC
-yQI0WROC9fx7HSLtq+LEQEGEX9JQylhz8a9wZ2xiD1T7rAeEiEyrqadvya7g+nvu
-RdAire5MgXtx0GjqRxw9SOClBXWfzPGh4yS46cFxqRZQXRcuJHqvNyEUNyShqbMa
-2X6yWgrXcXskJnEgoJ42QZ7C7WE61C3h1pJ/2aITIWYop8l0/PcG3ZKvj7EFypVg
-Mb9Ge0v0HVOuznhmsakpaKMTQ4l2nLldkiZfzRKRSeftce50dDdyYNWvdselnYvu
-gdTyAHjGs0/Xtnzy59t2
-=+pRN
------END PGP SIGNATURE-----
+2- openssl_random_pseudo_bytes() is not cryptographically secure
+
+https://bugs.php.net/bug.php?id=70014
+https://bugs.launchpad.net/ubuntu/+source/php5/+bug/1534203
+http://git.php.net/?p=php-src.git;a=commit;h=16023f3e3b9c06cf677c3c980e8d574e4c162827
+
+Marc.
+
+
