@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["521" "Monday" "10" "October" "2016" "16:18:39" "+0100" "Simon McVittie" "smcv@debian.org" "<20161010151839.mo6smghxskni47ht@perpetual.pseudorandom.co.uk>" "12" "Re: [oss-security] fd.o #98157: dbus format string vulnerability fixed in 1.10.12" nil nil nil "10" "2016101015:18:39" "[oss-security] fd.o #98157: dbus format string vulnerability fixed in 1.10.12" (number mark "U       smcv@debian. Oct 10   12/521   " thread-indent "\"Re: [oss-security] fd.o #98157: dbus format string vulnerability fixed in 1.10.12\"\n") "<20161010125516.GL28065@port70.net>" ("<20161010121518.tnvomatyp65fwoyz@perpetual.pseudorandom.co.uk>" "<20161010125516.GL28065@port70.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["652" "Friday" "22" "April" "2016" "11:32:26" "+1000" "Brendan Scarvell" "bscarvell@iix.net" "<CAOJmqsDC25MV1BMWeaQNfugjv0WbPRaXE3FTvWKvdWEK2Jfo5g@mail.gmail.com>" "24" "[oss-security] CVE Request - XXE in Pentaho Business Analytics 6.0.1.0.386" nil nil nil "4" "2016042201:32:26" "[oss-security] CVE Request - XXE in Pentaho Business Analytics 6.0.1.0.386" (number mark "U       bscarvell@ii Apr 22   24/652   " thread-indent "\"[oss-security] CVE Request - XXE in Pentaho Business Analytics 6.0.1.0.386\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21638 invoked by uid 550); 10 Oct 2016 15:19:06 -0000
+Received: (qmail 11466 invoked by uid 550); 22 Apr 2016 01:32:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,30 +12,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21620 invoked from network); 10 Oct 2016 15:19:05 -0000
-Date: Mon, 10 Oct 2016 16:18:39 +0100
-From: Simon McVittie <smcv@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20161010151839.mo6smghxskni47ht@perpetual.pseudorandom.co.uk>
-References: <20161010121518.tnvomatyp65fwoyz@perpetual.pseudorandom.co.uk>
- <20161010125516.GL28065@port70.net>
+Received: (qmail 11448 invoked from network); 22 Apr 2016 01:32:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=iix-net.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:date:message-id:subject:from:to;
+        bh=aoaStWCaWMyYgCx2aJtGoqNDFlbEzjL09Wj3LQLvQ2c=;
+        b=QUBgNNEKH3r+o19LtRpZ5AjlXj/T25bmdigjIcHY++X+2bXAeJRQ5/Bn04K112jgCP
+         EISDPjYkuyaudauiWGuqKjP4ILsNQ0XF26s/xB/K2N8UEDGd/5o4Y9jjDaQHmHP3xNjS
+         ys0dzjHiBlDbvZTRBfOc5OR0MojJm03wpA/Jt8bz7uTHsg81bDNq807QIWRWveWL21va
+         ZuDDS4FNCpQdNSZli3ur4LxgB/4ZMtMgi6GytjFooxBQvj0yo4bdOyd01XuUkAyn8nw/
+         2DF6JlnYC4OphhJFreGZPYW+cElIxMkm7T+tpJEztNUYc2OS5d/L6Z6ubLCclvkcRLTS
+         m/4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
+        bh=aoaStWCaWMyYgCx2aJtGoqNDFlbEzjL09Wj3LQLvQ2c=;
+        b=mJM4n+48YzXox1BV9Y0f4O0Dv2MNJoRH4RE9W5vF4JkdHLCQKDxUxjY4KucD3WtsdX
+         0fwaGRPgBJzp+oSE7+hLIJMUKLprb5IZ65lqVvIyhVq4Qpzyq3XL3eBjKktDcV7o90GK
+         NthxDBLGiY7jKmcEl0NT6tLP8UWlZ3xZkQjlUA5945NugS+yziJ+E0dMPjTzeB45IGQG
+         2naP5ba8Xl/aJ1h+icjlAwCk+NM3ow/2qM/Az8L00h7ZDc8yvVZtdUnT2daeBMz/gW/g
+         WqtquHtsCvoJ5JCz+Mv0FYZeDggvHe00dznzgEp+c5NUlY1K49nhh0UVliCAmW1ny76y
+         2HEQ==
+X-Gm-Message-State: AOPr4FUOPWeuCymBvgRdhTUy0hVuj5nPaREaPMwTXjSLaIB3rQhHgjHdj3E6Jm4Tmadd424c8yh4u7B0osoAclcI
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20161010125516.GL28065@port70.net>
-User-Agent: NeoMutt/20160916 (1.7.0)
-Subject: Re: [oss-security] fd.o #98157: dbus format string vulnerability
- fixed in 1.10.12
+X-Received: by 10.194.69.106 with SMTP id d10mr17600568wju.165.1461288746817;
+ Thu, 21 Apr 2016 18:32:26 -0700 (PDT)
+Date: Fri, 22 Apr 2016 11:32:26 +1000
+Message-ID: <CAOJmqsDC25MV1BMWeaQNfugjv0WbPRaXE3FTvWKvdWEK2Jfo5g@mail.gmail.com>
+From: Brendan Scarvell <bscarvell@iix.net>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=047d7bfcf5a0ab34e8053108cc88
+Subject: [oss-security] CVE Request - XXE in Pentaho Business Analytics 6.0.1.0.386
 
-On Mon, 10 Oct 2016 at 14:55:16 +0200, Szabolcs Nagy wrote:
-> * Simon McVittie <smcv@debian.org> [2016-10-10 13:15:18 +0100]:
-> > Please reference fd.o #98157 or
-> > <https://bugs.freedesktop.org/show_bug.cgi?id=98157> in any notices
-> > that refer to this vulnerability.
-> 
-> "You are not authorized to access bug #98157. To see this bug, you must first log in to an account with the appropriate permissions."
+--047d7bfcf5a0ab34e8053108cc88
+Content-Type: text/plain; charset=UTF-8
 
-It's unlocked now. Sorry, I was still part way through juggling
-releases at the time I sent this out.
+Hi there,
 
-    S
+I've discovered an XXE vulnerability in Pentaho Business Analytics
+Community Edition 6.0.1.0.386 due to Pentaho's xml parser not disabling the
+parsing of external entities.
+
+This issue has been reported to the vendor several times, who has refused
+to fix it in the community edition unless an enterprise license is
+purchased.  I've created a Github issue (
+https://github.com/pentaho/data-access/issues/728) for someone in the
+community to submit a patch.
+
+
+Could a CVE ID please be assigned to this issue.
+
+
+Thanks,
+
+Brendan Scarvell
+
+--047d7bfcf5a0ab34e8053108cc88--
