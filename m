@@ -1,23 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/31/2
-Message-ID: <7e3c5ba7-1efc-bb16-e041-80cc968cea5b@securify.nl>
-Date: Sun, 31 Jul 2016 14:44:19 +0200
-From: Summer of Pwnage <lists@...urify.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/22/2
+Message-ID: <20160422035737.GA14458@openwall.com>
+Date: Fri, 22 Apr 2016 06:57:37 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities affecting four WordPress Plugins & one Theme
+Subject: Re: s/party/hack like it's 1999
 Content-Type: text/plain; charset=utf-8
 
-Please see attached advisories for more information. These issues were 
-found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
-project. Its goal is to contribute to the security of popular, widely 
-used OSS projects in a fun and educational way.
+On Thu, Apr 21, 2016 at 09:45:59PM +0200, Jakub Wilk wrote:
+> * up201407890@...nos.dcc.fc.up.pt, 2015-09-17, 18:03:
+> >'less' doesn't interpret escape sequences unless the -r switch is used, 
+> >so stop aliasing it to 'less -r' just because there's no colored 
+> >output.
+> 
+> As somebody else noted, it should be s/doesn't interpret/neutralizes/ or 
+> something. But that doesn't mean you should feel safe if you don't use 
+> -r.
+> 
+> For example, when git automatically spawns a pager, it puts R in the 
+> LESS environment variable. (That would be fine if git escaped \033 
+> before passing them to the pager, but it doesn't. Oddly, it does seem to 
+> escape other control characters.) Now, -R is less convenient than -r for 
+> hiding malicious code, but you could still set foreground and background 
+> to black in hope that the victim's terminal background is also black.
+> 
+> But even without -r or -R, one can use backspace characters to hide evil 
+> payload:
 
-View attachment "cross_site_scripting_in_code_snippets_wordpress_plugin.txt" of type "text/plain" (3471 bytes)
+Right.  less has the -U option to prevent that.  And yes, it's too many
+options to remember, unfortunately.  Safe(r) use of less was previously
+discussed here:
 
-View attachment "cross_site_scripting_vulnerability_in_colorway_wordpress_theme.txt" of type "text/plain" (4875 bytes)
+http://www.openwall.com/lists/oss-security/2015/09/03/9
 
-View attachment "insert_php_wordpress_plugin_allows_authenticated_user_to_execute_arbitrary_php.txt" of type "text/plain" (3041 bytes)
+To view untrusted text files, use "less -nU".  Instead of "tail -f", use
+"less -nUEX +F".  Setting up aliases may help.
 
-View attachment "multiple_vulnerabilities_in_all_in_one_wp_security___firewall_plugin_login_captcha.txt" of type "text/plain" (6333 bytes)
+This assumes that your distro didn't setup a script in LESSOPEN that
+would do something dangerous for the given filename/suffix.
 
-View attachment "stored_cross_site_scripting_vulnerability_in_easy_testimonials_wordpress_plugin.txt" of type "text/plain" (3122 bytes)
+Alexander
