@@ -1,31 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/24/9
-Message-ID: <20160124195548.GC24448@coredump>
-Date: Sun, 24 Jan 2016 20:55:48 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/22/1
+Message-ID: <CAOJmqsDC25MV1BMWeaQNfugjv0WbPRaXE3FTvWKvdWEK2Jfo5g@mail.gmail.com>
+Date: Fri, 22 Apr 2016 11:32:26 +1000
+From: Brendan Scarvell <bscarvell@....net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for prima wlan driver: Address buffer overflow due to invalid length
+Subject: CVE Request - XXE in Pentaho Business Analytics 6.0.1.0.386
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Shawn <citypw@...il.com> [2016-01-24 13:05]:
-> **Introduction***
-> 
-> One exploitable bug has been fixed in prima wlan driver a few months
-> ago.
-> 
-> Upstream fix:
-> https://github.com/sonyxperiadev/prima/commit/4b91219ada9e73c897da2e0ae7bf2ff043dde950
-[...] 
+Hi there,
 
-This already has a CVE id per:
-https://codeaurora.org/projects/security-advisories/multiple-issues-wlan-driver-allow-local-privilege-escalation-cve-2015
+I've discovered an XXE vulnerability in Pentaho Business Analytics
+Community Edition 6.0.1.0.386 due to Pentaho's xml parser not disabling the
+parsing of external entities.
 
-This is CVE-2015-0569.
+This issue has been reported to the vendor several times, who has refused
+to fix it in the community edition unless an enterprise license is
+purchased.  I've created a Github issue (
+https://github.com/pentaho/data-access/issues/728) for someone in the
+community to submit a patch.
 
-Cheers,
-Nico
--- 
-Nico Golde - XMPP: nion@...ber.ccc.de - GPG: 0xA0A0AAAA
 
-Content of type "application/pgp-signature" skipped
+Could a CVE ID please be assigned to this issue.
+
+
+Thanks,
+
+Brendan Scarvell
+
