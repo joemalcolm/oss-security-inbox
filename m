@@ -1,51 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/07/9
-Message-ID: <43cd1612-2d42-a944-8089-bce6e48b45d6@canonical.com>
-Date: Wed, 7 Sep 2016 18:10:34 -0500
-From: Tyler Hicks <tyhicks@...onical.com>
-To: oss-security@...ts.openwall.com
-Cc: "security@...ntu.com" <security@...ntu.com>, Paolo Bacchilega <paobac@....gnome.org>
-Subject: CVE Request: File Roller path traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/23/3
+Message-ID: <20160423150350.GA28424@eldamar.local>
+Date: Sat, 23 Apr 2016 17:03:50 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: Roundcube: XSS issue in SVG image handling and protection for download urs against CSRF
 Content-Type: text/plain; charset=utf-8
 
-File Roller 3.5.4 through 3.20.2 was affected by a path traversal bug
-that could result in deleted files if a user were tricked into opening a
-malicious archive.
+Hi
 
-3.20.3 news:
-http://ftp.gnome.org/mirror/gnome.org/sources/file-roller/3.20/file-roller-3.20.3.news
-3.21.90 news:
-http://ftp.gnome.org/mirror/gnome.org/sources/file-roller/3.21/file-roller-3.21.90.news
-Distro bug: https://launchpad.net/bugs/1171236
-Upstream bug: https://bugzilla.gnome.org/show_bug.cgi?id=698554
-Introduced by:
-https://git.gnome.org/browse/file-roller/commit/?id=34b64f3a897c4b4e8e180c028f326bc921eb08ec
-Fixed by:
-https://git.gnome.org/browse/file-roller/commit/?id=f70be1f41688859ec8dbe266df35a1839ceb96c5
+Roundcube recently released new versions:
 
-= Setup =
+https://github.com/roundcube/roundcubemail/wiki/Changelog
 
-Create /dev/shm/will-be-emptied/important.txt which will act as an
-important file that we wouldn't want to lose.
+There are at least the following two fixes:
 
-$ mkdir -p /dev/shm/will-be-emptied/
-$ echo data > /dev/shm/will-be-emptied/important.txt
+Fix XSS issue in SVG images handling (#4949):
+---------------------------------------------
 
-= Test =
+Upstream issue:
+  https://github.com/roundcube/roundcubemail/issues/4949
 
-1. Open the attached links.tar with File Roller
+Fix for master branch:
+  https://github.com/roundcube/roundcubemail/commit/40d7342dd9c9bd2a1d613edc848ed95a4d71aa18
 
-  $ file-roller links.tar
+Fix for 1.1 branch:
+  https://github.com/roundcube/roundcubemail/commit/7bbefdb63b12e2344cf1cb87aeb6e3933b4063e0
 
-2. Double-click either of the "absolute" or "relative" files
+Protect download urls against CSRF using unique request tokens (#4957):
+-----------------------------------------------------------------------
 
-3. Close the opened Nautilus window as well as the File Roller window
+Upstrema issue:
+  https://github.com/roundcube/roundcubemail/issues/4957
 
-4. Check to see if /dev/shm/will-be-emptied/important.txt has been
-unintentionally deleted
+Fix for master branch:
+  https://github.com/roundcube/roundcubemail/commit/4a408843b0ef816daf70a472a02b78cd6073a4d5
 
-Tyler
+Fix for the 1.1 brach:
+  https://github.com/roundcube/roundcubemail/commit/699af1e5206ed9114322adaa3c25c1c969640a53
 
-Download attachment "links.tar" of type "application/x-tar" (10240 bytes)
+Could you assign CVEs for those issues?
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Regards,
+Salvatore
