@@ -1,4 +1,9 @@
-Received: (qmail 19656 invoked by uid 550); 13 Jul 2024 15:05:48 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1062" "Saturday" "23" "April" "2016" "17:03:50" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160423150350.GA28424@eldamar.local>" "36" "[oss-security] CVE Request: Roundcube: XSS issue in SVG image handling and protection for download urs against CSRF" nil nil nil "4" "2016042315:03:50" "[oss-security] CVE Request: Roundcube: XSS issue in SVG image handling and protection for download urs against CSRF" (number mark "U       carnil@debia Apr 23   36/1062  " thread-indent "\"[oss-security] CVE Request: Roundcube: XSS issue in SVG image handling and protection for download urs against CSRF\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 20031 invoked by uid 550); 23 Apr 2016 15:04:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,41 +12,77 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1489 invoked from network); 13 Jul 2024 14:59:29 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Heping Wang <peacewong@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <185996cb-e9f3-9fe2-31e5-5356cfe53d6a@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 13 Jul 2024 14:58:25 +0000
+Received: (qmail 20013 invoked from network); 23 Apr 2016 15:04:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=+fq/FiimXK1gxmRAZ3Fi7mj2djNk43no+5TRA/DF9iw=;
+        b=tZ6JWuk/lZOdSjzhwnxLHYfW4rxeTKIwcoIIP+U81xzgGWosmGEeaiWmoF37LpCk4q
+         2rS2m3HzsdJwBVMCSRl2/8nHvn43YeADkErX9u2jURkrCeRm7BI8aiPfRlSX1nliPAZl
+         m/lFEt530HbyaluwVO2sRNCi0qDQoFk7v+/YyJ6yLzc9MFew8bMbPX/Y03/MDS0CUPOX
+         vKeIl5qHyUw8ogp5xtLcRyLY03Ez9BhZVOb0rZPIq0N9ilE80Sz2HOqPTrtEwGmsn0aU
+         FVJqRK0FjKDpgDMGcdM8ImT6F1hB9MrFsIIaqba+jOsTVE9sj803Gtdb6mXTkUFPAiYU
+         EG2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=+fq/FiimXK1gxmRAZ3Fi7mj2djNk43no+5TRA/DF9iw=;
+        b=Notxsfni7ZIQDJpOr+iLmNxSlWo5RzZ387FZ8SPBKGsIMCp3KjcWkMN9gZA4QC8jyF
+         kjQKR4Typkr96qSmCzyEViD1nZ0+XnZYNltMhDgmEqgJZQRr4leAJrCEGNmoe9VYc0VO
+         oTXtosAlYdPcl+z7C8Zh673LTWs+BJYD7m00hi78WhPTqjso+TcaWRa52tGrnONXXXSt
+         dEIFkFX9XbncwBawPU1Q/4Sw+HvnzHNaFQGc7/9FnCYdgGqvPOueqaXQTyHWfyXrlKCE
+         QSzJ4lJeRHzPA8F2KfGIP6y1ZMNiIuUmTfrqWOjy6K+ZuxGEX3ZLJVORb1VFqKkUlNGZ
+         nuiw==
+X-Gm-Message-State: AOPr4FXWHTLcpwt/SwRpLcGh/y+TM5xYbxy31peNrqm3EZddXPQgHUZCUDcl8zSE61wdMw==
+X-Received: by 10.194.3.105 with SMTP id b9mr27225711wjb.140.1461423833651;
+        Sat, 23 Apr 2016 08:03:53 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Sat, 23 Apr 2016 17:03:50 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Message-ID: <20160423150350.GA28424@eldamar.local>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-46801: Apache Linkis DataSource: Remote code execution
- vulnerability in apache Linkis 1.4.0 
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: [oss-security] CVE Request: Roundcube: XSS issue in SVG image handling and
+ protection for download urs against CSRF
 
-Severity: moderate
+Hi
 
-Affected versions:
+Roundcube recently released new versions:
 
-- Apache Linkis DataSource 1.4.0 before 1.6.0
+https://github.com/roundcube/roundcubemail/wiki/Changelog
 
-Description:
+There are at least the following two fixes:
 
-In Apache Linkis <=3D 1.5.0, data source management module, when adding Mys=
-ql data source, exists remote code execution vulnerability for java version=
- < 1.8.0_241. The deserialization vulnerability exploited through jrmp can =
-inject malicious files into the server and execute them.=20
+Fix XSS issue in SVG images handling (#4949):
+---------------------------------------------
 
-This attack requires the attacker to obtain an authorized account from Link=
-is before it can be carried out.=C2=A0 We recommend that users upgrade the =
-java version to >=3D 1.8.0_241. Or users upgrade Linkis to version 1.6.0.
+Upstream issue:
+  https://github.com/roundcube/roundcubemail/issues/4949
 
-Credit:
+Fix for master branch:
+  https://github.com/roundcube/roundcubemail/commit/40d7342dd9c9bd2a1d613edc848ed95a4d71aa18
 
-Pho3n1x  (reporter)
+Fix for 1.1 branch:
+  https://github.com/roundcube/roundcubemail/commit/7bbefdb63b12e2344cf1cb87aeb6e3933b4063e0
 
-References:
+Protect download urls against CSRF using unique request tokens (#4957):
+-----------------------------------------------------------------------
 
-https://linkis.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2023-46801
+Upstrema issue:
+  https://github.com/roundcube/roundcubemail/issues/4957
 
+Fix for master branch:
+  https://github.com/roundcube/roundcubemail/commit/4a408843b0ef816daf70a472a02b78cd6073a4d5
+
+Fix for the 1.1 brach:
+  https://github.com/roundcube/roundcubemail/commit/699af1e5206ed9114322adaa3c25c1c969640a53
+
+Could you assign CVEs for those issues?
+
+Regards,
+Salvatore
