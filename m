@@ -1,89 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/7
-Message-ID: <2700333.W9CT5MSJyE@blackgate>
-Date: Tue, 18 Oct 2016 16:52:29 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign <cve-assign@...re.org>
-Subject: jasper: NULL pointer dereference in jp2_colr_destroy (jp2_cod.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/23/4
+Message-Id: <20160423235303.4DCBE6C0546@smtpvmsrv1.mitre.org>
+Date: Sat, 23 Apr 2016 19:53:03 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Roundcube: XSS issue in SVG image handling and protection for download urs against CSRF
 Content-Type: text/plain; charset=utf-8
 
-Description:
-jasper is an open-source initiative to provide a free software-based reference 
-implementation of the codec specified in the JPEG-2000 Part-1 standard.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Another round of fuzzing on an updated version (1.900.5) revealed a NULL 
-pointer access in jp2_colr_destroy
+> https://github.com/roundcube/roundcubemail/wiki/Changelog
+> https://github.com/roundcube/roundcubemail/releases
 
-The complete ASan output:
+> Fix XSS issue in SVG images handling (#4949):
+> https://github.com/roundcube/roundcubemail/issues/4949
+> https://github.com/roundcube/roundcubemail/commit/40d7342dd9c9bd2a1d613edc848ed95a4d71aa18
+> https://github.com/roundcube/roundcubemail/commit/7bbefdb63b12e2344cf1cb87aeb6e3933b4063e0
 
-# imginfo -f $FILE
-cannot copy box data                                                                                                                                                                                                                                                           
-ASAN:DEADLYSIGNAL                                                                                                                                                                                                                                                              
-=================================================================                                                                                                                                                                                                              
-==19664==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
-0x00000041defd bp 0xbebebebebebebebe sp 0x7ffc50768570 T0)                                                                                                                                        
-    #0 0x41defc in atomic_compare_exchange_strong /var/tmp/portage/sys-
-devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_atomic_clang.h:81                                                      
-    #1 0x41defc in 
-__asan::Allocator::AtomicallySetQuarantineFlag(__asan::AsanChunk*, void*, 
-__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:465                                
-    #2 0x41defc in __asan::Allocator::Deallocate(void*, unsigned long, 
-__sanitizer::BufferedStackTrace*, __asan::AllocType) /var/tmp/portage/sys-
-devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/asan_allocator.cc:525                                   
-    #3 0x41defc in __asan::asan_free(void*, __sanitizer::BufferedStackTrace*, 
-__asan::AllocType) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:709                                                              
-    #4 0x4c008c in free /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:41                                                                                                                                     
-    #5 0x7f8dcb5bc940 in jp2_colr_destroy /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jp2/jp2_cod.c:443:3                                                                                                                                         
-    #6 0x7f8dcb5c1f69 in jp2_box_destroy /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jp2/jp2_cod.c:211:3                                                                                                                                          
-    #7 0x7f8dcb5c1f69 in jp2_box_get /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jp2/jp2_cod.c:307                                                                                                                                                
-    #8 0x7f8dcb5c5dc0 in jp2_decode /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jp2/jp2_dec.c:156:16                                                                                                                                              
-    #9 0x7f8dcb556f39 in jas_image_decode /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/base/jas_image.c:380:16                                                                                                                                     
-    #10 0x4f1686 in main /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/appl/imginfo.c:188:16                                                                                                                                                                  
-    #11 0x7f8dca66561f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                       
-    #12 0x418e68 in _init (/usr/bin/imginfo+0x418e68)                                                                                                                                                                                                                          
+Use CVE-2015-8864 for the issue that was fixed by these commits. Use
+CVE-2016-4068 for the remaining SVG XSS issues that were not fixed
+(i.e., the SVG XSS issues that remain present in versions 1.0.9,
+1.1.5, and 1.2-rc), as described in the
+https://github.com/roundcube/roundcubemail/commit/40d7342dd9c9bd2a1d613edc848ed95a4d71aa18#commitcomment-15294218
+comment:
 
-AddressSanitizer can not provide additional info.                                                                                                                                                                                                                              
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_atomic_clang.h:81 in 
-atomic_compare_exchange_strong                                      
-==19664==ABORTING
+   thomascube commented on 40d7342 Jan 6, 2016
 
-Affected version:
-1.900.5
+   Good start! Removing script nodes, however, is just the beginning.
+   XSS code can also be in node attributes like onclick, onmouseover,
+   href="javascript:, etc. or even in CSS url() as we learned with
+   HTML messages.
 
-Fixed version:
-N/A
+   So traversing the entire DOM is probably necessary to provide
+   protection that goes beyond the one example we received.
 
-Commit fix:
-N/A
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+> Protect download urls against CSRF using unique request tokens (#4957):
+> https://github.com/roundcube/roundcubemail/issues/4957
+> https://github.com/roundcube/roundcubemail/commit/4a408843b0ef816daf70a472a02b78cd6073a4d5
+> https://github.com/roundcube/roundcubemail/commit/699af1e5206ed9114322adaa3c25c1c969640a53
 
-CVE:
-N/A
+Use CVE-2016-4069. This is not a typical type of impact associated
+with CSRF; however, it is still probably best to categorize this as a
+CSRF issue, not an SSRF issue.
 
-Timeline:
-2016-10-17: bug discovered
-2016-10-17: bug reported to upstream
-2016-10-18: blog post about the issue
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/10/18/jasper-null-pointer-dereference-in-jp2_colr_destroy-jp2_cod-c
+iQIcBAEBCAAGBQJXHAorAAoJEHb/MwWLVhi2yNYP/iihOBpJh4D9q5H+LtOinltO
+kuiy+mRQ3LhCNOfNtL7j5oI87UnZfWFua61wxPf3ce8q05ElU0pnrALVtM3ZIewO
+9Mko0i7TuVysb/0Kmr522BXKbkkumSmxmapOV83rsk2VSpVrMFXNmhPDwhQUiQ72
+tJr/kCDj8yK66zRse2bO2wzmpLyAHxWaJcXb76dGuaDAyBO/PsJ+Hg32qCNTuZaf
+lkhhcKIVYxVWf5zLfID9X2OQgD511DOeWJUJAKIt3LhnYfZa9ho7HYuZSAHcjoox
+Vc1zz46tS8njkzJcUpBm6RhfN5p9PbXOcxo8FCC2HBAculk4qILAvPvYZInwetEx
+CEpU5K9jvV1SEgwngwxVLPUf+V7o5KhBy0305W8GpFpASjOYksAi3Aho1Q0HKjd6
+BOKR3+w8t+Lr+dgO6/s8r+321nLfIfEslcVky+oPDyLcgWQ5lKwCiPkJDW0BhY6K
+WK4t5sSyQ+L/+hhWyX1WvRT+pR+J82pS4J+vDf9xPH41ejw7GUcMIsAXyxKFTJD4
+yBphN1hmQwAdOn6DOoQeT0q22hXMFjrpy2mNSpJO7/mvC1Cezh4H9mOieo+m1/WR
+rEQMgU0YvLbLU+QGJs70ffu7GbctyEy0Hcqro3PypseYazXBXbco3oeA5YoXpO4w
+CnimPVkwnLWULwjvomSM
+=bl7U
+-----END PGP SIGNATURE-----
