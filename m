@@ -1,4 +1,9 @@
-Received: (qmail 32117 invoked by uid 550); 15 Jun 2023 18:39:34 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2505" "Sunday" "24" "April" "2016" "12:52:42" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160424165242.6CE3F332037@smtpvbsrv1.mitre.org>" "57" "[oss-security] Re: CVE Request: jq: stack exhaustion using jv_dump_term() function" nil nil nil "4" "2016042416:52:42" "[oss-security] Re: CVE Request: jq: stack exhaustion using jv_dump_term() function" (number mark "U       cve-assign@m Apr 24   57/2505  " thread-indent "\"[oss-security] Re: CVE Request: jq: stack exhaustion using jv_dump_term() function\"\n") "<CACn5sdTyH2a6dbw4JDvUGHK39AzhWNxfrTLpaftkjDYmQjAu9A@mail.gmail.com>" ("<CACn5sdTyH2a6dbw4JDvUGHK39AzhWNxfrTLpaftkjDYmQjAu9A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7402 invoked by uid 550); 24 Apr 2016 16:52:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,67 +12,69 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31934 invoked from network); 15 Jun 2023 18:39:24 -0000
-Date: Thu, 15 Jun 2023 20:38:39 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20230615183839.GA12628@openwall.com>
-References: <20170624163950.GA405@openwall.com> <20171120224205.GA14494@openwall.com> <20210110180842.GA2432@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210110180842.GA2432@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] distros list archive
+Received: (qmail 7380 invoked from network); 24 Apr 2016 16:52:54 -0000
+From: cve-assign@mitre.org
+To: gustavo.grieco@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CACn5sdTyH2a6dbw4JDvUGHK39AzhWNxfrTLpaftkjDYmQjAu9A@mail.gmail.com>
+Message-Id: <20160424165242.6CE3F332037@smtpvbsrv1.mitre.org>
+Date: Sun, 24 Apr 2016 12:52:42 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: jq: stack exhaustion using jv_dump_term() function
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I've just made a further update of these, until May 31, 2023.
-
-Alexander
-
-On Sun, Jan 10, 2021 at 07:08:42PM +0100, Solar Designer wrote:
-> Hi,
+> A crash caused by stack exhaustion parsing a JSON was found. It affects, at
+> least version 1.5 as well as the last git revision. Technical details and a
+> reproducer are available here:
 > 
-> I've just updated the headers-only archives of (linux-)distros mentioned
-> in the message below to include headers of everything posted until
-> December 31, 2020.  There was relatively little need for this for a
-> while due to the statistics kindly maintained by Gentoo, but now those
-> are lagging behind (last updated until September 2019 inclusive).  They
-> will need to also be updated, and I felt updating these archives might
-> help with hopefully making that upcoming update and with its review.
-> 
-> Alexander
-> 
-> On Mon, Nov 20, 2017 at 11:42:05PM +0100, Solar Designer wrote:
-> > On Sat, Jun 24, 2017 at 06:39:50PM +0200, Solar Designer wrote:
-> > > I've just set up these archives of the private lists up until June 19:
-> > > 
-> > > http://www.openwall.com/lists/linux-distros/
-> > > http://www.openwall.com/lists/distros/
-> > > 
-> > > I did not decrypt the actual messages, but the statistics and the
-> > > message headers should provide some visibility into how much and roughly
-> > > what was discussed and when.
-> > 
-> > I've just updated these with message headers until November 19 (although
-> > there was nothing posted after November 9, until further still-embargoed
-> > messages appeared today).
-> > 
-> > > The messages appearing on distros should be strictly a subset of those
-> > > appearing on linux-distros, as per the description of the lists here:
-> > > 
-> > > http://oss-security.openwall.org/wiki/mailing-lists/distros
-> > > 
-> > > As you may notice, the Subject lines sometimes contain [vs] and other
-> > > times [vs-plain].  This reflects whether the messages traveled to the
-> > > list exploder in encrypted or plaintext form, respectively.  They
-> > > traveled to the list members in re-encrypted form either way.  The
-> > > [vs-plain] case commonly occurs on messages CC'ed to other parties, for
-> > > which the sender might not have had the keys.  MUAs generally don't
-> > > allow a message to be encrypted to a subset of the addressees and sent
-> > > in plaintext to others.
-> > > 
-> > > Enjoy.
-> > 
-> > Alexander
+> https://github.com/stedolan/jq/issues/1136
+
+>> jq . qcufnzxcnp.json.4167733746247029131
+>> 
+>> Program received signal SIGSEGV, Segmentation fault.
+
+>>> https://github.com/stedolan/jq/blob/master/README.md
+>>> jq is a lightweight and flexible command-line JSON processor.
+
+We do not feel that a stack-exhaustion attack against a command-line
+program requires a CVE ID in all cases. A jq bug was discovered; the
+question is whether it's a security bug. This depends on the existence
+of a common use case in which an unattended process receives untrusted
+JSON files, and (for example) the overall resource consumption is
+substantially higher than what an attacker could achieve by submitting
+a JSON file that is parsed without encountering any jq bugs.
+
+Our understanding is that https://jqplay.org/ is an existence proof of
+"unattended process receives untrusted JSON files." Also,
+https://stedolan.github.io/jq/manual/ might imply that the . filter is
+not expected to result in a lot of resource consumption (stack
+exhaustion or anything else). So, a need for a CVE ID seems plausible;
+however, we would like to have more information about security
+relevance if anyone wants many CVE IDs for many different jq bugs
+causing stack exhaustion.
+
+Use CVE-2016-4074.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXHPkoAAoJEHb/MwWLVhi2klQP/0JXSWdl1OK3qZD/7Ze8TGyi
+rbzXE7w0xk9/QPTjbvODOxDDIWOu1WKPbXLtk0Q3pMBbEIsSNB0gIF0uBpxA6jWa
+i+faeokrPE2VH8cKd1Esvo7GJ0hbGxF2o2StNIkqoTPlV+Ycy13NEt9fgJ1KBf7K
+kdmB9fd5yBLiP6Fbiob1jB7a/YSXIZ7QmtlrverLnrC2lNpKTIzMp2ena5wE5QBB
+ebc0cvtW149ktlfz3axexPM/GVOAnIPLqCtDskDjgSD2BngPuFIfI4+isai+mPQS
+6xRO4zJuZokKGLwIe2XuHCu3BSqHO5GXP2vgOy8JDEUaKejvUQlqdDpvqypa3CrN
+pNAGz4BXrOrCuXQOIsVcHFjSjzauAIP5ttioSX6DEeGCSkhSGuLe7v62SvlEJCmP
+clKRaXK0cTzYOneNiZncha8mUQpWpAe9q9DNutnQhIuA6d5Jx4wzXA8f8MmpUG5T
+eO9df1RkNca7+PzNSgspBQTdqBKcDCVqJSY47/VIf9oZKPyzKUI0k2pDgyajwIDv
+frelAoZ3CM2iPZdjJUY3EAn/CJV1rWMGFIUbCSDkyTshlP07V2cSbDj3KGySt0ZA
+Tdtt3Pt2r4CbBn3rwLd1g5GOTW7Od54wxUTnSOaFikZo6oEVhmOyG3AGIBsdtbxM
+mQMgvymwfziBQ5SeGM7D
+=BV9n
+-----END PGP SIGNATURE-----
