@@ -1,27 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/20/3
-Message-Id: <16A71325-B291-4AE5-8689-54374BA32C8F@nextcloud.com>
-Date: Mon, 20 Jun 2016 18:41:50 +0200
-From: Lukas Reschke <lukas@...tcloud.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE request for PHP bug #68978: "XSS in header() with Internet Explorer" (2015)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/24/4
+Message-Id: <20160424165242.6CE3F332037@smtpvbsrv1.mitre.org>
+Date: Sun, 24 Apr 2016 12:52:42 -0400 (EDT)
+From: cve-assign@...re.org
+To: gustavo.grieco@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: jq: stack exhaustion using jv_dump_term() function
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Considering CVE-2011-1398 (https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-1398) we believe PHP security bug #68978 (https://bugs.php.net/bug.php?id=68978) also warrants a CVE identifier:
+> A crash caused by stack exhaustion parsing a JSON was found. It affects, at
+> least version 1.5 as well as the last git revision. Technical details and a
+> reproducer are available here:
+> 
+> https://github.com/stedolan/jq/issues/1136
 
-> The filtering in header() function is not sufficient and this can lead to header injection and content injection (XSS) when the client is Internet Explorer (in every tested version).
-> IE accepts %0A%20 or %0D%0A%20 as separator in HTTP while other browser treat the new line beginning with space as the continuation of the previous header. This can lead to header injection or content injection (basically, XSS) in IE.
+>> jq . qcufnzxcnp.json.4167733746247029131
+>> 
+>> Program received signal SIGSEGV, Segmentation fault.
 
-PHP’s documentation (http://php.net/manual/en/function.header.php) explicitly states that since version 5.2.1 PHP natively prevents header injections:
+>>> https://github.com/stedolan/jq/blob/master/README.md
+>>> jq is a lightweight and flexible command-line JSON processor.
 
-> This function now prevents more than one header to be sent at once as a protection against header injection attacks.
+We do not feel that a stack-exhaustion attack against a command-line
+program requires a CVE ID in all cases. A jq bug was discovered; the
+question is whether it's a security bug. This depends on the existence
+of a common use case in which an unattended process receives untrusted
+JSON files, and (for example) the overall resource consumption is
+substantially higher than what an attacker could achieve by submitting
+a JSON file that is parsed without encountering any jq bugs.
 
-My understanding is t hat the corresponding upstream commit can be found at https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b 
+Our understanding is that https://jqplay.org/ is an existence proof of
+"unattended process receives untrusted JSON files." Also,
+https://stedolan.github.io/jq/manual/ might imply that the . filter is
+not expected to result in a lot of resource consumption (stack
+exhaustion or anything else). So, a need for a CVE ID seems plausible;
+however, we would like to have more information about security
+relevance if anyone wants many CVE IDs for many different jq bugs
+causing stack exhaustion.
 
-This has been patched in PHP 5.6.6, 5.5.22 and 5.4.38, since some distributions ship older versions and have not backported this we’re therefore kindly requesting a CVE identifier and making OSS Security aware of this. An issue directly to Ubuntu has been filed at https://bugs.launchpad.net/ubuntu/+source/php5/+bug/1594041 for 14.04.
+Use CVE-2016-4074.
 
-Thanks,
-Lukas
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXHPkoAAoJEHb/MwWLVhi2klQP/0JXSWdl1OK3qZD/7Ze8TGyi
+rbzXE7w0xk9/QPTjbvODOxDDIWOu1WKPbXLtk0Q3pMBbEIsSNB0gIF0uBpxA6jWa
+i+faeokrPE2VH8cKd1Esvo7GJ0hbGxF2o2StNIkqoTPlV+Ycy13NEt9fgJ1KBf7K
+kdmB9fd5yBLiP6Fbiob1jB7a/YSXIZ7QmtlrverLnrC2lNpKTIzMp2ena5wE5QBB
+ebc0cvtW149ktlfz3axexPM/GVOAnIPLqCtDskDjgSD2BngPuFIfI4+isai+mPQS
+6xRO4zJuZokKGLwIe2XuHCu3BSqHO5GXP2vgOy8JDEUaKejvUQlqdDpvqypa3CrN
+pNAGz4BXrOrCuXQOIsVcHFjSjzauAIP5ttioSX6DEeGCSkhSGuLe7v62SvlEJCmP
+clKRaXK0cTzYOneNiZncha8mUQpWpAe9q9DNutnQhIuA6d5Jx4wzXA8f8MmpUG5T
+eO9df1RkNca7+PzNSgspBQTdqBKcDCVqJSY47/VIf9oZKPyzKUI0k2pDgyajwIDv
+frelAoZ3CM2iPZdjJUY3EAn/CJV1rWMGFIUbCSDkyTshlP07V2cSbDj3KGySt0ZA
+Tdtt3Pt2r4CbBn3rwLd1g5GOTW7Od54wxUTnSOaFikZo6oEVhmOyG3AGIBsdtbxM
+mQMgvymwfziBQ5SeGM7D
+=BV9n
+-----END PGP SIGNATURE-----
