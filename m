@@ -1,49 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/15/7
-Message-Id: <20160315170216.6AB906C445F@smtpvmsrv1.mitre.org>
-Date: Tue, 15 Mar 2016 13:02:16 -0400 (EDT)
-From: cve-assign@...re.org
-To: vvs@...tuozzo.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, solar@...nwall.com, gorcunov@...tuozzo.com, davem@...emloft.net, khorenko@...tuozzo.com
-Subject: Re: CVE request: ipv4: Don't do expensive useless work during inetdev destroy
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/24/3
+Message-ID: <CACn5sdTyH2a6dbw4JDvUGHK39AzhWNxfrTLpaftkjDYmQjAu9A@mail.gmail.com>
+Date: Sun, 24 Apr 2016 10:44:39 +0200
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: jq: stack exhaustion using jv_dump_term() function
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> Destroy of network interface with huge number of ipv4 addresses
-> keeps rtnl_lock for a very long time (up to hour).
-> It blocks many network related operations,
+A crash caused by stack exhaustion parsing a JSON was found. It affects, at
+least version 1.5 as well as the last git revision. Technical details and a
+reproducer are available here:
 
->> in this scenerio we do two pointless things which can
->> be very expensive
+https://github.com/stedolan/jq/issues/1136
 
-> The problem is especially important for containers,
-> container owner have enough permission to enable this trigger
+This crash was found by QuickFuzz working with Radamsa (that caused the
+extreme mutation)
 
-> http://git.kernel.org/cgit/linux/kernel/git/davem/net-next.git/patch/?id=fbd40ea0180a2d328c5adc61414dc8bab9335ce2
+Regards,
+Gustavo.
 
-Use CVE-2016-3156.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJW6D2BAAoJEL54rhJi8gl5aPcQAI4vToE8HwKoXoPHrBvLzjkC
-d9CewviuH6iRvsAy7hsZ4XqYTVUe+aP9F+jZU9s+X77Sx2M4OcS3NMm7Q9a0MfKC
-+ns7JxOPw2T/Lb+fEykx5W+RSLF/gF+UK/CGlEdxP3dQ1jpDwVYEUHYMC3fXxipa
-95caC/UkdeK/pm5mIPZx0LaGPuSsGk2R+/sIdwKglcOY0nHEOHfzkWFAwisSStN2
-WUerlquTggA7qX+5vX0Q5COKIzmJOpHnzsdJRk1XeJpCKRGacdWmd41rVeNX+yjc
-jMYc2dXeTwm5pUhb86eX4aeK9hWOq55Fa+STwZRLZ/XreUxovoRat9ClMGujwHpI
-DatEqVuoX6fWzLNgZk+6DVP615WPlKKrbEGiyQ0n6ffBGsrEoUK4eKhqy9LiSsVF
-cdvrpbJZsB8Uu2zTvqYY9Qg8JV49UcdfZRnfzFOVNZtjy9Y7m/OLl0f+8VYVW++r
-yRxEyEHeIA4pOUprA+YrOHrYLqhbddUo/ESLd4MhCJQK3TldsNJ5yoEHb5pGCtxN
-EF2RYDnChUCBzV9tWKXU4sp39wqDJMJwEoUPAC73aCppmnaqWB76ARs2QEe8PejS
-hIqiJACuLIEkeCH/tgQ98kiQyPceLDJm7Vp1G0FAg5Qtj/nQlg3ajTdg0J5Jgm4p
-/q/uXiSvBR9uhsC28/tT
-=lo4r
------END PGP SIGNATURE-----
