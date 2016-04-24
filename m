@@ -1,33 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/07/4
-Message-ID: <20161107124854.GA7492@inutil.org>
-Date: Mon, 7 Nov 2016 13:48:54 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: citypw@...il.com, cve-assign@...re.org
-Subject: Re: Re: kernel: fix minor infoleak in get_user_ex()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/24/2
+Message-Id: <20160424035818.A9F8672E09B@smtpvbsrv1.mitre.org>
+Date: Sat, 23 Apr 2016 23:58:18 -0400 (EDT)
+From: cve-assign@...re.org
+To: felipe.andres.manzano@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Poppler < 0.40.0
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> > get_user_ex(x, ptr) should zero x on failure. It's not a lot of a leak
-> > (at most we are leaking uninitialized 64bit value off the kernel
-> > stack, and in a fairly constrained situation
-> > 
-> > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1c109fabbd51863475cd12ac206bdd249aee35af
-> > https://lwn.net/Articles/705264/
+> This is a clean heap overflow.
 > 
-> Use CVE-2016-9178.
+> https://cgit.freedesktop.org/poppler/poppler/commit/?id=b3425dd3261679958cd56c0f71995c15d2124433
 
-Can you please clarify on the scope of CVE-2016-9178?
+>> ExponentialFunction::ExponentialFunction(Object *funcObj, Dict *dict) {
+>> ...
+>> +  if (unlikely(n > funcMaxOutputs)) {
+>> +  error(errSyntaxError, -1, "Function's C0 array is wrong length");
+>> +  n = funcMaxOutputs;
+>> +  }
 
-I assume this is for the leak fixed with 1c109fabbd51863475cd12ac206bdd249aee35af,
-but the LWN comment by Brad Spengler referenced above refers to a new issue
-which affected some Linux stable lines, which backported 
-1c109fabbd51863475cd12ac206bdd249aee35af without also backporting
-548acf19234dbda5a52d5a8e7e205af46e9da840.
+Use CVE-2015-8868.
 
-So please assign a second CVE ID for the latter.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Cheers,
-        Moritz
+iQIcBAEBCAAGBQJXHEP+AAoJEHb/MwWLVhi2yCQP/jdyOQR6mHI2snwddK0mkFjC
+DOUAa2SMTDyVvoOmRcBUWspMtqgfBUlyzGQvBSSf7wKq5QyyDGVzc0q392Ik+j8A
+4NrFumG2uhUZGmt7ILzVAVRgOSVkNVVK3Ar8Ef/gX/MV+/ZQT/+YQFYlsauU28eE
+VF1gKrPNLoczFnPbmjzZbf6RnqIaAnvce1IIF6UZblEhudAUvjG0X4QNvyxJBqWb
+i0KOViYPc+VLqkYcNzGy3PFoDlUhU96xiSVpNPC7yoYFfrWrO4qLbO6V58tMALoz
+vcKPRdonELjcedxO1mpZAXkVXXkBrgWP/m/K3HsI7XM/qLaRYcjvtOZFBe+SNQrF
+HhVzGUBO8eB/1irkZTvqs3Qywbr4RZ9AC9+85Bl6lY4Tf58YmudMomn+IsPWAJ/o
+N0IBTnCH1xaTGStK4XFwgO6+wPoIh2x0gkpeOLgXA3ebpPcLN0x84Anbu0MRUpHN
+n6Ql07YXAtwmNpUrnQORklKqGSSo0k2GaANJKcxszHgF3fHCifQpbx2u6C0CON6f
+cVpYvbIRc+YhhlCgqt/I4BAE0QTw82zMht0rfx3+55l0Hx+eecqxnO+bNWBDZp0J
+xx1xQ/RF+KTs+OrozZk87w+M0La9Kn5VWQUEhwiXGOwom7edzJriJ9hteV7XSUT+
+nEohPLvL3NfXqCsYei4f
+=M8Dv
+-----END PGP SIGNATURE-----
