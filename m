@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4691" "Tuesday" "26" "October" "2021" "10:48:23" "+0200" "John Paul Adrian Glaubitz" "glaubitz@physik.fu-berlin.de" nil "77" "[oss-security] Re: Linux kernel: powerpc: KVM guest can trigger host crash on Power8" nil nil nil "10" nil nil (number mark "U       glaubitz@phy Oct 26   77/4691  " thread-indent "\"[oss-security] Re: Linux kernel: powerpc: KVM guest can trigger host crash on Power8\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: Linux kernel: powerpc: KVM guest can trigger host crash on Power8" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2171" "Monday" "25" "April" "2016" "17:36:11" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160425213611.A443C6C09ED@smtpvmsrv1.mitre.org>" "48" "[oss-security] Re: CVE requests: Multiple Wireshark vulnerabilities" nil nil nil "4" "2016042521:36:11" "[oss-security] Re: CVE requests: Multiple Wireshark vulnerabilities" (number mark "U       cve-assign@m Apr 25   48/2171  " thread-indent "\"[oss-security] Re: CVE requests: Multiple Wireshark vulnerabilities\"\n") "<20160425210010.GA9723@pisco.westfalen.local>" ("<20160425210010.GA9723@pisco.westfalen.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1724 invoked by uid 550); 26 Oct 2021 10:51:06 -0000
+Received: (qmail 17879 invoked by uid 550); 25 Apr 2016 21:36:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,99 +12,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19591 invoked from network); 26 Oct 2021 08:48:41 -0000
-Message-ID: <05b88724-90b6-a38a-bb3b-7392f85c1934@physik.fu-berlin.de>
-Date: Tue, 26 Oct 2021 10:48:23 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.0
-To: mpe@ellerman.id.au
-Cc: linuxppc-dev@lists.ozlabs.org, oss-security@lists.openwall.com,
- "debian-powerpc@lists.debian.org" <debian-powerpc@lists.debian.org>
-References: <87pmrtbbdt.fsf@mpe.ellerman.id.au>
-Content-Language: en-US
-From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-In-Reply-To: <87pmrtbbdt.fsf@mpe.ellerman.id.au>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Original-Sender: glaubitz@physik.fu-berlin.de
-X-Originating-IP: 87.189.151.54
-Subject: [oss-security] Re: Linux kernel: powerpc: KVM guest can trigger host crash on Power8
+Received: (qmail 17861 invoked from network); 25 Apr 2016 21:36:23 -0000
+From: cve-assign@mitre.org
+To: jmm@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@wireshark.org
+In-Reply-To: <20160425210010.GA9723@pisco.westfalen.local>
+Message-Id: <20160425213611.A443C6C09ED@smtpvmsrv1.mitre.org>
+Date: Mon, 25 Apr 2016 17:36:11 -0400 (EDT)
+Subject: [oss-security] Re: CVE requests: Multiple Wireshark vulnerabilities
 
-Hi Michael!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> The Linux kernel for powerpc since v5.2 has a bug which allows a
-> malicious KVM guest to crash the host, when the host is running on
-> Power8.
-> 
-> Only machines using Linux as the hypervisor, aka. KVM, powernv or bare
-> metal, are affected by the bug. Machines running PowerVM are not
-> affected.
-> 
-> The bug was introduced in:
-> 
->     10d91611f426 ("powerpc/64s: Reimplement book3s idle code in C")
-> 
-> Which was first released in v5.2.
-> 
-> The upstream fix is:
-> 
->   cdeb5d7d890e ("KVM: PPC: Book3S HV: Make idle_kvm_start_guest() return 0 if it went to guest")
->   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=cdeb5d7d890e14f3b70e8087e745c4a6a7d9f337
-> 
-> Which will be included in the v5.16 release.
+> there's quite a backlog of Wireshark vulnerabilities which don't
+> have CVE IDs assigned:
 
-I have tested these patches against 5.14 but it seems the problem [1] still remains for me
-for big-endian guests. I built a patched kernel yesterday, rebooted the KVM server and let
-the build daemons do their work over night.
+The CVEs for the latest Wireshark advisories (19 through 28) are
+already on the cve.mitre.org web site, and the CVE IDs were sent to
+the upstream vendor yesterday. We realize that they aren't yet on the
+https://www.wireshark.org/security/wnpa-sec-2016-##.html pages.
 
-When I got up this morning, I noticed the machine was down, so I checked the serial console
-via IPMI and saw the same messages again as reported in [1]:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4076
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4077
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4078
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4079
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4080
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4081
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4006
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4082
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4083
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4084
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4085
 
-[41483.963562] watchdog: BUG: soft lockup - CPU#104 stuck for 25521s! [migration/104:175]
-[41507.963307] watchdog: BUG: soft lockup - CPU#104 stuck for 25544s! [migration/104:175]
-[41518.311200] rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
-[41518.311216] rcu:     136-...0: (135 ticks this GP) idle=242/1/0x4000000000000000 softirq=32031/32033 fqs=2729959 
-[41547.962882] watchdog: BUG: soft lockup - CPU#104 stuck for 25581s! [migration/104:175]
-[41571.962627] watchdog: BUG: soft lockup - CPU#104 stuck for 25603s! [migration/104:175]
-[41581.330530] rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
-[41581.330546] rcu:     136-...0: (135 ticks this GP) idle=242/1/0x4000000000000000 softirq=32031/32033 fqs=2736378 
-[41611.962202] watchdog: BUG: soft lockup - CPU#104 stuck for 25641s! [migration/104:175]
-[41635.961947] watchdog: BUG: soft lockup - CPU#104 stuck for 25663s! [migration/104:175]
-[41644.349859] rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
-[41644.349876] rcu:     136-...0: (135 ticks this GP) idle=242/1/0x4000000000000000 softirq=32031/32033 fqs=2742753 
-[41671.961564] watchdog: BUG: soft lockup - CPU#104 stuck for 25697s! [migration/104:175]
-[41695.961309] watchdog: BUG: soft lockup - CPU#104 stuck for 25719s! [migration/104:175]
-[41707.369190] rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
-[41707.369206] rcu:     136-...0: (135 ticks this GP) idle=242/1/0x4000000000000000 softirq=32031/32033 fqs=2749151 
-[41735.960884] watchdog: BUG: soft lockup - CPU#104 stuck for 25756s! [migration/104:175]
-[41759.960629] watchdog: BUG: soft lockup - CPU#104 stuck for 25778s! [migration/104:175]
-[41770.388520] rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
-[41770.388548] rcu:     136-...0: (135 ticks this GP) idle=242/1/0x4000000000000000 softirq=32031/32033 fqs=2755540 
-[41776.076307] rcu: rcu_sched kthread timer wakeup didn't happen for 1423 jiffies! g49897 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x402
-[41776.076327] rcu:     Possible timer handling issue on cpu=32 timer-softirq=1056014
-[41776.076336] rcu: rcu_sched kthread starved for 1424 jiffies! g49897 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x402 ->cpu=32
-[41776.076350] rcu:     Unless rcu_sched kthread gets sufficient CPU time, OOM is now expected behavior.
-[41776.076360] rcu: RCU grace-period kthread stack dump:
-[41776.076434] rcu: Stack dump where RCU GP kthread last ran:
-[41783.960374] watchdog: BUG: soft lockup - CPU#104 stuck for 25801s! [migration/104:175]
-[41807.960119] watchdog: BUG: soft lockup - CPU#104 stuck for 25823s! [migration/104:175]
-[41831.959864] watchdog: BUG: soft lockup - CPU#104 stuck for 25846s! [migration/104:175]
-[41833.407851] rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
-[41833.407868] rcu:     136-...0: (135 ticks this GP) idle=242/1/0x4000000000000000 softirq=32031/32033 fqs=2760381 
-[41863.959524] watchdog: BUG: soft lockup - CPU#104 stuck for 25875s! [migration/104:175]
+The upstream vendor did not send a request to MITRE for 12 through 18.
+We will process those soon.
 
-It seems that in this case, it was the testsuite of the git package [2] that triggered the bug. As you
-can see from the overview, the git package has been in the building state for 8 hours meaning the
-build server crashed and is no longer giving feedback to the database.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Adrian
-
-> [1] https://bugzilla.kernel.org/show_bug.cgi?id=206669
-> [2] https://buildd.debian.org/status/package.php?p=git&suite=experimental
-
--- 
- .''`.  John Paul Adrian Glaubitz
-: :' :  Debian Developer - glaubitz@debian.org
-`. `'   Freie Universitaet Berlin - glaubitz@physik.fu-berlin.de
-  `-    GPG: 62FF 8A75 84E0 2956 9546  0006 7426 3B37 F5B5 F913
+iQIcBAEBCAAGBQJXHo1nAAoJEHb/MwWLVhi2WUgP/1TMEQFWSvfkEqhiIKd2vFOA
+F+7QOUVOEgwzecoLvcYWXj9NO8qDNzDmGXPEVseaXmfwasZ1hsOiIZJHcQnaRcqN
+mSo+YDw6H4edGPT/iobiBy8gucV3dyvbyeJYDlpbPyLAowZLt1PAv2F9GeNcfTz+
+xlja225h0TVBa999vK2Umg0XA+Oa4RXSlcXoqgz4qPfIqbtFw1zC4Dp2gxktbi0U
+RA5aAduQxCeu4F0DX/d9XNDvf0zLJizwkOknkRflMeagxqA2zrN3hRTEFzxf+RRg
+/kYlVhskSbic5bh4E+TBq5urw9wqztcHIInAfj2EFGCYDTpzXp0O/voyrh8CpA+C
+Y41HuOv9NiFcIiolKt/dbLg/6G3Mpwbf7J0d78Knv4ACgDLV7YkQ2fPENSsn526F
+ZHhMnGa/5O+xS0HcAcFl6u8Vo/71IJkepYUo+736+WhWa7dQB5vq96bCq/TzuD0F
+/M3kWTW5n75/S/qo+Uf/QWvD2/tA6UtKs3DUgYHfQdYU4T0JldAvMO5tTwefglot
+OWiAVRDz1eBUpoWT7FGYXcm8w3CRwHaXtU5hU1fLuriWBMl0gjC7jLhtBjEMjkAb
+EqQiw5222T3b7NjD3cruLqkNiRawSi2S8f2AmNMFAhOt8aPJl3lPFJ6YBdTjfpdv
+VpuTfFjKSt1zsCdfLCA3
+=g9RN
+-----END PGP SIGNATURE-----
