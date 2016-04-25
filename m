@@ -1,78 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/01/10
-Message-ID: <4d0087966bdd45da8a8802eacdcfa7b2@imshyb02.MITRE.ORG>
-Date: Tue, 1 Nov 2016 14:18:40 -0400
-From: <cve-assign@...re.org>
-To: <carnil@...ian.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: Handful of libass issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/25/1
+Message-ID: <20160425210010.GA9723@pisco.westfalen.local>
+Date: Mon, 25 Apr 2016 23:00:10 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: cve-assign@...re.org, oss-security@...ts.openwall.com
+Cc: security@...eshark.org
+Subject: CVE requests: Multiple Wireshark vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
+there's quite a backlog of Wireshark vulnerabilities which don't
+have CVE IDs assigned:
 
->>> The third is a huge memory allocation leading to a crash that wasn't
->>> fixed because a good solution is unavailable at the moment.
+Ixia IxVeriWave file parser crash :
+https://www.wireshark.org/security/wnpa-sec-2016-12.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11795
 
->>> https://github.com/libass/libass/pull/240
+IEEE 802.11 dissector crash :
+https://www.wireshark.org/security/wnpa-sec-2016-13.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11818
 
->> Use CVE-2016-7971.
+GSM A-bis OML dissector crash :
+https://www.wireshark.org/security/wnpa-sec-2016-14.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11825
 
-The vendor's comment was:
+ASN.1 BER dissector crash :
+https://www.wireshark.org/security/wnpa-sec-2016-15.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12106
 
-> grigorig commented Oct 5, 2016
-> I don't have a strong opinion about the CVE.
+SPICE dissector large loop :
+https://www.wireshark.org/security/wnpa-sec-2016-16.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12151
 
-The MITRE CVE team has no current plans to reject this CVE. Someone
-may want to use the CVE ID to track something. For example, there may
-be people who need to track that libass is not suitable for their own
-use case because they require exactly the "the best you can do is to
-make sure [rendering] gracefully fails with an appropriate error
-report (error code or exception or whatever you use) if memory can't
-be allocated or if a library-user-specified limit is exceeded - then
-the library user can handle that however they want to, for example by
-exiting (appropriate for a command-line tool) or by reporting an error
-but continuing to accept new requests (appropriate for a daemon)."
-behavior suggested in the
-http://www.openwall.com/lists/oss-security/2016/10/26/4 post.
+NFS dissector crash :
+https://www.wireshark.org/security/wnpa-sec-2016-17.html
 
-Even if neither the upstream vendor nor any Linux distribution will
-ever make any code change for CVE-2016-7971, discussion of the issue
-can help with understanding the product's behavior. For example,
-pull/240 also has a vendor comment of "Normally we should handle
-memory allocation failures gracefully, but there's probably still a
-lot of code which just crashes" that may be very relevant to planning
-other research.
+ASN.1 BER dissector crash :
+https://www.wireshark.org/security/wnpa-sec-2016-18.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11822
 
-The MITRE CVE team is willing to mark a CVE with "DISPUTED" if someone
-believes that it's based solely on an "AddressSanitizer failed to
-allocate ... bytes of LargeMmapAllocator" misinterpretation, and
-believes that it cannot have any relevance to risk management.
+NCP dissector crash :
+https://www.wireshark.org/security/wnpa-sec-2016-19.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11591
 
-Also, of course, if a finding (such as "AddressSanitizer failed to
-allocate ... bytes of LargeMmapAllocator" without follow-on research)
-has no known audience, then sending a CVE ID request may not be the
-best approach.
+TShark reassembly crash :
+https://www.wireshark.org/security/wnpa-sec-2016-20.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11799
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+IEEE 802.11 dissector crash :
+https://www.wireshark.org/security/wnpa-sec-2016-21.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11824
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12187
 
-iQIcBAEBCAAGBQJYGNtgAAoJEHb/MwWLVhi2NHMP+gNg7Xht/CNWHsVdWq4xXt94
-dt3eBEmYAI08dewav8dTrZ60S+Q0H/j7U4wvwO0xbnrpmnoq1ZjSEKZdXWUZyFnC
-Q5mGmmffyImnHYOyBUfpuNs+6rpo9ymuARgMBOxj1nZlVXz9n53O6jzcGVaPJ6Op
-EzqWoDHRDTkZ7rzDrsFrnrWPaDDusxgHhlIjTQyY0PuXvQEWgG01xDCAZl2x49Cf
-nDtGhA3Ox8K5tTw811CRNb8x57nXAu5OHCZTwr6rB4QFk+Oc/5Lm6SQP5XX8nY0o
-18YNacM1B5pYv999CofBwy4RthFm/J1tQzbATKUlTLBx4Li2+5PiFuomvpEfAJv4
-OhQlYQiUToRBiPBFGrihJB3f9iIW87V4ouX3sTPfBe9UcSjAZsd+VpGIf+SvWJFT
-TTkE/woWvUprfIKXlJLNxfUdFRBlagK6OZgvRYlVixDY96uAYergHFlyDsdPP6eN
-Je847yrnBkSB/KC1GVV/X8B6xNmeTz8JOW60pJ2TV8XvppOWxF+g9OVpQAnFMOYV
-soWxwSrSI5Vim+AfcrWEnHz+WPPPMpSc8xw0djFSOKzh4RJRs8y25hg5+B/UVo5W
-ZGFiLN26U9caRLjWoKK/K+9RL1HNbNA8wZSXb6vsCiNjtSVPQUNxsnbUZTN+SL/x
-sRvikrhVVxQ+YrFPTT+c
-=aMyc
------END PGP SIGNATURE-----
+PKTC dissector crash :
+https://www.wireshark.org/security/wnpa-sec-2016-22.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12206
+
+PKTC dissector crash :
+https://www.wireshark.org/security/wnpa-sec-2016-23.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12242
+
+IAX2 infinite loop :
+https://www.wireshark.org/security/wnpa-sec-2016-24.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12260
+
+Wireshark and TShark crash :
+https://www.wireshark.org/security/wnpa-sec-2016-25.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12268
+
+GSM CBCH dissector crash :
+https://www.wireshark.org/security/wnpa-sec-2016-26.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12278
+
+MS-WSP dissector crash :
+https://www.wireshark.org/security/wnpa-sec-2016-27.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12341
+
+Cheers,
+        Moritz
