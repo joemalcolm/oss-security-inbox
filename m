@@ -1,68 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/11/1
-Message-ID: <njfkjh$lk7$1@ger.gmane.org>
-Date: Sat, 11 Jun 2016 02:05:05 +0200
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: MantisBT: XSS in custom fields management
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/25/2
+Message-Id: <20160425213611.A443C6C09ED@smtpvmsrv1.mitre.org>
+Date: Mon, 25 Apr 2016 17:36:11 -0400 (EDT)
+From: cve-assign@...re.org
+To: jmm@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...eshark.org
+Subject: Re: CVE requests: Multiple Wireshark vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Please assign a CVE ID for the following issue.
+> there's quite a backlog of Wireshark vulnerabilities which don't
+> have CVE IDs assigned:
 
-Description:
+The CVEs for the latest Wireshark advisories (19 through 28) are
+already on the cve.mitre.org web site, and the CVE IDs were sent to
+the upstream vendor yesterday. We realize that they aren't yet on the
+https://www.wireshark.org/security/wnpa-sec-2016-##.html pages.
 
-An XSS vulnerability was discovered, affecting MantisBT Custom fields 
-management pages. It is caused by unescaped output of 'return URL' GPC 
-parameter, and can be exploited as follows:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4076
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4077
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4078
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4079
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4080
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4081
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4006
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4082
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4083
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4084
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4085
 
-1. using 'accesskey' inside hidden input field reflects XSS to the
-    administrator in manage_custom_field_edit_page.php when the keyboard
-    shortcut is actioned
-2. using 'javascript:' URI scheme executes the code when the user clicks
-    the [Proceed] link on manage_custom_field_update.php after updating
-    a custom field
+The upstream vendor did not send a request to MITRE for 12 through 18.
+We will process those soon.
 
-Both attack vectors have been addressed:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-- properly escape the return URL prior to printing it on the hidden form
-   field
-- let html_operation_successful() sanitize the URL before displaying
-   it, just like html_meta_redirect() does. In this case, if the
-   string contains an URI scheme, it will be replaced by 'index.php'
-
-
-Affected versions:
-1.2.0 and later (possibly older releases as well - not tested)
-
-Fixed in versions:
-- 1.2.20
-- 1.3.0-rc.2
-As of this writing, these have not been released yet, but both should be 
-available in the next few days.
-
-Patch:
-See Github [1]
-
-Credits:
-The issue was discovered by Kacper Szurek [2] and fixed by Damien Regad
-(MantisBT Developer).
-
-References:
-Further details available in our issue tracker [3]
-
-
-Best regards,
-D. Regad
-MantisBT Developer
-http://www.mantisbt.org
-
-
-[1] http://github.com/mantisbt/mantisbt/commit/5068df2d (1.2.x)
-     http://github.com/mantisbt/mantisbt/commit/11ab3d6c (1.3.x)
-[2] http://security.szurek.pl/
-[3] https://mantisbt.org/bugs/view.php?id=20956
-
-
-
+iQIcBAEBCAAGBQJXHo1nAAoJEHb/MwWLVhi2WUgP/1TMEQFWSvfkEqhiIKd2vFOA
+F+7QOUVOEgwzecoLvcYWXj9NO8qDNzDmGXPEVseaXmfwasZ1hsOiIZJHcQnaRcqN
+mSo+YDw6H4edGPT/iobiBy8gucV3dyvbyeJYDlpbPyLAowZLt1PAv2F9GeNcfTz+
+xlja225h0TVBa999vK2Umg0XA+Oa4RXSlcXoqgz4qPfIqbtFw1zC4Dp2gxktbi0U
+RA5aAduQxCeu4F0DX/d9XNDvf0zLJizwkOknkRflMeagxqA2zrN3hRTEFzxf+RRg
+/kYlVhskSbic5bh4E+TBq5urw9wqztcHIInAfj2EFGCYDTpzXp0O/voyrh8CpA+C
+Y41HuOv9NiFcIiolKt/dbLg/6G3Mpwbf7J0d78Knv4ACgDLV7YkQ2fPENSsn526F
+ZHhMnGa/5O+xS0HcAcFl6u8Vo/71IJkepYUo+736+WhWa7dQB5vq96bCq/TzuD0F
+/M3kWTW5n75/S/qo+Uf/QWvD2/tA6UtKs3DUgYHfQdYU4T0JldAvMO5tTwefglot
+OWiAVRDz1eBUpoWT7FGYXcm8w3CRwHaXtU5hU1fLuriWBMl0gjC7jLhtBjEMjkAb
+EqQiw5222T3b7NjD3cruLqkNiRawSi2S8f2AmNMFAhOt8aPJl3lPFJ6YBdTjfpdv
+VpuTfFjKSt1zsCdfLCA3
+=g9RN
+-----END PGP SIGNATURE-----
