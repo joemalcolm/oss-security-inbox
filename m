@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/28/7
-Message-ID: <569930062.30129018.1456680298679.JavaMail.zimbra@redhat.com>
-Date: Sun, 28 Feb 2016 12:24:58 -0500 (EST)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request -- linux kernel: visor: crash on invalid USB device descriptors in treo_attach() in visor driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/26/1
+Message-ID: <20160426052013.GA4299@lorien.valinor.li>
+Date: Tue, 26 Apr 2016 07:20:13 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: vtun: denial-of-service: high CPU usage after SIGHUP
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi
 
-If possible, we would like to obtain a CVE-ID for the following issue.
+There exists a denial-of-service vulnerability in vtun, resulting in
+high CPU usage after SIGHUP to a vtun client process.
 
-Let me please, note, that this flaw is very similar to already existing
-CVE-2015-7566 (https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7566).
-This is the same type of a flaw, which just exists in the different function
-treo_attach() (instead of clie_5_attach()), so probably we can use the same
-CVE-2015-7566 for this.
+Debian Bugreport: https://bugs.debian.org/818489 (contains proposed
+patch)
 
-Description:
+Additional references:
 
-A local kernel crash on invalid USB device requiring the visor driver was reported.
-The treo_attach() function of the [visor] driver, which is called during the driver
-initialization process, was dereferencing the bulk-in and interrupt-in urbs without
-first making sure they had been allocated by the core. Due to an incomplete sanity
-check, the visor driver tries to dereference null-pointers, which results in crash. 
+https://bugzilla.redhat.com/show_bug.cgi?id=1319858
+https://lists.fedoraproject.org/pipermail/package-announce/2016-April/181383.html
 
-References:
+Could you assign a CVE for this issue?
 
-Red Hat public Bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1312670
-
-An upstream patch: http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=cb3232138e37129e88240a98a1d2aba2187ff57c
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+Regards,
+Salvatore
