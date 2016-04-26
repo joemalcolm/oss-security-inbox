@@ -1,45 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/11
-Message-ID: <e27fe29d768b4d2787b24e8c35e19913@imshyb02.MITRE.ORG>
-Date: Thu, 10 Nov 2016 12:31:08 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: libming: listmp3: left shift in listmp3.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/26/2
+Message-ID: <602dadcb-a30f-30ff-d0e6-08d6936ab60a@integrity.pt>
+Date: Tue, 26 Apr 2016 11:32:45 +0100
+From: Fábio Pires <fp@...egrity.pt>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Insecure Direct Object Reference in OSTicket (last versions availablle)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> https://blogs.gentoo.org/ago/2016/11/09/libming-listmp3-left-shift-in-listmp3-c
-> 
-> if you have a web application that calls directly the
-> listmp3 binary to parse untrusted mp3, then you are affected.
-> 
-> listmp3.c:94:23: runtime error: left shift of negative value -1
-> listmp3.c:95:23: runtime error: left shift of negative value -1
+Can i have a CVE ID assigned to this: "Insecure Direct Object Reference
+in OSTicket attachments" ?
 
-Use CVE-2016-9266.
+https://labs.integrity.pt/advisories/insecure-direct-object-reference-in-osticket-attachments/
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+References:
 
-iQIcBAEBCAAGBQJYJK07AAoJEHb/MwWLVhi2xnIP/iMrmWEcLGxqkTjHbe/42kYD
-VyEq/lC0HbGi+5xvI5qLcC3AhmUC4WnpkyzNzOMh+fynNiojxM6qjWVsPHx5oWqd
-pUPBjGgZ08zdprhG9ovk5WE8+05ndCwSr47XJyyyJh6e3rUE4Le8wFs7AP7Qi0Lf
-7zOkVw1d8fAYYFg1UKToNilbuLFYwJmbEIjVZorhjH/8GJxhYqIk5HWWfBHGNyD7
-Huxvr9SXciyqhVKy+wOlSx9CU/M61iCXl4F+3cbnqX4xfFwoDUTRmbtHBJYXRBX4
-F2o2Ouh7Xvl5dBR4d9QN6s9Lw3hAY28Mz5E74h9u2QqzuRbNnArKfUe5npTYM3V0
-FSFZcv3e00Nojvsb1HvwVbpWnrGqv+ki9GbXAioBxJtuYWCV5MEguhq898nTRo1q
-WI2ZuyE7xapCEWYygz/W7Lc4UuIEHrZC7NvQs6IaICbGSbcbfl3/kwe14Z02K5fL
-AAteRtSd5DG97hZ6xhIdZhySxTXfa7mwmtaZpdKIYt1hKlwubDAtyrBDyFEle+mj
-AEUM/ynACAT3JMlR3KmFSdShluKbqo2s/DpsaA3SiXKNKbj5DLTo9U530AmvIQPq
-0qYTDeeb7p2POFf/nJg3RiUgPnLUl44lNskI5xyZVwmlLfi1a7hLaKQ1rUzXYZqR
-j+6hvOFIw29NRzOZWo6o
-=/BbH
------END PGP SIGNATURE-----
+https://github.com/osTicket/osTicket-1.8/issues/2615
+https://github.com/osTicket/osTicket-1.8/pull/2618
+
+Regards
+
+
+-- 
+
+Fabio Pires
+Pentesting Team
+
+*INTEGRITY Portugal*
+
+Av. João Crisóstomo, 30 5º
+1050-127 | Lisboa* -* Portugal
+Tel. +351 21 33 03 740 . Mob (+351) 93 65 50 016
+
+www.integrity.pt <http://www.integrity.pt/> – www.keepitsecure24.com
+<http://www.keepitsecure24.com/>
+
+
+	
+
+*INTEGRITY United Kingdom*
+
+Suite 4B | 43 Berkeley Square
+
+Mayfair, Westminster | London W1J 5FJ - UK
+
+
+
+
+
+Content of type "text/html" skipped
+
+Download attachment "logo_integrity.png" of type "image/png" (11151 bytes)
+
+Download attachment "logos.png" of type "image/png" (28623 bytes)
