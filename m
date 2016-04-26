@@ -1,4 +1,9 @@
-Received: (qmail 5266 invoked by uid 550); 27 Jan 2025 06:34:44 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["422" "Tuesday" "26" "April" "2016" "07:20:13" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160426052013.GA4299@lorien.valinor.li>" "17" "[oss-security] CVE Request: vtun: denial-of-service: high CPU usage after SIGHUP" nil nil nil "4" "2016042605:20:13" "[oss-security] CVE Request: vtun: denial-of-service: high CPU usage after SIGHUP" (number mark "U       carnil@debia Apr 26   17/422   " thread-indent "\"[oss-security] CVE Request: vtun: denial-of-service: high CPU usage after SIGHUP\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28567 invoked by uid 550); 26 Apr 2016 05:20:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,65 +12,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5229 invoked from network); 27 Jan 2025 06:34:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1737959674;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=CZEWEzncxiHWspAWr3JSfgGNIuUskoAY9haONERFGoA=;
-	b=W42nZSCQGsTBlBbeIsSjcg1C7knd53G3pggjHknRUZt19xXEqNTuVoW5TVKlglYCQjCUle
-	a0JfJIyNQpRAdpB9kY4qwXbeDYpBz4tKByvbJdUnfgBJxLBQudW3hhBPF8Hkkr8ypUzOlu
-	ssFJzeTvAMadAUh9AcMP/1E11BUoPHc=
-X-MC-Unique: Xr1yLbayOZaDE7QnpsjK6Q-1
-X-Mimecast-MFC-AGG-ID: Xr1yLbayOZaDE7QnpsjK6Q
-From: Florian Weimer <fweimer@redhat.com>
-To: Pete Allor <pallor@redhat.com>
-Cc: oss-security@lists.openwall.com
-In-Reply-To: <CAEFCzXX4sU9ps3PLcgjOS84+bKAb1qXy_koJdGNMqKokEsDbgg@mail.gmail.com>
-	(Pete Allor's message of "Sat, 25 Jan 2025 08:43:25 -0500")
-References: <Z4__rJ3_SmmtEIsG@netmeister.org>
-	<0a34f769-2a8d-4726-b9d7-6238ec3846e7@oracle.com>
-	<2025012512-likely-strainer-4e6d@gregkh>
-	<CAEFCzXX4sU9ps3PLcgjOS84+bKAb1qXy_koJdGNMqKokEsDbgg@mail.gmail.com>
-Date: Mon, 27 Jan 2025 07:34:27 +0100
-Message-ID: <87bjvssr2k.fsf@oldenburg3.str.redhat.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Received: (qmail 28549 invoked from network); 26 Apr 2016 05:20:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=Aeo2VGeRDHCUJKYYocUIhzDuq0mfLfGIfo0t+vImGr4=;
+        b=sAWqS7ryLRO1ZcSLSjnyNgViGiKe24fUKpJqzAGLV27bzVzBAKdOPdUI3M/it/4gM9
+         q2ZIGf/hJmBp/DitoFEAbHJqXnw6BEMsMPZc1IVTNF7wTjZHcMzx0AP0W/X1eZgEVvSX
+         HKY0SnAawKTjT00mX+l8pFK+NUjOhkaf7N3uZvLMJCpGvdZPz+PvfbaSri6/WbNGHHMs
+         UuiIzHBx2E0Z3FMM7pnLv4fnrPK/iXgV1ztNv0Kh5mmesBpQ1rIyU/eTorsjNmH+Dsj/
+         mBDr+20M2RuanT+UNlEu8VdFwP9PEmOedGKbr7FulSGCUt62WyVxLWz78U/KTcMjYyhp
+         5V1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=Aeo2VGeRDHCUJKYYocUIhzDuq0mfLfGIfo0t+vImGr4=;
+        b=P3XmiScvAK/lTIgGaHFGVu90g2tPP4gFQxgKRNLe9b8tTVTk/Yjv/ntbO+eHR9WjKL
+         sHso68ynJ3WAbNgVjfK6JKCoeGs+DHLAwiCQ8no5+IUBtCvldQZprfY4nQrpZTQNgj8D
+         XyEQBLyc1IwTmLaAITVpavHoEAwSCiEbcZgx5V7vzE8+pZB8nefEMGeHREs1AQ1Lox8n
+         I7+cqUQX1zJvQIXJBwomD0A4kVze1GdLJTf2eKi2U2s20HBLW3tPnCsBon1JlZm7qWRL
+         MBGHAT2d+WDIttOAb3WgtwuOAitnmZ/3sgRZ7q97Yx+wBA7WQE/ezgHNCB34RXWVgEMf
+         p23Q==
+X-Gm-Message-State: AOPr4FVFj/dx+Hr6WSGbyTGgLZxzJjhhMEkC+ruCM4rZRS4BAa5xjG6TDEWSGG1GP1E+MQ==
+X-Received: by 10.28.0.87 with SMTP id 84mr14849283wma.68.1461648015149;
+        Mon, 25 Apr 2016 22:20:15 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Tue, 26 Apr 2016 07:20:13 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Message-ID: <20160426052013.GA4299@lorien.valinor.li>
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: PzMXLcjaSs9c6RwPZRqoDh-F-cw-1o47Wep5QYyT4U0_1737959672
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain
-Subject: Re: [oss-security] Node.js EOL CVEs: CVE-2025-23087,
- CVE-2025-23088, CVE-2025-23089
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: [oss-security] CVE Request: vtun: denial-of-service: high CPU usage after SIGHUP
 
-* Pete Allor:
+Hi
 
-> I do agree with Greg K-H that open source projects should become CNAs.
-> But do want to note that missing elements of the CVE when submitting
-> allows CISA-ADP to 'vulnrich' your data.  Here is where
-> misinterpretation and/or lack of understanding by CISA confuses
-> downstream users and once you gain that 'critical' stigma in the
-> system, you have to be persistent to get that changed.
->
-> Is that a problem?  I think so and so do a number of PSIRTs so now we
-> have to contend with CISA-ADP and NVD to adjust their scores when the
-> CNA is 'the authoritative source' within the CVE Program.
+There exists a denial-of-service vulnerability in vtun, resulting in
+high CPU usage after SIGHUP to a vtun client process.
 
-The larger problem is that component scoring tends to be higher than
-whole-system scoring.  If a security component fails in its security
-function, it certainly deserves an impact rating that reflects that it's
-totally broken due to the vulnerability.  But if this component is
-integrated into a larger system, impact is often lower and might even be
-insignificant due to the way the component is used.
+Debian Bugreport: https://bugs.debian.org/818489 (contains proposed
+patch)
 
-The current system does not really reflect that.  One way to deal with
-it could be to treat everything as a fork, but not to decouple from
-upstream changes, but to make it clear that the upstream impact ratings
-do not apply.
+Additional references:
 
-Thanks,
-Florian
+https://bugzilla.redhat.com/show_bug.cgi?id=1319858
+https://lists.fedoraproject.org/pipermail/package-announce/2016-April/181383.html
 
+Could you assign a CVE for this issue?
+
+Regards,
+Salvatore
