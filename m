@@ -1,57 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/11
-Message-ID: <569E7AA1.1040700@redhat.com>
-Date: Tue, 19 Jan 2016 19:04:17 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: CVE assignment request for security bugs fixed in glibc 2.23
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/27/3
+Message-ID: <tencent_62222EFF74B667984E9F8E5B@qq.com>
+Date: Wed, 27 Apr 2016 11:36:32 +0800
+From: "PXO炳林" <271193918@...com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: 3 bugs refer to buffer overflow in in libtiff 4.0.6
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-we are preparing the glibc 2.23 release upstream and have fixed the
-following security bugs which, to my best knowledge, lack public CVE
-assignment so far:
-
-Passing out of range data to strftime() causes a segfault
-https://sourceware.org/bugzilla/show_bug.cgi?id=18985
-
-Out-of-range time values passed to the strftime function may cause it to
-crash, leading to a denial of service, or potentially disclosure
-information.
-
-LD_POINTER_GUARD is not ignored for privileged binaries
-https://sourceware.org/bugzilla/show_bug.cgi?id=18928
-
-LD_POINTER_GUARD was an environment variable which controls
-security-related behavior, but was not ignored for privileged binaries
-(in AT_SECURE mode).  This might allow local attackers (who can supply
-the environment variable) to bypass intended security restrictions.
-
-hcreate((size_t)-1) should fail with ENOMEM
-https://sourceware.org/bugzilla/show_bug.cgi?id=18240
-
-This is an integer overflow in hcreate and hcreate_r which can result in
-an out-of-bound memory access.  This could lead to application crashes
-or, potentially, arbitrary code execution.
-
-nan function unbounded stack allocation
-https://sourceware.org/bugzilla/show_bug.cgi?id=16962
-
-A stack overflow (unbounded alloca) can cause applications which process
-long strings with the nan function to crash or, potentially, execute
-arbitrary code.
-
-catopen() Multiple unbounded stack allocations
-https://sourceware.org/bugzilla/show_bug.cgi?id=17905
-
-A stack overflow (unbounded alloca) in the catopen function can cause
-applications which pass long strings to the catopen function to crash
-or, potentially execute arbitrary code.
+Hello oss-security,
 
 
-Several people have asked for CVE assignment for swbz#18928 on
-oss-security already.
+I did some test and found three bugs refer to buffer overflow: one stack buffer overflow in thumbnail and two buffer overflows in bmp2tiff. 
 
-Thanks,
-Florian
+
+Please let me know whether CVE Identifier number could be assigned.
+
+
+Overview:
+
+
+Running each poc file crashes thumbnail and bmp2tiff made with AddressSanitizer in tiff-4.0.6. I have attached poc and log files . 
+
+
+Steps to Reproduce:
+
+
+1) download the source code of tiff-4.0.6 from url (http://download.osgeo.org/libtiff/tiff-4.0.6.tar.gz) and compile it with gcc AddressSanitizer
+2) cd the directory where the bmp2tiff with Asan is and put a poc
+3) run a poc file with bmp2tiff made with AddressSanitizer (ASan) in tiff-4.0.6
+4) eg: ./bmp2tiff ./crashes/poc_745.bmp 1.tiff; ./bmp2tiff ./crashes/poc_775.bmp 1.tiff
+
+
+Actual Results: The application thumbnail and bmp2tiff 4.0.6 crashed after run the poc. Asan detect crashes.
+
+
+
+------------------
+From Debug_Orz
+Content of type "text/html" skipped
+
+Download attachment "thumbnail_bmp2tiff_pocs_logs.7z" of type "application/octet-stream" (56644 bytes)
