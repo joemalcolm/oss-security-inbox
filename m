@@ -1,4 +1,9 @@
-Received: (qmail 11712 invoked by uid 550); 3 Jul 2024 07:51:53 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["911" "Wednesday" "27" "April" "2016" "03:03:47" "+0000" "=?gb2312?B?wO7Hvw==?=" "liqiang6-s@360.cn" "<143C0AFC63FC204CB0C55BB88F3A8ABBE376A3@EX01.corp.qihoo.net>" "18" "[oss-security] CVE Request: Out-of-bands write issue found in qemu" nil nil nil "4" "2016042703:03:47" "[oss-security] CVE Request: Out-of-bands write issue found in qemu" (number mark "U       liqiang6-s@3 Apr 27   18/911   " thread-indent "\"[oss-security] CVE Request: Out-of-bands write issue found in qemu\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5406 invoked by uid 550); 27 Apr 2016 03:14:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,139 +12,39 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5978 invoked from network); 3 Jul 2024 07:51:02 -0000
-Date: Wed, 3 Jul 2024 09:50:55 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20240703075055.GA4532@openwall.com>
-References: <20240701083838.GA12787@localhost.localdomain> <6684B10C.3070904@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6684B10C.3070904@gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2024-6387: RCE in OpenSSH's server, on glibc-based Linux systems
+Received: (qmail 32514 invoked from network); 27 Apr 2016 03:04:03 -0000
+From: =?gb2312?B?wO7Hvw==?= <liqiang6-s@360.cn>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+CC: "cve-assign@mitre.org" <cve-assign@mitre.org>
+Thread-Topic: CVE Request: Out-of-bands write issue found in qemu
+Thread-Index: AdGgKHG0aj7gCi2CTQ6qPBRkMMIP+Q==
+Date: Wed, 27 Apr 2016 03:03:47 +0000
+Message-ID: <143C0AFC63FC204CB0C55BB88F3A8ABBE376A3@EX01.corp.qihoo.net>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.18.213.35]
+Content-Type: multipart/alternative;
+	boundary="_000_143C0AFC63FC204CB0C55BB88F3A8ABBE376A3EX01corpqihoonet_"
+MIME-Version: 1.0
+Subject: [oss-security] CVE Request: Out-of-bands write issue found in qemu
 
-On Tue, Jul 02, 2024 at 09:01:48PM -0500, Jacob Bachmeyer wrote:
-> Qualys Security Advisory wrote:
-> >SSH-2.0-OpenSSH_4.2p1 Debian-7ubuntu3 (Ubuntu 6.06.1, from 2006)
-> >========================================================================
-> >
-> >[...]
-> >
-> >------------------------------------------------------------------------
-> >Practice
-> >------------------------------------------------------------------------
-> >
-> >    I learned everything the hard way
-> >        -- The Interrupters, "The Hard Way"
-> >
-> >To mount this attack against sshd, we initially faced three problems:
-> >
-> >- The House of Mind requires us to store the pointer to our fake arena
-> >  at address 0x08100000 in the heap; but are we able to store attacker-
-> >  controlled data at such a high address? Because sshd calls pam_start()
-> >  at the very beginning of the user authentication, we do not control
-> >  anything except the user name itself; luckily, a user name of length
-> >  ~128KB (shorter than DEFAULT_MMAP_THRESHOLD) allows us to store our
-> >  own data at address 0x08100000.
-> >
-> >[...]
-> >
-> >Finally, our long user name also allows us to control the potentially
-> >uninitialized next field of 20 different structures (through leftovers
-> >from temporary copies of our long user name), because pam_start() calls
-> >_pam_add_handler() multiple times; i.e., our large race window contains
-> >20 small race windows.
+--_000_143C0AFC63FC204CB0C55BB88F3A8ABBE376A3EX01corpqihoonet_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-> A thought occurred to me late last night:  this exploit required the use 
-> of a very long fake user name (~128KB).  No legitimate account will have 
-> such a name; should defense-in-depth motivate limiting maximum user name 
-> length to some (un)reasonable value?  (The actual longest user name on 
-> the system cannot be used to set the limit because doing that would leak 
-> the length of the longest valid user name.)  I doubt any real system has 
-> even 256-byte-long user names, so a 1KiB limit (perhaps by default, with 
-> a configuration option (I propose "MaxLoginNameLen" to start a 
-> discussion) to raise or lower it?) would be far beyond any reasonable 
-> need, but would (or so it seems to me) have made at least this exploit 
-> much harder, if not impossible.
-> 
-> There may actually be a case for putting the user name into a static 
-> buffer here:  its length should be limited anyway to prevent abuse and 
-> keeping it away from the heap may be helpful as a defense-in-depth measure.
-> 
-> If there currently really is no limit at all, outrageously long fake 
-> usernames (limited only by bandwidth and LoginGraceTime?) could be 
-> directly used for a simple denial-of-service by consuming memory on the 
-> server, given sufficient bandwidth available to an attacker.
+SGksDQoNClRoZSBxZW11IGhhcyBhbiBvdXQtb2YtYmFuZHMgYnVnIGluIHVh
+cnRfd3JpdGUoKSBmdW5jdGlvbi4NCg0KSW4gdWFydF93cml0ZSgpIGZ1bmN0
+aW9uIGZyb20gaHcvY2hhci9jYWRlbmNlX3VhcnQuYywgdGhlIKGub2Zmc2V0
+oa8gaXNuoa90IGNoZWNrZWQgYW5kIGFmdGVyIGl0IGlzIGRpdmlkZWQgYnkg
+NCBhbmQgdXNlZCB0byBpbmRleCB0aGUgoa5yoa8gYXJyYXksIGl0IHdpbGwg
+Y2F1c2UgYW4gb3V0LW9mLWJhbmRzIG1lbW9yeSB3cml0ZS4gVGhlIHZhbHVl
+IGNhbiBiZSBjb250cm9sbGVkIGJ5IGd1ZXN0IGFuZCBjYW4gY2F1c2UgdGhl
+IHFlbXUgY3Jhc2ggb3IgY29kZSBleGVjdXRpb24gb24gaG9zdC4NCg0KVGhl
+IHBhdGNoIGlzIGhlcmU6DQpodHRwczovL2xpc3RzLm5vbmdudS5vcmcvYXJj
+aGl2ZS9odG1sL3FlbXUtZGV2ZWwvMjAxNi0wNC9tc2cwMjcxMS5odG1sDQoN
+ClRoYW5rcywNCg0KTGkgUWlhbmcgb2YgdGhlIENsb3VkIFNlY3VyaXR5IFRl
+YW0sIFFpaG9vIDM2MCBJbmMuDQoNCg==
 
-Actually, a related change was made in OpenSSH 8.5, but was "only
-enabled for Sun-derived PAM implementations."  Perhaps it should be
-generalized and enabled unconditionally, including without PAM.
-
-https://www.openwall.com/lists/oss-security/2021/03/03/1
-
- * Portable sshd(8): Prevent excessively long username going to PAM.
-   This is a mitigation for a buffer overflow in Solaris' PAM username
-   handling (CVE-2020-14871), and is only enabled for Sun-derived PAM
-   implementations.  This is not a problem in sshd itself, it only
-   prevents sshd from being used as a vector to attack Solaris' PAM.
-   It does not prevent the bug in PAM from being exploited via some
-   other PAM application. GHPR#212
-
-commit fcf429a4c69d30d8725612a55b37181594da8ddf
-Author: Darren Tucker <dtucker@dtucker.net>
-Date:   Wed Nov 11 12:30:46 2020 +1100
-
-    Prevent excessively long username going to PAM.
-    
-    This is a mitigation for a buffer overflow in Solaris' PAM username
-    handling (CVE-2020-14871), and is only enabled for Sun-derived PAM
-    implementations.  This is not a problem in sshd itself, it only
-    prevents sshd from being used as a vector to attack Solaris' PAM.
-    It does not prevent the bug in PAM from being exploited via some other
-    PAM application.
-    
-    Based on github PR#212 from Mike Scott but implemented slightly
-    differently.  ok tim@ djm@
-
-diff --git a/auth-pam.c b/auth-pam.c
-index 832382151..d429ef13a 100644
---- a/auth-pam.c
-+++ b/auth-pam.c
-@@ -689,6 +689,12 @@ sshpam_init(struct ssh *ssh, Authctxt *authctxt)
-        const char *pam_user, *user = authctxt->user;
-        const char **ptr_pam_user = &pam_user;
- 
-+#if defined(PAM_SUN_CODEBASE) && defined(PAM_MAX_RESP_SIZE)
-+       /* Protect buggy PAM implementations from excessively long usernames */
-+       if (strlen(user) >= PAM_MAX_RESP_SIZE)
-+               fatal("Username too long from %s port %d",
-+                   ssh_remote_ipaddr(ssh), ssh_remote_port(ssh));
-+#endif
-        if (sshpam_handle == NULL) {
-                if (ssh == NULL) {
-                        fatal("%s: called initially with no "
-
-This was shortly after the following lengthy blog post:
-
-https://cloud.google.com/blog/topics/threat-intelligence/live-off-the-land-an-overview-of-unc1945/
-
-I'll quote some pieces from it:
-
-> Live off the Land? How About Bringing Your Own Island? An Overview of UNC1945
-> November 2, 2020
-> Mandiant
-> Written by: Justin Moore, Wojciech Ledzion, Luis Rocha, Adrian Pisarczyk, Daniel Caban, Sara Rincon, Daniel Susin, Antonio Monaca
-
-> Initial Compromise
-> 
-> In late 2018, UNC1945 gained access to a Solaris server and installed a backdoor we track as SLAPSTICK in order to capture connection details and credentials to facilitate further compromise. The SSH service of this server was exposed to the internet at the time, the same time we observed first evidence of threat activity. Unfortunately, due to insufficient available evidence, the next indication of activity was in mid-2020 at which time a different Solaris server was observed connecting to the threat actor infrastructure. This indicates a dwell time of approximately 519 days based on recovered artifacts.
-> 
->     Although we were unable to determine how the late-2018 initial access was accomplished, we did observe successful UNC1945 SSH connections directly to the victim Solaris 10 server, since the SSH service was exposed directly to the internet at the time.
->     In mid-2020, we observed UNC1945 deploy EVILSUN - a remote exploitation tool containing a zero-day exploit for CVE-2020-14871 - on a Solaris 9 server. At the time, connections from the server to the threat actor IP address were observed over port 8080.
->         Mandiant discovered and reported CVE-2020-14871, a recently patched vulnerability in the Oracle Solaris Pluggable Authentication Module (PAM) that allows an unauthenticated attacker with network access via multiple protocols to exploit and compromise the operating system.
->         According to an April 2020 post on a black-market website, an "Oracle Solaris SSHD Remote Root Exploit" was available for approximately $3,000 USD, which may be identifiable with EVILSUN.
->         Additionally, we confirmed a Solaris server exposed to the internet had critical vulnerabilities, which included the possibility of remote exploitation without authentication.
-
-Alexander
+--_000_143C0AFC63FC204CB0C55BB88F3A8ABBE376A3EX01corpqihoonet_--
