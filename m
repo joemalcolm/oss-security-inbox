@@ -1,18 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/27/11
-Message-ID: <CACn5sdRcZ7YGWxfGf2NsJnb0tiJkCZQR7jkARtJZoZujjcFJ6A@mail.gmail.com>
-Date: Wed, 27 Jul 2016 22:26:01 +0200
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/27/9
+Message-ID: <CAKkdKCDAQKRooFGPmn94LufqzPXiYcXYoj81T01nXg7tO0BMKA@mail.gmail.com>
+Date: Wed, 27 Apr 2016 15:30:03 -0400
+From: Tony Homer <tony--@...che.org>
+To: dev@...dova.apache.org, private@...dova.apache.org,  "JPCERT/CC" <vuls@...ert.or.jp>, security@...che.org, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: CVE-2015-5208 - Arbitrary plugin execution issue in Apache Cordova iOS
 Content-Type: text/plain; charset=utf-8
 
-> Use CVE-2016-6352.
+CVE-2015-5208 - Arbitrary plugin execution issue in Apache Cordova iOS
 
-Also, the upstream report is here:
+Severity:
+High
 
-https://bugzilla.gnome.org/show_bug.cgi?id=769170#
+Vendor:
+The Apache Software Foundation
 
-and they said:
+Versions Affected:
+cordova-ios 3.9.1 and below
 
-> I have reproduced this with 2.30.7, 2.31.1 and 2.35.2. It doesn't happen with 2.26.1.
+Description:
+An arbitrary plugin can be executed when a user clicks on a link.
+
+Upgrade path:
+Developers who are concerned about this issue should install version
+4.0.0 or higher of the cordova-ios platform.
+
+Credit:
+This issue was discovered by Muneaki Nishimura (nishimunea) of Recruit
+Technologies Co.,Ltd.
