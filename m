@@ -1,108 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/01/4
-Message-ID: <CAK=Phk5nKihccv7WS8Wi8x7AbSDU4Osk2-Z=VF-avbCGqQ6TGA@mail.gmail.com>
-Date: Fri, 1 Jul 2016 18:12:46 -0400
-From: Sylvain Corlay <sylvain.corlay@...il.com>
-To: oss-security@...ts.openwall.com, Fernando Perez <fperez@....gov>,  Matthias Bussonnier <mbussonnier@...keley.edu>, Jamie Whitacre <whitacre@...keley.edu>
-Subject: CVE Request: ipywidgets executes untrusted JavaScript
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/27/7
+Message-ID: <5720DBF1.4010200@qrator.net>
+Date: Wed, 27 Apr 2016 18:34:09 +0300
+From: Evgeny Uskov <eu@...tor.net>
+To: oss-security@...ts.openwall.com
+Cc: noc@...tor.net
+Subject: CVE-2016-4049: Denial of Service Vulnerability in Quagga BGP Routing Daemon (bgpd)
 Content-Type: text/plain; charset=utf-8
 
-*Description*
+Hello,
 
-ipywidgets version 5.1.5 (and the companion package widgetsnbextension
-1.2.3) fixes a security vulnerability which affects the usage of ipywidgets
-in conjunction with the Jupyter Notebook. (The GitHub repository for the
-project is https://github.com/ipython/ipywidgets)
+About 3 months ago we found the following vulnerability in BGP daemon
+from Quagga routing software (bgpd): if the following conditions are
+satisfied:
+ - regular dumping is enabled
+ - bgpd instance has many BGP peers
+then BGP message packets that are big enough cause bgpd to crash.
+The situation when the conditions above are satisfied is quite common.
+Moreover, it is easy to craft a packet which is much "bigger" than a
+typical packet, and hence such crafted packet can much more likely cause
+the crash.
 
-*Affected versions*
+The reason of such behavior is as follows. The function
+bgp_dump_routes_func in bgpd/bgp_dump.c does not perform any size checks
+when writing data to bgp_dump_obuf. For each bgp_node table record it
+tries to dump all data to bgp_dump_obuf stream which is of limited size.
+If there is no free space in this stream, the assertion fails and bgpd
+crashes.
 
-The affected versions of ipywidgets are:
+The problem seems to be quite serious since it may occur if bgpd has
+many BGP peers announcing the same prefix (e.g. if bgpd is used as BGP
+reflector, on Internet Exchanges etc), and regular dumping is enabled.
+In our case "many" was equal to 20.
 
-ipywidgets version 5.0.0 ≤ V ≤ 5.1.4 (and widgetsnbextension < 1.2.3), …
+The easiest way to reproduce the problem:
+1) add 150 BGP neighbors announcing the same prefix
+2) write "dump bgp routes-mrt bview.dat" command to the telnet console.
 
-Only users who installed ipywidgets using pip or from source on the GitHub
-repository are affected.
+The easiest way to eliminate the problem is to create multiple MRT
+records if there is too much data for a prefix. Please see the attached
+file dump_fix.patch implementing such solution.
 
-Anaconda users are unaffected because the vulnerable version of ipywidget
-has never been released to the default conda channel.
+We contacted Quagga developers and sent them patches of this
+vulnerability. They responded that they are going to apply these patches
+in the next patching round:
+ - https://lists.quagga.net/pipermail/quagga-dev/2016-January/014699.html
+ - https://lists.quagga.net/pipermail/quagga-dev/2016-February/014743.html
+However, the vulnerability is still not patched and it is unclear how
+long to wait.
 
-*Resolution*
+This issue has been assigned the name CVE-2016-4049.
 
-We recently released ipywidgets version 5.1.5 (widgetsnbextension version
-1.2.3). You can check whether your system is affected by running the
-following command:
+--
+| Evgeny Uskov  | HLL l QRATOR
+| mob.: +7 916 319 33 20
+| skype: evgeny_uskov
+| mailto: eu@...tor.net
+| visit: www.qrator.net
 
-   >>> from distutils.version import LooseVersion as V
-   >>> import ipywidgets
-   >>> if V('5.0.0') <= V(ipywidgets.__version__) < V('5.1.5'):
-   >>>     print("Upgrade ipywidgets to 5.1.5")
 
-If your system is vulnerable, you will see the following output:
-
-    Upgrade ipywidgets to 5.1.5
-
-If your system is vulnerable please upgrade to ipywidgets version 5.1.5.
-Use the following command to install:
-
-   $ pip install "ipywidgets>=5.1.5"
-
-or
-
-   $ conda install "ipywidgets>=5.1.5"
-
-*Technical details*
-
-The vulnerability was discovered following an investigation of a potential
-vulnerability reported by Brian Granger to the ipython-security mailing
-list (security@...thon.org) on May 5.
-
-The reason for such behavior was determined on May 5 by Matthias Bussonnier.
-
-A fix was proposed written and reviewed, then [merged](
-https://github.com/ipython/ipywidgets/pull/591) into the development branch
-on May 20, and a non vulnerable version released on May 25.
-
-A widget snapshotting feature introduced in ipywidgets 5.0.0 (
-https://github.com/ipython/ipywidgets/pull/314/) allowed untrusted
-javascript code to execute in an untrusted notebook on loading and saving
-of a notebook.  A well crafted notebook could execute arbitrary code with
-the rights of the current user in the context of the page, the notebook
-server, and available kernels.
-
-We recommend immediate upgrade of the ipywidgets package.
-
-There is no simple configuration option that could mitigate the system for
-vulnerability. The user must upgrade to ipywidget version 5.1.5 or
-downgrade to 4.x.
-
-*Future Plan*
-
-The security issue resulted from the seemingly harmless combination of
-calls:
-
-    json = cell.get_json()
-    json = update_json(json)
-    cell.clear_output()
-    cell.from_json()
-
-The clear_output()  method has as a consequence to mark the cell as trusted
-(as it has no output that can potentially execute javascript). This is
-followed by the next call which can trigger JavaScript execution in the
-page context.
-
-We plan on improving the notebook API so that clear_output() does not
-change the trusted status of a cell (or a notebook), to prevent mistakes
-like this from having security consequences. This will lead to the slight
-behavior change that an empty cell with no output can be untrusted.
-
-We learned that we are not completely ready for fast release of security
-fixes. The time from vulnerability discovery to available fix, release, and
-announcement can and should be shorter.
-
-We encourage users who find possible security issues to notify
-security@...thon.org.
-
-Thanks!
-
-The Jupyter team
-
+View attachment "dump_fix.patch" of type "text/x-patch" (6413 bytes)
