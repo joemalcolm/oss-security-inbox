@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2483" "Friday" "29" "July" "2016" "11:58:43" "-0400" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20160729115843.386c87dc@pc1>" "67" "Re: [oss-security] Re: Use after free in my_login() function of DBD::mysql (Perl module)" "^Cc:" nil nil "7" "2016072915:58:43" "[oss-security] Re: Use after free in my_login() function of DBD::mysql (Perl module)" (number mark "        hanno@hboeck Jul 29   67/2483  " thread-indent "\"Re: [oss-security] Re: Use after free in my_login() function of DBD::mysql (Perl module)\"\n") "<abec12ab-d311-cbe6-f256-5c9df0af2008@gmail.com>" ("<20160727013203.C008FABC4E2@smtpvmsrv1.mitre.org>" "<abec12ab-d311-cbe6-f256-5c9df0af2008@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["749" "Wednesday" "27" "April" "2016" "15:19:16" "-0400" "Tony Homer" "ajh158@gmail.com" "<CAKkdKCC_PKa-s=jk9+Bq+bXcJ3_RmOH-Gs3BjDGMOje9WwMNUw@mail.gmail.com>" "17" "[oss-security] CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS" nil nil nil "4" "2016042719:19:16" "[oss-security] CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS" (number mark "U       ajh158@gmail Apr 27   17/749   " thread-indent "\"[oss-security] CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7385 invoked by uid 550); 29 Jul 2016 15:58:59 -0000
+Received: (qmail 3653 invoked by uid 550); 27 Apr 2016 19:24:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,86 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7361 invoked from network); 29 Jul 2016 15:58:58 -0000
-Message-ID: <20160729115843.386c87dc@pc1>
-In-Reply-To: <abec12ab-d311-cbe6-f256-5c9df0af2008@gmail.com>
-References: <20160727013203.C008FABC4E2@smtpvmsrv1.mitre.org>
-	<abec12ab-d311-cbe6-f256-5c9df0af2008@gmail.com>
-X-Mailer: Claws Mail 3.13.2 (GTK+ 2.24.30; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-20510-1469807926-0001-2"
-Cc: oss-security@lists.openwall.com
-Date: Fri, 29 Jul 2016 11:58:43 -0400
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Use after free in my_login() function of
- DBD::mysql (Perl module)
-To: lazytyped <lazytyped@gmail.com>
+Received: (qmail 1712 invoked from network); 27 Apr 2016 19:19:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to;
+        bh=gbemxcgG5lma4rKX3Wr+2HO7XzatUcRqVAoWV5LoXX0=;
+        b=Nsjej2rtGL7LEt3F6KuSbKPtGA2W2Csop+6QfXs7W3cNPiG+Hbxekuul0YJ8QBZLpL
+         sL9oIZI/nXuXR6k+NVUssIJ1xFVuVY+bn46sle9N5oS8+GSv+c6x7jLhFC7nLTrrFI89
+         brV0reJWqU+/ipyjpanrPheuoacf6rgTxVtnbgd17bmAEEXidSGn4VgE4MXThvnn37+j
+         RILmK9T7edoetoxJ0otPKXjAcn9OY76fEPsPjksFupjg+LipaBHU2ZiTllq3wapzUmai
+         H6+XctT9D2yi3mo//K3kdSCe4MseuNjzPDx3+Gn/GZWvzNOciRxdkFJjwxtcySgbMCyn
+         0ewA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
+        bh=gbemxcgG5lma4rKX3Wr+2HO7XzatUcRqVAoWV5LoXX0=;
+        b=ElARaZqXY0bPvggqONB3LfMpArPQCmN+QjuAxZEx0EeoM84HuXmjzMEVvnBfEo307A
+         4uMytxB6OuVwueEj8AJlYewarnv03KqxKY9NGmDuaERh2Nk6yiVMoa23CDp2hG+g9by7
+         8JdiS7B2a/8uM74Ky9ruxeGKn0BUoEkpKGrlM0stUZk/vNxJPheT23XynCfQajJGM52P
+         L15tWrqZW78GTI/wD50m2uVI5a/t609/PDAlsE8iCvMnHZ8ps0RRJhkq8c3nIw8t5RG2
+         rYtN/a1+vRJBoroYNNHCZwuY7zfSGD0eO0/G4tuESSBqhiB7A0xoVaSxX9M7A7VeGA3o
+         eKpw==
+X-Gm-Message-State: AOPr4FX7Yi3oFtkxFLLDUUpse4RFbW1wpKQtW+WrZWpXdFEWrH91/GgcvkolPuvWJB/WgT2tEb+p6GCEzB0H+A==
+MIME-Version: 1.0
+X-Received: by 10.50.146.196 with SMTP id te4mr29112361igb.3.1461784756434;
+ Wed, 27 Apr 2016 12:19:16 -0700 (PDT)
+Date: Wed, 27 Apr 2016 15:19:16 -0400
+Message-ID: <CAKkdKCC_PKa-s=jk9+Bq+bXcJ3_RmOH-Gs3BjDGMOje9WwMNUw@mail.gmail.com>
+From: Tony Homer <ajh158@gmail.com>
+To: dev@cordova.apache.org, private@cordova.apache.org, 
+	"JPCERT/CC" <vuls@jpcert.or.jp>, security@apache.org, oss-security@lists.openwall.com, 
+	bugtraq@securityfocus.com
+Content-Type: multipart/alternative; boundary=001a11c1c47425580405317c492b
+Subject: [oss-security] CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS
 
---=_zucker.schokokeks.org-20510-1469807926-0001-2
+--001a11c1c47425580405317c492b
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, 28 Jul 2016 06:31:20 -0700
-lazytyped <lazytyped@gmail.com> wrote:
+CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS
+Severity: High
+Vendor: The Apache Software Foundation
+Versions Affected:cordova-ios 3.9.1 and below
+Description:Apache Cordova iOS contains 2 methods to bypass the URL access
+restrictions provided by the whitelist. An attacker can use any of the 2
+methods to load malicious resources in an app that uses a whitelist to only
+load trusted resources.
+Upgrade path:Developers who are concerned about this issue should install
+version 4.0.0 or higher of the cordova-ios platform.
+Credit:This issue was discovered by Muneaki Nishimura (nishimunea) of
+Recruit Technologies Co.,Ltd.
 
-> Quick question:
->=20
-> - I guess the affecting function call is the following:
->=20
->    do_error(dbh, mysql_errno(imp_dbh->pmysql),
->                   mysql_error(imp_dbh->pmysql)=20
-> ,mysql_sqlstate(imp_dbh->pmysql));
->=20
-> which one of those calls provides an exploitation path? They seem all=20
-> reads off the free'd structure.
->=20
-> I see in the bug report: " (I think use after free's can be serious
-> and potentially lead to malfunction and security issues)" and would
-> like to understand more about the rationale.
-
-Hi,
-
-I don't have a practical exploit scenario, thus my careful wording (the
-best answer to "is this exploitable?" is often simply "I don't know").
-
-It's a use after free, should be undeniable that it should be fixed.
-
-But my highlevel understanding of what could happen in such a case: In a
-multithreaded application using that module it may be possible that
-another thread is allocating the free'd memory before do_error is
-called and may fill the memory of the struct with attacker-controlled
-content. Would require careful analysis of what do_error does exactly
-whether that could lead to further bad things.
-
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
-
-mail/jabber: hanno@hboeck.de
-GPG: BBB51E42
-
---=_zucker.schokokeks.org-20510-1469807926-0001-2
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCgAGBQJXm30zAAoJEKWIAHK7tR5CYb0P/22dNgQVctGqvnNpUYbRbaIF
-tpDkE6MTd9/T7MFSR4dMVtLr8GVzacBVpDXtJ368PSITIS3zNdUEwVK0ipWn2IwS
-kQTREwIKo9LFsvxsJk7qyvpA9RdiIM3rseJrm7DrKYsPZ5HLZdStubxRyCJ22qIG
-gPO8Z+R1AyFTBoHu9zPfuEwIniRvx4jkemnkcMVZ+HBPdsF1Dwm2dHdStHSuXnbs
-yFPhigK52bRwv/Dme06iidYJFifGU3g777tXa4PCMv5QW9jIVCOH1Hvwwt2Q/LMx
-SnGrYjX2j0wONQdnXI+Zn89m1KIpBFQ2PuvR48zjZon+ScNShySU7cxAh3eUO3VJ
-J9+f4CgCIkeRdNUY3BLV6AWbktXd8txRdjKgmqrFf5LMBGVzdwF0q5v/R7nRuOFV
-H/p4OG55G/GK0vmA0mvYfpgiC93KcvP0IRe048v/wV8QwYFON71Nqh3QwW8v4T7m
-L4BuISPN62wl35ISLU3Q/vy6q/VDPC+TOf+NAFw9hsEkScmQeYCnvEYvF7zm8b6C
-Hvp/Dow0JYmcRN8cVjlGqifBlj3VmT7ze/4o+enfZRsqmI5fzLBArE7hClBxlhFM
-Ifnc70qRZdvG2d9lgbo2EnOsppwrwBe9E9Uw0ds6tDoTepsm0/NPgX5aeilvXwpC
-5SWm7f1XrWYtvllWV1hs
-=QNOB
------END PGP SIGNATURE-----
-
---=_zucker.schokokeks.org-20510-1469807926-0001-2--
+--001a11c1c47425580405317c492b--
