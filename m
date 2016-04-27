@@ -1,54 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/14/8
-Message-Id: <20160414194911.B5BA16C0485@smtpvmsrv1.mitre.org>
-Date: Thu, 14 Apr 2016 15:49:11 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: imlib2: integer overflow resulting in insufficient heap allocation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/27/11
+Message-ID: <alpine.GSO.2.20.1604271646030.9720@freddy.simplesystems.org>
+Date: Wed, 27 Apr 2016 16:54:41 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: oss-security@...ts.openwall.com
+Subject: Re: 3 bugs refer to buffer overflow in in libtiff 4.0.6
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, 26 Apr 2016, Jodie Cunningham wrote:
+>>
+>> Running each poc file crashes thumbnail and bmp2tiff made with
+>> AddressSanitizer in tiff-4.0.6. I have attached poc and log files .
+>> ------------------
+>> From Debug_Orz
+>>
+> Is there a patch upstream?
 
-> an integer overflow in imlib2, which result in insufficient heap
-> allocation.
-> 
-> https://git.enlightenment.org/legacy/imlib2.git/commit/?id=7eba2e4c8ac0e20838947f10f29d0efe1add8227
+To my knowledge, none of the issues recently posted on this list have 
+been addressed yet in libtiff.
 
->> there are a lot of code that allocates image data with something like
->> 
->>     malloc(w * h * sizeof(DATA32));
->> 
->> Obviously, on 32-bit machines this results in integer overflow,
->> insufficient heap allocation, with [massive] out-of-bounds heap
->> overwrite.
+It is always our priority to fix issues occuring in libtiff itself 
+before addressing issues in the libtiff utilities.  Some of the 
+libtiff maintainers care about only a few of the utilities.  We are 
+all volunteers and available time is limited.
 
->> -  #define X_MAX_DIM 46340
+It is my intention to spend time addressing the libtiff utility issues 
+(some of which might be due to issues in core libtiff) once I have 
+addressed the remaining CVEs in GraphicsMagick.  Issues appearing to 
+be due to problems in libtiff itself will get attention first.
 
->> +  #define X_MAX_DIM 32767
+Well-formulated source patches are welcomed for the issues.
 
-Use CVE-2016-4024.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXD/NlAAoJEL54rhJi8gl5RfQQAL/khJP7I45NWzsmfikEOqry
-5+/yWayIM27k/4YauR/ijslSeQB6yH/qhqha0Xai2mMxJovHGOoY0fdMSyNLCqrG
-EkuGVhKk3mNo98jNUyUEGFNfYJwg5TuQyzXZi/qSrsaQLZ5IGZO3O9K+Io3xrbqb
-Qescx6U9+0V8H8UoSNNYmawYwCD/Iw1U05b4e8HI2eWg50NW/75GPO0mCyB+ymyr
-KCIsF69/iWft+i8JRZ1yvivL3QSb22ltwsxDXsZgtPedxW14MBlzakJ/HZOfkhV/
-/efcM/4jWyg48SxvBS+4JsaXuabH5xBrvq7OahABZrIL2EnDthe0MMUvEqgXS4im
-yiwzyPbZYubo0CBFMLCRrhdOE6MSUPEQnZM58jWfHSTzO9XOTHgFwCafRaocTw63
-Q6I7lW15ofV8xncQorRYzFhxxYp2aNFDgfGvYEUUQOUdKDtoDDNKWZIifZd/eZYj
-+noTSvwIZv5lQUQkJdRQWlFCnkJC+sfkmZYGpbtCQgg0qq1pp5vifTeJ17lAlVQh
-Cv838A3tnimTqg1HKpATjY+rgm+Pdu14oTypcBHz3a0BEPfFqf6MMrS+oaCEyheX
-UehdlrK4HVJ9tDsZjQk4To0ouBXtmvkvLMCyY/AF9FR7maQykgtSArbTkHiyF75F
-aVqw/STiET+EoipSAhhm
-=3vdb
------END PGP SIGNATURE-----
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
