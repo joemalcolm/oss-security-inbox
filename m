@@ -1,60 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/22/1
-Message-Id: <20160122015717.0586842E03A@smtpvbsrv1.mitre.org>
-Date: Thu, 21 Jan 2016 20:57:17 -0500 (EST)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, lersek@...hat.com
-Subject: Re: CVE request Qemu: net: e1000 infinite loop in start_xmit and e1000_receive_iov routines
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/27/5
+Message-ID: <alpine.LFD.2.20.1604271151190.13938@wniryva>
+Date: Wed, 27 Apr 2016 11:53:10 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+cc: "cve-assign@...re.org" <cve-assign@...re.org>
+Subject: Re: CVE Request: Out-of-bands write issue found in qemu
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
++-- On Wed, 27 Apr 2016, 李强 wrote --+
+| The qemu has an out-of-bands bug in uart_write() function.
+| 
+| In uart_write() function from hw/char/cadence_uart.c, the ‘offset’ isn’t 
+| checked and after it is divided by 4 and used to index the ‘r’ array, it 
+| will cause an out-of-bands memory write. The value can be controlled by 
+| guest and can cause the qemu crash or code execution on host.
+| 
+| The patch is here:
+| https://lists.nongnu.org/archive/html/qemu-devel/2016-04/msg02711.html
 
-> Qemu emulator built with the e1000 NIC emulation support is vulnerable to an
-> infinite loop issue. It could occur while processing data via transmit or
-> receive descriptors, provided the initial receive/transmit descriptor
-> head(TDH/RDH) is set outside the allocated descriptor buffer.
-> 
-> A privileged user inside guest could use this flaw to crash the Qemu instance
-> resulting in DoS.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1298570
-> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg03454.html
+  Not sure if this should need a CVE, awaiting upstream confirmation on the 
+same.
 
->> What both directions miss is that the guest could program TDLEN and RDLEN
->> so low, and the initial TDH and RDH so high, that these registers will
->> immediately be truncated to zero, and then never reassume their initial
->> values in the loop -- a full wraparound will never occur.
-
->> i.e., TDH or RDH start out after the last whole rx or tx descriptor that
->> fits into the TDLEN or RDLEN sized area.
-
-Use CVE-2016-1981.
-
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/e1000.c but
-that may be an expected place for a later update.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWoYr+AAoJEL54rhJi8gl5nWkP/RME1UtFdyDgcAJIQm1H06jB
-XaPffjyISNyiTDLOFBO+5be6yON1SLrZCHcatbSoGO0acCU0a9A1L3xwUFVKIokE
-yoU/oAF939VC+bE/aFsd6psR3Jy9IskODQn6wWE5kL0gz71xWrJWdna7mm5ysqZQ
-aM9I2tYaUtZs9C7QWglvojrMVMUTjmS5Ta2vvUCzSoyZHtMjZ1s2nkBeVk/OLUmi
-jE9h2TtEujSkROHKCqFrMHOzrZcUZax8nXC2OoJ+U92/uWLnVwUPnAKnLVuepjfO
-hpqFlW/ohFtDa5ymEavZDGbxQf0aR/AeHbJeNvLEI05hktt1/0y+IgoilfDPx9HD
-mhQE+L/rW3GVA1soCPv6FABHD4Gb6W50IFfssE9HHjqoLNHNynVUfgSXod20WNyd
-4hoaYcHvHKqKJ3eVKItmMwHtJHxLvtBPoQHObQaHdp0QQ23KloXbc9q4zrnQ+IfV
-ueK+pSahmfChammbzkQIIv9UVgtVhWeTp5u6VByO8QUo82osTudMUmkEjFgeBjjq
-65dE+RUhdxpRTKXBRYNLDBS5t3Tnb5Y8d3M9TpX0saZhFyhe0HvrW25w17MK0TtI
-dQ1T6A0B/GrDArTVzyucn4hUeyuTEBK0EtHADe3Y7DfRhYgL8kh3nlWBVxmGxnYp
-ArvGC+n7c3hDqtkK9ZQs
-=pZgV
------END PGP SIGNATURE-----
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
