@@ -1,46 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/02/11
-Message-ID: <5002229f1c1145cab231c07a2e1d43a2@imshyb02.MITRE.ORG>
-Date: Fri, 2 Dec 2016 13:07:34 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: imagemagick: heap-based buffer overflow in IsPixelGray (pixel-accessor.h) (Incomplete fix for CVE-2016-9556)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/27/10
+Message-ID: <CAKkdKCBWncYOSs+QeD0xR4qs=Mfyto=136MyxO1Zb_1CQiNvRg@mail.gmail.com>
+Date: Wed, 27 Apr 2016 15:36:31 -0400
+From: Tony Homer <tony--@...che.org>
+To: dev@...dova.apache.org, private@...dova.apache.org,  "JPCERT/CC" <vuls@...ert.or.jp>, security@...che.org, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS
 
-> https://blogs.gentoo.org/ago/2016/12/01/imagemagick-heap-based-buffer-overflow-in-ispixelgray-pixel-accessor-h-incomplete-fix-for-cve-2016-9556
+Severity:
+High
 
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 4
-> 
->     #0 0x7f897b123266 in IsPixelGray 
->     ImageMagick-7.0.3-8/./MagickCore/pixel-accessor.h:507:30
+Vendor:
+The Apache Software Foundation
 
-Use CVE-2016-9773 for the vulnerability present in "an updated version
-which includes the fix for CVE-2016-9556."
+Versions Affected:
+cordova-ios 3.9.1 and below
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Description:
+Apache Cordova iOS contains 2 methods to bypass the URL access
+restrictions provided by the whitelist. An attacker can use any of the
+2 methods to load malicious resources in an app that uses a whitelist
+to only load trusted resources.
 
-iQIcBAEBCAAGBQJYQbZTAAoJEHb/MwWLVhi23/0P/jjSc66cYiN9RO+COylm6tXV
-eTJyErBTaBEPif0I/0OYuYrXP40EIgUGFjCBYuCWpTkMabqw1/aOaSSSIc5fXfAg
-fuRpgddBCSmSsncTcivJGJw8mfRC7kRb9pxkmxcxRbC9JibW42OzFTo9Yzc0cpuE
-HENOhxL7n26ZJw3dc+y+tGZUXynLARe/93DFkpw03twLFE8pqSffRdPTSveQb6j/
-6GTuHdLYFmmqTFXVk3TGntbgQmKSFhodi6T5te9pTXdwSl336yAswbL7XSECXJeZ
-mr2RWFxCP3r9pGFPIfSGuuO4N5dkOOM/x94G5JgqYO+BBxMMdTSqwuLKZYLnmPju
-xYalu2woeXhb6I9LRiKVw6+kAGJTo3tTnhLk3P1p8gnYug5gcr6k1TP2RAvq8ydj
-0S12k2FJDiTFFQob3HCf5fYXDxgLc955pFhA1oE8ojblBG8LMaLAiPNUYUfWaAae
-VZ5v3awgaAltFCh8VwJfW7NOUWaDnd1eQfTnkYH0Wt0NDHcY5gjnRNyQePQKL9nU
-WyBACf4E8s/nPcpQJaZvgv0eiv0ncNGt2+ooXFo20BU72xu9xzXDq/HMMu2LIIL7
-X5Gh8NtWwRuT0Bsrs61cfL3oFoK91AexniJQQPyfzrSEfT81yi1YtmBkSoVZ8Zvw
-j9xoQMSMPUgvGv2afIGM
-=oclT
------END PGP SIGNATURE-----
+Upgrade path:
+Developers who are concerned about this issue should install version
+4.0.0 or higher of the cordova-ios platform.
+
+Credit:
+This issue was discovered by Muneaki Nishimura (nishimunea) of Recruit
+Technologies Co.,Ltd.
