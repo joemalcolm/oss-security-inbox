@@ -1,58 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/28/2
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BFB7FF@EX02.corp.qihoo.net>
-Date: Wed, 28 Sep 2016 08:27:15 +0000
-From: 张开翔 <zhangkaixiang@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: cve-assign <cve-assign@...re.org>
-Subject: CVE Request: docker2aci: Path traversals present in image converting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/27/8
+Message-ID: <CAKkdKCC_PKa-s=jk9+Bq+bXcJ3_RmOH-Gs3BjDGMOje9WwMNUw@mail.gmail.com>
+Date: Wed, 27 Apr 2016 15:19:16 -0400
+From: Tony Homer <ajh158@...il.com>
+To: dev@...dova.apache.org, private@...dova.apache.org,  "JPCERT/CC" <vuls@...ert.or.jp>, security@...che.org, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS
 Content-Type: text/plain; charset=utf-8
 
-DESCRIPTION
+CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS
+Severity: High
+Vendor: The Apache Software Foundation
+Versions Affected:cordova-ios 3.9.1 and below
+Description:Apache Cordova iOS contains 2 methods to bypass the URL access
+restrictions provided by the whitelist. An attacker can use any of the 2
+methods to load malicious resources in an app that uses a whitelist to only
+load trusted resources.
+Upgrade path:Developers who are concerned about this issue should install
+version 4.0.0 or higher of the cordova-ios platform.
+Credit:This issue was discovered by Muneaki Nishimura (nishimunea) of
+Recruit Technologies Co.,Ltd.
 
-
-
-This is Kaixiang Zhang of the Cloud Security Team, Qihoo 360. I submitted an path traversal vulnerability to docker2aci <https://github.com/appc/docker2aci/issues/201> recently. The issue exists in image converting, there must be a possibility that it extracts embedded layer data to arbitrary directories or paths since no essential check for the output file path. Could you please assign a CVE number for it? Thanks.
-
-
-
-Source info
-
-
-
-tmpLayerPath := path.Join(tmpDir, layerIDs[i])
-
-         tmpLayerPath += ".tar"
-
-         layerFile, err := extractEmbeddedLayer(lb.file, layerIDs[i], tmpLayerPath)// without essential check for layerpath, may breakout tmpDir.
-
-
-
-Proof-of-concept
-
-
-
-Build or downloading a malicious image as an archive file, containing some layer files with relative names ,like “../../../etc/ filename”, as well modifying the content of some corresponding json file related to it. then running docker2aci to convert the docker’s image to aci. Overview of the content of malicious image:
-
-../../../etc
-
-../../../etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625
-
-../../../etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625/json
-
-../../../etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625/VERSION
-
-../../../etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625/layer.tar
-
-
-and logs:
-         tmpDir:  /tmp/docker2aci-878549369
-tmpLayerPath:  /etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625.tar
-Extracting ../../../etc
-
-then check the results:  ls /etc/*.tar
-/etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625.tar
-
-Of course, the tar file content could be modified by yourself.
-
-Best regards&
