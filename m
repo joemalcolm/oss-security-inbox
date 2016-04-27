@@ -1,4 +1,9 @@
-Received: (qmail 5680 invoked by uid 550); 23 Dec 2022 16:49:59 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["546" "Tuesday" "26" "April" "2016" "23:26:13" "-0500" "Jodie Cunningham" "jodie.cunningham@gmail.com" "<CABfY0L3+qV-Q_L2awb-PSXzy=fPWyQFMkZwfbjHSXyxCkfrEbA@mail.gmail.com>" "20" "Re: [oss-security] 3 bugs refer to buffer overflow in in libtiff 4.0.6" "^Date:" nil nil "4" "2016042704:26:13" "[oss-security] 3 bugs refer to buffer overflow in in libtiff 4.0.6" (number mark "        jodie.cunnin Apr 26   20/546   " thread-indent "\"Re: [oss-security] 3 bugs refer to buffer overflow in in libtiff 4.0.6\"\n") "<tencent_62222EFF74B667984E9F8E5B@qq.com>" ("<tencent_62222EFF74B667984E9F8E5B@qq.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 19496 invoked by uid 550); 27 Apr 2016 04:26:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,54 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5656 invoked from network); 23 Dec 2022 16:49:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=l68gbs90pG9tVRVkLE9oZDu4vxcfBLgUFSXBnP1uzL4=; b=tCwjIU52768LEKp0tWVA/14RbM
-	8hpVFW/NmtVdTLounRP1zFeSN4Sie8mTEB3ztgYcVnxl5nKuk4C7rYXl4N3Pg61nbXE3pG59onQm+
-	Odw40GG/VkTOk8pDc0+qCNlGQ3+2UAVP+KlmtSp9x+pvWiHSjlx+I5HA7XhY7ycfZO2ya2ngYSRwu
-	Gl6zq67bycLIoHLXnjd+PMYOD0e1103HxoIF1BbN00JkHMraqmnbEMCG7MbPf80PHrl8hoMvgQyFS
-	aIeSVfbzfxykghGQVWaNMPkwyfbwHr/ZeqhtfCK13v9FHHKS8O/VKEcBj+TtBLqgj68HiOst8PlTM
-	rtEcalZw==;
-Date: Fri, 23 Dec 2022 16:49:43 +0000
-From: Simon McVittie <smcv@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <Y6XcJ+tcf1Cg1jkZ@momentum.pseudorandom.co.uk>
-References: <CACT4Y+aqb9V=WO0gsN1DgqimrjHiY3x+KvKGiz7b95jh9gubhw@mail.gmail.com>
- <20221222144445.i6z7fifqily6uej5@jwilk.net>
- <20221222150448.5wyrhot7ikhp75j7@mutt-hbsd>
+Received: (qmail 19471 invoked from network); 27 Apr 2016 04:26:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-transfer-encoding;
+        bh=vFtCMi0gdM9J12Rnx7UX8Jzwg5GiXRZuLhgPoNG7QnA=;
+        b=ZUF/6XgRGQwzZCSiBsdQKdcpMFXcn3atAsy/vlubMbtg0q2VhmyffLQ47WBeItlMnY
+         fO+SdmU5P/jrFuLdulZOjieUzfViwumMWV+jKC9EF3yvm3fDSuwDjECe4PTsCyc80jPh
+         Uo5AnoQI1OAdoPQDtlkTYho1ISgvR+c/J2pF882EDzo2ZCh4I9U1xdUX4lZtsvZ+cHdi
+         oW/arRzsHGMzDoh6XL7/QAwcjrxhtxA+BZkUWdQMAW8/I92QA7Vx+upmeHsw8k91qbkn
+         1rVMonn4CHp/HlR0VYss8fyK+izgFlDw9S5ZWE+usZ1h/nm3WIuS3yN4Y+l4XYea7Qx8
+         xryg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-transfer-encoding;
+        bh=vFtCMi0gdM9J12Rnx7UX8Jzwg5GiXRZuLhgPoNG7QnA=;
+        b=MYtm6vhHy39Mtik6tAhmB3kjyIc785koxRb8SAM3iybKvqVJZhixvW9m9XRrrUPh00
+         NCveOMLlsvneqVdT0CshIVVK90wTSsXCIKRirQvaUgB0BFnKlyN5B2U1XLtuYWZuua99
+         b2TwggNuc4RfX7aznIgVvhAfqTXAf6I0Or1jui6LhmN82+VQIXmDLGE581m0Xbb5YHcs
+         YrgNmNDoEsg1a0lqxfvJIHZ1uUPTKUrrARJyYcAOABRE8nF4V1tw7JbiXkT6kwLG0DEx
+         X+aqMFcDPVc13caU3wXc+/A4nJGHYWP5V4aRez7x2SEXTaLkj75BceBONlwkxY/7z9TN
+         8Mdw==
+X-Gm-Message-State: AOPr4FUvUrHuZdgi2m4uhxDG1nirgokXstQ2ildHL8oyMN42wnGKfonF3//Cm2IO6wSOID8rrSlUpGvze/048g==
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221222150448.5wyrhot7ikhp75j7@mutt-hbsd>
-X-Debian-User: smcv
-Subject: Re: [oss-security] [Linux] /proc/pid/stat parsing bugs
+X-Received: by 10.159.37.208 with SMTP id 74mr3346306uaf.148.1461731173813;
+ Tue, 26 Apr 2016 21:26:13 -0700 (PDT)
+In-Reply-To: <tencent_62222EFF74B667984E9F8E5B@qq.com>
+References: <tencent_62222EFF74B667984E9F8E5B@qq.com>
+Message-ID: <CABfY0L3+qV-Q_L2awb-PSXzy=fPWyQFMkZwfbjHSXyxCkfrEbA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 26 Apr 2016 23:26:13 -0500
+From: Jodie Cunningham <jodie.cunningham@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] 3 bugs refer to buffer overflow in in libtiff 4.0.6
+To: oss-security@lists.openwall.com
 
-On Thu, 22 Dec 2022 at 10:04:48 -0500, Shawn Webb wrote:
-> We knew way back then the dangers of VFS-based wizardry. Did we lose
-> that knowledge somehow?
+On Tue, Apr 26, 2016 at 10:36 PM, PXO=E7=82=B3=E6=9E=97 <271193918@qq.com> =
+wrote:
+>
+> Hello oss-security,
+>
+> I did some test and found three bugs refer to buffer overflow: one stack
+> buffer overflow in thumbnail and two buffer overflows in bmp2tiff.
+>
+> Please let me know whether CVE Identifier number could be assigned.
+>
+> Overview:
+>
+> Running each poc file crashes thumbnail and bmp2tiff made with
+> AddressSanitizer in tiff-4.0.6. I have attached poc and log files .
+> ------------------
+> From Debug_Orz
+>
 
-To me this seems like a parsing problem, not a VFS problem. Some
-pseudo-files in Linux /proc are one file per item (/proc/self/oom_adj,
-/proc/self/sessionid, most of /proc/sys) and those are fine[1]: the
-structure is implicit in the filesystem layout, and the file contents
-are trivial to "parse". Others have a simple and well-defined format
-(like /proc/self/environ and /proc/self/cmdline, which are sequences of
-\0-terminated bytestrings), and those also seem fine.
 
-It's the pseudo-files that contain more than one item, particularly
-those with a semi-consistent format that aims for human-readability, that
-can easily get into escaping and parsing issues. If those pseudo-files
-made *more* use of the VFS (one new file in /proc/self for each field
-in the current /proc/self/stat?) then they would suffer from different
-issues instead, like inability to read all fields atomically and maybe
-performance issues for heavy users, but parsing would become a non-issue.
-
-    smcv
-
-[1] or when they're not fine, the issues are around things like how to
-    separate an AppArmor enforcement mode from the label, which again is
-    a matter of parsing a human-readable format with structure
+Is there a patch upstream?
