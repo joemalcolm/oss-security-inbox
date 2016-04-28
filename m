@@ -1,46 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/23/5
-Message-ID: <62bd88e18535467990b8b87c1503444c@imshyb02.MITRE.ORG>
-Date: Tue, 22 Nov 2016 19:19:59 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: jasper: stack-based buffer overflow in jpc_tsfb_getbands2 (jpc_tsfb.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/28/4
+Message-ID: <CACn5sdQuKknmR6bZHKM2-G0Yb+P7hnJe7NkdRQkFthMpN5thpw@mail.gmail.com>
+Date: Thu, 28 Apr 2016 10:33:02 +0200
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE requests: DoS in librsvg parsing SVGs with circular definitions
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> https://blogs.gentoo.org/ago/2016/11/20/jasper-stack-based-buffer-overflow-in-jpc_tsfb_getbands2-jpc_tsfb-c
+Two DoS in librsvg 2.40.2 parsing SVGs with circular definitions were found
+(they will produce stack exhaustion). Other versions can be vulnerable too.
+They affect the following functions:
 
-> AddressSanitizer: stack-buffer-overflow
-> WRITE of size 4
+* rsvg_cairo_pop_discrete_layer - rsvg_cairo_pop_render_stack -
+rsvg_cairo_generate_mask: reproducible using circular-1.svg
+* _rsvg_css_normalize_font_size: reproducible using circular-2.svg
 
-> https://github.com/mdadams/jasper/commit/1abc2e5a401a4bf1d5ca4df91358ce5df111f495
+Both reproducers are attached in a tar.gz to avoid a crash in my own
+browser.  Fortunately, these issues are solved in the last git revision of
+librsvg2.
 
-> jpc/jpc_dec.c
+Regards,
+Gustavo.
 
-Use CVE-2016-9560.
+Content of type "text/html" skipped
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYNN57AAoJEHb/MwWLVhi28acP/3hSYAIq1eaWbaNey2wlw+nX
-MAyAYntbtqAmEiH20z4UYPx3z1PFkC47rkTEuXqCuGlf0eCRWckKs1/v83EXMDoX
-yIzsX9tlXMDvYGrJt9Z7bz4AB3H8g2aEuGgq6CdtHt6IuVzNugqwtiXKSNPsclfl
-bZ0mKlwICSoCSeKZ4lpxdsmkI06MKAqP3/DW0CPH15BJJ1yNXIvtE69+T5+TkdPR
-DZbno/EnnBGkrnJpuMDD1yErFyVzeZcqTMaEnfS7+dmglu5PlrrbG4+/BVKNnIRU
-J8BNYcaZbCCL/9L75aXWKtVLiXGF7+yeNDMFpKFPSVxlcXOmHcVmomplFCnv6z5b
-ecMLx3gg/Jn1fiZJDjVS31UtaqMSnlYzxPkRNkOBJzacniWWsieMgYGfW8wR2XPY
-bxCFFec0YAbck+Im0+QbNM9iTUpL3h462SIoN983AmCscF7hj7UGMcrfS+uIxNDo
-7sbTAPHwNk+/5Rqn0Z+ZJLPfc2STDFfKBKH2vViq1wTjmfO+CsGwyknVoKzx7KJq
-/NYhRKuMMnPTFscBgPe+wB2CpCRGD9NbrirL+uW+i+dnocHUldHLhenJuSvUdNIO
-Y/TOXveXXJmP//iRPcOpACJpCcFHd3DVF61G0R6UPc01gprTzUAmy+FliqXAfFuw
-b3ZoLRfyAny0Vg2BQaOG
-=H8km
------END PGP SIGNATURE-----
+Download attachment "circulars.tar.gz" of type "application/x-gzip" (1511 bytes)
