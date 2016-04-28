@@ -1,93 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/5
-Message-ID: <A9050F7D-C369-4835-9B4B-022B3631E17E@360.cn>
-Date: Fri, 8 Apr 2016 05:02:06 +0000
-From: 王梅 <wangmei@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-3625 libtiff: Out-of-bounds Read in the tiff2bw tool
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/28/6
+Message-Id: <20160428155738.EBD503AE1B2@smtpvbsrv1.mitre.org>
+Date: Thu, 28 Apr 2016 11:57:38 -0400 (EDT)
+From: cve-assign@...re.org
+To: manhluat93.php@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: [CVE Requests] PHP issues
 Content-Type: text/plain; charset=utf-8
 
-Details
-=======
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Product: libtiff
-Affected Versions: <= 4.0.6
-Vulnerability Type:  Out-of-bounds Read
-Vendor URL: http://www.remotesensing.org/libtiff/
-CVE ID: CVE-2016-3625
-Credit: Mei Wang of the Cloud Security Team, Qihoo 360
+> 1. Heap corruption in tar/zip/phar parser
+> https://bugs.php.net/bug.php?id=71354
 
-Introduction
-============
-
-Out-of-bounds Read occurred in tif_read.c:545 or tif_read.c:402 or tif_read.c:560 in tiff2bw allows attackers to cause a denial of service via a crafted TIFF image.
+Use CVE-2016-4342.
 
 
+> 2. Uninitialized pointer in phar_make_dirstream()
+> https://bugs.php.net/bug.php?id=71331
 
-gdb tiff2bw
-
-(gdb)r sample/tiff2bw_1.tif 1.tif
-
-Program received signal SIGSEGV, Segmentation fault.
-0x00007ffff7bb4b3a in TIFFFillStrip (tif=0x604010, strip=0) at tif_read.c:545
-545                                 td->td_stripoffset[strip] > (uint64)tif->tif_size - bytecount) {
-Missing separate debuginfos, use: debuginfo-install glibc-2.17-78.el7.x86_64
-(gdb) p td->td_stripoffset[strip]
-Cannot access memory at address 0x0
-(gdb) bt
-#0  0x00007ffff7bb4b3a in TIFFFillStrip (tif=0x604010, strip=0) at tif_read.c:545
-#1  0x00007ffff7bb411a in TIFFSeek (tif=0x604010, row=0, sample=0) at tif_read.c:228
-#2  0x00007ffff7bb42f2 in TIFFReadScanline (tif=0x604010, buf=0x6076d0, row=0, sample=0) at tif_read.c:295
-#3  0x000000000040197e in main (argc=3, argv=0x7fffffffe428) at tiff2bw.c:253
-(gdb)
+Use CVE-2016-4343.
 
 
-(gdb) r sample/tiff2bw_2.tif 1.tif
+> 3. Multiple Heap Overflow due to integer overflows | xml/filter_url/addcslashes
+> https://bugs.php.net/bug.php?id=71637
 
-Program received signal SIGSEGV, Segmentation fault.
-0x00007ffff7bb46e4 in TIFFReadRawStrip1 (tif=0x604010, strip=0, buf=0x605620, size=10, module=0x7ffff7bcfa81 <module.3917> "TIFFFillStrip") at tif_read.c:402
-402                     ma=(tmsize_t)td->td_stripoffset[strip];
-(gdb) p td->td_stripoffset[strip]
-Cannot access memory at address 0x0
-(gdb) bt
-#0  0x00007ffff7bb46e4 in TIFFReadRawStrip1 (tif=0x604010, strip=0, buf=0x605620, size=10, module=0x7ffff7bcfa81 <module.3917> "TIFFFillStrip") at tif_read.c:402
-#1  0x00007ffff7bb4d73 in TIFFFillStrip (tif=0x604010, strip=0) at tif_read.c:612
-#2  0x00007ffff7bb411a in TIFFSeek (tif=0x604010, row=0, sample=0) at tif_read.c:228
-#3  0x00007ffff7bb42f2 in TIFFReadScanline (tif=0x604010, buf=0x6076e0, row=0, sample=0) at tif_read.c:295
-#4  0x000000000040197e in main (argc=3, argv=0x7fffffffe428) at tiff2bw.c:253
+>> ext/xml/xml.c
 
-(gdb) r sample/tiff2bw_3.tif 1.tif
-
-Program received signal SIGSEGV, Segmentation fault.
-TIFFFillStrip (tif=0x604010, strip=0) at tif_read.c:560
-560                                     TIFFErrorExt(tif->tif_clientdata, module,
-(gdb) l
-555                                             "got %I64u bytes, expected %I64u",
-556                                             (unsigned long) strip,
-557                                             (unsigned __int64) tif->tif_size - td->td_stripoffset[strip],
-558                                             (unsigned __int64) bytecount);
-559     #else
-560                                     TIFFErrorExt(tif->tif_clientdata, module,
-561
-562                                             "Read error on strip %lu; "
-563                                             "got %llu bytes, expected %llu",
-564                                             (unsigned long) strip,
-(gdb) p td->td_stripoffset[strip]
-Cannot access memory at address 0x0
-(gdb) bt
-#0  TIFFFillStrip (tif=0x604010, strip=0) at tif_read.c:560
-#1  0x00007ffff7bb411a in TIFFSeek (tif=0x604010, row=0, sample=0) at tif_read.c:228
-#2  0x00007ffff7bb42f2 in TIFFReadScanline (tif=0x604010, buf=0x607600, row=0, sample=0) at tif_read.c:295
-#3  0x000000000040197e in main (argc=3, argv=0x7fffffffe428) at tiff2bw.c:253
-
-References:
-[1] http://www.remotesensing.org/libtiff/
-[2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
+Use CVE-2016-4344.
 
 
-Thank you!
-Best Regards,
+>> ext/filter/sanitizing_filters.c
+
+Use CVE-2016-4345.
 
 
-Mei
+>> ext/standard/string.c
 
+Use CVE-2016-4346.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXIjJmAAoJEHb/MwWLVhi2TDUQAJYgRTY/sXSPOhCSGULqnbSv
+/LTTtL494AMrbdwVwuAEEE2gQnQh1ceEyT6T7CCOZMIwid7c8eDjFTrglCSuN75s
+731+HOkd4e5UV7/Ms/rUUHarAz8iaroYqcJfFjFRZqbGrIA6K40Z9BOkvjbEQeDU
+f4tXQZqtiK7zvQWPbootRZ4+97U6BwuxBRs39nJTkKwcuGF6c25rORoJoof5wypV
+HFfUiwbPPlxHroNlZKb9MrhUUriT1PAo+HrOEthPX5H5RLBVzuB8wNdaz/XztUWB
+88Ia2upuBIIYDiygUrhL3ZiT5ot13qxBES8gF9VrLtPKLTDudg24B9/sUu/+AdFS
+c28Z1dU9Khh4wO+e44c+BWU2yX/92RLxf2aQHuu51UKGtvJQSOGtPL/jVVwYkqS7
+9Nk5DRq4SHU6xMi2u3o9huY3A3jiVQ10SsVE+ogq7xpmTWTtRotcv2QXk0eTX0gN
+Q/KmOG44Tn/eszUz8qo3cuspVqmpNygvZJZg2ezuiZhEiFf5en88S4f6FUWCEA/Y
+utxuKZRyPXIx3O+SBFEuytPDXhDlNyknpJIfOOR5DRf/fno9Jd8zRr43xRYa7K34
+pVtF417ZDQbO/Qfu9kjpXV2t34uM8HPSk8RQopj8Pda/FDJjPUSVB6slA4Ug+V9I
+v6LoUj4kgrDaip73ispF
+=o+rt
+-----END PGP SIGNATURE-----
