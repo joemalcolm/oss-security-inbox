@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["382" "Thursday" "13" "July" "2017" "23:28:25" "+0700" "Maxim Solodovnik" "solomax@apache.org" "<CAJmbs8jn7_27k=uH17L8_a8fHHtYLs-K-TVhrah2ym7Z33O_LA@mail.gmail.com>" "14" "[oss-security] CVE-2017-7685 - Apache OpenMeetings - Insecure HTTP Methods" nil nil nil "7" "2017071316:28:25" "[oss-security] CVE-2017-7685 - Apache OpenMeetings - Insecure HTTP Methods" (number mark "U       solomax@apac Jul 13   14/382   " thread-indent "\"[oss-security] CVE-2017-7685 - Apache OpenMeetings - Insecure HTTP Methods\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1534" "Thursday" "28" "April" "2016" "11:57:38" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160428155738.EBD503AE1B2@smtpvbsrv1.mitre.org>" "54" "[oss-security] Re: [CVE Requests] PHP issues" nil nil nil "4" "2016042815:57:38" "[oss-security] Re: [CVE Requests] PHP issues" (number mark "U       cve-assign@m Apr 28   54/1534  " thread-indent "\"[oss-security] Re: [CVE Requests] PHP issues\"\n") "<CABcHV3xszyuauXtLayGq7SiipJxG2OS3YXVgBNuhXgP-hR6EUg@mail.gmail.com>" ("<CABcHV3xszyuauXtLayGq7SiipJxG2OS3YXVgBNuhXgP-hR6EUg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5450 invoked by uid 550); 13 Jul 2017 16:28:39 -0000
+Received: (qmail 26416 invoked by uid 550); 28 Apr 2016 15:57:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,36 +12,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5354 invoked from network); 13 Jul 2017 16:28:38 -0000
-X-Gm-Message-State: AIVw112ZSyb2aZbBfWGoxSn6l2zqiG0y1AZaOlaQqleM/WF7XdHWeyhA
-	dmFDNkPnubOPbTTsTKhmiJF2siN23g==
-X-Received: by 10.98.8.93 with SMTP id c90mr400848pfd.213.1499963305947; Thu,
- 13 Jul 2017 09:28:25 -0700 (PDT)
-MIME-Version: 1.0
-From: Maxim Solodovnik <solomax@apache.org>
-Date: Thu, 13 Jul 2017 23:28:25 +0700
-X-Gmail-Original-Message-ID: <CAJmbs8jn7_27k=uH17L8_a8fHHtYLs-K-TVhrah2ym7Z33O_LA@mail.gmail.com>
-Message-ID: <CAJmbs8jn7_27k=uH17L8_a8fHHtYLs-K-TVhrah2ym7Z33O_LA@mail.gmail.com>
-To: Openmeetings user-list <user@openmeetings.apache.org>, dev <dev@openmeetings.apache.org>, 
-	security@openmeetings.apache.org, 
-	Joe Basirico <jbasirico@securityinnovation.com>, 
-	Sharath Unni <sunni@securityinnovation.com>, 
-	Dinesh Shetty <dshetty@securityinnovation.com>, oss-security@lists.openwall.com, 
-	bugtraq@securityfocus.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2017-7685 - Apache OpenMeetings - Insecure HTTP Methods
+Received: (qmail 26398 invoked from network); 28 Apr 2016 15:57:51 -0000
+From: cve-assign@mitre.org
+To: manhluat93.php@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CABcHV3xszyuauXtLayGq7SiipJxG2OS3YXVgBNuhXgP-hR6EUg@mail.gmail.com>
+Message-Id: <20160428155738.EBD503AE1B2@smtpvbsrv1.mitre.org>
+Date: Thu, 28 Apr 2016 11:57:38 -0400 (EDT)
+Subject: [oss-security] Re: [CVE Requests] PHP issues
 
-Severity: Lowest
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Vendor: The Apache Software Foundation
+> 1. Heap corruption in tar/zip/phar parser
+> https://bugs.php.net/bug.php?id=71354
 
-Versions Affected: Apache OpenMeetings 1.0.0
+Use CVE-2016-4342.
 
-Description: Apache OpenMeetingsrespond to the following insecure HTTP
-Methods: PUT, DELETE, HEAD, and PATCH.
-CVE-2017-7685
 
-The issue was fixed in 3.3.0
-All users are recommended to upgrade to Apache OpenMeetings 3.3.0
+> 2. Uninitialized pointer in phar_make_dirstream()
+> https://bugs.php.net/bug.php?id=71331
 
-Credit: This issue was identified by Security Innovation
+Use CVE-2016-4343.
+
+
+> 3. Multiple Heap Overflow due to integer overflows | xml/filter_url/addcslashes
+> https://bugs.php.net/bug.php?id=71637
+
+>> ext/xml/xml.c
+
+Use CVE-2016-4344.
+
+
+>> ext/filter/sanitizing_filters.c
+
+Use CVE-2016-4345.
+
+
+>> ext/standard/string.c
+
+Use CVE-2016-4346.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXIjJmAAoJEHb/MwWLVhi2TDUQAJYgRTY/sXSPOhCSGULqnbSv
+/LTTtL494AMrbdwVwuAEEE2gQnQh1ceEyT6T7CCOZMIwid7c8eDjFTrglCSuN75s
+731+HOkd4e5UV7/Ms/rUUHarAz8iaroYqcJfFjFRZqbGrIA6K40Z9BOkvjbEQeDU
+f4tXQZqtiK7zvQWPbootRZ4+97U6BwuxBRs39nJTkKwcuGF6c25rORoJoof5wypV
+HFfUiwbPPlxHroNlZKb9MrhUUriT1PAo+HrOEthPX5H5RLBVzuB8wNdaz/XztUWB
+88Ia2upuBIIYDiygUrhL3ZiT5ot13qxBES8gF9VrLtPKLTDudg24B9/sUu/+AdFS
+c28Z1dU9Khh4wO+e44c+BWU2yX/92RLxf2aQHuu51UKGtvJQSOGtPL/jVVwYkqS7
+9Nk5DRq4SHU6xMi2u3o9huY3A3jiVQ10SsVE+ogq7xpmTWTtRotcv2QXk0eTX0gN
+Q/KmOG44Tn/eszUz8qo3cuspVqmpNygvZJZg2ezuiZhEiFf5en88S4f6FUWCEA/Y
+utxuKZRyPXIx3O+SBFEuytPDXhDlNyknpJIfOOR5DRf/fno9Jd8zRr43xRYa7K34
+pVtF417ZDQbO/Qfu9kjpXV2t34uM8HPSk8RQopj8Pda/FDJjPUSVB6slA4Ug+V9I
+v6LoUj4kgrDaip73ispF
+=o+rt
+-----END PGP SIGNATURE-----
