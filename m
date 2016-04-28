@@ -1,24 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/03/2
-Message-ID: <ed9a84ac-7e62-55d5-afa2-4afaab0c1613@gmail.com>
-Date: Sat, 3 Dec 2016 09:20:09 +0800
-From: Baozeng Ding <sploving1@...il.com>
-To: cve-assign@...re.org, oss-security@...ts.openwall.com
-Cc: tiwai@...e.de
-Subject: CVE request: -- Linux kernel: ALSA: use-after-free in,kill_fasync
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/28/2
+Message-ID: <CABcHV3xszyuauXtLayGq7SiipJxG2OS3YXVgBNuhXgP-hR6EUg@mail.gmail.com>
+Date: Thu, 28 Apr 2016 15:12:21 +0700
+From: Luật Nguyễn <manhluat93.php@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: [CVE Requests] PHP issues
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
-A use-after-free vulnerability was found in ALSA pcm layer, which allows local users to cause a denial of service, memory corruption or possibly other unspecified impact. 
+Hi folks,
 
-Reference:
-------------------
-  --> https://patchwork.kernel.org/patch/8752621/
+There are flaws which are various type (heap corruption, heap
+overflow, Uninitialized pointer)  in PHP from previous version we
+might miss.
 
-Fixed in upstream:
---------------------
-  --> https://github.com/torvalds/linux/commit/3aa02cb664c5fb1042958c8d1aa8c35055a2ebc4
+1. Heap corruption in tar/zip/phar parser
+https://bugs.php.net/bug.php?id=71354
 
-Could you please assign a CVE for this vulnerability? 
+2. Uninitialized pointer in phar_make_dirstream()
+https://bugs.php.net/bug.php?id=71331
 
-Thank you.
+3. Multiple Heap Overflow due to integer overflows | xml/filter_url/addcslashes
+https://bugs.php.net/bug.php?id=71637
+
+
+Those 2nd, 3rd may let attackers with crafted PHAR file could
+potentially remote code execute without specific PHP script.
+
+Could we assign CVE for these ? :)
+
+
+References:
+http://php.net/ChangeLog-7.php
+http://php.net/ChangeLog-5.php
+
+
+
+Thank you && Regards.
+Luat.
