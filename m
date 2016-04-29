@@ -1,4 +1,9 @@
-Received: (qmail 3342 invoked by uid 550); 15 Aug 2024 20:28:47 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2398" "Friday" "29" "April" "2016" "10:49:11" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160429144911.5DD178BC4E6@smtpvmsrv1.mitre.org>" "54" "[oss-security] Re: buffer overflow and information leak in OCaml < 4.03.0" nil nil nil "4" "2016042914:49:11" "[oss-security] Re: buffer overflow and information leak in OCaml < 4.03.0" (number mark "U       cve-assign@m Apr 29   54/2398  " thread-indent "\"[oss-security] Re: buffer overflow and information leak in OCaml < 4.03.0\"\n") "<4868d0749e044d6491f11118f6e10d45@S1688.EX1688.lan>" ("<4868d0749e044d6491f11118f6e10d45@S1688.EX1688.lan>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 29912 invoked by uid 550); 29 Apr 2016 14:49:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,57 +12,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3309 invoked from network); 15 Aug 2024 20:28:47 -0000
-Date: Thu, 15 Aug 2024 22:28:38 +0200
-From: Christian Brabandt <cb@256bit.org>
-To: oss-security@lists.openwall.com
-Message-ID: <Zr5k9jjqTfWtADCB@256bit.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] [vim-security] use-after-free in alist_add() in Vim < v9.1.0678
+Received: (qmail 29891 invoked from network); 29 Apr 2016 14:49:24 -0000
+From: cve-assign@mitre.org
+To: cuoq@trust-in-soft.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <4868d0749e044d6491f11118f6e10d45@S1688.EX1688.lan>
+Message-Id: <20160429144911.5DD178BC4E6@smtpvmsrv1.mitre.org>
+Date: Fri, 29 Apr 2016 10:49:11 -0400 (EDT)
+Subject: [oss-security] Re: buffer overflow and information leak in OCaml < 4.03.0
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-use-after-free in alist_add() in Vim < v9.1.0678
-================================================
-Date: 15.08.2024
-Severity: Low
-CVE: CVE-2024-43374
-CWE: Use After Free (CWE-416)
+> OCaml versions 4.02.3 and earlier have a runtime bug that, on 64-bit
+> platforms, causes sizes arguments to an internal memmove call to be
+> sign-extended from 32 to 64-bits before being passed to the memmove
+> function.
+> 
+> This leads arguments between 2GiB and 4GiB to be interpreted as larger
+> than they are (specifically, a bit below 2^64), causing a buffer
+> overflow.
+> 
+> Arguments between 4GiB and 6GiB are interpreted as 4GiB smaller than
+> they should be, causing a possible information leak.
+> 
+> This commit fixes the bug:
+> https://github.com/ocaml/ocaml/commit/659615c7b100a89eafe6253e7a5b9d84d0e8df74#diff-a97df53e3ebc59bb457191b496c90762
+> The function caml_bit_string is called indirectly from such functions
+> as String.copy. String.copy for instance is supposed to be a "safe"
+> function for which OCaml's memory safety guarantees apply.
 
-When adding a new file to the argument list, this triggers `Buf*`
-autocommands. If such an autocommand wipes the buffer that was just 
-opened (including the window where it is shown), it causes the
-window structure to be freed which contains a reference to the argument
-list that was supposed to be modified.
+Use CVE-2015-8869.
 
-So once the autocommands are completed, the references to the window and
-argument list are no longer valid and as such cause an use-after-free.
+(We consider this a single "to be sign-extended from 32 to 64" issue
+even though there are two different types of impacts. Also, the
+structure of the code change ("Int_val" replaced by "Long_val") is the
+same everywhere. We did not consider it worthwhile to sort through the
+possible "independently encountered" aspects as mentioned, for
+example, in the
+https://github.com/ocaml/ocaml/commit/659615c7b100a89eafe6253e7a5b9d84d0e8df74#commitcomment-14040616
+comment.)
 
-Therefore, lock the current window, so that functions trying to close
-the window will return an error and the reference to the current
-argument list remains valid.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Impact is low since the user must either intentionally add some un-usual
-autocommands that wipe a buffer during creation (either manually or by 
-sourcing a malicious plugin) but it will most-likely crash Vim.
-
-The Vim project would like to thank github user SuyueGuo for reporting
-this issue.
-
-The issue has been fixed as of Vim patch v9.1.0678
-
-References:
-https://github.com/vim/vim/commit/0a6e57b09bc8c76691b367a5babfb79b31b770e8
-https://github.com/vim/vim/security/GHSA-2w8m-443v-cgvw
-
-
-Thanks,
-Christian
--- 
-Leute mit Mut und Charakter sind den anderen Leuten immer sehr
-unheimlich.
-		-- Hermann Hesse
+iQIcBAEBCAAGBQJXI3NXAAoJEHb/MwWLVhi2RdEQAI71I2vgUNPxtIPV5muuzuT/
+BGlgZLTiWI6HgmFvV7mRtNonvKockAP150f7cArfGgsG13DVViE45IYCk4WHacnW
+aTfRtbPYBZ+eawApm1tWmSxXi4Idt2sSBPXxnA46vwKUZo3oDG8p0oxEanZ1O1Y6
+v+zAL4vVNq+IdSnpPzwM368C/gc1KDBM0uLu7qVoV6E2qHriWXpWpEZ7MGqab5Dv
+2/8ZhpdAnZDVzMSzGbKY+h1k1JjwWnIx3WmWzU65JKF3ccDtLyWy+LaRT5D63d/K
+f5orQDKfJyxc9UQIa+TH4waYQZ64f1xb5haTZaQv8tJVxlwVKD0vVk/eVrlN/r1e
+XXbtknwlMcWLf30hKqzOcDwAfWf2rPtUk5h6PotFVR42esLTTDg7BlIjYFilBXw0
+AlVyDrZ4cBlnd3ZeeyJW2moEoErRlnYFrqdijjIBmHPokoPVAOUcfcU2saBfkFqP
+suYLBcMHrpvitrr4V5yu5T2ZYZI9DtEse+z3Oe+wupCemyfoXXcGvX7Kwz0j4oIk
+bFDuuKtNpo4do+2JkCwbczGwIGAyW20rBbyJqkMMGI1c3VlY/rzn8hES3ltKjVND
+1WShu2c9wwyIhhYUKuacdx8RvuZinNBAlmkWdpNUI33XsVXmdRiEhjB+RGyvqv/X
+a2JgvU+8pOLRMJsRX7CA
+=BBAV
+-----END PGP SIGNATURE-----
