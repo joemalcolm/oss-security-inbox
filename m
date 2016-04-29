@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2539" "Tuesday" "27" "September" "2016" "10:54:00" "+0930" "Doran Moppert" "dmoppert@redhat.com" "<20160927012359.GA30247@sin.redhat.com>" "79" "[oss-security] openjpeg CVE-2016-3181, CVE-2016-3182 .. and CVE-2013-6045" "^Date:" nil nil "9" "2016092701:24:00" "[oss-security] openjpeg CVE-2016-3181, CVE-2016-3182 .. and CVE-2013-6045" (number mark "U       dmoppert@red Sep 27   79/2539  " thread-indent "\"[oss-security] openjpeg CVE-2016-3181, CVE-2016-3182 .. and CVE-2013-6045\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3221" "Friday" "29" "April" "2016" "12:13:08" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160429161308.1775333600A@smtpvbsrv1.mitre.org>" "72" "[oss-security] Re: CVE request: three issues in libksba" nil nil nil "4" "2016042916:13:08" "[oss-security] Re: CVE request: three issues in libksba" (number mark "U       cve-assign@m Apr 29   72/3221  " thread-indent "\"[oss-security] Re: CVE request: three issues in libksba\"\n") "<87mvocv6ff.fsf@redhat.com>" ("<87mvocv6ff.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21965 invoked by uid 550); 27 Sep 2016 03:36:52 -0000
+Received: (qmail 32489 invoked by uid 550); 29 Apr 2016 16:13:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,96 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9255 invoked from network); 27 Sep 2016 01:24:17 -0000
-Message-ID: <20160927012359.GA30247@sin.redhat.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="KsGdsel6WgEHnImy"
-Content-Disposition: inline
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Tue, 27 Sep 2016 01:24:05 +0000 (UTC)
-Date: Tue, 27 Sep 2016 10:54:00 +0930
-From: Doran Moppert <dmoppert@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] openjpeg CVE-2016-3181, CVE-2016-3182 .. and CVE-2013-6045
-To: oss-security <oss-security@lists.openwall.com>
+Received: (qmail 32471 invoked from network); 29 Apr 2016 16:13:20 -0000
+From: cve-assign@mitre.org
+To: mprpic@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <87mvocv6ff.fsf@redhat.com>
+Message-Id: <20160429161308.1775333600A@smtpvbsrv1.mitre.org>
+Date: Fri, 29 Apr 2016 12:13:08 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: three issues in libksba
 
---KsGdsel6WgEHnImy
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-First, CVE-2016-3181 and CVE-2016-3182 have been identified by upstream as =
-the
-same underlying issue.
+> Denial of Service due to stack overflow in src/ber-decoder.c
+> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=07116a314f4dcd4d96990bbd74db95a03a9f650a
 
-https://github.com/uclouvain/openjpeg/issues/724
-
-> Origin of the issue is the same as #725
-
-https://github.com/uclouvain/openjpeg/issues/725
-
-Original requests:
-
-http://seclists.org/oss-sec/2016/q1/630
-http://seclists.org/oss-sec/2016/q1/631
+Use CVE-2016-4353. (This CVE is about changing the type of error
+handling after a decoder stack overflow. It is not about changing the
+decoder so that a decoder stack overflow occurs in fewer cases.)
 
 
-.. it gets more interesting.  The reproducer on issue 725 happens to tickle
-a flaw in a patch for CVE-2013-6045 that was posted here back when:
+> Integer overflow in the BER decoder src/ber-decoder.c
+> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=aea7b6032865740478ca4b706850a5217f1c3887
 
-http://seclists.org/oss-sec/2013/q4/412
+>> The actual bug described below is due to assigning an int
+>> (val.length) to a size_t (ti.length). The int was too large and thus
+>> negative so that the condition to check for too large objects didn't
+>> worked. Changing the type would have been enough but other conditions
+>> are possible. Thus the introduction of sum_a1_a2_ge_b for overflow
+>> checking and checks when adding 100 extra bytes to malloc calls are
+>> added.
 
-segfault-1.patch uses:
+We consider this two separate issues.
 
-+		tilec->data =3D (int*) opj_aligned_malloc((comp0size+3) * sizeof(int));
+Use CVE-2016-4354 for the use of an incorrect integer data type.
 
-which should have used compcsize instead of comp0size.
-
-Upstream never included this patch - deeper work went into eliminating this=
- and
-other issues in openjpeg-1.5.2.  The patch that addresses this particular i=
-ssue
-seems to be 69cd4f92 (hunk starting /* testcase 1336.pdf.asan.47.376 */).
-
-https://github.com/uclouvain/openjpeg/commit/69cd4f92
-https://github.com/uclouvain/openjpeg/issues/297
-
-This hasn't been an issue in upstream openjpeg releases for a long time ...
-but there are LTS distributions around still shipping 1.5.1 (or 1.3) with t=
-he
-patches from here applied.  Those should preferably upgrade to 1.5.2:  chan=
-ging
-comp0size to compcsize eliminates this particular crash, but the upstream f=
-ixes
-that got into 1.5.2 seem to more thoroughly address some of the underlying
-problems.
+Use CVE-2016-4355 for the cases in which the code was simply making no
+attempt to check for an integer overflow (the "+ 100" cases and the
+"+= d->val.length" case).
 
 
+> Integer overflow in the DN decoder src/dn.c
+> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=243d12fdec66a4360fbb3e307a046b39b5b4ffc3
 
---=20
-Doran Moppert
-Red Hat Product Security
+This might be an error in the original
+https://security.gentoo.org/glsa/201604-04 advisory. We did not notice
+any obvious relationship between
+243d12fdec66a4360fbb3e307a046b39b5b4ffc3 and an integer overflow fix.
+The 243d12fdec66a4360fbb3e307a046b39b5b4ffc3 commit message seems to
+focus on "read access out of bounds." Also, there is no other recent
+commit at
+http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=history;f=src/dn.c
+that refers to an integer overflow. Possibly there was an inapplicable
+copy-and-paste of "Integer overflow in the" from the previous report
+about the BER decoder.
 
---KsGdsel6WgEHnImy
-Content-Type: application/pgp-signature
+Use CVE-2016-4356 for the 243d12fdec66a4360fbb3e307a046b39b5b4ffc3
+issue that is described as "Fix encoding of invalid utf-8 strings in
+dn.c" and "read access out of bounds."
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+Version: GnuPG v1
 
-iQIcBAEBCgAGBQJX6covAAoJEGohqWcZR7qpvB8P/iV9I7Pb/u62n51bLfA4TkqX
-Q16jKYHlJ99f+M9GHt63hr1GF1qV9AkPTMH36TaJJfJYVcXy1LQWh3xAxIvRp+on
-On1a+rcZzAZOsZVWWFfBxMYf4+31G0m9xIVz6XTIs82MCaYFGjSNWVwqX0YW1Nk0
-xQCnhqIcb1F9iJVLqsh/QGdCwK+OnBZwcoJr0qcezwkLfnoget+0cO3BbkGUFLK7
-m2oKJbzqx27VnHLpvGorqloY6s/rAEBkdeRxcMUbFYqBI2LUEfjkn414ChGlZET4
-/3piYFkzyC0BvNVh+Pp4vHBzqCu2a55fYaGxKUbQQezRJgu+y3UpAIRPn9dRBqSz
-SPnwVuiB6CzYTQvzY+uxkUnTzvUCq7qeOgg9bU5g/yheKBVUkhAtnp8rqfGDxuQj
-ua+VCaV/HYFeD0ckhVbItqAvWJq/XxI4d3YGev6WniBFkoemZfw4yCx49O67289f
-KvkyG6+XtrHpkVo/jVisA4wG7yO94gkA5U6+PXErvIXVqhoMHsJgvswx3Ko6RRaI
-djfUmuH3tDbEEKMNrpaq9Lp8/9nnufmdJf4E1ZgepnIweQo56Wzt9rl3WinrFR7a
-gy8RflxMKFKgHMnAnW9/gcEKfOtWMhJ8ZF6IbkzzBDjeF8MYuBATbbEaHpmFHUCC
-WeFX0lBfGlwW5cCCkSWU
-=l2li
+iQIcBAEBCAAGBQJXI4eHAAoJEHb/MwWLVhi2ZvoP/0tfBkT4Iqjsya7V3BthT3ne
+p9wDYxI8Tre5Qza/lteablh3FicO4I8e4EFjghxYEd51lbVXerJBJNqo3vcZsDzD
+2lozbI0YooCsiE9Z2kESUFpT4agPg2yLamjFqmw4kxK71RTq+FDke5GTmbAK05WR
+ir4VoTsK1qPUB6mcq2qqylXjs/ulGL/pkd6SuJJAVp9YEExh2kgiey+1KtIDGeij
+4NnzJ5a7syT6VxyX/JfwNaLuNlfv6vddqJyp7NWAa/0B3y7n+6gjyVjyAuwZYsiN
+wbVJOw9p6TSVPp1VX7GOoxj/bWn9fiOfMzCsun0Oajq4Te9aXrCZODy9aWivaRlH
+2XMFUEHfELQV8UzvwJb1hA1PISzvzYheWxSNyncxiojKvJbKmi8UvrkVWYUXaGKl
+OFO6DcsoCnVpYwMAelN5Ir1hgsJ6dr73ssxuVFgO9jwAteDoqikE8HFVm5cJTELP
+q6Q9QecnHAA7aJ32PqcGd2sd10+majAejMZV5MZpoLTWUkH/1+olFGR1njpvegyK
+tepkG9onPWFXQ2iUbTpUxQzmgYYNrwdtmU+0TgFKXOcfLV8W88w7v22sfdhLUgj0
+sm4ckXuxB0fO+6TyVo/ZRVibm7UPjacrubB8f65lUTUldbx+3Wtwgl3+MWAKbpT4
+TBr+InX8c9ul3DacR4iv
+=u1+d
 -----END PGP SIGNATURE-----
-
---KsGdsel6WgEHnImy--
