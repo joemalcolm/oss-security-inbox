@@ -1,29 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/29/8
-Message-ID: <20160629194243.GA12097@eldamar.local>
-Date: Wed, 29 Jun 2016 21:42:44 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: libgd: Invalid color index is not properly handled leading to denial of service (crash)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/29/2
+Message-ID: <CAOJmqsBw6V5m4NbHzX4-KLhjgZqmzHLem_ZfTrgiwx9SBc979g@mail.gmail.com>
+Date: Fri, 29 Apr 2016 10:26:00 +1000
+From: Brendan Scarvell <bscarvell@....net>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE Request - Multiple vulnerabilities in Activiti Explorer
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Good morning
 
-There is currently PHP upstream bug which is still marked as private:
+I've discovered a stored XSS and an XXE vulnerability in Alfresco's Activi
+Explorer.
 
-https://bugs.php.net/bug.php?id=72494
+Comments created for "tasks" aren't having HTML characters sanitized
+correctly resulting in a stored XSS being executed when any user visits the
+page.
 
-But the libgd project references the following set of commits to this
-bug report:
+Activiti Explorer also has the parsing of external entities enabled and
+I've noticed that deployments tab is vulnerable to XXE. An attacker is able
+to upload malicious XML files to read arbitrary files off the server.
 
-https://github.com/libgd/libgd/compare/3fe0a71...6ff72ae
 
-indicating that libgd does not properly handle invalid color index,
-which could lead to a denial of service against applications using the
-libgd library (in particular thus PHP).
+I've attempted to report the issue to the vendor several times, however
+have received no response.
 
-Could you please assign a CVE for this issue (in case it was not yet
-requested by other channels?)
+Timeline:
+March 11  - Contacted vendor, no response
+March 17  - Contacted vendor, no response.
+March 24  - Contacted vendor, no response
+April 1      - Contacted vendor, no response
+April 15    - Contacted vendor, gave deadline for April 29th.
+April 29th - Still no response
 
-Regards,
-Salvatore
+Could a CVE ID please be assigned to these issues.
+
+
+Thanks,
+
+Brendan Scarvell
+
