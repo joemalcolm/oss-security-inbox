@@ -1,134 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/15/7
-Message-Id: <1F48D2B8-E1B2-48AB-A7F6-3EB320F269B1@gmail.com>
-Date: Thu, 15 Dec 2016 10:09:36 -0600
-From: Brandon Perry <bperry.volatile@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-9584: heap use-after-free on libical
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/29/7
+Message-Id: <20160429150851.0723C8BC556@smtpvmsrv1.mitre.org>
+Date: Fri, 29 Apr 2016 11:08:51 -0400 (EDT)
+From: cve-assign@...re.org
+To: gustavo.grieco@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Mplayer/Mencoder integer overflow parsing gif files
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> On Dec 15, 2016, at 10:04 AM, Brandon Perry <bperry.volatile@...il.com> wrote:
+> A crash caused by an integer overflow parsing a gif was found in the last
+> revision of mplayer. It seems to affect older versions too. It was recently
+> fixed (r37857). Technical details and a reproducer are available here:
 > 
+> https://trac.mplayerhq.hu/ticket/2295
 > 
->> On Dec 15, 2016, at 8:38 AM, Agustin Mista <mista.agustin@...il.com> wrote:
->> 
->> We found a heap use-after-free in a recent revision of libical (
->> f3688b444f820cecf51b1539b0856a392c0fdb0f),
->> using a specially crafted ics file. This bugs looks particularly dangerous
->> since it allows to read a big chunk of the heap memory.
->> 
->> The address sanitizer report is as follows:
->> 
->> ==14573==ERROR: AddressSanitizer: heap-use-after-free on address
->> 0x60700001e394 at pc 0x00000044478e bp 0x7fffffffc4a0 sp 0x7fffffffbc28
->> READ of size 62 at 0x60700001e394 thread T0
->> #0 0x44478d (/home/agustin/Code/libical/build/src/test/parser+0x44478d)
->> #1 0x444eb3 (/home/agustin/Code/libical/build/src/test/parser+0x444eb3)
->> #2 0x4461f0 (/home/agustin/Code/libical/build/src/test/parser+0x4461f0)
->> #3 0x7ffff7b519e8 (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0x19a9e8)
->> #4 0x7ffff7b5a40f (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0x1a340f)
->> #5 0x7ffff7add113 (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0x126113)
->> #6 0x7ffff7a978ec (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0xe08ec)
->> #7 0x7ffff7a97b4a (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0xe0b4a)
->> #8 0x7ffff7a96f11 (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0xdff11)
->> #9 0x4b8db7 (/home/agustin/Code/libical/build/src/test/parser+0x4b8db7)
->> #10 0x7ffff61baf44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
->> #11 0x4b829c (/home/agustin/Code/libical/build/src/test/parser+0x4b829c)
->> 
->> 0x60700001e394 is located 4 bytes inside of 66-byte region [0x60700001e390,
->> 0x60700001e3d2)
->> freed by thread T0 here:
->> #0 0x49a99b (/home/agustin/Code/libical/build/src/test/parser+0x49a99b)
->> #1 0x7ffff7abab48 (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0x103b48)
->> #2 0x7ffff7ad0da1 (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0x119da1)
->> #3 0x4b8cde (/home/agustin/Code/libical/build/src/test/parser+0x4b8cde)
->> #4 0x7ffff61baf44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
->> 
->> previously allocated by thread T0 here:
->> #0 0x49ac1b (/home/agustin/Code/libical/build/src/test/parser+0x49ac1b)
->> #1 0x7ffff7aba55a (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0x10355a)
->> #2 0x7ffff7ad7777 (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0x120777)
->> #3 0x7ffff7ad808a (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0x12108a)
->> #4 0x7ffff7ad0220 (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0x119220)
->> #5 0x4b8cde (/home/agustin/Code/libical/build/src/test/parser+0x4b8cde)
->> #6 0x7ffff61baf44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
->> 
->> SUMMARY: AddressSanitizer: heap-use-after-free ??:0 ??
->> Shadow bytes around the buggy address:
->> 0x0c0e7fffbc20: fd fd fd fd fd fd fd fd fa fa fa fa fd fd fd fd
->> 0x0c0e7fffbc30: fd fd fd fd fd fd fa fa fa fa fd fd fd fd fd fd
->> 0x0c0e7fffbc40: fd fd fd fd fa fa fa fa fd fd fd fd fd fd fd fd
->> 0x0c0e7fffbc50: fd fd fa fa fa fa fd fd fd fd fd fd fd fd fd fd
->> 0x0c0e7fffbc60: fa fa fa fa fd fd fd fd fd fd fd fd fd fd fa fa
->> =>0x0c0e7fffbc70: fa fa[fd]fd fd fd fd fd fd fd fd fa fa fa fa fa
->> 0x0c0e7fffbc80: fd fd fd fd fd fd fd fd fd fd fa fa fa fa 00 00
->> 0x0c0e7fffbc90: 00 00 00 00 00 00 03 fa fa fa fa fa fd fd fd fd
->> 0x0c0e7fffbca0: fd fd fd fd fd fa fa fa fa fa fd fd fd fd fd fd
->> 0x0c0e7fffbcb0: fd fd fd fd fa fa fa fa fd fd fd fd fd fd fd fd
->> 0x0c0e7fffbcc0: fd fd fa fa fa fa fd fd fd fd fd fd fd fd fd fd
->> 
->> 
->> And the backtrace is available here:
->> 
->> #0 0x00007ffff61cfc37 in __GI_raise (sig=sig@...ry=6)
->> at ../nptl/sysdeps/unix/sysv/linux/raise.c:56
->> #1 0x00007ffff61d3028 in __GI_abort () at abort.c:89
->> #2 0x00000000004b1356 in __sanitizer::Abort() ()
->> #3 0x00000000004a2037 in __asan::AsanDie() ()
->> #4 0x00000000004a8a6f in __sanitizer::Die() ()
->> #5 0x00000000004a06cb in __asan::ScopedInErrorReport::~ScopedInErrorReport()
->> ()
->> #6 0x00000000004a0211 in __asan_report_error ()
->> #7 0x00000000004447a9 in printf_common(void*, char const*, __va_list_tag*)
->> ()
->> #8 0x0000000000444eb4 in vsnprintf ()
->> #9 0x00000000004461f1 in snprintf ()
->> #10 0x00007ffff7b519e9 in icalreqstattype_as_string_r (stat=...)
->> at /home/agustin/Code/libical/src/libical/icaltypes.c:171
->> #11 0x00007ffff7b5a410 in icalvalue_as_ical_string_r (value=0x60e0000280c0)
->> at /home/agustin/Code/libical/src/libical/icalvalue.c:1208
->> #12 0x00007ffff7add114 in icalproperty_as_ical_string_r
->> (prop=0x6060000010a0)
->> at /home/agustin/Code/libical/src/libical/icalproperty.c:442
->> #13 0x00007ffff7a978ed in icalcomponent_as_ical_string_r
->> (impl=0x60700001e7f0)
->> at /home/agustin/Code/libical/src/libical/icalcomponent.c:291
->> #14 0x00007ffff7a97b4b in icalcomponent_as_ical_string_r
->> (impl=0x60700000ded0)
->> at /home/agustin/Code/libical/src/libical/icalcomponent.c:300
->> #15 0x00007ffff7a96f12 in icalcomponent_as_ical_string (impl=0x60700000ded0)
->> at /home/agustin/Code/libical/src/libical/icalcomponent.c:247
->> #16 0x00000000004b8db8 in main (argc=2, argv=0x7fffffffdf08)
->> at /home/agustin/Code/libical/src/test/icaltestparser.c:109
->> 
->> It is worth to mention there is a very similar bug found (CVE-2016-5824) on
->> the libical version used by
->> Thunderbird but we think is *not* the same as this one. In fact, we've
->> tested it on Thunderbird and it does *not* crash.
-> 
-> I’ve found multiple use-after-frees in libical that affected Thunderbird that did not cause Thunderbird to crash. Did you run this through valgrind or are you using Thunderbird not crashing as evidence it isn’t vulnerable.
+> I verified that this issue affects mencoder
 
-An example: https://bugzilla.mozilla.org/show_bug.cgi?id=1275400 <https://bugzilla.mozilla.org/show_bug.cgi?id=1275400>
-> 
+>> Fixed in r37857.
 >> 
->> The reproducer is available upon request.
->> 
->> Unfortunately, there is no fix yet, but upstream is working on it.
->> 
->> Regards.
-> 
+>> The gif demuxes assumes in many places that width*height is <=
+>> INT_MAX; this is not true with the sample. Fixed by validating the
+>> picture size.
 
+Use CVE-2016-4352.
 
+This code was added to libmpdemux/demux_gif.c between r37856 and r37857:
+
+   // Validate image size, most code in this demuxer assumes w*h <= INT_MAX
+   if ((int64_t)gif->SWidth * gif->SHeight > INT_MAX) {
+     mp_msg(MSGT_DEMUX, MSGL_ERR,
+            "[demux_gif] Unsupported picture size %dx%d.\n", gif->SWidth,
+            gif->SHeight);
+     if (DGifCloseFile(gif) == GIF_ERROR)
+       print_gif_error(NULL);
+     free(priv);
+     return NULL;
+   }
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXI3iYAAoJEHb/MwWLVhi2ndcQAIfNBWzI+O+D90r31xFgzNHh
+q5AYsp+VN48Z6f8Ctp6AVXWoD+I/KHC1AIBc5Pn9/ahDyQ+cv9ejMdizkohu7TpW
+q4vfeCsmp94pw2w8tKbT4wgI19mdERvWiFe03SD/1xpxaHc6gIZN4+zwmswyIJVq
+9UVl6cEbSD/NGDpudTwqNH2Tc6KPfpUTPDh05nHhdEYkoPepemS0E6dHZl0cnV38
+qFAF7EvF4h+1pQSfchVdtf58nPu5g7tuR7eudnqnq9g49PZlIOPBKB/cdra7ZON7
+eFvZp+0XZ3QtwvDiQ18uAHnobN2RdnonISfimOsd7zYDyoxtAttfOvBRaVRDtTBr
+U0hfDRA8g/d5JTmeLMcfm1NWG3+0nF90BVYjY7cziAVBAGoj17fo66mw6nM5Jn2A
+1T/9Cc/gqzIvlGlVQk/3KObdK0DbZvGxgFxo8pKTzrRo/thAS6Rp30X672pfGH1W
+DxWhbkJgnU+PmaW+86zrWsnHGqoX++bduSIxo/Y1jjigwetaTgCRHO6nFI0onWex
+dP0z76DjZ4jBAs7GzsFkv3ck/ZfaQ6MxjXjcR1yYZFeTp3WlD3VIZVuZwohg78wo
+IR/5QOoQjwoV5nbgH3l2f0h2pvrCJPvQiwbADzZJpklpg45D2Y8EIMtOQy64hZSz
+2kFgy6oWuYKbuQf49Wi4
+=oaGW
+-----END PGP SIGNATURE-----
