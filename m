@@ -1,57 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/22
-Message-ID: <CANO=Ty27nHy0Mz0E=d648Z+BBA7nqMdF-EgL__GUqMqPBn1NYQ@mail.gmail.com>
-Date: Wed, 24 Feb 2016 14:58:03 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: bash-completion: dequote command injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/29/8
+Message-Id: <20160429161308.1775333600A@smtpvbsrv1.mitre.org>
+Date: Fri, 29 Apr 2016 12:13:08 -0400 (EDT)
+From: cve-assign@...re.org
+To: mprpic@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: three issues in libksba
 Content-Type: text/plain; charset=utf-8
 
-I think in this case it's pretty simply "dequoting should not result in
-code execution" much like the various deserialization flaws (they should
-deserialize the data, not execute random stuff).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Wed, Feb 24, 2016 at 2:56 PM, Fernando Muñoz <fernando@...l-life.com>
-wrote:
+> Denial of Service due to stack overflow in src/ber-decoder.c
+> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=07116a314f4dcd4d96990bbd74db95a03a9f650a
 
-> Hello Eric,
->
-> I never mentioned privilege escalation.
->
-> This issue how ever could appear when a different application uses
-> user input and calls "dequote" function that not only dequotes, but
-> also executes it as a command. If mitre doesn't consider it CVE worth,
-> that's OK!
->
-> Regards.
->
->
->
-> On Wed, Feb 24, 2016 at 3:58 PM, Eric Blake <eblake@...hat.com> wrote:
-> > On 02/24/2016 12:08 PM, Fernando Muñoz wrote:
-> >> Marcelo Echeverria and Fernando Muñoz discovered that the dequote
-> >> function included in bash-completion allows to execute arbitrary
-> >> commands since it uses the eval function to call printf and perform
-> >> the actual dequoting. bash-completion is included on Debian, Ubuntu
-> >> OpenSuse [1] and probably other distros.
-> >
-> > But what is the privilege escalation?  This is no different than
-> > incorrectly using 'eval' in a shell script - you may have buggy code,
-> > and have an easy-to-trigger bug, but if you can't escalate privileges,
-> > how it is a CVE?
-> >
-> > --
-> > Eric Blake   eblake redhat com    +1-919-301-3266
-> > Libvirt virtualization library http://libvirt.org
-> >
->
+Use CVE-2016-4353. (This CVE is about changing the type of error
+handling after a decoder stack overflow. It is not about changing the
+decoder so that a decoder stack overflow occurs in fewer cases.)
 
 
+> Integer overflow in the BER decoder src/ber-decoder.c
+> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=aea7b6032865740478ca4b706850a5217f1c3887
 
--- 
+>> The actual bug described below is due to assigning an int
+>> (val.length) to a size_t (ti.length). The int was too large and thus
+>> negative so that the condition to check for too large objects didn't
+>> worked. Changing the type would have been enough but other conditions
+>> are possible. Thus the introduction of sum_a1_a2_ge_b for overflow
+>> checking and checks when adding 100 extra bytes to malloc calls are
+>> added.
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+We consider this two separate issues.
 
+Use CVE-2016-4354 for the use of an incorrect integer data type.
+
+Use CVE-2016-4355 for the cases in which the code was simply making no
+attempt to check for an integer overflow (the "+ 100" cases and the
+"+= d->val.length" case).
+
+
+> Integer overflow in the DN decoder src/dn.c
+> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=243d12fdec66a4360fbb3e307a046b39b5b4ffc3
+
+This might be an error in the original
+https://security.gentoo.org/glsa/201604-04 advisory. We did not notice
+any obvious relationship between
+243d12fdec66a4360fbb3e307a046b39b5b4ffc3 and an integer overflow fix.
+The 243d12fdec66a4360fbb3e307a046b39b5b4ffc3 commit message seems to
+focus on "read access out of bounds." Also, there is no other recent
+commit at
+http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=history;f=src/dn.c
+that refers to an integer overflow. Possibly there was an inapplicable
+copy-and-paste of "Integer overflow in the" from the previous report
+about the BER decoder.
+
+Use CVE-2016-4356 for the 243d12fdec66a4360fbb3e307a046b39b5b4ffc3
+issue that is described as "Fix encoding of invalid utf-8 strings in
+dn.c" and "read access out of bounds."
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXI4eHAAoJEHb/MwWLVhi2ZvoP/0tfBkT4Iqjsya7V3BthT3ne
+p9wDYxI8Tre5Qza/lteablh3FicO4I8e4EFjghxYEd51lbVXerJBJNqo3vcZsDzD
+2lozbI0YooCsiE9Z2kESUFpT4agPg2yLamjFqmw4kxK71RTq+FDke5GTmbAK05WR
+ir4VoTsK1qPUB6mcq2qqylXjs/ulGL/pkd6SuJJAVp9YEExh2kgiey+1KtIDGeij
+4NnzJ5a7syT6VxyX/JfwNaLuNlfv6vddqJyp7NWAa/0B3y7n+6gjyVjyAuwZYsiN
+wbVJOw9p6TSVPp1VX7GOoxj/bWn9fiOfMzCsun0Oajq4Te9aXrCZODy9aWivaRlH
+2XMFUEHfELQV8UzvwJb1hA1PISzvzYheWxSNyncxiojKvJbKmi8UvrkVWYUXaGKl
+OFO6DcsoCnVpYwMAelN5Ir1hgsJ6dr73ssxuVFgO9jwAteDoqikE8HFVm5cJTELP
+q6Q9QecnHAA7aJ32PqcGd2sd10+majAejMZV5MZpoLTWUkH/1+olFGR1njpvegyK
+tepkG9onPWFXQ2iUbTpUxQzmgYYNrwdtmU+0TgFKXOcfLV8W88w7v22sfdhLUgj0
+sm4ckXuxB0fO+6TyVo/ZRVibm7UPjacrubB8f65lUTUldbx+3Wtwgl3+MWAKbpT4
+TBr+InX8c9ul3DacR4iv
+=u1+d
+-----END PGP SIGNATURE-----
