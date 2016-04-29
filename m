@@ -1,26 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/2
-Message-ID: <122945095.MCtYvXDq6T@xps>
-Date: Wed, 28 Sep 2016 23:35:43 +0200
-From: Albert Astals Cid <aacid@....org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>, security@....org
-Subject: kdesu vulnerability: need CVE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/29/3
+Message-ID: <CACn5sdTKJd7hEo=YmpPmpuB76XDumiMORWJXGwiacq83_aUPmg@mail.gmail.com>
+Date: Fri, 29 Apr 2016 09:38:28 +0200
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Mplayer/Mencoder integer overflow parsing gif files
 Content-Type: text/plain; charset=utf-8
 
-Hi, Albert from KDE, can we get a CVE assigned for kdesu?
+Hi,
 
-The problem is that you could sneak an unicode string terminator in the kdesu invocation
-and the label showing which command will be executed ended there but we did execute the whole thing,
-that is,
-  
-   echo Hi@; whoami > /tmp/filebyroot
+A crash caused by an integer overflow parsing a gif was found in the last
+revision of mplayer. It seems to affect older versions too. It was recently
+fixed (r37857). Technical details and a reproducer are available here:
 
-If @ is the unicode string terminator would only tell the user kdesu would execute "echo Hi"
-but would create the /tmp/filebyroot file as root
+https://trac.mplayerhq.hu/ticket/2295
+<https://github.com/stedolan/jq/issues/1136>
 
-The fix is already available at
-https://github.com/KDE/kde-cli-tools/commit/5eda179a099ba68a20dc21dc0da63e85a565a171
+I verified that this issue affects mencoder, so you should check if you are
+using it for conversion of gif files. This crash was found by QuickFuzz.
 
-Thanks,
-  Albert
+Regards,
+Gustavo.
+
