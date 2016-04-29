@@ -1,25 +1,10 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/8
-Message-ID: <CAMYtjAo+ggV_RBCd7LsRBVwjv10+yqv838J7DSyGDfnvZpR-xw@mail.gmail.com>
-Date: Fri, 18 Nov 2016 11:22:09 +0100
-From: Pere Orga <pere@...a.cat>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/29/4
+Message-ID: <CACn5sdQ2Au8Ewz4rB5ju_KZLCLTFmfJDDoVL-gb5-Mo-3h+5Rg@mail.gmail.com>
+Date: Fri, 29 Apr 2016 09:48:40 +0200
+From: Gustavo Grieco <gustavo.grieco@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Drupal Security Team <security@...pal.org>
-Subject: CVE requests for Drupal core (SA-CORE-2016-005)
+Subject: Re: CVE request: Mplayer/Mencoder integer overflow parsing gif files
 Content-Type: text/plain; charset=utf-8
 
-Hi
-
-Please can I have CVE IDs assigned to the following Drupal
-vulnerabilities (see https://www.drupal.org/SA-CORE-2016-005):
-
-* Inconsistent name for term access query (Drupal 7 and Drupal 8)
-* Incorrect cache context on password reset page (Drupal 8)
-* Confirmation forms allow external URLs to be injected (Drupal 7)
-* Denial of service via transliterate mechanism (Drupal 8)
-
-Thanks
-
--- 
-Pere Orga
-
+Ups, the correct link is this one: https://trac.mplayerhq.hu/ticket/2295
