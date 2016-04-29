@@ -1,106 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/20
-Message-ID: <20511243.IiplisyCjp@arcadia>
-Date: Sun, 16 Oct 2016 20:52:34 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: mupdf: mujstest: global-buffer-overflow in main (jstest_main.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/29/5
+Message-ID: <87mvocv6ff.fsf@redhat.com>
+Date: Fri, 29 Apr 2016 16:24:52 +0200
+From: Martin Prpic <mprpic@...hat.com>
+To: "OSS Security Mailinglist" <oss-security@...ts.openwall.com>
+Subject: CVE request: three issues in libksba
 Content-Type: text/plain; charset=utf-8
 
-A note outside the blog post:
-This issue does not affect any library, but it is only in the mujstest binary.
-There aren't known applications which use mujstest, but if you have an 
-application or website which relies on mujstest you are invited to apply the 
-patch or use the newer package when it will be released. Thanks.
+Hi,
 
-Description:
-Mujstest, which is part of mupdf is a scriptable tester for mupdf + js.
+Can CVEs please be assigned to these three issues (unless they've
+already been assigned and I failed to find them):
 
-A fuzzing revealed a global buffer overflow write.
+Denial of Service due to stack overflow in src/ber-decoder.c
+http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=07116a314f4dcd4d96990bbd74db95a03a9f650a
 
-The complete ASan output:
+Integer overflow in the BER decoder src/ber-decoder.c
+http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=aea7b6032865740478ca4b706850a5217f1c3887
 
-# mujstest $FILE
-=================================================================
-==2244==ERROR: AddressSanitizer: global-buffer-overflow on address 
-0x0000013c6140 at pc 0x000000473526 bp 0x7fff866f77d0 sp 0x7fff866f6f80
-WRITE of size 1181 at 0x0000013c6140 thread T0
-    #0 0x473525 in __interceptor_strcpy /var/tmp/portage/sys-devel/llvm-3.8.0-
-r3/work/llvm-3.8.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:547
-    #1 0x4f7910 in main /var/tmp/portage/app-
-text/mupdf-1.9a/work/mupdf-1.9a/platform/x11/jstest_main.c:353:6
-    #2 0x7f3a6c18661f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #3 0x41ade8 in _init (/usr/bin/mujstest+0x41ade8)
+Integer overflow in the DN decoder src/dn.c
+http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=243d12fdec66a4360fbb3e307a046b39b5b4ffc3
 
-0x0000013c6140 is located 0 bytes to the right of global variable 'filename' 
-defined in 'platform/x11/jstest_main.c:15:13' (0x13c5d40) of size 1024
-SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/sys-
-devel/llvm-3.8.0-r3/work/llvm-3.8.0.src/projects/compiler-
-rt/lib/asan/asan_interceptors.cc:547 in __interceptor_strcpy
-Shadow bytes around the buggy address:
-  0x000080270bd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080270be0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080270bf0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080270c00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080270c10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x000080270c20: 00 00 00 00 00 00 00 00[f9]f9 f9 f9 f9 f9 f9 f9
-  0x000080270c30: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x000080270c40: f9 f9 f9 f9 f9 f9 f9 f9 04 f9 f9 f9 f9 f9 f9 f9
-  0x000080270c50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080270c60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080270c70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==2244==ABORTING
+A Gentoo advisory lists them as being fixed in version 1.3.3 and higher:
 
-Affected version:
-1.9a
+https://lwn.net/Alerts/685271/
 
-Fixed version:
-1.10 (not yet released)
-
-Commit fix:
-http://git.ghostscript.com/?p=mupdf.git;h=cfe8f35bca61056363368c343be36812abde0a06
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Timeline:
-2016-08-04: bug discovered
-2016-08-05: bug reported to upstream
-2016-09-22: upstream released a patch
-2016-09-24: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/09/24/mupdf-mujstest-global-buffer-overflow-in-main-jstest_main-c/
-
+Thank you!
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Martin Prpič / Red Hat Product Security
