@@ -1,90 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/23/8
-Message-Id: <20161023010023.5F7236C4684@smtpvmsrv1.mitre.org>
-Date: Sat, 22 Oct 2016 21:00:23 -0400 (EDT)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Fuzzing jasper
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/30/2
+Message-ID: <CAMoU6uYcJu7-RbCRQ1O9zqOHF14fD+CyMB+=y6Xt21UQiiJjVQ@mail.gmail.com>
+Date: Sat, 30 Apr 2016 14:41:03 +0200
+From: Bas Pape <baspape@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request - Quassel IRC denial of service
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> https://github.com/mdadams/jasper/issues/28
-> Heap overflow in jpc_dec_cp_setfromcox()
+It was found that quasselcore is vulnerable to a denial of service
+attack by unauthenticated clients. The protocol negotiation did not
+take into account lack of a match, in which case
+PeerFactory::createPeer returns a nullptr, which is immediately
+dereferenced [1].
+This issue was introduced in commit d1bf207 [2] (version 0.10.0 and
+later), and fixed in commit e678873 [3] (tagged as version 0.12.4).
 
-> AddressSanitizer: heap-buffer-overflow
-> WRITE of size 1
+Can a CVE be assigned to this issue?
 
-> malformed jpeg2000 file
+[1] https://github.com/quassel/quassel/blob/f64ac93/src/core/coreauthhandler.cpp#L100
+[2] https://github.com/quassel/quassel/commit/d1bf207
+[3] https://github.com/quassel/quassel/commit/e678873
 
-> jpc_dec_cp_setfromcox ... libjasper/jpc/jpc_dec.c:1668:32
-
-Use CVE-2016-8880.
-
-
-> https://github.com/mdadams/jasper/issues/29
-> Heap overflow in jpc_getuint16()
-
-> AddressSanitizer: heap-buffer-overflow
-> WRITE of size 8
-
-> jpc_getuint16 ... libjasper/jpc/jpc_cs.c:1572:8
-
-Use CVE-2016-8881.
-
-
-> https://github.com/mdadams/jasper/issues/30
-> segfault / null pointer access in jpc_pi_destroy
-
-> AddressSanitizer: SEGV on unknown address 0x000000000000
-
-> jpc_pi_destroy ... libjasper/jpc/jpc_t2cod.c:521:10
-
-> https://github.com/mdadams/jasper/commit/69a1439a5381e42b06ec6a06ed2675eb793babee
-
-Use CVE-2016-8882.
-
-
-> https://github.com/mdadams/jasper/issues/31
-> double free on jpeg parsing
-
->> From: Agostino Sarubbo
->> This is a duplicate of the double-free I reported
->> https://blogs.gentoo.org/ago/2016/10/16/jasper-double-free-in-mem_close-jas_stream-c/
-
-(this was already assigned CVE-2016-8693)
-
-
-> https://github.com/mdadams/jasper/issues/32
-> assert in jpc_dec_tiledecode()
-
-> imginfo: jpc_dec.c:1072: int jpc_dec_tiledecode(jpc_dec_t *, jpc_dec_tile_t *): Assertion `dec->numcomps >= 3' failed.
-
-> https://github.com/mdadams/jasper/commit/33cc2cfa51a8d0fc3116d16cc1d8fc581b3f9e8d
-
-Use CVE-2016-8883.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYDArpAAoJEHb/MwWLVhi2dRAP/1Qvj44C7Wp43GQDGLzXEkL+
-XF25qtPfMJBeNtcPeDmkAAfW04Re10NYptCmmNWH7uxXDeyeakHhJjCaiI372nSe
-e/TZ7adgkaxFAanUc5WF6lhnX8VrCg/Naa/F/aSUk5Y55KgkfmqnXosy84ktIaUs
-aSrPR5k6gogmG85K17Jy3rvysO01ftGKP5uvyT8V49BDAR7S21DGCgGowf53AWid
-J8fFHz64E+8L0Ws2T4secUhHVlxSC7EygVPN6RERspEezM49TDzWn/3jyU2Rnyiq
-Tc4ehZGxJR+TkPzg9dnnH/jrJ0EjLktYOhMttjCXhFUWLNAg9R2mowLxBqfVDsIm
-yotcn7pGVB5VZCHsBz5srzKdLytMV8HlpurVx2fawVh62TRULOon8RLKbGoO6x9d
-XMvOCjxF0+oPIq4wRk4j3FIewlzNi7sktgAJ7dqlADbiNtpOF8EhiWfYq5/+h8BJ
-kUqbLPDVTCF3iQiNkWOL7wdbBPlC3SsdgB73a0U92ApWCz4BZ2cMAbNosrmpbAS9
-DK8DPwwVFFKgMu8FVJhlCa3FSJEsXHMKZHeb0J3merRimupUcoDMIUV5VSHNq8RK
-WodgTixKBURw4XHGVJ3dgX665USRqbvBGxb9zOYWaXZsRrc1uHNRNHDP78h6eY6i
-N8eeB+pE7gmFUQP+7Kng
-=yV6y
------END PGP SIGNATURE-----
+-- 
+Bas Pape (Tucos)
