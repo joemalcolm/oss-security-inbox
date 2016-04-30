@@ -1,4 +1,9 @@
-Received: (qmail 5172 invoked by uid 550); 21 Aug 2024 11:36:47 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1429" "Saturday" "30" "April" "2016" "15:04:32" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160430190432.D01C142E008@smtpvbsrv1.mitre.org>" "35" "[oss-security] Re: CVE request - Quassel IRC denial of service" nil nil nil "4" "2016043019:04:32" "[oss-security] Re: CVE request - Quassel IRC denial of service" (number mark "U       cve-assign@m Apr 30   35/1429  " thread-indent "\"[oss-security] Re: CVE request - Quassel IRC denial of service\"\n") "<CAMoU6uYcJu7-RbCRQ1O9zqOHF14fD+CyMB+=y6Xt21UQiiJjVQ@mail.gmail.com>" ("<CAMoU6uYcJu7-RbCRQ1O9zqOHF14fD+CyMB+=y6Xt21UQiiJjVQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 29787 invoked by uid 550); 30 Apr 2016 19:04:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,44 +12,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17423 invoked from network); 21 Aug 2024 02:42:31 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Jun Gao <gaojun2048@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <4fa73da8-a1b9-70c0-c7cb-019994df39a3@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 21 Aug 2024 02:42:21 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-49198: Apache SeaTunnel Web: Arbitrary file read
- vulnerability 
+Received: (qmail 29748 invoked from network); 30 Apr 2016 19:04:45 -0000
+From: cve-assign@mitre.org
+To: baspape@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAMoU6uYcJu7-RbCRQ1O9zqOHF14fD+CyMB+=y6Xt21UQiiJjVQ@mail.gmail.com>
+Message-Id: <20160430190432.D01C142E008@smtpvbsrv1.mitre.org>
+Date: Sat, 30 Apr 2016 15:04:32 -0400 (EDT)
+Subject: [oss-security] Re: CVE request - Quassel IRC denial of service
 
-Severity: important
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Affected versions:
+> It was found that quasselcore is vulnerable to a denial of service
+> attack by unauthenticated clients. The protocol negotiation did not
+> take into account lack of a match, in which case
+> PeerFactory::createPeer returns a nullptr, which is immediately
+> dereferenced
+> 
+> https://github.com/quassel/quassel/commit/e67887343c433cc35bc26ad6a9392588f427e746
 
-- Apache SeaTunnel Web 1.0.0
+Use CVE-2016-4414.
 
-Description:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Mysql security vulnerability in Apache SeaTunnel.
-
-Attackers can read files on the MySQL server by modifying the information i=
-n the MySQL URL
-
- allowLoadLocalInfile=3Dtrue&allowUrlInLocalInfile=3Dtrue&allowLoadLocalInf=
-ileInPath=3D/&maxAllowedPacket=3D655360
-This issue affects Apache SeaTunnel: 1.0.0.
-
-Users are recommended to upgrade to version [1.0.1], which fixes the issue.
-
-Credit:
-
-jiahua huang (reporter)
-
-References:
-
-https://lists.apache.org/thread/nprwwhh2t9r91lg6kxcgqz2xzq34ojbs
-https://seatunnel.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2023-49198
-
+iQIcBAEBCAAGBQJXJQFQAAoJEHb/MwWLVhi2ZcAP/1LyyMKO4YOzrX0HmWXqANyu
+75tmS0QUrp1EZrMNw3phenr3FdBhpPUDfYNkqXxdR/fqfJG+yMdtW3CCnK7dxqgs
+iZuDqqohyTNLPHl78KJndAtMmmGfmMy8ZRB7NCqPTBomEGrM1unELYSYMTDEF9PE
+SO5m6Y8PlEJmP9c7wJeUagR32uvpeFHlNY3KzYptSYR5gEHVAZp28m912OEn1grg
+nywB0MSld+JdDL1FDHd/WEP8KBTtbLawxhC+/BY20Un5IY/1O1iSLUoz2uxn8pmM
+XrEKiylU+L3ifjgoP1vz00ndg160RQs+RUltJqst4yfWzjdYlWOfSqyPGenaRr0g
+JclOiQzr4PnzVuESYe/1VscGnvviJceew1VmQ9/M1ocR1M3AhCjAP373n9iitCCE
+fKM8PAxU5YD0Cz/XYsmZjfdKRO0WW2PZ8PTTEPtw/Ls9Q7b7tA5+xmL9zlqznhOj
+Oe1IQ8fnOXIi+SGHZZVWA+ViNjHaJ9fZXsAGAcNrUlHHnlijWo6rG/GmRk0oFEAn
+F2KnPoqBrx56sLWEPcpBimaKIDTz9kuU6NTd3qVZTQ23AQxbtc9Ka2X1J+L7fIsD
+TK3L/2vJkVRTLL/kboGApuoHCFGHLfzea+h5EFXvMD+l9XBNS2Q+52PQ3Nh9PvDV
+X+2oUb7pXqhymaQX4Zvc
+=ZaBE
+-----END PGP SIGNATURE-----
