@@ -1,16 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/21/3
-Message-ID: <57907073.60501@tu-bs.de>
-Date: Thu, 21 Jul 2016 08:49:23 +0200
-From: Christian Wressnegger <c.wressnegger@...bs.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/30/1
+Message-ID: <20160430095250.GA19211@eldamar.local>
+Date: Sat, 30 Apr 2016 11:52:50 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: cve-assign@...re.org
 Cc: oss-security@...ts.openwall.com
-Subject: Re: Buffer overflow in libarchive-3.2.0
+Subject: Re: CVE Request: vtun: denial-of-service: high CPU usage after SIGHUP
 Content-Type: text/plain; charset=utf-8
 
-On 07/20/2016 03:54 PM, cve-assign@...re.org wrote:
->> https://github.com/libarchive/libarchive/commit/3014e19820ea53c15c90f9d447ca3e668a0b76c6
-> 
-> Use CVE-2016-6250 for everything fixed by this commit.
+Hi,
 
-Thank you!
+On Wed, Apr 27, 2016 at 05:58:00PM -0400, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+> 
+> > https://bugs.debian.org/818489
+> 
+> Can you describe how this crosses a privilege boundary?
+> 
+> 
+> >> When you send a SIGHUP to a vtun client process and it cannot connects
+> >> to the remote server, vtun try to reconnect without sleep between each attempt.
+> >> In result, the vtun process uses lot of CPU, and write to syslog without limit.
+> 
+> Is there an important way in which this differs from "The vtun client
+> is not installed. The attacker simply writes their own program to
+> reconnect without sleeping and make many syslog calls"?
+> 
+> For example: does vtun's resource consumption belong to the root
+> account in a common scenario, but SIGHUP is accepted from an
+> unprivileged user? Are different unprivileged users successfully
+> sending SIGHUP to one another's vtun client processes? Do you mean
+> that there's a potentially common attack pattern in which a
+> man-in-the-middle attacker intentionally blocks connections to the
+> remote server in order to trick the victim into sending a SIGHUP, and
+> (in some sense) this man-in-the-middle attacker is thereby able to
+> trigger the excessive resource consumption?
+> 
+> Sometimes there are CVE IDs for "a client application inadvertently
+> starts launching a network DoS attack" but this is typically only in
+> cases where someone can send forged packets to the client application
+> in order to start the attack.
+
+You are right -- I cannot think of a situation (or seems hard to find
+a realistic example) right now where this issue would cross a
+privilege boundary, and thus might just be considered as bug, but not
+a vulnerability.
+
+Thanks for your feedback, I'm fine to not have assigned an identifier
+for this.
+
+Regards,
+Salvatore
