@@ -1,29 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/03/3
-Message-ID: <alpine.LFD.2.20.1610031723380.30560@wniryva>
-Date: Mon, 3 Oct 2016 17:25:36 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE Request Qemu: net: pcnet: infinite loop in pcnet_rdra_addr
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/01/1
+Message-Id: <20160501011252.5F9896C060D@smtpvmsrv1.mitre.org>
+Date: Sat, 30 Apr 2016 21:12:52 -0400 (EDT)
+From: cve-assign@...re.org
+To: jmm@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...eshark.org
+Subject: Re: CVE requests: Multiple Wireshark vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Quick Emulator(Qemu) built with the AMD PC-Net II emulator support is 
-vulnerable to an infinite loop issue. It could occur while receiving packets 
-via pcnet_receive().
+CVE-2016-4415
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11795
+https://www.wireshark.org/security/wnpa-sec-2016-12.html
+https://code.google.com/p/google-security-research/issues/detail?id=647
 
-A privileged user/process inside guest could use this issue to crash the Qemu 
-process on the host leading to DoS.
 
-Upstream patch
---------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg07942.html
+CVE-2016-4416
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11818
+https://www.wireshark.org/security/wnpa-sec-2016-13.html
 
-This issue was reported by Li Qiang of 360.cn Inc.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+CVE-2016-4417
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11825
+https://www.wireshark.org/security/wnpa-sec-2016-14.html
+
+
+CVE-2016-4418
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12106
+https://www.wireshark.org/security/wnpa-sec-2016-15.html
+
+
+CVE-2016-4419
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12151
+https://www.wireshark.org/security/wnpa-sec-2016-16.html
+
+
+CVE-2016-4420
+https://www.wireshark.org/security/wnpa-sec-2016-17.html
+
+
+CVE-2016-4421
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11822
+https://www.wireshark.org/security/wnpa-sec-2016-18.html
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXJVe4AAoJEHb/MwWLVhi2KGcP/0PM0l3c/X6ouWO/ewltfV1N
+zCm0qLM2cGtbmFx1d/Cb4s5BacBtIj3SgMA6tf3Jz8jCYHW2HgBxaR9c53J0v/nZ
+jj0utLopTF9NIK1g/Z5qKiV65enHciuxOUW6le2SzORKGLAujtjhQK3uFUR/Kn0v
+PUFfx1QrN8axi/sct30a2ToI5BbINsfk0tvtb1CBd/3HI/z21H1KZW1mnJD1XwVX
+OWlcMQSPfHUafpDwr9X4EoMZ4jFRRGfJ09dvbSFGiaL+CbYgNBfAMEaT4fqCQIyr
+1uxI9oIqd+ktJFhXE3J6zkVnUXhw2nDT8OtSP+JyPFzZPorDrzwjPv4sKXnW+QYT
+b68rRumEj+ux3pNbV5sKXnjsJMZmUd1d2Y7qY6N89qaA8LL3s9GfxlywbBmCMsCP
+zJZefnmVioIpe3WYnbPcx+OWzbNflNIWi2/UUDfIlPV2bS+RJpDtR6W81onyeTeB
+pySxM/S2id4bmheneGukFefOyBRXqaT2UNq+cKwClJV3DHyezWjPEyXwuC0XBJzu
+jBNAC5oXgBe4h3BOrx03nL0CguMZicr8EdDDvpJZWREKVb9VbsbXk1CD9/k2/sk0
+P9x6aGvB0moHCklRO1lj0DNr+OaV+DM7p1PM6Bt4iOJHtrjO01fL+ckl3nOgTXKi
+LDtPs2LxK0WKxPMcA6sJ
+=Z9Df
+-----END PGP SIGNATURE-----
