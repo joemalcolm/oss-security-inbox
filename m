@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1291" "Wednesday" "16" "March" "2016" "15:43:42" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160316194342.BC8FE6C4055@smtpvmsrv1.mitre.org>" "35" "[oss-security] Re: CVE request - OpenJPEG : Out-Of-Bounds Read in opj_tcd_free_tile function" nil nil nil "3" "2016031619:43:42" "[oss-security] Re: CVE request - OpenJPEG : Out-Of-Bounds Read in opj_tcd_free_tile function" (number mark "U       cve-assign@m Mar 16   35/1291  " thread-indent "\"[oss-security] Re: CVE request - OpenJPEG : Out-Of-Bounds Read in opj_tcd_free_tile function\"\n") "<1F2D4DA31CA62740BFF46830A0E6A4F7064F6983@EXMBX-TJ002.tencent.com>" ("<1F2D4DA31CA62740BFF46830A0E6A4F7064F6983@EXMBX-TJ002.tencent.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["997" "Sunday" "1" "May" "2016" "15:43:15" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1605011539410.23612@freddy.simplesystems.org>" "29" "Re: [oss-security] CVE request: DoS in multiple versions of GraphicsMagick" nil nil nil "5" "2016050120:43:15" "[oss-security] CVE request: DoS in multiple versions of GraphicsMagick" (number mark "U       bfriesen@sim May  1   29/997   " thread-indent "\"Re: [oss-security] CVE request: DoS in multiple versions of GraphicsMagick\"\n") "<CACn5sdRjA1Vma3em7z0xyuV87_iggAojuFMFZLWKnEFOHww3hg@mail.gmail.com>" ("<CACn5sdRjA1Vma3em7z0xyuV87_iggAojuFMFZLWKnEFOHww3hg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1416 invoked by uid 550); 16 Mar 2016 19:43:54 -0000
+Received: (qmail 7616 invoked by uid 550); 1 May 2016 20:43:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,47 +12,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1394 invoked from network); 16 Mar 2016 19:43:54 -0000
-From: cve-assign@mitre.org
-To: winsonliu@tencent.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <1F2D4DA31CA62740BFF46830A0E6A4F7064F6983@EXMBX-TJ002.tencent.com>
-Message-Id: <20160316194342.BC8FE6C4055@smtpvmsrv1.mitre.org>
-Date: Wed, 16 Mar 2016 15:43:42 -0400 (EDT)
-Subject: [oss-security] Re: CVE request - OpenJPEG : Out-Of-Bounds Read in opj_tcd_free_tile function
+Received: (qmail 7595 invoked from network); 1 May 2016 20:43:28 -0000
+Date: Sun, 1 May 2016 15:43:15 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
+X-X-Sender: bfriesen@freddy.simplesystems.org
+To: oss-security@lists.openwall.com
+In-Reply-To: <CACn5sdRjA1Vma3em7z0xyuV87_iggAojuFMFZLWKnEFOHww3hg@mail.gmail.com>
+Message-ID: <alpine.GSO.2.20.1605011539410.23612@freddy.simplesystems.org>
+References: <CACn5sdRjA1Vma3em7z0xyuV87_iggAojuFMFZLWKnEFOHww3hg@mail.gmail.com>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Sun, 01 May 2016 15:43:15 -0500 (CDT)
+Subject: Re: [oss-security] CVE request: DoS in multiple versions of
+ GraphicsMagick
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Sun, 1 May 2016, Gustavo Grieco wrote:
 
-> A specially crafted JPEG2000 image file can force Out-Of-Bounds Read
+> We recently tested GraphicsMagick with our tool and found two issues that
+> causes DoS:
+>
+> * Infinite loop caused by converting a circularly defined svg file.
+>
+> * Arithmetic exception converting a svg file caused by a X%0 operation in
+> magick/render.c:3800
+>
+>    (long) (y-fill_pattern->tile_info.y) % fill_pattern->rows,
+>
+> Reproducers for both issues are attached. They are triggered by converting
+> a svg to another format. Identification is not affected.
+> These issues affect 1.3.18 and 1.3.23. Most likely other versions are
+> vulnerable too.
 
-> opj_decompress -o image.pgm -i oob_opj_tcd_free_tile.jp2
+These issues are now resolved in the GraphicsMagick Mercurial 
+repository.
 
-> precision 31 is larger than 16
+It is worth noting that ImageMagick's built-in SVG renderer has the 
+same problem with "circular.svg" (specify the input file name like 
+"msvg:circular.svg").
 
-> Program received signal SIGSEGV, Segmentation fault.
-
-Use CVE-2016-3181.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJW6bbDAAoJEL54rhJi8gl5zMcP/12As0D1ZFaAB/OX9zTMWPRM
-ttAJ3Pd3BAkPH9K+hoGzIwY4Net+ClIP3E4yLYWqqfcuoDbbh0X7t0ZpVVs+nP6V
-9oLkNTEeSD/5eyFWPcz1niXGi/Gx1KvbihsS3vcR7/cGpHzly8EDrXAytS1EbWkr
-PSynB3gE2w1nnO8/Oq1toRhoSqKk9+5U3KAaI7tDl6tkilBs+edT1AxLwfAC8T80
-3JThnjBr1Ee6HW4f5PZhkDUpVHFFdltsVCKkPZwgEdYRcDac8/Ia7nMnFGmRrcH7
-mDdI/d/peHyAdR1E8ageG/GZOOm5P6vF9fn8GZZyRbMSHMOueLOpc1jlXF/GArPx
-TQO4UhWj4QUP1NEfDe3nH/tHPV12Z4TqtNSy5Ea6EP6+Wzn16851G27WpYlFV65o
-tbAKDrDX6in4Y3j/HMCc9VG/IPPVwZPwefQVPTLPVe+JaKZmbuD68RgREA/3thBd
-gHIZsSgBuLoXGVnFwYCzJ7J/NFmJhuFBTCiPp5GEnFPTH9l3VuhO2jictuWzyc1H
-/GKGwZOL4U8i7xDlwVDmaio0uSHtB6VoIvIAprK7dauevop/hjIhsVVhJvxImcR+
-QGRnn228hS5dHZ+j01ErisFBLpqfcWazRnnNuPxvpVIBG4BIgraWj7g8cyPLVJji
-YwftmPV2DEwNLl5q1zPA
-=felc
------END PGP SIGNATURE-----
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
