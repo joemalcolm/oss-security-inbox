@@ -1,52 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/03/5
-Message-ID: <b0348bd0efe1af61f4aed18c087eb70d@mail.adam-barratt.org.uk>
-Date: Thu, 03 Mar 2016 09:04:12 +0000
-From: "Adam D. Barratt" <adam@...m-barratt.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/01/6
+Message-ID: <alpine.GSO.2.20.1605011539410.23612@freddy.simplesystems.org>
+Date: Sun, 1 May 2016 15:43:15 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Cc: cypherpunks@...nks.org, debian-legal@...ts.debian.org, listmaster@...ts.debian.org
-Subject: Re: According to www.virustotal.com, lists.debian.org are hosting attachment .DOC virus
+Subject: Re: CVE request: DoS in multiple versions of GraphicsMagick
 Content-Type: text/plain; charset=utf-8
 
-[full quote for listmaster@]
+On Sun, 1 May 2016, Gustavo Grieco wrote:
 
-If you want an answer from those who deal with lists, you have to ask 
-them. debian-legal@ is just another mailing list.
+> We recently tested GraphicsMagick with our tool and found two issues that
+> causes DoS:
+>
+> * Infinite loop caused by converting a circularly defined svg file.
+>
+> * Arithmetic exception converting a svg file caused by a X%0 operation in
+> magick/render.c:3800
+>
+>    (long) (y-fill_pattern->tile_info.y) % fill_pattern->rows,
+>
+> Reproducers for both issues are attached. They are triggered by converting
+> a svg to another format. Identification is not affected.
+> These issues affect 1.3.18 and 1.3.23. Most likely other versions are
+> vulnerable too.
 
-On 2016-03-03 8:44, Georgi Guninski wrote:
-> According to www.virustotal.com, lists.debian.org
-> are hosting attachment .DOC virus.
-> 
-> Would someone confirm or deny this?
-> 
-> Warning:  DO NOT OPEN THE .DOC!
-> Discalimer: Nothing personal against Debian
-> 
-> https://lists.debian.org/debian-consultants/2016/01/msg00000.html
-> links to:
-> 
-> https://lists.debian.org/debian-consultants/2016/01/docyrW4BlUhzH.doc
-> 
-> Submitting the last .doc URL at:
-> https://www.virustotal.com
-> and then going to:
-> Go to downloaded file analysis
-> gives:
-> https://www.virustotal.com/en/file/c7210dc26e00a0d9f9bf8fb3b4850d52b62bb5836a7fa34bb669fc1b1553005e/analysis/1456991242/
-> 
-> SHA256: 
-> 	c7210dc26e00a0d9f9bf8fb3b4850d52b62bb5836a7fa34bb669fc1b1553005e
-> File name: 	docyrW4BlUhzH.doc
-> Detection ratio: 	17 / 54
-> 
-> the first few results are:
-> AVG 	W97M/Downloader 	20160303
-> AVware 	Trojan-Downloader.O97M.Adnel.n (v) 	20160303
-> AegisLab 	W97M.Gen!c 	20160303
-> Arcabit 	HEUR.VBA.Trojan.e 	20160303
-> Avast 	VBA:Downloader-ABC [Trj] 	20160303
-> ESET-NOD32 	VBA/TrojanDownloader.Agent.AOM 	20160303
-> 
-> and some report it as clean.
-> 
-> The .doc is downloadable with the same checksum.
+These issues are now resolved in the GraphicsMagick Mercurial 
+repository.
+
+It is worth noting that ImageMagick's built-in SVG renderer has the 
+same problem with "circular.svg" (specify the input file name like 
+"msvg:circular.svg").
+
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
