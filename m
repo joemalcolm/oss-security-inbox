@@ -1,29 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/03/6
-Message-ID: <1614761186.10592613.1478186149176.JavaMail.zimbra@redhat.com>
-Date: Thu, 3 Nov 2016 11:15:49 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/01/4
+Message-ID: <CACn5sdRjA1Vma3em7z0xyuV87_iggAojuFMFZLWKnEFOHww3hg@mail.gmail.com>
+Date: Sun, 1 May 2016 16:54:10 +0200
+From: Gustavo Grieco <gustavo.grieco@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request -- linux kernel: crypto: GPF in lrw_crypt caused by null-deref
+Subject: CVE request: DoS in multiple versions of GraphicsMagick
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+We recently tested GraphicsMagick with our tool and found two issues that
+causes DoS:
 
-We would like to ask for a CVE-ID for the following security flaw.
+* Infinite loop caused by converting a circularly defined svg file.
 
-The lrw_crypt() function in 'crypto/lrw.c' in the Linux kernel
-before 4.5 allows local users to cause a system crash and a denial
-of service by the NULL pointer dereference via accept(2) system call
-for AF_ALG socket without calling setkey() first to set a cipher key.
+* Arithmetic exception converting a svg file caused by a X%0 operation in
+magick/render.c:3800
 
-Initial discussion:
-https://groups.google.com/forum/#!msg/syzkaller/frb2XrB5aWk/xCXzkIBcDAAJ
+    (long) (y-fill_pattern->tile_info.y) % fill_pattern->rows,
 
-Red Hat Product Security Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=1386286
+Reproducers for both issues are attached. They are triggered by converting
+a svg to another format. Identification is not affected.
+These issues affect 1.3.18 and 1.3.23. Most likely other versions are
+vulnerable too.
 
-Initial upstream patch (followed by a set of the related patches):
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=dd504589577d8e8e70f51f997ad487a4cb6c026f
+Regards,
+Gustavo
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+Content of type "text/html" skipped
+
+Download attachment "circular.svg" of type "image/svg+xml" (6285 bytes)
+
+Download attachment "sigfpe.svg" of type "image/svg+xml" (1450 bytes)
