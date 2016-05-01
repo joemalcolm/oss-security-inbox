@@ -1,93 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/12
-Message-ID: <alpine.DEB.2.20.1611020812500.375@tvnag.unkk.fr>
-Date: Wed, 2 Nov 2016 08:13:26 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/01/2
+Message-ID: <20160501054304.GA31390@eldamar.local>
+Date: Sun, 1 May 2016 07:43:04 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: libpam-sshauth: local root privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-IDNA 2003 makes curl use wrong host
-===================================
+Hi
 
-Project cURL Security Advisory, November 2, 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20161102K.html)
+Due to a programming error, libpam-sshauth returned PAM_SUCCESS where
+it should fail with PAM_AUTH_ERR. This was fixed in Debian in the last
+upload to unstable with the attached patch.
 
-VULNERABILITY
--------------
+Introduced with:
+https://bazaar.launchpad.net/~ltsp-upstream/ltsp/libpam-sshauth/revision/93/src/pam_sshauth.c
+Fixed by:
+https://bazaar.launchpad.net/~ltsp-upstream/ltsp/libpam-sshauth/revision/114
 
-When curl is built with libidn to handle International Domain Names (IDNA), it
-translates them to puny code for DNS resolving using the IDNA 2003 standard,
-while IDNA 2008 is the modern and up-to-date IDNA standard.
+Could you assign a CVE for this issue?
 
-This misalignment causes problems with for example domains using the German ß
-character (known as the Unicode Character 'LATIN SMALL LETTER SHARP S') which
-is used at times in the .de TLD and is translated differently in the two IDNA
-standards, leading to users potentially and unknowingly issuing network
-transfer requests to the wrong host.
+Regards,
+Salvatore
 
-For example, `straße.de` is translated into `strasse.de` using IDNA 2003 but
-is translated into `xn--strae-oqa.de` using IDNA 2008. Needless to say, those
-host names could very well resolve to different addresses and be two
-completely independent servers. IDNA 2008 is mandatory for .de domains.
-
-curl is not alone with this problem, as there's currently a big flux in the
-world of network user-agents about which IDNA version to support and use.
-
-This name problem exists for DNS-using protocols in curl, but only when built
-to use libidn.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-8625 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-This flaw exists in the following curl versions.
-
-- Affected versions: curl 7.12.0 to and including 7.50.3
-- Not affected versions: curl < 7.12.0 and curl >= 7.51.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.51.0, the parser function is fixed.
-
-A [patch for CVE-2016-8625](https://curl.haxx.se/CVE-2016-8625.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.51.0
-
-  B - Apply the patch to your version and rebuild
-
-TIME LINE
----------
-
-It was first reported to the curl project on October 11 by Christian Heimes.
-
-We contacted distros@...nwall on October 19.
-
-curl 7.51.0 was released on November 2 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Thanks to Christian Heimes
-
--- 
-
-  / daniel.haxx.se
+View attachment "return-pam-auth-err-with-system-user" of type "text/plain" (714 bytes)
