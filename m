@@ -1,68 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/10
-Message-Id: <20160728162220.B178134EAE6@smtpvbsrv1.mitre.org>
-Date: Thu, 28 Jul 2016 12:22:20 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/02/1
+Message-Id: <20160502124647.5F221332073@smtpvbsrv1.mitre.org>
+Date: Mon,  2 May 2016 08:46:47 -0400 (EDT)
 From: cve-assign@...re.org
-To: carnil@...ian.org
+To: gustavo.grieco@...il.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: redis: World readable .rediscli_history
+Subject: Re: CVE Request: Jansson: stack exhaustion parsing a JSON file
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://bugs.debian.org/832460
+> https://github.com/akheron/jansson/issues/282
 
->> redis-cli stores its history in ~/.rediscli_history, this file is
->> created with permissions 0644. Home folders are world readable as well
->> in debian, so any user can access other users' redis history, including
->> AUTH commands, which include credentials.
->>
->> I've contacted upstream on 2016-05-30 without any reaction at all and
->> discovered this bug was first reported 3 years ago, still unfixed.
->> @RedisLabs keeps referring to their paid support on twitter.
->>
->> Demo: `cat /home/*/.rediscli_history`
+> It takes a less than 100kb json file to crash the library, which is
+> bad if you are receiving untrusted inputs.
 
-> Upstream report: https://github.com/antirez/redis/issues/3284
+>> https://github.com/akheron/jansson/blob/master/README.rst
+>> Jansson is a C library for encoding, decoding and manipulating JSON data.
 
->>> https://github.com/antirez/redis/pull/3322
->>> https://github.com/antirez/redis/pull/1418
-
-> Could you please assign a CVE for this issue in redis?
-
-As far as we can tell, this is being presented as a vulnerability in
-Redis, not a vulnerability in Linenoise.
-https://github.com/antirez/linenoise/blob/master/README.markdown says
-"A minimal, zero-config, BSD licensed, readline replacement used in
-Redis, MongoDB, and Android." Because it has a "minimal" design goal,
-it seems reasonable to argue that the linenoiseHistorySave function
-itself should not be making umask changes, because it cannot know
-whether history elements are potentially sensitive information within
-an arbitrary application that uses Linenoise. Also, the "History"
-section of README.markdown says "Linenoise has direct support for
-persisting the history into an history file. The functions
-linenoiseHistorySave and linenoiseHistoryLoad do just that. Both
-functions return -1 on error and 0 on success." It does not offer any
-guidance about whether this is typically safe.
-
-Admittedly, there is a counterargument that command history is always
-sensitive information, and that the design of the linenoiseHistorySave
-function is fundamentally wrong. We are not currently using that
-perspective for CVE ID assignments. (Also,
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=832460#20 suggests
-that there isn't a huge amount of affected code.)
-
-Use CVE-2013-7458 for the Redis vulnerability.
-
-If there are other issues (such as in the
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=832460#25 report)
-that also need CVE IDs, please send a message about the others.
-Separate CVE IDs are also useful for host-based vulnerability
-scanning, e.g., a vulnerability check for a readable
-~/.rediscli_history file completely covers CVE-2013-7458. A check for
-a readable ~/.dbshell file (if that is indeed a vulnerability) would
-map to a different CVE ID.
+Use CVE-2016-4425.
 
 - -- 
 CVE Assignment Team
@@ -72,17 +29,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXmjBnAAoJEHb/MwWLVhi2XbUP/0Hx1N1IVhL3BJH+Ja5IBWrO
-b7EhDkUl/31ZdT+iSJFbyt1VYLt2K+x54SwyDE3qhcXriU+kzOGJzgHep1TwAUbD
-/vVKaNiLS6yAM9NRNpLI/IPL2Z6Xzt54cgYxYW/d7btRctFJKza9vKCkQeuIWtEN
-oR9Gfq3901wPxskRSKgzo6n5run1SfvRQ+icx8QO/7pqtPXfWiwweZXQYH/vIENe
-VdG5Hc/BFiJoPaWBQnP9z/Wmp1e9vtJjxzVZmFSWI8mq7MLCZgXqsBTpuxgrR+uB
-SUg5RexMz9zIfUmCZJ966SuDzc7Pg2FcmknrZcWmD2gZORZxRFJ4PXpya6znRaCU
-HCwh7dn+956EVs+UqOS0z1zBPKA3iOyVBSV7P4uwZ9X17UF2rVnVUTW2/NnR5zaA
-4hO+dtDMcHN43ESv3gakwPcvazsSkix+ACiWYJqwdR76EnAZIPtv+kscGtgq7sC/
-oQts0akBLAF49ppNCoHyJx87w8aOJ2jzcM7D41Yr8y0nVDFwux8zniw51N7i0/LX
-r27waQaRkrGSGCTPyovCAVrN9sh3qK/8TKGHpvN9z4wO4fi89PK/ZadixWpDTZFd
-neI9zWY1h/AMuT1oPay2lWy5Kj3G5Px253wX7DPDJTgreCbZN2Iupac7hULA28oG
-qEIvs2HrpjkHZZxW5NMN
-=Xa5w
+iQIcBAEBCAAGBQJXJ0ufAAoJEHb/MwWLVhi24okQALgjTPVfcfIDXtenPzhzNHRx
+ypUyAed3CIVkfJC+R+ehuFEmpyAKEgO1woqy1TjIqi9U+lDGXFVa4FX98ENwFE22
+ap3EpKq0ZwzeacPhm/XYOyIqmeA96nonf9NNFAhCvtpSjLxaWcrs7JbnqhCrsf1/
+qBM819kLXwuO8GUtdJYVkOVWQX3e5QadqwOiU5J6b7pe8FiJBlsW32b9tANXJg7I
+G1W3lYXG/nULkXGEjyj8fFlLM0icync8T4revmBXNN9AWQOxjOx7zoODy54snzSU
+7vIkd79NLG623aosZp7h2bcmJdP9l1WO7SPvF8qSzLP+fq5qrBaAuR++pOvzHp7Q
+Whnfdg3uP//UiIcM/bh9jLCMXDJKsFgr/Qr5DItwsltdYteN31g6m+4nYmARtOE5
+HjSnU5tYzzRzc7+kWtxYZxAeRFGQ8VNIv5j/85QFoIKGrkuGs2nGfW2T44ObZfyF
+Nwd/k2Pa9k3sqwTAQp3lEI0nTSUn7vlzRzAr2/QhtPqbDdeERWZWsQDlEJ5L2n0f
+m+b0iQIGBXFo9Q4wBdS91Vx6NEkhWxrgWbyIExgVCnUFh/LCo4BFjI3qq+GPsnoP
+hmxD/9LXa8B2tefKtjzlPBnw4rqKyCFmfzVi+LkrZqNCxid+2DEpUBr2r+CsA7wv
+jQNgK1C0S/wmuJclLq4+
+=4UUQ
 -----END PGP SIGNATURE-----
