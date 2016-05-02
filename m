@@ -1,4 +1,9 @@
-Received: (qmail 16090 invoked by uid 550); 16 Apr 2026 05:53:52 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["868" "Monday" "2" "May" "2016" "23:04:47" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1605022258410.3059@wniryva>" "25" "Re: [oss-security] CVE Request: Out-of-bands write issue found in qemu" nil nil nil "5" "2016050217:34:47" "[oss-security] CVE Request: Out-of-bands write issue found in qemu" (number mark "U       ppandit@redh May  2   25/868   " thread-indent "\"Re: [oss-security] CVE Request: Out-of-bands write issue found in qemu\"\n") "<alpine.LFD.2.20.1604271151190.13938@wniryva>" ("<143C0AFC63FC204CB0C55BB88F3A8ABBE376A3@EX01.corp.qihoo.net>" "<alpine.LFD.2.20.1604271151190.13938@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 22417 invoked by uid 550); 2 May 2016 17:35:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,229 +12,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30039 invoked from network); 16 Apr 2026 05:49:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=frasunek.com;
-	s=netium; t=1776318585;
-	bh=WVb0hV8xxCKLctvVoH8962VwIQ9E4Nj03VWgJARNY4M=;
-	h=Date:To:From:Subject;
-	b=W/Lff8CPp+cHLIKw/y5jy4E9Mn2pBIZmb8XSnMpaRfmIPl+Zhx7eNSYDRlithJXdh
-	 QGw6b12v2DYheVt3tWjibAfL0v5oKdP0yBoxmv9MS33clxUU6FjrRC/vmssqZPaqPy
-	 RHqTcrVyli3yNjcaIZxsvwEeHGflbzuTjLun6eis=
-Message-ID: <69b791e8-91d6-47cd-ad81-827d13cc0b65@frasunek.com>
-Date: Thu, 16 Apr 2026 07:49:45 +0200
+Received: (qmail 22399 invoked from network); 2 May 2016 17:35:04 -0000
+Date: Mon, 2 May 2016 23:04:47 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+cc: "cve-assign@mitre.org" <cve-assign@mitre.org>,
+        Peter Maydell <peter.maydell@linaro.org>
+In-Reply-To: <alpine.LFD.2.20.1604271151190.13938@wniryva>
+Message-ID: <alpine.LFD.2.20.1605022258410.3059@wniryva>
+References: <143C0AFC63FC204CB0C55BB88F3A8ABBE376A3@EX01.corp.qihoo.net> <alpine.LFD.2.20.1604271151190.13938@wniryva>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: pl
-To: oss-security@lists.openwall.com
-From: Przemyslaw Frasunek <przemyslaw@frasunek.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] UAF in rsync 3.4.1 and below
+Content-Type: multipart/mixed; BOUNDARY="0-1025921908-1462210269=:3059"
+Content-ID: <alpine.LFD.2.20.1605022301360.3059@wniryva>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Mon, 02 May 2016 17:34:53 +0000 (UTC)
+Subject: Re: [oss-security] CVE Request: Out-of-bands write issue found in
+ qemu
 
-VULNERABILITY REPORT
-====================
+--0-1025921908-1462210269=:3059
+Content-Type: text/plain; CHARSET=GB2312
+Content-Transfer-Encoding: 8BIT
+Content-ID: <alpine.LFD.2.20.1605022301361.3059@wniryva>
 
-rsync: Use-After-Free via qsort Out-of-Bounds in receive_xattr()
------------------------------------------------------------------
++-- On Wed, 27 Apr 2016, P J P wrote --+
+| +-- On Wed, 27 Apr 2016, ¿Ó«ø wrote --+
+| | The qemu has an out-of-bands bug in uart_write() function.
+| |
+| | The patch is here:
+| | https://lists.nongnu.org/archive/html/qemu-devel/2016-04/msg02711.html
+| 
+|   Not sure if this should need a CVE, awaiting upstream confirmation on the 
+| same.
 
-Reporter:       Przemyslaw Frasunek <przemyslaw@frasunek.com>
-Date:           2026-04-16
-Affected:       rsync 3.0.1 through 3.4.1 (all versions with xattr abbreviation)
-                 Current development head (3.4.2dev, commit b905ab23) also affected.
-File:           xattrs.c, function receive_xattr(), line 864
-Severity:       Medium / High
-Attack vector:  Network (malicious rsync sender)
+  Received confirmation from Qemu upstream, it could not consider this issue 
+to be security relevant[*], to require CVE assignment.
 
+[*] http://wiki.qemu.org/SecurityProcess#How_impact_and_severity_of_a_bug_is_decided
 
-1. SUMMARY
-
-The receive_xattr() function in rsync uses a wire-supplied count value as the
-length argument to qsort() instead of the actual number of items stored in the
-array. When xattr name filtering causes some items to be discarded, the count
-of items passed to qsort exceeds the number of valid items. The excess array
-positions contain stale data from a previously processed file's xattr list.
-After qsort reorders these stale entries into the stored positions, they are
-persisted in the global xattr list (rsync_xal_l) with dangling pointers to
-heap allocations that are subsequently freed and reallocated.
-
-This creates use-after-free conditions in the receiver process: stale datum
-pointers are dereferenced in rsync_xal_set() for checksum comparison and in
-recv_xattr_request() for name copying, and freed again in both functions,
-leading to double-free or free-of-allocated-memory scenarios.
-
-2. AFFECTED CONFIGURATIONS
-
-The bug is triggered when qsort runs over the stale array elements. The
-conditions depend on the operating system:
-
-Linux:
-   The need_sort flag defaults to 0 and is only set to 1 when a non-user
-   namespace xattr (e.g. system.*, security.*) is received and prefixed with
-   the rsync namespace prefix (RSYNC_PREFIX = "user.rsync."). This prefixing
-   only occurs when am_root <= 0, specifically:
-
-   - rsync receiver running with --fake-super (am_root = -1): VULNERABLE.
-     Non-user namespace xattrs from the sender are prefixed and need_sort is
-     set. This is a common configuration for backup mirrors and rsyncd
-     deployments that operate without root privileges.
-
-   - rsync receiver running as non-root (am_root = 0) with xattr filter
-     (--filter='x ...') configured: VULNERABLE. Non-user xattrs that pass
-     the filter are prefixed and need_sort is set.
-
-   - rsync receiver running as root without --fake-super: NOT VULNERABLE
-     on Linux. Non-user xattrs are accepted without prefixing or sorting.
-
-   - rsync receiver running as non-root without xattr filter: NOT VULNERABLE.
-     Non-user xattrs are silently discarded without setting need_sort.
-
-FreeBSD, macOS, and other non-Linux platforms:
-   The need_sort flag defaults to 1 unconditionally (xattrs.c line 771).
-   The bug is triggerable whenever count > 1. All configurations running with
-   -X/--xattrs are VULNERABLE.
-
-
-3. ROOT CAUSE
-
-In receive_xattr() (xattrs.c), the wire-supplied xattr count for each file
-is read at line 786:
-
-     if ((count = read_varint(f)) != 0) {
-         (void)EXPAND_ITEM_LIST(&temp_xattr, rsync_xa, count);
-         temp_xattr.count = 0;
-     }
-
-The EXPAND_ITEM_LIST call ensures the temp_xattr.items array has room for
-count items. However, the loop that follows (lines 791-861) only adds items
-that pass namespace filtering and xattr filter checks. Each accepted item
-increments temp_xattr.count via EXPAND_ITEM_LIST(..., 1). Items that are
-filtered out are freed and skipped via continue.
-
-When some items are filtered, temp_xattr.count < count. The array positions
-from temp_xattr.count to count-1 are not cleared. Because temp_xattr is a
-static variable reused across files, these positions contain stale rsync_xa
-structs from the most recent file whose receive_xattr() populated those
-indices.
-
-At line 863-864:
-
-     if (need_sort && count > 1)
-         qsort(temp_xattr.items, count, sizeof (rsync_xa), rsync_xal_compare_names);
-
-qsort operates on count items, including the stale entries. Since qsort sorts
-by xattr name (rsync_xal_compare_names), and the stale entries contain valid
-name pointers at this stage, the stale entries can be sorted into the first
-temp_xattr.count positions of the array.
-
-At line 866, rsync_xal_store(&temp_xattr) copies exactly temp_xattr.count
-items into the global rsync_xal_l list. If stale entries were sorted into
-positions 0..temp_xattr.count-1, they are now permanently stored as the
-current file's xattr data, with datum and name pointers pointing into another
-file's xattr allocations.
-
-
-4. EXPLOITATION
-
-The stale rsync_xa structs stored in rsync_xal_l reference datum buffers
-allocated during a prior file's receive_xattr(). These buffers are freed when
-recv_xattr_request() processes that prior file's abbreviated xattr requests
-(line 753: free(old_datum)), creating dangling pointers in the current file's
-stored xattr list.
-
-The dangling pointers are subsequently dereferenced in two locations:
-
-a) recv_xattr_request() for the current file (if the generator requests the
-    stale items):
-
-      old_datum = rxa->datum;                                    // dangling
-      rxa->datum = new_array(char, rxa->datum_len + rxa->name_len);
-      memcpy(name, rxa->name, rxa->name_len);          // read-after-free
-      free(old_datum);                              // double-free / UAF free
-
-b) rsync_xal_set() for the current file:
-
-      if (XATTR_ABBREV(rxas[i])) {                     // struct field check
-          ptr = get_xattr_data(fnamecmp, name, &len, 1); // read-after-free
-          if (memcmp(sum, rxas[i].datum + 1, ...) != 0)  // read-after-free
-          ...
-          free(rxas[i].datum);                      // double-free / UAF free
-
-4.1 Stock receiver exploitation constraints
-
-Stock rsync does not write to freed memory after free(rxas[i].datum) in
-rsync_xal_set(). Without a write-after-free primitive, redirecting tcache
-allocations to arbitrary addresses is not directly achievable.
-
-The following primitives ARE available on stock rsync:
-
-- Read-after-free: stale datum pointers are dereferenced for checksum
-   comparison (memcmp against heap contents) and xattr name reads (memcpy
-   from freed memory for name strings past tcache metadata offset).
-
-- Free-of-allocated-memory: stale pointers that were re-allocated by another
-   file's recv_xattr_request are freed again, bypassing glibc tcache key
-   detection (the key field was overwritten by application data during
-   re-allocation). This corrupts heap state by placing an in-use allocation
-   on the tcache free list.
-
-- Information disclosure: if rsync_xal_set processes a stale item via the
-   non-abbreviated path (lsetxattr), tcache metadata (safe-linked pointers,
-   tcache key) is written as xattr values on destination files. This leaks
-   heap layout information to the filesystem.
-
-- Denial of service: the double-free / heap corruption reliably crashes the
-   receiver process.
-
-
-5. TRIGGER CONDITIONS
-
-For a malicious sender to trigger the vulnerability:
-
-a) The victim must run rsync with -X (--xattrs) to enable xattr transfer.
-
-b) On Linux, the victim must also use --fake-super, or have an xattr filter
-    configured that passes non-user namespace xattrs. On FreeBSD/macOS, no
-    additional flags are required.
-
-c) The sender must include at least one non-user namespace xattr in the
-    triggering file's xattr list (Linux only, to set need_sort=1).
-
-d) The sender must set the wire count higher than the number of xattrs that
-    will pass filtering, and arrange for a prior file in the transfer to
-    populate the stale array positions with exploitable xattr structs.
-
-The sender fully controls conditions (c) and (d) through the rsync protocol.
-Conditions (a) and (b) depend on the victim's rsync invocation.
-
-
-6. SUGGESTED FIX
-
-Replace count with temp_xattr.count in the qsort call at xattrs.c line 864:
-
-   Before:
-     qsort(temp_xattr.items, count, sizeof (rsync_xa), rsync_xal_compare_names);
-
-   After:
-     qsort(temp_xattr.items, temp_xattr.count, sizeof (rsync_xa), 
-rsync_xal_compare_names);
-
-This ensures qsort only operates on actually populated items, preventing
-stale data from being sorted into the stored xattr list.
-
-
-7. TIMELINE
-
-2008-03-07  Bug introduced in commit d724dd186 (rsync 3.0.1pre1).
-             The commit added qsort to receive_xattr() for sorting xattrs
-             after namespace prefix munging in --fake-super mode.
-2026-04-16  This report.
-
-
-8. REFERENCES
-
-Source: https://github.com/RsyncProject/rsync
-Buggy commit: d724dd186 ("Fixed the interaction of --fake-super with
-   --link-dest & --xattrs. Fixed the munging of non-user namespace xattrs
-   w/--fake-super. Fixed the sorting of received xattrs when name-munging
-   occurs.")
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+--0-1025921908-1462210269=:3059--
