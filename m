@@ -1,49 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/04/7
-Message-Id: <20160104165933.8E8EA332405@smtpvbsrv1.mitre.org>
-Date: Mon,  4 Jan 2016 11:59:33 -0500 (EST)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request Qemu: net: vmxnet3: reading IMR registers leads to a crash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/02/5
+Message-ID: <20160502203045.GA5924@w1.fi>
+Date: Mon, 2 May 2016 23:30:45 +0300
+From: Jouni Malinen <j@...fi>
+To: oss-security@...ts.openwall.com
+Subject: hostapd/wpa_supplicant - psk configuration parameter update allowing arbitrary data to be written
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+psk configuration parameter update allowing arbitrary data to be written
 
-> Qemu emulator built with a VMWARE VMXNET3 paravirtual NIC emulator support is
-> vulnerable to crash issue. It could occur while reading Interrupt Mask
-> Registers(IMR).
-> 
-> A privileged(CAP_SYS_RAWIO) guest user could use this flaw to crash the Qemu
-> process instance resulting in DoS.
-> 
-> http://git.qemu.org/?p=qemu.git;a=commit;h=c6048f849c7e3f009786df76206e895a69de032c
-> https://bugzilla.redhat.com/show_bug.cgi?id=1270876
+Published: May 2, 2016
+Identifier: related to CVE-2016-2447
+Latest version available from: http://w1.fi/security/2016-1/
 
->> Instead of asserting, return the actual IMR register value.
 
-Use CVE-2015-8745.
+Vulnerability
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+A vulnerability was found in how hostapd and wpa_supplicant writes the
+configuration file update for the WPA/WPA2 passphrase parameter. If this
+parameter has been updated to include control characters either through
+a WPS operation or through local configuration change over the
+wpa_supplicant control interface, the resulting configuration file may
+prevent the hostapd and wpa_supplicant from starting when the updated
+file is used. In addition for wpa_supplicant, it may be possible to load
+a local library file and execute code from there with the same
+privileges under which the wpa_supplicant process runs.
 
-iQIcBAEBCAAGBQJWiqQVAAoJEL54rhJi8gl52usP/R53hBnStbF9uMh/QOzBjtvc
-o2jmKr2Az1WXYAeTs08Mui/6bC+c8VW7OSBbnOgfy/vn7D6ddXC6qEAgq0+ngJ/8
-FZfxYPFXIfJdTKGed7nsG5YhI7ckEEnxIWxsmW7EmQDXj3UInpvEBfNOR7ogM0WT
-1bW5lMhJz90HxKtWqGc3Fcmpk5+tEWZXgWJfTxD7QejFG5g9HKBCWqYj3muQ6/af
-HRoJOoonmsFbk6ZmOboIDcIQQU4WiCmaNcKNNy3fyIvlQjABfYLTgwzIH+eeMpN1
-FpXwG7ogVczqyes2cVzVS36l7U1EXRd5vUtUi7GDOKRjuuSxckjx2YUea//Ejml0
-CTF+7WNGA1kwlywsQJeXOELhhSPvs+Wb9TIdkoZWrG/Sa719G+vcFey+bKC3VXTw
-zAG0rHRDOktRKw5x8tAV+mtzcKrMWd3iUH43cvQtYpU9TOPEtytT2ckU2p/zkAEp
-Xp9iARSzMeQbHSwAw+2qC6ElAouVItealoH6JpJte5idOTzZkrZOmRP+umpYRJli
-dh2vTqMkHCR6AZlrgEjrBzUSNDYRAbVl7oSGgnXjwg+pip7umbWsY7gNAYgJbhpV
-ULxqgi1wGLWp/nsfKhWhtLYuv15Uah06G/mJUyoHjqKWJEcaImR9JNu8Q+eqiTOL
-haSycTu8WkHEUkHol1QT
-=8aFM
------END PGP SIGNATURE-----
+The WPS trigger for this requires local user action to authorize the WPS
+operation in which a new configuration would be received. The attacker
+would also need to be in radio range of the device or have access to the
+IP network to act as a WPS External Registrar. Such an attack could
+result in denial of service by not allowing hostapd or wpa_supplicant to
+start after they have been stopped.
+
+The local configuration update through the control interface SET_NETWORK
+command could allow privilege escalation for the local user to run code
+from a locally stored library file under the same privileges as the
+wpa_supplicant process has. The assumption here is that a not fully
+trusted user/application might have access through a connection manager
+to set network profile parameters like psk, but would not have access to
+set other configuration file parameters. If the connection manager in
+such a case does not filter out control characters from the psk value,
+it could have been possible to practically update the global parameters
+by embedding a newline character within the psk value. In addition, the
+untrusted user/application would need to be able to install a library
+file somewhere on the device from where the wpa_supplicant process has
+privileges to load the library.
+
+Similarly to the SET_NETWORK case, if a connection manager exposes
+access to the SET_CRED or SET commands, similar issue with newline
+characters can exist as those commands do not filter out control
+characters from the value.
+
+It should also be noted that providing unlimited access to the
+wpa_supplicant control interface would allow arbitrary SET commands to
+be issued. Such unlimited access should not be provided to untrusted
+users/applications.
+
+
+Vulnerable versions/configurations
+
+For the local control interface attack vector:
+
+wpa_supplicant v0.4.0-v2.5 with control interface enabled
+
+update_config=1 must have been enabled in the configuration file.
+
+
+For the WPS attack vector:
+
+wpa_supplicant v0.6.7-v2.5 with CONFIG_WPS build option enabled
+hostapd v0.6.7-v2.5 with CONFIG_WPS build option enabled
+
+WPS needs to be enabled in the runtime operation and the WPS operation
+needs to have been authorized by the local user over the control
+interface. For wpa_supplicant, update_config=1 must have been enabled in
+the configuration file.
+
+
+Acknowledgments
+
+Thanks to Google for reporting this issue and Imre Rad of SEARCH-LAB
+Ltd. discovering it.
+
+
+Possible mitigation steps
+
+- Merge the following commits to hostapd/wpa_supplicant and rebuild it:
+
+  WPS: Reject a Credential with invalid passphrase
+  Reject psk parameter set with invalid passphrase character
+  Remove newlines from wpa_supplicant config network output
+  Reject SET_CRED commands with newline characters in the string values
+  Reject SET commands with newline characters in the string values
+
+  These patches are available from http://w1.fi/security/2016-1/
+
+- Update to wpa_supplicant v2.6 or newer, once available
+
+-- 
+Jouni Malinen                                            PGP id EFC895FA
