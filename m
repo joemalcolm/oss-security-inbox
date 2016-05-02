@@ -1,37 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/25/4
-Message-ID: <CALJHwhQrJUeWwJ6u=kQ_=LU5AGMgQoN_rEE4rGieMwe+JspG2A@mail.gmail.com>
-Date: Mon, 25 Jul 2016 12:16:54 +1000
-From: Wade Mealing <wmealing@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2016-5400 - linux kernel: denial of service in airspy USB driver.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/02/4
+Message-ID: <alpine.LFD.2.20.1605022258410.3059@wniryva>
+Date: Mon, 2 May 2016 23:04:47 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+cc: "cve-assign@...re.org" <cve-assign@...re.org>, Peter Maydell <peter.maydell@...aro.org>
+Subject: Re: CVE Request: Out-of-bands write issue found in qemu
 Content-Type: text/plain; charset=utf-8
 
-> Any reason why this isn't tagged for a stable kernel release?
++-- On Wed, 27 Apr 2016, P J P wrote --+
+| +-- On Wed, 27 Apr 2016, 李强 wrote --+
+| | The qemu has an out-of-bands bug in uart_write() function.
+| |
+| | The patch is here:
+| | https://lists.nongnu.org/archive/html/qemu-devel/2016-04/msg02711.html
+| 
+|   Not sure if this should need a CVE, awaiting upstream confirmation on the 
+| same.
 
-Patch was sent to airspy maintainer by James Patrick-Evans (The flaw
-submitter) on July 17th.  I have no control over maintainers.
+  Received confirmation from Qemu upstream, it could not consider this issue 
+to be security relevant[*], to require CVE assignment.
 
-LKML process is likely best kept off list.
+[*] http://wiki.qemu.org/SecurityProcess#How_impact_and_severity_of_a_bug_is_decided
 
-Thanks,
-
-Wade Mealing
-
-On Mon, Jul 25, 2016 at 11:13 AM, Greg KH <greg@...ah.com> wrote:
-> On Mon, Jul 25, 2016 at 10:51:16AM +1000, Wade Mealing wrote:
->> Hit send too early,
->>
->>
->> Upstream patch:
->> https://git.linuxtv.org/media_tree.git/commit/?id=eca2d34b9d2ce70165a50510659838e28ca22742
->>
->> Maintainer has yet to send to LKML.
->
-> If it's in the media tree, it doesn't go to lkml.
->
-> Any reason why this isn't tagged for a stable kernel release?
->
-> thanks,
->
-> greg k-h
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
