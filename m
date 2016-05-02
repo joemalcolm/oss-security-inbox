@@ -1,63 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/12/7
-Message-Id: <20160112164335.E3FEE3320DE@smtpvbsrv1.mitre.org>
-Date: Tue, 12 Jan 2016 11:43:35 -0500 (EST)
-From: cve-assign@...re.org
-To: sec@...fl7.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Vtiger CRM 6.4 Authenticated Remote Code Execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/02/3
+Message-ID: <57278CD6.2030209@shadura.me>
+Date: Mon, 2 May 2016 19:22:30 +0200
+From: Andrew Shadura <andrew@...dura.me>
+To: Kallithea <kallithea-general@...onservancy.org>
+Cc: oss-security@...ts.openwall.com
+Subject: [SECURITY ISSUES] CVE-2016-3691 and CVE-2016-3114
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello everyone,
 
-> This vulnerability is different than CVE-2015-6000 (in fact it is a
-> result of an insufficient fix for CVE-2015-6000).
-> 
-> Vtiger CRM allows for the upload of a "company logo" from within the
-> administrative interface.
-> 
-> Multiple flaws in the Settings_Vtiger_CompanyDetailsSave_Action class
-> allow attackers to upload files with (almost) arbitrary contents,
-> including PHP code passing commands to the underlying operating system.
-> 
-> However, an attacker may choose to embed malicious PHP code within a
-> valid image file, for example as EXIF data of a JPEG file. Once the
-> server has received the attacker's JPEG file, mime_content_type() will
-> process it, correctly consider it to be a valid image file, and return
-> the MIME type "image/jpeg" -- which passes Vtiger's "mime type check".
-> 
-> http://b.fl7.de/2016/01/vtiger-crm-6.4-auth-rce.html
+We've discovered the following security issues in Kallithea.
 
-As far as we can tell, the main issue you are reporting is that the
-product attempts to forbid executable content within otherwise safe
-file types, and does this incorrectly.
+CVE-2016-3114: Privilege escalation
+===================================
 
-Use CVE-2016-1713.
+The vulnerability that allowed logged-in users to edit or
+delete open pull requests associated with any repository to which
+they had read access, plus a related vulnerability allowing logged-in
+users to delete any comment from any repository, provided they could
+determine the comment ID and had read access to just one repository.
 
-There are no other CVE IDs for your report. For example, the ability
-of the attacker to use the .php extension, although unusual, does not
-seem to be an entirely separate problem.
+CVE-2016-3691: CSRF protection bypass
+=====================================
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Routes allows GET requests to override the HTTP method, which breaks
+the Kallithea CSRF protection (which only applies to POST requests).
 
-iQIcBAEBCAAGBQJWlSyAAAoJEL54rhJi8gl5Wy0QALHdBn98mgUGkRiZXOA/1KJh
-+b7q1rarXguIemZGi1/KU+yuI84gKb7QBpIsJz2ZxEPuJH814oDaDLLi9wnhWWg8
-m1U1DVY5d7+1gGlQa8fJ3Ra6QDcCmyoDEX1VY+suQElPnm9P/CJp/68R6IUCx70A
-2ZKFMFW4vTQvulK4bKfO9TVtKwl2hrGU6AG4Sj4qDCgOau/3xfFNlyzPNrKECJ6g
-cJzjg/eGbQXgkaqqUOyeMe/74kNmWjFWuCd3oHugPZtvehdtJvun7idyXu31AZGN
-+hDYOInRl6OL9zEc4eo38tqNk0IFAqpeAiyPuWtk2YgFMheeeTsKzl4kkqTlN56W
-15CbScMyZfcQpd0DL0NAho4MPBXSDmxRBZKoAx37kPx1SCGo+UjbBGCv9UiZ3wmU
-k55CKsppZWv+QyfmB/E8EUKBDerB2+k7scJImRpXGsILxCy+ZdyWt5s+iIUBZbFI
-tGLqGOxEQm/StHoupBZcIxdulcE85RDt9IBXcfoz8anJNPXCF3Qts6TZoW89jpsc
-Gpgawu6PXaUVFrvAsx0P20EJUEU0pz1R1U011KGetPwknmyJM/BMvjyio4JY9eMw
-xoG+yxsD6slrvQFVKbV+5vfrUGvMGKVitUm84hXjPAzJDmmg/ZttjWM9h3LawGju
-v+PULkENNk1Wx2PoQHug
-=N8Vg
------END PGP SIGNATURE-----
+The attacker might misuse GET requests method overriding to trick user
+into issuing a request with a different method, thus bypassing the
+CSRF protection.
+
+Resolution
+==========
+
+Søren Løvborg wrote patches fixing these issues, both of which are
+included in the release 0.3.2. Users are advised to upgrade as soon as
+possible.
+
+-- 
+Cheers,
+  Andrew
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
