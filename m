@@ -1,120 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/9
-Message-Id: <E1c99mI-00086a-9W@xenbits.xenproject.org>
-Date: Tue, 22 Nov 2016 12:02:22 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 193 (CVE-2016-9385) - x86 segment base write emulation lacking canonical address checks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/02/2
+Message-ID: <25eccda6-535c-c688-2081-87e4819f59d9@teufelsnetz.com>
+Date: Mon, 2 May 2016 19:14:58 +0200
+From: Max Teufel <max@...felsnetz.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: atheme: security fixes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-            Xen Security Advisory CVE-2016-9385 / XSA-193
-                              version 3
+Multiple security issues were found in Atheme, an IRC services package,
+which will be fixed in the upcoming 7.2.7 release. Could CVEs be
+assigned to the issues summarized below?
 
-   x86 segment base write emulation lacking canonical address checks
+Fix:
+https://github.com/atheme/atheme/commit/c597156adc60a45b5f827793cd420945f47bc03b
+Description: A remote attacker could change Atheme's behavior by
+registering/dropping certain accounts/nicks.
+Reference: https://github.com/atheme/atheme/issues/397
 
-UPDATES IN VERSION 3
-====================
+Fix:
+https://github.com/atheme/atheme/commit/87580d767868360d2fed503980129504da84b63e
+Description: Under certain circumstances, a remote attacker could cause
+denial of service due to a buffer overflow in the XMLRPC response
+encoding code.
 
-Public release.
+Regards,
+Max Teufel
 
-ISSUE DESCRIPTION
-=================
-
-Both writes to the FS and GS register base MSRs as well as the
-WRFSBASE and WRGSBASE instructions require their input values to be
-canonical, or a #GP fault will be raised.  When the use of those
-instructions by the hypervisor was enabled, the previous guard against
-#GP faults (having recovery code attached) was accidentally removed.
-
-IMPACT
-======
-
-A malicious guest administrator can crash the host, leading to a DoS.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions 4.4 and onwards are affected.  Xen versions 4.3 and
-earlier are not affected.
-
-The vulnerability is only exposed to x86 PV guests.
-
-The vulnerability is NOT exposed to x86 HVM guests.
-
-ARM systems are NOT vulnerable.
-
-MITIGATION
-==========
-
-Running only HVM guests will avoid this vulnerability.
-
-For PV guests the vulnerability can be avoided if the guest kernel is
-controlled by the host rather than guest administrator, provided that
-further steps are taken to prevent the guest administrator from loading
-code into the kernel (e.g. by disabling loadable modules etc) or from
-using other mechanisms which allow them to run code at kernel privilege.
-
-CREDITS
-=======
-
-This issue was discovered by Andrew Cooper of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa193.patch           xen-unstable
-xsa193-4.7.patch       Xen 4.7.x, Xen 4.6.x
-xsa193-4.5.patch       Xen 4.5.x, Xen 4.4.x
-
-$ sha256sum xsa193*
-401df29b462a3430403a4f5bb36fd7824e692c9b5bac650e1a9d70bd440a55a1  xsa193.patch
-b3494b1fe5fefc0d032bd603340e364c880ec0d3ae3fb8aa3a773038e956f955  xsa193-4.5.patch
-f1b0092c585ebffe83d6ed7df94885ec5dfcb4227bdb33f421bad9febb8135a1  xsa193-4.7.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJYNDK2AAoJEIP+FMlX6CvZswsIAI17sWqaGeP8GvtddxR08G2J
-3Nb7Lnb/4cq8Hdc5XmUnX/zuDqobT5AGJEgKAuhRc9zs2TOv8FwcABc+/odKG6ak
-tcMAaLThMcKbB0b0ZYEkcrU+jaCDDVE3rYVGjKv0hHKZNRY/SmWOdl180xcHksXG
-pj5OQn6/+db6nqMlhyOcOyjM3w1/1AUe/O0EDsdUSNrY1mZi4/MjUXlDaJTZbDCc
-KW9XUeRSq66iZELawBaosViTenOm/R+8DJGiR8fmJlXx+gzpEywtsEUCrxeKlTDo
-tT68gwy0aHdlqKbIthkKr5qaT5FtKPyX0UpIXu7qtldbdEZG61iIlNOEG8tyPhU=
-=fjbt
------END PGP SIGNATURE-----
-
-Download attachment "xsa193.patch" of type "application/octet-stream" (2798 bytes)
-
-Download attachment "xsa193-4.5.patch" of type "application/octet-stream" (2886 bytes)
-
-Download attachment "xsa193-4.7.patch" of type "application/octet-stream" (2966 bytes)
