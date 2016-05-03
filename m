@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["785" "Tuesday" "12" "January" "2021" "18:49:20" "+0100" "Solar Designer" "solar@openwall.com" "<20210112174919.GA2815@openwall.com>" "19" "Re: [oss-security] Gentoo's \"contributing back\" linux-distros tasks" nil nil nil "1" "2021011217:49:20" "[oss-security] Gentoo's \"contributing back\" linux-distros tasks" (number mark "U       solar@openwa Jan 12   19/785   " thread-indent "\"Re: [oss-security] Gentoo's \"contributing back\" linux-distros tasks\"\n") "<f74590e7-e57b-08cf-aec0-9ebd251ca9ac@gentoo.org>" ("<20201012123020.GA26643@openwall.com>" "<cig3321ri3ihti.fsf@u54e1add816995a33037d.ant.amazon.com>" "<20210110184458.GA2808@openwall.com>" "<f74590e7-e57b-08cf-aec0-9ebd251ca9ac@gentoo.org>") nil nil nil nil nil nil nil "Re: [oss-security] Gentoo's \"contributing back\" linux-distros tasks" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1734" "Tuesday" "3" "May" "2016" "18:52:43" "+0200" "Gsunde Orangen" "gsunde.orangen@gmail.com" "<52f58a81-5a5a-005d-cc87-27f1cce0379e@gmail.com>" "45" "Re: [oss-security] OpenSSL Security Advisory [3rd May 2016]" "^Date:" nil nil "5" "2016050316:52:43" "[oss-security] OpenSSL Security Advisory [3rd May 2016]" (number mark "        gsunde.orang May  3   45/1734  " thread-indent "\"Re: [oss-security] OpenSSL Security Advisory [3rd May 2016]\"\n") "<20160503152100.GA4790@openwall.com>" ("<20160503152100.GA4790@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3248 invoked by uid 550); 12 Jan 2021 17:50:01 -0000
+Received: (qmail 21780 invoked by uid 550); 3 May 2016 16:52:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,37 +11,88 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 21756 invoked from network); 3 May 2016 16:52:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding;
+        bh=9ZG5gTw4jtS+jeOXRjoa7M/kQyTnVs9YBnoRzYT9zsY=;
+        b=QpmZTft5fvUQaU/HuiqqLFZbnwAfm1XB4ijhbFhz3m7Y70Q0e9ivNlYx9KDBxbOyqD
+         HFbn6EOUwoiTC4Yc8qP1R+y3V/rXLs7u+wWRpOXa4hC8+RSkX1/eP0A/4dJ4gtMKzgQj
+         IBOkMOwpBIQqqXiB/ycooMe5vZZUj8KS6mzzpZleqssJUGAI6FN2yOQfSPoDgrxCEijW
+         +gh0E67LVW4LQmVObBQubtVLSJZjJIzB0Of81UHm4PexeT7tdz/NCbvOhUdIjhN/Lv40
+         0962R07dQRXi03CNyfd81bGu/QcTKpLexhFIEO8d879W/TSUFRlVEwPhPCPoPxHpmo0N
+         ugyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=9ZG5gTw4jtS+jeOXRjoa7M/kQyTnVs9YBnoRzYT9zsY=;
+        b=ihj8CoLPdT9SgAR/zS+rVYoI9jrWUoz+p+hhgz27dxTBWyDZrEDH/d/pNk6Fci0Ubu
+         DCYzTzzpb+2eM04UQmcsUwPqA/5+jncPOEG4cTLjaSEKiSwkFkCZ8ihfRDMg3Vh2PXWd
+         4TpSWqwZ3uWuxAT18Xg5XzfKPUXLdJqLZoQvhAN/3P1kdBirB61iMhmv1PDU6s6TNaES
+         rkH4CmCoYTzGY586BN9vjQqbNymQ0X57BK9nkZJ3x4tgZDYiwDvdV7fIbokYoVEPIk1R
+         HYNA9A5PmBzNfL+FXXWmzkN0/Vc9he30V+7wY1DHkuutI7a999ENW+v3Y/FQujfdYWCM
+         QPiQ==
+X-Gm-Message-State: AOPr4FW6i5JwvI+ruiM7RnGe4Qp1I4o+qBA1o5wZWB3Rt6612i/dtpfZzsDbE1H6hMmy+g==
+X-Received: by 10.28.143.11 with SMTP id r11mr4784129wmd.46.1462294356410;
+        Tue, 03 May 2016 09:52:36 -0700 (PDT)
+References: <20160503152100.GA4790@openwall.com>
+Message-ID: <52f58a81-5a5a-005d-cc87-27f1cce0379e@gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.0
+MIME-Version: 1.0
+In-Reply-To: <20160503152100.GA4790@openwall.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Date: Tue, 3 May 2016 18:52:43 +0200
+From: Gsunde Orangen <gsunde.orangen@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3124 invoked from network); 12 Jan 2021 17:49:24 -0000
-Date: Tue, 12 Jan 2021 18:49:20 +0100
-From: Solar Designer <solar@openwall.com>
-To: Thomas Deutschmann <whissi@gentoo.org>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20210112174919.GA2815@openwall.com>
-References: <20201012123020.GA26643@openwall.com> <cig3321ri3ihti.fsf@u54e1add816995a33037d.ant.amazon.com> <20210110184458.GA2808@openwall.com> <f74590e7-e57b-08cf-aec0-9ebd251ca9ac@gentoo.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f74590e7-e57b-08cf-aec0-9ebd251ca9ac@gentoo.org>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Gentoo's "contributing back" linux-distros tasks
+Subject: Re: [oss-security] OpenSSL Security Advisory [3rd May 2016]
+To: oss-security@lists.openwall.com
 
-On Mon, Jan 11, 2021 at 10:09:18PM +0100, Thomas Deutschmann wrote:
-> On 2021-01-10 19:44, Solar Designer wrote:
-> >Gentoo, please let us all know whether you'd like to stay primary for
-> >these tasks, be moved to backup, or something else?
+My current view on three of the issues:
+
+* Padding oracle in AES-NI CBC MAC check (CVE-2016-2107)
+The advisory says: "This issue was introduced as part of the fix for
+Lucky 13 padding attack (CVE-2013-0169)".
+So the following versions should be affected (ref.
+https://openssl.org/news/vulnerabilities.html#y2013):
+ - 1.0.2 through 1.02g
+ - 1.0.1d through 1.0.1s
+ - 1.0.0k and all later versions
+ - 0.9.8y and all later versions
+
+* ASN.1 BIO excessive memory allocation (CVE-2016-2109)
+The OpenSSL code history tells that the vulnerable code is also in the
+0.9.8 and 1.0.0 lines --> affected
+
+* EBCDIC overread (CVE-2016-2176)
+The OpenSS code history tells that the vulnerable code is also in the
+0.9.8 and 1.0.0 lines --> affected
+(btw: curious about where there are still EBCDIC systems that use
+OpenSSL and are interested in fixing vulnerabilities...?)
+
+Gsunde
+
+
+
+On 03.05.2016, 17:21 Solar Designer wrote:
+> Now we need to figure out which of these affect latest OpenSSL 1.0.0,
+> even if unsupported.  I guess "Memory corruption in the ASN.1 encoder
+> (CVE-2016-2108)" was fixed in 1.0.0 branch in 2015 as well?  I guess
+> "Padding oracle in AES-NI CBC MAC check (CVE-2016-2107)" doesn't affect
+> 1.0.0 since it lacks AES-NI support?  (I haven't confirmed either yet.)
 > 
-> I think we will be able to act as backup.
-
-If possible, please stay or become primary for at least one task.  We've
-been asking the same from newly joining distros lately.
-
-> We will need to figure out a workflow to ensure we notice when we are on 
-> call but I am sure we will find a way. I'll contact Anthony directly for 
-> the details.
-
-Great to know you're coordinating with Anthony (Amazon), but a meaning
-of backup is that you'd also need to take over when the primary fails to
-handle a task without notifying you first.
-
-Alexander
+> ----- Forwarded message from OpenSSL <openssl@openssl.org> -----
+> 
+> Date: Tue, 3 May 2016 14:04:55 +0000
+> From: OpenSSL <openssl@openssl.org>
+> To: OpenSSL Developer ML <openssl-dev@openssl.org>,
+>  OpenSSL User Support ML <openssl-users@openssl.org>,
+>  OpenSSL Announce ML <openssl-announce@openssl.org>
+> Subject: [openssl-announce] OpenSSL Security Advisory
+> 
+> 
+> OpenSSL Security Advisory [3rd May 2016]
+> ========================================
