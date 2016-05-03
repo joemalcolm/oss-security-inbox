@@ -1,127 +1,129 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/01/4
-Message-Id: <20160801160408.622033AE01F@smtpvbsrv1.mitre.org>
-Date: Mon,  1 Aug 2016 12:04:08 -0400 (EDT)
-From: cve-assign@...re.org
-To: astieger@...e.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Wireshark 2.0.5 and 1.12.13 security releases
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/12
+Message-ID: <20160503175618.GA11827@w1.fi>
+Date: Tue, 3 May 2016 20:56:18 +0300
+From: Jouni Malinen <j@...fi>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: hostapd/wpa_supplicant - psk configuration parameter update allowing arbitrary data to be written
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> Wireshark 2.0.5 and 1.12.13 were announced to contain fixes of the usual
-> dissector crash / endless loop read from wire or capture file type:
-
-We think one typo ended up in your
-http://openwall.com/lists/oss-security/2016/07/28/3 post:
-
-> MMSE infinite loop (wnpa-sec-2016-43)
-> The MMSE dissector could go into an infinite loop. It may be possible to
-> make Wireshark consume excessive CPU resources by injecting a malformed
-> packet onto the wire or by convincing someone to read a malformed packet
-> trace file. Affects 1.12.0 to 1.12.12, fixed 1.12.13
-> https://www.wireshark.org/security/wnpa-sec-2016-43.html
-> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12624
+On Tue, May 03, 2016 at 01:29:28AM -0400, cve-assign@...re.org wrote:
+> > Identifier: related to CVE-2016-2447
 > 
-> RLC long loop (wnpa-sec-2016-44)
-> The RLC dissector could go into a long loop. It may be possible to make
-> Wireshark consume excessive CPU resources by injecting a malformed
-> packet onto the wire or by convincing someone to read a malformed packet
-> trace file. Affects  2.0.0 to 2.0.4, 1.12.0 to 1.12.12, fixed in 2.0.5,
-> 1.12.13.
-> https://www.wireshark.org/security/wnpa-sec-2016-44.html
-> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12624
+> We understand the existence of the CVE-2016-2447 ID in
+> http://source.android.com/security/bulletin/2016-05-01.html and that
+> the reports credit Imre Rad; however, there are different exploitation
+> scenarios that affect different versions from the perspective of
+> hostapd/wpa_supplicant, and thus it is probably simplest for most
+> people to have separate hostapd/wpa_supplicant CVE IDs.
 
-wnpa-sec-2016-44 is Wireshark bug 12660, not 12624. Here are
-the 11 CVE IDs:
-
-
-CVE-2016-6503
-http://www.wireshark.org/security/wnpa-sec-2016-39.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12495
-https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=581a17af40b84ef0c9e7f41ed0795af345b61ce1
+Agreed. CVE-2016-2447 is an instance of CVE-2016-4477 on a specific
+platform. I updated the w1.fi security advisory 2016-1 with the assigned
+new CVE IDs as follows:
 
 
-CVE-2016-6504
-http://www.wireshark.org/security/wnpa-sec-2016-40.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12576
-https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=9eacbb4d48df647648127b9258f9e5aeeb0c7d99
+psk configuration parameter update allowing arbitrary data to be written
+
+Published: May 2, 2016
+Identifiers: CVE-2016-4476 and CVE-2016-4477
+   (CVE-2016-2447 is an instance of CVE-2016-4477 on Android)
+Latest version available from: http://w1.fi/security/2016-1/
 
 
-CVE-2016-6505
-http://www.wireshark.org/security/wnpa-sec-2016-41.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12577
-https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=94e97e45cf614c7bb8fe90c23df52910246b2c95
+Vulnerability
+
+A vulnerability was found in how hostapd and wpa_supplicant writes the
+configuration file update for the WPA/WPA2 passphrase parameter. If this
+parameter has been updated to include control characters either through
+a WPS operation (CVE-2016-4476) or through local configuration change
+over the wpa_supplicant control interface (CVE-2016-4477), the resulting
+configuration file may prevent the hostapd and wpa_supplicant from
+starting when the updated file is used. In addition for wpa_supplicant,
+it may be possible to load a local library file and execute code from
+there with the same privileges under which the wpa_supplicant process
+runs.
+
+The WPS trigger for this requires local user action to authorize the WPS
+operation in which a new configuration would be received. The attacker
+would also need to be in radio range of the device or have access to the
+IP network to act as a WPS External Registrar. Such an attack could
+result in denial of service by not allowing hostapd or wpa_supplicant to
+start after they have been stopped.
+
+The local configuration update through the control interface SET_NETWORK
+command could allow privilege escalation for the local user to run code
+from a locally stored library file under the same privileges as the
+wpa_supplicant process has. The assumption here is that a not fully
+trusted user/application might have access through a connection manager
+to set network profile parameters like psk, but would not have access to
+set other configuration file parameters. If the connection manager in
+such a case does not filter out control characters from the psk value,
+it could have been possible to practically update the global parameters
+by embedding a newline character within the psk value. In addition, the
+untrusted user/application would need to be able to install a library
+file somewhere on the device from where the wpa_supplicant process has
+privileges to load the library.
+
+Similarly to the SET_NETWORK case, if a connection manager exposes
+access to the SET_CRED or SET commands, similar issue with newline
+characters can exist as those commands do not filter out control
+characters from the value.
+
+It should also be noted that providing unlimited access to the
+wpa_supplicant control interface would allow arbitrary SET commands to
+be issued. Such unlimited access should not be provided to untrusted
+users/applications.
 
 
-CVE-2016-6506
-http://www.wireshark.org/security/wnpa-sec-2016-42.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12594
-https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=a9d5256890c9189c7461bfce6ed6edce5d861499
+Vulnerable versions/configurations
+
+For the local control interface attack vector (CVE-2016-4477):
+
+wpa_supplicant v0.4.0-v2.5 with control interface enabled
+
+update_config=1 must have been enabled in the configuration file.
 
 
-CVE-2016-6507
-http://www.wireshark.org/security/wnpa-sec-2016-43.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12624
-https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=b5a10743258bd016c07ebf6479137fda3d172a0f
+For the WPS attack vector (CVE-2016-4476):
+
+wpa_supplicant v0.6.7-v2.5 with CONFIG_WPS build option enabled
+hostapd v0.6.7-v2.5 with CONFIG_WPS build option enabled
+
+WPS needs to be enabled in the runtime operation and the WPS operation
+needs to have been authorized by the local user over the control
+interface. For wpa_supplicant, update_config=1 must have been enabled in
+the configuration file.
 
 
-CVE-2016-6508
-http://www.wireshark.org/security/wnpa-sec-2016-44.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12660
-https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=6cf9616df68a4db7e436bb77392586ff9ad84feb
+Acknowledgments
+
+Thanks to Google for reporting this issue and Imre Rad of SEARCH-LAB
+Ltd. discovering it.
 
 
-CVE-2016-6509
-http://www.wireshark.org/security/wnpa-sec-2016-45.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12662
-https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=5a469ddc893f7c1912d0e15cc73bd3011e6cc2fb
+Possible mitigation steps
+
+- Merge the following commits to hostapd/wpa_supplicant and rebuild it:
+
+  CVE-2016-4476:
+  WPS: Reject a Credential with invalid passphrase
+  CVE-2016-4477:
+  Reject psk parameter set with invalid passphrase character
+  Reject SET_CRED commands with newline characters in the string values
+  Reject SET commands with newline characters in the string values
+  CVE-2016-4476 and CVE-2016-4477:
+  Remove newlines from wpa_supplicant config network output
+
+  These patches are available from http://w1.fi/security/2016-1/
+
+- Update to hostapd/wpa_supplicant v2.6 or newer, once available
 
 
-CVE-2016-6510
-http://www.wireshark.org/security/wnpa-sec-2016-46.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12664
-https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=47a5fa850b388fcf4ea762073806f01b459820fe
+Change history
 
+May 3, 2016
+- Added CVE IDs
 
-CVE-2016-6511
-http://www.wireshark.org/security/wnpa-sec-2016-47.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12659
-https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=56706427f53cc64793870bf072c2c06248ae88f3
-
-
-CVE-2016-6512
-http://www.wireshark.org/security/wnpa-sec-2016-48.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12661
-https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=2193bea3212d74e2a907152055e27d409b59485e
-
-
-CVE-2016-6513
-http://www.wireshark.org/security/wnpa-sec-2016-49.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12663
-https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=347f071f1b9180563c28b0f3d0627b91eb456c72
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXn3I1AAoJEHb/MwWLVhi2UdAP/06WJAU6wBEINx2Q8T7lXtGw
-PT+IooGuVUxKd16B7UH2zM1ccnjnLyne5W6rDPmLVoQ93i03pSOVsXx2INyXT1Is
-v55zOj1ifYCCFRaiRueD9zFtdooa2rUKJbGqUuv3IActhX/kSTvcAFahGjbA+fyy
-h8ea4aAie86710v2HsSE6g0sVj00WT9oAn7oTCdtyO2m0TyDJ0Al0s0HUeOrJjw2
-CLnsnT35KtWDQ8YnAckBEMZ/LfXK2H+WQLZGrp3TE2dRVkt3bK+9lW5HVO5efD5m
-c2GbP17vGZH/FukGZXbgRszXPpGpb05/4VJ9I2jZfyYN336/qALwS0b4WEwUFZIj
-qXjSUiCDGLyGNaF5P2URY5jIWkLysKViZFG0xvDOECwOjUmvPgKHjjCunUQcvHns
-yzyghuaJoRQiXw1k6bXaH5YsXHo6maahejTDhZolPpZdQ9VdRB2R2m7m0MR1eGay
-3OuxCvZVPtwxLjgFkhSb3rgaOMGgSWkd9Djh9NLRvhrI7kCob57XXG5JbxFb2okZ
-zXu2dQG/XbbX3OWydYfXrQDiqIbzNSpV2sABGqtzcl0/KiGN40JzILSzobxuA+o3
-qBaslvgcTS1xzwgC1V5co1b/vIA9CCpdGDbrQVfO700/xHqjRr7D9FnICnkWaeKn
-0KVjTOG4zF2op/nuy7ug
-=95/1
------END PGP SIGNATURE-----
+-- 
+Jouni Malinen                                            PGP id EFC895FA
