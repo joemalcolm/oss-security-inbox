@@ -1,48 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/9
-Message-Id: <20160728162022.A49C58BC3D3@smtpvmsrv1.mitre.org>
-Date: Thu, 28 Jul 2016 12:20:22 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE Request Qemu: virtio: infinite loop in virtqueue_pop
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/19
+Message-ID: <20160503232637.GA2319@hunt>
+Date: Tue, 3 May 2016 16:26:37 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Karim Valiev <valievkarim@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, May 04, 2016 at 01:38:49AM +0300, Karim Valiev wrote:
+> The exploit was posted at Hacker News comments thread, so it's time to
+> disclose the full story.
 
-> Quick emulator(Qemu) built with the virtio framework is vulnerable to an
-> infinite loop issue. It could occur if the guest was to set the I/O descriptor
-> buffer length to be zero. A privileged user inside guest could use this flaw
-> to potentially crash the Qemu instance on the host resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-07/msg06246.html
+Thanks for this; here's the bulk of my reply to the distros@ list yesterday:
 
-Use CVE-2016-6490.
+========
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/virtio/virtio.c but
-that may be an expected place for a later update.
+[...] I see attempts in the source code to apply
+whitelists to allowed characters:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+http://git.imagemagick.org/repos/ImageMagick/commit/06c41aba39b97203f6b9a0be6a2ccf8888cddc93
 
-iQIcBAEBCAAGBQJXmjADAAoJEHb/MwWLVhi2KZ8P/jkyKrIQY2ryaoptTvhMn41U
-D1TgFaTnQwZAfCLeF4r45Uy1h2G4TmsE+XHnk2gOaqFkBFiYRKBEOKqv7pEszohC
-MvKyQC2WPIuQnM8Y/KIy4Xgpw/UVjQfnWtg2dW6Hb4kg/H7WL602vIlE0yxa2BGz
-ZpBRQViB/qOn9MI4+5lHdc5jSGlVBLJUEK7Ckm83AejMwF7VVeFfnxM/jGreBH1/
-SejweRYV2c9nKsYH41wBvTD482Ee+hLY5cC2CDMKsG/NB015KGY66yzh41vUDLXI
-Rc3nxjD9PSxaPvzXyl8ha6cnYZy4H5qWmEUhC96hoPPEOgtiatE8Ekcf8q7reUVM
-MI9LXjSaZy7MZOTuS75Ha2lKPqPaBHuCpe/SxpS3vD4BjG7ZpZrTthyZYO1eJz49
-f7FxXVb1TLc0GjkWLlWh31EuABldZzwBFXqOIfyYrCsoPngfSgViq1i2GjKgz+XB
-5D8mz8jXTcklV2P7EE8nj72aT6YHbwi089oR5oNQzWDAsz86oTYqXghSHHs6MRRx
-NweiubIUxDvDVYuGtHlJbVLAUIKeV5O1zIfqAs4YxkC0ADqaz29KWEL5+IBd84nJ
-Gg4NJYg1VhztrGCwUmMeqflT1OaduIZkSGgGnzv24oYpoSxF2ZZB3KhSIu/atT50
-lmUdCpS6w6UUlT6LMSLd
-=7n+b
------END PGP SIGNATURE-----
+"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_- "
+".@&;<>()/\\\'\":%=~`";
+
+followed several days later by:
+
+http://git.imagemagick.org/repos/ImageMagick/commit/a347456a1ef3b900c20402f9866992a17eb5d181
+
+"^-ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+"+&@...?=~_|!:,.;()";
+
+The ; and | entries make me think they haven't actually thought this
+thing through in any real way yet. Shellshock showed that e.g. () may
+look harmless enough without the $ but it is also dangerous. I think it's
+probably a mistake to try to whitelist filter input in this fashion and
+try to continue on in the case of failure. Error out in the case of
+oddball inputs.
+
+Another approach is to quote inputs following Florian Weimer's advice:
+http://www.openwall.com/lists/oss-security/2014/02/04/7
+
+        return "'" + s.replace("'"', r"'\''")  + "'"
+
+(In Python, but the idea should translate well.)
+
+Or, generate the filenames to contain only safe chars. (See mkstemp(3),
+the function already exists.)
+
+Or, replace the strings with arrays and use execve() instead of system().
+
+Or, scrap the entire delegates.xml idea, it seems like a strange thing to
+bolt on to the side of the image processing toolkit.
+
+========
+
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
