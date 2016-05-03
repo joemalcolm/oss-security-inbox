@@ -1,110 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/24
-Message-ID: <CAM1yOjaDZ_cFH4zYxFH4P=undqA7nbHcr3HQydPh7W3Ht5HdYg@mail.gmail.com>
-Date: Thu, 29 Sep 2016 11:50:07 -0400
-From: Mike Kienenberger <mkienenb@...il.com>
-To: announce@...aces.apache.org, MyFaces Development <dev@...aces.apache.org>,  MyFaces Discussion <users@...aces.apache.org>
-Cc: "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: [ANNOUNCE][CVE-2016-5019] Apache MyFaces Trinidad 2.0.2 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/10
+Message-ID: <5728D478.3090005@lsexperts.de>
+Date: Tue, 3 May 2016 18:40:24 +0200
+From: LSE-Advisories <advisories@...xperts.de>
+To: bugtraq@...urityfocus.com, oss-security@...ts.openwall.com, submissions@...ketstormsecurity.org, fulldisclosure@...lists.org, bugs@...uritytracker.com
+Subject: LSE Leading Security Experts GmbH - LSE-2016-02-03 - OXID eShop Path Traversal Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-The Apache MyFaces team is pleased to announce the release of Apache
-MyFaces Trinidad 2.0.2.
+=== LSE Leading Security Experts GmbH - Security Advisory 2016-02-03 ===
 
-MyFaces Trinidad is a feature-rich renderkit for JavaServer(tm) Faces
-that provides an extendibles framework and extensive skinning support.
-This version is designed to be used with the JSF 2.0 specification and
-works with either Mojarra or MyFaces.
+OXID eShop Path Traversal Vulnerability
+------------------------------------------------------------------------
 
-CVE-2016-5019:
-Trinidad’s CoreResponseStateManager both reads and writes view state
-strings using
-ObjectInputStream/ObjectOutputStream directly.  By doing so, Trinidad
-bypasses the
-view state security features provided by the JSF implementations - ie. the view
-state is not encrypted and is not MAC’ed.  Trinidad’s
-CoreResponseStateManager will
-blindly deserialize untrusted view state strings, which makes Trinidad-based
-applications vulnerable to deserialization attacks.
+Affected Versions
+=================
+Community Edition 4.9.7
 
-Apache MyFaces Trinidad is available in both binary and source
-distributions, and there are examples available as well:
+Issue Overview
+==============
+Vulnerability Type: path traversal, privilege escalation
+Version: Tested in Community Edition 4.9.7
+Technical Risk: high
+Likelihood of Exploitation: medium
+Vendor: OXID eSales AG
+Vendor URL: https://www.oxid-esales.com
+Credits: LSE Leading Security Experts GmbH employee Tim Herres
+Advisory URL: https://www.lsexperts.de/advisories/lse-2016-02-03.txt
+Advisory Status: Public
+CVE-Number: NA
+CVE URL: NA
+OVE-ID:OVE-20160419-0002
+OVI-ID:OVI-2016-7988
+CWE-ID: CWE-22
+CVSS 2.0: 3.5  (AV:N/AC:M/Au:S/C:P/I:N/A:N)
 
-    * http://myfaces.apache.org/trinidad/download.html
 
-Apache MyFaces Trinidad is available in the central Maven repository
-under Group ID "org.apache.myfaces.trinidad"
 
-Release Notes - MyFaces Trinidad - Version 2.0.2
+Impact
+======
+A missing file path validation allows an authenticated user with permission
+to add or edit products to read any file on the file system without permissions.
 
-Bug
-    [TRINIDAD-2542] - CVE-2016-5019: MyFaces Trinidad view state
-deserialization security vulnerability
 
-    [TRINIDAD-2218] - Need an ability for the WindowManager
-implementation to be executed before all Configurators and filters and
-to complete teh response
-    [TRINIDAD-2224] - Client DateTimeConverter _fix2DYear does not
-handle th_TH locale
-    [TRINIDAD-2230] - adjustments to the UIXComponentBase
-subscribeToEvent and unsubscribeFromEvent implementation
-    [TRINIDAD-2233] - x-frame-options header not working in trinidad
-    [TRINIDAD-2245] - ForEach tag throws ArrayIndexOfBoundsException
-when the end attribute is same as the size of the List
-    [TRINIDAD-2252] -
-ViewDeclarationLanguageFactoryImpl$ChangeApplyingVDLWrapper does not
-override non-abstract retargetMethodExpressions() causing composite
-component actions not to fire
-    [TRINIDAD-2260] - tr:inputListOfValues - no ReturnEvent is fired
-when using facelets
-    [TRINIDAD-2262] - UIXComponentBase calls setInView(false) before
-the component is actually removed from tree
-    [TRINIDAD-2263] - StateManagerImp.saveView should not check
-current request token
-    [TRINIDAD-2285] - avoid exceptions in design time for agent rules
-    [TRINIDAD-2286] - alias wrongly specified in base-desktop.css
-    [TRINIDAD-2289] - function _pprControlCapture() causes an error in
-IE8 when it tries to focus on a PPR'd element
-    [TRINIDAD-2299] - f:convertnumber throws error when the number
-input by user has leading or trailing grouping separator char
-    [TRINIDAD-2301] - avoid exceptions in design time when wrong style
-sheet name is specified in trinidad-skins.xml
-    [TRINIDAD-2303] - State saving skips facets (component resources).
-    [TRINIDAD-2309] - perf: change the concurrenthashmap to arraymap
-and fix the golden files
-    [TRINIDAD-2327] - update RenderingContext.getIcon() documentation
-    [TRINIDAD-2329] - remove acc datatable=0 from non data tables
-    [TRINIDAD-2340] - LocaleElementsResourceLoader init dependency on
-request path
-    [TRINIDAD-2348] - HeadRenderer renders meta tags in wrong order for IE
-    [TRINIDAD-2349] - TreeRenderer renders duplicate IDs
-    [TRINIDAD-2393] - GlobalConfiguratorImpl will not always clean up resources
-    [TRINIDAD-2408] - TrPage._getTextContent is not working in IE10
-    [TRINIDAD-2525] - IE 11 - Unsupported JavaScript methods are used
-in Trinidad
 
-Improvement
+Issue Description
+=================
+While conducting an internal evaluation of the software, LSE Leading
+Security Experts GmbH discovered a path traversal vulnerability in the product
+downloads function. A user with permissions to change or add products may change
+the Downloads name to a local file (e.g. "../../../config.inc.php"). This may lead
+to a privilege escalation.
 
-    [TRINIDAD-2172] - pseudo classes missing from CSSGenerationUtils
-    [TRINIDAD-2186] - Clirr runner tests should work off last revision
-rather then a fixed label
-    [TRINIDAD-2226] - Provide mechanism to reload skin definitions
-from trinidad-skins.xml
-    [TRINIDAD-2235] - Skinning: stable names for generated style sheets
-    [TRINIDAD-2248] - Change component templating scheme to generate
-superclasses of templated components rather than the templated
-components themselves
-    [TRINIDAD-2253] - Ability to synchronize UI view size with model cache size`
-    [TRINIDAD-2292] - Update Clirr Runner tests to check against Trinidad 2.0.0
-    [TRINIDAD-2330] - Add support for base64 encoded images in skin files.
-    [TRINIDAD-2391] - Enhancements to allow for custom FileUpload code
-    [TRINIDAD-2392] - Ability to control skin and compression programatically
-    [TRINIDAD-2394] - LabeledFacesMessage is not appropriately serializable
 
-New Feature
 
-    [TRINIDAD-2234] - Pregeneration of skin style sheets
 
-regards,
+Temporary Workaround and Fix
+============================
+Install latest update 4.9.8/5.2.8
+See http://wiki.oxidforge.org/Downloads/4.9.8_5.2.8
 
-Mike Kienenberger
+
+Proof of Concept
+================
+Create a new product in the backend. In the "Downloads" tab set "name of the uploaded
+file" to "../../../config.inc.php". Go to the frontend and buy the related product.
+Move to "My account" and choose the download section. Download the file and enjoy
+full database credentials.
+
+History
+=======
+2016-02-05 Issue discovered
+2016-02-22 Vendor contacted
+2016-02-24 Vendor confirmed
+2016-05-03 Vendor released patch
+2016-05-03 Advisory release
+
+
+GPG Signature
+=============
+This advisory is signed with the GPG key of the
+LSE Leading Security Experts GmbH advisories team.
+The key can be downloaded here: https://www.lsexperts.de/advisories-key-99E3277C.asc
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
