@@ -1,42 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/26/2
-Message-ID: <20160326145211.GA22709@openwall.com>
-Date: Sat, 26 Mar 2016 17:52:11 +0300
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/14
+Message-ID: <20160503181505.GA8195@openwall.com>
+Date: Tue, 3 May 2016 21:15:05 +0300
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption
+Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 22, 2016 at 11:58:39PM +0300, Solar Designer wrote:
-> The primary reason I am posting this is so that other distros know the
-> vulnerability was apparently shown to be exploitable.
+Thank you for bringing this in here, Ryan.
 
-And that's not the end of the story:
+On Tue, May 03, 2016 at 10:59:12AM -0700, Ryan Huber wrote:
+> What are "magic bytes"?
+> 
+> The first few bytes of a file can often used to identify the type of
+> file. Some examples are GIF images, which start with the hex bytes "47
+> 49 46 38", and JPEG images, which start with "FF D8". This list on
+> Wikipedia has the magic bytes for most common file types.
 
-https://lwn.net/SubscriberLink/681062/b974fb24a6c4617b/
+It may be preferable to refer to ImageMagick's own list of magics.
+HD Moore tweeted the relevant links:
 
-"Posted Mar 25, 2016 13:23 UTC (Fri) by BenHutchings (subscriber, #37955) [Link]
+<hdmoore> Two reasons you probably shouldn't be using ImageMagick in your web applications: https://github.com/ImageMagick/ImageMagick/blob/8c9d68ca4241b6faafa7a35658a125c3500a5edf/MagickCore/magic.c#L89 & https://github.com/ImageMagick/ImageMagick/blob/e93e339c0a44cec16c08d78241f7aa3754485004/www/source/delegates.xml#L62
+<hdmoore> ImageTragick: Upload(meme.png)->(IM detects non-png format based on file magic)->(IM uses insecure delegates to decode)->Shells!
 
-Unfortunately the fix by Seth Jennings for RHEL, later applied to
-stable branches, was still incorrect, leading to CVE-2016-0774. I hope
-AOSP picks up the second fix as well."
+> ImageMagick also disclosed this on their forum a few hours ago.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2016-0774
-
-"Petr Matousek  2016-02-02 09:34:35 EST 
-
-It was found that the fix for CVE-2015-1805 incorrectly kept buffer
-offset and buffer length in sync on failed atomic read, potentially
-resulting in pipe buffer state corruption.
-
-A local, unprivileged user could use this flaw to crash the system or
-leak kernel memory to user-space.
-
-Upstream Linux kernel is not affected by this flaw as it was introduced
-by the Red Hat Enterprise Linux only fix for CVE-2015-1805.
-
-Acknowledgements:
-
-The security impact of this issue was discovered by Red Hat."
+https://www.imagemagick.org/discourse-server/viewtopic.php?f=4&t=29588
 
 Alexander
