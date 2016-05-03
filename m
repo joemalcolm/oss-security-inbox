@@ -1,40 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/14/9
-Message-ID: <CAKG8Do4AKZuiifnELuyaBiNGWBEfkmnibMFffmULG7BQXZnyYA@mail.gmail.com>
-Date: Tue, 14 Jun 2016 17:46:18 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/8
+Message-ID: <CACn5sdQe0-qg68k+Zb5XtTk9Q2z1j38akrPxbAQQu_4Qf+g3Lw@mail.gmail.com>
+Date: Tue, 3 May 2016 18:36:50 +0200
+From: Gustavo Grieco <gustavo.grieco@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Python CVE-2016-0772: smtplib StartTLS stripping attack
+Subject: CVE request: out-of-bounds read parsing an XML in libxml2 using recover mode
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+ Hi,
 
-This is to publicly disclose Python CVE-2016-0772: smtplib StartTLS
-stripping attack.
+We found an out-of-bounds read parsing a specially crafted xml in libxml2
+if recover mode is used. It affects all versions.  It was discovered before
+by another guy but for some reason, never reported or fixed. Since upstream
+is not responding, i think it is a good time to publish some details here.
 
-Description :
-A vulnerability in smtplib allowing MITM attacker to perform a startTLS
-stripping attack. smtplib does not seem to raise an exception when the
-remote end (smtp server) is capable of negotiating starttls but fails to
-respond with 220 (ok) to an explicit call of SMTP.starttls(). This may
-allow a malicious MITM to perform a startTLS stripping attack if the client
-code does not explicitly check the response code for startTLS.
+$ xmllint -recover ohizsmaase.xml.-6355798974422201279
+...
+==2994== ERROR: AddressSanitizer: heap-buffer-overflow on address
+0x60040000d5d3 at pc 0x73320a bp 0x7fffffffc1e0 sp 0x7fffffffc1d8
+READ of size 1 at 0x60040000d5d3 thread T0
+...
+0x60040000d5d3 is located 0 bytes to the right of 3-byte region
+[0x60040000d5d0,0x60040000d5d3)
 
-Upstream patch :
-3.4 branch : https://hg.python.org/cpython/rev/d590114c2394
-2.7 branch : https://hg.python.org/cpython/rev/b3ce713fb9be
+And backtrace is here:
 
-Red Hat Bugzilla :
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2016-0772
+...
+#7  0x000000000073320a in xmlBufAttrSerializeTxtContent
+(buf=0x600c0000a7c0, doc=0x601e0000ef50, attr=0x601000007ea0,
+string=0x60040000d5d0 <incomplete sequence \341>) at xmlsave.c:2057
+#8  0x000000000072af0b in xmlAttrSerializeContent (buf=0x600c0000a820,
+attr=0x601000007ea0) at xmlsave.c:443
+#9  0x000000000072c36c in xmlAttrDumpOutput (ctxt=0x601c0000ca60,
+cur=0x601000007ea0) at xmlsave.c:780
+#10 0x000000000072c3b2 in xmlAttrListDumpOutput (ctxt=0x601c0000ca60,
+cur=0x601000007ea0) at xmlsave.c:797
+#11 0x000000000072dc22 in xmlNodeDumpOutputInternal (ctxt=0x601c0000ca60,
+cur=0x60180000b440) at xmlsave.c:1055
+#12 0x000000000072ef8a in xmlDocContentDumpOutput (ctxt=0x601c0000ca60,
+cur=0x601e0000ef50) at xmlsave.c:1234
+#13 0x000000000073246c in xmlSaveDoc (ctxt=0x601c0000ca60,
+doc=0x601e0000ef50) at xmlsave.c:1936
+#14 0x000000000040a238 in parseAndPrintFile (filename=0x7fffffffe759
+"ohizsmaase.xml.-6355798974422201279", rectxt=0x0) at xmllint.c:2689
+#15 0x000000000040fe5e in main (argc=3, argv=0x7fffffffe4a8) at
+xmllint.c:3739
 
-Reported by: Tin (Team Oststrom)
+A reproducer is available upon request. Please assign a CVE if necesary.
 
-Kind regards,
-
--- 
-Cedric Buissart,
-Product Security
-
-Purkynova 99
-Brno 612 45
+Regards,
+Gustavo.
 
