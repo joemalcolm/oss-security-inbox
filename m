@@ -1,55 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/01/6
-Message-ID: <56AF8FA4.9020409@igalia.com>
-Date: Mon, 1 Feb 2016 18:02:28 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org
-Cc: bugtraq@...urityfocus.com, oss-security@...ts.openwall.com
-Subject: WebKitGTK+ Security Advisory WSA-2016-0001
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/5
+Message-ID: <20160503145713.GA9004@eldamar.local>
+Date: Tue, 3 May 2016 16:57:13 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com, Vagrant Cascadian <vagrant@...ian.org>
+Subject: Re: CVE Request: libpam-sshauth: local root privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK+ Security Advisory                               WSA-2016-0001
-------------------------------------------------------------------------
+Hi,
 
-Date reported      : February 01, 2016
-Advisory ID        : WSA-2016-0001
-Advisory URL       : http://webkitgtk.org/security/WSA-2016-0001.html
-CVE identifiers    : CVE-2015-7096, CVE-2015-7098.
+On Sun, May 01, 2016 at 10:02:15AM -0400, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+> 
+> > Due to a programming error, libpam-sshauth returned PAM_SUCCESS where
+> > it should fail with PAM_AUTH_ERR. This was fixed in Debian in the last
+> > upload to unstable with the attached patch.
+> > 
+> > https://bazaar.launchpad.net/~ltsp-upstream/ltsp/libpam-sshauth/revision/114
+> 
+> We can assign a CVE ID because it appears that something definitely is
+> wrong from the Debian perspective, either the code itself or
+> documentation/lack-of-documentation about how the code was supposed to
+> be used.
+> 
+> Use CVE-2016-4422.
 
-Several vulnerabilities were discovered on WebKitGTK+.
+Thanks for assigning the CVE identifier.
 
-CVE-2015-7096
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to Apple.
-    WebKit in Apple iOS before 9.2, Safari before 9.0.2, and tvOS before
-    9.1 allows remote attackers to execute arbitrary code or cause a
-    denial of service (memory corruption and application crash) via a
-    crafted web site, a different vulnerability than CVE-2015-7048,
-    CVE-2015-7095, CVE-2015-7097, CVE-2015-7098, CVE-2015-7099,
-    CVE-2015-7100, CVE-2015-7101, CVE-2015-7102, and CVE-2015-7103.
+> 
+> However, we don't completely understand the issue:
+> 
+> > Introduced with:
+> > https://bazaar.launchpad.net/~ltsp-upstream/ltsp/libpam-sshauth/revision/93/src/pam_sshauth.c
+> 
+> Here, the commit message for revision 93 was "Succeed for system
+> accounts."
+> 
+> We don't know why introducing the undocumented behavior of "Is it a
+> system user? Fail" would be better than simply not checking
+> "pwent->pw_uid < UID_MIN" at all. Also, is there any risk that, with
+> this libpam-sshauth update, a system's PAM configuration might
+> suddenly provide no way for root to login via SSH?
+> 
+> Is it possible that the original motivation for revision 93 was that
+> the PAM_SUCCESS from pam_sm_authenticate was supposed to be specially
+> handled elsewhere in the "pwent->pw_uid < UID_MIN" case?
+> 
+> Although not directly applicable to libpam-sshauth, the examples
+> section of the
+> http://www.linux-pam.org/Linux-PAM-html/sag-pam_succeed_if.html man
+> page shows that a set of rules is sometimes designed with UID_MIN
+> special cases.
 
-CVE-2015-7098
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to Apple.
-    WebKit in Apple iOS before 9.2, Safari before 9.0.2, and tvOS before
-    9.1 allows remote attackers to execute arbitrary code or cause a
-    denial of service (memory corruption and application crash) via a
-    crafted web site, a different vulnerability than CVE-2015-7048,
-    CVE-2015-7095, CVE-2015-7096, CVE-2015-7097, CVE-2015-7099,
-    CVE-2015-7100, CVE-2015-7101, CVE-2015-7102, and CVE-2015-7103.
+It might be right that revision 93 cannot be considred the introducing
+revision for the problem. By following the example as given in the
+README.
 
+https://sources.debian.net/src/libpam-sshauth/0.3.1-1/README/#L75
 
-We recommend updating to the last stable version of WebKitGTK+. It is
-the best way of ensuring that you are running a safe version of
-WebKitGTK+. Please check our website for information about the last
-stable releases.
+$ cat /etc/pam.d/testservice 
+auth    required        pam_sshauth.so host=127.0.0.1 nostrict # or wherever
+auth    required        pam_exec.so expose_authtok /usr/bin/ltsp-session
+session required        pam_exec.so /usr/bin/ltsp-session
+$ pamtester -v testservice root authenticate open_session close_session
+pamtester: invoking pam_start(testservice, root, ...)
+pamtester: performing operation - authenticate
+Password: <anypassword>
+pamtester: successfully authenticated
+pamtester: performing operation - open_session
+pamtester: successfully opened a session
+pamtester: performing operation - close_session
+pamtester: session has successfully been closed.
 
-Further information about WebKitGTK+ Security Advisories can be found
-at: http://webkitgtk.org/security.html
+I want though to add the Debian maintainer for libpam-sshauth to more
+accurately answer the raised questions, Vagrant Cascadian
+<vagrant@...ian.org>. 
 
-The WebKitGTK+ team,
-February 01, 2016
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
+Regards,
+Salvatore
