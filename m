@@ -1,25 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/21/9
-Message-ID: <6r72dyrNdwjxo1dgsBt91YejfCOBjVGrLFzleahj0qi34idDnBgHp0vaThERN_YzWF2kfW08Z2xhuNNaY5B2diStx_mPwFrHsNqOMF1SdNw=@pusic.com>
-Date: Wed, 21 Dec 2016 17:10:54 -0500
-From: Luka Pusic <luka@...ic.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE request - Vesta Control Panel 0.9.7 <= 0.9.8-16 Local Privilege Escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/11
+Message-ID: <20160503173526.GA6669@openwall.com>
+Date: Tue, 3 May 2016 20:35:26 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSL Security Advisory [3rd May 2016]
 Content-Type: text/plain; charset=utf-8
 
-Vesta Control Panel 0.9.7 <= 0.9.8-16 Local Privilege Escalation
-Vendor Homepage: http://vestacp.com/
-Software Link: https://github.com/serghey-rodin/vesta
-Affected Versions: 0.9.7 and up to including 0.9.8-16
+On Tue, May 03, 2016 at 06:52:43PM +0200, Gsunde Orangen wrote:
+> * Padding oracle in AES-NI CBC MAC check (CVE-2016-2107)
+> The advisory says: "This issue was introduced as part of the fix for
+> Lucky 13 padding attack (CVE-2013-0169)".
+> So the following versions should be affected (ref.
+> https://openssl.org/news/vulnerabilities.html#y2013):
+>  - 1.0.2 through 1.02g
+>  - 1.0.1d through 1.0.1s
+>  - 1.0.0k and all later versions
+>  - 0.9.8y and all later versions
 
-Description:
-Vesta CP default install script adds /usr/local/vesta/bin/ directory into /etc/sudoers.d with the NOPASSWD option for the default "admin" user. All programs in /usr/local/vesta/bin/ directory can therefore be run as root. A command injection vulnerability in "v-get-web-domain-value" script can be exploited to run arbitrary commands and escalate from admin user to root.
+You're assuming that all versions with the fix for CVE-2013-0169 are
+affected, but the description also says that the new bug is in AES-NI
+specific code.  AES-NI support appears to be missing in 1.0.0 and older.
+I've just tried grepping 1.0.0t for aesenc (one of the AES-NI mnemonics,
+present in the 1.0.1 tree) - it isn't in there.
 
-Vulnerability:
-Parameter $3 (key) in v-get-web-domain-value is not properly sanitized before being passed to bash eval.
-
-GitHub issue: https://github.com/serghey-rodin/vesta/issues/906
-GitHub fix commit: https://github.com/serghey-rodin/vesta/commit/56182cecf414a0dd833ea3db07d589be88ca5e64
-
-Fix:
-Remove "v-get-web-domain-value" script file, because it is not used anymore.
+Alexander
