@@ -1,77 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/24
-Message-Id: <20160505220104.3054F6CC095@smtpvmsrv1.mitre.org>
-Date: Thu,  5 May 2016 18:01:04 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: PHP: several issues fixed with 7.0.6, 5.6.21 and 5.5.35
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/13
+Message-ID: <CABi+pA7xDJhirUFbrVZQkwMnFj--zbNJA8_Aoq-SiJx0QNcsoA@mail.gmail.com>
+Date: Tue, 3 May 2016 10:59:12 -0700
+From: Ryan Huber <rhuber@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: ImageMagick Is On Fire -- CVE-2016-3714
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+There are multiple vulnerabilities in ImageMagick, a package commonly
+used by web services to process images. One of the vulnerabilities can
+lead to remote code execution (RCE) if you process user submitted
+images. The exploit for this vulnerability is being used in the wild.
 
-> 1/ bcpowmod accepts negative scale and corrupts _one_ definition
->    - https://bugs.php.net/bug.php?id=72093
->    - https://git.php.net/?p=php-src.git;a=commit;h=d650063a0457aec56364e4005a636dc6c401f9cd
+A number of image processing plugins depend on the ImageMagick
+library, including, but not limited to, PHP's imagick, Ruby's rmagick
+and paperclip, and nodejs's imagemagick.
 
->> [2016-04-25 01:31 UTC] stas@....net
->> 
->> Two problems here actually: bcpowmod accepting negative scale and
->> _one_ definition being overridden by scale adjustment.
+If you use ImageMagick or an affected library, we recommend you
+mitigate the known vulnerabilities by doing at least one these two
+things (but preferably both!):
 
-Use CVE-2016-4537 for "bcpowmod accepting negative scale."
+1. Verify that all image files begin with the expected "magic bytes"
+corresponding to the image file types you support before sending them
+to ImageMagick for processing. (see FAQ for more info)
 
-Use CVE-2016-4538 for "_one_ definition being overridden by scale adjustment."
+2. Use a policy file to disable the vulnerable ImageMagick coders. The
+global policy for ImageMagick is usually found in "/etc/ImageMagick".
+This policy.xml example will disable the coders EPHEMERAL, URL, MVG,
+and MSL.
+
+Github Gist showing an example policy file:
+https://gist.github.com/rawdigits/d73312d21c8584590783a5e07e124723
+
+FAQ
+
+Who found this bug?
+
+Stewie (https://hackerone.com/stewie) found the initial bug, and
+Nikolay Ermishkin (https://twitter.com/__sl1m) from the Mail.Ru
+Security Team found additional issues, including the RCE.
+
+Will you share the exploit with me?
+
+No. We would like to give people a chance to patch before it is more
+widely available. The exploit is trivial, so we expect it to be
+available within hours of this post. Updates and PoC will eventually
+be available here.
+
+Are patches available?
+
+Yes, but they appear to be incomplete. Everyone would have preferred
+to wait for patches before disclosing, but working exploits are
+readily available.
+
+What are "magic bytes"?
+
+The first few bytes of a file can often used to identify the type of
+file. Some examples are GIF images, which start with the hex bytes "47
+49 46 38", and JPEG images, which start with "FF D8". This list on
+Wikipedia has the magic bytes for most common file types.
+
+Why are you disclosing a vulnerability like this?
+
+We have collectively determined that these vulnerabilities are
+available to individuals other than the person(s) who discovered them.
+An unknowable number of people having access to these vulnerabilities
+makes this a critical issue for everyone using this software.
+ImageMagick also disclosed this on their forum a few hours ago.
+
+How well-tested are these mitigations?
+
+They are effective against all of the exploit samples we've seen, but
+we cannot guarantee they will eliminate all vectors of attack.
+
+Are there other ways to mitigate?
+
+Sandboxing ImageMagick is worth investigating, but we are not
+providing specific instructions for doing this.
+
+What else should I know?
+
+We did not find this vulnerability ourselves. We understand the
+mechanisms involved, but credit for finding this vulnerability should
+go to the researcher(s).
+
+Vulnerabilities need names! What is its name??!?
+
+If you must, we've been calling it "ImageTragick".
+
+How can I contact you?
+
+imagetragick@...il.com
 
 
-> 2/ xml_parse_into_struct segmentation fault
->    - https://bugs.php.net/bug.php?id=72099
->    - https://git.php.net/?p=php-src.git;a=commit;h=dccda88f27a084bcbbb30198ace12b4e7ae961cc
-
->> AddressSanitizer: SEGV on unknown address
-
-Use CVE-2016-4539.
-
-
-> 3/ Out-of-bounds reads in zif_grapheme_stripos with negative offset
->    - https://bugs.php.net/bug.php?id=72061
->    - https://git.php.net/?p=php-src.git;a=commit;h=fd9689745c44341b1bd6af4756f324be8abba2fb
-
-Use CVE-2016-4540 for the grapheme_stripos issue.
-
-Use CVE-2016-4541 for the grapheme_strpos issue (separately discovered).
-
-
-> 4/ Out of bounds heap read access in exif header processing
->    - https://bugs.php.net/bug.php?id=72094
->    - https://git.php.net/?p=php-src.git;a=commit;h=082aecfc3a753ad03be82cf14f03ac065723ec92
-
-Use CVE-2016-4542 for the issue associated with the spprintf call.
-
-Use CVE-2016-4543 for both issues in which "Illegal IFD size" validation was added.
-
-Use CVE-2016-4544 for the issue in which "Invalid TIFF start" validation was added.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXK8GIAAoJEHb/MwWLVhi2/LAP/Rilr5fFWad/xntAVEnxwlFG
-/mTNs7JMK4GMq64DkafJIkWcv96b0/Xbscb6FzpUtiSHvCKjWZKyQjau5nT1Z4mg
-IlOgEC7CwDFXjPmSBxmhgK4RcjJv/XoHDBOkj8yH0PZ7rLcyGiJrbQ8kWl5t7rvc
-YJApIajtiK6dRx8B7Ddcdo843Q2IpThPi47/VihSYP8z1IBx5I5uBpQxApVo/AA+
-3Ayucf7+zI0pBGjOOAj0jaKA0n9RI8/6zRId0V8+sE1VQfPfh0809x9KqccWL2FB
-TE+amquxVA/TRNugemsAy6XRog4WbCD38P2aAa076jW7BQmRw8tOaNFDJzCHGEhj
-wYmhmIx+dbC6e+yRF5zb4BzZkxRm7uR2Psp8+QBj+BzaT/+6xrlGmjzGJhZhaU1n
-usSpPTvWaeV1iP4CL6jKVDe18A0/brf2H7snwFjjTv2583PQ9QQLSKRWUNnfq3xX
-xu+1MTPN/qStwHUUN2DyYLHytDKGBdYkTX867ZGrNIyaFpGKLvKVMrwJijwlWXdU
-sLiFuDMaZLtzzN5vobpDcSGhtB26f/YDh2dA7BSPPTT1hOzOgwVL9uTX0hldZlcQ
-hjAkVQ0rNVD8zo+JDxAk3wyphgF5gkb+KSOx+A9zPv5zO5hI/Trb4yygKHeLbGQU
-2rDmztzq9xFdHeYEpid1
-=z62X
------END PGP SIGNATURE-----
+-- 
+Ryan Huber
+rhuber@...il.com
+@ryanhuber
+https://github.com/rawdigits
++1 (312) 380 6136
