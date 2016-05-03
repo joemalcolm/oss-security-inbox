@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1414" "Saturday" "1" "April" "2017" "22:44:57" "+0200" "Solar Designer" "solar@openwall.com" "<20170401204457.GA12965@openwall.com>" "39" "Re: [oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring" "^Date:" nil nil "4" "2017040120:44:57" "[oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring" (number mark "        solar@openwa Apr  1   39/1414  " thread-indent "\"Re: [oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring\"\n") "<CAAeHK+wL_b0h-gSq3E=8+0Pi7cmzr-FtUgszdeo3i_kJ9bJScg@mail.gmail.com>" ("<CAAeHK+x6PmHr1jWD1MUiZx_Oj1R1gai3oXj03xbcfDe86uSjNA@mail.gmail.com>" "<CAAeHK+wL_b0h-gSq3E=8+0Pi7cmzr-FtUgszdeo3i_kJ9bJScg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["537" "Tuesday" "3" "May" "2016" "16:51:10" "-0700" "Tim" "tim-security@sentinelchicken.org" "<20160503235110.GD1250@sentinelchicken.org>" "17" "Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714" "^Date:" nil nil "5" "2016050323:51:10" "[oss-security] ImageMagick Is On Fire -- CVE-2016-3714" (number mark "        tim-security May  3   17/537   " thread-indent "\"Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714\"\n") "<20160503232637.GA2319@hunt>" ("<CABi+pA7xDJhirUFbrVZQkwMnFj--zbNJA8_Aoq-SiJx0QNcsoA@mail.gmail.com>" "<20160503181505.GA8195@openwall.com>" "<57292879.7050303@gmail.com>" "<20160503232637.GA2319@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1491 invoked by uid 550); 1 Apr 2017 20:45:32 -0000
+Received: (qmail 15438 invoked by uid 550); 3 May 2016 23:52:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,37 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32730 invoked from network); 1 Apr 2017 20:45:03 -0000
-Message-ID: <20170401204457.GA12965@openwall.com>
-References: <CAAeHK+x6PmHr1jWD1MUiZx_Oj1R1gai3oXj03xbcfDe86uSjNA@mail.gmail.com> <CAAeHK+wL_b0h-gSq3E=8+0Pi7cmzr-FtUgszdeo3i_kJ9bJScg@mail.gmail.com>
-Mime-Version: 1.0
+Received: (qmail 15417 invoked from network); 3 May 2016 23:52:40 -0000
+Message-ID: <20160503235110.GD1250@sentinelchicken.org>
+References: <CABi+pA7xDJhirUFbrVZQkwMnFj--zbNJA8_Aoq-SiJx0QNcsoA@mail.gmail.com>
+ <20160503181505.GA8195@openwall.com>
+ <57292879.7050303@gmail.com>
+ <20160503232637.GA2319@hunt>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAAeHK+wL_b0h-gSq3E=8+0Pi7cmzr-FtUgszdeo3i_kJ9bJScg@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Sat, 1 Apr 2017 22:44:57 +0200
-From: Solar Designer <solar@openwall.com>
+In-Reply-To: <20160503232637.GA2319@hunt>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Date: Tue, 3 May 2016 16:51:10 -0700
+From: Tim <tim-security@sentinelchicken.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714
+To: Seth Arnold <seth.arnold@canonical.com>, oss-security@lists.openwall.com
 
-To Red Hat folks:
 
-On Fri, Mar 31, 2017 at 07:20:20PM +0200, Andrey Konovalov wrote:
-> On Fri, Mar 31, 2017 at 2:03 PM, Andrey Konovalov <andreyknvl@google.com> wrote:
-> > CVE-2017-7308 [1] was assigned to the following issue:
-> >
-> > The packet_set_ring function in net/packet/af_packet.c in the Linux
-> > kernel through 4.10.6 does not properly validate certain block-size
-> > data, which allows local users to cause a denial of service (overflow)
-> > or possibly have unspecified other impact via crafted system calls.
-> >
-> > The fix is sent upstream [2].
-> 
-> Update: the fix actually consists of 3 patches:
-> 
-> https://patchwork.ozlabs.org/patch/744811/
-> https://patchwork.ozlabs.org/patch/744813/
-> https://patchwork.ozlabs.org/patch/744812/
-> 
-> > [1] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7308
-> >
-> > [2] https://patchwork.ozlabs.org/patch/744811/
+> Or, replace the strings with arrays and use execve() instead of system().
+ 
+^^^
 
-Red Hat currently says all RHEL starting with RHEL5 are affected:
+That.
 
-https://access.redhat.com/security/cve/cve-2017-7308
+system() should be taken out into the street and shot.  There's just
+no good reason for a respectable programmer to use it.
 
-However, the corresponding Bugzilla entry has no mention of that:
+Not saying that's the *only* thing they would need to do, but we need
+to encourage development platforms, in general, to stop offering up
+awful interfaces like this.  Heck, Node.js offers a child_process.exec()
+call that isn't exec at all.  It is (approximately) system().  Surely
+that won't lead to any problems...
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1437404
-
-So is it just a better-safe-than-sorry default to list products as
-affected until known otherwise?  If so, maybe Unknown would be better?
-
-RHEL5 doesn't yet include TPACKET_V3.  I did not check RHEL6.
-
-https://github.com/torvalds/linux/commit/f6fb8f100b807378fda19e83e5ac6828b638603a
-
-Alexander
+tim
