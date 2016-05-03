@@ -1,47 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/16
-Message-ID: <57081473.7000604@oracle.com>
-Date: Fri, 8 Apr 2016 13:28:35 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/15
+Message-ID: <74d54064-2a90-1170-1abb-7729216b461b@gmail.com>
+Date: Tue, 3 May 2016 20:17:52 +0200
+From: Gsunde Orangen <gsunde.orangen@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-3619 libtiff: Out-of-bounds Read in the bmp2tiff tool
+Subject: Re: OpenSSL Security Advisory [3rd May 2016]
 Content-Type: text/plain; charset=utf-8
 
-That's a bug against Red Hat's distro - not the upstream libtiff project.
-Did you not report these to libtiff upstream yet?
+Thanks, Alexander & agreed - and the "official" OpenSSL changelog
+confirms that AES-NI support was introduced with 1.0.1:
 
-	-alan-
+https://www.openssl.org/news/changelog.html#x22
+Changes between 1.0.0h and 1.0.1  [14 Mar 2012]:
+*) Extensive assembler packs updates, most notably:
+ - x86[_64]: AES-NI, ...
 
-On 04/ 8/16 12:00 AM, 王梅 wrote:
-> Thanks for pointing out the mistake.
->
-> CVE-2016-3619: https://bugzilla.redhat.com/show_bug.cgi?id=1316569
->
->
->> 在 2016年4月8日，下午2:00，Alan Coopersmith <alan.coopersmith@...cle.com> 写道：
->>
->> On 04/ 7/16 12:32 AM, 王梅 wrote:
->>> Details
->>> =======
->>>
->>> Product: libtiff
->>> Affected Versions: <= 4.0.6
->>> Vulnerability Type: Out-of-bounds Read
->>> Vendor URL: http://www.libtiff.org/
->>> CVE ID: CVE-2016-3619
->>> Credit: Mei Wang of the Cloud Security Team, Qihoo 360
->>
->>> References:
->>> [1] http://www.remotesensing.org/libtiff/
->>> [2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
->>
->> Instead of pointing to a list of 305 bugs, please just provide a link to the bug
->> you filed for each issue so it's easier for distros to check the progress of the
->> fix.
->>
->> --
->> 	-Alan Coopersmith-              alan.coopersmith@...cle.com
->> 	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
->
-
+On 03.05.2016, 19:35 Solar Designer wrote:
+> On Tue, May 03, 2016 at 06:52:43PM +0200, Gsunde Orangen wrote:
+>> * Padding oracle in AES-NI CBC MAC check (CVE-2016-2107)
+>> The advisory says: "This issue was introduced as part of the fix for
+>> Lucky 13 padding attack (CVE-2013-0169)".
+>> So the following versions should be affected (ref.
+>> https://openssl.org/news/vulnerabilities.html#y2013):
+>>  - 1.0.2 through 1.02g
+>>  - 1.0.1d through 1.0.1s
+>>  - 1.0.0k and all later versions
+>>  - 0.9.8y and all later versions
+> 
+> You're assuming that all versions with the fix for CVE-2013-0169 are
+> affected, but the description also says that the new bug is in AES-NI
+> specific code.  AES-NI support appears to be missing in 1.0.0 and older.
+> I've just tried grepping 1.0.0t for aesenc (one of the AES-NI mnemonics,
+> present in the 1.0.1 tree) - it isn't in there.
+> 
+> Alexander
+> 
 
