@@ -1,122 +1,219 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/9
-Message-ID: <2803183.JXljhHXDl4@blackgate>
-Date: Wed, 09 Nov 2016 15:42:22 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: libdwarf: heap-based buffer overflow in _dwarf_skim_forms (dwarf_macro5.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/4
+Message-ID: <5728B29C.2010004@suse.de>
+Date: Tue, 3 May 2016 23:45:56 +0930
+From: Simon Lees <sflees@...e.de>
+To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com, security@...me.org, security@...e.com
+Subject: CVE-2016-3627 CVE-2016-3705: libxml2: stack overflow in xml validator (parser)
 Content-Type: text/plain; charset=utf-8
 
-If it is suitable for a CVE please assign one. Thanks.
+Hi
+This is a disclosure of the following issue that was raised a week ago
+on the distro's mailing list. Both bugs on the gnome bugtracker are
+currently private and should be made public now. The two attached
+patches are based off the 2.9.3 libxml2 release.
 
-Description:
-libdwarf is a library to consume and produce DWARF debug information.
+A couple of weeks back while working on a related bug [CVE-2016-3627] I
+discovered a specially created xml file is capable of triggering a stack
+overflow before libxml2 can detect its a invalid xml file.
 
-A fuzz on an updated version revealed a buffer overflow.
+We raised this issue upstream on 2016-04-18 and informed them that we
+would place a two week embargo on the issue in case we didn't here back.
+As of yet we have had no response so we have posted here.
+https://bugzilla.gnome.org/show_bug.cgi?id=765207
 
-The complete ASan output:
+We intend to keep the current embargo (ending May 3) unless we get
+advise otherwise here. Below is a script to generate the xml file along
+with a tested patch to fix the issue. I will also include our
+unpublished patch and simplified reproducer for CVE-2016-3627 as again
+we have had no response upstream and its likely that you will want to
+fix this less severe issue at the same time.
+https://bugzilla.gnome.org/show_bug.cgi?id=762100
 
-# dwarfdump $FILE
-==2437==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x62000000fe5b at pc 0x000000462c7c bp 0x7ffea0d4b690 sp 0x7ffea0d4ae40
-READ of size 29 at 0x62000000fe5b thread T0
-    #0 0x462c7b in __interceptor_strlen /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:581
-    #1 0x5edea2 in _dwarf_skim_forms 
-/tmp/dwarf-20161021/libdwarf/dwarf_macro5.c:185:17
-    #2 0x5edea2 in _dwarf_get_macro_ops_count_internal 
-/tmp/dwarf-20161021/libdwarf/dwarf_macro5.c:346
-    #3 0x5eb886 in _dwarf_internal_macro_context_by_offset 
-/tmp/dwarf-20161021/libdwarf/dwarf_macro5.c:1338:11
-    #4 0x5eb886 in _dwarf_internal_macro_context 
-/tmp/dwarf-20161021/libdwarf/dwarf_macro5.c:1201
-    #5 0x5ed10e in dwarf_get_macro_context_by_offset 
-/tmp/dwarf-20161021/libdwarf/dwarf_macro5.c:1467:11
-    #6 0x54f7be in print_macros_5style_this_cu 
-/tmp/dwarf-20161021/dwarfdump/print_macro.c:288:16
-    #7 0x514d0f in print_one_die_section 
-/tmp/dwarf-20161021/dwarfdump/print_die.c:869:21
-    #8 0x512262 in print_infos 
-/tmp/dwarf-20161021/dwarfdump/print_die.c:371:16
-    #9 0x4faafa in process_one_file 
-/tmp/dwarf-20161021/dwarfdump/dwarfdump.c:1371:9
-    #10 0x4faafa in main /tmp/dwarf-20161021/dwarfdump/dwarfdump.c:654
-    #11 0x7f74b22e761f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #12 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
+python3 repoducer.py ; xmllint repo.xml
 
-0x62000000fe5b is located 0 bytes to the right of 3547-byte region 
-[0x62000000f080,0x62000000fe5b)
-allocated by thread T0 here:
-    #0 0x4c0ad8 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52
-    #1 0x7f74b33c1206 in __libelf_set_rawdata_wrlock /tmp/portage/dev-
-libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_getdata.c:318
+repoducer.py
+-----------------------------------------------------------------------
+#!/bin/python3
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/sys-
-devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/asan_interceptors.cc:581 in __interceptor_strlen
-Shadow bytes around the buggy address:
-  0x0c407fff9f70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c407fff9f80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c407fff9f90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c407fff9fa0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c407fff9fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c407fff9fc0: 00 00 00 00 00 00 00 00 00 00 00[03]fa fa fa fa
-  0x0c407fff9fd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c407fff9fe0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c407fff9ff0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c407fffa000: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c407fffa010: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==2437==ABORTING
+f = open('repo.xml', 'w')
 
-Affected version:
-20161021
+f.write( "<!DOCTYPE a [ ")
 
-Fixed version:
-N/A
+i = 1
 
-Commit fix:
-https://sourceforge.net/p/libdwarf/code/ci/583f8834083b5ef834c497f5b47797e16101a9a6/
+while (i < 30000):
+    f.write ("<!ENTITY a" + str(i) + " \"&a" + str(i+1) + ";\">")
+    i = i+1
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+f.write("<!ENTITY a" + str(i+1) + " \"&a1;\">]> <bruces bogans=\"&a1;\">")
 
-CVE:
-N/A
+f.close()
+-----------------------------------------------------------------------
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00027-libdwarf-heapoverflow-_dwarf_skim_forms
+Patch for this issue.
+-----------------------------------------------------------------------
+From: Peter Simons <psimons@...e.com>
+Date: Fri, 15 Apr 2016 11:56:55 +0200
+Subject: Add missing increments of recursion depth counter to XML
+ parser.
 
-Timeline:
-2016-11-02: bug discovered and reported to upstream
-2016-11-05: upstream released a patch
-2016-11-07: blog post about the issue
+The functions xmlParserEntityCheck() and xmlParseAttValueComplex() used
+to call
+xmlStringDecodeEntities() in a recursive context without incrementing the
+'depth' counter in the parser context. Because of that omission, the parser
+failed to detect attribute recursions in certain documents before
+running out
+of stack space.
+---
+ parser.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-Note:
-This bug was found with American Fuzzy Lop.
+diff --git a/parser.c b/parser.c
+index 9604a72..4da151f 100644
+--- a/parser.c
++++ b/parser.c
+@@ -144,8 +144,10 @@ xmlParserEntityCheck(xmlParserCtxtPtr ctxt, size_t
+size,
 
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/07/libdwarf-heap-based-buffer-overflow-in-_dwarf_skim_forms-dwarf_macro5-c
+ 	ent->checked = 1;
+
++        ++ctxt->depth;
+ 	rep = xmlStringDecodeEntities(ctxt, ent->content,
+ 				  XML_SUBSTITUTE_REF, 0, 0, 0);
++        --ctxt->depth;
+
+ 	ent->checked = (ctxt->nbentities - oldnbent + 1) * 2;
+ 	if (rep != NULL) {
+@@ -3966,8 +3968,10 @@ xmlParseEntityValue(xmlParserCtxtPtr ctxt,
+xmlChar **orig) {
+ 	 * an entity declaration, it is bypassed and left as is.
+ 	 * so XML_SUBSTITUTE_REF is not set here.
+ 	 */
++        ++ctxt->depth;
+ 	ret = xmlStringDecodeEntities(ctxt, buf, XML_SUBSTITUTE_PEREF,
+ 				      0, 0, 0);
++        --ctxt->depth;
+ 	if (orig != NULL)
+ 	    *orig = buf;
+ 	else
+@@ -4092,9 +4096,11 @@ xmlParseAttValueComplex(xmlParserCtxtPtr ctxt,
+int *attlen, int normalize) {
+ 		} else if ((ent != NULL) &&
+ 		           (ctxt->replaceEntities != 0)) {
+ 		    if (ent->etype != XML_INTERNAL_PREDEFINED_ENTITY) {
++			++ctxt->depth;
+ 			rep = xmlStringDecodeEntities(ctxt, ent->content,
+ 						      XML_SUBSTITUTE_REF,
+ 						      0, 0, 0);
++			--ctxt->depth;
+ 			if (rep != NULL) {
+ 			    current = rep;
+ 			    while (*current != 0) { /* non input consuming */
+@@ -4130,8 +4136,10 @@ xmlParseAttValueComplex(xmlParserCtxtPtr ctxt,
+int *attlen, int normalize) {
+ 			(ent->content != NULL) && (ent->checked == 0)) {
+ 			unsigned long oldnbent = ctxt->nbentities;
+
++			++ctxt->depth;
+ 			rep = xmlStringDecodeEntities(ctxt, ent->content,
+ 						  XML_SUBSTITUTE_REF, 0, 0, 0);
++			--ctxt->depth;
+
+ 			ent->checked = (ctxt->nbentities - oldnbent + 1) * 2;
+ 			if (rep != NULL) {
+-- 
+2.7.4
+
+-----------------------------------------------------------------------
+
+CVE-2016-3627 - simplified reproducers
+echo '<!DOCTYPE b [ <!ENTITY b "&b;"> ]> <b b="&b;">' | xmllint -recover -
+echo '<!DOCTYPE b [ <!ENTITY b "&c;"> <!ENTITY c "&d;"> <!ENTITY d
+"&b;">]> <test123="&c;">' | xmllint -recover -
+-----------------------------------------------------------------------
+
+
+CVE-2016-3627 - Patch
+-----------------------------------------------------------------------
+From: Peter Simons <psimons@...e.com>
+Date: Thu, 14 Apr 2016 16:15:13 +0200
+Subject: [PATCH] xmlStringGetNodeList: limit the function to 1024 recursions
+ to avoid CVE-2016-3627
+
+This patch prevents stack overflows like the one reported in
+https://bugzilla.gnome.org/show_bug.cgi?id=762100.
+---
+ tree.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/tree.c b/tree.c
+index 6a158ce..9c9f0ec 100644
+--- a/tree.c
++++ b/tree.c
+@@ -1464,6 +1464,8 @@ out:
+     return(ret);
+ }
+
++static xmlNodePtr xmlStringGetNodeListInternal(const xmlDoc *doc, const
+xmlChar *value, size_t recursionLevel);
++
+ /**
+  * xmlStringGetNodeList:
+  * @doc:  the document
+@@ -1475,6 +1477,11 @@ out:
+  */
+ xmlNodePtr
+ xmlStringGetNodeList(const xmlDoc *doc, const xmlChar *value) {
++  return xmlStringGetNodeListInternal(doc, value, 0);
++}
++
++static xmlNodePtr
++xmlStringGetNodeListInternal(const xmlDoc *doc, const xmlChar *value,
+size_t recursionLevel) {
+     xmlNodePtr ret = NULL, last = NULL;
+     xmlNodePtr node;
+     xmlChar *val;
+@@ -1483,6 +1490,8 @@ xmlStringGetNodeList(const xmlDoc *doc, const
+xmlChar *value) {
+     xmlEntityPtr ent;
+     xmlBufPtr buf;
+
++    if (recursionLevel > 1024) return(NULL);
++
+     if (value == NULL) return(NULL);
+
+     buf = xmlBufCreateSize(0);
+@@ -1593,8 +1602,9 @@ xmlStringGetNodeList(const xmlDoc *doc, const
+xmlChar *value) {
+ 			else if ((ent != NULL) && (ent->children == NULL)) {
+ 			    xmlNodePtr temp;
+
+-			    ent->children = xmlStringGetNodeList(doc,
+-				    (const xmlChar*)node->content);
++			    ent->children = xmlStringGetNodeListInternal(doc,
++				    (const xmlChar*)node->content,
++                                    recursionLevel+1);
+ 			    ent->owner = 1;
+ 			    temp = ent->children;
+ 			    while (temp) {
+-- 
+2.7.4
+
+-----------------------------------------------------------------------
+
+Cheers
+
+-- 
+
+Simon Lees (Simotek)                            http://simotek.net
+
+Emergency Update Team                           keybase.io/simotek
+SUSE Linux                            Adeliade Australia, UTC+9:30
+GPG Fingerprint: 5B87 DB9D 88DC F606 E489 CEC5 0922 C246 02F0 014B
+
+View attachment "0001-Add-missing-increments-of-recursion-depth-counter-to.patch" of type "text/x-patch" (2319 bytes)
+
+View attachment "libxml2-2.9.1-CVE-2016-3627.patch" of type "text/x-patch" (1879 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
