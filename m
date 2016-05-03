@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1636" "Monday" "24" "June" "2019" "17:53:41" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20190625005341.GA26741@hunt>" "46" "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" "^Date:" nil nil "6" "2019062500:53:41" "[oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" (number mark "U       seth.arnold@ Jun 24   46/1636  " thread-indent "\"Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz\"\n") "<CAFRnB2XeQ-casQLm0MRCdRmQ5aeF9K=X3Km5eYg9DB6A915d5A@mail.gmail.com>" ("<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>" "<20190617113203.GH15432@suse.de>" "<CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>" "<alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>" "<alpine.LRH.2.21.1906241152180.4597@fairfax.gathman.org>" "<E1hfSKS-00015J-V5@rmmprod07.runbox>" "<20190624193048.GA8039@espresso.pseudorandom.co.uk>" "<CAFRnB2XeQ-casQLm0MRCdRmQ5aeF9K=X3Km5eYg9DB6A915d5A@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5004" "Tuesday" "3" "May" "2016" "14:05:36" "-0500" "Scott Balneaves" "sbalneav@ltsp.org" "<CAJC6uyt4Wa4=-_o_89ck-1gOgNSLE9AB7eGEvw4z4T6VRVrqcw@mail.gmail.com>" "128" "[oss-security] Re: CVE Request: libpam-sshauth: local root privilege escalation" nil nil nil "5" "2016050319:05:36" "[oss-security] Re: CVE Request: libpam-sshauth: local root privilege escalation" (number mark "U       sbalneav@lts May  3  128/5004  " thread-indent "\"[oss-security] Re: CVE Request: libpam-sshauth: local root privilege escalation\"\n") "<87k2jb0yc3.fsf@aikidev.net>" ("<20160501054304.GA31390@eldamar.local>" "<20160501140215.AED64332069@smtpvbsrv1.mitre.org>" "<20160503145713.GA9004@eldamar.local>" "<87k2jb0yc3.fsf@aikidev.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30065 invoked by uid 550); 25 Jun 2019 00:53:55 -0000
+Received: (qmail 17639 invoked by uid 550); 3 May 2016 19:09:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,73 +11,174 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30047 invoked from network); 25 Jun 2019 00:53:54 -0000
-Message-ID: <20190625005341.GA26741@hunt>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
- <20190617113203.GH15432@suse.de>
- <CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>
- <alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>
- <alpine.LRH.2.21.1906241152180.4597@fairfax.gathman.org>
- <E1hfSKS-00015J-V5@rmmprod07.runbox>
- <20190624193048.GA8039@espresso.pseudorandom.co.uk>
- <CAFRnB2XeQ-casQLm0MRCdRmQ5aeF9K=X3Km5eYg9DB6A915d5A@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Qxx1br4bt0+wmkIi"
-Content-Disposition: inline
-In-Reply-To: <CAFRnB2XeQ-casQLm0MRCdRmQ5aeF9K=X3Km5eYg9DB6A915d5A@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-Date: Mon, 24 Jun 2019 17:53:41 -0700
-From: Seth Arnold <seth.arnold@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Thousands of vulnerabilities, almost no CVEs:
- OSS-Fuzz
-To: oss-security@lists.openwall.com
+Received: (qmail 14277 invoked from network); 3 May 2016 19:05:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ltsp-org.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=CNegTts28hhJvP0TdEgpBx2c3NXqx3i7qdjmMMul1+8=;
+        b=YPdHTOOgS6bZYzknRQZphoo+/e8SZF7pjIyQr3cpr7otYhKwl8ddwyM4ARAxDYpm8t
+         V0j791ck76kLWc9brwd64uZ5RgFoJ0FZuHHELW9nCwto/H/o6DmJoHHATgiDWEPuoKVG
+         zRaPBo5whWromBrsTsgX2DfuDmN9ABFPC01k6vNq7McJ2xOaoAE/kszcAQkz+ZOp1suV
+         TbKpbYFnaP0yfBDo4JofiwqgIQw2x2uxUJKLdM8dyBQUNj/8kf5pvoUDIAWbg9rxESQJ
+         OZmTAO3L79DlJYXS8YPoWC47Fb+KdEH2Ot3jdgEPX//111/56aHUc/zSB6UPwayeMqiB
+         W1GA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=CNegTts28hhJvP0TdEgpBx2c3NXqx3i7qdjmMMul1+8=;
+        b=QQGsoZkCtGhTU3n+8MvhF+FKehSQzwlC3D7ilZIOw726wPG7rRbM9XXyeIaF9nad4d
+         7oSbeKLGjSsYOkUAlDJ5uj29O4TZcZIN0BqgNZAPN+fXPUhz+B+WVKKfIqW2somzw4my
+         kTfAnzOdz/hEgHqQcbv9B6/yGkrnpLivpBr0mTLX0i+hLoPa7WmAmnmy6aj9wPtaAS8m
+         s4Kcq4e39/ieVDqdmuxirAJmfghvGiBi18yV+yp7f+x9PmOB3kxZXgH4CrGTAJb14thU
+         5TtP7uGmSHscLfQ98qX2n4b8XbbcLg4qxye1ubAfh2j0/ardpuWMFIbuOhHCV5y3lvLE
+         At9A==
+X-Gm-Message-State: AOPr4FUl7uC04aay4PYnfoaR9Sd08uju8Mrr5mAQuSbMvLnfRNJP+nUZ/M9URG6EhPp6I4mohz+8Y4d4B1dVww==
+MIME-Version: 1.0
+X-Received: by 10.107.183.139 with SMTP id h133mr5897297iof.97.1462302336127;
+ Tue, 03 May 2016 12:05:36 -0700 (PDT)
+X-Originating-IP: [209.171.88.141]
+In-Reply-To: <87k2jb0yc3.fsf@aikidev.net>
+References: <20160501054304.GA31390@eldamar.local>
+	<20160501140215.AED64332069@smtpvbsrv1.mitre.org>
+	<20160503145713.GA9004@eldamar.local>
+	<87k2jb0yc3.fsf@aikidev.net>
+Date: Tue, 3 May 2016 14:05:36 -0500
+Message-ID: <CAJC6uyt4Wa4=-_o_89ck-1gOgNSLE9AB7eGEvw4z4T6VRVrqcw@mail.gmail.com>
+From: Scott Balneaves <sbalneav@ltsp.org>
+To: Vagrant Cascadian <vagrant@debian.org>
+Cc: Salvatore Bonaccorso <carnil@debian.org>, cve-assign@mitre.org, 
+	oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=94eb2c0ba1824cae770531f4cbad
+Subject: [oss-security] Re: CVE Request: libpam-sshauth: local root privilege escalation
 
---Qxx1br4bt0+wmkIi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--94eb2c0ba1824cae770531f4cbad
+Content-Type: text/plain; charset=UTF-8
 
-On Mon, Jun 24, 2019 at 07:15:20PM -0400, Alex Gaynor wrote:
-> sounds very hard to me, at least without requiring more user involvement
-> than ASAN requires right now. This seems like a very cool area for academic
-> research though!
+>> Here, the commit message for revision 93 was "Succeed for system
+>> accounts."
+>>
+>> We don't know why introducing the undocumented behavior of "Is it a
+>> system user? Fail" would be better than simply not checking
+>> "pwent->pw_uid < UID_MIN" at all. Also, is there any risk that, with
+>> this libpam-sshauth update, a system's PAM configuration might
+>> suddenly provide no way for root to login via SSH?
+>>
+>> Is it possible that the original motivation for revision 93 was that
+>> the PAM_SUCCESS from pam_sm_authenticate was supposed to be specially
+>> handled elsewhere in the "pwent->pw_uid < UID_MIN" case?
 
-Have you tried the gdb exploitable plugin yet?
+The problem was, quite bluntly, an incomplete understanding of PAM
+mechanics on my part.
 
-https://github.com/jfoote/exploitable
+The original idea was that it was supposed to be used in conjunction
+with other modules; specifically, pam_unix.  So my *thinking* (if you
+could call it that) was that it would be used as such:
 
-Some of the tools written around AFL have included support for running
-exploitable directly on the fuzzer results and helping to prioritize,
-roughly, in what order the specimens should be worked on:
+auth required pam_unix.so  ...
+auth required pam_sshauth.so ...
 
-https://gitlab.com/rc0r/afl-utils
+Since (in my mind), accepting the root user would be handled by pam_unix,
+I should simply succeed, since if the root account password was
+incorrectly entered, the pam_unix result would be a FAIL, and thus
+then entire pam auth stack would fail.  Therefore, in my (incorrect)
+thinking,
+I should simply succeed on systems accounts.
 
-with a direct link to a pretty screenshot:
+I didn't, at the time, know about the ability to skip with [success=N], or
+even
+consider that I would use it as the only pam module.
 
-https://gitlab.com/rc0r/afl-utils/raw/master/.scrots/afl_collect_sample.png
+TL;DR: I didn't know what I was doing, and misunderstood how I should
+handle systems accounts.  Mea culpa, mea maxima culpa.
 
-I assume like most such tools, this is another case of being a good start
-but not nearly as reliable as a knowledgeable human. It's also probably
-completely useless for issues that aren't memory-safety issues. But it's
-something that exists today and may be helpful.
+Cheers,
+Scott
 
-Thanks
+On Tue, May 3, 2016 at 1:51 PM, Vagrant Cascadian <vagrant@debian.org>
+wrote:
 
---Qxx1br4bt0+wmkIi
-Content-Type: application/pgp-signature; name="signature.asc"
+> On 2016-05-03, Salvatore Bonaccorso wrote:
+> > On Sun, May 01, 2016 at 10:02:15AM -0400, cve-assign@mitre.org wrote:
+> >> > Due to a programming error, libpam-sshauth returned PAM_SUCCESS where
+> >> > it should fail with PAM_AUTH_ERR. This was fixed in Debian in the last
+> >> > upload to unstable with the attached patch.
+> >> >
+> >> >
+> https://bazaar.launchpad.net/~ltsp-upstream/ltsp/libpam-sshauth/revision/114
+> >>
+> >> We can assign a CVE ID because it appears that something definitely is
+> >> wrong from the Debian perspective, either the code itself or
+> >> documentation/lack-of-documentation about how the code was supposed to
+> >> be used.
+> >>
+> >> Use CVE-2016-4422.
+> >
+> > Thanks for assigning the CVE identifier.
+> >
+> >>
+> >> However, we don't completely understand the issue:
+> >>
+> >> > Introduced with:
+> >> >
+> https://bazaar.launchpad.net/~ltsp-upstream/ltsp/libpam-sshauth/revision/93/src/pam_sshauth.c
+> >>
+> >> Here, the commit message for revision 93 was "Succeed for system
+> >> accounts."
+> >>
+> >> We don't know why introducing the undocumented behavior of "Is it a
+> >> system user? Fail" would be better than simply not checking
+> >> "pwent->pw_uid < UID_MIN" at all. Also, is there any risk that, with
+> >> this libpam-sshauth update, a system's PAM configuration might
+> >> suddenly provide no way for root to login via SSH?
+> >>
+> >> Is it possible that the original motivation for revision 93 was that
+> >> the PAM_SUCCESS from pam_sm_authenticate was supposed to be specially
+> >> handled elsewhere in the "pwent->pw_uid < UID_MIN" case?
+> >>
+> >> Although not directly applicable to libpam-sshauth, the examples
+> >> section of the
+> >> http://www.linux-pam.org/Linux-PAM-html/sag-pam_succeed_if.html man
+> >> page shows that a set of rules is sometimes designed with UID_MIN
+> >> special cases.
+> >
+> > It might be right that revision 93 cannot be considred the introducing
+> > revision for the problem. By following the example as given in the
+> > README.
+> >
+> > https://sources.debian.net/src/libpam-sshauth/0.3.1-1/README/#L75
+> >
+> > $ cat /etc/pam.d/testservice
+> > auth    required        pam_sshauth.so host=127.0.0.1 nostrict # or
+> wherever
+> > auth    required        pam_exec.so expose_authtok /usr/bin/ltsp-session
+> > session required        pam_exec.so /usr/bin/ltsp-session
+> > $ pamtester -v testservice root authenticate open_session close_session
+> > pamtester: invoking pam_start(testservice, root, ...)
+> > pamtester: performing operation - authenticate
+> > Password: <anypassword>
+> > pamtester: successfully authenticated
+> > pamtester: performing operation - open_session
+> > pamtester: successfully opened a session
+> > pamtester: performing operation - close_session
+> > pamtester: session has successfully been closed.
+> >
+> > I want though to add the Debian maintainer for libpam-sshauth to more
+> > accurately answer the raised questions, Vagrant Cascadian
+> > <vagrant@debian.org>.
+>
+> Also bringing the primary upstream developer, Scott Balneaves
+> <sbalneav@ltsp.org> into the conversation, who has better understanding
+> of the code.
+>
+> For this issue, I've largely just discovered it and made some small
+> effort to backport the patch.
+>
+>
+> live well,
+>   vagrant
+>
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAl0RcIsACgkQ8yFyWZ2N
-LpeMDAf+Kd18WGs/RF9GNUGd1URmxeksKotHB1QnQ6ir9aoLhOxBPBri8FOVYKiW
-vMlHM0A2ACm7GUUq505w0kTp2vfs8KQvi1gW8R0BL4nvVG8HEWBz3bvvRsAUMiLo
-Az4cKVSgBPsK4OH5cDWu05dnCBYNFyyA30A5x2ybaOXEdeLsC2Xkighc00n8P0HX
-KJXJHhlmtAMiuaPxO/RfyvEBn1xvwYmOwErMihud5KY5hqVukhxjf7q3IoXcjdD5
-OQyMD1gW6Mot2tbdH1mNjrhC32Ka9F+buQ467VuN1bjkauQwQzT/oGEMuvIvdBjR
-wloUJITb9jSpEHQhUDLFg5PeGdF9CQ==
-=+kaJ
------END PGP SIGNATURE-----
-
---Qxx1br4bt0+wmkIi--
+--94eb2c0ba1824cae770531f4cbad--
