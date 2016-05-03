@@ -1,28 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/21/1
-Message-ID: <20161220225935.GH19629@jumper.schlittermann.de>
-Date: Tue, 20 Dec 2016 23:59:35 +0100
-From: Heiko Schlittermann <hs@...littermann.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-9963 Exim private information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/16
+Message-ID: <87k2jb0yc3.fsf@aikidev.net>
+Date: Tue, 03 May 2016 11:51:24 -0700
+From: Vagrant Cascadian <vagrant@...ian.org>
+To: Salvatore Bonaccorso <carnil@...ian.org>, cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com, sbalneav@...p.org
+Subject: Re: CVE Request: libpam-sshauth: local root privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Heiko Schlittermann <hs@...littermann.de> (So 18 Dez 2016 18:59:25 CET):
-…
-> On Dec, 25th we will make the details and the above mentioned releases
-> available to the public.
+On 2016-05-03, Salvatore Bonaccorso wrote:
+> On Sun, May 01, 2016 at 10:02:15AM -0400, cve-assign@...re.org wrote:
+>> > Due to a programming error, libpam-sshauth returned PAM_SUCCESS where
+>> > it should fail with PAM_AUTH_ERR. This was fixed in Debian in the last
+>> > upload to unstable with the attached patch.
+>> > 
+>> > https://bazaar.launchpad.net/~ltsp-upstream/ltsp/libpam-sshauth/revision/114
+>> 
+>> We can assign a CVE ID because it appears that something definitely is
+>> wrong from the Debian perspective, either the code itself or
+>> documentation/lack-of-documentation about how the code was supposed to
+>> be used.
+>> 
+>> Use CVE-2016-4422.
+>
+> Thanks for assigning the CVE identifier.
+>
+>> 
+>> However, we don't completely understand the issue:
+>> 
+>> > Introduced with:
+>> > https://bazaar.launchpad.net/~ltsp-upstream/ltsp/libpam-sshauth/revision/93/src/pam_sshauth.c
+>> 
+>> Here, the commit message for revision 93 was "Succeed for system
+>> accounts."
+>> 
+>> We don't know why introducing the undocumented behavior of "Is it a
+>> system user? Fail" would be better than simply not checking
+>> "pwent->pw_uid < UID_MIN" at all. Also, is there any risk that, with
+>> this libpam-sshauth update, a system's PAM configuration might
+>> suddenly provide no way for root to login via SSH?
+>> 
+>> Is it possible that the original motivation for revision 93 was that
+>> the PAM_SUCCESS from pam_sm_authenticate was supposed to be specially
+>> handled elsewhere in the "pwent->pw_uid < UID_MIN" case?
+>> 
+>> Although not directly applicable to libpam-sshauth, the examples
+>> section of the
+>> http://www.linux-pam.org/Linux-PAM-html/sag-pam_succeed_if.html man
+>> page shows that a set of rules is sometimes designed with UID_MIN
+>> special cases.
+>
+> It might be right that revision 93 cannot be considred the introducing
+> revision for the problem. By following the example as given in the
+> README.
+>
+> https://sources.debian.net/src/libpam-sshauth/0.3.1-1/README/#L75
+>
+> $ cat /etc/pam.d/testservice 
+> auth    required        pam_sshauth.so host=127.0.0.1 nostrict # or wherever
+> auth    required        pam_exec.so expose_authtok /usr/bin/ltsp-session
+> session required        pam_exec.so /usr/bin/ltsp-session
+> $ pamtester -v testservice root authenticate open_session close_session
+> pamtester: invoking pam_start(testservice, root, ...)
+> pamtester: performing operation - authenticate
+> Password: <anypassword>
+> pamtester: successfully authenticated
+> pamtester: performing operation - open_session
+> pamtester: successfully opened a session
+> pamtester: performing operation - close_session
+> pamtester: session has successfully been closed.
+>
+> I want though to add the Debian maintainer for libpam-sshauth to more
+> accurately answer the raised questions, Vagrant Cascadian
+> <vagrant@...ian.org>. 
 
-To be more precise: On Dec, 25th, at 10.00 UTC we'll push the changes to the public
-Git repository git://git.exim.org/exim.git and upload the tar balls into the 
-FTP area ftp://ftp.exim.org/pub/exim/exim4
+Also bringing the primary upstream developer, Scott Balneaves
+<sbalneav@...p.org> into the conversation, who has better understanding
+of the code.
 
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
--- 
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+For this issue, I've largely just discovered it and made some small
+effort to backport the patch.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+
+live well,
+  vagrant
+
+Download attachment "signature.asc" of type "application/pgp-signature" (819 bytes)
