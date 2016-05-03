@@ -1,91 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/01/4
-Message-ID: <CAFkTriJzamt=OwzB6HkD4a2jp3aCvQpNkwsCNoxvXwZKrcHQwQ@mail.gmail.com>
-Date: Sat, 1 Oct 2016 14:22:41 +0800
-From: Marco Grassi <marco.gra@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: imagemagick mogrify global buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/2
+Message-Id: <20160503052928.C84286C0068@smtpvmsrv1.mitre.org>
+Date: Tue,  3 May 2016 01:29:28 -0400 (EDT)
+From: cve-assign@...re.org
+To: j@...fi
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: hostapd/wpa_supplicant - psk configuration parameter update allowing arbitrary data to be written
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-imagemagick identify suffers of a global buffer overflow issue, which I
-reported and has been patched, you can find a reproducer in the github bug
-tracker issue link
+> Identifier: related to CVE-2016-2447
 
-issue: https://github.com/ImageMagick/ImageMagick/issues/280
-patch:
-https://github.com/ImageMagick/ImageMagick/commit/a7bb158b7bedd1449a34432feb3a67c8f1873bfa
+We understand the existence of the CVE-2016-2447 ID in
+http://source.android.com/security/bulletin/2016-05-01.html and that
+the reports credit Imre Rad; however, there are different exploitation
+scenarios that affect different versions from the perspective of
+hostapd/wpa_supplicant, and thus it is probably simplest for most
+people to have separate hostapd/wpa_supplicant CVE IDs.
 
-Thanks,
+> WPA/WPA2 passphrase parameter ... to include control characters
 
-Marco Grassi (@marcograss) of Tencent's Keen Lab
+> The WPS trigger for this requires local user action to authorize the WPS
+> operation in which a new configuration would be received. The attacker
+> would also need to be in radio range of the device or have access to the
+> IP network to act as a WPS External Registrar. Such an attack could
+> result in denial of service by not allowing hostapd or wpa_supplicant to
+> start after they have been stopped.
+> 
+> wpa_supplicant v0.6.7-v2.5 with CONFIG_WPS build option enabled
+> hostapd v0.6.7-v2.5 with CONFIG_WPS build option enabled
 
-➜ utilities git:(master) ✗ ./magick mogrify
-../../ImageMagick_bugs/mogrify_gbof~~
+Use CVE-2016-4476.
 
-==26125==ERROR: AddressSanitizer: global-buffer-overflow on address
-0x0000037a74fc at pc 0x00000077c9ba bp 0x7ffdffbaac70 sp 0x7ffdffbaac68
-READ of size 4 at 0x0000037a74fc thread T0
-#0 0x77c9b9
-(/home/bob/VulnResearch/misc/ImageMagick/utilities/magick+0x77c9b9)
-#1 0x78024f
-(/home/bob/VulnResearch/misc/ImageMagick/utilities/magick+0x78024f)
-#2 0x18bed91
-(/home/bob/VulnResearch/misc/ImageMagick/utilities/magick+0x18bed91)
-#3 0x18c2594
-(/home/bob/VulnResearch/misc/ImageMagick/utilities/magick+0x18c2594)
-#4 0x2ff1c7f
-(/home/bob/VulnResearch/misc/ImageMagick/utilities/magick+0x2ff1c7f)
-#5 0x2f8cead
-(/home/bob/VulnResearch/misc/ImageMagick/utilities/magick+0x2f8cead)
-#6 0x4f5da9
-(/home/bob/VulnResearch/misc/ImageMagick/utilities/magick+0x4f5da9)
-#7 0x7f3717a6b82f (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
-#8 0x422428
-(/home/bob/VulnResearch/misc/ImageMagick/utilities/magick+0x422428)
 
-0x0000037a74fc is located 4 bytes to the left of global variable
-'format_bytes' defined in 'MagickCore/profile.c:1945:5' (0x37a7500) of size
-52
-0x0000037a74fc is located 34 bytes to the right of global variable ''
-defined in 'MagickCore/profile.c:1306:38' (0x37a74c0) of size 26
-'' is ascii string 'ResetImageProfileIterator'
-SUMMARY: AddressSanitizer: global-buffer-overflow
-(/home/bob/VulnResearch/misc/ImageMagick/utilities/magick+0x77c9b9)
-Shadow bytes around the buggy address:
-0x0000806ece40: f9 f9 f9 f9 00 00 f9 f9 f9 f9 f9 f9 02 f9 f9 f9
-0x0000806ece50: f9 f9 f9 f9 00 00 00 03 f9 f9 f9 f9 05 f9 f9 f9
-0x0000806ece60: f9 f9 f9 f9 00 00 00 00 01 f9 f9 f9 f9 f9 f9 f9
-0x0000806ece70: 00 04 f9 f9 f9 f9 f9 f9 00 00 00 00 00 00 06 f9
-0x0000806ece80: f9 f9 f9 f9 00 00 03 f9 f9 f9 f9 f9 00 00 00 00
-=>0x0000806ece90: 00 06 f9 f9 f9 f9 f9 f9 00 00 00 02 f9 f9 f9[f9]
-0x0000806ecea0: 00 00 00 00 00 00 04 f9 f9 f9 f9 f9 05 f9 f9 f9
-0x0000806eceb0: f9 f9 f9 f9 05 f9 f9 f9 f9 f9 f9 f9 00 00 00 00
-0x0000806ecec0: 00 00 00 00 f9 f9 f9 f9 05 f9 f9 f9 f9 f9 f9 f9
-0x0000806eced0: 04 f9 f9 f9 f9 f9 f9 f9 05 f9 f9 f9 f9 f9 f9 f9
-0x0000806ecee0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 07
-Shadow byte legend (one shadow byte represents 8 application bytes):
-Addressable: 00
-Partially addressable: 01 02 03 04 05 06 07
-Heap left redzone: fa
-Heap right redzone: fb
-Freed heap region: fd
-Stack left redzone: f1
-Stack mid redzone: f2
-Stack right redzone: f3
-Stack partial redzone: f4
-Stack after return: f5
-Stack use after scope: f8
-Global redzone: f9
-Global init order: f6
-Poisoned by user: f7
-Container overflow: fc
-Array cookie: ac
-Intra object redzone: bb
-ASan internal: fe
-Left alloca redzone: ca
-Right alloca redzone: cb
-==26125==ABORTING
+> The local configuration update through the control interface SET_NETWORK
+> command could allow privilege escalation for the local user to run code
+> from a locally stored library file
+>
+> ... SET_CRED or SET commands, similar issue ...
+> 
+> wpa_supplicant v0.4.0-v2.5 with control interface enabled
 
+Use CVE-2016-4477.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXKDatAAoJEHb/MwWLVhi2mqQQALY+roiB6xee2Ux/cpcPcVC0
+jOTKd+hEVHKojwM0C0740Og5ruVwQnSF8L4ggrcSIlRw+rLa2zvyCz56HFLaO7VK
+UetNHBJej0XmLJBJBeg/BP+zZXLzym2ptjiQBW3FZorNoTE+baRxRUXGd14MSnOZ
+7f00/E3omjRMm4+QutmiXL/iVARNYwdy2dYeeJfEFEw05l/YFjb/ozMjWIYvepEp
+sxxtaxuSTPnMMlMfbhb/EvpvxnCTw6SZBbz1mA9i48ex3VT2VFmuRBiAZa56pptU
+ghF4LeMhxmj2guc/G14To3VFc9Pj/Xd8qqMtk1E7n3Wg5ESd41ocFN6frav5MNDM
+PoyemIa86Z86d/dxlAd7GLMBDSrKN3Sgk/ENbUNyCIdCsFWIX9FPvipigZliiO9X
+KeMS5zAVqou8Cfq16VqtlsjIRq7cd0JwRWqzI3AvhMCyZz1FBVaQAe002grrs+TS
+60ozbevL9AbtaCYvMIS4zE5kQAvbpPz6MWrwJMcv5NFbWLTB1+iHBkd9AB3N7Q4u
+ba/fY8RB244bmu37+vgSunkamEmRHLoGx8byUTUXtKP0Yc0lFvartdRjQncS2qlZ
+bzYhvTlR8QOJMgE+7Qf6aQhG0kwOMOrWN6IdIUGo8I5tTscZ+wtlICfiaH2/kEcw
+RBngwj4bI80CX0bZT6gV
+=f9JF
+-----END PGP SIGNATURE-----
