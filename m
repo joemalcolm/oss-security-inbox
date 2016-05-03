@@ -1,39 +1,134 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/15/11
-Message-ID: <CAH8yC8k=G2OFp+9v53Lno-UATnXdG563oN3-JkGhxDGoFSuNPw@mail.gmail.com>
-Date: Thu, 15 Sep 2016 16:51:26 -0400
-From: Jeffrey Walton <noloader@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Does a documentation bug elevate to CVE status?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/17
+Message-ID: <CAJC6uyt4Wa4=-_o_89ck-1gOgNSLE9AB7eGEvw4z4T6VRVrqcw@mail.gmail.com>
+Date: Tue, 3 May 2016 14:05:36 -0500
+From: Scott Balneaves <sbalneav@...p.org>
+To: Vagrant Cascadian <vagrant@...ian.org>
+Cc: Salvatore Bonaccorso <carnil@...ian.org>, cve-assign@...re.org,  oss-security@...ts.openwall.com
+Subject: Re: CVE Request: libpam-sshauth: local root privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Hi Everyone,
+>> Here, the commit message for revision 93 was "Succeed for system
+>> accounts."
+>>
+>> We don't know why introducing the undocumented behavior of "Is it a
+>> system user? Fail" would be better than simply not checking
+>> "pwent->pw_uid < UID_MIN" at all. Also, is there any risk that, with
+>> this libpam-sshauth update, a system's PAM configuration might
+>> suddenly provide no way for root to login via SSH?
+>>
+>> Is it possible that the original motivation for revision 93 was that
+>> the PAM_SUCCESS from pam_sm_authenticate was supposed to be specially
+>> handled elsewhere in the "pwent->pw_uid < UID_MIN" case?
 
-Please forgive my ignorance and hair splitting. We were talking with
-the Debian Security Team and FW alerted us to a gap in our
-documentation. The gap is simple: we handle sensitive information and
-did not tell users that they must define -DNDEBUG when using alternate
-build systems, like Autotools or CMake. The project's supported build
-system, [GNU] Make, adds the define.
+The problem was, quite bluntly, an incomplete understanding of PAM
+mechanics on my part.
 
-The higher level concern is assert is a debugging and diagnostic aide
-that eventually raises a SIGABRT. We use them for debugging and
-diagnostics for development. During production, the assert is expected
-to be removed with NDEBUG and a C++ throw() follows.
+The original idea was that it was supposed to be used in conjunction
+with other modules; specifically, pam_unix.  So my *thinking* (if you
+could call it that) was that it would be used as such:
 
-If the assert is _not_ removed, then machinery could engage that
-egresses the sensitive information to the file system (core files and
-the like). On some platforms, like Ubuntu with Apport, Apple with
-CrashReporter, and Windows with Windows Error Reporting, the sensitive
-information is egressed to a third party (multiple; the platform
-provider and the developer).
+auth required pam_unix.so  ...
+auth required pam_sshauth.so ...
 
-We know entities like Apple, Google, Microsoft and  app developers
-receive the information; see for example, the comment at
-https://github.com/weidai11/cryptopp/pull/172#issuecomment-218705068.
+Since (in my mind), accepting the root user would be handled by pam_unix,
+I should simply succeed, since if the root account password was
+incorrectly entered, the pam_unix result would be a FAIL, and thus
+then entire pam auth stack would fail.  Therefore, in my (incorrect)
+thinking,
+I should simply succeed on systems accounts.
 
-So my question is, does a documentation bug elevate to CVE status?
+I didn't, at the time, know about the ability to skip with [success=N], or
+even
+consider that I would use it as the only pam module.
 
-Thanks in advance,
+TL;DR: I didn't know what I was doing, and misunderstood how I should
+handle systems accounts.  Mea culpa, mea maxima culpa.
 
-Jeff
+Cheers,
+Scott
+
+On Tue, May 3, 2016 at 1:51 PM, Vagrant Cascadian <vagrant@...ian.org>
+wrote:
+
+> On 2016-05-03, Salvatore Bonaccorso wrote:
+> > On Sun, May 01, 2016 at 10:02:15AM -0400, cve-assign@...re.org wrote:
+> >> > Due to a programming error, libpam-sshauth returned PAM_SUCCESS where
+> >> > it should fail with PAM_AUTH_ERR. This was fixed in Debian in the last
+> >> > upload to unstable with the attached patch.
+> >> >
+> >> >
+> https://bazaar.launchpad.net/~ltsp-upstream/ltsp/libpam-sshauth/revision/114
+> >>
+> >> We can assign a CVE ID because it appears that something definitely is
+> >> wrong from the Debian perspective, either the code itself or
+> >> documentation/lack-of-documentation about how the code was supposed to
+> >> be used.
+> >>
+> >> Use CVE-2016-4422.
+> >
+> > Thanks for assigning the CVE identifier.
+> >
+> >>
+> >> However, we don't completely understand the issue:
+> >>
+> >> > Introduced with:
+> >> >
+> https://bazaar.launchpad.net/~ltsp-upstream/ltsp/libpam-sshauth/revision/93/src/pam_sshauth.c
+> >>
+> >> Here, the commit message for revision 93 was "Succeed for system
+> >> accounts."
+> >>
+> >> We don't know why introducing the undocumented behavior of "Is it a
+> >> system user? Fail" would be better than simply not checking
+> >> "pwent->pw_uid < UID_MIN" at all. Also, is there any risk that, with
+> >> this libpam-sshauth update, a system's PAM configuration might
+> >> suddenly provide no way for root to login via SSH?
+> >>
+> >> Is it possible that the original motivation for revision 93 was that
+> >> the PAM_SUCCESS from pam_sm_authenticate was supposed to be specially
+> >> handled elsewhere in the "pwent->pw_uid < UID_MIN" case?
+> >>
+> >> Although not directly applicable to libpam-sshauth, the examples
+> >> section of the
+> >> http://www.linux-pam.org/Linux-PAM-html/sag-pam_succeed_if.html man
+> >> page shows that a set of rules is sometimes designed with UID_MIN
+> >> special cases.
+> >
+> > It might be right that revision 93 cannot be considred the introducing
+> > revision for the problem. By following the example as given in the
+> > README.
+> >
+> > https://sources.debian.net/src/libpam-sshauth/0.3.1-1/README/#L75
+> >
+> > $ cat /etc/pam.d/testservice
+> > auth    required        pam_sshauth.so host=127.0.0.1 nostrict # or
+> wherever
+> > auth    required        pam_exec.so expose_authtok /usr/bin/ltsp-session
+> > session required        pam_exec.so /usr/bin/ltsp-session
+> > $ pamtester -v testservice root authenticate open_session close_session
+> > pamtester: invoking pam_start(testservice, root, ...)
+> > pamtester: performing operation - authenticate
+> > Password: <anypassword>
+> > pamtester: successfully authenticated
+> > pamtester: performing operation - open_session
+> > pamtester: successfully opened a session
+> > pamtester: performing operation - close_session
+> > pamtester: session has successfully been closed.
+> >
+> > I want though to add the Debian maintainer for libpam-sshauth to more
+> > accurately answer the raised questions, Vagrant Cascadian
+> > <vagrant@...ian.org>.
+>
+> Also bringing the primary upstream developer, Scott Balneaves
+> <sbalneav@...p.org> into the conversation, who has better understanding
+> of the code.
+>
+> For this issue, I've largely just discovered it and made some small
+> effort to backport the patch.
+>
+>
+> live well,
+>   vagrant
+>
+
