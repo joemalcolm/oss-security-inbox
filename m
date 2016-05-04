@@ -1,58 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/19
-Message-ID: <56E1CB2B.7020109@trylinux.us>
-Date: Thu, 10 Mar 2016 11:29:47 -0800
-From: "Zach W." <kestrel@...linux.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/19
+Message-ID: <20160504132152.GA25258@kroah.com>
+Date: Wed, 4 May 2016 06:21:52 -0700
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+Cc: Taesoo Kim <taesoo@...ech.edu>, Chengyu Song <csong84@...ech.edu>, Insu Yun <insu@...ech.edu>
+Subject: Re: CVE Request: information leak in wilc1000 module of Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-Hello Tim,
+On Wed, May 04, 2016 at 09:12:52AM -0400, Kangjie Lu wrote:
+> Hello,
+> 
+> In the milc1000 module (drivers/staging/wilc1000/wilc_wfi_cfgoperations.c),
+> The 6-bytes stack object “mac” is not initialized but leaked via “nla_put”.
+> This bug may result in leaks of sensitive kernel stack data.
+> 
+> The patch of this bug has been accepted by Linux kernel maintainer and will
+> be
+> merged in the next kernel release (see the message bellow).
+> 
+> Fix info:
+> *http://www.spinics.net/lists/linux-wireless/msg150352.html
+> <http://www.spinics.net/lists/linux-wireless/msg150352.html>*
+> git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/staging.git
+> 
+> Could you please assign a CVE to it?
 
-This is all great info.
+I wouldn't recommend CVEs for drivers in the staging portion of the
+Linux kernel tree.  It's just too easy to find bugs in them, and very
+few distros actually enable them.  Unless you want to prove that CVEs
+don't really mean much :)
 
-Can you please add this to the feedback on the repo?
+thanks,
 
-Zach W.
-On 3/10/2016 11:25 AM, Tim wrote:
->> It's git. You can trivially keep an entire copy the databases trivially. It
->> can be hosted in many places. We'd have to redo the issue tracking, but
->> bugtracking systems are not exactly hard anymore.
-> I see that as only one component of having a distributed database.
-> Who's running the cron job that constantly pulls down updates from the
-> github server?  How do you ensure it's synced up when a legal threat
-> causes the main repo to go black?  
->
->> See above. That's the whole point of the artifacts database. Please reread
->> my original email maybe?
->> I am of course open to feedback, but please actually go to
->> https://github.com/distributedweaknessfiling/ and see what we're doing
->> first before assuming we aren't doing certain things (like making sure the
->> artifacts associated with a security vuln don't disappear).
-> I did look.  Sorry I missed the artifacts.  The git repos and
-> documentation make it far from obvious where that info lies.
->
-> Ok so is "A database of artifacts, files and related files for DWF
-> entries (so that when websites disappear the required content is
-> hopefully still available)" in an email the sum of your documentation
-> on that right now?  Just want to be sure I didn't miss something else.
->
->
-> Do you have ideas on how to capture vendor advisories?  Vendors are
-> almost certainly, in 99% of cases, going to ignore the DWF for a long
-> time.  Perhaps forever.  We're currently lucky to get many of them to
-> even include a CVE # in their own advisory.  How can that information
-> be captured without moderators having to do all the work?  Have you
-> thought about how we can deal with the copyright issues associated
-> with copying vendor content directly into the DWF for archival?
->
-> What I'm thinking is that perhaps there's a way to make vendors *want*
-> to post information.  Also, perhaps there could be a way to license
-> DWF numbering in such a way that vendors implicitly agree that the DWF
-> can re-publish.  Or maybe there's a way to work with the Internet
-> Archive to have third-party URLs archived automatically when they are
-> first posted.  See:
->  https://archive-it.org/learn-more/
->
-> tim
-
+greg k-h
