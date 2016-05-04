@@ -1,24 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/08/15
-Message-ID: <4d58ebad-f2d5-2078-3846-f44bfde65641@mozilla.com>
-Date: Wed, 8 Jun 2016 14:10:18 -0700
-From: Daniel Veditz <dveditz@...illa.com>
-To: product-security@...le.com, secure@...rosoft.com, Michal Zalewski <lcamtuf@...gle.com>, parisa.tabriz@...il.com, oss-security@...ts.openwall.com, psirt@...be.com
-Subject: Excessive resource consumption (DOS) in JPEG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/7
+Message-Id: <20160504053355.82E858BC11B@smtpvmsrv1.mitre.org>
+Date: Wed,  4 May 2016 01:33:55 -0400 (EDT)
+From: cve-assign@...re.org
+To: gustavo.grieco@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: out-of-bounds read parsing an XML in libxml2 using recover mode
 Content-Type: text/plain; charset=utf-8
 
-Mozilla wishes to draw the attention of list participants who process
-JPEG images to the following recently-discovered excessive resource
-consumption issues with the JPEG standard, which affect multiple
-implementations:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-https://docs.google.com/document/d/17exDyGr2txYJ5Ntv4Q8B3MnLSvbcSfs5dje_xuDZPNA/edit
+> We found an out-of-bounds read parsing a specially crafted xml in libxml2
+> if recover mode is used.
 
-We advise you to take appropriate mitigatory measures.
+> xmllint -recover
 
--Dan Veditz
-Mozilla Security Team
+> AddressSanitizer: heap-buffer-overflow ...
+> READ of size 1
 
+> in xmlBufAttrSerializeTxtContent
+> at xmlsave.c:2057
 
+Use CVE-2016-4483 for this buffer over-read issue.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (205 bytes)
+(As far as we can tell, xmlsave.c is not specific to the xmllint program, e.g.,
+
+  libxml2_la_SOURCES = SAX.c entities.c encoding.c error.c parserInternals.c  \
+  ...
+                  xmlwriter.c legacy.c chvalid.c pattern.c xmlsave.c \
+
+in the Makefile.in file.)
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXKYjwAAoJEHb/MwWLVhi2XyQP/0HHmJWg4qK6CZ3MP51QXnpN
+moUDMdEST1oGlOSjfQcZ0i/i3yesk0qqfG2V1E+uH0Yu5FS78ud2mc+5/SZnjFzj
+RO71qkIUN8vrXSJRJ2CZrySAa6Z3VM5P3NZQHq1pZ/BF2fzwgFATwLb+476+BDOu
+tAIFMhWVH4TQ3YtG5dGrgDjCPK2LJCFockvvtjsYElfZQkTDKapk8/JjbZxmMcFY
+QPvM4YqCXrJ6i+LCO+LERFW51xZso6o32HqeeizfuT5Q+XTfx1Kd+t/VasVcGp77
+k8AqhNJSNFnDFUCmN+fQN093q7GQQG80spKwYSOXfP9ZGb7g/jP5IRv1kbmtdDof
+eKKA2gQr7XMiGlqMxEUPFkVXYcX37oH1BMcjS7erw6+zE+EI6seW+6gWxK8Ke/Hg
+ycklozYz9ZsvrqS2cfR5kdG5EmNvgatYQ3pivZmjfp3V4W+dwXTxeNh4oiEF3YJv
+mhgdi3WqeH0z8ibyU75GVeZh3WHbcB4yNlyqeNOOcosvy6O2DNlA4LDqK7ouriGF
+AB0t+sy289WdDKHIPRVwTMlZkNaqtiuR5MUVKeYHH6y+qiqwdv4y69y5opBd+caP
+2rAYNJx8e/lbBF6EvXVfQZdgzfLP644tv7+rsJwi5K7J0Nbvn6rkI6/nQIDRKNKe
+sNb0SV4CM2Tym0y40PGq
+=meeO
+-----END PGP SIGNATURE-----
