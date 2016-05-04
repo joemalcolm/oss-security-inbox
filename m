@@ -1,42 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/04/1
-Message-ID: <20161204151827.w6cvq2enbqdg4ido@eldamar.local>
-Date: Sun, 4 Dec 2016 16:18:27 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/24
+Message-ID: <572A42A7.90407@openwall.com>
+Date: Wed, 4 May 2016 21:42:47 +0300
+From: Alexander Cherepanov <ch3root@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: mprpic@...hat.com, cve-assign@...re.org, James Cowgill <jcowgill@...ian.org>
-Subject: Re: Re: RCE in Zabbix 2.2 to 3.0.3
+Subject: Re: broken RSA keys
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On 05/04/2016 03:42 PM, Solar Designer wrote:
+> 0x115CFF61CFECFF61BE9, where we see three 32-bit limbs satisfying:
+>
+> limb[1] = limb[0] + limb[2]
 
-On Tue, Nov 01, 2016 at 02:17:05PM -0400, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
-> 
-> > https://www.exploit-db.com/exploits/39937/
-> > Zabbix 2.2 < 3.0.3 - API JSON-RPC Remote Code Execution
-> 
-> > /api_jsonrpc.php
-> 
-> > "method": "script.update",
-> 
-> > "command": ""+cmd+""
-> 
-> Use CVE-2016-9140.
+This just means that the number came from two-limb number with limbs 
+limb_src[1] = limb[1] - limb[0] and limb_src[0] = limb[0] by multiplying 
+it by 2**32 + 1. HTH.
 
-This has later on been reported upstream, as
-https://support.zabbix.com/browse/ZBX-11483 . Upstream believes that
-this is not a vulnerability, but a superadmin able to use a feature as
-intended. Cf. 
-
-https://support.zabbix.com/browse/ZBX-11483?focusedCommentId=202709&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-202709
-and
-https://support.zabbix.com/browse/ZBX-11483?focusedCommentId=202789&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-202789
-
-As such this might be actually be REJECTed. Martin and CVE assigning
-team from MITRE, does this look correct? Should the CVE be rejected
-instead?
-
-Regards,
-Salvatore
+-- 
+Alexander Cherepanov
