@@ -1,31 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/05/5
-Message-ID: <20160105101345.GA13653@lorien.valinor.li>
-Date: Tue, 5 Jan 2016 11:13:46 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: netfilter-persistent: (local) information leak due to world-readable rules files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/25
+Message-ID: <572A4BF8.9010303@openwall.com>
+Date: Wed, 4 May 2016 22:22:32 +0300
+From: Alexander Cherepanov <ch3root@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: broken RSA keys
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 05/04/2016 09:01 PM, Solar Designer wrote:
+> On Wed, May 04, 2016 at 08:28:03PM +0300, Solar Designer wrote:
+>> BTW, had I not realized the above, I would now come up with an even more
+>> complex conspiracy theory about 149784613473514443594783892995, which is
+>> 0x1E3FAEDA6A4F093A7C0F5A603, so:
+>>
+>> limb[0] = 0xC0F5A603
+>> limb[1] = 0xA4F093A7
+>> limb[2] = 0xE3FAEDA6
+>> limb[3] = 1
+>>
+>> which satisfies:
+>>
+>> limb[1] = limb[0] + limb[2] + 2
+>>
+>> No idea why it's "+ 2" here
+>
+> Actually, it's "- 2", not "+ 2".  Sorry.  Not that it matters, but I was
+> uncomfortable leaving the error uncorrected in case someone wants to try
+> and figure out why exactly this artifact manifests itself like it does.
+>
+> There's probably an explanation of why the algorithm is likely to hit
+> numbers of this form, but this is beside the point for software bugs,
+> which is what I want us to discuss further in this thread.
 
-iptables-persistent (in Debian) is a loader for netfilter configuration
-using a plugin-based architecture.
+Quoted relationship between limbs holds only mod 2**32 and written 
+without wrapping looks like this:
 
-iptables-persistent is vulnerable to a (local) information leak due to
-world-readable rules files. It was reported in Debian in
+limb[1] = limb[0] + limb[2] - 2 - 2**32
 
-https://bugs.debian.org/764645
+It also means that the original number is a multiple of 2**32 + 1. More 
+precisely, it's a product of 2**32 + 1 and a number with limbs (1, 
+limb[2] - 2, limb[0]).
 
-And fixed via
-
-https://anonscm.debian.org/cgit/collab-maint/iptables-persistent.git/commit/?id=37905034f07e94c4298a1762b39b7bbd4063c0df
-
-Could you assign a CVE for this issue?
-
-p.s.: There is a fork of iptables-persistent. But I have not checked
-if the fork https://github.com/zertrin/iptables-persistent is as well
-affected by this issue).
-
-Regards,
-Salvatore
+-- 
+Alexander Cherepanov
