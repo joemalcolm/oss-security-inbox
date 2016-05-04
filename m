@@ -1,33 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/9
-Message-ID: <20160314063228.GA12829@steve.org.uk>
-Date: Mon, 14 Mar 2016 06:32:28 +0000
-From: Steve Kemp <steve@...ve.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/16
+Message-ID: <7830cad706e7061be3fe25de4f5116d3@aplu.fr>
+Date: Wed, 04 May 2016 14:23:39 +0200
+From: Aymeric <mulx@...u.fr>
 To: oss-security@...ts.openwall.com
-Subject: CVE-Request - GNU Awk.
+Subject: Re: Dotclear 2.9.1 XSS vulnerability by SVG
 Content-Type: text/plain; charset=utf-8
 
+On 2016-05-04 08:46, limingxing wrote:
+> Hello,
+> We find an vulnerability about Dotclear 2.9.1 XSS vulnerability by SVG
+> [zip]
 
-  I reported two DoS bugs against GNU Awk to the debian
- bug tracker recently, both of which are denial of service
- attacks causing NULL-pointer deferences.
+Hello,
 
-  It would be useful to have a CVE identifiers assigned.
+FYI, I forwarded your email to their dev mailing list.
+Please, if you found any other vulnerability on dotclear, at least add 
+them to cc security(@)dotclear.net (http://dev.dotclear.org/2.0/).
 
-  The two issues can be demonstrated like so :
-
-    echo | gawk  '{ print( @olower( "steve" ) ) }'
-
-    echo | gawk 'for (i = ) in foo bar baz'
-
-  There are potential patches and further diagnostics on
- the bug reports themselves which are respectively:
-
-    https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=816271
-
-    https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=816277
-
-Steve
--- 
-# Git Based DNS Hosting
-https://www.dns-api.com
+Bye
