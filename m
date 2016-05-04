@@ -1,61 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/09/11
-Message-Id: <20160909174108.D61853AE004@smtpvbsrv1.mitre.org>
-Date: Fri,  9 Sep 2016 13:41:08 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: ettercap: etterlog: multiple crashes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/20
+Message-ID: <20160504161626.GA18912@openwall.com>
+Date: Wed, 4 May 2016 19:16:26 +0300
+From: Solar Designer <solar@...nwall.com>
+To: Adrien Nader <adrien@...k.org>
+Cc: oss-security@...ts.openwall.com, David Moreno Montero <dmoreno@...albits.com>, Zachary Grafton <zachary.grafton@...il.com>, Remi Birot-Delrue <asgeir@...e.fr>
+Subject: Re: libonion 0.8 contains security fixes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> Basically, the tool should read what you capture with YOUR ettercap, but since
-> ettercap is one of the valid tools for MITM, there are dozens of blog post
-> about how to use it, so there could be posts where malicious users make
-> available crafted datafile to show something.
+On Wed, May 04, 2016 at 02:23:36PM +0200, Adrien Nader wrote:
+> I've also found myself calling shutdown() simply so that I could
+> receive an error event and could then close everything, albeit in a
+> slightly different context.
 > 
-> Details:
-> https://blogs.gentoo.org/ago/2016/09/06/ettercap-etterlog-multiple-three-heap-based-buffer-overflow-el_profiles-c/
-> 
-> https://blogs.gentoo.org/ago/2016/09/09/ettercap-etterlog-null-pointer-dereference-in-fingerprint_search-ec_fingerprint-c/
+> I'm wondering if this is a common practice. I hadn't read about it I
+> think and I'm once again wondering how many people do this.
 
-These are crashes of a command-line program, not a program that is
-supposed to continue running to handle a series of inputs. No write
-access is reported. Also, running etterlog on an arbitrary
-attacker-modified .ecp or .eci file probably would occur very rarely.
+I don't know if it's common or not.
 
-The "(three) heap-based buffer overflow" report is exclusively about
-"AddressSanitizer: heap-buffer-overflow ... READ." It's apparently
-about an attacker who fuzzes a file so that an IP address-length field
-is a large number rather than, for example, 4 or 32. A memcmp reads
-out-of-bounds data but the flow of control isn't altered. Also, this
-happens in the etterlog source code (utils/etterlog/el_profiles.c),
-not in library code that might be used in other applications.
+I also don't know if it's common and intended or is a hack to use
+EPOLLONESHOT for race-free multi-threaded use of a shared epoll
+instance.  In other words, I don't know if it was meant that we rely on
+the one-shot property working 100% reliably as much as we would rely
+e.g. on a futex (which we would have needed in absence of this feature).
+If anyone in here knows the answer, please post (and yes, this is
+security-relevant).  I suspect some answers could be obtained on LKML.
 
-We feel that these crashes are just an inconvenience, not a security
-risk, and there are no CVE IDs at this time.
+As it happens, these two tricks are very powerful, especially combined.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+> Also, does
+> anyone know of more "usage tricks" than what is in man 7 epoll?
 
-iQIcBAEBCAAGBQJX0vOmAAoJEHb/MwWLVhi2ImQP/iRxxu9CbxT/TCTi1OK83Zzl
-2gEwUhdrwMgYif9A5baHjQNcVgj/L6djdku6//6KL1WczXodGTbh+SD+bgZM4Yqm
-2zR9+4jGn11PerC/7/Zs0arZSPBYwgo30gFvo4/UA1AOb+Z8dWJYl0vLGPfaS1Pa
-tlW2+ZkCwjMmpeR70+u915X+r2vmi/ELtnvIdDD+51xOS2St+ts4yIOOzEP8ju0A
-wghxGl+9m1Mzj8Ky5A6l2TPEuNrVGDP2GjIdbpc26ne6Kt8Xe/Sm1nYaWAogZKAv
-dfCvK84ReBaX0xBxsJMYk32+XP57xOWEyg1CKYH36ZGLszTwru7MuiUtv1L4aHZ2
-dqusZYwHdYSjB8cewZLf+QlbnqgTvt24g+Iw/F2J/fCi3QuwqWOABTvK4odWXMwS
-r7gL5DRMMWMs8zZkhDT1+C4hygl3cCIa8iGHUzPEjT3VZl7K9rlc1pGGEM23+GmR
-7ac74iOy3FYJFEev4Ko9IDaJqv6nxOQLVuuEaSFH27WAJPQ54e3xkQ39m6wz2fFT
-/hqEEONrzyyxcuErHyDzj+qQM1P/iBTmwMVsUVav9tcR3jKCWJi/bd4KsMeX0bKb
-YQe7ZkjTYHVR5CMNsh0aPJwjWVAZXOHdE2NcpBpagheV0+4P6hcwx2NKPJwgLmu1
-B1w0CaBwAR1ftKSN4Npm
-=fytj
------END PGP SIGNATURE-----
+Below is one we've been considering as an alternative fix for the races
+in onion, and which I guess David might implement in master branch now.
+(It's a more invasive change, so for the 0.8 release I advocated that we
+go with the shutdown() workaround that I described.)  Here's an excerpt
+from my posting to onion-dev on March 13:
+
+---
+Looks like the epoll interface is lacking in that it only has a timeout
+for the epoll_wait() call, but not per-fd timeouts.  If it could raise
+per-fd events for per-fd timeouts, then the same one-shot mechanism
+would prevent the race here.
+
+... actually, it almost can:
+
+http://stackoverflow.com/questions/10772208/epoll-and-timeouts#18454825
+
+"Try pairing each socket with a timer fd object (timerfd_create). For
+each socket in your application, create a timer that's initially set to
+expire after 500ms, and add the timer to the epoll object (same as with
+a socket - via epoll_ctl and EPOLL_CTL_ADD). Then, whenever data arrives on
+a socket, reset that socket's associated timer back to a 500ms timeout.
+
+If a timer expires (because a socket has been inactive for 500ms) then
+the timer will become "read ready" in the epoll object and cause any
+thread waiting on epoll_wait to wake up. That thread may then handle the
+timeout for the timer's associated socket."
+
+This should be much more scalable than your current linear scanning of
+the list of slots - that approach needed to be reworked anyway.
+---
+
+This was further discussed between David and me on GitHub:
+
+---
+> I think we can add a timerfd slot that wakes up on next timeout, do the
+> closing of fds if necessary, and loop over all the slots to check the
+> new expiration time. This expiration time has to be reset as well on new
+> slots and slot function dispatching, as user could set a new timeout
+> sooner than the current timeout. timerfd allows to reset a running
+> timer.
+
+This sounds good to me.  I am also considering using timerfd's if/when I
+eventually replace my use of onion with own code.
+
+Waking up on each exact timeout may be more costly than waking up once
+per second.  So you'll want to group nearby timeouts, with some
+reasonable granularity.
+---
+
+While I am posting the above, let's please keep further discussion on
+oss-security, if any, security-focused.  I felt the above was (barely)
+on topic because it's about races, and those are security hazards.
+
+epoll usage tricks in general, beyond security relevant ones, are
+off-topic for oss-security.  Adrien, I am not saying that your message
+was off-topic for oss-security; rather, I am saying that just like this
+reply of mine, yours was also barely on topic (and that's fine), so
+let's not stray farther into arbitrary epoll usage tricks or whatever.
+
+Alexander
