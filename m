@@ -1,98 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/13
-Message-Id: <5FE87C7D-93F9-45CE-91F4-4C29BEB1A8E2@gmail.com>
-Date: Thu, 28 Jul 2016 19:50:14 +0100
-From: Ibrahim el-sayed <i.elsayed92@...il.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE-Request Buffer overflow ImageMagick
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/6
+Message-Id: <20160504052840.69F508BC11E@smtpvmsrv1.mitre.org>
+Date: Wed,  4 May 2016 01:28:40 -0400 (EDT)
+From: cve-assign@...re.org
+To: kangjielu@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, taesoo@...ech.edu, csong84@...ech.edu, insu@...ech.edu
+Subject: Re: CVE Request: information leak in devio of Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-Hi CVE Assignemnt Team,
-I would like to request a CVE for a buffer overflow in ImageMagick that was fixed in the following commit:
-https://github.com/ImageMagick/ImageMagick/commit/dd84447b63a71fa8c3f47071b09454efc667767b <https://github.com/ImageMagick/ImageMagick/commit/dd84447b63a71fa8c3f47071b09454efc667767b>
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Details of the vulnerability in the forwarded message:
+> In the USB module (drivers/usb/core/devio.c), The stack object "ci" has a
+> total
+> size of 8 bytes. Its last 3 bytes are padding bytes which are not
+> initialized and
+> leaked to userland
+> 
+> http://www.spinics.net/lists/linux-usb/msg140243.html
+> 
+> https://git.kernel.org/cgit/linux/kernel/git/next/linux-next.git/log/drivers/usb/core/devio.c
+> (not yet there; probably soon)
 
+Use CVE-2016-4482.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-> Begin forwarded message:
-> 
-> From: Ibrahim el-sayed <i.elsayed92@...il.com>
-> Subject: Re: Read out-of-bound could lead to memory leak
-> Date: June 27, 2016 at 3:44:40 AM GMT+1
-> To: security@...gemagick.org
-> 
-> PS:
-> to run the PoC try:
-> magick convert -clip PoC1  <<<-- This will run the first PoC
-> 
-> 
-> On Mon, Jun 27, 2016 at 3:09 AM, Ibrahim el-sayed <i.elsayed92@...il.com <mailto:i.elsayed92@...il.com>> wrote:
-> Hi Imagemagick security team,
-> The vulnerability gets triggered at
-> https://github.com/ImageMagick/ImageMagick/blob/master/MagickCore/property.c#L697 <https://github.com/ImageMagick/ImageMagick/blob/master/MagickCore/property.c#L697>
->  (void) CopyMagickMemory(attribute,(char *) info,(size_t) count);
-> The info ptr points at the end of the PoC image. The out-of-bound read occurs when info+count is > image_size. The attribute ptr then points to data that is read from the memory.
-> 
-> backtrace
-> #9  0x000000000043a5f8 in CopyMagickMemory (destination=0x7f760dd5c010, source=0x239b3b8, size=3878239) at MagickCore/memory.c:696
-> #10 0x000000000046f0ff in Get8BIMProperty (image=<optimized out>, key=<optimized out>, exception=<optimized out>) at MagickCore/property.c:698
-> #11 GetImageProperty (image=0x238bf00, property=0x2361c50 "8BIM:1999,2998:#1", exception=0x23580a0) at MagickCore/property.c:2201
-> #12 0x0000000000416ceb in ClipImagePath (image=0x238bf00, pathname=0xbb5a89 "#1", inside=<optimized out>, exception=0x23580a0) at MagickCore/image.c:723
-> #13 0x0000000000416b66 in ClipImage (image=0x7f760dd5c010, exception=0x765abe <XDisplayImage+11038>) at MagickCore/image.c:695
-> #14 0x0000000000a40f5d in MogrifyImage (image_info=0x235e4a0, argc=<optimized out>, argv=0x2361858, image=0x7ffcf1b60098, exception=0x23580a0) at MagickWand/mogrify.c:1084
-> #15 0x0000000000aae42e in MogrifyImages (image_info=0x235e4a0, post=MagickTrue, argc=2, argv=0x2361858, images=0x7ffcf1b60098, exception=0x23580a0) at MagickWand/mogrify.c:8908
-> 
-> Attached two PoC files:
-> PoC1: reads 0xff5f extra bytes from the memory
-> PoC2: reads 0xb0ff5f bytes of the memory (it is likely that this PoC causes a crash because the memory segment isn't mapped or doesn't have the correct permissions)
-> 
-> The read out-of-bound could lead to memory leak because the data read is then written into the output image using SetImageProperty which is called after the read
-> 
-> The PoC has been tested on
-> version: ImageMagick 7.0.2-1 Q16 x86_64 2016-06-19 http://www.imagemagick.org <http://www.imagemagick.org/>
-> 
-> --
-> Regards
-> Ibrahim M. El-Sayed
-> Security Engineer
-> Website: https://www.ibrahim-elsayed.com <https://www.ibrahim-elsayed.com/>
-> @ibrahim_mosaad
-> 
-> 
-> 
-> --
-> Regards
-> Ibrahim M. El-Sayed
-> Security Engineer
-> Website: https://www.ibrahim-elsayed.com <https://www.ibrahim-elsayed.com/>
-> @ibrahim_mosaad
-
-
-
-
-
-
-> Begin forwarded message:
-> 
-> From: vir.prudens.non.contra.ventum.mingit@...gemagick.org
-> Subject: Re: Read out-of-bound could lead to memory leak
-> Date: July 25, 2016 at 1:56:01 AM GMT+1
-> To: vir.prudens.non.contra.ventum.mingit@...gemagick.org, i.elsayed92@...il.com
-> 
-> Ibrahim el-sayed <i.elsayed92@...il.com> wrote:
-> 
->> Are you sure you run it the following way:
->> magick convert -clip PoC1 /dev/null
-> 
-> Thanks for the problem report.  We can reproduce it and will have a patch to fix it in GIT master branch @ https://github.com/ImageMagick/ImageMagick later today.  The patch will be available in the beta releases of ImageMagick @ http://www.imagemagick.org/download/beta/ by sometime tomorrow.
-> 
-> The ImageMagick Development Team
-
-
-
-Content of type "text/html" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
+iQIcBAEBCAAGBQJXKYeVAAoJEHb/MwWLVhi2HVgP/1PZ63KIkqDmy/qRT0FjYG13
+L5SvXGvwD/uo9GEf5Ml27JTEnJ3GAGno0Rvo8x44739X4KJijhoJYiqhxg2gmakM
+aXtuCjLVry5RBak+VZbclmKIIei+WNuPIhzBJ9PGIP0hxmMJtXgGxq41HZGJbQYj
+RzrQlJcmu7TixXCpPwxPFP+APMQaiB7i8M4x+lNfBSDs42eeqBlJJdCP7OCk3Bw/
+ROHI9+UaUko5tbvL/sFQoiA/53BKW2/iGT+X9belfRc93guZibKmlBxtgw3TKnKH
+MTSGnHiPmkGGcQU8R3QEiBdFvUuPeJvlkSjP3sLW4oYm+MC+HcJX2u90uYzzb0xJ
+EW/9jq4gt9X8UNRRGZEAaJTw/lSYocDWB7pF7DVEu1Gxuv7pQlUNtwvu3PAFRJfF
+ulVqU8Cp9S/rOEoAIxSoaUbH8mHSVFwo9sASn1KIeMZzHkjZs2wvLu8MMW2g8R2j
+Oj+lgNmGAqw4AUXY9GlqG0Z6CUMxZRWUoGyeLKceDK2dlQv390YgZOoeWvbONU1N
+DC6qV9F/i+EYwWgS8LN1m6Kly0nPRsH0COPfZA8+APoVvtetBMMgDCG93sGbE12j
+SEI/tu19i118D3Nq1kQWhXQh1xpsgKy+X9gMxWJAbHuzdYX5Jwn0wJqctEXjNVaz
+Plv7PbXJ7DAoP8bNb/Ry
+=3AUJ
+-----END PGP SIGNATURE-----
