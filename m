@@ -1,44 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/13/2
-Message-ID: <56BED1B0.30900@eng.utah.edu>
-Date: Fri, 12 Feb 2016 23:48:16 -0700
-From: Scotty Bauer <sbauer@....utah.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/28
+Message-ID: <572A871B.5070303@openwall.com>
+Date: Thu, 5 May 2016 02:34:51 +0300
+From: Alexander Cherepanov <ch3root@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software
+Subject: Re: broken RSA keys
 Content-Type: text/plain; charset=utf-8
 
-I assume most severe linux bugs are going through the distros list which does exactly as you describe in your mail...
+On 2016-05-04 15:42, Solar Designer wrote:
+> Now to the point: some of the keys do look to me like they're a result
+> of software bugs in key generation.  Specifically, as it was noticed and
+> noted by many before, Phuctor's list of broken keys includes many with
+> non-prime e of the form intended_e*(2^32+1) - that is, with the 32-bit
+> value duplicated across 64 bits.  (I wrote it that way to show that all
+> such e's are non-prime.)
 
-http://oss-security.openwall.org/wiki/mailing-lists/distros
+Indeed. From 225 keys listed at http://phuctor.nosuchlabs.com/phuctored, 
+152 ones have modulus and exponent divisible by 2**32+1:
 
-On 02/12/2016 10:52 PM, halfdog wrote:
-> Hello List,
-> 
-> As just written in a mail to another list, this might also be
-> interesting for discussion here.:
-> 
-> As it would be the most natural thing for e.g. NSA, China, ... (those
-> with capabilities to monitor large amount of network traffic) to just
-> record all mails from large-scale Linux distribution collaboration and
-> issue tracking systems containing the keyword "security", and as this is
-> very cheap way to get to near-zero day material, I would assume, that
-> this is already done. This is like serving them zero days on a golden
-> plate.
-> 
-> Hence really critical security material perhaps should not go to such
-> platforms, e.g. Ubuntu Launchpad, or the platform should be modified to
-> send security issues only in encrypted mails without talkative title,
-> members without mail public key registered should get only message "Bug
-> [Number]: Info changed" including the HTTPS link to the issue in the
-> platform.
-> 
-> What do you think?
-> 
-> Does someone have a link to anyone having access to the selector lists
-> leaked by Snowden to ask them, which of the distros are already in scope
-> or otherwise to discard this e-mail as pure paranoia?
-> 
-> Kind regards,
-> hd
-> 
-> 
+$ curl -s http://phuctor.nosuchlabs.com/phuctored |
+ >   perl -Mbigint -ln0e 'print join " ", map { $_ % (2**32 + 1) } ($1, 
+$2) while m{RSA Modulus .N.:.*?<td>(\d+)<.*?<td>(\d+)<}sg' |
+ >   grep -c '^0 0$'
+152
+
+Modulus and exponent are divisible by 2**32+1 or not simultaneously.
+
+-- 
+Alexander Cherepanov
