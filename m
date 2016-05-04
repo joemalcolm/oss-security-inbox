@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/24/4
-Message-ID: <20160124153743.GA19655@eldamar.local>
-Date: Sun, 24 Jan 2016 16:37:43 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: tiff: potential out-of-bound write in NeXTDecode()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/1
+Message-ID: <20160504010039.GB2319@hunt>
+Date: Tue, 3 May 2016 18:00:39 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Brandon Dees <brandon@...tta.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Wed, May 04, 2016 at 12:05:16AM +0000, Brandon Dees wrote:
+> is it appropriate to ask if the same issues are present in GraphicsMagick
+> as well?
 
-Could you assign a CVE for the following issue in tiff:
+I haven't investigated deeply but it seems very plausible to me:
+Here's the delegates.xml work-alike:
+https://sourceforge.net/p/graphicsmagick/code/ci/default/tree/config/delegates.mgk.in
 
-http://bugzilla.maptools.org/show_bug.cgi?id=2508
+This appears to be executed via:
+https://sourceforge.net/p/graphicsmagick/code/ci/default/tree/magick/delegate.c
+which tries to escape arguments using UnixShellTextEscape(). This function
+appears to replace \`"$ chars with backslash-escaped versions. I'm not
+sure this is a safe mechanism either.
 
-> 2015-12-27  Even Rouault <even.rouault at spatialys.com>
-> 
->         * libtiff/tif_next.c: fix potential out-of-bound write in NeXTDecode()
->         triggered by http://lcamtuf.coredump.cx/afl/vulns/libtiff5.tif
->         (bugzilla #2508)
+Thanks
 
-Fixing commit:
-
-https://github.com/vadz/libtiff/commit/b18012dae552f85dcc5c57d3bf4e997a15b1cc1c
-
-Regards,
-Salvatore
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
