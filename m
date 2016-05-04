@@ -1,46 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/11/12
-Message-ID: <20160311172515.5af76630@pc1>
-Date: Fri, 11 Mar 2016 17:25:15 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Several out of bounds reads in ProFTPD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/3
+Message-ID: <alpine.GSO.2.20.1605032020420.23612@freddy.simplesystems.org>
+Date: Tue, 3 May 2016 20:42:30 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: oss-security@...ts.openwall.com
+Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
 Content-Type: text/plain; charset=utf-8
 
-https://blog.fuzzing-project.org/40-Several-out-of-bounds-reads-in-ProFTPD.html
+On Tue, 3 May 2016, Seth Arnold wrote:
 
-The latest releases of ProFTPD 1.3.5a and 1.3.6rc2 fix several out of
-bounds read issues. I discovered these issues by running the test suite
-with Address Sanitizer enabled.
+> On Wed, May 04, 2016 at 12:05:16AM +0000, Brandon Dees wrote:
+>> is it appropriate to ask if the same issues are present in GraphicsMagick
+>> as well?
+>
+> I haven't investigated deeply but it seems very plausible to me:
+> Here's the delegates.xml work-alike:
+> https://sourceforge.net/p/graphicsmagick/code/ci/default/tree/config/delegates.mgk.in
+>
+> This appears to be executed via:
+> https://sourceforge.net/p/graphicsmagick/code/ci/default/tree/magick/delegate.c
+> which tries to escape arguments using UnixShellTextEscape(). This function
+> appears to replace \`"$ chars with backslash-escaped versions. I'm not
+> sure this is a safe mechanism either.
 
-An invalid off by one read can happen in the function pr_fs_dircat().
-This affects both 1.3.5a and 1.3.6rc1 and earlier.
-http://bugs.proftpd.org/show_bug.cgi?id=4194
-Upstream bug report
-https://github.com/proftpd/proftpd/commit/f99ef850a05f46c56be8deae97e59efa50575e69
-Git commit / fix
+Please provide me with a working exploit.
 
-An invalid off by one read can happen in the string handling function
-pr_ascii_ftp_to_crlf(). This code is not present in the stable 1.3.5
-release series and only affects 1.3.6 release candidates before rc2.
-http://bugs.proftpd.org/show_bug.cgi?id=4195
-Upstream bug report
-https://github.com/proftpd/proftpd/pull/145
-Git commit / fix
+Be aware that this quoting method is only used for the few 
+delegates.mgk rules which require shell-like syntax to work. 
+Otherwise the external program is run using execvp() without a shell.
 
-A missing null termination of a string causes an out of bounds memory
-read in a test. This does not affect the ProFTPD code itself, it's just
-an issue in the test suite.
-http://bugs.proftpd.org/show_bug.cgi?id=4193
-Upstream bug report
-https://github.com/proftpd/proftpd/commit/d9f9d469ce1da09c7935f509797d488fa2d08697
-Git commit / fix
+I am aware that the handling for Microsoft Windows is not quite secure 
+and in fact Windows concatentates all the spawnvp() vector arguments 
+into one long string and each program parses command line arguments 
+using its own algorithm without a secure quoting mechanism so 
+command-line programs can never possibly be secured.
 
+In order to achieve the best security with GraphicsMagick (with some 
+possible loss of function due to missing file formats), please define 
+this environment variable:
+
+   MAGICK_CODER_STABILITY=PRIMARY
+
+Use 'gm convert -list formats' and check the second column of output 
+to see what formats are classified as Primary, Stable, and Unstable. 
+Primary formats are considered common and trustworthy.
+
+There is also a way that C/C++ programs using the libraries can bless 
+the files which will be accessed before the access occurs (not yet 
+controlled by a configuration file).
+
+Thanks,
+
+Bob
 -- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
