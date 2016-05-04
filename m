@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2461" "Friday" "20" "January" "2017" "00:19:34" "+0800" "idl3r" "idler1984@gmail.com" "<0b4f01d2726f$d3b693e0$7b23bba0$@gmail.com>" "73" "RE: [oss-security] CVE Request - Samsung Exynos GPU driver OOB read" nil nil nil "1" "2017011916:19:34" "[oss-security] CVE Request - Samsung Exynos GPU driver OOB read" (number mark "U       idler1984@gm Jan 20   73/2461  " thread-indent "\"RE: [oss-security] CVE Request - Samsung Exynos GPU driver OOB read\"\n") "<20170119143700.GA5132@kroah.com>" ("<CACCOJE3M1+PbtZgpvLXQjxMkKFirwu0=506OdZZuBUrTK5VqpA@mail.gmail.com>" "<CACCOJE3K5aEk_frgRr7_pt3T635=9OgnVagn+jOj-v1YetE74A@mail.gmail.com>" "<20170119143700.GA5132@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2492" "Wednesday" "4" "May" "2016" "12:08:35" "+0200" "Florian Weimer" "fweimer@redhat.com" "<5729CA23.7050707@redhat.com>" "64" "[oss-security] A few Hesiod issues" "^Date:" nil nil "5" "2016050410:08:35" "[oss-security] A few Hesiod issues" (number mark "        fweimer@redh May  4   64/2492  " thread-indent "\"[oss-security] A few Hesiod issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 10167 invoked by uid 550); 20 Jan 2017 04:12:36 -0000
+Received: (qmail 3191 invoked by uid 550); 4 May 2016 10:08:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,122 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21712 invoked from network); 19 Jan 2017 16:19:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:references:in-reply-to:subject:date:message-id
-         :mime-version:content-transfer-encoding:thread-index
-         :content-language;
-        bh=lfSBOyJAD9WRDhywladrJldZR32iNA4/8Yj34uhMUDs=;
-        b=Lj4q/0Nth/u33u7W6RrcjtTPWE2BT2dXiCt4L995iinFieC9uDnWD3YeRV9Z8/q0x8
-         Gdee7megy4s2oL6G7u+GYfeHkexbdR6iC4P5r90Yek1TLDXw2cvUH7s6vJEGaVWxRoi+
-         8P/lY2o2TzsEe9HldsFowWsNtsV230hbuXQGNRgVmidUgOPIsH5epvWXu/EHuAQTe8cj
-         wHIijNgycmMinhpK0E3Ua8UBzJiahoSU3QX3esnHleOPr78pDtavSpA01zfV7G4xYsbD
-         p86XRjFA2QRF47G8z1QPsLRdhUxkpCVICPgbOdcXwQG9D+OyFuAx33n/Z6teubbcAIIz
-         QxxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
-         :message-id:mime-version:content-transfer-encoding:thread-index
-         :content-language;
-        bh=lfSBOyJAD9WRDhywladrJldZR32iNA4/8Yj34uhMUDs=;
-        b=lsX+ql/6zWenNx9mCYGXGTtY6s+JwKU/VcCDYzdlPfI+YJL2tGQv8ELd0c73Fy/vml
-         VVEUdHkIIW4WtPcTg7Jr9nM8l5JVclBFqwJBGAypv1wlHew5OS/Lpo0k1Swqbdg0JAhw
-         a8zmPLV7KodgxUuAc5yYoVko8LOioYj3cnfIgfohsvecUXhdl9LQpWaxcQ+7GnbyEQkr
-         M+b+v3DkdjEexqhKE3WtdqiB5lU4bKgn6d0HeOXi83TRjUM6//NeOjc79r5LVjq9Ev/p
-         8i89hdceoc/y7lbUsOq3PK2HOrv1N8BOuI3R8IMC6Erew8ddA9yNZ0G4adNlUZmUyOuO
-         UNxA==
-X-Gm-Message-State: AIkVDXLkauLxldr4TTJeeGp+aw6cs5vtZjoJuCenN5CMuHJ0sg6TRjVpsljs1W63yO9rOQ==
-X-Received: by 10.98.36.16 with SMTP id r16mr10884107pfj.56.1484842782474;
-        Thu, 19 Jan 2017 08:19:42 -0800 (PST)
-From: "idl3r" <idler1984@gmail.com>
-To: <oss-security@lists.openwall.com>
-Cc: "'Anarcheuz Fritz'" <anarcheuz@gmail.com>,
-	<cve-assign@mitre.org>
-References: <CACCOJE3M1+PbtZgpvLXQjxMkKFirwu0=506OdZZuBUrTK5VqpA@mail.gmail.com> <CACCOJE3K5aEk_frgRr7_pt3T635=9OgnVagn+jOj-v1YetE74A@mail.gmail.com> <20170119143700.GA5132@kroah.com>
-In-Reply-To: <20170119143700.GA5132@kroah.com>
-Date: Fri, 20 Jan 2017 00:19:34 +0800
-Message-ID: <0b4f01d2726f$d3b693e0$7b23bba0$@gmail.com>
+Received: (qmail 3170 invoked from network); 4 May 2016 10:08:48 -0000
+Message-ID: <5729CA23.7050707@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.1
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 15.0
-Thread-Index: AQIp6CLm9uCR12d1apbojhB5sppgTwHmPVGhAjfDo4GgcB7BgA==
-Content-Language: en-us
-Subject: RE: [oss-security] CVE Request - Samsung Exynos GPU driver OOB read
-
-Unfortunately, there is no official git for tracking from Samsung, so I
-can't give a pointer to the particular commit.
-
-The bug itself resides in
-<root>/drivers/gpu/arm/t7xx/r5p0/mali_kbase_core_linux.c of the src tree, in
-function kbase_dispatch which is the main ioctl dispatcher of the driver:
-
-static mali_error kbase_dispatch(struct kbase_context *kctx, void * const
-args, u32 args_size)
-{
-...
-    /* setup complete, perform normal operation */
-
-    switch (id) {
-...
-	case KBASE_FUNC_TMU_SKIP:
-		{
-/* MALI_SEC_INTEGRATION */
-#ifdef CONFIG_SENSORS_SEC_THERMISTOR
-#ifdef CONFIG_USE_VSYNC_SKIP
-			struct kbase_uk_tmu_skip *tskip = args;
-			int thermistor = sec_therm_get_ap_temperature();
-			u32 i, t_index = tskip->num_ratiometer;
-
-			for (i = 0; i < tskip->num_ratiometer; i++)
-<== missing of boundary check
-				if (thermistor >= tskip->temperature[i])
-					t_index = i;
-
-tskip->temperature is a uint32 array of static size(10 elements) and
-tskip->num_ratiometer a uint32 which is user controlled. Since the boundary
-check is missing, OOB read may happen leading to possible memory corruption.
-
------Original Message-----
-From: Greg KH [mailto:greg@kroah.com] 
-Sent: Thursday, January 19, 2017 10:37 PM
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Wed, 04 May 2016 10:08:37 +0000 (UTC)
+Date: Wed, 4 May 2016 12:08:35 +0200
+From: Florian Weimer <fweimer@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] A few Hesiod issues
 To: oss-security@lists.openwall.com
-Cc: Anarcheuz Fritz <anarcheuz@gmail.com>; cve-assign@mitre.org
-Subject: Re: [oss-security] CVE Request - Samsung Exynos GPU driver OOB read
 
-On Thu, Jan 19, 2017 at 02:38:31PM +0800, Idler wrote:
-> Hello,
-> 
-> I'd like to request CVE for the following security issue:
-> 
-> Security bulletin: 
-> http://security.samsungmobile.com/smrupdate.html#SMR-JAN-2017
-> 
-> SVE-2016-6362: out of bound read in gpu driver
-> 
-> Severity: Low
-> Affected versions: M(6.0), N(7.0) devices with Exynos AP chipsets 
-> Reported on: May 31, 2016 Disclosure status: Privately disclosed.
-> Vulnerability in gpu driver does not properly check the boundary of 
-> buffers leading to a possible memory corruption.
-> The applied patch avoids an illegal access to memory by checking the
-boundary.
-> 
-> Source code:
-> Source code of the affected GPU drivers (as part of the Linux kernel
-> source) can be downloaded from Samsung Opensource Resource center:
-> http://opensource.samsung.com/
-> 
-> The particular model of phone we used to reproduce this issue is:
-> http://opensource.samsung.com/reception/receptionSub.do?method=sub&sub
-> =F&searchValue=SM-G9200
+We rediscovered a few Hesiod client issues, some of which have been 
+fixed for a long time in various forks of the Hesiod client.  We did not 
+assign CVE IDs because they are mostly ordinary bugs (no trust boundary 
+is crossed etc.).
 
-Any pointer to the commit(s) that happened to resolve this issue?
+(a) Hard-coded default athena.mit.edu
 
-thanks,
+   <https://bugzilla.redhat.com/show_bug.cgi?id=1332493>
+   <https://github.com/achernya/hesiod/pull/10>
 
-greg k-h
+If the configuration file cannot be opened, the hesiod library will 
+default to use athena.mit.edu:
 
+#define DEF_RHS ".athena.mit.edu"
+…
+   /* Try to open the configuration file. */
+   fp = fopen(filename, "r");
+   if (!fp)
+     {
+       /* Use compiled in default domain names. */
+       ctx->lhs = malloc(strlen(DEF_LHS) + 1);
+       ctx->rhs = malloc(strlen(DEF_RHS) + 1);
+
+This means that an attacker who can control the athena.mit.edu zone or 
+one of its parent zones can supply fake Hesiod data in certain cases. 
+(This would allow injection of fake root accounts, for example.)
+
+If a Hesiod deployment uses DNSSEC with a trusted, validating recursive 
+resolver to secure Hesiod data, this issue could result in retrieval of 
+non-DNSSEC-signed Hesiod data (athena.mit.edu is currently unsigned).
+
+glibc did not use a default for RHS since 2000, presumably as part of an 
+update to BIND 8.2.3-T5B.  Current NetBSD sources lack a default as well.
+
+(b) Weak AT_SECURE check
+
+   <https://bugzilla.redhat.com/show_bug.cgi?id=1332508>
+   <https://github.com/achernya/hesiod/pull/9>
+
+hesiod checks the current EUID against the UID (and EGID against GID) in 
+a few places to protect overriding certain configuration values with 
+environment variables:
+
+       configname = ((getuid() == geteuid()) && (getgid() == getegid())) 
+? getenv("HESIOD_CONFIG") : NULL;
+
+This is problematic if the process has elected to become full root, or 
+otherwise made UID == EUID without dropping all privileges.  It does not 
+catch SELinux transitions, either.  In such cases, local attackers who 
+can set the HESIOD_CONFIG or HES_DOMAIN environment variables and run an 
+affected binary with an AT_SECURE transition might be able to elevate 
+their privileges.
+
+glibc has always used secure_getenv for a long time (except for a brief 
+period in 1997).  Current NetBSD source use an equivalent.
+
+(c) A heap-based buffer overflow in TXT record parsing
+
+  <https://sourceware.org/bugzilla/show_bug.cgi?id=20031>
+  <https://github.com/achernya/hesiod/issues/11>
+
+Hesiod treats DNS as trusted, so this is not a vulnerability.
+
+Florian
