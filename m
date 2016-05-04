@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1694" "Friday" "16" "September" "2016" "21:49:19" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160917014919.76934B2E003@smtpvbsrv1.mitre.org>" "46" "[oss-security] Re: libav: NULL pointer dereference in put_no_rnd_pixels8_xy2_mmx (rnd_template.c)" nil nil nil "9" "2016091701:49:19" "[oss-security] Re: libav: NULL pointer dereference in put_no_rnd_pixels8_xy2_mmx (rnd_template.c)" (number mark "U       cve-assign@m Sep 16   46/1694  " thread-indent "\"[oss-security] Re: libav: NULL pointer dereference in put_no_rnd_pixels8_xy2_mmx (rnd_template.c)\"\n") "<1954849.FvxM1m0O36@arcadia>" ("<1954849.FvxM1m0O36@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6721" "Wednesday" "4" "May" "2016" "12:42:25" "+0300" "Solar Designer" "solar@openwall.com" "<20160504094225.GA12893@openwall.com>" "150" "[oss-security] libonion 0.8 contains security fixes" "^Cc:" nil nil "5" "2016050409:42:25" "[oss-security] libonion 0.8 contains security fixes" (number mark "        solar@openwa May  4  150/6721  " thread-indent "\"[oss-security] libonion 0.8 contains security fixes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 31979 invoked by uid 550); 17 Sep 2016 01:49:33 -0000
+Received: (qmail 12286 invoked by uid 550); 4 May 2016 09:43:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,168 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 12197 invoked from network); 4 May 2016 09:43:00 -0000
+Message-ID: <20160504094225.GA12893@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Cc: David Moreno Montero <dmoreno@coralbits.com>,
+	Zachary Grafton <zachary.grafton@gmail.com>,
+	Remi Birot-Delrue <asgeir@free.fr>
+Date: Wed, 4 May 2016 12:42:25 +0300
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31947 invoked from network); 17 Sep 2016 01:49:31 -0000
-From: cve-assign@mitre.org
-To: ago@gentoo.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <1954849.FvxM1m0O36@arcadia>
-Message-Id: <20160917014919.76934B2E003@smtpvbsrv1.mitre.org>
-Date: Fri, 16 Sep 2016 21:49:19 -0400 (EDT)
-Subject: [oss-security] Re: libav: NULL pointer dereference in put_no_rnd_pixels8_xy2_mmx (rnd_template.c)
+Subject: [oss-security] libonion 0.8 contains security fixes
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> https://blogs.gentoo.org/ago/2016/09/17/libav-null-pointer-dereference-in-put_no_rnd_pixels8_xy2_mmx-rnd_template-c/
-> 
-> A fuzzing, with an mp3 file as input, discovered a null pointer access in
-> put_no_rnd_pixels8_xy2_mmx.
-> 
-> Input #0, h263, from '9.crashes'
-> 
-> AddressSanitizer: SEGV on unknown address
-> 
-> put_no_rnd_pixels8_xy2_mmx libav-11.7/libavcodec/x86/rnd_template.c:37:5
-> 
-> https://git.libav.org/?p=libav.git;a=commit;h=136f55207521f0b03194ef5b55ba70f1635d6aee
+onion is "C library to create simple HTTP servers and Web Applications."
 
->> mpegvideo_motion: Handle edge emulation even without unrestricted_mv
->> 
->> Fix out of bounds read.
->> 
->> libavcodec/mpegvideo_motion.c
+http://coralbits.com/libonion/
 
-Use CVE-2016-7424.
+Version 0.8 was released recently:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+https://github.com/davidmoreno/onion/tree/onion-0-8
 
-iQIcBAEBCAAGBQJX3KC3AAoJEHb/MwWLVhi22mgQAIBJvVTNLEjK2nah32PovlaX
-Ttm/nelFwY1rclJ0omateDF2UVID2ha/pI7V14mLiEcf1YfrLa+fh4AsCHOPFcSw
-sMxzP79oyiSi5H5zwj4O1RAYD5zi3t4sWyM18cig+Sd10iMhTI6JShcBOtrbL344
-o1d/x4DLUoBQIUDx+LVOwIXq5QreSM48mrJANIKhIBu1tzEu41yceD+lr2l05etH
-63GgxmF5WOP3vPB7pEr4b21HdfonAKjOjZpevVUhHfzzjP5ccYHDd5bMbwUXwEi8
-WO1UhmZPekY3zWTOSSLAaZL8DjtqJg2FIacpHrZk+czjbet4ybOualFfGOyE2Vvh
-AMCo5XIR63z73A4e9QbkN/UvxjGnjbY8/lz9poWGvzVfEj2FCaItgXWW1QOgqc/V
-Xasq9ZRsrZ25RILLRVA65w4RTEssHN+A6meyvU6Vub/R+M5jbZLqOq1JHvE9C8PO
-yjJv1Gdc6evvHM+54QURCjnDIU7XNczvy2ALpfYRC+5S3ILSKuvQ0pbvebXIHofU
-XVvAToc04+Bn5wJXQ68H8ZERrKgwS0Od9RFcWNs3tYSXU+P7/A806OiBbxdw8riX
-jrxDBGftqSlptgA2tcuyA0pcQFF6yTMLverW9CQdzE1Lsv6+WDh3Nv5iztJQIHrC
-3CA42JEkSvBTLCKzrG8z
-=OD1P
------END PGP SIGNATURE-----
+Changes in this version, as well as in the master branch, include some
+security fixes.
+
+In particular, when the library is built with Linux epoll support and is
+used in the pool of threads mode, as invoked with onion_new(O_POOL),
+there was a file descriptor and data race condition between handling of
+epoll events and timeout events.  The code is using EPOLLONESHOT to
+avoid epoll event vs. epoll event races, but it is detecting and
+handling timeouts manually, operating on the same file descriptors and
+shared data structures (connection slots) that epoll operates on.  It's
+only after I figured this out, with some help from David Moreno Montero
+(onion upstream), and came up with a workaround, based on Rich Felker's
+idea, that I found this had previously been observed and reported as a
+GitHub issue by MoZhonghua on July 30, 2015:
+
+https://github.com/davidmoreno/onion/issues/116
+
+Apparently, the issue was easily unintentionally triggerable, without
+even a stress-test, with onion's default hard-coded epoll_wait()
+maxevents of 10.  I was using maxevents of 1 for unrelated reasons (and
+this has since become the default), which made the problem much harder
+to trigger: it took over 30 million HTTP requests at 10k requests/second
+for me to trigger the problem in my stress-testing of an onion-using
+application.  However, this very first crash I triggered, running the
+application under gdb, resulted in attempted execution of a portion of
+an HTTP request or response as code: the freed memory where a connection
+slot structure had been was reused in such a way that a data pointer
+appeared just where the handler function pointer had been.  On another
+occasion, with a later upstream revision with a partial workaround in
+place, I had it crash on attempting to make the handler function call
+over the pointer, which was directly replaced with data.  The latter
+condition was more likely exploitable on modern systems (where the
+malloc()'ed HTTP request and response data is non-executable, so need to
+use borrowed rather than injected code).
+
+A mitigating factor is that unless a given application (or a wrapper)
+has respawn functionality, there's only one chance to try exploiting the
+bug.  Another mitigating factor is that epoll, especially with the
+specific features used by the code, only exists on modern Linux (so
+having this code run on a system with executable malloc()'ed data and
+without ASLR is unlikely).
+
+This issue is currently believed to be worked around for good with this
+pull request, included in 0.8:
+
+https://github.com/davidmoreno/onion/pull/167
+
+The important commits are:
+
+commit 4e111f30c1adf0ba0d5814a24f904dea35310a37
+Author: Solar Designer <solar@openwall.com>
+Date:   Sun Mar 27 19:16:04 2016 +0300
+
+    Complete the implementation of Rich Felker's idea (partially introduced
+    with commit c80c46d5ff842291f0cce3917e7b8340c43d4315) to shutdown()
+    rather than close() on timeout, so that the fd is held until after
+    another one-shot epoll event arrives.  This way, we don't close the fd
+    (thereby not freeing it for possible reuse just yet) and don't free the
+    slot asynchronously to a possible event for the same slot on another
+    thread.  When we do receive another event for the shutdown() fd, we
+    expect that no concurrent event is being processed for the same fd and
+    the same slot due to the one-shot property of the epoll instance.
+    In other words, we postpone the potential fd and slot memory reuse until
+    after we're out of the asynchronous timeout handling and into the
+    per-slot synchronous one-shot event handling.
+
+    Handle timeouts in busy servers more optimally: check for them once per
+    second (and per thread for now) rather than once per event.
+
+commit 0ba14e54ab2c8bee9de68b98db084220cccb2234
+Author: Solar Designer <solar@openwall.com>
+Date:   Sun Mar 27 19:31:52 2016 +0300
+
+    On the first call to onion_poller_slot_new(), pre-allocate memory for
+    all slots based on the maximum number of fd's allowed for the program
+    (the currently effective limit for RLIMIT_NOFILE, or 1000000 at most).
+    This assumes that the first call to onion_poller_slot_new() doesn't need
+    to be MT-safe (it is expected to be for a listening fd).
+
+    Rationale:
+    1. Reduced impact of premature slot memory reuse bugs (now accessing a
+    reused slot rather than arbitrarily reused memory) in case any are left
+    or are reintroduced later or a new kernel version doesn't fully enforce
+    the epoll one-shot property.
+    2. Performance improvement (one calloc()/free() less per connection).
+
+I've just assigned OVE-20160504-0004 to the onion pre-0.8 epoll event
+vs. timeout handling race conditions.
+
+There may still be issues with fd's getting closed on error by other
+parts of onion, which would trigger races in the poller again.  In that
+case, the additional change to memory allocation as described above
+should help reduce the impact.  Once identified, these issues would need
+their own fixes (and their own tracking IDs, if anyone cares).
+
+Another likely security issue fixed in 0.8 was found and fixed by
+Zachary Grafton:
+
+https://github.com/davidmoreno/onion/pull/161
+
+commit 2e54d367b804f8a803c700065b17edd70afdf615
+Author: Zachary Grafton <zachary.grafton@gmail.com>
+Date:   Tue Mar 15 08:57:28 2016 -0400
+
+    Fix issue with html quoting and a buffer overflow.
+
+    We were incorrectly calculating the size of the new string, &amp; is 5
+    characters and not 4. This creates a buffer overflow condition in
+    onion_html_quote.
+
+I've just assigned OVE-20160504-0005 to this issue.
+
+There's also, with unclear security relevance/impact, but potentially
+just as bad:
+
+commit c4f137f2d4c0b09657ae105ae6f133e9cec481a1
+Author: Remi Birot-Delrue <asgeir@free.fr>
+Date:   Sat Apr 16 18:20:04 2016 +0200
+
+    Fix bugs in onion_response_vprintf.
+
+    For input (format string + arguments) larger than 512 bytes:
+    - A null byte was written at the end of input;
+    - the variadic list was used a second time without initialization, causing segfaults.
+
+I've just assigned OVE-20160504-0006 to this issue.
+
+There are probably more.  Basically, if you're using onion, consider
+upgrading to 0.8 now.
+
+FWIW, my current opinion of onion is: friendly and helpful upstream,
+healthy community, but I wish code quality were much better.
+
+There's a good list of other embeddable HTTP server libraries at:
+
+https://www.gnu.org/software/libmicrohttpd/
+
+(scroll down to "Alternatives"), as well as indeed libmicrohttpd itself.
+
+Alexander
