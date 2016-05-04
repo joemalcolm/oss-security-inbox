@@ -1,54 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/30/8
-Message-ID: <a3bc645664c34b6dbfe5aa8b76797692@imshyb02.MITRE.ORG>
-Date: Sun, 30 Oct 2016 15:42:59 -0400
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
-Subject: Re: CVE request Qemu: 9pfs: integer overflow leading to OOB access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/17
+Message-ID: <20160504124248.GA15148@openwall.com>
+Date: Wed, 4 May 2016 15:42:48 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: broken RSA keys
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9
-> File System(9pfs) support, is vulnerable to an integer overflow issue. It
-> could occur by accessing xattributes values.
-> 
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> instance resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02942.html
+As many of you know, the projects factorable.net and Phuctor have
+identified some weak RSA keys in the wild - on (key)servers or submitted
+to those projects.  This does not necessarily mean that the weak keys
+were generated as such in all cases - it can as well be that keys got
+mangled later.  (In fact, this has spurred heated debate and insults.
+Luckily, that's not the primary topic of my message, so I don't have to
+refer to it more directly risking to bring that controversy in here.
+Let's just not go into that direction at all.)
 
->> Fix this by comparing the offset and the xattr size, which are
->> both uint64_t, before trying to compute the effective number of bytes
->> to read or write.
+Now to the point: some of the keys do look to me like they're a result
+of software bugs in key generation.  Specifically, as it was noticed and
+noted by many before, Phuctor's list of broken keys includes many with
+non-prime e of the form intended_e*(2^32+1) - that is, with the 32-bit
+value duplicated across 64 bits.  (I wrote it that way to show that all
+such e's are non-prime.)
 
-Use CVE-2016-9104.
+When looking into this a few days ago, I found that OpenSSL 0.9.5a (and
+earlier?), which was current in year 2000, had a bug that would result
+in behavior just like this on some 64-bit platforms:
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/9pfs/9p.c but
-that may be an expected place for a later update.
+http://marc.info/?l=openssl-users&m=95961024500509
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+I've also checked libgcrypt's code since its commit history start in
+1997 and to latest.  Its RSA e setup looks OK to me: it uses libgcrypt's
+own *mpi*_set_ui(), which just set first limb without going to bit level.
 
-iQIcBAEBCAAGBQJYFkuAAAoJEHb/MwWLVhi2fJwQAKH7JgohXVJh8HsReYgIUaBD
-pa9ceIq+t77Ddd8uS0N7srXQnZCXTkM+PKxKLW2cvBtZviUvF0wYCuoUIR3dh66e
-L9otE6tlEUQIMSXFuzWsUNhxQfQRYhdU1x9PuraPdcFSHE881xm9UWkg4L7PXcrL
-m2YS9A2kxniOjVTEWgv/Wt7Ay/hbzKX++asyBq1MomGeKQooy279xgU+C9oly8mV
-Zs6jdxpKcOElyC7qAW9Bn0jQ5FN10mWIBWX6C38MjjpGrtxKJS87gPpz/j2BKNTZ
-+JoqjDimpbEvv7PXUXMBzLa19lkJmQS9pAvbnvcVyG7IcAwBCLLP0s0Uvldmd6vX
-2vh/vSrQ2TTktZYxhEy0CMgn5+viynrF0nMZHs2Oc//XS2dsdk/EGsRb9J7q/Oma
-UX1QGfJ/mPekHKhT8uprlpOb2IQKQX6w+GnTWexqWpbT5E/CCsuIHtiYtOxvMCAJ
-qHpXE1apcW66f6lNpGu4W2KDQ+4QZoK8wk7Eo+s36QqYuPO4K0C1h/jJoGvqqcoj
-byN7na2s/ZgGukxK4XOEbIpVxOuJhskf4OuXo1bz4pBhhAo8qtMf4w5bA9j5m0kJ
-Q/V2lN9fiK3CewzS0kLCarid7HRBAHqlETG+5ULKZvfJOFu9Mu3FrGSZGKDYCnAP
-lxrzglHL0JsqKlqwaY5U
-=ja9u
------END PGP SIGNATURE-----
+Additionally, both Phuctor's list and Hanno Bock's list of GCDs include
+many small factors that also exhibit 32-bit value duplication.  To me,
+this speaks in favor of there being a bignum library bug like this.
+A bug that not only duplicates the least significant 32 bits onto the
+next 32 bits, but also keeps the rest of the limbs at all-zeroes.  There
+are even weirder examples, though - e.g., one of Phuctor's factors is
+0x115CFF61CFECFF61BE9, where we see three 32-bit limbs satisfying:
+
+limb[1] = limb[0] + limb[2]
+
+and also limb[2] is small and thus likely didn't come from a CSPRNG, but
+possibly from uninitialized memory.
+
+We may want to review other RSA and general bignum libraries for bugs
+that would match these patterns, although that's probably not any easier
+than just reviewing them for any bugs in related code paths.  It is
+likely that something more recent than OpenSSL 0.9.5a still has a bug of
+this sort (besides, that OpenSSL bug can't explain the 3-limb
+relationship in a factor, above).  Indeed, that "something" might turn
+out not to be open source, but we would care about and would be
+reviewing the open source libraries and programs - hence posting in here
+for now.  Any volunteers?  Please post to these thread about whatever
+you've reviewed, even if you came to the conclusion it probably isn't
+buggy (like I did for libgcrypt's e setup).
+
+Alexander
+
+P.S. I've attached the OpenSSL bug posting from 2000, for archival.
+
+View attachment "openssl-rsa-e-bug.txt" of type "text/plain" (1559 bytes)
