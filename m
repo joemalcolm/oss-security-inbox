@@ -1,64 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/23/4
-Message-ID: <CAH6wpnqzeNtpykT7emtDU1-GV7AvjFP5-YroWcCC4UZyQEFvtA@mail.gmail.com>
-Date: Fri, 23 Sep 2016 12:14:14 +0100
-From: Martyn Taylor <mtaylor@...hat.com>
-To: security@...che.org, Matthias Kaiser <matthias.kaiser@...e-white.com>,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  dev@...ivemq.apache.org, users@...ivemq.apache.org
-Subject: [CVE-2016-4978] Apache ActiveMQ Artemis: Deserialization of untrusted input vunerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/18
+Message-ID: <CABEk9Yz0mijhgKqKEugbvfAdqJKRcn6-HYyET3MA-D2EROo0tw@mail.gmail.com>
+Date: Wed, 4 May 2016 09:12:52 -0400
+From: Kangjie Lu <kangjielu@...il.com>
+To: oss-security@...ts.openwall.com, Taesoo Kim <taesoo@...ech.edu>,  Chengyu Song <csong84@...ech.edu>, Insu Yun <insu@...ech.edu>
+Subject: CVE Request: information leak in wilc1000 module of Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+Hello,
 
-Vendor: The Apache Software Foundation
+In the milc1000 module (drivers/staging/wilc1000/wilc_wfi_cfgoperations.c),
+The 6-bytes stack object “mac” is not initialized but leaked via “nla_put”.
+This bug may result in leaks of sensitive kernel stack data.
 
-Versions Affected: Apache Artemis 1.0.0, 1.1.0, 1.2.0, 1.3.0
+The patch of this bug has been accepted by Linux kernel maintainer and will
+be
+merged in the next kernel release (see the message bellow).
 
-A class implementing the Serializable interface is free to implement
-the “readObject(java.io.ObjectInputStream
-in)” method however it chooses. This readObject method is used during the
-deserialization process, when constructing a java object from a serialized
-byte stream. It is possible to implement the method in such a way that can
-result in java code being executed during the deserialization of an object
-of this class (gadget class).
+Fix info:
+*http://www.spinics.net/lists/linux-wireless/msg150352.html
+<http://www.spinics.net/lists/linux-wireless/msg150352.html>*
+git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/staging.git
 
-The JMS specification outlines a getObject() method on the
-javax.jms.ObjectMessage
-class. The Apache Artemis implementation of this method allows
-deserialization of objects, from untrusted input. There are several places
-where Apache Artemis uses this getObject() method. In the JMS Core client,
-the Artemis broker and the Artemis REST component. These Artemis components
-may therefore be vulnerable to a remote code execution attack. Successful
-exploitations of this vulnerability rely on these "gadget classes"  being
-present on the Artemis classpath and the sender of the untrusted input
-being authenticated and authorized to send messages to the Artemis broker.
+Could you please assign a CVE to it?
 
-The code execution exploit may happen under the following circumstances:
+Thanks,
+Kangjie Lu
 
-· In the JMS client when consuming an object message.
 
-· In the REST module when a REST client requests to consume a message that
-was originally sent as an object message (cross protocol).
+---------- Forwarded message ----------
+From: <gregkh@...uxfoundation.org>
+Date: Wed, May 4, 2016 at 1:57 AM
+Subject: patch "staging: wilc1000: fix infoleak in wilc_wfi_cfgoperations"
+added to staging-testing
+To: kangjielu@...il.com, gregkh@...uxfoundation.org, kjlu@...ech.edu
 
-· In the Artemis management layer, when a client sends an object message to
-a management address.
 
-· On the broker when an AMQP client consumes a message that was originally
-sent as an object message (cross protocol).
 
-For this exploit to occur the sender of the compromised message needs to be
-authenticated and authorized in order to send the message to the Artemis
-broker and affected classes (gadget classes) present on the Artemis class
-path.
+This is a note to let you know that I've just added the patch titled
 
-Mitigation:
-To secure the Apache Artemis broker and management layer:
-** Upgrade to 1.4.0.
+    staging: wilc1000: fix infoleak in wilc_wfi_cfgoperations
 
-For the Apache Artemis REST module and Apache Artemis JMS client.
-** Upgrade to Apache Artemis 1.4.0
-** Configure the appropriate deserialization white/black lists as outlined
-in the Artemis documentation.
+to my staging git tree which can be found at
+    git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/staging.git
+in the staging-testing branch.
 
-Credit: This issue was discovered by Matthias Kaiser of Code White (
-www.code-white.com)
+The patch will show up in the next release of the linux-next tree
+(usually sometime within the next 24 hours during the week.)
+
+The patch will be merged to the staging-next branch sometime soon,
+after it passes testing, and the merge window is open.
+
+If you have any questions about this process, please let me know.
+
+
+>From d13829686bba3e06e2217f044beb8fd5a9abf792 Mon Sep 17 00:00:00 2001
+From: Kangjie Lu <kangjielu@...il.com>
+Date: Tue, 3 May 2016 21:36:11 -0400
+Subject: staging: wilc1000: fix infoleak in wilc_wfi_cfgoperations
+
+"mac" is an array allocated in stack without being initialized,
+and will be sent out via "nla_put". The dump_station() is supposed
+to initialize the mac address; otherwise, sensitive data in kernel
+stack will be leaked. To fix this, copy the mac address to it.
+
+Signed-off-by: Kangjie Lu <kjlu@...ech.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
+---
+ drivers/staging/wilc1000/wilc_wfi_cfgoperations.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/staging/wilc1000/wilc_wfi_cfgoperations.c
+b/drivers/staging/wilc1000/wilc_wfi_cfgoperations.c
+index 85031f75d7ee..4b041356f823 100644
+--- a/drivers/staging/wilc1000/wilc_wfi_cfgoperations.c
++++ b/drivers/staging/wilc1000/wilc_wfi_cfgoperations.c
+@@ -1804,6 +1804,7 @@ static int dump_station(struct wiphy *wiphy, struct
+net_device *dev,
+
+        wilc_get_rssi(vif, &sinfo->signal);
+
++       memcpy(mac, priv->au8AssociatedBss, ETH_ALEN);
+        return 0;
+ }
+
+--
+2.8.2
 
