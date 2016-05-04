@@ -1,38 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/01/6
-Message-ID: <alpine.GSO.2.20.1605011539410.23612@freddy.simplesystems.org>
-Date: Sun, 1 May 2016 15:43:15 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/8
+Message-ID: <57298BB0.5070507@gmail.com>
+Date: Wed, 4 May 2016 07:42:08 +0200
+From: Albert Veli <albert.veli@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: DoS in multiple versions of GraphicsMagick
+Subject: Re: OpenSSL Security Advisory [3rd May 2016]
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 1 May 2016, Gustavo Grieco wrote:
+Does the 3 May CVE:s affect LibreSSL too?
 
-> We recently tested GraphicsMagick with our tool and found two issues that
-> causes DoS:
->
-> * Infinite loop caused by converting a circularly defined svg file.
->
-> * Arithmetic exception converting a svg file caused by a X%0 operation in
-> magick/render.c:3800
->
->    (long) (y-fill_pattern->tile_info.y) % fill_pattern->rows,
->
-> Reproducers for both issues are attached. They are triggered by converting
-> a svg to another format. Identification is not affected.
-> These issues affect 1.3.18 and 1.3.23. Most likely other versions are
-> vulnerable too.
+https://openssl.org/news/vulnerabilities.html
 
-These issues are now resolved in the GraphicsMagick Mercurial 
-repository.
-
-It is worth noting that ImageMagick's built-in SVG renderer has the 
-same problem with "circular.svg" (specify the input file name like 
-"msvg:circular.svg").
-
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
