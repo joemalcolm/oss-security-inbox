@@ -1,4 +1,9 @@
-Received: (qmail 26188 invoked by uid 550); 4 Oct 2023 19:23:06 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4643" "Wednesday" "4" "May" "2016" "15:42:48" "+0300" "Solar Designer" "solar@openwall.com" "<20160504124248.GA15148@openwall.com>" "111" "[oss-security] broken RSA keys" "^Date:" nil nil "5" "2016050412:42:48" "[oss-security] broken RSA keys" (number mark "        solar@openwa May  4  111/4643  " thread-indent "\"[oss-security] broken RSA keys\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 17457 invoked by uid 550); 4 May 2016 12:43:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,70 +11,126 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 16315 invoked from network); 4 May 2016 12:42:54 -0000
+Message-ID: <20160504124248.GA15148@openwall.com>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="r5Pyd7+fXNt84Ff3"
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Date: Wed, 4 May 2016 15:42:48 +0300
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26137 invoked from network); 4 Oct 2023 19:23:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696447374; x=1697052174; darn=lists.openwall.com;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8wbJEgAPFDIZMh81Ki1dy23UV4F9a/BdujltpKgrP1U=;
-        b=RX2TmS/qoMCWOUOA7GOql/h8EqDertbNpVO0GRXgTUrd1ad/ydyRbuJN+4DUfwTGzE
-         PCBBiWqR8uek/tHTO4FfC3HfzPsrDeWKNEKx9TiljUcdrQb5LRF3s5BZ1tUpvrk29XVr
-         O+x1ZLjMe/Znk1j8+qCTGUaseoO8uEnJQevEzFsZCcK+VEzTVm2oL3DzAPraB0cRprUf
-         fa8W44W/OYb6tCKyUWHfk/pLPgEzzMmk0oazbVUWtycgNadd1p6gogW64NEl87udCvkC
-         H/VPAIV87p9DIuNToVjE7d/wkXyUhmeMNFmaBBNY84EVk9kHiA8j2qZaR9iixtX5MtP4
-         zUFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696447374; x=1697052174;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8wbJEgAPFDIZMh81Ki1dy23UV4F9a/BdujltpKgrP1U=;
-        b=RoFWdajLSoCJ0Q8R+cLE7Ndf0tpgIMvykLh7ANFDKu9NdDIKpbxUHR76jw6nG8sYel
-         aIzLIyWg8BOSinJHbKA+EsBK2goEJbHIPxziRFuP/9VRKUUoTxh7sVmF9ks6CMkS2BC1
-         QV+BFiosiNCq5uO2AME1YHt1KiStDqWm/Ce9PfXcww95JJ7Ra8Mf4qgaG2Wb3PQwchYl
-         Mrle731IasfCkZH6NPa6HPhx1bh1L69I5gsHUHce1Az+Xr9zW7lddMzkrJLIauHzl5u+
-         OO69cFryLNhq/fDphaWxZQzg5R2EDUaoWt+DJNM0NE7ITVO+eUzlBGy4DMZCvvim2keQ
-         HlRg==
-X-Gm-Message-State: AOJu0YwcvDCK3IirFFVZEoCIsZY27W9vJ86zGp+34BVMPtkd+YcWfiUU
-	m8r10jq3rwn2SAViNXWTavY3Rfj/Ec9Yyg==
-X-Google-Smtp-Source: AGHT+IF7oc9KfEpTxOq+m+UlgNen8YtDbfrvwVMY2O5F0Vz09vzFLleGlXm7w9ePUzNOqzRpHioOlg==
-X-Received: by 2002:a17:906:23e2:b0:9ad:7d5c:3d4b with SMTP id j2-20020a17090623e200b009ad7d5c3d4bmr2608964ejg.35.1696447373793;
-        Wed, 04 Oct 2023 12:22:53 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Wed, 4 Oct 2023 21:22:52 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
+Subject: [oss-security] broken RSA keys
 To: oss-security@lists.openwall.com
-Cc: Solar Designer <solar@openwall.com>, zdi@trendmicro.com
-Message-ID: <ZR27jCirFcyI7smg@eldamar.lan>
-References: <7b2e3fb3afc05aa39864e62b0c87a631b746f5c7.camel@runout.at>
- <ZRb180+B34Wmg1IM@jumper.schlittermann.de>
- <20230929165914.GA31245@openwall.com>
- <SJ0PR01MB7413CB07EDE457153C8C5C3CD1C0A@SJ0PR01MB7413.prod.exchangelabs.com>
-MIME-Version: 1.0
+
+--r5Pyd7+fXNt84Ff3
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <SJ0PR01MB7413CB07EDE457153C8C5C3CD1C0A@SJ0PR01MB7413.prod.exchangelabs.com>
-Subject: Re: [oss-security] Exim4 MTA CVEs assigned from ZDI
 
-Hi ZDI team,
+Hi,
 
-On Fri, Sep 29, 2023 at 07:26:45PM +0000, zdi@trendmicro.com wrote:
-> Hi,
-> 
-> The ZDI reached out multiple times to the developers regarding
-> multiple bug reports with little progress to show for it. After our
-> disclosure timeline was exceeded by many months, we notified the
-> maintainer of our intent to publicly disclose these bugs, at which
-> time we were told, "you do what you do." If these bugs have been
-> appropriately addressed, we will update our advisories with a link
-> to the security advisory, code check-in, or other public
-> documentation closing the issue.
+As many of you know, the projects factorable.net and Phuctor have
+identified some weak RSA keys in the wild - on (key)servers or submitted
+to those projects.  This does not necessarily mean that the weak keys
+were generated as such in all cases - it can as well be that keys got
+mangled later.  (In fact, this has spurred heated debate and insults.
+Luckily, that's not the primary topic of my message, so I don't have to
+refer to it more directly risking to bring that controversy in here.
+Let's just not go into that direction at all.)
 
-As there is still some confusion around the libspf2 related issue: can
-you confirm or deny if the issue CVE-2023-42118 / ZDI-23-1472 is
-covered by https://github.com/shevek/libspf2/pull/44 ?
+Now to the point: some of the keys do look to me like they're a result
+of software bugs in key generation.  Specifically, as it was noticed and
+noted by many before, Phuctor's list of broken keys includes many with
+non-prime e of the form intended_e*(2^32+1) - that is, with the 32-bit
+value duplicated across 64 bits.  (I wrote it that way to show that all
+such e's are non-prime.)
 
-Regards,
-Salvatore
+When looking into this a few days ago, I found that OpenSSL 0.9.5a (and
+earlier?), which was current in year 2000, had a bug that would result
+in behavior just like this on some 64-bit platforms:
+
+http://marc.info/?l=openssl-users&m=95961024500509
+
+I've also checked libgcrypt's code since its commit history start in
+1997 and to latest.  Its RSA e setup looks OK to me: it uses libgcrypt's
+own *mpi*_set_ui(), which just set first limb without going to bit level.
+
+Additionally, both Phuctor's list and Hanno Bock's list of GCDs include
+many small factors that also exhibit 32-bit value duplication.  To me,
+this speaks in favor of there being a bignum library bug like this.
+A bug that not only duplicates the least significant 32 bits onto the
+next 32 bits, but also keeps the rest of the limbs at all-zeroes.  There
+are even weirder examples, though - e.g., one of Phuctor's factors is
+0x115CFF61CFECFF61BE9, where we see three 32-bit limbs satisfying:
+
+limb[1] = limb[0] + limb[2]
+
+and also limb[2] is small and thus likely didn't come from a CSPRNG, but
+possibly from uninitialized memory.
+
+We may want to review other RSA and general bignum libraries for bugs
+that would match these patterns, although that's probably not any easier
+than just reviewing them for any bugs in related code paths.  It is
+likely that something more recent than OpenSSL 0.9.5a still has a bug of
+this sort (besides, that OpenSSL bug can't explain the 3-limb
+relationship in a factor, above).  Indeed, that "something" might turn
+out not to be open source, but we would care about and would be
+reviewing the open source libraries and programs - hence posting in here
+for now.  Any volunteers?  Please post to these thread about whatever
+you've reviewed, even if you came to the conclusion it probably isn't
+buggy (like I did for libgcrypt's e setup).
+
+Alexander
+
+P.S. I've attached the OpenSSL bug posting from 2000, for archival.
+
+--r5Pyd7+fXNt84Ff3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="openssl-rsa-e-bug.txt"
+
+List:       openssl-users
+Subject:    64 bit problem in RSA_generate_key in 0.9.5a
+From:       Karsten Spang <ks () bellesystems ! com>
+Date:       2000-05-29 13:46:24
+
+I have found a problem in the generation of an RSA key. Under 64 bit HP-UX,
+the problem manifests itself as RSA_F4 becoming 0x1000100010001. The bug
+is that 1 is an int, and according to the ANSI C standard, shifting more
+than the size of the an expression is undefined. On this architechture,
+only the 5 least significant bits of the shift is used, thus 1<<32==1 !
+The patch below changes 1 to 1UL, and 1UL<<32!=1UL when a long is 64 bits.
+--
+Karsten Spang
+Senior Software Developer, Ph.D.
+Belle Systems A/S
+Tel.:   +45 59 44 25 00
+Fax.:   +45 59 44 25 88
+E-mail: kspang@bellesystems.com
+Web:    http://www.bellesystems.com/
+Defining the Future of IP Services
+
+*** rsa_gen.c.dist	Sat Feb  5 15:17:30 2000
+--- rsa_gen.c	Mon May 29 15:19:31 2000
+***************
+*** 95,101 ****
+  	 * unsigned long can be larger */
+  	for (i=0; i<sizeof(unsigned long)*8; i++)
+  		{
+! 		if (e_value & (1<<i))
+  			BN_set_bit(rsa->e,i);
+  		}
+  #else
+--- 95,101 ----
+  	 * unsigned long can be larger */
+  	for (i=0; i<sizeof(unsigned long)*8; i++)
+  		{
+! 		if (e_value & (1UL<<i))
+  			BN_set_bit(rsa->e,i);
+  		}
+  #else
+______________________________________________________________________
+OpenSSL Project                                 http://www.openssl.org
+User Support Mailing List                    openssl-users@openssl.org
+Automated List Manager                           majordomo@openssl.org
+
+--r5Pyd7+fXNt84Ff3--
