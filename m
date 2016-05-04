@@ -1,23 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/1
-Message-ID: <2863659.udzN8cixfE@willoughby>
-Date: Mon, 10 Oct 2016 09:41:27 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: Marcus Meissner <meissner@...e.de>
-Subject: Re: potrace: memory allocation failure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/12
+Message-ID: <5729B432.3070503@gmail.com>
+Date: Wed, 4 May 2016 10:34:58 +0200
+From: Albert Veli <albert.veli@...il.com>
+To: "Alan J. Wylie" <iwnwi1owfl@...ie.me.uk>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: OpenSSL Security Advisory [3rd May 2016]
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 09 October 2016 11:28:25 Marcus 
-Meissner wrote:
-> did you attach the reproducer files 
-somewhere?
+On 2016-05-04 10:21, Alan J. Wylie wrote:
+> https://twitter.com/bob_beck/status/727478594591543296
+>
+> Bob Beck @bob_beck 
+>
+> LibreSSL is vulnerable to the same issues as OpenSSL CVE-2016-2105
+> through 2019 - fixes are forthcoming today as well.
+>
+Ok, then I guess the patches are these ones:
 
-Attached.
-
---
-Agostino
-
-Content of type "text/html" skipped
-
-Download attachment "potrace_testcase" of type "application/octet-stream" (157 bytes)
+http://marc.info/?l=openbsd-announce&m=146228598930416&w=2
