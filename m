@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1315" "Monday" "6" "August" "2018" "14:18:19" "+0300" "Henri Salo" "henri@nerv.fi" "<20180806111819.kc3o3vd266qdjich@tunkki.bugs.fi>" "35" "Re: [oss-security] Requesting CVE number for Qt Creator / Botan issue" nil nil nil "8" "2018080611:18:19" "[oss-security] Requesting CVE number for Qt Creator / Botan issue" (number mark "U       henri@nerv.f Aug  6   35/1315  " thread-indent "\"Re: [oss-security] Requesting CVE number for Qt Creator / Botan issue\"\n") "<2145096.zCNlfaKS3V@tjmaciei-mobl1>" ("<2145096.zCNlfaKS3V@tjmaciei-mobl1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3755" "Wednesday" "4" "May" "2016" "20:28:03" "+0300" "Solar Designer" "solar@openwall.com" "<20160504172803.GA19393@openwall.com>" "79" "Re: [oss-security] broken RSA keys" "^Date:" nil nil "5" "2016050417:28:03" "[oss-security] broken RSA keys" (number mark "        solar@openwa May  4   79/3755  " thread-indent "\"Re: [oss-security] broken RSA keys\"\n") "<20160504124248.GA15148@openwall.com>" ("<20160504124248.GA15148@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26361 invoked by uid 550); 6 Aug 2018 11:18:40 -0000
+Received: (qmail 5951 invoked by uid 550); 4 May 2016 17:28:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +11,96 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26338 invoked from network); 6 Aug 2018 11:18:39 -0000
-X-Virus-Scanned: Debian amavisd-new at coconut.nerv.fi
-Date: Mon, 6 Aug 2018 14:18:19 +0300
-From: Henri Salo <henri@nerv.fi>
-To: Thiago Macieira <thiago@macieira.org>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20180806111819.kc3o3vd266qdjich@tunkki.bugs.fi>
-References: <2145096.zCNlfaKS3V@tjmaciei-mobl1>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="syrch3n2hb3ugtkc"
-Content-Disposition: inline
-In-Reply-To: <2145096.zCNlfaKS3V@tjmaciei-mobl1>
-User-Agent: NeoMutt/20170113 (1.7.2)
-Subject: Re: [oss-security] Requesting CVE number for Qt Creator / Botan issue
-
---syrch3n2hb3ugtkc
+Received: (qmail 5903 invoked from network); 4 May 2016 17:28:09 -0000
+Message-ID: <20160504172803.GA19393@openwall.com>
+References: <20160504124248.GA15148@openwall.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20160504124248.GA15148@openwall.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Wed, 4 May 2016 20:28:03 +0300
+From: Solar Designer <solar@openwall.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] broken RSA keys
+To: oss-security@lists.openwall.com
 
-On Sun, Aug 05, 2018 at 11:21:00AM -0700, Thiago Macieira wrote:
-> I would like to request a CVE number for an advisory about Qt Creator
-> shipping old Botan (and potentially vulnerable) sources.
+On Wed, May 04, 2016 at 03:42:48PM +0300, Solar Designer wrote:
+> Additionally, both Phuctor's list and Hanno Bock's list of GCDs include
+> many small factors that also exhibit 32-bit value duplication.  To me,
+> this speaks in favor of there being a bignum library bug like this.
+> A bug that not only duplicates the least significant 32 bits onto the
+> next 32 bits, but also keeps the rest of the limbs at all-zeroes.  There
+> are even weirder examples, though - e.g., one of Phuctor's factors is
+> 0x115CFF61CFECFF61BE9, where we see three 32-bit limbs satisfying:
+> 
+> limb[1] = limb[0] + limb[2]
+> 
+> and also limb[2] is small and thus likely didn't come from a CSPRNG, but
+> possibly from uninitialized memory.
 
-https://cveform.mitre.org/
+While the 32-bit duplication of e is probably for real (or those keys
+wouldn't validate... do they?), similar observations for factors are
+probably a red herring: an artifact of the process used by these
+factoring projects rather than part of how the keys were generated.
 
---=20
-Henri Salo
+Specifically, the above 3-limb example came from this key:
 
---syrch3n2hb3ugtkc
-Content-Type: application/pgp-signature; name="signature.asc"
+http://phuctor.nosuchlabs.com/gpgkey/63016E43A530350EC983F09A74C50EC8E87FEB92F3DEAC355BE2E64CA7985921
 
------BEGIN PGP SIGNATURE-----
+Its listed factors for:
 
-iQIzBAABCAAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAltoLnkACgkQJ633pE6q
-dXSxZBAAi+nEF9Cu0p5/3ZZGgnly+XyDJWPcu4vD7Srsv/b8QZe8Fhl33/0tExHz
-SPQrH73V4OHqevEpmwCbVKuQF4HJ1vHPnBq33SVli785N4F6igsgPW0Uwb8RoINm
-7gi3Cy/Q29vO8ZlgiX5KDCaMsNmU18/ktkHE4UYtLahzxNGGBRD38jJJgdhjZnNh
-UKRJo96ezUQ0otvHAns+FzEqVuTGj6w08T9ETAytBr5z5abQPSHN8RhUz/Bz2fjY
-cTigDTI8zWj/qsywV5anC2aWrX8Kt3JqTSbY5sYs2KF/CWdmDDS5q7/hwJVXahfT
-ofhytP+SK33rLTrPamQYkt5mUR39481ztCvn2nYY/daHy9mm09BIodtBAKAgi/o0
-LUbNMU4MbYxcsv5WlSMnX/yA5XAkrOkDy/4yZJhCfoQBfHGD31nttcPmwkZnnag2
-05A+C3yTpn8LMn+Ds6OkbFfiHaT2klYVrqYsebJswDFebEdzbzxuVp39UpYQ13hG
-AzhtCzss28KrvrDaamVpniw/YbDLk62/b3RBG/iSGWPiv6nuav7bykx64skiQuFn
-M8H0CSfUFcGnM25Ri4jtuIwrvhWe83XDehScgocdwsLQnzW1HroM1xDgEDyC//G7
-XxTpRI/ImzPXrKhg3b8fvMm/JibWtlMHQZ2d+zFY0pSzEKvYjLQ=
-=wQMD
------END PGP SIGNATURE-----
+30994406304224333705089301021808817053265691600565745779461319192700482173499346901463373323760837101094422297015585914901975150808157025848055524050099664666818474403138047948921297911809676315880151194417982271740532112280276561406067150580272837889469704078603620474607973901168413284328036775114860003006242978036093114581459742298368645557721283839266550975745706234722636520751279031095530989644784794578820133689102573944830983932022310476740027696204630693285065012124122533231053902876463977914183401001126261496277170510153621628673978038897817661593063222593495679683291096299835912556781797309445223969995
 
---syrch3n2hb3ugtkc--
+are:
+
+15010910703015
+5124733305108403985385
+149784613473514443594783892995
+
+However, this modulus is also divisible by 3, 5, and thus by 15, etc.
+So what we're seeing in databases like this are just some larger
+non-prime factors that combine the smaller factors in specific ways.
+I understand that's not how they were figured out (rather, they're
+shared factors with other keys), but that's what they happen to be
+composed of.  Moreover, the larger ones of the factors above are
+divisible by the smaller ones of them:
+
+5124733305108403985385 / 15010910703015 = 341400559
+149784613473514443594783892995 / 5124733305108403985385 = 29227787
+
+So these are pretty much arbitrary, process-dependent combinations of
+smaller factors, and thus their bit patterns, etc. don't tell us much or
+anything about the nature of bugs in key generation, if there were any.
+(I say "if there were any" since the keys could as well have been
+mangled later.)
+
+BTW, had I not realized the above, I would now come up with an even more
+complex conspiracy theory about 149784613473514443594783892995, which is
+0x1E3FAEDA6A4F093A7C0F5A603, so:
+
+limb[0] = 0xC0F5A603
+limb[1] = 0xA4F093A7
+limb[2] = 0xE3FAEDA6
+limb[3] = 1
+
+which satisfies:
+
+limb[1] = limb[0] + limb[2] + 2
+
+No idea why it's "+ 2" here, unlike in the smaller factor's example, but
+like I say this is just a conspiracy theory, and I think the simple
+explanation is it's an artifact of the process rather than any inherent
+property of the keys.
+
+Thus, I think it makes sense to focus on searching for bugs producing
+the 32-bit duplicated e's, after all.  And it also makes sense to
+validate those keys - not merely rely on data already in these factoring
+projects' databases.
+
+Could it be that all of the broken e keys were generated by OpenSSL from
+year 2000 or earlier?  Embedded copies in proprietary PGP implementations
+that have since been rebuilt for 64-bit?  Doesn't sound very realistic,
+but who knows.
+
+Alexander
