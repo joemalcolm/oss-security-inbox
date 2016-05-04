@@ -1,64 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/20/4
-Message-Id: <B8DA6832-45AA-4600-990A-EF50B18EDFCD@beckweb.net>
-Date: Mon, 20 Jun 2016 19:00:33 +0200
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Jenkins plugins -- multiple fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/21
+Message-ID: <CANO=Ty0PxH3R6erUL1y=zoqpuxTh3y8Kxu_D6i60gnC=F=EcWA@mail.gmail.com>
+Date: Wed, 4 May 2016 10:47:11 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Older OpenSSL RSA key/64 bit bug (now with added CVE!)
 Content-Type: text/plain; charset=utf-8
 
-The Jenkins project published plugin updates today with fixes for multiple 
-vulnerabilities. Users should upgrade these plugins to the indicated 
-versions:
-
-* Async Http Client Plugin 1.7.24.1
-* Build Failure Analyzer 1.16.0
-* Image Gallery Plugin 1.4
-* TAP Plugin 1.25
-
-Summary and description of the vulnerabilities are below. Some more details, 
-severity, and attribution can be found here:
-https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2016-05-11
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you find security vulnerabilities in Jenkins, please report them as 
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-1)
-SECURITY-85 / CVE-2016-4986:
-Path traversal vulnerability in TAP Plugin
-
-The plugin did not correctly filter a parameter and allowed reading 
-arbitrary files on the file system.
+---------- Forwarded message ----------
+From: <cve-assign@...re.org>
+Date: Wed, May 4, 2016 at 9:25 AM
+Subject: Re: [oss-security] broken RSA keys
+To: solar@...nwall.com
+Cc: cve-assign@...re.org, kseifried@...hat.com
 
 
-2)
-SECURITY-278 / CVE-2016-4987:
-Path traversal vulnerability in Image Gallery Plugin
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The plugin did not correctly validate form fields and allowed listing 
-arbitrary directories and reading arbitrary files on the file system.
+> On Wed, May 04, 2016 at 07:50:24AM -0600, Kurt Seifried wrote:
+>> Is this something we should look at with respect to CVE assignment (ala
+>> CVE-2008-0166)?
+
+> The old OpenSSL bug from 2000 could get a CVE from 2000, since that's
+> when it was publicly reported
+
+>>> http://marc.info/?l=openssl-users&m=95961024500509
+>>>
+>>> Under 64 bit HP-UX,
+>>> the problem manifests itself as RSA_F4 becoming 0x1000100010001. The bug
+>>> is that 1 is an int, and according to the ANSI C standard, shifting more
+>>> than the size of the an expression is undefined. On this architechture,
+>>> only the 5 least significant bits of the shift is used, thus 1<<32==1
+
+Use CVE-2000-1254. The commit is:
+https://git.openssl.org/?p=openssl.git;a=commit;h=db82b8f9bd432a59aea8e1014694e15fc457c2bb
+
+(We are not sure how this CVE ID would be used. It is possible that
+nobody will use this ID for OpenSSL risk management, but someone will
+use this ID in deciding to pursue further research on "shifting more
+than the size of an expression" issues.)
+
+If this ID is sent in an oss-security followup, the Subject: header
+should be changed to mention OpenSSL. Also, MITRE currently plans to
+publish the CVE for this along with the CVEs for the OpenSSL
+2016-05-03 issues, which should be very soon.
+
+- --
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXKhODAAoJEHb/MwWLVhi2bREQAKYSRGk+hCcwiAy19+RYQC1g
+AvRnK7+5kJnLXVdQO7K2yPQo1aLHcKgbmv+VNcu9tf4kJg/7ebROecdgrtWXHzI1
+yksyozDzX574LtFuyBWDax7ethEWdHY1BSmSWRIUOmFj6IOTSks8eI7T5rgEd+Gp
+dB2kRLSKEWlPV1ld6B//bfnW1bo/cbfuEgxCkpYh97zwbADSZdGltTqpvzQGt6d/
+BRCDLoV688aTS1lEqrrmxcf4BaAWUa1TMHuCg3GSuTfnu8iVDvOuuMrvDItpmovk
+5/Z3G/Z23RHwAq6R8yMmXPdDq4aelS0IzxuFCCEU9zCcZsAc90HP1Vt6CDgOQagW
+kVRMi2wTVsy+FqlMyDN5CeGDmwlKe5BegAB/sanRzUlv4gn0/rpF223bvgKcYYRc
+4LJlOMxhn+eymktp+8neJhwlR5rWzC2Na4HxJFitKQmv2FnQhzYD3BvNyhQSPwJ9
+k4ky1/+/T6WyxNNXsA2DnqbYBgDD4crq58IDHfdVEBXpq+wiyGT+b32FS1+fLC29
+cIi97XUrzUh6Fzvx1m3Bjwbt31B/lWs13iNy8qz5Z+91Y6ud5UERqjZ2ogv/AVIX
+Na3ycUizKATKRdfr2WuEOFXR5Cu+rLB8ayPVlKAc8bNeUcWpOoWUrWTsTyBC0rzT
+yka/lgb3X77XRXs9gYgt
+=yEbu
+-----END PGP SIGNATURE-----
 
 
-3)
-SECURITY-290 / CVE-2016-4988:
-Cross-site scripting vulnerability in Build Failure Analyzer Plugin
 
-The plugin did not escape a parameter echoed on an HTML page, resulting in a 
-reflected XSS vulnerability.
+-- 
 
-
-4)
-SECURITY-305 / CVE-2013-7397 and CVE-2013-7398:
-Async HTTP Client Plugin does not properly validate certificates
-
-Async HTTP Client Plugin provides the Async HTTP Client Java library to 
-other plugins. It is based on the 1.7.x line of AHC, which by default is 
-vulnerable to CVE-2013-7397 and CVE-2013-7398, allowing man-in-the-middle 
-attacks. The fixes for these vulnerabilities were backported.
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
