@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2190" "Sunday" "24" "January" "2016" "13:03:13" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160124180313.5D41C6C04A5@smtpvmsrv1.mitre.org>" "52" "[oss-security] Re: CVE Request: Linux: fuse: possible denial of service in fuse_fill_write_pages()" nil nil nil "1" "2016012418:03:13" "[oss-security] Re: CVE Request: Linux: fuse: possible denial of service in fuse_fill_write_pages()" (number mark "U       cve-assign@m Jan 24   52/2190  " thread-indent "\"[oss-security] Re: CVE Request: Linux: fuse: possible denial of service in fuse_fill_write_pages()\"\n") "<20160124064746.GA23949@eldamar.local>" ("<20160124064746.GA23949@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["355" "Wednesday" "4" "May" "2016" "10:34:58" "+0200" "Albert Veli" "albert.veli@gmail.com" "<5729B432.3070503@gmail.com>" "11" "Re: [oss-security] OpenSSL Security Advisory [3rd May 2016]" "^Cc:" nil nil "5" "2016050408:34:58" "[oss-security] OpenSSL Security Advisory [3rd May 2016]" (number mark "        albert.veli@ May  4   11/355   " thread-indent "\"Re: [oss-security] OpenSSL Security Advisory [3rd May 2016]\"\n") "<87y47qmdwn.fsf@devnull.wylie.me.uk>" ("<20160503152100.GA4790@openwall.com>" "<52f58a81-5a5a-005d-cc87-27f1cce0379e@gmail.com>" "<20160503173526.GA6669@openwall.com>" "<74d54064-2a90-1170-1abb-7729216b461b@gmail.com>" "<57298BB0.5070507@gmail.com>" "<87y47qmdwn.fsf@devnull.wylie.me.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28231 invoked by uid 550); 24 Jan 2016 18:03:29 -0000
+Received: (qmail 13315 invoked by uid 550); 4 May 2016 09:43:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 22028 invoked from network); 4 May 2016 08:35:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=A2NTS+uPERLIDpj/yL6VYSdnYpc34iHG3nc3Q+iR+A8=;
+        b=OqmhHZuXwQlj7hKvYsE5/qp2zXjpJPFXuZoo27cSspAHeF2R1KYuyJGKHMApKQf4zp
+         rRPGBZKgzNklqRoPga2/XoMRd2CHs4uNZ5n7PEcuMPdpk0sx0W1xyROz9VfQ/3iW/vSK
+         61Zt3n45d0YSD3GOjMg2dwMGIsr5Jj58B1P/L0cMzTpQVu0dfcC2Npiz2A7sQaSIoqYb
+         SqIWt2OXRBkPOAO/F8gOtAjW7Zsl2wammhYagjVePHqmuxJW4g/11Dd6A7wINeMYSVjt
+         d32r+d48hYuaQQkO2leL2a4r/1oAF1Q6OwvigG57RXZc4FbyxsKZzOrl2pbMEsUq2gNl
+         hLBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=A2NTS+uPERLIDpj/yL6VYSdnYpc34iHG3nc3Q+iR+A8=;
+        b=aHvojbA+XKgNcKzXH7+OFYWWDDya9qRcD0B9f9gOqEM2zNorbDKTkqcX62VM4XxwJq
+         m9RWtDw6N3iu9TVGIQ3ksF6u/KS4kIf+RHu+Q7+9hSl7jz+1q1qDJEC05+1ON3YV7T0V
+         8AY9JaehKK0cBzsKTYwKsSqnKeiUgB2HsVhfJSQzMAGiEI8mAomEeMpBqmnRRo36HN96
+         DFcUqzdLBSR+FSyCbsbMsdbzJrPSMC8itBRtLOQ+1clj/xgt67Tfn3QiVY1/pNDXJUNf
+         mg+PdS6jMAMdubTRHwkDha5MQmexUdhuHisOTaMhC0+uLIBq88vpk5avUyKSF057SpOw
+         DGUg==
+X-Gm-Message-State: AOPr4FW/kE5xz12ftVU+zn9iPP9Dj1oWsgMtx/qjl4VZL3TQR8N58BBM1Mg03j5dSvKDyg==
+X-Received: by 10.25.91.213 with SMTP id p204mr3023274lfb.167.1462350900148;
+        Wed, 04 May 2016 01:35:00 -0700 (PDT)
+References: <20160503152100.GA4790@openwall.com>
+ <52f58a81-5a5a-005d-cc87-27f1cce0379e@gmail.com>
+ <20160503173526.GA6669@openwall.com>
+ <74d54064-2a90-1170-1abb-7729216b461b@gmail.com> <57298BB0.5070507@gmail.com>
+ <87y47qmdwn.fsf@devnull.wylie.me.uk>
+Message-ID: <5729B432.3070503@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
+MIME-Version: 1.0
+In-Reply-To: <87y47qmdwn.fsf@devnull.wylie.me.uk>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: oss-security@lists.openwall.com
+Date: Wed, 4 May 2016 10:34:58 +0200
+From: Albert Veli <albert.veli@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28173 invoked from network); 24 Jan 2016 18:03:24 -0000
-From: cve-assign@mitre.org
-To: carnil@debian.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20160124064746.GA23949@eldamar.local>
-Message-Id: <20160124180313.5D41C6C04A5@smtpvmsrv1.mitre.org>
-Date: Sun, 24 Jan 2016 13:03:13 -0500 (EST)
-Subject: [oss-security] Re: CVE Request: Linux: fuse: possible denial of service in fuse_fill_write_pages()
+Subject: Re: [oss-security] OpenSSL Security Advisory [3rd May 2016]
+To: "Alan J. Wylie" <iwnwi1owfl@wylie.me.uk>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 2016-05-04 10:21, Alan J. Wylie wrote:
+> https://twitter.com/bob_beck/status/727478594591543296
+>
+> Bob Beck @bob_beck 
+>
+> LibreSSL is vulnerable to the same issues as OpenSSL CVE-2016-2105
+> through 2019 - fixes are forthcoming today as well.
+>
+Ok, then I guess the patches are these ones:
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1290642
-> https://git.kernel.org/linus/3ca8138f014a913f98e6ef40e939868e1e9ea876
-
-> I got a report about unkillable task eating CPU. Further investigation
-> shows, that the problem is in the fuse_fill_write_pages() function. If
-> iov's first segment has zero length, we get an infinite loop, because
-> we never reach iov_iter_advance() call.
-
-Use CVE-2015-8785.
-
-
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=124d3b7041f9a0ca7c43a6293e1cae4576c32fd5
-
-> Frederik Himpe reported an unkillable and un-straceable pan process.
-
-> Zero length iovecs can go into an infinite loop in writev, because the
-> iovec iterator does not always advance over them.
-
-> The sequence required to trigger this is not trivial. I think it
-> requires that a zero-length iovec be followed by a non-zero-length
-> iovec which causes a pagefault in the atomic usercopy. This causes the
-> writev code to drop back into single-segment copy mode, which then
-> tries to copy the 0 bytes of the zero-length iovec; a zero length copy
-> looks like a failure though, so it loops.
-
-Use CVE-2008-7316.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWpQ7BAAoJEL54rhJi8gl5Am8QAIDWhohuCTV/LLATmZ2l79qT
-6nH6UaXEQDTBLo3zaroI37UuALPBO3jj6gs+QrvAgs/p6lIVmYVZXbW+s23JXcly
-UaF82HMfSa7G4TpErnY140XiyuY9litUunfxtJ1GBaB+NYDyPKOUI2O/LAfbnS7J
-KvkB+9fzPNb6sgmHCNVtLQB8FI/zWscDL+YUAJtRlFzaj6m4Zmld+DfgNKEVj5v5
-BYx2arc67iCKDeravJ+FTBJ7q332z/zgDjYOYSsHRlsBtkcZjkOXQaFDxEXOMXUK
-VWjA3HG4UIryj5lt0WCJvrxEVQGUKxuKqoznYb9n2yUeIX/tpqbARkHxAkcaoZch
-N9qSZS7aoSqb0Zpg2kJPzrpM7lFsyZUARYoX4JzeNC/luFxfcyyD4Rsq6ZvtS4gN
-626g1nWB8te7xtUAWL8EEvAyLi8M5Xy9yNBQ/TJvi4AYUgMMJcRTzQNwEstwwIiv
-k0jo9ExujeusDwJ0OTww7jtqfHLeyY+WqwWK11Lfs7A1a03qMgmcYTQoZ/PFyklX
-SKygUyCIh8ampY97myeL6pa7Vk4gBnlcntr7hmCBKVPGY7uJbKC/21pgkuwoMAs9
-0E5vO/87fYlrWv1NYoGomk/fYWKFBgtmDLDP/9Cr0wqkxL/zYTurKiCTxo/MFJUw
-maIt64IN9PU7Nt9URjLb
-=2eQ6
------END PGP SIGNATURE-----
+http://marc.info/?l=openbsd-announce&m=146228598930416&w=2
