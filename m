@@ -1,4 +1,9 @@
-Received: (qmail 27859 invoked by uid 550); 15 Jul 2024 23:12:08 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["340" "Wednesday" "4" "May" "2016" "21:42:47" "+0300" "Alexander Cherepanov" "ch3root@openwall.com" "<572A42A7.90407@openwall.com>" "11" "Re: [oss-security] broken RSA keys" "^Date:" nil nil "5" "2016050418:42:47" "[oss-security] broken RSA keys" (number mark "        ch3root@open May  4   11/340   " thread-indent "\"Re: [oss-security] broken RSA keys\"\n") "<20160504124248.GA15148@openwall.com>" ("<20160504124248.GA15148@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 25716 invoked by uid 550); 4 May 2016 18:43:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,45 +11,28 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13853 invoked from network); 15 Jul 2024 23:05:15 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Huajie Wang <benjobs@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <5c661d31-4e97-a79c-b0ff-3f23b6bab847@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 15 Jul 2024 23:05:06 +0000
+Received: (qmail 25698 invoked from network); 4 May 2016 18:42:59 -0000
+References: <20160504124248.GA15148@openwall.com>
+X-Enigmail-Draft-Status: N1110
+Message-ID: <572A42A7.90407@openwall.com>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-52290: Apache StreamPark (incubating): Unchecked SQL
- query fields trigger SQL injection vulnerability 
+In-Reply-To: <20160504124248.GA15148@openwall.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Date: Wed, 4 May 2016 21:42:47 +0300
+From: Alexander Cherepanov <ch3root@openwall.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] broken RSA keys
+To: oss-security@lists.openwall.com
 
-Severity: low
+On 05/04/2016 03:42 PM, Solar Designer wrote:
+> 0x115CFF61CFECFF61BE9, where we see three 32-bit limbs satisfying:
+>
+> limb[1] = limb[0] + limb[2]
 
-Affected versions:
+This just means that the number came from two-limb number with limbs 
+limb_src[1] = limb[1] - limb[0] and limb_src[0] = limb[0] by multiplying 
+it by 2**32 + 1. HTH.
 
-- Apache StreamPark (incubating) 2.0.0 before 2.1.4
-
-Description:
-
-In streampark-console the list pages(e.g: application pages), users can sor=
-t page by field. This sort field is sent from the front-end to the back-end=
-, and the SQL query is generated using this field. However, because this so=
-rt field isn't validated, there is a risk of SQL injection vulnerability.=
-=C2=A0The attacker must successfully log into the system to launch an attac=
-k, which may cause data leakage. Since no data will be written, so this is =
-a low-impact vulnerability.
-
-Mitigation:
-
-all users should upgrade to 2.1.4,  Such parameters will be blocked.
-
-Credit:
-
-thiscodecc of MoyunSec Vlab and Bing (reporter)
-
-References:
-
-https://streampark.incubator.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2023-52290
-
+-- 
+Alexander Cherepanov
