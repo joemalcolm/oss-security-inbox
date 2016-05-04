@@ -1,4 +1,9 @@
-Received: (qmail 13436 invoked by uid 550); 4 Nov 2025 16:03:05 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3367" "Wednesday" "4" "May" "2016" "14:23:36" "+0200" "Adrien Nader" "adrien@notk.org" "<20160504122336.GA14517@notk.org>" "71" "Re: [oss-security] libonion 0.8 contains security fixes" "^Cc:" nil nil "5" "2016050412:23:36" "[oss-security] libonion 0.8 contains security fixes" (number mark "        adrien@notk. May  4   71/3367  " thread-indent "\"Re: [oss-security] libonion 0.8 contains security fixes\"\n") "<20160504094225.GA12893@openwall.com>" ("<20160504094225.GA12893@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 25659 invoked by uid 550); 4 May 2016 12:37:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,85 +11,92 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1264 invoked from network); 4 Nov 2025 11:48:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1762256874;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=0BrNF432Z4n64dUFIzOn8mjxTD2FqxeD94p+r4biVTY=;
-	b=e7YOD08gpH/AG6kpGnrzyKMZfc4JGC9TovPyvneldBw5CQWhEyVvSoxyGamW9ocerfnfY0
-	mUnYxtNX52fqSzzsX3vjYrm39eBLqHaREXdsp5ZFHyD3nvq3JgkTkjXP4JB3lhyBj3loel
-	y5YW9DMgp2snZn/n1CA2pH7Mg8BjogE=
-X-MC-Unique: 8Yr-qJwEPAiLFP4eQXmyLg-1
-X-Mimecast-MFC-AGG-ID: 8Yr-qJwEPAiLFP4eQXmyLg_1762256868
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762256866; x=1762861666;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0BrNF432Z4n64dUFIzOn8mjxTD2FqxeD94p+r4biVTY=;
-        b=dxghQdsdArJP3bavZOJyNUy7IZYT62hF4Nfoc+LCXbJwt9gF1r8IfMdaHuhPH/nPeF
-         XwD6w4sG7mfyYniwW0OaBhzbp+XN89xDH0+ciKj/FZS3mU9neUL6zHuhIwkYhTz2kMjh
-         5lsE4um7vc7bkpG4OJQDUp2roa42z0GhT6QgTFUKEIl7lnzaN6sIFj34bLKr+C/JFXY4
-         lr3lirxtKoeJ7NyfJlCgARSks+wNajpcOa41mMDyzkv/YmVpFzleWbfBVaNFaaSGNHZq
-         qAf56TyI+Bcnezv9rwfEEj+eqCFqDC/kBzC4dn144igzWH0mTXGSpPcP9KMQDJLU/R5+
-         NOAA==
-X-Gm-Message-State: AOJu0Yyipk6nSdPAIFJP9svZhTu66s1bQnZts37DTURV0/eMPesnoEsk
-	GWHWt7lBX02SigpiD9mEaCXXLeptWtnooGmmahkaK7Yhq6MIkZlAE1jcEZt1SzOYmJZKPdiDs40
-	Y6hULluPZC/ZySeEzt+sc2Pmw4lsjTuIsSfC4Mx5/z2fXb7fTNCFJQrBl7knunsyom9LwsWBHRU
-	Leyp04MhAXSnRajrt+fyq+CgU1oHgk4V2s0OG37DRxnQCk1virZxZMGBc=
-X-Gm-Gg: ASbGncv7r1K/smOt1gquegGGKBs1H51R2l9/o8769hFmDbafh32pV1uNwMLHbSC3F+W
-	HPl0GgL61oTjEOQPJJvfuvjMBuW7pclhjdxI2jQhebNbkt1smJznM0mpesxR6fM36t5O0YmFPWL
-	G+1X8Bn00rOUNuGE2TkATmwd27qLOXQ3CjRRV5+ASWFaNTznIPabZ3nw==
-X-Received: by 2002:a17:90b:3fc3:b0:340:d1a1:af6d with SMTP id 98e67ed59e1d1-340d1a1b159mr14603396a91.36.1762256866625;
-        Tue, 04 Nov 2025 03:47:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGEYbjb5CqD2t0QapaiRqcGj2IXTcnTcKrE3xsaLNn3lHy9giO9DhMjoSvyBjJsT64b/WeFraxrU3y3XnWdOPs=
-X-Received: by 2002:a17:90b:3fc3:b0:340:d1a1:af6d with SMTP id
- 98e67ed59e1d1-340d1a1b159mr14603359a91.36.1762256866088; Tue, 04 Nov 2025
- 03:47:46 -0800 (PST)
+Received: (qmail 11878 invoked from network); 4 May 2016 12:23:47 -0000
+Message-ID: <20160504122336.GA14517@notk.org>
+References: <20160504094225.GA12893@openwall.com>
 MIME-Version: 1.0
-From: Rodrigo Freire <rfreire@redhat.com>
-Date: Tue, 4 Nov 2025 08:47:35 -0300
-X-Gm-Features: AWmQ_bl6jyFUIa4aQR0xXfCgBkwLlKawCIuOyZFXzqIzwN5zZdV6vV2Ag4gQb1c
-Message-ID: <CAHjsZGZvy3zeN3st9-Ya4Hxu+29My68sXc9WJnZw_Pd2c_AF6Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20160504094225.GA12893@openwall.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Cc: David Moreno Montero <dmoreno@coralbits.com>,
+	Zachary Grafton <zachary.grafton@gmail.com>,
+	Remi Birot-Delrue <asgeir@free.fr>
+Date: Wed, 4 May 2016 14:23:36 +0200
+From: Adrien Nader <adrien@notk.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] libonion 0.8 contains security fixes
 To: oss-security@lists.openwall.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: g47A8FKbVZoa10W2vOGjyXDboEaBg0nUmyCxLgR64WE_1762256868
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Becoming a CVE Naming Authority for your project
 
-Open Source Project Maintainers,
+Hi,
 
-Managing security vulnerabilities is currently a significant pain,
-especially with the recent increase in dubious CVE reports due to AI
-assistants. The discussion around questionable CVEs reported against
-projects like dnsmasq, curl highlights a growing concern within the
-open source community.
+On Wed, May 04, 2016, Solar Designer wrote:
+> In particular, when the library is built with Linux epoll support and is
+> used in the pool of threads mode, as invoked with onion_new(O_POOL),
+> there was a file descriptor and data race condition between handling of
+> epoll events and timeout events.> 
+> [...]
 
-One effective way to combat the influx of bogus CVEs and ensure
-accurate vulnerability reporting is for open source projects to become
-their own CVE Numbering Authority (CNA). As a CNA, your project gains
-control over the CVE assignment process.
+This kind of issue is not limited to multi-threading: I've encountered
+the same thing (in another, non-free, product) because file descriptors
+were dup'ed() in order to ease management and were then passed to epoll.
 
-Taking ownership of your project's as a CNA ensures that you are in
-control of the CVE assignment. There will be some requirements to it,
-sure thing. Check
-https://openssf.org/blog/2023/11/27/openssf-introduces-guide-to-becoming-a-cve-numbering-authority-as-an-open-source-project/
+Doing this is probably a typical use of epoll. In man 7 epoll, the second
+question in the "Question and answers" section is:
 
-If you want to learn more and how it impacted an open source project,
-reach for the glibc (in the past, a frequent topic here in this
-mailing list) security community
-(https://sourceware.org/glibc/security.html) and ask them your
-questions.
+  What  happens  if you register the same file descriptor on an epoll
+  instance twice?
 
-If you're interested in learning more about becoming a CNA, Red Hat
-(along Google, INCIBE, JPCERT/CC, and Thales Group) can help you.
-Reach ymittal@redhat.com and we will be happy to help.
+  You will probably get EEXIST.  However, it is  possible  to  add  a
+  duplicate  (dup(2),  dup2(2),  fcntl(2) F_DUPFD) file descriptor to
+  the same epoll instance.  This can be a useful technique  for  fil‐
+  tering  events,  if  the  duplicate file descriptors are registered
+  with different events masks.
 
-Best regards;
+In my case, one fd was used to wait on input operations and then dup'ed
+to be used for output operations. Otherwise we had to remember which
+flags had been set when we wanted to stop getting events about
+writeability (i.e. "was EPOLLIN also set?") and the logic was much more
+complex in the end.
 
-Rodrigo Freire
-Chief Architect
+However, epoll_wait() can return events for both file descriptors in a
+single call and it is possible to free the associated data because of
+the first event, do some other work and then handle the work for the
+dup'ed file descriptor.
 
+The code isn't using one-shot and the fix was to invalidate the event
+set upon closing any connection, stop treating the current event batch
+and call epoll_wait() again (remember: not one-shot mode so no event is
+lost).
+
+> commit 4e111f30c1adf0ba0d5814a24f904dea35310a37
+> Author: Solar Designer <solar@openwall.com>
+> Date:   Sun Mar 27 19:16:04 2016 +0300
+> 
+>     Complete the implementation of Rich Felker's idea (partially introduced
+>     with commit c80c46d5ff842291f0cce3917e7b8340c43d4315) to shutdown()
+>     rather than close() on timeout, so that the fd is held until after
+>     another one-shot epoll event arrives.  This way, we don't close the fd
+>     (thereby not freeing it for possible reuse just yet) and don't free the
+>     slot asynchronously to a possible event for the same slot on another
+>     thread.  When we do receive another event for the shutdown() fd, we
+>     expect that no concurrent event is being processed for the same fd and
+>     the same slot due to the one-shot property of the epoll instance.
+>     In other words, we postpone the potential fd and slot memory reuse until
+>     after we're out of the asynchronous timeout handling and into the
+>     per-slot synchronous one-shot event handling.
+> 
+>     Handle timeouts in busy servers more optimally: check for them once per
+>     second (and per thread for now) rather than once per event.
+
+I've also found myself calling shutdown() simply so that I could
+receive an error event and could then close everything, albeit in a
+slightly different context.
+
+I'm wondering if this is a common practice. I hadn't read about it I
+think and I'm once again wondering how many people do this. Also, does
+anyone know of more "usage tricks" than what is in man 7 epoll?
+
+-- 
+Adrien Nader
