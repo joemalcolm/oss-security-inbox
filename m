@@ -1,10 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/29/4
-Message-ID: <CACn5sdQ2Au8Ewz4rB5ju_KZLCLTFmfJDDoVL-gb5-Mo-3h+5Rg@mail.gmail.com>
-Date: Fri, 29 Apr 2016 09:48:40 +0200
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Mplayer/Mencoder integer overflow parsing gif files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/26
+Message-ID: <CABEk9YxcYnhx2VDgzVztLSdY0hjGe20=7P=yp6v3WyE9-tHyfQ@mail.gmail.com>
+Date: Wed, 4 May 2016 16:43:36 -0400
+From: Kangjie Lu <kangjielu@...il.com>
+To: oss-security@...ts.openwall.com, Chengyu Song <csong84@...ech.edu>,  Taesoo Kim <taesoo@...ech.edu>, Insu Yun <insu@...ech.edu>
+Subject: CVE Request: kernel information leak vulnerability in llc module
 Content-Type: text/plain; charset=utf-8
 
-Ups, the correct link is this one: https://trac.mplayerhq.hu/ticket/2295
+Hello,
+
+We found a kernel information leak vulnerability in the llc module.
+In the file "net/llc/af_llc.c", The stack object “info” has a total size of
+12 bytes. Its last byte is padding which is not initialized and leaked
+via “put_cmsg”.
+
+Our patch to this vulnerability has been accepted and applied by
+linux kernel maintainer (please refer to the message bellow).
+
+Fix info:
+http://marc.info/?l=linux-netdev&m=146239325130106&w=2
+http://marc.info/?l=linux-kernel&m=146239321930088&w=2
+
+
+Please help assign a CVE to this vulnerability.
+
+
+
+Thanks a lot!
+Kangjie Lu
+
+
+
+
+---------- Forwarded message ----------
+From: David Miller <davem@...emloft.net>
+Date: Wed, May 4, 2016 at 4:20 PM
+Subject: Re: [PATCH] fix infoleak in llc
+To: kangjielu@...il.com
+Cc: acme@...stprotocols.net, netdev@...r.kernel.org,
+linux-kernel@...r.kernel.org, taesoo@...ech.edu, insu@...ech.edu,
+kjlu@...ech.edu
+
+
+From: Kangjie Lu <kangjielu@...il.com>
+Date: Tue,  3 May 2016 16:35:05 -0400
+
+> The stack object “info” has a total size of 12 bytes. Its last byte
+> is padding which is not initialized and leaked via “put_cmsg”.
+>
+> Signed-off-by: Kangjie Lu <kjlu@...ech.edu>
+
+Applied.
+
