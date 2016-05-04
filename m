@@ -1,29 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/30/1
-Message-ID: <CALJHwhQQb3HXqR35yb7bjQPbUpN1vHH_=ETEyMq7LQ+6VLbkHA@mail.gmail.com>
-Date: Wed, 30 Nov 2016 19:10:43 +1100
-From: Wade Mealing <wmealing@...hat.com>
-To: oss-security@...ts.openwall.com, CVE ID Requests <cve-assign@...re.org>
-Subject: cve-request: linux kernel - memory leak in xfs attribute mechanism.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/2
+Message-ID: <CABEk9YwFJU6942BNgFfao4pU+zzT_5-CYPa0N_=aSVzoFmVHwQ@mail.gmail.com>
+Date: Tue, 3 May 2016 20:52:55 -0400
+From: Kangjie Lu <kangjielu@...il.com>
+To: oss-security@...ts.openwall.com, Taesoo Kim <taesoo@...ech.edu>,  Chengyu Song <csong84@...ech.edu>, Insu Yun <insu@...ech.edu>
+Subject: CVE Request: information leak in devio of Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+Hello,
 
-I'd like to request a CVE for the following flaw found in the XFS
-attribute management code where over-eager error handling could create
-a memory leak (not in information leak) and perhaps with enough
-dedication and patience a local attacker could eventually leak
-available system memory, creating a DOS attack.
+In the USB module (drivers/usb/core/devio.c), The stack object “ci” has a
+total
+size of 8 bytes. Its last 3 bytes are padding bytes which are not
+initialized and
+leaked to userland via “copy_to_user”.
 
-As this same flaw style appears in two functions, this could have one
-or two CVE's, I'll leave it up to the fine assigners at mitre to
-decide that.
+The patch of this bug has been accepted by Linux kernel maintainer and will
+be
+merged in the next major kernel release (see the bellow message).
+
+Fix info:
+http://www.spinics.net/lists/linux-usb/msg140243.html
+git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git
+
+Could you please assign a CVE to it?
 
 Thanks,
+Kangjie Lu
 
-Wade Mealing
-Red Hat Product Security
 
-Upstream:
 
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=2e83b79b2d6c78bf1b4aa227938a214dcbddc83f
+
+---------- Forwarded message ----------
+From: <gregkh@...uxfoundation.org>
+Date: Tue, May 3, 2016 at 7:23 PM
+Subject: patch "USB: usbfs: fix potential infoleak in devio" added to
+usb-next
+To: kangjielu@...il.com, gregkh@...uxfoundation.org, kjlu@...ech.edu
+
+
+
+This is a note to let you know that I've just added the patch titled
+
+    USB: usbfs: fix potential infoleak in devio
+
+to my usb git tree which can be found at
+    git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git
+in the usb-next branch.
+
+The patch will show up in the next release of the linux-next tree
+(usually sometime within the next 24 hours during the week.)
+
+The patch will also be merged in the next major kernel release
+during the merge window.
+
+If you have any questions about this process, please let me know.
+
+
+>From 681fef8380eb818c0b845fca5d2ab1dcbab114ee Mon Sep 17 00:00:00 2001
+From: Kangjie Lu <kangjielu@...il.com>
+Date: Tue, 3 May 2016 16:32:16 -0400
+Subject: USB: usbfs: fix potential infoleak in devio
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The stack object “ci” has a total size of 8 bytes. Its last 3 bytes
+are padding bytes which are not initialized and leaked to userland
+via “copy_to_user”.
+
+Signed-off-by: Kangjie Lu <kjlu@...ech.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
+---
+ drivers/usb/core/devio.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/usb/core/devio.c b/drivers/usb/core/devio.c
+index 73ce87166401..e9f5043a2167 100644
+--- a/drivers/usb/core/devio.c
++++ b/drivers/usb/core/devio.c
+@@ -1316,10 +1316,11 @@ static int proc_getdriver(struct usb_dev_state *ps,
+void __user *arg)
+
+ static int proc_connectinfo(struct usb_dev_state *ps, void __user *arg)
+ {
+-       struct usbdevfs_connectinfo ci = {
+-               .devnum = ps->dev->devnum,
+-               .slow = ps->dev->speed == USB_SPEED_LOW
+-       };
++       struct usbdevfs_connectinfo ci;
++
++       memset(&ci, 0, sizeof(ci));
++       ci.devnum = ps->dev->devnum;
++       ci.slow = ps->dev->speed == USB_SPEED_LOW;
+
+        if (copy_to_user(arg, &ci, sizeof(ci)))
+                return -EFAULT;
+--
+2.8.2
+
