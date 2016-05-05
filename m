@@ -1,52 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/01/12
-Message-ID: <20161201190542.hbicm7xfeflknmuu@eldamar.local>
-Date: Thu, 1 Dec 2016 20:05:42 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: OpenAFS: directory information leaks (OPENAFS-SA-2016-003)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/20
+Message-ID: <572B56FA.1030507@openwall.com>
+Date: Thu, 5 May 2016 17:21:46 +0300
+From: Alexander Cherepanov <ch3root@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: broken RSA keys
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On 2016-05-05 12:23, Hanno Böck wrote:
+> What one will find are 273 vulnerable moduli.
 
-The OpenAFS project has released a security advisory:
+I've took a look.
 
-https://www.openafs.org/pages/security/OPENAFS-SA-2016-003.txt
+174 moduli are divisible by 2**32+1. All of them consist of duplicated 
+32-bit limbs, as we have already seen in previous examples. There are no 
+exponents in the set, so I've only checked moduli.
 
-OpenAFS Security Advisory 2016-003
+214 moduli are both in this set and in the phuctor set. There are 11 
+moduli that are in phuctor only:
 
-> Topic: directory information leakage
->                                                                                                   
-> Issued: 30 November, 2016
-> Affected: OpenAFS client versions 1.0 through 1.6.19
->           OpenAFS servers versions 1.0 through 1.6.19
-> 
-> The contents of OpenAFS directories may be leaked in client cache partitions,
-> in fileserver vice partitions, and on the wire for certain RPCs.
-> 
-> SUMMARY
-> =======
-> 
-> Due to incomplete initialization or clearing of reused memory, OpenAFS
-> directory objects are likely to contain "dead" directory entry information.
-> This extraneous information is not active - that is, it is logically invisible
-> to the fileserver and client. However, the leaked information is physically
-> visible on the fileserver vice partition, on the wire in FetchData replies and
-> other RPCs, and on the client cache partition. This constitutes a leak of
-> directory information.
+http://phuctor.nosuchlabs.com/gpgkey/8382619625FF6F7D4A9D62B3DA6CD70227AE2FE8329BAEDCB1B84A7D7B01F43B
+http://phuctor.nosuchlabs.com/gpgkey/70B3180A25B248F090A74547A31373B2BFB1AE203632D24A26181CE0B0E1D24B
+http://phuctor.nosuchlabs.com/gpgkey/BC8A4290FD0B2F36F20B7CF469D06CACB67204EE47E9E38C4077699C95F190C1
+http://phuctor.nosuchlabs.com/gpgkey/73B5D08E0F43710FC8E04037FFDE987E9C2F648297F9D24CE29D4068A7B86964
+http://phuctor.nosuchlabs.com/gpgkey/94E0C9E553C74A3A837160998693F14D8895AED0F4575565CBC3EB94DA4DE610
+http://phuctor.nosuchlabs.com/gpgkey/3C76C921ACD9ED4BE60ECD06C341CD8F18952E398C63CD4C958503DA9E42C1B2
+http://phuctor.nosuchlabs.com/gpgkey/07C61F68A5980FFB9272A759B577A7338D559B2EF7E17FA24AC14F62808B46E2
+http://phuctor.nosuchlabs.com/gpgkey/B731C95FA850A5B27F1A5FC534AA85C6768AF95600A3F1DEC3A63E78F0AA48C9
+http://phuctor.nosuchlabs.com/gpgkey/01DD7A44EC310DA9E8EB4726A32C322F6990CE6EFC4CFAA44486AA8619C21894
+http://phuctor.nosuchlabs.com/gpgkey/90BC6D88C26403285CF4A89F6E0501D31AD908A598A81BB09E41E0C981C24091
+http://phuctor.nosuchlabs.com/gpgkey/65B890243C97BE24B5089EA8B1F6A3BDA129651C31BD33A106BD44ECD8FD8E95
 
-I'm attaching the full advisory for reference (and to have it int the
-list archives).
+> I'll upload a keyids file to the pgpmoduli repo:
+> https://github.com/hannob/pgpmoduli
+>
+> The way to interpret that data is that line numbers match. I.e. the gcd
+> in line 10 of gcds matches the modulus in line 10 of vulnerable_moduli
+> and the keyid in line 10 of keyids etc.
 
-Patches:
+There are only 259 keyids though.
 
-https://www.openafs.org/pages/security/openafs-sa-2016-003.patch
-https://www.openafs.org/pages/security/openafs-sa-2016-003-master.patch
-
-Could you please assign a CVE for the directory information leak issue
-in OpenAFS?
-
-Regards,
-Salvatore
-
-View attachment "OPENAFS-SA-2016-003.txt" of type "text/plain" (4779 bytes)
+-- 
+Alexander Cherepanov
