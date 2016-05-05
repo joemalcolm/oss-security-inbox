@@ -1,45 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/17
-Message-ID: <20160224191054.GD19242@ubuntumail>
-Date: Wed, 24 Feb 2016 19:10:54 +0000
-From: Serge Hallyn <serge.hallyn@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/6
+Message-ID: <20160505081757.GA23172@openwall.com>
+Date: Thu, 5 May 2016 11:17:57 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Access to /dev/pts devices via pt_chown and user namespaces
+Subject: Re: broken RSA keys
 Content-Type: text/plain; charset=utf-8
 
-Quoting Dmitry V. Levin (ldv@...linux.org):
-> On Wed, Feb 24, 2016 at 07:01:11AM +0000, Simon McVittie wrote:
-> [...]
-> > <https://bugs.debian.org/717544> has some interesting background. The
-> > Debian and Ubuntu glibc maintainers tried turning off pt_chown in 2014,
-> > but had to turn it back on because it caused too many regressions: in
-> > particular "mount -t devpts devpts-foo chroot-foo/dev/pts" apparently
-> > alters the mount options for the "real" /dev/pts, not just the one being
-> > mounted in the chroot (presumably losing the noexec,nosuid,gid=5 and
-> > mode=620 or mode=600 options that are expected in Debian). I don't know
-> > whether the default mount options were subsequently altered in util-linux
-> > and/or the kernel as suggested on that bug, or whether manually mounting
-> > devpts is just not going to be a supported action in Debian 9.
+I posted some half-baked thoughts in here yesterday.  (Not that this
+message is fully baked.)  When suspecting that some of what we were
+seeing was an artifact of the process, I temporarily forgot that those
+shared factors were supposed to be GCDs (not arbitrary shared factors),
+which doesn't leave freedom to the process.  The patterns seen in the
+GCDs should in fact have to do with pairs of keys, rather than with the
+process.  Luckily, there is a simple explanation for the patterns:
+
+When a modulus is (mangled?) such that each of its 64-bit limbs consists
+of two matching 32-bit limbs, it is necessarily a multiple of 2^32+1.
+That's because it can be represented as:
+
+N = {an an ... a1 a1 a0 a0} = (2^32+1) * {0 an ... 0 a1 0 a0}
+
+where the {...} notation means concatenated 32-bit limbs (or base 2^32
+digits, if you will).  From this, it follows that pairwise GCDs of such
+moduli will also have 2^32+1 as a factor, and this is what ultimately
+causes the 32-bit limb patterns in the GCDs.  As Alexander Cherepanov
+correctly pointed out, even the seemingly slightly more complex 32-bit
+limb patterns in the GCDs are merely indication of them being multiples
+of 2^32+1.  There's probably nothing else to see here.
+
+I made the mistake yesterday of looking at hex representations of the
+posted shared factors without first looking at hex representations of
+the moduli.  Now that I just did, I see that the example modulus I
+posted does follow the pattern mentioned above, and which Stanislav
+mentioned below.
+
+On Wed, May 04, 2016 at 09:18:26PM -0400, Stanislav Datskovskiy wrote:
+> Author of Phuctor speaking.
+
+Thank you for posting your comments!
+
+> 1) We presently know of 165 keys containing 'mirrored' moduli.
+
+This is similar but not the same as the number Alexander Cherepanov
+posted after analyzing your data:
+
+"From 225 keys listed at http://phuctor.nosuchlabs.com/phuctored,
+152 ones have modulus and exponent divisible by 2**32+1
+[...]
+Modulus and exponent are divisible by 2**32+1 or not simultaneously."
+
+Is your definition of "mirrored" different from "divisible by 2**32+1",
+or does something else (what?) cause the 165 vs. 152 discrepancy?
+
+> 2) The list of affected persons and organizations includes a number of
+> possibly 'politically interesting' targets, e.g., mathematicians, open
+> source projects (Debian, a few others), plus a few other delicacies,
+> such as 'Apple Product Security', 'PGP Corporation Update Signing
+> Key', etc.
 > 
-> Linux kernel, starting with version 2.6.29, allows multiple instances
-> of devpts filesystem (assuming that CONFIG_DEVPTS_MULTIPLE_INSTANCES
-> is enabled) when "newinstance" mount option is specified for devpts.
-> The feature is primarily to support containers, but also addresses
-> the issue: 
-> https://www.kernel.org/doc/Documentation/filesystems/devpts.txt
+> 3) The 'mirrored' keys found thus far in no case have valid
+> self-signatures. (A number of the remaining phuctored keys - do.) Thus
+> it does not follow from the facts at hand that these particular keys
+> were generated /by the people and organizations whose names appear in
+> the user string/ !
 
-The problem is that while it's possible to mount a newinstance, it
-is also still possible to mount the host instance and change the
-settings.  Any rogue piece of userspace in a non-user-namespaced
-container is able to do so and mess up the host.  If new devpts
-mounts always did newinstance, then I think things would have been
-different.  But the mere availability of newinstance mounts does not
-solve this.
+Are all of the "politically interesting" targets' keys (at least those
+you explicitly listed in 2 above) "mirrored" (and don't have valid
+self-signatures, as you say)?
 
-(When the newinstance was being implemented the authors really did want
-to make it so that future mounts would remount the 'namespaced' version,
-(i.e. mount -t devpts -o newinstance /mnt; mount -t devpts /dev/pts
-would result in /mnt's superblock being used for /dev/pts), but there
-just wasn't a good way to figure out which mount that would be.)
+> 4) One parsimonious explanation for (1) given (2) and (3) is that the
+> 'mirrored' keys were generated by a malicious actor,
 
--serge
+Makes sense, but why would they similarly mangle the exponent as well?
+As Alexander Cherepanov wrote, if I understand him correctly, there's
+100% overlap between keys with such moduli and with such exponents.
+
+> who counted on the principle described at, e.g.,  https://evil32.com ,
+> https://bugs.gnupg.org/gnupg/issue1579
+
+As I understand it, the description at evil32.com in particular is about
+generating valid (and not necessarily weak) keypairs that would happen
+to have the intended 32-bit key id.  This is more computationally
+intensive than the "mirroring", but it is fast enough, is an
+older-known(?) and more obvious attack, and it doesn't expose the
+encrypted data to other/unintended attackers (OK, the "evil guys" might
+not care either way).  So it is a little bit surprising (but just a
+little) that someone would go for the "mirroring" instead.
+
+Alexander
