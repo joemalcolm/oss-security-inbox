@@ -1,27 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/12
-Message-ID: <20161214160649.GH11065@suse.de>
-Date: Wed, 14 Dec 2016 17:06:49 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: why many CVEs are ** RESERVED ** on Mitre
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/19
+Message-ID: <1afe70a0.13380.154810ba449.Coremail.pengdawei521@163.com>
+Date: Thu, 5 May 2016 21:11:44 +0800 (CST)
+From: Vinc3nt4H <pengdawei521@....com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE request - samsumg android phone TvoutService_C binder service DoS
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 14, 2016 at 03:17:57PM +0000, Sevan Janiyan wrote:
-> 
-> 
-> On 14/12/2016 15:09, Kurt Seifried wrote:
-> > I would suggest you consider getting involved in helping create CVEs if it
-> > is such an important resource, rather then just being a somewhat classic
-> > "Free rider"
-> > 
-> > https://en.wikipedia.org/wiki/Free_rider_problem
-> 
-> Would creating CVEs help with the reservations of already disclosed CVEs?
+Hi,
+Description of the potential vulnerability:
+When a app send a evil data to com. TvoutService_C service by service command (Android system command) , can cause to TvoutService_C service crash.
 
-There is a clear allocation strategy for CVEs, using a multi tiered tree
-of CNA (candidate naming authorities)
 
-CVEs are not randomly grabbed but assigned by these CNAs.
+Steps to reproduce the issue:
+1 A PC connect S6 device;
+2 Input command: adb shell;
+3 Android Input command:
+service call TvoutService_C 22 i32 1090056453 i32 1428574234 i32 836766018 i32 779588542
 
-Ciao, Marcus
+
+Affected versions: KK(4.4), L(5.0/5.1), M(6.0) 
+
+
+Fix:
+http://security.samsungmobile.com/smrupdate.html#SMR-FEB-2016
+SVE-2016-5134: TvoutService_C service DoS
+
+
+We report this to samsung, samsung reply to us if we want to get CVE request it by ourself.
+
+
+Best regards,
+Vinc3nt4H of Alibaba Mobile Security Team
