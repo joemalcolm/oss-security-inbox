@@ -1,312 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/02/13
-Message-Id: <20160602180844.04E2BB2E053@smtpvbsrv1.mitre.org>
-Date: Thu,  2 Jun 2016 14:08:44 -0400 (EDT)
-From: cve-assign@...re.org
-To: scorneli@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: ImageMagick CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/7
+Message-ID: <20160505112350.66f699b5@pc1>
+Date: Thu, 5 May 2016 11:23:50 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: broken RSA keys
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> 1) tga processing issue:
-> Double free in coders/tga.c:221 
-> https://bugs.launchpad.net/ubuntu/+source/imagemagick/+bug/1490362
-> Reportedly fixed with:
-> https://github.com/ImageMagick/ImageMagick/commit/4f68e9661518463fca523c9726bb5d940a2aa6d8
-
-Use CVE-2015-8894.
-
-
-> 2) pict/icon processing issues:
-> Integer and Buffer overflow in coders/icon.c 
-> https://bugs.launchpad.net/ubuntu/+source/imagemagick/+bug/1459747
-> Reportedly fixed with:
-> https://github.com/ImageMagick/ImageMagick/commit/0f6fc2d5bf8f500820c3dbcf0d23ee14f2d9f734
-
-Use CVE-2015-8895 for the "Memory is allocated based on the sum of a
-user-supplied value and a fixed value. That sum can overflow, causing
-only a small amount of memory to be allocated, while the program
-assumes more was allocated." It is possible that
-0f6fc2d5bf8f500820c3dbcf0d23ee14f2d9f734 also fixes other issues that
-are outside the scope of this CVE.
-
-
-> http://www.openwall.com/lists/oss-security/2015/10/07/2
-> https://bugs.launchpad.net/ubuntu/+source/imagemagick/+bug/1448803
-> Double free in coders/pict.c:2000
-> http://www.openwall.com/lists/oss-security/2015/10/08/3
-> 
-> "there's a patch for this in the following
-> commit (the pict.c part): 
-> https://github.com/ImageMagick/ImageMagick/commit/0f6fc2d5bf8f500820c3dbcf0d23ee14f2d9f734
-> 
-> Also, this is what I would classify as an integer truncation issue, not
-> a double-free."
-
-Use CVE-2015-8896 for the integer truncation issue.
-
-
-> 3) ImageMagick,GraphicsMagick: Gnuplot delegate vulnerability allowing
-> command injection
-> http://git.imagemagick.org/repos/ImageMagick/commit/70a2cf326ed32bedee144b961005c63846541a16
-
-Use CVE-2016-5239.
-
-
-> - Out of bounds error in SpliceImage
->     http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=28466
->     Upstream fix: https://github.com/ImageMagick/ImageMagick/commit/7b1cf5784b5bcd85aa9293ecf56769f68c037231
-
-Use CVE-2015-8897.
-
-
->  - Prevent null pointer access in magick/constitute.c
->     https://github.com/ImageMagick/ImageMagick/pull/34
->     Upstream fix: https://github.com/ImageMagick/ImageMagick/commit/5b4bebaa91849c592a8448bc353ab25a54ff8c44
-
-Use CVE-2015-8898.
-
-
-> http://www.openwall.com/lists/oss-security/2014/12/24/1
-
-  * Avoid a DOS in vision.c due to an infinite loop.
-
-CVE-2014-9804
-
-
-  * Avoid a SEGV due to a corrupted pnm file.
-
-CVE-2014-9805
-
-
-  * Do not leak fd due to corrupted file.
-
-CVE-2014-9806
-
-
-  * Fix a double free in pdb coder.
-
-CVE-2014-9807
-
-
-  * Fix a SEGV due to corrupted dpc and xwd images.
-
-CVE-2014-9808 = dpc
-CVE-2014-9809 = xwd
-
-
-  * Fix a SEGV in dpx file handler.
-
-CVE-2014-9810
-
-
-  * Fix a SEGV in malformed xwd file handler.
-
-CVE-2014-9811
-
-
-  * Avoid a NULL pointer dereference in ps file handling.
-
-CVE-2014-9812
-
-
-  * Fix a crash with corrupted viff file.
-
-CVE-2014-9813
-
-
-  * Fix a NULL pointer dereference in wpg file handling.
-
-CVE-2014-9814
-
-
-  * Do not continue on corrupted wpg file.
-
-CVE-2014-9815
-
-
-  * Avoid an out of bound access in viff image.
-
-CVE-2014-9816
-
-
-  * Avoid a heap buffer overflow in pdb file handling.
-
-CVE-2014-9817
-
-
-  * Avoid an out of bound access on malformed sun file.
-
-CVE-2014-9818
-
-
-  * Avoid heap overflow in palm, pnm and xpm files.
-
-CVE-2014-9819 = palm
-CVE-2014-9820 = pnm
-CVE-2014-9821 = xpm
-
-
-  * Fix heap overflow in quantum, palm and psd file.
-
-CVE-2014-9822 = quantum
-CVE-2014-9823 = palm
-CVE-2014-9824 = psd
-
-
-  * Fix handling of corrupted of psd, sun and xpm file.
-
-CVE-2014-9825 = psd
-CVE-2014-9826 = sun
-CVE-2014-9827 = xpm
-
-
-  * Fix corrupted (too many colors) psd file.
-
-CVE-2014-9828
-
-
-  * Fix an out of bound access in sun file.
-
-CVE-2014-9829
-
-
-  * Fix handling of corrupted sun and wpg file.
-
-CVE-2014-9830 = sun
-CVE-2014-9831 = wpg
-
-
-  * Fix heap overflow in pcx file, psd, pict and wpf files and DOS in xpm files.
-
-CVE-2014-9832 = pcx
-CVE-2014-9833 = psd
-CVE-2014-9834 = pict
-CVE-2014-9835 = wpf
-CVE-2014-9836 = xpm
-
-
-  * Add additional PNM sanity checks.
-
-CVE-2014-9837
-
-
-  * Avoid a crash to out of memory in magick/cache.c
-
-CVE-2014-9838
-
-
-  * Fix a theoretical out of bound access in magick/colormap-private.h
-
-CVE-2014-9839
-
-
-  * Fix an out of bound access in palm file.
-
-CVE-2014-9840
-
-
-  * Fixed throwing of exceptions in psd handling and fix a memory leak.
-
-CVE-2014-9841 = throwing of exceptions
-CVE-2014-9842 = memory leak
-
-
-  * Fixed boundary checks in DecodePSDPixels.
-
-CVE-2014-9843
-
-
-  * Fix another out of bound problem in rle file.
-
-CVE-2014-9844
-
-
-  * Fix crash due to corrupted dib file.
-
-CVE-2014-9845
-
-
-  * Added checks to prevent overflow in rle file.
-
-CVE-2014-9846
-
-
-  * Impose a limit of 10 million columns or rows in an input PNG
-
-This does not yet have a CVE ID.
-http://anonscm.debian.org/cgit/collab-maint/imagemagick.git/commit/?h=debian-patches/6.8.9.9-4-for-upstream&id=ec550654499ce8035d70ac466a6f78965ca2642e
-does not state a vulnerability.
-
-
-  * Don't try to handle a "previous" image in the JNG decoder.
-
-CVE-2014-9847
-
-
-  * Avoid a memory leak in quantum management.
-
-CVE-2014-9848
-
-
-  * Avoid a crash in png coder.
-
-CVE-2014-9849
-
-
-  * Thread limit should be at least 1 in order to be efficient.
-"Limit thread when thread limit is 0. It is a logic error that could
-lead to resource exhaustion."
-
-CVE-2014-9850
-
-
-  * In psd file handling fixed parsing resource block and avoid a crash.
-
-http://anonscm.debian.org/cgit/collab-maint/imagemagick.git/commit/?h=debian-patches/6.8.9.9-4-for-upstream&id=33b2d377b94eb738011bc7d5e90ca0a16ce4d471
-suggests that the crash isn't an independent problem.
-
-CVE-2014-9851
-
-
-  * In cache fix usage of object after it has been destroyed.
-
-CVE-2014-9852
-
-
-  * Avoid a memory leak in rle file handling.
-
-CVE-2014-9853
-
-
-  * During identification of image do not fill memory
-"This create a security risk (DOS) by filling all memory during
-identification of image."
-
-CVE-2014-9854
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXUHXGAAoJEHb/MwWLVhi2W4UP/RZwPtaAYarBSMABHblaM3Ll
-HHCRyA742Ouf5sCBca3iHiADxZ9ZjlbgfIxkiXfFDrXuCTOtd8uIUCtLZtGJfOHZ
-5kUGlqdxymr6YcQlo6yyhqkTUYMT7CCG6a+fcq84hLHFA1nSprtY1V6lgAK4v4jO
-6Ly/2zLFarD7qo2Q/pxjSGAdpsQ/qA7veBiIhSAko+I25RtUHk4pfcN/ZU2e7FD+
-Y+vtFfF88t57OqYW5NmQROz+nIo/5A2YTFYj/5txwTdUlj+SFTRbZQ9YSx6sUyHy
-EvTQmdoL80mYfscnDW7PmaO+IHusMMVTGmsHqoMmQq+jdgbuVh/UbvYRfhFOxZyu
-rS/5TEcQuBCMPhNbs5co02HncjJlNuirskdOUe2GqT64xIIvdGg2CoSDi1ogBhvx
-9ph4d/S3ZnigfHBmQ1tZGDuHrq2PXuU5lTav82QXWloY65FmTTS7ysACh4pUOjvW
-+IgzXTiftZOrkvKb410pQusRncwKBq9qIGxxsZmbbjf08srINYyHv6gNsLdqFC/M
-SPUdhAiA5OLa5WVyQHdhsC4AlB2OEx7O9Y1a4SgE1OYlkf3fQxYA1LfwuGZCIZus
-ZG4Z+gDW7vyzeYbC5Up1iBJZUwElfpSbAIWRo8IIfvl46w24GU6BUObwKJuwQbAn
-oId1lN3G/3YEAprnosRR
-=yTzY
------END PGP SIGNATURE-----
+Hi,
+
+I've now done a bit more thorough analysis, but I really don't think
+there's anything overly interesting to find here.
+
+A comment before: The guy who publicized this stuff via his blog writes
+some very confused blog entrys and has lately written one where he
+threw a lot of insults at me and declared that I'm responsible for
+everything that's wrong with computers and with the world. So please
+understand that I find it a bit hard to deal with these people, and I
+won't attempt to communicate with them in any way. But I'll try to do my
+best to clarify what I know. (I don't know if/how the author of phuctor
+who wrote in this thread is related to these blogposts.)
+
+As a background: What we're talking about is a so-called batch-gcd
+attack, developed by DJB. Arjen Lenstra and Nadia Heninger were as far
+as I know the first ones to use this on publicly available keysets in
+order to find vulnerable keys. The implementation from Nadia Heninger is
+freely available [1] and some code to turn a pgp keyserver dump into a
+mysql database is available from me [2]. So everyone should be able to
+replicate what I'm saying (the workflow is: use my script to turn
+keyserver dump into a database, select the rsa_n value from the
+keys_rsa table, run sort -u on it, feed the result into nadia's fastgcd
+tool). It takes a couple of hours on a fast machine to replicate the
+attack.
+
+What one will find are 273 vulnerable moduli. Of those most have
+invalid self signatures. If you look at them the most plausible
+explanation is that they're the result of data errors. You'll
+find corresponding valid keys for most/all of them (I have only checked
+some manually). If you look into them you'll find stuff like this:
+f92f34e31bfcd57369ae04bf87888cfbca5525e3b24dd55aa4f7775ffb631c24f511c8de4c6707d3f685ea75c8b5f6e432e86fea10edaa6ed4812cdd51a90203010001300b06092a864886f70d010104030100fdfdfdfd00000000000000000000000000b0120a01e8220a01684640005000000010000000010000002a000000
+f92f34e31bfcd57369ae04bf87888cfbca5525e3b24dd55aa4f7775ffb631c24f511c8de4c6707d3f685ea75c8b5f6e432e86fea10edaa6ed4812cdd51a90203010001300b06092a864886f70d010104030100fdfdfdfd00000000000000000000000000b0120a01e8220a01684640005000000010000000010000002a000000
+
+Or in short: lots of repetitions, zero and ff values. I think it'll be
+very hard to pinpoint what the source of these issues is, but it looks
+a lot like simple data errors. I assume network transmission problems,
+disk failures or software bugs. It's also possible that
+people just messed with a hexeditor in keys and uploaded them. I think
+all primefactor patterns are just factors that happen to be likely once
+you do such random data errors.
+
+Now to the 10 keys that have valid selfsigs. Two are for
+alice@...mple.com (and honestly it may be that these one comes from me,
+but I don't remember exactly. I created broken test keys, but I don't
+know if I uploaded any. At least the date roughly matches when I worked
+on this).
+2 keys are for Texas Instruments and 512 bit. That's probably some joke
+referring to the breakage of TI signing keys [3]. One key is for "FAKE:
+key generation test", one has an empty userid field. They're probably
+examples as well.
+
+That leaves 4 keys that look somewhat reasonable. They're all really
+old (>10 years). Of those two have very small gcd factors and are
+pre-2000. The other two are from 2001 and have large factors.
+The last two are supposedly (from what Nadia Heninger told me) from a
+software called CryptoEx from a german company Glück&Kanja.
+Unfortunately one doesn't find this software anywhere online, just some
+old press releases. The product later got bought by PGP (aka
+what today belongs to symantec).
+
+Honestly I don't think there's too much to see here. There likely was a
+very old commercial PGP implementation that created broken keys. Maybe
+there were two (because of the two keys with small primefactors). And
+the keyservers take broken copies of valid keys without complains, as
+they don't check any signatures. Plus there are some keys that look
+like people manually creating broken test keys. I don't see any sign of
+a deliberate attack in this data. But you don't have to take my word
+for it. The software and data I used to analyze this is all public.
+
+I'll upload a keyids file to the pgpmoduli repo:
+https://github.com/hannob/pgpmoduli
+
+The way to interpret that data is that line numbers match. I.e. the gcd
+in line 10 of gcds matches the modulus in line 10 of vulnerable_moduli
+and the keyid in line 10 of keyids etc.
+
+Slightly related: There are other ways to search for bad pgp (or
+generally crypto) keys. I once searched for broken DSA keys (due to
+duplicate r values) [4] and found one broken key and for RSA-CRT issues
+and found one other broken key (E46DEB00098894FD). The first came from
+a beta of an app, the second is of unknown source (the crt issue is
+something I haven't published anywhere before).
+
+
+[1] https://factorable.net/resources.html
+[2] https://github.com/hannob/pgpecosystem
+[3]
+https://en.wikipedia.org/wiki/Texas_Instruments_signing_key_controversy
+[4] https://eprint.iacr.org/2015/262
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
