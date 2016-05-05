@@ -1,48 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/4
-Message-Id: <20160908065142.EF4D81BE24C@smtpvbsrv1.mitre.org>
-Date: Thu,  8 Sep 2016 02:51:42 -0400 (EDT)
-From: cve-assign@...re.org
-To: tyhicks@...onical.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, paobac@....gnome.org, security@...ntu.com
-Subject: Re: CVE Request: File Roller path traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/9
+Message-ID: <20160505130336.7557b73b@pc1>
+Date: Thu, 5 May 2016 13:03:36 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: broken RSA keys
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, 5 May 2016 13:34:05 +0300
+Solar Designer <solar@...nwall.com> wrote:
 
-> File Roller 3.5.4 through 3.20.2 was affected by a path traversal bug
-> that could result in deleted files if a user were tricked into opening a
-> malicious archive.
+> On Wed, May 04, 2016 at 09:18:26PM -0400, Stanislav Datskovskiy wrote:
+> > older versions of GPG
+> > will regard the bottom 32 bits of a modulus as the 'fingerprint',
+> > rather than performing a hash.  
 > 
-> http://ftp.gnome.org/mirror/gnome.org/sources/file-roller/3.20/file-roller-3.20.3.news
-> http://ftp.gnome.org/mirror/gnome.org/sources/file-roller/3.21/file-roller-3.21.90.news
-> Distro bug: https://launchpad.net/bugs/1171236
-> Upstream bug: https://bugzilla.gnome.org/show_bug.cgi?id=698554
-> Fixed by:
-> https://git.gnome.org/browse/file-roller/commit/?id=f70be1f41688859ec8dbe266df35a1839ceb96c5
+> Are you sure? 
 
-Use CVE-2016-7162.
+https://tools.ietf.org/html/rfc4880
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+"V3 keys are deprecated.  They contain three weaknesses.  First, it is
+relatively easy to construct a V3 key that has the same Key ID as any
+other key because the Key ID is simply the low 64 bits of the public
+modulus."
 
-iQIcBAEBCAAGBQJX0QmDAAoJEHb/MwWLVhi2DqkQAI/f8t2ZR6E+2yHJ1My3OBum
-2yuJFIdnkCzGonivRLk5l8Gj7v9tKMwqOP8HUFSy6bBzGy3fA+DOiAhjq+WJoGSQ
-tbjn2ATBnS4KylAJCD0luGV50A/qEo/kZ50K4+pVlK/jVOH5oQepxCFWrh9Nybnc
-9gr4DCwXubsi1l5Pjr1KzDZQyJInDdVH/Q4RlN7g3ZkenzFoMOWtQoeIsOnnfpw4
-3XTDto5EW4mAq/4kUFGoxAScpu3qhIVMU9ms6mL9KeSkRzXUl5Hrn4VYvHKya8fY
-Mpa+6dVrLYkkdB3ey76LJhTYQcx4qdNTjtgf+c0SmUjoqNaWIno1YkfajRWEEhyO
-fQzDyySAidxZMjG2wkqOn0rVAkJ2kRbStbAPNnS/RrGowp4GTGkmUvqxrv/+R3T0
-msdoVlz4DEy1RpNLI5uEfmKOJDtoRVHYgqm1S+VLokMRahA/Lcru+pgTzIzAJnwV
-+WHMUEVHur0fMdWVvdbtyYJKS5ti72HSxXM8182neiwA9yJH/Z+S4v5PMH4aGaHv
-riPEgRVpKLMPFnqV0zl6AuJWL4ljLRF2yhcrjcFlkNGk2vs95gEdeZv64xiLIW09
-k1eMhHaw9ZkWiJ/vaynDZrJ7NcvbI5PX6yVXNGEW+EA0csTHlm83w3cALY4ii+pq
-qrPRq/IrV7vf/vMs8Dmn
-=zLoP
------END PGP SIGNATURE-----
+I had forgotten about that, but it probably also explains the two
+pre-2000 keys with small factors I found.
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
