@@ -1,22 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/16
-Message-ID: <1705729.nZSttpXEVz@arcadia>
-Date: Sun, 16 Oct 2016 12:30:53 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: Graham Christensen <graham@...hamc.com>
-Cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: Re: Fuzzing jasper
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/18
+Message-ID: <6aa8b189.1329d.1548107c1d2.Coremail.pengdawei521@163.com>
+Date: Thu, 5 May 2016 21:07:29 +0800 (CST)
+From: Vinc3nt4H <pengdawei521@....com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request - samsumg android phone com.samsung.android.jam.IAndroidShm binder service DoS
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 16 October 2016 10:23:43 Graham Christensen wrote:
-> For what it is worth, Jasper has recently issued a release fixing many
-> CVEs, and would likely appreciate these fussing results as bug reports on
-> their github project: https://github.com/mdadams/jasper/
+Hi,
+Description of the potential vulnerability:
+When a app send a evil data to com.samsung.android.jam.IAndroidShm  service by service command (Android system command) , can cause to IAndroidShm service crash.
 
-This was already done.
 
-I will quote my first mail which includes the details and the commit fix.
+Steps to reproduce the issue:
+1 A PC connect S6 device;
+2 Input command: adb shell;
+3 Android Input command:
+service call com.samsung.android.jam.IAndroidShm 5 i32 917154658 i32 998369275 i32 1652062893 i32 2113420870 i32 1380178743 i32 47342718 i32 543810222 i32 1481030271
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+
+Affected versions: KK(4.4), L(5.0/5.1) 
+
+
+Fix:
+http://security.samsungmobile.com/smrupdate.html#SMR-JAN-2016
+SVE-2015-5133: IAndroidShm IAPAService service DoS
+
+
+We report this to samsung, samsung reply to us if we want to get CVE request it by ourself.
+
+
+Best regards,
+Vinc3nt4H of Alibaba Mobile Security Team
+
