@@ -1,56 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/04/3
-Message-ID: <e6957bccb1334b74a39ff42d1ce6aa5d@imshyb02.MITRE.ORG>
-Date: Fri, 4 Nov 2016 03:06:52 -0400
-From: <cve-assign@...re.org>
-To: <vdronov@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request -- linux kernel: crypto: GPF in lrw_crypt caused by null-deref
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/21
+Message-ID: <20160505145031.GA22827@eldamar.local>
+Date: Thu, 5 May 2016 16:50:31 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: PHP: several issues fixed with 7.0.6, 5.6.21 and 5.5.35
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> The lrw_crypt() function in 'crypto/lrw.c' in the Linux kernel
-> before 4.5 allows local users to cause a system crash and a denial
-> of service by the NULL pointer dereference via accept(2) system call
-> for AF_ALG socket without calling setkey() first to set a cipher key.
-> 
-> Initial discussion:
-> https://groups.google.com/forum/#!msg/syzkaller/frb2XrB5aWk/xCXzkIBcDAAJ
-> 
-> Red Hat Product Security Bugzilla:
-> https://bugzilla.redhat.com/show_bug.cgi?id=1386286
-> 
-> Initial upstream patch (followed by a set of the related patches):
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=dd504589577d8e8e70f51f997ad487a4cb6c026f
+With the 7.0.6, 5.6.21 and 5.5.35 PHP releases several issues were
+fixed, of those at least those four were as well commited to 5.5.35
+(only in security-fixes mode) and might warrant a CVE:
 
-Use CVE-2015-8970.
+1/ bcpowmod accepts negative scale and corrupts _one_ definition
+   - https://bugs.php.net/bug.php?id=72093
+   - https://git.php.net/?p=php-src.git;a=commit;h=d650063a0457aec56364e4005a636dc6c401f9cd
 
-(The scope of this CVE does not include other issues related to the
-https://groups.google.com/forum/#!original/syzkaller/frb2XrB5aWk/R1UNCBm_DwAJ
-"However, crypto is still considerably unstable. I will post reports
-that I see separately." statement.)
+2/ xml_parse_into_struct segmentation fault
+   - https://bugs.php.net/bug.php?id=72099
+   - https://git.php.net/?p=php-src.git;a=commit;h=dccda88f27a084bcbbb30198ace12b4e7ae961cc
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+3/ Out-of-bounds reads in zif_grapheme_stripos with negative offset
+   - https://bugs.php.net/bug.php?id=72061
+   - https://git.php.net/?p=php-src.git;a=commit;h=fd9689745c44341b1bd6af4756f324be8abba2fb
 
-iQIcBAEBCAAGBQJYHDIjAAoJEHb/MwWLVhi2cN8P/3vw2bO6dXiF2lT052yLL7PK
-wVp0lXruDV4LgpUjxUkSdYDVMaW/p/J+CFGSBhyk0hrrBqTVTolgCZPmiHK+7ry7
-Ujm+qGP6dwnr2YIJ1E5Du2gIuwRncPk1EbtmRB2rtTLAZ/bkIEBl90HxBB9kC6V7
-Hi3qk9xGh9TMy6UHdibR83l+5NB2/L5cHQjAyA4VX39///ZjZwpX2d6lmL2k7vTI
-XLpaPZXHK+dhXLdSjGGrx5B7+7IXFkWxPCy/uW2srnE3OwycMiPzBOyOHRYf+G9Y
-gZoVBzyCmWFmJEqR/TC+mSfO+EWVplKq5n9gdW7siUNeBItAPhPvlw7ldsgmHyhV
-cGkrQX9eDFeU1I43uTpUOk6rDzc8Ue/J+iU1gbaD0PRlMqjBaNJ7HO1nqzKTwrR9
-HhL2qmWyL6b/a8h/OH+e0jOwSyDl73Ai7l7M6BywqZFO9tw5L/UdBZmWYBwL+Cu0
-491JFgsyNejgrnyFMxzwN4rbBZiYQxMIdu7TRHPkVzOM1TX5XyWMhnP72tvJ6lPw
-z1ZMaTvx8CD4majrRHtraOHB5xQRncIWy9c6N+wMJr5msOueQHGofNj8wakbzZCR
-gTphUq0U6ka7Oxx2UvxTmHNj1Xv5lpy8SrIkiH3nCHmwodYDuOFXTN3kMXPoZX39
-jIXh42I22cKUT4rkWgbh
-=LQ8Q
------END PGP SIGNATURE-----
+4/ Out of bounds heap read access in exif header processing
+   - https://bugs.php.net/bug.php?id=72094
+   - https://git.php.net/?p=php-src.git;a=commit;h=082aecfc3a753ad03be82cf14f03ac065723ec92
+
+I merely only have checked the php changelogs, but cannot give
+background on the impact of those.
+
+Regards,
+Salvatore
