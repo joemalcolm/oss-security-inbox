@@ -1,48 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/1
-Message-ID: <20160511050946.GC30154@sisay.ephaone.org>
-Date: Wed, 11 May 2016 07:09:46 +0200
-From: Michael Scherer <misc@...b.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/16
+Message-ID: <CAP9m6YeuL4wmjT+uwGuYYvsUvq4gh9-La=O5hjkqrAY7yOBAJQ@mail.gmail.com>
+Date: Thu, 5 May 2016 09:11:08 -0400
+From: Stanislav Datskovskiy <stas@...er-os.org>
 To: oss-security@...ts.openwall.com
-Cc: security@...keeper.com
-Subject: Re: BitKeeper /tmp vulns
+Subject: Re: broken RSA keys
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 10, 2016 at 12:40:50PM -0700, Larry McVoy wrote:
-> In the past, at least, BitKeeper was run inside a firewall and in an
-> environment where users are trusted.  As such, I suspect that you have
-> just begun to scratch the surface, I wouldn't be at all surprised to
-> see dozens more like this.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-If the security model is "everybody is trusted and we have firewall", the
-frontpage of https://www.bitkeeper.com/ with "Hardened for the Enterprise.",
-is a bit misleading, as is the part on "security" and "safety" on
-https://www.bitkeeper.com/why_why_buy
+My program parsed out RSA moduli in all rfc2440/4880-compatible formats.
 
-I do get that "hardening", "security", "safety" can mean different things to different
-people, but "insecure on a shared server" is not written anywhere in the documentation.
+The SKS dump was from slightly over a year ago. A more recent on will be fed in
+next.
 
-> We've never had anyone complain about this in a real world situation
-> so we've never focussed on it.  
+- -S
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-I am not sure to fully understand, so allow me to rephrase based on my understanding.
-
-Because no one complained and found the problem before among your
-clients, (that likely didn't had the source code to begin with, and also no
-expectation of being able to read without likely infriging copyright), 
-the BK team didn't focused on trying to be proactive and fixing security issues
-that ook 5 minutes to be found ?
-
-(or updating code bundled for a 15 years old CVE)
-
-> If you care about this stuff we'll
-> gladly take patches.
-
-I am sorry, but that's not exactly the kind of answer that motivate me to work
-on a software I do not use. 
-
-But since you agree that's a security problem, I guess I can now officially request
-CVE for the issues that do not have one.
-
--- 
-Michael Scherer
+iQEcBAEBCgAGBQJXK0ZcAAoJELmCKKABq//HXR4H/24arPafKlXV3nLo95JSA3lk
+Zhf2KXjdFrzJQSYLqdUtxTG/U8zsqIK0EZhMvoXU1iARxujmMWfCqnE7XyRSYMGm
+hP52kC7fQyw2ku80vJfcua5V8depEpEg39m/tI+iRUJrd9FZ7AB7dmnbmeuC9dK5
+5l3cvuq7VmWDvbjTeq3tiSAANCIg2oZpwgtQSucEIPQ/G80M79FKeact6w9DfyKK
+9S8WdGNXnttGfSF227nzi4DLAoErf9BaF6Btb39kqhx/X6jk8NOtsCIo3/7g1JRD
+/EmWKXUsKQK95r9ZuO2K0tCMv+YB1RCEa5kXySB8qFHmKvgsH+Ry4/C1M3QCNek=
+=j0R9
+-----END PGP SIGNATURE-----
