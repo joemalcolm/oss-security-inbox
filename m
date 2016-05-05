@@ -1,82 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/19/9
-Message-Id: <20160819134959.E8FB8332027@smtpvbsrv1.mitre.org>
-Date: Fri, 19 Aug 2016 09:49:59 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/24
+Message-Id: <20160505220104.3054F6CC095@smtpvmsrv1.mitre.org>
+Date: Thu,  5 May 2016 18:01:04 -0400 (EDT)
 From: cve-assign@...re.org
-To: hanno@...eck.de
+To: carnil@...ian.org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: MatrixSSL Bignum bugs
+Subject: Re: CVE Request: PHP: several issues fixed with 7.0.6, 5.6.21 and 5.5.35
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> http://www.matrixssl.org/blog/releases/matrixssl_3_8_4
+> 1/ bcpowmod accepts negative scale and corrupts _one_ definition
+>    - https://bugs.php.net/bug.php?id=72093
+>    - https://git.php.net/?p=php-src.git;a=commit;h=d650063a0457aec56364e4005a636dc6c401f9cd
 
->> several issues related to RSA and bignum operations
+>> [2016-04-25 01:31 UTC] stas@....net
+>> 
+>> Two problems here actually: bcpowmod accepting negative scale and
+>> _one_ definition being overridden by scale adjustment.
 
+Use CVE-2016-4537 for "bcpowmod accepting negative scale."
 
-> If one tries to calculate a modular
-> exponentiation with the base zero (0^b mod a, code) it would crash with
-> an invalid free operation, potentially leading to memory corruption.
-> https://github.com/hannob/bignum-fuzz/blob/master/matrixssl-base-zero.c
-
->> Testing MatrixSSL's pstm_exptmod with base zero
-
-Use CVE-2016-6885.
-
-
-> a malicious client could simply send a zero or the key's modulus here. I
-> created a patch against openssl that allows to test this. Both values
-> crash the MatrixSSL server. However the crash seems not to happen in
-> pstm_exptmod(), it hits another bug earlier. In both cases the crash
-> happens due to an invalid memory read in the function pstm_reverse(),
-> which is not prepared for zero-sized inputs and will underflow the len
-> variable.
-> https://github.com/hannob/bignum-fuzz/blob/master/openssl-break-rsa-values.diff
-
->> This patch allows one to send malformed RSA encryptions during the handshake.
->> One can either send zeros or the RSA key modulus. Both trigger a bug in
->> MatrixSSL 3.8.3.
-
-As far as we can tell, here you are reporting a crash issue that is not
-identical to the "exponentiation with the base zero" issue.
-
-Use CVE-2016-6886.
+Use CVE-2016-4538 for "_one_ definition being overridden by scale adjustment."
 
 
-> Fortunately this was discovered before the change made it into a
-> release.
-> https://lists.lysator.liu.se/pipermail/nettle-bugs/2016/003104.html
+> 2/ xml_parse_into_struct segmentation fault
+>    - https://bugs.php.net/bug.php?id=72099
+>    - https://git.php.net/?p=php-src.git;a=commit;h=dccda88f27a084bcbbb30198ace12b4e7ae961cc
 
->> I'm considering the below patch
+>> AddressSanitizer: SEGV on unknown address
 
->>> https://lists.lysator.liu.se/pipermail/nettle-bugs/2016/003099.html
->>> Committed and pushed now
-
-There is no CVE ID for this "crashes with a floating point error"
-behavior that existed in the https://git.lysator.liu.se/nettle/nettle
-code as of approximately 2016-07-17 through 2016-07-31. The Nettle
-documentation at https://www.lysator.liu.se/~nisse/nettle/ doesn't
-specifically recommend that people ship unreleased Nettle code. A CVE
-ID isn't, in general, required for each issue noted at any arbitrary
-point during development.
+Use CVE-2016-4539.
 
 
-> I was able to identify an input value that caused a
-> wrong calculation result.
-> 
-> They now restrict the input to the pstm_exptmod()
-> function to a set of bit sizes (512, 1024, 1536, 2048, 3072, 4096). My
-> test input had a different bit size
+> 3/ Out-of-bounds reads in zif_grapheme_stripos with negative offset
+>    - https://bugs.php.net/bug.php?id=72061
+>    - https://git.php.net/?p=php-src.git;a=commit;h=fd9689745c44341b1bd6af4756f324be8abba2fb
 
-As far as we can tell, a "wrong calculation result" is not always a
-vulnerability on its own, and sometimes becomes relevant only when
-there is a composite with another issue. However, the set of other
-issues is not fully specified and thus we are assigning a CVE ID to
-the "wrong calculation result" itself in this specific case.
+Use CVE-2016-4540 for the grapheme_stripos issue.
 
-Use CVE-2016-6887.
+Use CVE-2016-4541 for the grapheme_strpos issue (separately discovered).
+
+
+> 4/ Out of bounds heap read access in exif header processing
+>    - https://bugs.php.net/bug.php?id=72094
+>    - https://git.php.net/?p=php-src.git;a=commit;h=082aecfc3a753ad03be82cf14f03ac065723ec92
+
+Use CVE-2016-4542 for the issue associated with the spprintf call.
+
+Use CVE-2016-4543 for both issues in which "Illegal IFD size" validation was added.
+
+Use CVE-2016-4544 for the issue in which "Invalid TIFF start" validation was added.
 
 - -- 
 CVE Assignment Team
@@ -86,17 +61,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXtwz9AAoJEHb/MwWLVhi2o/YP/idLfMy+aLG2sgmccQASZZGz
-BSri6w0qzXrp3vta6zvU5NtGrFKe6728eteh+s5tzvQOx8cibQhkRf0rhV5+OVWR
-dW3zOU/8yy8ns7liFnCCzkT3N64ZX7D6m3x9xfeBd9qAVp57y0OetH54mEX3K3wK
-az47xi35WpQsGfXP6MWpxUXXNod5P/hu38TCH/siIImB/gNYgP9tmTBArsp63/M6
-wxRLl5/zkMYc727tfY2apoAnu7c3qEl2WDOe12P4/T77Cpjbv1mQhpXT3fUw2dff
-vCILkdN/YZM0X4zFL4MIUsTOcRX68YoP83npRCjb9q9OX6fTCeZGjAE1z2Kc0DJr
-aRqv++KmjMDWa9T+NJoczsNbxcnvoCJhUpGIsL2czEEb8qbBgllbyIlvlcuh2zYf
-6fxMNgPbInINglJt5j+LqxSspk4ZyMF9Ptf0zPuEOwikaLOtFI5C1AVyMiQMwO9q
-RwtJnW1X4heT2OeoLQApRS3vXABdViQiPVDCqbKeYd5HaDuT3FtDqGQRfTzbCgaP
-ixdotezrAC9HX/UB2WDYwSbDEIJolfnGbplGOfIuPSOsbAmQegj3fFvQg8bM/a8m
-nIwmJl9liXlFpdJo4WEL4i0nQqACtP7Y3cB9oZY2S1MR2+locsZJB40p6P4T4tjG
-p1ybwtmkWvayRh9TNjg7
-=a0WT
+iQIcBAEBCAAGBQJXK8GIAAoJEHb/MwWLVhi2/LAP/Rilr5fFWad/xntAVEnxwlFG
+/mTNs7JMK4GMq64DkafJIkWcv96b0/Xbscb6FzpUtiSHvCKjWZKyQjau5nT1Z4mg
+IlOgEC7CwDFXjPmSBxmhgK4RcjJv/XoHDBOkj8yH0PZ7rLcyGiJrbQ8kWl5t7rvc
+YJApIajtiK6dRx8B7Ddcdo843Q2IpThPi47/VihSYP8z1IBx5I5uBpQxApVo/AA+
+3Ayucf7+zI0pBGjOOAj0jaKA0n9RI8/6zRId0V8+sE1VQfPfh0809x9KqccWL2FB
+TE+amquxVA/TRNugemsAy6XRog4WbCD38P2aAa076jW7BQmRw8tOaNFDJzCHGEhj
+wYmhmIx+dbC6e+yRF5zb4BzZkxRm7uR2Psp8+QBj+BzaT/+6xrlGmjzGJhZhaU1n
+usSpPTvWaeV1iP4CL6jKVDe18A0/brf2H7snwFjjTv2583PQ9QQLSKRWUNnfq3xX
+xu+1MTPN/qStwHUUN2DyYLHytDKGBdYkTX867ZGrNIyaFpGKLvKVMrwJijwlWXdU
+sLiFuDMaZLtzzN5vobpDcSGhtB26f/YDh2dA7BSPPTT1hOzOgwVL9uTX0hldZlcQ
+hjAkVQ0rNVD8zo+JDxAk3wyphgF5gkb+KSOx+A9zPv5zO5hI/Trb4yygKHeLbGQU
+2rDmztzq9xFdHeYEpid1
+=z62X
 -----END PGP SIGNATURE-----
