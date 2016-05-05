@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2025" "Tuesday" "8" "September" "2015" "13:02:44" "+0530" "Huzaifa Sidhpurwala" "huzaifas@redhat.com" "<55EE8F1C.605@redhat.com>" "52" "[oss-security] Pending CVE requests for glibc" nil nil nil "9" "2015090807:32:44" "[oss-security] Pending CVE requests for glibc" (number mark "U       huzaifas@red Sep  8   52/2025  " thread-indent "\"[oss-security] Pending CVE requests for glibc\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1496" "Thursday" "5" "May" "2016" "17:59:43" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160505215943.1BD3972E002@smtpvbsrv1.mitre.org>" "36" "[oss-security] Re: CVE Request: OpenAFS: OPENAFS-SA-2016-002 - various client functionality leak stack data onto the wire in the clear" nil nil nil "5" "2016050521:59:43" "[oss-security] Re: CVE Request: OpenAFS: OPENAFS-SA-2016-002 - various client functionality leak stack data onto the wire in the clear" (number mark "U       cve-assign@m May  5   36/1496  " thread-indent "\"[oss-security] Re: CVE Request: OpenAFS: OPENAFS-SA-2016-002 - various client functionality leak stack data onto the wire in the clear\"\n") "<20160505133201.GA12142@eldamar.local>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20072 invoked by uid 550); 8 Sep 2015 07:19:28 -0000
+Received: (qmail 32022 invoked by uid 550); 5 May 2016 21:59:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,69 +12,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20052 invoked from network); 8 Sep 2015 07:19:28 -0000
-To: oss-security@lists.openwall.com,
-        Mitre CVE assign department <cve-assign@mitre.org>
-From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
-Message-ID: <55EE8F1C.605@redhat.com>
-Date: Tue, 8 Sep 2015 13:02:44 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-Subject: [oss-security] Pending CVE requests for glibc
+Received: (qmail 32001 invoked from network); 5 May 2016 21:59:55 -0000
+From: cve-assign@mitre.org
+To: carnil@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20160505133201.GA12142@eldamar.local>
+Message-Id: <20160505215943.1BD3972E002@smtpvbsrv1.mitre.org>
+Date: Thu,  5 May 2016 17:59:43 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: OpenAFS: OPENAFS-SA-2016-002 - various client functionality leak stack data onto the wire in the clear
 
-Hi MITRE,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I could not help but notice, some glibc security issues were not
-assigned CVE ids.
+> https://www.openafs.org/pages/security/OPENAFS-SA-2016-002.txt
 
-1. glibc: multiple overflows in strxfrm()
-Integer overflow when computing memory allocation sizes (similar to
-CVE-2012-4412) was reported [1] in glibc strxfrm() function. Attached
-strxfrm-int32.c should trigger this issue on a 32-bit systems.
-Additionally, it was discovered [1] that strxfrm() falls back to an
-unbounded alloca if malloc fails making it vulnerable to stack-based
-buffer overflows (similar to CVE-2012-4424). Attached strxfrm-alloca.c
-should trigger this issue.
+> Several structures used as RPC arguments contain a mask field that
+> indicates which other fields should be processed by the server. In
+> some cases, fields not not indicated in the mask were transmitted over
+> the network without being written to, exposing the previous contents
+> of that memory. Both kernel stack and userspace stack data can be
+> leaked.
 
-Previously a request was made via:
-http://seclists.org/oss-sec/2015/q1/540
+Use CVE-2016-4536.
 
-2. glibc: _IO_wstr_overflow integer overflow
-An integer overflow flaw, leading to a heap-based buffer overflow, was
-found in glibc's _IO_wstr_overflow() function. If an application used
-this function, it could cause the application to crash or, potentially,
-execute arbitrary code with the privileges of the user running the
-application.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-https://sourceware.org/bugzilla/show_bug.cgi?id=17269
-https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=bdf1ff052a8e23d637f2c838fa5642d78fcedc33
-
-3. glibc: potential denial of service in internal_fnmatch()
-It was reported [1] that when processing certain malformed patterns,
-fnmatch can skip over the NUL byte terminating the pattern.  This can
-potentially result in an application crash if fnmatch hits an unmapped
-page before encountering a NUL byte.
-
-https://sourceware.org/bugzilla/show_bug.cgi?id=18032
-https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=4a28f4d55a6cc33474c0792fe93b5942d81bf185
-
-Previously a request was made via:
-http://seclists.org/oss-sec/2015/q1/689
-
-4. glibc: potential denial of service in pop_fail_stack()
-A crash was reported [1] during glibc extended regular expression
-processing. No known patch exists at the time of writing.
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=779392
-
-
-Can MITRE please assign CVE ids to these flaws?
-
-Thanks!
-
-
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+iQIcBAEBCAAGBQJXK8F+AAoJEHb/MwWLVhi2FPwP/jGfRJCE7dylxZoUxSekgILk
+Q/eRTyo1/UYSEB1/TohhY9ESNntbPmVKn1tXGrcjP7199IV1B6HV4w0umCl/bf9A
+WZFelcXoSs0Jjjd7ddeKGMg4eCd0c4smTjJosIB7p8idvf7lY9dSGgnUXFh57AAG
+g5Kj7kzZCRlkRdZTSXnHxcsaFfcBe8rSUG2WPiY/mHbH+LD17pyG9krYdmdEE9oJ
+cYms9nSMeCxn2Ibh1lJXv7qRMM4WhvelWAA4ti59Ier6bnRY92cnSLFUmtuShZj+
+f9M5MI6FbnDL/sawzCY855ywwOhcVddsHSdiQAYsBoPStMhMqutCxu7aLl3BEbEr
+UkaY2uoeY3uSwgU5u1ap4CGGMEqwyVWSS34lD+0Bj9l5QfzCLw0HXQmPcJbKLQLb
+dMi+/gdBtL8B8PgBtj2v8QCjfJRhoqVTIFnMsl9ssSITypJ1s35lpVzXkvsdMeNc
+7UH09028O7fsMXRtRQpL+9D+xOz1PadkFE96hm9n5vKnCDM0UVp7hbBMzldqpHZu
+l9No2d2oc33flPVcgLW6W4nOtvz4zvh7o4qjPdY6QloAjTFiazL8oNlmJQ90F3s6
+wB7XeWsMkUHaYaNpVxldGdbQjZFMokjYU7jupWgWZgAuLbGQa+7zNRnGn3fIU6pE
+vt58CYD8DBZezU9vLwF3
+=cQap
+-----END PGP SIGNATURE-----
