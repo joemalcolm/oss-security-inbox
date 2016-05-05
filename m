@@ -1,53 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/10
-Message-ID: <alpine.LFD.2.20.1601192253240.22604@wniryva>
-Date: Tue, 19 Jan 2016 22:56:06 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Laszlo Ersek <lersek@...hat.com>
-Subject: CVE request Qemu: net: e1000 infinite loop in start_xmit and e1000_receive_iov routines
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/15
+Message-ID: <20160505145032.0f3a564a@pc1>
+Date: Thu, 5 May 2016 14:50:32 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: broken RSA keys
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, 5 May 2016 08:42:13 -0400
+Stanislav Datskovskiy <stas@...er-os.org> wrote:
 
-   Hello,
+> Where, exactly, did you get your public keys? Would you consider
+> sharing? Quite a few of your moduli are not in my SKS dumps.
 
-Qemu emulator built with the e1000 NIC emulation support is vulnerable to an 
-infinite loop issue. It could occur while processing data via transmit or 
-receive descriptors, provided the initial receive/transmit descriptor 
-head(TDH/RDH) is set outside the allocated descriptor buffer.
+I highly doubt that the keyserver dumps are different (except a few
+days +-). I got mine from this URL:
+http://stueve.us/keydump/
 
-A privileged user inside guest could use this flaw to crash the Qemu instance 
-resulting in DoS.
+Wild speculation: There are several ways in which keys can be
+different. There are v2, v3 and v4 keys (see rfc 4880) and there are
+master keys and subkeys. My parser code should handle all of them.
+Maybe whatever you do doesn't support all key variants?
 
-Upstream patch
-- --------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg03454.html
+-- 
+Hanno Böck
+https://hboeck.de/
 
-Reference:
-- ----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1298570
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-Thank you.
-- --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJWnnGuAAoJEN0TPTL+WwQfM3sP/1VRTdBss1oIFirNs52Tpsyl
-KmZBC5tPP7u+x9KWSQIClCRQcMHV09b5fvFnf7F86tNtFd/7Fhh6OpVQ9gpENpw1
-enYDmDixD5eNJCpTiLAAoKznrvN/PmiFYcuQbCI9nxnEZUb46Ocw0WYQNm6PC9w2
-wHj6oKfAOBCn0nmHZL7mHygRQeJdrufWFWBvx2aJyU+9a/TMAZ58iegj/ymW9V3L
-7+FZMEcEuKDEHf7z06NNAbS+tjJb0DoYoEUxXL8ZvX2P813hr5uoZarXa0wVVNCS
-gfcLPET2UKSlzP88vQyypKWVExofWr7s1VLH93x6CCvqpvoizVRIoDOMNPKUZSMB
-2rTPTT9Z+Dr/c7o84Q2Tan9Yu6+8fd6fasGt7T0tTvOzlhXHFJNpnPriHiTOJBlV
-+T2WD8CE7q7uWog+GaxL4Fc5JgHLwF6q1aZVWYcgyDakRRP1SeuajEydSuxcq+EY
-gkNlX6k902JTNjoa3IYcQwe2Kv3zZ7avpbq8LxlyhKo0+FNst2xpaZS0KFIna9cs
-Jiblnrw1E3of8XaZnNObLkNXfDvBanMhf/VTuzxKe1MxvWAzuo9iILLx9U+I8pHU
-H5m5d8/qNlzclcB9atghb15AvMe2ddB997+U8rbhDHV7aqkzwTj0vy0+2tsRwYJ4
-yoXLJL9V6CQzYYdprvlI
-=T2Vb
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
