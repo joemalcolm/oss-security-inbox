@@ -1,23 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/14/6
-Message-ID: <20160814195158.GA19228@kroah.com>
-Date: Sun, 14 Aug 2016 21:51:58 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/8
+Message-ID: <20160505103405.GA25044@openwall.com>
+Date: Thu, 5 May 2016 13:34:05 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-5696: linux kernel - challange ack information leak.
+Subject: Re: broken RSA keys
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Aug 14, 2016 at 09:36:39PM +0200, Sona Sarmadi wrote:
-> Hi all,
-> 
-> This vulnerability is currently only fixed in mainline kernels (4.7 &
-> 4.8). Does anyone know if there is any work ongoing to backport this fix
-> to the  older versions?
+On Wed, May 04, 2016 at 09:18:26PM -0400, Stanislav Datskovskiy wrote:
+> older versions of GPG
+> will regard the bottom 32 bits of a modulus as the 'fingerprint',
+> rather than performing a hash.
 
-I just added the fix for this issue to the stable kernel queues and it
-will show up in the next stable releases, in about 2 days after it
-passes all of the needed review.
+Are you sure?  Got an example?
 
-Hope this helps,
+I think the fingerprint was always a hash, with key id being last 32+
+bits from it.  I think it is compatible with PGP 2.x's from 1990s.
 
-greg k-h
+Did I possibly miss some very early versions of GPG where this was not
+true, transitioning from PGP 2.x to later GPG (which I did) and thus not
+noticing this aspect?  (Just trying to see how your statement could
+possibly be correct and consistent with my experience using PGP/GPG.)
+
+Alexander
