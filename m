@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2528" "Tuesday" "31" "July" "2018" "12:53:34" "+0200" "Matthias Gerstner" "mgerstner@suse.de" "<20180731105334.GB29194@f195.suse.de>" "67" "[oss-security] blueman before version 2.0.6 is not enforcing authorization for polkit action org.blueman.network.setup" "^Date:" nil nil "7" "2018073110:53:34" "[oss-security] blueman before version 2.0.6 is not enforcing authorization for polkit action org.blueman.network.setup" (number mark "U       mgerstner@su Jul 31   67/2528  " thread-indent "\"[oss-security] blueman before version 2.0.6 is not enforcing authorization for polkit action org.blueman.network.setup\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2790" "Thursday" "5" "May" "2016" "15:33:37" "+0300" "Alexander Cherepanov" "ch3root@openwall.com" "<572B3DA1.6030608@openwall.com>" "65" "Re: [oss-security] broken RSA keys" "^Date:" nil nil "5" "2016050512:33:37" "[oss-security] broken RSA keys" (number mark "        ch3root@open May  5   65/2790  " thread-indent "\"Re: [oss-security] broken RSA keys\"\n") "<20160505081757.GA23172@openwall.com>" ("<20160504124248.GA15148@openwall.com>" "<20160504172803.GA19393@openwall.com>" "<CAP9m6YeT=Vo1WQ4Jqn1QV-Cp6mBQ3EwWQ5p_=Rm4P3Na3aGcGw@mail.gmail.com>" "<20160505081757.GA23172@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30447 invoked by uid 550); 31 Jul 2018 10:53:46 -0000
+Received: (qmail 27879 invoked by uid 550); 5 May 2016 12:33:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30412 invoked from network); 31 Jul 2018 10:53:46 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20180731105334.GB29194@f195.suse.de>
+Received: (qmail 27857 invoked from network); 5 May 2016 12:33:48 -0000
+References: <20160504124248.GA15148@openwall.com>
+ <20160504172803.GA19393@openwall.com>
+ <CAP9m6YeT=Vo1WQ4Jqn1QV-Cp6mBQ3EwWQ5p_=Rm4P3Na3aGcGw@mail.gmail.com>
+ <20160505081757.GA23172@openwall.com>
+X-Enigmail-Draft-Status: N1110
+Message-ID: <572B3DA1.6030608@openwall.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="E39vaYmALEf/7YXx"
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Date: Tue, 31 Jul 2018 12:53:34 +0200
-From: Matthias Gerstner <mgerstner@suse.de>
+In-Reply-To: <20160505081757.GA23172@openwall.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Date: Thu, 5 May 2016 15:33:37 +0300
+From: Alexander Cherepanov <ch3root@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] blueman before version 2.0.6 is not enforcing authorization for
- polkit action org.blueman.network.setup
+Subject: Re: [oss-security] broken RSA keys
 To: oss-security@lists.openwall.com
 
---E39vaYmALEf/7YXx
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 2016-05-05 11:17, Solar Designer wrote:
+> When a modulus is (mangled?) such that each of its 64-bit limbs consists
+> of two matching 32-bit limbs, it is necessarily a multiple of 2^32+1.
+> That's because it can be represented as:
+>
+> N = {an an ... a1 a1 a0 a0} = (2^32+1) * {0 an ... 0 a1 0 a0}
+>
+> where the {...} notation means concatenated 32-bit limbs (or base 2^32
+> digits, if you will).  From this, it follows that pairwise GCDs of such
+> moduli will also have 2^32+1 as a factor, and this is what ultimately
+> causes the 32-bit limb patterns in the GCDs.  As Alexander Cherepanov
+> correctly pointed out, even the seemingly slightly more complex 32-bit
+> limb patterns in the GCDs are merely indication of them being multiples
+> of 2^32+1.  There's probably nothing else to see here.
+>
+> I made the mistake yesterday of looking at hex representations of the
+> posted shared factors without first looking at hex representations of
+> the moduli.  Now that I just did, I see that the example modulus I
+> posted does follow the pattern mentioned above, and which Stanislav
+> mentioned below.
 
-Hello,
+All modulus from Phuctor that are divisible by 2**32+1 indeed have the 
+form {an an ... a1 a1 a0 a0}. The following script would print moduli 
+that don't have this form but it prints nothing. The script:
 
-blueman [1] is a graphical interface for dealing with bluetooth devices
-on Linux. It comes with a daemon running as root (blueman-mechanism)
-that performs privileged operations.
+perl -Mbigint -ln0e '
+   while (m{RSA Modulus .N.:.*?<td>(\d+)<.*?<td>(\d+)<}sg) { # extract 
+numbers
+     if ($1 % (2**32 + 1) == 0) {           # is modulus a multiple of 
+2**32 + 1
+       $m = ($1+0)->as_hex;                 # modulus as hex
+       $m =~ s/^0x//;                       # remove hex prefix
+       $m = '0' x (-length($m) % 8) . $m;   # pad up to multiple of 8 digits
+       if ($m !~ /^(([0-9a-f]{8})\2)+$/) {  # check
+         print $m
+       }
+     }
+   }
+' phuctored
 
-During a code review [2] I noticed that blueman-mechanism in the stable
-version 2.0.5 of blueman does not enforce the polkit action
-'org.blueman.network.setup' for which a polkit policy is shipped. This
-means that any user with access to the D-Bus system bus is able to
-access the related API without authentication.
+While at it, let's see which exponents we get after dividing by 2**32+1 
+(from those that are divisible):
 
-The result is an unspecified impact on the networking stack.
-blueman-mechanism for example sets up a bridge device, changes system
-wide IPv4 forwarding settings and runs a DHCP client like dnsmasq,
-dhclient or dhcpcd.
+$ perl -Mbigint -ln0e 'while (m{RSA Modulus 
+.N.:.*?<td>(\d+)<.*?<td>(\d+)<}sg) { print $2 / (2**32 + 1) if $2 % 
+(2**32 + 1) == 0 }' phuctored | sort | uniq -c
+       2 17
+       7 41
+     143 65537
 
-After I contacted upstream about this, they released an updated stable
-version blueman 2.0.6 containing a set of backported patches that
-address this issue. These patches have already been present in the alpha
-version branch of blueman for a longer time.
+>> 4) One parsimonious explanation for (1) given (2) and (3) is that the
+>> 'mirrored' keys were generated by a malicious actor,
+>
+> Makes sense, but why would they similarly mangle the exponent as well?
+> As Alexander Cherepanov wrote, if I understand him correctly, there's
+> 100% overlap between keys with such moduli and with such exponents.
 
-Regards
+That's right. My original one-liner ended with "grep -c '^0 0$'" which 
+counts cases where both remainders are 0. If you change it to "grep -c 
+'^0 '" it will count cases where modulus is divisible by 2**32+1. 
+Similarly, "grep -c ' 0$'" will count exponents. Results from all three 
+commands are the same (152).
 
-Matthias
-
-[1]: https://github.com/blueman-project/blueman
-[2]: https://bugzilla.suse.com/show_bug.cgi?id=3D1083066
-[3]: https://github.com/blueman-project/blueman/releases/tag/2.0.6
-
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Telefon: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-
-SUSE Linux GmbH
-GF: Felix Imend=F6rffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nuernberg)
-
---E39vaYmALEf/7YXx
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAltgP60ACgkQFMQFyXGS
-NVO/dhAAlM6fEZMccHew0vtZ0yM2vD9idi5Ay+mFcw6cYQTThkVpPUQShMJlxhnk
-12BJrtyA/UZOuKdeP6XMYNwiHUlcqOJ5DPpU2whKx4PvtaFQwjqaAmm3e6SABZ0t
-OktlIxVSvfMdsa8bONKk4ihfwHjhQWGAtclUHalvXENxa40IkCQ8sfEus/NM/rsN
-MxUjtLaxtZ7mJdMpD3cs8xxuvyf3ToNWiuhLdqzI0erVM7UgkQr19Ynb6L6eqeyx
-oAwKIa1tsTKiJymagjPHmbSWDxkRSViowmWjEOLagT7Hn1qiKrOJqisTmU0FyudE
-NX6d+Tm54pBOefbUr6/4nc+7ueUXhh38qKZcEiOkAEvwEg68c+611KiY6da3x6qO
-0AgLIzTj1i3438keXFdDsyAv9+Dq7Atm9KxnOayiNGkeZkw1oNeW3y0la12YI0ul
-vsaeQr8A2QDDEBPd9vB71ILMPO98pJnbzzmmtRtWfPdEx/A+szNpCYZ0E14oabeA
-eF62DkL1fXaFfzrAbfFtvFXTddb5t2MIvsNIHEKlPt00t4a9Mefxqjn2YBZCUCUl
-XD26GtVyQwnCcBI/INhnoqi2lYNwoPFg0Yzc5EaCnG1cCFCcZ1Z9uaOWq/CzOmk9
-gRjxbTi4hYNFGHTNgl4E127zIv/hKFgr9TE4qHX24NG0Uk9GKDQ=
-=RY2x
------END PGP SIGNATURE-----
-
---E39vaYmALEf/7YXx--
+-- 
+Alexander Cherepanov
