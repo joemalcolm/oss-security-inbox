@@ -1,78 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/18/4
-Message-ID: <3626D6E697A150459C44C0E5D8D8D00E0DBD531F@EX02.corp.qihoo.net>
-Date: Mon, 18 Jan 2016 10:33:40 +0000
-From: limingxing <limingxing@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Out-of-bounds Read in the OpenJpeg's opj_j2k_update_image_data and opj_tgt_reset function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/10
+Message-ID: <20160505112114.GA25313@openwall.com>
+Date: Thu, 5 May 2016 14:21:14 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: broken RSA keys
 Content-Type: text/plain; charset=utf-8
 
+On Thu, May 05, 2016 at 01:03:36PM +0200, Hanno B??ck wrote:
+> On Thu, 5 May 2016 13:34:05 +0300 Solar Designer <solar@...nwall.com> wrote:
+> > On Wed, May 04, 2016 at 09:18:26PM -0400, Stanislav Datskovskiy wrote:
+> > > older versions of GPG
+> > > will regard the bottom 32 bits of a modulus as the 'fingerprint',
+> > > rather than performing a hash.
+> > 
+> > Are you sure?
+> 
+> https://tools.ietf.org/html/rfc4880
+> 
+> "V3 keys are deprecated.  They contain three weaknesses.  First, it is
+> relatively easy to construct a V3 key that has the same Key ID as any
+> other key because the Key ID is simply the low 64 bits of the public
+> modulus."
 
-Hello,
-We find two vulnerabilities in the way OpenJpeg's opj_j2k_update_image_data and opj_tgt_reset function  parsed certain JPEG 2000 image files.
-I was successful in reproducing these issues in the latest version of openjpeg  (https://github.com/uclouvain/openjpeg, 2016.1.18).
+Thanks.  I guess when I imported a PGP 2.6 key to GPG, I just did not
+notice this detail, and GPG continued to use the V3 format key for me.
 
-The crash info about opj_j2k_update_image_data function was:
-==1630==ERROR: AddressSanitizer: heap-buffer-overflow on address 0xb48010d8 at pc 0x8184862 bp 0xbfff8e58 sp 0xbfff8e50
-READ of size 4 at 0xb48010d8 thread T0
-==1630==WARNING: Trying to symbolize code, but external symbolizer is not initialized!
-    #0 0x8184861 (/home/r/fuzz3/openjpeg-master/bin/opj_decompress+0x8184861)
+Also from the RFC above:
 
-0xb48010d8 is located 0 bytes to the right of 56-byte region [0xb48010a0,0xb48010d8)
-allocated by thread T0 here:
-    #0 0x80b5f8e (/home/r/fuzz3/openjpeg-master/bin/opj_decompress+0x80b5f8e)
-    #1 0x81ba220 (/home/r/fuzz3/openjpeg-master/bin/opj_decompress+0x81ba220)
-    #2 0x8273db1 (/home/r/fuzz3/openjpeg-master/bin/opj_decompress+0x8273db1)
-    #3 0x827c023 (/home/r/fuzz3/openjpeg-master/bin/opj_decompress+0x827c023)
-    #4 0x81e0709 (/home/r/fuzz3/openjpeg-master/bin/opj_decompress+0x81e0709)
-    #5 0x8212cba (/home/r/fuzz3/openjpeg-master/bin/opj_decompress+0x8212cba)
-    #6 0x82cc849 (/home/r/fuzz3/openjpeg-master/bin/opj_decompress+0x82cc849)
-    #7 0x81ac9b6 (/home/r/fuzz3/openjpeg-master/bin/opj_decompress+0x81ac9b6)
-    #8 0x80dc56e (/home/r/fuzz3/openjpeg-master/bin/opj_decompress+0x80dc56e)
-    #9 0xb7da2a82 (/lib/i386-linux-gnu/libc.so.6+0x19a82)
+"  For a V3 key, the eight-octet Key ID consists of the low 64 bits of
+   the public modulus of the RSA key.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow ??:0 ??
-Shadow bytes around the buggy address:
-  0x369001c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x369001d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x369001e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x369001f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x36900200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x36900210: fa fa fa fa 00 00 00 00 00 00 00[fa]fa fa fa fa
-  0x36900220: 00 00 00 00 00 00 00 fa fa fa fa fa 00 00 00 00
-  0x36900230: 00 00 00 fa fa fa fa fa 00 00 00 00 00 00 00 fa
-  0x36900240: fa fa fa fa 00 00 00 00 00 00 00 fa fa fa fa fa
-  0x36900250: 00 00 00 00 00 00 00 fa fa fa fa fa 00 00 00 00
-  0x36900260: 00 00 00 fa fa fa fa fa 00 00 00 00 00 00 00 fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:     fa
-  Heap right redzone:    fb
-  Freed heap region:     fd
-  Stack left redzone:    f1
-  Stack mid redzone:     f2
-  Stack right redzone:   f3
-  Stack partial redzone: f4
-  Stack after return:    f5
-  Stack use after scope: f8
-  Global redzone:        f9
-  Global init order:     f6
-  Poisoned by user:      f7
-  ASan internal:         fe
-==1630==ABORTING
-[Inferior 1 (process 1630) exited with code 01]
+   The fingerprint of a V3 key is formed by hashing the body (but not
+   the two-octet length) of the MPIs that form the key material (public
+   modulus n, followed by exponent e) with MD5.  Note that both V3 keys
+   and MD5 are deprecated."
 
-The crash info about opj_tgt_reset function was:
-ASAN:SIGSEGV
-=================================================================
-==1666==ERROR: AddressSanitizer: SEGV on unknown address 0x00008109 (pc 0x083b06c7 sp 0xbfa06420 bp 0xbfa065b8 T0)
-==1666==WARNING: Trying to symbolize code, but external symbolizer is not initialized!
-    #0 0x83b06c6 (/home/r/fuzz3/openjpeg-master/bin/opj_decompress+0x83b06c6)
+So key id was not part of the fingerprint.  That's not how I remember
+it, but I'll trust the RFC over my memory.
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV ??:0 ??
-==1666==ABORTING
-
-These vulnerabilities ware found by Qihoo 360 Codesafe Team
-Download attachment "openjpeg_poc.zip" of type "application/octet-stream" (2560 bytes)
+Alexander
