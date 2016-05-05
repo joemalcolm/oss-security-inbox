@@ -1,63 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/13/1
-Message-ID: <885b2658-698a-7030-f3bc-edec7208b3ba@redhat.com>
-Date: Mon, 13 Jun 2016 09:55:48 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/14
+Message-ID: <CAP9m6Yc06E+Snw_1Wn_7txX+o9jSTcU_0hsf+QDsR1xuv+FqAA@mail.gmail.com>
+Date: Thu, 5 May 2016 08:42:13 -0400
+From: Stanislav Datskovskiy <stas@...er-os.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
+Subject: Re: broken RSA keys
 Content-Type: text/plain; charset=utf-8
 
-On 06/10/2016 06:04 PM, cve-assign@...re.org wrote:
->> I would like to request a CVE for the protocol flaw in IKEv1, details below:
-> 
->> https://www.kb.cert.org/vuls/id/419128
->> https://blogs.akamai.com/2016/02/ikeikev2-ripe-for-ddos-abuse.html
-> 
->> https://bugzilla.redhat.com/show_bug.cgi?id=1308508
->> https://github.com/libreswan/libreswan/commit/152d6d95632d8b9477c170f1de99bcd86d7fb1d6
->> https://lists.libreswan.org/pipermail/swan-dev/2016-March/001394.html
-> 
->> Can a CVE id be please assigned to this?
-> 
-> CVE IDs are not assigned to UDP protocols solely on the basis of an
-> observed amplification-attack risk. A CVE ID can exist if the UDP
-> reply traffic simply cannot ever have any legitimate purpose for users
-> of a protocol. The general case of the interaction between UDP
-> amplification and CVE was discussed between MITRE and CERT in 2013;
-> this may be the reason that no CVE ID is listed in the
-> https://www.kb.cert.org/vuls/id/419128 document.
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-In that case, no CVE should be assigned to this issue as well. Its not
-libreswan which is flawed, but its the protocol which they are trying to
-implement.
+On Thu, May 5, 2016 at 5:23 AM, Hanno Böck <hanno@...eck.de> wrote:
+> Hi,
+>
+> as I know the first ones to use this on publicly available keysets in
+> order to find vulnerable keys. The implementation from Nadia Heninger is
+> freely available [1] and some code to turn a pgp keyserver dump into a
+> mysql database is available from me [2]. So everyone should be able to
+> replicate what I'm saying
 
+Where, exactly, did you get your public keys? Would you consider sharing?
+Quite a few of your moduli are not in my SKS dumps.
 
-> We can, however, assign a CVE ID to a vendor's announcement of a
-> required security update, such as on the https://libreswan.org/ home
-> page:
-> 
->   "libreswan 3.16 vulnerable to DDOS attack. Please upgrade to 3.17"
-> 
-> Use CVE-2016-5361 for this issue only in the libreswan codebase.
-> 
-> 
+Best,
+- -S
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-
-Also the following products (which implement IKEv1 are flawed, since
-they follow this protocol)
-
- ipsec-tools
- racoon2
- openswan
- strongswan
- libreswan
- ike
- vpnc
-
-(There may be others, but i can only think of the above)
-
-
-
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+iQEcBAEBCgAGBQJXKz+IAAoJELmCKKABq//HVf8H/1ZpDz5+sS/2cEc/TJXXrb9l
+QuoQpRpRKSzaAJ239zeojqbvLNZ4s/p+CvczqNEQ2QhHxc4cRlcUTeq6f/54py4N
+qemE5A4OUfrIgQzH/UPpXRY+N6IKiXL1wP9hMgKsDVV+x9h2ENdoa2GQlsuDenyU
+OQFQoizVsU2XzOAY4MkEJKdY3oHU1yx14Bs93ayW2aN5K2ZWs9pM3zCAV+kWmH3O
+47vANi7DdBTzBoixzZflruoGe6rRMDfft4vx+ngiGcPBkN5NyEpzTbPM9tAtyncJ
+g8H9ygaHJoLc89iScW4HmQuLW3HEaHaMwPYv2x78X+ubFGQuoWwNADcE6kBJwSw=
+=PLnp
+-----END PGP SIGNATURE-----
