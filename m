@@ -1,78 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/31/6
-Message-ID: <2cc0c808c8ec740dc075b3b286598454.squirrel@webmail-etu.univ-nantes.fr>
-Date: Thu, 31 Mar 2016 17:37:19 +0200 (CEST)
-From: "Hugues ANGUELKOV" <hugues.anguelkov@....univ-nantes.fr>
-To: tytso@...ena.mit.edu
-Cc: kseifried@...hat.com, sandeen@...hat.com, oss-security@...ts.openwall.com
-Subject: Re: CVE Request - Linux kernel (multiple versions) ext2/ext3  filesystem DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/06/7
+Message-Id: <20160506154021.7AD8B72E002@smtpvbsrv1.mitre.org>
+Date: Fri,  6 May 2016 11:40:21 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Requests: Linux: BPF flaws (one use-after-free / local root privilege escalation)
 Content-Type: text/plain; charset=utf-8
 
-Date: Thu, 31 Mar 2016 08:53:17 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Andreas Dilger <adilger@...ger.ca>, Yves-Alexis Perez
-<corsac@...ian.org>,
-	Theodore Tso <tytso@...gle.com>, linux-ext4@...r.kernel.org
-Subject: Re: CVE Request - Linux kernel (multiple versions)
- ext2/ext3 filesystem DoS
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Wed, Mar 30, 2016 at 2:43 PM, Theodore Ts'o <tytso@....edu> wrote:
->
->
-> You can mount the file system with "mount -o errors=continue" and this
-> will override the default behavior specified in the super block.
->
-> I would argue that a Desktop or server system that had automount
-> should either (a) mount with -o errors=continue, or (b) force an fsck
-> on the file system before mounting it.
->
+> A use-after-free flaw via double-fdput in bpf was recently fixed in
+> Linux. Details:
+> 
+> https://bugs.chromium.org/p/project-zero/issues/detail?id=808
+> 
+> Fixed via:
+> https://git.kernel.org/linus/8358b02bf67d3a5d8a825070e1aa73f25fb2e4c7
+> 
+> And as well reported/forwarded in Debian:
+> https://bugs.debian.org/823603
 
-The problem is that:
+Use CVE-2016-4557.
 
-a) means I'll be mounting filesystems with errors that I may want to know
-about (but not have my  system panic about)
-
-b) fsck takes a long time on large disks (the smallest size of disk I buy
-for USB drives is 1TB, if I fsck every time I plug one in I'll die of old
-age).
-
-
->
-> So I think this is a particularly meaningless CVE, which is why I have
-> zero respect for people who try to make any kind of conclusion based
-> on CVE counts.   I certainly don't plan to do anything about this.
->
-
-As for your comments on CVE counting even the then head of CVE @mitre told
-people not to rely on CVE counting for vulnerability stats:
-
-https://media.blackhat.com/us-13/US-13-Martin-Buying-Into-The-Bias-Why-Vulnerability-Statistics-Suck-Slides.pdf
-
-As for your comment on not fixing this: I think fundamentally I should be
-able to plug a file system in and try to mount it with default/reasonable
-options and NOT have my system panic. File system handling code, like any
-code that handles user supplied data should be able to handle garbage
-gracefully and securely. At worst it should try to mount and go "derp, it's
-messed up, maybe fsck it?"
+(Additional notes about this: in 808, the first paragraph describes
+intentional behavior. The kernel/bpf/verifier.c attack surface for
+unprivileged users is also relevant to one or more previous CVEs such
+as CVE-2016-2383. Also, the paragraphs after "There are two problems
+with this approach" describe kernel behaviors that make CVE-2016-4557
+exploitation more reliable. We do not currently feel that these
+behaviors should have CVE IDs. For example, the paragraphs mention
+"abusing the writev() syscall and FUSE" and "has to wait for the
+attacker-owned FUSE filesystem to resolve the pagefault, allowing the
+attacker to suspend code execution in the kernel at that point
+arbitrarily.")
 
 
+> bpf: fix refcnt overflow:
+> https://git.kernel.org/linus/92117d8443bc5afacc8d5ba82e541946310f106e
 
->
->                                            - Ted
->
+Use CVE-2016-4558.
+
+(The "program refcnt" and "map refcnt" problems are not precisely analogous but
+we feel that the one ID, CVE-2016-4558, is sufficient.)
 
 
-First of all, I would like to say I'm not a MIT genius nor a security
-engineer, just a chemistry student who were fuzzing his box on his free
-time. I'm not interested about getting CVE nor collecting them and I
-apologize if my mail have sound like that.
-I was just concerned about getting a better system where I can mount any
-file system without any crash/panic.
-But again I'm not a pro/engineer, and I know that I've got no credibility
-and it's certainly not with these kind of things I will get somes. Anyway,
-thanks for reading and all your work, now I'm gonna use this fucking DoS
-trick called "shutdown -h now" and stop reporting thing what I was
-thinking it was strange behaviour.
-Hugues.
+> bpf: fix check_map_func_compatibility logic
+> https://git.kernel.org/linus/6aff67c85c9e5a4bc99e5211c1bac547936626ca
+> 
+> Not sure though if the later one has a security impact.
 
+We have not yet assigned a CVE ID to
+6aff67c85c9e5a4bc99e5211c1bac547936626ca in case someone else wants to
+provide additional information.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXLLoiAAoJEHb/MwWLVhi2dnQP/2P3MLVWWfYTlmj6mOLImmtM
+Ag8ChZX2PpdGd69SxwryOKpEGnyfu30/teUp3AiZW8f4M9eAftFSl0dICJip3wS5
+9zhi4KhQYDOlTi6xujXYSG7KUQVckyLkCurxwhsW8rGs9xUNKrMkrivcCu94SANk
+a0tg2FIoTcXyVTPSs6V4LwhyDAChLDFUCCuqNwFupvWRqshdkI6cjE4rJ1al8iP4
+ujfWtJlqFnofvL6vEE3ZEAe7Y8N2ZN22z2E3dM+9CKyEdZ+Gij/8YKBThYKjC2Ku
+bZ5jEJjvlGZyXGg+k40XFT5r8k+1LUE2uLk0eNCN/3Sc/LgeDMKmSqfiAX+LsGS1
+s+8vDweQ72Q1OoxoiChvoK5d0e4RT/5UtinjA3h/1yABBFJ/4StwTjZkkSHr8o7a
+JD60QEG8PEdzz8hEFh6FyoaLXcz52PKe54cI2kbqiKfXytJMOmrNSf/v/hBMVjFV
+CzT1ZYmIQUxhllqNzxmangWnijCq0eNCUCEHvgc6qNwPyQTsB5uj0cqaDaKkmH2z
+5Wyt2sFvVsIi3vFZr8y7mjM243V7hH5xXurhUOFIzhzF5YvTZ/eaq8ibpolBgyrB
+CleVL3ok8uy0ikCblzVnHgEqsYl3GX4CMF4PMeayIO9seo5iPuh5eGutgdwuLDlV
+osmgYu9VbVVb8mMPATPw
+=V36N
+-----END PGP SIGNATURE-----
