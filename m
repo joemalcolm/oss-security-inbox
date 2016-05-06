@@ -1,56 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/03/1
-Message-ID: <CAFdyfB2TsH3t=nyMmb42CREXL8wRqZ5yxv=ORyRPKi+-miPY8A@mail.gmail.com>
-Date: Wed, 3 Aug 2016 00:57:25 +0100
-From: Dario Bertini <berdario@...il.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: CSRF in Grails console
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/06/8
+Message-ID: <20160506193041.GA4287@eldamar.local>
+Date: Fri, 6 May 2016 21:30:41 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: ikiwiki: HTML-escape error messages to prevent cross-site scripting attack
 Content-Type: text/plain; charset=utf-8
 
-Thanks
+Hi
 
-On Tue, Aug 2, 2016 at 11:43 PM,  <cve-assign@...re.org> wrote:
-> It is possible that a behavior like this could have its own CVE ID if
-> it is undocumented or interacts incorrectly with run-app. For example,
-> http://docs.grails.org/1.3.9/guide/single.html#6.4.5%20Mapping%20to%20HTTP%20methods
-> says "the HTTP method (GET, POST, PUT or DELETE)." Do you mean, for
-> example, that the OPTIONS or TRACE method can allow access, but the
-> documentation suggests that only GET, POST, PUT, and DELETE need to be
-> anticipated?
+Release 3.20160506 of ikiwiki, a wiki compiler, fixed a cross-site
+scripting vulnerability. It has been fixed with the following commit:
 
-Nothing that fancy (I actually forgot about the HTTP method mapping
-you linked to...)
+http://source.ikiwiki.branchable.com/?p=source.git;a=commitdiff;h=32ef584dc5abb6ddb9f794f94ea0b2934967bba7
 
-The template code dropped by `grails create-app` is the same one you
-can see here: http://docs.grails.org/3.1.1/ref/Plug-ins/URL%20mappings.html
+> Subject: [PATCH] HTML-escape error messages (OVE-20160505-0012)
+> 
+> The instance in cgierror() is a potential cross-site scripting attack,
+> because an attacker could conceivably cause some module to raise an
+> exception that includes attacker-supplied HTML in its message, for
+> example via a crafted filename. (OVE-20160505-0012)
+> 
+> The instances in preprocess() is just correctness. It is not a
+> cross-site scripting attack, because an attacker could equally well
+> write the desired HTML themselves; the sanitize hook is what
+> protects us from cross-site scripting here.
 
-```
-"/$controller/$action?/$id?"{
-    constraints {
-        // apply constraints here
-    }
-}
-```
+Could you please assign a CVE identifier for this issue.
 
-This code is then kept by Grails programmer, who only rarely add more
-constrained mappings to this file, and instead relying on "convention
-over configuration". That is: they add controllers, and every
-non-private Closure/method defined in such controllers is accessible
-via any HTTP method, unless the snippet above is not removed.
-
-You can easily find demonstrations that this happens in real code:
-
-The same Grails Console plugin
-https://github.com/sheehan/grails-console/blob/88b1bb2/grails3/app/grails-app/controllers/UrlMappings.groovy
-(note that in fact their fix requires a CSRF token even for GET requests)
-
-The reference app for the Grails in Action book:
-https://github.com/pledbrook/graina/blob/fe1feca/hubbub/grails-app/conf/UrlMappings.groovy#L16-L20
-
-( There are even people that proposed custom annotations to provide a
-mechanism to constrain the methods closer to the actual
-method/function definition:
-http://burtbeckwith.com/blog/?p=80 ... I'd say that this is a simptom
-of how there are several ways to constrain HTTP methods for each
-controller, and yet none of these is truly used universally)
+Regards,
+Salvatore
