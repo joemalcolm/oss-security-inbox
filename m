@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["490" "Thursday" "10" "August" "2017" "21:35:32" "+0200" "Lukasz Lenart" "lukaszlenart@apache.org" "<CAMopvkMDajj=C-aJKXi2F9q4fB8T1Rk84p391PQvYsox0EDGwg@mail.gmail.com>" "15" "[oss-security] [ANN] Apache Struts: S2-049 Security Bulletin update" nil nil nil "8" "2017081019:35:32" "[oss-security] [ANN] Apache Struts: S2-049 Security Bulletin update" (number mark "U       lukaszlenart Aug 10   15/490   " thread-indent "\"[oss-security] [ANN] Apache Struts: S2-049 Security Bulletin update\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3630" "Friday" "6" "May" "2016" "10:46:41" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160506144641.EE41F72E00D@smtpvbsrv1.mitre.org>" "97" "[oss-security] Re: CVE Request: Squid HTTP caching proxy" "^Cc:" nil nil "5" "2016050614:46:41" "[oss-security] Re: CVE Request: Squid HTTP caching proxy" (number mark "U       cve-assign@m May  6   97/3630  " thread-indent "\"[oss-security] Re: CVE Request: Squid HTTP caching proxy\"\n") "<583f664a-dc8b-93cb-4b88-2b778d705ee0@treenet.co.nz>" ("<583f664a-dc8b-93cb-4b88-2b778d705ee0@treenet.co.nz>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28020 invoked by uid 550); 10 Aug 2017 20:20:10 -0000
+Received: (qmail 28613 invoked by uid 550); 6 May 2016 14:46:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,38 +11,110 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 28586 invoked from network); 6 May 2016 14:46:53 -0000
+In-Reply-To: <583f664a-dc8b-93cb-4b88-2b778d705ee0@treenet.co.nz>
+Message-Id: <20160506144641.EE41F72E00D@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Fri,  6 May 2016 10:46:41 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17444 invoked from network); 10 Aug 2017 19:36:10 -0000
-X-Gm-Message-State: AHYfb5hksvBotOesvr83XEvao2jDp7/4agV4/TwgDcMsOWF/dEj5dz1r
-	zpy/7cUCFXjjqL+MdDHto+C/Qi6oDA==
-X-Received: by 10.25.18.87 with SMTP id h84mr4494836lfi.217.1502393753062;
- Thu, 10 Aug 2017 12:35:53 -0700 (PDT)
-MIME-Version: 1.0
-From: Lukasz Lenart <lukaszlenart@apache.org>
-Date: Thu, 10 Aug 2017 21:35:32 +0200
-X-Gmail-Original-Message-ID: <CAMopvkMDajj=C-aJKXi2F9q4fB8T1Rk84p391PQvYsox0EDGwg@mail.gmail.com>
-Message-ID: <CAMopvkMDajj=C-aJKXi2F9q4fB8T1Rk84p391PQvYsox0EDGwg@mail.gmail.com>
-To: Struts Users Mailing List <user@struts.apache.org>
-Cc: "announcements@struts.apache.org" <announcements@struts.apache.org>, 
-	Struts Developers List <dev@struts.apache.org>, announce@apache.org, 
-	"security@struts.apache.org" <security@struts.apache.org>, oss-security@lists.openwall.com, 
-	bugtraq@securityfocus.com, Yasser Zamani <yasser.zamani@live.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] [ANN] Apache Struts: S2-049 Security Bulletin update
+Subject: [oss-security] Re: CVE Request: Squid HTTP caching proxy
+To: squid3@treenet.co.nz
 
-This is an update of the recently announced Security Bulletin S2-049 -
-http://struts.apache.org/docs/s2-049.html
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The bulletin was extended with an additional information when the
-potential vulnerability can be present in your application. Please
-re-read the mentioned bulletin and apply required actions if needed.
+> 1) Cache Poisoning issue in HTTP Request handling
+> Advisory at http://www.squid-cache.org/Advisories/SQUID-2016_7.txt
+> Patch at
+> http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14039.patch
+> 
+>   When absolute-URI is provided Host header should be ignored. However some
+>   code still uses Host directly so normalize it using the URL authority
+>   value before doing any further request processing.
+>   
+>   For now preserve the case where Host is completely absent.
 
-Please report any problems back to the Struts Security mailing list -
-security@struts.apache.org
+Use CVE-2016-4553.
 
 
-Kind regards
---=20
-=C5=81ukasz
-+ 48 606 323 122 http://www.lenart.org.pl/
+> 2) Header Smuggling issue in HTTP Request processing
+> Advisory at http://www.squid-cache.org/Advisories/SQUID-2016_8.txt
+> 
+> Patches at:
+>  http://www.squid-cache.org/Versions/v3/3.1/changesets/squid-3.1-10496.patch
+>  ...
+>  http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14038.patch
+> 
+> Require exact match in Host header name lookup
+> 
+> - while (xisspace(*p))
+> -     ++p;
+
+Use CVE-2016-4554.
+
+
+> 3) Multiple Denial of Service issues in ESI Response processing.
+> Advisory at http://www.squid-cache.org/Advisories/SQUID-2016_9.txt
+> 
+> Patches at:
+>  http://www.squid-cache.org/Versions/v3/3.4/changesets/SQUID-2016_9.patch
+>  http://www.squid-cache.org/Versions/v3/3.5/changesets/SQUID-2016_9.patch
+
+> Due to incorrect pointer handling and reference counting Squid is
+> vulnerable to a denial of service attack when processing ESI
+> responses.
+> 
+> These problems allow a remote server delivering certain ESI
+> response syntax to trigger a denial of service for all clients
+> accessing the Squid service.
+
+Use CVE-2016-4555 for the vulnerability in client_side_request.cc -
+here, "if (aConn)" was added.
+
+Use CVE-2016-4556 for the vulnerability in Esi.cc - it is
+described as "was being unlocked without having been locked."
+
+
+> Due to unrelated changes Squid-3.5 has become vulnerable to some
+> regular ESI server responses also triggering one or more of these
+> issues.
+> 
+> This bug is fixed by Squid version 3.5.18 and 4.0.10.
+
+As far as we can tell, this does not really mean that there is an
+additional vulnerability in 3.5.17 that did not exist in 4.0.9.
+Instead, it means that the vulnerabilities are the same, but in 3.5.x
+people might notice the vulnerabilities being exploited accidentally.
+
+
+> (URLs below are now all public, but some of our mirrors may take a few
+> more hours to pick up the changes).
+
+This means, for example, that the URLs work if one manually locates
+all instances of www.squid-cache.org and inserts www1.jp.squid-cache.org
+instead. See http://www.squid-cache.org/Download/http-mirrors.html
+for other options.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXLK2sAAoJEHb/MwWLVhi2dv4P/307N7HayVoijH0rHVfU6E1b
+Ncy7dciziT5ErGQNLvF8vdSbGoMtWy8hIPyqcU6J/ajfeQ5eYxTl6ZAChoa0AUPK
+xwhgk29TjA33NeqL+/YzRqTdkCMdeydU/sIGPXbUHuumHRVlLkOf49LgaONZaO3o
+c0RdQGs5Ncy5yTGeh7mZjSKLTw/N2QShJNWt7NRPfwdWADuz5FFEBywL9MNQtQen
+GLso1f9fTezKsfV7Ph+KECCAWOJq9kekG1awfhn6mGX/urp5VtgZW6Ro9/5TCATc
+lbiN0s3Cj7toRfbs/0w2xpjFMttn50bWG/ohIcb52rReTMJSPY5MQLUpcBtPrsHq
+ICWo9gcIilkPeol+kzAPRWM8zqbeZBwHomLjWcKhBXZyDaZpSKxp9Dimypt22pUV
+g7OXwrn/L2VaIrH4pm8RikCSes7cSi1Ef7TgwpkOL1xfCmqO7BupWHB/168A0bL9
+eiqcDyWGz/TJr5I7yAJcBQECAu7H3n+hclSBoqrOHhS3u13FNdAxdUWn2Gsp8Rw1
+A06zfz4Q2bF+6UTmjQztPgUrKIW77hDJwOP2/gmv2ruegig2QwAqEH1/LeTLbjSq
+qSdkKWKLD5xzCXnc0p4rqBusfU2KR9bpLPZ46VF6TcEr97LgtSd4G8d/2+kUkVVp
+OHALUwfR5fbWjM1IW5Bx
+=Zucs
+-----END PGP SIGNATURE-----
