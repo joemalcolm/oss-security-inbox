@@ -1,62 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/29/7
-Message-ID: <CAEmCSgmmuLYpNLdz_vg3-NH_f8Psfj7PxgN7b5S9UCLbKzvO9A@mail.gmail.com>
-Date: Fri, 29 Jan 2016 17:45:27 +0000
-From: Scott Herbert <scott.a.herbert@...glemail.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/06/3
+Message-ID: <583f664a-dc8b-93cb-4b88-2b778d705ee0@treenet.co.nz>
+Date: Fri, 6 May 2016 23:11:10 +1200
+From: Amos Jeffries <squid3@...enet.co.nz>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: CVE Request: Squid HTTP caching proxy
 Content-Type: text/plain; charset=utf-8
 
-That would be nice sure, but given that IoT vendors are rushing so
-fast to market that their doing things like sending login credentials
-via http, I think we're a long way from having them secure their
-products from scanning let alone anything else.
+Hi,
+ several serious issues have been reported about the Squid proxy.
 
-On 29 January 2016 at 15:47, enki <enki@...k.pl> wrote:
-> ---- Wł. Pt, 29 sty 2016 15:21:01 +0100 Hazel  napisał(a) ----
->>On 27 January 2016 at 14:43, Kurt Seifried <kseifried@...hat.com> wrote:
->>> On Wed, Jan 27, 2016 at 4:24 AM, Luca BRUNO <lucab@...ian.org> wrote:
->>> > For oss-sec crowd: is there anything we can do to improve the situation
->>> > and avoid
->>> > similar cases in the future? Should crowd-sourced and fundamental services
->>> > like this
->>> > be encouraged to move to a stronger WoT?
->>>
->>> [...]
->>>
->>> Sadly we can't really rely on the IoT device makers to fix this, they have
->>> basically 0 incentive to prevent scanners from hitting their products
->>> (they're already sold, to late for the customer to make an informed
->>> decision).
->>
->>I hope you'll forgive me making a modest proposal here, but it seems
->>to me that there might be an opportunity here for Linux distributions
->>that are upstream of IoT vendors to modify their default configuration
->>to address this.
->>
->>My somewhat off-the-cuff suggestion would be to...
->>
->>1. Add an *additional, secondary* IPv6 address to external interfaces that is:
->>-> a. generated in accordance with the IPv6 Privacy Extensions (i.e. RFC 4941)
->>-> b. firewalled by default against all traffic except NTP in either direction
->>
->>2. Configure the NTP *client* to use this secondary address as the
->>source for outgoing NTP traffic, instead of the default address?
->>
->>...thereby avoiding revealing the primary address of the host to
->>would-be scanners?
->>
->
-> I'd go even further and use the IPv6 privacy-enhanced address for all outgoing connections, not only NTP. It's only a matter of time before someone sets up a debian mirror for example that logs source addresses and launches scans against them.
->
-> --
-> enki@...k.pl
->
+(URLs below are now all public, but some of our mirrors may take a few
+more hours to pick up the changes).
+
+
+1) Cache Poisoning issue in HTTP Request handling
+
+Incorrect input validation of HTTP Request messages lets clients use an
+absolute-URI on port 80 to bypass the protection previously added to
+Squid for CVE-2009-0801 and other related attack vectors. This can lead
+to cache poisoning of the Squid and browser caches, bypass of
+same-origin and sandbox protections in browsers.
+
+All Squid 2.x are not vulnerable.
+All Squid-3.x up to and including 3.2.0.10 are not vulnerable unless
+ they have been patched for CVE-2009-0801.
+All Squid-3.2.0.11 and later up to and including 3.5.17 are vulnerable.
+All Squid-4.x up to and including 4.0.9 are vulnerable.
+
+Advisory at <http://www.squid-cache.org/Advisories/SQUID-2016_7.txt>
+
+Patch at
+<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14039.patch>
+(patches for other versions are TBD.)
 
 
 
--- 
---
-Web:  http://cryptonot.es/
-Twitter: http://twitter.com/Scott_Herbert
-Linkedin: http://www.linkedin.com/in/scottaherbert
+2) Header Smuggling issue in HTTP Request processing
+
+Incorrect input validation allows a client to smuggle Host header value
+past same-origin security protections to cause Squid operating as
+interception or reverse-proxy to contact the wrong origin server. Also
+poisoning any downstream cache which stores the response.
+
+However, the cache poisoning is only possible if the caching agent
+(browser or explicit/forward proxy) is not following RFC 7230 processing
+guidelines and lets the smuggled value through.
+
+NP: This appears to be an example of CWE-144, but smuggling just a
+specific header value instead of a whole message. The result is the same
+as documented for message smuggling but much harder to detect by
+observing log content - since there is no unexplained message or
+response corruption after the attack has happened.
+
+All 2.x versions up to and including 2.7.STABLE9 are vulnerable.
+All 3.x versions up to and including 3.5.17 are vulnerable.
+All 4.x versions are not vulnerable.
+
+Advisory at <http://www.squid-cache.org/Advisories/SQUID-2016_8.txt>
+
+Patches at:
+ <http://www.squid-cache.org/Versions/v3/3.1/changesets/squid-3.1-10496.patch>
+ <http://www.squid-cache.org/Versions/v3/3.2/changesets/squid-3.2-11842.patch>
+ <http://www.squid-cache.org/Versions/v3/3.3/changesets/squid-3.3-12698.patch>
+ <http://www.squid-cache.org/Versions/v3/3.4/changesets/squid-3.4-13236.patch>
+ <http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14038.patch>
+
+
+
+3) Multiple Denial of Service issues in ESI Response processing.
+
+Due to incorrect pointer handling and reference counting Squid is
+vulnerable to a denial of service attack when processing ESI responses.
+
+All Squid-2.x are not vulnerable.
+Squid-3.x up to and including 3.5.17 and 4.x up to and including 4.0.9
+are affected. Vulnerability is configuration and build dependent. see
+the advisory for more detail if interested.
+
+Advisory at <http://www.squid-cache.org/Advisories/SQUID-2016_9.txt>
+
+Patches at:
+ <http://www.squid-cache.org/Versions/v3/3.4/changesets/SQUID-2016_9.patch>
+ <http://www.squid-cache.org/Versions/v3/3.5/changesets/SQUID-2016_9.patch>
+
+
+
+Thanks
+
+Amos Jeffries
+Squid Software Foundation
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (835 bytes)
