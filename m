@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1275" "Thursday" "14" "September" "2017" "09:51:36" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<4196795.4HvRXNqvRy@wanheda>" "31" "Re: [oss-security] mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)" nil nil nil "9" "2017091407:51:36" "[oss-security] mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)" (number mark "U       ago@gentoo.o Sep 14   31/1275  " thread-indent "\"Re: [oss-security] mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)\"\n") "<20170914072445.bq2r6vtcnxietd4j@perpetual.pseudorandom.co.uk>" ("<427445.19640425-sendEmail@localhost>" "<20170914072445.bq2r6vtcnxietd4j@perpetual.pseudorandom.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1587" "Thursday" "5" "May" "2016" "22:40:39" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160506024039.D27F78BC1B1@smtpvmsrv1.mitre.org>" "43" "[oss-security] Re: CVE request - samsumg android phone TvoutService_C binder service DoS" nil nil nil "5" "2016050602:40:39" "[oss-security] Re: CVE request - samsumg android phone TvoutService_C binder service DoS" (number mark "U       cve-assign@m May  5   43/1587  " thread-indent "\"[oss-security] Re: CVE request - samsumg android phone TvoutService_C binder service DoS\"\n") "<1afe70a0.13380.154810ba449.Coremail.pengdawei521@163.com>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3174 invoked by uid 550); 14 Sep 2017 07:51:52 -0000
+Received: (qmail 9725 invoked by uid 550); 6 May 2016 02:40:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,47 +12,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3153 invoked from network); 14 Sep 2017 07:51:51 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: Simon McVittie <smcv@debian.org>
-Date: Thu, 14 Sep 2017 09:51:36 +0200
-Message-ID: <4196795.4HvRXNqvRy@wanheda>
-In-Reply-To: <20170914072445.bq2r6vtcnxietd4j@perpetual.pseudorandom.co.uk>
-References: <427445.19640425-sendEmail@localhost> <20170914072445.bq2r6vtcnxietd4j@perpetual.pseudorandom.co.uk>
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
-Subject: Re: [oss-security] mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)
+Received: (qmail 9703 invoked from network); 6 May 2016 02:40:51 -0000
+From: cve-assign@mitre.org
+To: pengdawei521@163.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <1afe70a0.13380.154810ba449.Coremail.pengdawei521@163.com>
+Message-Id: <20160506024039.D27F78BC1B1@smtpvmsrv1.mitre.org>
+Date: Thu,  5 May 2016 22:40:39 -0400 (EDT)
+Subject: [oss-security] Re: CVE request - samsumg android phone TvoutService_C binder service DoS
 
-On gioved=EC 14 settembre 2017 09:24:45 CEST Simon McVittie wrote:
-> On Thu, 14 Sep 2017 at 07:00:25 +0000, Agostino Sarubbo wrote:
-> > The fuzz was done via the aacgain command-line tool which uses mp3gain
-> > which bundles an old-modified version of mpg123 called mpglibDBL.
->=20
-> I wouldn't recommend putting effort into fuzzing mp3gain. mpglibDBL
-> is known to have security vulnerabilities anyway:
-> https://security-tracker.debian.org/tracker/source-package/mp3gain
-> (I wonder whether you've rediscovered those, or found new vulnerabilities=
-?)
->=20
-> It probably also suffers from most other historical vulnerabilities
-> that are listed for mpg123. We removed it from Debian in 2014,
-> with a recommendation to use the rgain Python package instead:
-> https://tracker.debian.org/pkg/rgain
->=20
-> rgain uses libmad or ffmpeg via GStreamer for decoding, so it isn't
-> exactly bug-free either; but those libraries are actively maintained,
-> and when they have vulnerabilities, they'd need to be fixed anyway for
-> the benefit of other packages.
->=20
-> Regards,
->     smcv
-I didn't investigate to the mpg123 bugs, I searched for mp3gain into the CV=
-E=20
-database.
-Anwyay I agree with you that is time to drop the packages.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
---=20
-Agostino Sarubbo
-Gentoo Linux Developer
+> When a app send a evil data to com. TvoutService_C service by service
+> command (Android system command) , can cause to TvoutService_C service
+> crash.
+
+> adb shell;
+
+> service call TvoutService_C 22 i32 1090056453 i32 1428574234 i32
+> 836766018 i32 779588542
+
+> Fix:
+> http://security.samsungmobile.com/smrupdate.html#SMR-FEB-2016
+> SVE-2016-5134: TvoutService_C service DoS
+
+>> A vulnerability without appropriate exception handling allows
+>> attackers to make a system crash easily through such as a DoS attack.
+
+Use CVE-2016-4547.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXLAAhAAoJEHb/MwWLVhi2qBsQAKkQv8L6AdrgxVNJGTdN5nLI
+kiR1mtMcKmUb4IBnjH3D2O7TlDTzMf57bnyfIIVB/qeae9nZRZEwqTgBrXBq4ouu
+/o77fWmcuxa4F5uF8O9cG7zFoTljoLF4kUD0WhSA5lFn0BUqig2vWia4trKIdflT
+4C3QhVVwvLeR4kZiwiMwn8sA44NnXZMhCfOHdqxNRaXZNdVDiAPn9uxQhOhME6fy
+z4uwSJoc+CckCPY3HviYy65FJ4lRESU2sK9vfuXm41x1sBtXJSg/IUkwO6x7aJBs
+t0+9rE0xOXacscEP/WMhwuquBUGvK6HglmXMogW7kL6WLAc2BetrckPbWqu71K2J
+O4N6iqJ3tv+fgVC1ATW2KjmjotABavZ/rR5I9uCN5J7fLTi6u9G5Dy5oJwZTY7wq
+fIHwk9Ku8l89jt8h5yr+X+ab6UcBOuzIU8Qh3m8ssY66tbge+ZAzcVDhHBrjW7XA
+EstiyR5GKkxGS0g/oyd7GbH+2FBlUTMETu2KQh2xQNt0v8tjT4exLeMgqtgk1plz
+q4ToF7uB32prXLFFkrX5ooS9RkEL4oSuKqr9n7c9rdofr2jy5Ob8PO6VJAuZ2MOZ
+LfgvDQWOHZlmBTFwqCSQnaou5FT+yTLXWIHOuR0n0r0ZDTNsGmsPd2dv85x1/gHJ
+V1JOoJChFUcX4gdluv83
+=tNLr
+-----END PGP SIGNATURE-----
