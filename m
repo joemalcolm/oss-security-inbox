@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4304" "Monday" "18" "May" "2020" "15:03:33" "+0300" "Aki Tuomi" "aki.tuomi@dovecot.fi" "<1552538431.97.1589803413519@appsuite-dev-guard.open-xchange.com>" "157" "[oss-security] Multiple vulnerabilities in Dovecot IMAP server" "^Date:" nil nil "5" "2020051812:03:33" "[oss-security] Multiple vulnerabilities in Dovecot IMAP server" (number mark "U       aki.tuomi@do May 18  157/4304  " thread-indent "\"[oss-security] Multiple vulnerabilities in Dovecot IMAP server\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Dovecot IMAP server" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2157" "Friday" "6" "May" "2016" "17:07:01" "+0200" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdS+8Hc+VOm3zX7k2dE2UYj6kuCH4ZmZqtc-WbXca=n9vQ@mail.gmail.com>" "51" "[oss-security] CVE request: an invalid pointer read in mini-xml 2.7" nil nil nil "5" "2016050615:07:01" "[oss-security] CVE request: an invalid pointer read in mini-xml 2.7" (number mark "U       gustavo.grie May  6   51/2157  " thread-indent "\"[oss-security] CVE request: an invalid pointer read in mini-xml 2.7\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18090 invoked by uid 550); 18 May 2020 12:50:46 -0000
+Received: (qmail 22033 invoked by uid 550); 6 May 2016 15:07:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,198 +11,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19594 invoked from network); 18 May 2020 12:03:45 -0000
-Message-ID: <1552538431.97.1589803413519@appsuite-dev-guard.open-xchange.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; 
-	boundary="----=_Part_96_1856029690.1589803413518"
-X-Priority: 3
-Importance: Normal
-X-Mailer: Open-Xchange Mailer v7.10.4-Rev0
-X-Originating-Client: open-xchange-appsuite
-Autocrypt: addr=aki.tuomi@open-xchange.com; prefer-encrypt=mutual; keydata=
- mQENBFb7bukBCACpK7GFwH/gyL0oF8t91WM7S+UjuQ1vOQZg2eoCUHi4ILpm1Kae4UeZLB2XVbeph+k
- 29BIQbo+Hjv6rq6JzPfKIZCRLLrkMD1MtA0YB7ZYiACywLrATAdAMJ6sRq+DL5RlrA2CvviTifz6DwE
- nbqI+ckcKggsY2gywHs5muDw+n5TwLiL0V9IU478vg7OUWzMZ42toTmeTW2MtsIAE5xbnjZ58LUSZR2
- CNO8SAtDHYI558ACkS0wHBAoRFNv27IPr3cebiPsIglSEIBr0R1F1Twbgm6mWVBhK+smDgGxmmuAhH6
- boSaKWoWAq+tNf+6oXnr3/D0IPtR8c/bZobtvWG3ABEBAAG0J1R1b21pLCBBa2kgPGFraS50dW9taUB
- vcGVuLXhjaGFuZ2UuY29tPokBPgQTAQIAKAIbAwUJEswDAAUCW2P/aAYLCQgHAwIGFQgCCQoLBBYCAw
- ECHgECF4AACgkQGTtjY7NEQgYmMwf9G5U0+vKJB+f3Vl8rjPqlXmUZu4waf6pig5lLCrgu56ZkqEDmj
- axmxXAah7JZ6dD/66kzlQzKQPYpLor0KnTZgm8XZr+MtqLK8DMF/4+iljADvkS4nfJuX3LbdafPyuk4
- x+GIa+6NJ+y34jZ284Oesj+FtPOevthR9rDmnc2KQjBD30ceKsadxIKqWPYPqPESQ0PyMu9tOaWNdGn
- tx8LvO3LlspZ2DzEh5rregFKtO01jR9ai5r3mbUrQqwzWLxJztBYjds8D5VAiCBeivUxetDqhoPr3Cy
- KHStc5GfgHvazjG34H+CShReqIylfR4mwc654qkmVQfPMMUTaa677n8bkBDQRW+27pAQgAosZdRB8tu
- i65tjna4iYKPHqcNDZUXOUuPLTucYc2tY2v67POGr44gOZNzuQWKyXRSBs+Q2zJHcbccPe0ZEptkOCO
- wdhhvBwZLKa6nI9jnJ0K+szT2NbD0YkvaIDALA9pVGMJqa88wvkkocf/I5fkdTk6xuLp8AamRXvcPZu
- UPo/s2PXQV4u+gtKdX1FmaHiBg1oQhtoDWZO04H74r9fyPPs499ra9iNckSlZP51OUFBbV/RmbtEC03
- 1r4iXUAgiL0nQ1mNpRIW+PU/5beX/4YwYeCpzy7g0XfMaJoMWDamRdXgzkXK6IJIxwo/89M8qPW+Bkh
- 88yAennI2SsEvniXQARAQABiQExBBgBAgAbBQJW+27pAhsMBAsJCAcGFQoJCAsCBQkSzAMAAAoJEBk7
- Y2OzREIGCm8IAIZkj5FClx8EmPy1caC+CNv1mVrC2YhKY9Zh255JUtt+Xp6tshN6IOr+saNkcwgUghx
- mx6+asZXPDHTqhXoswPi28k1uCY7n4gvh3jlS7a0HeI0sy2RCsrkIaQD2uSt+ju9fpEM2aOXQHGT/x6
- gZhJ7Uwu+JfDnCB7CBFjVnRaV2/87Y0ZImfhIMPYRzwOyWW6KR+JPIutyZAWo9c7mmjKbySLXhqgZar
- iMJU+RQF5/daQsiRJKP1IkC/Ncy/iZSnGvPIRZjvQxtrz+4xexZX6NjG7IbKAwmbo1t27cF3hE4Heja
- kF5bLOhznVWubhjXp1J6pL9fymHmG2tZPsgwXcA=
-Date: Mon, 18 May 2020 15:03:33 +0300 (EEST)
-From: Aki Tuomi <aki.tuomi@dovecot.fi>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Multiple vulnerabilities in Dovecot IMAP server
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
-	"fulldisclosure@seclists.org" <fulldisclosure@seclists.org>
+Received: (qmail 22010 invoked from network); 6 May 2016 15:07:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to;
+        bh=4jgT5pvs5xcJdhuXdbfnNEeLYDgysu/G89kIxO+5YqE=;
+        b=OEbRtLlESUcBZpsgjKjU6OhYW/wW2swdV2SBzryg+K1txGRahHUG9rl/uRw+qlpbwK
+         r2oEBd7o5AZ+c2b1i0isWghEqB1j/pLwUh5oWATru2UddUs2kUMV7OD9t3QVnU0BbvVQ
+         3J4xioLyL3qM24WWicmZBmIjCnPXaj4THSq8qHLWQuQkA8OQTeo0LJJ0q46sMzQy+YaT
+         kD6ieYK4mJbsPTYC2QtXYEk+k1uHWBnB4FC2GcbeMd9HuqHjGNdgApsaP1Y66u1yfnFE
+         mhP2yhv2YgR6VYaoVmyITRB5kYZyB/RJSveHlhqbXjUsnHX6uzKQzax2kQYdCuspoA0E
+         bsXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
+        bh=4jgT5pvs5xcJdhuXdbfnNEeLYDgysu/G89kIxO+5YqE=;
+        b=IXtdNAUBuE1AaKpP1En8mzckXJ632JcXJEFMH+G0t4KFRZppOdqISiBsatxowS0kn6
+         4KxR6RImZXstnEkg5WYusH0AJbksG0W7IwZ9JdO89FFpzmIM1UWSj9YkpAUhiuSMDYre
+         vMW3n/r4uDphWmEGAxeaQvyBbn40sLwhvUPajiRvWaRdqlxgSmTO5G9Ql6m3+5qbfN17
+         LJxxyJdvzKJYb/DB5OVqhxVcqZBWn5/ogUjpWafcEskmX3at2yQfmUJrtuQRlMmjX55E
+         KhuSUSZNdT6TKxKA4GnCsXC6vM1VtgionvfnBko9M5ruTlkiOCpR+G5vPWWeYMvTpQ3/
+         /vUw==
+X-Gm-Message-State: AOPr4FWp1XV7KTk8hX5nk3TM81YLqJ3VuhI6qXbPNWBPipGJ8SE1GNvdaPefWbWRJgY3FStkIp/0IzYwOLPKFA==
+MIME-Version: 1.0
+X-Received: by 10.112.160.163 with SMTP id xl3mr10104542lbb.19.1462547221842;
+ Fri, 06 May 2016 08:07:01 -0700 (PDT)
+Date: Fri, 6 May 2016 17:07:01 +0200
+Message-ID: <CACn5sdS+8Hc+VOm3zX7k2dE2UYj6kuCH4ZmZqtc-WbXca=n9vQ@mail.gmail.com>
+From: Gustavo Grieco <gustavo.grieco@gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a11c34262a0169b05322dcfb2
+Subject: [oss-security] CVE request: an invalid pointer read in mini-xml 2.7
 
-------=_Part_96_1856029690.1589803413518
+--001a11c34262a0169b05322dcfb2
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 
-Dear subscribers,
+Hi,
 
-we are sending notifications for three vulnerabilities,
+An invalid pointer read located in a vsnprintf call in mini-xml 2.7 (
+https://www.msweet.org/projects.php?Z3) was found:
 
- - CVE-2020-10957
- - CVE-2020-10958
- - CVE-2020-10967
+$ gdb --args ./testmxml jezrijgasv.xml.-5377691366552468283
+...
+Program received signal SIGSEGV, Segmentation fault.
+0x00007ffff48b3a03 in _IO_vfprintf_internal (s=s@entry=0x7fffffff9970,
+format=<optimized out>,
+    format@entry=0x40d900 "<%s> cannot be a second root node after <%s>",
+ap=ap@entry=0x7fffffff9b10) at vfprintf.c:1661
+1661    vfprintf.c: No such file or directory.
+(gdb) bt
+#0  0x00007ffff48b3a03 in _IO_vfprintf_internal (s=s@entry=0x7fffffff9970,
+format=<optimized out>,
+    format@entry=0x40d900 "<%s> cannot be a second root node after <%s>",
+ap=ap@entry=0x7fffffff9b10) at vfprintf.c:1661
+#1  0x00007ffff4971235 in ___vsnprintf_chk (s=s@entry=0x7fffffff9b50 "<b>
+cannot be a second root node after <\002", maxlen=<optimized out>,
+    maxlen@entry=1024, flags=flags@entry=1, slen=slen@entry=1024,
+format=format@entry=0x40d900 "<%s> cannot be a second root node after
+<%s>",
+    args=args@entry=0x7fffffff9b10) at vsnprintf_chk.c:63
+#2  0x000000000040a3c0 in vsnprintf (__ap=0x7fffffff9b10, __fmt=0x40d900
+"<%s> cannot be a second root node after <%s>", __n=1024,
+    __s=0x7fffffff9b50 "<b> cannot be a second root node after <\002") at
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:77
+#3  mxml_error (format=0x40d900 "<%s> cannot be a second root node after
+<%s>") at mxml-private.c:86
+#4  0x0000000000405a74 in mxml_load_data (top=top@entry=0x0,
+p=p@entry=0x60360000fd80,
+cb=cb@entry=0x402863 <type_cb>,
+    getc_cb=getc_cb@entry=0x404c78 <mxml_file_getc>, sax_cb=sax_cb@entry=0x0,
+sax_data=sax_data@entry=0x0) at mxml-file.c:1662
+#5  0x00000000004079d0 in mxmlLoadFile (top=top@entry=0x0,
+fp=fp@entry=0x60360000fd80,
+cb=cb@entry=0x402863 <type_cb>) at mxml-file.c:199
+#6  0x0000000000402166 in main (argc=<optimized out>, argv=0x7fffffffe4f8)
+at testmxml.c:473
 
-Please find them below
+Fortunately, this issue is fixed in mini-xml 2.9. A reproducer is available
+upon request. Please assign a CVE if necesary.
 
----
-Aki Tuomi
-Open-Xchange Oy
+Regards,
+Gustavo.
 
-------------------
-
-Open-Xchange Security Advisory 2020-05-18
-
-Product: Dovecot
-Vendor: OX Software GmbH
-
-Internal reference: DOV-3784
-Vulnerability type: NULL pointer dereference (CWE-476)
-Vulnerable version: 2.3.0 - 2.3.10
-Vulnerable component: submission, lmtp
-Report confidence: Confirmed
-Solution status: Fixed by Vendor
-Fixed version: 2.3.10.1
-Researcher credits: Philippe Antoine (Catena Cyber)
-Vendor notification: 2020-03-24
-Solution date: 2020-04-02
-Public disclosure: 2020-05-18
-CVE reference: CVE-2020-10957
-CVSS: 7.5  (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
-
-Vulnerability Details:
-	Sending malformed NOOP command causes crash in submission, submission-login or
-	lmtp service.
-
-Risk:
-	Remote attacker can keep submission-login service down, causing denial of
-	service attack. For lmtp the risk is neglible, as lmtp is usually behind a
-	trusted MTA.
-
-Steps to reproduce:
-	Send ``NOOP EE"FY`` to submission port, or similarly malformed command.
-
-Solution:
-	Upgrade to fixed version.
-
-------------------
-
-Open-Xchange Security Advisory 2020-05-18
-
-Product: Dovecot IMAP server
-Vendor: OX Software GmbH
-
-Internal reference: DOV-3875
-Vulnerability type: Improper handling of input data (CWE-20)
-Vulnerable version: 2.3.0 - 2.3.10
-Vulnerable component: submission, lmtp
-Report confidence: Confirmed
-Solution status: Fixed by Vendor
-Fixed version: 2.3.10.1
-Researcher credits: Philippe Antoine (Catena Cyber)
-Vendor notification: 2020-03-23
-Solution date: 2020-04-02
-Public disclosure: 2020-05-18
-CVE reference: CVE-2020-10958
-CVSS: 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)
-
-Vulnerability Details:
-
-	Sending command followed by sufficient number of newlines triggers a
-	use-after-free bug that might crash submission-login, submission or
-	lmtp service.
-
-Risk:
-
-	Remote attacker can keep submission-login service down, causing denial
-	of service attack. For lmtp the risk is neglible, as lmtp is usually
-	behind a trusted MTA.
-
-Steps to reproduce:
-
-	This can be currently reproduced with ASAN or Valgrind. Reliable way to
-	crash has not yet been discovered.
-
-Solution:
-
-	Upgrade to fixed version.
-
-------------------
-
-Open-Xchange Security Advisory 2020-05-18
-
-Product: Dovecot
-Vendor: OX Software GmbH
-
-Internal reference: DOV-1745
-Vulnerability type: Improper input validation (CWE-20)
-Vulnerable version: 2.3.0 - 2.3.10
-Vulnerable component: submission, lmtp
-Report confidence: Confirmed
-Solution status: Fixed by Vendor
-Fixed version: 2.3.10.1
-Researcher credits: mailbox.org
-Vendor notification: 2020-03-20
-Solution date: 2020-04-02
-Public disclosure: 2020-05-18
-CVE reference: CVE-2020-10967
-CVSS: 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)
-
-Vulnerability Details:
-	Sending mail with empty quoted localpart causes submission or lmtp component
-	to crash.
-
-Risk:
-	Malicious actor can cause denial of service to mail delivery by repeatedly
-	sending mails with bad sender or recipient address.
-
-Steps to reproduce:
-	Send mail with envelope sender or recipient as ``<""@example.org>``.
-
-Workaround:
-	For submission there is no workaround, but triggering the bug requires valid
-	credentials.
-	For lmtp, one can implement sufficient filtering on MTA level to prevent mails
-	with such addresses from ending up in LMTP delivery.
-
-Solution:
-	Upgrade to fixed version.
-
-------------------
-
-------=_Part_96_1856029690.1589803413518
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment; filename=signature.asc
-
------BEGIN PGP SIGNATURE-----
-Version: BCPG v1.62
-
-iQEcBAABCgAGBQJewnmVAAoJEBk7Y2OzREIGdvMH/3e08xam6YrPOJ/mpMZ68hnw
-jUQLjs9Il17TC32u+aEhywXK0mzJqBqqQcBIRJmhqJESsdwrX/ME+IMXD2MfxlvQ
-SqZNIJ4pLbdMaFAAsl8ZYg62kzs3USeobzkIgajG4em2JaGq/iiXNcwLm0M4xF91
-Sgwfn09uX3VEFvHBPW5QrrG9ejV5A4F+1TUZqiDod012bo84fenw6k4vaf83zg1j
-P8eDZUKhiR0wtmybgoimaWrTgPAZSWLika7pj/6Eu9AiCmZnAKALZ9JFQqRdW5/W
-HBU8on0oGppPvsDUfgm7oZCoNJ+7OdtlqPB/l6leju5YNSxY1LEfnK7OqG+Dv/o=
-=AToH
------END PGP SIGNATURE-----
-
-------=_Part_96_1856029690.1589803413518--
+--001a11c34262a0169b05322dcfb2--
