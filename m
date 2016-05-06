@@ -1,37 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/19/3
-Message-ID: <alpine.LFD.2.20.1605191642030.11606@wniryva>
-Date: Thu, 19 May 2016 16:44:42 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2016-4439 Qemu: scsi: esp: OOB write while writing to 's->cmdbuf' in esp_reg_write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/06/9
+Message-Id: <20160506201059.165AF332055@smtpvbsrv1.mitre.org>
+Date: Fri,  6 May 2016 16:10:59 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: ikiwiki: HTML-escape error messages to prevent cross-site scripting attack
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Quick Emulator(Qemu) built with the ESP/NCR53C9x controller emulation support 
-is vulnerable to an OOB write access issue. The controller uses 16-byte FIFO 
-buffer for command and data transfer. The OOB write occurs while writing to 
-this command buffer in esp_reg_write().
+> http://source.ikiwiki.branchable.com/?p=source.git;a=commit;h=32ef584dc5abb6ddb9f794f94ea0b2934967bba7
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS OR potentially leverage it to execute arbitrary code with 
-privileges of the Qemu process on the host.
+> The instance in cgierror() is a potential cross-site scripting attack,
+> because an attacker could conceivably cause some module to raise an
+> exception that includes attacker-supplied HTML in its message, for
+> example via a crafted filename. (OVE-20160505-0012)
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg03273.html
+>> CGI.pm
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1337502
+Use CVE-2016-4561.
 
-This issue was discovered by Li Qiang of 360.cn Inc.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-'CVE-2016-4439' has been assigned to it by Red Hat Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+iQIcBAEBCAAGBQJXLPn2AAoJEHb/MwWLVhi2ALMQAIlovh1Sl+fuQdZIQBAzRJfg
+f4IgcFMZxk6MFeTzDXmrdDlRHSPqI/BDAaSPz96thHjURMVet/CCSNkbA1G8CIVB
+r04BTvqNhDaL2tP/KxZ/bha9q4BM9BpO+6L8+aRK4sjiRbr21Q/PlvicEus3B20e
+1e/jyMX/69oX4O8mqkm9UoQtsft2nlI13TOwM9yKKgQ61eMkjkDpDFMkAOaj25wP
+qJ7pXPHWIYv5ic0Wg0KacF+BRlrFckN0RXfody4pzya7ND0yck/41F1y6h0isn4c
+MHkwvKJ29qTeccflgF4FoB2YSD8E0dZkQU9CYpo95hdsyeVMj7O4wRE5bd5kPCZs
+HIF8KEKzzvvZZ01xGxNeIgAFEDqBu0rnUQ9JC9bfVDYDSNFKkiHZE039lL/vr/3A
++y03HSvSZAjX7ZiALfRgcFvdAdqQfi6RPT6awU0X1HOfJChDJO9RG4UJf4qdK2/X
+lM8T0bqeWA/975ftkZUfIPNxYy4UI/jrKkdK7MeVLe1JcXfbqO4BiCRRSx34MaNS
+AqREZahOpL29UfRPysWYBJce30SCI/I4YBgn4xhe1KEu0Ud33+UirvIcSTeXM9I1
+PViZrkuTUDAhACg9sYpvVxhnqyfd6+t7mJ0nqrs7UiF+1ZYwCQKWgyiqr7FN64lu
+JvZf7sCAq3oE9ULBEP9d
+=Y0cq
+-----END PGP SIGNATURE-----
