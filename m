@@ -1,52 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/10
-Message-ID: <1462820605.18084.2.camel@nixnuts.net>
-Date: Mon, 09 May 2016 14:03:25 -0500
-From: John Lightsey <john@...nuts.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: GraphicsMagick Response To "ImageTragick"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/06/1
+Message-Id: <20160506023911.7A4638BC1B1@smtpvmsrv1.mitre.org>
+Date: Thu,  5 May 2016 22:39:11 -0400 (EDT)
+From: cve-assign@...re.org
+To: pengdawei521@....com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request - samsumg android phone com.samsung.android.jam.IAndroidShm binder service DoS
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2016-05-09 at 18:20 +0100, Simon McVittie wrote:
-> On Mon, 09 May 2016 at 08:29:40 -0500, Bob Friesenhahn wrote:
-> > 1. CVE-2016-3714 - Insufficient shell characters filtering
-> > 
-> >    GraphicsMagick is not susceptible to remote code execution except
-> >    if gnuplot is installed (because gnuplot executes shell commands).
-> >    Gnuplot-shell based shell exploits are possible without a gnuplot
-> >    file being involved although gnuplot invokes the shell.  To fix
-> >    this, the "gplt" entry in the delegates.mgk file must be removed.
-> 
-> I think this should perhaps have a separate CVE ID assigned: it's the
-> same impact (arbitrary code execution) and was discovered at around
-> the same time, but the mechanism is not similar to the
-> missing/insufficient quoting/escaping for ImageMagick's %M placeholder,
-> which was the root cause of (the original incarnation of) CVE-2016-3714.
-> 
-> In GraphicsMagick this was the "GPLT" format, removed in hg commit
-> "Gnuplot files are inherently insecure. Remove delegates support for
-> reading them."
-> https://sourceforge.net/p/graphicsmagick/code/ci/45998a25992d1142df201d8cf024b
-> 6c948b40748/
-> 
-> In ImageMagick this was the "PLT" format, removed in this git commit with
-> the misleading commit message "Update to the latest autoconf/automake":
-> https://github.com/ImageMagick/ImageMagick/commit/e87116ab2bd070c47943d4118a18
-> c8f3a47461e2
-> 
-> MITRE, do you consider this to be:
-> 
-> * part of CVE-2016-3714,
-> * a single separate vulnerability to which both GraphicsMagick and ImageMagick
->   were vulnerable, or
-> * two separate vulnerabilities, one in each package?
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+> When a app send a evil data to com.samsung.android.jam.IAndroidShm
+> service by service command (Android system command) , can cause to
+> IAndroidShm service crash.
 
-The "man" attack vector needs the same determination.
+> adb shell;
 
-It is similar to CVE-2016-3717 in impact, but uses a different codepath. The
-existing fixes for CVE-2016-3717 do not address it.
+> service call com.samsung.android.jam.IAndroidShm 5 i32 917154658 i32
+> 998369275 i32 1652062893 i32 2113420870 i32 1380178743 i32 47342718
+> i32 543810222 i32 1481030271
 
+> Fix:
+> http://security.samsungmobile.com/smrupdate.html#SMR-JAN-2016
+> SVE-2015-5133: IAndroidShm IAPAService service DoS
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+>> A vulnerability without proper exception handling in system services
+>> can lead to crash by calling malicious service commands.
+
+Use CVE-2016-4546.
+
+If you have additional reports about Samsung software, then
+oss-security readers might find it useful if you include a reference
+establishing that the software is open source. For example, we
+selected an arbitrary Samsung repository of
+git://opensource.samsung.com/SM-N900P and found a
+vendor/samsung/common/external/jack/android/AndroidShm.cpp file
+that may be related.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXLANMAAoJEHb/MwWLVhi2150P/Rz+lyS2h7ZVm90d3Y1V2sSp
+8M+zy6rN8YhjOizW2VhAWpf1U0ekDahXV9qDVmjOVxqiP5l3UXPVTb62Ee6zgYjd
+fGPkYxQDMroqps42ryIg7K5eNsKGO0iZ+tsi8wfdH1wzk+opa6ta45CTqPHUl9vS
+STi5sZoX2txMXCbfdcGsuudylkVG7y3FbjGw//cT7DcoHHQbWmSF7SmQwcdBzq/c
+0Xl67OUOWBKFnNgrLdqifeS6Msa0YW52omLmSMOiLm9/+1jN5bCpfVrwWI78ALeG
+FxfHi6HiVWZAyHPt894kCnNeynKa8uw2bWAEgy7RiHf42OBNp+15Crzdg2FvpBCa
+8WXRgij1+ML7YtPbG0PfBt66rtlSpznlxp7jCeyriiKqsvSyKcS0rxVWNDbinn8g
+vmApz6CqDAotB/PS4/dAv9EyvPlK/bSPiqmbYE0jDw2UmTKVrjc6DnlD0iSPgE4L
+y4D6wmFLqSIljFadZVnnHqIGrdqJZQU14yWbw31Fjpp+NdKrMfG2VP/F7ZPPF1Qo
+Dk+JYGurrooQwbDsEZ/6TTRXNEMfEtQRLHm7xCXzaxTFjwn12rA6jRlje0MoIPqQ
+7Qtersx91679csj9cqAXlBbxgTwpFlIv5XqEcZRPiFKYK02NH/y2vyRE/2yCWkjW
+pU6S7ZescwAX+GAeFsur
+=GdhJ
+-----END PGP SIGNATURE-----
