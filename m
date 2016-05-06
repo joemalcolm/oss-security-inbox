@@ -1,75 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/16
-Message-ID: <20160822205542.GB12931@kroah.com>
-Date: Mon, 22 Aug 2016 16:55:42 -0400
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/06/6
+Message-ID: <CACn5sdS+8Hc+VOm3zX7k2dE2UYj6kuCH4ZmZqtc-WbXca=n9vQ@mail.gmail.com>
+Date: Fri, 6 May 2016 17:07:01 +0200
+From: Gustavo Grieco <gustavo.grieco@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: meissner@...e.de, cve-assign@...re.org
-Subject: Re: Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
+Subject: CVE request: an invalid pointer read in mini-xml 2.7
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 22, 2016 at 02:37:17PM -0400, cve-assign@...re.org wrote:
-> There has been a related CVE for five years (CVE-2011-0640), although
-> selecting udev as the responsible component was probably not the right
-> approach, and maybe that CVE should be updated or rejected. We think
-> the current understanding, very roughly, is:
+Hi,
 
-Yes, udev isn't the correct place for it, but I really don't know what
-would be.  What "tool" was assigned this CVE for other operating systems
-that do the same thing (all BSDs, OS-X, Windows, etc.)?
+An invalid pointer read located in a vsnprintf call in mini-xml 2.7 (
+https://www.msweet.org/projects.php?Z3) was found:
 
-> 
->   - the Linux kernel does not require a configuration in which a newly
->     connected USB device is recognized in any way
+$ gdb --args ./testmxml jezrijgasv.xml.-5377691366552468283
+...
+Program received signal SIGSEGV, Segmentation fault.
+0x00007ffff48b3a03 in _IO_vfprintf_internal (s=s@...ry=0x7fffffff9970,
+format=<optimized out>,
+    format@...ry=0x40d900 "<%s> cannot be a second root node after <%s>",
+ap=ap@...ry=0x7fffffff9b10) at vfprintf.c:1661
+1661    vfprintf.c: No such file or directory.
+(gdb) bt
+#0  0x00007ffff48b3a03 in _IO_vfprintf_internal (s=s@...ry=0x7fffffff9970,
+format=<optimized out>,
+    format@...ry=0x40d900 "<%s> cannot be a second root node after <%s>",
+ap=ap@...ry=0x7fffffff9b10) at vfprintf.c:1661
+#1  0x00007ffff4971235 in ___vsnprintf_chk (s=s@...ry=0x7fffffff9b50 "<b>
+cannot be a second root node after <\002", maxlen=<optimized out>,
+    maxlen@...ry=1024, flags=flags@...ry=1, slen=slen@...ry=1024,
+format=format@...ry=0x40d900 "<%s> cannot be a second root node after
+<%s>",
+    args=args@...ry=0x7fffffff9b10) at vsnprintf_chk.c:63
+#2  0x000000000040a3c0 in vsnprintf (__ap=0x7fffffff9b10, __fmt=0x40d900
+"<%s> cannot be a second root node after <%s>", __n=1024,
+    __s=0x7fffffff9b50 "<b> cannot be a second root node after <\002") at
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:77
+#3  mxml_error (format=0x40d900 "<%s> cannot be a second root node after
+<%s>") at mxml-private.c:86
+#4  0x0000000000405a74 in mxml_load_data (top=top@...ry=0x0,
+p=p@...ry=0x60360000fd80,
+cb=cb@...ry=0x402863 <type_cb>,
+    getc_cb=getc_cb@...ry=0x404c78 <mxml_file_getc>, sax_cb=sax_cb@...ry=0x0,
+sax_data=sax_data@...ry=0x0) at mxml-file.c:1662
+#5  0x00000000004079d0 in mxmlLoadFile (top=top@...ry=0x0,
+fp=fp@...ry=0x60360000fd80,
+cb=cb@...ry=0x402863 <type_cb>) at mxml-file.c:199
+#6  0x0000000000402166 in main (argc=<optimized out>, argv=0x7fffffffe4f8)
+at testmxml.c:473
 
-I don't understand this statement, can you clarify?
+Fortunately, this issue is fixed in mini-xml 2.9. A reproducer is available
+upon request. Please assign a CVE if necesary.
 
-The Linux kernel has a configuration that does not allow any USB devices
-to work, unless explicitly granted permission to do so by a userspace
-tool.  The device will be enumerated, but that is all, it is up to
-userspace to then tell the kernel to actually "use" the device.
-This feature has been present at the USB "device" level for quite some
-time, and at the USB "interface" level now for I think over a year (can
-dig it out if people really care, the work was done by someone from
-SuSE.)
+Regards,
+Gustavo.
 
-Also, all Wireless USB devices operate in this manner "by default" for
-as long as Linux has supported Wireless USB devices (thankfully these
-devices are really rare.)
-
->   - a Linux distribution may ship with a default configuration in
->     which a newly connected USB device can operate as a keyboard and
->     inject text into an application
-
-Yes, but I don't understand, perhaps what you really mean to say is:
-	A Linux distribution may ship with a default configuration of
-	trusting all new devices that are plugged in without any form of
-	userspace authentication before they begin to operate.
-
->   - some Linux distributions want to have this behavior, and their
->     maintainers have concluded that there is no comprehensive method
->     for "asking a user" about a new USB device in a way that is
->     compatible with all use cases
-
-Huh?  There is such a method, Linux has supported this for a very long
-time (see above.)   It's up to the distro to decide to use it or not,
-that's their choice (hint, I don't blame them for making this choice,
-it's what almost all users expect and want as well...)
-
->   - if anyone (whether a Linux distribution or other type of product)
->     is announcing a required security update, in which software or
->     configuration is being changed to address malicious keyboard
->     attacks, then we can assign a CVE ID to associate with the update
->     announcement
-
-Why would a CVE be needed for a "my distro decides to not trust USB
-devices as much as your distro does" type decision?  This is just a
-matter of how a distribution configures their kernel, combined with
-their decision of how to deal with new USB devices.  Perhaps you could
-argue that some of those decisions might be "more secure" than others,
-but I don't see a "bug" that is resolved by deciding about this one way
-or the other, do you?
-
-thanks,
-
-greg k-h
