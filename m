@@ -1,38 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/11
-Message-ID: <alpine.GSO.2.20.1609131447570.990@freddy.simplesystems.org>
-Date: Tue, 13 Sep 2016 14:57:01 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security@...ts.openwall.com
-Subject: Re: libxml with CGI fix
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/06/4
+Message-ID: <20160506131455.GA17272@lorien.valinor.li>
+Date: Fri, 6 May 2016 15:14:55 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: Ben Hutchings <benh@...ian.org>
+Subject: CVE Requests: Linux: BPF flaws (one use-after-free / local root privilege escalation)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 13 Sep 2016, watashiwaher wrote:
+A use-after-free flaw via double-fdput in bpf was recently fixed in
+Linux. Details:
 
-> Hi, huys! There is a known httpoxy vulnerability ( https://httpoxy.org/ ).
-> There is a problem with CGI usage in all application which use libxml2
-> library. Attacker can make requests via attacker proxy from target server
-> using this vulnerability. I reported this problem in the 5th august, but
-> developers didn't reply me at all, and I don't know if they want to
-> response.
+https://bugs.chromium.org/p/project-zero/issues/detail?id=808
 
-The referenced web site provides the advice "Do it “at the edge”, 
-where HTTP requests first enter your system.".  In this case libxml2 
-is not the edge.  The edge is the parser which accepts the CGI 
-requests.
+Fixed via:
+https://git.kernel.org/linus/8358b02bf67d3a5d8a825070e1aa73f25fb2e4c7
 
-Adding detection of "REQUEST_METHOD" to libxml2 may reduce the 
-potential menace.
+And as well reported/forwarded in Debian:
+https://bugs.debian.org/823603
 
-The libxml2 developers should have responded to you but I can see why 
-they would not consider this to be their problem.
+Could you please assign a CVE for this issue?
 
-If you break libxml2 support for HTTP_PROXY (and/or http_proxy) then 
-the proxy capabilty can't be used outside of CGI applications, which 
-is likely to break existing valid uses.
+The following two might as well warrant a CVE (Ben Hutchings CC'ed has
+already applied those to the packaging repository in Debian):
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+bpf: fix refcnt overflow:
+https://git.kernel.org/linus/92117d8443bc5afacc8d5ba82e541946310f106e
+
+bpf: fix check_map_func_compatibility logic
+https://git.kernel.org/linus/6aff67c85c9e5a4bc99e5211c1bac547936626ca
+
+Not sure though if the later one has a security impact. The bug
+allowed generic map functions to be applied to special map types
+(program, perf events) that did not support them properly.
+
+Regards,
+Salvatore
