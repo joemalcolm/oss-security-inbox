@@ -1,32 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/25
-Message-ID: <20160908230801.GA2048@openwall.com>
-Date: Fri, 9 Sep 2016 01:08:01 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Vahagn Vardanyan <vvvaagn@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: multiple crashes in radare2/radiff2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/07/4
+Message-ID: <20160507141409.GA11843@eldamar.local>
+Date: Sat, 7 May 2016 16:14:09 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: Ben Hutchings <benh@...ian.org>
+Subject: CVE Request: Linux: [media] videobuf2-v4l2: Verify planes array in buffer dequeueing
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi
 
-On Thu, Sep 08, 2016 at 05:34:09PM +0300, Vahagn Vardanyan wrote:
-> I created report
-> https://bugs.chromium.org/p/project-zero/issues/detail?id=933&can=1&q=&sort=-id
+Please assign a CVE for the following issue, which could lead to
+overwriting of kernel memory:
 
-Going to this URL, I am asked to login to a Google account (which I
-didn't).  Can you please post the contents of your report and Tavis'
-reply (as well as any other relevant replies) as a reply to this same
-thread here on oss-security?
+>     [media] videobuf2-v4l2: Verify planes array in buffer dequeueing
+>     
+>     When a buffer is being dequeued using VIDIOC_DQBUF IOCTL, the exact buffer
+>     which will be dequeued is not known until the buffer has been removed from
+>     the queue. The number of planes is specific to a buffer, not to the queue.
+>     
+>     This does lead to the situation where multi-plane buffers may be requested
+>     and queued with n planes, but VIDIOC_DQBUF IOCTL may be passed an argument
+>     struct with fewer planes.
+>     
+>     __fill_v4l2_buffer() however uses the number of planes from the dequeued
+>     videobuf2 buffer, overwriting kernel memory (the m.planes array allocated
+>     in video_usercopy() in v4l2-ioctl.c)  if the user provided fewer
+>     planes than the dequeued buffer had. Oops!
+>     
+>     Fixes: b0e0e1f83de3 ("[media] media: videobuf2: Prepare to divide videobuf2")
 
-> Please tell how I can send crashes archive, thank you
+Fixed in
+https://git.kernel.org/linus/2c1f6951a8a82e6de0d82b1158b5e493fc6c54ab (v4.6-rc6)
+(Cc'ed to stable@...r.kernel.org for v4.4+, fixed in v4.5.3 and
+v4.4.9)
 
-If your entire message including the 4/3 MIME overhead would be below
-200 KB, then please just attach this archive to the message.  Otherwise
-please come up with a smaller testcase (and attach it) or use an
-external URL for the file (but accessible to everyone without having to
-log in).  The former is strongly preferred.
+Introduced by
+https://git.kernel.org/linus/b0e0e1f83de31aa0428c38b692c590cc0ecd3f03 (v4.4-rc1)
 
-Thanks,
-
-Alexander
+Regards,
+Salvatore
