@@ -1,101 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/2
-Message-ID: <CABEk9YwFJU6942BNgFfao4pU+zzT_5-CYPa0N_=aSVzoFmVHwQ@mail.gmail.com>
-Date: Tue, 3 May 2016 20:52:55 -0400
-From: Kangjie Lu <kangjielu@...il.com>
-To: oss-security@...ts.openwall.com, Taesoo Kim <taesoo@...ech.edu>,  Chengyu Song <csong84@...ech.edu>, Insu Yun <insu@...ech.edu>
-Subject: CVE Request: information leak in devio of Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/07/6
+Message-Id: <20160507151935.2B6DA332055@smtpvbsrv1.mitre.org>
+Date: Sat,  7 May 2016 11:19:35 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, dledford@...hat.com, secalert@...hat.com, benh@...ian.org
+Subject: Re: CVE Request: Linux: IB/security: Restrict use of the write() interface'
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-In the USB module (drivers/usb/core/devio.c), The stack object “ci” has a
-total
-size of 8 bytes. Its last 3 bytes are padding bytes which are not
-initialized and
-leaked to userland via “copy_to_user”.
+> https://git.kernel.org/linus/e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3
 
-The patch of this bug has been accepted by Linux kernel maintainer and will
-be
-merged in the next major kernel release (see the bellow message).
+> The drivers/infiniband stack uses write() as a replacement for
+> bi-directional ioctl().  This is not safe. There are ways to
+> trigger write calls that result in the return structure that
+> is normally written to user space being shunted off to user
+> specified kernel memory instead.
 
-Fix info:
-http://www.spinics.net/lists/linux-usb/msg140243.html
-git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git
-
-Could you please assign a CVE to it?
-
-Thanks,
-Kangjie Lu
+Use CVE-2016-4565.
 
 
+> For long term, update the user space libraries and the kernel API
+> to something that doesn't present the same security vulnerabilities
+> (likely a structured ioctl() interface).
 
+As far as we can tell, this statement does not imply that there is a
+remaining known vulnerability after
+e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3 - instead, this statement
+only suggests a possible functionality problem, e.g., there might be
+third-party code or in-development code that was attempting to rely on
+write calls for a legitimate purpose, and this code has now stopped
+working without an immediate workaround.
 
----------- Forwarded message ----------
-From: <gregkh@...uxfoundation.org>
-Date: Tue, May 3, 2016 at 7:23 PM
-Subject: patch "USB: usbfs: fix potential infoleak in devio" added to
-usb-next
-To: kangjielu@...il.com, gregkh@...uxfoundation.org, kjlu@...ech.edu
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-
-This is a note to let you know that I've just added the patch titled
-
-    USB: usbfs: fix potential infoleak in devio
-
-to my usb git tree which can be found at
-    git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git
-in the usb-next branch.
-
-The patch will show up in the next release of the linux-next tree
-(usually sometime within the next 24 hours during the week.)
-
-The patch will also be merged in the next major kernel release
-during the merge window.
-
-If you have any questions about this process, please let me know.
-
-
->From 681fef8380eb818c0b845fca5d2ab1dcbab114ee Mon Sep 17 00:00:00 2001
-From: Kangjie Lu <kangjielu@...il.com>
-Date: Tue, 3 May 2016 16:32:16 -0400
-Subject: USB: usbfs: fix potential infoleak in devio
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-The stack object “ci” has a total size of 8 bytes. Its last 3 bytes
-are padding bytes which are not initialized and leaked to userland
-via “copy_to_user”.
-
-Signed-off-by: Kangjie Lu <kjlu@...ech.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
----
- drivers/usb/core/devio.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/usb/core/devio.c b/drivers/usb/core/devio.c
-index 73ce87166401..e9f5043a2167 100644
---- a/drivers/usb/core/devio.c
-+++ b/drivers/usb/core/devio.c
-@@ -1316,10 +1316,11 @@ static int proc_getdriver(struct usb_dev_state *ps,
-void __user *arg)
-
- static int proc_connectinfo(struct usb_dev_state *ps, void __user *arg)
- {
--       struct usbdevfs_connectinfo ci = {
--               .devnum = ps->dev->devnum,
--               .slow = ps->dev->speed == USB_SPEED_LOW
--       };
-+       struct usbdevfs_connectinfo ci;
-+
-+       memset(&ci, 0, sizeof(ci));
-+       ci.devnum = ps->dev->devnum;
-+       ci.slow = ps->dev->speed == USB_SPEED_LOW;
-
-        if (copy_to_user(arg, &ci, sizeof(ci)))
-                return -EFAULT;
---
-2.8.2
-
+iQIcBAEBCAAGBQJXLgZZAAoJEHb/MwWLVhi29cEP/0J4S+2R9nVMJlexim783uu+
+YdU/ivYcTS6jxj3KuUPRZnmWWJbE4h/73/sa9H2pdu0CzR0LmqICeeP94zGO2Jn7
+8zoEBst07RqisgNgZFu+TCgvmwemoPEEE9OkTmurQBh3r5lcmR9I6wJulXJ8n1l2
+rXOw796aR5KoYYyl9cjDU9hU1ufvrMi6hDThEb8+THFpoTus/kyOFhnZ74B4kUux
+EjqTdrSZIqneCi5EIY5xxCZYo4LlsXx5rlZF6Yqhcg1jC5G/6jtzIZSjws0ZVPY7
+Ueen2yV37Ms3d1YdTSo4QBCzMon2sMC0j1Jj0Ov+g2jWbHZh6zU+V5z6Xjf8nH0B
+TgKWdG/wYOpcY1si+lfZbtKQwHvM2i1RZP5mH6v/lggCYivA72Q+KPmDSdpIq395
+YOFKWRfA8xarcfmeENhFLKjgp/QlZn26TAuMdzSvrcbkqqMUk/XHHcifR4J46gjI
+vCu47kmL0hJV6Q0GhX9cZ2A2/8cXSjpxfgQTG3ifjtuxdugXHxXSOoEx9o36NVWH
+1dt0L+YISIkh0yUx7lF5qQ1NoTMLnY2RHuKOeJFoRz8xyrbH5c4cizuyXYeFbKRC
+C7uxW98W0OxbORLWpjrgcjFBCnIDWIrgGh9fJAECQS3gV6A5k1EmZDtSmMAhjzE+
+LY6zu+JLlIGbCDdCOL/o
+=Zjzu
+-----END PGP SIGNATURE-----
