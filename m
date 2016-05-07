@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1981" "Thursday" "22" "December" "2016" "11:03:01" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<3ffc286c0922469cb1c17303abd6674d@imshyb02.MITRE.ORG>" "42" "[oss-security] Re: CVE Request: Smack: TLS SecurityMode.required not always enforced, leading to striptls attack" nil nil nil "12" "2016122216:03:01" "[oss-security] Re: CVE Request: Smack: TLS SecurityMode.required not always enforced, leading to striptls attack" (number mark "U       cve-assign@m Dec 22   42/1981  " thread-indent "\"[oss-security] Re: CVE Request: Smack: TLS SecurityMode.required not always enforced, leading to striptls attack\"\n") "<CABQu4+4X=WBhODKjSM1-Pgm-Ujnc2Lxw5rXAUOojbCaDjphbhg@mail.gmail.com>" ("<CABQu4+4X=WBhODKjSM1-Pgm-Ujnc2Lxw5rXAUOojbCaDjphbhg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["393" "Saturday" "7" "May" "2016" "09:44:55" "-0400" "Daniel Kahn Gillmor" "dkg@fifthhorseman.net" "<87inyq0yp4.fsf@alice.fifthhorseman.net>" "9" "Re: [oss-security] broken RSA keys" "^Date:" nil nil "5" "2016050713:44:55" "[oss-security] broken RSA keys" (number mark "        dkg@fifthhor May  7    9/393   " thread-indent "\"Re: [oss-security] broken RSA keys\"\n") "<20160505112114.GA25313@openwall.com>" ("<20160504124248.GA15148@openwall.com>" "<20160504172803.GA19393@openwall.com>" "<CAP9m6YeT=Vo1WQ4Jqn1QV-Cp6mBQ3EwWQ5p_=Rm4P3Na3aGcGw@mail.gmail.com>" "<20160505103405.GA25044@openwall.com>" "<20160505130336.7557b73b@pc1>" "<20160505112114.GA25313@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17578 invoked by uid 550); 22 Dec 2016 16:03:14 -0000
+Received: (qmail 32435 invoked by uid 550); 7 May 2016 13:45:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +11,25 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17557 invoked from network); 22 Dec 2016 16:03:13 -0000
-From: <cve-assign@mitre.org>
-To: <sylvain.sarmejeanne.ml@gmail.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <CABQu4+4X=WBhODKjSM1-Pgm-Ujnc2Lxw5rXAUOojbCaDjphbhg@mail.gmail.com>
-Message-ID: <3ffc286c0922469cb1c17303abd6674d@imshyb02.MITRE.ORG>
-Date: Thu, 22 Dec 2016 11:03:01 -0500
+Received: (qmail 32396 invoked from network); 7 May 2016 13:45:06 -0000
+In-Reply-To: <20160505112114.GA25313@openwall.com>
+References: <20160504124248.GA15148@openwall.com> <20160504172803.GA19393@openwall.com> <CAP9m6YeT=Vo1WQ4Jqn1QV-Cp6mBQ3EwWQ5p_=Rm4P3Na3aGcGw@mail.gmail.com> <20160505103405.GA25044@openwall.com> <20160505130336.7557b73b@pc1> <20160505112114.GA25313@openwall.com>
+User-Agent: Notmuch/0.22+16~g87b7bd4 (http://notmuchmail.org) Emacs/24.5.1 (x86_64-pc-linux-gnu)
+Message-ID: <87inyq0yp4.fsf@alice.fifthhorseman.net>
 MIME-Version: 1.0
 Content-Type: text/plain
-Subject: [oss-security] Re: CVE Request: Smack: TLS SecurityMode.required not always enforced, leading to striptls attack
+Date: Sat, 07 May 2016 09:44:55 -0400
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] broken RSA keys
+To: Solar Designer <solar@openwall.com>, oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu 2016-05-05 07:21:14 -0400, Solar Designer wrote:
+> Thanks.  I guess when I imported a PGP 2.6 key to GPG, I just did not
+> notice this detail, and GPG continued to use the V3 format key for me.
 
-> I reported a vulnerability in the Smack XMPP library where the security of
-> the TLS connection is not always enforced. By stripping the "starttls"
-> feature from the server response with a man-in-the-middle tool, an attacker
-> can force the client to authenticate in clear text even if the
-> "SecurityMode.required" TLS setting has been set. This is a race condition
-> issue so the attack will work after a few tries.
+FWIW, newer versions of GnuPG (since 2.1.0) have completely dropped
+support for v3 keys.  This silly construction of the keyid is only one
+of the problems with the v3 format.
 
-> https://community.igniterealtime.org/blogs/ignite/2016/11/22/smack-security-advisory-2016-11-22
-> https://issues.igniterealtime.org/browse/SMACK-739
-> https://github.com/igniterealtime/Smack/commit/a9d5cd4a611f47123f9561bc5a81a4555fe7cb04
-> https://github.com/igniterealtime/Smack/commit/059ee99ba0d5ff7758829acf5a9aeede09ec820b
-
->> smack-core/src/main/java/org/jivesoftware/smack/AbstractXMPPConnection.java
->> smack-tcp/src/main/java/org/jivesoftware/smack/tcp/XMPPTCPConnection.java
-
-Use CVE-2016-10027.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYW/idAAoJEHb/MwWLVhi2Ti0QAIWkl59R8amXlPpJJjU4Ydbl
-2ADm4yXOsRVnhy8QJ9u44ogteMANPZbuU006Q9ezeE2SIlLX1rcHeEsHy/nR9rNM
-us/Ip79ZIfDU1wuP1XjeIa1lO3Ldf0L2Wo9gX+JRaSyX+w0+WfIvmg40AtEehjfR
-2hAPY3ALuiVw4y3TY6eRk2e03f765ZnvIqbTSO3ayRJ5NYLQlvI15+1WIGTOoH8o
-nputmqaDb2/jIQUoI2bpRVAnbijmN1CCOEDT0n1e/F8MmxYKpuTLnde98KhDriz+
-o6OM5pYv0X1CnIb6RGzb2Brt2FUmqWvEAmnFoRknEy8UQ4iQWXRjoI/QQDMaI5ru
-WNaB2fUtplT4jQ2IeNLinFNwxbMYSaMrCWfNuIpuTANXXyF2PgKuYTA5JmwtJHkR
-pJuTRD+mfO1ybcyf/D678T3hldpC5NlMf9eRQDbB5h9viNLVBGhnulE/OPZpU+2R
-J3hvXAVpaGFHAQllBgSq8Ut7zsI5s7ZFoo2gWuHCA//dT+C6GjUs/h7w6wWK9iiU
-a932syiLLmT5HRCJwucEiwRk2KczVzMgai2FM1jSlDLoonw2nHqHe128rYcwGGQd
-DZeU/1e1ZYje1WLFCJzRuNGTesNwFdFhT/F3WLCrglANm1VfXuWyqtWMDSeInaf3
-MWbq6ZtaZvw40COKoh8r
-=4pVQ
------END PGP SIGNATURE-----
+         --dkg
