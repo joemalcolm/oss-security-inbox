@@ -1,58 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/19/5
-Message-Id: <20160219154945.8C75F6C05D3@smtpvmsrv1.mitre.org>
-Date: Fri, 19 Feb 2016 10:49:45 -0500 (EST)
-From: cve-assign@...re.org
-To: mouzannar@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, yarolig@...il.com, security@...ian.org
-Subject: Re: CVE request: didiwiki path traversal vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/07/1
+Message-ID: <20160507042232.GA5286@eldamar.local>
+Date: Sat, 7 May 2016 06:22:32 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: Doug Ledford <dledford@...hat.com>, Red Hat Security Response Team <secalert@...hat.com>, Ben Hutchings <benh@...ian.org>
+Subject: CVE Request: Linux: IB/security: Restrict use of the write() interface'
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi
 
-> https://github.com/OpenedHand/didiwiki/pull/1/files
-> curl http://localhost:8000/api/page/get?page=/etc/passwd
+Jann Horn reported an issue in the infiniband stack. It has been fixed
+in v4.6-rc6 with commit e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3:
 
-We aren't sure about the need for CVE IDs for this product because it
-doesn't seem to advertise any security properties, e.g.,
+https://git.kernel.org/linus/e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3
 
-  https://github.com/OpenedHand/didiwiki/blob/master/README
-  "Its probably not very secure at all."
+> IB/security: Restrict use of the write() interface
+> The drivers/infiniband stack uses write() as a replacement for
+> bi-directional ioctl().  This is not safe. There are ways to
+> trigger write calls that result in the return structure that
+> is normally written to user space being shunted off to user
+> specified kernel memory instead.
+> 
+> For the immediate repair, detect and deny suspicious accesses to
+> the write API.
+> 
+> For long term, update the user space libraries and the kernel API
+> to something that doesn't present the same security vulnerabilities
+> (likely a structured ioctl() interface).
+> 
+> The impacted uAPI interfaces are generally only available if
+> hardware from drivers/infiniband is installed in the system.
 
-We can assign a CVE ID if there is going to be a DSA.
+Could you assign a CVE for this issue?
 
-One concern is that the design may not be intended for environments
-with untrusted clients, and many other issues may be found. Also, we
-aren't sure about the patch:
+I'm just to avoid possible duplication as well Cc'ing Red Hat's
+secalert, since the commit was signed off by Doug Ledford
+<dledford@...hat.com>.
 
-+   if (!isalnum(page_name[0]))
-+        return FALSE;
-+   
-+    if (strstr(page_name, ".."))
-+         return FALSE;
-
-e.g., what about C:\file.txt if it's possible to build this on Windows.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWxzknAAoJEL54rhJi8gl57ogQAJA6Xt9qMW2rW+xJRgPptQSu
-dImNhpj3wK1MccZge209MPhXQfRnbY7jvm0UjcFLBcbgmp6mXOnqgM0PHte58FYX
-80VO1zj22aH5EyG8e1c/S18nKl7yRFhU56xXSYsmSBWU/1azhuTNX6hKhu1/kr0U
-PSfkIgXaFhm7j1rj824/dBtTMVXa/nA4c/wDKTjkGkWld1l4V/7ZraaUiu28OZat
-s/oiZcgG2cDHKhsh+fJ8tVin6wQE7+ydTJeVUQLrJqemD1Wnghthin5LDqnK77tP
-Cq3R15bQjunn7dHz56BIE68aFhQoAjunv1GlHS5im5W3u3dRi4r9aRDQNiNO7WZL
-NV0vflWiMmyNqNExOk9y3VOuTGBQ/BpbkW/YAMwyvzjRoMesuAE2fv6QdHXEs0j+
-q7B4NiWmAcUPstyZpBoqq7iZm5c7OBaWmujs5k1jxOuRzsGfjY4pKUpc+4R1ydKm
-+brG4jZa4rdBZbE9OB1fURVkgH4GqgOSGVdiPys/GbPk02YvUHQn28qg22b6aS+4
-u8Xx5O2cTyzLyQIzVmqUUAS6CSmFFM5KiTZTTzW2W1tCzXwjnx3cQTPPH0IlSaR0
-pPctHFMCXX2ghOikyNA4mrZuxUDCGYQHILD2QBOsEgBz8mr+eadz9DXh6zpaffp1
-NRFKU2HYn0DCATgFJCdv
-=GYQp
------END PGP SIGNATURE-----
+Regards,
+Salvatore
