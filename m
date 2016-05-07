@@ -1,56 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/30/5
-Message-ID: <20160630121425.GA17822@eldamar.local>
-Date: Thu, 30 Jun 2016 14:14:25 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: CVE Request: libgd: Invalid color index is not properly handled leading to denial of service (crash)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/07/7
+Message-Id: <20160507152115.4A261332033@smtpvbsrv1.mitre.org>
+Date: Sat,  7 May 2016 11:21:15 -0400 (EDT)
+From: cve-assign@...re.org
+To: csmall@....com.au
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: wordpress and mediaelement
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Wed, Jun 29, 2016 at 09:27:58PM -0400, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
-> 
-> > There is currently PHP upstream bug which is still marked as private:
-> > 
-> > https://bugs.php.net/bug.php?id=72494
-> > 
-> > But the libgd project references the following set of commits to this
-> > bug report:
-> > 
-> > https://github.com/libgd/libgd/compare/3fe0a71...6ff72ae
-> > 
-> > indicating that libgd does not properly handle invalid color index,
-> > which could lead to a denial of service against applications using the
-> > libgd library (in particular thus PHP).
-> 
-> > https://github.com/libgd/libgd/commit/1ccfe21e14c4d18336f9da8515cd17db88c3de61
-> > gd_crop.c
-> > gdImageCropThreshold
-> > 
-> > + if (color < 0 || (!gdImageTrueColor(im) && color >= gdImageColorsTotal(im))) {
-> > + return NULL;
-> > + }
-> 
-> > https://github.com/libgd/libgd/commit/6ff72ae40c7c20ece939afb362d98cc37f4a1c96
-> > tests/gdimagecrop/php_bug_72494.c
-> > 
-> > im = gdImageCreate(50, 50);
-> > gdImageCropThreshold(im, 1337, 0);
-> > gdImageDestroy(im);
-> 
-> Use CVE-2016-6128.
+> https://wordpress.org/news/2016/05/wordpress-4-5-2/
+> two security issues, both XSS
 
-Thanks for the CVE assignment. Just for the record, my above commit
-range stated should have better been written as
 
-https://github.com/libgd/libgd/compare/3fe0a7128bac5000fdcfab888bd2a75ec0c9447d...fd623025505e87bba7ec8555eeb72dae4fb0afd
+> WordPress versions 4.5.1 and earlier are affected by a SOME vulnerability through Plupload
 
-including
-https://github.com/libgd/libgd/commit/a0f9f8f7bd0d3a6c6afd6d180b8e75d93aadddfa
+> https://core.trac.wordpress.org/changeset/37382/
 
-Regards,
-Salvatore
+> wp-includes/js/plupload/plupload.flash.swf
+
+Use CVE-2016-4566.
+
+
+> WordPress versions 4.2 through 4.5.1 are vulnerable to reflected XSS
+> using specially crafted URIs through MediaElement.js
+
+> https://core.trac.wordpress.org/changeset/37371
+
+> js/mediaelement/flashmediaelement.swf
+> js/mediaelement/mediaelement-and-player.min.js
+
+> https://github.com/johndyer/mediaelement/commit/34834eef8ac830b9145df169ec22016a4350f06e
+
+> flash/FlashMediaElement.as
+> js/me-shim.js
+
+Use CVE-2016-4567.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXLgZiAAoJEHb/MwWLVhi2KUwP/Amvnzvt7dhmVFVXumBcyAw3
+VhKj2FD/HMq7VXJemJSyVf6mo8oJKJwn5ruiMwY/ntQAOLy/+BkYhP3Ngm1HPGwR
+22XWXCAPBIBzcKS02oXLMSxFycqqvPpttt9mr1HjamCa8Z8/jXoDubniLjdHD3RJ
+psMkF1Yr2x+Tj6ZLBnKBJ8Mi/tF1fXGNfsNBLsg6V2189ZgcAh7lE5HcDUxb4V5H
+ShkjwIhqP24q5Hmb2Kg/wDqviDg64NMRGEvbdmXZa8O2MtsADTR7UPAK5ycCPO2d
+Tv2jg6xWBK7zb5KfeOAGZ7Ex9SESP8m41bhRW+zTx9rVPGEnrKmN4k3y/vBNYUYx
+Rwf8cGFF8Fit10hO46WV2TRZkRVdq7eEUR+o7ji3rIxWheMJjXgcdjRvMFO/B8c9
+w9NoFF0Lm5x4wOfccuSvEmxHfM8L40LJklKJMKP+hrxC3Q96cmS7ach55X7di8xf
+GQ9xv2OH7xhR/UtpROzXW3KZDLAYO4/5dPgNEEl5sgbnEYgSGMAlAHbg799wbn7w
+aUEhRJrzpxqEhwPpbOAPUWQsww+sCdYQtzmKfsY9mDZG1NhdnawQXznPwMayiCD6
+0c6o+OXYLarcS6Cc9oRhQzFutjR2/yphuXH8ACIcf/svCblAz4pbJNVbGoajQxae
+QiNFEoipdnkFPQiSGYa3
+=nnff
+-----END PGP SIGNATURE-----
