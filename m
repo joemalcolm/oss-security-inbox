@@ -1,32 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/25/2
-Message-ID: <3230301C09DEF9499B442BBE162C5E48ABEA459A@SESTOEX04.enea.se>
-Date: Tue, 25 Oct 2016 06:22:33 +0000
-From: Sona Sarmadi <sona.sarmadi@...a.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: membership request  to the closed linux-distros 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/07/3
+Message-ID: <87inyq0yp4.fsf@alice.fifthhorseman.net>
+Date: Sat, 07 May 2016 09:44:55 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+Subject: Re: broken RSA keys
 Content-Type: text/plain; charset=utf-8
 
-Hi, 
+On Thu 2016-05-05 07:21:14 -0400, Solar Designer wrote:
+> Thanks.  I guess when I imported a PGP 2.6 key to GPG, I just did not
+> notice this detail, and GPG continued to use the V3 format key for me.
 
-I sent membership request to the list for a while ago (on behalf of Enea) 
-and got feedback/improvement suggestions from some members .  
-We have gained some experience and improved our security works 
-and security updates. We have infrastructure to handle embargoed issues. 
-I would appreciate if you could re-evaluate our membership request.
+FWIW, newer versions of GnuPG (since 2.1.0) have completely dropped
+support for v3 keys.  This silly construction of the keyid is only one
+of the problems with the v3 format.
 
-I am a member of OPNFV security team:
-https://wiki.opnfv.org/display/security 
-
-I have been running CII Best Practices Badge program for OPNFV project:
-https://bestpractices.coreinfrastructure.org/projects?q=opnfv 
-
-I am also a member of Yocto/OpenEmbedded security team:
-https://wiki.yoctoproject.org/wiki/Security
-
-Security Responsible for Enea Linux:
-http://www.enea.com/solutions/Enea-Linux/Security  
-http://www.enea.com/solutions/Enea-Linux/Security/CVEs-list
-
-Thanks
-//Sona
+         --dkg
