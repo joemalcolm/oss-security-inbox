@@ -1,106 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/19/1
-Message-ID: <65c18a57-739f-d5e0-ce01-aba4573707a3@redhat.com>
-Date: Mon, 19 Dec 2016 09:27:29 +0000
-From: Luke Hinds <lhinds@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSN-0074] Nova metadata service should not be used for sensitive information
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/07/5
+Message-Id: <20160507151734.68C826C0716@smtpvmsrv1.mitre.org>
+Date: Sat,  7 May 2016 11:17:34 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, benh@...ian.org
+Subject: Re: CVE Request: Linux: [media] videobuf2-v4l2: Verify planes array in buffer dequeueing
 Content-Type: text/plain; charset=utf-8
 
-Openstack Security Note: 0074
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Nova metadata service should not be used for sensitive information
+> https://git.kernel.org/linus/2c1f6951a8a82e6de0d82b1158b5e493fc6c54ab
+> 
+> __fill_v4l2_buffer() however uses the number of planes from the dequeued
+> videobuf2 buffer, overwriting kernel memory ...
+> if the user provided fewer planes than the dequeued buffer had.
 
----
+Use CVE-2016-4568.
 
-### Summary ###
-A recent security report has highlighted how users may be using the
-metadata service to store security sensitive information.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-The Nova metadata service should not be considered a secure repository
-of confidential information required by compute instances.
-
-### Affected Services / Software ###
-Nova, All Versions
-
-### Discussion ###
-A recent vulnerability report for Nova stated that the metadata service
-will obey the `X-Forwarded-For` HTTP header. This header is often
-supplied by proxies so that the end service can identify which IP the
-request originated from.
-
-The Nova metadata service typically uses the source IP address of the
-incoming request to respond with the appropriate data for the compute
-instance making the request. This is a sort of weak authentication,
-designed to ensure that metadata for one tenant isn't accidentally
-provided to another.
-
-If the request contains a `X-Forwarded-For` HTTP header then the
-metadata service will use that for the source authentication rather than
-the actual TCP/IP source.
-
-An attacker with access to a compute instance in the cloud could send a
-request to the metadata service and include the `X-Forwarded-For` header
-in order to effectively spoof their source and cause the metadata
-service to provide information that should not have been provided to
-that instance.
-
-Consider the following:
-Alice creates a compute instance. She places the root password for that
-instance in the metadata service. The instance is assigned a 10.1.2.2
-IP address. Alice believes that the root password for her instance is
-safe within the metadata service.
-
-Alice retrieves metadata by running a command similar to:
-`curl http://169.254.169.254/latest/meta-data
-<http://169.254.169.254/latest/meta-data>`
-this will retrieve any metadata stored for Alice's compute instance,
-which has an IP address of 10.1.2.2
-
-Bob has a compute instance with IP address 10.1.9.9 however Bob wants
-access to the metadata for Alice's compute instance. If Bob runs a
-similar command to Alice, but includes a customer header as below, he
-will get access to all of Alice's metadata, including the root password
-she chose to store there:
-`curl -H "X-Forwarded-For:
-10.1.2.2" http://169.254.169.254/latest/meta-data
-<http://169.254.169.254/latest/meta-data>`
-
-The Nova metadata service is a useful utility within OpenStack but
-clearly not intended as a strongly authenticated system for storing
-sensitive data such as private keys or passwords.
-
-### Recommended Actions ###
-The metadata service should not be used to store sensitive information.
-
-The IP forwarding issue is not a defect of itself, it exists to allow
-the metadata service to provide IP addresses for instances that are
-behind a proxy as may be the case in more complex deployments.
-
-Cloud users who have a requirement to store sensitive information that
-compute instances require for operation should instead look to the
-Config drive to provide this service. It's operation is much more
-tightly bound to individual compute instances.
-
-Where use of config drive is not an option, operators should consider
-other mitigations such as placing a proxy in front of the metadata service
-which can filter out these sorts of malicious activities.
-
-### Contacts / References ###
-Author: Robert Clark, IBM
-This OSSN : https://wiki.openstack.org/wiki/OSSN/OSSN-0074
-Original LaunchPad Bug : https://bugs.launchpad.net/nova/+bug/1563954
-<https://bugs.launchpad.net/nova/+bug/1563954>
-Mailing List : [Security] tag on openstack-dev@...ts.openstack.org
-OpenStack Security Group : https://launchpad.net/~openstack-ossg
-<https://launchpad.net/%7Eopenstack-ossg>
-Config Drive
-: http://docs.openstack.org/user-guide/cli-config-drive.html
-<http://docs.openstack.org/user-guide/cli-config-drive.html>
-
-
-Content of type "text/html" skipped
-
-Download attachment "0x3C202614.asc" of type "application/pgp-keys" (1699 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+iQIcBAEBCAAGBQJXLgZSAAoJEHb/MwWLVhi20G8QALSR5YnhenGOLq7Om8MR3oNK
+Y5cyZXw4E/4h9n1z1/HZ/2yn+xh52oEgQ4utPTFRzCB/yOjBW+qMGf+j3AGCRqA4
+g7WKkRmqMp9nKMhnCrCcxFC+NsnN+tySE9Nk01nHO8EGPqHBbe+HBtg2SGOuYs2I
+oCH/NZlZdb/LOCKZKAkqbLoVn5jHyKsHMYd16LVSbHDKRazMhH2IAPI1g8BgLuym
+kEDVKUEwXazwuGATpRbIf2lSVZ5Qz5RhxDEntWMR5rR/w2RLcmTUfIHTkbEVoS35
+QwV8pn+qgOEqZ1BdskOsYb8Cxc3rg+J8qusYa/xpkq3l3z9veMr/1tmcYbmWMZGb
+/yWSm2R2Oy/t0jP0B421o+2FIFkqY6CXIypk1c4wpNLBzE2JlJoaymoQrwDrITHE
+EANQ/dp9WJeNdXiuFH9wfIgQXo+Z48JhWrpdN3rleLB6Foezg/0a4tuqGCKoHdly
+hGCI6Xx0OJKSq2ZBW6kW9ZvPATs0BY76/N9BAuxGKlTew7qiU7JeuF3Y0HGzIqpj
+DUHAhNWj9/+QDPQXPQxVRoNc1m62M8pR9s7hw8dM2Fbc/kmcxV+oQTxKVoOjQryJ
+XJE8+7oHZjWgGr1CUIrczk5ugZVhIjB63xj8YWPUxyKiOoWUhz1MRdWoAu42cEtx
+I80GkBp5znEdyshOx9Rg
+=eGPg
+-----END PGP SIGNATURE-----
