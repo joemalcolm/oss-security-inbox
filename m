@@ -1,4 +1,9 @@
-Received: (qmail 7194 invoked by uid 550); 21 Apr 2023 14:34:31 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["894" "Saturday" "7" "May" "2016" "05:33:13" "+0000" "Craig Small" "csmall@enc.com.au" "<CALy8Cw7nYh_p5qR3anmUM+t5g5zV-2HuZD4E6SFiWckCMfhNMA@mail.gmail.com>" "27" "[oss-security] CVE Request: wordpress and mediaelement" nil nil nil "5" "2016050705:33:13" "[oss-security] CVE Request: wordpress and mediaelement" (number mark "U       csmall@enc.c May  7   27/894   " thread-indent "\"[oss-security] CVE Request: wordpress and mediaelement\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11380 invoked by uid 550); 7 May 2016 07:21:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,109 +12,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6140 invoked from network); 21 Apr 2023 14:34:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:Cc:To:Subject:From:
-	MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=dZJahp3P9THYFcCYiAMOSMqvCZrg0s+PkxbQzlzlL2Q=; b=DaUpeHF/uLBDNhYEbuTNtaQz4H
-	nHYLNdc5FSz0qh5cY51YiUNuTJfyDpogOzuPPd7ALBgj8vdeJ3rci/c8xSmZJ5v7PQj5eo1t1W8T5
-	Ub91lNVGo/kiC8DRKo5z5HOmUg7mBjGcUiMohIBiIvrNzJ6lvgh8hJXvK3vJRZq8OgZRqV/YEvUt2
-	xWV8ISAoPJS9EXbneyDQvpgraHGnmX/9cYjOKJBrYzjuPZfHQWrzU/taz4yoQbehoP6a3H7lkOouS
-	WVHgxj+fZlpmhc8raw5Pyxt+c/0gc15T7HxuieJsscVQ9w4mOsQfef8uHknkGDpgA8ocGR1XPFfrw
-	Vr4yyDqw==;
-Message-ID: <65bdc479-3ce7-ffdd-9747-aeef94e6767d@igalia.com>
-Date: Fri, 21 Apr 2023 16:34:17 +0200
+Received: (qmail 6064 invoked from network); 7 May 2016 05:33:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=enc-com-au.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=N6rMCeGe4Zh2HDb+uuUcnRw7mHS/HsZ2wC9DfdvXkDU=;
+        b=uq4mRVME+bdPRfcHZZwrYrV9/WPjloYbSYQOdhoRiA1GOBb+Iey0eRlmRBmJwcAXOr
+         EDQ+DddbDfUDN4ykmJEm2v+qO0OG8TUq1E7DMuh2qq6O8S/repKHlRBzCf/cn5VcgRKv
+         rDKedvu7qqvaBjIBqMqKU+Ni5Gw02slo09GAjjApLFsf4y9xg8uvbr31+mBRWQGirT4v
+         K5IVGQqIctuN/AfnIH+Y5q5pLa8KackFgF8njyHCehP2rVPyle7Ghbb4LGnO9VLpxPaI
+         Rku+gHJezn2gqlWkrQniD0Mpm5WvjUOFC9vDx3zlkhUdquuH5pr4P7EjINEq7h4mt8wn
+         mqRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=N6rMCeGe4Zh2HDb+uuUcnRw7mHS/HsZ2wC9DfdvXkDU=;
+        b=IwUU4p4b03Vft7hCBnSYu+NY8R1wJcmy6WAdXuPpJFBVnVFFU3LNpYtbpDch3A/72A
+         zpFcoHdvjN4gwAGfU0ldfRzY45QPDN9fcEQdH/s/VcWosq7Zq+ZBE5WUpEoi8ivBrfBI
+         tuCyFCBvAUHDDDlg6LCCtiXv03V/7ZXIj9JCSJr80DsFZkcJRhPMD9uct8KaGWrla1SU
+         TfEht8qC4Y7drSm0yQtnicgTmf/3BZ032UcA6foJPhkA60Vvvw5JvqyBoSGNsnHPo0ox
+         ExBx8kxc992CDwvE0vfLHH+GfmFKsHFUuWHr4mU7wgQwJ4eEcLjuraR/3nZoens5I0+c
+         m1Cg==
+X-Gm-Message-State: AOPr4FUiH1b5dYIFHg/RnDCSR4rKfme6xiwVg++o7Vmd+356+Sv9c7h4SLWP84Vd/bZ8IpXF/ZpaNbIl5dezmg==
+X-Received: by 10.98.7.24 with SMTP id b24mr33650400pfd.125.1462599203479;
+ Fri, 06 May 2016 22:33:23 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Content-Language: en-GB
-From: Carlos Alberto Lopez Perez <clopez@igalia.com>
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, oss-security@lists.openwall.com
-Organization: Igalia S.L.
-Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
- security@webkit.org, oss-security@lists.openwall.com
+From: Craig Small <csmall@enc.com.au>
+Date: Sat, 07 May 2016 05:33:13 +0000
+Message-ID: <CALy8Cw7nYh_p5qR3anmUM+t5g5zV-2HuZD4E6SFiWckCMfhNMA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a1143ddb0f8fe03053239e9b8
+Subject: [oss-security] CVE Request: wordpress and mediaelement
+
+--001a1143ddb0f8fe03053239e9b8
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2023-0003
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0003
-------------------------------------------------------------------------
+Hi,
+  wordpress 4.5.1 has two security issues[1], both XSS, both fixed in 4.5.2
 
-Date reported           : April 21, 2023
-Advisory ID             : WSA-2023-0003
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0003.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0003.html
-CVE identifiers         : CVE-2023-25358, CVE-2022-0108, CVE-2022-32885,
-                          CVE-2023-27932, CVE-2023-27954,
-                          CVE-2023-28205.
-
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
-
-CVE-2023-25358
-    Versions affected: WebKitGTK and WPE WebKit before 2.36.8.
-    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher
-    lab.
-    A use-after-free vulnerability exists in WebCore::RenderLayer. This
-    issue allows remote attackers to execute arbitrary code or cause a
-    denial of service (memory corruption and application crash) via a
-    crafted web site. This is the same issue than CVE-2023-25360,
-    CVE-2023-25361, CVE-2023-25362 and CVE-2023-25363.
-
-CVE-2022-0108
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.6 and 2.40
-    branch before 2.40.1.
-    Credit to Luan Herrera (@lbherrera_).
-    Impact: An HTML document may be able to render iframes with
-    sensitive user information. Description: This issue was addressed
-    with improved iframe sandbox enforcement.
-
-CVE-2022-32885
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.6 and 2.40
-    branch before 2.40.1.
-    Credit to P1umer(@p1umer) and Q1IQ(@q1iqF).
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A memory corruption issue was
-    addressed with improved validation.
-
-CVE-2023-27932
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.6 and 2.40
-    branch before 2.40.1.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may bypass Same
-    Origin Policy. Description: This issue was addressed with improved
-    state management.
-
-CVE-2023-27954
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.6 and 2.40
-    branch before 2.40.1.
-    Credit to an anonymous researcher.
-    Impact: A website may be able to track sensitive user information.
-    Description: The issue was addressed by removing origin information.
-
-CVE-2023-28205
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.6 and 2.40
-    branch before 2.40.1.
-    Credit to Clément Lecigne of Google's Threat Analysis Group and
-    Donncha Ó Cearbhaill of Amnesty International’s Security Lab.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Apple is aware of a report that this issue
-    may have been actively exploited. Description: A use after free
-    issue was addressed with improved memory management.
+One is around the plupload embedded code[2] which I'm unsure if it affects
+plupload proper or just wordpress.
+The second is around mediaelement[3] and this does affect the upstream
+program but is already fixed[4].
 
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
+1: https://wordpress.org/news/2016/05/wordpress-4-5-2/
+2: https://core.trac.wordpress.org/changeset/37382/
+3: https://core.trac.wordpress.org/changeset/37371
+4:
+https://github.com/johndyer/mediaelement/commit/34834eef8ac830b9145df169ec22016a4350f06e
 
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
 
-The WebKitGTK and WPE WebKit team,
-April 21, 2023
+ - Craig
+
+-- 
+Craig Small (@smallsees)   http://enc.com.au/       csmall at : enc.com.au
+Debian GNU/Linux           http://www.debian.org/   csmall at : debian.org
+GPG fingerprint:        5D2F B320 B825 D939 04D2  0519 3938 F96B DF50 FEA5
+
+--001a1143ddb0f8fe03053239e9b8--
