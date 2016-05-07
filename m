@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["483" "Sunday" "13" "December" "2015" "09:02:26" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20151213080226.GA16071@eldamar.local>" "17" "[oss-security] CVE Request: Cups Filters/Foomatic Filters: Does not consider semicolon as an illegal shell escape character" "^Cc:" nil nil "12" "2015121308:02:26" "[oss-security] CVE Request: Cups Filters/Foomatic Filters: Does not consider semicolon as an illegal shell escape character" (number mark "        carnil@debia Dec 13   17/483   " thread-indent "\"[oss-security] CVE Request: Cups Filters/Foomatic Filters: Does not consider semicolon as an illegal shell escape character\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1336" "Saturday" "7" "May" "2016" "11:17:34" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160507151734.68C826C0716@smtpvmsrv1.mitre.org>" "33" "[oss-security] Re: CVE Request: Linux: [media] videobuf2-v4l2: Verify planes array in buffer dequeueing" nil nil nil "5" "2016050715:17:34" "[oss-security] Re: CVE Request: Linux: [media] videobuf2-v4l2: Verify planes array in buffer dequeueing" (number mark "U       cve-assign@m May  7   33/1336  " thread-indent "\"[oss-security] Re: CVE Request: Linux: [media] videobuf2-v4l2: Verify planes array in buffer dequeueing\"\n") "<20160507141409.GA11843@eldamar.local>" ("<20160507141409.GA11843@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3760 invoked by uid 550); 13 Dec 2015 08:02:40 -0000
+Received: (qmail 32706 invoked by uid 550); 7 May 2016 15:17:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3739 invoked from network); 13 Dec 2015 08:02:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=JZiCMbM9mAiqjMofYXF4NKELpJuFLKNGvhRctRWDxSI=;
-        b=I7xDO9BGwdRhDy0YVOl411LpSaTEbFtpyopTQNkRl4N+UGQ8RsjP492yfl7kv5+/dX
-         7/8fzwLMkp6JvjqrYpvE78PZlxdzSNL0nTMZhkYAbCvWw8jHShozWiLUSm0D4NxJfNho
-         lFUwqzNd+27b6FooIWNSdHUW8mny4t0nwIL3he1r4cWDfZhd485ScoEuJ8GGbgwa+v92
-         3wc7+963YMdmc2Jb9ytwPhnx3n5nAtqcgtCc5mRp+sFsxAVRhjk79EQB7tmYD353cJfj
-         aAwYoGaWCxDHbZMyQm30OctY524wHsr1ZWWIMyYVnanXcTNRZhYRzRBMaNPG+k6e6FwL
-         D4tA==
-X-Received: by 10.194.178.135 with SMTP id cy7mr30153766wjc.61.1449993748213;
-        Sun, 13 Dec 2015 00:02:28 -0800 (PST)
-Message-ID: <20151213080226.GA16071@eldamar.local>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: CVE Assignments MITRE <cve-assign@mitre.org>,
-	Adam Chester <adam.chester@pentest.co.uk>,
-	Till Kamppeter <till.kamppeter@gmail.com>
-Date: Sun, 13 Dec 2015 09:02:26 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: [oss-security] CVE Request: Cups Filters/Foomatic Filters: Does not consider
- semicolon as an illegal shell escape character
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Received: (qmail 32688 invoked from network); 7 May 2016 15:17:46 -0000
+From: cve-assign@mitre.org
+To: carnil@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, benh@debian.org
+In-Reply-To: <20160507141409.GA11843@eldamar.local>
+Message-Id: <20160507151734.68C826C0716@smtpvmsrv1.mitre.org>
+Date: Sat,  7 May 2016 11:17:34 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: Linux: [media] videobuf2-v4l2: Verify planes array in buffer dequeueing
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-CVE-2015-8327 was assigned to cups-filters/foomatic-rip since it does
-not consider the back ticks as an illegal shell escape character
-and allowing code execution.
+> https://git.kernel.org/linus/2c1f6951a8a82e6de0d82b1158b5e493fc6c54ab
+> 
+> __fill_v4l2_buffer() however uses the number of planes from the dequeued
+> videobuf2 buffer, overwriting kernel memory ...
+> if the user provided fewer planes than the dequeued buffer had.
 
-There was another commit in cups-filters upstream (revision 7419) as
-well adding (;) to the set of illegal shell escape characters:
+Use CVE-2016-4568.
 
-http://bzr.linuxfoundation.org/loggerhead/openprinting/cups-filters/revision/7419
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-an was found by Adam Chester.
-
-Could you assign a CVE for this issue as well?
-
-Regards,
-Salvatore
+iQIcBAEBCAAGBQJXLgZSAAoJEHb/MwWLVhi20G8QALSR5YnhenGOLq7Om8MR3oNK
+Y5cyZXw4E/4h9n1z1/HZ/2yn+xh52oEgQ4utPTFRzCB/yOjBW+qMGf+j3AGCRqA4
+g7WKkRmqMp9nKMhnCrCcxFC+NsnN+tySE9Nk01nHO8EGPqHBbe+HBtg2SGOuYs2I
+oCH/NZlZdb/LOCKZKAkqbLoVn5jHyKsHMYd16LVSbHDKRazMhH2IAPI1g8BgLuym
+kEDVKUEwXazwuGATpRbIf2lSVZ5Qz5RhxDEntWMR5rR/w2RLcmTUfIHTkbEVoS35
+QwV8pn+qgOEqZ1BdskOsYb8Cxc3rg+J8qusYa/xpkq3l3z9veMr/1tmcYbmWMZGb
+/yWSm2R2Oy/t0jP0B421o+2FIFkqY6CXIypk1c4wpNLBzE2JlJoaymoQrwDrITHE
+EANQ/dp9WJeNdXiuFH9wfIgQXo+Z48JhWrpdN3rleLB6Foezg/0a4tuqGCKoHdly
+hGCI6Xx0OJKSq2ZBW6kW9ZvPATs0BY76/N9BAuxGKlTew7qiU7JeuF3Y0HGzIqpj
+DUHAhNWj9/+QDPQXPQxVRoNc1m62M8pR9s7hw8dM2Fbc/kmcxV+oQTxKVoOjQryJ
+XJE8+7oHZjWgGr1CUIrczk5ugZVhIjB63xj8YWPUxyKiOoWUhz1MRdWoAu42cEtx
+I80GkBp5znEdyshOx9Rg
+=eGPg
+-----END PGP SIGNATURE-----
