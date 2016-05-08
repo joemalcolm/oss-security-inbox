@@ -1,30 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/25/6
-Message-ID: <alpine.LFD.2.20.1605251800090.15974@wniryva>
-Date: Wed, 25 May 2016 18:01:36 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE Request Qemu: scsi: megasas: out-of-bounds write while setting controller properties
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/08/2
+Message-ID: <20160508221902.04889595@pc1>
+Date: Sun, 8 May 2016 22:19:02 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: dosfstools / fsck.vfat: Several invalid memory accesses
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+https://blog.fuzzing-project.org/44-dosfstools-fsck.vfat-Several-invalid-memory-accesses.html
 
-Quick Emulator(Qemu) built with the MegaRAID SAS 8708EM2 Host Bus Adapter 
-emulation support is vulnerable to an out-of-bounds write access issue. It 
-could occur while processing MegaRAID Firmware Interface(MFI) command to set 
-controller properties in 'megasas_dcmd_set_properties'.
+I lately fuzzed various filesystem check tools. This uncovered a number
+of issues in dosfstools / fsck.fat that have now been fixed in the new
+version 4.0. All issues were found with american fuzzy lop and address
+sanitizer.
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-on the host resulting in DoS.
+https://github.com/dosfstools/dosfstools/issues/11
+Global out of bounds read file_stat() / check_dir()
+https://github.com/dosfstools/dosfstools/commit/2aad1c83c7d010de36afbe79c9fde22c50aa2f74
+Git commit / fix
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04340.html
+https://github.com/dosfstools/dosfstools/issues/12
+Unclear invalid memory access in get_fat()
+https://github.com/dosfstools/dosfstools/commit/07908124838afcc99c577d1d3e84cef2dbd39cb7
+Git commit / fix
 
-This issue was discovered by Li Qiang of 360.cn Inc.
+https://github.com/dosfstools/dosfstools/issues/25
+Heap overflow in read_fat()
+https://github.com/dosfstools/dosfstools/issues/26
+Heap out of bounds read in get_fat()
+https://github.com/dosfstools/dosfstools/commit/e8eff147e9da1185f9afd5b25948153a3b97cf52
+Git commit / fix for both issues
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+These bugs can pose a security risk if a system automatically checks
+attached storage media with fsck or in situations where filesystems on
+untrusted devices get checked. The new version dosfstools 4.0 fixes all
+four bugs.
+
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
