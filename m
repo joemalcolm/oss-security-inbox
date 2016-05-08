@@ -1,24 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/2
-Message-ID: <5732F3E2.9070409@redhat.com>
-Date: Wed, 11 May 2016 10:57:06 +0200
-From: Adam Maris <amaris@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/08/1
+Message-ID: <CACn5sdQusVVOHdJqBTzyjpy8XCHP=ZmsOzjOU49XB0Bm3kt8BQ@mail.gmail.com>
+Date: Sun, 8 May 2016 17:36:10 +0200
+From: Gustavo Grieco <gustavo.grieco@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Mishandling the first propagated copy being a slave
+Subject: Re: CVE requested: two stack exhaustation parsing xml files using mxml
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Sorry, the title of the mails was "CVE requested", but it should be
+"CVE request". Please assign CVE if it is suitable.
 
-When the first propagated copy was a slave, it results into kernel oops.
-This oops happens with the namespace_sem held and can be triggered by
-non-root users.
+Thanks!
 
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=5ec0811d30378ae104f250bfc9b3640242d81e3f
-
-Regards,
-
--- 
-Adam Mariš, Red Hat Product Security
-1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
-
-
+2016-05-07 23:40 GMT+02:00 Gustavo Grieco <gustavo.grieco@...il.com>:
+> Hi,
+>
+> We found two stack exhustation conditions that can easily crash mxml
+> when parsing an xml. Both issues are affecting versions 2.7 and 2.9
+> (and probably others):
+>
+> * Recursion using mxmlDelete at mxml-node.c:217 (stack-exhaustion-1.xml)
+> * Recursion using mxml_write_node at mxml-file.c:2739 (stack-exhaustion-2.xml)
+>
+> Found using QuickFuzz + Radamsa. Reproducers are attached.
+>
+> Regards,
+> Gustavo.
