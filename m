@@ -1,20 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/17/3
-Message-ID: <578B3ADF.7080604@securify.nl>
-Date: Sun, 17 Jul 2016 09:59:27 +0200
-From: Summer of Pwnage <lists@...urify.nl>
-To: oss-security@...ts.openwall.com
-Subject: Multiple stored Cross-Site Scripting vulnerabilities affecting three WordPress Plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/08/3
+Message-ID: <CABEk9YyTYLpTE0Q5wtvqdHirJd6-2sdJ6Y2YE_kty+wi3DB4jw@mail.gmail.com>
+Date: Sun, 8 May 2016 18:16:50 -0400
+From: Kangjie Lu <kangjielu@...il.com>
+To: oss-security@...ts.openwall.com, Chengyu Song <csong84@...ech.edu>,  Insu Yun <insu@...ech.edu>, Taesoo Kim <taesoo@...ech.edu>
+Subject: CVE Request: kernel information leak vulnerability in Linux sound module
 Content-Type: text/plain; charset=utf-8
 
-Please see attached advisories for more information. These issues were 
-found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
-project. Its goal is to contribute to the security of popular, widely 
-used OSS projects in a fun and educational way.
+Hello,
+
+In file sound/core/timer.c of the latest mainline Linux kernel, the stack
+object “tread” has a total size of 32 bytes. It contains a 8-bytes padding,
+which is not initialized but sent to user via copy_to_user, resulting a
+kernel leak.
+
+Fix info:
+http://comments.gmane.org/gmane.linux.kernel/2214250
 
 
-View attachment "persistent_cross_site_scripting_in_all_in_one_seo_pack_wordpress_plugin.txt" of type "text/plain" (5890 bytes)
+Please help assign a CVE to this vulnerability.
 
-View attachment "persistent_cross_site_scripting_in_wordpress_activity_log_plugin.txt" of type "text/plain" (4374 bytes)
 
-View attachment "persistent_cross_site_scripting_in_wp_live_chat_support_plugin.txt" of type "text/plain" (5969 bytes)
+Thanks,
+Kangjie Lu
+
