@@ -1,63 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/23/5
-Message-ID: <20160523181917.GA19626@sisay.ephaone.org>
-Date: Mon, 23 May 2016 20:19:17 +0200
-From: Michael Scherer <misc@...b.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/6
+Message-ID: <20160509172045.GC9754@perpetual.pseudorandom.co.uk>
+Date: Mon, 9 May 2016 18:20:46 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: /tmp usage race condition in onionshare
+Cc: cve-assign@...re.org
+Subject: Re: GraphicsMagick Response To "ImageTragick"
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, 09 May 2016 at 08:29:40 -0500, Bob Friesenhahn wrote:
+> 1. CVE-2016-3714 - Insufficient shell characters filtering
+> 
+>    GraphicsMagick is not susceptible to remote code execution except
+>    if gnuplot is installed (because gnuplot executes shell commands).
+>    Gnuplot-shell based shell exploits are possible without a gnuplot
+>    file being involved although gnuplot invokes the shell.  To fix
+>    this, the "gplt" entry in the delegates.mgk file must be removed.
 
-I found a rather complicated issue regarding /tmp and onionshare, a
-utility to share file over tor hidden services.
+I think this should perhaps have a separate CVE ID assigned: it's the
+same impact (arbitrary code execution) and was discovered at around
+the same time, but the mechanism is not similar to the
+missing/insufficient quoting/escaping for ImageMagick's %M placeholder,
+which was the root cause of (the original incarnation of) CVE-2016-3714.
 
-See
-https://github.com/micahflee/onionshare/blob/master/onionshare/hs.py#L105
-for the start of the problem.
+In GraphicsMagick this was the "GPLT" format, removed in hg commit
+"Gnuplot files are inherently insecure. Remove delegates support for
+reading them."
+https://sourceforge.net/p/graphicsmagick/code/ci/45998a25992d1142df201d8cf024b6c948b40748/
 
-And https://www.torproject.org/docs/tor-hidden-service.html.en for
-more details on what happen for hidden services.
+In ImageMagick this was the "PLT" format, removed in this git commit with
+the misleading commit message "Update to the latest autoconf/automake":
+https://github.com/ImageMagick/ImageMagick/commit/e87116ab2bd070c47943d4118a18c8f3a47461e2
 
-So onionshare use /tmp/onionshare to create a temporary directory
-$HS that is then used for the creation of a tor hidden service, as
-HiddenServiceDir configuration.  Then, the tor daemon create 2 files
-in $HS, one for the hidden service hostname, the other for the
-private key
+MITRE, do you consider this to be:
 
-But onionshare doesn't verify the owner or the exact permission of
-/tmp/onionshare.  So if a attacker pre-create a directory
-/tmp/onionshare with 777 permissions and him as a owner, he can use
-a race condition to inject his own files in the share.
+* part of CVE-2016-3714,
+* a single separate vulnerability to which both GraphicsMagick and ImageMagick
+  were vulnerable, or
+* two separate vulnerabilities, one in each package?
 
-Since the file 'hostname' is created by tor, then opened and read by
-onionshare, the attacker could use inotify on the temporary
-directory and rename the $HS dir (since he own /tmp/onionshare) and
-substitute his own directory with a crafted hostname directing to
-his own hiddenservice, thus permitting him to inject his own
-hiddenservices and so own files in the exchange, which seems to be a
-potential problem.
+> 2. CVE-2016-3718 - SSRF
+> 
+>    GraphicsMagick has always supported HTTP and FTP URL requests from
+>    the context of the executing process if it is linked with libxml2.
+>    There is no sandboxing or policy to determine which HTTP and FTP
+>    URLs should be allowed/denied because they should only be available
+>    from outside the system, or in the public space outside
+>    a "firewall".
 
-I suspect that using setgid on /tmp/onionshare might also give
-interesting potential attacks.  For example, if umask is not properly
-set, the attacker could steal the private key and hostname, thus
-being able to place himself as man in the middle during the
-exchange, which make the previous attack easier (since the attacker
-just have to set a proxy, rather than guessing the filename or
-something like this)
+I'm not sure whether I'm understanding "because they should..."
+correctly.
 
-I am also not 100% sure that
-https://github.com/micahflee/onionshare/blob/master/onionshare/hs.py#L217
-and
-https://github.com/micahflee/onionshare/blob/master/onionshare/hs.py#L116
-are safe if a attacker control the directory that will be used for
-shutil.rmtree.
+To be clear, are you saying that running GraphicsMagick code on a host
+that is whitelisted in someone's IP address ACL, has access to a LAN
+where the wider Internet does not, or has private services on the
+loopback interface is not a supported situation?
 
-I tried to contact upstream 5 months ago without results.
+Is there a subset of "safe" image formats that is known not to induce
+these requests, and where they *would* be considered to be a bug?  I would
+be surprised if this happened when resizing or manipulating common bitmap
+formats like JPEG, PNG, GIF, BMP, and one of the mitigations recommended
+on imagetragick.com has been to limit the formats that will be accepted.
 
-So I guess I can go public and provides a patch once I have a CVE id 
-assigned ( or any others kind of way to identify the vuln...)
+> 4. CVE-2016-3716 - File moving
+> 
+>     This is a two-factor attack and is actually file copying.  It is
+>     not successful using GraphicsMagick.  MSL is an XML-based "script"
+>     format which should never be allowed to be submitted and invoked
+>     by an untrusted party.
 
--- 
-Michael Scherer
+Is there any situation where GraphicsMagick will interpret a file of
+unspecified format as MSL, for instance recognizing it by extension or
+magic number?
 
+Thanks,
+    S
