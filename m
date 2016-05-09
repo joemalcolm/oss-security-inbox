@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["739" "Monday" "14" "March" "2016" "13:26:52" "+0100" "Tomas Hoger" "thoger@redhat.com" "<20160314132652.4530b528@redhat.com>" "22" "Re: [oss-security] CVE-Request - GNU Awk." "^Cc:" nil nil "3" "2016031412:26:52" "[oss-security] CVE-Request - GNU Awk." (number mark "        thoger@redha Mar 14   22/739   " thread-indent "\"Re: [oss-security] CVE-Request - GNU Awk.\"\n") "<20160314063228.GA12829@steve.org.uk>" ("<20160314063228.GA12829@steve.org.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1560" "Monday" "9" "May" "2016" "15:03:40" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1605091454420.27960@freddy.simplesystems.org>" "33" "Re: [oss-security] GraphicsMagick Response To \"ImageTragick\"" "^Date:" nil nil "5" "2016050920:03:40" "[oss-security] GraphicsMagick Response To \"ImageTragick\"" (number mark "        bfriesen@sim May  9   33/1560  " thread-indent "\"Re: [oss-security] GraphicsMagick Response To \"ImageTragick\"\"\n") "<20160509193355.GA11234@perpetual.pseudorandom.co.uk>" ("<alpine.GSO.2.20.1605090828220.23612@freddy.simplesystems.org>" "<20160509172045.GC9754@perpetual.pseudorandom.co.uk>" "<alpine.GSO.2.20.1605091330140.27960@freddy.simplesystems.org>" "<20160509193355.GA11234@perpetual.pseudorandom.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9958 invoked by uid 550); 14 Mar 2016 12:27:11 -0000
+Received: (qmail 30527 invoked by uid 550); 9 May 2016 20:03:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,40 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9940 invoked from network); 14 Mar 2016 12:27:10 -0000
-Message-ID: <20160314132652.4530b528@redhat.com>
-In-Reply-To: <20160314063228.GA12829@steve.org.uk>
-References: <20160314063228.GA12829@steve.org.uk>
+Received: (qmail 30502 invoked from network); 9 May 2016 20:03:52 -0000
+X-X-Sender: bfriesen@freddy.simplesystems.org
+In-Reply-To: <20160509193355.GA11234@perpetual.pseudorandom.co.uk>
+Message-ID: <alpine.GSO.2.20.1605091454420.27960@freddy.simplesystems.org>
+References: <alpine.GSO.2.20.1605090828220.23612@freddy.simplesystems.org> <20160509172045.GC9754@perpetual.pseudorandom.co.uk> <alpine.GSO.2.20.1605091330140.27960@freddy.simplesystems.org> <20160509193355.GA11234@perpetual.pseudorandom.co.uk>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-Cc: oss-security@lists.openwall.com
-Date: Mon, 14 Mar 2016 13:26:52 +0100
-From: Tomas Hoger <thoger@redhat.com>
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Mon, 09 May 2016 15:03:41 -0500 (CDT)
+Date: Mon, 9 May 2016 15:03:40 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-Request - GNU Awk.
-To: Steve Kemp <steve@steve.org.uk>
+Subject: Re: [oss-security] GraphicsMagick Response To "ImageTragick"
+To: oss-security@lists.openwall.com
 
-On Mon, 14 Mar 2016 06:32:28 +0000 Steve Kemp wrote:
+On Mon, 9 May 2016, Simon McVittie wrote:
+>
+> Great. Is there an API that can be used to say "load this arbitrary file,
+> but only if it is in a format that is considered entirely safe"?
 
->   I reported two DoS bugs against GNU Awk to the debian
->  bug tracker recently, both of which are denial of service
->  attacks causing NULL-pointer deferences.
-> 
->   It would be useful to have a CVE identifiers assigned.
+In GraphicsMagick, defining the environment variable 
+MAGICK_CODER_STABILITY=PRIMARY before running the will block out quite 
+a lot of functionality (including SVG/MVG/MSL) but nothing can be 
+considered entirely safe.
 
-Why should these get a CVE?  As you state in one of your reports:
+> I think the reason people are surprised and concerned to read about the
+> MVG and MSL scripting languages is that they enter *Magick through the
+> same APIs that open "safe" image files, blurring the boundary between
+> "open a file" and "execute a script". If the entry point into executing
+> MVG/MSL scripts was named more like ExecuteScript(), as opposed to
+> ReadImage(), then I don't think anyone would object to MVG and MSL
+> files having arbitrary code execution capabilities.
 
-  While I appreciate that passing untrusted code to gawk is not a
-  common thing to do, I do not believe that it should be possible to
-  trigger a segfault though.
+It is likely that the *Magick name was coined from the header of XPM 
+files which playfully use the word "magick" as part of the header that 
+programs would use for header magic testing.  This sets the stage for 
+the automatic things that the software is doing.
 
-Why should that be considered a valid / safe use case at all?  If
-something makes awk run untrusted programs, there's code execution
-problem already:
+In GraphicsMagick, the automatic scary stuff is all done within one 
+function so it is reasonable to develop a less magical mode which is 
+less likely to dispatch to a file reader for an archaic file format 
+which stopped being used in 1993.
 
-  echo | awk '{ system("id") }'
-
+Bob
 -- 
-Tomas Hoger / Red Hat Product Security
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
