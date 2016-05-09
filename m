@@ -1,222 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/28/1
-Message-ID: <m1lh3yjhyl.darpa@darpa.mil>
-Date: Thu, 28 Apr 2016 14:44:18 +0700
-From: Hans Jerry Illikainen <hji@...topia.com>
-To: bugtraq@...urityfocus.com, fulldisclosure@...lists.org, oss-security@...ts.openwall.com
-Subject: CVE-2016-3078: php: integer overflow in ZipArchive::getFrom*
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/10
+Message-ID: <1462820605.18084.2.camel@nixnuts.net>
+Date: Mon, 09 May 2016 14:03:25 -0500
+From: John Lightsey <john@...nuts.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: GraphicsMagick Response To "ImageTragick"
 Content-Type: text/plain; charset=utf-8
 
-Details
-=======
-
-An integer wrap may occur in PHP 7.x before version 7.0.6 when reading
-zip files with the getFromIndex() and getFromName() methods of
-ZipArchive, resulting in a heap overflow.
-
-php-7.0.5/ext/zip/php_zip.c
-,----
-| 2679 static void php_zip_get_from(INTERNAL_FUNCTION_PARAMETERS, int type) /* {{{ */
-| 2680 {
-| ....
-| 2684     struct zip_stat sb;
-| ....
-| 2689     zend_long len = 0;
-| ....
-| 2692     zend_string *buffer;
-| ....
-| 2702     if (type == 1) {
-| 2703         if (zend_parse_parameters(ZEND_NUM_ARGS(), "P|ll", &filename, &len, &flags) == FAILURE) {
-| 2704             return;
-| 2705         }
-| 2706         PHP_ZIP_STAT_PATH(intern, ZSTR_VAL(filename), ZSTR_LEN(filename), flags, sb);  // (1)
-| 2707     } else {
-| 2708         if (zend_parse_parameters(ZEND_NUM_ARGS(), "l|ll", &index, &len, &flags) == FAILURE) {
-| 2709             return;
-| 2710         }
-| 2711         PHP_ZIP_STAT_INDEX(intern, index, 0, sb);                                      // (1)
-| 2712     }
-| ....
-| 2718     if (len < 1) {
-| 2719         len = sb.size;
-| 2720     }
-| ....
-| 2731     buffer = zend_string_alloc(len, 0);                                                // (2)
-| 2732     n = zip_fread(zf, ZSTR_VAL(buffer), ZSTR_LEN(buffer));                             // (3)
-| ....
-| 2742 }
-`----
-
-With `sb.size' from (1) being:
-
-php-7.0.5/ext/zip/lib/zip_stat_index.c
-,----
-| 038 ZIP_EXTERN int
-| 039 zip_stat_index(zip_t *za, zip_uint64_t index, zip_flags_t flags,
-| 040                zip_stat_t *st)
-| 041 {
-| ...
-| 043     zip_dirent_t *de;
-| 044
-| 045     if ((de=_zip_get_dirent(za, index, flags, NULL)) == NULL)
-| 046         return -1;
-| ...
-| 063         st->size = de->uncomp_size;
-| ...
-| 086 }
-`----
-
-Both `size' and `uncomp_size' are unsigned 64bit integers:
-
-php-7.0.5/ext/zip/lib/zipint.h
-,----
-| 339 struct zip_dirent {
-| ...
-| 351     zip_uint64_t uncomp_size;        /* (cl) size of uncompressed data */
-| ...
-| 332 };
-`----
-
-php-7.0.5/ext/zip/lib/zip.h
-,----
-| 279 struct zip_stat {
-| ...
-| 283     zip_uint64_t size;            /* size of file (uncompressed) */
-| ...
-| 290 };
-`----
-
-Whereas `len' is signed and has a platform-dependent size:
-
-php-7.0.5/Zend/zend_long.h
-,----
-| 028 #if defined(__x86_64__) || defined(__LP64__) || defined(_LP64) || defined(_WIN64)
-| 029 # define ZEND_ENABLE_ZVAL_LONG64 1
-| 030 #endif
-| ...
-| 033 #ifdef ZEND_ENABLE_ZVAL_LONG64
-| 034 typedef int64_t zend_long;
-| ...
-| 043 #else
-| 044 typedef int32_t zend_long;
-| ...
-| 053 #endif
-`----
-
-Uncompressed file sizes in zip-archives may be specified as either 32-
-or 64bit values; with the latter requiring that the size be specified in
-the extra field in zip64 mode.
-
-Anyway, as for the invocation of `zend_string_alloc()' in (2):
-
-php-7.0.5/Zend/zend_string.h
-,----
-| 119 static zend_always_inline zend_string *zend_string_alloc(size_t len, int persistent)
-| 120 {
-| 121     zend_string *ret = (zend_string *)pemalloc(ZEND_MM_ALIGNED_SIZE(_ZSTR_STRUCT_SIZE(len)), persistent); // (4)
-| ...
-| 133     ZSTR_LEN(ret) = len;                                                                                  // (5)
-| 134     return ret;
-| 135 }
-`----
-
-The `size' argument to the `pemalloc' macro is aligned/adjusted in (4)
-whilst the *original* value of `len' is stored as the size of the
-allocated buffer in (5).  No boundary checking is done in (4) and it may
-thus wrap, which would lead to a heap overflow during the invocation of
-`zip_fread()' in (3) as the `toread' argument is `ZSTR_LEN(buffer)':
-
-php-7.0.5/Zend/zend_string.h
-,----
-| 041 #define ZSTR_LEN(zstr)  (zstr)->len
-`----
-
-On a 32bit system:
-
-,----
-| (gdb) p/x ZEND_MM_ALIGNED_SIZE(_ZSTR_STRUCT_SIZE(0xfffffffe))
-| $1 = 0x10
-`----
-
-The wraparound may also occur on 64bit systems with `uncomp_size'
-specified in the extra field (Zip64 mode; ext/zip/lib/zip_dirent.c:463).
-However, it won't result in a buffer overflow because of `zip_fread()'
-bailing on a size that would have wrapped the allocation in (4):
-
-php-7.0.5/ext/zip/lib/zip_fread.c
-,----
-| 038 ZIP_EXTERN zip_int64_t
-| 039 zip_fread(zip_file_t *zf, void *outbuf, zip_uint64_t toread)
-| 040 {
-| ...
-| 049     if (toread > ZIP_INT64_MAX) {
-| 050         zip_error_set(&zf->error, ZIP_ER_INVAL, 0);
-| 051         return -1;
-| 052     }
-| ...
-| 063 }
-`----
-
-php-7.0.5/ext/zip/lib/zipconf.h
-,----
-| 130 #define ZIP_INT64_MAX     0x7fffffffffffffffLL
-`----
-
-,----
-| (gdb) p/x ZEND_MM_ALIGNED_SIZE(_ZSTR_STRUCT_SIZE(0x7fffffffffffffff))
-| $1 = 0x8000000000000018
-`----
+On Mon, 2016-05-09 at 18:20 +0100, Simon McVittie wrote:
+> On Mon, 09 May 2016 at 08:29:40 -0500, Bob Friesenhahn wrote:
+> > 1. CVE-2016-3714 - Insufficient shell characters filtering
+> > 
+> >    GraphicsMagick is not susceptible to remote code execution except
+> >    if gnuplot is installed (because gnuplot executes shell commands).
+> >    Gnuplot-shell based shell exploits are possible without a gnuplot
+> >    file being involved although gnuplot invokes the shell.  To fix
+> >    this, the "gplt" entry in the delegates.mgk file must be removed.
+> 
+> I think this should perhaps have a separate CVE ID assigned: it's the
+> same impact (arbitrary code execution) and was discovered at around
+> the same time, but the mechanism is not similar to the
+> missing/insufficient quoting/escaping for ImageMagick's %M placeholder,
+> which was the root cause of (the original incarnation of) CVE-2016-3714.
+> 
+> In GraphicsMagick this was the "GPLT" format, removed in hg commit
+> "Gnuplot files are inherently insecure. Remove delegates support for
+> reading them."
+> https://sourceforge.net/p/graphicsmagick/code/ci/45998a25992d1142df201d8cf024b
+> 6c948b40748/
+> 
+> In ImageMagick this was the "PLT" format, removed in this git commit with
+> the misleading commit message "Update to the latest autoconf/automake":
+> https://github.com/ImageMagick/ImageMagick/commit/e87116ab2bd070c47943d4118a18
+> c8f3a47461e2
+> 
+> MITRE, do you consider this to be:
+> 
+> * part of CVE-2016-3714,
+> * a single separate vulnerability to which both GraphicsMagick and ImageMagick
+>   were vulnerable, or
+> * two separate vulnerabilities, one in each package?
+> 
 
 
-PoC
-===
+The "man" attack vector needs the same determination.
 
-Against Arch Linux i686 with php-fpm 7.0.5 behind nginx [1]:
-
-,----
-| $ python exploit.py --bind-port 5555 http://1.2.3.4/upload.php
-| [*] this may take a while
-| [*] 103 of 4096 (0x67fd0)...
-| [+] connected to 1.2.3.4:5555
-| 
-| id
-| uid=33(http) gid=33(http) groups=33(http)
-| 
-| uname -a
-| Linux arch32 4.5.1-1-ARCH #1 SMP PREEMPT Thu Apr 14 19:36:01 CEST
-| 2016 i686 GNU/Linux
-| 
-| pacman -Qs php-fpm
-| local/php-fpm 7.0.5-2
-|     FastCGI Process Manager for PHP
-| 
-| cat upload.php
-| <?php
-| $zip = new ZipArchive();
-| if ($zip->open($_FILES["file"]["tmp_name"]) !== TRUE) {
-|     echo "cannot open archive\n";
-| } else {
-|     for ($i = 0; $i < $zip->numFiles; $i++) {
-|         $data = $zip->getFromIndex($i);
-|     }
-|     $zip->close();
-| }
-| ?>
-`----
+It is similar to CVE-2016-3717 in impact, but uses a different codepath. The
+existing fixes for CVE-2016-3717 do not address it.
 
 
-Solution
-========
-
-This issue has been fixed in php 7.0.6.
-
-
-
-Footnotes
-_________
-
-[1] [https://github.com/dyntopia/exploits/tree/master/CVE-2016-3078]
-
-
--- 
-Hans Jerry Illikainen
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
