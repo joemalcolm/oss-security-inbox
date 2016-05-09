@@ -1,48 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/05/5
-Message-ID: <1459892278.30749.347.camel@ipfire.org>
-Date: Tue, 05 Apr 2016 22:37:58 +0100
-From: Michael Tremer <michael.tremer@...ire.org>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: CVE request: Remote command execution/XSS vulnerability after login in IPFire's web user interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/17
+Message-Id: <20160509232909.8E58C52E014@smtpvbsrv1.mitre.org>
+Date: Mon,  9 May 2016 19:29:09 -0400 (EDT)
+From: cve-assign@...re.org
+To: kangjielu@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, csong84@...ech.edu, insu@...ech.edu, taesoo@...ech.edu
+Subject: Re: CVE Request: kernel information leak vulnerability in Linux sound module
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I would like to request a CVE number for the following two issues in the web
-user interface of IPFire reported by Yann Cam [1].
+> http://comments.gmane.org/gmane.linux.kernel/2214250
+> 
+> The stack object "tread" has a total size of 32 bytes. Its field
+> "event" and "val" both contain 4 bytes padding. These 8 bytes
+> padding bytes are sent to user without being initialized.
 
-We currently have an upstream bug report [2] that is non-public at the moment
-and patches are under review by the reporter.
+Use CVE-2016-4569.
 
+This is not yet available at
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/sound/core/timer.c
+but may be there later.
 
-1) XSS in GET parameter in ipinfo.cgi
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-A non-persistent XSS in GET param is available in the ipinfo.cgi. The injection
-can be URLencoded with certain browsers or blocked with Anti-XSS engine.
-
-This XSS works on IE and affect IPFire version <= 2.17 Core Update 99 for the
-moment.
- 
-File /srv/web/ipfire/cgi-bin/ipinfo.cgi line 87 :
-    &Header::openbox('100%', 'left', $addr . ' (' . $hostname . ') : '.$whoisname);
- 
-
-2) Remote command execution in proxy.cgi
-
-Remote Command Execution in the proxy.cgi file. This file is protected from CSRF
-execution. Affected version <= 2.17 Core Update 99 for the moment.
-
-File /srv/web/ipfire/cgi-bin/proxy.cgi line 4137 :
-    system("/usr/sbin/htpasswd -b $userdb $str_user $str_pass");
-
-The $str_pass isn't sanitized before execution in command line. It's possible to
-change the "NCSA_PASS" and "NCSA_PASS_CONFIRM" post data with arbitrary data.
-
-
-Thank you,
--Michael
-
-[1] https://www.asafety.fr/data/20160403_-_IPFire_2.17_i586_Core_Update_99_Remote_Command_Execution.txt
-[2] https://bugzilla.ipfire.org/show_bug.cgi?id=11087
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQIcBAEBCAAGBQJXMRzFAAoJEHb/MwWLVhi2mMAP/3G1B/9smkpGJB5/VGfvpifs
+Nzkd+Jy6CHSi+Q0A91h1YdTrLwtFQMffVo0keZd8gYarApxSpA8qiRVK1sc3bsZ6
+Um9NW+4dVLjUZ+RjQ0RjDMjKWbTHFyzZC8Z8DiY8ZXMzpY4UaylEVP9auSCUXvmq
+4p8guXW+6PdoaDarFqTVW/fpSfk2gHFxbkWZ602xUdXTn8ZGkItv25dvtVgp21IP
+zOfaZmZG+yPjOPCMEQNm3TcuJ7jFeq/KpsuLmtyY/EOBUNqZpRtJBtEPTMMkxlNZ
+BaDuV1SrJsXu7ZDsfdz+Yx+57Wa/gDkOsVnFlJyTR6NOrtJfjwJG+dYZYAA0bg4N
+KliqQTCOhGGkPGOB52zRg9UYg+7d/dEqcL2oP6Xuvr74aY1CZepbD+zDMkympXuQ
+Wu93c5Hh05g3xOwNj+90s3u8DQ0sDJlfizUXWbStEmBJNwno6y/HjSVJqs/vjZWk
+ERyWZd4vkVGbt4rBoTCNdxUi+V1k04xQGM6dF1XUSQd4rhQ0HJKRva10ac90JVSx
+pt/KPWxL89MxWLOmHP5VdIHFoQyFre4a4fOzFMovixB0RJsm5/iZ3lAKPc0RKsu6
+ZgtaujTVAkMAtFM0tfCybSI++JEsYIMV5Rr9cNkSYSVZYKbn0A+i+mH3luREBJyF
+6rS0YTVBB5kAR9DgUc2n
+=I4nm
+-----END PGP SIGNATURE-----
