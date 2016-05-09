@@ -1,45 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/11/7
-Message-ID: <86556a717f404fcda780ced608b05693@imshyb02.MITRE.ORG>
-Date: Fri, 11 Nov 2016 12:42:40 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: libdwarf: heap-based buffer overflow in _dwarf_skim_forms (dwarf_macro5.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/8
+Message-ID: <CAG48ez0_BFmrhW_JaKFSNz0tH3U+vmVnsA_1NaZcbCsYHURiHw@mail.gmail.com>
+Date: Mon, 9 May 2016 10:53:39 -0700
+From: Jann Horn <jannh@...gle.com>
+To: oss-security@...ts.openwall.com
+Cc: carnil@...ian.org, cve-assign@...re.org
+Subject: Re: Re: CVE Requests: Linux: BPF flaws (one use-after-free / local root privilege escalation)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Fri, May 6, 2016 at 8:40 AM,  <cve-assign@...re.org> wrote:
+>> bpf: fix check_map_func_compatibility logic
+>> https://git.kernel.org/linus/6aff67c85c9e5a4bc99e5211c1bac547936626ca
+>>
+>> Not sure though if the later one has a security impact.
+>
+> We have not yet assigned a CVE ID to
+> 6aff67c85c9e5a4bc99e5211c1bac547936626ca in case someone else wants to
+> provide additional information.
 
-> https://blogs.gentoo.org/ago/2016/11/07/libdwarf-heap-based-buffer-overflow-in-_dwarf_skim_forms-dwarf_macro5-c
-> https://sourceforge.net/p/libdwarf/code/ci/583f8834083b5ef834c497f5b47797e16101a9a6/
-> 
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 29
+I'm the original reporter of that bug. As far as I can tell, its
+impact is low - you could use it to:
 
-Use CVE-2016-9275 for this buffer over-read. Although the commit is
-the same as for CVE-2016-9276, fixing CVE-2016-9275 apparently
-requires the dwarf_macro5.c part of the commit.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYJgKQAAoJEHb/MwWLVhi24wcP/ArXrxDuL31zWyp2eGSZzbs3
-OK084kv5ln3zjGErGzoOch57mF2Eh8YRTKR0BofC0sJJATYs3PTl5LdRLl7tiy6m
-9y8Z6aWRZfu3AyahJWoeEZmxOdHvRUgiQ2SMBf9jJBowRkbM8/omCIvfsLU7owyp
-z1gauiGtLXzkGMMBREGqW5rdsFBBfHWqXo9fv8J7gUWOtNmYBiZ8lgc5Vsl6WTwl
-+B7FFUBncj0oJGva807YmrrhHd0oKYv6Czrlfb3mdNYgVy2DaB+sIAkNpbmxg1Bc
-+79RJ3Hir1j8An9M59qij0HNyWfvlk6mv99p6ELBcZ0xisYcFaeSKtS9XZbbYeAG
-ROojMlSprq5uaKrEoFodUDuNrmC05X8A5sanVWyOPIkUaEw+7wcKPe78LYRpCUbn
-0AQLBeG4YOkaPxA2VluU4+s5wMHJDtQvmK/yaGTf2+S3AlQf5JWVN054sBa2Boi7
-i+m8XhW9gPurKrcjgLD7qN7q6rXWNo3U36I05bvsCObc4fgPr6CY/xEGM5QHYh/k
-ApEZU4ZAvgcjew7R7HaaxgxBk5+90bEq4bzWNhExB0MCMpNrf4xg/L/PhzKSa+fF
-HE+TQk5aIQqfGjI8eowdw/JZvEtDApNxqtKw/FcLuQe2DmJ55QJ/D9bijNwgpeB+
-6VCWZuLyUbFPqM9sghS9
-=FIB3
------END PGP SIGNATURE-----
+ - obtain the ability to execute BPF programs that are owned by other processes
+ - perhaps cause a NULL dereference in an exiting task if the BPF
+program is executed in
+   softirq context after exit_files() has nulled tsk->files
