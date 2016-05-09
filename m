@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1568" "Monday" "3" "October" "2016" "10:23:41" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161003142341.C426D42E00C@smtpvbsrv1.mitre.org>" "38" "[oss-security] Re: CVE request Qemu: net: Infinite loop in mcf_fec_do_tx" nil nil nil "10" "2016100314:23:41" "[oss-security] Re: CVE request Qemu: net: Infinite loop in mcf_fec_do_tx" (number mark "U       cve-assign@m Oct  3   38/1568  " thread-indent "\"[oss-security] Re: CVE request Qemu: net: Infinite loop in mcf_fec_do_tx\"\n") "<alpine.LFD.2.20.1610031659410.30046@wniryva>" ("<alpine.LFD.2.20.1610031659410.30046@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3062" "Monday" "9" "May" "2016" "18:20:46" "+0100" "Simon McVittie" "smcv@debian.org" "<20160509172045.GC9754@perpetual.pseudorandom.co.uk>" "67" "Re: [oss-security] GraphicsMagick Response To \"ImageTragick\"" "^Cc:" nil nil "5" "2016050917:20:46" "[oss-security] GraphicsMagick Response To \"ImageTragick\"" (number mark "        smcv@debian. May  9   67/3062  " thread-indent "\"Re: [oss-security] GraphicsMagick Response To \"ImageTragick\"\"\n") "<alpine.GSO.2.20.1605090828220.23612@freddy.simplesystems.org>" ("<alpine.GSO.2.20.1605090828220.23612@freddy.simplesystems.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7938 invoked by uid 550); 3 Oct 2016 14:23:54 -0000
+Received: (qmail 5924 invoked by uid 550); 9 May 2016 17:20:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 5900 invoked from network); 9 May 2016 17:20:58 -0000
+Message-ID: <20160509172045.GC9754@perpetual.pseudorandom.co.uk>
+References: <alpine.GSO.2.20.1605090828220.23612@freddy.simplesystems.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.GSO.2.20.1605090828220.23612@freddy.simplesystems.org>
+User-Agent: Mutt/1.6.0 (2016-04-01)
+Cc: cve-assign@mitre.org
+Date: Mon, 9 May 2016 18:20:46 +0100
+From: Simon McVittie <smcv@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7899 invoked from network); 3 Oct 2016 14:23:53 -0000
-From: cve-assign@mitre.org
-To: ppandit@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn
-In-Reply-To: <alpine.LFD.2.20.1610031659410.30046@wniryva>
-Message-Id: <20161003142341.C426D42E00C@smtpvbsrv1.mitre.org>
-Date: Mon,  3 Oct 2016 10:23:41 -0400 (EDT)
-Subject: [oss-security] Re: CVE request Qemu: net: Infinite loop in mcf_fec_do_tx
+Subject: Re: [oss-security] GraphicsMagick Response To "ImageTragick"
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> Quick Emulator(Qemu) built with the ColdFire Fast Ethernet Controller emulator
-> support is vulnerable to an infinite loop issue. It could occur while
-> processing packets on the transmit queue in 'mcf_fec_do_tx'.
+On Mon, 09 May 2016 at 08:29:40 -0500, Bob Friesenhahn wrote:
+> 1. CVE-2016-3714 - Insufficient shell characters filtering
 > 
-> A privileged user/process inside guest could use this issue to crash the Qemu
-> process on the host leading to DoS.
+>    GraphicsMagick is not susceptible to remote code execution except
+>    if gnuplot is installed (because gnuplot executes shell commands).
+>    Gnuplot-shell based shell exploits are possible without a gnuplot
+>    file being involved although gnuplot invokes the shell.  To fix
+>    this, the "gplt" entry in the delegates.mgk file must be removed.
+
+I think this should perhaps have a separate CVE ID assigned: it's the
+same impact (arbitrary code execution) and was discovered at around
+the same time, but the mechanism is not similar to the
+missing/insufficient quoting/escaping for ImageMagick's %M placeholder,
+which was the root cause of (the original incarnation of) CVE-2016-3714.
+
+In GraphicsMagick this was the "GPLT" format, removed in hg commit
+"Gnuplot files are inherently insecure. Remove delegates support for
+reading them."
+https://sourceforge.net/p/graphicsmagick/code/ci/45998a25992d1142df201d8cf024b6c948b40748/
+
+In ImageMagick this was the "PLT" format, removed in this git commit with
+the misleading commit message "Update to the latest autoconf/automake":
+https://github.com/ImageMagick/ImageMagick/commit/e87116ab2bd070c47943d4118a18c8f3a47461e2
+
+MITRE, do you consider this to be:
+
+* part of CVE-2016-3714,
+* a single separate vulnerability to which both GraphicsMagick and ImageMagick
+  were vulnerable, or
+* two separate vulnerabilities, one in each package?
+
+> 2. CVE-2016-3718 - SSRF
 > 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg05557.html
+>    GraphicsMagick has always supported HTTP and FTP URL requests from
+>    the context of the executing process if it is linked with libxml2.
+>    There is no sandboxing or policy to determine which HTTP and FTP
+>    URLs should be allowed/denied because they should only be available
+>    from outside the system, or in the public space outside
+>    a "firewall".
 
->> http://git.qemu.org/?p=qemu.git;a=commit;h=070c4b92b8cd5390889716677a0b92444d6e087a
+I'm not sure whether I'm understanding "because they should..."
+correctly.
 
-Use CVE-2016-7908.
+To be clear, are you saying that running GraphicsMagick code on a host
+that is whitelisted in someone's IP address ACL, has access to a LAN
+where the wider Internet does not, or has private services on the
+loopback interface is not a supported situation?
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Is there a subset of "safe" image formats that is known not to induce
+these requests, and where they *would* be considered to be a bug?  I would
+be surprised if this happened when resizing or manipulating common bitmap
+formats like JPEG, PNG, GIF, BMP, and one of the mitigations recommended
+on imagetragick.com has been to limit the formats that will be accepted.
 
-iQIcBAEBCAAGBQJX8mkIAAoJEHb/MwWLVhi2JYoP/3+0IfxTkbFklvyaC8xBr/WW
-LOk4tonp6F9z+camxOsWlHoIMMJgJ8J8L2qgfVGspdtSHkG+d3XSJ7r287aftPiq
-raCjWOW8vpVS9YgE60K04VJTqOBwepq25okTngZenmFX4SgqdR4WdETTNoyXgssS
-Qmh5PR2zVLuQ/ZJgoYvL9rjnEGWjwXtaxCi4OwFLrcvU7NmxEP9vRi4l73a81qbU
-i6KkzJDzYmhGe2RRWGkTkCdsDEf85n8E6lHTN1u7JQ4j3AN1EbF9J6xZxhvwXmna
-wB8QMWYx1l/TNePFvw6fIwnTApmeetAlsPrkxSJ/zp0g4vFSOP6ApG4Y962yiTdP
-WuPU14aqHxY5Qqwj5rSCjuxUoKFWUaXovIpiTi3BsnGO8+4iuPOkzh1yLvdI+XIU
-3Hhk/oTcfutLbsQ+Dx762D/mP5iH49PDgaqq8zsPbhUmxMycaWAQQi35T195TW2q
-euMcc+MNzkLrDxwTpCqzVsJYewTmYzyE/LJXi93wxphkYmAV6qhipTw2iqiFkOrf
-DiNnJwLILlr3suNbZwBfoMLwa3ynoUjbk5Zw6Qcp3U5QFOGbM0THRI3yCIB8m6u1
-D4tru7IyKkjeV2p05Vv/Ollo3DvHetwN7cOo9D8mr+fRLngeNC6U0cgPX1mo9qvs
-pzZ1pgv1R0dLJsp5F7yN
-=1UlC
------END PGP SIGNATURE-----
+> 4. CVE-2016-3716 - File moving
+> 
+>     This is a two-factor attack and is actually file copying.  It is
+>     not successful using GraphicsMagick.  MSL is an XML-based "script"
+>     format which should never be allowed to be submitted and invoked
+>     by an untrusted party.
+
+Is there any situation where GraphicsMagick will interpret a file of
+unspecified format as MSL, for instance recognizing it by extension or
+magic number?
+
+Thanks,
+    S
