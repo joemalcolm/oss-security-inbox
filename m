@@ -1,51 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/28/6
-Message-Id: <20160628150056.1C1B7332021@smtpvbsrv1.mitre.org>
-Date: Tue, 28 Jun 2016 11:00:56 -0400 (EDT)
-From: cve-assign@...re.org
-To: meissner@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, tiwai@...e.de
-Subject: Re: CVE Request: integer overflow in ALSA snd_compress_check_input
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/15
+Message-ID: <alpine.GSO.2.20.1605091454420.27960@freddy.simplesystems.org>
+Date: Mon, 9 May 2016 15:03:40 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: oss-security@...ts.openwall.com
+Subject: Re: GraphicsMagick Response To "ImageTragick"
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Mon, 9 May 2016, Simon McVittie wrote:
+>
+> Great. Is there an API that can be used to say "load this arbitrary file,
+> but only if it is in a format that is considered entirely safe"?
 
-> but there was no 2012 CVE assignment to the original fixing commit b35cc8225845 as far as I see:
-> 
-> commit b35cc8225845112a616e3a2266d2fde5ab13d3ab
-> Author: Dan Carpenter <dan.carpenter@...cle.com>
-> Date:   Wed Sep 5 15:32:18 2012 +0300
-> 
->     ALSA: compress_core: integer overflow in snd_compr_allocate_buffer()
->     
->     These are 32 bit values that come from the user, we need to check for
->     integer overflows or we could end up allocating a smaller buffer than
->     expected.
+In GraphicsMagick, defining the environment variable 
+MAGICK_CODER_STABILITY=PRIMARY before running the will block out quite 
+a lot of functionality (including SVG/MVG/MSL) but nothing can be 
+considered entirely safe.
 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b35cc8225845112a616e3a2266d2fde5ab13d3ab
+> I think the reason people are surprised and concerned to read about the
+> MVG and MSL scripting languages is that they enter *Magick through the
+> same APIs that open "safe" image files, blurring the boundary between
+> "open a file" and "execute a script". If the entry point into executing
+> MVG/MSL scripts was named more like ExecuteScript(), as opposed to
+> ReadImage(), then I don't think anyone would object to MVG and MSL
+> files having arbitrary code execution capabilities.
 
-Use CVE-2012-6703.
+It is likely that the *Magick name was coined from the header of XPM 
+files which playfully use the word "magick" as part of the header that 
+programs would use for header magic testing.  This sets the stage for 
+the automatic things that the software is doing.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+In GraphicsMagick, the automatic scary stuff is all done within one 
+function so it is reasonable to develop a less magical mode which is 
+less likely to dispatch to a file reader for an archaic file format 
+which stopped being used in 1993.
 
-iQIcBAEBCAAGBQJXcpCGAAoJEHb/MwWLVhi2aMYP/j9JEZplRgptXAOO/yVII9Bd
-sUd/mJuGgc9HRMzppMPhu8GLjA0IIG1Ms0T3OL37ESBGOqKAMaWQO2E1WNl61igq
-QzrZGE6t8aYLoP4rESXWmSbZ2QQHxKpXfre48Uaek/Flc4sVMeCW0TfwZANv5CEB
-mdLLpDNDDpgUWDzAE27PG1+zSJoE+aI+HM72rKfRYTpSmzqcGbA7rxGB+/8whkVO
-yaUeIRrZ1Tn8m320+HEA7pfUF48cS5i5RCir99eViLhXlk1rTDDrHUYxhnD9cSi0
-dR9JZNLfPNhJKjAe/NjqnsLVLk97wKGP0vKnSvm9TSt26DGeg99jEelc073/tGIR
-xEgcnSZ8enle+O6T1nJFykOKolujeqzzu2AApZTSTs4uofLPl0pnIptfaC+j4Vxv
-0Myl38AzITonRBMVQprhcKg3A5AF+dMdZeRycwZauVTy4q6AgfHnLo0ahpDD515U
-T2a+2W8Yo3n8b/GDN8P4HGvo7rrVuyMyVyT53U0qgdz2Ls6qQX9Z0pAHINRJNujD
-BJivsm49vw9NnzDo0opxh9fiO3MLoT/4lot//c1NyBvEaJzrOAMic6MthYFaIGSI
-lTE796ibKjdk6v3G6YdQs5vug2HvFe4I8yYl1OPwF4Qb29DzkQ52rPT1GezD/nJA
-Avd/cqOXOsknyoDGR5k5
-=J3ot
------END PGP SIGNATURE-----
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
