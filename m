@@ -1,55 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/6
-Message-ID: <20160916150053.76622e04@hboeck.de>
-Date: Fri, 16 Sep 2016 15:00:53 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Out of bounds heap bugs in glib, heap buffer overflow in gnome-session
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/16
+Message-Id: <20160509232519.6082F52E015@smtpvbsrv1.mitre.org>
+Date: Mon,  9 May 2016 19:25:19 -0400 (EDT)
+From: cve-assign@...re.org
+To: gustavo.grieco@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE requested: two stack exhaustation parsing xml files using mxml
 Content-Type: text/plain; charset=utf-8
 
-https://blog.fuzzing-project.org/53-Out-of-bounds-heap-bugs-in-glib,-heap-buffer-overflow-in-gnome-session.html
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-By testing GNOME-related packages with Address Sanitizer I recently
-discovered several trivial to find bugs.
+> We found two stack exhaustion conditions that can easily crash mxml
+> when parsing an xml.
 
-Two out of bounds bugs in the glib library were uncovered by running
-the test suite with Address Sanitizer enabled. One heap buffer overflow
-in the parameter parsing of gnome-session was uncovered by trying to
-start GNOME. Given that these bugs weren't discovered earlier means
-that most likely nobody ever used Address Sanitizer to test GNOME
-components.
-
-I strongly recommend to GNOME and to other software communities to use
-Address Sanitizer testing in order to improve the quality of their
-software.
-
-Out of bounds read in g_unichar_iswide_bsearch() / glib
-https://bugzilla.gnome.org/show_bug.cgi?id=766211
-Upstream bug report (again reported here)
-https://git.gnome.org/browse/glib/commit/?id=bcbd8d7
-Commit / fix
-Fixed in 2.48.2.
-
-Out of bounds read in token_stream_prepare() / glib
-https://bugzilla.gnome.org/show_bug.cgi?id=762417
-Upstream bug report
-https://git.gnome.org/browse/glib/commit/glib/gvariant-parser.c?id=aead1c046dd39748cca449b55ec300ba5f025365
-Commit / fix
-Fixed in 2.48.0.
-
-Heap buffer overflow in gnome-session
-https://bugzilla.gnome.org/show_bug.cgi?id=768441
-Upstream bug report
-https://git.gnome.org/browse/gnome-session/commit/?h=gnome-3-20&id=634ab70d9f03b1650be4b8259091ca3036f0fbf9
-Commit / fix
-Fixed in 3.20.2.
+(The two example XML documents seem dissimilar. For example,
+stack-exhaustion-2.xml starts with "<?xml" whereas
+stack-exhaustion-1.xml does not.)
 
 
--- 
-Hanno Böck
-https://hboeck.de/
+> Recursion using mxmlDelete at mxml-node.c:217 (stack-exhaustion-1.xml)
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Use CVE-2016-4570.
 
-Content of type "application/pgp-signature" skipped
+
+> Recursion using mxml_write_node at mxml-file.c:2739 (stack-exhaustion-2.xml)
+
+Use CVE-2016-4571.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXMRwEAAoJEHb/MwWLVhi2WDIP/jQvTGHSQ5QKY3VfTq5WaVji
+Ykggk/CpRwh8z7Cf3xPdNkWv4dUXh8mG0f7w7hJNiVMP7wywinNUh9mLCorwKdkQ
+4I8dQxKdF3OaGXnGHQxBKnQTRGZJmgNVs+ShQKOQIPxlC7F+fd5XF3kz8yC6oCdc
+hfiGkKH0p987wDExPluTuztFNmGrYpEPt22i644dDw7GegtvG0Fm7D5V6SsxTIsI
+SYztQnZod9S/MmgKRrThakIKr9/uzFTDEcCiOVlJwBAdiKaPjO3CZMgSiINHXicU
+75fNVh67FKFJDIYe4jRASdMabRgnVSLZdXP/VTcBo3lJa8A6v5wnhXn0HbPx0NPL
+P/sfs29Q6WV5Ean9uGCWqGi2ME3420xUFSu0/0xo4ewaj5QKPoQOJJM2tEy6U3wS
+uWmjYfh0K6wxUT7oQCo9Itlf/utgJqSA75K4J1UFfjbKNqKamA/hcCNcHmSzVSxK
+cBItGvGPDH+OjYA61wIOJt6PVwuSPGpcXpZPUG95t6eNXVjoSsbKAXfZbotbE5xd
+k02vrTth2t4rYwgbjfVJ2eYnW8yE42XGKzDzVTd01mohUNxXl8WzE2YPyYu6g6fx
+oXuGPZlUVtPuYjy6rLSGZ3VQoi7JUwOp4raUGHM5EVFhLCHDCzOt2quyxwqJ9omR
+o07Fd42eg20ZAHDPfcoS
+=/ZGU
+-----END PGP SIGNATURE-----
