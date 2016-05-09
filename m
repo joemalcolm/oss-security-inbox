@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["752" "Wednesday" "25" "May" "2016" "18:04:14" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1605251802140.15974@wniryva>" "24" "[oss-security] CVE Request Qemu: scsi: megasas: out-of-bounds read in megasas_lookup_frame() function" nil nil nil "5" "2016052512:34:14" "[oss-security] CVE Request Qemu: scsi: megasas: out-of-bounds read in megasas_lookup_frame() function" (number mark "U       ppandit@redh May 25   24/752   " thread-indent "\"[oss-security] CVE Request Qemu: scsi: megasas: out-of-bounds read in megasas_lookup_frame() function\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["937" "Sunday" "8" "May" "2016" "19:48:49" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1605081939480.23612@freddy.simplesystems.org>" "21" "[oss-security] GraphicsMagick Response To \"ImageTragick\"" "^Date:" nil nil "5" "2016050900:48:49" "[oss-security] GraphicsMagick Response To \"ImageTragick\"" (number mark "        bfriesen@sim May  8   21/937   " thread-indent "\"[oss-security] GraphicsMagick Response To \"ImageTragick\"\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 12145 invoked by uid 550); 25 May 2016 12:34:35 -0000
+Received: (qmail 13781 invoked by uid 550); 9 May 2016 00:49:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,42 +11,37 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12127 invoked from network); 25 May 2016 12:34:34 -0000
-Date: Wed, 25 May 2016 18:04:14 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Li Qiang <liqiang6-s@360.cn>
-Message-ID: <alpine.LFD.2.20.1605251802140.15974@wniryva>
+Received: (qmail 13719 invoked from network); 9 May 2016 00:49:02 -0000
+X-X-Sender: bfriesen@freddy.simplesystems.org
+Message-ID: <alpine.GSO.2.20.1605081939480.23612@freddy.simplesystems.org>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Wed, 25 May 2016 12:34:22 +0000 (UTC)
-Subject: [oss-security] CVE Request Qemu: scsi: megasas: out-of-bounds read in megasas_lookup_frame()
- function
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Sun, 08 May 2016 19:48:49 -0500 (CDT)
+Date: Sun, 8 May 2016 19:48:49 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] GraphicsMagick Response To "ImageTragick"
+To: oss-security@lists.openwall.com
 
-   Hello,
+The GraphicsMagick project response to the recent "ImageTragick" 
+(https://imagetragick.com/) exploits may be found in an email posted 
+to the GraphicsMagick announcements mail list and which may be found 
+archived here: 
+"https://sourceforge.net/p/graphicsmagick/mailman/message/35072963/".
 
-Quick Emulator(Qemu) built with the MegaRAID SAS 8708EM2 Host Bus Adapter 
-emulation support is vulnerable to an out-of-bounds read access issue. It 
-could occur while looking up MegaRAID Firmware Interface(MFI) command frames 
-in 'megasas_lookup_frame' routine.
+The most important concern noted is that a shell exploit is possible 
+via the "gplt" entry in the delegates.mgk file.  While GraphicsMagick 
+does escape individual Unix shell arguments appropriately, the gnuplot 
+load request can be used to invoke gnuplot's system() command.  The 
+mere existence of a system() command makes gnuplot files entirely 
+unsecure and it is a very dangerous format.
 
-A privileged user inside guest could use this flaw to read invalid memory 
-leading to crash the Qemu process on the host.
+Unfortunately, I see that SourceForge converted the several patches 
+into MS-DOS format.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04424.html
-
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1336461
-
-This issue was discovered by Li Qiang of 360.cn Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
