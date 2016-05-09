@@ -1,46 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/2
-Message-ID: <CADSYzssdZ5k5H92mOKaLHE38Db0har=n4azHZeNosC-wsr55dw@mail.gmail.com>
-Date: Mon, 10 Oct 2016 04:32:57 -0300
-From: Dawid Golunski <dawid@...alhackers.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/9
+Message-ID: <alpine.GSO.2.20.1605091330140.27960@freddy.simplesystems.org>
+Date: Mon, 9 May 2016 13:53:28 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2016-5425 - Apache Tomcat packaging on RedHat-based distros - Root Privilege Escalation (affecting CentOS, Fedora, OracleLinux, RedHat etc.)
+Subject: Re: GraphicsMagick Response To "ImageTragick"
 Content-Type: text/plain; charset=utf-8
 
-Vulnerability: Apache Tomcat packaging on RedHat-based distros
+On Mon, 9 May 2016, Simon McVittie wrote:
+>
+>> 2. CVE-2016-3718 - SSRF
+>>
+>>    GraphicsMagick has always supported HTTP and FTP URL requests from
+>>    the context of the executing process if it is linked with libxml2.
+>>    There is no sandboxing or policy to determine which HTTP and FTP
+>>    URLs should be allowed/denied because they should only be available
+>>    from outside the system, or in the public space outside
+>>    a "firewall".
+>
+> I'm not sure whether I'm understanding "because they should..."
+> correctly.
+>
+> To be clear, are you saying that running GraphicsMagick code on a host
+> that is whitelisted in someone's IP address ACL, has access to a LAN
+> where the wider Internet does not, or has private services on the
+> loopback interface is not a supported situation?
 
-CVE-2016-5425
+The SVG and MVG formats are able to submit http and ftp URL requests. 
+The allowed URLs are not restricted by policy as they would be if SVG 
+was running in a web browser.  My point is that the URLs are requested 
+from the perspective of the user id and host where the process is 
+running.  If this is on the back-side of a firewall, then it may be 
+possible to access URLs which otherwise could not be accessed.
 
-Discovered by:
-Dawid Golunski (http://legalhackers.com)
+> Is there a subset of "safe" image formats that is known not to induce
+> these requests, and where they *would* be considered to be a bug?  I would
+> be surprised if this happened when resizing or manipulating common bitmap
+> formats like JPEG, PNG, GIF, BMP, and one of the mitigations recommended
+> on imagetragick.com has been to limit the formats that will be accepted.
 
-Affected systems: Multiple Tomcat packages on RedHat-based systems
-including: CentOS,Fedora,OracleLinux,RedHat etc.
+Outside of the utilities themselves, or applications based on the 
+libraries, only SVG, MVG, and MSL (Magick Scripting Language) are able 
+to submit URL requests.  MSL should be viewed as a scripting format 
+rather than being a file format.
 
-Short Description:
+>> 4. CVE-2016-3716 - File moving
+>>
+>>     This is a two-factor attack and is actually file copying.  It is
+>>     not successful using GraphicsMagick.  MSL is an XML-based "script"
+>>     format which should never be allowed to be submitted and invoked
+>>     by an untrusted party.
+>
+> Is there any situation where GraphicsMagick will interpret a file of
+> unspecified format as MSL, for instance recognizing it by extension or
+> magic number?
 
-Apache Tomcat packages provided by default repositories of RedHat-based
-distributions (including CentOS, RedHat, OracleLinux, Fedora,  etc.)
-create a tmpfiles.d configuration file with insecure permissions which
-allow attackers who are able to write files with tomcat user permissions
-(for example, through a vulnerability in web application hosted on Tomcat)
-to escalate their privileges from tomcat user to root and fully compromise
-the target system.
+There is no detection of MSL by its header but the MSL reader will be 
+dispatched to by a .MSL extension.  It requires adding only one line 
+of code to block responding to the MSL extension.
 
-Full advisory and a working root privilege escalation exploit can be found
-at:
+There has been little mention of SVG, but in both GraphicsMagick and 
+ImageMagick the native SVG renderer works by pre-processing SVG into a 
+MVG file.  The MVG file is then executed.  The SVG pre-processor is 
+not very robust so it is possible to inject arbitrary strings from the 
+SVG into MVG, and (with correct quoting) insert new commands into the 
+MVG stream.  Due to this, MVG needs to behave securely while it is 
+executing MVG delivered from SVG.  Otherwise it is my opinion that MVG 
+is an internal implementation format (not a file exchange format) 
+which should be allowed to support extensions peculiar to 
+GraphicsMagick and is not a scary dangerous thing.
 
-http://legalhackers.com/advisories/Tomcat-RedHat-Pkgs-Root-PrivEsc-Exploit-CVE-2016-5425.html
+The focus of https://imagetragick.com/ on MVG has brought attention to 
+it, and tarnished its reputation, but (provided it is not executed by 
+default) the focus should be on assuring that formats assumed to be 
+secure (e.g. SVG and WMF) are read/rendered securely.
 
-
-BTW. If you are using Tomcat on a Debian-based distro,  you may want
-to check out
-my previous Tomcat advisory and exploit at:
-
-http://legalhackers.com/advisories/Tomcat-DebPkgs-Root-Privilege-Escalation-Exploit-CVE-2016-1240.html
-
-
+Bob
 -- 
-Regards,
-Dawid Golunski
-http://legalhackers.com
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
