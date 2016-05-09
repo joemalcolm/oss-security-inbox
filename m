@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1149" "Sunday" "6" "January" "2019" "07:23:52" "+0100" "=?UTF-8?B?SmVhbi1CYXB0aXN0ZSBPbm9mcsOp?=" "jb@nanthrax.net" "<1c9e7212-f8a7-04b2-a956-17f7bce8c3bb@nanthrax.net>" "40" "[oss-security] [SECURITY] New security advisory for CVE-2018-11788 released for Apache Karaf" "^Date:" nil nil "1" "2019010606:23:52" "[oss-security] [SECURITY] New security advisory for CVE-2018-11788 released for Apache Karaf" (number mark "        jb@nanthrax. Jan  6   40/1149  " thread-indent "\"[oss-security] [SECURITY] New security advisory for CVE-2018-11788 released for Apache Karaf\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3921" "Monday" "9" "May" "2016" "20:33:55" "+0100" "Simon McVittie" "smcv@debian.org" "<20160509193355.GA11234@perpetual.pseudorandom.co.uk>" "75" "Re: [oss-security] GraphicsMagick Response To \"ImageTragick\"" "^Date:" nil nil "5" "2016050919:33:55" "[oss-security] GraphicsMagick Response To \"ImageTragick\"" (number mark "        smcv@debian. May  9   75/3921  " thread-indent "\"Re: [oss-security] GraphicsMagick Response To \"ImageTragick\"\"\n") "<alpine.GSO.2.20.1605091330140.27960@freddy.simplesystems.org>" ("<alpine.GSO.2.20.1605090828220.23612@freddy.simplesystems.org>" "<20160509172045.GC9754@perpetual.pseudorandom.co.uk>" "<alpine.GSO.2.20.1605091330140.27960@freddy.simplesystems.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20108 invoked by uid 550); 6 Jan 2019 09:27:29 -0000
+Received: (qmail 15861 invoked by uid 550); 9 May 2016 19:34:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,94 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9601 invoked from network); 6 Jan 2019 06:24:04 -0000
-Message-ID: <1c9e7212-f8a7-04b2-a956-17f7bce8c3bb@nanthrax.net>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+Received: (qmail 15843 invoked from network); 9 May 2016 19:34:06 -0000
+Message-ID: <20160509193355.GA11234@perpetual.pseudorandom.co.uk>
+References: <alpine.GSO.2.20.1605090828220.23612@freddy.simplesystems.org>
+ <20160509172045.GC9754@perpetual.pseudorandom.co.uk>
+ <alpine.GSO.2.20.1605091330140.27960@freddy.simplesystems.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Date: Sun, 6 Jan 2019 07:23:52 +0100
-From: =?UTF-8?Q?Jean-Baptiste_Onofr=c3=a9?= <jb@nanthrax.net>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.GSO.2.20.1605091330140.27960@freddy.simplesystems.org>
+User-Agent: Mutt/1.6.0 (2016-04-01)
+Date: Mon, 9 May 2016 20:33:55 +0100
+From: Simon McVittie <smcv@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [SECURITY] New security advisory for CVE-2018-11788 released for
- Apache Karaf
-To: user@karaf.apache.org, Karaf Dev <dev@karaf.apache.org>,
- Apache Security Team <security@apache.org>, oss-security@lists.openwall.com,
- Brian Wang <brianwangrewa@gmail.com>
+Subject: Re: [oss-security] GraphicsMagick Response To "ImageTragick"
+To: oss-security@lists.openwall.com
 
-A new security advisory has been released for Apache Karaf, that is
-fixed in recent 4.1.7 and 4.2.2 releases.
+For context: I co-maintain ikiwiki, a wiki engine that uses the
+Image::Magick Perl bindings to resize potentially-attacker-supplied images
+(although I'm considering supporting both, and potentially trying to load
+Graphics::Magick first). I suspect that many ImageMagick and GraphicsMagick
+users are in an analogous situation.
 
-CVS-2018-11788: XXE vulnerability found on Apache Karaf
+On Mon, 09 May 2016 at 13:53:28 -0500, Bob Friesenhahn wrote:
+> The SVG and MVG formats are able to submit http and ftp URL requests. The
+> allowed URLs are not restricted by policy as they would be if SVG was
+> running in a web browser.  My point is that the URLs are requested from the
+> perspective of the user id and host where the process is running.  If this
+> is on the back-side of a firewall, then it may be possible to access URLs
+> which otherwise could not be accessed.
 
-Severity: Moderate
+Thanks for clarifying!
 
-Vendor: The Apache Software Foundation
+> Outside of the utilities themselves, or applications based on the libraries,
+> only SVG, MVG, and MSL (Magick Scripting Language) are able to submit URL
+> requests.  MSL should be viewed as a scripting format rather than being a
+> file format.
 
-Versions Affected: all versions of Apache Karaf prior to 4.1.7, 4.2.2.
+Great. Is there an API that can be used to say "load this arbitrary file,
+but only if it is in a format that is considered entirely safe"?
+(Safe in the sense that it isn't vulnerable to SSRF, doesn't perform
+arbitrary actions like MSL does, can't recurse into a separate
+resource that might not be safe, and so on, in a way that won't
+become insecure by the addition of another format.)
 
-Description:
+At the moment my mitigation for these vulnerabilities is refusing to
+resize images that don't end with .jpg .jpeg .png or .gif, refusing
+to resize images that have one of those extensions but don't have the
+matching magic number, and invoking ImageMagick APIs with an argument
+like "jpeg:myfile.jpg" to force the use of the expected coder. This
+doesn't seem like something that every developer is going to get right
+in practice.
 
-Apache Karaf provides a features deployer, which allows users to "hot
-deploy"
-a features XML by dropping the file directly in the deploy folder.
+> > >     MSL is an XML-based "script"
+> > >     format which should never be allowed to be submitted and invoked
+> > >     by an untrusted party.
+> > 
+> > Is there any situation where GraphicsMagick will interpret a file of
+> > unspecified format as MSL, for instance recognizing it by extension or
+> > magic number?
+> 
+> There is no detection of MSL by its header but the MSL reader will be
+> dispatched to by a .MSL extension.  It requires adding only one line of code
+> to block responding to the MSL extension.
 
-The features XML is parsed by XMLInputFactory class.
+I think it might be necessary to add that one line of code, if rendering a
+SVG that contains <xi:include> directives can result in interpreting
+an accompanying .msl script. On the other hand, if SVGs are open to SSRF
+by design, many services will need to avoid processing an attacker-supplied
+SVG anyway, so perhaps the set of services that are willing to process SVGs
+from untrusted users is negligible...
 
-Apache Karaf XMLInputFactory class doesn't contain any mitigation codes
-against XXE.
-This is a potential security risk as an user can inject external XML
-entities.
+> The focus of https://imagetragick.com/ on MVG has brought attention to it,
+> and tarnished its reputation, but (provided it is not executed by default)
+> the focus should be on assuring that formats assumed to be secure (e.g. SVG
+> and WMF) are read/rendered securely.
 
-The mitigation is to prevent XXE by disabling external entities loading
-feature
-in XMLInputFactory and XmlUtils.
+I think the reason people are surprised and concerned to read about the
+MVG and MSL scripting languages is that they enter *Magick through the
+same APIs that open "safe" image files, blurring the boundary between
+"open a file" and "execute a script". If the entry point into executing
+MVG/MSL scripts was named more like ExecuteScript(), as opposed to
+ReadImage(), then I don't think anyone would object to MVG and MSL
+files having arbitrary code execution capabilities.
 
-This has been fixed in revision:
+It's the same concern as when office suites' document formats gain support
+for auto-running macros when opened, or when operating systems start
+auto-running scripts and executables when removable media are inserted -
+an action that was previously considered to be mostly safe to perform
+on untrusted content unexpectedly becomes an act of trust.
 
-https://gitbox.apache.org/repos/asf?p=karaf.git;h=cc3332e
-https://gitbox.apache.org/repos/asf?p=karaf.git;h=1ffa6d1
-
-Mitigation: Apache Karaf users should upgrade to 4.1.7, 4.2.2
-or later as soon as possible.
-
-JIRA Tickets: https://issues.apache.org/jira/browse/KARAF-5911
-
-Credit: This issue was reported by Brian Wang.
-
+    S
