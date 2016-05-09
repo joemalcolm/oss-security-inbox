@@ -1,4 +1,9 @@
-Received: (qmail 26533 invoked by uid 550); 31 Dec 2025 19:54:11 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3565" "Monday" "9" "May" "2016" "13:53:28" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1605091330140.27960@freddy.simplesystems.org>" "73" "Re: [oss-security] GraphicsMagick Response To \"ImageTragick\"" "^Date:" nil nil "5" "2016050918:53:28" "[oss-security] GraphicsMagick Response To \"ImageTragick\"" (number mark "        bfriesen@sim May  9   73/3565  " thread-indent "\"Re: [oss-security] GraphicsMagick Response To \"ImageTragick\"\"\n") "<20160509172045.GC9754@perpetual.pseudorandom.co.uk>" ("<alpine.GSO.2.20.1605090828220.23612@freddy.simplesystems.org>" "<20160509172045.GC9754@perpetual.pseudorandom.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 27662 invoked by uid 550); 9 May 2016 18:53:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,52 +11,91 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 18310 invoked from network); 31 Dec 2025 13:49:03 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Tomasz Cedro <cederom@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <d79af7d6-b4de-d582-eee5-e57afcf83b9d@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 31 Dec 2025 13:48:51 +0000
+Received: (qmail 26612 invoked from network); 9 May 2016 18:53:40 -0000
+X-X-Sender: bfriesen@freddy.simplesystems.org
+In-Reply-To: <20160509172045.GC9754@perpetual.pseudorandom.co.uk>
+Message-ID: <alpine.GSO.2.20.1605091330140.27960@freddy.simplesystems.org>
+References: <alpine.GSO.2.20.1605090828220.23612@freddy.simplesystems.org> <20160509172045.GC9754@perpetual.pseudorandom.co.uk>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-48769: Apache NuttX RTOS: fs/vfs/fs_rename: use after
- free 
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Mon, 09 May 2016 13:53:28 -0500 (CDT)
+Date: Mon, 9 May 2016 13:53:28 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] GraphicsMagick Response To "ImageTragick"
+To: oss-security@lists.openwall.com
 
-Severity: moderate=20
+On Mon, 9 May 2016, Simon McVittie wrote:
+>
+>> 2. CVE-2016-3718 - SSRF
+>>
+>>    GraphicsMagick has always supported HTTP and FTP URL requests from
+>>    the context of the executing process if it is linked with libxml2.
+>>    There is no sandboxing or policy to determine which HTTP and FTP
+>>    URLs should be allowed/denied because they should only be available
+>>    from outside the system, or in the public space outside
+>>    a "firewall".
+>
+> I'm not sure whether I'm understanding "because they should..."
+> correctly.
+>
+> To be clear, are you saying that running GraphicsMagick code on a host
+> that is whitelisted in someone's IP address ACL, has access to a LAN
+> where the wider Internet does not, or has private services on the
+> loopback interface is not a supported situation?
 
-Affected versions:
+The SVG and MVG formats are able to submit http and ftp URL requests. 
+The allowed URLs are not restricted by policy as they would be if SVG 
+was running in a web browser.  My point is that the URLs are requested 
+from the perspective of the user id and host where the process is 
+running.  If this is on the back-side of a firewall, then it may be 
+possible to access URLs which otherwise could not be accessed.
 
-- Apache NuttX RTOS 7.20 before 12.11.0
+> Is there a subset of "safe" image formats that is known not to induce
+> these requests, and where they *would* be considered to be a bug?  I would
+> be surprised if this happened when resizing or manipulating common bitmap
+> formats like JPEG, PNG, GIF, BMP, and one of the mitigations recommended
+> on imagetragick.com has been to limit the formats that will be accepted.
 
-Description:
+Outside of the utilities themselves, or applications based on the 
+libraries, only SVG, MVG, and MSL (Magick Scripting Language) are able 
+to submit URL requests.  MSL should be viewed as a scripting format 
+rather than being a file format.
 
-Use After Free vulnerability was discovered in fs/vfs/fs_rename code of the=
- Apache NuttX RTOS, that due recursive implementation and single buffer use=
- by two different pointer variables allowed arbitrary user provided size bu=
-ffer reallocation and write to the previously freed heap chunk, that in spe=
-cific cases could cause unintended virtual filesystem rename/move operation=
- results.
+>> 4. CVE-2016-3716 - File moving
+>>
+>>     This is a two-factor attack and is actually file copying.  It is
+>>     not successful using GraphicsMagick.  MSL is an XML-based "script"
+>>     format which should never be allowed to be submitted and invoked
+>>     by an untrusted party.
+>
+> Is there any situation where GraphicsMagick will interpret a file of
+> unspecified format as MSL, for instance recognizing it by extension or
+> magic number?
 
-This issue affects Apache NuttX RTOS: from 7.20 before 12.11.0.
+There is no detection of MSL by its header but the MSL reader will be 
+dispatched to by a .MSL extension.  It requires adding only one line 
+of code to block responding to the MSL extension.
 
-Users of virtual filesystem based services with write access especially whe=
-n exposed over the network (i.e. FTP) are affected and recommended to upgra=
-de to version 12.11.0 that fixes the issue.
+There has been little mention of SVG, but in both GraphicsMagick and 
+ImageMagick the native SVG renderer works by pre-processing SVG into a 
+MVG file.  The MVG file is then executed.  The SVG pre-processor is 
+not very robust so it is possible to inject arbitrary strings from the 
+SVG into MVG, and (with correct quoting) insert new commands into the 
+MVG stream.  Due to this, MVG needs to behave securely while it is 
+executing MVG delivered from SVG.  Otherwise it is my opinion that MVG 
+is an internal implementation format (not a file exchange format) 
+which should be allowed to support extensions peculiar to 
+GraphicsMagick and is not a scary dangerous thing.
 
-Credit:
+The focus of https://imagetragick.com/ on MVG has brought attention to 
+it, and tarnished its reputation, but (provided it is not executed by 
+default) the focus should be on assuring that formats assumed to be 
+secure (e.g. SVG and WMF) are read/rendered securely.
 
-Liu, Richard Jiayang <rjliu3@illinois.edu> (finder)
-Liu, Richard Jiayang <rjliu3@illinois.edu> (remediation developer)
-Tomek CEDRO <cederom@apache.org> (coordinator)
-Xiang Xiao <xiaoxiang@apache.org> (remediation reviewer)
-Jiuzhu Dong <jiuzhudong@apache.org> (remediation reviewer)
-
-References:
-
-https://github.com/apache/nuttx/pull/16455
-https://nuttx.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2025-48769
-
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
