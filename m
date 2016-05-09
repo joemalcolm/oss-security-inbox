@@ -1,51 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/13
-Message-ID: <CANO=Ty0yD+DmmeqC3dS2u=4+QNawqt6OJjyXRW2x1pqid=S5tQ@mail.gmail.com>
-Date: Tue, 18 Oct 2016 13:19:26 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Huzaifa Sidhpurwala <huzaifas@...hat.com>, CVE ID Requests <cve-assign@...re.org>
-Subject: Re: Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/4
+Message-ID: <alpine.LFD.2.20.1605091734040.23120@wniryva>
+Date: Mon, 9 May 2016 17:40:04 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Michael Roth <mdroth@...ux.vnet.ibm.com>, Peter Maydell <peter.maydell@...aro.org>, Gerd Hoffmann <ghoffman@...hat.com>, Stefano Stabellini <sstabellini@...nel.org>, zuozhi.fzz@...baba-inc.com
+Subject: CVE-2016-3712 Qemu: vga: out-of-bounds read and integer overflow issues
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 12, 2016 at 1:46 PM, Paul Wouters <pwouters@...hat.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->
->
-> I have tested openswan and strongswan and confirmed it contains the same
-> amplification that is inherent in being IKEv1 compliant.
->
-> Neither implementation has applied the hardening that libreswan has
-> applied for this that was the original information that caused
-> CVE-2016-5361 to be issued for libreswan.
->
-> I believe MITRE needs to fix the inconsistency in the issuance of
-> CVE-2016-5361, expand it to be about the IKEv1 protocol, and gather
-> the other vendor information and patches, or issue additional vendor
-> specific CVE's. I believe the first solution is better.
->
-> Paul
->
+   Hello,
 
-So I had a chance to talk to Paul
+An out-of-bounds read and integer overflow issue was reported in the Qemu 
+emulator's VGA module.
 
-Basically: the RFC doesn't define a specific way to handle this, as such a
-CVE cannot be given to the RFC (currently CVEs will be given to
-RFCs/protocols that say "do something bad" like using weak encryption
-algorithms).
+Qemu VGA module allows guest to edit certain registers in 'vbe' and 'vga' 
+modes. ie. guest could set certain 'VGA' registers while in 'VBE' mode. This 
+leads to potential integer overflow or OOB read access issues in Qemu, 
+resulting in DoS by crashing the Qemu process on the host. (Moderate)
 
-As such it was left up to all the IKE implementations themselves to
-determine what to do with respect to retransmits.
+A privileged guest user could use this flaw to crash the Qemu process on the 
+host.
 
-I think it's safe to say an amplification of 1:10 or more qualifies as a
-problem, I'm not sure what the exact amplification ratio to qualify for a
-CVE is (1:3, 1:7?) but I think 1:10 or more should definitely qualify.
+'CVE-2016-3712' has been assigned to this issue by Red Hat Inc. Patches are 
+attached herein to help fix this issue.
 
-Thus a lot of other IKE implementations will be needing CVEs for this class
-of problem (as well as other protocols).
+This issue was discovered and reported by Zuozhi Fzz of Alibaba Inc.
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJXMH4cAAoJEN0TPTL+WwQfJQ8QAIskTPJjmQ5o2OMyIgTrFlTe
+suLiD/qRFInd/MpgeICalqVRBzxh5FdOUJWXCoDUbogPLdZ2LmUHBXL/LyjDK01O
+R118M3HYUxWGowPf5Jh+ir4/IPSZamTn0LFZAJCrwWW9dmdqcbnoClDxBm6wsDJD
+4uzYmYoHogQZ4DVVL8k9kRrQ1yIkftvwoYZCXN6ToikvXcbJxJdDnc5jQ9W/ABGV
+fAfJfsG1zbq2fXagfy+ChKJANse525TAKpTmTZXcZWyoE7JrIUFNFIsWWaBpuJdp
+yqj+T8EF0bDz2DxJlmlILkpqg48EaEFJlKBg0jlR8/hkNyl1wgEX+Y/C7mgJd2Om
+Dipwkk/G4/izUWls+IZijWeZ2Ge1ul4QG+sM0/InnYhTuyhq3Cw8E8Nt+ZOJHBKj
+/KOEYYPr7/QEIC41LKVatN2W5ai6mOSkiGD6qIuIvuR3dPhz7qhFZAML/1KAooAs
+QOTPxjqxuMvDUm4+KAF598WY+3UFpDeIF0LExc1bhrvEcrjlhC7ypm02d5WaOk26
+wkJQ4hJcbHRs/4vp8mMkpTdz8ccjzfbz3GI1GmSsxN5EbdLW4+r8xgGXZ0o0jwpX
+JJHtq1wikxab5+rgC/03oDlGcL2AtD7FvDJtcyGEl+5raDguwNrAuKZoF1cBnTVg
+MDzQ2/zuFdeJbIWydjL9
+=xwOS
+-----END PGP SIGNATURE-----
+View attachment "0005-vga-make-sure-vga-register-setup-for-vbe-stays-intac.patch" of type "text/plain" (2873 bytes)
+
+View attachment "0004-vga-update-vga-register-setup-on-vbe-changes.patch" of type "text/plain" (948 bytes)
+
+View attachment "0003-vga-factor-out-vga-register-setup.patch" of type "text/plain" (5241 bytes)
+
+View attachment "0002-vga-add-vbe_enabled-helper.patch" of type "text/plain" (2163 bytes)
