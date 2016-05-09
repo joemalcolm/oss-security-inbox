@@ -1,110 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/21
-Message-ID: <2093176.kk87qeuY9I@arcadia>
-Date: Tue, 22 Nov 2016 17:52:54 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: metapixel: heap-based buffer overflow in open_gif_file (rwgif.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/3
+Message-ID: <alpine.LFD.2.20.1605091724170.23120@wniryva>
+Date: Mon, 9 May 2016 17:33:28 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Michael Roth <mdroth@...ux.vnet.ibm.com>, Peter Maydell <peter.maydell@...aro.org>, Gerd Hoffmann <ghoffman@...hat.com>, Stefano Stabellini <sstabellini@...nel.org>, Qinghao Tang <luodalongde@...il.com>
+Subject: CVE-2016-3710 Qemu: vga: out-of-bounds r/w access issue
 Content-Type: text/plain; charset=utf-8
 
-Description:
-metapixel is a program for generating photomosaics.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-A fuzzing on metapixel-imagesize revealed an overflow. The latest upstream 
-release was about ten years ago, so I didn’t made any report. The bug does not 
-resides in any shared object which aren’t provided by the package. If you have 
-a web application which relies on the metapixel-imagesize binary, then you are 
-affected. Since the “READ of size 1” it may don’t warrant a CVE at all, but 
-some distros and packagers would have the bug fixed in their repository, so 
-I’m sharing it.
+    Hello,
 
-The complete ASan output:
+An out-of-bounds r/w access issue was reported in the Qemu emulator's VGA 
+module.
 
-# metapixel-imagesize $FILE
-==24883==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x60200000eff9 at pc 0x00000050edcf bp 0x7ffce3891f90 sp 0x7ffce3891f88
-READ of size 1 at 0x60200000eff9 thread T0
-    #0 0x50edce in open_gif_file /tmp/portage/media-gfx/metapixel-1.0.2-
-r1/work/metapixel-1.0.2/rwimg/rwgif.c:132:60
-    #1 0x50a4cd in open_image_reading /tmp/portage/media-gfx/metapixel-1.0.2-
-r1/work/metapixel-1.0.2/rwimg/readimage.c:88:9
-    #2 0x50a18b in main /tmp/portage/media-gfx/metapixel-1.0.2-
-r1/work/metapixel-1.0.2/imagesize.c:37:14
-    #3 0x7fcc5c3a861f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #4 0x41a1d8 in _init (/usr/bin/metapixel-imagesize+0x41a1d8)
+Qemu VGA module allows banked access to video memory using the window at 
+0xa00000 and it supports different access modes with different address 
+calculations. A privileged guest user could use this flaw to exceed the bank 
+address window and write beyond the said memory area, potentially leading to 
+arbitrary code execution with privileges of the Qemu process on a host. 
+(Important)
 
-0x60200000eff9 is located 3 bytes to the right of 6-byte region 
-[0x60200000eff0,0x60200000eff6)
-allocated by thread T0 here:
-    #0 0x4d3195 in calloc /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:72
-    #1 0x7fcc5d267392 in GifMakeMapObject /tmp/portage/media-
-libs/giflib-5.1.4/work/giflib-5.1.4/lib/gifalloc.c:55
+'CVE-2016-3710' has been assigned to this issue by Red Hat Inc. Patch attached 
+herein fixes this issue.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-
-gfx/metapixel-1.0.2-r1/work/metapixel-1.0.2/rwimg/rwgif.c:132:60 in 
-open_gif_file
-Shadow bytes around the buggy address:
-  0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9de0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x0c047fff9df0: fa fa fa fa fa fa fa fa fa fa 00 fa fa fa 06[fa]
-  0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==24883==ABORTING
+This issue was discovered and reported by "Wei Xiao and Qinghao Tang of 360 
+Marvel Team" of 360.cn Inc.
 
-Affected version:
-1.0.2
+They have named this issue as - "Dark Portal"
 
-Fixed version:
-N/A
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
-Commit fix:
-N/A
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00058-metapipxel-heapoverflow-open_gif_file
-
-Timeline:
-2016-11-22: bug discovered
-2016-11-22: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/22/metapixel-heap-based-buffer-overflow-in-open_gif_file-rwgif-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+iQIcBAEBAgAGBQJXMHyQAAoJEN0TPTL+WwQfnnIQAImX2cxVTrPmGrPwFC66di8N
+OIme91B7rFjFUQJ46Z+F3PmlsUsgDo9hwhg3VLOsQWeju06+C6fTV01dNvxL88re
+mE7S5uQTRwOs9tR/ojxIYlwq6FnPek4yISRo9VsiQi/d8QD4+IPxg4mRH6nP9O4M
+g9pYQrHAdKCGBsMmHUnIXJ5xamKO0oZMqJOfzZZUfZCDU3cy1p6pN6f2FVdgm7il
+5/A5YJpC3Qvz9AM8DZ2jJOrEXMqIGucjt5fggOTzq3eNely6+Q1EV4i96+U08PrM
+TeQqwNC1hEVSISpOKTM3V43XPnjpbbyb7SOMy2W4CCUq/NZTAQP9+HGzwarZ4IrF
+xeVqJyyT9zewPRBuQX7XpG6cgKpHP3RuS4cYprMLccugd9fvYire7adRGeGfO25c
+Rk3q1uSYWD4PkqalyprpjhXi85hQg2YbHRbc4Mjf1LAVExBYHoKb0vtZ0KnUXZTh
+4h9HYPH1NnVKConQFXtSVEkcBgTAOtgKgHjDM/rZ0xNPnKsi4yVmJhBqSpmZ5c4b
+VsnIggSpL0MtcDePKZN028a4bbkxdHUUCuADkBuNZSc5siBhzWFysO2CD5GaU7Qv
+ZWV1IkxXbyZUXGgTzASvrsLtyXmBrB8EfQivZc2nVJCO3fHS1vGMPz6ccNKmRVnQ
+T5mRyogkCnGI6B/lY8nj
+=zy94
+-----END PGP SIGNATURE-----
+View attachment "0001-vga-fix-banked-access-bounds-checking-CVE-2016-3710.patch" of type "text/plain" (4450 bytes)
