@@ -1,20 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/1
-Message-ID: <CAH8yC8k3dB68=n-t-7d+-nL8dVWzUOmwX8YZrO+1p+Dv2uv-Nw@mail.gmail.com>
-Date: Thu, 15 Sep 2016 18:11:47 -0400
-From: Jeffrey Walton <noloader@...il.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Does a documentation bug elevate to CVE status? - Crypto++
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/14
+Message-ID: <1462823339.4268.54.camel@opteya.com>
+Date: Mon, 09 May 2016 21:48:59 +0200
+From: Yann Droneaud <ydroneaud@...eya.com>
+To: oss-security@...ts.openwall.com
+Cc: Doug Ledford <dledford@...hat.com>, Red Hat Security Response Team <secalert@...hat.com>, Ben Hutchings <benh@...ian.org>,  linux-rdma@...r.kernel.org
+Subject: Re: CVE Request: Linux: IB/security: Restrict use of the write() interface'
 Content-Type: text/plain; charset=utf-8
 
-Damn, you guys are ruthless...
+Hi,
 
-The Crypto++ project is tracking this at
-https://github.com/weidai11/cryptopp/issues/277.
+Le samedi 07 mai 2016 à 06:22 +0200, Salvatore Bonaccorso a écrit :
+> 
+> Jann Horn reported an issue in the infiniband stack. It has been
+> fixed
+> in v4.6-rc6 with commit e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3:
+> 
+> https://git.kernel.org/linus/e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3
+> 
+> > 
+> > IB/security: Restrict use of the write() interface
+> > The drivers/infiniband stack uses write() as a replacement for
+> > bi-directional ioctl().  This is not safe. There are ways to
+> > trigger write calls that result in the return structure that
+> > is normally written to user space being shunted off to user
+> > specified kernel memory instead.
+> > 
+> > For the immediate repair, detect and deny suspicious accesses to
+> > the write API.
+> > 
+> > For long term, update the user space libraries and the kernel API
+> > to something that doesn't present the same security vulnerabilities
+> > (likely a structured ioctl() interface).
+> > 
+> > The impacted uAPI interfaces are generally only available if
+> > hardware from drivers/infiniband is installed in the system.
 
-Please make it a public bug/CVE. The Crypto++ project believe in
-complete transparency so decision makers can assess risk and and apply
-remediations commensurate with their data security posture.
+As a workaround, I would suggest that systems which do not require
+(userspace) RDMA/Infiniband to blacklist/remove the following modules:
 
-Jeffrey Walton on behalf of Crypto++ project.
+  rdma_ucm
+  ib_uverbs
+  ib_ucm
+  ib_umad
+
+For example, adds the following in /etc/modprobe.d/blacklist.conf
+
+  blacklist rdma_ucm
+  blacklist ib_uverbs
+  blacklist ib_ucm
+  blacklist ib_umad
+
+Those building their own kernel might want to disable, if not already,
+
+  CONFIG_INFINIBAND_USER_ACCESS, 
+  CONFIG_INFINIBAND_USER_MAD,
+  CONFIG_INFINIBAND_ADDR_TRANS
+
+(Unfortunately the last one will also disable those features:
+  iSCSI Extensions for RDMA (iSER)
+  iSCSI Extensions for RDMA (iSER) target support
+  RDS over Infiniband and iWARP
+  9P RDMA Transport (Experimental)
+  RPC-over-RDMA transport
+    (which actually disable NFSoRDMA))
+
+Regards.
+
+-- 
+Yann Droneaud
+OPTEYA
+
