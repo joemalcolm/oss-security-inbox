@@ -1,41 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/12/5
-Message-ID: <e82d52b0-9a85-8fd5-b599-23f0786cba86@dchanm.com>
-Date: Wed, 11 May 2016 20:36:56 -0700
-From: David Chan <david@...anm.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: GraphicsMagick Response To "ImageTragick"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/10/5
+Message-ID: <CANO=Ty0jMX=XhW5D71G4__tqtHwHY5iFX-YKZO71skbgin5U8w@mail.gmail.com>
+Date: Tue, 10 May 2016 09:31:27 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>, security@...keeper.com
+Subject: BitKeeper /tmp vulns
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Not found by me, mentioned on HackerNews:
 
-On 5/9/2016 12:03 PM, John Lightsey wrote:
-> On Mon, 2016-05-09 at 18:20 +0100, Simon McVittie wrote:
->> On Mon, 09 May 2016 at 08:29:40 -0500, Bob Friesenhahn wrote:
-> 
-> 
-> The "man" attack vector needs the same determination.
-> 
-> It is similar to CVE-2016-3717 in impact, but uses a different
-> codepath. The existing fixes for CVE-2016-3717 do not address it.
-> 
+https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/bk.sh#L485
 
-The patch which fixes the gplt vector also fixes a related vector in gs.
-The lack of -dSAFER when invoking Ghostscript allows for arbitrary
-file read/write. Sander Bos noticed that ImageMagick isn't affected
-by this bug. Given that the -dSAFER bug is specific to GraphicsMagick,
-I think a separate CVE should be assigned.
+BitKeeper is under Apache license so here it is.
 
-David
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Also a quick look at the source shows a ton of other potential /tmp/ vulns,
+CC'ing bitkeeper security
 
-iQEcBAEBCAAGBQJXM/pYAAoJEFNDksGFxk4g+kMH/2oeXMLdfZqup02Zq5IJ1zIf
-cDpU2CLrDcNyyKAC81WviR6A8jj7VX58rI4O4be/OBlO+6X6CP5PVZzERisqlqdO
-sIpHryXReA1rjPPDB3WWXY3ijLPVozitTmM0p+81TfHrkL0LTc/ZXUMeAEw2xRgw
-dzU31nAMTIKV/FS87VkTesScotDLAEXXAxeD4LEepGoxTCqVctjLvk0yXBg9tpZc
-LwB+2EKMA45bMo0mRNRUnSCIhQXNHSdTpjnmR53nd5BYZtVPvVy3n31QaSXmt4MF
-OsghVcp44/Nb8Etkictu78yHusnXa6stTctdLzRS+51XzGj6nvW4VF89T+ASl/Q=
-=yy3S
------END PGP SIGNATURE-----
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
