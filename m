@@ -1,44 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/21/1
-Message-ID: <f4140eea-595f-612b-8875-36d117aedeb0@redhat.com>
-Date: Wed, 21 Sep 2016 00:39:23 +0000
-From: Tristan Cacqueray <tdecacqu@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/10/10
+Message-ID: <20160510192837.GB30154@sisay.ephaone.org>
+Date: Tue, 10 May 2016 21:28:38 +0200
+From: Michael Scherer <misc@...b.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE request for vulnerability in OpenStack Nova
+Cc: security@...keeper.com
+Subject: Re: BitKeeper /tmp vulns
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public, although
-an advisory was not sent yet.
+On Tue, May 10, 2016 at 10:43:27AM -0600, Kurt Seifried wrote:
+> Hopefully security@...keeper.com (it doesn't bounce so I assume it's valid)
+> will review/address these.
 
-Title: Nova may fail to delete images in resize state regression
-Reporter: Rajesh Tailor (Red Hat)
-Products: Nova
-Affects: ==13.0.0
+So, looking at the current files included in the installer:
+https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/import.sh#L952
+https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/import.sh#L834
+https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/import.sh#L709
 
-Description:
-Rajesh Tailor from Red Hat reported a vulnerability in Nova. If an
-authenticated user deletes an instance while it is in resize state, it
-will cause the original instance to not be deleted from the compute node
-it was running on. An attacker can use this to launch a denial of
-service attack. All Nova setups are affected.
+from a quick check, this seems to be run with "bk import".
 
-Note:
-This bug is similar to OSSA-2015-017 (CVE-2015-3280) and was
-re-introduced in the first release of Mitaka version of Nova and it was
-re-fixed in nova-13.1.0.
+There is this file
+https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/bk.sh#L283
+https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/bk.sh#L337
+nder the name bk.script
 
-References:
-https://launchpad.net/bugs/1589821
+And apply-patch:
+https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/applypatch.sh#L33
 
-Thanks in advance,
+And that' just on the shell code.
 
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+There is also fun stuff like
+https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/gnu/diffutils/sdiff.c
+
+whose last edit is in 2000, but in 2001, someone found CVE-2001-0117
 
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+> On Tue, May 10, 2016 at 10:24 AM, Michael Scherer <misc@...b.org> wrote:
+> 
+> > On Tue, May 10, 2016 at 09:31:27AM -0600, Kurt Seifried wrote:
+> > > Not found by me, mentioned on HackerNews:
+> > >
+> > > https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/bk.sh#L485
+> >
+> > Just to clarify, the vuln was not mentioned on HN, just the new about it
+> > being
+> > under a free license. Then I did a git clone, and grep /tmp and pointed on
+> > internal
+> > IRC that, as usual, there is a ton of /tmp issue (and then Kurt did see
+> > and asked where I did see it,
+> > and answered on HN (to the question "bk is now opensource").
+> >
+> > > BitKeeper is under Apache license so here it is.
+> > >
+> > > Also a quick look at the source shows a ton of other potential /tmp/
+> > vulns,
+> > > CC'ing bitkeeper security
+> >
+> > for example:
+> >
+> > https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/utils/bk_version#L1563
+> >
+> > There is also a few here:
+> >
+> > https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/utils/extractor.c
+> >
+> > but that's the installation script, so unlikely to be exploitable.
+> >
+> > Or in apply-patch, etc.
+> >
+> > But there is also a few projects that are bundled (like zlib), and a few
+> > scripts that
+> > are used only at installation and/or build time, so classifying everything
+> > is more
+> > work than what I have time to devote for the project.
+> >
+> > --
+> > Michael Scherer
+> >
+> 
+> 
+> 
+> -- 
+> 
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> Red Hat Product Security contact: secalert@...hat.com
