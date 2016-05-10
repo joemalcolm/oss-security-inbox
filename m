@@ -1,44 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/18
-Message-ID: <20161214200545.GT10921@scully.more-magic.net>
-Date: Wed, 14 Dec 2016 21:05:45 +0100
-From: Peter Bex <peter@...e-magic.net>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE Request: IrRegular Expressions resource exhaustion in regex compilation [was: Re: CVE Request: resource exhaustion in regex expression handling in WebKit]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/10/9
+Message-ID: <CABEk9YzHK2jN5YHzTSVWRaMyGZiNcqZXT29zD9=N+ZG9Vzw=RQ@mail.gmail.com>
+Date: Tue, 10 May 2016 15:27:58 -0400
+From: Kangjie Lu <kangjielu@...il.com>
+To: oss-security@...ts.openwall.com, Chengyu Song <csong84@...ech.edu>,  Insu Yun <insu@...ech.edu>, Taesoo Kim <taesoo@...ech.edu>
+Subject: CVE Request: alsa: kernel information leak vulnerability in Linux sound/core/timer
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Nov 26, 2016 at 03:11:44PM -0300, Gustavo Grieco wrote:
-> Hello,
-> 
-> Trying to parse and execute this regex code in WebKit:
-> 
-> /($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($(${-2,16}+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)/
->
-> will consume large amounts of memory (8GB or more), after a few seconds.
-> This seems to be a case of CWE-400 (uncontrolled resource consumption).
+Hello,
 
-Hello all,
+In function snd_timer_user_ccallback() of file sound/core/timer.c,
+the stack object “r1” has a total size of 32 bytes. Its field “event” and
+“val” both
+contain 4 bytes padding. These 8 bytes padding bytes are sent to user
+without
+being initialized.
 
-Compiling the above regex also causes excessive resource consumption in
-the portable Irregex (IrRegular Expressions) Scheme package, which can be
-found at http://synthcode.com/scheme/irregex/.
+Fix info:
+https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=9a47e9cff994f37f7f0dbd9ae23740d0f64f9fe6
+Patch has been applied: http://comments.gmane.org/gmane.linux.kernel/2214250
 
-This code is completely unrelated to WebKit's regex implementation, and
-a cursory inspection seems to indicate that the underlying cause is
-different.  So, it might be worthwhile to inspect other regex engines for
-issues similar to this!
+Please help assign a CVE to this vulnerability.
 
-All versions prior to 0.9.6 are affected.  The fix is at
-https://github.com/ashinn/irregex/commit/a16ffc86eca15fca9e40607d41de3cea9cf868f1
+Thanks,
+Kangjie Lu
 
-This package comes bundled at least with CHICKEN Scheme, Jazz Scheme and
-Vicare Scheme, and there are "chez-irregex" and "guile-irregex" packages
-available for GuixSD and perhaps other package managers.
-
-Versions of CHICKEN up to and including 4.11.1 are affected.
-
-Cheers,
-Peter Bex
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
