@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1900" "Wednesday" "4" "April" "2018" "15:57:36" "+0200" "Patrick Uiterwijk" "puiterwijk@redhat.com" "<20180404135736.GA14395@workstation.home.puiterwijk.org>" "61" "[oss-security] CVE-2018-1002150: koji: Dist Repo call missing authorization check allowing filesystem manipulation" nil nil nil "4" "2018040413:57:36" "[oss-security] CVE-2018-1002150: koji: Dist Repo call missing authorization check allowing filesystem manipulation" (number mark "U       puiterwijk@r Apr  4   61/1900  " thread-indent "\"[oss-security] CVE-2018-1002150: koji: Dist Repo call missing authorization check allowing filesystem manipulation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2636" "Tuesday" "10" "May" "2016" "21:28:38" "+0200" "Michael Scherer" "misc@zarb.org" "<20160510192837.GB30154@sisay.ephaone.org>" "78" "Re: [oss-security] BitKeeper /tmp vulns" nil nil nil "5" "2016051019:28:38" "[oss-security] BitKeeper /tmp vulns" (number mark "U       misc@zarb.or May 10   78/2636  " thread-indent "\"Re: [oss-security] BitKeeper /tmp vulns\"\n") "<CANO=Ty3x2M-OqiUoQssjW4WjuamLyjpVeFckCH2GuZVVeh5xLg@mail.gmail.com>" ("<CANO=Ty0jMX=XhW5D71G4__tqtHwHY5iFX-YKZO71skbgin5U8w@mail.gmail.com>" "<20160510162457.GA30154@sisay.ephaone.org>" "<CANO=Ty3x2M-OqiUoQssjW4WjuamLyjpVeFckCH2GuZVVeh5xLg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26446 invoked by uid 550); 4 Apr 2018 14:57:47 -0000
+Received: (qmail 22334 invoked by uid 550); 10 May 2016 19:29:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,91 +12,97 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5827 invoked from network); 4 Apr 2018 14:06:21 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :user-agent;
-        bh=6pgjfxc3ZIZNL0pAvmZMThiafz+J8cAtYJWT8EyOBC4=;
-        b=iRDYSi0Txd3uBE0BSeYg16gR+Cz7Z3T0LfFmPkdxQx/Qrf9JFWpmtmKcjj9lJXJ+vq
-         0X9Fxh6aQ9dDTSS3aUm8cuEu/vA4GiOBMkCw5xinaswiN+QuFFaQgnvalrvgLMtLVVZU
-         fvj4waK/GshwkG0ykrqtBF2JRyWODgjENPiGcLYj6amZiTcXs3qZNXiJKTfRouemlGCQ
-         2a2467OK5sFwzaWYaZcdm7gxEgPQ9uKKSShreIxmYtG7mEfDmXBXvn8tjUDp8d6p7Zft
-         PZ2CCbtBonZGPwpjARiBmLoqDG2198E5OHdd0IinKfOmkX/kruDhpRdUq2GJvL1/PHnC
-         a/jA==
-X-Gm-Message-State: ALQs6tAkMGzJ8APieFPqElvV7TE1ZzN3ClyMFe4u57/h0A64NkkiUxGe
-	NkZu2j/Z7Ppv+TyQiovRDU18N5snVdk=
-X-Google-Smtp-Source: AIpwx48IP5ZqtQGN8+rMj0JVECjKVL7/3ALi1WoDk63GSAzcegQ49C8MDyBJbpNvkSnkA5Lw63bLoA==
-X-Received: by 2002:a9d:9c:: with SMTP id w28-v6mr11361761oti.328.1522850769226;
-        Wed, 04 Apr 2018 07:06:09 -0700 (PDT)
-Date: Wed, 4 Apr 2018 15:57:36 +0200
-From: Patrick Uiterwijk <puiterwijk@redhat.com>
+Received: (qmail 22293 invoked from network); 10 May 2016 19:29:20 -0000
+Date: Tue, 10 May 2016 21:28:38 +0200
+From: Michael Scherer <misc@zarb.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20180404135736.GA14395@workstation.home.puiterwijk.org>
+Cc: security@bitkeeper.com
+Message-ID: <20160510192837.GB30154@sisay.ephaone.org>
+References: <CANO=Ty0jMX=XhW5D71G4__tqtHwHY5iFX-YKZO71skbgin5U8w@mail.gmail.com>
+ <20160510162457.GA30154@sisay.ephaone.org>
+ <CANO=Ty3x2M-OqiUoQssjW4WjuamLyjpVeFckCH2GuZVVeh5xLg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; x-action=pgp-signed
-User-Agent: Mutt/1.9.3 (2018-01-21)
-Subject: [oss-security] CVE-2018-1002150: koji: Dist Repo call missing authorization check
- allowing filesystem manipulation
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <CANO=Ty3x2M-OqiUoQssjW4WjuamLyjpVeFckCH2GuZVVeh5xLg@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+Subject: Re: [oss-security] BitKeeper /tmp vulns
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+On Tue, May 10, 2016 at 10:43:27AM -0600, Kurt Seifried wrote:
+> Hopefully security@bitkeeper.com (it doesn't bounce so I assume it's valid)
+> will review/address these.
 
-Description
-===========
+So, looking at the current files included in the installer:
+https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/import.sh#L952
+https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/import.sh#L834
+https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/import.sh#L709
 
-A vulnerability in Koji was found that allows manipulation of the koji filesystem.
-This allows an attacker to extract secrets from disk that the Hub has access to or to overwrite
-files on disk that httpd can write to.
+from a quick check, this seems to be run with "bk import".
 
+There is this file
+https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/bk.sh#L283
+https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/bk.sh#L337
+nder the name bk.script
 
-Affected versions
-=================
+And apply-patch:
+https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/applypatch.sh#L33
 
-All versions of Koji 1.12 before 1.12.1 are vulnerable.
-All versions of Koji 1.13 before 1.13.1 are vulnerable.
-All versions of Koji 1.14 before 1.14.1 are vulnerable.
-All versions of Koji 1.15 before 1.15.1 are vulnerable.
+And that' just on the shell code.
 
+There is also fun stuff like
+https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/gnu/diffutils/sdiff.c
 
-Patched versions
-================
-
-Koji versions 1.12.1, 1.13.1, 1.14.1 and 1.15.1 are available on the website, and
-all include patches to solve this problem.
-
-
-Mitigation
-==========
-
-A temporary mitigation until the code patch is applied would be to move the repos-dist
-folder in the koji root directory out of the way and create a file with the same name
-as the folder that was just moved away.
+whose last edit is in 2000, but in 2001, someone found CVE-2001-0117
 
 
-Credits
-=======
-
-This issue was discovered by Mike McLean of Red Hat.
-
-
-References
-==========
-
-https://docs.pagure.org/koji/CVE-2018-1002150/
------BEGIN PGP SIGNATURE-----
-
-iQIcBAEBCgAGBQJaxNnQAAoJEIZXmA2atR5Q2/MQAJnIw5m4l64npyPmyZMzTbB1
-6hn7OBjTa4NUD1xlxkPDPjo1Z1SgnQP3D01mJCU/Ot9b3eBNiznfqDIc++y78xIs
-Hdb9b3IY7OcHhXwHbqr9Y4XfcvnDIG9p9q94uHnAmCpGURZhWG7QzDJ7vZsy4916
-vSepVhxhGtP6pLYG5BLkUan3YmS3Eg0eUVJ25Ijhm7WRlOEHAQI2Ih52LIljExzq
-3EhA1j2zeWz58Zw3zOnlX8b03yfN56y8HbCIF9fJtFAf7+5noEHL4gO8IGuvKn1d
-jw+RZVzezJzHTejapML9ttrRRnP7DGNanah0DJFphm3BxfuleSotCmE0phTe8aIK
-7vRGqtrWdPfkjaDe6nXOL1YlMm8Vy0qyw4qbUazY+mB5eFZXTS8W6cJyH6eeM9Kg
-cnN5cOfkP82CoT7akTLjoO8RZRMme5okTqsetMrJkvqLTaYJ+UjD+ODFmEXczT8o
-DwbfqWSBysfRQtukdHNsQ49TAAc+xFSjTBcTBYBvXoo46oOZo3NNYYIe8uTWipeH
-coIVoJwCRvNpsSkwaLsUA3qETtq/+H3pep+dx4td2xpLbFFwo8XP+IMpgEIIMij5
-fKzz1NMxAogUanBVnjdP/mVAvf1tnu2rKF/MqLirv11t5IvDymJBPGeyUkJhwT89
-+AXA2bXHVAhBiqiD12qO
-=zv8L
------END PGP SIGNATURE-----
+> On Tue, May 10, 2016 at 10:24 AM, Michael Scherer <misc@zarb.org> wrote:
+> 
+> > On Tue, May 10, 2016 at 09:31:27AM -0600, Kurt Seifried wrote:
+> > > Not found by me, mentioned on HackerNews:
+> > >
+> > > https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/bk.sh#L485
+> >
+> > Just to clarify, the vuln was not mentioned on HN, just the new about it
+> > being
+> > under a free license. Then I did a git clone, and grep /tmp and pointed on
+> > internal
+> > IRC that, as usual, there is a ton of /tmp issue (and then Kurt did see
+> > and asked where I did see it,
+> > and answered on HN (to the question "bk is now opensource").
+> >
+> > > BitKeeper is under Apache license so here it is.
+> > >
+> > > Also a quick look at the source shows a ton of other potential /tmp/
+> > vulns,
+> > > CC'ing bitkeeper security
+> >
+> > for example:
+> >
+> > https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/utils/bk_version#L1563
+> >
+> > There is also a few here:
+> >
+> > https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/utils/extractor.c
+> >
+> > but that's the installation script, so unlikely to be exploitable.
+> >
+> > Or in apply-patch, etc.
+> >
+> > But there is also a few projects that are bundled (like zlib), and a few
+> > scripts that
+> > are used only at installation and/or build time, so classifying everything
+> > is more
+> > work than what I have time to devote for the project.
+> >
+> > --
+> > Michael Scherer
+> >
+> 
+> 
+> 
+> -- 
+> 
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> Red Hat Product Security contact: secalert@redhat.com
