@@ -1,52 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/13
-Message-ID: <00fe01d25129$88fc70c0$9af55240$@com>
-Date: Thu, 8 Dec 2016 16:03:16 +0800
-From: Huawei PSIRT <psirt@...wei.com>
-To: <ppandit@...hat.com>, <oss-security@...ts.openwall.com>
-CC: <liq3ea@...il.com>, <jiangxin1@...wei.com>, Huawei PSIRT <PSIRT@...wei.com>, "Wanglijun (PSIRT)" <wanglijun.wanglijun@...wei.com>
-Subject: Re: CVE request Qemu: display: cirrus_vga: a divide by zero in cirrus_do_copy
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/10/12
+Message-ID: <CABEk9YzSs+SRPKeL95=Pd7sMZ4Ud+H67UOZMwjjudMs5n0iknw@mail.gmail.com>
+Date: Tue, 10 May 2016 15:35:09 -0400
+From: Kangjie Lu <kangjielu@...il.com>
+To: oss-security@...ts.openwall.com, Chengyu Song <csong84@...ech.edu>,  Insu Yun <insu@...ech.edu>, Taesoo Kim <taesoo@...ech.edu>
+Subject: CVE Request: x25: a kernel infoleak in x25_negotiate_facilities()
 Content-Type: text/plain; charset=utf-8
 
-Dear,
-
-Could you please change the reporter information from PSIRTeam of Huawei Inc
-to Jiangxin <jiangxin1@...wei.com> of Huawei Inc. Thank you.
-
-Best regards,
-Huawei PSIRT
-
------邮件原件-----
-发件人: P J P [mailto:ppandit@...hat.com] 
-发送时间: 2016年12月8日 15:32
-收件人: oss security list
-抄送: liq3ea@...il.com; psirt@...wei.com
-主题: CVE request Qemu: display: cirrus_vga: a divide by zero in
-cirrus_do_copy
-
-   Hello,
-
-Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is
-vulnerable to a divide by zero issue. It could occur while copying VGA data
-when cirrus graphics mode was set to be VGA.
-
-A privileged user inside guest could use this flaw to crash the Qemu process
-instance on the host, resulting in DoS.
-
-Upstream patch
---------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-12/msg00442.html
-
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1334398
-
-This issue was independently reported by Qinghao Tang, Li Qiang of Qihoo
-360.cn Inc. and PSIRTeam of Huawei Inc.
+Hello,
 
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+In function  x25_negotiate_facilities()  of file net/x25/x25_facilities.c,
+the stack object "dte_facilities" is allocated in x25_rx_call_request(),
+which is supposed to be initialized in x25_negotiate_facilities. However,
+5 fields (8 bytes in total) are not initialized. This object is then copied
+to
+userland via copy_to_user, thus an infoleak occurs.
+
+Fix info: https://lkml.org/lkml/2016/5/8/59
+Patch applied: https://lkml.org/lkml/2016/5/9/1100
+
+
+Please help assign a CVE to it.
+
+
+Thanks,
+Kangjie Lu
 
