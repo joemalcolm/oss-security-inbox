@@ -1,34 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/27/1
-Message-Id: <20160727013203.C008FABC4E2@smtpvmsrv1.mitre.org>
-Date: Tue, 26 Jul 2016 21:32:03 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/10/4
+Message-Id: <20160510151306.987E16C05A7@smtpvmsrv1.mitre.org>
+Date: Tue, 10 May 2016 11:13:06 -0400 (EDT)
 From: cve-assign@...re.org
-To: hanno@...eck.de
+To: astieger@...e.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Use after free in my_login() function of DBD::mysql (Perl module)
+Subject: Re: CVE request: three issues in libksba
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://blog.fuzzing-project.org/50-Use-after-free-in-my_login-function-of-DBDmysql-Perl-module.html
-> 
-> DBD::mysql versions 4.033 and earlier have a use after free bug in the
-> my_login() function. DBD::mysql is a Perl module providing bindings to
-> the mysql database. The issue was fixed in version 4.034.
-> 
-> https://github.com/perl5-dbi/DBD-mysql/pull/45
+> There is a follow-up fix in libksba 1.3.4 for this issue:
+> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=6be61daac047d8e6aa941eb103f8e71a1d4e3c75
 
->> When my_login fails the code tries to call mysql_errno on the mysql
->> connection. However my_login has already free'd that connection
->> variable, therefore causing a use-after-free error.
->> 
->> This patch changes that so that the free happens after the call to the
->> error functions.
->> 
->> https://github.com/perl5-dbi/DBD-mysql/commit/cf0aa7751f6ef8445e9310a64b14dc81460ca156
-
-Use CVE-2015-8949.
+Use CVE-2016-4574 for this additional issue that exists because
+of an incomplete fix for CVE-2016-4356.
 
 - -- 
 CVE Assignment Team
@@ -38,17 +25,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXmA3NAAoJEHb/MwWLVhi2T50P/2JWP75tgnyR/hKJzXM3Tunj
-W2mE0M2ELKLJj3e+CDn97LgOl2jsv2CcpIo3VGuTYMeHZ/99wP2HRp7da0WSYMBI
-CILmexHgb4bLWCbUg5H1P+Af2CCHGWcGz9ZlW5epwBD/bNaWw8ESDI46ua9j/QYj
-9qpXfVZdzKGlfnO891gnwwmjzWQXPOw0YGCNs9xCPD5FNcM6S+pnUEPc8GU6G1QW
-EdhzJnoCFCBAZRSrgHsU6h5nSpoLALMm/0f/h5Z3JWLUhD+ZRUeB3KVE0h5k4XTI
-a2JZT7WYJRA7RBiazy+NSR6eh0zwDz1cBeHrZwuWMZQIP3epyL5VkGBxNZAwjycC
-HEGqVOO3LLiWbjStDE0s8vad6b1XUZmQgOTr/gWAnb1R+PJm7rNSzCW2YL3t1jNy
-V0xKpt/k2XIcrblTs3yaVw3Z5vUqJ87PjstHyA0aKzO/ID3lhT6DkQiuX4alOp9s
-TQRbdX4PBjyzYSl15lNYAEosdZJeL+LTSYVABeD/Psppl8lcOzjDGEshUALEDLYn
-LZMHpRxB2L7as+foW4xS9k6ueAfpwZgO/wORVZOHPtZaIDNMB/E+ZUcP3ubMgoro
-SClTjv8oW6RWfcaVTjet/+eu0UfojDo17OXlpgoltWfXLCOf+b1hu8K5qsHYb4/s
-wmAXCt8jSR66BgFTq8ft
-=fO5Z
+iQIcBAEBCAAGBQJXMfopAAoJEHb/MwWLVhi2XssP/15HiLng9szt57/rKHx54akG
+6qFSHL4U+zaC/qv6XD18rXWYyC9vaxn2eY9OT2Zdp2/Nif2dafrhAiXsxOE0BUot
+qJKEdswdiDMx/7eZnK9kaEesLvbDo9DLTSJ5PFcJmWy2w/wHzWaUa5PXQY+UeRpJ
+MeDljX3G+drjP2wHAiKdCBJHkLzZTenCZSZxNJ5PcCDAjhxrCvecpribxz3yuzj0
+hO29bdLdBNz0gjt/1PK+62LdZi2cQUkJnDUiCHpVTDYVfkK/MP7ZHLjV+yYRx5jM
+jlrvsLBlCjDpGAV19le8/Kifl3w30FPpAohdIRDv8j+ib6iJ56sUPtZEg3AjzQUy
+u9aIU/k0320pXSlw7y/YwSJe4lB8Qub9oKxJCbLMwM/e8MfwbU4FWZpGw0aZtqQz
+UZ0IL27umY4dym6R3CyetTylNMXV7VPE5rzO9CdMPMEQ/ZQeIHSm1hhCpgMR9hZt
+EmW0dp/kxPgka0Noq/lw6dosoKr4RcKjdh9EO9ykYThfBgpTo7B80xktiJxIa+yJ
+EKN0o2H35d2mlm2MzqzB5HRoDO78rSDZ8sgQ5A21/r33n8QHZHChuZcxPGxymI8H
+W4FcL7ZSgCn3xKDsNuNgPnr6DUkb5WQ37yXNpBQnsOGQL8R/fNLG6hbzViQqvAwQ
+QeLuaB8qMKpWiZGkrEiu
+=OKMS
 -----END PGP SIGNATURE-----
