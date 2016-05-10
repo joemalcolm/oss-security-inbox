@@ -1,20 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/10/2
-Message-ID: <6437795.J0nPW8acoZ@arcadia>
-Date: Sat, 10 Sep 2016 17:03:53 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: autotrace: out-of-bounds write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/10/13
+Message-ID: <20160510194050.GA19811@mcvoy.com>
+Date: Tue, 10 May 2016 12:40:50 -0700
+From: Larry McVoy <lm@...oy.com>
+To: Michael Scherer <misc@...b.org>
+Cc: oss-security@...ts.openwall.com, security@...keeper.com
+Subject: Re: BitKeeper /tmp vulns
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+In the past, at least, BitKeeper was run inside a firewall and in an
+environment where users are trusted.  As such, I suspect that you have
+just begun to scratch the surface, I wouldn't be at all surprised to
+see dozens more like this.
 
-with Address Sanitizer I found that each bmp you try to manage with autotrace 
-causes an out-of-bounds write.
+We've never had anyone complain about this in a real world situation
+so we've never focussed on it.  If you care about this stuff we'll
+gladly take patches.
 
-Details:
-https://blogs.gentoo.org/ago/2016/09/10/autotrace-heap-based-buffer-overflow-in-pstoedit_suffix_table_init-output-pstoedit-c/
-
+On Tue, May 10, 2016 at 09:28:38PM +0200, Michael Scherer wrote:
+> On Tue, May 10, 2016 at 10:43:27AM -0600, Kurt Seifried wrote:
+> > Hopefully security@...keeper.com (it doesn't bounce so I assume it's valid)
+> > will review/address these.
+> 
+> So, looking at the current files included in the installer:
+> https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/import.sh#L952
+> https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/import.sh#L834
+> https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/import.sh#L709
+> 
+> from a quick check, this seems to be run with "bk import".
+> 
+> There is this file
+> https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/bk.sh#L283
+> https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/bk.sh#L337
+> nder the name bk.script
+> 
+> And apply-patch:
+> https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/applypatch.sh#L33
+> 
+> And that' just on the shell code.
+> 
+> There is also fun stuff like
+> https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/gnu/diffutils/sdiff.c
+> 
+> whose last edit is in 2000, but in 2001, someone found CVE-2001-0117
+> 
+> 
+> > On Tue, May 10, 2016 at 10:24 AM, Michael Scherer <misc@...b.org> wrote:
+> > 
+> > > On Tue, May 10, 2016 at 09:31:27AM -0600, Kurt Seifried wrote:
+> > > > Not found by me, mentioned on HackerNews:
+> > > >
+> > > > https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/bk.sh#L485
+> > >
+> > > Just to clarify, the vuln was not mentioned on HN, just the new about it
+> > > being
+> > > under a free license. Then I did a git clone, and grep /tmp and pointed on
+> > > internal
+> > > IRC that, as usual, there is a ton of /tmp issue (and then Kurt did see
+> > > and asked where I did see it,
+> > > and answered on HN (to the question "bk is now opensource").
+> > >
+> > > > BitKeeper is under Apache license so here it is.
+> > > >
+> > > > Also a quick look at the source shows a ton of other potential /tmp/
+> > > vulns,
+> > > > CC'ing bitkeeper security
+> > >
+> > > for example:
+> > >
+> > > https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/utils/bk_version#L1563
+> > >
+> > > There is also a few here:
+> > >
+> > > https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/utils/extractor.c
+> > >
+> > > but that's the installation script, so unlikely to be exploitable.
+> > >
+> > > Or in apply-patch, etc.
+> > >
+> > > But there is also a few projects that are bundled (like zlib), and a few
+> > > scripts that
+> > > are used only at installation and/or build time, so classifying everything
+> > > is more
+> > > work than what I have time to devote for the project.
+> > >
+> > > --
+> > > Michael Scherer
+> > >
+> > 
+> > 
+> > 
+> > -- 
+> > 
+> > --
+> > Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> > PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> > Red Hat Product Security contact: secalert@...hat.com
 
 -- 
-Agostino
+---
+Larry McVoy            	     lm at mcvoy.com             http://www.mcvoy.com/lm 
