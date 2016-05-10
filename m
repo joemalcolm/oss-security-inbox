@@ -1,107 +1,279 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/3
-Message-ID: <662dea313e09433f99b121899afaf087@imshyb02.MITRE.ORG>
-Date: Fri, 18 Nov 2016 03:13:48 -0500
-From: <cve-assign@...re.org>
-To: <kcwu@...e.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: w3m - multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/10/2
+Message-Id: <E1b05nb-0007wp-H4@xenbits.xenproject.org>
+Date: Tue, 10 May 2016 11:25:59 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 179 (CVE-2016-3710,CVE-2016-3712) - QEMU: Banked access to VGA memory (VBE) uses inconsistent bounds checks
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-CVE-2016-9422 - https://github.com/tats/w3m/issues/8 stack smashed
-  see analysis in https://github.com/tats/w3m/pull/19
+      Xen Security Advisory CVE-2016-3710,CVE-2016-3712 / XSA-179
+                               version 5
 
-CVE-2016-9423 - https://github.com/tats/w3m/issues/9 some buffer overflow
+ QEMU: Banked access to VGA memory (VBE) uses inconsistent bounds checks
 
-Note that both issues/9 and issues/10 are fixed by
-9f0bdcfdf061db3520bd1f112bdc5e83acdec4be; however, they are different
-vulnerabilities.
+UPDATES IN VERSION 5
+====================
 
+Fixed credits section. Zuozhi Fzz was mistakenly credited with
+CVE-2016-3710, but should have been credited with CVE-2016-3712.
 
-CVE-2016-9424 - https://github.com/tats/w3m/issues/12 heap write
+ISSUE DESCRIPTION
+=================
 
-CVE-2016-9425 - https://github.com/tats/w3m/issues/21 heap write
+Qemu VGA module allows banked access to video memory using the window
+at 0xa00000 and it supports different access modes with different
+address calculations.  But an attacker can easily change access modes
+after setting the bank register.  This is CVE-2016-3710.
 
-Note that both issues/21 and issues/26 are fixed by
-4e464819dd360ffd3d58fa2a89216fe413cfcc74; however, they are different
-vulnerabilities.
-
-
-> https://github.com/tats/w3m/issues/25 heap corruption
->   itself should be only OOM. But it was affected by
->     https://github.com/ivmai/bdwgc/issues/135
->   which become heap corruption
-
-Use CVE-2016-9426 for the issues/25 vulnerability in w3m. Use
-CVE-2016-9427 for the issues/135 vulnerability in libgc (aka bdwgc or
-boehmgc).
+Qemu VGA module allows guest to edit certain registers in 'vbe' and
+'vga' modes. ie. guest could set certain 'VGA' registers while in
+'VBE' mode.  This is CVE-2016-3712.
 
 
-CVE-2016-9428 - https://github.com/tats/w3m/issues/26 heap write
+IMPACT
+======
 
-CVE-2016-9429 - https://github.com/tats/w3m/issues/29 global-buffer-overflow write
+A privileged guest user could use CVE-2016-3710 to exceed the bank
+address window and write beyond the said memory area, potentially
+leading to arbitrary code execution with privileges of the Qemu
+process.  If the system is not using stubdomains, this will be in
+domain 0.
 
-CVE-2016-9430 - https://github.com/tats/w3m/issues/7 null deref
-
-CVE-2016-9431 - https://github.com/tats/w3m/issues/10 stack overflow
-
-CVE-2016-9432 - https://github.com/tats/w3m/issues/13 bcopy negative size
-
-CVE-2016-9433 - https://github.com/tats/w3m/issues/14 array index out of bound read
-
-CVE-2016-9434 - https://github.com/tats/w3m/issues/15 null deref
-
-
-> https://github.com/tats/w3m/issues/16 use uninit value
-
-Use CVE-2016-9435 for the problem fixed by the new conditional
-PUSH_ENV(HTML_DL) call in file.c in
-https://github.com/tats/w3m/commit/33509cc81ec5f2ba44eb6fd98bd5c1b5873e46bd
-
-Use CVE-2016-9436 for the problem fixed by the new "tagname[0] = '\0'"
-line in parsetagx.c in
-https://github.com/tats/w3m/commit/33509cc81ec5f2ba44eb6fd98bd5c1b5873e46bd
+A privileged guest user could use CVE-2016-3712 to cause potential
+integer overflow or OOB read access issues in Qemu, resulting in a DoS
+of the guest itself.  More dangerous effect, such as data leakage or
+code execution, are not known but cannot be ruled out.
 
 
-CVE-2016-9437 - https://github.com/tats/w3m/issues/17 write to rodata
+VULNERABLE SYSTEMS
+==================
 
-CVE-2016-9438 - https://github.com/tats/w3m/issues/18 null deref
+Versions of qemu shipped with all Xen versions are vulnerable.
 
-CVE-2016-9439 - https://github.com/tats/w3m/issues/20 stack overflow
+Xen systems running on x86 with HVM guests, with the qemu process
+running in dom0 are vulnerable.
 
-CVE-2016-9440 - https://github.com/tats/w3m/issues/22 near-null deref
+Only guests provided with the "stdvga" emulated video card can exploit
+the vulnerability.  The default "cirrus" emulated video card is not
+vulnerable.  (With xl the emulated video card is controlled by the
+"stdvga=" and "vga=" domain configuration options.)
 
-CVE-2016-9441 - https://github.com/tats/w3m/issues/24 near-null deref
+ARM systems are not vulnerable.  Systems using only PV guests are not
+vulnerable.
 
-CVE-2016-9442 - https://github.com/tats/w3m/commit/d43527cfa0dbb3ccefec4a6f7b32c1434739aa29 potential heap buffer corruption
-  I classify this as "moderate" because the allocator do preserve more space
-  than required size due to bucketing. And w3m's allocator is boehmgc, it
-  seems not easy replaceable. So the heap won't be corrupted in practice
+For VMs whose qemu process is running in a stub domain, a successful
+attacker will only gain the privileges of that stubdom, which should
+be only over the guest itself.
 
-CVE-2016-9443 - https://github.com/tats/w3m/issues/28 null deref
+Both upstream-based versions of qemu (device_model_version="qemu-xen")
+and `traditional' qemu (device_model_version="qemu-xen-traditional")
+are vulnerable.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+MITIGATION
+==========
+
+Running only PV guests will avoid the issue.
+
+Running HVM guests with the device model in a stubdomain will mitigate
+the issue.
+
+Changing the video card emulation to cirrus (stdvga=0, vga="cirrus",
+in the xl domain configuraton) will avoid the vulnerability.
+
+CREDITS
+=======
+
+CVE-2016-3710 was discovered and reported by "Wei Xiao and Qinghao
+Tang of 360 Marvel Team" of 360.cn Inc.
+
+CVE-2016-3712 was discovered and reported by Zuozhi Fzz of Alibaba
+Inc.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue for
+systems using upstream-based versions of qemu.  Patch 0001 addresses
+CVE-2016-3710, and patches 0002-0005 address CVE-2016-3712.
+
+qemu-upstream, xen-unstable:
+
+xsa179-qemuu-unstable-0001-vga-fix-banked-access-bounds-checking-CVE-2016-3710.patch
+xsa179-qemuu-unstable-0002-vga-add-vbe_enabled-helper.patch
+xsa179-qemuu-unstable-0003-vga-factor-out-vga-register-setup.patch
+xsa179-qemuu-unstable-0004-vga-update-vga-register-setup-on-vbe-changes.patch
+xsa179-qemuu-unstable-0005-vga-make-sure-vga-register-setup-for-vbe-stays-intac.patch
+
+qemu-upstream, xen 4.6:
+
+xsa179-qemuu-4.6-0001-vga-fix-banked-access-bounds-checking-CVE-2016-3710.patch
+xsa179-qemuu-4.6-0002-vga-add-vbe_enabled-helper.patch
+xsa179-qemuu-4.6-0003-vga-factor-out-vga-register-setup.patch
+xsa179-qemuu-4.6-0004-vga-update-vga-register-setup-on-vbe-changes.patch
+xsa179-qemuu-4.6-0005-vga-make-sure-vga-register-setup-for-vbe-stays-intac.patch
+
+qemu-upstream, xen 4.5:
+
+xsa179-qemuu-4.5-0001-vga-fix-banked-access-bounds-checking-CVE-2016-3710.patch
+xsa179-qemuu-4.5-0002-vga-add-vbe_enabled-helper.patch
+xsa179-qemuu-4.5-0003-vga-factor-out-vga-register-setup.patch
+xsa179-qemuu-4.5-0004-vga-update-vga-register-setup-on-vbe-changes.patch
+xsa179-qemuu-4.5-0005-vga-make-sure-vga-register-setup-for-vbe-stays-intac.patch
+
+qemu-upstream, xen 4.4:
+
+xsa179-qemuu-4.4-0001-vga-fix-banked-access-bounds-checking-CVE-2016-3710.patch
+xsa179-qemuu-4.4-0002-vga-add-vbe_enabled-helper.patch
+xsa179-qemuu-4.4-0003-vga-factor-out-vga-register-setup.patch
+xsa179-qemuu-4.4-0004-vga-update-vga-register-setup-on-vbe-changes.patch
+xsa179-qemuu-4.4-0005-vga-make-sure-vga-register-setup-for-vbe-stays-intac.patch
+
+qemu-upstream, xen 4.3:
+
+xsa179-qemuu-4.3-0001-vga-fix-banked-access-bounds-checking-CVE-2016-3710.patch
+xsa179-qemuu-4.3-0002-vga-add-vbe_enabled-helper.patch
+xsa179-qemuu-4.3-0003-vga-factor-out-vga-register-setup.patch
+xsa179-qemuu-4.3-0004-vga-update-vga-register-setup-on-vbe-changes.patch
+xsa179-qemuu-4.3-0005-vga-make-sure-vga-register-setup-for-vbe-stays-intac.patch
+
+qemu-xen-traditional, unstable:
+
+xsa179-qemut-unstable-0001-vga-fix-banked-access-bounds-checking-CVE-2016-3710.patch
+xsa179-qemut-unstable-0002-vga-add-vbe_enabled-helper.patch
+xsa179-qemut-unstable-0003-vga-factor-out-vga-register-setup.patch
+xsa179-qemut-unstable-0004-vga-update-vga-register-setup-on-vbe-changes.patch
+xsa179-qemut-unstable-0005-vga-make-sure-vga-register-setup-for-vbe-stays-intac.patch
+
+$ sha256sum xsa179*
+e216959d099ed807b282026e1e4d558ce0c0e8ead284ddd9d0581cef5fcef0ad  xsa179-qemuu-unstable-0001-vga-fix-banked-access-bounds-checking-CVE-2016-3710.patch
+708e40d85866540567d2d915731c6e9876cd0d6754bc6696650ed71d8e48d710  xsa179-qemuu-unstable-0002-vga-add-vbe_enabled-helper.patch
+767007028189bce54df9769ff6cb9db7cd37b5c2afaac86787b30c8f2a03f342  xsa179-qemuu-unstable-0003-vga-factor-out-vga-register-setup.patch
+1fb507c307b093e5e4471d4a5e567db419adecbfe772a68bf91722836bcba4cd  xsa179-qemuu-unstable-0004-vga-update-vga-register-setup-on-vbe-changes.patch
+ff4327d598d2e0912dc3a22ab9ba14d6c79bfa5a154714b6c5da761d5ded403f  xsa179-qemuu-unstable-0005-vga-make-sure-vga-register-setup-for-vbe-stays-intac.patch
+059bfa59f39222ad6991e6c0c8338385f2a317e379d02d0c2cb0e5a8138cb329  xsa179-qemuu-4.3-0001-vga-fix-banked-access-bounds-checking-CVE-2016-3710.patch
+c6dfe50d694b75670bbdec78a3ce6293a8da46d5ff8b47f1e0d7e4fac22260bf  xsa179-qemuu-4.3-0002-vga-add-vbe_enabled-helper.patch
+f57e31e8b81f1161537277a0934013c1fb3bbf57319543dfd10a5dc5fdfb927b  xsa179-qemuu-4.3-0003-vga-factor-out-vga-register-setup.patch
+14900af2b13d362ffb98c061e76b13965965284399dd9b9f1a4e41b41f34a3a3  xsa179-qemuu-4.3-0004-vga-update-vga-register-setup-on-vbe-changes.patch
+2b2e7d306fd95fa74490ee1694af1af9438d7ff738d8c6aecc7d99d4eb96dcb2  xsa179-qemuu-4.3-0005-vga-make-sure-vga-register-setup-for-vbe-stays-intac.patch
+e6108266bf0abada5fc6e0a3ca65c2702fcae610826ead6a215d622ec3ed973a  xsa179-qemuu-4.4-0001-vga-fix-banked-access-bounds-checking-CVE-2016-3710.patch
+05bdfae312078b22542e9f18db98fae11dbfd9785184b0b3c8de8c94797e1427  xsa179-qemuu-4.4-0002-vga-add-vbe_enabled-helper.patch
+56dee9d0f54357391d5249a01ab28a1879dd7d1a36b4d147d68c62688d8af22b  xsa179-qemuu-4.4-0003-vga-factor-out-vga-register-setup.patch
+10603f5ffe317de328dc46139a6b5ff6081040ca6368ee1642b5343db9bcfda1  xsa179-qemuu-4.4-0004-vga-update-vga-register-setup-on-vbe-changes.patch
+e0dbc47086f0346a9554b98468256bc325d67440f5d786c5825390d293896509  xsa179-qemuu-4.4-0005-vga-make-sure-vga-register-setup-for-vbe-stays-intac.patch
+9b0cfdba369437a3e3da86690cd0c6d9d05e39d1168065e4d11ff2de4e546feb  xsa179-qemuu-4.5-0001-vga-fix-banked-access-bounds-checking-CVE-2016-3710.patch
+3c56f255d2ff3e5ae24f15de69cbd4abf3ff0d2dbb63a686937d5e2ab1989d59  xsa179-qemuu-4.5-0002-vga-add-vbe_enabled-helper.patch
+b1ddabf50720635efa17a7c57778acd2e1d9fd6a6424038455163991afecb044  xsa179-qemuu-4.5-0003-vga-factor-out-vga-register-setup.patch
+0f34eeda817f39d3b5e484d535aa29bae16e7e36b4dc042bc41ef0e1844bf3cb  xsa179-qemuu-4.5-0004-vga-update-vga-register-setup-on-vbe-changes.patch
+c24b3401a7ed45f853de7c96b998d50461254e9082a706753b814ddcbc285b17  xsa179-qemuu-4.5-0005-vga-make-sure-vga-register-setup-for-vbe-stays-intac.patch
+de59a098a39c1adbc86f3857dbb2b655479f97756d46e017e83b41c1390a98b9  xsa179-qemuu-4.6-0001-vga-fix-banked-access-bounds-checking-CVE-2016-3710.patch
+3686d0b5c3603819fe0eca65ed62161c676e6abd8e676e513f6d4b3d46e7a997  xsa179-qemuu-4.6-0002-vga-add-vbe_enabled-helper.patch
+18d01083e2f4000816ecf26d85da5cb337f540da447e6252f348a5b538cc7fa4  xsa179-qemuu-4.6-0003-vga-factor-out-vga-register-setup.patch
+811ce206293b54ad601eb0a0e59bee502277c642f73f1ea0bad712efc528f82d  xsa179-qemuu-4.6-0004-vga-update-vga-register-setup-on-vbe-changes.patch
+2097c9e4eac66a65e07607664d1aaec288c4c8b0f147c73636c1b2532cdd20dd  xsa179-qemuu-4.6-0005-vga-make-sure-vga-register-setup-for-vbe-stays-intac.patch
+132fd7f7d1f7bee4d934daefc24ec65080ae09b7d0e07a86edc3b683cad8156a  xsa179-qemut-unstable-0001-vga-fix-banked-access-bounds-checking-CVE-2016-3710.patch
+b83c29c3737415bf05da14c0b856abeb3bdbb77fba7d538956535ed67160abe8  xsa179-qemut-unstable-0002-vga-add-vbe_enabled-helper.patch
+834266af0499167e6d8e2e87bb770b79c0e8480ab5ea72064298656ccdd36741  xsa179-qemut-unstable-0003-vga-factor-out-vga-register-setup.patch
+a5c3c38340261c7ff44047289aad6276e501930e214c40350056a364469965cd  xsa179-qemut-unstable-0004-vga-update-vga-register-setup-on-vbe-changes.patch
+4869ad504cba52f537dae102e226b020422e3b6494ffba3b865eb2893bee0e9e  xsa179-qemut-unstable-0005-vga-make-sure-vga-register-setup-for-vbe-stays-intac.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBCAAGBQJYLrfFAAoJEHb/MwWLVhi2oVkP/37BjwMtl3eBG7iJMhMJ+CM2
-q6MswxfueNx+xJFoEKY6bcFY7Es4S2iVMLVnGVPwWXRhQPLOww2jGNv8kSrrQ5S/
-TJ5aHU1pbnmCg3Cz/SQDRpNAAr6pQiqXqRC0zvXEBhLWqfyZH4qfWu2WPVfBvuKz
-6JC53YrHUPrHzbD97+FhBGBuIXWUv2hUKQ4pLa7ikzQ/WfsOkQn70GIT6cEVSkef
-wFu4H+3Umq0EufW/ScTfCkDoWeNyk5/kg44Q5jsOiKbco/bEMrlKOt4hSjt5dZNB
-/RKnNkGri3vJA3d50wIjIq6vlDgbCTEOhJx1Q+9CAYwXlWytgmYTUHl4Mb0z1rqm
-4ljlkTVIW3MQl0l3bIDdL8WYEJ6eUvj+nL8WeiszwpZneZr+eStD67T/tKJipJla
-yeG9bnVfWtDytobHO7s8EN8KJhGPanmzj6vPoqiXt52S/Tcp3oe24EGa+CtfnDnG
-i4BDm9yAnRuZ7ZkeynnnRBxA+kOU9gTlfx23PL7N8slRpZeNONrNVsgl83Trp1Q1
-UdUxLv3qleJJFWA1F2MQPMaiHYICF4aWh02Tf5Dmp42tHU58Ezhv5LFD7CpEoKj2
-Nws7sati4M5CmOkLjkFSFcg8fPkPiGR0kqBt8Ck+3QVDeln+zD3+LQBg/4dU6qnJ
-VkeNyH+PpwPAk5+CyOr3
-=QSeZ
+iQEcBAEBAgAGBQJXMcStAAoJEIP+FMlX6CvZ8g4H/i3UdCtqBWhs5ZAa7arEzDLC
+GggGZ0MQDriujr+10MN6OyM7W493AxHC2+8Ck0jft1YrUh0ojlVt3/tqd+f4yI1I
+1S5ueWQYS0vEqH4lxiftp4MRc9/wWpKnEGdo3437AyDuuZwqDfTjvt8yDrfMLCuI
+2v3ofXfSOeBiNYqSSsz3Hbmlb9ZqohGRIGqc74C4D+RKYJlDBVO6GNDMv9lI5tdW
+LE5PqaCxndZVO+uFAgIg6tw+GOObk2IyEBi00R5FmkW5g9QP2i2em+/usKAb8l3v
+bFjBEuw0SkL/CZF3fpoBNjTej/5HHSJwhB2rDY2NFV1hwmt36G8NPKKwLrcQKdU=
+=O3qx
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa179-qemuu-unstable-0001-vga-fix-banked-access-bounds-checking-CVE-2016-3710.patch" of type "application/octet-stream" (4343 bytes)
+
+Download attachment "xsa179-qemuu-unstable-0002-vga-add-vbe_enabled-helper.patch" of type "application/octet-stream" (2096 bytes)
+
+Download attachment "xsa179-qemuu-unstable-0003-vga-factor-out-vga-register-setup.patch" of type "application/octet-stream" (5115 bytes)
+
+Download attachment "xsa179-qemuu-unstable-0004-vga-update-vga-register-setup-on-vbe-changes.patch" of type "application/octet-stream" (920 bytes)
+
+Download attachment "xsa179-qemuu-unstable-0005-vga-make-sure-vga-register-setup-for-vbe-stays-intac.patch" of type "application/octet-stream" (2799 bytes)
+
+Download attachment "xsa179-qemuu-4.3-0001-vga-fix-banked-access-bounds-checking-CVE-2016-3710.patch" of type "application/octet-stream" (4334 bytes)
+
+Download attachment "xsa179-qemuu-4.3-0002-vga-add-vbe_enabled-helper.patch" of type "application/octet-stream" (2199 bytes)
+
+Download attachment "xsa179-qemuu-4.3-0003-vga-factor-out-vga-register-setup.patch" of type "application/octet-stream" (5246 bytes)
+
+Download attachment "xsa179-qemuu-4.3-0004-vga-update-vga-register-setup-on-vbe-changes.patch" of type "application/octet-stream" (936 bytes)
+
+Download attachment "xsa179-qemuu-4.3-0005-vga-make-sure-vga-register-setup-for-vbe-stays-intac.patch" of type "application/octet-stream" (2876 bytes)
+
+Download attachment "xsa179-qemuu-4.4-0001-vga-fix-banked-access-bounds-checking-CVE-2016-3710.patch" of type "application/octet-stream" (4363 bytes)
+
+Download attachment "xsa179-qemuu-4.4-0002-vga-add-vbe_enabled-helper.patch" of type "application/octet-stream" (2179 bytes)
+
+Download attachment "xsa179-qemuu-4.4-0003-vga-factor-out-vga-register-setup.patch" of type "application/octet-stream" (5279 bytes)
+
+Download attachment "xsa179-qemuu-4.4-0004-vga-update-vga-register-setup-on-vbe-changes.patch" of type "application/octet-stream" (977 bytes)
+
+Download attachment "xsa179-qemuu-4.4-0005-vga-make-sure-vga-register-setup-for-vbe-stays-intac.patch" of type "application/octet-stream" (2856 bytes)
+
+Download attachment "xsa179-qemuu-4.5-0001-vga-fix-banked-access-bounds-checking-CVE-2016-3710.patch" of type "application/octet-stream" (4363 bytes)
+
+Download attachment "xsa179-qemuu-4.5-0002-vga-add-vbe_enabled-helper.patch" of type "application/octet-stream" (2179 bytes)
+
+Download attachment "xsa179-qemuu-4.5-0003-vga-factor-out-vga-register-setup.patch" of type "application/octet-stream" (5279 bytes)
+
+Download attachment "xsa179-qemuu-4.5-0004-vga-update-vga-register-setup-on-vbe-changes.patch" of type "application/octet-stream" (977 bytes)
+
+Download attachment "xsa179-qemuu-4.5-0005-vga-make-sure-vga-register-setup-for-vbe-stays-intac.patch" of type "application/octet-stream" (2856 bytes)
+
+Download attachment "xsa179-qemuu-4.6-0001-vga-fix-banked-access-bounds-checking-CVE-2016-3710.patch" of type "application/octet-stream" (4403 bytes)
+
+Download attachment "xsa179-qemuu-4.6-0002-vga-add-vbe_enabled-helper.patch" of type "application/octet-stream" (2153 bytes)
+
+Download attachment "xsa179-qemuu-4.6-0003-vga-factor-out-vga-register-setup.patch" of type "application/octet-stream" (5172 bytes)
+
+Download attachment "xsa179-qemuu-4.6-0004-vga-update-vga-register-setup-on-vbe-changes.patch" of type "application/octet-stream" (977 bytes)
+
+Download attachment "xsa179-qemuu-4.6-0005-vga-make-sure-vga-register-setup-for-vbe-stays-intac.patch" of type "application/octet-stream" (2856 bytes)
+
+Download attachment "xsa179-qemut-unstable-0001-vga-fix-banked-access-bounds-checking-CVE-2016-3710.patch" of type "application/octet-stream" (3977 bytes)
+
+Download attachment "xsa179-qemut-unstable-0002-vga-add-vbe_enabled-helper.patch" of type "application/octet-stream" (2185 bytes)
+
+Download attachment "xsa179-qemut-unstable-0003-vga-factor-out-vga-register-setup.patch" of type "application/octet-stream" (4707 bytes)
+
+Download attachment "xsa179-qemut-unstable-0004-vga-update-vga-register-setup-on-vbe-changes.patch" of type "application/octet-stream" (975 bytes)
+
+Download attachment "xsa179-qemut-unstable-0005-vga-make-sure-vga-register-setup-for-vbe-stays-intac.patch" of type "application/octet-stream" (3094 bytes)
