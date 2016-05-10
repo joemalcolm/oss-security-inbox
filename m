@@ -1,63 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/7
-Message-ID: <CAPiURgVCtTu3h0TM=5QBKjTQ62g6GLdDve3pcg29PDtRC1O1FQ@mail.gmail.com>
-Date: Tue, 1 Mar 2016 09:55:03 -0800
-From: Grant Ridder <shortdudey123@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: CVE ID Requests <cve-assign@...re.org>
-Subject: Re: CVE's for SSLv2 support
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/10/8
+Message-ID: <52abc457-86a6-6349-aeca-0b0d591c3b3d@suse.com>
+Date: Tue, 10 May 2016 20:08:05 +0200
+From: Andreas Stieger <astieger@...e.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: CVE request: libksba out-of-bouds read remote DOS issue fixed in 1.3.4
 Content-Type: text/plain; charset=utf-8
 
-Link to RedHat announcement:
-https://access.redhat.com/security/vulnerabilities/drown
+libksba 1.3.4 was released with the following in NEWS:
 
-I am trying to follow the scope of this issue.  RedHat says "TLS servers
-which support SSLv2 are vulnerable".  Can't tell if this means that
-services with SSLv2 capabilities are vulnerable or only ones with it
-enabled.
+> * Fixed two OOB read access bugs which could be used to force a DoS.
 
--Grant
+The first is http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=a7eed17a0b2a1c09ef986f3b4b323cd31cea2b64
 
-On Tue, Mar 1, 2016 at 9:39 AM, Loganaden Velvindron <loganaden@...il.com>
-wrote:
+> Fix possible read access beyond the buffer. > > * src/ber-help.c (_ksba_ber_parse_tl): Add extra sanity check. > *
+src/cert.c (ksba_cert_get_cert_policies): Check TLV given length >
+against buffer length. > (ksba_cert_get_ext_key_usages): Ditto. > *
+src/ocsp.c (parse_asntime_into_isotime): Ditto. > -- > > The returned
+length of the object from _ksba_ber_parse_tl (ti.length) > was not
+always checked against the actual buffer length, thus leading > to a
+read access after the end of the buffer and thus a segv. > >
+GnuPG-bug-id: 2344 > Reported-by: Pascal Cuoq > Signed-off-by: Werner
+Koch <wk@...pg.org <mailto:wk@...pg.org>>
 
-> On Tue, Mar 1, 2016 at 5:33 PM, Kurt Seifried <kseifried@...hat.com>
-> wrote:
->
-> > So there is this proposed RFC:
-> >
-> > https://tools.ietf.org/html/rfc6176
-> >
-> > TL;DR: SSLv2 needs to be shot.
-> >
-> > Now we have yet another significant SSLv2 problem, DROWN, bad enough in
-> > fact that Red Hat has now disabled SSLv2 in OpenSSL by default (already
-> > done in NSS/GnuTLS), so from my vendor perspective, we're treating SSLv2
-> > support as a security problem, the solution of which is to remove said
-> > support.
-> >
-> > But more generally, should we look at assigning CVE's for support of
-> SSLv2,
-> > much like we would for products supporting DES or other known insecure
-> > cryptographic algorithms, hashes, digests and protocols? My personal vote
-> > is for yes.
-> >
-> >
-> >
-> >
-> Btw, FreeBSD has done some work there:
->
-> https://wiki.freebsd.org/LibreSSL/PatchingPorts#SSLv2.2FSSLv3_method_failures
->
-> Linking with LibreSSL would help uncover those cases, and assign CVEs :)
->
->
-> >
-> >
-> > --
-> > Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> > PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> > Red Hat Product Security contact: secalert@...hat.com
-> >
->
 
+
+The second (6be61daac047d8e6aa941eb103f8e71a1d4e3c75
+<http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=6be61daac047d8e6aa941eb103f8e71a1d4e3c75>) was already assigned CVE-2016-4574 (incomplete fix for CVE-2016-4356) elsethread.
+http://seclists.org/oss-sec/2016/q2/300
+
+Could a CVE be assigned to this issue?
+
+Andreas
+
+-- 
+Andreas Stieger <astieger@...e.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG Nürnberg)
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
