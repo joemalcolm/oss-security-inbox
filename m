@@ -1,55 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/24/7
-Message-Id: <20160524134554.0F51B6C0E37@smtpvmsrv1.mitre.org>
-Date: Tue, 24 May 2016 09:45:54 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE Request: Qemu: scsi: mptsas infinite loop in mptsas_fetch_requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/10/3
+Message-ID: <ab2d729f-e62c-3d92-09d2-4845bbae7a97@suse.com>
+Date: Tue, 10 May 2016 14:09:11 +0200
+From: Andreas Stieger <astieger@...e.com>
+To: oss-security@...ts.openwall.com, mprpic@...hat.com
+Cc: cve-assign@...re.org
+Subject: Re: Re: CVE request: three issues in libksba
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> Quick Emulator(Qemu) built with the LSI SAS1068 Host Bus Adapter emulation
-> support is vulnerable to an infinite loop issue. It could occur while fetching
-> new requests in mptsas_fetch_requests().
-> 
-> A privileged user inside guest could use this flaw to consume excessive host
-> resources or crash the Qemu process resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04027.html
+On 04/29/2016 06:13 PM, cve-assign@...re.org wrote:
+> > Integer overflow in the DN decoder src/dn.c
+> >
+> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=243d12fdec66a4360fbb3e307a046b39b5b4ffc3
+>
+> This might be an error in the original
+> https://security.gentoo.org/glsa/201604-04 advisory. We did not notice
+> any obvious relationship between
+> 243d12fdec66a4360fbb3e307a046b39b5b4ffc3 and an integer overflow fix.
+> The 243d12fdec66a4360fbb3e307a046b39b5b4ffc3 commit message seems to
+> focus on "read access out of bounds." Also, there is no other recent
+> commit at
+> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=history;f=src/dn.c
+> that refers to an integer overflow. Possibly there was an inapplicable
+> copy-and-paste of "Integer overflow in the" from the previous report
+> about the BER decoder.
+>
+> Use CVE-2016-4356 for the 243d12fdec66a4360fbb3e307a046b39b5b4ffc3
+> issue that is described as "Fix encoding of invalid utf-8 strings in
+> dn.c" and "read access out of bounds."
 
->> The LSI SAS1068 Host Bus Adapter emulator in Qemu, periodically
->> looks for requests and fetches them. A loop doing that in
->> mptsas_fetch_requests() could run infinitely if 's->state' was
->> not operational. Move check to avoid such a loop.
 
-Use CVE-2016-4964.
+There is a follow-up fix in libksba 1.3.4 for this issue:
+http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=6be61daac047d8e6aa941eb103f8e71a1d4e3c75
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/mptsas.c but
-that may be an expected place for a later update.
+> Fix an OOB read access in _ksba_dn_to_str.
+>
+> * src/dn.c (append_utf8_value): Use a straightforward check to fix an
+> off-by-one.
+> --
+>
+> The old fix for the problem from April 2015 had an off-by-one in the
+> bad encoding handing.
+>
+> Fixes-commit: 243d12fdec66a4360fbb3e307a046b39b5b4ffc3
+> <http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=object;h=243d12fdec66a4360fbb3e307a046b39b5b4ffc3>
+> GnuPG-bug-id: 2344
+> Reported-by: Pascal Cuoq
+> Signed-off-by: Werner Koch <wk@...pg.org>
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Andreas
 
-iQIcBAEBCAAGBQJXRFoUAAoJEHb/MwWLVhi2eREP/RhdpWO2TWtok4uMWzOC5tUE
-w/MXH56dSTjvJUVVD7zD6LGNVaxXkjywiPNX49Pk4mibEKgXD1J1KnhsjpmroJes
-3Lh1tU9ojMJYhSwQVTVvKakuo3zhDMm307nao8zLTyA1H44vAj0w8bYeqal3Q2+k
-n86IVtv3AsjQQEWkFcAZbQBKw78Vkbg2DtYoBzy7Wp/7S99CyMy4EFQiWUI/2dVj
-1uJdes2eAPawoPHI/1fKK9aGg3ZMslA6sw+vtBC9iQkYd99whBf0OiKgauJC5c8L
-j0o7pedV+jwciDTAzFdTaM9yoVaoGhaH7QZY7NfBl3aWbZDaxJAZKicOWHFNXt0y
-ePswqrHNhglshL0OwiZTlPktaz1o1iJxSjYEOYc1eY0X9y3peTg8+3gao+EAWDng
-hbR2opWVdgjjy3Ob/tV1QSVASbZV+BSCavMUOcHf0ulQTHBRJOKXopGcY1Qmx8Ot
-DhgDZINAhSSgrlBLvgfXYMlRKVm9MTZqfpjwQTr8kdHOpQljrHB00SJSAzI5uvlx
-HdbTUonZvaTYSenkaK1D+L/8C+0hPZXrf7B1IyXh6QFILJAZ5+TYyzXxdajUoImg
-jl1wPo5DS0i/wFO4Obt7phpf7MM2rabo1WDzolWiGU+glmVIuXFmEVa43d2eTBxz
-ORKeSpt/xA4I3D98cYxe
-=fzoY
------END PGP SIGNATURE-----
+-- 
+Andreas Stieger <astieger@...e.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG Nürnberg)
+
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
