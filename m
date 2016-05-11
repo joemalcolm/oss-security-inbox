@@ -1,50 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/2
-Message-ID: <CALJHwhSmb-Fx6VYaqW4FwNg=GTm=q2d7LqqoZ10U5TjA1=nTOA@mail.gmail.com>
-Date: Mon, 22 Aug 2016 15:28:51 +1000
-From: Wade Mealing <wmealing@...hat.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: CVE request: Linux kernel mbcache lock contention denial of service.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/4
+Message-ID: <s5hshxp9jdr.wl-tiwai@suse.de>
+Date: Wed, 11 May 2016 08:52:16 +0200
+From: Takashi Iwai <tiwai@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: Kangjie Lu <kangjielu@...il.com>, Chengyu Song <csong84@...ech.edu>, Insu Yun <insu@...ech.edu>, Taesoo Kim <taesoo@...ech.edu>
+Subject: Re: CVE Request: alsa: kernel information leak vulnerability in Linux sound/core/timer
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+On Tue, 10 May 2016 21:27:58 +0200,
+Kangjie Lu wrote:
+> 
+> Hello,
+> 
+> In function snd_timer_user_ccallback() of file sound/core/timer.c,
+> the stack object “r1” has a total size of 32 bytes. Its field “event” and
+> “val” both
+> contain 4 bytes padding. These 8 bytes padding bytes are sent to user
+> without
+> being initialized.
+> 
+> Fix info:
+> https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=9a47e9cff994f37f7f0dbd9ae23740d0f64f9fe6
+> Patch has been applied: http://comments.gmane.org/gmane.linux.kernel/2214250
+> 
+> Please help assign a CVE to this vulnerability.
 
-A design flaw was found in the file extended attribute handling of the
-linux kernels handling of cached attributes.  Too many entries in the
-cache cause a soft lockup while attempting to iterate the cache and
-access relevant locks.
+Maybe we can fold all three similar bugs in sound/core/timer.c into
+the existing CVE-2016-4569?
 
-Upstream has replaced the mbcache code with an updated version which
-was not a patch but a clear-cut reimplementation of the code, no
-single diff
+In my sound.git tree,
 
-Soft lockup information is in both the bugzilla.kernel.org and
-referred to in the LWN article.  This would affect containers running
-with ext4 as it shares the same mbcache between all containers/host.
+cec8f96e49d9be372fdb0c3836dcf31ec71e457e
+  ALSA: timer: Fix leak in SNDRV_TIMER_IOCTL_PARAMS
+9a47e9cff994f37f7f0dbd9ae23740d0f64f9fe6
+  ALSA: timer: Fix leak in events via snd_timer_user_ccallback
+e4ec8cc8039a7063e24204299b462bd1383184a5
+  ALSA: timer: Fix leak in events via snd_timer_user_tinterrupt
 
-This did not affect Red Hat Enterprise Linux versions 5,6 or 7, so I
-can't validate the claim that it does affect other newer kernels.
-This may be worthwhile tracking for others who are affected by this
-flaw.
+BTW, at the next time, *please* put the upstream maintainer into the
+loop...
 
-For those following along at home, this seemed to be fixed in:
 
- ±  git tag --contains be0726d33cb8f411945884664924bed3cb8c70ee
-v4.6
-
-However I can't be sure which factor introduced the issue, but I've
-been unable to reproduce with the given instructions.
-
-Thanks,
-
-Wade Mealing
-Red Hat Product Security
-
-Upstream discussion:
-https://lwn.net/Articles/668718/
-
-Bugzilla kernel submission:
-https://bugzilla.kernel.org/show_bug.cgi?id=107301
-
-Red Hat Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=1360968
+Takashi
