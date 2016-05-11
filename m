@@ -1,46 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/23/7
-Message-ID: <20160623171218.GA8259@eldamar.local>
-Date: Thu, 23 Jun 2016 19:12:18 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Requests: WordPress: 4.5.3 maintenance and security release: several issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/7
+Message-Id: <20160511153609.3FE896C0591@smtpvmsrv1.mitre.org>
+Date: Wed, 11 May 2016 11:36:09 -0400 (EDT)
+From: cve-assign@...re.org
+To: amaris@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Mishandling the first propagated copy being a slave - Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-WordPress issued version 4.5.3 a maintenace and security release. The
-advisory mentions several issues fixed:
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=5ec0811d30378ae104f250bfc9b3640242d81e3f
 
-https://wordpress.org/news/2016/06/wordpress-4-5-3/
+> This oops happens with the namespace_sem held and can be triggered by
+> non-root users.
 
-WordPress versions 4.5.2 and earlier are affected by several security
-issues:
+> The reason why the first source mount is special is that its
+> mnt_parent is not a mount in the dest_mnt propagation tree
 
- - redirect bypass in the customizer, reported by Yassine Aboukir;
+Use CVE-2016-4581.
 
- - two different XSS problems via attachment names, reported by Jouko
-   Pynnönen and Divyesh Prajapati;
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
- - revision history information disclosure, reported independently by
-   John Blackbourn from the WordPress security team and by Dan Moen from
-   the Wordfence Research Team;
-
- - oEmbed denial of service reported by Jennifer Dodd from Automattic;
-
- - unauthorized category removal from a post, reported by David Herrera
-   from Alley Interactive;
-
- - password change via stolen cookie, reported by Michael Adams from the
-   WordPress security team;
-
- - and some less secure sanitize_file_name edge cases reported by Peter
-   Westwood of the WordPress security team.
-
-(I wrapped the advisory text in the various separate items).
-
-Could you assign CVE identifier as needed for the above issues fixed
-with the Wordpress 4.5.3 release?
-
-Regards,
-Salvatore
+iQIcBAEBCAAGBQJXM1DhAAoJEHb/MwWLVhi2yPoP/R3beZrIgZLWH0/Uu2iaYt9E
+EGKHQS52T05fD8d1hSwEdGUNmQ+s/44PBThQIdKig76Hm5lW8yUN9Ed59waCIVyq
+E3ctFFcXYyGvwtlnO1BSH2RMXyZ0P6QbJiKGcCsIw3L83CAk4oaxm2WRkf0edMan
+BmlnZqI+oMxMa+tMokoMfU8q6EDdFFag9CFmAp+03ThmZgj/tkUTXXY+zJm7LMzM
+9+d4CTXIb9Bi7s4t9ae6gJHQGqd74Ox+Uzpf9/ZcyNV7L5E9cGQmMIjtgp155SRv
+v413/IsXoCsl55v5HDcOqbZHcpC+VTfEb8JvdZ/QzecvoezsATEbO6N2QcT4xtbU
+r7Rh8nc8/am81j7EXHR+cOOIowiRxYdG5Qoe5k4A+/2FFcOGJyL4e0ZoJ0mSDbiv
+zqmiy25PQIR3H+tA1WNA/G1cUX4LDH0stGpUU0GfUaz6jpvtZ4nsZdRVxWI6ftK5
+Ej3P5Te+N+UA2fJFgcQj6a8Tj7boYkWCsLa1tyQPVm05XWGOtoHObMHEVaOtoteB
+5/oV2baUQwWcO+RfV/cr4jvjKRnufEUBl4e6BwmOtVvBPcHMgVWaQL7RLoxUc3GP
+KAa/NjOWOAVE4bSBJ8cnkCeBz4DrTPMTxb8YmcoLBM0EljUNVsOJg9Oqcj3m0hv3
+uAQCWLpNqGpd+HsL+jmQ
+=agbV
+-----END PGP SIGNATURE-----
