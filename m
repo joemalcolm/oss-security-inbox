@@ -1,18 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/09/5
-Message-ID: <20160609150629.GC7655@suse.de>
-Date: Thu, 9 Jun 2016 17:06:29 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org
-Subject: CVE Request: haproxy remote denial of service via reqdeny
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/10
+Message-Id: <20160511154358.8C88E3AE008@smtpvbsrv1.mitre.org>
+Date: Wed, 11 May 2016 11:43:58 -0400 (EDT)
+From: cve-assign@...re.org
+To: astieger@...e.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: libksba out-of-bouds read remote DOS issue fixed in 1.3.4
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This is a remote denial of service against haproxy (uncontrollable crash).
+> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=a7eed17a0b2a1c09ef986f3b4b323cd31cea2b64
 
-http://git.haproxy.org/?p=haproxy-1.6.git;a=commit;h=60f01f8c89e4fb2723d5a9f2046286e699567e0b
+> The returned length of the object from _ksba_ber_parse_tl (ti.length)
+> was not always checked against the actual buffer length, thus leading
+> to a read access after the end of the buffer
 
-The problem was apparently introduced in haproxy 1.6.0, and is fixed in git (which will become 1.6.6).
+Use CVE-2016-4579.
 
-Ciao, Marcus
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXM1LfAAoJEHb/MwWLVhi2N10P/0+rxmJVD8dNcnKtGuVt4lUc
+R3TTBT9/FzmRzBOqe2sn/2GCgiZVuV1tBKvem16qrQI9wM8tndw8q1Osi+sYcN9q
+bZetnnk0Upi0ix/Zbyx01D8ENCoUTXShhIf5rU4tSZKSInD79KxyzqKWbxCG5Ecd
+5ncqcTApwWdSpmwDJRbZDZ4K38nT8QCAp6DrLUKaMmnOtuYsgdsx/Yc2bZ1gWdIQ
+Jgk7dTrIchh7d88igd6nWRewwmh2WX8dh+iSegs9x6xrEJallqCdqBzWs7kU3edJ
+04jNhqaJIMZcHJrxLV6ozyEA9PdWyMc3+WDaOEQ+T2aPfrnm3+VQl6xRf3vNjins
+eNmYLneyYPAGjJvRL+mzchcb5SOLspNO+GUcN/814RWM90st3U6OTVxl8A6LmAtF
+4ARmrKWClz1vBYAZrXDFIZaECWR2GnkAOO0pEPtn1/WCu/Nq+/h0KAFxH9LQObtG
+EtrbOs04/66Ny2TR0yw2TWnlqJoI5vzXuSE3ofpOxDX6ComyCypURsqIzO3xP/xg
+8WxCuMDaD5ZRqSPavsKXnvPrYvCTr2P+tysqfwc50wiNKBmE7cj3ZmRB3jWQE79w
+4T8k6H7h+8SYwHkmfhV0m8yA8slKYXfOK6+TaVf6ZmCIySpb7WcdHa7Xk2mz2ric
+0myN/q9o1w35t7c230xx
+=UcFl
+-----END PGP SIGNATURE-----
