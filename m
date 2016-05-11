@@ -1,60 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/02/2
-Message-ID: <CAFdyfB2D-63JUZbO_tU8sx2_pbS1e30cBemu81PNKABufdogpg@mail.gmail.com>
-Date: Mon, 1 Aug 2016 23:27:23 +0100
-From: Dario Bertini <berdario@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/15
+Message-Id: <000E6874-A0FB-46E7-91D9-52598837EBAC@beckweb.net>
+Date: Thu, 12 May 2016 00:30:08 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: CSRF in Grails console
+Subject: Jenkins - multiple fixes
 Content-Type: text/plain; charset=utf-8
 
-The Grails console (aka Grails Debug Console, Grails Web Console) was
-vulnerable to CSRF.
+The Jenkins project published new releases today with fixes for multiple
+vulnerabilities. Users should upgrade to Jenkins 2.3 or Jenkins 1.651.2:
+https://jenkins.io/download/
 
-https://grails.org/plugin/console
-https://github.com/sheehan/grails-console
+Summary and description of the vulnerabilities are below. Some more 
+details, severity, and attribution can be found here:
+https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2016-05-11
 
-(this is the plugin, not to be confused with the command line grails
-console: http://docs.grails.org/3.1.1/ref/Command%20Line/console.html
-)
+We provide advance notification for security updates on this mailing
+list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-The fix has been made available in versions 1.5.10, 2.0.7. Versions up
-to 1.5.9 and 2.0.6 are affected.
+If you find security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-This allows an attacker to (create pages that when visited by a victim
-will) forge requests that will execute arbitrary groovy code on the
-backend (the documentation explains how to enable it in production,
-and granting access to administrators only, so this is not simply a
-development tool).
+---
 
-Bug tracker: https://github.com/sheehan/grails-console/issues/54
-fix commit: https://github.com/sheehan/grails-console/commit/155e0f5f0fe3b3bd7027d730fa00bf0655f28207
+1)
+SECURITY-170 / CVE-2016-3721: Arbitrary build parameters are passed to 
+build scripts as environment variables
 
-Could you allocate a CVE id for this?
+Build parameters in Jenkins typically are passed to build scripts as 
+environment variables. Some plugins allow passing arbitrary (undeclared)
+parameters. Depending on access permissions and installed plugins, 
+malicious users were able to trigger builds, passing arbitrary 
+environment variables (e.g. PATH) to modify the behavior of those builds.
 
-Thank you
 
-On a more general note to Grails programmers, Caveat Auditor:
+2)
+SECURITY-243 / CVE-2016-3722: Malicious users with multiple user 
+accounts can prevent other users from logging in
 
-Unfortunately the Grails framework itself ships with some horribly
-insecure defaults. As of 3.1.9 the template code dropped by `grails
-create-app` will have a UrlMappings.groovy that will allow access to
-Grails controllers actions via any HTTP method. CSRF protection is
-also not enabled by default, and there's no documentation on how to
-enable it globally. Some deprecated builtin modules in widespread but
-old Grails versions (i.e. formRemote) also make it impossible to add
-csrf protection to the associated endpoints.
+By changing the freely editable 'full name', malicious users with
+multiple user accounts could prevent other users from logging in, as 
+'full name' was resolved before actual user name to determine which 
+account is currently trying to log in.
 
-On the bright side, Grails 3.1 added explicit rest mappings:
-http://docs.grails.org/latest/guide/theWebLayer.html#restfulMappings
 
-which makes it clearer which methods are allowed for every action, and
-harder to forget about it. Compare to allowedMethods
-http://docs.grails.org/latest/ref/Controllers/allowedMethods.html
-which can be distant tens/hundreds line of code from the actual
-controller-action they are protecting, and moreover can be easily
-forgotten in a new file, also because they aren't added by default
-when creating a controller with `grails create-controller`
+3)
+SECURITY-250 / CVE-2016-3723: Information on installed plugins exposed 
+via API
 
-It's thus likely that you might find more csrf vulnerabilities in
-other open source plugins, as well as in your closed source
-applications.
+The XML/JSON API endpoints providing information about installed plugins
+were missing permissions checks, allowing any user with read access to
+Jenkins to determine which plugins and versions were installed.
+
+
+4)
+SECURITY-266 / CVE-2016-3724: Encrypted secrets (e.g. passwords) were
+leaked to users with permission to read configuration
+
+Users with extended read access could access encrypted secrets stored
+directly in the configuration of those items.
+
+
+5)
+SECURITY-273 / CVE-2016-3725: Regular users can trigger download of
+update site metadata
+
+A missing permissions check allowed any user with access to Jenkins 
+to trigger an update of update site metadata. This could be combined
+with DNS cache poisoning to disrupt Jenkins service.
+
+
+6)
+SECURITY-276 / CVE-2016-3726: Open redirect to scheme-relative URLs
+
+Some Jenkins URLs did not properly validate the redirect URLs, which
+allowed malicious users to create URLs that redirect users to arbitrary
+scheme-relative URLs.
+
+
+7)
+SECURITY-281 / CVE-2016-3727: Granting the permission to read node
+configurations allows access to overall system configuration
+
+The API URL /computer/(master)/api/xml allowed users with the 'extended
+read' permission for the master node to see some global Jenkins
+configuration, including the configuration of the security realm.
+
