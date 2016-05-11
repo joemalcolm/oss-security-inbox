@@ -1,84 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/03/6
-Message-ID: <20160303090927.GG11024@jumper.schlittermann.de>
-Date: Thu, 3 Mar 2016 10:09:27 +0100
-From: Heiko Schlittermann <hs@...littermann.de>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Exim CVE-2016-1531 fixed
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/1
+Message-ID: <20160511050946.GC30154@sisay.ephaone.org>
+Date: Wed, 11 May 2016 07:09:46 +0200
+From: Michael Scherer <misc@...b.org>
+To: oss-security@...ts.openwall.com
+Cc: security@...keeper.com
+Subject: Re: BitKeeper /tmp vulns
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Tue, May 10, 2016 at 12:40:50PM -0700, Larry McVoy wrote:
+> In the past, at least, BitKeeper was run inside a firewall and in an
+> environment where users are trusted.  As such, I suspect that you have
+> just begun to scratch the surface, I wouldn't be at all surprised to
+> see dozens more like this.
 
-We've fixed CVE-2016-1531. The fix was announced to the public
-via exim-{maintainers,dev,users} mailing lists, via the
-about Wed, 2 Mar 2016 19:10 GMT, the announcement to exim-announce
-followed about one hour later.
+If the security model is "everybody is trusted and we have firewall", the
+frontpage of https://www.bitkeeper.com/ with "Hardened for the Enterprise.",
+is a bit misleading, as is the part on "security" and "safety" on
+https://www.bitkeeper.com/why_why_buy
 
-Known distro maintainers and Exim contributors got access to the fix
-on Monday, 29 Feb 2016 at 14:00 GMT.
+I do get that "hardening", "security", "safety" can mean different things to different
+people, but "insecure on a shared server" is not written anywhere in the documentation.
 
-Some *BSD portability issues where fixed on Tue Mar 1 late evening.
+> We've never had anyone complain about this in a real world situation
+> so we've never focussed on it.  
 
-The announcement we sent to the above mentioned lists:
+I am not sure to fully understand, so allow me to rephrase based on my understanding.
 
-Security fix for CVE-2016-1531
-==============================
+Because no one complained and found the problem before among your
+clients, (that likely didn't had the source code to begin with, and also no
+expectation of being able to read without likely infriging copyright), 
+the BK team didn't focused on trying to be proactive and fixing security issues
+that ook 5 minutes to be found ?
 
-All installations having Exim set-uid root and using 'perl_startup' are
-vulnerable to a local privilege escalation. Any user who can start an
-instance of Exim (and this is normally *any* user) can gain root
-privileges.
+(or updating code bundled for a 15 years old CVE)
 
-New options
------------
+> If you care about this stuff we'll
+> gladly take patches.
 
-We had to introduce two new configuration options:
+I am sorry, but that's not exactly the kind of answer that motivate me to work
+on a software I do not use. 
 
-    keep_environment =
-    add_environment =
+But since you agree that's a security problem, I guess I can now officially request
+CVE for the issues that do not have one.
 
-Both options are empty per default. That is, Exim cleans the complete
-environment on startup. This affects Exim itself and any subprocesses,
-as transports, that may call other programs via some alias mechanisms,
-as routers (queryprogram), lookups, and so on.
-
-** THIS MAY BREAK your existing installation **
-
-If both options are not used in the configuration, Exim issues a warning
-on startup. This warning disappears if at least one of these options is
-used (even if set to an empty value).
-
-keep_environment should contain a list of trusted environment variables.
-(Do you trust PATH?). This may be a list of names and REs.
-
-    keep_environment = ^LDAP_ : FOO_PATH
-
-To add (or override) variables, you can use add_environment:
-
-    add_environment = <; PATH=/sbin:/usr/sbin
-
-
-New behaviour
--------------
-
-Now Exim changes it's working directory to / right after startup,
-even before reading it's configuration. (Later Exim changes it's working
-directory to $spool_directory, as usual.)
-
-Exim only accepts an absolute configuration file path now, when using
-the -C option.
-
-
-Thank you for your understanding.
-
-
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
 -- 
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Michael Scherer
