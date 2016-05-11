@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["886" "Tuesday" "21" "August" "2018" "07:48:22" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFk+RtYrqWQ4Mj1SLVJ7BTZBHLjo_M9t-gDVS_uDEPhuCrg@mail.gmail.com>" "25" "[oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" "^Date:" nil nil "8" "2018082114:48:22" "[oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" (number mark "        taviso@googl Aug 21   25/886   " thread-indent "\"[oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?\"\n") "<CAJ_zFk+ZNi8r8TKTZuaYgSBUz4mxCO7C5SC=B8Ktc_CZQW6Dsw@mail.gmail.com>" ("<CAJ_zFk+ZNi8r8TKTZuaYgSBUz4mxCO7C5SC=B8Ktc_CZQW6Dsw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["400" "Wednesday" "11" "May" "2016" "10:57:06" "+0200" "Adam Maris" "amaris@redhat.com" "<5732F3E2.9070409@redhat.com>" "16" "[oss-security] CVE request: Mishandling the first propagated copy being a slave" nil nil nil "5" "2016051108:57:06" "[oss-security] CVE request: Mishandling the first propagated copy being a slave" (number mark "U       amaris@redha May 11   16/400   " thread-indent "\"[oss-security] CVE request: Mishandling the first propagated copy being a slave\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7342 invoked by uid 550); 21 Aug 2018 14:48:46 -0000
+Received: (qmail 15396 invoked by uid 550); 11 May 2016 08:57:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,34 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7306 invoked from network); 21 Aug 2018 14:48:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=qwIn5ZFtuwhMiz2wIV4iCLrVkjXvI1IFvZbpEEmykvU=;
-        b=eRXWkSFUfj43zUEaKrw8dwE6fnodD1twuJB2LF/ooUf37TBvkjH8uw0KGKEzWs04cC
-         y0Mq1biRLpxK6lgEfLdWJNNwVojBtZobROTQQi30bZrW4SCbc7E1NiOnWb7w5V/sBRFq
-         tZV2R6XI39RhwIUQa8U0/jrHzz06vgHm3isAjNJ6xfldNKHzBxPbY7YPPzc5BgVfXAus
-         46DoXN+F8OdsYghp2p5LzHVl2Aa3zz2HsbSkAWVIuCiJeTbWpHPqZXYLDgp0pl5fcoXb
-         pZPj8+Id3EJHUspu50PTzBD/i1KmuFmjEhxtdR+ImAqw8qNmcEYttdhuv2uOiGuQsE/A
-         cZuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=qwIn5ZFtuwhMiz2wIV4iCLrVkjXvI1IFvZbpEEmykvU=;
-        b=abWa3RE+w+JGM9LxP++X36eadtJDvYawXyMV1c8761dqbScgRZZhdzFSKoyVDmcYe7
-         cfJCdcfNOFhZ5QOnBETopBBegA6p5rLtjvTIKYCWAiJ58buYmk7uFUwUO+oXZGOpd4mu
-         7j4mioC8SRWXsltm6JPzkiyDp+3UgtHMCG5h5m/TS/5041uRC8mGd0VxRm+ldbPbdLu+
-         jo1pEeC0hL74qxsEZgcGyuO3bUyzohzKzWMfbPrrRDA1nuruLWV3MvohTZIYca7Oxn5f
-         vkHpNmRoJ27mdwTk7/7TjBCiQNQbeESYXZBOAGLjTwIQUasXcx1OLM/BvJdzkMB9tGRt
-         seUA==
-X-Gm-Message-State: AOUpUlGZNY1D8pLiZXEpYMG/wic/XjpR194MRQErZ50cHjnNR1MOZoBU
-	3+oyWYXERCfbW8oEiyqXzFA6YkIh8TgV7Pks+qiLMOWfDXE=
-X-Google-Smtp-Source: AA+uWPyWsxDnZwEFbl8IxiPvX5paK7CNJfuABgGDTRkRBu3vRdxZKIi3u5W1fKM094VQczqB5qlXxmra1JZ83CrCK2o=
-X-Received: by 2002:ae9:dc05:: with SMTP id q5-v6mr47398852qkf.332.1534862912828;
- Tue, 21 Aug 2018 07:48:32 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAJ_zFk+ZNi8r8TKTZuaYgSBUz4mxCO7C5SC=B8Ktc_CZQW6Dsw@mail.gmail.com>
-In-Reply-To: <CAJ_zFk+ZNi8r8TKTZuaYgSBUz4mxCO7C5SC=B8Ktc_CZQW6Dsw@mail.gmail.com>
-Message-ID: <CAJ_zFk+RtYrqWQ4Mj1SLVJ7BTZBHLjo_M9t-gDVS_uDEPhuCrg@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000b35d7d0573f31eb0"
-Date: Tue, 21 Aug 2018 07:48:22 -0700
-From: Tavis Ormandy <taviso@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in
- policy.xml by default?
+Received: (qmail 15378 invoked from network); 11 May 2016 08:57:20 -0000
 To: oss-security@lists.openwall.com
+From: Adam Maris <amaris@redhat.com>
+Message-ID: <5732F3E2.9070409@redhat.com>
+Date: Wed, 11 May 2016 10:57:06 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.29]); Wed, 11 May 2016 08:57:09 +0000 (UTC)
+Subject: [oss-security] CVE request: Mishandling the first propagated copy being a slave
 
---000000000000b35d7d0573f31eb0
-Content-Type: text/plain; charset="UTF-8"
+Hello,
 
-On Tue, Aug 21, 2018 at 5:46 AM Tavis Ormandy <taviso@google.com> wrote:
+When the first propagated copy was a slave, it results into kernel oops.
+This oops happens with the namespace_sem held and can be triggered by
+non-root users.
 
->
-> $ convert input.jpg output.gif
-> uid=1000(taviso) gid=1000(taviso) groups=1000(taviso),10(wheel)
-> context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
->
->
->
-My colleague Jann Horn pointed out evince (which uses libgs, which is
-affected with some tweaks to the PoC) is used to generate previews in
-Nautilus, which means previews can trigger code execution (see
-/usr/share/thumbnailers/evince.thumbnailer). I think it's possible to
-trigger that via file automatic download in a browser just by visiting a
-URL, but I haven't tested it.
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=
+=3D5ec0811d30378ae104f250bfc9b3640242d81e3f
 
-I think those thumbnails should be disabled, but you've probably noticed I
-think everything related to untrusted ghostscript should be disabled :-)
+Regards,
 
-Tavis.
+--=20
+Adam Mari=C5=A1, Red Hat Product Security
+1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
 
---000000000000b35d7d0573f31eb0--
+
