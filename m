@@ -1,69 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/17
-Message-ID: <1491121.JZs8W73v97@arcadia>
-Date: Sun, 16 Oct 2016 12:41:15 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing jasper
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/6
+Message-ID: <s5htwi4ek94.wl-tiwai@suse.de>
+Date: Wed, 11 May 2016 16:34:31 +0200
+From: Takashi Iwai <tiwai@...e.de>
+To: cve-assign@...re.org
+Cc: kangjielu@...il.com, oss-security@...ts.openwall.com, csong84@...ech.edu, insu@...ech.edu, taesoo@...ech.edu
+Subject: Re: CVE Request: alsa: kernel information leak vulnerability in Linux sound/core/timer
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
-
-I would like to inform people that the jasper development is alive on github 
-since few days, I filed the bugs and some was fixed.
-
-Below the link to my blogs for each issue which contains the commit fix and 
-or/the status.
-
-
-On Tuesday 23 August 2016 20:40:27 Agostino Sarubbo wrote:
-> Hello all,
+On Wed, 11 May 2016 16:26:55 +0200,
+cve-assign@...re.org wrote:
 > 
-> I fuzzed jasper and it revealed some crashes,
-> we know that jasper has no more release(s) since a lot of time, so there are
-> some unfixed vulnerabilities.
-> Based on what I said, I don't know if any of the following crashes have been
-> reported in the past.
+> > https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=cec8f96e49d9be372fdb0c3836dcf31ec71e457e
+> >   ALSA: timer: Fix leak in SNDRV_TIMER_IOCTL_PARAMS
+> > 
+> > https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=9a47e9cff994f37f7f0dbd9ae23740d0f64f9fe6
+> >   ALSA: timer: Fix leak in events via snd_timer_user_ccallback
+> > 
+> > https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=e4ec8cc8039a7063e24204299b462bd1383184a5
+> >   ALSA: timer: Fix leak in events via snd_timer_user_tinterrupt
 > 
-> I know that Jasper clearly state about its capability on the BMP format, so
-> if you think that something is suitable for an identifier, please assign
-> one. Thanks.
 > 
-> NOTE: The command used in all cases was: imginfo $CRAFTED_IMAGE
+> > Maybe we can fold
+> 
+> That is not what we are going to do. Because the meaning of
+> CVE-2016-4569 was already established to be the
+> http://comments.gmane.org/gmane.linux.kernel/2214250 issue with the
+> "tread" object, which is only
+> cec8f96e49d9be372fdb0c3836dcf31ec71e457e, we are keeping that
+> ID assignment the same.
+> 
+> Use CVE-2016-4578 for both 9a47e9cff994f37f7f0dbd9ae23740d0f64f9fe6
+> and e4ec8cc8039a7063e24204299b462bd1383184a5.
 
-> SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-libs/jasper-1.900.1-
-> r9/work/jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:383:5 in bmp_getdata
-https://blogs.gentoo.org/ago/2016/10/16/jasper-two-null-pointer-dereference-in-bmp_getdata-bmp_dec-c/
+Fair enough.
 
-> SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-libs/jasper-1.900.1-
-> r9/work/jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:385:5 in bmp_getdata
-https://blogs.gentoo.org/ago/2016/10/16/jasper-two-null-pointer-dereference-in-bmp_getdata-bmp_dec-c/
-
-
-> SUMMARY: AddressSanitizer: FPE /tmp/portage/media-libs/jasper-1.900.1-
-> r9/work/jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1195:17 in
-> jpc_dec_process_siz
-https://blogs.gentoo.org/ago/2016/10/16/jasper-two-divide-by-zero-in-jpc_dec_process_siz-jpc_dec-c/
-
-
-> SUMMARY: AddressSanitizer: FPE /tmp/portage/media-libs/jasper-1.900.1-
-> r9/work/jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1197:18 in
-> jpc_dec_process_siz
-https://blogs.gentoo.org/ago/2016/10/16/jasper-two-divide-by-zero-in-jpc_dec_process_siz-jpc_dec-c/
+(And, at the next time, please put the maintainer into Cc from the
+ beginning.  This would have saved lots of time in both sides.)
 
 
-> SUMMARY: AddressSanitizer: double-free /var/tmp/temp/portage/sys-
-> devel/llvm-3.8.0-r2/work/llvm-3.8.0.src/projects/compiler-
-> rt/lib/asan/asan_malloc_linux.cc:38 in free
-https://blogs.gentoo.org/ago/2016/10/16/jasper-double-free-in-mem_close-jas_stream-c/
+thanks,
 
-
-SUMMARY:
-The two SEGV are patched and they aren't in any release
-The two FPE are patches and they are in 1.900.4
-The double-free is unfixed.
-
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Takashi
