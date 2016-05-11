@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["11046" "Saturday" "28" "March" "2015" "15:36:47" "+1300" "Matthew Daley" "mattd@bugfuzz.com" "<CAD3CanfM2CTgmWUV7fhjiV0_S5VG3i7vMbbHhsNSNe9bJybASQ@mail.gmail.com>" "244" "[oss-security] Advisory: CVE-2014-9707: GoAhead Web Server 3.0.0 - 3.4.1" nil nil nil "3" "2015032802:36:47" "[oss-security] Advisory: CVE-2014-9707: GoAhead Web Server 3.0.0 - 3.4.1" (number mark "        mattd@bugfuz Mar 28  244/11046 " thread-indent "\"[oss-security] Advisory: CVE-2014-9707: GoAhead Web Server 3.0.0 - 3.4.1\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["408" "Wednesday" "11" "May" "2016" "23:37:58" "+0800" "Baozeng Ding" "sploving1@gmail.com" "<573351D6.8000504@gmail.com>" "13" "[oss-security] CVE Requests: Linux: use-after-free issue for ppp channel" nil nil nil "5" "2016051115:37:58" "[oss-security] CVE Requests: Linux: use-after-free issue for ppp channel" (number mark "U       sploving1@gm May 11   13/408   " thread-indent "\"[oss-security] CVE Requests: Linux: use-after-free issue for ppp channel\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23965 invoked by uid 550); 28 Mar 2015 02:37:05 -0000
+Received: (qmail 21681 invoked by uid 550); 11 May 2016 15:39:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,272 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23910 invoked from network); 28 Mar 2015 02:36:58 -0000
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 20337 invoked from network); 11 May 2016 15:38:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=to:cc:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=ogUm345bItLtl1/ItxzqW4z7KGiEe8XspK7Ip6rrOms=;
+        b=URaY+YNHJK3cuMkCpvNATZfOI1+gEcsr+jlMy6yliM1iLC0EZ7fEaVahjr1pq0Pl0M
+         cpB8PCFZnJoJV5xLP55zDEb1q+P0tZ+WEondVMSfoifD+PmMlNSdo0G/4zJggcYYB5g7
+         cuRRWmlAVjN/PZaI9aOUK0m0HifDoc3hP9DTtZ5csJIV8JQ9QBtsTxdmw77kgKqg0DNO
+         X+hI0mrwP8w32ixPkhXxF/Z4KI8H2EXHmxgoKqfBu/LDzPg7jlCJBikoihwshf11LPqk
+         P0/rvDGupbh1lD/ZA9bsIcsVm1SGW3Qpfa7HQcjaKmAbf5Z2tDZ1g+I8BgojFDWni8pw
+         rHFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=lXwKXwe74jwBYIrvUDXLNmhEtQdQ748Lz/24rhzyGTE=;
-        b=Kphmg0QhW/iUPo+vb4sv/12rGUYj7SPERf5krLu3W1nbKRKxv/XNT8W3WvWKG54wgI
-         6cLHPBjb1de0RuI4ah18lM6ZPG7mVtqDh+QnjbxLiPLw2Z1QgO/Js5s3RwAFtRvwxgeT
-         hN+bzMG5HlqIVPsb6Gjep2y1pyFZjFAZu2VNKRZvRNxqQDoctMsOJie2vimCX8AhAsS1
-         qN+ffcFDSC3TRblh4Z8Nm3Y974t/lZTPxUt6CQBoSCwnLNaBINUC3Adz4T8GQy7W3IWu
-         lIJma4XSg+wrOOD01PmWe41bM/DQpnNDKZvrMPD8jnFVI6ZIpl/e4Axd/boC07j4jqpu
-         vUlA==
-X-Gm-Message-State: ALoCoQk/fHWO8AHzLNnTK3BGUsn+PoMYNSvBUraFU2mytg//6oX3Szu2FmihvArCscq9Q1jIh0hn
+        h=x-gm-message-state:to:cc:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=ogUm345bItLtl1/ItxzqW4z7KGiEe8XspK7Ip6rrOms=;
+        b=TRkvbeZ8rDMrrsv+LRmZdpP6QDH4ilLmy/zNlsaQFptSOHabv3FMWaWVKCjPvFEcSM
+         nl5UbM6JNQErsHqph3957jAIO4Q41QXDqPQlZ96FLrAv3ynWiYAwoJWTgU1HT8x9Zs+h
+         F8JfejlbCaWKVqZW5BGNhdhrSp0Qr3k4aOjQURSRa15OK98Ky4CeLSRZp6vRO8IW4K1y
+         EBWCrKbV9y86wXowDQNqYOH5GpfBR4VAZC9s+uEWeRAXm7ZQylWVvBt8vbDYd1E0D3U9
+         /IvcM3kGjytaVkCzau28t4//yRRaUeLspz8M/sjRGMwBl9OOrnHMGeKg+hPflj9d/oJJ
+         LUpw==
+X-Gm-Message-State: AOPr4FU6Ru2pWop5onRu6vFALRLmer4U1cJoULxhXGB+tX5uNT2FTULEkZGG+1Yn0DVgPA==
+X-Received: by 10.202.48.20 with SMTP id w20mr2085476oiw.61.1462981084514;
+        Wed, 11 May 2016 08:38:04 -0700 (PDT)
+To: oss-security@lists.openwall.com
+Cc: g.nault@alphalink.fr
+From: Baozeng Ding <sploving1@gmail.com>
+Message-ID: <573351D6.8000504@gmail.com>
+Date: Wed, 11 May 2016 23:37:58 +0800
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.2
 MIME-Version: 1.0
-X-Received: by 10.194.78.144 with SMTP id b16mr42041005wjx.18.1427510207280;
- Fri, 27 Mar 2015 19:36:47 -0700 (PDT)
-Message-ID: <CAD3CanfM2CTgmWUV7fhjiV0_S5VG3i7vMbbHhsNSNe9bJybASQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Sat, 28 Mar 2015 15:36:47 +1300
-From: Matthew Daley <mattd@bugfuzz.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Advisory: CVE-2014-9707: GoAhead Web Server 3.0.0 - 3.4.1
-To: fulldisclosure@seclists.org, oss-security@lists.openwall.com, 
-	bugtraq@securityfocus.com
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE Requests: Linux: use-after-free issue for ppp channel
 
-Affected software: GoAhead Web Server
-Affected versions: 3.0.0 - 3.4.1 (3.x.x series before 3.4.2)
-CVE ID: CVE-2014-9707
-
-Description: The server incorrectly normalizes HTTP request URIs that
-contain path segments that start with a "." but are not entirely equal
-to "." or ".." (eg. ".x"). By sending a request with a URI that
-contains these incorrectly handled segments, it is possible for remote
-attackers to cause a heap overflow with attacker-controlled content or
-perform a directory traversal attack.
-
-Fixed version: 3.4.2
-Bug entry: https://github.com/embedthis/goahead/issues/106
-Fix: https://github.com/embedthis/goahead/commit/eed4a7d177bf94a54c7b06ccce88507fbd76fb77
-Reported by: Matthew Daley
-
-Detail:
-
-The vulnerability lies in the websNormalizeUriPath function. This
-function correctly handles the normalization of URIs consisting of
-normal segments as well as "." and ".." segments, but fails to handle
-other segments that start with a '.' character.
+Hi all,
+    The ppp channel did not take reference on its network namespace when 
+it was registered and unregistered, which causes a use-after-free issue. 
+Details:
+https://lkml.org/lkml/2016/3/17/569
+Fixed via:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1f461dcdd296eecedaffffc6bae2bfa90bd7eb89 
 
 
-A quick runthrough of the important parts of this function:
+Could you please assign a CVE for this issue? Thanks.
 
-The function starts by splitting up the URI into segments (at forward
-slashes) into an array. At the same time, it calculates the total
-length of these segments.
-
-The function then iterates through the resulting array in order to
-perform an in-place normalization (both the input and output pointers
-point to the same array):
-
-* If a given segment does not start with a '.', it is simply copied from the
-  current input pointer to the current output pointer. The for loop's
-  increment code will then advance both the input and output pointers.
-
-* Otherwise, if the segment is "." or "..", the input and output pointers are
-  adjusted appropriately (taking into account the for loop's increment code)
-  but (correctly) no segment is copied.
-
-* Otherwise the segment starts with a '.' but is not "." nor ".."; in this
-  case the function incorrectly does nothing and both the input and output
-  pointers are simply advanced by the for loop's increment code. This
-  effectively skips over a segment in the segment array without any
-  modification by the function.
-
-After this iteration has completed, a string buffer for the final
-output is allocated. The size used for this allocation comes from the
-previously-calculated total segment length, with the addition of space
-for forward slashes to join the segments back together again and a
-null terminator. The segments in the array up to the final output
-pointer are joined together in this buffer with forward slashes
-separating them.
-
-
-There are two ways to exploit this incorrect handling of certain segments:
-
-
-1) Heap overflow
-
-The heap overflow exploitation lies in the possibility to create a
-disconnect between the lengths of the segments left in the segment
-array after the iteration has completed and the previously-calculated
-total segment length. The previously-calculated length should, in
-theory, be the worst-case (longest) final output string buffer size
-required (when all segments are left and none are removed by the
-normalization iteration). However, since we can force the iteration to
-skip over certain segments in the array, it is possible to effectively
-duplicate segments in the resulting array; this is done by having the
-segment copied from one location to another but then also having the
-original copy skipped over, making it appear in the resulting array
-twice. When this is done, the previously-calculated length is no
-longer long enough for the final output's string buffer, and a heap
-overflow occurs while joining together the final result.
-
-As an example, take the following URI as input to the function:
-"/./AAAAAAAA/.x".
-
-The URI is first split into the segments "", ".", "AAAAAAAA" and ".",
-with the total segment length calculated as 0 + 1 + 8 + 2 = 11 bytes.
-
-The normalization iteration proceeds as follows:
-
-* The "" segment is simply copied from input to output, and hence remains
-  unchanged. Both the input and output pointers are then advanced.
-
-* The "." segment causes the output pointer to stay in place while the input
-  pointer advances forward.
-
-* The "AAAAAAAA" segment is simply copied from input to output, and hence
-  overwrites the previous "." segment. Both the input and output pointers are
-  then advanced.
-
-* Finally, the ".x" segment is incorrectly handled: no modification of
-  segments is performed but both the input and output pointers are still
-  advanced, moving the output pointer over the original "AAAAAAAA" segment.
-
-Hence, the resulting segments in the array that are left up to the
-final output pointer are "", "AAAAAAAA" and "AAAAAAAA". Note that the
-"AAAAAAAA" segment has been duplicated. These segments, including
-space for forward slashes to join them together with and a null
-terminator, have a total length of 0 + 8 + 8 + 2 + 1 = 19 bytes.
-
-A string buffer is then allocated for the final output, which uses the
-previously-calculated total segment length of 11 bytes plus 3 bytes
-for forward slashes and 1 byte for a null terminator, giving a total
-size of 11 + 3 + 1 = 15 bytes.
-
-The resulting segments are finally joined together into this final
-output string buffer. In doing so in this case, however, the buffer is
-overflowed by 19 - 15 = 4 bytes.
-
-So, a remote attacker can make (ie.) a simple HTTP GET request for the
-URI in question and cause a heap overflow. ASAN gives the following
-output in this case, which shows the exact moment that the heap
-overflow occurs:
-
-=================================================================
-==2613==ERROR: AddressSanitizer: heap-buffer-overflow on address
-0x60200000d47f at pc 0x7ffff6f34020 bp 0x7fffffffd410 sp
-0x7fffffffcbd0
-WRITE of size 9 at 0x60200000d47f thread T0
-    #0 0x7ffff6f3401f in __interceptor_strcpy
-(/usr/lib/x86_64-linux-gnu/libasan.so.1+0x2f01f)
-    #1 0x7ffff63a7d6d in websNormalizeUriPath src/http.c:3320
-    #2 0x7ffff639b4de in parseFirstLine src/http.c:969
-    #3 0x7ffff639a905 in parseIncoming src/http.c:880
-    #4 0x7ffff639a4c9 in websPump src/http.c:829
-    #5 0x7ffff639a19c in readEvent src/http.c:802
-    #6 0x7ffff6399de7 in socketEvent src/http.c:740
-    #7 0x7ffff6399cbc in websAccept src/http.c:719
-    #8 0x7ffff63ac8ed in socketAccept src/socket.c:327
-    #9 0x7ffff63ade95 in socketDoEvent src/socket.c:638
-    #10 0x7ffff63add5f in socketProcess src/socket.c:622
-    #11 0x7ffff639daf8 in websServiceEvents src/http.c:1307
-    #12 0x401b5c in main src/goahead.c:153
-    #13 0x7ffff597ab44 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21b44)
-    #14 0x4011d8
-(/home/matthew/goahead-3.4.1/build/linux-x64-debug/bin/goahead+0x4011d8)
-
-0x60200000d47f is located 0 bytes to the right of 15-byte region
-[0x60200000d470,0x60200000d47f)
-allocated by thread T0 here:
-    #0 0x7ffff6f5973f in malloc (/usr/lib/x86_64-linux-gnu/libasan.so.1+0x5473f)
-    #1 0x7ffff63a7d04 in websNormalizeUriPath src/http.c:3318
-    #2 0x7ffff639b4de in parseFirstLine src/http.c:969
-    #3 0x7ffff639a905 in parseIncoming src/http.c:880
-    #4 0x7ffff639a4c9 in websPump src/http.c:829
-    #5 0x7ffff639a19c in readEvent src/http.c:802
-    #6 0x7ffff6399de7 in socketEvent src/http.c:740
-    #7 0x7ffff6399cbc in websAccept src/http.c:719
-    #8 0x7ffff63ac8ed in socketAccept src/socket.c:327
-    #9 0x7ffff63ade95 in socketDoEvent src/socket.c:638
-    #10 0x7ffff63add5f in socketProcess src/socket.c:622
-    #11 0x7ffff639daf8 in websServiceEvents src/http.c:1307
-    #12 0x401b5c in main src/goahead.c:153
-    #13 0x7ffff597ab44 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21b44)
-(... snip ...)
-
-As with all heap overflows, it's likely that this can then go on to be
-exploited in order to gain full remote code execution, especially in
-embedded systems which are less likely to have heap allocators with
-modern hardening techniques.
-
-
-2) Directory traversal
-
-The directory traversal exploitation lies in the fact that we can
-force the normalization iteration to skip over certain segments in the
-array; namely, we can force it to skip over a ".." segment. The ".."
-segment will pass through unchanged into the final output string
-buffer, where it is treated by the rest of the server as an actual
-parent-directory relative segment.
-
-As an example, take the following URI as input to the function:
-"/../../../../../.x/.x/.x/.x/.x/.x/etc/passwd".
-
-The URI is first split into the segments "", "..", "..", "..", "..",
-"..", ".x", ".x", ".x", ".x", ".x", ".x", "etc", and "passwd". (The
-total segment length that is calculated during this operation is
-irrelevant for this mode of exploitation.)
-
-When the normalization iteration reaches the ".x" segments, the
-contents of the segment array are still untouched (as all the previous
-segments are either empty or are "..") and the output pointer is still
-pointing back at the "" segment. The incorrect handling of the ".x"
-segments only causes the output (and input) pointers to be advanced
-forward over the "" and ".." segments.
-
-When the iteration reaches the "etc" segment, all the "" and ".."
-segments have been skipped over; the output pointer is now pointing at
-the first ".x" segment. The "etc" is copied over the first ".x"
-segment, and the "passwd" segment is copied over the second ".x"
-segment.
-
-Hence, the resulting segments in the array that are left up to the
-final output pointer are "", "..", "..", "..", "..", "..", "etc" and
-"passwd"; note that the ".." segments are still present.
-
-The final output string buffer is created and the resulting segments
-are joined together to give a string of "/../../../../../etc/passwd".
-
-The rest of the server is expecting that the result from the function
-is normalized and that it contains no relative segments. Hence, the
-".." segments go unnoticed when opening the content file while
-handling the HTTP request. The end result is that the local filesystem
-is traversed up from the administrator-configured web root until
-reaching the filesystem's root directory and back down again into the
-"/etc/passwd" file. Hence, the file "/etc/passwd" is given in response
-to the HTTP request, regardless of the configured web root.
-
-So, a remote attacker can make (ie.) a simple HTTP GET request for the
-URI in question and get the contents of the "/etc/passwd" file:
-
-$ echo -ne 'GET /../../../../../.x/.x/.x/.x/.x/.x/etc/passwd
-HTTP/1.0\r\n\r\n' | nc localhost 4700
-HTTP/1.0 200 OK
-Server: GoAhead-http
-Date: Sun Nov 16 17:21:01 2014
-Content-Length: 1346
-Connection: close
-Last-Modified: Sat Oct 25 17:07:25 2014
-
-root:x:0:0:root:/root:/bin/bash
-daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
-bin:x:2:2:bin:/bin:/usr/sbin/nologin
-sys:x:3:3:sys:/dev:/usr/sbin/nologin
-sync:x:4:65534:sync:/bin:/bin/sync
-games:x:5:60:games:/usr/games:/usr/sbin/nologin
-man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
-lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
-mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
-(... snip ...)
-
-Of course, 5 ".." segments may not be enough to reach the filesystem's
-root directory in all cases and so the crafted URI may have to be
-extended with more ".." and ".x" segments.
-
-
-- Matthew Daley
+Best Regards,
+Baozeng
