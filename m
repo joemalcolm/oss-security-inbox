@@ -1,36 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/19
-Message-ID: <20160504132152.GA25258@kroah.com>
-Date: Wed, 4 May 2016 06:21:52 -0700
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/8
+Message-ID: <573351D6.8000504@gmail.com>
+Date: Wed, 11 May 2016 23:37:58 +0800
+From: Baozeng Ding <sploving1@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Taesoo Kim <taesoo@...ech.edu>, Chengyu Song <csong84@...ech.edu>, Insu Yun <insu@...ech.edu>
-Subject: Re: CVE Request: information leak in wilc1000 module of Linux kernel
+Cc: g.nault@...halink.fr
+Subject: CVE Requests: Linux: use-after-free issue for ppp channel
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 04, 2016 at 09:12:52AM -0400, Kangjie Lu wrote:
-> Hello,
-> 
-> In the milc1000 module (drivers/staging/wilc1000/wilc_wfi_cfgoperations.c),
-> The 6-bytes stack object “mac” is not initialized but leaked via “nla_put”.
-> This bug may result in leaks of sensitive kernel stack data.
-> 
-> The patch of this bug has been accepted by Linux kernel maintainer and will
-> be
-> merged in the next kernel release (see the message bellow).
-> 
-> Fix info:
-> *http://www.spinics.net/lists/linux-wireless/msg150352.html
-> <http://www.spinics.net/lists/linux-wireless/msg150352.html>*
-> git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/staging.git
-> 
-> Could you please assign a CVE to it?
+Hi all,
+    The ppp channel did not take reference on its network namespace when 
+it was registered and unregistered, which causes a use-after-free issue. 
+Details:
+https://lkml.org/lkml/2016/3/17/569
+Fixed via:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1f461dcdd296eecedaffffc6bae2bfa90bd7eb89 
 
-I wouldn't recommend CVEs for drivers in the staging portion of the
-Linux kernel tree.  It's just too easy to find bugs in them, and very
-few distros actually enable them.  Unless you want to prove that CVEs
-don't really mean much :)
 
-thanks,
+Could you please assign a CVE for this issue? Thanks.
 
-greg k-h
+Best Regards,
+Baozeng
