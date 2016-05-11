@@ -1,57 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/07/1
-Message-Id: <20160907005320.3015233E005@smtpvbsrv1.mitre.org>
-Date: Tue,  6 Sep 2016 20:53:20 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn, vv474172261@...il.com
-Subject: Re: CVE request: Qemu: scsi: pvscsi: OOB read and infinite loop while setting descriptor rings
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/11
+Message-ID: <CABrd9SSJXuqwq6dm6dTKpXGcGy7inV7Ya2PU6JXw4ft_qFXijQ@mail.gmail.com>
+Date: Wed, 11 May 2016 17:18:46 +0100
+From: Ben Laurie <benl@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: broken RSA keys
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 5 May 2016 at 10:23, Hanno Böck <hanno@...eck.de> wrote:
+> As a background: What we're talking about is a so-called batch-gcd
+> attack, developed by DJB. Arjen Lenstra and Nadia Heninger were as far
+> as I know the first ones to use this on publicly available keysets in
+> order to find vulnerable keys.
 
-> Quick Emulator(Qemu) built with the VMWARE PVSCSI paravirtual SCSI bus
-> emulation support is vulnerable to an OOB access and/or infinite loop issue.
-> It could occur while processing SCSI commands 'PVSCSI_CMD_SETUP_RINGS'.
-> 
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg00050.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1373462
+FWIW, it was actually me and Mathias Bauer in 2004 (which may also
+pre-date DJB's development, I don't know - certainly we didn't get the
+idea from him, it was Mathias'). We looked at the PGP keyserver data,
+but we didn't find anything very interesting, which is probably why
+most people don't know it.
 
->> Vmware Paravirtual SCSI emulation uses command descriptors to
->> process SCSI commands. These descriptors come with their ring
->> buffers. A guest could set the page count for these rings to
->> an arbitrary value, leading to infinite loop or OOB access.
->> Add check to avoid it.
-
-Use CVE-2016-7155.
-
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/vmw_pvscsi.c but
-that may be an expected place for a later update.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXz2K3AAoJEHb/MwWLVhi2gXcP/iZr4mBbZqMJU/QngSo6pixg
-17eBrvWqWoFxB+h1Fh+etk5EXS8LB6L8vPz0BpyGjhixdF0z9N8rMKEu14nVZmY3
-R3IejY1e25gDuOZnX7pyR/4qTTE+ebYFg6DEU+vPiQslBrhMNj0ZB5VzF9uZD1kD
-6bnJkQIUJ51ZcnxQsu0V/Zk9Q+cJX2ctKQLa4GHubaKI0wKRRS0PB64XCxKGxPca
-r0oKV5CbSLU+0rXvG54GfzXwNFrVlQIssuYYMPMpGgMhIJRi/uq9g0hKvVC9BgX3
-HEwRbkDtp0I3pNlQsbJMO5JkTb78DQWfW+bZMgFAjFtFhbitVKwpOrEu/Afx/VID
-PrHITep4kYsALpJ3enfgJ1XpkpY9lKz3Y498ZRnfwQhMmGldiTO3mAAPDsrtOsLi
-Bn1A/Y86wWK1qnDjr6bsrxTu7x2dSV+W1As0ILfH+RA9FwjKI8mGUDk55u9b2g1o
-Nc4ow2jMj+YFvCS1p0auYKKGMI66weX3NFsPmw0HmeNRLcspr7p7Y/0VwgHeAUwf
-C5YSdNx2uhTlH4d6bxP0RlO2IeyBIkHCmsb69kNd10N7uaMmEsT9+xZHKB/z9QV9
-QaDqBu6mwyulj0UKycyafSmbk2p9BDHWYpCXGP3UpiSUkcxi/7v9YZYKSN4jQR0P
-geRSHxzwQBMdDP3RVrgX
-=Dx9R
------END PGP SIGNATURE-----
+To be entirely fair, we did pairwise GCDs, which comes to the same
+thing, but less efficiently...
