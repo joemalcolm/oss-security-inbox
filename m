@@ -1,39 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/24/4
-Message-Id: <F0516C22-C2D6-4C52-8AD1-86F33F6A2513@gmail.com>
-Date: Thu, 24 Nov 2016 15:18:02 +0800
-From: haojun hou <haojunhou@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request - BigTree CMS 4.2.13 - Cross-Site Scripting (XSS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/5
+Message-Id: <20160511142655.B3EC6332010@smtpvbsrv1.mitre.org>
+Date: Wed, 11 May 2016 10:26:55 -0400 (EDT)
+From: cve-assign@...re.org
+To: tiwai@...e.de, kangjielu@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, csong84@...ech.edu, insu@...ech.edu, taesoo@...ech.edu
+Subject: Re: CVE Request: alsa: kernel information leak vulnerability in Linux sound/core/timer
 Content-Type: text/plain; charset=utf-8
 
-Hi:
-BigTree CMS 4.2.13 - Cross-Site Scripting (XSS) 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Procuct: BigTree CMS
+> https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=cec8f96e49d9be372fdb0c3836dcf31ec71e457e
+>   ALSA: timer: Fix leak in SNDRV_TIMER_IOCTL_PARAMS
+> 
+> https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=9a47e9cff994f37f7f0dbd9ae23740d0f64f9fe6
+>   ALSA: timer: Fix leak in events via snd_timer_user_ccallback
+> 
+> https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=e4ec8cc8039a7063e24204299b462bd1383184a5
+>   ALSA: timer: Fix leak in events via snd_timer_user_tinterrupt
 
-Vendor: BigTree CMS (https://www.bigtreecms.org/)
 
-Vunlerable Version: 4.2.13 and probably prior
+> Maybe we can fold
 
-Tested Version: 4.2.13
+That is not what we are going to do. Because the meaning of
+CVE-2016-4569 was already established to be the
+http://comments.gmane.org/gmane.linux.kernel/2214250 issue with the
+"tread" object, which is only
+cec8f96e49d9be372fdb0c3836dcf31ec71e457e, we are keeping that
+ID assignment the same.
 
-Author: Haojun Hou in ADLab of Venustech
+Use CVE-2016-4578 for both 9a47e9cff994f37f7f0dbd9ae23740d0f64f9fe6
+and e4ec8cc8039a7063e24204299b462bd1383184a5.
 
- 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Advisory Details:
-
-Haojun Hou in ADLab of Venustech discovered a Cross-Site Scripting (XSS) in BigTree CMS, which can be exploited to add,modify or delete information in application`s database and gain complete control over the application.
-
- 
-
-The vulnerability exists due to insufficientfiltration of user-supplied data in “id” HTTP GET parameter passed to “core/admin/adjax/dashboard/check-module-integrity.php” url. An attacker could execute arbitrary HTML and script code in browser in context of the vulnerable website.
-
-The exploitation example below uses the "alert()" JavaScript function to see a  pop-up messagebox:
-
-http://localhost/BigTreeCMS/core/admin/adjax/dashboard/check-module-integrity.php?id=“><script>alert(1);</script>< <http://localhost/BigTreeCMS/core/admin/adjax/dashboard/check-module-integrity.php?id=>”
-
- 
-
-Could you please help me assign a CVE for this issue?
+iQIcBAEBCAAGBQJXM0CDAAoJEHb/MwWLVhi2YdAQAKibrD8XeEWMfNOhVt1JJZyK
+7tjA7BnVA96YCv/wl5Ry4hbNCA7TmFIYjq4M9Fahbr/dlJxkol4xXGCmX2sOTA8l
+vAKVt30oYpgmESleRz8vJ5JVSYEXmem4v4y4xX37w3WNf6fXhB83zm1nniWddwio
+GLV7UGxZTfs+jCeZo0ou+Db02YpqgR5E0oOOIvPNuX6xLkNQy0JFNzRTKfP0Eo2W
+wLoKx7R6l74pe1FPoOqkGEs8oQ7fs1M9nQfUydsUqwTz8fGtwxVScOthze3FguaK
+UFJOr5pfM7aV5pZbxhvh/umd5hnl8LmkT91VqhpA8r5M2l9rqV0vRzr1PfbXeQfe
+UOpsS24GKgQ0wvGPBvxU8GCJcY3NPs2mF6fxrR46fwf1R5sZfwRV/nrS76E2CSuZ
+9VQ1v90VkH1uRZd8g7iluwlTa+V5EWiqUcTxuQPv1SjZGNDUqV+wOW8ttazCszwe
+DdjJRvmBnyyb835BJo24afw0u/QZkQCwdtub4ZQqBkuGudYIK+8AZsMG3vZ+Jlt7
+ZL4VFrSRsDW1c8pfBEkdH9/YJIEeEHckLOWcD2DoqokzcjVcr4DDw3bVuBTK2hwn
+OwMX7iXXuPEuJFeotCiv4VkK94DfdtVwJ4p55ErIDHHpkXBMB8BLuBdgvbNXw/FO
+DU8UQO+pwaNTDNx55N9Z
+=M8WL
+-----END PGP SIGNATURE-----
