@@ -1,24 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/14
-Message-ID: <20160929135430.GA11369@chrystal.uk.oracle.com>
-Date: Thu, 29 Sep 2016 15:54:30 +0200
-From: Quentin Casasnovas <quentin.casasnovas@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/2
+Message-ID: <5732F3E2.9070409@redhat.com>
+Date: Wed, 11 May 2016 10:57:06 +0200
+From: Adam Maris <amaris@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "cve-assign@...re.org" <cve-assign@...re.org>
-Subject: Re: CVE request - Linux kernel through 4.6.2 allows escalade privileges via IP6T_SO_SET_REPLACE compat setsockopt call
+Subject: CVE request: Mishandling the first propagated copy being a slave
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 29, 2016 at 07:43:35AM +0000, 张谦 wrote:
-> Hi there,
-> I found a memory corruption vulnerabiliry in Linux kernel through 4.6.2, and I have a working exploit to escalade privileges which requires the ip6_tables module to be loaded, that it is properly blocked on all up-to-date versions.
-> Due to the number of users running vulnerable code(not update to 4.7 or higher), and that this exploit is only available to security researchers and kernel packagers upon request but that I don't want it to spread.
-> 
-> I have reported this issue to Linux kernel official and they have already fixed this.
-> And I would like to request CVE-ID for this issue.
-> 
+Hello,
 
-This was already disclosed here and CVEs were assigned AFAICT:
+When the first propagated copy was a slave, it results into kernel oops.
+This oops happens with the namespace_sem held and can be triggered by
+non-root users.
 
- http://seclists.org/oss-sec/2016/q2/599
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=5ec0811d30378ae104f250bfc9b3640242d81e3f
 
-Quentin
+Regards,
+
+-- 
+Adam Mariš, Red Hat Product Security
+1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
+
+
