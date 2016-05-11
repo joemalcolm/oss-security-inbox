@@ -1,34 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/18/6
-Message-ID: <1455764639.23773.4.camel@gmail.com>
-Date: Wed, 17 Feb 2016 22:03:59 -0500
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Address Sanitizer local root
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/9
+Message-ID: <CABEk9YyfmYsnNq+1w57fYUd96wVn7VzVSNjrUkpbKKHAb24O7Q@mail.gmail.com>
+Date: Wed, 11 May 2016 11:41:41 -0400
+From: Kangjie Lu <kangjielu@...il.com>
+To: Takashi Iwai <tiwai@...e.de>
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com,  Chengyu Song <csong84@...ech.edu>, Insu Yun <insu@...ech.edu>, Taesoo Kim <taesoo@...ech.edu>
+Subject: Re: CVE Request: alsa: kernel information leak vulnerability in Linux sound/core/timer
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2016-02-17 at 17:24 -0800, Konstantin Serebryany wrote:
-> Sadly MPX is too slow, too memory-hungry, and does not protect from
-> use-after-free at all.
+On Wed, May 11, 2016 at 10:34 AM, Takashi Iwai <tiwai@...e.de> wrote:
 
-MPX is definitely problematic (performance, memory usage, false
-positives with some atomic data structures, false positives without
-using it everywhere - essentially a new ABI) but I don't think the lack
-of coverage for lifetime issues is a major issue.
+> On Wed, 11 May 2016 16:26:55 +0200,
+> cve-assign@...re.org wrote:
+> >
+> > >
+> https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=cec8f96e49d9be372fdb0c3836dcf31ec71e457e
+> > >   ALSA: timer: Fix leak in SNDRV_TIMER_IOCTL_PARAMS
+> > >
+> > >
+> https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=9a47e9cff994f37f7f0dbd9ae23740d0f64f9fe6
+> > >   ALSA: timer: Fix leak in events via snd_timer_user_ccallback
+> > >
+> > >
+> https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=e4ec8cc8039a7063e24204299b462bd1383184a5
+> > >   ALSA: timer: Fix leak in events via snd_timer_user_tinterrupt
+> >
+> >
+> > > Maybe we can fold
+> >
+> > That is not what we are going to do. Because the meaning of
+> > CVE-2016-4569 was already established to be the
+> > http://comments.gmane.org/gmane.linux.kernel/2214250 issue with the
+> > "tread" object, which is only
+> > cec8f96e49d9be372fdb0c3836dcf31ec71e457e, we are keeping that
+> > ID assignment the same.
+> >
+> > Use CVE-2016-4578 for both 9a47e9cff994f37f7f0dbd9ae23740d0f64f9fe6
+> > and e4ec8cc8039a7063e24204299b462bd1383184a5.
+>
+> Fair enough.
+>
+> (And, at the next time, please put the maintainer into Cc from the
+>  beginning.  This would have saved lots of time in both sides.)
+>
 
-The malloc implementation can do a good job at mitigating lifetime
-issues though. It can't detect 100% of UAF issues, but it can force
-usage of pointers to fault (via proper junk filling) and detect write
-after free via a comparable quarantine technique + validating that the
-junk data is unaltered when allocations leave the quarantine. It can be
-just as good at detecting double-free.
+Thank you all! Sure, will do that next time.
 
-See the follow-up email:
+Kangjie
 
-http://www.openwall.com/lists/oss-security/2016/02/18/3
+>
+>
+> thanks,
+>
+> Takashi
+>
 
-It's extremely painful to actually debug the aborts and faults produced
-from this kind of hardening, so it doesn't really displace ASan at all
-even for the bits where it can be as reliable, and it doesn't cover the
-read-after-free case in the same way.
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
