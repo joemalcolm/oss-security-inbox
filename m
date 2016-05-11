@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2813" "Saturday" "17" "March" "2018" "10:03:43" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20180317100343.4edeba53@pc1>" "59" "[oss-security] Squirrelmail directory traversal vulnerability allows exfiltrating files from server" nil nil nil "3" "2018031709:03:43" "[oss-security] Squirrelmail directory traversal vulnerability allows exfiltrating files from server" (number mark "U       hanno@hboeck Mar 17   59/2813  " thread-indent "\"[oss-security] Squirrelmail directory traversal vulnerability allows exfiltrating files from server\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1011" "Wednesday" "11" "May" "2016" "22:44:13" "+0200" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdR-N=-+o7L_eCkd9b4Sv05woTVLh6_r7JekMEJFPBQmNw@mail.gmail.com>" "35" "[oss-security] Re: CVE requested: two stack exhaustation parsing xml files using mxml" nil nil nil "5" "2016051120:44:13" "[oss-security] Re: CVE requested: two stack exhaustation parsing xml files using mxml" (number mark "U       gustavo.grie May 11   35/1011  " thread-indent "\"[oss-security] Re: CVE requested: two stack exhaustation parsing xml files using mxml\"\n") "<20160509232519.6082F52E015@smtpvbsrv1.mitre.org>" ("<CACn5sdRgkmEjLHf4-QejK6x8LSNupa4XKj3N_izTUBjt=HFFbw@mail.gmail.com>" "<20160509232519.6082F52E015@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26528 invoked by uid 550); 17 Mar 2018 09:04:05 -0000
+Received: (qmail 23723 invoked by uid 550); 11 May 2016 20:44:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,74 +12,76 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26454 invoked from network); 17 Mar 2018 09:04:02 -0000
-Date: Sat, 17 Mar 2018 10:03:43 +0100
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
-To: Open Source Security <oss-security@lists.openwall.com>
-Message-ID: <20180317100343.4edeba53@pc1>
-X-Mailer: Claws Mail 3.16.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Received: (qmail 23696 invoked from network); 11 May 2016 20:44:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=jN/Hgc7vyP3QlTsoI/hkQhYw0k6GSFuERRnK4gpxxrw=;
+        b=D49AlrkGlt/gHcN17X2jN4nkcOTz5vaZ8RCz7w5rKwpXBnUg2D4yk6LbbWuQaprzzI
+         GOYflw7IRvm9nUtLmiOxOArAmtwPME9jxU/Xif45yiKY3N9mMoHvsXZSR46vGqfaOBUy
+         DnZQ/N5vno7YrQKQta49QWvA9+D1CAV6WTXT9bS6CJ/eSfOsdpSIuJHBL/okHPctSlXe
+         fW4Q64KOeSDfmZHhGF7f7vR71qCqJG94XzGGVG8KCOTdkPP1BKxA5eG2ripSwwPMruC5
+         sUKhZaWJQTa9dxSDUroT2wJRTS7RkfGyuVLfDEcThH/CuYeKAXL29Mf3epCCHV4XTn/n
+         h+jA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=jN/Hgc7vyP3QlTsoI/hkQhYw0k6GSFuERRnK4gpxxrw=;
+        b=GHiGbIdaFlRN9veGwocbxwv8uyKZBVctS1rI6PMl+anlTjCs6uZPakschG4wJJkd1C
+         p0VbYoI5BUtZH28m5/Sy8kR7Hd7sMmwaOqTqmDtq/vxkWd9bLS3TkgvkqllqDj1y4TJa
+         q9EWbpG8gESSEOiTFRvf2PYvZkVkxSIkhjw4mDDbVpz9O8rp1tZBZbj3el8lGxJ34Mjh
+         UVBNlYv/Zci+f/Aoef8e1PuYtQijoUZzAaBxPNIvivtYTM8r/CtQYKjsvZlARbZzs3xu
+         6jjiTR8vVwREfpSYXWRhRljp0hpHQPIoRkZPLzHqSVBb+ron+HSGUUxTgpNhticMAmF0
+         XpGg==
+X-Gm-Message-State: AOPr4FWXG21ETr8+bZnAQskqSq8gvsRax2OGzWuAeWikoO6cWdhA6hL1inZsvj0BnvnS7MUMlCBCGdc9IwCPfg==
 MIME-Version: 1.0
+X-Received: by 10.25.207.134 with SMTP id f128mr2536269lfg.83.1462999453255;
+ Wed, 11 May 2016 13:44:13 -0700 (PDT)
+In-Reply-To: <20160509232519.6082F52E015@smtpvbsrv1.mitre.org>
+References: <CACn5sdRgkmEjLHf4-QejK6x8LSNupa4XKj3N_izTUBjt=HFFbw@mail.gmail.com>
+	<20160509232519.6082F52E015@smtpvbsrv1.mitre.org>
+Date: Wed, 11 May 2016 22:44:13 +0200
+Message-ID: <CACn5sdR-N=-+o7L_eCkd9b4Sv05woTVLh6_r7JekMEJFPBQmNw@mail.gmail.com>
+From: Gustavo Grieco <gustavo.grieco@gmail.com>
+To: cve-assign@mitre.org
+Cc: oss-security@lists.openwall.com
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] Squirrelmail directory traversal vulnerability allows exfiltrating
- files from server
+Subject: [oss-security] Re: CVE requested: two stack exhaustation parsing xml files using mxml
 
-Hi,
+2016-05-10 1:25 GMT+02:00  <cve-assign@mitre.org>:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+>> We found two stack exhaustion conditions that can easily crash mxml
+>> when parsing an xml.
+>
+> (The two example XML documents seem dissimilar. For example,
+> stack-exhaustion-2.xml starts with "<?xml" whereas
+> stack-exhaustion-1.xml does not.)
+>
+>
+>> Recursion using mxmlDelete at mxml-node.c:217 (stack-exhaustion-1.xml)
+>
+> Use CVE-2016-4570.
+>
+>
+>> Recursion using mxml_write_node at mxml-file.c:2739 (stack-exhaustion-2.xml)
+>
+> Use CVE-2016-4571.
 
-During the Troopers conference this week an unpatched vulnerability in
-squirrelmail was presented by Florian Grunow from ERNW [1].
+Thanks!
 
-The issue is that when uploading a mail attachment a temporary file is
-generated on the server that the client later references when sending
-the mail. The filename is not sanitized in any way, so by passing a
-filename of the form "../../../../some_path/some_filename" one can use
-this to attach arbitrary files from the server that can be accessed by
-the PHP process to a mail. Thus an attacker who has a mail account
-could use this to exfiltrate files and send them as attachments.
+The report of these stack exhaustions is here:
 
-The bug is unfixed. The finders say they tried to reach out to the
-squirrelmail developers, but were unable to contact them.
+http://www.msweet.org/bugs.php?U549 (but you need to register)
 
-Squirrelmail hasn't had a release for many years and the webpage has
-its last news from 2013. But despite that until recently the subversion
-repository and the provided svn snapshots still provided security
-fixes, e.g. a 2017 found injection vuln [2] was fixed.
-Despite its stale state I believe many people still use squirrelmail,
-in my experience it works better than alternatives like roundcube in
-situations where you have very weak internet connections.
+Just to clarify, since we compiled testmxml with ASAN, in order to
+reproduce  using the attached files in the original binary it is
+necessary to reduce a little the stack size, for instance:
 
-I created a preliminary quick and dirty patch that should close the
-main hole [3]. It guarantees that the filename only contains letters
-and numbers (this should be okay as the filename is created by
-squirrelmail and usually doesn't contain any user-controlled
-characters in normal operation) and otherwise just terminates the
-process. There may be an obscure cornercase where this patch does not
-fully protect: If for some reason a user can guess another users
-temporary filename while writing a mail one may be able to exfiltrate
-that. I find that unlikely enough that I haven't bothered looking more
-into this.
+$ ulimit -s 4000
 
-The researchers found this flaw while investigating a check point
-appliance that bundles squirrelmail for their webmail functionality. As
-squirrelmail is GPL I asked check point to share the patch, which they
-did and I'm providing it here [4]. I haven't reviewed it, but the ERNW
-people told me it may not work with all PHP versions.
-
-In any case if anyone has contact to the squirrelmail authors it would
-be great if they could incorporate a fix (and maybe even provide a new
-release). Otherwise everyone using squirrelmail should obviously
-patch this manually.
-
-[1]
-https://insinuator.net/2018/03/squirrelmail-full-disclosure-troopers18/
-[2]
-https://legalhackers.com/advisories/SquirrelMail-Exploit-Remote-Code-Exec-C=
-VE-2017-7692-Vuln.html
-[3] https://gist.github.com/hannob/3c4f86863c418930ad08853c1109364e
-[4] https://paste.pound-python.org/show/OjSLiFTxiBrTk63jqEUu/
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
-
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+The stack exhaustations are still possible with the original testmxml
+binary, but it requires slightly bigger files.
