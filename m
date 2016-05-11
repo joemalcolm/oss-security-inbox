@@ -1,13 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/16
-Message-ID: <20161205185654.GA13378@jasmine>
-Date: Mon, 5 Dec 2016 13:56:54 -0500
-From: Leo Famulari <leo@...ulari.name>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-8740: Apache HTTPD 2.4.17-2.4.23: Server memory can be exhausted and service denied when HTTP/2 is used
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/14
+Message-ID: <CACn5sdR-N=-+o7L_eCkd9b4Sv05woTVLh6_r7JekMEJFPBQmNw@mail.gmail.com>
+Date: Wed, 11 May 2016 22:44:13 +0200
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE requested: two stack exhaustation parsing xml files using mxml
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Dec 05, 2016 at 07:22:10PM +0100, Solar Designer wrote:
-> Patch against 2.4.23 release source:
+2016-05-10 1:25 GMT+02:00  <cve-assign@...re.org>:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+>> We found two stack exhaustion conditions that can easily crash mxml
+>> when parsing an xml.
+>
+> (The two example XML documents seem dissimilar. For example,
+> stack-exhaustion-2.xml starts with "<?xml" whereas
+> stack-exhaustion-1.xml does not.)
+>
+>
+>> Recursion using mxmlDelete at mxml-node.c:217 (stack-exhaustion-1.xml)
+>
+> Use CVE-2016-4570.
+>
+>
+>> Recursion using mxml_write_node at mxml-file.c:2739 (stack-exhaustion-2.xml)
+>
+> Use CVE-2016-4571.
 
-I think you forgot to forward the patch.
+Thanks!
+
+The report of these stack exhaustions is here:
+
+http://www.msweet.org/bugs.php?U549 (but you need to register)
+
+Just to clarify, since we compiled testmxml with ASAN, in order to
+reproduce  using the attached files in the original binary it is
+necessary to reduce a little the stack size, for instance:
+
+$ ulimit -s 4000
+
+The stack exhaustations are still possible with the original testmxml
+binary, but it requires slightly bigger files.
