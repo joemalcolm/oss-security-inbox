@@ -1,65 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/7
-Message-ID: <2016111816551064884867@gmail.com>
-Date: Fri, 18 Nov 2016 16:55:12 +0800
-From: "wykcomputer@...il.com" <wykcomputer@...il.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: [Bug report] Vulnerability In libbpg-2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/3
+Message-ID: <20160511120119.056ad3c2@pc1>
+Date: Wed, 11 May 2016 12:01:19 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: ImageMagick heap overflow and out of bounds read
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-I find a out-of-bounds write issue in libbpg(0.9.7, maybe other early versions), which can lead to memory corruption or even remote code execution.
-I have reported it to the author of libbpg, but no responding, so I report it to you.
+https://blog.fuzzing-project.org/45-ImageMagick-heap-overflow-and-out-of-bounds-read.html
 
-Run ./bpgenc PoC.jpg out.bpg, get the crash as follows.
-Crash Log:
-Program received signal SIGSEGV, Segmentation fault.
-0x00000000004069ce in gray8_to_gray (s=0x7fffffffd320, y_ptr=0x0, 
-    src=0x7ffff0000df0 "\233\264\237\255\257\252\256\253", '\254' <repeats 56 times>, 'Y' <repeats 24 times>, "\020\342T]P\023\233q\377\377\377\377\377\377\377\377", 'w' <repeats 64 times>, "vwx{uw~m\221", '\377' <repeats 23 times>..., n=65260, incr=1) at bpgenc.c:255
-255         y_ptr[i] = (c * g + rnd) >> shift;
-(gdb) bt
-#0  0x00000000004069ce in gray8_to_gray (s=0x7fffffffd320, y_ptr=0x0, 
-    src=0x7ffff0000df0 "\233\264\237\255\257\252\256\253", '\254' <repeats 56 times>, 'Y' <repeats 24 times>, "\020\342T]P\023\233q\377\377\377\377\377\377\377\377", 'w' <repeats 64 times>, "vwx{uw~m\221", '\377' <repeats 23 times>..., n=65260, incr=1) at bpgenc.c:255
-#1  0x000000000040a0d3 in read_jpeg (pmd=0x7fffffffd8f8, f=0x11ca730, out_bit_depth=8) at bpgenc.c:1368
-#2  0x000000000040a496 in load_image (pmd=0x7fffffffd978, infilename=0x7fffffffe28a "../libbpg-0.9.7/out_enc_jpg/crashes/0.jpg", color_space=BPG_CS_YCbCr, bit_depth=8, limited_range=0, 
-    premultiplied_alpha=0) at bpgenc.c:1451
-#3  0x000000000040e0e1 in main (argc=4, argv=0x7fffffffdeb8) at bpgenc.c:2942
+Recently the ImageTragick vulnerability shed some light on the security
+status of ImageMagick.
 
-read_jpeg function in bpgenc.c, img->data[i] = malloc(linesize * h1), linesize * h1 maybe integer over-flow(larger than 0xffffffff), this lead to malloc a smaller memory than expected, when execute to gray8_to_gray, maybe cause out-of-bounds write.
+This made me wonder how resilient to fuzzing ImageMagick is these days.
+It's pretty much a posterchild example for a good fuzzing target: Lots
+of supported complex binary file formats.
 
-Image *read_jpeg(BPGMetaData **pmd, FILE *f, int out_bit_depth)
-//...
-img = image_alloc(w, h, format, has_alpha, color_space, out_bit_depth);
-|
-|->for(i = 0; i < c_count; i++) {
-get_plane_res(img, &w1, &h1, i);
-/* multiple of 16 pixels to add borders */
-w1 = (w1 + (W_PAD - 1)) & ~(W_PAD - 1);
-h1 = (h1 + (W_PAD - 1)) & ~(W_PAD - 1);
+I already did some fuzzing on ImageMagick, but as far as I remember
+that was before I used american fuzzy lop and was done with zzuf. I was
+also aware that others did some more thorough fuzzing on ImageMagick.
+http://www.openwall.com/lists/oss-security/2014/12/24/1
 
-linesize = w1 << img->pixel_shift;
-img->data[i] = malloc(linesize * h1);//maybe integer overflow
+What I did now was relatively simple: I took a trivial, few pixels PNG
+and used ImageMagick's "convert" tool to convert it into all file
+formats that have both read and write support in ImageMagick. I used
+that to run a fuzzing job with afl and asan. By design ImageMagick will
+sometimes do huge memory allocations, these can be prevented by setting
+limits for the width, height and memory usage in the policy.xml file.
 
-//...
-ptr = (PIXEL *)(img->data[idx] + 
-                                    img->linesize[idx] * (y1 + i));
-        gray8_to_gray(cvt, ptr, rows[c_idx][i], w1, 1);
-|
-|->y_ptr[i] = (c * g + rnd) >> shift;
+I discovered one heap buffer overflow in the PICT parser and one heap
+out of bounds read in the PSD parser. Given how big the attack surface
+is this is not terrible, but it shows that despite previous efforts
+there's still potential to fuzz ImageMagick.
 
-Fix:
-To check the integer overflow issue. Such as,
-linesize = w1 << img->pixel_shift;
-+ uint64_t tmp = (uint64_t)linesize * h1;
-+ if(tmp > 0xffffffff)
-return NULL;
-img->data[i] = malloc(linesize * h1);
+https://crashes.fuzzing-project.org/imagemagick-heapoverflow-WritePixelCachePixels.pict
+Sample file for heap buffer overflow in WritePixelCachePixels() (PICT
+format)
+https://github.com/ImageMagick/ImageMagick/commit/cfbe890d0cfcd5d3b0f63744a6901e40e992e07c
+Git commit / fix
 
-Thank you for your reading!
+https://crashes.fuzzing-project.org/imagemagick-oob-heap-read-PushShortPixel.psd
+Sample file for heap out of bounds read in PushShortPixel() (PSD format)
+https://github.com/ImageMagick/ImageMagick/commit/15dd190dfd7e7a3341bdc378f4f0daba9873322c
+Git commit / fix
 
+https://www.imagemagick.org/script/changelog.php
+Both issues have been fixed in the versions 6.9.4-0 and 7.0.1-2. In the
+meantime new versions (6.9.4-1, 7.0.1-3) came out that, as far as I
+understand the ChangeLog, remove another potential vector for the
+ImageTragick vulnerabilities, so you should preferrably update to those.
 
-wykcomputer@...il.com
+-- 
+Hanno Böck
+https://hboeck.de/
 
-Content of type "text/html" skipped
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-Download attachment "PoC.jpg" of type "application/octet-stream" (10400 bytes)
+Content of type "application/pgp-signature" skipped
