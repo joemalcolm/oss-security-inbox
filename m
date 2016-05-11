@@ -1,60 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/05/13
-Message-ID: <20160305224306.GE1250@sentinelchicken.org>
-Date: Sat, 5 Mar 2016 14:43:06 -0800
-From: Tim <tim-security@...tinelchicken.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/13
+Message-ID: <CAGDGa53U+Nq3nZv-u7azf--UuHdex0PmXB6tmaRct81scV5y7Q@mail.gmail.com>
+Date: Wed, 11 May 2016 16:28:57 -0300
+From: Oliveira Lima <oliveiralimajr@...il.com>
+To: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Request CVE ID for Simple Photo Gallery 1.8.0 - Stored XSS
 Content-Type: text/plain; charset=utf-8
 
+request CVE ID for Simple Photo Gallery <= 1.8.0 - Stored Cross-Site
+Scripting (XSS)
 
-> Of course, the information will need to be available to those
-> third-party databases from somewhere - but this can be the researcher's
-> or the vendor's disclosure, as you say.  Until such disclosure, a
-> customer would not even be aware of the ID, let alone want to look it up.
+Description
+***********************
 
-The trouble with third-party databases is that they aren't a reliable
-archive of information.  I can't tell you how many times I've found a
-vulnerability scanner detecting an issue, and I go back to get more
-details to understand the risk, only to find all the technical details
-have been taken offline.  It is a major gap in the security
-community's (and IT industry's) tool set that we don't have a
-reliable, single archive of vulnerability information.  It is a huge
-waste of time looking up every bug.  And when I say "reliable" I
-merely mean the information won't go away tomorrow (like the old FD
-did so suddenly).  I don't mean the information must always be true or
-validated, just available.
+The plugin allows the execution of malicious codes on name input of the
+gallery and album.
 
-Providing something like this is clearly a significant undertaking and
-isn't something most security companies can make any real money at.
-*Maybe* a well-thought-out non-profit could accomplish this and still
-make ends meet by providing bulk feeds for a small subscription fee.
-Obviously a government has the resources to do this, if not always the
-competence.  Currently my government is just "letting the Internet
-burn", as they say, so I'm not optimistic that DHS or whatever is
-going to step up.
+Proof of Concept URL
+***************************
 
+http://www.rootlabs.com.br/xss-simple-photo-gallery/
 
-> A drawback is that such requests become somewhat security-sensitive, if
-> for yet unpublished issues.  This is already a major concern with CVE,
-> where information may be subject to unjustified risk for the purpose of
-> merely getting an ID assigned.
+Report Timeline
+************************
+26-April-2016- Reported
+27-April-2016- Vendor Response
+27 -April-2016- Vendor Fixed
+28-April-2016- Public disclosed
 
+Vendo Reference
+*****************
+https://br.wordpress.org/plugins/simple-photo-gallery/changelog/
 
-That's a good point.  As a researcher, I want an ID very early in the
-process (before going public) so I can refer to it when interacting
-with a vendor and draft my advisory in advance.  One *could* accept
-submissions "to be released on date ...", but then any database like
-that will become a target.
+References
+*****************
 
-So instead, this hypothetical web app could require only basic
-information about the products affected up front, and then allow
-arbitrary additions of content later.  (Note I said additions, not
-changes).  I think it should also allow anonymous submission, perhaps
-only with validation of email addresses (which could be burners).  It's
-all too easy for researchers to become victim of idiotic libel
-lawsuits.  (Which then leads one to wonder what legal defenses the
-hosting org needs...)
+<https://br.wordpress.org/plugins/simple-photo-gallery/changelog/>
+http://www.rootlabs.com.br/xss-simple-photo-gallery/
+https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
 
-Cheers,
-tim
+-- 
+Oliveira Lima Jr
+rootlabs.com.br
+Linkedin <http://br.linkedin.com/pub/oliveira-lima-junior/2b/48/285/>
+@oliveiralimajr <https://twitter.com/oliveiralimajr>
+
