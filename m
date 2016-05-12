@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2009" "Wednesday" "2" "December" "2015" "09:49:56" "+0100" "Sebastian Krahmer" "krahmer@suse.com" "<20151202084956.GA11762@suse.de>" "56" "Re: [oss-security] Re: CVE Request: dhcpcd 3.x, potentially other versions too" "^Date:" nil nil "12" "2015120208:49:56" "[oss-security] Re: CVE Request: dhcpcd 3.x, potentially other versions too" (number mark "        krahmer@suse Dec  2   56/2009  " thread-indent "\"Re: [oss-security] Re: CVE Request: dhcpcd 3.x, potentially other versions too\"\n") "<20151202075811.GL24908@hunt>" ("<20151202015146.GJ24908@hunt>" "<20151202045847.129B06C0063@smtpvmsrv1.mitre.org>" "<20151202075811.GL24908@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1343" "Wednesday" "11" "May" "2016" "20:12:32" "-0400" "ira.weiny" "ira.weiny@intel.com" "<20160512001231.GB27943@phlsvsds.ph.intel.com>" "50" "Re: [oss-security] CVE Request: Linux: IB/security: Restrict use of the write() interface'" nil nil nil "5" "2016051200:12:32" "[oss-security] CVE Request: Linux: IB/security: Restrict use of the write() interface'" (number mark "U       ira.weiny@in May 11   50/1343  " thread-indent "\"Re: [oss-security] CVE Request: Linux: IB/security: Restrict use of the write() interface'\"\n") "<1462823339.4268.54.camel@opteya.com>" ("<20160507042232.GA5286@eldamar.local>" "<1462823339.4268.54.camel@opteya.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21508 invoked by uid 550); 2 Dec 2015 08:50:08 -0000
+Received: (qmail 30490 invoked by uid 550); 12 May 2016 11:23:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,81 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20460 invoked from network); 2 Dec 2015 08:50:08 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20151202084956.GA11762@suse.de>
-References: <20151202015146.GJ24908@hunt>
- <20151202045847.129B06C0063@smtpvmsrv1.mitre.org>
- <20151202075811.GL24908@hunt>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20151202075811.GL24908@hunt>
-Organization: SUSE Linux GmbH, GF: Felix =?utf-8?Q?Imend?=
- =?utf-8?Q?=F6rffer?= =?utf-8?Q?=2C?= Jane Smithard, Graham Norton, HRB 21284
- (AG Nuernberg)
-User-Agent: Outlook
-Date: Wed, 2 Dec 2015 09:49:56 +0100
-From: Sebastian Krahmer <krahmer@suse.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE Request: dhcpcd 3.x, potentially other
- versions too
-To: cve-assign@mitre.org, oss-security@lists.openwall.com,
-	guidovranken@gmail.com
+Received: (qmail 28052 invoked from network); 12 May 2016 00:12:47 -0000
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.24,609,1455004800"; 
+   d="scan'208";a="964049981"
+X-Authentication-Warning: phlsvsds.ph.intel.com: iweiny set sender to ira.weiny@intel.com using -f
+Date: Wed, 11 May 2016 20:12:32 -0400
+From: "ira.weiny" <ira.weiny@intel.com>
+To: Yann Droneaud <ydroneaud@opteya.com>
+Cc: oss-security@lists.openwall.com, Doug Ledford <dledford@redhat.com>,
+        Red Hat Security Response Team <secalert@redhat.com>,
+        Ben Hutchings <benh@debian.org>, linux-rdma@vger.kernel.org
+Message-ID: <20160512001231.GB27943@phlsvsds.ph.intel.com>
+References: <20160507042232.GA5286@eldamar.local> <1462823339.4268.54.camel@opteya.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1462823339.4268.54.camel@opteya.com>
+User-Agent: Mutt/1.4.2.2i
+Subject: Re: [oss-security] CVE Request: Linux: IB/security: Restrict use of the write() interface'
 
-Hi
-
-On Tue, Dec 01, 2015 at 11:58:11PM -0800, Seth Arnold wrote:
-> On Tue, Dec 01, 2015 at 11:58:47PM -0500, cve-assign@mitre.org wrote:
-> > MITRE will assign CVE IDs. Do the above references mean that most of
-> > the changed code lines in dhcp.c.patch correspond to out-of-bounds
-> > reads shown in the
-> > http://roy.marples.name/projects/dhcpcd/fdiff?sbs=1&v1=63689c50411b0920&v2=dad877391ea5b128
-> > diff,
+On Mon, May 09, 2016 at 09:48:59PM +0200, Yann Droneaud wrote:
+> Hi,
 > 
-> I had expected this part of the diff to address the out-of-bounds writes:
 > 
-> 		if (out && out != start)
-> 			*(out - 1) = ' ';
-
-Ack, looks like heap[-1] OOB write to me.
-
+> As a workaround, I would suggest that systems which do not require
+> (userspace) RDMA/Infiniband to blacklist/remove the following modules:
 > 
-> > the change from "(l = *q++)" to "(l = *q++) && q - p < len"
-> > corresponds to an out-of-bounds write,
-> 
-> I must confess that I skimmed the protected code block quickly when coming
-> to the conclusion that this was out-of-bounds reads -- it's intricate and
-> involved and the q - p < len check looked correct. But the memcpy(out,...)
-> call does look like it'd also perform out-of-bounds writes.
+>   rdma_ucm
+>   ib_uverbs
+>   ib_ucm
+>   ib_umad
 
-Recalling from my last analyse, I think this is just an OOB read, because
-decode_search() is called with out being NULL to count the amount of data
-to be copied later. Unless this data is somehow modified the next call
-to decode_search() should have sufficient amount of heap allocated for
-the memcpy() to be correct. But the loop has an OOB read when counting
-the data (and later when copying it and there wasnt already a SIGSEGV).
+NOTE: AFAICT ib_umad is not vulnerable as it uses correct write/read semantics.
+However, if you are disabling the other modules you probably have no use for
+ib_umad either.
 
+Ira
 
 > 
-> > the deletion of "free
-> > (dhcp->dnssearch)" corresponds to a use-after-free, and nothing else
-> > in the 2012 part of the http://roy.marples.name reference is a new
-> > vulnerability? (This is just a guess.)
+> For example, adds the following in /etc/modprobe.d/blacklist.conf
 > 
-> I should point out that it's my summary that it's a use-after-free --
-> Guido said in his report that it is a double-free.
-
-I think that both classes are basically the same.
-
-After all, maybe quite challenging to exploit for one-packet client
-side.
-
-Sebastian
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@suse.com - SuSE Security Team
-
+>   blacklist rdma_ucm
+>   blacklist ib_uverbs
+>   blacklist ib_ucm
+>   blacklist ib_umad
+> 
+> Those building their own kernel might want to disable, if not already,
+> 
+>   CONFIG_INFINIBAND_USER_ACCESS, 
+>   CONFIG_INFINIBAND_USER_MAD,
+>   CONFIG_INFINIBAND_ADDR_TRANS
+> 
+> (Unfortunately the last one will also disable those features:
+>   iSCSI Extensions for RDMA (iSER)
+>   iSCSI Extensions for RDMA (iSER) target support
+>   RDS over Infiniband and iWARP
+>   9P RDMA Transport (Experimental)
+>   RPC-over-RDMA transport
+>     (which actually disable NFSoRDMA))
+> 
+> Regards.
+> 
+> -- 
+> Yann Droneaud
+> OPTEYA
+> 
+> --
+> To unsubscribe from this list: send the line "unsubscribe linux-rdma" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
