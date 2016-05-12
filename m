@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["575" "Friday" "24" "June" "2016" "10:14:46" "-0700" "Alvaro Hoyos" "alvaro.hoyos@onelogin.com" "<CAAdSu-FbGNfOsfRv9saHTCso0fPQJ+QrJ5JamZf4_gcCq7LD6w@mail.gmail.com>" "18" "[oss-security] [CVE-2016-5697] signature wrapping attack vulnerability in ruby-saml prior to version 1.3.0" nil nil nil "6" "2016062417:14:46" "[oss-security] [CVE-2016-5697] signature wrapping attack vulnerability in ruby-saml prior to version 1.3.0" (number mark "U       alvaro.hoyos Jun 24   18/575   " thread-indent "\"[oss-security] [CVE-2016-5697] signature wrapping attack vulnerability in ruby-saml prior to version 1.3.0\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1878" "Thursday" "12" "May" "2016" "23:31:27" "+0800" "Marco Grassi" "marco.gra@gmail.com" "<CAFkTri+WhHVtePMwvQETGoabDot8UE=ZG+Xq8jG8WXP3+C1n1Q@mail.gmail.com>" "54" "[oss-security] Re: Linux Kernel bpf related UAF" nil nil nil "5" "2016051215:31:27" "[oss-security] Re: Linux Kernel bpf related UAF" (number mark "U       marco.gra@gm May 12   54/1878  " thread-indent "\"[oss-security] Re: Linux Kernel bpf related UAF\"\n") "<20160512152749.88F6A6C0689@smtpvmsrv1.mitre.org>" ("<CAFkTriLitb9v4MZn5b2HV9HGpu6VWHifgR3VZhDYoQwjGyaWBg@mail.gmail.com>" "<20160512152749.88F6A6C0689@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19768 invoked by uid 550); 24 Jun 2016 17:23:00 -0000
+Received: (qmail 14244 invoked by uid 550); 12 May 2016 15:31:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,52 +12,95 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13794 invoked from network); 24 Jun 2016 17:15:37 -0000
+Received: (qmail 14182 invoked from network); 12 May 2016 15:31:39 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=onelogin.com; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=byj4oa+1X663TIRxSbQMO6UPgXzi9b3quZFwyFonWzI=;
-        b=dj4IfEOyHt2eyD6h2/q76hmoIL8br7DybXlSyjK7dQ9w9rNgL6TacpYd2+ppRfK4cL
-         qA6rjFjhX/iSI/HIrqv+05pT6KMiRzSRLGicckSltf30hA1gSJVTiTt3VCNTBlFhgVLt
-         BRjCFdBg0SrO/92jLVWDwWpJSojQfjrCryokI=
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=mRmYOqkMFwFPr3/j1tqLpYy21w3lGuIuGKUAj3yN0yw=;
+        b=LHSG3pD4nMUVtxxm9ys3Lbvf3AfAsItUHQI5fmSSY2gasGjFAd0+QHODS2NUGtJbF8
+         GhjmBLCVA69M91Uj0aRPxFqTd9kIgX5MSaJd+VNSLzUwUVrvE4CJE1EOeBWQ0tWPKPap
+         l5V+IXRCp6AX1YtOVYAv9sfkayueHzBzR12d9OqDAE7C80sWfjUqUOo0JrJDKmvCX+Al
+         EsNyEAAA9hmSyBTdasiSMFV6+GSpTpcr+NNmOtvaYSMvxTGIh8C0asJWSCBTA3qiriM3
+         sKwgbaqrLz5s/q6k7KAtLQVzebOZ2LBHMePRKr+Z+4XlU2C2uYfLQOSeBkAdIXjUFN4o
+         dP6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=byj4oa+1X663TIRxSbQMO6UPgXzi9b3quZFwyFonWzI=;
-        b=dDjDsjKn8BcWq9l/awVXkKUP78E/u+9QAg4eD5hmU/S7LKZ3MwHhzILEcS9sId08h0
-         ydgmvJAF5Gfbb9CPlpGGcBnT6D4FIp1tGSICBzkzC8naJ9ecKG7juSHFeusFKVKbDSlQ
-         r+J3BKPwbExg+FKSkpmREatkwlJaPy8B+xBbwRdoHzaz1sSyJBJXfVKNQ//C73RwHmEs
-         eftlNoEAsEWkWWBAYwHohKyNs7N8rWWxeJPwXloHb1Xx3MB2JHZy2dYEf9yVpJwR4Hua
-         g9mypFretfm7c3E7k4MPmVPSIQDFUo0F3uydo1BlryVBonyB94mGjReLRdT91qLpl8la
-         Rc8Q==
-X-Gm-Message-State: ALyK8tJiH7zwKyfA63ds+8x7i6O1P837yZI5wM0IgRk+6x7pPNSoGEonUVYfetvHw7Rt2k5+k8e98u5VjYNW98y9
-X-Received: by 10.107.33.71 with SMTP id h68mr6939880ioh.10.1466788525922;
- Fri, 24 Jun 2016 10:15:25 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=mRmYOqkMFwFPr3/j1tqLpYy21w3lGuIuGKUAj3yN0yw=;
+        b=Ft48HBH6E6Vp/5UYB3eZGFI5aTLcSCmyIhsMo/uu0rs+RDDB5l0WpXoie1KZyknhTx
+         JtiqIbkNHkY6dYarz+7+lIWOpHmVVElKY5+CmOLTP31RbEaiykWxieDO361cm28iv2KS
+         mkNpbrxzMUMRKsp0VzvYkbX/6BvfJLDpBV/0GahE4tKXjOvQ1eLPj7kU1KFlcYyylhL2
+         /BsAiFi6xiCDxeTKHOkPAUEolAiMfqyp4IPDYgHLPck84O2GSW5MlvxLRJgxL23h/w8Q
+         Ueep6+/svJq8bZDaehvVN4Rf4Cl764cmESU7IfbQEbtAPDvoDANbX3CUfI7iSvTAtQxO
+         T1fw==
+X-Gm-Message-State: AOPr4FWv+BwZDphkYUo6vMEZQ83B2wqCJB/rWL1PMRz0TA5f7e+SPY1ZkWOm+hz/bvTOE+asK8VkAfNGkqDq7w==
 MIME-Version: 1.0
-From: Alvaro Hoyos <alvaro.hoyos@onelogin.com>
-Date: Fri, 24 Jun 2016 10:14:46 -0700
-Message-ID: <CAAdSu-FbGNfOsfRv9saHTCso0fPQJ+QrJ5JamZf4_gcCq7LD6w@mail.gmail.com>
-To: ruby-security-ann@googlegroups.com, rubysec-announce@googlegroups.com, 
-	oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a1140f4880c764e05360951ef
-Subject: [oss-security] [CVE-2016-5697] signature wrapping attack vulnerability in ruby-saml
- prior to version 1.3.0
+X-Received: by 10.202.94.132 with SMTP id s126mr5971678oib.34.1463067087259;
+ Thu, 12 May 2016 08:31:27 -0700 (PDT)
+In-Reply-To: <20160512152749.88F6A6C0689@smtpvmsrv1.mitre.org>
+References: <CAFkTriLitb9v4MZn5b2HV9HGpu6VWHifgR3VZhDYoQwjGyaWBg@mail.gmail.com>
+	<20160512152749.88F6A6C0689@smtpvmsrv1.mitre.org>
+Date: Thu, 12 May 2016 23:31:27 +0800
+Message-ID: <CAFkTri+WhHVtePMwvQETGoabDot8UE=ZG+Xq8jG8WXP3+C1n1Q@mail.gmail.com>
+From: Marco Grassi <marco.gra@gmail.com>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Content-Type: multipart/alternative; boundary=001a113d516004cf3d0532a6da07
+Subject: [oss-security] Re: Linux Kernel bpf related UAF
 
---001a1140f4880c764e05360951ef
+--001a113d516004cf3d0532a6da07
 Content-Type: text/plain; charset=UTF-8
 
-Overview:
-Ruby-saml prior to version 1.3.0 is vulnerable to an XML signature wrapping
-attack. Ruby-saml users must update to 1.3.0 version which implements 3
-extra validations to mitigate this kind of attack.
+https://lkml.org/lkml/2016/4/17/125
 
-Overall CVSS Score 6.1
+Kudos for @revskills for pointing out ^^
+On May 12, 2016 23:27, <cve-assign@mitre.org> wrote:
 
-Fix: Add extra validations to prevent Signature wrapping attacks [1]
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+> > the following reproducer will cause a UAF of a previously allocated
+> memory
+> > in bpf.
+> >
+> > You can reproduce with linux kernel master, or 4.6-rc6 4.6-rc7 and maybe
+> > other kernel versions.
+>
+> > int main(int argc, char **argv)
+> > ...
+> > r[0] = syscall(SYS_mmap, ...
+> > ...
+> > r[5] = syscall(SYS_bpf, ...
+>
+> Use CVE-2016-4794. (We did not run any tests, or look for other
+> information, to investigate whether the same reproducer or a similar
+> reproducer affects any kernel version that's considered stable or
+> longterm.)
+>
+> - --
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQIcBAEBCAAGBQJXNKCMAAoJEHb/MwWLVhi2g8QP/3vBTsa8xuk8NWYWsv3jwNGu
+> Ugpl+hUdkQHW4aFzxx96nePBPZpfVeNCGRMdtlCcKVb9wFNUSbRwDPBHFXrfKz9R
+> KVf9VHi4CMcBlvPS0MvGZg52SQPAAO7O7cCWpEAdhyxW2gPPxKYo98x4xNuNVlWx
+> POD/dVK9ll261g6W+CUSYPtwJgIrPSddnnNCUvbB+XIvV87MGSLp+nE6h8I3L2Yp
+> ZisKaT6z6aHqqC0bcySk6V04UlbkfL83eahAz5bWvZeywUEjYvN+kOUlgR8TOxLC
+> 8bIQ28Q043XM3VC853rhPQqe5enV6KDRrLgDu1paeFdKYcaHjGkHvkwjRfxjJZIC
+> EsNdEl2vGjB1iGTUnFiUep9BteZBRrwfmaTE1yAseaUjEAx/3UK85PpTEqmNkON6
+> 1HCInP0LOeZMcggVzBKgRKCXKJZiInxEtSBXhxnPGgxagkOD7enw86gWflSqz3ca
+> wdRm/oADgCrQk6CsSGgusCouSyndC/T6ZRCa2/7vCecm2BBi8gxRuT4TZem3A6Ij
+> x+zfK7QaMDtELPGL+/rVOSgVCTaihz7oGeBKzqJeuyAv7zN0LxYoNlBsmsoBSTYJ
+> Uftvf0T7JTR3AQd1+tB2kOnyGOW4jSCNu66xNifR29j1C7jvKB0+uh891s/3mkzo
+> Wttcn/XLKpzXFWtN+mjb
+> =DWFZ
+> -----END PGP SIGNATURE-----
+>
 
-[1] https://github.com/onelogin/ruby-saml
-
-alvaro j hoyos | chief information security officer |
-alvaro.hoyos@onelogin.com | +1 415.653.1893 | skype: alvaroonelogin
-
---001a1140f4880c764e05360951ef--
+--001a113d516004cf3d0532a6da07--
