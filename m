@@ -1,33 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/14/8
-Message-ID: <f24b7778-0446-c5d1-4905-e75a580fcbc4@redhat.com>
-Date: Tue, 14 Jun 2016 10:34:53 -0400
-From: Paul Wouters <pwouters@...hat.com>
-To: oss-security@...ts.openwall.com, huzaifas@...hat.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/12/13
+Message-ID: <20160512211648.GA18760@pisco.westfalen.local>
+Date: Thu, 12 May 2016 23:16:48 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
 Cc: cve-assign@...re.org
-Subject: Re: Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
+Subject: Re: CVE Request : Use-after-free in openjpeg
 Content-Type: text/plain; charset=utf-8
 
-On 06/13/2016 10:40 AM, cve-assign@...re.org wrote:
->> Its not libreswan which is flawed, but its the protocol which they are trying to implement.
+On Tue, Sep 15, 2015 at 05:33:55PM +0200, FEIST Josselin wrote:
+> Hi,
 > 
->> which implement IKEv1 are flawed, since they follow this protocol
+> Use-after-free was found in openjpeg
+> (https://github.com/uclouvain/openjpeg). The vuln is fixed in version
+> 2.1.1 and was located in opj_j2k_write_mco function. More details are
+> available here : https://github.com/uclouvain/openjpeg/issues/563.
+> Is it possible to get a CVE for this ?
 > 
-> Many protocols could be described as "flawed." The IKEv1 protocol amplification concern does not make it flawed in a way that would lead to a per-protocol
-> CVE ID assignment.
+> Credit goes to the static analyzer Gueb.
 
-Then you should pull the CVE-2016-5361 which deals with retransmission amplification in IKEv1
+Explicitly adding cve-assign to CC, this seems to have fallen through
+the cracks.
 
- We are maintaining the
-> CVE-2016-5361 ID assignment for the upstream announcement of "libreswan 3.16 vulnerable to DDOS attack. Please upgrade to 3.17"
-
-That statement on the libreswan website is clearly referring to CVE-2016-3071 not CVE-2016-5361.
-
- and
-> accompanying upstream patch, as described in the http://www.openwall.com/lists/oss-security/2016/06/10/4 post.
-
-Which again clearly refers to CVE-2016-5361 and not CVE-2016-3071
-
-So again, please fix CVE-2016-5361 or drop it.
-
-Paul
+Cheers,
+        Moritz
