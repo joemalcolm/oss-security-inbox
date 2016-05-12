@@ -1,26 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/14/2
-Message-ID: <20160214153152.GA27269@eldamar.local>
-Date: Sun, 14 Feb 2016 16:31:52 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: Ben Hutchings <benh@...ian.org>
-Subject: CVE Request: Linux: ALSA: usb-audio: double-free triggered by invalid USB descriptor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/12/14
+Message-ID: <305647a8-4b7a-7dac-a2ad-b976691ae05b@voidsec.com>
+Date: Fri, 13 May 2016 00:20:44 +0100
+From: VoidSec <voidsec@...dsec.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE Request for VirIT Explorer v.8.1.68 Local Privilege Escalation
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Request a CVE ID for VirIT Explorer Lite & Pro v.8.1.68 - Local Privilege Escalation (SYSTEM Privilege)/Arbitrary Code Execution
 
-There is a double-free flaw in the ALSA USB MIDI driver:
+Exploit Author: Paolo Stagno - voidsec@...dsec.com
+Vendor Homepage: http://www.tgsoft.it
+Version: VirIT Explorer Lite & Pro v.8.1.68
+CVSS v2: 6.8 (AV:L/AC:L/Au:S/C:C/I:C/A:C/E:H/RL:U/RC:C)
 
-> The 'umidi' object will be free'd on the error path by snd_usbmidi_free()
-> when tearing down the rawmidi interface. So we shouldn't try to free it
-> in snd_usbmidi_create() after having registered the rawmidi interface.
+Overview
+---- 
+Vir.IT eXplorer [1] is an AntiVirus, AntiSpyware and AntiMalware software made in Italy and developed by TG Soft S.a.s.
 
-This was fixed in https://git.kernel.org/linus/07d86ca93db7e5cdf4743564d98292042ec21af7
+A major flaws exists in the last version of Vir.IT eXplorer, this vulnerability allow a local attacker,
+to execute arbitrary code in the context of the application with SYSTEM privilege.
 
-https://lkml.org/lkml/2016/2/13/11
+Details
+---- 
+The flaw resides in the viritsvclite Service due to bad privileges for the main Vir.IT folder, by default, any user (even guest) will be able to 
+replace, modify or alter the file. This would allow an attacker to inject code or replace the executable and have it run in the context of the system.
 
-Could you assign a CVE for this issue?
+This would allow a complete compromise of the system on which the antivirus was installed; an attacker can replace the executable, 
+reboot the system and it would then compromise the machine. As NT AUTHORITY\SYSTEM is the highest privilege level on a Windows machine, 
+this allows a total control and access to the system.
 
-Regards,
-Salvatore
+Services: viritsvclite
+Folder: %SYSTEMDRIVE%\VEXPLite
+Executable: %SYSTEMDRIVE%\VEXPLite\viritsvc.exe
+
+[2] icacls.exe VEXPLite
+C:\VEXPLite Everyone:(OI)(CI)(F)    <=================== Vulnerable
+            BUILTIN\Administrators:(I)(F)
+            BUILTIN\Administrators:(I)(OI)(CI)(IO)(F)
+            NT AUTHORITY\SYSTEM:(I)(F)
+            NT AUTHORITY\SYSTEM:(I)(OI)(CI)(IO)(F)
+            BUILTIN\Users:(I)(OI)(CI)(RX)
+            NT AUTHORITY\Authenticated Users:(I)(M)
+            NT AUTHORITY\Authenticated Users:(I)(OI)(CI)(IO)(M)
+
+Exploit
+---- 
+https://gist.github.com/VoidSec/9971092829dd1fec146e1595843aae65
+https://www.youtube.com/watch?v=5a09efEvjTk (video proof)
+
+Remediation
+---- 
+Remove the permissions on the VEXPLite folder, all of its files and on the viritsvc.exe Service executables to allow only
+privileged users to alter the files, apply vendor patch once distributed.
+
+Footnotes
+---- 
+[1] http://www.tgsoft.it/english/prodotti_eng.asp
+[2] https://technet.microsoft.com/en-us/library/cc753525%28WS.10%29.aspx
+
+----
+
+*VoidSec *| voidsec@...dsec.com <mailto:voidsec@...dsec.com> |
+http://voidsec.com <http://voidsec.com/>
+
+/The information contained in this document is confidential and/or
+exclusive and is intended only for the use of the addressee.
+Unauthorized use, disclosure or copying of this information, or any part
+thereof is strictly prohibited and may be unlawful./
+
+
