@@ -1,99 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/21/10
-Message-Id: <ABD7A6F5-D9A2-491C-9CFC-00BD7E6D658C@berkeley.edu>
-Date: Wed, 21 Sep 2016 12:03:03 -0400
-From: Jamie Whitacre <whitacre@...keley.edu>
-To: Sylvain Corlay <sylvain.corlay@...il.com>
-Cc: oss-security@...ts.openwall.com, Fernando Perez <fperez@....gov>, Matthias Bussonnier <mbussonnier@...keley.edu>
-Subject: Re: CVE Request: ipywidgets executes untrusted JavaScript
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/12/4
+Message-ID: <20160512001231.GB27943@phlsvsds.ph.intel.com>
+Date: Wed, 11 May 2016 20:12:32 -0400
+From: "ira.weiny" <ira.weiny@...el.com>
+To: Yann Droneaud <ydroneaud@...eya.com>
+Cc: oss-security@...ts.openwall.com, Doug Ledford <dledford@...hat.com>, Red Hat Security Response Team <secalert@...hat.com>, Ben Hutchings <benh@...ian.org>, linux-rdma@...r.kernel.org
+Subject: Re: CVE Request: Linux: IB/security: Restrict use of the write() interface'
 Content-Type: text/plain; charset=utf-8
 
-Hi Folks, 
-Is this done?
+On Mon, May 09, 2016 at 09:48:59PM +0200, Yann Droneaud wrote:
+> Hi,
+> 
+> 
+> As a workaround, I would suggest that systems which do not require
+> (userspace) RDMA/Infiniband to blacklist/remove the following modules:
+> 
+>   rdma_ucm
+>   ib_uverbs
+>   ib_ucm
+>   ib_umad
 
-Thanks, 
-Jamie
+NOTE: AFAICT ib_umad is not vulnerable as it uses correct write/read semantics.
+However, if you are disabling the other modules you probably have no use for
+ib_umad either.
 
-> On Aug 11, 2016, at 9:08 AM, Sylvain Corlay <sylvain.corlay@...il.com> wrote:
-> 
-> Hello everyone, 
-> 
-> I am following up on this CVE request. Did we miss something in how the request is formulated?
-> 
-> Thanks,
-> 
-> Sylvain
-> 
-> On Fri, Jul 1, 2016 at 6:12 PM, Sylvain Corlay <sylvain.corlay@...il.com <mailto:sylvain.corlay@...il.com>> wrote:
-> Description
-> 
-> ipywidgets version 5.1.5 (and the companion package widgetsnbextension 1.2.3) fixes a security vulnerability which affects the usage of ipywidgets in conjunction with the Jupyter Notebook. (The GitHub repository for the project is https://github.com/ipython/ipywidgets <https://github.com/ipython/ipywidgets>)
-> 
-> Affected versions
-> 
-> The affected versions of ipywidgets are:
-> 
-> ipywidgets version 5.0.0 ≤ V ≤ 5.1.4 (and widgetsnbextension < 1.2.3), …
-> 
-> Only users who installed ipywidgets using pip or from source on the GitHub repository are affected.
-> 
-> Anaconda users are unaffected because the vulnerable version of ipywidget has never been released to the default conda channel.
-> 
-> Resolution
-> 
-> We recently released ipywidgets version 5.1.5 (widgetsnbextension version 1.2.3). You can check whether your system is affected by running the following command:
-> 
->    >>> from distutils.version import LooseVersion as V
->    >>> import ipywidgets
->    >>> if V('5.0.0') <= V(ipywidgets.__version__) < V('5.1.5'):
->    >>>     print("Upgrade ipywidgets to 5.1.5")
-> 
-> If your system is vulnerable, you will see the following output:
-> 
->     Upgrade ipywidgets to 5.1.5
-> 
-> If your system is vulnerable please upgrade to ipywidgets version 5.1.5. Use the following command to install:
-> 
->    $ pip install "ipywidgets>=5.1.5"
-> 
-> or
-> 
->    $ conda install "ipywidgets>=5.1.5"
-> 
-> Technical details
-> 
-> The vulnerability was discovered following an investigation of a potential vulnerability reported by Brian Granger to the ipython-security mailing list (security@...thon.org <mailto:security@...thon.org>) on May 5.
-> 
-> The reason for such behavior was determined on May 5 by Matthias Bussonnier.
-> 
-> A fix was proposed written and reviewed, then [merged](https://github.com/ipython/ipywidgets/pull/591 <https://github.com/ipython/ipywidgets/pull/591>) into the development branch on May 20, and a non vulnerable version released on May 25.
-> 
-> A widget snapshotting feature introduced in ipywidgets 5.0.0 (https://github.com/ipython/ipywidgets/pull/314/ <https://github.com/ipython/ipywidgets/pull/314/>) allowed untrusted javascript code to execute in an untrusted notebook on loading and saving of a notebook.  A well crafted notebook could execute arbitrary code with the rights of the current user in the context of the page, the notebook server, and available kernels.
-> 
-> We recommend immediate upgrade of the ipywidgets package.
-> 
-> There is no simple configuration option that could mitigate the system for vulnerability. The user must upgrade to ipywidget version 5.1.5 or downgrade to 4.x.
-> 
-> Future Plan
-> 
-> The security issue resulted from the seemingly harmless combination of calls:
-> 
->     json = cell.get_json()
->     json = update_json(json)
->     cell.clear_output()
->     cell.from_json()
-> 
-> The clear_output()  method has as a consequence to mark the cell as trusted (as it has no output that can potentially execute javascript). This is followed by the next call which can trigger JavaScript execution in the page context.
-> 
-> We plan on improving the notebook API so that clear_output() does not change the trusted status of a cell (or a notebook), to prevent mistakes like this from having security consequences. This will lead to the slight behavior change that an empty cell with no output can be untrusted.
-> 
-> We learned that we are not completely ready for fast release of security fixes. The time from vulnerability discovery to available fix, release, and announcement can and should be shorter.
-> 
-> We encourage users who find possible security issues to notify security@...thon.org <mailto:security@...thon.org>.
-> 
-> Thanks!
-> 
-> The Jupyter team
-> 
+Ira
 
-
+> 
+> For example, adds the following in /etc/modprobe.d/blacklist.conf
+> 
+>   blacklist rdma_ucm
+>   blacklist ib_uverbs
+>   blacklist ib_ucm
+>   blacklist ib_umad
+> 
+> Those building their own kernel might want to disable, if not already,
+> 
+>   CONFIG_INFINIBAND_USER_ACCESS, 
+>   CONFIG_INFINIBAND_USER_MAD,
+>   CONFIG_INFINIBAND_ADDR_TRANS
+> 
+> (Unfortunately the last one will also disable those features:
+>   iSCSI Extensions for RDMA (iSER)
+>   iSCSI Extensions for RDMA (iSER) target support
+>   RDS over Infiniband and iWARP
+>   9P RDMA Transport (Experimental)
+>   RPC-over-RDMA transport
+>     (which actually disable NFSoRDMA))
+> 
+> Regards.
+> 
+> -- 
+> Yann Droneaud
+> OPTEYA
+> 
+> --
+> To unsubscribe from this list: send the line "unsubscribe linux-rdma" in
+> the body of a message to majordomo@...r.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
