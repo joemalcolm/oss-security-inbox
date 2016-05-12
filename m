@@ -1,46 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/06/9
-Message-Id: <20160506201059.165AF332055@smtpvbsrv1.mitre.org>
-Date: Fri,  6 May 2016 16:10:59 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: ikiwiki: HTML-escape error messages to prevent cross-site scripting attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/12/11
+Message-ID: <CAFkTri+WhHVtePMwvQETGoabDot8UE=ZG+Xq8jG8WXP3+C1n1Q@mail.gmail.com>
+Date: Thu, 12 May 2016 23:31:27 +0800
+From: Marco Grassi <marco.gra@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Linux Kernel bpf related UAF
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+https://lkml.org/lkml/2016/4/17/125
 
-> http://source.ikiwiki.branchable.com/?p=source.git;a=commit;h=32ef584dc5abb6ddb9f794f94ea0b2934967bba7
+Kudos for @revskills for pointing out ^^
+On May 12, 2016 23:27, <cve-assign@...re.org> wrote:
 
-> The instance in cgierror() is a potential cross-site scripting attack,
-> because an attacker could conceivably cause some module to raise an
-> exception that includes attacker-supplied HTML in its message, for
-> example via a crafted filename. (OVE-20160505-0012)
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+> > the following reproducer will cause a UAF of a previously allocated
+> memory
+> > in bpf.
+> >
+> > You can reproduce with linux kernel master, or 4.6-rc6 4.6-rc7 and maybe
+> > other kernel versions.
+>
+> > int main(int argc, char **argv)
+> > ...
+> > r[0] = syscall(SYS_mmap, ...
+> > ...
+> > r[5] = syscall(SYS_bpf, ...
+>
+> Use CVE-2016-4794. (We did not run any tests, or look for other
+> information, to investigate whether the same reproducer or a similar
+> reproducer affects any kernel version that's considered stable or
+> longterm.)
+>
+> - --
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQIcBAEBCAAGBQJXNKCMAAoJEHb/MwWLVhi2g8QP/3vBTsa8xuk8NWYWsv3jwNGu
+> Ugpl+hUdkQHW4aFzxx96nePBPZpfVeNCGRMdtlCcKVb9wFNUSbRwDPBHFXrfKz9R
+> KVf9VHi4CMcBlvPS0MvGZg52SQPAAO7O7cCWpEAdhyxW2gPPxKYo98x4xNuNVlWx
+> POD/dVK9ll261g6W+CUSYPtwJgIrPSddnnNCUvbB+XIvV87MGSLp+nE6h8I3L2Yp
+> ZisKaT6z6aHqqC0bcySk6V04UlbkfL83eahAz5bWvZeywUEjYvN+kOUlgR8TOxLC
+> 8bIQ28Q043XM3VC853rhPQqe5enV6KDRrLgDu1paeFdKYcaHjGkHvkwjRfxjJZIC
+> EsNdEl2vGjB1iGTUnFiUep9BteZBRrwfmaTE1yAseaUjEAx/3UK85PpTEqmNkON6
+> 1HCInP0LOeZMcggVzBKgRKCXKJZiInxEtSBXhxnPGgxagkOD7enw86gWflSqz3ca
+> wdRm/oADgCrQk6CsSGgusCouSyndC/T6ZRCa2/7vCecm2BBi8gxRuT4TZem3A6Ij
+> x+zfK7QaMDtELPGL+/rVOSgVCTaihz7oGeBKzqJeuyAv7zN0LxYoNlBsmsoBSTYJ
+> Uftvf0T7JTR3AQd1+tB2kOnyGOW4jSCNu66xNifR29j1C7jvKB0+uh891s/3mkzo
+> Wttcn/XLKpzXFWtN+mjb
+> =DWFZ
+> -----END PGP SIGNATURE-----
+>
 
->> CGI.pm
-
-Use CVE-2016-4561.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXLPn2AAoJEHb/MwWLVhi2ALMQAIlovh1Sl+fuQdZIQBAzRJfg
-f4IgcFMZxk6MFeTzDXmrdDlRHSPqI/BDAaSPz96thHjURMVet/CCSNkbA1G8CIVB
-r04BTvqNhDaL2tP/KxZ/bha9q4BM9BpO+6L8+aRK4sjiRbr21Q/PlvicEus3B20e
-1e/jyMX/69oX4O8mqkm9UoQtsft2nlI13TOwM9yKKgQ61eMkjkDpDFMkAOaj25wP
-qJ7pXPHWIYv5ic0Wg0KacF+BRlrFckN0RXfody4pzya7ND0yck/41F1y6h0isn4c
-MHkwvKJ29qTeccflgF4FoB2YSD8E0dZkQU9CYpo95hdsyeVMj7O4wRE5bd5kPCZs
-HIF8KEKzzvvZZ01xGxNeIgAFEDqBu0rnUQ9JC9bfVDYDSNFKkiHZE039lL/vr/3A
-+y03HSvSZAjX7ZiALfRgcFvdAdqQfi6RPT6awU0X1HOfJChDJO9RG4UJf4qdK2/X
-lM8T0bqeWA/975ftkZUfIPNxYy4UI/jrKkdK7MeVLe1JcXfbqO4BiCRRSx34MaNS
-AqREZahOpL29UfRPysWYBJce30SCI/I4YBgn4xhe1KEu0Ud33+UirvIcSTeXM9I1
-PViZrkuTUDAhACg9sYpvVxhnqyfd6+t7mJ0nqrs7UiF+1ZYwCQKWgyiqr7FN64lu
-JvZf7sCAq3oE9ULBEP9d
-=Y0cq
------END PGP SIGNATURE-----
