@@ -1,81 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/9
-Message-ID: <20160125193202.GB14069@TC.local>
-Date: Mon, 25 Jan 2016 11:32:02 -0800
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2016-0751] Possible Object Leak and Denial of Service attack in Action Pack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/12/12
+Message-ID: <20160512181600.GA6622@openwall.com>
+Date: Thu, 12 May 2016 21:16:00 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: broken RSA keys
 Content-Type: text/plain; charset=utf-8
 
-Possible Object Leak and Denial of Service attack in Action Pack
+On Thu, May 05, 2016 at 08:36:29AM -0400, Stanislav Datskovskiy wrote:
+> On Thu, May 5, 2016 at 4:17 AM, Solar Designer <solar@...nwall.com> wrote:
+> > When a modulus is (mangled?) such that each of its 64-bit limbs consists
+> > of two matching 32-bit limbs, it is necessarily a multiple of 2^32+1.
+> > That's because it can be represented as:
+> >
+> > N = {an an ... a1 a1 a0 a0} = (2^32+1) * {0 an ... 0 a1 0 a0}
+> >
+> > where the {...} notation means concatenated 32-bit limbs (or base 2^32
+> > digits, if you will).  From this, it follows that pairwise GCDs of such
+> > moduli will also have 2^32+1 as a factor, and this is what ultimately
+> > causes the 32-bit limb patterns in the GCDs.  As Alexander Cherepanov
+> > correctly pointed out, even the seemingly slightly more complex 32-bit
+> > limb patterns in the GCDs are merely indication of them being multiples
+> > of 2^32+1.  There's probably nothing else to see here.
+> 
+> Mircea Popescu (trilema.com) and I figured this out last May.
+> But the conclusion 'nothing to see here, move along' does not follow.
 
-There is a possible object leak which can lead to a denial of service
-vulnerability in Action Pack. This vulnerability has been
-assigned the CVE identifier CVE-2016-0751.
+By "nothing else to see here" I was referring only to the patterns seen
+in GCDs, which are merely a consequence of the pattern seen in moduli.
 
-Versions Affected:  All.
-Not affected:       None.
-Fixed Versions:     5.0.0.beta1.1, 4.2.5.1, 4.1.14.1, 3.2.22.1
+> > As Alexander Cherepanov wrote, if I understand him correctly, there's
+> > 100% overlap between keys with such moduli and with such exponents.
+> 
+> Presently I do not know why the perpetrator found it necessary to mangle
+> the exponent.
 
-Impact
-------
-A carefully crafted accept header can cause a global cache of mime types to
-grow indefinitely which can lead to a possible denial of service attack in
-Action Pack.
+To me, this speaks in favor of the software bug/miscompile theory,
+rather than an attack.  I took a look at:
 
-All users running an affected release should either upgrade or use one of the
-workarounds immediately.
+$ sha256sum *gz
+bced395621ddd1c8fd5a87279dface260fb47351a89427e1db7a785fd9f7595c  pks-0.9.4.tar.gz
+419fff7df644ac11d92ca5b7981e0a6f1e10f74605eb1602f7b39e272d8b079c  pks-0.9.6.tar.gz
+0b3b706df7bf2a4deb7b2e779402f1f8fcbe42b12d32a97692f37d97c5dba264  sks-1.0.5.tgz
+92a7f113f0ba7a28d51d7ced60a984d042d8524c651dc3fcafe9d11cc32981a0  sks-1.1.5.tgz
 
-Releases
---------
-The FIXED releases are available at the normal locations.
+but none of them look like they'd be likely to contain or expose a
+library bug like this: they don't appear to re-encode the bignums.
 
-Workarounds
------------
-This attack can be mitigated by a proxy that only allows known mime types in
-the Accept header.
+> I haven't any notion of why this particular mutilation was chosen.
+> But the particular list of victims is sufficient to rule out 'software bug'
+> in my mind as an intellectually-honest explanation.
 
-Placing the following code in an initializer will also mitigate the issue:
+This could be so, or there could be something else in common about them,
+such as preference to use some otherwise not so common piece of software.
 
-```ruby
-require 'action_dispatch/http/mime_type'
+Anyway, I think we can in fact end this discussion for now - not because
+"nothing to see here, move along", but because we've already considered
+the available clues (thank you all for helping get us on the same page!)
+and there are no new clues yet.
 
-Mime.const_set :LOOKUP, Hash.new { |h,k|
-  Mime::Type.new(k) unless k.blank?
-}
-```
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
-
-* 5-0-mime_types_leak.patch - Patch for 5.0 series
-* 4-2-mime_types_leak.patch - Patch for 4.2 series
-* 4-1-mime_types_leak.patch - Patch for 4.1 series
-* 3-2-mime_types_leak.patch - Patch for 3.2 series
-
-Please note that only the 4.1.x and 4.2.x series are supported at present. Users
-of earlier unsupported releases are advised to upgrade as soon as possible as we
-cannot guarantee the continued availability of security fixes for unsupported
-releases.
-
-Credits
--------
-Aaron Patterson <3<3
-
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "3-2-mime_types_leak.patch" of type "text/plain" (2126 bytes)
-
-View attachment "4-1-mime_types_leak.patch" of type "text/plain" (1983 bytes)
-
-View attachment "4-2-mime_types_leak.patch" of type "text/plain" (1983 bytes)
-
-View attachment "5-0-mime_types_leak.patch" of type "text/plain" (1998 bytes)
-
-Content of type "application/pgp-signature" skipped
+Alexander
