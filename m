@@ -1,75 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/20/4
-Message-Id: <20160420043330.E3AA36C0122@smtpvmsrv1.mitre.org>
-Date: Wed, 20 Apr 2016 00:33:30 -0400 (EDT)
-From: cve-assign@...re.org
-To: matthias@...lons.info
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: opam - missing certificate validation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/12/9
+Message-ID: <CALJHwhQTKMaC6kp33J+1nmBPUqL7-Ppzb1V=7B+ffNfDyWsdoQ@mail.gmail.com>
+Date: Fri, 13 May 2016 00:01:56 +1000
+From: Wade Mealing <wmealing@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-0758 - Linux kernel - Flaw in ASN.1 DER decoder for x509 certificate DER files.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+An issue with ASN.1 DER decoder was reported that could lead to memory
+corruptions, possible privilege escalation, or complete local denial
+of service via x509 certificate DER files.
 
-> https://github.com/ocaml/opam/commit/3d43295df3bb9e67e60801d319bf82c2c8a84d24
-> https://github.com/ocaml/opam/commit/5507426030a60c50f7479ac758d116b573fdbd5e
-> https://github.com/ocaml/opam/issues/55
-> https://github.com/ocaml/opam/issues/2006
+Tags with indefinite length can be used to corrupt the _dp and _len
+pointers in asn1_find_indefinite_length() in lib/asn1_decoder.c
+
+The vulnerable code:
+
+...
+next_tag:
+        if (unlikely(datalen - dp < 2)) {
+                if (datalen == dp)
+                        goto missing_eoc;
+                goto data_overrun_error;
+        }
+...
+        n = len - 0x80;
+        if (unlikely(n > sizeof(size_t) - 1))
+                goto length_too_long;
+        if (unlikely(n > datalen - dp))
+                goto data_overrun_error;
+        for (len = 0; n > 0; n--) {
+                len <<= 8;
+                len |= data[dp++];
+        }
+        dp += len;
+        goto next_tag;
+...
+
+The dp can be corrupted and the check at next_tag is not sufficient to
+prevent this.
+
+Red Hat would like to thank Philip Pettersson of Samsung for reporting
+this issue to Red Hat.
+
+Thanks,
+
+Wade Mealing
+Red Hat Product Security Team
 
 
-> https://github.com/ocaml/opam/issues/2006#issue-57763563
+References:
 
-> This was added because of compatibility issues on many common
-> installations, in which curl didn't have access to a reasonable list
-> of root certificates (in particular for github). I am wondering if
-> this is still an issue now ?
-> 
-> We still double-check md5s of course.
+Upstream fix:
+https://lkml.org/lkml/2016/5/12/270
 
-
-> src/repository/opamDownload.ml
-> 
-> let curl_args = [
-> 
-> - CString "--insecure", None;
-> 
-> let wget_args = [
-> 
-> - CString "--no-check-certificate", None;
-
-
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=818081#15
-> 
-> This issue does not warrant a DSA, but may be good to fix it as well
-> in an upcoming jessie point release.
-
-We feel that this should not have a CVE ID because the removed curl
-and wget options had been intentional behavior. In other words, the
-vendor was not particularly interested in ensuring that the client was
-communicating with the correct web site. That required relying on
-third parties (maintainers of curl and wget) to maintain certificate
-data. Instead, the vendor was interested in whether the client was
-downloading the correct file. Achieving that can be independent.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXFwYcAAoJEHb/MwWLVhi2lS4P/3g0tuTBDJFhdPjGYs52WncH
-4oyAXUPboTN/1ED1D9bcmARcBjE1lik2yMoM4JU0nuwiCj9aPwkXofpt8TCp3As8
-haSrupzKzU0bpHeDVnTwXyc4a04CQ9WAaPDqDgPRViZN7AYKoyhF02zVxNN4jyXu
-CCPp3YsJCHLUvx5UFCFf5XevQBikINm1HuJiizoePHqrl5l6g0efsOulIpC4cGLo
-OobJanX3QNYNQe/bVfFS0R/tJysyDErSRLYzN3prhDDgoe/F1q1Unp/BKlEh0Cub
-+y0tw420qnIAhebz2CD3jgO5rAv1RA8zXOETtNl/m93oG/lyJa9YDRTXxetuW3K6
-ulOQUrlM0l05cmsLKAYuqtPzeEyv6umfGhH/cG4NjHiaUlgXqihNdHRMjcQl5Bx8
-XZ6cAn9XHuMqYBDffuSRspsXIkCZYzwlS6CRqy4uyPN+HH33CB5NHfRAhZFiEDY6
-vK3cRgkcjrU6w6yQ43O8ttNiN6YpFocGXfImf/8FM1jcwBjsnl8IKufdZCKS+NJj
-8/2Atu+aCdbhEVV+i3iEeeL806c1fH92JKmZxWvkU4/6W8xVS2uITqmuVRhg++5n
-tjTH4TrCpi1yjOsl3+PfSSqSsmoVrPe+hHRCXRZYmQ86b+eZXGr2oQt3Cic4xx21
-FakLj9DAVjQBfk65+Jud
-=/IEH
------END PGP SIGNATURE-----
+Red hat Bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=1300257
