@@ -1,18 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/04/3
-Message-ID: <1465024076.32327.17.camel@gmail.com>
-Date: Sat, 04 Jun 2016 03:07:56 -0400
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: expat hash collision fix too predictable?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/12/10
+Message-Id: <20160512152749.88F6A6C0689@smtpvmsrv1.mitre.org>
+Date: Thu, 12 May 2016 11:27:49 -0400 (EDT)
+From: cve-assign@...re.org
+To: marco.gra@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Linux Kernel bpf related UAF
 Content-Type: text/plain; charset=utf-8
 
-It's quite questionable for libraries to be calling thread-unsafe
-functions like rand or strtok at all. AFAIK, expat is supposed to be
-thread safe and is used in many multi-threaded applications.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A proper hash DoS fix is using a CSPRNG to generate keys for a keyed
-hash with meaningful security properties, like SipHash. It's usually
-done very poorly, and the quality of the RNG doesn't matter much if key
-independent collisions can be generated for the hash function anyway.
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+> the following reproducer will cause a UAF of a previously allocated memory
+> in bpf.
+> 
+> You can reproduce with linux kernel master, or 4.6-rc6 4.6-rc7 and maybe
+> other kernel versions.
+
+> int main(int argc, char **argv)
+> ...
+> r[0] = syscall(SYS_mmap, ...
+> ...
+> r[5] = syscall(SYS_bpf, ...
+
+Use CVE-2016-4794. (We did not run any tests, or look for other
+information, to investigate whether the same reproducer or a similar
+reproducer affects any kernel version that's considered stable or
+longterm.)
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXNKCMAAoJEHb/MwWLVhi2g8QP/3vBTsa8xuk8NWYWsv3jwNGu
+Ugpl+hUdkQHW4aFzxx96nePBPZpfVeNCGRMdtlCcKVb9wFNUSbRwDPBHFXrfKz9R
+KVf9VHi4CMcBlvPS0MvGZg52SQPAAO7O7cCWpEAdhyxW2gPPxKYo98x4xNuNVlWx
+POD/dVK9ll261g6W+CUSYPtwJgIrPSddnnNCUvbB+XIvV87MGSLp+nE6h8I3L2Yp
+ZisKaT6z6aHqqC0bcySk6V04UlbkfL83eahAz5bWvZeywUEjYvN+kOUlgR8TOxLC
+8bIQ28Q043XM3VC853rhPQqe5enV6KDRrLgDu1paeFdKYcaHjGkHvkwjRfxjJZIC
+EsNdEl2vGjB1iGTUnFiUep9BteZBRrwfmaTE1yAseaUjEAx/3UK85PpTEqmNkON6
+1HCInP0LOeZMcggVzBKgRKCXKJZiInxEtSBXhxnPGgxagkOD7enw86gWflSqz3ca
+wdRm/oADgCrQk6CsSGgusCouSyndC/T6ZRCa2/7vCecm2BBi8gxRuT4TZem3A6Ij
+x+zfK7QaMDtELPGL+/rVOSgVCTaihz7oGeBKzqJeuyAv7zN0LxYoNlBsmsoBSTYJ
+Uftvf0T7JTR3AQd1+tB2kOnyGOW4jSCNu66xNifR29j1C7jvKB0+uh891s/3mkzo
+Wttcn/XLKpzXFWtN+mjb
+=DWFZ
+-----END PGP SIGNATURE-----
