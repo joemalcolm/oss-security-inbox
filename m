@@ -1,97 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/23/6
-Message-ID: <1686747.IoBOjVF1Mp@arcadia>
-Date: Sun, 23 Oct 2016 09:58:37 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/12/5
+Message-ID: <e82d52b0-9a85-8fd5-b599-23f0786cba86@dchanm.com>
+Date: Wed, 11 May 2016 20:36:56 -0700
+From: David Chan <david@...anm.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: jasper: NULL pointer dereference in jp2_colr_destroy (jp2_cod.c) (incomplete fix for CVE-2016-8887)
+Subject: Re: GraphicsMagick Response To "ImageTragick"
 Content-Type: text/plain; charset=utf-8
 
-Description:
-jasper is an open-source initiative to provide a free software-based reference 
-implementation of the codec specified in the JPEG-2000 Part-1 standard.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Another round of fuzzing on an updated version (1.900.10) revealed that the 
-NULL pointer access identified as CVE-2016-8887 which upstream declared to be 
-fixed in the version 1.900.10 is still here.
+On 5/9/2016 12:03 PM, John Lightsey wrote:
+> On Mon, 2016-05-09 at 18:20 +0100, Simon McVittie wrote:
+>> On Mon, 09 May 2016 at 08:29:40 -0500, Bob Friesenhahn wrote:
+> 
+> 
+> The "man" attack vector needs the same determination.
+> 
+> It is similar to CVE-2016-3717 in impact, but uses a different
+> codepath. The existing fixes for CVE-2016-3717 do not address it.
+> 
 
-The complete ASan output:
+The patch which fixes the gplt vector also fixes a related vector in gs.
+The lack of -dSAFER when invoking Ghostscript allows for arbitrary
+file read/write. Sander Bos noticed that ImageMagick isn't affected
+by this bug. Given that the -dSAFER bug is specific to GraphicsMagick,
+I think a separate CVE should be assigned.
 
-# imginfo -f $FILE
-ASAN:DEADLYSIGNAL
-=================================================================
-==20885==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
-0x00000041defd bp 0xbebebebebebebebe sp 0x7ffc4e4a4550 T0)
-    #0 0x41defc in atomic_compare_exchange_strong /var/tmp/portage/sys-
-devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_atomic_clang.h:81
-    #1 0x41defc in 
-__asan::Allocator::AtomicallySetQuarantineFlag(__asan::AsanChunk*, void*, 
-__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:465
-    #2 0x41defc in __asan::Allocator::Deallocate(void*, unsigned long, 
-__sanitizer::BufferedStackTrace*, __asan::AllocType) /var/tmp/portage/sys-
-devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/asan_allocator.cc:525
-    #3 0x41defc in __asan::asan_free(void*, __sanitizer::BufferedStackTrace*, 
-__asan::AllocType) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:709
-    #4 0x4c008c in free /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:41
-    #5 0x7faeeeb2d430 in jp2_colr_destroy /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jp2/jp2_cod.c:450:3
-    #6 0x7faeeeb32b0e in jp2_box_destroy /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jp2/jp2_cod.c:211:3
-    #7 0x7faeeeb32b0e in jp2_box_get /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jp2/jp2_cod.c:314
-    #8 0x7faeeeb369a0 in jp2_decode /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jp2/jp2_dec.c:156:16
-    #9 0x7faeeeac6a29 in jas_image_decode /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/base/jas_image.c:392:16
-    #10 0x4f1686 in main /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/appl/imginfo.c:188:16
-    #11 0x7faeedbd361f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #12 0x418e68 in _init (/usr/bin/imginfo+0x418e68)
+David
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_atomic_clang.h:81 in 
-atomic_compare_exchange_strong
-==20885==ABORTING
-
-Affected version:
-1.900.10
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00002-jasper-NULLptr-jp2_colr_destroy
-
-Timeline:
-2016-10-22: bug re-discovered
-2016-10-22: bug re-reported to upstream
-2016-10-23: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/10/23/jasper-null-pointer-dereference-in-jp2_colr_destroy-jp2_cod-c-incomplete-fix-for-cve-2016-8887
-
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+iQEcBAEBCAAGBQJXM/pYAAoJEFNDksGFxk4g+kMH/2oeXMLdfZqup02Zq5IJ1zIf
+cDpU2CLrDcNyyKAC81WviR6A8jj7VX58rI4O4be/OBlO+6X6CP5PVZzERisqlqdO
+sIpHryXReA1rjPPDB3WWXY3ijLPVozitTmM0p+81TfHrkL0LTc/ZXUMeAEw2xRgw
+dzU31nAMTIKV/FS87VkTesScotDLAEXXAxeD4LEepGoxTCqVctjLvk0yXBg9tpZc
+LwB+2EKMA45bMo0mRNRUnSCIhQXNHSdTpjnmR53nd5BYZtVPvVy3n31QaSXmt4MF
+OsghVcp44/Nb8Etkictu78yHusnXa6stTctdLzRS+51XzGj6nvW4VF89T+ASl/Q=
+=yy3S
+-----END PGP SIGNATURE-----
