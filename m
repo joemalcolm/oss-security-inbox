@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["942" "Wednesday" "30" "June" "2021" "20:25:34" "+0200" "Maurits van Rees" "maurits@vanrees.org" nil "25" "[oss-security] Plone: stored XSS in folder contents" nil nil nil "6" nil nil (number mark "U       maurits@vanr Jun 30   25/942   " thread-indent "\"[oss-security] Plone: stored XSS in folder contents\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Plone: stored XSS in folder contents" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["588" "Thursday" "12" "May" "2016" "11:23:02" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160512092302.GA13770@lorien.valinor.li>" "18" "[oss-security] Possible CVE request: gdk-pixbuf: Additional fixes to protect against overlows in pixops_* functions (similar to CVE-2015-7674)" nil nil nil "5" "2016051209:23:02" "[oss-security] Possible CVE request: gdk-pixbuf: Additional fixes to protect against overlows in pixops_* functions (similar to CVE-2015-7674)" (number mark "U       carnil@debia May 12   18/588   " thread-indent "\"[oss-security] Possible CVE request: gdk-pixbuf: Additional fixes to protect against overlows in pixops_* functions (similar to CVE-2015-7674)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29795 invoked by uid 550); 30 Jun 2021 18:26:57 -0000
+Received: (qmail 24149 invoked by uid 550); 12 May 2016 09:23:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,52 +12,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28481 invoked from network); 30 Jun 2021 18:25:50 -0000
-X-Virus-Scanned: amavisd-new at heinlein-support.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vanrees.org; s=MBO0001;
-	t=1625077536;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=QkH+SeqwdorBYgCd15RAiDxrkFIJbZU+ldka4lYrbeY=;
-	b=LIsmtdy2ko86z6aU5UjSJ2uFHiQcyiTNHnOJ38RL16K6IDYe5d9PmZcyGniuLX1gWrm4gu
-	+Fb92XTeoGStzeyiUhK/+Qx9aFlb9QDU1/4diidIWqNOQRBF780KYw3/ivajqxfXBhhM9i
-	bP1lzOg1bXTojbrgqh13sRwmNRW+X2Tn7AQqnmlgkOv+W++ohu99D/JvjgTaxlG0i95pH6
-	rWhxNteH3DA3eWMUTsNIIogXIxrMKD7dozU2GpGILuHziCD03tOiYMBzqCQ4RYBCGUWzrF
-	/XtASKOwR2VTMX/2T3CVK4X+/7kRgrSG3tvoaR/4X0tybfpPTuu4Upy4oMfhtg==
-To: oss-security@lists.openwall.com
-From: Maurits van Rees <maurits@vanrees.org>
-Message-ID: <5102a4b5-ade4-643b-66f3-41c0f7e4bbcc@vanrees.org>
-Date: Wed, 30 Jun 2021 20:25:34 +0200
+Received: (qmail 24129 invoked from network); 12 May 2016 09:23:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=u2FIK1bie8864nVjkbrHEUpDcGRGHhjvZf6o5pak5Zo=;
+        b=fpRwVwvz/9mlIwre4LHe0dB8em0PpEcnn14TpYzas04CmVkET+e2Sf4JmOOsz8IESp
+         lgHUWSd/PaSFrzibeeQTNP2p+25tDG6iHbSJe4Ig7B1ZJLSsScXo+xX8IE5c30QJW3Tl
+         oPQPPaIcdAoMLmqDPf1I60gymAiicHcuCaWhHYqkBENqjydq/b1ftTefFj8SlhsQDBQe
+         TuNsl1b3vtqt3Ke5jqFHbkNzJ5QdWaMjV63a1mxQE/x4TCVbjj42Qd8AO1D99FyqA1z1
+         rtS94FggJpA93IujgebPrY/mAd4cv5DExsj3nGa4LPs0SSpUTdu/ARVgAqg4wOJxKXIE
+         jWTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=u2FIK1bie8864nVjkbrHEUpDcGRGHhjvZf6o5pak5Zo=;
+        b=g2JA7FBxKtxatm8rNZHmI8PsnAgIyUZZ7zzRDDMEF2+z1lc3cKEvvYCyNdnW8R4obt
+         ZL/riIyfqqjGS706OeAADV51MvmVfx6cBE7oPDK58m0tbAUB9Z6uJdEvQaUBLJHqtQPr
+         /tCzlqUM9WSJx0KdnGvh7cd7GoMh9hnAUaLm4In124jIMm/grn26bY0Z03Zm+OChWaTU
+         QtYGD6Ey+NyW2d75G/YdVvVwUMTeheUvY2qE0DxwyFQQ9zsf5hwkE8ivZcahVsdlZnDE
+         trIL2f1mxGcuxU1cLkoM8cYIhlA1C3I+SkgZDGH1OVr0AmAhsXEk15QPDpHmqqvyWZvC
+         S8+Q==
+X-Gm-Message-State: AOPr4FX2zIiVcp/kpatCSylL+Q2mS4dC8K0kx0/tBtGQI8AYlCqPNwU/mljCsWfFu21vSg==
+X-Received: by 10.194.9.233 with SMTP id d9mr9673909wjb.29.1463044984910;
+        Thu, 12 May 2016 02:23:04 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Thu, 12 May 2016 11:23:02 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Message-ID: <20160512092302.GA13770@lorien.valinor.li>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-MBO-SPAM-Probability: 
-Subject: [oss-security] Plone: stored XSS in folder contents
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: [oss-security] Possible CVE request: gdk-pixbuf: Additional fixes to protect
+ against overlows in pixops_* functions (similar to CVE-2015-7674)
 
-A very good day to all you lovely people!
+Hi
 
-Matt Moreschi discovered a vulnerability in Plone and reported it to the 
-security list, security@plone.org.
-In Plone 5.0.0 through 5.2.4, Editors are vulnerable to XSS in the 
-folder contents view, if a Contributor has created a folder with a 
-SCRIPT tag in the description field.
-Full information is here: 
-https://plone.org/security/hotfix/20210518/stored-xss-in-folder-contents
-Since we had recently created a hotfix package, we decided to include a 
-fix in a new version, 1.5.
-This is available from 
-https://pypi.org/project/Products.PloneHotfix20210518/1.5/ and 
-https://plone.org/security/hotfix/20210518
-The fix will be included in the affected package plone.app.content 
-3.8.8, which will be included in Plone 5.2.5, expected in July.
+CVE-2015-7674, an interger overflow flaw in the pixops_scale_nearest
+function, was fixed by
 
-CVE number is CVE-2021-35959:
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-35959
+https://git.gnome.org/browse/gdk-pixbuf/commit/?id=e9a5704edaa9aee9498f1fbf6e1b70fcce2e55aa
 
-Thanks,
+There is another commit in the gdk-pixbuf repository to fix overflows
+in the pixops_composite_nearest, pixops_composite_color_nearest and
+pixops_process functions:
 
--- 
-Maurits van Rees https://maurits.vanrees.org/
+https://git.gnome.org/browse/gdk-pixbuf/commit/?id=dbfe8f70471864818bf458a39c8a99640895bd22
 
+Can you aassing an additional CVE for this since the scope for
+CVE-2015-7674 was for the pixops_scale_nearest function?
+
+Regards,
+Salvatore
