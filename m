@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1565" "Thursday" "22" "August" "2019" "21:13:11" "-0400" "Perry E. Metzger" "perry@piermont.com" "<20190822211311.1d435223@jabberwock.cb.piermont.com>" "33" "Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" "^Cc:" nil nil "8" "2019082301:13:11" "[oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" (number mark "        perry@piermo Aug 22   33/1565  " thread-indent "\"Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2\"\n") "<e690b8e0-0f3e-6370-8b1c-41baa4e13a71@ehuk.net>" ("<CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>" "<C1E053CF-5359-43A3-8572-BE6CDFDCC2B1@oracle.com>" "<20190822093122.GQ6086@suse.de>" "<ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>" "<CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>" "<20190822135753.10d124a4@jabberwock.cb.piermont.com>" "<9c8ef246-0e75-793b-6995-51e50a730701@ehuk.net>" "<20190822150054.1a7ef060@jabberwock.cb.piermont.com>" "<e690b8e0-0f3e-6370-8b1c-41baa4e13a71@ehuk.net>") nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: multiple vulnerabilities in the USB subsystem x2" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1559" "Thursday" "12" "May" "2016" "11:27:49" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160512152749.88F6A6C0689@smtpvmsrv1.mitre.org>" "42" "[oss-security] Re: Linux Kernel bpf related UAF" nil nil nil "5" "2016051215:27:49" "[oss-security] Re: Linux Kernel bpf related UAF" (number mark "U       cve-assign@m May 12   42/1559  " thread-indent "\"[oss-security] Re: Linux Kernel bpf related UAF\"\n") "<CAFkTriLitb9v4MZn5b2HV9HGpu6VWHifgR3VZhDYoQwjGyaWBg@mail.gmail.com>" ("<CAFkTriLitb9v4MZn5b2HV9HGpu6VWHifgR3VZhDYoQwjGyaWBg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13477 invoked by uid 550); 23 Aug 2019 01:13:24 -0000
+Received: (qmail 1975 invoked by uid 550); 12 May 2016 15:28:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13459 invoked from network); 23 Aug 2019 01:13:23 -0000
-Message-ID: <20190822211311.1d435223@jabberwock.cb.piermont.com>
-In-Reply-To: <e690b8e0-0f3e-6370-8b1c-41baa4e13a71@ehuk.net>
-References: <CA+fCnZfz=Y41rkacwG6z0d_d6WV=iSkU2R1L-JzxfRKYHnSN9w@mail.gmail.com>
-	<C1E053CF-5359-43A3-8572-BE6CDFDCC2B1@oracle.com>
-	<20190822093122.GQ6086@suse.de>
-	<ECC3E425-3E0F-4671-AC2B-CA5FD8958FBD@oracle.com>
-	<CA+fCnZfpGc0qK9MRp-BQJkLPrZhf-Md-UYCOtPi0RhbwJqmAHQ@mail.gmail.com>
-	<20190822135753.10d124a4@jabberwock.cb.piermont.com>
-	<9c8ef246-0e75-793b-6995-51e50a730701@ehuk.net>
-	<20190822150054.1a7ef060@jabberwock.cb.piermont.com>
-	<e690b8e0-0f3e-6370-8b1c-41baa4e13a71@ehuk.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: oss-security@lists.openwall.com
-Date: Thu, 22 Aug 2019 21:13:11 -0400
-From: "Perry E. Metzger" <perry@piermont.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel: multiple vulnerabilities in the
- USB subsystem x2
-To: Eddie Chapman <eddie@ehuk.net>
+Received: (qmail 1919 invoked from network); 12 May 2016 15:28:01 -0000
+From: cve-assign@mitre.org
+To: marco.gra@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAFkTriLitb9v4MZn5b2HV9HGpu6VWHifgR3VZhDYoQwjGyaWBg@mail.gmail.com>
+Message-Id: <20160512152749.88F6A6C0689@smtpvmsrv1.mitre.org>
+Date: Thu, 12 May 2016 11:27:49 -0400 (EDT)
+Subject: [oss-security] Re: Linux Kernel bpf related UAF
 
-On Thu, 22 Aug 2019 20:33:54 +0100 Eddie Chapman <eddie@ehuk.net>
-wrote:
-> On 22/08/2019 20:00, Perry E. Metzger wrote:
-> > You can argue anything you like. Power charging points have
-> > popped up around the world, and you're not in a position to stop
-> > them. Furthermore, I'll note that over the air exploitable bugs in
-> > things like WiFi stacks and Bluetooth stacks have also appeared
-> > over time; perhaps it's foolish to have your phone on at all, and
-> > yet people will continue to turn their phones on, and even to use
-> > them.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> the following reproducer will cause a UAF of a previously allocated memory
+> in bpf.
 > 
-> Well, I certainly am not deluded enough to think I have the power
-> to stop power charging points popping up everywhere :-) Or to stop
-> people making mistakes. Just because something is possible and
-> everyone else does it doesn't make something less stupid.
-> 
-> It's a similar principle with wifi/bluetooth, which is why I avoid 
-> connecting even to a family member's wifi access point unless it's 
-> absolutely necessary.
+> You can reproduce with linux kernel master, or 4.6-rc6 4.6-rc7 and maybe
+> other kernel versions.
 
-I think the fact that you avoid connecting to WiFi access points,
-even ones owned by family members, unless absolutely necessary, may
-demonstrate that your model of what does and does not constitute
-a ordinary user behavior might not be the same as other
-people's. Most people do use WiFi in a variety of places, and most
-people do charge off of USB ports they have not personally vetted.
+> int main(int argc, char **argv)
+> ...
+> r[0] = syscall(SYS_mmap, ...
+> ...
+> r[5] = syscall(SYS_bpf, ...
 
-Given this, I think fixing bugs that might lead to privilege
-escalation, even if they require physical connection of USB devices,
-does indeed seem reasonable.
+Use CVE-2016-4794. (We did not run any tests, or look for other
+information, to investigate whether the same reproducer or a similar
+reproducer affects any kernel version that's considered stable or
+longterm.)
 
---
-Perry E. Metzger		perry@piermont.com
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXNKCMAAoJEHb/MwWLVhi2g8QP/3vBTsa8xuk8NWYWsv3jwNGu
+Ugpl+hUdkQHW4aFzxx96nePBPZpfVeNCGRMdtlCcKVb9wFNUSbRwDPBHFXrfKz9R
+KVf9VHi4CMcBlvPS0MvGZg52SQPAAO7O7cCWpEAdhyxW2gPPxKYo98x4xNuNVlWx
+POD/dVK9ll261g6W+CUSYPtwJgIrPSddnnNCUvbB+XIvV87MGSLp+nE6h8I3L2Yp
+ZisKaT6z6aHqqC0bcySk6V04UlbkfL83eahAz5bWvZeywUEjYvN+kOUlgR8TOxLC
+8bIQ28Q043XM3VC853rhPQqe5enV6KDRrLgDu1paeFdKYcaHjGkHvkwjRfxjJZIC
+EsNdEl2vGjB1iGTUnFiUep9BteZBRrwfmaTE1yAseaUjEAx/3UK85PpTEqmNkON6
+1HCInP0LOeZMcggVzBKgRKCXKJZiInxEtSBXhxnPGgxagkOD7enw86gWflSqz3ca
+wdRm/oADgCrQk6CsSGgusCouSyndC/T6ZRCa2/7vCecm2BBi8gxRuT4TZem3A6Ij
+x+zfK7QaMDtELPGL+/rVOSgVCTaihz7oGeBKzqJeuyAv7zN0LxYoNlBsmsoBSTYJ
+Uftvf0T7JTR3AQd1+tB2kOnyGOW4jSCNu66xNifR29j1C7jvKB0+uh891s/3mkzo
+Wttcn/XLKpzXFWtN+mjb
+=DWFZ
+-----END PGP SIGNATURE-----
