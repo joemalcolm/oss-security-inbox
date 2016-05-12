@@ -1,70 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/05/3
-Message-ID: <57039D2F.3000506@free.fr>
-Date: Tue, 5 Apr 2016 13:10:39 +0200
-From: Vincent Danjean <vdanjean.ml@...e.fr>
-To: oss-security@...ts.openwall.com
-Cc: Moritz Mühlenhoff <jmm@...til.org>, Pierre Neyron <pierre.neyron@...g.fr>, team@...urity.debian.org
-Subject: root escalation from any user on clusters managed with OAR
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/12/3
+Message-ID: <20160512092302.GA13770@lorien.valinor.li>
+Date: Thu, 12 May 2016 11:23:02 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: Possible CVE request: gdk-pixbuf: Additional fixes to protect against overlows in pixops_* functions (similar to CVE-2015-7674)
 Content-Type: text/plain; charset=utf-8
 
-  Hi,
+Hi
 
-  Here is a report of a bug in OAR, a software used to manage
-jobs and resources of HPC clusters. This bug allows one to increase
-privileges.
+CVE-2015-7674, an interger overflow flaw in the pixops_scale_nearest
+function, was fixed by
 
-  The bug has been reported by Emmanuel Thomé to upstream.
-Then, it has been discussed with the Debian Security Team that
-assigned us CVE-2016-1235 for this issue.
+https://git.gnome.org/browse/gdk-pixbuf/commit/?id=e9a5704edaa9aee9498f1fbf6e1b70fcce2e55aa
 
-  Here is a brief summary of the problem:
+There is another commit in the gdk-pixbuf repository to fix overflows
+in the pixops_composite_nearest, pixops_composite_color_nearest and
+pixops_process functions:
 
-  OAR is a software which allows authorized people to submit reservations
-for nodes (or even part of nodes) in a managed HPC cluster.
-OAR is also used to log into the reserved nodes once the reservation
-is done.
+https://git.gnome.org/browse/gdk-pixbuf/commit/?id=dbfe8f70471864818bf458a39c8a99640895bd22
 
-  One difficulty of OAR, when login into reserved nodes, is to ensure
-that the cpuset is correctly set in case of partial node reservation.
-The used mechanism involves suid binary :
-1) the user use 'oarsh' instead of 'ssh' (similar syntax)
-2) oarsh call a suid ('oar' user) tool that:
-   - adds mandatory ssh options for the use case
-   - calls ssh as 'oar' user
-     => running as 'oar', the ssh client is able to connect a specific
-     sshd server on the nodes (reading a private key only readable by
-     the 'oar' user)
-3) on the nodes, the specific sshd server accept the 'oar' ssh-key
-   and run again a trusted program as root that will get and setup CPUSET
-   correctly. Then, it switches to the initial user account and run
-   the user specified program.
+Can you aassing an additional CVE for this since the scope for
+CVE-2015-7674 was for the pixops_scale_nearest function?
 
-  The problem occurs at step 2, if the user adds some arguments to oarsh.
-Indeed, these arguments were all passed to the 'ssh' call which is
-running with more privileges. For example, calling:
-grisou-50 ~ $ oarsh -F /var/lib/oar/ethome_$OAR_JOBID.jobkey `hostname`
-/var/lib/oar/ethome_937064.jobkey: line 1: Bad configuration option: -----begin
-/var/lib/oar/ethome_937064.jobkey: line 2: Bad configuration option: miicxgibaakbgqdkhpdism+ong8phqw9poga4fps3f68b1fprlzamseezvgx5nkx
-[...]
-/var/lib/oar/ethome_937064.jobkey: line 14: Bad configuration option: k7dgew6kcaqubskujokbccsauhnctmdrwf0ftwgh+xzn9g
-/var/lib/oar/ethome_937064.jobkey: line 15: Bad configuration option: -----end
-/var/lib/oar/ethome_937064.jobkey: terminating, 15 bad configuration options
-
-=> you get nearly (but the case) the private key (which ssh tries to parse
-as a config file and fails, printing its content). This key should not be
-available to the user.
-  With the knowing of this private key, the user can log into nodes
-and even oar server with a account that has root access...
-
-  So, the upstream patch modifies the suid binary (more exactly the script
-called by the suid binary) in order to restrict/filter authorized options for
-oarsh (ie for the privileged "ssh" call).
-  The fix is introduced into OAR 2.5.7 release. All previous OAR releases
-suffer from this bug.
-
-  Debian packages with fix have just been uploaded to sid, stable and oldstable.
-
-  Regards,
-    Vincent
-
+Regards,
+Salvatore
