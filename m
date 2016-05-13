@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1052" "Tuesday" "18" "December" "2018" "11:44:32" "+0200" "saar amar" "saaramar5@gmail.com" "<CAF2z-PPRVy+4CQkJ=Abm6__D0f3vTjGXcPH6OG0OiF-iBn0HAg@mail.gmail.com>" "37" "[oss-security] Re: CVE-2018-20124 QEMU: rdma: OOB access when building scatter-gather array" nil nil nil "12" "2018121809:44:32" "[oss-security] Re: CVE-2018-20124 QEMU: rdma: OOB access when building scatter-gather array" (number mark "U       saaramar5@gm Dec 18   37/1052  " thread-indent "\"[oss-security] Re: CVE-2018-20124 QEMU: rdma: OOB access when building scatter-gather array\"\n") "<nycvar.YSQ.7.76.1812181420590.5773@xnncv>" ("<nycvar.YSQ.7.76.1812181420590.5773@xnncv>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1777" "Thursday" "12" "May" "2016" "23:53:59" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160513035359.77D777BC065@smtpvmsrv1.mitre.org>" "43" "[oss-security] Re: CVE Request - OpenJPEG: Security Fixes" nil nil nil "5" "2016051303:53:59" "[oss-security] Re: CVE Request - OpenJPEG: Security Fixes" (number mark "U       cve-assign@m May 12   43/1777  " thread-indent "\"[oss-security] Re: CVE Request - OpenJPEG: Security Fixes\"\n") "<1F2D4DA31CA62740BFF46830A0E6A4F706575A62@EXMBX-TJ003.tencent.com>" ("<1F2D4DA31CA62740BFF46830A0E6A4F706575A62@EXMBX-TJ003.tencent.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26607 invoked by uid 550); 18 Dec 2018 10:38:25 -0000
+Received: (qmail 21734 invoked by uid 550); 13 May 2016 03:54:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,80 +12,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21577 invoked from network); 18 Dec 2018 09:44:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nx2CBSZETqsQiyj4ozrRcQQm+d+mj+Il/dgt7mKOlnU=;
-        b=i0NkyGFQYL2ZTBhwglpBrDXoSkt7W/SQuwwP8XS5K/nm4WcfOwzbAiQZYzhOaClmsO
-         TJK2zUuggSBf2nGcj2d1z2qw6bZ1mauXoWX1UO+ZAWdYN3/dH9ROuI7GUcKcrrzBLqEB
-         w4oZgGKdPcWbmONUoJDY5ltSEziObmUFR8D8XqNB8aFCjUTIyp/F/ckQ/sHq2SSOMaQM
-         7y8qrzZmrhNI+xo2u9m40bcuhnXjqmM5Q1VR4zjMOdzULQO5DmCUqYG4TX+/pi/lNS9/
-         3P1RevmsEPyEcsKfmZSFxjj9iFPNm5o8C+6Shy4MO1uq75p6X1Vio6WsfhrrXHBnVLp1
-         TCHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nx2CBSZETqsQiyj4ozrRcQQm+d+mj+Il/dgt7mKOlnU=;
-        b=PlcYHuYWyRWh2tYWQZmKZv6uCczVZ7RJQKwXtriCP9WqFUgO7tzy8IZ+lhUGQF1xGn
-         QnjN/BpOHEjRs2qOb2rBgBmYbA1ug1Tje3bUQIOWTbIcT2zQi4im8KF3N+0CnqwkP+wh
-         Lllb7JjacSln9UJz5/nhYq7g3dguoknCM7dBO+uMSVQO0JB5BRAxbtqtWwSyyMsxeYeu
-         uE2zHcd9lC2uVaud3/H9cBUHwlaEQbhc9gvRxKtCkBvx/ARYOaCBy64mED5xNnk4JfV5
-         tmGpLaA9TVsZD629PyDFDlrwxroG5V2yS7+6ujke+9csU8I6oC79p4UUmh7h+ihQjVdH
-         a15g==
-X-Gm-Message-State: AA+aEWbxWucQiZPCUuQz+2HPjS916phOcy/We9RNivkn9BA37G46TLTL
-	W1CoDiFUi6sJZWa6chALU0fZApQgxh/hycAkdUc=
-X-Google-Smtp-Source: AFSGD/Uw/SzV/E6BjKNlKA0Ajf5PICJpD3UyXR2Ut194Qs6gKWcK8DBmu6bROMloXvGPVLMosFLPAKi+eSLUxiAXsZA=
-X-Received: by 2002:a50:afa3:: with SMTP id h32mr15837885edd.150.1545126284000;
- Tue, 18 Dec 2018 01:44:44 -0800 (PST)
-MIME-Version: 1.0
-References: <nycvar.YSQ.7.76.1812181420590.5773@xnncv>
-In-Reply-To: <nycvar.YSQ.7.76.1812181420590.5773@xnncv>
-From: saar amar <saaramar5@gmail.com>
-Date: Tue, 18 Dec 2018 11:44:32 +0200
-Message-ID: <CAF2z-PPRVy+4CQkJ=Abm6__D0f3vTjGXcPH6OG0OiF-iBn0HAg@mail.gmail.com>
-To: P J P <ppandit@redhat.com>
-Cc: oss security list <oss-security@lists.openwall.com>
-Content-Type: multipart/alternative; boundary="0000000000004a8424057d48bfe5"
-Subject: [oss-security] Re: CVE-2018-20124 QEMU: rdma: OOB access when building
- scatter-gather array
+Received: (qmail 21713 invoked from network); 13 May 2016 03:54:11 -0000
+From: cve-assign@mitre.org
+To: winsonliu@tencent.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <1F2D4DA31CA62740BFF46830A0E6A4F706575A62@EXMBX-TJ003.tencent.com>
+Message-Id: <20160513035359.77D777BC065@smtpvmsrv1.mitre.org>
+Date: Thu, 12 May 2016 23:53:59 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request - OpenJPEG: Security Fixes
 
---0000000000004a8424057d48bfe5
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Thanks all :) I'm happy it fixed, thanks for the response guys!
+> 1. Issue 774
+> OpenJPEG Heap Buffer Overflow in function color_cmyk_to_rgb of color.c
+> Fixed via https://github.com/uclouvain/openjpeg/commit/162f6199c0cd3ec1c6c6dc65e41b2faab92b2d91
 
-I'm wondering why it says "DOS" and not "execute arbitrary code on the
-host, in the context of the QEMU process"? I have stack overflow, it pretty
-clear I could gain more than simple DOS:)
+Use CVE-2016-4796.
 
-What do your day?
 
-On Tue, 18 Dec 2018, 10:53 P J P <ppandit@redhat.com wrote:
+> 3. Issue 733
+> OpenJPEG division-by-zero in function opj_tcd_init_tile of tcd.c
+> Fixed via https://github.com/uclouvain/openjpeg/commit/8f9cc62b3f9a1da9712329ddcedb9750d585505c
 
->    Hello,
->
-> An out-of-bound stack buffer r/w access issue was found in QEMU's generic
-> RDMA
-> back-end implementation. It could occur when a driver tries to build
-> scatter/gather element's array in build_host_sge_array() routine.
->
-> A guest user/process could use this flaw to crash the QEMU process
-> resulting
-> in DoS.
->
-> Upstream patch:
-> ---------------
->    -> https://lists.gnu.org/archive/html/qemu-devel/2018-12/msg02822.html
->
-> This issue was reported by Saar Amar.
->
-> Thank you.
-> --
-> Prasad J Pandit / Red Hat Product Security Team
-> 47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
->
+Use CVE-2016-4797. Note that the problematic
+"(OPJ_UINT32)-1) / l_data_size" was apparently introduced in a patch
+addressing out-of-bounds read (or heap-based buffer over-read)
+vulnerabilities. See the pdfium.googlesource.com reference in
+CVE-2014-7947. In other words, CVE-2016-4797 exists because of an
+incorrect fix for CVE-2014-7947.
 
---0000000000004a8424057d48bfe5--
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXNU9PAAoJEHb/MwWLVhi28X4QAIGR60vQpZzIhEywfDxkjIBR
+dSoym8oeHcYmXJ3ss2YRbh7+SWIstc3gu9cM3BXTuvyIQqsjN0uMf4/GOYanYUe4
+5BtBptTnJlZW+mR+SfZ3Q/ykY3ysTgQMx93114gSj+5+JPS22rb3SM9PiaofeMgh
+1NMGfI91bpp/KotoChumac2ySmA6ozyPXitOhBcu/fYipJAAnymxg0msmXqemjY8
+HC9yjamL5RxvNSl8ljJsB67A7HJ9tvW8zvDUv6w6Q7s6LvbnCdQKJi62gj8/s+u4
+bPP5KlfFdqDSVmQuMbhFwC+g1LfH5wPzjeKo9B2HFZnXPU/MMlHiTLM+Sw2ZPaAK
+y1iZiHJWgoVcgEWRDmBim698GqITbkvkIuIhr/Wwr5JG9VogTmwkEyoHsSUpvybh
+0xtT9po9hyWpli0pzCrEVMOEhg3IIa8l2HY7QK0QwpQgIiOS5FqoDQGx+rE257zX
+ycEjCotU9ut0x9NvuoEZ4Vcij9uuN4LOq936TwbDCL7Mrl2+/sKzUggl9NdiwLOz
+zulrm15VG76PcyrdlBxg5Mz+T3jKnGeASvuIFGvFNAqgDbo1a9aNPsqZqt9PQGms
+tYOD46BI1j04y0lO0+0kzuKM6KQD2I5P481mlxwNkpak8ZbYh2nk+v+sbtE6mQh/
+f76PMrF6mhLea5mECvFK
+=0Yri
+-----END PGP SIGNATURE-----
