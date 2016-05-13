@@ -1,39 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/18/5
-Message-ID: <569CE313.4060002@redhat.com>
-Date: Mon, 18 Jan 2016 14:05:23 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/13/1
+Message-Id: <20160513031601.D166C72E017@smtpvbsrv1.mitre.org>
+Date: Thu, 12 May 2016 23:16:01 -0400 (EDT)
+From: cve-assign@...re.org
+To: jmm@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request : Use-after-free in openjpeg
 Content-Type: text/plain; charset=utf-8
 
-On 01/15/2016 01:56 PM, Yann Droneaud wrote:
-> Hi,
-> 
-> Le vendredi 15 janvier 2016 à 12:06 +0100, Florian Weimer a écrit :
->> On 01/14/2016 06:13 PM, Qualys Security Advisory wrote:
->>> Internal stdio buffering is the most severe of the three problems
->>> discussed in this section, although GNU/Linux is not affected
->>> because the glibc mmap()s and munmap()s (and therefore cleanses)
->>> stdio buffers.
->>
->> This will change in glibc 2.23, stdio will use regular malloc and
->> free for its buffers.  I did not expect this change to have security
->> implications.  Considering that the actual bug lies elsewhere, and
->> stdio usage is based on copying out of the buffer (so leaks can still
->> happen elsewhere), I do not wish to revert this change.
->>
-> 
-> Would setvbuf(stream, NULL, _IONBF, 0); be used to disable buffer
-> before reading/writting sensible data to a stream ?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-That entirely depends on how the data is read or written.  glibc will
-make additional copies on the heap in some cases.  In any case, this is
-an implementation detail.
+> Use-after-free was found in openjpeg
+> (https://github.com/uclouvain/openjpeg). The vuln is fixed in version
+> 2.1.1 and was located in opj_j2k_write_mco function. More details are
+> available here : https://github.com/uclouvain/openjpeg/issues/563.
+> Is it possible to get a CVE for this ?
 
-Even if the data is gone from the process image, the kernel or its
-hypervisor may still keep copies, particularly if the data is (or was
-once) on the file system.  It is very hard to override data reliably on
-modern systems.
+>> https://github.com/uclouvain/openjpeg/commit/940100c28ae28931722290794889cf84a92c5f6f
+>> j2k.c
 
-Florian
+Use CVE-2015-8871.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXNUZ9AAoJEHb/MwWLVhi2kZcP/iL6ppset8OqSb3ZD3OWUjaF
+JarptdmZEX7Ay6Kzt9BBfYqAhR+Nz3xIpQa+vvNDnvP+ITZ2m9J7zVbTd5iIRAkw
+FXe+6zhXwAGzjHCuFOVeDPZXyfB8v4tNCFNon4cpz0p+CDnJavo0ZQlsS4S8U8FN
+CbnuJUuz1EfbvGtG3GNh2yfdQCK9xX/qzdm+3TjM9FK+THqe3BvIBQ3PK+kEbcgv
+95kSt9rothzIdnE9llyosB5oQeaqgBPbksQUc1WB4OGz3H1aazjcSsGp+54bSaUu
+AgHyF1fRjiR0M771ouRMHo+Ug+0mvbWZiFpwPlzVGV2dPb4YLQpWvZVaOENwdcb9
+RWISBA1NcgbTWPBCJoLt7mgXOlHhm5qBkFXqwpO6ZfQDDoVlPHanp1MQ2CRur87r
+Z9FeRrYUuwH80ndtexD5zMCKnVup+tP6XXudeZJ1FmG394+7du/JnBznohBiPXTh
+K40wRp9mMjsv/jgDoS9Xg6+VzFVHHMvQ8m1KDJacmexHoLHubeAYc32RAJfAZMnC
+P1w3rSV32K6RKGIUnyINAgmzenrbuRxg96Ghq52djEvW2K9PyHFx26F4rlLnOPro
+M4ErrCfvcYNPuyX0vK2zvbzTFRPx5yt6WjAJ4P704fIEUqaDUSWdrYY6/exiN0Kp
+j4XA4VMjVHcbfrPwEW8t
+=s3Bf
+-----END PGP SIGNATURE-----
