@@ -1,58 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/28/1
-Message-Id: <20160328171244.795EE6C063B@smtpvmsrv1.mitre.org>
-Date: Mon, 28 Mar 2016 13:12:44 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/13/2
+Message-Id: <20160513035359.77D777BC065@smtpvmsrv1.mitre.org>
+Date: Thu, 12 May 2016 23:53:59 -0400 (EDT)
 From: cve-assign@...re.org
-To: joerg.schaible@....de
+To: winsonliu@...cent.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request - XStream: XXE vulnerability
+Subject: Re: CVE Request - OpenJPEG: Security Fixes
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> XStream (x-stream.github.io) ... An attacker could therefore provide
-> manipulated XML as input to access data on the file system
-> 
-> Since XStream 1.4.9 all parsers are configured to ignore external entities
-> by default as far as such behavior is configurable:
-> http://x-stream.github.io/changes.html#1.4.9
+> 1. Issue 774
+> OpenJPEG Heap Buffer Overflow in function color_cmyk_to_rgb of color.c
+> Fixed via https://github.com/uclouvain/openjpeg/commit/162f6199c0cd3ec1c6c6dc65e41b2faab92b2d91
 
-Use CVE-2016-3674 for the XStream vulnerability that was resolved by
-this change.
+Use CVE-2016-4796.
 
 
-> Applications using XOM or explicitly BEA's old StAX reference parser are
-> still vulnerable, we found no way to deactivate processing of external
-> entities for those two.
+> 3. Issue 733
+> OpenJPEG division-by-zero in function opj_tcd_init_tile of tcd.c
+> Fixed via https://github.com/uclouvain/openjpeg/commit/8f9cc62b3f9a1da9712329ddcedb9750d585505c
 
-These seem to be present in one or more Linux distributions and thus
-might have widespread deployment, e.g.,
-
-  http://pkgs.fedoraproject.org/cgit/rpms/xom.git
-  http://pkgs.fedoraproject.org/cgit/rpms/bea-stax.git
-
-Within the context of XStream itself, we do not feel that the
-XomDriver or BEAStaxDriver behavior should have a CVE stating that
-version 1.4.9 is vulnerable, because
-http://x-stream.github.io/faq.html#Security_XXEVulnerability
-explicitly documents the behavior, and XStream users could reasonably
-be expected to look at that FAQ document before choosing XomDriver or
-BEAStaxDriver for use with untrusted XML documents.
-
-However, that FAQ document might suggest that the underlying problems
-are upstream implementation errors, e.g., the design of these pieces
-of code would be reasonably expected to support ignoring all external
-entities but did not achieve that:
-
-  https://java.net/projects/xom/sources/svn/content/trunk/src/nu/xom/tests/BuilderTest.java
-  private static class NonEntityResolvingFilter extends XMLFilterImpl
-
-  https://repository.jboss.org/nexus/content/groups/public-jboss/stax/stax-src/1.2.0/stax-src-1.2.0.distribution-zip
-  src/com/bea/xml/stream/ConfigurationContextBase.java
-
-Does anyone want to request two CVE IDs for these two products? (We
-think that the StAX issue is more general than CVE-2013-7315.)
+Use CVE-2016-4797. Note that the problematic
+"(OPJ_UINT32)-1) / l_data_size" was apparently introduced in a patch
+addressing out-of-bounds read (or heap-based buffer over-read)
+vulnerabilities. See the pdfium.googlesource.com reference in
+CVE-2014-7947. In other words, CVE-2016-4797 exists because of an
+incorrect fix for CVE-2014-7947.
 
 - -- 
 CVE Assignment Team
@@ -62,17 +37,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW+WWhAAoJEL54rhJi8gl5ASUP/iZGOTiraYf0lVA5xgjcfbN6
-7kqf5Oqlv/FH4Vrj5qe2irFrQ0bZuZbMoLtSUFWq/bBTPcxa8ITd/sJB6f9N5/tw
-P/EseQRf/HfpzSSKPjuOUNIMYoJ7ik2UAdeClndCiHZtHqvp4and+pXk3yM3J4fV
-BLXcecUhQf0qZuC4RIglK5VEe62hMiEMHSRglt7B1rNJimpBbID0ObNOUqKjjEQA
-sIwbAl0Mm9Vebennxb7uJB5gCEbZKhL9APJay5NzBp3fPB0a2upHSNZ6gouCBha1
-3CBqVdFQxYYEyQ0iB3A7kKTR7f5d8CtO8aBGwolkoH2dcRxpvMfdFV3EsxvDxiiZ
-p6IM+VFa/SgxOeaDhlVZeqtlGvzgTMNSdi9l34352RQuniloGBq/GQvwh54PaaQy
-netM0hUmKgR+O+WMC2gV+WFgTQYnUP94zx0D6P3Eq25S04RlQQIkK5aYP7iVsKRw
-lxZGgjnTUG5MgFSec+bjKqCDcSTCg/BQ2rKGWsAvKV0tjePauQ9OHohumNvSVaxo
-/ju9jZKNsKXBZPB6g1Tk8JG9WkifpdarfxAtlkBmbpJaqYbfIn6jlbYGE4ZD1ovl
-Q2TQ0GRfMW2c8vKhYUB/FDT7hEcRjAe6gH9SXGMV9q94zPsgF72EHOqG+srT6+tQ
-aHE6v/IZoJHc0cPvyGzy
-=g/fx
+iQIcBAEBCAAGBQJXNU9PAAoJEHb/MwWLVhi28X4QAIGR60vQpZzIhEywfDxkjIBR
+dSoym8oeHcYmXJ3ss2YRbh7+SWIstc3gu9cM3BXTuvyIQqsjN0uMf4/GOYanYUe4
+5BtBptTnJlZW+mR+SfZ3Q/ykY3ysTgQMx93114gSj+5+JPS22rb3SM9PiaofeMgh
+1NMGfI91bpp/KotoChumac2ySmA6ozyPXitOhBcu/fYipJAAnymxg0msmXqemjY8
+HC9yjamL5RxvNSl8ljJsB67A7HJ9tvW8zvDUv6w6Q7s6LvbnCdQKJi62gj8/s+u4
+bPP5KlfFdqDSVmQuMbhFwC+g1LfH5wPzjeKo9B2HFZnXPU/MMlHiTLM+Sw2ZPaAK
+y1iZiHJWgoVcgEWRDmBim698GqITbkvkIuIhr/Wwr5JG9VogTmwkEyoHsSUpvybh
+0xtT9po9hyWpli0pzCrEVMOEhg3IIa8l2HY7QK0QwpQgIiOS5FqoDQGx+rE257zX
+ycEjCotU9ut0x9NvuoEZ4Vcij9uuN4LOq936TwbDCL7Mrl2+/sKzUggl9NdiwLOz
+zulrm15VG76PcyrdlBxg5Mz+T3jKnGeASvuIFGvFNAqgDbo1a9aNPsqZqt9PQGms
+tYOD46BI1j04y0lO0+0kzuKM6KQD2I5P481mlxwNkpak8ZbYh2nk+v+sbtE6mQh/
+f76PMrF6mhLea5mECvFK
+=0Yri
 -----END PGP SIGNATURE-----
