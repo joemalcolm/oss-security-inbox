@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4521" "Tuesday" "5" "October" "2021" "18:43:10" "+0000" "Xen.org security team" "security@xen.org" nil "120" "[oss-security] Xen Security Advisory 386 v1 (CVE-2021-28702) - PCI devices with RMRRs not deassigned correctly" nil nil nil "10" nil nil (number mark "U       security@xen Oct  5  120/4521  " thread-indent "\"[oss-security] Xen Security Advisory 386 v1 (CVE-2021-28702) - PCI devices with RMRRs not deassigned correctly\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 386 v1 (CVE-2021-28702) - PCI devices with RMRRs not deassigned correctly" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3757" "Saturday" "14" "May" "2016" "09:55:43" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160514135543.9BF946C050C@smtpvmsrv1.mitre.org>" "88" "[oss-security] Re: dosfstools / fsck.vfat: Several invalid memory accesses" nil nil nil "5" "2016051413:55:43" "[oss-security] Re: dosfstools / fsck.vfat: Several invalid memory accesses" (number mark "U       cve-assign@m May 14   88/3757  " thread-indent "\"[oss-security] Re: dosfstools / fsck.vfat: Several invalid memory accesses\"\n") "<20160508221902.04889595@pc1>" ("<20160508221902.04889595@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 10199 invoked by uid 550); 5 Oct 2021 18:43:30 -0000
+Received: (qmail 29921 invoked by uid 550); 14 May 2016 13:56:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,143 +12,100 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10179 invoked from network); 5 Oct 2021 18:43:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=tfi/3QwQXxxrSN8ZOEpf0N6gSqkc9mlvL65nLRNcV9Y=; b=4Xv/9z2YWtWV1lA5qeAWpVtPNQ
-	5K6Zq8UEV8nWtHoISUY5o5Ad0avsVPp+/zKMOwnrN7aQ4pK7yN3USz9sHwwLr0yC/NRBt04PfNNMQ
-	oxh5eJlwbfCP2baa4EEHoPfnd9pJzxkofsK1zRuc03Pog9Vc1IdaTRHgjcgCN+40Y4iw=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1mXpPC-0006vg-20@xenbits.xenproject.org>
-Date: Tue, 05 Oct 2021 18:43:10 +0000
-Subject: [oss-security] Xen Security Advisory 386 v1 (CVE-2021-28702) - PCI devices with
- RMRRs not deassigned correctly
-
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Received: (qmail 29871 invoked from network); 14 May 2016 13:55:55 -0000
+From: cve-assign@mitre.org
+To: hanno@hboeck.de
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20160508221902.04889595@pc1>
+Message-Id: <20160514135543.9BF946C050C@smtpvmsrv1.mitre.org>
+Date: Sat, 14 May 2016 09:55:43 -0400 (EDT)
+Subject: [oss-security] Re: dosfstools / fsck.vfat: Several invalid memory accesses
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-            Xen Security Advisory CVE-2021-28702 / XSA-386
+These reports are about command-line programs that realistically
+encounter untrusted input. However,
+https://github.com/dosfstools/dosfstools/blob/master/README.md says
+"dosfstools consists of the programs mkfs.fat, fsck.fat and fatlabel
+to create, check and label file systems of the FAT family." It does
+not state that dosfstools provides a library that can be used to build
+other programs that a user may want. In particular, there does not
+seem to be a use case in which a provided program needs to remain
+running to process additional filesystems after encountering an
+invalid filesystem.
 
-            PCI devices with RMRRs not deassigned correctly
 
-ISSUE DESCRIPTION
-=================
+> https://github.com/dosfstools/dosfstools/issues/11
+> Global out of bounds read file_stat() / check_dir()
+> https://github.com/dosfstools/dosfstools/commit/2aad1c83c7d010de36afbe79c9fde22c50aa2f74
+> Git commit / fix
 
-Certain PCI devices in a system might be assigned Reserved Memory
-Regions (specified via Reserved Memory Region Reporting, "RMRR").
-These are typically used for platform tasks such as legacy USB
-emulation.
+As far as we can tell, this one is not a vulnerability in the
+above-described context. It seems to be an out-of-bounds read that
+doesn't affect the flow of control.
 
-If such a device is passed through to a guest, then on guest shutdown
-the device is not properly deassigned.  The IOMMU configuration for
-these devices which are not properly deassigned ends up pointing to a
-freed data structure, including the IO Pagetables.
 
-Subsequent DMA or interrupts from the device will have unpredictable
-behaviour, ranging from IOMMU faults to memory corruption.
+> https://github.com/dosfstools/dosfstools/issues/12
+> Unclear invalid memory access in get_fat()
+> https://github.com/dosfstools/dosfstools/commit/07908124838afcc99c577d1d3e84cef2dbd39cb7
+> Git commit / fix
+> 
+> that was a nasty one: FAT12 corruption when a certain FAT entry at the
+> end is changed.
+> 
+> set_fat(): Fix off-by-2 error leading to corruption in FAT12
+> 
+> If the third to last entry was written on a FAT12 filesystem with an
+> odd number of clusters, the second to last entry would be corrupted.
+> This corruption may also lead to invalid memory accesses when the
+> corrupted entry becomes out of bounds and is used later.
 
-IMPACT
-======
+Use CVE-2015-8872.
 
-Administrators of guests which have been assigned RMRR-using PCI
-devices can cause denial of service and other problems, possibly
-including escalation of privilege.
 
-VULNERABLE SYSTEMS
-==================
+> https://github.com/dosfstools/dosfstools/issues/25
+> Heap overflow in read_fat()
+> https://github.com/dosfstools/dosfstools/issues/26
+> Heap out of bounds read in get_fat()
+> https://github.com/dosfstools/dosfstools/commit/e8eff147e9da1185f9afd5b25948153a3b97cf52
+> Git commit / fix for both issues
+> 
+> it's a failure to properly catch a zero length FAT in read_fat() and
+> continuing with that and the other corrupt values
+> 
+> read_boot(): Handle excessive FAT size specifications
+> 
+> The variable used for storing the FAT size (in bytes) was an unsigned
+> int. Since the size in sectors read from the BPB was not sufficiently
+> checked, this could end up being zero after multiplying it with the
+> sector size while some offsets still stayed excessive. Ultimately it
+> would cause segfaults when accessing FAT entries for which no memory
+> was allocated.
 
-All versions of Xen from at least 4.4 onwards are vulnerable.
+Use CVE-2016-4804 (this applies to both issues/25 and issues/26, even
+though the impact in 25 is a heap-based buffer overflow with write
+access, and the impact in 26 is a heap-based buffer over-read).
 
-Only Intel x86 systems are affected.  AMD x86 systems, and Arm
-systems, are all unaffected.
-
-Only systems using PCI passthrough are affected.  (And then, only if
-the assigned devices have RMRRs, but whether a device advertises RMRRs
-is not easy to discern.)
-
-MITIGATION
-==========
-
-There is no mitigation (other than not passing through PCI devices
-with RMRRs to guests).
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa386.patch           xen-unstable - Xen 4.12.x
-
-$ sha256sum xsa386*
-f2f83c825e249bba9454437b48bbd8307fe7a224f56484388a67af124dfd279b  xsa386.patch
-$
-
-NOTE CONCERNING LACK OF EMBARGO
-===============================
-
-This issue was reported and debugged in public before the security nature
-became apparent.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmFcnH8MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZje0H+QE5A0ZvoaJ5VupZYjAt5ynbQjVqxwxqAxZDTvP7
-t3gtpsHSYgrHW+3giULxjGU0ZUGF9daO1JEIZCPCbUdIlmGqGEXdDoqtz0GrXCJJ
-swQFeXQVmn9lV4KMTHO0BvGw5aZOft1VgGNrixd3vckFl7c5G8sWFdl7IU7FPDTQ
-LiLMg6f1oOntBYjNZUZ2210jqct9GZ4ugURRufwZrwYIpc9H5pFnZAFHKismX/2m
-x/PCdmOCeivytmUPA4k62oJVpJdysAL+31XkZz8bbAhjFsUmYBJscW2T5mSfaYIp
-TaSrg9WBV+TVW7aNE2iittE2O0/YyOWfpUVh6lliECeFdd0=
-=aNEo
+iQIcBAEBCAAGBQJXNy15AAoJEHb/MwWLVhi25VEP/iMdL0X84Xo9ysSMP9D0hxZz
+1v3OtKF16jmGPpKBiC++PHoBN533jVi+K7epBhkvHC2ycKTsHHK6ImmWCguRU2C5
+w+rpoqEHMsqmiCf9M/XjutMHvgCdsFbNf4pe4dkJBt5oAK+oqThzUZ2kFK1Jvs0U
+HBDQHs9XKWIMals6N+FyF1TanIX2dUtchaky+Ba92piL3rdN95vs1/Mt1C6l+7bw
+ZUt8uqIZMNOCgr5Cq1gMvc16VFYOi8ZYWol1FBq0kFpxzjsOn8dpeJ4lxn+JKyyp
+hpAKUBPAgv+OWogtq+LsklD9qoGuaBKClrZiVL6qbr9YYA9NBabXuMqJJghGHUTy
+omKQsTOE+SuQXLLiV/gKs0bCUkWbK7yScSRUG2lEb1qtbWqHByZTq/FHTC2Kc5IY
+n0VUEayp2IFwfny11pM+D1O6VeWBFRvZNgc849VHNSo5KbTo1z9aFQSmld38t5sW
+DOzg6IvV86P+jP/OzCv7uDbJG6aSDoy8fELv4xisCp4cFq+K+9aLUqWj9HrPr+on
+3AEntSjDmvrEMvmNxY6I7ayan2AphcEGblUNnuu+2k0KnOEKjS1oIcCXSbnS8F0J
+NGI1jYf+Y5LPMX6aLmJEazyU0fXtNJx6BAKhmaGNzTBXpZdhD9nkw88puLQKMBv2
+TZGsWop91NEPNGjtPSRa
+=tWe9
 -----END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa386.patch"
-Content-Disposition: attachment; filename="xsa386.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
-OiBWVC1kOiBmaXggZGVhc3NpZ24gb2YgZGV2aWNlIHdpdGggUk1SUgpEYXRl
-OiBGcmksIDEgT2N0IDIwMjEgMTU6MDU6NDIgKzAyMDAKCklnbm9yaW5nIGEg
-c3BlY2lmaWMgZXJyb3IgY29kZSBoZXJlIHdhcyBub3QgbWVhbnQgdG8gc2hv
-cnQgY2lyY3VpdApkZWFzc2lnbiB0byBfanVzdF8gdGhlIHVubWFwcGluZyBv
-ZiBSTVJScy4gVGhpcyBidWcgd2FzIHByZXZpb3VzbHkKaGlkZGVuIGJ5IHRo
-ZSBib2d1cyAocG90ZW50aWFsbHkgaW5kZWZpbml0ZSkgbG9vcGluZyBpbgpw
-Y2lfcmVsZWFzZV9kZXZpY2VzKCksIHVudGlsIGY1OTE3NTU4MjNhNyAoIklP
-TU1VL1BDSTogZG9uJ3QgbGV0IGRvbWFpbgpjbGVhbnVwIGNvbnRpbnVlIHdo
-ZW4gZGV2aWNlIGRlLWFzc2lnbm1lbnQgZmFpbGVkIikgZml4ZWQgdGhhdCBs
-b29wLgoKVGhpcyBpcyBDVkUtMjAyMS0yODcwMiAvIFhTQS0zODYuCgpGaXhl
-czogOGI5OWY0NDAwYjY5ICgiVlQtZDogZml4IFJNUlIgcmVsYXRlZCBlcnJv
-ciBoYW5kbGluZyIpClJlcG9ydGVkLWJ5OiBJdmFuIEthcmR5a292IDxrYXJk
-eWtvdkB0YWJpdC5wcm8+ClNpZ25lZC1vZmYtYnk6IEphbiBCZXVsaWNoIDxq
-YmV1bGljaEBzdXNlLmNvbT4KVGVzdGVkLWJ5OiBJdmFuIEthcmR5a292IDxr
-YXJkeWtvdkB0YWJpdC5wcm8+CgotLS0gYS94ZW4vZHJpdmVycy9wYXNzdGhy
-b3VnaC92dGQvaW9tbXUuYworKysgYi94ZW4vZHJpdmVycy9wYXNzdGhyb3Vn
-aC92dGQvaW9tbXUuYwpAQCAtMjQwOSw3ICsyNDA5LDcgQEAgc3RhdGljIGlu
-dCByZWFzc2lnbl9kZXZpY2Vfb3duZXJzaGlwKAogICAgICAgICAgICAgICAg
-IHJldCA9IGlvbW11X2lkZW50aXR5X21hcHBpbmcoc291cmNlLCBwMm1fYWNj
-ZXNzX3gsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICBybXJyLT5iYXNlX2FkZHJlc3MsCiAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICBybXJyLT5lbmRfYWRkcmVz
-cywgMCk7Ci0gICAgICAgICAgICAgICAgaWYgKCByZXQgIT0gLUVOT0VOVCAp
-CisgICAgICAgICAgICAgICAgaWYgKCByZXQgJiYgcmV0ICE9IC1FTk9FTlQg
-KQogICAgICAgICAgICAgICAgICAgICByZXR1cm4gcmV0OwogICAgICAgICAg
-ICAgfQogICAgIH0KCg==
-
---=separator--
