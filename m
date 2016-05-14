@@ -1,55 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/04/2
-Message-Id: <20160104125706.727B93321D0@smtpvbsrv1.mitre.org>
-Date: Mon,  4 Jan 2016 07:57:06 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/14/1
+Message-Id: <20160514135543.9BF946C050C@smtpvmsrv1.mitre.org>
+Date: Sat, 14 May 2016 09:55:43 -0400 (EDT)
 From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liuling-it@....cn
-Subject: Re: CVE request Qemu: net: ne2000: OOB r/w in ioport operations
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: dosfstools / fsck.vfat: Several invalid memory accesses
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Qemu emulator built with the NE2000 device emulation support is vulnerable to
-> an OOB r/w access issue. It could occur while performing 'ioport' r/w
-> operations.
+These reports are about command-line programs that realistically
+encounter untrusted input. However,
+https://github.com/dosfstools/dosfstools/blob/master/README.md says
+"dosfstools consists of the programs mkfs.fat, fsck.fat and fatlabel
+to create, check and label file systems of the FAT family." It does
+not state that dosfstools provides a library that can be used to build
+other programs that a user may want. In particular, there does not
+seem to be a use case in which a provided program needs to remain
+running to process additional filesystems after encountering an
+invalid filesystem.
+
+
+> https://github.com/dosfstools/dosfstools/issues/11
+> Global out of bounds read file_stat() / check_dir()
+> https://github.com/dosfstools/dosfstools/commit/2aad1c83c7d010de36afbe79c9fde22c50aa2f74
+> Git commit / fix
+
+As far as we can tell, this one is not a vulnerability in the
+above-described context. It seems to be an out-of-bounds read that
+doesn't affect the flow of control.
+
+
+> https://github.com/dosfstools/dosfstools/issues/12
+> Unclear invalid memory access in get_fat()
+> https://github.com/dosfstools/dosfstools/commit/07908124838afcc99c577d1d3e84cef2dbd39cb7
+> Git commit / fix
 > 
-> A privileged(CAP_SYS_RAWIO) user/process could use this flaw to leak or
-> corrupt Qemu memory bytes(3).
+> that was a nasty one: FAT12 corruption when a certain FAT entry at the
+> end is changed.
 > 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg00050.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1264929
+> set_fat(): Fix off-by-2 error leading to corruption in FAT12
+> 
+> If the third to last entry was written on a FAT12 filesystem with an
+> odd number of clusters, the second to last entry would be corrupted.
+> This corruption may also lead to invalid memory accesses when the
+> corrupted entry becomes out of bounds and is used later.
 
-Use CVE-2015-8743.
+Use CVE-2015-8872.
 
-This was already public in 2015 in, for example, the
-https://lists.gnu.org/archive/html/qemu-devel/2015-12/msg04863.html
-post.
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/ne2000.c
-that may be an expected place for a later update.
+> https://github.com/dosfstools/dosfstools/issues/25
+> Heap overflow in read_fat()
+> https://github.com/dosfstools/dosfstools/issues/26
+> Heap out of bounds read in get_fat()
+> https://github.com/dosfstools/dosfstools/commit/e8eff147e9da1185f9afd5b25948153a3b97cf52
+> Git commit / fix for both issues
+> 
+> it's a failure to properly catch a zero length FAT in read_fat() and
+> continuing with that and the other corrupt values
+> 
+> read_boot(): Handle excessive FAT size specifications
+> 
+> The variable used for storing the FAT size (in bytes) was an unsigned
+> int. Since the size in sectors read from the BPB was not sufficiently
+> checked, this could end up being zero after multiplying it with the
+> sector size while some offsets still stayed excessive. Ultimately it
+> would cause segfaults when accessing FAT entries for which no memory
+> was allocated.
+
+Use CVE-2016-4804 (this applies to both issues/25 and issues/26, even
+though the impact in 25 is a heap-based buffer overflow with write
+access, and the impact in 26 is a heap-based buffer over-read).
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWimuNAAoJEL54rhJi8gl5ltkP/i3MzYVDYPDAWO3bpbhIZtiZ
-rEwnrcHd3E4ObDpc1yPu3xYSRCIqeFykO6z8UWpXlQofa0FY9rPw11sSMFQ1mTWI
-eJu2flvwEQzjMj/LkPtq0diCObZPgrBdYtev63d+SbTM+vr5y3+aFlo4sD6wru3s
-WR2lbJQ3+tqo/Srguw3+7wfwk0VRKvaEUuPzVLaEW67vnovN1FCcNE/l8peeXh4y
-fwXYhdWsxfUycbzHfIm9BPPF9QiLU0HWtEGNe/vEm12RSjwo33M2qpuO7/FZbHZc
-jXgjVtYN5UpWHTJmkUU8f9XdgJ/5kBB7aWvHRwJs4WcZHvKQEtaVzARKVbhS5FoP
-6igGmgopIMBM0m5QvcWnEKBZQQ1FJtReWdlDN45I92AymX6qNntDJD0lg3qeyzte
-brSDk8+nr/EiP0P5+7vPIwYvaYrTpFeXJl4wvPjo05IahSpUegqWUBQblr6/zNxL
-gOFziozu6yE9UhrTOiCxLYkAhDUWvTsh30rbH8fvxDUxTeveJaUh8G06aIoOTGUu
-h1VTbSfURQYRmxdWQY4L+r1cvmIzdVpe/Cu1BypIUggT1B3nSlvFiXbxZMlTLu/v
-SVB6SgFHwBMAuwA/01BdAHvLCyWYdxdHsSRQkOC2Qr0FTMnRLwBEd9NoyMd6v9Y1
-5cK66VL09ZI7HupaiK+e
-=aw2o
+iQIcBAEBCAAGBQJXNy15AAoJEHb/MwWLVhi25VEP/iMdL0X84Xo9ysSMP9D0hxZz
+1v3OtKF16jmGPpKBiC++PHoBN533jVi+K7epBhkvHC2ycKTsHHK6ImmWCguRU2C5
+w+rpoqEHMsqmiCf9M/XjutMHvgCdsFbNf4pe4dkJBt5oAK+oqThzUZ2kFK1Jvs0U
+HBDQHs9XKWIMals6N+FyF1TanIX2dUtchaky+Ba92piL3rdN95vs1/Mt1C6l+7bw
+ZUt8uqIZMNOCgr5Cq1gMvc16VFYOi8ZYWol1FBq0kFpxzjsOn8dpeJ4lxn+JKyyp
+hpAKUBPAgv+OWogtq+LsklD9qoGuaBKClrZiVL6qbr9YYA9NBabXuMqJJghGHUTy
+omKQsTOE+SuQXLLiV/gKs0bCUkWbK7yScSRUG2lEb1qtbWqHByZTq/FHTC2Kc5IY
+n0VUEayp2IFwfny11pM+D1O6VeWBFRvZNgc849VHNSo5KbTo1z9aFQSmld38t5sW
+DOzg6IvV86P+jP/OzCv7uDbJG6aSDoy8fELv4xisCp4cFq+K+9aLUqWj9HrPr+on
+3AEntSjDmvrEMvmNxY6I7ayan2AphcEGblUNnuu+2k0KnOEKjS1oIcCXSbnS8F0J
+NGI1jYf+Y5LPMX6aLmJEazyU0fXtNJx6BAKhmaGNzTBXpZdhD9nkw88puLQKMBv2
+TZGsWop91NEPNGjtPSRa
+=tWe9
 -----END PGP SIGNATURE-----
