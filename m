@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["523" "Thursday" "19" "May" "2016" "17:18:36" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" "<20160519171836.GC15295@yuggoth.org>" "14" "Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714" "^Date:" nil nil "5" "2016051917:18:36" "[oss-security] ImageMagick Is On Fire -- CVE-2016-3714" (number mark "        fungi@yuggot May 19   14/523   " thread-indent "\"Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714\"\n") "<alpine.GSO.2.20.1605191154150.15930@freddy.simplesystems.org>" ("<CABi+pA7xDJhirUFbrVZQkwMnFj--zbNJA8_Aoq-SiJx0QNcsoA@mail.gmail.com>" "<20160503181505.GA8195@openwall.com>" "<57292879.7050303@gmail.com>" "<alpine.GSO.2.20.1605191154150.15930@freddy.simplesystems.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1472" "Sunday" "15" "May" "2016" "10:20:22" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160515142022.4BFE7332008@smtpvbsrv1.mitre.org>" "38" "[oss-security] Re: CVE Requests: Linux: use-after-free issue for ppp channel" nil nil nil "5" "2016051514:20:22" "[oss-security] Re: CVE Requests: Linux: use-after-free issue for ppp channel" (number mark "U       cve-assign@m May 15   38/1472  " thread-indent "\"[oss-security] Re: CVE Requests: Linux: use-after-free issue for ppp channel\"\n") "<57385812.2030402@gmail.com>" ("<57385812.2030402@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11813 invoked by uid 550); 19 May 2016 17:18:52 -0000
+Received: (qmail 5646 invoked by uid 550); 15 May 2016 14:20:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,38 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11786 invoked from network); 19 May 2016 17:18:51 -0000
-Message-ID: <20160519171836.GC15295@yuggoth.org>
-References: <CABi+pA7xDJhirUFbrVZQkwMnFj--zbNJA8_Aoq-SiJx0QNcsoA@mail.gmail.com>
- <20160503181505.GA8195@openwall.com>
- <57292879.7050303@gmail.com>
- <alpine.GSO.2.20.1605191154150.15930@freddy.simplesystems.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.GSO.2.20.1605191154150.15930@freddy.simplesystems.org>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Date: Thu, 19 May 2016 17:18:36 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714
-To: oss-security@lists.openwall.com
+Received: (qmail 5628 invoked from network); 15 May 2016 14:20:34 -0000
+From: cve-assign@mitre.org
+To: sploving1@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, g.nault@alphalink.fr
+In-Reply-To: <57385812.2030402@gmail.com>
+Message-Id: <20160515142022.4BFE7332008@smtpvbsrv1.mitre.org>
+Date: Sun, 15 May 2016 10:20:22 -0400 (EDT)
+Subject: [oss-security] Re: CVE Requests: Linux: use-after-free issue for ppp channel
 
-On 2016-05-19 12:07:16 -0500 (-0500), Bob Friesenhahn wrote:
-> I find it very disturbing that there seems to be very little
-> response from popular OS distributions to this issue. Most do not
-> appear to have issued any package updates to close the shell
-> exploit.
-[...]
-> As an example Ubuntu 14.04.4 LTS (which is supposed to be getting
-> security updates) has not provided ImageMagick or GraphicsMagick
-> package updates in 3 years.
-[...]
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Seems to be in progress? https://launchpad.net/bugs/1578398
--- 
-Jeremy Stanley
+>    The ppp channel did not take reference on its network namespace
+> when it was registered and unregistered, which causes a use-after-free
+> issue. Details:
+> https://lkml.org/lkml/2016/3/17/569
+> Fixed via:
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1f461dcdd296eecedaffffc6bae2bfa90bd7eb89
+
+>> ppp: take reference on channels netns
+
+> Fixed in linux-stable 4.5.4
+
+Use CVE-2016-4805.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXOISqAAoJEHb/MwWLVhi2pt0P/RXsGFFEKEkonzo9IdSJ/tZZ
+MTsM+l8dZzpHFh44HTbI+GnzilwX5TdtZADLR8a4mfLvnF+qxoMMf/rZBrmokkAI
+I0b5UfM+37twvWDnj7pKDYHn5LdsGsZW+z6WeXddhwdry9scB04xnVCgXni0SOJ4
+Fhmu72ykxgoZ4nT9gqT62nGbFHsLlS3mhF3lobmJwaFp3kiP1AL/NaaAzVdYX1T0
+bcIjRoJoRpKzIXURSIyQ+WnmtoMB5KvnQQgDZvsmqk9dLe0iWiZamAV8reKiIaHN
+ZbKiDsDSQzqHJ1IsY/CT08Uj+WFyn3bbikrbo2WmxVZd1kuvJCzB/uD1zLny5vLG
+GWWml1isPA8jTMH5AT8ZcTED+vPgN+a55JpOkUKSUq/thlwhdv+5smE/ZqUQaTZK
+6M910FY9AA+75AdA6RR+PKzbB6UnwaJS71oEGXELzwJw7UtdooUHHqJK9Y5mPH5J
+ysYb3vrEUiPvRuZyuWSXi1jk/MMHGmG/lInXhWFirvwh1jt5XYKJP5uJN+qfMwCg
+WBBvUOinqUwDu0C42wrpM5NkCfFE/o854+EurHuJ7nXOQjrX+Zzd5eAZkhFNJeej
+iCX4C/FV5QLpQnahtsbZeYrtl8FKJ/4yJty5KxnE+S/V4ic4H06zA00j3XPZD4jz
+U6E7HOPcRqdPhitNBIHt
+=RgAh
+-----END PGP SIGNATURE-----
