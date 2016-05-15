@@ -1,44 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/13/2
-Message-Id: <20161013070125.9C7331BE0E7@smtpvbsrv1.mitre.org>
-Date: Thu, 13 Oct 2016 03:01:25 -0400 (EDT)
-From: cve-assign@...re.org
-To: krahmer@...e.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: bubblewrap LPE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/15/2
+Message-ID: <57385812.2030402@gmail.com>
+Date: Sun, 15 May 2016 19:05:54 +0800
+From: Baozeng Ding <sploving1@...il.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Cc: g.nault@...halink.fr
+Subject: Re: CVE Requests: Linux: use-after-free issue for ppp channel
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+It was introduced by
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=273ec51dd7ceaa76e038875d85061ec856d8905e
+Fixed in linux-stable 4.5.4 and longterm 3.2.80, 3.12.59, 3.14.69, 
+3.16.35, 4.4.10.
 
-> Once the dumpable flag is set, there is a chance we could attach to the process,
-> once the remaining caps are dropped and the whole process runs as user.
-> 
-> Luckily, that happens at line 1707, right after a PrivSep socket has been opened!
+On 2016/5/11 23:37, Baozeng Ding wrote:
+> Hi all,
+>    The ppp channel did not take reference on its network namespace 
+> when it was registered and unregistered, which causes a use-after-free 
+> issue. Details:
+> https://lkml.org/lkml/2016/3/17/569
+> Fixed via:
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1f461dcdd296eecedaffffc6bae2bfa90bd7eb89 
+>
+>
+> Could you please assign a CVE for this issue? Thanks.
+>
+> Best Regards,
+> Baozeng
 
-Use CVE-2016-8659 for this issue in which there is unintended
-functionality of attaching to the process because of the details
-of the code near 1707.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX/zCzAAoJEHb/MwWLVhi2N7MP/iBQbZmO7LEnU4n2DN0AgDwV
-WiZAzDsNl6rfFMDC25pSmy+0wY5E9qzbXdOWxiAphntuwG7K2qPeM78FrqcBr6wB
-/bMwj1Xp7fIWZIAt5O9Nnd/0B+KQgYwU0KjaJVyEyHW59Qhk/WWIqWViqia3CDL0
-zWVF/Ofnu2pTeoIOIBmnjAdgkiSihpU1XlR16e2YGfJAKAlaS0td+4jhogUmgkg3
-Sa5IbvgTVrLdG0LALAa9NQeN2guOslDkiQepW4NjhNungSJbmrkgq3xdMey2GHrC
-1hV1DgHbBLg43Kz7Mp1wKLxAn+VWvZrPHfYAP/gwpmA9kuUet1PAlN84awi2VbQg
-fTiY2f7/0AyQsIhhgPQVqfsidw2xBQ0DYc7uoQftFff/MmVFs0+K4miuFqmeQ06B
-WyFs4ur43J2EiS/rBJnZlNlqaBGvVg9pzeLv5MhfYnvteFGDxALfKAKNqIpQYHsZ
-c0JynLFP+el/XMBS2pt8cJiD1xVhGS/G3eCGCUWTmPBmaMfLHcJeyxO8ZmLcDetN
-zLPWjCDgtqUWGtfKWTR643I1cu5IVD3w2/k+glXwy3spz5JiKl5tfAFodDSUi35m
-Yn54sbPQ5ohVqoUrSd7FzTzrgfVAZJVNjcqbG+3VGpnfscgn0dSsEiH2i2jTlOy7
-Vxo15BHmFPpa4CuVsG/j
-=/As/
------END PGP SIGNATURE-----
