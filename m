@@ -1,37 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/12/7
-Message-ID: <87mvjcojxr.fsf@prune.linuxpenguins.xyz>
-Date: Tue, 13 Sep 2016 08:02:56 +1000
-From: Brian May <brian@...uxpenguins.xyz>
-To: oss-security@...ts.openwall.com
-Subject: Re: autotrace: out-of-bounds write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/15/1
+Message-ID: <CACn5sdSBwUpHD6KVqNnGfRj_7ofzmG0VHxz=xTBfe3vSVNmW0g@mail.gmail.com>
+Date: Sun, 15 May 2016 09:05:03 +0200
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+To: Brian May <brian@...uxpenguins.xyz>
+Cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: Re: CVE requests: DoS in librsvg parsing SVGs with circular definitions
 Content-Type: text/plain; charset=utf-8
 
-Agostino Sarubbo <ago@...too.org> writes:
+2016-05-11 0:36 GMT+02:00 Brian May <brian@...uxpenguins.xyz>:
+> Just did a git bisect against the source. Assuming I got this right, the
+> following commits fixed the issue.
 
-> with Address Sanitizer I found that each bmp you try to manage with autotrace 
-> causes an out-of-bounds write.
+Thanks for taking the time to do the git bisect!
+
 >
-> Details:
-> https://blogs.gentoo.org/ago/2016/09/10/autotrace-heap-based-buffer-overflow-in-pstoedit_suffix_table_init-output-pstoedit-c/
+>>> They affect the following functions:
+>>
+>>> * rsvg_cairo_pop_discrete_layer - rsvg_cairo_pop_render_stack -
+>>> rsvg_cairo_generate_mask: reproducible using circular-1.svg
+>>
+>> Use CVE-2016-4347.
+>
+> Fixed in:
+>
+> commit a51919f7e1ca9c535390a746fbf6e28c8402dc61
+> Author: Benjamin Otte <otte@...hat.com>
+> Date:   Wed Oct 7 08:45:37 2015 +0200
+>
+>     rsvg: Add rsvg_acquire_node()
+>
+>     This function does proper recursion checks when looking up resources
+>     from URLs and thereby helps avoiding infinite loops when cyclic
+>     references span multiple types of elements.
 
-I have had a look at CVE-2016-7392 in autotrace, in Debian wheezy. From
-a quick glance at source code, the code does:
 
-XMALLOC(pstoedit_suffix_table, sizeof(char *) * 2 * (dd_tmp - dd_start) + 1);
+I think CVE-2016-4347 and CVE-2015-7558 (stack exhaustion due to
+cyclic dependency, reported here:
+http://www.openwall.com/lists/oss-security/2015/12/21/5) are in fact,
+the same issue. This is probably my fault (sorry!).
 
-Which I believe is the same as:
+MITRE: We should reject the the newly assigned one?
 
-XMALLOC(pstoedit_suffix_table, (sizeof(char *) * 2 * (dd_tmp - dd_start)) + 1);
-
-i.e. the code leaves room for one byte at the end. However we store a
-(char *) at the very end. Which I think might be more then one byte:
-
-pstoedit_suffix_table[2 * (dd_tmp - dd_start)] = NULL;
-
-My testing indicates the problem goes away if you change the line to:
-
-XMALLOC(pstoedit_suffix_table, sizeof(char *) * (2 * (dd_tmp - dd_start) + 1));
--- 
-Brian May <brian@...uxpenguins.xyz>
-https://linuxpenguins.xyz/brian/
+Regards,
+Gustavo.
