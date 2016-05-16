@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["10653" "Wednesday" "27" "June" "2018" "21:03:54" "+0000" "Xen.org security team" "security@xen.org" "<E1fYHbW-0005EC-T0@xenbits.xenproject.org>" "233" "[oss-security] Xen Security Advisory 264 (CVE-2018-12891) - preemption checks bypassed in x86 PV MM handling" nil nil nil "6" "2018062721:03:54" "[oss-security] Xen Security Advisory 264 (CVE-2018-12891) - preemption checks bypassed in x86 PV MM handling" (number mark "U       security@xen Jun 27  233/10653 " thread-indent "\"[oss-security] Xen Security Advisory 264 (CVE-2018-12891) - preemption checks bypassed in x86 PV MM handling\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3515" "Monday" "16" "May" "2016" "17:30:16" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1605161718050.4904@wniryva>" "75" "[oss-security] CVE-2016-3713 Linux kernel: kvm: OOB r/w access issue with MSR 0x2F8" nil nil nil "5" "2016051612:00:16" "[oss-security] CVE-2016-3713 Linux kernel: kvm: OOB r/w access issue with MSR 0x2F8" (number mark "U       ppandit@redh May 16   75/3515  " thread-indent "\"[oss-security] CVE-2016-3713 Linux kernel: kvm: OOB r/w access issue with MSR 0x2F8\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28233 invoked by uid 550); 27 Jun 2018 21:04:24 -0000
+Received: (qmail 9527 invoked by uid 550); 16 May 2016 12:00:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,250 +12,94 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28140 invoked from network); 27 Jun 2018 21:04:22 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 9503 invoked from network); 16 May 2016 12:00:37 -0000
+Date: Mon, 16 May 2016 17:30:16 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Radim Krcmar <rkrcmar@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+        Salvatore Bonaccorso <carnil@debian.org>
+Message-ID: <alpine.LFD.2.20.1605161718050.4904@wniryva>
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.508 (Entity 5.508)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1fYHbW-0005EC-T0@xenbits.xenproject.org>
-Date: Wed, 27 Jun 2018 21:03:54 +0000
-Subject: [oss-security] Xen Security Advisory 264 (CVE-2018-12891) - preemption checks
- bypassed in x86 PV MM handling
+Content-Type: multipart/mixed; BOUNDARY="0-351776692-1463399991=:4904"
+Content-ID: <alpine.LFD.2.20.1605161730000.4904@wniryva>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Mon, 16 May 2016 12:00:25 +0000 (UTC)
+Subject: [oss-security] CVE-2016-3713 Linux kernel: kvm: OOB r/w access issue with MSR
+ 0x2F8
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+--0-351776692-1463399991=:4904
+Content-Type: text/plain; FORMAT=flowed; CHARSET=US-ASCII
+Content-ID: <alpine.LFD.2.20.1605161730001.4904@wniryva>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+   Hello,
 
-            Xen Security Advisory CVE-2018-12891 / XSA-264
-                               version 3
+Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) with 
+variable Memory Type Range Registers(MTRR) support is vulnerable to an 
+out-of-bounds r/w access issue. It could occur while accessing processor's 
+MTRRs via ioctl(2) calls.
 
-           preemption checks bypassed in x86 PV MM handling
+A privileged user inside guest could use this flaw to manipulate host kernel's 
+memory bytes leading to information disclosure OR potentially crashing the 
+kernel resulting in DoS.
 
-UPDATES IN VERSION 3
-====================
+'CVE-2016-3713' has been assigned to this issue by Red Hat Inc. A proposed 
+patch is attached herein to fix this issue.
 
-Public release.
+Reference:
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1332139
 
-ISSUE DESCRIPTION
-=================
 
-Certain PV MMU operations may take a long time to process.  For that
-reason Xen explicitly checks for the need to preempt the current vCPU at
-certain points.  A few rarely taken code paths did bypass such checks.
-By suitably enforcing the conditions through its own page table
-contents, a malicious guest may cause such bypasses to be used for an
-unbounded number of iterations.
+This issue was reported by Mr David Matlack of Google Inc.
 
-IMPACT
-======
 
-A malicious or buggy PV guest may cause a Denial of Service (DoS)
-affecting the entire host.  Specifically, it may prevent use of a
-physical CPU for an indeterminate period of time.
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+--0-351776692-1463399991=:4904
+Content-Type: text/plain; CHARSET=UTF-8; NAME=KVM-MTRR-remove-MSR-0x2f8.patch
+Content-Transfer-Encoding: BASE64
+Content-ID: <alpine.LFD.2.20.1605161729500.4904@wniryva>
+Content-Description: 
+Content-Disposition: ATTACHMENT; FILENAME=KVM-MTRR-remove-MSR-0x2f8.patch
 
-VULNERABLE SYSTEMS
-==================
+RnJvbTogPT9VVEYtOD9xP1JhZGltPTIwS3I9QzQ9OERtPUMzPUExPUM1PTk5
+Pz0gPHJrcmNtYXJAcmVkaGF0LmNvbT4NClN1YmplY3Q6IFtQQVRDSF0gS1ZN
+OiBNVFJSOiByZW1vdmUgTVNSIDB4MmY4DQpNSU1FLVZlcnNpb246IDEuMA0K
+Q29udGVudC1UeXBlOiB0ZXh0L3BsYWluOyBjaGFyc2V0PVVURi04DQpDb250
+ZW50LVRyYW5zZmVyLUVuY29kaW5nOiA4Yml0DQoNCk1TUiAweDJmOCBhY2Nl
+c3NlZCB0aGUgMTI0dGggVmFyaWFibGUgUmFuZ2UgTVRSUiBldmVyIHNpbmNl
+IE1UUlIgc3VwcG9ydA0Kd2FzIGludHJvZHVjZWQgYnkgOWJhMDc1YTY2NGRm
+ICgiS1ZNOiBNVFJSIHN1cHBvcnQiKS4NCg0KMHgyZjggYmVjYW1lIGhhcm1m
+dWwgd2hlbiA5MTBhNmFhZTRlMmUgKCJLVk06IE1UUlI6IGV4YWN0bHkgZGVm
+aW5lIHRoZQ0Kc2l6ZSBvZiB2YXJpYWJsZSBNVFJScyIpIHNocmlua2VkIHRo
+ZSBhcnJheSBvZiBWUiBNVFJScyBmcm9tIDI1NiB0byA4LA0Kd2hpY2ggbWFk
+ZSBhY2Nlc3MgdG8gaW5kZXggMTI0IG91dCBvZiBib3VuZHMuICBUaGUgc3Vy
+cm91bmRpbmcgY29kZSBvbmx5DQpXQVJOcyBpbiB0aGlzIHNpdHVhdGlvbiwg
+dGh1cyB0aGUgZ3Vlc3QgZ2FpbmVkIGEgbGltaXRlZCByZWFkL3dyaXRlDQph
+Y2Nlc3MgdG8gc3RydWN0IGt2bV9hcmNoX3ZjcHUuDQoNCjB4MmY4IGlzIG5v
+dCBhIHZhbGlkIFZSIE1UUlIgTVNSLCBiZWNhdXNlIEtWTSBoYXMvYWR2ZXJ0
+aXNlcyBvbmx5IDE2IFZSDQpNVFJSIE1TUnMsIDB4MjAwLTB4MjBmLiAgRXZl
+cnkgVlIgTVRSUiBpcyBzZXQgdXAgdXNpbmcgdHdvIE1TUnMsIDB4MmY4DQp3
+YXMgdHJlYXRlZCBhcyBhIFBIWVNCQVNFIGFuZCAweDJmOSB3b3VsZCBiZSBp
+dHMgUEhZU01BU0ssIGJ1dCAweDJmOSB3YXMNCm5vdCBpbXBsZW1lbnRlZCBp
+biBLVk0sIHRoZXJlZm9yZSAweDJmOCBjb3VsZCBuZXZlciBkbyBhbnl0aGlu
+ZyB1c2VmdWwNCmFuZCBnZXR0aW5nIHJpZCBvZiBpdCBpcyBzYWZlLg0KDQpU
+aGlzIGZpeGVzIENWRS0yMDE2LTM3MTMuDQoNCkZpeGVzOiA5MTBhNmFhZTRl
+MmUgKCJLVk06IE1UUlI6IGV4YWN0bHkgZGVmaW5lIHRoZSBzaXplIG9mIHZh
+cmlhYmxlIE1UUlJzIikNCkNjOiBzdGFibGVAdmdlci5rZXJuZWwub3JnDQpS
+ZXBvcnRlZC1ieTogRGF2aWQgTWF0bGFjayA8ZG1hdGxhY2tAZ29vZ2xlLmNv
+bT4NClNpZ25lZC1vZmYtYnk6IFJhZGltIEtyxI1tw6HFmSA8cmtyY21hckBy
+ZWRoYXQuY29tPg0KLS0tDQogYXJjaC94ODYva3ZtL210cnIuYyB8IDIgLS0N
+CiAxIGZpbGUgY2hhbmdlZCwgMiBkZWxldGlvbnMoLSkNCg0KZGlmZiAtLWdp
+dCBhL2FyY2gveDg2L2t2bS9tdHJyLmMgYi9hcmNoL3g4Ni9rdm0vbXRyci5j
+DQppbmRleCAzZjhjNzMyMTE3ZWMuLmMxNDZmM2MyNjJjMyAxMDA2NDQNCi0t
+LSBhL2FyY2gveDg2L2t2bS9tdHJyLmMNCisrKyBiL2FyY2gveDg2L2t2bS9t
+dHJyLmMNCkBAIC00NCw4ICs0NCw2IEBAIHN0YXRpYyBib29sIG1zcl9tdHJy
+X3ZhbGlkKHVuc2lnbmVkIG1zcikNCiAJY2FzZSBNU1JfTVRSUmRlZlR5cGU6
+DQogCWNhc2UgTVNSX0lBMzJfQ1JfUEFUOg0KIAkJcmV0dXJuIHRydWU7DQot
+CWNhc2UgMHgyZjg6DQotCQlyZXR1cm4gdHJ1ZTsNCiAJfQ0KIAlyZXR1cm4g
+ZmFsc2U7DQogfQ0KLS0gDQoyLjguMQ0K
 
-All Xen versions from 3.4 onwards are vulnerable.  Xen versions 3.3 and
-earlier are vulnerable to an even wider class of attacks, due to them
-lacking preemption checks altogether in the affected code paths.
-
-Only x86 systems are affected.  ARM systems are not affected.
-
-Only multi-vCPU x86 PV guests can leverage the vulnerability.  x86 HVM
-or PVH guests as well as x86 single-vCPU PV ones cannot leverage the
-vulnerability.
-
-MITIGATION
-==========
-
-Running only HVM, PVH, or single-vCPU PV guests will avoid this
-vulnerability.
-
-For PV guests, the vulnerability can be avoided if the guest kernel is
-controlled by the host rather than guest administrator, provided that
-further steps are taken to prevent the guest administrator from loading
-code into the kernel (e.g. by disabling loadable modules etc) or from
-using other mechanisms which allow them to run code at kernel privilege.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa264.patch           xen-unstable
-xsa264-4.10.patch      Xen 4.10.x ... 4.6.x
-
-$ sha256sum xsa264*
-a7d2edf219af3375ac0d49bff9e64628c70e704fcf131ea21684694517aa9210  xsa264.patch
-66aca234b168abc01f28fe131b7e07645a73fd5d0f1d141d68343f31914d96cc  xsa264-4.10.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJbM+5GAAoJEIP+FMlX6CvZy7cIALkEoEQnHw5O8vYC5KpDA24X
-P320Gh0OppT2qtQfKtAF7MaCc7VF9Tnhf3CrtNtolXMryM4vrh7KyOn8wk7jbRBy
-tp28e6ppO8ons9x1kBAmAZrno8LXwOa2t22hQpUv1mYksRkZotViAXS72t4HkOVl
-SEQVVLElWAIfPbGJwtu1/qgS8dCckA2MeLeN/dKHRm8gD63XsYt37nQnBa2iraKX
-yN5sdih+WLgXCf55mubFlQfE6+7qgn27khZpMeJAwGk6N+Rz/Q3q1zSFX9YB+P6d
-9ppgoRFVxYpekwtCrLkVLxSAoEwCKi6sdYFnvIngHIMlLiVHjNsLd5YKTAsZcEE=
-=zTq5
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa264.patch"
-Content-Disposition: attachment; filename="xsa264.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
-OiB4ODYvbW06IGRvbid0IGJ5cGFzcyBwcmVlbXB0aW9uIGNoZWNrcwoKV2hp
-bGUgdW5saWtlbHksIGl0IGlzIG5vdCBpbXBvc3NpYmxlIGZvciBhIG11bHRp
-LXZDUFUgZ3Vlc3QgdG8gbGV2ZXJhZ2UKYnlwYXNzZXMgb2YgcHJlZW1wdGlv
-biBjaGVja3MgdG8gZHJpdmUgWGVuIGludG8gYW4gdW5ib3VuZGVkIGxvb3Au
-CgpUaGlzIGlzIFhTQS0yNjQuCgpTaWduZWQtb2ZmLWJ5OiBKYW4gQmV1bGlj
-aCA8amJldWxpY2hAc3VzZS5jb20+ClJldmlld2VkLWJ5OiBBbmRyZXcgQ29v
-cGVyIDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29tPgotLS0KQm90aCBhcmNo
-aXRlY3R1cmUncyByZWxpbnF1aXNoX21lbW9yeSgpIGFzIHdlbGwgYXMgbGl2
-ZXBhdGNoX2xpc3QoKSBoYXZlCmEgc2ltaWxhciBpc3N1ZSwgYnV0IHRoZSBm
-dW5jdGlvbnMgY2FuJ3QgYmUgaW52b2tlZCBieSAibm9ybWFsIiBndWVzdHMu
-CgotLS0gYS94ZW4vYXJjaC94ODYvbW0uYworKysgYi94ZW4vYXJjaC94ODYv
-bW0uYwpAQCAtMjU1MSw3ICsyNTUxLDcgQEAgc3RhdGljIGludCBfcHV0X3Bh
-Z2VfdHlwZShzdHJ1Y3QgcGFnZV9pbgogICAgICAgICAgICAgICAgIG54ID0g
-eCAmIH4oUEdUX3ZhbGlkYXRlZHxQR1RfcGFydGlhbCk7CiAgICAgICAgICAg
-ICAgICAgaWYgKCB1bmxpa2VseSgoeSA9IGNtcHhjaGcoJnBhZ2UtPnUuaW51
-c2UudHlwZV9pbmZvLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgIHgsIG54KSkgIT0geCkgKQotICAgICAgICAgICAgICAg
-ICAgICBjb250aW51ZTsKKyAgICAgICAgICAgICAgICAgICAgYnJlYWs7CiAg
-ICAgICAgICAgICAgICAgLyogV2UgY2xlYXJlZCB0aGUgJ3ZhbGlkIGJpdCcg
-c28gd2UgZG8gdGhlIGNsZWFuIHVwLiAqLwogICAgICAgICAgICAgICAgIHJj
-ID0gX3B1dF9maW5hbF9wYWdlX3R5cGUocGFnZSwgeCwgcHJlZW1wdGlibGUs
-IHB0cGcpOwogICAgICAgICAgICAgICAgIGlmICggeCAmIFBHVF9wYXJ0aWFs
-ICkKQEAgLTI1NzQsNyArMjU4NzQsMTggQEAgc3RhdGljIGludCBfcHV0X3Bh
-Z2VfdHlwZShzdHJ1Y3QgcGFnZV9pbgogICAgICAgICAgICAgZWxzZQogICAg
-ICAgICAgICAgICAgIEJVR19PTighSVNfRU5BQkxFRChDT05GSUdfUFZfTElO
-RUFSX1BUKSk7CiAKLSAgICAgICAgICAgIGJyZWFrOworICAgICAgICAgICAg
-LyogZmFsbCB0aHJvdWdoICovCisgICAgICAgIGRlZmF1bHQ6CisgICAgICAg
-ICAgICBpZiAoIHVubGlrZWx5KCh5ID0gY21weGNoZygmcGFnZS0+dS5pbnVz
-ZS50eXBlX2luZm8sIHgsIG54KSkgIT0geCkgKQorICAgICAgICAgICAgICAg
-IGJyZWFrOworCisgICAgICAgICAgICBpZiAoIHB0cGcgJiYgUEdUX3R5cGVf
-ZXF1YWwoeCwgcHRwZy0+dS5pbnVzZS50eXBlX2luZm8pICkKKyAgICAgICAg
-ICAgIHsKKyAgICAgICAgICAgICAgICBkZWNfbGluZWFyX3VzZXMocGFnZSk7
-CisgICAgICAgICAgICAgICAgZGVjX2xpbmVhcl9lbnRyaWVzKHB0cGcpOwor
-ICAgICAgICAgICAgfQorCisgICAgICAgICAgICByZXR1cm4gMDsKIAogICAg
-ICAgICBjYXNlIFBHVF9sb2NrZWQ6CiAgICAgICAgICAgICBBU1NFUlRfVU5S
-RUFDSEFCTEUoKTsKQEAgLTI1ODcsMjMgKzI1OTgsMTIgQEAgc3RhdGljIGlu
-dCBfcHV0X3BhZ2VfdHlwZShzdHJ1Y3QgcGFnZV9pbgogICAgICAgICAgICAg
-ICovCiAgICAgICAgICAgICBjcHVfcmVsYXgoKTsKICAgICAgICAgICAgIHkg
-PSBwYWdlLT51LmludXNlLnR5cGVfaW5mbzsKLSAgICAgICAgICAgIGNvbnRp
-bnVlOwotICAgICAgICB9Ci0KLSAgICAgICAgaWYgKCBsaWtlbHkoKHkgPSBj
-bXB4Y2hnKCZwYWdlLT51LmludXNlLnR5cGVfaW5mbywgeCwgbngpKSA9PSB4
-KSApCiAgICAgICAgICAgICBicmVhazsKKyAgICAgICAgfQogCiAgICAgICAg
-IGlmICggcHJlZW1wdGlibGUgJiYgaHlwZXJjYWxsX3ByZWVtcHRfY2hlY2so
-KSApCiAgICAgICAgICAgICByZXR1cm4gLUVJTlRSOwogICAgIH0KLQotICAg
-IGlmICggcHRwZyAmJiBQR1RfdHlwZV9lcXVhbCh4LCBwdHBnLT51LmludXNl
-LnR5cGVfaW5mbykgKQotICAgIHsKLSAgICAgICAgZGVjX2xpbmVhcl91c2Vz
-KHBhZ2UpOwotICAgICAgICBkZWNfbGluZWFyX2VudHJpZXMocHRwZyk7Ci0g
-ICAgfQotCi0gICAgcmV0dXJuIDA7CiB9CiAKIApAQCAtMjcwNCwxMiArMjcw
-NCwxMSBAQCBzdGF0aWMgaW50IF9nZXRfcGFnZV90eXBlKHN0cnVjdCBwYWdl
-X2luCiAgICAgICAgICAgICBpZiAoICEoeCAmIFBHVF9wYXJ0aWFsKSApCiAg
-ICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgLyogU29tZW9uZSBlbHNl
-IGlzIHVwZGF0aW5nIHZhbGlkYXRpb24gb2YgdGhpcyBwYWdlLiBXYWl0Li4u
-ICovCi0gICAgICAgICAgICAgICAgd2hpbGUgKCAoeSA9IHBhZ2UtPnUuaW51
-c2UudHlwZV9pbmZvKSA9PSB4ICkKLSAgICAgICAgICAgICAgICB7CisgICAg
-ICAgICAgICAgICAgZG8gewogICAgICAgICAgICAgICAgICAgICBpZiAoIHBy
-ZWVtcHRpYmxlICYmIGh5cGVyY2FsbF9wcmVlbXB0X2NoZWNrKCkgKQogICAg
-ICAgICAgICAgICAgICAgICAgICAgcmV0dXJuIC1FSU5UUjsKICAgICAgICAg
-ICAgICAgICAgICAgY3B1X3JlbGF4KCk7Ci0gICAgICAgICAgICAgICAgfQor
-ICAgICAgICAgICAgICAgIH0gd2hpbGUgKCAoeSA9IHBhZ2UtPnUuaW51c2Uu
-dHlwZV9pbmZvKSA9PSB4ICk7CiAgICAgICAgICAgICAgICAgY29udGludWU7
-CiAgICAgICAgICAgICB9CiAgICAgICAgICAgICAvKiBUeXBlIHJlZiBjb3Vu
-dCB3YXMgbGVmdCBhdCAxIHdoZW4gUEdUX3BhcnRpYWwgZ290IHNldC4gKi8K
-
---=separator
-Content-Type: application/octet-stream; name="xsa264-4.10.patch"
-Content-Disposition: attachment; filename="xsa264-4.10.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
-OiB4ODYvbW06IGRvbid0IGJ5cGFzcyBwcmVlbXB0aW9uIGNoZWNrcwoKV2hp
-bGUgdW5saWtlbHksIGl0IGlzIG5vdCBpbXBvc3NpYmxlIGZvciBhIG11bHRp
-LXZDUFUgZ3Vlc3QgdG8gbGV2ZXJhZ2UKYnlwYXNzZXMgb2YgcHJlZW1wdGlv
-biBjaGVja3MgdG8gZHJpdmUgWGVuIGludG8gYW4gdW5ib3VuZGVkIGxvb3Au
-CgpUaGlzIGlzIFhTQS0yNjQuCgpTaWduZWQtb2ZmLWJ5OiBKYW4gQmV1bGlj
-aCA8amJldWxpY2hAc3VzZS5jb20+ClJldmlld2VkLWJ5OiBBbmRyZXcgQ29v
-cGVyIDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29tPgoKLS0tIGEveGVuL2Fy
-Y2gveDg2L21tLmMKKysrIGIveGVuL2FyY2gveDg2L21tLmMKQEAgLTI1MjYs
-NyArMjUyNiw3IEBAIHN0YXRpYyBpbnQgX3B1dF9wYWdlX3R5cGUoc3RydWN0
-IHBhZ2VfaW4KICAgICAgICAgICAgICAgICBueCA9IHggJiB+KFBHVF92YWxp
-ZGF0ZWR8UEdUX3BhcnRpYWwpOwogICAgICAgICAgICAgICAgIGlmICggdW5s
-aWtlbHkoKHkgPSBjbXB4Y2hnKCZwYWdlLT51LmludXNlLnR5cGVfaW5mbywK
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB4
-LCBueCkpICE9IHgpICkKLSAgICAgICAgICAgICAgICAgICAgY29udGludWU7
-CisgICAgICAgICAgICAgICAgICAgIGdvdG8gbWF5YmVfcHJlZW1wdDsKICAg
-ICAgICAgICAgICAgICAvKiBXZSBjbGVhcmVkIHRoZSAndmFsaWQgYml0JyBz
-byB3ZSBkbyB0aGUgY2xlYW4gdXAuICovCiAgICAgICAgICAgICAgICAgcmMg
-PSBfcHV0X2ZpbmFsX3BhZ2VfdHlwZShwYWdlLCB4LCBwcmVlbXB0aWJsZSwg
-cHRwZyk7CiAgICAgICAgICAgICAgICAgcHRwZyA9IE5VTEw7CkBAIC0yNTU4
-LDEyICsyNTU4LDEzIEBAIHN0YXRpYyBpbnQgX3B1dF9wYWdlX3R5cGUoc3Ry
-dWN0IHBhZ2VfaW4KICAgICAgICAgICAgICAqLwogICAgICAgICAgICAgY3B1
-X3JlbGF4KCk7CiAgICAgICAgICAgICB5ID0gcGFnZS0+dS5pbnVzZS50eXBl
-X2luZm87Ci0gICAgICAgICAgICBjb250aW51ZTsKKyAgICAgICAgICAgIGdv
-dG8gbWF5YmVfcHJlZW1wdDsKICAgICAgICAgfQogCiAgICAgICAgIGlmICgg
-bGlrZWx5KCh5ID0gY21weGNoZygmcGFnZS0+dS5pbnVzZS50eXBlX2luZm8s
-IHgsIG54KSkgPT0geCkgKQogICAgICAgICAgICAgYnJlYWs7CiAKKyAgICBt
-YXliZV9wcmVlbXB0OgogICAgICAgICBpZiAoIHByZWVtcHRpYmxlICYmIGh5
-cGVyY2FsbF9wcmVlbXB0X2NoZWNrKCkgKQogICAgICAgICAgICAgcmV0dXJu
-IC1FSU5UUjsKICAgICB9CkBAIC0yNjc2LDEyICsyNjc3LDExIEBAIHN0YXRp
-YyBpbnQgX19nZXRfcGFnZV90eXBlKHN0cnVjdCBwYWdlX2kKICAgICAgICAg
-ICAgIGlmICggISh4ICYgUEdUX3BhcnRpYWwpICkKICAgICAgICAgICAgIHsK
-ICAgICAgICAgICAgICAgICAvKiBTb21lb25lIGVsc2UgaXMgdXBkYXRpbmcg
-dmFsaWRhdGlvbiBvZiB0aGlzIHBhZ2UuIFdhaXQuLi4gKi8KLSAgICAgICAg
-ICAgICAgICB3aGlsZSAoICh5ID0gcGFnZS0+dS5pbnVzZS50eXBlX2luZm8p
-ID09IHggKQotICAgICAgICAgICAgICAgIHsKKyAgICAgICAgICAgICAgICBk
-byB7CiAgICAgICAgICAgICAgICAgICAgIGlmICggcHJlZW1wdGlibGUgJiYg
-aHlwZXJjYWxsX3ByZWVtcHRfY2hlY2soKSApCiAgICAgICAgICAgICAgICAg
-ICAgICAgICByZXR1cm4gLUVJTlRSOwogICAgICAgICAgICAgICAgICAgICBj
-cHVfcmVsYXgoKTsKLSAgICAgICAgICAgICAgICB9CisgICAgICAgICAgICAg
-ICAgfSB3aGlsZSAoICh5ID0gcGFnZS0+dS5pbnVzZS50eXBlX2luZm8pID09
-IHggKTsKICAgICAgICAgICAgICAgICBjb250aW51ZTsKICAgICAgICAgICAg
-IH0KICAgICAgICAgICAgIC8qIFR5cGUgcmVmIGNvdW50IHdhcyBsZWZ0IGF0
-IDEgd2hlbiBQR1RfcGFydGlhbCBnb3Qgc2V0LiAqLwo=
-
---=separator--
+--0-351776692-1463399991=:4904--
