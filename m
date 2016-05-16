@@ -1,23 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/11
-Message-ID: <CABrd9SSJXuqwq6dm6dTKpXGcGy7inV7Ya2PU6JXw4ft_qFXijQ@mail.gmail.com>
-Date: Wed, 11 May 2016 17:18:46 +0100
-From: Ben Laurie <benl@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: broken RSA keys
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/16/2
+Message-ID: <alpine.LFD.2.20.1605161718050.4904@wniryva>
+Date: Mon, 16 May 2016 17:30:16 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Radim Krcmar <rkrcmar@...hat.com>, Paolo Bonzini <pbonzini@...hat.com>, Salvatore Bonaccorso <carnil@...ian.org>
+Subject: CVE-2016-3713 Linux kernel: kvm: OOB r/w access issue with MSR 0x2F8
 Content-Type: text/plain; charset=utf-8
 
-On 5 May 2016 at 10:23, Hanno Böck <hanno@...eck.de> wrote:
-> As a background: What we're talking about is a so-called batch-gcd
-> attack, developed by DJB. Arjen Lenstra and Nadia Heninger were as far
-> as I know the first ones to use this on publicly available keysets in
-> order to find vulnerable keys.
+   Hello,
 
-FWIW, it was actually me and Mathias Bauer in 2004 (which may also
-pre-date DJB's development, I don't know - certainly we didn't get the
-idea from him, it was Mathias'). We looked at the PGP keyserver data,
-but we didn't find anything very interesting, which is probably why
-most people don't know it.
+Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) with 
+variable Memory Type Range Registers(MTRR) support is vulnerable to an 
+out-of-bounds r/w access issue. It could occur while accessing processor's 
+MTRRs via ioctl(2) calls.
 
-To be entirely fair, we did pairwise GCDs, which comes to the same
-thing, but less efficiently...
+A privileged user inside guest could use this flaw to manipulate host kernel's 
+memory bytes leading to information disclosure OR potentially crashing the 
+kernel resulting in DoS.
+
+'CVE-2016-3713' has been assigned to this issue by Red Hat Inc. A proposed 
+patch is attached herein to fix this issue.
+
+Reference:
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1332139
+
+
+This issue was reported by Mr David Matlack of Google Inc.
+
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+View attachment "KVM-MTRR-remove-MSR-0x2f8.patch" of type "text/plain" (1644 bytes)
