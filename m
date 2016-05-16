@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3497" "Sunday" "15" "January" "2017" "03:37:20" "+0100" "Solar Designer" "solar@openwall.com" "<20170115023720.GA21220@openwall.com>" "77" "Re: [oss-security] linux-distros subscription" "^Date:" nil nil "1" "2017011502:37:20" "[oss-security] linux-distros subscription" (number mark "        solar@openwa Jan 15   77/3497  " thread-indent "\"Re: [oss-security] linux-distros subscription\"\n") "<20170113093611.ztx4osufhxtcgany@workbook.ipv6.hrusecky.net>" ("<20170113093611.ztx4osufhxtcgany@workbook.ipv6.hrusecky.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["897" "Monday" "16" "May" "2016" "09:53:24" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160516075324.GA10354@eldamar.local>" "25" "Re: [oss-security] CVE Request: gdk-pixbuf: Additional fixes to protect against overlows in pixops_* functions (similar to CVE-2015-7674)" nil nil nil "5" "2016051607:53:24" "[oss-security] CVE Request: gdk-pixbuf: Additional fixes to protect against overlows in pixops_* functions (similar to CVE-2015-7674)" (number mark "U       carnil@debia May 16   25/897   " thread-indent "\"Re: [oss-security] CVE Request: gdk-pixbuf: Additional fixes to protect against overlows in pixops_* functions (similar to CVE-2015-7674)\"\n") "<20160512092302.GA13770@lorien.valinor.li>" ("<20160512092302.GA13770@lorien.valinor.li>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20224 invoked by uid 550); 15 Jan 2017 02:39:35 -0000
+Received: (qmail 21614 invoked by uid 550); 16 May 2016 07:53:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,94 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19753 invoked from network); 15 Jan 2017 02:38:01 -0000
-Message-ID: <20170115023720.GA21220@openwall.com>
-References: <20170113093611.ztx4osufhxtcgany@workbook.ipv6.hrusecky.net>
-Mime-Version: 1.0
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 21586 invoked from network); 16 May 2016 07:53:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=yEozTwbfwcxU+NQPPXreq78MPMOcAf91YDgh22yGbcY=;
+        b=p+G/MPKXBvmrdJt5YuRcEts1X+aMLELixhCXAVJIDjBl3toFsHXZS3ahLXOv7nM3jw
+         NUv0iTXuf8zQT6vFpNmZRgsSj5r/jGR+hSWDpx2n7fxgQ3gFST8FX387zjeQQnarx3rO
+         J7VuDwSBRLf0LlbIZtl9gtUi+mEmx8y4hz4lZrP259cOcNFSFljr8MmmlPTfzwjkUlcZ
+         4gbN8HAAMO3PrSBWACxFxPUXAv4IJ8EygLIB4VkXeplfzKIVOR2xo+s4DyJDFl+ny6hO
+         IPIN324E+nJeGt1JFepsqie8Bz7Oe/MLTYC0xsPa712YPArg8vfk5xp28H8nUeMXY87I
+         X0cQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=yEozTwbfwcxU+NQPPXreq78MPMOcAf91YDgh22yGbcY=;
+        b=LZ86JuBzjD7wLJns8VIo+ks8fr6HH9oZpXcFCuHj8TS7JxOnd8s/wa8CfYVtk0972U
+         AvqU5ASav5dnFIHAOAOzWsmm2Ux8uXIzGJXA/utyGHI5FvPB4vQCqwBWrUpC7zIiUY6G
+         rf8d+9a5fmK5PdI1pIyQlm1RlO3FVO5nNTNbh30ZjFdYT6i2zG+1yv4hqUkoThFOhLuF
+         qMajHf8kzmdSlPeyeSwFY/degmdnFQVpM7yRFhanL1tJcPI4sr+r0fSxE5GEiK8nYwba
+         8vSf8bzMlNFEa2ajrmpUXKj7gSRoNymnLPa2gTJuVyQeDcXM9YfcWax+kaLw/++mO1tf
+         R6GA==
+X-Gm-Message-State: AOPr4FUkn/Rx4RLKn4YqcAdc3hvXVgXVmpd4bqMueJ1qIaol8ppCBBcBH3e+wrCTjXb+ug==
+X-Received: by 10.194.26.41 with SMTP id i9mr31843686wjg.114.1463385206314;
+        Mon, 16 May 2016 00:53:26 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Mon, 16 May 2016 09:53:24 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: oss-security@lists.openwall.com
+Cc: CVE Assignments MITRE <cve-assign@mitre.org>
+Message-ID: <20160516075324.GA10354@eldamar.local>
+References: <20160512092302.GA13770@lorien.valinor.li>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170113093611.ztx4osufhxtcgany@workbook.ipv6.hrusecky.net>
-User-Agent: Mutt/1.4.2.3i
-Date: Sun, 15 Jan 2017 03:37:20 +0100
-From: Solar Designer <solar@openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] linux-distros subscription
-To: oss-security@lists.openwall.com
+In-Reply-To: <20160512092302.GA13770@lorien.valinor.li>
+User-Agent: Mutt/1.6.0 (2016-04-01)
+Subject: Re: [oss-security] CVE Request: gdk-pixbuf: Additional fixes to
+ protect against overlows in pixops_* functions (similar to CVE-2015-7674)
 
-Hi Michal,
+Hi,
 
-On Fri, Jan 13, 2017 at 10:36:11AM +0100, Michal Hrusecky wrote:
-> I would like to request subscription to linux-distros mailing list. I'm one of
-> the maintainers of Turris OS - OpenWRT fork used on Turris and Turris Omnia
-> routers[1].
+On Thu, May 12, 2016 at 11:23:02AM +0200, Salvatore Bonaccorso wrote:
+> Hi
 > 
-> Not sure what has to be part of application, on wiki[2] I found only that I
-> should request it here.
-
-Right.  This basically tells us there's interest, and from whom and for
-what reasons.  That's useful, so thanks for posting your request.
-
-However, in practice the list membership has been frozen since the last
-distro addition in April 2014, so for almost 3 years now.  Since then,
-there were only removals and changes in who's subscribed for the
-previously accepted distros.
-
-Perhaps we'll be forced to re-open this can of worms, or shut down these
-lists for good.  Simply keeping them frozen is unfair to new distros
-requesting membership now.  Simply accepting all who request membership
-based on mostly objective criteria yet without introducing distro's
-userbase size as a criterion is, in my opinion, going to make things
-worse overall (in terms of balance of benefit to users vs. risk of
-leaks).  Yet we might, as long as the benefit-risk is still deemed to be
-positive (even if less than now).  Just to be fair.
-
-Here's a thread from 2015 with some half-baked thoughts on the issues:
-
-http://www.openwall.com/lists/oss-security/2015/03/20/5
-
-Here are some recent requests:
-
-http://www.openwall.com/lists/oss-security/2016/10/21/2
-http://www.openwall.com/lists/oss-security/2016/10/25/2
-
-What's common about the timing of these: they were triggered by
-vulnerabilities that attracted a lot of media attention.  This may be
-primarily about publicity and checklists ("our competitors are on that
-list, we should be too") and only secondarily about security.  I do
-value the persistence of some distros/people reminding me about their
-requests, though - suggesting their interest is more likely genuine.
-And your request isn't nearly that "badly" timed. ;-)
-
-> Probably you will need some proof that I'm who I claim to be. You can see bunch
-> of commits on our gitlab[3] (signed by the same key I'm using to sign this
-> mail) and you can reach me and some of my colleagues on security@turris.cz
-> e-mail alias that is also listed as security contact on our web[4].
+> CVE-2015-7674, an interger overflow flaw in the pixops_scale_nearest
+> function, was fixed by
 > 
-> We have infrastructure in place to work on embargoed issues without disclosing
-> them to public. Not sure whether there are any other requirements to meet. If
-> so, please let me know.
+> https://git.gnome.org/browse/gdk-pixbuf/commit/?id=e9a5704edaa9aee9498f1fbf6e1b70fcce2e55aa
 > 
-> [1] https://omnia.turris.cz/en/
-> [2] http://oss-security.openwall.org/wiki/mailing-lists/distros
-> [3] https://gitlab.labs.nic.cz/turris/openwrt/commits/test
-> [4] https://www.turris.cz/en/contacts
+> There is another commit in the gdk-pixbuf repository to fix overflows
+> in the pixops_composite_nearest, pixops_composite_color_nearest and
+> pixops_process functions:
+> 
+> https://git.gnome.org/browse/gdk-pixbuf/commit/?id=dbfe8f70471864818bf458a39c8a99640895bd22
+> 
+> Can you aassing an additional CVE for this since the scope for
+> CVE-2015-7674 was for the pixops_scale_nearest function?
 
-What would have been some recent issue likely handled via the distros
-list (this is often stated in the follow-up postings on oss-security,
-albeit not always) where the advance notification would have helped your
-project release a fix substantially sooner?
+I realise I did not made that clear: The two commits were not fixed in
+the same release, the initial one resulting in CVE-2015-7674 is
+contained in 2.32.1, wereas the second commit came later in 2.33.1.
 
-I notice you fixed OpenSSL CVE-2016-7056 promptly:
-
-https://gitlab.labs.nic.cz/turris/openwrt/commit/9aa88e76e70250dd219e8e228162bde045ade4f9
-
-However, that issue wasn't on the distros list.
-
-I also notice you've been on oss-security for half a year.  That's good.
-However, I wasn't able to find any record of your past participation in
-this specific community.  You might want to get more involved first.
-
-And if/when we do re-open the list for additional distros, you'll be
-able to re-request membership.
-
-Alexander
+Regards,
+Salvatore
