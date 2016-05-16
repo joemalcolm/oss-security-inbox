@@ -1,50 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/18/1
-Message-ID: <1455754125.23003.18.camel@gmail.com>
-Date: Wed, 17 Feb 2016 19:08:45 -0500
-From: Daniel Micay <danielmicay@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/16/1
+Message-ID: <20160516075324.GA10354@eldamar.local>
+Date: Mon, 16 May 2016 09:53:24 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Address Sanitizer local root
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: CVE Request: gdk-pixbuf: Additional fixes to protect against overlows in pixops_* functions (similar to CVE-2015-7674)
 Content-Type: text/plain; charset=utf-8
 
-ASan is also far from providing full memory safety and to a large extent
-it defeats Address Space Layout Randomization. It was strange to see a
-hardening effort enabling both PIE and ASan. Even without taking the
-runtime issues into consideration, it can make exploitation easier. It
-doesn't work with PaX ASLR for a reason. It's also incompatible with PaX
-UDEREF on x86_64 but that's a separate kind of issue since it could be
-altered to reserve the mappings in a way that's compatible.
+Hi,
 
-ASan's bounds checking is great at detecting the common cases of
-overflow for debugging, but it's far from exhaustive. An attacker would
-be able to bypass it in the general case. It would make it too hard to
-exploit some vulnerabilities, but it won't prevent exploitation in
-general.
+On Thu, May 12, 2016 at 11:23:02AM +0200, Salvatore Bonaccorso wrote:
+> Hi
+> 
+> CVE-2015-7674, an interger overflow flaw in the pixops_scale_nearest
+> function, was fixed by
+> 
+> https://git.gnome.org/browse/gdk-pixbuf/commit/?id=e9a5704edaa9aee9498f1fbf6e1b70fcce2e55aa
+> 
+> There is another commit in the gdk-pixbuf repository to fix overflows
+> in the pixops_composite_nearest, pixops_composite_color_nearest and
+> pixops_process functions:
+> 
+> https://git.gnome.org/browse/gdk-pixbuf/commit/?id=dbfe8f70471864818bf458a39c8a99640895bd22
+> 
+> Can you aassing an additional CVE for this since the scope for
+> CVE-2015-7674 was for the pixops_scale_nearest function?
 
-The use-after-free and double-free detection is based on the same
-quarantine technique in Valgrind. It can only detect the issues before
-allocations are flushed out of the quarantine by memory pressure. It
-does mitigate many vulnerabilities but comparable double-free detection
-could be done in malloc without the drawbacks (two flat arrays providing
-a ring buffer for a FIFO quarantine + a hash table). The same thing
-applies to write-after-free but not use-after-free, since that would
-require instrumentation in the code. A write-after-free can be detected
-by filling allocations with junk and then checking for it when it's
-flushed from the quarantine rather than instrumentation. It doesn't need
-to do the whole allocation to be useful, so there's a large range of
-tuning for performance. The junk data could come from a stream cipher
-seeded from the address if desired, but it doesn't seem important.
+I realise I did not made that clear: The two commits were not fixed in
+the same release, the initial one resulting in CVE-2015-7674 is
+contained in 2.32.1, wereas the second commit came later in 2.33.1.
 
-It makes a lot of sense to use UBSan in the trapping mode for hardening,
-as it has no runtime and is simply adding extra checks branching to an
-instruction aborting the process. That includes the bounds and object-
-size sanitizers for bounds checking where object sizes are statically
-known. They could even be extended to cover cases where the compiler can
-figure out runtime size bounds at compile-time (for example, usage of
-memory directly after allocation with malloc(n)).
-
-Using ASan doesn't seem advisable. There would need to be an investment
-in remaking it with hardening in mind. It might not make sense to use
-the same design at all. For example, Intel MPX is much more oriented
-towards usage in production, including for hardening.
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Regards,
+Salvatore
