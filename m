@@ -1,48 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/21/7
-Message-ID: <CANO=Ty3Su3JaEtEvUs4GO=dg8ufpBZsUALaBCD0COW5j67y8-w@mail.gmail.com>
-Date: Fri, 21 Oct 2016 17:49:20 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Requesting membership to linux-distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/17/9
+Message-ID: <CAKG8Do5JnkxQhd90yXCmkM_OXBKMxTZN9sYzGVRJL98q33v_TQ@mail.gmail.com>
+Date: Tue, 17 May 2016 20:40:37 +0200
+From: Cedric Buissart <cbuissar@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: RHSA-2016:1086 libndp: denial of service due to insufficient validation of source of NDP messages
 Content-Type: text/plain; charset=utf-8
 
-It looks like CoreOS is shipping Linux and respecting the various licenses
-in a volume sufficient to make sense for them being given access to the
-Linux distros list, and shipping security updates (I would say they could
-benefit from shipping advisories, but they put the CVE's in the ChangeLog
-so I really can't complain). Assuming they can handle embargoed issues (do
-you have private bug tracking/code repos/CI/whatever else you need to ship
-an update?) I would have no objections to them joining the Linux distros
-list. Can you confirm you have infrastructure to handle embargoed issues?
-If yes I guess it's up to Solar to add you.
+Dear all,
 
-On Thu, Oct 20, 2016 at 7:55 PM, Alex Crawford <alex.crawford@...eos.com>
-wrote:
+An improper input validation check, and improper origin check flaw during
+the reception of NDP message was discovered in libndp. An attacker in a
+non local network could use this flaw to advertise a node as a router, and
+cause a denial of service attack, or act as a man in the middle.
 
-> On 10/20, Kurt Seifried wrote:
-> > On Thu, Oct 20, 2016 at 7:36 PM, Alex Crawford <alex.crawford@...eos.com
-> >
-> > wrote:
-> > I found a security page: https://coreos.com/security/ but it only
-> mentions
-> > some upstream security. I can't find any security advisories, the
-> closest I
-> > can find is a few blog postings. Do you have an advisory page?
->
-> Not at the moment (though, it's been on my mind for a while). The
-> closest thing we have is the release notes which will call out CVEs.
-> e.g. https://coreos.com/releases/#1122.3.0
->
-> -Alex
->
+The patches enforce that hop limit must be 255, to ensure that the NDP
+message
+has not been routed.
 
+Patches can be found upsteam:
 
+ -  libndp: validate the IPv6 hop limit
+https://github.com/jpirko/libndp/commit/a4892df306e0532487f1634ba6d4c6d4bb381c7f
 
--- 
+ -  libndb: reject redirect and router advertisements from non-link-local
+https://github.com/jpirko/libndp/commit/2af9a55b38b55abbf05fd116ec097d4029115839
+  https://people.freedesktop.org/~lkundrak/.libndp/
 
+Known affected packages : NetworkManager >= 1.0
+
+Thanks to Julien Bernard (Viagénie) for discovering the issue
+
+Kind regards,
 --
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+Cedric Buissart
+Purkynova 99
+Brno 612 45
 
