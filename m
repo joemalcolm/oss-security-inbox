@@ -1,142 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/6
-Message-ID: <20161110145424.GA18402@tunkki>
-Date: Thu, 10 Nov 2016 16:54:24 +0200
-From: Henri Salo <henri@...v.fi>
-To: cve-request@...re.org
-Cc: oss-security@...ts.openwall.com, Egidio Romano <n0b0d13s@...il.com>
-Subject: CVE request: Piwik <= 2.16.0 (saveLayout) PHP Object Injection vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/17/7
+Message-Id: <20160517155228.E08766C0624@smtpvmsrv1.mitre.org>
+Date: Tue, 17 May 2016 11:52:28 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: gdk-pixbuf: Additional fixes to protect against overlows in pixops_* functions (similar to CVE-2015-7674)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-Please assign CVE identifier for Piwik <= 2.16.0 (saveLayout) PHP Object
-Injection vulnerability, thanks. For the previous request MITRE responded that
-Piwik is out of scope, but there has been lots of CVEs assigned for Piwik so
-could you please clarify for the oss-security mailing list why this one didn't
-get assigned. At least following CVEs has been assigned before:
+> CVE-2015-7674, an integer overflow flaw in the pixops_scale_nearest
+> function, was fixed by
+> 
+> https://git.gnome.org/browse/gdk-pixbuf/commit/?id=e9a5704edaa9aee9498f1fbf6e1b70fcce2e55aa
+> 
+> There is another commit in the gdk-pixbuf repository to fix overflows
+> in the pixops_composite_nearest, pixops_composite_color_nearest and
+> pixops_process functions:
+> 
+> https://git.gnome.org/browse/gdk-pixbuf/commit/?id=dbfe8f70471864818bf458a39c8a99640895bd22
+> 
+> Can you assign an additional CVE for this since the scope for
+> CVE-2015-7674 was for the pixops_scale_nearest function?
+> 
+> The two commits were not fixed in
+> the same release, the initial one resulting in CVE-2015-7674 is
+> contained in 2.32.1, whereas the second commit came later in 2.33.1.
 
-CVE-2011-0004, CVE-2011-0398, CVE-2011-0399, CVE-2011-0400, CVE-2011-0401
-CVE-2011-4941, CVE-2012-4541, CVE-2013-0193, CVE-2013-0195, CVE-2013-1844
-CVE-2013-2633, CVE-2015-7815, CVE-2015-7816
-
-In case you are changing the policy for some software products about CVE
-assignment what are the reasoning for this and where are these cases listed
-publicly?
-
-Details of the vulnerability below.
-
-http://karmainsecurity.com/KIS-2016-13
-http://lists.openwall.net/full-disclosure/2016/11/07/13
-
-"""
-- ---------------------------------------------------------------
-Piwik <= 2.16.0 (saveLayout) PHP Object Injection Vulnerability
-- ---------------------------------------------------------------
-
-
-[-] Software Link:
-
-https://piwik.org/
-
-
-[-] Affected Versions:
-
-Version 2.16.0 and prior versions.
-
-
-[-] Vulnerability Description:
-
-The vulnerability can be triggered through the saveLayout() method 
-defined in /plugins/Dashboard/Controller.php:
-
-210.    public function saveLayout()
-211.    {
-212.        $this->checkTokenInUrl();
-213.
-214.        $layout      = 
-Common::unsanitizeInputValue(Common::getRequestVar('layout'));
-215.        $layout      = strip_tags($layout);
-216.        $idDashboard = Common::getRequestVar('idDashboard', 1, 'int');
-217.        $name        = Common::getRequestVar('name', '', 'string');
-218.
-219.        if (Piwik::isUserIsAnonymous()) {
-220.            $session = new SessionNamespace("Dashboard");
-221.            $session->dashboardLayout = $layout;
-222.            $session->setExpirationSeconds(1800);
-
-User input passed by anonymous users through the "layout" request 
-parameter is being stored into
-a session variable at line 221, and this is possible by invoking an URL 
-like this:
-
-http://[piwik]/index.php?module=Dashboard&action=saveLayout&token_auth=anonymous&layout=[injection]%26%2365536;
-
-Since Piwik is not using "utf8mb4" collations for its database, this can 
-be exploited in combination with a MySQL
-UTF8 truncation issue in order to corrupt the session array, allowing 
-unauthenticated attackers to inject arbitrary
-PHP objects into the application scope and carry out Server-Side Request 
-Forgery (SSRF) attacks, delete arbitrary
-files, execute arbitrary PHP code, and possibly other attacks. 
-Successful exploitation of this vulnerability
-requires Piwik to use the database to store session data (dbtable 
-option) and the application running on
-PHP before version 5.4.45, 5.5.29, or 5.6.13.
-
-
-[-] Solution:
-
-Update to version 2.16.1 or later.
-
-
-[-] Disclosure Timeline:
-
-[08/02/2016] - Vendor notified
-[09/02/2016] - Vendor replied not to be able to reproduce the issue
-[11/02/2016] - Proof of concept tested on demo.piwik.org sent to the vendor
-[11/02/2016] - Vendor response stating the issue will be fixed in 2.16.1 
-release
-[17/02/2016] - Bug bounty received
-[11/04/2016] - Version 2.16.1 released: 
-http://piwik.org/changelog/piwik-2-16-1/
-[16/06/2016] - CVE number requested
-[07/11/2016] - Public disclosure
-
-
-[-] CVE Reference:
-
-The Common Vulnerabilities and Exposures project (cve.mitre.org)
-has not assigned a CVE identifier for this vulnerability.
-
-
-[-] Credits:
-
-Vulnerability discovered by Egidio Romano.
-
-
-[-] Original Advisory:
-
-http://karmainsecurity.com/KIS-2016-13
-"""
+Use CVE-2015-8875 for dbfe8f70471864818bf458a39c8a99640895bd22.
 
 - -- 
-Henri Salo
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBAgAGBQJYJIogAAoJECet96ROqnV0K/gP+gNrSA0+itbFsvOmcHfVr2Xx
-XUPEMtPZ6OH9BgVP7Qhegb6UyeaMoCKjcHe6kw1zY8EpPE5hdZHKdb570OMFFECj
-2lIOtcDauOwIy4K+2Vop2LyEdxXvyAPDR/piJda3rZyMITA4cBJ9Y3gQVlhpd349
-T9/MYYhnZxNQCOmHd1Tg+jvekOKcFB+icOGNxVFMuc2skNMqsk0H8F/IXbX+36MF
-MDiM2oRINgsed6gEz1q6Ev3MvLYf9d0EECPYymmm0A0aYq02RIxg+vOtXEqzIsqC
-OASMOn1vrhdsBskpz3wUHnV/urCLI+h7H+p5QjggMAhUoby+EajN0LPXAKf+t+TC
-ihFlIxobJ/ztl/wWKrTDMVSLXoqZLTh2+skcuQWiuv3XyUlnnrpIFXw6B7JfxlJJ
-n7j4UJTO8CTjEDrp4wF9P2neJYaS3OdasmQumuod5CPPu2uTrenw03F+T5rDbT/b
-u/zr1/nfiq53oMC55GiZvuPHcQtsFAas8nW60vlG25fhOGBi4MRmxrkRigFdS2PD
-Gynli9EL8y3Nx7FUbkRPYrOpM0Ipr4On3v2pc75YGrBDh+FYQD8JqJvBB8LNXmdW
-cVMJG6c4Du7rteih0aBIfEXFIQYqQwnPA519Sm47Jr4ayjTv0LmfMyQVLMSthWcl
-BxXgPUr79nFXoAGV3TKj
-=7SR1
+iQIcBAEBCAAGBQJXOz25AAoJEHb/MwWLVhi2uzQQAJLasmM6bKZ9byBNHW92u63I
+V8zfQ1vKPHJsQUJ+/ydbfmlyxeClfUUPYK37NLFzMtlhZjuRte8FPaYoYjayahSn
+sfGfBsw/Vtpx14t3AUofZx+NAnr37EOD/N1iXHnBKdO7YZtBkIBfB/0ts0uxnY6f
+7AYMChqNpqFI9gZdCAJjao0spCe11D203QLUygDGFZZ+/+bbEfIJZK4KZGisR0tY
+n8MZln8+QstCnuG/5/6MPa976dMe3a0bNjGuMg399qP9iDCHmGnfAmoKh68YQFMT
+NO6Q1J6TPwLKT+xRNfTzdwmZFYW2m59oj1BSZ/jvWbl/8lOn+oukBpQElwuvB6jz
+rwJWU11gMwPXPEMyEnKW9X2U3zMYVcGzPD20/j4rJJsL2vA78iCrgF6owGYZPAji
+mFFm+GovverJqJWx452UeUdsBbEYc/A5hlQN6oa0780QLas6Wo3QZdCyuPpDWnu+
+eh/U2qVk4+BGLQiZb55dlBqmVJkW7RktqUnhFYgDC7kUbR3hpprKKDj5NnSznuYG
+Jzs1LBV6h3wb4LBcILU4d+z1OcSRFYL334XHGEurtML08GTAhuqMhZT3o/YnFeut
+EStuqTBEWmQd0IEsxYhC6sP1w4+rfIfEd0X94vi6qqBettbmNguTgAgiy/SLNISl
+FshmJwoViYA7W+UAo1fz
+=rGoH
 -----END PGP SIGNATURE-----
