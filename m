@@ -1,53 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/21/1
-Message-Id: <20160421145546.4E703332038@smtpvbsrv1.mitre.org>
-Date: Thu, 21 Apr 2016 10:55:46 -0400 (EDT)
-From: cve-assign@...re.org
-To: fr@...egrity.pt
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Stored Cross-Site Scripting in TYPO3 Bookmarks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/17/12
+Message-ID: <CACn5sdSJEQf7eF6=xE_-sZxMr9QUGz80O=R_60mybm+CdLyBKQ@mail.gmail.com>
+Date: Tue, 17 May 2016 17:16:17 -0300
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: sebastian@...ping.org, karl@...lawek.net
+Subject: CVE-2016-0718: Expat XML Parser Crashes on Malformed Input
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2016-0718: Expat XML Parser Crashes on Malformed Input
 
-> Can I have a CVE ID assigned to this Stored Cross-Site Scripting in
-> TYPO3 Bookmarks?
-> 
-> https://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2016-006/
+Severity: Critical
 
->> Problem Description: Failing to properly encode incoming data, the
->> bookmark toolbar is susceptible to Cross-Site Scripting.
+Versions Affected: All Expat XML Parser library versions
 
-> https://labs.integrity.pt/advisories/cve-pending-stored-cross-site-scripting-in-typo3-bookmarks/
+Description: The Expat XML parser mishandles certain kinds of malformed
+input documents, resulting in buffer overflows during processing and error
+reporting. The overflows can manifest as a segmentation fault or as memory
+corruption during a parse operation. The bugs allow for a denial of service
+attack in many applications by an unauthenticated attacker, and could
+conceivably result in remote code execution.
 
->> To replicate this issue we go to any page and click on "Create a
->> bookmark to this page".
->> 
->> And now grab the POST request that is being passed to the server and
->> change the "module" parameter to your payload.
+Mitigation: Applications that are using Expat should apply the
+attached patch as soon as possible.
 
-Use CVE-2016-4056.
+Credit: this issue was reported by Gustavo Grieco
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+and patched by:
 
-iQIcBAEBCAAGBQJXGOkgAAoJEHb/MwWLVhi2FiQP/1qjggqrBC8qjEN+PgJPeIhf
-yLRSxbpXpmPJpaP/P5B/z71babzUFCYmzlyPLaDgvokdn4oLUHZL+C+FVpoS7nNr
-D6Wj35JWhwbgwN8bjvmtjH61K7viFHMG3M/kVx+edt8pRAYVgzwoiX0+f6epYoJX
-j9iEx76NRFeKLiNoolR27i/j3MirMaljPE3HBle9x3uIf7ClGPHGoORv2532gkU3
-TImXvpCbPHORGCM/2WZWeoYRvhMCnA21pPS8nZvptQ2o15Risno2A98np03H4iBj
-rIu3xV0U9wBMElp5ZooK5tiWhplkXKMnjZuATRfI8t6rBZbU5oW2/zUzWglPTgxt
-czJN2TnqWgxA+ZSEHVRHBEXU7OBy5daRIHFYKlfkUmA7n+LeHcQkJ4zaxnwqENLB
-LTwtxgZAzQEELy2ODqmxVs/oz6rsTZf2CknuRpLJUxtQ/6RSIhZC5ivdNV8pPMNY
-3e/peVhCjO0NXFGPjygB3EcfPdQ/fcuTMaNsvRV9MqvwTerWgixciXtoELa/FI92
-lzxsgb34paE/eAuQvDa3aPxwLk+OySXwKm4EQY2F1NW3ilFCx+Eh/Ajv/c3Jh4kM
-rTR0MHo1VEiM3xs/NXyVnKgPhx0mvS+M/o5Gi6sI7K+7z3P6e6+DkrFzB8W2TIk6
-EgycOanoaCIcW/KAQcc1
-=263O
------END PGP SIGNATURE-----
+* Pascal Cuoq
+* Christian Heimes
+* Karl Waclawek
+* Gustavo Grieco
+* Sebastian Pipping
+
+View attachment "CVE-2016-0718-v2-2-1.patch" of type "text/x-patch" (26435 bytes)
