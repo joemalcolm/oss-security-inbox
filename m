@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2340" "Tuesday" "24" "March" "2015" "12:51:00" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150324165100.E40C342E091@smtpvbsrv1.mitre.org>" "52" "[oss-security] Re: CVE request Linux kernel: fs: btrfs: non-atomic xattr replace operation" nil nil nil "3" "2015032416:51:00" "[oss-security] Re: CVE request Linux kernel: fs: btrfs: non-atomic xattr replace operation" (number mark "        cve-assign@m Mar 24   52/2340  " thread-indent "\"[oss-security] Re: CVE request Linux kernel: fs: btrfs: non-atomic xattr replace operation\"\n") "<alpine.LFD.2.11.1503241359350.9901@wniryva>" ("<alpine.LFD.2.11.1503241359350.9901@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["773" "Tuesday" "17" "May" "2016" "11:07:16" "-0700" "Molly Crowther" "mcrowther@pivotal.io" "<8D5AEF62-B15D-423E-BCC7-D08C75E9E361@pivotal.io>" "21" "[oss-security] CVE-2016-3091 Diego log encoding vulnerability" nil nil nil "5" "2016051718:07:16" "[oss-security] CVE-2016-3091 Diego log encoding vulnerability" (number mark "U       mcrowther@pi May 17   21/773   " thread-indent "\"[oss-security] CVE-2016-3091 Diego log encoding vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17916 invoked by uid 550); 24 Mar 2015 16:51:13 -0000
+Received: (qmail 11959 invoked by uid 550); 17 May 2016 18:08:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17889 invoked from network); 24 Mar 2015 16:51:12 -0000
-In-Reply-To: <alpine.LFD.2.11.1503241359350.9901@wniryva>
-Message-Id: <20150324165100.E40C342E091@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue, 24 Mar 2015 12:51:00 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request Linux kernel: fs: btrfs: non-atomic xattr replace operation
-To: ppandit@redhat.com
+Received: (qmail 11615 invoked from network); 17 May 2016 18:07:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=pivotal-io.20150623.gappssmtp.com; s=20150623;
+        h=from:content-transfer-encoding:subject:message-id:date:to
+         :mime-version;
+        bh=dSVw5mUFDutxSWEBWrjBoZaoUZpTxXmhrka43P/BK3Y=;
+        b=adT79ffjGs/yCST0Zu91Fuz+rOAVugfdlH9w7+MODSXLz1u87w0JlRy4+DR8sAZIi6
+         lp8Rwwrl3ww1SMrD4ys2rqL/aApxVyW74Go1y3jRXDTAYE1elk0Kt50S5V8G25iPGUXR
+         wgiFoZrcKDbNvqXWGbJrCcfaP8skBUPX0ndoeMGnSnrhzXb7QPeLTiACNEGPkbs5uMoV
+         o4mhiN5EGxeRMGudAoJKV3hLN7L1MAtNEG5M2ILvdwD2PGbQuXSzf54wDnGGokKlx03k
+         OV4aWxIWBCYn2msmBKm1qlsSkiOm7ULUM/K9LgbBTUMlWAIlNaV//7w4l6KEdAvoULUJ
+         XAYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:content-transfer-encoding:subject
+         :message-id:date:to:mime-version;
+        bh=dSVw5mUFDutxSWEBWrjBoZaoUZpTxXmhrka43P/BK3Y=;
+        b=YIDevYxFYItibmhbHlm0PUwoO3PzZ/5EOqt8eopobO/a50+7JyEeNReXX0rtC7o02s
+         +nxe3Au701Yfs1BC1siQG8Rjp87jRwSMll97RpJMt/j7ABkOTUGZ77y6drde9ghi7C6F
+         DzUWGXwLVd6cEfFw0RWmUTTzWD+zH7wcE7bYVa20C04SmCaqy4KHkDuJqLJImrll8UbH
+         k315AxRHKoEUFV0xkc4K/uVgvAUdtjHG1GAw/TPJIb71XLZi6/5NoyOuVAasTRy/ot3r
+         RLVWslzEa0A5oFvhsCFLhb2yzdHWjTldoxsG0dElFqRk/fCcVV30kVrwOVuspKUsuFkl
+         yfmA==
+X-Gm-Message-State: AOPr4FU5+HR+F8Imi3gv5oHEsgIXV+w3MFdIH+CN9evc825gpQMhvcG9n05aFIMcL9KyTux7
+X-Received: by 10.66.234.131 with SMTP id ue3mr4066822pac.120.1463508438294;
+        Tue, 17 May 2016 11:07:18 -0700 (PDT)
+From: Molly Crowther <mcrowther@pivotal.io>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <8D5AEF62-B15D-423E-BCC7-D08C75E9E361@pivotal.io>
+Date: Tue, 17 May 2016 11:07:16 -0700
+To: oss-security@lists.openwall.com,
+ bugtraq@securityfocus.com
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
+Subject: [oss-security] CVE-2016-3091 Diego log encoding vulnerability
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Title: CVE-2016-3091 Diego log encoding vulnerability
 
-> Linux kernel built with the Btrfs Filesystem support(CONFIG_BTRFS_FS) is
-> vulnerable to a race condition which leaves the extended attribute(xattr)
-> empty for a short time window. This could be leveraged to bypass set ACLs and
-> potentially escalate user privileges.
-> 
-> An unprivileged user could use this flaw to potentially escalate privileges on
-> a system.
-> 
-> https://git.kernel.org/linus/5f5bc6b1e2d5a6f827bc860ef2dc5b6f365d1339
+Severity: High
 
-We would like to restate the security issue somewhat. The commit
-mentions two separate concerns: (1) "This leaves a time window where
-readers (getxattr, listxattrs) won't see any value for the xattr" and
-(2) "Deleting the old xattr value without verifying first if the new
-xattr will fit." In both cases, apparently the underlying problem is
-that the code is attempting to accomplish a transition between a
-previously acceptable state of an object and a new acceptable state of
-an object, but does this in a way that an intermediate state becomes
-visible. Because the intermediate state is, for a security-relevant
-reason, not known to be acceptable, the transition code has a
-vulnerability (related, in general, to CWE-371). We feel that (1) and
-(2) are therefore the same type of vulnerability, even though the
-attack methodology might rely on a race condition only in case (1).
+Vendor: Cloud Foundry Foundation
 
-Use CVE-2014-9710 for this vulnerability involving improper management
-of xattr state.
+Versions Affected: Diego-release versions 0.1468.0 through 0.1470.0
 
-> Returning -EEXIST when the flag XATTR_CREATE is given and the xattr
-> doesn't exist
+Description: Due to how Diego handles breaking up large log streams on UTF-=
+8 boundaries, it is possible to cause a denial of service on a Cloud Foundr=
+y installation with an app outputting malformed UTF-8 sequences.
 
-We don't know whether this third concern is a vulnerability. Presumably
-it would depend on what callers do after the -EEXIST.
+Affected Cloud Foundry Products and Versions: Diego-release versions 0.1468=
+.0 through 0.1470.0
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Mitigation: The Cloud Foundry project recommends that Cloud Foundry Deploym=
+ents running Diego versions 0.1468.0 through 0.1470.0 upgrade to Diego vers=
+ion 0.1471.0.
 
-iQEcBAEBAgAGBQJVEZW6AAoJEKllVAevmvmsk44IAKLgwGa2CnmZn+gN53zdhkSX
-3RguwbKRz4QbOri829ByHoqo5wpGfsNKi+KHfz77d895w0SbqEoosStqhgXErQy7
-bGCVxjf1PwDRthffptsDtwT+NrP2d8uWVcGM1U9dDlBD40VU4a7fRCzYxoReJaAp
-eyy1aA96gyxFoGZm1vENuMrgDJmMp6EajV3292Acg6cJ/UoPJ7QxNpPtYI8tua/V
-zXqMprms2jyba7v37+HW6zQ0zELDCWfzSeYkyCOAgGI5oBc1RsKeOyHfWpS1A3sr
-f5pqfNfUu75+38+xl0Ic+GKxO1reqCkZe6iFu9OkdGtAHXIMMkxLMHpQfP4J9v8=
-=op6Y
------END PGP SIGNATURE-----
+Credit: This issue was identified by a Pivotal team and reported responsibl=
+y to the Cloud Foundry Foundation.
