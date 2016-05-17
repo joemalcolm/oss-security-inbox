@@ -1,71 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/22/8
-Message-ID: <1590235068.409323.1482405991070@mail.yahoo.com>
-Date: Thu, 22 Dec 2016 11:26:31 +0000 (UTC)
-From: Nicholas Prowse <nick5990@...oo.co.uk>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: Curious about the security of my router fermwair.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/17/1
+Message-ID: <CALJHwhRSR+vkuO9fn_d1-Ui9=eWsfd73QCLNi6zc7egL+zM7Fg@mail.gmail.com>
+Date: Tue, 17 May 2016 11:01:17 +1000
+From: Wade Mealing <wmealing@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-3707 : kernel-rt - Sending SysRq command via ICMP echo request
 Content-Type: text/plain; charset=utf-8
 
-Jonathan,
+Gday,
 
-- My suggestion is to port scan all devices eg routers you own. Then store and analyse the results. Only scan devices you own since scanning other peoples devices / networks may be illegal.
+A flaw was found in the kernel-rt in which an attacker could submit a
+specially crafted ICMP echo request which can trigger a sysrq function
+based on values in the ICMP packet.
 
-- A wide variety of tutorials and information about port scanning is available online.
+This feature was introduced in the kernel-rt only and is not shipping
+with standard Red Hat Enterprise Linux kernels.  Other kernels also
+ship this patch.
 
-- I found through port scanning some of the devices I own earlier this year, that there were many open and filtered ports and stated services such as telnet, upnp, and ssdp. I found out via research that these services / protocols have had vulnerabilities in the past that are publicly known. There are likely many devices with known and unknown weaknesses in circulation.
+When enabled, remote attacker who are able to send ICMP packets to the
+host could exploit this feature using bruteforce to submit arbitrary
+SysRq commands.
 
-- shodan.io can tell one how many requests are being sent by specific services / protocols. Some results were quite surprising to me.
+A local user can find the cookie immediately by inspecting the cookie file:
 
-Q: Does anyone know if there are databases / listings / websites that have port scan results by device? If yes, some examples would be good.
+$ ls -l /proc/sys/net/ipv4/icmp_echo_sysrq
+-rw-r--r--. 1 root root 0 Apr 28 15:39 /proc/sys/net/ipv4/icmp_echo_sysrq
 
-Regards,
-Nick
+This pattern in hex can be used to attack the host with the
+icmp_echo_sysrq cookie set (and sysrq enabled) as per this example:
 
---------------------------------------------
-On Wed, 12/21/16, tapper <lancett01@...glemail.com> wrote:
+# ping -c1 -s57 -p0102030468 <target>
 
- Subject: [oss-security] Curious about the security of my router fermwair.
- To: oss-security@...ts.openwall.com, oss-security@...ts.openwall.com
- Date: Wednesday, December 21, 2016, 11:39 AM
- 
-     Hi my name is
- Jonathan. I don't know if this is the write place to ask 
- about this but here gos.
- 
- I would like to know if any one would like to have a poke
- around at the 
- third party router firmware I use on my router called
- Gargoyle.
- Its a easy to use interface built on top of Openwrt.
- 
- I use this firmware because it has some grate plug ins and
- the user 
- interface has grate a11y. I use a screen reader as I am
- blind and the 
- html5 interface is easy for me to get around in.
- 
- It's homepage
- https://www.gargoyle-router.com/index.php
- GitHub
- https://github.com/ericpaulbishop/gargoyle
- forum
- https://www.gargoyle-router.com/phpbb/index.php
- 
- The devs behind Gargoyle are really nice people and have
- helped me out 
- with bugs and made me a mod on the forum.
- What I would really like to know is just how secure is this
- firmware?
- 
- I'm not a coder. I am just interested in how safe is my
- router firmware 
- keeping me?
- 
- If any one finds any sacurety bugs I know they will get
- fix.
- 
- Thanks and sorry about my spelling
- Jonathan       
-         
- 
+Remote attacker could exploit this feature using bruteforce to submit
+arbitrary SysRq commands if this feature was enabled.
+
+There is no fix for this at the time, this feature can be disabled /
+reverted in the code and usual methods of sysrq magic keys can be used
+as a workaround till a sufficient alternative has been developed.
+
+Resources:
+https://www.kernel.org/pub/linux/kernel/projects/rt/4.4/patch-4.4.7-rt16.patch.gz
+
+Upstream discussion on original topic:
+https://lwn.net/Articles/448790/
+
+Red Hat Bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2016-3707
