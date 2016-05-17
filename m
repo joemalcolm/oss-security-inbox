@@ -1,26 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/19
-Message-Id: <FF64064C-58B8-4A27-AA23-F343C361E5CB@shub-internet.org>
-Date: Mon, 19 Sep 2016 17:33:41 -0500
-From: Brad Knowles <brad@...b-internet.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/17/4
+Message-ID: <CAB_jSYzrYau1c_zEO-BczpEKc7W617NKeuphfJt=HLgE9bMbfA@mail.gmail.com>
+Date: Tue, 17 May 2016 17:01:24 +0800
+From: Marina Glancy <marina@...dle.com>
 To: oss-security@...ts.openwall.com
-Cc: Brad Knowles <brad@...b-internet.org>
-Subject: Re: ezmlm warning
+Subject: Moodle security release 3.0.4, 2.9.6, 2.8.12, 2.7.14
 Content-Type: text/plain; charset=utf-8
 
-On Sep 19, 2016, at 5:06 PM, Solar Designer <solar@...nwall.com> wrote:
+The following security notifications have now been made public
+following release of Moodle 3.0.4, 2.9.6, 2.8.12 and 2.7.14. Thanks to
+OSS members for their cooperation.
 
-> This is on my back burner.  I might approach experimenting with this
-> some months later.  I'm afraid I have other priorities right now.  For
-> now, I recommend that you don't use DMARC for addresses that you use on
-> mailing lists (posting and/or subscribing); in fact, I am likely to
-> continue to recommend this even if we do deploy a workaround for the
-> lists hosted at Openwall.
+==============================================================================
+MSA-16-0013: Users are able to change profile fields that were locked by the
+administrator
 
-This might be verging on heresy, but do note that Mailman should now be DMARC-friendly out-of-the-box.
+Description:       User editing form only disabled the profile fields in UI
+                   and did not actually prevent users from editing them
+Issue summary:     Tricky users can change locked profile fields
+Severity/Risk:     Minor
+Versions affected: 3.0 to 3.0.3, 2.9 to 2.9.5, 2.8 to 2.8.11, 2.7 to 2.7.13
+                   and earlier unsupported versions
+Versions fixed:    3.0.4, 2.9.6, 2.8.12 and 2.7.14
+Reported by:       Vadim Dvorovenko
+Issue no.:         MDL-53954
+CVE identifier:    CVE-2016-3729
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-53954
 
---
-Brad Knowles <brad@...b-internet.org>
+==============================================================================
+MSA-16-0015: Information disclosure of hidden forum names and sub-names.
 
+Description:       Name of the inaccessible forum or forum discussion could be
+                   disclosed as part of the error message on the subscription
+                   page
+Issue summary:     Information disclosure of hidden forum names and sub-names.
+Severity/Risk:     Minor
+Versions affected: 3.0 to 3.0.3, 2.9 to 2.9.5 and 2.8 to 2.8.11
+Versions fixed:    3.0.4, 2.9.6 and 2.8.12
+Reported by:       Callum
+Issue no.:         MDL-53696
+CVE identifier:    CVE-2016-3731
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-53696
 
-Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
+==============================================================================
+MSA-16-0016: User can view badges of other users without proper permissions
+
+Description:       Capability check to view other badges was performed for the
+                   current user instead for the user whose badges are being
+                   viewed
+Issue summary:     Badges code checks viewotherbadges capability in the wrong
+                   context
+Severity/Risk:     Minor
+Versions affected: 3.0 to 3.0.3, 2.9 to 2.9.5, 2.8 to 2.8.11, 2.7 to 2.7.13
+                   and earlier unsupported versions
+Versions fixed:    3.0.4, 2.9.6 and 2.8.12
+Reported by:       Tim Hunt
+Issue no.:         MDL-53589
+CVE identifier:    CVE-2016-3732
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-53589
+
+==============================================================================
+MSA-16-0017: Course idnumber not protected from teacher restore
+
+Description:       During the course restore teacher could overwrite idnumber
+                   even without having the capability to change it
+Issue summary:     Course idnumber not protected from teacher restore
+Severity/Risk:     Minor
+Versions affected: 3.0 to 3.0.3, 2.9 to 2.9.5, 2.8 to 2.8.11, 2.7 to 2.7.13
+                   and earlier unsupported versions
+Versions fixed:    3.0.4, 2.9.6, 2.8.12 and 2.7.14
+Reported by:       Donna Hrynkiw
+Issue no.:         MDL-51369
+CVE identifier:    CVE-2016-3733
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-51369
+
+==============================================================================
+MSA-16-0018: CSRF in script marking forum posts as read
+
+Description:       CSRF possible in the URL that marks forum posts as read
+Issue summary:     Forum markposts.php missing sesskey check
+Severity/Risk:     Minor
+Versions affected: 3.0 to 3.0.3, 2.9 to 2.9.5, 2.8 to 2.8.11, 2.7 to 2.7.13
+                   and earlier unsupported versions
+Versions fixed:    3.0.4, 2.9.6, 2.8.12 and 2.7.14
+Reported by:       Andrew Nicols
+Issue no.:         MDL-53755
+CVE identifier:    CVE-2016-3734
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-53755
+
+==============================================================================
+
+Marina Glancy
+Development Process Manager
+e: marina@...dle.com
+p: +61 8 9467 4167 w: moodle.com
