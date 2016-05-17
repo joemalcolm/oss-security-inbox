@@ -1,41 +1,124 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/2
-Message-ID: <20160301161155.GA4786@eldamar.local>
-Date: Tue, 1 Mar 2016 17:11:55 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: Ben Hutchings <benh@...ian.org>
-Subject: CVE Request: Linux: aio write triggers integer overflow in some network protocols
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/17/6
+Message-Id: <E1b2dqK-0008FL-IE@xenbits.xenproject.org>
+Date: Tue, 17 May 2016 12:11:20 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 176 (CVE-2016-4480) - x86 software guest page walk PS bit handling flaw
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-We would like to request a CVE for the following issue in the Linux
-kernel:
+             Xen Security Advisory CVE-2016-4480 / XSA-176
+                               version 3
 
-https://git.kernel.org/linus/4c185ce06dca14f5cea192f5a2c981ef50663f2b (v4.1-rc1)
+           x86 software guest page walk PS bit handling flaw
 
-For the linux-stable:
+UPDATES IN VERSION 3
+====================
 
-https://git.kernel.org/cgit/linux/kernel/git/stable/linux-stable.git/commit?id=c4f4b82694fe48b02f7a881a1797131a6dad1364
+Public release.
 
-For an upcoming Linux DSA in Debian we would use something like:
+ISSUE DESCRIPTION
+=================
 
-> Ben Hawkes of Google Project Zero reported that the AIO interface
-> permitted reading or writing 2 GiB of data or more in a single
-> chunk, which could lead to an integer overflow when applied to
-> certain filesystems, socket or device types.  The full security
-> impact has not been evaluated.
+The Page Size (PS) page table entry bit exists at all page table levels
+other than L1.  Its meaning is reserved in L4, and conditionally
+reserved in L3 and L2 (depending on hardware capabilities).  The
+software page table walker in the hypervisor, however, so far ignored
+that bit in L4 and (on respective hardware) L3 entries, resulting in
+pages to be treated as page tables which the guest OS may not have
+designated as such.  If the page in question is writable by an
+unprivileged user, then that user will be able to map arbitrary guest
+memory.
 
-The issue was initially already addressed via
+IMPACT
+======
 
-https://git.kernel.org/linus/a70b52ec1aaeaf60f4739edb1b422827cb6f3893 (v3.5-rc1)
+On vulnerable OSes, guest user mode code may be able to establish
+mappings of arbitrary memory inside the guest, allowing it to elevate
+its privileges inside the guest.
 
-but then opened again due to
+VULNERABLE SYSTEMS
+==================
 
-https://git.kernel.org/linus/41ef4eb8eef8d06bc1399e7b00c940d771554711 (v3.10-rc1)
+All Xen versions expose the vulnerability.
 
-Can you please assign a CVE id for this issue?
+ARM systems are not vulnerable.  x86 PV guests are not vulnerable.
 
-Regards,
-Salvatore
+To be vulnerable, a system must have both a vulnerable hypervisor, and
+a vulnerable guest operating system, i.e. ones which make non-standard
+use of the PS bit.  We are not aware of any vulnerable guest operating
+systems, but we cannot rule it out.  We have checked with maintainers
+of the following operating systems, all of whom have said that to the
+best of their knowledge their operating system is not vulnerable:
+Linux, FreeBSD, NetBSD, OpenBSD, and Solaris.  Nor has it been observed
+in common proprietary operating systems.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this issue.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich from SUSE.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+Note, however, that on hosts supporting 1Gb page mappings, for guests
+which get this capability hidden via CPUID override in their config
+file, fully correct behavior cannot be provided when using HAP paging.
+This is a result of hardware behavior, which software cannot mitigate.
+If that is a concern, such guests would need to be run in shadow paging
+mode.
+
+xsa176.patch      xen-unstable, Xen 4.6.x, Xen 4.5.x, Xen 4.4.x, Xen 4.3.x
+
+$ sha256sum xsa176*
+e61c52477a8d8aa79111d686b103202ff8a558d8b3356635288c1290789b7eb3  xsa176.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJXOvhuAAoJEIP+FMlX6CvZ8JgH/A7YU+62hV5ayIx77AEwHeIJ
+6nqf6B1k+Y0aEtiSbupHDIMwSw13FoR+LluaZjTXpBd251Ut1cwXkDvC6yiPHxq0
+rWlb1/ka0rnOT3/rx0SgUjx02HbBzOFyyhZgR6W/gXV/S5fQhE26KbhEWvVaYCXO
+QeryIsi9WBV/AWbx4fis4ecREhyEWPYkJ/bQq867P6YJLXQ1btc/CyZ7ahBjna68
+VB9WE8czSs2x5QjJfKad5ksRAixdvaLFtVNOhnqJuJBickO3dd/IZPRxcSmazjdl
+sIiSMfKU9nPb56MIgZxTWCLpvYLe8yarnvjiVOivaHl2cBT01UOjVJv/dSQEyrw=
+=uQdJ
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa176.patch" of type "application/octet-stream" (1501 bytes)
