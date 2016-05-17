@@ -1,57 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/1
-Message-Id: <20161027064119.26C1813A5A0@smtpvmsrv1.mitre.org>
-Date: Thu, 27 Oct 2016 02:41:19 -0400 (EDT)
-From: cve-assign@...re.org
-To: vlad@...rklevich.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: kernel: low-severity vfio driver integer overflow - Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/17/3
+Message-ID: <a21ce701-cd83-f4da-736a-0977b1e7f31f@redhat.com>
+Date: Tue, 17 May 2016 10:19:16 +0200
+From: Andrej Nemec <anemec@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: ImageMagick heap overflow and out of bounds read
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 05/11/2016 12:01 PM, Hanno Böck wrote:
 
-> The vfio driver allows direct user access to devices. The
-> VFIO_DEVICE_SET_IRQS ioctl for vfio PCI devices has a state machine
-> confusion bug where specifying VFIO_IRQ_SET_DATA_NONE along with
-> another bit in VFIO_IRQ_SET_DATA_TYPE_MASK in hdr.flags allows integer
-> overflow checks to be skipped for hdr.start/hdr.count. This might
-> allow memory corruption later in vfio_pci_set_msi_trigger() with user
-> access to an appropriate vfio device file, but it seems difficult to
-> usefully exploit in practice.
-> 
-> https://patchwork.kernel.org/patch/9373631/
+> https://blog.fuzzing-project.org/45-ImageMagick-heap-overflow-and-out-of-bounds-read.html
+>
+> Recently the ImageTragick vulnerability shed some light on the security
+> status of ImageMagick.
+>
+> This made me wonder how resilient to fuzzing ImageMagick is these days.
+> It's pretty much a posterchild example for a good fuzzing target: Lots
+> of supported complex binary file formats.
+>
+> I already did some fuzzing on ImageMagick, but as far as I remember
+> that was before I used american fuzzy lop and was done with zzuf. I was
+> also aware that others did some more thorough fuzzing on ImageMagick.
+> http://www.openwall.com/lists/oss-security/2014/12/24/1
+>
+> What I did now was relatively simple: I took a trivial, few pixels PNG
+> and used ImageMagick's "convert" tool to convert it into all file
+> formats that have both read and write support in ImageMagick. I used
+> that to run a fuzzing job with afl and asan. By design ImageMagick will
+> sometimes do huge memory allocations, these can be prevented by setting
+> limits for the width, height and memory usage in the policy.xml file.
+>
+> I discovered one heap buffer overflow in the PICT parser and one heap
+> out of bounds read in the PSD parser. Given how big the attack surface
+> is this is not terrible, but it shows that despite previous efforts
+> there's still potential to fuzz ImageMagick.
+>
+> https://crashes.fuzzing-project.org/imagemagick-heapoverflow-WritePixelCachePixels.pict
+> Sample file for heap buffer overflow in WritePixelCachePixels() (PICT
+> format)
+> https://github.com/ImageMagick/ImageMagick/commit/cfbe890d0cfcd5d3b0f63744a6901e40e992e07c
+> Git commit / fix
+>
+> https://crashes.fuzzing-project.org/imagemagick-oob-heap-read-PushShortPixel.psd
+> Sample file for heap out of bounds read in PushShortPixel() (PSD format)
+> https://github.com/ImageMagick/ImageMagick/commit/15dd190dfd7e7a3341bdc378f4f0daba9873322c
+> Git commit / fix
+>
+> https://www.imagemagick.org/script/changelog.php
+> Both issues have been fixed in the versions 6.9.4-0 and 7.0.1-2. In the
+> meantime new versions (6.9.4-1, 7.0.1-3) came out that, as far as I
+> understand the ChangeLog, remove another potential vector for the
+> ImageTragick vulnerabilities, so you should preferrably update to those.
+>
+Hello,
 
-Use CVE-2016-9083 for the "state machine confusion bug."
+This seems to have fallen through the cracks.
+Mitre, do you want to assign CVE IDs to these vulnerabilities?
 
-Use CVE-2016-9084 for the separate problem fixed by "kzalloc is
-changed to a kcalloc."
+Thanks!
+Best Regards,
 
-This is not yet available at
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/drivers/vfio/pci/vfio_pci.c
-and
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/drivers/vfio/pci/vfio_pci_intrs.c
-but may be there later.
+-- 
+Andrej Nemec, Red Hat Product Security
+3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYEaDdAAoJEHb/MwWLVhi2SXoP/A1cw0kppdrB03QUfdZM8ShT
-BBnH+GWpricg333jEtfM1ypq5NqN62bG4/SQzvJwqV0HKffodIqzKAqpu0jzvzHA
-rlVs+lrv0folE2T4mZNc0lDWr36lwIf2LJx3tdYnl/EaW11FSVIsO/K5/bnXYU0b
-Yxarmk5jhG48pcjFo969FvpfDYXBZuleuluTWs/t4MM5R5iY/hpA/+vPBqQPf9Qp
-Mb+WwFu4fuXjTxWRTXfaH6l2ZQ4qdjxzwZnHzyj4Xt/B9aXDQx/uibM6gwMlK79d
-HSAElifmLxhBClhRj9t5CWjz7qxtD/Ll7UOklM1a6C+DPwvpYnr5iaz0iQDh4IA9
-ZFWh+EffrFufmrvQ1/3YBLwCUd74thDisbeqZSaIOH9+itdV5rwiuiAz7PusNzcc
-VLTh3kP34kahzIyvpNt342opeA/1dCvv1qNWCC1G9MwJbuW6N7PAm1v7bwr22Fz7
-sFvQ7FB4aUV+AV835wkPNXqZaoyBfzDvzXoW9aFMzQzjcvdKfNT4VU7N2mHJqfYU
-OP5PNuqUg4Wly0Rwych0YpoYTXfvFyy//AvuTIvZRHQErS5ny8gJvjwGg8oVObjr
-l+3WOQxAmJST2jvczPLKhiQP3zPDmlMx9MTUuYWR4MJqaEf7nwjJnqTf5chWGPsR
-9jneh8oMpkQJm0IRDyc+
-=AZ3J
------END PGP SIGNATURE-----
