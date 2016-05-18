@@ -1,28 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/24/3
-Message-ID: <20160124153737.GA18993@eldamar.local>
-Date: Sun, 24 Jan 2016 16:37:37 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/18/3
+Message-ID: <20160518082837.GA13028@lorien.valinor.li>
+Date: Wed, 18 May 2016 10:28:37 +0200
 From: Salvatore Bonaccorso <carnil@...ian.org>
 To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: tiff: Out-of-bounds write for invalid images using LogL compression
+Subject: CVE Request: Linux: information leak in Rock Ridge Extensions to iso9660 -- fs/isofs/rock.c
 Content-Type: text/plain; charset=utf-8
 
 Hi
 
-Could you assign a CVE for the following issue in tiff:
+The following commit in Linux v4.6 addresses an information leak
+caused by not properly handling NM entries containing NUL. Quoting the
+commit message:
 
-http://bugzilla.maptools.org/show_bug.cgi?id=2522
-
-> 2015-12-27  Even Rouault <even.rouault at spatialys.com>
+> Subject: get_rock_ridge_filename(): handle malformed NM entries
 > 
->         * libtiff/tif_luv.c: fix potential out-of-bound writes in decode
->         functions in non debug builds by replacing assert()s by regular if
->         checks (bugzilla #2522).
->         Fix potential out-of-bound reads in case of short input data.
+> Payloads of NM entries are not supposed to contain NUL.  When we run
+> into such, only the part prior to the first NUL goes into the
+> concatenation (i.e. the directory entry name being encoded by a bunch
+> of NM entries).  We do stop when the amount collected so far + the
+> claimed amount in the current NM entry exceed 254.  So far, so good,
+> but what we return as the total length is the sum of *claimed*
+> sizes, not the actual amount collected.  And that can grow pretty
+> large - not unlimited, since you'd need to put CE entries in
+> between to be able to get more than the maximum that could be
+> contained in one isofs directory entry / continuation chunk and
+> we are stop once we'd encountered 32 CEs, but you can get about 8Kb
+> easily.  And that's what will be passed to readdir callback as the
+> name length.  8Kb __copy_to_user() from a buffer allocated by
+> __get_free_page()
+> 
+> Cc: stable@...r.kernel.org # 0.98pl6+ (yes, really)
+> Signed-off-by: Al Viro <viro@...iv.linux.org.uk>
 
-Fixing commit:
+Upstream commit: https://git.kernel.org/linus/99d825822eade8d827a1817357cbf3f889a552d6 (v4.6)
 
-https://github.com/vadz/libtiff/commit/aaab5c3c9d2a2c6984f23ccbc79702610439bc65
+Can you please assign a CVE for this issue?
 
 Regards,
 Salvatore
