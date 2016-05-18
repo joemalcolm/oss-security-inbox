@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2453" "Tuesday" "21" "June" "2016" "13:41:22" "+0200" "Tomas Hoger" "thoger@redhat.com" "<20160621134122.4118704e@redhat.com>" "70" "Re: [oss-security] SELinux troubles" nil nil nil "6" "2016062111:41:22" "[oss-security] SELinux troubles" (number mark "U       thoger@redha Jun 21   70/2453  " thread-indent "\"Re: [oss-security] SELinux troubles\"\n") "<20160621094501.GA21668@suse.de>" ("<20160621094501.GA21668@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2560" "Wednesday" "18" "May" "2016" "11:34:35" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160518153435.8189F6C00A8@smtpvmsrv1.mitre.org>" "56" "[oss-security] Re: CVE Request: Linux: information leak in Rock Ridge Extensions to iso9660 -- fs/isofs/rock.c" nil nil nil "5" "2016051815:34:35" "[oss-security] Re: CVE Request: Linux: information leak in Rock Ridge Extensions to iso9660 -- fs/isofs/rock.c" (number mark "U       cve-assign@m May 18   56/2560  " thread-indent "\"[oss-security] Re: CVE Request: Linux: information leak in Rock Ridge Extensions to iso9660 -- fs/isofs/rock.c\"\n") "<20160518082837.GA13028@lorien.valinor.li>" ("<20160518082837.GA13028@lorien.valinor.li>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13628 invoked by uid 550); 21 Jun 2016 11:41:39 -0000
+Received: (qmail 22043 invoked by uid 550); 18 May 2016 15:34:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,88 +12,68 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13604 invoked from network); 21 Jun 2016 11:41:38 -0000
-Date: Tue, 21 Jun 2016 13:41:22 +0200
-From: Tomas Hoger <thoger@redhat.com>
-To: Sebastian Krahmer <krahmer@suse.com>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20160621134122.4118704e@redhat.com>
-In-Reply-To: <20160621094501.GA21668@suse.de>
-References: <20160621094501.GA21668@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Tue, 21 Jun 2016 11:41:26 +0000 (UTC)
-Subject: Re: [oss-security] SELinux troubles
+Received: (qmail 22019 invoked from network); 18 May 2016 15:34:47 -0000
+From: cve-assign@mitre.org
+To: carnil@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20160518082837.GA13028@lorien.valinor.li>
+Message-Id: <20160518153435.8189F6C00A8@smtpvmsrv1.mitre.org>
+Date: Wed, 18 May 2016 11:34:35 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: Linux: information leak in Rock Ridge Extensions to iso9660 -- fs/isofs/rock.c
 
-On Tue, 21 Jun 2016 11:45:01 +0200 Sebastian Krahmer wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> 1)
+> The following commit in Linux v4.6 addresses an information leak
+> caused by not properly handling NM entries containing NUL.
 > 
-> This bug is mitigated since setroubleshoot that is found on RHEL 7.2,
-> by running it as a dedicated user (untested).
-> 
-> Shell injection issue in setroubleshoot/audit_data.py:
-> 
-> def _set_tpath(self):
-> [...]
-> 	if path.startswith("/") == False and inodestr:
-> 		import subprocess
-> 		command = "locate -b '\%s'" % path
-> 		try:
-> 	    	    output = subprocess.check_output(command,
-> 		 	                             stderr=subprocess.STDOUT,
->                                                      shell=True)
-> [...]
-> 
-> 
-> taking 'path' off AVC denial messages and constructing a command thats
-> passed to "sh -c".  o.O
-> Note that AVC denial messages appear outside of containers, so
-> a setroubleshoot is usually run on the host, processing AVC messages
-> from containers. This allows for an easy breakout.
-> 
-> 
-> 2)
-> 
-> I did not test this, but even though the run_fix() function in
-> SetroubleshootFixit.py is protected by auth_admin polkit rules, it looks
-> like theres good chance to pass XML documents via setroubleshoots
-> RPC/DBUS API that contains evil local_id or analysis_id fields and trick
-> real admins to "fix" AVC denials that inject code:
-> 
-> [...]
->     def run_fix(self, local_id, analysis_id):
->          import commands
->          command = "sealert -f %s -P %s" % ( local_id, analysis_id)
->          return commands.getoutput(command)
-> [...]
-> 
-> This is not mitigated by the run-as-user, since SetroubleshootFixit.py
-> still runs as root (and probably needs to).
+> https://git.kernel.org/linus/99d825822eade8d827a1817357cbf3f889a552d6
 
-CVE-2016-4989 was assigned to the issues above.
+>> stop once we'd encountered 32 CEs, but you can get about 8Kb easily.
+>> And that's what will be passed to readdir callback as the name length.
 
+>> Cc: stable@vger.kernel.org # 0.98pl6+ (yes, really)
 
-There are additional similar problems in setroubleshoot and
-setroubleshoot-plugins:
+Use CVE-2016-4913.
 
-- CVE-2016-4445, setroubleshoot, affecting 'sealert --fix'.  Problem was
-  already fixed in version 3.2.23.
+This might have a threat model that is not often seen in vulnerability
+reports. Is the issue somewhat similar to CVE-2014-9731, i.e., the
+attacker only needs the ability to mount an isofs filesystem on an
+already-running system -- either with physical removable media or
+equivalent actions that may be relevant with virtualization -- and
+then the attacker obtains the ability to read from some unintended
+(but not arbitrary) kernel memory locations? Also, is the severity of
+CVE-2016-4913 much greater than that of CVE-2014-9731, because the
+amount of kernel memory is much larger and because CVE-2016-4913
+affects essentially every Linux release (as long as CONFIG_ISO9660_FS
+was used)?
 
-  https://github.com/fedora-selinux/setroubleshoot/commit/2d12677629ca319310f6263688bb1b7f676c01b7
+Are there also plausible scenarios with a DoS impact, but they are of
+less concern because the information leak is much more important in
+almost all realistic cases? (For example: possibly someone has a
+long-running root process that tries to maintain a searchable index of
+all files on all user-mounted isofs filesystems, and that process
+stops because the code sees invalid readdir results.)
 
-- CVE-2016-4444, setroubleshoot-plugins, allow_execmod plugin.  Also
-  previously fixed in versoin 3.2.23.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-  https://github.com/fedora-selinux/setroubleshoot/commit/5cd60033ea7f5bdf8c19c27b23ea2d773d9b09f5
-
-- CVE-2016-4446, setroubleshoot-plugins, allow_execstack plugin.
-  Similar to the previous one, only using commands.getoutput instead of
-  commands.getstatusoutput.
-
-  https://github.com/fedora-selinux/setroubleshoot/blob/setroubleshoot-plugins-3.3.4/plugins/src/allow_execstack.py#L29
-
--- 
-Tomas Hoger / Red Hat Product Security
+iQIcBAEBCAAGBQJXPIsOAAoJEHb/MwWLVhi2LPIP/RJ+S+xraiesxdcpC4M4uIB9
+IQ7APteqUe2QCD4yoZwo4Lkq3IthV/cGE0Mko64coLzvU5zj0VSWac0rIQoXx1UR
+mLVgelyUCejpuFs9BZGhcjkBmzTT2pMSPxfwPeMV+0qiBfJbiJDIfYSLb7nzQXZA
+zb8XuKBWZL5VOftoXN2I33ZyEhaNXezyHESGTPaChEkioYyt48tAEBs/iTDUF/j6
+j4dNouBoKPqeunbCtXtuZ5KMSSkmZrkCFg0N38Hs0CFdEUH2BTHJGcml1pforWx5
+okoBPONK/oSM7WeiRftjFL3DLKnYPaW9DAkujNoJwh5GoW216qbuymYMYcz8yVHA
+BogUBRCfpuCe7Ua7MalgeBGklAYsfY3tYHhwDOnUZtO9wPJnocnoBVXKEoSQ+zAH
+cVTFPizG/ZvaGehC1Mp52+KSOgsdvJiNysQy6/GZmrEVOAk7kI9t/XFK6U7MUBwI
+p/wAzo27U1+0WL65JfVKP04RmPku0EN0zDCzka+GOyZXeAy96N0EcmsqoNT6NMS8
+RBqLw/F61uNlPyK4Ys8NWn7XOv/GHl4t8l4I0ForxyLw7qikMZWwCW404TJ+CiTt
+Q6jz6Gky02gtifoaivheTzpWKUJE07TxubfkKdQTI+uimpAx/fx7mCIQFMSIei1i
+B4RwERTwoQgfX9GKwUnl
+=1bfz
+-----END PGP SIGNATURE-----
