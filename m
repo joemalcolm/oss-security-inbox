@@ -1,33 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/15/5
-Message-ID: <20161115211458.GK2344@openstack.org>
-Date: Tue, 15 Nov 2016 21:15:00 +0000
-From: Jeremy Stanley <jeremy@...nstack.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/18/4
+Message-ID: <CAKG8Do6qnT4yPS8B=fTaoFf2x4k-cKy2ixDZLRA8aSxRkuFo2Q@mail.gmail.com>
+Date: Wed, 18 May 2016 13:40:18 +0200
+From: Cedric Buissart <cbuissar@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: [FD] CVE-2016-4484: - Cryptsetup Initrd root Shell
+Subject: Re: CVE-2016-3698 libndp: denial of service due to insufficient validation of source of NDP messages
 Content-Type: text/plain; charset=utf-8
 
-On 2016-11-15 20:11:11 +0000 (+0000), Hector Marco wrote:
-> It would be more precise to say "2:1.7.3-2" rather than "2:1".
-> This number refers to the Debian package. It seems that Debian is using
-> different version numbers for the "cryptsetup" package:
-> 
-> https://security-tracker.debian.org/tracker/CVE-2016-4484
-> 
-> We are not sure whether the last part of the version number (2:1.7.3-2)
-> of the Debian package (1.7.3-2) is used to match with the cryptsetup
-> version.
-[...]
+Accidental miss-use of copy/paste : updated subject with the CVE number.
 
-The "2:" prefix is called an "epoch" and was introduced around the
-time the package was renamed from "cryptsetup-luks" to "cryptsetup"
-(for reasons not entirely clear to me from reading the package
-changelog, but is usually employed to work around version numbers
-going in reverse or mistakes in version numbers for a package). The
--2 suffix is a package revision, which makes updated packages
-containing non-updated upstream releases possible (necessary to, for
-example, be able to fix bugs in the packaging itself). So in the
-case of a 2:1.7.3-2 package version, 1.7.3 is the corresponding
-upstream source version number.
+On Tue, May 17, 2016 at 8:40 PM, Cedric Buissart <cbuissar@...hat.com>
+wrote:
+
+> Dear all,
+>
+> An improper input validation check, and improper origin check flaw during
+> the reception of NDP message was discovered in libndp. An attacker in a
+> non local network could use this flaw to advertise a node as a router, and
+> cause a denial of service attack, or act as a man in the middle.
+>
+> The patches enforce that hop limit must be 255, to ensure that the NDP
+> message
+> has not been routed.
+>
+> Patches can be found upsteam:
+>
+>  -  libndp: validate the IPv6 hop limit
+>
+> https://github.com/jpirko/libndp/commit/a4892df306e0532487f1634ba6d4c6d4bb381c7f
+>
+>  -  libndb: reject redirect and router advertisements from non-link-local
+>
+> https://github.com/jpirko/libndp/commit/2af9a55b38b55abbf05fd116ec097d4029115839
+>   https://people.freedesktop.org/~lkundrak/.libndp/
+>
+> Known affected packages : NetworkManager >= 1.0
+>
+> Thanks to Julien Bernard (Viagénie) for discovering the issue
+>
+> Kind regards,
+> --
+> Cedric Buissart
+> Purkynova 99
+> Brno 612 45
+>
+
+
+
 -- 
-Jeremy Stanley
+Cedric Buissart,
+Product Security
+
+Purkynova 99
+Brno 612 45
+
