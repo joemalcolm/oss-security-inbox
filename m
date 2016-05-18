@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3273" "Thursday" "16" "March" "2017" "17:34:21" "+0100" "Peter Bex" "peter@more-magic.net" "<20170316163421.GI759@scully.more-magic.net>" "105" "Re: [oss-security] CVE request for unchecked size argument in malloc() in CHICKEN Scheme" nil nil nil "3" "2017031616:34:21" "[oss-security] CVE request for unchecked size argument in malloc() in CHICKEN Scheme" (number mark "U       peter@more-m Mar 16  105/3273  " thread-indent "\"Re: [oss-security] CVE request for unchecked size argument in malloc() in CHICKEN Scheme\"\n") "<877f3p8lh2.fsf@dell.be.48ers.dk>" ("<20170315224749.GG759@scully.more-magic.net>" "<1489656677.3059.3.camel@redhat.com>" "<20170316100821.GH759@scully.more-magic.net>" "<877f3p8lh2.fsf@dell.be.48ers.dk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2986" "Wednesday" "18" "May" "2016" "08:18:11" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1605180816100.8323@tvnag.unkk.fr>" "95" "[oss-security] [SECURITY ADVISORY] curl: TLS certificate check bypass with mbedTLS/PolarSSL" nil nil nil "5" "2016051806:18:11" "[oss-security] [SECURITY ADVISORY] curl: TLS certificate check bypass with mbedTLS/PolarSSL" (number mark "U       daniel@haxx. May 18   95/2986  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: TLS certificate check bypass with mbedTLS/PolarSSL\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32613 invoked by uid 550); 16 Mar 2017 16:34:34 -0000
+Received: (qmail 17931 invoked by uid 550); 18 May 2016 06:18:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,133 +12,115 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32589 invoked from network); 16 Mar 2017 16:34:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=more-magic.net; s=dkim-2016-12;
-	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=4/lTAdOrXwLB3xjGaJ4bvpuq4+VwgssIeVj9VvtrnkU=;
-	b=CW4wQdpSSNSgmBgH+1c3kpO82jwTlhQfTPbHMnTVCVVzbwQ4vNVhSlAGMES1o2MKdSsarbt2dkeiAVXjZNRRHYD8lTwhqBAiAR7fwgXKPj5+afem7koYYrp+TlMwo0xoAvnfAQ92UG7b4vy7Y+lnZa+oJPMKEcEyts6wFRenrww=;
-Date: Thu, 16 Mar 2017 17:34:21 +0100
-From: Peter Bex <peter@more-magic.net>
-To: oss-security@lists.openwall.com
-Cc: Adam Maris <amaris@redhat.com>
-Message-ID: <20170316163421.GI759@scully.more-magic.net>
-Mail-Followup-To: oss-security@lists.openwall.com,
-	Adam Maris <amaris@redhat.com>
-References: <20170315224749.GG759@scully.more-magic.net>
- <1489656677.3059.3.camel@redhat.com>
- <20170316100821.GH759@scully.more-magic.net>
- <877f3p8lh2.fsf@dell.be.48ers.dk>
+Received: (qmail 17865 invoked from network); 18 May 2016 06:18:25 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+Date: Wed, 18 May 2016 08:18:11 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@giant.haxx.se
+To: Curl Announce -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
+Message-ID: <alpine.DEB.2.20.1605180816100.8323@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="enGqbSaueFq5omEL"
-Content-Disposition: inline
-In-Reply-To: <877f3p8lh2.fsf@dell.be.48ers.dk>
-X-PGP-Key: http://www.more-magic.net/peter-bex.asc
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Subject: Re: [oss-security] CVE request for unchecked size argument in
- malloc() in CHICKEN Scheme
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: TLS certificate check bypass with
+ mbedTLS/PolarSSL
 
---enGqbSaueFq5omEL
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+TLS certificate check bypass with mbedTLS/PolarSSL
+==================================================
 
-On Thu, Mar 16, 2017 at 01:17:13PM +0100, Peter Korsgaard wrote:
-> >>>>> "Peter" =3D=3D Peter Bex <peter@more-magic.net> writes:
->=20
->  > On Thu, Mar 16, 2017 at 10:31:17AM +0100, Adam Maris wrote:
->  >> Hi Peter,
->  >>=20
->  >> oss-security mailing is no longer a place for requesting CVEs. Please,
->  >> request CVE from MITRE via=A0https://cveform.mitre.org/=A0or also pos=
-sibly
->  >> from DWF project via=A0http://iwantacve.org/
->=20
->  > Oh yeah, I forgot about that.  I've filled out the form, and I hope I'=
-ve
->  > done this correctly.
->=20
-> Please don't forget to forward the form details to this list once a CVE
-> has been assigned. Thanks.
+Project cURL Security Advisory, May 18th 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20160518.html)
 
-This was assigned CVE-2017-6949.  The form details were in my original
-mail, but I'll include them here again, though I must say fiddling around
-with e-mail to forward it is much much more inconvenient than how it used
-to work:
+VULNERABILITY
+-------------
 
-> [Suggested description]
-> An issue was discovered in CHICKEN Scheme through 4.12.0.
-> When using a nonstandard CHICKEN-specific extension to allocate an
-> SRFI-4 vector in unmanaged memory, the vector size would be used in
-> unsanitised form as an argument to malloc(). With an unexpected size,
-> the impact may have been a segfault or buffer overflow.
->=20
-> ------------------------------------------
->=20
-> [Vulnerability Type]
-> Buffer Overflow
->=20
-> ------------------------------------------
->=20
-> [Affected Product Code Base]
-> Affected: All versions up to and including 4.12.0.  No fixed versions rel=
-eased yet
->=20
-> ------------------------------------------
->=20
-> [Affected Component]
-> All SRFI-4 vector constructor functions in CHICKEN Scheme
->=20
-> ------------------------------------------
->=20
-> [Attack Type]
-> Context-dependent
->=20
-> ------------------------------------------
->=20
-> [Impact Code execution]
-> true
->=20
-> ------------------------------------------
->=20
-> [Impact Denial of Service]
-> true
->=20
-> ------------------------------------------
->=20
-> [Attack Vectors]
-> When using a nonstandard CHICKEN-specific extension to allocate a
-> SRFI-4 vector in unmanaged memory, the vector size would be used in
-> unsanitised form as argument to malloc().
->=20
-> ------------------------------------------
->=20
-> [Reference]
-> http://lists.gnu.org/archive/html/chicken-announce/2017-03/msg00000.html
->=20
-> ------------------------------------------
->=20
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
->=20
-> ------------------------------------------
->=20
-> [Discoverer]
-> Lemonboy
+libcurl did not check the server certificate of TLS connections done to a host
+specified as an IP address, or when explicitly asked to use SSLv3.
 
---enGqbSaueFq5omEL
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+This flaw only exists when libcurl is built to use mbedTLS or PolarSSL as TLS
+backend.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+The documentation for mbedTLS and PolarSSL (wrongly) says that the API
+function *ssl_set_hostname() is used only for setting the name for the TLS
+extension SNI. The set string is however even more importantly used by the
+libraries to verify the server certificate, and if no "hostname" is set it
+will just skip the check and successfully continue with the handshake.
 
-iQEcBAEBAgAGBQJYyr6NAAoJEBEdufnLRYmwBW4H/3j/hV2xR+8g6lmKF9iyixOV
-KuJVi89in7J90oM4KxZMRf5sPnPuvtUhno06wylnF6aqZbN4cVw46NzITkaBrlKl
-VUGxIsYr3mRcOlG+6WDVo/IdK8CQP8e9tSZ9mQBlivKiPJjZSyz4OWUeiHt09kIp
-BnWDMrO/2QlunSzTMjYipI6mJl4nw/Rv3OaTvRMSgaoTWk0Uway8TmWgbm+FmPo2
-j+94tJGPgotN9qDhAD9cX4pQz0BB3hJKUUwupEA54e8tg3k6YMGX/KHlrPkVfKKH
-bGLeWsr7ha/5ttmsOvkFVBdFtES24nqI6e1GRCAuKWOwom9CxONjV+fLzlA6j1g=
-=gRq8
------END PGP SIGNATURE-----
+libcurl would wrongly avoid using the function when the specified host name
+was given as an IP address or when SSLv3 is used, as SNI isn't supposed to be
+used then. This then leads to that all uses of TLS oriented protocols (HTTPS,
+FTPS, IMAPS, POPS3, SMTPS, etc) will allow connections to servers with
+unverified server certificates as long as they're specified as IP addresses or
+using SSLv3.
 
---enGqbSaueFq5omEL--
+By tricking a libcurl-using client to use a URL with a host specified as IP
+address only, an application could be made to connect to an impostor server or
+Man In The Middle host without noticing.
+
+Note: PolarSSL is the old name and releases of the library that nowadays is
+known and released under the name mbedTLS.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This flaw also affects the curl command line tool.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-3739 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+This flaw is relevant for all versions of curl and libcurl that support
+PolarSSL or mbedTLS.
+
+- Affected versions: libcurl 7.21.0 to and including 7.48.0
+- Not affected versions: libcurl < 7.21.0 and libcurl >= 7.49.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+In version 7.49.0, libcurl properly sets the "hostname" even when it is just
+an IP address and even when using SSLv3 that doesn't have SNI.
+
+A [patch for CVE-2016-3739](https://curl.haxx.se/CVE-2016-3739.patch) is available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.49.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Build your libcurl with another TLS backend to work around this flaw.
+
+TIME LINE
+---------
+
+It was first reported to the curl project on April 21st 2016. We contacted
+distros@openwall on May 8th.
+
+libcurl 7.49.0 was released on May 18 2016, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported by Moti Avrahami. Patched by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
