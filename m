@@ -1,4 +1,9 @@
-Received: (qmail 32389 invoked by uid 550); 21 Apr 2024 12:31:00 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1390" "Wednesday" "18" "May" "2016" "10:28:37" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160518082837.GA13028@lorien.valinor.li>" "32" "[oss-security] CVE Request: Linux: information leak in Rock Ridge Extensions to iso9660 -- fs/isofs/rock.c" nil nil nil "5" "2016051808:28:37" "[oss-security] CVE Request: Linux: information leak in Rock Ridge Extensions to iso9660 -- fs/isofs/rock.c" (number mark "U       carnil@debia May 18   32/1390  " thread-indent "\"[oss-security] CVE Request: Linux: information leak in Rock Ridge Extensions to iso9660 -- fs/isofs/rock.c\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13852 invoked by uid 550); 18 May 2016 08:28:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,96 +12,73 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32365 invoked from network); 21 Apr 2024 12:31:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=M60aLlnsCl9DpJScufvTgDSBWEUnyh+6BHVr132hxz4=; b=sLraIaukQ61Us6cxnNJe8+f176
-	+idkVuZFIsvWjV8Qojv4h7BT2EXDlsndrjlFqGpdS703VU2k3OLNH65eLWXtblTg86DLbfAybdoeV
-	nMV32A+URwQi85TGmN/DhgnNvIa6ET1LqSoeThcSawkt68rYAoV/s7WKyNFwkGL5L0m/sZp78AjpG
-	QiCvOCubbxPclM3ItpkLBrzkdvpsxS5ob2SgWf+jtkqG2lQGJXMYfxMa6R8eHry3zoypQGuqgtcLC
-	X0QvXtRuE6KEW/EVo3YLRSU0U+iOErKDOK2NoNSMbdhRJKqRpKhzdXM9svuOemz8RSscY9fqNJpGu
-	am8J51Kw==;
-Date: Sun, 21 Apr 2024 13:30:49 +0100
-From: Simon McVittie <smcv@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ZiUG-cMNJgFl-zCO@remnant.pseudorandom.co.uk>
-References: <20240414190855.GA12716@openwall.com>
- <354b913bc1c154c1e3a2fc34ed8ed6b0d4641f11.camel@canonical.com>
- <20240419154435.GA7046@openwall.com>
- <ZiKo7shztRpgvAIC@remnant.pseudorandom.co.uk>
- <20240420181211.GA12463@openwall.com>
+Received: (qmail 13831 invoked from network); 18 May 2016 08:28:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=l0830bx+RLEk/KrOtDmKuIl/bYxbZyl4ol5ZKR1oBr8=;
+        b=csaOyN0hkp4/KE/8uxSW9y/CmBiDOm8guPdp1kTm+q+DjEGldV85pZojOMmB2iAZUN
+         yk7ecgqjSa53pxDwclBXQIh23WZ+ITOG8RK1Ag+ZTcqFZ5/c01FXVUHihwo2SMa9pYXm
+         GNAjDOLbfgn5byCx7yOf552QA4DHPVCxkalFPSUBVt+h4jEwOD3W4CbIgFMxbkNFRnow
+         Jp88uiNsN+HclAbja0ERgXzjGN/yldJEgz6He1/tLJFdEL+Vr9x3SRKuTIhgt6RhVQVz
+         6ndPhAwy4VHmiiKvaWZ4xRm+3RMoavFwvu2f0ivslWW/2DxR0biU5BrFDnlo3xabdtYf
+         SqyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=l0830bx+RLEk/KrOtDmKuIl/bYxbZyl4ol5ZKR1oBr8=;
+        b=H5ScyBHgKblfPuXMp1hcdyGQC7odCL+3UbkXe44PmOf/8BA8VjU+J/uN3YBa/4utad
+         i/ws4x25cvPLtcuRhT9LUTC35K8VwhNJ1SxbzsCqQbSCKwLWN3hj40J00DRWCDhvG9lv
+         JpZ+XsscIXTVut1bwfRTl5krWx1LRh5LpKvn/7cZC4S4FEdBQ6hyefcvO3ZDU5iS1Voz
+         iyIp9OYXM7pmSXEc5yoyWZb3FRp2eiOh3okX7DKo0VZ4Oz6pQkHivS/gJn4sxMOavamb
+         yMOZIPMOTdvLQoRH0wdKjREzfhN9esaProBaOnP65Noxt9bQo5+Zd2bI/Ap5PQq+r/Sk
+         K86w==
+X-Gm-Message-State: AOPr4FULJisd2ZtJ31oFgRgusUEtkki3RyprLCvicSjFOwAzS+2JWIobf9v987mtBkkN+A==
+X-Received: by 10.28.35.201 with SMTP id j192mr26877403wmj.18.1463560119602;
+        Wed, 18 May 2016 01:28:39 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Wed, 18 May 2016 10:28:37 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Message-ID: <20160518082837.GA13028@lorien.valinor.li>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240420181211.GA12463@openwall.com>
-X-Debian-User: smcv
-Subject: Re: [oss-security] Linux: Disabling network namespaces
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: [oss-security] CVE Request: Linux: information leak in Rock Ridge Extensions to
+ iso9660 -- fs/isofs/rock.c
 
-On Sat, 20 Apr 2024 at 20:12:11 +0200, Solar Designer wrote:
-> So with my idea/proposal, someone using these tools on a
-> desktop system would need to set the max depth to 1.  That would leave
-> the kernel's full attack surface exposed on the host system, but not to
-> sandboxed programs because those would run with capabilities already
-> relinquished (per what you write above) and would not be able to regain
-> them by creating a nested namespace.
+Hi
 
-I believe that's all correct. If someone prototypes this, a way to verify
-it would be, minimally:
+The following commit in Linux v4.6 addresses an information leak
+caused by not properly handling NM entries containing NUL. Quoting the
+commit message:
 
-    $ ip addr ls
-    (should show all your IP addresses)
-    $ bwrap --dev-bind / / -- ip addr ls
-    (same output)
-    $ bwrap --dev-bind / / --unshare-net -- ip addr ls
-    (should show only lo with 127.0.0.1 and ::1)
+> Subject: get_rock_ridge_filename(): handle malformed NM entries
+> 
+> Payloads of NM entries are not supposed to contain NUL.  When we run
+> into such, only the part prior to the first NUL goes into the
+> concatenation (i.e. the directory entry name being encoded by a bunch
+> of NM entries).  We do stop when the amount collected so far + the
+> claimed amount in the current NM entry exceed 254.  So far, so good,
+> but what we return as the total length is the sum of *claimed*
+> sizes, not the actual amount collected.  And that can grow pretty
+> large - not unlimited, since you'd need to put CE entries in
+> between to be able to get more than the maximum that could be
+> contained in one isofs directory entry / continuation chunk and
+> we are stop once we'd encountered 32 CEs, but you can get about 8Kb
+> easily.  And that's what will be passed to readdir callback as the
+> name length.  8Kb __copy_to_user() from a buffer allocated by
+> __get_free_page()
+> 
+> Cc: stable@vger.kernel.org # 0.98pl6+ (yes, really)
+> Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 
-or for a "whole stack" version with Flatpak, install any random Flatpak
-app such as org.gnome.Recipes and do:
+Upstream commit: https://git.kernel.org/linus/99d825822eade8d827a1817357cbf3f889a552d6 (v4.6)
 
-    $ flatpak run --unshare=network org.gnome.Recipes
+Can you please assign a CVE for this issue?
 
-      # or to explore the sandbox environment interactively
-    $ flatpak run --command=bash --unshare=network org.gnome.Recipes
-
-For simplicity, the use of bwrap shown above is not a security boundary:
-it doesn't make any attempt to restrict access to the host filesystem
-like e.g. Flatpak does. bwrap command-lines that implement a meaningful
-security boundary, while still providing useful functionality, are much
-longer than that!
-
-> Sounds like a worthwhile feature?
-
-I'm not sure. As with most security designs, it depends on your security
-model.
-
-To protect a trusted user from their own sandboxed apps, it should be
-unnecessary/redundant for Flatpak users, because Flatpak already doesn't
-let apps inherit CAP_NET_ADMIN or create new user namespaces - but it
-could be useful for other sandboxed app frameworks, or as a second line
-of defence against Flatpak not providing the boundary that it aims to.
-
-To protect the OS and other users from a malicious or compromised
-user account using kernel vulnerabilities to elevate privileges, it's
-insufficient - if that's your security model then there isn't going to be
-any substitute for either trusting the kernel to make CAP_NET_ADMIN in a
-non-init user namespace be safe, or trusting a component like bwrap to
-impose restrictions that its caller is not allowed to bypass.
-
-Of course, any time we say things like "trusting a component to impose
-restrictions that its caller is not allowed to bypass", we get into
-the same territory as setuid/setgid/setcap, in terms of needing to
-prevent LD_PRELOAD, LD_LIBRARY_PATH and similar ways to influence the
-trusted component's behaviour from the outside - which is likely to be
-impossible if the kernel isn't helping to defang those aspects of the
-execution environment by flagging the process as AT_SECURE, either in
-core kernel code or in an LSM like AppArmor.
-
-I believe the kernel maintainers' position is that CAP_NET_ADMIN in
-a non-init userns is meant to be safe for untrusted code to have, so
-auditing and if necessary hardening the kernel's use of CAP_NET_ADMIN
-might well be better-received upstream than trying to limit which parts
-of user-space can obtain it.
-
-    smcv
+Regards,
+Salvatore
