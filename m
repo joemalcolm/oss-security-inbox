@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8262" "Wednesday" "12" "April" "2017" "09:12:58" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<513133.504052774-sendEmail@localhost>" "92" "[oss-security] libsamplerate: global buffer overflow in calc_output_single (src_sinc.c)" "^Date:" nil nil "4" "2017041209:12:58" "[oss-security] libsamplerate: global buffer overflow in calc_output_single (src_sinc.c)" (number mark "        ago@gentoo.o Apr 12   92/8262  " thread-indent "\"[oss-security] libsamplerate: global buffer overflow in calc_output_single (src_sinc.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1369" "Wednesday" "18" "May" "2016" "13:40:18" "+0200" "Cedric Buissart" "cbuissar@redhat.com" "<CAKG8Do6qnT4yPS8B=fTaoFf2x4k-cKy2ixDZLRA8aSxRkuFo2Q@mail.gmail.com>" "54" "Re: [oss-security] CVE-2016-3698 libndp: denial of service due to insufficient validation of source of NDP messages" nil nil nil "5" "2016051811:40:18" "[oss-security] CVE-2016-3698 libndp: denial of service due to insufficient validation of source of NDP messages" (number mark "U       cbuissar@red May 18   54/1369  " thread-indent "\"Re: [oss-security] CVE-2016-3698 libndp: denial of service due to insufficient validation of source of NDP messages\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5574 invoked by uid 550); 12 Apr 2017 09:13:18 -0000
+Received: (qmail 7832 invoked by uid 550); 18 May 2016 11:40:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,105 +11,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5556 invoked from network); 12 Apr 2017 09:13:17 -0000
-Message-ID: <513133.504052774-sendEmail@localhost>
-MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-994904.928215878"
-Date: Wed, 12 Apr 2017 09:12:58 +0000
-From: "Agostino Sarubbo" <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] libsamplerate: global buffer overflow in calc_output_single (src_sinc.c)
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 7810 invoked from network); 18 May 2016 11:40:30 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
+        bh=4wq2LaLo+UF76aoIJA3E6NBEJqOTHYoyO4ynsRA5+oQ=;
+        b=EHK6uz9zQBifrAyVjhek9ZexpDdQmhmG9Oi+tf0nsrJ0benyBud6/Yu+fQn7Iyf31S
+         9RpRUNvqIAlU2/mrgpHC/Xzrl9omj2CXx7wZvsbHktr3+n5D7mJ9J4nRhSYQqlF0xsxQ
+         j8BWxQHdvcTKt6YtSVVXJ3W+l4oVEjE5qcAygHgFbHhywGa1A9BpUc9Oc1b1e+Ubw1Y9
+         5js1JtQawH9tllFuy7M31gm8fjy8mWUkQLTMuTkLt2LD1JJutGS2VKYmRiwswx8w6aGH
+         5kzNwaJLmTrZcrYqJ7ozfTHeBCiuZnebQgP2SJuf0lyDo+NuCh4K2H3BGhhlcqFvOScG
+         bQxg==
+X-Gm-Message-State: AOPr4FVYAS7++RAAZ+iWgazosQ2bjwnb23AHCeNkyGtSYSj8Oak63nLOMXSOkCp8mMudtY1RrH+eP0w6uEPduBIZ
+MIME-Version: 1.0
+X-Received: by 10.98.20.197 with SMTP id 188mr10248487pfu.144.1463571618785;
+ Wed, 18 May 2016 04:40:18 -0700 (PDT)
+Date: Wed, 18 May 2016 13:40:18 +0200
+Message-ID: <CAKG8Do6qnT4yPS8B=fTaoFf2x4k-cKy2ixDZLRA8aSxRkuFo2Q@mail.gmail.com>
+From: Cedric Buissart <cbuissar@redhat.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=94eb2c0396fe71040c05331c527c
+Subject: Re: [oss-security] CVE-2016-3698 libndp: denial of service due to
+ insufficient validation of source of NDP messages
 
-------MIME delimiter for sendEmail-994904.928215878
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+--94eb2c0396fe71040c05331c527c
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Description:
-libsamplerate is a Sample Rate Converter for audio.
+Accidental miss-use of copy/paste : updated subject with the CVE number.
 
-This bug was initially discovered and silently fixed by the upstream author Erik de Castro Lopo (erikd). As usual I’m providing the stacktrace and the reproducer so that all release distros can test and 
-patch their own version of the package.
+On Tue, May 17, 2016 at 8:40 PM, Cedric Buissart <cbuissar@redhat.com>
+wrote:
 
-# sndfile-resample -to 24000 -c 1 $FILE out
-==13807==ERROR: AddressSanitizer: global-buffer-overflow on address 0x7f44bc709a3c at pc 0x7f44bc6b1d6b bp 0x7fffec8f5e20 sp 0x7fffec8f5e18                                                                       
-READ of size 4 at 0x7f44bc709a3c thread T0                                                                                                                                                                        
-    #0 0x7f44bc6b1d6a in calc_output_single /tmp/portage/media-libs/libsamplerate-0.1.8-r1/work/libsamplerate-0.1.8/src/src_sinc.c:296:48                                                                         
-    #1 0x7f44bc6b1d6a in sinc_mono_vari_process /tmp/portage/media-libs/libsamplerate-0.1.8-r1/work/libsamplerate-0.1.8/src/src_sinc.c:400                                                                        
-    #2 0x7f44bc6a3659 in src_process /tmp/portage/media-libs/libsamplerate-0.1.8-r1/work/libsamplerate-0.1.8/src/samplerate.c:174:11                                                                              
-    #3 0x51369a in sample_rate_convert /tmp/portage/media-libs/libsamplerate-0.1.8-r1/work/libsamplerate-0.1.8/examples/sndfile-resample.c:221:16                                                                 
-    #4 0x51369a in main /tmp/portage/media-libs/libsamplerate-0.1.8-r1/work/libsamplerate-0.1.8/examples/sndfile-resample.c:163                                                                                   
-    #5 0x7f44bb55278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                        
-    #6 0x419f88 in _init (/usr/bin/sndfile-resample+0x419f88)                                                                                                                                                     
-                                                                                                                                                                                                                  
-0x7f44bc709a3c is located 0 bytes to the right of global variable 'slow_mid_qual_coeffs' defined in '/tmp/portage/media-libs/libsamplerate-0.1.8-r1/work/libsamplerate-0.1.8/src/mid_qual_coeffs.h:37:3' 
-(0x7f44bc6f3ba0) of size 89756
-SUMMARY: AddressSanitizer: global-buffer-overflow /tmp/portage/media-libs/libsamplerate-0.1.8-r1/work/libsamplerate-0.1.8/src/src_sinc.c:296:48 in calc_output_single                                             
-Shadow bytes around the buggy address:                                                                                                                                                                            
-  0x0fe9178d92f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                 
-  0x0fe9178d9300: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                 
-  0x0fe9178d9310: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                 
-  0x0fe9178d9320: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                 
-  0x0fe9178d9330: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                 
-=>0x0fe9178d9340: 00 00 00 00 00 00 00[04]f9 f9 f9 f9 f9 f9 f9 f9                                                                                                                                                 
-  0x0fe9178d9350: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9                                                                                                                                                 
-  0x0fe9178d9360: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9                                                                                                                                                 
-  0x0fe9178d9370: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9                                                                                                                                                 
-  0x0fe9178d9380: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9                                                                                                                                                 
-  0x0fe9178d9390: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9                                                                                                                                                 
-Shadow byte legend (one shadow byte represents 8 application bytes):                                                                                                                                              
-  Addressable:           00                                                                                                                                                                                       
-  Partially addressable: 01 02 03 04 05 06 07                                                                                                                                                                     
-  Heap left redzone:       fa                                                                                                                                                                                     
-  Freed heap region:       fd                                                                                                                                                                                     
-  Stack left redzone:      f1                                                                                                                                                                                     
-  Stack mid redzone:       f2                                                                                                                                                                                     
-  Stack right redzone:     f3                                                                                                                                                                                     
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==13807==ABORTING
-Affected version:
-1.0.8
-
-Fixed version:
-1.0.9
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Erik de Castro Lopo and Agostino Sarubbo.
-
-CVE:
-CVE-2017-7697
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00262-libsamplerate-globaloverflow-calc_output_single
-
-Timeline:
-2017-04-11: bug discovered and reported to upstream
-2017-04-11: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/11/libsamplerate-global-buffer-overflow-in-calc_output_single-src_sinc-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+> Dear all,
+>
+> An improper input validation check, and improper origin check flaw during
+> the reception of NDP message was discovered in libndp. An attacker in a
+> non local network could use this flaw to advertise a node as a router, and
+> cause a denial of service attack, or act as a man in the middle.
+>
+> The patches enforce that hop limit must be 255, to ensure that the NDP
+> message
+> has not been routed.
+>
+> Patches can be found upsteam:
+>
+>  -  libndp: validate the IPv6 hop limit
+>
+> https://github.com/jpirko/libndp/commit/a4892df306e0532487f1634ba6d4c6d4b=
+b381c7f
+>
+>  -  libndb: reject redirect and router advertisements from non-link-local
+>
+> https://github.com/jpirko/libndp/commit/2af9a55b38b55abbf05fd116ec097d402=
+9115839
+>   https://people.freedesktop.org/~lkundrak/.libndp/
+>
+> Known affected packages : NetworkManager >=3D 1.0
+>
+> Thanks to Julien Bernard (Viag=C3=A9nie) for discovering the issue
+>
+> Kind regards,
+> --
+> Cedric Buissart
+> Purkynova 99
+> Brno 612 45
+>
 
 
-------MIME delimiter for sendEmail-994904.928215878--
 
+--=20
+Cedric Buissart,
+Product Security
+
+Purkynova 99
+Brno 612 45
+
+--94eb2c0396fe71040c05331c527c--
