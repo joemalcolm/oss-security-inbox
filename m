@@ -1,55 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/05/3
-Message-ID: <CACn5sdQKBq6cDXY_OAp6a+7dYWXtjE6=hSQps5g5aMxtiCTZHQ@mail.gmail.com>
-Date: Sat, 5 Nov 2016 10:04:30 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Null pointer derefence parsing xml file using libxml 2.9.4 (in recover mode)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/18/2
+Message-ID: <alpine.DEB.2.20.1605180816100.8323@tvnag.unkk.fr>
+Date: Wed, 18 May 2016 08:18:11 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: Curl Announce -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: TLS certificate check bypass with mbedTLS/PolarSSL
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+TLS certificate check bypass with mbedTLS/PolarSSL
+==================================================
 
-We found a null pointer dereference when parsing a xml file using recover
-mode. It was tested in libxml 2.9.4 (ArchLinux x86_64). To reproduce:
+Project cURL Security Advisory, May 18th 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20160518.html)
 
-$ xmllint --recover crash-libxml2-recover.xml
+VULNERABILITY
+-------------
 
-==27646==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000
-(pc 0x0000004fbd88 bp 0x7ffc3345dff0 sp 0x7ffc3345dfd0 T0)
-    #0 0x4fbd87 in xmlDumpElementContent
-/home/g/Work/Code/libxml2-2.9.4/valid.c:1181
-    #1 0x4fbcd5 in xmlDumpElementContent
-/home/g/Work/Code/libxml2-2.9.4/valid.c:1177
-    #2 0x4fe5ff in xmlDumpElementDecl
-/home/g/Work/Code/libxml2-2.9.4/valid.c:1706
-    #3 0x72e714 in xmlBufDumpElementDecl
-/home/g/Work/Code/libxml2-2.9.4/xmlsave.c:501
-    #4 0x73048f in xmlNodeDumpOutputInternal
-/home/g/Work/Code/libxml2-2.9.4/xmlsave.c:939
-    #5 0x72fc47 in xmlNodeListDumpOutput
-/home/g/Work/Code/libxml2-2.9.4/xmlsave.c:825
-    #6 0x72f6d5 in xmlDtdDumpOutput
-/home/g/Work/Code/libxml2-2.9.4/xmlsave.c:749
-    #7 0x73038f in xmlNodeDumpOutputInternal
-/home/g/Work/Code/libxml2-2.9.4/xmlsave.c:931
-    #8 0x732412 in xmlDocContentDumpOutput
-/home/g/Work/Code/libxml2-2.9.4/xmlsave.c:1234
-    #9 0x735883 in xmlSaveDoc /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:1936
-    #10 0x40ba0f in parseAndPrintFile
-/home/g/Work/Code/libxml2-2.9.4/xmllint.c:2712
-    #11 0x411eb6 in main /home/g/Work/Code/libxml2-2.9.4/xmllint.c:3767
-    #12 0x7f23dcd4c290 in __libc_start_main (/usr/lib/libc.so.6+0x20290)
-    #13 0x4032b9 in _start
-(/home/g/Work/Code/libxml2-2.9.4/xmllint+0x4032b9)
+libcurl did not check the server certificate of TLS connections done to a host
+specified as an IP address, or when explicitly asked to use SSLv3.
 
+This flaw only exists when libcurl is built to use mbedTLS or PolarSSL as TLS
+backend.
 
-A reproducer is attached. It is interesting to note that the developers of
-libxml2 strongly recommend not to use recover mode to parse untrusted
-inputs. Please assign a CVE if suitable.
+The documentation for mbedTLS and PolarSSL (wrongly) says that the API
+function *ssl_set_hostname() is used only for setting the name for the TLS
+extension SNI. The set string is however even more importantly used by the
+libraries to verify the server certificate, and if no "hostname" is set it
+will just skip the check and successfully continue with the handshake.
 
-Regards,
-Gustavo.
+libcurl would wrongly avoid using the function when the specified host name
+was given as an IP address or when SSLv3 is used, as SNI isn't supposed to be
+used then. This then leads to that all uses of TLS oriented protocols (HTTPS,
+FTPS, IMAPS, POPS3, SMTPS, etc) will allow connections to servers with
+unverified server certificates as long as they're specified as IP addresses or
+using SSLv3.
 
-Content of type "text/html" skipped
+By tricking a libcurl-using client to use a URL with a host specified as IP
+address only, an application could be made to connect to an impostor server or
+Man In The Middle host without noticing.
 
-View attachment "crash-libxml2-recover.xml" of type "text/xml" (803 bytes)
+Note: PolarSSL is the old name and releases of the library that nowadays is
+known and released under the name mbedTLS.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This flaw also affects the curl command line tool.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-3739 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+This flaw is relevant for all versions of curl and libcurl that support
+PolarSSL or mbedTLS.
+
+- Affected versions: libcurl 7.21.0 to and including 7.48.0
+- Not affected versions: libcurl < 7.21.0 and libcurl >= 7.49.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+In version 7.49.0, libcurl properly sets the "hostname" even when it is just
+an IP address and even when using SSLv3 that doesn't have SNI.
+
+A [patch for CVE-2016-3739](https://curl.haxx.se/CVE-2016-3739.patch) is available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.49.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Build your libcurl with another TLS backend to work around this flaw.
+
+TIME LINE
+---------
+
+It was first reported to the curl project on April 21st 2016. We contacted
+distros@...nwall on May 8th.
+
+libcurl 7.49.0 was released on May 18 2016, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported by Moti Avrahami. Patched by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
