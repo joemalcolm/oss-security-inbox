@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2674" "Saturday" "21" "March" "2015" "20:30:09" "-0700" "Russ Allbery" "eagle@eyrie.org" "<87fv8xd7zy.fsf@hope.eyrie.org>" "47" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032203:30:09" "[oss-security] CVE for Kali Linux" (number mark "        eagle@eyrie. Mar 21   47/2674  " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<550E33F1.4020007@gmail.com>" ("<550E21FA.6090704@redhat.com>" "<CAHZU0yRzjyO78Nan5jgf38Mqt3hPQDDhcsirdVmBFPmRZ=6k9g@mail.gmail.com>" "<550E289C.1060602@redhat.com>" "<550E33F1.4020007@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1016" "Thursday" "19" "May" "2016" "12:07:16" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1605191154150.15930@freddy.simplesystems.org>" "23" "Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714" "^Date:" nil nil "5" "2016051917:07:16" "[oss-security] ImageMagick Is On Fire -- CVE-2016-3714" (number mark "        bfriesen@sim May 19   23/1016  " thread-indent "\"Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714\"\n") "<57292879.7050303@gmail.com>" ("<CABi+pA7xDJhirUFbrVZQkwMnFj--zbNJA8_Aoq-SiJx0QNcsoA@mail.gmail.com>" "<20160503181505.GA8195@openwall.com>" "<57292879.7050303@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28233 invoked by uid 550); 22 Mar 2015 03:30:23 -0000
+Received: (qmail 26297 invoked by uid 550); 19 May 2016 17:07:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28212 invoked from network); 22 Mar 2015 03:30:22 -0000
-In-Reply-To: <550E33F1.4020007@gmail.com> (Daniel Micay's message of "Sat, 21
-	Mar 2015 23:16:01 -0400")
-Organization: The Eyrie
-References: <550E21FA.6090704@redhat.com>
-	<CAHZU0yRzjyO78Nan5jgf38Mqt3hPQDDhcsirdVmBFPmRZ=6k9g@mail.gmail.com>
-	<550E289C.1060602@redhat.com> <550E33F1.4020007@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-Message-ID: <87fv8xd7zy.fsf@hope.eyrie.org>
+Received: (qmail 26270 invoked from network); 19 May 2016 17:07:29 -0000
+X-X-Sender: bfriesen@freddy.simplesystems.org
+In-Reply-To: <57292879.7050303@gmail.com>
+Message-ID: <alpine.GSO.2.20.1605191154150.15930@freddy.simplesystems.org>
+References: <CABi+pA7xDJhirUFbrVZQkwMnFj--zbNJA8_Aoq-SiJx0QNcsoA@mail.gmail.com> <20160503181505.GA8195@openwall.com> <57292879.7050303@gmail.com>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-Date: Sat, 21 Mar 2015 20:30:09 -0700
-From: Russ Allbery <eagle@eyrie.org>
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Thu, 19 May 2016 12:07:17 -0500 (CDT)
+Date: Thu, 19 May 2016 12:07:16 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE for Kali Linux
+Subject: Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714
 To: oss-security@lists.openwall.com
 
-Daniel Micay <danielmicay@gmail.com> writes:
+I find it very disturbing that there seems to be very little response 
+from popular OS distributions to this issue.  Most do not appear to 
+have issued any package updates to close the shell exploit.  Perhaps
+the opinion is that major new versions will be introduced as part of 
+major distribution releases and it is ok for users to exposed to 
+problems for two or three years.
 
-> It would be much better to provide the download via HTTPS from a domain
-> that's HSTS preloaded and ideally has some level of key pinning. We are
-> all well aware that few users are going to go through a manual process
-> on the command-line to verify the download, especially if they're on
-> Windows as they won't have the commands that are being used.
+As an example Ubuntu 14.04.4 LTS (which is supposed to be getting 
+security updates) has not provided ImageMagick or GraphicsMagick 
+package updates in 3 years.
 
-Unless you do certificate pinning, I don't see how this adds much
-meaningful security.  Commercial CAs at the level of browser verification
-of server certificates are a bad joke.  You should assume that a
-moderately sophisticated attacker can get a valid brower-acceptable
-certificate for any web site they choose, particularly given the number of
-opportunities attackers have to insert new root CAs into the user's
-browser store.  (Sometimes even preinstalled on the factory-shipped
-computer.)
+Even NebBSD pkgsrc does not appear to have created a new version to 
+address the "ImageTragick" issues.
 
-I think the approach Debian takes here has some real merit, although it
-would still be a good idea to offer https downloads just for privacy
-reasons (it's hard to do so just because of the way the mirror network and
-the commercial CA world work).  Because the downloads are over HTTP,
-everyone goes "wait, what?" and looks for the *actual* security, which,
-provided you can get a good bootstrap of the initial public PGP keys, is
-quite a bit better than just TLS verification of the server.  As opposed
-to seeing TLS and assuming that adds meaningful verification of the
-server, which is dubious.
+What is the point of security notices and advisories if there is no 
+response from the community to provide updates to protect the majority 
+of their users (who are using 'stable' releases) from the problems?
 
-And that approach has the significant advantage that, because it uses
-proper public key cryptography, anyone can mirror the packages and you
-don't have to care where you got the packages from or establishing a full
-trust chain for them.  You only have to do that for the published signing
-key, and then verify the signatures, which apt does for you.  This is a
-pretty huge advantage, since it means that large organizations can just
-mirror the repository with rsync, and any apt client can be pointed to the
-mirror without needing to configure any new keys and while getting the
-same level of security validation.
-
-The problem, of course, is how to do the bootstrap, and that's where the
-original post came in.  The ISO images presumably (like Debian's) include
-the pre-installed repository signing keys, so known-good ISO images are a
-way to bootstrap the security of subsequent downloads.  But this requires
-actually verifying the ISO signatures in some meaningful way, which is
-hard for the average user to do, since there isn't any pre-existing trust
-relationship that one can easily leverage.
-
+Bob
 -- 
-Russ Allbery (eagle@eyrie.org)              <http://www.eyrie.org/~eagle/>
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
