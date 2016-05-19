@@ -1,38 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/12
-Message-Id: <F5095245-3270-42FC-9FCC-91C2D121E6DC@gmail.com>
-Date: Thu, 27 Oct 2016 08:24:24 -0500
-From: Brandon Perry <bperry.volatile@...il.com>
-To: Salvatore Bonaccorso <carnil@...ian.org>
-Cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: Re: Handful of libass issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/19/5
+Message-ID: <alpine.GSO.2.20.1605191154150.15930@freddy.simplesystems.org>
+Date: Thu, 19 May 2016 12:07:16 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: oss-security@...ts.openwall.com
+Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
 Content-Type: text/plain; charset=utf-8
 
+I find it very disturbing that there seems to be very little response 
+from popular OS distributions to this issue.  Most do not appear to 
+have issued any package updates to close the shell exploit.  Perhaps
+the opinion is that major new versions will be introduced as part of 
+major distribution releases and it is ok for users to exposed to 
+problems for two or three years.
 
-> On Oct 27, 2016, at 3:39 AM, Salvatore Bonaccorso <carnil@...ian.org> wrote:
-> 
-> Hi,
-> 
-> On Tue, Oct 04, 2016 at 10:23:22PM -0400, cve-assign@...re.org wrote:
->>> The third is a huge memory allocation leading to a crash that wasn't
->>> fixed because a good solution is unavailable at the moment.
->> 
->> Use CVE-2016-7971.
-> 
-> It looks from the discussion in
-> https://github.com/libass/libass/pull/240 that this issue is disputed
-> to be actually in libass.
-> 
+As an example Ubuntu 14.04.4 LTS (which is supposed to be getting 
+security updates) has not provided ImageMagick or GraphicsMagick 
+package updates in 3 years.
 
-For context, while the input caused a crash with AFL (not fuzzing with ASAN) and it crashes with ASAN, I was unable to reproduce the crash with libass externally. I was only able to take up a hug amount of memory and take a long time to finish parsing the input.
+Even NebBSD pkgsrc does not appear to have created a new version to 
+address the "ImageTragick" issues.
 
-I asked if they dev wanted to reject the CVE but got no strong response either way, so I decided to not pursue it.
+What is the point of security notices and advisories if there is no 
+response from the community to provide updates to protect the majority 
+of their users (who are using 'stable' releases) from the problems?
 
-> Should the CVE assignment be revisited, possibly rejected, according
-> the upstream discussion?
-> 
-> Regards,
-> Salvatore
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
