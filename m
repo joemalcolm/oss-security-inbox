@@ -1,170 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/02/8
-Message-ID: <CANO=Ty1MwPO8yXAiOyvgrynYrf1=on6wNd5sE6AzPYffyD=-dQ@mail.gmail.com>
-Date: Fri, 2 Sep 2016 11:24:13 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/19/9
+Message-ID: <20160519190037.GA6411@perpetual.pseudorandom.co.uk>
+Date: Thu, 19 May 2016 20:00:37 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 1, 2016 at 9:30 PM, Diogo Mónica <diogo.monica@...ker.com>
-wrote:
+On Thu, 19 May 2016 at 12:25:09 -0600, Kurt Seifried wrote:
+> Without making a commercial pitch for the company I work ... I suspect one
+> aspect of other vendors not fixing this is that there is a very
+> simple/effective/verifiable workaround to prevent exploitation of this
 
-> If you read the report, you'll see that no claims are made about shutting
-> down the swarm. The reporter simply claims that no new nodes can join the
-> swarm:
->
-> "it results in a machine could not join the swarm cluster after another
-> node’s repeatedly joining and quitting the swarm"
+Having looked into it a bit for Debian, there are several factors:
 
+* mitigations exist, like you said
 
-> As we describe in our documentation, possession of the token gives the
-> permission to join new workers. Joining new workers effectively means
-> reserving some resources for your worker. If the system runs out of
-> resources, I believe it is expected that no new workers should be able to
-> join.
->
+* many of the upstream fixes in ImageMagick are not clearly separated
+  from random other changes (I found one in a commit labelled
+  "Update to the latest autoconf / automake"!)
 
-DoS is often a gray area. Obviously if I send 10 gigabits of request
-traffic and swarm gets slow/non responsive the CVE response would be "Well
-yeah... that's probably what happens if you saturate the network with
-requests. No CVE for you" but if a single node behaves in an odd way and
-prevents the whole system from working in an expected manner, that may be a
-problem that is worth a CVE, especially if it can be triggered by an
-attacker/less trusted user (classic trust boundary violation to quote
-@sushidude).
+* many of the upstream fixes in ImageMagick (and GraphicsMagick)
+  are really just mitigations too, and they remove features that someone
+  could conceivably have been using, which rather goes against the idea
+  of a stable release with a fixed feature-set
+  (yes, I realise some of those features cannot be done securely)
 
+* there are a large number of other issues found via fuzzing, in coders
+  for miscellaneous formats that you'll probably never see "in the wild",
+  which could conceivably also be security vulnerabilities but probably
+  aren't feasible to backport to old releases
 
->
-> Again, this is simply not a vulnerability of either Docker swarm or Docker
-> swarmkit, and I kindly request that this CVE is rescinded.
->
+Bob, if you would like distributions to pick up GraphicsMagick security
+fixes in a timely way, it would probably be really useful to do an
+upstream release - distributions are typically a lot more confident about
+backporting large changes to their stable branches without regressions
+if they've been able to get some testing on the same changes in their
+unstable branches first.
 
-Regardless of whether this is CVE worthy is there any plan to add rate
-limiting or other protective measures to prevent a single badly
-behaved/malicious node from making the swarm unable to operate normally? I
-don't see any issues in https://github.com/docker/swarm/issues for this.
-Thanks!
-
-
->
->
-> On Thu, Sep 1, 2016 at 7:53 PM, Kurt Seifried <kseifried@...hat.com>
-> wrote:
->
-> > On Thu, Sep 1, 2016 at 8:48 PM, Diogo Monica <diogo.monica@...ker.com>
-> > wrote:
-> >
-> > > Can you please describe how this vulnerability makes a worker node be
-> > able
-> > > to administer the swarm?
-> > >
-> >
-> > It allows a worker node to disable and effectively shut down the swarm, I
-> > assume shutting down the swan is an administrative function, if not
-> please
-> > let me know where the documentation for workers covers this (allowing a
-> > worker to shutdown the swarm). Thanks!
-> >
-> >
-> > >
-> > >
-> > >
-> > >
-> > >
-> > >
-> > > On Thu, Sep 1, 2016 at 7:12 PM -0700, "Kurt Seifried" <
-> > > kseifried@...hat.com> wrote:
-> > >
-> > >
-> > >
-> > >
-> > >
-> > >
-> > >
-> > >
-> > >
-> > >
-> > > On Thu, Sep 1, 2016 at 5:17 PM, Diogo Mónica
-> > > wrote:
-> > >
-> > > > A few weeks ago (Aug 4, 2016), a CVE (CVE-2016-6595) describing a DoS
-> > on
-> > > > docker swarm got issued. We believe this not a real issue, and would
-> > like
-> > > > to have the CVE rescinded.
-> > > >
-> > > > The person reporting this "vulnerability" is exhausting the resources
-> > of
-> > > a
-> > > > remote manager by doing hundreds of join/leave operations without
-> > > removing
-> > > > the state that is left by old nodes. At some point the manager
-> > obviously
-> > > > stops being able to accept new nodes, since it runs out of memory.
-> > > >
-> > > > Given that both for Docker swarm and for Docker Swarmkit nodes are
-> > > > *required* to provide a secret token (it's actually the only mode of
-> > > > operation), this means that no adversary can simply join nodes and
-> > > exhaust
-> > > > manager resources.
-> > > >
-> > > > We can't do anything about a manager running out of memory and not
-> > being
-> > > > able to add new legitimate nodes to the system. This is merely a
-> > resource
-> > > > provisioning issue, and definitely not a CVE worthy vulnerability.
-> > > >
-> > >
-> > > I checked the documentation and it looks like a worker node is only
-> > > supposed to work and is not supposed to be able to administer the
-> swarm.
-> > As
-> > > such this is a trust boundary violation, and needs a CVE.
-> > >
-> > >
-> > >
-> > > > Thank you,
-> > > > --
-> > > > Diogo Mónica
-> > > >
-> > >
-> > >
-> > >
-> > > --
-> > >
-> > > --
-> > > Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> > > PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> > > Red Hat Product Security contact: secalert@...hat.com
-> > >
-> > >
-> > >
-> > >
-> > >
-> > >
-> >
-> >
-> > --
-> >
-> > --
-> > Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> > PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> > Red Hat Product Security contact: secalert@...hat.com
-> >
->
->
->
-> --
-> Diogo Mónica
->
-
-
-
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+    S
