@@ -1,24 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/4
-Message-Id: <7dc04e47-533c-46cb-b9e0-eee3367e6f81@googlegroups.com>
-Date: Tue, 1 Mar 2016 09:19:47 -0800 (PST)
-From: Tim Graham <timograham@...il.com>
-To: django-announce <django-announce@...glegroups.com>
-Cc: django-developers@...glegroups.com, django-users@...glegroups.com,  oss-security@...ts.openwall.com
-Subject: [ANNOUNCE] Django security releases issued: 1.9.3 and 1.8.10
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/19/2
+Message-ID: <573D9824.9040607@cleal.org>
+Date: Thu, 19 May 2016 11:40:36 +0100
+From: Dominic Cleal <dominic@...al.org>
+To: oss-security@...ts.openwall.com
+Cc: foreman-security@...glegroups.com
+Subject: CVE-2016-3728: remote code execution in Foreman smart proxy TFTP API
 Content-Type: text/plain; charset=utf-8
 
-Today the Django team issued 1.9.3 and 1.8.10 as part of our security 
-process. This releases address two security issues, and we encourage all 
-users to upgrade as soon as possible.
+CVE-2016-3728: remote code execution in Foreman smart proxy TFTP API
 
-Details are available on the Django project weblog:
+The Foreman smart proxy TFTP API is vulnerable to arbitrary remote code
+execution, as it passes untrusted user input (the PXE template type) to
+the eval() function causing it to be executed.
 
-https://www.djangoproject.com/weblog/2016/mar/01/security-releases/
+Thanks to Lukas Zapletal for reporting the issue to foreman-security.
 
-As a reminder, we ask that potential security issues be reported via 
-private email to security@...ngoproject.com and not via Django's Trac 
-instance or the django-developers list. Please see 
-https://www.djangoproject.com/security for further information.
+Mitigation: ensure trusted_hosts is set in
+/etc/foreman-proxy/settings.yml, HTTPS is in use and
+/etc/foreman-proxy/settings.d/tftp.yml is configured for https only (if
+enabled).
 
-Content of type "text/html" skipped
+Affects Foreman 0.2 and higher
+Fix released in Foreman 1.11.2, and due for 1.10.4
+
+Patch:
+https://github.com/theforeman/smart-proxy/commit/eef532aa668d656b9d61d9c6edf7c2505f3f43c7
+
+More information:
+http://theforeman.org/security.html#2016-3728
+http://projects.theforeman.org/issues/14931
+http://theforeman.org
+
+-- 
+Dominic Cleal
+dominic@...al.org
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
