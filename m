@@ -1,45 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/10/8
-Message-ID: <52abc457-86a6-6349-aeca-0b0d591c3b3d@suse.com>
-Date: Tue, 10 May 2016 20:08:05 +0200
-From: Andreas Stieger <astieger@...e.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: CVE request: libksba out-of-bouds read remote DOS issue fixed in 1.3.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/19/7
+Message-ID: <alpine.GSO.2.20.1605191228070.15930@freddy.simplesystems.org>
+Date: Thu, 19 May 2016 12:42:24 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: oss-security@...ts.openwall.com
+Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
 Content-Type: text/plain; charset=utf-8
 
-libksba 1.3.4 was released with the following in NEWS:
+On Thu, 19 May 2016, Jeremy Stanley wrote:
+>> As an example Ubuntu 14.04.4 LTS (which is supposed to be getting
+>> security updates) has not provided ImageMagick or GraphicsMagick
+>> package updates in 3 years.
+> [...]
+>
+> Seems to be in progress? https://launchpad.net/bugs/1578398
 
-> * Fixed two OOB read access bugs which could be used to force a DoS.
+That is good to hear.
 
-The first is http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=a7eed17a0b2a1c09ef986f3b4b323cd31cea2b64
+OS distribution response seems to be good for software like ISC named 
+and OpenSSH but seems to be very poor for this trivial shell-exploit 
+issue which impacts a great many (perhaps more than a million) Linux, 
+*BSD, Solaris, and OS-X users.  Perhaps this is because the developers 
+of such packages are used to providing advance notice and a 
+well-formed response and distribution maintainers are practiced and 
+ready.
 
-> Fix possible read access beyond the buffer. > > * src/ber-help.c (_ksba_ber_parse_tl): Add extra sanity check. > *
-src/cert.c (ksba_cert_get_cert_policies): Check TLV given length >
-against buffer length. > (ksba_cert_get_ext_key_usages): Ditto. > *
-src/ocsp.c (parse_asntime_into_isotime): Ditto. > -- > > The returned
-length of the object from _ksba_ber_parse_tl (ti.length) > was not
-always checked against the actual buffer length, thus leading > to a
-read access after the end of the buffer and thus a segv. > >
-GnuPG-bug-id: 2344 > Reported-by: Pascal Cuoq > Signed-off-by: Werner
-Koch <wk@...pg.org <mailto:wk@...pg.org>>
+Most people using a graphical desktop (e.g Gnome and KDE) are exposed 
+to the issue since ImageMagick (and often GraphicsMagick) is a common 
+dependency and clicking on a file in a graphical file manager (or 
+delivered as an email attachment) is likely to expose the user to the 
+problem.  Servers processing uploaded images are exposed to the issue 
+but server applications often take additional precautions which might 
+protect from the problem.  Desktop users are entirely exposed.
 
-
-
-The second (6be61daac047d8e6aa941eb103f8e71a1d4e3c75
-<http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=6be61daac047d8e6aa941eb103f8e71a1d4e3c75>) was already assigned CVE-2016-4574 (incomplete fix for CVE-2016-4356) elsethread.
-http://seclists.org/oss-sec/2016/q2/300
-
-Could a CVE be assigned to this issue?
-
-Andreas
-
+Bob
 -- 
-Andreas Stieger <astieger@...e.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG Nürnberg)
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
