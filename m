@@ -1,49 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/11/4
-Message-ID: <b9c127bf-b3c2-c143-b432-f0574481484c@cleal.org>
-Date: Fri, 11 Nov 2016 12:56:55 +0000
-From: Dominic Cleal <dominic@...al.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/19/11
+Message-ID: <20160519205320.GA23862@danbala.tuwien.ac.at>
+Date: Thu, 19 May 2016 22:53:20 +0200
+From: Thomas Klausner <wiz@...BSD.org>
 To: oss-security@...ts.openwall.com
-Cc: foreman-security@...glegroups.com
-Subject: CVE-2016-8639: Foreman stored XSS in orgs/locations in settings
+Cc: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-8639: Foreman settings dropdown menus may run stored XSS in
-organization/location name
+On Thu, May 19, 2016 at 12:07:16PM -0500, Bob Friesenhahn wrote:
+> Even NebBSD pkgsrc does not appear to have created a new version to address
+> the "ImageTragick" issues.
 
-If an organization or location is created with a name containing HTML,
-then the administrator-only Settings page will render the HTML as part
-of a dropdown menu.
+Since you mention it explicitly:
 
-This may permit a stored XSS attack if an organization/location with
-HTML in the name is created, then an administrator attempts to change
-the default organization/location settings.
+Updated graphics/ImageMagick to 7.0.1.3 [adam 2016-05-10]
+http://cvsweb.netbsd.org/bsdweb.cgi/pkgsrc/graphics/ImageMagick/?only_with_tag=MAIN
 
-Mitigation: restrict permissions to organization and location creation,
-use the API or CLI instead to change the default organization/location
-settings.
-
-Note: this CVE identifier has been assigned retrospectively, to describe
-a vulnerability that was fixed during a refactoring of the affected code.
-
-This issue was reported by Sanket Jagtap.
-
-Affects Foreman 1.11.0 to 1.12.4
-Fix released in Foreman 1.13.0
-
-Patch (a refactoring):
-https://github.com/theforeman/foreman/commit/d163507797c5d9c20249aa4d858465cbb74be229
-
-More information:
-https://theforeman.org/security.html#2016-8639
-http://projects.theforeman.org/issues/15037
-https://theforeman.org
-
--- 
-Dominic Cleal
-dominic@...al.org
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (210 bytes)
+ Thomas
