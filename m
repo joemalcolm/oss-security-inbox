@@ -1,67 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/18/9
-Message-ID: <20160218110831.17429da5@pc1>
-Date: Thu, 18 Feb 2016 11:08:31 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Address Sanitizer local root
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/19/1
+Message-ID: <ffaed073-e299-5c01-eb3d-998c8e4e80bb@redhat.com>
+Date: Thu, 19 May 2016 12:17:11 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request: null pointer deref in openslp, can be triggered remotely
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 05/18/2016 09:55 PM, cve-assign@...re.org wrote:
 
-Thanks a lot for your analysis.
-
-On Wed, 17 Feb 2016 23:19:21 +0100
-Szabolcs Nagy <nsz@...t70.net> wrote:
-
-> https://blog.hboeck.de/archives/879-Safer-use-of-C-code-running-Gentoo-with-Address-Sanitizer.html
-> (the later was presented at FOSDEM 2016:
-> https://fosdem.org/2016/schedule/event/csafecode/ )
+> The oss-security message and the rhbz document seem to describe the
+> impact in different ways, i.e., "Basically return value from malloc
+> isn't checked ... This can be triggered remotely by sending a large
+> number of requests, which could possibly lead malloc to fail at one
+> point, causing crash via null pointer deref" versus "A remote attacker
+> could potentially deplete the memory of the server." For purposes of
+> CVE, this type of scenario is often not interpreted as two independent
+> problems. Roughly speaking, it is interpreted as "The unchecked malloc
+> return value is the primary problem. This problem becomes reachable
+> for reasons that aren't fully described, but those reasons might
+> involve a design limitation in which the memory consumption of
+> requests is not strictly controlled."
 > 
-> While these are interesting projects, ASan should not be
-> used for hardening in production systems in its current form,
-> so at least the language ("hardening", "protection", "safe")
-> should be fixed.
-
-Given that this is my work (I did the asanized Gentoo and the FOSDEM
-talk) I think I should answer.
-
-I hope I have made it clear that whether using asan for production
-purposes makes any sense was an open question to me. I have placed
-warnings that this is experimental and I didn't recommend any production
-use right now.
-
-I was aware about the performance and memory costs of asan, and I was
-aware that there are risks involved, but it appeared to me that
-balancing issues out it would still be a security win and might
-therefore be an option for some highly security sensitive environments.
-Your mail makes it clear to me that I was in error and at least in its
-current form asan is probably not suitable for secure use at all.
-I will add a note to my blogpost and the Gentoo wiki with a link to
-your mail to make this clear.
+I fixed the description in the bug. The problem basically is unchecked
+return value from malloc inside the realloc function. So when "crafted"
+packets are sent to the server, realloc is triggered to extend the size
+of the data structure which holds the network data. Under memory
+pressure malloc could fail, which will trigger a null pointer deref.
 
 
-Appart from that I wonder whether this should have any consequences for
-asan and which ones. Would it be desirable to:
-a) Try to fix security issues like the one you presented with suid
-binaries? (not sure what the best fix would be, maybe detect suid
-binaries and drop privileges back to user [not sure if that's even
-possible]).
-b) Leave issues unfixed and declare that asan is just not good for
-production use. In this case I agree that the asan documentation should
-probably include some more obvious warnings / explanations of the
-risks involved.
-c) Some other variant, like splitting asan into two different variants.
-One could imagine having a new cflag that would enable asan, but
-disable some of the ASAN_OPTIONS things like logging (however thinking
-about this I don't like it - if I imagine running asan on some kind of
-server I would want to be able to log issues).
+
+> Finally, although perhaps not related to the issue of whether a CVE ID
+> should exist, that Security.html page says "If you find a security
+> hole in OpenSLP, please bring it to the attention of the OpenSLP
+> maintainer" and names John Calcote. Possibly Red Hat could do this
+> upstream notification if that hasn't already happened.
+> 
+
+
+Yes, we will inform upstream
+
 
 -- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+Huzaifa Sidhpurwala / Red Hat Product Security Team
