@@ -1,53 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/25/9
-Message-Id: <20161025165108.37FFE73C0DA@smtpvmsrv1.mitre.org>
-Date: Tue, 25 Oct 2016 12:51:08 -0400 (EDT)
-From: cve-assign@...re.org
-To: corsac@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, up201407890@...nos.dcc.fc.up.pt, netblue30@...oo.com, team@...urity.debian.org
-Subject: Re: CVE-2016-7545 -- SELinux sandbox escape - Firejail is CVE-2016-9016
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/20/1
+Message-ID: <573E2514.7080509@electronsweatshop.com>
+Date: Thu, 19 May 2016 16:41:56 -0400
+From: Randy Barlow <randy@...ctronsweatshop.com>
+To: oss-security@...ts.openwall.com
+Subject: Pulp 2.8.3 Released to address multiple CVEs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Pulp 2.8.3 has been released to address multiple CVEs:
 
-> On Sun, 2016-09-25 at 13:49 +0200, up201407890@...nos.dcc.fc.up.pt wrote:
->> When executing a program via the SELinux sandbox, the nonpriv session
->> can escape to the parent session by using the TIOCSTI ioctl to push
->> characters into the terminal's input buffer, allowing an attacker to
->> escape the sandbox.
+CVE-2016-3111 (Low Impact):
+pulp.spec generates its RSA keys for message signing insecurely
+https://pulp.plan.io/issues/1837
 
-> it seems that firejail was affected by the same vulnerability, which
-> was fixed in 0.9.44 with
-> https://github.com/netblue30/firejail/commit/46dc2b34f1fbbc4597b4ff9f6a3cb28b2d500d1b
-> 
-> The commit log reuses the CVE-2016-7545 number, but I guess a new one
-> should be assigned since they don't share the same codebase?
+CVE-2016-3112 (Moderate Impact):
+Pulp consumer private keys are world-readable
+https://pulp.plan.io/issues/1834
 
-The ID for the similar Firejail vulnerability is CVE-2016-9016.
-An additional reference is:
+CVE-2016-3107 (Moderate Impact):
+Node certificate containing private key stored in world-readable file
+https://pulp.plan.io/issues/1833
 
-  https://firejail.wordpress.com/download-2/release-notes/
+CVE-2016-3108 (Moderate Impact):
+Insecure temporary file used when generating certificate for Pulp Nodes
+https://pulp.plan.io/issues/1830
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+CVE-2016-3106 (Low Impact):
+Insecure creation of temporary directory when generating new CA key
+https://pulp.plan.io/issues/1827
 
-iQIcBAEBCAAGBQJYD4z3AAoJEHb/MwWLVhi24ewQAIgsLJF0ToaKXKahu7nzwYxk
-R4AnRxXuzA0eLbvH+jqGQxE0NbIlf394O7IwGv6gDLpwAvN0KbgtyEMqrBZ270+L
-UOzydUS4i9Ntlp6e2k/1CLr7Jihphjo60qclGgJEzq187qALfmFyi7H56NWpjBLX
-1JZs7vL3po8ehmEOweb+UdstVrene2UcvX9TZRNGP4GOO1XJ7/VrnvhDBxCNpONR
-0M2F98Jb9XY/jx4Agur64xRrvE3GiuY4S5GC+JOTBcbCXc7l2o+rOXOOEbuOYkxP
-5znGPpya92D6bjDe1LNZ+SntH73vEGJXUHRvqLrZAdRZ4YQCPAxvI87AHNh7e2o8
-a5QayZCYd0QVvHX2fa2lzDOQ2MV8adWj/IU1C6TRNThEQQgZzMvvqtl0nOcdetYh
-blQo8n4WqdRRK3SeBB2z8lnzF3b5H79/PJCUSCI35gT39kw47GetwdtzrEODrl4E
-LxRsl8XsmamWA0qq8DhWg7YlGMSYgx7on8gTyh73lN87cSziq26OnZEuAK1uQbcI
-Ag0OllszMHJMIBY7CxgxAfNcEc91LPwmcNXSSybxJ0QJcFzSnKgWgQqvYLYOcfH7
-olobW7zvnXr9rpYODd9P+EzXBWbvRKzp8tMUljb20jC8DZ49slCwkW+TzfloG6Q3
-kvg8DcdSvh+XK8FzieDu
-=I0E8
------END PGP SIGNATURE-----
+Additionally, CVE-2013-7450[0] was announced during this release cycle
+even though it was fixed in Pulp 2.3.0. Users who have upgraded from
+Pulp < 2.3.0 may still be vulnerable, action may be required.
+
+Users should read the release notes[1] and the mailing list
+announcement[2] to learn more.
+
+Thanks to Florian Weimer, Sander Bos, and Jeremy Cline for reporting
+these issues and submitting patches.
+
+
+[0] https://bugzilla.redhat.com/show_bug.cgi?id=1003326
+[1]
+http://pulp.readthedocs.io/en/latest/user-guide/release-notes/2.8.x.html#pulp-2-8-3
+[2] https://www.redhat.com/archives/pulp-list/2016-May/msg00054.html
+
+-- 
+Randy Barlow
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
