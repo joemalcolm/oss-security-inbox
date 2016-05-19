@@ -1,62 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/1
-Message-Id: <20160503052507.7B7EA7BC01B@smtpvmsrv1.mitre.org>
-Date: Tue,  3 May 2016 01:25:07 -0400 (EDT)
-From: cve-assign@...re.org
-To: max@...felsnetz.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: atheme: security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/19/3
+Message-ID: <alpine.LFD.2.20.1605191642030.11606@wniryva>
+Date: Thu, 19 May 2016 16:44:42 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE-2016-4439 Qemu: scsi: esp: OOB write while writing to 's->cmdbuf' in esp_reg_write
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+   Hello,
 
-> Multiple security issues were found in Atheme, an IRC services package
+Quick Emulator(Qemu) built with the ESP/NCR53C9x controller emulation support 
+is vulnerable to an OOB write access issue. The controller uses 16-byte FIFO 
+buffer for command and data transfer. The OOB write occurs while writing to 
+this command buffer in esp_reg_write().
 
-> Fix:
-> https://github.com/atheme/atheme/commit/c597156adc60a45b5f827793cd420945f47bc03b
-> Description: A remote attacker could change Atheme's behavior by
-> registering/dropping certain accounts/nicks.
-> Reference: https://github.com/atheme/atheme/issues/397
+A privileged user inside guest could use this flaw to crash the Qemu process 
+resulting in DoS OR potentially leverage it to execute arbitrary code with 
+privileges of the Qemu process on the host.
 
-Use CVE-2014-9773. We don't completely understand issues/397. We think
-"This is rejected for Atheme, please consider reporting it to a
-downstream fork instead" means that the vulnerability report was
-originally rejected, but that decision was reconsidered many months
-later.
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg03273.html
 
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1337502
 
-> Fix:
-> https://github.com/atheme/atheme/commit/87580d767868360d2fed503980129504da84b63e
-> Description: Under certain circumstances, a remote attacker could cause
-> denial of service due to a buffer overflow in the XMLRPC response
-> encoding code.
+This issue was discovered by Li Qiang of 360.cn Inc.
 
-Use CVE-2016-4478.
+'CVE-2016-4439' has been assigned to it by Red Hat Inc.
 
-
-(Incidentally, our understanding is that this code, or at least related
-code, is available in the Debian atheme-services package.)
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXKDXOAAoJEHb/MwWLVhi2ZogP+QHDhnJ4pYRn19Fx9FOp3azJ
-sFuB4gxtWYTej04JDBJuM8cx8TywJnWrJezIElofLDM0xLcbfYhUyTT69qUKn1sf
-8SfWZimDQvNTbUW1a3hdEd7NbJhtFU1BruzXQZ1GF9kxVUCLIVOYpctQVVImRcpA
-EZ5V4cBK8nBZwpegCI/c0jp6X37QTFrfgar08VV1tB66Ch2CrXfG7QL0ecu7mQxL
-3hYmj83rl8Lc//lHRR7lV/L+coapgsJju/z7btB2rz9RvQERO9QWojhYiG3CL3aO
-/yJ+9yHrIdoFJFC5GRN/jaAFnltbxvowKcCcaznZGDepTnmiVY4UBuGYwaHofEAS
-1Vw+9U9oPNrYBN4emgyuonnGgeG5dEoHUCBb8+gTYuktNkdR+MmKgoh3/JUmHj4F
-F7urIFTV4rxj1jK+jQCYs1gVwbyjU9KOwNek8roOhou7SGMKWz+klj6roSSDZkDx
-RBnYvPS5A1Yr9thcpx5Wq19FLxBs4jxLkzPggQSKxxz9f+i45GVnFz2j30LnDjQv
-nHEksTj/Az1eYIj7PYkZ8VKbcuRnuUPQrUo/p82EHBGLev/x7fC8xA/WLyDSLRw6
-b6oiLcOUKbAdrigumyYF9rJlm37kdGufdeczWlk8UCf2NM5DbzLK2QeugnlzjYXk
-5onF2vOKMXseEckA7VtD
-=skOF
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
