@@ -1,44 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/06/1
-Message-ID: <CACn5sdQZPFShZBtHviBu_tS=NeN_uEobPQh8CzLHbmvsG-sTGg@mail.gmail.com>
-Date: Wed, 5 Oct 2016 22:43:19 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/19/12
+Message-ID: <3b0ab9e5-d160-c5fe-a554-a5ac61eede34@cpanel.net>
+Date: Thu, 19 May 2016 16:27:09 -0500
+From: John Lightsey <jd@...nel.net>
 To: oss-security@...ts.openwall.com
-Subject: librsvg and cairo are causing libpng to write out-of-bounds
+Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 5/19/16 2:00 PM, Simon McVittie wrote:
+> Bob, if you would like distributions to pick up GraphicsMagick security
+> fixes in a timely way, it would probably be really useful to do an
+> upstream release - distributions are typically a lot more confident about
+> backporting large changes to their stable branches without regressions
+> if they've been able to get some testing on the same changes in their
+> unstable branches first.
 
-We found a write out-of-bounds affecting librsvg 2.40 and cairo 1.14.6
-(but other versions could be affected). It was tested in ArchLinux
-(x86_64). In this odd issue, the interaction between librsvg and cairo
-is somehow causing the function png_write_row in libpng to write out
-of bounds. To reproduce:
+I spent quite a bit of time looking at the ImageMagick, GraphicsMagick,
+RedHat and Debian changes trying to piece together a proper list of
+flaws to fix through backporting and policy file changes.
 
-$ gdb --args rsvg-convert -o /dev/null libpng-crash.svg
-...
-Thread 1 "rsvg-convert" received signal SIGSEGV, Segmentation fault.
-0x00007ffff6753e1e in __memmove_sse2_unaligned_erms () from /usr/lib/libc.so.6
-(gdb) bt
-#0  0x00007ffff6753e1e in __memmove_sse2_unaligned_erms () from
-/usr/lib/libc.so.6
-#1  0x00007ffff423cce8 in png_write_row () from /usr/lib/libpng16.so.16
-#2  0x00007ffff423d0ab in png_write_image () from /usr/lib/libpng16.so.16
-#3  0x00007ffff7046455 in ?? () from /usr/lib/libcairo.so.2
-#4  0x00007ffff7046e09 in cairo_surface_write_to_png_stream () from
-/usr/lib/libcairo.so.2
-#5  0x00000000004021c6 in ?? ()
-#6  0x00007ffff66f0291 in __libc_start_main () from /usr/lib/libc.so.6
-#7  0x0000000000402a49 in ?? ()
+I also spent some time looking at the remaining delegates trying to
+figure out which will have near-identical flaws to the issues that have
+already been fixed.
+
+This is the list I'm working off of. For RedHat and Debian, I only
+checked the ImageMagick updates.
+
+CVE-2016–3714 - RCE via shell characters in delegate invocation.
+ImageMagick: Fixed
+GraphicsMagick: Not vulnerable
+RedHat: Fixed
+Debian: Fixed
+
+CVE-2016-3718 - SSRF via HTTP and FTP coders
+ImageMagick: Not fixed
+GraphicsMagick: Not fixed
+RedHat: Fixed
+Debian: Fixed
+
+CVE-2016-3715 - File deletion via EPHEMERAL coder
+ImageMagick: Fixed
+GraphicsMagick: Fixed
+RedHat: Fixed
+Debian: Fixed
+
+CVE-2016-3716 - File move via MSL coder
+ImageMagick: Fixed
+GraphicsMagick: Fixed
+RedHat: Fixed
+Debian: Fixed
+
+CVE-2016-3717 - File read via LABEL coder
+ImageMagick: Not fixed?
+GraphicsMagick: Not fixed?
+RedHat: Fixed
+Debian: Fixed
+
+No CVE assigned - Heap overflow in PICT parser
+ImageMagick: Fixed
+GraphicsMagick: ??
+RedHat: Not fixed
+Debian: Not fixed
+Reference: http://www.openwall.com/lists/oss-security/2016/05/11/3
+
+No CVE assigned - Out of bounds read in the PSD parser
+ImageMagick: Fixed
+GraphicsMagick: ??
+RedHat: Not fixed
+Debian: Not fixed
+Reference: http://www.openwall.com/lists/oss-security/2016/05/11/3
+
+No CVE assigned - RCE via gnuplot delegate
+ImageMagick: Fixed
+GraphicsMagick: Fixed
+RedHat: Not fixed
+Debian: Fixed
+Reference: http://www.openwall.com/lists/oss-security/2016/05/09/1
+
+No CVE assigned - File read via man delegate
+ImageMagick: Fixed
+GraphicsMagick: Fixed
+RedHat: Not fixed
+Debian: Not fixed
+Reference:
+https://sourceforge.net/p/graphicsmagick/mailman/message/35072963/
+
+The core problems brought up in CVE-2016-3718 and CVE-2016-3717 haven't
+been fully addressed anywhere.
+
+It's trivial to generate SSRF payloads for the formats processed through
+html2ps and soffice. I'd also expect that SSRF is normal behavior for
+uniconvertor, and RCE is normal behavior for blender and povray, but I
+haven't verified.
+
+If those are all counted separately...
+
+No CVE assigned - SSRF via html2ps delegates
+ImageMagick: Not fixed
+GraphicsMagick: Not fixed
+RedHat: Not fixed
+Debian: Not fixed
+
+No CVE assigned - SSRF via soffice delegates
+ImageMagick: Not fixed
+GraphicsMagick: Not vulnerable
+RedHat: Not fixed
+Debian: Not fixed
+
+No CVE assigned - (assumed) SSRF via uniconvertor delegates
+ImageMagick: Not fixed
+GraphicsMagick: Not vulnerable
+RedHat: Not fixed
+Debian: Not fixed
+
+No CVE assigned - (assumed) RCE via blender delegate
+ImageMagick: Not fixed
+GraphicsMagick: Not vulnerable
+RedHat: Not fixed
+Debian: Not fixed
+
+No CVE assigned - (assumed) RCE via povray delegate
+ImageMagick: Fixed
+GraphicsMagick: Fixed
+RedHat: Not fixed
+Debian: Not fixed
+
+Are there other formats that are unsafe and should be removed using the
+policy configuration files?
 
 
-I don't think there is bug in libpng, but i'm not sure where the other
-libraries are failing. Interestingly enough, there is no indication of
-invalid memory reads or writes before the crash.
-The compressed reproducer is attached. Hopefully someone will be able
-to find and isolate this vulnerability.
-
-Regards,
-Gustavo.
-
-Download attachment "libpng-crash.svg.gz" of type "application/x-gzip" (17949 bytes)
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (3691 bytes)
