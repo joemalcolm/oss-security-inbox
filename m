@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["570" "Saturday" "17" "September" "2016" "12:50:41" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<3200281.PYQmTlBBlq@arcadia>" "19" "Re: [oss-security] Re: libav: NULL pointer dereference in put_no_rnd_pixels8_xy2_mmx (rnd_template.c)" nil nil nil "9" "2016091710:50:41" "[oss-security] Re: libav: NULL pointer dereference in put_no_rnd_pixels8_xy2_mmx (rnd_template.c)" (number mark "U       ago@gentoo.o Sep 17   19/570   " thread-indent "\"Re: [oss-security] Re: libav: NULL pointer dereference in put_no_rnd_pixels8_xy2_mmx (rnd_template.c)\"\n") "<20160917014919.76934B2E003@smtpvbsrv1.mitre.org>" ("<20160917014919.76934B2E003@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["891" "Friday" "20" "May" "2016" "12:15:55" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1605201212030.30609@wniryva>" "26" "[oss-security] CVE-2016-4440 Kernel: kvm: vmx: incorrect state update leading to MSR access" nil nil nil "5" "2016052006:45:55" "[oss-security] CVE-2016-4440 Kernel: kvm: vmx: incorrect state update leading to MSR access" (number mark "U       ppandit@redh May 20   26/891   " thread-indent "\"[oss-security] CVE-2016-4440 Kernel: kvm: vmx: incorrect state update leading to MSR access\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15403 invoked by uid 550); 17 Sep 2016 10:50:56 -0000
+Received: (qmail 29736 invoked by uid 550); 20 May 2016 06:46:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,36 +12,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15375 invoked from network); 17 Sep 2016 10:50:55 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Date: Sat, 17 Sep 2016 12:50:41 +0200
-Message-ID: <3200281.PYQmTlBBlq@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.20; x86_64; ; )
-In-Reply-To: <20160917014919.76934B2E003@smtpvbsrv1.mitre.org>
-References: <20160917014919.76934B2E003@smtpvbsrv1.mitre.org>
+Received: (qmail 29717 invoked from network); 20 May 2016 06:46:15 -0000
+Date: Fri, 20 May 2016 12:15:55 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+Message-ID: <alpine.LFD.2.20.1605201212030.30609@wniryva>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: Re: [oss-security] Re: libav: NULL pointer dereference in put_no_rnd_pixels8_xy2_mmx (rnd_template.c)
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Fri, 20 May 2016 06:46:03 +0000 (UTC)
+Subject: [oss-security] CVE-2016-4440 Kernel: kvm: vmx: incorrect state update leading to
+ MSR access
 
-On Friday 16 September 2016 21:49:19 cve-assign@mitre.org wrote:
-> >> mpegvideo_motion: Handle edge emulation even without unrestricted_mv
-> >> 
-> >> Fix out of bounds read.
-> >> 
-> >> libavcodec/mpegvideo_motion.c
-> 
-> Use CVE-2016-7424.
+   Hello,
 
-I would like to mention that the upstream git commit is wrong.
-This issue is a NULL pointer access and not an out-of-bounds
+Linux kernel built with the Kernel-based virtual machine(CONFIG_KVM) along 
+with Hyper-v Synthetic Interrupt Controller(SynIC) support is vulnerable to an 
+undue APIC register access issue. In that a guest with SynIC enabled, could 
+gain access to host's Machine Specific Registers(MSR).
 
-I already pinged an upstream developer to notify the discrepancy but I guess 
-that their git does not allow to edit the message for the commit already 
-pushed.
+A privileged user inside guest could use this flaw to crash the host kernel 
+resulting in DoS OR potentially leverage it to escalate privileges on the 
+host.
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Upstream patch:
+---------------
+   -> http://permalink.gmane.org/gmane.comp.emulators.kvm.devel/152191
+
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1337806
+   -> http://comments.gmane.org/gmane.comp.emulators.kvm.devel/152100
+
+'CVE-2016-4440' has been assigned to this issue by Red Hat Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
