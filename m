@@ -1,102 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/03/2
-Message-ID: <20160403023253.GB3334@thunk.org>
-Date: Sat, 2 Apr 2016 22:32:53 -0400
-From: Theodore Ts'o <tytso@....edu>
-To: Ben Hutchings <ben@...adent.org.uk>
-Cc: Yves-Alexis Perez <corsac@...ian.org>, oss-security@...ts.openwall.com, Johannes Segitz <jsegitz@...e.com>
-Subject: Re: ext4 data corruption due to punch hole races
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/20/3
+Message-ID: <573F0915.2060200@mittwald.de>
+Date: Fri, 20 May 2016 14:54:45 +0200
+From: Sven Kieske <s.kieske@...twald.de>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 03, 2016 at 02:37:45AM +0100, Ben Hutchings wrote:
-> Regardless of how difficult it is, we probably need to fix the bugs
-> somehow in Debian stable.  It looks like the commits are:
+On 19/05/16 19:07, Bob Friesenhahn wrote:
 > 
-> ea3d7209ca01 fix for PUNCH_HOLE (3.0+)
-> 17048e8a083f fix for default fallocate (all) and ZERO_RANGE (3.15+)
-> 32ebffd3bbb4 fix for COLLAPSE_RANGE (3.15+) and INSERT_RANGE (4.2+)
-> 011278485ecc fix for PUNCH_HOLE (3.0+) and ZERO_RANGE (3.15+)
-> 
-> So the third would not be needed for stable branches up to 3.14 but
-> otherwise they're all needed (at least in part) for all live stable
-> branches - right?
-> 
-> (As there are clearly multiple bugs here; why only one CVE ID?)
+> As an example Ubuntu 14.04.4 LTS (which is supposed to be getting
+> security updates) has not provided ImageMagick or GraphicsMagick
+> package updates in 3 years.
 
-Commit ea3d7209ca01 fixes the only bug that could result in the
-overwriting of another file or directory (which could belong to
-someone else, or in the case of a directory could lead to a file
-system corruption.)
+Hi,
 
-The other bugs fixes races which could lead to the user's file being
-corrupted (some data regions getting replaced by zeros), but it's
-strictly speaking not a vulnerability per se, since the user would
-have to be trying very hard to hit the race, and it would only result
-in the user's own file being corrupted.  Hence, it's probably fair to
-consider them as not being vulernabilities, and hence not needing a
-CVE.
+as you can see here:
 
-Furthermore, very few applications call ZERO_RANGE, COLLAPSE_RANGE, or
-INSERT_RANGE at all, and those that do are not likely to be trying to
-issue racing writes or truncates while they operate on the file using
-these fallocate modes.  Hence, I'd consider them low priority bug
-fixes to backport.
+http://packages.ubuntu.com/trusty/graphicsmagick
 
-To the extent that ea3d7209ca01 could result in file system corruption
-or another user's file being corrupted, it's clearly the higher
-priority one to backport.  Using this as a viable exploit would be
-tricky, since you would have to try to hit the race while the other
-user was trying to allocate blocks to the file or directory that you
-are trying to corrupt.
+GM in Ubuntu resides in the "universe" repository
 
-Still, in a highly specialized circumstance where you had some ACL
-that was getting regularly updated at a predictable time interval
-(say, /root/.ssh/authorized_keys, from some contralized databased), if
-you could manage to arrange to allocate and punch holes in the same
-block group as the ACL file would be written to, it probably could be
-leveraged into a privilege escalation attack.  While I suspect that
-most cyber criminals and the NSA have zero days stocked up that would
-allow them to escalate a non-privileged shell up to root access that
-would be far easier and less noisy to exploit, it would be good to
-backport this commit.
+When you read up about "universe" here:
 
-> > If anyone is interested, please contact me.  Otherwise, I'll get to it
-> > eventually.
-> 
-> Since I do most of the security backports for Debian, of course I am
-> interested.
+https://help.ubuntu.com/community/Repositories/Ubuntu
 
-That would be great, thanks!  It's been two months since the last time
-I've done a comprehensive test of the stable kernels.  Typically
-xfstests gets updated with repros of the more critical bugs, so I try
-to rerun xfstests on the stable kernels to make sure we haven't missed
-any critical backports.  The last time I did the survey, there is one
-upstream commit that still needs to be backported to the stable
-kernel:
+you will see that:
 
-commit 3da40c7b089810ac9cf2bb1e59633f619f3a7312
-Author: Josef Bacik <jbacik@...com>
-Date:   Mon Jun 22 00:31:26 2015 -0400
+"Universe - Community maintained software, i.e. not officially supported
+software."
 
-    ext4: only call ext4_truncate when size <= isize
-    
-    At LSF we decided that if we truncate up from isize we shouldn't trim
-    fallocated blocks that were fallocated with KEEP_SIZE and are past the
-    new i_size.  This patch fixes ext4 to do this.
-    
-    [ Completely reworked patch so that i_disksize would actually get set
-      when truncating up.  Also reworked the code for handling truncate so
-      that it's easier to handle. -- tytso ]
-    
-    Signed-off-by: Josef Bacik <jbacik@...com>
-    Signed-off-by: Theodore Ts'o <tytso@....edu>
-    Reviewed-by: Lukas Czerner <lczerner@...hat.com>
+which means all software from universe is _not_ officially supported
+by canonical and thus receives only timely updates, if a community
+member picks up the necessary work.
 
-This is not security critical, but it makes ext4's behavior consistent
-with the other file systems, and it fixes an xfstest failure.  With
-this exception, the regression test runs were quite clean the last
-time I checked, about two months ago.
+Too also quote from https://wiki.ubuntu.com/LTS
 
-Cheers,
+"The LTS designation applies only to specific subsets of the Ubuntu
+archive."
 
-						 - Ted
+See also this (german) article about packages which do not
+get security updates in Ubuntu "LTS" releases, because they are
+only community maintained:
+
+http://www.heise.de/ct/artikel/Ubuntu-LTS-Langzeitpflege-gibt-es-nur-fuer-das-Wichtigste-3179960.html
+
+There is also a command line tool to find out about unsupported
+packages:
+
+ubuntu-support-status --show-unsupported
+
+
+HTH
+
+-- 
+Mit freundlichen Grüßen / Regards
+
+Sven Kieske
+
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +495772 293100
+F: +495772 293333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
