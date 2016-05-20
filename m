@@ -1,59 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/3
-Message-ID: <CAEsznC5BCaqRXQo1=SfvhgZTDfk=XJ2bwP05B6=qKW7mWTcNMg@mail.gmail.com>
-Date: Tue, 18 Oct 2016 15:18:55 +0300
-From: Lior Kaplan <kaplanlior@...il.com>
-To: Adam Maris <amaris@...hat.com>
-Cc: oss-security@...ts.openwall.com, Stanislav Malyshev <stas@....net>
-Subject: Re: CVE assignment for PHP 5.6.27 and 7.0.12
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/20/6
+Message-ID: <573F9743.90309@suse.de>
+Date: Sat, 21 May 2016 08:31:23 +0930
+From: Simon Lees <sflees@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
 Content-Type: text/plain; charset=utf-8
 
-Hi Adam,
-
-On behalf of the PHP security team, I intend to request only one CVE.
-(in addition to #73003 that, as you mentioned, already had CVE assigned by
-libgd)
-
-The rest of the bugs weren't assessed as "CVE needed". You're welcome to
-contact
-the PHP security list for further discussion.
-
-Kaplan
 
 
-On Tue, Oct 18, 2016 at 3:06 PM, Adam Maris <amaris@...hat.com> wrote:
-
-> On 18/10/16 09:42, Lior Kaplan wrote:
->
->> Hi,
+On 05/20/2016 11:22 PM, Bob Friesenhahn wrote:
+> On Thu, 19 May 2016, John Lightsey wrote:
 >>
->> Please assign a CVE for the following issue:
+>> This is the list I'm working off of. For RedHat and Debian, I only
+>> checked the ImageMagick updates.
 >>
->> Bug #73147    Use After Free in unserialize()
->> https://bugs.php.net/bug.php?id=73147
->> http://git.php.net/?p=php-src.git;a=commit;h=0e6fe3a4c96be2d
->> 3e88389a5776f878021b4c59f
->>
->> Thanks,
->>
->> Kaplan
->>
->> 16 bugs marked as 'security' were fixed in php 5.6.27 of which only one
-> has CVE assigned.
-> Here you request CVE for another one issue (even the documentation says
-> it's unsafe to use
-> unserialize on untrusted input).
->
-> Are you planning to obtain CVEs also for other security bugs or do you
-> treat the rest as
-> CVE-unworthy? Or are reporters/community supposed to do it?
->
-> Thanks!
->
-> --
-> Adam Mariš, Red Hat Product Security
-> 1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
->
->
->
+>> CVE-2016-3718 - SSRF via HTTP and FTP coders
+>> ImageMagick: Not fixed
+>> GraphicsMagick: Not fixed
+>> RedHat: Fixed
+>> Debian: Fixed
+> 
+> The above topic is worthy of discussion.  What is a security issue in
+> some contexts is normal and necessary in others.
+> 
+>> No CVE assigned - Heap overflow in PICT parser
+>> ImageMagick: Fixed
+>> GraphicsMagick: ??
+>> RedHat: Not fixed
+>> Debian: Not fixed
+>> Reference: http://www.openwall.com/lists/oss-security/2016/05/11/3
+> 
+> The GraphicsMagick development code is not vulnerable to this one.
+> GraphicsMagick may have been vulnerable in the past.
+> 
+>> No CVE assigned - Out of bounds read in the PSD parser
+>> ImageMagick: Fixed
+>> GraphicsMagick: ??
+>> RedHat: Not fixed
+>> Debian: Not fixed
+>> Reference: http://www.openwall.com/lists/oss-security/2016/05/11/3
+> 
+> The GraphicsMagick development code is not vulnerable to this one.
+> GraphicsMagick may have been vulnerable in the past.
+> 
+>> Are there other formats that are unsafe and should be removed using the
+>> policy configuration files?
+> 
+> In interest of full-disclosure, the GraphicsMagick project has fixed
+> approximately 45 CVE-worthy issues since the last release, not including
+> issues covered by CVE-2016-2317 and CVE-2016-2318 (which are fixed in
+> the development code).  Many of the test files are published in full
+> open view on bug trackers or other places.
+> 
+> In a similar time-frame, the ImageMagick project has been provided a
+> great many files (likely more than 100) which crash the software and
+> many of these files are published in full open view on bug trackers or
+> other places.  Commits and other records show that problems are being
+> fixed.
+> 
+> When fixed versions are released, OS distributions which continue to
+> provide 3-year old releases are exposing users to releases with perhaps
+> hundreds of fixed vulnerabilities which can be triggered using
+> publically available files.
+> 
+> Bob
 
+Some distro's have customers that pay them to have the 3 year old
+version with only fixes to bugs as they wish to reduce the chance of
+breakage. I must thank you the email you published with the list of
+issues and there corresponding patches made it much much easier to
+address the issues in GraphicsMagick then it was for ImageMagick.
+
+-- 
+
+Simon Lees (Simotek)                            http://simotek.net
+
+Emergency Update Team                           keybase.io/simotek
+SUSE Linux                            Adeliade Australia, UTC+9:30
+GPG Fingerprint: 5B87 DB9D 88DC F606 E489 CEC5 0922 C246 02F0 014B
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
