@@ -1,4 +1,9 @@
-Received: (qmail 30209 invoked by uid 550); 16 Mar 2026 03:00:22 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2178" "Friday" "20" "May" "2016" "08:52:31" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1605200827380.7756@freddy.simplesystems.org>" "59" "Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714" "^Date:" nil nil "5" "2016052013:52:31" "[oss-security] ImageMagick Is On Fire -- CVE-2016-3714" (number mark "        bfriesen@sim May 20   59/2178  " thread-indent "\"Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714\"\n") "<3b0ab9e5-d160-c5fe-a554-a5ac61eede34@cpanel.net>" ("<CABi+pA7xDJhirUFbrVZQkwMnFj--zbNJA8_Aoq-SiJx0QNcsoA@mail.gmail.com>" "<20160503181505.GA8195@openwall.com>" "<57292879.7050303@gmail.com>" "<alpine.GSO.2.20.1605191154150.15930@freddy.simplesystems.org>" "<CANO=Ty26E=diToYAoedQB4JKTbnjykSy94ciE-XBNdyJBU0jNw@mail.gmail.com>" "<20160519190037.GA6411@perpetual.pseudorandom.co.uk>" "<3b0ab9e5-d160-c5fe-a554-a5ac61eede34@cpanel.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 25887 invoked by uid 550); 20 May 2016 13:52:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,141 +11,78 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 25845 invoked from network); 20 May 2016 13:52:43 -0000
+X-X-Sender: bfriesen@freddy.simplesystems.org
+In-Reply-To: <3b0ab9e5-d160-c5fe-a554-a5ac61eede34@cpanel.net>
+Message-ID: <alpine.GSO.2.20.1605200827380.7756@freddy.simplesystems.org>
+References: <CABi+pA7xDJhirUFbrVZQkwMnFj--zbNJA8_Aoq-SiJx0QNcsoA@mail.gmail.com> <20160503181505.GA8195@openwall.com> <57292879.7050303@gmail.com> <alpine.GSO.2.20.1605191154150.15930@freddy.simplesystems.org> <CANO=Ty26E=diToYAoedQB4JKTbnjykSy94ciE-XBNdyJBU0jNw@mail.gmail.com>
+ <20160519190037.GA6411@perpetual.pseudorandom.co.uk> <3b0ab9e5-d160-c5fe-a554-a5ac61eede34@cpanel.net>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Fri, 20 May 2016 08:52:31 -0500 (CDT)
+Date: Fri, 20 May 2016 08:52:31 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13763 invoked from network); 16 Mar 2026 02:58:24 -0000
-Date: Mon, 16 Mar 2026 03:58:16 +0100
-From: Solar Designer <solar@openwall.com>
+Subject: Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714
 To: oss-security@lists.openwall.com
-Message-ID: <20260316025816.GA14368@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] 10+ CVEs in GStreamer
 
-Hi,
+On Thu, 19 May 2016, John Lightsey wrote:
+>
+> This is the list I'm working off of. For RedHat and Debian, I only
+> checked the ImageMagick updates.
+>
+> CVE-2016-3718 - SSRF via HTTP and FTP coders
+> ImageMagick: Not fixed
+> GraphicsMagick: Not fixed
+> RedHat: Fixed
+> Debian: Fixed
 
-As described on the homepage:
+The above topic is worthy of discussion.  What is a security issue in 
+some contexts is normal and necessary in others.
 
-https://gstreamer.freedesktop.org
+> No CVE assigned - Heap overflow in PICT parser
+> ImageMagick: Fixed
+> GraphicsMagick: ??
+> RedHat: Not fixed
+> Debian: Not fixed
+> Reference: http://www.openwall.com/lists/oss-security/2016/05/11/3
 
-> GStreamer is a library for constructing graphs of media-handling
-> components. The applications it supports range from simple Ogg/Vorbis
-> playback, audio/video streaming to complex audio (mixing) and video
-> (non-linear editing) processing.
+The GraphicsMagick development code is not vulnerable to this one. 
+GraphicsMagick may have been vulnerable in the past.
 
-> News - GStreamer 1.26.11 old-stable bug fix release   2026-03-10 17:00
-> 
-> The GStreamer team is pleased to announce another bug fix release in
-> the now old-stable 1.26 release series of your favourite cross-platform
-> multimedia framework!
-> 
-> Please note that the 1.26 old-stable series is no longer actively
-> maintained and has been superseded by the GStreamer 1.28 stable series
-> now.
-> 
-> This release only contains bugfixes, and it should be safe to update
-> from 1.26.x.
-> 
-> Highlighted bugfixes:
-> 
->     Security fixes for the JPEG, H.265 and H.266 video parsers and the
-> DVB subtitle overlay
->     Security fixes for the ASF, RealMedia and QuickTime/MP4 demuxers and
-> RIFF library
->     Security fixes for the WAV audio parser and the RTP QDM2 depayloader
+> No CVE assigned - Out of bounds read in the PSD parser
+> ImageMagick: Fixed
+> GraphicsMagick: ??
+> RedHat: Not fixed
+> Debian: Not fixed
+> Reference: http://www.openwall.com/lists/oss-security/2016/05/11/3
 
-> GStreamer 1.28.1 stable bug fix release   2026-02-26 02:00
-> 
-> The GStreamer team is pleased to announce the first bug fix release in
-> the new stable 1.28 release series of your favourite cross-platform
-> multimedia framework!
-> 
-> This release only contains bug fixes as well as a number of security
-> fixes. It should be safe to update from 1.28.0, and we recommend you do
-> so at your earliest convenience.
-> 
-> Highlighted bugfixes:
-> 
->     Various security fixes and playback fixes
+The GraphicsMagick development code is not vulnerable to this one.
+GraphicsMagick may have been vulnerable in the past.
 
-The news story at:
+> Are there other formats that are unsafe and should be removed using the
+> policy configuration files?
 
-https://www.opennet.me/opennews/art.shtml?num=64964
+In interest of full-disclosure, the GraphicsMagick project has fixed 
+approximately 45 CVE-worthy issues since the last release, not 
+including issues covered by CVE-2016-2317 and CVE-2016-2318 (which are 
+fixed in the development code).  Many of the test files are published 
+in full open view on bug trackers or other places.
 
-originally in Russian explains GStreamer usage as follows, translated to
-English here:
+In a similar time-frame, the ImageMagick project has been provided a 
+great many files (likely more than 100) which crash the software and 
+many of these files are published in full open view on bug trackers or 
+other places.  Commits and other records show that problems are being 
+fixed.
 
-> The GStreamer library is used to parse multimedia files in Nautilus
-> (GNOME Files), GNOME Videos, and Rhythmbox, as well as in the
-> localsearch search engine (previously known as tracker-miners) developed
-> by the GNOME project. This engine is installed in many distributions as
-> a dependency of the tracker-extract package, which GNOME uses to
-> automatically parse metadata in new files. Among other things, this
-> service indexes all files in the user's home directory without any user
-> interaction. Therefore, to perform an attack, simply create a specially
-> crafted multimedia file in the user's home directory, and the
-> vulnerability will be exploited during its automatic indexing.
-> 
-> In most GNOME distributions, localsearch components (tracker-miners) are
-> enabled by default and loaded as a hard dependency of the Nautilus file
-> manager (GNOME Files). Starting with GNOME 46, the localsearch process
-> runs in sandbox isolation. To disable metadata extraction, you can
-> delete the rules files from the /usr/share/localsearch3/extract-rules/
-> or /usr/share/tracker3-miners/extract-rules/ directory.
+When fixed versions are released, OS distributions which continue to 
+provide 3-year old releases are exposing users to releases with 
+perhaps hundreds of fixed vulnerabilities which can be triggered using 
+publically available files.
 
-There are 10 GStreamer CVEs recently listed at:
-
-https://www.zerodayinitiative.com/advisories/published/
-
-and even more at:
-
-https://gstreamer.freedesktop.org/security/
-
-so I'll quote from the latter page:
-
-> GStreamer-SA-2026-0012 	H.265 video parser potential denial-of-service 	2026-02-25 23:59
-> 
-> GStreamer-SA-2026-0011
-> CVE-2026-3084
-> ZDI-CAN-28910 	Out-of-bounds write in H.266 video parser when parsing picture partitions 	2026-02-25 23:59
-> 
-> GStreamer-SA-2026-0010
-> CVE-2026-3081
-> ZDI-CAN-28839 	Stack buffer overflow in H.266 video parser when parsing pic_timing SEIs 	2026-02-25 23:59
-> 
-> GStreamer-SA-2026-0009
-> CVE-2026-3086
-> ZDI-CAN-28911 	Out-of-bounds buffer write in H.266 video parser when parsing Adaptation Parameter Set 	2026-02-25 23:59
-> 
-> GStreamer-SA-2026-0008
-> CVE-2026-3083, CVE-2026-3085
-> ZDI-CAN-28851, ZDI-CAN-28850 	Multiple vulnerabilities in RTP QDM2 depayloader element 	2026-02-25 23:59
-> 
-> GStreamer-SA-2026-0007
-> CVE-2026-2923
-> ZDI-CAN-28838 	Out-of-bounds read and write in DVB Subtitle Decoder 	2026-02-25 23:59
-> 
-> GStreamer-SA-2026-0006
-> CVE-2026-2920
-> ZDI-CAN-28843 	Out-of-bounds write in ASF Demuxer 	2026-02-25 23:59
-> 
-> GStreamer-SA-2026-0005
-> CVE-2026-2922
-> ZDI-CAN-28845 	Out-of-bounds write in RealMedia Demuxer 	2026-02-25 23:59
-> 
-> GStreamer-SA-2026-0004
-> CVE-2026-2921
-> ZDI-CAN-28854 	Integer overflow in RIFF parser 	2026-02-25 23:59
-> 
-> GStreamer-SA-2026-0003
-> CVE-2026-3082
-> ZDI-CAN-28840 	Heap-based Buffer Overflow on Huffman tables reading in JPEG parser 	2026-02-25 23:59
-> 
-> GStreamer-SA-2026-0002 	Out-of-bounds read in MP4 demuxer 	2026-02-25 23:59
-> 
-> GStreamer-SA-2026-0001
-> CVE-2026-1940 	Out-of-bounds read in WAV parser 	2026-02-25 23:59
-
-Alexander
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
