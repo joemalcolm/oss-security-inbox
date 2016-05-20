@@ -1,47 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/10
-Message-ID: <7871016480124167bb36dc8681d1e8bd@imshyb02.MITRE.ORG>
-Date: Mon, 14 Nov 2016 13:40:34 -0500
-From: <cve-assign@...re.org>
-To: <roucaries.bastien@...il.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <team@...urity.debian.org>
-Subject: Re: Imagemagick heap overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/20/4
+Message-ID: <alpine.GSO.2.20.1605200827380.7756@freddy.simplesystems.org>
+Date: Fri, 20 May 2016 08:52:31 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: oss-security@...ts.openwall.com
+Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, 19 May 2016, John Lightsey wrote:
+>
+> This is the list I'm working off of. For RedHat and Debian, I only
+> checked the ImageMagick updates.
+>
+> CVE-2016-3718 - SSRF via HTTP and FTP coders
+> ImageMagick: Not fixed
+> GraphicsMagick: Not fixed
+> RedHat: Fixed
+> Debian: Fixed
 
-> https://github.com/ImageMagick/ImageMagick/issues/296
-> 
-> Imagemagick before 3cbfb163cff9e5b8cdeace8312e9bfee810ed02b
-> suffer from a heap overflow in WaveletDenoiseImage()
-> 
-> https://github.com/ImageMagick/ImageMagick/commit/3cbfb163cff9e5b8cdeace8312e9bfee810ed02b
-> 
-> -  kernel=(float *) AcquireQuantumMemory(MagickMax(image->rows,image->columns),
-> +  kernel=(float *) AcquireQuantumMemory(MagickMax(image->rows,image->columns)+1,
+The above topic is worthy of discussion.  What is a security issue in 
+some contexts is normal and necessary in others.
 
-Use CVE-2016-9298.
+> No CVE assigned - Heap overflow in PICT parser
+> ImageMagick: Fixed
+> GraphicsMagick: ??
+> RedHat: Not fixed
+> Debian: Not fixed
+> Reference: http://www.openwall.com/lists/oss-security/2016/05/11/3
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+The GraphicsMagick development code is not vulnerable to this one. 
+GraphicsMagick may have been vulnerable in the past.
 
-iQIcBAEBCAAGBQJYKgM4AAoJEHb/MwWLVhi2MewP+QFOJsQiiDfwNhdN+UKAPde4
-6Lr26VhijhZvwDFrYM+YGcAdajnTmOXe1JnRHKuFwThVwHfnmKq36INM3urKH+pS
-Vr6+xaG1ITbFsA9xNojUSFeK98LOYs+1EEipTW+PsPpkvL7LAwjTEdBIvbc5rKhF
-gCcV9IScnAGPMyQvi6rnlKU7BbBMkEh7H7b/1B/ytaNVPy9adG18h9M7dY7+bXEN
-FsBO7stN/Mvz0UtnMyCsFeP14RwUSRmwDhsfxv9K8YCiogI70B1rjWMHvG0ZoBhP
-omZENbWh+ZJyKCOnyEN1o331NINkbYS0NWVvjrOU5Opre+Jo6yPHoG9lp+kScLQ3
-1u509BUE3415Ny8xPqITP/duAzQoNNoSR6y3ZCuDEtSn+jH0rufkie2N6wI0FK49
-c4nxspUMBm5UlMVjGfKBZXa1OX7GthFXu22sEm/uc8Zmf/ALVR48vHHKs3Bz3t5S
-fIw7R9mAhp5CM/ieu3X0g0WlrVQbqbQqfDSOokHWDOhi79n7hEGkNjAMWh1oBWah
-SY52vuWRTDla9k6mJuXENej2Cj01B9J5PbqY6lNUXSh+gExCLx7ZC0RVoXRiJ/AS
-WIstWjng16SMIVrT88koD9JD3nHQ/QpBIEONBqBfVosEzvqVkO3/ijPuNQ4eAjAb
-6AmnkYtJ1wfbZgjiYqCe
-=gHC9
------END PGP SIGNATURE-----
+> No CVE assigned - Out of bounds read in the PSD parser
+> ImageMagick: Fixed
+> GraphicsMagick: ??
+> RedHat: Not fixed
+> Debian: Not fixed
+> Reference: http://www.openwall.com/lists/oss-security/2016/05/11/3
+
+The GraphicsMagick development code is not vulnerable to this one.
+GraphicsMagick may have been vulnerable in the past.
+
+> Are there other formats that are unsafe and should be removed using the
+> policy configuration files?
+
+In interest of full-disclosure, the GraphicsMagick project has fixed 
+approximately 45 CVE-worthy issues since the last release, not 
+including issues covered by CVE-2016-2317 and CVE-2016-2318 (which are 
+fixed in the development code).  Many of the test files are published 
+in full open view on bug trackers or other places.
+
+In a similar time-frame, the ImageMagick project has been provided a 
+great many files (likely more than 100) which crash the software and 
+many of these files are published in full open view on bug trackers or 
+other places.  Commits and other records show that problems are being 
+fixed.
+
+When fixed versions are released, OS distributions which continue to 
+provide 3-year old releases are exposing users to releases with 
+perhaps hundreds of fixed vulnerabilities which can be triggered using 
+publically available files.
+
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
