@@ -1,21 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/01/1
-Message-ID: <alpine.LFD.2.20.1604011151000.27413@wniryva>
-Date: Fri, 1 Apr 2016 11:55:26 +0530 (IST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/20/2
+Message-ID: <alpine.LFD.2.20.1605201212030.30609@wniryva>
+Date: Fri, 20 May 2016 12:15:55 +0530 (IST)
 From: P J P <ppandit@...hat.com>
 To: oss security list <oss-security@...ts.openwall.com>
-cc: cve-assign@...re.org
-Subject: Re: Re: Partial SMAP bypass on 64-bit Linux kernels
+Subject: CVE-2016-4440 Kernel: kvm: vmx: incorrect state update leading to MSR access
 Content-Type: text/plain; charset=utf-8
 
-+-- On Thu, 31 Mar 2016, cve-assign@...re.org wrote --+
-| Specifically, is there anyone who believes
-| 3d44d51bd339766f0178f0cf2e8d048b4a4872aa must not have a CVE ID?
-...
-|However, it seems to be a bug in how the kernel responds to a
-|post-exploitation attack pattern.
+   Hello,
 
-True, IIUC it seems more of hardening patch than an issue.
+Linux kernel built with the Kernel-based virtual machine(CONFIG_KVM) along 
+with Hyper-v Synthetic Interrupt Controller(SynIC) support is vulnerable to an 
+undue APIC register access issue. In that a guest with SynIC enabled, could 
+gain access to host's Machine Specific Registers(MSR).
+
+A privileged user inside guest could use this flaw to crash the host kernel 
+resulting in DoS OR potentially leverage it to escalate privileges on the 
+host.
+
+Upstream patch:
+---------------
+   -> http://permalink.gmane.org/gmane.comp.emulators.kvm.devel/152191
+
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1337806
+   -> http://comments.gmane.org/gmane.comp.emulators.kvm.devel/152100
+
+'CVE-2016-4440' has been assigned to this issue by Red Hat Inc.
+
+Thank you.
 --
 Prasad J Pandit / Red Hat Product Security Team
 47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
