@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2436" "Wednesday" "21" "July" "2021" "09:15:24" "+0200" "Daniel Stenberg" "daniel@haxx.se" nil "88" "[oss-security] [SECURITY ADVISORY] curl: TELNET stack contents disclosure again" nil nil nil "7" nil nil (number mark "U       daniel@haxx. Jul 21   88/2436  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: TELNET stack contents disclosure again\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY ADVISORY] curl: TELNET stack contents disclosure again" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1501" "Saturday" "21" "May" "2016" "09:59:21" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160521135921.EC33352E01C@smtpvbsrv1.mitre.org>" "35" "[oss-security] Re: CVE request: -- Linux kernel: Null pointer dereference in tipc_nl_publ_dump" nil nil nil "5" "2016052113:59:21" "[oss-security] Re: CVE request: -- Linux kernel: Null pointer dereference in tipc_nl_publ_dump" (number mark "U       cve-assign@m May 21   35/1501  " thread-indent "\"[oss-security] Re: CVE request: -- Linux kernel: Null pointer dereference in tipc_nl_publ_dump\"\n") "<a55a2a8b-31c4-d454-376a-fe85302c9b29@gmail.com>" ("<a55a2a8b-31c4-d454-376a-fe85302c9b29@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19994 invoked by uid 550); 21 Jul 2021 07:15:37 -0000
+Received: (qmail 9664 invoked by uid 550); 21 May 2016 13:59:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,105 +12,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19929 invoked from network); 21 Jul 2021 07:15:36 -0000
-Date: Wed, 21 Jul 2021 09:15:24 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@silly
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>, 
-    curl-announce@cool.haxx.se, libcurl hacking <curl-library@cool.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <nycvar.QRO.7.76.2107210915010.25537@fvyyl>
-User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
-X-fromdanielhimself: yes
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl: TELNET stack contents disclosure again
+Received: (qmail 9643 invoked from network); 21 May 2016 13:59:34 -0000
+From: cve-assign@mitre.org
+To: sploving1@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, richard.alpe@ericsson.com
+In-Reply-To: <a55a2a8b-31c4-d454-376a-fe85302c9b29@gmail.com>
+Message-Id: <20160521135921.EC33352E01C@smtpvbsrv1.mitre.org>
+Date: Sat, 21 May 2016 09:59:21 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: -- Linux kernel: Null pointer dereference in tipc_nl_publ_dump
 
-TELNET stack contents disclosure again
-======================================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Project curl Security Advisory, July 21st 2021 -
-[Permalink](https://curl.se/docs/CVE-2021-22925.html)
+> http://lists.openwall.net/netdev/2016/05/14/28
+> https://github.com/torvalds/linux/commit/45e093ae2830cd1264677d47ff9a95a71f5d9f9c
 
-VULNERABILITY
--------------
+> Without checking the pointer to the netlink socket attribute, it could
+> cause a null pointer dereference when parsing the nested attributes in
+> function tipc_nl_publ_dump. It allows local users to cause a denial of
+> service. This vulnerability affects Linux kernel versions from 3.19 to 4.6.
 
-curl supports the `-t` command line option, known as `CURLOPT_TELNETOPTIONS`
-in libcurl. This rarely used option is used to send variable=content pairs to
-TELNET servers.
+Use CVE-2016-4951.
 
-Due to flaw in the option parser for sending `NEW_ENV` variables, libcurl
-could be made to pass on uninitialized data from a stack based buffer to the
-server. Therefore potentially revealing sensitive internal information to the
-server using a clear-text network protocol.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-This could happen because curl did not call and use sscanf() correctly when
-parsing the string provided by the application.
-
-The previous curl security vulnerability
-[CVE-2021-22898](https://curl.se/docs/CVE-2021-22898.html) is almost identical
-to this one but the fix was insufficient so this security vulnerability
-remained.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This flaw has existed in curl since commit
-[a1d6ad2610](https://github.com/curl/curl/commit/a1d6ad2610) in libcurl 7.7,
-released on March 22, 2001. There was a previous attempt to fix this issue in
-curl 7.77.0 but it was not done proper.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2021-22925 to this issue.
-
-CWE-457: Use of Uninitialized Variable
-
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.7 to and including 7.77.0
-- Not affected versions: curl < 7.7 and curl >= 7.78.0
-
-Also note that libcurl is used by many applications, and not always advertised
-as such.
-
-THE SOLUTION
-------------
-
-Use sscanf() properly and only use properly filled-in buffers.
-
-A [fix for CVE-2021-22925](https://github.com/curl/curl/commit/894f6ec730597eb243618d33cc84d71add8d6a8a)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 7.78.0
-
-  B - Apply the patch to your local version
-
-  C - Avoid using `CURLOPT_TELNETOPTIONS`
-
-TIMELINE
---------
-
-This issue was reported to the curl project on June 11, 2021.
-
-This advisory was posted on July 21, 2021.
-
-CREDITS
--------
-
-This issue was reported and patched by Red Hat Product Security.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://www.wolfssl.com/contact/
+iQIcBAEBCAAGBQJXQGkEAAoJEHb/MwWLVhi21gkP/1eCj9lEnb+LDcZu56yrfV+e
+fO9tl7DUcrGlj5SwqiF1x80nAsWiIfdQkG1vKguqMWQYE3o0wT841FcTOltphUnx
+tPndKrWCfv8hkJrH+rB01MXM+8jUFe3E6tn7mCdoF5RwYrOR8MnBSFi20/ekc826
+qOw4nnFZ8eujJkBAXi58L1nSnE+tTsmtwZoGl+bE0qIR5QV4Hc1Ep26VOrQ2wxKN
+bdGz37ZweRcVemb1KdP3kzxZYGCF9x71zeFCMBw/N2I6cHgbtJCmBnAU16hanh1J
+fHlHQpt41WZ8MMoD9iBpPve92vE7jZUbZVxV9UHhYtIaJw8q5Rwnn0D1y9ObtevW
+QMqqSjKC41gHU63OviYOq/5g2nuRZ435iWw8oqg2/dXInYPXe5drnK5wv5jM+IU8
+N1UwSRXSHMaNFwT77mqF6a448M6GPIYBA4jclLAIIrPJqhK4EBZIjXNgzflxoIIA
+hXlwhu4GUxuI1usQ2fgsSbOiVCz6KsPiM9098ycZtIl7RNukHZh8itJAjAb2+fFc
+Eq0B/1J4l8U6tTXECigNZGQZG0GQxQNHH34RKVEUclfhwAMS74A2puTBREPN1Nkb
+1W8ye0M762tL1wa/0RRLml4/Ajm4MTFoBnY2e0HxmmIn3M54fmK6+cSsi2mxdPhW
+4hwVUl4K+P/OMujS4KNw
+=N8vt
+-----END PGP SIGNATURE-----
