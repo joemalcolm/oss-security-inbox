@@ -1,60 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/27/9
-Message-ID: <20161227190001.efhubtt3lsk33qyq@jwilk.net>
-Date: Tue, 27 Dec 2016 20:00:01 +0100
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: tqdm: insecure use of git
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/21/2
+Message-Id: <20160521135921.EC33352E01C@smtpvbsrv1.mitre.org>
+Date: Sat, 21 May 2016 09:59:21 -0400 (EDT)
+From: cve-assign@...re.org
+To: sploving1@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, richard.alpe@...csson.com
+Subject: Re: CVE request: -- Linux kernel: Null pointer dereference in tipc_nl_publ_dump
 Content-Type: text/plain; charset=utf-8
 
->Can you clarify the threat model for this? Our understanding is that 
->.git/config is not really a part of a repository that is controlled by a 
->remote party, e.g., see the second paragraph of the 
->https://git-blame.blogspot.com/2014/12/git-1856-195-205-214-and-221-and.html 
->post.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Right; the malicious git repository would have to be created by other means 
-than "git clone" alone.
+> http://lists.openwall.net/netdev/2016/05/14/28
+> https://github.com/torvalds/linux/commit/45e093ae2830cd1264677d47ff9a95a71f5d9f9c
 
-The attack scenario I had in mind is:
+> Without checking the pointer to the netlink socket attribute, it could
+> cause a null pointer dereference when parsing the nested attributes in
+> function tipc_nl_publ_dump. It allows local users to cause a denial of
+> service. This vulnerability affects Linux kernel versions from 3.19 to 4.6.
 
-Alice and Mallory are local users on the same machine.
-Mallory creates world-readable /tmp/.git such that running "git log" against 
-this repository compromises the user's account.
-Alice chdirs to /tmp (or maybe even to a subdirectory of /tmp accessible only 
-to her), and runs a command that uses the tqdm module under the hood. tqdm 
-executes "git log", which executes Mallory's code.
+Use CVE-2016-4951.
 
->Is either (or both) of these a valid interpretation of your report?
->
->1. You are suggesting that there is a security problem in git because the 
->risks of an attacker-controlled config file are not documented carefully 
->enough. In other words, you want documentation such as 
->https://www.kernel.org/pub/software/scm/git/docs/git-config.html to tell the 
->user that they must not use a "repository specific configuration file" that is 
->writable by an untrusted local user.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-No, I don't see this as a problem in git.
-
->2. You are suggesting that there is a security problem in tqdm because the 
->victim is not explicitly being told that they are executing a git command, and 
->thus they do not realize that there is a need to verify that they have a safe 
->cwd before proceeding.
-
-Yes.
-
->A. Anyone planning to explicitly enter "git log" from a shell prompt is 
->responsible for first verifying that the cwd is safe. It is a known property 
->of git that the cwd is critical to security.
-
-Yes.
-
->B. No third-party product should ever be executing "git log" in an unexpected 
->context. Either the user must somehow be aware that a "git log" may be 
->executed, or else the product must somehow force the use of a safe local 
->directory. Otherwise, a CVE is needed for each such product.
-
-Yes.
-
--- 
-Jakub Wilk
+iQIcBAEBCAAGBQJXQGkEAAoJEHb/MwWLVhi21gkP/1eCj9lEnb+LDcZu56yrfV+e
+fO9tl7DUcrGlj5SwqiF1x80nAsWiIfdQkG1vKguqMWQYE3o0wT841FcTOltphUnx
+tPndKrWCfv8hkJrH+rB01MXM+8jUFe3E6tn7mCdoF5RwYrOR8MnBSFi20/ekc826
+qOw4nnFZ8eujJkBAXi58L1nSnE+tTsmtwZoGl+bE0qIR5QV4Hc1Ep26VOrQ2wxKN
+bdGz37ZweRcVemb1KdP3kzxZYGCF9x71zeFCMBw/N2I6cHgbtJCmBnAU16hanh1J
+fHlHQpt41WZ8MMoD9iBpPve92vE7jZUbZVxV9UHhYtIaJw8q5Rwnn0D1y9ObtevW
+QMqqSjKC41gHU63OviYOq/5g2nuRZ435iWw8oqg2/dXInYPXe5drnK5wv5jM+IU8
+N1UwSRXSHMaNFwT77mqF6a448M6GPIYBA4jclLAIIrPJqhK4EBZIjXNgzflxoIIA
+hXlwhu4GUxuI1usQ2fgsSbOiVCz6KsPiM9098ycZtIl7RNukHZh8itJAjAb2+fFc
+Eq0B/1J4l8U6tTXECigNZGQZG0GQxQNHH34RKVEUclfhwAMS74A2puTBREPN1Nkb
+1W8ye0M762tL1wa/0RRLml4/Ajm4MTFoBnY2e0HxmmIn3M54fmK6+cSsi2mxdPhW
+4hwVUl4K+P/OMujS4KNw
+=N8vt
+-----END PGP SIGNATURE-----
