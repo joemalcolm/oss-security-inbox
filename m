@@ -1,57 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/3
-Message-Id: <20160224033848.CA26C72E028@smtpvbsrv1.mitre.org>
-Date: Tue, 23 Feb 2016 22:38:48 -0500 (EST)
-From: cve-assign@...re.org
-To: alexandru.cornea@...el.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, costel.maxim@...el.com, stern@...land.harvard.edu
-Subject: Re: CVE Request: Linux kernel USB hub invalid memory access in hub_activate()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/21/1
+Message-ID: <a55a2a8b-31c4-d454-376a-fe85302c9b29@gmail.com>
+Date: Sat, 21 May 2016 19:21:56 +0800
+From: Baozeng Ding <sploving1@...il.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Cc: richard.alpe@...csson.com
+Subject: CVE request: -- Linux kernel: Null pointer dereference in tipc_nl_publ_dump
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
+Without checking the pointer to the netlink socket attribute, it could 
+cause a null pointer dereference when parsing the nested attributes in 
+function tipc_nl_publ_dump. It allows local users to cause a denial of 
+service. This vulnerability affects Linux kernel versions from 3.19 to 4.6.
 
-> Quickly plugging in and unplugging a USB hub can lead to a null
-> pointer dereference in kernel (local denial of service) or the USB
-> port to which the hub is connected becomes unusable, for kernel
-> versions 2.6.32 < 4.4. The issue occurs when the USB hub gets
-> disconnected before or while the routine for USB hub activation is
-> running - hub_activate() function.
-> 
-> Bug reported on the kernel USB mailing list:
-> http://www.spinics.net/lists/linux-usb/msg132311.html
-> 
-> Issue is fixed in kernel 4.4, by commit:
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=e50293ef9775c5f1cf3fcc093037dd6a8c5684ea
+References:
+http://lists.openwall.net/netdev/2016/05/14/28
+http://lists.openwall.net/netdev/2016/05/16/26
 
->> This patch fixes the problem by taking a reference to the usb_hub at
->> the start of hub_activate() and releasing it at the end (when the work
->> is finished), and by locking the hub interface while the work routine
->> is running. It also adds a check at the start of the routine to see if
->> the hub has already been disconnected, in which nothing should be
->> done.
+Fixed via:
+https://github.com/torvalds/linux/commit/45e093ae2830cd1264677d47ff9a95a71f5d9f9c
 
-Use CVE-2015-8816.
+Introduce by:
+https://github.com/torvalds/linux/commit/1a1a143daf84db95dd7212086042004a3abb7bc2
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Could you please assign a CVE for this vulnerability? Thank you.
 
-iQIcBAEBCAAGBQJWzSUDAAoJEL54rhJi8gl5mokQAJjfrH2LsZTYKCaO4JWi60x9
-l+CQdmkmlwGwr+jc+ijq6IuXroeNCJ9qKoGx+0u6Rl6XjRU9pTnga1NhIuRuO4SB
-8vUcoZa4upHCtPzgHDZ0xKjR890UlUzIzi5WCqbZsqR3DzU9KK62qAh54C5idoLw
-JBs3Jm6sf+LSRMwJs9nlSsTE+OlbgqaPOmzUcEs1vuxROffYLeh8FL4On3iEbL7G
-LPEO/yIkqOAltYAoBGlMHnFXcaeXr9UNRKTJ5KkxCV+rR68Nvu5/lQDdNB7xEdZn
-iL1Zg81+uJj6A7xHq21SRj4HtOEgsqGvSp1yxRmi6M1LeTEt95HL7Y1vc0NWKOza
-N4D9AeHneUz+/DwzBTBWFoSF3qrkcQU9BjN9VZes+DH4PFlSRERdT31gDmiEzmv3
-ohh3dc0AT0P7WL2mR3fA2RvtbC0B4I6BgKjSGoQ4em25dk6CJkamIZnZvkXKVAiK
-9TOWbOJcFX5YwBKhwMF8Sjrt8VXnyLXaP7k3R1QiLcvLZEnuIrp+9FTyoVghCdcx
-UaYeC6XQ10Fsj7DP06YYpTjAyzyY9T6I1sWYgYWUz/I1G2hUUvalDdkNqDaP0qgw
-15BnBjNFqywSDIf2ecsMviDbPfbauHrXWG72SgsvHTiCmlMu9PxPbDLvCGcsZbEA
-RYaRhm3fjTEoCcb/0Qb7
-=gSr5
------END PGP SIGNATURE-----
+Best Regards,
+Baozeng Ding,  Alibaba Mobile Security Team
+
