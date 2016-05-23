@@ -1,4 +1,9 @@
-Received: (qmail 24509 invoked by uid 550); 25 Dec 2024 18:13:53 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1895" "Monday" "23" "May" "2016" "13:33:03" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160523173303.042486C0718@smtpvmsrv1.mitre.org>" "46" "[oss-security] Re: CVE request: Qemu: scsi: pvscsi: out-of-bounds access issue in pvsci_ring_init_msg/data routines" nil nil nil "5" "2016052317:33:03" "[oss-security] Re: CVE request: Qemu: scsi: pvscsi: out-of-bounds access issue in pvsci_ring_init_msg/data routines" (number mark "U       cve-assign@m May 23   46/1895  " thread-indent "\"[oss-security] Re: CVE request: Qemu: scsi: pvscsi: out-of-bounds access issue in pvsci_ring_init_msg/data routines\"\n") "<alpine.LFD.2.20.1605231637460.27295@wniryva>" ("<alpine.LFD.2.20.1605231637460.27295@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 19649 invoked by uid 550); 23 May 2016 17:33:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,94 +12,58 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 23831 invoked from network); 25 Dec 2024 18:13:31 -0000
-Date: Wed, 25 Dec 2024 19:13:21 +0100
-From: Solar Designer <solar@openwall.com>
-To: Yair Mizrahi <yairm@jfrog.com>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20241225181321.GA12547@openwall.com>
-References: <CALXx8ZniT0BHhhVgqZK4z+gsRUuOJGSZJRzFbjfA2BQUdRPmew@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CALXx8ZniT0BHhhVgqZK4z+gsRUuOJGSZJRzFbjfA2BQUdRPmew@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2024-40896 Analysis: libxml2 XXE due to type confusion
+Received: (qmail 19622 invoked from network); 23 May 2016 17:33:15 -0000
+From: cve-assign@mitre.org
+To: ppandit@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn
+In-Reply-To: <alpine.LFD.2.20.1605231637460.27295@wniryva>
+Message-Id: <20160523173303.042486C0718@smtpvmsrv1.mitre.org>
+Date: Mon, 23 May 2016 13:33:03 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: Qemu: scsi: pvscsi: out-of-bounds access issue in pvsci_ring_init_msg/data routines
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Thank you for bringing this in here.
-
-On Wed, Dec 25, 2024 at 11:52:06AM +0200, Yair Mizrahi wrote:
-> libxml2, CVE-2024-40896, was published recently and given a "Critical"
-> (9.1) severity by CISA. Interestingly - This vulnerability is a regression
-> of an issue that was identified over a decade ago - CVE-2012-0037, which
-> was given a "Medium" (6.5) severity.
+> Quick Emulator(Qemu) built with the VMWARE PVSCSI paravirtual SCSI bus
+> emulation support is vulnerable to an OOB r/w access issue. It could occur
+> while processing SCSI commands 'PVSCSI_CMD_SETUP_RINGS' or
+> 'PVSCSI_CMD_SETUP_MSG_RING'.
 > 
-> Is the massive increase in CVSS over the exact same issue justified? We
-> believe that it's inflated.
-
-I think both CVSS vectors are "buggy", and CVSS is quite poor at scoring
-library code vulnerabilities.
-
-CVE-2012-0037  NIST NVD CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N
-CVE-2024-40896 CISA-ADP CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H
-
-The differences are whether user interaction is required or not (can't
-know that for library code, so have to assume either best or worst case)
-and what impact there is (again can't know it for library code, but
-these two test vectors somehow assume different impacts).  Given how
-poor CVSS base score is for scoring library code in general, I'm afraid
-this issue would more "reasonably" (per CVSS spec) be scored 10.0 as
-AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H, because such exposed usage of the
-library is realistic, SSRF would be a change of scope (right?), and the
-worst impacts of all 3 kinds are quite possible.
-
-What this tells us is that CVSS base scores are pretty much unusable for
-ranking library and interpreter vulnerabilities.  Adding temporal and
-exploitability metrics may improve things, but also mostly when applied
-not just to the libraries, but to their specific uses.  Since this is
-generally too hard, I think a future revision of CVSS should have
-adjustments in the base score for issues that are not directly exposed.
-
-I propose updating the spec to either use AC:H for them (list such
-condition) or add new AV or AC type Indirect (document it as meaning the
-issue isn't directly exposed as a vulnerability by the software it's
-in).  Indirect should be scored lower than AV:N/AC:L.
-
-> CVE-2012-0037 allowed attackers to perform XXE attacks on vulnerable
-> applications that use Raptor, an RDF parsing and serializing library, which
-> uses libxml2. XXE attacks may have severe consequences, such as leakage of
-> arbitrary local files from the victim machine and SSRF.
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> resulting in DoS.
 > 
-> The vulnerability was fixed in Raptor by parsing XML entities and making
-> sure they don't contain file URIs or network URIs. A crucial part of this
-> patch was letting libxml2 know not to re-parse the XML entities, as that
-> would have rendered the fix ineffective.
-> 
-> [1] In order to do this, Raptor used the "checked" field of libxml2's
-> `XmlEntity` struct.
+> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg03774.html
 
-CVE-2012-0037 was (per its description) against Raptor.  CVE-2024-40896
-is (per its) against libxml2.  As I understand from your description,
-libxml2 2.11.0+ was at fault for no longer providing functionality for
-Raptor to be safe, but Raptor was at fault for silently accepting that
-with a code change of their own instead of sounding the alarm.  Perhaps
-when CVE-2012-0037 was fixed, a source code comment should have been
-added to Raptor about the importance of that fix, which would have
-guarded against its silent removal in 2023 (for the case of building
-against libxml2 2.11.0+).  So this looks to me like more of a failure by
-Raptor than by libxml2.
+>> Vmware Paravirtual SCSI emulation uses command descriptors to
+>> process SCSI commands. These descriptors come with their ring
+>> buffers. A guest could set the ring buffer size to an arbitrary
+>> value leading to OOB access issue. Add check to avoid it.
 
-As I understand, CVE-2024-40896 is against libxml2 because that's where
-the issue is hopefully-fully addressed this time, even if the "fix" is
-hardening for/against dangerous uses by third-party code such as Raptor.
-It would indeed be weird to file this CVE against Raptor when fixes
-would then be against libxml2.  So this discrepancy is understandable,
-even if unfortunate.
+Use CVE-2016-4952.
 
-Disclaimer: I am not familiar with these libraries, so the above is
-based on my reading of what the previous message said.
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/vmw_pvscsi.c but
+that may be an expected place for a later update.
 
-Alexander
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXQz5SAAoJEHb/MwWLVhi2csUP/0e0mBl7EgwbVigNAvU8UUWD
+MoA509vJm8qAw34v8A7tOnmDxOM89aW7z5RDPEWScw+mjHJEf39bW5Ibrvn56Gy/
+IvHcS9At+stv00zqSdhAFD3sCVUqLvU3ybt+3+gu5m/4teCc+llO/72T+xLYIiwE
+H8lQnZdxuSRIXeyU4gbAIlPDLLqguTjNVuma1Cu+G6S5ka4h7EUJpPz2UyJotOw/
+T9B8jklo0aR3odLiYuZ97I49yky2jAqWznYUAIasriKbG0ahdBvSjEy4aa93FLSM
+eWffJVwgxX5YFNMjr0M8AnMP5/1VQZFQz4mbLpAE7rb4/sry2wb7t7/6gBTFnfvD
+xEruol3jgBqtIsAqfldkP2u9hPWVzJO+yIpqpUkGUWg2b00jadLIb4CJcSWSeVbo
+h9YH3IgX7yCwAorT4YoQ6PEtrgiXHjief1208tVKa25gwyHERLuc1VSmsAimXedI
+qdFlK7onHAgKMNoymiGtcuSWUQc06F/SJXcSCUFO3UBnS2Yki65WjS6hdWlaaLyJ
+hPowD8PJDZv47h+slMPAjKUUEVHNB5e0Pbsk+ig7LMbq4k8tQsHzWH32oXznwRvL
+pk6TmROU3CVQsBmdhfsMSR9pvg6GQQAA7BCoEt9jLjxS76n09JWblQP28qeZSZQ0
+oshueEI3i19JNzNIIbc8
+=KEBo
+-----END PGP SIGNATURE-----
