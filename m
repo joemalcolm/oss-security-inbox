@@ -1,104 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/19/2
-Message-ID: <57B63EBF.4010307@justinbull.ca>
-Date: Thu, 18 Aug 2016 19:03:27 -0400
-From: Justin Bull <me@...tinbull.ca>
-To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com, fulldisclosure@...lists.org
-Subject: [CVE-2016-6582] Doorkeeper gem does not revoke tokens & uses wrong auth/auth method
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/23/5
+Message-ID: <20160523181917.GA19626@sisay.ephaone.org>
+Date: Mon, 23 May 2016 20:19:17 +0200
+From: Michael Scherer <misc@...b.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: /tmp usage race condition in onionshare
 Content-Type: text/plain; charset=utf-8
 
-Good evening everyone,
+Hi,
 
-A security bulletin for all of you.
+I found a rather complicated issue regarding /tmp and onionshare, a
+utility to share file over tor hidden services.
 
-Software:
---------
-Doorkeeper (https://github.com/doorkeeper-gem/doorkeeper)
+See
+https://github.com/micahflee/onionshare/blob/master/onionshare/hs.py#L105
+for the start of the problem.
 
-Description:
-----------
-Doorkeeper is an OAuth 2 provider for Rails written in Ruby.
+And https://www.torproject.org/docs/tor-hidden-service.html.en for
+more details on what happen for hidden services.
 
-Affected Versions:
----------------
-1.2.0 - 4.1.0 (all versions but latest patch supporting token revocation)
+So onionshare use /tmp/onionshare to create a temporary directory
+$HS that is then used for the creation of a tor hidden service, as
+HiddenServiceDir configuration.  Then, the tor daemon create 2 files
+in $HS, one for the hidden service hostname, the other for the
+private key
 
-Fixed Versions:
--------------
-4.2.0 or apply this commit[0]
+But onionshare doesn't verify the owner or the exact permission of
+/tmp/onionshare.  So if a attacker pre-create a directory
+/tmp/onionshare with 777 permissions and him as a owner, he can use
+a race condition to inject his own files in the share.
 
-Problem:
---------
-Doorkeeper failed to implement OAuth 2.0 Token Revocation[1] (RFC
-7009[2]) in the following ways:
+Since the file 'hostname' is created by tor, then opened and read by
+onionshare, the attacker could use inotify on the temporary
+directory and rename the $HS dir (since he own /tmp/onionshare) and
+substitute his own directory with a crafted hostname directing to
+his own hiddenservice, thus permitting him to inject his own
+hiddenservices and so own files in the exchange, which seems to be a
+potential problem.
 
-1. Public clients making valid, unauthenticated calls to revoke a token
-would not have their token revoked
-2. Requests were not properly authenticating the *client credentials*
-but were, instead, looking at the access token in a second location
-3. Because of 2, the requests were also not authorizing confidential
-clients' ability to revoke a given token. It should only revoke tokens
-that belong to it.
+I suspect that using setgid on /tmp/onionshare might also give
+interesting potential attacks.  For example, if umask is not properly
+set, the attacker could steal the private key and hostname, thus
+being able to place himself as man in the middle during the
+exchange, which make the previous attack easier (since the attacker
+just have to set a proxy, rather than guessing the filename or
+something like this)
 
-(see [3][4][5][6] for above statements)
+I am also not 100% sure that
+https://github.com/micahflee/onionshare/blob/master/onionshare/hs.py#L217
+and
+https://github.com/micahflee/onionshare/blob/master/onionshare/hs.py#L116
+are safe if a attacker control the directory that will be used for
+shutil.rmtree.
 
-The security implication is: OAuth 2.0 clients who "log out" a user
-expect to have the corresponding access & refresh tokens revoked,
-preventing an attacker who may have already hijacked the session from
-continuing to impersonate the victim. Because of the bug described
-above, this is not the case. As far as OWASP is concerned, this counts
-as broken authentication design[7].
+I tried to contact upstream 5 months ago without results.
 
-MITRE has assigned CVE-2016-6582 due to the security issues raised. An
-attacker, thanks to 1, can replay a hijacked session after a victim logs
-out/revokes their token. Additionally, thanks to 2 & 3, an attacker via
-a compromised confidential client could "grief" other clients by
-revoking their tokens (albeit this is an exceptionally narrow attack
-with little value).
+So I guess I can go public and provides a patch once I have a CVE id 
+assigned ( or any others kind of way to identify the vuln...)
 
-Unless I'm mistaken, all clients (public or confidential) that send
-well-formed, RFC 7009 compliant requests are affected by this bug.
+-- 
+Michael Scherer
 
-Solution:
--------
-
-Modify the controller so if the request comes from a public client
-revoke the token without auth/auth. If the client is confidential,
-authenticate the client per RFC 6749 Sec. 2.3[8] and authorize its
-ownership of the provided token. As per [0].
-
-Timeline:
---------
-2016-08-03: Bug discovered
-2016-08-03: CVE requested, assigned, privately disclosed to maintainer,
-bugfix/patch authored
-2016-08-08: Maintainer tweaked patch
-2016-08-12: Jonathan Clem ( jclem) also discovered bug and publicly
-disclosed[6]
-2016-08-18: Patched version 4.2.0 is released
-
-Acknowledgements:
------------------
-Special thanks to the maintainer, Tute Costa (https://github.com/tute),
-for quickly collaborating with me to prepare & apply a patch.
-
-References:
-----------
-[0]:
-https://github.com/doorkeeper-gem/doorkeeper/commit/fb938051777a3c9cb071e96fc66458f8f615bd53
-[1]: https://github.com/doorkeeper-gem/doorkeeper/pull/374
-[2]: https://tools.ietf.org/html/rfc7009#section-2.1
-[3]:
-https://github.com/doorkeeper-gem/doorkeeper/blob/v4.1.0/app/controllers/doorkeeper/tokens_controller.rb#L13-L35
-[4]:
-https://github.com/doorkeeper-gem/doorkeeper/blob/master/lib/doorkeeper/helpers/controller.rb#L28-L30
-[5]:
-https://github.com/doorkeeper-gem/doorkeeper/blob/master/lib/doorkeeper/oauth/token.rb#L5-L23
-[6]: https://github.com/doorkeeper-gem/doorkeeper/issues/875
-[7]:
-https://www.owasp.org/index.php/Top_10_2013-A2-Broken_Authentication_and_Session_Management
-[8]: https://tools.ietf.org/html/rfc6749#section-2.3
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
