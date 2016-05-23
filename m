@@ -1,48 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/13
-Message-ID: <88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>
-Date: Mon, 14 Nov 2016 20:45:51 +0000
-From: Hector Marco <hmarco@...rco.org>
-To: fulldisclosure@...lists.org, oss security list <oss-security@...ts.openwall.com>, bugtraq@...urityfocus.com
-Subject: CVE-2016-4484: - Cryptsetup Initrd root Shell
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/23/3
+Message-Id: <E1b4tME-0003x1-2c@xenbits.xenproject.org>
+Date: Mon, 23 May 2016 17:09:34 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 180 (CVE-2014-3672) - Unrestricted qemu logging
 Content-Type: text/plain; charset=utf-8
 
-Hello All,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+            Xen Security Advisory CVE-2014-3672 / XSA-180
 
-Affected package
-----------------
-Cryptsetup <= 2:1
+                       Unrestricted qemu logging
 
+ISSUE DESCRIPTION
+=================
 
-CVE-ID
-------
-CVE-2016-4484
+When the libxl toolstack launches qemu for HVM guests, it pipes the
+output of stderr to a file in /var/log/xen.  This output is not
+rate-limited in any way.  The guest can easily cause qemu to print
+messages to stderr, causing this file to become arbitrarily large.
 
+IMPACT
+======
 
-Description
------------
-A vulnerability in Cryptsetup, concretely in the scripts that unlock the
-system partition when the partition is ciphered using LUKS (Linux
-Unified Key Setup).
+The disk containing the logfile can be exausted, possibly causing a
+denial-of-service (DoS).
 
-This vulnerability allows to obtain a root initramfs shell on affected
-systems. The vulnerability is very reliable because it doesn't depend on
-specific systems or configurations. Attackers can copy, modify or
-destroy the hard disc as well as set up the network to exflitrate data.
+VULNERABLE SYSTEMS
+==================
 
-In cloud environments it is also possible to remotely exploit this
-vulnerability without having "physical access."
+All versions of Xen are affected.
 
+Only x86 systems are affected; ARM systems are not affected.
 
-Full description:
------------------
-http://hmarco.org/bugs/CVE-2016-4484/CVE-2016-4484_cryptsetup_initrd_shell.html
+Only systems running HVM guests are affected; systems running only PV
+guests are not affected.
 
+Both qemu-upstream and qemu-traditional are affected.
 
-Regards,
-Hector Marco & Ismael Ripoll.
+MITIGATION
+==========
 
+Running only PV guests will avoid this vulnerability.
 
+CREDITS
+=======
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+This issue was discovered by Andrew Sorensen of leviathansecurity.com.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+The patches adopt a simple and rather crude approach which is
+effective at resolving the security issue in the context of a Xen
+device model.  They may not be appropriate for adoption upstream or in
+other contexts.
+
+xsa180-qemut.patch       qemu-xen-traditional (all supported versions)
+xsa180-qemuu.patch       qemu-xen (upstream) Xen unstable
+
+$ sha256sum xsa180*
+7733fd57868c4313c7c47ccde3aba21e9ed5002ee8a937b20997fb3d2282a5d7  xsa180-qemut.patch
+7a92bbd3b6368f91e694400c8e850567972e14852e4f61fbb61cc3b7b98f14ef  xsa180-qemuu.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJXQzkrAAoJEIP+FMlX6CvZjkYIAMJRhIzcKP7P8Q075WKw29e2
+PpLFy+eOM/946SOnKxrN/1Pq+yYl5Jn1rN/TMRre4n6pYdGlGY/+MFa4N2tfKhBv
+8dYcE2BMD9tbLi4SpbvoIMUtmLM1y0lVSmtHbMaw/zQDpT0uM1Kh+P0VjTeBADo/
+PgRgePGfV7r+4nVjxjdSiNah8XAR5P/hoHNGOaM2kuIT19FwyDK7uQONE+HL2SdI
+ccA+JAMZFlHs1/hcjeCLny7Soedy4GPfGfqUpu/zRkaaDmCkG1E+gfcox5S2myYc
+Kogj7oiVWjRTcYh5cUOIfSmC4TDM8pqWnMmFftGShOvWqRJH3tUWt3TkaU669X8=
+=SczG
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa180-qemut.patch" of type "application/octet-stream" (2397 bytes)
+
+Download attachment "xsa180-qemuu.patch" of type "application/octet-stream" (2949 bytes)
