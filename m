@@ -1,47 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/15/2
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BB625E@EX02.corp.qihoo.net>
-Date: Wed, 15 Jun 2016 02:31:43 +0000
-From: 张开翔 <zhangkaixiang@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-5315: libtiff 4.0.6 tif_dir.c: setByteArray() Read access violation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/23/4
+Message-Id: <20160523173303.042486C0718@smtpvmsrv1.mitre.org>
+Date: Mon, 23 May 2016 13:33:03 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
+Subject: Re: CVE request: Qemu: scsi: pvscsi: out-of-bounds access issue in pvsci_ring_init_msg/data routines
 Content-Type: text/plain; charset=utf-8
 
-Details
-=======
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Product: libtiff
-Affected Versions: <= 4.0.6
-Vulnerability Type: illegel read
-Vendor URL: http://www.remotesensing.org/libtiff/
-CVE ID: CVE-2016-5315
-Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
+> Quick Emulator(Qemu) built with the VMWARE PVSCSI paravirtual SCSI bus
+> emulation support is vulnerable to an OOB r/w access issue. It could occur
+> while processing SCSI commands 'PVSCSI_CMD_SETUP_RINGS' or
+> 'PVSCSI_CMD_SETUP_MSG_RING'.
+> 
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg03774.html
 
-Introduction
-=======
+>> Vmware Paravirtual SCSI emulation uses command descriptors to
+>> process SCSI commands. These descriptors come with their ring
+>> buffers. A guest could set the ring buffer size to an arbitrary
+>> value leading to OOB access issue. Add check to avoid it.
 
-Read access violation occurred in function setByteArray in tif_dir.c, which allows attackers to result in DoS via a crafted TIFF image.
+Use CVE-2016-4952.
 
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/vmw_pvscsi.c but
+that may be an expected place for a later update.
 
-Here is the stack info:
-gdb --args $tool/rgb2ycbcr id31.tif tmpout.tif
---- ---
-(gdb) bt
-#0  _int_malloc (av=av@...ry=0xb7d91780 <main_arena>, bytes=bytes@...ry=29) at malloc.c:3728
-#1  0xb7c3f44f in __GI___libc_malloc (bytes=29) at malloc.c:2914
-#2  0xb7faa875 in _TIFFmalloc (s=29) at tif_unix.c:316
-#3  0xb7e88d2d in setByteArray (elem_size=1, nmemb=<optimized out>, vp=0xbfffeab0, vpp=<optimized out>) at tif_dir.c:51
-#4  _TIFFVSetField (tif=0x804e008, tag=270, ap=<optimized out>) at tif_dir.c:539
-#5  0xb7e89fab in TIFFVSetField (tif=0x804e008, tag=270, ap=0xbfffea48 "\260\352\377\277\370\363\004\b") at tif_dir.c:820
-#6  0xb7e8a094 in TIFFSetField (tif=0x804e008, tag=270) at tif_dir.c:764
-#7  0x0804aa04 in tiffcvt (in=in@...ry=0x804f148, out=out@...ry=0x804e008) at rgb2ycbcr.c:339
-(gdb) i r $ebx
-ebx            0x86868686        -2038004090
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-
-References:
-[1] http://www.remotesensing.org/libtiff/
-
-Thank you!
-Best Regards,
+iQIcBAEBCAAGBQJXQz5SAAoJEHb/MwWLVhi2csUP/0e0mBl7EgwbVigNAvU8UUWD
+MoA509vJm8qAw34v8A7tOnmDxOM89aW7z5RDPEWScw+mjHJEf39bW5Ibrvn56Gy/
+IvHcS9At+stv00zqSdhAFD3sCVUqLvU3ybt+3+gu5m/4teCc+llO/72T+xLYIiwE
+H8lQnZdxuSRIXeyU4gbAIlPDLLqguTjNVuma1Cu+G6S5ka4h7EUJpPz2UyJotOw/
+T9B8jklo0aR3odLiYuZ97I49yky2jAqWznYUAIasriKbG0ahdBvSjEy4aa93FLSM
+eWffJVwgxX5YFNMjr0M8AnMP5/1VQZFQz4mbLpAE7rb4/sry2wb7t7/6gBTFnfvD
+xEruol3jgBqtIsAqfldkP2u9hPWVzJO+yIpqpUkGUWg2b00jadLIb4CJcSWSeVbo
+h9YH3IgX7yCwAorT4YoQ6PEtrgiXHjief1208tVKa25gwyHERLuc1VSmsAimXedI
+qdFlK7onHAgKMNoymiGtcuSWUQc06F/SJXcSCUFO3UBnS2Yki65WjS6hdWlaaLyJ
+hPowD8PJDZv47h+slMPAjKUUEVHNB5e0Pbsk+ig7LMbq4k8tQsHzWH32oXznwRvL
+pk6TmROU3CVQsBmdhfsMSR9pvg6GQQAA7BCoEt9jLjxS76n09JWblQP28qeZSZQ0
+oshueEI3i19JNzNIIbc8
+=KEBo
+-----END PGP SIGNATURE-----
