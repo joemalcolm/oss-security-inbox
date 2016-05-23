@@ -1,74 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/21
-Message-ID: <4660482.3AE3K0588b@arcadia>
-Date: Sun, 16 Oct 2016 20:52:39 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/23/2
+Message-ID: <CABjOGM5oLVXRFhKCYf=0pRNn377m8Ahw4z-H-k8zgiN_ckQUoA@mail.gmail.com>
+Date: Mon, 23 May 2016 17:06:13 +0200
+From: "Luis M. Merino" <luismiguelmerino@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: mupdf: mujstest: strcpy-param-overlap in main (jstest_main.c)
+Subject: CVE request: OpenNTPD not verifying CN during HTTPS constraints request
 Content-Type: text/plain; charset=utf-8
 
-A note outside the blog post:
-This issue does not affect any library, but it is only in the mujstest binary.
-There aren't known applications which use mujstest, but if you have an 
-application or website which relies on mujstest you are invited to apply the 
-patch or use the newer package when it will be released. Thanks.
+Good afternoon,
+
+I'm requesting a CVE for this patched mitm mitigation bypass vulnerability
+on OpenNTPD.
+
+
+Upstream patch:
+http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/usr.sbin/ntpd/constraint.c.diff?r1=1.27&r2=1.28
+
+Affected versions:
+All OpenNTPD versions containing constraints before May 21st 2016 are
+affected.
+OpenBSD 5.9 is affected.
 
 Description:
-Mujstest, which is part of mupdf is a scriptable tester for mupdf + js.
+OpenNTPD constraints is an experimental functionality to mitigate
+NTP man-in-the-middle attacks. When enabled (by default on OpenBSD base
+install), it request timestamps from trusted HTTPS servers through HTTP
+Date: header and the average of the values obtained are used to filter
+out deviating NTP responses.
 
-A fuzzing revealed a strcpy-param-overlap.
+Common Name verification was disabled while configuring the HTTPS request,
+allowing upstream network attackers to intercept and forward the request to
+a malicious server that could provide forged timestamp
+constraints presenting valid certificates without the server noticing it.
 
-The complete ASan output:
+The vulnerable function is httpsdate_init at
+/src/usr.sbin/ntpd/constraint.c on OpenBSD source:
 
-# mujstest $FILE
-==26843==ERROR: AddressSanitizer: strcpy-param-overlap: memory ranges 
-[0x0000013c5d40,0x0000013c62ed) and [0x0000013c6285, 0x0000013c6832) overlap
-    #0 0x473129 in __interceptor_strcpy /var/tmp/portage/sys-devel/llvm-3.8.0-
-r3/work/llvm-3.8.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:545
-    #1 0x4f7910 in main /var/tmp/portage/app-
-text/mupdf-1.9a/work/mupdf-1.9a/platform/x11/jstest_main.c:353:6
-    #2 0x7f8af37a961f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #3 0x41ade8 in _init (/usr/bin/mujstest+0x41ade8)
+[...]
+/* XXX we have to pre-resolve, so name and host are not equal */
+tls_config_insecure_noverifyname(httpsdate->tls_config);
+[...]
 
-0x0000013c6140 is located 0 bytes to the right of global variable 'filename' 
-defined in 'platform/x11/jstest_main.c:15:13' (0x13c5d40) of size 1024
-0x0000013c6285 is located 5 bytes inside of global variable 'getline_buffer' 
-defined in 'platform/x11/jstest_main.c:24:13' (0x13c6280) of size 4096
-SUMMARY: AddressSanitizer: strcpy-param-overlap /var/tmp/portage/sys-
-devel/llvm-3.8.0-r3/work/llvm-3.8.0.src/projects/compiler-
-rt/lib/asan/asan_interceptors.cc:545 in __interceptor_strcpy
-==26843==ABORTING
-
-Affected version:
-1.9a
-
-Fixed version:
-1.10 (not yet released)
-
-Commit fix:
-http://git.ghostscript.com/?p=mupdf.git;h=cfe8f35bca61056363368c343be36812abde0a06
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Timeline:
-2016-08-04: bug discovered
-2016-08-05: bug reported to upstream
-2016-09-22: upstream released a patch
-2016-09-25: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/09/25/mupdf-mujstest-strcpy-param-overlap-in-main-jstest_main-c/
+Solution:
+Update to -CURRENT.
 
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Regards,
+Luis M. Merino
+
