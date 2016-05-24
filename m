@@ -1,4 +1,9 @@
-Received: (qmail 15823 invoked by uid 550); 8 Aug 2024 12:53:27 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1532" "Tuesday" "24" "May" "2016" "14:17:48" "+0200" "Dejan Bosanac" "dejan@nighttale.net" "<CAGeh-pFfPXUX8XpUAJt5n6=qvoAr82ubN97BxE4a44o79tCudg@mail.gmail.com>" "59" "[oss-security] Re: [ANNOUNCE] CVE-2016-3088: ActiveMQ Fileserver web application vulnerabilities" nil nil nil "5" "2016052412:17:48" "[oss-security] Re: [ANNOUNCE] CVE-2016-3088: ActiveMQ Fileserver web application vulnerabilities" (number mark "U       dejan@nightt May 24   59/1532  " thread-indent "\"[oss-security] Re: [ANNOUNCE] CVE-2016-3088: ActiveMQ Fileserver web application vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 31932 invoked by uid 550); 24 May 2016 12:18:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,79 +12,100 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14274 invoked from network); 7 Aug 2024 21:11:39 -0000
+Received: (qmail 31914 invoked from network); 24 May 2016 12:18:00 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723065091; x=1723669891; darn=lists.openwall.com;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=k8gaJby62z6a4F377rrY77gEytcB5xp2JFIIKyK84/Y=;
-        b=MHWZSZM0vzoCGkenhhD1zFhdNXdLFxPurf4hiigBN/MTrwOQr+GE3SRYIUod/uNlQm
-         rjzJu9V0Zr6U7+2MX3luhR6IhIwe7w1SRtdr6EnQwLEbF0Fz53JIp62KqoKwHR2Pr4Xn
-         47NhWphqEJHE8GCCFxxfdavvj942JX97ZW7U8mHB+LxeDusDmOARMsbzbZJA8uDCTxSc
-         VIYIWlrVel9OlYm/5fP2THiWNPrpK6IRDZ8zIWpQBf7s+eal/ZOA/c8K5Tly81Ib4lML
-         uwnTfRrhmtPCJlBCNWD5UPLJxV/xEg9zzz7oGSXqTKYHYcjz5jnFxXdu+HTwFkwuJsk6
-         Ej6Q==
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:cc;
+        bh=5EYYrwPBLBWSQgtIfkmd4cpCVpJpbA3JNt6urRuQTvU=;
+        b=Ay9L6bgPnRRcXe0ABFZv41JW06Z5e6Ml0ZrC7rMhLXD1q2Vh0CjaOeen72X0RRTPbA
+         1tENEFbpuK4weTXuOJAcjysvp+K//87Spn/eK6V8mkZ8/8GXXaxMbnlaI353u8NJc0ME
+         9fxWQbSkKEnL98zjOQPoCrGB5jmVY6qOk6TaUTGqnd1oX69PMLrUtNMxIivaVH7sWVhp
+         T7o4LoELwAodOZSX8HzmXcNOBDSm8VTEkJ5G0rZfXn9N716B+9RzklJb/puNGrN7HzPX
+         9QUJACRnA8ev9GDl+s7xD93MP9aKwGb4WlRt/mu8/y43lPngKftNd9nSzCZGJglM/yvp
+         as1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723065091; x=1723669891;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=k8gaJby62z6a4F377rrY77gEytcB5xp2JFIIKyK84/Y=;
-        b=pRESjOTlrgBeSZzONJhHwf8cYmmg9PFmtRPTvO/lC67IAWdMVuuUmB9CR/5iSLTjJp
-         81aXjzjVXjI/k0yzsggh5rIKmBWHR1ZDuhfMz2EoShemTbt71NADfOE8ickutrEB3Kmm
-         tmPMHgTev8oGS1MDsDA2fDXAsZKSS/FKa+cm7FLyDOKPEQTK+vXqQ3RulRZIIjNuezYv
-         BAIshNDZVXuZFTk+pZhyQH6dgNd9M6cJAkDPSvDkxhkRaq+4OOP/IBhyM5qF+wDrn0rX
-         gfwfKkChWyLyOyFE1v1vBNY4HCb0Z0S91tDZmYh7/zVgQi8sDCvyIh8DvEXFjtUykMoe
-         9wtw==
-X-Gm-Message-State: AOJu0YyyPYkw1XQka5q/cczmaPms/QOT9tgO+WFD0ZgxKj0CGIsywlSW
-	d1btlCciRV2wC0QpfrRNZ83iCnT5SPLacuRPYvJeWSrvhHQxctKBpGT//NGfjW+Af4D5DBXENm/
-	3120SFLAvFdXnJjNSi/sNYDIlQK/IptjG
-X-Google-Smtp-Source: AGHT+IF5L3QW5A5hPflywufggviQq2mIzQtY4pnKd2LdkS6tPDtk1/r+Mz2FnYgN+nSxH9t+v4ig3qF5G4OsnOJ2MQE=
-X-Received: by 2002:a25:8047:0:b0:e05:cf78:2908 with SMTP id
- 3f1490d57ef6-e0e876e6683mr3347487276.6.1723065090791; Wed, 07 Aug 2024
- 14:11:30 -0700 (PDT)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:date:message-id:subject:from
+         :to:cc;
+        bh=5EYYrwPBLBWSQgtIfkmd4cpCVpJpbA3JNt6urRuQTvU=;
+        b=K4+b8XFwxhEaKYQEzq4oBhkhKT2VfpdoOoqic2/dfHoSqoYEsYKfFJ5UBoWQPBDzA1
+         JlYpEL4lb6evnaqXGsoT+i1YMCs4RVu84UUyaJ7dT94bcdoSQpwuTkZOz8XptH5mTvS8
+         Yqwukeer3hmFqUEZpRi8WW+G2MT4cUI1sOCh93ZuobrXCY0LQ4k1s/bUFC1kwtp7Ygq0
+         /E3fI28r8lSOW6+coY+CeYMlGFXm8mEuYOPU08qTRYzRf98/TUEEs2JzDCkpC6uk0YU1
+         mdbFlj8pn5+DbLMlmi56orPl8glBKML1k2vSxpj28thYBTqS9P/N5kpO0vGa/JimpvXH
+         Xrqw==
+X-Gm-Message-State: ALyK8tKZfCi1R6kDwHBkh50k4fW0eUadvwgBmT6Us17Q13kbSIHceWL87c8VC4lvrRB50Xv2LCTFrM+T0fMnrw==
 MIME-Version: 1.0
-References: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com>
- <20240806171232.6bd08942@zbook> <ZrJQpDftQthxOT2g@symphytum.spacehopper.org>
- <1dfc8a2f-cc26-4e05-b41d-0398c925226d@gmail.com> <20240807140212.ls_NX9bg@steffen%sdaoden.eu>
-In-Reply-To: <20240807140212.ls_NX9bg@steffen%sdaoden.eu>
-From: Jeffrey Walton <noloader@gmail.com>
-Date: Wed, 7 Aug 2024 17:10:54 -0400
-Message-ID: <CAH8yC8k01PEivvgmP7hk2mW7WTfxVohmFrF7FRr6NwkkzVUj3A@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
+X-Received: by 10.176.64.198 with SMTP id i64mr2249888uad.121.1464092268402;
+ Tue, 24 May 2016 05:17:48 -0700 (PDT)
+Sender: chubrilo@gmail.com
+Date: Tue, 24 May 2016 14:17:48 +0200
+X-Google-Sender-Auth: EHkhz2Krr9nhLNP7SZAAMS8NuqA
+Message-ID: <CAGeh-pFfPXUX8XpUAJt5n6=qvoAr82ubN97BxE4a44o79tCudg@mail.gmail.com>
+From: Dejan Bosanac <dejan@nighttale.net>
+To: "users@activemq.apache.org" <users@activemq.apache.org>
+Cc: "dev@activemq.apache.org" <dev@activemq.apache.org>, 
+	Apache Security Response Team <security@apache.org>, bugtraq@securityfocus.com, 
+	oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=94eb2c047c5893a2570533958b9f
+Subject: [oss-security] Re: [ANNOUNCE] CVE-2016-3088: ActiveMQ Fileserver web application vulnerabilities
+
+--94eb2c047c5893a2570533958b9f
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] feedback requested regarding deprecation of TLS 1.0/1.1
 
-On Wed, Aug 7, 2024 at 4:47=E2=80=AFPM Steffen Nurpmeso <steffen@sdaoden.eu=
-> wrote:
-> [...]
-> Given that most sensitive software supports easy configuration, for
-> example by passing through "MinProtocol" configuration settings to
-> *SSL (and i so much like the possibility of a "global central
-> OpenSSL configuration file" that bundles all relevant settings,
-> yet so few programs support that possibility), topics like these
-> always strike me as hysteria.  And before the ears ring, i quickly
-> say "as defaults are safe".
+Hi Tim,
 
-Small nit: there is no SSL or TLS min version or max version.
+it=E2=80=99s an omission. The feature will be completely removed with 5.14.=
+0 and
+it=E2=80=99s been disabled by default since 5.12.0, so 5.13.x broker that h=
+aven=E2=80=99t
+this feature turn on explicitly are not vulnerable.
 
-There is a TLS record version, and a TLS protocol version. The record
-layer carries the protocol messages. The record version is kind of
-boring. It has not changed much, and I would speculate you could
-select TLS 1.0 and it would be the same as TLS 1.2 or TLS 1.3 (though
-I did not verify the claim). The TLS protocol version is much more
-interesting, and it is what people customarily think of when they hear
-TLS 1.0, TLS 1.2, and TLS 1.3. It changed a lot between TLS 1.1/TLS
-1.2, and TLS 1.2/TLS 1.3.
+I=E2=80=99ll fix the announcement now to say 5.13.x so it=E2=80=99s future =
+proof in case of
+new 5.13 branch releases
 
-TLS record version and TLS protocol version are _not_ a range of
-min/max. They are discrete versions of the protocol for the underlying
-transport (record) and the upper protocol data units (messages).
+Regards
+--
+Dejan Bosanac
+about.me/dejanb
 
-Also see <https://datatracker.ietf.org/doc/html/rfc5246#appendix-E>.
-It talks about how to set the various versions for maximum
-interoperability.
+On Tue, May 24, 2016 at 2:09 PM, Tim Bain <tbain@alumni.duke.edu> wrote:
 
-Jeff
+> Does the range of versions specified mean that the issue is already
+> addressed in 5.13.3, or was its omission from the range an oversight?
+>
+> Tim
+> On May 24, 2016 2:41 AM, "Dejan Bosanac" <dejan@nighttale.net> wrote:
+>
+> > There's a security vulnerability reported against Apache
+> > ActiveMQ 5.13.2 and older versions.
+> >
+> > Please check the following document and see if you=E2=80=99re affected =
+by the
+> > issue.
+> >
+> >
+> >
+> http://activemq.apache.org/security-advisories.data/CVE-2016-3088-announc=
+ement.txt
+> >
+> > Vulnerability is similar to the one reported in CVE-2015-1830 (
+> >
+> >
+> http://activemq.apache.org/security-advisories.data/CVE-2015-1830-announc=
+ement.txt
+> > ).
+> > The fileserver web application will be removed in 5.14.0 release and
+> users
+> > are advised not to use it and disable it in older versions.
+> >
+> > Regards
+> > --
+> > Dejan Bosanac
+> > about.me/dejanb
+> >
+>
+
+--94eb2c047c5893a2570533958b9f--
