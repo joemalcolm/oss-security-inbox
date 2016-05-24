@@ -1,55 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/25/7
-Message-Id: <20160625162517.21FF36C02B4@smtpvmsrv1.mitre.org>
-Date: Sat, 25 Jun 2016 12:25:17 -0400 (EDT)
-From: cve-assign@...re.org
-To: mpe@...erman.id.au
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux: powerpc/tm: Always reclaim in start_thread() for exec() class syscalls - Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/24/6
+Message-ID: <CAGeh-pFfPXUX8XpUAJt5n6=qvoAr82ubN97BxE4a44o79tCudg@mail.gmail.com>
+Date: Tue, 24 May 2016 14:17:48 +0200
+From: Dejan Bosanac <dejan@...httale.net>
+To: "users@...ivemq.apache.org" <users@...ivemq.apache.org>
+Cc: "dev@...ivemq.apache.org" <dev@...ivemq.apache.org>,  Apache Security Response Team <security@...che.org>, bugtraq@...urityfocus.com,  oss-security@...ts.openwall.com
+Subject: Re: [ANNOUNCE] CVE-2016-3088: ActiveMQ Fileserver web application vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Tim,
 
-> We've found an issue in the handling of Transactional Memory on powerpc
-> systems. An unprivileged local user can crash the kernel by starting a
-> transaction, suspending it, and then calling any of the exec() class system
-> calls.
-> 
-> https://patchwork.ozlabs.org/patch/636776/
+it’s an omission. The feature will be completely removed with 5.14.0 and
+it’s been disabled by default since 5.12.0, so 5.13.x broker that haven’t
+this feature turn on explicitly are not vulnerable.
 
->> Userspace can quite legitimately perform an exec() syscall with a
->> suspended transaction. exec() does not return to the old process,
->> rather it load a new one and starts that, the expectation therefore is
->> that the new process starts not in a transaction. Currently exec() is
->> not treated any differently to any other syscall which creates
->> problems.
+I’ll fix the announcement now to say 5.13.x so it’s future proof in case of
+new 5.13 branch releases
 
-Use CVE-2016-5828.
+Regards
+--
+Dejan Bosanac
+about.me/dejanb
 
-This is not yet available at
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/arch/powerpc/kernel/process.c
-but may be there later.
+On Tue, May 24, 2016 at 2:09 PM, Tim Bain <tbain@...mni.duke.edu> wrote:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+> Does the range of versions specified mean that the issue is already
+> addressed in 5.13.3, or was its omission from the range an oversight?
+>
+> Tim
+> On May 24, 2016 2:41 AM, "Dejan Bosanac" <dejan@...httale.net> wrote:
+>
+> > There's a security vulnerability reported against Apache
+> > ActiveMQ 5.13.2 and older versions.
+> >
+> > Please check the following document and see if you’re affected by the
+> > issue.
+> >
+> >
+> >
+> http://activemq.apache.org/security-advisories.data/CVE-2016-3088-announcement.txt
+> >
+> > Vulnerability is similar to the one reported in CVE-2015-1830 (
+> >
+> >
+> http://activemq.apache.org/security-advisories.data/CVE-2015-1830-announcement.txt
+> > ).
+> > The fileserver web application will be removed in 5.14.0 release and
+> users
+> > are advised not to use it and disable it in older versions.
+> >
+> > Regards
+> > --
+> > Dejan Bosanac
+> > about.me/dejanb
+> >
+>
 
-iQIcBAEBCAAGBQJXbq+vAAoJEHb/MwWLVhi2fJcP/0BcGb5bh7e/KURhMlhCN5Pd
-FPqvNvpTdpLzDnW6ert9mD7wBrHbvf3CdSbNTUI2seRHAcV+ga4Z7gRvmqLtcTCC
-9qdsZymXU6i/ptFKImrHgPbFuqXT8ogOt87usL8RHOaAajRwWYasWsCKWOc0ZJKb
-b819G7I9aXgdLqon+EFcTm0NgU/6VxvK2hrE8b0bGkqw7rflWWIbMYxsb46VoqKe
-BklhgJZUp9kVd2hpNN1Fpv57e8kQ3JtV9obDEW16W68bpiuKIR5HEvZRsBbydNd7
-CqRG7Q4WaqUdlrr9TT3cFHQFOyDZc+rkzrn+yc39xwzOtHJGRHG8bs+wZ0IjihYg
-/VpbjOu6/H1tCBZ2FFH+WEN0PZsqtRy4P9FJzIc2hdsVaj6xC5XxMoh4vH1ryuDp
-gwMc2nZDgtZRN9XQe7n8f6Zd1M4EsSDDrBHp77WgtBmVJTOIF31iN8/tFEjzN0d7
-f5ExKTsMBiEcmK1gZ2YQnlhKtoEEpar95/meGd9FHzsrKg7TV0oc6pChWfTGV5rl
-BvrRJOOs5E433vIIPiTl40QzVPZDnCiqAnH2bzy60ugr7gxTi7vdE/M7VBdUK6yw
-6Oq25iahfH6LOgevzImbDEmQrOf07exQZinXrn+y0e6iYkaPJ78mmBtshX+XUrB7
-K4Cb5KrtVl/PVf5dy3mi
-=y7Xd
------END PGP SIGNATURE-----
