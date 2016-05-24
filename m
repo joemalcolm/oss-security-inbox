@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3347" "Monday" "26" "April" "2021" "15:41:17" "+0200" "Matthias Gerstner" "mgerstner@suse.de" nil "87" "[oss-security] virtualbox: CVE-2021-25319: missing sticky bit in openSUSE packaging for /etc/box allows local root exploit for members of vboxusers group" nil nil nil "4" nil nil (number mark "U       mgerstner@su Apr 26   87/3347  " thread-indent "\"[oss-security] virtualbox: CVE-2021-25319: missing sticky bit in openSUSE packaging for /etc/box allows local root exploit for members of vboxusers group\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] virtualbox: CVE-2021-25319: missing sticky bit in openSUSE packaging for /etc/box allows local root exploit for members of vboxusers group" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["746" "Tuesday" "24" "May" "2016" "10:41:08" "+0200" "Dejan Bosanac" "dejan@nighttale.net" "<CAGeh-pG-+vdAo2TxfnJERYBB-rgcsUX=TX7L71wLGPJXq+dLmg@mail.gmail.com>" "25" "[oss-security] =?UTF-8?B?W0FOTk9VTkNFXSBDVkUtMjAxNi0zMDg4OiBBY3RpdmVNUSBGaWxlc2VydmVyIHdlYiBhcA==?==?UTF-8?B?cGxpY2F0aW9uIHZ1bG5lcmFiaWxpdGllc++7vw==?=" nil nil nil "5" "2016052408:41:08" "[oss-security] =?UTF-8?B?W0FOTk9VTkNFXQ==?= =?UTF-8?B?Q1ZFLTIwMTYtMzA4ODo=?= =?UTF-8?B?QWN0aXZlTVE=?= =?UTF-8?B?RmlsZXNlcnZlcg==?= =?UTF-8?B?d2Vi?= =?UTF-8?B?YXA=?==?UTF-8?B?cGxpY2F0aW9u?= =?UTF-8?B?dnVsbmVyYWJpbGl0aWVz77u/?=" (number mark "U       dejan@nightt May 24   25/746   " thread-indent "\"[oss-security] =?UTF-8?B?W0FOTk9VTkNFXSBDVkUtMjAxNi0zMDg4OiBBY3RpdmVNUSBGaWxlc2VydmVyIHdlYiBhcA==?==?UTF-8?B?cGxpY2F0aW9uIHZ1bG5lcmFiaWxpdGllc++7vw==?=\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3661 invoked by uid 550); 26 Apr 2021 13:41:31 -0000
+Received: (qmail 4043 invoked by uid 550); 24 May 2016 08:41:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,103 +12,67 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3640 invoked from network); 26 Apr 2021 13:41:31 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Mon, 26 Apr 2021 15:41:17 +0200
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <YIbC/ejOYMYVFOPM@f195.suse.de>
+Received: (qmail 3977 invoked from network); 24 May 2016 08:41:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to;
+        bh=yVs2NdpLbWHXGtTRtelrPaLKIyeqxH0v8jJKa8J31gM=;
+        b=qiDZu9kNukBdizrZssFptzLJO1+fPc3LmiMlLf/v7lIB2BRiOgvR5MTy+wZp9SaAqD
+         DRxZBbC32/70tzMtOQLyjIy9CGRksueWBd6PJtIBeqM5LINyTVhi85QCQaTBy0YKVS/N
+         TZaBanDxQd9W32un6Zkwudp5ialPTpOnrCOo/4fdjxWn+OIwQxqGnVNu5ByzI4x3czIW
+         3mXax3bq4eSYQU7A4Zokjo0P6C7GBDX9fQ442ph0aQJOmI4ER8Uv8R9wIagcf+l3N+NM
+         /yqpVHj6VxvVa1t0ZYJFwK58IMUAAv1jX0ekFDBhGm5NMf0ryCnBQnY/0VVjL7Q9Itmt
+         DRhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:date:message-id:subject:from
+         :to;
+        bh=yVs2NdpLbWHXGtTRtelrPaLKIyeqxH0v8jJKa8J31gM=;
+        b=Bh5n/7Ymz8dweUEY7uDKCuyr08nKpdH5YOd5T7vNYlU3eY4yQuzYr343+20GyQUF6B
+         xt8BMAkxskLnUuby25kzeoSxarv7Gq2BdN05hRUAns9b1Eabtfk6vMU/kCwy+AZWUbyw
+         fxXY9odDV35Q6fbJS2xadTbNl2oIoMiC5BbWkrF3uIbfldcKTQRQIr7BREz8mcEliJjx
+         MtArlPS+s9Ib7vcZTADaXU5mY849kt1NeEeUS0Sy6RoIw9PzSjy824LRnTj8Dy1rww1U
+         SX/QQMcPLvD2U5Bzv06SbF72NVOr1OhUrq5qGR4+BVJHWBi3dHF8p9VRbJEmV1TvksR0
+         K4XQ==
+X-Gm-Message-State: ALyK8tJWuiBc80jr5SpVB9iKafF7eQLc83KIPp0cD8L89eJBQjB2tz32s7/IBSAP24I6xYzmbhMhNoE8K6M/Jg==
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="D24RobCn7UadMVn1"
-Content-Disposition: inline
-Subject: [oss-security] virtualbox: CVE-2021-25319: missing sticky bit in openSUSE packaging
- for /etc/box allows local root exploit for members of vboxusers group
+X-Received: by 10.176.3.39 with SMTP id 36mr1772868uat.105.1464079269028; Tue,
+ 24 May 2016 01:41:09 -0700 (PDT)
+Sender: chubrilo@gmail.com
+Date: Tue, 24 May 2016 10:41:08 +0200
+X-Google-Sender-Auth: M-0JKzPbyls2PFDu2hfAUirFyrg
+Message-ID: <CAGeh-pG-+vdAo2TxfnJERYBB-rgcsUX=TX7L71wLGPJXq+dLmg@mail.gmail.com>
+From: Dejan Bosanac <dejan@nighttale.net>
+To: "dev@activemq.apache.org" <dev@activemq.apache.org>, 
+	"users@activemq.apache.org" <users@activemq.apache.org>, 
+	Apache Security Response Team <security@apache.org>, oss-security@lists.openwall.com, 
+	bugtraq@securityfocus.com
+Content-Type: multipart/alternative; boundary=001a113d1a5ec0ed51053392844c
+Subject: [oss-security] =?UTF-8?Q?=5BANNOUNCE=5D_CVE=2D2016=2D3088=3A_ActiveMQ_Fileserver_web_ap?=
+	=?UTF-8?Q?plication_vulnerabilities=EF=BB=BF?=
 
---D24RobCn7UadMVn1
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+--001a113d1a5ec0ed51053392844c
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+There's a security vulnerability reported against Apache
+ActiveMQ 5.13.2 and older versions.
 
-somewhat related to CVE-2021-2264 I noticed an openSUSE specific
-security issue in the openSUSE packaging for virtualbox [1]. To enable
-the autostart feature in virtualbox as outlined in the upstream manual
-[2] our packagers introduced a group 'vboxusers' that is granted write
-access to the directory /etc/vbox as the "autostart DB". Contrary to
-what the manual says the directory was not packaged with the sticky bit
-set, however.
+Please check the following document and see if you=E2=80=99re affected by t=
+he issue.
 
-The file /etc/vbox/vbox.cfg is a configuration file for virtualbox. This
-file is sourced by other virtualbox bash scripts running as root like
-'vboxautostart.sh', 'vboxdrv.sh' and 'vboxweb-service.sh'. Due to the
-missing sticky bit any member of the vboxusers group can replace the
-/etc/vbox/vbox.cfg file by a manipulated one, allowing for full code
-execution in the context of the root user once e.g. the vboxautostart
-systemd service runs.
+http://activemq.apache.org/security-advisories.data/CVE-2016-3088-announcem=
+ent.txt
 
-Reproducer:
+Vulnerability is similar to the one reported in CVE-2015-1830 (
+http://activemq.apache.org/security-advisories.data/CVE-2015-1830-announcem=
+ent.txt).
+The fileserver web application will be removed in 5.14.0 release and users
+are advised not to use it and disable it in older versions.
 
-    root# su -g vboxusers nobody
-    nobody$ cd /etc/vbox
-    nobody$ cp vbox.cfg vbox.cfg.new
-    nobody$ rm -f vbox.cfg
-    nobody$ mv vbox.cfg.new vbox.cfg
-    nobody$ echo "touch /root/evil" >>vbox.cfg
-=20=20=20=20
-    nobody$ exit
-    root# systemctl start vboxautostart.service
-    root# ls -lh /root/evil
-    -rw-r--r-- 1 root root 0  2. M=E4r 12:14 /root/evil
+Regards
+--
+Dejan Bosanac
+about.me/dejanb
 
-I have been looking into other distributions like Arch Linux, Fedora and
-also some of the RPMs distributed on www.virtualbox.org. They all
-package /etc/vbox as root:root mode 755 and are therefore not affected.
-
-Updates for the openSUSE virtualbox packages are underway [3] that will
-fix the packaging error and also move the "autostart DB" directory from
-/etc/vbox to /etc/vbox/autostart.d to avoid mixing the autostart related
-files with the virtualbox system configuration file in the same
-directory.
-
-Cheers
-
-Matthias
-
-[1]: https://build.opensuse.org/package/show/Virtualization/virtualbox
-[2]: https://www.virtualbox.org/manual/ch09.html#autostart-linux
-[3]: https://bugzilla.suse.com/show_bug.cgi?id=3D1182918
-
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-=20
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG N=FCrnberg
-Gesch=E4ftsf=FChrer: Felix Imend=F6rffer
-
---D24RobCn7UadMVn1
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmCGwv0ACgkQFMQFyXGS
-NVMFUA/8C58CiIu6akceqxxVqowX1KWjQuGN9uQs9gqEonVHBtT1MRFSREoYGMi0
-Ou4kZS3Yy7CXzCc8Rz0vGYVcbFpekmczet+KAG9X0G3AnFiuvH68yazGvWQHN7gB
-wMHQBkdk/BA8ZVEe2Jgcq38WmGKtDgy8Rs7apmhSRBwdtAyWOCOzWols3FQFL9gw
-TJoobKneLRJDShWYWW8zcPgYePn+7RjJeJ99tyaM4Tt9rApRzdfjhBmUYR3xlsSY
-Xkzrp9h4PSsqJiawbcTcznRARKnFsdKhOorlV2G4IHRg6k37sPjNAHuds/nus7/Y
-KM+7lkTqS8GM196JY7eD7soe9DGMu/gYwNhJnLs4gWuog0fF01ep4MvcJ5+LraFi
-bhhJesQNcsDjjZbE52jrkaZnWLWBCUwuld0Pap6ofjc5XTZCA88/1xKiWjm/t5iE
-aQs4i3n+wwqaKRXogDbCgCdTmtofK4n2heH1RuKVnq5HbCYPLY5bVOzFK7YM0dRh
-79WabFmPQJnCVJklcQojVD79TzaDD7msMjBLfORe1j7Hd3q93jXXiP7PVmqT6UVx
-dSD6ktZ0xzJ+kkvcYmKjvRGl5hoLxTszJXxnmSx/Mim+pEWb844gWgwp1gwuMP46
-HvFQZx6VJx41u4tirzqhZVNznqu4koimoE4wI2HYuM8SsI7dVOI=
-=9aEo
------END PGP SIGNATURE-----
-
---D24RobCn7UadMVn1--
+--001a113d1a5ec0ed51053392844c--
