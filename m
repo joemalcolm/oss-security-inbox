@@ -1,4 +1,9 @@
-Received: (qmail 15977 invoked by uid 550); 7 Jul 2025 17:39:13 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["19676" "Tuesday" "24" "May" "2016" "11:51:13" "+0300" "Solar Designer" "solar@openwall.com" "<20160524085113.GA29535@openwall.com>" "777" "Re: [oss-security] CVE request: Multiple vunerabilities in libdwarf & dwarfdump" nil nil nil "5" "2016052408:51:13" "[oss-security] CVE request: Multiple vunerabilities in libdwarf & dwarfdump" (number mark "U       solar@openwa May 24  777/19676 " thread-indent "\"Re: [oss-security] CVE request: Multiple vunerabilities in libdwarf & dwarfdump\"\n") "<CANK7Sy-z=M=S+SPfy1x4Mkz4rUb5aFUtquhJujQnm+60DQr4ng@mail.gmail.com>" ("<CANK7Sy-z=M=S+SPfy1x4Mkz4rUb5aFUtquhJujQnm+60DQr4ng@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 18206 invoked by uid 550); 24 May 2016 08:51:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,97 +12,794 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15922 invoked from network); 7 Jul 2025 17:39:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751909943; x=1752514743; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=kN2wEdmEZWesYo97vMEr++vOqU9IuTu36TLi7Uj4/d0=;
-        b=dIRGGKAmLHYYEdfCrHd56mrElcEn9if4o+BMxNKre5B54oxt2uPKTBJfax8AwV/8Lx
-         So3ib+aLEPZpGYRIslyRhTQi3cJ2dM3CTJvOOfAwMuRPjGO3T1hWhC4GfwyXct4H0FwG
-         xfBsUrWfc0QVPd1Jv/zOku/7HmA6gDU9GrzCceJ8K/SeMuohogCpgeU72TSTKVLfON7J
-         ZJQIPcg0JvGCIZuWQd9Nq2XBk881ilRtCQ+1MTILj0qEx/tQ3j+IG7SIjwwzqBsMAHkx
-         Us1GppktkgssSHnneZsSrqY6plXgQJ9wMD9cP6Nu7vGpvUvn6TDDHRDh5+C8alhjDwNH
-         vb+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751909943; x=1752514743;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kN2wEdmEZWesYo97vMEr++vOqU9IuTu36TLi7Uj4/d0=;
-        b=E72+yxc/gUs2IVfywX5pY3j7ix9H8j+OXt3WfACwPc2h27GZok+JAxA86dG/xBKaKb
-         AcFZSnFKd/GL60S3NY+nxzYDQE4wzJIsQWyiapLAEaEFKKhm69lk6eCw8n9+ntEYNxir
-         67cvPXb9liXIJQ2bW+W+L6j/28dynaZr0SmLYI9vclOqF729w2TDERl9MzVaT14HzDaB
-         s1yb2Wrb2+krg+MKtFJaLwAgo4fawto/t3Q/L8/3cboCK0ShsZiPW/+SX5yDDNplDgGL
-         iX0cQDuGHW7uuQwUlwWfm5BZBO5u/D5RDLkyih1lxzwvybh2BTOOmw0NmC6gUa/heHlC
-         Ws9g==
-X-Gm-Message-State: AOJu0YwpfWwhxqZ96Hj6LLgXNWF3Vi/iLiXZvNQr2kv6dQpWjWMVtdcN
-	hb/COSGDboQl4GuS7bS//R0f4Tk7Ff/nbRGlUSdjsENrGSnVH4eAWY/ODYkD/8nGXtB0JHYNX3B
-	sa5uyfErsGppReRVBF1wLGIetZbZiK1tyz2bPT1g=
-X-Gm-Gg: ASbGncsRAyFquT9j0FA2GQvWEHAc0RvJm2KRVGRxO5Ad1N1NekycK0IfkYQCPhjf2ic
-	66oncWkz9+YceSoZVCYZDbsQxryxZlR1FRovMSsBpmvLnH81ZbQPPPDlzzOzOYxif6eenaNeWMM
-	+Yc/P/pAUQIp7NDoQQAbGtZpSlJTmy6FqhgJsK9fKb/AZDoi+UywP/E6FgKMVP/wOyhtOFv1ak4
-	Fc=
-X-Google-Smtp-Source: AGHT+IGDU9s4YCVRp1TlClv7LzpZ8/y4Xvsa/pS4zEIDjDuftxOsIoJPo39ru+JeBBmRc4eZzWMKqSyJJk6KZ358dLI=
-X-Received: by 2002:a05:6820:6081:b0:613:bd07:3f34 with SMTP id
- 006d021491bc7-613bd0747demr850414eaf.0.1751909942469; Mon, 07 Jul 2025
- 10:39:02 -0700 (PDT)
-MIME-Version: 1.0
-From: Brandon Perry <bperry.volatile@gmail.com>
-Date: Mon, 7 Jul 2025 12:38:50 -0500
-X-Gm-Features: Ac12FXyDZt3QVz2yKWuOMQKOJqXxJ2V-2klyJ6HVR8NZkzU76R3s54O5Tp007_U
-Message-ID: <CAOJKFBBgP_ixci3K0=EdoXXk91=sLD-K5KYNDmYVVnKhYWeeRA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/mixed; boundary="000000000000ccce1006395a51e2"
-Subject: [oss-security] Electric Charger Research
+Received: (qmail 18183 invoked from network); 24 May 2016 08:51:27 -0000
+Date: Tue, 24 May 2016 11:51:13 +0300
+From: Solar Designer <solar@openwall.com>
+To: Yue Liu <liuyue0310@gmail.com>
+Cc: oss-security@lists.openwall.com, David Anderson <davea42@linuxmail.org>
+Message-ID: <20160524085113.GA29535@openwall.com>
+References: <CANK7Sy-z=M=S+SPfy1x4Mkz4rUb5aFUtquhJujQnm+60DQr4ng@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="ZGiS0Q5IWpPtfppv"
+Content-Disposition: inline
+In-Reply-To: <CANK7Sy-z=M=S+SPfy1x4Mkz4rUb5aFUtquhJujQnm+60DQr4ng@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE request: Multiple vunerabilities in libdwarf & dwarfdump
 
---000000000000ccce1006395a51e2
-Content-Type: multipart/alternative; boundary="000000000000ccce0d06395a51e0"
+--ZGiS0Q5IWpPtfppv
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
---000000000000ccce0d06395a51e0
-Content-Type: text/plain; charset="UTF-8"
+Hi,
 
-Attached is a write-up of some research I've been doing since November last
-year. The research covers the digital protocols used from an electric
-vehicle -> charger (ISO-15118) and the protocols used to manage the charger
-from a central management system (OCPP). I also cover some of the equipment
-I've used to do the research.
+On oss-security it is strongly preferred that actual content (rather
+than just links) be included in the postings for long-term archival,
+as long as the message doesn't exceed 200 KB (including MIME overhead).
 
-tl;dr - Your vehicle charger port or EVSE charger cable is functionally a
-network interface utilizing powerline communication over the control pilot
-pin. Using a development kit for electric vehicle and charger research, I
-showed how SSH can be configured to listen on the charger cable
-accidentally, allowing a vehicle to initiate the network and authenticate
-to the SSH server over the charger cable.
+On Tue, May 24, 2016 at 04:01:42PM +0800, Yue Liu wrote:
+> There are multiple vunerabilities in libdwarf&dwarfdump which were
+> discovered by Yue Liu(lieanu <liuyue0310@gmail.com>) and Qixue Xiao.
+> 
+> Vulnerabilities DW201605-001 to DW201605-019 in
+> https://www.prevanders.net/dwarfbug.html
 
-I also demonstrate two separate issues affecting open source CSMS
-implementations, one a full denial of service, the other partial DoS.
+I've attached the current content of the above web page to this message,
+as text/plain.
 
-You can also find this HTML file here: https://ocpp.us/howto.html
+> And anther one https://bugzilla.redhat.com/show_bug.cgi?id=1330237
 
-I hope this helps others. Thanks.
+Here it is:
 
---000000000000ccce0d06395a51e0
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+---
+Description of problem:
+There is a NULL pointer dereference bug in libdwarf-20160115 and latest git code.
 
-<div dir=3D"ltr"><div>Attached is a write-up of some research I&#39;ve been=
- doing since November=C2=A0last year. The research covers the digital proto=
-cols used from an electric vehicle -&gt; charger (ISO-15118) and the protoc=
-ols used to manage the charger from a central management system (OCPP). I a=
-lso cover some of the equipment I&#39;ve used to do the research.</div><div=
-><br></div><div>tl;dr - Your vehicle charger port or EVSE charger cable is =
-functionally a network interface utilizing powerline communication over the=
- control pilot pin. Using a development kit for electric vehicle and charge=
-r research, I showed how SSH can be configured to listen on the charger cab=
-le accidentally, allowing a vehicle to initiate the network and authenticat=
-e to the SSH server over the charger cable.</div><div><br></div><div>I also=
- demonstrate two separate issues affecting open source CSMS implementations=
-, one a full denial of service, the other partial DoS.</div><div><br></div>=
-<div>You can also find this HTML file here:=C2=A0<a href=3D"https://ocpp.us=
-/howto.html">https://ocpp.us/howto.html</a></div><div><br></div><div>I hope=
- this helps others. Thanks.</div></div>
+The bug is at file dwarf_leb.c:147
+ 143             byte_length++;
+ 144             if (byte_length > BYTESLEBMAX) {
+ 145                 /*  Erroneous input. What to do?
+ 146                     Abort? Return error? Just stop here?*/
+ 147                 *leb128_length = BYTESLEBMAX;               <- $pc
+ 148                 return number;
+ 149             }
+ 150         }
 
---000000000000ccce0d06395a51e0--
+which triggered by dwarf_form.c:918
+ 913             *return_sval = (Dwarf_Signed) ret_value;
+ 914             return DW_DLV_OK;
+ 915             }
+ 916
+ 917         case DW_FORM_sdata:
+ 918             ret_value =
+ 919                 (_dwarf_decode_s_leb128(attr->ar_debug_ptr, NULL));
+ 920             *return_sval = ret_value;
+ 921             return DW_DLV_OK;
+ 922
 
---000000000000ccce1006395a51e2--
+Version-Release number of selected component (if applicable):
+Tested in libdwarf-20160115 and latest git code
+---
+
+> All vulnerabilities have been fixed in upstream.
+> 
+> POC: https://sourceforge.net/p/libdwarf/regressiontests/ci/master/tree/liu/
+
+Unfortunately, some of the PoCs are a bit too large to attach.  While
+the above directory is ~110 KB under tar.xz, the PoC attached to Red Hat
+Bugzilla Bug 1330237 is ~150 KB under xz.
+
+So let's keep just the vulnerability detail in here for now.
+
+One of the reasons why I am posting this is to provide an example of
+what content to include in oss-security postings going forward.  Also,
+it's a call for smaller PoCs (for further occasions; no need to rework
+these PoCs now), so that those could be included as well.
+
+Alexander
+
+--ZGiS0Q5IWpPtfppv
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="dwarfbug.txt"
+
+                            David A's DWARF Page
+
+                                Introduction
+
+ This page provides documentation of known vulnerabilities in libdwarf. We
+ are concerned here with cases where corrupt (by accident or intention)
+ DWARF can cause the library to get a fault (crash) which could expose the
+ calling program to interception by malefactors. The page is new as of 4
+ May, 2016 (20160504 as an ISO date) and its content may change radically
+ as we determine what this page should contain and whether this page is a
+ good idea.
+
+ For an xml version of the same data one should refer to
+ https://www.prevanders.net/dwarfbug.xml
+
+ Git commit string ids refer to the source on sourceforge.net. The source
+ can be retrieved via anonymous access:
+ "git clone git://git.code.sf.net/p/libdwarf/code"
+
+ Git reference path names refer to object files in the libdwarf regression
+ test base. The test files can be retrieved via anonymous access:
+ "git clone git://git.code.sf.net/p/libdwarf/regressiontests" .
+
+                              Vulnerabilities
+
+ Vulnerabilities are listed newest-first.
+
+DW201605-019
+
+ id: DW201605-019
+
+ cve:
+
+ datereported: 20160523
+
+ reportedby: Yue Liu
+
+ vulnerability: Null derefernce in print_frame_inst_bytes (dwarfdump)
+
+ product: libdwarf
+
+ description: The null dereference is due to a corrupted object file.
+ Libdwarf was not dealing with empty (bss-like) sections since it really
+ did not expect to see such in sections it reads! Now libdwarf catches the
+ object error so dwarfdump sees the section as empty (as indeed it is!).
+
+ datefixed: 20160523
+
+ references: dwarftests/liu/NULLdeference0522c.elf
+
+ gitfixid: a55b958926cc67f89a512ed30bb5a22b0adb10f4
+
+ tarrelease:
+
+
+DW201605-018
+
+ id: DW201605-018
+
+ cve:
+
+ datereported: 20160522
+
+ reportedby: Yue Liu
+
+ vulnerability: Null dereference in create_fullest_file_path().
+
+ product: libdwarf
+
+ description: The null dereference in create_fullest_file_path() causes a
+ crash. This is due to corrupted dwarf and the fix detects this corruption
+ and if that null string pointer happens undetected a static string is
+ substituted so readers can notice the situation.
+
+ 202             }
+203             if (dirno > 0 && fe->fi_dir_index > 0) {
+204                 inc_dir_name = (char *)
+                        line_context->lc_include_directories[
+205                     fe->fi_dir_index - 1];
+206                 incdirnamelen = strlen(inc_dir_name);  <- $pc
+207             }
+208             full_name = (char *) _dwarf_get_alloc(dbg,
+#0  create_fullest_file_path (dbg=<optimized out>,
+fe=0x68d510, line_context=0x68c4f0, name_ptr_out=<optimized
+out>, error=0x7fffffffe2b8) at ./dwarf_line.c:206
+#1  0x00007ffff7b6d3f9 in dwarf_filename (context=<optimized
+out>, fileno_in=<optimized out>, ret_filename=0x7fffffffe280,
+error=0x7fffffffe2b8) at ./dwarf_line.c:1418
+#2  dwarf_linesrc (line=<optimized out>,
+ret_linesrc=<optimized out>, error=<optimized out>) at
+./dwarf_line.c:1436
+
+
+ datefixed: 20160522
+
+ references: dwarftests/liu/NULLdereference0522.elf
+
+ gitfixid: acae971371daa23a19358bc62204007d258fbc5e
+
+ tarrelease:
+
+
+DW201605-017
+
+ id: DW201605-017
+
+ cve:
+
+ datereported: 20160519
+
+ reportedby: Yue Liu
+
+ vulnerability: Null dereference bug in
+ _dwarf_calculate_info_section_end_ptr().
+
+ product: libdwarfj
+
+ description: NULL dereference bug in
+ _dwarf_calculate_info_section_end_ptr().
+
+1742         Dwarf_Off off2 = 0;
+1743         Dwarf_Small *dataptr = 0;
+1744
+1745         dbg = context->cc_dbg;
+1746         dataptr = context->cc_is_info? dbg->de_debug_info.dss_data:                 <- $pc
+1747             dbg->de_debug_types.dss_data;
+1748         off2 = context->cc_debug_offset;
+1749         info_start = dataptr + off2;
+1750         info_end = info_start + context->cc_length +
+#0  _dwarf_calculate_info_section_end_ptr
+(context=context@entry=0x0) at dwarf_query.c:1746
+#1  0x00002aaaaace307d in
+_dwarf_extract_string_offset_via_str_offsets
+(dbg=dbg@entry=0x655a70, info_data_ptr=0x6629f0
+"", attrnum=attrnum@entry=121,
+attrform=attrform@entry=26, cu_context=0x0,
+str_sect_offset_out=str_sect_offset_out@entry=0x7fffffffd718,
+error=error@entry=0x7fffffffd878) at dwarf_form.c:1099
+#2  0x00002aaaaacf4ed7 in dwarf_get_macro_defundef
+(macro_context=macro_context@entry=0x65b790,
+op_number=op_number@entry=1,
+line_number=line_number@entry=0x7fffffffd858,
+index=index@entry=0x7fffffffd860,
+offset=offset@entry=0x7fffffffd868,
+forms_count=forms_count@entry=0x7fffffffd7ce,
+macro_string=macro_string@entry=0x7fffffffd870,
+error=error@entry=0x7fffffffd878) at dwarf_macro5.c:557
+------
+_dwarf_calculate_info_section_end_ptr (context=context@entry=0x0) at
+  dwarf_query.c:1746
+1746        dataptr = context->cc_is_info? dbg->de_debug_info.dss_data:
+gef> p/x $rdi
+$4 = 0x0
+
+
+ datefixed: 20160522
+
+ references: regressiontests/liu/NULLdereference0519.elf
+
+ gitfixid: 6fa3f710ee6f21bba7966b963033a91d77c952bd
+
+ tarrelease:
+
+
+DW201605-016
+
+ id: DW201605-016
+
+ cve:
+
+ datereported: 20160519
+
+ reportedby: Yue Liu
+
+ vulnerability: Invalid dwarf leads to dwarfdump crash in
+ print_frame_inst_bytes.
+
+ product: dwarfdump
+
+ description: Corrupted dwarf crashes dwarfdump
+
+1297         }
+1298         len = len_in;
+1299         endpoint = instp + len;
+1300         for (; len > 0;) {
+1301             unsigned char ibyte = *instp;           <- $pc
+1302             int top = ibyte & 0xc0;
+1303             int bottom = ibyte & 0x3f;
+1304             int delta = 0;
+1305             int reg = 0;
+#0  print_frame_inst_bytes (dbg=dbg@entry=0x655ca0,
+cie_init_inst=<optimized out>, len_in=<optimized out>,
+data_alignment_factor=-4, code_alignment_factor=4,
+addr_size=addr_size@entry=4, offset_size=4, version=3,
+config_data=config_data@entry=0x63cda0 <g_config_file_data>)
+at print_frames.c:1301
+#1  0x000000000041b70c in print_one_cie
+(dbg=dbg@entry=0x655ca0, cie=<optimized out>,
+cie_index=cie_index@entry=2, address_size=<optimized out>,
+config_data=config_data@entry=0x63cda0 <g_config_file_data>)
+at print_frames.c:1161
+#2  0x000000000041cf52 in print_frames (dbg=0x655ca0,
+print_debug_frame=print_debug_frame@entry=1, print_eh_frame=0,
+config_data=config_data@entry=0x63cda0 <g_config_file_data>)
+at print_frames.c:2229
+gef> p/x $r13
+$1 = 0x4bcad8
+gef> p/x *$r13
+Cannot access memory at address 0x4bcad8
+
+
+ datefixed: 20160522
+
+ references: regressiontests/liu/OOB_READ0519.elf
+
+ gitfixid: 6fa3f710ee6f21bba7966b963033a91d77c952bd
+
+ tarrelease:
+
+
+DW201605-015
+
+ id: DW201605-015
+
+ cve:
+
+ datereported: 20160517
+
+ reportedby: Yue Liu
+
+ vulnerability: OOB read bug in print_frame_inst_bytes()
+
+ product: libdwarf
+
+ description: Test object shows an invalid read in
+ print_frame_inst_bytes().
+
+1294         for (; len > 0;) {
+1295             unsigned char ibyte = *instp;           <- $pc
+1296             int top = ibyte & 0xc0;
+#0  print_frame_inst_bytes (dbg=dbg@entry=0x654c80,
+   cie_init_inst=<optimized out>, len=503715, data_alignment_factor=-4,
+   code_alignment_factor=1, addr_size=addr_size@entry=4, offset_size=4,
+   version=3, config_data=config_data@entry=0x63bda0
+   <g_config_file_data>) at print_frames.c:1295
+#1  0x000000000041b64c in print_one_cie (dbg=dbg@entry=0x654c80,
+   cie=<optimized out>, cie_index=cie_index@entry=1,
+   address_size=<optimized out>, config_data=
+   config_data@entry=0x63bda0 <g_config_file_data>) at print_frames.c:1161
+#2  0x000000000041ce92 in print_frames (dbg=0x654c80,
+   print_debug_frame=print_debug_frame@entry=1, print_eh_frame=0,
+   config_data=config_data@entry=0x63bda0 <g_config_file_data>)
+   at print_frames.c:2209
+gef> x/10x $r13
+0x5e7981:       Cannot access memory at address 0x5e7981
+gef> p/x $r13
+$14 = 0x5e7981
+
+
+ datefixed: 20150518
+
+ references: regressiontests/liu/OOB0517_03.elf
+
+ gitfixid: ac6673e32f3443a5d36c2217cb814000930b2c54
+
+ tarrelease:
+
+
+DW201605-014
+
+ id: DW201605-014
+
+ cve:
+
+ datereported: 20160517
+
+ reportedby: Yue Liu
+
+ vulnerability: OOB read bug in dwarf_get_xu_hash_entry()
+
+ product: libdwarf
+
+ description: Test object shows an invalid read in dwarf_get
+ _xu_hash_entry, lin 211.
+
+#0  dwarf_get_xu_hash_entry (xuhdr=xuhdr@entry=0x657360,
+   index=index@entry=2897626028, hash_value=
+   hash_value@entry=0x7fffffffd5b0,
+   index_to_sections=index_to_sections@entry=0x7fffffffd5a8,
+   err=err@entry=0x7fffffffdb08) at dwarf_xu_index.c:211
+#1  0x00002aaaaacfd05e in _dwarf_search_fission_for_key (
+   dbg=0x654a50, error=0x7fffffffdb08, percu_index_out=<synthetic pointer>,
+   key_in=0x7fffffffd670, xuhdr=0x657360) at dwarf_xu_index.c:363
+#2  dwarf_get_debugfission_for_key (dbg=dbg@entry=0x654a50,
+   key=key@entry=0x7fffffffd670, key_type=key_type@entry=0x2aaaaad15e2a
+   "tu", percu_out=percu_out@entry=0x65a830,
+   error=error@entry=0x7fffffffdb08) at dwarf_xu_index.c:577
+
+
+ datefixed: 20150518
+
+ references: regressiontests/liu/OOB0517_02.elf
+
+ gitfixid: ac6673e32f3443a5d36c2217cb814000930b2c54
+
+ tarrelease:
+
+
+DW201605-013
+
+ id: DW201605-013
+
+ cve:
+
+ datereported: 20160517
+
+ reportedby: Yue Liu
+
+ vulnerability: OOB read bug in print_exprloc_content
+
+ product: libdwarf
+
+ description: Test object shows an invalid write in print_exprloc_content.
+
+#0  print_exprloc_content (dbg=dbg@entry=0x654ea0,
+   die=die@entry=0x65b110, attrib=attrib@entry=0x65b590,
+   esbp=esbp@entry=0x7fffffffcef0, showhextoo=1) at print_die.c:4182
+#1  0x0000000000412fb1 in get_attr_value (dbg=dbg@entry=0x654ea0,
+   tag=<optimized out>, die=die@entry=0x65b110,
+   dieprint_cu_goffset=dieprint_cu_goffset@entry=11,
+   attrib=attrib@entry=0x65b590, srcfiles=srcfiles@entry=0x0,
+   cnt=cnt@entry=0, esbp=esbp@entry=0x7fffffffcef0, show_form=0,
+   local_verbose=0) at print_die.c:4972
+
+
+ datefixed: 20150518
+
+ references: regressiontests/liu/OOB0517_01.elf
+
+ gitfixid: ac6673e32f3443a5d36c2217cb814000930b2c54
+
+ tarrelease:
+
+
+DW201605-012
+
+ id: DW201605-012
+
+ cve:
+
+ datereported: 20160513
+
+ reportedby: Yue Liu
+
+ vulnerability: OOB write. From relocation records
+
+ product: libdwarf
+
+ description: Test object shows an invalid write in dwarf_elf_access.c
+ (when doing the relocations). Adding the relocation value to anything
+ overflowed and disguised the bad relocation record. With a 32bit kernel
+ build the test could show a double-free and coredump due to the unchecked
+ invalid writes from relocations.
+
+ datefixed: 20160517
+
+ references: regressiontests/liu/HeapOverflow0513.elf
+
+ gitfixid: 10ca310f64368dc083efacac87732c02ef560a92
+
+ tarrelease:
+
+
+DW201605-011
+
+ id: DW201605-011
+
+ cve:
+
+ datereported: 20160506
+
+ reportedby: Yue Liu
+
+ vulnerability: OOB read bug in _dwarf_read_line_table_header
+
+ product: libdwarf
+
+ description: Test object shows null dereference at line 62 of
+ dwarf_line_table_reader.c. Frame code and linetable code was not noticing
+ data corruption.
+
+ datefixed: 20160512
+
+ references: regressiontests/liu/OOB_read4.elf
+
+ gitfixid: 82d8e007851805af0dcaaff41f49a2d48473334b
+
+ tarrelease:
+
+
+DW201605-010
+
+ id: DW201605-010
+
+ cve:
+
+ datereported: 20160506
+
+ reportedby: Yue Liu
+
+ vulnerability: OOB read bug in dump_block
+
+ product: libdwarf
+
+ description: Test object shows null dereverence at line 186 of
+ dump_block() in print_sections.c Frame code was not noticing frame data
+ corruption.
+
+ datefixed: 20160512
+
+ references: regressiontests/liu/OOB_read3.elf
+ regressiontests/liu/OOB_read3_02.elf
+
+ gitfixid: 82d8e007851805af0dcaaff41f49a2d48473334b
+
+ tarrelease:
+
+
+DW201605-009
+
+ id: DW201605-009
+
+ cve:
+
+ datereported: 20160505
+
+ reportedby: Yue Liu
+
+ vulnerability: NULL dereference in _dwarf_load_section
+
+ product: libdwarf
+
+ description: Test object shows null dereverence at line 1010
+ if(!strncmp("ZLIB",(const char *)src,4)) { in dwarf_init_finish.c The zlib
+ code was not checking for a corrupted length-value.
+
+ datefixed: 20160506
+
+ references: regressiontests/liu/NULLderefer0505_01.elf
+
+ gitfixid: b6ec2dfd850929821626ea63fb0a752076a3c08a
+
+ tarrelease: 20160507
+
+
+DW201605-008
+
+ id: DW201605-008
+
+ cve:
+
+ datereported: 20160505
+
+ reportedby: Yue Liu
+
+ vulnerability: OOB read in dwarf_get_macro_startend_file()
+
+ product: libdwarf
+
+ description: Test object shows out of bound read. OOB at: line 772
+ *src_file_name = macro_context->mc_srcfiles[trueindex]; in dwarf_macro5.c
+ A string offset into .debug_str is outside the bounds of the .debug_str
+ section.
+
+ datefixed: 20160512
+
+ references: regressiontests/liu/OOB0505_02.elf
+ regressiontests/liu/OOB0505_02_02.elf
+
+ gitfixid: 82d8e007851805af0dcaaff41f49a2d48473334b
+
+ tarrelease:
+
+
+DW201605-007
+
+ id: DW201605-007
+
+ cve:
+
+ datereported: 20160505
+
+ reportedby: Yue Liu
+
+ vulnerability: OOB read bug in get_attr_value()
+
+ product: libdwarf
+
+ description: Test object shows out of bound read. Object had data
+ all-bits-on so the existing length check did not work due to wraparound.
+ Added a check not susceptible to that error
+ (DW_DLE_FORM_BLOCK_LENGTH_ERROR).
+
+ datefixed: 20160506
+
+ references: regressiontests/liu/OOB0505_01.elf
+
+ gitfixid: eb1472afac95031d0c9dd8c11d527b865fe7deb8
+
+ tarrelease: 20160507
+
+
+DW201605-006
+
+ id: DW201605-006
+
+ cve:
+
+ datereported: 20160505
+
+ reportedby: Yue Liu
+
+ vulnerability: Two Heap-Overflow bug
+
+ product: libdwarf
+
+ description: Two test objects showing a heap overflow in libdwarf when
+ using dwarfdump. It seems that these were fixed by the previous git
+ update. Neither gdb nor valgrind find any errors when building with
+ yesterday's commit.
+
+ datefixed: 20160504
+
+ references: regressiontests/liu/free_invalid_address.elf
+ regressiontests/liu/heapoverflow01b.elf
+
+ gitfixid: 98a3da1e8237fe0d45b67ef77f3fa5ed9ff0215f
+
+ tarrelease: 20160507
+
+
+DW201605-005
+
+ id: DW201605-005
+
+ cve:
+
+ datereported: 20160502
+
+ reportedby: Yue Liu
+
+ vulnerability: A specially crafted DWARF section results in reading a
+ compilation unit header that crashes the application.
+
+ product: libdwarf
+
+ description: If the data read for a compilation unit header contains a too
+ large length value the library will read outside of its bounds and crash
+ the application.
+
+ datefixed: 20160504
+
+ references: regressiontests/liu/null02.elf
+
+ gitfixid: 98a3da1e8237fe0d45b67ef77f3fa5ed9ff0215f
+
+ tarrelease: 20160507
+
+
+DW201605-004
+
+ id: DW201605-004
+
+ cve:
+
+ datereported: 20160502
+
+ reportedby: Yue Liu
+
+ vulnerability: A specially crafted DWARF section results in a null
+ dereference reading debugging information entries which crashes the
+ application.
+
+ product: libdwarf
+
+ description: If no DW_AT_name is present in a debugging information entry
+ using DWARF5 macros a null dereference in dwarf_macro5.c will crash the
+ application.
+
+ datefixed: 20160504
+
+ references: regressiontests/liu/null01.elf
+
+ gitfixid: 98a3da1e8237fe0d45b67ef77f3fa5ed9ff0215f
+
+ tarrelease: 20160507
+
+
+DW201605-003
+
+ id: DW201605-003
+
+ cve:
+
+ datereported: 20160502
+
+ reportedby: Yue Liu
+
+ vulnerability: A specially crafted DWARF section results in an infinite
+ loop that eventually crashes the application.
+
+ product: libdwarf
+
+ description: In dwarf_get_aranges_list() an invalid count will iterate,
+ reading from memory addresses that increase till it all fails.
+
+ datefixed: 20160504
+
+ references: regressiontests/liu/infiniteloop.elf
+
+ gitfixid: 98a3da1e8237fe0d45b67ef77f3fa5ed9ff0215f
+
+ tarrelease: 20160507
+
+
+DW201605-002
+
+ id: DW201605-002
+
+ cve:
+
+ datereported: 20160502
+
+ reportedby: Yue Liu
+
+ vulnerability: A specially crafted DWARF section results in a read outside
+ the bounds of in memory data so the calling application can crash.
+
+ product: libdwarf
+
+ description: Out of bound read bug in libdwarf git code. dwarf_dealloc()
+ did not check the Dwarf_Ptr space argument before using it. This will lead
+ to a out-of-bound read bug.
+
+backtrace:
+#0  dwarf_dealloc (dbg=dbg@entry=0x655f30, space=0xa0,
+alloc_type=alloc_type@entry=1) at dwarf_alloc.c:477
+#1  0x00002aaaaacf3296 in dealloc_srcfiles
+(dbg=0x655f30, srcfiles=0x66b8f0, srcfiles_count=17) at
+dwarf_macro5.c:1025 #2  0x00002aaaaacf50e6 in dealloc_srcfiles
+(srcfiles_count=<optimized out>, srcfiles=<optimized out>,
+dbg=<optimized out>) at dwarf_macro5.c:1021 -----
+gef> p &r->rd_dbg
+$14 = (void **) 0x90
+
+
+ datefixed: 20160504
+
+ references: regressiontests/liu/outofbound01.elf
+
+ gitfixid: 98a3da1e8237fe0d45b67ef77f3fa5ed9ff0215f
+
+ tarrelease: 20160507
+
+
+DW201605-001
+
+ id: DW201605-001
+
+ cve:
+
+ datereported: 20160502
+
+ reportedby: Yue Liu
+
+ vulnerability: A specially crafted DWARF section results in a duplicate
+ free() in libdwarf and the calling application will crash.
+
+ product: libdwarf
+
+ description: In file dwarf_elf_access.c:1071
+
+WRITE_UNALIGNED(dbg,target_section + offset,
+    &outval,sizeof(outval),reloc_size);
+
+
+ A crafted ELF file may lead to a large offset value, which bigger than the
+ size of target_section heap chunk, then this WRITE_UNALIGNED() function
+ will write the value of &outval out of the heap chunk. offset is a 64bit
+ unsigned int value, so this is more than a heap overflow bug, but also a
+ Out-of-Bound write bug. So WRITE_UNALIGNED() need more strictly checking
+ to prevent this.
+
+ datefixed: 20160504
+
+ references: regressiontests/liu/heapoverflow01.elf
+
+ gitfixid: 98a3da1e8237fe0d45b67ef77f3fa5ed9ff0215f
+
+ tarrelease: 20160507
+
+--ZGiS0Q5IWpPtfppv--
