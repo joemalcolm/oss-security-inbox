@@ -1,44 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/23/1
-Message-Id: <20160723020426.70DC352E00B@smtpvbsrv1.mitre.org>
-Date: Fri, 22 Jul 2016 22:04:26 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/24/9
+Message-Id: <20160524233429.36792B2E006@smtpvbsrv1.mitre.org>
+Date: Tue, 24 May 2016 19:34:29 -0400 (EDT)
 From: cve-assign@...re.org
-To: peter@...e-magic.net
+To: misc@...b.org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: A CGI application vulnerability for PHP, Go, Python and others - CHICKEN eggs
+Subject: Re: CVE request: /tmp usage race condition in onionshare
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> This issue affects the CHICKEN egg "spiffy-cgi-handlers", which is an
-> optional add-on to add CGI and FastCGI support to the Spiffy web server.
+> So onionshare use /tmp/onionshare to create a temporary directory
+> $HS that is then used for the creation of a tor hidden service, as
+> HiddenServiceDir configuration.  Then, the tor daemon create 2 files
+> in $HS
 > 
-> All versions before 0.5 are affected. An announcement was made to
-> http://lists.gnu.org/archive/html/chicken-announce/2016-07/msg00000.html
-
->> a HTTP server which converts the Proxy header as a
->> HTTP_PROXY environment variable. The spiffy-cgi-handlers egg will do
->> that in the default setup.
-
-> The spiffy-cgi-handlers code was part of the spiffy web server before
-> version 5.0, so earlier versions of that egg were also affected. Strictly
-> speaking, I think this deserves another CVE because it's a different
-> piece of software.
+> But onionshare doesn't verify the owner or the exact permission of
+> /tmp/onionshare.  So if a attacker pre-create a directory
+> /tmp/onionshare with 777 permissions and him as a owner, he can use
+> a race condition to inject his own files in the share.
 > 
-> Could I have a CVE for this issue?
+> I suspect that using setgid on /tmp/onionshare might also give
+> interesting potential attacks.  For example, if umask is not properly
+> set, the attacker could steal the private key and hostname
 
-Use CVE-2016-6286 for this code, as found either in the
-spiffy-cgi-handlers egg or in the spiffy web server. (Moving a piece
-of code from one software product to another doesn't generate a second
-CVE ID.)
+As far as we can tell, there is only one primary problem: the product
+accepts the existence of a pre-created /tmp/onionshare for which
+ownership and all permission bits are controlled by the attacker.
+(Control over the setgid bit isn't really an independent problem with
+a realistically independent solution.)
+
+Use CVE-2016-5026.
 
 
-> I believe this affects the CHICKEN egg "http-client", when used in a CGI
-> context when the calling server unsafely passes "Proxy" as "HTTP_PROXY".
-> Could I have a CVE for this issue as well?
+> I am also not 100% sure that
+> https://github.com/micahflee/onionshare/blob/master/onionshare/hs.py#L217
+> and
+> https://github.com/micahflee/onionshare/blob/master/onionshare/hs.py#L116
+> are safe if a attacker control the directory that will be used for
+> shutil.rmtree.
 
-Use CVE-2016-6287.
+Nobody has commented on this today, so we are not going to assign a
+separate CVE ID related to an shutil.rmtree impact unless there is
+further research by someone.
+
+The code has "self.cleanup_filenames.append(self.hidserv_dir)" and the
+product should have been designed so that self.hidserv_dir is never
+something controlled by an arbitrary unauthorized local user. Possibly
+you are envisioning a threat model in which the attacker controls the
+process running tor but not the process running onionshare. In that
+situation, it might be important to understand whether there's any
+symlink following in shutil.rmtree, because this might allow the tor
+process to trigger unlink actions with the privileges of the
+onionshare process.
 
 - -- 
 CVE Assignment Team
@@ -48,17 +63,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXktAdAAoJEHb/MwWLVhi25n4QALaJxLjnoIvN/GUErP1UObu1
-JNBU160mBi8S9MW28AVzx6DNgzWBtnd7ymtpXRHkbMjWCc+ORQnJPvnm39Tatt6l
-LP48zvXOr2gbLarh9izTtACqwmgF0jbacwc2J5tqhZ7rk6Y6FpVgAIAntS1qK1bY
-NIez74JZlNVvnKix0pOweuAswOM1V7zwDYdvMUjdpzh7gfC8AiJX09e46G1WEkSr
-THXXzUWud+USZAme9s6fD9nLvrr/Tlv2fGnZyp9APGz4Tcs+tbRiE+wtfYK5Cu1K
-MySc1jIoDf+cZKDQgPoDBHovoAn9oBBzq4fa9ph2Y6MuY6ktGT5OzHZqfqHy0MKe
-EnLZvMWkhD0F/U8kIFBo4wjPpo7aRQE7L8W+mGL/QwucExb1Bbn7h6XYJ69fQCny
-NcD+uDPta0tPmJcQ3OY8GCu5MhwI01WZhMBi+eLbrwxpVITezISXbIEhozXtZeJz
-5U+Lpw2rJUPq+1cLbGPlP1cvT+zGHzFLyQIukzqK/AdCLrnAyynL2lrTsoPmrFkK
-fNRU/UYfnEQb2ehiSr7Ho5lCCyNewJdwq0Zrktw2EReVu/tlLNMyutUH3B9jSN2x
-pL1Q5EVeq34u/dI95wzw4yVh4HDN4bXhPPtOdaQ2YgXnJ4AMSjRisSuE3ISOYLxZ
-dTOiEBp3s/l3QRrWkdIk
-=53io
+iQIcBAEBCAAGBQJXRORnAAoJEHb/MwWLVhi2AjAP/213PqKqOX4HRjUx4vU2Y4gd
+PUqAk17+LR9BgsIbWJTCl1kcXGSlpHHqsgq/8W3OP+Aumsr6iLy5ksZmw7D9xgyW
+wYOslFWUA6z9Drt/P24OxiDrHfpqRAxyPclAQJbSgNwmBk9iQK9Tpb+ACLDr3yOU
+XBcbnBr1QKT2kOFogdB8bx+Qz/uhR9wAJ0f37nJ+iI3Y6pzeKzMDEHl/je9/Pa+X
+iHjUPuKYHU/A+X+2mN3nBmuXJerijn/MBKjgxW3L4DCNOr5NUC1UQ2WULE9WIds1
+DS6CvpaVsZXSA5Q094HFvo0M2AoyfePpQuVuGgPZ3tens//In3pr3xkKPT316HW4
+eKNH7I9L6Xc604a64TzFmSQnWui7ZlOwFy/0aR8p2mZCBYEKqMkV1OvFx78EE0pw
+QpZMRuoz3EcnwNfIhKYpzVzCf1UOKw7srdIfuxnLO6dAPQhMnios26mU7BnxxlLR
+4UiZQWeDMZVBqwd+NJnL1NupgAs/4H1mQ+vKIn/obpYnTxGb8q1+x61eyk1Ueh/O
+JFBj4gfMnO7v/zA0wtlDK/otE9j/XxWHTw9gKH7BAr3wdbJFPoYnng2CMRFjBva3
+Kq4j/ml0BclQDxmk4/3PVc19rO56h0EgMKccArJSVANjMrj3YDmKlTcS2YcaJIVa
+zFC5SNEvmY0EdRR6f2gX
+=RzaD
 -----END PGP SIGNATURE-----
