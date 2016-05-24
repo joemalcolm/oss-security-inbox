@@ -1,107 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/21/5
-Message-ID: <1793542.7Axp6M92oG@x2>
-Date: Thu, 21 Jan 2016 10:15:55 -0500
-From: Steve Grubb <sgrubb@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Florent Daigniere <florent.daigniere@...stmatta.com>
-Subject: Re: Prime example of a can of worms
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/24/5
+Message-ID: <alpine.LFD.2.20.1605241511470.26750@wniryva>
+Date: Tue, 24 May 2016 15:40:50 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: "Daniel P. Berrange" <berrange@...hat.com>
+Subject: CVE-2014-3672 libvirt: DoS via excessive logging 
 Content-Type: text/plain; charset=utf-8
 
-On Thursday, January 21, 2016 11:43:45 AM Florent Daigniere wrote:
-> On Thu, 2016-01-21 at 04:05 +0300, gremlin@...mlin.ru wrote:
-> > On 2016-01-20 08:45:07 -0700, Kurt Seifried wrote:
-> > 
-> >  > I finally got the article written and published, it's at:
-> >  > https://securityblog.redhat.com/2016/01/20/primes-parameters-and-m
-> > oduli/
-> > 
-> > In that article you wrote:
-> > 
-> >  > I think the best plan for dealing with this in the short term
-> >  > is deploying larger primes (2048 bits minimum, ideally 4096
-> >  > bits) right now wherever possible.
-> > 
-> > 4096 bit keys seem to be the absolute minimum, and personally I've
-> > already moved to 8192 bit keys.
-> 
-> I'd like to know where you guys picked those numbers from:
-> http://www.keylength.com/en/compare/ suggests that 2048 bits is okay
-> for everyone but the BSI (at least not past 2016). Surely a
-> recommendation today should have a higher standard than that.
-> 
-> On the other hand, 3072 bits seems to be enough for everyone for the
-> next decade or so.
+   Hello,
 
-I think that is assuming that quantum computers are not brought to market any 
-time soon. Over the summer the NSA's Suite B page kind of backpeddled on the 
-ECC requirements and refocused on RSA. I attended a speech this fall where 
-NIST talked about what quantum computers will do. The presentation is here but 
-does not have speakers notes:
+A while back, Mr Andrew Sorensen reported a Qemu logging issue wherein Libvirt 
+OR Xen directed 'stderr' of Qemu to a log file on the host.
 
-http://csrc.nist.gov/news_events/cif_2015/research/day1_research_200-250pt3.pdf
+This can be easily exploited by a user inside guest to flood the log file with 
+endless messages, resulting in a DoS situation on the host, affecting other 
+services and guests alike.
 
-This is the notes that I took while listening to the speech:
+'CVE-2014-3672' was assigned to it by Red Hat Inc.
 
-This panelist talked about quantum crypto. The issue is that quantum computers 
-could use Shor's algorithm and Grover's algorithm to kill PKI. In the future 
-key sizes could be around a million bits. This will mean changes to network 
-protocols. Its estimated that a key space of N can be search in the square 
-root of N time. So, in current technology, if you need 128 bits of strength, 
-you will need to square it to get the key size.
+Until recently there was no remedy in sight, but quoting Mr Daniel P Berrange 
+of libvirt
 
-Hallway discussions mentioned that ECC is dead due to trust issues and fuzzy 
-IP issues which slowed vendor uptake. There was a mention of RSA officially 
-being allowed to go to 16k key sizes.
+   "Since libvirt version 1.3.3, libvirt has 'virtlogd' daemon running. The
+    QEMU stdout/err are no longer connected directly to a file on disk, instead
+    they go to a pipe connected to virtlogd. virtlogd only allows 128 kb of
+    data to be written before rolling over the logs, and only keeps 3 backups,
+    so there is no longer an uncontrolled denial of service.
 
--Steve
+    With QEMU 2.6, it is further possible to use virtlogd in association with
+    QEMU serial ports that need to log to a file, for the same reason."
 
+Upstream patch:
+---------------
+   -> https://libvirt.org/git/?p=libvirt.git;a=commit;h=0d968ad715475a1660779bcdd2c5b38ad63db4cf
 
-> I haven't found anyone suggesting that bigger groups are either
-> necessary or worth it. If you want QC proof crypto you need groups of
-> ~16k bits.
-> 
-> My favourite recommendation (ECRYPT II):
-> http://www.keylength.com/en/3/
-> where
-> 1024 bits -> level 3 (<<2015)
-> 2048 bits -> level 5 (2020)
-> 3248 bits -> level 7 (2040)
-> for any of the modelled adversaries.
-> 
-> > Here are some numbers:
-> > 
-> > `openssl dhparam -2 4096` took 1:53:29 to generate (HH:MM:SS);
-> > `openssl dhparam -5 4096` took 1:43:44;
-> > `openssl dhparam -2 8192` took 25:51:34;
-> > `openssl dhparam -5 8192` took 16:51:47.
-> > 
-> >  > Why not huge primes?
-> >  > Why not simply use really large primes? Because computation
-> >  > is expensive, battery life matters more than ever and latency
-> >  > will become problems that users will not tolerate.
-> > 
-> > Any and all cryptographic transforms must be expensive - that means
-> > at least time and electric power. 
-> 
-> There is a good reason why no one wants custom-groups in protocol
-> design. I haven't seen it mentioned much so far so I will spell it out
-> again:
-> 
-> Custom groups need to be transmitted for each handshake: that's
-> problematic on most networks (none of the group sizes suggested will
-> fit on a MTU worth of data) as it will involve fragmentation and
-> potentially retransmission.
-> 
-> If anything, TLS has proven that it won't work; both because 
-> - no one will use the feature, even if it's present (status-quo with
-> 1024 bits groups today)
-> - it's impractical for it to be used anywhere where the connectivity is
-> anything less than perfect (mobile networks, high-latency networks,
-> ...)
-> 
-> K.I.S.S.!
-> 
-> Florent
+Note: It's probably not feasible to back port this solution to older versions.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
