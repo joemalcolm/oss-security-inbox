@@ -1,50 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/29/1
-Message-ID: <d45df96858a4de9a1d544b795d2be58c@blinkenshell.org>
-Date: Wed, 29 Jun 2016 08:28:23 +0200
-From: _rc0r <hlt99@...nkenshell.org>
-To: <oss-security@...ts.openwall.com>
-Subject: CVE Request - PECL-HTTP 3.0.0 Buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/24/1
+Message-ID: <CANK7Sy-z=M=S+SPfy1x4Mkz4rUb5aFUtquhJujQnm+60DQr4ng@mail.gmail.com>
+Date: Tue, 24 May 2016 16:01:42 +0800
+From: Yue Liu <liuyue0310@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: David Anderson <davea42@...uxmail.org>
+Subject: CVE request: Multiple vunerabilities in libdwarf & dwarfdump
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hi,
 
-Hi list, hi CVE assignment team,
+There are multiple vunerabilities in libdwarf&dwarfdump which were
+discovered by Yue Liu(lieanu <liuyue0310@...il.com>) and Qixue Xiao.
 
-back in March a buffer overflow was discovered in url parsing
-functions of the PECL HTTP extension.
-The bug allowed a partial overwrite of a callback function pointer
-possibly leading to execution of arbitrary code.
+Vulnerabilities DW201605-001 to DW201605-019 in
+https://www.prevanders.net/dwarfbug.html
+And anther one https://bugzilla.redhat.com/show_bug.cgi?id=1330237
+All vulnerabilities have been fixed in upstream.
 
-For the original bug report to the PHP bug tracker, please see:
+POC: https://sourceforge.net/p/libdwarf/regressiontests/ci/master/tree/liu/
 
-https://bugs.php.net/bug.php?id=71719
+Could you please assign CVE ids for these issue? Thanks.
 
-This flaw was fixed in commit [3724cd7]
+Regards,
+Yue Liu
 
-https://github.com/m6w6/ext-http/commit/3724cd76a28be1d6049b5537232e97ac
-567ae1f5
-
-and was included in PECL-HTTP 3.0.1 that was released the same day:
-
-https://pecl.php.net/package/pecl_http/3.0.1
-
-
-Cheers
------BEGIN PGP SIGNATURE-----
-
-iQIcBAEBCgAGBQJXc2nFAAoJEII4s+efq3pF1+4P/RBvkJLH9jfISkoAEijVYbJc
-YB7moTXaLGbAF1G0Tz8WWWQeKhXiq7Rn6uf4nVrVFT/MDXmX45wFSIOQfURMa8iW
-Ikdqq5Ydb5Mh7RJ6F3ri11vhjPqSxcwmav71xg50U7GQzM+paUVUZo+lNCaVn1u6
-Llg3YwKKHnvVnrggUTaWBXzL4o8eeMNPWB/gCiJthMI3KvgEqXWRC9V6sT5U1DE/
-hIkroHuqRJfbdocMyVRE3B2erXi3ijhjDqVMRqkRkB8jiCXy13BtFuoRqFXT69Ow
-pwKIKL7j3Su4kkr6OJq0D8hbU/YmhITnSzVqU5SfCoEVmn4Oab1+GFFiuMZVUd3q
-clWb1ano2cQwEazTldp54LwIz2Ov438H1jCuu8XHp8KGZpWjYQAZ0LmZdskA/Qn6
-mFx41z1doexG1hsJvgWLeKKR6zzP4yLeCY7vNUiSWBOiQiC6hUHbWfUPvfB7aEhf
-TKRAKphgJ8DRSRe9GVGNRKP2YfddwlppvP7a6l0L2q0h9ZPu0X3OqsCvcvMjLBZd
-YyH/wMpG0U5Ae8zxrnu73kYadFCmmeuj/8KfF1VLsId07ImRstZfgeUYIJ//N895
-NfqqAdJuioLAH9qOngfQIQCiCd742ZQItlgaEEqhsj6oe+HiINs95z1WKi6faVyz
-7WU95dh8voVrao+3CH2x
-=hOsV
------END PGP SIGNATURE-----
