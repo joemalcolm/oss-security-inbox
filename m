@@ -1,69 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/2
-Message-Id: <20160503052928.C84286C0068@smtpvmsrv1.mitre.org>
-Date: Tue,  3 May 2016 01:29:28 -0400 (EDT)
-From: cve-assign@...re.org
-To: j@...fi
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: hostapd/wpa_supplicant - psk configuration parameter update allowing arbitrary data to be written
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/24/3
+Message-ID: <20160524085113.GA29535@openwall.com>
+Date: Tue, 24 May 2016 11:51:13 +0300
+From: Solar Designer <solar@...nwall.com>
+To: Yue Liu <liuyue0310@...il.com>
+Cc: oss-security@...ts.openwall.com, David Anderson <davea42@...uxmail.org>
+Subject: Re: CVE request: Multiple vunerabilities in libdwarf & dwarfdump
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> Identifier: related to CVE-2016-2447
+On oss-security it is strongly preferred that actual content (rather
+than just links) be included in the postings for long-term archival,
+as long as the message doesn't exceed 200 KB (including MIME overhead).
 
-We understand the existence of the CVE-2016-2447 ID in
-http://source.android.com/security/bulletin/2016-05-01.html and that
-the reports credit Imre Rad; however, there are different exploitation
-scenarios that affect different versions from the perspective of
-hostapd/wpa_supplicant, and thus it is probably simplest for most
-people to have separate hostapd/wpa_supplicant CVE IDs.
-
-> WPA/WPA2 passphrase parameter ... to include control characters
-
-> The WPS trigger for this requires local user action to authorize the WPS
-> operation in which a new configuration would be received. The attacker
-> would also need to be in radio range of the device or have access to the
-> IP network to act as a WPS External Registrar. Such an attack could
-> result in denial of service by not allowing hostapd or wpa_supplicant to
-> start after they have been stopped.
+On Tue, May 24, 2016 at 04:01:42PM +0800, Yue Liu wrote:
+> There are multiple vunerabilities in libdwarf&dwarfdump which were
+> discovered by Yue Liu(lieanu <liuyue0310@...il.com>) and Qixue Xiao.
 > 
-> wpa_supplicant v0.6.7-v2.5 with CONFIG_WPS build option enabled
-> hostapd v0.6.7-v2.5 with CONFIG_WPS build option enabled
+> Vulnerabilities DW201605-001 to DW201605-019 in
+> https://www.prevanders.net/dwarfbug.html
 
-Use CVE-2016-4476.
+I've attached the current content of the above web page to this message,
+as text/plain.
 
+> And anther one https://bugzilla.redhat.com/show_bug.cgi?id=1330237
 
-> The local configuration update through the control interface SET_NETWORK
-> command could allow privilege escalation for the local user to run code
-> from a locally stored library file
->
-> ... SET_CRED or SET commands, similar issue ...
+Here it is:
+
+---
+Description of problem:
+There is a NULL pointer dereference bug in libdwarf-20160115 and latest git code.
+
+The bug is at file dwarf_leb.c:147
+ 143             byte_length++;
+ 144             if (byte_length > BYTESLEBMAX) {
+ 145                 /*  Erroneous input. What to do?
+ 146                     Abort? Return error? Just stop here?*/
+ 147                 *leb128_length = BYTESLEBMAX;               <- $pc
+ 148                 return number;
+ 149             }
+ 150         }
+
+which triggered by dwarf_form.c:918
+ 913             *return_sval = (Dwarf_Signed) ret_value;
+ 914             return DW_DLV_OK;
+ 915             }
+ 916
+ 917         case DW_FORM_sdata:
+ 918             ret_value =
+ 919                 (_dwarf_decode_s_leb128(attr->ar_debug_ptr, NULL));
+ 920             *return_sval = ret_value;
+ 921             return DW_DLV_OK;
+ 922
+
+Version-Release number of selected component (if applicable):
+Tested in libdwarf-20160115 and latest git code
+---
+
+> All vulnerabilities have been fixed in upstream.
 > 
-> wpa_supplicant v0.4.0-v2.5 with control interface enabled
+> POC: https://sourceforge.net/p/libdwarf/regressiontests/ci/master/tree/liu/
 
-Use CVE-2016-4477.
+Unfortunately, some of the PoCs are a bit too large to attach.  While
+the above directory is ~110 KB under tar.xz, the PoC attached to Red Hat
+Bugzilla Bug 1330237 is ~150 KB under xz.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+So let's keep just the vulnerability detail in here for now.
 
-iQIcBAEBCAAGBQJXKDatAAoJEHb/MwWLVhi2mqQQALY+roiB6xee2Ux/cpcPcVC0
-jOTKd+hEVHKojwM0C0740Og5ruVwQnSF8L4ggrcSIlRw+rLa2zvyCz56HFLaO7VK
-UetNHBJej0XmLJBJBeg/BP+zZXLzym2ptjiQBW3FZorNoTE+baRxRUXGd14MSnOZ
-7f00/E3omjRMm4+QutmiXL/iVARNYwdy2dYeeJfEFEw05l/YFjb/ozMjWIYvepEp
-sxxtaxuSTPnMMlMfbhb/EvpvxnCTw6SZBbz1mA9i48ex3VT2VFmuRBiAZa56pptU
-ghF4LeMhxmj2guc/G14To3VFc9Pj/Xd8qqMtk1E7n3Wg5ESd41ocFN6frav5MNDM
-PoyemIa86Z86d/dxlAd7GLMBDSrKN3Sgk/ENbUNyCIdCsFWIX9FPvipigZliiO9X
-KeMS5zAVqou8Cfq16VqtlsjIRq7cd0JwRWqzI3AvhMCyZz1FBVaQAe002grrs+TS
-60ozbevL9AbtaCYvMIS4zE5kQAvbpPz6MWrwJMcv5NFbWLTB1+iHBkd9AB3N7Q4u
-ba/fY8RB244bmu37+vgSunkamEmRHLoGx8byUTUXtKP0Yc0lFvartdRjQncS2qlZ
-bzYhvTlR8QOJMgE+7Qf6aQhG0kwOMOrWN6IdIUGo8I5tTscZ+wtlICfiaH2/kEcw
-RBngwj4bI80CX0bZT6gV
-=f9JF
------END PGP SIGNATURE-----
+One of the reasons why I am posting this is to provide an example of
+what content to include in oss-security postings going forward.  Also,
+it's a call for smaller PoCs (for further occasions; no need to rework
+these PoCs now), so that those could be included as well.
+
+Alexander
+
+View attachment "dwarfbug.txt" of type "text/plain" (17124 bytes)
