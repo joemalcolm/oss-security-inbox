@@ -1,35 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/14/6
-Message-ID: <AC2FF540-C9A4-4A44-97D5-10E9E0874B24@nccgroup.trust>
-Date: Thu, 14 Jul 2016 21:23:35 +0000
-From: Jesse Hertz <Jesse.Hertz@...group.trust>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: #NA-Disclosure <na-disclosure@...group.trust>
-Subject: Re: Multiple Bugs in OpenBSD Kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/24/8
+Message-ID: <CAPVVMa_M_c8_kTWep-19+kTDZ6Www-JwqHn5SYhkgvcFvDoFEA@mail.gmail.com>
+Date: Tue, 24 May 2016 06:09:35 -0600
+From: Tim Bain <tbain@...mni.duke.edu>
+To: ActiveMQ Users <users@...ivemq.apache.org>
+Cc: dev@...ivemq.apache.org,  Apache Security Response Team <security@...che.org>, bugtraq@...urityfocus.com,  oss-security@...ts.openwall.com
+Subject: Re: [ANNOUNCE] CVE-2016-3088: ActiveMQ Fileserver web application vulnerabilities﻿
 Content-Type: text/plain; charset=utf-8
 
-It appears that me using HTML emails may have made the attachments unreadable on the web interface or for some users. Apologies. Here are the attachments again in a plaintext email.
+Does the range of versions specified mean that the issue is already
+addressed in 5.13.3, or was its omission from the range an oversight?
 
-I would also like to note (thanks to tj@...nbsd for pointing this out!) that with regard to the bugs requiring kern.usermount:
+Tim
+On May 24, 2016 2:41 AM, "Dejan Bosanac" <dejan@...httale.net> wrote:
 
-“these bugs are now root-only in -current since the kern.usermount option
-was disabled and will be removed entirely. may be worth a mention on your
-write-up. https://marc.info/?l=openbsd-cvs&m=146851081629533&w=2” 
+> There's a security vulnerability reported against Apache
+> ActiveMQ 5.13.2 and older versions.
+>
+> Please check the following document and see if you’re affected by the
+> issue.
+>
+>
+> http://activemq.apache.org/security-advisories.data/CVE-2016-3088-announcement.txt
+>
+> Vulnerability is similar to the one reported in CVE-2015-1830 (
+>
+> http://activemq.apache.org/security-advisories.data/CVE-2015-1830-announcement.txt
+> ).
+> The fileserver web application will be removed in 5.14.0 release and users
+> are advised not to use it and disable it in older versions.
+>
+> Regards
+> --
+> Dejan Bosanac
+> about.me/dejanb
+>
 
-
-
-Download attachment "kevent_panic.c" of type "application/octet-stream" (2981 bytes)
-
-Download attachment "mmap_panic.c" of type "application/octet-stream" (7134 bytes)
-
-Download attachment "mount_panic.c" of type "application/octet-stream" (2290 bytes)
-
-Download attachment "thrsigdivert_panic.c" of type "application/octet-stream" (2815 bytes)
-
-Download attachment "thrsleep_panic.c" of type "application/octet-stream" (2579 bytes)
-
-Download attachment "tmpfs_mknod_panic.c" of type "application/octet-stream" (1976 bytes)
-
-Download attachment "ufs_getdents_panic.c" of type "application/octet-stream" (2836 bytes)
-
-Download attachment "unmount_panic.c" of type "application/octet-stream" (2199 bytes)
