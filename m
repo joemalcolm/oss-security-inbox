@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["981" "Thursday" "18" "October" "2018" "13:25:29" "+0000" "Jordan Glover" "Golden_Miller83@protonmail.ch" "<SHcYHexZFIPEzxu783h1FvPmnsUAwkTcsBunOplth1OaHsV-kE1uNS6roHC9sojsMJxQE2yOQoj-BBCc2qWNdb09Yrb-rwTVu1nAJgT7ZO0=@protonmail.ch>" "21" "Re: [oss-security] Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284" "^Cc:" nil nil "10" "2018101813:25:29" "[oss-security] Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284" (number mark "        Golden_Mille Oct 18   21/981   " thread-indent "\"Re: [oss-security] Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284\"\n") "<CAJ_zFkJgSzTV8WKRL7OW6ueFibVGvNY-P6sBNBrDeagLrbPfWw@mail.gmail.com>" ("<CAJ_zFk+P0WurjfHK3bQZ7fSuiFRYeAz+GrpQCn2F3SJPx3z=Cw@mail.gmail.com>" "<CAJ_zFk+Db=VQi14vEfA8AeRbqEfROwApCbgVqPQny7qbhj7nhw@mail.gmail.com>" "<9Oh6Q_oGBdLOE2SpGuy67o4P_ytW1KG0urBaQPvPOskA6d6uwyU_et3aIaNCb0M6mSWw8T90Lb2OQIXkE38PlXk5eSCsQqS3Dr0QZ_2Q2ns=@protonmail.ch>" "<CAJ_zFkJgSzTV8WKRL7OW6ueFibVGvNY-P6sBNBrDeagLrbPfWw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3066" "Tuesday" "24" "May" "2016" "19:34:29" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160524233429.36792B2E006@smtpvbsrv1.mitre.org>" "69" "[oss-security] Re: CVE request: /tmp usage race condition in onionshare" nil nil nil "5" "2016052423:34:29" "[oss-security] Re: CVE request: /tmp usage race condition in onionshare" (number mark "U       cve-assign@m May 24   69/3066  " thread-indent "\"[oss-security] Re: CVE request: /tmp usage race condition in onionshare\"\n") "<20160523181917.GA19626@sisay.ephaone.org>" ("<20160523181917.GA19626@sisay.ephaone.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18258 invoked by uid 550); 18 Oct 2018 17:15:14 -0000
+Received: (qmail 20171 invoked by uid 550); 24 May 2016 23:34:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7385 invoked from network); 18 Oct 2018 13:25:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.ch;
-	s=default; t=1539869133;
-	bh=tOrvXhloWXzQUPGULEi7xcExOk2tRMSV7Oy0VU/WvN4=;
-	h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:
-	 Feedback-ID:From;
-	b=AmIUt8CprZErUqbP2tewrWC5f47oS9XPsuBsRve/F6+ZUnuLR6pgXktK7Qvvn8nfQ
-	 9vuTYSD/GaBRUDwA9bMeuG3Vj58Rr2NFZ6FpRkT+MOHVCtjEFLDnKdak5W2TbGsEWS
-	 Bw7szUQ7NqAY/jhJnEe9o52MBMm9R0uB+wUwdDSQ=
-Message-ID: <SHcYHexZFIPEzxu783h1FvPmnsUAwkTcsBunOplth1OaHsV-kE1uNS6roHC9sojsMJxQE2yOQoj-BBCc2qWNdb09Yrb-rwTVu1nAJgT7ZO0=@protonmail.ch>
-In-Reply-To: <CAJ_zFkJgSzTV8WKRL7OW6ueFibVGvNY-P6sBNBrDeagLrbPfWw@mail.gmail.com>
-References: <CAJ_zFk+P0WurjfHK3bQZ7fSuiFRYeAz+GrpQCn2F3SJPx3z=Cw@mail.gmail.com>
- <CAJ_zFk+Db=VQi14vEfA8AeRbqEfROwApCbgVqPQny7qbhj7nhw@mail.gmail.com>
- <9Oh6Q_oGBdLOE2SpGuy67o4P_ytW1KG0urBaQPvPOskA6d6uwyU_et3aIaNCb0M6mSWw8T90Lb2OQIXkE38PlXk5eSCsQqS3Dr0QZ_2Q2ns=@protonmail.ch>
- <CAJ_zFkJgSzTV8WKRL7OW6ueFibVGvNY-P6sBNBrDeagLrbPfWw@mail.gmail.com>
-Feedback-ID: QEdvdaLhFJaqnofhWA-dldGwsuoeDdDw7vz0UPs8r8sanA3bIt8zJdf4aDqYKSy4gJuZ0WvFYJtvq21y6ge_uQ==:Ext:ProtonMail
-MIME-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="b1_02aaf890340ce13dcc4391ada6a6d386"
-Cc: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Thu, 18 Oct 2018 13:25:29 +0000
-From: Jordan Glover <Golden_Miller83@protonmail.ch>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284
-To: Tavis Ormandy <taviso@google.com>
+Received: (qmail 20144 invoked from network); 24 May 2016 23:34:42 -0000
+From: cve-assign@mitre.org
+To: misc@zarb.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20160523181917.GA19626@sisay.ephaone.org>
+Message-Id: <20160524233429.36792B2E006@smtpvbsrv1.mitre.org>
+Date: Tue, 24 May 2016 19:34:29 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: /tmp usage race condition in onionshare
 
---b1_02aaf890340ce13dcc4391ada6a6d386
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-4oCQ4oCQ4oCQ4oCQ4oCQ4oCQ4oCQIE9yaWdpbmFsIE1lc3NhZ2Ug4oCQ4oCQ
-4oCQ4oCQ4oCQ4oCQ4oCQCk9uIFRodXJzZGF5LCBPY3RvYmVyIDE4LCAyMDE4
-IDI6MzIgUE0sIFRhdmlzIE9ybWFuZHkgPHRhdmlzb0Bnb29nbGUuY29tPiB3
-cm90ZToKCj4gT24gVGh1LCBPY3QgMTgsIDIwMTggYXQgMzo1MSBBTSBKb3Jk
-YW4gR2xvdmVyIDxHb2xkZW5fTWlsbGVyODNAcHJvdG9ubWFpbC5jaD4gd3Jv
-dGU6Cj4KPj4gRG8geW91IGtub3cgaWYgdXBzdHJlYW0gaXMgZ29pbmcgdG8g
-bWFrZSBuZXcgcmVsZWFzZSBzb29uIG9yIGRpc3Ryb3Mgc2hvdWxkIHRha2Ug
-dGhlCj4+IHBhaW4gYW5kIGJhY2twb3J0IGFsbCBvZiB0aG9zZSB0aGVtc2Vs
-dmVzPwo+Cj4gQUZBSUsgdXBzdHJlYW0gb25seSBtYWtlcyBxdWFydGVybHkg
-cmVsZWFzZXMsIHNvIEkgdGhpbmsgeW91IG5lZWQgdG8gYmFja3BvcnQuCj4K
-PiBUYXZpcy4KCkluIG5vcm1hbCwgYm9yaW5nIHRpbWVzIHllcyBidXQgOS4y
-NSB3YXMgYXZhaWxhYmxlIGp1c3QgMTAgZGF5cyBhZnRlciA5LjI0IGFzIHVy
-Z2VudCBzZWN1cml0eQpyZWxlYXNlIGFuZCBpdCBzZWVtcyBpdCB3YXMgc3Rp
-bGwgbm90IGVub3VnaC4KCkpvcmRhbg==
+> So onionshare use /tmp/onionshare to create a temporary directory
+> $HS that is then used for the creation of a tor hidden service, as
+> HiddenServiceDir configuration.  Then, the tor daemon create 2 files
+> in $HS
+> 
+> But onionshare doesn't verify the owner or the exact permission of
+> /tmp/onionshare.  So if a attacker pre-create a directory
+> /tmp/onionshare with 777 permissions and him as a owner, he can use
+> a race condition to inject his own files in the share.
+> 
+> I suspect that using setgid on /tmp/onionshare might also give
+> interesting potential attacks.  For example, if umask is not properly
+> set, the attacker could steal the private key and hostname
 
---b1_02aaf890340ce13dcc4391ada6a6d386--
+As far as we can tell, there is only one primary problem: the product
+accepts the existence of a pre-created /tmp/onionshare for which
+ownership and all permission bits are controlled by the attacker.
+(Control over the setgid bit isn't really an independent problem with
+a realistically independent solution.)
 
+Use CVE-2016-5026.
+
+
+> I am also not 100% sure that
+> https://github.com/micahflee/onionshare/blob/master/onionshare/hs.py#L217
+> and
+> https://github.com/micahflee/onionshare/blob/master/onionshare/hs.py#L116
+> are safe if a attacker control the directory that will be used for
+> shutil.rmtree.
+
+Nobody has commented on this today, so we are not going to assign a
+separate CVE ID related to an shutil.rmtree impact unless there is
+further research by someone.
+
+The code has "self.cleanup_filenames.append(self.hidserv_dir)" and the
+product should have been designed so that self.hidserv_dir is never
+something controlled by an arbitrary unauthorized local user. Possibly
+you are envisioning a threat model in which the attacker controls the
+process running tor but not the process running onionshare. In that
+situation, it might be important to understand whether there's any
+symlink following in shutil.rmtree, because this might allow the tor
+process to trigger unlink actions with the privileges of the
+onionshare process.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXRORnAAoJEHb/MwWLVhi2AjAP/213PqKqOX4HRjUx4vU2Y4gd
+PUqAk17+LR9BgsIbWJTCl1kcXGSlpHHqsgq/8W3OP+Aumsr6iLy5ksZmw7D9xgyW
+wYOslFWUA6z9Drt/P24OxiDrHfpqRAxyPclAQJbSgNwmBk9iQK9Tpb+ACLDr3yOU
+XBcbnBr1QKT2kOFogdB8bx+Qz/uhR9wAJ0f37nJ+iI3Y6pzeKzMDEHl/je9/Pa+X
+iHjUPuKYHU/A+X+2mN3nBmuXJerijn/MBKjgxW3L4DCNOr5NUC1UQ2WULE9WIds1
+DS6CvpaVsZXSA5Q094HFvo0M2AoyfePpQuVuGgPZ3tens//In3pr3xkKPT316HW4
+eKNH7I9L6Xc604a64TzFmSQnWui7ZlOwFy/0aR8p2mZCBYEKqMkV1OvFx78EE0pw
+QpZMRuoz3EcnwNfIhKYpzVzCf1UOKw7srdIfuxnLO6dAPQhMnios26mU7BnxxlLR
+4UiZQWeDMZVBqwd+NJnL1NupgAs/4H1mQ+vKIn/obpYnTxGb8q1+x61eyk1Ueh/O
+JFBj4gfMnO7v/zA0wtlDK/otE9j/XxWHTw9gKH7BAr3wdbJFPoYnng2CMRFjBva3
+Kq4j/ml0BclQDxmk4/3PVc19rO56h0EgMKccArJSVANjMrj3YDmKlTcS2YcaJIVa
+zFC5SNEvmY0EdRR6f2gX
+=RzaD
+-----END PGP SIGNATURE-----
