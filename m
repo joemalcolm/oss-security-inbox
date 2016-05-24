@@ -1,41 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/03/1
-Message-ID: <050445c18a3443e9ad987c659ab83817@imshyb02.MITRE.ORG>
-Date: Fri, 2 Dec 2016 19:24:09 -0500
-From: <cve-assign@...re.org>
-To: <andreyknvl@...gle.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <kcc@...gle.com>, <dvyukov@...gle.com>, <edumazet@...gle.com>
-Subject: Re: CVE Request: Linux: signed overflows for SO_{SND|RCV}BUFFORCE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/24/7
+Message-Id: <20160524134554.0F51B6C0E37@smtpvmsrv1.mitre.org>
+Date: Tue, 24 May 2016 09:45:54 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
+Subject: Re: CVE Request: Qemu: scsi: mptsas infinite loop in mptsas_fetch_requests
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> There's a bug in SO_{SND|RCV}BUFFORCE setsockopt() implementation,
-> which allows CAP_NET_ADMIN users to cause memory corruption.
+> Quick Emulator(Qemu) built with the LSI SAS1068 Host Bus Adapter emulation
+> support is vulnerable to an infinite loop issue. It could occur while fetching
+> new requests in mptsas_fetch_requests().
 > 
-> The fix is upstream:
-> https://github.com/torvalds/linux/commit/b98b0bc8c431e3ceb4b26b0dfc8db509518fb290
+> A privileged user inside guest could use this flaw to consume excessive host
+> resources or crash the Qemu process resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04027.html
 
->> CAP_NET_ADMIN users should not be allowed to set negative
->> sk_sndbuf or sk_rcvbuf values, as it can lead to various memory
->> corruptions, crashes, OOM...
+>> The LSI SAS1068 Host Bus Adapter emulator in Qemu, periodically
+>> looks for requests and fetches them. A loop doing that in
+>> mptsas_fetch_requests() could run infinitely if 's->state' was
+>> not operational. Move check to avoid such a loop.
 
-Use CVE-2016-9793. This affects, for example, 4.8.12.
+Use CVE-2016-4964.
 
-
-We might not completely understand the CVE implications of the "Note
-that before
-https://github.com/torvalds/linux/commit/82981930125abfd39d7c8378a9cfdf5e1be2002b
-the bug was even more serious, since SO_SNDBUF and SO_RCVBUF were
-vulnerable" comment within the
-b98b0bc8c431e3ceb4b26b0dfc8db509518fb290 commit message.
-82981930125abfd39d7c8378a9cfdf5e1be2002b is a commit from 2012. The
-3.5 release has this, whereas the 3.4 release does not.
-
-For now, we are assigning CVE-2012-6704 to mean the analogous
-vulnerability involving SO_SNDBUF and SO_RCVBUF that affects "before
-3.5" kernels.
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/mptsas.c but
+that may be an expected place for a later update.
 
 - -- 
 CVE Assignment Team
@@ -45,17 +39,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYQhAGAAoJEHb/MwWLVhi2Q70QALXvPXP7eiF3IBAKa2pTZOXs
-J9JGbNp3LcZhAbLlIsXD033lVMI04KB6eyymajLFxQ4++r+eqVq7EixYu8l5Aady
-MBNB5Oy8yzOG4+7ktAIPUNkCipbt016/VtTVgC6ryQbhDJHwrzSaL+2z7ukGRiTo
-MzN/4ojgB0QWs8gKfugH+Sk9MvjklxuRQr/wejVXxfpayfC+1KBWHzC/T/mv0mVv
-j8D8g2i5OmuJ6iemExzT13vvPY/kO6AdvNypMXc8ZL1i2rQD/xsQhNkRGubE6ace
-cqFGuYlj3RxVUh1dDF86hSbzJPj71vrfqKzlkx3Ml92yDMQxGz7xFbWIJLO69MD8
-uBXGR9C5v7UJJKtHen5b+eyngvs/9aOLI12jbxWbdvg+MHJ/ZqYJP3tQ88iOCXuY
-fKJc+dgfYoPDybYgaD3jOhOT7ZfsRQvkiORSe9EU1s9/ic6dS8u1i3Z3j4DQ5RyH
-lIr2V/tT2JVd65Vm1UJuENO/tQCHTKj+PQBrRjqHk2tHzlx8dpH0G4fjyOewwTYl
-U//XW9U5flbUqViKHpRqhN1czZNBwYOV2nCJ22j9dgX0m/QEDkREibtBLVkHZiNX
-eC96vz5DQvTAvS4klSGdQOJ85TwEBxG8y4PGfz2XND/CjrKfaBr8sDBLh7YPUhfb
-2+HqiZwP/N92Pq3N5vah
-=a80X
+iQIcBAEBCAAGBQJXRFoUAAoJEHb/MwWLVhi2eREP/RhdpWO2TWtok4uMWzOC5tUE
+w/MXH56dSTjvJUVVD7zD6LGNVaxXkjywiPNX49Pk4mibEKgXD1J1KnhsjpmroJes
+3Lh1tU9ojMJYhSwQVTVvKakuo3zhDMm307nao8zLTyA1H44vAj0w8bYeqal3Q2+k
+n86IVtv3AsjQQEWkFcAZbQBKw78Vkbg2DtYoBzy7Wp/7S99CyMy4EFQiWUI/2dVj
+1uJdes2eAPawoPHI/1fKK9aGg3ZMslA6sw+vtBC9iQkYd99whBf0OiKgauJC5c8L
+j0o7pedV+jwciDTAzFdTaM9yoVaoGhaH7QZY7NfBl3aWbZDaxJAZKicOWHFNXt0y
+ePswqrHNhglshL0OwiZTlPktaz1o1iJxSjYEOYc1eY0X9y3peTg8+3gao+EAWDng
+hbR2opWVdgjjy3Ob/tV1QSVASbZV+BSCavMUOcHf0ulQTHBRJOKXopGcY1Qmx8Ot
+DhgDZINAhSSgrlBLvgfXYMlRKVm9MTZqfpjwQTr8kdHOpQljrHB00SJSAzI5uvlx
+HdbTUonZvaTYSenkaK1D+L/8C+0hPZXrf7B1IyXh6QFILJAZ5+TYyzXxdajUoImg
+jl1wPo5DS0i/wFO4Obt7phpf7MM2rabo1WDzolWiGU+glmVIuXFmEVa43d2eTBxz
+ORKeSpt/xA4I3D98cYxe
+=fzoY
 -----END PGP SIGNATURE-----
