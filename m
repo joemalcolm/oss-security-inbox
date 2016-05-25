@@ -1,42 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/1
-Message-Id: <20160505015009.9BE7BB2E106@smtpvbsrv1.mitre.org>
-Date: Wed,  4 May 2016 21:50:09 -0400 (EDT)
-From: cve-assign@...re.org
-To: kangjielu@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, csong84@...ech.edu, taesoo@...ech.edu, insu@...ech.edu
-Subject: Re: CVE Request: kernel information leak vulnerability in llc module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/25/2
+Message-ID: <3197eee1-d6c3-1376-b83c-a14101703e63@redhat.com>
+Date: Wed, 25 May 2016 12:29:04 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: 3 libxml2 issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi All,
 
-> https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=b8670c09f37bdf2847cc44f36511a53afc6161fd
-> 
-> The stack object "info" has a total size of 12 bytes. Its last byte is
-> padding which is not initialized and leaked via "put_cmsg".
+The following issues were reported to us:
 
-Use CVE-2016-4485.
+1. CVE-2016-4447: libxml2: Heap-based buffer underreads due to xmlParseName
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+https://bugzilla.redhat.com/show_bug.cgi?id=1338686
 
-iQIcBAEBCAAGBQJXKqYEAAoJEHb/MwWLVhi2M5wP/0oANDPgSueRVuJpx2mV9ltb
-/YPO3BK4nSjzmdEd9do+6mTmz75TWVCGxEO7ET81u3lBI4rlAVC3zetSZftxlrnd
-UXYYvJgAkk3wORJ3ixCki178EG/Koswdh/UENFp0wZl1gCFwWff+TBq6ZoWfX+/w
-o8iV7M/xdjHUqAwEn38VjSdldLnHINq4Q9nWUGth/2aTRDCeu/e4XqdCk77EyP5D
-JU0dLF2cTbJrJkpXfXdZ4LGniJqEu6Wfnv5OZGOgfDouo/uCnKn16tKOhDFxLEN8
-3pZpXo2FMS5+rk4txzS2mYxOJCgnlkXXZF6ANrMlGZGZPfUmufX2IaaE+umrqL0i
-RhGelyYLmDK90tJF7pvWR8KzExhB3x1g8A7TwoauIVwH8e1pEvNzP3AUF0ceA+IX
-aN0WhfYMw5WSByWk2Ouw6r5s3ztTSXWJ3uzHo3C8bpedyVyWe+1GonWqbSH/e48U
-5sXI59uR3rzOTOUCWCKcRv3fuvgE8t60hTMs7DDl3BP82v5cp0ykpP78Hz51amNV
-EdnTmIVCbPkv8WKxzHQ4gobqpSvIlLUFMJp4bA7dj/z4AZmBplNkq3W3xQr99U3t
-8m6hVzJXWaJBCOeSmV8eumRalJaljy29V55+wVwONxshjb+BdlnC7FbPUcelfhX+
-6p5OZ9IH0ZpR5Gs7oOsQ
-=SIWz
------END PGP SIGNATURE-----
+2. CVE-2016-4448 libxml2: Format string vulnerability
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1338700
+
+3. CVE-2016-4449 libxml2: Inappropriate fetch of entities content
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1338701
+
+
+Each of the Red Hat bugs , contain links to the commits which fix these
+issues. (The upstream bugs are currently private)
+
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
