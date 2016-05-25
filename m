@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2484" "Friday" "20" "January" "2017" "21:39:41" "+1100" "Harshula" "harshula@redhat.com" "<1484908781.11949.37.camel@redhat.com>" "65" "Re: [oss-security] CVE REQUEST: linux kernel: process with pgid zero able to crash kernel" "^Cc:" nil nil "1" "2017012010:39:41" "[oss-security] CVE REQUEST: linux kernel: process with pgid zero able to crash kernel" (number mark "        harshula@red Jan 20   65/2484  " thread-indent "\"Re: [oss-security] CVE REQUEST: linux kernel: process with pgid zero able to crash kernel\"\n") "<20170120082635.GB28326@kroah.com>" ("<1484880112.11949.24.camel@redhat.com>" "<20170120082635.GB28326@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1585" "Wednesday" "25" "May" "2016" "10:51:15" "+0300" "Lior Kaplan" "kaplanlior@gmail.com" "<CAEsznC5htNHcq=f_tq8A99yD5k4t84AFaW=sj7RL589qMmoaXQ@mail.gmail.com>" "54" "[oss-security] Fwd: CVE for PHP 5.5.36 issues" nil nil nil "5" "2016052507:51:15" "[oss-security] Fwd: CVE for PHP 5.5.36 issues" (number mark "U       kaplanlior@g May 25   54/1585  " thread-indent "\"[oss-security] Fwd: CVE for PHP 5.5.36 issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26238 invoked by uid 550); 20 Jan 2017 10:45:32 -0000
+Received: (qmail 5595 invoked by uid 550); 25 May 2016 07:51:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,88 +11,91 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23802 invoked from network); 20 Jan 2017 10:39:59 -0000
-Message-ID: <1484908781.11949.37.camel@redhat.com>
-In-Reply-To: <20170120082635.GB28326@kroah.com>
-References: <1484880112.11949.24.camel@redhat.com>
-	 <20170120082635.GB28326@kroah.com>
-Content-Type: text/plain; charset="UTF-8"
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Fri, 20 Jan 2017 10:39:48 +0000 (UTC)
-Cc: Jesse Hertz <Jesse.Hertz@nccgroup.trust>,
-        Wade Mealing
- <wmealing@redhat.com>
-Date: Fri, 20 Jan 2017 21:39:41 +1100
-From: Harshula <harshula@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE REQUEST: linux kernel: process with pgid
- zero able to crash kernel
-To: oss-security@lists.openwall.com, Greg KH <greg@kroah.com>
+Received: (qmail 5486 invoked from network); 25 May 2016 07:51:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc;
+        bh=RQWxXesWjvNbgc8GyCZz9YZIIxyNB6mPUNdRPNW5cz0=;
+        b=CHUulsLXuZzzWW7uYWhM9wYa9PuVsBetWIX/OqF//GvXeeyscc//P9kSbp/UpuPqUM
+         xqv40M+bFiPdNPMSivMs5RcgHWTBk5204AObDG2eDQ+3updcB3sIraZPhMCtRVn7iWv0
+         EETbGXQJPfAP0v52La5p3W1KD3IiOE79UcQwhf8mMoceVSyl9mgX8biDzcL8JXxFzUXT
+         dsJD2x5YLCtrX5y3isRWxfTbcWMw5/3AkDtV0U+9mZuNC4rkQ9sRE0HziH73BXIwdTvf
+         BI6+400e8xAcS8pf/bNxHdQ2E/lBN+8CQTW1QOEkOPKhz5V9fGm4lOf8gjhqdMkf6JJE
+         ivNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
+        bh=RQWxXesWjvNbgc8GyCZz9YZIIxyNB6mPUNdRPNW5cz0=;
+        b=joW7FJzDMr7ZLC62sahwDe8w0ozPv6zCmLUsjL+emkV+UUiEiYhcnWmX/T0EUCm9I5
+         5mtz+9+qZh34rDHc19Mf6wUSRwyqRds8o0DBA+xxo+aF3OFNn5YspDUsMa1b89xsC0gm
+         dE5qsaW7vrwxmX4QAFUryrc4hdi7EMA6qI5ZxPyReXmyeZEzevZGcNPmNdDwEqOe6AJo
+         8Lxgof0SYHfne/kohjwyxAtbJRvOKlxU2b3YJGRGGWBH5vQZBWte4F6b83osm9VGZi3B
+         cRaAPyTqeQsDQFQC+6YfCpFWdD+ZWyVUXXuRSU0uJbPq6ydIrFTg5Lso3RQc/glXeCL4
+         mxEw==
+X-Gm-Message-State: ALyK8tLQCv+6DvmzzGmIKAUehVHZ92ZrSRwzMpfcBkZHc7r4J7ywYypLN7YKccjU6Ik2NNXZdk9POWX32fhZiQ==
+MIME-Version: 1.0
+X-Received: by 10.50.29.39 with SMTP id g7mr2571902igh.50.1464162675127; Wed,
+ 25 May 2016 00:51:15 -0700 (PDT)
+Date: Wed, 25 May 2016 10:51:15 +0300
+Message-ID: <CAEsznC5htNHcq=f_tq8A99yD5k4t84AFaW=sj7RL589qMmoaXQ@mail.gmail.com>
+From: Lior Kaplan <kaplanlior@gmail.com>
+To: cve-assign@mitre.org
+Cc: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=047d7bd758cc25226f0533a5f019
+Subject: [oss-security] Fwd: CVE for PHP 5.5.36 issues
 
-Hi Greg,
+--047d7bd758cc25226f0533a5f019
+Content-Type: text/plain; charset=UTF-8
 
-On Fri, 2017-01-20 at 09:26 +0100, Greg KH wrote:
-> On Fri, Jan 20, 2017 at 01:41:52PM +1100, Harshula wrote:
-> > Hi Folks,
-> > 
-> > Red Hat Product Security has been notified of a kernel vulnerability
-> > that a local attacker can exploit to crash/panic the kernel and cause a
-> > denial of service.
-> > 
-> > This was reported to Red Hat by Jesse Hertz (CC'd) (reproducer:
-> > rt411016):
-> > 
-> > "A process that is in the same process group as the ``init'' process
-> > (group id zero) can crash the Linux 2 kernel with several system calls
-> > by passing in a process ID or process group ID of zero. The value zero
-> > is a special value that indicates the current process ID or process
-> > group. However, in this case it is also the process group ID of the
-> > process."
-> > 
-> > I've been testing whether RHEL is vulnerable and found the following:
-> > 
-> > * Upstream/mainline is not vulnerable
-> 
-> Is this true for the mainline kernel tree that RHEL 6 was based on?
-> 
-> > * RHEL 7 is not vulnerable
-> > * RHEL 6 is vulnerable
-> > * RHEL 5 is partially vulnerable
-> 
-> So this is only due to a specific set of patches that were added to RHEL
-> 6 and RHEL 5 yet never made it upstream?  I ask as we want to make sure
-> some of the older LTS mainline kernels might be affected and it would be
-> good to ensure they are not.
+Hi,
 
-Good questions, I had not looked at it from a mainline timeline
-perspective.
+Please assign CVE for the following issues, expected to be part of PHP
+5.5.36
+Code at http://git.php.net/?p=php-src.git;a=shortlog;h=refs/heads/PHP-5.5
 
-1) Mainline kernels containing patches [a], [b] and [c] are not
-vulnerable.
+#72227 is a backport from upstream, so we'd prefer to reuse their CVE (if
+already exists).
+#72135 and 72114 are PHP 5.x only bugs.
 
-2) The vulnerability is *NOT* due to non-upstream patches that went
-into RHEL 5 and/or 6.
+Thanks,
 
-3) I suspect some older LTS mainline kernels that branched off
-mainline/upstream at around the same time as RHEL 6 would be
-vulnerable. Check if the data structure fields, corresponding to the
-initialization changes in patch [a], [b] and [c], are initialized the
-same way in the LTS mainline kernels you maintain.
+Kaplan
 
-4) For any RHEL 5 vintage LTS mainline kernels, see if task_struct's
-thread_group field is not initialised. If so, it is likely partially
-vulnerable and could do with a strong dose of patch [c].
+---------- Forwarded message ----------
+From: Lior Kaplan <kaplanlior@gmail.com>
+Date: Wed, May 25, 2016 at 12:55 AM
+Subject: CVE for PHP 5.5.36 issues ?
+To: "security@php.net" <security@php.net>
 
-Regards,
-Harshula
+Following my mail bellow from last week, these are the issues which got
+fixed in the security repository for PHP 5.5.
 
-[a] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/com
-mit/?id=f106eee10038c2ee5b6056aaf3f6d5229be6dcdd
+commit 7a1aac3343af85b4af4df5f8844946eaa27394ab
+Author: Stanislav Malyshev <stas@php.net>
+Date:   Mon May 23 00:28:02 2016 -0700
 
-[b] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/com
-mit/?id=f20011457f41c11edb5ea5038ad0c8ea9f392023
+    Fixed bug #72227: imagescale out-of-bounds read
 
-[c] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/com
-mit/?id=fa2755e20ab0c7215d99c2dc7c262e98a09b01df
+    Ported from
+https://github.com/libgd/libgd/commit/4f65a3e4eedaffa1efcf9ee1eb08f0b504fbc31a
+
+commit 97eff7eb57fc2320c267a949cffd622c38712484
+Author: Stanislav Malyshev <stas@php.net>
+Date:   Sun May 22 17:49:02 2016 -0700
+
+    Fix bug #72241: get_icu_value_internal out-of-bounds read
+
+commit 0da8b8b801f9276359262f1ef8274c7812d3dfda
+Author: Stanislav Malyshev <stas@php.net>
+Date:   Sun May 15 23:26:51 2016 -0700
+
+    Fix bug #72135 - don't create strings with lengths outside int range
+
+commit abd159cce48f3e34f08e4751c568e09677d5ec9c
+Author: Stanislav Malyshev <stas@php.net>
+Date:   Mon May 9 21:55:29 2016 -0700
+
+    Fix bug #72114 - int/size_t confusion in fread
+
+--047d7bd758cc25226f0533a5f019--
