@@ -1,63 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/19/1
-Message-ID: <20160419080643.GA26432@suse.de>
-Date: Tue, 19 Apr 2016 10:06:43 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Cc: security@...nel.org
-Subject: CVE Request: Linux kernel: remote buffer overflow in usbip
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/25/6
+Message-ID: <alpine.LFD.2.20.1605251800090.15974@wniryva>
+Date: Wed, 25 May 2016 18:01:36 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE Request Qemu: scsi: megasas: out-of-bounds write while setting controller properties
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+   Hello,
 
-https://github.com/torvalds/linux/commit/b348d7dddb6c4fbfc810b7a0626e8ec9e29f7cbb
+Quick Emulator(Qemu) built with the MegaRAID SAS 8708EM2 Host Bus Adapter 
+emulation support is vulnerable to an out-of-bounds write access issue. It 
+could occur while processing MegaRAID Firmware Interface(MFI) command to set 
+controller properties in 'megasas_dcmd_set_properties'.
 
-commit b348d7dddb6c4fbfc810b7a0626e8ec9e29f7cbb
-Author: Ignat Korchagin <ignat.korchagin@...il.com>
-Date:   Thu Mar 17 18:00:29 2016 +0000
+A privileged user inside guest could use this flaw to crash the Qemu process 
+on the host resulting in DoS.
 
-    USB: usbip: fix potential out-of-bounds write
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04340.html
 
-    Fix potential out-of-bounds write to urb->transfer_buffer
-    usbip handles network communication directly in the kernel. When receiving a
-    packet from its peer, usbip code parses headers according to protocol. As
-    part of this parsing urb->actual_length is filled. Since the input for
-    urb->actual_length comes from the network, it should be treated as untrusted.
-    Any entity controlling the network may put any value in the input and the
-    preallocated urb->transfer_buffer may not be large enough to hold the data.
-    Thus, the malicious entity is able to write arbitrary data to kernel memory.
+This issue was discovered by Li Qiang of 360.cn Inc.
 
-    Signed-off-by: Ignat Korchagin <ignat.korchagin@...il.com>
-    Signed-off-by: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
-
-diff --git a/drivers/usb/usbip/usbip_common.c b/drivers/usb/usbip/usbip_common.c
-index facaaf0..e40da77 100644
---- a/drivers/usb/usbip/usbip_common.c
-+++ b/drivers/usb/usbip/usbip_common.c
-@@ -741,6 +741,17 @@ int usbip_recv_xbuff(struct usbip_device *ud, struct urb *urb)
-        if (!(size > 0))
-                return 0;
-
-+       if (size > urb->transfer_buffer_length) {
-+               /* should not happen, probably malicious packet */
-+               if (ud->side == USBIP_STUB) {
-+                       usbip_event_add(ud, SDEV_EVENT_ERROR_TCP);
-+                       return 0;
-+               } else {
-+                       usbip_event_add(ud, VDEV_EVENT_ERROR_TCP);
-+                       return -EPIPE;
-+               }
-+       }
-+
-        ret = usbip_recv(ud->tcp_socket, urb->transfer_buffer, size);
-        if (ret != size) {
-                dev_err(&urb->dev->dev, "recv xbuf, %d\n", ret);
-
-Our USB developer confirms:
-https://bugzilla.suse.com/show_bug.cgi?id=975945
-|The vulnerability is true. If an attacker can get a malicious package
-|into the connection the kernel will accept all of the data in that
-|package whether it fits into the buffer or not.
-|You can scribble about 1k into RAM, albeit at an unpredictable location.
-
-Ciao, Marcus
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
