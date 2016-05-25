@@ -1,122 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/17/4
-Message-ID: <1531511.3Otosgf4bN@blackgate>
-Date: Mon, 17 Oct 2016 17:04:53 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: imagemagick: memory allocation failure in AcquireMagickMemory (memory.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/25/7
+Message-ID: <alpine.LFD.2.20.1605251802140.15974@wniryva>
+Date: Wed, 25 May 2016 18:04:14 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE Request Qemu: scsi: megasas: out-of-bounds read in megasas_lookup_frame() function
 Content-Type: text/plain; charset=utf-8
 
-Description:
-imagemagick is a software suite to create, edit, compose, or convert bitmap 
-images.
+   Hello,
 
-A fuzzing with the upstream security policy enabled revealed a memory 
-allocation failure.
+Quick Emulator(Qemu) built with the MegaRAID SAS 8708EM2 Host Bus Adapter 
+emulation support is vulnerable to an out-of-bounds read access issue. It 
+could occur while looking up MegaRAID Firmware Interface(MFI) command frames 
+in 'megasas_lookup_frame' routine.
 
-The complete ASan output:
-# identify $FILE
-==14275==ERROR: AddressSanitizer failed to allocate 0x99ad49000 (41252327424) 
-bytes of LargeMmapAllocator (error code: 12)
-==14275==Process memory map follows:
-[..cut here..]
-==14275==End of process memory map.
-==14275==AddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:183 "((0 && "unable to mmap")) != 
-(0)" (0x0, 0x0)
-    #0 0x4c9f9d in AsanCheckFailed /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67
-    #1 0x4d0ad3 in __sanitizer::CheckFailed(char const*, int, char const*, 
-unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:159
-    #2 0x4d0cc1 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char 
-const*, char const*, int, bool) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:183
-    #3 0x4d9cfa in __sanitizer::MmapOrDie(unsigned long, char const*, bool) 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_posix.cc:122
-    #4 0x42208f in 
-__sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, 
-unsigned long, unsigned long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1033
-    #5 0x42208f in 
-__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
-__asan::AsanMapUnmapCallback>, 
-__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->, __sanitizer::LargeMmapAllocator 
->::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-
-devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1302
-    #6 0x42208f in __asan::Allocator::Allocate(unsigned long, unsigned long, 
-__sanitizer::BufferedStackTrace*, __asan::AllocType, bool) 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:368
-    #7 0x42208f in __asan::asan_malloc(unsigned long, 
-__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:718
-    #8 0x4c0661 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:53
-    #9 0x7fe5713b3b3b in AcquireMagickMemory /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/memory.c:460:10
-    #10 0x7fe5713b3b3b in AcquireVirtualMemory /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/memory.c:642
-    #11 0x7fe564f7af95 in ReadPCXImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/coders/pcx.c:400:16
-    #12 0x7fe571087b12 in ReadImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:496:13
-    #13 0x7fe57181f406 in ReadStream /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/stream.c:1012:9
-    #14 0x7fe5710865ca in PingImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:226:9
-    #15 0x7fe571086e25 in PingImages /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:326:10
-    #16 0x7fe57090c4c3 in IdentifyImageCommand /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/identify.c:319:18
-    #17 0x7fe5709a226a in MagickCommandGenesis /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/mogrify.c:183:14
-    #18 0x4f1fb5 in MagickMain /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:145:10
-    #19 0x4f1fb5 in main /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:176
-    #20 0x7fe56f84661f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #21 0x419138 in _init (/usr/bin/magick+0x419138)
+A privileged user inside guest could use this flaw to read invalid memory 
+leading to crash the Qemu process on the host.
 
-Affected version:
-7.0.3.2
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04424.html
 
-Fixed version:
-7.0.3.3
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1336461
 
-Commit fix:
-https://github.com/ImageMagick/ImageMagick/commit/aea6c6507f55632829e6432f8177a084a57c9fcc
+This issue was discovered by Li Qiang of 360.cn Inc.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Timeline:
-2016-09-14: bug discovered
-2016-09-14: bug reported to upstream
-2016-10-07: upstream released a patch
-2016-10-08: upstream released 7.0.3.3
-2016-10-17: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/10/17/imagemagick-memory-allocation-failure-in-acquiremagickmemory-memory-c/
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
