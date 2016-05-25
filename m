@@ -1,42 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/10
-Message-ID: <20160505112114.GA25313@openwall.com>
-Date: Thu, 5 May 2016 14:21:14 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: broken RSA keys
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/25/8
+Message-ID: <20160525135228.GA13576@eldamar.local>
+Date: Wed, 25 May 2016 15:52:28 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: roundcube: XSS vulnerability in mail content page
 Content-Type: text/plain; charset=utf-8
 
-On Thu, May 05, 2016 at 01:03:36PM +0200, Hanno B??ck wrote:
-> On Thu, 5 May 2016 13:34:05 +0300 Solar Designer <solar@...nwall.com> wrote:
-> > On Wed, May 04, 2016 at 09:18:26PM -0400, Stanislav Datskovskiy wrote:
-> > > older versions of GPG
-> > > will regard the bottom 32 bits of a modulus as the 'fingerprint',
-> > > rather than performing a hash.
-> > 
-> > Are you sure?
-> 
-> https://tools.ietf.org/html/rfc4880
-> 
-> "V3 keys are deprecated.  They contain three weaknesses.  First, it is
-> relatively easy to construct a V3 key that has the same Key ID as any
-> other key because the Key ID is simply the low 64 bits of the public
-> modulus."
+Hi
 
-Thanks.  I guess when I imported a PGP 2.6 key to GPG, I just did not
-notice this detail, and GPG continued to use the V3 format key for me.
+Can you please assign a CVE for the following XSS vulnerability in
+roundcube fixed with the recent 1.2 release:
 
-Also from the RFC above:
+RELEASE 1.2.0
+-------------
+[...]
+- Fix XSS issue in href attribute on area tag (#5240)
 
-"  For a V3 key, the eight-octet Key ID consists of the low 64 bits of
-   the public modulus of the RSA key.
+References:
+https://github.com/roundcube/roundcubemail/issues/5240
+https://github.com/roundcube/roundcubemail/pull/5241
 
-   The fingerprint of a V3 key is formed by hashing the body (but not
-   the two-octet length) of the MPIs that form the key material (public
-   modulus n, followed by exponent e) with MD5.  Note that both V3 keys
-   and MD5 are deprecated."
+Thanks in advance,
 
-So key id was not part of the fingerprint.  That's not how I remember
-it, but I'll trust the RFC over my memory.
-
-Alexander
+Regards,
+Salvatore
