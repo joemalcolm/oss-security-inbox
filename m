@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2728" "Saturday" "9" "May" "2015" "05:43:26" "+0000" "Nitin Venkatesh" "venkatesh.nitin@gmail.com" "<CAARZ5vpRu9sgev=p9M+zbxagBjbGRWBHrA-yUO9a2V7vpyVfRA@mail.gmail.com>" "79" "[oss-security] Wordpress Roomcloud plugin v1.1(rev @1115307) XSS vulnerability" nil nil nil "5" "2015050905:43:26" "[oss-security] Wordpress Roomcloud plugin v1.1(rev @1115307) XSS vulnerability" (number mark "        venkatesh.ni May  9   79/2728  " thread-indent "\"[oss-security] Wordpress Roomcloud plugin v1.1(rev @1115307) XSS vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["591" "Wednesday" "25" "May" "2016" "12:29:04" "+0530" "Huzaifa Sidhpurwala" "huzaifas@redhat.com" "<3197eee1-d6c3-1376-b83c-a14101703e63@redhat.com>" "23" "[oss-security] 3 libxml2 issues" nil nil nil "5" "2016052506:59:04" "[oss-security] 3 libxml2 issues" (number mark "U       huzaifas@red May 25   23/591   " thread-indent "\"[oss-security] 3 libxml2 issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9733 invoked by uid 550); 9 May 2015 11:18:19 -0000
+Received: (qmail 24362 invoked by uid 550); 25 May 2016 06:59:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,104 +11,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24528 invoked from network); 9 May 2015 05:43:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=0ECPcqDiAwZ3bgeWmDsBH/AXjWgGgBKMaAhwWTMfw08=;
-        b=wk5t3y4jwymkATPVolT0K0MvAzn9Q9FDgKp4aFrUVzLuo3HrBWkgEodngI1p3SY4oJ
-         xnu7EnTS60rN16oH4SFBea/K+4QwM7FvySZS4jqkzdHvzLos2ZMnnaprkWa0Su1luwzG
-         aYAqlCz9L2YkWeYHujnK0xWcQujNRw/57uMjv8b6NPlHuX8dFsLBweC8VryQw+pf9yC8
-         BGRMQJpMkZyTso0/tBQbOKEbA+8ES1DxH0j+m20mwnluXavRgn/sEZfEmUzAUKZxHGdD
-         pUh4kPBj2POleM71ksLVQsU+VzzjrwbXyvqSfNVTI+SGh2MW2ui0t4uTUeQrTG7Cu8ox
-         xRFw==
-X-Received: by 10.50.45.103 with SMTP id l7mr1780183igm.41.1431150207544; Fri,
- 08 May 2015 22:43:27 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAARZ5vpRu9sgev=p9M+zbxagBjbGRWBHrA-yUO9a2V7vpyVfRA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=089e0111b1b6bdb3fa05159f9fb8
-Date: Sat, 09 May 2015 05:43:26 +0000
-From: Nitin Venkatesh <venkatesh.nitin@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Wordpress Roomcloud plugin v1.1(rev @1115307) XSS vulnerability
+Received: (qmail 24344 invoked from network); 25 May 2016 06:59:18 -0000
 To: oss-security@lists.openwall.com
+From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
+Message-ID: <3197eee1-d6c3-1376-b83c-a14101703e63@redhat.com>
+Date: Wed, 25 May 2016 12:29:04 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Wed, 25 May 2016 06:59:07 +0000 (UTC)
+Subject: [oss-security] 3 libxml2 issues
 
---089e0111b1b6bdb3fa05159f9fb8
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Hi All,
 
-## Details
+The following issues were reported to us:
 
-# Title: Unsanitized parameters in Wordpress Roomcloud plugin v1.1(rev
-@1115307) allows Cross-site Scripting
-# Submitter: Nitin Venkatesh <venkatesh [dot] nitin [at] gmail [dot] com>
-# Product: Wordpress Roomcloud plugin
-# Product URL: https://wordpress.org/plugins/roomcloud
-# Vulnerability Type: Cross-site Scripting [CWE-79]
-# Affected Versions: Tested on v1.1 (revision @1115307)
-# Fixed Version: v1.1 (revision @1117499)
-# Link to source code diff:
-https://plugins.trac.wordpress.org/changeset/1117499
-# CVE Status: None/Unassigned/Fresh
+1. CVE-2016-4447: libxml2: Heap-based buffer underreads due to xmlParseName
 
-## Product Information
+https://bugzilla.redhat.com/show_bug.cgi?id=1338686
 
-A Plugin to add roomcloud booking form to hotel website using [roomcloud]
-shortcode
+2. CVE-2016-4448 libxml2: Format string vulnerability
 
-Use Roomcloud plugin to embed our Booking Engine form into your wordpress
-site.
-This allows your customers to make online reservations on the web site of
-your hotel.
-More info at http://www.roomcloud.net
+https://bugzilla.redhat.com/show_bug.cgi?id=1338700
 
-## Vulnerability Description
+3. CVE-2016-4449 libxml2: Inappropriate fetch of entities content
 
-Unsantized POST parameters are susceptible to XSS in the roomcloud.php file
-viz., (1)pin, (2)start_day, (3)start_month, (4)start_year, (5)end_day,
-(6)end_month, (7)end_year, (8)lang, (9)adults, (10)children
+https://bugzilla.redhat.com/show_bug.cgi?id=1338701
 
-## Vulnerable Source Code
 
-39 echo('<iframe width=3D"800" height=3D"600" src=3D"');
-40
-41   echo('
-http://www.roomcloud.net/be/se1/hotel.jsp?hotel=3D'.$_POST['hotel'].'&pin=
-=3D'.$_POST['pin'].'&start_day=3D'.$_POST['start_day'].'&start_month=3D'.$_=
-POST['start_month'].'&start_year=3D'.$_POST['start_year'].'&end_day=3D'.$_P=
-OST['end_day'].'&end_month=3D'.$_POST['end_month'].'&end_year=3D'.$_POST['e=
-nd_year'].'&r=3D1&a=3D1&lang=3D'.$_POST['lang'].'&t=3D0&n=3D0&adults=3D'.$_=
-POST['adults'].'&children=3D'.$_POST['children'].$chlda
-);
-42
-43   echo('"></iframe>');
+Each of the Red Hat bugs , contain links to the commits which fix these
+issues. (The upstream bugs are currently private)
 
-## Proof of Concept
 
-Sample exploit POST request body:
-
-hotel=3D144&lang=3Den&start_day=3D"><script>alert(1);</script>&start_month=
-=3D03&start_year=3D2015&end_day=3D20&end_month=3D03&end_year=3D2015&adults=
-=3D2&pin=3D&children=3D
-
-## Solution:
-
-Upgrade to latest version of the plugin.
-
-## Disclosure Timeline:
-
-2015-03-19 - Informed developer in support forums for the plugin & mailed
-Wordpress plugins team
-2015-03-21 - Plugin disabled for download by Wordpress team
-2015-03-21 - Contacted developer via email
-2015-03-21 - Vulnerability fixed by developer
-2015-03-22 - Agreed to public disclosure on/after May 5, 2015
-2015-03-23 - Wordpress Plugins team re-enables download page
-2015-05-09 - Publishing disclosure on FD mailing list.
-
-## Disclaimer:
-
-This disclosure is purely meant for educational purposes. I will in no way
-be responsible as to how the information in this disclosure is used.
-
---089e0111b1b6bdb3fa05159f9fb8--
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
