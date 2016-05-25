@@ -1,25 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/14/2
-Message-ID: <20160814094637.GA29541@openwall.com>
-Date: Sun, 14 Aug 2016 12:46:37 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: gorgeous
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/25/3
+Message-ID: <CAEsznC5htNHcq=f_tq8A99yD5k4t84AFaW=sj7RL589qMmoaXQ@mail.gmail.com>
+Date: Wed, 25 May 2016 10:51:15 +0300
+From: Lior Kaplan <kaplanlior@...il.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Fwd: CVE for PHP 5.5.36 issues
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-Gorgeous or not, but with spam/phishing/malware like that, which tries
-not entirely unrelated combinations of source and destination e-mail
-addresses (presumably taken from people's compromised mailboxes or such,
-or/and from public mailing list archives indeed), it looks like we'll
-have to cut down on auto-approve for moderated mailing lists (and switch
-more lists to pre-moderation even for subscribers).  Unfortunately.
-I've just removed this particular address from auto-approve, and we'll
-be adjusting these settings to strike a balance between delivery delays
-and spam getting through.
+Please assign CVE for the following issues, expected to be part of PHP
+5.5.36
+Code at http://git.php.net/?p=php-src.git;a=shortlog;h=refs/heads/PHP-5.5
 
-On Sun, Aug 14, 2016 at 12:18:03PM +0300, squid3 wrote:
-> Dear, That stuff is just gorgeous, you have  to read about it more at
+#72227 is a backport from upstream, so we'd prefer to reuse their CVE (if
+already exists).
+#72135 and 72114 are PHP 5.x only bugs.
 
-Alexander
+Thanks,
+
+Kaplan
+
+---------- Forwarded message ----------
+From: Lior Kaplan <kaplanlior@...il.com>
+Date: Wed, May 25, 2016 at 12:55 AM
+Subject: CVE for PHP 5.5.36 issues ?
+To: "security@....net" <security@....net>
+
+Following my mail bellow from last week, these are the issues which got
+fixed in the security repository for PHP 5.5.
+
+commit 7a1aac3343af85b4af4df5f8844946eaa27394ab
+Author: Stanislav Malyshev <stas@....net>
+Date:   Mon May 23 00:28:02 2016 -0700
+
+    Fixed bug #72227: imagescale out-of-bounds read
+
+    Ported from
+https://github.com/libgd/libgd/commit/4f65a3e4eedaffa1efcf9ee1eb08f0b504fbc31a
+
+commit 97eff7eb57fc2320c267a949cffd622c38712484
+Author: Stanislav Malyshev <stas@....net>
+Date:   Sun May 22 17:49:02 2016 -0700
+
+    Fix bug #72241: get_icu_value_internal out-of-bounds read
+
+commit 0da8b8b801f9276359262f1ef8274c7812d3dfda
+Author: Stanislav Malyshev <stas@....net>
+Date:   Sun May 15 23:26:51 2016 -0700
+
+    Fix bug #72135 - don't create strings with lengths outside int range
+
+commit abd159cce48f3e34f08e4751c568e09677d5ec9c
+Author: Stanislav Malyshev <stas@....net>
+Date:   Mon May 9 21:55:29 2016 -0700
+
+    Fix bug #72114 - int/size_t confusion in fread
+
