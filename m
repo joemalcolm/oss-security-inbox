@@ -1,60 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/22/3
-Message-ID: <ba7df7a2-3a2f-b861-f4f3-bba12493056d@googlemail.com>
-Date: Wed, 21 Dec 2016 20:46:43 +0000
-From: tapper <lancett01@...glemail.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Curious about the security of my router fermwair.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/26/6
+Message-Id: <20160526182059.BF3EE7BC09E@smtpvmsrv1.mitre.org>
+Date: Thu, 26 May 2016 14:20:59 -0400 (EDT)
+From: cve-assign@...re.org
+To: seth.arnold@...onical.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...ntu.com
+Subject: Re: CVE Requests: libimobiledevice and libusbmuxd
 Content-Type: text/plain; charset=utf-8
 
-Thanks very much for this I will pass this on to the devs. I don't see 
-this being much of a problem I will make a pr. I scanned my device with 
-nmap and didn't find any thing open that should not be so that makes me 
-happy :)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+> Please assign CVE(s) to libimobiledevice and libusbmuxd; both libraries
+> accidentally bound a listening IPv4 TCP socket to INADDR_ANY rather than
+> INADDR_LOOPBACK:
+> 
+> https://github.com/libimobiledevice/libimobiledevice/commit/df1f5c4d70d0c19ad40072f5246ca457e7f9849e
+> https://github.com/libimobiledevice/libusbmuxd/commit/4397b3376dc4e4cb1c991d0aed61ce6482614196
 
-On 21/12/2016 20:07, Seth Arnold wrote:
-> On Wed, Dec 21, 2016 at 11:39:26AM +0000, tapper wrote:
->> 	Hi my name is Jonathan. I don't know if this is the write place to ask
->> about this but here gos.
->
-> It's not the usual use of this list but I suspect you won't upset many
-> people either.
->
->> I would like to know if any one would like to have a poke around at the
->> third party router firmware I use on my router called Gargoyle.
->
-> The first item I found in about one minute of inspection is that they
-> include an utterly ancient version of ffmpeg:
->
-> https://github.com/ericpaulbishop/gargoyle/blob/master/package/ffmpeg/Makefile#L10
->
-> PKG_NAME:=ffmpeg
-> PKG_VERSION:=2.4.4
-> PKG_RELEASE:=1
->
-> PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-> PKG_SOURCE_URL:=http://ffmpeg.org/releases/
-> PKG_MD5SUM:=7e2819c71484ffba1ba1a91dd5285643
->
-> The 2.4 branch of ffmpeg ended with version 2.4.13 on 2016-02-02. Not
-> only are they nine point releases behind, they are also drastically
-> behind on shipping newer versions entirely. (The latest version upstream
-> is numbered 3.2.2. That's seven minor versions behind, too.) Granted,
-> new versions bring new bugs, but picking one point in time two years
-> ago and then never updating is trouble.
->
-> I didn't spot any security fixes for ffmpeg in the patches-generic or
-> patches-old directories, but perhaps they just weren't clearly labeled.
->
-> Another concerning point is the use of md5 to validate the download. While
-> use of md5 as a 'better crc32' is well established, most cryptographic
-> authorities are saying it's time to replace md5's replacement, sha-1.
-> They're two hash functions behind the times.
->
-> A full review would take far more time than I have to offer but the
-> initial impression is that it needs a serious refresh of its dependencies.
->
-> Thanks
->
+Use CVE-2016-5104 for this vulnerability in both products. We did not
+investigate how these products were developed, but it is clear that
+these were not independent mistakes in separately written code.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXRzuDAAoJEHb/MwWLVhi2o4UP/Axr1qTym6sYJgBkuyLRvVDe
+hPsp7oZxBpD7XsyB9sgVLfcS831/bVJDOZMM8gBmF+U3XFUwsxrG/0Eeiy6Ye809
+07tA1DwQVzkdEVoFI5zyqP3XhZoyCux6oouEfT4Q/SbLzZMP8erMPs9G0+BIdNDz
+tzCen2Ey3hnXdYzm9Sl2Py3yvYt1XXtAVPoc1OOq/P1dYToDrWeWW1wW2eHWLr0L
+UlzidNHiPFUWz7VtO3aydSMkOq7nmFL9qjup2CS0+5COi5hTvy+GhV1k+IubvD/Z
+C0SBru8ldqnXwA/b920nHm/IFuYwwaUx9r09dsFTeEawG9CNd4y2SgH9fd6fdHi2
+QpZwBPsLJQvDCzWGaALUGfeWFFPjDk8ZmnVuRlrvDPHqW2jE+t3y7K4Zk8lPR8tP
+Pj6sAyxVosE24u3aq+kMpTgfDu+DC3qQXxiU9j5c0oOCy8IoDBSTeWaMa+4kCiPp
+h0+el4k55Zkm2wlD8v1Qe7qo+Cm6ALk2A+S4m05mXh8J17GXw9A1ZAkEBsnpkYcw
+xiK+qYIxUCfexMi/GfdngmKHnHaUiH4F2HZvyUOw9pdIVI3wZs0E/J428a/ZfPF3
+hKr3p60rZIrYGf9QmMaPqAo83MVnS0G29fMEO8pbRamDWewm+oBKX9KiUjKmzxmg
+2QIZO/45MdzfAHHPmr2i
+=ZCZK
+-----END PGP SIGNATURE-----
