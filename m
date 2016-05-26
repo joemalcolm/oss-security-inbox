@@ -1,4 +1,9 @@
-Received: (qmail 28653 invoked by uid 550); 12 Dec 2025 20:50:44 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1944" "Thursday" "26" "May" "2016" "14:22:31" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160526182231.A7D0A52E007@smtpvbsrv1.mitre.org>" "46" "[oss-security] Re: CVE Request Qemu: scsi: megasas: stack information leakage while reading configuration" nil nil nil "5" "2016052618:22:31" "[oss-security] Re: CVE Request Qemu: scsi: megasas: stack information leakage while reading configuration" (number mark "U       cve-assign@m May 26   46/1944  " thread-indent "\"[oss-security] Re: CVE Request Qemu: scsi: megasas: stack information leakage while reading configuration\"\n") "<alpine.LFD.2.20.1605251756250.15974@wniryva>" ("<alpine.LFD.2.20.1605251756250.15974@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 20292 invoked by uid 550); 26 May 2016 18:22:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,84 +12,58 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 25733 invoked from network); 12 Dec 2025 20:50:25 -0000
-Date: Fri, 12 Dec 2025 21:50:24 +0100
-From: Solar Designer <solar@openwall.com>
-To: Huajie Wang <benjobs@apache.org>
-Cc: oss-security@lists.openwall.com, omkarparth@gmail.com
-Message-ID: <20251212205024.GA26668@openwall.com>
-References: <8d3fb2d0-ddeb-63da-1f6a-4c430a4a407d@apache.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8d3fb2d0-ddeb-63da-1f6a-4c430a4a407d@apache.org>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2025-54947: Apache StreamPark: Use hard-coded key vulnerability
+Received: (qmail 20264 invoked from network); 26 May 2016 18:22:43 -0000
+From: cve-assign@mitre.org
+To: ppandit@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn
+In-Reply-To: <alpine.LFD.2.20.1605251756250.15974@wniryva>
+Message-Id: <20160526182231.A7D0A52E007@smtpvbsrv1.mitre.org>
+Date: Thu, 26 May 2016 14:22:31 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request Qemu: scsi: megasas: stack information leakage while reading configuration
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Thank you for bringing these CVE announcements to oss-security.  However:
-
-On Fri, Dec 12, 2025 at 02:57:25PM +0000, Huajie Wang wrote:
-> Severity: important
-
-Is this message providing a replacement CVE and advisory for what you
-had announced as "CVE-2025-53960: Apache StreamPark: Use the user's
-password as the secret key Vulnerability" last week?
-
-https://www.openwall.com/lists/oss-security/2025/12/04/1
-
-If so, this looks like misuse of CVEs to me.  When you want to amend an
-advisory, this is generally not a valid reason to issue another CVE.
-You should be able to amend an advisory while retaining the CVE.  Since
-I see this happen for different Apache projects lately, maybe there's an
-issue in Apache guidelines or tooling that needs to be fixed?
-
-In this case, looks like only the title and severity have changed, but
-even if you edited something in the description or affected versions
-range that would also be no reason for a new CVE, unless you actually
-start talking about a different issue.
-
-Also, CVEs aside, it's confusing when you post something anew without
-any explanation of how it relates to seemingly the same thing you posted
-before.  For a better example, see how the Xen project does it, with
-revision history in advisories.
-
-Finally, you could have posted the amendment as a "reply" to your own
-message that first announced the issue.  That way, your amendment would
-have been linked as "next in thread" from the original message in list
-archives, so anyone who found the original message in there would know
-there is and be able to easily access the additional information - which
-isn't the case currently.
-
-On the actual vulnerability:
-
-> Description:
+> Quick Emulator(Qemu) built with the MegaRAID SAS 8708EM2 Host Bus Adapter
+> emulation support is vulnerable to an information leakage issue. It could
+> occur while processing MegaRAID Firmware Interface(MFI) command to read device
+> configuration in 'megasas_dcmd_cfg_read'.
 > 
-> In Apache StreamPark versions 2.0.0 through 2.1.7, a security vulnerability involving a hard-coded encryption key exists. This vulnerability occurs because the system uses a fixed, immutable key for encryption instead of dynamically generating or securely configuring the key. Attackers may obtain this key through reverse engineering or code analysis, potentially decrypting sensitive data or forging encrypted information, leading to information disclosure or unauthorized system access.
+> A privileged user inside guest could use this flaw to leak host memory bytes.
 > 
-> This issue affects Apache StreamPark: from 2.0.0 before 2.1.7.
-> 
-> Users are recommended to upgrade to version 2.1.7, which fixes the issue.
+> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04419.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1339583
 
-This leaves me and probably others wondering how you fixed the issue.
-Your previous announcement seems to have wrongly included a hint on the
-fix in the vulnerability description.  "Use the user's password as the
-secret key" - is that the fix?  Any more detail you can share on it?
-Such as whether/what PBKDF is used to derive the encryption key from the
-user's password (if no KDF, or a fast non-password KDF, then that's yet
-another vulnerability right there).  Maybe refer to fix commit(s)?
+>> When reading MegaRAID SAS controller configuration via MegaRAID
+>> Firmware Interface(MFI) commands, routine megasas_dcmd_cfg_read
+>> uses an uninitialised local data buffer. Initialise this buffer
+>> to avoid stack information leakage.
 
-Inclusion of more detail on the fixes may result in folks in here taking
-a look and commenting, helping find potential issues with initial fixes.
+Use CVE-2016-5105.
 
-> Credit:
-> 
-> omkarparth@gmail.com (finder)
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/megasas.c but
+that may be an expected place for a later update.
 
-Added to CC.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Thanks again,
-
-Alexander
+iQIcBAEBCAAGBQJXRzxiAAoJEHb/MwWLVhi2qVUP/AsvBiRL5zXD4C4Kx/LCRyCE
+PbG+dd7HH27fm5UHvev40MLvZ9tXQok3hV2XlMMBvvLzkIwFfxYA67qOmJJAF76d
+ae200JbEbdIKYF8EMANPzbh4xKZ/bpRD8cD43kBWpvr0oGzHsJzP7K1147844kFx
+R9nT3b18k18YhbxO/kEGi4ssDoFx3Orqrdi6mYQWU6UeZQtwkjTpGOg0pKFubtoW
+htAhGT/8LPS4NxzVyCcAhLRb8Gk403IlmHnB3b/T7frUcx6hjSJqVm2mShAO5tT3
+iLYPjDcbljFjhQ9KFuFcflDKRFoZU5eQjFyx0kJ99QqlnmvPmOB0ks9RYWfUROWq
+7D7s3SW8jmqK8Q1LcANHw3hDYNabVQzrY+R31fAM/BmhmdWzlDIDXs/z/lXBzsdk
+gQkDbOD4Zizfi9XwN+Su2wp8ZkG25tO5t5je0au+irHck53lPzJYI6UgKWw82O1S
+lEsMZj8dvn+qcOvOYZrQr/awQ13nz+1VjbwiOn4Ce0cS35mRXAMYM2uRvj7NIVrR
+qZrSavg/TN+tOAxKKDcrLyipwoSBtjeXyGp22MWYv+es2jdt9RJ9RFDl6mrlOy2i
+eV0KPnXpEYqqGRrLaYLYUPAosfYyQiHW0aMIpMOKNNJ++Fw2SgeJGGu/W5fsdUW/
+StE1XDD/7pcOjCT2bJw5
+=kowa
+-----END PGP SIGNATURE-----
