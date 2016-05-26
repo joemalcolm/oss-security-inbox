@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9786" "Friday" "4" "November" "2016" "15:43:31" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<6451341.vFYbS6xerg@blackgate>" "100" "[oss-security] jasper: use of uninitialized value in jpc_pi_nextcprl (jpc_t2cod.c)" "^Cc:" nil nil "11" "2016110414:43:31" "[oss-security] jasper: use of uninitialized value in jpc_pi_nextcprl (jpc_t2cod.c)" (number mark "U       ago@gentoo.o Nov  4  100/9786  " thread-indent "\"[oss-security] jasper: use of uninitialized value in jpc_pi_nextcprl (jpc_t2cod.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["969" "Thursday" "26" "May" "2016" "15:55:35" "+0000" "Tim Allison" "tallison@apache.org" "<1705136517.1175366.1464278135251.JavaMail.yahoo@mail.yahoo.com>" "24" "[oss-security] [CVE-2016-4434] Apache Tika XML External Entity vulnerability" nil nil nil "5" "2016052615:55:35" "[oss-security] [CVE-2016-4434] Apache Tika XML External Entity vulnerability" (number mark "U       tallison@apa May 26   24/969   " thread-indent "\"[oss-security] [CVE-2016-4434] Apache Tika XML External Entity vulnerability\"\n") "<1705136517.1175366.1464278135251.JavaMail.yahoo.ref@mail.yahoo.com>" ("<1705136517.1175366.1464278135251.JavaMail.yahoo.ref@mail.yahoo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1966 invoked by uid 550); 4 Nov 2016 14:43:50 -0000
+Received: (qmail 9730 invoked by uid 550); 26 May 2016 17:53:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,116 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1924 invoked from network); 4 Nov 2016 14:43:48 -0000
-Message-ID: <6451341.vFYbS6xerg@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.26-gentoo; KDE/4.14.24; x86_64; ; )
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Cc: cve-assign@mitre.org
-Date: Fri, 04 Nov 2016 15:43:31 +0100
-From: Agostino Sarubbo <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] jasper: use of uninitialized value in jpc_pi_nextcprl (jpc_t2cod.c)
-To: oss-security@lists.openwall.com
+Received: (qmail 5223 invoked from network); 26 May 2016 16:00:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1464278405; bh=rbNphpIzC+9b3Z+XLqP4UnGEhHIE/07bm83QlKGSvx0=; h=Date:From:Reply-To:To:Subject:References:From:Subject; b=uYOnpNkDsxHEKkyqgcK0ANuvBs7+ja6YFX+KHFs+Myd/mturg3jVAom56ZOWymO/QOk8zn1lwZJttrccnFpECFg2BwErajK3MSHtxLfOQyxqyFdvGqXAtAkN6YUShnuSVsd6xqX/AwpjHnUDo+H867i0ZlVl/jU8S/OLGf+/8uRZx9wV6O4jzoiXUVp9zaUkZLJ3gnNI3YMIPV0LmC0Zu0PW37NA50D/NHtom8XRPmKsDWHonBbBUxQfazTdBjFYPixQxN8aevPy39tGspnezNjAp3L4cZ4Jb46MSUoO89bsIEtzsiCMfLrw+VjXGeQ4yVfACIMPjzemUhwPcfuchg==
+X-Yahoo-Newman-Property: ymail-4
+X-Yahoo-Newman-Id: 885457.47331.bm@omp1036.mail.bf1.yahoo.com
+X-YMail-OSG: YOydFOYVM1ltw7HIIw3owWvZlMvM99YvXUGXHb3B1i6vg09fFYr89I7hhpfYMX0
+ Mk00dBUNg0xJbaOjb6is3rhY4w87D1q_rjfjYU7wDcCl5y5zZVVzZJYs2fe2cyB7sFiBzvI7YjIQ
+ TCa.2OOSf_9V8Z4D8ovKxCksczHLN2PZEgmO5O6rJQEmampGiZHvgk7I0dCPZZpM536Mgff8QHD3
+ AwhDLPVGittOpf1cJEoy5dU2kVcdaFc.l4NYh7ZUnXOFHFyRboaOVSzuzVqLDhXL9Oc7n4PH9PwE
+ cnMKpTKb0rino.vOSHFecv7vp14KUz1_4Evqjh_cMsa5ekXgPgsubnPJeXZqbq2LezT4OAfiiUoc
+ dcYrVyQWYfxsrLdtvfi6HdQavXTEfcTywMEdFag2JM7i8SFDXnzzYu78bmmSWD6rABjwSrxUG4j4
+ n_rwqF9NhFrAdpPpRXD84jEc6UHQhN5wLw.8xvDObp3Eru4NEH04puskAih9gxssav9QcBdoiUmf
+ Em0C7ToXTOABJfPMv
+Date: Thu, 26 May 2016 15:55:35 +0000 (UTC)
+From: Tim Allison <tallison@apache.org>
+To: "security@apache.org" <security@apache.org>, 
+	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, 
+	"bugtraq@securityfocus.com" <bugtraq@securityfocus.com>, 
+	"dev@tika.apache.org" <dev@tika.apache.org>, 
+	"user@tika.apache.org" <user@tika.apache.org>
+Message-ID: <1705136517.1175366.1464278135251.JavaMail.yahoo@mail.yahoo.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+References: <1705136517.1175366.1464278135251.JavaMail.yahoo.ref@mail.yahoo.com>
+Subject: [oss-security] [CVE-2016-4434] Apache Tika XML External Entity vulnerability
 
-If suitable for a CVE please assign one. Thanks.
+CVE-2016-4434: Apache Tika XML External Entity vulnerability
 
-Description:
-jasper is an open-source initiative to provide a free software-based reference 
-implementation of the codec specified in the JPEG-2000 Part-1 standard.
+Severity: Important
 
-I decided to try another round of fuzzing with the Memory Sanitizer enabled, 
-and I discovered that there is an use-of-uninitialized-value in 
-jpc_pi_nextcprl
 
-The complete MSan output:
+Vendor: 
+The Apache Software Foundation
 
-# imginfo -f $FILE
-warning: trailing garbage in marker segment (14 bytes)                                                                                                                                                                                                                         
-warning: trailing garbage in marker segment (14 bytes)                                                                                                                                                                                                                         
-warning: ignoring unknown marker segment                                                                                                                                                                                                                                       
-type = 0xff41 (UNKNOWN); len = 20;01 87 01 00 00 00 00 00 00 00 00 00 00 00 00 
-00 00 00 warning: trailing garbage in marker segment (14 bytes)                                                                                                                                 
-==7937==WARNING: MemorySanitizer: use-of-uninitialized-value                                                                                                                                                                                                                   
-    #0 0x7fc562323907 in jpc_pi_nextcprl /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_t2cod.c:482:12                                                                                                                                     
-    #1 0x7fc562323907 in jpc_pi_next /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_t2cod.c:125                                                                                                                                            
-    #2 0x7fc56232aadc in jpc_dec_decodepkts /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_t2dec.c:441:14                                                                                                                                  
-    #3 0x7fc5621fa9f1 in jpc_dec_process_sod /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:594:6                                                                                                                                    
-    #4 0x7fc56220c574 in jpc_dec_decode /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:391:10                                                                                                                                        
-    #5 0x7fc56220c574 in jpc_decode /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:255                                                                                                                                               
-    #6 0x7fc5621ac5a4 in jp2_decode /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jp2/jp2_dec.c:215:21                                                                                                                                            
-    #7 0x7fc5620d69d1 in jas_image_decode /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/base/jas_image.c:396:16                                                                                                                                   
-    #8 0x557bb7618831 in main /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/appl/imginfo.c:203:16                                                                                                                                                           
-    #9 0x7fc5611e961f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                        
-    #10 0x557bb7599a28 in _init (/usr/bin/imginfo+0x1aa28)                                                                                                                                                                                                                     
-                                                                                                                                                                                                                                                                               
-  Uninitialized value was created by a heap allocation                                                                                                                                                                                                                         
-    #0 0x557bb75bf639 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/msan/msan_interceptors.cc:1002                                                                                                                           
-    #1 0x7fc5621507d4 in jas_malloc /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/base/jas_malloc.c:148:13                                                                                                                                        
-    #2 0x7fc562152520 in jas_alloc2 /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/base/jas_malloc.c:275:9                                                                                                                                         
-    #3 0x7fc56233360c in jpc_dec_pi_create /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_t2dec.c:506:30                                                                                                                                   
-    #4 0x7fc5621f2c71 in jpc_dec_tileinit /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:911:19                                                                                                                                      
-    #5 0x7fc5621f2c71 in jpc_dec_process_sod /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:560                                                                                                                                      
-    #6 0x7fc56220c574 in jpc_dec_decode /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:391:10                                                                                                                                        
-    #7 0x7fc56220c574 in jpc_decode /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:255                                                                                                                                               
-    #8 0x7fc5621ac5a4 in jp2_decode /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jp2/jp2_dec.c:215:21                                                                                                                                            
-    #9 0x7fc5620d69d1 in jas_image_decode /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/base/jas_image.c:396:16                                                                                                                                   
-    #10 0x557bb7618831 in main /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/appl/imginfo.c:203:16                                                                                                                                                          
-    #11 0x7fc5611e961f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                       
-                                                                                                                                                                                                                                                                               
-SUMMARY: MemorySanitizer: use-of-uninitialized-value /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_t2cod.c:482:12 
-in jpc_pi_nextcprl                                                                                                      
-Exiting
+Versions Affected: 
+Apache Tika 0.10 to 1.12
 
-Affected version:
-1.900.17
+Description: 
+Apache Tika parses XML within numerous file formats.  In some instances[1], the initialization ofthe XML parser or the choice of handlers did not protect against XML External Entity (XXE)
+vulnerabilities.  According to www.owasp.org [2]: "This attack may lead to the disclosure of confidential data, denial of service, server side request forgery, port scanning from the perspective of the machine where the parser is located, and other system impacts." 
 
-Fixed version:
-1.900.20
 
-Commit fix:
-https://github.com/mdadams/jasper/commit/1f0dfe5a42911b6880a1445f13f6d615ddb55387
+Mitigation: 
+Upgrade to Apache Tika 1.13.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+Credit: 
+This issue was discovered by Arthur Khashaev (https://khashaev.ru), Seulgi Kim, Mesut Timur,and Microsoft Vulnerability Research.
 
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00029-jasper-uninitvalue-jpc_pi_nextcprl
-
-Timeline:
-2016-11-03: bug discovered and reported to upstream
-2016-11-04: upstream released a patch
-2016-11-04: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/04/jasper-use-of-uninitialized-value-in-jpc_pi_nextcprl-jpc_t2cod-c
+[1] Spreadsheets in OOXML files and XMP in PDF and other file formats.
+[2] https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing
