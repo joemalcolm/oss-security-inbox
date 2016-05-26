@@ -1,81 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/28/10
-Message-ID: <1586796749.30137780.1456687267516.JavaMail.zimbra@redhat.com>
-Date: Sun, 28 Feb 2016 14:21:07 -0500 (EST)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: CVE request -- linux kernel: visor: crash on invalid USB device descriptors in treo_attach() in visor driver
-Content-Type: text/plain; charset=utf-8
-
-Hello,
-
->> We don't really understand "An upstream patch" here.
-Indeed, the correct commit is cac9b50b0d. I'm sorry for the error.
-
-We will use CVE-2016-2782, thank you.
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
-
-
------ Original Message -----
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/26/8
+Message-Id: <20160526182403.AD26C72E014@smtpvbsrv1.mitre.org>
+Date: Thu, 26 May 2016 14:24:03 -0400 (EDT)
 From: cve-assign@...re.org
-To: vdronov@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Sent: Sunday, February 28, 2016 7:41:39 PM
-Subject: [oss-security] Re: CVE request -- linux kernel: visor: crash on invalid USB device descriptors in treo_attach() in visor driver
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
+Subject: Re: CVE Request Qemu: scsi: megasas: out-of-bounds write while setting controller properties
+Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> A local kernel crash on invalid USB device requiring the visor driver was reported.
-> The treo_attach() function of the [visor] driver, which is called during the driver
-> initialization process, was dereferencing the bulk-in and interrupt-in urbs without
-> first making sure they had been allocated by the core. Due to an incomplete sanity
-> check, the visor driver tries to dereference null-pointers, which results in crash.
+> Quick Emulator(Qemu) built with the MegaRAID SAS 8708EM2 Host Bus Adapter
+> emulation support is vulnerable to an out-of-bounds write access issue. It
+> could occur while processing MegaRAID Firmware Interface(MFI) command to set
+> controller properties in 'megasas_dcmd_set_properties'.
 > 
-> References:
-> 
-> Red Hat public Bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1312670
-> 
-> An upstream patch: http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=cb3232138e37129e88240a98a1d2aba2187ff57c
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> on the host resulting in DoS.
 
-We don't really understand "An upstream patch" here. We think you mean
-the patch is
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=cac9b50b0d75a1d50d6c056ff65c005f3224c8e0
-instead. In any case, use CVE-2016-2782 for the reported treo_attach
-vulnerability.
+> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04340.html
 
+>> When setting MegaRAID SAS controller properties via MegaRAID
+>> Firmware Interface(MFI) commands, a user supplied size parameter
+>> is used to set property value. Use appropriate size value to avoid
+>> OOB access issues.
 
-> this flaw is very similar to already existing
-> CVE-2015-7566 (https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7566).
-> This is the same type of a flaw, which just exists in the different function
-> treo_attach() (instead of clie_5_attach()), so probably we can use the same
-> CVE-2015-7566 for this.
+Use CVE-2016-5106.
 
-We're not going to change or expand the meaning of CVE-2015-7566
-several weeks later.
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/megasas.c but
+that may be an expected place for a later update.
+
+Note that this issue was originally disputed in
+https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04410.html
+but the dispute was later resolved, and
+https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04340.html
+stands as the final vulnerability description.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW0z65AAoJEL54rhJi8gl56wkP/Aoe0dtizrz4nd4CopPTiDOD
-g+x7UmKmjqlAIlJ6nKwGLmv7by9yvOjZnKnaxQOU/EG+wSL3GpSnVojsrNVZSQGu
-V5iacBA2GW0a4kd8g7bBnK4ViXuoeJII31LfEYVIrAUXXL9h+fOZSjjy4/L+kk1m
-VFSCVIa2jbzHvJr+iNIs0oWFmXQjcuzyFzsOOjbgAvtBFEOL4JW+LAW7qMp8mXTR
-+DpMkaG1JqjzO+Qcj931kNN0MAc5SZBs5+vB0kcI7+g5bKpN01qITvME2szk1iZg
-GRrVyYKzfc16KcjWjbWJNr6i8TuyE/8UvYOmr9c9DNZjM2yAObBpYehrVApTmAmj
-yp/pc+QAFUDGMvalgAwtlEie/c+0cihTGN/BkftFd5/RW8JM6Tm3xcl2/ktK6OGC
-X5L6Mm+q73oVK+YEj3ky5kHYkEsjSrTfN+RrdqE/8r7gNoDhjbaiI4fbq41iFWru
-33XexHwVjtVBJboJ5nKQHBpfUdksQ7gY+6rI9rah4Njt2K2EWwzY+Ibw79d+9i8M
-yJ2grJC/rOzNIDAyU0nyiSWibxEq2HvqmWyfc6CxBgfbXgcTbHxcgWHvTjVuBUfb
-VcDYFPggg/sxehevY34lcbQCJG/GGWihdNuJ2dY/4jOBqLgjlsGNES/lTd6GXjFF
-9IbRRVCzbBb3fap+Ol1N
-=6+yK
+iQIcBAEBCAAGBQJXRzzKAAoJEHb/MwWLVhi2zloP/0/55owAdqXLYJpgkVtd9DtD
+MeJGK8ZZSCTiQl5eNTmh7qxklu360ijisJZ3/JSnZMm4Ic+Wrs66/XxN+F3Z+cc7
+uSUG+FVRZBcX6ynJhyOs+6odKq/DsXDT0aRFuSZjpSQzruJQh44PCHp0KdiZccFf
+RJiNBq7+TTY1CIZtp5PnrUWU8tax05olnJxqO0xJC36kSk77Apu97cAg0aQKjd+n
+jSL66eOviTPOSFrcAgGbLqo6Q1NDrk2hiTf7+GZAr3oGraOZ5Kx0AYMMo66RWF03
+/5PvhWBOMI67ic9n5Zag2OBZnxb5nr07IgsO+yiXmRePKRnYMu3s7vvp0asBvolU
+DzlYXIofT1bR2xasuxba6E9cq/v13sKFVOyHWcslpAZg/eiP/2J+oR+sh7qGkUoN
+g+7FF6H2qDZC4hQa09ivyP6mwdrGh7R7p3JUK2ic6uohNBl2z7I+IPQq8t+3f9L3
+vTOJA9nvEzbGR/416j70T0q36vTB5Miv0cg4PkoMoc5Xe7akb7/Yo/UCtkpUvEHq
+A/vqfo7lhge1xKL4aPIgLpe5BmjbPgsiAAEqBoH/J7V/2WVlylw9FKdGyW1pb8MH
+5i/u4jZJCTlzqICs5UDUh6XMRr2WQxm9rJidtNnGFFSyOMhu5m4FsMXoIb9739Ro
+9XTzzUiK1dyJnWxI8anO
+=MoXX
 -----END PGP SIGNATURE-----
