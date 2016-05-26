@@ -1,21 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/09/4
-Message-ID: <570986F2.5020308@vorlons.info>
-Date: Sun, 10 Apr 2016 00:49:22 +0200
-From: Matthias Geerdsen <matthias@...lons.info>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: cronic - predictable temporary files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/26/4
+Message-ID: <1705136517.1175366.1464278135251.JavaMail.yahoo@mail.yahoo.com>
+Date: Thu, 26 May 2016 15:55:35 +0000 (UTC)
+From: Tim Allison <tallison@...che.org>
+To: "security@...che.org" <security@...che.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "bugtraq@...urityfocus.com" <bugtraq@...urityfocus.com>,  "dev@...a.apache.org" <dev@...a.apache.org>,  "user@...a.apache.org" <user@...a.apache.org>
+Subject: [CVE-2016-4434] Apache Tika XML External Entity vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+CVE-2016-4434: Apache Tika XML External Entity vulnerability
 
-please assign a CVE ID for cronic [1] using predictable names for
-temporary files.
+Severity: Important
 
-Debian bug report:
-<https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=820331>
 
-Cheers
-Matthias
+Vendor: 
+The Apache Software Foundation
 
-[1] <http://habilis.net/cronic/>
+Versions Affected: 
+Apache Tika 0.10 to 1.12
+
+Description: 
+Apache Tika parses XML within numerous file formats.  In some instances[1], the initialization ofthe XML parser or the choice of handlers did not protect against XML External Entity (XXE)
+vulnerabilities.  According to www.owasp.org [2]: "This attack may lead to the disclosure of confidential data, denial of service, server side request forgery, port scanning from the perspective of the machine where the parser is located, and other system impacts." 
+
+
+Mitigation: 
+Upgrade to Apache Tika 1.13.
+
+Credit: 
+This issue was discovered by Arthur Khashaev (https://khashaev.ru), Seulgi Kim, Mesut Timur,and Microsoft Vulnerability Research.
+
+[1] Spreadsheets in OOXML files and XMP in PDF and other file formats.
+[2] https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing
