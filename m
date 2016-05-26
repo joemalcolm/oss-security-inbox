@@ -1,108 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/17/9
-Message-ID: <20160217221921.GB24130@port70.net>
-Date: Wed, 17 Feb 2016 23:19:21 +0100
-From: Szabolcs Nagy <nsz@...t70.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/26/1
+Message-ID: <20160526002711.GB26856@hunt>
+Date: Wed, 25 May 2016 17:27:11 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Address Sanitizer local root
+Cc: security@...ntu.com
+Subject: CVE Requests: libimobiledevice and libusbmuxd
 Content-Type: text/plain; charset=utf-8
 
-There is an alarming trend that Address Sanitizer and related
-compiler instrumentations from compiler-rt are used as a hardening
-solution and run in production.
+Hello MITRE, all,
 
-Even though these are debugging and testing tools, there is
-no clear warning against production use in their documentation:
-http://clang.llvm.org/docs/
-And it's obvious how a tool that catches UB can be misunderstood
-as a hardening tool:
+Please assign CVE(s) to libimobiledevice and libusbmuxd; both libraries
+accidentally bound a listening IPv4 TCP socket to INADDR_ANY rather than
+INADDR_LOOPBACK:
 
-This analysis concluded that ASan can be used for protection
-to stop certain attacks:
-http://scarybeastsecurity.blogspot.dk/2014/09/using-asan-as-protection.html
-The Tor project distributes ASan "hardened" binaries:
-https://blog.torproject.org/blog/tor-browser-55a4-hardened-released
-And there are various projects for full Linux distro instrumentation:
-http://balintreczey.hu/blog/progress-report-on-hardened1-linux-amd64-a-potential-debian-port-with-pie-asan-ubsan-and-more/
-https://blog.hboeck.de/archives/879-Safer-use-of-C-code-running-Gentoo-with-Address-Sanitizer.html
-(the later was presented at FOSDEM 2016: https://fosdem.org/2016/schedule/event/csafecode/ )
+https://github.com/libimobiledevice/libimobiledevice/commit/df1f5c4d70d0c19ad40072f5246ca457e7f9849e
+https://github.com/libimobiledevice/libusbmuxd/commit/4397b3376dc4e4cb1c991d0aed61ce6482614196
 
-While these are interesting projects, ASan should not be
-used for hardening in production systems in its current form,
-so at least the language ("hardening", "protection", "safe")
-should be fixed.
+I do not know who to credit with discovery.
 
-My simple local root exploit is that ASan uses a lot
-of environment variables without checking for secure
-execution of setuid binaries:
+Thanks
 
-ASAN_OPTIONS='verbosity=2 log_path=foo' ./suid.exe
-
-will write to foo.$PID using escalated priviledge, so a
-normal user may be able to clobber arbitrary root owned files
-(by creating foo.{1,2,3,..} symlinks to it) which can lead
-to local root on an "ASan hardened" Linux distribution:
-
-ASAN_OPTIONS='suppressions="/foo
-root:passwdhash:12345:0:::::
-bar" log_path=foo' ./suid.exe
-
-can easily clobber /etc/shadow with
-
-AddressSanitizer: failed to read suppressions file '/foo
-root:passwdhash:12345:0:::::
-bar'
-
-if there is any setuid root executable built with ASan.
-
-(This is not a problem for testing where the env var based
-configuration is convenient and I haven't checked if any
-of the current ASan distro efforts have setuid executables
-with instrumentation, but I still find it a security bug
-given the improper advertisment of the sanitizer tools:
-this can lead to problems if the documentation is not fixed.)
-
-Beyond this trivial issue there are plenty reliability
-problems in the sanitizer runtimes that i think deserve
-at least a warning. It can crash conforming applications
-because
-
-- the shadow map overlaps with something
-- ulimit -v
-- overcommit is turned off
-- it allocates memory but aborts on failure
-- it interposes __tls_get_addr with non-as-safe code.
-- it uses initial-exec TLS.
-- it handles "deadly" signals like SIGBUS
-  (often used by applications using mmaped files).
-- the c runtime is updated and incompatible
-  (with the various interposition hacks)
-- does not handle c11 thread creation
-
-some of the features reduce security:
-
-- heuristic introspective unwind
-- nice diagnositc messages at undefined behaviour
-- interpositions in general (UB according to POSIX)
-
-other limitations:
-
-- static linking is not supported
-
-(This is for ASan only, I briefly looked at thread
-sanitizer, which seemed even worse for reliability
-and safe stack that is in fact advertised for hardening
-but it has plenty reliability problems, needs further
-analysis.)
-
-I believe some of the problems can be fixed by
-implementing the runtimes in the libc instead of
-second guessing libc behaviour with fragile
-heuristics from a compiler runtime.   This would solve
-most of the runtime aborts.  I can see an easy way to do
-this with musl libc (because a non-host musl is easy to
-distribute and link against), but non-trivial with glibc.
-In either case I don't see a solution to the shadow map
-commit charge unless the kernel is modified.  So I cannot
-recommend even a careful reimplementation in libc for
-production use for reliable systems.
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
