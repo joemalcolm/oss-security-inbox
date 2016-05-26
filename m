@@ -1,87 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/06/5
-Message-Id: <20160506144641.EE41F72E00D@smtpvbsrv1.mitre.org>
-Date: Fri,  6 May 2016 10:46:41 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/26/9
+Message-Id: <20160526182609.ED687ABC298@smtpvmsrv1.mitre.org>
+Date: Thu, 26 May 2016 14:26:09 -0400 (EDT)
 From: cve-assign@...re.org
-To: squid3@...enet.co.nz
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Squid HTTP caching proxy
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
+Subject: Re: CVE Request Qemu: scsi: megasas: out-of-bounds read in megasas_lookup_frame() function
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> 1) Cache Poisoning issue in HTTP Request handling
-> Advisory at http://www.squid-cache.org/Advisories/SQUID-2016_7.txt
-> Patch at
-> http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14039.patch
+> Quick Emulator(Qemu) built with the MegaRAID SAS 8708EM2 Host Bus Adapter
+> emulation support is vulnerable to an out-of-bounds read access issue. It
+> could occur while looking up MegaRAID Firmware Interface(MFI) command frames
+> in 'megasas_lookup_frame' routine.
 > 
->   When absolute-URI is provided Host header should be ignored. However some
->   code still uses Host directly so normalize it using the URL authority
->   value before doing any further request processing.
->   
->   For now preserve the case where Host is completely absent.
-
-Use CVE-2016-4553.
-
-
-> 2) Header Smuggling issue in HTTP Request processing
-> Advisory at http://www.squid-cache.org/Advisories/SQUID-2016_8.txt
+> A privileged user inside guest could use this flaw to read invalid memory
+> leading to crash the Qemu process on the host.
 > 
-> Patches at:
->  http://www.squid-cache.org/Versions/v3/3.1/changesets/squid-3.1-10496.patch
->  ...
->  http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14038.patch
-> 
-> Require exact match in Host header name lookup
-> 
-> - while (xisspace(*p))
-> -     ++p;
+> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04424.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1336461
 
-Use CVE-2016-4554.
+>> While doing MegaRAID SAS controller command frame lookup, routine
+>> 'megasas_lookup_frame' uses 'read_queue_head' value as an index
+>> into 'frames[MEGASAS_MAX_FRAMES=2048]' array. Limit its value
+>> within array bounds to avoid any OOB access.
 
+Use CVE-2016-5107.
 
-> 3) Multiple Denial of Service issues in ESI Response processing.
-> Advisory at http://www.squid-cache.org/Advisories/SQUID-2016_9.txt
-> 
-> Patches at:
->  http://www.squid-cache.org/Versions/v3/3.4/changesets/SQUID-2016_9.patch
->  http://www.squid-cache.org/Versions/v3/3.5/changesets/SQUID-2016_9.patch
-
-> Due to incorrect pointer handling and reference counting Squid is
-> vulnerable to a denial of service attack when processing ESI
-> responses.
-> 
-> These problems allow a remote server delivering certain ESI
-> response syntax to trigger a denial of service for all clients
-> accessing the Squid service.
-
-Use CVE-2016-4555 for the vulnerability in client_side_request.cc -
-here, "if (aConn)" was added.
-
-Use CVE-2016-4556 for the vulnerability in Esi.cc - it is
-described as "was being unlocked without having been locked."
-
-
-> Due to unrelated changes Squid-3.5 has become vulnerable to some
-> regular ESI server responses also triggering one or more of these
-> issues.
-> 
-> This bug is fixed by Squid version 3.5.18 and 4.0.10.
-
-As far as we can tell, this does not really mean that there is an
-additional vulnerability in 3.5.17 that did not exist in 4.0.9.
-Instead, it means that the vulnerabilities are the same, but in 3.5.x
-people might notice the vulnerabilities being exploited accidentally.
-
-
-> (URLs below are now all public, but some of our mirrors may take a few
-> more hours to pick up the changes).
-
-This means, for example, that the URLs work if one manually locates
-all instances of www.squid-cache.org and inserts www1.jp.squid-cache.org
-instead. See http://www.squid-cache.org/Download/http-mirrors.html
-for other options.
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/megasas.c but
+that may be an expected place for a later update.
 
 - -- 
 CVE Assignment Team
@@ -91,17 +41,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXLK2sAAoJEHb/MwWLVhi2dv4P/307N7HayVoijH0rHVfU6E1b
-Ncy7dciziT5ErGQNLvF8vdSbGoMtWy8hIPyqcU6J/ajfeQ5eYxTl6ZAChoa0AUPK
-xwhgk29TjA33NeqL+/YzRqTdkCMdeydU/sIGPXbUHuumHRVlLkOf49LgaONZaO3o
-c0RdQGs5Ncy5yTGeh7mZjSKLTw/N2QShJNWt7NRPfwdWADuz5FFEBywL9MNQtQen
-GLso1f9fTezKsfV7Ph+KECCAWOJq9kekG1awfhn6mGX/urp5VtgZW6Ro9/5TCATc
-lbiN0s3Cj7toRfbs/0w2xpjFMttn50bWG/ohIcb52rReTMJSPY5MQLUpcBtPrsHq
-ICWo9gcIilkPeol+kzAPRWM8zqbeZBwHomLjWcKhBXZyDaZpSKxp9Dimypt22pUV
-g7OXwrn/L2VaIrH4pm8RikCSes7cSi1Ef7TgwpkOL1xfCmqO7BupWHB/168A0bL9
-eiqcDyWGz/TJr5I7yAJcBQECAu7H3n+hclSBoqrOHhS3u13FNdAxdUWn2Gsp8Rw1
-A06zfz4Q2bF+6UTmjQztPgUrKIW77hDJwOP2/gmv2ruegig2QwAqEH1/LeTLbjSq
-qSdkKWKLD5xzCXnc0p4rqBusfU2KR9bpLPZ46VF6TcEr97LgtSd4G8d/2+kUkVVp
-OHALUwfR5fbWjM1IW5Bx
-=Zucs
+iQIcBAEBCAAGBQJXRz1JAAoJEHb/MwWLVhi2IHIP/2H2PSIdn9u6NM0/+piwp64W
+uDXllEWxQn/g0GVY411lOtjVAYx61u1V5735Ft0O4GpgygYbpHzZu1DJ1R5dkVcO
+iebNKl9R0p5XjOnUXSNkXXMJpElpHu1bsoU/szE+APYjBMFxifmDFQzOXojOvo1u
+TYkRxE0JG/SkCWnSChoGEcjOtewqVhI/sYGv+SGRZOClMmKZsv/OQnwhcRYJ9OcE
+/zvrOFMNCpJojNo+6szHlqqQsU1/6URrRBEhGbSpj2TH/9KQHMUKrAnCMxgWe06N
+D4WDQWGb2MUuS7JEdssRGLnIzhr78GR/F24J5ofYCew48oRtxof8NFyRAcy9NUZM
+SKo5POqRX+yfOOcQiHG/zEE2Dg39mYon539jrvx5dhGnrN2nhdY/4jBKl/wEjkR7
+dhbADHx5ogTCbKrm4hwB7KOco3JxywF0G1/G88EMSnXTaOpAdjWvlGdOw+qrGWAe
+MK1DzPgzd//Z7l2OQVFsfLQ0KQIHkZTS7RSOF1ltCF35d1B7ydvd2m51aoaURuSu
+JOL0h8AqaYS2Xo90J9g6nFl48NCFeFvwg5vs4Ag7lQIfh0d+qIZdSaA5AtEBzKbX
+gUaMSkRXwMpUuGtPVldwaYoTn934U6Ip/ffRdeDui4klcOrLITIIadvQspfj9ekG
+slNT+Dd0uYveHivvS8Z6
+=CpLG
 -----END PGP SIGNATURE-----
