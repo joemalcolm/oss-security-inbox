@@ -1,30 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/7
-Message-Id: <20160818033840.B027AB2E013@smtpvbsrv1.mitre.org>
-Date: Wed, 17 Aug 2016 23:38:40 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/26/5
+Message-Id: <20160526181856.014BE7BC0A1@smtpvmsrv1.mitre.org>
+Date: Thu, 26 May 2016 14:18:56 -0400 (EDT)
 From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE request Qemu: an infinite loop during packet fragmentation
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: roundcube: XSS vulnerability in mail content page
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support,
-> with network abstraction layer is vulnerable to an infinite loop issue.
-> It could occur while fragmenting packets in the device.
+> Fix XSS issue in href attribute on area tag (#5240)
+> https://github.com/roundcube/roundcubemail/issues/5240
+> https://github.com/roundcube/roundcubemail/pull/5241
 > 
-> A privileged user inside guest could use this flaw to crash the Qemu instance
-> resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg01601.html
-> http://git.qemu.org/?p=qemu.git;a=commit;h=ead315e43ea0c2ca3491209c6c8db8ce3f2bbe05
-> 
-> It is susceptible
-> to an infinite loop, if the current fragment length is zero.
+> <img src=# usemap=#foo width=100%><map name="foo"><area href=[XSS] shape=default>
 
-Use CVE-2016-6834.
+Use CVE-2016-5103.
 
 - -- 
 CVE Assignment Team
@@ -34,17 +27,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXtSWUAAoJEHb/MwWLVhi2Y/sP/jxwMXiQrfXymrc2Ol3PCKxA
-S7jTAlxSjG8DCH3T20nblB4NBdN7JXdKhywmZVs24zFsVGUA6zHD+JFduMROpQzv
-p5GYv2WveqUGlgz0X96q6cIJOQh+iTwlw4SKcUxexK1iGGr/LrU9BTG+aIHLrOYe
-t2UBHt0avx9Sfy8PCWljU+xrLTzU1IULd0fU/qaBXrn5GMweo79JPnIPMq7bAx/1
-uUUod8hRnoEv04Pstv6k46NoF1IW0SFNol8i6NcZhxaGqD8viUmIaBoeSvfF3I6o
-xWK5NNoiROKXGgfzhqt/q3i9KurVwnaDFV5ZPeVPb0mss0HWB4Gloo9MdMa4fBAf
-UmHp2/mkIHqkJv9lqDidW2Qt+D9c5yJ/92f6Ym9hKX26Q1+UaD/MpJT5OXsj4Otu
-VcMR3tPjaSh3h9xYjmONBkbMmkum09KSTvfhGtssiQaAiTP18T60adLGGIPwBj/d
-gcVOANLF0gr4DlxYn0H0hD90Mw3eGK0ShU9Ny/K81z7hcUA8T/T4QVuFR7Va5tvJ
-USmd+HPrZzQcqeRV0oYmDqio+Dg9V8+0LrYILxA82+qv3w+/BoaEmYPkxFqNRleH
-6TPWLlewziXb14goepC7TAnUyPHTKxYkuOFqEXdaeGEW2X8KqDv1DwQy4sKCTFBj
-Ic0SqC5GnEEgFlo70OHN
-=59XJ
+iQIcBAEBCAAGBQJXRzsvAAoJEHb/MwWLVhi2KlcQAK5YCa0J9EAyeVL8wtTL5fQd
+ZULIXbjQ5jFSR/FP0zh7BFtpWPZCcfEsUcuxW2fC76NStQyeypLMBbGo+z0GMe0v
+O0QmN1Jdk7DqpPo/g3nfX8v5S0XJdUNEXOXIgfB6RXGYLP6+j9uX5ZOgVIjFvXSi
+XSrzh2YcDfuytqxZoUJkpgtfz8OGaSoJWRdC6MoF2ytmuZ9suB7OowKQyNRLszO+
+dGeEh7T+MxepmDGTF3AQ0ssm7g7wEyC6ojBqsMdmZCVFbR84brDB8wc4ZWQYkI3e
+ap0e/7dHyfzAzV3GN6BYvaz0rr/Wci8URQV+bRkObpRj8cKqAs/m2eaXOONxgCzn
+Lw6WS4pVdgIFemvKV+Du/hewUHgo60g7dKQ1cw13UVO+VcQNv50wBpoc+W0KLR1r
+hYAwEjN3V+pNvQZ+zNsO7IG2cVzGFWSBH3/amK9bAC3PZXRyY4bAbhF0GTEidgV5
+f/qH8O4Y7TLHXunDwSStPtPpS94G6mHsOKaeHYdWODSs+2alJn+1MioLcAFdYq7G
+sQ8QI4GoCN0JzVYMPMfTklByAtIrxG9cbpLa/X+/xSsbbXlIk+BJbGTD0Uz8iK4R
+84J05w1ErGlJ0lphq5VfZbRIeM2wpLiVh58XAmiu7fh4+Z+JJpVR9ZzAdbS7TTj+
+pkXD/GkrGu3Omjv8JSVl
+=HbY0
 -----END PGP SIGNATURE-----
