@@ -1,42 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/24/2
-Message-ID: <CAJCHTFX--F249k4kdfrWv5iHDu33SwBwZqWkhL+_v=2knRQgew@mail.gmail.com>
-Date: Sun, 24 Jan 2016 03:21:31 +0000
-From: Zemn mez <zemnmez@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Host based account hijack attack on php-openid
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/26/2
+Message-Id: <20160526061816.F37E46C0410@smtpvmsrv1.mitre.org>
+Date: Thu, 26 May 2016 02:18:16 -0400 (EDT)
+From: cve-assign@...re.org
+To: stefan.horlacher@...us-security.ch
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-Request: TYPO3 Extbase Missing Access Check
 Content-Type: text/plain; charset=utf-8
 
-An authorization hijacking attack can be carried out on a webserver using
-php-openid for authentication.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-In example usage (which the vast majority of sites use verbatim),
-php-openid checks the `openid.realm` parameter against the PHP variable
-`$SERVER['SERVER_NAME']`. (
-https://github.com/openid/php-openid/blob/fb4cdfcaa578436c451f8e8687dfb61165074488/examples/consumer/common.php#L109
-)
+> https://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2016-013/
+> TYPO3-CORE-SA-2016-013
+> 
+> Extbase request handling fails to implement a proper access check for
+> requested controller/ action combinations, which makes it possible for
+> an attacker to execute arbitrary Extbase actions by crafting a special
+> request. To successfully exploit this vulnerability, an attacker must
+> have access to at least one Extbase plugin or module action in a TYPO3
+> installation. The missing access check inevitably leads to information
+> disclosure or remote code execution, depending on the action that an
+> attacker is able to execute.
 
-Apache after 1.3 and many other webservers derive SERVER_NAME from the HOST
-header.
+> TYPO3 installations with at least one publicly available Extbase
+> action, are exploitable without any further authentication.
+> 
+> TYPO3 installations without publicly available Extbase actions, are
+> still exploitable for authenticated backend users with access to a
+> backend module, which is based on Extbase.
 
-The attacker coerces the victim into logging into his server with OpenID
-provider P. The victim has an account on a website S that also uses P for
-authentication.
+Use CVE-2016-5091 for both of these installation scenarios. As far as
+we can tell, the second scenario ("without publicly available") occurs
+only because TYPO3 Core code (or a copy of TYPO3 Core code) exists in,
+or is reachable by, a (supported or unsupported) backend module.
 
-When the victim logs into the attacker's site, the attacker captures the
-request made to it via the victim's browser upon successful login.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-The attacker makes a login request to S with the request made to it by the
-victim to log into their website, changing the `Host` HTTP header to
-reflect the attacker's server.
-
-The captured request represents an authorization destined for the
-attacker's evil.com that the victim has allowed a login to evil.com through
-the OpenID provider P. By changing the Host header and making the request
-to the vulnerable website S, S thinks the openid.realm through SERVER_NAME
-should be evil.com, and accepts the OpenID login, allowing the attacker
-access to the victim's account on S.
-
-
-Zemnmez and Nathaniel "XMPPwocky" Theis
-
+iQIcBAEBCAAGBQJXRpTJAAoJEHb/MwWLVhi2vU8P/34LeiCcFMQRXakBpAKqBQv5
+Vox2Wg1HJO0lkpbihKE3ixhvRawSJsT/5TKMqSdBJG5HWQblIOHW9S0JHAazfIge
+ezxJDJObtDGo8jjUERgvDAsYGgT/ZZ15ApVnCJYaVNc1ZKgM9f1/V044O8+mE1WX
+4B6thQZmmbpCK8KWBEwQ9uOxES0168tS4QQ6Iu2mst7vpXnak8RxU1wI8qawFo/7
+ySqgNdX6mqAo0TXQ/mPJxkT9sa/Mf+7Hr7L4K8ukRG8OkVaQ74Py4noy+XKm6lV6
+IvVN+ILFcu3XcPM98Civu8B6lRi61JGjC1VQwk1UP9mgqSQBrxTRWDQSBOUrvdEI
+YviIMAMSGEXhEQfG+peTVNJmR0SJr5DBhYn9UY5gHiqqM8q6XMsH6jVrbOYSy/KQ
+FVVc/9K32pPwG53A9lnNkNs6FFIKzLVDOGBS3zHU9YBprN6ulV1ApIWcWuQm+sZh
+81z/CzQZSLV3ovNYagmJpXyOIRmcWkfpD9YtIPwcdZWk3IuuynswSUBKlT57Mu+F
+4N3SmHtRAy40ZJA35KWvnCW2PwXV8CQx+EU9B8rGCVYcbGOxtG6BTElMS5fuBwsJ
+luwySw1sbQgDaECk9JKjTtwBl558KZALjzDXRd3aLv1dq8q9vd93rMifeShSTIlQ
+7Oi3kAkzjD1dNVXjhC12
+=A6Qx
+-----END PGP SIGNATURE-----
