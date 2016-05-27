@@ -1,108 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/23/7
-Message-Id: <20160823193208.DB3356CC2D3@smtpvmsrv1.mitre.org>
-Date: Tue, 23 Aug 2016 15:32:08 -0400 (EDT)
-From: cve-assign@...re.org
-To: greg@...ah.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, meissner@...e.de
-Subject: Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/27/3
+Message-ID: <3a4fbbc4-be6e-e410-21f0-0f32d12bafd9@gmail.com>
+Date: Fri, 27 May 2016 14:25:09 +0100
+From: Patrick Coleman <blinken@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: VLC - crash and potential code execution when processing QuickTime IMA files
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-We're unsure whether all of your remaining questions are within the
-scope of the oss-security list. Some of them seem to be questions
-about CVE in general. We don't see much demand for CVE to be the
-mechanism by which people can make 100% of their decisions about
-whether to connect an arbitrary USB device.
+Hi,
 
-> Are you really saying that you need authorship permission here in order
-> to create a CVE?
+In modules/codec/adpcm.c, VLC can be made to perform an out-of-bounds
+write with user-controlled input.
 
-If the author agrees that a CVE ID should exist, then that is
-typically sufficient (but typically not necessary) for CVE ID
-assignment. We don't think it is realistic to try to document every
-corner case here. For example, maybe an author agrees that a CVE ID
-should exist only because they have a totally incorrect understanding
-of what CVE is (e.g., they ask for a CVE ID for the mistake of
-releasing their code under the wrong license, and we refuse). As far
-as we know, people aren't abusing the authorship role to try to
-arrange for their own code to have as many CVEs as possible.
+The function DecodeAdpcmImaQT at adpcm.c:595 allocates a buffer which
+is filled with bytes from the input stream. However, it does not check
+that the number of channels in the input stream is less than or equal
+to the size of the buffer, resulting in an out-of-bounds write. The
+number of channels is clamped at <= 5.
 
-> Ok, but then why is this somehow CVE related if a Linux system can "not
-> handle" such a device?
+adpcm_ima_wav_channel_t channel[2];
+...
+for( i_ch = 0; i_ch < p_dec->fmt_in.audio.i_channels; i_ch++ )
+{
+    channel[i_ch].i_predictor  = (int16_t)((( ( p_buffer[0] << 1 )|(
+p_buffer[1] >> 7 ) ))<<7);
+    channel[i_ch].i_step_index = p_buffer[1]&0x7f;
+...
 
-An author could write userspace code that contains some type of logic
-or algorithm to determine whether to tell the kernel to use a USB
-device. Then, the author could decide that this logic or algorithm was
-wrong, and represented an exploitable vulnerability because it offered
-an attack mechanism that the author had not intended to offer.
-Finally, the author could ask for and obtain a CVE ID for their own
-vulnerable userspace code.
+The mangling of the input p_buffer above and in
+AdpcmImaWavExpandNibble() makes this difficult to exploit, but there
+is a potential for remote code execution via a malicious media file.
 
-> So if an operating system were to not trust new USB
-> devices, it could then probably not be USB compliant.
+Please find attached a POC which crashes VLC[1].
 
-We don't know to what extent userspace code is part of the "operating
-system." However, in the above scenario, the author could assert that
-their own userspace code was vulnerable, because they specifically
-wanted their userspace code to violate the USB specification by
-providing less "trust" than the specification requires.
+The vendor has confirmed the issue has been resolved and will be fixed
+in VLC 2.2.4 and VLC 3.0.0.
 
-> Are you going to start filing CVEs against hardware specifications?
+Please allocate a CVE for this issue. If you require any further
+information, please let me know.
 
-We probably don't have CVEs yet for hardware specifications, although
-we did have one CVE (CVE-2016-2427) for a specification that could
-conceivably have a hardware implementation.
+Regards,
 
-> So how could this ever be something that an operating system
-> could implement?
+Patrick
 
-"pops up a dialog asking about each new USB device" could be
-implemented, and might prevent a malicious-keyboard attack some of the
-time, but it's a poor solution. So, if a random person picks one of
-the many real-life operating systems that don't pop up these dialogs,
-and wants a CVE ID to track the status of adding that poor solution,
-then we won't provide a CVE ID. If someone is the author of a
-hypothetical single-user operating system where this solution works
-and is requiring all of their customers to take a security update to
-version 1.1 with this solution, then they can have a CVE ID for the
-vulnerability in their version 1.0. We'll leave it at that. This list
-is about open-source software, not hypothetical software that will
-probably never exist.
+1. Also <https://blinken.co/20160527_vlc_poc_chans4.mov>. SHA1
+08e1e74cf4edf19dddcea1c4da14798654d16097
 
-> In summary, yes, this is a mess where the physical world hits the
-> software world, and unless you all draw a _very_ clear line, this is
-> only going to get worse and worse.
 
-Yes, the line will be drawn, but iteratively. We do generally agree
-with Willy's principle that "something where a bug allows someone
-unauthorized to do something he couldn't do differently needs a CVE."
-We also think that the author often has the clearest picture of
-whether "something he couldn't do differently" is actually true, and
-thus we feel that the author's perspective matters. We just don't
-believe that we can proactively identify every corner case.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXvKRCAAoJEHb/MwWLVhi2gPMP/R3kM1v3OeBEReKpGJSOxSJ0
-b3vHHscLpYmSbE+KgnYvG5pacSjj77b85HZ+iY3VLpRWSO4G9lD5yOqM2I95etJs
-2mU1CzXXUxpDYwPsDFnt7BRovL/4CVuUSaPe1C2fBdjLGkNxcxGwCkO+9BFDEoEj
-JvS65bXoG0sD+/AXBUIPs5j02Ul2Fx79/ByqfIbB02m2/LQLmrw6W3jbdLGn1ptT
-XYM9QiRjP5lvSe4t1wkvyM+Tke6iJHUQLpT00t0bW3NbV1DHFze3DKbAPo2KOTCU
-odLZL/Gd6EejzDgdj7it7skaDwX1FUNyRmO+wF2H3oppGRkTbuzN0ZNpFoJfXoZ4
-OR2tucLnsgGgBkDhxQDDTcahfbhjqk19gZBQIywEb1F3zj8Hpx4p4671YHlKh6l1
-H1EgF2ZYXcEr/054PmGdPUU7m8PyiFjVnlCBwu4p16B7HzxvJMzSTdDZR4rQe6wm
-R4mGLHa/kJIJrHRsNOuCWxc2fA+i4rWp6otDDoETyCYqVBKaTqtjRj3wRxAr2hj5
-5U6UTi3uGpzmwjjcitemckh/mg8M3FGgx9L5Z0NSSAgLsknxygm9YDS/OPrS/wOM
-Sq0ZQ7KqKIwHJ9i2vMlRfr/X3INYyRaIOSF34WQ5KE1BmvI6V9Tsnqa5ciTvo949
-QdAJvnGjGDYMIqVXixXJ
-=HAsi
+iQEcBAEBCAAGBQJXSEqFAAoJEFQwhhLHo8khRWYIAIEYBsLg+0nSeiUP2lBqqEEI
+d3zt0QhlcZD4Jk5U/HDcdu6QvSI/cMLNBxEwLbgPJt/hyYWEaQbfYzxcHLYr0Sgs
+VAK8hEr/XXNcgi7iU6ApLuHXXzHQ4bJrzk1QJhAgp6G7bhzwDm8qcU7VvifjZaCo
+hNsHT3w7kmBC2s7tIfGu09ufhW1Nzvf86DPRvF3xS2R90TGM8jdvRpAFrrjmp7jY
+tHJVCiM1Ln19BlkglNShtd53nGT7Y0pEUrmAcMdqxuUGFRGAQplbfJ5HNnxhPZsd
+FpXfktaHotBhf4OcbU0W4c5hg4fP2ajaPRPpkqAKukr+izHKxYZ7J5qn1OI6k3o=
+=GERz
 -----END PGP SIGNATURE-----
+
