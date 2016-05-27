@@ -1,96 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/20
-Message-ID: <CANO=Ty3Gws1VO5CVr_sAw4Kzjk=1uO+xi3KjdabH7-o6yv0ikg@mail.gmail.com>
-Date: Thu, 10 Mar 2016 12:34:52 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/27/4
+Message-ID: <alpine.GSO.2.20.1605270933490.4552@freddy.simplesystems.org>
+Date: Fri, 27 May 2016 09:37:38 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: oss-security@...ts.openwall.com
+Subject: Security issues addressed in GraphicsMagick SVG reader
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 10, 2016 at 12:25 PM, Tim <tim-security@...tinelchicken.org>
-wrote:
+===========================================
+SVG Security Improvements in GraphicsMagick
+===========================================
 
-> > It's git. You can trivially keep an entire copy the databases trivially.
-> It
-> > can be hosted in many places. We'd have to redo the issue tracking, but
-> > bugtracking systems are not exactly hard anymore.
->
-> I see that as only one component of having a distributed database.
-> Who's running the cron job that constantly pulls down updates from the
-> github server?  How do you ensure it's synced up when a legal threat
-> causes the main repo to go black?
->
+This is a summary of security improvements made to development
+GraphicsMagick's SVG reader since the 1.3.23 release.  These
+improvements were made in response to fuzz testing by Gustavo Grieco
+(using Quickfuzz) which and which resulted in CVE-2016-2317 and
+CVE-2016-2318.  We are thankful that Gustavo has been willing to
+continue fuzz testing as improvements have been made.
 
-Whoever wants to. It's public. Can you give me a real world example of this
-BTW, or are we just worrying about things that pretty much never happen in
-real life, but make for fun email threads?
+While several implementation flaws were found and fixed, the most
+serious issue which has been addressed is that the SVG reader was
+doing no parameter value validation whatsoever.  Some algorithms are
+unstable given improper inputs (e.g. negative number).  Luckily, the
+SVG specification is very helpful with noting parameters which have
+restricted value ranges and this can be used as a guide.
 
+The SVG renderer in GraphicsMagick (and the built-in SVG renderer in
+ImageMagick from which it originated) are based on a design where a
+SVG pre-processor translates from SVG XML syntax into a simpler
+internal textual form known as Magick Vector Graphics (MVG).  In most
+cases the pre-processor acts as a translator/re-formatter, but in some
+cases (e.g. for viewbox and affine transformations) it performs
+computations.  Validation checks are added to the SVG pre-processor
+whenever a value is used by computations.  Otherwise validation checks
+are primarily added at the MVG level.
 
-> > See above. That's the whole point of the artifacts database. Please
-> reread
-> > my original email maybe?
->
-> > I am of course open to feedback, but please actually go to
-> > https://github.com/distributedweaknessfiling/ and see what we're doing
-> > first before assuming we aren't doing certain things (like making sure
-> the
-> > artifacts associated with a security vuln don't disappear).
->
-> I did look.  Sorry I missed the artifacts.  The git repos and
-> documentation make it far from obvious where that info lies.
+These improvements were made:
 
-Ok so is "A database of artifacts, files and related files for DWF
-> entries (so that when websites disappear the required content is
-> hopefully still available)" in an email the sum of your documentation
-> on that right now?  Just want to be sure I didn't miss something else.
->
+* Validate that parameter token text was actually consumed and that
+   the token text does not overflow its buffer.
 
-Not clear what your question is.
+* Correctly estimate memory requirements required by the
+   roundRectangle primitive.
 
+* Validate stroke path arguments.  In particular, reject negative
+   length values.
 
-> Do you have ideas on how to capture vendor advisories?  Vendors are
-> almost certainly, in 99% of cases, going to ignore the DWF for a long
-> time.  Perhaps forever.  We're currently lucky to get many of them to
-> even include a CVE # in their own advisory.  How can that information
-> be captured without moderators having to do all the work?  Have you
-> thought about how we can deal with the copyright issues associated
-> with copying vendor content directly into the DWF for archival?
->
+* Validate stroke dash pattern arguments.  In particular, reject
+   negative length values.
 
-Vendors can submit them, to get your DWF # officially in the database you
-also need to be willing to post the artifacts. So that's the big carrot for
-a lot of researchers (official recognition which they can then use on their
-resume/etc.).
+* Validate stroke-miterlimit values (must be >= 1.0)
 
+* Validate radialGradient angle values.
 
->
-> What I'm thinking is that perhaps there's a way to make vendors *want*
-> to post information.  Also, perhaps there could be a way to license
->
+* Check rectangle arguments for appropriate ranges (e.g. reject
+   negative width/height).
 
-Well with CVE we've already crossed that bridge for the ones that care,
-they (like Red Hat) post CVEs, the vendors that don't care, well, they'll
-continue to not care until customers speak up. One hope I have is that
-getting more identifiers for issues that researchers find will give
-customers the data they need to make informed decisions and maybe pressure
-companies into behaving better.
+* Check rounded rectangle arguments for appropriate ranges
+   (e.g. reject negative width/height/radius).
 
+* Check ellipse arguments for appropriate range (e.g. reject negative
+   radius).
 
-> DWF numbering in such a way that vendors implicitly agree that the DWF
-> can re-publish.  Or maybe there's a way to work with the Internet
-> Archive to have third-party URLs archived automatically when they are
-> first posted.  See:
->  https://archive-it.org/learn-more/
->
-> tim
->
+* Check viewbox arguments for appropriate ranges (e.g. reject negative
+   width/height).
+
+* Prohibit use of Magick-specific file name prefixes and suffix
+   arguments in SVG URLs.
+
+* Limit the allowed size of clip-path and gradient images.
+
+* Added drawing recursion detection.  This avoids hangs and stack
+   exhaustion given self-referential URLs in the SVG.
+
+* Fix usages of uninitialized memory discovered with some SVG files.
 
 
+Fuzz testing is an on-going process and we will continue to address
+any issues discovered.
 
+Bob
 -- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
