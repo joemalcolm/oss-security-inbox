@@ -1,109 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/18/8
-Message-Id: <20160918154533.28FC16C579F@smtpvmsrv1.mitre.org>
-Date: Sun, 18 Sep 2016 11:45:33 -0400 (EDT)
-From: cve-assign@...re.org
-To: bfriesen@...ple.dallas.tx.us
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: GraphicsMagick 1.3.25 fixes some security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/27/6
+Message-ID: <CAFEMS4tXDKYxKVMmU0zTb_7uzduoUS4_RePnUwz1tj+GQLNw5Q@mail.gmail.com>
+Date: Fri, 27 May 2016 16:17:33 +0100
+From: Keith W <keith.wall@...il.com>
+To: "users@...d.apache.org" <users@...d.apache.org>, "dev@...d.apache.org" <dev@...d.apache.org>,  "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: [CVE-2016-4432] Apache Qpid Java Broker - authentication bypass
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+[CVE-2016-4432] Apache Qpid Java Broker - authentication bypass
 
-> Date: Tue, 6 Sep 2016 20:50:23 -0500 (CDT)
+Severity: Important
 
-> Yesterday GraphicsMagick 1.3.25 was released. It fixes several
-> security issues:
+Vendor: The Apache Software Foundation
 
-> 1. A last instance of CVE-2016-2317 (heap buffer overflow) in the MVG
-> rendering code (also impacts SVG). This problem was originally
-> reported by Gustavo Grieco.
+Versions Affected: Qpid Java Broker versions 6.0.2 and earlier
 
-CVE does not support the concept of a different "instance" of an ID
-number that has different affected versions. For the aspect of the
-heap buffer overflow issue in MVG/SVG rendering that remained present
-in the 1.3.24 release (and was not fixed until 1.3.25), use
-CVE-2016-7446.
+Description:
 
-This should be considered a clarification to the following NEWS
-excerpts:
+The code responsible for handling incoming AMQP 0-8, 0-9, 0-91, and
+0-10 connections contains a flaw that allows authentication to be
+bypassed.  An remote attacker can exploit this vulnerability to
+perform actions, without the need to specify valid credentials.  For
+instance, unauthorised messages could be injected or messages stolen.
 
-   http://www.graphicsmagick.org/NEWS.html#may-30-2016
-   1.3.24 (May 30, 2016)
-   SVG: Fixed heap and stack buffer overflows, as well as segmentation
-   violations (CVE-2016-2317 and CVE-2016-2318).
+The vulnerability cannot be exploited if the Access Control List (ACL)
+feature is enabled AND access to all virtual hosts controlled.
 
-   http://www.graphicsmagick.org/NEWS.html#september-5-2016
-   1.3.25 (September 5, 2016)
-   SVG/MVG: Fix another case of CVE-2016-2317 (heap buffer overflow)
-   in the MVG rendering code (also impacts SVG).
+The vulnerability does not apply to the Broker's AMQP 1.0 support.
 
+The vulnerability does not apply if the Broker is configured to
+require SSL client authentication for all messaging connections.
 
-> 2. A possible heap overflow of the EscapeParenthesis() function.
-> While I was not able to reproduce it for myself, the implementation is
-> replaced with a different algorithm. This problem was reported by
-> Gustavo Grieco.
+Resolution:
 
-Use CVE-2016-7447.
+Users should upgrade the Qpid Java Broker to version 6.0.3 or later
+(recommended).
 
+Mitigation:
 
-> 3. The Utah RLE reader did not validate that header information was
-> reasonable given the file size and so it could cause huge memory
-> allocations and/or consume huge amounts of CPU. This problem was
-> reported by Agostino Sarubbo.
+If upgrading is not possible, the vulnerability can be mitigated using
+an ACL file containing "ACCESS VIRTUALHOST" clauses that white-lists
+user access to all virtualhosts.
 
-Use CVE-2016-7448.
+If AMQP 0-8, 0-9, 0-91, and 0-10 support is not required, the
+vulnerability can also be mitigated by turning off these protocols at
+the Port level.
 
+References:
 
-> 4. The TIFF reader had a bug pertaining to use of TIFFGetField() when
-> a 'count' value is returned. The bug caused a heap read overflow (due
-> to using strlcpy() to copy a possibly unterminated string) which could
-> allow an untrusted file to crash the software.
-
->> Fix heap buffer read overflow while copying sized TIFF attributes.
-
->> http://hg.code.sf.net/p/graphicsmagick/code/rev/eb58028dacf5
-
->>> https://blogs.gentoo.org/ago/2016/08/23/graphicsmagick-two-heap-based-buffer-overflow-in-readtiffimage-tiff-c/
->>> https://blogs.gentoo.org/ago/2016/09/07/graphicsmagick-null-pointer-dereference-in-magickstrlcpy-utility-c/
-
->>>> The problem was due to the definition of strlcpy() in that it is 
->>>> supposed to return the number of characters which would have been 
->>>> copied if the destination buffer was large enough. To satisfy this 
->>>> requirement, strlcpy() needs to continue scanning memory until it 
->>>> encounters a null byte in memory.
->>>> 
->>>> The strlcpy() function has very nice properties but this weakness is 
->>>> something that developers need to be aware of.
-
-Use CVE-2016-7449 for all of these reported TIFF problems. The
-ultimate vulnerability was use of:
-
-  strlcpy(attribute,text,Min(sizeof(attribute),(count+1)));
-
-three times in coders/tiff.c, where strlcpy is not an appropriate
-function choice for this type of scenario of untrusted-data copying.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX3rYOAAoJEHb/MwWLVhi2T8AP/2FLvqniHnnBY6teYw5BlnFI
-CfQhTDZnh9Y1/yKcHci9A3QPtcuNRkhpwTXIV3pBNsTLIm+/E+/q28YZzS+j9pzJ
-wdURRmR40Hg1fCztO+VRpoe2WTu1qwKiC7nVcnol2fGqtx+umy25Frtwo6TaQ6q6
-D1YpbHwP4u5S91KX2dC3BStKY4jwgRtMCCOiojelKftvpxYu8oLXsVwBwKGOZPr9
-Kk4SJiFdSKQrJzzZKB8srIwLkDjA8fXz3KV7nfSznt6TGwQyx0hMJdHm/bif9oVt
-ILZ6/IKXlAgN3z+gVdEhPaqzMjyUXskfiX1+8UZx2d9cumSlW9xbaQUBrdhIbC3w
-6d0Mwcs/fG0zYULNpIiVCJrQFNjkAsIEL9wcEqaUoQmifXqgFZ4g1FPJi1xyjUNg
-hrkSOn4N/e2Y7LYlPgJeCUEjl+f00FA5/2rWSyk8V78vz5cLpFV5tQ2+5mRhXJCO
-mcmfo0TPeboyYidBXlLWj9BVPHSJySeylYdH6yHnhD1ZjC1C4gQVHhIcYezkFIiO
-KspZxgBpo+FC6uXnm4Pn3tR2o+XdgDvg8oe7pW4ZNb1lB6qMd90sMnWGIW+4XSWQ
-JQurAylyajRnZ0MN8pHR9fel++8aaIXqY/QK1JwUC3MIBZdwHs1OH6t2VBu4eNff
-Lk+EMJgP868wTRmhGWwK
-=DLQk
------END PGP SIGNATURE-----
+https://issues.apache.org/jira/browse/QPID-7257
