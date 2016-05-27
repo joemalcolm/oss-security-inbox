@@ -1,93 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/19
-Message-ID: <149ffd43-942f-3e77-31dc-897e0ccec1e2@securify.nl>
-Date: Thu, 8 Sep 2016 19:27:41 +0200
-From: Summer of Pwnage <lists@...urify.nl>
-To: oss-security@...ts.openwall.com
-Subject: Persistent Cross-Site Scripting vulnerability in WordPress due to unsafe processing of file names
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/27/1
+Message-ID: <83a03bcf-f86b-4688-37b5-615c080291d8@apache.org>
+Date: Fri, 27 May 2016 08:03:05 +0200
+From: Andreas Lehmkuehler <lehmi@...che.org>
+To: announce@...che.org, dev@...box.apache.org, "users@...box.apache.org" <users@...box.apache.org>, security@...che.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [CVE-2016-2175] Apache PDFBox XML External Entity vulnerability
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-Persistent Cross-Site Scripting vulnerability in WordPress due to unsafe
-processing of file names
-------------------------------------------------------------------------
-Han Sahin, July 2016
+CVE-2016-2175: Apache PDFBox XML External Entity vulnerability
 
-------------------------------------------------------------------------
-Abstract
-------------------------------------------------------------------------
-A persistent Cross-Site Scripting (XSS) vulnerability has been found in
-WordPress. An attacker can create a specially crafted image file name
-which, when uploaded in WordPress, injects malicious JavaScript code
-into the application. An attacker can use this vulnerability to perform
-a wide variety of actions, such as stealing victims' session tokens or
-login credentials, and performing arbitrary actions on their behalf.
+Severity: Important
 
-------------------------------------------------------------------------
-OVE ID
-------------------------------------------------------------------------
-OVE-20160724-0018
 
-------------------------------------------------------------------------
-Tested versions
-------------------------------------------------------------------------
-This issue was successfully tested on WordPress [2] 4.5.3.
+Vendor:
+The Apache Software Foundation
 
-------------------------------------------------------------------------
-Fix
-------------------------------------------------------------------------
-This vulnerability is resolved in WordPress 4.6.1 [3] (Release Notes
-[4]).
+Versions Affected:
+Apache PDFBox 1.8.0 to 1.8.11
+Apache PDFBox 2.0.0
+Earlier, unsupported Apache PDFBox versions may be affected as well
 
-------------------------------------------------------------------------
-Introduction
-------------------------------------------------------------------------
-WordPress Media Upload functionality is used to upload image, audio,
-video and other allowed file extensions. The uploaded media types are
-automatically available to public users via so called public 'Attachment
-Pages'.
+Description:
+Apache PDFBox parses different XML data within PDF files such as XMP and the 
+initialization of the XML parsers did not protect against XML External Entity 
+(XXE) vulnerabilities. According to www.owasp.org [1]: "This attack may lead to 
+the disclosure of confidential data, denial of service, server side request 
+forgery, port scanning from the perspective of the machine where the parser is 
+located, and other system impacts."
 
-------------------------------------------------------------------------
-Details
-------------------------------------------------------------------------
-WordPress performs insufficient validation on the file name of uploaded
-media types and in specific images. The file name of an image is used as
-image Title (meta) in so called ‘attachment pages’ (HTML). An
-attacker can exploit this vulnerability by crafting an image file name
-with Cross-Site Scripting payload and lure an admin into uploading the
-image with the malicious file name.
 
-------------------------------------------------------------------------
-Limitations
-------------------------------------------------------------------------
+Mitigation:
+Upgrade to Apache PDFBox 1.8.12 respectively 2.0.1
 
-Operating System
+Credit:
+This issue was discovered by Arthur Khashaev (https://khashaev.ru), Seulgi Kim, 
+Mesut Timur and Microsoft Vulnerability Research.
 
-Please note that the WordPress admin (victim) needs to use an operating
-system like for example Mac or Linux. These provide extended file name
-capabilities necessary for an attacker to be able to successfully use
-this vulnerability.
-
-Social Engineering
-
-For the attack to succeed the following conditions have to be met:
-
-- A WordPress admin uploads a malicious image file requested by a user
-this admin trusts or a popular malicious image that was spread via
-social media. This involves social engineering. In the Proof of Concept
-the file name cengizhansahinsumofpwn<img src=a
-onerror=alert(document.cookie)>.jpg was used.
-
-- An attacker can now determine if the file name with which the
-malicious file is available on the WordPress site. With this information
-he can spread the URL to end users and the WordPress admin.
-
-------------------------------------------------------------------------
-References
-------------------------------------------------------------------------
-[1] 
-https://sumofpwn.nl/advisory/2016/persistent_cross_site_scripting_vulnerability_in_wordpress_due_to_unsafe_processing_of_file_names.html
-[2] https://wordpress.org/
-[3] https://wordpress.org/wordpress-4.6.1.zip
-[4] 
-https://wordpress.org/news/2016/09/wordpress-4-6-1-security-and-maintenance-release/
+[1] https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing
