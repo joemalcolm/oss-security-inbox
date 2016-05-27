@@ -1,25 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/12/9
-Message-ID: <CANO=Ty3co85-pb-pwfwESMY8To8njpdN+zYrwyHy7P43o8azkA@mail.gmail.com>
-Date: Tue, 12 Jan 2016 10:20:59 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>, CVE ID Requests <cve-assign@...re.org>
-Subject: CVE request for Kubernetes api server: patch operation should use patched object to check admission control
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/27/5
+Message-ID: <5748641A.2050701@gmail.com>
+Date: Fri, 27 May 2016 16:13:30 +0100
+From: Lorenz Quack <quack.lorenz@...il.com>
+To: users@...d.apache.org, dev@...d.apache.org, "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [CVE-2016-3094] Apache Qpid Java Broker denial of service vulnerability
 Content-Type: text/plain; charset=utf-8
 
-CVE request for Kubernetes api server: patch operation should use patched
-object to check admission control
+CVE-2016-3094: Apache Qpid Java Broker denial of service vulnerability
 
-https://github.com/kubernetes/kubernetes/issues/19479
+Severity: Important
 
-TL;DR:  you can patch your resources and they'll always be allowed, so more
-ram, disk, etc. CWE-285
+Vendor: The Apache Software Foundation
 
+Versions Affected: Qpid Java Broker versions 6.0.0, 6.0.1, and 6.0.2
 
--- 
+Description: A malformed authentication attempt may cause the broker to
+terminate.  The Qpid Java Broker supports a number of configurable
+authentication providers each supporting various SASL mechanisms. Some
+mechanisms need (or can be configured to accept) plain-text passwords
+being sent to the Broker (using the SASL "PLAIN" mechanism).  Where the
+broker has been configured to allow plain-text passwords for authentication
+it is possible for a client to send a malformed authentication attempt 
+which
+will lead the broker to terminate due to an uncaught Exception.
+Brokers configured to use authentication from the "PlainPasswordFile",
+"SimpleLDAP", or "Base64MD5PasswordFile" providers are vulnerable if the
+"PLAIN" mechanism is enabled (by default "PLAIN" will be disabled on
+non-TLS ports, but enabled on TLS connections).
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+Mitigation: Users should upgrade their Qpid Java Broker to version 6.0.3 or
+later.  If this is not possible, users can disable the PLAIN mechanism for
+their authentication manager on versions 0.32 and later by adding 
+"PLAIN" to
+the list of disabledMechanisms on their authentication provider object.
+Note that the SimpleLDAP authentication provider requires PLAIN and so this
+work around does not apply there.
+
+Credit: This issue was discovered by ﻿Alex Szczuczko of Red Hat, Inc.
+
+References: https://issues.apache.org/jira/browse/QPID-7271
 
