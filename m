@@ -1,48 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/13/7
-Message-ID: <CA+s3sfH_VUEnbiXJtymJZmKD5JNy3hazrZ8y=Ex6Xzrim5bbYg@mail.gmail.com>
-Date: Wed, 13 Jan 2016 21:06:57 +0000
-From: Jason Buberel <jbuberel@...gle.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: [security] Go security release v1.5.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/27/7
+Message-Id: <20160527171903.64AA8332023@smtpvbsrv1.mitre.org>
+Date: Fri, 27 May 2016 13:19:03 -0400 (EDT)
+From: cve-assign@...re.org
+To: blinken@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: VLC - crash and potential code execution when processing QuickTime IMA files
 Content-Type: text/plain; charset=utf-8
 
-A security-related issue has been reported in Go's math/big package. The
-issue was introduced in Go 1.5. We recommend that all users upgrade to Go
-1.5.3, which fixes the issue. Go programs must be recompiled with Go 1.5.3
-in order to receive the fix.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The Go team would like to thank Nick Craig-Wood for identifying the issue.
+> it does not check
+> that the number of channels in the input stream is less than or equal
+> to the size of the buffer, resulting in an out-of-bounds write
+> 
+> potential for remote code execution via a malicious media file.
 
-This issue can affect RSA computations in crypto/rsa, which is used by
-crypto/tls. TLS servers on 32-bit systems could plausibly leak their RSA
-private key due to this issue. Other protocol implementations that create
-many RSA signatures could also be impacted in the same way.
+Use CVE-2016-5108.
 
-Specifically, incorrect results in one part of the RSA Chinese Remainder
-computation can cause the result to be incorrect in such a way that it
-leaks one of the primes. While RSA blinding should prevent an attacker from
-crafting specific inputs that trigger the bug, on 32-bit systems the bug
-can be expected to occur at random around one in 2^26 times. Thus
-collecting around 64 million signatures (of known data) from an affected
-server should be enough to extract the private key used.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-On 64-bit systems, the frequency of the bug is so low (less than one in
-2^50) that it would be very difficult to exploit. Nonetheless, everyone is
-strongly encouraged to upgrade.
-
-Go 1.6 will include include a change to double-check the RSA computation,
-which is a generic countermeasure to this class of bug.
-
-The CVE issue descriptions and fixes are linked below. Downloads are
-available at http://golang.org/dl for all supported platforms.
-
-CVE-2015-8618
-
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8618
-
-CLs fixing the issue:
-
-https://go-review.googlesource.com/#/c/17672/
-https://go-review.googlesource.com/#/c/18491/
-
+iQIcBAEBCAAGBQJXSIEeAAoJEHb/MwWLVhi2ER4QAK5kLAexK+KFPLs35LdTwYvu
+YCcFcWZylzAhEXB8ukMGCrEikoXgZe5frYun/wRwmkKOauwyzGfH7kqzTEMq9cgs
+ky43QVe7iSyVcsmi+jr+B2KUOq7vtTBaEhe2RR5PYG8vvseUYRO1rXiwMy7BTsSM
+SwskbnIQ8IHg6RdIQ+XTnI0zOWqXmU+YT3H0P3QyqXa/2katuUAADN5/orDQSvfn
+gmoh82VJc1tIJKckbEl2ivURfVPdVzb86Ng7ReJChR+YDx+MfZ9kcLZYH3982+9s
+OrpGCR0NJlMurP7FWBwekrd/bgnYXXZJpiEg6Ygg39X+8TSbRNHrycfSnHj5D2At
+GBcm6wdHWPROYHlQeeFng/wyxZC8qEP9LKIEQr8ypcEQT4UhJ9rQej0TTSHfXNiG
+UXG3jhIHCJJEBhQQX92XrR9CYwbn3MCmrT4CE4OCKO+088w3uHPxiVMUc6T6U2Pq
+ZElZ9kOLQposZe6ItuhHmPa9hOVzWpReeBZduPOdzW1PMDhfanUah7AEvp1eKn2d
+waA9CBhNH/4cxwMSlZUYGjx6SB9jaTkmYYk8HmcEW40nlDlfn8RrPiSrsMZfQZHT
+kO1ohrVDquQhoMycRu3GVaB9nGs+RGGfYD/XzsFSC+jb0PPuFKozdlHHonT5CP66
+vq0r06z1IrJDK0Nye6Re
+=ky5Z
+-----END PGP SIGNATURE-----
