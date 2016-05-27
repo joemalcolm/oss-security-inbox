@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["250" "Monday" "13" "March" "2017" "12:06:58" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<6058659.ly9LUa4Ua5@blackgate>" "10" "Re: [oss-security] jasper: NULL pointer dereference in jp2_cdef_destroy (jp2_cod.c)" nil nil nil "3" "2017031311:06:58" "[oss-security] jasper: NULL pointer dereference in jp2_cdef_destroy (jp2_cod.c)" (number mark "U       ago@gentoo.o Mar 13   10/250   " thread-indent "\"Re: [oss-security] jasper: NULL pointer dereference in jp2_cdef_destroy (jp2_cod.c)\"\n") "<4852597.N8d9Bx2SxP@blackgate>" ("<4852597.N8d9Bx2SxP@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["987" "Friday" "27" "May" "2016" "08:03:05" "+0200" "Andreas Lehmkuehler" "lehmi@apache.org" "<83a03bcf-f86b-4688-37b5-615c080291d8@apache.org>" "30" "[oss-security] [CVE-2016-2175] Apache PDFBox XML External Entity vulnerability" nil nil nil "5" "2016052706:03:05" "[oss-security] [CVE-2016-2175] Apache PDFBox XML External Entity vulnerability" (number mark "U       lehmi@apache May 27   30/987   " thread-indent "\"[oss-security] [CVE-2016-2175] Apache PDFBox XML External Entity vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17846 invoked by uid 550); 13 Mar 2017 11:07:17 -0000
+Received: (qmail 7764 invoked by uid 550); 27 May 2016 06:29:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,26 +12,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17822 invoked from network); 13 Mar 2017 11:07:16 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Date: Mon, 13 Mar 2017 12:06:58 +0100
-Message-ID: <6058659.ly9LUa4Ua5@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.52-gentoo; KDE/4.14.29; x86_64; ; )
-In-Reply-To: <4852597.N8d9Bx2SxP@blackgate>
-References: <4852597.N8d9Bx2SxP@blackgate>
+Received: (qmail 17932 invoked from network); 27 May 2016 06:03:33 -0000
+From: Andreas Lehmkuehler <lehmi@apache.org>
+To: announce@apache.org, dev@pdfbox.apache.org,
+ "users@pdfbox.apache.org" <users@pdfbox.apache.org>, security@apache.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Organization: Apache Software Foundation
+Message-ID: <83a03bcf-f86b-4688-37b5-615c080291d8@apache.org>
+Date: Fri, 27 May 2016 08:03:05 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.1.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: Re: [oss-security] jasper: NULL pointer dereference in jp2_cdef_destroy (jp2_cod.c)
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] [CVE-2016-2175] Apache PDFBox XML External Entity vulnerability
 
-On Wednesday 25 January 2017 10:10:35 Agostino Sarubbo wrote:
-> Permalink:
-> https://blogs.gentoo.org/ago/2017/01/25/jasper-null-pointer-dereference-in-j
-> p2_cdef_destroy-jp2_cod-c
+CVE-2016-2175: Apache PDFBox XML External Entity vulnerability
 
-This is CVE-2017-6850
+Severity: Important
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+
+Vendor:
+The Apache Software Foundation
+
+Versions Affected:
+Apache PDFBox 1.8.0 to 1.8.11
+Apache PDFBox 2.0.0
+Earlier, unsupported Apache PDFBox versions may be affected as well
+
+Description:
+Apache PDFBox parses different XML data within PDF files such as XMP and the 
+initialization of the XML parsers did not protect against XML External Entity 
+(XXE) vulnerabilities. According to www.owasp.org [1]: "This attack may lead to 
+the disclosure of confidential data, denial of service, server side request 
+forgery, port scanning from the perspective of the machine where the parser is 
+located, and other system impacts."
+
+
+Mitigation:
+Upgrade to Apache PDFBox 1.8.12 respectively 2.0.1
+
+Credit:
+This issue was discovered by Arthur Khashaev (https://khashaev.ru), Seulgi Kim, 
+Mesut Timur and Microsoft Vulnerability Research.
+
+[1] https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing
