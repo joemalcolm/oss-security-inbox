@@ -1,57 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/11
-Message-ID: <20160314073723.GB8335@suse.de>
-Date: Mon, 14 Mar 2016 08:37:23 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/27/2
+Message-ID: <1533281.bsIDiLpCPt@tony>
+Date: Fri, 27 May 2016 14:34:23 +0200
+From: Marek Hulán <mhulan@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request
+Subject: CVE-2016-4451: Privileges escalation through Organization and Locations Foreman API
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 14, 2016 at 11:19:29AM +0400, Loganaden Velvindron wrote:
-> Hi guys,
-> 
-> Is there a CVE assigned to this yet ?
-> 
-> https://guidovranken.wordpress.com/2016/03/01/public-disclosure-malformed-private-keys-lead-to-heap-corruption-in-b2i_pvk_bio/
+CVE-2016-4451: Privilege escalation through Organization and Locations API
 
-I brought this to the openssl team and they claim it is not a security issue.
+When accessing Foreman as a user limited to specific organization, if users 
+know other organization id and have unlimited filters they can access/modify 
+other organization data. They just have to set the id as API parameter.
 
-https://www.mail-archive.com/openssl-dev@openssl.org/msg43102.html
-https://www.mail-archive.com/openssl-dev@openssl.org/msg43119.html
+Mitigation: make sure you have filters restricted to organizations or locations 
+when you limit user by assigning him particular organization or location.
 
-This has been fixed in commit 5f57abe2b15 (master version, similar
-commits in other branches):
+Affects Foreman 1.7 and higher
 
-commit 5f57abe2b150139b8b057313d52b1fe8f126c952
-Author:     Dr. Stephen Henson <st...@...nssl.org>
-AuthorDate: Thu Mar 3 23:37:36 2016 +0000
-Commit:     Dr. Stephen Henson <st...@...nssl.org>
-CommitDate: Fri Mar 4 01:20:04 2016 +0000
+Patch available at https://github.com/theforeman/foreman/pull/3553
+Fix released in Foreman 1.11.3 (to be released)
+For more information please see Redmine issue 
+http://projects.theforeman.org/issues/15182
 
-    Sanity check PVK file fields.
-
-    PVK files with abnormally large length or salt fields can cause an
-    integer overflow which can result in an OOB read and heap corruption.
-    However this is an rarely used format and private key files do not
-    normally come from untrusted sources the security implications not
-    significant.
-
-    Fix by limiting PVK length field to 100K and salt to 10K: these
-should be
-    more than enough to cover any files encountered in practice.
-
-    Issue reported by Guido Vranken.
-
-    Reviewed-by: Rich Salz <rs...@...nssl.org>
+--
+Marek
 
 
-As per the notes in the commit we do not see the security implications
-as significant and therefore we are treating this as a bug and will not
-be issuing a CVE.
-
-Matt
--- 
-
-
-
-Ciao, Marcus
