@@ -1,4 +1,9 @@
-Received: (qmail 27971 invoked by uid 550); 9 Apr 2026 21:16:20 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1590" "Sunday" "29" "May" "2016" "13:45:22" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160529174522.13B2B33202D@smtpvbsrv1.mitre.org>" "42" "[oss-security] Re: CVE request: Mplayer/Mencoder read out-of-bounds parsing a mp3 file" nil nil nil "5" "2016052917:45:22" "[oss-security] Re: CVE request: Mplayer/Mencoder read out-of-bounds parsing a mp3 file" (number mark "U       cve-assign@m May 29   42/1590  " thread-indent "\"[oss-security] Re: CVE request: Mplayer/Mencoder read out-of-bounds parsing a mp3 file\"\n") "<CACn5sdR5YjVY3TqJchTxhUQJQqCwJfjtZD6hzRE0AQiOYMmOXQ@mail.gmail.com>" ("<CACn5sdR5YjVY3TqJchTxhUQJQqCwJfjtZD6hzRE0AQiOYMmOXQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5633 invoked by uid 550); 29 May 2016 17:45:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,58 +12,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 24198 invoked from network); 9 Apr 2026 19:49:29 -0000
-Authentication-Results: apache.org; auth=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
-	t=1775764158; bh=M5JAYPDaLVOiyi6NqTBl96Fwr4G4O3Yi0oH/vQZAFbg=;
-	h=Date:To:From:Subject:From;
-	b=CkTRGOeczw8ALpjzg2bpVYFHA3z0MP3mYE22u1kDk0ZWP8pX+3a1e8qJLbUOAmlBW
-	 YiH1BcDsEcLVFGZkpxBWNCLqNXQ1Ab3IQohvJuI9+E/sITfADTNpMEvLdqA5Mx9M0u
-	 ejwS258Ki6Aw2EuHr+127MA+zR354TlC2o9yP55QzK4086kQHr0heXX5egGDbKjw3s
-	 54CrkeIajrVhaD2yEa277KfUupjsCyc2F2BhMdt9+KIY5bEnIL55nWpW/7dFb9GR3i
-	 ViDMGraVGKxPxkw48wS9gCAv1024jBCCJcdyGtder6gp8jgUj8zLCCAsaHYadW3Aqv
-	 tFox7Ggkv0JnA==
-Message-ID: <95b627e0-f5b5-48e7-8625-c3a9bf32b6b1@apache.org>
-Date: Thu, 9 Apr 2026 20:49:18 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-From: Mark Thomas <markt@apache.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2026-29146: Apache Tomcat: EncryptInterceptor vulnerable to
- padding oracle attack by default
+Received: (qmail 5606 invoked from network); 29 May 2016 17:45:34 -0000
+From: cve-assign@mitre.org
+To: gustavo.grieco@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CACn5sdR5YjVY3TqJchTxhUQJQqCwJfjtZD6hzRE0AQiOYMmOXQ@mail.gmail.com>
+Message-Id: <20160529174522.13B2B33202D@smtpvbsrv1.mitre.org>
+Date: Sun, 29 May 2016 13:45:22 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: Mplayer/Mencoder read out-of-bounds parsing a mp3 file
 
-Severity: important
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Affected versions:
+> A read out-of-bounds parsing a mp3 file was found in the last revision
+> of mplayer. Technical details and a reproducer are available here:
+> 
+> https://trac.mplayerhq.hu/ticket/2298
 
-- Apache Tomcat 11.0.0-M1 through 11.0.18
-- Apache Tomcat 10.0.0-M1 through 10.1.52
-- Apache Tomcat 9.0.13 through 9.0.115
-- Apache Tomcat 8.5.38 through 8.5.100
-- Apache Tomcat 7.0.100 through 7.0.109
+>> Component:  libavcodec
+>> libavformat version 57.34.103 (internal)
+>> 
+>> AddressSanitizer: heap-buffer-overflow
+>> READ of size 4
+>> 
+>> in avcodec_decode_audio4
 
-Description:
+Use CVE-2016-5115 for this libavcodec issue. We did not check whether
+this affects any versions of FFmpeg. libavformat version 57.34.103 is
+more recent than in FFmpeg 3.0.2, for example.
 
-Padding Oracle vulnerability in Apache Tomcat's EncryptInterceptor with 
-default configuration.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.18, from 
-10.0.0-M1 through 10.1.52, from 9.0.13 through 9..115, from 8.5.38 
-through 8.5.100, from 7.0.100 through 7.0.109.
-
-Users are recommended to upgrade to version 11.0.19, 10.1.53 and 
-9.0.116, which fixes the issue.
-
-Credit:
-
-Uri Katz and Avi Lumelsky (Oligo Security) (finder)
-
-References:
-
-https://lists.apache.org/thread/lzt04z2pb3dc5tk85obn80xygw3z1p0w
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-29146
+iQIcBAEBCAAGBQJXSyoVAAoJEHb/MwWLVhi2sOkP/3FeYYp5pcAVPHm4Lx3qM9Rr
+LZYC8ph+Cn8HSTxMhOO+jtTe7DdlXkMvHWMRDGAreaw/RKTT4OjY+iF3u2zdpd6n
+Txw31NSKyToof4jVWTojxibkjUa3mAXdNYo9hIW9DL5YBtIz0mYLxoRu5gnNg+V4
+pMN/aSKVfiB9W4W36tpo6al8fyEOHakYgqetbkOpV9O40j1nfO9qywGrLA+tWg6Z
+b+aLByyLRTYbCoTuuEKYhP/wE78KnVLZRxzoMPSGL0rCFDeQYYBR9ha5bW3n3Dzo
+zPag7BqUafbIDOfnhPmbh+FkGqySuHTJxqfZycPH4RymDMzLW0Wb5wtuI+xc13Nx
+c7SpdLhX1fQcXBwPUmv0qdhbDMPpGgoovRPvKxCDH2sXR7+ZCtP7QUv2wO7gqe3w
+mMqJsORLguf81m4r95QC/Nm0np6GVwDEkNCaQkJft8p3CbACib2NoY3i2OSBEqKB
+RO5n4Wq6TIeMpoNTQhTxN2Zhni/ZQ+88Uo2qQP5YPH2griPAUADXopypv7hhCSsx
+UZpiLvdRJrMevXMU1D8llqvTfOtYzVoJ7IWlDbg+vtJhQEwyMhT0HYjamkLVusm9
+TnfIshGwWKq3jtre3xqDez24S/N9zvTA9FaFQtJb+we95n5cSrZJb17RhOii52M+
+tZGsRx2O5Wsp/74wvnli
+=nzCw
+-----END PGP SIGNATURE-----
