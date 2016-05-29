@@ -1,27 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/18
-Message-ID: <alpine.LFD.2.20.1612060051070.20462@wniryva>
-Date: Tue, 6 Dec 2016 00:54:17 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liq3ea@...il.com>
-Subject: CVE request Qemu: display: virtio-gpu: memory leakage while updating cursor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/29/4
+Message-Id: <20160529174522.13B2B33202D@smtpvbsrv1.mitre.org>
+Date: Sun, 29 May 2016 13:45:22 -0400 (EDT)
+From: cve-assign@...re.org
+To: gustavo.grieco@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Mplayer/Mencoder read out-of-bounds parsing a mp3 file
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Quick Emulator built with the Virtio GPU Device emulator support is vulnerable 
-to a memory leakage issue. It could occur while updating the cursor data in 
-update_cursor_data_virgl.
+> A read out-of-bounds parsing a mp3 file was found in the last revision
+> of mplayer. Technical details and a reproducer are available here:
+> 
+> https://trac.mplayerhq.hu/ticket/2298
 
-A guest user/process could use this flaw to leak host memory bytes, resulting 
-in DoS for a host.
+>> Component:  libavcodec
+>> libavformat version 57.34.103 (internal)
+>> 
+>> AddressSanitizer: heap-buffer-overflow
+>> READ of size 4
+>> 
+>> in avcodec_decode_audio4
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-11/msg00029.html
+Use CVE-2016-5115 for this libavcodec issue. We did not check whether
+this affects any versions of FFmpeg. libavformat version 57.34.103 is
+more recent than in FFmpeg 3.0.2, for example.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXSyoVAAoJEHb/MwWLVhi2sOkP/3FeYYp5pcAVPHm4Lx3qM9Rr
+LZYC8ph+Cn8HSTxMhOO+jtTe7DdlXkMvHWMRDGAreaw/RKTT4OjY+iF3u2zdpd6n
+Txw31NSKyToof4jVWTojxibkjUa3mAXdNYo9hIW9DL5YBtIz0mYLxoRu5gnNg+V4
+pMN/aSKVfiB9W4W36tpo6al8fyEOHakYgqetbkOpV9O40j1nfO9qywGrLA+tWg6Z
+b+aLByyLRTYbCoTuuEKYhP/wE78KnVLZRxzoMPSGL0rCFDeQYYBR9ha5bW3n3Dzo
+zPag7BqUafbIDOfnhPmbh+FkGqySuHTJxqfZycPH4RymDMzLW0Wb5wtuI+xc13Nx
+c7SpdLhX1fQcXBwPUmv0qdhbDMPpGgoovRPvKxCDH2sXR7+ZCtP7QUv2wO7gqe3w
+mMqJsORLguf81m4r95QC/Nm0np6GVwDEkNCaQkJft8p3CbACib2NoY3i2OSBEqKB
+RO5n4Wq6TIeMpoNTQhTxN2Zhni/ZQ+88Uo2qQP5YPH2griPAUADXopypv7hhCSsx
+UZpiLvdRJrMevXMU1D8llqvTfOtYzVoJ7IWlDbg+vtJhQEwyMhT0HYjamkLVusm9
+TnfIshGwWKq3jtre3xqDez24S/N9zvTA9FaFQtJb+we95n5cSrZJb17RhOii52M+
+tZGsRx2O5Wsp/74wvnli
+=nzCw
+-----END PGP SIGNATURE-----
