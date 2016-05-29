@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2049" "Thursday" "17" "November" "2016" "18:25:03" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<c8eb591fa67d43db9f8d7543008a59c2@imshyb02.MITRE.ORG>" "46" "[oss-security] Re: CVE Request: teeworlds: possible remote code execution on teeworlds client" nil nil nil "11" "2016111723:25:03" "[oss-security] Re: CVE Request: teeworlds: possible remote code execution on teeworlds client" (number mark "U       cve-assign@m Nov 17   46/2049  " thread-indent "\"[oss-security] Re: CVE Request: teeworlds: possible remote code execution on teeworlds client\"\n") "<20161116193356.jmopa3xpg6yeg3eq@eldamar.local>" ("<20161116193356.jmopa3xpg6yeg3eq@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3197" "Sunday" "29" "May" "2016" "15:03:10" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1605291453540.4552@freddy.simplesystems.org>" "79" "[oss-security] CVE Request: GraphicsMagick and ImageMagick popen() shell vulnerability via filename" "^Date:" nil nil "5" "2016052920:03:10" "[oss-security] CVE Request: GraphicsMagick and ImageMagick popen() shell vulnerability via filename" (number mark "        bfriesen@sim May 29   79/3197  " thread-indent "\"[oss-security] CVE Request: GraphicsMagick and ImageMagick popen() shell vulnerability via filename\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7634 invoked by uid 550); 17 Nov 2016 23:25:16 -0000
+Received: (qmail 7818 invoked by uid 550); 29 May 2016 20:03:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +11,96 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7610 invoked from network); 17 Nov 2016 23:25:15 -0000
-From: <cve-assign@mitre.org>
-To: <carnil@debian.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <20161116193356.jmopa3xpg6yeg3eq@eldamar.local>
-Message-ID: <c8eb591fa67d43db9f8d7543008a59c2@imshyb02.MITRE.ORG>
-Date: Thu, 17 Nov 2016 18:25:03 -0500
+Received: (qmail 7737 invoked from network); 29 May 2016 20:03:22 -0000
+X-X-Sender: bfriesen@freddy.simplesystems.org
+Message-ID: <alpine.GSO.2.20.1605291453540.4552@freddy.simplesystems.org>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE Request: teeworlds: possible remote code execution on teeworlds client
+Content-Type: multipart/mixed; BOUNDARY="-559023410-1061514417-1464552190=:4552"
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Sun, 29 May 2016 15:03:10 -0500 (CDT)
+Date: Sun, 29 May 2016 15:03:10 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: GraphicsMagick and ImageMagick popen() shell vulnerability
+ via filename
+To: oss security list <oss-security@lists.openwall.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+---559023410-1061514417-1464552190=:4552
+Content-Type: text/plain; format=flowed; charset=US-ASCII
 
-> https://github.com/teeworlds/teeworlds/commit/ff254722a2683867fcb3e67569ffd36226c4bc62
-> https://anonscm.debian.org/cgit/pkg-games/teeworlds.git/commit/?id=bf5e8e2c457013571b02dc97f9ed9f409efdd947
-> https://bugs.debian.org/844546
-> https://www.teeworlds.com/?page=news&id=12086
+All existing releases of GraphicsMagick and ImageMagick support a file
+open syntax where if the first character of the file specification is
+a '|', then the remainder of the filename is passed to the shell for
+execution using the POSIX popen(3C) function.  File opening is handled
+by an OpenBlob() function in the source file blob.c.  Unlike the
+vulnerability described by CVE-2016-3714, this functionality is
+supported by the core file opening function rather than a delegates
+subsystem usually used to execute external programs.
 
-> 0.6.4 released ...
-> the security vulnerability is worse, attacker
-> controlled memory-writes and possibly arbitrary code execution on the
-> client, abusable by any server the client joins.
+The funtionality can be demonstrated as follows:
 
-> - if(Unpacker.Error())
-> + if(Unpacker.Error() || NumParts < 1 || NumParts > CSnapshot::MAX_PARTS || Part < 0 | Part >= NumParts || PartSize < 0 || PartSize > MAX_SNAPSHOT_PACKSIZE)
+   % rm -f hello.txt
+   % convert '|echo Hello > hello.txt;' null:
+   % ls hello.txt
+   hello.txt
 
-Use CVE-2016-9400.
+The same weakness in the native SVG readers may be used to provoke
+this problem.  This example returns a valid image given a known file 
+(but an actual file is not necessary):
 
-Our guess is that neither github.com/teeworlds nor anonscm.debian.org
-intended to commit this with a bitwise OR between "Part < 0" and
-"Part >= NumParts" above. On first glance, though, the code seems to have
-the same effect regardless of whether "Part < 0 | Part >= NumParts" or
-"Part < 0 || Part >= NumParts" is used.
+   <?xml version="1.0" standalone="no"?>
+   <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+   <svg width="4in" height="3in" version="1.1"
+   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+   <desc>Illustrates how a shell command may be embedded in a SVG.
+   </desc>
+   <image x="200" y="200" width="100px" height="100px"
+   xlink:href="|echo Hello > hello.txt; cat /usr/lib/firefox/browser/icons/mozicon128.png">
+   <title>My image</title>
+   </image>
+   </svg>
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Or in MVG:
 
-iQIcBAEBCAAGBQJYLjvOAAoJEHb/MwWLVhi2PcEQAJxCENetx/MZu5IHhvHMrk8k
-Bh4sKUbbV5OkxA2k/AY0uEG68f/WqPEsk1q/IDCow//eh56xlgYiEnAxkdYa29vv
-CheoWqqiQJfrKCPIruhxahDVfE6hNRzK3pCMo15SMKfddTHH8hyViYxKVhwKvaYr
-LGWondROY8hCOli8btfNJlxVqaX24LI8OoEjvvKPZxvBkcehgHKFTibsEIi9evHj
-y9XsSoeTxAefRYmkv18q5w3WWKv8TUeFTW9mcRgRueqNVW7aFsysmG/cbz4BBDtm
-5Q+/ipLwx+AazZS8FHZKFvVJtYkwno6C7AzyCezzCCG+UOc1gv8ojqCYLF7r+c+V
-RaT0TkDQkjam3J2IZXewPo7wQUuqMMQI92N0fhHwVXKiKsolyUeAJPUgaF13ZOt8
-EPy5MuvTT9wca42EKWwyLdp8Wz2I0JSk26hmUQ3XrQD8Desoc0/yUmsQR6NDtIr+
-ZR9wT6ChD5hS6gMbPJ6AcPyY3juCXOZVNYrWPc8TzxTn3LfcVgHlscGNB4HW/tc6
-Cq7BJNTGvbbRSgFo0lrL1y9pFPKuZiflfo4HuYmdh7hN/PW67H1DAyMOpEDzTE0F
-/l0NpMnKmFytfDM3ysm4DXSdEaGh+/JATbdxMmHKdxwcfBipmz7msDIf+ACGJwQI
-UN89aY0tNp011ztELlBR
-=HGX3
------END PGP SIGNATURE-----
+   push graphic-context
+   viewbox 0 0 640 480
+   image copy 200,200 100,100 "|echo Hello > hello.txt; cat /usr/lib/firefox/browser/icons/mozicon128.png"
+   pop graphic-context
+
+Previously supplied recommended patches for GraphicsMagick do 
+successfully block this attack vector in SVG and MVG.
+
+It is highly likely that there are many paths leading to a suitable 
+filename which may be executed outside of SVG and MVG since the 
+software is quite complex and powerful.  The examples above are not 
+meant to suggest that other avenues to the same weakness are not 
+available.
+
+The simple solution to the problem is to disable the popen support 
+(HAVE_POPEN) in GraphicsMagick's magick/blob.c as is done by the 
+attached patch.
+
+This issue was discovered by Bob Friesenhahn, of the GraphicsMagick
+project.
+
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+---559023410-1061514417-1464552190=:4552
+Content-Type: text/plain; charset=US-ASCII; name=disable-popen-filename.patch
+Content-Transfer-Encoding: BASE64
+Content-ID: <alpine.GSO.2.20.1605291503100.4552@freddy.simplesystems.org>
+Content-Description: 
+Content-Disposition: attachment; filename=disable-popen-filename.patch
+
+ZGlmZiAtciAzMzIwMGZjNjQ1ZjYgbWFnaWNrL2Jsb2IuYw0KLS0tIGEvbWFn
+aWNrL2Jsb2IuYwlTYXQgTm92IDA3IDE0OjQ5OjE2IDIwMTUgLTA2MDANCisr
+KyBiL21hZ2ljay9ibG9iLmMJU3VuIE1heSAyOSAxNDoxMjo1NyAyMDE2IC0w
+NTAwDQpAQCAtNjgsNiArNjgsNyBAQA0KICovDQogI2RlZmluZSBEZWZhdWx0
+QmxvYlF1YW50dW0gIDY1NTQxDQogDQorI3VuZGVmIEhBVkVfUE9QRU4NCiAN
+CiAvKg0KICAgRW51bSBkZWNsYXJhdGlvbnMuDQo=
+
+---559023410-1061514417-1464552190=:4552--
