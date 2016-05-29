@@ -1,21 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/26/10
-Message-ID: <20160926165409.ekk6dztdpttnnf67@jwilk.net>
-Date: Mon, 26 Sep 2016 18:54:09 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-7545 -- SELinux sandbox escape
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/29/5
+Message-Id: <20160529184648.168BA33201D@smtpvbsrv1.mitre.org>
+Date: Sun, 29 May 2016 14:46:48 -0400 (EDT)
+From: cve-assign@...re.org
+To: fernando@...l-life.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: libgd - gdCtxPrintf memory leak
 Content-Type: text/plain; charset=utf-8
 
-* up201407890@...nos.dcc.fc.up.pt, 2016-09-25, 13:49:
->When executing a program via the SELinux sandbox, the nonpriv session can 
->escape to the parent session by using the TIOCSTI ioctl to push characters 
->into the terminal's input buffer, allowing an attacker to escape the sandbox.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Apparently every single program that tries to run stuff with reduced privileges 
-falls through this trap.
+> https://github.com/libgd/libgd/issues/211
+> 
+> length from the failed vsnprintf attempt to copy more than 8000 chars
+> on a 4096 buffer ... libgd returns this length as is and PHP prints
+> more information from memory than it should.
 
-Are there any use cases for TIOCSTI other than producing exploits?
+> https://github.com/libgd/libgd/commit/4dc1a2d7931017d3625f2d7cff70a17ce58b53b4
+> 
+> xbm: avoid stack overflow (read) with large names #211
+> 
+> We use the name passed in to printf into a local stack buffer which is
+> limited to 4000 bytes. So given a large enough value, lots of stack
+> data is leaked.
 
--- 
-Jakub Wilk
+Use CVE-2016-5116.
+
+
+> PHP devs marked it as a "not a bug" because the bundled version of
+> libgd with PHP 5.5 is not vulnerable, however using PHP with
+> systemwide libgd is a common practice.
+
+For purposes of CVE ID assignment, we do not feel that it's necessary
+to suggest a decision about whether this must also be considered a
+vulnerability in any PHP 5.5.x releases.
+4dc1a2d7931017d3625f2d7cff70a17ce58b53b4 indicates that it's an
+upstream bug, and the bug has plausible security relevance in some
+contexts (which might be contexts involving integration of libgd and
+PHP, or might be non-PHP contexts).
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXSzioAAoJEHb/MwWLVhi2otMQAIa8J38OGLLay1kQr/aEq4q9
+4dGoTKtxLdlVWVjlb/jhrWHQNY9YDj4tfTHJROKbCakdSTtyaD9r1aTkaTY6Ks8y
+H+TEUtzwGFYNeT/4JvKeF77i+u9ILVVeKIF0ZLL6VjKhDSO8zrBXsWx5fcofa4gH
+mjrxhOWw81W6N0jT0kxajqZuFWB5d6zLNovw5T3BG4g7kl0yOB//dCUhil/Zey7I
+bNJTj7+2TVCTI9s1+4Rs2AqU6XdrrGUSP8iTRiaBXgLMKny2a9X08hVmxZw6B2tW
+70NN8pTd/yQc9G77oHMDoNOc0nDV3/ZSQyt4abs4PWowbfOcZdnvIVBDyOKzY7Ev
+55QIyizv0Se7/QV0bn3C5/3DiuV9olVy9rJ0OyxDdLCALcDyozG+L62ZyicQMtae
+/s2HJWa4numcn69fwr1nzYYnvwZWO3Bh+SsnQfrCv973t25mJNnA3CL4UMtWSH6c
+Qbh5/eLZUkRIBYFCaD2uoCjXLXrTwwZ8BNiN+cUc99NjYCkwAE8crtO6D623yymt
+6CZkKdr9UkbDCF3oU3ZFecEBCs6wk368PoDmIoopNXwN6lkTfKFH7UmawhsB4jQw
+SnM2CKgANYCzFPKop8nsoBI/o8bEn4qBkZ3G8qRoI+NpvZvZ06IIYsti8cqAUChK
+9MEsup58hdRErJXYoUPJ
+=yK1x
+-----END PGP SIGNATURE-----
