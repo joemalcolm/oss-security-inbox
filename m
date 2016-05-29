@@ -1,23 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/17
-Message-ID: <20160301203138.GA13572@hunt>
-Date: Tue, 1 Mar 2016 12:31:38 -0800
-From: Seth Arnold <seth.arnold@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE's for SSLv2 support
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/29/6
+Message-Id: <20160529195359.7CDC6332014@smtpvbsrv1.mitre.org>
+Date: Sun, 29 May 2016 15:53:59 -0400 (EDT)
+From: cve-assign@...re.org
+To: luismiguelmerino@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: OpenNTPD not verifying CN during HTTPS constraints request
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 01, 2016 at 01:43:39PM -0500, cve-assign@...re.org wrote:
-> MITRE does not assign CVE IDs to track whether the universe of
-> products has similar or dissimilar time scales in adapting to
-> technology changes.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-While I can appreciate that MITRE would be in an untenable position to
-arbitrate trends on six-month timescales, SSLv2's replacement was released
-nearly twenty years ago.
+> Common Name verification was disabled while configuring the HTTPS request,
+> allowing upstream network attackers to intercept and forward the request to
+> a malicious server that could provide forged timestamp
+> constraints presenting valid certificates without the server noticing it.
+> 
+> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/usr.sbin/ntpd/constraint.c.diff?r1=1.27&r2=1.28
 
-Please reconsider this position.
+>> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/usr.sbin/ntpd/constraint.c
+>> Revision 1.28
+>> stop disabling server name verification
 
-Thanks
+Use CVE-2016-5117.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXS0fJAAoJEHb/MwWLVhi2bmAP/RU7Ksh8OPSWaen7I9Rof/fB
+ckApEVEEeLVs52LSO/re3hmIqB+TiM9N6nMUYVT/EZajaFTZb2KALJcLU2sn7jWd
+soEusAUwGTv6hiDKUrgK64suJIogNNAwuzkCozabvn8j0B4NT5SmxR7oMdaF2qZH
+6h9jdmxCW1A2c9oyRpyWIpdcf241ir7DGqeEhS3aWir5211UHCysAmX4sxHtlG6Q
+dzUsoJWOamlWEDTA5NP85dmJGhThiIN4eliJm9Ui1tQ+SqKzFzDEcpUf/TbF4CGc
+MOWm4GQzG0omH48kGJ75KzMYE5Af26b8OsmCk1YZKCt8s+PSvnFRe2aZLI1QQ4IL
+53kp+64P4XRPAemHeCDI7Zzf6GjczivYks46zRX42tHwEGwSx10MZxW0U+NdUWmT
+ru3HyniFjRyLJ3X+jPnP+iftk5N2KsFrXUhVaSIQgTxST8CNAO/iiZUUs4YEnBJT
+BDqTKr21CTWi7QgCl5vTrw2/LMIRhYu0nhHuI6X41RvdR2dgDizeYFEsliVrNw8g
+6pw9CoF7qhBDi+A3X8FvOI94wE8u7OHRqNL80NjP26/gNI5JNmEcxN7wbOXFrN4W
+SUfvSQk5TV63Cxq52veTLHebHxzjevW9feyQYsu0QMJWM5q3d8/r5AQDKnzOj6dg
+nKZvo7u8C1L7lbNmWrVs
+=4Wi8
+-----END PGP SIGNATURE-----
