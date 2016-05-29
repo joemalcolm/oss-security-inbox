@@ -1,69 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/21/6
-Message-Id: <20160721134806.0BEC342E2D6@smtpvbsrv1.mitre.org>
-Date: Thu, 21 Jul 2016 09:48:06 -0400 (EDT)
-From: cve-assign@...re.org
-To: lucian@...ocar.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: uclibc-ng (and uclibc): ARM arch: code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/29/2
+Message-ID: <CACn5sdR5YjVY3TqJchTxhUQJQqCwJfjtZD6hzRE0AQiOYMmOXQ@mail.gmail.com>
+Date: Sun, 29 May 2016 18:59:50 +0200
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Mplayer/Mencoder read out-of-bounds parsing a mp3 file
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+A read out-of-bounds parsing a mp3 file was found in the last revision
+of mplayer. Technical details and a reproducer are available here:
 
-http://www.uclibc-ng.org/ says "History ... uClibc-ng is a spin-off of
-uClibc."
+https://trac.mplayerhq.hu/ticket/2298
 
-> This was fixed in version 1.0.16
-> http://repo.or.cz/uclibc-ng.git/commit/e3848e3dd64a8d6437531488fe341354bc02eaed
-> http://mailman.uclibc-ng.org/pipermail/devel/2016-July/001067.html
+Please assign a CVE if suitable.
 
->> libc/string/arm/memset.S
-
->> bugfix: ARM: memset.S: use unsigned comparisons
->> 
->> The 'BLT' instruction checks for *signed* values. So if a3, length
->> parameter of memset, is negative, then value added to the PC will be
->> large.
->> 
->> memset(buf, 0xaa, 0xffff0000) triggers the bug.
-
-
-> http://mailman.uclibc-ng.org/pipermail/devel/2016-May/000890.html
-> 
-> an attacker that controls the length parameter of
-> the `memset' can also control the value of the PC register. The issue is
-> similar to CVE-2011-2702.
-
->> The attack is a bit unrealistic, as it requires that the
->> application that uses uClibc allows a user to control a memory chunk
->> larger than 2GB.
-
-> denial of service proof of concept
-> 
-> http://article.gmane.org/gmane.comp.lib.uclibc-ng/27
-
-Use CVE-2016-6264.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXkNIpAAoJEHb/MwWLVhi2PgQP/1GXbqRoO4iat1l6WABZ44PN
-lf9A6gqRtELgzs3V6fArIYpBHzNSFFUFZQYwMAXi0NGciRwNEWwxmnxmEo2yQ0my
-/yX50tijfwgOn3/Rs0LJTGxDyfFkAC/Cp0IruKssMdlIBhk44WcBE29p84rQ5yCT
-E/qoF+i0mHuFDwqC3f9wgUG14kgEd6TUZ7TG1WAwiwnmLhkS+TH8kE0FqfVMbXML
-+QGedNg97XX1PAPeVD5S4QPRGtFmH09u4f9rFiE/zeebzk0t3ErVd403aB7meMkx
-MnsWZlqFFU3U9iZOItO68OvXpWcH1JGqbyfBZ2sTlldtzLWkqPcqTRmtMJVU3ryY
-V52wrxqIMWcd88QSpZnx976WLCQx7cTCVRc5QwXbI2XEGWYTlFbw8ijJ6CpowrN4
-4/Qzz7Mf7u9CdQjb/vGbsie3uKGelYNslN2Ihq0AcCPQarCl5fUNiqEtNogycvB5
-VNA/hKVHGAklmAUhIgajOkVg1TblcAZ1a2YOAoJzRqjGXqAky7i8QfXKZL7rqAir
-va0SK9ldEcd9sPr0VCEO8i8SF6hHNdYM9dx+NVRmJAZ5+Hl7GVYdZUIau1dCLfZT
-kTomgLWA16lofyebMMoPxv2It5wgq7lvrfaryZV5fzIEVfBbXbc9MSpRVTZEI2P8
-vVLQwRK1FNQMM0L41u57
-=r44f
------END PGP SIGNATURE-----
+Regards,
+Gustavo.
