@@ -1,4 +1,9 @@
-Received: (qmail 23568 invoked by uid 550); 10 Mar 2025 13:30:49 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2616" "Sunday" "29" "May" "2016" "12:43:34" "-0500" "=?UTF-8?B?RmVybmFuZG8gTXXDsW96?=" "fernando@null-life.com" "<CAEr-gPHkGeMp-k75G5X3MNutXvNx9Q35uYtYrKcdGsH_0wUKQQ@mail.gmail.com>" "81" "[oss-security] CVE Request: libgd - gdCtxPrintf memory leak" nil nil nil "5" "2016052917:43:34" "[oss-security] CVE Request: libgd - gdCtxPrintf memory leak" (number mark "U       fernando@nul May 29   81/2616  " thread-indent "\"[oss-security] CVE Request: libgd - gdCtxPrintf memory leak\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 26343 invoked by uid 550); 29 May 2016 17:43:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,132 +12,120 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 22512 invoked from network); 10 Mar 2025 13:30:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=notcom.org;
-	s=jk; h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date:Reply-To:Cc
-	:Content-Transfer-Encoding:Content-ID:Content-Description:In-Reply-To:
-	References; bh=s24adCglRGGzCFqacmSMsXxRNRvT0693lgTUotMhr64=;
-	i=b49a205f73f09af5fde31f6781a721d6b26ace42@notcom.org; t=1741613450;
-	x=1742261450; b=rKd/l1z+tLMqYeenzfLkZOyuccLfeI4TvfUlanTle3JqCfzFF8OrOrDXU5Xt1
-	PQ52EMGwpSxoUV1xB9uVwLuYXsE1oi6k8zESV3n1aOtxX95TGv64k20i/PL/bpg5dokXHCFq/5YQA
-	7kG9Hi6tuvALMAYqGhdhnK+tB3FerfENrBMlF3oiKee9IbEYHYX1WZSlitDCmSWsZu1muM8w8Mmlw
-	utJ+VpThSrZdU5DAmAOcs+H62iS4v+MPQuEnyTWbjK4JZIXCOsbPcYJlX6uK7JbHdUurylfoV70nS
-	7douMRACduvSynr8w8Q42N8CPFOTcDjyR+dJ2eYDCVI1E80ryw==;
-Date: Mon, 10 Mar 2025 15:30:30 +0200
-From: Valtteri Vuorikoski <vuori@notcom.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ovqbvdsvupbr2dse76qem7ukiyidoqdynmm4rn7ah5kqiagugg@xbgvxewonj4p>
-Mail-Followup-To: oss-security@lists.openwall.com
+Received: (qmail 26314 invoked from network); 29 May 2016 17:43:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=null-life-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:date:message-id:subject:from:to
+         :content-transfer-encoding;
+        bh=fCiLe52isz9G0Te6/fEt00zvJw046mH8Q9BM4bLiH94=;
+        b=Idau3K9j9SS7ZGvOfYHqaqyKDfeD6E+1VwGZ12INfIbL8uD/02j/R2bo2Vt0/l7W79
+         wfz8deqEGJyIfNggRxnCul8nzIPY5hrwfuIaI9cE7T5EQ0T+yyPLlIMvd2GsOFaHeSTI
+         dRYfvmfyrQoI1/sEeseAWUr+aGPCIHJnyaN6rlbuS3LJghzC7gH+F3uJu2f/BC7Vg5YX
+         aPeT7V08zD1EL3XXtcfmKg3zFMdGIT9qzBGF7gIQ7PUphzK3lOlOixwZbuA36yGWuxq7
+         yjfpqMNnpg6Zby1rcWpoMnDnpQ3OHkQwUuILWID30UhsWuELdFJCMSWSkUCg5xkGlIeX
+         a+fA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-transfer-encoding;
+        bh=fCiLe52isz9G0Te6/fEt00zvJw046mH8Q9BM4bLiH94=;
+        b=Mouk18wln2gZyku/9kRqzNtXgCXaq4j7HhTKNszBAjijpVg7QQvJg2YCDkKkNjgNBp
+         s+AHbWsEI51i6SRpJMd5JnvMOTfvIFLl/CY7UIRA9Ol3WH2ivw6ICBeZ/1oQDwPBseMS
+         8m1Sk9TnVN1morGCateZ5Jdi6VbKizThfI/koeEfDKwL4HRd0BGr8l298GJqYVImGE71
+         QceWAYPMRa9qmqjk77BRl6diinDfxYH4TNgyVZNimalV7DU/U8Pw/OMol7uRXfJgXx6Q
+         iTJCeLnsFE7XZYo+51uCcDr2a+U+wn7eHcKV2Qa0IMyaV+rrd+V6kFizzOHDBHYm9DcC
+         ogIQ==
+X-Gm-Message-State: ALyK8tLRbSvXoso0Sd9r9wVwti4OzEQV6ZQtbZZBlu4DJRWDeLy1zgPcZ4Z8r1GBcvVXK7RzhtQdBQqPoz/4vw==
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: NeoMutt/20241002-60-525451
-Subject: [oss-security] CVE-2025-1937+more: Numerous memory-safety issues in Firefox &
- Thunderbird
+X-Received: by 10.176.5.194 with SMTP id e60mr12903163uae.37.1464543814226;
+ Sun, 29 May 2016 10:43:34 -0700 (PDT)
+X-Originating-IP: [190.24.57.39]
+Date: Sun, 29 May 2016 12:43:34 -0500
+Message-ID: <CAEr-gPHkGeMp-k75G5X3MNutXvNx9Q35uYtYrKcdGsH_0wUKQQ@mail.gmail.com>
+From: =?UTF-8?Q?Fernando_Mu=C3=B1oz?= <fernando@null-life.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] CVE Request: libgd - gdCtxPrintf memory leak
 
-Last week Mozilla published security advisories for Firefox and Thunderbird
-which are overall rated "high" for the latest versions (136) and "critical" for
-the currently-supported ESR releases. However the only issue ranked
-critical only affects Android, looks like desktop versions top out at high.
+libgd report:
+https://github.com/libgd/libgd/issues/211
 
-The advisories list a large number of memory-safety issues affecting both
-products. For Thunderbird, it appears that all issues are related to browser
-functionality; I don't see any related specifically to the e-mail handling side.
+PHP report:
+https://bugs.php.net/bug.php?id=3D72115 - password 18c90f75
 
-Mozilla advisories: <https://www.mozilla.org/en-US/security/advisories/> (the March 4 list)
+Fix:
+https://github.com/libgd/libgd/commit/4dc1a2d7931017d3625f2d7cff70a17ce58b5=
+3b4
 
-Debian has shipped updates for bookworm for both FF and TB. DSAs:
+Credit: Fernando Mu=C3=B1oz and Marcelo Echeverria
 
-FF: <https://www.mozilla.org/en-US/security/advisories/mfsa2025-16/>
-TB: <https://www.mozilla.org/en-US/security/advisories/mfsa2025-16/>
+While creating an XBM image (imagexbm) with an user supplied name,
+libgd isn't checking the vsnprintf return value and PHP 5.5 will trust
+this length and read more memory than it should, causing a read-out-of
+boundaries, leaking stack memory.
 
-High/critical issues from both for 128-based ESR versions from the Mozilla
-advisories, excluding Windows-only:
+vsnprintf man: "a return value of size or more means that the output
+was truncated".
 
-CVE-2024-43097: Overflow when growing an SkRegion's RunArray
+PHP devs marked it as a "not a bug" because the bundled version of
+libgd with PHP 5.5 is not vulnerable, however using PHP with
+systemwide libgd is a common practice. PHP 5.6 and PHP 7 are not
+vulnerable to this issue because another bugfix prevents this from
+being exploited [1].
 
-Reporter
-    Google Android
-Impact
-    critical
-
-Description
-
-In resizeToAtLeast of SkRegion.cpp, there was a possible out of bounds write due
-to an integer overflow
-
-
-CVE-2025-1931: Use-after-free in WebTransportChild
-
-Reporter
-    sherkito
-Impact
-    high
-
-Description
-
-It was possible to cause a use-after-free in the content process side of a
-WebTransport connection, leading to a potentially exploitable crash.
+Test script (PHP 5.5 and systemwide libgd):
+<?php
+$var1=3Dimagecreatetruecolor ( 2 , 2);
+$var2=3Dstr_repeat("ABCD", 1030);
+imagexbm($var1, $var2, 0);
 
 
-CVE-2025-1932: Inconsistent comparator in XSLT sorting led to out-of-bounds access
+Affected code:
+/* {{{ gdCtxPrintf */
+static void gdCtxPrintf(gdIOCtx * out, const char *format, ...)
+{
+    char buf[4096];
+    int len;
+    va_list args;
 
-Reporter
-    Ivan Fratric of Google Project Zero
-Impact
-    high
-
-Description
-
-An inconsistent comparator in xslt/txNodeSorter could have resulted in
-potentially exploitable out-of-bounds access. Only affected version 122 and
-later.
-
-
-CVE-2025-1933: JIT corruption of WASM i32 return values on 64-bit CPUs
-
-Reporter
-    Xiangwei Zhang and kkdong of Tencent Security YUNDING LAB
-Impact
-    high
-
-Description
-
-On 64-bit CPUs, when the JIT compiles WASM i32 return values they can pick up
-bits from left over memory. This can potentially cause them to be treated as a
-different type.
+    va_start(args, format);
+    len =3D vsnprintf(buf, sizeof(buf)-1, format, args);
+     // -----> if len > 4096 data was truncated
+     // -----> but libgd returns this value as is
+    va_end(args);
+    out->putBuf(out, buf, len);
+}
 
 
-CVE-2025-1937: Memory safety bugs fixed in Firefox 136, Thunderbird 136, Firefox ESR 115.21, Firefox ESR 128.8, and Thunderbird 128.8
+Debug:
+(gdb) r
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /home/user/php/php-55/sapi/cli/php -n
+-dextension=3D/home/user/php/php-55/modules/gd.so /home/user/img.php
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/i386-linux-gnu/libthread_db.so.1".
 
-Reporter
-    the Mozilla Fuzzing Team, Andrew McCreight
-Impact
-    high
+Breakpoint 1, _php_image_output_putbuf (ctx=3D0xb46ddf38,
+buf=3D0xbfffa69c, l=3D8017) at /home/user/php/php-55/ext/gd/gd_ctx.c:39
+39              return php_write((void *)buf, l TSRMLS_CC);
+(gdb) print l
+$7 =3D 8017
 
-Description
+PHP will use 8017 as string length.
 
-Memory safety bugs present in Firefox 135, Thunderbird 135, Firefox ESR 115.20,
-Firefox ESR 128.7, and Thunderbird 128.7. Some of these bugs showed evidence of
-memory corruption and we presume that with enough effort some of these could
-have been exploited to run arbitrary code.
-
-
-CVE-2025-1938: Memory safety bugs fixed in Firefox 136, Thunderbird 136, Firefox ESR 128.8, and Thunderbird 128.8
-
-Reporter
-    Julien Wajsberg, the Mozilla Fuzzing Team
-Impact
-    high
-
-Description
-
-Memory safety bugs present in Firefox 135, Thunderbird 135, Firefox ESR 128.7,
-and Thunderbird 128.7. Some of these bugs showed evidence of memory corruption
-and we presume that with enough effort some of these could have been exploited
-to run arbitrary code.  References
+ASAN:
+#define ABCD... <random stuff from memory> ...
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+ERROR: AddressSanitizer: stack-buffer-underflow on address
+0xbfffb750 at pc 0xb7aa6dbd bp 0xbfffa408 sp 0xbfff9fdc
+READ of size 8017 at 0xbfffb750 thread T0
+                                       #0 0xb7aa6dbc
+(/usr/lib/i386-linux-gnu/libasan.so.2+0x3ddbc)
+    #1 0x99388cf in sapi_cli_single_write
+/home/user/php/php-55/sapi/cli/php_cli.c:273
 
 
- -Valtteri
- 
+[1] https://bugs.php.net/bug.php?id=3D66339
