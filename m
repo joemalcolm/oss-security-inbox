@@ -1,131 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/3
-Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F7066E5C45@EXMBX-TJ002.tencent.com>
-Date: Thu, 8 Sep 2016 05:54:36 +0000
-From: winsonliu(刘科) <winsonliu@...cent.com>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: cve-assign <cve-assign@...re.org>
-Subject: CVE Request: OpenJPEG Integer Overflow Issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/29/1
+Message-Id: <20160529032255.12FC7332079@smtpvbsrv1.mitre.org>
+Date: Sat, 28 May 2016 23:22:55 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Fwd: PHP-FPM fpm_log.c memory leak and buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This is Ke from Tencent's Xuanwu LAB. I reported a security issue of OpenJPEG some days ago and it has been fixed now. The fix is available at https://github.com/uclouvain/openjpeg/commit/c16bc057ba3f125051c9966cf1f5b68a05681de4 and https://github.com/uclouvain/openjpeg/commit/ef01f18dfc6780b776d0674ed3e7415c6ef54d24 .
+> Date: Tue, 2 Feb 2016 17:10:22 +0100
+> To: <oss-security@...ts.openwall.com>
 
-Could you please assign a CVE number for it?
+> Date:	Mon, 25 Jan 2016 16:50:38 +0100
+> To:	bugtraq@...urityfocus.com
 
-Thanks.
+> The FastCGI Process Manager (FPM) SAPI of PHP was vulnerable to memory
+> leak and buffer overflow in the access logging feature.
 
-Regards,
-Ke
-Tencent's Xuanwu LAB
+> the PHP engine performed an out-of-boundaries read and also wrote a \n
+> character outside of the allocated memory.
 
+> http://git.php.net/?p=php-src.git;a=commit;h=2721a0148649e07ed74468f097a28899741eb58f
+> http://www.search-lab.hu/about-us/news/111-some-unusual-vulnerabilities-in-the-php-engine
 
-DESCRIPTION
-==============
-An integer overflow issue exists in function opj_pi_create_decode of pi.c. It can lead to Out-Of-Bounds Read and Out-Of-Bounds Write in function opj_pi_next_cprl of pi.c (function opj_pi_next_lrcp, opj_pi_next_rlcp, opj_pi_next_rpcl, opj_pi_next_pcrl may also be vulnerable). This vulnerability allows remote attackers to execute arbitrary code on vulnerable installations of OpenJPEG.
+>> as it has some strict prerequisites, the severity is low.
 
+>> This was just an expanded version of the default access.format
+>> template, we added the REMOTE_ADDR and REQUEST_URI fields
 
-CREDIT
-==============
-This vulnerability was discovered by Ke Liu of Tencent's Xuanwu LAB.
+As explained in the www.search-lab.hu post (in the section between "We
+found the answer by reviewing the source code" and "And here we are"),
+there was really only one underlying problem: the code misinterpreted
+the semantics of the snprintf return value. Use CVE-2016-5114. The
+other outcomes were consequences of this. The "memory leak" is the
+same as the "out-of-boundaries read": extra bytes from process memory
+were being written to a log file that might be readable by untrusted
+users. The "buffer overflow" is the same as the "wrote a \n character
+outside of the allocated memory."
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-TESTED VERSION
-==============
-Master version of OpenJPEG (2016/08/16)
-
-
-EXCEPTION LOG
-==============
-==10074==ERROR: AddressSanitizer: heap-buffer-overflow on address 0xad9370a0 at pc 0xb767ba50 bp 0xbff1ad78 sp 0xbff1ad70
-READ of size 2 at 0xad9370a0 thread T0
-    #0 0xb767ba4f in opj_pi_next_cprl src/lib/openjp2/pi.c:541:12
-    #1 0xb76644e7 in opj_pi_next src/lib/openjp2/pi.c:1872:11
-    #2 0xb76cd0af in opj_t2_decode_packets src/lib/openjp2/t2.c:412:24
-    #3 0xb771ee6e in opj_tcd_t2_decode src/lib/openjp2/tcd.c:1547:15
-    #4 0xb771de16 in opj_tcd_decode_tile src/lib/openjp2/tcd.c:1286:15
-    #5 0xb74d7a0e in opj_j2k_decode_tile src/lib/openjp2/j2k.c:8134:15
-    #6 0xb7563354 in opj_j2k_decode_tiles src/lib/openjp2/j2k.c:9761:23
-    #7 0xb74bce4c in opj_j2k_exec src/lib/openjp2/j2k.c:7350:43
-    #8 0xb74f378b in opj_j2k_decode src/lib/openjp2/j2k.c:9959:15
-    #9 0xb75b80de in opj_jp2_decode src/lib/openjp2/jp2.c:1492:8
-    #10 0xb7622eb8 in opj_decode src/lib/openjp2/openjpeg.c:412:10
-    #11 0x8140304 in main src/bin/jp2/opj_decompress.c:1332:10
-    #12 0xb71b9af2 in __libc_start_main /build/eglibc-X4bnBz/eglibc-2.19/csu/libc-start.c:287
-    #13 0x80781eb in _start (bin/opj_decompress+0x80781eb)
-
-AddressSanitizer can not describe address in more detail (wild memory access suspected).
-SUMMARY: AddressSanitizer: heap-buffer-overflow src/lib/openjp2/pi.c:541 opj_pi_next_cprl
-Shadow bytes around the buggy address:
-  0x35b26dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x35b26dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x35b26de0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x35b26df0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x35b26e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x35b26e10: fa fa fa fa[fa]fa fa fa fa fa fa fa fa fa fa fa
-  0x35b26e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x35b26e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x35b26e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x35b26e50: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x35b26e60: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==10074==ABORTING
-
-
-SOURCE CODE
-==============
-1. OOB read and OOB write exist in function opj_pi_next_cprl, function opj_pi_next_lrcp, opj_pi_next_rlcp, opj_pi_next_rpcl, opj_pi_next_pcrl may also be vulnerable.
-
-static OPJ_BOOL opj_pi_next_cprl(opj_pi_iterator_t * pi) {
-    // ...
-    for (pi->layno = pi->poc.layno0; pi->layno < pi->poc.layno1; pi->layno++) {
-        index = pi->layno * pi->step_l + pi->resno * pi->step_r + pi->compno * pi->step_c + pi->precno * pi->step_p;
-        if (!pi->include[index]) {      // ----> Out-Of-Bounds Read!!!
-            pi->include[index] = 1;     // ----> Out-Of-Bounds Write!!!
-            return OPJ_TRUE;
-        }
-    // ...
-    return OPJ_FALSE;
-}
-
-2. Integer overflow exists in function opj_pi_create_decode.
-
-opj_pi_iterator_t *opj_pi_create_decode(opj_image_t *p_image,
-                                        opj_cp_t *p_cp,
-                                        OPJ_UINT32 p_tile_no)
-{
-    // ...
-    l_step_p = 1;
-    l_step_c = l_max_prec * l_step_p;
-    l_step_r = p_image->numcomps * l_step_c;
-    l_step_l = l_max_res * l_step_r;
-
-    /* set values for first packet iterator */
-    l_current_pi = l_pi;
-
-    /* memory allocation for include */
-    l_current_pi->include = (OPJ_INT16*) opj_calloc(
-        (l_tcp->numlayers +1) * l_step_l, sizeof(OPJ_INT16));   // ----> Integer Overflow!!!
-    // ...
-}
+iQIcBAEBCAAGBQJXSmAHAAoJEHb/MwWLVhi2KkwQAJYehVlnt9SusqqgXhyhdZgt
+TwqfEcyDihIZRtNw1MVqSTyR3B5Tf8S0SiSeINC2uRvaWSia/NlSEjWuMshmDkIn
+vXsPj60bPpjtvU9DXK7NZ2L35zOqwaVLf/n/XnNf2dkHIVCE2uNfm2GvNyGjGSGn
+8W38RS9xu1BJeF1PKtgkd3CdYKbfy2J/NZs59E02yhJ5gtQoR64n86zj2qdv5lhd
+/pTvd3QzdCztOU+/wKRA/vOlm0UJKc4vMyP92ffYPuQkPaqaA2AovzCGJuJ+vKoL
+XHSKvwigkLK1VECfTHpxmt0JXOHe4UMdDjSFPXryixjWxT0D3OnYU1lJKCn7XjKx
+UBGOm+p3CvEZ5+3pxDqI5oULJokn6ZiLBLuWP2rhDITcyEsRbr745UQCJ0kZjuSu
+tHheUYJWRHo4XOHQkeV2eiVrZTjTo/1txTUZCoenV57WK8EnOiKuoFaBbq0xddtq
+UfQMWB6wYFf7n7O4LuMPxcE4UgC6dO04CuY12yHduarvxcPb/r7n9H8ACyexb93k
+OvmhaX2fDJNEjQ2ZGIBvOhKXJAYCe/kHjCeFH256xAfQhe2eW14SLo53Akt6dgvg
+0jzyABI/KSbJnpWqwB3Bf1K9vfmSmBCEWYJVlY0HCtE5caqe+IJSE5RygSlR22Ha
+7YksgydiRGiXmapN76dc
+=ONL0
+-----END PGP SIGNATURE-----
