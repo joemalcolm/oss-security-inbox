@@ -1,61 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/1
-Message-ID: <CANO=Ty3Hd-hRYmfSsRoLoOwQC-Dvx+ENLDwM1bL3R6xKmhqukA@mail.gmail.com>
-Date: Sun, 21 Aug 2016 20:45:01 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: "ouspg@...oulu.fi" <ouspg@...oulu.fi>
-Subject: Re: TLS testing results - OS distro vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/30/3
+Message-ID: <alpine.LFD.2.20.1605301422320.26205@wniryva>
+Date: Mon, 30 May 2016 14:24:39 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE-2016-4454 Qemu: display: vmsvga: out-of-bounds read in vmsvga_fifo_read_raw() routine
 Content-Type: text/plain; charset=utf-8
 
-If you find apps/distros/etc that are NOT checking certificate validity
-properly please either ask for CVEs here or contact DWF for CVEs (for open
-source stuff). Thanks.
+   Hello,
 
-On Sat, Aug 20, 2016 at 10:50 AM, Mauri Miettinen <
-Mauri.Miettinen@...dent.oulu.fi> wrote:
+Quick Emulator(Qemu) built with the VMware-SVGA "chipset" emulation support is 
+vulnerable to an information disclosure issue. It could occur while processing 
+VGA commands via its FIFO buffer.
 
-> To whom it may concern,
->
-> We developed a tool to check if languages and libraries verify TLS
-> certificates properly.
-> While testing this tool we did a shootout against supported versions of the
-> some major Linux distributions.
->
-> Results are available from:
->
-> https://github.com/ouspg/trytls/blob/shootout-0.3/shootout/README.md
->
-> It seems it may be unsafe to do TLS in some of the  common distros.
-> E.g. the native Python version in the distros varies, and not all fixes
-> have
-> been backported. In these cases Python still doesn't always have
-> certificate
-> checking enabled by default.
->
-> We have contacted Python developers about the results.
->
-> https://mail.python.org/pipermail/python-dev/2016-August/145815.html
->
-> They gave us a couple of good pointers on how configuration could be
-> used to mitigate the issues in some of the distributions. We are afraid
-> this is still a hazard where neither software developers or users realize
-> that code that works well for the developer may not be safe for the users.
->
-> Would you have any other resources, advice or pointers we should
-> document when communicating about this in the TryTLS project?
->
-> Mauri Miettinen
->
-> PS. Results have indications of weak crypto issues as well.
+A privileged user inside guest could use this flaw to leak host memory bytes 
+or crash the Qemu process resulting in DoS.
+
+Upstream fix:
+-------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg05271.html
+
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1336429
 
 
+This issue was discovered and reported by Li Qiang of 360.cn Inc. 
+CVE-2016-4454 was assigned by Red Hat Inc.
 
-
--- 
-
+Thank you.
 --
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
