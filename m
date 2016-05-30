@@ -1,50 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/30/9
-Message-ID: <59c7287f196e4a4987d4987463be8a31@imshyb02.MITRE.ORG>
-Date: Sun, 30 Oct 2016 15:44:13 -0400
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
-Subject: Re: CVE request Qemu: memory leakage in v9fs_link
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/30/5
+Message-ID: <574C4533.6020504@igalia.com>
+Date: Mon, 30 May 2016 15:50:43 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK+ Security Advisory WSA-2016-0004
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+------------------------------------------------------------------------
+WebKitGTK+ Security Advisory                               WSA-2016-0004
+------------------------------------------------------------------------
 
-> Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9
-> File System(9pfs) support, is vulnerable to a memory leakage issue. It could
-> occur when calling v9fs_link call.
-> 
-> A privileged user inside guest could use this flaw to leak the host memory
-> bytes resulting in DoS for other services.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02608.html
-> http://git.qemu.org/?p=qemu.git;a=commit;h=4c1586787ff43c9acd18a56c12d720e3e6be9f7c
+Date reported      : May 30, 2016
+Advisory ID        : WSA-2016-0004
+Advisory URL       : http://webkitgtk.org/security/WSA-2016-0004.html
+CVE identifiers    : CVE-2016-1854, CVE-2016-1856, CVE-2016-1857,
+                     CVE-2016-1858, CVE-2016-1859.
 
->> it doesn't put the 'oldfidp'
->> fid object, this will make the 'oldfidp->ref' never reach to 0
+Several vulnerabilities were discovered in WebKitGTK+.
 
-Use CVE-2016-9105.
+CVE-2016-1854
+    Versions affected: WebKitGTK+ before 2.12.1.
+    Credit to Anonymous working with Trend Micro's Zero Day Initiative.
+    WebKit, as used in Apple iOS before 9.3.2, Safari before 9.1.1, and
+    tvOS before 9.2.1, allows remote attackers to execute arbitrary code
+    or cause a denial of service (memory corruption) via a crafted web
+    site, a different vulnerability than CVE-2016-1855, CVE-2016-1856,
+    and CVE-2016-1857.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+CVE-2016-1856
+    Versions affected: WebKitGTK+ before 2.12.1.
+    Credit to lokihardt working with Trend Micro's Zero Day Initiative.
+    WebKit, as used in Apple iOS before 9.3.2, Safari before 9.1.1, and
+    tvOS before 9.2.1, allows remote attackers to execute arbitrary code
+    or cause a denial of service (memory corruption) via a crafted web
+    site, a different vulnerability than CVE-2016-1854, CVE-2016-1855,
+    and CVE-2016-1857.
 
-iQIcBAEBCAAGBQJYFkuHAAoJEHb/MwWLVhi2DMAQAIO5vFhKXH1jUOmYSL9U28Ll
-7zekNnjjaInS3IUqygdo9awZVAHmPS93yW3oJJ0jkwYU/TDUtEqDVjLrlylvCfww
-OCJFxc6N8bkgRl8XHmSnON0jehx9Gsm7JbM8u6yYYpmEKR6CEawFzO8nT2wBt0SD
-zgxurZJ8R7WCIcrhBtVBFECI7HGMnyS3XXx/p4Brd4Tv+oFCFHKaV4a9jZY8fmIq
-2Vw9bxLRLNnGLY61GRJNOEk1z836jeeH/S2Ey4vPMDzwRiHd0izXykscMHdVFb/9
-vQ+gzOt2VATieZJxRV7JywxLkDf9ZWqRNeIonW4LfZl+acO/lrTWPZZXmIz/JUSy
-U6/63ksgKrOMcPlRCStX+GmB5fXQ4BZnTQRW5q2pkYtsoL11KsszoQmSDs/9ou0/
-Xm6Duj0UfJGqrUcei8IS01nXSPk+sfnLSyfELe/QxTbd7wHoogjj0L5sdfaTDdDk
-JL/STIuVvsJSehH7LwmBC1//xhTUhWf2h+W2W5I43pvgBGvArBtipY0Pr6Gi/k2Q
-Uuqc1ZgFtyM70umJRTblBzuiEPAWtExZoTPWfQXmTYHHRqWl+kKZ7no3oMNrDOYl
-FbQVdWhUw0lfdyfICJ7U1lW4AiCpNjCs0w2KMT2MEz0OrPpCMQkJaf9swdWdH/Q7
-8ygJtNKg5QpmODGyq2Pv
-=4oL2
------END PGP SIGNATURE-----
+CVE-2016-1857
+    Versions affected: WebKitGTK+ before 2.12.3.
+    Credit to Jeonghoon Shin@....D and Liang Chen, Zhen Feng, wushi of
+    KeenLab, Tencent working with Trend Micro's Zero Day Initiative.
+    WebKit, as used in Apple iOS before 9.3.2, Safari before 9.1.1, and
+    tvOS before 9.2.1, allows remote attackers to execute arbitrary code
+    or cause a denial of service (memory corruption) via a crafted web
+    site, a different vulnerability than CVE-2016-1854, CVE-2016-1855,
+    and CVE-2016-1856.
+
+CVE-2016-1858
+    Versions affected: WebKitGTK+ before 2.12.0.
+    Credit to Anonymous.
+    WebKit, as used in Apple iOS before 9.3.2, Safari before 9.1.1, and
+    tvOS before 9.2.1, improperly tracks taint attributes, which allows
+    remote attackers to obtain sensitive information via a crafted web
+    site.
+
+CVE-2016-1859
+    Versions affected: WebKitGTK+ before 2.12.1.
+    Credit to Liang Chen, wushi of KeenLab, Tencent working with Trend
+    Micro's Zero Day Initiative.
+    The WebKit Canvas implementation in Apple iOS before 9.3.2, Safari
+    before 9.1.1, and tvOS before 9.2.1 allows remote attackers to
+    execute arbitrary code or cause a denial of service (memory
+    corruption) via a crafted web site.
+
+
+We recommend updating to the last stable version of WebKitGTK+. It is
+the best way of ensuring that you are running a safe version of
+WebKitGTK+. Please check our website for information about the last
+stable releases.
+
+Further information about WebKitGTK+ Security Advisories can be found
+at: http://webkitgtk.org/security.html
+
+The WebKitGTK+ team,
+May 30, 2016
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
