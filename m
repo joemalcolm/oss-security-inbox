@@ -1,23 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/12/5
-Message-ID: <20160412091406.GB24278@beta.private.mielke.cc>
-Date: Tue, 12 Apr 2016 05:14:06 -0400
-From: Dave Mielke <dave@...lke.cc>
-To: Sebastian Krahmer <krahmer@...e.com>
-Cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE-Request for brltty auth bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/30/7
+Message-Id: <20160530231411.B89C63320B3@smtpvbsrv1.mitre.org>
+Date: Mon, 30 May 2016 19:14:11 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request Qemu: block: iscsi: buffer overflow in iscsi_aio_ioctl
 Content-Type: text/plain; charset=utf-8
 
-[quoted lines by Sebastian Krahmer on 2016/04/12 at 09:49 +0200]
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
->I already contacted upstream (Cc) but so far no response.
+> Quick Emulator(Qemu) built with the Block driver for iSCSI images(virtio-blk)
+> support is vulnerable to a heap buffer overflow flaw. It could occur while
+> processing iSCSI asynchronous I/O ioctl(2) calls.
 
-I'm just awaiting the patch to be actually tested. It'll certainly be included 
-as soon as I'm informed that the test has been successful. I apreciate your 
-patch, and am also sure that you can appreciate my wanting to wait for it to be 
-tested.
+> A user inside guest could use this flaw to crash the Qemu process resulting in
+> DoS OR potentially leverage it to execute arbitrary code with privileges of
+> the Qemu process on the host.
 
--- 
-Dave Mielke           | 2213 Fox Crescent | The Bible is the very Word of God.
-Phone: 1-613-726-0014 | Ottawa, Ontario   | http://Mielke.cc/bible/
-EMail: Dave@...lke.cc | Canada  K2A 1H7   | http://FamilyRadio.org/
+> https://bugzilla.redhat.com/show_bug.cgi?id=1340924
+> https://lists.gnu.org/archive/html/qemu-block/2016-05/msg00779.html
+
+>> at least in the path via virtio-blk the maximum size is not
+>> restricted.
+
+Use CVE-2016-5126.
+
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=block/iscsi.c but
+that may be an expected place for a later update.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXTMkCAAoJEHb/MwWLVhi24uQQAJ4N5kMcseYpiFJFYmP8Ytmy
+itkiZjCmNUWkPJqyIcYXCPK4Ro50yVRVenEem/9sgD9gRIQ+3qfTzEHKSnOqBAd8
+s4cVhhqse3hY9JIk4x+Bt/p75siub51ulE00X2joAdcJZJsWqZpzW/luYUjaiuV7
+7tWJ7PMZONe49nsc5mOe4c04QusPDCLyLXcVLKVKdthqQVp3vdWT/0i8GnvuTtQg
+2kNOCRogxxZMHQnp5MwfujZ+BnwiHhMNgbaaM+LBou0eNhmST8AVwFAjRL4s0zeK
+MguYFDQLocCFgHKGFolNY6536Sdh4s3tj3omN3gniZMhxtqNkOrJGcPV1Mti8UUU
+sbbDyPrt/d63GIvBYNUNNWlE9rRsmnFn5pIhG30sLIdXOKNnK2RZO0mnQBBlXbUr
+IrE0WCe4r6sLjL9BDcJPqteODgpM+8MQIHwTdUuTKT9/NWy2DRw14msNph9QYZFa
+BjQQ8XrdbOrPqNO6awSax8ooUp9ZbqI3Blb5CYPgDRTslBdR85G9qzziEs7Yb9m2
+Eb0LpZAuvCuye8iC2Maa116MrNXigMTMFt0hTBCvkLDFmhLmSbtY3DbIckTMErJN
+F1H3iTFAIHdN9bOc185TZIGyYOSgfnAIEMEAk77Miajy2I9daKb6h6jU/mGeSuLs
+EtF3PrQSiMjrSTr6a52D
+=ZB0r
+-----END PGP SIGNATURE-----
