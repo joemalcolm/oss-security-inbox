@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1166" "Monday" "14" "March" "2016" "00:23:52" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160314042352.2D22D52E003@smtpvbsrv1.mitre.org>" "30" "[oss-security] Re: CVE request -- linux kernel: crash on invalid USB device descriptors (cdc_acm driver)" "^Cc:" nil nil "3" "2016031404:23:52" "[oss-security] Re: CVE request -- linux kernel: crash on invalid USB device descriptors (cdc_acm driver)" (number mark "        cve-assign@m Mar 14   30/1166  " thread-indent "\"[oss-security] Re: CVE request -- linux kernel: crash on invalid USB device descriptors (cdc_acm driver)\"\n") "<899891185.35543085.1457700821820.JavaMail.zimbra@redhat.com>" ("<899891185.35543085.1457700821820.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["702" "Monday" "30" "May" "2016" "14:22:03" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1605301419050.26205@wniryva>" "24" "[oss-security] CVE-2016-4453 Qemu: display: vmsvga: infinite loop in vmsvga_fifo_run() routine" "^cc:" nil nil "5" "2016053008:52:03" "[oss-security] CVE-2016-4453 Qemu: display: vmsvga: infinite loop in vmsvga_fifo_run() routine" (number mark "U       ppandit@redh May 30   24/702   " thread-indent "\"[oss-security] CVE-2016-4453 Qemu: display: vmsvga: infinite loop in vmsvga_fifo_run() routine\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18206 invoked by uid 550); 14 Mar 2016 04:24:04 -0000
+Received: (qmail 3701 invoked by uid 550); 30 May 2016 08:52:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,42 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18182 invoked from network); 14 Mar 2016 04:24:03 -0000
-In-Reply-To: <899891185.35543085.1457700821820.JavaMail.zimbra@redhat.com>
-Message-Id: <20160314042352.2D22D52E003@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Mon, 14 Mar 2016 00:23:52 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 3673 invoked from network); 30 May 2016 08:52:25 -0000
+X-X-Sender: pjp@javelin
+Message-ID: <alpine.LFD.2.20.1605301419050.26205@wniryva>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Mon, 30 May 2016 08:52:13 +0000 (UTC)
+cc: Li Qiang <liqiang6-s@360.cn>
+Date: Mon, 30 May 2016 14:22:03 +0530 (IST)
+From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request -- linux kernel: crash on invalid USB device descriptors (cdc_acm driver)
-To: vdronov@redhat.com
+Subject: [oss-security] CVE-2016-4453 Qemu: display: vmsvga: infinite loop in vmsvga_fifo_run()
+ routine
+To: oss security list <oss-security@lists.openwall.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+   Hello,
 
-> http://seclists.org/bugtraq/2016/Mar/54
-> https://bugzilla.redhat.com/show_bug.cgi?id=1283366
+Quick Emulator(Qemu) built with the VMware-SVGA "chipset" emulation support is 
+vulnerable to an infinite loop issue. It could occur while processing VGA 
+commands via its FIFO buffer.
 
-Use CVE-2016-3138.
+A privileged user inside guest could use this flaw to crash the Qemu process 
+resulting in DoS.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Upstream patch
+--------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg05270.html
 
-iQIcBAEBCAAGBQJW5jxiAAoJEL54rhJi8gl5WFUP/3z33WUQmeerUw1jHWIod9pA
-WITQqeozGRGSZkaGTSLmAVB+xIgLoyVCAMvCJCeR24DD6gix63EVEFK7R9JUH9wd
-qL8FmZFc9fG+waPA1yk1ZPhmzkX74SE3rtKR2IP5ECN0PnbKNpmrXqn95SXaIW0J
-mJbbU+N1E57F8g7kAU0GUUmAbOWEjtUVgVLALgqNxfROHkd2br9Y5POxWkctkgaj
-VB4JHO9C8ALFStpMtz+Li+1nZzULn6FHN+w4LL63oIRanLWHoJzI1qbaBY3bv5WX
-LmH9KlYF7vId44gjJky3iX6cS0k0ipRAsTKXNFG1XYbId0GKsqMwCyZvRjL59WqL
-LyP/G2KjpyeGxQkXHjohoIBpDlRBypHiNiH6Gdb7Gcyky9IbqR6Bt5da/vduDxmO
-bk53EXO29RHKFLc7yjRQSbu/V7b1cvmAY+mDTObDRDuTg7OVIR8tbhJo++zCMOhy
-NE0jjM1oTEnJVF0nQ4cYdOd63+z3SW8bclHmwd+8Z24K1o8EHYyVbCgvdPHufLfg
-VasXW4y8SCyZHJnyfgeUEeoSUCpLdJBN2kUW5KPylIaO3t/4o+N9h99KbdiHGjd2
-9cfMuplZOQvs6zxluMCowMJnXLIDJEs6jEc7+p0pRf4or6e+ICyVFdBwkxMfW7lZ
-w7ySycQbyZ/euZb7iKoZ
-=5QI+
------END PGP SIGNATURE-----
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1336650
+
+This issue was discovered and reported by Li Qiang of 360.cn Inc. 
+CVE-2016-4453 is assigned by Red Hat Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
