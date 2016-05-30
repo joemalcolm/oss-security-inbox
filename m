@@ -1,39 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/31/5
-Message-ID: <20160331151128.GK26612@suse.de>
-Date: Thu, 31 Mar 2016 17:11:29 +0200
-From: Johannes Segitz <jsegitz@...e.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: ext4 data corruption due to punch hole races
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/30/1
+Message-Id: <20160530020253.8412F6C0B16@smtpvmsrv1.mitre.org>
+Date: Sun, 29 May 2016 22:02:53 -0400 (EDT)
+From: cve-assign@...re.org
+To: bfriesen@...ple.dallas.tx.us
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: GraphicsMagick and ImageMagick popen() shell vulnerability via filename
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Jan Kara fixed some issues in the Linux kernel with security implications.
+> if the first character of the file specification is
+> a '|', then the remainder of the filename is passed to the shell for
+> execution using the POSIX popen(3C) function
+> 
+> The simple solution to the problem is to disable the popen support
+> (HAVE_POPEN) in GraphicsMagick's magick/blob.c as is done by the
+> attached patch.
 
-https://bugzilla.suse.com/show_bug.cgi?id=972174
+Use CVE-2016-5118.
 
-"When punching holes into a file races with the page fault of the same
-area, it is possible that freed blocks remain referenced from page cache
-pages mapped to process' address space. Thus modification of these blocks
-can corrupt data someone else is now storing in those blocks (which
-obviously has security implications if you can trick filesystem into
-storing some important file in those blocks).
 
-This affects all the kernels where we support ext4 for writing. Relevant
-fixes upstream are commits ea3d7209ca01da209cda6f0dea8be9cc4b7a933b,
-17048e8a083fec7ad841d88ef0812707fbc7e39f,
-32ebffd3bbb4162da5ff88f9a35dd32d0a28ea70,
-011278485ecc3cd2a3954b5d4c73101d919bf1fa."
+> Previously supplied recommended patches for GraphicsMagick do
+> successfully block this attack vector in SVG and MVG.
 
-Please assign CVE(s).
+If there was a previous announcement of a vulnerability fix for a
+subset of the exploitation methodologies, then a separate CVE ID is
+also needed. The scope of CVE-2016-5118 is only the new "initial |
+character" information announced in the
+http://www.openwall.com/lists/oss-security/2016/05/29/7 post.
 
-Johannes
--- 
-GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nürnberg)
+(For example, if there had previously been any type of announcement
+that the
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+  xlink:href="|
+
+substring was being blocked in the native SVG readers, then that can
+have its own unique CVE ID.)
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXS57cAAoJEHb/MwWLVhi2MksP/j43+PGhpwdmLcAn0snPrMNM
+1uVyeMvOasjPoIWqshe45UUIXUrBN9PdtlueJhsxEl6WtO/QUSRnVk+mVQShnOMq
+K4KRqEk/7k0D7txEkulMwLK8phA2bMUGNX/YbliMBJD0z7YOB2dR7H97TszpJ0p1
+rAudJXHiW4IUyNgZm/jjohhyA70jUl5XhwuAGVLoudrJeGnsJZ5e5Vbp130sGkgD
+R8KUpmy4Bl2c04aWaevkSc4jKfL8qBUwxSZC6cHxo3au+7NnXCZ/fJhejV/p0phA
+vq99kKlT/IqXQ+ON4T6AdzGpn4a+EVhp9pn6pknNg9vHtBpvEQuX8jeJx9jMdtIc
+er9soxqmckeMEwoiJ9Hdm3SHYlH/orb9n3C+Woe18BLR3VjRMZA6PL9SBfVbkET0
+Evtnui7BBUiYtVX62K2OTp+uTc2wfRKj7+paSAT5bGBfspD0p1heOfHeWJzJd28B
+UNbhfS5mhpDKHLDKDeaQQjCE/icPyfsZsvlcsnGeSg1Pta1AtBiZYauiae7jCscX
+BQTBoV7TTSbVfx1VP6jy9jGD30RW0Uj4c85wyDuRYmlOqzCE7/H/SGASjxGqQvLX
+GjDHzDF0xvEbTqMyw+8yn/3eCW8eZy/y50DMc2TLdYpWIHQfMsWMY8K3LOS/tcaF
+iOspq5Qmc+dxTuYQguTz
+=7jWy
+-----END PGP SIGNATURE-----
