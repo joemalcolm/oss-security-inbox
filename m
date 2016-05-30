@@ -1,88 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/29/3
-Message-ID: <CAEr-gPHkGeMp-k75G5X3MNutXvNx9Q35uYtYrKcdGsH_0wUKQQ@mail.gmail.com>
-Date: Sun, 29 May 2016 12:43:34 -0500
-From: Fernando Muñoz <fernando@...l-life.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: libgd - gdCtxPrintf memory leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/30/4
+Message-ID: <20160530111138.GZ2472@core.inversepath.com>
+Date: Mon, 30 May 2016 13:11:38 +0200
+From: Daniele Bianco <danbia@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT 2016-001] Jetty path sanitization issues
 Content-Type: text/plain; charset=utf-8
 
-libgd report:
-https://github.com/libgd/libgd/issues/211
 
-PHP report:
-https://bugs.php.net/bug.php?id=72115 - password 18c90f75
+Description:
 
-Fix:
-https://github.com/libgd/libgd/commit/4dc1a2d7931017d3625f2d7cff70a17ce58b53b4
+Jetty is a Java HTTP (Web) server and Servlet container.
 
-Credit: Fernando Muñoz and Marcelo Echeverria
+The Jetty path normalization mechanism suffers of an implementation issue
+when parsing the request URLs. 
 
-While creating an XBM image (imagexbm) with an user supplied name,
-libgd isn't checking the vsnprintf return value and PHP 5.5 will trust
-this length and read more memory than it should, causing a read-out-of
-boundaries, leaking stack memory.
+The path normalization logic implemented in the PathResource class and
+introduced in Jetty versions 9.3.x can be defeated by requesting malicious
+URLs containing specific escaped characters.
 
-vsnprintf man: "a return value of size or more means that the output
-was truncated".
+Leveraging on this weakness, a malicious user can gain access to protected
+resources (e.g. WEB-INF and META-INF folders and their contents) and defeat
+application filters or other security constraints implemented in the
+servlet configuration.
 
-PHP devs marked it as a "not a bug" because the bundled version of
-libgd with PHP 5.5 is not vulnerable, however using PHP with
-systemwide libgd is a common practice. PHP 5.6 and PHP 7 are not
-vulnerable to this issue because another bugfix prevents this from
-being exploited [1].
+A workaround to mitigate the issue, using the 'rewrite' module, can
+alternatively be implemented as follows:
 
-Test script (PHP 5.5 and systemwide libgd):
-<?php
-$var1=imagecreatetruecolor ( 2 , 2);
-$var2=str_repeat("ABCD", 1030);
-imagexbm($var1, $var2, 0);
+  $ java -jar ../start.jar --module=rewrite etc/backslashalias.xml
 
+or 
 
-Affected code:
-/* {{{ gdCtxPrintf */
-static void gdCtxPrintf(gdIOCtx * out, const char *format, ...)
-{
-    char buf[4096];
-    int len;
-    va_list args;
+  $ java -jar ../start.jar --add-to-startd=rewrite
+  $ java -jar ../start.jar  etc/backslashalias.xml 
 
-    va_start(args, format);
-    len = vsnprintf(buf, sizeof(buf)-1, format, args);
-     // -----> if len > 4096 data was truncated
-     // -----> but libgd returns this value as is
-    va_end(args);
-    out->putBuf(out, buf, len);
-}
+Workaround file backslashalias.xml contents:
+
+  <?xml version="1.0"?>
+  <!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure_9_3.dtd">
+  <Configure id="Rewrite" class="org.eclipse.jetty.rewrite.handler.RuleContainer">
+    <Call name="addRule">
+      <Arg>
+        <New class="org.eclipse.jetty.rewrite.handler.RedirectRegexRule">
+          <Arg>.*\\.*</Arg>
+          <Arg>/</Arg>
+          <Set name="statusCode">404</Set>
+        </New>
+      </Arg>
+    </Call>
+  </Configure>
 
 
-Debug:
-(gdb) r
-The program being debugged has been started already.
-Start it from the beginning? (y or n) y
-Starting program: /home/user/php/php-55/sapi/cli/php -n
--dextension=/home/user/php/php-55/modules/gd.so /home/user/img.php
-[Thread debugging using libthread_db enabled]
-Using host libthread_db library "/lib/i386-linux-gnu/libthread_db.so.1".
+Affected version:
 
-Breakpoint 1, _php_image_output_putbuf (ctx=0xb46ddf38,
-buf=0xbfffa69c, l=8017) at /home/user/php/php-55/ext/gd/gd_ctx.c:39
-39              return php_write((void *)buf, l TSRMLS_CC);
-(gdb) print l
-$7 = 8017
+Jetty >= 9.3.0, <= 9.3.8
 
-PHP will use 8017 as string length.
+Fixed version:
 
-ASAN:
-#define ABCD... <random stuff from memory> ...
-==============================================
-ERROR: AddressSanitizer: stack-buffer-underflow on address
-0xbfffb750 at pc 0xb7aa6dbd bp 0xbfffa408 sp 0xbfff9fdc
-READ of size 8017 at 0xbfffb750 thread T0
-                                       #0 0xb7aa6dbc
-(/usr/lib/i386-linux-gnu/libasan.so.2+0x3ddbc)
-    #1 0x99388cf in sapi_cli_single_write
-/home/user/php/php-55/sapi/cli/php_cli.c:273
+Jetty >= 9.3.9
 
+Credit: vulnerability reported by Simon Zuckerbraun of Trend Micro Zero Day Initiative
 
-[1] https://bugs.php.net/bug.php?id=66339
+CVE: CVE-2016-4800
+
+Timeline:
+
+2016-05-03: vulnerability report received
+2016-05-06: contacted maintainer
+2016-05-11: patch provided by maintainer
+2016-05-13: assigned CVE
+2016-05-18: reporter confirms patch
+2016-05-20: contacted affected vendors
+2016-05-30: advisory release
+
+References:
+http://www.eclipse.org/jetty/download.html
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2016-001.html
+
+--
+  Daniele Bianco      Open Source Computer Security Incident Response Team
+  <danbia@...rt.org>                                  http://www.ocert.org
+
+  GPG Key 0x9544A497
+  GPG Key fingerprint = 88A7 43F4 F28F 1B9D 6F2D  4AC5 AE75 822E 9544 A497
