@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1035" "Friday" "14" "August" "2015" "15:09:39" "-0800" "Michael McNally" "mcnally@isc.org" "<55CE7533.1090303@isc.org>" "33" "[oss-security] Re: Is CVE-2015-4650 a duplicate, leak, or just a typo?" nil nil nil "8" "2015081423:09:39" "[oss-security] Re: Is CVE-2015-4650 a duplicate, leak, or just a typo?" (number mark "        mcnally@isc. Aug 14   33/1035  " thread-indent "\"[oss-security] Re: Is CVE-2015-4650 a duplicate, leak, or just a typo?\"\n") "<55CB4D2A.1070404@isc.org>" ("<55CB3CE9.1030104@redhat.com>" "<55CB4D2A.1070404@isc.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2236" "Monday" "30" "May" "2016" "13:11:38" "+0200" "Daniele Bianco" "danbia@ocert.org" "<20160530111138.GZ2472@core.inversepath.com>" "78" "[oss-security] [oCERT 2016-001] Jetty path sanitization issues" nil nil nil "5" "2016053011:11:38" "[oss-security] [oCERT 2016-001] Jetty path sanitization issues" (number mark "U       danbia@ocert May 30   78/2236  " thread-indent "\"[oss-security] [oCERT 2016-001] Jetty path sanitization issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7554 invoked by uid 550); 14 Aug 2015 23:09:57 -0000
+Received: (qmail 13869 invoked by uid 550); 30 May 2016 11:11:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,96 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7531 invoked from network); 14 Aug 2015 23:09:56 -0000
-Message-ID: <55CE7533.1090303@isc.org>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-MIME-Version: 1.0
-References: <55CB3CE9.1030104@redhat.com> <55CB4D2A.1070404@isc.org>
-In-Reply-To: <55CB4D2A.1070404@isc.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-CC: oss-security@lists.openwall.com, 
- "security-officer@isc.org" <security-officer@isc.org>
-Date: Fri, 14 Aug 2015 15:09:39 -0800
-From: Michael McNally <mcnally@isc.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Is CVE-2015-4650 a duplicate, leak, or just a typo?
-To: Florian Weimer <fweimer@redhat.com>
+Received: (qmail 13826 invoked from network); 30 May 2016 11:11:51 -0000
+Date: Mon, 30 May 2016 13:11:38 +0200
+From: Daniele Bianco <danbia@ocert.org>
+To: oss-security@lists.openwall.com, ocert-announce@lists.ocert.org,
+        bugtraq@securityfocus.com
+Message-ID: <20160530111138.GZ2472@core.inversepath.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-GPG-Key: 0x9544A497
+X-GPG-Fingerprint: 88A7 43F4 F28F 1B9D 6F2D  4AC5 AE75 822E 9544 A497
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Subject: [oss-security] [oCERT 2016-001] Jetty path sanitization issues
 
-On 8/12/15 5:42 AM, ISC Security Officer wrote:
 
-> Speaking for ISC on the matter, I suspect a typo as well; at any rate
-> we have no knowledge of a CVE with that number.=20
+Description:
 
-We contacted the administrators of the web page that Florian identified
-as the origin of the error and asked them about it.  I include their
-response, which confirms that it was an inadvertent typo.
+Jetty is a Java HTTP (Web) server and Servlet container.
 
-> Hi Michael,
->=20
-> Thanks for flagging this for us.  It is indeed a typo.
-> We've corrected our release notes and security advisory.
->=20
-> https://www.alienvault.com/forums/discussion/5706/
->=20
-> Regards,
-> Jim
->=20
-> -------------------------------------------------------------------------=
-------------------
-> Jim Hansen
-> AlienVault, Inc. | VP, Product Management
+The Jetty path normalization mechanism suffers of an implementation issue
+when parsing the request URLs. 
 
-If you spot "CVE-2015-4650" (the typo'ed number) in use elsewhere,
-please either inform the page owner of the error or inform
-security-officer@isc.org if you think that people will be significantly
-mislead by the error.
+The path normalization logic implemented in the PathResource class and
+introduced in Jetty versions 9.3.x can be defeated by requesting malicious
+URLs containing specific escaped characters.
 
-Thank you,
+Leveraging on this weakness, a malicious user can gain access to protected
+resources (e.g. WEB-INF and META-INF folders and their contents) and defeat
+application filters or other security constraints implemented in the
+servlet configuration.
 
-Michael McNally
-(responding as ISC Security Officer)
+A workaround to mitigate the issue, using the 'rewrite' module, can
+alternatively be implemented as follows:
+
+  $ java -jar ../start.jar --module=rewrite etc/backslashalias.xml
+
+or 
+
+  $ java -jar ../start.jar --add-to-startd=rewrite
+  $ java -jar ../start.jar  etc/backslashalias.xml 
+
+Workaround file backslashalias.xml contents:
+
+  <?xml version="1.0"?>
+  <!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure_9_3.dtd">
+  <Configure id="Rewrite" class="org.eclipse.jetty.rewrite.handler.RuleContainer">
+    <Call name="addRule">
+      <Arg>
+        <New class="org.eclipse.jetty.rewrite.handler.RedirectRegexRule">
+          <Arg>.*\\.*</Arg>
+          <Arg>/</Arg>
+          <Set name="statusCode">404</Set>
+        </New>
+      </Arg>
+    </Call>
+  </Configure>
+
+
+Affected version:
+
+Jetty >= 9.3.0, <= 9.3.8
+
+Fixed version:
+
+Jetty >= 9.3.9
+
+Credit: vulnerability reported by Simon Zuckerbraun of Trend Micro Zero Day Initiative
+
+CVE: CVE-2016-4800
+
+Timeline:
+
+2016-05-03: vulnerability report received
+2016-05-06: contacted maintainer
+2016-05-11: patch provided by maintainer
+2016-05-13: assigned CVE
+2016-05-18: reporter confirms patch
+2016-05-20: contacted affected vendors
+2016-05-30: advisory release
+
+References:
+http://www.eclipse.org/jetty/download.html
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2016-001.html
+
+--
+  Daniele Bianco      Open Source Computer Security Incident Response Team
+  <danbia@ocert.org>                                  http://www.ocert.org
+
+  GPG Key 0x9544A497
+  GPG Key fingerprint = 88A7 43F4 F28F 1B9D 6F2D  4AC5 AE75 822E 9544 A497
