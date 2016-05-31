@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2188" "Thursday" "26" "May" "2016" "14:24:03" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160526182403.AD26C72E014@smtpvbsrv1.mitre.org>" "52" "[oss-security] Re: CVE Request Qemu: scsi: megasas: out-of-bounds write while setting controller properties" nil nil nil "5" "2016052618:24:03" "[oss-security] Re: CVE Request Qemu: scsi: megasas: out-of-bounds write while setting controller properties" (number mark "U       cve-assign@m May 26   52/2188  " thread-indent "\"[oss-security] Re: CVE Request Qemu: scsi: megasas: out-of-bounds write while setting controller properties\"\n") "<alpine.LFD.2.20.1605251800090.15974@wniryva>" ("<alpine.LFD.2.20.1605251800090.15974@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1338" "Tuesday" "31" "May" "2016" "08:56:55" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1605310854360.4552@freddy.simplesystems.org>" "34" "Re: [oss-security] Security issues addressed in GraphicsMagick SVG reader" "^cc:" nil nil "5" "2016053113:56:55" "[oss-security] Security issues addressed in GraphicsMagick SVG reader" (number mark "        bfriesen@sim May 31   34/1338  " thread-indent "\"Re: [oss-security] Security issues addressed in GraphicsMagick SVG reader\"\n") "<20160531110944.58e24e2c@redhat.com>" ("<alpine.GSO.2.20.1605270933490.4552@freddy.simplesystems.org>" "<20160531110944.58e24e2c@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1493 invoked by uid 550); 26 May 2016 18:24:16 -0000
+Received: (qmail 5553 invoked by uid 550); 31 May 2016 13:57:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 5532 invoked from network); 31 May 2016 13:57:09 -0000
+X-X-Sender: bfriesen@freddy.simplesystems.org
+In-Reply-To: <20160531110944.58e24e2c@redhat.com>
+Message-ID: <alpine.GSO.2.20.1605310854360.4552@freddy.simplesystems.org>
+References: <alpine.GSO.2.20.1605270933490.4552@freddy.simplesystems.org> <20160531110944.58e24e2c@redhat.com>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Tue, 31 May 2016 08:56:57 -0500 (CDT)
+cc: oss-security@lists.openwall.com
+Date: Tue, 31 May 2016 08:56:55 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1455 invoked from network); 26 May 2016 18:24:15 -0000
-From: cve-assign@mitre.org
-To: ppandit@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn
-In-Reply-To: <alpine.LFD.2.20.1605251800090.15974@wniryva>
-Message-Id: <20160526182403.AD26C72E014@smtpvbsrv1.mitre.org>
-Date: Thu, 26 May 2016 14:24:03 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request Qemu: scsi: megasas: out-of-bounds write while setting controller properties
+Subject: Re: [oss-security] Security issues addressed in GraphicsMagick SVG
+ reader
+To: Stefan Cornelius <scorneli@redhat.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, 31 May 2016, Stefan Cornelius wrote:
 
-> Quick Emulator(Qemu) built with the MegaRAID SAS 8708EM2 Host Bus Adapter
-> emulation support is vulnerable to an out-of-bounds write access issue. It
-> could occur while processing MegaRAID Firmware Interface(MFI) command to set
-> controller properties in 'megasas_dcmd_set_properties'.
-> 
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> on the host resulting in DoS.
+> On Fri, 27 May 2016 09:37:38 -0500 (CDT)
+> Bob Friesenhahn <bfriesen@simple.dallas.tx.us> wrote:
+>
+>> ===========================================
+>> SVG Security Improvements in GraphicsMagick
+>> ===========================================
+>>
+>> This is a summary of security improvements made to development
+>> GraphicsMagick's SVG reader since the 1.3.23 release.  These
+>> improvements were made in response to fuzz testing by Gustavo Grieco
+>> (using Quickfuzz) which and which resulted in CVE-2016-2317 and
+>> CVE-2016-2318.  We are thankful that Gustavo has been willing to
+>> continue fuzz testing as improvements have been made.
+>
+> Hi,
+>
+> I'm curious, are these the CVEs for the issues that still have an
+> outstanding CVE request at http://seclists.org/oss-sec/2016/q2/180 - or
+> are they completely unrelated?
+>
+> (If they are indeed the same/related, can you give more details about
+> the exact mapping?)
 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04340.html
+Gustavo Grieco's CVE request regarding DoS is completely unrelated to 
+the listed CVEs (CVE-2016-2317/CVE-2016-2318).  Regardless, fixes were 
+made for these two issues as well and are included in the release.
 
->> When setting MegaRAID SAS controller properties via MegaRAID
->> Firmware Interface(MFI) commands, a user supplied size parameter
->> is used to set property value. Use appropriate size value to avoid
->> OOB access issues.
-
-Use CVE-2016-5106.
-
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/megasas.c but
-that may be an expected place for a later update.
-
-Note that this issue was originally disputed in
-https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04410.html
-but the dispute was later resolved, and
-https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04340.html
-stands as the final vulnerability description.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXRzzKAAoJEHb/MwWLVhi2zloP/0/55owAdqXLYJpgkVtd9DtD
-MeJGK8ZZSCTiQl5eNTmh7qxklu360ijisJZ3/JSnZMm4Ic+Wrs66/XxN+F3Z+cc7
-uSUG+FVRZBcX6ynJhyOs+6odKq/DsXDT0aRFuSZjpSQzruJQh44PCHp0KdiZccFf
-RJiNBq7+TTY1CIZtp5PnrUWU8tax05olnJxqO0xJC36kSk77Apu97cAg0aQKjd+n
-jSL66eOviTPOSFrcAgGbLqo6Q1NDrk2hiTf7+GZAr3oGraOZ5Kx0AYMMo66RWF03
-/5PvhWBOMI67ic9n5Zag2OBZnxb5nr07IgsO+yiXmRePKRnYMu3s7vvp0asBvolU
-DzlYXIofT1bR2xasuxba6E9cq/v13sKFVOyHWcslpAZg/eiP/2J+oR+sh7qGkUoN
-g+7FF6H2qDZC4hQa09ivyP6mwdrGh7R7p3JUK2ic6uohNBl2z7I+IPQq8t+3f9L3
-vTOJA9nvEzbGR/416j70T0q36vTB5Miv0cg4PkoMoc5Xe7akb7/Yo/UCtkpUvEHq
-A/vqfo7lhge1xKL4aPIgLpe5BmjbPgsiAAEqBoH/J7V/2WVlylw9FKdGyW1pb8MH
-5i/u4jZJCTlzqICs5UDUh6XMRr2WQxm9rJidtNnGFFSyOMhu5m4FsMXoIb9739Ro
-9XTzzUiK1dyJnWxI8anO
-=MoXX
------END PGP SIGNATURE-----
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
