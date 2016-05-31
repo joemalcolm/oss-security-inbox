@@ -1,65 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/26/4
-Message-ID: <cc6dbbfbd8654d4899153ece8385bf60@imshyb02.MITRE.ORG>
-Date: Sat, 26 Nov 2016 17:49:28 -0500
-From: <cve-assign@...re.org>
-To: <gustavo.grieco@...il.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: Heap read out-of-bounds parsing a Javascript file with the last revision of JavaScript Core
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/31/1
+Message-ID: <20160531110944.58e24e2c@redhat.com>
+Date: Tue, 31 May 2016 11:09:44 +0200
+From: Stefan Cornelius <scorneli@...hat.com>
+To: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Security issues addressed in GraphicsMagick SVG reader
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Fri, 27 May 2016 09:37:38 -0500 (CDT)
+Bob Friesenhahn <bfriesen@...ple.dallas.tx.us> wrote:
 
-> https://bugs.webkit.org/show_bug.cgi?id=164000
+> ===========================================
+> SVG Security Improvements in GraphicsMagick
+> ===========================================
+> 
+> This is a summary of security improvements made to development
+> GraphicsMagick's SVG reader since the 1.3.23 release.  These
+> improvements were made in response to fuzz testing by Gustavo Grieco
+> (using Quickfuzz) which and which resulted in CVE-2016-2317 and
+> CVE-2016-2318.  We are thankful that Gustavo has been willing to
+> continue fuzz testing as improvements have been made.
 
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 16
+Hi,
 
->     #0 0x7ffff67f04af in WTF::(anonymous namespace)::lockHashtable()
-> (/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20cc4af)
->     #1 0x7ffff67f1b6c in WTF::ParkingLot::parkConditionallyImpl(void
-> const*, WTF::ScopedLambda<bool ()> const&, WTF::ScopedLambda<void ()>
-> const&, std::chrono::time_point<std::chrono::_V2::steady_clock,
-> std::chrono::duration<long, std::ratio<1l, 1000000000l> > >)
-> (/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20cdb6c)
->     #2 0x7ffff67cc1cb in std::_Function_handler<void (),
-> WTF::AutomaticThread::start(WTF::Locker<WTF::LockBase>
-> const&)::{lambda()#1}>::_M_invoke(std::_Any_data const&)
-> (/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20a81cb)
+I'm curious, are these the CVEs for the issues that still have an
+outstanding CVE request at http://seclists.org/oss-sec/2016/q2/180 - or
+are they completely unrelated?
 
-> After a month, i received no response from the original bug report in the
-> webkit bug tracker. Additionally, Chrome / Chromium is not affected.
+(If they are indeed the same/related, can you give more details about
+the exact mapping?)
 
-Use CVE-2016-9642.
-
-Incidentally, the published WebKit policy is apparently "We cannot
-guarantee a prompt human response to every security bug filed. If you
-would like immediate feedback on a security issue, or would like to
-discuss details with members of the WebKit Security Group, please
-email security@...kit.org and include a link to the relevant Bugzilla
-bug. Your message will be acknowledged within a week at most." on the
-https://webkit.org/security-policy/ web page.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYOg/mAAoJEHb/MwWLVhi2ePcQAIxMTNbZW2og6OGm+H3OoNmJ
-LeLWKqY58w4NkUcrf+Rla3aPkwPTtdWasjy15rO7YfQ4ugzdvBHEPmO052kcYoGj
-nCVWoSYG/04DLhz14Q3eixqDO2Z5k8dE+Sgi7XWsXG7Z5s4duOTOX6nX2ZvK9FR5
-jY5ZHAXltXdc521YzBTDo4KycfOHzLImLajN9PJsGZJugDjgzxvICnHqUjcH2j2r
-nQjYKlNok4jVnlib6mOgMCv0xGgvRXibJlfNQrMmdFHeJfDAj66AHT0YN73qyRCr
-dXkHFrmhQHwc1EEtoh2wWYAlOU4vUZwMuNkyknn1IgyQ83jSnMBlmP9y10bKsO79
-mQ6Vpu0EaBo54WOhKUv7GOXxMuL4R53LUwfpkA9G8omkIeg8VW0E2uxIYRC6N/2R
-fwT1Z8r1A6CWtX7lUM5p4beAeExn184vPCRFsmR0WVsZDBe1xEHitDeXYcwlFcvV
-ZccNRbTFZUhgT4tNOo1a7587F40Nn75lIKLKEU6EZdrBZCor+9PmA1qnccVj7nlG
-F8SOuX7je0ULwbWmVNqYrZzewDLXge5PJ4Ovlyzo7TPse2MNvUbQtuPBGiI2RbA0
-YF+fX8nGoS8kHh1PCFLgHWCOHO85LLdfSAMkE9AynGeMWvtWzLYtZekrWDsZ03bB
-Dmqbs/1smLo4dEAEGlcj
-=gYlb
------END PGP SIGNATURE-----
+Thanks, 
+-- 
+Stefan Cornelius / Red Hat Product Security
