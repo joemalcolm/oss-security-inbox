@@ -1,26 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/01/2
-Message-ID: <20160501054304.GA31390@eldamar.local>
-Date: Sun, 1 May 2016 07:43:04 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: libpam-sshauth: local root privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/31/4
+Message-ID: <4628FDFAEBD591408C8B1BDFCDEB862885A5ACF3@SRV01.softscheck.local>
+Date: Tue, 31 May 2016 11:48:52 +0000
+From: Lubomir Stroetmann <lubomir.stroetmann@...tscheck.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE Request: Reflected Cross-Site Scripting in TYPO3 Formhandler
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi!
 
-Due to a programming error, libpam-sshauth returned PAM_SUCCESS where
-it should fail with PAM_AUTH_ERR. This was fixed in Debian in the last
-upload to unstable with the attached patch.
+I would like to request a CVE ID for the following XSS Vulnerability:
+https://typo3.org/news/article/cross-site-scripting-in-extension-formhandler-formhandler/ 
 
-Introduced with:
-https://bazaar.launchpad.net/~ltsp-upstream/ltsp/libpam-sshauth/revision/93/src/pam_sshauth.c
-Fixed by:
-https://bazaar.launchpad.net/~ltsp-upstream/ltsp/libpam-sshauth/revision/114
+ 
+Sincerely,
 
-Could you assign a CVE for this issue?
+Lubomir Stroetmann
+Consultant
+ 
+softScheck GmbH
+Büro: Bonner Str. 108, 53757 Sankt Augustin
+Telefon: +49 (2241) 255 43 - 0
+Fax: +49 (2241) 255 43 - 29
+www.softScheck.com
+www.it-sicherheitsgesetz.news
+Geschäftsführer: Prof. Dr. Hartmut Pohl
+Registergericht: Amtsgericht Köln HRB 72534
+Steuer-Nr. 223/5818/7372 USt-IdNr.: DE277769235
+Raiffeisenbank Sank Augustin eG IBAN DE69 3706 9707 1007 7240 19
+UBS Zürich IBAN CH47 0020 6206 1179 3801 U
 
-Regards,
-Salvatore
+PGP key ID: 0xB8669ED6997926B1
+PGP fingerprint: E119 C84C D97E 489C 17B8 60A9 B866 9ED6 9979 26B1
+ 
 
-View attachment "return-pam-auth-err-with-system-user" of type "text/plain" (714 bytes)
+
+Download attachment "smime.p7s" of type "application/x-pkcs7-signature" (8737 bytes)
