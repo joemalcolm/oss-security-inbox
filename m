@@ -1,17 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/03/9
-Message-ID: <CAFdyfB2hwixWS3k1v=ZdPX4NRrBvzBNnseGv2HgFs3VNyobXPA@mail.gmail.com>
-Date: Wed, 3 Aug 2016 22:28:50 +0100
-From: Dario Bertini <berdario@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Grails Console is still vulnerable to CSRF CVE-2016-6521
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/31/3
+Message-ID: <alpine.GSO.2.20.1605310854360.4552@freddy.simplesystems.org>
+Date: Tue, 31 May 2016 08:56:55 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: Stefan Cornelius <scorneli@...hat.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: Security issues addressed in GraphicsMagick SVG reader
 Content-Type: text/plain; charset=utf-8
 
-In a previous email I announced that the issue was fixed in versions
-1.5.10, 2.0.7
+On Tue, 31 May 2016, Stefan Cornelius wrote:
 
-I was wrong
+> On Fri, 27 May 2016 09:37:38 -0500 (CDT)
+> Bob Friesenhahn <bfriesen@...ple.dallas.tx.us> wrote:
+>
+>> ===========================================
+>> SVG Security Improvements in GraphicsMagick
+>> ===========================================
+>>
+>> This is a summary of security improvements made to development
+>> GraphicsMagick's SVG reader since the 1.3.23 release.  These
+>> improvements were made in response to fuzz testing by Gustavo Grieco
+>> (using Quickfuzz) which and which resulted in CVE-2016-2317 and
+>> CVE-2016-2318.  We are thankful that Gustavo has been willing to
+>> continue fuzz testing as improvements have been made.
+>
+> Hi,
+>
+> I'm curious, are these the CVEs for the issues that still have an
+> outstanding CVE request at http://seclists.org/oss-sec/2016/q2/180 - or
+> are they completely unrelated?
+>
+> (If they are indeed the same/related, can you give more details about
+> the exact mapping?)
 
-https://github.com/sheehan/grails-console/issues/55
+Gustavo Grieco's CVE request regarding DoS is completely unrelated to 
+the listed CVEs (CVE-2016-2317/CVE-2016-2318).  Regardless, fixes were 
+made for these two issues as well and are included in the release.
 
-Hopefully this vuln will be closed for good soon
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
