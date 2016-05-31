@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["885" "Friday" "11" "February" "2022" "10:01:38" "+0000" "Marcus Eriksson" "marcuse@apache.org" nil "31" "[oss-security] CVE-2021-44521: Apache Cassandra: Remote code execution for scripted UDFs " nil nil nil "2" nil nil (number mark "U       marcuse@apac Feb 11   31/885   " thread-indent "\"[oss-security] CVE-2021-44521: Apache Cassandra: Remote code execution for scripted UDFs \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-44521: Apache Cassandra: Remote code execution for scripted UDFs " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["949" "Tuesday" "31" "May" "2016" "11:09:44" "+0200" "Stefan Cornelius" "scorneli@redhat.com" "<20160531110944.58e24e2c@redhat.com>" "26" "Re: [oss-security] Security issues addressed in GraphicsMagick SVG reader" "^Cc:" nil nil "5" "2016053109:09:44" "[oss-security] Security issues addressed in GraphicsMagick SVG reader" (number mark "        scorneli@red May 31   26/949   " thread-indent "\"Re: [oss-security] Security issues addressed in GraphicsMagick SVG reader\"\n") "<alpine.GSO.2.20.1605270933490.4552@freddy.simplesystems.org>" ("<alpine.GSO.2.20.1605270933490.4552@freddy.simplesystems.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15913 invoked by uid 550); 11 Feb 2022 12:43:41 -0000
+Received: (qmail 28216 invoked by uid 550); 31 May 2016 09:10:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,46 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23675 invoked from network); 11 Feb 2022 10:02:17 -0000
-Content-Type: text/plain; charset=utf-8
-From: Marcus Eriksson <marcuse@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <6ce2cc1a-3308-19a3-91d5-b5457ed6f2f5@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 11 Feb 2022 10:01:38 +0000
+Received: (qmail 28191 invoked from network); 31 May 2016 09:10:05 -0000
+Message-ID: <20160531110944.58e24e2c@redhat.com>
+In-Reply-To: <alpine.GSO.2.20.1605270933490.4552@freddy.simplesystems.org>
+References: <alpine.GSO.2.20.1605270933490.4552@freddy.simplesystems.org>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2021-44521: Apache Cassandra: Remote code execution for
- scripted UDFs 
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Tue, 31 May 2016 09:09:53 +0000 (UTC)
+Cc: oss-security@lists.openwall.com
+Date: Tue, 31 May 2016 11:09:44 +0200
+From: Stefan Cornelius <scorneli@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Security issues addressed in GraphicsMagick SVG
+ reader
+To: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 
-Severity: high
+On Fri, 27 May 2016 09:37:38 -0500 (CDT)
+Bob Friesenhahn <bfriesen@simple.dallas.tx.us> wrote:
 
-Description:
+> ===========================================
+> SVG Security Improvements in GraphicsMagick
+> ===========================================
+> 
+> This is a summary of security improvements made to development
+> GraphicsMagick's SVG reader since the 1.3.23 release.  These
+> improvements were made in response to fuzz testing by Gustavo Grieco
+> (using Quickfuzz) which and which resulted in CVE-2016-2317 and
+> CVE-2016-2318.  We are thankful that Gustavo has been willing to
+> continue fuzz testing as improvements have been made.
 
-When running Apache Cassandra with the following configuration:
+Hi,
 
-enable_user_defined_functions: true
-enable_scripted_user_defined_functions: true
-enable_user_defined_functions_threads: false=20
+I'm curious, are these the CVEs for the issues that still have an
+outstanding CVE request at http://seclists.org/oss-sec/2016/q2/180 - or
+are they completely unrelated?
 
-it is possible for an attacker to execute arbitrary code on the host. The a=
-ttacker would need to have enough permissions to create user defined functi=
-ons in the cluster to be able to exploit this. Note that this configuration=
- is documented as unsafe, and will continue to be considered unsafe after t=
-his CVE.
+(If they are indeed the same/related, can you give more details about
+the exact mapping?)
 
-This issue is being tracked as CASSANDRA-17352
-
-Mitigation:
-
-Set `enable_user_defined_functions_threads: true` (this is default)
-or
-3.0 users should upgrade to 3.0.26
-3.11 users should upgrade to 3.11.12
-4.0 users should upgrade to 4.0.2
-
-Credit:
-
-This issue was discovered by Omer Kaspi of the JFrog Security vulnerability=
- research team.
-
+Thanks, 
+-- 
+Stefan Cornelius / Red Hat Product Security
