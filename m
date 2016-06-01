@@ -1,50 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/15/4
-Message-Id: <20161015164223.DC55E52E011@smtpvbsrv1.mitre.org>
-Date: Sat, 15 Oct 2016 12:42:23 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, psirt@...wei.com
-Subject: Re: CVE request Qemu: dma: rc4030 divide by zero error in set_next_tick
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/01/3
+Message-Id: <AB91E013-C484-4EDD-98BB-0D6E4938C22A@apache.org>
+Date: Wed, 1 Jun 2016 10:41:46 -0400
+From: Velmurugan Periasamy <vel@...che.org>
+To: security@...che.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Cc: dev@...ger.incubator.apache.org, user@...ger.incubator.apache.org, private@...ger.incubator.apache.org, vel@...che.org
+Subject: CVE update (CVE-2016-2174) - Fixed in Ranger 0.5.3
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello:
 
-> Quick Emulator(Qemu) built with the JAZZ RC4030 chipset emulation support is
-> vulnerable to a divide by zero issue. It could occur while computing its
-> periodic timer's next tick value.
-> 
-> A privileged guest user could use this flaw to crash the Qemu process instance
-> on the host resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02577.html
+Here’s a CVE update for Ranger 0.5.3 release. Please see below details. 
 
-Use CVE-2016-8667.
+Release details can be found at https://cwiki.apache.org/confluence/display/RANGER/0.5.3+Release+-+Apache+Ranger
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/dma/rc4030.c but
-that may be an expected place for a later update.
+Thank you,
+Velmurugan Periasamy
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYAlsIAAoJEHb/MwWLVhi2+64P/2Jr6tZwPQJcfz2igrYRV7Rj
-CdEpz77vj+57XV+DwcnxgFtZAh1KnZ6KKwlVsLSuNAI7pRmeP33DtSMRt3ICT8kh
-ON+ZpSG8SaT2qQ3tDitB2gN1QXgm/1V6Y90b2qmcgj0SBadXvWAhdkbMFgvGFWrS
-+XpHlDw8gGkfSGYj3oQZ6VCl3G6ZaH/AsU27l9IwjT9/ow1IZreSSnBEKcNy6pe3
-f+ONhuESyxLrro6Oq4rD9uzk/8K8MpzG/UaVylfRZ9nM7Glgdye2yL0vaB/k7k+1
-CMqfgKnYo0si2QSopTUtdShUOXgJSRHtNku9EC+vy2ggstF8J8qm3u4xHupn2Da/
-fNALN1VFuuoOfnt18DKHH0JrWFKGw4XfhoawJqevfc8ronrJR3SGkBQGgXfw8Cvy
-+yHaEoFBVfqeXcygPesGuPSMHy7fG0uKu2o14Cu2fNHiH6MyQoUhDdKl2QQImWY4
-dQYk9z+XMDkJk3DxKzRUbtF9klBsidPJOJ8Jw2o6wI9vjmWsyuc+b4UsjypPCpAI
-0DN5DdXtAMkO+ZY8/yPkIgnb1w048qyR9IqncDXO6InBcHWTCv14vZ+6UpwCZCl6
-o3MkN7yE0OtM8MAQEDfiS/j6CsKp0UMMhx4HYZP/bQr+kgrLh0WOJqK4Rj/Ew7dq
-1ZQLVkYSPzfxBYZAYDOJ
-=eFPo
------END PGP SIGNATURE-----
+-----------------------------------------------------------------------------------------------
+CVE-2016-2174: Apache Ranger sql injection vulnerability
+-----------------------------------------------------------------------------------------------
+Severity: Normal
+Vendor: The Apache Software Foundation
+Versions Affected: All versions of Apache Ranger from 0.5.0 (up to 0.5.3)
+Users Affected: All admin users of ranger policy admin tool
+Description: SQL Injection vulnerability in Audit > Access tab. When the user 
+clicks an element from policyId row of the list, there is a call made underneath 
+with eventTime parameter which contains the vulnerability. Admin users can 
+send some arbitrary sql code to be executed along with eventTime parameter
+ using /service/plugins/policies/eventTime url.
+Fix details: Replaced native queries with JPA named queries
+Mitigation: Users should upgrade to 0.5.3 version of Apache Ranger with the fix.
+Credit: Thanks to Mateusz Olejarka from SecuRing for reporting this issue.
+-----------------------------------------------------------------------------------------------
