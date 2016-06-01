@@ -1,31 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/29/5
-Message-ID: <87mvocv6ff.fsf@redhat.com>
-Date: Fri, 29 Apr 2016 16:24:52 +0200
-From: Martin Prpic <mprpic@...hat.com>
-To: "OSS Security Mailinglist" <oss-security@...ts.openwall.com>
-Subject: CVE request: three issues in libksba
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/01/1
+Message-ID: <20160601141541.7d5219cc@andriamanitra>
+Date: Wed, 1 Jun 2016 14:15:41 +0300
+From: Mihamina RAKOTOMANDIMBY <mihamina-rakotomandimby@...mb.org>
+To: oss-security@...ts.openwall.com
+Subject: "The Blind SQL Injection Issue" explanation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi members,
 
-Can CVEs please be assigned to these three issues (unless they've
-already been assigned and I failed to find them):
+A web application of mine has been scanned by a "security tool".
+It reports some issues about "Blind SQL Injection Issue"
 
-Denial of Service due to stack overflow in src/ber-decoder.c
-http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=07116a314f4dcd4d96990bbd74db95a03a9f650a
+The test result seems to indicate a vulnerability
+because it shows that values can be appended to parameter
+values, indicating that they were embedded in an SQL
+query. In this test, three (or sometimes four)
+requests are sent. The last is logically equal to the original,
+and the next-to-last is different. Any others are for control
+purposes. A comparison of the last two responses with the first
+(the last is similar to it, and the next-to-last is different)
+indicates that the application is vulnerable.
 
-Integer overflow in the BER decoder src/ber-decoder.c
-http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=aea7b6032865740478ca4b706850a5217f1c3887
+This message is widely used on internet: https://goo.gl/Gtqkbk
 
-Integer overflow in the DN decoder src/dn.c
-http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=243d12fdec66a4360fbb3e307a046b39b5b4ffc3
+My problem is I cannot figure out how this could work.
 
-A Gentoo advisory lists them as being fixed in version 1.3.3 and higher:
+Let's suppose the web app is vulnerable, the reasoning of this test is:
 
-https://lwn.net/Alerts/685271/
+- req. 1 gets resp. 1 and changed database state to state 1
+- req. 2 gets resp. 2 and changed database state to state "whatever"
+- req. 3 gets resp. 1 and changed database state to state "whatever"
 
-Thank you!
+My questions are:
+- How could database state "whatever" would give the same response as
+  "state 1" ? (a.k.a "resp. 1")
+- As a "blind" one (mostly random input then), how could these
+  assertions work?
 
--- 
-Martin Prpič / Red Hat Product Security
+Would you please help me to figure out how this works?
+I have basic security level and maths are far away in the past ;-)
+
+Thank you in advance.
