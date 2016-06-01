@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["497" "Wednesday" "26" "January" "2022" "14:46:17" "+0800" "Zhang Yonglun" "zhangyonglun@apache.org" nil "21" "[oss-security] CVE-2022-23223: Apache ShenYu (incubating) Password leakage" nil nil nil "1" nil nil (number mark "U       zhangyonglun Jan 26   21/497   " thread-indent "\"[oss-security] CVE-2022-23223: Apache ShenYu (incubating) Password leakage\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2022-23223: Apache ShenYu (incubating) Password leakage" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2282" "Wednesday" "1" "June" "2016" "14:53:48" "+0300" "Solar Designer" "solar@openwall.com" "<20160601115348.GA22607@openwall.com>" "45" "Re: [oss-security] \"The Blind SQL Injection Issue\" explanation" "^Cc:" nil nil "6" "2016060111:53:48" "[oss-security] \"The Blind SQL Injection Issue\" explanation" (number mark "        solar@openwa Jun  1   45/2282  " thread-indent "\"Re: [oss-security] \"The Blind SQL Injection Issue\" explanation\"\n") "<20160601141541.7d5219cc@andriamanitra>" ("<20160601141541.7d5219cc@andriamanitra>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 4041 invoked by uid 550); 26 Jan 2022 11:15:44 -0000
+Received: (qmail 28241 invoked by uid 550); 1 Jun 2016 11:53:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,40 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 28222 invoked from network); 1 Jun 2016 11:53:54 -0000
+Message-ID: <20160601115348.GA22607@openwall.com>
+References: <20160601141541.7d5219cc@andriamanitra>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20160601141541.7d5219cc@andriamanitra>
+User-Agent: Mutt/1.4.2.3i
+Cc: oss-security@lists.openwall.com
+Date: Wed, 1 Jun 2016 14:53:48 +0300
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22321 invoked from network); 26 Jan 2022 06:46:42 -0000
-X-Gm-Message-State: AOAM5301ADb5qU1gfcgkNQ1t82eImdbtIkzteUYn5v1OGKR6qLCNdOK9
-	s+Jh0BILZ74BKWIyTzq2KOZ2isx0+9RJMQ71On0=
-X-Google-Smtp-Source: ABdhPJyV5xYfaPrv45aL42YDGdZbSzZGMByedZHsjBvLVu2vK34Lbn1nFbEaNbRK6GN/U9LUCqk75vU8qNTHRDZeir4=
-X-Received: by 2002:a67:edc5:: with SMTP id e5mr9692807vsp.6.1643179588540;
- Tue, 25 Jan 2022 22:46:28 -0800 (PST)
-MIME-Version: 1.0
-From: Zhang Yonglun <zhangyonglun@apache.org>
-Date: Wed, 26 Jan 2022 14:46:17 +0800
-X-Gmail-Original-Message-ID: <CA+ZBtZ6ENBd4PkJsuQdqG+67Z5c4Vtpp9P2HJxB03UbY3HYTaA@mail.gmail.com>
-Message-ID: <CA+ZBtZ6ENBd4PkJsuQdqG+67Z5c4Vtpp9P2HJxB03UbY3HYTaA@mail.gmail.com>
-To: oss-security@lists.openwall.com, dev@shenyu.apache.org
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2022-23223: Apache ShenYu (incubating) Password leakage
+Subject: Re: [oss-security] "The Blind SQL Injection Issue" explanation
+To: Mihamina RAKOTOMANDIMBY <mihamina-rakotomandimby@rktmb.org>
 
-Severity: moderate
+Hi Mihamina,
 
-Description:
+Your message lacks open source focus (is your web app open source? as
+far as I can tell, the security scanner in question is not) and you
+posted the same question to Security Basics, so as a list moderator I
+was reluctant to approve it.  Next time, please post content that is
+more obviously on topic for oss-security, or clarify how whatever you're
+posting is on topic.  If you can't, then please refrain from making
+borderline postings like this.  Security Basics, judging by its name, is
+probably a more appropriate place for your question, but it looks rather
+inactive, I don't know why - no community interested in discussing
+security basics on a mailing list?  If anyone in here has suggestions on
+an appropriate mailing list for questions such as this, please share.
+Maybe full-disclosure, which is used for lots of stuff, even though this
+is a question and not a disclosure?
 
-The HTTP response will disclose the user password.
-When users send the request like the following URL
-"dashboardUser?currentPage=1&pageSize=12", the response will disclose
-all the passwords of the users.
-This issue affects Apache ShenYu (incubating) 2.4.0 and 2.4.1.
+On Wed, Jun 01, 2016 at 02:15:41PM +0300, Mihamina RAKOTOMANDIMBY wrote:
+> Let's suppose the web app is vulnerable, the reasoning of this test is:
+> 
+> - req. 1 gets resp. 1 and changed database state to state 1
+> - req. 2 gets resp. 2 and changed database state to state "whatever"
+> - req. 3 gets resp. 1 and changed database state to state "whatever"
+> 
+> My questions are:
+> - How could database state "whatever" would give the same response as
+>   "state 1" ? (a.k.a "resp. 1")
 
-Mitigation:
+I can't speak for authors of a proprietary security scanner, but I guess
+the assumption is that the queries are such that the database state does
+not change (at all, or at least not in a way affecting these specific
+queries).  If the database state changes (in a relevant way), then a
+possible difference in responses to requests 1 and 2 does not indicate
+SQL injection, but more likely indicates a false positive, so the
+purpose of request 3 may be to weed out such false positives (ensure the
+state has not changed from request 1 to request 3, and thus the
+different response to request 2 more likely indicates SQL injection
+rather than a change in response occurring between subsequent requests
+in general).  This is just a guess, which might be wrong.
 
-Upgrade to Apache ShenYu (incubating) 2.4.2 or apply patch
-https://github.com/apache/incubator-shenyu/pull/2357.
+> - As a "blind" one (mostly random input then), how could these
+>   assertions work?
 
+"Blind" does not mean "mostly random input".
 
---
-
-Zhang Yonglun
-Apache ShenYu (Incubating)
-Apache ShardingSphere
+Alexander
