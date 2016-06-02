@@ -1,62 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/24/6
-Message-Id: <20160124180313.5D41C6C04A5@smtpvmsrv1.mitre.org>
-Date: Sun, 24 Jan 2016 13:03:13 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/02/10
+Message-Id: <20160602161814.9F65C42E023@smtpvbsrv1.mitre.org>
+Date: Thu,  2 Jun 2016 12:18:14 -0400 (EDT)
 From: cve-assign@...re.org
-To: carnil@...ian.org
+To: gustavo.grieco@...il.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux: fuse: possible denial of service in fuse_fill_write_pages()
+Subject: Re: CVE request: DoS in phantomjs 2.1.1 rasterizing websites
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1290642
-> https://git.kernel.org/linus/3ca8138f014a913f98e6ef40e939868e1e9ea876
+> A denegation of service vulnerability was found in phantomjs when it
+> is processing a particular svg file. This crash caused by a null
+> pointer dereference can be easily used by a malicious website to
+> avoid rasterizing when it is crawled using phantomjs 2.1.1. Previous
+> versions like 1.9.x are not affected. A reproducer is available here:
+> 
+> https://github.com/ariya/phantomjs/issues/14244
 
-> I got a report about unkillable task eating CPU. Further investigation
-> shows, that the problem is in the fuse_fill_write_pages() function. If
-> iov's first segment has zero length, we get an infinite loop, because
-> we never reach iov_iter_advance() call.
+Please provide more information about the threat model. Do you mean
+that a single PhantomJS process is commonly used to access a series of
+independently operated web sites, and the operator of any one web site
+could disrupt this use case by placing the crafted SVG file on their
+site? Or, do you mean that the only known impact is that one web-site
+operator could prevent PhantomJS access (e.g., screenshotting) of
+their own web site by using the crafted SVG file -- in other words,
+the crash would not realistically disrupt any use of PhantomJS by the
+same client to access other web sites?
 
-Use CVE-2015-8785.
-
-
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=124d3b7041f9a0ca7c43a6293e1cae4576c32fd5
-
-> Frederik Himpe reported an unkillable and un-straceable pan process.
-
-> Zero length iovecs can go into an infinite loop in writev, because the
-> iovec iterator does not always advance over them.
-
-> The sequence required to trigger this is not trivial. I think it
-> requires that a zero-length iovec be followed by a non-zero-length
-> iovec which causes a pagefault in the atomic usercopy. This causes the
-> writev code to drop back into single-segment copy mode, which then
-> tries to copy the 0 bytes of the zero-length iovec; a zero length copy
-> looks like a failure though, so it loops.
-
-Use CVE-2008-7316.
+Is ongoing use of PhantomJS disrupted only in the
+http://phantomjs.org/api/webserver/ case? In other words, any one
+web-site operator could crash the web server within PhantomJS, and
+there would be an outage until the web server within PhantomJS is
+manually restarted?
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWpQ7BAAoJEL54rhJi8gl5Am8QAIDWhohuCTV/LLATmZ2l79qT
-6nH6UaXEQDTBLo3zaroI37UuALPBO3jj6gs+QrvAgs/p6lIVmYVZXbW+s23JXcly
-UaF82HMfSa7G4TpErnY140XiyuY9litUunfxtJ1GBaB+NYDyPKOUI2O/LAfbnS7J
-KvkB+9fzPNb6sgmHCNVtLQB8FI/zWscDL+YUAJtRlFzaj6m4Zmld+DfgNKEVj5v5
-BYx2arc67iCKDeravJ+FTBJ7q332z/zgDjYOYSsHRlsBtkcZjkOXQaFDxEXOMXUK
-VWjA3HG4UIryj5lt0WCJvrxEVQGUKxuKqoznYb9n2yUeIX/tpqbARkHxAkcaoZch
-N9qSZS7aoSqb0Zpg2kJPzrpM7lFsyZUARYoX4JzeNC/luFxfcyyD4Rsq6ZvtS4gN
-626g1nWB8te7xtUAWL8EEvAyLi8M5Xy9yNBQ/TJvi4AYUgMMJcRTzQNwEstwwIiv
-k0jo9ExujeusDwJ0OTww7jtqfHLeyY+WqwWK11Lfs7A1a03qMgmcYTQoZ/PFyklX
-SKygUyCIh8ampY97myeL6pa7Vk4gBnlcntr7hmCBKVPGY7uJbKC/21pgkuwoMAs9
-0E5vO/87fYlrWv1NYoGomk/fYWKFBgtmDLDP/9Cr0wqkxL/zYTurKiCTxo/MFJUw
-maIt64IN9PU7Nt9URjLb
-=2eQ6
+iQIcBAEBCAAGBQJXUFvYAAoJEHb/MwWLVhi2qSAP/ieu7bSO3I9bPOqkc5+5YkI3
+/rjZASGY/nV5BCoDv0F7uv3AAKQYd+EzKoa9Nu6soOo2LCnhE4TdFL9VhdJQcSLk
+UwGcx+Iqk/s44igsWML2GnTOsSldxzLHKP9a1IDYj+lU+kZ07yYXytUlx1bbKJNZ
+w2nzT2+sn4V0pHkRMx0a8YkugzTJzD2MGkYxDsLUh0aTDvbA/U53S20obYe7wJjq
+xwinllQRW8cE/Rf0yglxbJpBeV3/dsdOcKC/lnNYbvGMDYWe3t8DIpqVdDXM7nlg
+NfqfDU7pl9q31FpEmxnSzTi7MmnWimgQbxAT/Jpi59sGIx0+XE9KqNdwPpj4YQYT
+FCUujyJBNNdU0+yLHi5NHb6fsT65Wq3AaTK/10220siLAfFfNU11bT/nIUv572Aa
+j81M04BwotyzuQE76MRrXZKswncHyYJZPY5LCvr4KfBntwBfxwJx/xxdSPOtQA59
+mkV1gvVBbL+ANJUZOPuiRNTi95UCTi4z9CEfNgIONCMxtLIvCJZ65QGDGvL+kV8o
+ko8+W5/7FWR2j53AhxGYICoiXlLc/v3OVektEx5LwFxp6Mc6IFqhbsnIy6m+p8NU
+JQVoDfj1NLy+oRzh+7aysYFOUxqAMU20fQLReZNfBmvjRz9DPiYnsZcmd8igYP6K
+4QzOCYC0rF1y6PbhjAd0
+=2USQ
 -----END PGP SIGNATURE-----
