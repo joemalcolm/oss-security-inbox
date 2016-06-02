@@ -1,41 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/16
-Message-ID: <a5ca9fe1-6a0b-246f-4f22-60470c9f48f2@case.edu>
-Date: Fri, 16 Sep 2016 15:46:51 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: John Haxby <john.haxby@...cle.com>, oss-security@...ts.openwall.com
-Cc: chet.ramey@...e.edu
-Subject: Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/02/12
+Message-ID: <20160602180240.GA23506@layer-acht.org>
+Date: Thu, 2 Jun 2016 18:02:40 +0000
+From: Holger Levsen <holger@...er-acht.org>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: mat doesn't remove metadata in embedded images in PDFs
 Content-Type: text/plain; charset=utf-8
 
-On 9/16/16 12:16 PM, John Haxby wrote:
-> Hello All,
+On Thu, Jun 02, 2016 at 12:21:34PM -0400, cve-assign@...re.org wrote:
+> We think you mean that a CVE ID can exist with the rationale of:
 > 
-> A little while ago, one of our users discovered that by setting the
-> hostname to $(something unpleasant), bash would run "something
-> unpleasant" when it expanded \h in the prompt string.
-
-I finally got this message, three hours later.
-
-I assume you're using $HOSTNAME as a shorthand; bash only uses the
-return value from gethostname().
-
-It's unlikely that something like this could be accomplished without
-existing privilege.  If you have a fake DHCP server on your network, for
-instance, you have massive problems aside from this issue.  If someone
-sets the hostname on the local machine, he already has privilege.
-
+>   - as of version 0.7, there will be a required security update in
+>     which the embedded-in-a-PDF security problem is resolved
 > 
-> I believe the fix in parse.y is this (Chet, please correct me if I'm wrong):
+>   - the CVE ID is needed to tag that required security update
+> 
+>   - as of version 0.7, the https://mat.boum.org/ text may be changed
+>     from "images embedded inside PDF may not be cleaned" to something
+>     like "images embedded inside complex documents may not be cleaned,
+>     but users can rely on cleaning in the specific case of PDF
+>     documents"
+> 
+> Does that match your intention for the CVE ID?
 
-Yes, that is the current fix for this.  There are other ways to do it.
+yes.
 
-This issue has been public since October, 2015, in Ubuntu's bash bug
-database.
+Though I disagree with the 3rd paragraph a bit, I don't think it's that
+hard to recursivly process files, eg both
+https://tracker.debian.org/pkg/strip-nondeterminism (in perl) and
+https://tracker.debian.org/pkg/diffoscope (in python) do that.
 
-https://bugs.launchpad.net/ubuntu/+source/bash/+bug/1507025
 
 -- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, UTech, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+cheers,
+	Holger
+
+Download attachment "signature.asc" of type "application/pgp-signature" (812 bytes)
