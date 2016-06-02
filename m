@@ -1,29 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/09/6
-Message-ID: <2068016.NGJ2REXo3s@willoughby>
-Date: Fri, 09 Sep 2016 16:29:51 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: ettercap: etterlog: multiple crashes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/02/14
+Message-Id: <20160602214746.6F1FE8BC0C8@smtpvmsrv1.mitre.org>
+Date: Thu,  2 Jun 2016 17:47:46 -0400 (EDT)
+From: cve-assign@...re.org
+To: gustavo.grieco@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: DoS in multiple versions of GraphicsMagick
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-etterlog which is part off ettercap, crashes when try to reads malformed data.
+> We recently tested GraphicsMagick with our tool and found two issues that
+> causes DoS:
 
-Basically, the tool should read what you capture with YOUR ettercap, but since 
-ettercap is one of the valid tools for MITM, there are dozens of blog post 
-about how to use it, so there could be posts where malicious users make 
-available crafted datafile to show something.
+> * Infinite loop caused by converting a circularly defined svg file.
 
-Details:
-https://blogs.gentoo.org/ago/2016/09/06/ettercap-etterlog-multiple-three-heap-based-buffer-overflow-el_profiles-c/
+Use CVE-2016-5240.
 
-https://blogs.gentoo.org/ago/2016/09/09/ettercap-etterlog-null-pointer-dereference-in-fingerprint_search-ec_fingerprint-c/
+>> http://www.openwall.com/lists/oss-security/2016/05/01/6
+
+>> It is worth noting that ImageMagick's built-in SVG renderer has the 
+>> same problem with "circular.svg" (specify the input file name like 
+>> "msvg:circular.svg").
+
+We feel that this ImageMagick issue is also within the scope of the
+CVE-2016-5240 ID.
 
 
-If you think that something is suitable for an identifier, please assign one.
-Thanks.
+> * Arithmetic exception converting a svg file caused by a X%0 operation in
+> magick/render.c:3800
+> 
+>     (long) (y-fill_pattern->tile_info.y) % fill_pattern->rows,
 
---
-Agostino
+Use CVE-2016-5241.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXUKjzAAoJEHb/MwWLVhi2VZ8QAIIB/LpzpI+nMhnzoBeIwbwV
+lTDnRhiXdrSyGaCAa2bZSJLtYG+XmIW79T14CesmHxNXQSqHjE8Q/bcqrQUUW73U
+BewXqemI6q596Z7Oqs83u/pEAG8PqPrCnZsJ2olMm+2DbBRXiHMT3vy0UhRJB31z
+N/ez9h1IU/6VBVsViYG/S4KMEJZDxz14YQBn17JiV7JlvTsZ0xRpm8rmPX1r/FOU
+CBnc9JI52byeF1iiWbMjW01C2izy52oCiC4DVH6NXDTmN8umMqr9yDzznn3ZwHWC
+eKAjuv4i8pEhM7slR+iuzbPfo75AoeG0QSUIMv6c7Jcwo7G35WnSdPXYc9mPcCTs
+yoG7PaKl2Zy3axly2IbEx/cr/U3ht8qf3SlnbiVpcGl9kjY24CiNwZ4Dsv5yXQiZ
+zb/dWF+BijpvGWkQVsHSnFAbKBSVma7MALD08l99DLo0ZliKBBkypLPiGYno2bW0
+MlOwDtAbWcUZI/kK/EhvFHhzEe9lyV+qItDrqzyusbp6PNN/FRThbW0D+S0TQiEr
+sL9pIeu9aYoi5df9CqLYCSKfQgysSdN8L+/I+ggt3jO9MbQbAcXXvdH9Pb2eVgvm
+qXdW0iVfb5TLMbSEYmDOBAsXqKWXHg3VOVp0XbUwVCGtIRVbr3T91CZnL1aocAVp
+Uh6pny8WNsV2FRwJ2f8L
+=UjQN
+-----END PGP SIGNATURE-----
