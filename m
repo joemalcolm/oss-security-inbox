@@ -1,4 +1,9 @@
-Received: (qmail 3811 invoked by uid 550); 2 Apr 2026 15:55:07 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2061" "Thursday" "2" "June" "2016" "18:02:40" "+0000" "Holger Levsen" "holger@layer-acht.org" "<20160602180240.GA23506@layer-acht.org>" "56" "[oss-security] Re: CVE request: mat doesn't remove metadata in embedded images in PDFs" nil nil nil "6" "2016060218:02:40" "[oss-security] Re: CVE request: mat doesn't remove metadata in embedded images in PDFs" (number mark "U       holger@layer Jun  2   56/2061  " thread-indent "\"[oss-security] Re: CVE request: mat doesn't remove metadata in embedded images in PDFs\"\n") "<20160602162134.8A5D56C0659@smtpvmsrv1.mitre.org>" ("<20160602103328.GA6618@layer-acht.org>" "<20160602162134.8A5D56C0659@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 19794 invoked by uid 550); 2 Jun 2016 18:03:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,68 +12,76 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30288 invoked from network); 2 Apr 2026 15:36:17 -0000
-Authentication-Results: apache.org; auth=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
-	t=1775144163; bh=B436MJckMPjU17nEnOfe35CIZ8grRNbfERJof7U1Fd0=;
-	h=From:Date:Subject:To:Cc:From;
-	b=JXn9Lhmdhfe9YPCOeOB0v3zQ79HACun0YWANCY2EbVYxlxIAcNsF73rvvN8ijvsrn
-	 shIwlo5QD9ffy+RN1pdnyNp7gl1nat0/+E7e87blyeIDeVkMPyeU2p68DjRTrX1+3+
-	 b1mJkzepFNpFJBzIf0ZWrN3w13C74bpKLoKUYcPRmpOQ//fCbpFCrlD1NTsQVeoYcp
-	 9OFMsxTJaLMhsIqcieKlsVhoItXgoKPsOEEyeihNU4ULQGm7BQZMe51CAeIHdX+lzp
-	 YNBZH9BzQCM1F8qUXEjMHk4hWxZNkxSd4pyTqbmdXQf5R6kHTFRaLmEb2TEXg0M7+S
-	 zuZbVI0UtmCFw==
-X-Gm-Message-State: AOJu0Yxv53ONIszCwDyFVtZjl8pG2Dub5LExmX/uWUANxK34Bc/MGYfj
-	CkF3SxM1C8tRXGREn4i+J6cjvcy21L/UOl7C6Nucbua2KAxrHPAT+hZDAo5ZuR4L7KyHGwdgfcA
-	5npB7+IKUwHaSfpXYnDe7MNP+9CHlNGY=
-X-Received: by 2002:a17:903:183:b0:2ae:aa16:acf7 with SMTP id
- d9443c01a7336-2b269c949b7mr80075925ad.40.1775144161796; Thu, 02 Apr 2026
- 08:36:01 -0700 (PDT)
-MIME-Version: 1.0
-From: Masakazu Kitajo <maskit@apache.org>
-Date: Thu, 2 Apr 2026 09:35:50 -0600
-X-Gmail-Original-Message-ID: <CAGjw+kNQQdrjU3ypPr716M83omaoBT3+KsVxX8zMEDWPgsoLgQ@mail.gmail.com>
-X-Gm-Features: AQROBzAKHjiU4T-7CdS8pclkuSRCdvilYUE_4tobHEIoFt4GKnpTOAsPpJ0KbuU
-Message-ID: <CAGjw+kNQQdrjU3ypPr716M83omaoBT3+KsVxX8zMEDWPgsoLgQ@mail.gmail.com>
-To: announce@trafficserver.apache.org, Dev <dev@trafficserver.apache.org>, 
-	users <users@trafficserver.apache.org>, security@trafficserver.apache.org
+Received: (qmail 19776 invoked from network); 2 Jun 2016 18:03:04 -0000
+X-Virus-Scanned: Debian amavisd-new at alpha.holgerlevsen.de
+Date: Thu, 2 Jun 2016 18:02:40 +0000
+From: Holger Levsen <holger@layer-acht.org>
+To: cve-assign@mitre.org
 Cc: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000306c29064e7bf51a"
-Subject: [oss-security] [ANNOUNCE] ATS is vulnerable to HTTP requests with body
+Message-ID: <20160602180240.GA23506@layer-acht.org>
+References: <20160602103328.GA6618@layer-acht.org>
+ <20160602162134.8A5D56C0659@smtpvmsrv1.mitre.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="VbJkn9YxBvnuCH5J"
+Content-Disposition: inline
+In-Reply-To: <20160602162134.8A5D56C0659@smtpvmsrv1.mitre.org>
+Subject: [oss-security] Re: CVE request: mat doesn't remove metadata in embedded images in
+ PDFs
 
---000000000000306c29064e7bf51a
-Content-Type: text/plain; charset="UTF-8"
+--VbJkn9YxBvnuCH5J
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Description:
-ATS is vulnerable to HTTP requests with body.
+On Thu, Jun 02, 2016 at 12:21:34PM -0400, cve-assign@mitre.org wrote:
+> We think you mean that a CVE ID can exist with the rationale of:
+>=20
+>   - as of version 0.7, there will be a required security update in
+>     which the embedded-in-a-PDF security problem is resolved
+>=20
+>   - the CVE ID is needed to tag that required security update
+>=20
+>   - as of version 0.7, the https://mat.boum.org/ text may be changed
+>     from "images embedded inside PDF may not be cleaned" to something
+>     like "images embedded inside complex documents may not be cleaned,
+>     but users can rely on cleaning in the specific case of PDF
+>     documents"
+>=20
+> Does that match your intention for the CVE ID?
 
-CVE:
-CVE-2025-58136 - A simple legitimate POST request causes a crash
-CVE-2025-65114 - Malformed chunked message body allows request smuggling
+yes.
 
-Reported By:
-Masakazu Kitajo (CVE-2025-58136)
-Katsutoshi Ikenoya (CVE-2025-65114)
+Though I disagree with the 3rd paragraph a bit, I don't think it's that
+hard to recursivly process files, eg both
+https://tracker.debian.org/pkg/strip-nondeterminism (in perl) and
+https://tracker.debian.org/pkg/diffoscope (in python) do that.
 
-Vendor:
-The Apache Software Foundation
 
-Version Affected:
-ATS 9.0.0 to 9.2.12
-ATS 10.0.0 to 10.1.1
+--=20
+cheers,
+	Holger
 
-Mitigation:
-9.x users should upgrade to 9.1.13 or later versions
-10.x users should upgrade to 10.1.2 or later versions
+--VbJkn9YxBvnuCH5J
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-For CVE-2025-58136, old version users
-can set proxy.config.http.request_buffer_enabled to 0 (the default value is
-0) to prevent the crash.
-There is no workaround for CVE-2025-65114.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-CVE:
-https://www.cve.org/CVERecord?id=CVE-2025-58136
-https://www.cve.org/CVERecord?id=CVE-2025-65114
+iQIVAwUBV1B0wAkauFYGmqocAQo/RRAAhVZsfWzK21p8XXDH2OHBN4eSJ4poAL/q
+wZe6HRvQ+M3N4/S9riomZJMIaUqpNN0XwLttZOgXja/Gx3zAKDR4/+qepKE/NNrL
+rPTY6G1Ookrmoy44wQ+DKICP/Z/QUE6Q2Hg80iyBtx/fM8wZlXqmZMjgIG/8JwMS
+wTo1v1SQroXZ9/n5wCn2IbbfNvI8FcV9pg9ML74z79YD79KZRs0gyFsPB69G8nAX
+Bbgk5br9kW8zn5/7+CRKMKhrJE1DzI9VMTLxLEeck1PUNavAPFdqpdA79Hx1ZTEd
+i4fXxRVnQ8GJAyPM/fWZn57cf1RNUFal18u4F0ThiNJg6xENseQfwGcEmluZx9vC
+vbxhVzPK7PAWn/ilA7isYvbWqkmr5USKr3uyCnSP1djCOxwvhwd+eoYRLep8HclR
+iFoxZsmJJHvOcz4Upj+LaQr1+G/rMv9XL3L3X/thLdetAm5TsfaYERlyHkIgrz+U
+w5OgmS5beZdUwmg07Qj2PI8YzqKXvVC+vuZxahCZaMHJPWQ+KDIxTmnjXc8b51a4
+TRk3nH2hidyC2hqK858cmNjjdp5DEJyhNrovgQpZnkhex0TG3Vf3rWC6o9C6MEUi
+W2kezHtC5Pu6As8kKDvya4pfKUmiROrNsB5y3i/b0Ftt62lZF7N3oWZKiNWSAya9
+UalxAatnyqw=
+=pM+I
+-----END PGP SIGNATURE-----
 
---000000000000306c29064e7bf51a--
+--VbJkn9YxBvnuCH5J--
