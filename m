@@ -1,4 +1,9 @@
-Received: (qmail 5196 invoked by uid 550); 29 Mar 2024 20:29:14 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["774" "Thursday" "2" "June" "2016" "10:56:53" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1606021054530.24989@wniryva>" "25" "[oss-security] CVE Request Qemu: scsi: esp: OOB write when using non-DMA mode in get_cmd" nil nil nil "6" "2016060205:26:53" "[oss-security] CVE Request Qemu: scsi: esp: OOB write when using non-DMA mode in get_cmd" (number mark "U       ppandit@redh Jun  2   25/774   " thread-indent "\"[oss-security] CVE Request Qemu: scsi: esp: OOB write when using non-DMA mode in get_cmd\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21518 invoked by uid 550); 2 Jun 2016 05:27:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,66 +12,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23867 invoked from network); 29 Mar 2024 20:17:45 -0000
-DKIM-Signature: a=rsa-sha256; b=lNhU1jN80Q/EOZGX+IiJA+aBZxL9vlvcRwW8ZLDuCqfiARVrRZNWcHlJq1NdG0h67ksYPYWTSe4kqIwKrbrArIJTN2SbqgpjXEF+dbgg3Pe+OGTMaPOOxHXrbwFfHt8jn6tUFH7UTVRupAQ4a15uExULXUsqLJ0krouDJHBR1/oiW8YVWd+D+ost2RG/hr5dT/GDnSRBUKU+mR+N+37oDh8VmyvAbqB8btAbRhaTM4LqS5Aa4XDukBE+i0dTGMGhBSEDqW1f4r3xJiKsckoSSPjiW7pY7mM9Jia3y46WI/hfn11wNghEi1atc3fKLP8nwRW8CKAc3xC8pyF449IBPw==; s=purelymail2; d=levitati.ng; v=1; bh=EvjJAzASdUfgx3nv3P17v8j2Kvd8UKhZ3SxpdAyxLfA=; h=Received:From:To:Subject;
-DKIM-Signature: a=rsa-sha256; b=cXj/wdFoc8Qc5qWx2TfRaerBvF7HUHZn5EEAx9+8EseuMG6TeOH03C/rTPxWSZ0SFIRG47B8AjN/B/0hJYHA1MUSGx/VKMdCH/FaykcJzcPajOXlgjChcpxBIyG9qlZhxXxqTRKzb/+tsgG/lmBtltf9iRtj5GRB2I5wz/Kf4aoAK6jo+1MDZyjFbKxwQRoecgK3z5/45VBz9U1vSxl6auq+Dzzq0yisvmnobkmHJsC3dDaA0b+BVAidvqSQdlPMM/h56+HCu70n6Vy/UwWE3ikyOrl0zS1tfKgTbw6jFa28j6JT7dN5jhpSxYavE6PE8W82z/fJ0L0zRwpzv4g2xA==; s=purelymail2; d=purelymail.com; v=1; bh=EvjJAzASdUfgx3nv3P17v8j2Kvd8UKhZ3SxpdAyxLfA=; h=Feedback-ID:Received:From:To:Subject;
-Feedback-ID: 25799:4744:null:purelymail
-X-Pm-Original-To: oss-security@lists.openwall.com
+Received: (qmail 20474 invoked from network); 2 Jun 2016 05:27:13 -0000
+Date: Thu, 2 Jun 2016 10:56:53 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Li Qiang <liqiang6-s@360.cn>
+Message-ID: <alpine.LFD.2.20.1606021054530.24989@wniryva>
 MIME-Version: 1.0
-Date: Fri, 29 Mar 2024 21:17:29 +0100
-From: "Rein Fernhout (Levitating)" <me@levitati.ng>
-To: oss-security@lists.openwall.com
-Cc: "Alexander E. Patrakov" <patrakov@gmail.com>
-In-Reply-To: <CAN_LGv0CU6J+5d6RX=mDrMvAg4kf3EGi+56x+J4iW0NCFRee1g@mail.gmail.com>
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
- <CAN_LGv0CU6J+5d6RX=mDrMvAg4kf3EGi+56x+J4iW0NCFRee1g@mail.gmail.com>
-User-Agent: Purely Mail via Roundcube/1.6.5
-Message-ID: <2b0cea4ac146cfa257c60538909e03c4@purelymail.com>
-X-Sender: me@levitati.ng
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
-Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh
- server compromise
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Thu, 02 Jun 2016 05:27:01 +0000 (UTC)
+Subject: [oss-security] CVE Request Qemu: scsi: esp: OOB write when using non-DMA mode in
+ get_cmd
 
-> P.S. in the detect.sh script, the "set -eu" line plays a bad trick: it
-> aborts the check if sshd is not actually linked to liblzma.
+   Hello,
 
-Or if sshd is not in PATH. (/usr/sbin/)
+Quick Emulator(Qemu) built with the ESP/NCR53C9x controller emulation support 
+is vulnerable to an OOB write access issue. The controller uses 16-byte FIFO 
+buffer for command and information transfer. The OOB write occurs while 
+reading from information transfer buffer via non-DMA mode in routine 
+get_cmd().
 
-On 2024-03-29 19:59, Alexander E. Patrakov wrote:
-> On Sat, Mar 30, 2024 at 12:09=E2=80=AFAM Andres Freund <andres@anarazel.d=
-e>=20
-> wrote:
->> =3D=3D Affected Systems =3D=3D
->>=20
->> The attached de-obfuscated script is invoked first after configure,=20
->> where it
->> decides whether to modify the build process to inject the code.
->>=20
->> These conditions include...
-> <snip>
->> Running as part of a debian or RPM package build:
->>     if test -f "$srcdir/debian/rules" || test "x$RPM_ARCH" =3D=20
->> "xx86_64";then
->=20
-> Could you please confirm that the Arch Linux binary package was never
-> actually compromised?
->=20
->> openssh does not directly use liblzma. However debian and several=20
->> other
->> distributions patch openssh to support systemd notification, and=20
->> libsystemd
->> does depend on lzma.
->=20
-> <snip>
->=20
->> Observed requirements for the exploit:
->> b) argv[0] needs to be /usr/sbin/sshd
->=20
-> I have checked, and found that Arch Linux does not apply any patches
-> when building OpenSSH.
->=20
-> P.S. in the detect.sh script, the "set -eu" line plays a bad trick: it
-> aborts the check if sshd is not actually linked to liblzma.
+A privileged user inside guest could use this flaw to crash the Qemu process 
+resulting in DoS.
+
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-06/msg00150.html
+
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1341931
+
+This issue was discovered by Li Qiang of 360.cn Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
