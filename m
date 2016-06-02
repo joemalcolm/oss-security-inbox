@@ -1,83 +1,174 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/2
-Message-ID: <0c221798-c6e3-962d-ae71-fb143223eda1@laposte.net>
-Date: Wed, 16 Mar 2016 02:31:27 +0100
-From: Laël Cellier <lael.cellier@...oste.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: server and client side remote code execution through a buffer overflow in all git versions before 2.7.1 (unpublished ᴄᴠᴇ-2016-2324 and ᴄᴠᴇ‑2016‑2315)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/02/8
+Message-Id: <E1b8S6c-0000XB-Jw@xenbits.xenproject.org>
+Date: Thu, 02 Jun 2016 12:52:10 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 178 (CVE-2016-4963) - Unsanitised driver domain input in libxl device handling
 Content-Type: text/plain; charset=utf-8
 
-Concerning the reply to ᴄᴠᴇ details. (as you can check without the 
-quotes, the pgp signature is correct and belong to mitre) (it was 
-originally posted on the git‑security mailing list).
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
->>>> int nlen = strlen(name); // the size is converted to a positive number
->>>> (the correct size was allocated previously with an unsigned long). I
->>>> got 705804100
->>> (i.e., inconsistent use of signed versus unsigned).
->>>
->>> Use CVE-2016-2315.
->> Yes, I think this is really the root of the issue ... It's
->> not just signed versus unsigned, though, but also truncation on 64-bit
->> systems (size_t down to int).
->
-> OK, so more generally CVE-2016-2315 is the issue that "int" is the
-> wrong data type for that nlen assignment.
->
->
->> Related ... is
->> integer overflow due to a loop which adds more to "len".
->>
->> I think that should potentially have a separate CVE (as it was_not_
->> fixed by 34fa79a6, and in fact there is not a published fix yet).
->
-> Use CVE-2016-2324 for this integer overflow.
->
-> - -- CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available throughhttp://cve.mitre.org/cve/request_id.html  ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
->
-> iQIcBAEBCAAGBQJWvN/aAAoJEL54rhJi8gl5uAYP/izpW1/dYi3/UB0FFp3J6iz0
-> pOpLy0TgZbfGCvrLAg2xlOxkY8ENEsX1JLKkIwAh0ViaLmKD+4xucgT5DIlpk2fl
-> 0eAH8Hxcl2Nn8vOYx5orA6vTJ+S5pVGGSONk448cUDut9F4NBF0ngZ1GnAzQGI1d
-> kbvA7aEz9jqUZGcnihoz84DeHwxZAw037MG1Yd/QW0eyHEC9w2fHEVF6GyHxfcMG
-> eDowkjefIkmwYlMTbzv9l8v7rc6T7fFSrWe9xYc61rSEkYM5U1Eq2xHEIku6kYQT
-> ns+0R+pZgwXakbUe9cJEjHQprGFw0iYtRdBZIDjSeiWZwWBjR9GUkFz/HXo2MdKV
-> esN1lpF1x9MqFWjkHlxyCJOEAR1yzClYWU7RodyFeBIfdpc+7BM/I4Mr2b77O+Oi
-> hUMBsfbZSPBz0+dBLlijFOBCkf+dvULc6DXM/yBJyYebY8EyUmtvw89u4dXefsZJ
-> bvkYw6ltNgXYEovlg+Zp5HDtY5wBeJl/00XRK/Yqtl96Rgmc59jOvnO6j2487cEH
-> x4KzwEP7PNDad954iMNQAIv2DLr+6/dGh1LEIoJeWV6kgHR2fM6roY1Ky6Dhc3HS
-> BDD/i2d53+Ydej4+xAs7ABe0SRnONPZLvGXfTg1Xf3A1DQ3ctBEU8WTgoDeoNGF1
-> 0VRlf18y1csVeTrRhfyX
-> =mJKj
-> -----END PGP SIGNATURE-----
->
-But more generally, individual patches are here 
-http://thread.gmane.org/gmane.comp.version-control.git/286253
-And the affected versions are 2.7.0 and below. 2.7.1 is the first 
-version which is safe to use. sid, you can relax the 2.7.3 in gitlab
-This is the matter of pushing one or several crafted tree objects if the 
-target is a server, or making a client cloning a crafted repository 
-containing such objects.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Users of gerrit are also affected due to gerrit‑gc (so even probably 
-google’s servers). But as the frontend is Jgit, the installed git 
-version number is hidden (so the only way is to exploit remote code 
-execution). (and this was because wikmedia used gerrit they were 
-threat). Because gerrit‑gc rely on git, not on Jgit.
+            Xen Security Advisory CVE-2016-4963 / XSA-178
+                              version 3
 
-And for fun, a switch to java git might not be a good bet. Because I 
-also probably found a server side memory leak in Jgit which can be 
-triggered with a simple clone access (which I would be able to confirm 
-once that vendor get that 
-http://www.materiel.net/carte-reseau/intel-dual-band-wireless-ac-7260-desktop-7260hmwdtx1-r-114087.html 
-again (so they can ship it to me, so I can replace the one that died)).
+       Unsanitised driver domain input in libxl device handling
 
-Concerning github, I already told they fixed github enterprise in 
-December, and of course they did for the main site at the same time : 
-https://bounty.github.com
+UPDATES IN VERSION 3
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+libxl's device-handling code freely uses and trusts information from
+the backend directories in xenstore.
+
+The backend domain (driver domain) can store bogus data in the
+backend, causing libxl's enquiry functions to fail, confusing
+management tools.
+
+A driver domain can also remove its backend directory from xenstore
+entirely, preventing the device from showing up in device listings and
+preventing it from being removed and replaced.
+
+A driver domain can cause libxl to generate disk eject events for
+disks for which the driver domain is not responsible.
+
+IMPACT
+======
+
+A malicious driver domain can deny service to management tools.
+
+VULNERABLE SYSTEMS
+==================
+
+This vulnerability is only applicable to systems which are using
+driver domains, and then only where the driver domain is not intended
+to be fully trusted with respect to the host.
+
+Such Xen systems using libxl based toolstacks (for example xl or
+libvirt with the libxl driver) are vulnerable.
+
+Note that even with this vulnerability a driver domain based system is
+better from a security point of view, than a system where devices are
+provided directly by dom0.  Users and vendors of systems using driver
+domains should not change their configuration.
+
+MITIGATION
+==========
+
+No mitigation is available.
+
+CREDITS
+=======
+
+This issue was discovered by Wei Liu from Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch set from XSA-175, plus the
+appropriate attached patch set below, resolves this issue.
+
+xsa178-unstable/*.patch           xen-unstable
+
+$ sha256sum xsa178-*/*
+fd6a1f858d44f618a4e792553598005871f63d12e718bc9b5477d14bf0113386  xsa178-unstable/0001-libxl-Make-copy-of-every-xs-backend-in-libxl-in-_gen.patch
+ee6cf66ad385203c49d9b030959715fb885a250aa36b85080e6985a603bb1ddb  xsa178-unstable/0002-libxl-Do-not-trust-backend-in-libxl__device_exists.patch
+ea29cf28609c2d467fb7a620601af7bf434b098a7554dada956f11ed50c1b895  xsa178-unstable/0003-libxl-Do-not-trust-backend-for-vtpm-in-getinfo-excep.patch
+a2abc4308d9a18f49a02e6ca8ba913d4d9890867b7816dcc19b548836b65af6c  xsa178-unstable/0004-libxl-Do-not-trust-backend-for-vtpm-in-getinfo-uuid.patch
+2884e6566c59ae95792d4282e174c6b3d201c1e006b9e0ab57fbaad2b62ecfb9  xsa178-unstable/0005-libxl-cdrom-eject-and-insert-write-to-libxl.patch
+d6ac82211d056a386d18b8296a6a1f2e8a65e8156594595b9c34a3a377f1cf98  xsa178-unstable/0006-libxl-Do-not-trust-backend-for-disk-eject-vdev.patch
+4c8bb7bee3b624b02796afdfa0157ea1dc49a7f54f34912f992bae201b6bfe40  xsa178-unstable/0007-libxl-Do-not-trust-backend-for-disk-fix-driver-domai.patch
+556b14e8783ddd7ad0cb9a561ca43a40b37ccb27cd56337e7714ac0f796ce21b  xsa178-unstable/0008-libxl-Do-not-trust-backend-for-disk-in-getinfo.patch
+b51aaa8cca1f367ae51ffb65240831617d4cab4a3fa6d0a2d42728e99ee8cee8  xsa178-unstable/0009-libxl-Do-not-trust-backend-for-cdrom-insert.patch
+3ef493e6bda2d2b96a89cf18b55d43fbdb84a2cd5c10c88f04299434c629ba2b  xsa178-unstable/0010-libxl-Do-not-trust-backend-for-channel-in-getinfo.patch
+da4db890c9e73fca006bc381f2208f9bff0fc35990c4dd51d59999db27072d33  xsa178-unstable/0011-libxl-Rename-libxl__device_-nic-channel-_from_xs_be-.patch
+ae8b043a83cc35beee2205ab621b6f5bc6543f6d4dcdc06c97e07b1a17ca94bf  xsa178-unstable/0012-libxl-Rename-READ_BACKEND-to-READ_LIBXLDEV.patch
+936c44de9a344b0634b7bff4f5b3cf9c034a0080e87d267e7a84683a967d1bff  xsa178-unstable/0013-libxl-Have-READ_LIBXLDEV-use-libxl_path-rather-than-.patch
+3b65a3140387651cf2ed1bcf8668efecd58fbd274a62a03d785c269b55bea8fe  xsa178-unstable/0014-libxl-Do-not-trust-backend-in-nic-getinfo.patch
+6d009153b98fd58f316efa4f39c821cf609b54184726e15f887947321610ed14  xsa178-unstable/0015-libxl-Do-not-trust-backend-for-nic-in-devid_to_devic.patch
+3105c062bb2017681f47499e2dd2f6cd2996539068f216a5af7d6143bc726eda  xsa178-unstable/0016-libxl-Do-not-trust-backend-for-nic-in-list.patch
+97961ce38d8d77e9d91ee85052fd33e04d19f45e5ddfec61f82dc9c8a78158ea  xsa178-unstable/0017-libxl-Do-not-trust-backend-in-channel-list.patch
+6ebb611501b66dca66259d3a790e30ae6d892eb27c6d06577d8f399d619c286b  xsa178-unstable/0018-libxl-Do-not-trust-backend-for-vusb.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+HOWEVER note that deployment of the patches for XSA-175 (which are a
+prerequisite for the patches for XSA-178) is restricted.  See
+XSA-175's `Deployment During Embargo' section for details.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJXUCvvAAoJEIP+FMlX6CvZFe0H/3GPDNPPGnUCY9SffiBKFNy/
+MxOFZvQFUVShVGvWYfkYHhkaVUkDUlRnnXCoXSxS12BXXQEixywB04+Ma+O4Hcc7
+6xAP2iTMeRbbKxIt2BvQJwUov6oV3A/LELC4r2XrjOxugCZUCOYLTOvXuh6toe5V
+odiBHucFy4b2ioFw9xUXNwiJo95xIoxM07O+Tg000WaF04nICfdzyqOXEdacuokn
+tbXTbciKOC8pv5+sLzZ/lUZ7vyez8U8g/7pDMnt01gmOu9RUVJuF9YQ+5lOePclA
+HYP1xiYxFQtGid7PL4NjD7yXgtEkE2nIMMtTXumkvh4VE+lzEy6gizgMuKeKDu4=
+=6GJi
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa178-unstable/0001-libxl-Make-copy-of-every-xs-backend-in-libxl-in-_gen.patch" of type "application/octet-stream" (3937 bytes)
+
+Download attachment "xsa178-unstable/0002-libxl-Do-not-trust-backend-in-libxl__device_exists.patch" of type "application/octet-stream" (1054 bytes)
+
+Download attachment "xsa178-unstable/0003-libxl-Do-not-trust-backend-for-vtpm-in-getinfo-excep.patch" of type "application/octet-stream" (1980 bytes)
+
+Download attachment "xsa178-unstable/0004-libxl-Do-not-trust-backend-for-vtpm-in-getinfo-uuid.patch" of type "application/octet-stream" (1835 bytes)
+
+Download attachment "xsa178-unstable/0005-libxl-cdrom-eject-and-insert-write-to-libxl.patch" of type "application/octet-stream" (2645 bytes)
+
+Download attachment "xsa178-unstable/0006-libxl-Do-not-trust-backend-for-disk-eject-vdev.patch" of type "application/octet-stream" (2593 bytes)
+
+Download attachment "xsa178-unstable/0007-libxl-Do-not-trust-backend-for-disk-fix-driver-domai.patch" of type "application/octet-stream" (10993 bytes)
+
+Download attachment "xsa178-unstable/0008-libxl-Do-not-trust-backend-for-disk-in-getinfo.patch" of type "application/octet-stream" (1383 bytes)
+
+Download attachment "xsa178-unstable/0009-libxl-Do-not-trust-backend-for-cdrom-insert.patch" of type "application/octet-stream" (3778 bytes)
+
+Download attachment "xsa178-unstable/0010-libxl-Do-not-trust-backend-for-channel-in-getinfo.patch" of type "application/octet-stream" (1633 bytes)
+
+Download attachment "xsa178-unstable/0011-libxl-Rename-libxl__device_-nic-channel-_from_xs_be-.patch" of type "application/octet-stream" (3137 bytes)
+
+Download attachment "xsa178-unstable/0012-libxl-Rename-READ_BACKEND-to-READ_LIBXLDEV.patch" of type "application/octet-stream" (4021 bytes)
+
+Download attachment "xsa178-unstable/0013-libxl-Have-READ_LIBXLDEV-use-libxl_path-rather-than-.patch" of type "application/octet-stream" (2377 bytes)
+
+Download attachment "xsa178-unstable/0014-libxl-Do-not-trust-backend-in-nic-getinfo.patch" of type "application/octet-stream" (1261 bytes)
+
+Download attachment "xsa178-unstable/0015-libxl-Do-not-trust-backend-for-nic-in-devid_to_devic.patch" of type "application/octet-stream" (1581 bytes)
+
+Download attachment "xsa178-unstable/0016-libxl-Do-not-trust-backend-for-nic-in-list.patch" of type "application/octet-stream" (3000 bytes)
+
+Download attachment "xsa178-unstable/0017-libxl-Do-not-trust-backend-in-channel-list.patch" of type "application/octet-stream" (2228 bytes)
+
+Download attachment "xsa178-unstable/0018-libxl-Do-not-trust-backend-for-vusb.patch" of type "application/octet-stream" (2312 bytes)
