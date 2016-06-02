@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1380" "Wednesday" "1" "November" "2017" "22:35:59" "+0100" "Florent Rougon" "f.rougon@free.fr" "<87o9ol4r7k.fsf@frougon.crabdance.com>" "39" "Re: [oss-security] Re: Fw: Security risk of vim swap files" "^Date:" nil nil "11" "2017110121:35:59" "[oss-security] Re: Fw: Security risk of vim swap files" (number mark "        f.rougon@fre Nov  1   39/1380  " thread-indent "\"Re: [oss-security] Re: Fw: Security risk of vim swap files\"\n") "<32e60988-4ab4-fe39-9d94-5f3453eb50b0@orlitzky.com>" ("<e7a2d0fa-bb31-7320-44ba-47652bcfba47@Z5T1.com>" "<32e60988-4ab4-fe39-9d94-5f3453eb50b0@orlitzky.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1736" "Thursday" "2" "June" "2016" "17:47:46" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160602214746.6F1FE8BC0C8@smtpvmsrv1.mitre.org>" "49" "[oss-security] Re: CVE request: DoS in multiple versions of GraphicsMagick" nil nil nil "6" "2016060221:47:46" "[oss-security] Re: CVE request: DoS in multiple versions of GraphicsMagick" (number mark "U       cve-assign@m Jun  2   49/1736  " thread-indent "\"[oss-security] Re: CVE request: DoS in multiple versions of GraphicsMagick\"\n") "<CACn5sdRjA1Vma3em7z0xyuV87_iggAojuFMFZLWKnEFOHww3hg@mail.gmail.com>" ("<CACn5sdRjA1Vma3em7z0xyuV87_iggAojuFMFZLWKnEFOHww3hg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29756 invoked by uid 550); 2 Nov 2017 00:12:39 -0000
+Received: (qmail 1408 invoked by uid 550); 2 Jun 2016 21:47:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20283 invoked from network); 1 Nov 2017 21:36:10 -0000
-References: <e7a2d0fa-bb31-7320-44ba-47652bcfba47@Z5T1.com>
-	<32e60988-4ab4-fe39-9d94-5f3453eb50b0@orlitzky.com>
-Mail-Followup-To: oss-security@lists.openwall.com
-Message-ID: <87o9ol4r7k.fsf@frougon.crabdance.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Date: Wed, 01 Nov 2017 22:35:59 +0100
-From: Florent Rougon <f.rougon@free.fr>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Fw: Security risk of vim swap files
-To: oss-security@lists.openwall.com
+Received: (qmail 1389 invoked from network); 2 Jun 2016 21:47:58 -0000
+From: cve-assign@mitre.org
+To: gustavo.grieco@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CACn5sdRjA1Vma3em7z0xyuV87_iggAojuFMFZLWKnEFOHww3hg@mail.gmail.com>
+Message-Id: <20160602214746.6F1FE8BC0C8@smtpvmsrv1.mitre.org>
+Date: Thu,  2 Jun 2016 17:47:46 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: DoS in multiple versions of GraphicsMagick
 
-Michael Orlitzky <michael@orlitzky.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> This is what I used to do in emacs before I disabled the backups
-> completely. I was wondering if there were any problems with it. If there
-> aren't, it seems like a better default to me, for both emacs and vim.
+> We recently tested GraphicsMagick with our tool and found two issues that
+> causes DoS:
 
-On Emacs, this has been possible for a loooong time, and in a way that
-prevents collisions due to the same basename:
+> * Infinite loop caused by converting a circularly defined svg file.
 
-  (setq backup-directory-alist '(("." . "/some/path")))
+Use CVE-2016-5240.
 
-This saves backup files in /some/path with names such as
-'!home!me!some-subdir!some-basename~'.
+>> http://www.openwall.com/lists/oss-security/2016/05/01/6
 
-It's also possible to programmatically disable the backup feature for
-specific files:
+>> It is worth noting that ImageMagick's built-in SVG renderer has the 
+>> same problem with "circular.svg" (specify the input file name like 
+>> "msvg:circular.svg").
 
-  ;; For `some',
-  ;; cf. <http://stackoverflow.com/questions/5902847/how-do-i-apply-or-to-a-list-in-elisp>.
-  (require 'cl)
-  (defun my-backup-enable-predicate (fullpath)
-    (and (not (some #'(lambda (file)
-                         (string-equal fullpath (expand-file-name file)))
-                    '("~/.zsh_history"
-                      "~/.local/share/mc/history")))
-         (normal-backup-enable-predicate fullpath)))
+We feel that this ImageMagick issue is also within the scope of the
+CVE-2016-5240 ID.
 
-  (setq backup-enable-predicate 'my-backup-enable-predicate)
 
-Finally, an easier but non-programmatic solution when you can afford to
-write comments directly to the file: use “file variables”, e.g., with
-this at the beginning of the file you want to never be backed up:
+> * Arithmetic exception converting a svg file caused by a X%0 operation in
+> magick/render.c:3800
+> 
+>     (long) (y-fill_pattern->tile_info.y) % fill_pattern->rows,
 
--*- make-backup-files: nil -*-
+Use CVE-2016-5241.
 
-Regards
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
--- 
-Florent
+iQIcBAEBCAAGBQJXUKjzAAoJEHb/MwWLVhi2VZ8QAIIB/LpzpI+nMhnzoBeIwbwV
+lTDnRhiXdrSyGaCAa2bZSJLtYG+XmIW79T14CesmHxNXQSqHjE8Q/bcqrQUUW73U
+BewXqemI6q596Z7Oqs83u/pEAG8PqPrCnZsJ2olMm+2DbBRXiHMT3vy0UhRJB31z
+N/ez9h1IU/6VBVsViYG/S4KMEJZDxz14YQBn17JiV7JlvTsZ0xRpm8rmPX1r/FOU
+CBnc9JI52byeF1iiWbMjW01C2izy52oCiC4DVH6NXDTmN8umMqr9yDzznn3ZwHWC
+eKAjuv4i8pEhM7slR+iuzbPfo75AoeG0QSUIMv6c7Jcwo7G35WnSdPXYc9mPcCTs
+yoG7PaKl2Zy3axly2IbEx/cr/U3ht8qf3SlnbiVpcGl9kjY24CiNwZ4Dsv5yXQiZ
+zb/dWF+BijpvGWkQVsHSnFAbKBSVma7MALD08l99DLo0ZliKBBkypLPiGYno2bW0
+MlOwDtAbWcUZI/kK/EhvFHhzEe9lyV+qItDrqzyusbp6PNN/FRThbW0D+S0TQiEr
+sL9pIeu9aYoi5df9CqLYCSKfQgysSdN8L+/I+ggt3jO9MbQbAcXXvdH9Pb2eVgvm
+qXdW0iVfb5TLMbSEYmDOBAsXqKWXHg3VOVp0XbUwVCGtIRVbr3T91CZnL1aocAVp
+Uh6pny8WNsV2FRwJ2f8L
+=UjQN
+-----END PGP SIGNATURE-----
