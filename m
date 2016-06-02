@@ -1,59 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/19/7
-Message-ID: <1975740.FIEDfIgEBD@arcadia>
-Date: Sat, 19 Nov 2016 17:18:26 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/02/1
+Message-ID: <76fe8eab-0a51-792e-b8d1-c566717f1e66@gmail.com>
+Date: Wed, 1 Jun 2016 17:25:02 -0700
+From: morgan fainberg <morgan.fainberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: imagemagick: null pointer must never be null (tiff.c)
+Subject: [OSSA-2016-008] Incorrect Audit IDs in Keystone Fernet Tokens can result in revocation bypass (CVE-2016-4911)
 Content-Type: text/plain; charset=utf-8
 
-If suitable for a CVE please assign one. Thanks.
+============================================================================================
+OSSA-2016-008: Incorrect Audit IDs in Keystone Fernet Tokens can result in revocation bypass
+============================================================================================
 
-Description:
-imagemagick is a software suite to create, edit, compose, or convert bitmap 
-images.
+:Date: May 23, 2016
+:CVE: CVE-2016-4911
 
-A fuzz on an updated version with the undefined behavior sanitizer enabled, 
-revealed a null pointer which is declared to never be null.
 
-The complete UBSan output:
+Affects
+~~~~~~~
+- Keystone: ==9.0.0
 
-# identify $FILE
-coders/tiff.c:655:39: runtime error: null pointer passed as argument 2, which 
-is declared to never be null
-MagickCore/string_.h:76:23: note: nonnull attribute specified here
 
-Affected version:
-7.0.3.6
+Description
+~~~~~~~~~~~
+Lance Bragstad (Rackspace) reported a vulnerability in the Keystone
+Fernet Token Provider. By rescoping a token a user will receive a new
+token without correct audit_ids, these incorrect audit_ids will
+prevent the entire chain of tokens from being revoked properly. This
+vulnerability does not impact revoking a token by its individual
+audit_id. Only deployments with Keystone configured to use Fernet
+tokens are impacted.
 
-Fixed version:
-7.0.3.7
 
-Commit fix:
-https://github.com/ImageMagick/ImageMagick/commit/b61d35eaccc0a7ddeff8a1c3abfcd0a43ccf210b
+Patches
+~~~~~~~
+- https://review.openstack.org/#/c/312582/ (Mitaka)
+- https://review.openstack.org/#/c/311886/ (Newton)
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
 
-CVE:
-N/A
+Credits
+~~~~~~~
+- Lance Bragstad from Rackspace (CVE-2016-4911)
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00049-imagemagick-pointernerverbenull
 
-Timeline:
-2016-11-09: bug discovered and reported to upstream
-2016-11-09: upstream released a patch
-2016-11-15: upstream released 7.0.3.7
-2016-11-19: blog post about the issue
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/bugs/1577558
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4911
 
-Note:
-This bug was found with American Fuzzy Lop.
 
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/19/imagemagick-null-pointer-must-never-be-null-tiff-c
+Notes
+~~~~~
+- This fix was included in the openstack/keystone 9.0.1 (mitaka) release.
+
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Morgan Fainberg
+OpenStack Vulnerability Management Team
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
