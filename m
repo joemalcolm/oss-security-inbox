@@ -1,52 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/12/10
-Message-Id: <20160512152749.88F6A6C0689@smtpvmsrv1.mitre.org>
-Date: Thu, 12 May 2016 11:27:49 -0400 (EDT)
-From: cve-assign@...re.org
-To: marco.gra@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel bpf related UAF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/02/5
+Message-ID: <20160602103328.GA6618@layer-acht.org>
+Date: Thu, 2 Jun 2016 10:33:28 +0000
+From: Holger Levsen <holger@...er-acht.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: mat doesn't remove metadata in embedded images in PDFs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> the following reproducer will cause a UAF of a previously allocated memory
-> in bpf.
-> 
-> You can reproduce with linux kernel master, or 4.6-rc6 4.6-rc7 and maybe
-> other kernel versions.
+https://digitalcourage.de/blog/2016/using-tails-be-careful-embedded-metadata
+explains how mat fails to do what it's supposed to do, namely removing
+embedded meta data. The bug is that it doesnt remove metadata from images
+embedded in PDFs (while it does remove metadata from PDFs and from
+images…)
 
-> int main(int argc, char **argv)
-> ...
-> r[0] = syscall(SYS_mmap, ...
-> ...
-> r[5] = syscall(SYS_bpf, ...
+So basically the core feature of mat is partly broken :/ So I think this
+warrants a CVE as IMHO this ain't just a missing feature and folks on
+the #debian-security IRC channel agreed.
 
-Use CVE-2016-4794. (We did not run any tests, or look for other
-information, to investigate whether the same reproducer or a similar
-reproducer affects any kernel version that's considered stable or
-longterm.)
+This issue is being tracked by it's developers as
+https://labs.riseup.net/code/issues/11067 and in Debian as
+https://bugs.debian.org/826101 and affects all versions of mat and is
+not fixed anywhere yet.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Could a CVE please be assigned to this issue?
+ 
+Also I wonder if similar bugs happen with other recursive formats, like an
+OpenDocument text embedding an image or embedding a pdf embedding an
+image or a zip file containing a zip file containing a .odt file
+containing an pdf containing an image…
 
-iQIcBAEBCAAGBQJXNKCMAAoJEHb/MwWLVhi2g8QP/3vBTsa8xuk8NWYWsv3jwNGu
-Ugpl+hUdkQHW4aFzxx96nePBPZpfVeNCGRMdtlCcKVb9wFNUSbRwDPBHFXrfKz9R
-KVf9VHi4CMcBlvPS0MvGZg52SQPAAO7O7cCWpEAdhyxW2gPPxKYo98x4xNuNVlWx
-POD/dVK9ll261g6W+CUSYPtwJgIrPSddnnNCUvbB+XIvV87MGSLp+nE6h8I3L2Yp
-ZisKaT6z6aHqqC0bcySk6V04UlbkfL83eahAz5bWvZeywUEjYvN+kOUlgR8TOxLC
-8bIQ28Q043XM3VC853rhPQqe5enV6KDRrLgDu1paeFdKYcaHjGkHvkwjRfxjJZIC
-EsNdEl2vGjB1iGTUnFiUep9BteZBRrwfmaTE1yAseaUjEAx/3UK85PpTEqmNkON6
-1HCInP0LOeZMcggVzBKgRKCXKJZiInxEtSBXhxnPGgxagkOD7enw86gWflSqz3ca
-wdRm/oADgCrQk6CsSGgusCouSyndC/T6ZRCa2/7vCecm2BBi8gxRuT4TZem3A6Ij
-x+zfK7QaMDtELPGL+/rVOSgVCTaihz7oGeBKzqJeuyAv7zN0LxYoNlBsmsoBSTYJ
-Uftvf0T7JTR3AQd1+tB2kOnyGOW4jSCNu66xNifR29j1C7jvKB0+uh891s/3mkzo
-Wttcn/XLKpzXFWtN+mjb
-=DWFZ
------END PGP SIGNATURE-----
+
+-- 
+thanks,
+	Holger (not subscribed to the list, please cc: me on replies.)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (812 bytes)
