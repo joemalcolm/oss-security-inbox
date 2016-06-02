@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3619" "Thursday" "14" "September" "2017" "07:02:19" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<250752.937604801-sendEmail@localhost>" "100" "[oss-security] mp3gain: stack-based buffer overflow in dct36 (mpglibDBL/layer3.c)" nil nil nil "9" "2017091407:02:19" "[oss-security] mp3gain: stack-based buffer overflow in dct36 (mpglibDBL/layer3.c)" (number mark "U       ago@gentoo.o Sep 14  100/3619  " thread-indent "\"[oss-security] mp3gain: stack-based buffer overflow in dct36 (mpglibDBL/layer3.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2410" "Thursday" "2" "June" "2016" "12:11:23" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160602161123.78CDA6C028A@smtpvmsrv1.mitre.org>" "60" "[oss-security] Re: CVE Request Qemu: scsi: esp: OOB write when using non-DMA mode in get_cmd" "^Cc:" nil nil "6" "2016060216:11:23" "[oss-security] Re: CVE Request Qemu: scsi: esp: OOB write when using non-DMA mode in get_cmd" (number mark "U       cve-assign@m Jun  2   60/2410  " thread-indent "\"[oss-security] Re: CVE Request Qemu: scsi: esp: OOB write when using non-DMA mode in get_cmd\"\n") "<alpine.LFD.2.20.1606021054530.24989@wniryva>" ("<alpine.LFD.2.20.1606021054530.24989@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18193 invoked by uid 550); 14 Sep 2017 07:02:36 -0000
+Received: (qmail 26105 invoked by uid 550); 2 Jun 2016 16:11:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,113 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 26085 invoked from network); 2 Jun 2016 16:11:35 -0000
+In-Reply-To: <alpine.LFD.2.20.1606021054530.24989@wniryva>
+Message-Id: <20160602161123.78CDA6C028A@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn
+Date: Thu,  2 Jun 2016 12:11:23 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18127 invoked from network); 14 Sep 2017 07:02:35 -0000
-Message-ID: <250752.937604801-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Thu, 14 Sep 2017 07:02:19 +0000
-MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-783937.435903685"
-Subject: [oss-security] mp3gain: stack-based buffer overflow in dct36 (mpglibDBL/layer3.c)
+Subject: [oss-security] Re: CVE Request Qemu: scsi: esp: OOB write when using non-DMA mode in get_cmd
+To: ppandit@redhat.com
 
-------MIME delimiter for sendEmail-783937.435903685
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Description:
-mp3gain is a program to analyze and adjust MP3 files to same volume.
+> Quick Emulator(Qemu) built with the ESP/NCR53C9x controller emulation support
+> is vulnerable to an OOB write access issue. The controller uses 16-byte FIFO
+> buffer for command and information transfer. The OOB write occurs while
+> reading from information transfer buffer via non-DMA mode in routine
+> get_cmd().
+> 
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> resulting in DoS.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1341931
+> https://lists.gnu.org/archive/html/qemu-devel/2016-06/msg00150.html
 
-The fuzz was done via the aacgain command-line tool which uses mp3gain which bundles an old-modified version of mpg123 called mpglibDBL.
-The upstream project seems to be dead, so the issue wasn’t communicated to them.
+>> Add check to validate command length against buffer size to avoid any
+>> overrun.
 
-The complete ASan output of the issue:
+Use CVE-2016-5238.
 
-# aacgain -f $FILE
-==13869==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7fa590d1b958 at pc 0x0000008b2341 bp 0x7ffc23c02b70 sp 0x7ffc23c02b68
-READ of size 8 at 0x7fa590d1b958 thread T0
-    #0 0x8b2340 in dct36 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:1279
-    #1 0x8d26e6 in III_hybrid /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:1504
-    #2 0x8d26e6 in do_layer3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:1695
-    #3 0x8ac2f9 in decodeMP3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:643
-    #4 0x43e767 in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:2262
-    #5 0x7fa5937b1680 in __libc_start_main (/lib64/libc.so.6+0x20680)
-    #6 0x4426c8 in _start (/usr/bin/aacgain+0x4426c8)
+The scope of this CVE is the missing "dmalen > TI_BUFSZ" check in
+the get_cmd function. The scope of this CVE does not include the
+"At least the following patch is needed to ensure that ti_size always
+matches ti_rptr/ti_wptr" discussion.
 
-Address 0x7fa590d1b958 is located in stack of thread T0 at offset 18776 in frame
-    #0 0x4341ff in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:1411
-
-  This frame has 7 object(s):
-    [32, 33) 'maxgain'
-    [96, 97) 'mingain'
-    [160, 164) 'nprocsamp'
-    [224, 232) 'maxsample'
-    [288, 9504) 'lsamples'
-    [9536, 18752) 'rsamples'
-    [18784, 50704) 'mp' 0x0ff53219b720: 00 00 00 00 00 00 00 00 f2 f2 f2[f2]00 00 00 00
-  0x0ff53219b730: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ff53219b740: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ff53219b750: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ff53219b760: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ff53219b770: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==13869==ABORTING
-
-Affected version:
-1.5.2
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-14408
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00351-aacgain-stackoverflow-dct36
-
-Timeline:
-2017-08-28: bug discovered
-2017-09-08: blog post about the issue
-2017-09-13: CVE Assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/08/mp3gain-stack-based-buffer-overflow-in-dct36-mpglibdbllayer3-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/esp.c but
+that may be an expected place for a later update.
 
 
-------MIME delimiter for sendEmail-783937.435903685--
+>> In theory this shouldn't happen, but I agree that it is better to be
+>> defensive.
 
+We typically can still assign a CVE ID with that response. We cannot
+assign a CVE ID with a response of "there is no vulnerability but
+I'm accepting the defense-in-depth code change." Admittedly this is
+sometimes a difficult distinction.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXUFo9AAoJEHb/MwWLVhi2HgcP+wWpJhmbyE55xndbleU5kBUX
+MyF83fzuj/PhM5ShgCI3y+VPQ7GmabZ4ui03qIhQl8NGdO4JW8PD1rRYJJ0gouVW
+UCi6JXQLQt8nlOQ0g4ROKTyONiKt5kc+9y6NoDZO16v7gd8gPFkoF6Z7JGOoizTA
+7Si/nCVB5XPWyRG8eEYNyxEXKxq6bdKvWlSYkwIHNDR9bWjCCy915vg/VyIjG9td
+thbASw7Ocem811eH79h7E5prm1MBb4Dmjlgbw/1TPeAvbVRki+KFqbdG1UVe0nJk
+6DD+TfyNrk4DERuzN97XTaltz7s+lyNWhObLuDHrhmQV8DNYiPz63wP45QVD3vff
+kjw8xnmuGhAyWhBenWBaUJ2HPFTJoXob5+Knvdo6JWH5Y8ES8Ob9gBbaKRnKhs6u
+dM/Kdht9A1DCHG0+QKCYlT8GfERutCPgjejyGxhBauRTnPztxTTr6/3G0BOkU3j9
+s1gUkWjk2SONM2mtnFa0Kd3ZU+qE+9k9EoBf4DZnRY+BnBfd/Nq2j78vTQiIrBOn
+oT42usKfbCKFiixbJKH2pVsreherp+eau4UirjoksIbftCIeCiWA90wfi0Dhoi3P
+ydwB2X0Eh9Jy1IN9Pu/sc5IrA7sMMHTRByomyxYcZmu1oOAoOTH7qmNBYSxrKA1Z
+DB5KI7w/WY+cLrwaUhxv
+=kY8R
+-----END PGP SIGNATURE-----
