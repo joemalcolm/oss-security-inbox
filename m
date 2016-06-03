@@ -1,4 +1,9 @@
-Received: (qmail 7179 invoked by uid 550); 21 Mar 2026 18:00:29 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1050" "Friday" "3" "June" "2016" "21:31:04" "+0200" "Sebastian Pipping" "sebastian@pipping.org" "<5751DAF8.6060901@pipping.org>" "41" "Re: [oss-security] expat hash collision fix too predictable?" "^Date:" nil nil "6" "2016060319:31:04" "[oss-security] expat hash collision fix too predictable?" (number mark "        sebastian@pi Jun  3   41/1050  " thread-indent "\"Re: [oss-security] expat hash collision fix too predictable?\"\n") "<20120405093027.GB18070@suse.de>" ("<20120405093027.GB18070@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 19955 invoked by uid 550); 3 Jun 2016 19:31:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,36 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 19935 invoked from network); 3 Jun 2016 19:31:16 -0000
+References: <20120405093027.GB18070@suse.de>
+X-Enigmail-Draft-Status: N1110
+Message-ID: <5751DAF8.6060901@pipping.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.1
+MIME-Version: 1.0
+In-Reply-To: <20120405093027.GB18070@suse.de>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: aGFydHdvcmtAYmluZXJhLmRl
+Date: Fri, 3 Jun 2016 21:31:04 +0200
+From: Sebastian Pipping <sebastian@pipping.org>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5483 invoked from network); 21 Mar 2026 18:00:17 -0000
-Date: Sat, 21 Mar 2026 19:00:13 +0100
-From: Solar Designer <solar@openwall.com>
+Subject: Re: [oss-security] expat hash collision fix too predictable?
 To: oss-security@lists.openwall.com
-Message-ID: <20260321180013.GA20708@openwall.com>
-References: <9164016d-f642-4ceb-bde8-03e09303e038@oracle.com> <37aacb54-8bcf-4b7e-a747-6ff3ec8143c5@oracle.com> <031BCE73-BDEB-4D18-9EFD-8F3180E8527D.1@smtp-inbound1.duck.com> <EEDF7B9C-89E2-4544-A33D-DBF2B0FED6E0.1@smtp-inbound1.duck.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <EEDF7B9C-89E2-4544-A33D-DBF2B0FED6E0.1@smtp-inbound1.duck.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Buffer overflow in /bin/su from UNIX v4
 
-On Sat, Mar 21, 2026 at 01:13:47PM -0400, kf503bla@duck.com wrote:
-> why assign cve to something irrelvent?
+Hi!
 
-I guess because (ir)relevance isn't among criteria for (not) assigning a
-CVE, and because there may be value in having a non-ambiguous way to
-refer to historical vulnerabilities for illustration of how the current
-ones fit in historical context.
 
-That said, I'm sure there are other cases of historical vulnerabilities
-that never got CVEs.  Some were known prior to the CVE program start, so
-would need CVEs from before 1999.  I think there's some value in that,
-but it would be a change.  CVEs were not assigned for pre-1999 findings
-so far.
+On 05.04.2012 11:30, Marcus Meissner wrote:
+> Hi,
+> 
+> while reviewing a expat regression (likely caused by the hash collision denial of service fix, but unclear)
+> i stumbled about the randomness it uses.
+> 
+> 	static unsigned long
+> 	generate_hash_secret_salt(void)
+> 	{
+> 	  unsigned int seed = time(NULL) % UINT_MAX;
+> 	  srand(seed);
+> 	  return rand();
+> 	}
+> 
+> and it is seeded once at parser object creation.
+> 
+> This is better than not seeding, but I am not sure if it is sufficient.
+> 
+> Ciao, Marcus
+> 
 
-The 2025 in this CVE is almost certainly wrong, but I understand that no
-one had the resources to figure out the year it was first discovered.
+Please excuse bumping this thread.  It think it may need another CVE:
 
-Alexander
+The call to srand(3) can reduce the security of the calling application,
+depending on what it is doing with srand(3)/random(3).  This behavior is
+recognized as a bug by Fedora, too
+(https://bugzilla.redhat.com/show_bug.cgi?id=1197087).
+
+There are multiple related commits in Expat's Git repository.  I am
+happy to extract a single to-the-point patch for your version of Expat
+and operating system platform from that for you, if needed.
+
+Best
+
+
+
+Sebastian
+
