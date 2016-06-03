@@ -1,4 +1,9 @@
-Received: (qmail 17915 invoked by uid 550); 27 Oct 2025 22:18:45 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1474" "Friday" "3" "June" "2016" "11:11:58" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160603151158.0CB287BC0B2@smtpvmsrv1.mitre.org>" "36" "[oss-security] Re: CVE Request: rds: fix an infoleak in rds_inc_info_copy" nil nil nil "6" "2016060315:11:58" "[oss-security] Re: CVE Request: rds: fix an infoleak in rds_inc_info_copy" (number mark "U       cve-assign@m Jun  3   36/1474  " thread-indent "\"[oss-security] Re: CVE Request: rds: fix an infoleak in rds_inc_info_copy\"\n") "<CABEk9YwUfe0s1iWLqyfVOv6=NA-PBnaSGMhL-DnVX9LbV5DENA@mail.gmail.com>" ("<CABEk9YwUfe0s1iWLqyfVOv6=NA-PBnaSGMhL-DnVX9LbV5DENA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 2036 invoked by uid 550); 3 Jun 2016 15:12:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,93 +12,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 17890 invoked from network); 27 Oct 2025 22:18:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761603516; x=1762208316; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=dizsOqB2jtOvWktY8PSrkkRb+1/L6v2d8uDg6UD8/TU=;
-        b=aplSaKl5NWOIg5fYLC+496A+H5V4gDAIqwDRwrhebiLGZ7ExUYBoG5nnqMVPNMxala
-         iOe6ZLYCU31vgSaQq9A6DqPqiLN8D2eo8xSBTBW29CUslu3DXrTrcKUhZmZ+BqcCeDP0
-         /BWLlWj7c8GZEVRwRqJn1MlYuJFiUQ4jM7Qy90nH3PA5C98bEj+uLn2WRR3AmEIOmJs5
-         PMrim52w3+EqFXobhVTyW4ytqRIFZb7CKxZsJcenCuSzXqYwHCEOdEI5KK7eZUtmBM4w
-         g2yPILI6sqbb6btInbJPdjKu2pigpkShdGqb82ymU81j1GlwkRvfUlbO5in2xr3K1fQu
-         ZbFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761603516; x=1762208316;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dizsOqB2jtOvWktY8PSrkkRb+1/L6v2d8uDg6UD8/TU=;
-        b=bLLoINxPFRDTcl48Nw0aqlNPZOctrXOfHrlbI+aGYHjtyCdaRFI1D6hF6SvPJvNNCx
-         VQyexeRmCFQaiAoRxj9ui029v/uU6KKQDic8fKD8rxKtcKkEKRENxVBu1AgN6SffWm4L
-         JZel7FKuVMBbceJCJyMzi4upJOGd2s3VIZLtM9TSPSCE2YlKaACojJVCRNEYi15eruyH
-         eE6HMvGJlLYB4sQuD+A3tHPbxDWCjdMrT0/6uki2WsK4sYBx2excSlCPVqHjRwcFXtki
-         8Lw6MkObeFjGRAS+Z3MT6CPo7fVZsRS/wnTZ2KhigIXEHHB9S9/+h8k+7Hy+9q+G4Su9
-         +sYg==
-X-Gm-Message-State: AOJu0YyH+afrePQQ1LrTRnQSU2IFG8F8bApvy+iSvp+0uDTIfySp4lrD
-	JXM7b6EGscRh3BpOyYqx5fr749iasjcAWI8bIDXdZiE0QivHksaRqyxjTafa2t/U
-X-Gm-Gg: ASbGnct/Xp9GfP6nhrng6LJCvwYOYj46oTddI5lmhzNDdFm2680M1YD25acP+cNdd++
-	DQvIIwuRuAn4EXT7c+k7ZgskeNZDqe+EnWswJmZq18rlPzgR9/o5T9IBijGku+b+UxCAcb9h4Xc
-	ykt/9vuDXTvZG6uzH8mpauwwBTok/VCTFUQ0KSuJlqPMwbkW4D8NDjLEaDZQlLlxoICIfmX3rm4
-	ShF6oE+1U1dOj+w8O709vGD5RiwstrOKFLylSoks8bqVsHH2/eyL2zZD39kt5utreFVf6hMQw/d
-	WzKa+O120wXOhcHiBK4UumvORHXYnua16sxiuGDZF9NxM1clweBt90QgndQ9lRr9HjKXXIxKAhF
-	Fp21ADR7zZhGhBox2XBBP9VigeLIpzPdEXEsNbo9/iCn5AJBSNAz1QkIXnyoYtHldZTw/tt2IGQ
-	51x/9aEmwsx8dRp0FffLVtYgGaCLKZeGaZ/tbIILFmXAE842S5vsGh0g==
-X-Google-Smtp-Source: AGHT+IG67Na3Tp1mlBKbHKkS50yZ7okP2tQ4v4vJ0Al/9IbK3EU8obZdoQZGZgAAEpXSt+USqXwKsA==
-X-Received: by 2002:a05:6a20:2583:b0:2af:65aa:4eef with SMTP id adf61e73a8af0-344d441fe3emr1260924637.47.1761603515785;
-        Mon, 27 Oct 2025 15:18:35 -0700 (PDT)
-Message-ID: <cf80acf8-29a3-4da9-a4a5-9dc11f4aa142@gmail.com>
-Date: Mon, 27 Oct 2025 15:18:34 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com
-References: <2ccbcc13-fc25-484c-a34d-56f27ac87db7@oracle.com>
- <aP-rxft9ra58z9EZ@yuggoth.org>
- <CA+qj4S-=TtjPN5Us5tva1TUo7a2MJKzpXweiQCM=QLMwcq5Xjw@mail.gmail.com>
- <6c9a4094-6af3-4aa3-940d-0d19505da3b1@pipping.org>
- <aP_L7mY0OXB2iDmk@symphytum.spacehopper.org>
- <9eefb12f-5de8-4638-a4e8-b0c309e81cec@pipping.org>
-Content-Language: en-US
-From: Matthew Fernandez <matthew.fernandez@gmail.com>
-In-Reply-To: <9eefb12f-5de8-4638-a4e8-b0c309e81cec@pipping.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] Questionable CVE's reported against dnsmasq
+Received: (qmail 2018 invoked from network); 3 Jun 2016 15:12:40 -0000
+From: cve-assign@mitre.org
+To: kangjielu@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, taesoo@gatech.edu, csong84@gatech.edu
+In-Reply-To: <CABEk9YwUfe0s1iWLqyfVOv6=NA-PBnaSGMhL-DnVX9LbV5DENA@mail.gmail.com>
+Message-Id: <20160603151158.0CB287BC0B2@smtpvmsrv1.mitre.org>
+Date: Fri,  3 Jun 2016 11:11:58 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: rds: fix an infoleak in rds_inc_info_copy
 
-Hi Sebastian,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On 10/27/25 13:40, Sebastian Pipping wrote:
-> Hello Stuart,
+> There was an infoleak vulnerability in function
+> rds_inc_info_copy of file net/rds/recv.c.
+> The last field "flags" of object "minfo" is not initialized.
+> Copying this object out may leak kernel stack data.
+> Assign 0 to it to avoid leak.
 > 
-> 
-> On 10/27/25 20:45, Stuart Henderson wrote:
->> On 2025/10/27 19:51, Sebastian Pipping wrote:
->>> Also, fixes without a CVE will not be backported downstream.
->>
->> That depends on the downstream.
-> 
-> I'm happy to learn which downstreams backport security issues
-> without a CVE, in practice. Do you have an example or two?
+> https://patchwork.ozlabs.org/patch/629110/
+> https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=4116def2337991b39919f3b448326e21c40e0dbb
 
-E.g. the Graphviz 2.40.1-3 update in Debian¹ appears to have cherry 
-picked bd97cff688f7a7b85b6f1262e14eb1cac0862fcd² that went into upstream 
-release 2.42.0. AFAIK the underlying issue never received a CVE.
+Use CVE-2016-5244.
 
-Speaking as one of the upstream maintainers, there seems very little 
-logic to me as to which Graphviz patches get backported and which do 
-not. I suspect it is just whatever users file requests for.³ Ubuntu has 
-also started carrying some modified versions of Graphviz components 
-under the category “Ubuntu Pro”. The changes there seem to be 
-exclusively backported CVE fixes, so this supports the point that CVEs 
-carry some weight. OTOH as the Graphviz project is not a CNA nor 
-requests CVEs, the actual CVEs against Graphviz are just an arbitrary 
-subset of bugs fixed, so not really a useful thing to index on.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-¹ Scroll down in 
-https://metadata.ftp-master.debian.org/changelogs//main/g/graphviz/graphviz_2.42.4-3_changelog
-² 
-https://gitlab.com/graphviz/graphviz/-/commit/bd97cff688f7a7b85b6f1262e14eb1cac0862fcd
-³ E.g. https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1075904
+iQIcBAEBCAAGBQJXUZw/AAoJEHb/MwWLVhi2aiUP/07OBwM0MtVy/t1KcZL8v7DD
+vIAzXg1kSR91f+gtrWhJCblBVwd86MnuLFxEersj7sVhNi+Cxt+LS952cCdXvjqu
+ELT1u3iZyOfW2h5kUrZIQKJgPggdbEikR6dRl+rsd/qAIzFvdqE0PFxXU1EIfkHi
+lKYdwS8X/Tnw3mo2D5pMXa3K1dIbq5XZZNIvvlYD/owgzu6z9k9eRmwDe+HRZOIW
+euBGQ/Wx1gD3/DfNot0rXguVP9C43079FVCrr8LIcQh2ogszb4coYIU2+KYObbbk
++ZrOXkHY+n6B2sy2kirqoN01G8YThfc7Hcl9qsYB2ZuaHJdCMRAgP/nhY8kgytDF
+ivIqbx01dJQ+ce+T/J9hjkWNE8FN5QvcLAypZcVRsHC/fuue1GUD0jQpGLbSJUBY
+GoQ1pPiz7aojimx41dh0hGO2N0WQyzujo5OLCiHi2IQ+Mv/9Qtduh+2wfRxGMjWU
+ydLveWg4kj2Ao2eqn/j6XOpSu6vE1fB1qX8+VBRO+o44g2p8Y7nM0MskYhZ3ayAY
+sy/nuBTBO4W0Q+xwjh1bIJkC1KraLYXPoHdhmviWIAd95xO5+5Uqy6jtwTjiATQx
+wCFEB0e+zqHF+XJJfYk9oBb4H/jzpZvJdl5xMtHT+nLuDYz3kmL5InTGBufRD6p2
+eyF4kMXone5kZVbr/kTB
+=O3Ht
+-----END PGP SIGNATURE-----
