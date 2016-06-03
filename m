@@ -1,98 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/06/8
-Message-ID: <CAMWaY3N67=JovC3e4-9AvA7fiRXtMprqRfOxhxerLHdjDj0VKQ@mail.gmail.com>
-Date: Wed, 6 Jan 2016 14:40:22 +0530
-From: CSW Research Lab <disclose@...ersecurityworks.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/03/8
+Message-ID: <5751DAF8.6060901@pipping.org>
+Date: Fri, 3 Jun 2016 21:31:04 +0200
+From: Sebastian Pipping <sebastian@...ping.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Cross Site Scripting (XSS) & Cross Site Request Forgery (CSRF) in Crony Cronjob Manager Version 0.4.4
+Subject: Re: expat hash collision fix too predictable?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-Please assign CVE as appropriate. Thanks for your valuable time & effort
-taken.
-
-Details
-================
-# Title : Cross Site Scripting (XSS) & Cross Site Request Forgery (CSRF) in
-Crony Cronjob Manager Version 0.4.4
-# Affected Product :  Crony Cronjob Manager Wordpress plugin Version 0.4.4
-# Vendor Homepage : https://wordpress.org/plugins/crony/developers/
-# Vulnerability Type :  Cross Site Scripting (XSS) & Cross Site Request
-Forgery (CSRF)
-# Risk :  High
-# POC URL               :
-https://github.com/cybersecurityworks/Disclosed/issues/9
-# Video URL : https://www.youtube.com/watch?v=MY5l91pX-tY
-# Status : Fixed
-# CVE                      : not assigned
-
-Description
-================
-By exploiting a Cross-site scripting vulnerability along with Cross Site
-Request forgery will gives an easy access to an attacker for hijacking a
-logged in user’s session by stealing cookies. This means that the malicious
-hacker can change the logged in user’s password and invalidate the session
-of the victim while the hacker maintains access.
-
-Technical Details
-================
-
-   1. Logon into any wordpress application (attacker)
-   2. Click to “Add new cronjob” in Crony Cronjob Manager Version 0.4.4
-   Plugin and capture the request in intercepting proxy.
-   3. Now, Generate a CSRF Request with attacker logged in account.
-   4. Modify the request with the code you required to get executed in
-   victim’s browser.
-   5. Enter the value for the name variable with “XSS&CSRF” and add any
-   scripts, malicious code or payload.
-   6. Here, its <script>alert(‘Vulnerable2CSRF&XSS’)</script> which an
-   attacker wants to get executed in victim’s browser and sends the link to
-   victim.
-   7. Now, once the victim opens the link in the user logged in browser.
-   Then, immediately the added XSS payload will be executed whenever we review
-   it.
+Hi!
 
 
-Advisory Timeline
-================
+On 05.04.2012 11:30, Marcus Meissner wrote:
+> Hi,
+> 
+> while reviewing a expat regression (likely caused by the hash collision denial of service fix, but unclear)
+> i stumbled about the randomness it uses.
+> 
+> 	static unsigned long
+> 	generate_hash_secret_salt(void)
+> 	{
+> 	  unsigned int seed = time(NULL) % UINT_MAX;
+> 	  srand(seed);
+> 	  return rand();
+> 	}
+> 
+> and it is seeded once at parser object creation.
+> 
+> This is better than not seeding, but I am not sure if it is sufficient.
+> 
+> Ciao, Marcus
+> 
 
-2015-08-28 – Discovered in Crony Cronjob Manager Version 0.4.4.
-2015-08-28 – Reported to plugins@...dpress.org & lol@...ttkclark.com
-2015-08-28 – lol@...ttkclark.com replied, "I'll check it out, thanks for
-the heads up."
-2015-08-28 – Requested for Advance CVE
-2015-09-08 – Another response from developer, "I'll be back into things
-tomorrow morning, will let you know once it's up."
-2015-09-27 – Issues fixed in version 0.4.6
-<https://wordpress.org/plugins/crony/changelog/>, developer responded.
-2015-11-30 - Issues were reported again. Since, not fixed in the released
-version (0.4.6)
-2015-12-09 - Developer responded.
-2016-01-04 - Fixed in version 0.4.7
-<https://downloads.wordpress.org/plugin/crony.0.4.7.zip> now.
+Please excuse bumping this thread.  It think it may need another CVE:
 
-Fix
-================
-https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)
-https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
+The call to srand(3) can reduce the security of the calling application,
+depending on what it is doing with srand(3)/random(3).  This behavior is
+recognized as a bug by Fedora, too
+(https://bugzilla.redhat.com/show_bug.cgi?id=1197087).
 
-Credits & Authors
-================
-sathish@...ersecurityworks.com from cybersecurityworks Pvt Ltd
-<http://www.cybersecurityworks.com/>
+There are multiple related commits in Expat's Git repository.  I am
+happy to extract a single to-the-point patch for your version of Expat
+and operating system platform from that for you, if needed.
 
-About Cybersecurityworks
-================
-Cybersecurity Works is basically an auditing company passionate working on
-findings & reporting security flaws & vulnerabilities on web application
-and network. As professionals, we handle each client differently based on
-their unique requirements. Visit our website
-<http://www.cybersecurityworks.com/> for more information.
+Best
 
--- 
-----------
-Cheers !!!
 
-Team CSW Research Lab <http://www.cybersecurityworks.com>
+
+Sebastian
 
