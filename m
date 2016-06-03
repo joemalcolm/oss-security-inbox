@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1739" "Monday" "4" "January" "2016" "07:57:06" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160104125706.727B93321D0@smtpvbsrv1.mitre.org>" "45" "[oss-security] Re: CVE request Qemu: net: ne2000: OOB r/w in ioport operations" nil nil nil "1" "2016010412:57:06" "[oss-security] Re: CVE request Qemu: net: ne2000: OOB r/w in ioport operations" (number mark "U       cve-assign@m Jan  4   45/1739  " thread-indent "\"[oss-security] Re: CVE request Qemu: net: ne2000: OOB r/w in ioport operations\"\n") "<alpine.LFD.2.20.1601041714500.15987@wniryva>" ("<alpine.LFD.2.20.1601041714500.15987@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6023" "Friday" "3" "June" "2016" "09:47:18" "+0000" "Xen.org security team" "security@xen.org" "<E1b8lhG-000336-Hz@xenbits.xenproject.org>" "148" "[oss-security] Xen Security Advisory 181 - arm: Host crash caused by VMID exhaustion" nil nil nil "6" "2016060309:47:18" "[oss-security] Xen Security Advisory 181 - arm: Host crash caused by VMID exhaustion" (number mark "U       security@xen Jun  3  148/6023  " thread-indent "\"[oss-security] Xen Security Advisory 181 - arm: Host crash caused by VMID exhaustion\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19872 invoked by uid 550); 4 Jan 2016 12:57:19 -0000
+Received: (qmail 5366 invoked by uid 550); 3 Jun 2016 09:47:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,57 +12,164 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19851 invoked from network); 4 Jan 2016 12:57:18 -0000
-From: cve-assign@mitre.org
-To: ppandit@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liuling-it@360.cn
-In-Reply-To: <alpine.LFD.2.20.1601041714500.15987@wniryva>
-Message-Id: <20160104125706.727B93321D0@smtpvbsrv1.mitre.org>
-Date: Mon,  4 Jan 2016 07:57:06 -0500 (EST)
-Subject: [oss-security] Re: CVE request Qemu: net: ne2000: OOB r/w in ioport operations
+Received: (qmail 5304 invoked from network); 3 Jun 2016 09:47:42 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.505 (Entity 5.505)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security@xen.org>
+Message-Id: <E1b8lhG-000336-Hz@xenbits.xenproject.org>
+Date: Fri, 03 Jun 2016 09:47:18 +0000
+Subject: [oss-security] Xen Security Advisory 181 - arm: Host crash caused by VMID exhaustion
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> Qemu emulator built with the NE2000 device emulation support is vulnerable to
-> an OOB r/w access issue. It could occur while performing 'ioport' r/w
-> operations.
-> 
-> A privileged(CAP_SYS_RAWIO) user/process could use this flaw to leak or
-> corrupt Qemu memory bytes(3).
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg00050.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1264929
+                    Xen Security Advisory XSA-181
 
-Use CVE-2015-8743.
+               arm: Host crash caused by VMID exhaustion
 
-This was already public in 2015 in, for example, the
-https://lists.gnu.org/archive/html/qemu-devel/2015-12/msg04863.html
-post.
+ISSUE DESCRIPTION
+=================
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/ne2000.c
-that may be an expected place for a later update.
+VMIDs are a finite hardware resource, and allocated as part of domain
+creation.  If no free VMIDs are available when trying to create a new domain,
+a bug in the error path causes a NULL pointer to be used, resulting in a Data
+Abort and host crash.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+IMPACT
+======
+
+Attempting to create too many concurrent domains causes a host crash rather
+than a graceful error.  A malicious device driver domain can hold references
+to domains, preventing its VMID being released.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 4.4 and later are affected.  Older Xen versions are unaffected.
+
+x86 systems are not affected.
+
+Only arm systems with less-privileged device driver domains can expose this
+vulnerability.
+
+MITIGATION
+==========
+
+There is no mitigation.  Not using driver domains reclassifies the problem,
+but does not fix it.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+The crash was discussed publicly on xen-devel, before it was appreciated
+that there was a security problem.
+
+CREDITS
+=======
+
+This issue was discovered by Aaron Cornelius of DornerWorks.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa181.patch           xen-unstable, Xen 4.6.x, 4.5.x
+xsa181-4.4.patch       Xen 4.4.x
+
+$ sha256sum xsa181*
+6756fcf44446675e5277f6d6c0e8a0aaa51a7909ad9a55af89a09367fded8733  xsa181.patch
+97a90c7cb42466647622cb2ed98de531b7ba2e174a1bc639a32a6f1b626d503f  xsa181-4.4.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBCAAGBQJWimuNAAoJEL54rhJi8gl5ltkP/i3MzYVDYPDAWO3bpbhIZtiZ
-rEwnrcHd3E4ObDpc1yPu3xYSRCIqeFykO6z8UWpXlQofa0FY9rPw11sSMFQ1mTWI
-eJu2flvwEQzjMj/LkPtq0diCObZPgrBdYtev63d+SbTM+vr5y3+aFlo4sD6wru3s
-WR2lbJQ3+tqo/Srguw3+7wfwk0VRKvaEUuPzVLaEW67vnovN1FCcNE/l8peeXh4y
-fwXYhdWsxfUycbzHfIm9BPPF9QiLU0HWtEGNe/vEm12RSjwo33M2qpuO7/FZbHZc
-jXgjVtYN5UpWHTJmkUU8f9XdgJ/5kBB7aWvHRwJs4WcZHvKQEtaVzARKVbhS5FoP
-6igGmgopIMBM0m5QvcWnEKBZQQ1FJtReWdlDN45I92AymX6qNntDJD0lg3qeyzte
-brSDk8+nr/EiP0P5+7vPIwYvaYrTpFeXJl4wvPjo05IahSpUegqWUBQblr6/zNxL
-gOFziozu6yE9UhrTOiCxLYkAhDUWvTsh30rbH8fvxDUxTeveJaUh8G06aIoOTGUu
-h1VTbSfURQYRmxdWQY4L+r1cvmIzdVpe/Cu1BypIUggT1B3nSlvFiXbxZMlTLu/v
-SVB6SgFHwBMAuwA/01BdAHvLCyWYdxdHsSRQkOC2Qr0FTMnRLwBEd9NoyMd6v9Y1
-5cK66VL09ZI7HupaiK+e
-=aw2o
+iQEcBAEBAgAGBQJXUVIbAAoJEIP+FMlX6CvZAe8IAIwe1A/05KM9PfJTCwb23WEs
+pfSiEZy7KzmavYwzV4TLwzWuCNzkRAuEejvQ9dTFnk8ZBkCZIbAaMoCPJljK/8gg
+oBcn0cXE9Kz9kWBk+JCWHynboVh010p+7DGlcvrxmAwxJCUjGy4YcajDZ4uGJoHA
+pgJxIk/w4CIzF+AQYm7bRW8dHF3yym4V6dmR4pGqXeYS41XbMqpEenGBggoBeH+C
+TJLUzaNZfATcPK5NUCqBD7IiQtHyYJT8xEtIKDH4hfjEzffydHbErDb/lKk3fxK0
+ECzrhdWMExnkUX4VkC393QaqGf78P6sa+psfZt4I7DDFDI2uEvXYmgVXjOuvSpg=
+=hUSO
 -----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa181.patch"
+Content-Disposition: attachment; filename="xsa181.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSBlZTQ4OGUyMTMzZTU4MTk2N2QxM2Q1Mjg3ZDdiZDY1NGU5YjJlMmE2
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBBbmRyZXcgQ29vcGVy
+IDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29tPgpEYXRlOiBUaHUsIDIgSnVu
+IDIwMTYgMTQ6MTk6MDAgKzAxMDAKU3ViamVjdDogW1BBVENIXSB4ZW4vYXJt
+OiBEb24ndCBmcmVlIHAybS0+cm9vdCBpbiBwMm1fdGVhcmRvd24oKSBiZWZv
+cmUgaXQgaGFzCiBiZWVuIGFsbG9jYXRlZAoKSWYgcDJtX2luaXQoKSBkaWRu
+J3QgY29tcGxldGUgc3VjY2Vzc2Z1bGx5LCAoZS5nLiBkdWUgdG8gVk1JRApl
+eGhhdXN0aW9uKSwgcDJtX3RlYXJkb3duKCkgaXMgY2FsbGVkIGFuZCB1bmNv
+bmRpdGlvbmFsbHkgdHJpZXMgdG8gZnJlZQpwMm0tPnJvb3QgYmVmb3JlIGl0
+IGhhcyBiZWVuIGFsbG9jYXRlZC4gIGZyZWVfZG9taGVhcF9wYWdlcygpIGRv
+ZXNuJ3QKdG9sZXJhdGUgTlVMTCBwb2ludGVycy4KClRoaXMgaXMgWFNBLTE4
+MQoKUmVwb3J0ZWQtYnk6IEFhcm9uIENvcm5lbGl1cyA8QWFyb24uQ29ybmVs
+aXVzQGRvcm5lcndvcmtzLmNvbT4KU2lnbmVkLW9mZi1ieTogQW5kcmV3IENv
+b3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6
+IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KUmV2aWV3ZWQtYnk6
+IEp1bGllbiBHcmFsbCA8anVsaWVuLmdyYWxsQGFybS5jb20+Ci0tLQogeGVu
+L2FyY2gvYXJtL3AybS5jIHwgMyArKy0KIDEgZmlsZSBjaGFuZ2VkLCAyIGlu
+c2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQgYS94ZW4v
+YXJjaC9hcm0vcDJtLmMgYi94ZW4vYXJjaC9hcm0vcDJtLmMKaW5kZXggODM4
+ZDAwNC4uNmExOWM1NyAxMDA2NDQKLS0tIGEveGVuL2FyY2gvYXJtL3AybS5j
+CisrKyBiL3hlbi9hcmNoL2FybS9wMm0uYwpAQCAtMTQwOCw3ICsxNDA4LDgg
+QEAgdm9pZCBwMm1fdGVhcmRvd24oc3RydWN0IGRvbWFpbiAqZCkKICAgICB3
+aGlsZSAoIChwZyA9IHBhZ2VfbGlzdF9yZW1vdmVfaGVhZCgmcDJtLT5wYWdl
+cykpICkKICAgICAgICAgZnJlZV9kb21oZWFwX3BhZ2UocGcpOwogCi0gICAg
+ZnJlZV9kb21oZWFwX3BhZ2VzKHAybS0+cm9vdCwgUDJNX1JPT1RfT1JERVIp
+OworICAgIGlmICggcDJtLT5yb290ICkKKyAgICAgICAgZnJlZV9kb21oZWFw
+X3BhZ2VzKHAybS0+cm9vdCwgUDJNX1JPT1RfT1JERVIpOwogCiAgICAgcDJt
+LT5yb290ID0gTlVMTDsKIAotLSAKMi4xLjQKCg==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa181-4.4.patch"
+Content-Disposition: attachment; filename="xsa181-4.4.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSA2MDVhMjcxMWM0MTEyNDc5MjAxMTZhNTAyNmU3NzI4MTViMTE2OGNk
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBBbmRyZXcgQ29vcGVy
+IDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29tPgpEYXRlOiBUaHUsIDIgSnVu
+IDIwMTYgMTQ6MTk6MDAgKzAxMDAKU3ViamVjdDogW1BBVENIXSB4ZW4vYXJt
+OiBEb24ndCBmcmVlIHAybS0+Zmlyc3RfbGV2ZWwgaW4gcDJtX3RlYXJkb3du
+KCkgYmVmb3JlCiBpdCBoYXMgYmVlbiBhbGxvY2F0ZWQKCklmIHAybV9pbml0
+KCkgZGlkbid0IGNvbXBsZXRlIHN1Y2Nlc3NmdWxseSwgKGUuZy4gZHVlIHRv
+IFZNSUQKZXhoYXVzdGlvbiksIHAybV90ZWFyZG93bigpIGlzIGNhbGxlZCBh
+bmQgdW5jb25kaXRpb25hbGx5IHRyaWVzIHRvIGZyZWUKcDJtLT5maXJzdF9s
+ZXZlbCBiZWZvcmUgaXQgaGFzIGJlZW4gYWxsb2NhdGVkLiAgZnJlZV9kb21o
+ZWFwX3BhZ2VzKCkgZG9lc24ndAp0b2xlcmF0ZSBOVUxMIHBvaW50ZXJzLgoK
+VGhpcyBpcyBYU0EtMTgxCgpSZXBvcnRlZC1ieTogQWFyb24gQ29ybmVsaXVz
+IDxBYXJvbi5Db3JuZWxpdXNAZG9ybmVyd29ya3MuY29tPgpTaWduZWQtb2Zm
+LWJ5OiBBbmRyZXcgQ29vcGVyIDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29t
+PgpSZXZpZXdlZC1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29t
+PgpSZXZpZXdlZC1ieTogSnVsaWVuIEdyYWxsIDxqdWxpZW4uZ3JhbGxAYXJt
+LmNvbT4KLS0tCiB4ZW4vYXJjaC9hcm0vcDJtLmMgfCAzICsrLQogMSBmaWxl
+IGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKQoKZGlm
+ZiAtLWdpdCBhL3hlbi9hcmNoL2FybS9wMm0uYyBiL3hlbi9hcmNoL2FybS9w
+Mm0uYwppbmRleCBhZmY3YTJjLi45Y2Y2ZjkxIDEwMDY0NAotLS0gYS94ZW4v
+YXJjaC9hcm0vcDJtLmMKKysrIGIveGVuL2FyY2gvYXJtL3AybS5jCkBAIC02
+MTUsNyArNjE1LDggQEAgdm9pZCBwMm1fdGVhcmRvd24oc3RydWN0IGRvbWFp
+biAqZCkKICAgICB3aGlsZSAoIChwZyA9IHBhZ2VfbGlzdF9yZW1vdmVfaGVh
+ZCgmcDJtLT5wYWdlcykpICkKICAgICAgICAgZnJlZV9kb21oZWFwX3BhZ2Uo
+cGcpOwogCi0gICAgZnJlZV9kb21oZWFwX3BhZ2VzKHAybS0+Zmlyc3RfbGV2
+ZWwsIFAyTV9GSVJTVF9PUkRFUik7CisgICAgaWYgKCBwMm0tPmZpcnN0X2xl
+dmVsICkKKyAgICAgICAgZnJlZV9kb21oZWFwX3BhZ2VzKHAybS0+Zmlyc3Rf
+bGV2ZWwsIFAyTV9GSVJTVF9PUkRFUik7CiAKICAgICBwMm0tPmZpcnN0X2xl
+dmVsID0gTlVMTDsKIAotLSAKMi4xLjQKCg==
+
+--=separator--
