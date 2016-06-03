@@ -1,45 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/20
-Message-ID: <20161122161915.wut6macbvu4ggdpn@freya.jamessan.com>
-Date: Tue, 22 Nov 2016 11:19:15 -0500
-From: James McCoy <jamessan@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/03/2
+Message-ID: <CABEk9YwpYud4vgFLWJQTV6PFPdGQ2ejd6ueJMimsgKw94KgnYQ@mail.gmail.com>
+Date: Fri, 3 Jun 2016 15:26:24 +0200
+From: Kangjie Lu <kangjielu@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: vim/neovim: Arbitrary command execution (CVE-2016-1248)
+Cc: Taesoo Kim <taesoo@...ech.edu>, Chengyu Song <csong84@...ech.edu>
+Subject: CVE Request: tipc: an infoleak in tipc_nl_compat_link_dump
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hello,
 
-CVE-2016-1248 was assigned for a vulnerability in Vim which would allow
-arbitrary shell commands to be run if a user opened a file with a
-malicious modeline.  This is due to lack of validation of values for a
-few options.  Those options' values are then used in Vim's scripts to
-build a command string that's evaluated by :execute, which is what
-allows the shell commands to be run.
+In function tipc_nl_compat_link_dump of file net/tipc/netlink_compat.c,
+link_info.str is a char array of size 60. Memory after the NULL
+byte is not initialized. Sending the whole object out can cause
+a leak of sensitive info in kernel stack.
 
-This has been fixed in Vim by patch 8.0.0056[0], and new Windows builds
-of Vim have been published with the fix, however the implications have
-not yet been disclosed.
+Fix info:
+https://patchwork.ozlabs.org/patch/629100/
 
-Since Neovim shares this code, it is also vulnerable.  It is fixed by
-commit 4fad66f[1], but has not yet had a release.
+Please help assign a CVE to this vulnerability.
 
-This affects Vim at least as far back as 7.0.  I didn't check any older
-versions.
 
-This affects all released versions of Neovim.
+Thanks,
+Kangjie Lu
 
-Thanks to Florian Larysch for discovering this issue.
-
-[0]: https://github.com/vim/vim/releases/tag/v8.0.0056
-[1]: https://github.com/neovim/neovim/commit/4fad66fbe637818b6b3d6bc5d21923ba72795040
-
-Cheers,
--- 
-James
-GPG Key: 4096R/91BF BF4D 6956 BD5D F7B7  2D23 DFE6 91AE 331B A3DB
-
-View attachment "vim_CVE-2016-1248.patch" of type "text/x-diff" (3946 bytes)
-
-View attachment "neovim_CVE-2016-1248.patch" of type "text/x-diff" (4088 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
