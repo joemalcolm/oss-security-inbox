@@ -1,48 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/15/7
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BB629A@EX02.corp.qihoo.net>
-Date: Wed, 15 Jun 2016 02:35:38 +0000
-From: 张开翔 <zhangkaixiang@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-5321: libtiff 4.0.6 DumpModeDecode(): Ddos
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/03/1
+Message-Id: <E1b8lhG-000336-Hz@xenbits.xenproject.org>
+Date: Fri, 03 Jun 2016 09:47:18 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 181 - arm: Host crash caused by VMID exhaustion
 Content-Type: text/plain; charset=utf-8
 
-Details
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+                    Xen Security Advisory XSA-181
+
+               arm: Host crash caused by VMID exhaustion
+
+ISSUE DESCRIPTION
+=================
+
+VMIDs are a finite hardware resource, and allocated as part of domain
+creation.  If no free VMIDs are available when trying to create a new domain,
+a bug in the error path causes a NULL pointer to be used, resulting in a Data
+Abort and host crash.
+
+IMPACT
+======
+
+Attempting to create too many concurrent domains causes a host crash rather
+than a graceful error.  A malicious device driver domain can hold references
+to domains, preventing its VMID being released.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 4.4 and later are affected.  Older Xen versions are unaffected.
+
+x86 systems are not affected.
+
+Only arm systems with less-privileged device driver domains can expose this
+vulnerability.
+
+MITIGATION
+==========
+
+There is no mitigation.  Not using driver domains reclassifies the problem,
+but does not fix it.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+The crash was discussed publicly on xen-devel, before it was appreciated
+that there was a security problem.
+
+CREDITS
 =======
 
-Product: libtiff
-Affected Versions: <= 4.0.6
-Vulnerability Type: illegel read
-Vendor URL: http://www.remotesensing.org/libtiff/
-Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
-CVE ID: CVE-2016-5321
-Tested system version:
-       fedora23 32bit
-       fedora23 64bit
-       CentOS Linux release 7.1.1503 64bit
+This issue was discovered by Aaron Cornelius of DornerWorks.
 
+RESOLUTION
+==========
 
-Introduction
-=======
+Applying the appropriate attached patch resolves this issue.
 
-It was always corrupted when I use tiffcrop command followed by a crafted TIFF image.The vulnerbility exists in fuction DumpModeDecode() whitout checking the value of output parameters, Attackers could exploit this issue to cause denial-of-service.
+xsa181.patch           xen-unstable, Xen 4.6.x, 4.5.x
+xsa181-4.4.patch       Xen 4.4.x
 
+$ sha256sum xsa181*
+6756fcf44446675e5277f6d6c0e8a0aaa51a7909ad9a55af89a09367fded8733  xsa181.patch
+97a90c7cb42466647622cb2ed98de531b7ba2e174a1bc639a32a6f1b626d503f  xsa181-4.4.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Here is the stack info:
-gdb –args ./tiffcrop DumpModeDecode.tif tmpout.tif
---- ---
-__memcpy_ssse3_back () at ../sysdeps/x86_64/multiarch/memcpy-ssse3-back.S:2709
-2709                   movdqu    %xmm0, 36(%rdi)
-Program received signal SIGSEGV, Segmentation fault.
-__memcpy_ssse3_back () at ../sysdeps/x86_64/multiarch/memcpy-ssse3-back.S:2709
-2709                   movdqu    %xmm0, 36(%rdi)
-(gdb) bt
-#0  __memcpy_ssse3_back () at ../sysdeps/x86_64/multiarch/memcpy-ssse3-back.S:2709
-#1  0x00007ffff7ad6a79 in DumpModeDecode (tif=0x662010, buf=<optimized out>, cc=52, s=<optimized out>) at tif_dumpmode.c:103
-#2  0x00007ffff7ba3739 in TIFFReadEncodedTile (tif=tif@...ry=0x662010, tile=8, buf=0x0, size=52, size@...ry=-1) at tif_read.c:668
-#3  0x00007ffff7ba3a01 in TIFFReadTile (tif=tif@...ry=0x662010, buf=<optimized out>, x=x@...ry=0, y=y@...ry=0, z=z@...ry=0, s=s@...ry=8) at tif_read.c:641
-#4  0x0000000000443e41 in readSeparateTilesIntoBuffer (bps=208, spp=9, tl=1, tw=2, imagewidth=2, imagelength=1, obuf=0x662ce0 "\200\177\335\367\377\177", in=0x662010) at tiffcrop.c:994
-#5  loadImage (in=in@...ry=0x662010, image=image@...ry=0x7fffffff7960, dump=dump@...ry=0x7fffffffc270, read_ptr=read_ptr@...ry=0x7fffffff7920) at tiffcrop.c:6079
-#6  0x0000000000403209 in main (argc=<optimized out>, argv=<optimized out>) at tiffcrop.c:2278
-(gdb) p buf
-$6 = 0x0
+iQEcBAEBAgAGBQJXUVIbAAoJEIP+FMlX6CvZAe8IAIwe1A/05KM9PfJTCwb23WEs
+pfSiEZy7KzmavYwzV4TLwzWuCNzkRAuEejvQ9dTFnk8ZBkCZIbAaMoCPJljK/8gg
+oBcn0cXE9Kz9kWBk+JCWHynboVh010p+7DGlcvrxmAwxJCUjGy4YcajDZ4uGJoHA
+pgJxIk/w4CIzF+AQYm7bRW8dHF3yym4V6dmR4pGqXeYS41XbMqpEenGBggoBeH+C
+TJLUzaNZfATcPK5NUCqBD7IiQtHyYJT8xEtIKDH4hfjEzffydHbErDb/lKk3fxK0
+ECzrhdWMExnkUX4VkC393QaqGf78P6sa+psfZt4I7DDFDI2uEvXYmgVXjOuvSpg=
+=hUSO
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa181.patch" of type "application/octet-stream" (1243 bytes)
+
+Download attachment "xsa181-4.4.patch" of type "application/octet-stream" (1285 bytes)
