@@ -1,4 +1,9 @@
-Received: (qmail 22084 invoked by uid 550); 13 Apr 2025 19:51:02 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["656" "Friday" "3" "June" "2016" "13:50:40" "-0400" "Marc Deslauriers" "marc.deslauriers@canonical.com" "<5751C370.1010802@canonical.com>" "24" "[oss-security] CVE Request: Dnsmasq denial of service" nil nil nil "6" "2016060317:50:40" "[oss-security] CVE Request: Dnsmasq denial of service" (number mark "U       marc.deslaur Jun  3   24/656   " thread-indent "\"[oss-security] CVE Request: Dnsmasq denial of service\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21923 invoked by uid 550); 3 Jun 2016 17:50:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,55 +12,39 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3319 invoked from network); 13 Apr 2025 19:32:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stig.io; s=MBO0001;
-	t=1744572752;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=NyNABuKJ7+uVTWIv0SbDHwrwyvtCsSyF/BFPLpwYRvg=;
-	b=FQU99Cl26s1Bj3Xa+8MV9dQfJWFsyt3Z0SK/JzKiw5j3MkToEArkDqKy09WUTG+5h7Qtke
-	JjpxAbBHnsb9GJCijjm6+d+rehiSGlZITWR0ekw8DsQmEbWW5AosvjYkFyXX0V+JCGeI9a
-	fkX7MKYG70SpfoTQf2wtbbn85nq9OnXmmz/ESYSux87vOhtQc/LKAhbOGqB9nhP8ma6xT3
-	68NdogkVMgDsLD0e4TRDvnhr/+LFOnYbnB0nZHVCdf95RBVeA/IVQRRLhhA3BcaZCR6DMh
-	9fmRrjT4jRJdwXKUIus88P80GfG2OOjTuOCK5lkzTwZsg5oqTl2aT/d/kbWJUg==
-Date: Sun, 13 Apr 2025 21:32:31 +0200
-From: Stig Palmquist <stig@stig.io>
+Received: (qmail 21902 invoked from network); 3 Jun 2016 17:50:54 -0000
+From: Marc Deslauriers <marc.deslauriers@canonical.com>
 To: oss-security@lists.openwall.com
-Message-ID: <ra5dq7grenapn6i4u4wjdogxpxaqhqpbhwu3hhj4bovr42pad6@zta4tml47irw>
-References: <gawci7t5wtkbk3kj3d3wjqqyy6jshli6mnyimynu5cngjvtm72@chxdlvz3vhsi>
- <20250413144759.GA18912@openwall.com>
+Message-ID: <5751C370.1010802@canonical.com>
+Date: Fri, 3 Jun 2016 13:50:40 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.8.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250413144759.GA18912@openwall.com>
-Subject: Re: [oss-security] CVE-2024-56406: Perl 5.34, 5.36, 5.38 and 5.40
- are vulnerable to a heap buffer overflow when transliterating non-ASCII
- bytes
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] CVE Request: Dnsmasq denial of service
 
-On 2025-04-13 16:47, Solar Designer wrote:
-[..]
-> As it was mentioned in the advance notification to distros, the issue
-> was introduced in:
-> 
-> https://github.com/Perl/perl5/commit/a311ee08b6781f83a7785f578a26bbc21a7ae457
-> 
-> which is part of tags v5.33.1 to v5.41.10, so I guess those versions are
-> also affected.  The fix commit is effectively a revert of the bug commit.
+Hello,
 
-Hi Alexander,
+I don't believe this issue has a CVE:
 
-Thank you for the feedback. We only considered release branches for the
-affected versions.
+ Fix crash when an A or AAAA record is defined locally,
+ in a hosts file, and an upstream server sends a reply
+ that the same name is empty. Thanks to Edwin Török for
+ the patch.
 
-To fix this, the CVE record has been updated to take into account
-development versions and release candidates:
+http://lists.thekelleys.org.uk/pipermail/dnsmasq-discuss/2016q2/010479.html
+http://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=commit;h=41a8d9e99be9f2cc8b02051dd322cb45e0faac87
+https://bugs.launchpad.net/ubuntu/+source/dnsmasq/+bug/1581181
 
-      Versions:  from 5.41.0 through 5.41.10
-                 from 5.39.0 before 5.40.2-RC1
-                 from 5.33.1 before 5.38.4-RC1
 
-Best,
+Could a CVE please be assigned to it?
+
+Thanks,
+
+Marc.
+
 -- 
-Stig Palmquist
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
