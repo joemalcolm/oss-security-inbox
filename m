@@ -1,42 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/06/3
-Message-Id: <20160106081546.6A66333E02F@smtpvbsrv1.mitre.org>
-Date: Wed,  6 Jan 2016 03:15:46 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/03/4
+Message-Id: <20160603151004.0FD7A6C0400@smtpvmsrv1.mitre.org>
+Date: Fri,  3 Jun 2016 11:10:04 -0400 (EDT)
 From: cve-assign@...re.org
-To: vdronov@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request -- linux kernel: nfs: kernel panic occurs at nfs client when nfsv4.2 migration is executed
+To: kangjielu@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, taesoo@...ech.edu, csong84@...ech.edu
+Subject: Re: CVE Request: tipc: an infoleak in tipc_nl_compat_link_dump
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1295802
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=18e3b739fdc826481c6a1335ce0c5b19b3d415da
+> In function tipc_nl_compat_link_dump of file net/tipc/netlink_compat.c,
+> link_info.str is a char array of size 60. Memory after the NULL
+> byte is not initialized. Sending the whole object out can cause
+> a leak of sensitive info in kernel stack.
+> 
+> https://patchwork.ozlabs.org/patch/629100/
+> https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=5d2be1422e02ccd697ccfcd45c85b4a26e6178e2
 
->> NFS: Fix a NULL pointer dereference of migration recovery ops for v4.2 client
-
-Use CVE-2015-8746.
+Use CVE-2016-5243.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWjMxnAAoJEL54rhJi8gl5XlEP/3mgM7uIvnkPzcP00tYANwWd
-EjpngZqCRZ/T2UP+5mhlAO3rVWoFPpRyS9ATk1ytIzAuq9PvlkiORZFzSJF/fQNY
-p3H4GPRfBFya8I0/Mo/UdHarumk4MrpW4wd3osDW+pJWETqa4HSDgBil63bImifC
-dj4A3KAUzHSLvK818hHuQLMQ3GVi4Tws3Yyv4mrnj5bYodWuBwehEdtLMq7M3LJS
-D2x8Io1tFAmzS7UZqx8XOBknoG09eTYdsyaONasmH2dkx9XsftuA0afUKwc99KiE
-vZ4kvMmSnidKmj0bVAjQthJgLiVvU29Pd9dbI0cZg3y2utiWvr7VmildChssCT7y
-YxMHwG7vpzHZ7S7Ebd7+hJ12BxPX4rDXks0fxw4E9U/a4GY7LvF1y+lwQnWVcLQG
-kKlq35kINboc2n0ktNvqGEhPmlriZABoQUuCMsrD46XsEDnr5UFkURdjhOAHtJI8
-Zy1NsAbOIeO+nfmN4D5rtu+LZF1z3dpG85IoHB1cOXuMD1ViZ0q7rMJkL9Q7QWE3
-GMxpj/l7ahY2+/KYotCMMKA8wHB237HcVmd3wNPCIQoSZI+QzX8+DzD8dmWP6b1U
-U2194pDrcX78mzrWNM5RMPzcNWw5JuQeAbRcrxTBKpHMoh3vJFCF6sxrgg8uy532
-Ue7fi6vMIrYWqtL8wbxZ
-=gz1q
+iQIcBAEBCAAGBQJXUZw5AAoJEHb/MwWLVhi2+IoP/22pu8mdKyqH4/UuIFtGLmfl
+ymJ+oHCNz6O/3cy9YbBSkkmNMDvwng1UW6+Gtyn4GjaJqFdhYDNCRZuwdXg+u/eP
+WoF2maZ8jo882luNajmzoaQAkjxjlsB/OqJZP47yKpoGwbgqvjdr5xfg0qvP6RIV
+vw0qZYfqZZan4rtr9dE3MolpIHP0AEXPTuNHZeCrtuyfTagJjCOD+dr1UuRKIXll
+zfvbSH1074IHgGExx4USTVx5/oAkfATy5wxqWtq/fRxvJno/5+I154bOknRI5mj5
+GmhY0BIpWACUiOaoyN1aM34usXMNvtWuYqJo0s+mZgOkTn5c0W6O7bSswyJcLpjE
+F0b8xkWs3PlpajNMZBbpzw00NTadviVhBroF/Ef4oDV5IaCab83A368MESS3RJHF
+W0WFDhlnTMpUqZeiWN55seh25vwEp0zff98a0cpaToj8b+OOwHD0qGhRQ9LPNydw
+18CndQnJk+upioqEgmWvwRT9UPfoN4MCVyW6zeMP0IO4nCJjlZ8QW980u1zz2Wx4
+2raWb9cMh2ipURwb+k5OfTAVM97TMarppWIBb+WIMrzKDGpv/OUGU/Hn8ZpxZsGF
+vesvNFDSl3ydlZdBuL0lkvXC4HiW/Bc121bovocuUYecpo8ZRn1/fViCHfir/d4S
+ZL3a1PZlbuY02U3vHp3o
+=uadr
 -----END PGP SIGNATURE-----
