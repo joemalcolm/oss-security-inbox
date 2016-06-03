@@ -1,18 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/18
-Message-ID: <20161005182507.tbpgjh6kvi4ygvdl@jwilk.net>
-Date: Wed, 5 Oct 2016 20:25:07 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/03/6
+Message-ID: <CAH9eYVqvceWHY8M0BhqUaE0=UMKxGvNWMvimypCYqpGMsqMTQg@mail.gmail.com>
+Date: Fri, 3 Jun 2016 11:26:53 -0400
+From: Brian Demers <bdemers@...che.org>
+To: dev@...ro.apache.org, "user@...ro.apache.org" <user@...ro.apache.org>, security@...ro.apache.org,  announce@...ro.apache.org, "security@...che.org" <security@...che.org>,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [Announce] CVE-2016-4437: Apache Shiro information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-* Hanno Böck <hanno@...eck.de>, 2016-10-05, 19:33:
->>There are perhaps two open-sourced PDF interpreters available (Ghostscript 
->>and derivatives of 'xpdf' like 'poppler').
->There's two more from the browser world: pdfium and PDF.js.
+Severity: Important
 
-There's also mupdf.
+Vendor:
+The Apache Software Foundation
 
--- 
-Jakub Wilk
+Versions Affected:
+1.0.0-incubating - 1.2.4
+
+Description:
+A default cipher key is used for the "remember me" feature when not
+explicitly configured.  A request that included a specially crafted request
+parameter could be used to execute arbitrary code or access content that
+would otherwise be protected by a security constraint.
+
+Mitigation:
+Users should upgrade to 1.2.5 [1],  ensure a secret cipher key is
+configured [2], or disable the "remember me" feature. [3]
+
+All binaries (.jars) are available in Maven Central already.
+
+References:
+[1] http://shiro.apache.org/download.html
+[2] http://shiro.apache.org/configuration.html#Configuration-ByteArrayValues
+[3] If using a shiro.ini, "remember me" can be disabled adding the
+following config line in the '[main]' section:
+  securityManager.rememberMeManager = null
+
