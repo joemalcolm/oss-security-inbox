@@ -1,55 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/21/7
-Message-ID: <20160421174220.GA19359@eldamar.local>
-Date: Thu, 21 Apr 2016 19:42:20 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/03/3
+Message-ID: <CABEk9YwUfe0s1iWLqyfVOv6=NA-PBnaSGMhL-DnVX9LbV5DENA@mail.gmail.com>
+Date: Fri, 3 Jun 2016 15:30:02 +0200
+From: Kangjie Lu <kangjielu@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: security@....net, Lior Kaplan <kaplan@...ian.org>, Ondřej Surý <ondrej@...ian.org>
-Subject: Re: CVE request: PHP issues fixed in 7.0.5, 5.6.20 and 5.5.34 releases
+Cc: Taesoo Kim <taesoo@...ech.edu>, Chengyu Song <csong84@...ech.edu>
+Subject: CVE Request: rds: fix an infoleak in rds_inc_info_copy
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-On Mon, Apr 11, 2016 at 09:41:41PM +0200, Matthias Geerdsen wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
-> 
-> Hi,
-> 
-> could you please provide CVE IDs for the following PHP issues fixed in
-> the latest releases, as I have not yet seen any IDs yet:
-> 
-> - -  Buffer over-write in finfo_open with malformed magic file
-> https://bugs.php.net/bug.php?id=71527
-> http://bugs.gw.com/view.php?id=522
-> 
-> - - Integer overflow in php_raw_url_encode
-> https://bugs.php.net/bug.php?id=71798
-> https://git.php.net/?p=php-src.git;a=commit;h=95433e8e339dbb6b5d5541473c
-> 1661db6ba2c451
-> 
-> 
-> - - php_snmp_error() Format String Vulnerability
-> https://bugs.php.net/bug.php?id=71704
-> https://git.php.net/?p=php-src.git;a=commit;h=6e25966544fb1d2f3d7596e060
-> ce9c9269bbdcf8
-> 
-> 
-> - - Invalid memory write in phar on filename containing \0 inside name
-> https://bugs.php.net/bug.php?id=71860
-> https://gist.github.com/smalyshev/80b5c2909832872f2ba2
-> 
-> 
-> - - AddressSanitizer: negative-size-param (-1) in mbfl_strcut
-> https://bugs.php.net/bug.php?id=71906
-> https://gist.github.com/smalyshev/d8355c96a657cc5dba70
+There was an infoleak vulnerability in function
+rds_inc_info_copy of file net/rds/recv.c.
+The last field "flags" of object "minfo" is not initialized.
+Copying this object out may leak kernel stack data.
+Assign 0 to it to avoid leak.
 
-Can CVE identiers be assigned for those?
+Fix info:
+https://patchwork.ozlabs.org/patch/629110/
 
-The recent Ubuntu USN 2952-1 as well fixed some other issues without
-CVE identifers, cf. http://www.ubuntu.com/usn/usn-2952-1/
+Please help assign a CVE to this vulnerability.
 
-Regards,
-Salvatore
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Thanks,
+Kangjie Lu
+
