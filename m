@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1746" "Wednesday" "15" "April" "2015" "09:04:47" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkL=xJagH5Fv+V0aZTHOKH8z1_HuQwV6nOVfExOV7fbi-Q@mail.gmail.com>" "45" "Re: [oss-security] Problems in automatic crash analysis frameworks" nil nil nil "4" "2015041516:04:47" "[oss-security] Problems in automatic crash analysis frameworks" (number mark "        taviso@googl Apr 15   45/1746  " thread-indent "\"Re: [oss-security] Problems in automatic crash analysis frameworks\"\n") "<552E828F.9020600@redhat.com>" ("<CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com>" "<552E828F.9020600@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["985" "Friday" "3" "June" "2016" "11:26:53" "-0400" "Brian Demers" "bdemers@apache.org" "<CAH9eYVqvceWHY8M0BhqUaE0=UMKxGvNWMvimypCYqpGMsqMTQg@mail.gmail.com>" "31" "[oss-security] [Announce] CVE-2016-4437: Apache Shiro information disclosure vulnerability" nil nil nil "6" "2016060315:26:53" "[oss-security] [Announce] CVE-2016-4437: Apache Shiro information disclosure vulnerability" (number mark "U       bdemers@apac Jun  3   31/985   " thread-indent "\"[oss-security] [Announce] CVE-2016-4437: Apache Shiro information disclosure vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30149 invoked by uid 550); 15 Apr 2015 16:05:52 -0000
+Received: (qmail 22103 invoked by uid 550); 3 Jun 2016 15:28:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,86 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30130 invoked from network); 15 Apr 2015 16:05:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=OeCT9EeUfeHyjZaGjMTZjZCLtaEJ9zocpNk09ZazG5U=;
-        b=ZGt4jvmEh20H2UTws/evvsOxnr168chzVIN3tuQiyszeR557/qkj3yPolijihw0f+m
-         B4vppT/Uu0+xQUupXes/CZuguXLDK6tKVEJ0xW9540yIA8hbWyUMHQ5LcS78POTPa/Nb
-         DumGpRGLkFRHcmfNx9jGhjOZzyiqLStk5Kx3ulTCVmzwXhnerqKinfe784xcFrsdbDue
-         GkX2cvrWT+iy1SVmYWA0XRVS/4tGkRo5wmHoB447/IdzbeAph710LTlzxxQUVps+5xOT
-         Biw0fPMlmS0K02e8vv/yDM2a53srxFdIDwvZmGWbEk68ASfKbI5k4kbNpZ28mM3rpvn0
-         fo4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-type;
-        bh=OeCT9EeUfeHyjZaGjMTZjZCLtaEJ9zocpNk09ZazG5U=;
-        b=cmE1Q0n81gglh2ddB4McHRjAlgBeNCROiJ5xqNdViPGNtXcj8NP1o60wXjT7K9VU96
-         +wqWXLf5VSghfsenb8TnvpIWmJQqdC3a87NB8NuvB7upHxrRJEzk7CDjk3kN7ZfhaFF4
-         S/Z+j3bzI4qoRMF36H6+oJ0/PBBILpLq5rFjzHWiGgJdPc68yBacGbNAYPzJt53VxRGm
-         n32NPgdX7kbmM1duv17jvVUW0Y0ICf7wF7E+lgfOlGBN0tOBpQqOiD54aWApjOEAvpQ7
-         rSIGCwvYVK/2kayAFZfijXT8mD4NSY+cHj260Exdx17Wngt+ItmNidFYszsqWg7LLZIM
-         t0Pg==
-X-Gm-Message-State: ALoCoQlvdsaJv8nI382T4nsPimFGz7+G09hut4gTzQ6tw3wZ6mQyo2R+H1OHflmK6bFLweqGXgE6
-X-Received: by 10.55.21.139 with SMTP id 11mr53204173qkv.19.1429113907576;
- Wed, 15 Apr 2015 09:05:07 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <552E828F.9020600@redhat.com>
-References: <CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com>
- <552E828F.9020600@redhat.com>
-Message-ID: <CAJ_zFkL=xJagH5Fv+V0aZTHOKH8z1_HuQwV6nOVfExOV7fbi-Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 15 Apr 2015 09:04:47 -0700
-From: Tavis Ormandy <taviso@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Problems in automatic crash analysis frameworks
-To: oss-security@lists.openwall.com
+Received: (qmail 20280 invoked from network); 3 Jun 2016 15:27:07 -0000
+X-Gm-Message-State: ALyK8tLVkRIGnEKFD80ikelRBix12vU2oCMGI7RCPOCfvIJD1Wzq+w+ZEeP2cgyMWRy8kSjWm7YJGfuYZtH5lw==
+X-Received: by 10.31.184.196 with SMTP id i187mr1962961vkf.34.1464967613496;
+ Fri, 03 Jun 2016 08:26:53 -0700 (PDT)
+MIME-Version: 1.0
+From: Brian Demers <bdemers@apache.org>
+Date: Fri, 3 Jun 2016 11:26:53 -0400
+X-Gmail-Original-Message-ID: <CAH9eYVqvceWHY8M0BhqUaE0=UMKxGvNWMvimypCYqpGMsqMTQg@mail.gmail.com>
+Message-ID: <CAH9eYVqvceWHY8M0BhqUaE0=UMKxGvNWMvimypCYqpGMsqMTQg@mail.gmail.com>
+To: dev@shiro.apache.org, "user@shiro.apache.org" <user@shiro.apache.org>, security@shiro.apache.org, 
+	announce@shiro.apache.org, "security@apache.org" <security@apache.org>, 
+	oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Content-Type: multipart/alternative; boundary=001a1143abce35c6aa0534615a2f
+Subject: [oss-security] [Announce] CVE-2016-4437: Apache Shiro information disclosure vulnerability
 
-On Wed, Apr 15, 2015 at 8:23 AM, Florian Weimer <fweimer@redhat.com> wrote:
-> On 04/14/2015 03:30 PM, Tavis Ormandy wrote:
->
->> This code trusts the /proc/pid/exe symlink, even though it is possible
->> to link it anywhere you want.
->>
->> https://github.com/abrt/abrt/blob/master/src/hooks/abrt-hook-ccpp.c#L368
->>
->>         sprintf(buf, "/proc/%lu/exe", (long)pid);
->>         int src_fd_binary = open(buf, O_RDONLY); /* might fail and
->> return -1, it's ok */
->
-> Does opening /proc/PID/exe really perform symlink resolution?  Or does
-> the kernel create temporary /proc/PID entries for non-executable file?
->
-> This feature is supposedly disabled by default.  As far as I can see, it
-> can disclose the program text of execute-only binaries to users, which
-> has been treated as a vulnerability in the past.
+--001a1143abce35c6aa0534615a2f
+Content-Type: text/plain; charset=UTF-8
 
-Ack, I knew /proc/pid/exe was magic, but for some reason I thought
-when it was marked deleted symlink resolution did work.
+Severity: Important
 
-I tested it and I think you're correct, it's just the execute-only disclosure.
+Vendor:
+The Apache Software Foundation
 
->
-> Upstream has posted patches for some of the vulnerabilities:
->
->   <https://github.com/abrt/abrt/pull/950>
->   <https://github.com/abrt/libreport/pull/343>
->
-> There's still some debate how to best address the creation of the
-> user-owned directory.  My proposal is to change from root:root to
-> user:abrt as late as possible.
->
-> (The Hotspot crash dump copying is disabled in the sources, so no patch
-> for that is planned right now.)
->
-> We also need to move off the /var/tmp/abrt directory (the code for
-> creating the directory looks racy), back to /var/spool/abrt.
->
-> I have not looked at how directory creation is handled for the other
-> crash handlers (say Python).
->
-> --
-> Florian Weimer / Red Hat Product Security
+Versions Affected:
+1.0.0-incubating - 1.2.4
+
+Description:
+A default cipher key is used for the "remember me" feature when not
+explicitly configured.  A request that included a specially crafted request
+parameter could be used to execute arbitrary code or access content that
+would otherwise be protected by a security constraint.
+
+Mitigation:
+Users should upgrade to 1.2.5 [1],  ensure a secret cipher key is
+configured [2], or disable the "remember me" feature. [3]
+
+All binaries (.jars) are available in Maven Central already.
+
+References:
+[1] http://shiro.apache.org/download.html
+[2] http://shiro.apache.org/configuration.html#Configuration-ByteArrayValues
+[3] If using a shiro.ini, "remember me" can be disabled adding the
+following config line in the '[main]' section:
+  securityManager.rememberMeManager = null
+
+--001a1143abce35c6aa0534615a2f--
