@@ -1,28 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/11/2
-Message-ID: <CAAeBhPdgWqsUJStCLLt+dgfHjsP=fUyc75L4ME3de4M_ctu8JQ@mail.gmail.com>
-Date: Thu, 11 Feb 2016 10:45:48 -0500
-From: David Leo <httpsonly.github.io@...il.com>
-To: bugtraq@...urityfocus.com, fulldisclosure@...lists.org,  oss-security@...ts.openwall.com
-Subject: HTTPS Only (Open Source, Python)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/03/7
+Message-ID: <5751C370.1010802@canonical.com>
+Date: Fri, 3 Jun 2016 13:50:40 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Dnsmasq denial of service
 Content-Type: text/plain; charset=utf-8
 
-This tool completely locks browser:
-just HTTPS, nothing else.
+Hello,
 
-This tool is extremely simple:
-less than 100 lines of code(Python and JavaScript).
+I don't believe this issue has a CVE:
 
-If browser tries to access HTTP address,
-you will have three options:
-try HTTPS,
-Google Cache,
-or copy-and-paste the address.
+ Fix crash when an A or AAAA record is defined locally,
+ in a hosts file, and an upstream server sends a reply
+ that the same name is empty. Thanks to Edwin Török for
+ the patch.
 
-There is no option to "temporarily bypass HTTPS Only".
-You can always do that in another browser.
+http://lists.thekelleys.org.uk/pipermail/dnsmasq-discuss/2016q2/010479.html
+http://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=commit;h=41a8d9e99be9f2cc8b02051dd322cb45e0faac87
+https://bugs.launchpad.net/ubuntu/+source/dnsmasq/+bug/1581181
 
-Project Home Page:
-https://httpsonly.github.io/
 
-Best Wishes,
+Could a CVE please be assigned to it?
+
+Thanks,
+
+Marc.
+
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
