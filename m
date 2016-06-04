@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["25403" "Tuesday" "12" "September" "2017" "12:03:29" "+0000" "Xen.org security team" "security@xen.org" "<E1drjub-000809-A0@xenbits.xenproject.org>" "493" "[oss-security] Xen Security Advisory 231 (CVE-2017-14316) - Missing NUMA node parameter verification" nil nil nil "9" "2017091212:03:29" "[oss-security] Xen Security Advisory 231 (CVE-2017-14316) - Missing NUMA node parameter verification" (number mark "U       security@xen Sep 12  493/25403 " thread-indent "\"[oss-security] Xen Security Advisory 231 (CVE-2017-14316) - Missing NUMA node parameter verification\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3479" "Saturday" "4" "June" "2016" "16:17:28" "+0200" "Sebastian Pipping" "sebastian@pipping.org" "<5752E2F8.10805@pipping.org>" "95" "[oss-security] Re: expat hash collision fix too predictable?" "^Cc:" nil nil "6" "2016060414:17:28" "[oss-security] Re: expat hash collision fix too predictable?" (number mark "        sebastian@pi Jun  4   95/3479  " thread-indent "\"[oss-security] Re: expat hash collision fix too predictable?\"\n") "<20160604025647.D1D406C00F8@smtpvmsrv1.mitre.org>" ("<20160604025647.D1D406C00F8@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3480 invoked by uid 550); 12 Sep 2017 12:05:31 -0000
+Received: (qmail 26201 invoked by uid 550); 4 Jun 2016 14:17:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,511 +11,116 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1831 invoked from network); 12 Sep 2017 12:04:21 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 26166 invoked from network); 4 Jun 2016 14:17:40 -0000
+References: <20160604025647.D1D406C00F8@smtpvmsrv1.mitre.org>
+X-Enigmail-Draft-Status: N1110
+Message-ID: <5752E2F8.10805@pipping.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.1
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.505 (Entity 5.505)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1drjub-000809-A0@xenbits.xenproject.org>
-Date: Tue, 12 Sep 2017 12:03:29 +0000
-Subject: [oss-security] Xen Security Advisory 231 (CVE-2017-14316) - Missing NUMA node
- parameter verification
-
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
+In-Reply-To: <20160604025647.D1D406C00F8@smtpvmsrv1.mitre.org>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
+X-Df-Sender: aGFydHdvcmtAYmluZXJhLmRl
+Cc: oss-security@lists.openwall.com
+Date: Sat, 4 Jun 2016 16:17:28 +0200
+From: Sebastian Pipping <sebastian@pipping.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: expat hash collision fix too predictable?
+To: cve-assign@mitre.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-            Xen Security Advisory CVE-2017-14316 / XSA-231
-                               version 3
-
-               Missing NUMA node parameter verification
-
-UPDATES IN VERSION 3
-====================
-
-Updated metadata file
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-The function `alloc_heap_pages` allows callers to specify the first
-NUMA node that should be used for allocations through the `memflags`
-parameter; the node is extracted using the `MEMF_get_node` macro.
-
-While the function checks to see if the special constant
-`NUMA_NO_NODE` is specified, it otherwise does not handle the case
-where `node >= MAX_NUMNODES`.  This allows an out-of-bounds access
-to an internal array.
-
-IMPACT
-======
-
-An attacker using crafted hypercalls can execute arbitrary code within
-Xen.
-
-VULNERABLE SYSTEMS
-==================
-
-All versions of Xen are affected.
-
-Both ARM and x86 are affected.
-
-Both systems running HVM guests and system running PV guests are
-affected.
-
-MITIGATION
-==========
-
-No known mitigation.
-
-CREDITS
-=======
-
-This issue was discovered by Matthew Daley.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa231.patch           xen-unstable
-xsa231-4.9.patch       Xen 4.9, Xen 4.8
-xsa231-4.7.patch       Xen 4.7, Xen 4.6
-xsa231-4.5.patch       Xen 4.5
-
-$ sha256sum xsa231*
-4255d2bc4ca668e7abcbf8256b0a8f21acef2a47a06d626aad6d22c685034587  xsa231.meta
-b72af3fb8c44925ea7973533e8a8701becfc194f3e1c97f12af0392e1edd16a3  xsa231.patch
-d9853b2d2649679d8810bd7e93f7b51bd9fefb3472da60ae464bde88aae3389c  xsa231-4.5.patch
-ce29b56a0480f4835b37835b351e704d204bb0ccd22325f487127aa2776cc2cf  xsa231-4.7.patch
-71a53a5133c8d4e381dd0e3e54205d31dea545ab62b261084dd3aea140f88cad  xsa231-4.9.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+Hi!
 
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+On 04.06.2016 04:56, cve-assign@mitre.org wrote:
+> The text below assigns one CVE ID to this expat vulnerability.
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Thank you.  Please see my questions below.
 
-iQEcBAEBCAAGBQJZt80DAAoJEIP+FMlX6CvZrooIALgotDR4DC367J1SF87V2dHW
-Wo2O05rF8uBl12ofMA4LirjPfbNq49ZikaDr01jq+srFZLDw72IzgjbNJOwThkZt
-DHFR12LABvAPHT/Je58vGqS24HKKhK1o+Q0vDcbZHzBGXkj6gwxNC+DJAzF9D9Ye
-qXtZv4GmkmhFs0nQuzUF8bLu7ZvIQjB7QVoXnOvynx/mpCI9GPvoRGLptIJhbc8A
-CqSLsgF+7cXC6E8u/pp9XorpsQf2ekQwJMkLiG3UXieeShwrmY1mCE/vWBgsFeyj
-k7/+dQhj6X+7vwLA385Df3cF7hDjDi23AJMUN1AuVd9fx9/ie4o+9nJIa0FpUOA=
-=al8X
------END PGP SIGNATURE-----
 
---=separator
-Content-Type: application/octet-stream; name="xsa231.meta"
-Content-Disposition: attachment; filename="xsa231.meta"
-Content-Transfer-Encoding: base64
+>>> https://bugzilla.redhat.com/show_bug.cgi?id=1197087#c6
+>>>
+>>> Expat is calling srand ... [if] the code using Expat ... never called
+>>> XML_SetHashSalt on that parser ... the arrival of XML_SetHashSalt
+>>> bypassed the Expat user's radar
+> 
+>>>> https://sourceforge.net/p/expat/bugs/499/
+>>>> 2012-04-05
+>>>> In any case, you can supply your own hash salt - after creating the
+>>>> parser, but before parsing is started. See the new API function XML_SetHashSalt.
+> 
+> The higher-level issue, from our perspective, is that a library
+> (intended for use in arbitrary applications) should not have
+> potentially unavoidable calls to the srand function unless this is
+> documented. The library might be used by an application in which srand
+> was already called exactly once, and srand/rand happens to be the
+> right choice for that application because of a minimal need for
+> randomness, and this minimal need for randomness is no longer
+> satisfied if there are unexpected extra calls to srand.
+> 
+> In other words, good options for a library include:
+> 
+>   - never call srand under any circumstances
+> 
+>   - call srand only if the application calls a library function that
+>     is documented as triggering an srand call
+> 
+>   - call srand whenever it wants, as long as the documentation warns
+>     application authors about potential incompatibility with any use
+>     of srand within an application
+> 
+> We really don't know whether the above is a generally accepted
+> principle for all libraries.
 
-ewogICJYU0EiOiAyMzEsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
-Im1hc3RlciIsCiAgICAiNC45IiwKICAgICI0LjgiLAogICAgIjQuNyIsCiAg
-ICAiNC42IiwKICAgICI0LjUiCiAgXSwKICAiVHJlZXMiOiBbCiAgICAieGVu
-IgogIF0sCiAgIlJlY2lwZXMiOiB7CiAgICAiNC41IjogewogICAgICAiWGVu
-VmVyc2lvbiI6ICI0LjUiLAogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAi
-eGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICIzMjE3MTI5ZWI2NWMw
-ZDQ5OTVlZDA4ZmI4OTE5ZTNjMzM0Y2FkNTQ4IiwKICAgICAgICAgICJQcmVy
-ZXFzIjogWwogICAgICAgICAgICAyMjYsCiAgICAgICAgICAgIDIyNywKICAg
-ICAgICAgICAgMjMwCiAgICAgICAgICBdLAogICAgICAgICAgIlBhdGNoZXMi
-OiBbCiAgICAgICAgICAgICJ4c2EyMzEtNC41LnBhdGNoIgogICAgICAgICAg
-XQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjYiOiB7CiAgICAg
-ICJYZW5WZXJzaW9uIjogIjQuNiIsCiAgICAgICJSZWNpcGVzIjogewogICAg
-ICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogImI0NjYwYjRk
-NGEzNWVkYWM3MTVjMDAzYzg0MzI2ZGUyYjBmYTRmNDciLAogICAgICAgICAg
-IlByZXJlcXMiOiBbXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAg
-ICAgICAieHNhMjMxLTQuNy5wYXRjaCIKICAgICAgICAgIF0KICAgICAgICB9
-CiAgICAgIH0KICAgIH0sCiAgICAiNC43IjogewogICAgICAiWGVuVmVyc2lv
-biI6ICI0LjciLAogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjog
-ewogICAgICAgICAgIlN0YWJsZVJlZiI6ICI1MTUxMjU3NjI2MTU1ZDZlMzMx
-Y2M5ZTY2ZDg5NmM4NGRiMTYxMWUxIiwKICAgICAgICAgICJQcmVyZXFzIjog
-W10sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTIz
-MS00LjcucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAg
-ICB9LAogICAgIjQuOCI6IHsKICAgICAgIlhlblZlcnNpb24iOiAiNC44IiwK
-ICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAg
-ICJTdGFibGVSZWYiOiAiZjUyMTFjZTc1ODIxZTBmMmNjNTVlZmZkMjhkZmJl
-OTA4MjI2OTcwZiIsCiAgICAgICAgICAiUHJlcmVxcyI6IFtdLAogICAgICAg
-ICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EyMzEtNC45LnBhdGNo
-IgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0
-LjkiOiB7CiAgICAgICJYZW5WZXJzaW9uIjogIjQuOSIsCiAgICAgICJSZWNp
-cGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVm
-IjogIjliZjE0YmJmOTkwODQzYmZlYzE2YTVkNjlkMzZjZjQ2Yzc1OTNkODgi
-LAogICAgICAgICAgIlByZXJlcXMiOiBbXSwKICAgICAgICAgICJQYXRjaGVz
-IjogWwogICAgICAgICAgICAieHNhMjMxLTQuOS5wYXRjaCIKICAgICAgICAg
-IF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAibWFzdGVyIjogewog
-ICAgICAiWGVuVmVyc2lvbiI6ICJtYXN0ZXIiLAogICAgICAiUmVjaXBlcyI6
-IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICI5
-MDUzYTc0YzA4ZmQ2YWJmNDNiYjQ1ZmY5MzJiNDM4NmRlN2U4NTEwIiwKICAg
-ICAgICAgICJQcmVyZXFzIjogW10sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsK
-ICAgICAgICAgICAgInhzYTIzMS5wYXRjaCIKICAgICAgICAgIF0KICAgICAg
-ICB9CiAgICAgIH0KICAgIH0KICB9Cn0=
+Agreed.
 
---=separator
-Content-Type: application/octet-stream; name="xsa231.patch"
-Content-Disposition: attachment; filename="xsa231.patch"
-Content-Transfer-Encoding: base64
 
-RnJvbTogR2VvcmdlIER1bmxhcCA8Z2VvcmdlLmR1bmxhcEBjaXRyaXguY29t
-PgpTdWJqZWN0OiB4ZW4vbW06IG1ha2Ugc3VyZSBub2RlIGlzIGxlc3MgdGhh
-biBNQVhfTlVNTk9ERVMKClRoZSBvdXRwdXQgb2YgTUVNRl9nZXRfbm9kZSht
-ZW1mbGFncykgY2FuIGJlIGFzIGxhcmdlIGFzIG5vZGVpZF90IGNhbgpob2xk
-IChjdXJyZW50bHkgMjU1KS4gIFRoaXMgaXMgdGhlbiB1c2VkIGFzIGFuIGlu
-ZGV4IHRvIGFycmF5cyBvZiBzaXplCk1BWF9OVU1OT0RFLCB3aGljaCBpcyA2
-NCBvbiB4ODYgYW5kIDEgb24gQVJNLCBjYW4gYmUgcGFzc2VkIGluIGJ5IGFu
-CnVudHJ1c3RlZCBndWVzdCAodmlhIG1lbW9yeV9leGNoYW5nZSBhbmQgaW5j
-cmVhc2VfcmVzZXJ2YXRpb24pIGFuZCBpcwpub3QgY3VycmVudGx5IGJvdW5k
-cy1jaGVja2VkLgoKQ2hlY2sgdGhlIHZhbHVlIGluIHBhZ2VfYWxsb2MuYyBi
-ZWZvcmUgdXNpbmcgaXQsIGFuZCBhbHNvIGNoZWNrIHRoZQp2YWx1ZSBpbiB0
-aGUgaHlwZXJjYWxsIGNhbGwgc2l0ZXMgYW5kIHJldHVybiAtRUlOVkFMIGlm
-IGFwcHJvcHJpYXRlLgpEb24ndCBwZXJtaXQgZG9tYWlucyBvdGhlciB0aGFu
-IHRoZSBoYXJkd2FyZSBvciBjb250cm9sIGRvbWFpbiB0bwphbGxvY2F0ZSBu
-b2RlLWNvbnN0cmFpbmVkIG1lbW9yeS4KClRoaXMgaXMgWFNBLTIzMS4KClJl
-cG9ydGVkLWJ5OiBNYXR0aGV3IERhbGV5IDxtYXR0ZEBidWdmdXp6LmNvbT4K
-U2lnbmVkLW9mZi1ieTogR2VvcmdlIER1bmxhcCA8Z2VvcmdlLmR1bmxhcEBj
-aXRyaXguY29tPgpTaWduZWQtb2ZmLWJ5OiBKYW4gQmV1bGljaCA8amJldWxp
-Y2hAc3VzZS5jb20+ClJldmlld2VkLWJ5OiBBbmRyZXcgQ29vcGVyIDxhbmRy
-ZXcuY29vcGVyM0BjaXRyaXguY29tPgotLS0KdjQ6IElnbm9yZSBwaHlzaWNh
-bCBub2RlIGlucHV0IGZvciBvdGhlciB0aGFuIGhhcmR3YXJlIGFuZCBjb250
-cm9sCiAgICBkb21haW5zLgp2MzogRHJvcCBwcmludGsoKS4KdjI6IFByb3Bl
-cmx5IGRlYWwgd2l0aCBOVU1BX05PX05PREUgYmVpbmcgdmFsaWQgYXMgaW5w
-dXQsIGJ1dCBsYXJnZXIKICAgIHRoYW4gTUFYX05VTU5PREVTLiBEcm9wIHRy
-YWlsaW5nIHdoaXRlIHNwYWNlLgoKLS0tIGEveGVuL2NvbW1vbi9tZW1vcnku
-YworKysgYi94ZW4vY29tbW9uL21lbW9yeS5jCkBAIC00MjksNiArNDI5LDMx
-IEBAIHN0YXRpYyB2b2lkIGRlY3JlYXNlX3Jlc2VydmF0aW9uKHN0cnVjdAog
-ICAgIGEtPm5yX2RvbmUgPSBpOwogfQogCitzdGF0aWMgYm9vbCBwcm9wYWdh
-dGVfbm9kZSh1bnNpZ25lZCBpbnQgeG1mLCB1bnNpZ25lZCBpbnQgKm1lbWZs
-YWdzKQoreworICAgIGNvbnN0IHN0cnVjdCBkb21haW4gKmN1cnJkID0gY3Vy
-cmVudC0+ZG9tYWluOworCisgICAgQlVJTERfQlVHX09OKFhFTk1FTUZfZ2V0
-X25vZGUoMCkgIT0gTlVNQV9OT19OT0RFKTsKKyAgICBCVUlMRF9CVUdfT04o
-TUVNRl9nZXRfbm9kZSgwKSAhPSBOVU1BX05PX05PREUpOworCisgICAgaWYg
-KCBYRU5NRU1GX2dldF9ub2RlKHhtZikgPT0gTlVNQV9OT19OT0RFICkKKyAg
-ICAgICAgcmV0dXJuIHRydWU7CisKKyAgICBpZiAoIGlzX2hhcmR3YXJlX2Rv
-bWFpbihjdXJyZCkgfHwgaXNfY29udHJvbF9kb21haW4oY3VycmQpICkKKyAg
-ICB7CisgICAgICAgIGlmICggWEVOTUVNRl9nZXRfbm9kZSh4bWYpID49IE1B
-WF9OVU1OT0RFUyApCisgICAgICAgICAgICByZXR1cm4gZmFsc2U7CisKKyAg
-ICAgICAgKm1lbWZsYWdzIHw9IE1FTUZfbm9kZShYRU5NRU1GX2dldF9ub2Rl
-KHhtZikpOworICAgICAgICBpZiAoIHhtZiAmIFhFTk1FTUZfZXhhY3Rfbm9k
-ZV9yZXF1ZXN0ICkKKyAgICAgICAgICAgICptZW1mbGFncyB8PSBNRU1GX2V4
-YWN0X25vZGU7CisgICAgfQorICAgIGVsc2UgaWYgKCB4bWYgJiBYRU5NRU1G
-X2V4YWN0X25vZGVfcmVxdWVzdCApCisgICAgICAgIHJldHVybiBmYWxzZTsK
-KworICAgIHJldHVybiB0cnVlOworfQorCiBzdGF0aWMgbG9uZyBtZW1vcnlf
-ZXhjaGFuZ2UoWEVOX0dVRVNUX0hBTkRMRV9QQVJBTSh4ZW5fbWVtb3J5X2V4
-Y2hhbmdlX3QpIGFyZykKIHsKICAgICBzdHJ1Y3QgeGVuX21lbW9yeV9leGNo
-YW5nZSBleGNoOwpAQCAtNTAxLDYgKzUyNiwxMiBAQCBzdGF0aWMgbG9uZyBt
-ZW1vcnlfZXhjaGFuZ2UoWEVOX0dVRVNUX0hBCiAgICAgICAgIH0KICAgICB9
-CiAKKyAgICBpZiAoIHVubGlrZWx5KCFwcm9wYWdhdGVfbm9kZShleGNoLm91
-dC5tZW1fZmxhZ3MsICZtZW1mbGFncykpICkKKyAgICB7CisgICAgICAgIHJj
-ID0gLUVJTlZBTDsKKyAgICAgICAgZ290byBmYWlsX2Vhcmx5OworICAgIH0K
-KwogICAgIGQgPSByY3VfbG9ja19kb21haW5fYnlfYW55X2lkKGV4Y2guaW4u
-ZG9taWQpOwogICAgIGlmICggZCA9PSBOVUxMICkKICAgICB7CkBAIC01MTks
-NyArNTUwLDYgQEAgc3RhdGljIGxvbmcgbWVtb3J5X2V4Y2hhbmdlKFhFTl9H
-VUVTVF9IQQogICAgICAgICBkLAogICAgICAgICBYRU5NRU1GX2dldF9hZGRy
-ZXNzX2JpdHMoZXhjaC5vdXQubWVtX2ZsYWdzKSA/IDoKICAgICAgICAgKEJJ
-VFNfUEVSX0xPTkcrUEFHRV9TSElGVCkpKTsKLSAgICBtZW1mbGFncyB8PSBN
-RU1GX25vZGUoWEVOTUVNRl9nZXRfbm9kZShleGNoLm91dC5tZW1fZmxhZ3Mp
-KTsKIAogICAgIGZvciAoIGkgPSAoZXhjaC5ucl9leGNoYW5nZWQgPj4gaW5f
-Y2h1bmtfb3JkZXIpOwogICAgICAgICAgIGkgPCAoZXhjaC5pbi5ucl9leHRl
-bnRzID4+IGluX2NodW5rX29yZGVyKTsKQEAgLTg4MiwxMiArOTEyLDggQEAg
-c3RhdGljIGludCBjb25zdHJ1Y3RfbWVtb3BfZnJvbV9yZXNlcnZhdAogICAg
-ICAgICB9CiAgICAgICAgIHJlYWRfdW5sb2NrKCZkLT52bnVtYV9yd2xvY2sp
-OwogICAgIH0KLSAgICBlbHNlCi0gICAgewotICAgICAgICBhLT5tZW1mbGFn
-cyB8PSBNRU1GX25vZGUoWEVOTUVNRl9nZXRfbm9kZShyLT5tZW1fZmxhZ3Mp
-KTsKLSAgICAgICAgaWYgKCByLT5tZW1fZmxhZ3MgJiBYRU5NRU1GX2V4YWN0
-X25vZGVfcmVxdWVzdCApCi0gICAgICAgICAgICBhLT5tZW1mbGFncyB8PSBN
-RU1GX2V4YWN0X25vZGU7Ci0gICAgfQorICAgIGVsc2UgaWYgKCB1bmxpa2Vs
-eSghcHJvcGFnYXRlX25vZGUoci0+bWVtX2ZsYWdzLCAmYS0+bWVtZmxhZ3Mp
-KSApCisgICAgICAgIHJldHVybiAtRUlOVkFMOwogCiAgICAgcmV0dXJuIDA7
-CiB9Ci0tLSBhL3hlbi9jb21tb24vcGFnZV9hbGxvYy5jCisrKyBiL3hlbi9j
-b21tb24vcGFnZV9hbGxvYy5jCkBAIC03NzYsOSArNzc2LDEyIEBAIHN0YXRp
-YyBzdHJ1Y3QgcGFnZV9pbmZvICphbGxvY19oZWFwX3BhZ2UKICAgICAgICAg
-aWYgKCBub2RlID49IE1BWF9OVU1OT0RFUyApCiAgICAgICAgICAgICBub2Rl
-ID0gY3B1X3RvX25vZGUoc21wX3Byb2Nlc3Nvcl9pZCgpKTsKICAgICB9Cisg
-ICAgZWxzZSBpZiAoIHVubGlrZWx5KG5vZGUgPj0gTUFYX05VTU5PREVTKSAp
-CisgICAgeworICAgICAgICBBU1NFUlRfVU5SRUFDSEFCTEUoKTsKKyAgICAg
-ICAgcmV0dXJuIE5VTEw7CisgICAgfQogICAgIGZpcnN0X25vZGUgPSBub2Rl
-OwotCi0gICAgQVNTRVJUKG5vZGUgPCBNQVhfTlVNTk9ERVMpOwogCiAgICAg
-LyoKICAgICAgKiBTdGFydCB3aXRoIHJlcXVlc3RlZCBub2RlLCBidXQgZXho
-YXVzdCBhbGwgbm9kZSBtZW1vcnkgaW4gcmVxdWVzdGVkIAo=
+> However, it appears that the expat vendor
+> is recognizing the old behavior (i.e., the behavior before
+> XML_SetHashSalt was available and documented) as a security-relevant
+> implementation error. Use CVE-2012-6702.
+> 
+> An entirely separate question is whether generate_hash_secret_salt
+> should ultimately be using the rand function to attempt to provide a
+> random number, or whether it should provide a better quality random
+> number. There is no CVE ID for this yet. If the expat upstream
+> maintainer is announcing a new expat release, specifically stating
+> that discontinuing use of the rand function represents a vulnerability
+> fix, then a CVE ID can be assigned.
 
---=separator
-Content-Type: application/octet-stream; name="xsa231-4.5.patch"
-Content-Disposition: attachment; filename="xsa231-4.5.patch"
-Content-Transfer-Encoding: base64
+I am not sure if I get that right.
 
-RnJvbTogR2VvcmdlIER1bmxhcCA8Z2VvcmdlLmR1bmxhcEBjaXRyaXguY29t
-PgpTdWJqZWN0OiB4ZW4vbW06IG1ha2Ugc3VyZSBub2RlIGlzIGxlc3MgdGhh
-biBNQVhfTlVNTk9ERVMKClRoZSBvdXRwdXQgb2YgTUVNRl9nZXRfbm9kZSht
-ZW1mbGFncykgY2FuIGJlIGFzIGxhcmdlIGFzIG5vZGVpZF90IGNhbgpob2xk
-IChjdXJyZW50bHkgMjU1KS4gIFRoaXMgaXMgdGhlbiB1c2VkIGFzIGFuIGlu
-ZGV4IHRvIGFycmF5cyBvZiBzaXplCk1BWF9OVU1OT0RFLCB3aGljaCBpcyA2
-NCBvbiB4ODYgYW5kIDEgb24gQVJNLCBjYW4gYmUgcGFzc2VkIGluIGJ5IGFu
-CnVudHJ1c3RlZCBndWVzdCAodmlhIG1lbW9yeV9leGNoYW5nZSBhbmQgaW5j
-cmVhc2VfcmVzZXJ2YXRpb24pIGFuZCBpcwpub3QgY3VycmVudGx5IGJvdW5k
-cy1jaGVja2VkLgoKQ2hlY2sgdGhlIHZhbHVlIGluIHBhZ2VfYWxsb2MuYyBi
-ZWZvcmUgdXNpbmcgaXQsIGFuZCBhbHNvIGNoZWNrIHRoZQp2YWx1ZSBpbiB0
-aGUgaHlwZXJjYWxsIGNhbGwgc2l0ZXMgYW5kIHJldHVybiAtRUlOVkFMIGlm
-IGFwcHJvcHJpYXRlLgpEb24ndCBwZXJtaXQgZG9tYWlucyBvdGhlciB0aGFu
-IHRoZSBoYXJkd2FyZSBvciBjb250cm9sIGRvbWFpbiB0bwphbGxvY2F0ZSBu
-b2RlLWNvbnN0cmFpbmVkIG1lbW9yeS4KClRoaXMgaXMgWFNBLTIzMS4KClJl
-cG9ydGVkLWJ5OiBNYXR0aGV3IERhbGV5IDxtYXR0ZEBidWdmdXp6LmNvbT4K
-U2lnbmVkLW9mZi1ieTogR2VvcmdlIER1bmxhcCA8Z2VvcmdlLmR1bmxhcEBj
-aXRyaXguY29tPgpTaWduZWQtb2ZmLWJ5OiBKYW4gQmV1bGljaCA8amJldWxp
-Y2hAc3VzZS5jb20+ClJldmlld2VkLWJ5OiBBbmRyZXcgQ29vcGVyIDxhbmRy
-ZXcuY29vcGVyM0BjaXRyaXguY29tPgoKLS0tIGEveGVuL2NvbW1vbi9tZW1v
-cnkuYworKysgYi94ZW4vY29tbW9uL21lbW9yeS5jCkBAIC0zODMsNiArMzgz
-LDMwIEBAIHN0YXRpYyB2b2lkIGRlY3JlYXNlX3Jlc2VydmF0aW9uKHN0cnVj
-dAogICAgIGEtPm5yX2RvbmUgPSBpOwogfQogCitzdGF0aWMgYm9vbF90IHBy
-b3BhZ2F0ZV9ub2RlKHVuc2lnbmVkIGludCB4bWYsIHVuc2lnbmVkIGludCAq
-bWVtZmxhZ3MpCit7CisgICAgY29uc3Qgc3RydWN0IGRvbWFpbiAqY3VycmQg
-PSBjdXJyZW50LT5kb21haW47CisKKyAgICBCVUlMRF9CVUdfT04oWEVOTUVN
-Rl9nZXRfbm9kZSgwKSAhPSBOVU1BX05PX05PREUpOworCisgICAgaWYgKCBY
-RU5NRU1GX2dldF9ub2RlKHhtZikgPT0gTlVNQV9OT19OT0RFICkKKyAgICAg
-ICAgcmV0dXJuIDE7CisKKyAgICBpZiAoIGlzX2hhcmR3YXJlX2RvbWFpbihj
-dXJyZCkgfHwgaXNfY29udHJvbF9kb21haW4oY3VycmQpICkKKyAgICB7Cisg
-ICAgICAgIGlmICggWEVOTUVNRl9nZXRfbm9kZSh4bWYpID49IE1BWF9OVU1O
-T0RFUyApCisgICAgICAgICAgICByZXR1cm4gMDsKKworICAgICAgICAqbWVt
-ZmxhZ3MgfD0gTUVNRl9ub2RlKFhFTk1FTUZfZ2V0X25vZGUoeG1mKSk7Cisg
-ICAgICAgIGlmICggeG1mICYgWEVOTUVNRl9leGFjdF9ub2RlX3JlcXVlc3Qg
-KQorICAgICAgICAgICAgKm1lbWZsYWdzIHw9IE1FTUZfZXhhY3Rfbm9kZTsK
-KyAgICB9CisgICAgZWxzZSBpZiAoIHhtZiAmIFhFTk1FTUZfZXhhY3Rfbm9k
-ZV9yZXF1ZXN0ICkKKyAgICAgICAgcmV0dXJuIDA7CisKKyAgICByZXR1cm4g
-MTsKK30KKwogc3RhdGljIGxvbmcgbWVtb3J5X2V4Y2hhbmdlKFhFTl9HVUVT
-VF9IQU5ETEVfUEFSQU0oeGVuX21lbW9yeV9leGNoYW5nZV90KSBhcmcpCiB7
-CiAgICAgc3RydWN0IHhlbl9tZW1vcnlfZXhjaGFuZ2UgZXhjaDsKQEAgLTQ1
-NSw2ICs0NzksMTIgQEAgc3RhdGljIGxvbmcgbWVtb3J5X2V4Y2hhbmdlKFhF
-Tl9HVUVTVF9IQQogICAgICAgICB9CiAgICAgfQogCisgICAgaWYgKCB1bmxp
-a2VseSghcHJvcGFnYXRlX25vZGUoZXhjaC5vdXQubWVtX2ZsYWdzLCAmbWVt
-ZmxhZ3MpKSApCisgICAgeworICAgICAgICByYyA9IC1FSU5WQUw7CisgICAg
-ICAgIGdvdG8gZmFpbF9lYXJseTsKKyAgICB9CisKICAgICBkID0gcmN1X2xv
-Y2tfZG9tYWluX2J5X2FueV9pZChleGNoLmluLmRvbWlkKTsKICAgICBpZiAo
-IGQgPT0gTlVMTCApCiAgICAgewpAQCAtNDczLDcgKzUwMyw2IEBAIHN0YXRp
-YyBsb25nIG1lbW9yeV9leGNoYW5nZShYRU5fR1VFU1RfSEEKICAgICAgICAg
-ZCwKICAgICAgICAgWEVOTUVNRl9nZXRfYWRkcmVzc19iaXRzKGV4Y2gub3V0
-Lm1lbV9mbGFncykgPyA6CiAgICAgICAgIChCSVRTX1BFUl9MT05HK1BBR0Vf
-U0hJRlQpKSk7Ci0gICAgbWVtZmxhZ3MgfD0gTUVNRl9ub2RlKFhFTk1FTUZf
-Z2V0X25vZGUoZXhjaC5vdXQubWVtX2ZsYWdzKSk7CiAKICAgICBmb3IgKCBp
-ID0gKGV4Y2gubnJfZXhjaGFuZ2VkID4+IGluX2NodW5rX29yZGVyKTsKICAg
-ICAgICAgICBpIDwgKGV4Y2guaW4ubnJfZXh0ZW50cyA+PiBpbl9jaHVua19v
-cmRlcik7CkBAIC04MTQsOSArODQzLDggQEAgbG9uZyBkb19tZW1vcnlfb3Ao
-dW5zaWduZWQgbG9uZyBjbWQsIFhFTgogICAgICAgICAgICAgYXJncy5tZW1m
-bGFncyA9IE1FTUZfYml0cyhhZGRyZXNzX2JpdHMpOwogICAgICAgICB9CiAK
-LSAgICAgICAgYXJncy5tZW1mbGFncyB8PSBNRU1GX25vZGUoWEVOTUVNRl9n
-ZXRfbm9kZShyZXNlcnZhdGlvbi5tZW1fZmxhZ3MpKTsKLSAgICAgICAgaWYg
-KCByZXNlcnZhdGlvbi5tZW1fZmxhZ3MgJiBYRU5NRU1GX2V4YWN0X25vZGVf
-cmVxdWVzdCApCi0gICAgICAgICAgICBhcmdzLm1lbWZsYWdzIHw9IE1FTUZf
-ZXhhY3Rfbm9kZTsKKyAgICAgICAgaWYgKCB1bmxpa2VseSghcHJvcGFnYXRl
-X25vZGUocmVzZXJ2YXRpb24ubWVtX2ZsYWdzLCAmYXJncy5tZW1mbGFncykp
-ICkKKyAgICAgICAgICAgIHJldHVybiAtRUlOVkFMOwogCiAgICAgICAgIGlm
-ICggb3AgPT0gWEVOTUVNX3BvcHVsYXRlX3BoeXNtYXAKICAgICAgICAgICAg
-ICAmJiAocmVzZXJ2YXRpb24ubWVtX2ZsYWdzICYgWEVOTUVNRl9wb3B1bGF0
-ZV9vbl9kZW1hbmQpICkKLS0tIGEveGVuL2NvbW1vbi9wYWdlX2FsbG9jLmMK
-KysrIGIveGVuL2NvbW1vbi9wYWdlX2FsbG9jLmMKQEAgLTYxMCw5ICs2MTAs
-MTMgQEAgc3RhdGljIHN0cnVjdCBwYWdlX2luZm8gKmFsbG9jX2hlYXBfcGFn
-ZQogICAgICAgICBpZiAoIG5vZGUgPj0gTUFYX05VTU5PREVTICkKICAgICAg
-ICAgICAgIG5vZGUgPSBjcHVfdG9fbm9kZShzbXBfcHJvY2Vzc29yX2lkKCkp
-OwogICAgIH0KKyAgICBlbHNlIGlmICggdW5saWtlbHkobm9kZSA+PSBNQVhf
-TlVNTk9ERVMpICkKKyAgICB7CisgICAgICAgIEFTU0VSVF9VTlJFQUNIQUJM
-RSgpOworICAgICAgICByZXR1cm4gTlVMTDsKKyAgICB9CiAgICAgZmlyc3Rf
-bm9kZSA9IG5vZGU7CiAKLSAgICBBU1NFUlQobm9kZSA+PSAwKTsKICAgICBB
-U1NFUlQoem9uZV9sbyA8PSB6b25lX2hpKTsKICAgICBBU1NFUlQoem9uZV9o
-aSA8IE5SX1pPTkVTKTsKIAo=
 
---=separator
-Content-Type: application/octet-stream; name="xsa231-4.7.patch"
-Content-Disposition: attachment; filename="xsa231-4.7.patch"
-Content-Transfer-Encoding: base64
+The hash DoS vulnerability CVE-2012-0876 was fixed to some extend in
+Expat 2.1.0, commit e3e81a6d -- the place where Expat started calling
+srand.  While XML_SetHashSalt was introducd a bit later, it did arrive
+with Expat 2.1.0 still.
 
-RnJvbTogR2VvcmdlIER1bmxhcCA8Z2VvcmdlLmR1bmxhcEBjaXRyaXguY29t
-PgpTdWJqZWN0OiB4ZW4vbW06IG1ha2Ugc3VyZSBub2RlIGlzIGxlc3MgdGhh
-biBNQVhfTlVNTk9ERVMKClRoZSBvdXRwdXQgb2YgTUVNRl9nZXRfbm9kZSht
-ZW1mbGFncykgY2FuIGJlIGFzIGxhcmdlIGFzIG5vZGVpZF90IGNhbgpob2xk
-IChjdXJyZW50bHkgMjU1KS4gIFRoaXMgaXMgdGhlbiB1c2VkIGFzIGFuIGlu
-ZGV4IHRvIGFycmF5cyBvZiBzaXplCk1BWF9OVU1OT0RFLCB3aGljaCBpcyA2
-NCBvbiB4ODYgYW5kIDEgb24gQVJNLCBjYW4gYmUgcGFzc2VkIGluIGJ5IGFu
-CnVudHJ1c3RlZCBndWVzdCAodmlhIG1lbW9yeV9leGNoYW5nZSBhbmQgaW5j
-cmVhc2VfcmVzZXJ2YXRpb24pIGFuZCBpcwpub3QgY3VycmVudGx5IGJvdW5k
-cy1jaGVja2VkLgoKQ2hlY2sgdGhlIHZhbHVlIGluIHBhZ2VfYWxsb2MuYyBi
-ZWZvcmUgdXNpbmcgaXQsIGFuZCBhbHNvIGNoZWNrIHRoZQp2YWx1ZSBpbiB0
-aGUgaHlwZXJjYWxsIGNhbGwgc2l0ZXMgYW5kIHJldHVybiAtRUlOVkFMIGlm
-IGFwcHJvcHJpYXRlLgpEb24ndCBwZXJtaXQgZG9tYWlucyBvdGhlciB0aGFu
-IHRoZSBoYXJkd2FyZSBvciBjb250cm9sIGRvbWFpbiB0bwphbGxvY2F0ZSBu
-b2RlLWNvbnN0cmFpbmVkIG1lbW9yeS4KClRoaXMgaXMgWFNBLTIzMS4KClJl
-cG9ydGVkLWJ5OiBNYXR0aGV3IERhbGV5IDxtYXR0ZEBidWdmdXp6LmNvbT4K
-U2lnbmVkLW9mZi1ieTogR2VvcmdlIER1bmxhcCA8Z2VvcmdlLmR1bmxhcEBj
-aXRyaXguY29tPgpTaWduZWQtb2ZmLWJ5OiBKYW4gQmV1bGljaCA8amJldWxp
-Y2hAc3VzZS5jb20+ClJldmlld2VkLWJ5OiBBbmRyZXcgQ29vcGVyIDxhbmRy
-ZXcuY29vcGVyM0BjaXRyaXguY29tPgoKLS0tIGEveGVuL2NvbW1vbi9tZW1v
-cnkuYworKysgYi94ZW4vY29tbW9uL21lbW9yeS5jCkBAIC0zOTAsNiArMzkw
-LDMxIEBAIHN0YXRpYyB2b2lkIGRlY3JlYXNlX3Jlc2VydmF0aW9uKHN0cnVj
-dAogICAgIGEtPm5yX2RvbmUgPSBpOwogfQogCitzdGF0aWMgYm9vbF90IHBy
-b3BhZ2F0ZV9ub2RlKHVuc2lnbmVkIGludCB4bWYsIHVuc2lnbmVkIGludCAq
-bWVtZmxhZ3MpCit7CisgICAgY29uc3Qgc3RydWN0IGRvbWFpbiAqY3VycmQg
-PSBjdXJyZW50LT5kb21haW47CisKKyAgICBCVUlMRF9CVUdfT04oWEVOTUVN
-Rl9nZXRfbm9kZSgwKSAhPSBOVU1BX05PX05PREUpOworICAgIEJVSUxEX0JV
-R19PTihNRU1GX2dldF9ub2RlKDApICE9IE5VTUFfTk9fTk9ERSk7CisKKyAg
-ICBpZiAoIFhFTk1FTUZfZ2V0X25vZGUoeG1mKSA9PSBOVU1BX05PX05PREUg
-KQorICAgICAgICByZXR1cm4gMTsKKworICAgIGlmICggaXNfaGFyZHdhcmVf
-ZG9tYWluKGN1cnJkKSB8fCBpc19jb250cm9sX2RvbWFpbihjdXJyZCkgKQor
-ICAgIHsKKyAgICAgICAgaWYgKCBYRU5NRU1GX2dldF9ub2RlKHhtZikgPj0g
-TUFYX05VTU5PREVTICkKKyAgICAgICAgICAgIHJldHVybiAwOworCisgICAg
-ICAgICptZW1mbGFncyB8PSBNRU1GX25vZGUoWEVOTUVNRl9nZXRfbm9kZSh4
-bWYpKTsKKyAgICAgICAgaWYgKCB4bWYgJiBYRU5NRU1GX2V4YWN0X25vZGVf
-cmVxdWVzdCApCisgICAgICAgICAgICAqbWVtZmxhZ3MgfD0gTUVNRl9leGFj
-dF9ub2RlOworICAgIH0KKyAgICBlbHNlIGlmICggeG1mICYgWEVOTUVNRl9l
-eGFjdF9ub2RlX3JlcXVlc3QgKQorICAgICAgICByZXR1cm4gMDsKKworICAg
-IHJldHVybiAxOworfQorCiBzdGF0aWMgbG9uZyBtZW1vcnlfZXhjaGFuZ2Uo
-WEVOX0dVRVNUX0hBTkRMRV9QQVJBTSh4ZW5fbWVtb3J5X2V4Y2hhbmdlX3Qp
-IGFyZykKIHsKICAgICBzdHJ1Y3QgeGVuX21lbW9yeV9leGNoYW5nZSBleGNo
-OwpAQCAtNDYyLDYgKzQ4NywxMiBAQCBzdGF0aWMgbG9uZyBtZW1vcnlfZXhj
-aGFuZ2UoWEVOX0dVRVNUX0hBCiAgICAgICAgIH0KICAgICB9CiAKKyAgICBp
-ZiAoIHVubGlrZWx5KCFwcm9wYWdhdGVfbm9kZShleGNoLm91dC5tZW1fZmxh
-Z3MsICZtZW1mbGFncykpICkKKyAgICB7CisgICAgICAgIHJjID0gLUVJTlZB
-TDsKKyAgICAgICAgZ290byBmYWlsX2Vhcmx5OworICAgIH0KKwogICAgIGQg
-PSByY3VfbG9ja19kb21haW5fYnlfYW55X2lkKGV4Y2guaW4uZG9taWQpOwog
-ICAgIGlmICggZCA9PSBOVUxMICkKICAgICB7CkBAIC00ODAsNyArNTExLDYg
-QEAgc3RhdGljIGxvbmcgbWVtb3J5X2V4Y2hhbmdlKFhFTl9HVUVTVF9IQQog
-ICAgICAgICBkLAogICAgICAgICBYRU5NRU1GX2dldF9hZGRyZXNzX2JpdHMo
-ZXhjaC5vdXQubWVtX2ZsYWdzKSA/IDoKICAgICAgICAgKEJJVFNfUEVSX0xP
-TkcrUEFHRV9TSElGVCkpKTsKLSAgICBtZW1mbGFncyB8PSBNRU1GX25vZGUo
-WEVOTUVNRl9nZXRfbm9kZShleGNoLm91dC5tZW1fZmxhZ3MpKTsKIAogICAg
-IGZvciAoIGkgPSAoZXhjaC5ucl9leGNoYW5nZWQgPj4gaW5fY2h1bmtfb3Jk
-ZXIpOwogICAgICAgICAgIGkgPCAoZXhjaC5pbi5ucl9leHRlbnRzID4+IGlu
-X2NodW5rX29yZGVyKTsKQEAgLTgzNCwxMiArODY0LDggQEAgc3RhdGljIGlu
-dCBjb25zdHJ1Y3RfbWVtb3BfZnJvbV9yZXNlcnZhdAogICAgICAgICB9CiAg
-ICAgICAgIHJlYWRfdW5sb2NrKCZkLT52bnVtYV9yd2xvY2spOwogICAgIH0K
-LSAgICBlbHNlCi0gICAgewotICAgICAgICBhLT5tZW1mbGFncyB8PSBNRU1G
-X25vZGUoWEVOTUVNRl9nZXRfbm9kZShyLT5tZW1fZmxhZ3MpKTsKLSAgICAg
-ICAgaWYgKCByLT5tZW1fZmxhZ3MgJiBYRU5NRU1GX2V4YWN0X25vZGVfcmVx
-dWVzdCApCi0gICAgICAgICAgICBhLT5tZW1mbGFncyB8PSBNRU1GX2V4YWN0
-X25vZGU7Ci0gICAgfQorICAgIGVsc2UgaWYgKCB1bmxpa2VseSghcHJvcGFn
-YXRlX25vZGUoci0+bWVtX2ZsYWdzLCAmYS0+bWVtZmxhZ3MpKSApCisgICAg
-ICAgIHJldHVybiAtRUlOVkFMOwogCiAgICAgcmV0dXJuIDA7CiB9Ci0tLSBh
-L3hlbi9jb21tb24vcGFnZV9hbGxvYy5jCisrKyBiL3hlbi9jb21tb24vcGFn
-ZV9hbGxvYy5jCkBAIC03MTEsOSArNzExLDEzIEBAIHN0YXRpYyBzdHJ1Y3Qg
-cGFnZV9pbmZvICphbGxvY19oZWFwX3BhZ2UKICAgICAgICAgaWYgKCBub2Rl
-ID49IE1BWF9OVU1OT0RFUyApCiAgICAgICAgICAgICBub2RlID0gY3B1X3Rv
-X25vZGUoc21wX3Byb2Nlc3Nvcl9pZCgpKTsKICAgICB9CisgICAgZWxzZSBp
-ZiAoIHVubGlrZWx5KG5vZGUgPj0gTUFYX05VTU5PREVTKSApCisgICAgewor
-ICAgICAgICBBU1NFUlRfVU5SRUFDSEFCTEUoKTsKKyAgICAgICAgcmV0dXJu
-IE5VTEw7CisgICAgfQogICAgIGZpcnN0X25vZGUgPSBub2RlOwogCi0gICAg
-QVNTRVJUKG5vZGUgPCBNQVhfTlVNTk9ERVMpOwogICAgIEFTU0VSVCh6b25l
-X2xvIDw9IHpvbmVfaGkpOwogICAgIEFTU0VSVCh6b25lX2hpIDwgTlJfWk9O
-RVMpOwogCg==
+srand was called (by generate_hash_secret_salt) since Expat 2.1.0 if
 
---=separator
-Content-Type: application/octet-stream; name="xsa231-4.9.patch"
-Content-Disposition: attachment; filename="xsa231-4.9.patch"
-Content-Transfer-Encoding: base64
+ a) the app using Expat did not call XML_SetHashSalt
+    prior to starting to parse with that XML_Parser instance
+    (XML_SetHashSalt existing or not) or
 
-RnJvbTogR2VvcmdlIER1bmxhcCA8Z2VvcmdlLmR1bmxhcEBjaXRyaXguY29t
-PgpTdWJqZWN0OiB4ZW4vbW06IG1ha2Ugc3VyZSBub2RlIGlzIGxlc3MgdGhh
-biBNQVhfTlVNTk9ERVMKClRoZSBvdXRwdXQgb2YgTUVNRl9nZXRfbm9kZSht
-ZW1mbGFncykgY2FuIGJlIGFzIGxhcmdlIGFzIG5vZGVpZF90IGNhbgpob2xk
-IChjdXJyZW50bHkgMjU1KS4gIFRoaXMgaXMgdGhlbiB1c2VkIGFzIGFuIGlu
-ZGV4IHRvIGFycmF5cyBvZiBzaXplCk1BWF9OVU1OT0RFLCB3aGljaCBpcyA2
-NCBvbiB4ODYgYW5kIDEgb24gQVJNLCBjYW4gYmUgcGFzc2VkIGluIGJ5IGFu
-CnVudHJ1c3RlZCBndWVzdCAodmlhIG1lbW9yeV9leGNoYW5nZSBhbmQgaW5j
-cmVhc2VfcmVzZXJ2YXRpb24pIGFuZCBpcwpub3QgY3VycmVudGx5IGJvdW5k
-cy1jaGVja2VkLgoKQ2hlY2sgdGhlIHZhbHVlIGluIHBhZ2VfYWxsb2MuYyBi
-ZWZvcmUgdXNpbmcgaXQsIGFuZCBhbHNvIGNoZWNrIHRoZQp2YWx1ZSBpbiB0
-aGUgaHlwZXJjYWxsIGNhbGwgc2l0ZXMgYW5kIHJldHVybiAtRUlOVkFMIGlm
-IGFwcHJvcHJpYXRlLgpEb24ndCBwZXJtaXQgZG9tYWlucyBvdGhlciB0aGFu
-IHRoZSBoYXJkd2FyZSBvciBjb250cm9sIGRvbWFpbiB0bwphbGxvY2F0ZSBu
-b2RlLWNvbnN0cmFpbmVkIG1lbW9yeS4KClRoaXMgaXMgWFNBLTIzMS4KClJl
-cG9ydGVkLWJ5OiBNYXR0aGV3IERhbGV5IDxtYXR0ZEBidWdmdXp6LmNvbT4K
-U2lnbmVkLW9mZi1ieTogR2VvcmdlIER1bmxhcCA8Z2VvcmdlLmR1bmxhcEBj
-aXRyaXguY29tPgpTaWduZWQtb2ZmLWJ5OiBKYW4gQmV1bGljaCA8amJldWxp
-Y2hAc3VzZS5jb20+ClJldmlld2VkLWJ5OiBBbmRyZXcgQ29vcGVyIDxhbmRy
-ZXcuY29vcGVyM0BjaXRyaXguY29tPgoKLS0tIGEveGVuL2NvbW1vbi9tZW1v
-cnkuYworKysgYi94ZW4vY29tbW9uL21lbW9yeS5jCkBAIC00MTEsNiArNDEx
-LDMxIEBAIHN0YXRpYyB2b2lkIGRlY3JlYXNlX3Jlc2VydmF0aW9uKHN0cnVj
-dAogICAgIGEtPm5yX2RvbmUgPSBpOwogfQogCitzdGF0aWMgYm9vbCBwcm9w
-YWdhdGVfbm9kZSh1bnNpZ25lZCBpbnQgeG1mLCB1bnNpZ25lZCBpbnQgKm1l
-bWZsYWdzKQoreworICAgIGNvbnN0IHN0cnVjdCBkb21haW4gKmN1cnJkID0g
-Y3VycmVudC0+ZG9tYWluOworCisgICAgQlVJTERfQlVHX09OKFhFTk1FTUZf
-Z2V0X25vZGUoMCkgIT0gTlVNQV9OT19OT0RFKTsKKyAgICBCVUlMRF9CVUdf
-T04oTUVNRl9nZXRfbm9kZSgwKSAhPSBOVU1BX05PX05PREUpOworCisgICAg
-aWYgKCBYRU5NRU1GX2dldF9ub2RlKHhtZikgPT0gTlVNQV9OT19OT0RFICkK
-KyAgICAgICAgcmV0dXJuIHRydWU7CisKKyAgICBpZiAoIGlzX2hhcmR3YXJl
-X2RvbWFpbihjdXJyZCkgfHwgaXNfY29udHJvbF9kb21haW4oY3VycmQpICkK
-KyAgICB7CisgICAgICAgIGlmICggWEVOTUVNRl9nZXRfbm9kZSh4bWYpID49
-IE1BWF9OVU1OT0RFUyApCisgICAgICAgICAgICByZXR1cm4gZmFsc2U7CisK
-KyAgICAgICAgKm1lbWZsYWdzIHw9IE1FTUZfbm9kZShYRU5NRU1GX2dldF9u
-b2RlKHhtZikpOworICAgICAgICBpZiAoIHhtZiAmIFhFTk1FTUZfZXhhY3Rf
-bm9kZV9yZXF1ZXN0ICkKKyAgICAgICAgICAgICptZW1mbGFncyB8PSBNRU1G
-X2V4YWN0X25vZGU7CisgICAgfQorICAgIGVsc2UgaWYgKCB4bWYgJiBYRU5N
-RU1GX2V4YWN0X25vZGVfcmVxdWVzdCApCisgICAgICAgIHJldHVybiBmYWxz
-ZTsKKworICAgIHJldHVybiB0cnVlOworfQorCiBzdGF0aWMgbG9uZyBtZW1v
-cnlfZXhjaGFuZ2UoWEVOX0dVRVNUX0hBTkRMRV9QQVJBTSh4ZW5fbWVtb3J5
-X2V4Y2hhbmdlX3QpIGFyZykKIHsKICAgICBzdHJ1Y3QgeGVuX21lbW9yeV9l
-eGNoYW5nZSBleGNoOwpAQCAtNDgzLDYgKzUwOCwxMiBAQCBzdGF0aWMgbG9u
-ZyBtZW1vcnlfZXhjaGFuZ2UoWEVOX0dVRVNUX0hBCiAgICAgICAgIH0KICAg
-ICB9CiAKKyAgICBpZiAoIHVubGlrZWx5KCFwcm9wYWdhdGVfbm9kZShleGNo
-Lm91dC5tZW1fZmxhZ3MsICZtZW1mbGFncykpICkKKyAgICB7CisgICAgICAg
-IHJjID0gLUVJTlZBTDsKKyAgICAgICAgZ290byBmYWlsX2Vhcmx5OworICAg
-IH0KKwogICAgIGQgPSByY3VfbG9ja19kb21haW5fYnlfYW55X2lkKGV4Y2gu
-aW4uZG9taWQpOwogICAgIGlmICggZCA9PSBOVUxMICkKICAgICB7CkBAIC01
-MDEsNyArNTMyLDYgQEAgc3RhdGljIGxvbmcgbWVtb3J5X2V4Y2hhbmdlKFhF
-Tl9HVUVTVF9IQQogICAgICAgICBkLAogICAgICAgICBYRU5NRU1GX2dldF9h
-ZGRyZXNzX2JpdHMoZXhjaC5vdXQubWVtX2ZsYWdzKSA/IDoKICAgICAgICAg
-KEJJVFNfUEVSX0xPTkcrUEFHRV9TSElGVCkpKTsKLSAgICBtZW1mbGFncyB8
-PSBNRU1GX25vZGUoWEVOTUVNRl9nZXRfbm9kZShleGNoLm91dC5tZW1fZmxh
-Z3MpKTsKIAogICAgIGZvciAoIGkgPSAoZXhjaC5ucl9leGNoYW5nZWQgPj4g
-aW5fY2h1bmtfb3JkZXIpOwogICAgICAgICAgIGkgPCAoZXhjaC5pbi5ucl9l
-eHRlbnRzID4+IGluX2NodW5rX29yZGVyKTsKQEAgLTg2NCwxMiArODk0LDgg
-QEAgc3RhdGljIGludCBjb25zdHJ1Y3RfbWVtb3BfZnJvbV9yZXNlcnZhdAog
-ICAgICAgICB9CiAgICAgICAgIHJlYWRfdW5sb2NrKCZkLT52bnVtYV9yd2xv
-Y2spOwogICAgIH0KLSAgICBlbHNlCi0gICAgewotICAgICAgICBhLT5tZW1m
-bGFncyB8PSBNRU1GX25vZGUoWEVOTUVNRl9nZXRfbm9kZShyLT5tZW1fZmxh
-Z3MpKTsKLSAgICAgICAgaWYgKCByLT5tZW1fZmxhZ3MgJiBYRU5NRU1GX2V4
-YWN0X25vZGVfcmVxdWVzdCApCi0gICAgICAgICAgICBhLT5tZW1mbGFncyB8
-PSBNRU1GX2V4YWN0X25vZGU7Ci0gICAgfQorICAgIGVsc2UgaWYgKCB1bmxp
-a2VseSghcHJvcGFnYXRlX25vZGUoci0+bWVtX2ZsYWdzLCAmYS0+bWVtZmxh
-Z3MpKSApCisgICAgICAgIHJldHVybiAtRUlOVkFMOwogCiAgICAgcmV0dXJu
-IDA7CiB9Ci0tLSBhL3hlbi9jb21tb24vcGFnZV9hbGxvYy5jCisrKyBiL3hl
-bi9jb21tb24vcGFnZV9hbGxvYy5jCkBAIC03MDYsOSArNzA2LDEzIEBAIHN0
-YXRpYyBzdHJ1Y3QgcGFnZV9pbmZvICphbGxvY19oZWFwX3BhZ2UKICAgICAg
-ICAgaWYgKCBub2RlID49IE1BWF9OVU1OT0RFUyApCiAgICAgICAgICAgICBu
-b2RlID0gY3B1X3RvX25vZGUoc21wX3Byb2Nlc3Nvcl9pZCgpKTsKICAgICB9
-CisgICAgZWxzZSBpZiAoIHVubGlrZWx5KG5vZGUgPj0gTUFYX05VTU5PREVT
-KSApCisgICAgeworICAgICAgICBBU1NFUlRfVU5SRUFDSEFCTEUoKTsKKyAg
-ICAgICAgcmV0dXJuIE5VTEw7CisgICAgfQogICAgIGZpcnN0X25vZGUgPSBu
-b2RlOwogCi0gICAgQVNTRVJUKG5vZGUgPCBNQVhfTlVNTk9ERVMpOwogICAg
-IEFTU0VSVCh6b25lX2xvIDw9IHpvbmVfaGkpOwogICAgIEFTU0VSVCh6b25l
-X2hpIDwgTlJfWk9ORVMpOwogCg==
+ b) the app using Expat called XML_SetHashSalt with
+    hash_salt of value 0 (which is documented since Expat 2.1.1,
+    commit 891ec14f).
 
---=separator--
+The next release of Expat will not do internal calls to srand (or rand)
+any more but extract and use entropy from other sources.
+
+
+Please confirm that using CVE-2012-6702 for consequences of
+"unanticipated internal calls to srand" is what you intended.
+
+Also I suppose hash initialization with (too little /) second-based
+entropy still is part of the original CVE-2012-0876 (or the same again).
+ If not, it may not fit CVE-2012-6702 semantically.
+
+Thank you!
+
+Best
+
+
+
+Sebastian
