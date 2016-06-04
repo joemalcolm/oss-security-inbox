@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8521" "Tuesday" "28" "March" "2017" "06:45:34" "-0400" "Stiepan" "stie@itk.swiss" "<DJvRoKIuVbRyh3w6YppaTZqH1Dcid84FuuKxC6GKQeaXXt2iBfmnPlSvpDlx-wu52iIHxc6-aq7Hpa5PkpetzfBwyuo6NXmTzADSPd9LdG4=@itk.swiss>" "145" "Re: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership" nil nil nil "3" "2017032810:45:34" "[oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership" (number mark "U       stie@itk.swi Mar 28  145/8521  " thread-indent "\"Re: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership\"\n") "<yEw48KeZXecR-EKWWbAiNN-28xRPMYmv5qRYVlLwbDs4oH3fwjTstCNrpqptLwzG1mqIHxjMk-hiWRreJGC1WJmbY-daelcKJWMJdrb77z0=@itk.swiss>" ("<8919f274-0c56-2c12-649f-2561d6cd59d8@canonical.com>" "<Ya92X4yQVrEDADDRD-xy-FeIBfDkxTwkyuxI1ATPJl5YbwqpJDwGpa-5HQzKiS09u8o1yNNyHK9G-fzxNDU5NqURXqe49zTp4--EQYjHh8g=@itk.swiss>" "<831d5907-bf61-70c2-9501-f57923e5ae07@canonical.com>" "<9C8Q126sS901vkG8mMxgQPigkx5gBFpDrXBZJqzB9mfVVKvASCmxDOcSAiq9IjkGPjKbAm7r44vrPcqypgDoadrQ2Wuo4wYXFHdQ8amAvwk=@itk.swiss>" "<yEw48KeZXecR-EKWWbAiNN-28xRPMYmv5qRYVlLwbDs4oH3fwjTstCNrpqptLwzG1mqIHxjMk-hiWRreJGC1WJmbY-daelcKJWMJdrb77z0=@itk.swiss>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1970" "Saturday" "4" "June" "2016" "13:04:42" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160604170442.A47D96C0729@smtpvmsrv1.mitre.org>" "42" "[oss-security] three vulnerabilities in ImageMagick before 7.0.1-2" nil nil nil "6" "2016060417:04:42" "[oss-security] three vulnerabilities in ImageMagick before 7.0.1-2" (number mark "U       cve-assign@m Jun  4   42/1970  " thread-indent "\"[oss-security] three vulnerabilities in ImageMagick before 7.0.1-2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15728 invoked by uid 550); 28 Mar 2017 10:46:58 -0000
+Received: (qmail 32660 invoked by uid 550); 4 Jun 2016 17:04:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,167 +12,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15372 invoked from network); 28 Mar 2017 10:45:54 -0000
-Date: Tue, 28 Mar 2017 06:45:34 -0400
-Authentication-Results: mail2.protonmail.ch; dkim=none
+Received: (qmail 32641 invoked from network); 4 Jun 2016 17:04:54 -0000
+From: cve-assign@mitre.org
 To: oss-security@lists.openwall.com
-From: Stiepan <stie@itk.swiss>
-Cc: "857295@bugs.debian.org" <857295@bugs.debian.org>, =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@ubuntu.com>, serge.hallyn@ubuntu.com
-Message-ID: <DJvRoKIuVbRyh3w6YppaTZqH1Dcid84FuuKxC6GKQeaXXt2iBfmnPlSvpDlx-wu52iIHxc6-aq7Hpa5PkpetzfBwyuo6NXmTzADSPd9LdG4=@itk.swiss>
-In-Reply-To: <yEw48KeZXecR-EKWWbAiNN-28xRPMYmv5qRYVlLwbDs4oH3fwjTstCNrpqptLwzG1mqIHxjMk-hiWRreJGC1WJmbY-daelcKJWMJdrb77z0=@itk.swiss>
-References: <8919f274-0c56-2c12-649f-2561d6cd59d8@canonical.com>
- <Ya92X4yQVrEDADDRD-xy-FeIBfDkxTwkyuxI1ATPJl5YbwqpJDwGpa-5HQzKiS09u8o1yNNyHK9G-fzxNDU5NqURXqe49zTp4--EQYjHh8g=@itk.swiss>
- <831d5907-bf61-70c2-9501-f57923e5ae07@canonical.com>
- <9C8Q126sS901vkG8mMxgQPigkx5gBFpDrXBZJqzB9mfVVKvASCmxDOcSAiq9IjkGPjKbAm7r44vrPcqypgDoadrQ2Wuo4wYXFHdQ8amAvwk=@itk.swiss>
- <yEw48KeZXecR-EKWWbAiNN-28xRPMYmv5qRYVlLwbDs4oH3fwjTstCNrpqptLwzG1mqIHxjMk-hiWRreJGC1WJmbY-daelcKJWMJdrb77z0=@itk.swiss>
-Feedback-ID: wnsnnc8Us3MVqt1IALGduDJl-d16B_hEkg50pF7qo11mpeysEHmUOGy-yvw8MEApAPX3TXcPDHQwu7hti-kzSw==:Ext:ProtonMail
-MIME-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="b1_43cef91f811945a566de8e236908b25e"
-Subject: Re: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership
+Cc: cve-assign@mitre.org
+Message-Id: <20160604170442.A47D96C0729@smtpvmsrv1.mitre.org>
+Date: Sat,  4 Jun 2016 13:04:42 -0400 (EDT)
+Subject: [oss-security] three vulnerabilities in ImageMagick before 7.0.1-2
 
---b1_43cef91f811945a566de8e236908b25e
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-VGhhbmtzIHRvIHRoZSAyLjAuNy0yIHVwZGF0ZSBieSBFdmdlbmkgR29sb3Yg
-YW5kIGhpcyBjcnlzdGFsLWNsZWFyIGluc3RydWN0aW9ucyBvbiBob3cgdG8g
-dXNlIGx4Y2JyMCB3aXRoIHRoaXMgdmVyc2lvbiwgSSBjb3VsZCBjb25maXJt
-IHRoYXQgdGhlIGlzc3VlIHdpdGggdGhlIGhvc3QncyByb3V0aW5nIHRhYmxl
-IGJlaW5nIGFmZmVjdGVkIGJ5IGNoYW5nZXMgaW4gdGhlIGNvbnRhaW5lcnMn
-IHJvdXRpbmcgdGFibGVzIGlzIG5vdCB0aGVyZSBhbnltb3JlIHdoZW4gdXNp
-bmcgdGhhdCB2ZXJzaW9uIChseGMgMi4wLjctMiBmcm9tIGplc3NpZS1iYWNr
-cG9ydHMpLCB3aGljaCBpbmNsdWRlcyB0aGUgZml4ZXMgdG8gQ1ZFLTIwMTct
-NTk4NSB3aGljaCB3ZXJlIGJyb3VnaHQgaW4gTFhDIDIuMC43ICh1cHN0cmVh
-bSkuCgpUaGlzIHdhcyB0aHVzIGJhc2ljYWxseSBhIHZhcmlhdGlvbiBvZiBz
-YWlkIENWRSwgd2hpY2ggcHJvYmFibHkgZG9lc24ndCBuZWVkIHRvIGJlIHNl
-cGFyYXRlbHkgbnVtYmVyZWQgYXMgc3VjaCwgdGhlIGNvcmUgcHJvYmxlbSBh
-dCBzdGFrZSBiZWluZyB0aGUgc2FtZToKbmV0d29yayBuYW1lc3BhY2Ugb3du
-ZXJzaGlwIHdhcyBub3QgcmVzcGVjdGVkIGJ5IGEgc2V0dWlkLXJvb3QgcHJv
-Z3JhbSBlbmFibGluZyB0aGUgdXNlciB0byBjb25maWd1cmUgbmV0d29ya3Mg
-YXMgbm9uLXJvb3QsIHdoaWNoIGlzIG5vdyBzb2x2ZWQuClRoaXMgbGVhZHMg
-bWUgdG8gYSBzdWdnZXN0aW9uIHRvIHRoZSB1cHN0cmVhbSBkZXZlbG9wZXJz
-OiBjb3VsZG4ndCB0aGUgc2FtZSBiZSBhY2hpZXZlZCB1c2luZyBzcGVjaWZp
-YyBuZXR3b3JrLXJlbGF0ZWQgY2FwYWJpbGl0aWVzLCBpbnN0ZWFkIG9mIHNl
-dHVpZC1yb290LCB0aGVyZWJ5IGZ1cnRoZXIgcmVkdWNpbmcgdGhlIHJpc2sg
-b2YgbHhjLXVzZXItbmljIGJlaW5nIGV4cGxvaXRlZCBhbmQgaGVuY2UsIHJl
-ZHVjaW5nIG92ZXJhbGwgYXR0YWNrIHN1cmZhY2UgKGluIHVucHJpdmlsZWdl
-ZCBtb2RlKT8KSSBoYXZlIHJlYWQgaW4gaHR0cHM6Ly93aWtpLnVidW50dS5j
-b20vVXNlck5hbWVzcGFjZSB0aGF0IHRoZSBhcHByb2FjaCBvZiB1c2luZyAi
-dGFyZ2V0ZWQgY2FwYWJpbGl0aWVzIiB3YXMgdGhlbiBjb25zaWRlcmVkLiBU
-aGlzIGlzIHByb2JhYmx5IHRoZSBjbG9zZXN0IHRvIHdoYXQgSSBhbSBzdWdn
-ZXN0aW5nIChzcGVjaWZpY2FsbHkgZm9yIGx4Yy11c2VyLW5pYyAtIHRoZSBj
-dXJyZW50IGFwcHJvYWNoIHdpdGggMS0xIHVpZCBtYXBwaW5ncyBzZWVtcyBm
-aW5lIGZvciBuZXR3b3JrLXVucmVsYXRlZCB0aGluZ3MpLgoKU3RpZXBhbgoK
-LS0tLS0tLS0gT3JpZ2luYWwgTWVzc2FnZSAtLS0tLS0tLQpTdWJqZWN0OiBS
-ZTogW29zcy1zZWN1cml0eV0gTFhDOiBDVkUtMjAxNy01OTg1OiBseGMtdXNl
-ci1uaWMgZGlkbid0IHZlcmlmeSBuZXR3b3JrIG5hbWVzcGFjZSBvd25lcnNo
-aXAKTG9jYWwgVGltZTogMTUgTWFyY2ggMjAxNyAxMTo1NSBBTQpVVEMgVGlt
-ZTogMTUgTWFyY2ggMjAxNyAxMDo1NgpGcm9tOiBzdGllQGl0ay5zd2lzcwpU
-bzogb3NzLXNlY3VyaXR5QGxpc3RzLm9wZW53YWxsLmNvbQpvc3Mtc2VjdXJp
-dHlAbGlzdHMub3BlbndhbGwuY29tIDxvc3Mtc2VjdXJpdHlAbGlzdHMub3Bl
-bndhbGwuY29tPiwgODU3Mjk1QGJ1Z3MuZGViaWFuLm9yZyA8ODU3Mjk1QGJ1
-Z3MuZGViaWFuLm9yZz4sIFN0w6lwaGFuZSBHcmFiZXIgPHN0Z3JhYmVyQHVi
-dW50dS5jb20+LCBzZXJnZS5oYWxseW5AdWJ1bnR1LmNvbQoKSSBoYXZlIGZv
-dW5kIGEgd29ya2Fyb3VuZCB0byBzdGFydCB0aGUgY29udGFpbmVyIGluIHVz
-ZXIgbW9kZSBhZ2FpbiBvbiBEZWJpYW4gODoKdXNlIGEgInRydWUiIGJyMCBi
-cmlkZ2UgaW5zdGVhZCBvZiBseGMtYnIwIGFuZCBkaXNhYmxlLCBvciBzdG9w
-IHRoZSBseGMtbmV0IHNlcnZpY2UuCgpVbmRlciB0aGVzZSBjb25kaXRpb25z
-LCB1c2luZyBseGMgMi4wLjcoLTEpIGZyb20gamVzc2llLWJhY2twb3J0cywg
-SSBhbSBub3QgYWJsZSB0byByZXByb2R1Y2UgdGhlIHJvdXRpbmcgaXNzdWUg
-SSBzYXcgcnVubmluZyBseGMgMi4wLjYgaW4gdXNlciBtb2RlIHVzaW5nIGx4
-Yy1uZXQuIFNvIGEgc2FmZSBmYWxsYmFjayAoZm9yIERlYmlhbiA4KSwgZm9y
-IHRoZSB0aW1lIGJlaW5nLCBzZWVtcyB0byBiZSB0byBhdm9pZCB1c2luZyB1
-c2VyIG1vZGUgbHhjIG5ldHdvcmtpbmcgYW5kIHVzZSBhIHBsYWluIG9sZCBi
-cjAgaW5zdGVhZC4gVGhpcyBzaG91bGQgd29yayBvbiBhbGwgQ1BVIGFyY2hp
-dGVjdHVyZXMgKGV2ZW4gb24gcG93ZXJwYywga25vd24gdG8gYmUgcmVjYWxj
-aXRyYW50IHRvIGx4YyBvbiBEZWJpYW4gOCkuCgpTdGllcGFuCgotLS0tLS0t
-LSBPcmlnaW5hbCBNZXNzYWdlIC0tLS0tLS0tClN1YmplY3Q6IFJlOiBbb3Nz
-LXNlY3VyaXR5XSBMWEM6IENWRS0yMDE3LTU5ODU6IGx4Yy11c2VyLW5pYyBk
-aWRuJ3QgdmVyaWZ5IG5ldHdvcmsgbmFtZXNwYWNlIG93bmVyc2hpcApMb2Nh
-bCBUaW1lOiAxNCBNYXJjaCAyMDE3IDU6MTcgUE0KVVRDIFRpbWU6IDE0IE1h
-cmNoIDIwMTcgMTY6MTcKRnJvbTogc3RpZUBpdGsuc3dpc3MKVG86IG9zcy1z
-ZWN1cml0eUBsaXN0cy5vcGVud2FsbC5jb20gPG9zcy1zZWN1cml0eUBsaXN0
-cy5vcGVud2FsbC5jb20+LCA4NTcyOTVAYnVncy5kZWJpYW4ub3JnIDw4NTcy
-OTVAYnVncy5kZWJpYW4ub3JnPgpTdMOpcGhhbmUgR3JhYmVyIDxzdGdyYWJl
-ckB1YnVudHUuY29tPiwgc2VyZ2UuaGFsbHluQHVidW50dS5jb20KCllvdSBh
-cmUgd2VsY29tZS4gQXMgc3RhdGVkIGluIG15IHJlcGx5IHRvIFNlcmdlIEgu
-IEhhbGx5bidzIG9mZi1saXN0IG1lc3NhZ2UsIGluIHRoZSBtZWFudGltZSBJ
-IGhhdmUgaW5zdGFsbGVkIHZlcnNpb24gMi4wLjcgZnJvbSBqZXNzaWUtYmFj
-a3BvcnRzIGFuZCBhbSB1bmFibGUgdG8gcmVwcm9kdWNlIHRoZSBpc3N1ZSwg
-YXMgSSBjYW5ub3Qgc3RhcnQgdW5wcml2aWxlZ2VkIGNvbnRhaW5lcnMgYW55
-bW9yZSAoZHVlIHRvIGEgbmV0d29yayBlcnJvcikuIEFjY29yZGluZyB0byBE
-ZWJpYW4ncyB0cmFja2VyIHBhZ2UgZm9yIGx4YywgdGhlIHZlcnNpb24gdGhh
-dCBJIGhhdmUgaW5zdGFsbGVkIGZyb20gYmFja3BvcnRzIGlzIDIuMC43LTEs
-IHdoaWNoIGRvZXMgbm90IGluY2x1ZGUgbGF0ZXN0IHVwc3RyZWFtIGZpeGVz
-LiBJIGd1ZXNzIHRoYXQgSSBoYXZlIHRvIHdhaXQgZm9yIHRoZSAyLjAuNy0y
-IHBhY2thZ2UgLSB3aGljaCBpbmNsdWRlcyBsYXRlc3QgdXBzdHJlYW0gZml4
-ZXMgLSB0byBsYW5kIGluIGplc3NpZS1iYWNrcG9ydHMgZm9yIHRoZXNlIGlz
-c3VlcyAoYm90aCBzZWN1cml0eSBhbmQgZnVuY3Rpb25hbCkgdG8gYmUgZml4
-ZWQuCgpDQy1pbmcgdGhlIERlYmlhbiBhZGRyZXNzIGZvciB0aGlzIGJ1Zywg
-YXMgdGhleSBleHBsaWNpdGx5IGFza2VkIHRvIGRvIHRoaXMgaW4gY2FzZSB0
-aGVyZSBpcyBhIG5lZWQgdG8gcmVvcGVuIHRoZSBEZWJpYW4gYnVnLCB3aGlj
-aCBzZWVtcyB0byBiZSB0aGUgY2FzZSBoZXJlIChhdCBsZWFzdCwgZm9yIEpl
-c3NpZSwgc2luY2UgdGhlIGludGVybWVkaWFyeSAyLjAuNy0xIC5kZWIgYXBw
-YXJlbnRseSBicmVha3MgdW5wcml2aWxlZ2VkIG5ldHdvcmtpbmcsIGJlc2lk
-ZXMgbm90IGZpeGluZyB0aGUgc2VjdXJpdHkgaXNzdWUpLgpUbyB0aGUgRGVi
-aWFuIHRlYW0gaW4gY2hhcmdlIG9mIHRoaXMgYnVnOgpBcyB1bnByaXZpbGVn
-ZWQgbW9kZSBpcyBub3QgYWN0aXZhdGVkIGJ5IGRlZmF1bHQgb24gRGViaWFu
-LCBJIHVuZGVyc3RhbmQgdGhhdCB0aGlzIGlzIG5vdCBhIHByaW9yaXR5LCBi
-dXQgaXQgd291bGQgc3RpbGwgYmUgbmljZSB0byBoYXZlIHRoaXMgZml4ZWQg
-cXVpY2tseS4KQnkgdGhlIHdheSwgbm90IGRpcmVjdGx5IHJlbGF0ZWQgdG8g
-dGhpcyBzcGVjaWZpYyBidWcsIGJ1dCBJIGhvcGUgdGhhdCBzbmFwZCArIExY
-RCBzb21laG93IGZpbmRzIGl0cyB3YXkgaW50byBqZXNzaWUtYmFja3BvcnRz
-OiB0aGF0IHdvdWxkIGJlIGdyZWF0IQoKU3RpZXBhbgoKLS0tLS0tLS0gT3Jp
-Z2luYWwgTWVzc2FnZSAtLS0tLS0tLQpTdWJqZWN0OiBSZTogW29zcy1zZWN1
-cml0eV0gTFhDOiBDVkUtMjAxNy01OTg1OiBseGMtdXNlci1uaWMgZGlkbid0
-IHZlcmlmeSBuZXR3b3JrIG5hbWVzcGFjZSBvd25lcnNoaXAKTG9jYWwgVGlt
-ZTogMTQgTWFyY2ggMjAxNyAyOjA2IEFNClVUQyBUaW1lOiAxNCBNYXJjaCAy
-MDE3IDAxOjA3CkZyb206IHR5aGlja3NAY2Fub25pY2FsLmNvbQpUbzogb3Nz
-LXNlY3VyaXR5QGxpc3RzLm9wZW53YWxsLmNvbQpTdMOpcGhhbmUgR3JhYmVy
-IDxzdGdyYWJlckB1YnVudHUuY29tPiwgc2VyZ2UuaGFsbHluQHVidW50dS5j
-b20KCk9uIDAzLzEwLzIwMTcgMDY6MDMgQU0sIFN0aWVwYW4gd3JvdGU6Cj4g
-SSBkb24ndCBrbm93IHdoZXRoZXIgdGhhdCBpcyB0aGUgc2FtZSBidWcsIG9y
-IGEgcmVsYXRlZCBvbmUsIGJ1dCBvbiBEZWJpYW44IHVzaW5nIExYQyBmcm9t
-IGplc3NpZS1iYWNrcG9ydHMsIHNldHRpbmcgdGhlIGRlZmF1bHQgcm91dGUg
-aW4gYSBjb250YWluZXIgYWZmZWN0cyB0aGUgaG9zdCAtIG5hbWVseSwgZnJv
-bSBhbiB1bnByaXYuIGNvbnRhaW5lciwgc2V0dGluZyB0aGUgcm91dGUgc2V0
-cyB0aGUgaG9zdCdzIHJvdXRlIGFzIHdlbGwuCj4gbHhjLWluZm8gLS12ZXJz
-aW9uIG91dHB1dHMgMi4wLjYgYW5kIG5vIHVwZGF0ZSBpcyBjdXJyZW50bHkg
-YXZhaWxhYmxlIChvbiBEZWJpYW4pLgoKVGhhbmtzIGZvciB0aGUgcmVwb3J0
-LiBJIGp1c3QgdHJpZWQgdG8gcmVwcm9kdWNlIHRoZSBpc3N1ZSBvbiBVYnVu
-dHUKMTYuMDQgd2l0aCAyLjAuNy0wdWJ1bnR1MX4xNi4wNC4yLCB3aGljaCBp
-cyB0aGUgcGFja2FnZSBwYXRjaGVkIGZvciB0aGUKaXNzdWUgdGhhdCBJIGFu
-bm91bmNlZCBpbiB0aGlzIHRocmVhZC4gSSBjb3VsZG4ndCByZXByb2R1Y2Ug
-aXQuCgpJIHRoZW4gaW5zdGFsbGVkIGFuIG9sZCAyLjAuNiBiYXNlZCBkZWIg
-KDIuMC42LTB1YnVudHUxfnVidW50dTE2LjA0LjEpCmFuZCBzdGlsbCBjb3Vs
-ZG4ndCByZXByb2R1Y2UgaXQuCgpJJ2Qgc3VnZ2VzdCBvcGVuaW5nIGFuIHVw
-c3RyZWFtIGJ1ZyBoZXJlOgoKaHR0cHM6Ly9naXRodWIuY29tL2x4Yy9seGMv
-aXNzdWVzL25ldwoKKE5vcm1hbGx5LCB0aGV5IHByZWZlciBwcml2YXRlIHNl
-Y3VyaXR5IGJ1Z3Mgb24gTGF1bmNocGFkIGJ1dCB5b3VyCnJlcG9ydCB0byB0
-aGlzIGxpc3QgaXMgYWxyZWFkeSBwdWJsaWMgc28gSSBkb24ndCBzZWUgYSBu
-ZWVkLikKClR5bGVyCgo+IFN0aWVwYW4KPgo+Cj4KPiAtLS0tLS0tLSBPcmln
-aW5hbCBNZXNzYWdlIC0tLS0tLS0tCj4gU3ViamVjdDogW29zcy1zZWN1cml0
-eV0gTFhDOiBDVkUtMjAxNy01OTg1OiBseGMtdXNlci1uaWMgZGlkbid0IHZl
-cmlmeSBuZXR3b3JrIG5hbWVzcGFjZSBvd25lcnNoaXAKPiBMb2NhbCBUaW1l
-OiA5IE1hcmNoIDIwMTcgNTo1NCBQTQo+IFVUQyBUaW1lOiA5IE1hcmNoIDIw
-MTcgMTY6NTUKPiBGcm9tOiB0eWhpY2tzQGNhbm9uaWNhbC5jb20KPiBUbzog
-b3NzLXNlY3VyaXR5QGxpc3RzLm9wZW53YWxsLmNvbQo+IFN0w6lwaGFuZSBH
-cmFiZXIgPHN0Z3JhYmVyQHVidW50dS5jb20+Cj4KPiBKYW5uIEhvcm4gZGlz
-Y292ZXJlZCB0aGF0IHRoZSBseGMtdXNlci1uaWMgcHJvZ3JhbSBjb3VsZCBi
-ZSB0cmlja2VkIGludG8KPiBvcGVyYXRpbmcgb24gYSBuZXR3b3JrIG5hbWVz
-cGFjZSBvdmVyIHdoaWNoIHRoZSBjYWxsZXIgZGlkIG5vdCBob2xkCj4gcHJp
-dmlsZWdlLgo+Cj4gVGhlIGJlaGF2aW9yIGRpZG4ndCBmb2xsb3cgd2hhdCB3
-YXMgZG9jdW1lbnRlZCBpbiB0aGUgbHhjLXVzZXItbmljKDEpCj4gbWFuIHBh
-Z2U6Cj4KPiBJdCBlbnN1cmVzIHRoYXQgdGhlIGNhbGxpbmcgdXNlciBpcyBw
-cml2aWxlZ2VkIG92ZXIgdGhlIG5ldHdvcmsKPiBuYW1lc3BhY2UgdG8gd2hp
-Y2ggdGhlIGludGVyZmFjZSB3aWxsIGJlIGF0dGFjaGVkLgo+Cj4gVGhpcyBp
-c3N1ZSBpcyBDVkUtMjAxNy01OTg1Lgo+Cj4gaHR0cHM6Ly9saXN0cy5saW51
-eGNvbnRhaW5lcnMub3JnL3BpcGVybWFpbC9seGMtdXNlcnMvMjAxNy1NYXJj
-aC8wMTI5MjUuaHRtbAo+IGh0dHBzOi8vbGF1bmNocGFkLm5ldC9idWdzLzE2
-NTQ2NzYKPiBodHRwczovL2dpdGh1Yi5jb20vbHhjL2x4Yy9jb21taXQvMTZh
-ZjIzODAzNmE1NDY0YWU4ZjI0MjBlZDNhZjIxNGYwZGU4NzVmOQo+Cj4gVHls
-ZXIKPg==
+In case anyone needs background information about:
 
---b1_43cef91f811945a566de8e236908b25e--
+  https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-4562
+  https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-4563
+  https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-4564
 
+The person who requested these CVE IDs from MITRE provided a security
+advisory showing three independent problems (also with quite different
+attack methodologies) that each happens to have a resultant buffer
+overflow. However, they do not plan to make their security advisory
+public. The CVE descriptions are based only on the surface-level
+code-change information that is public in GitHub. For open-source
+software, it is relatively rare for someone to compose a detailed
+advisory about multiple CVEs and keep it permanently non-public, but
+this can happen. One of the effects of non-public advisories is that
+the number of CVEs may seem unrelated to the commit message.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXUwPnAAoJEHb/MwWLVhi291MP/3wV+ZGCP8XJftP9nZez4apC
+VtgFMu00wh19tQDJoskUhagfuc0D74KSo0c9o/rrTpNVAIpxaPsEkjCqTCicThEv
+C55FqsDPIQo+XN8docdNFteYuuIwgt+thjMgmV1IuEdm4wbSCg0Ddm6vJGUUK9i7
+F965FZ2S8B10kDG3soX43VsRiRmJnyhJ+MhcyGyuaAKGqmtLUnw8rFm91qvhghD3
+abAV6PENb1abvBNzztYs1iWDtzCM/whIEVoRpH0qm/yTGin3/+Mo3SIcDVQ9/UQj
+VvpBhpzURoLJOrzVqrPWrQO4vOD8BYE0hwfn878//qKVPp0TfnPPqUzLpBTN9eZQ
+wv76w6/+1hoTKeuSrMfdAgqO/15pvB2iLWxBPjJcVVCyY32IalS1562LQxeVxqlC
+250OZWu4APlvXjoKos56WuV0CPohVEFhBtbmQ9qxoudkjejcDoWhmi/Z+Fh2ElHp
+n/LNiPWttWrrPzKb+s9GNvxXo2z9dDHbxVrBEOqppNwuynocCbmR4UGZc1vp9PQ7
+UhXFQ/y1guWTvOGw/NZR9kYJthN2o7p5P0ceHWRpPfqMQlTQEn0CTjShLCtXrZ2G
+nUiu3QT58FlP5hUfbjCQ+XGYj0lMcpBoN52AgiDxZL1BjKf15VIRsOLqwDSs144J
+UX+2kIOAvJIMLky69RL9
+=lITg
+-----END PGP SIGNATURE-----
