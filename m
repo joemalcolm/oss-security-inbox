@@ -1,67 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/17/2
-Message-ID: <CAODc34+BJ7bSmCJfe7g6jjAj+xDfj0ZyZCrUuiM7f_Gs1+XbYQ@mail.gmail.com>
-Date: Mon, 18 Apr 2016 01:23:12 +0800
-From: Berry <throber3@...il.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: cve-assign@...re.org
-Subject: CVE request - samsumg android phone msm_sensor_config function write some range kernel address with any value
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/04/3
+Message-ID: <1465024076.32327.17.camel@gmail.com>
+Date: Sat, 04 Jun 2016 03:07:56 -0400
+From: Daniel Micay <danielmicay@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: expat hash collision fix too predictable?
 Content-Type: text/plain; charset=utf-8
 
-            The v4l-subdev driver provides an ioctl system call
-interface to user space clients for communication. When processing
-this communication, the msm_sensor_config function uses the
-user-supplied value gpio_config.gpio_name as an index to a buffer for
-write operations without any boundary checks.
+It's quite questionable for libraries to be calling thread-unsafe
+functions like rand or strtok at all. AFAIK, expat is supposed to be
+thread safe and is used in many multi-threaded applications.
 
-
-              code:
-              //
-kernel/SM-G9008V_CHN_KK_Opensource/Kernel/drivers/media/platform/msm/camera_v2/sensor/msm_sensor.c
-
-             int msm_sensor_config(struct msm_sensor_ctrl_t *s_ctrl,
-void __user *argp){
-                struct sensorb_cfg_data *cdata = (struct
-sensorb_cfg_data *)argp;
-
-                case CFG_SET_GPIO_STATE: {    //case 12:
-                  struct msm_sensor_gpio_config gpio_config;
-                  struct msm_camera_power_ctrl_t *data =
-&s_ctrl->sensordata->power_info;
-                  if (copy_from_user(&gpio_config,
-                         (void*)cdata->cfg.setting,
-                         sizeof(gpio_config))) {
-                    pr_err("%s:%d failed\n", __func__, __LINE__);
-                    rc = -EFAULT;
-                    break;
-                  }
-                  pr_info("%s: setting gpio: %d to %d\n", __func__,
-
-data->gpio_conf->gpio_num_info->gpio_num[gpio_config.gpio_name],
-                    gpio_config.config_val);
-
-                  gpio_set_value_cansleep(
-
-data->gpio_conf->gpio_num_info->gpio_num[gpio_config.gpio_name],
-                    gpio_config.config_val);  //control
-gpio_config.gpio_name and gpio_config.config_val
-                  break;
-                }
-                default:
-                  rc = -EFAULT;
-                  break;
-              }
-
-
-            Affected versions:
-            KK(4.4) and L with APQ8084, MSM8974, and MSM8974pro chipset
-
-             fix:
-             http://security.samsungmobile.com/smrupdate.html#SMR-JAN-2016
-             SVE-2015-4958: msm_sensor_config security issues
-
-             we report this to samsung, samsung reply  to us if we
-want to get cve  request it by ourself.
-
-              Best regards,
-              Berry Cheng
+A proper hash DoS fix is using a CSPRNG to generate keys for a keyed
+hash with meaningful security properties, like SipHash. It's usually
+done very poorly, and the quality of the RNG doesn't matter much if key
+independent collisions can be generated for the hash function anyway.
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
