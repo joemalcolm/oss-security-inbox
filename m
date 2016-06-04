@@ -1,64 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/02/1
-Message-ID: <CANO=Ty2FD92Oj-ebOJ=dJnO-+Y1zxNJNwW6HUR5mXH+8G64_ag@mail.gmail.com>
-Date: Tue, 1 Mar 2016 17:31:50 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Bob Beck <beck@...nbsd.org>
-Cc: oss-security <oss-security@...ts.openwall.com>, CVE ID Requests <cve-assign@...re.org>
-Subject: Re: Re: CVE's for SSLv2 support
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/04/5
+Message-Id: <20160604145419.70E2B6C037C@smtpvmsrv1.mitre.org>
+Date: Sat,  4 Jun 2016 10:54:19 -0400 (EDT)
+From: cve-assign@...re.org
+To: sebastian@...ping.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: expat hash collision fix too predictable?
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 1, 2016 at 2:23 PM, Bob Beck <beck@...nbsd.org> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> On Tue, Mar 1, 2016 at 12:12 PM,  <cve-assign@...re.org> wrote:
-> > -----BEGIN PGP SIGNED MESSAGE-----
-> > Hash: SHA256
-> >
-> >> If a crypto library (e.g. OpenSSL, NSS) supports AND enables SSLv2 by
-> >> default should it receive a CVE?
-> >
-> > There's no general answer to that question. CVE ID assignments are not
-> > based on outsiders making guesses about the expectations of a product's
-> > customers. For example, there might be a crypto library intended for
-> > communication on isolated networks to high-value embedded devices that
-> > support only SSLv2, and cannot and will not ever be updated.
->
->
-> What.. like... I have an embedded high value device that only supports
-> TELNET to access it.. OMG please give me a CVE?
->
-> replace SSLV2 in the above sentence with telnet or ssh v1 for that
-> matter and you have the same issue.
->
+> Please confirm that using CVE-2012-6702 for consequences of
+> "unanticipated internal calls to srand" is what you intended.
 
-That is a perfect example actually. Telnet makes no security claims,
-explicit, implied or otherwise. It's a simple clear text protocol. In fact
-if you want to secure it you can use SSL enabled Telnet (in fact I remember
-fighting with it prior to the wide spread existence of SSH and then
-OpenSSH).
-
-SSL and TLS both makes explicit and implicit claims about security, most
-notably at a minimum:
-
-1) the SSL/TLS protocols encrypt the and the data cannot be read by an
-attacker
-2) the SSL/TLS protocols ensure the data is not altered in transit by an
-attacker without detection
-
-Additionally depending on how you configure the servers there are claims
-that you are talking to the correct server/client (e.g. using certificates)
-but that is not germane to this discussion.
-
-SSLv2 is obviously NOT capable of ensuring claim #1 (that data is encrypted
-and cannot be read by an attacker), due to a wide variety of issues, and I
-have no doubt more will be found if people keep looking. Hence my thinking
-is that ANY and ALL use of SSLv2 is CVE worthy, especially when considering
-that many devices/manufacturers are less than transparent about their
-configurations/security issues.
+Yes, we confirm that. (They are unanticipated both because of
+thread-safety concerns, and because it's possible for an application
+to have an important dependency on srand being called exactly once.)
 
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+> The hash DoS vulnerability CVE-2012-0876 was fixed to some extend in
+> Expat 2.1.0, commit e3e81a6d
+> ...
+> The next release of Expat will not do internal calls to srand (or rand)
+> any more but extract and use entropy from other sources.
+> ...
+> I suppose hash initialization with (too little /) second-based
+> entropy still is part of the original CVE-2012-0876 (or the same again).
 
+Use CVE-2016-5300 for the separate issue in which the original choices
+of entropy source and RNG did not properly address the possibility of
+a successful hash DoS attack. In other words, the code changes (in the
+next release) to fix CVE-2016-5300 are needed because the original fix
+for CVE-2012-0876 was insufficient. (We use separate CVE IDs when
+follow-on work is needed to complete the solution to the same original
+vulnerability finding.)
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXUuskAAoJEHb/MwWLVhi2/BMP/RmK0mqYwmznhALOJw+m24IY
+PiLec/ly/1kBu4Ng03fo5YCZuNdM15ZIkHlTnNrkEdFvZpFin/5R8vXEZVjOPJgR
+3De4Y/47PWm1v0H0KoOhK1a/zuO8KqL8MUJUlhokMp5SQnbo0u+ANYPVwB2yndmQ
+uaoN2zjOx5aWIb9toDeFcNO2WprzsCVZdqwREHhXAmrXAV2NWfyYLvgk2nQ4wkHF
+OdME+So20qrl+rq9GsvBV12ecjCk4WBtW1k/l9Tt1Q8BXGIr9iMIWtJjDc3+uXap
+Y2DschCUfYd5J/H8GEnsOyRffLpw0cEQNS7+iYfttqJLY08XKfEwTnXdj1kW/Uny
+AwkzgB6X//qmeD5+P90A/mI9ovpuc/MmjHTMqgLT+9DF9MRYLDqT8xwQ6yoo26f0
+CuHvx83T2mSNfFjjWjBNC0YY7d8h/4Xefd43AdEWiX5MT/aGkL2vJCSqUqiVVFq4
+SJQKixQ3C/y0yxqHNCbC9CQqDJYdepFXmIV2LzhWnwNsKtVW4c1xZNlNwsCl02lK
+sTneAV4whgioqj66Du+6fFPifKdkx+ezkEBaauAJRySBtzbgj5+vqvbNKyn0BSLM
+WCvRSyLL4nBc3hWi7JTq76eGwrYeB+xyst6+YehdR6oJ+NaqTsO8Ec6PKQtqicyg
+ktXAm8A5yDPoTcCYOt12
+=r9fV
+-----END PGP SIGNATURE-----
