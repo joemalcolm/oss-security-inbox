@@ -1,30 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/25/3
-Message-ID: <CAJmbs8jiQ3sp4b9BEsJsHy2j4eywP_xYZeVD9nOhgs1VwKPSqw@mail.gmail.com>
-Date: Fri, 25 Mar 2016 15:56:57 +0600
-From: Maxim Solodovnik <solomax@...che.org>
-To: Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  security@...nmeetings.apache.org, security@...che.org,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [CVE-2016-2163] Stored Cross Site Scripting in Event description
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/04/8
+Message-Id: <20160604170442.A47D96C0729@smtpvmsrv1.mitre.org>
+Date: Sat,  4 Jun 2016 13:04:42 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: three vulnerabilities in ImageMagick before 7.0.1-2
 Content-Type: text/plain; charset=utf-8
 
-Severity: Moderate
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Vendor: The Apache Software Foundation
+In case anyone needs background information about:
 
-Versions Affected: Apache OpenMeetings 1.9.x - 3.0.7
+  https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-4562
+  https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-4563
+  https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-4564
 
-Description:
-When creating an event, it is possible to create clickable URL links in
-the event description. These links will be present inside the event details
-once a participant enters the room via the event. It is possible to create a
-link like "javascript:alert('xss')", which will execute once the link is
-clicked. As the link is placed within an <a> tag, the actual link is not
-visible to the end user which makes it hard to tell if the link is
-legit or not.
+The person who requested these CVE IDs from MITRE provided a security
+advisory showing three independent problems (also with quite different
+attack methodologies) that each happens to have a resultant buffer
+overflow. However, they do not plan to make their security advisory
+public. The CVE descriptions are based only on the surface-level
+code-change information that is public in GitHub. For open-source
+software, it is relatively rare for someone to compose a detailed
+advisory about multiple CVEs and keep it permanently non-public, but
+this can happen. One of the effects of non-public advisories is that
+the number of CVEs may seem unrelated to the commit message.
 
-All users are recommended to upgrade to Apache OpenMeetings 3.1.1
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Credit: This issue was identified by Andreas Lindh
-
-
-Apache OpenMeetings Team
+iQIcBAEBCAAGBQJXUwPnAAoJEHb/MwWLVhi291MP/3wV+ZGCP8XJftP9nZez4apC
+VtgFMu00wh19tQDJoskUhagfuc0D74KSo0c9o/rrTpNVAIpxaPsEkjCqTCicThEv
+C55FqsDPIQo+XN8docdNFteYuuIwgt+thjMgmV1IuEdm4wbSCg0Ddm6vJGUUK9i7
+F965FZ2S8B10kDG3soX43VsRiRmJnyhJ+MhcyGyuaAKGqmtLUnw8rFm91qvhghD3
+abAV6PENb1abvBNzztYs1iWDtzCM/whIEVoRpH0qm/yTGin3/+Mo3SIcDVQ9/UQj
+VvpBhpzURoLJOrzVqrPWrQO4vOD8BYE0hwfn878//qKVPp0TfnPPqUzLpBTN9eZQ
+wv76w6/+1hoTKeuSrMfdAgqO/15pvB2iLWxBPjJcVVCyY32IalS1562LQxeVxqlC
+250OZWu4APlvXjoKos56WuV0CPohVEFhBtbmQ9qxoudkjejcDoWhmi/Z+Fh2ElHp
+n/LNiPWttWrrPzKb+s9GNvxXo2z9dDHbxVrBEOqppNwuynocCbmR4UGZc1vp9PQ7
+UhXFQ/y1guWTvOGw/NZR9kYJthN2o7p5P0ceHWRpPfqMQlTQEn0CTjShLCtXrZ2G
+nUiu3QT58FlP5hUfbjCQ+XGYj0lMcpBoN52AgiDxZL1BjKf15VIRsOLqwDSs144J
+UX+2kIOAvJIMLky69RL9
+=lITg
+-----END PGP SIGNATURE-----
