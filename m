@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1302" "Sunday" "31" "May" "2015" "21:49:45" "+0800" "=?ISO-8859-1?Q?wen=5Fguanxing?=" "wen_guanxing@venustech.com.cn" "<tencent_058744537B69DAA079F09F5B@qq.com>" "27" "[oss-security] CVE Request: PCRE Library Stack Overflow Vulnerability" nil nil nil "5" "2015053113:49:45" "[oss-security] CVE Request: PCRE Library Stack Overflow Vulnerability" (number mark "U       wen_guanxing May 31   27/1302  " thread-indent "\"[oss-security] CVE Request: PCRE Library Stack Overflow Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1464" "Friday" "3" "June" "2016" "23:00:14" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160604030014.4F48352E020@smtpvbsrv1.mitre.org>" "35" "[oss-security] Re: CVE Request: Dnsmasq denial of service" nil nil nil "6" "2016060403:00:14" "[oss-security] Re: CVE Request: Dnsmasq denial of service" (number mark "U       cve-assign@m Jun  3   35/1464  " thread-indent "\"[oss-security] Re: CVE Request: Dnsmasq denial of service\"\n") "<5751C370.1010802@canonical.com>" ("<5751C370.1010802@canonical.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3903 invoked by uid 550); 31 May 2015 14:45:31 -0000
+Received: (qmail 11709 invoked by uid 550); 4 Jun 2016 03:00:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,66 +12,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30476 invoked from network); 31 May 2015 13:50:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=venustech.com.cn;
-	 h=x-mailer:message-id:date:date:content-transfer-encoding
-	:content-type:content-type:mime-version:subject:subject:to:from
-	:from; s=dkim; t=1433079985; x=1433943986; bh=E3xpTyjdHVjePekoTL
-	vczzKFXjrd+XEecP5KFF1E9H8=; b=Cm8hYgKGbd9hk8GQxEOAYN/UoFtJFPUKPT
-	EsSg1BmE0oeVqYOExevZmQS5NuK+8l9HClGfMkobZilP8DdNZVvv6bG77mhcJhw+
-	aOsZTIMqfNLwzqlDHFh22FsoCzKlyqxHt65+rocGSt35Cs8N7CObNocKO1oXjU5b
-	Yi3k7qvOs=
-X-QQ-FEAT: DQhWakk72O9A/peqOFCjMvVBvqNstd1O7LWU0Co9yQ2FL4sTkJCPeXBs50jJ1
-	HR0ZvxnkZzbSdj30zjZLzdnlyDxfoaL7VOpm5PgUJDE6tRKMNeKQ74Koj3+TjmaQCd4NNyo
-	027BxvqtdNJpXV1euWc1Rd2oINNI9MW4f182E32MJBpGYi1jtFRvtnUnzpU+VDHVawwc66X
-	+PTk4xnU0IQ==
-X-QQ-SSF: 00000000000000F000000000000000N
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-Originating-IP: 60.250.146.74
-X-QQ-STYLE: 
-X-QQ-mid: webmail802t1433080185t181095
-From: "=?ISO-8859-1?B?d2VuX2d1YW54aW5n?=" <wen_guanxing@venustech.com.cn>
-To: "=?ISO-8859-1?B?b3NzLXNlY3VyaXR5?=" <oss-security@lists.openwall.com>
-Mime-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="----=_NextPart_556B1179_09028568_7773C8FD"
-Content-Transfer-Encoding: 8Bit
-Date: Sun, 31 May 2015 21:49:45 +0800
-X-Priority: 3
-Message-ID: <tencent_058744537B69DAA079F09F5B@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-SENDSIZE: 520
-X-QQ-FName: F613D81FDA024B8BBF66B6BA282EDB72
-X-QQ-LocalIP: 58.250.134.100
-Subject: [oss-security] CVE Request: PCRE Library Stack Overflow Vulnerability
+Received: (qmail 11689 invoked from network); 4 Jun 2016 03:00:28 -0000
+From: cve-assign@mitre.org
+To: marc.deslauriers@canonical.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <5751C370.1010802@canonical.com>
+Message-Id: <20160604030014.4F48352E020@smtpvbsrv1.mitre.org>
+Date: Fri,  3 Jun 2016 23:00:14 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: Dnsmasq denial of service
 
-------=_NextPart_556B1179_09028568_7773C8FD
-Content-Type: text/plain;
-	charset="ISO-8859-1"
-Content-Transfer-Encoding: base64
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-SGVsbG8sDQoNCg0KUENSRSBpcyBhIHJlZ3VsYXIgZXhwcmVzc2lvbiBDIGxp
-YnJhcnkgaW5zcGlyZWQgYnkgdGhlIHJlZ3VsYXIgZXhwcmVzc2lvbiBjYXBh
-YmlsaXRpZXMgaW4gdGhlIFBlcmwgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UuIFRo
-ZSBQQ1JFIGxpYnJhcnkgaXMgaW5jb3Jwb3JhdGVkIGludG8gYSBudW1iZXIg
-b2YgcHJvbWluZW50IHByb2dyYW1zLCBzdWNoIGFzIHRoZSBBZG9iZSBGbGFz
-aCwgQXBhY2hlLCBOZ2lueCBhbmQgUEhQLiANCg0KDQpQQ1JFIGxpYnJhcnkg
-aXMgcHJvbmUgdG8gYSB2dWxuZXJhYmlsaXR5IHdoaWNoIGxlYWRzIHRvIFN0
-YWNrIE92ZXJmbG93LiBXaXRob3V0IGVub3VnaCBib3VuZCBjaGVja2luZyBp
-bnNpZGUgY29tcGlsZV9yZWdleCgpLCB0aGUgc3RhY2sgbWVtb3J5IGNvdWxk
-IGJlIG92ZXJmbG93ZWQgdmlhIGEgY3JhZnRlZCByZWd1bGFyIGV4cHJlc3Np
-b24uIFNpbmNlIFBDUkUgbGlicmFyeSBpcyB3aWRlbHkgdXNlZCwgdGhpcyB2
-dWxuZXJhYmlsaXR5IHNob3VsZCBhZmZlY3QgbWFueSBhcHBsaWNhdGlvbnMu
-IEFuIGF0dGFja2VyIG1heSBleHBsb2l0IHRoaXMgaXNzdWUgdG8gZXhlY3V0
-ZSBhcmJpdHJhcnkgY29kZSBpbiB0aGUgY29udGV4dCBvZiB0aGUgdXNlciBy
-dW5uaW5nIHRoZSBhZmZlY3RlZCBhcHBsaWNhdGlvbi4gDQoNCg0KSW5mbyAm
-IGZpeGVkOg0KaHR0cHM6Ly9idWdzLmV4aW0ub3JnL3Nob3dfYnVnLmNnaT9p
-ZD0xNTAzDQoNCg0KQ291bGQgYSBDVkUgcGxlYXNlIGJlIGFzc2lnbmVkIHRv
-IHRoaXMgaXNzdWU/DQoNCg0KVGhhbmtzLA0KDQoNCldlbiBHdWFueGluZw0K
-RnJvbSBWZW51c3RlY2ggQURMQUI=
+>  Fix crash when an A or AAAA record is defined locally,
+>  in a hosts file, and an upstream server sends a reply
+>  that the same name is empty.
+> 
+> http://lists.thekelleys.org.uk/pipermail/dnsmasq-discuss/2016q2/010479.html
+> http://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=commit;h=41a8d9e99be9f2cc8b02051dd322cb45e0faac87
+> https://bugs.launchpad.net/ubuntu/+source/dnsmasq/+bug/1581181
 
-------=_NextPart_556B1179_09028568_7773C8FD--
+Use CVE-2015-8899.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXUkO/AAoJEHb/MwWLVhi2ECQP/24EmeCxivXRv440Aph1gohv
+plToHPOCIhrqC1u2D7zMklmSYdvwtvCc9UwBqKbj/ufgXC9EeAGj2zlmKOq8NoP1
+l427TFDVnu9vKPgN/w5GwDWuzAC7bx+qRuCxspycP3HAc5wCBXeF3m37txptQdFh
+WkrDaW+2aHaIBliD3/CsZcf2cKlcbm5vvbYQMcJKh5JiGdl5xNidYV+24HMCauU1
+Tk22jfNm4I37XTR7PZg93I37JEZguXyq7csrZpCzE7yxHGRYthQCFf5O/Jc/4S+7
+GZAXDRX51RCCVfsYTQdHBi/dMlPiUpa/1Lcsgiugg25BU9Wy4qpL4knbVMt4ZSLf
+BPR0GGtNfygX0v5S92QaiUU+T6dxPOaidxueyMSwPtuq7taZXullPyPHGS4ioFya
++4OEwNPfqygzXVYjzRZM8925fOQBk733jwMvBuPZeuEuq3lBPFgYF0+CIOeMuAw+
+/jn8Jj5K6x4HGjBixr1VRaB6mZ/C/k7XRNjr17/QL3hjOUfj1g6Pn1q52gFwq0ny
+02jvT0RQqnGAnIrKPnuzvccsHkJlSydbR0t8JYoWDeK8btULJDqJbG5vit1jAQaL
+5Y88gTFabG9mAFLdo4q+hi+jKwKw6gplOlcUQysYleImyMAawIweZ11GodT9Q9hx
+cfPCSdvhgyVr8DR4Fmd2
+=3Y1C
+-----END PGP SIGNATURE-----
