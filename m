@@ -1,4 +1,9 @@
-Received: (qmail 29908 invoked by uid 550); 14 Dec 2023 12:33:59 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1377" "Saturday" "4" "June" "2016" "17:24:40" "+0200" "Sebastian Pipping" "sebastian@pipping.org" "<5752F2B8.5000009@pipping.org>" "35" "[oss-security] Re: expat hash collision fix too predictable?" "^Cc:" nil nil "6" "2016060415:24:40" "[oss-security] Re: expat hash collision fix too predictable?" (number mark "        sebastian@pi Jun  4   35/1377  " thread-indent "\"[oss-security] Re: expat hash collision fix too predictable?\"\n") "<20160604145419.70E2B6C037C@smtpvmsrv1.mitre.org>" ("<20160604145419.70E2B6C037C@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 23753 invoked by uid 550); 4 Jun 2016 15:24:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,522 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29872 invoked from network); 14 Dec 2023 12:33:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1702557251; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=O1bu6+1nelUuRNQgBE8Ovewz87LLgpfHVAcnC24nTMU=;
-	b=Oo1diTKG94wZeDUK6LBc489OE/HfthvXxL09+cOFiAlQzOwDg1q/MX4eolM5qIwKmMN9lS
-	/D6UpzlJRqR2/BwmLuVMDmdgb57vFuDHgl6UdkXvjD+Ipo5APdMqHvqsRb8i0ABMkNKOYc
-	m72Gee6AUsU4POkXJxL2ASrq8UZhBVk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1702557251;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=O1bu6+1nelUuRNQgBE8Ovewz87LLgpfHVAcnC24nTMU=;
-	b=M8C7hzL08Fs3Br+93yDM6AddbuKKLw4ySf3Hlzu2to0Y9oYDTgD43Qjx0Dw1ohMo6AQMD7
-	wjf1GoYbFGG9TnBA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1702557249; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=O1bu6+1nelUuRNQgBE8Ovewz87LLgpfHVAcnC24nTMU=;
-	b=AxPJxKf/02SQC1Pq9iPdKA4xeiK1JV0MV+QUZEGvpeCuZFlwOJDHw0liniTv2ctoWT3GUZ
-	g5kJHmKhCVHNc/wEAEipXZw1w4TuZzXAXNAE8a+9Wt0CbRC3GfeJagziiEGQ1SyAeErnF3
-	yhI6xnGdG/37to+YR9tJZtLqpoDqm4g=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1702557249;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=O1bu6+1nelUuRNQgBE8Ovewz87LLgpfHVAcnC24nTMU=;
-	b=7b6AudT7ES9+ZQo/RNphE3eSKILMi+KUUnTyZ92KwU5T0/z9vp+DmQi0LvJt9uRf5EQKnO
-	xZlRbxcu2m0IElAw==
-Date: Thu, 14 Dec 2023 13:34:05 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <ZXr2P6zT-PLtWShn@kasco.suse.de>
+Received: (qmail 23720 invoked from network); 4 Jun 2016 15:24:52 -0000
+References: <20160604145419.70E2B6C037C@smtpvmsrv1.mitre.org>
+Message-ID: <5752F2B8.5000009@pipping.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="bHiPltkjUWK89oq1"
-Content-Disposition: inline
-Authentication-Results: smtp-out1.suse.de;
-	none
-Subject: [oss-security] budgie-extras: multiple predictable /tmp path issues in various
- applications
-
---bHiPltkjUWK89oq1
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 14 Dec 2023 13:34:05 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Subject: budgie-extras: multiple predictable /tmp path issues in various
- applications
-
-Hello list,
-
-this report is about a range of predictable /tmp path issues in various
-applications in the budgie-extras [1] repository. This repository
-contains a range of helper applications for the Budgie desktop
-environment.
-
-During a routine review of applications that are autostarted in X11
-environments I found the issues 1) to 4) outlined below. Upstream found
-two additional cases of predictable /tmp path uses that they addressed,
-as outlined in items 5) and 6). Upstream released version 1.7.1 today
-which fixes all the issues.
-
-Introduction
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-The affected programs are mostly written in the Vala programming
-language, some are also scripted in Python. In all cases predictable
-paths in /tmp containing only the username or no variable components at
-all are used. In these paths regular files or directories are created.
-The paths are often used as a kind of inter-process-communication
-between two or more budgie-extras components.
-
-The impact of the issues differs a lot depending on the actual affected
-program and ranges from denial-of-service to information leaks to
-integrity issues through manipulation of the data which is used e.g. for
-displaying images on the desktop. All the issues are restricted to local
-attackers, naturally.
-
-Without the Linux kernel's protect symlink sysctl setting the severity
-of the issues will in some cases be worse. Even with this protection
-enabled it is often possible to pre-create the files or directories as
-another local user, granting world read and write access, which will
-cause the budgie-extras applications to use them even though they are
-attacker controlled.
-
-Without the Linux kernel's symlink protection many of these findings
-where files are created look like they might allow symlink attacks to
-have files created in arbitrary locations. The Vala file creation calls
-I looked into are mostly translated into the following system call,
-though:
-
-    openat(AT_FDCWD, <path>, O_WRONLY|O_CREAT|O_EXCL|O_CLOEXEC, 0666)
-
-Even tough this is missing the `O_NOFOLLOW` flag, symlinks would not be
-followed, due to the combination of O_CREAT and O_EXCL. I will point
-out cases where symlink attacks might still be possible in spite of
-this.
-
-As a quick fix for all of these issues I suggested to use
-`$XDG_RUNTIME_DIR` instead of /tmp. This directory is private to the
-logged in user and cannot be manipulated by other users in the system.
-In the instances where these files are used as a simple communication
-mechanism ("trigger" logic) it could be considered using sockets,
-D-Bus session bus or named FIFOs instead - also placed in safe
-locations, of course.
-
-Following is a detailed listing of all individual issues based on the
-budgie-extras Git repository tag for version 1.7.0.
-
-1) budgie-window-shuffler (CVE-2023-49344)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-1.1) /tmp/shufflerapplettrigger_<user>
---------------------------------------
-
-In "src/shuffler_control.vala" line 1740 first an attempt is made to
-delete this path. Then it starts monitoring the path, reacting to its
-creation, by automatically selecting (popping up) the "Applet" listbox
-GUI entry.
-
-The counterpart to this is found in "applet/src/ShufflerApplet.vala"
-line 91, where this file is created to let the settings dialog open.
-
-The worst that can happen here is likely confusing the victims GUI so it
-is low severity.
-
-1.2) /tmp/<user>_shufflertriggers/layoutspopup
-----------------------------------------------
-
-In "src/toggle_layouts_popup.vala" line 62 first an attempt is made to
-create the directory, ignoring any potential errors - considering it to
-already exist. Then the "layoutspopup" file is created within the
-directory. Depending on program evaluation logic the string
-"fromcontrol" is written to the file, otherwise the file remains empty.
-
-In "src/layouts_popup.vala" line 1384 monitoring for this file is setup,
-its content is read (it is checked whether it contains "fromcontrol")
-and then a popup window is either created or destroyed, depending on the
-current program state.
-
-Another user in the system can pre-create this directory and then
-control the creation and destruction of the popup dialog, thereby
-confusing the victim's GUI. By placing a FIFO instead of a regular file
-at "layoutspopup", the layout popup will be subject to denial-of-service
-(either by blocking it indefinitely or by feeding it large amounts of
-data, leading to an out-of-memory situation).
-
-Without the Linux kernel's symlink protection the issue can be used to
-make the `layouts_popup` program read from arbitrary files, or to
-operate in arbitrary directories.
-
-1.3) /tmp/<user>_running_layout
--------------------------------
-
-In "src/run_layout.vala" line 203 this file is created to "temporarily
-disable possibly set windowrules". In line 379 this path is (needlessly)
-constructed again and passed to function `create_busyfile()`, although
-this parameter remains unused by the function. In line 478 `stat()` and
-`unlink()` are attempted on the file.
-
-In "src/windowshufflerdaemon.vala" line 831 an existence check for this
-file is made. If it exists then the `run_rule` program will not be
-executed for any windows.
-
-This path allows a local attacker to prevent the victim's `run_rule`
-ever to be executed.
-
-1.4) /tmp/<user>_gridtrigger
-----------------------------
-
-In "src/togglegui.vala" line 33 an existence check is made for this path
-and depending on the outcome it is either created as an empty file, or
-deleted.
-
-In "src/windowshufflerdaemon.vala" line 992 in function `actonfile()`
-there is a reaction on the creation and deletion of this path. Depending
-on this the `gridguiruns` boolean is set to true or false respectively.
-If it is set to `false` then a window will be destroyed in line 1148.
-
-In "src/gridwindow.vala" line 637 a monitor is setup for this file and
-depending on it being created or being deleted the `gridwindow` is being
-displayed or destroyed.
-
-This path basically allows a local attacker to make the "grid window"
-managed by the `gridwindow` program appear, thereby confusing the
-victim's GUI. The other way around `windowshufflerdaemon` can be
-caused to destroy its "preview window" if this state file is under a
-local attacker's control.
-
-1.5) /tmp/shuffler-warning.png
-------------------------------
-
-In "src/windowshufflerdaemon.vala" line 1017 in function
-`create_warningbg()` this path is used to write a programmatically
-created PNG image into. In function `show_awarning()` in line 338 the
-program `sizeexceeds_warning` is executed which in turn in
-"src/sizeexceeds_warning.vala" line 68 displays the generated PNG image
-on the desktop.
-
-A local attacker can attempt to place arbitrary PNG data in this path
-and have it displayed on the victim's desktop. Placing crafted PNG data
-could allow to exploit further security issues in image processing
-libraries.
-
-1.6) /tmp/<user>_istestingtask
-------------------------------
-
-This path is potentially created in "src/layouts_popup.vala" line 492.
-The file receives data from the GUI interface. In "src/run_layout.vala"
-line 407 this path is picked up again and its content is interpreted in
-`extractlayout_fromfile()`.
-
-Since this file's content is evaluated and used for further program
-logic there is a chance for a local attacker to massively break the
-`run_layout` program's logic or maybe even achieve code execution. The
-Linux kernel's protected_regular sysctl setting comes to the rescue
-here, though. The `open()` with `O_CREAT` will fail. It can then
-still present a denial-of-service vector, though.
-
-Upstream Fix
-------------
-
-This is fixed in upstream commit 11b0201 [2]. The public /tmp directory
-has been replaced by the user's private XDG_RUNTIME_DIR, with a fallback
-to the user's HOME directory.
-
-2) budgie-wpreviews (CVE-2023-49347)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-2.1) /tmp/<user>_window-previews
---------------------------------
-
-This path is used for a directory. In "src/separate_shot.vala" line 43
-it is created, errors are ignored. In line 105 screenshots of certain
-X11 windows are placed in the directory following the name scheme
-"<window-id>.<workspace-name>.png".
-
-In "src/previews_creator.vala" line 74 an attempt to create the
-directory the same way is found. In line 241 the directory is iterated
-over and each file found there, independently of its name, will be
-assembled in a file list. This file list is luckily only used for
-removing files of non-existent windows in this program.
-
-In "src/previews_daemon.vala" line 719 there is another attempt to
-create the directory the same way as in the other two locations. In line
-523 the directory is again iterated over and a list of the contained
-filenames is assembled, independently of their names. In line 404 the
-filenames are interpreted and split into X11 window IDs and workspace
-names again. It seems the code expects all filenames to match the
-pattern, if this is not the case then the program will likely crash. The
-resulting file list is (luckily) matched against the existing X11 window
-IDs in line 421.
-
-Even without exploiting the fixed temporary directory path this
-directory has security issues, since it is created world-readable. Any
-other users in the system can access the window screenshots that are
-created there and thus this is an information leak.
-
-Since all errors trying to create the directory are ignored, another
-local user can pre-create this directory world-writable, and the
-wpreviews applications will still use the directory which is now under
-attacker control. The attacker can place additional PNG image files
-there, trying to confuse the victim's GUI experience. A local DoS
-against the `previews_daemon` seems also possible by placing
-non-conforming files into the directory. Since the `previews_daemon`
-only uses files from the directory for which an existing X11 window is
-found, the complexity for a local attacker to inject arbitrary PNG files
-into the preview logic is raised. It can still be possible by observing
-the PNG files created by e.g. the `separate_shot` program and replacing
-them with crafted data.
-
-Without the Linux kernel's symlink protection a local attacker can place
-a symlink there instead of a directory, causing the programs to operate
-in arbitrary other directory locations.
-
-2.2) /tmp/<user>_prvtrigger_*, /tmp/<user>_previoustrigger, /tmp/<user>_nex=
-ttrigger
----------------------------------------------------------------------------=
---------
-
-This long list of trigger files:
-
-    /tmp/<user>_prvtrigger_all
-    /tmp/<user>_prvtrigger_current
-    /tmp/<user>_prvtrigger_all_hotcorner
-    /tmp/<user>_prvtrigger_curr_hotcorner
-    /tmp/<user>_previoustrigger
-    /tmp/<user>_prvtrigger_all
-    /tmp/<user>_nexttrigger
-
-is used both in "src/previews_triggers.vala" line 43 and
-"src/previews_daemon.vala" line 664.
-
-The `previews_triggers` program selects one of these trigger paths
-depending on command line arguments, various logical evaluations and
-depending on whether some of the paths already exist. The selected path
-is then simply created with empty content.
-
-In `previews_daemon` these paths are monitored and their existence is
-evaluated in a complex fashion to display previews of existing windows.
-
-In conjunction with the issues in 2.1) this can be used to display
-attacker controlled images on the victim's screen at arbitrary times,
-provided that the victim user is running the `previews_daemon`.
-
-Apart from the security related problems this group of files for
-controlling a daemons behaviour seems ill devised. Instead proper IPC
-mechanisms should be used.
-
-Upstream Fix
-------------
-
-This is fixed in upstream commit 588cbe6 [3]. The public /tmp directory
-has been replaced by the user's private XDG_RUNTIME_DIR, with a fallback
-to the user's HOME directory.
-
-3) budgie-takeabreak (CVE-2023-49345)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-3.1) /tmp/nextbreak_<user>
---------------------------
-
-This file is read in "budgie_takeabreak.py" line 245 and the resulting
-string is split on ".", the first element resulting from this is used as
-the new "time" displayed in the GUI.
-
-In "takeabreak_run" line 80 this path is created and the next "break
-time" is written to it.
-
-A local attacker can pre-create this file and have arbitrary string
-content displayed instead of the actual "next time". A denial-of-service
-will also be possible e.g. by placing a FIFO there.
-
-Upstream Fix
-------------
-
-This is fixed in upstream commit 588cbe6 [3]. The public /tmp directory
-has been replaced by the user's private XDG_RUNTIME_DIR, with a fallback
-to the user's HOME directory.
-
-4) budgie-weathershow (CVE-2023-49346)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-4.1) /tmp/<username>_weatherdata
---------------------------------
-
-In "src/weathershow/WeatherShow.vala" line 354 the current "weather
-data" is written to this location. Before this an attempt is made to
-delete an already existing file. Errors for both, deletion and creation
-of the file, are ignored unconditionally.
-
-In "src/weathershow/WeatherShow.vala" line 236 the content from this
-file is read and interpreted for updating GUI window data.
-
-A local attacker can pre-create this file and thus manipulate the data
-displayed by the weather applet. Also a denial-of-service will be
-possible e.g. by placing a FIFO there.
-
-Upstream Fix
-------------
-
-This is fixed in upstream commit 0092025 [5]. The public /tmp directory
-has been replaced by the user's private XDG_RUNTIME_DIR, with a fallback
-to the user's HOME directory.
-
-5) budgie-clockworks (CVE-2023-49342)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-This issue was not discovered by me but by upstream while working on the
-fixes for the other issues I reported. For completeness I mention it in
-this report as well.
-
-5.1) /tmp/<user>_clockworks
----------------------------
-
-This path is used as a directory in the Python script "cwtools.py". It
-is reused if it already exists. The scripts generates SVG vector
-graphics in there, converts them to the PNG image format and saves them
-in the users home directory in "~/.config/budgie-extras/clockworks".
-
-Here, again, the image data can be manipulated by a local attacker by
-pre-creating this directory. In this case the data will even be
-persisted in the user's home directory. Crafted SVG of PNG data could be
-placed in the directory to try attacking the image processing libraries
-used.
-
-Upstream Fix
-------------
-
-This is fixed in upstream commit d030837 [6]. The public /tmp directory
-has been replaced by the user's private XDG_RUNTIME_DIR, with a fallback
-to the user's HOME directory.
-
-6) budgie-dropby (CVE-2023-49343)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D
-
-Like issue 5), this issue was not discovered by me but by upstream while
-working on the other issues I reported. For completeness I mention it in
-this report as well.
-
-6.1) /tmp/<user>_keepdropbywin
-------------------------------
-
-This path is used as a "timer" file in the "checkonwin" and "dropover"
-Python scripts. The file's content is not evaluated, but the
-"checkonwin" script runs "wmctrl -c dropby_popup" if the file doesn't
-exist for more than six seconds.
-
-The Python `openat()` call uses "O_CREAT | O_EXCL" flags so symlink
-attacks are not a problem even without kernel symlink protection. Other
-users in the system can shorten the "timer" logic of the "checkonwin"
-script, though, by creating the file path at an arbitrary time.
-
-6.2) /tmp/<user>_call_dropby
-----------------------------
-
-The script "budgie_dropby.py" creates this file as a trigger for the
-"dropover" script which reacts to the creation of this path by scanning
-the current list of USB block devices and their mount points in the
-system. A GUI dialog is displayed or updated as a reaction to this.
-
-A local attacker can cause this dialog to be displayed by creating this
-file. It can also be used as a kind of local DoS vector to keep the
-"dropover" script busy all the time, iterating over block devices.
-
-6.3) /tmp/<user>_dropby_icon_copy
----------------------------------
-
-This is used as a trigger file in "budgie_dropby.py". If the file is
-created then a GUI dialog is changed and updated. In the `copy_flash`
-Python script this trigger is created to signal that some files have
-been copied.
-
-A local attacker can cause this dialog to be displayed by creating this
-file at arbitrary times.
-
-Upstream Fix
-------------
-
-This is fixed in upstream commit e75c94a [7]. The public /tmp directory
-has been replaced by the user's private XDG_RUNTIME_DIR, with a fallback
-to the user's HOME directory.
-
-7) Timeline
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-2023-10-16: I reported the issues 1) - 4) to fossfreedom@ubuntu.com,
-            offering coordinated disclosure.
-2023-10-17: Upstream accepted coordinated disclosure aiming at a
-            publication date towards the end of the year.
-2023-11-28: Upstream communicated to us the CVEs they assigned for the
-            issues plus for the two additional items 5) - 6) they
-	    discovered. They communicated that an upcoming version 1.7.1
-	    will contain the fixes.
-2023-12-03: Upstream communicated a preliminary publication date
-	    of 2023-12-14 for version 1.7.1 containing the fixes. They
-	    shared the individual patches for issues 1) - 6) with us.
-2023-11-14: The publication date has been reached, the upstream version
-            1.7.1 as well as GitHub security advisories have been
-	    published.
-
-8) References
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-[1]: https://github.com/UbuntuBudgie/budgie-extras
-[2]: https://github.com/UbuntuBudgie/budgie-extras/commit/11b02011ad2f6d464=
-85b292713af09f7314843a5
-[3]: https://github.com/UbuntuBudgie/budgie-extras/commit/588cbe6ffa72df904=
-213d77728a3fd5bfae7195e
-[4]: https://github.com/UbuntuBudgie/budgie-extras/commit/ffa29d4bfe880217e=
-28d99de99026760ae6fe1d4
-[5]: https://github.com/UbuntuBudgie/budgie-extras/commit/0092025ef25b48c28=
-7a75946c0ee797d3c142760
-[6]: https://github.com/UbuntuBudgie/budgie-extras/commit/d03083732569126d2=
-f21c8810d5a69554ccc5900
-[7]: https://github.com/UbuntuBudgie/budgie-extras/commit/e75c94af249191bdb=
-d33eebf7a62d4234a0d8be5
-
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Security Engineer
-https://www.suse.com/security
-GPG Key ID: 0x14C405C971923553
-=20
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG N=FCrnberg
-Gesch=E4ftsf=FChrer: Ivo Totev, Andrew McDonald, Werner Knoblich
-
---bHiPltkjUWK89oq1
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmV69j4ACgkQFMQFyXGS
-NVP06w//fBvNCuA+k/mUeFXnOmsuBT3G8U4i1YcWMHYCNTmpNQ3E2hhF80LVbfKw
-uREc71m28/Q5SoNeEPV7tqreSpxT1rg2bRBuyrtNwvmaw7ipHt6Se9KCH91dvt4E
-KvUmlCS8zi4Hph9FfnmxhFCXV8SSioUxW9QjQlTHSOfGDyZpBg4LzkcIzaqz2Xrs
-7jgQPpx1Mm4OPiH30htlPjRp5UB1SI8Q8HFSdKsdWZGxp9258c0wSOPUufjWUyWR
-sB8KJY9Llt+AgtIEWsEmMr0xNJkZuJ1I2Fpn4cO1NIqJqpXEB0Qqo3A+H5xA89EF
-Tr6OAxWaw13UrW0Mtx9CPpCP0UQVka7jsXU4O9q1Xt0NOIoEMMR4gWaU6LaJZ9mK
-UBBsNWDub+Hu5E9lql+TDtwwAXB+H3JtCQ0FzVOv8TozazYhHgygzfPSWflZCqOo
-xEcwHC//Qn0OIbbMchJIZ7CkJh9Fxtbl7Mm6FOqenDoEkmlI6OUqz9x2XHqLJz+g
-hmaaVQYMbERhZ2P0NI3fdd5vN3u8tSCdCJf6Fr55d5gNrgULcj+DO+EFn98kM2bW
-gQAlX2lb+6oVG1srmAIjqmTSCg/lX8OhNSVsOLwMJJaCpXumlHTXGA0AgzE6S+Fb
-AcHGitsJmW929eiMWrhlqy6a5SnSrp5OGbwS13K7FMNsuO8vJnw=
-=3rBS
------END PGP SIGNATURE-----
-
---bHiPltkjUWK89oq1--
+In-Reply-To: <20160604145419.70E2B6C037C@smtpvmsrv1.mitre.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: aGFydHdvcmtAYmluZXJhLmRl
+Cc: oss-security@lists.openwall.com
+Date: Sat, 4 Jun 2016 17:24:40 +0200
+From: Sebastian Pipping <sebastian@pipping.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: expat hash collision fix too predictable?
+To: cve-assign@mitre.org
+
+On 04.06.2016 16:54, cve-assign@mitre.org wrote:
+>> Please confirm that using CVE-2012-6702 for consequences of
+>> "unanticipated internal calls to srand" is what you intended.
+> 
+> Yes, we confirm that. (They are unanticipated both because of
+> thread-safety concerns, and because it's possible for an application
+> to have an important dependency on srand being called exactly once.)
+> 
+> 
+>> The hash DoS vulnerability CVE-2012-0876 was fixed to some extend in
+>> Expat 2.1.0, commit e3e81a6d
+>> ...
+>> The next release of Expat will not do internal calls to srand (or rand)
+>> any more but extract and use entropy from other sources.
+>> ...
+>> I suppose hash initialization with (too little /) second-based
+>> entropy still is part of the original CVE-2012-0876 (or the same again).
+> 
+> Use CVE-2016-5300 for the separate issue in which the original choices
+> of entropy source and RNG did not properly address the possibility of
+> a successful hash DoS attack. In other words, the code changes (in the
+> next release) to fix CVE-2016-5300 are needed because the original fix
+> for CVE-2012-0876 was insufficient. (We use separate CVE IDs when
+> follow-on work is needed to complete the solution to the same original
+> vulnerability finding.)
+
+Excellent, thank you!
+
+https://sourceforge.net/p/expat/code_git/ci/07cc2fcacf81b32b2e06aa918df51756525240c0/
+
+Best
+
+
+
+Sebastian
