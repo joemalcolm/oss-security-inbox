@@ -1,4 +1,9 @@
-Received: (qmail 26401 invoked by uid 550); 2 May 2024 13:08:32 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3892" "Friday" "3" "June" "2016" "22:56:47" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160604025647.D1D406C00F8@smtpvmsrv1.mitre.org>" "86" "[oss-security] Re: expat hash collision fix too predictable?" "^Cc:" nil nil "6" "2016060402:56:47" "[oss-security] Re: expat hash collision fix too predictable?" (number mark "        cve-assign@m Jun  3   86/3892  " thread-indent "\"[oss-security] Re: expat hash collision fix too predictable?\"\n") "<5751DAF8.6060901@pipping.org>" ("<5751DAF8.6060901@pipping.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 32719 invoked by uid 550); 4 Jun 2016 02:57:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,109 +11,99 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 32646 invoked from network); 4 Jun 2016 02:56:59 -0000
+In-Reply-To: <5751DAF8.6060901@pipping.org>
+Message-Id: <20160604025647.D1D406C00F8@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Fri,  3 Jun 2016 22:56:47 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26370 invoked from network); 2 May 2024 13:08:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=beckweb.net
-	; s=he112721; h=To:Date:Message-Id:Subject:Mime-Version:
-	Content-Transfer-Encoding:Content-Type:From:From:Sender:Reply-To:Subject:Date
-	:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=bgaiSmN9lBYUL7HUH1wuly67xaXeOR68+1iYwCrNspo=; t=1714655315; x=1715087315;
-	 b=w8Tw649cAUFmXrniBl0ptcd7xkoZ8iVZBigu99gNM8ayEClUzADlpnreaKVrbqmRXgsjDgZnaG
-	3hmPp74kP1utog9xckT+VELU71Vyyfqn77pbAK/qyasU3mgAerif4I5h3T4cBZ37HDqhv+FuEaViN
-	05E0Kfd4TgTzlsvEDpwW0X0lQEUo9iJGSEWd86iuuQWzmCNTWrcLDOCejweYOyxJW3fdhFNcziGAW
-	7mlvDv0EDqzFwgmuptg/czP+01OsnsMcA9xA+6lYbliJW/UHWVs9Gs4O4Is2YJ2JAC2ZxUKduNYzY
-	va82Smf97T8hsL4tqnwaNv4QuSFcaPDz4I/XQ==;
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.300.61.1.2\))
-Message-Id: <C20D6D7D-DE83-4394-941C-F9683ABA6440@beckweb.net>
-Date: Thu, 2 May 2024 15:08:13 +0200
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3774.300.61.1.2)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1714655315;8b3c84b2;
-X-HE-SMSGID: 1s2WAh-0002kZ-Pl
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Subject: [oss-security] Re: expat hash collision fix too predictable?
+To: sebastian@pipping.org
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The following releases contain fixes for security vulnerabilities:
+> The call to srand(3) can reduce the security of the calling application,
+> depending on what it is doing with srand(3)/random(3). This behavior is
+> recognized as a bug by Fedora, too
+> (https://bugzilla.redhat.com/show_bug.cgi?id=1197087).
 
-* Git server Plugin 117.veb_68868fa_027
-* Script Security Plugin 1336.vf33a_a_9863911
-
-Additionally, we announce unresolved security issues in the following
-plugins:
-
-* Subversion Partial Release Manager Plugin
-* Telegram Bot Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2024-05-02/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-3341 / CVE-2024-34144 (crafted constructor bodies) & CVE-2024-3414=
-5 (sandbox-defined classes)
-Script Security Plugin provides a sandbox feature that allows low
-privileged users to define scripts, including Pipelines, that are generally
-safe to execute. Calls to code defined inside a sandboxed script are
-intercepted, and various allowlists are checked to determine whether the
-call is to be allowed.
-
-Multiple sandbox bypass vulnerabilities exist in Script Security Plugin
-1335.vf07d9ce377a_e and earlier:
-
-* Crafted constructor bodies that invoke other constructors can be used to
-  construct any subclassable type via implicit casts.
-* Sandbox-defined Groovy classes that shadow specific non-sandbox-defined
-  classes can be used to construct any subclassable type.
-
-These vulnerabilities allow attackers with permission to define and run
-sandboxed scripts, including Pipelines, to bypass the sandbox protection
-and execute arbitrary code in the context of the Jenkins controller JVM.
+The text below assigns one CVE ID to this expat vulnerability.
 
 
-SECURITY-3342 / CVE-2024-34146
-Git server Plugin 114.v068a_c7cc2574 and earlier does not perform a
-permission check for read access to a Git repository over SSH.
+>> https://bugzilla.redhat.com/show_bug.cgi?id=1197087#c6
+>> 
+>> Expat is calling srand ... [if] the code using Expat ... never called
+>> XML_SetHashSalt on that parser ... the arrival of XML_SetHashSalt
+>> bypassed the Expat user's radar
 
-This allows attackers with a previously configured SSH public key but
-lacking Overall/Read permission to access Git repositories.
+>>> https://sourceforge.net/p/expat/bugs/499/
+>>> 2012-04-05
+>>> In any case, you can supply your own hash salt - after creating the
+>>> parser, but before parsing is started. See the new API function XML_SetHashSalt.
 
+The higher-level issue, from our perspective, is that a library
+(intended for use in arbitrary applications) should not have
+potentially unavoidable calls to the srand function unless this is
+documented. The library might be used by an application in which srand
+was already called exactly once, and srand/rand happens to be the
+right choice for that application because of a minimal need for
+randomness, and this minimal need for randomness is no longer
+satisfied if there are unexpected extra calls to srand.
 
-SECURITY-3294 / CVE-2024-34147
-Telegram Bot Plugin 1.4.0 and earlier stores the Telegram Bot token
-unencrypted in its global configuration file
-`jenkinsci.plugins.telegrambot.TelegramBotGlobalConfiguration.xml` on the
-Jenkins controller as part of its configuration.
+In other words, good options for a library include:
 
-This token can be viewed by users with access to the Jenkins controller
-file system.
+  - never call srand under any circumstances
 
-As of publication of this advisory, there is no fix.
+  - call srand only if the application calls a library function that
+    is documented as triggering an srand call
 
+  - call srand whenever it wants, as long as the documentation warns
+    application authors about potential incompatibility with any use
+    of srand within an application
 
-SECURITY-3331 / CVE-2024-34148
-Subversion Partial Release Manager Plugin 1.0.1 and earlier
-programmatically sets the Java system property
-`hudson.model.ParametersAction.keepUndefinedParameters` whenever
-a build is triggered from a release tag with the 'Svn-Partial
-Release Manager' SCM. Doing so disables the fix for SECURITY-170
-/ CVE-2016-3721.
+We really don't know whether the above is a generally accepted
+principle for all libraries. However, it appears that the expat vendor
+is recognizing the old behavior (i.e., the behavior before
+XML_SetHashSalt was available and documented) as a security-relevant
+implementation error. Use CVE-2012-6702.
 
-As of publication of this advisory, there is no fix.
+An entirely separate question is whether generate_hash_secret_salt
+should ultimately be using the rand function to attempt to provide a
+random number, or whether it should provide a better quality random
+number. There is no CVE ID for this yet. If the expat upstream
+maintainer is announcing a new expat release, specifically stating
+that discontinuing use of the rand function represents a vulnerability
+fix, then a CVE ID can be assigned.
 
+One might make a design assertion that every portable library and
+application, if it potentially has a need for good random numbers, is
+supposed to have its own code that is able to call each of getrandom,
+CryptGenRandom, and arc4random_buf on the applicable OS (as suggested
+in https://bugzilla.redhat.com/show_bug.cgi?id=1197087#c28). We don't
+feel that CVE is the right way to track that assertion's viability or
+adherence.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
+iQIcBAEBCAAGBQJXUkL1AAoJEHb/MwWLVhi29JcP/1O68QOg+teOsPnIAXqBFnf+
+8zty+w4jemQtwcSeSEsFKm7U9r3ACC/EtGi8sdjws5kqFY7Qad2+XyJS4mTQLozZ
+aK2MjByk3ITmEtPkLiIwBbYro1DpixvdOnkCVGUKe3NwuZ42/FOnXNobPprSEBPW
+5ibjiqcu1HKAfH7A2e9EuGs63Skdh40NhEBwSbbvhiHLq1FMQuETEGmkno7yIC+u
+zijg1uz+K//YkJrADyzvAzwcfer4WUqe9Ney+jgrTyp5sIqVuStro08WVH7HQRTZ
+pKJ4ZbvNrn0HrchA5nd+xcsn7B29NjKMVuUCvczpP4xZKvASyey95+t9FfrkwZ6O
+A04BdefJMddedSwd7odzVq0QdqUinkWMLlPuMv4UdZRwjF/MsdBqDZVPDouNSPxT
+vL6KOwhGJ12qazXYhjIDxkqztj6ou9udcUyUsLK0EehlnHeE2/ZnfnEAR34i53uG
+wFmPXual8A5imxVtY3uruVl91Y2UAbspTIujSBZcZwBGnIGdXmTBHdybKI4/4dfh
+5nsAc6EgVak1hWR/JxzNnvwowySXECLV9XHlaMdzO/g6kMF3HKCGZYhdjgrhIE8b
+GkN6uKv3JVZmFmuaOvqzPRpkrCS4Y36K9KV+T9u1qGKsmEzUt23vAEU7yr4crlDz
+cX0LtknjCbvm/N/Hv1eJ
+=5Ppg
+-----END PGP SIGNATURE-----
