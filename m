@@ -1,32 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/25/14
-Message-ID: <alpine.LFD.2.20.1607260055500.12460@wniryva>
-Date: Tue, 26 Jul 2016 01:07:33 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request Qemu: scsi: esp: oob write access while reading ESP command 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/04/9
+Message-Id: <DD545187-DC87-48DC-A3AB-69F8000E2F11@gmail.com>
+Date: Sat, 4 Jun 2016 12:10:56 -0500
+From: Brandon Perry <bperry.volatile@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Libtorrent http_parser.cpp denial of service
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Helo list,
 
-Quick Emulator(Qemu) built with the ESP/NCR53C9x controller emulation support 
-is vulnerable to an OOB write access issue. It could occur while doing DMA 
-read into ESP command buffer 's->cmdbuf'; It could write past the 's->cmdbuf' 
-area, if it was transferring more than 16 bytes in esp_do_dma().
+I recently opened a bug on libtorrent regarding malformed HTTP or UPnP responses that has been fixed on branch RC_1_1. The maintainer also mentioned backporting the fix to RC_1_0.
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS OR potentially leverage it to execute arbitrary code with 
-privileges of the Qemu process on the host.
+https://github.com/arvidn/libtorrent/issues/780 <https://github.com/arvidn/libtorrent/issues/780>
 
-Upstream patches:
------------------
-   -> http://git.qemu.org/?p=qemu.git;a=commit;h=926cde5f3e4d2504ed161ed0
-   -> http://git.qemu.org/?p=qemu.git;a=commit;h=cc96677469388bad3d664793
+https://github.com/arvidn/libtorrent/pull/782 <https://github.com/arvidn/libtorrent/pull/782>
 
-This issue was discovered by Li Qiang of 360.cn Inc.
+Content of type "text/html" skipped
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
