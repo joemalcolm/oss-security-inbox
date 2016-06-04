@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1950" "Saturday" "4" "July" "2015" "12:58:40" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150704165840.0EE836C0490@smtpvmsrv1.mitre.org>" "49" "[oss-security] Re: please REJECT CVE-2015-3199" nil nil nil "7" "2015070416:58:40" "[oss-security] Re: please REJECT CVE-2015-3199" (number mark "        cve-assign@m Jul  4   49/1950  " thread-indent "\"[oss-security] Re: please REJECT CVE-2015-3199\"\n") "<5597FEC8.5060400@redhat.com>" ("<5597FEC8.5060400@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2822" "Saturday" "4" "June" "2016" "12:10:56" "-0500" "Brandon Perry" "bperry.volatile@gmail.com" "<DD545187-DC87-48DC-A3AB-69F8000E2F11@gmail.com>" "57" "[oss-security] Libtorrent http_parser.cpp denial of service" nil nil nil "6" "2016060417:10:56" "[oss-security] Libtorrent http_parser.cpp denial of service" (number mark "U       bperry.volat Jun  4   57/2822  " thread-indent "\"[oss-security] Libtorrent http_parser.cpp denial of service\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1953 invoked by uid 550); 4 Jul 2015 16:58:51 -0000
+Received: (qmail 22153 invoked by uid 550); 4 Jun 2016 17:18:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,95 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1932 invoked from network); 4 Jul 2015 16:58:51 -0000
-In-Reply-To: <5597FEC8.5060400@redhat.com>
-Message-Id: <20150704165840.0EE836C0490@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Sat,  4 Jul 2015 12:58:40 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: please REJECT CVE-2015-3199
-To: kseifried@redhat.com
+Received: (qmail 15433 invoked from network); 4 Jun 2016 17:11:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:subject:date:message-id:to:mime-version;
+        bh=G5xKcL1P7u7XZKTwUKpimqiJOu5n6vytDrL9MVad3G4=;
+        b=WJeK1Kaxr03rrYto8NDf8Toj8ee/i9JrEQUaeKubr7O9V37jgJzApmxJDtluGsHUEX
+         AOOsCCTeerDdDKQ9teNZ7tONiiefkt+rZ9wzORPXllEcjvR/46Rgfrst+lYK5bPuXHIV
+         sRoQ+yfrejpT02mTZwIm2/d5gv5xBkDMcS7DglH8Fahxn6JuEs58BSpdJoR5SUEXc1Rj
+         U0QOe6TnKhy0U3DLjDnh5RgHM2FX8tmX75UfjX+ab/nmWHfX/+MdmjhzSC8eKTUqeQf8
+         gLakIdpMxsRR0cJKmEo6sG7Psd/1723S08ccLx90u3kKKK++c6cLakd+sk98IYAoRtVI
+         jXZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:subject:date:message-id:to:mime-version;
+        bh=G5xKcL1P7u7XZKTwUKpimqiJOu5n6vytDrL9MVad3G4=;
+        b=EUlaf/QQKJVmb4n9Kyt+6TQG6qHuwKBXa3I8tmxNlSOBM+7v8x4lKkulXGMoXOxDxZ
+         Rl/igwQHiICrd0ZbnNAupxHitb+Jh7ok6I1/YiVIqm26LX6T4x7+E4ii4ZwB8GmjV5qO
+         6hr9ALej4FMQEsBa+1MP3y14yeQ0xz+z2KPDw8VHmRWbPQ7fLaGe1d6pqqOGuoy2UIwS
+         jG/iy9eSg5GobBh1WrQPwQ53tZU1gvj1H0k8MX05klTd1KxBICqIwTB5eu2cxpZAav6p
+         TTJt/WmHSisMlOLhePnRju0bt/IaXAdBo23Z/zQ8o9sUP5JQoEM+Ii2gbOpVe2UD7toO
+         9MDA==
+X-Gm-Message-State: ALyK8tJ9pA50LfWV+cUGjl9bGJJt5rtaH500HATHncAo88Yq/ANohVIZ+zJT7QXEbd+C8g==
+X-Received: by 10.157.61.197 with SMTP id l63mr5255113otc.48.1465060263659;
+        Sat, 04 Jun 2016 10:11:03 -0700 (PDT)
+From: Brandon Perry <bperry.volatile@gmail.com>
+X-Pgp-Agent: GPGMail 2.6b2
+Content-Type: multipart/signed; boundary="Apple-Mail=_4B6F7B7E-EDDA-4499-B0F7-9AFF5BF3844B"; protocol="application/pgp-signature"; micalg=pgp-sha512
+Date: Sat, 4 Jun 2016 12:10:56 -0500
+Message-Id: <DD545187-DC87-48DC-A3AB-69F8000E2F11@gmail.com>
+To: oss-security@lists.openwall.com
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
+Subject: [oss-security] Libtorrent http_parser.cpp denial of service
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--Apple-Mail=_4B6F7B7E-EDDA-4499-B0F7-9AFF5BF3844B
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_A2CEF6E5-CC37-43FE-815F-9AF1655894CB"
 
-> http://projects.theforeman.org/issues/10469
-> 
-> "This was reported by Ori Rabin to foreman-security (thanks!) and a CVE
-> identifier was filed under CVE-2015-3199, but it turned out this does
-> not affect any released upstream version."
-> 
-> so it was effectively in an unreleased version, thus no need for CVE.
 
-The scope of CVE isn't strictly limited to released upstream versions.
-As mentioned at the bottom of the
-http://openwall.com/lists/oss-security/2015/01/04/7 post, some
-products sometimes have CVEs for this type of unreleased software,
-whereas others do not. We feel that Foreman is probably in the latter
-category.
+--Apple-Mail=_A2CEF6E5-CC37-43FE-815F-9AF1655894CB
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-http://theforeman.org/contribute.html and 10469 suggest that the
-incorrect code was found only on the develop branch:
-  
-    - Master - latest stable release code
-    - Develop - new features and bug fixes
+Helo list,
 
-    Master is frozen between major releases.
+I recently opened a bug on libtorrent regarding malformed HTTP or UPnP resp=
+onses that has been fixed on branch RC_1_1. The maintainer also mentioned b=
+ackporting the fix to RC_1_0.
 
-http://theforeman.org/introduction.html doesn't suggest that anyone
-ships a product using code from the Foreman develop branch, but we
-don't want to immediately rule out that possibility. This seems to be
-a good choice for moving to the REJECT state, and we will most likely
-do that next week unless there's an important reason to keep
-CVE-2015-3199.
+https://github.com/arvidn/libtorrent/issues/780 <https://github.com/arvidn/=
+libtorrent/issues/780>
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+https://github.com/arvidn/libtorrent/pull/782 <https://github.com/arvidn/li=
+btorrent/pull/782>
+
+--Apple-Mail=_A2CEF6E5-CC37-43FE-815F-9AF1655894CB
+Content-Transfer-Encoding: 7bit
+Content-Type: text/html;
+	charset=us-ascii
+
+<html><head><meta http-equiv="Content-Type" content="text/html charset=us-ascii"></head><body style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;" class="">Helo list,<div class=""><br class=""></div><div class="">I recently opened a bug on libtorrent regarding malformed HTTP or UPnP responses that has been fixed on branch RC_1_1. The maintainer also mentioned backporting the fix to RC_1_0.</div><div class=""><br class=""></div><div class=""><a href="https://github.com/arvidn/libtorrent/issues/780" class="">https://github.com/arvidn/libtorrent/issues/780</a></div><div class=""><br class=""></div><div class=""><a href="https://github.com/arvidn/libtorrent/pull/782" class="">https://github.com/arvidn/libtorrent/pull/782</a></div></body></html>
+--Apple-Mail=_A2CEF6E5-CC37-43FE-815F-9AF1655894CB--
+
+--Apple-Mail=_4B6F7B7E-EDDA-4499-B0F7-9AFF5BF3844B
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Comment: GPGTools - https://gpgtools.org
 
-iQEcBAEBAgAGBQJVmBAvAAoJEKllVAevmvmsXS4IAMYPSg8K5gDoSq+LV5lTS+na
-HTpCQP4POO8NY8YcTQnKY4bnZOF13CXZqUzGxpUiw1uwJlH3yeJI6c3J/EFfAC/s
-jnZgLBQ4PgDu3wk3gtIwfQROFQPz07TsAAKZj36mT/v7zA/7UhgVjfqCK9iZxwGd
-ejN8Xcfz6ATKyNZvuxxPblqhb4FSdl2cyaQ87VRUVgDcdWnHrcWlimyEN9muNjX6
-zeBIYohDVnkkktOu3OeKMkKOyH1ejHNJ3zxcKZMbUpo9fwmRrlssLEslqNbEzIWq
-Iv+Pruul3SIENuUVpZgYjq6fbB1sbRuGKBHzxApqVKLZOAXkFAXuPyYf4WqJYlc=
-=jqn1
+iQIcBAEBCgAGBQJXUwulAAoJEKJq8VjVbt2pXgEP/jwCAOxBNjgrvXnqGOB07y3c
+OYTAwa+leWr548bUmmfkMehFwHr2hcCO93wBybQfnGLFCgHbgf1KWXP2oTWVQGuY
+N/s1Bd66Tdi7KOETYccvDdFCQi+sTA8ZGY8jw0CQovoIo+TO0OMljYXbuoiQ5Tk+
+13CxI/5MWgdiCSxbYsCVp/pJ/53/dKmVt+b+6mPXtcb/PvAhXY8fkYggfU+3JdwE
+NbpMEoxubhffHxVHicVES/UrHI9WNXlxM4RTDZ3KaqusLSYSURc7erVCMxYFUIkT
+kdDq+ADA2G9/jq9pbEhsM4wPLy2ypyENYtWZ4Xgb2eJ74lZ291cFIT9zj2RzJ1lX
+2KDJr+zj+z6hrh0qpPbiEk1qVDU5kIPwrUxP8vsTqC9V2GpJZIZFjhtdm3XSFafy
+G+Krx0N1M4DR9qYT19dYewOjDGPpULCbVU0YDwetJKqnI3LI8NRDhlU44wW6dLZQ
+nXJcplYOmBkWayTw1Vbf+5tpjHHt+kmCe6cjMHV+95ovsik+cHLlWZnEmQHkkZzG
+LxRxvkLM/hBzy6iMRTnSM58h4dqlF4aoBB6UeGqEgOUCbbq9b5XPbZ9UfQbZnIJP
+Y22QPswB7vbZhKA91YObrSxPWJjTCr+gjghq7ZU9YXyWOVMDp7/+KWSeq9ObEL+h
+5kSJBuuSmsKWOKbpHHyR
+=9hAL
 -----END PGP SIGNATURE-----
+
+--Apple-Mail=_4B6F7B7E-EDDA-4499-B0F7-9AFF5BF3844B--
