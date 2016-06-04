@@ -1,46 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/27/7
-Message-ID: <CAFB0D2S-jjKKegnTqXo+Kcn9JME+=KwAjUVKMBVCWS=z1uxQUQ@mail.gmail.com>
-Date: Wed, 27 Jan 2016 10:47:18 -0500
-From: Justin Bull <me@...tinbull.ca>
-To: rubyonrails-security@...glegroups.com
-Cc: security@...e.de, oss-security@...ts.openwall.com,  ruby-security-ann@...glegroups.com
-Subject: Re: [CVE-2016-0751] Possible Object Leak and Denial of Service attack in Action Pack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/04/6
+Message-ID: <5752F2B8.5000009@pipping.org>
+Date: Sat, 4 Jun 2016 17:24:40 +0200
+From: Sebastian Pipping <sebastian@...ping.org>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: expat hash collision fix too predictable?
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jan 25, 2016 at 2:32 PM, Aaron Patterson <tenderlove@...y-lang.org>
-wrote:
+On 04.06.2016 16:54, cve-assign@...re.org wrote:
+>> Please confirm that using CVE-2012-6702 for consequences of
+>> "unanticipated internal calls to srand" is what you intended.
+> 
+> Yes, we confirm that. (They are unanticipated both because of
+> thread-safety concerns, and because it's possible for an application
+> to have an important dependency on srand being called exactly once.)
+> 
+> 
+>> The hash DoS vulnerability CVE-2012-0876 was fixed to some extend in
+>> Expat 2.1.0, commit e3e81a6d
+>> ...
+>> The next release of Expat will not do internal calls to srand (or rand)
+>> any more but extract and use entropy from other sources.
+>> ...
+>> I suppose hash initialization with (too little /) second-based
+>> entropy still is part of the original CVE-2012-0876 (or the same again).
+> 
+> Use CVE-2016-5300 for the separate issue in which the original choices
+> of entropy source and RNG did not properly address the possibility of
+> a successful hash DoS attack. In other words, the code changes (in the
+> next release) to fix CVE-2016-5300 are needed because the original fix
+> for CVE-2012-0876 was insufficient. (We use separate CVE IDs when
+> follow-on work is needed to complete the solution to the same original
+> vulnerability finding.)
 
->
-> Workarounds
-> -----------
-> This attack can be mitigated by a proxy that only allows known mime types
-> in
-> the Accept header.
->
-> Placing the following code in an initializer will also mitigate the issue:
->
-> ```ruby
-> require 'action_dispatch/http/mime_type'
->
-> Mime.const_set :LOOKUP, Hash.new { |h,k|
->   Mime::Type.new(k) unless k.blank?
-> }
-> ```
->
+Excellent, thank you!
 
-I know 4.0.x isn't a supported Rails version, but it's worth noting that
-with our app, that workaround breaks the `params` hash in Action
-Controller. The request must be "application/json" with a POST payload. The
-workaround, for some reason, completely removes the post payload hash from
-`params`. Note that a "multipart/form-data" request and GET parameters work
-just fine.
+https://sourceforge.net/p/expat/code_git/ci/07cc2fcacf81b32b2e06aa918df51756525240c0/
 
-Advice as to a workaround that preserves "application/json" POST request
-parameters would be appreciated.
+Best
 
--- 
-Best Regards,
-Justin Bull
-PGP Fingerprint: E09D 38DE 8FB7 5745 2044 A0F4 1A2B DEAA 68FD B34C
 
+
+Sebastian
