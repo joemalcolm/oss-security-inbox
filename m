@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3770" "Wednesday" "4" "May" "2016" "19:16:26" "+0300" "Solar Designer" "solar@openwall.com" "<20160504161626.GA18912@openwall.com>" "83" "Re: [oss-security] libonion 0.8 contains security fixes" "^Cc:" nil nil "5" "2016050416:16:26" "[oss-security] libonion 0.8 contains security fixes" (number mark "        solar@openwa May  4   83/3770  " thread-indent "\"Re: [oss-security] libonion 0.8 contains security fixes\"\n") "<20160504122336.GA14517@notk.org>" ("<20160504094225.GA12893@openwall.com>" "<20160504122336.GA14517@notk.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1524" "Saturday" "4" "June" "2016" "22:16:52" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160605021652.356446C0308@smtpvmsrv1.mitre.org>" "42" "[oss-security] Re: Libtorrent http_parser.cpp denial of service" nil nil nil "6" "2016060502:16:52" "[oss-security] Re: Libtorrent http_parser.cpp denial of service" (number mark "U       cve-assign@m Jun  4   42/1524  " thread-indent "\"[oss-security] Re: Libtorrent http_parser.cpp denial of service\"\n") "<DD545187-DC87-48DC-A3AB-69F8000E2F11@gmail.com>" ("<DD545187-DC87-48DC-A3AB-69F8000E2F11@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17518 invoked by uid 550); 4 May 2016 16:16:36 -0000
+Received: (qmail 3341 invoked by uid 550); 5 Jun 2016 02:17:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,104 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17496 invoked from network); 4 May 2016 16:16:36 -0000
-Message-ID: <20160504161626.GA18912@openwall.com>
-References: <20160504094225.GA12893@openwall.com> <20160504122336.GA14517@notk.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160504122336.GA14517@notk.org>
-User-Agent: Mutt/1.4.2.3i
-Cc: oss-security@lists.openwall.com,
-	David Moreno Montero <dmoreno@coralbits.com>,
-	Zachary Grafton <zachary.grafton@gmail.com>,
-	Remi Birot-Delrue <asgeir@free.fr>
-Date: Wed, 4 May 2016 19:16:26 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] libonion 0.8 contains security fixes
-To: Adrien Nader <adrien@notk.org>
+Received: (qmail 3275 invoked from network); 5 Jun 2016 02:17:04 -0000
+From: cve-assign@mitre.org
+To: bperry.volatile@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <DD545187-DC87-48DC-A3AB-69F8000E2F11@gmail.com>
+Message-Id: <20160605021652.356446C0308@smtpvmsrv1.mitre.org>
+Date: Sat,  4 Jun 2016 22:16:52 -0400 (EDT)
+Subject: [oss-security] Re: Libtorrent http_parser.cpp denial of service
 
-On Wed, May 04, 2016 at 02:23:36PM +0200, Adrien Nader wrote:
-> I've also found myself calling shutdown() simply so that I could
-> receive an error event and could then close everything, albeit in a
-> slightly different context.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> I recently opened a bug on libtorrent regarding malformed HTTP or UPnP
+> responses
 > 
-> I'm wondering if this is a common practice. I hadn't read about it I
-> think and I'm once again wondering how many people do this.
+> https://github.com/arvidn/libtorrent/issues/780
+> https://github.com/arvidn/libtorrent/pull/782
 
-I don't know if it's common or not.
+>> A specially crafted HTTP response from a tracker (or potentially a
+>> UPnP broadcast) can crash libtorrent in the parse_chunk_header()
+>> function.
+>> 
+>> AddressSanitizer: SEGV on unknown address
+>> 
+>> Memcheck, a memory error detector
+>> Invalid read of size 1
 
-I also don't know if it's common and intended or is a hack to use
-EPOLLONESHOT for race-free multi-threaded use of a shared epoll
-instance.  In other words, I don't know if it was meant that we rely on
-the one-shot property working 100% reliably as much as we would rely
-e.g. on a futex (which we would have needed in absence of this feature).
-If anyone in here knows the answer, please post (and yes, this is
-security-relevant).  I suspect some answers could be obtained on LKML.
+Use CVE-2016-5301.
 
-As it happens, these two tricks are very powerful, especially combined.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-> Also, does
-> anyone know of more "usage tricks" than what is in man 7 epoll?
-
-Below is one we've been considering as an alternative fix for the races
-in onion, and which I guess David might implement in master branch now.
-(It's a more invasive change, so for the 0.8 release I advocated that we
-go with the shutdown() workaround that I described.)  Here's an excerpt
-from my posting to onion-dev on March 13:
-
----
-Looks like the epoll interface is lacking in that it only has a timeout
-for the epoll_wait() call, but not per-fd timeouts.  If it could raise
-per-fd events for per-fd timeouts, then the same one-shot mechanism
-would prevent the race here.
-
-... actually, it almost can:
-
-http://stackoverflow.com/questions/10772208/epoll-and-timeouts#18454825
-
-"Try pairing each socket with a timer fd object (timerfd_create). For
-each socket in your application, create a timer that's initially set to
-expire after 500ms, and add the timer to the epoll object (same as with
-a socket - via epoll_ctl and EPOLL_CTL_ADD). Then, whenever data arrives on
-a socket, reset that socket's associated timer back to a 500ms timeout.
-
-If a timer expires (because a socket has been inactive for 500ms) then
-the timer will become "read ready" in the epoll object and cause any
-thread waiting on epoll_wait to wake up. That thread may then handle the
-timeout for the timer's associated socket."
-
-This should be much more scalable than your current linear scanning of
-the list of slots - that approach needed to be reworked anyway.
----
-
-This was further discussed between David and me on GitHub:
-
----
-> I think we can add a timerfd slot that wakes up on next timeout, do the
-> closing of fds if necessary, and loop over all the slots to check the
-> new expiration time. This expiration time has to be reset as well on new
-> slots and slot function dispatching, as user could set a new timeout
-> sooner than the current timeout. timerfd allows to reset a running
-> timer.
-
-This sounds good to me.  I am also considering using timerfd's if/when I
-eventually replace my use of onion with own code.
-
-Waking up on each exact timeout may be more costly than waking up once
-per second.  So you'll want to group nearby timeouts, with some
-reasonable granularity.
----
-
-While I am posting the above, let's please keep further discussion on
-oss-security, if any, security-focused.  I felt the above was (barely)
-on topic because it's about races, and those are security hazards.
-
-epoll usage tricks in general, beyond security relevant ones, are
-off-topic for oss-security.  Adrien, I am not saying that your message
-was off-topic for oss-security; rather, I am saying that just like this
-reply of mine, yours was also barely on topic (and that's fine), so
-let's not stray farther into arbitrary epoll usage tricks or whatever.
-
-Alexander
+iQIcBAEBCAAGBQJXU4siAAoJEHb/MwWLVhi2KbIP/1tVXGYZeEa2sb34OgsgVYiV
+M8l+7yc+cOfOmPASgA3qo5ANkjX7QHCn1IjZaRM77716b1fM4+PQI49PZHpve9FE
+5fhx1Mn+2hQicbOyEbzkRz/p/qU1seUWwFfo/6rHRtgLDGl/A375PkCWL6nVG6sw
+ufJ57CdKPLPv2/ZL/BEwP2DeYlCAYTd8lHiFeia4VvxG3VEgeYM4kkS9tiHuvcdN
+SlmfTW/1uWL+Q45wmvlRNq4WZhTWjaNm5VYFIrV1E1iagtC9S2OBvnEwZpwDH1VP
+rSTW7erlRz8ZThjKf9zwGpFwFMzkYzx0kDhMBkLOIrvorXLiTx+QJAsdNBycryKy
+LQ8y33OUB+eIHgwaAVoTSAzuWcoC/tjuSNh/JpIyPQtkeKCbBVeosLxmrlLoo9q0
+GImRXM4hOAwIgvPfJQrWbbdP3OV8r3xZd09+MVbTuBkIqr0nLP3ljPAEYZQFhZXQ
+gNETQglchAU8qqLntwO8XjcxeeEncYWoTEnet4fgGfiimXjjQsH/fCM4W27gUPak
+x/8hROSJB7fkldlddtk4wgc8j9mEk4dfzyRbpc99DNWYE4MJ5HkXMS63hkViqq/A
+fQ8EaIoa1LOrq+FFjwitrHMCOHEkHnejDAMMqAnEK/X5VXc9t3SsVlcIg4KWmNmP
+lrec6mVfkk8wKlKpEsNz
+=BR8M
+-----END PGP SIGNATURE-----
