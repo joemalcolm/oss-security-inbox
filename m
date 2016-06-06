@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1175" "Monday" "22" "August" "2016" "14:56:20" "+0200" "Werner Koch" "wk@gnupg.org" "<87mvk59d3f.fsf@wheatstone.g10code.de>" "41" "Re: [oss-security] memory issues in libksba 1.3.4 and git" nil nil nil "8" "2016082212:56:20" "[oss-security] memory issues in libksba 1.3.4 and git" (number mark "U       wk@gnupg.org Aug 22   41/1175  " thread-indent "\"Re: [oss-security] memory issues in libksba 1.3.4 and git\"\n") "<20160822111506.GA4403@openwall.com>" ("<E28562C2-12D4-407B-BD2B-E154F5FCF884@trust-in-soft.com>" "<8760qtaza4.fsf@wheatstone.g10code.de>" "<20160822111506.GA4403@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1231" "Sunday" "5" "June" "2016" "19:18:02" "-0500" "Jodie Cunningham" "jodie.cunningham@gmail.com" "<CABfY0L3cfjwEENQTXtyx6z9Sqy6kFPqFHmQPHe_a5yzveJ8Eng@mail.gmail.com>" "41" "[oss-security] Re: Requesting CVE for ImageMagick DoS" nil nil nil "6" "2016060600:18:02" "[oss-security] Re: Requesting CVE for ImageMagick DoS" (number mark "U       jodie.cunnin Jun  5   41/1231  " thread-indent "\"[oss-security] Re: Requesting CVE for ImageMagick DoS\"\n") "<CABfY0L0q8fJjyyHKpZumOesDm72yNwebVQxa21TStFhAO+3atw@mail.gmail.com>" ("<CABfY0L1tAvrzxmmPJOXj61Z2dX_j41GYu-DY25HmSLo1TXnfqg@mail.gmail.com>" "<CABfY0L0q8fJjyyHKpZumOesDm72yNwebVQxa21TStFhAO+3atw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15975 invoked by uid 550); 22 Aug 2016 13:09:59 -0000
+Received: (qmail 11965 invoked by uid 550); 6 Jun 2016 00:18:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,65 +12,82 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1893 invoked from network); 22 Aug 2016 13:02:36 -0000
-From: Werner Koch <wk@gnupg.org>
-To: Solar Designer <solar@openwall.com>
-Cc: oss-security@lists.openwall.com,  Pascal Cuoq <cuoq@trust-in-soft.com>,  Rapha??l Rieu-Helft <raphael.rieu-helft@trust-in-soft.com>
-References: <E28562C2-12D4-407B-BD2B-E154F5FCF884@trust-in-soft.com>
-	<8760qtaza4.fsf@wheatstone.g10code.de>
-	<20160822111506.GA4403@openwall.com>
-Organisation: g10 Code GmbH
-X-message-flag: Mails containing HTML will not be read!
-	 Please send only plain text.
-OpenPGP: url=https://k.gnupg.net/80615870F5BAD690333686D0F2AD85AC1E42B367
-Date: Mon, 22 Aug 2016 14:56:20 +0200
-In-Reply-To: <20160822111506.GA4403@openwall.com> (Solar Designer's message of
-	"Mon, 22 Aug 2016 14:15:06 +0300")
-Message-ID: <87mvk59d3f.fsf@wheatstone.g10code.de>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Received: (qmail 11863 invoked from network); 6 Jun 2016 00:18:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ajDOnC6yU2omDLzNkUcDsCWRyWpl4XWBpeB7NBjkWEo=;
+        b=iObubwVSSIhJNweG4SCJ20fDYURIqF+GAyt0pswHPuIUmHTPdEk4I/ksWuHiLSIBQh
+         HP5zOoEydbrIbz3mcs7wcz/3FSZFi3Is5KGAQo9KQuYT6Us1EYvAJxdccJodSTcN5P51
+         mc9PC1c2NQit3IDExfSI8pDH3bkMaO4PUc49+Nd4MJnJCvbgr0/dFxcZaehMQKC50v3A
+         nDJocdHYDOHygJmL/9SK7ppdke+C6CMHBHqEG3f/Cqkqb3i3IXeBHL2KpFuKnqnGIV+I
+         Y8Z9vO7qvKgwhnvboI+4upJngF1Sky+QkkHX5L9YkNU7gyf+R/ZUa/EGEFpLHu+vmfzs
+         bg6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ajDOnC6yU2omDLzNkUcDsCWRyWpl4XWBpeB7NBjkWEo=;
+        b=EaIHO8PiveN1V606vTZFsjH9S9qWyf7duUYqwhCHOWO89ODNjDTqNQR4uBKLjoMWGx
+         Uz4ItEbxD884wYq+ZZApbOPJ+fMN2GxFQZ9Xv+SuYCEeqvtDHzzVFEYFVQDyQb7sw2e0
+         q3HzDUcExxNC7coOJ/dSxxf71kbcO2fPfK6VvX/Ba5PuQFHtCRzyB2fGVB/RVAAA7laH
+         99H/2o6cwxImpPeHgI5r6OlM0+4zO+Kh+CDRaplGUmgeNRkzwhjHQVpwyGgrThqzXFHB
+         4YUw5Wj7Zaj91HyU5p4cgjn2plotzT07WQwnWe3IZKJZZeuDzCcK0JBT2gnApC1M7AKP
+         D7jg==
+X-Gm-Message-State: ALyK8tJhBcdnHtIJwBN8Os1twi0C69oy2ObKvCOO1PNcdAaIx5Wvo+HOpEfUM5moIiaq1q39t9bBQqMdqgYJ5g==
+X-Received: by 10.159.40.225 with SMTP id d88mr7088088uad.73.1465172283059;
+ Sun, 05 Jun 2016 17:18:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=Compsec_ASO_Ron_Brown_SDI_Kennedy_Islam_Abduganievich_Karimov=indust";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-Subject: Re: [oss-security] memory issues in libksba 1.3.4 and git
+In-Reply-To: <CABfY0L0q8fJjyyHKpZumOesDm72yNwebVQxa21TStFhAO+3atw@mail.gmail.com>
+References: <CABfY0L1tAvrzxmmPJOXj61Z2dX_j41GYu-DY25HmSLo1TXnfqg@mail.gmail.com>
+ <CABfY0L0q8fJjyyHKpZumOesDm72yNwebVQxa21TStFhAO+3atw@mail.gmail.com>
+From: Jodie Cunningham <jodie.cunningham@gmail.com>
+Date: Sun, 5 Jun 2016 19:18:02 -0500
+Message-ID: <CABfY0L3cfjwEENQTXtyx6z9Sqy6kFPqFHmQPHe_a5yzveJ8Eng@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] Re: Requesting CVE for ImageMagick DoS
 
-
-On Mon, 22 Aug 2016 13:15, solar@openwall.com said:
-
-> The "[" character isn't in the allowed set per RFC 2046:
-
-Ooops.  This is the first report after 15 years or so.  spook.lines
-apparently has a new entry since some time.
-
->                       "+" / "_" / "," / "-" / "." /
-
-Oh cool, underscore is also allowed; looks better anyway.
-
-> Werner, maybe you could try this old workaround for next time you post? -
+On Thu, Feb 26, 2015 at 2:50 PM, Jodie Cunningham
+<jodie.cunningham@gmail.com> wrote:
+> Adding cve-assign to cc
 >
->   (setq mml-insert-mime-headers-always t)
+> -Jodie
+>
+> Hi,
+>
+> I wanted to share four DoS bugs I found via fuzzing with AFL in
+> ImageMagick, as the maintainer has since corrected them. I'd like to
+> request the appropriate CVE(s) to cover these DoS bugs:
+>
+> Date, File ID, ShortDescription, Bug report URL:
+> 1/24/2015 3c1c3e63 HDR file DoS, CPU
+>  http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26929
+>
+> 1/25/2015 d595506c MIFF file DoS, CPU
+>  http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26931
+>
+> 1/25/2015 c8ad6aba PDB file DoS, CPU
+> http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26932
+>
+> 1/25/2015 783d8806 VICAR file DoS, CPU
+> http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26933
+>
+>
+> Regards,
+> -Jodie Cunningham
 
-Done.  Thanks for pointing me to this setting; for reference this is:
 
-  If non-nil, always put Content-Type: text/plain at top of empty parts.
-  It is necessary to work against a bug in certain clients.
+While it's a party, are there any identifiers for the above?
+
+Also here are the downstream tickets for them:
+VICAR: https://bugzilla.redhat.com/show_bug.cgi?id=1195271
+PDB: https://bugzilla.redhat.com/show_bug.cgi?id=1195269
+MIFF: https://bugzilla.redhat.com/show_bug.cgi?id=1195265
+HDR: https://bugzilla.redhat.com/show_bug.cgi?id=1195260
 
 
-Shalom-Salam,
-
-   Werner
-
-=2D-=20
-Die Gedanken sind frei.  Ausnahmen regelt ein Bundesgesetz.
- /* Join us at OpenPGP.conf  <https://openpgp-conf.org> */
-
---=Compsec_ASO_Ron_Brown_SDI_Kennedy_Islam_Abduganievich_Karimov=indust
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-
-iEYEARECAAYFAle69nQACgkQTwVA1Xf5X5V9QwCbBvskL4/CjyWK4HJ7NTvFO6P5
-BYQAnjHqy8imjofHry3o7itRzB1bs+Kf
-=0LYK
------END PGP SIGNATURE-----
---=Compsec_ASO_Ron_Brown_SDI_Kennedy_Islam_Abduganievich_Karimov=indust--
-
+Regards,
+-Jodie
