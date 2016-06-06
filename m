@@ -1,39 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/7
-Message-ID: <20160728144249.GB23522@perpetual.pseudorandom.co.uk>
-Date: Thu, 28 Jul 2016 15:42:49 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/06/3
+Message-ID: <0d0061c0-7c51-98cd-e62b-073743e31d25@redhat.com>
+Date: Mon, 6 Jun 2016 15:54:13 +0200
+From: Adam Maris <amaris@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: cve request: systemd-machined: information exposure for docker containers
+Cc: cve-assign@...re.org
+Subject: Re: Re: CVE requests: DoS in librsvg parsing SVGs with circular definitions
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 28 Jul 2016 at 08:34:35 -0400, Daniel J Walsh wrote:
-> Lennart is wrong when he states that this only effects "user"
-> containers, any container that registers with
-> machinectl, will have this information revealed to non privileged user
-> processes.
 
-*Which* unprivileged user processes?
 
-If the unprivileged user processes are not in a container, they can get a
-significant amount of the same information by reading the host's /proc.
+On 15/05/16 09:05, Gustavo Grieco wrote:
+> 2016-05-11 0:36 GMT+02:00 Brian May <brian@...uxpenguins.xyz>:
+>> Just did a git bisect against the source. Assuming I got this right, the
+>> following commits fixed the issue.
+> Thanks for taking the time to do the git bisect!
+>
+>>>> They affect the following functions:
+>>>> * rsvg_cairo_pop_discrete_layer - rsvg_cairo_pop_render_stack -
+>>>> rsvg_cairo_generate_mask: reproducible using circular-1.svg
+>>> Use CVE-2016-4347.
+>> Fixed in:
+>>
+>> commit a51919f7e1ca9c535390a746fbf6e28c8402dc61
+>> Author: Benjamin Otte <otte@...hat.com>
+>> Date:   Wed Oct 7 08:45:37 2015 +0200
+>>
+>>     rsvg: Add rsvg_acquire_node()
+>>
+>>     This function does proper recursion checks when looking up resources
+>>     from URLs and thereby helps avoiding infinite loops when cyclic
+>>     references span multiple types of elements.
+>
+> I think CVE-2016-4347 and CVE-2015-7558 (stack exhaustion due to
+> cyclic dependency, reported here:
+> http://www.openwall.com/lists/oss-security/2015/12/21/5) are in fact,
+> the same issue. This is probably my fault (sorry!).
+>
+> MITRE: We should reject the the newly assigned one?
+>
+> Regards,
+> Gustavo.
 
-If the unprivileged user processes are in a container or other confinement
-that prevents them from looking at the host's /proc, then one of the other
-things that confinement can/should prevent is unfiltered access to the host
-system's D-Bus system bus, which is how machinectl talks to systemd-machined.
+CC'ing MITRE in case they missed this question. We confirm it is a
+duplication. Which CVE should be rejected?
 
-Lennart also points out on the systemd bug that the
-methods in question can be access-controlled (at your
-own risk, the policy language is horrible) by modifying
-/etc/dbus-1/system.d/org.freedesktop.machine1.conf. They don't appear to
-be mediated by /usr/share/polkit-1/actions/org.freedesktop.machine1.policy
-too, but they could be; that would be an enhancement request for systemd
-upstream.
+Thanks!
 
-I think the bottom line here is that if the author of a container integration
-tool chooses to publish information in a central registry (systemd-machined),
-then they shouldn't be surprised to find the central registry's security model
-getting applied to that information.
+-- 
+Adam Mariš, Red Hat Product Security
+1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
 
-    S
+
