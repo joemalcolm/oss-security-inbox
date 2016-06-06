@@ -1,29 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/05/4
-Message-ID: <20160305134841.GA3099@eldamar.local>
-Date: Sat, 5 Mar 2016 14:48:42 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: Dotclear: XSS vulnerability in comments managment page and media exclusion control enforcement
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/06/4
+Message-Id: <20160606142120.B833F332034@smtpvbsrv1.mitre.org>
+Date: Mon,  6 Jun 2016 10:21:20 -0400 (EDT)
+From: cve-assign@...re.org
+To: gustavo.grieco@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, amaris@...hat.com
+Subject: Re: CVE requests: DoS in librsvg parsing SVGs with circular definitions
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Dotclear, a web publishing software, fixed a cross-site scripting
-vulnerability in 2.8.2. Additionally the media exlusion control in the
-media manager was furhter enforced:
+> I think CVE-2016-4347 and CVE-2015-7558 (stack exhaustion due to
+> cyclic dependency, reported here:
+> http://www.openwall.com/lists/oss-security/2015/12/21/5) are in fact,
+> the same issue. This is probably my fault (sorry!).
+> 
+> MITRE: We should reject the the newly assigned one?
 
-https://dotclear.org/blog/post/2015/10/25/Dotclear-2.8.2
+Yes, we have rejected CVE-2016-4347 in favor of CVE-2015-7558.
 
-The XSS vulnerability was fixed with 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-https://hg.dotclear.org/dotclear/rev/65e65154dadf
-
-The second mentioned issue was addressed with
-
-https://hg.dotclear.org/dotclear/rev/198580bc3d80
-
-Could you assign CVEs for those?
-
-Regards,
-Salvatore
+iQIcBAEBCAAGBQJXVYZVAAoJEHb/MwWLVhi23P4P/jRHh7qf6/Iw3JTxwbWOJYAb
+vL30dueXHyLZkW+tHhBIk5YTRUfqcozmP8AbWpJ6MImYn9XpIXqyvh3m9b3kSIWX
+pXABqX9FwdXhkDaQThsEiSy7IkzMZwSV8LYoZ4o+G4FmL9jwjTh7EUh5t8DXzZlC
+bGgDwAtgWwxp5EhtrFHt00QTk9Qb+ShCxOEQGL/g0MXUqRbm4vIO4qrztxfo4Ekn
+Oh9RhF+17pzhHJVf9UFIWWtqeUmKGsPPXBm63r0V64297gPpgmnaCo0ssk5Q1wE3
+0Z2M63gsjsh8v5OJkL3QCP7hOCy4iPci0Xz0VPIp4V2Rh+qv7ref+K/Jd9Tp8Qpq
+5wiWrMSp17ERhn5HT6uEFiSOq8p3uVr/TOXH/UifEuqTrcDJujTucVlLKMuWjGDQ
+H/lr0XpRzeSP7kinUpJwQlL9s2qp7M5FE9YgecOt1IxFK6nJ4jrWpQJt9p4IqUZY
+RZd972FpwYa3JHdtujZGkczJ1uV8I+qphxoRWJ/QPwzDJKSCuWKwAyD2/zf2VcmB
+2trpFGsUaj6jZxrp7YkVyKTDXh2qnrlzrlZR9spJyB49vaeBkoY7+ERp/I75Cseg
+0WtdElN3wW8StwMJFtkCO4SgN1rgwxtYXpVj4Jf5ktFZNSIXjbEQyMGxZ9EZ4phC
+7zqsrHIVrLa91bz6TXVD
+=VRYg
+-----END PGP SIGNATURE-----
