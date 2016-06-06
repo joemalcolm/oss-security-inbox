@@ -1,24 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/04/5
-Message-ID: <56B3B4D9.3000806@trylinux.us>
-Date: Thu, 4 Feb 2016 12:30:17 -0800
-From: "Zach W." <kestrel@...linux.us>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: CVE Request: Open Source Media Center insecure default config
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/06/5
+Message-Id: <E1b9vTq-0001gg-6a@xenbits.xenproject.org>
+Date: Mon, 06 Jun 2016 14:26:14 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 181 (CVE-2016-5242) - arm: Host crash caused by VMID exhaustion
 Content-Type: text/plain; charset=utf-8
 
-Hey all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Using several other CVEs as an example (such as
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-6850), I am
-requesting a CVE for "OSMC: Open Source Media Center" default config.
+            Xen Security Advisory CVE-2016-5242 / XSA-181
+                              version 2
 
-1) Default user is osmc/osmc
-2) SSH, and FTP are enabled by default, which osmc has access to
-3) The interface does not require or request a password change for the
-default user
-4) osmc has full sudoers access and can gain root access via sudo
+               arm: Host crash caused by VMID exhaustion
 
-Thanks!
+UPDATES IN VERSION 2
+====================
 
-Zach W.
+CVE assigned.
+
+ISSUE DESCRIPTION
+=================
+
+VMIDs are a finite hardware resource, and allocated as part of domain
+creation.  If no free VMIDs are available when trying to create a new domain,
+a bug in the error path causes a NULL pointer to be used, resulting in a Data
+Abort and host crash.
+
+IMPACT
+======
+
+Attempting to create too many concurrent domains causes a host crash rather
+than a graceful error.  A malicious device driver domain can hold references
+to domains, preventing its VMID being released.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 4.4 and later are affected.  Older Xen versions are unaffected.
+
+x86 systems are not affected.
+
+Only arm systems with less-privileged device driver domains can expose this
+vulnerability.
+
+MITIGATION
+==========
+
+There is no mitigation.  Not using driver domains reclassifies the problem,
+but does not fix it.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+The crash was discussed publicly on xen-devel, before it was appreciated
+that there was a security problem.
+
+CREDITS
+=======
+
+This issue was discovered by Aaron Cornelius of DornerWorks.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa181.patch           xen-unstable, Xen 4.6.x, 4.5.x
+xsa181-4.4.patch       Xen 4.4.x
+
+$ sha256sum xsa181*
+6756fcf44446675e5277f6d6c0e8a0aaa51a7909ad9a55af89a09367fded8733  xsa181.patch
+97a90c7cb42466647622cb2ed98de531b7ba2e174a1bc639a32a6f1b626d503f  xsa181-4.4.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEbBAEBAgAGBQJXUYxcAAoJEIP+FMlX6CvZgAAH+OiNDLSkAHUl3isXjFzK+Mf9
+NGuIyXc2j5K8uTwz5KvZkhiWLVCeOY7Jo1Wix3Fa1wFtJ2rMlgQf7/hOt0tk0NjU
+w97Re+xSi69iruPEdwb4k31ohnlfLSqriqL4JWh6EDrhftdnvEk/yXmriyu1RhKy
+MLk1P24Ora/gvSj31px3vBkbu8KLImhIOkOcRmJ7FQb8gWsmMDluuVu7lhUAL7im
+KCe6u99sDQo18wxubYID4XxFqJExBUd6L3cnpdN4UITgylSaIqJq/RBwd8jRrxW8
+MxT9/IcNf0rmB1Sh1IARBFF7P7hj76ho3sIpMeE0cMPWBe2NWMItX9ula61vQA==
+=kBFB
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa181.patch" of type "application/octet-stream" (1243 bytes)
+
+Download attachment "xsa181-4.4.patch" of type "application/octet-stream" (1285 bytes)
