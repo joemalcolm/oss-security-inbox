@@ -1,47 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/09/4
-Message-ID: <CA+PdXcs3nHUMs8cnF_XMNOOq7_yARB_qK_6kr4bufvgRYFUySA@mail.gmail.com>
-Date: Sat, 9 Jul 2016 12:35:27 -0400
-From: Glenn Randers-Pehrson <glennrp@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: On anonymous CVE assignments
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/06/2
+Message-Id: <20160606042429.EBD9D42E014@smtpvbsrv1.mitre.org>
+Date: Mon,  6 Jun 2016 00:24:29 -0400 (EDT)
+From: cve-assign@...re.org
+To: jodie.cunningham@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Requesting CVE for ImageMagick DoS
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 8, 2016 at 3:43 PM, Glenn Randers-Pehrson <glennrp@...il.com>
-wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> *CVE*-*2016*-*3751*(H)
->
-> On Fri, Jul 8, 2016 at 9:55 AM, Kurt Seifried <kseifried@...hat.com>
-> wrote:
->
->> Also if projects don't like "Surprise" CVEs one way to deal with that is
->> to
->> request the CVE's themselves when they know something is a security
->> vulnerability. Also making it easy to contact them helps, the harder you
->> make it for a security researcher to deal with you, the less likely they
->> are to.
->>
->
-> It's hard to do that when a "surprise" CVE was never sent to the project,
-> for example  *CVE*-*2016*-*3751*(H) which just appeared in an Android
-> security
-> bulletin.  It claims that libpng has a bug that allows privilidge
-> escalation
-> and was reported 3 Dec 2015. I'm guessing that it is a duplicate of
-> CVE-2015-8126 or CVE-2015-8472, but it's hard to tell for sure without
-> seeing it.  All I've been able to find out is that it is a "reserved" CVE,
-> with
-> no clue as to who reserved it.
->
+> 1/24/2015 3c1c3e63 HDR file DoS, CPU
+>  http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26929
+>  https://bugzilla.redhat.com/show_bug.cgi?id=1195260
+>  http://trac.imagemagick.org/changeset/17845
+>  http://trac.imagemagick.org/changeset/17846
 
-I still haven't seen the CVE, but it seems that it is a report against a
-fork of libpng, that had fallen several years out-of-date, and the CVE
-is just a private catch-all for updating the fork to current libpng status.
+Use CVE-2015-8900.
+
+There are currently no DNS records for trac.imagemagick.org. It
+appears that some or all of the code changes may be on GitHub,
+although we have not confirmed that. For example, this HDR issue might
+be
+https://github.com/ImageMagick/ImageMagick/commit/97aa7d7cfd2027f6ba7ce42caf8b798541b9cdc6
 
 
-> Glenn Randers-Pehrson
-> libpng custodian
->
->
+> 1/25/2015 d595506c MIFF file DoS, CPU
+>  http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26931
+>  https://bugzilla.redhat.com/show_bug.cgi?id=1195265
+>  http://trac.imagemagick.org/changeset/17854
 
+Use CVE-2015-8901.
+
+
+> 1/25/2015 c8ad6aba PDB file DoS, CPU
+>  http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26932
+>  https://bugzilla.redhat.com/show_bug.cgi?id=1195269
+>  http://trac.imagemagick.org/changeset/17855
+
+Use CVE-2015-8902.
+
+
+> 1/25/2015 783d8806 VICAR file DoS, CPU
+>  http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26933
+>  https://bugzilla.redhat.com/show_bug.cgi?id=1195271
+>  http://trac.imagemagick.org/changeset/17856
+
+Use CVE-2015-8903.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXVPqDAAoJEHb/MwWLVhi2YnoP/j/OsaE0UGCCqQ9+i6ryS7Ye
+i4PWl9Wj+LR843eJDfjT5oi2HwZVFoVP0rOCKqN0P6gj1Qhm1LeaQduY7hBkroXT
+zzNA0VombvKRRBwB4+3Bj9RDe74QNos8OoNz6SRJJyu2C/l7qyar6chyE71WxFn9
+wOGKk/Hi530cWJ1Cj3ft42nMbdG6eGQmtnmg+/h6Afd9FjD4YSYq/llUD20gVass
+oK4nXEUx3CsxiX8YOlbtkuTCIxuKhqb1xSqU0YyNUhTIRMBsywdcxpAplyO0iK43
+27s40ay8fSVV0xLg1GOwZ0t+/Ouwbu0iArXfxuzQOcSBaKcguz5NhzONE5vKT0Y5
+JpWlc1EvoLzdp0oDawJnfLr4TmTsA90DXgqM9TJXNReUyVB0HJkBFSn2t27HCeUf
+Gyvrq7oTkyWJhpJFOLTM+LmkDsXIaw6SlzUn6GSTwsDdEGJ5+C7W4byTkkpGFu9Y
+wo0JKrtwMNZQm1pjsV7w+AihnDhdwTyTNdTYrqqTXuPk4luD2T+kyTbB5Z+mba87
+chVHoptvOXG96X17EKLjfGjguqjziDE0ddDwbhxI4Z1FD347bXsui4NO2QBHiZ5X
+UW8XbWIou2L5MOhxM5M8SIfkEzfROhYstes3C1UC/RIL3SpFCceKqZCl3n/DdIob
+kTjGO9x5OCa+DWyPMhnx
+=Wtlv
+-----END PGP SIGNATURE-----
