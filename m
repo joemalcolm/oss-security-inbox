@@ -1,41 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/18/3
-Message-ID: <20160518082837.GA13028@lorien.valinor.li>
-Date: Wed, 18 May 2016 10:28:37 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: Linux: information leak in Rock Ridge Extensions to iso9660 -- fs/isofs/rock.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/07/4
+Message-ID: <87wpm1wixw.fsf@redhat.com>
+Date: Tue, 07 Jun 2016 09:34:51 +0200
+From: Martin Prpic <mprpic@...hat.com>
+To: "oss-security\@lists.openwall.com" <oss-security@...ts.openwall.com>
+cc: "Mitre CVE assign department" <cve-assign@...re.org>
+Subject: Please reject duplicate CVE for libxml2
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi, it seems two CVEs were assigned for the same issue in libxml2:
 
-The following commit in Linux v4.6 addresses an information leak
-caused by not properly handling NM entries containing NUL. Quoting the
-commit message:
+http://seclists.org/oss-sec/2016/q1/683
+http://seclists.org/oss-sec/2016/q2/214
 
-> Subject: get_rock_ridge_filename(): handle malformed NM entries
-> 
-> Payloads of NM entries are not supposed to contain NUL.  When we run
-> into such, only the part prior to the first NUL goes into the
-> concatenation (i.e. the directory entry name being encoded by a bunch
-> of NM entries).  We do stop when the amount collected so far + the
-> claimed amount in the current NM entry exceed 254.  So far, so good,
-> but what we return as the total length is the sum of *claimed*
-> sizes, not the actual amount collected.  And that can grow pretty
-> large - not unlimited, since you'd need to put CE entries in
-> between to be able to get more than the maximum that could be
-> contained in one isofs directory entry / continuation chunk and
-> we are stop once we'd encountered 32 CEs, but you can get about 8Kb
-> easily.  And that's what will be passed to readdir callback as the
-> name length.  8Kb __copy_to_user() from a buffer allocated by
-> __get_free_page()
-> 
-> Cc: stable@...r.kernel.org # 0.98pl6+ (yes, really)
-> Signed-off-by: Al Viro <viro@...iv.linux.org.uk>
+Daniel Veillard reported to us that these issues are the same and fixed
+by:
 
-Upstream commit: https://git.kernel.org/linus/99d825822eade8d827a1817357cbf3f889a552d6 (v4.6)
+https://git.gnome.org/browse/libxml2/commit/?id=bdd66182ef53fe1f7209ab6535fda56366bd7ac9
 
-Can you please assign a CVE for this issue?
+The upstream bug is:
 
-Regards,
-Salvatore
+https://bugzilla.gnome.org/show_bug.cgi?id=762100
+
+Can CVE-2016-4483 please be rejected as a duplicate of CVE-2016-3627?
+
+Thank you!
+
+-- 
+Martin Prpič / Red Hat Product Security
