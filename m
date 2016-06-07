@@ -1,4 +1,9 @@
-Received: (qmail 30401 invoked by uid 550); 28 Apr 2022 23:35:07 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["611" "Tuesday" "7" "June" "2016" "08:45:27" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160607064527.GA20067@lorien.valinor.li>" "18" "[oss-security] CVE Request: GnuTLS: GNUTLS-SA-2016-1: File overwrite by setuid programs" nil nil nil "6" "2016060706:45:27" "[oss-security] CVE Request: GnuTLS: GNUTLS-SA-2016-1: File overwrite by setuid programs" (number mark "U       carnil@debia Jun  7   18/611   " thread-indent "\"[oss-security] CVE Request: GnuTLS: GNUTLS-SA-2016-1: File overwrite by setuid programs\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 24159 invoked by uid 550); 7 Jun 2016 06:45:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,180 +12,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30377 invoked from network); 28 Apr 2022 23:35:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=from : to : subject :
- date : message-id : references : in-reply-to : content-type :
- mime-version; s=jan2016.eng;
- bh=pebCgHPaHM2YE65ylXszPe5lfmDoeKt41N0qvPrxSpI=;
- b=Uhy7HB4NMYtmKUGnO6fHcwSw2jDH0+GHd2yl2lTIpYw528qaQD9xdhOTux03BnQpjjI4
- 1Eb1ij8kggXIj0H470TWYrJl2hpX49WQANVmpo4kRiEXou0EcD6TyzLUbGbY6FwZlBh1
- 5CVv1bZvqsNLhBbf4WkZ3YOROVJ7zeCw46oDgoh6PzYrKJjWYSCPlZtleT53YM58VxN0
- UPM7V/kxBCPOyL9/b1XcjQusDu2AhlJx+w+05WrczbO+Qmerk4VoK2olhyl8qLyJBFTW
- QzVoWnemrqI44Ai6tUqZ8LLv+K/HKP2Z2Qcu1JP01/8yspzzTAxluA2+H0YwBs2PA3mf 6g== 
-From: "Seaman, Chad" <cseaman@akamai.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: [oss-security] CVE-2022-21449 and version reporting
-Thread-Index: AQHYWwnvRn9SqN6pE0iqZ4aPzwUoj60GFaGAgAAIeoD//9zoqA==
-Date: Thu, 28 Apr 2022 23:34:46 +0000
-Message-ID: <2D37FD38-B910-4D66-A5B3-0E58DA3B87C1@akamai.com>
-References: <484488E0-D662-4F58-80DB-499DE532FA3B@akamai.com>
- <20220428201003.GA1260523@millbarge>,<142a2b8b-f5f5-526e-741f-35337a5a81f2@tao.at>
-In-Reply-To: <142a2b8b-f5f5-526e-741f-35337a5a81f2@tao.at>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-Content-Type: multipart/mixed;
-	boundary="_004_2D37FD38B9104D66A5B30E58DA3B87C1akamaicom_"
+Received: (qmail 24140 invoked from network); 7 Jun 2016 06:45:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=gM5JyJ37e1/G9653QyCh82SBUqa39vY3p0a0al1ruVU=;
+        b=PP9U908NOso4NxZA2uGY3I55fQpKrKswCNu9BYx7ax+hLKBi+gHug5/DYZxmlNQfAF
+         cP0LC47LTpU1aCQxcxMAcJGrhM7O9V1w8vkVBP7/BctMf+ZGtbRqNBtpcGYc1ttmdAQz
+         aSORenl21jhIDM142LQha1dl7TAVCQxbuIxgDzIAPejXtrqb9HHraIMevYhgX9bSF1Sv
+         ms0Kt6qX6Zxg+CQpvFTQtb5WtzhMzrWvtYRm/jcX0B+89C8lRNyOQtFW20jRgEIb2WOD
+         WQL96wmGKPIMfc2pW+G3eSD7Ms2DFFhTHI4lbxo+5NApJrROD6tjB+8Qk0L5RnPWFR+1
+         vg/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=gM5JyJ37e1/G9653QyCh82SBUqa39vY3p0a0al1ruVU=;
+        b=R6PR0enbFT3i++O8l6QkNe2r6MeCP6V4AokFmSVPd1EdcT8nYmG6DH7ajWFOUrA1CT
+         5+zB3T7yW7dHmDPQmuQLGSelprU5RH/pxMEwFb4UBYcoQYBXByIgmc5UDw7Q9D+1itle
+         J+YSZoJ5yFloVhd6pNx5ksZa/ngdgr1K7cgIdSg0RY1fXxyp0+5ASRFjEo/wHMVpYE62
+         M/fu0wN0OY1DgcnzYLvenTenzMNV2LeUqCUiqu+/CAp1X9PBBaLW9LCFMYpNnKxr+6NT
+         Pl3dYF+vCevYVghgNpmhUegjiwYzTtqauvzLRHXJbVY0iDnw11qB3tgqEsr9c/y+hk7l
+         jRvQ==
+X-Gm-Message-State: ALyK8tI0Ck5wt48TbC/bnT5C5Q9EZ+oAarGQJi1DQYblHc+slkzdJFKY1htgjWVGrRqaKQ==
+X-Received: by 10.28.182.8 with SMTP id g8mr952658wmf.56.1465281931117;
+        Mon, 06 Jun 2016 23:45:31 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Tue, 7 Jun 2016 08:45:27 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Message-ID: <20160607064527.GA20067@lorien.valinor.li>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.486,18.0.858
- definitions=2022-04-28_05:2022-04-28,2022-04-28 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 suspectscore=0
- malwarescore=0 phishscore=0 spamscore=0 bulkscore=0 mlxscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2202240000 definitions=main-2204280135
-X-Proofpoint-GUID: XeyQLo1X0YJ_K4JRpy4GdsrtTM4WuM2B
-X-Proofpoint-ORIG-GUID: XeyQLo1X0YJ_K4JRpy4GdsrtTM4WuM2B
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.858,Hydra:6.0.486,FMLib:17.11.64.514
- definitions=2022-04-28_05,2022-04-28_01,2022-02-23_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 phishscore=0
- adultscore=0 spamscore=0 mlxlogscore=997 suspectscore=0 priorityscore=1501
- mlxscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1034 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2202240000
- definitions=main-2204280134
-Subject: Re: [oss-security] CVE-2022-21449 and version reporting
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: [oss-security] CVE Request: GnuTLS: GNUTLS-SA-2016-1: File overwrite by setuid
+ programs
 
---_004_2D37FD38B9104D66A5B30E58DA3B87C1akamaicom_
-Content-Type: multipart/alternative;
-	boundary="_000_2D37FD38B9104D66A5B30E58DA3B87C1akamaicom_"
+Hi
 
---_000_2D37FD38B9104D66A5B30E58DA3B87C1akamaicom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+GnuTLS 3.4.13 was released addressing GNUTLS-SA-2016-1,
+http://gnutls.org/security.html#GNUTLS-SA-2016-1 :
 
-RXhhY3RseSB0aGlzLg0KDQpJdOKAmXMgbm90IHRoYXQgdGhleSBkaWRu4oCZ
-dC9jYW7igJl0IHZlcmlmeSwgaXTigJlzIGFscmVhZHkgdmVyaWZpZWQsIHRo
-ZXnigJlyZSBjbGFpbWluZyB0aG9zZSB2ZXJzaW9ucyBubyBsb25nZXIgYmVp
-bmcgb2ZmaWNpYWxseSBzdXBwb3J0ZWQgbWVhbnMgdGhleSBjYW4gc2VlbWlu
-Z2x5IG9taXQgdGhlbSBmcm9tIENWRSByZXBvcnRpbmcuDQoNCldoaWNoIGlz
-IGRhbmdlcm91cywgbWlzbGVhZGluZywgYW5kIG5vbnNlbnNpY2FsLg0KDQpS
-ZWdhcmRzLA0KQ2hhZA0KDQpPbiBBcHIgMjgsIDIwMjIsIGF0IDU6MzYgUE0s
-IFN2ZW4gU2Nod2VkYXMgPHN2ZW4uc2Nod2VkYXNAdGFvLmF0PiB3cm90ZToN
-Cg0K77u/DQpPbiAyOC4wNC4yMiAyMjoxMCwgU2V0aCBBcm5vbGQgd3JvdGU6
-DQpPbiBUaHUsIEFwciAyOCwgMjAyMiBhdCAwMjoxMjowNFBNICswMDAwLCBT
-ZWFtYW4sIENoYWQgd3JvdGU6DQpJbiB3aGF0IHVuaXZlcnNlIGV4YWN0bHkg
-YXJlIHZlcnNpb25zIG9taXR0ZWQgZnJvbSB2dWxuZXJhYmlsaXR5DQpyZXBv
-cnRpbmcgYmVjYXVzZSBhIHZlbmRvciDigJxubyBsb25nZXIgc3VwcG9ydHMg
-dGhhdCB2ZXJzaW9u4oCd4oCmIHRoaXMNCm5vbi1zdXBwb3J0ZWQgdmVyc2lv
-biBpcyBzdGlsbCB2dWxuZXJhYmxlPw0KQSBsYXJnZSBwYXJ0IG9mIHNvZnR3
-YXJlIG1haW50ZW5hbmNlIGlzIG1hbmFnaW5nIHRlY2huaWNhbCBkZWJ0IC0t
-DQphbmQgYmVpbmcgYWJsZSB0byB3YWxrIGF3YXkgZnJvbSBuby1sb25nZXIt
-c3VwcG9ydGVkIHByb2R1Y3RzIGlzIGFuDQppbXBvcnRhbnQgcGFydCBvZiB0
-aGF0Lg0KV291bGQgeW91IGV4cGVjdCBNaWNyb3NvZnQgdG8gZXZhbHVhdGUg
-V2luZG93cyAzLjExLCBXaW5kb3dzIDk1LA0KV2luZG93cyA5OCwgV2luZG93
-cyBNRSwgV2luZG93cyBOVCAzLjUxLCBXaW5kb3dzIE5UIDQuMC4gV2luZG93
-cyBYUCwNCmV0YyBmb3IgZXZlcnkgc2luZ2xlIHZ1bG5lcmFiaWxpdHkgZGlz
-Y292ZXJlZCBpbiBuZXdlc3QgcHJvZHVjdHM/DQoNCllvdSBhbmQgSmVyZW15
-IGFyZ3VpbmcgaW4gYmFkIGZhaXRoIGhlcmUsIE9QIGRpZG4ndCBhc2sgYWJv
-dXQgYW55dGhpbmcgbGlrZSB0aGF0Lg0KDQpUaGUgcHJvYmxlbSBhdCBoYW5k
-IGlzLCBzb21lb25lICphbHJlYWR5IGRpZCBhbGwgdGhhdCB3b3JrKiwgYW5k
-IE9yYWNsZSBpcyAqYWN0aXZlbHkgaW50ZXJ2ZW5pbmcqIHRvIGhhdmUgaXQg
-ZHJvcHBlZCBmcm9tIENWRSByZXBvcnRzLg0KDQpTbyB0aGUgcXVlc3Rpb24g
-aXM6IFdoeSBpcyB2dWxuZXJhYmlsaXR5IGluZm9ybWF0aW9uIHRoYXQgYWxy
-ZWFkeSBleGlzdHMgYmVpbmcgY2Vuc29yZWQ/DQo=
+> Setuid programs using GnuTLS 3.4.12 could potentially allow an
+> attacker to overwrite and corrupt arbitrary files in the filesystem.
+> This issue was introduced in GnuTLS 3.4.12 and fixed in GnuTLS 3.4.13.
+> Recommendation: Upgrade to GnuTLS 3.4.13, or later versions.
 
---_000_2D37FD38B9104D66A5B30E58DA3B87C1akamaicom_
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+The relevant upstream commits seem to be:
 
-PGh0bWw+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlw
-ZSIgY29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjwvaGVh
-ZD4NCjxib2R5IGRpcj0iYXV0byI+DQpFeGFjdGx5IHRoaXMuDQo8ZGl2Pjxi
-cj4NCjwvZGl2Pg0KPGRpdj5JdOKAmXMgbm90IHRoYXQgdGhleSBkaWRu4oCZ
-dC9jYW7igJl0IHZlcmlmeSwgaXTigJlzIGFscmVhZHkgdmVyaWZpZWQsIHRo
-ZXnigJlyZSBjbGFpbWluZyB0aG9zZSB2ZXJzaW9ucyBubyBsb25nZXIgYmVp
-bmcgb2ZmaWNpYWxseSBzdXBwb3J0ZWQgbWVhbnMgdGhleSBjYW4gc2VlbWlu
-Z2x5IG9taXQgdGhlbSBmcm9tIENWRSByZXBvcnRpbmcuPC9kaXY+DQo8ZGl2
-Pjxicj4NCjwvZGl2Pg0KPGRpdj5XaGljaCBpcyBkYW5nZXJvdXMsIG1pc2xl
-YWRpbmcsIGFuZCBub25zZW5zaWNhbC48L2Rpdj4NCjxkaXY+PGJyPg0KPGRp
-diBkaXI9Imx0ciI+UmVnYXJkcywNCjxkaXY+Q2hhZDwvZGl2Pg0KPC9kaXY+
-DQo8ZGl2IGRpcj0ibHRyIj48YnI+DQo8YmxvY2txdW90ZSB0eXBlPSJjaXRl
-Ij5PbiBBcHIgMjgsIDIwMjIsIGF0IDU6MzYgUE0sIFN2ZW4gU2Nod2VkYXMg
-Jmx0O3N2ZW4uc2Nod2VkYXNAdGFvLmF0Jmd0OyB3cm90ZTo8YnI+DQo8YnI+
-DQo8L2Jsb2NrcXVvdGU+DQo8L2Rpdj4NCjxibG9ja3F1b3RlIHR5cGU9ImNp
-dGUiPg0KPGRpdiBkaXI9Imx0ciI+77u/PHNwYW4+PC9zcGFuPjxicj4NCjxz
-cGFuPk9uIDI4LjA0LjIyIDIyOjEwLCBTZXRoIEFybm9sZCB3cm90ZTo8L3Nw
-YW4+PGJyPg0KPGJsb2NrcXVvdGUgdHlwZT0iY2l0ZSI+PHNwYW4+T24gVGh1
-LCBBcHIgMjgsIDIwMjIgYXQgMDI6MTI6MDRQTSAmIzQzOzAwMDAsIFNlYW1h
-biwgQ2hhZCB3cm90ZTo8L3NwYW4+PGJyPg0KPC9ibG9ja3F1b3RlPg0KPGJs
-b2NrcXVvdGUgdHlwZT0iY2l0ZSI+DQo8YmxvY2txdW90ZSB0eXBlPSJjaXRl
-Ij48c3Bhbj5JbiB3aGF0IHVuaXZlcnNlIGV4YWN0bHkgYXJlIHZlcnNpb25z
-IG9taXR0ZWQgZnJvbSB2dWxuZXJhYmlsaXR5PC9zcGFuPjxicj4NCjwvYmxv
-Y2txdW90ZT4NCjwvYmxvY2txdW90ZT4NCjxibG9ja3F1b3RlIHR5cGU9ImNp
-dGUiPg0KPGJsb2NrcXVvdGUgdHlwZT0iY2l0ZSI+PHNwYW4+cmVwb3J0aW5n
-IGJlY2F1c2UgYSB2ZW5kb3Ig4oCcbm8gbG9uZ2VyIHN1cHBvcnRzIHRoYXQg
-dmVyc2lvbuKAneKApiB0aGlzPC9zcGFuPjxicj4NCjwvYmxvY2txdW90ZT4N
-CjwvYmxvY2txdW90ZT4NCjxibG9ja3F1b3RlIHR5cGU9ImNpdGUiPg0KPGJs
-b2NrcXVvdGUgdHlwZT0iY2l0ZSI+PHNwYW4+bm9uLXN1cHBvcnRlZCB2ZXJz
-aW9uIGlzIHN0aWxsIHZ1bG5lcmFibGU/PC9zcGFuPjxicj4NCjwvYmxvY2tx
-dW90ZT4NCjwvYmxvY2txdW90ZT4NCjxibG9ja3F1b3RlIHR5cGU9ImNpdGUi
-PjxzcGFuPkEgbGFyZ2UgcGFydCBvZiBzb2Z0d2FyZSBtYWludGVuYW5jZSBp
-cyBtYW5hZ2luZyB0ZWNobmljYWwgZGVidCAtLTwvc3Bhbj48YnI+DQo8L2Js
-b2NrcXVvdGU+DQo8YmxvY2txdW90ZSB0eXBlPSJjaXRlIj48c3Bhbj5hbmQg
-YmVpbmcgYWJsZSB0byB3YWxrIGF3YXkgZnJvbSBuby1sb25nZXItc3VwcG9y
-dGVkIHByb2R1Y3RzIGlzIGFuPC9zcGFuPjxicj4NCjwvYmxvY2txdW90ZT4N
-CjxibG9ja3F1b3RlIHR5cGU9ImNpdGUiPjxzcGFuPmltcG9ydGFudCBwYXJ0
-IG9mIHRoYXQuPC9zcGFuPjxicj4NCjwvYmxvY2txdW90ZT4NCjxibG9ja3F1
-b3RlIHR5cGU9ImNpdGUiPjxzcGFuPldvdWxkIHlvdSBleHBlY3QgTWljcm9z
-b2Z0IHRvIGV2YWx1YXRlIFdpbmRvd3MgMy4xMSwgV2luZG93cyA5NSw8L3Nw
-YW4+PGJyPg0KPC9ibG9ja3F1b3RlPg0KPGJsb2NrcXVvdGUgdHlwZT0iY2l0
-ZSI+PHNwYW4+V2luZG93cyA5OCwgV2luZG93cyBNRSwgV2luZG93cyBOVCAz
-LjUxLCBXaW5kb3dzIE5UIDQuMC4gV2luZG93cyBYUCw8L3NwYW4+PGJyPg0K
-PC9ibG9ja3F1b3RlPg0KPGJsb2NrcXVvdGUgdHlwZT0iY2l0ZSI+PHNwYW4+
-ZXRjIGZvciBldmVyeSBzaW5nbGUgdnVsbmVyYWJpbGl0eSBkaXNjb3ZlcmVk
-IGluIG5ld2VzdCBwcm9kdWN0cz88L3NwYW4+PGJyPg0KPC9ibG9ja3F1b3Rl
-Pg0KPHNwYW4+PC9zcGFuPjxicj4NCjxzcGFuPllvdSBhbmQgSmVyZW15IGFy
-Z3VpbmcgaW4gYmFkIGZhaXRoIGhlcmUsIE9QIGRpZG4ndCBhc2sgYWJvdXQg
-YW55dGhpbmcgbGlrZSB0aGF0Ljwvc3Bhbj48YnI+DQo8c3Bhbj48L3NwYW4+
-PGJyPg0KPHNwYW4+VGhlIHByb2JsZW0gYXQgaGFuZCBpcywgc29tZW9uZSAq
-YWxyZWFkeSBkaWQgYWxsIHRoYXQgd29yayosIGFuZCBPcmFjbGUgaXMgKmFj
-dGl2ZWx5IGludGVydmVuaW5nKiB0byBoYXZlIGl0IGRyb3BwZWQgZnJvbSBD
-VkUgcmVwb3J0cy48L3NwYW4+PGJyPg0KPHNwYW4+PC9zcGFuPjxicj4NCjxz
-cGFuPlNvIHRoZSBxdWVzdGlvbiBpczogV2h5IGlzIHZ1bG5lcmFiaWxpdHkg
-aW5mb3JtYXRpb24gdGhhdCBhbHJlYWR5IGV4aXN0cyBiZWluZyBjZW5zb3Jl
-ZD88L3NwYW4+PGJyPg0KPC9kaXY+DQo8L2Jsb2NrcXVvdGU+DQo8L2Rpdj4N
-CjxkaXY+DQo8YmxvY2txdW90ZSB0eXBlPSJjaXRlIj4NCjxkaXYgZGlyPSJs
-dHIiPjwvZGl2Pg0KPC9ibG9ja3F1b3RlPg0KPC9kaXY+DQo8L2JvZHk+DQo8
-L2h0bWw+DQo=
+https://gitlab.com/gnutls/gnutls/compare/fb2a6baef79f4aadfd95e657fe5a18da20a1410e...86076c9b17b9a32b348cafb8b724f57f7da64d58
 
---_000_2D37FD38B9104D66A5B30E58DA3B87C1akamaicom_--
+Can you assign a CVE for this issue?
 
---_004_2D37FD38B9104D66A5B30E58DA3B87C1akamaicom_
-Content-Type: application/octet-stream; name="OpenPGP_signature"
-Content-Description: OpenPGP_signature
-Content-Disposition: attachment; filename="OpenPGP_signature"; size=677;
-	creation-date="Thu, 28 Apr 2022 23:34:46 GMT";
-	modification-date="Thu, 28 Apr 2022 23:34:46 GMT"
-Content-ID: <C8DCD46BC3DC824BB76AFC5D150434B0@akamai.com>
-Content-Transfer-Encoding: base64
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0NCg0Kd3NENUJBQUJDQUFq
-RmlFRVd6eTNJc09EWit0Zm1qZUJZVW9uZnB1SVVuSUZBbUpxKzdjRkF3QUFB
-QUFBQ2drUVlVb25mcHVJVW5LRg0KZ0F3QXdnakgyNWVoa2lnZUl6S242QzNO
-Ymphc2lrVVNITEZKMGF6NHVDRWRiUWVjVGxVYWNzaVRwSS8xR3RlMStrUzhl
-S2ZwZVhYcg0KQ1c5YnZ2b0F3OWVuaEJkRlIxYzhRK1FiYStnR2JsbTFiWHVL
-UWcvV1l1THdyb01HWFE2eXhWMlh3VFIySGVkeUkyZ0RVem1PMHRSUQ0KdTlT
-aC9SQXIvMUZyL05DSmRWQSt5MTBROTR3anRBMDJCWEhRc2J1L1JZZThVS2Y1
-aEl1cWJTS0hvN0VobzgycWk3d3pkV05aK0dVOA0KNlZBM0kzYXBNR1dmUzdL
-ZDN5YU51NURJNDJuVzhYVDY1bS9vaXVTZ2hWc1lSNUxCZHFIelJpMnJGcGk0
-bkxSSUo5OExnSDZMUHdKaQ0KbitoYVhDZnNkMGhIcUJPQ3NzWUlza1RUSG9t
-UDhJQkN5U2p4V3pKbUtzZnlmaTczd2N4aFdTbFBQWU1qQlluQngvWmcwSnhX
-VVJlcw0KSk90bGhqbkJQWENNSzBBLyt2MFdwK3RxZkFzWjFYN3lqcmxYdXZj
-STVkTnhoY1g3d2hEbUlmYzBPNWtuYkp5R1h5WDRwenkybkU1dg0KUzFvbUk4
-Z0psRUJrZEV1SFhTTlphNENjQ21KdTlaZVAxRGpiWkZUY052QWhPWnZaaWd4
-THJud3FjMXVjDQo9RzV2SA0KLS0tLS1FTkQgUEdQIFNJR05BVFVSRS0tLS0t
-DQo=
-
---_004_2D37FD38B9104D66A5B30E58DA3B87C1akamaicom_--
+Regards,
+Salvatore
