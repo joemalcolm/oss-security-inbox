@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1241" "Wednesday" "31" "May" "2017" "11:11:32" "+0200" "Peter Bex" "peter@more-magic.net" "<20170531091132.GH4590@scully.more-magic.net>" "40" "Re: [oss-security] CVE request form not working" "^Date:" nil nil "5" "2017053109:11:32" "[oss-security] CVE request form not working" (number mark "        peter@more-m May 31   40/1241  " thread-indent "\"Re: [oss-security] CVE request form not working\"\n") "<2308024.l19IxOpFt6@wanheda>" ("<20170531084224.GG4590@scully.more-magic.net>" "<2308024.l19IxOpFt6@wanheda>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3358" "Monday" "6" "June" "2016" "20:48:34" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160607004834.1C15252E001@smtpvbsrv1.mitre.org>" "84" "[oss-security] Re: 3 bugs refer to buffer overflow in in libtiff 4.0.6" nil nil nil "6" "2016060700:48:34" "[oss-security] Re: 3 bugs refer to buffer overflow in in libtiff 4.0.6" (number mark "U       cve-assign@m Jun  6   84/3358  " thread-indent "\"[oss-security] Re: 3 bugs refer to buffer overflow in in libtiff 4.0.6\"\n") "<tencent_62222EFF74B667984E9F8E5B@qq.com>" ("<tencent_62222EFF74B667984E9F8E5B@qq.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28090 invoked by uid 550); 31 May 2017 09:11:44 -0000
+Received: (qmail 30418 invoked by uid 550); 7 Jun 2016 00:48:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,97 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28057 invoked from network); 31 May 2017 09:11:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=more-magic.net; s=dkim-2016-12;
-	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:To:From:Date; bh=Ri4qol9wteDJEe0nWZ7IC0Q2X33XF72Jm0+UwAmSZOc=;
-	b=SNvKHAtqJBISUXOVCfI3CDydWcItXHkE1mMJ5Q7m0FpCaP7DPUsEzzFPjCeg74P18ae5ampC+t7vF9tmK8DYu/HG6ghnfx0K0vZSTqLgncfKpclktO9tgG+Efv8rjz+/0xPmRf3XGzCbOzt0xgakEvtGQyOs36SznY9A4s/5gaM=;
-Message-ID: <20170531091132.GH4590@scully.more-magic.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20170531084224.GG4590@scully.more-magic.net>
- <2308024.l19IxOpFt6@wanheda>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="/rDaUNvWv5XYRSKj"
-Content-Disposition: inline
-In-Reply-To: <2308024.l19IxOpFt6@wanheda>
-X-PGP-Key: http://www.more-magic.net/peter-bex.asc
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Date: Wed, 31 May 2017 11:11:32 +0200
-From: Peter Bex <peter@more-magic.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE request form not working
-To: oss-security@lists.openwall.com
+Received: (qmail 30392 invoked from network); 7 Jun 2016 00:48:48 -0000
+From: cve-assign@mitre.org
+To: 271193918@qq.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <tencent_62222EFF74B667984E9F8E5B@qq.com>
+Message-Id: <20160607004834.1C15252E001@smtpvbsrv1.mitre.org>
+Date: Mon,  6 Jun 2016 20:48:34 -0400 (EDT)
+Subject: [oss-security] Re: 3 bugs refer to buffer overflow in in libtiff 4.0.6
 
---/rDaUNvWv5XYRSKj
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Wed, May 31, 2017 at 11:02:44AM +0200, Agostino Sarubbo wrote:
-> On Wednesday 31 May 2017 10:42:24 Peter Bex wrote:
-> > Hi all,
-> >=20
-> > Today I wanted to request another CVE, but cveform.mitre.org seems to
-> > be down (it just loads forever here).  Can anyone please fix this?
-> >=20
-> > Cheers,
-> > Peter Bex
->=20
-> It works for me. However is missing a redirect from http to https.
+> #####################################
+> 1) stack buffer overflow in thumbnail 
+> #####################################
+> 
+> 
+> Memory corruption bugs can be triggered when thumbnail function _TIFFVGetField handling maliciously crafted tiff file, 
+> it will cause the target application to crash.
+> 
+> AddressSanitizer: stack-buffer-overflow ...
+> WRITE of size 4
 
-Thanks, I didn't remember to check https.  The http version is what loads
-forever.
+Use CVE-2016-5318.
 
-Cheers,
-Peter
 
---/rDaUNvWv5XYRSKj
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+> ####################################
+> 2) heap buffer overflow in bmp2tiff
+> ####################################
+> 
+> 
+> Memory corruption bugs can be triggered when bmp2tiff handling maliciously crafted bmp file, it will cause the target 
+> application to crash.
+> 
+> bmp2tiff.c:line 752 deals with comprbuf and does not check the length of Image width.
+> 
+> AddressSanitizer: heap-buffer-overflow ...
+> READ of size 1 ...
+>     #0 0x403b66 in main /root/Desktop/AFL/tiff-4.0.6-Asan/tools/bmp2tiff.c:745
 
+We do not feel that a CVE ID is required for this issue. This is a
+crash issue in the bmp2tiff command-line program, not an issue within
+the libtiff library. Accordingly, it only affects use of the bmp2tiff
+program, not other programs that a user may build with the library. If
+the user accesses a crafted BMP file and observes a crash in
+bmp2tiff, with the reported "READ" outside the bounds of a buffer,
+then a complete solution may be for the user to avoid accessing that
+specific BMP file again. As far as we can tell, this "READ of size 1"
+does not affect the flow of control and is not exploitable for code
+execution.
+
+
+> ####################################
+> 3) heap buffer overflow in bmp2tiff
+> ####################################
+> 
+> Memory corruption bugs can be triggered when bmp2tiff handling maliciously crafted bmp file, it will cause the target 
+> application to crash.
+> 
+> PackBitsEncode.c:line 85 does not check the length of bp passed through buf.
+
+(the filename is actually tif_packbits.c not PackBitsEncode.c)
+
+> AddressSanitizer: heap-buffer-overflow ...
+> READ of size 1 ...
+>     #0 0x48709f in PackBitsEncode /root/Desktop/AFL/tiff-4.0.6/libtiff/tif_packbits.c:85
+>     #1 0x458563 in TIFFWriteScanline /root/Desktop/AFL/tiff-4.0.6/libtiff/tif_write.c:173
+>     #2 0x403f83 in main /root/Desktop/AFL/tiff-4.0.6/tools/bmp2tiff.c:775
+
+Use CVE-2016-5319 for this PackBitsEncode issue.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBAgAGBQJZLojEAAoJEBEdufnLRYmwkzEH/3WZHgqu4TrurXHd32U58FXX
-El9lCRmZ+d2AuQyhUKozs/UwhUlqnOXuT8X9lQZz+akF8EURmm7YsubYBMItewPU
-VhVljL0cUp711XwqXWUNup5VphOCT2V3vHXahzG+yANsHkm/DvaUJHzC5TLgxpju
-Nz8SVz99Di5NV9n3ZIXdOWYj4owUtoLpyP4qjYbF/qB/RapdcPqe577M6lWtt36q
-bBTcbfizZgmwdKYvt4T+rWQsHFeEAyZV4U5RmEXAy3P8n5dQt4xWJUFNNlMlfIyQ
-ap+CBPuO1dMh6bB27qn2ew0BYKbbk1GRyOlI/zMED2jXbeeyOSujsSlhNbPPOQ0=
-=87me
+iQIcBAEBCAAGBQJXVg3mAAoJEHb/MwWLVhi22NIQALAzwueERmQaSsyOZkCiy7y3
+2V7gEeiDH+nH8g6Qnf9iqHYY+uU6aRRG3RnhzLitDRj9N32UD4+UhnVC9J0kSL9+
+Q/H0Q3H0erBQl0S/l6z7CVzpmHdDqGmE5Al7PVltTigCY5wpQCnnS/R9kmXJwStf
+ZlYyqDNSrFHwtpv8Dmhf0mpdh7yQYWw77Xf/F7iZ9/VLlIPggwjqc4kUdiX7mrvX
+QQUobtPzNZ/ATear95CpZxa8D5lFVi8RkSiTP8BW74Me3xLao16fezKSjR/hR+0L
+ZNYBo6uHQmQsHMDur26ENGoonmiVKXMKtDnAtCLtJoOtG0d/b0QxdoEfUnele/xL
+clcBqRmJYdI33cE7eA7nISzcuRJ5Jo2soSB4JvrqTZPiFoH8LGnQRtWGPUyxYWT+
+Q86XvYFKdBE+Wv1s5dRKFVboXgfsTH8UUqbnzcPvKcBcFvdOyNIUIt3RVyncb6TE
+6f7/Ffr18nksdd6oG9bB7Ke095Rhe+t0zXhRbT/2MpCUV93OCfxkFsZczCdR6EQQ
+xWYHoaQLxbFICcX0Cq+UtstR7GZG8Ue1nOLbbkTC9/LBt10seXHAFxeI/s4kj4yH
+7va4b2kv4borlBr5w1D9iLD+cbzrLvpOEKSIHzk40dWbJc71dbCRd+CGVCxq2UYU
+WbQOieCXn2W3mw6MktxM
+=OWHh
 -----END PGP SIGNATURE-----
-
---/rDaUNvWv5XYRSKj--
