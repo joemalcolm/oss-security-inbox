@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["698" "Tuesday" "27" "April" "2021" "09:26:59" "+0530" "Bharat Viswanadham" "bharat@apache.org" nil "26" "[oss-security] CVE-2020-17517: Apache Ozone: Ozone S3 Gateway allows bucket and key access to non authenticated users" nil nil nil "4" nil nil (number mark "U       bharat@apach Apr 27   26/698   " thread-indent "\"[oss-security] CVE-2020-17517: Apache Ozone: Ozone S3 Gateway allows bucket and key access to non authenticated users\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-17517: Apache Ozone: Ozone S3 Gateway allows bucket and key access to non authenticated users" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1163" "Tuesday" "7" "June" "2016" "11:27:00" "+0200" "Adam Maris" "amaris@redhat.com" "<99de9e1d-0488-31f2-5045-9d1bd11be781@redhat.com>" "38" "Re: [oss-security] CVE Request: GnuTLS: GNUTLS-SA-2016-1: File overwrite by setuid programs" nil nil nil "6" "2016060709:27:00" "[oss-security] CVE Request: GnuTLS: GNUTLS-SA-2016-1: File overwrite by setuid programs" (number mark "U       amaris@redha Jun  7   38/1163  " thread-indent "\"Re: [oss-security] CVE Request: GnuTLS: GNUTLS-SA-2016-1: File overwrite by setuid programs\"\n") "<20160607064527.GA20067@lorien.valinor.li>" ("<20160607064527.GA20067@lorien.valinor.li>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9454 invoked by uid 550); 27 Apr 2021 06:43:51 -0000
+Received: (qmail 18034 invoked by uid 550); 7 Jun 2016 09:27:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,46 +12,58 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17494 invoked from network); 27 Apr 2021 03:57:23 -0000
-X-Gm-Message-State: AOAM531CavqTePpQ74t7qamlSUHNAs8Ud8zvKERULB5cS0GjYMVLAGch
-	waRsnyEQDFkp2EhFIvd//Opd4HzIJEZvTE/cOiU=
-X-Google-Smtp-Source: ABdhPJxRLoYchlSXjw8ns80SdvYv79uELr+UnaFy7h97z8PvxIG+HaK5Iu6TRi0mCo5bzljeTjhGlzSLYP0D4qN83iA=
-X-Received: by 2002:aa7:cfd0:: with SMTP id r16mr2018918edy.330.1619495830241;
- Mon, 26 Apr 2021 20:57:10 -0700 (PDT)
+Received: (qmail 18005 invoked from network); 7 Jun 2016 09:27:14 -0000
+To: oss-security@lists.openwall.com
+References: <20160607064527.GA20067@lorien.valinor.li>
+From: Adam Maris <amaris@redhat.com>
+Message-ID: <99de9e1d-0488-31f2-5045-9d1bd11be781@redhat.com>
+Date: Tue, 7 Jun 2016 11:27:00 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.0
 MIME-Version: 1.0
-From: Bharat Viswanadham <bharat@apache.org>
-Date: Tue, 27 Apr 2021 09:26:59 +0530
-X-Gmail-Original-Message-ID: <CABK_9Y-q9o4T33KCOQ-p1bi5DUu8EyujZtU2g7qvG3WjXeKc6A@mail.gmail.com>
-Message-ID: <CABK_9Y-q9o4T33KCOQ-p1bi5DUu8EyujZtU2g7qvG3WjXeKc6A@mail.gmail.com>
-To: users@ozone.apache.org
-Cc: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000ad477405c0ec418a"
-Subject: [oss-security] CVE-2020-17517: Apache Ozone: Ozone S3 Gateway allows bucket and key
- access to non authenticated users
+In-Reply-To: <20160607064527.GA20067@lorien.valinor.li>
+Content-Type: multipart/alternative;
+ boundary="------------0075BE8D3CBBA45CB5DE4B13"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Tue, 07 Jun 2016 09:27:03 +0000 (UTC)
+Subject: Re: [oss-security] CVE Request: GnuTLS: GNUTLS-SA-2016-1: File
+ overwrite by setuid programs
 
---000000000000ad477405c0ec418a
-Content-Type: text/plain; charset="UTF-8"
-
-Description:
-
-The S3 buckets and keys in a secure Apache Ozone Cluster must be
-inaccessible to anonymous access by default. The current security
-vulnerability allows access to keys and buckets through a curl command
-or an unauthenticated HTTP request. This enables unauthorized access
-to buckets and keys thereby exposing data to anonymous clients or
-users.  This affected Apache Ozone prior to the 1.1.0 release.
-
-Mitigation:
-
-Upgrade to the latest Apache Ozone 1.1.0 release.
-
-Credit:
-
-Apache Ozone would like to thank Kota Uenishi for reporting this issue.
+--------------0075BE8D3CBBA45CB5DE4B13
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
 
-Thanks,
 
-Apache Ozone Team.
+On 07/06/16 08:45, Salvatore Bonaccorso wrote:
+> Hi
+>
+> GnuTLS 3.4.13 was released addressing GNUTLS-SA-2016-1,
+> http://gnutls.org/security.html#GNUTLS-SA-2016-1 :
+>
+>> Setuid programs using GnuTLS 3.4.12 could potentially allow an
+>> attacker to overwrite and corrupt arbitrary files in the filesystem.
+>> This issue was introduced in GnuTLS 3.4.12 and fixed in GnuTLS 3.4.13.
+>> Recommendation: Upgrade to GnuTLS 3.4.13, or later versions.
+> The relevant upstream commits seem to be:
+>
+> https://gitlab.com/gnutls/gnutls/compare/fb2a6baef79f4aadfd95e657fe5a18da=
+20a1410e...86076c9b17b9a32b348cafb8b724f57f7da64d58
+>
+> Can you assign a CVE for this issue?
+>
+> Regards,
+> Salvatore
 
---000000000000ad477405c0ec418a--
+We already assigned CVE-2016-4456 for using insecure getenv() on
+GNUTLS_KEYLOGFILE when we got a report for this issue. Not sure why it's
+not included in the advisory. I'm dealing with that now.
+
+Regards,
+
+--=20
+Adam Mari=9A, Red Hat Product Security
+1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
+
+
+--------------0075BE8D3CBBA45CB5DE4B13--
