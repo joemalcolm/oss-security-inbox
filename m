@@ -1,45 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/4
-Message-ID: <s5hshxp9jdr.wl-tiwai@suse.de>
-Date: Wed, 11 May 2016 08:52:16 +0200
-From: Takashi Iwai <tiwai@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: Kangjie Lu <kangjielu@...il.com>, Chengyu Song <csong84@...ech.edu>, Insu Yun <insu@...ech.edu>, Taesoo Kim <taesoo@...ech.edu>
-Subject: Re: CVE Request: alsa: kernel information leak vulnerability in Linux sound/core/timer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/07/3
+Message-ID: <alpine.LFD.2.20.1606071247030.8126@wniryva>
+Date: Tue, 7 Jun 2016 12:50:04 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Huawei PSIRT <psirt@...wei.com>, Li Qiang <liqiang6-s@....cn>
+Subject: CVE Request Qemu: scsi: esp: OOB r/w access while processing ESP_FIFO
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 10 May 2016 21:27:58 +0200,
-Kangjie Lu wrote:
-> 
-> Hello,
-> 
-> In function snd_timer_user_ccallback() of file sound/core/timer.c,
-> the stack object “r1” has a total size of 32 bytes. Its field “event” and
-> “val” both
-> contain 4 bytes padding. These 8 bytes padding bytes are sent to user
-> without
-> being initialized.
-> 
-> Fix info:
-> https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=9a47e9cff994f37f7f0dbd9ae23740d0f64f9fe6
-> Patch has been applied: http://comments.gmane.org/gmane.linux.kernel/2214250
-> 
-> Please help assign a CVE to this vulnerability.
+   Hello,
 
-Maybe we can fold all three similar bugs in sound/core/timer.c into
-the existing CVE-2016-4569?
+Quick Emulator(Qemu) built with the ESP/NCR53C9x controller emulation support 
+is vulnerable to an OOB r/w access issue. The controller uses 16-byte FIFO 
+buffer the information transfer. The OOB r/w occurs while reading/writing to 
+this buffer in esp_reg_read() and esp_reg_write() routines.
 
-In my sound.git tree,
+A privileged user inside guest could use this flaw to crash the Qemu process 
+resulting in DoS OR potentially leverage it to execute arbitrary code with 
+privileges of the Qemu process on the host.
 
-cec8f96e49d9be372fdb0c3836dcf31ec71e457e
-  ALSA: timer: Fix leak in SNDRV_TIMER_IOCTL_PARAMS
-9a47e9cff994f37f7f0dbd9ae23740d0f64f9fe6
-  ALSA: timer: Fix leak in events via snd_timer_user_ccallback
-e4ec8cc8039a7063e24204299b462bd1383184a5
-  ALSA: timer: Fix leak in events via snd_timer_user_tinterrupt
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-06/msg01507.html
 
-BTW, at the next time, *please* put the upstream maintainer into the
-loop...
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1343323
+
+This issue was independently discovered and reported by Li Qiang of 360.cn Inc 
+and Security Team at Huawei Inc.
 
 
-Takashi
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
