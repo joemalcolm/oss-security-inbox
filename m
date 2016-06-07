@@ -1,39 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/28/2
-Message-ID: <CABcHV3xszyuauXtLayGq7SiipJxG2OS3YXVgBNuhXgP-hR6EUg@mail.gmail.com>
-Date: Thu, 28 Apr 2016 15:12:21 +0700
-From: Luật Nguyễn <manhluat93.php@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: [CVE Requests] PHP issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/07/2
+Message-ID: <20160607064527.GA20067@lorien.valinor.li>
+Date: Tue, 7 Jun 2016 08:45:27 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: GnuTLS: GNUTLS-SA-2016-1: File overwrite by setuid programs
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
+Hi
 
-There are flaws which are various type (heap corruption, heap
-overflow, Uninitialized pointer)  in PHP from previous version we
-might miss.
+GnuTLS 3.4.13 was released addressing GNUTLS-SA-2016-1,
+http://gnutls.org/security.html#GNUTLS-SA-2016-1 :
 
-1. Heap corruption in tar/zip/phar parser
-https://bugs.php.net/bug.php?id=71354
+> Setuid programs using GnuTLS 3.4.12 could potentially allow an
+> attacker to overwrite and corrupt arbitrary files in the filesystem.
+> This issue was introduced in GnuTLS 3.4.12 and fixed in GnuTLS 3.4.13.
+> Recommendation: Upgrade to GnuTLS 3.4.13, or later versions.
 
-2. Uninitialized pointer in phar_make_dirstream()
-https://bugs.php.net/bug.php?id=71331
+The relevant upstream commits seem to be:
 
-3. Multiple Heap Overflow due to integer overflows | xml/filter_url/addcslashes
-https://bugs.php.net/bug.php?id=71637
+https://gitlab.com/gnutls/gnutls/compare/fb2a6baef79f4aadfd95e657fe5a18da20a1410e...86076c9b17b9a32b348cafb8b724f57f7da64d58
 
+Can you assign a CVE for this issue?
 
-Those 2nd, 3rd may let attackers with crafted PHAR file could
-potentially remote code execute without specific PHP script.
-
-Could we assign CVE for these ? :)
-
-
-References:
-http://php.net/ChangeLog-7.php
-http://php.net/ChangeLog-5.php
-
-
-
-Thank you && Regards.
-Luat.
+Regards,
+Salvatore
