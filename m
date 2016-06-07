@@ -1,28 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/18/1
-Message-ID: <e21dd438-42f0-afc7-b510-cc8affd352c8@redhat.com>
-Date: Wed, 18 May 2016 11:33:05 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>
-Subject: CVE Request: null pointer deref in openslp, can be triggered remotely
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/07/6
+Message-ID: <99de9e1d-0488-31f2-5045-9d1bd11be781@redhat.com>
+Date: Tue, 7 Jun 2016 11:27:00 +0200
+From: Adam Maris <amaris@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: GnuTLS: GNUTLS-SA-2016-1: File overwrite by setuid programs
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
-
-The following flaw was reported to us by Yuguang Cai. Basically return
-value from malloc isnt checked, in _xrealloc function. This can be
-triggered remotely by sending a large number of request, which could
-possibly lead malloc to fail at one point, causing crash via null
-pointer deref.
-
-Because of the way memory works on modern linux systems, this one seems
-to be difficult to exploit, so i am wondering if a CVE id should really
-be assigned to this issue.
-
-Details at:
-https://bugzilla.redhat.com/show_bug.cgi?id=1329295
 
 
+On 07/06/16 08:45, Salvatore Bonaccorso wrote:
+> Hi
+>
+> GnuTLS 3.4.13 was released addressing GNUTLS-SA-2016-1,
+> http://gnutls.org/security.html#GNUTLS-SA-2016-1 :
+>
+>> Setuid programs using GnuTLS 3.4.12 could potentially allow an
+>> attacker to overwrite and corrupt arbitrary files in the filesystem.
+>> This issue was introduced in GnuTLS 3.4.12 and fixed in GnuTLS 3.4.13.
+>> Recommendation: Upgrade to GnuTLS 3.4.13, or later versions.
+> The relevant upstream commits seem to be:
+>
+> https://gitlab.com/gnutls/gnutls/compare/fb2a6baef79f4aadfd95e657fe5a18da20a1410e...86076c9b17b9a32b348cafb8b724f57f7da64d58
+>
+> Can you assign a CVE for this issue?
+>
+> Regards,
+> Salvatore
+
+We already assigned CVE-2016-4456 for using insecure getenv() on
+GNUTLS_KEYLOGFILE when we got a report for this issue. Not sure why it's
+not included in the advisory. I'm dealing with that now.
+
+Regards,
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+Adam Mariš, Red Hat Product Security
+1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
+
+
