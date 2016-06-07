@@ -1,4 +1,9 @@
-Received: (qmail 14222 invoked by uid 550); 1 Feb 2024 14:07:03 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1072" "Tuesday" "7" "June" "2016" "09:49:00" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160607074900.GA10065@lorien.valinor.li>" "34" "Re: [oss-security] Please reject duplicate CVE for libxml2" nil nil nil "6" "2016060707:49:00" "[oss-security] Please reject duplicate CVE for libxml2" (number mark "U       carnil@debia Jun  7   34/1072  " thread-indent "\"Re: [oss-security] Please reject duplicate CVE for libxml2\"\n") "<87wpm1wixw.fsf@redhat.com>" ("<87wpm1wixw.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 20431 invoked by uid 550); 7 Jun 2016 07:49:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,41 +12,77 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32696 invoked from network); 1 Feb 2024 08:51:50 -0000
-Message-ID: <8cbdda76-dcfc-41b3-b613-b88a80784328@treenet.co.nz>
-Date: Thu, 1 Feb 2024 21:54:05 +1300
+Received: (qmail 20411 invoked from network); 7 Jun 2016 07:49:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=+qTO+KWjOdJbRVWJ/CCHtKwxDc39iCa2uI4B+G9Z+UI=;
+        b=G7QStAsmuVmXKOcAdAmhmHvvbmo6jbqs038rsVsWYmZdc7bR07mKFuyb7L0TjV083t
+         JRZexNWOOI4lx8fCl/lIclgvWWRYFb+DyEUNC2sQEh4Ps31JrcZc5KeMwPORKGjoSWb+
+         cBsdg6ctyKnqowyqqAXatGyz6f4hQRxRBTgZke0GWhqIywp85QLlfe+LDv13mVBnH9Ob
+         0GaOZSmk2BIm9d1zsRLjmnr5bhD32qk53hYL6pbd/JrS2l4pfTQkYDcv+R5q6rynTORu
+         OwAK7kn7Kv7p3x7aegUiNXzCI6giisPI4A+V2RJdyd/SxoamYhmktH4b/0tAdYoTqwUi
+         1g6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=+qTO+KWjOdJbRVWJ/CCHtKwxDc39iCa2uI4B+G9Z+UI=;
+        b=WzpLwJhi3pUfClPTCq/osaexXAO92YsUtDpv7ceEt8oxyVSQpBZP8S8XbO75ZDuxK+
+         aJnc8gi9OQK4bjsZ3qBlj/EVXHMzsGduA5ahx0j2oDe9ifctzDuwAuvhTeH/3s+HmX8t
+         GddSznBUPLDE8ECPv3jRu65fiybXZXect4vPQyoWr3ISWgFymJZPzDNrocc6MQIR09z3
+         RiuZYJy24z1hAHBmCzX119jo+35HJHYcEiyI5RoNdfcu83EvTr7CyNwEmmDBF9q5GGFK
+         Z9RJMQ4bL5Hpi7unjIQ+9veojGbokkCKyxkY14SVwhAmsg3TvG7I/xxa9lCwOa44CqsK
+         SyLQ==
+X-Gm-Message-State: ALyK8tIjf1z/J9YIz57SEGwz7ZntHiFmsgdnLfRWvwPoZGA+NSwyznPia9Mpz4q1K+IZzA==
+X-Received: by 10.28.8.17 with SMTP id 17mr1234806wmi.67.1465285744100;
+        Tue, 07 Jun 2016 00:49:04 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Tue, 7 Jun 2016 09:49:00 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: oss-security@lists.openwall.com
+Cc: Mitre CVE assign department <cve-assign@mitre.org>
+Message-ID: <20160607074900.GA10065@lorien.valinor.li>
+References: <87wpm1wixw.fsf@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: oss-security@lists.openwall.com,
- Matthew Fernandez <matthew.fernandez@gmail.com>
-References: <aa1585dd-d109-463e-9639-9b6f576a3f1e@oracle.com>
- <47f2f72f-302d-2bdc-447d-0d970d9f8b15@gmail.com>
-From: Amos Jeffries <squid3@treenet.co.nz>
-In-Reply-To: <47f2f72f-302d-2bdc-447d-0d970d9f8b15@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] Numerous unconfirmed FOSS CVEs disclosed on FD
- mailing list
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87wpm1wixw.fsf@redhat.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: Re: [oss-security] Please reject duplicate CVE for libxml2
 
-On 27/01/24 12:03, Matthew Fernandez wrote:
-> On 1/27/24 08:53, Alan Coopersmith wrote:
->> While I can't speak for all the projects involved, I can speak for the
->> X.Org maintainers & security team, and I can say that we were not
->> consulted or informed about this CVE filing - if I wasn't on the FD
->> mailing list, I wouldn't even know it had happened.  The CNA responsible
->> has not yet published the CVE to the CVE database yet, so we can't yet
->> file a dispute, but once they do, I plan to request that they withdraw
->> CVE-2023-45916 for xedit, as there is no security boundary crossed here
->> and the bug doesn't allow someone to do anything they otherwise couldn't.
+Hi,
+
+On Tue, Jun 07, 2016 at 09:34:51AM +0200, Martin Prpic wrote:
+> Hi, it seems two CVEs were assigned for the same issue in libxml2:
 > 
-> We (the Graphviz maintainers) were also not consulted/informed. Though 
-> we do not plan to contest the CVE.
+> http://seclists.org/oss-sec/2016/q1/683
+> http://seclists.org/oss-sec/2016/q2/214
+> 
+> Daniel Veillard reported to us that these issues are the same and fixed
+> by:
+> 
+> https://git.gnome.org/browse/libxml2/commit/?id=bdd66182ef53fe1f7209ab6535fda56366bd7ac9
+> 
+> The upstream bug is:
+> 
+> https://bugzilla.gnome.org/show_bug.cgi?id=762100
+> 
+> Can CVE-2016-4483 please be rejected as a duplicate of CVE-2016-3627?
 
+What though is confusing is that the two commits are tagged
+accordingly in the upstream git repository:
 
-Please *DO* contest CVE issued for non-security bugs. It helps 
-discourage this kind of bad behaviour if their CVEs get removed. May 
-also help CNA to identify repeat offenders for closer inspection of reports.
+Tagged for CVE-2016-4483:
+https://git.gnome.org/browse/libxml2/commit/?id=c97750d11bb8b6f3303e7131fe526a61ac65bcfd
 
-HTH
-AYJ
+Tagged for CVE-2016-3627:
+https://git.gnome.org/browse/libxml2/commit/?id=bdd66182ef53fe1f7209ab6535fda56366bd7ac9
+
+For the updates in Debian thus we have used both and referenced both
+CVEs, think Ubuntu has done the same in USN 2994
+(http://www.ubuntu.com/usn/usn-2994-1/)
+
+Regards,
+Salvatore
