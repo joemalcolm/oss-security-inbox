@@ -1,44 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/30/3
-Message-ID: <56FBBB41.9010405@census-labs.com>
-Date: Wed, 30 Mar 2016 14:40:49 +0300
-From: Stelios Tsampas <stelios@...sus-labs.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/07/5
+Message-ID: <20160607074900.GA10065@lorien.valinor.li>
+Date: Tue, 7 Jun 2016 09:49:00 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: fulldisclosure@...lists.org, bugtraq@...urityfocus.com
-Subject: CVE-2016-2385 Kamailio SEAS module heap buffer overflow
+Cc: Mitre CVE assign department <cve-assign@...re.org>
+Subject: Re: Please reject duplicate CVE for libxml2
 Content-Type: text/plain; charset=utf-8
 
-Kamailio (successor of former OpenSER and SER) is an Open Source SIP
-Server released under GPL. It can be used to build large platforms for
-VoIP and realtime communications, presence, WebRTC, Instant messaging
-and other applications.
+Hi,
 
-A heap overflow was found in Kamailio version 4.3.4 (possibly affecting
-earlier versions also). The heap overflow takes place in the encode_msg
-function of the SEAS module and can be triggered remotely if the module
-is enabled.
+On Tue, Jun 07, 2016 at 09:34:51AM +0200, Martin Prpic wrote:
+> Hi, it seems two CVEs were assigned for the same issue in libxml2:
+> 
+> http://seclists.org/oss-sec/2016/q1/683
+> http://seclists.org/oss-sec/2016/q2/214
+> 
+> Daniel Veillard reported to us that these issues are the same and fixed
+> by:
+> 
+> https://git.gnome.org/browse/libxml2/commit/?id=bdd66182ef53fe1f7209ab6535fda56366bd7ac9
+> 
+> The upstream bug is:
+> 
+> https://bugzilla.gnome.org/show_bug.cgi?id=762100
+> 
+> Can CVE-2016-4483 please be rejected as a duplicate of CVE-2016-3627?
 
-A technical analysis of the vulnerability can be found here:
-https://census-labs.com/news/2016/03/30/kamailio-seas-heap-overflow/
+What though is confusing is that the two commits are tagged
+accordingly in the upstream git repository:
 
-The vulnerability may allow an attacker to cause memory corruption,
-process termination or potentially remote code execution.
+Tagged for CVE-2016-4483:
+https://git.gnome.org/browse/libxml2/commit/?id=c97750d11bb8b6f3303e7131fe526a61ac65bcfd
 
-This defect has been fixed in version 4.3.5 of Kamailio. Administrators
-of affected systems are strongly advised to upgrade Kamailio to the
-latest stable release.
+Tagged for CVE-2016-3627:
+https://git.gnome.org/browse/libxml2/commit/?id=bdd66182ef53fe1f7209ab6535fda56366bd7ac9
 
-Disclosure Timeline
--------------------
-Vendor Contact:	        February 12th, 2016
-CVE assignment:	        February 15th, 2016
-Vendor Patch Release:	March 3rd, 2016
-Public Advisory:	March 30th, 2016
+For the updates in Debian thus we have used both and referenced both
+CVEs, think Ubuntu has done the same in USN 2994
+(http://www.ubuntu.com/usn/usn-2994-1/)
 
 Regards,
-
-Stelios Tsampas
-
-IT Security Researcher
-CENSUS S.A.
-
+Salvatore
