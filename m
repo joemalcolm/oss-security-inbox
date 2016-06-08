@@ -1,39 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/10/2
-Message-ID: <095c337c-63af-ecdd-866a-9d1918e4bfac@redhat.com>
-Date: Wed, 10 Aug 2016 15:04:50 -0400
-From: Daniel J Walsh <dwalsh@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/08/4
+Message-ID: <CAOTQaXHLe6ST5SOQhH_hig1KD9UyhzMUvr4iXiJz5szm5hsUow@mail.gmail.com>
+Date: Wed, 8 Jun 2016 17:15:59 +0200
+From: Gsunde Orangen <gsunde.orangen@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: cve request: systemd-machined: information exposure for docker containers
+Subject: Re: CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations
 Content-Type: text/plain; charset=utf-8
 
+Whilst there is a commit in openssl and a CVE ID, I wonder why this hasn't
+been announced yet by OpenSSL.org and why there are no official fix
+releases (yet).
+What made this issue different to the usual coordinated disclosures being
+practiced with the OpenSSL team?
 
+2016-06-08 10:54 GMT+02:00 Solar Designer <solar@...nwall.com>:
 
-On 08/10/2016 03:00 PM, CAI Qian wrote:
+> Hi,
 >
-> ----- Original Message -----
->> From: "Daniel J Walsh" <dwalsh@...hat.com>
->> To: oss-security@...ts.openwall.com
->> Sent: Wednesday, August 3, 2016 3:27:00 AM
->> Subject: Re: [oss-security] cve request: systemd-machined: information exposure for docker containers
->>
->>
->>
->> On 08/01/2016 12:24 PM, Shiz wrote:
->>>> On 28 Jul 2016, at 16:42, Simon McVittie <smcv@...ian.org> wrote:
->>>>
->>>> *Which* unprivileged user processes?
->>>>
->>>> If the unprivileged user processes are not in a container, they can get a
->>>> significant amount of the same information by reading the host's /proc.
->>> Except if a host is running with hidepid={1,2}, which is not entirely
->>> uncommon
->>> especially in hardened systems. In that regard it /does/ qualify as
->>> infoleak.
->>>
->>> - Shiz
->> Then simply rpm -e oci-register-machine
->>
-> Except people can't do that in OSes like atomic host.
->    CAI Qian
-But people do not tend to have non privileged users logged into atomic host.
+> Just off Twitter:
+>
+> <mjos_crypto> Out today: This is the OpenSSL side-channel vulnerability I
+> mentioned last week; now on ePrint. Also CVE-2016-2178.
+> http://eprint.iacr.org/2016/594
+> <@mjos_crypto> @mjos_crypto Currently unfixed in essentially all distros.
+> <mjos_crypto> Note that CVE-2016-2178 /
+> http://eprint.iacr.org/2016/594.pdf most severely actually impacts
+> OpenSSH, which uses the OpenSSL library.
+> <mjos_crypto> Cesar's CVE-2016-2178 patch for the OpenSSL library from
+> Monday.
+> https://git.openssl.org/?p=openssl.git;a=commit;h=399944622df7bd81af62e67ea967c470534090e2
+>
+> http://eprint.iacr.org/2016/594
+>
+> | "Make Sure DSA Signing Exponentiations Really are Constant-Time''
+> |
+> | Cesar Pereida Garca and Billy Bob Brumley and Yuval Yarom
+> |
+> | Abstract: TLS and SSH are two of the most commonly used protocols for
+> securing Internet traffic. Many of the implementations of these protocols
+> rely on the cryptographic primitives provided in the OpenSSL library. In
+> this work we disclose a vulnerability in OpenSSL, affecting all versions
+> and forks (e.g. LibreSSL and BoringSSL) since roughly October 2005, which
+> renders the implementation of the DSA signature scheme vulnerable to
+> cache-based side-channel attacks. Exploiting the software defect, we
+> demonstrate the first published cache-based key-recovery attack on these
+> protocols: 260 SSH-2 handshakes to extract a 1024/160-bit DSA host key from
+> an OpenSSH server, and 580 TLS 1.2 handshakes to extract a 2048/256-bit DSA
+> key from an stunnel server.
+> |
+> | Category / Keywords: applied cryptography; digital signatures;
+> side-channel analysis; timing attacks; cache-timing attacks; DSA; OpenSSL;
+> CVE-2016-2178
+> |
+> | Date: received 6 Jun 2016, last revised 7 Jun 2016
+>
+>
+> https://git.openssl.org/?p=openssl.git;a=commit;h=399944622df7bd81af62e67ea967c470534090e2
+>
+> | author        Cesar Pereida
+> |       Mon, 23 May 2016 12:45:25 +0300 (12:45 +0300)
+> | committer     Matt Caswell
+> |       Mon, 6 Jun 2016 13:08:15 +0300 (11:08 +0100)
+>
+> | Fix DSA, preserve BN_FLG_CONSTTIME
+> |
+> | Operations in the DSA signing algorithm should run in constant time in
+> | order to avoid side channel attacks. A flaw in the OpenSSL DSA
+> | implementation means that a non-constant time codepath is followed for
+> | certain operations. This has been demonstrated through a cache-timing
+> | attack to be sufficient for an attacker to recover the private DSA key.
+> |
+> | CVE-2016-2178
+>
+> Alexander
+>
+
