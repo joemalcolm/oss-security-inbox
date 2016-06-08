@@ -1,58 +1,134 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/14/4
-Message-Id: <20160714181602.59527B2E012@smtpvbsrv1.mitre.org>
-Date: Thu, 14 Jul 2016 14:16:02 -0400 (EDT)
-From: cve-assign@...re.org
-To: idolf@...gle.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Information leak in LibTIFF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/08/7
+Message-ID: <20160608153856.GH3711@suse.de>
+Date: Wed, 8 Jun 2016 17:38:57 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> I would like to request a CVE number for an information leak in LibTIFF,
-> specifically in the file libtiff/tif_read.c.
-> 
-> The vulnerability allows an attacker to specify a negative index into the
-> file-content buffer and copy data from that position until the end of the
-> buffer.
-> 
-> This will allow an attacker to crash the process by accessing unmapped
-> memory and (depending on how LibTIFF is used) might also allow an attacker
-> to leak sensitive information.
-> 
-> The issue is fixed in CVS HEAD with the commit:
-> 
-> revision 1.49
-> date: 2016-07-10 20:00:21 +0200;  author: erouault;
-> commitid: YhOZoKv5OA9gNNdz;
-> * libtiff/tif_read.c: Fix out-of-bounds read on
-> memory-mapped files in TIFFReadRawStrip1() and TIFFReadRawTile1()
-> when stripoffset is beyond tmsize_t max value (reported by
-> Mathias Svensson)
+the openssl team usually announces those LOW issues together with the other
+issues during their semi regular advisories.
 
-Use CVE-2016-6223.
+(And usually as soon as these LOW CVE issues are getting added to git, a
+new advisory is not far away.)
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Ciao, Marcus
+On Wed, Jun 08, 2016 at 05:33:35PM +0200, Gsunde Orangen wrote:
+> ... which would be a different rating to the "moderate" that the RedHat
+> team ended up with: https://access.redhat.com/security/cve/CVE-2016-2178
+> I agree that both ratings are reasonable; so still awaiting for the OpenSSL
+> announcement at least in the vulnerability section (
+> https://www.openssl.org/news/vulnerabilities.html#y2016).
+> (Could be that I am just too impatient ;-)
+> 
+> 2016-06-08 17:18 GMT+02:00 Alex Gaynor <alex.gaynor@...il.com>:
+> 
+> > I assume the OpenSSL team considers this vulnerability to be LOW severity:
+> > https://www.openssl.org/policies/secpolicy.html
+> >
+> > Alex
+> >
+> > On Wed, Jun 8, 2016 at 11:15 AM, Gsunde Orangen <gsunde.orangen@...il.com>
+> > wrote:
+> >
+> > > Whilst there is a commit in openssl and a CVE ID, I wonder why this
+> > hasn't
+> > > been announced yet by OpenSSL.org and why there are no official fix
+> > > releases (yet).
+> > > What made this issue different to the usual coordinated disclosures being
+> > > practiced with the OpenSSL team?
+> > >
+> > > 2016-06-08 10:54 GMT+02:00 Solar Designer <solar@...nwall.com>:
+> > >
+> > > > Hi,
+> > > >
+> > > > Just off Twitter:
+> > > >
+> > > > <mjos_crypto> Out today: This is the OpenSSL side-channel
+> > vulnerability I
+> > > > mentioned last week; now on ePrint. Also CVE-2016-2178.
+> > > > http://eprint.iacr.org/2016/594
+> > > > <@mjos_crypto> @mjos_crypto Currently unfixed in essentially all
+> > distros.
+> > > > <mjos_crypto> Note that CVE-2016-2178 /
+> > > > http://eprint.iacr.org/2016/594.pdf most severely actually impacts
+> > > > OpenSSH, which uses the OpenSSL library.
+> > > > <mjos_crypto> Cesar's CVE-2016-2178 patch for the OpenSSL library from
+> > > > Monday.
+> > > >
+> > >
+> > https://git.openssl.org/?p=openssl.git;a=commit;h=399944622df7bd81af62e67ea967c470534090e2
+> > > >
+> > > > http://eprint.iacr.org/2016/594
+> > > >
+> > > > | "Make Sure DSA Signing Exponentiations Really are Constant-Time''
+> > > > |
+> > > > | Cesar Pereida Garca and Billy Bob Brumley and Yuval Yarom
+> > > > |
+> > > > | Abstract: TLS and SSH are two of the most commonly used protocols for
+> > > > securing Internet traffic. Many of the implementations of these
+> > protocols
+> > > > rely on the cryptographic primitives provided in the OpenSSL library.
+> > In
+> > > > this work we disclose a vulnerability in OpenSSL, affecting all
+> > versions
+> > > > and forks (e.g. LibreSSL and BoringSSL) since roughly October 2005,
+> > which
+> > > > renders the implementation of the DSA signature scheme vulnerable to
+> > > > cache-based side-channel attacks. Exploiting the software defect, we
+> > > > demonstrate the first published cache-based key-recovery attack on
+> > these
+> > > > protocols: 260 SSH-2 handshakes to extract a 1024/160-bit DSA host key
+> > > from
+> > > > an OpenSSH server, and 580 TLS 1.2 handshakes to extract a 2048/256-bit
+> > > DSA
+> > > > key from an stunnel server.
+> > > > |
+> > > > | Category / Keywords: applied cryptography; digital signatures;
+> > > > side-channel analysis; timing attacks; cache-timing attacks; DSA;
+> > > OpenSSL;
+> > > > CVE-2016-2178
+> > > > |
+> > > > | Date: received 6 Jun 2016, last revised 7 Jun 2016
+> > > >
+> > > >
+> > > >
+> > >
+> > https://git.openssl.org/?p=openssl.git;a=commit;h=399944622df7bd81af62e67ea967c470534090e2
+> > > >
+> > > > | author        Cesar Pereida
+> > > > |       Mon, 23 May 2016 12:45:25 +0300 (12:45 +0300)
+> > > > | committer     Matt Caswell
+> > > > |       Mon, 6 Jun 2016 13:08:15 +0300 (11:08 +0100)
+> > > >
+> > > > | Fix DSA, preserve BN_FLG_CONSTTIME
+> > > > |
+> > > > | Operations in the DSA signing algorithm should run in constant time
+> > in
+> > > > | order to avoid side channel attacks. A flaw in the OpenSSL DSA
+> > > > | implementation means that a non-constant time codepath is followed
+> > for
+> > > > | certain operations. This has been demonstrated through a cache-timing
+> > > > | attack to be sufficient for an attacker to recover the private DSA
+> > key.
+> > > > |
+> > > > | CVE-2016-2178
+> > > >
+> > > > Alexander
+> > > >
+> > >
+> >
+> >
+> >
+> > --
+> > "I disapprove of what you say, but I will defend to the death your right to
+> > say it." -- Evelyn Beatrice Hall (summarizing Voltaire)
+> > "The people's good is the highest law." -- Cicero
+> > GPG Key fingerprint: D1B3 ADC0 E023 8CA6
+> >
 
-iQIcBAEBCAAGBQJXh9YEAAoJEHb/MwWLVhi2NZIP/AlJLMTfzlrz/si4ZZdxud9U
-yJTUt7t/zzzH7oLx0rzZb+hivMp6Z5P5Cqhn8eVzTj+hOMFTaZek+sBaf034WKxN
-qZyaVdu4VHs1gpJNJpP7t0toXdUmNMh2CKsx7PUEfrM73o+VeiwaWgG8UvuJO5vd
-28sspVqmhtfOmsPtx6mnIabnHtZG0N4TE/FUVKF9mRp73xlxhxB3gkwAzAXy5sRh
-R23M0qU5v5HkryvUvKoA0sQ3H6dgMDMqUE/Gq6B67t2Lm98E0DLPnayCn5x/Jkzf
-IrNGI8e2yRjqggeXKO/SRfmZSR/1qM43vGuHeYbgn0ZOJPPrFIv9+BY9uN6fIfpH
-ox5x2GXFVMp79Rwnea2ywy0Z6mCBLvmFCs8In2B4GxoVJ+MUVAuhyFUqctgrZ81L
-5uphXH8KDhKiY5k/qa6T9j2eNz13Por3UvK0irEixsgaUQzEz3wNUy8mW56L0mB0
-4sCZVlH5zt5/eIDHRWxHrbBR3Oo27R21ONVP2MJTthcVthCiLnMvZEcNOOp7//MR
-1FWYp3qsPrc858j7ZWtyXvpROscv/ivN7V6xzPvjYal+qVs4RPexwJ3/pUn63fms
-mEZdDlbzR7ecLPXRHksx99FgT9R/ETgugd1oYKwgCo+zVgCHGrJH3XvhQQsHgCK+
-A/ao2iuPSnQu1eG2aUSi
-=Bszf
------END PGP SIGNATURE-----
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
