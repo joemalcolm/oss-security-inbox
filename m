@@ -1,33 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/07/2
-Message-ID: <9467a2c3-24fe-0ce4-c0bc-186eccae18ae@powerdns.com>
-Date: Thu, 7 Jul 2016 16:19:04 +0200
-From: Remi Gacogne <remi.gacogne@...erdns.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Malicious primary DNS servers can crash secondaries
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/08/14
+Message-Id: <20160608204936.89CF8ABC0C1@smtpvmsrv1.mitre.org>
+Date: Wed,  8 Jun 2016 16:49:36 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, psirt@...wei.com, liqiang6-s@....cn
+Subject: Re: CVE Request Qemu: scsi: esp: OOB r/w access while processing ESP_FIFO
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On 07/06/2016 12:10 PM, Florian Weimer wrote:
-> PowerDNS is reportedly affected as well, but I did not find a public bug
-> for this issue.
+> Quick Emulator(Qemu) built with the ESP/NCR53C9x controller emulation support
+> is vulnerable to an OOB r/w access issue. The controller uses 16-byte FIFO
+> buffer the information transfer. The OOB r/w occurs while reading/writing to
+> this buffer in esp_reg_read() and esp_reg_write() routines.
+> 
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> resulting in DoS OR potentially leverage it to execute arbitrary code with
+> privileges of the Qemu process on the host.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1343323
+> https://lists.gnu.org/archive/html/qemu-devel/2016-06/msg01507.html
+> http://git.qemu.org/?p=qemu.git;a=commit;h=ff589551c8e8e9e95e211b9d8daafb4ed39f1aec
 
-We are tracking this issue at:
+Use CVE-2016-5338.
 
-https://github.com/PowerDNS/pdns/issues/4128
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-The following patches are still under review but should be merged soon:
-
-- Master: https://github.com/PowerDNS/pdns/pull/4133
-- 3.4.x: https://github.com/PowerDNS/pdns/pull/4134
-
-
--- 
-Remi Gacogne
-PowerDNS.COM BV - https://www.powerdns.com/
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
+iQIcBAEBCAAGBQJXWIM2AAoJEHb/MwWLVhi2qZMQAKFtExzVCnlnvI+HcKlNrYDP
+KYs8RZZsL35htugWCWGhKd1bu5DZCgKicQJv6Ffxfjbg8mg+X0Gm4hvO4o7swfKL
+p9+yHXzO4ULSz2GhlUQmyH5B+oO/0o8fCgLE1B04ngOqLiWDi1qRjjs1FXGBTlgF
+RD0RyhNpzAQVQrBwJugpxd6mZ/b/IZ8MqwxcigWwqOwsIdFsT3YTso2dG63t0a4n
+JHfC+6bFxDw82AZcJ32jgul59eQAuUrH4/2qMymaHnxLHIexitLl5QpATyKPhSJ9
+59lHlEROszYTuRyCQzSJSWahIcbiUXGD4GEkvLyqHzt2GdhjCxHVgPZ3QizHONPz
+UDwU91RzZefYE2MCz17QE076n953pQpum/elMpDvsNxwqReR9raT8E67BNccp+kn
+LU+J5TdLG41OLrtlKCsseb/2tz8rU0AbHz4kM+r1E7Xj0j180BmL4JPYec4UEsGj
+ApB/iAZ2NMpidkOxOUGJSDYq84paN4+2PHyZLdXEdPjTGbJGOe1mt4FxVsuT/+sf
+FebH7drSRihl3Fwtb/0mcNHD78nAvGLEn1WzJsbz89cXvcZbtnJ3ay7pqqIU2Gzg
+F+QGveEDtq66cFIUBSFpuXvehuqsSarfKcf1el5/xYKKQZO8fsQMmXb6UzVp95Xy
+gFwKGtK+wk7BMTXrDUU7
+=ThnN
+-----END PGP SIGNATURE-----
