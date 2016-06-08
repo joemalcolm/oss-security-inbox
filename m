@@ -1,4 +1,9 @@
-Received: (qmail 24223 invoked by uid 550); 27 May 2024 11:34:53 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1036" "Wednesday" "8" "June" "2016" "23:24:44" "+0300" "Billy Brumley" "bbrumley@gmail.com" "<CAFeDd5a0aBM-wafxZu7m7NFPcOZyMBV-2ufbiDi_7MLWyqm-Eg@mail.gmail.com>" "25" "Re: [oss-security] CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations" "^Date:" nil nil "6" "2016060820:24:44" "[oss-security] CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations" (number mark "        bbrumley@gma Jun  8   25/1036  " thread-indent "\"Re: [oss-security] CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations\"\n") "<7067CF16-30A5-4EE8-B2C0-18262D355B14@schaltsekun.de>" ("<20160608085431.GA4278@openwall.com>" "<CAOTQaXHLe6ST5SOQhH_hig1KD9UyhzMUvr4iXiJz5szm5hsUow@mail.gmail.com>" "<CAFRnB2UaY54U2VdmXR=dRSU7HtjgfjQMgOZ0w55jL4AYTng5oA@mail.gmail.com>" "<CAOTQaXH7_L469A-AWkMUDYe_ByetxuHdWHnhpTaXyGGaAOhcoA@mail.gmail.com>" "<20160608153856.GH3711@suse.de>" "<4CC7C148-7BCC-4D6D-88D0-ED2BADD124BF@schaltsekun.de>" "<7067CF16-30A5-4EE8-B2C0-18262D355B14@schaltsekun.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7364 invoked by uid 550); 8 Jun 2016 20:24:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,78 +11,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 7342 invoked from network); 8 Jun 2016 20:24:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=EUVadVo/Ugr4D6WAo/kDYX9ZACoipx1rYSQ89rPDYqU=;
+        b=GBbDa1spVI1PxEkkyqWIZF6NM+qdGNwjivqgCJ4O2Agtm6uO7rnN7HdR0kaYIM6zuT
+         amAPrUNs8GSv7TP63AIA6KDBt3LoVxbGg05aRrpr9Mn4THD/zYHyfX+98yza1bnnPsoS
+         zFTYADsI58KmtaULtW0ab8WAcwF4tE/0b9UDrpJMbN8XIksraItsvfwphtroi7sWp43R
+         9GIhoR58QdDHSVyGlYIUZeupjtp2FB+aYLlp8HCn+PZNRHdxctEkxUb1LZYlKC4f9c7Y
+         kCwS4zqtj3+tj0s6NFvsDQEIRbdhFqVztXrezvbm0gYr520dLE9grwX5u7MZLVz3oehx
+         FO+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=EUVadVo/Ugr4D6WAo/kDYX9ZACoipx1rYSQ89rPDYqU=;
+        b=JIYKiOTXbMUzOsah0j76ia5SPDcoE3TKY0AyM3pXTIMZKBhODOIoZevyPa2p2SmDw2
+         hVdJc4ktoD2HaKwMtVSIiDFlC1mqIjE8Ra4bdJKkUx/tarLtaue+lvS+Uo5LAT5HOQfc
+         zxXEk1Wu/mlnkV13zKVqBYEpbAIUmAygvskadAS0GwN9zFRS4ERi214EnjuDE+UiA8Yj
+         wF+IAchPv8FdWbytgkTq9wantk+G20GsoXTRHhAC6oQ1f/fRcQKlkeT1UBqkpMWMZD1L
+         R9MN9dvqDFFgAwjKYpUkRTTRcD4m3V0G5PsY40bXz/jzwKqdeBPbG8GVwaTs1HS+Rww0
+         rbIA==
+X-Gm-Message-State: ALyK8tJcV6oZvozbymdHoFsvCeppxFFYcUqbYXBhNzVmRa5NebmoqacyEDgSdZdh0baCvQ2DdCySMpnGzUvBeg==
+X-Received: by 10.200.55.115 with SMTP id p48mr3595267qtb.15.1465417485481;
+ Wed, 08 Jun 2016 13:24:45 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <7067CF16-30A5-4EE8-B2C0-18262D355B14@schaltsekun.de>
+References: <20160608085431.GA4278@openwall.com> <CAOTQaXHLe6ST5SOQhH_hig1KD9UyhzMUvr4iXiJz5szm5hsUow@mail.gmail.com>
+ <CAFRnB2UaY54U2VdmXR=dRSU7HtjgfjQMgOZ0w55jL4AYTng5oA@mail.gmail.com>
+ <CAOTQaXH7_L469A-AWkMUDYe_ByetxuHdWHnhpTaXyGGaAOhcoA@mail.gmail.com>
+ <20160608153856.GH3711@suse.de> <4CC7C148-7BCC-4D6D-88D0-ED2BADD124BF@schaltsekun.de>
+ <7067CF16-30A5-4EE8-B2C0-18262D355B14@schaltsekun.de>
+Message-ID: <CAFeDd5a0aBM-wafxZu7m7NFPcOZyMBV-2ufbiDi_7MLWyqm-Eg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 8 Jun 2016 23:24:44 +0300
+From: Billy Brumley <bbrumley@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22263 invoked from network); 27 May 2024 11:34:34 -0000
-Date: Mon, 27 May 2024 13:34:30 +0200
-From: Solar Designer <solar@openwall.com>
+Subject: Re: [oss-security] CVE-2016-2178: OpenSSL DSA follows a non-constant
+ time codepath for certain operations
 To: oss-security@lists.openwall.com
-Message-ID: <20240527113430.GA14378@openwall.com>
-References: <23c15272-d797-4c3c-bbfb-e462c900978f@gmail.com> <20240418164242.GA2468@openwall.com> <7789a6d5-92c9-4239-8a07-7b0131ed166b@lexfo.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7789a6d5-92c9-4239-8a07-7b0131ed166b@lexfo.fr>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] The GNU C Library security advisories update for 2024-04-17: GLIBC-SA-2024-0004/CVE-2024-2961: ISO-2022-CN-EXT: fix out-of-bound writes when writing escape sequence
 
-On Mon, May 27, 2024 at 11:16:53AM +0200, Charles Fol wrote:
-> Although very late, here is a follow up explaining the impact of the 
-> vulnerability.
-> 
-> Provided that you can force an application to convert a partially 
-> controlled buffer to ISO-2022-CN-EXT, you get an
-> overflow of 1 to 3 bytes whose value you don't control.
-> 
-> This can be triggered in at least two ways in PHP:
-> 
-> - Through direct calls to iconv()
-> - Through the use of PHP filters (i.e. using a "file read" vulnerability)
-> 
-> Due to the way PHP's heap is built, you can use such a memory corruption 
-> to alter part of a free list pointer,
-> which can in turn give you an arbitrary write primitive in the program's 
-> memory.
-> 
-> With this bug, any person that has a file read vulnerability with a 
-> controlled prefix on a PHP application has RCE.
-> Any person that can force PHP into calling iconv() with controlled 
-> parameters has RCE.
-> 
-> We have provided more explanations on a blogpost of ours (I do not think 
-> that I can post it here, it shouldn't be too
-> hard to find if you're interested).
+>> Are we sure that a "low" rating is justified?
+>> DSA is basically dead, until the constant time switch is flicked. The
+>> only countermeasure so far is turning it off.
+>
+> Maybe I should be a little more verbose on this:
+> 1) attacker recovers the DSA host key.
+> 2) attacker mitm-attacks client connections to the server and recovers the user's private key by exploiting the vulnerable openssl on the client side
+> 3) ...
+>
+> The same principles apply when the computational burden is reversed for client auth, aren't they?
 
-Surely you can post a link to a blog post, although we strongly prefer
-that besides the link you also post a plain text copy of most content,
-for archival.
+Are you talking about the SSH target?
 
-I assume you refer to:
+If so, the realistic scenario is a user with legitimate credentials
+logging into a server to steal the DSA host key locally with cache
+timings.
 
-https://www.ambionics.io/blog/iconv-cve-2024-2961-p1
+I don't think client-side enters into the equation for this vuln. You
+need an active attacker initiating handshakes. That's my 2c -- we
+didn't consider client-side victim much in this work.
 
-This ends with:
+If it's the TLS target, you need local access or manage to co-locate
+in cloud scenarios. Not as realistic as the SSH case IMO.
 
-> This concludes the first part of the series on CNEXT (CVE-2024-2961).
-> The exploit is now available on our GitHub. There is still much more to
-> explore: what about direct calls to iconv() ? What happens the file read
-> is blind?
-> 
-> In part 2, we'll dive deeper in the PHP engine to target an iconv() call
-> found in a very popular PHP webmail. I'll describe the impact of such
-> direct calls on the PHP ecosystem, and show you some unexpected sinks.
-> Finally, in part 3, we'll cover blind file read exploitation.
-
-The GitHub link is:
-
-https://github.com/ambionics/cnext-exploits/
-
-I understand it'd be difficult to convert a so nicely formatted blog
-post into a plain text posting, but perhaps you can now post the plain
-text description you had shared with the distros list?
-
-Are your OffensiveCon slides online or will be soon?  A link to them can
-also be shared.
-
-Thanks,
-
-Alexander
+BBB
