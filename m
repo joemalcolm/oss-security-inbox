@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2398" "Friday" "29" "April" "2016" "10:49:11" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160429144911.5DD178BC4E6@smtpvmsrv1.mitre.org>" "54" "[oss-security] Re: buffer overflow and information leak in OCaml < 4.03.0" nil nil nil "4" "2016042914:49:11" "[oss-security] Re: buffer overflow and information leak in OCaml < 4.03.0" (number mark "U       cve-assign@m Apr 29   54/2398  " thread-indent "\"[oss-security] Re: buffer overflow and information leak in OCaml < 4.03.0\"\n") "<4868d0749e044d6491f11118f6e10d45@S1688.EX1688.lan>" ("<4868d0749e044d6491f11118f6e10d45@S1688.EX1688.lan>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["720" "Wednesday" "8" "June" "2016" "15:32:44" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1606081531020.11110@wniryva>" "23" "[oss-security] CVE Request Qemu: scsi: megasas: information leakage in megasas_ctrl_get_info" nil nil nil "6" "2016060810:02:44" "[oss-security] CVE Request Qemu: scsi: megasas: information leakage in megasas_ctrl_get_info" (number mark "U       ppandit@redh Jun  8   23/720   " thread-indent "\"[oss-security] CVE Request Qemu: scsi: megasas: information leakage in megasas_ctrl_get_info\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29912 invoked by uid 550); 29 Apr 2016 14:49:24 -0000
+Received: (qmail 29804 invoked by uid 550); 8 Jun 2016 10:03:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,66 +12,40 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29891 invoked from network); 29 Apr 2016 14:49:24 -0000
-From: cve-assign@mitre.org
-To: cuoq@trust-in-soft.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <4868d0749e044d6491f11118f6e10d45@S1688.EX1688.lan>
-Message-Id: <20160429144911.5DD178BC4E6@smtpvmsrv1.mitre.org>
-Date: Fri, 29 Apr 2016 10:49:11 -0400 (EDT)
-Subject: [oss-security] Re: buffer overflow and information leak in OCaml < 4.03.0
+Received: (qmail 29784 invoked from network); 8 Jun 2016 10:03:01 -0000
+Date: Wed, 8 Jun 2016 15:32:44 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Li Qiang <liqiang6-s@360.cn>
+Message-ID: <alpine.LFD.2.20.1606081531020.11110@wniryva>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Wed, 08 Jun 2016 10:02:49 +0000 (UTC)
+Subject: [oss-security] CVE Request Qemu: scsi: megasas: information leakage in
+ megasas_ctrl_get_info
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+   Hello,
 
-> OCaml versions 4.02.3 and earlier have a runtime bug that, on 64-bit
-> platforms, causes sizes arguments to an internal memmove call to be
-> sign-extended from 32 to 64-bits before being passed to the memmove
-> function.
-> 
-> This leads arguments between 2GiB and 4GiB to be interpreted as larger
-> than they are (specifically, a bit below 2^64), causing a buffer
-> overflow.
-> 
-> Arguments between 4GiB and 6GiB are interpreted as 4GiB smaller than
-> they should be, causing a possible information leak.
-> 
-> This commit fixes the bug:
-> https://github.com/ocaml/ocaml/commit/659615c7b100a89eafe6253e7a5b9d84d0e8df74#diff-a97df53e3ebc59bb457191b496c90762
-> The function caml_bit_string is called indirectly from such functions
-> as String.copy. String.copy for instance is supposed to be a "safe"
-> function for which OCaml's memory safety guarantees apply.
+Quick Emulator(Qemu) built with the MegaRAID SAS 8708EM2 Host Bus Adapter 
+emulation support is vulnerable to an information leakage issue. It could 
+occur while processing MegaRAID Firmware Interface(MFI) command to read device 
+control information in 'megasas_ctrl_get_info'.
 
-Use CVE-2015-8869.
+A privileged user inside guest could use this flaw to leak host memory bytes.
 
-(We consider this a single "to be sign-extended from 32 to 64" issue
-even though there are two different types of impacts. Also, the
-structure of the code change ("Int_val" replaced by "Long_val") is the
-same everywhere. We did not consider it worthwhile to sort through the
-possible "independently encountered" aspects as mentioned, for
-example, in the
-https://github.com/ocaml/ocaml/commit/659615c7b100a89eafe6253e7a5b9d84d0e8df74#commitcomment-14040616
-comment.)
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-06/msg01969.html
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1343909
 
-iQIcBAEBCAAGBQJXI3NXAAoJEHb/MwWLVhi2RdEQAI71I2vgUNPxtIPV5muuzuT/
-BGlgZLTiWI6HgmFvV7mRtNonvKockAP150f7cArfGgsG13DVViE45IYCk4WHacnW
-aTfRtbPYBZ+eawApm1tWmSxXi4Idt2sSBPXxnA46vwKUZo3oDG8p0oxEanZ1O1Y6
-v+zAL4vVNq+IdSnpPzwM368C/gc1KDBM0uLu7qVoV6E2qHriWXpWpEZ7MGqab5Dv
-2/8ZhpdAnZDVzMSzGbKY+h1k1JjwWnIx3WmWzU65JKF3ccDtLyWy+LaRT5D63d/K
-f5orQDKfJyxc9UQIa+TH4waYQZ64f1xb5haTZaQv8tJVxlwVKD0vVk/eVrlN/r1e
-XXbtknwlMcWLf30hKqzOcDwAfWf2rPtUk5h6PotFVR42esLTTDg7BlIjYFilBXw0
-AlVyDrZ4cBlnd3ZeeyJW2moEoErRlnYFrqdijjIBmHPokoPVAOUcfcU2saBfkFqP
-suYLBcMHrpvitrr4V5yu5T2ZYZI9DtEse+z3Oe+wupCemyfoXXcGvX7Kwz0j4oIk
-bFDuuKtNpo4do+2JkCwbczGwIGAyW20rBbyJqkMMGI1c3VlY/rzn8hES3ltKjVND
-1WShu2c9wwyIhhYUKuacdx8RvuZinNBAlmkWdpNUI33XsVXmdRiEhjB+RGyvqv/X
-a2JgvU+8pOLRMJsRX7CA
-=BBAV
------END PGP SIGNATURE-----
+This issue was reportd by Li Qiang of 360.cn Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
