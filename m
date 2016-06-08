@@ -1,108 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/29/6
-Message-Id: <57514A3C-DBAD-4E5E-98EA-23E490629C02@dilger.ca>
-Date: Tue, 29 Mar 2016 16:56:11 -0600
-From: Andreas Dilger <adilger@...ger.ca>
-To: Yves-Alexis Perez <corsac@...ian.org>
-Cc: oss-security@...ts.openwall.com, Theodore Tso <tytso@...gle.com>, linux-ext4@...r.kernel.org
-Subject: Re: CVE Request - Linux kernel (multiple versions) ext2/ext3  filesystem DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/08/9
+Message-ID: <20160608174723.GA14819@openwall.com>
+Date: Wed, 8 Jun 2016 20:47:23 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-2177: OpenSSL undefined pointer arithmetic
 Content-Type: text/plain; charset=utf-8
 
-On Mar 29, 2016, at 3:14 PM, Yves-Alexis Perez <corsac@...ian.org> wrote:
-> 
-> [dropping MITRE from CC since it's not about the CVE]
-> [adding ext and Theodore to CC]
-> 
-> On mar., 2016-03-29 at 19:24 +0200, Hugues ANGUELKOV wrote:
->> Hello,
->> 
->> The linux kernel is prone to a Denial of service when mounting specially
->> crafted ext2/ext3 (possibly ext4) filesystems. This occurs in the function
->> ext4_handle_error who call the panic function on precise circumstance.
-> 
-> Did you contact the upstream maintainers about this? I'm adding them just in
-> case they're not already aware of that…
-> 
->> This was tested on severals linux kernel version: 3.10, 3.18, 3.19, on
->> real hardware and Xen DomU PV & HVM (the crash report attached is from a
->> Fedora 3.18 PV DomU), from different distribution release: Ubuntu, CentOS,
->> Fedora, Linux Mint, QubesOS.
->> This a low security impact bug, because generally only root can mount
->> image, however on Desktop (or possibly server?) system configured with
->> automount the bug is easily triggable (think of android smartphone? Haven't
->> test yet).
+Hi,
 
-It seems that the important point here is that the filesystem has
-"s_errors=EXT4_ERRORS_PANIC" set in the superblock?  I don't think
-the actual corruption that triggered the ext4_error() call is important,
-since there are any number of other failure cases that could generate
-a similar error.
+More off Twitter:
 
-It seems practical to change s_errors at mount time from EXT4_ERRORS_PANIC
-to EXT4_ERRORS_RO for filesystems mounted by regular users.  The question
-is whether there is a way for the ext4 code to know this at mount time?
+<guidovranken> @solardiz Here is another very recent OpenSSL CVE that hasnt been released officially yet https://github.com/openssl/openssl/commit/a004e72b95835136d3f1ea90517f706c24c03da7
 
-Cheers, Andreas
+| Avoid some undefined pointer arithmetic
+| 
+| A common idiom in the codebase is:
+| 
+| if (p + len > limit)
+| {
+|     return; /* Too long */
+| }
+| 
+| Where "p" points to some malloc'd data of SIZE bytes and
+| limit == p + SIZE
+| 
+| "len" here could be from some externally supplied data (e.g. from a TLS
+| message).
+| 
+| The rules of C pointer arithmetic are such that "p + len" is only well
+| defined where len <= SIZE. Therefore the above idiom is actually
+| undefined behaviour.
+| 
+| For example this could cause problems if some malloc implementation
+| provides an address for "p" such that "p + len" actually overflows for
+| values of len that are too big and therefore p + len < limit!
+| 
+| Issue reported by Guido Vranken.
+| 
+| CVE-2016-2177
 
->> The crafted image may be burn onto SD card or USB key to crash a large
->> panel of linux box.
->> 
->> 
->> [ 929.200197] EXT4-fs error (device loop0): ext4_iget:4058: inode #2: comm
->> mount: bad extended attribute block 8390656
->> [ 929.200226] Kernel panic - not syncing: EXT4-fs (device loop0): panic
->> forced after error
->> [ 929.200226]
->> [ 929.200230] CPU: 1 PID: 980 Comm: mount Tainted: G O
->> 3.18.17-8.pvops.qubes.x86_64 #1
->> [ 929.200233] 0000000000000000 000000007533690c ffff88000ea07aa8
->> ffffffff81722191
->> [ 929.200237] 0000000000000000 ffffffff81a84108 ffff88000ea07b28
->> ffffffff8171a462
->> [ 929.200240] ffff880000000010 ffff88000ea07b38 ffff88000ea07ad8
->> 000000007533690c
->> [ 929.200244] Call Trace:
->> [ 929.200249] [<ffffffff81722191>] dump_stack+0x46/0x58
->> [ 929.200253] [<ffffffff8171a462>] panic+0xd0/0x204
->> [ 929.200257] [<ffffffff812ae4d6>] ext4_handle_error.part.188+0x96/0xa0
->> [ 929.200260] [<ffffffff812ae838>] __ext4_error_inode+0xa8/0x180
->> [ 929.200264] [<ffffffff81292869>] ext4_iget+0x929/0xae0
->> [ 929.200267] [<ffffffff812b31fb>] ext4_fill_super+0x18db/0x2b60
->> [ 929.200270] [<ffffffff8120af20>] mount_bdev+0x1b0/0x1f0
->> [ 929.200273] [<ffffffff812b1920>] ? ext4_calculate_overhead+0x3d0/0x3d0
->> [ 929.200276] [<ffffffff812a3425>] ext4_mount+0x15/0x20
->> [ 929.200278] [<ffffffff8120b879>] mount_fs+0x39/0x1b0
->> [ 929.200282] [<ffffffff811afd95>] ? __alloc_percpu+0x15/0x20
->> [ 929.200285] [<ffffffff8122754b>] vfs_kern_mount+0x6b/0x110
->> [ 929.200287] [<ffffffff8122a38c>] do_mount+0x22c/0xb60
->> [ 929.200290] [<ffffffff811aab96>] ? memdup_user+0x46/0x80
->> [ 929.200292] [<ffffffff8122b002>] SyS_mount+0xa2/0x110
->> [ 929.200295] [<ffffffff8172a609>] system_call_fastpath+0x12/0x17
->> [ 929.200301] Kernel Offset: 0x0 from 0xffffffff81000000 (relocation
->> range: 0xffffffff80000000-0xffffffff9fffffff)c
->> 
->> I cannot attach the PoC (2x2MB too large) nor sending it in plain text
->> (they are filesystems), so I've uploaded it on this website of free file
->> sharing ... (sorry for the inconvenient):
->> poc.ext2 https://1fichier.com/?zbk2gohk8s
->> poc.ext3 https://1fichier.com/?9r0c8agjfa
->> 
->> Can you assign a CVE for this?
->> Thank for reading and your time.
->> 
->> Hugues ANGUELKOV.
->> 
->> 
-> --
-> Yves-Alexis
-> 
+The commit message above gives pointer wraparound as an example of when
+and how this UB could manifest itself, but I think even more likely is
+that an optimizing C compiler would remove the check because it can't
+be reliably true (it can be either false or UB).  A valid pointer is at
+most one element beyond the end of an object, so in the example given
+above "p + len > limit" is never reliably true.  In the actual code
+being patched, there are different instances of the problem, and some of
+the checks look like they're effectively ">= limit" rather than "> limit".
+Those ">=" checks are more lucky, as they can't be completely removed
+(but can still misbehave if the pointer advances further).
 
+In fact, there are so many instances that someone should re-review the
+patch and possibly look for even more instances of the problem (maybe in
+an automated way different from what might have been used so far).  The
+commit has "Reviewed-by: Rich Salz", which is great, but I think it
+needs more eyes than the committer's and one other person's.
 
-Cheers, Andreas
-
-
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Alexander
