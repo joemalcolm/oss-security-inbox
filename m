@@ -1,64 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/31/7
-Message-Id: <B942CDE1-651E-43D2-82F1-8E110D6EB228@dilger.ca>
-Date: Thu, 31 Mar 2016 09:47:34 -0600
-From: Andreas Dilger <adilger@...ger.ca>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security <oss-security@...ts.openwall.com>, Yves-Alexis Perez <corsac@...ian.org>, Theodore Tso <tytso@...gle.com>, linux-ext4@...r.kernel.org
-Subject: Re: CVE Request - Linux kernel (multiple versions) ext2/ext3 filesystem DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/08/5
+Message-ID: <CAFRnB2UaY54U2VdmXR=dRSU7HtjgfjQMgOZ0w55jL4AYTng5oA@mail.gmail.com>
+Date: Wed, 8 Jun 2016 11:18:41 -0400
+From: Alex Gaynor <alex.gaynor@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations
 Content-Type: text/plain; charset=utf-8
 
-On Mar 31, 2016, at 8:53 AM, Kurt Seifried <kseifried@...hat.com> wrote:
-> 
-> 
-> 
-> On Wed, Mar 30, 2016 at 2:43 PM, Theodore Ts'o <tytso@....edu> wrote:
-> 
->> You can mount the file system with "mount -o errors=continue" and this
->> will override the default behavior specified in the super block.
->> 
->> I would argue that a Desktop or server system that had automount
->> should either (a) mount with -o errors=continue, or (b) force an fsck
->> on the file system before mounting it.
-> 
-> The problem is that:
-> 
-> a) means I'll be mounting filesystems with errors that I may want to know about (but not have my  system panic about)
-> 
-> b) fsck takes a long time on large disks (the smallest size of disk I buy for USB drives is 1TB, if I fsck every time I plug one in I'll die of old age).
+I assume the OpenSSL team considers this vulnerability to be LOW severity:
+https://www.openssl.org/policies/secpolicy.html
 
-Two options that I think are fairly straight forward to fix this:
-- add /sbin/mount.{ext2,ext3,ext4} helpers that add "errors=remount-ro"
-  when a non-root user mounts the filesystem. I think "errors=remount-ro"
-  is safer than "errors=continue" since it blocks all later attempts to
-  modify the filesystem, otherwise there may be further corruption and
-  more risk of hitting an unhandled error condition.
-- add a check in ext4_fill_super() to change EXT4_ERRORS_PANIC superblock
-  option to EXT4_ERRORS_RO if mounted by a non-root user
+Alex
 
->> So I think this is a particularly meaningless CVE, which is why I have
->> zero respect for people who try to make any kind of conclusion based
->> on CVE counts.   I certainly don't plan to do anything about this.
-> 
-> As for your comments on CVE counting even the then head of CVE @mitre told people not to rely on CVE counting for vulnerability stats:
-> 
-> https://media.blackhat.com/us-13/US-13-Martin-Buying-Into-The-Bias-Why-Vulnerability-Statistics-Suck-Slides.pdf
-> 
-> As for your comment on not fixing this: I think fundamentally I should be able to plug a file system in and try to mount it with default/reasonable options and NOT have my system panic. File system handling code, like any code that handles user supplied data should be able to handle garbage gracefully and securely. At worst it should try to mount and go "derp, it's messed up, maybe fsck it?"
+On Wed, Jun 8, 2016 at 11:15 AM, Gsunde Orangen <gsunde.orangen@...il.com>
+wrote:
 
-I think this is a legitimate problem to fix.  The main question is how complex
-it is to fix?  I just don't know enough about the increasing number of ways
-that userspace can mount a filesystem to know how to detect this correctly in
-the kernel.
+> Whilst there is a commit in openssl and a CVE ID, I wonder why this hasn't
+> been announced yet by OpenSSL.org and why there are no official fix
+> releases (yet).
+> What made this issue different to the usual coordinated disclosures being
+> practiced with the OpenSSL team?
+>
+> 2016-06-08 10:54 GMT+02:00 Solar Designer <solar@...nwall.com>:
+>
+> > Hi,
+> >
+> > Just off Twitter:
+> >
+> > <mjos_crypto> Out today: This is the OpenSSL side-channel vulnerability I
+> > mentioned last week; now on ePrint. Also CVE-2016-2178.
+> > http://eprint.iacr.org/2016/594
+> > <@mjos_crypto> @mjos_crypto Currently unfixed in essentially all distros.
+> > <mjos_crypto> Note that CVE-2016-2178 /
+> > http://eprint.iacr.org/2016/594.pdf most severely actually impacts
+> > OpenSSH, which uses the OpenSSL library.
+> > <mjos_crypto> Cesar's CVE-2016-2178 patch for the OpenSSL library from
+> > Monday.
+> >
+> https://git.openssl.org/?p=openssl.git;a=commit;h=399944622df7bd81af62e67ea967c470534090e2
+> >
+> > http://eprint.iacr.org/2016/594
+> >
+> > | "Make Sure DSA Signing Exponentiations Really are Constant-Time''
+> > |
+> > | Cesar Pereida Garca and Billy Bob Brumley and Yuval Yarom
+> > |
+> > | Abstract: TLS and SSH are two of the most commonly used protocols for
+> > securing Internet traffic. Many of the implementations of these protocols
+> > rely on the cryptographic primitives provided in the OpenSSL library. In
+> > this work we disclose a vulnerability in OpenSSL, affecting all versions
+> > and forks (e.g. LibreSSL and BoringSSL) since roughly October 2005, which
+> > renders the implementation of the DSA signature scheme vulnerable to
+> > cache-based side-channel attacks. Exploiting the software defect, we
+> > demonstrate the first published cache-based key-recovery attack on these
+> > protocols: 260 SSH-2 handshakes to extract a 1024/160-bit DSA host key
+> from
+> > an OpenSSH server, and 580 TLS 1.2 handshakes to extract a 2048/256-bit
+> DSA
+> > key from an stunnel server.
+> > |
+> > | Category / Keywords: applied cryptography; digital signatures;
+> > side-channel analysis; timing attacks; cache-timing attacks; DSA;
+> OpenSSL;
+> > CVE-2016-2178
+> > |
+> > | Date: received 6 Jun 2016, last revised 7 Jun 2016
+> >
+> >
+> >
+> https://git.openssl.org/?p=openssl.git;a=commit;h=399944622df7bd81af62e67ea967c470534090e2
+> >
+> > | author        Cesar Pereida
+> > |       Mon, 23 May 2016 12:45:25 +0300 (12:45 +0300)
+> > | committer     Matt Caswell
+> > |       Mon, 6 Jun 2016 13:08:15 +0300 (11:08 +0100)
+> >
+> > | Fix DSA, preserve BN_FLG_CONSTTIME
+> > |
+> > | Operations in the DSA signing algorithm should run in constant time in
+> > | order to avoid side channel attacks. A flaw in the OpenSSL DSA
+> > | implementation means that a non-constant time codepath is followed for
+> > | certain operations. This has been demonstrated through a cache-timing
+> > | attack to be sufficient for an attacker to recover the private DSA key.
+> > |
+> > | CVE-2016-2178
+> >
+> > Alexander
+> >
+>
 
-It may be that "non-root user" in the options above should be "removable media"
-instead?  Knowing the intent of the user/sysadmin is difficult.
-
-Cheers, Andreas
 
 
+-- 
+"I disapprove of what you say, but I will defend to the death your right to
+say it." -- Evelyn Beatrice Hall (summarizing Voltaire)
+"The people's good is the highest law." -- Cicero
+GPG Key fingerprint: D1B3 ADC0 E023 8CA6
 
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
