@@ -1,4 +1,9 @@
-Received: (qmail 21574 invoked by uid 550); 5 Oct 2024 15:36:05 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1828" "Wednesday" "8" "June" "2016" "16:44:44" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160608204444.1EC5EB2E01A@smtpvbsrv1.mitre.org>" "42" "[oss-security] Re: CVE Request Qemu: scsi: megasas: information leakage in megasas_ctrl_get_info" nil nil nil "6" "2016060820:44:44" "[oss-security] Re: CVE Request Qemu: scsi: megasas: information leakage in megasas_ctrl_get_info" (number mark "U       cve-assign@m Jun  8   42/1828  " thread-indent "\"[oss-security] Re: CVE Request Qemu: scsi: megasas: information leakage in megasas_ctrl_get_info\"\n") "<alpine.LFD.2.20.1606081531020.11110@wniryva>" ("<alpine.LFD.2.20.1606081531020.11110@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 25973 invoked by uid 550); 8 Jun 2016 20:44:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,313 +12,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 27712 invoked from network); 5 Oct 2024 09:33:48 -0000
-DKIM-Signature: v=1; a=ed25519-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=josefsson.org; s=ed2303; h=Content-Type:MIME-Version:Message-ID:In-Reply-To
-	:Date:References:Subject:To:From:Sender:Reply-To:Cc:Content-Transfer-Encoding
-	:Content-ID:Content-Description;
-	bh=cn98IV9VI4oTnm4TxfyfL/PGdB0f2W0sUxUqKOwPGUs=; t=1728120824; x=1729330424; 
-	b=kKnaeA5Gqw51vWWL/EIGPie9JLlCbkGeCB4WmIyVtL3e7sG1vwI6vj+y1AMcdKprcbo5qDFZ+fd
-	CH+57d72fDA==;
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=josefsson.org; s=rsa2303; h=Content-Type:MIME-Version:Message-ID:
-	In-Reply-To:Date:References:Subject:To:From:Sender:Reply-To:Cc:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=cn98IV9VI4oTnm4TxfyfL/PGdB0f2W0sUxUqKOwPGUs=; t=1728120824; x=1729330424; 
-	b=vmQzorqokm7MdZg+uMzyAPxkjCYxaU5AxFHlEF6a79o1db2F50SVO7/USNRA+H7unH+bOwPWMK9
-	NGQx17TILYTe3YGXLeLrdgjjhy8KrK4AhmQQlHU2Lx90DdLjP15O7izYaNY8veDi2IfQpARmox3gd
-	gAzMk0JhcfvsX7rqCLo+0AhmDB4k6I98Nt7mhVzO4qXdM+AmPP6Q99UgFOAP0jHmmu97/RSPd0BC4
-	FvovcS0rkuELiRCjwYG0SJLxHiVHdmXSjeSG06H69DclMUyMwbDuPK/fukrOXdjfQp8vigXE2uuqk
-	D1TT6uKbT0cgyj/Mh6faJ7orNMJy1ZJuDGzDFrFPPEJjyhbozW+lByWRTt0KsWUaiULXhLdvG+SDu
-	VbLLeEFAl8ey0cIXIC5tPoTfWsSPt98OsjaF+QL1IUmW/X10SuEoeIDZLzpGYnVF4oibLAgt3;
-From: Simon Josefsson <simon@josefsson.org>
-To: oss-security@lists.openwall.com
-References: <Zv-9gAGM_X7QQShJ@suse.com>
-OpenPGP: id=B1D2BD1375BECB784CF4F8C4D73CF638C53C06BE;
- url=https://josefsson.org/key-20190320.txt
-X-Hashcash: 1:23:241005:jsegitz@suse.de::igZVg0E2x3kt0oOT:DQKM
-X-Hashcash: 1:23:241005:oss-security@lists.openwall.com::U+38otuBWPsr7cDh:M63N
-Date: Sat, 05 Oct 2024 11:33:56 +0200
-In-Reply-To: <Zv-9gAGM_X7QQShJ@suse.com> (Johannes Segitz's message of "Fri, 4
-	Oct 2024 12:03:44 +0200")
-Message-ID: <878qv251x7.fsf@kaka.sjd.se>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha256; protocol="application/pgp-signature"
-Subject: [oss-security] Re: CVE-2024-47191: Local root exploit in the PAM module pam_oath.so
-
---=-=-=
-Content-Type: text/plain
-
-OATH Toolkit pam_oath usersfile `${HOME}` privilege escalation
---------------------------------------------------------------
-
-Security Vulnerability
-----------------------
-
-OATH Toolkit provides two components `liboath` and `pam_oath`.
-Pam_oath is normally run as root and assumes that the `usersfile` path
-setting value points to a root-controlled and protected file
-containing the OATH secrets (cryptographic HMAC keys) for users.
-
-The documentation suggests using a root-owned `/etc/users.oath` and to
-do `chmod go-rw /etc/users.oath` on it.  The design assumes that file
-permissions are set up to prevent malicious read or writes to the
-credential file by unauthorized users.  Whether file permissions are
-setup correctly or not is not checked by the code.
-
-On every successful authentication, the file is rewritten to prevent
-OTP replay attacks.  The rewriting logic works by acquiring a POSIX
-file lock on a newly created `*.lock` file (in the same directory),
-and then writing file content to a newly created `*.new` file (also in
-the same directory).  File ownership of the new file is set to the
-same as the original file.  The original usersfile is replaced
-atomically with the newly created file.
-
-With the introduction of the `${HOME}` indirection variable in the
-usersfile parameter the design assumptions no longer holds.  The
-feature was added in version 2.6.7 released on 2021-05-01.
-
-A typical setup when `${HOME}` is used in a usersfile value such as
-`usersfile=${HOME}/.config/oath.secrets` is to allow users to manage
-their own credentials.  The file is owned by the user who is
-responsible for adding the secret to it, and to set read/write
-permissions on the file appropriately.
-
-The security problem is easy to exploit.  To demonstrate the
-vulnerability with a vulnerable version and configuration, create a
-symbolic link `$HOME/.config/oath.secrets.new` that points to a
-privileged file such as `/etc/shadow`.  After successful login as the
-user, `pam_oath`/`liboath` has followed the symbolic link and rewrote
-the target file with new updated OATH credentials and sets ownership
-of that file to the user.  The user is now able to modify
-`/etc/shadow`.
-
-We are not aware of any active exploits in the wild of this flaw.
-
-Affected versions and configurations
-------------------------------------
-
-OATH Toolkit pam_oath and liboath version 2.6.7 to version 2.6.11 are
-affected.  Version 2.6.12 prevents the attack.
-
-The attack requires that the "usersfile" setting has a file or path
-component that is in a vulnerable location.  The common setup with a
-write/read-protected `usersfile=/etc/users.oath` setup is not
-vulnerable.
-
-While admin's may specify a "usersfile" in a world-writeable directory
-like `/tmp` we regard that as a configuration error.  In most
-scenarios, only "usersfile" with `${HOME}` in them should be regarded
-as a vulnerable configuration.
-
-One vulnerable setting is `usersfile=/home/joe/.config/system.oath`
-giving joe the ability to modify root-owned files, assuming a non-root
-user joe with write access to anything below `/home/joe`.  This is
-somewhat similar to having a system SSH configuration of HostKey
-`/home/joe/ssh_hostkey` which we believe is unlikely and also consider
-to be a configuration error.
-
-Another example is via the `${USER}` setting as in
-`usersfile=/home/${USER}/.config/oath.secrets` giving any non-root
-user the ability to control system files, assuming they have write
-access to anything below `/home/${USER}`.  We have improved the
-documentation regarding `${USER}` to be for those settings where
-root-controlled per-user files are desired.  The intended use of
-`${USER}` strings are for setups like
-`usersfile=/var/oath/oath.${USER}.secrets` where the files are
-per-user but owned by root and have file permissions setup to prevent
-read/write from the user.  The root-ownership and file permission
-should prevent users from being able to reach their OATH credentials
-when `${USER}` is used.
-
-The `pam_oath` fix only address configurations that uses `${HOME}` and
-not any other vulnerable configurations.  The liboath fix prevent
-direct attacks via `*.new` and `*.lock` symlinks, but other scenarios
-are possible and the input to `oath_authenticate_usersfile()` MUST be
-a trusted filename -- suitable sanitization is application-dependent.
-
-Details
--------
-
-The vulnerable code in liboath is inside
-`oath_authenticate_usersfile()`, quoting code from version 2.6.11
-which can be reviewed here:
-
-https://gitlab.com/oath-toolkit/oath-toolkit/-/blob/oath-toolkit-2.6.11/liboath/usersfile.c?ref_type=tags#L324
-
-The lock file is acquired:
-
-  /* Open lockfile. */
-  {
-    int l;
-    l = asprintf (&lockfile, "%s.lock", usersfile);
-    if (lockfile == NULL || ((size_t) l) != strlen (usersfile) + 5)
-      return OATH_PRINTF_ERROR;
-    lockfh = fopen (lockfile, "w");
-    if (!lockfh)
-      {
-	free (lockfile);
-	return OATH_FILE_CREATE_ERROR;
-      }
-  }
-
-Since `fopen("w")` is used any existing file with the predictable
-`*.lock` filename will be opened, including if that file happens to be
-a symbolic link that points elsewhere.  The code is run as root, so a
-symbolic link pointing to confidential files under `/etc` are happily
-opened.  Note that since "w" is used, the file will be automatically
-truncated.  So this allows non-root to truncate root-owned files.
-
-Reading on to the `*.new` file handling:
-
-https://gitlab.com/oath-toolkit/oath-toolkit/-/blob/oath-toolkit-2.6.11/liboath/usersfile.c?ref_type=tags#L360
-
-    outfh = fopen (newfilename, "w");
-    if (!outfh)
-      {
-	free (newfilename);
-	fclose (lockfh);
-	free (lockfile);
-	return OATH_FILE_CREATE_ERROR;
-      }
-
-Similarily, this will open a file for writing, and later code will
-essentially copy data from the existing file into the new one.  This
-new file is moved back into the original place.
-
-The PAM module invokes `oath_authenticate_usersfile()` in
-`pam_oath.c`, which can be shown here:
-
-https://gitlab.com/oath-toolkit/oath-toolkit/-/blob/oath-toolkit-2.6.11/pam_oath/pam_oath.c?ref_type=tags#L452
-
-The code is running as root so it may work on an untrustworthy
-filename.  The design used to be that admin's specify a trusted
-pathname here, but the `${HOME}` use-case broke this design assumption
-and the pathnames should then no longer be considered trusted.
-
-Solution
---------
-
-Version 2.6.12 contains the following liboath patch to use `fopen(wx)`:
-
-https://gitlab.com/oath-toolkit/oath-toolkit/-/commit/3235a52f6b87cd1c5da6508f421ac261f5e33a70
-
-Some non-glibc and non-ISO C11 platforms needs the following patch to
-enable gnulib's `fopen(wx)` workaround:
-
-https://gitlab.com/oath-toolkit/oath-toolkit/-/commit/3271139989fde35ab0163b558fc29e80c3a280e5
-
-Then `pam_oath.c` is modified to call seteuid()/setegid() as follows:
-
-https://gitlab.com/jas/oath-toolkit/-/commit/95ef255e6a401949ce3f67609bf8aac2029db418
-
-A patch that applies cleanly to version 2.6.7 found in Debian 12.x
-bookworm is available here:
-
-https://salsa.debian.org/debian/oath-toolkit/-/blob/debian/bookworm-security/debian/patches/pam_oath-seteuid.patch
-
-We recommend you to upgrade to version 2.6.12.
-
-If that is unpractical we recommended you to apply the patches on top
-of your earlier version.
-
-Reproducer
-----------
-
-Included in the 2.6.12 release is a C program to test if a liboath is
-vulnerable or not.  It can be built as follows on a system with
-liboath properly installed:
-
-  git clone https://gitlab.com/oath-toolkit/oath-toolkit.git
-  cd oath-toolkit
-  git checkout oath-toolkit-2.6.12
-  cd liboath/tests
-  cc -o tst_fopen-wx tst_fopen-wx.c $(pkg-config --libs --cflags liboath)
-  rm -f cve.oath cve.oath.new cve.sshd-config cve.oath.lock
-  printf 'HOTP/E/8\tsilver\t4711\t3132333435363738393031323334353637383930313233343536373839303132\n' > cve.oath
-  echo my-magic-cookie > cve.sshd-config
-  ln -s cve.sshd-config cve.oath.new
- ./tst_fopen-wx cve.oath silver 670691 4711
-
-When invoked on a Trisquel 11 system with liboath0 and liboath-dev
-version 2.6.7-3build1 installed, it will print the following:
-
-  Liboath fopen(wx) bug test for oath.h 2.6.7 liboath.so 2.6.7
-  FAIL: Liboath VULNERABLE to fopen(wx) bug.
-
-To test a particular liboath use LD_PRELOAD as follows:
-
-  LD_PRELOAD=/usr/local/lib/x86_64-linux-gnu/liboath.so.0 ./tst_fopen-wx cve.oath silver 670691 4711
-
-The liboath/tests/tst_fopen-wx.sh script can be used to setup and
-invoke the C program testing two different vulnerable configurations.
-
-Related work
-------------
-
-The logic for the usersfile handling was inspired by earlier versions
-of mod-authn-otp and pam_google_authenticator although their modern
-design appears to be somewhat different from pam_oath's current code.
-
-https://github.com/archiecobbs/mod-authn-otp
-
-https://github.com/google/google-authenticator-libpam/
-
-While the liboath oath_authenticate_usersfile() vulnerability is not a
-typical "time-of-check, time-of-use" race condition (since there is no
-check happening in the code) it exhibits the same pattern in the code
-since fopen(w) is used instead of fopen(wx).  Running GitLab semantic
-analysis (SAST) on the vulnerable code flagged it as problematic:
-
-https://gitlab.com/oath-toolkit/oath-toolkit/-/security/vulnerabilities/139535897
-
-https://gitlab.com/oath-toolkit/oath-toolkit/-/security/vulnerabilities/139535890
-
-https://wiki.sei.cmu.edu/confluence/display/c/FIO45-C.+Avoid+TOCTOU+race+conditions+while+accessing+files
-
-We have enabled GitLab SAST and Coverity scanning of OATH Toolkit and
-will review the findings.
-
-SUSE's alternative patch and advisory can be found via:
-
-https://security.opensuse.org/2024/10/04/oath-toolkit-vulnerability.html
-
-It rely on Linux kernel specific features and uses fork() which was
-determined to be contrary to the liboath design, which aims to be
-portable to macOS and *BSD and beyond.  This alternative patch may be
-used by some vendors, and it is assumed to fix the security problem.
-
-History
--------
-
-Fabian Vogt reported this issue in private e-mail on 2024-08-08.
-Matthias Gerstner reported the issue as a GitLab confidential issue on
-2024-08-20.  These reports came in during vacation time and were not
-read by the maintainer.  Salvatore Bonaccorso reached out on
-2024-09-29 via SMS, and the progress since then has been tracked in
-the bug tracker:
-
-https://gitlab.com/oath-toolkit/oath-toolkit/-/issues/43
-
-Credits
--------
-
-The problem was discovered by Fabian Vogt of SUSE.  An initial patch
-against liboath was developed by Matthias Gerstner of SUSE Security
-Team.  An alternative and portable patch to liboath and pam_oath were
-developed by Simon Josefsson.
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
+Received: (qmail 25942 invoked from network); 8 Jun 2016 20:44:55 -0000
+From: cve-assign@mitre.org
+To: ppandit@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn
+In-Reply-To: <alpine.LFD.2.20.1606081531020.11110@wniryva>
+Message-Id: <20160608204444.1EC5EB2E01A@smtpvbsrv1.mitre.org>
+Date: Wed,  8 Jun 2016 16:44:44 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request Qemu: scsi: megasas: information leakage in megasas_ctrl_get_info
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> Quick Emulator(Qemu) built with the MegaRAID SAS 8708EM2 Host Bus Adapter
+> emulation support is vulnerable to an information leakage issue. It could
+> occur while processing MegaRAID Firmware Interface(MFI) command to read device
+> control information in 'megasas_ctrl_get_info'.
+> 
+> A privileged user inside guest could use this flaw to leak host memory bytes.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1343909
+> https://lists.gnu.org/archive/html/qemu-devel/2016-06/msg01969.html
+> http://git.qemu.org/?p=qemu.git;a=commit;h=844864fbae66935951529408831c2f22367a57b6
+
+>> While reading information via 'megasas_ctrl_get_info' routine,
+>> a local bios version buffer isn't null terminated. Add the
+>> terminating null byte to avoid any OOB access.
+
+Use CVE-2016-5337.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iIoEARYIADIWIQSjzJyHC50xCrrUzy9RcisI/kdFogUCZwEIBBQcc2ltb25Aam9z
-ZWZzc29uLm9yZwAKCRBRcisI/kdFokq+AQDT4HL9/7BRC08371DfwGK72fHaPys1
-la4lI87RC0npFAEAsmdl0pvyi7i7zVRFY1oKreXwPXxgsQ3u57hM8wwwdAs=
-=qnnc
+iQIcBAEBCAAGBQJXWIM7AAoJEHb/MwWLVhi2Xf4P/Ahd+5miydBOK6lpzPz8rCki
+yO1bf5RBSrxCs8mupwxK1jI8YgohSOwaeYrACwDeNTHnzJD7uc6MwvhWYvuMnv8D
+K///kKuhocZD8A1Ol5KSHxul/ukNv1+jMV+XhQZvHZh/qHFApCeJAldAvPh3tqrT
+Qt+8vCqoIQR14IbQMqLuC7peqBPOU9PuXv9xA3FYBxomlDCl+B3mfptLMuBCQ+hW
+EDTea9jmA6M5rzDY23/iWyauUgW65+ze2Cx6Y8+xtJbAsBgzJl66iJWKmhZ5xvhm
+qn7GWvN9YboqR+819cwmAHCDbPrE4UNfbst63W51epIj7eO5NQSVWb3INpV0rR8B
+P64vpoOdZ+C9Ur+IH3bSypGXVAa9E2caT5Wn/LLnumxyDRB+zuQcmXikGe5clROV
+rdA8Nq86HQEp+uax4j1KCjSJxeMWJ0C25QsNXVO5GZDBpJ7JAtpM0MSp1rh0KWPM
+jqHv24YdWfq1SO/6XmVIv8yhJfCjOiXRgiC8fvb9y92n2UgRf4Lp88BCYrl6FU1x
+vSph/1nqbl8WJqqRR3BYNCLaTEZUtuA6nxll6FttaGi/icWW6MB+B1QL4jQ1d2y3
+5tIvvUD+NgCsfGZAEq63Qi4H+XlG8DdIAADKa1mXSNp0ZUAivNBgnH4SdUIKkT0v
+5JkP8v9qRFtvQv9gceVV
+=Up/J
 -----END PGP SIGNATURE-----
---=-=-=--
