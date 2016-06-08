@@ -1,42 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/15
-Message-ID: <20160115215828.GI238@oevtugenva.nrevsny.pk>
-Date: Fri, 15 Jan 2016 16:58:28 -0500
-From: Rich Felker <dalias@...c.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/08/2
+Message-ID: <20160608085431.GA4278@openwall.com>
+Date: Wed, 8 Jun 2016 11:54:31 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
+Subject: CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 15, 2016 at 01:56:33PM +0100, Yann Droneaud wrote:
-> Hi,
-> 
-> Le vendredi 15 janvier 2016 à 12:06 +0100, Florian Weimer a écrit :
-> > On 01/14/2016 06:13 PM, Qualys Security Advisory wrote:
-> > > Internal stdio buffering is the most severe of the three problems
-> > > discussed in this section, although GNU/Linux is not affected
-> > > because the glibc mmap()s and munmap()s (and therefore cleanses)
-> > > stdio buffers.
-> > 
-> > This will change in glibc 2.23, stdio will use regular malloc and
-> > free for its buffers.  I did not expect this change to have security
-> > implications.  Considering that the actual bug lies elsewhere, and
-> > stdio usage is based on copying out of the buffer (so leaks can still
-> > happen elsewhere), I do not wish to revert this change.
-> > 
-> 
-> Would setvbuf(stream, NULL, _IONBF, 0); be used to disable buffer
-> before reading/writting sensible data to a stream ?
+Hi,
 
-Yes. Or preferably you could provide a custom buffer pointer for the
-stdio FILE to use and clear it safely yourself after calling fclose.
+Just off Twitter:
 
-> What about a buffering flag (_IOSBF) that would enable "secure" 
-> handling of the buffer, that is, on fclose() and fflush(), write
-> back and cleanse buffer on output stream, cleanse buffer on input
-> stream ?
+<mjos_crypto> Out today: This is the OpenSSL side-channel vulnerability I mentioned last week; now on ePrint. Also CVE-2016-2178. http://eprint.iacr.org/2016/594
+<@mjos_crypto> @mjos_crypto Currently unfixed in essentially all distros.
+<mjos_crypto> Note that CVE-2016-2178 / http://eprint.iacr.org/2016/594.pdf most severely actually impacts OpenSSH, which uses the OpenSSL library.
+<mjos_crypto> Cesar's CVE-2016-2178 patch for the OpenSSL library from Monday. https://git.openssl.org/?p=openssl.git;a=commit;h=399944622df7bd81af62e67ea967c470534090e2
 
-This sounds undesirable when there is already a portable fix (above).
-There are also some issues with compatibility for such a feature
-between versions and what symbol versioning might be needed.
+http://eprint.iacr.org/2016/594
 
-Rich
+| "Make Sure DSA Signing Exponentiations Really are Constant-Time''
+| 
+| Cesar Pereida Garca and Billy Bob Brumley and Yuval Yarom
+| 
+| Abstract: TLS and SSH are two of the most commonly used protocols for securing Internet traffic. Many of the implementations of these protocols rely on the cryptographic primitives provided in the OpenSSL library. In this work we disclose a vulnerability in OpenSSL, affecting all versions and forks (e.g. LibreSSL and BoringSSL) since roughly October 2005, which renders the implementation of the DSA signature scheme vulnerable to cache-based side-channel attacks. Exploiting the software defect, we demonstrate the first published cache-based key-recovery attack on these protocols: 260 SSH-2 handshakes to extract a 1024/160-bit DSA host key from an OpenSSH server, and 580 TLS 1.2 handshakes to extract a 2048/256-bit DSA key from an stunnel server. 
+| 
+| Category / Keywords: applied cryptography; digital signatures; side-channel analysis; timing attacks; cache-timing attacks; DSA; OpenSSL; CVE-2016-2178
+| 
+| Date: received 6 Jun 2016, last revised 7 Jun 2016
+
+https://git.openssl.org/?p=openssl.git;a=commit;h=399944622df7bd81af62e67ea967c470534090e2
+
+| author	Cesar Pereida
+| 	Mon, 23 May 2016 12:45:25 +0300 (12:45 +0300)
+| committer	Matt Caswell
+| 	Mon, 6 Jun 2016 13:08:15 +0300 (11:08 +0100)
+
+| Fix DSA, preserve BN_FLG_CONSTTIME
+| 
+| Operations in the DSA signing algorithm should run in constant time in
+| order to avoid side channel attacks. A flaw in the OpenSSL DSA
+| implementation means that a non-constant time codepath is followed for
+| certain operations. This has been demonstrated through a cache-timing
+| attack to be sufficient for an attacker to recover the private DSA key.
+| 
+| CVE-2016-2178
+
+Alexander
