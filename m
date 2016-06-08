@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1862" "Wednesday" "14" "September" "2016" "15:37:29" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20160914223729.GL25324@hunt>" "46" "Re: [oss-security] Re: ADOdb PDO driver: incorrect quoting may allow SQL injection" "^Date:" nil nil "9" "2016091422:37:29" "[oss-security] Re: ADOdb PDO driver: incorrect quoting may allow SQL injection" (number mark "        seth.arnold@ Sep 14   46/1862  " thread-indent "\"Re: [oss-security] Re: ADOdb PDO driver: incorrect quoting may allow SQL injection\"\n") "<CANO=Ty3Ru9FEkXs93PY5KgQbT2Gru6S0HHGfciUgZwuXVLy=aA@mail.gmail.com>" ("<nqpirj$fvm$1@blaine.gmane.org>" "<nraqt1$a2m$1@blaine.gmane.org>" "<8b02b17e-cc12-5145-9957-381c583aa76c-IBi9RG/b67k@public.gmane.org>" "<1797555053.495533413.810249.dregad-mantisbt.org@news.gmane.org>" "<20160914092135.GA16607@inutil.org>" "<CANO=Ty3Ru9FEkXs93PY5KgQbT2Gru6S0HHGfciUgZwuXVLy=aA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["541" "Wednesday" "8" "June" "2016" "22:10:03" "+0200" "Roman Drahtmueller" "draht@schaltsekun.de" "<7067CF16-30A5-4EE8-B2C0-18262D355B14@schaltsekun.de>" "16" "Re: [oss-security] CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations" "^Date:" nil nil "6" "2016060820:10:03" "[oss-security] CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations" (number mark "        draht@schalt Jun  8   16/541   " thread-indent "\"Re: [oss-security] CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations\"\n") "<4CC7C148-7BCC-4D6D-88D0-ED2BADD124BF@schaltsekun.de>" ("<20160608085431.GA4278@openwall.com>" "<CAOTQaXHLe6ST5SOQhH_hig1KD9UyhzMUvr4iXiJz5szm5hsUow@mail.gmail.com>" "<CAFRnB2UaY54U2VdmXR=dRSU7HtjgfjQMgOZ0w55jL4AYTng5oA@mail.gmail.com>" "<CAOTQaXH7_L469A-AWkMUDYe_ByetxuHdWHnhpTaXyGGaAOhcoA@mail.gmail.com>" "<20160608153856.GH3711@suse.de>" "<4CC7C148-7BCC-4D6D-88D0-ED2BADD124BF@schaltsekun.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 25758 invoked by uid 550); 14 Sep 2016 22:37:43 -0000
+Received: (qmail 21891 invoked by uid 550); 8 Jun 2016 20:10:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +11,33 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25739 invoked from network); 14 Sep 2016 22:37:43 -0000
-Message-ID: <20160914223729.GL25324@hunt>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <nqpirj$fvm$1@blaine.gmane.org>
- <nraqt1$a2m$1@blaine.gmane.org>
- <8b02b17e-cc12-5145-9957-381c583aa76c-IBi9RG/b67k@public.gmane.org>
- <1797555053.495533413.810249.dregad-mantisbt.org@news.gmane.org>
- <20160914092135.GA16607@inutil.org>
- <CANO=Ty3Ru9FEkXs93PY5KgQbT2Gru6S0HHGfciUgZwuXVLy=aA@mail.gmail.com>
+Received: (qmail 21871 invoked from network); 8 Jun 2016 20:10:26 -0000
+In-Reply-To: <4CC7C148-7BCC-4D6D-88D0-ED2BADD124BF@schaltsekun.de>
+References: <20160608085431.GA4278@openwall.com> <CAOTQaXHLe6ST5SOQhH_hig1KD9UyhzMUvr4iXiJz5szm5hsUow@mail.gmail.com> <CAFRnB2UaY54U2VdmXR=dRSU7HtjgfjQMgOZ0w55jL4AYTng5oA@mail.gmail.com> <CAOTQaXH7_L469A-AWkMUDYe_ByetxuHdWHnhpTaXyGGaAOhcoA@mail.gmail.com> <20160608153856.GH3711@suse.de> <4CC7C148-7BCC-4D6D-88D0-ED2BADD124BF@schaltsekun.de>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ai3I8gwHc37+ASRI"
-Content-Disposition: inline
-In-Reply-To: <CANO=Ty3Ru9FEkXs93PY5KgQbT2Gru6S0HHGfciUgZwuXVLy=aA@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Date: Wed, 14 Sep 2016 15:37:29 -0700
-From: Seth Arnold <seth.arnold@canonical.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+ charset=UTF-8
+Message-ID: <7067CF16-30A5-4EE8-B2C0-18262D355B14@schaltsekun.de>
+Date: Wed, 08 Jun 2016 22:10:03 +0200
+From: Roman Drahtmueller <draht@schaltsekun.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: ADOdb PDO driver: incorrect quoting may allow
- SQL injection
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations
+To: oss-security@lists.openwall.com,Marcus Meissner <meissner@suse.de>
 
---ai3I8gwHc37+ASRI
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-On Wed, Sep 14, 2016 at 10:22:58AM -0600, Kurt Seifried wrote:
-> Ideally people should get CVEs and then post to oss-security with the
-> information and the CVE. A lot of people consume the list data and the
-> current method means that people end up searching their DBs, making sure
-> it's new, then entering it, then updating it with a CVE. If people got CVEs
-> first this would vastly simplify things.
+> Are we sure that a "low" rating is justified?
+> DSA is basically dead, until the constant time switch is flicked. The
+> only countermeasure so far is turning it off. 
 
-I don't like the idea of waiting on CVE assignment before posting
-information here:
+Maybe I should be a little more verbose on this:
+1) attacker recovers the DSA host key. 
+2) attacker mitm-attacks client connections to the server and recovers the user's private key by exploiting the vulnerable openssl on the client side 
+3) ...
 
-- MITRE's team does impressive work, but some assignments take
-  significantly longer than others; a request here, publicly, allows users
-  to mitigate or fix before a number is known.
+The same principles apply when the computational burden is reversed for client auth, aren't they?
 
-- In cases when there are no fixes yet, or incomplete fixes, it may not be
-  known how many CVEs are even needed -- making the issues widely known
-  earlier increases the chances of someone preparing patches, to clarify
-  how many issues existed.
+R.
 
-- With MITRE's reduced scope of CVE coverage, there's the risk that
-  software that's important to list members or the wider computing public
-  may not get a number at all. Not getting a number assigned may give the
-  impression that the issue isn't important.
-
-Thanks
-
---ai3I8gwHc37+ASRI
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJX2dEpAAoJEPMhclmdjS6XWskIAL0qTPpf3ig2Clm1qJHp8WhI
-yPNWEuPU7u4T7kKs084DQg6NKGIGaTCP5dLSDXTQ323uAm/S/wnd7hpPhZnPvDoV
-4KDntO9R92GpwhpHWC9T6v5Uqmvl/vQcw+IZebRxWlSjgNwxkatwVGkJOR/KQ9VV
-iO96Uxw7+pRNyVPCSEbq6VkRRNhmq+2j0csaWySC/kAeKY/jhlxHbFYzc3U5I3ZK
-9qQA7kYB+I4e5wyGMlL1y9X6aoJywu99mZ/9TQEu7gqOETpv2cDc/1J3SYoICw0f
-BuoOj6rLXSmFyeugflmhXyck9s4/onUAJlE2K3abZNU/Sc8GadVBEt4X6zI3Xn4=
-=deoz
------END PGP SIGNATURE-----
-
---ai3I8gwHc37+ASRI--
+-- 
+schaltsekun.de
