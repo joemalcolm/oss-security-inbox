@@ -1,57 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/11/11
-Message-ID: <0424dad03c6545cfb4427d45c28d12ac@imshyb02.MITRE.ORG>
-Date: Fri, 11 Nov 2016 13:46:47 -0500
-From: <cve-assign@...re.org>
-To: <idler1984@...il.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <anarcheuz@...il.com>
-Subject: Re: CVE Request - Samsung Exynos fimg2d Multiple Issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/08/15
+Message-ID: <4d58ebad-f2d5-2078-3846-f44bfde65641@mozilla.com>
+Date: Wed, 8 Jun 2016 14:10:18 -0700
+From: Daniel Veditz <dveditz@...illa.com>
+To: product-security@...le.com, secure@...rosoft.com, Michal Zalewski <lcamtuf@...gle.com>, parisa.tabriz@...il.com, oss-security@...ts.openwall.com, psirt@...be.com
+Subject: Excessive resource consumption (DOS) in JPEG
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Mozilla wishes to draw the attention of list participants who process
+JPEG images to the following recently-discovered excessive resource
+consumption issues with the JPEG standard, which affect multiple
+implementations:
 
-> Samsung Exynos fimg2d driver for Android:
-> 
-> http://security.samsungmobile.com/smrupdate.html#SMR-NOV-2016
+https://docs.google.com/document/d/17exDyGr2txYJ5Ntv4Q8B3MnLSvbcSfs5dje_xuDZPNA/edit
 
-> SVE-2016-6736: Kernel Crash on /dev/fimg2d ioctl command
-> Affected versions: All devices with Exynos 5433/54xx/7420 chipsets
-> The fimg2d which is one of the graphic devices for Exynos chipsets
-> doesn.t have exception control routines to handle unexpected commands
-> and it can lead to kernel panic.
-> The patch prevents kernel panic by ignoring inappropriate commands at the state.
+We advise you to take appropriate mitigatory measures.
 
-Use CVE-2016-9278.
+-Dan Veditz
+Mozilla Security Team
 
 
-> SVE-2016-6853: Use After Free in /dev/fimg2d
-> Affected versions: All devices with Exynos 5433/54xx/7420 chipsets
-> A use-after-free vulnerability in fimg2d allows attackers to gain
-> access to unauthorized data.
-> The patch with error handling was applied.
 
-Use CVE-2016-9279.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYJhG5AAoJEHb/MwWLVhi23s0P/0n2+8vVYSofET7+hqwCSpWU
-6AN45eYz6KoMwMlitjcOC6XYveqTE4L16qQyBPGQJZivKJJjOY+Uv768GUv5dGQB
-gtQ8cIEF2o2NdO2FhSwmOz91J7DiLzqU5T7OpixFtELMIGQYJmhR1e8VcgYA4WWn
-+MsC1MDIQfCZGaUHX8h9b9ySWkOsQqecJWrRbI6YnAWm2wNZedrUgySOqbYcoi3n
-VRZ9XY2B4zRCLXUSrWUwvaeFS1sIf+XK5yhbiF65ZS6h4o2qJg2vHxmn/IXrzZ3V
-hXBxXtD8GBi4dG+Xb0HIVDS+SqakGSSJ7wXItLNYSXXT0Zp//SJa/6/fR01JBY54
-5/4xVpnjofCssnil7S8ECvAQ8+sYKo3eZbueZbAZzvd0z+w6hpOMFab9bTQCr9IP
-Qmc25+xtbRVMhw6Om2k4LfuC2Pu7eOduBpUp9bvSUSmB3tkjoyoND3+PEm/0LWR/
-i36ZjShbvHFpQ4oV0mPoZuTeTb1JUfm3GZElzCSLwgL0SQYWjM2gh/7/ClGxEu66
-204gBBOzWJW0bmMfpV4AYxqhXu65TmDuEecppmTpeeak43SOerCJAJxvB+Hnng3W
-gxsnjPCkGaeCxszyLDAMt44DbVv4Y9KZe9wR9KaVQwrpznBVyRUvHC5jR2nmIcn5
-sAjbZqWX9mmuESv5Bk1k
-=cN7g
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (205 bytes)
