@@ -1,4 +1,9 @@
-Received: (qmail 30142 invoked by uid 550); 12 Jan 2026 15:01:18 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["293" "Thursday" "9" "June" "2016" "17:06:29" "+0200" "Marcus Meissner" "meissner@suse.de" "<20160609150629.GC7655@suse.de>" "9" "[oss-security] CVE Request: haproxy remote denial of service via reqdeny" nil nil nil "6" "2016060915:06:29" "[oss-security] CVE Request: haproxy remote denial of service via reqdeny" (number mark "U       meissner@sus Jun  9    9/293   " thread-indent "\"[oss-security] CVE Request: haproxy remote denial of service via reqdeny\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5459 invoked by uid 550); 9 Jun 2016 15:06:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,42 +12,28 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 19639 invoked from network); 12 Jan 2026 14:26:09 -0000
-Date: Mon, 12 Jan 2026 15:25:59 +0100
-From: Vincent Lefevre <vincent@vinc17.net>
-To: oss-security@lists.openwall.com
-Message-ID: <20260112142559.GA974242@joooj.vinc17.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <f6825a3e-06ba-4672-afc1-171c7ae48d9d@oracle.com>
- <56e7f252-59a4-447c-b8ee-29e647c6bc3b@gmail.com>
+Received: (qmail 5440 invoked from network); 9 Jun 2016 15:06:41 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Thu, 9 Jun 2016 17:06:29 +0200
+From: Marcus Meissner <meissner@suse.de>
+To: OSS Security List <oss-security@lists.openwall.com>,
+	cve-assign@mitre.org
+Message-ID: <20160609150629.GC7655@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <56e7f252-59a4-447c-b8ee-29e647c6bc3b@gmail.com>
-X-Mailer-Info: https://www.vinc17.net/mutt/
-User-Agent: Mutt/2.2.16+96 (33c58fb2) vl-169878 (2026-01-07)
-Subject: Re: [oss-security] Null Pointer Dereference in HarfBuzz
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Subject: [oss-security] CVE Request: haproxy remote denial of service via reqdeny
 
-On 2026-01-11 21:09:55 -0600, Jacob Bachmeyer wrote:
-> Aside from the dubious patch, this is a good example of a legitimate bug but
-> bogus CVE:  how exactly does an attacker trigger this without either having
-> *already* completed a DoS attack (consuming all memory) or achieved
-> arbitrary code execution (altering the allocator to return NULL even though
-> memory is available)?
-> 
-> In short, this is a crash bug, but not a security issue.  This is different
-> from (for example) a parser bug that results in NULL being dereferenced if
-> crafted input is processed.
+Hi,
 
-Note that according to the C standard, dereferencing a null pointer
-is undefined behavior, not necessarily a crash. This means that
-due to compiler optimizations, unexpected code might be run with
-uncontrollable behavior. And it may be difficult to prove that the
-code is actually safe despite the optimizations.
+This is a remote denial of service against haproxy (uncontrollable crash).
 
--- 
-Vincent Lefèvre <vincent@vinc17.net> - Web: <https://www.vinc17.net/>
-100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
-Work: CR INRIA - computer arithmetic / Pascaline project (LIP, ENS-Lyon)
+http://git.haproxy.org/?p=haproxy-1.6.git;a=commit;h=60f01f8c89e4fb2723d5a9f2046286e699567e0b
+
+The problem was apparently introduced in haproxy 1.6.0, and is fixed in git (which will become 1.6.6).
+
+Ciao, Marcus
