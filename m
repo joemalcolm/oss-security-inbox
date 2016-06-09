@@ -1,56 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/31/2
-Message-ID: <20161231154054.abrg2lwgdfj3354p@eldamar.local>
-Date: Sat, 31 Dec 2016 16:40:54 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: daved@...siol.usyd.edu.au, Jean-Francois Dockes <jf@...kes.org>, Willi Mann <willi@...ian.org>, security@...ian.org
-Subject: CVE Request: UnRTF: stack-based buffer overflows in cmd_* functions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/09/6
+Message-Id: <20160609153207.6011C3AE009@smtpvbsrv1.mitre.org>
+Date: Thu,  9 Jun 2016 11:32:07 -0400 (EDT)
+From: cve-assign@...re.org
+To: meissner@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: haproxy remote denial of service via reqdeny
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-As reported by "Skylake" in the Debian bugtracker[1], UnRTF is prone
-to stack-based buffer overflows in various cmd_* functions.
-
-> I've found a Stack-based buffer overflow in unrtf 0.21.9, which
-> affects three functions including: cmd_expand, cmd_emboss and
-> cmd_engrave.
+> This is a remote denial of service against haproxy (uncontrollable crash).
 > 
-> # convert.c
-> 
-> static int
-> cmd_expand (Word *w, int align, char has_param, int param) {
-> char str[10];
-> if (has_param) {
-> sprintf(str, "%d", param/4); // Overflow, 9-digit negative value triggers the bug
-> if (!param)
-> attr_pop(ATTR_EXPAND);
-> else
-> attr_push(ATTR_EXPAND, str);
-> }
-> return FALSE;
-> }
-> 
-> Apparently writing a negative integer to the buffer can trigger the
-> overflow (Minus sign needs an extra byte).
-> 
-> * How to trigger the bug *
-> 
-> $ echo "\expnd-400000000" > poc
-> $ unrtf poc
+> http://git.haproxy.org/?p=haproxy-1.6.git;a=commit;h=60f01f8c89e4fb2723d5a9f2046286e699567e0b
 
-A preliminary patch can be found in the Debian bugtracker, but it is
-not yet finalized.
+>> is filled only
+>> by actions "http-request deny" and "http-request tarpit". It's then used
+>> in the deny code path to emit the proper error message, but is used
+>> uninitialized when the deny comes from a "reqdeny" rule, causing random
+>> behaviours ranging from returning a 200, an empty response, or crashing
+>> the process.
 
-Could you assign (a?) CVE as needed? Does one CVE suffice here, since
-same class of issue in various cmd_* functions from one reporter?
-Whilest, at least in Debian, unrtf is compiled with FORTIFY_SOURCE=2
-and the buffer overflows are detected, at least if any exposed
-application uses unrtf to process untrusted input, this might lead to
-a denial-of-service.
+Use CVE-2016-5360.
 
- [1] https://bugs.debian.org/849705
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Regards,
-Salvatore
+iQIcBAEBCAAGBQJXWYtiAAoJEHb/MwWLVhi2jiYP/15CBap1NSe+nJG8HRO/Kxwe
+hIxfrw/B8r0HtM6+nB0rfkXhQGbzIhSe47P0IDHHHyHI97EiX3cOoQcxieMEcOQ1
+UgXb+IOvYnXNxW2vOs4OWCQi1DRLjSwaIPLvAtGdukLFG1BlefehXmuzAW0A+jpB
+gzfgBgqYmvKfnnUScBGb+01SYXf1l3QgIBQ0tcyAADAbK2ogQxjWN+KpD3BGu9yL
+fAQjLk/qpHoz79G/GNb9KDSYYlqipr07mLsmraa0tVzav3yoR2w92avpetlPV1Eq
+dFdomo0zCSO3eZ1yl1wg1uIPE0PVYw2JmWu4LLpAfTSSFbEKorcSANGS9zbLBGJi
+YLSjCqoLctPCF/6jaHBZV593fNGgFlg6DnBTeCGlSImH9ODmGlzOiLwF5rsrffSK
+IH+Odqc6q1iJdagxcgPFbNIx8S/pb7ZfScUd5ubOFKSsIEi3UrWxREsa1PB6NIeb
+7z2J5gcaftc6lUn1+pH3+nrzPLQ6JbvydXONxWPlxt4oztK94nzHOCnbs2cOhGfM
+IwSlr8L1nI5TWvLkvwabKtYPeLxGVECHQ5akG2MTPzez8RBx1Gu6XUrwU0Wlc/xi
+ctj0Tp2FV1/qnk3OEubzZ7p0iva4VPWx1rkZdcX/V0Mg+8UvSu+IklCm+1uJy3yk
+LRnf/DS6Fuq2/DbEK9kC
+=XzKt
+-----END PGP SIGNATURE-----
