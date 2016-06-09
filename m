@@ -1,53 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/20/2
-Message-Id: <20160220152304.552F06C07A1@smtpvmsrv1.mitre.org>
-Date: Sat, 20 Feb 2016 10:23:04 -0500 (EST)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE for nodejs hawk
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/09/1
+Message-ID: <20160609080613.GA3694@suse.de>
+Date: Thu, 9 Jun 2016 10:06:13 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org
+Subject: CVE Request: ruby openssl hostname verification issue
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> Does Mitre know about this?
+This probably warrants a CVE:
 
-Thank you for this report. The MITRE CVE team had not previously been
-informed of that vulnerability. As mentioned in the
-http://www.openwall.com/lists/oss-security/2016/01/12/2 post,
-"CVE-PENDING" does not imply an earlier request.
+https://github.com/ruby/openssl/issues/8
 
-> https://nodesecurity.io/advisories/77
-> Regular Expression Denial of Service
+quoting:
 
-> https://github.com/hueniverse/hawk/issues/168
-> Long headers or uris can cause minor DoS
+Even if OpenSSL::SSL::VERIFY_PEER is configured, I/O is allowed with a
+remote server before the subject has been verified. VERIFY_PEER only
+checks the cert chain is rooted in the local truststore. It does not
+check if the subject is valid in and of itself.
 
-> https://github.com/hueniverse/hawk/commit/0833f99ba64558525995a7e21d4093da1f3e15fa
-> // Limit the length of uris and headers to avoid a DoS attack on string matching
+My understanding is the ssl_socket.post_connection_check(hostname) method
+must be called to ensure the subject is correctly verified. However,
+communication is allowed to remote services without verifying the subject.
 
-Use CVE-2016-2515.
+I would suggest throwing an exception if VERIFY_PEER is configured and
+I/O is attempted without first calling post_connection_check
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+It would also be nice if this all happened automatically simply by
+passing hostname into OpenSSL::SSL::SSLSocket (which AFAICT only affects
+SNI presently, and not subject verification)
 
-iQIcBAEBCAAGBQJWyIRZAAoJEL54rhJi8gl5WhMP/193koIE+vRIVMuT+2yRfXhL
-u+ffJKUvx/K0cSY2AaB1K+T77r6OmOCKgDrwPN2d1gaZxuAA/gX3GK42Lo7Mf6Vp
-uVcFArlOtNTghNxlWZVP5/vjAkG7ykgrmgGZOQFUjH9KMN7xS6ocrrR+SuHVthFU
-p+jt1Qun+c+1F5WEWc35XV9f3XSKmcf/Cw0u7mJDXK9paWY8wDRfHhDNHQnmXB/i
-nEgiI+ShdjksLhsO5GWTBQYEEiRArMKYYIKNA2RXfQcANAwU5x+AYyLoYqjGkCms
-ABhs66NBYhLobKq92Cyz6h8urkyydLcvHnXfcwoUW1Cce+6QwmlFgnI5CuT3FO4P
-CuBFtwF3zNlbDP8EnjOLJDu/qQZqnoskrBD84c+f8VsKyZloS9CBhnjZzmpmvl+x
-wjH2/pJqhgDdlRbZKlPam/JhDVLc0cZlhySb3NZguvzeKt0Gj7NOyNH7du7p8TA0
-yQPlX+MA/R5zvrWmX7cR+hhmITOIwbdX91fMn/+y293E1WKcKGEuxNtCYEmvBDET
-RZPleVe6xxUdzOYkbSDTytuEQcBTkU1Arnu8clNXs98mC5ujJbicAQDPsIEvT95e
-MR9b/6khL9z/lAYHyOC2AfxJYvexztRi6SzIAG6LX6JGFUB7YIcUoYDydrH4JyYg
-7VRvjxDTRn8RUxhMWULb
-=IyjB
------END PGP SIGNATURE-----
+----
+
+Ciao, Marcus
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
