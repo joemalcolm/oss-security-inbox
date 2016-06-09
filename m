@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2547" "Monday" "31" "December" "2018" "20:16:42" "+0100" "Vincent Lefevre" "vincent@vinc17.net" "<20181231191642.GB7238@zira.vinc17.org>" "52" "[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)" "^Cc:" nil nil "12" "2018123119:16:42" "[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)" (number mark "U       vincent@vinc Dec 31   52/2547  " thread-indent "\"[oss-security] Re: Asserts considered harmful (or GMP spills its sensitive information)\"\n") "<CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>" ("<CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4700" "Thursday" "9" "June" "2016" "13:52:49" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160609175249.85CE16C03BF@smtpvmsrv1.mitre.org>" "103" "[oss-security] Re: CVE Request: ruby openssl hostname verification issue" nil nil nil "6" "2016060917:52:49" "[oss-security] Re: CVE Request: ruby openssl hostname verification issue" (number mark "U       cve-assign@m Jun  9  103/4700  " thread-indent "\"[oss-security] Re: CVE Request: ruby openssl hostname verification issue\"\n") "<20160609080613.GA3694@suse.de>" ("<20160609080613.GA3694@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3753 invoked by uid 550); 31 Dec 2018 19:58:29 -0000
+Received: (qmail 21975 invoked by uid 550); 9 Jun 2016 17:53:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,75 +11,116 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28242 invoked from network); 31 Dec 2018 19:16:59 -0000
-Message-ID: <20181231191642.GB7238@zira.vinc17.org>
-Mail-Followup-To: Jeffrey Walton <noloader@gmail.com>,
-	oss-security@lists.openwall.com, gmp-bugs@gmplib.org
-References: <CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAH8yC8m90KssanbHt+YmVt7iLOiwWHASDqRYW5TQGeNV2zWXDw@mail.gmail.com>
-X-Mailer-Info: https://www.vinc17.net/mutt/
-User-Agent: Mutt/1.11.1+82 (86db373c) vl-114418 (2018-12-29)
-Cc: oss-security@lists.openwall.com, gmp-bugs@gmplib.org
-Date: Mon, 31 Dec 2018 20:16:42 +0100
-From: Vincent Lefevre <vincent@vinc17.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Asserts considered harmful (or GMP spills its sensitive
- information)
-To: Jeffrey Walton <noloader@gmail.com>
+Received: (qmail 21946 invoked from network); 9 Jun 2016 17:53:02 -0000
+From: cve-assign@mitre.org
+To: meissner@suse.de
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20160609080613.GA3694@suse.de>
+Message-Id: <20160609175249.85CE16C03BF@smtpvmsrv1.mitre.org>
+Date: Thu,  9 Jun 2016 13:52:49 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: ruby openssl hostname verification issue
 
-On 2018-12-31 13:03:27 -0500, Jeffrey Walton wrote:
-> The GMP library uses asserts to crash a program at runtime when
-> presented with data it did not expect. The library also ignores user
-> requests to remove asserts using Posix's -DNDEBUG. Posix asserts are a
-> deugging aide intended for developement, and using them in production
-> software ranges from questionable to insecure.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-That's much better than letting the program run erratically, with
-possible memory corruption and/or sensitive information leakage
-to unauthorized users. You'd better fix bugs in your program.
-
-> Many programs can safely use assert to crash a program at runtime.
-> However, the prequisite is, the program cannot handle sensitive
-> information like user passwords, user keys or sensitive documents.
+> This probably warrants a CVE:
 > 
-> High integrity software, like GMP and Nettle, cannot safely use an
-> assert to crash a program. To understand why the data flow must be
-> examined. First, when an assert fires, a SIGABRT is eventually sent to
-> the program on Unix and Linux
-> (http://pubs.opengroup.org/onlinepubs/009695399/functions/assert.html).
-> 
-> Second, the SIGABRT terminates the process and can write a core file.
+> https://github.com/ruby/openssl/issues/8
 
-That's the default behavior, but you can trap SIGABRT if you want.
-Of course, there is no guarantee because the memory may already be
-in an inconsistent state.
+We are not sure exactly what issue you believe should have a CVE ID,
+There seem to be three issues that are somewhat related. Our short
+answer is "probably there shouldn't be a CVE ID - the main concern was
+that the documentation needed to be improved, and the vendor instead
+decided to change the API semantics and break one (rare) use case."
 
-> This is the first point of unwanted data egress. Sensitive information
-> like user passwords and keys can be written to the filesystem
-> unprotected.
+Here's some discussion of the three issues.
 
-This can occur with any program, even not using asserts, e.g. due to
-a segmentation fault (which may happen as a consequence of not using
-asserts, with possibly worse consequences).
+> VERIFY_PEER only checks the cert chain is rooted in the local
+> truststore. It does not check if the subject is valid in and of
+> itself.
 
-If you don't want a core file, then you can instruct the kernel not
-to write a core file. See getrlimit.
+One might argue that this behavior should have a CVE ID because it is
+not properly documented. Some users might have guessed that
+VERIFY_PEER did validate the subject, because it is very rare for
+anyone to want to establish only that a certificate is rooted in the
+local truststore, with any arbitrary subject.
 
-> Third, the dump is sometimes sent to an error reporting service like
-> Apple Crash Report, Android Crash Report, Ubuntu Apport, and Windows
-> Error Reporting. This is the second point of unwanted data egress.
-> Sensitive information can be sent to the error reporting service. The
-> platform provider like Apple, Google, Microsoft and Ubuntu gain access
-> to the sensitive information, in addition to the developer.
+Other products, such as libcurl, have a similarly named option with
+the same behavior, but with explicit documentation, e.g.,
 
-If you don't like them, do not use these services. Not using asserts
-can also yield a crash, which will have the same consequences.
+  https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYPEER.html
+  "Authenticating the certificate is not enough to be sure about the
+  server. You typically also want to ensure that the server is the
+  server you mean to be talking to. Use CURLOPT_SSL_VERIFYHOST for
+  that."
 
--- 
-Vincent Lefèvre <vincent@vinc17.net> - Web: <https://www.vinc17.net/>
-100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
-Work: CR INRIA - computer arithmetic / AriC project (LIP, ENS-Lyon)
+However, there apparently isn't an analogous OpenSSL::SSL::VERIFY_HOST
+for Ruby.
+
+Still, our initial thought is that underdocumenting
+OpenSSL::SSL::VERIFY_PEER, by itself, should not have a CVE ID. Users
+may be able to realize, possibly from their knowledge of libcurl, that
+an option called VERIFY_PEER or VERIFYPEER is typically insufficient.
+
+
+> My understanding is the ssl_socket.post_connection_check(hostname) method
+> must be called to ensure the subject is correctly verified. However,
+> communication is allowed to remote services without verifying the subject.
+
+Here, maybe the problem is a race condition. In other words, there is
+inherently a time window in which communication can occur with an
+unexpected host. Possibly, in most common scenarios in which the
+application author did understand the post_connection_check
+documentation, nothing security-relevant happens in this time window,
+e.g., a client would not be sending requests to a server before the
+post_connection_check step. However, there may be uncommon scenarios
+where something security-relevant can happen in this time window.
+
+Do you believe that these uncommon scenarios actually occur, and
+therefore this race condition should have a CVE ID?
+
+
+> I would suggest throwing an exception if VERIFY_PEER is configured and
+> I/O is attempted without first calling post_connection_check
+
+Here, you seem to be suggesting that VERIFY_PEER is never sufficient
+in any scenario. This seems to be equivalent to suggesting that the
+libcurl choice of using CURLOPT_SSL_VERIFYPEER without
+CURLOPT_SSL_VERIFYHOST is always wrong, and should not even be
+possible in the libcurl API.
+
+Do you believe that there should be a CVE ID, in general, for "the
+product needlessly offers a way to skip subject validation"?
+
+(We don't know all of the use cases for skipping subject validation.
+We think that it is typically useful only within isolated networks.
+For example, consider a scenario where the local truststore recognizes
+exactly one CA, this CA has only ever issued one certificate, and the
+certificate happens to have an arbitrary subject, but is intentionally
+used on multiple intranet HTTPS servers that are trusted by the same
+intranet clients. Here, subject validation doesn't really help anyone,
+and mandating subject validation would break this use case.)
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXWawKAAoJEHb/MwWLVhi2tgkP/2xjIkd96YWn0dYlo0XWD00s
+9rdCsybI7FffGljxN0eioA33cAGbZ7Xw6OHjQMfjuV6V9eprWwjFQvRKmO/5nJcI
+Wqw24KonYbeoNwYZVMcESfKMefPitEUFf2FYs1blo4PoEJx+3bOUvpnA2576f11k
+f5mBX3GIj5SoRzxr5f3gQfVW/CZfvJgeVEmb7g/I868kXOeNPR78/OIGogj96s9v
+4bOFg7nAd20uHTKScKl82Gh5VcuL4ZWaKJhVGmdC6AH/7YTLIWbFNwKWv/LhZTzl
+YxBl/FfZG6M1glRpqDUnIEGj0EEtA0EyTUxrtNrL0nVxxh6ZyowEAH8wlNsFuwuU
+KsKC7JJsrPtG+SxMXwdc10jDvUufS1XPPvm1KVOEy/MRRLWYcxlPKOGM3SD/Pchw
+qijozFYx59ORKg47NUVKOzvahan1GLoDXKaxXQZzN7ll6PwiKsFpEGBPbNQEsuBq
+gUMuws4UC1g5yD2p0RreC2X4S0EXA0MbdGo0ovIYH/C1uhJdooIQt6UvajVa9X3X
+0NFnvpJuj3q+dxWD8H0BwVvg9CQTeFslD04ZMJND1TeXJWYBMElIVgDc8Bc0IYzw
+SRjEyqX5GK9qXiR/VOW+XhHzcRkY8Rd6n+M8timCOjqIGWu9bOhVLtKovbnudM4L
+9tJEbPydeJGuvSmiEkTS
+=KqPE
+-----END PGP SIGNATURE-----
