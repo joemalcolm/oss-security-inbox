@@ -1,50 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/29/4
-Message-ID: <CAJMyd9Yje0QY+Th_QUYuO6JspRvysKqkkxtXq-xgANBASM_Nrw@mail.gmail.com>
-Date: Fri, 29 Jan 2016 14:21:01 +0000
-From: Hazel <hazel@...dlingmojo.com>
-To: oss-security@...ts.openwall.com
-Cc: pool@...ts.ntp.org, linuxbrad@...il.com, team@...urity.debian.org,  secalert <secalert@...hat.com>
-Subject: Re: shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/09/8
+Message-ID: <CAFeDd5ZMz=HYaBsFHf5kOkH99krDzFLqisDb2fztO40jNVG1Pw@mail.gmail.com>
+Date: Thu, 9 Jun 2016 23:19:38 +0300
+From: Billy Brumley <bbrumley@...il.com>
+To: Roman Drahtmueller <draht@...altsekun.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations
 Content-Type: text/plain; charset=utf-8
 
-On 27 January 2016 at 14:43, Kurt Seifried <kseifried@...hat.com> wrote:
-> On Wed, Jan 27, 2016 at 4:24 AM, Luca BRUNO <lucab@...ian.org> wrote:
-> > For oss-sec crowd: is there anything we can do to improve the situation
-> > and avoid
-> > similar cases in the future? Should crowd-sourced and fundamental services
-> > like this
-> > be encouraged to move to a stronger WoT?
+> The paper very resourceful, and thank you for sharing your thoughts
+> even beyond it!
+
+My pleasure :)
+
+> Control over CPU utilization (and thereby cache eviction) can be achieved
+> by a remote attacker: Web applications are influenced remotely by
+> definition, and they are far from slim or localized these days.
+> Keepalives allow to keep the system in a sling with predictable resource
+> utilization including cache fills, as there is not only just data stuffed
+> through some buffers.
 >
-> [...]
->
-> Sadly we can't really rely on the IoT device makers to fix this, they have
-> basically 0 incentive to prevent scanners from hitting their products
-> (they're already sold, to late for the customer to make an informed
-> decision).
+> The question remains if the deterioration of the SNR (*) leaves enough
+> resolution to be useful. This would no longer constitute a cache-based
+> attack with the terrifyingly clear signal, but the sharp edges in the
+> latency that you have demonstrated may contribute to filtering the effect
+> from the noise.
+> While the cause - non-constant-time implementation - remains.
 
-I hope you'll forgive me making a modest proposal here, but it seems
-to me that there might be an opportunity here for Linux distributions
-that are upstream of IoT vendors to modify their default configuration
-to address this.
+What you are saying is all valid on paper. But when you move to the
+uarch level, the techniques we are using are very specific --- rdtsc
+and clflush instructions, paired with targeted malicious performance
+degradation techniques. When you take away these tools, it really
+complicates things for an attacker.
 
-My somewhat off-the-cuff suggestion would be to...
+> Are the orders of magnitude in range?
 
-1. Add an *additional, secondary* IPv6 address to external interfaces that is:
--> a. generated in accordance with the IPv6 Privacy Extensions (i.e. RFC 4941)
--> b. firewalled by default against all traffic except NTP in either direction
+This is more of an interesting research question that would take maybe
+six months to definitively answer.
 
-2. Configure the NTP *client* to use this secondary address as the
-source for outgoing NTP traffic, instead of the default address?
-
-...thereby avoiding revealing the primary address of the host to
-would-be scanners?
-
-I realise that that is a rather drastic approach, and might be too
-bold a change for Debian or RHEL, but perhaps in the case of
-distributions like Raspbian which focus on IoT, it might be tenable?
-
-
-Cheers,
-
-Hazel
+BBB
