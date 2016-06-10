@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["12295" "Monday" "5" "October" "2020" "15:53:26" "-0600" "Grant Taylor" "gtaylor@tnetconsulting.net" "<51adb874-f967-5cf7-ffff-a2b871a5455b@spamtrap.tnetconsulting.net>" "252" "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" nil nil nil "10" "2020100521:53:26" "[oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" (number mark "U       gtaylor@tnet Oct  5  252/12295 " thread-indent "\"Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?\"\n") "<20201005204820.GA8410@openwall.com>" ("<CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>" "<20201005204820.GA8410@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["23072" "Friday" "10" "June" "2016" "14:46:23" "-0700" "John Johansen" "john.johansen@canonical.com" "<575B352F.9000808@canonical.com>" "499" "[oss-security] [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ" nil nil nil "6" "2016061021:46:23" "[oss-security] [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ" (number mark "U       john.johanse Jun 10  499/23072 " thread-indent "\"[oss-security] [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21900 invoked by uid 550); 6 Oct 2020 10:43:38 -0000
+Received: (qmail 20033 invoked by uid 550); 10 Jun 2016 21:46:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,282 +12,519 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21917 invoked from network); 5 Oct 2020 21:53:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=tnetconsulting.net;
-	s=2019; t=1601934813;
-	bh=o50x5yKj05iC+MWzIrHGls2lee4FfSVeuA9qA1C41ic=;
-	h=Subject:To:References:From:Message-ID:Date:User-Agent:
-	 MIME-Version:In-Reply-To:Content-Type:Cc:Content-Disposition:
-	 Content-Language:Content-Transfer-Encoding:Content-Type:Date:From:
-	 In-Reply-To:Message-ID:MIME-Version:References:Reply-To:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:Sender:Subject:To:
-	 User-Agent;
-	b=II5Fe+k58b5X9nsbo0tJ44IUUERLwETp0xNWk7o4fOhOHMgq8lMjjSggZKHVq6yEk
-	 4aQBL6FL4iwTMWPihmEAjdmLeAPfSOScPWVmFn04ZnRnzxdAvO/hJLBfBHB37Sf1nx
-	 J6WKd7o1vvSt/4aAiESrImJiR0J6cfWaWsUzQcps=
+Received: (qmail 20013 invoked from network); 10 Jun 2016 21:46:38 -0000
+From: John Johansen <john.johansen@canonical.com>
+Cc: Jann Horn <jannh@google.com>, Tyler Hicks <tyhicks@canonical.com>,
+ "security@kernel.org" <security@kernel.org>
 To: oss-security@lists.openwall.com
-References: <CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>
- <20201005204820.GA8410@openwall.com>
-From: Grant Taylor <gtaylor@tnetconsulting.net>
-Message-ID: <51adb874-f967-5cf7-ffff-a2b871a5455b@spamtrap.tnetconsulting.net>
-Date: Mon, 5 Oct 2020 15:53:26 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.12.1
+Organization: Canonical
+Message-ID: <575B352F.9000808@canonical.com>
+Date: Fri, 10 Jun 2016 14:46:23 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.8.0
 MIME-Version: 1.0
-In-Reply-To: <20201005204820.GA8410@openwall.com>
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256; boundary="------------ms020703090906070009090009"
-Subject: Re: [oss-security] major changes if gnu/linux dominates the desktop
- and/or mobile market?
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="oUFadpsSXmWEIrH4XXSl7BcG1sRDfWP35"
+Subject: [oss-security] [vs-plain] Linux kernel stack overflow via ecryptfs and
+ /proc/$pid/environ
 
---------------ms020703090906070009090009
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+--oUFadpsSXmWEIrH4XXSl7BcG1sRDfWP35
+Content-Type: multipart/mixed; boundary="KurOk4gPSfS3NShJjJTnc2c6wP2p5h2uJ"
+From: John Johansen <john.johansen@canonical.com>
+To: oss-security@lists.openwall.com
+Cc: Jann Horn <jannh@google.com>, Tyler Hicks <tyhicks@canonical.com>,
+ "security@kernel.org" <security@kernel.org>
+Message-ID: <575B352F.9000808@canonical.com>
+Subject: [vs-plain] Linux kernel stack overflow via ecryptfs and
+ /proc/$pid/environ
+
+--KurOk4gPSfS3NShJjJTnc2c6wP2p5h2uJ
+Content-Type: multipart/mixed;
+ boundary="------------070000050502060506050409"
+
+This is a multi-part message in MIME format.
+--------------070000050502060506050409
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: quoted-printable
 
-On 10/5/20 2:48 PM, Solar Designer wrote:
-> Hi all,
+This is a forward notification of a local priv escalation flaw from
+security@kernel.org to the OSS security list. The CRD was for
+2016-06-08 14:00:00 UTC. Patches attached to the email.
 
-Hi,
+The flaw in eCryptfs was assigned CVE-2016-1583.
 
-> As a moderator I approved all messages in this thread so far, but I=20
-> am unhappy about the quality of both Georgi's message and the replies.
-
-Thank you ...
-
-> This is a valid topic, but there's no room in it for trolling (that's=20
-> how Georgi's message came across, even if maybe unintentionally) nor=20
-> for responding only about the presumed trolling.  Just assume good=20
-> faith and post a response that's actually useful to others in here.
-
-... for presuming good intent in the hopes of a constructive conversation.
-
-> I'll try:
-
-:-)
-
-> I'd say yes, major security changes are needed.
->=20
-> On the desktop, major Linux distributions (and by the way *BSDs=20
-> and Solaris are not very different in this respect, I think) when=20
-> used as single-user desktop systems lack security isolation between=20
-> applications of the user.
-
-I agree that there is a lot of room for improvement here.  But -- like=20
-you say -- I don't think this is isolated to Linux by any stretch of the=20
-imagination.  Unless I'm sorely mistaken, just about every contemporary=20
-desktop, and possibly server, operating system only gets as granular as=20
-the user level.
-
-> (And also between the user and root, due to the typical recommended=20
-> use of sudo from the user account.)
-
-Please elaborate what you mean here?
-
-Are you commenting on the use of sudo (vs other access control=20
-mechanisms) or the seemingly default recommendation to allow members of=20
-the sudo group run any and all commands via sudo?  E.g.:
-
-    %group ALL=3D(ALL) NOPASSWD: ALL
-
-I personally have found judicious use of sudo to be quite effective.=20
-Meaning give the DB Administrators access to the explicit commands that=20
-they need.  Likewise with the OS Administrators.  Backup Operators, yep,=20
-them too.  But each group only gets the commands that they need and=20
-can't run the commands for other groups without additional level of=20
-intervention.
-
-I believe that sudo as a tool has a LOT of potential and that many=20
-people are only using a tiny fraction of what it can do.
-
-> This kind of security isolation is something we have on Android,=20
-> but at the price of the user not having full access to (not entirely)=20
-> their device.  The user cannot even have e.g. a file manager app with=20
-> which they'd access all files of other apps.
-
-I don't know anything about Android other than it made me mad the last=20
-time I tried to use it.
-
-I have seen some recent references to user namespaces and sub-IDs.  I'm=20
-on the lookout for information to see if that might be a way to run=20
-different applications as their own sub-user-id and then behave=20
-similarly to how applications running as different users work.  Meaning=20
-that each application -> user ID would have it's own files and would=20
-then rely on being a member of another group to access other files.  All=20
-the while relying on file system permissions to protect other things.
-
-Aside:  If you know of something that I should be reading, please point=20
-me towards it.
-
-Have Firefox run as <username>-<firefox> and Evolution run as=20
-<username>-<evolution>.  Both user would appear as a different user than=20
-just <username> thereby enabling traditional user & group security=20
-models between applications run by the same user.
-
-I don't know if I'm hallucinating or if something like this is possible,=20
-or even done somewhere that I'm not aware of.
-
-> For typical desktop Linux users, realistically most security is=20
-> provided by the web browser, which these days at least uses a=20
-> sandbox, protecting the user's files and other apps from itself.=20
-> That's something the underlying systems tend to lack.
-
-I'm grateful that the web browser does do sandboxing.  But I don't think=20
-that we should need to rely on it for as much security as we do.=20
-Presuming of course that fat applications are being used and we're not=20
-running /everything/ inside the web browser.
-
-> Sure malware and social engineering are valid threats to keep in mind.
-
-I don't see how the operating system / security infrastructure can be=20
-responsible for protecting people here.
-
-I guess the OS could make changes in some manner that they can be rolled=20
-back and rely on behavioral monitoring to detect when such a roll back=20
-is necessary as the result of deletion / encryption / corruption of=20
-documents.
-
-> It's also a good idea not to rely solely on the browser's built-in=20
-> authorization checks, but to limit its access to system resources=20
-> such as the microphone and camera.  Qubes OS does that.
-
-I naively think that some of this can be controlled with traditional=20
-file system permissions on the relevant device files.  If your (sub)user=20
-is not in the group to access the microphone -- guess what -- you don't=20
-get access to it.  Further, your (repeated) attempt to do so can be=20
-treated as an indicator of compromise.  Rinse, later, and repeat for=20
-other devices / files.
-
-> Now this is about the lack of security isolation between the users,=20
-> if there's more than one actual user on a system.  I also do think=20
-> this is very wrong and needs to change (and is an easy change, unlike=20
-> others I pointed out above).
-
-Linux, being a Unix like operating system, has been pressed into uses=20
-that weren't imagined when the old user based security model was developed.
-
-The idea that multiple users have accounts on the same system and=20
-leverage group membership to divide their personal files from their=20
-teams files from other teams files simply does not remotely match our=20
-current use of these systems.
-
-> Relaxed file permissions like that may also further weaken some partial=20
-> sandboxes (when a service is running with its dedicated credentials,=20
-> but with retained filesystem access - such as because it needs that).
-
-I want to agree with that.  But, with things ultimately running as the=20
-same user, then any subdivision therein is difficult to enforce.
-
-> Then there are also plenty of other local security risks on typical=20
-> Linux distros, starting with risky data processing by apport and abrt.=20
-> Those would matter more if other issues I mentioned are addressed.
->=20
-> I might be right or wrong or (most likely) both, but I hope this sets=20
-> the tone for constructive further discussion.
-
-:-)
+If backporting these patches to kernels pre 4.6 you may need to
+cherry-pick patch 6a480a7842545ec520a91730209ec0bae41694c1
 
 
+--------------070000050502060506050409
+Content-Type: text/plain; charset=UTF-8;
+ name="2of3.patch"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment;
+ filename="2of3.patch"
 
+From: Jann Horn <jannh@google.com>
+To: security@kernel.org
+Cc: Jann Horn <jannh@google.com>
+Subject: [PATCH 2/3] ecryptfs: forbid opening files without mmap handler
+Date: Wed,  1 Jun 2016 11:55:06 +0200
+Message-Id: <1464774907-7753-2-git-send-email-jannh@google.com>
+X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
+In-Reply-To: <1464774907-7753-1-git-send-email-jannh@google.com>
+References: <CAG48ez3HNCkbW0rFyQJqAvaLNxtLWTKMdPoo6TruYdkpE7oVvg@mail.gmail=
+.com>
+ <1464774907-7753-1-git-send-email-jannh@google.com>
+X-Spam-Status: No, hits=3D-5.1 required=3D5 tests=3DDKIM_SIGNED,DKIM_VALID,=
+DKIM_VALID_AU,DKIM_VERIFIED
+X-Spam-Checker-Version: SpamAssassin 3.4.0-outflux_revision__1.66__
+X-Virus-Scanned: ClamAV using ClamSMTP
+Envelope-To: kees@outflux.net
+X-MIMEDefang-Filter: outflux$Revision: 1.316 $
+X-HELO: www.outflux.net
+X-Scanned-By: MIMEDefang 2.73
+
+This prevents users from triggering an exploitable stack overflow
+through a recursive invocation of pagefault handling that involves
+mapping procfs files into virtual memory.
+
+Signed-off-by: Jann Horn <jannh@google.com>
+Cc: stable@vger.kernel.org
+---
+ fs/ecryptfs/kthread.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/fs/ecryptfs/kthread.c b/fs/ecryptfs/kthread.c
+index 866bb18..e818f5a 100644
+--- a/fs/ecryptfs/kthread.c
++++ b/fs/ecryptfs/kthread.c
+@@ -25,6 +25,7 @@
+ #include <linux/slab.h>
+ #include <linux/wait.h>
+ #include <linux/mount.h>
++#include <linux/file.h>
+ #include "ecryptfs_kernel.h"
+=20
+ struct ecryptfs_open_req {
+@@ -147,7 +148,7 @@ int ecryptfs_privileged_open(struct file **lower_file,
+ 	flags |=3D IS_RDONLY(d_inode(lower_dentry)) ? O_RDONLY : O_RDWR;
+ 	(*lower_file) =3D dentry_open(&req.path, flags, cred);
+ 	if (!IS_ERR(*lower_file))
+-		goto out;
++		goto have_file;
+ 	if ((flags & O_ACCMODE) =3D=3D O_RDONLY) {
+ 		rc =3D PTR_ERR((*lower_file));
+ 		goto out;
+@@ -165,8 +166,16 @@ int ecryptfs_privileged_open(struct file **lower_file,
+ 	mutex_unlock(&ecryptfs_kthread_ctl.mux);
+ 	wake_up(&ecryptfs_kthread_ctl.wait);
+ 	wait_for_completion(&req.done);
+-	if (IS_ERR(*lower_file))
++	if (IS_ERR(*lower_file)) {
+ 		rc =3D PTR_ERR(*lower_file);
++		goto out;
++	}
++have_file:
++	if ((*lower_file)->f_op->mmap =3D=3D NULL) {
++		fput(*lower_file);
++		*lower_file =3D NULL;
++		rc =3D -EMEDIUMTYPE;
++	}
+ out:
+ 	return rc;
+ }
 --=20
-Grant. . . .
-unix || die
+2.8.0.rc3.226.g39d4020
 
 
---------------ms020703090906070009090009
-Content-Type: application/pkcs7-signature; name="smime.p7s"
+
+--------------070000050502060506050409
+Content-Type: application/x-tar;
+ name="crasher.tar"
 Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
+Content-Disposition: attachment;
+ filename="crasher.tar"
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG
-9w0BBwEAAKCCCzkwggUhMIIECaADAgECAhA53zcXtFD9dENby64EqrKqMA0G
-CSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRl
-ciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0
-aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRo
-ZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTE5MTExOTAwMDAw
-MFoXDTIwMTExODIzNTk1OVowKzEpMCcGCSqGSIb3DQEJARYaZ3RheWxvckB0
-bmV0Y29uc3VsdGluZy5uZXQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK
-AoIBAQCwIZcEJcuE7mUfxJnDI8oOSX/TvAhoP11agD++8L7Ok8fFJhJK0lOV
-Rsq1M6lF2E2Vzuyffg2ppbecWvHcIRadsaiGimnrJQasdkhj/JUtqPUXnC0S
-VA0AzYLrLReQB+9j/jTgB5JnFLyC2lEn9KTA6JmDGjvVkv2Tk+I2+v24nI4/
-2lGjD+jIKQiFXkE1uqablXJAw1c9Mh9d4/wjnIM9zLGv1i3xxOLdQ1PXSUZL
-12wOy1r7CsGAnNSNhGaceB2tdhdleFEyIHgSgDWtWResHdu/ubZqFiHxaLRJ
-lafOHMj3yC6xNOA1IdcNJsaRkQHxSkayKzeE5JK3TxlV83dbAgMBAAGjggHT
-MIIBzzAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4E
-FgQUU6bXebmKM+efFHN0MBjYuJO9Za8wDgYDVR0PAQH/BAQDAgWgMAwGA1Ud
-EwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1Ud
-IAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8v
-c2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwu
-c2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5k
-U2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcw
-AoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0
-aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYX
-aHR0cDovL29jc3Auc2VjdGlnby5jb20wJQYDVR0RBB4wHIEaZ3RheWxvckB0
-bmV0Y29uc3VsdGluZy5uZXQwDQYJKoZIhvcNAQELBQADggEBADOWdJFXVQvd
-VPUy4ChriEyS3wiEdWmLb3CGko4ps7uXgHoCk0V9oU38LjKTrcm/KOhLhBh2
-Wz3LxirbtgTP+YxpgkPxDEWOee/o/TiLhVrTLiqZJIwjlZmY1lTmHuoXWQK3
-M0MJZYVrGgMJgQg0/+mZkRlEa67N4WETh7MHrKglv3HHy3LeU835KA8cpMxR
-bDvPiA8wdKHWgrl4LXOJKtI8rgmMJxUOCQdgI6DSEo/yYve0/TxLLBlWAhve
-7e+/aYjKn3V5CpNOmqkRi7V2d6ZJ+RMQrJDtqitQAkzq8cH+CSTGagHzAxQp
-e00hH+aVwNioyaoNBezCCLirOjVdlFIwggYQMIID+KADAgECAhBNlCwQ1Dvg
-lAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQGEwJVUzETMBEG
-A1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNV
-BAoTFVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0
-IFJTQSBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBa
-Fw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
-YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9T
-ZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBB
-dXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG
-9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8
-gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUfItMltrMaXqcESJuK8dtK
-56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeWQcpG
-EGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw
-4VuZ79Khj1YBrf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36b
-BJMxqdHLpdwIUkTqT8se3ed0PewDch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52
-Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAUU3m/WqorSs9UgOHY
-m8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
-DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsG
-AQUFBwMCBggrBgEFBQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkw
-RzBFoEOgQYY/aHR0cDovL2NybC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
-QUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUFBwEBBGowaDA/
-BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVz
-dFJTQUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51
-c2VydHJ1c3QuY29tMA0GCSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVt
-MnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+xswhh2GqkW5JQrM8zVlU+A2V
-P72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9IHk96Vws
-acIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk
-2ddQXyn7kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZU
-FeCUisdDe/0ABLTI+jheXUV1eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz
-9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4KxaYIhvqPqUMWqRdWyn7
-crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL1Ygz
-3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF
-/CEGVqR1hiuQOZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPF
-f9pLkAFFWs1QNyN++niFhsM47qodx/PL+5jR87myx5uYdBEQkkDc+lKB1Wct
-6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i5ZgtwCLXgAIe5W8m
-ybM2JzGCBDIwggQuAgEBMIGrMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMS
-R3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQK
-Ew9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVu
-dCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhA53zcXtFD9
-dENby64EqrKqMA0GCWCGSAFlAwQCAQUAoIICVzAYBgkqhkiG9w0BCQMxCwYJ
-KoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yMDEwMDUyMTUzMjZaMC8GCSqG
-SIb3DQEJBDEiBCB7lgcZGfmaIqUwA47FM/HKMnDl7BhAG+oawwqUkoHb1zBs
-BgkqhkiG9w0BCQ8xXzBdMAsGCWCGSAFlAwQBKjALBglghkgBZQMEAQIwCgYI
-KoZIhvcNAwcwDgYIKoZIhvcNAwICAgCAMA0GCCqGSIb3DQMCAgFAMAcGBSsO
-AwIHMA0GCCqGSIb3DQMCAgEoMIG8BgkrBgEEAYI3EAQxga4wgaswgZYxCzAJ
-BgNVBAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNV
-BAcTB1NhbGZvcmQxGDAWBgNVBAoTD1NlY3RpZ28gTGltaXRlZDE+MDwGA1UE
-AxM1U2VjdGlnbyBSU0EgQ2xpZW50IEF1dGhlbnRpY2F0aW9uIGFuZCBTZWN1
-cmUgRW1haWwgQ0ECEDnfNxe0UP10Q1vLrgSqsqowgb4GCyqGSIb3DQEJEAIL
-MYGuoIGrMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5j
-aGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExp
-bWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNh
-dGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhA53zcXtFD9dENby64EqrKqMA0G
-CSqGSIb3DQEBAQUABIIBAJZoFyimyxuDcRJfpT7qY7l1fv9I3RI3Z9YEg9Gf
-ZFDERzxHxZgOzP1BgvfAFnrJEmi0d5VlRzFSC83ku1D7iqb31hzGRkH+sc8l
-lc7HbQOzAyIJpeS7LUx4joKZgsQtHJ8/RmInT3zvAunGotPzEBBhOgOoOso+
-6p1HZWXIQoHq9Lkk3im/qD09bwJ9jB+pgSRYHXQG8rv6JdhUVi0+aWI6Rt+u
-b63micKlJeb8UHqD+qzmU6YABzgmbghnn0IMZ+ylvQe0XeI5X8oQYEyXjnHg
-6pINYIl3ZokP9MGvlEm3DQOg63xzJKzRECrksKMVAe/BbN5geBzB9vxfCCXw
-F3UAAAAAAAA=
+Y3Jhc2hlci8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAADAwMDA3NTAAMTM0NTYwMQAwMDEzMjAyADAwMDAwMDAwMDAw
+ADEyNzIzMzY2NjA0ADAxMjAzMwAgNQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhciAgAGphbm5o
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbm9uY29uZgAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAABjcmFzaGVyL2NvbXBpbGUuc2gAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMDAwMDc1MAAxMzQ1NjAxADAw
+MTMyMDIAMDAwMDAwMDAxMDcAMTI3MjMzMzE2MTMAMDE0MDEwACAwAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAHVzdGFyICAAamFubmgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABu
+b25jb25mAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACMhL2Jpbi9iYXNo
+CmdjYyAtbyBjcmFzaGVyIGNyYXNoZXIuYyAtc3RkPWdudTk5IC1sZWNyeXB0
+ZnMgLVdhbGwgLWdnZGIKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAY3Jhc2hlci9jcmFzaGVyLmMAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAADAwMDA2NDAAMTM0NTYwMQAwMDEzMjAyADAwMDAw
+MDE1MDEzADEyNzIzMzMzNjA1ADAxMzYyMgAgMAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhciAg
+AGphbm5oAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbm9uY29uZgAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjZGVmaW5lIF9HTlVfU09VUkNFCiNp
+bmNsdWRlIDxzeXMvdHlwZXMuaD4KI2luY2x1ZGUgPHN5cy9zdGF0Lmg+CiNp
+bmNsdWRlIDxmY250bC5oPgojaW5jbHVkZSA8ZXJyLmg+CiNpbmNsdWRlIDxz
+eXMvbW1hbi5oPgojaW5jbHVkZSA8c3RkaW8uaD4KI2luY2x1ZGUgPHN5cy9w
+cmN0bC5oPgojaW5jbHVkZSA8dW5pc3RkLmg+CiNpbmNsdWRlIDxzdGRpbnQu
+aD4KI2luY2x1ZGUgPGtleXV0aWxzLmg+CiNpbmNsdWRlIDxlcnJuby5oPgoj
+aW5jbHVkZSA8ZWNyeXB0ZnMuaD4KI2luY2x1ZGUgPHN5cy9ldmVudGZkLmg+
+CiNpbmNsdWRlIDxzaWduYWwuaD4KI2luY2x1ZGUgPHN0cmluZy5oPgojaW5j
+bHVkZSA8c3RkbGliLmg+CiNpbmNsdWRlIDxzeXMvc3lzY2FsbC5oPgojaW5j
+bHVkZSA8c3lzL2lvY3RsLmg+CiNpbmNsdWRlIDxzeXMvc29ja2V0Lmg+CiNp
+bmNsdWRlIDxzdGRib29sLmg+CiNpbmNsdWRlIDxzY2hlZC5oPgoKdm9pZCBz
+ZXRfZW52X2FyZWEoY2hhciAqcHRyLCBzaXplX3Qgc2l6ZSkgewogIHN0cnVj
+dCBwcmN0bF9tbV9tYXAgbW1fbWFwID0gewogICAgLnN0YXJ0X2NvZGUgPSAw
+eDQwMDAwMCwKICAgIC5lbmRfY29kZSA9IDB4NDAwMDAxLAogICAgLnN0YXJ0
+X2RhdGEgPSAweDQwMDAwMiwKICAgIC5lbmRfZGF0YSA9IDB4NDAwMDAzLAog
+ICAgLnN0YXJ0X2JyayA9IDB4NDAwMDA0LAogICAgLmJyayA9ICh1aW50NjRf
+dClzYnJrKDApLAogICAgLnN0YXJ0X3N0YWNrID0gMHgxMDAwMDAwMDAsCiAg
+ICAuYXJnX3N0YXJ0ID0gMHgxMDAwMDAwMDIsCiAgICAuYXJnX2VuZCA9IDB4
+MTAwMDAwMDA0LAogICAgLmVudl9zdGFydCA9ICh1aW50NjRfdClwdHIsCiAg
+ICAuZW52X2VuZCA9ICh1aW50NjRfdClwdHIgKyBzaXplLAogICAgLmF1eHZf
+c2l6ZSA9IDAsCiAgICAuZXhlX2ZkID0gLTEKICB9OwogIGlmIChwcmN0bChQ
+Ul9TRVRfTU0sIFBSX1NFVF9NTV9NQVAsICZtbV9tYXAsIHNpemVvZihtbV9t
+YXApLCAwKSkKICAgIGVycigxLCAiUFJfU0VUX01NX01BUCIpOwp9Cgp2b2lk
+IHdyaXRlX2ZpbGUoY2hhciAqZGlyLCBjaGFyICpuYW1lLCBjaGFyICpkYXRh
+KSB7CiAgY2hhciBwYXRoWzUwMF07CiAgc3ByaW50ZihwYXRoLCAiJXMvJXMi
+LCBkaXIsIG5hbWUpOwogIGludCBmZCA9IG9wZW4ocGF0aCwgT19XUk9OTFl8
+T19UUlVOQ3xPX0NSRUFULCAwNjAwKTsKICBpZiAoZmQgPT0gLTEpCiAgICBl
+cnIoMSwgIm9wZW5pbmcgJXMgZmFpbGVkIiwgcGF0aCk7CiAgaWYgKHdyaXRl
+KGZkLCBkYXRhLCBzdHJsZW4oZGF0YSkpICE9IHN0cmxlbihkYXRhKSkKICAg
+IGVycngoMSwgIndyaXRlIHRvICVzIGZhaWxlZCIsIHBhdGgpOwogIGNsb3Nl
+KGZkKTsKfQoKc2l6ZV90IHJlYWRfZmlsZShjaGFyICpkaXIsIGNoYXIgKm5h
+bWUsIGNoYXIgKipkYXRhKSB7CiAgY2hhciBwYXRoWzUwMF07CiAgc3ByaW50
+ZihwYXRoLCAiJXMvJXMiLCBkaXIsIG5hbWUpOwogIGludCBmZCA9IG9wZW4o
+cGF0aCwgT19SRE9OTFkpOwogIGlmIChmZCA9PSAtMSkKICAgIGVycigxLCAi
+b3BlbiBcIiVzXCIiLCBwYXRoKTsKICBzdHJ1Y3Qgc3RhdCBzdDsKICBpZiAo
+ZnN0YXQoZmQsICZzdCkpCiAgICBlcnIoMSwgImZzdGF0Iik7CiAgKmRhdGEg
+PSBtYWxsb2Moc3Quc3Rfc2l6ZSk7CiAgaWYgKCEqZGF0YSkKICAgIGVycigx
+LCAibWFsbG9jIik7CiAgaWYgKHJlYWQoZmQsICpkYXRhLCBzdC5zdF9zaXpl
+KSAhPSBzdC5zdF9zaXplKQogICAgZXJyeCgxLCAicmVhZF9maWxlIHJlYWQi
+KTsKICBjbG9zZShmZCk7CiAgcmV0dXJuIHN0LnN0X3NpemU7Cn0KCmNoYXIg
+Km1tYXBfZmlsZShjaGFyICpwYXRoLCBzaXplX3QgbGVuKSB7CiAgaW50IGZk
+ID0gb3BlbihwYXRoLCBPX1JET05MWSk7CiAgaWYgKGZkID09IC0xKQogICAg
+ZXJyKDEsICJvcGVuIFwiJXNcIiIsIHBhdGgpOwogIGVycm5vID0gMDsKICBj
+aGFyICpwdHIgPSBtbWFwKE5VTEwsIGxlbiwgUFJPVF9SRUFELCBNQVBfUFJJ
+VkFURSwgZmQsIDApOwogIGlmIChwdHIgPT0gTUFQX0ZBSUxFRCkKICAgIGVy
+cigxLCAibW1hcCIpOwogIGNsb3NlKGZkKTsKICByZXR1cm4gcHRyOwp9Cgp2
+b2lkIGNvcHlfZmlsZShjaGFyICpzcmNkaXIsIGNoYXIgKnNyY25hbWUsIGNo
+YXIgKmRzdGRpciwgY2hhciAqZHN0bmFtZSkgewogIGNoYXIgY21kWzEwMDBd
+OwogIHNwcmludGYoY21kLCAiY3AgJyVzLyVzJyAnJXMvJXMnIiwgc3JjZGly
+LCBzcmNuYW1lLCBkc3RkaXIsIGRzdG5hbWUpOwogIGlmIChzeXN0ZW0oY21k
+KSkKICAgIGVycngoMSwgInN5c3RlbShcIiVzXCIpIiwgY21kKTsKfQoKdm9p
+ZCBldmVudGZkX3dhaXQoaW50IGZkKSB7CiAgdWludDY0X3QgY3RyOwogIHNz
+aXplX3QgcmVzID0gcmVhZChmZCwgJmN0ciwgOCk7CiAgaWYgKHJlcyAhPSA4
+KQogICAgZXJyKDEsICJldmVudGZkX3dhaXQiKTsKfQoKdm9pZCBldmVudGZk
+X3NlbmQoaW50IGZkKSB7CiAgdWludDY0X3QgY3RyID0gMTsKICBzc2l6ZV90
+IHJlcyA9IHdyaXRlKGZkLCAmY3RyLCA4KTsKICBpZiAocmVzICE9IDgpCiAg
+ICBlcnIoMSwgImV2ZW50ZmRfc2VuZCIpOwp9CgojZGVmaW5lIE1BVFJPU0tB
+X0RFUFRIIDUwCgpwaWRfdCBjaGlsZHJlbltNQVRST1NLQV9ERVBUSF07Cmlu
+dCBzeW5jX2V2ZW50ZmRzX3RvX2NoaWxkW01BVFJPU0tBX0RFUFRIXTsKaW50
+IHN5bmNfZXZlbnRmZHNfZnJvbV9jaGlsZFtNQVRST1NLQV9ERVBUSF07Cgpp
+bnQgbWFpbih2b2lkKSB7CiAgLy8gZmlyc3QsIHNldCB1cCBhbiBlY3J5cHRm
+cyBmb3IgbWF0cm9za2EgY3JlYXRpb24KICBjaGFyIHNpZ1tFQ1JZUFRGU19T
+SUdfU0laRV9IRVggKyAxXTsKICBjaGFyIHNhbHRbRUNSWVBURlNfU0FMVF9T
+SVpFXSA9IHswfTsKICBpZiAoZWNyeXB0ZnNfYWRkX3Bhc3NwaHJhc2Vfa2V5
+X3RvX2tleXJpbmcoc2lnLCAiZm9vYmFyIiwgc2FsdCkgPCAwKQogICAgZXJy
+eCgxLCAidW5hYmxlIHRvIGFkZCBrZXkgdG8ga2V5cmluZyIpOwogIGNoYXIg
+ZWNyeXB0ZnNfZGlyWzMwMF07CiAgc3ByaW50ZihlY3J5cHRmc19kaXIsICIl
+cy8uZWNyeXB0ZnMiLCBnZXRlbnYoIkhPTUUiKSk7CiAgaWYgKG1rZGlyKGVj
+cnlwdGZzX2RpciwgMDcwMCkgJiYgZXJybm8gIT0gRUVYSVNUKQogICAgZXJy
+KDEsICJta2RpciIpOwogIC8qIHNpbmdsZSBsaW5lOyBubyBmaWxlbmFtZSBl
+bmNyeXB0aW9uIGtleSAqLwogIHdyaXRlX2ZpbGUoZWNyeXB0ZnNfZGlyLCAi
+ZXhwbG9pdC5zaWciLCBzaWcpOwogIGlmIChta2RpcigiL3RtcC9leHBsb2l0
+X21vdW50IiwgMDcwMCkgJiYgZXJybm8gIT0gRUVYSVNUKQogICAgZXJyKDEs
+ICJta2RpciBpbiAvdG1wIik7CiAgaWYgKG1rZGlyKCIvdG1wL2V4cGxvaXRf
+bG93ZXIiLCAwNzAwKSAmJiBlcnJubyAhPSBFRVhJU1QpCiAgICBlcnIoMSwg
+Im1rZGlyIGluIC90bXAiKTsKICBjaGFyIGNvbmZfZGF0YVs1MDBdOwogIHNw
+cmludGYoY29uZl9kYXRhLCAiL3RtcC9leHBsb2l0X2xvd2VyIC90bXAvZXhw
+bG9pdF9tb3VudCBlY3J5cHRmcyBub25lIDAgMFxuIik7CiAgd3JpdGVfZmls
+ZShlY3J5cHRmc19kaXIsICJleHBsb2l0LmNvbmYiLCBjb25mX2RhdGEpOwog
+IGlmIChzeXN0ZW0oIi9zYmluL21vdW50LmVjcnlwdGZzX3ByaXZhdGUgZXhw
+bG9pdCIpKQogICAgZXJyeCgxLCAibW91bnQxIGZhaWxlZCIpOwoKICAvLyBu
+b3csIGNyZWF0ZSB0aGUgbWF0cm9za2FzCiAgY2hhciBNQVRST1NLQV9aRVJP
+WzUwICogMTAyNF07IC8qIDUwS2lCLCBzaG91bGQgYmUgc3VmZmljaWVudCB0
+byBwcmV2ZW50IGNhY2hpbmcgKi8KICBtZW1zZXQoTUFUUk9TS0FfWkVSTywg
+MHg0Miwgc2l6ZW9mKE1BVFJPU0tBX1pFUk8pKTsKICB3cml0ZV9maWxlKCIv
+dG1wL2V4cGxvaXRfbW91bnQiLCAiMSIsIE1BVFJPU0tBX1pFUk8pOwogIHN5
+bmMoKTsKICBmb3IgKGludCBpPTE7IGk8TUFUUk9TS0FfREVQVEg7IGkrKykg
+ewogICAgY2hhciBpX3N0clsxMF07CiAgICBjaGFyIG5leHRpX3N0clsxMF07
+CiAgICBzcHJpbnRmKGlfc3RyLCAiJWQiLCBpKTsKICAgIHNwcmludGYobmV4
+dGlfc3RyLCAiJWQiLCBpKzEpOwogICAgY29weV9maWxlKCIvdG1wL2V4cGxv
+aXRfbG93ZXIiLCBpX3N0ciwgIi90bXAvZXhwbG9pdF9tb3VudCIsIG5leHRp
+X3N0cik7CiAgICBzeW5jKCk7CiAgfQoKICAvLyBjcmVhdGUgdGhyZWFkcwog
+IGZvciAoaW50IGk9MDsgaTxNQVRST1NLQV9ERVBUSDsgaSsrKSB7CiAgICBz
+eW5jX2V2ZW50ZmRzX3RvX2NoaWxkW2ldID0gZXZlbnRmZCgwLCBFRkRfU0VN
+QVBIT1JFKTsKICAgIGlmIChzeW5jX2V2ZW50ZmRzX3RvX2NoaWxkW2ldID09
+IC0xKQogICAgICBlcnIoMSwgImV2ZW50ZmQiKTsKICAgIHN5bmNfZXZlbnRm
+ZHNfZnJvbV9jaGlsZFtpXSA9IGV2ZW50ZmQoMCwgRUZEX1NFTUFQSE9SRSk7
+CiAgICBpZiAoc3luY19ldmVudGZkc19mcm9tX2NoaWxkW2ldID09IC0xKQog
+ICAgICBlcnIoMSwgImV2ZW50ZmQiKTsKICB9CiAgZm9yIChpbnQgaT0wOyBp
+PE1BVFJPU0tBX0RFUFRIOyBpKyspIHsKICAgIHBpZF90IGNoaWxkID0gZm9y
+aygpOwogICAgaWYgKGNoaWxkID09IC0xKQogICAgICBlcnIoMSwgImZvcmsi
+KTsKICAgIGlmIChjaGlsZCA9PSAwKSB7CiAgICAgIGNoYXIgZmlsZW51bXN0
+clsxMF07CiAgICAgIHNwcmludGYoZmlsZW51bXN0ciwgIiVkIiwgaSsxKTsK
+ICAgICAgY2hhciAqZGlyZWN0X21hdHJvc2thOwogICAgICBzaXplX3QgZGly
+ZWN0X21hdHJvc2thX2xlbiA9IHJlYWRfZmlsZSgiL3RtcC9leHBsb2l0X2xv
+d2VyIiwgZmlsZW51bXN0ciwgJmRpcmVjdF9tYXRyb3NrYSk7CiAgICAgIHNl
+dF9lbnZfYXJlYShkaXJlY3RfbWF0cm9za2EsIGRpcmVjdF9tYXRyb3NrYV9s
+ZW4pOwoKICAgICAgLy8gTm90ZTogVGhpcyB5aWVsZHMgY29udHJvbCB0byB0
+aGUgbWFpbiBwcm9jZXNzIGFuZCBvbmx5IHJlc3VtZXMgYWZ0ZXIgYWxsIHRo
+ZSBjaGlsZHJlbgogICAgICAvLyBoYXZlIHBhc3NlZCB0aGlzIHBvaW50IQog
+ICAgICBldmVudGZkX3NlbmQoc3luY19ldmVudGZkc19mcm9tX2NoaWxkW2ld
+KTsKICAgICAgZXZlbnRmZF93YWl0KHN5bmNfZXZlbnRmZHNfdG9fY2hpbGRb
+aV0pOwoKICAgICAgaWYgKGkgIT0gTUFUUk9TS0FfREVQVEggLSAxKSB7CiAg
+ICAgICAgLy8gbWFwIGxvd2VyIGVudmlyb24gYXMgZW52aXJvbgogICAgICAg
+IGNoYXIgbmV3X2Vudl9wYXRoWzMwMF07CiAgICAgICAgc3ByaW50ZihuZXdf
+ZW52X3BhdGgsICIvdG1wL2V4cGxvaXRfbW91bnRzLyVkL2Vudmlyb24iLCBp
+KzEpOwogICAgICAgIGNoYXIgKm5ld19lbnYgPSBtbWFwX2ZpbGUobmV3X2Vu
+dl9wYXRoLCBkaXJlY3RfbWF0cm9za2FfbGVuKTsKICAgICAgICBzZXRfZW52
+X2FyZWEobmV3X2VudiwgZGlyZWN0X21hdHJvc2thX2xlbik7CiAgICAgIH0K
+CiAgICAgIGV2ZW50ZmRfc2VuZChzeW5jX2V2ZW50ZmRzX2Zyb21fY2hpbGRb
+aV0pOwogICAgICBldmVudGZkX3dhaXQoc3luY19ldmVudGZkc190b19jaGls
+ZFtpXSk7CgogICAgICBleGl0KDApOwogICAgfQogICAgZXZlbnRmZF93YWl0
+KHN5bmNfZXZlbnRmZHNfZnJvbV9jaGlsZFtpXSk7CiAgICBjaGlsZHJlbltp
+XSA9IGNoaWxkOwogIH0KCiAgLy8gc2V0IHVwIG1vdW50cwogIGlmIChta2Rp
+cigiL3RtcC9leHBsb2l0X21vdW50cyIsIDA3MDApICYmIGVycm5vICE9IEVF
+WElTVCkKICAgIGVycigxLCAibWtkaXIgaW4gL3RtcCIpOwogIGZvciAoaW50
+IGk9MDsgaTxNQVRST1NLQV9ERVBUSDsgaSsrKSB7CiAgICBjaGFyIGV4cGxv
+aXRfbW91bnRfc3VicGF0aFszMDBdOwogICAgc3ByaW50ZihleHBsb2l0X21v
+dW50X3N1YnBhdGgsICIvdG1wL2V4cGxvaXRfbW91bnRzLyVkIiwgaSk7CiAg
+ICBpZiAobWtkaXIoZXhwbG9pdF9tb3VudF9zdWJwYXRoLCAwNzAwKSAmJiBl
+cnJubyAhPSBFRVhJU1QpCiAgICAgIGVycigxLCAibWtkaXIgaW4gL3RtcCIp
+OwoKICAgIC8vIG5vdGU6IHRoZSB1bW91bnQgaGVscGVyIHJlbW92ZWQgdGhl
+IGtleSwgcmVpbnNlcnQgaXQKICAgIGlmIChlY3J5cHRmc19hZGRfcGFzc3Bo
+cmFzZV9rZXlfdG9fa2V5cmluZyhzaWcsICJmb29iYXIiLCBzYWx0KSA8IDAp
+CiAgICAgIGVycngoMSwgInVuYWJsZSB0byBhZGQga2V5IHRvIGtleXJpbmci
+KTsKICAgIHNwcmludGYoY29uZl9kYXRhLCAiL3Byb2MvJWQgL3RtcC9leHBs
+b2l0X21vdW50cy8lZCBlY3J5cHRmcyBub25lIDAgMFxuIiwgKGludCljaGls
+ZHJlbltpXSwgaSk7CiAgICB3cml0ZV9maWxlKGVjcnlwdGZzX2RpciwgImV4
+cGxvaXQuY29uZiIsIGNvbmZfZGF0YSk7CiAgICBpZiAoc3lzdGVtKCIvc2Jp
+bi9tb3VudC5lY3J5cHRmc19wcml2YXRlIGV4cGxvaXQiKSkKICAgICAgZXJy
+eCgxLCAic3lzdGVtIGZhaWxlZCIpOwogIH0KCiAgLy8gbWFwIGxvd2VyIGVu
+dmlyb24KICBjaGFyICp0b3BfbWFwID0gbW1hcF9maWxlKCIvdG1wL2V4cGxv
+aXRfbW91bnRzLzAvZW52aXJvbiIsIHNpemVvZihNQVRST1NLQV9aRVJPKSk7
+CiAgZm9yIChpbnQgaT0wOyBpPE1BVFJPU0tBX0RFUFRIOyBpKyspIHsKICAg
+ICAgZXZlbnRmZF9zZW5kKHN5bmNfZXZlbnRmZHNfdG9fY2hpbGRbaV0pOwog
+ICAgICBldmVudGZkX3dhaXQoc3luY19ldmVudGZkc19mcm9tX2NoaWxkW2ld
+KTsKICB9CgogIHB1dHMoImZhdWx0IGNoYWluIHNldCB1cCwgZmF1bHRpbmcg
+bm93Iik7CiAgcmV0dXJuICoodW5zaWduZWQgbG9uZyAqKSh0b3BfbWFwICsg
+c2l6ZW9mKE1BVFJPU0tBX1pFUk8pIC0gOCk7Cn0KAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 
---------------ms020703090906070009090009--
+--------------070000050502060506050409
+Content-Type: text/plain; charset=UTF-8;
+ name="1of3.patch"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment;
+ filename="1of3.patch"
+
+From: Jann Horn <jannh@google.com>
+To: security@kernel.org
+Cc: Jann Horn <jannh@google.com>
+Subject: [PATCH 1/3] proc: prevent stacking filesystems on top
+Date: Wed,  1 Jun 2016 11:55:05 +0200
+Message-Id: <1464774907-7753-1-git-send-email-jannh@google.com>
+X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
+In-Reply-To: <CAG48ez3HNCkbW0rFyQJqAvaLNxtLWTKMdPoo6TruYdkpE7oVvg@mail.gmai=
+l.com>
+References: <CAG48ez3HNCkbW0rFyQJqAvaLNxtLWTKMdPoo6TruYdkpE7oVvg@mail.gmail=
+.com>
+X-Spam-Status: No, hits=3D-5.1 required=3D5 tests=3DDKIM_SIGNED,DKIM_VALID,=
+DKIM_VALID_AU,DKIM_VERIFIED
+X-Spam-Checker-Version: SpamAssassin 3.4.0-outflux_revision__1.66__
+X-Virus-Scanned: ClamAV using ClamSMTP
+Envelope-To: kees@outflux.net
+X-MIMEDefang-Filter: outflux$Revision: 1.316 $
+X-HELO: www.outflux.net
+X-Scanned-By: MIMEDefang 2.73
+
+This prevents stacking filesystems (ecryptfs and overlayfs)
+from using procfs as lower filesystem. There is too much magic
+going on inside procfs, and there is no good reason to stack
+stuff on top of procfs.
+
+(For example, procfs does access checks in VFS open handlers,
+and ecryptfs by design calls open handlers from a kernel
+thread that doesn't drop privileges or so.)
+
+Signed-off-by: Jann Horn <jannh@google.com>
+Cc: stable@vger.kernel.org
+---
+ fs/proc/root.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/fs/proc/root.c b/fs/proc/root.c
+index 55bc7d6..0670278 100644
+--- a/fs/proc/root.c
++++ b/fs/proc/root.c
+@@ -121,6 +121,13 @@ static struct dentry *proc_mount(struct file_system_ty=
+pe *fs_type,
+ 	if (IS_ERR(sb))
+ 		return ERR_CAST(sb);
+=20
++	/*
++	 * procfs isn't actually a stacking filesystem; however, there is
++	 * too much magic going on inside it to permit stacking things on
++	 * top of it
++	 */
++	sb->s_stack_depth =3D FILESYSTEM_MAX_STACK_DEPTH;
++
+ 	if (!proc_parse_options(options, ns)) {
+ 		deactivate_locked_super(sb);
+ 		return ERR_PTR(-EINVAL);
+--=20
+2.8.0.rc3.226.g39d4020
+
+
+
+--------------070000050502060506050409
+Content-Type: text/x-patch;
+ name="3of3.patch"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment;
+ filename="3of3.patch"
+
+From: Jann Horn <jannh@google.com>
+To: security@kernel.org
+Cc: Jann Horn <jannh@google.com>
+Subject: [PATCH 3/3] sched: panic on corrupted stack end
+Date: Wed,  1 Jun 2016 11:55:07 +0200
+Message-Id: <1464774907-7753-3-git-send-email-jannh@google.com>
+X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
+In-Reply-To: <1464774907-7753-1-git-send-email-jannh@google.com>
+References: <CAG48ez3HNCkbW0rFyQJqAvaLNxtLWTKMdPoo6TruYdkpE7oVvg@mail.gmail=
+.com>
+ <1464774907-7753-1-git-send-email-jannh@google.com>
+X-Spam-Status: No, hits=3D-5.1 required=3D5 tests=3DDKIM_SIGNED,DKIM_VALID,=
+DKIM_VALID_AU,DKIM_VERIFIED
+X-Spam-Checker-Version: SpamAssassin 3.4.0-outflux_revision__1.66__
+X-Virus-Scanned: ClamAV using ClamSMTP
+Envelope-To: kees@outflux.net
+X-MIMEDefang-Filter: outflux$Revision: 1.316 $
+X-HELO: www.outflux.net
+X-Scanned-By: MIMEDefang 2.73
+
+Until now, hitting this BUG_ON caused a recursive oops (because oops
+handling involves do_exit(), which calls into the scheduler, which in
+turn raises an oops), which caused stuff below the stack to be
+overwritten until a panic happened (e.g. via an oops in interrupt context,
+caused by the overwritten CPU index in the thread_info).
+
+Just panic directly.
+
+Signed-off-by: Jann Horn <jannh@google.com>
+---
+ kernel/sched/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 7f2cae4..8dbe9be 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -3156,7 +3156,8 @@ static noinline void __schedule_bug(struct task_struc=
+t *prev)
+ static inline void schedule_debug(struct task_struct *prev)
+ {
+ #ifdef CONFIG_SCHED_STACK_END_CHECK
+-	BUG_ON(task_stack_end_corrupted(prev));
++	if (task_stack_end_corrupted(prev))
++		panic("corrupted stack end detected inside scheduler\n");
+ #endif
+=20
+ 	if (unlikely(in_atomic_preempt_off())) {
+--=20
+2.8.0.rc3.226.g39d4020
+
+
+--------------070000050502060506050409--
+
+--KurOk4gPSfS3NShJjJTnc2c6wP2p5h2uJ--
+
+--oUFadpsSXmWEIrH4XXSl7BcG1sRDfWP35
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCgAGBQJXWzUvAAoJEAUvNnAY1cPY4HAP/13q9WtZN8s3xJ61OcW6ftmg
+mJ4rI8fvF3KvF/n/TR13NDWCrppqKJqlYdtDgtTFBMyPixAyCdAls1uTyWvJtBAw
+hgCqNxiC3GYkIW9LTetZhp3NBwUnX04rFtwR7E999j8lmWU8p4eoud2llQSoPht4
+KOeWyjpFKD7TH/Uj87fvcNQ5rwlOoDt4bAz/jvTl6tfsDa8eO0zgv0WGnmWq7MGH
+hixCrrmEaMKjVJeLONDaYUXlO4kDisCk5sqLhNZMzzMq5rciQ3Z+bH7pm3edz5BZ
+RmJ7VS7czA2nV4p1LqGjruM7UkwbxeUZIOVWGHa9jtEw+zIvVYAl31g5k1dr0RL6
+9H8JsP5b9DixTzobhdE3haRXctIaWGVo+/IbZW/PtBkrdHDqvuj8ZzbhM+sca1OO
+MKABcXzjcpHj20syDEUqpxOojwYe7YBnLE6KDK3nQGpLWVgXIQR11nH8Ug9JeqpC
+oHdV2bcU43tQj3agZdOdx9MUA0HKILPEWfuvcgGezbGNZvxyK0U0SPExi1Jh/ul+
+w8uz1YP7dZ0FuLEpakGnuzobHpibr/i747v7R/BO9O7qpm5ym2AsewpYzIBZiAT9
+AhIYg6sITSyeK0e80LP+5relQr9WG+tfZQWyLz9gtvtIwfz5eFceq64ktDPloNLU
+Op6/n5f96mbw7RNa2SV9
+=50sO
+-----END PGP SIGNATURE-----
+
+--oUFadpsSXmWEIrH4XXSl7BcG1sRDfWP35--
