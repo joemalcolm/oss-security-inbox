@@ -1,38 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/07/7
-Message-ID: <20161207134835.GA20060@grsecurity.net>
-Date: Wed, 7 Dec 2016 08:48:35 -0500
-From: Brad Spengler <spender@...ecurity.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/10/7
+Message-ID: <CAKws9z0qx_7spQTw9Z3vrV1hRa8so=G-1T7eegnLuMzTp0H59Q@mail.gmail.com>
+Date: Fri, 10 Jun 2016 13:56:14 -0400
+From: Scott Arciszewski <scott@...agonie.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2016-8655 Linux af_packet.c race condition (local root)
+Subject: Simple Machines Forums - PHP Object Injection
 Content-Type: text/plain; charset=utf-8
 
-4.8.12 doesn't have the fix included, despite being released on the same
-day the commit was merged into net/ and despite the advance notice in
-private via security@...nel.org.  It's currently in the net/ "stable" queue
-which operates seperately from the rest of the kernel.  It'll be merged
-whenever that process plays itself out.
+I reported the following PHP Object Injection vulnerabilities to the SMF
+development team on March 9, 2016:
 
--Brad
+https://github.com/SimpleMachines/SMF2.1/blob/404fd5347951652624dfb72304ee38fcab98378f/Sources/Packages.php#L863-L873
 
-On Wed, Dec 07, 2016 at 02:15:15PM +0100, Hanno B??ck wrote:
-> Hi,
-> 
-> I'm running kernel 4.8.12, which has the fix you pointed out included,
-> however:
-> 
-> > You can also run it with "crash" as the first argument to force a
-> > panic.
-> 
-> running your code with the "crash" parameter reliably panics this
-> kernel.
-> This doesn't seem right. Is this an incomplete or nonworking fix?
-> 
-> -- 
-> Hanno B??ck
-> https://hboeck.de/
-> 
-> mail/jabber: hanno@...eck.de
-> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+https://github.com/SimpleMachines/SMF2.1/blob/19ee85ff8761b792ea3e9ed630a947f45f93ee68/Sources/LogInOut.php#L125-L129
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+In the first case, you can achieve PHP Object Injection by sending
+themechanges[]=serialized+object+here in the POST data of an HTTP request.
+
+It looks like someone had attempted to find+replace all the obvious PHP
+Object Injection issues (i.e. unserialize($_POST['foo'])) at some point,
+but they didn't look for variables directly derived from user input.
+(foreach ($_POST['foo'] as $bar)).
+
+I've sent follow-up emails to the development team but was never notified
+of any progress towards fixing it.
+
+The first one appears to have been fixed in the release-2.1 branch, but the
+other one still exists.
+
+https://github.com/SimpleMachines/SMF2.1/blob/release-2.1/Sources/Packages.php#L872-L882
+is fixed
+
+https://github.com/SimpleMachines/SMF2.1/blob/release-2.1/Sources/LogInOut.php#L125-L129
+is unfixed
+
+That's all from me.
+
+Scott Arciszewski
+Chief Development Officer
+Paragon Initiative Enterprises <https://paragonie.com>
+
