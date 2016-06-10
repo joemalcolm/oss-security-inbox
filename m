@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["926" "Wednesday" "27" "May" "2020" "14:06:52" "-0400" "Benjamin Gilbert" "benjamin.gilbert@coreos.com" "<20200527180652.GA3675595@trogon.sfo.coreos.systems>" "21" "Re: [oss-security] CoreOS leaving distros/linux-distros on May 26, handing off responsibilities" nil nil nil "5" "2020052718:06:52" "[oss-security] CoreOS leaving distros/linux-distros on May 26, handing off responsibilities" (number mark "U       benjamin.gil May 27   21/926   " thread-indent "\"Re: [oss-security] CoreOS leaving distros/linux-distros on May 26, handing off responsibilities\"\n") "<20200507230420.GA2011454@trogon.sfo.coreos.systems>" ("<CAF=P+=6oF_93xq7VwdiDXu-K19NkVTx7B5c0pwr8-q14jQ2UTg@mail.gmail.com>" "<20200505192458.GA8312@openwall.com>" "<20200507230420.GA2011454@trogon.sfo.coreos.systems>") nil nil nil nil nil nil nil "Re: [oss-security] CoreOS leaving distros/linux-distros on May 26, handing off responsibilities" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1377" "Friday" "10" "June" "2016" "13:56:14" "-0400" "Scott Arciszewski" "scott@paragonie.com" "<CAKws9z0qx_7spQTw9Z3vrV1hRa8so=G-1T7eegnLuMzTp0H59Q@mail.gmail.com>" "37" "[oss-security] Simple Machines Forums - PHP Object Injection" "^Date:" nil nil "6" "2016061017:56:14" "[oss-security] Simple Machines Forums - PHP Object Injection" (number mark "        scott@parago Jun 10   37/1377  " thread-indent "\"[oss-security] Simple Machines Forums - PHP Object Injection\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20244 invoked by uid 550); 27 May 2020 18:54:47 -0000
+Received: (qmail 9521 invoked by uid 550); 10 Jun 2016 17:57:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17473 invoked from network); 27 May 2020 18:07:07 -0000
+Received: (qmail 7421 invoked from network); 10 Jun 2016 17:56:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=paragonie-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:date:message-id:subject:from:to;
+        bh=QokUV4kiRADaCwtRsZbtOuYtwFQNH15ap/BWLmGhpVs=;
+        b=JxtCn7OkeFEcCK5YapSuw1hefeIUj6JsztzcryouvHqUDcePq32Uh8kLpX1Z/OLMHr
+         rNinG/4uEUVQZSDzKoRUZI5Ff2y9DcclLPBSvnF+TqRqGoEYuWSuNcz2l84BfLyzlC2P
+         W0H3FbHfBiZ+flfydhL5aFsA9LkttOHvU3PgMBmKfIeiYk8NS4yGTMKN5SgvjIGTiiPk
+         tlCoc3D3se29SSUE3PkB/zOrb2DY4ldThJmdlAvZdr/HtZ2EeJO/ncl/AW6f6s8tEbgi
+         nr9cVMZ3roMYg3Rk4z55sV0w0o+WMtM7eYyyOJhFmZAqy8mmG09dsbREazZd4lExRBB8
+         uX1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=+zsUPf+jI8A7ye6edBdj/T11i5XJPB/V73P/Wh6CY8U=;
-        b=ucH4cmo1wQBBDAb8g2u7q7g0f7uevuvmLCPvGURMUoFSVedFIchwVAH9RkNEd637qL
-         CalWjxpK+VZteQ1FJWW7mclCq/0uq+ZlgD7YCfzymMSHSX9T78fEboLMWPKd78NCT8+7
-         I2+WVhW0my7E3SdGjlF7DFHoXLfOqcSboZGg9AKxPG8A+mmDOcXaWBJ4NV5NWzYnZSZQ
-         kz8TORteFYhIlREWHmCSNQJRCnXmY7CZrHAKjNo3nM/K+xv1narA65jWbmvtzz1JSKDb
-         svagMlv9BeMohtNVxPh7pqOXsEMP9h4nggs6Rsq9k5DPv0LsTJXyPz7E1DY13eKEYZJK
-         fwoA==
-X-Gm-Message-State: AOAM533fEVBkZWfGG2zvwbLI4TJY0DJHGFFHv9UNGxtBLc9SvkZgjEDW
-	VgtAbnP1VGWTi+2mF0hidTsssPXRh5M=
-X-Google-Smtp-Source: ABdhPJw3JJtzVEsU7MXSGiLkY8C+cN3lvpHPJrLMM2m35CNn5FUlT0+4FHa0FbcLnmK1YBz0nl51QA==
-X-Received: by 2002:a05:620a:a8a:: with SMTP id v10mr5240889qkg.488.1590602815095;
-        Wed, 27 May 2020 11:06:55 -0700 (PDT)
-Date: Wed, 27 May 2020 14:06:52 -0400
-From: Benjamin Gilbert <benjamin.gilbert@coreos.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20200527180652.GA3675595@trogon.sfo.coreos.systems>
-References: <CAF=P+=6oF_93xq7VwdiDXu-K19NkVTx7B5c0pwr8-q14jQ2UTg@mail.gmail.com>
- <20200505192458.GA8312@openwall.com>
- <20200507230420.GA2011454@trogon.sfo.coreos.systems>
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
+        bh=QokUV4kiRADaCwtRsZbtOuYtwFQNH15ap/BWLmGhpVs=;
+        b=gmzwfwomga4W76ivHd5KQq5h5JEmeInOgUWgZZ4jljdQ/BBzMYl1Jj2EhoKpoguBB2
+         2vep1wml2Ah0Su4Xtav0xndLYj91Xq/TkjZzKUqIwFISB3fVm8mkZi79kQ9lQ5fzU5L2
+         TifPXv3yn9L5RIinlMPkFbN0BCzh5VMhMsv44RVOIeW+a0UZSgCHo+MAyQ+jcf0q91xp
+         Qa79fhpM9IOCNmEr8pLUBKJoAMbpyiiEhp7qJysksB1RcblQQ2/4zgZkhA6L7rWiH+an
+         XZW+hJ2tQ1SzbLjkdAf6YEezJo7SIMea3GYjaqSPWL38JCtPBoR6aLUFsyl6rI/vEXwk
+         R4tQ==
+X-Gm-Message-State: ALyK8tIU4eQEfz+r285eUbXXQ+blUSW/mn3sF44e3pDqdB8o3ki/OVcIe7Mi5i/w6ity7f3jk9kBtflYpiPGLQ==
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200507230420.GA2011454@trogon.sfo.coreos.systems>
-Subject: Re: [oss-security] CoreOS leaving distros/linux-distros on May 26,
- handing off responsibilities
+X-Received: by 10.202.214.15 with SMTP id n15mr1711581oig.106.1465581374759;
+ Fri, 10 Jun 2016 10:56:14 -0700 (PDT)
+Message-ID: <CAKws9z0qx_7spQTw9Z3vrV1hRa8so=G-1T7eegnLuMzTp0H59Q@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a113b04543b80d80534f041cd
+Date: Fri, 10 Jun 2016 13:56:14 -0400
+From: Scott Arciszewski <scott@paragonie.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Simple Machines Forums - PHP Object Injection
+To: oss-security@lists.openwall.com
 
-On Thu, May 07, 2020 at 07:04:20PM -0400, Benjamin Gilbert wrote:
-> On Tue, May 05, 2020 at 09:24:58PM +0200, Solar Designer wrote:
-> > On Tue, Mar 03, 2020 at 12:07:29AM -0500, Benjamin Gilbert wrote:
-> > > Red Hat recently announced [1] that CoreOS Container Linux will reach
-> > > end-of-life on May 26.  The Container Linux team will be leaving the
-> > > distros lists on that date,
-> > 
-> > I assume you'll remind me about that on that date.
-> > 
-> > > We plan to continue executing our current responsibilities until May
-> > > 26, but if other distros want to take over our roles sooner for ease
-> > > of bookkeeping, we're open to that.
-> > 
-> > I suggest that Oracle and CloudLinux already start to act as primary for
-> > their respective tasks, and CoreOS as backup until you leave on May 26.
-> 
-> That all sounds good to us.
+--001a113b04543b80d80534f041cd
+Content-Type: text/plain; charset=UTF-8
 
-CoreOS has now unsubscribed from distros/linux-distros.  Thanks, all.
+I reported the following PHP Object Injection vulnerabilities to the SMF
+development team on March 9, 2016:
 
---Benjamin Gilbert
+https://github.com/SimpleMachines/SMF2.1/blob/404fd5347951652624dfb72304ee38fcab98378f/Sources/Packages.php#L863-L873
+
+https://github.com/SimpleMachines/SMF2.1/blob/19ee85ff8761b792ea3e9ed630a947f45f93ee68/Sources/LogInOut.php#L125-L129
+
+In the first case, you can achieve PHP Object Injection by sending
+themechanges[]=serialized+object+here in the POST data of an HTTP request.
+
+It looks like someone had attempted to find+replace all the obvious PHP
+Object Injection issues (i.e. unserialize($_POST['foo'])) at some point,
+but they didn't look for variables directly derived from user input.
+(foreach ($_POST['foo'] as $bar)).
+
+I've sent follow-up emails to the development team but was never notified
+of any progress towards fixing it.
+
+The first one appears to have been fixed in the release-2.1 branch, but the
+other one still exists.
+
+https://github.com/SimpleMachines/SMF2.1/blob/release-2.1/Sources/Packages.php#L872-L882
+is fixed
+
+https://github.com/SimpleMachines/SMF2.1/blob/release-2.1/Sources/LogInOut.php#L125-L129
+is unfixed
+
+That's all from me.
+
+Scott Arciszewski
+Chief Development Officer
+Paragon Initiative Enterprises <https://paragonie.com>
+
+--001a113b04543b80d80534f041cd--
