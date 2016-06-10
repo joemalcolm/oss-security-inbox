@@ -1,112 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/21/5
-Message-ID: <CAFkTriJ_Gdghr4XZY3VbdtsmWN46ZMmPo9TX9c-CPebpwVhz2A@mail.gmail.com>
-Date: Thu, 21 Jul 2016 21:42:44 +0800
-From: Marco Grassi <marco.gra@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: mupdf library use after free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/10/6
+Message-Id: <20160610164327.253166C0780@smtpvmsrv1.mitre.org>
+Date: Fri, 10 Jun 2016 12:43:27 -0400 (EDT)
+From: cve-assign@...re.org
+To: tdecacqu@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for vulnerability in OpenStack Neutron
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I disclosed a UAF in MuPDF, you can find the reproducer and report here:
+> Title: Neutron IPTables firewall anti-spoof protection bypass
 
-http://bugs.ghostscript.com/show_bug.cgi?id=696941
+> independently reported vulnerabilities in Neutron
+> anti-spoof protection. By forging DHCP discovery messages or non-IP
+> traffic, such as ARP or ICMPv6, an instance may spoof IP or MAC source
+> addresses on attached networks resulting in denial of services and/or
+> traffic interception. Moreover when L2population isn't used, other
+> tenants attached to a shared network are also vulnerable. Neutron
+> setups using the IPTables firewall driver are affected.
 
-I put a partially symbolicated ASAN report here for reference
+> The dhcp fix has been included in the 8.0.0 release and this
+> request probably needs more than one CVE.
 
-Marco
+>> https://bugs.launchpad.net/neutron/+bug/1502933/comments/21
 
------
+>> Just to be clear, the ICMPv6 source address spoof isn't addressed by
+>> bug 1558658 patch (I39dc0e23fc118ede19ef2d986b29fc5a8e48ff78).
 
-➜  mupdf ./mupdf_debug/build/debug/mupdf-x11 mucrash1.pdf 2>&1 |
-asan_symbolize-3.8
-warning: broken xref section, proceeding anyway.
-=================================================================
-==24575==ERROR: AddressSanitizer: heap-use-after-free on address
-0x61700000fda8 at pc 0x0000006b0a54 bp 0x7ffcb040dbb0 sp 0x7ffcb040dba8
-READ of size 4 at 0x61700000fda8 thread T0
-    #0 0x6b0a53 in pdf_load_xref
-/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/source/pdf/pdf-xref.c:1188
-    #1 0x6b0a53 in ?? ??:0
-    #2 0x6aac73 in pdf_init_document
-/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/source/pdf/pdf-xref.c:1440
-    #3 0x6aac73 in ?? ??:0
-    #4 0x6ad4ae in pdf_open_document
-/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/source/pdf/pdf-xref.c:2347
-    #5 0x6ad4ae in ?? ??:0
-    #6 0x5183d2 in fz_open_document
-/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/source/fitz/document.c:129
-    #7 0x5183d2 in ?? ??:0
-    #8 0x4fbb2b in pdfapp_open_progressive
-/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/platform/x11/pdfapp.c:317
-    #9 0x4fbb2b in ?? ??:0
-    #10 0x4fb708 in pdfapp_open
-/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/platform/x11/pdfapp.c:213
-    #11 0x4fb708 in ?? ??:0
-    #12 0x4f01df in main
-/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/platform/x11/x11_main.c:888
-    #13 0x4f01df in ?? ??:0
-    #14 0x7f6b723ef82f in __libc_start_main
-/build/glibc-GKVZIf/glibc-2.23/csu/../csu/libc-start.c:291
-    #15 0x7f6b723ef82f in ?? ??:0
-    #16 0x41ad98 in _start ??:?
-    #17 0x41ad98 in ?? ??:0
+>> Since both issues abuse the same fundamental flaw, it seems like a
+>> good opportunity to bundle both fix in a single advisory.
 
-0x61700000fda8 is located 296 bytes inside of 768-byte region
-[0x61700000fc80,0x61700000ff80)
-freed by thread T0 here:
-    #0 0x4bad40 in __interceptor_cfree.localalias.0 asan_malloc_linux.cc.o:?
-    #1 0x4bad40 in ?? ??:0
-    #2 0x516018 in fz_free_default
-/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/source/fitz/memory.c:225
-    #3 0x516018 in ?? ??:0
+>> However, because we need different patch, this will likely requires 2
+>> different CVE numbers...
 
-previously allocated by thread T0 here:
-    #0 0x4baec8 in malloc ??:?
-    #1 0x4baec8 in ?? ??:0
-    #2 0x515f68 in fz_malloc_default
-/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/source/fitz/memory.c:213
-    #3 0x515f68 in ?? ??:0
-    #4 0x6b9aae in pdf_xref_find_subsection
-/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/source/pdf/pdf-xref.c:740
-    #5 0x6b9aae in ?? ??:0
+> https://bugs.launchpad.net/bugs/1558658 (DHCP spoofing because the rule had only
+>                                          -p udp -m udp --sport 68 --dport 67)
 
-SUMMARY: AddressSanitizer: heap-use-after-free
-(/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/build/debug/mupdf-x11+0x6b0a53)
-Shadow bytes around the buggy address:
-  0x0c2e7fff9f60: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2e7fff9f70: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2e7fff9f80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2e7fff9f90: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c2e7fff9fa0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-=>0x0c2e7fff9fb0: fd fd fd fd fd[fd]fd fd fd fd fd fd fd fd fd fd
-  0x0c2e7fff9fc0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c2e7fff9fd0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c2e7fff9fe0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c2e7fff9ff0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2e7fffa000: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==24575==ABORTING
+Use CVE-2016-5362.
 
+
+> https://bugs.launchpad.net/bugs/1558658 (MAC source address spoofing)
+
+Use CVE-2016-5363.
+
+
+> https://bugs.launchpad.net/bugs/1502933 (ICMPv6 source address spoofing)
+
+Use CVE-2015-8914.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXWuzyAAoJEHb/MwWLVhi2bBAQAKsmBq6+BILn7sflHZr1biSs
+1bGOleiu+F947NAp5zzqjv9riowFneB7fCTPJ3uSXueCSNEyGFDIVPR80M7MWKdv
+vtTUnLT8GLl9P2ZkvdYLaIW12UQq2OQF5nA0kuz8piVJx5Mx6M9rMypw83cKlIfw
+iovaJMZuI6ZSsYmdm8RJiEyhRO+fyTXSYi/i7/6UqGUnZuBU4//KvkTqE3ZHWw6K
+4HRaFIDVFljIHJpLgdIyLDBoMymxf7yYSvMVAX7f74drOLkQd+LyMYnLzR6dLCtc
+sFR31f3f1v+lFSYTXdklEF/toSu6pNHauffcmxAWLpn3vOLJbzKpZZ2I23uDPQSZ
+cOJ0ygs+ZbIXABaRsfBiU6bk0uiXvGqyifcFZnoayWPpCyN65qrdJlgMYBjhprVa
+g1TEnJ7I+H/6FVTbvpdHo+m0YVS2oF3/Wy2B2FrpdCC43aTPYCzEWNmlQfl8MY39
+aGdLugde8eOhWOJQugnqe94CxbAdcR2H/BTh28XaABhLdDwrnU6XSWY56pzcu1ys
+ctYo8aPPsgHr9SC6c7noBfO3RMQGqkLOFakjjPGUmMHQ3Fz/Rz3pljVFZYwaQ8aS
+BPvpQ2DtsHo9VSDt/t6srftFNWC2B91lbOj68aKm32rXq4rDuuNtS3pbmFpphjgv
+WUQ3XjzlzzoHO3TR4PHY
+=5QDQ
+-----END PGP SIGNATURE-----
