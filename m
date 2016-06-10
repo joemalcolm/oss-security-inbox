@@ -1,35 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/18
-Message-ID: <nc6fs4$ta1$1@ger.gmane.org>
-Date: Mon, 14 Mar 2016 16:55:14 +0300
-From: "Yuriy M. Kaminskiy" <yumkam@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request - GNU Awk.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/11/2
+Message-ID: <CAGoFzNdHoz9cBOoHsN28m6oT+ig=Dt1LRtkYw_+A2-4RpMqe+Q@mail.gmail.com>
+Date: Fri, 10 Jun 2016 17:02:58 -0400
+From: Insu Yun <wuninsu@...il.com>
+To: oss-security@...ts.openwall.com, Yeongjin Jang <Yeongjin.jang@...ech.edu>
+Subject: CVE-Request: heap overflow in Python
 Content-Type: text/plain; charset=utf-8
 
-On 14.03.2016 15:26, Tomas Hoger wrote:
-> On Mon, 14 Mar 2016 06:32:28 +0000 Steve Kemp wrote:
->
->>    I reported two DoS bugs against GNU Awk to the debian
->>   bug tracker recently, both of which are denial of service
->>   attacks causing NULL-pointer deferences.
->>
->>    It would be useful to have a CVE identifiers assigned.
->
-> Why should these get a CVE?  As you state in one of your reports:
->
->    While I appreciate that passing untrusted code to gawk is not a
->    common thing to do, I do not believe that it should be possible to
->    trigger a segfault though.
->
-> Why should that be considered a valid / safe use case at all?  If
-> something makes awk run untrusted programs, there's code execution
-> problem already:
->
->    echo | awk '{ system("id") }'
+Hello.
+In zipimport module,
+if compress != 0, then bytes_size = data_size + 1
+data_size is not sanitized, so if data_size = -1,
+then it overflows and becomes 0.
+In that case bytes_size becomes 1 and python allocates small heap,
+but after that in fread, it overflows heap.
 
-What if someone generates awk script using data from untrusted source, 
-and avoids all theoretically-dangerous constructs (like system()), but 
-their filter miss something theoretically-innocent that can trigger 
-SIGSEGV (or worse) due to bug in gawk.
+Fix info
+https://bugs.python.org/issue26171
+
+Please help assign a CVE to this vulnerability.
+
+Thank you.
+
+-- 
+Regards
+Insu Yun
 
