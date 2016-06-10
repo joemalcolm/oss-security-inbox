@@ -1,27 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/27/5
-Message-ID: <alpine.LFD.2.20.1604271151190.13938@wniryva>
-Date: Wed, 27 Apr 2016 11:53:10 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-cc: "cve-assign@...re.org" <cve-assign@...re.org>
-Subject: Re: CVE Request: Out-of-bands write issue found in qemu
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/10/3
+Message-ID: <CALPTtNXwk-si9KX9c8dMY2uyKAFdc6NLGPUxrVgXMSCDGQU0xw@mail.gmail.com>
+Date: Fri, 10 Jun 2016 09:23:50 +0200
+From: Reed Loden <reed@...dloden.com>
+To: Sam Saffron <sam.saffron@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Ruby gem rack-mini-profiler CVE-2016-4442
 Content-Type: text/plain; charset=utf-8
 
-+-- On Wed, 27 Apr 2016, 李强 wrote --+
-| The qemu has an out-of-bands bug in uart_write() function.
-| 
-| In uart_write() function from hw/char/cadence_uart.c, the ‘offset’ isn’t 
-| checked and after it is divided by 4 and used to index the ‘r’ array, it 
-| will cause an out-of-bands memory write. The value can be controlled by 
-| guest and can cause the qemu crash or code execution on host.
-| 
-| The patch is here:
-| https://lists.nongnu.org/archive/html/qemu-devel/2016-04/msg02711.html
+On Fri, Jun 10, 2016 at 8:10 AM, Sam Saffron <sam.saffron@...il.com> wrote:
 
-  Not sure if this should need a CVE, awaiting upstream confirmation on the 
-same.
+>
+> I am not sure how to go about announcing this CVE, where else to I
+> need to post this?
+>
 
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+This is actually somewhat documented, believe it or not!
+
+http://guides.rubygems.org/security/#reporting-security-vulnerabilities
+
+Yay for documentation! Though, boo for it needing to be updated since OSVDB
+is gone now. :(
+
+~reed
+
