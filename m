@@ -1,50 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/01/13
-Message-ID: <82df59c6546c4fa695c9c1cf6988d15c@imshyb02.MITRE.ORG>
-Date: Thu, 1 Dec 2016 14:13:14 -0500
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: Kernel: kvm: stack memory information leakage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/10/5
+Message-ID: <575AD7A7.8090302@redhat.com>
+Date: Fri, 10 Jun 2016 15:07:19 +0000
+From: Tristan Cacqueray <tdecacqu@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE request for vulnerability in OpenStack Neutron
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+A vulnerability was discovered in OpenStack (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public, although
+an advisory was not sent yet.
 
-> Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) support
-> is vulnerable to an information leakage issue. It could occur on x86 platform,
-> in 32bit mode, while emulating instructions.
-> 
-> A user/process could use this flaw to leak host kernel memory bytes.
+Title: Neutron IPTables firewall anti-spoof protection bypass
+Reporter: Romain Aviolat (Nagravision) and
+          Dustin Lundquist (Blue Box Group, Inc)
+Products: Neutron
+Affects: <=7.0.4, >=8.0.0 <=8.1.0
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1400468
-> https://git.kernel.org/linus/2117d5398c81554fbf803f5fd1dc55eb78216c0c
+Description:
+Romain Aviolat from Nagravision and Dustin Lundquist from
+Blue Box Group, Inc independently reported vulnerabilities in Neutron
+anti-spoof protection. By forging DHCP discovery messages or non-IP
+traffic, such as ARP or ICMPv6, an instance may spoof IP or MAC source
+addresses on attached networks resulting in denial of services and/or
+traffic interception. Moreover when L2population isn't used, other
+tenants attached to a shared network are also vulnerable. Neutron
+setups using the IPTables firewall driver are affected.
 
->> KVM: x86: drop error recovery in em_jmp_far and em_ret_far
+References:
+https://bugs.launchpad.net/bugs/1502933 (icmpv6)
+https://bugs.launchpad.net/bugs/1558658 (mac, dhcp)
 
->> was left uninitialized outside of long mode
+Note:
+The dhcp fix has been included in the 8.0.0 release and this
+request probably needs more than one CVE.
 
-Use CVE-2016-9756.
+Thanks in advance,
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
-iQIcBAEBCAAGBQJYQHXsAAoJEHb/MwWLVhi2TgcQAIG2Ktz53lW9raKviMre4rfZ
-X2KyP4Z3K5IKcpMhKZRIFbwTE9VdN7T+w6avgh896X/b+qOyL4iAyXSumVMVsAzZ
-I5tr0qxJvL1wybm5v/+w+dwWySE9rETa6kYxhjt/SPqvNiO2MluysS2zt1IjG2IT
-oN+NnXWOk5rgfl4lp3Ei2sbLOU/0dWd0XgVRVmA332toD+w+AcsHCQBPy0Bba11B
-CHE8pzNqQr5R0237OuCEXd5aAQVw7YJKz6oQVii1HjK523m7Cf/C1NH6k/lAQby4
-mJcuC41yApyiPB/Ch2iUg1IKg6b2b1himL12kDEgTvgejE/4x0BNTaMw5bYCPSAe
-RhCNNMLmhKy6VBB3aUTKIGoFa0q/DplL9jGG5Jy2LQ9tg1rC68MWqrSdlHDDscxu
-svTUMiPpboh83D5BYhVTXajQzVEgFktbGyycOgfT2cos5imbF9RPXYtu/QD5e+Pp
-T/9ziafUnQ1YrU3X2wpV/v0P8mFoxsDVrEu8AMvvB/Q+tKyB62rSV/Fc952M52K3
-eeJPGEC83G7O51ZAuEXGaJGqSTQ90UrPM38fOJIYOmX18HwaBIyEdBFvhXshpjYE
-UfCjLblQYcnV3Ba02CjbA9MSkzfuClGXwHVBTPkIi8aV+BDKlR958wNrjO+HWQl/
-44D1okf1EQ/QqrejB32l
-=YB5I
------END PGP SIGNATURE-----
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
