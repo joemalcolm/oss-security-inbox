@@ -1,68 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/04/7
-Message-ID: <CACn5sdTTwpjgFduGLqa+eK3YtL4wVdUrN=rk5pGA+91LiB8-hw@mail.gmail.com>
-Date: Sat, 4 Jun 2016 18:40:21 +0200
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: DoS in phantomjs 2.1.1 rasterizing websites
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/10/2
+Message-ID: <CAAtdryMeBm=+QAMNSDNQZXJCgsCM4Mw=05ye1kS6bw6L+VaajQ@mail.gmail.com>
+Date: Fri, 10 Jun 2016 16:10:29 +1000
+From: Sam Saffron <sam.saffron@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Ruby gem rack-mini-profiler CVE-2016-4442
 Content-Type: text/plain; charset=utf-8
 
-2016-06-02 18:18 GMT+02:00  <cve-assign@...re.org>:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
->> A denegation of service vulnerability was found in phantomjs when it
->> is processing a particular svg file. This crash caused by a null
->> pointer dereference can be easily used by a malicious website to
->> avoid rasterizing when it is crawled using phantomjs 2.1.1. Previous
->> versions like 1.9.x are not affected. A reproducer is available here:
->>
->> https://github.com/ariya/phantomjs/issues/14244
->
-> Please provide more information about the threat model. Do you mean
-> that a single PhantomJS process is commonly used to access a series of
-> independently operated web sites, and the operator of any one web site
-> could disrupt this use case by placing the crafted SVG file on their
-> site? Or, do you mean that the only known impact is that one web-site
-> operator could prevent PhantomJS access (e.g., screenshotting) of
-> their own web site by using the crafted SVG file -- in other words,
-> the crash would not realistically disrupt any use of PhantomJS by the
-> same client to access other web sites?
+https://github.com/MiniProfiler/rack-mini-profiler
 
-For sure, a malicious website can use it to avoid screenshoting and
-other automatic operations just including such image.
+https://rubygems.org/gems/rack-mini-profiler/
 
->
-> Is ongoing use of PhantomJS disrupted only in the
-> http://phantomjs.org/api/webserver/ case? In other words, any one
-> web-site operator could crash the web server within PhantomJS, and
-> there would be an outage until the web server within PhantomJS is
-> manually restarted?
+Description: Carefully crafted requests can expose information about
+strings and objects allocated during the request for unauthorised
+users.
 
-I'm not sure about this. I was hopping someone from oss-security can
-comment on this.
+Fixed in: https://github.com/MiniProfiler/rack-mini-profiler/commit/4273771d65f1a7411e3ef5843329308d0e2d257c
 
->
-> - --
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->   http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
->
-> iQIcBAEBCAAGBQJXUFvYAAoJEHb/MwWLVhi2qSAP/ieu7bSO3I9bPOqkc5+5YkI3
-> /rjZASGY/nV5BCoDv0F7uv3AAKQYd+EzKoa9Nu6soOo2LCnhE4TdFL9VhdJQcSLk
-> UwGcx+Iqk/s44igsWML2GnTOsSldxzLHKP9a1IDYj+lU+kZ07yYXytUlx1bbKJNZ
-> w2nzT2+sn4V0pHkRMx0a8YkugzTJzD2MGkYxDsLUh0aTDvbA/U53S20obYe7wJjq
-> xwinllQRW8cE/Rf0yglxbJpBeV3/dsdOcKC/lnNYbvGMDYWe3t8DIpqVdDXM7nlg
-> NfqfDU7pl9q31FpEmxnSzTi7MmnWimgQbxAT/Jpi59sGIx0+XE9KqNdwPpj4YQYT
-> FCUujyJBNNdU0+yLHi5NHb6fsT65Wq3AaTK/10220siLAfFfNU11bT/nIUv572Aa
-> j81M04BwotyzuQE76MRrXZKswncHyYJZPY5LCvr4KfBntwBfxwJx/xxdSPOtQA59
-> mkV1gvVBbL+ANJUZOPuiRNTi95UCTi4z9CEfNgIONCMxtLIvCJZ65QGDGvL+kV8o
-> ko8+W5/7FWR2j53AhxGYICoiXlLc/v3OVektEx5LwFxp6Mc6IFqhbsnIy6m+p8NU
-> JQVoDfj1NLy+oRzh+7aysYFOUxqAMU20fQLReZNfBmvjRz9DPiYnsZcmd8igYP6K
-> 4QzOCYC0rF1y6PbhjAd0
-> =2USQ
-> -----END PGP SIGNATURE-----
+Released public fix in version: 0.10.
+
+
+----
+
+I am not sure how to go about announcing this CVE, where else to I
+need to post this?
