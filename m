@@ -1,46 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/03/3
-Message-ID: <0301c866a24643c1a4f15ace461d6aaf@imshyb02.MITRE.ORG>
-Date: Fri, 2 Dec 2016 22:20:08 -0500
-From: <cve-assign@...re.org>
-To: <sploving1@...il.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <tiwai@...e.de>
-Subject: Re: CVE request: -- Linux kernel: ALSA: use-after-free in,kill_fasync
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/10/8
+Message-ID: <575B352F.9000808@canonical.com>
+Date: Fri, 10 Jun 2016 14:46:23 -0700
+From: John Johansen <john.johansen@...onical.com>
+To: oss-security@...ts.openwall.com
+Cc: Jann Horn <jannh@...gle.com>, Tyler Hicks <tyhicks@...onical.com>, "security@...nel.org" <security@...nel.org>
+Subject: [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+This is a forward notification of a local priv escalation flaw from
+security@...nel.org to the OSS security list. The CRD was for
+2016-06-08 14:00:00 UTC. Patches attached to the email.
 
-> https://github.com/torvalds/linux/commit/3aa02cb664c5fb1042958c8d1aa8c35055a2ebc4
-> https://patchwork.kernel.org/patch/8752621/
+The flaw in eCryptfs was assigned CVE-2016-1583.
 
->> Currently kill_fasync() is called outside the stream lock in
->> snd_pcm_period_elapsed(). This is potentially racy, since the stream
->> may get released even during the irq handler is running.
+If backporting these patches to kernels pre 4.6 you may need to
+cherry-pick patch 6a480a7842545ec520a91730209ec0bae41694c1
 
->>> BUG: KASAN: use-after-free in kill_fasync
 
-Use CVE-2016-9794.
+View attachment "2of3.patch" of type "text/plain" (2331 bytes)
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Download attachment "crasher.tar" of type "application/x-tar" (10240 bytes)
 
-iQIcBAEBCAAGBQJYQjl+AAoJEHb/MwWLVhi20bIP/2YwMe+WkpAO/h+tumPCmFmh
-hdZr5j+sGBqm+QajpvcMyRaSGr+5Jxby33NZVYiI7xOQsfRh7unL4+JqaDNvA0gU
-HrCin7BtFCKYS8LqUW0y1T3/PkjBr69PJJoBADwhn7MyFQ8VqlBCUMaILVUygk5M
-eSlyp3pl1KZblySC6KWEH+Lw+sfq+CaLH3Y1EPKcBqCwDPnib2cW7T9K6fYVBLnR
-1uzPX54A+bdXAWpU3Qb9wz0QrzLwtsFRp0ue/FjJLJWNCPwGuU4q8QcSUsZ4IVgo
-mYgZvWQs2sz5FJpL2TBFZ1Nx2ijx9WJrS26U02gUO3lhAc+8EkaW3TfvUFszWGsG
-5CI1FExd5j/oxmUISP8YXcQoy1B5V9pzzXkiz1HKLxSu5hdGplpuvRm5z7OZ9x5I
-hLwEH87wVhKYMofKFf90zJhOZYnQzmUe2Zs1Z4D1a1cKu7YT//lkQZytKmDKEceZ
-Fj36LwBwnI8MhV8T7F1a/ejdkBw0h32VazVF3hRPHqTeF3FREvu137MHA/vOTVzh
-+XsM+SJbKHkfzXEkxCisiuAluSkfOuWiyFuBAFiDHZYMMQAF7ZuOTwG+Zwu3BWUT
-ex3w0SJ1mkcCjw2EKJFaUT6/oQ0FF0e7vkgauwP5wI9owxdc14qKuD1JGbANHUGs
-8xXWBJWlploCCTgiYz7v
-=XKyZ
------END PGP SIGNATURE-----
+View attachment "1of3.patch" of type "text/plain" (1908 bytes)
+
+View attachment "3of3.patch" of type "text/x-patch" (1862 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
