@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1825" "Thursday" "26" "August" "2021" "23:18:53" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" nil "66" "Re: [oss-security] Linux kernel: qrtr: another out-of-bound Read in qrtr_endpoint_post in net/qrtr/qrtr.c" nil nil nil "8" nil nil (number mark "U       butterflyhua Aug 26   66/1825  " thread-indent "\"Re: [oss-security] Linux kernel: qrtr: another out-of-bound Read in qrtr_endpoint_post in net/qrtr/qrtr.c\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: qrtr: another out-of-bound Read in qrtr_endpoint_post in net/qrtr/qrtr.c" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["506" "Friday" "10" "June" "2016" "17:02:58" "-0400" "Insu Yun" "wuninsu@gmail.com" "<CAGoFzNdHoz9cBOoHsN28m6oT+ig=Dt1LRtkYw_+A2-4RpMqe+Q@mail.gmail.com>" "23" "[oss-security] CVE-Request: heap overflow in Python" "^Date:" nil nil "6" "2016061021:02:58" "[oss-security] CVE-Request: heap overflow in Python" (number mark "U       wuninsu@gmai Jun 10   23/506   " thread-indent "\"[oss-security] CVE-Request: heap overflow in Python\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14086 invoked by uid 550); 26 Aug 2021 15:21:54 -0000
+Received: (qmail 5289 invoked by uid 550); 11 Jun 2016 00:40:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,111 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13606 invoked from network); 26 Aug 2021 15:19:14 -0000
+Received: (qmail 20261 invoked from network); 10 Jun 2016 21:03:10 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5zV7TRSdE24+hJwWL7W/Kk3PDGr7JO09KF9L0eo126U=;
-        b=oVNS4MujaL8cD7lo5Zaw61m3pqP08xmwOAdvb2bLilAqqK0egEKRSSsRL2uyS8x5Mi
-         33Fys8sltKZDk9HC0t4fRnEFEoJrjHx4ry9nvDT7bGMam96gV5olT71KmRH4dGU56NNR
-         TIzP4FZIXoSEYqd8w+Gb68GnycVCnIblidLSUpoMIv0pCYb0rNsgLSmN5/ixW/xui7Wh
-         Oqa2xUd8FnXD6DfQVmX3WvYmd3bhxJjR00BTdMRP1CHsc7F5MTjtmI7hCS/3gki2LvUe
-         CkOeqGa1r+TzAY0EO8rMTOTl3IuyXtuzc++gZO3/QfM+fuimoddgP/xP+jjmPAX+TJI1
-         Kdew==
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=RlCZFHgb6mQiUZFWHSae5Nkye0RTxtqcntFCHYOvf+M=;
+        b=v7zrF112m/sBfj7UPm/kIRX9LzrsHWQdOkfaXnNd/ZNJ7QOtiWYw8boELdDK6qHnbt
+         I7r0YafmSehEe9H1kVXDxEuB3Z+lQoZ3lsePdyxnToDgKfqjVdhCoBcskZm6Wad+NSFn
+         ORcINAD//bOfMvXWtglsHbwKFAAVxdN/JAZ0qrSyYOShi39UFhpdqVbh82ruZUj6hAYA
+         OWnBWA2MJ4IsxLgv8k8ePXcgsNggToE1A9KcTkjfzxhIgf1DlUiBDePKe6zae3P69d7j
+         W/ReaUWlPAoFOFMLqOEPSkQ0S0ck78zRaBHTpPOB4gwyct7VlxLQLqJGWG0YSmznilHf
+         il1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5zV7TRSdE24+hJwWL7W/Kk3PDGr7JO09KF9L0eo126U=;
-        b=bS99zE6cTkA9q3E5+6nnGl+rb2Eo+Qun8vpWdmrhNLVfFH7Jc5qK/iiLYlv0b0yO/6
-         H7poQ5g0NoaAlvqZZ2a+5qtc1ix5Uu94BJmMoHy1lDHjDJuCLCYOFlNsoh12755UgHcy
-         l7nIjprE3aNDEk+DmjSdZdWadfUV/GB4SmXmwR872BQMs2paD6tEnGQO6TSFxZASxx3J
-         J2Sv3ko+Ic06N+OIBYrSig9b7g/wUsLS3lcx/pstPi9bMBWJMGB60c78NLQWo31PQidG
-         8dbv3hYo6+I8OJ7oDVfAScpYSc2aAxOin68pe3gRewrHrBSABGn3i//zBnBp/3ZN1ylg
-         +u/A==
-X-Gm-Message-State: AOAM5333eSvdJFHUySIRNvYgrI8oD6Op/Ae1o+pmyFIXMVeljazZZGdx
-	sztdz4WICoyGxg/AKn3+604Rt958cfw0iMkPlzM=
-X-Google-Smtp-Source: ABdhPJyuR2sMuuQF7gC4oL63AOdH3Lz9Xcp84gUWZ2sxGxgPnpCmon189V9KptMM+nT6o/VVOxCjQbsWcjlQ5m7zy7w=
-X-Received: by 2002:a25:a241:: with SMTP id b59mr5690976ybi.522.1629991143046;
- Thu, 26 Aug 2021 08:19:03 -0700 (PDT)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=RlCZFHgb6mQiUZFWHSae5Nkye0RTxtqcntFCHYOvf+M=;
+        b=YgtGp34T2k4Er1gOe1eNP+n/MUTC1dGWWQgyU7kQPYGQT6ryCrPO7jEQm8WDFs5lpM
+         8FWng0cJ8BPCqAwSRaE3DxlSYLv9XPWjuDZdKss+C9DuT/NlAVlDzv+oBnB3Hy+EIgpk
+         mhlWAUb7JRbuYYhDfpLoBhR0PtfQPs10a3XkSmSAsj0LTwElWiaJdFzGTIAv/Ns/Eiuh
+         XiviVAJwDD5h+q2I9DuEOII0ecsdAMkMcTQbkzoBzoZIWiIwqtpVn9aBQDyNYw6LDECv
+         hvRYA/6lADIf+hVwCJC9gkgVffVOj1kp/Q2P7N/fXAVXCMX9Bb1Ui3u9+/G056kM0UFG
+         9tAA==
+X-Gm-Message-State: ALyK8tK9xv41NTWfjtrng59y7sx078fKG3I+Zt5Y1JquSlgBY50EQDtogfR9ownq/nn0W9tAyIgdRO1zDr3PFg==
+X-Received: by 10.31.63.14 with SMTP id m14mr1390539vka.16.1465592578576; Fri,
+ 10 Jun 2016 14:02:58 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAFcO6XMiLJqwy=QW0Mv-yruhytSFRwb3yJsdMRVg3Gghm_5u7g@mail.gmail.com>
- <66DDFEAA-E5B2-4348-B5D9-ECCE66231F44@oracle.com>
-In-Reply-To: <66DDFEAA-E5B2-4348-B5D9-ECCE66231F44@oracle.com>
-From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
-Date: Thu, 26 Aug 2021 23:18:53 +0800
-Message-ID: <CAFcO6XO9KQwwcwYrSc00j1y_xAf+wU4AN7YLSCgWOEqUAANMOQ@mail.gmail.com>
-To: John Haxby <john.haxby@oracle.com>
-Cc: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] Linux kernel: qrtr: another out-of-bound Read in
- qrtr_endpoint_post in net/qrtr/qrtr.c
+Message-ID: <CAGoFzNdHoz9cBOoHsN28m6oT+ig=Dt1LRtkYw_+A2-4RpMqe+Q@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a114dd3400815e80534f2ddd4
+Date: Fri, 10 Jun 2016 17:02:58 -0400
+From: Insu Yun <wuninsu@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-Request: heap overflow in Python
+To: oss-security@lists.openwall.com, Yeongjin Jang <Yeongjin.jang@gatech.edu>
 
-No, I didn't. I have reported to Red Hat, they said that if they
-confirmed and would assign a CVE for this issue.
+--001a114dd3400815e80534f2ddd4
+Content-Type: text/plain; charset=UTF-8
 
-Regards,
-  butt3rflyh4ck.
+Hello.
+In zipimport module,
+if compress != 0, then bytes_size = data_size + 1
+data_size is not sanitized, so if data_size = -1,
+then it overflows and becomes 0.
+In that case bytes_size becomes 1 and python allocates small heap,
+but after that in fread, it overflows heap.
 
-On Thu, Aug 26, 2021 at 10:41 PM John Haxby <john.haxby@oracle.com> wrote:
->
->
->
-> > On 25 Aug 2021, at 03:40, butt3rflyh4ck <butterflyhuangxx@gmail.com> wrote:
-> >
-> > Hi, There was another out-of-bound read bug in qrtr_endpoint_post in
-> > net/qrtr/qrtr.c in 5.14.0-rc6+ and reproduced it.
-> >
-> > This check in  qrtr_endpoint_post was incomplete, did not consider size is 0:
-> > ```
-> > if (len != ALIGN(size, 4) + hdrlen)
-> >                goto err;
-> > ```
-> > if size from qrtr_hdr is 0, the result of ALIGN(size, 4) will be 0,
-> > In case of len == hdrlen and size == 0 in header this check won't fail and
-> > ```
-> > if (cb->type == QRTR_TYPE_NEW_SERVER) { /* Remote node endpoint can
-> > bridge other distant nodes */
-> >             const struct qrtr_ctrl_pkt *pkt = data + hdrlen;
-> >             qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
-> > }
-> > ```
-> > will also read out of bound from data, which is hdrlen allocated block.
-> >
-> >
-> > #analyze and some details
-> > https://lists.openwall.net/netdev/2021/08/17/124
-> >
-> > #patch
-> > https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=7e78c597c3eb
-> > now not available upstream.
->
-> Hi,
->
-> Did you ask for a CVE for this bug?
->
-> jch
->
-> >
-> > #Timeline
-> > *2021/8/17 - Vulnerability reported to netdev@vger.kernel.org.
-> > *2021/8/20 - Vulnerability confirmed and patched.
-> > *2021/8/23 - Vulnerability reported to secalert@redhat.com.
-> > *2021/8/25 - Opened on oss-security@lists.openwall.com.
-> >
-> > #Credit
-> > Active Defense Lab of Venustech.
-> >
-> >
-> > Regards,
-> > butt3rflyh4ck.
-> >
-> > --
-> > Active Defense Lab of Venustech
->
+Fix info
+https://bugs.python.org/issue26171
 
+Please help assign a CVE to this vulnerability.
 
---
-Active Defense Lab of Venustech
+Thank you.
+
+-- 
+Regards
+Insu Yun
+
+--001a114dd3400815e80534f2ddd4--
