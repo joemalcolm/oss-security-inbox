@@ -1,79 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/7
-Message-ID: <20160822111506.GA4403@openwall.com>
-Date: Mon, 22 Aug 2016 14:15:06 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Werner Koch <wk@...pg.org>, Pascal Cuoq <cuoq@...st-in-soft.com>, Rapha??l Rieu-Helft <raphael.rieu-helft@...st-in-soft.com>
-Subject: Re: memory issues in libksba 1.3.4 and git
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/10/4
+Message-Id: <20160610123434.D865C13B51E@smtpvmsrv1.mitre.org>
+Date: Fri, 10 Jun 2016 08:34:34 -0400 (EDT)
+From: cve-assign@...re.org
+To: huzaifas@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I thought I had fixed that ezmlm-idx incompatibility with Werner's setup
-of Gnus, but it seems not - perhaps it's not exactly that same old bug,
-even if very similar:
+> I would like to request a CVE for the protocol flaw in IKEv1, details below:
 
-http://www.openwall.com/lists/oss-security/2016/08/18/20
+> https://www.kb.cert.org/vuls/id/419128
+> https://blogs.akamai.com/2016/02/ikeikev2-ripe-for-ddos-abuse.html
 
-In those old bug reports, it was about MIME sections completely lacking
-headers.  In Werner's messages, the MIME section has only the
-Content-Transfer-Encoding header, but not a Content-Type header.
+> https://bugzilla.redhat.com/show_bug.cgi?id=1308508
+> https://github.com/libreswan/libreswan/commit/152d6d95632d8b9477c170f1de99bcd86d7fb1d6
+> https://lists.libreswan.org/pipermail/swan-dev/2016-March/001394.html
 
-Also, Werner's latest message appears to have an invalid boundary
-string.  (The previous message for which corruption occurred had a
-valid boundary string, even if unusual.  These unusual boundary strings
-might or might not be relevant to the problem.)  Specifically:
+> Can a CVE id be please assigned to this?
 
---=SRI-target-ANDVT-Freeh-anthrax-[Hello-to-all-my-friends-and-fans-in=
+CVE IDs are not assigned to UDP protocols solely on the basis of an
+observed amplification-attack risk. A CVE ID can exist if the UDP
+reply traffic simply cannot ever have any legitimate purpose for users
+of a protocol. The general case of the interaction between UDP
+amplification and CVE was discussed between MITRE and CERT in 2013;
+this may be the reason that no CVE ID is listed in the
+https://www.kb.cert.org/vuls/id/419128 document.
 
-The "[" character isn't in the allowed set per RFC 2046:
+We can, however, assign a CVE ID to a vendor's announcement of a
+required security update, such as on the https://libreswan.org/ home
+page:
 
-     boundary := 0*69<bchars> bcharsnospace
+  "libreswan 3.16 vulnerable to DDOS attack. Please upgrade to 3.17"
 
-     bchars := bcharsnospace / " "
+Use CVE-2016-5361 for this issue only in the libreswan codebase.
 
-     bcharsnospace := DIGIT / ALPHA / "'" / "(" / ")" /
-                      "+" / "_" / "," / "-" / "." /
-                      "/" / ":" / "=" / "?"
 
-Unfortunately, the message corruption occurs post moderator approval, so
-I couldn't easily see whether it occurred this time or not without
-approving the message first.  I guess I'd need to debug it on a test
-list, re-injecting Werner's message on my own, but I don't currently
-have time for that.  I'll include Werner's original message below.
+> https://bugzilla.redhat.com/show_bug.cgi?id=1308508#c6
 
-Werner, maybe you could try this old workaround for next time you post? -
+> This is tracked via upstream bug:
 
-  (setq mml-insert-mime-headers-always t)
+> https://bugs.libreswan.org/show_bug.cgi?id=262
 
-Thanks, and sorry, and yes this is pretty ridiculous.
+We don't think that Bug 262 tracks this "one update to libreswan IKEv1
+to reduce amplification caused by retransmits" issue. Bug 262 is about
+a possible functionality problem in the 3.17 release, It is marked
+"Importance: Low enhancement."
 
-Alexander
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-On Mon, Aug 22, 2016 at 12:11:47PM +0200, Werner Koch wrote:
-> On Sat, 20 Aug 2016 16:06, cuoq@...st-in-soft.com said:
-> 
-> > These inputs have been set to Werner Koch, privately as per his
-> > request, on May 25, June 11 and July 11. I am publishing them now so
-> 
-> I am sorry about the delays.  I asked Pascal to discuss this privately
-> for the simple matter that I would anyway be the one to fix the things.
-> In the future I will take care to CC my co-hackers on such private mails
-> so they can jump in or remind me of such delays.
-> 
-> > that anyone who uses or might want to use libksba to parse messages
-> > (received pre-authentification by definition) can make an informed
-> > choice considering the risks of denial of service and information
-> 
-> I just release libksba 1.3.5 which limits the allocation to a 16 MiB
-> which is the best solution I could come up with.  Note that this parser
-> is only used for smallish ASN.1 objects like certificates or small parts
-> of of larger ASN.1 objects (like CRLs).
-> 
-> Thanks to Pascal for looking at Libksba.
-> 
-> 
-> Shalom-Salam,
-> 
->    Werner
+iQIcBAEBCAAGBQJXWrL9AAoJEHb/MwWLVhi2DokP/05yJL+xl3qdCOdoJ3Y+QqhR
+2B2ktnsgySAPkPSaBQCQd2PcRTedM+yRzXTqOiBsiPm1PrB85YOemhLn37H4bwM2
+C17TMsrwXa2tnPQAxjqZNP6j6fg2Y0Cw2/odUsXdV0ZR9VxtePQUI0GBKq5RBmJn
+BtCfHlQFf145H9MO8tUJ3LNxu076JmfAy33q25Ha7/bU46H6HiiybSB4UOUziiDL
+0OEAbCMKVDEorTW0Cu9OcdhVFi3u13WO3GUmTIGaXVboMnq0N1Swdlg7V18XSikZ
+P61tdEBVA9565cEKR+OnAG4nC5uFZ8Sri0FJCPS21nbQ8J0srOtlBBZt55+W5SzX
+0JPLSc6maxtDH8XVYLHHlLyMYCFkUmMztifnEzV2WAulrzW5fZZyo6hkSo1dMQ3S
+uLfm8bvfwopIYRGCeTPesDIQIPoqSy9lfh01Z9GJ2G59Jg8SZIPIzH09h7ft4OYv
+cK79yb5v/XdyNH3PUHTEmEm4wkQeJY/X2TFob5iGCxOSmKUs+rWMMliVIJd22K25
+2e0Y2nOv1Z4PTS2+c2uncswFPP1IQmSN9/jP8sIKXeg+NjthgzUJ7V69iMyFkkLZ
+dZVGvK3VGm5qM1Zmh7AG7iIjj0IRIHEIh7TJD/LmFqCDC6Qkjm4gVXbXiAZjsr2R
+8pFYiRXpWVYsrwtR+nBs
+=L6xn
+-----END PGP SIGNATURE-----
