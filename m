@@ -1,24 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/11/13
-Message-ID: <20161111194327.GA26873@tunkki>
-Date: Fri, 11 Nov 2016 21:43:27 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: mehmet@...metince.net, mr@...buckingham.com
-Subject: CVE request: BigTree CMS SQL injection and reflected cross-site scripting vulnerabilities fixed in 4.2.12 / 4.1.16
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/11/3
+Message-ID: <20160611055627.GA26999@1wt.eu>
+Date: Sat, 11 Jun 2016 07:56:27 +0200
+From: Willy Tarreau <w@....eu>
+To: John Johansen <john.johansen@...onical.com>
+Cc: oss-security@...ts.openwall.com, Jann Horn <jannh@...gle.com>, Tyler Hicks <tyhicks@...onical.com>, "security@...nel.org" <security@...nel.org>
+Subject: Re: [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ
 Content-Type: text/plain; charset=utf-8
 
-Please assign CVE identifier for BigTree CMS SQL injection and reflected
-cross-site scripting vulnerabilities, thanks.
+John, Jann,
 
-Fixed in 4.2.12 / 4.1.16
-Reported by Mehmet İnce in https://github.com/bigtreecms/BigTree-CMS/pull/256
+On Fri, Jun 10, 2016 at 02:46:23PM -0700, John Johansen wrote:
+> The flaw in eCryptfs was assigned CVE-2016-1583.
+> 
+> If backporting these patches to kernels pre 4.6 you may need to
+> cherry-pick patch 6a480a7842545ec520a91730209ec0bae41694c1
 
-Fixed in:
+In the future, please add such precious information to the relevant
+commit message, because it significantly helps doing backports and
+everyone does not necessarily read a security list archives at the
+same time.
 
-https://github.com/bigtreecms/BigTree-CMS/commit/7e4b03f89dcf8dc3b0500347e877ddb7a766f23e
-https://github.com/bigtreecms/BigTree-CMS/commit/7260b84371c99e29576e8ee22eda7b36fc5da741
-https://github.com/bigtreecms/BigTree-CMS/commit/50bfa22c5861657470803669a0283053d8b67338
-
--- 
-Henri Salo
+Thanks!
+Willy
