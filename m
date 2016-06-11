@@ -1,62 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/26/8
-Message-Id: <20160526182403.AD26C72E014@smtpvbsrv1.mitre.org>
-Date: Thu, 26 May 2016 14:24:03 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE Request Qemu: scsi: megasas: out-of-bounds write while setting controller properties
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/11/1
+Message-ID: <njfkjh$lk7$1@ger.gmane.org>
+Date: Sat, 11 Jun 2016 02:05:05 +0200
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Subject: MantisBT: XSS in custom fields management
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Greetings,
 
-> Quick Emulator(Qemu) built with the MegaRAID SAS 8708EM2 Host Bus Adapter
-> emulation support is vulnerable to an out-of-bounds write access issue. It
-> could occur while processing MegaRAID Firmware Interface(MFI) command to set
-> controller properties in 'megasas_dcmd_set_properties'.
-> 
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> on the host resulting in DoS.
+Please assign a CVE ID for the following issue.
 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04340.html
+Description:
 
->> When setting MegaRAID SAS controller properties via MegaRAID
->> Firmware Interface(MFI) commands, a user supplied size parameter
->> is used to set property value. Use appropriate size value to avoid
->> OOB access issues.
+An XSS vulnerability was discovered, affecting MantisBT Custom fields 
+management pages. It is caused by unescaped output of 'return URL' GPC 
+parameter, and can be exploited as follows:
 
-Use CVE-2016-5106.
+1. using 'accesskey' inside hidden input field reflects XSS to the
+    administrator in manage_custom_field_edit_page.php when the keyboard
+    shortcut is actioned
+2. using 'javascript:' URI scheme executes the code when the user clicks
+    the [Proceed] link on manage_custom_field_update.php after updating
+    a custom field
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/megasas.c but
-that may be an expected place for a later update.
+Both attack vectors have been addressed:
 
-Note that this issue was originally disputed in
-https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04410.html
-but the dispute was later resolved, and
-https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04340.html
-stands as the final vulnerability description.
+- properly escape the return URL prior to printing it on the hidden form
+   field
+- let html_operation_successful() sanitize the URL before displaying
+   it, just like html_meta_redirect() does. In this case, if the
+   string contains an URI scheme, it will be replaced by 'index.php'
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXRzzKAAoJEHb/MwWLVhi2zloP/0/55owAdqXLYJpgkVtd9DtD
-MeJGK8ZZSCTiQl5eNTmh7qxklu360ijisJZ3/JSnZMm4Ic+Wrs66/XxN+F3Z+cc7
-uSUG+FVRZBcX6ynJhyOs+6odKq/DsXDT0aRFuSZjpSQzruJQh44PCHp0KdiZccFf
-RJiNBq7+TTY1CIZtp5PnrUWU8tax05olnJxqO0xJC36kSk77Apu97cAg0aQKjd+n
-jSL66eOviTPOSFrcAgGbLqo6Q1NDrk2hiTf7+GZAr3oGraOZ5Kx0AYMMo66RWF03
-/5PvhWBOMI67ic9n5Zag2OBZnxb5nr07IgsO+yiXmRePKRnYMu3s7vvp0asBvolU
-DzlYXIofT1bR2xasuxba6E9cq/v13sKFVOyHWcslpAZg/eiP/2J+oR+sh7qGkUoN
-g+7FF6H2qDZC4hQa09ivyP6mwdrGh7R7p3JUK2ic6uohNBl2z7I+IPQq8t+3f9L3
-vTOJA9nvEzbGR/416j70T0q36vTB5Miv0cg4PkoMoc5Xe7akb7/Yo/UCtkpUvEHq
-A/vqfo7lhge1xKL4aPIgLpe5BmjbPgsiAAEqBoH/J7V/2WVlylw9FKdGyW1pb8MH
-5i/u4jZJCTlzqICs5UDUh6XMRr2WQxm9rJidtNnGFFSyOMhu5m4FsMXoIb9739Ro
-9XTzzUiK1dyJnWxI8anO
-=MoXX
------END PGP SIGNATURE-----
+Affected versions:
+1.2.0 and later (possibly older releases as well - not tested)
+
+Fixed in versions:
+- 1.2.20
+- 1.3.0-rc.2
+As of this writing, these have not been released yet, but both should be 
+available in the next few days.
+
+Patch:
+See Github [1]
+
+Credits:
+The issue was discovered by Kacper Szurek [2] and fixed by Damien Regad
+(MantisBT Developer).
+
+References:
+Further details available in our issue tracker [3]
+
+
+Best regards,
+D. Regad
+MantisBT Developer
+http://www.mantisbt.org
+
+
+[1] http://github.com/mantisbt/mantisbt/commit/5068df2d (1.2.x)
+     http://github.com/mantisbt/mantisbt/commit/11ab3d6c (1.3.x)
+[2] http://security.szurek.pl/
+[3] https://mantisbt.org/bugs/view.php?id=20956
+
+
+
