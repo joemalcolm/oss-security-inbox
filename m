@@ -1,22 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/11/16
-Message-ID: <20160311201624.GE42706@coredump>
-Date: Fri, 11 Mar 2016 21:16:24 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/11/4
+Message-ID: <20160611075017.GA268@pepper.home.stoeckmann.org>
+Date: Sat, 11 Jun 2016 09:50:17 +0200
+From: Tobias Stoeckmann <tobias@...eckmann.org>
 To: oss-security@...ts.openwall.com
-Subject: two udhcpc (busybox) issues
+Subject: CVE Request for Denial of Service in pacman 5.0.1
 Content-Type: text/plain; charset=utf-8
 
-This is probably only relevant for the embedded space. Sharing two issues I 
-found in busybox' dhcp client implementation:
+The package manager of Arch Linux, pacman, is vulnerable to a denial of
+service attack based on signature files. This issue is located in libalpm
+and therefore affects any other frontend of it, too.
 
-CVE-2016-2147 / OOB heap write due to integer underflow
-https://git.busybox.net/busybox/commit/?id=d474ffc68290e0a83651c4432eeabfa62cd51e87
+A malicious signature file can trigger an out of bondary read on 32 and
+64 bit systems, but also leads to an endless loop on 32 bit system.
 
-CVE-2016-2148 / heap overflow in OPTION_6RD parsing
-https://git.busybox.net/busybox/commit/?id=352f79acbd759c14399e39baef21fc4ffe180ac2
+While an endless loop on itself is no security issue per-se, such a
+crafted file might trick the end-user to disable signature verification
+to get his updates installed. This, on the other hand, would open up
+possibilities for malicious packages to be installed.
 
-Cheers,
-Nico
+Therefore, this DoS can be considered a stepping stone towards a system
+attack.
 
-Content of type "application/pgp-signature" skipped
+Proof of concept (signature verification must be enabled):
+
+$ uname -m
+i686
+$ PKG=package-1.0.tar.xz
+$ touch $PKG
+$ echo "iQEcBAABCAAGBQJXTxJiAAr/////+wA=" | base64 -d - > $PKG.sig
+$ sudo pacman -U $PKG
+_
+
+The out of boundary access can be used to send 8 bytes inside the
+address space of a root-running program to a keyserver, as long as the
+byte in front of them is 0x10.
+
+This issue with a patch has been reported upstream. [1]
+
+Can you assign a CVE-ID for this?
+
+
+--T.
+
+[1] https://lists.archlinux.org/pipermail/pacman-dev/2016-June/021148.html
