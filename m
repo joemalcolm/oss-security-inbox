@@ -1,83 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/9
-Message-ID: <alpine.DEB.2.20.1611020811110.375@tvnag.unkk.fr>
-Date: Wed, 2 Nov 2016 08:11:41 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl URL unescape heap overflow via integer truncation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/13/1
+Message-ID: <885b2658-698a-7030-f3bc-edec7208b3ba@redhat.com>
+Date: Mon, 13 Jun 2016 09:55:48 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
 Content-Type: text/plain; charset=utf-8
 
-URL unescape heap overflow via integer truncation
-=================================================
+On 06/10/2016 06:04 PM, cve-assign@...re.org wrote:
+>> I would like to request a CVE for the protocol flaw in IKEv1, details below:
+> 
+>> https://www.kb.cert.org/vuls/id/419128
+>> https://blogs.akamai.com/2016/02/ikeikev2-ripe-for-ddos-abuse.html
+> 
+>> https://bugzilla.redhat.com/show_bug.cgi?id=1308508
+>> https://github.com/libreswan/libreswan/commit/152d6d95632d8b9477c170f1de99bcd86d7fb1d6
+>> https://lists.libreswan.org/pipermail/swan-dev/2016-March/001394.html
+> 
+>> Can a CVE id be please assigned to this?
+> 
+> CVE IDs are not assigned to UDP protocols solely on the basis of an
+> observed amplification-attack risk. A CVE ID can exist if the UDP
+> reply traffic simply cannot ever have any legitimate purpose for users
+> of a protocol. The general case of the interaction between UDP
+> amplification and CVE was discussed between MITRE and CERT in 2013;
+> this may be the reason that no CVE ID is listed in the
+> https://www.kb.cert.org/vuls/id/419128 document.
+> 
 
-Project cURL Security Advisory, November 2, 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20161102H.html)
+In that case, no CVE should be assigned to this issue as well. Its not
+libreswan which is flawed, but its the protocol which they are trying to
+implement.
 
-VULNERABILITY
--------------
 
-The URL percent-encoding decode function in libcurl is called
-`curl_easy_unescape`. Internally, even if this function would be made to
-allocate a unscape destination buffer larger than 2GB, it would return that
-new length in a signed 32 bit integer variable, thus the length would get
-either just truncated or both truncated and turned negative. That could then
-lead to libcurl writing outside of its heap based buffer.
+> We can, however, assign a CVE ID to a vendor's announcement of a
+> required security update, such as on the https://libreswan.org/ home
+> page:
+> 
+>   "libreswan 3.16 vulnerable to DDOS attack. Please upgrade to 3.17"
+> 
+> Use CVE-2016-5361 for this issue only in the libreswan codebase.
+> 
+> 
 
-This can be triggered by a user on a 64bit system if the user can send in a
-custom (very large) URL to a libcurl using program.
 
-We are not aware of any exploit of this flaw.
+Also the following products (which implement IKEv1 are flawed, since
+they follow this protocol)
 
-INFO
-----
+ ipsec-tools
+ racoon2
+ openswan
+ strongswan
+ libreswan
+ ike
+ vpnc
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-8622 to this issue.
+(There may be others, but i can only think of the above)
 
-AFFECTED VERSIONS
------------------
 
-This flaw exists in the following curl versions
-
-- Affected versions: curl 7.24.0 to and including 7.50.3
-- Not affected versions: curl < 7.24.0 and curl >= 7.51.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.51.0, the parser function is fixed.
-
-A [patch for CVE-2016-8622](https://curl.haxx.se/CVE-2016-8622.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.51.0
-
-  B - Apply the patch to your version and rebuild
-
-TIME LINE
----------
-
-It was first reported to the curl project on September 23 by Cure53.
-
-We contacted distros@...nwall on October 19.
-
-curl 7.51.0 was released on November 2 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-his vulnerability was found during a Secure Open Source audit performed by
-Cure53.
 
 -- 
-
-  / daniel.haxx.se
+Huzaifa Sidhpurwala / Red Hat Product Security Team
