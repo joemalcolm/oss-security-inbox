@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["609" "Tuesday" "26" "June" "2018" "10:11:50" "+1200" "Nate McCall" "zznate@apache.org" "<CABsaHTOiWdPU_ycw14=1Z0N47+BHL-WiiwZEeFSxbzzo+u1ZFw@mail.gmail.com>" "13" "[oss-security] CVE-2018-8016 on Apache Cassandra" nil nil nil "6" "2018062522:11:50" "[oss-security] CVE-2018-8016 on Apache Cassandra" (number mark "U       zznate@apach Jun 26   13/609   " thread-indent "\"[oss-security] CVE-2018-8016 on Apache Cassandra\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1656" "Monday" "13" "June" "2016" "10:40:48" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160613144048.9BBA942E034@smtpvbsrv1.mitre.org>" "38" "[oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack" nil nil nil "6" "2016061314:40:48" "[oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack" (number mark "U       cve-assign@m Jun 13   38/1656  " thread-indent "\"[oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack\"\n") "<885b2658-698a-7030-f3bc-edec7208b3ba@redhat.com>" ("<885b2658-698a-7030-f3bc-edec7208b3ba@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27850 invoked by uid 550); 26 Jun 2018 00:19:37 -0000
+Received: (qmail 28303 invoked by uid 550); 13 Jun 2016 14:41:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,31 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12270 invoked from network); 25 Jun 2018 22:12:05 -0000
-X-Gm-Message-State: APt69E1wH81kvr5QwZ8T2GCy+yd9tPQCnGE2Ya3HSXY/J3/hYrGqq6Ho
-	/mOtNmaLzwfRqIbIbuq87zWpMOCR0BC52RI7R/U=
-X-Google-Smtp-Source: ADUXVKISY40u22WjlLlolgV2/qcHSyuPSs6sOaGVdMSJgKrPmiF4ycfi1mZhwr5lKZ5pya992H+0s/qyhK+EygtP1og=
-X-Received: by 2002:a37:ae83:: with SMTP id x125-v6mr12439901qke.130.1529964711097;
- Mon, 25 Jun 2018 15:11:51 -0700 (PDT)
-MIME-Version: 1.0
-From: Nate McCall <zznate@apache.org>
-Date: Tue, 26 Jun 2018 10:11:50 +1200
-X-Gmail-Original-Message-ID: <CABsaHTOiWdPU_ycw14=1Z0N47+BHL-WiiwZEeFSxbzzo+u1ZFw@mail.gmail.com>
-Message-ID: <CABsaHTOiWdPU_ycw14=1Z0N47+BHL-WiiwZEeFSxbzzo+u1ZFw@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2018-8016 on Apache Cassandra
+Received: (qmail 28281 invoked from network); 13 Jun 2016 14:41:00 -0000
+From: cve-assign@mitre.org
+To: huzaifas@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <885b2658-698a-7030-f3bc-edec7208b3ba@redhat.com>
+Message-Id: <20160613144048.9BBA942E034@smtpvbsrv1.mitre.org>
+Date: Mon, 13 Jun 2016 10:40:48 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
 
-CVE-2018-8016 describes an issue with the default configuration of
-Apache Cassandra releases 3.8 through 3.11.1 which binds an
-unauthenticated JMX/RMI interface to all network interfaces allowing
-attackers to execute arbitrary Java code via an RMI request. This
-issue is a regression of the previously disclosed CVE-2015-0225.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The regression was introduced in
-https://issues.apache.org/jira/browse/CASSANDRA-12109. The fix for the
-regression is implemented in
-https://issues.apache.org/jira/browse/CASSANDRA-14173. This fix is
-contained in the 3.11.2 release of Apache Cassandra.
+> Its not libreswan which is flawed, but its the protocol which they are
+> trying to implement.
 
-- The Apache Cassandra PMC
+> which implement IKEv1 are flawed, since they follow this protocol
+
+Many protocols could be described as "flawed." The IKEv1 protocol
+amplification concern does not make it flawed in a way that would lead
+to a per-protocol CVE ID assignment. We are maintaining the
+CVE-2016-5361 ID assignment for the upstream announcement of
+"libreswan 3.16 vulnerable to DDOS attack. Please upgrade to 3.17" and
+accompanying upstream patch, as described in the
+http://www.openwall.com/lists/oss-security/2016/06/10/4 post.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXXsVfAAoJEHb/MwWLVhi2VBIQAJJwLfi5H3I6QQsHWYDakEyg
+uhTJOcJJShpTe0UEmUQ/KS16lM7WjcmhmbH7xdB5+yQe9qVK4V78QsmdeGve5gs+
+cFSot1v8KNfsZN51B28GVFh1n4TFrDoWPH0AU45zs1/4ryEnYoiz5ckvJjr/qCKd
+LiT3GInHiLeUFlpsQ8CbHuonC6lVdkm9tzuSGW00zRuS7wnOD/oanYAOb2s7Mk6K
+BkpaTJ4cg/+x1ATvIrD4B8pqAZaBcLJ4CbzIX7iafqt5fi+TOT/1G1AFXO11KHRl
+SMES3LYhgWDdXgszgewsHDefG24gx0F72GNvC/wsEcqyJOesW40IwaMDhj12bEJz
+DQ05IoYik7/2+5iPwBEJFXf5fAZ78ZlVX/dnW2cvpiTIoUcAfv3iKlmfiNF8fCLq
+fQcmZ9EC8BiKVOBXL2a4vbNLeqJhuXCrEhCEt6q43jnV/9qqMkAK5g7HdXeNvTWd
+r+TJk7ngGHigYxyMErxpGRjEDEgwusBf8o9WzvMe7JHoEdlaf6Hcczcol8pauDcy
+2FAjTg+TzNV3P1LrE2Kjulovz1ApnWKlyMqqG0HCQho2bSzmhQK+HmdK6BmNs/qe
+WZXhJt+hr1E0IZjwiuGegGYOMecxFXATj4HjRS1qslO1dPftos0hb4xK3J3yoQMR
+T5uAdnR5YRNTB5E/seg0
+=XtKp
+-----END PGP SIGNATURE-----
