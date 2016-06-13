@@ -1,44 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/28/9
-Message-ID: <56AA4839.9000506@trylinux.us>
-Date: Thu, 28 Jan 2016 08:56:25 -0800
-From: "Zach W." <kestrel@...linux.us>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/13/4
+Message-ID: <dbaa8dbe-68a9-012d-4ea1-a6dd0e1d748e@redhat.com>
+Date: Mon, 13 Jun 2016 11:07:49 -0400
+From: Paul Wouters <pwouters@...hat.com>
+To: oss-security@...ts.openwall.com, huzaifas@...hat.com
+Cc: cve-assign@...re.org
+Subject: Re: Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
 Content-Type: text/plain; charset=utf-8
 
-> shodan.io are the bad guys!  block them wherever possible, put them in
-> default blocklists suggested
-> for firewalls, etc.
->
-> these guys really don't care.   when submitting networks for
-> exclusion, they reply as if they will do something,
-> sometimes the scanning may pause for a day or a week, then it always
-> comes back.
-This is simply not true and this is the first case that I've heard of
-this happening. They DO care and they typically respond very well. I
-will be contacting you off-list to resolve this.
+On 06/13/2016 10:40 AM, cve-assign@...re.org wrote:
+>> Its not libreswan which is flawed, but its the protocol which they are trying to implement.
+> 
+>> which implement IKEv1 are flawed, since they follow this protocol
+> 
+> Many protocols could be described as "flawed." The IKEv1 protocol amplification concern does not make it flawed in a way that would lead to a per-protocol
+> CVE ID assignment. We are maintaining the CVE-2016-5361 ID assignment for the upstream announcement of "libreswan 3.16 vulnerable to DDOS attack. Please
+> upgrade to 3.17" and accompanying upstream patch, as described in the http://www.openwall.com/lists/oss-security/2016/06/10/4 post.
 
-Zach W.
+<with upstream libreswan hat on>
 
+If you want us to keep honestly reporting security issues, I recommend you
+not single out single implementations over RFC compliant protocol flaws.
 
-On 1/27/2016 8:36 AM, Rob Janssen wrote:
-> Luca BRUNO wrote:
->> [cross-posted to pool-ntp and oss-sec]
->>
->>
->> For ntp.org admins: can those rogue server be expunged from the
->> pools, and the whole
->> shodan.io situation clarified?
->
-> shodan.io are the bad guys!  block them wherever possible, put them in
-> default blocklists suggested
-> for firewalls, etc.
->
-> these guys really don't care.   when submitting networks for
-> exclusion, they reply as if they will do something,
-> sometimes the scanning may pause for a day or a week, then it always
-> comes back.
->
-> Rob
+I'm fine if you list the CVE with the 6 vulnerable implementations, then say
+libreswan has fixed it.
 
+I'm not okay with libreswan being listed as vulnerable and the other 5 vulnerable
+implementations not being listed.
+
+If you keep the CVE as-is, we will document it at libreswan.org/security/ as a
+mis-issued CVE entry.
+
+Related, I would _REALLY_ appreciate it if MITR talks to us before issuing CVE's
+for our software. We've been at this long before MITR, we respond within days, we
+are known to have coordinated CVE issues for IKE implementation issues across
+various implementations. You can contact us at security@...reswan.org, PGP key
+available at the usual places.
+
+Paul
