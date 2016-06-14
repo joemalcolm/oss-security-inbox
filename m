@@ -1,26 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/24/6
-Message-ID: <alpine.LFD.2.20.1610250103070.21966@wniryva>
-Date: Tue, 25 Oct 2016 01:05:59 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: cve-assign@...re.org, hendersa@...ulus.org
-Subject: Re: Re: CVE request Qemu: net: rtl8139: infinite loop while transmit in C+ mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/14/2
+Message-ID: <575FAA90.7040500@redhat.com>
+Date: Tue, 14 Jun 2016 06:56:16 +0000
+From: Tristan Cacqueray <tdecacqu@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA-2016-009] Neutron IPTables firewall anti-spoof protection bypass (CVE-2016-5362, CVE-2016-5363, CVE-2015-8914)
 Content-Type: text/plain; charset=utf-8
 
-+-- On Mon, 24 Oct 2016, cve-assign@...re.org wrote --+
-| > https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg05495.html
-| >>
-| >> RTL8139 ethernet controller in C+ mode supports multiple
-| >> descriptor rings, each with maximum of 64 descriptors. While
-| >> processing transmit descriptor ring in 'rtl8139_cplus_transmit',
-| >> it does not limit the descriptor count and runs forever.
-| 
-| Use CVE-2016-8910.
+=====================================================================
+OSSA-2016-009: Neutron IPTables firewall anti-spoof protection bypass
+=====================================================================
 
-This issue was reported by Mr Andrew Henderson of Intelligent Automation Inc.
+:Date: June 14, 2016
+:CVE: CVE-2016-5362 (DHCP spoofing),
+      CVE-2016-5363 (MAC source address spoofing),
+      CVE-2015-8914 (ICMPv6 source address spoofing)
 
-Thank you.
+
+Affects
+~~~~~~~
+- Neutron: <=7.0.4, >=8.0.0 <=8.1.0
+
+
+Description
+~~~~~~~~~~~
+Romain Aviolat from Nagravision and Dustin Lundquist from Blue Box
+Group, Inc independently reported vulnerabilities in Neutron anti-
+spoof protection. By forging DHCP discovery messages or non-IP
+traffic, such as ARP or ICMPv6, an instance may spoof IP or MAC source
+addresses on attached networks resulting in denial of services and/or
+traffic interception. Moreover when L2population isn't used, other
+tenants attached to a shared network are also vulnerable. Neutron
+setups using the IPTables firewall driver are affected.
+
+
+Patches
+~~~~~~~
+- https://review.openstack.org/299025 (MAC)    (Liberty)
+- https://review.openstack.org/303572 (DHCP)   (Liberty)
+- https://review.openstack.org/310652 (ICMPv6) (Liberty)
+- https://review.openstack.org/299023 (MAC)    (Mitaka)
+- https://review.openstack.org/303563 (DHCP)   (Mitaka)
+- https://review.openstack.org/310648 (ICMPv6) (Mitaka)
+- https://review.openstack.org/299021 (MAC)    (Newton)
+- https://review.openstack.org/300202 (DHCP)   (Newton)
+- https://review.openstack.org/300233 (ICMPv6) (Newton)
+
+
+Credits
+~~~~~~~
+- Romain Aviolat from Nagravision           (CVE-2015-8914)
+- Dustin Lundquist from Blue Box Group, Inc (CVE-2016-5362,
+                                             CVE-2016-5363)
+
+
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/bugs/1502933 (ICMPv6)
+- https://bugs.launchpad.net/bugs/1558658 (MAC, DHCP)
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-5362
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-5363
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8914
+
 --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
