@@ -1,81 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/21/3
-Message-ID: <1453373025.3030.24.camel@trustmatta.com>
-Date: Thu, 21 Jan 2016 11:43:45 +0100
-From: Florent Daigniere <florent.daigniere@...stmatta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/14/5
+Message-ID: <20160614135328.34a1e4e4@pc1>
+Date: Tue, 14 Jun 2016 13:53:28 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Prime example of a can of worms
+Cc: cve-assign@...re.org
+Subject: Various invalid memory reads in ImageMagick (WPG, DDS, DCM)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2016-01-21 at 04:05 +0300, gremlin@...mlin.ru wrote:
-> On 2016-01-20 08:45:07 -0700, Kurt Seifried wrote:
-> 
->  > I finally got the article written and published, it's at:
->  > https://securityblog.redhat.com/2016/01/20/primes-parameters-and-m
-> oduli/
-> 
-> In that article you wrote:
-> 
->  > I think the best plan for dealing with this in the short term
->  > is deploying larger primes (2048 bits minimum, ideally 4096
->  > bits) right now wherever possible.
-> 
-> 4096 bit keys seem to be the absolute minimum, and personally I've
-> already moved to 8192 bit keys.
-> 
+https://blog.fuzzing-project.org/46-Various-invalid-memory-reads-in-ImageMagick-WPG,-DDS,-DCM.html
 
-I'd like to know where you guys picked those numbers from:
-http://www.keylength.com/en/compare/ suggests that 2048 bits is okay
-for everyone but the BSI (at least not past 2016). Surely a
-recommendation today should have a higher standard than that.
+Further fuzzing of ImageMagick uncovered some more issues.
 
-On the other hand, 3072 bits seems to be enough for everyone for the
-next decade or so.
+An out of bounds memory read in the VerticalFilter() function can be
+triggered by a malformed DDS file.
+https://crashes.fuzzing-project.org/imagemagick-oob-heap-read-VerticalFilter.dds
+Sample file
+https://github.com/ImageMagick/ImageMagick/commit/791aa82c8064ee8965a63ccf4384f56b95057e5b
+Git commit / fix This was fixed in versions 7.0.1-4 and 6.9.4-3.
 
-I haven't found anyone suggesting that bigger groups are either
-necessary or worth it. If you want QC proof crypto you need groups of
-~16k bits.
+Several bugs in the WPG parser could lead to a heap overflow and random
+invalid memory writes. These bugs only seem to appear when a memory
+limit is set.
+https://crashes.fuzzing-project.org/imagemagick-heapoverflow-SetPixelIndex.wpg
+Sample for heap write overflow in SetPixelIndex
+https://crashes.fuzzing-project.org/imagemagick-invalid-write-ScaleCharToQuantum.wpg
+Sample for unclear invalid write in ScaleCharToQuantum
+https://crashes.fuzzing-project.org/imagemagick-invalid-write-SetPixelIndex.wpg
+Sample for unclear invalid write in SetPixelIndex
+https://github.com/ImageMagick/ImageMagick/commit/fc43974d34318c834fbf78570ca1a3764ed8c7d7
+Git commit / fix 1
+https://github.com/ImageMagick/ImageMagick/commit/aecd0ada163a4d6c769cec178955d5f3e9316f2f
+Git commit / fix 2 These issues were fixed in versions 7.0.1-4 and
+6.9.4-3.
 
-My favourite recommendation (ECRYPT II):
-http://www.keylength.com/en/3/
-where
-1024 bits -> level 3 (<<2015)
-2048 bits -> level 5 (2020)
-3248 bits -> level 7 (2040)
-for any of the modelled adversaries.
+Null pointer accesses and unclear segfaults can happen in the DCM
+parser.
+https://crashes.fuzzing-project.org/imagemagick-nullptr-ReadDCMImage-3220.dcm
+Sample for null pointer access in ReadDCMImage
+https://crashes.fuzzing-project.org/imagemagick-nullptr-ReadDCMImage-3240.dcm
+Sample for null pointer access in ReadDCMImage (different code)
+https://crashes.fuzzing-project.org/imagemagick-segv-ReadDCMImage-3968.dcm
+Sample for unclear segfault in ReadDCMImage
+https://github.com/ImageMagick/ImageMagick/commit/5511ef530576ed18fd636baa3bb4eda3d667665d
+Git commit / fix These issues were fixed in versions 7.0.1-7 and
+6.9.4-5.
 
-> Here are some numbers:
-> 
-> `openssl dhparam -2 4096` took 1:53:29 to generate (HH:MM:SS);
-> `openssl dhparam -5 4096` took 1:43:44;
-> `openssl dhparam -2 8192` took 25:51:34;
-> `openssl dhparam -5 8192` took 16:51:47.
-> 
->  > Why not huge primes?
->  > Why not simply use really large primes? Because computation
->  > is expensive, battery life matters more than ever and latency
->  > will become problems that users will not tolerate.
-> 
-> Any and all cryptographic transforms must be expensive - that means
-> at least time and electric power. 
 
-There is a good reason why no one wants custom-groups in protocol
-design. I haven't seen it mentioned much so far so I will spell it out
-again:
+-- 
+Hanno Böck
+https://hboeck.de/
 
-Custom groups need to be transmitted for each handshake: that's
-problematic on most networks (none of the group sizes suggested will
-fit on a MTU worth of data) as it will involve fragmentation and
-potentially retransmission.
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-If anything, TLS has proven that it won't work; both because 
-- no one will use the feature, even if it's present (status-quo with
-1024 bits groups today)
-- it's impractical for it to be used anywhere where the connectivity is
-anything less than perfect (mobile networks, high-latency networks,
-...)
-
-K.I.S.S.!
-
-Florent
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Content of type "application/pgp-signature" skipped
