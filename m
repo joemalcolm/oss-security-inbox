@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1624" "Saturday" "11" "June" "2016" "02:05:05" "+0200" "Damien Regad" "dregad@mantisbt.org" "<njfkjh$lk7$1@ger.gmane.org>" "59" "[oss-security] MantisBT: XSS in custom fields management" "^Date:" nil nil "6" "2016061100:05:05" "[oss-security] MantisBT: XSS in custom fields management" (number mark "U       dregad@manti Jun 11   59/1624  " thread-indent "\"[oss-security] MantisBT: XSS in custom fields management\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3252" "Tuesday" "14" "June" "2016" "13:53:28" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20160614135328.34a1e4e4@pc1>" "85" "[oss-security] Various invalid memory reads in ImageMagick (WPG, DDS, DCM)" "^Cc:" nil nil "6" "2016061411:53:28" "[oss-security] Various invalid memory reads in ImageMagick (WPG, DDS, DCM)" (number mark "        hanno@hboeck Jun 14   85/3252  " thread-indent "\"[oss-security] Various invalid memory reads in ImageMagick (WPG, DDS, DCM)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11592 invoked by uid 550); 11 Jun 2016 00:05:47 -0000
+Received: (qmail 18279 invoked by uid 550); 14 Jun 2016 11:53:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,79 +11,100 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11331 invoked from network); 11 Jun 2016 00:05:27 -0000
-X-Injected-Via-Gmane: http://gmane.org/
-Message-ID: <njfkjh$lk7$1@ger.gmane.org>
+Received: (qmail 18185 invoked from network); 14 Jun 2016 11:53:42 -0000
+Message-ID: <20160614135328.34a1e4e4@pc1>
+X-Mailer: Claws Mail 3.13.2 (GTK+ 2.24.30; x86_64-pc-linux-gnu)
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 253.170.6.85.dynamic.wline.res.cust.swisscom.ch
-X-Mozilla-News-Host: news://news.gmane.org
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
-Date: Sat, 11 Jun 2016 02:05:05 +0200
-From: Damien Regad <dregad@mantisbt.org>
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-5752-1465905211-0001-2"
+Cc: cve-assign@mitre.org
+Date: Tue, 14 Jun 2016 13:53:28 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] MantisBT: XSS in custom fields management
+Subject: [oss-security] Various invalid memory reads in ImageMagick (WPG, DDS, DCM)
 To: oss-security@lists.openwall.com
 
-Greetings,
+--=_zucker.schokokeks.org-5752-1465905211-0001-2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Please assign a CVE ID for the following issue.
+https://blog.fuzzing-project.org/46-Various-invalid-memory-reads-in-ImageMa=
+gick-WPG,-DDS,-DCM.html
 
-Description:
+Further fuzzing of ImageMagick uncovered some more issues.
 
-An XSS vulnerability was discovered, affecting MantisBT Custom fields 
-management pages. It is caused by unescaped output of 'return URL' GPC 
-parameter, and can be exploited as follows:
+An out of bounds memory read in the VerticalFilter() function can be
+triggered by a malformed DDS file.
+https://crashes.fuzzing-project.org/imagemagick-oob-heap-read-VerticalFilte=
+r.dds
+Sample file
+https://github.com/ImageMagick/ImageMagick/commit/791aa82c8064ee8965a63ccf4=
+384f56b95057e5b
+Git commit / fix This was fixed in versions 7.0.1-4 and 6.9.4-3.
 
-1. using 'accesskey' inside hidden input field reflects XSS to the
-    administrator in manage_custom_field_edit_page.php when the keyboard
-    shortcut is actioned
-2. using 'javascript:' URI scheme executes the code when the user clicks
-    the [Proceed] link on manage_custom_field_update.php after updating
-    a custom field
+Several bugs in the WPG parser could lead to a heap overflow and random
+invalid memory writes. These bugs only seem to appear when a memory
+limit is set.
+https://crashes.fuzzing-project.org/imagemagick-heapoverflow-SetPixelIndex.=
+wpg
+Sample for heap write overflow in SetPixelIndex
+https://crashes.fuzzing-project.org/imagemagick-invalid-write-ScaleCharToQu=
+antum.wpg
+Sample for unclear invalid write in ScaleCharToQuantum
+https://crashes.fuzzing-project.org/imagemagick-invalid-write-SetPixelIndex=
+.wpg
+Sample for unclear invalid write in SetPixelIndex
+https://github.com/ImageMagick/ImageMagick/commit/fc43974d34318c834fbf78570=
+ca1a3764ed8c7d7
+Git commit / fix 1
+https://github.com/ImageMagick/ImageMagick/commit/aecd0ada163a4d6c769cec178=
+955d5f3e9316f2f
+Git commit / fix 2 These issues were fixed in versions 7.0.1-4 and
+6.9.4-3.
 
-Both attack vectors have been addressed:
-
-- properly escape the return URL prior to printing it on the hidden form
-   field
-- let html_operation_successful() sanitize the URL before displaying
-   it, just like html_meta_redirect() does. In this case, if the
-   string contains an URI scheme, it will be replaced by 'index.php'
-
-
-Affected versions:
-1.2.0 and later (possibly older releases as well - not tested)
-
-Fixed in versions:
-- 1.2.20
-- 1.3.0-rc.2
-As of this writing, these have not been released yet, but both should be 
-available in the next few days.
-
-Patch:
-See Github [1]
-
-Credits:
-The issue was discovered by Kacper Szurek [2] and fixed by Damien Regad
-(MantisBT Developer).
-
-References:
-Further details available in our issue tracker [3]
-
-
-Best regards,
-D. Regad
-MantisBT Developer
-http://www.mantisbt.org
-
-
-[1] http://github.com/mantisbt/mantisbt/commit/5068df2d (1.2.x)
-     http://github.com/mantisbt/mantisbt/commit/11ab3d6c (1.3.x)
-[2] http://security.szurek.pl/
-[3] https://mantisbt.org/bugs/view.php?id=20956
+Null pointer accesses and unclear segfaults can happen in the DCM
+parser.
+https://crashes.fuzzing-project.org/imagemagick-nullptr-ReadDCMImage-3220.d=
+cm
+Sample for null pointer access in ReadDCMImage
+https://crashes.fuzzing-project.org/imagemagick-nullptr-ReadDCMImage-3240.d=
+cm
+Sample for null pointer access in ReadDCMImage (different code)
+https://crashes.fuzzing-project.org/imagemagick-segv-ReadDCMImage-3968.dcm
+Sample for unclear segfault in ReadDCMImage
+https://github.com/ImageMagick/ImageMagick/commit/5511ef530576ed18fd636baa3=
+bb4eda3d667665d
+Git commit / fix These issues were fixed in versions 7.0.1-7 and
+6.9.4-5.
 
 
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
 
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
+
+--=_zucker.schokokeks.org-5752-1465905211-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCgAGBQJXX/A4AAoJEKWIAHK7tR5Cwm0P/1UsuiHeOdeN1f9/+CM65nU1
+xwCfSxV+HvuHZB8SslU2F6NhNmQRw06pAFtwa4dgCQI6XwQdyRDq5WtPhzY4n7Uo
+kOLtt3iyZj3B60qFmdP/lyXnCrH/7ej86KjqutZe8INZspiQ2MbW/RRqyO5PmxDU
+fcUaypEWsQcW7PKqsU/N0NmFgmHXtHumthpCWz9+36NkawSZ5UIbCB7NPPfALgHU
+9nGo3jZUBp4wtQFRJ7UeQlFmT0I+MHyzRV04XnXLrpGZ3QvrCsh7kbbQKmDNNXG9
+WmKmFiupfvGvt+nSz6VR7NUkaYdFAWQAbQXD/BdeipkF87mW/jzGZIaLBhdXA59+
+9T7SJ7wVm5K6JK1c3kWUdE/NOGaBayQ3xZVAsRFzoqoIcGaoF2kgauOdyzN8z55G
+evM8wup27brkq3sLF8FwRC8HARXF0L9uVb3PWBwEMkG4oMlIdgbJhhW5wOML0E0k
+VAGUZswnk2KHBAmIXpv49l2GCroBGMVRIVHIrvJJBfXbYuODAu6BKS/wSBzXZbRW
+Qm3MM5YGs2ZnyCvXKfklUZeGfR5IQidxvwXnJxja7cMd3S0N2BAKn6exUWxbXHSE
+8FMw7AWGICSSrh6pkAYZ08ivkEQM9ekA+eT5PSGX+UxwZUgwgchktJEq5oaT4vf/
+wHBel8pQtz1igYTG1o0r
+=4/WH
+-----END PGP SIGNATURE-----
+
+--=_zucker.schokokeks.org-5752-1465905211-0001-2--
