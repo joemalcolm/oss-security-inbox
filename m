@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["679" "Wednesday" "25" "May" "2016" "18:01:36" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1605251800090.15974@wniryva>" "20" "[oss-security] CVE Request Qemu: scsi: megasas: out-of-bounds write while setting controller properties" nil nil nil "5" "2016052512:31:36" "[oss-security] CVE Request Qemu: scsi: megasas: out-of-bounds write while setting controller properties" (number mark "U       ppandit@redh May 25   20/679   " thread-indent "\"[oss-security] CVE Request Qemu: scsi: megasas: out-of-bounds write while setting controller properties\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["834" "Tuesday" "14" "June" "2016" "14:16:24" "-0700" "Tim" "tim-security@sentinelchicken.org" "<20160614211623.GB11505@sentinelchicken.org>" "23" "Re: [oss-security] CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client" nil nil nil "6" "2016061421:16:24" "[oss-security] CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client" (number mark "U       tim-security Jun 14   23/834   " thread-indent "\"Re: [oss-security] CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client\"\n") "<CAKG8Do5XPLJTJR9iaTRMOtFFZYan_Eeaf7KxxLWDgWiUQDsEbw@mail.gmail.com>" ("<CAKG8Do5XPLJTJR9iaTRMOtFFZYan_Eeaf7KxxLWDgWiUQDsEbw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1579 invoked by uid 550); 25 May 2016 12:31:59 -0000
+Received: (qmail 7408 invoked by uid 550); 14 Jun 2016 21:16:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,37 +12,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1561 invoked from network); 25 May 2016 12:31:58 -0000
-Date: Wed, 25 May 2016 18:01:36 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Li Qiang <liqiang6-s@360.cn>
-Message-ID: <alpine.LFD.2.20.1605251800090.15974@wniryva>
+Received: (qmail 7383 invoked from network); 14 Jun 2016 21:16:43 -0000
+Date: Tue, 14 Jun 2016 14:16:24 -0700
+From: Tim <tim-security@sentinelchicken.org>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Message-ID: <20160614211623.GB11505@sentinelchicken.org>
+References: <CAKG8Do5XPLJTJR9iaTRMOtFFZYan_Eeaf7KxxLWDgWiUQDsEbw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.29]); Wed, 25 May 2016 12:31:47 +0000 (UTC)
-Subject: [oss-security] CVE Request Qemu: scsi: megasas: out-of-bounds write while setting
- controller properties
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAKG8Do5XPLJTJR9iaTRMOtFFZYan_Eeaf7KxxLWDgWiUQDsEbw@mail.gmail.com>
+User-Agent: Mutt/1.6.0 (2016-04-01)
+Subject: Re: [oss-security] CVE request: Python HTTP header injection in
+ urrlib2/urllib/httplib/http.client
 
-   Hello,
 
-Quick Emulator(Qemu) built with the MegaRAID SAS 8708EM2 Host Bus Adapter 
-emulation support is vulnerable to an out-of-bounds write access issue. It 
-could occur while processing MegaRAID Firmware Interface(MFI) command to set 
-controller properties in 'megasas_dcmd_set_properties'.
+> I would like to request a CVE for a Python header injection flaw in
+> urrlib2/urllib/httplib/http.client.
+> 
+> HTTPConnection.putheader() allows unsafe characters, which can be used to
+> inject additional headers.
+> 
+> Upstream bug with reproducer :
+> https://bugs.python.org/issue22928
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-on the host resulting in DoS.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04340.html
+Thank you for requesting a CVE Cedric.  I have additional information
+about this bug, including an additional exploitation path, which I
+shared with Python security on January 14, 2016.  Unfortunately, they
+have apparently failed to act to notify the public or acquire a CVE.
+(They stopped responding to me months ago.)  I'll post the additional
+information soon, once I am back at my desk.
 
-This issue was discovered by Li Qiang of 360.cn Inc.
+In the mean time, do you happen to have specific information on which
+versions of the 2.x and 3.x upstream branches were affected/fixed?
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Thanks!
+tim
