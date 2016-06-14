@@ -1,26 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/22
-Message-ID: <CAMhPm6NxrFTnfdJbT3RkC7rHiUYaXL-EmFREv0Cpued00Dii=g@mail.gmail.com>
-Date: Mon, 14 Mar 2016 19:37:01 +0000
-From: Bart de Water <bart@...nilocode.nl>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: DoS vulnerability in Ruby gem Paperclip
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/14/8
+Message-ID: <f24b7778-0446-c5d1-4905-e75a580fcbc4@redhat.com>
+Date: Tue, 14 Jun 2016 10:34:53 -0400
+From: Paul Wouters <pwouters@...hat.com>
+To: oss-security@...ts.openwall.com, huzaifas@...hat.com
+Cc: cve-assign@...re.org
+Subject: Re: Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 06/13/2016 10:40 AM, cve-assign@...re.org wrote:
+>> Its not libreswan which is flawed, but its the protocol which they are trying to implement.
+> 
+>> which implement IKEv1 are flawed, since they follow this protocol
+> 
+> Many protocols could be described as "flawed." The IKEv1 protocol amplification concern does not make it flawed in a way that would lead to a per-protocol
+> CVE ID assignment.
 
-I believe there's a denial of service vulnerability in Paperclip version
-4.2.2 through 4.3.5: it's possible to cause a DoS by uploading files with a
-spoofed media type, because it causes megabytes of logging (data from the
-mime-types gem) to be written. See
-https://cwe.mitre.org/data/definitions/779.html for more information.
+Then you should pull the CVE-2016-5361 which deals with retransmission amplification in IKEv1
 
-It seems to be introduced in this commit
-https://github.com/thoughtbot/paperclip/commit/9aee4112f36058cd28d5fe4a006d6981bd1eda57
-in
-version 4.2.2 and it's fixed in 4.3.6 (released yesterday) with this pull
-request: https://github.com/thoughtbot/paperclip/pull/2126
+ We are maintaining the
+> CVE-2016-5361 ID assignment for the upstream announcement of "libreswan 3.16 vulnerable to DDOS attack. Please upgrade to 3.17"
 
-Thanks,
-Bart de Water
+That statement on the libreswan website is clearly referring to CVE-2016-3071 not CVE-2016-5361.
 
+ and
+> accompanying upstream patch, as described in the http://www.openwall.com/lists/oss-security/2016/06/10/4 post.
+
+Which again clearly refers to CVE-2016-5361 and not CVE-2016-3071
+
+So again, please fix CVE-2016-5361 or drop it.
+
+Paul
