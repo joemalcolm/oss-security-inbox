@@ -1,49 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/15/1
-Message-ID: <26e060c4-231e-7e40-7039-e65588b64f19@hmarco.org>
-Date: Tue, 15 Nov 2016 01:26:52 +0000
-From: Hector Marco-Gisbert <hmarco@...rco.org>
-To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org, bugtraq@...urityfocus.com
-Subject: Re: CVE-2016-4484: - Cryptsetup Initrd root Shell - Update: Dracut is also vulnerable
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/14/7
+Message-ID: <CAKG8Do5XPLJTJR9iaTRMOtFFZYan_Eeaf7KxxLWDgWiUQDsEbw@mail.gmail.com>
+Date: Tue, 14 Jun 2016 16:12:25 +0200
+From: Cedric Buissart <cbuissar@...hat.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-We have found that systems that use Dracut instead of initramfs are
-also vulnerables (tested on Fedora 24 x86_64).
+I would like to request a CVE for a Python header injection flaw in
+urrlib2/urllib/httplib/http.client.
 
-Regards,
-Hector Marco & Ismael Ripoll.
+HTTPConnection.putheader() allows unsafe characters, which can be used to
+inject additional headers.
+
+Upstream bug with reproducer :
+https://bugs.python.org/issue22928
 
 
-> Hello All,
-> 
-> 
-> Affected package ---------------- Cryptsetup <= 2:1
-> 
-> 
-> CVE-ID ------ CVE-2016-4484
-> 
-> 
-> Description ----------- A vulnerability in Cryptsetup, concretely 
-> in the scripts that unlock the system partition when the partition 
-> is ciphered using LUKS (Linux Unified Key Setup).
-> 
-> This vulnerability allows to obtain a root initramfs shell on 
-> affected systems. The vulnerability is very reliable because it 
-> doesn't depend on specific systems or configurations. Attackers
-> can copy, modify or destroy the hard disc as well as set up the
-> network to exflitrate data.
-> 
-> In cloud environments it is also possible to remotely exploit this
->  vulnerability without having "physical access."
-> 
-> 
-> Full description: ----------------- 
-> http://hmarco.org/bugs/CVE-2016-4484/CVE-2016-4484_cryptsetup_initrd_shell.html
->
->
-> 
-> 
-> Regards, Hector Marco & Ismael Ripoll.
-> 
+Kind regards,
+
+
+-- 
+Cedric Buissart,
+Product Security
+
+Purkynova 99
+Brno 612 45
+
