@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1392" "Monday" "30" "December" "2019" "08:11:44" "-0500" "Erik Hatcher" "erik.hatcher@gmail.com" nil "42" nil "^Date:" nil nil "12" nil nil (number mark "        erik.hatcher Dec 30   42/1392  " thread-indent "\"[oss-security] [CVE-2019-17558] Apache Solr RCE through VelocityResponseWriter\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-17558] Apache Solr RCE through VelocityResponseWriter" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3045" "Tuesday" "14" "June" "2016" "08:14:30" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160614121430.54A8F6C0643@smtpvmsrv1.mitre.org>" "65" "[oss-security] Re: CVE Request for Denial of Service in pacman 5.0.1" nil nil nil "6" "2016061412:14:30" "[oss-security] Re: CVE Request for Denial of Service in pacman 5.0.1" (number mark "U       cve-assign@m Jun 14   65/3045  " thread-indent "\"[oss-security] Re: CVE Request for Denial of Service in pacman 5.0.1\"\n") "<20160611075017.GA268@pepper.home.stoeckmann.org>" ("<20160611075017.GA268@pepper.home.stoeckmann.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9254 invoked by uid 550); 30 Dec 2019 13:38:35 -0000
+Received: (qmail 9530 invoked by uid 550); 14 Jun 2016 12:14:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,80 +11,78 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3594 invoked from network); 30 Dec 2019 13:12:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=6dyr3Wvu69b+Pj6TJCWuMIzs8xxm7ZbH86K+T52ys6o=;
-        b=WYFwojCM6isQjDtUCBBS1YY2lw4+kJV9lFwpl0Jm8rBhVZ9HD8qw1WC6YxRK/BP8YT
-         ADiozxzUenN3bqc1+lHNhS28N2Kq2zjAA4C1JU7HUSn6HaFcxk+bk+D+eHDYBQ57v169
-         6kZoV9XC+dk+0hSJPQTRhwYxZ633WeKhqqnYAwR9TH9NQ8zV2baXoHxLvSr28CSyoeGH
-         /xN7R0zKMMpPn3+pKAzTC4cBxs5ttaBcySGCR1HkfWKy6Gko382r8Lyl8hEtmatu+dLy
-         yTUeJxQ97vTEkpQhNU51Pq1iUnKoqDtC7qFC+w54aqD0J3NI9dkym3S5DjSzsCt8pt4p
-         /LnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=6dyr3Wvu69b+Pj6TJCWuMIzs8xxm7ZbH86K+T52ys6o=;
-        b=Jas5wqeHjr1I3b3Ve0VHxH6I8p3vDUYENp47bzrIQiiborXE+R8cNJixiGaoXfuWCL
-         J0mW+KhJ9HGP2AeFMxUqUVsV2xZc1U7GXF6Ack/zkokU2XxSrLEybmU0le2kFv6zhIkh
-         HK+C1rIhtTIWpq2Ut+BHMdkiKpqHn+V32BLcLeH3LAQrK3Zzqi2xnEw5oqT2jzLdsLPI
-         CCL2wZjSzobgsJXipghGklU8hrTSuW0jqA1JcGSho0GyfRZ7RM7NkVDJMsCqJmovtmFl
-         sbQgMeBXgdcwDZTrMMP1/jRuaCso6D781vQ2+Tb8c1tGrElkhCCSnVv0XfbvnI9SHQMY
-         RaKA==
-X-Gm-Message-State: APjAAAUGxfcOzbD+A2fZ8GB/ZEfCKdPI9CqAzRiAWSv3qV+w15ucZQtV
-	GEZGTV47ayN0t+4AjbRWVO/XEe5MKk2X3iuCK3y+K2cHA8I=
-X-Google-Smtp-Source: APXvYqzY9koasB0+ub2eIjCVQLhnBCJDdNrM0PdldPvjqud0kZGVMiiCCADgclz7fHrlmXhIaqRJQyTZ6tHrWsQDW3U=
-X-Received: by 2002:ac2:4c2b:: with SMTP id u11mr38602266lfq.46.1577711515516;
- Mon, 30 Dec 2019 05:11:55 -0800 (PST)
-MIME-Version: 1.0
-Message-ID: <CACOzrT0QVJ4W+12XJemBttKNetG4qH+1aUyj51iSC4epw8vKyA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="00000000000070c5da059aeb9650"
-Date: Mon, 30 Dec 2019 08:11:44 -0500
-From: Erik Hatcher <erik.hatcher@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [CVE-2019-17558] Apache Solr RCE through VelocityResponseWriter
-To: oss-security@lists.openwall.com
+Received: (qmail 9512 invoked from network); 14 Jun 2016 12:14:42 -0000
+From: cve-assign@mitre.org
+To: tobias@stoeckmann.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20160611075017.GA268@pepper.home.stoeckmann.org>
+Message-Id: <20160614121430.54A8F6C0643@smtpvmsrv1.mitre.org>
+Date: Tue, 14 Jun 2016 08:14:30 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request for Denial of Service in pacman 5.0.1
 
---00000000000070c5da059aeb9650
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-[CVE-2019-17558] Apache Solr RCE through VelocityResponseWriter
+> The package manager of Arch Linux, pacman, is vulnerable to a denial of
+> service attack based on signature files. This issue is located in libalpm
+> and therefore affects any other frontend
+> 
+> While an endless loop on itself is no security issue per-se
 
-Severity: High
+We assign CVE IDs to infinite loops in libraries, as long as a real or
+plausible library-using application runs unattended, and presents an
+attack surface in which the loop may be triggered by not-fully-trusted
+input.
 
-Vendor: The Apache Software Foundation
+Use CVE-2016-5434 for this libalpm vulnerability.
 
-Versions Affected: 5.0.0 to 8.3.1
+(For example, someone may plausibly use libalpm as part of a web
+application that receives packages with signatures from authors and,
+after validity checks, hosts those packages for public download.)
 
-Description:
 
-The affected versions are vulnerable to a Remote Code Execution through the
-VelocityResponseWriter.  A Velocity template can be provided through
-Velocity (.vm) templates in a configset `velocity/` directory or as a
-parameter.  A user defined configset could contain renderable, potentially
-malicious, templates. Parameter provided templates are disabled by default,
-but can be enabled by setting `params.resource.loader.enabled` by defining
-a response writer with that setting set to `true`.  Defining a response
-writer requires configuration API access.
+> such a
+> crafted file might trick the end-user to disable signature verification
+> to get his updates installed. This, on the other hand, would open up
+> possibilities for malicious packages to be installed.
 
-Solr 8.4 removed the params resource loader entirely, and only enables the
-configset-provided template rendering when the configset is `trusted` (has
-been uploaded by an authenticated user).
+Maybe, but this would not, by itself, be a reason to assign a CVE ID
+unless the package manager suggested that course of action, e.g., a
+dialog stating "A signature-verification process is running slowly.
+Terminate that process and disable all future verification? [y/N]."
+For example, if there were a signature-verification infinite loop that
+only affected a GUI package manager, without that type of dialog, then
+a CVE ID seems unlikely. First, it's unclear whether there are many
+end users who have the expertise to determine that a loop is related
+to signature verification, but also would jump to the conclusion that
+disabling signature verification was a reasonable solution to their
+immediate problem. More generally, any DoS bug in any package manager
+might trick a non-expert end user into not bothering to install new
+packages, and instead leaving old vulnerable packages installed
+permanently. That is arguably a security impact, but it seems much too
+indirect, so we don't want to assign CVE IDs to 100% of DoS bugs in
+all package managers.
 
-Mitigation: Ensure your network settings are configured so that only
-trusted traffic
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-communicates with Solr, especially to the configuration APIs.
-
-Credits: Github user `s00py`
-
-References:
-
-  * https://cwiki.apache.org/confluence/display/solr/SolrSecurity
-
-  * https://issues.apache.org/jira/browse/SOLR-13971
-
-  * https://issues.apache.org/jira/browse/SOLR-14025
-
---00000000000070c5da059aeb9650--
+iQIcBAEBCAAGBQJXX/SSAAoJEHb/MwWLVhi2koIP/0JPOJFLF7Fs582+6wD8RvFD
+PsTEcWc5X/80uL0yGREFI8Hvm1n7YBuINexgTWoEMfwHPoxvrwtUY2aNDrhAY77X
+SnBobg5B4mrFDGZh0VcmU0vYhriwCx8KDTWF5AfVyQZ4mjmru2MBxF5KyQEQuBuY
+SqhohAlc856KjO0vns17Kw284Eqs34iwQXIZ3nxSwBkJhfrokRaMunA3jGawdJku
+BjQi8RK0TXir2wdyGA95ySIQP6Z5HlsaCjoUa+miuA8Fu7TITBCo31aKxEHfrIFn
+F3zai0bxXz0jaly1TWz4uyAn2P7WL24V2rLlmFIH0z8+tzEKiIiaXjIlzz3JasKp
+0yTI8uUSvUu61WIcBSQcAwRmTYTZ+Rz8IYVsbAS8pnWysXwySBReEnR/rkaKzLX+
+qbREp2oMEoAiEjDAZMM20ObuXzn7NW2S/sLx9jMTdr8OJW7n567SBCO31IbN5Inu
+lopHPR8d5sA3EYL17MGfgkLH9DdHbeZaxDPw41smmNdA04G//bZFChgab02H8uai
+DLWOeaiS1m1zmGpRWCvcS4xm55G1kEdTfJVvj45w9G63BZZuYqzgun1ejG3eTIfz
+zw4Ot7TzyZ7icGAWbrb68eBCisHmzNM7hVHuhRlj5EUuGsrAVHD5fgUGDaV1wvC/
+6XwLFN7kxp5XkLVuq/V3
+=UySW
+-----END PGP SIGNATURE-----
