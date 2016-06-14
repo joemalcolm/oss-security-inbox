@@ -1,89 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/6
-Message-ID: <alpine.DEB.2.20.1611020809190.375@tvnag.unkk.fr>
-Date: Wed, 2 Nov 2016 08:09:59 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl double-free in krb5 code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/14/9
+Message-ID: <CAKG8Do4AKZuiifnELuyaBiNGWBEfkmnibMFffmULG7BQXZnyYA@mail.gmail.com>
+Date: Tue, 14 Jun 2016 17:46:18 +0200
+From: Cedric Buissart <cbuissar@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Python CVE-2016-0772: smtplib StartTLS stripping attack
 Content-Type: text/plain; charset=utf-8
 
-double-free in krb5 code
-========================
+Hi,
 
-Project cURL Security Advisory, November 2, 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20161102E.html)
+This is to publicly disclose Python CVE-2016-0772: smtplib StartTLS
+stripping attack.
 
-VULNERABILITY
--------------
+Description :
+A vulnerability in smtplib allowing MITM attacker to perform a startTLS
+stripping attack. smtplib does not seem to raise an exception when the
+remote end (smtp server) is capable of negotiating starttls but fails to
+respond with 220 (ok) to an explicit call of SMTP.starttls(). This may
+allow a malicious MITM to perform a startTLS stripping attack if the client
+code does not explicitly check the response code for startTLS.
 
-In curl's implementation of the Kerberos authentication mechanism, the
-function `read_data()` in security.c is used to fill the necessary krb5
-structures. When reading one of the length fields from the socket, it fails to
-ensure that the length parameter passed to realloc() is not set to 0.
+Upstream patch :
+3.4 branch : https://hg.python.org/cpython/rev/d590114c2394
+2.7 branch : https://hg.python.org/cpython/rev/b3ce713fb9be
 
-This would lead to realloc() getting called with a zero size and when doing so
-realloc() returns NULL *and* frees the memory - in contrary to normal
-realloc() fails where it only returns NULL - causing libcurl to free the
-memory *again* in the error path.
+Red Hat Bugzilla :
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2016-0772
 
-This flaw could be triggered by a malicious or just otherwise ill-behaving
-server.
+Reported by: Tin (Team Oststrom)
 
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-8619 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-This flaw exists in the following curl versions
-
-- Affected versions: curl 7.3 to and including 7.50.3
-- Not affected versions: curl < 7.3 and curl >= 7.51.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.51.0, the function reading data will consider reading a zero size
-to be an error and bail out.
-
-A [patch for CVE-2016-8619](https://curl.haxx.se/CVE-2016-8619.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.51.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Do not use KRB5
-
-TIME LINE
----------
-
-It was first reported to the curl project on September 23 by Cure53.
-
-We contacted distros@...nwall on October 19.
-
-curl 7.51.0 was released on November 2 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-This vulnerability was found during a Secure Open Source audit performed by
-Cure53.
+Kind regards,
 
 -- 
+Cedric Buissart,
+Product Security
 
-  / daniel.haxx.se
+Purkynova 99
+Brno 612 45
+
