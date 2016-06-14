@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2621" "Friday" "16" "December" "2016" "10:50:00" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty1eVmPTCoVn-x5snXBMTmpDctfO_b+52zaC+km=Xz64Pw@mail.gmail.com>" "72" "Re: [oss-security] vulnerable version: 4.8.12 and previous versions but xml file says: cpe:/o:linux:linux_kernel:4.8.12\"/>" "^Date:" nil nil "12" "2016121617:50:00" "[oss-security] vulnerable version: 4.8.12 and previous versions but xml file says: cpe:/o:linux:linux_kernel:4.8.12\"/>" (number mark "        kseifried@re Dec 16   72/2621  " thread-indent "\"Re: [oss-security] vulnerable version: 4.8.12 and previous versions but xml file says: cpe:/o:linux:linux_kernel:4.8.12\"/>\"\n") "<CANO=Ty1YYz+=Yn9TfCEeinqL+2W3pjpew8m55dWTZts7Yu=FZQ@mail.gmail.com>" ("<3230301C09DEF9499B442BBE162C5E48AC0EAB12@sestoex09.enea.se>" "<CANO=Ty1yr2POsK=ntTap9dUKRTFQCxcdDza-HxHyPLOS1A2kDA@mail.gmail.com>" "<665d3544-22f2-f766-383a-fcb406e96085@enea.com>" "<CANO=Ty1YYz+=Yn9TfCEeinqL+2W3pjpew8m55dWTZts7Yu=FZQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1996" "Tuesday" "14" "June" "2016" "10:04:18" "+0200" "Daniel Borkmann" "daniel@iogearbox.net" "<575FBA82.9000209@iogearbox.net>" "50" "Re: [oss-security] Re: Linux Kernel bpf related UAF" nil nil nil "6" "2016061408:04:18" "[oss-security] Re: Linux Kernel bpf related UAF" (number mark "U       daniel@iogea Jun 14   50/1996  " thread-indent "\"Re: [oss-security] Re: Linux Kernel bpf related UAF\"\n") "<20160512152749.88F6A6C0689@smtpvmsrv1.mitre.org>" ("<20160512152749.88F6A6C0689@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15409 invoked by uid 550); 16 Dec 2016 17:50:14 -0000
+Received: (qmail 7528 invoked by uid 550); 14 Jun 2016 09:11:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,104 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15378 invoked from network); 16 Dec 2016 17:50:12 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=ehX8qnHRs/HQWb9q9FF6GZqSfrt11Yl7vD0lyF13aYQ=;
-        b=GWr9B+zCETow/DRLKT/GaoM9t3mBHp+UWo6X9syBeimvDnJWkPzTU4V7FKitz9NVWf
-         wTKStKfQ/I1ZIZEoqjB22MUG/M+QoW/YLJtPq2d1q9uZ7VVwzJ7WL5nNjvdrUNkaGCGM
-         lVGl2OMYA1YyPR/CPhq0cP6HMkrrqcysF/DGELve1sN2SqQUDBmxFqZ30Y+4ft8asrUh
-         /YmpD7EOXhkyLjgufsj/8yzzmhu7OWMKysQb42F/k6cnfkXB9+xUSp22xE6etrjW7LcD
-         o7NxkPpmxKCpyqIGYEwuZ8XEIOWNr9ej9rcZRLLT4vgfRbdQ/yxvY8DSD4ND8yblGMKC
-         6lxA==
-X-Gm-Message-State: AIkVDXKCLu38ul15b+G3DkaOAynrFqwJNMXNZiBT9jHlCjuQPO60DPjNF9MZJDfQnEpASUWkMuqKLAzksvwaprby
-X-Received: by 10.157.5.70 with SMTP id 64mr2645076otw.104.1481910600888; Fri,
- 16 Dec 2016 09:50:00 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <CANO=Ty1YYz+=Yn9TfCEeinqL+2W3pjpew8m55dWTZts7Yu=FZQ@mail.gmail.com>
-References: <3230301C09DEF9499B442BBE162C5E48AC0EAB12@sestoex09.enea.se>
- <CANO=Ty1yr2POsK=ntTap9dUKRTFQCxcdDza-HxHyPLOS1A2kDA@mail.gmail.com>
- <665d3544-22f2-f766-383a-fcb406e96085@enea.com> <CANO=Ty1YYz+=Yn9TfCEeinqL+2W3pjpew8m55dWTZts7Yu=FZQ@mail.gmail.com>
-Message-ID: <CANO=Ty1eVmPTCoVn-x5snXBMTmpDctfO_b+52zaC+km=Xz64Pw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=94eb2c04817af491c40543ca3240
-Date: Fri, 16 Dec 2016 10:50:00 -0700
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] vulnerable version: 4.8.12 and previous versions
- but xml file says: cpe:/o:linux:linux_kernel:4.8.12"/>
-To: oss-security <oss-security@lists.openwall.com>
+Received: (qmail 21652 invoked from network); 14 Jun 2016 08:04:30 -0000
+Message-ID: <575FBA82.9000209@iogearbox.net>
+Date: Tue, 14 Jun 2016 10:04:18 +0200
+From: Daniel Borkmann <daniel@iogearbox.net>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+MIME-Version: 1.0
+To: oss-security@lists.openwall.com
+CC: marco.gra@gmail.com, cve-assign@mitre.org
+References: <20160512152749.88F6A6C0689@smtpvmsrv1.mitre.org>
+In-Reply-To: <20160512152749.88F6A6C0689@smtpvmsrv1.mitre.org>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authenticated-Sender: daniel@iogearbox.net
+X-Virus-Scanned: Clear (ClamAV 0.99.2/21727/Tue Jun 14 07:53:26 2016)
+Subject: Re: [oss-security] Re: Linux Kernel bpf related UAF
 
---94eb2c04817af491c40543ca3240
-Content-Type: text/plain; charset=UTF-8
-
+On 05/12/2016 05:27 PM, cve-assign@mitre.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
 >
-> On Wed, Dec 14, 2016 at 11:57 AM, Sona Sarmadi <sona.sarmadi@enea.com>
-> wrote:
+>> the following reproducer will cause a UAF of a previously allocated memory
+>> in bpf.
+>>
+>> You can reproduce with linux kernel master, or 4.6-rc6 4.6-rc7 and maybe
+>> other kernel versions.
 >
->>
->>
->> On 2016-12-14 15:26, Kurt Seifried wrote:
->> > Why are you complaining about a nist.gov website/data on an opensource
->> > security mailing list/to MITRE? (hint: we can't fix it and neither can
->> > MITRE) Please contact NIST.
->> >
->> Thanks for being so helpful.
->>
->> I was just trying to see of there are other people out there who also
->> think this is a problem. This list seemed like a place where I could
->> find such people.
->> Perhaps someone knows a work around, perhaps some post-processing tool.
->> If none exists, I guess we have to try to fix the problem at the source
->> or use another CVE databse.
->>
->> Cheers
->> //Sona
->> > On Wed, Dec 14, 2016 at 1:19 AM, Sona Sarmadi <sona.sarmadi@enea.com>
->> wrote:
->> >
->> >> Hi all,
->> >>
->> >> It seems that nvd.xml files (e.g. nvdcve-2.0-2016.xml) does not list
->> >> vulnerable versions correctly. One example is the following CVE.
->> Vulnerable
->> >>
->>
->>
+>> int main(int argc, char **argv)
+>> ...
+>> r[0] = syscall(SYS_mmap, ...
+>> ...
+>> r[5] = syscall(SYS_bpf, ...
 >
+> Use CVE-2016-4794. (We did not run any tests, or look for other
+> information, to investigate whether the same reproducer or a similar
+> reproducer affects any kernel version that's considered stable or
+> longterm.)
+
+Just fyi, the issues have been fixed in the kernel's percpu allocator:
+
+   - https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=4f996e234dad488e5d9ba0858bc1bae12eff82c3
+   - https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6710e594f71ccaad8101bc64321152af7cd9ea28
+
+> - --
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>    http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
 >
-So I've been thinking about the question here (and several other recent
-postings) and my response (less than ideal, and unnecessarily grumpy for
-which I apologize). Here are my assumptions:
+> iQIcBAEBCAAGBQJXNKCMAAoJEHb/MwWLVhi2g8QP/3vBTsa8xuk8NWYWsv3jwNGu
+> Ugpl+hUdkQHW4aFzxx96nePBPZpfVeNCGRMdtlCcKVb9wFNUSbRwDPBHFXrfKz9R
+> KVf9VHi4CMcBlvPS0MvGZg52SQPAAO7O7cCWpEAdhyxW2gPPxKYo98x4xNuNVlWx
+> POD/dVK9ll261g6W+CUSYPtwJgIrPSddnnNCUvbB+XIvV87MGSLp+nE6h8I3L2Yp
+> ZisKaT6z6aHqqC0bcySk6V04UlbkfL83eahAz5bWvZeywUEjYvN+kOUlgR8TOxLC
+> 8bIQ28Q043XM3VC853rhPQqe5enV6KDRrLgDu1paeFdKYcaHjGkHvkwjRfxjJZIC
+> EsNdEl2vGjB1iGTUnFiUep9BteZBRrwfmaTE1yAseaUjEAx/3UK85PpTEqmNkON6
+> 1HCInP0LOeZMcggVzBKgRKCXKJZiInxEtSBXhxnPGgxagkOD7enw86gWflSqz3ca
+> wdRm/oADgCrQk6CsSGgusCouSyndC/T6ZRCa2/7vCecm2BBi8gxRuT4TZem3A6Ij
+> x+zfK7QaMDtELPGL+/rVOSgVCTaihz7oGeBKzqJeuyAv7zN0LxYoNlBsmsoBSTYJ
+> Uftvf0T7JTR3AQd1+tB2kOnyGOW4jSCNu66xNifR29j1C7jvKB0+uh891s/3mkzo
+> Wttcn/XLKpzXFWtN+mjb
+> =DWFZ
+> -----END PGP SIGNATURE-----
+>
 
-1) We (infosec, technology, basically everyone) needs better context
-sensitive help/guidance. Obviously this won't happen globally so
-
-2) We (infosec, technology, basically everyone) needs better public
-documentation on things that people ask, for example the CVE
-"***RESERVED*** description question I got so often I updated the CVE
-Wikipedia entry, searchability and SEO ranking is an issue here (what good
-are docs if google/bing/etc don't show them to people asking questions?)
-
-3) We do have a number of specific sites we should probably target to
-include the information (Wikipedia, StackExchange sites, etc.)
-
-4) We definitely have a number of sites where people ask questions (this
-list, Reddit, etc.)
-
-This feeds into my CVE Mentor idea, we need people that can easily be
-discovered and either know the answers, know where to find the answer, or
-know who to ask/further direct people to for help. But we need it more
-generally than just for CVE.
-
-Now, I suspect many of my assumptions are wrong/out dated. So I would
-appreciate if people would give feedback (where do you go for security
-info? instagram?) I would appreciate that.
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
---94eb2c04817af491c40543ca3240--
