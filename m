@@ -1,56 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/10
-Message-ID: <CANO=Ty343o1sxiZpedxfPOROwbPU3iBr4wva=SqduCKpL8EM=w@mail.gmail.com>
-Date: Wed, 16 Mar 2016 07:34:39 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>, lael.cellier@...oste.net
-Cc: website@...se.com
-Subject: Re: Re: server and client side remote code execution through a buffer overflow in all git versions before 2.7.1 (unpublished ᴄᴠᴇ-2016-2324 and ᴄᴠᴇ‑2016‑2315)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/14/3
+Message-ID: <loom.20160614T103255-750@post.gmane.org>
+Date: Tue, 14 Jun 2016 08:39:05 +0000 (UTC)
+From: Petter Reinholdtsen <pere@...gry.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: reads out-of-bounds with cpio 2.11
 Content-Type: text/plain; charset=utf-8
 
-One thing to keep in mind, once the source code is updated publicly the cat
-is usually out of the bag (people that read the code commit can understand
-the security implications typically). So as far as I'm concerned that while
-inconvenient, what you did isn't really all that wrong (ideally git
-upstream should have notified distros with a heads up, but again, that's an
-optional step).
+>> Two reads out-of-bounds in cpio 2.11 were found in the parsing of cpio
+>> files
 
-If you need help handling a vulnerability/coordinating the embargo/etc you
-can reach out to Red Hat and we can at least point you in the right
-direction, if not directly help ourselves (e.g. if we ship it we're more
-than happy to help!), secalert@...hat.com for that.
+Note, testing with valgrind show that after the out-of-bounds reads,
+there is an out-of-bounds write too.  The issue is triggered by a
+file name length of zero in an internal data structure.  This cases
+the code to do operations on a buffer returned by malloc(0), first a memory
+access, then a memory write and finally a lstat().
 
-On Wed, Mar 16, 2016 at 4:47 AM, Laël Cellier <lael.cellier@...oste.net>
-wrote:
+I've send the valgrind output and a patch to fix it to
+<URL: http://bugs.debian.org/815965 > and upstream.
 
-> Oh………………………… Big mistake. I might advertised too soon.
->
-> I saw changes were pushed in master, so I thought the next version (which
-> was 2.7.1) would be the one which will include the fix.
->
-> But as pointed out on
-> https://security-tracker.debian.org/tracker/CVE-2016-2324 no versions
-> including the fixes were released yet, and even 2.7.3 still include
-> path_name(). I didn’t checked the code (Sorrrry).
->
->
-> So the only way to fix it is to draw your compilers and compile the
-> current master branch at https://git.kernel.org/cgit/git/git.git/.
->
-> Or do like github did by using the patches at
-> http://thread.gmane.org/gmane.comp.version-control.git/286253 and
-> http://thread.gmane.org/gmane.comp.version-control.git/286008
->
->
-> I’m really sorry…
->
-
-
-
+I have no idea if the issue is a security issue, though.  I could not
+come up with a way to use the unwanted reads and writes for anything
+interesting.
 -- 
+Happy hacking
+Petter Reinholdtsen
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
 
