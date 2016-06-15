@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6347" "Thursday" "23" "April" "2020" "17:32:15" "+0300" "PromiseLabs Pentest Research" "pentest@promiselabs.net" "<2236ad47936a87f144248f9ab6c7340f@promiselabs.net>" "156" "Re: [oss-security] spoofing of local email sender via a homoglyph attack" "^Date:" nil nil "4" "2020042314:32:15" "[oss-security] spoofing of local email sender via a homoglyph attack" (number mark "        pentest@prom Apr 23  156/6347  " thread-indent "\"Re: [oss-security] spoofing of local email sender via a homoglyph attack\"\n") "<20200423133148.GA19214@openwall.com>" ("<20200422152047.3196780D981@smtprhmv1.mitre.org>" "<2843537f5deb3a7987c8485bcc56a260@promiselabs.net>" "<ef4d2b65970d80e81fc0294aca5a6a30@promiselabs.net>" "<20200423133148.GA19214@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] spoofing of local email sender via a homoglyph attack" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2053" "Wednesday" "15" "June" "2016" "02:31:43" "+0000" "=?utf-8?B?5byg5byA57+U?=" "zhangkaixiang@360.cn" "<5EDB84F4B23F5B4DB6500A89258280E0BB625E@EX02.corp.qihoo.net>" "37" "[oss-security] CVE-2016-5315: libtiff 4.0.6 tif_dir.c: setByteArray() Read access violation" nil nil nil "6" "2016061502:31:43" "[oss-security] CVE-2016-5315: libtiff 4.0.6 tif_dir.c: setByteArray() Read access violation" (number mark "U       zhangkaixian Jun 15   37/2053  " thread-indent "\"[oss-security] CVE-2016-5315: libtiff 4.0.6 tif_dir.c: setByteArray() Read access violation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24334 invoked by uid 550); 23 Apr 2020 14:39:37 -0000
+Received: (qmail 9963 invoked by uid 550); 15 Jun 2016 02:33:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,203 +11,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17762 invoked from network); 23 Apr 2020 14:32:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=promisedev.com; s=default; h=Message-ID:References:In-Reply-To:Subject:To:
-	From:Date:Content-Transfer-Encoding:Content-Type:MIME-Version:Sender:Reply-To
-	:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=Aaj5KXuGXDiRHMQFqRtslyGmZwxZbfqeQXGX/ntrnHk=; b=YYKQndbVUbXkwNVADSPuOtkMoC
-	e03lcjKeMs51S5FqTYvvNX2W0d0TnN/tmNIRYfO+RNW02Qbk2GWuSMbLTYiQVPvndOvlXw4fEW4Ca
-	FtUk7+AYOV0bJLYmYlncOdKu/vqjdIZCpyOJ79jxaLcSMsyRDZz9mv9XNJ5NcgllRes+48tt7HXKv
-	ErTIVVDHOppQDnV7PdoU5UvXC+33kqpxEY7WetEeIV5eWs5H5vMxUktaYdyL1RsEJwvihxF+GjDKY
-	lhhnnvwTWRghXcrgt/B7VG/Ixv7QDzTLOHf55+6RpgH+HNPpeKtTP0Uh8YOzX8PsCnpvTxofS8qwK
-	vaFGO4Eg==;
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Organization: PromiseLabs
-In-Reply-To: <20200423133148.GA19214@openwall.com>
-References: <20200422152047.3196780D981@smtprhmv1.mitre.org>
- <2843537f5deb3a7987c8485bcc56a260@promiselabs.net>
- <ef4d2b65970d80e81fc0294aca5a6a30@promiselabs.net>
- <20200423133148.GA19214@openwall.com>
-Message-ID: <2236ad47936a87f144248f9ab6c7340f@promiselabs.net>
-X-Sender: pentest@promiselabs.net
-User-Agent: Roundcube Webmail/1.3.8
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - lego.superhosting.bg
-X-AntiAbuse: Original Domain - lists.openwall.com
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - promiselabs.net
-X-Get-Message-Sender-Via: lego.superhosting.bg: authenticated_id: pentest@promisedev.com
-X-Authenticated-Sender: lego.superhosting.bg: pentest@promisedev.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-Date: Thu, 23 Apr 2020 17:32:15 +0300
-From: PromiseLabs Pentest Research <pentest@promiselabs.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] spoofing of local email sender via a homoglyph
- attack
-To: oss-security@lists.openwall.com
+Received: (qmail 6124 invoked from network); 15 Jun 2016 02:31:55 -0000
+From: =?utf-8?B?5byg5byA57+U?= <zhangkaixiang@360.cn>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: CVE-2016-5315: libtiff 4.0.6 tif_dir.c: setByteArray() Read
+ access violation
+Thread-Index: AdHGreLw6FLFfI3xSlyJadh0+OgKBw==
+Date: Wed, 15 Jun 2016 02:31:43 +0000
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BB625E@EX02.corp.qihoo.net>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.18.25.62]
+Content-Type: multipart/alternative;
+	boundary="_000_5EDB84F4B23F5B4DB6500A89258280E0BB625EEX02corpqihoonet_"
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2016-5315: libtiff 4.0.6 tif_dir.c: setByteArray() Read access
+ violation
 
-Hi,
+--_000_5EDB84F4B23F5B4DB6500A89258280E0BB625EEX02corpqihoonet_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-To follow up on your questions:
+RGV0YWlscw0KPT09PT09PQ0KDQpQcm9kdWN0OiBsaWJ0aWZmDQpBZmZlY3Rl
+ZCBWZXJzaW9uczogPD0gNC4wLjYNClZ1bG5lcmFiaWxpdHkgVHlwZTogaWxs
+ZWdlbCByZWFkDQpWZW5kb3IgVVJMOiBodHRwOi8vd3d3LnJlbW90ZXNlbnNp
+bmcub3JnL2xpYnRpZmYvDQpDVkUgSUQ6IENWRS0yMDE2LTUzMTUNCkNyZWRp
+dDogS2FpeGlhbmcgWmhhbmcgb2YgdGhlIENsb3VkIFNlY3VyaXR5IFRlYW0s
+IFFpaG9vIDM2MA0KDQpJbnRyb2R1Y3Rpb24NCj09PT09PT0NCg0KUmVhZCBh
+Y2Nlc3MgdmlvbGF0aW9uIG9jY3VycmVkIGluIGZ1bmN0aW9uIHNldEJ5dGVB
+cnJheSBpbiB0aWZfZGlyLmMsIHdoaWNoIGFsbG93cyBhdHRhY2tlcnMgdG8g
+cmVzdWx0IGluIERvUyB2aWEgYSBjcmFmdGVkIFRJRkYgaW1hZ2UuDQoNCg0K
+SGVyZSBpcyB0aGUgc3RhY2sgaW5mbzoNCmdkYiAtLWFyZ3MgJHRvb2wvcmdi
+MnljYmNyIGlkMzEudGlmIHRtcG91dC50aWYNCi0tLSAtLS0NCihnZGIpIGJ0
+DQojMCAgX2ludF9tYWxsb2MgKGF2PWF2QGVudHJ5PTB4YjdkOTE3ODAgPG1h
+aW5fYXJlbmE+LCBieXRlcz1ieXRlc0BlbnRyeT0yOSkgYXQgbWFsbG9jLmM6
+MzcyOA0KIzEgIDB4YjdjM2Y0NGYgaW4gX19HSV9fX2xpYmNfbWFsbG9jIChi
+eXRlcz0yOSkgYXQgbWFsbG9jLmM6MjkxNA0KIzIgIDB4YjdmYWE4NzUgaW4g
+X1RJRkZtYWxsb2MgKHM9MjkpIGF0IHRpZl91bml4LmM6MzE2DQojMyAgMHhi
+N2U4OGQyZCBpbiBzZXRCeXRlQXJyYXkgKGVsZW1fc2l6ZT0xLCBubWVtYj08
+b3B0aW1pemVkIG91dD4sIHZwPTB4YmZmZmVhYjAsIHZwcD08b3B0aW1pemVk
+IG91dD4pIGF0IHRpZl9kaXIuYzo1MQ0KIzQgIF9USUZGVlNldEZpZWxkICh0
+aWY9MHg4MDRlMDA4LCB0YWc9MjcwLCBhcD08b3B0aW1pemVkIG91dD4pIGF0
+IHRpZl9kaXIuYzo1MzkNCiM1ICAweGI3ZTg5ZmFiIGluIFRJRkZWU2V0Rmll
+bGQgKHRpZj0weDgwNGUwMDgsIHRhZz0yNzAsIGFwPTB4YmZmZmVhNDggIlwy
+NjBcMzUyXDM3N1wyNzdcMzcwXDM2M1wwMDRcYiIpIGF0IHRpZl9kaXIuYzo4
+MjANCiM2ICAweGI3ZThhMDk0IGluIFRJRkZTZXRGaWVsZCAodGlmPTB4ODA0
+ZTAwOCwgdGFnPTI3MCkgYXQgdGlmX2Rpci5jOjc2NA0KIzcgIDB4MDgwNGFh
+MDQgaW4gdGlmZmN2dCAoaW49aW5AZW50cnk9MHg4MDRmMTQ4LCBvdXQ9b3V0
+QGVudHJ5PTB4ODA0ZTAwOCkgYXQgcmdiMnljYmNyLmM6MzM5DQooZ2RiKSBp
+IHIgJGVieA0KZWJ4ICAgICAgICAgICAgMHg4Njg2ODY4NiAgICAgICAgLTIw
+MzgwMDQwOTANCg0KDQoNClJlZmVyZW5jZXM6DQpbMV0gaHR0cDovL3d3dy5y
+ZW1vdGVzZW5zaW5nLm9yZy9saWJ0aWZmLw0KDQpUaGFuayB5b3UhDQpCZXN0
+IFJlZ2FyZHMsDQo=
 
-1) How exactly would a mail server block a message from an existing
-username (even without the homoglyph attack for now), and under what
-scenario - message being submitted locally or via SMTP?
-
-The current configuration actually blocks any non-authorized requests as 
-explained in the description. The use-case of this (from my perspective) 
-is that it could be used to advance a social-engineer attack into 
-tricking the recipients believing that they are getting an email from a 
-high-level position at the company.
-
-It's related to the from header.
-
-Issuing a regular unauthenticated request, trying to send an email from 
-john.doe, which is a high-level user at the company:
-$ nc -v *** OMITTED *** 25
-Connection to *** OMITTED *** 25 port [tcp/smtp] succeeded!
-220 *** OMITTED *** ESMTP Postfix
-mail from: john.doe@server.com
-250 2.1.0 Ok
-rcpt to: existing.user@server.com
-553 5.7.1 <john.doe@server.com>: Sender address rejected: not logged in
-
-As you can see, the mail server rejects the request as the existing user 
-hasn't authenticated himself.
-
-
-However, issuing a request using a homoglyph character:
-$ echo -ne "j\xce\xbfhn.doe@server.com" | xclip -selection clipboard
-$ nc -v *** OMITTED ***  25
-Connection to *** OMITTED ***  25 port [tcp/smtp] succeeded!
-220 *** OMITTED ***  ESMTP Postfix
-mail from: jοhn.doe@server.com
-250 2.1.0 Ok
-rcpt to: existing.user@server.com
-250 2.1.5 Ok
-data
-354 End data with <CR><LF>.<CR><LF>
-
-The victim would get an email thinking it's from the actual john.doe 
-user.
-
-Whether this is applicable for assigning a CVE it's up to you decide, 
-the only actual risk here discovered so far is a social-engineering 
-attack.
-
-
----
-PLPR:
-Plamen Dimitrov
-Penetration Tester, CEH & OSCP certified
-
-Promise Solutions LTD
-Penetration Testing and Managed Security services
-
-https://www.promisedev.com
-https://www.promiselabs.net
-+359 883 22 05 12
-
-On 2020-04-23 16:31, Solar Designer wrote:
-> Hi,
-> 
-> As list moderator, I took the liberty of changing the Subject of this
-> posting to include the (claimed) vulnerability type, and not to single
-> out the possibly irrelevant choice of software/version.  The original
-> message Subject was:
-> 
-> Subject: Fwd: Re: [scr882459] postfix 2.10.1 (other versions may be 
-> affected)
-> 
-> To make having this in here reasonable, I think we should first 
-> consider
-> discussing the general (non-)issue and only then specific software.
-> 
-> Speaking mostly in general, not focusing on Postfix:
-> 
-> On Thu, Apr 23, 2020 at 03:10:55PM +0300, PromiseLabs Pentest Research 
-> wrote:
->> >> Postfix allows an email from unsanitized input, pretending to be from
->> >> an existing user on the mail system, which may look exactly the same.
->> >> For example, it is possible sending an email using the hex character
->> >> \xce\ xbf, which looks exactly like the letter 'o'. In case the user
->> >> john.doe exists on the mail server, postfix would not allow to send an
->> >> email from this email account unless an unauthorized attempt is made.
->> >> However, in case we substitute the letter 'o' with the hex character
->> >> \xce\xbf, it will look exactly like it's being sent from john.doe,
->> >> although john.doe (j<\xce\xbf)hn.doe) is actually different from
->> >> the other.
-> 
-> How exactly would a mail server block a message from an existing
-> username (even without the homoglyph attack for now), and under what
-> scenario - message being submitted locally or via SMTP?
-> 
-> For locally submitted messages, depending on mail server architecture,
-> it may be technically possible to infer the real sender (e.g., which
-> user invoked an SGID program to submit the message to the queue, or
-> which user connected to a Unix domain socket).  However, if so the mail
-> server would reasonably not merely block sending mail from other
-> existing local usernames (and allow mail from non-existent 
-> local-looking
-> usernames) but would rather insist on the message having the one 
-> correct
-> username specified as its sender (retrieving the username by UID and
-> either substituting it or comparing exact strings, so a homoglyph 
-> attack
-> is irrelevant).
-> 
-> For messages received via SMTP, the exact sender can generally not be
-> determined, but a message appearing to come from a locally hosted 
-> domain
-> name may be accepted or rejected or inbetween depending on anti-spam
-> settings and such (which may also provide limited anti-spoofing).  I'd
-> expect such configuration to be per-domain (applying regardless of
-> whether the claimed sender's name exists locally or not), not per-user.
-> While use cases can exist where it'd make sense to reject only messages
-> from usernames that exist locally, that feels like a special case, and 
-> I
-> doubt is a default configuration - or is it a default somewhere?  Even
-> if it is, is it an expected security feature (rather than a best-effort
-> anti-spam filter, perhaps one of many)?  That's highly doubtful.
-> 
-> Finally, are we talking about envelope-from, header From, header 
-> Sender,
-> or/and something else?
-> 
-> With these questions, I am trying to show that PromiseLabs' report
-> leaves so much unspecified that claiming a specific attack is 
-> premature.
-> Let alone request (and even successfully obtain) a CVE ID.
-> 
->> > Use CVE-2020-12063.
-> 
-> So now we have a CVE ID specifically against Postfix while the issue is
-> probably generic (or possibly a non-issue, depending on how you look at
-> it) and if there's anything specific to Postfix here then it's possibly
-> Postfix actually trying to prevent spoofing (or just spam) in some
-> cases, but not doing so perfectly.  Should either of these cases really
-> result in a CVE ID against Postfix?
-> 
-> Also, is the issue (if one exists) potentially fixable?  Probably not
-> directly - that is, there's probably no reliable way to prevent just 
-> the
-> homoglyph attacks.  Instead, either whatever check possibly exists can
-> be removed or relaxed (also accept messages appearing from usernames
-> that do exist locally) for the sake of consistency, or the check can be
-> changed to be per-domain.  Either way, it'd not care about the 
-> usernames
-> anymore (assuming it currently somehow does).
-> 
-> I suggest that PromiseLabs research and describe the issue for real,
-> which in my opinion they did not yet.
-> 
-> Alexander
+--_000_5EDB84F4B23F5B4DB6500A89258280E0BB625EEX02corpqihoonet_--
