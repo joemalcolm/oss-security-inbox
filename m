@@ -1,48 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/31/12
-Message-ID: <1763062.ChaLcRdSCz@x2>
-Date: Thu, 31 Mar 2016 17:03:08 -0400
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/15/12
+Message-ID: <CAKG8Do524=Adj62mrRP0eZb0bp7CbXN3yi_Mid5VxFvdE1sE=A@mail.gmail.com>
+Date: Wed, 15 Jun 2016 10:42:48 +0200
+From: Cedric Buissart <cbuissar@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: Partial SMAP bypass on 64-bit Linux kernels
+Subject: Re: CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client
 Content-Type: text/plain; charset=utf-8
 
-On Thursday, March 31, 2016 04:31:25 PM cve-assign@...re.org wrote:
-> > https://git.kernel.org/cgit/linux/kernel/git/tip/tip.git/commit/?h=x86/urg
-> > ent&id=3d44d51bd339766f0178f0cf2e8d048b4a4872aa
-> > 
-> > That patch fixes a bug that exposed a fairly large kernel code surface
-> > to a straightforward SMAP bypass.
-> > 
-> >> From: Salvatore Bonaccorso <carnil@...ian.org>
-> >> Date: Tue, 29 Mar 2016 17:00:03 +0200
-> >> 
-> >> @MITRE CVE assignment team: Would it make sense to have a CVE id
-> >> assigned for this issue for better trackability?
-> 
-> We're going to approach this one in the same way as the issue that was
-> later assigned CVE-2016-2847.
-> 
-> Specifically, is there anyone who believes
-> 3d44d51bd339766f0178f0cf2e8d048b4a4872aa must not have a CVE ID?
-> 
-> The situation, very roughly, seems to be that the upstream vendor has
-> announced that the behavior is a bug. CLAC occurs at a correct place
-> for some types of entries, but accidentally did not occur at a correct
-> place in the case of entries through the int80 gate. Consequently,
-> exploits of kernel vulnerabilities can cause more damage in some
-> cases.
-> 
-> However, it seems to be a bug in how the kernel responds to a
-> post-exploitation attack pattern. This is not a topic area that
-> commonly has CVE ID assignments. Access by the kernel to a user space
-> page is not an action that "crosses a privilege boundary" in a
-> traditional sense.
+Hi Tim,
 
-What if an unprivileged application triggered a NULL pointer dereference that 
-was supposed to be accessing a data structure in the kernel for a policy 
-decision but instead used an attacker controlled structure mapped at address 
-0?
+On Tue, Jun 14, 2016 at 11:16 PM, Tim <tim-security@...tinelchicken.org>
+wrote:
 
--Steve
+>
+> In the mean time, do you happen to have specific information on which
+> versions of the 2.x and 3.x upstream branches were affected/fixed?
+>
+
+Reproducible on all python versions I tested : 2.4, 2.6, 2.7, 3.4 and 3.5
+
+Fixed branches :
+3.4 / 3.5 : revision 94952 : https://hg.python.org/cpython/rev/bf3e1c9b80e9
+2.7 : revision 94951 : https://hg.python.org/cpython/rev/1c45047c5102
+
+Regards,
+
+-- 
+Cedric Buissart,
+Product Security
+
+Purkynova 99
+Brno 612 45
+
