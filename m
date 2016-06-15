@@ -1,91 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/6
-Message-ID: <20160505081757.GA23172@openwall.com>
-Date: Thu, 5 May 2016 11:17:57 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: broken RSA keys
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/15/2
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BB625E@EX02.corp.qihoo.net>
+Date: Wed, 15 Jun 2016 02:31:43 +0000
+From: 张开翔 <zhangkaixiang@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-5315: libtiff 4.0.6 tif_dir.c: setByteArray() Read access violation
 Content-Type: text/plain; charset=utf-8
 
-I posted some half-baked thoughts in here yesterday.  (Not that this
-message is fully baked.)  When suspecting that some of what we were
-seeing was an artifact of the process, I temporarily forgot that those
-shared factors were supposed to be GCDs (not arbitrary shared factors),
-which doesn't leave freedom to the process.  The patterns seen in the
-GCDs should in fact have to do with pairs of keys, rather than with the
-process.  Luckily, there is a simple explanation for the patterns:
+Details
+=======
 
-When a modulus is (mangled?) such that each of its 64-bit limbs consists
-of two matching 32-bit limbs, it is necessarily a multiple of 2^32+1.
-That's because it can be represented as:
+Product: libtiff
+Affected Versions: <= 4.0.6
+Vulnerability Type: illegel read
+Vendor URL: http://www.remotesensing.org/libtiff/
+CVE ID: CVE-2016-5315
+Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
 
-N = {an an ... a1 a1 a0 a0} = (2^32+1) * {0 an ... 0 a1 0 a0}
+Introduction
+=======
 
-where the {...} notation means concatenated 32-bit limbs (or base 2^32
-digits, if you will).  From this, it follows that pairwise GCDs of such
-moduli will also have 2^32+1 as a factor, and this is what ultimately
-causes the 32-bit limb patterns in the GCDs.  As Alexander Cherepanov
-correctly pointed out, even the seemingly slightly more complex 32-bit
-limb patterns in the GCDs are merely indication of them being multiples
-of 2^32+1.  There's probably nothing else to see here.
+Read access violation occurred in function setByteArray in tif_dir.c, which allows attackers to result in DoS via a crafted TIFF image.
 
-I made the mistake yesterday of looking at hex representations of the
-posted shared factors without first looking at hex representations of
-the moduli.  Now that I just did, I see that the example modulus I
-posted does follow the pattern mentioned above, and which Stanislav
-mentioned below.
 
-On Wed, May 04, 2016 at 09:18:26PM -0400, Stanislav Datskovskiy wrote:
-> Author of Phuctor speaking.
+Here is the stack info:
+gdb --args $tool/rgb2ycbcr id31.tif tmpout.tif
+--- ---
+(gdb) bt
+#0  _int_malloc (av=av@...ry=0xb7d91780 <main_arena>, bytes=bytes@...ry=29) at malloc.c:3728
+#1  0xb7c3f44f in __GI___libc_malloc (bytes=29) at malloc.c:2914
+#2  0xb7faa875 in _TIFFmalloc (s=29) at tif_unix.c:316
+#3  0xb7e88d2d in setByteArray (elem_size=1, nmemb=<optimized out>, vp=0xbfffeab0, vpp=<optimized out>) at tif_dir.c:51
+#4  _TIFFVSetField (tif=0x804e008, tag=270, ap=<optimized out>) at tif_dir.c:539
+#5  0xb7e89fab in TIFFVSetField (tif=0x804e008, tag=270, ap=0xbfffea48 "\260\352\377\277\370\363\004\b") at tif_dir.c:820
+#6  0xb7e8a094 in TIFFSetField (tif=0x804e008, tag=270) at tif_dir.c:764
+#7  0x0804aa04 in tiffcvt (in=in@...ry=0x804f148, out=out@...ry=0x804e008) at rgb2ycbcr.c:339
+(gdb) i r $ebx
+ebx            0x86868686        -2038004090
 
-Thank you for posting your comments!
 
-> 1) We presently know of 165 keys containing 'mirrored' moduli.
 
-This is similar but not the same as the number Alexander Cherepanov
-posted after analyzing your data:
+References:
+[1] http://www.remotesensing.org/libtiff/
 
-"From 225 keys listed at http://phuctor.nosuchlabs.com/phuctored,
-152 ones have modulus and exponent divisible by 2**32+1
-[...]
-Modulus and exponent are divisible by 2**32+1 or not simultaneously."
-
-Is your definition of "mirrored" different from "divisible by 2**32+1",
-or does something else (what?) cause the 165 vs. 152 discrepancy?
-
-> 2) The list of affected persons and organizations includes a number of
-> possibly 'politically interesting' targets, e.g., mathematicians, open
-> source projects (Debian, a few others), plus a few other delicacies,
-> such as 'Apple Product Security', 'PGP Corporation Update Signing
-> Key', etc.
-> 
-> 3) The 'mirrored' keys found thus far in no case have valid
-> self-signatures. (A number of the remaining phuctored keys - do.) Thus
-> it does not follow from the facts at hand that these particular keys
-> were generated /by the people and organizations whose names appear in
-> the user string/ !
-
-Are all of the "politically interesting" targets' keys (at least those
-you explicitly listed in 2 above) "mirrored" (and don't have valid
-self-signatures, as you say)?
-
-> 4) One parsimonious explanation for (1) given (2) and (3) is that the
-> 'mirrored' keys were generated by a malicious actor,
-
-Makes sense, but why would they similarly mangle the exponent as well?
-As Alexander Cherepanov wrote, if I understand him correctly, there's
-100% overlap between keys with such moduli and with such exponents.
-
-> who counted on the principle described at, e.g.,  https://evil32.com ,
-> https://bugs.gnupg.org/gnupg/issue1579
-
-As I understand it, the description at evil32.com in particular is about
-generating valid (and not necessarily weak) keypairs that would happen
-to have the intended 32-bit key id.  This is more computationally
-intensive than the "mirroring", but it is fast enough, is an
-older-known(?) and more obvious attack, and it doesn't expose the
-encrypted data to other/unintended attackers (OK, the "evil guys" might
-not care either way).  So it is a little bit surprising (but just a
-little) that someone would go for the "mirroring" instead.
-
-Alexander
+Thank you!
+Best Regards,
