@@ -1,44 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/20
-Message-ID: <572B56FA.1030507@openwall.com>
-Date: Thu, 5 May 2016 17:21:46 +0300
-From: Alexander Cherepanov <ch3root@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: broken RSA keys
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/15/6
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BB62C2@EX02.corp.qihoo.net>
+Date: Wed, 15 Jun 2016 02:37:11 +0000
+From: 张开翔 <zhangkaixiang@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-5323: libtiff 4.0.6 tiffcrop _TIFFFax3fillruns(): divide by zero
 Content-Type: text/plain; charset=utf-8
 
-On 2016-05-05 12:23, Hanno Böck wrote:
-> What one will find are 273 vulnerable moduli.
+Details
+=======
 
-I've took a look.
+Product: libtiff
+Affected Versions: <= 4.0.6
+Vulnerability Type: divide by zero
+Vendor URL: http://www.remotesensing.org/libtiff/
+Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
+CVE ID: CVE-2016-5323
+Tested system version:
+       fedora23 32bit
+       fedora23 64bit
+       CentOS Linux release 7.1.1503 64bit
 
-174 moduli are divisible by 2**32+1. All of them consist of duplicated 
-32-bit limbs, as we have already seen in previous examples. There are no 
-exponents in the set, so I've only checked moduli.
+Introduction
+=======
 
-214 moduli are both in this set and in the phuctor set. There are 11 
-moduli that are in phuctor only:
+t was always corrupted when I use tiffcrop command followed by a crafted TIFF image in function _TIFFFax3fillruns () without checking the value of divisor, it causes a divide by zero flaw. Attackers cound exploit this issue to cause denial-of-service.
 
-http://phuctor.nosuchlabs.com/gpgkey/8382619625FF6F7D4A9D62B3DA6CD70227AE2FE8329BAEDCB1B84A7D7B01F43B
-http://phuctor.nosuchlabs.com/gpgkey/70B3180A25B248F090A74547A31373B2BFB1AE203632D24A26181CE0B0E1D24B
-http://phuctor.nosuchlabs.com/gpgkey/BC8A4290FD0B2F36F20B7CF469D06CACB67204EE47E9E38C4077699C95F190C1
-http://phuctor.nosuchlabs.com/gpgkey/73B5D08E0F43710FC8E04037FFDE987E9C2F648297F9D24CE29D4068A7B86964
-http://phuctor.nosuchlabs.com/gpgkey/94E0C9E553C74A3A837160998693F14D8895AED0F4575565CBC3EB94DA4DE610
-http://phuctor.nosuchlabs.com/gpgkey/3C76C921ACD9ED4BE60ECD06C341CD8F18952E398C63CD4C958503DA9E42C1B2
-http://phuctor.nosuchlabs.com/gpgkey/07C61F68A5980FFB9272A759B577A7338D559B2EF7E17FA24AC14F62808B46E2
-http://phuctor.nosuchlabs.com/gpgkey/B731C95FA850A5B27F1A5FC534AA85C6768AF95600A3F1DEC3A63E78F0AA48C9
-http://phuctor.nosuchlabs.com/gpgkey/01DD7A44EC310DA9E8EB4726A32C322F6990CE6EFC4CFAA44486AA8619C21894
-http://phuctor.nosuchlabs.com/gpgkey/90BC6D88C26403285CF4A89F6E0501D31AD908A598A81BB09E41E0C981C24091
-http://phuctor.nosuchlabs.com/gpgkey/65B890243C97BE24B5089EA8B1F6A3BDA129651C31BD33A106BD44ECD8FD8E95
+Here is the stack info:
+gdb –args ./tiffcrop _TIFFFax3fillruns.tif tmpout.tif
+--- ---
+Program received signal SIGSEGV, Segmentation fault.
+0x00007ffff7ad97f0 in _TIFFFax3fillruns (buf=0x0, runs=0x673500, erun=<optimized out>, lastx=64) at tif_fax3.c:407
+407                              ZERO(n, cp);
+(gdb) bt
+#0  0x00007ffff7ad97f0 in _TIFFFax3fillruns (buf=0x0, runs=0x673500, erun=<optimized out>, lastx=64) at tif_fax3.c:407
+#1  0x00007ffff7ae087c in Fax3DecodeRLE (tif=0x662010, buf=0x0, occ=8192, s=<optimized out>) at tif_fax3.c:1527
+#2  0x00007ffff7ba3739 in TIFFReadEncodedTile (tif=tif@...ry=0x662010, tile=8, buf=0x0, size=8192, size@...ry=-1) at tif_read.c:668
+#3  0x00007ffff7ba3a01 in TIFFReadTile (tif=tif@...ry=0x662010, buf=<optimized out>, x=x@...ry=0, y=y@...ry=0, z=z@...ry=0, s=s@...ry=8) at tif_read.c:641
+#4  0x0000000000443e41 in readSeparateTilesIntoBuffer (bps=1, spp=129, tl=1024, tw=64, imagewidth=32, imagelength=32, obuf=0x7ffff7ee5010 "", in=0x662010) at tiffcrop.c:994
+#5  loadImage (in=in@...ry=0x662010, image=image@...ry=0x7fffffff7960, dump=dump@...ry=0x7fffffffc270, read_ptr=read_ptr@...ry=0x7fffffff7920) at tiffcrop.c:6079
+#6  0x0000000000403209 in main (argc=<optimized out>, argv=<optimized out>) at tiffcrop.c:2278
+(gdb) p cp
+$2 = (unsigned char *) 0x0
 
-> I'll upload a keyids file to the pgpmoduli repo:
-> https://github.com/hannob/pgpmoduli
->
-> The way to interpret that data is that line numbers match. I.e. the gcd
-> in line 10 of gcds matches the modulus in line 10 of vulnerable_moduli
-> and the keyid in line 10 of keyids etc.
 
-There are only 259 keyids though.
-
--- 
-Alexander Cherepanov
