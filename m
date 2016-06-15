@@ -1,36 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/26/7
-Message-Id: <20160526182231.A7D0A52E007@smtpvbsrv1.mitre.org>
-Date: Thu, 26 May 2016 14:22:31 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/15/4
+Message-Id: <20160615024015.E24396C0201@smtpvmsrv1.mitre.org>
+Date: Tue, 14 Jun 2016 22:40:15 -0400 (EDT)
 From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE Request Qemu: scsi: megasas: stack information leakage while reading configuration
+To: jens.erat@...-konstanz.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: several SOGo issues (DOS, XSS, information leakage)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Quick Emulator(Qemu) built with the MegaRAID SAS 8708EM2 Host Bus Adapter
-> emulation support is vulnerable to an information leakage issue. It could
-> occur while processing MegaRAID Firmware Interface(MFI) command to read device
-> configuration in 'megasas_dcmd_cfg_read'.
-> 
-> A privileged user inside guest could use this flaw to leak host memory bytes.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04419.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1339583
+We have a few questions about this. First, several of the
+https://sogo.nu/bugs URLs provide an "Access Denied" response and we
+were wondering whether that was intentional. MITRE has no role in
+determining the list charter, but
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security says
+"List Content Guidelines ... Any security issues that you post to
+oss-security should be either already public or to be made public by
+your posting."
 
->> When reading MegaRAID SAS controller configuration via MegaRAID
->> Firmware Interface(MFI) commands, routine megasas_dcmd_cfg_read
->> uses an uninitialised local data buffer. Initialise this buffer
->> to avoid stack information leakage.
+When required, CVE IDs can be assigned based on commits in conjunction
+with non-public bug reports; this potentially addresses all of the
+cases except for SOGo #3670, which is apparently not yet public at
+all.
 
-Use CVE-2016-5105.
+Also, your message didn't mention whether you are making the CVE
+request on behalf of the Inverse team, or whether you are noting
+issues that are security-related from your own perspective.
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/megasas.c but
-that may be an expected place for a later update.
+Going through the list of public issues:
+
+SOGo #3510 - is the ultimate case of the entire issue summarized by
+"copies the attachment (into memcached?) and then eliminates the copy
+in the sogod. The memcached copy stays forever/until the SOGo service
+is restarted"? Or is there a second implementation error? It seems
+that part of the issue, but not all of it, is a feature request (SOGo
+#3135) suggesting that SOGo should have size limits because
+configuring limits at the level of the web server and SMTP server
+disrupts the user experience.
+
+SOGo #3695 is listed twice but the second one has 3696 in the URL. We
+are guessing that the second "SOGo #3695" is just a "SOGo #3696" typo.
+More importantly, are there two distinct code problems? Or is it a
+single code problem that is reachable with different attack vectors?
+
+SOGo #3718 has two identical
+"Issue: https://sogo.nu/bugs/view.php?id=3718" lines. Was one of them
+supposed to be a different URL?
+
+SOGo #2598 - we are able to assign CVE-2014 IDs. Does "SOGo #2598:
+Script injection in calendar title ... Reporter: Jens Erat" mean that
+your own discovery was only about the calendar title, and that
+additional attack vectors ("contacts module" and "CSS dialogs") were
+follow-on discoveries by the Inverse team?
 
 - -- 
 CVE Assignment Team
@@ -40,17 +63,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXRzxiAAoJEHb/MwWLVhi2qVUP/AsvBiRL5zXD4C4Kx/LCRyCE
-PbG+dd7HH27fm5UHvev40MLvZ9tXQok3hV2XlMMBvvLzkIwFfxYA67qOmJJAF76d
-ae200JbEbdIKYF8EMANPzbh4xKZ/bpRD8cD43kBWpvr0oGzHsJzP7K1147844kFx
-R9nT3b18k18YhbxO/kEGi4ssDoFx3Orqrdi6mYQWU6UeZQtwkjTpGOg0pKFubtoW
-htAhGT/8LPS4NxzVyCcAhLRb8Gk403IlmHnB3b/T7frUcx6hjSJqVm2mShAO5tT3
-iLYPjDcbljFjhQ9KFuFcflDKRFoZU5eQjFyx0kJ99QqlnmvPmOB0ks9RYWfUROWq
-7D7s3SW8jmqK8Q1LcANHw3hDYNabVQzrY+R31fAM/BmhmdWzlDIDXs/z/lXBzsdk
-gQkDbOD4Zizfi9XwN+Su2wp8ZkG25tO5t5je0au+irHck53lPzJYI6UgKWw82O1S
-lEsMZj8dvn+qcOvOYZrQr/awQ13nz+1VjbwiOn4Ce0cS35mRXAMYM2uRvj7NIVrR
-qZrSavg/TN+tOAxKKDcrLyipwoSBtjeXyGp22MWYv+es2jdt9RJ9RFDl6mrlOy2i
-eV0KPnXpEYqqGRrLaYLYUPAosfYyQiHW0aMIpMOKNNJ++Fw2SgeJGGu/W5fsdUW/
-StE1XDD/7pcOjCT2bJw5
-=kowa
+iQIcBAEBCAAGBQJXYL+JAAoJEHb/MwWLVhi2PTsP/iNm7/+Zm9i08VM/T8HlRltR
+F38rhWFOg9tZ+zQcATWAYINlsTOGBAUpF7N/J2zVnxiY1ZyRTPl5KApqi0aN9d+H
+hlUMXl0mxxjxWLFEbOfkgZhiqKr+sE1S2KQ9aBaXV86DF1BEBVE0NiMzkgp+vipj
+s13AIn8CtcZbHpKYOwgfYqHdOEX0vgs8ap/WQL/JXYNKk0KXbF33DFXFui3vn3n4
+BkRDfb6MO1+DdA1yePtaTArY16RncvRwpWnbYhTT62nIQdQVUZ2digeGgD+Ob7/N
+ZNLt+MhfKXVFe5GuSl7J7mW4G22FSsAlvTUbt56g1ZUcz8HnrMP6IKxQPmELRYs+
+MZUiuoyHvsD274VjlCDLdn95vF7kLBIkTRDGLy4RNrDbvrZ/Yj0cG/qt5IK3AUL3
+fA29LlViMzjdUwH73IgC/Elt6+m4xJeECn/vBo5tjXzWv/Cg938oWZarXGm9w0XC
+100oSk9lbNT8dmWq04m90C0lg6h5c24v05vjlBmqnXQZbroBo0GN6ac6Z1quyAhS
+ncvbH0H4s4H9NIADedI8q1gzYTObgE3sa6AZTBt4xTzC3S3XuXZTupga6NCaXGJ1
+IlL51OwN4mLez1AmWe12iIFrAPDmCfwPA+QUQMyXsL+TT6WCo4oaCn7jOV4+Uieq
+tZ6r8wbwS5WPFqI+2lHU
+=EtEt
 -----END PGP SIGNATURE-----
