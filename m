@@ -1,25 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/15/6
-Message-ID: <20160315154307.GA4255@openwall.com>
-Date: Tue, 15 Mar 2016 18:43:07 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: La??l Cellier <lael.cellier@...oste.net>
-Subject: Re: server and client side remote code execution through a buffer overflow in all git versions before 2.7.1 (unpublished cve-2016-2324 and cve-2016-2315)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/15/8
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BB62AE@EX02.corp.qihoo.net>
+Date: Wed, 15 Jun 2016 02:36:19 +0000
+From: 张开翔 <zhangkaixiang@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-5322:libtiff 4.0.6 extractContigSamplesBytes: out-of-bounds read
 Content-Type: text/plain; charset=utf-8
 
-Thanks for bringing this to oss-security.
+Details
+=======
 
-On Tue, Mar 15, 2016 at 03:55:37PM +0100, La??l Cellier wrote:
-> Hello, original report describing the overflow is here 
-> http://pastebin.com/UX2P2jjg
+Product: libtiff
+Affected Versions: <= 4.0.6
+Vulnerability Type: illegel read
+Vendor URL: http://www.remotesensing.org/libtiff/
+Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
+CVE ID: CVE-2016-5322
+Tested system version:
+       fedora23 32bit
+       fedora23 64bit
+       CentOS Linux release 7.1.1503 64bit
 
-Going forward, please post the actual content directly to oss-security,
-not (only) via reference.  I've attached the contents of this pastebin
-to this message, so that it's properly archived.
+Introduction
+=======
 
-(No idea why you had "cve" obfuscated with Unicode, but I undid that.)
+It was always corrupted when I use tiffcrop command followed by a crafted TIFF image .The vulnerbility exists in extractContigSamplesBytes() without checking the buffer length when reading, Attackers could exploit this issue to cause denial-of-service.
 
-Alexander
+Here is the stack info:
+gdb –args ./tiffcrop extractContigSamplesBytes.tif tmpout.tif
+--- ---
+Program received signal SIGSEGV, Segmentation fault.
+extractContigSamplesBytes (in=0x6647b0 "@z\335\367\377\177", out=out@...ry=0x66d9a0 "@z\335\367\377\177", cols=cols@...ry=32, sample=sample@...ry=0, spp=spp@...ry=16385, bps=bps@...ry=256, count=count@...ry=1, start=1, start@...ry=0,
+    end=end@...ry=32) at tiffcrop.c:2705
+2705                     *dst++ = *src++;
+(gdb) bt
+#0  extractContigSamplesBytes (in=0x6647b0 "@z\335\367\377\177", out=out@...ry=0x66d9a0 "@z\335\367\377\177", cols=cols@...ry=32, sample=sample@...ry=0, spp=spp@...ry=16385, bps=bps@...ry=256, count=count@...ry=1, start=1,
+    start@...ry=0, end=end@...ry=32) at tiffcrop.c:2705
+#1  0x00000000004379a7 in extractContigSamplesToBuffer (dump=<optimized out>, bps=256, spp=16385, sample=0, cols=<optimized out>, rows=<optimized out>, in=0x6647b0 "@z\335\367\377\177", out=0x66d9a0 "@z\335\367\377\177")
+    at tiffcrop.c:3493
+#2  writeBufferToSeparateStrips (out=out@...ry=0x662570, buf=buf@...ry=0x6647b0 "@z\335\367\377\177", length=length@...ry=32, width=width@...ry=32, spp=spp@...ry=16385, dump=dump@...ry=0x7fffffffc260) at tiffcrop.c:1165
+#3  0x000000000043e729 in writeCroppedImage (in=in@...ry=0x662010, out=0x662570, image=image@...ry=0x7fffffff7950, dump=dump@...ry=0x7fffffffc260, width=32, length=32, crop_buff=crop_buff@...ry=0x6647b0 "@z\335\367\377\177",
+    pagenum=pagenum@...ry=0, total_pages=total_pages@...ry=1) at tiffcrop.c:7866
+#4  0x0000000000408acb in main (argc=<optimized out>, argv=<optimized out>) at tiffcrop.c:2326
+(gdb) p src
+$4 = (uint8 *) 0x6e47d0 <Address 0x6e47d0 out of bounds>
 
-View attachment "cve-2016-2315.c" of type "text/x-c" (1674 bytes)
+
