@@ -1,71 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/06/7
-Message-ID: <CAFHyJTqHw=Cjg6C-u4eUyUVe9bcntn+LombQ+fnosgXBy79OZA@mail.gmail.com>
-Date: Sun, 6 Mar 2016 15:47:19 +0000
-From: "op7ic \\x00" <op7ica@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/15/7
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BB629A@EX02.corp.qihoo.net>
+Date: Wed, 15 Jun 2016 02:35:38 +0000
+From: 张开翔 <zhangkaixiang@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-5321: libtiff 4.0.6 DumpModeDecode(): Ddos
 Content-Type: text/plain; charset=utf-8
 
-agree, the vanity hunting is going to be there but I suppose as with any
-bug ID that is going to happen.
-But beyond that I don't think it matters as much. In the end of the day if
-somebody can use OVI or OVE to identify their bug then at least we got some
-level of reference to look it up on google.
+Details
+=======
 
-I was toying with 4digit IDs that would be random enough, thats a
-possiblity too, the only problem is that there is a overhead of doing DB
-sorting and lookups to make sure their don't clash. Thats why ovi uses
-sequential numbers - its just easier to manage.
+Product: libtiff
+Affected Versions: <= 4.0.6
+Vulnerability Type: illegel read
+Vendor URL: http://www.remotesensing.org/libtiff/
+Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
+CVE ID: CVE-2016-5321
+Tested system version:
+       fedora23 32bit
+       fedora23 64bit
+       CentOS Linux release 7.1.1503 64bit
 
-Cheers,
+
+Introduction
+=======
+
+It was always corrupted when I use tiffcrop command followed by a crafted TIFF image.The vulnerbility exists in fuction DumpModeDecode() whitout checking the value of output parameters, Attackers could exploit this issue to cause denial-of-service.
 
 
-
-On Sun, Mar 6, 2016 at 3:09 PM, Solar Designer <solar@...nwall.com> wrote:
-
-> On Sun, Mar 06, 2016 at 12:39:46PM +0000, op7ic x00 wrote:
-> > www.freeovi.com  -> it does have big `blue' button.
->
-> Oh, I wasn't aware of it, and a Google search for "freeovi" or "ovi id"
-> finds only irrelevant stuff now.  I think it was not publicized enough.
-> Also, there's a name clash of "freeovi" with some old Nokia maps stuff.
->
-> As to the button (non-)issue, I brought it to Twitter poll.  Of course,
-> it's not the same crowd as oss-security, but I want to get an overall
-> picture of how strongly people feel in favor of not wasting IDs, without
-> spamming this list with "+1" replies:
->
-> https://twitter.com/solardiz/status/706488297242140672
->
-> In fact, there are pretty strong results after a few minutes already.
->
-> One of my concerns was that people would be hunting for vanity OVE IDs.
-> I didn't want to encourage waste of time on that, nor attempts to
-> increase the counter up to a pretty-looking number.  The latter is one
-> of the reasons why I chose to include the full date rather than just the
-> year - this makes numbers like 7777 less valuable, since there's one of
-> each of those every day.  (Another reason to include the full date is
-> that it may sometimes provide some insight into disclosure timelines,
-> even if not reliably.  I suspect some people won't like that, though.)
-> I think OVI, if it gains popularity and is not adjusted, is far more
-> "vulnerable" to such vanity ID hunting.
->
-> Also, having the IDs increase up to a few thousand on each normal day
-> may discourage deliberate/malicious attempts to do so, and people trying
-> to skip IDs on such days and come back for lower IDs tomorrow.
->
-> However, there appears to be a psychological aspect with spilling
-> unrequested IDs on the page.  It makes many people feel sorry.  I think
-> I underestimated that.
->
-> (Another workaround would be to use randomized yet 4-digit IDs, but
-> being able to get some sequential IDs is very nice for assigning them to
-> related vulnerabilities.  This is why the page currently spills 10 IDs
-> at once on a second page load from the same IP address, and a few times
-> more, as long as the current ID is sufficiently below 9999 to allow for
-> this generosity.)
->
-> Alexander
->
-
+Here is the stack info:
+gdb –args ./tiffcrop DumpModeDecode.tif tmpout.tif
+--- ---
+__memcpy_ssse3_back () at ../sysdeps/x86_64/multiarch/memcpy-ssse3-back.S:2709
+2709                   movdqu    %xmm0, 36(%rdi)
+Program received signal SIGSEGV, Segmentation fault.
+__memcpy_ssse3_back () at ../sysdeps/x86_64/multiarch/memcpy-ssse3-back.S:2709
+2709                   movdqu    %xmm0, 36(%rdi)
+(gdb) bt
+#0  __memcpy_ssse3_back () at ../sysdeps/x86_64/multiarch/memcpy-ssse3-back.S:2709
+#1  0x00007ffff7ad6a79 in DumpModeDecode (tif=0x662010, buf=<optimized out>, cc=52, s=<optimized out>) at tif_dumpmode.c:103
+#2  0x00007ffff7ba3739 in TIFFReadEncodedTile (tif=tif@...ry=0x662010, tile=8, buf=0x0, size=52, size@...ry=-1) at tif_read.c:668
+#3  0x00007ffff7ba3a01 in TIFFReadTile (tif=tif@...ry=0x662010, buf=<optimized out>, x=x@...ry=0, y=y@...ry=0, z=z@...ry=0, s=s@...ry=8) at tif_read.c:641
+#4  0x0000000000443e41 in readSeparateTilesIntoBuffer (bps=208, spp=9, tl=1, tw=2, imagewidth=2, imagelength=1, obuf=0x662ce0 "\200\177\335\367\377\177", in=0x662010) at tiffcrop.c:994
+#5  loadImage (in=in@...ry=0x662010, image=image@...ry=0x7fffffff7960, dump=dump@...ry=0x7fffffffc270, read_ptr=read_ptr@...ry=0x7fffffff7920) at tiffcrop.c:6079
+#6  0x0000000000403209 in main (argc=<optimized out>, argv=<optimized out>) at tiffcrop.c:2278
+(gdb) p buf
+$6 = 0x0
