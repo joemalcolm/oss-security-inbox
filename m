@@ -1,4 +1,9 @@
-Received: (qmail 8033 invoked by uid 550); 26 Sep 2025 02:36:28 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5290" "Wednesday" "15" "June" "2016" "02:28:58" "+0000" "=?utf-8?B?5byg5byA57+U?=" "zhangkaixiang@360.cn" "<5EDB84F4B23F5B4DB6500A89258280E0BB624A@EX02.corp.qihoo.net>" "90" "[oss-security] =?utf-8?B?Q1ZFLTIwMTYtNTMxNO+8mmxpYnRpZmYgNC4wLjYgUGl4YXJMb2dEZWNvZGUo?==?utf-8?B?KSBvdXQtb2YtYm91bmQgd3JpdGVz?=" nil nil nil "6" "2016061502:28:58" "[oss-security] =?utf-8?B?Q1ZFLTIwMTYtNTMxNO+8mmxpYnRpZmY=?= =?utf-8?B?NC4wLjY=?= =?utf-8?B?UGl4YXJMb2dEZWNvZGUo?==?utf-8?B?KQ==?= =?utf-8?B?b3V0LW9mLWJvdW5k?= =?utf-8?B?d3JpdGVz?=" (number mark "U       zhangkaixian Jun 15   90/5290  " thread-indent "\"[oss-security] =?utf-8?B?Q1ZFLTIwMTYtNTMxNO+8mmxpYnRpZmYgNC4wLjYgUGl4YXJMb2dEZWNvZGUo?==?utf-8?B?KSBvdXQtb2YtYm91bmQgd3JpdGVz?=\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7589 invoked by uid 550); 15 Jun 2016 02:33:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,280 +12,112 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 10049 invoked from network); 26 Sep 2025 02:33:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758854024; x=1759458824; darn=lists.openwall.com;
-        h=in-reply-to:from:content-language:references:cc:to:subject:reply-to
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JNOqIWavx8rFIfX3JbcVc4qINNoTU+wFd5Mii2ny7gE=;
-        b=CbJgq4A4/6WtxrQZebOgMjAb0SPbgDubuH1AgvoJEvd31Rbfz8Rgmcu3xfD8xkFexf
-         mZVLvcggc8TbgMm6AWV/bv/gYJnTzvZvGJ3asGyyvEiX/swXVSO2X/0R89QD3jCCWLzW
-         4cjHJHvdta+znHaGmTJyouKchWlB7v7l/Aun7HHOE0xGrp66x3SMep40ep1r06l2e9oP
-         BrIT8qkcNIZigcGZg63Kdm7RtmRuqj9fwS0HWIVwOmE4FFoIt7EPT+MH7AmtFQWBAMYf
-         nim6R89DsKgzgOSIQ9tG28BbGbpPnnloBD15Muw57XLIuciwkmdRKBotVeTUTO5yRWi3
-         d7Jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758854024; x=1759458824;
-        h=in-reply-to:from:content-language:references:cc:to:subject:reply-to
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=JNOqIWavx8rFIfX3JbcVc4qINNoTU+wFd5Mii2ny7gE=;
-        b=WNj33yhEQPPW9aVPUFW8Nf1NtTSUYrMSzMPSPj/JfHcVmrYjkRLGCngZbtX3KgWqCC
-         v1qCp4NkdunqzOWuxD0dXF2Mct3tmmk2rUrY3GVRbk3XEVZKTD/ggBmUwNnXOuvo2nOz
-         2GuyRMd/YN1AWkaT2ZI4qINVinqxNHKZJAR4QPaB+XAwEYuJHzOq2lx7cWRsVoBeRkVW
-         +tu0o7YVm9/V4nIzqZm7thH+8lHDxwSrihCBnb9XvRe4SmvepIZvNlnocDPAqOUoUBpH
-         lBcq4IWMVPGiYvqHgM+QXjAEwRmcDJeRVzfpfEqZtj5A/mFju38o8awkewU4wTcQVYDx
-         kbZA==
-X-Forwarded-Encrypted: i=1; AJvYcCWd0HOTja0v/M2LVuNMLU0Oi7ciRXRWqbEH3TSbXvgu9a9W9Bog6lBegCPgUspQRMj2NEAIfRQ37UcWvIg=@lists.openwall.com
-X-Gm-Message-State: AOJu0Yy7NhAE4GyneAYUSxlJDmhmEccoEMvh9jUeceeLVuXgY2fIFB80
-	9k2+tnypdcWQFhn1CmbsKuMKHf7CxSwcy57VYbD9h9dM62HsWKaEBewa
-X-Gm-Gg: ASbGncsNbTcOusNB+e/vUBc+LEvWOxkBlaAiqYQhU2iIk2UaBZMI0WCJ3eFzJUtxAic
-	rXyeqe0RoEZs4xKfbYwHobnWbn9JtRFVml+aCpNTWmCOESRSPSt2XRCJro/JNLW21sRlOUdt0ni
-	XIJn+SKa14VRYiMEjQX1kHJCZeK/8QSa5HK/rJE04SJAn8amdfgexYxUzjQlwoUG/9RJHyn0FeV
-	w9EBtAEPX0Ureo7htiViuhyFtBq0B+0GuWrr5nEnwdWAJEkA+0/0ZwDtesGwweWUurF7geFBa5l
-	Jv7GsXat9wlQ7kKpzf/YlXIYgae9F6HzMfPzVFuDEQbT8StpYCoPr3hU/+fWM5bs/VkgVx61x9X
-	NB2ah+JsvUrC9YrzRdX3Bm0CxRVJ6MQ==
-X-Google-Smtp-Source: AGHT+IE8MhtR6Od0OXaM0CDkDsxRvAGn/kgtb8tTDEOPjSLHaq/p/0gd5aI/ciS8a1G6vc+t1rb0GA==
-X-Received: by 2002:a05:690c:4b8b:b0:74e:a5d3:d95 with SMTP id 00721157ae682-763fe2866a6mr68813797b3.22.1758854024357;
-        Thu, 25 Sep 2025 19:33:44 -0700 (PDT)
+Received: (qmail 5166 invoked from network); 15 Jun 2016 02:29:11 -0000
+From: =?utf-8?B?5byg5byA57+U?= <zhangkaixiang@360.cn>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: =?utf-8?B?Q1ZFLTIwMTYtNTMxNO+8mmxpYnRpZmYgNC4wLjYgUGl4YXJMb2dEZWNvZGUo?=
+ =?utf-8?Q?)_out-of-bound_writes?=
+Thread-Index: AdHGrXdab8SDrD3XTK+n0gb473+knQ==
+Date: Wed, 15 Jun 2016 02:28:58 +0000
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BB624A@EX02.corp.qihoo.net>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.18.25.62]
 Content-Type: multipart/alternative;
- boundary="------------U7vyLdj9h354lRx9E7zz7k3o"
-Message-ID: <a715936d-759a-4c2f-8498-6da12f0fba3a@gmail.com>
-Date: Thu, 25 Sep 2025 21:33:30 -0500
+	boundary="_000_5EDB84F4B23F5B4DB6500A89258280E0BB624AEX02corpqihoonet_"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Demi Marie Obenour <demiobenour@gmail.com>,
- oss-security@lists.openwall.com, Peter Gutmann <pgut001@cs.auckland.ac.nz>,
- "Adiletta, Andrew" <ajadiletta@wpi.edu>, Solar Designer
- <solar@openwall.com>, Andrew Cooper <andrew.cooper3@citrix.com>
-Cc: "openssh@openssh.com" <openssh@openssh.com>, "Tol, Caner" <mtol@wpi.edu>,
- "Sunar, Berk" <sunar@wpi.edu>, "Doroz, Yarkin" <ydoroz@wpi.edu>,
- "Todd C. Miller" <Todd.Miller@courtesan.com>
-References: <92a89d5d-e0de-c713-e7d2-83f971574eff@mindrot.org>
- <20250923032113.GA14348@openwall.com>
- <BL1PR01MB772308134BF946DF07159A05C11CA@BL1PR01MB7723.prod.exchangelabs.com>
- <43743160-7c83-4c4e-ad77-52e5058636c5@gmail.com>
- <ME0P300MB0713919015F954023D6D63FAEE1CA@ME0P300MB0713.AUSP300.PROD.OUTLOOK.COM>
- <0ea3da20-739e-4608-8869-9d5882a8f003@gmail.com>
- <544d9d89-2a0a-4901-84ab-40c07c9c7bcd@gmail.com>
-Content-Language: en-US
-From: Jacob Bachmeyer <jcb62281@gmail.com>
-In-Reply-To: <544d9d89-2a0a-4901-84ab-40c07c9c7bcd@gmail.com>
-Subject: Re: [oss-security] Re: [EXT] Re: [oss-security] CVE-2023-51767: a
- bogus CVE in OpenSSH
+Subject: [oss-security] =?utf-8?B?Q1ZFLTIwMTYtNTMxNO+8mmxpYnRpZmYgNC4wLjYgUGl4YXJMb2dEZWNvZGUo?=
+ =?utf-8?Q?)_out-of-bound_writes?=
 
---------------U7vyLdj9h354lRx9E7zz7k3o
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+--_000_5EDB84F4B23F5B4DB6500A89258280E0BB624AEX02corpqihoonet_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-On 9/25/25 14:38, Demi Marie Obenour wrote:
-> On 9/24/25 23:51, Jacob Bachmeyer wrote:
->> On 9/24/25 06:45, Peter Gutmann wrote:
->>> Jacob Bachmeyer<jcb62281@gmail.com> writes:
->>>
->>>> The critical issue for exploiting Rowhammer to corrupt spilled register
->>>> values seems to be how long those spilled values remain live in DRAM before
->>>> they are reloaded into the register file and ultimately used.
->>> It also depends on whether they're ever actually read back from RAM or just
->>> end up sitting in cache for a microsecond or two before they're re-fetched
->>> from there.  There are some attacks that exploit the difference between
->>> (glitched) data in RAM and data in cache, but in this case it'd mitigate
->>> Rowhammer by having the corrupted data in RAM ignored if it's still in cache.
->> Indeed, if the spilled value is never evicted from cache, then it is
->> never live in DRAM and Rowhammer cannot be used to corrupt it. However,
->> if I understand correctly, modern systems aggressively flush caches on
->> process context switches in order to close cache-related side channels.
->>
->> This seems to suggest that the solution to "Rowhammer Mayhem" may lie in
->> improvements to kernel scheduler and VM management subsystems.
-> What about hardware fixes?  Those will take a long time
-> to roll out but hopefully they can be 100% effective.
+DQpEZXRhaWxzDQo9PT09PT09DQoNClByb2R1Y3Q6IGxpYnRpZmYNCkFmZmVj
+dGVkIFZlcnNpb25zOiA8PSA0LjAuNg0KVnVsbmVyYWJpbGl0eSBUeXBlOiBv
+dXQtb2YtYm91bmQgd3JpdGVzDQpWZW5kb3IgVVJMOiBodHRwOi8vd3d3LnJl
+bW90ZXNlbnNpbmcub3JnL2xpYnRpZmYvDQpDVkUgSUQ6IENWRS0yMDE2LTUz
+MTQNCkNyZWRpdDogS2FpeGlhbmcgWmhhbmcgb2YgdGhlIENsb3VkIFNlY3Vy
+aXR5IFRlYW0sIFFpaG9vIDM2MA0KDQpJbnRyb2R1Y3Rpb24NCj09PT09PT0N
+Cg0KSXQgd2FzIGFsd2F5cyBjb3JydXB0ZWQgd2hlbiBJIHVzZSByZ2IyeWNi
+Y3IgY29tbWFuZCBmb2xsb3dlZCBieSBhIGNyYWZ0ZWQgVElGRiBpbWFnZS4g
+VGhlIHZ1bG5lcmFiaWxpdHkgb2Ygb3V0LW9mLWJvdW5kIHdyaXRlcyBjb21l
+cyBmcm9tIFBpeGFyTG9nRGVjb2RlKCkgZnVuY3Rpb24gd2l0aG91dCBjaGVj
+a2luZyB0aGUgYnVmZmVyIGxlbmd0aCwgd2hpY2ggY2F1c2UgdGhlIGhlYWQg
+b2YgbmV4dCBoZWFwIGNvdWxkIGJlIGZpbGxlZCB3aXRoIGFueSBkYXRhLCBj
+cmFzaCBvY2N1cnMgd2hlbiBtYWxsb2MoKSBvciBmcmVlKCkgaXMgY2FsbGVk
+LkF0dGFja2VycyBjb3VsZCBleHBsb2l0IHRoaXMgaXNzdWUgdG8gcmVzdWx0
+IGluIERvUy4NCg0KDQpIZXJlIGlzIHRoZSBzdGFjayBpbmZvOg0KZ2RiIOKA
+k2FyZ3MgLi9yZ2IyeWNiY3IgZ3RUaWxlQ29udGlnLnRpZiB0bXBvdXQudGlm
+DQotLS0gLS0tDQooZ2RiKSBiIHRpZl9waXhhcmxvZy5jOjc4Nw0KQnJlYWtw
+b2ludCAxIGF0IDB4YjdmNzkxNmM6IGZpbGUgdGlmX3BpeGFybG9nLmMsIGxp
+bmUgNzg3Lg0KKGdkYikgcg0KLS0tIC0tLQ0KQnJlYWtwb2ludCAxLCBQaXhh
+ckxvZ0RlY29kZSAodGlmPTB4ODA0ZjE0OCwgb3A9MHg4MDRmNTA4ICIiLCBv
+Y2M9PG9wdGltaXplZCBvdXQ+LCBzPTApIGF0IHRpZl9waXhhcmxvZy5jOjc4
+Nw0KNzg3ICAgICAgICAgICAgICAgICAgICAgaW50IHN0YXRlID0gaW5mbGF0
+ZSgmc3AtPnN0cmVhbSwgWl9QQVJUSUFMX0ZMVVNIKTsNCihnZGIpIHgvMzJ4
+dyAgc3AtPnN0cmVhbS0+bmV4dF9vdXQNCjB4ODA0ZjU5ODogICAgICAgMHhi
+N2Q5MTdiMCAgICAgMHhiN2Q5MTdiMCAgICAgMHg5YjlhOTk5OCAgICAgMHg5
+ZjllOWQ5Yw0KMHg4MDRmNWE4OiAgICAgICAweGEzYTJhMWEwICAgICAweGE3
+YTZhNWE0ICAgICAweGFiYWFhOWE4ICAgICAweGFmYWVhZGFjDQoweDgwNGY1
+Yjg6ICAgICAgIDB4YjNiMmIxYjAgICAgIDB4YjdiNmI1YjQgICAgIDB4YmJi
+YWI5YjggICAgIDB4YmZiZWJkYmMNCjB4ODA0ZjVjODogICAgICAgMHhjM2My
+YzFjMCAgICAgMHhjN2M2YzVjNCAgICAgMHhjYmNhYzljOCAgICAgMHhjZmNl
+Y2RjYw0KMHg4MDRmNWQ4OiAgICAgICAweGQzZDJkMWQwICAgICAweGQ3ZDZk
+NWQ0ICAgICAweGRiZGFkOWQ4ICAgICAweDAwMDAwMDkxDQoweDgwNGY1ZTg6
+ICAgICAgIDB4YjdkOTE4MzggICAgIDB4YjdkOTE4MzggICAgIDB4ZWJlYWU5
+ZTggICAgIDB4ZWZlZWVkZWMNCg0KKGdkYikgZmluaXNoDQooZ2RiKSB4LzMy
+eHcgIHNwLT5zdHJlYW0tPm5leHRfb3V0DQoweDgwNGY1OTg6ICAgICAgIDB4
+ODY4Njg2ODYgICAgIDB4OTM5MjBkMGMgICAgICAweGEwOWUxYTE4ICAgICAw
+eGFkYWEyNzI0DQoweDgwNGY1YTg6ICAgICAgIDB4YmFiNjM0MzAgICAgIDB4
+YzdjMjQxM2MgICAgICAweGQ0Y2U0ZTQ4ICAgICAweGUxZGE1YjU0DQoweDgw
+NGY1Yjg6ICAgICAgIDB4ZWVlNjY4NjAgICAgIDB4ZmJmMjc1NmMgICAgICAw
+eDA4ZmU4Mjc4ICAgICAweDE2MGE4Zjg0DQoweDgwNGY1Yzg6ICAgICAgIDB4
+MjMxNjljOTAgICAgIDB4MzAyMmE5OWMgICAgICAweDNkMmViNmE4ICAgICAw
+eDRhM2FjM2I0DQoweDgwNGY1ZDg6ICAgICAgIDB4NTc0NmQwYzAgICAgIDB4
+ODY4NmRkY2MgICAgICAweDkzOTIwZDBjICAgICAweDQwOWQxYTE4DQoweDgw
+NGY1ZTg6ICAgICAgIDB4NGRhOWM3MjMgICAgIDB4NWFiNWQ0MmYgICAgICAw
+eDY3YzFlMTNiICAgICAweDc0Y2RlZTQ3DQoNCihnZGIpIGMNCkNvbnRpbnVp
+bmcuDQpQcm9ncmFtIHJlY2VpdmVkIHNpZ25hbCBTSUdTRUdWLCBTZWdtZW50
+YXRpb24gZmF1bHQuDQoweGI3YzNiZDM4IGluIF9pbnRfZnJlZSAoYXY9MHhi
+N2Q5MTc4MCA8bWFpbl9hcmVuYT4sIHA9PG9wdGltaXplZCBvdXQ+LCBoYXZl
+X2xvY2s9MCkgYXQgbWFsbG9jLmM6NDAxNQ0KNDAxNSAgICAgICAgICAgICAg
+ICAgICB1bmxpbmsoYXYsIG5leHRjaHVuaywgYmNrLCBmd2QpOw0KKGdkYikg
+YnQNCiMwICAweGI3YzNiZDM4IGluIF9pbnRfZnJlZSAoYXY9MHhiN2Q5MTc4
+MCA8bWFpbl9hcmVuYT4sIHA9PG9wdGltaXplZCBvdXQ+LCBoYXZlX2xvY2s9
+MCkgYXQgbWFsbG9jLmM6NDAxNQ0KIzEgIDB4YjdjM2Y2ZTAgaW4gX19HSV9f
+X2xpYmNfZnJlZSAobWVtPTB4ODA0ZjUwOCkgYXQgbWFsbG9jLmM6Mjk2OQ0K
+IzIgIDB4YjdmYWE4ZjggaW4gX1RJRkZmcmVlIChwPTB4ODA0ZjUwOCkgYXQg
+dGlmX3VuaXguYzozMjINCiMzICAweGI3ZjI5MDUwIGluIGd0VGlsZUNvbnRp
+ZyAoaW1nPTB4YmZmZmU1ODQsIHJhc3Rlcj0weDgwNjhiMDAsIHc9MzQsIGg9
+NCkgYXQgdGlmX2dldGltYWdlLmM6NjkxDQojNCAgMHhiN2YzMTUxNyBpbiBU
+SUZGUkdCQUltYWdlR2V0IChpbWc9MHhiZmZmZTU4NCwgcmFzdGVyPTB4ODA2
+OGIwMCwgdz0zNCwgaD00KSBhdCB0aWZfZ2V0aW1hZ2UuYzo1MDANCiM1ICAw
+eGI3ZjMxNzNjIGluIFRJRkZSZWFkUkdCQUltYWdlT3JpZW50ZWQgKHRpZj0w
+eDgwNGYxNDgsIHJ3aWR0aD0zNCwgcmhlaWdodD00LCByYXN0ZXI9MHg4MDY4
+YjAwLCBvcmllbnRhdGlvbj00LCBzdG9wPTApIGF0IHRpZl9nZXRpbWFnZS5j
+OjUxOQ0KIzYgIDB4YjdmMzE3YmEgaW4gVElGRlJlYWRSR0JBSW1hZ2UgKHRp
+Zj0weDgwNGYxNDgsIHJ3aWR0aD0zNCwgcmhlaWdodD00LCByYXN0ZXI9MHg4
+MDY4YjAwLCBzdG9wPTApIGF0IHRpZl9nZXRpbWFnZS5jOjUzNw0KIzcgIDB4
+MDgwNGE1OWYgaW4gdGlmZmN2dCAoaW49aW5AZW50cnk9MHg4MDRmMTQ4LCBv
+dXQ9b3V0QGVudHJ5PTB4ODA0ZTAwOCkgYXQgcmdiMnljYmNyLmM6MzE1DQoj
+OCAgMHgwODA0OTRhMSBpbiBtYWluIChhcmdjPTMsIGFyZ3Y9MHhiZmZmZjNi
+NCkgYXQgcmdiMnljYmNyLmM6MTI3DQoNCihnZGIpIHgvOHh3IDB4ODA0ZjUw
+OC04DQoweDgwNGY1MDA6ICAgICAgIDB4MDAwMDAwMzAgICAgIDB4MDAwMDAw
+OTEgICAgIDB4ZmZmZmZmZmYgICAgMHg0MmM0ZmZmZg0KMHg4MDRmNTEwOiAg
+ICAgICAweDAyZjcwZWI4ICAgICAgMHhmZmZmZmZmZiAgICAweDFiYjE3ZDlj
+ICAgICAweGZmZmYwNjFiDQooZ2RiKSB4Lzh4dyAweDgwNGY1MDArMHg5MA0K
+MHg4MDRmNTkwOiAgICAgICAweDhiOGE4OTg4ICAgICAweDAwMDAwMDUxICAg
+ICAweDg2ODY4Njg2ICAgICAweDkzOTIwZDBjDQoweDgwNGY1YTA6ICAgICAg
+IDB4YTA5ZTFhMTggICAgIDB4YWRhYTI3MjQgICAgIDB4YmFiNjM0MzAgICAg
+IDB4YzdjMjQxM2MNCihnZGIpIHgvOHh3IDB4ODA0ZjUwMCsweDkwKzB4NTAN
+CjB4ODA0ZjVlMDogICAgICAgMHg5MzkyMGQwYyAgICAgMHg0MDlkMWExOCAg
+ICAgMHg0ZGE5YzcyMyAgICAgMHg1YWI1ZDQyZg0KMHg4MDRmNWYwOiAgICAg
+ICAweDY3YzFlMTNiICAgICAweDc0Y2RlZTQ3ICAgICAweDgxZDlmYjUzICAg
+ICAgMHg4ZWU1MDg1Zg0KDQoNClJlZmVyZW5jZXM6DQpbMV0gaHR0cDovL3d3
+dy5yZW1vdGVzZW5zaW5nLm9yZy9saWJ0aWZmLw0KDQpUaGFuayB5b3UhDQpC
+ZXN0IFJlZ2FyZHMsDQo=
 
-First, that does absolutely nothing for current hardware. Declaring all 
-(or almost all) current hardware e-waste is severely environmentally 
-irresponsible if it can possibly be avoided.
-
-Second, I had expected ECC to "kill Rowhammer dead" only to find that it 
-can be possible to cause enough bit flips to get all the way from one 
-valid ECC word to another valid ECC word before ECC scrub reaches the 
-location.  I suspect that the DDR5 built-in ECC is supposed to resolve 
-Rowhammer, but we will have to wait and see if it actually achieves that 
-goal.
-
-It seems highly likely that Rowhammer is an inherent consequence of DRAM 
-density beyond a certain limit and highly *unlikely* that reducing DRAM 
-density below the "Rowhammer threshold" will prove to be an acceptable 
-solution.
-
->> Perhaps a yield primitive that yields the rest of the current timeslice
->> but guarantees a full unpreemptable timeslice upon resume?  That would
->> allow a brief sensitive computation to be effectively made
->> uninterruptible but would not permit monopolization of the processor.
->>
->> Perhaps more randomization in assigning physical page frames to prevent
->> the kernel from reliably using "bait" pages?  The attack in the paper
->> seems to depend on predictable page frame allocation.
->>
->> The latter could also be implemented in user processes:  allocate a
->> randomly-sized pad on the stack to shift "inner" stack variables away
->> from their predictable locations.  Making the pad multiple pages plus a
->> fraction of a page could also counter predictable kernel page frame
->> allocations by shifting the sequence of pages allocated.
-> One idea I had is to add physical guard pages
-> between uses of memory for different purposes.
-
-That depends on assumptions about physical layout that may not hold.  
-(What if the DRAM is interleaved such that the guard pages end up in a 
-different bank or chip?)  Apparently the researchers already had to hit 
-areas at some logical distance from the target; I doubt that the exact 
-physical DRAM layout in the chips they used is published.
-
-Worse, skipping page frames like this may work for one DRAM density and 
-silently fail for another, or even between two different chips with the 
-same density but different internal layouts, or even between identical 
-hardware that has different memory controller configurations for some 
-reason.
-
-
-The stack is intrinsically aligned on much finer than page granularity; 
-introducing additional "jitter" to the locations of stack variables (and 
-spilled registers) is a solution available today with minimal cost.  All 
-you need is "size_t slide_size=random_stack_slide_size(); void * 
-slide=alloca(slide_size); memset(slide,0,slide_size);" near the top of 
-main (and possibly other functions to "mix it up" more) and a function 
-random_stack_slide_size() that gives an appropriate unpredictable value.
-
-The key is to avoid trying to prevent bits from being flipped (that 
-proverbial ship has sailed on current hardware) but instead prevent an 
-attacker from being able to predict accomplishing something useful with 
-those bit-flips.
-
-
--- Jacob
-
---------------U7vyLdj9h354lRx9E7zz7k3o
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <div class="moz-cite-prefix">On 9/25/25 14:38, Demi Marie Obenour
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:544d9d89-2a0a-4901-84ab-40c07c9c7bcd@gmail.com">
-      <pre wrap="" class="moz-quote-pre">On 9/24/25 23:51, Jacob Bachmeyer wrote:
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">On 9/24/25 06:45, Peter Gutmann wrote:
-</pre>
-        <blockquote type="cite">
-          <pre wrap="" class="moz-quote-pre">Jacob Bachmeyer <a class="moz-txt-link-rfc2396E" href="mailto:jcb62281@gmail.com">&lt;jcb62281@gmail.com&gt;</a> writes:
-
-</pre>
-          <blockquote type="cite">
-            <pre wrap="" class="moz-quote-pre">The critical issue for exploiting Rowhammer to corrupt spilled register
-values seems to be how long those spilled values remain live in DRAM before
-they are reloaded into the register file and ultimately used.
-</pre>
-          </blockquote>
-          <pre wrap="" class="moz-quote-pre">It also depends on whether they're ever actually read back from RAM or just
-end up sitting in cache for a microsecond or two before they're re-fetched
-from there.  There are some attacks that exploit the difference between
-(glitched) data in RAM and data in cache, but in this case it'd mitigate
-Rowhammer by having the corrupted data in RAM ignored if it's still in cache.
-</pre>
-        </blockquote>
-        <pre wrap="" class="moz-quote-pre">
-Indeed, if the spilled value is never evicted from cache, then it is 
-never live in DRAM and Rowhammer cannot be used to corrupt it. However, 
-if I understand correctly, modern systems aggressively flush caches on 
-process context switches in order to close cache-related side channels.
-
-This seems to suggest that the solution to "Rowhammer Mayhem" may lie in 
-improvements to kernel scheduler and VM management subsystems.
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-What about hardware fixes?  Those will take a long time
-to roll out but hopefully they can be 100% effective.</pre>
-    </blockquote>
-    <p>First, that does absolutely nothing for current hardware. 
-      Declaring all (or almost all) current hardware e-waste is severely
-      environmentally irresponsible if it can possibly be avoided.</p>
-    <p>Second, I had expected ECC to "kill Rowhammer dead" only to find
-      that it can be possible to cause enough bit flips to get all the
-      way from one valid ECC word to another valid ECC word before ECC
-      scrub reaches the location.  I suspect that the DDR5 built-in ECC
-      is supposed to resolve Rowhammer, but we will have to wait and see
-      if it actually achieves that goal.<br>
-    </p>
-    <p>It seems highly likely that Rowhammer is an inherent consequence
-      of DRAM density beyond a certain limit and highly *unlikely* that
-      reducing DRAM density below the "Rowhammer threshold" will prove
-      to be an acceptable solution.<span style="white-space: pre-wrap">
-</span></p>
-    <blockquote type="cite"
-      cite="mid:544d9d89-2a0a-4901-84ab-40c07c9c7bcd@gmail.com">
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">Perhaps a yield primitive that yields the rest of the current timeslice 
-but guarantees a full unpreemptable timeslice upon resume?  That would 
-allow a brief sensitive computation to be effectively made 
-uninterruptible but would not permit monopolization of the processor.
-
-Perhaps more randomization in assigning physical page frames to prevent 
-the kernel from reliably using "bait" pages?  The attack in the paper 
-seems to depend on predictable page frame allocation.
-
-The latter could also be implemented in user processes:  allocate a 
-randomly-sized pad on the stack to shift "inner" stack variables away 
-from their predictable locations.  Making the pad multiple pages plus a 
-fraction of a page could also counter predictable kernel page frame 
-allocations by shifting the sequence of pages allocated.
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-One idea I had is to add physical guard pages
-between uses of memory for different purposes.
-</pre>
-    </blockquote>
-    <p>That depends on assumptions about physical layout that may not
-      hold.  (What if the DRAM is interleaved such that the guard pages
-      end up in a different bank or chip?)  Apparently the researchers
-      already had to hit areas at some logical distance from the target;
-      I doubt that the exact physical DRAM layout in the chips they used
-      is published.</p>
-    <p>Worse, skipping page frames like this may work for one DRAM
-      density and silently fail for another, or even between two
-      different chips with the same density but different internal
-      layouts, or even between identical hardware that has different
-      memory controller configurations for some reason.</p>
-    <p><br>
-    </p>
-    <p>The stack is intrinsically aligned on much finer than page
-      granularity; introducing additional "jitter" to the locations of
-      stack variables (and spilled registers) is a solution available
-      today with minimal cost.  All you need is "size_t
-      slide_size=random_stack_slide_size(); void *
-      slide=alloca(slide_size); memset(slide,0,slide_size);" near the
-      top of main (and possibly other functions to "mix it up" more) and
-      a function random_stack_slide_size() that gives an appropriate
-      unpredictable value.</p>
-    <p>The key is to avoid trying to prevent bits from being flipped
-      (that proverbial ship has sailed on current hardware) but instead
-      prevent an attacker from being able to predict accomplishing
-      something useful with those bit-flips.<br>
-    </p>
-    <br>
-    <p>-- Jacob<br>
-    </p>
-  </body>
-</html>
-
---------------U7vyLdj9h354lRx9E7zz7k3o--
+--_000_5EDB84F4B23F5B4DB6500A89258280E0BB624AEX02corpqihoonet_--
