@@ -1,50 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/15/7
-Message-Id: <20160215170955.33F4D6CC060@smtpvmsrv1.mitre.org>
-Date: Mon, 15 Feb 2016 12:09:55 -0500 (EST)
-From: cve-assign@...re.org
-To: scorneli@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: foomatic-rip unhtmlify() buffer overflow vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/15/3
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BB6272@EX02.corp.qihoo.net>
+Date: Wed, 15 Jun 2016 02:32:46 +0000
+From: 张开翔 <zhangkaixiang@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-5316: libtiff 4.0.6  tif_pixarlog.c:  PixarLogCleanup() Segmentation fault
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-> A buffer-overflow vulnerability was discovered in the unhtmlify()
-> function of foomatic-rip. The function did not properly calculate
-> buffer sizes, possibly leading to a heap-based memory corruption. A
-> remote, unauthenticated attacker could exploit this flaw to cause
-> foomatic-rip to crash or possibly execute arbitrary code.
-> 
-> https://bugs.linuxfoundation.org/show_bug.cgi?id=515
-> https://bugzilla.redhat.com/show_bug.cgi?id=1218297
+Details
+=======
 
-Use CVE-2010-5325.
+Product: libtiff
+Affected Versions: <= 4.0.6
+Vulnerability Type: illegel read
+Vendor URL: http://www.remotesensing.org/libtiff/
+CVE ID: CVE-2016-5316
+Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
 
-(Although https://bugzilla.redhat.com/show_bug.cgi?id=1218297#c2
-also has a mention of "an off-by-one-ish problem" in addition to the
-larger problem, there will not be multiple CVE IDs for this.)
+Introduction
+=======
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Segmentation fault ocurrs in PixarLogCleanup() in tif_pixarlog.c when using rgb2ycbcr tool followed a crafted TIFF image. Attackers cound exploit this issue to cause denial-of-service.
 
-iQIcBAEBCAAGBQJWwgUSAAoJEL54rhJi8gl5uykQAJzaoeYlGDOykAPG4FKygAuW
-j4WKh5JltgiHBp4Fd22pr02A+LrIU0gH0iAEPU6lA8484P6YnWHvs3OMmYa4FRJT
-ct9Nxf6Zjm3tewnhROTcx3pb8Xv5ooUtlvjDQ7S1HY2WrQ3+r/VGykGoupYNZFwC
-HCNHW/HKaw33/eidUpaigRaCR9ftH24YjOa46bp6OJr+C3PGeR9GjE/umv6inJHz
-byM+evEmzubiUYnahIzUyPjCYFjW+YyHfb9juoWWmNfVbLG+YqL3sbt8HeMI4y2W
-dPXGgHkrm/B1GY1D/IO2rA3JGRrC7LSg6v0Tq33BbealBzwsdrwGQJewSEuJKnyc
-fujBb3FnYQwbzcWL/XIxwwVnN/FldDuub+JpaesIY+pHhWf96KjJn5UmhYYRI0NE
-I2EgKDhSzidCu3IdcCd7Ei2bKER8VRiq6EEnxy40o5QUTip2UTsroup9/NggIGo8
-FZcXWRTMRKIWexMsUW5Fkmh4NobzLKAbYCDOaCy1vs8usysE0xeXh9gPB6+qLbtv
-cR9FKMTqFRSQ5AXQ0YhSCnbxx3pP/5VAw7rnfFlEPHasAPdNyYNVSrNIUbPfIZTw
-nSZ3x88l4jGgB4X4ydBM/fUSJ22A24fuu9tXAcvfsr2zNGWgrj676lbqAzFT51PC
-qq3z5dhfv6awjdCptaC7
-=kqIA
------END PGP SIGNATURE-----
+
+Here is the stack info:
+gdb –args ./rgb2ycbcr PixarLogCleanup.tif tmpout.tif
+--- ---
+Program received signal SIGSEGV, Segmentation fault.
+__GI___libc_free (mem=0x75757575) at malloc.c:2952
+2952           if (chunk_is_mmapped (p))                       /* release mmapped memory. */
+Missing separate debuginfos, use: dnf debuginfo-install libjpeg-turbo-1.4.1-2.fc23.i686 zlib-1.2.8-9.fc23.i686
+(gdb) bt
+#0  __GI___libc_free (mem=0x75757575) at malloc.c:2952
+#1  0xb7df0a4c in zcfree () from /usr/lib/libz.so.1
+#2  0xb7dedd3e in inflateEnd () from /usr/lib/libz.so.1
+#3  0xb7f72044 in PixarLogCleanup (tif=0x804f148) at tif_pixarlog.c:1264
+#4  0xb7ec29ae in TIFFReadDirectory (tif=0x804f148) at tif_dirread.c:3412
+#5  0x0804942d in main (argc=3, argv=0xbffff3a4) at rgb2ycbcr.c:132
+
+
+References:
+[1] http://www.remotesensing.org/libtiff/
+
+Thank you!
+Best Regards,
