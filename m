@@ -1,61 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/31/3
-Message-Id: <20160831122356.6E0566C4866@smtpvmsrv1.mitre.org>
-Date: Wed, 31 Aug 2016 08:23:56 -0400 (EDT)
-From: cve-assign@...re.org
-To: ben@...adent.org.uk
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, debian@...ny.org
-Subject: Re: CVE request: Kernel Oops when issuing fcntl on an AUFS directory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/15/14
+Message-ID: <20160615100547.GD12588@suse.de>
+Date: Wed, 15 Jun 2016 12:05:47 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2016-5323: libtiff 4.0.6 tiffcrop _TIFFFax3fillruns(): divide by zero
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> a bug in Debian's kernel
-> packages that allows a denial of service (crash) by local users with
-> access to an aufs filesystem.  The bug is in a Debian-specific patch,
-> not the upstream kernel or aufs code.
+This looks like a NULL pointer dereference, not a division by 0.
 
->> the wheezy kernel upgrade from 3.2.78-1 to 3.2.81-1 added the SETFL
->> fcntl support code (#627782) which unfortunately results in a kernel
->> Oops when the fcntl is called on a directory. This breaks e.g. copying
->> files from an AUFS filesystem on a remote machine using scp.
+Ciao, Marcus
+On Wed, Jun 15, 2016 at 02:37:11AM +0000, 张开翔 wrote:
+> Details
+> =======
+> 
+> Product: libtiff
+> Affected Versions: <= 4.0.6
+> Vulnerability Type: divide by zero
+> Vendor URL: http://www.remotesensing.org/libtiff/
+> Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
+> CVE ID: CVE-2016-5323
+> Tested system version:
+>        fedora23 32bit
+>        fedora23 64bit
+>        CentOS Linux release 7.1.1503 64bit
+> 
+> Introduction
+> =======
+> 
+> t was always corrupted when I use tiffcrop command followed by a crafted TIFF image in function _TIFFFax3fillruns () without checking the value of divisor, it causes a divide by zero flaw. Attackers cound exploit this issue to cause denial-of-service.
+> 
+> Here is the stack info:
+> gdb –args ./tiffcrop _TIFFFax3fillruns.tif tmpout.tif
+> --- ---
+> Program received signal SIGSEGV, Segmentation fault.
+> 0x00007ffff7ad97f0 in _TIFFFax3fillruns (buf=0x0, runs=0x673500, erun=<optimized out>, lastx=64) at tif_fax3.c:407
+> 407                              ZERO(n, cp);
+> (gdb) bt
+> #0  0x00007ffff7ad97f0 in _TIFFFax3fillruns (buf=0x0, runs=0x673500, erun=<optimized out>, lastx=64) at tif_fax3.c:407
+> #1  0x00007ffff7ae087c in Fax3DecodeRLE (tif=0x662010, buf=0x0, occ=8192, s=<optimized out>) at tif_fax3.c:1527
+> #2  0x00007ffff7ba3739 in TIFFReadEncodedTile (tif=tif@...ry=0x662010, tile=8, buf=0x0, size=8192, size@...ry=-1) at tif_read.c:668
+> #3  0x00007ffff7ba3a01 in TIFFReadTile (tif=tif@...ry=0x662010, buf=<optimized out>, x=x@...ry=0, y=y@...ry=0, z=z@...ry=0, s=s@...ry=8) at tif_read.c:641
+> #4  0x0000000000443e41 in readSeparateTilesIntoBuffer (bps=1, spp=129, tl=1024, tw=64, imagewidth=32, imagelength=32, obuf=0x7ffff7ee5010 "", in=0x662010) at tiffcrop.c:994
+> #5  loadImage (in=in@...ry=0x662010, image=image@...ry=0x7fffffff7960, dump=dump@...ry=0x7fffffffc270, read_ptr=read_ptr@...ry=0x7fffffff7920) at tiffcrop.c:6079
+> #6  0x0000000000403209 in main (argc=<optimized out>, argv=<optimized out>) at tiffcrop.c:2278
+> (gdb) p cp
+> $2 = (unsigned char *) 0x0
+> 
+> 
 
->>        fcntl (fd, F_SETFL, O_RDONLY);
-
->> Call the program on regular a file (nothing happens) and then on a
->> directory (Oops).
-
->> The Oops happens in fs/fcntl.c
-
->> The aufs_file_fop structure sets the value of the .setfl member to
->> aufs_setfl (f_op.c). aufs_dir_fop (dir.c) on the other hand does not.
-
->>   aufs 3.2.x+setfl-debian
-
->>   kernel NULL pointer dereference
-
-Use CVE-2016-7118.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXxsvbAAoJEHb/MwWLVhi2LWoP/3ZaPz0Ig/FPWdBi+JyGP7/K
-YlCUjfpCrWaIBQwczMqZX+7E+aTym5dQ3tvRYdoOiDZhhcGCxLa7YCNLHZdVDIkC
-OJOrBOoDyL1OjhcNvFD6uahCAfqVAilvFgR7HNkbiwPnvFIkUd3LZXtvpfCla4l8
-8/PABvTGSnZWesZdG573mduIZQ0wO/RGcp1ng+tbyZjXUUWqJe03v70C19s0aMVh
-xXZLk3WuCUUnEfdWsRK2W5Shj4zCqIBhzbzWQcBcFLL65hxdoLGLLsCkx3EM0VkO
-8f07NoP24dKfLy1uH4HhRcVKIc4E22knCGOnWIX4aiHvbLHtBAnoNHhG9rgRg221
-DomDaYqjyOXgFUIK2DxB1qJbTPvKuyhWQZ+MrI0c72NJ8nSgexoEdk/6pKagpnq7
-gSu1MN+r7Q/IBf722Xqi82y9BBV+NlWH967dlqnH3EoxiHK5M6Y7koCdx+9HYrvs
-Ib1f60ztjAwglxljqjhGVG02wJhwOqvfH2wJb78HKPJ9A3F24Y5bDyxzmB1J2Pjm
-fT5vYyOXGUIoY4U8062yaqPI6OJedhKgJvYfnFqJCxa88RpB8sPXZlMcsm+2ajSv
-kA7X7fS7eNj/gPAXgUEkjJaK8r6sDB5MzhRZ1OvJevbRpHR7GYczfAfgFeqJNSEx
-IleDjdlHzS7T25oRRIFQ
-=4pvR
------END PGP SIGNATURE-----
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
