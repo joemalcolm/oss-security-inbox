@@ -1,4 +1,9 @@
-Received: (qmail 18171 invoked by uid 550); 28 Jul 2025 23:35:29 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6392" "Wednesday" "15" "June" "2016" "02:38:54" "+0000" "=?utf-8?B?5byg5byA57+U?=" "zhangkaixiang@360.cn" "<5EDB84F4B23F5B4DB6500A89258280E0BB62D8@EX02.corp.qihoo.net>" "108" "[oss-security] CVE-2016-5317: GNOME nautilus: crash occurs when generating a thumbnail for a crafted TIFF image " "^Date:" nil nil "6" "2016061502:38:54" "[oss-security] CVE-2016-5317: GNOME nautilus: crash occurs when generating a thumbnail for a crafted TIFF image" (number mark "U       zhangkaixian Jun 15  108/6392  " thread-indent "\"[oss-security] CVE-2016-5317: GNOME nautilus: crash occurs when generating a thumbnail for a crafted TIFF image \"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 17787 invoked by uid 550); 15 Jun 2016 02:44:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,106 +11,131 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28455 invoked from network); 28 Jul 2025 23:00:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wichmann.us; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1753743632;
-	 x=1753830032; bh=C16TOcWxIIh6Pk+5RmLubp0M0/E+bNm8tD7bge2uOLw=; b=
-	Omzt7Oi6Wg2BPxdo09eW0kOaS3K03nDgN/GAsZDaKY515FhTb/H5fOoCKYj2qOge
-	bsuYVwLi0TZPiO6U0fOytV1DE+vXyPeC9ND6bB6tqPsf9WGEh2dRB6/v2n9nEuye
-	HBzhPURalHzrZrUp0OWlERWYQgh2+6H7Vf9bwS+fAPFLHie2v/Y4A/9TfaS4AF4N
-	Q5NoGI5ASkOrQdaxH2wplsj8GF75wzMEaiQ+yx1FT587xJQgjzrTzTsCb4gOiZJL
-	whfyovZPMZ1urXe1Pn6Aos59y98W4/+wilnfdC/zV4qwGqDNrFWrpG8Yh+6xkgYc
-	7iIe8vD2DGWaoAPsbW/xuQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1753743632; x=1753830032; bh=C
-	16TOcWxIIh6Pk+5RmLubp0M0/E+bNm8tD7bge2uOLw=; b=nzjmQpXScTtquRGYF
-	zNrvUZ7DFxYMR0DILB+GbuHKZ6/gWLcSep6+kMYcndtyKGprHpF6Z0DD8BnPxKsj
-	rbJ73kHo74gQBM5NBRwLo6/g/BcJcUQE5PSm5FAlbJ0iMURIIBqd8O4cwwnjCvwl
-	vDFAzZv9Cs85PJ/+P8Sw/FQk/Iz/V2gMS/BKvLieIhN7ldiVrX1nnXRKL6/I4Vqx
-	X1dKnoYumIhE4D5UuIjpQ5OPGieDHN3wgAUAF4m3sIQ+seVaRcemqpS3DIsNZBE7
-	6bapO/xFOXTcgkvumf316sG/MDt9bq+qZmlEFAEm+a9tJ2V9uWOhIcpCOo/wBA3d
-	KnhaA==
-X-ME-Sender: <xms:DwGIaPQEOOR73-M1k036m_wMOILyr8OVxFHZmbYdw6nmrfMn3Nsv4g>
-    <xme:DwGIaA9Kht0rof1weRpc248m2RviQgezYerrmG1URbemRHRmyo9URZ-EKjlkslqB1
-    eQCWJkilzwpkUqdM54>
-X-ME-Received: <xmr:DwGIaGpLZWjWUogl-bQ4jQae6Hw_CtT7kywEaIKLcFkV82LPMgDpYXCCMDlIPyivn1_ZvKdNsU1z8SC317aC-nrgy4DrKV2ahA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelfeeggecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepkfffgggfuffvfhfhjggtgfesthejredttd
-    dvjeenucfhrhhomhepofgrthhsucghihgthhhmrghnnhcuoehmrghtshesfihitghhmhgr
-    nhhnrdhusheqnecuggftrfgrthhtvghrnhepteejvefhfeelffeiveduuddvheekheehud
-    elhfevtedvheehveeuffeukedvvdetnecuffhomhgrihhnpegtvhgvrdhorhhgnecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepmhgrthhsseifih
-    gthhhmrghnnhdruhhspdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdp
-    rhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhishhtshdrohhpvghnfigrlhhlrd
-    gtohhmpdhrtghpthhtohepshgvtghurhhithihsehphihthhhonhdrohhrgh
-X-ME-Proxy: <xmx:DwGIaNnVYNDaVYITM8W6Hw58v4y0CHWRAgSw2qz40yzg3YQJgykhcg>
-    <xmx:DwGIaNLu_6jEmTtex4GpgBHHYCIUw-ZBnUudeAmV7IdYoXH5sySAqw>
-    <xmx:DwGIaCwOtgbQAumo50vD6ldKM9YU3RTuiUZ-uqS94wad1M4r2nshKg>
-    <xmx:DwGIaFuIoVYE6PL-1ilInrTg6daYnnwU9fV8RHpwnjnKH_slz37LOQ>
-    <xmx:EAGIaDCaWTaumK4THPi1NiLvVfw2u1DvUdxgSbYB7dsoRYx8xoDf88Bl>
-Feedback-ID: i387144f0:Fastmail
-Message-ID: <94d43c9f-1280-4247-bef2-556190620d84@wichmann.us>
-Date: Mon, 28 Jul 2025 17:00:29 -0600
+Received: (qmail 5585 invoked from network); 15 Jun 2016 02:39:06 -0000
+Thread-Topic: CVE-2016-5317: GNOME nautilus: crash occurs when generating a
+ thumbnail for a crafted TIFF image 
+Thread-Index: AdHGruIWtZb4VJRjT4Gzd/0aMxsT7g==
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BB62D8@EX02.corp.qihoo.net>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.18.25.62]
+Content-Type: multipart/alternative;
+	boundary="_000_5EDB84F4B23F5B4DB6500A89258280E0BB62D8EX02corpqihoonet_"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com
-References: <CAADqWPT33dBPg2cba1h39veP-_C4bpmsn-On8mEXio0Nz_gcEg@mail.gmail.com>
- <c1d8d50a-9e67-411e-8f1e-cb2de457a637@oracle.com>
-From: Mats Wichmann <mats@wichmann.us>
-Content-Language: en-US
-Autocrypt: addr=mats@wichmann.us;
- keydata= xsDiBD9xp6oRBAC1vd3YI8Gcr1CxpV1gldNQu0uQsNaICDk+Ai3+R163s/P83JOYG+SBEA3P
- v7iZx70qpQ3RzP7KrjF1Nm6j0em9ccUX2fPQUCAxXw5Hiq7CSMiwQQZRI6shcnyMh9XTKViT
- WK5MrKDyvjDEn7epjKzKwPS5SG039l6XaOKU0A4uGwCgsNqUQqC0gMMcbKlJV8ql58iKmbMD
- /ii8FPQrXmyS/FnsPs7UddV5qMHKm7NUH5oiKuMVyakInRyq9iIxuu3D4Ec6mWRKcGsjmIkW
- HXCSz0aefs6dsqNqpU54cYioJ3wP5LzHK7oclgJPryVt5Qezbdutf8SQf8gVkaNIlkxwGUzi
- bKTZ6CHzwlz9nNgeel0XPUcZzFxGA/4paeCg2rMSVuAhUQbsLYHu4XzTs9P16zaXkrtxc4m5
- b+BF5xsLgTpyO5l859XudS2Gp+7/Y37dAU4QlyGGOboWmF1y9U5DnzBwG8ghsnym+ga58MJh
- LdRdQQ6xQolCpEXOuzm40f2r5uMxF3KOJ7WpIPuGAkeCPru9BmlATH+zOs0gTWF0cyBXaWNo
- bWFubiA8bWF0c0B3aWNobWFubi51cz7CYQQTEQIAIQIbAwYLCQgHAwIDFQIDAxYCAQIeAQIX
- gAUCT0VyZwIZAQAKCRDAMaCQc9hUxiZBAJ9cWziGp7hVfsu5T+cQptc3rLNndQCgrZh8u5LW
- BfJ5e/Y+3PwZ8UEm+ELOwE0EP5is8BAEAMtwzcA8TYf5UTjDMgwcSNoErTc9ag+IX05QFgL8
- aF8sfJRv5atcitqQy0gSIsOzI+L/AFdPN/+QQI3dL1tCq14t32KPDtigDhzm6jVPXX5z+V9u
- xnD8XTp+ZvNcWoHXjViM8aXeLLEiCpiVCho307h3XShvqoKINWRQWeAsKKDDAAMFA/48zaey
- wiiEyvI0meJ1KkNHxdLP0yLODr1WV6j9xkPkLWOaIDw7dlwEOlF1N1YtZ2wa0p1wsttdIbIx
- ffgwXmcH4zrdxUIMz3U0BqYzk5H+5cYFXECXTFVOmweS+JECYMj80PjRoKCO1eVO1N30zksB
- 36NnhZWPRWIhjK3ZarIYH8JGBBgRAgAGBQI/mKzwAAoJEMAxoJBz2FTG6VEAoKDYHfDp5Q3q
- PuPvPahCE9HsXMgAAJ9INTqcLSJrOfyJ8q95nBO1T26H2Q==
-In-Reply-To: <c1d8d50a-9e67-411e-8f1e-cb2de457a637@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Fwd:[CVE-2025-8194] Cpython Tarfile infinite loop
- during parsing with negative member offset
+Date: Wed, 15 Jun 2016 02:38:54 +0000
+From: =?utf-8?B?5byg5byA57+U?= <zhangkaixiang@360.cn>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2016-5317: GNOME nautilus: crash occurs when generating a
+ thumbnail for a crafted TIFF image 
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-On 7/28/25 13:55, Alan Coopersmith forwarded a cPython security issue:
+--_000_5EDB84F4B23F5B4DB6500A89258280E0BB62D8EX02corpqihoonet_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-some unfortunate glitches here. first, a template failure:
+DQpEZXRhaWxzDQo9PT09PT09PT09PT0NClByb2R1Y3Q6IG5hdXRpbHVzDQpB
+ZmZlY3RlZCBWZXJzaW9uczogPD0gR05PTUUgbmF1dGlsdXMgMy4xOC41LCA8
+PWxpYnRpZmYuc28gNC4wLjYNClZ1bG5lcmFiaWxpdHkgVHlwZTogb3V0LW9m
+LWJvdW5kcyB3cml0ZQ0KVGVzdGVkIHN5c3RlbTogZmVkb3JhMjMgMzJiaXQs
+IGZlZG9yYTIzIDY0Yml0DQpWZW5kb3IgVVJMOiBodHRwczovL3d3dy5nbm9t
+ZS5vcmcvDQpDVkUgSUQ6IENWRS0yMDE2LTUzMTcNCkNyZWRpdDogS2FpeGlh
+bmcgWmhhbmcgb2YgdGhlIENsb3VkIFNlY3VyaXR5IFRlYW0sIFFpaG9vIDM2
+MA0KDQpJbnRyb2R1Y3Rpb24NCj09PT09PT09PT09PQ0KSXQgd2FzIGFsd2F5
+cyBjb3JydXB0ZWQgd2hlbiBJIHVzZSBuYXV0aWx1cyBjb21tYW5kIGZvbGxv
+d2VkIGEgc3BlY2lmaWMgZGlyZWN0b3J5IGNvbnRhaW5pbmcgYSBjcmFmdGVk
+IFRJRkYgaW1hZ2UuIFRoZSB2dWxuZXJhYmlsaXR5IG9mIG91dC1vZi1ib3Vu
+ZCB3cml0ZXMgaXMgaW4gUGl4YXJMb2dEZWNvZGUoKSBpbiBsaWJ0aWZmLnNv
+IHdpdGhvdXQgY2hlY2tpbmcgdGhlIGJ1ZmZlciBsZW5ndGgsIHdoaWNoIGNh
+dXNlIHRoZSBoZWFkIGRhdGEgb2YgbmV4dCBoZWFwIGNvdWxkIGJlIGZpbGxl
+ZCB3aXRoIGFueSBkYXRhLCBjcmFzaCBvY2N1cnMgd2hlbiB0aGUgbmV4dCBo
+ZWFwIGlzIGFsbG9jYXRlZCBvciBmcmVlZC4gQXR0YWNrZXJzIGNvdWxkIGV4
+cGxvaXQgdGhpcyBpc3N1ZSB0byBjcmFzaCBuYXV0aWx1cyB0byByZXN1bHQg
+aW4gRG9TLg0KDQpTb3VyY2UgaW5mbw0KPT09PT09PT09PT09DQoxMDgyICAg
+ICAgICAgICB3cCArPSBuICsgc3RyaWRlIC0gMTsgICAgIC8qIHBvaW50IHRv
+IGxhc3Qgb25lICovDQoxMDgzICAgICAgICAgICBpcCArPSBuICsgc3RyaWRl
+IC0gMTsgICAgICAgLyogcG9pbnQgdG8gbGFzdCBvbmUgKi8NCjEwODQgICAg
+ICAgICAgIG4gLT0gc3RyaWRlOw0KMTA4NSAgICAgICAgICAgd2hpbGUgKG4g
+PiAwKSB7DQoxMDg2ICAgICAgICAgICAgICBSRVBFQVQoc3RyaWRlLCB3cFsw
+XSA9IENMQU1QKGlwWzBdKTsNCjEwODcgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgd3Bbc3RyaWRlXSAtPSB3cFswXTsNCjEwODggICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgd3Bbc3RyaWRlXSAmPSBtYXNrOw0KMTA4OSAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICB3cC0tOyBpcC0tKQ0KMTA5MCAgICAg
+ICAgICAgICAgbiAtPSBzdHJpZGU7DQoxMDkxICAgICAgICAgICB9DQoxMDky
+ICAgICAgICAgICBSRVBFQVQoc3RyaWRlLCB3cFswXSA9IENMQU1QKGlwWzBd
+KTsgd3AtLTsgaXAtLSkNCg0KRGVidWcgaW5mbw0KPT09PT09PT09PT09DQpn
+ZGIg4oCTYXJncyBuYXV0aWx1cyAuDQoNCihnZGIpIGIgdGlmX3BpeGFybG9n
+LmM6Nzg3DQpCcmVha3BvaW50IDEgYXQgMHhhZWJhMDE2YzogZmlsZSB0aWZf
+cGl4YXJsb2cuYywgbGluZSA3ODcuDQooZ2RiKSBjDQpDb250aW51aW5nLg0K
+DQpCcmVha3BvaW50IDEsIFBpeGFyTG9nRGVjb2RlICh0aWY9MHhhZWMwMzdh
+OCwNCiAgICBvcD0weGFlYzAzYmQwICJcMzc3XDM3N1wzNzdcMzc3XDM3N1wz
+NzdcMzA0QlwyNzBcMDE2XDM2N1wwMDJcMzc3XDM3N1wzNzdcMzc3XDIzNH1c
+MjYxXDAzM1wwMzNcMDA2XDM3N1wzNzdcMzc3XDM3N1BcMzU0XDAzMlwwNjR9
+XHZcMzE1XDAwMVwzNzdcMzc3XDM3N1wzNzdcMDA1YlwyMzRcMDI1XDMwNFww
+MDRcMzc3XDM3N1wzNzdcMzc3aVwyNzBcMjUwKFwzNjdcYlwyNDMiLCBvY2M9
+PG9wdGltaXplZCBvdXQ+LCBzPTApIGF0IHRpZl9waXhhcmxvZy5jOjc4Nw0K
+Nzg3ICAgICAgICAgICAgICAgIGludCBzdGF0ZSA9IGluZmxhdGUoJnNwLT5z
+dHJlYW0sIFpfUEFSVElBTF9GTFVTSCk7DQooZ2RiKSB4LzMyeHcgc3AtPnN0
+cmVhbS0+bmV4dF9vdXQtOA0KMHhhZWMwM2M1ODogICAgMHg4YjhhODk4OCAg
+ICAweDAwMDAwMDU1ICAgIDB4YWVjMDAwYjAgICAgMHhhZWMwMDBiMA0KMHhh
+ZWMwM2M2ODogICAgMHg5YjlhOTk5OCAgICAweDlmOWU5ZDljICAgICAweGEz
+YTJhMWEwICAgICAweGE3YTZhNWE0DQooZ2RiKSB4LzMyeHcgc3AtPnN0cmVh
+bS0+bmV4dF9vdXQtOCsweDUwDQoweGFlYzAzY2E4OiAgICAweGRiZGFkOWQ4
+ICAgIDB4MDAwMDAwMjkgICAgMHhhZWMwMDA2MCAgICAweGFlYzAwMDYwDQow
+eGFlYzAzY2I4OiAgICAweGViZWFlOWU4ICAgICAweGVmZWVlZGVjICAgICAg
+MHhmM2YyZjFmMCAgICAgIDB4ZjdmNmY1ZjQNCg0KKGdkYikgZmluaXNoDQoo
+Z2RiKSB4LzMyeHcgc3AtPnN0cmVhbS0+bmV4dF9vdXQtOA0KMHhhZWMwM2M1
+ODogICAgMHg4YjhhODk4OCAgICAweDAwMDAwMDU1ICAgIDB4ODY4Njg2ODYg
+ICAgMHg5MzkyMGQwYw0KMHhhZWMwM2M2ODogICAgMHhhMDllMWExOCAgICAw
+eGFkYWEyNzI0ICAgIDB4YmFiNjM0MzAgICAgMHhjN2MyNDEzYw0KKGdkYikg
+eC8zMnh3IHNwLT5zdHJlYW0tPm5leHRfb3V0LTgrMHg1MA0KMHhhZWMwM2Nh
+ODogICAgMHg5MzkyMGQwYyAgICAweDQwOWQxYTE4ICAgIDB4NGRhOWM3MjMg
+ICAgMHg1YWI1ZDQyZg0KMHhhZWMwM2NiODogICAgMHg2N2MxZTEzYiAgICAw
+eDc0Y2RlZTQ3ICAgIDB4ODFkOWZiNTMgICAgMHg4ZWU1MDg1Zg0KDQooZ2Ri
+KSBjDQpDb250aW51aW5nLg0KW1RocmVhZCAweGIwNzIzYjQwIChMV1AgMjQ5
+NDgpIGV4aXRlZF0NCg0KUHJvZ3JhbSByZWNlaXZlZCBzaWduYWwgU0lHU0VH
+ViwgU2VnbWVudGF0aW9uIGZhdWx0Lg0KMHhiNmJlNGQzOCBpbiBfaW50X2Zy
+ZWUgKGF2PTB4YWVjMDAwMTAsIHA9PG9wdGltaXplZCBvdXQ+LCBoYXZlX2xv
+Y2s9MCkgYXQgbWFsbG9jLmM6NDAxNQ0KNDAxNSAgICAgICAgICAgICAgdW5s
+aW5rKGF2LCBuZXh0Y2h1bmssIGJjaywgZndkKTsNCihnZGIpIHAgYXYNCiQ0
+MiA9IChtc3RhdGUpIDB4YWVjMDAwMTANCihnZGIpIHAgbmV4dGNodW5rDQok
+NDMgPSAobWNodW5rcHRyKSAweGFlYzAzYzU4DQooZ2RiKSB4Lzh4dyBuZXh0
+Y2h1bmsNCihnZGIpIHAgYmNrDQokNDQgPSAobWNodW5rcHRyKSAweDkzOTIw
+ZDBjDQooZ2RiKSBwIGZ3ZA0KJDQ1ID0gKG1jaHVua3B0cikgMHg4Njg2ODY4
+Ng0KMHhhZWMwM2M1ODogICAgMHg4YjhhODk4OCAgICAweDAwMDAwMDU1ICAg
+IDB4ODY4Njg2ODYgICAgMHg5MzkyMGQwYw0KMHhhZWMwM2M2ODogICAgMHhh
+MDllMWExOCAgICAweGFkYWEyNzI0ICAgIDB4YmFiNjM0MzAgICAgMHhjN2My
+NDEzYw0KDQooZ2RiKSBidA0KIzAgIDB4YjZiZTRkMzggaW4gX2ludF9mcmVl
+IChhdj0weGFlYzAwMDEwLCBwPTxvcHRpbWl6ZWQgb3V0PiwgaGF2ZV9sb2Nr
+PTApIGF0IG1hbGxvYy5jOjQwMTUNCiMxICAweGI2YmU4NmUwIGluIF9fR0lf
+X19saWJjX2ZyZWUgKG1lbT0weGFlYzAwMDEwKSBhdCBtYWxsb2MuYzoyOTY5
+DQojMiAgMHhhZDM0MzhmOCBpbiBfVElGRmZyZWUgKHA9MHhhZWMwMDAxMCkg
+YXQgdGlmX3VuaXguYzozMjINCiMzICAweGFkMmMyMDUwIGluIGd0VGlsZUNv
+bnRpZyAoaW1nPTB4YWRiNzA5ZDQsIHJhc3Rlcj0weGFlNTFmNTYwLCB3PTM0
+LCBoPTQpIGF0IHRpZl9nZXRpbWFnZS5jOjY5MQ0KIzQgIDB4YWQyY2E1MTcg
+aW4gVElGRlJHQkFJbWFnZUdldCAoaW1nPTB4YWRiNzA5ZDQsIHJhc3Rlcj0w
+eGFlNTFmNTYwLCB3PTM0LCBoPTQpIGF0IHRpZl9nZXRpbWFnZS5jOjUwMA0K
+IzUgIDB4YWQyY2E3M2MgaW4gVElGRlJlYWRSR0JBSW1hZ2VPcmllbnRlZCAo
+dGlmPTB4YWU1MDViZTgsIHJ3aWR0aD0zNCwgcmhlaWdodD00LCByYXN0ZXI9
+MHhhZTUxZjU2MCwgb3JpZW50YXRpb249MSwgc3RvcD0xKSBhdCB0aWZfZ2V0
+aW1hZ2UuYzo1MTkNCiM2ICAweGFlNzFiMzdmIGluIHRpZmZfaW1hZ2VfcGFy
+c2UgKCkgZnJvbSAvdXNyL2xpYi9nZGstcGl4YnVmLTIuMC8yLjEwLjAvbG9h
+ZGVycy9saWJwaXhidWZsb2FkZXItdGlmZi5zbw0KIzcgIDB4YWU3MWI5NGUg
+aW4gZ2RrX3BpeGJ1Zi50aWZmX2ltYWdlX3N0b3BfbG9hZCAoKSBmcm9tIC91
+c3IvbGliL2dkay1waXhidWYtMi4wLzIuMTAuMC9sb2FkZXJzL2xpYnBpeGJ1
+ZmxvYWRlci10aWZmLnNvDQojOCAgMHhiNzUyODNlMyBpbiBnZGtfcGl4YnVm
+X2xvYWRlcl9jbG9zZSAoKSBmcm9tIC91c3IvbGliL2xpYmdka19waXhidWYt
+Mi4wLnNvLjANCiM5ICAweGI3ZjVlZGI1IGluIF9nZGtfcGl4YnVmX25ld19m
+cm9tX3VyaV9hdF9zY2FsZS5jb25zdHByb3AuNyAoKSBmcm9tIC91c3IvbGli
+L2xpYmdub21lLWRlc2t0b3AtMy5zby4xMg0KIzEwIDB4YjdmNWY0MWIgaW4g
+Z25vbWVfZGVza3RvcF90aHVtYm5haWxfZmFjdG9yeV9nZW5lcmF0ZV90aHVt
+Ym5haWwgKCkgZnJvbSAvdXNyL2xpYi9saWJnbm9tZS1kZXNrdG9wLTMuc28u
+MTINCiMxMSAweDgwMGUwZWY5IGluIHRodW1ibmFpbF90aHJlYWRfc3RhcnQg
+KCkNCiMxMiAweGI2ZDQ1NDUyIGluIHN0YXJ0X3RocmVhZCAoYXJnPTB4YWRi
+NzJiNDApIGF0IHB0aHJlYWRfY3JlYXRlLmM6MzM0DQojMTMgMHhiNmM2OTI1
+ZSBpbiBjbG9uZSAoKSBhdCAuLi9zeXNkZXBzL3VuaXgvc3lzdi9saW51eC9p
+Mzg2L2Nsb25lLlM6MTIyDQoNCg0KQmVzdCByZWdhcmRzLA0KS2FpeGlhbmcg
+WmhhbmcNCi0tLS0tLQ0KDQo=
 
-> There is a HIGH severity vulnerability affecting {project}.
-
-second and third:
-
-> Please see the linked CVE ID for the latest information on affected 
-> versions:
-> 
-> * https://www.cve.org/CVERecord?id=CVE-2025-8194
-The CVE contents suggest nothing is broken:
-
- > affected
-
- >    affected from 0 before 3.14.0
-
-(3.14 still being unreleased).  But patches for this were backported to 
-all supported cPython versions, so the effect must be a bit wider than that.
-
-
-And in the cve record itself, the patch suggestion comes out mangled.
+--_000_5EDB84F4B23F5B4DB6500A89258280E0BB62D8EX02corpqihoonet_--
