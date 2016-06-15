@@ -1,82 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/06/1
-Message-ID: <87bn8zjxmg.fsf@x220.int.ebiederm.org>
-Date: Tue, 05 Jan 2016 19:38:15 -0600
-From: ebiederm@...ssion.com (Eric W. Biederman)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/15/16
+Message-ID: <20160615154451.GK360@suse.de>
+Date: Wed, 15 Jun 2016 17:44:51 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: cve-assign@...re.org
-Cc: john.johansen@...onical.com,  oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: Linux kernel: privilege escalation in user namespaces
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: ruby openssl hostname verification issue
 Content-Type: text/plain; charset=utf-8
 
-cve-assign@...re.org writes:
+Hi Mitre,
 
-> Use CVE-2015-8709 for the issue fixed in the
-> https://lkml.org/lkml/2015/12/25/71 post.
->
-> (This is not yet available at
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/kernel/ptrace.c
-> and http://marc.info/?l=linux-kernel&m=145118185526359 might be the
-> current end of the earlier discussion.)
->
-> This issue has been covered in security advisories from one or more
-> Linux distributions, e.g.,
->
->>> http://www.ubuntu.com/usn/usn-2847-1
->>> 
->>> Jann Horn discovered a ptrace issue with user namespaces in the Linux
->>> kernel. The namespace owner could potentially exploit this flaw by ptracing
->>> a root owned process entering the user namespace to elevate its privileges
->>> and potentially gain access outside of the namespace.
->>> (http://bugs.launchpad.net/bugs/1527374)
->
->
-> There has been some discussion of whether the finding was a
-> vulnerability discovery, e.g.,
->
->>>> Date: Fri, 18 Dec 2015 00:07:19 +0100
->>>> From: Jann Horn <jann@...jh.net>
->>>> 
->>>> I'm not sure whether this is CVE-worthy - the user_namespaces
->>>> manpage says "the process has full privileges for operations
->>>> inside the user namespace, but is unprivileged for operations
->>>> outside the namespace". ptrace()ing a process in the
->>>> namespace can reasonably be considered an "operation inside
->>>> the user namespace" ...
->>>> 
->>>> In my opinion, this patch is somewhere between hardening and
->>>> a security feature, but I wouldn't really call it a vuln fix.
->
->
->>>>> Date: Thu, 17 Dec 2015 23:54:03 +0000
->>>>> From: Serge Hallyn <serge.hallyn@...ntu.com>
->>>>> 
->>>>>> ptrace()ing a process in the
->>>>>> namespace can reasonably be considered an "operation inside
->>>>>> the user namespace"
->>>>> 
->>>>> Except by creating a file in the host namespace, you were, as
->>>>> root in the container, able to escape your namespace, right?
->
-> We feel that, more generally, the usn-2847-1 mention of "and
-> potentially gain access outside of the namespace" is a realistic
-> concern.
+Sorry for answering late.
 
-My mind is boggling at some of the logic involved here.
+I agree with your assessments of "underdocumentation, but not
+generally buggy".
 
-There is no potentially gaining access outside of the namespace when it
-is access to things that were put inside the namespace.
+I also do not see a need for a CVE of this race condition.
 
-The discussion was about how to make it easier for userspace not to do
-stupid things, not how to fix a bug in the kernel.
+I hereby retract the CVE request.
 
-The code we have been discussing most definitely does not make it safe
-for a arbitrary root owned processes to call setns and enter a user
-namespace with a hostile user namespace root.  You have to close file
-descriptors, unmap files and do I don't know what else.  Properly
-and safely dropping privileges is a challenging problem.
+Sorry for the noise.
 
-Calling bug because it is possible to use a kernel feature wrong feels
-completely inappropriate.
+Ciao, Marcus
+On Thu, Jun 09, 2016 at 01:52:49PM -0400, cve-assign@...re.org wrote:
+> > This probably warrants a CVE:
+> > 
+> > https://github.com/ruby/openssl/issues/8
+> 
+> We are not sure exactly what issue you believe should have a CVE ID,
+> There seem to be three issues that are somewhat related. Our short
+> answer is "probably there shouldn't be a CVE ID - the main concern was
+> that the documentation needed to be improved, and the vendor instead
+> decided to change the API semantics and break one (rare) use case."
+> 
+> Here's some discussion of the three issues.
+> 
+> > VERIFY_PEER only checks the cert chain is rooted in the local
+> > truststore. It does not check if the subject is valid in and of
+> > itself.
+> 
+> One might argue that this behavior should have a CVE ID because it is
+> not properly documented. Some users might have guessed that
+> VERIFY_PEER did validate the subject, because it is very rare for
+> anyone to want to establish only that a certificate is rooted in the
+> local truststore, with any arbitrary subject.
+> 
+> Other products, such as libcurl, have a similarly named option with
+> the same behavior, but with explicit documentation, e.g.,
+> 
+>   https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYPEER.html
+>   "Authenticating the certificate is not enough to be sure about the
+>   server. You typically also want to ensure that the server is the
+>   server you mean to be talking to. Use CURLOPT_SSL_VERIFYHOST for
+>   that."
+> 
+> However, there apparently isn't an analogous OpenSSL::SSL::VERIFY_HOST
+> for Ruby.
+> 
+> Still, our initial thought is that underdocumenting
+> OpenSSL::SSL::VERIFY_PEER, by itself, should not have a CVE ID. Users
+> may be able to realize, possibly from their knowledge of libcurl, that
+> an option called VERIFY_PEER or VERIFYPEER is typically insufficient.
+> 
+> 
+> > My understanding is the ssl_socket.post_connection_check(hostname) method
+> > must be called to ensure the subject is correctly verified. However,
+> > communication is allowed to remote services without verifying the subject.
+> 
+> Here, maybe the problem is a race condition. In other words, there is
+> inherently a time window in which communication can occur with an
+> unexpected host. Possibly, in most common scenarios in which the
+> application author did understand the post_connection_check
+> documentation, nothing security-relevant happens in this time window,
+> e.g., a client would not be sending requests to a server before the
+> post_connection_check step. However, there may be uncommon scenarios
+> where something security-relevant can happen in this time window.
+> 
+> Do you believe that these uncommon scenarios actually occur, and
+> therefore this race condition should have a CVE ID?
+> 
+> 
+> > I would suggest throwing an exception if VERIFY_PEER is configured and
+> > I/O is attempted without first calling post_connection_check
+> 
+> Here, you seem to be suggesting that VERIFY_PEER is never sufficient
+> in any scenario. This seems to be equivalent to suggesting that the
+> libcurl choice of using CURLOPT_SSL_VERIFYPEER without
+> CURLOPT_SSL_VERIFYHOST is always wrong, and should not even be
+> possible in the libcurl API.
+> 
+> Do you believe that there should be a CVE ID, in general, for "the
+> product needlessly offers a way to skip subject validation"?
+> 
+> (We don't know all of the use cases for skipping subject validation.
+> We think that it is typically useful only within isolated networks.
+> For example, consider a scenario where the local truststore recognizes
+> exactly one CA, this CA has only ever issued one certificate, and the
+> certificate happens to have an arbitrary subject, but is intentionally
+> used on multiple intranet HTTPS servers that are trusted by the same
+> intranet clients. Here, subject validation doesn't really help anyone,
+> and mandating subject validation would break this use case.)
+> 
+> -- 
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
+> 
 
-Eric
-
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
