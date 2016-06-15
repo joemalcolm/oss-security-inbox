@@ -1,95 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/07/3
-Message-ID: <BD973AA6-4933-4527-951F-0AEE2273D2C3@360.cn>
-Date: Thu, 7 Apr 2016 07:39:43 +0000
-From: 王梅 <wangmei@....cn>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/15/1
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BB624A@EX02.corp.qihoo.net>
+Date: Wed, 15 Jun 2016 02:28:58 +0000
+From: 张开翔 <zhangkaixiang@....cn>
 To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-3621 libtiff: Out-of-bounds Read in the bmp2tiff tool
+Subject: CVE-2016-5314：libtiff 4.0.6 PixarLogDecode() out-of-bound writes
 Content-Type: text/plain; charset=utf-8
+
 
 Details
 =======
 
 Product: libtiff
 Affected Versions: <= 4.0.6
-Vulnerability Type: Out-of-bounds Read
-Vendor URL: http://www.libtiff.org/
-CVE ID: CVE-2016-3621
-Credit: Mei Wang of the Cloud Security Team, Qihoo 360
+Vulnerability Type: out-of-bound writes
+Vendor URL: http://www.remotesensing.org/libtiff/
+CVE ID: CVE-2016-5314
+Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
 
 Introduction
-============
+=======
 
-LZWEncode function in tif_lzw.c in bmp2tiff allows attackers to cause a denial of service (Out-of-bounds Read) via a crafted bmp image with param -c lzw.
-
-
-libtiff-master/libtiff/tif_lzw.c:915
-
-910  */
-911 PutNextCode(op, CODE_CLEAR);
-912 ent = *bp++; cc--; incount++;
-913 }
-914 while (cc > 0) {
-915 c = *bp++; cc--; incount++;
-916 fcode = ((long)c << BITS_MAX) + ent;
-917 h = (c << HSHIFT) ^ ent; /* xor hashing */
+It was always corrupted when I use rgb2ycbcr command followed by a crafted TIFF image. The vulnerability of out-of-bound writes comes from PixarLogDecode() function without checking the buffer length, which cause the head of next heap could be filled with any data, crash occurs when malloc() or free() is called.Attackers could exploit this issue to result in DoS.
 
 
-./bmp2tiff  -c lzw  ./sample/bmp2tiff_lzw.bmp 1.tif
+Here is the stack info:
+gdb –args ./rgb2ycbcr gtTileContig.tif tmpout.tif
+--- ---
+(gdb) b tif_pixarlog.c:787
+Breakpoint 1 at 0xb7f7916c: file tif_pixarlog.c, line 787.
+(gdb) r
+--- ---
+Breakpoint 1, PixarLogDecode (tif=0x804f148, op=0x804f508 "", occ=<optimized out>, s=0) at tif_pixarlog.c:787
+787                     int state = inflate(&sp->stream, Z_PARTIAL_FLUSH);
+(gdb) x/32xw  sp->stream->next_out
+0x804f598:       0xb7d917b0     0xb7d917b0     0x9b9a9998     0x9f9e9d9c
+0x804f5a8:       0xa3a2a1a0     0xa7a6a5a4     0xabaaa9a8     0xafaeadac
+0x804f5b8:       0xb3b2b1b0     0xb7b6b5b4     0xbbbab9b8     0xbfbebdbc
+0x804f5c8:       0xc3c2c1c0     0xc7c6c5c4     0xcbcac9c8     0xcfcecdcc
+0x804f5d8:       0xd3d2d1d0     0xd7d6d5d4     0xdbdad9d8     0x00000091
+0x804f5e8:       0xb7d91838     0xb7d91838     0xebeae9e8     0xefeeedec
 
-=================================================================
-==10455== ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7fbcd06d1c00 at pc 0x4827aa bp 0x7ffef81741d0 sp 0x7ffef81741c0
-READ of size 1 at 0x7fbcd06d1c00 thread T0
-    #0 0x4827a9 in LZWEncode /home/dazhuang/asan/libtiff-master/libtiff/tif_lzw.c:915
-    #1 0x45665e in TIFFWriteScanline /home/dazhuang/asan/libtiff-master/libtiff/tif_write.c:173
-    #2 0x40450f in main /home/dazhuang/asan/libtiff-master/tools/bmp2tiff.c:775
-    #3 0x7fbcccc92af4 in __libc_start_main (/lib64/libc.so.6+0x21af4)
-    #4 0x4019a8 in _start (/home/dazhuang/asan/libtiff-master/tools/bmp2tiff+0x4019a8)
-0x7fbcd06d1c00 is located 0 bytes to the right of 1573888-byte region [0x7fbcd0551800,0x7fbcd06d1c00)
-allocated by thread T0 here:
-    #0 0x7fbccd563129 (/lib64/libasan.so.0+0x16129)
-    #1 0x45b761 in _TIFFmalloc /home/dazhuang/asan/libtiff-master/libtiff/tif_unix.c:316
-    #2 0x4037c3 in main /home/dazhuang/asan/libtiff-master/tools/bmp2tiff.c:678
-    #3 0x7fbcccc92af4 in __libc_start_main (/lib64/libc.so.6+0x21af4)
-SUMMARY: AddressSanitizer: heap-buffer-overflow /home/dazhuang/asan/libtiff-master/libtiff/tif_lzw.c:915 LZWEncode
-Shadow bytes around the buggy address:
-  0x0ff81a0d2330: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ff81a0d2340: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ff81a0d2350: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ff81a0d2360: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ff81a0d2370: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0ff81a0d2380:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0ff81a0d2390: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0ff81a0d23a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0ff81a0d23b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0ff81a0d23c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0ff81a0d23d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07
-  Heap left redzone:     fa
-  Heap righ redzone:     fb
-  Freed Heap region:     fd
-  Stack left redzone:    f1
-  Stack mid redzone:     f2
-  Stack right redzone:   f3
-  Stack partial redzone: f4
-  Stack after return:    f5
-  Stack use after scope: f8
-  Global redzone:        f9
-  Global init order:     f6
-  Poisoned by user:      f7
-  ASan internal:         fe
-==10455== ABORTING
+(gdb) finish
+(gdb) x/32xw  sp->stream->next_out
+0x804f598:       0x86868686     0x93920d0c      0xa09e1a18     0xadaa2724
+0x804f5a8:       0xbab63430     0xc7c2413c      0xd4ce4e48     0xe1da5b54
+0x804f5b8:       0xeee66860     0xfbf2756c      0x08fe8278     0x160a8f84
+0x804f5c8:       0x23169c90     0x3022a99c      0x3d2eb6a8     0x4a3ac3b4
+0x804f5d8:       0x5746d0c0     0x8686ddcc      0x93920d0c     0x409d1a18
+0x804f5e8:       0x4da9c723     0x5ab5d42f      0x67c1e13b     0x74cdee47
+
+(gdb) c
+Continuing.
+Program received signal SIGSEGV, Segmentation fault.
+0xb7c3bd38 in _int_free (av=0xb7d91780 <main_arena>, p=<optimized out>, have_lock=0) at malloc.c:4015
+4015                   unlink(av, nextchunk, bck, fwd);
+(gdb) bt
+#0  0xb7c3bd38 in _int_free (av=0xb7d91780 <main_arena>, p=<optimized out>, have_lock=0) at malloc.c:4015
+#1  0xb7c3f6e0 in __GI___libc_free (mem=0x804f508) at malloc.c:2969
+#2  0xb7faa8f8 in _TIFFfree (p=0x804f508) at tif_unix.c:322
+#3  0xb7f29050 in gtTileContig (img=0xbfffe584, raster=0x8068b00, w=34, h=4) at tif_getimage.c:691
+#4  0xb7f31517 in TIFFRGBAImageGet (img=0xbfffe584, raster=0x8068b00, w=34, h=4) at tif_getimage.c:500
+#5  0xb7f3173c in TIFFReadRGBAImageOriented (tif=0x804f148, rwidth=34, rheight=4, raster=0x8068b00, orientation=4, stop=0) at tif_getimage.c:519
+#6  0xb7f317ba in TIFFReadRGBAImage (tif=0x804f148, rwidth=34, rheight=4, raster=0x8068b00, stop=0) at tif_getimage.c:537
+#7  0x0804a59f in tiffcvt (in=in@...ry=0x804f148, out=out@...ry=0x804e008) at rgb2ycbcr.c:315
+#8  0x080494a1 in main (argc=3, argv=0xbffff3b4) at rgb2ycbcr.c:127
+
+(gdb) x/8xw 0x804f508-8
+0x804f500:       0x00000030     0x00000091     0xffffffff    0x42c4ffff
+0x804f510:       0x02f70eb8      0xffffffff    0x1bb17d9c     0xffff061b
+(gdb) x/8xw 0x804f500+0x90
+0x804f590:       0x8b8a8988     0x00000051     0x86868686     0x93920d0c
+0x804f5a0:       0xa09e1a18     0xadaa2724     0xbab63430     0xc7c2413c
+(gdb) x/8xw 0x804f500+0x90+0x50
+0x804f5e0:       0x93920d0c     0x409d1a18     0x4da9c723     0x5ab5d42f
+0x804f5f0:       0x67c1e13b     0x74cdee47     0x81d9fb53      0x8ee5085f
+
 
 References:
 [1] http://www.remotesensing.org/libtiff/
-[2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
-
 
 Thank you!
 Best Regards,
-
-
-Mei
-
