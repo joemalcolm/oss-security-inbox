@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2111" "Thursday" "21" "January" "2016" "02:56:55" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160121075655.E2AEC6C0066@smtpvmsrv1.mitre.org>" "49" "[oss-security] Re: CVE for node.js websockets (ws)" "^Cc:" nil nil "1" "2016012107:56:55" "[oss-security] Re: CVE for node.js websockets (ws)" (number mark "        cve-assign@m Jan 21   49/2111  " thread-indent "\"[oss-security] Re: CVE for node.js websockets (ws)\"\n") "<CANO=Ty2__zBT=MeY=6mQaepEM1vr=igkrmeZkX3XM5pwttEbEg@mail.gmail.com>" ("<CANO=Ty2__zBT=MeY=6mQaepEM1vr=igkrmeZkX3XM5pwttEbEg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["655" "Wednesday" "15" "June" "2016" "10:42:48" "+0200" "Cedric Buissart" "cbuissar@redhat.com" "<CAKG8Do524=Adj62mrRP0eZb0bp7CbXN3yi_Mid5VxFvdE1sE=A@mail.gmail.com>" "29" "Re: [oss-security] CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client" nil nil nil "6" "2016061508:42:48" "[oss-security] CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client" (number mark "U       cbuissar@red Jun 15   29/655   " thread-indent "\"Re: [oss-security] CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client\"\n") "<20160614211623.GB11505@sentinelchicken.org>" ("<CAKG8Do5XPLJTJR9iaTRMOtFFZYan_Eeaf7KxxLWDgWiUQDsEbw@mail.gmail.com>" "<20160614211623.GB11505@sentinelchicken.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12131 invoked by uid 550); 21 Jan 2016 07:57:08 -0000
+Received: (qmail 13427 invoked by uid 550); 15 Jun 2016 08:43:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12107 invoked from network); 21 Jan 2016 07:57:07 -0000
-In-Reply-To: <CANO=Ty2__zBT=MeY=6mQaepEM1vr=igkrmeZkX3XM5pwttEbEg@mail.gmail.com>
-Message-Id: <20160121075655.E2AEC6C0066@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 21 Jan 2016 02:56:55 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE for node.js websockets (ws)
-To: kseifried@redhat.com
+Received: (qmail 13406 invoked from network); 15 Jun 2016 08:43:00 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to;
+        bh=s0Eoyb4ph23EPEwuNVzSYbN/Ss5Fvb1NKAvri+af45U=;
+        b=bl9TN5Z7pOPg8C7BtxLVklp63PYRnNUvLGFPU1SEv49wECNT0mWeigcn1/XifFRbFV
+         gw8NeE/cUiUzPUvhI63jQJ3ajpHZjzqZQ+1e6lORA3ce/zorGwVQadrm+FdUZmqF7rJH
+         FD/dVYMEvrI5Q6chq1LWxYwJ/+stE3nE27FyzmXFhaRdsTH0WIoAYUjYJ/s51wanj/hp
+         oJKMuua6NLzthKMSulPjac7Yq5bttYQtQIAYToYIo14QkdnMKtHLlz2MlHZAU1Xom/pR
+         wUHfC2Mtep95NEjh89In8Hoc07nJ6F9MQBn0/cjj0BHbi/tKjeFyXag1rrllAK7gYlG8
+         ywsA==
+X-Gm-Message-State: ALyK8tJ+6G5vxwnN6ZWx1UhAd3SSyBsep/UDwck8tLF/1IxLqks+2cApmZAF4OV9ZRSt0hghlVi30L6seOK2Fbul
+MIME-Version: 1.0
+X-Received: by 10.98.30.133 with SMTP id e127mr2692032pfe.112.1465980168484;
+ Wed, 15 Jun 2016 01:42:48 -0700 (PDT)
+In-Reply-To: <20160614211623.GB11505@sentinelchicken.org>
+References: <CAKG8Do5XPLJTJR9iaTRMOtFFZYan_Eeaf7KxxLWDgWiUQDsEbw@mail.gmail.com>
+	<20160614211623.GB11505@sentinelchicken.org>
+Date: Wed, 15 Jun 2016 10:42:48 +0200
+Message-ID: <CAKG8Do524=Adj62mrRP0eZb0bp7CbXN3yi_Mid5VxFvdE1sE=A@mail.gmail.com>
+From: Cedric Buissart <cbuissar@redhat.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=94eb2c03b68e30d6da05354d1b3c
+Subject: Re: [oss-security] CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--94eb2c03b68e30d6da05354d1b3c
+Content-Type: text/plain; charset=UTF-8
 
-> https://nodesecurity.io/advisories/67
+Hi Tim,
 
-We currently feel that a CVE ID should not exist (unless an affected
-application is identified) because any related instances of
-security-relevant behavior would be site-specific, and therefore
-outside the scope of CVE.
+On Tue, Jun 14, 2016 at 11:16 PM, Tim <tim-security@sentinelchicken.org>
+wrote:
 
-For example:
+>
+> In the mean time, do you happen to have specific information on which
+> versions of the 2.x and 3.x upstream branches were affected/fixed?
+>
 
-  https://gist.github.com/c0nrad/e92005446c480707a74a#gistcomment-1664152
-  https://nodejs.org/api/dgram.html#dgram_socket_send_buf_offset_length_port_address_callback
+Reproducible on all python versions I tested : 2.4, 2.6, 2.7, 3.4 and 3.5
 
-suggests that the problem is that Node.js allows people to write
-incorrect server-side code in which there is a call to socket.send,
-socket.ping, or socket.pong with a numerical argument. However, the
-documentation states that the argument must be a Buffer object or
-string. Behavior in the case of a numerical argument seems to be
-undefined. The change seems to be a hardening measure in which
-numerical arguments are automatically converted to strings, thereby
-making it safer to execute a specific type of incorrect code.
+Fixed branches :
+3.4 / 3.5 : revision 94952 : https://hg.python.org/cpython/rev/bf3e1c9b80e9
+2.7 : revision 94951 : https://hg.python.org/cpython/rev/1c45047c5102
 
-If incorrect server-side code actually exists in a product, then a CVE
-ID can be assigned.
+Regards,
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+-- 
+Cedric Buissart,
+Product Security
 
-iQIcBAEBCAAGBQJWoI5eAAoJEL54rhJi8gl5JsAQAKBciZvNRlApccHSGlmNWMHR
-FTnjGchK1LxzJ9dyJ1Ap/kR3ZoYGj1HxeiajsCVu+gqkB71/N1V6kEKWfZtZBUI/
-fQTEv1Ydadp8E5apigN5+bGf2mX+ahRZjfr2mJn/uoI/3tXcX8JUlduR1r162xmJ
-4641oTYzh5UkNYJPBFeCPwjsCqqVHsSeBoftifMXhdSMP06qJYQE4Bxu8kuMRNQj
-ZwonpjKXAK86+qiM67Ic+ndxB3u/KNITqp++wsWVZBefmaDzsSsAf0K3kxSckX02
-ngQi7/8MeHCZyTU3lLGsr7EUzb69RHHhPlE5bRRfE12mZi07htRu4IR4jzJNcNYg
-wEPzLp+irLY4oF/RplysEj0jf2j952xTQGD0HfoqGPsgK9EY2Z+O6s+GEJJF94hS
-b53sAtwSSZolXT7sSRSAbN7YAB1me+PN8AUaCKY8VXwJD3O4dYxsee1jTrx9BEqc
-hyst7ADv2fhqL5nXdUdOXunUmwTqy4oNQXNTVyRIGsfu3Kllk6AO9bdX73JHHSAl
-zmY2ruUKyGG2HCMLvBwCZ7YEM5oTF5UrGSvBcyWiLMA/55okt+a2TxMGR2Ne8/S3
-pNV97DHNb38NQhhwSMbWKcezh2FK1lAnQnM4xxe5MAR+al3TOfSQoS39lmxLuIdg
-dBrwTilumCdT13FjYkhf
-=hyHR
------END PGP SIGNATURE-----
+Purkynova 99
+Brno 612 45
+
+--94eb2c03b68e30d6da05354d1b3c--
