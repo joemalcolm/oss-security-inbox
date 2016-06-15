@@ -1,52 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/21/7
-Message-Id: <20160721140920.5C8D06C49AA@smtpvmsrv1.mitre.org>
-Date: Thu, 21 Jul 2016 10:09:20 -0400 (EDT)
-From: cve-assign@...re.org
-To: marco.gra@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: mupdf library use after free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/15/5
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BB62D8@EX02.corp.qihoo.net>
+Date: Wed, 15 Jun 2016 02:38:54 +0000
+From: 张开翔 <zhangkaixiang@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-5317: GNOME nautilus: crash occurs when generating a thumbnail for a crafted TIFF image 
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-> I disclosed a UAF in MuPDF, you can find the reproducer and report here:
-> 
-> http://bugs.ghostscript.com/show_bug.cgi?id=696941
-> 
-> mupdf ./mupdf_debug/build/debug/mupdf-x11 mucrash1.pdf
-> 
-> AddressSanitizer: heap-use-after-free ...
-> READ of size 4
-> 
-> #0 0x6b0a53 in pdf_load_xref
-> ... source/pdf/pdf-xref.c
+Details
+============
+Product: nautilus
+Affected Versions: <= GNOME nautilus 3.18.5, <=libtiff.so 4.0.6
+Vulnerability Type: out-of-bounds write
+Tested system: fedora23 32bit, fedora23 64bit
+Vendor URL: https://www.gnome.org/
+CVE ID: CVE-2016-5317
+Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
 
-Use CVE-2016-6265.
+Introduction
+============
+It was always corrupted when I use nautilus command followed a specific directory containing a crafted TIFF image. The vulnerability of out-of-bound writes is in PixarLogDecode() in libtiff.so without checking the buffer length, which cause the head data of next heap could be filled with any data, crash occurs when the next heap is allocated or freed. Attackers could exploit this issue to crash nautilus to result in DoS.
 
-As far as we can tell, this is not yet referenced on the
-http://git.ghostscript.com/?p=mupdf.git;a=shortlog page.
+Source info
+============
+1082           wp += n + stride - 1;     /* point to last one */
+1083           ip += n + stride - 1;       /* point to last one */
+1084           n -= stride;
+1085           while (n > 0) {
+1086              REPEAT(stride, wp[0] = CLAMP(ip[0]);
+1087                            wp[stride] -= wp[0];
+1088                            wp[stride] &= mask;
+1089                            wp--; ip--)
+1090              n -= stride;
+1091           }
+1092           REPEAT(stride, wp[0] = CLAMP(ip[0]); wp--; ip--)
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Debug info
+============
+gdb –args nautilus .
 
-iQIcBAEBCAAGBQJXkNc6AAoJEHb/MwWLVhi24isQALZ8CLX1M0+Hva0aICremI3a
-yyL7gQLxK/+Pda3uq20K1J/phQWGU4PUB8Xda1JHxJu6iAdxXvbXrarHtwdvUx5n
-1axHjaEsFwVPh3jivU2Dy3mQuRomcSEYS8AojdAhNNC84z+DBEXroRi0ugS84AkN
-IwRQTY3hAu9kV3Vq5wh2kKPBfUPSIq4X4l0+pulwahLzEZtPs2fUUiV+ft5T3UtU
-lJuHz9n1nhiY0ScItic6fPu34U2iFT8CGSp/0Tigu8gIMkHkcoPIVK7cq1HhVMI4
-gGgn0fLNa/6qldR1XLeRIK4rFWg5i5b5JxuPEVk4zQ3trFNUZT9PvMKoKJwNeTj7
-s6k0yCOLBs0izrVBN66eD+zlgLywuaGzqfszuA7I+dUCB2bfeJV0/PEZS6hV6gSP
-Csnimw7qPAf7c5Zw9NVtqsu3ojRq2GtWat/YoG31+z5lOlokfnkxRw6EheDjYmdM
-wsS+aU211em9oO3pFgXtn6Rv/ipaloQFG2RwBEXdZb1hTuNkkoWWHdV9dn4RVCCC
-VPX21ROUVd85KDd45yEliZOtqA65GdDoNmvzKOaYXZSsLbXI2ywKZ5GYWvguQfe7
-TIfrkm4wqzWjVwWS93GpoJNpwc13gu+LJ3YfRND8U4klJPCzF/BxG/jqRk/4RaQu
-ioc3SAefDUtrPooRl3g4
-=4FHP
------END PGP SIGNATURE-----
+(gdb) b tif_pixarlog.c:787
+Breakpoint 1 at 0xaeba016c: file tif_pixarlog.c, line 787.
+(gdb) c
+Continuing.
+
+Breakpoint 1, PixarLogDecode (tif=0xaec037a8,
+    op=0xaec03bd0 "\377\377\377\377\377\377\304B\270\016\367\002\377\377\377\377\234}\261\033\033\006\377\377\377\377P\354\032\064}\v\315\001\377\377\377\377\005b\234\025\304\004\377\377\377\377i\270\250(\367\b\243", occ=<optimized out>, s=0) at tif_pixarlog.c:787
+787                int state = inflate(&sp->stream, Z_PARTIAL_FLUSH);
+(gdb) x/32xw sp->stream->next_out-8
+0xaec03c58:    0x8b8a8988    0x00000055    0xaec000b0    0xaec000b0
+0xaec03c68:    0x9b9a9998    0x9f9e9d9c     0xa3a2a1a0     0xa7a6a5a4
+(gdb) x/32xw sp->stream->next_out-8+0x50
+0xaec03ca8:    0xdbdad9d8    0x00000029    0xaec00060    0xaec00060
+0xaec03cb8:    0xebeae9e8     0xefeeedec      0xf3f2f1f0      0xf7f6f5f4
+
+(gdb) finish
+(gdb) x/32xw sp->stream->next_out-8
+0xaec03c58:    0x8b8a8988    0x00000055    0x86868686    0x93920d0c
+0xaec03c68:    0xa09e1a18    0xadaa2724    0xbab63430    0xc7c2413c
+(gdb) x/32xw sp->stream->next_out-8+0x50
+0xaec03ca8:    0x93920d0c    0x409d1a18    0x4da9c723    0x5ab5d42f
+0xaec03cb8:    0x67c1e13b    0x74cdee47    0x81d9fb53    0x8ee5085f
+
+(gdb) c
+Continuing.
+[Thread 0xb0723b40 (LWP 24948) exited]
+
+Program received signal SIGSEGV, Segmentation fault.
+0xb6be4d38 in _int_free (av=0xaec00010, p=<optimized out>, have_lock=0) at malloc.c:4015
+4015              unlink(av, nextchunk, bck, fwd);
+(gdb) p av
+$42 = (mstate) 0xaec00010
+(gdb) p nextchunk
+$43 = (mchunkptr) 0xaec03c58
+(gdb) x/8xw nextchunk
+(gdb) p bck
+$44 = (mchunkptr) 0x93920d0c
+(gdb) p fwd
+$45 = (mchunkptr) 0x86868686
+0xaec03c58:    0x8b8a8988    0x00000055    0x86868686    0x93920d0c
+0xaec03c68:    0xa09e1a18    0xadaa2724    0xbab63430    0xc7c2413c
+
+(gdb) bt
+#0  0xb6be4d38 in _int_free (av=0xaec00010, p=<optimized out>, have_lock=0) at malloc.c:4015
+#1  0xb6be86e0 in __GI___libc_free (mem=0xaec00010) at malloc.c:2969
+#2  0xad3438f8 in _TIFFfree (p=0xaec00010) at tif_unix.c:322
+#3  0xad2c2050 in gtTileContig (img=0xadb709d4, raster=0xae51f560, w=34, h=4) at tif_getimage.c:691
+#4  0xad2ca517 in TIFFRGBAImageGet (img=0xadb709d4, raster=0xae51f560, w=34, h=4) at tif_getimage.c:500
+#5  0xad2ca73c in TIFFReadRGBAImageOriented (tif=0xae505be8, rwidth=34, rheight=4, raster=0xae51f560, orientation=1, stop=1) at tif_getimage.c:519
+#6  0xae71b37f in tiff_image_parse () from /usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-tiff.so
+#7  0xae71b94e in gdk_pixbuf.tiff_image_stop_load () from /usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-tiff.so
+#8  0xb75283e3 in gdk_pixbuf_loader_close () from /usr/lib/libgdk_pixbuf-2.0.so.0
+#9  0xb7f5edb5 in _gdk_pixbuf_new_from_uri_at_scale.constprop.7 () from /usr/lib/libgnome-desktop-3.so.12
+#10 0xb7f5f41b in gnome_desktop_thumbnail_factory_generate_thumbnail () from /usr/lib/libgnome-desktop-3.so.12
+#11 0x800e0ef9 in thumbnail_thread_start ()
+#12 0xb6d45452 in start_thread (arg=0xadb72b40) at pthread_create.c:334
+#13 0xb6c6925e in clone () at ../sysdeps/unix/sysv/linux/i386/clone.S:122
+
+
+Best regards,
+Kaixiang Zhang
+------
+
