@@ -1,4 +1,9 @@
-Received: (qmail 3460 invoked by uid 550); 30 May 2026 16:48:56 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2854" "Wednesday" "15" "June" "2016" "02:37:11" "+0000" "=?utf-8?B?5byg5byA57+U?=" "zhangkaixiang@360.cn" "<5EDB84F4B23F5B4DB6500A89258280E0BB62C2@EX02.corp.qihoo.net>" "50" "[oss-security] CVE-2016-5323: libtiff 4.0.6 tiffcrop _TIFFFax3fillruns(): divide by zero" nil nil nil "6" "2016061502:37:11" "[oss-security] CVE-2016-5323: libtiff 4.0.6 tiffcrop _TIFFFax3fillruns(): divide by zero" (number mark "U       zhangkaixian Jun 15   50/2854  " thread-indent "\"[oss-security] CVE-2016-5323: libtiff 4.0.6 tiffcrop _TIFFFax3fillruns(): divide by zero\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 20456 invoked by uid 550); 15 Jun 2016 02:44:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,88 +12,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3424 invoked from network); 30 May 2026 16:48:56 -0000
-Date: Sat, 30 May 2026 18:48:45 +0200
-From: Christian Brabandt <cb@256bit.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ahsU7bRbPbLYQpwF@256bit.org>
+Received: (qmail 5200 invoked from network); 15 Jun 2016 02:37:24 -0000
+From: =?utf-8?B?5byg5byA57+U?= <zhangkaixiang@360.cn>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: CVE-2016-5323: libtiff 4.0.6 tiffcrop _TIFFFax3fillruns():
+ divide by zero
+Thread-Index: AdHGrqWMAggsHKNVTFWKyyj4kAXA9A==
+Date: Wed, 15 Jun 2016 02:37:11 +0000
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BB62C2@EX02.corp.qihoo.net>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.18.25.62]
+Content-Type: multipart/alternative;
+	boundary="_000_5EDB84F4B23F5B4DB6500A89258280E0BB62C2EX02corpqihoonet_"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] [vim-security] Out-of-bounds Read in Terminal Screen Snapshot in Vim
- < 9.2.565
+Subject: [oss-security] CVE-2016-5323: libtiff 4.0.6 tiffcrop _TIFFFax3fillruns(): divide
+ by zero
 
-Out-of-bounds Read in Terminal Screen Snapshot in Vim < 9.2.565
-================================================================
-Date: 30.05.2026
-Severity: Medium
-CVE: *requested, not yet assigned*
-CWE: Out-of-bounds Read (CWE-125)
+--_000_5EDB84F4B23F5B4DB6500A89258280E0BB62C2EX02corpqihoonet_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-## Summary
-The `update_snapshot()` function in `src/terminal.c` copies the visible
-terminal screen into the scrollback buffer when a snapshot is taken.  For
-each screen cell it walks the cell's `chars[]` array with no upper bound,
-stopping only when it encounters a NUL terminator.  When a cell legitimately
-fills all `VTERM_MAX_CHARS_PER_CELL` (6) slots — a base character plus five
-combining marks — the bundled libvterm returns the array without a
-terminating NUL, so the loop reads past the fixed six-element array and
-appends the out-of-bounds values to a buffer reserved for only six
-characters.  A program whose output is rendered inside a `:terminal` window
-can trigger this with a short byte sequence and no Vim scripting, leading to
-a crash.
+RGV0YWlscw0KPT09PT09PQ0KDQpQcm9kdWN0OiBsaWJ0aWZmDQpBZmZlY3Rl
+ZCBWZXJzaW9uczogPD0gNC4wLjYNClZ1bG5lcmFiaWxpdHkgVHlwZTogZGl2
+aWRlIGJ5IHplcm8NClZlbmRvciBVUkw6IGh0dHA6Ly93d3cucmVtb3Rlc2Vu
+c2luZy5vcmcvbGlidGlmZi8NCkNyZWRpdDogS2FpeGlhbmcgWmhhbmcgb2Yg
+dGhlIENsb3VkIFNlY3VyaXR5IFRlYW0sIFFpaG9vIDM2MA0KQ1ZFIElEOiBD
+VkUtMjAxNi01MzIzDQpUZXN0ZWQgc3lzdGVtIHZlcnNpb246DQogICAgICAg
+ZmVkb3JhMjMgMzJiaXQNCiAgICAgICBmZWRvcmEyMyA2NGJpdA0KICAgICAg
+IENlbnRPUyBMaW51eCByZWxlYXNlIDcuMS4xNTAzIDY0Yml0DQoNCkludHJv
+ZHVjdGlvbg0KPT09PT09PQ0KDQp0IHdhcyBhbHdheXMgY29ycnVwdGVkIHdo
+ZW4gSSB1c2UgdGlmZmNyb3AgY29tbWFuZCBmb2xsb3dlZCBieSBhIGNyYWZ0
+ZWQgVElGRiBpbWFnZSBpbiBmdW5jdGlvbiBfVElGRkZheDNmaWxscnVucyAo
+KSB3aXRob3V0IGNoZWNraW5nIHRoZSB2YWx1ZSBvZiBkaXZpc29yLCBpdCBj
+YXVzZXMgYSBkaXZpZGUgYnkgemVybyBmbGF3LiBBdHRhY2tlcnMgY291bmQg
+ZXhwbG9pdCB0aGlzIGlzc3VlIHRvIGNhdXNlIGRlbmlhbC1vZi1zZXJ2aWNl
+Lg0KDQpIZXJlIGlzIHRoZSBzdGFjayBpbmZvOg0KZ2RiIOKAk2FyZ3MgLi90
+aWZmY3JvcCBfVElGRkZheDNmaWxscnVucy50aWYgdG1wb3V0LnRpZg0KLS0t
+IC0tLQ0KUHJvZ3JhbSByZWNlaXZlZCBzaWduYWwgU0lHU0VHViwgU2VnbWVu
+dGF0aW9uIGZhdWx0Lg0KMHgwMDAwN2ZmZmY3YWQ5N2YwIGluIF9USUZGRmF4
+M2ZpbGxydW5zIChidWY9MHgwLCBydW5zPTB4NjczNTAwLCBlcnVuPTxvcHRp
+bWl6ZWQgb3V0PiwgbGFzdHg9NjQpIGF0IHRpZl9mYXgzLmM6NDA3DQo0MDcg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICBaRVJPKG4sIGNwKTsNCihn
+ZGIpIGJ0DQojMCAgMHgwMDAwN2ZmZmY3YWQ5N2YwIGluIF9USUZGRmF4M2Zp
+bGxydW5zIChidWY9MHgwLCBydW5zPTB4NjczNTAwLCBlcnVuPTxvcHRpbWl6
+ZWQgb3V0PiwgbGFzdHg9NjQpIGF0IHRpZl9mYXgzLmM6NDA3DQojMSAgMHgw
+MDAwN2ZmZmY3YWUwODdjIGluIEZheDNEZWNvZGVSTEUgKHRpZj0weDY2MjAx
+MCwgYnVmPTB4MCwgb2NjPTgxOTIsIHM9PG9wdGltaXplZCBvdXQ+KSBhdCB0
+aWZfZmF4My5jOjE1MjcNCiMyICAweDAwMDA3ZmZmZjdiYTM3MzkgaW4gVElG
+RlJlYWRFbmNvZGVkVGlsZSAodGlmPXRpZkBlbnRyeT0weDY2MjAxMCwgdGls
+ZT04LCBidWY9MHgwLCBzaXplPTgxOTIsIHNpemVAZW50cnk9LTEpIGF0IHRp
+Zl9yZWFkLmM6NjY4DQojMyAgMHgwMDAwN2ZmZmY3YmEzYTAxIGluIFRJRkZS
+ZWFkVGlsZSAodGlmPXRpZkBlbnRyeT0weDY2MjAxMCwgYnVmPTxvcHRpbWl6
+ZWQgb3V0PiwgeD14QGVudHJ5PTAsIHk9eUBlbnRyeT0wLCB6PXpAZW50cnk9
+MCwgcz1zQGVudHJ5PTgpIGF0IHRpZl9yZWFkLmM6NjQxDQojNCAgMHgwMDAw
+MDAwMDAwNDQzZTQxIGluIHJlYWRTZXBhcmF0ZVRpbGVzSW50b0J1ZmZlciAo
+YnBzPTEsIHNwcD0xMjksIHRsPTEwMjQsIHR3PTY0LCBpbWFnZXdpZHRoPTMy
+LCBpbWFnZWxlbmd0aD0zMiwgb2J1Zj0weDdmZmZmN2VlNTAxMCAiIiwgaW49
+MHg2NjIwMTApIGF0IHRpZmZjcm9wLmM6OTk0DQojNSAgbG9hZEltYWdlIChp
+bj1pbkBlbnRyeT0weDY2MjAxMCwgaW1hZ2U9aW1hZ2VAZW50cnk9MHg3ZmZm
+ZmZmZjc5NjAsIGR1bXA9ZHVtcEBlbnRyeT0weDdmZmZmZmZmYzI3MCwgcmVh
+ZF9wdHI9cmVhZF9wdHJAZW50cnk9MHg3ZmZmZmZmZjc5MjApIGF0IHRpZmZj
+cm9wLmM6NjA3OQ0KIzYgIDB4MDAwMDAwMDAwMDQwMzIwOSBpbiBtYWluIChh
+cmdjPTxvcHRpbWl6ZWQgb3V0PiwgYXJndj08b3B0aW1pemVkIG91dD4pIGF0
+IHRpZmZjcm9wLmM6MjI3OA0KKGdkYikgcCBjcA0KJDIgPSAodW5zaWduZWQg
+Y2hhciAqKSAweDANCg0KDQo=
 
-## Description
-`update_snapshot()` is invoked whenever the terminal's visible screen is
-snapshotted into the scrollback buffer, for example when the user enters
-Terminal-Normal mode with `CTRL-W N`, or when the terminal job exits.  For
-each cell it retrieves the cell with `vterm_screen_get_cell()` and emits its
-characters with:
-
-    for (i = 0; (c = cell.chars[i]) > 0 || i == 0; ++i)
-        ga.ga_len += utf_char2bytes(c == NUL ? ' ' : c,
-             (char_u *)ga.ga_data + ga.ga_len);
-
-The loop has no `i < VTERM_MAX_CHARS_PER_CELL` guard and relies on the array
-being NUL-terminated.  The bundled libvterm fills `cell.chars[]` with up to
-`VTERM_MAX_CHARS_PER_CELL` entries and only writes a terminator when fewer
-than that many characters are present.  A cell holding a base glyph plus five
-combining marks therefore fills all six slots and is returned unterminated,
-so the loop reads `cell.chars[6]` and beyond — past the end of the array —
-and appends each out-of-bounds value to the snapshot buffer, which was grown
-for only `VTERM_MAX_CHARS_PER_CELL` characters.
-
-## Impact
-A program running inside a `:terminal` window normally controls only its own
-output and cannot affect the parent Vim process's memory.  By emitting a
-single cell that fills all six character slots, such a program causes Vim to
-read past a fixed-size array and append attacker-influenced, out-of-bounds
-values to a buffer sized for only six characters.  The reliably reproduced
-outcome is an out-of-bounds read leading to a crash (denial of service) of
-the editor.
-
-## Mitigation
-The issue is fixed as of Vim patch v9.2.0565, which bounds the loop in
-`update_snapshot()` with `i < VTERM_MAX_CHARS_PER_CELL`, mirroring the
-existing bound in `handle_pushline()`.
-
-## Acknowledgements
-The Vim project would like to thank github user andrejtomci for reporting and
-analyzing the issue and suggesting a fix.
-
-## References
-The issue has been fixed as of Vim patch [v9.2.565](https://github.com/vim/vim/releases/tag/v9.2.0565).
-- [Commit](https://github.com/vim/vim/commit/63680c6d3d52477817b49cd1a66e7aabe8a7aa19)
-- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-47gw-8gc3-mgcm)
-
-
-Thanks,
-Chris
--- 
-Je mehr man getrunken, desto mehr lobt man den Wirt und sein Bier.
-		-- Jean Paul
+--_000_5EDB84F4B23F5B4DB6500A89258280E0BB62C2EX02corpqihoonet_--
