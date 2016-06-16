@@ -1,27 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/17
-Message-Id: <20160509232909.8E58C52E014@smtpvbsrv1.mitre.org>
-Date: Mon,  9 May 2016 19:29:09 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/16/1
+Message-Id: <20160616112936.69EE16C0570@smtpvmsrv1.mitre.org>
+Date: Thu, 16 Jun 2016 07:29:36 -0400 (EDT)
 From: cve-assign@...re.org
-To: kangjielu@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, csong84@...ech.edu, insu@...ech.edu, taesoo@...ech.edu
-Subject: Re: CVE Request: kernel information leak vulnerability in Linux sound module
+To: wuninsu@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, Yeongjin.jang@...ech.edu
+Subject: Re: CVE Request: heap overflow in Python zipimport module
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> http://comments.gmane.org/gmane.linux.kernel/2214250
+> https://bugs.python.org/issue26171
+
+>> Issue #26171: Fix possible integer overflow and heap corruption in
+>> zipimporter.get_data().
+
+>> Modules/zipimport.c
+
+> In Python zipimport module,
+> if compress != 0, then bytes_size = data_size + 1
+> data_size is not sanitized, so if data_size = -1,
+> then it overflows and becomes 0.
 > 
-> The stack object "tread" has a total size of 32 bytes. Its field
-> "event" and "val" both contain 4 bytes padding. These 8 bytes
-> padding bytes are sent to user without being initialized.
+> In that case, python allocates small heap, but after that in freed, it
+> overflows heap.
 
-Use CVE-2016-4569.
-
-This is not yet available at
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/sound/core/timer.c
-but may be there later.
+Use CVE-2016-5636.
 
 - -- 
 CVE Assignment Team
@@ -31,17 +36,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXMRzFAAoJEHb/MwWLVhi2mMAP/3G1B/9smkpGJB5/VGfvpifs
-Nzkd+Jy6CHSi+Q0A91h1YdTrLwtFQMffVo0keZd8gYarApxSpA8qiRVK1sc3bsZ6
-Um9NW+4dVLjUZ+RjQ0RjDMjKWbTHFyzZC8Z8DiY8ZXMzpY4UaylEVP9auSCUXvmq
-4p8guXW+6PdoaDarFqTVW/fpSfk2gHFxbkWZ602xUdXTn8ZGkItv25dvtVgp21IP
-zOfaZmZG+yPjOPCMEQNm3TcuJ7jFeq/KpsuLmtyY/EOBUNqZpRtJBtEPTMMkxlNZ
-BaDuV1SrJsXu7ZDsfdz+Yx+57Wa/gDkOsVnFlJyTR6NOrtJfjwJG+dYZYAA0bg4N
-KliqQTCOhGGkPGOB52zRg9UYg+7d/dEqcL2oP6Xuvr74aY1CZepbD+zDMkympXuQ
-Wu93c5Hh05g3xOwNj+90s3u8DQ0sDJlfizUXWbStEmBJNwno6y/HjSVJqs/vjZWk
-ERyWZd4vkVGbt4rBoTCNdxUi+V1k04xQGM6dF1XUSQd4rhQ0HJKRva10ac90JVSx
-pt/KPWxL89MxWLOmHP5VdIHFoQyFre4a4fOzFMovixB0RJsm5/iZ3lAKPc0RKsu6
-ZgtaujTVAkMAtFM0tfCybSI++JEsYIMV5Rr9cNkSYSVZYKbn0A+i+mH3luREBJyF
-6rS0YTVBB5kAR9DgUc2n
-=I4nm
+iQIcBAEBCAAGBQJXYox2AAoJEHb/MwWLVhi2x50QAJ+aesIW4gTI+XVrFayusyC0
+G4WiCKzHxZMQy33b8nQKjtGiRAlyzOFNUY7xQ6l5AwtB28gJzYG9b5IxFcY3psPB
+cRAQ0j1lOOFdsLFslkhu9CegJynWIljvWM2S3qlI7PEddstCO9OD9Zb2Jsyidb2g
+Yp/0hdOjEs+WZ8IyDOG0S3BgXcCgaAeviQjixfWrGkxMAA1yzjuUZQXzINXGdiYn
++p4ysB9o1walp2Yyq1dmk7zx3Sgj3T8Puu9Ir5ol/QzGRSYONwD8pE7M+ueDLQxH
+c+HMpMPxBq3Rm6EbTKWukHplXRtmV5tCbqjIwkRtZIDPG9ktJO92LenXKMdFsemj
+/O+1HoX7osq6q37EouqNhJR8/jPzqRh5t6v4Njit9/lKCz3KwizfW5i3O/6+KT+8
+j1KPj+vr9fvOlRgDSYdSsjKr5d2SlrmQpUGmS1c+ER9XGMU3dPfDI2wqFhM/S8Vs
+RR7XJhr4D/eVEH7daanTbuP8bEXDnASZfTns5x3MVbejgp38MTZBGcgX6fpfoWOa
+JbaR9dFQWAx6u9rxyhuKDEwW1QM659GF+cww41nBErmdbSBsDVnGxfy4jXv9ieKO
+rpW/re2MYama/wkmxN5y+/6b771/RPCRxQbVQBP1rMj5dxQebfDrwHE8frzc/DD2
+6Kv46gZBWtKJQnHPkgON
+=0doi
 -----END PGP SIGNATURE-----
