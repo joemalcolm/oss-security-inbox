@@ -1,62 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/12/12
-Message-ID: <20160512181600.GA6622@openwall.com>
-Date: Thu, 12 May 2016 21:16:00 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: broken RSA keys
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/16/2
+Message-Id: <20160616224550.6061A52E005@smtpvbsrv1.mitre.org>
+Date: Thu, 16 Jun 2016 18:45:50 -0400 (EDT)
+From: cve-assign@...re.org
+To: cbuissar@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client
 Content-Type: text/plain; charset=utf-8
 
-On Thu, May 05, 2016 at 08:36:29AM -0400, Stanislav Datskovskiy wrote:
-> On Thu, May 5, 2016 at 4:17 AM, Solar Designer <solar@...nwall.com> wrote:
-> > When a modulus is (mangled?) such that each of its 64-bit limbs consists
-> > of two matching 32-bit limbs, it is necessarily a multiple of 2^32+1.
-> > That's because it can be represented as:
-> >
-> > N = {an an ... a1 a1 a0 a0} = (2^32+1) * {0 an ... 0 a1 0 a0}
-> >
-> > where the {...} notation means concatenated 32-bit limbs (or base 2^32
-> > digits, if you will).  From this, it follows that pairwise GCDs of such
-> > moduli will also have 2^32+1 as a factor, and this is what ultimately
-> > causes the 32-bit limb patterns in the GCDs.  As Alexander Cherepanov
-> > correctly pointed out, even the seemingly slightly more complex 32-bit
-> > limb patterns in the GCDs are merely indication of them being multiples
-> > of 2^32+1.  There's probably nothing else to see here.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> I would like to request a CVE for a Python header injection flaw in
+> urrlib2/urllib/httplib/http.client.
 > 
-> Mircea Popescu (trilema.com) and I figured this out last May.
-> But the conclusion 'nothing to see here, move along' does not follow.
-
-By "nothing else to see here" I was referring only to the patterns seen
-in GCDs, which are merely a consequence of the pattern seen in moduli.
-
-> > As Alexander Cherepanov wrote, if I understand him correctly, there's
-> > 100% overlap between keys with such moduli and with such exponents.
+> HTTPConnection.putheader() allows unsafe characters, which can be used to
+> inject additional headers.
 > 
-> Presently I do not know why the perpetrator found it necessary to mangle
-> the exponent.
+> Upstream bug with reproducer :
+> https://bugs.python.org/issue22928
+> 
+> Fixed branches :
+> 3.4 / 3.5 : revision 94952 : https://hg.python.org/cpython/rev/bf3e1c9b80e9
+> 2.7 : revision 94951 : https://hg.python.org/cpython/rev/1c45047c5102
 
-To me, this speaks in favor of the software bug/miscompile theory,
-rather than an attack.  I took a look at:
+As far as we can tell, this is best thought of as only one
+vulnerability in one piece of code, even though the code is in a
+different file (Lib/http/client.py versus Lib/httplib.py) in 3.x
+relative to 2.7. Also, urrlib2 in the Subject line is a typo of
+urllib2.
 
-$ sha256sum *gz
-bced395621ddd1c8fd5a87279dface260fb47351a89427e1db7a785fd9f7595c  pks-0.9.4.tar.gz
-419fff7df644ac11d92ca5b7981e0a6f1e10f74605eb1602f7b39e272d8b079c  pks-0.9.6.tar.gz
-0b3b706df7bf2a4deb7b2e779402f1f8fcbe42b12d32a97692f37d97c5dba264  sks-1.0.5.tgz
-92a7f113f0ba7a28d51d7ced60a984d042d8524c651dc3fcafe9d11cc32981a0  sks-1.1.5.tgz
+In issue22928, the first message seems slightly unsure about whether
+it is a vulnerability, but then the vendor confirms that it is a
+vulnerability:
 
-but none of them look like they'd be likely to contain or expose a
-library bug like this: they don't appear to re-encode the bignums.
+>> I'd like to opt to begin with prohibiting newline characters
+>> to be present in HTTP headers. Although this issue is not a
+>> "hard vulnerability" such as a buffer overflow, it does translate
+>> to a potentially equal level of severity
 
-> I haven't any notion of why this particular mutilation was chosen.
-> But the particular list of victims is sufficient to rule out 'software bug'
-> in my mind as an intellectually-honest explanation.
+>> Here's a patch addressing the potential vulnerability as reported.
 
-This could be so, or there could be something else in common about them,
-such as preference to use some otherwise not so common piece of software.
+Finally,
+http://blog.blindspotsecurity.com/2016/06/advisory-http-header-injection-in.html
+explains that this is not in the general report category of "this
+library omits input validation that is arguably either required or
+expected, and therefore real-life applications might be affected if
+they offer an unusually large attack surface to untrusted input."
+Instead, it is in the category of "this library omits input validation
+that is obviously critical during URL parsing, and therefore there are
+almost certainly many affected real-life applications." (The former
+category often qualifies for CVE IDs, but the decision is much easier
+in the latter category.)
 
-Anyway, I think we can in fact end this discussion for now - not because
-"nothing to see here, move along", but because we've already considered
-the available clues (thank you all for helping get us on the same page!)
-and there are no new clues yet.
+Use CVE-2016-5699.
 
-Alexander
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXYyuAAAoJEHb/MwWLVhi2m04P/0qVnpNhWxRL0+fSoaQfUdKJ
+60zgH5J1B7SV+6V9JJifrr8uEbK75806XFesrZScj4BmoqhBZsyD3iD+8BxD37Zr
+PrscsnFV6Dqixu7W8g04CFhRifdTBCutmOegNuAufWHi+UZ/ajwvonXEN1Vw1LB8
+aoPFryqvXjofh4TtU3R1YDFQXQmInyyu4TPmsMDqOaFAg20SSmqIIq/AbH+eqcy4
+Yugylwn0S+FuahyQRokYGAyRoLnhqUoJxnLaXe8t3HweiH9DvIdnCaXPGOK9f5Bu
+Xdk0DX7HQ6Ub+fhQszJjkk6yefXut9W0w0MbSpLnoHVRKJrCv131HGJ3z6UGbCWR
+lcIGXOnYYEE9vQ3fMeRFMI8duThLfkDmMSUZRNr0BrUEucgZKA7FqBNH/TA7TAV5
+DTgVSlNEr649LBJwtb0Cd+5rt7FgEjyKlM3uLaMoFUtHQKkf5Fn5wcKevWCoVYF1
+bNruk9w9b/AxOhvklQ3+CB/ap0eFkbVCBHbcrAxHXnPAr3F9CWbWS7kaYtTKNnD1
+mKRS+BJtkJHmF0TKQGXihwLPhbEBgrkhwZ5mtWsH2R41jAjE9ps4RSvevImcWL8g
+MS+AxrD9I1K1T+FKnDWO4NaDaO50lCp/Eka/0WS3msQhK1bWwaE0Ka2Rbbe7p6t6
+G8bc27YJeXNkrau8p+qr
+=tp8L
+-----END PGP SIGNATURE-----
