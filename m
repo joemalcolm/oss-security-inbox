@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1706" "Thursday" "25" "June" "2020" "13:21:56" "+0200" "Johannes Segitz" "jsegitz@suse.de" "<20200625112156.GN7041@suse.com>" "42" "Re: [oss-security] =?iso-8859-1?Q?Requesti?==?iso-8859-1?Q?ng_a_CVE_id_for_Trojit=E1?==?iso-8859-1?Q?,?= an e-mail client: Improper Certificate Validation" nil nil nil "6" "2020062511:21:56" "[oss-security] =?iso-8859-1?Q?Requesti?==?iso-8859-1?Q?ng?= =?iso-8859-1?Q?a?= =?iso-8859-1?Q?CVE?= =?iso-8859-1?Q?id?= =?iso-8859-1?Q?for?= =?iso-8859-1?Q?Trojit=E1?==?iso-8859-1?Q?,?= an e-mail client: Improper Certificate Validation" (number mark "U       jsegitz@suse Jun 25   42/1706  " thread-indent "\"Re: [oss-security] =?iso-8859-1?Q?Requesti?==?iso-8859-1?Q?ng?= =?iso-8859-1?Q?a?= =?iso-8859-1?Q?CVE?= =?iso-8859-1?Q?id?= =?iso-8859-1?Q?for?= =?iso-8859-1?Q?Trojit=E1?==?iso-8859-1?Q?,?= an e-mail client: Improper Certificate Validation\"\n") "<96bf2c19-1a4d-494a-a643-a7501a22fc67@kde.org>" ("<96bf2c19-1a4d-494a-a643-a7501a22fc67@kde.org>") nil nil nil nil nil nil nil "Re: [oss-security] =?iso-8859-1?Q?Requesti?==?iso-8859-1?Q?ng?= =?iso-8859-1?Q?a?= =?iso-8859-1?Q?CVE?= =?iso-8859-1?Q?id?= =?iso-8859-1?Q?for?= =?iso-8859-1?Q?Trojit=E1?==?iso-8859-1?Q?,?= an e-mail client: Improper Certificate Validation" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1493" "Thursday" "16" "June" "2016" "07:29:36" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160616112936.69EE16C0570@smtpvmsrv1.mitre.org>" "42" "[oss-security] Re: CVE Request: heap overflow in Python zipimport module" nil nil nil "6" "2016061611:29:36" "[oss-security] Re: CVE Request: heap overflow in Python zipimport module" (number mark "U       cve-assign@m Jun 16   42/1493  " thread-indent "\"[oss-security] Re: CVE Request: heap overflow in Python zipimport module\"\n") "<CAGoFzNedN+OD6JymsdZxO7UrLqctV0dbzAu-HkMqZFsKAEcsOg@mail.gmail.com>" ("<CAGoFzNedN+OD6JymsdZxO7UrLqctV0dbzAu-HkMqZFsKAEcsOg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11912 invoked by uid 550); 25 Jun 2020 11:48:32 -0000
+Received: (qmail 15748 invoked by uid 550); 16 Jun 2016 11:29:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,63 +12,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32347 invoked from network); 25 Jun 2020 11:22:09 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Thu, 25 Jun 2020 13:21:56 +0200
-From: Johannes Segitz <jsegitz@suse.de>
-To: Jan =?iso-8859-1?Q?Kundr=E1t?= <jkt@kde.org>
-Cc: oss-security@lists.openwall.com, security@kde.org
-Message-ID: <20200625112156.GN7041@suse.com>
-References: <96bf2c19-1a4d-494a-a643-a7501a22fc67@kde.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="gBtIq6ck+y0Wz1FN"
-Content-Disposition: inline
-In-Reply-To: <96bf2c19-1a4d-494a-a643-a7501a22fc67@kde.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Subject: Re: [oss-security] =?iso-8859-1?Q?Requesti?=
- =?iso-8859-1?Q?ng_a_CVE_id_for_Trojit=E1?= =?iso-8859-1?Q?=2C?= an e-mail
- client: Improper Certificate Validation
+Received: (qmail 15727 invoked from network); 16 Jun 2016 11:29:48 -0000
+From: cve-assign@mitre.org
+To: wuninsu@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, Yeongjin.jang@gatech.edu
+In-Reply-To: <CAGoFzNedN+OD6JymsdZxO7UrLqctV0dbzAu-HkMqZFsKAEcsOg@mail.gmail.com>
+Message-Id: <20160616112936.69EE16C0570@smtpvmsrv1.mitre.org>
+Date: Thu, 16 Jun 2016 07:29:36 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: heap overflow in Python zipimport module
 
---gBtIq6ck+y0Wz1FN
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Thu, Jun 25, 2020 at 12:05:03PM +0200, Jan Kundr=E1t wrote:
-> Hi folks, I would appreciate a Cc on responses as I'm not subscribed to t=
-his
-> list. I would like to request a CVE for the following vulnerability:
+> https://bugs.python.org/issue26171
 
-The process changed, you need to request one at
-https://cveform.mitre.org/
+>> Issue #26171: Fix possible integer overflow and heap corruption in
+>> zipimporter.get_data().
 
-Johannes
---=20
-GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-SUSE Software Solutions Germany GmbH, Maxfeldstr. 5, 90409 Nuernberg
-Gesch=E4ftsf=FChrer: Felix Imend=F6rffer (HRB 36809, AG N=FCrnberg)
+>> Modules/zipimport.c
 
---gBtIq6ck+y0Wz1FN
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+> In Python zipimport module,
+> if compress != 0, then bytes_size = data_size + 1
+> data_size is not sanitized, so if data_size = -1,
+> then it overflows and becomes 0.
+> 
+> In that case, python allocates small heap, but after that in freed, it
+> overflows heap.
 
+Use CVE-2016-5636.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQIzBAEBCgAdFiEEJQ9D9ffObx6cWU+VvCfdnSzE/WYFAl70iMAACgkQvCfdnSzE
-/WYzIxAAgEU9dmhd2qmaNbiOCeQSAMh6OnwYtRfjuUA0zQvLSOnb+M4EbLAk2WlZ
-BhNqkxuLGiLy3s5gN5ccuYL30dl7n2tlFgHKXwGBzBqiSfG6fRTRgQSh82jv+0Kp
-by97LZZEjOQpjK0S07DNiYscn/nPC9U+qxb9nRTN6YOGs8xhmAGQsVMcXDBHE1B1
-vkUEKD5MOmeMF1FbJD60Zj4hzzV6o8WlIxAno+Tn9e6hDqwjam/C6pyrQSHrBYRl
-Bd0llxN04ejX81VagDPVhqcd4AN3sQd1zfz2yEdU9REUMAu9+XeZ6dwvK0vF7iwP
-Eu3KhMTHcWGdVzlVlkDB5nC0INK/v4k3vA7m/2BzywTGvpufyUVq8xkjrs0ytVaC
-y5TWeVdNm3Fi0aWLqxSw+CmbRu/xwaXqk6paIXCPiV3ZSL1/R59r3Bt6+Vc6lrCf
-ayQ7UdXJX9QynKtBq87AQN5QaGUVPQufpiULrY/VgYnPHaRhqIMTAZaRe5JGXTPz
-ICeUeVXjMkH6V9iLGM0XlknNWymkKMbmeLeMuCG97HsGQcT0k+EZbS14a5JD06NU
-r50jIZfmmsgsibSwrROC95IEI0hAmJHh5ctHPmslcDjge81OdKbsRMjclLuaL/kS
-S2gFZ/fuvrJivzBFeWzuOBtdQ0dZ7T/mAmxXtvPuYeNUnehQTIY=
-=a8TN
+iQIcBAEBCAAGBQJXYox2AAoJEHb/MwWLVhi2x50QAJ+aesIW4gTI+XVrFayusyC0
+G4WiCKzHxZMQy33b8nQKjtGiRAlyzOFNUY7xQ6l5AwtB28gJzYG9b5IxFcY3psPB
+cRAQ0j1lOOFdsLFslkhu9CegJynWIljvWM2S3qlI7PEddstCO9OD9Zb2Jsyidb2g
+Yp/0hdOjEs+WZ8IyDOG0S3BgXcCgaAeviQjixfWrGkxMAA1yzjuUZQXzINXGdiYn
++p4ysB9o1walp2Yyq1dmk7zx3Sgj3T8Puu9Ir5ol/QzGRSYONwD8pE7M+ueDLQxH
+c+HMpMPxBq3Rm6EbTKWukHplXRtmV5tCbqjIwkRtZIDPG9ktJO92LenXKMdFsemj
+/O+1HoX7osq6q37EouqNhJR8/jPzqRh5t6v4Njit9/lKCz3KwizfW5i3O/6+KT+8
+j1KPj+vr9fvOlRgDSYdSsjKr5d2SlrmQpUGmS1c+ER9XGMU3dPfDI2wqFhM/S8Vs
+RR7XJhr4D/eVEH7daanTbuP8bEXDnASZfTns5x3MVbejgp38MTZBGcgX6fpfoWOa
+JbaR9dFQWAx6u9rxyhuKDEwW1QM659GF+cww41nBErmdbSBsDVnGxfy4jXv9ieKO
+rpW/re2MYama/wkmxN5y+/6b771/RPCRxQbVQBP1rMj5dxQebfDrwHE8frzc/DD2
+6Kv46gZBWtKJQnHPkgON
+=0doi
 -----END PGP SIGNATURE-----
-
---gBtIq6ck+y0Wz1FN--
