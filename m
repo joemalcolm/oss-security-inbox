@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1694" "Tuesday" "22" "September" "2015" "09:42:07" "+0200" "MinRK" "benjaminrk@gmail.com" "<CAHNn8BWL1iucS0LwVcdDn3aefk8d2h1OGT=UdkdK_jfx9na=OQ@mail.gmail.com>" "61" "[oss-security] Re: CVE Request: Maliciously crafted text files in IPython/Jupyter editor" nil nil nil "9" "2015092207:42:07" "[oss-security] Re: CVE Request: Maliciously crafted text files in IPython/Jupyter editor" (number mark "        benjaminrk@g Sep 22   61/1694  " thread-indent "\"[oss-security] Re: CVE Request: Maliciously crafted text files in IPython/Jupyter editor\"\n") "<CAHNn8BV_zT_eADA1DGDwQNG2EQQraW0nAe42z5ft+8P=5L5MZw@mail.gmail.com>" ("<CAHNn8BV_zT_eADA1DGDwQNG2EQQraW0nAe42z5ft+8P=5L5MZw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2919" "Thursday" "16" "June" "2016" "18:45:50" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160616224550.6061A52E005@smtpvbsrv1.mitre.org>" "69" "[oss-security] Re: CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client" "^Cc:" nil nil "6" "2016061622:45:50" "[oss-security] Re: CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client" (number mark "U       cve-assign@m Jun 16   69/2919  " thread-indent "\"[oss-security] Re: CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client\"\n") "<CAKG8Do5XPLJTJR9iaTRMOtFFZYan_Eeaf7KxxLWDgWiUQDsEbw@mail.gmail.com>" ("<CAKG8Do5XPLJTJR9iaTRMOtFFZYan_Eeaf7KxxLWDgWiUQDsEbw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26507 invoked by uid 550); 22 Sep 2015 07:42:39 -0000
+Received: (qmail 9331 invoked by uid 550); 16 Jun 2016 22:46:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,89 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26483 invoked from network); 22 Sep 2015 07:42:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=D5iaeu/eH753qjVfHHCengkNCljmIDIQfat1xX6jTZk=;
-        b=vkt6o/AuI08hkRSl7i9wDOOG3lz2Pi53qPWsQOUi8AukQGnC0C/oWm59r5AqGxg7cR
-         Kh+ANcnU9eeuZy6xiNQ+EsjJCyR2VqRsv67pwvMVXbtpTm7RRDQFIb/KYLHGTvLDG9mH
-         PNN2EdqmBKwL2xDAAmIJSMpajsMn/d9d5IdKt5n/JTj6wwymIHyBJiZO1OBC/flFjuM2
-         7e6hPjq8vaEXsm6PedZ4+K2PNX36dR38zldgxIz6dIlWG3Xo63dt0lhX4KCClmd0ovh3
-         9a6m0fpUk65+QFnl5vHAdo+C47EEsHkACQOwESDd9N8WvpzinX2eXeNmCBKhFBDRyc9w
-         nSYw==
-X-Received: by 10.140.37.101 with SMTP id q92mr27200221qgq.3.1442907746736;
- Tue, 22 Sep 2015 00:42:26 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CAHNn8BV_zT_eADA1DGDwQNG2EQQraW0nAe42z5ft+8P=5L5MZw@mail.gmail.com>
-References: <CAHNn8BV_zT_eADA1DGDwQNG2EQQraW0nAe42z5ft+8P=5L5MZw@mail.gmail.com>
-Message-ID: <CAHNn8BWL1iucS0LwVcdDn3aefk8d2h1OGT=UdkdK_jfx9na=OQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11c11e6cb021870520512331
-Date: Tue, 22 Sep 2015 09:42:07 +0200
-From: MinRK <benjaminrk@gmail.com>
+Received: (qmail 9306 invoked from network); 16 Jun 2016 22:46:02 -0000
+In-Reply-To: <CAKG8Do5XPLJTJR9iaTRMOtFFZYan_Eeaf7KxxLWDgWiUQDsEbw@mail.gmail.com>
+Message-Id: <20160616224550.6061A52E005@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 16 Jun 2016 18:45:50 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Maliciously crafted text files in IPython/Jupyter editor
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client
+To: cbuissar@redhat.com
 
---001a11c11e6cb021870520512331
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Is there any more information needed to get a CVE assignment on this?
+> I would like to request a CVE for a Python header injection flaw in
+> urrlib2/urllib/httplib/http.client.
+> 
+> HTTPConnection.putheader() allows unsafe characters, which can be used to
+> inject additional headers.
+> 
+> Upstream bug with reproducer :
+> https://bugs.python.org/issue22928
+> 
+> Fixed branches :
+> 3.4 / 3.5 : revision 94952 : https://hg.python.org/cpython/rev/bf3e1c9b80e9
+> 2.7 : revision 94951 : https://hg.python.org/cpython/rev/1c45047c5102
 
--MinRK
+As far as we can tell, this is best thought of as only one
+vulnerability in one piece of code, even though the code is in a
+different file (Lib/http/client.py versus Lib/httplib.py) in 3.x
+relative to 2.7. Also, urrlib2 in the Subject line is a typo of
+urllib2.
 
-On Wed, Sep 16, 2015 at 3:02 PM, MinRK <benjaminrk@gmail.com> wrote:
+In issue22928, the first message seems slightly unsure about whether
+it is a vulnerability, but then the vendor confirms that it is a
+vulnerability:
 
-> Email address of requester: security@ipython.org, benjaminrk@gmail.com,
-> rgbkrk@gmail.com, jkamens@quantopian.com, ssanderson@quantopian.com
->
-> Software name: IPython notebook / Jupyter notebook
-> Type of vulnerability: Maliciously forged file
-> Attack outcome: Possible remote execution
->
-> Vulnerability: A maliciously forged file opened for editing can execute
-> javascript, specifically by being redirected to /files/ due to a failure =
-to
-> treat the file as plain text.
->
-> Affected versions:
->
-> - IPython 3.0 =E2=89=A4 version =E2=89=A4 3.2.1
-> - notebook 4.0 =E2=89=A4 4.0.4
->
-> URI with issues:
->
-> - GET /edit/**
->
-> Patches:
->
-> - IPython 3.x: 0a8096adf165e2465550bd5893d7e352544e5967 (
-> https://github.com/ipython/ipython/commit/0a8096adf165e2465550bd5893d7e35=
-2544e5967
-> )
-> - Jupyter 4.0.x: 9e63dd89b603dfbe3a7e774d8a962ee0fa30c0b5 (
-> https://github.com/jupyter/notebook/commit/9e63dd89b603dfbe3a7e774d8a962e=
-e0fa30c0b5
-> )
->
-> Mitigations:
->
-> Upgrade to IPython/Jupyter notebook 4.0.5, 4.1 or 3.2.2 once available.
-> If using pip,
->
->     pip install --upgrade "ipython[notebook]<4.0"  # for 3.2.2
->     pip install --upgrade notebook # for 4.1 or 4.0.5
->
-> For conda:
->
->     conda update conda
->     conda update ipython "ipython-notebook<4.0" # for 3.2.2
->     conda update notebook # for 4.1 or 4.0.5
->
-> Vulnerability reported by Jonathan Kamens at Quantopian
->
->
+>> I'd like to opt to begin with prohibiting newline characters
+>> to be present in HTTP headers. Although this issue is not a
+>> "hard vulnerability" such as a buffer overflow, it does translate
+>> to a potentially equal level of severity
 
---001a11c11e6cb021870520512331--
+>> Here's a patch addressing the potential vulnerability as reported.
+
+Finally,
+http://blog.blindspotsecurity.com/2016/06/advisory-http-header-injection-in.html
+explains that this is not in the general report category of "this
+library omits input validation that is arguably either required or
+expected, and therefore real-life applications might be affected if
+they offer an unusually large attack surface to untrusted input."
+Instead, it is in the category of "this library omits input validation
+that is obviously critical during URL parsing, and therefore there are
+almost certainly many affected real-life applications." (The former
+category often qualifies for CVE IDs, but the decision is much easier
+in the latter category.)
+
+Use CVE-2016-5699.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXYyuAAAoJEHb/MwWLVhi2m04P/0qVnpNhWxRL0+fSoaQfUdKJ
+60zgH5J1B7SV+6V9JJifrr8uEbK75806XFesrZScj4BmoqhBZsyD3iD+8BxD37Zr
+PrscsnFV6Dqixu7W8g04CFhRifdTBCutmOegNuAufWHi+UZ/ajwvonXEN1Vw1LB8
+aoPFryqvXjofh4TtU3R1YDFQXQmInyyu4TPmsMDqOaFAg20SSmqIIq/AbH+eqcy4
+Yugylwn0S+FuahyQRokYGAyRoLnhqUoJxnLaXe8t3HweiH9DvIdnCaXPGOK9f5Bu
+Xdk0DX7HQ6Ub+fhQszJjkk6yefXut9W0w0MbSpLnoHVRKJrCv131HGJ3z6UGbCWR
+lcIGXOnYYEE9vQ3fMeRFMI8duThLfkDmMSUZRNr0BrUEucgZKA7FqBNH/TA7TAV5
+DTgVSlNEr649LBJwtb0Cd+5rt7FgEjyKlM3uLaMoFUtHQKkf5Fn5wcKevWCoVYF1
+bNruk9w9b/AxOhvklQ3+CB/ap0eFkbVCBHbcrAxHXnPAr3F9CWbWS7kaYtTKNnD1
+mKRS+BJtkJHmF0TKQGXihwLPhbEBgrkhwZ5mtWsH2R41jAjE9ps4RSvevImcWL8g
+MS+AxrD9I1K1T+FKnDWO4NaDaO50lCp/Eka/0WS3msQhK1bWwaE0Ka2Rbbe7p6t6
+G8bc27YJeXNkrau8p+qr
+=tp8L
+-----END PGP SIGNATURE-----
