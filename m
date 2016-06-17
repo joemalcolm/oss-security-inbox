@@ -1,4 +1,9 @@
-Received: (qmail 13505 invoked by uid 550); 31 Aug 2022 06:31:56 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5451" "Friday" "17" "June" "2016" "14:51:46" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20160617145146.710ad5de@pc1>" "155" "[oss-security] Many invalid memory access issues in libarchive" "^Cc:" nil nil "6" "2016061712:51:46" "[oss-security] Many invalid memory access issues in libarchive" (number mark "        hanno@hboeck Jun 17  155/5451  " thread-indent "\"[oss-security] Many invalid memory access issues in libarchive\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 26459 invoked by uid 550); 17 Jun 2016 12:52:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,95 +11,170 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 26341 invoked from network); 17 Jun 2016 12:52:00 -0000
+Message-ID: <20160617145146.710ad5de@pc1>
+X-Mailer: Claws Mail 3.13.2 (GTK+ 2.24.30; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-30994-1466167910-0001-2"
+Cc: cve-assign@mitre.org
+Date: Fri, 17 Jun 2016 14:51:46 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13487 invoked from network); 31 Aug 2022 06:31:56 -0000
-Date: Wed, 31 Aug 2022 08:31:44 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <8r186sn8-2orp-3n38-nno4-9o8n23n6s069@unkk.fr>
-X-fromdanielhimself: yes
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] CVE-2022-35252: control code in cookie denial
- of service (curl)
+Subject: [oss-security] Many invalid memory access issues in libarchive
+To: oss-security@lists.openwall.com
 
-CVE-2022-35252: control code in cookie denial of service
-========================================================
+--=_zucker.schokokeks.org-30994-1466167910-0001-2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Project curl Security Advisory, August 31 2022 -
-[Permalink](https://curl.se/docs/CVE-2022-35252.html)
+https://blog.fuzzing-project.org/47-Many-invalid-memory-access-issues-in-li=
+barchive.html
 
-VULNERABILITY
--------------
+libarchive version 3.2.0 (released on April 30th) fixed a large number
+of memory access bugs that I reported to them a while ago.
 
-When curl retrieves and parses cookies from an HTTP(S) server, it accepts
-cookies using control codes (byte values below 32). When cookies that contain
-such control codes are later sent back to an HTTP(S) server, it might make the
-server return a 400 response. Effectively allowing a "sister site" to deny
-service to siblings.
+https://github.com/libarchive/libarchive/issues/503
+Unclear invalid memory read in CPIO parser
+http://libarchive.github.io/google-code/issue-395/comment-0/crash.cpio
+Sample file
 
-We are not aware of any exploit of this flaw.
+https://github.com/libarchive/libarchive/issues/504
+Null pointer access in RAR parser
+http://libarchive.github.io/google-code/issue-396/comment-0/crash.rar
+Sample file
 
-INFO
-----
+https://github.com/libarchive/libarchive/issues/505
+Null pointer access in CAB parser
+http://libarchive.github.io/google-code/issue-397/comment-0/segf.cab
+Sample file
 
-This flaw in the code was initially introduced in curl 4.9 but HTTP(S) servers
-back then did not generally reject requests using control codes so this
-mistake did not actually cause problems until HTTP(S) servers started doing
-this much later. Different server implementations of course doing it at
-different times (with some also still accepting them just fine).
+https://github.com/libarchive/libarchive/issues/506
+Overlapping memcpy in CAB parser
+http://libarchive.github.io/google-code/issue-398/comment-0/memcpy.cab
+Sample file
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2022-35252 to this issue.
+https://github.com/libarchive/libarchive/issues/510
+Heap out of bounds read in LHA/LZH parser
+http://libarchive.github.io/google-code/issue-402/comment-0/bsdtar-invalid-=
+read.lzh
+Sample file
 
-CWE-1286: Improper Validation of Syntactic Correctness of Input
+https://github.com/libarchive/libarchive/issues/511
+Stack out of bounds read in ar parser
+http://libarchive.github.io/google-code/issue-403/comment-0/bsdtar-invalid-=
+read-stack.a
+Sample file
 
-Severity: Low
+https://github.com/libarchive/libarchive/issues/512
+Global out of bounds read in mtree parser
+http://libarchive.github.io/google-code/issue-404/comment-0/invalid-read-ov=
+erflow.mtree
+Sample file
 
-AFFECTED VERSIONS
------------------
+https://github.com/libarchive/libarchive/issues/513
+Null pointe access in 7z parser
+http://libarchive.github.io/google-code/issue-405/comment-0/bsdtar-null-ptr=
+.7z
+Sample file
 
-- Affected versions: curl 4.9 to and including 7.84.0
-- Not affected versions: curl < 4.9 and curl >= 7.85.0
+https://github.com/libarchive/libarchive/issues/514
+Unclear crashes in ZIP parser
+http://libarchive.github.io/google-code/issue-406/comment-0/bsdtar-zip-cras=
+h-variant1.zip
+Sample file
 
-libcurl is used by many applications, but not always advertised as such!
+https://github.com/libarchive/libarchive/issues/515
+Heap out of bounds read in TAR parser
+http://libarchive.github.io/google-code/issue-407/comment-0/tar-heap-overfl=
+ow.tar
+Sample file
 
-THE SOLUTION
-------------
+https://github.com/libarchive/libarchive/issues/516
+Unclear invalid memory read in mtree parser
+http://libarchive.github.io/google-code/issue-408/comment-0/read_mtree.mtree
+Sample file
 
-[fix for CVE-2022-35252](https://github.com/curl/curl/commit/8dfc93e573ca740544a2d79ebb)
+https://github.com/libarchive/libarchive/issues/518
+Null pointer access in RAR parser
+http://libarchive.github.io/google-code/issue-410/comment-0/segfault.rar
+Sample file
 
-RECOMMENDATIONS
---------------
+https://github.com/libarchive/libarchive/issues/523
+Heap out of bounds heap read read when reading password for malformed
+ZIP
+http://libarchive.github.io/google-code/issue-415/comment-0/pwcrash.zip
+Sample file
 
-  A - Upgrade curl to version 7.85.0
+https://github.com/libarchive/libarchive/issues/550
+Heap out of bounds read in mtree parser
+https://crashes.fuzzing-project.org/libarchive-oob-process_add_entry.mtree
+Sample file
 
-  B - Apply the patch to your local version
+I also reported a couple of lower severity issues (leaks, hangs,
+undefined behavior issues):
 
-  C - Do not enable the cookie engine
+https://github.com/libarchive/libarchive/issues/517
+Memory leak in TAR parser
 
-TIMELINE
---------
+https://github.com/libarchive/libarchive/issues/522
+Endless loop in ISO parser
+http://libarchive.github.io/google-code/issue-414/comment-0/hang.iso
+Sample file
 
-This issue was reported to the curl project on June 26, 2022. We contacted
-distros@openwall on August 22.
+https://github.com/libarchive/libarchive/issues/539
+Undefined behavior / signed integer overflow in mtree parser
 
-libcurl 7.85.0 was released on August 31 2022, coordinated with the
-publication of this advisory.
+https://github.com/libarchive/libarchive/issues/540
+Use after free in test suite
 
-CREDITS
--------
+https://github.com/libarchive/libarchive/issues/547
+Undefined behavior / invalid shiftleft in TAR parser
+https://crashes.fuzzing-project.org/libarchive-undefined-shiftleft
+Sample file
 
-- Reported-by: Axel Chong
-- Patched-by: Daniel Stenberg
+https://github.com/libarchive/libarchive/issues/548
+Undefined behavior / signed integer overflow in TAR parser
+https://crashes.fuzzing-project.org/libarchive-undefined-signed-overflow.tar
+Sample file
 
-Thanks a lot!
+Unfortunately one out of bounds heap read bug in the RAR parser (sample
+file) remained unfixed. I hope a fix will find its way into the next
+version. I was interested in making libarchive more robust because once
+all issues are fixed it can serve as a safer alternative to many low
+quality command line tools for various archiving formats.
+https://github.com/libarchive/libarchive/issues/521
+http://libarchive.github.io/google-code/issue-413/comment-0/bsdtar-invalid-=
+read.rar
 
--- 
 
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
+
+--=_zucker.schokokeks.org-30994-1466167910-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCgAGBQJXY/JiAAoJEKWIAHK7tR5CbO8QAJvYZGClzPaZ5GmgdCc323qt
+dPFfzwv/+eFYZEIGFS/S4lx4RDJdFlVqrdrQP0QMLg/4JeeyfyHnCweY0zzyk2rz
+bPY0SbFOy+9dSDCN/GAD1ov7bOBYQkfMjJJALQ1BY41+NwInmN0Pz4x6femSQJ08
+V5zY0Dnql0FeHefF1qPxyTIXFfwlCfC2AAN8Tb0Y3fnFVdPTYhNSt7Vl3pNkCLmi
+6eLJoIFYKeV2ndOWigcEyyyGsH7czP8KIWRF3+Y5eFlHaR7X2t93AmKavIGSHdCR
+0WcQGV3bA0e1iJRBzrjjy1N0iOUPm/VyS0GciwbliVidzuF9KJ9rmEvXvzTNaxqX
+/KzP6TQ3ofEdK3TCvPuyRT5OmKDyYB1g/1p6JcKU3GI2MSoSm//Xxgmw4Fxj5RJ7
+5FmUVzgI7dsI5hP9UnrlgCNTZlWA8PmwXB2vXrni/OcaiQ9FaCg1TttJYgPdJy/D
+yKaP3Ox8DUq830ZBgfmW3KjkgZQ6xIM8eOI6ptra3R0YhOAIHP6IKeqCVaSCossJ
+1mNgvIYK2yJHnPIS+UyevmyHcOA93a6OmXEaHu5JPmo1GEFKHH4Ozbzd2LmKPplR
+Cv22kPHMq+Dm3utHm6/xpZbcG+I9dHrkXW71+/OGVlaRx59SzpOJR1c0CBffFWk9
+RiV5+yqIDLaq2nXh6mbt
+=2h96
+-----END PGP SIGNATURE-----
+
+--=_zucker.schokokeks.org-30994-1466167910-0001-2--
