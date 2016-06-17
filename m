@@ -1,44 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/29/1
-Message-ID: <CADSYzsuHFEFFySPG18sgpV1i=xekNDpJe+6rDJkYmuOpY7P-LA@mail.gmail.com>
-Date: Thu, 29 Dec 2016 01:04:52 -0200
-From: Dawid Golunski <dawid@...alhackers.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit (CVE-2016-10045) (Bypass of the CVE-2016-1033 patch)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/17/3
+Message-Id: <20160617135951.F3F486C05C4@smtpvmsrv1.mitre.org>
+Date: Fri, 17 Jun 2016 09:59:51 -0400 (EDT)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Various invalid memory reads in ImageMagick (WPG, DDS, DCM)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 28, 2016 at 2:58 PM, Solar Designer <solar@...nwall.com> wrote:
-> On Wed, Dec 28, 2016 at 03:03:39AM -0200, Dawid Golunski wrote:
->> This was reported responsibly to the vendor & assigned a CVEID on the
->> 26th of December.
->> The vendor has been working on a new patch which would fix the problem but
->> not break the RFC too badly. The patch should be published very soon.
->>
->> I'm releasing this as a 0day without the new patch available publicly
->> as a potential bypass was publicly discussed on oss-sec with Solar
->> Designer in the PHPMailer < 5.2.18 thread, so holding the advisory
->> further would serve no purpose.
->
-> Yeah.  I did think for a moment before posting in here yesterday, but
-> for a number of reasons chose to go ahead with the public discussion.
->
-> Alexander
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hi Alexander,
+> https://blog.fuzzing-project.org/46-Various-invalid-memory-reads-in-ImageMagick-WPG,-DDS,-DCM.html
 
-No worries,  good that the patch came in quick so it wasn't too bad I guess.
-Got a bunch of critical comments but most of them are pretty funny
-anyway ;) E.g.
+> An out of bounds memory read in the VerticalFilter() function can be
+> triggered by a malformed DDS file.
+> 
+> https://github.com/ImageMagick/ImageMagick/commit/791aa82c8064ee8965a63ccf4384f56b95057e5b
 
-https://twitter.com/dawid_golunski/status/814253540503908356
-
-;D
-
-Good work on sensing trouble in that bit of code too though.
+The "out of bounds memory read" seems to be a valid concern, and is
+assigned the CVE-2016-5687 ID. However, we do not happen to understand
+why 791aa82c8064ee8965a63ccf4384f56b95057e5b is a fix.
 
 
--- 
-Regards,
-Dawid Golunski
-https://legalhackers.com
-t: @dawid_golunski
+> Several bugs in the WPG parser could lead to a heap overflow and random
+> invalid memory writes. These bugs only seem to appear when a memory
+> limit is set.
+> 
+> Sample for heap write overflow in SetPixelIndex
+> 
+> Sample for unclear invalid write in ScaleCharToQuantum
+> 
+> Sample for unclear invalid write in SetPixelIndex
+> 
+> https://github.com/ImageMagick/ImageMagick/commit/fc43974d34318c834fbf78570ca1a3764ed8c7d7
+> https://github.com/ImageMagick/ImageMagick/commit/aecd0ada163a4d6c769cec178955d5f3e9316f2f
+
+As far as we can tell, this can be thought of as a single issue in
+which some type of input validation (associated with a SetImageExtent
+return-value check) occurred in the wrong place, and was accompanied
+by incorrect error handling. The various write-access observations
+would then be consequences of this.
+
+Use CVE-2016-5688 for this entire report about the WPG parser.
+
+
+> Null pointer accesses and unclear segfaults can happen in the DCM
+> parser.
+> 
+> Sample for null pointer access in ReadDCMImage
+> 
+> Sample for null pointer access in ReadDCMImage (different code)
+> 
+> Sample for unclear segfault in ReadDCMImage
+> 
+> https://github.com/ImageMagick/ImageMagick/commit/5511ef530576ed18fd636baa3bb4eda3d667665d
+
+As far as we can tell, there are three separate issues identified in
+the fix. (These do not necessarily map directly to the three samples.)
+
+Use CVE-2016-5689 for the lack of required NULL pointer checks.
+
+Use CVE-2016-5690 for the error in the for statement in the "Compute
+pixel scaling table" part of the ReadDCMImage function.
+
+Use CVE-2016-5691 for the lack of validation of pixel.red,
+pixel.green, and pixel.blue.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXZAH0AAoJEHb/MwWLVhi26YQP/1wB8tcmsY0Ljb68BDyylo+8
+Fsl4LBITCVw2cPLJKw/cPupFN0I4kTG38EEr4HNemfIt8zGSYKGfcdr+geTB+WGK
+Y/EgTBwJrSCLt7KQOADAi1uNHHuq9+7uoZ1zjhffO729MqY73g0Vh4oi7waNqJBm
+N52k4VJA24s0zHFLQX3A29gaVsdMHxW/bTdsOiI6+VicMWYdfSHSbzfK4MP0daCK
+Y2OGnAFJAhcsZHKjXSiyEBCdH2dATjLuBONW3Y+bYaDvZ9Q313eKoDXJZ7ng/Idp
+UAfHpKYgkkN4wbOS+Y5AFYSaGGpLeMxzg6z113sAPw8pB5ukEoQvjm5FQq78HDGk
+sQSrunAuZS/9vLLmypTEpj0tuTDzi4V+WDqcwneTYh5xMxtLcMlaECMVOealOwFV
+63Vf6sRV7TindQ3AulzIl+qux6cQJzh+8mWYfOA7UdpYrX1qDInPdX2ZiuSLQ9UW
+jusvHE1wbXj7F7VBmuZHmUOFQX0T2hI0jJa81YdQvoDXVxp+kerIIwVAcB7Xc/3+
+/Kh8kw0xiaewVhe4lo/SwkUhTecNxm3hw22aCITvCMo9Hcg6qzwBmMBKJtcRWbYd
+gIB/KopZv0CLwOGDvRcZql+QA811Ee9QBR28e7gJ48PjiJmKEgXvcNDhuGb29n2c
+z6A2Z9cyks8gJCWERGvF
+=Pvf8
+-----END PGP SIGNATURE-----
