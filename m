@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["452" "Monday" "12" "October" "2020" "16:59:20" "-0400" "Jeffrey Walton" "noloader@gmail.com" "<CAH8yC8n7ghXxZ4WgS2MfW-hAV8s_Zyfd1BoE8O03WfMhmA62UA@mail.gmail.com>" "18" "[oss-security] Re: You are using an old email address \"@stahl.de\". Please note our new email addresses \"@r-stahl.com\"" nil nil nil "10" "2020101220:59:20" "[oss-security] Re: You are using an old email address \"@stahl.de\". Please note our new email addresses \"@r-stahl.com\"" (number mark "U       noloader@gma Oct 12   18/452   " thread-indent "\"[oss-security] Re: You are using an old email address \"@stahl.de\". Please note our new email addresses \"@r-stahl.com\"\"\n") "<59654139a4b34c94a336835bda44c76f@r-stahl.com>" ("<59654139a4b34c94a336835bda44c76f@r-stahl.com>") nil nil nil nil nil nil nil "[oss-security] Re: You are using an old email address \"@stahl.de\". Please note our new email addresses \"@r-stahl.com\"" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1125" "Friday" "17" "June" "2016" "11:22:32" "+0200" "Cedric Buissart" "cbuissar@redhat.com" "<CAKG8Do6ip4RSonV48gxBtAFU8X2MEAQUC=j-Giz1fLhtEP1p+A@mail.gmail.com>" "46" "Re: [oss-security] CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client" nil nil nil "6" "2016061709:22:32" "[oss-security] CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client" (number mark "U       cbuissar@red Jun 17   46/1125  " thread-indent "\"Re: [oss-security] CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client\"\n") "<20160615165420.GG1225@sentinelchicken.org>" ("<CAKG8Do5XPLJTJR9iaTRMOtFFZYan_Eeaf7KxxLWDgWiUQDsEbw@mail.gmail.com>" "<20160614211623.GB11505@sentinelchicken.org>" "<CAKG8Do524=Adj62mrRP0eZb0bp7CbXN3yi_Mid5VxFvdE1sE=A@mail.gmail.com>" "<20160615165420.GG1225@sentinelchicken.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25802 invoked by uid 550); 12 Oct 2020 21:00:00 -0000
+Received: (qmail 1998 invoked by uid 550); 17 Jun 2016 09:22:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,62 +12,77 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25764 invoked from network); 12 Oct 2020 21:00:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=rCQfqmN+u/KxlrE80GaRseYhBbsq705x8mFPoi0YWmA=;
-        b=QeJmWvVZsoysSwvvUaZJIKgnjDY3wQWq0F+DgPW5yVIWCSlFHwbSMThjj+anaXCWZH
-         YyjYNvbM+z394WZSu3fTyG3zc+QnLet8EFTEMQvIcQw80cuVNsBAc9HZp3VwHEzUR1Ak
-         B3bWT5Z5rLTLXMMPaB2+o2eT90bxAW6IQOw8pcM6pvNkSkurz+fxV4jGgy1YlKpWexMo
-         DwNoU1Dz1f9osnpCJXJUSN448PTDQDwkfd0EqGZsxwxNnpUOipx3bo9u5NbOJZ8bmc4n
-         DS37E9/Pp3eKO80BVsvg2vBY+SlBk8v/9Ybhc7n/uuvZtjS2o41bekzP2e3UuKm3TLSy
-         Xy+w==
+Received: (qmail 1980 invoked from network); 17 Jun 2016 09:22:45 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
-         :from:date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=rCQfqmN+u/KxlrE80GaRseYhBbsq705x8mFPoi0YWmA=;
-        b=ljAHeV163RuWaf27bVZV5+G9CJ+6hpgOnmQs8sUkcj+7wA640s0vaPU6L3ZuQLAJ89
-         3HXNNKvH6In4xSGZ/z8VCFP6msEtNeQ0yEHMjyXDZYcB3j3/9h5wpZhbs4EkGU1GUySK
-         kGOoOL99gjRposFoCRbJDf5b9VYBGIQq7TJ/twgPvi08FCNP71Aa0GbPEaHF98APEn22
-         bih0QIcbiFH4mPgWrhaGRLrNWkXWtfIA8MhGqbDlkLs7QXGfzw+bbczLUy/v4jLl8rK3
-         4M4MYoreWxaOuUnjZr+hZLsFf3ojrg2QuhlmeSFzDALbbvSlbjPEEXId0efE8pvWNIp8
-         1smA==
-X-Gm-Message-State: AOAM533N1oqYNl80G6e4FfcymG3/JvtBQMjWvaTpDvtm/zjhZ2DrhL0F
-	wSjRR7MWGB0PxLm0Chl0VUUYcEdE6Q/lt3onsOOKRCizCWE=
-X-Google-Smtp-Source: ABdhPJzlbtZW4S5a5woi7SNRhR93rBh3zXOOg0O9C8bu+bh7cQsls+t/xYPgywRQttXkUlCtlj5teKPAAg6crijvLsg=
-X-Received: by 2002:a92:d5c1:: with SMTP id d1mr543030ilq.212.1602536388074;
- Mon, 12 Oct 2020 13:59:48 -0700 (PDT)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to;
+        bh=11446JQiHzwYn5kiHon/6VP3FJ+R/IVAMxLPvekGD+4=;
+        b=j9KsJoLszazJwVd6mEbOnd4nYP5U8WdAkNESXPICyKOeOMn2dmAQ7f8ZCwrLIOuwwF
+         KJ6TE2KA11gAKVF7n+MtB+QI9fttde0S94x3SywJTjbLXvfF4PfQCNgn9z8sQo3VtJZe
+         +cvCjbOS3JOTeuEL3H5RUpC7kdHXyyl4jzFdixffiUU+M6vgbdYid41CryK6BIb7n0oT
+         EyZF9QGie8MwMLMfRqoPXrcmA67OyS4VjhWgyHiy0mitTXLV4FP+UPyNZ6vFBOHI0hR5
+         Xr+6DaZtk4nVBpRGhg0+Ez6zpWauxlIkH6YnAdccr4aX3AIUKKl5xhPhM4bta6kLXjly
+         BKbg==
+X-Gm-Message-State: ALyK8tLloyLyoHe4YTPA5smlwjaHQ4+uhd9u7ShrLj5C0OeLRUM77okSkPBms0OHboWe1LLW3slyJhoMgcBoxUrq
 MIME-Version: 1.0
-References: <59654139a4b34c94a336835bda44c76f@r-stahl.com>
-In-Reply-To: <59654139a4b34c94a336835bda44c76f@r-stahl.com>
-From: Jeffrey Walton <noloader@gmail.com>
-Date: Mon, 12 Oct 2020 16:59:20 -0400
-Message-ID: <CAH8yC8n7ghXxZ4WgS2MfW-hAV8s_Zyfd1BoE8O03WfMhmA62UA@mail.gmail.com>
+X-Received: by 10.98.76.211 with SMTP id e80mr1402755pfj.28.1466155353023;
+ Fri, 17 Jun 2016 02:22:33 -0700 (PDT)
+In-Reply-To: <20160615165420.GG1225@sentinelchicken.org>
+References: <CAKG8Do5XPLJTJR9iaTRMOtFFZYan_Eeaf7KxxLWDgWiUQDsEbw@mail.gmail.com>
+	<20160614211623.GB11505@sentinelchicken.org>
+	<CAKG8Do524=Adj62mrRP0eZb0bp7CbXN3yi_Mid5VxFvdE1sE=A@mail.gmail.com>
+	<20160615165420.GG1225@sentinelchicken.org>
+Date: Fri, 17 Jun 2016 11:22:32 +0200
+Message-ID: <CAKG8Do6ip4RSonV48gxBtAFU8X2MEAQUC=j-Giz1fLhtEP1p+A@mail.gmail.com>
+From: Cedric Buissart <cbuissar@redhat.com>
 To: oss-security@lists.openwall.com
-Cc: herman.harperink@r-stahl.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] Re: You are using an old email address "@stahl.de". Please note our
- new email addresses "@r-stahl.com"
+Content-Type: multipart/alternative; boundary=001a1136e45c00c4f9053575e55a
+Subject: Re: [oss-security] CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client
 
-Hi Alexander,
+--001a1136e45c00c4f9053575e55a
+Content-Type: text/plain; charset=UTF-8
 
-I'm getting these bounce-like messages when replying to the list.
+Hi Tim,
 
-Maybe you can remove the user.
+On Wed, Jun 15, 2016 at 6:54 PM, Tim <tim-security@sentinelchicken.org>
+wrote:
 
-Thanks,
-Jeff
-
-On Mon, Oct 12, 2020 at 4:52 PM EXpert Mail | R. STAHL
-<noreply@r-stahl.com> wrote:
 >
-> You are using an old email address =E2=80=B3@stahl.de=E2=80=B3.
-> Please note our new email addresses =E2=80=B3@r-stahl.com=E2=80=B3
+> Here are the additional details I promised:
 >
-> Please update your contact information.
+> http://blog.blindspotsecurity.com/2016/06/advisory-http-header-injection-in.html
 >
-> Correct Email address is: herman.harperink@r-stahl.com
+> The gist of it is that protocol injection can occur not only if an
+> application sets a header based on user-supplied values, but also if
+> the application ever tries to fetch a URL specified by an attacker
+> (SSRF case) OR if the application ever accesses any malicious web
+> server (redirection case).  URLs of the following form allow
+> injection into the HTTP stream:
+>
+>   http://127.0.0.1%0d%0aX-injected:%20header%0d%0ax-leftover:%20:12345/foo
+>   http://localhost%00%0d%0ax-bar:%20:12345/foo
+>
+> More details in the blog post, of course.
+>
+
+Thanks for details!
+The glibc side of the issue has its own upstream bug entry:
+https://sourceware.org/bugzilla/show_bug.cgi?id=20018
+
+>
+> Best regards,
+> tim
+>
+
+
+
+-- 
+Cedric Buissart,
+Product Security
+
+Purkynova 111
+Brno 612 45
+Czech Republic
+
+--001a1136e45c00c4f9053575e55a--
