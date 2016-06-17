@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3769" "Wednesday" "12" "September" "2018" "09:33:19" "-0400" "Daniel Kahn Gillmor" "dkg@fifthhorseman.net" "<874leu7sdc.fsf@fifthhorseman.net>" "99" "Re: [oss-security] tdesktop leaks user IP address" nil nil nil "9" "2018091213:33:19" "[oss-security] tdesktop leaks user IP address" (number mark "U       dkg@fifthhor Sep 12   99/3769  " thread-indent "\"Re: [oss-security] tdesktop leaks user IP address\"\n") "<CAG8b5tSvm1nZ=Q=3L=YGnbjmnD1i8Le4xC3y=n=N+P4O1wYW-A@mail.gmail.com>" ("<CAG8b5tSvm1nZ=Q=3L=YGnbjmnD1i8Le4xC3y=n=N+P4O1wYW-A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4797" "Friday" "17" "June" "2016" "15:35:19" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160617193519.1646CABC216@smtpvmsrv1.mitre.org>" "182" "[oss-security] Re: Many invalid memory access issues in libarchive" "^Cc:" nil nil "6" "2016061719:35:19" "[oss-security] Re: Many invalid memory access issues in libarchive" (number mark "        cve-assign@m Jun 17  182/4797  " thread-indent "\"[oss-security] Re: Many invalid memory access issues in libarchive\"\n") "<20160617145146.710ad5de@pc1>" ("<20160617145146.710ad5de@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1247 invoked by uid 550); 12 Sep 2018 13:33:38 -0000
+Received: (qmail 5396 invoked by uid 550); 17 Jun 2016 19:35:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,115 +11,195 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 5336 invoked from network); 17 Jun 2016 19:35:31 -0000
+In-Reply-To: <20160617145146.710ad5de@pc1>
+Message-Id: <20160617193519.1646CABC216@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Fri, 17 Jun 2016 15:35:19 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1221 invoked from network); 12 Sep 2018 13:33:38 -0000
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: Dhiraj Mishra <mishra.dhiraj95@gmail.com>, oss-security@lists.openwall.com
-In-Reply-To: <CAG8b5tSvm1nZ=Q=3L=YGnbjmnD1i8Le4xC3y=n=N+P4O1wYW-A@mail.gmail.com>
-References: <CAG8b5tSvm1nZ=Q=3L=YGnbjmnD1i8Le4xC3y=n=N+P4O1wYW-A@mail.gmail.com>
-Date: Wed, 12 Sep 2018 09:33:19 -0400
-Message-ID: <874leu7sdc.fsf@fifthhorseman.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Subject: Re: [oss-security] tdesktop leaks user IP address
+Subject: [oss-security] Re: Many invalid memory access issues in libarchive
+To: hanno@hboeck.de
 
---=-=-=
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hi Dhiraj--
+> https://blog.fuzzing-project.org/47-Many-invalid-memory-access-issues-in-libarchive.html
 
-On Tue 2018-09-11 17:25:47 +0530, Dhiraj Mishra wrote:
-> tdesktop leaks user IP address
->=20
-> This is still not fix in telegram desktop  team says their is nothing to
-> fix here and this is working has intended.
+> libarchive version 3.2.0 (released on April 30th) fixed a large number
+> of memory access bugs that I reported to them a while ago.
 
-Thanks for this report -- it's good to have people looking at metadata
-leakage and considering it as a security concern.  It is.
+> https://github.com/libarchive/libarchive/issues/503
+> Unclear invalid memory read in CPIO parser
 
-However, i'm not convinced that you've described the problem you're
-seeing well enough to be actionable yet.  In particular, it's not clear
-to me *whose IP address* you are concerned about leaking, and *where*
-you are concerned about it leaking.  It's also not clear to me that
-you've evaluated the impact/consequences of your proposed mitigation.
+>> hit end-of-file when trying to read a cpio header
 
-I've written out several questions below in the hopes of helping clarify
-the concern, and figuring out what makes sense to do about it.  Please
-take these questions in the spirit of constructive engagement!
+Use CVE-2015-8915.
 
-> tdesktop: https://github.com/telegramdesktop/tdesktop
->
-> *Steps to reproduce:*
-> 1. ./Telegram
-> 2. Call end user
-> 3. The access log on CLI reveals the end user public IP address.
 
-let's give the parties involved in this names so that it's easier to
-reason about.  Let's say that the call Initiator is Inigo, and that the
-call recipient is Rebecca.  So Inigo takes steps 1 and 2.  Whose public
-IP address (Inigo's?  Rebecca's?) leaks into which access log
-(Inigo's?  Rebecca's?  both?)?
+> https://github.com/libarchive/libarchive/issues/504
+> Null pointer access in RAR parser
 
-Is the concern really the inclusion of the IP address in the access log,
-or is it the fact that Rebecca's public IP address is visible to Inigo,
-and vice versa?  To whom else is this IP address visible?  Another way
-of asking this is: who is the adversary you're concerned about learning
-this IP address information?
+Use CVE-2015-8916.
 
- * someone looking at some specific logfile in the future?
+There is not a second ID for the "it assumes this is a multivolume
+archive" discussion in the
+https://github.com/libarchive/libarchive/issues/504#issuecomment-198683221
+comment.
 
- * the other party on the call during the call? (i.e. Inigo is Rebecca's
-   adversary, and vice versa)
 
- * the Telegram server operator?
+> https://github.com/libarchive/libarchive/issues/505
+> Null pointer access in CAB parser
 
- * a network monitor inspecting traffic?
+>> The real problem though is that the filename in the cabinet is set to
+>> 0x97. This single character is not a valid utf8 character and
+>> therefore the conversion fails.
 
- * =E2=80=A6
+Use CVE-2015-8917.
 
-> By default in tdesktop p2p is enable, which open a direct communication
-> when calling to the other user, potentially seeing his/her IP. Telegram is
-> supposedly is a secure messaging application but while calling another us=
-er
-> leaks his/her public IP address in access log. However, by navigating to
-> Settings and Privacy  > Calls > and set P2P to `nobody` in telegram apps =
-in
-> (iOS and android) will not allow others to view public IP of end user, but
-> this option is still not available in tdesktop, which makes tdesktop
-> vulnerable to this issue.
 
-Who needs to set P2P to "nobody" to have this change?  If either party
-makes this choice is it sufficient for a given call?
+> https://github.com/libarchive/libarchive/issues/506
+> Overlapping memcpy in CAB parser
 
-Presumably turning off P2P means routing the calls through a central
-server (perhaps via STUN/TURN or some other relay/proxy equivalent).  If
-that's not the case, how are calls completed when P2P is disabled?  Who
-operates that central server?
+Use CVE-2015-8918.
 
-What is the performance impact (on rates of successful connections, on
-latency during calls) of such a change?
 
-Is the central server operator already in a position to be able to force
-this shift from P2P to a centralized fallback?  What cost(s) would they
-pay if they force this shift?
+> https://github.com/libarchive/libarchive/issues/510
+> Heap out of bounds read in LHA/LZH parser
 
-How does the potential for centralized mass surveillance of call traffic
-change if all calls are routed through the central server by default?
+Use CVE-2015-8919.
 
-Regards,
 
-       --dkg
+> https://github.com/libarchive/libarchive/issues/511
+> Stack out of bounds read in ar parser
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
+Use CVE-2015-8920.
 
+
+> https://github.com/libarchive/libarchive/issues/512
+> Global out of bounds read in mtree parser
+
+Use CVE-2015-8921.
+
+
+> https://github.com/libarchive/libarchive/issues/513
+> Null pointer access in 7z parser
+
+Use CVE-2015-8922.
+
+
+> https://github.com/libarchive/libarchive/issues/514
+> Unclear crashes in ZIP parser
+
+>> Issue here was reading a size field as a signed number
+>> and then using that as an offset.
+
+Use CVE-2015-8923.
+
+
+> https://github.com/libarchive/libarchive/issues/515
+> Heap out of bounds read in TAR parser
+
+Use CVE-2015-8924.
+
+
+> https://github.com/libarchive/libarchive/issues/516
+> Unclear invalid memory read in mtree parser
+
+>> Fix escaped newline parsing
+
+Use CVE-2015-8925.
+
+
+> https://github.com/libarchive/libarchive/issues/518
+> Null pointer access in RAR parser
+
+Use CVE-2015-8926.
+
+
+> https://github.com/libarchive/libarchive/issues/523
+> Heap out of bounds read when reading password for malformed ZIP
+
+Use CVE-2015-8927.
+
+
+> https://github.com/libarchive/libarchive/issues/550
+> Heap out of bounds read in mtree parser
+
+Use CVE-2015-8928.
+
+
+> I also reported a couple of lower severity issues (leaks, hangs,
+> undefined behavior issues):
+
+> https://github.com/libarchive/libarchive/issues/517
+> Memory leak in TAR parser
+
+Use CVE-2015-8929.
+
+
+> https://github.com/libarchive/libarchive/issues/522
+> Endless loop in ISO parser
+
+Use CVE-2015-8930.
+
+
+> https://github.com/libarchive/libarchive/issues/539
+> Undefined behavior / signed integer overflow in mtree parser
+
+>> We run on a lot of platforms that don't use glibc
+
+Use CVE-2015-8931.
+
+
+> https://github.com/libarchive/libarchive/issues/540
+> Use after free in test suite
+
+This does not have a CVE ID. The vendor response was "Looks like this
+is just a bug in the test. The test runs a set of checks twice but
+doesn't correctly reset in between." The code change is in the
+libarchive/test/test_archive_read_add_passphrase.c file.
+
+
+> https://github.com/libarchive/libarchive/issues/547
+> Undefined behavior / invalid shiftleft in TAR parser
+
+Use CVE-2015-8932.
+
+
+> https://github.com/libarchive/libarchive/issues/548
+> Undefined behavior / signed integer overflow in TAR parser
+
+Use CVE-2015-8933.
+
+
+> Unfortunately one out of bounds heap read bug in the RAR parser (sample
+> file) remained unfixed. I hope a fix will find its way into the next
+> version.
+
+> https://github.com/libarchive/libarchive/issues/521
+
+Use CVE-2015-8934.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iHUEARYKAB0WIQTTaP514aqS9uSbmdJsHx7ezFD6UwUCW5kVoAAKCRBsHx7ezFD6
-U1rjAQC4OFrGx2WPXXQsDEh22zV3gFHbfsWkerw7mCF5xj31+gEAhu6nkeKxUuNx
-Y7SMn5PNwXoO3SlpqPrKcSG4j8y0Rws=
-=cC1t
+iQIcBAEBCAAGBQJXZFBlAAoJEHb/MwWLVhi2IvcQAJLbWv3xlaskqSfuSLpe58Q8
+fitvzzYGjb3vz/A6HFkIoPImxyokCMCljw0IQbeRLamFuwhaDnswDpLE2kdspX90
+8z7lnmoZvK29d0bmlPlOSrkHHwBM7d0J5AtxL+VdNCZ+l+75e1oKUQNxd5Vkugll
+3KQzmBr2ZO9bRhlrTfviY/D5T+dH0H/PnjO5kL2FaSPQylam2CRRWv2O6N8BWDCY
+qOibiC4Tz269lawxcM1mxJIvFVuXaomKGaXp1+F91cuUfV1/t7aUAMlSjUc3ASL4
+6rkWAy8WDlk24ZKG7mLv8t5V+fcDxLNNJLryWuRB8IqcBgFRuac3QPtvm2dw4j2Q
+7ioHgjCISvfmh08a341SIG1vMdBfq+lCgp3IGom3mjSf38I/x0dcxCIXAd3ZMSVr
+ApguzBuW6mTW8Xr/Eiqa8QyJ9HbvZS/Io5Qp/ki3O0LAKrHf2cLyzd/M1aNZFBK+
+AmPlK39wuxDGDNZPIBV0v5eVvAq3ljE8XhdrGN8wxq5+UAeUDsaIOksWRFWXmji2
+iEHhReLq3Z3zCEIoo9UADeOwrh36Ucq7P+EgmTd3YmX1H21tT2cIuRCdj095rzJV
+dVTMARdB7vs60X5kXj1dVl5GLEaVa2wZ7AP34AutJI8WNbn86eL0Tcw/vRvv2Jxl
+TCeZY1uY1URj4l8tvMpU
+=TTkk
 -----END PGP SIGNATURE-----
---=-=-=--
