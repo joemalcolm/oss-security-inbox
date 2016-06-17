@@ -1,18 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/20/5
-Message-Id: <4D58EA81-17C1-4CBE-8B7A-B24D510320BC@beckweb.net>
-Date: Mon, 20 Jun 2016 19:04:16 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/17/4
+Message-ID: <576407E6.6000706@redhat.com>
+Date: Fri, 17 Jun 2016 14:23:34 +0000
+From: Tristan Cacqueray <tdecacqu@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Jenkins plugins -- multiple fixes
+Subject: [OSSA-2016-010] XSS in Horizon client side template (CVE-2016-4428)
 Content-Type: text/plain; charset=utf-8
 
+==================================================
+OSSA-2016-010: XSS in Horizon client side template
+==================================================
 
-> On 20.06.2016, at 19:00, Daniel Beck <ml@...kweb.net> wrote:
-> 
-> https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2016-05-11
-
-Copy & paste is fun. Correct URL:
-https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2016-06-20
+:Date: June 15, 2016
+:CVE: CVE-2016-4428
 
 
+Affects
+~~~~~~~
+- Horizon: <=8.0.1, >=9.0.0 <=9.0.1
+
+
+Description
+~~~~~~~~~~~
+Beth Lancaster and Brandon Sawyers from Virginia Tech reported a
+vulnerability in Horizon. By injecting Angularjs template in dashboard
+forms, such as image's description, an authenticated user may trigger
+a cross-site-scripting vulnerability when another user browses the
+affected pages. It may result in potential assets theft like user
+access credentials. All Horizon setups are affected.
+
+
+Patches
+~~~~~~~
+- https://review.openstack.org/329997 (Liberty)
+- https://review.openstack.org/329996 (Mitaka)
+- https://review.openstack.org/329998 (Newton)
+
+
+Credits
+~~~~~~~
+- Beth Lancaster from Virginia Tech (CVE-2016-4428)
+- Brandon Sawyers from Virginia Tech (CVE-2016-4428)
+
+
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/bugs/1567673
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4428
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
