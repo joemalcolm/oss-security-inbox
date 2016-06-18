@@ -1,85 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/20/6
-Message-ID: <573F9743.90309@suse.de>
-Date: Sat, 21 May 2016 08:31:23 +0930
-From: Simon Lees <sflees@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/18/1
+Message-Id: <20160618195224.BFA2A33201D@smtpvbsrv1.mitre.org>
+Date: Sat, 18 Jun 2016 15:52:24 -0400 (EDT)
+From: cve-assign@...re.org
+To: scott@...agonie.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Simple Machines Forums - PHP Object Injection
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> The first one appears to have been fixed in the release-2.1 branch, but the
+> other one still exists.
+
+> https://github.com/SimpleMachines/SMF2.1/blob/404fd5347951652624dfb72304ee38fcab98378f/Sources/Packages.php#L863-L873
+
+Use CVE-2016-5726.
 
 
-On 05/20/2016 11:22 PM, Bob Friesenhahn wrote:
-> On Thu, 19 May 2016, John Lightsey wrote:
->>
->> This is the list I'm working off of. For RedHat and Debian, I only
->> checked the ImageMagick updates.
->>
->> CVE-2016-3718 - SSRF via HTTP and FTP coders
->> ImageMagick: Not fixed
->> GraphicsMagick: Not fixed
->> RedHat: Fixed
->> Debian: Fixed
-> 
-> The above topic is worthy of discussion.  What is a security issue in
-> some contexts is normal and necessary in others.
-> 
->> No CVE assigned - Heap overflow in PICT parser
->> ImageMagick: Fixed
->> GraphicsMagick: ??
->> RedHat: Not fixed
->> Debian: Not fixed
->> Reference: http://www.openwall.com/lists/oss-security/2016/05/11/3
-> 
-> The GraphicsMagick development code is not vulnerable to this one.
-> GraphicsMagick may have been vulnerable in the past.
-> 
->> No CVE assigned - Out of bounds read in the PSD parser
->> ImageMagick: Fixed
->> GraphicsMagick: ??
->> RedHat: Not fixed
->> Debian: Not fixed
->> Reference: http://www.openwall.com/lists/oss-security/2016/05/11/3
-> 
-> The GraphicsMagick development code is not vulnerable to this one.
-> GraphicsMagick may have been vulnerable in the past.
-> 
->> Are there other formats that are unsafe and should be removed using the
->> policy configuration files?
-> 
-> In interest of full-disclosure, the GraphicsMagick project has fixed
-> approximately 45 CVE-worthy issues since the last release, not including
-> issues covered by CVE-2016-2317 and CVE-2016-2318 (which are fixed in
-> the development code).  Many of the test files are published in full
-> open view on bug trackers or other places.
-> 
-> In a similar time-frame, the ImageMagick project has been provided a
-> great many files (likely more than 100) which crash the software and
-> many of these files are published in full open view on bug trackers or
-> other places.  Commits and other records show that problems are being
-> fixed.
-> 
-> When fixed versions are released, OS distributions which continue to
-> provide 3-year old releases are exposing users to releases with perhaps
-> hundreds of fixed vulnerabilities which can be triggered using
-> publically available files.
-> 
-> Bob
+> https://github.com/SimpleMachines/SMF2.1/blob/19ee85ff8761b792ea3e9ed630a947f45f93ee68/Sources/LogInOut.php#L125-L129
 
-Some distro's have customers that pay them to have the 3 year old
-version with only fixes to bugs as they wish to reduce the chance of
-breakage. I must thank you the email you published with the list of
-issues and there corresponding patches made it much much easier to
-address the issues in GraphicsMagick then it was for ImageMagick.
+Use CVE-2016-5727.
 
--- 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Simon Lees (Simotek)                            http://simotek.net
-
-Emergency Update Team                           keybase.io/simotek
-SUSE Linux                            Adeliade Australia, UTC+9:30
-GPG Fingerprint: 5B87 DB9D 88DC F606 E489 CEC5 0922 C246 02F0 014B
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+iQIcBAEBCAAGBQJXZaYTAAoJEHb/MwWLVhi2/+YP+wc2CtBwbz9Qs67YW8t1UXuS
+wxH2Dw7r3VLuGmD5UJAZBYt4+7kGd8FdMijD4ZNT3EdfraEkD45u8sXmbx0P0y7E
+qX178dTVoi3h7sJHlTOa5agRmGqS1uLbzWWxXSolAU8X6/FFO/7/cTOJBCVW0z02
+R1GNIVuf8mJA0mgGZ3DDJy0RV/dnco3VO4LoRKy2uQHnz3XHWaKnZkrmkBmt+eGK
+ZevSmz4OVVf6B/w8rx4BcAajdlGWS89epGZSeAPnZeTPeixQE7E6uOhRaGPif0h4
+0JP4GsDbKNUjod7DnVEKkDV0bHxc2Z+SEQyBihahtvdSxwe2W0N5ZdMejHbw2f8f
+kN+0EYIGbOdPJYAP0c35PKLyfhlDrUwF/iPNx2k+tTls1T8qX//gb8PuZoF0k2Ro
+zO9MYrZTlM819fN1Y4oqpUsB1dhDgcPstQx8ptqI6KDVJP61KUgRv/ADga9cLulo
+nYPDfcqd+swJUZxRnUgeJuwmsYDF8BZTUQJmR48wTiBCQEqrQN4PSyD11RZLcJUv
+lUrKhv6zINxknlNMPyb72NMIcSfW1iMwc0SiuYNElY+pSliBrPyZ0jC8+Bhpt0QL
+eFvKwmGRTnoWp6Ly7iK2nI8uwp5zS0bCKrjw7ZpVmh97vslA2iA+7yxohqNV7po5
+mGc8to+TR4jrcCoFZy2E
+=SRzi
+-----END PGP SIGNATURE-----
