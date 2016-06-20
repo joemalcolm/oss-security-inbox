@@ -1,38 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/06/8
-Message-ID: <20160306161617.GA30781@openwall.com>
-Date: Sun, 6 Mar 2016 19:16:17 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/20/3
+Message-Id: <16A71325-B291-4AE5-8689-54374BA32C8F@nextcloud.com>
+Date: Mon, 20 Jun 2016 18:41:50 +0200
+From: Lukas Reschke <lukas@...tcloud.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+Cc: cve-assign@...re.org
+Subject: CVE request for PHP bug #68978: "XSS in header() with Internet Explorer" (2015)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Mar 06, 2016 at 03:47:19PM +0000, op7ic x00 wrote:
-> agree, the vanity hunting is going to be there but I suppose as with any
-> bug ID that is going to happen.
-> But beyond that I don't think it matters as much. In the end of the day if
-> somebody can use OVI or OVE to identify their bug then at least we got some
-> level of reference to look it up on google.
+Hi,
 
-Right.
+Considering CVE-2011-1398 (https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-1398) we believe PHP security bug #68978 (https://bugs.php.net/bug.php?id=68978) also warrants a CVE identifier:
 
-> I was toying with 4digit IDs that would be random enough, thats a
-> possiblity too, the only problem is that there is a overhead of doing DB
-> sorting and lookups to make sure their don't clash. Thats why ovi uses
-> sequential numbers - its just easier to manage.
+> The filtering in header() function is not sufficient and this can lead to header injection and content injection (XSS) when the client is Internet Explorer (in every tested version).
+> IE accepts %0A%20 or %0D%0A%20 as separator in HTTP while other browser treat the new line beginning with space as the continuation of the previous header. This can lead to header injection or content injection (basically, XSS) in IE.
 
-Oh, you (would) use an actual database backend?  OVE currently uses a C
-program with a tiny binary data file (to keep track of per-IP and
-per-netblock consumption of IDs, as well as the current date and ID),
-and the file is wiped clean (by this same program) on first access after
-midnight.  I wrote this yesterday in response to the thread in here.
+PHP’s documentation (http://php.net/manual/en/function.header.php) explicitly states that since version 5.2.1 PHP natively prevents header injections:
 
-For random IDs, if we wanted those, there are shuffling algorithms that
-don't require storage yet guarantee unique numbers (until the target
-range is exhausted) - they're good e.g. for IP ID and DNS sequence
-numbers - although checking against an array of 10k numbers is almost
-instant anyway (as far as this application is concerned).
+> This function now prevents more than one header to be sent at once as a protection against header injection attacks.
 
-Anyway, this is getting off-topic.
+My understanding is t hat the corresponding upstream commit can be found at https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b 
 
-Alexander
+This has been patched in PHP 5.6.6, 5.5.22 and 5.4.38, since some distributions ship older versions and have not backported this we’re therefore kindly requesting a CVE identifier and making OSS Security aware of this. An issue directly to Ubuntu has been filed at https://bugs.launchpad.net/ubuntu/+source/php5/+bug/1594041 for 14.04.
+
+Thanks,
+Lukas
