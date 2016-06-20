@@ -1,37 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/28/2
-Message-ID: <E91F67A6-D25F-47ED-A6E5-14A4C6BDBD66@verisign.com>
-Date: Sun, 28 Aug 2016 05:56:27 +0000
-From: "Misra, Deapesh" <dmisra@...isign.com>
-To: "cve-assign@...re.org" <cve-assign@...re.org>
-CC: "dawid@...alhackers.com" <dawid@...alhackers.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/20/1
+Message-ID: <CAKG8Do7kM6n0Qzy6DkV+8y1SvzWYmp_S=bL6MekkLMEVcCP6dQ@mail.gmail.com>
+Date: Mon, 20 Jun 2016 13:10:32 +0200
+From: Cedric Buissart <cbuissar@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-3189: bzip2 use-after-free on bzip2recover
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi all,
 
+This is to report CVE-2016-3189: bzip2 use-after-free on bzip2recover
 
-> On Aug 27, 2016, at 3:08 PM, "cve-assign@...re.org" <cve-assign@...re.org> wrote:
-> 
-> Maybe a marginally realistic exploitation scenario is for the
-> attacker to convey this message to potential victims:
+A heap use after free vulnerability was reported in bzip2recover.
+A maliciously crafted file could cause the application to crash.
 
-When I read the vulnerability report for the first time, this is the scenario I came up with to justify the security threat from this issue:
+Originally reported by Aladdin Mubaied
 
-(Hypothetical story of course)
-A group of developers decide to write their own version of the "internet archive - way back machine". To keep things simple they decide to use the power of wget within their PHP app. 
+For additional information & proposed patch:
+https://bugzilla.redhat.com/show_bug.cgi?id=1319648
 
-For their version one of the app, they decide to only allow the archiving and viewing of jpeg files. 
+== ASAN output & backtrace ==
+bzip2recover 1.0.6: extracts blocks from damaged .bz2 files.
+/opt/bzip-asan/bin/bzip2recover: searching for block boundaries ...
+   block 1 runs from 176 to 175
+   block 2 runs from 224 to 871
+   block 3 runs from 920 to 919
+   block 4 runs from 968 to 1024 (incomplete)
+bzip2recover: splitting into blocks
+   writing block 2 to `crasherfile1' ...
+Program received signal SIGSEGV, Segmentation fault.
+=================================================================
+==8476== ERROR: AddressSanitizer: heap-use-after-free on address
+0x60060000ef8c at pc 0x40277c bp 0x7fff7f1afe90 sp 0x7fff7f1afe80
+READ of size 4 at 0x60060000ef8c thread T0
+    #0 0x40277b (/opt/bzip-asan/bin/bzip2recover+0x40277b)
+    #1 0x401f35 (/opt/bzip-asan/bin/bzip2recover+0x401f35)
+    #2 0x7f10fcae2af4 (/usr/lib64/libc-2.17.so+0x21af4)
+    #3 0x4020e4 (/opt/bzip-asan/bin/bzip2recover+0x4020e4)
+0x60060000ef8c is located 12 bytes inside of 24-byte region
+[0x60060000ef80,0x60060000ef98)
+freed by thread T0 here:
+    #0 0x7f10fce98009 (/usr/lib64/libasan.so.0.0.0+0x16009)
+    #1 0x40205c (/opt/bzip-asan/bin/bzip2recover+0x40205c)
+previously allocated by thread T0 here:
+    #0 0x7f10fce98129 (/usr/lib64/libasan.so.0.0.0+0x16129)
+    #1 0x40175f (/opt/bzip-asan/bin/bzip2recover+0x40175f)
+Shadow bytes around the buggy address:
+  0x0c013fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c013fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c013fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c013fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c013fff9de0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0c013fff9df0: fd[fd]fd fa fa fa 00 00 00 fa fa fa fd fd fd fa
+  0x0c013fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c013fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c013fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c013fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c013fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:     fa
+  Heap righ redzone:     fb
+  Freed Heap region:     fd
+  Stack left redzone:    f1
+  Stack mid redzone:     f2
+  Stack right redzone:   f3
+  Stack partial redzone: f4
+  Stack after return:    f5
+  Stack use after scope: f8
+  Global redzone:        f9
+  Global init order:     f6
+  Poisoned by user:      f7
+  ASan internal:         fe
 
-They then set up their PHP app and solicit people to input in URLs of websites with images which need to be archived.
+bt
+#0  0x00007ffff7a8fa11 in putc () from /lib64/libc.so.6
+#1  0x00000000004046ad in bsPutBit (bit=0x0, bs=<optimized out>) at
+bzip2recover.c:183
+#2  bsPutUChar (c=<optimized out>, bs=<optimized out>) at bzip2recover.c:246
+#3  main (argc=<optimized out>, argv=<optimized out>) at bzip2recover.c:455
+#4  0x00007ffff7a3caf5 in __libc_start_main () from /lib64/libc.so.6
+#5  0x0000000000405bd9 in _start ()
 
-In this kind of "archiving website" scenario, the victim has to 
-- solicit and accept URLs from untrustworthy parties
-- has to archive the specified files and then make the archived files available
+Regards,
 
-
-Isn't this a common enough and plausible scenario which poses a security threat to the developers server ?
-
-Thanks,
-- deapesh.
+-- 
+Cedric Buissart,
+Product Security
 
