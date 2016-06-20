@@ -1,109 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/16
-Message-ID: <00ce3a12-88cc-5727-5ee1-ff13b8748a3f@redhat.com>
-Date: Thu, 27 Oct 2016 22:42:06 +0100
-From: Luke Hinds <lhinds@...hat.com>
-To: openstack@...ts.openstack.org, openstack-dev@...ts.openstack.org, oss-security@...ts.openwall.com
-Subject: [OSSN-0076] Glance Image service v1 and v2 api image-create vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/20/4
+Message-Id: <B8DA6832-45AA-4600-990A-EF50B18EDFCD@beckweb.net>
+Date: Mon, 20 Jun 2016 19:00:33 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Jenkins plugins -- multiple fixes
 Content-Type: text/plain; charset=utf-8
 
-Glance Image service v1 and v2 api image-create vulnerability
+The Jenkins project published plugin updates today with fixes for multiple 
+vulnerabilities. Users should upgrade these plugins to the indicated 
+versions:
+
+* Async Http Client Plugin 1.7.24.1
+* Build Failure Analyzer 1.16.0
+* Image Gallery Plugin 1.4
+* TAP Plugin 1.25
+
+Summary and description of the vulnerabilities are below. Some more details, 
+severity, and attribution can be found here:
+https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2016-05-11
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you find security vulnerabilities in Jenkins, please report them as 
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
 ---
 
-### Summary ###
-No limits are enforced within the Glance image service for both v1 and
-v2 `/images` API POST method for authenticated users, resulting in
-possible denial of service attacks through database table saturation.
+1)
+SECURITY-85 / CVE-2016-4986:
+Path traversal vulnerability in TAP Plugin
 
-### Affected Services / Software ###
-All versions of Glance image service.
-
-### Discussion ###
-Within the Glance image service, calls to the POST method within v1 or
-v2/images creates an image (record) in `queued` status. There is no
-limit enforced within the Glance API on the number of images a single
-tenant may create, just on the total amount of storage a single user may
-consume.
-
-Therefore a user could either maliciously or unintentionally fill
-multiple database tables (images, image_properties, image_tags,
-image_members) with useless image records, thereby causing a denial of
-service by lengthening transaction response times in the Glance database.
-
-### Recommended Actions ###
-For all versions of Glance that expose either the v1 and v2/images API,
-operators are recommended to deploy external rate-limiting proxies or
-web application firewalls, to provide a front layer of protection to
-glance. The Glance database should be monitored for abnormal growth.
-Although rate-limiting does not eliminate this attack vector, it will
-slow it to the point where you can react prior to a denial of service
-occurring.
-
-The following solutions may be considered, however it is key that the
-operator carefully plans and considers the individual performance needs
-of users and services within their OpenStack cloud, when configuring any
-rate limiting functionality.
-
-#### Repose ####
-Repose provides a rate limiting filter, that can utilise limits by IP,
-Role (OpenStack Identity v3 filter) or header.
-
-https://repose.atlassian.net/wiki/display/REPOSE/Rate+Limiting+Filter
-
-#### NGINX ####
-NGINX provides the limit_req_module, which can be used to provide a
-global rate
-limit. By means of a `map`, it can be limited to just the POST method.
-
-Further details can be found on the nginx site:
-http://nginx.org/en/docs/http/ngx_http_limit_req_module.html
-
-#### HAProxy ####
-HAProxy can provide inherent rate-limiting using stick-tables with a General
-Purpose Counter (gpc)
-
-Further details can be found on the haproxy website:
-
-http://blog.haproxy.com/2012/02/27/use-a-load-balancer-as-a-first-row-of-defense-against-ddos
-
-#### Apache ####
-A number of solutions can be explored here as follows.
-
-##### mod_ratelimit #####
-http://httpd.apache.org/docs/2.4/mod/mod_ratelimit.html
-
-##### mod_qos #####
-http://opensource.adnovum.ch/mod_qos/dos.html
-
-##### mod_evasive #####
-https://www.digitalocean.com/community/tutorials/how-to-protect-against-dos-and-ddos-with-mod_evasive-for-apache-on-centos-7
-
-##### mod_security #####
-https://www.modsecurity.org/
-
-#### Limit `add_image` to admin role ####
-
-Another possible mitigation is to restrict image creation to the admin
-role, however this should only be done for those cases in which there
-are Glance nodes dedicated to end-user access only. Restriction to admin
-only on Glance nodes that serve OpenStack services will for example,
-remove the ability to create snapshots from the Compute API or to create
-bootable volumes from Cinder.
-
-To restrict image creation to the role admin only, amend
-`/etc/glance/policy.json` accordingly.
-
-    "add_image": "role:admin",
-
-### Contacts / References ###
-Author: Luke Hinds, Red Hat
-This OSSN : https://wiki.openstack.org/wiki/OSSN/OSSN-0076
-Original LaunchPad Bug : https://bugs.launchpad.net/ossn/+bug/1545092
-OpenStack Security ML : openstack-security@...ts.openstack.org
-OpenStack Security Group : https://launchpad.net/~openstack-ossg
+The plugin did not correctly filter a parameter and allowed reading 
+arbitrary files on the file system.
 
 
+2)
+SECURITY-278 / CVE-2016-4987:
+Path traversal vulnerability in Image Gallery Plugin
 
-Download attachment "0x3C202614.asc" of type "application/pgp-keys" (1699 bytes)
+The plugin did not correctly validate form fields and allowed listing 
+arbitrary directories and reading arbitrary files on the file system.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+
+3)
+SECURITY-290 / CVE-2016-4988:
+Cross-site scripting vulnerability in Build Failure Analyzer Plugin
+
+The plugin did not escape a parameter echoed on an HTML page, resulting in a 
+reflected XSS vulnerability.
+
+
+4)
+SECURITY-305 / CVE-2013-7397 and CVE-2013-7398:
+Async HTTP Client Plugin does not properly validate certificates
+
+Async HTTP Client Plugin provides the Async HTTP Client Java library to 
+other plugins. It is based on the 1.7.x line of AHC, which by default is 
+vulnerable to CVE-2013-7397 and CVE-2013-7398, allowing man-in-the-middle 
+attacks. The fixes for these vulnerabilities were backported.
+
