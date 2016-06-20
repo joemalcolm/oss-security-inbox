@@ -1,34 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/15/12
-Message-ID: <CAKG8Do524=Adj62mrRP0eZb0bp7CbXN3yi_Mid5VxFvdE1sE=A@mail.gmail.com>
-Date: Wed, 15 Jun 2016 10:42:48 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/20/6
+Message-ID: <DM2PR09MB03839F3453B0899959D2E35CA12A0@DM2PR09MB0383.namprd09.prod.outlook.com>
+Date: Mon, 20 Jun 2016 20:11:46 +0000
+From: CVE ID Requests <cve-assign@...re.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: CVE ID Requests <cve-assign@...re.org>
+Subject: RE: CVE Request: 2015 squidguard reflected XSS
 Content-Type: text/plain; charset=utf-8
 
-Hi Tim,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Tue, Jun 14, 2016 at 11:16 PM, Tim <tim-security@...tinelchicken.org>
-wrote:
+Thank you for your submission. It will be reviewed by a CVE Assignment Team
+member.
 
->
-> In the mean time, do you happen to have specific information on which
-> versions of the 2.x and 3.x upstream branches were affected/fixed?
->
+- --
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[A PGP key is available for encrypted communications at
+http://cve.mitre.org/cve/request_id.html]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.14 (GNU/Linux)
 
-Reproducible on all python versions I tested : 2.4, 2.6, 2.7, 3.4 and 3.5
-
-Fixed branches :
-3.4 / 3.5 : revision 94952 : https://hg.python.org/cpython/rev/bf3e1c9b80e9
-2.7 : revision 94951 : https://hg.python.org/cpython/rev/1c45047c5102
-
-Regards,
-
--- 
-Cedric Buissart,
-Product Security
-
-Purkynova 99
-Brno 612 45
-
+iQIcBAEBCAAGBQJXaE1MAAoJEHb/MwWLVhi2n+kP/1+D+lH+887rXCZml03OdHOu
+t1Jc9WeYcMKjOXNKQ0PQgrIyWKLvZwxnVL/6f1X6OAqt4o6c/wxeTVqEGq3appAY
++1fkjXywatvgsE3TUBiZ9YWO2VinfWrIf3fSSshU1D9sBKoiCAqWQXGwBI+xAgJ0
+SwnoMfb+2RGA1WaETU353lL8/PcrCaEeVjbpiMVcseFnMuJ01Z0yxTEVDfO5onkF
+0n+a7nCdA5eolUqDsZFsT3w5bWOXegWCpFBv2/FCuJrW/+ifh+iKbvWWhcy7EvMb
+DMFfWrTk5KLRIdywpABxaLJHKQxW9RQgAplZX04akesrpz/eHiKGL0THfmBBiB6v
++tDHUQ8G42vNDJIGAaHSpJsLNguC0cvUMhHPb3lscULUsaeqFAplUgYD0ZLZx9Py
+rxR6kPtcL8OMXGtkMXVZFvuIdXE/F/RKsp3ZU090EYneXNEjBihzsxg0XCCKjFD0
+1fdXuoM8kjJTDxz3FoFLskfpw4j7zCgf3ZJ3pgiJ3gIQCbwF0t3kjOQDkta/TwQJ
+3Zel/K1L0cTx3s5NiwmEd4+LKjNlkvJXKP8qajl95wEV3ha9BmnJ0qGb/ghvKWlO
+D7aADDy61MuoFSlYPT2S/JbkOi71n5N1FhPLBVQblouJbl40c4bgLmwE5fmR4hjY
+Bh3ogFJKcYL+FFDTWU6X
+=x2oy
+-----END PGP SIGNATURE-----
