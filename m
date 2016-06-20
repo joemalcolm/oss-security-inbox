@@ -1,31 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/19/9
-Message-ID: <CAL8hw9EXLQs7QVJvR5NzeOHC0C3fWqoPptKJnvLerKmToOLrqQ@mail.gmail.com>
-Date: Tue, 19 Apr 2016 15:11:08 +0000
-From: Nathan Van Gheem <vangheem@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE Request: Unauthorized disclosure of site content
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/20/2
+Message-ID: <20160620134053.GG24371@suse.de>
+Date: Mon, 20 Jun 2016 15:40:53 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: 2015 squidguard reflected XSS
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-Can a CVE be assigned to this issue, please?
+Please assign a CVE for:
 
-https://plone.org/security/20160419/unauthorized-disclosure-of-site-content
+http://www.squidguard.org/Downloads/CHANGELOG
+	2015-02-01	Fixed a cross site vulnerability in squidGuard.cgi
 
-A vulnerability that allows attackers to gain information about unpublished
-site content.
+http://www.squidguard.org/Downloads/Patches/1.4/Readme.Patch-20150201
 
-The relevant code is:
+I have attached the diff against 1.4, the relevant part seem to be the two lines replacing tags
+in $url.
 
-*https://plone.org/security/20160419 <https://plone.org/security/20160419>*
+Unsure why they added another \n to the headers, as there are already two \n.
 
-The vendor credits with the discovery: Maarten Kling
+Ciao, Marcus
 
-Thanks, let me know if you'd like more information.
-
--- 
-Nathan Van Gheem
-Director of Solutions Engineering
-Wildcard Corp
-
+View attachment "squidguard-20150201.patch" of type "text/x-patch" (2837 bytes)
