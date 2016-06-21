@@ -1,42 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/2
-Message-Id: <20161016024535.717936C0D4B@smtpvmsrv1.mitre.org>
-Date: Sat, 15 Oct 2016 22:45:35 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: imagemagick: heap-based buffer overflow in IsPixelMonochrome (pixel-accessor.h)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/21/4
+Message-Id: <1466532058.213043.644361457.02F3FA4A@webmail.messagingengine.com>
+Date: Tue, 21 Jun 2016 13:00:58 -0500
+From: Gregory Haynes <greg@...ghaynes.net>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE Request Openstack-infra puppet-gerrit module xss vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> https://blogs.gentoo.org/ago/2016/10/07/imagemagick-heap-based-buffer-overflow-in-ispixelmonochrome-pixel-accessor-h/
+Hello Everyone,
 
-> AddressSanitizer: heap-buffer-overflow ... READ of size 10
-> ImageMagick-7.0.3-0/./MagickCore/pixel-accessor.h:557:24 in IsPixelMonochrome
+A vulnerability was discovered in the OpenStack-Infra Puppet module
+for Gerrit (see below). In order to ensure full traceability, we need
+a CVE number assigned. This issue is already public.
 
-Use CVE-2016-8678.
+It was recently discovered that our puppet-gerrit module configures
+Gerrit in a way which makes it vulnerable to a XSS attack. This stems
+from our configuration marking text/html as a 'safe' mimetype[1].
+This configuration change was first made in May 2014[2] but we believe
+it did not begin working until Feb 2015[3]. Using this, a user could
+potentially craft a review which when visited at the proper url would
+have access to the account information of any user visiting that url.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+It is highly recommended that all downstream users of this module
+apply this commit[4] to protect themselves against this attack.
+
+Thanks,
+Greg
+
+1:
+https://review.openstack.org/#/c/332219/
+
+2:
+http://git.openstack.org/cgit/openstack-infra/puppet-gerrit/commit/?id=346618da6d0527335b67d17dea78f7d6c55fb129
+
+3:
+http://git.openstack.org/cgit/openstack-infra/puppet-gerrit/commit/?id=c53838ae2246f74fd5206a1bdb7b8cac656529d9
+
+4:
+http://git.openstack.org/cgit/openstack-infra/puppet-gerrit/commit/?id=8573c2ee172f66c1667de49685c88fdc8883ca8b
+
+  -- 
+  Gregory Haynes
+  greg@...ghaynes.net
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYAudMAAoJEHb/MwWLVhi2q1AQAIBi/od3vsXpt53PUspCr8sZ
-IwEVpM7XL9/Ee7rH4GJTI7dJp/FOf+obiVIASLMIIvpC7Kgy8omoBDIZ2s8mmCkv
-jMM4MUSs2QUZFjoR26uYW9L+IiwQyD4bBMlMUOFuKUoHbOYpVb7QQABft5NV8H81
-RB6ZmbSzDmLwVRIQOLV27L4EZx+kUJb72mbs9VfMIFO5hwF5UX1mCUqp6jQ25UP4
-/zlYPPcUsTTcAjRiai+zSxSIKKySfzuEJF4XiHdETPNFguMDquH505OBg8zenpjZ
-djYjpnI2cVxFe/yWVpa7d+oTEya7jscuV8PlqquOtLfmfOCYGTI8V7js0Zd3yx8/
-/4lhcaMyULhILvho2191mh7CD4SkgL8XNq94DrlQ8IhcZflzCdUOU0lQCn6RRdfg
-GqfZ82obAIdg/DJSrMO5QOt5DYyAYNpPS1AFAOpH2UgIfhEcHaAbv3wkudG7vnK2
-3Jlj4vUmAxcfWHHSKgpYVh0ffrBHegDypLV5wwHlg/XIVEfEwQ6EjFePMqFHO2AJ
-atXRM85uh93WWok09ay+oW84JHzX5F9jDTrTM+92XG62KrRWRCjQviMAZKbx5+yB
-kvcH0IWZ0aHRs0BOJ5nuhk8h1VocdzSZwe3nJw1aOJ+UCpzPQqHu60PxqMbrLyyb
-3r1w88ZsRdwdsxJ8fch0
-=Im8q
+iQIcBAEBAgAGBQJXaX7NAAoJELwhhWqbFNDRFp4P/i8eqQYWzV6mbrPZKvYfF2HN
+KWleeHMIIeMVcDpC2F/3rYIla0A+SMQqrKzPkbYJh10hEbdiEG/mDuYuYkISD/pf
+Hud9a216bfZdj/naQzyc+0m4bae5Q7viudseX1oFDyHbSTGzEoWcPtakdp+BmYQ7
+TsPJm9XsT0F29U0+hQBGOBzzkg5uP+56seou7wZ7WcmuWzLrbWGF8wPJ/XFitqjz
+N7VN+Ckpd2jsRvlSNCEutS10pBXeH53NB4OWOMcfhOY3Xp2w6sqP3sOopvZZvoBz
+u468Q2gd7bOmwfKnLKeeuO/JLrN8AJ2wH1vEXPwrVUgXj15Sf34j36XIpcLfTAVK
+UH3FQ/xq57sdh79Ixa3E6uhlYOtLV9jF6+1Vt9eMApue6ERuv6phmXI6Ni1BM+hW
+5pFXJJN/r/rAyTaY8cZLNV56OSPIRE95sJ2bWJ535W/4Unqt+pbTK4FRPBdBJNf3
+IKPeh+Uxt7f3HbUwSWA72/1qOWH5yWQs6tanovg2CGwmoTzpRwz5ho+ARjjUljHq
+tFfiVrsytW9bF16ffXVpUUnAAIqCWm/ZnTXlS96Xuqdj9pW0jTuW9EA8fzsYMQcL
+nCf8gxHTPGW87P0v9Sf3IxmKp95X3QEdy+WdoH/F/UWTEp4uqICuiMVxwawv3AFL
+G+xXItIFLYST0JUA0EiQ
+=mBX/
 -----END PGP SIGNATURE-----
