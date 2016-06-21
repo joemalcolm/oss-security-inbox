@@ -1,4 +1,9 @@
-Received: (qmail 24049 invoked by uid 550); 11 Apr 2024 15:22:24 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2453" "Tuesday" "21" "June" "2016" "13:41:22" "+0200" "Tomas Hoger" "thoger@redhat.com" "<20160621134122.4118704e@redhat.com>" "70" "Re: [oss-security] SELinux troubles" nil nil nil "6" "2016062111:41:22" "[oss-security] SELinux troubles" (number mark "U       thoger@redha Jun 21   70/2453  " thread-indent "\"Re: [oss-security] SELinux troubles\"\n") "<20160621094501.GA21668@suse.de>" ("<20160621094501.GA21668@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13628 invoked by uid 550); 21 Jun 2016 11:41:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,75 +12,88 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21555 invoked from network); 11 Apr 2024 15:20:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=mind.be; s=google; t=1712848835; x=1713453635; darn=lists.openwall.com;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=foBkFoiSYoxQd/YoNOr5u/2/f2he70I26XV0c9zzjHs=;
-        b=QEMRxmfyfHwJyuIPjFE7YTr/1zHCJbZIdCpGjMFYS6BwagOU7XyjfnfQiPk/jHEQR3
-         MOKGbCuSvLjbuccUmEjWeBOTrWUNrya8KWs5xTaU+pCAGyIlPT0gON1pP9WOktVawV44
-         ZmFx6FNRLzo9kTWasE3dtFv9uyMpmlT4hHaxWsV9I4jenBu4uP8+aotjE54qasDhwnW5
-         NSHwWepTq86eJh/u36B2slOaMXO/WE7glf7AyMTs0KBHak/CKtf/umrzU15aoGaMEUqm
-         h5N8gJbLu+BtuWICkYbserV+wOhg8HKH1WVAwZLFWC/QTG4qpbfy4IvD0o0lI6KyG1xB
-         rOZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712848835; x=1713453635;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=foBkFoiSYoxQd/YoNOr5u/2/f2he70I26XV0c9zzjHs=;
-        b=KKqfpu2wrM9N24Pn1TPjExJooFBAiXLgOCM/G42G+QIuCjMTWCKfqJoaa0zEO8msmt
-         2b9/rTzW38qvnlfnHvTMYZYrrsTHJAqlo4ow2uVqlH+lKEBjwA2BlDVSlqR087rWjOjo
-         ZpPwmqmyMnyqSJk1XehQPnEMjnjU31qUh5Xyx26Kyu93afDrCuTapeSlY7g0U2nfM+Kn
-         rKmvk1060zdj4Gr3pnbpU9BR5vmblvKkNtRdMeIibMxtGyQgqE0MmSiZGJns6RXi+U/B
-         UA/ykMpnHdYHiUJJcGz/bl7HNcUYpUt80NMAm1fyKfPfftK91tT3RGFmhMF8jPteJ+gV
-         yZ/w==
-X-Forwarded-Encrypted: i=1; AJvYcCUuYyddjmjmmJXGRTg2gBSfRJEm/yycf3MuW991hWt2bjTcvIsfMaY/EZfiTP2WRNHiVTnISo4w/3nX+RxkwUT6FcZVQC0HmAiiOX/M6sss
-X-Gm-Message-State: AOJu0YzloXVA7cyJVhNuuWu+XnvjgrNvgdQIHo6/lt3U6Z+XFvTf/erf
-	62SNlRFhdxlWlmZL6m2RHF4b7KA9KgGFA0IriEcrv6Rpq8PCadUJmedEJQ9KA4Y=
-X-Google-Smtp-Source: AGHT+IGtjM9P4ylpXDtobYCQGe56TzOPzUyHunhEELGo4rgcinE7Nf3V5sy9N48gIYAJ4W6Lff09hA==
-X-Received: by 2002:a5d:4bce:0:b0:346:b95f:2783 with SMTP id l14-20020a5d4bce000000b00346b95f2783mr1300088wrt.52.1712848834731;
-        Thu, 11 Apr 2024 08:20:34 -0700 (PDT)
-From: Ben Hutchings <ben.hutchings@mind.be>
-To: buildroot@buildroot.org
-Cc: Ben Hutchings <ben.hutchings@mind.be>,
-	oss-security@lists.openwall.com
-Date: Thu, 11 Apr 2024 17:20:16 +0200
-Message-Id: <20240411152016.1185109-1-ben.hutchings@mind.be>
-X-Mailer: git-send-email 2.39.2
+Received: (qmail 13604 invoked from network); 21 Jun 2016 11:41:38 -0000
+Date: Tue, 21 Jun 2016 13:41:22 +0200
+From: Tomas Hoger <thoger@redhat.com>
+To: Sebastian Krahmer <krahmer@suse.com>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20160621134122.4118704e@redhat.com>
+In-Reply-To: <20160621094501.GA21668@suse.de>
+References: <20160621094501.GA21668@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] [PATCH] package/skeleton-init-sysv: Set sticky bit on /dev/shm
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Tue, 21 Jun 2016 11:41:26 +0000 (UTC)
+Subject: Re: [oss-security] SELinux troubles
 
-/dev/shm is a world-writable directory, like /tmp, and should also
-have the sticky bit set.  Without this, any user can delete and
-replace another user's files in /dev/shm.
+On Tue, 21 Jun 2016 11:45:01 +0200 Sebastian Krahmer wrote:
 
-This bug has been present since /dev/shm was added to the skeleton
-/etc/fstab, but appears to have been fixed for systems using systemd
-by commit 76fc9275f14e "system: separate sysv and systemd parts of the
-skeleton" which went into Buildroot 2017.08.
+> 1)
+> 
+> This bug is mitigated since setroubleshoot that is found on RHEL 7.2,
+> by running it as a dedicated user (untested).
+> 
+> Shell injection issue in setroubleshoot/audit_data.py:
+> 
+> def _set_tpath(self):
+> [...]
+> 	if path.startswith("/") == False and inodestr:
+> 		import subprocess
+> 		command = "locate -b '\%s'" % path
+> 		try:
+> 	    	    output = subprocess.check_output(command,
+> 		 	                             stderr=subprocess.STDOUT,
+>                                                      shell=True)
+> [...]
+> 
+> 
+> taking 'path' off AVC denial messages and constructing a command thats
+> passed to "sh -c".  o.O
+> Note that AVC denial messages appear outside of containers, so
+> a setroubleshoot is usually run on the host, processing AVC messages
+> from containers. This allows for an easy breakout.
+> 
+> 
+> 2)
+> 
+> I did not test this, but even though the run_fix() function in
+> SetroubleshootFixit.py is protected by auth_admin polkit rules, it looks
+> like theres good chance to pass XML documents via setroubleshoots
+> RPC/DBUS API that contains evil local_id or analysis_id fields and trick
+> real admins to "fix" AVC denials that inject code:
+> 
+> [...]
+>     def run_fix(self, local_id, analysis_id):
+>          import commands
+>          command = "sealert -f %s -P %s" % ( local_id, analysis_id)
+>          return commands.getoutput(command)
+> [...]
+> 
+> This is not mitigated by the run-as-user, since SetroubleshootFixit.py
+> still runs as root (and probably needs to).
 
-Signed-off-by: Ben Hutchings <ben.hutchings@mind.be>
-Fixes: 22fde22e35f98f7830c2f8955465532328348cd1
----
- package/skeleton-init-sysv/skeleton/etc/fstab | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+CVE-2016-4989 was assigned to the issues above.
 
-diff --git a/package/skeleton-init-sysv/skeleton/etc/fstab b/package/skeleton-init-sysv/skeleton/etc/fstab
-index 169054b74f..06c20fe9d5 100644
---- a/package/skeleton-init-sysv/skeleton/etc/fstab
-+++ b/package/skeleton-init-sysv/skeleton/etc/fstab
-@@ -2,7 +2,7 @@
- /dev/root	/		ext2	rw,noauto	0	1
- proc		/proc		proc	defaults	0	0
- devpts		/dev/pts	devpts	defaults,gid=5,mode=620,ptmxmode=0666	0	0
--tmpfs		/dev/shm	tmpfs	mode=0777	0	0
-+tmpfs		/dev/shm	tmpfs	mode=1777	0	0
- tmpfs		/tmp		tmpfs	mode=1777	0	0
- tmpfs		/run		tmpfs	mode=0755,nosuid,nodev	0	0
- sysfs		/sys		sysfs	defaults	0	0
+
+There are additional similar problems in setroubleshoot and
+setroubleshoot-plugins:
+
+- CVE-2016-4445, setroubleshoot, affecting 'sealert --fix'.  Problem was
+  already fixed in version 3.2.23.
+
+  https://github.com/fedora-selinux/setroubleshoot/commit/2d12677629ca319310f6263688bb1b7f676c01b7
+
+- CVE-2016-4444, setroubleshoot-plugins, allow_execmod plugin.  Also
+  previously fixed in versoin 3.2.23.
+
+  https://github.com/fedora-selinux/setroubleshoot/commit/5cd60033ea7f5bdf8c19c27b23ea2d773d9b09f5
+
+- CVE-2016-4446, setroubleshoot-plugins, allow_execstack plugin.
+  Similar to the previous one, only using commands.getoutput instead of
+  commands.getstatusoutput.
+
+  https://github.com/fedora-selinux/setroubleshoot/blob/setroubleshoot-plugins-3.3.4/plugins/src/allow_execstack.py#L29
+
 -- 
-2.39.2
-
+Tomas Hoger / Red Hat Product Security
