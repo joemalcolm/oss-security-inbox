@@ -1,71 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/3
-Message-ID: <72886774-4BBF-4ACF-B7BC-CB112FC7720C@360.cn>
-Date: Fri, 8 Apr 2016 04:56:22 +0000
-From: 王梅 <wangmei@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-3623 libtiff: Divide By Zero in the rgb2ycbcr tool
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/21/3
+Message-Id: <20160621120053.0711D72E27D@smtpvbsrv1.mitre.org>
+Date: Tue, 21 Jun 2016 08:00:53 -0400 (EDT)
+From: cve-assign@...re.org
+To: lukas@...tcloud.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for PHP bug #68978: "XSS in header() with Internet Explorer" (2015)
 Content-Type: text/plain; charset=utf-8
 
-Details
-=======
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Product: libtiff
-Affected Versions: <= 4.0.6
-Vulnerability Type: Divide By Zero
-Vendor URL: http://www.remotesensing.org/libtiff/
-CVE ID: CVE-2016-3623
-Credit: Mei Wang of the Cloud Security Team, Qihoo 360
+> PHP security bug #68978 (https://bugs.php.net/bug.php?id=68978) also
+> warrants a CVE identifier:
 
-Introduction
-============
+>> The filtering in header() function is not sufficient and this can
+>> lead to header injection and content injection (XSS) when the client
+>> is Internet Explorer (in every tested version).
 
-Division by zero occurs in rgb2ycbcr in libtiff-4.0.6 allows attackers to cause a denial of service when the param v or param h was set to 0.
+>> IE accepts %0A%20 or %0D%0A%20 as separator in HTTP while other
+>> browser treat the new line beginning with space as the continuation
+>> of the previous header. This can lead to header injection or content
+>> injection (basically, XSS) in IE.
 
+> PHP's documentation (http://php.net/manual/en/function.header.php)
+> explicitly states that since version 5.2.1 PHP natively prevents
+> header injections:
 
-libtiff-master/libtiff/rgb2ycbcr.c:256-257
+>> This function now prevents more than one header to be sent at once
+>> as a protection against header injection attacks.
 
-250 cvtRaster(TIFF* tif, uint32* raster, uint32 width, uint32 height)
-251 {
-252         uint32 y;
-253         tstrip_t strip = 0;
-254         tsize_t cc, acc;
-255         unsigned char* buf;
-256         uint32 rwidth = roundup(width, horizSubSampling);
-257         uint32 rheight = roundup(height, vertSubSampling);
-258         uint32 nrows = (rowsperstrip > rheight ? rheight : rowsperstrip);
+> My understanding is that the corresponding upstream commit can be
+> found at
+> https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b
 
+Use CVE-2015-8935.
 
-gdb rgb2ycbcr
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-(gdb)r -c zip  -r 0  -h 2  -v 0 ./sample/rgb2ycbcr_cvtRaster.tif 1.tif
-
-Program received signal SIGFPE, Arithmetic exception.
-0x00000000004017cd in cvtRaster (tif=0x604010, raster=0x7ffff4cab010, width=65312, height=152) at rgb2ycbcr.c:257
-257             uint32 rheight = roundup(height, vertSubSampling);
-(gdb) p height
-$1 = 152
-(gdb) p vertSubSampling
-$2 = 0
-
-(gdb) r -c zip  -r 0  -h 0  -v 2 ./sample/rgb2ycbcr_cvtRaster.tif 1.tif
-
-Program received signal SIGFPE, Arithmetic exception.
-0x0000000000401798 in cvtRaster (tif=0x604010, raster=0x7ffff4cab010, width=65312, height=152) at rgb2ycbcr.c:256
-256             uint32 rwidth = roundup(width, horizSubSampling);
-(gdb) p width
-$3 = 65312
-(gdb) p horizSubSampling
-$4 = 0
-
-References:
-[1] http://www.remotesensing.org/libtiff/
-[2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
-
-
-Thank you!
-Best Regards,
-
-
-Mei
-
+iQIcBAEBCAAGBQJXaSwPAAoJEHb/MwWLVhi2PwAP/RxDG+I/240T4Bof1AeJd/0e
+h4da07InmmtISwUyEQJQVJMnZt+A0ewrwn+Ipdm8haaqwO3fsIrm0eRk2HR8VZQE
+Wf7cq1FIPaIwCTaAAEBOpMhXN3/A/GnOJC8gzKFZIvbDTFbs8F6kE6JBB3E52B07
+G940pVZtWNjhyeloo543q2Xt0eFy1CmFqxsf3vTQHgXU1y+twgpW9fd1kbyfz70t
+Cj53kZW8jcShxLzCc6nDeT91sBWM54v24h8zAiUCLMLCDvahfYzfOqqXRZHhEhcc
+sSkft1FdBO8ED4FXZ8r1n6hRdMrrbi2Y0DNxCxoEm77Yz6gqMg267RqxHbLdBVK+
+5f2WOc1Xhy3K09ORxjlu0fgqnSp9MhEwaQqo1oOu9xgQNvjKbn4gulSTH68St35h
+6zISQrWWYO/T9g/G+dEF/K/oNrjwfvhLdiGd4Np4GA/Z3rmBREXNCpjZ8lYQzZrk
+YoGWg5xSCkcy0W9uh0H6A/d9aDRKxixATbOx7HvaxeAB6jd7Xgr4Jlq7bbLPu1qu
+IqPrlNfES06j/06CFtdee6iPcBLz80gM/A5yxQ5fi/+nakkhb7PWYBQc9ilkChkq
+3DLtFno9zuERUN1skN2lsfSB8/dCWuhtzlCJFAENgw7BE3CkSDQ/x6oW7ELSK39k
+mP+W41Ni4/lIlRuf8zZn
+=0A1M
+-----END PGP SIGNATURE-----
