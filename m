@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2407" "Monday" "25" "July" "2016" "16:16:06" "+0100" "Dominic Cleal" "dominic@cleal.org" "<57962D36.9000102@cleal.org>" "75" "[oss-security] CVE-2016-4451, CVE-2016-4475: Foreman organizations/locations API/UI privilege escalations" nil nil nil "7" "2016072515:16:06" "[oss-security] CVE-2016-4451, CVE-2016-4475: Foreman organizations/locations API/UI privilege escalations" (number mark "U       dominic@clea Jul 25   75/2407  " thread-indent "\"[oss-security] CVE-2016-4451, CVE-2016-4475: Foreman organizations/locations API/UI privilege escalations\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2054" "Tuesday" "21" "June" "2016" "08:00:53" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160621120053.0711D72E27D@smtpvbsrv1.mitre.org>" "50" "[oss-security] Re: CVE request for PHP bug #68978: \"XSS in header() with Internet Explorer\" (2015)" nil nil nil "6" "2016062112:00:53" "[oss-security] Re: CVE request for PHP bug #68978: \"XSS in header() with Internet Explorer\" (2015)" (number mark "U       cve-assign@m Jun 21   50/2054  " thread-indent "\"[oss-security] Re: CVE request for PHP bug #68978: \"XSS in header() with Internet Explorer\" (2015)\"\n") "<16A71325-B291-4AE5-8689-54374BA32C8F@nextcloud.com>" ("<16A71325-B291-4AE5-8689-54374BA32C8F@nextcloud.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30427 invoked by uid 550); 25 Jul 2016 15:16:22 -0000
+Received: (qmail 13928 invoked by uid 550); 21 Jun 2016 12:01:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,93 +12,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30406 invoked from network); 25 Jul 2016 15:16:22 -0000
-To: oss-security@lists.openwall.com
-Cc: foreman-security@googlegroups.com
-From: Dominic Cleal <dominic@cleal.org>
-Message-ID: <57962D36.9000102@cleal.org>
-Date: Mon, 25 Jul 2016 16:16:06 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="tDOw0xt6J1noOKbela2bEI6jBPbLqiUji"
-Subject: [oss-security] CVE-2016-4451, CVE-2016-4475: Foreman organizations/locations API/UI
- privilege escalations
+Received: (qmail 13907 invoked from network); 21 Jun 2016 12:01:05 -0000
+From: cve-assign@mitre.org
+To: lukas@nextcloud.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <16A71325-B291-4AE5-8689-54374BA32C8F@nextcloud.com>
+Message-Id: <20160621120053.0711D72E27D@smtpvbsrv1.mitre.org>
+Date: Tue, 21 Jun 2016 08:00:53 -0400 (EDT)
+Subject: [oss-security] Re: CVE request for PHP bug #68978: "XSS in header() with Internet Explorer" (2015)
 
---tDOw0xt6J1noOKbela2bEI6jBPbLqiUji
-Content-Type: multipart/mixed; boundary="uWL9xiwqFNNv03XQJ9bBU3rp9xVjfhO89"
-From: Dominic Cleal <dominic@cleal.org>
-To: oss-security@lists.openwall.com
-Cc: foreman-security@googlegroups.com
-Message-ID: <57962D36.9000102@cleal.org>
-Subject: CVE-2016-4451, CVE-2016-4475: Foreman organizations/locations API/UI
- privilege escalations
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
---uWL9xiwqFNNv03XQJ9bBU3rp9xVjfhO89
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+> PHP security bug #68978 (https://bugs.php.net/bug.php?id=68978) also
+> warrants a CVE identifier:
 
-1) CVE-2016-4451: organizations/locations privilege escalation in
-Foreman API
+>> The filtering in header() function is not sufficient and this can
+>> lead to header injection and content injection (XSS) when the client
+>> is Internet Explorer (in every tested version).
 
-When accessing Foreman as a user limited to specific organization, if
-users know other organization id and have unlimited filters they can
-access/modify other organization data. They just have to set the id as
-API parameter.
+>> IE accepts %0A%20 or %0D%0A%20 as separator in HTTP while other
+>> browser treat the new line beginning with space as the continuation
+>> of the previous header. This can lead to header injection or content
+>> injection (basically, XSS) in IE.
 
-Affects Foreman 1.7 and higher
-Fix released in Foreman 1.12.0 and 1.11.3
+> PHP's documentation (http://php.net/manual/en/function.header.php)
+> explicitly states that since version 5.2.1 PHP natively prevents
+> header injections:
 
+>> This function now prevents more than one header to be sent at once
+>> as a protection against header injection attacks.
 
-2) CVE-2016-4475: privilege escalation in organizations/locations API and UI
+> My understanding is that the corresponding upstream commit can be
+> found at
+> https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b
 
-When accessing Foreman as a user limited to specific organization or
-location, these are not taken into account in the API or parts of the
-UI. This allows a user to view, edit and delete organizations and
-locations they are not associated with if they have the requisite
-permissions.
+Use CVE-2015-8935.
 
-Affects Foreman 1.1 and higher
-Fix released in Foreman 1.12.0 and 1.11.4
-
-
-Mitigation for both vulnerabilities: make sure you have filters
-restricted to organizations or locations when you limit user by
-assigning them to particular organizations or locations.
-
-Patches:
-https://github.com/theforeman/foreman/commit/1144040f444b4bf4aae81940a150b2=
-6b23b4623c
-https://github.com/theforeman/foreman/commit/a30ab44ed6f140f1791afc51a1e448=
-afc2ff28f9
-
-More information:
-https://theforeman.org/security.html#2016-4451
-http://projects.theforeman.org/issues/15182
-https://theforeman.org/security.html#2016-4475
-http://projects.theforeman.org/issues/15268
-https://theforeman.org
-
---=20
-Dominic Cleal
-dominic@cleal.org
-
-
---uWL9xiwqFNNv03XQJ9bBU3rp9xVjfhO89--
-
---tDOw0xt6J1noOKbela2bEI6jBPbLqiUji
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v1
 
-iEYEARECAAYFAleWLTYACgkQfH0ybywrcswOWQCglqv+5H9DNG1/r7AfvllXiGaX
-CW0AnRvzoHplozORw7Av+eJg8ndyejwV
-=tUxd
+iQIcBAEBCAAGBQJXaSwPAAoJEHb/MwWLVhi2PwAP/RxDG+I/240T4Bof1AeJd/0e
+h4da07InmmtISwUyEQJQVJMnZt+A0ewrwn+Ipdm8haaqwO3fsIrm0eRk2HR8VZQE
+Wf7cq1FIPaIwCTaAAEBOpMhXN3/A/GnOJC8gzKFZIvbDTFbs8F6kE6JBB3E52B07
+G940pVZtWNjhyeloo543q2Xt0eFy1CmFqxsf3vTQHgXU1y+twgpW9fd1kbyfz70t
+Cj53kZW8jcShxLzCc6nDeT91sBWM54v24h8zAiUCLMLCDvahfYzfOqqXRZHhEhcc
+sSkft1FdBO8ED4FXZ8r1n6hRdMrrbi2Y0DNxCxoEm77Yz6gqMg267RqxHbLdBVK+
+5f2WOc1Xhy3K09ORxjlu0fgqnSp9MhEwaQqo1oOu9xgQNvjKbn4gulSTH68St35h
+6zISQrWWYO/T9g/G+dEF/K/oNrjwfvhLdiGd4Np4GA/Z3rmBREXNCpjZ8lYQzZrk
+YoGWg5xSCkcy0W9uh0H6A/d9aDRKxixATbOx7HvaxeAB6jd7Xgr4Jlq7bbLPu1qu
+IqPrlNfES06j/06CFtdee6iPcBLz80gM/A5yxQ5fi/+nakkhb7PWYBQc9ilkChkq
+3DLtFno9zuERUN1skN2lsfSB8/dCWuhtzlCJFAENgw7BE3CkSDQ/x6oW7ELSK39k
+mP+W41Ni4/lIlRuf8zZn
+=0A1M
 -----END PGP SIGNATURE-----
-
---tDOw0xt6J1noOKbela2bEI6jBPbLqiUji--
