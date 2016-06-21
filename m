@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["647" "Monday" "26" "September" "2016" "13:53:02" "-0400" "Christos Zoulas" "christos@zoulas.com" "<20160926175302.D6C8417FDAB@rebar.astron.com>" "14" "Re: [oss-security] CVE-2016-7545 -- SELinux sandbox escape" "^Date:" nil nil "9" "2016092617:53:02" "[oss-security] CVE-2016-7545 -- SELinux sandbox escape" (number mark "        christos@zou Sep 26   14/647   " thread-indent "\"Re: [oss-security] CVE-2016-7545 -- SELinux sandbox escape\"\n") "<20160926165409.ekk6dztdpttnnf67@jwilk.net>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2675" "Tuesday" "21" "June" "2016" "11:45:01" "+0200" "Sebastian Krahmer" "krahmer@suse.com" "<20160621094501.GA21668@suse.de>" "90" "[oss-security] SELinux troubles" nil nil nil "6" "2016062109:45:01" "[oss-security] SELinux troubles" (number mark "U       krahmer@suse Jun 21   90/2675  " thread-indent "\"[oss-security] SELinux troubles\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19867 invoked by uid 550); 26 Sep 2016 17:58:10 -0000
+Received: (qmail 5298 invoked by uid 550); 21 Jun 2016 09:45:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,29 +11,109 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16339 invoked from network); 26 Sep 2016 17:53:14 -0000
-In-Reply-To: <20160926165409.ekk6dztdpttnnf67@jwilk.net>
-       from Jakub Wilk (Sep 26,  6:54pm)
-Organization: Astron Software
-X-Mailer: Mail User's Shell (7.2.6 beta(4.pl1)+dynamic 20000103)
-Message-Id: <20160926175302.D6C8417FDAB@rebar.astron.com>
-Date: Mon, 26 Sep 2016 13:53:02 -0400
-From: christos@zoulas.com (Christos Zoulas)
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2016-7545 -- SELinux sandbox escape
+Received: (qmail 5203 invoked from network); 21 Jun 2016 09:45:13 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Tue, 21 Jun 2016 11:45:01 +0200
+From: Sebastian Krahmer <krahmer@suse.com>
 To: oss-security@lists.openwall.com
+Message-ID: <20160621094501.GA21668@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Organization: SUSE Linux GmbH, GF: Felix =?utf-8?Q?Imend?=
+ =?utf-8?Q?=F6rffer?= =?utf-8?Q?=2C?= Jane Smithard, Graham Norton, HRB 21284
+ (AG Nuernberg)
+User-Agent: Outlook
+Subject: [oss-security] SELinux troubles
 
-On Sep 26,  6:54pm, jwilk@jwilk.net (Jakub Wilk) wrote:
--- Subject: Re: [oss-security] CVE-2016-7545 -- SELinux sandbox escape
 
-| Are there any use cases for TIOCSTI other than producing exploits?
+Hi
 
-On the BSDs TIOCSTI has been limited to the superuser since the
-4.4BSD Lite 2 release in 1995 (IIRC). I think that linux should
-follow suit if it has not (yet). For those who are interested in
-the history of this, I believe that first we checked only the
-userid (4.2BSD), then we checked the userid and that the process
-was a session leader (4.3BSD), and finally we decided that this
-was too big of a hole and limited it to the superuser.
+As per list policy, this is the repost to oss-sec. CRD was
+set to today. PoC may be found as straight-shooter.c inside
+old troubleshooter git.
+Please also note the container-damaging beauty this time.
 
-christos
+Sebastian
+
+----8<---------------
+
+Hi
+
+Due to a review request, it was necessary to have a look at setroubleshoot
+again.
+
+setroubleshoot (still) contains various code injection vulns, leading to
+full (unconfined) root.
+PoC has been tested on CentOS 6.6, 6.8 and 7. PoC as well works inside
+Docker containers to achieve running in a setroubleshoot domain with
+uid 0 on "the host". (PoC most likely also works on RHEL 6.x and 7 if
+CentOS maps to it).
+This is not CVE-2015-1815 and PoC runs on systems that are patched against it.
+
+Here are the details:
+
+
+1)
+
+This bug is mitigated since setroubleshoot that is found on RHEL 7.2,
+by running it as a dedicated user (untested).
+
+Shell injection issue in setroubleshoot/audit_data.py:
+
+def _set_tpath(self):
+[...]
+	if path.startswith("/") == False and inodestr:
+		import subprocess
+		command = "locate -b '\%s'" % path
+		try:
+	    	    output = subprocess.check_output(command,
+		 	                             stderr=subprocess.STDOUT,
+                                                     shell=True)
+[...]
+
+
+taking 'path' off AVC denial messages and constructing a command thats
+passed to "sh -c".  o.O
+Note that AVC denial messages appear outside of containers, so
+a setroubleshoot is usually run on the host, processing AVC messages
+from containers. This allows for an easy breakout.
+
+
+2)
+
+I did not test this, but even though the run_fix() function in
+SetroubleshootFixit.py is protected by auth_admin polkit rules, it looks
+like theres good chance to pass XML documents via setroubleshoots
+RPC/DBUS API that contains evil local_id or analysis_id fields and trick
+real admins to "fix" AVC denials that inject code:
+
+[...]
+    def run_fix(self, local_id, analysis_id):
+         import commands
+         command = "sealert -f %s -P %s" % ( local_id, analysis_id)
+         return commands.getoutput(command)
+[...]
+
+This is not mitigated by the run-as-user, since SetroubleshootFixit.py
+still runs as root (and probably needs to).
+
+
+There are various other occurences of subprocess calls for "rpm" and others,
+which have already been mentioned in the CVE-2015-1815 report but probably
+still unfixed because of "missing PoC".
+
+The codebase is huge, and I wonder what kind of lax handling and
+user-surfacing code inside critical SELinux components this is, in particular
+where SELinux' aim is to harden the system.
+
+Sebastian
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@suse.com - SuSE Security Team
+
+
