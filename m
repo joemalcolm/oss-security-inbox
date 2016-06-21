@@ -1,28 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/13
-Message-ID: <20161005193254.7a46fc48@pc1>
-Date: Wed, 5 Oct 2016 19:32:54 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/21/1
+Message-ID: <20160621094501.GA21668@suse.de>
+Date: Tue, 21 Jun 2016 11:45:01 +0200
+From: Sebastian Krahmer <krahmer@...e.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
+Subject: SELinux troubles
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 5 Oct 2016 10:09:07 -0700
-Tavis Ormandy <taviso@...gle.com> wrote:
 
-> Ahh, no, I was right - it's using libgs, and the same issues apply
-> there.
+Hi
 
-To clarify the confusion here:
-I didn't see ghostscript as a dependency and saw libspectre for ps
-rendering. But libspected itself uses ghostscript, so it seems it's
-just a wrapper around it.
+As per list policy, this is the repost to oss-sec. CRD was
+set to today. PoC may be found as straight-shooter.c inside
+old troubleshooter git.
+Please also note the container-damaging beauty this time.
+
+Sebastian
+
+----8<---------------
+
+Hi
+
+Due to a review request, it was necessary to have a look at setroubleshoot
+again.
+
+setroubleshoot (still) contains various code injection vulns, leading to
+full (unconfined) root.
+PoC has been tested on CentOS 6.6, 6.8 and 7. PoC as well works inside
+Docker containers to achieve running in a setroubleshoot domain with
+uid 0 on "the host". (PoC most likely also works on RHEL 6.x and 7 if
+CentOS maps to it).
+This is not CVE-2015-1815 and PoC runs on systems that are patched against it.
+
+Here are the details:
+
+
+1)
+
+This bug is mitigated since setroubleshoot that is found on RHEL 7.2,
+by running it as a dedicated user (untested).
+
+Shell injection issue in setroubleshoot/audit_data.py:
+
+def _set_tpath(self):
+[...]
+	if path.startswith("/") == False and inodestr:
+		import subprocess
+		command = "locate -b '\%s'" % path
+		try:
+	    	    output = subprocess.check_output(command,
+		 	                             stderr=subprocess.STDOUT,
+                                                     shell=True)
+[...]
+
+
+taking 'path' off AVC denial messages and constructing a command thats
+passed to "sh -c".  o.O
+Note that AVC denial messages appear outside of containers, so
+a setroubleshoot is usually run on the host, processing AVC messages
+from containers. This allows for an easy breakout.
+
+
+2)
+
+I did not test this, but even though the run_fix() function in
+SetroubleshootFixit.py is protected by auth_admin polkit rules, it looks
+like theres good chance to pass XML documents via setroubleshoots
+RPC/DBUS API that contains evil local_id or analysis_id fields and trick
+real admins to "fix" AVC denials that inject code:
+
+[...]
+    def run_fix(self, local_id, analysis_id):
+         import commands
+         command = "sealert -f %s -P %s" % ( local_id, analysis_id)
+         return commands.getoutput(command)
+[...]
+
+This is not mitigated by the run-as-user, since SetroubleshootFixit.py
+still runs as root (and probably needs to).
+
+
+There are various other occurences of subprocess calls for "rpm" and others,
+which have already been mentioned in the CVE-2015-1815 report but probably
+still unfixed because of "missing PoC".
+
+The codebase is huge, and I wonder what kind of lax handling and
+user-surfacing code inside critical SELinux components this is, in particular
+where SELinux' aim is to harden the system.
+
+Sebastian
 
 -- 
-Hanno Böck
-https://hboeck.de/
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.com - SuSE Security Team
 
-Content of type "application/pgp-signature" skipped
+
