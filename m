@@ -1,47 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/07/9
-Message-Id: <20160107204053.68482332272@smtpvbsrv1.mitre.org>
-Date: Thu,  7 Jan 2016 15:40:53 -0500 (EST)
-From: cve-assign@...re.org
-To: grant.murphy@....com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for vulnerability in OpenStack Nova
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/21/6
+Message-ID: <20160621222517.GE21113@jimrollenhagen.com>
+Date: Tue, 21 Jun 2016 18:25:17 -0400
+From: Jim Rollenhagen <jim@...rollenhagen.com>
+To: oss-security@...ts.openwall.com
+Subject: Ironic node information including credentials exposed to unathenticated users
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+=============================================================================
+Ironic node information including credentials exposed to unathenticated users
+=============================================================================
 
-> Xen connection password leak in logs via StorageError
-> 
-> If a StorageError occurs when attempting to connect a volume
-> using the Xen API, the connection parameters will be logged. These
-> parameters may include credentials that are not masked.
-> 
-> https://launchpad.net/bugs/1516765
+:Date: June 21, 2016
+:CVE: CVE-2016-4985
 
-Use CVE-2015-8749 for the lack of strutils.mask_password use. There is
-no CVE ID for the https://bugs.launchpad.net/bugs/1321785 related
-discussion of a design issue.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Affects
+~~~~~~~
+- Ironic: >=2014.2, >=4.0.0 <=4.2.4, >=4.3.0 <=5.1.1
 
-iQIcBAEBCAAGBQJWjszMAAoJEL54rhJi8gl5RMAP/RcP2koL8KmPcmnknO/jFAGp
-ZARI12CsqoS6u+lKUsr0ZnNLbOoJHzIyiinEtRSTrisyrZIF9pLjlCVQ3xwPDZUr
-IIVpW5clK3WWsl4838LgtIFfQwTHot8slglIIvWMyfPh/VVMqNA4rWU/i8+loscw
-82WnO+rgaMnZDH68IKyEBFkrrvdvrP0ixB3Q0ImjxfnjXqy74PwNzeRWCi26D5+8
-FEJEmmaXjkP0nWr1HoKkGuDb2A8TS8ZrNNDCFKJXbQccVv3EikPMAwCdp8yVROmo
-jFALhLJSsiyDqOFVFNYQKb6pCTOGQOXunba8AFnTK2XzGOVx/bSQOUVUQn84B7Fo
-CC7vneB6upaPNH2lYj8De0Iiw1asPQh1KJhhFR7/3qHZ/9H6WX13GHGfs4/tqDT4
-PS5aYJvcW8klwOoy2x2w5bHS2n1fQkvbOzJ1u61xlAleyA0+LICyU/l3nrhz9R+7
-V/s8M3sFMh5/eLfYIJEa24fITUnJxU5jt6DiPFgsz1f34msek8x2GitK1NsCMEkO
-4Vz6Fp2D6sQlEiTkA/vkUbHMZRcgmbw13If+kWRFevDA1epXWn2h+ikHV687ENvD
-dnm6bCUrLYzV4o204hVnrN7G9IzuOYawgrZ3ZC76tkGBJoBDeWiM1UK2TB3b9qvY
-3ixDLcVIthDIaJTmNEds
-=Zujb
------END PGP SIGNATURE-----
+
+Description
+~~~~~~~~~~~
+Devananda van der Veen (IBM) reported the following vulnerability in Ironic.
+
+A client with network access to the ironic-api service can bypass Keystone
+authentication and retrieve all information about any Node registered with
+Ironic, if they know (or are able to guess) the MAC address of a network card
+belonging to that Node, by sending a crafted POST request to the
+/v1/drivers/$DRIVER_NAME/vendor_passthru resource.
+
+The response will include the full Node details, including management
+passwords, even when /etc/ironic/policy.json is configured to hide passwords in
+API responses.
+
+This vulnerability has been verified in all currently supported branches
+(liberty, mitaka, master) and traced back to code introduced in commit
+3e568fbbbcc5748035c1448a0bdb26306470797c during the Juno development cycle.
+Therefore, it is likely that both juno and kilo braches (and their releases)
+are also affected.
+
+
+Patches
+~~~~~~~
+https://review.openstack.org/332195 (Newton)
+https://review.openstack.org/332196 (Mitaka)
+https://review.openstack.org/332197 (Liberty)
+
+
+Credits
+~~~~~~~
+- Devananda van der Veen from IBM (CVE-2016-4985)
+
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/ironic/+bug/1572796
+- http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2016-4985
+
+Notes
+~~~~~
+- This fix is included in the upcoming 4.2.5 (Liberty), 5.1.2 (Mitaka), and
+  6.0.0 (Newton) releases of Ironic.
+
+
+--
+Jim Rollenhagen
+OpenStack Ironic Project Team Lead
+
+
+Content of type "application/pgp-signature" skipped
