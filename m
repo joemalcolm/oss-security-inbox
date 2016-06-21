@@ -1,27 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/19/9
-Message-Id: <20161019213233.2E9CA52E00A@smtpvbsrv1.mitre.org>
-Date: Wed, 19 Oct 2016 17:32:33 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/21/5
+Message-Id: <20160621202707.249988BC11C@smtpvmsrv1.mitre.org>
+Date: Tue, 21 Jun 2016 16:27:07 -0400 (EDT)
 From: cve-assign@...re.org
-To: shilei-c@....cn
+To: meissner@...e.de
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: OpenSSH: Memory exhaustion issue found in OpenSSH
+Subject: Re: CVE Request: 2015 squidguard reflected XSS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> The OpenSSH has a memory exhaustion bug in key exchange process. An
-> unauthenticated peer could repeat the KEXINIT and cause allocation of
-> up to 384MB(not 128MB that the official said). In the default case, an
-> attacker can build 100 such connections, which will consume 38400 MB
-> of memory on the server.
+> http://www.squidguard.org/Downloads/CHANGELOG
+>         2015-02-01      Fixed a cross site vulnerability in squidGuard.cgi
+> 
+> http://www.squidguard.org/Downloads/Patches/1.4/Readme.Patch-20150201
 
-> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/kex.c?rev=1.127&content-type=text/x-cvsweb-markup
+> +$url =~ s/</&lt;/g ;
+> +$url =~ s/>/&gt;/g ;
 
->> Unregister the KEXINIT handler after message has been received.
+Use CVE-2015-8936.
 
-Use CVE-2016-8858.
+(We posted http://www.openwall.com/lists/oss-security/2016/06/20/6 in
+error. We will adjust our process to try to avoid sending "Thank you
+for your submission" to the oss-security list.)
 
 - -- 
 CVE Assignment Team
@@ -31,17 +33,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYB+W7AAoJEHb/MwWLVhi2PK0QALEeBA+iTzAL1ZrgIoiDJsYm
-xvsg61m19gz/Wf9sxXLPDd13lhRJhEIs/fBfdngIBaXRTi5dYI7HAsVGB2gnWMsj
-fqUZSfmcYri2VunzYWOX8J81OtBxUR670SOA757g7ktd+6MEq2QQNb1vJSOprapU
-1MqZkz9ZD/c/22pAC/SNCIeT4mZpCNxHZwVCPrELIKKnsp9cYQf0xvRBYFnxulre
-RplzO2iq6GDOk4etpA0YyOzOGA6iZt9+O13+ROaILYUIwUF7DseQKNpB2F82An6l
-qCXYE7d0ZMHDRyPZPmKf72VVM92N+KDoRG/8LlFcn4Yso2o7gHmv5UCRUuFVjD15
-3ZDwYbCB+qtYQ5aLm561Jp1+2rTGg+p1G3bvjRAILp4ZFdsyzDgS02r1epg9TBfx
-GU9QN0GJyjNHFR16KJgo5JtPU0lHk+g68JtsmHzXRZemsQ53ujUK/4gv9lB1feuA
-Nw0ABpuznYOgxN/FuEi1k7SasAZH1KRSiUV/UIiAWLayXE/6q9MMYWhzGPjk317c
-dX+ceeov1GfjsZOfnqiK8bzZfrfPm0qBhOZ1mAJsOiSdQjU4nzYJVewTmflrNLnR
-a+0MHCdOp0uOVoG3jLUOc50mRePLscv80DiiuX31ukO1SacGGNEMyAE/N4eqHd57
-ByjtYBRhe+CxotowFPtd
-=Op5b
+iQIcBAEBCAAGBQJXaaI4AAoJEHb/MwWLVhi2n3kQAJ/b21J8D3SDHZzjiBC8sQXE
+lG+FE6FN8HWUNn0/LVk2vX+M7MTN92rT24mrBDLx92/ujWWzFdyA8IL6Xvt/ES4Y
+NUyyw/lFHgi0wE0LUz+6lae/VF5f/sztyZhufuuMmZ3onFc7i06h3tR9B5sNZJpw
+UFQIgTmIoppoja7xzEcq7cplAKACxsTcbRdvD/nBJ4pA+vJ+YOv8B+X9fy4pfh5J
+K9pGuBpHqgAYTXUZOULuBDtDs6Mow1zoqTFZ4wp+8M3tlGCF9aIuGOvVG0Zx+GFr
+nP7PjHn1M2prs0i/7Mp0bolrfyxBlfHalkFYcNAg6Zo8buqobSh7GPiQ/ITlrK+J
+Aude8FZ+Oj4HdpPsd87Vtd/csedF+lMKhOjLYceLQsUrutoczmUax68g797Q+UiB
+0ubq8jOZu/3okbW7RUitop0hn/HZq7YK5+GkOgHYT9t1qgZVsDIfo/mKhDhyHoFy
+yT72LFhieAjL0UFX8fYRWfe+B8lEMfVRXiLCg4SXtoOfUUeWiMsxlvuO72USr9gQ
+Kku3/a1bgN3rGypyQgVyQKGQnnTqvu/LLitbelDy2CO6J2DggfI2rNTugfrzTaJg
+zovyqf4K73nzh43qjOn0uTMN3nXziTIJ5ZJE8CzbYjdCvvtm5X8fUG5q1YGcxWuE
+dix1vSNOFPwRL377PWm6
+=MSpr
 -----END PGP SIGNATURE-----
