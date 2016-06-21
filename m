@@ -1,15 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/08/4
-Message-ID: <A19277CE-0378-4415-A28E-7BB8F7CE00A9@uah.es>
-Date: Tue, 8 Mar 2016 15:43:02 +0000
-From: Hoz de la Hoz Enrique de la <enrique.delahoz@....es>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE request: simpleSAMLphp 1.14 information leakage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/21/2
+Message-ID: <20160621134122.4118704e@redhat.com>
+Date: Tue, 21 Jun 2016 13:41:22 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: Sebastian Krahmer <krahmer@...e.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: SELinux troubles
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On Tue, 21 Jun 2016 11:45:01 +0200 Sebastian Krahmer wrote:
 
-Is it possible to get a CVE for this?
-https://simplesamlphp.org/security/201603-01
+> 1)
+> 
+> This bug is mitigated since setroubleshoot that is found on RHEL 7.2,
+> by running it as a dedicated user (untested).
+> 
+> Shell injection issue in setroubleshoot/audit_data.py:
+> 
+> def _set_tpath(self):
+> [...]
+> 	if path.startswith("/") == False and inodestr:
+> 		import subprocess
+> 		command = "locate -b '\%s'" % path
+> 		try:
+> 	    	    output = subprocess.check_output(command,
+> 		 	                             stderr=subprocess.STDOUT,
+>                                                      shell=True)
+> [...]
+> 
+> 
+> taking 'path' off AVC denial messages and constructing a command thats
+> passed to "sh -c".  o.O
+> Note that AVC denial messages appear outside of containers, so
+> a setroubleshoot is usually run on the host, processing AVC messages
+> from containers. This allows for an easy breakout.
+> 
+> 
+> 2)
+> 
+> I did not test this, but even though the run_fix() function in
+> SetroubleshootFixit.py is protected by auth_admin polkit rules, it looks
+> like theres good chance to pass XML documents via setroubleshoots
+> RPC/DBUS API that contains evil local_id or analysis_id fields and trick
+> real admins to "fix" AVC denials that inject code:
+> 
+> [...]
+>     def run_fix(self, local_id, analysis_id):
+>          import commands
+>          command = "sealert -f %s -P %s" % ( local_id, analysis_id)
+>          return commands.getoutput(command)
+> [...]
+> 
+> This is not mitigated by the run-as-user, since SetroubleshootFixit.py
+> still runs as root (and probably needs to).
 
-Thanks in advance.
+CVE-2016-4989 was assigned to the issues above.
+
+
+There are additional similar problems in setroubleshoot and
+setroubleshoot-plugins:
+
+- CVE-2016-4445, setroubleshoot, affecting 'sealert --fix'.  Problem was
+  already fixed in version 3.2.23.
+
+  https://github.com/fedora-selinux/setroubleshoot/commit/2d12677629ca319310f6263688bb1b7f676c01b7
+
+- CVE-2016-4444, setroubleshoot-plugins, allow_execmod plugin.  Also
+  previously fixed in versoin 3.2.23.
+
+  https://github.com/fedora-selinux/setroubleshoot/commit/5cd60033ea7f5bdf8c19c27b23ea2d773d9b09f5
+
+- CVE-2016-4446, setroubleshoot-plugins, allow_execstack plugin.
+  Similar to the previous one, only using commands.getoutput instead of
+  commands.getstatusoutput.
+
+  https://github.com/fedora-selinux/setroubleshoot/blob/setroubleshoot-plugins-3.3.4/plugins/src/allow_execstack.py#L29
+
+-- 
+Tomas Hoger / Red Hat Product Security
