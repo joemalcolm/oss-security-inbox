@@ -1,87 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/10
-Message-ID: <alpine.DEB.2.20.1611020811430.375@tvnag.unkk.fr>
-Date: Wed, 2 Nov 2016 08:12:14 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl use-after-free via shared cookies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/22/2
+Message-Id: <20160622110200.7BE556C0B46@smtpvmsrv1.mitre.org>
+Date: Wed, 22 Jun 2016 07:02:00 -0400 (EDT)
+From: cve-assign@...re.org
+To: greg@...ghaynes.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request Openstack-infra puppet-gerrit module xss vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Use-after-free via shared cookies
-=================================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Project cURL Security Advisory, November 2, 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20161102I.html)
+> It was recently discovered that our puppet-gerrit module configures
+> Gerrit in a way which makes it vulnerable to a XSS attack. This stems
+> from our configuration marking text/html as a 'safe' mimetype
+> 
+> a user could
+> potentially craft a review which when visited at the proper url would
+> have access to the account information of any user visiting that url.
+> 
+> https://review.openstack.org/#/c/332219/
+> http://git.openstack.org/cgit/openstack-infra/puppet-gerrit/commit/?id=8573c2ee172f66c1667de49685c88fdc8883ca8b
 
-VULNERABILITY
--------------
+>> -[mimetype "text/html"]
+>> -        safe = true
 
-libcurl explicitly allows users to share cookies between multiple easy handles
-that are concurrently employed by different threads.
+Use CVE-2016-5737.
 
-When cookies to be sent to a server are collected, the matching function
-collects all cookies to send and the cookie lock is released immediately
-afterwards. That funcion however only returns a list with *references* back to
-the original strings for name, value, path and so on. Therefore, if another
-thread quickly takes the lock and frees one of the original cookie structs
-together with its strings, a use-after-free can occur and lead to information
-disclosure. Another thread can also replace the contents of the cookies from
-separate HTTP responses or API calls.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-8623 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-This flaw exists in the following curl versions:
-
-- Affected versions: curl 7.10.7 to and including 7.50.3
-- Not affected versions: curl < 7.10.7 and curl >= 7.51.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.51.0, the function returning the cookies make deep copies.
-
-A [patch for CVE-2016-8623](https://curl.haxx.se/CVE-2016-8623.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.51.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Do not share cookies between threads
-
-TIME LINE
----------
-
-It was first reported to the curl project on September 23 by Cure53.
-
-We contacted distros@...nwall on October 19.
-
-curl 7.51.0 was released on November 2 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-his vulnerability was found during a Secure Open Source audit performed by
-Cure53.
-
--- 
-
-  / daniel.haxx.se
+iQIcBAEBCAAGBQJXam9xAAoJEHb/MwWLVhi2BAIP/A/nVfFm9lCU2/r5Hn7/CHJ3
+eZkfmbMZU6+GDNx6xp+5ZIu2OOWbEwmCh1daXxCu1z3YSVv/tq06nw5TZ57pufd/
+K1vSdwwm54U1hdT8O/+TGV7tREVfyJMLncVIxwtctHOsnsODOQFCln89fpLYzObH
+HOBOqii6TCqeyCyatjBsKRzIZz4Gy0FN+j3htWR6Ws+TDEujK/yjm/KeLak4QKp8
+ZpVjxq3Cc9HmdQjnTR14uMNr1gcEhvKW9yBjzERarJ7/vzoNQLfLzmVLAnqP7xQK
+vixrgxrD8UNU15frbFfxJ2EQk9wP3j8tXYag8XlAWkjbr++2Fy5EuN68lSqxqfnC
+cgVFvTjyO7ValKzkuCPUBiBEo0e2lvspxZaEIxrqC7VvXWdtuuqftDjOiZ6KI2xN
+R0LpyPylYho5n1lMLI6iZv5XUNpdTkLHLhjAMAZ5oLqqVcoGEeg8orvoC25GZIZg
++BAmu4k8mhs9oDlFVzXyk4Xpt/E8PBqYcUpfIFGzPYI6N5UUGN1tJ1doj5UXzJ04
+opmmz2X859F8JjXLPutxWxJzVIwo1gS+HTNMEzyvOBgaSTB/6dD4+tGy538AH4Zt
+jtkhEMH8WiYp8hOJ4ShiVBYBkldfOv9ScQoD70UtndKbjJnY4tEutPajqrb09dvX
+tPrQg6mNSnadZYUBFGHA
+=OuaR
+-----END PGP SIGNATURE-----
