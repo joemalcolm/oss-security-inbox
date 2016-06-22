@@ -1,25 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/15/15
-Message-ID: <CAGoFzNedN+OD6JymsdZxO7UrLqctV0dbzAu-HkMqZFsKAEcsOg@mail.gmail.com>
-Date: Wed, 15 Jun 2016 10:28:02 -0400
-From: Insu Yun <wuninsu@...il.com>
-To: oss-security@...ts.openwall.com, Yeongjin Jang <Yeongjin.jang@...ech.edu>
-Subject: CVE Request: heap overflow in Python zipimport module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/22/5
+Message-Id: <20160622213446.7624B6C01D7@smtpvmsrv1.mitre.org>
+Date: Wed, 22 Jun 2016 17:34:46 -0400 (EDT)
+From: cve-assign@...re.org
+To: john@...nuts.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: SQL injection in MovableType xml-rpc interface
 Content-Type: text/plain; charset=utf-8
 
-Hello.
-In Python zipimport module,
-if compress != 0, then bytes_size = data_size + 1
-data_size is not sanitized, so if data_size = -1,
-then it overflows and becomes 0.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-In that case, python allocates small heap, but after that in freed, it
-overflows heap.
-Fix info https://bugs.python.org/issue26171
-Please help assign a CVE to this vulnerability.
-Thank you.
+> SixApart just released new versions of MovableType 6.2 and 6.1 to fix an SQL
+> injection in the xml-rpc interface. 
 
--- 
-Regards
-Insu Yun
+> https://movabletype.org/news/2016/06/movable_type_626_and_613_released.html
 
+This says:
+
+>> Previous versions, including Movable Type 6.2.4 and 6.1.2, are
+>> susceptible to SQL injection attacks via XML-RPC interface.
+
+>> AFFECTED VERSIONS OF MOVABLE TYPE
+
+>>    Movable Type Pro 6.0.x, 6.1.x, 6.2.x
+>>    Movable Type Advanced 6.0.x, 6.1.x, 6.2.x
+
+Use CVE-2016-5742.
+
+> The vulnerability also affects the older GPLv2 licensed MovableType
+> 5.2.13.
+
+Is there a separate public reference stating that 5.2.13 is affected?
+Or, do you mean that you've done your own analysis and concluded
+that 5.2.13 has the same vulnerability as 6.x? (Either one seems
+fine, and wouldn't affect the number of CVE IDs - we are mostly
+interested in linking the CVE to the primary-source reference about
+the 5.2.13 vulnerability, if such a reference exists elsewhere.)
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXawQKAAoJEHb/MwWLVhi25CYP/1ndEBhuECXE1ewc2We9koth
+yYPF2n523eUcrcl5gZIKsfFnZBAiGSQTiGqCpjtZ6DFF8JkGS8gr+QCe6y6yzF0x
+ayljwMsxMzHG0QMEmM0v/KKeIGacLTfsKwfOMLiVM5xsXURXZXxP7oifneTS75Rj
+wWFW1KQqz6tpQi4NNQp5jCu2R1hv+JrXTX2x/NlG5sUSsxZ96+8JFVckLqVrzLo1
+HVaZBHkYvRgdntGmt24yH6fMGBHGpTGGP2mMTiYDA736dcgk2fv6QB7HPiPAXl9D
+BYeZpa1A4vnmMaGB7rC2A56yChJ2cbcGr1AZZGlwHaIqWJhm5Qh/eP6AE7y+0ank
+0xQe9DBPzTB7YUzBzdnIIgVjA1cgTxUhfryOAdnb1ci3E6hLVSwdKbMEzaIg63fG
+nD7Vv2QBTuFhr3wkvugnHadW8oAsfPqeM6nr1uTjzhERQa6PBundQLzsDRBk3aUT
+95V8WoZ0yv+32KV5WyZzZM2VuywD6cWW85OVRQM2wFMi4Z8K91fl9qr0IaEwRr45
+U8wOnCOHCRRGLFjArlc+5uDQ5cEZBE+449ZIxUE+Pa2ljRW5oz172Dzam2jF+hS9
+5sN2dVRZ7EX6AZkXb4npt1HKivne3W770qirZmoR+W/VZCm6Fb3bOx4+Aft/2Guh
+XonC8O8zTCjrRB4/KmoS
+=CU2Q
+-----END PGP SIGNATURE-----
