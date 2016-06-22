@@ -1,26 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/18/14
-Message-ID: <CAMYtjAq5Mb+gVHxmYYMJqxvx0=VR_fAEePODPVgNJfrOGZA9Kg@mail.gmail.com>
-Date: Thu, 18 Feb 2016 22:13:03 +0100
-From: Pere Orga <pere@...a.cat>
-To: oss-security@...ts.openwall.com
-Cc: Drupal Security Team <security@...pal.org>
-Subject: CVE requests for Drupal contributed modules (2016-006, 2016-007)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/22/3
+Message-ID: <1466608195.2458.5.camel@nixnuts.net>
+Date: Wed, 22 Jun 2016 10:09:55 -0500
+From: John Lightsey <john@...nuts.net>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request: SQL injection in MovableType xml-rpc interface
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi there,
 
-Please can I have CVE IDs assigned to the following vulnerabilities:
+SixApart just released new versions of MovableType 6.2 and 6.1 to fix an SQL
+injection in the xml-rpc interface. The vulnerability also affects the older
+GPLv2 licensed MovableType 5.2.13.
 
-Commerce Authorize.Net SIM/DPM Payment Methods - Access Bypass -
-DRUPAL-SA-CONTRIB-2016-006
-https://www.drupal.org/node/2670632
+Could you please assign a CVE identifier for tracking this issue?
 
-Nodejs - Access bypass - DRUPAL-SA-CONTRIB-2016-007
-https://www.drupal.org/node/2670636
-
-Many thanks
-
-Regards
--- 
-Pere Orga on behalf of the Drupal Security team
+https://movabletype.org/news/2016/06/movable_type_626_and_613_released.html
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
