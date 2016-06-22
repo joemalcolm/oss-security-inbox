@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4175" "Wednesday" "20" "April" "2016" "17:16:24" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160420211624.5E0486C0453@smtpvmsrv1.mitre.org>" "174" "[oss-security] various vulnerabilities in Node.js packages" nil nil nil "4" "2016042021:16:24" "[oss-security] various vulnerabilities in Node.js packages" (number mark "U       cve-assign@m Apr 20  174/4175  " thread-indent "\"[oss-security] various vulnerabilities in Node.js packages\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1693" "Wednesday" "22" "June" "2016" "13:11:51" "+0100" "henrix@camandro.org" "henrix@camandro.org" "<8760t1pgmw.fsf@camandro.org>" "55" "Re: [oss-security] [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ" nil nil nil "6" "2016062212:11:51" "[oss-security] [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ" (number mark "U       henrix@caman Jun 22   55/1693  " thread-indent "\"Re: [oss-security] [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ\"\n") "<20160622092838.GA9075@openwall.com>" ("<575B352F.9000808@canonical.com>" "<20160622092838.GA9075@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28612 invoked by uid 550); 20 Apr 2016 21:16:36 -0000
+Received: (qmail 7588 invoked by uid 550); 22 Jun 2016 16:42:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,185 +12,75 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28588 invoked from network); 20 Apr 2016 21:16:35 -0000
-From: cve-assign@mitre.org
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Message-Id: <20160420211624.5E0486C0453@smtpvmsrv1.mitre.org>
-Date: Wed, 20 Apr 2016 17:16:24 -0400 (EDT)
-Subject: [oss-security] various vulnerabilities in Node.js packages
+Received: (qmail 19719 invoked from network); 22 Jun 2016 12:12:26 -0000
+From: henrix@camandro.org
+To: Solar Designer <solar@openwall.com>
+Cc: oss-security@lists.openwall.com
+References: <575B352F.9000808@canonical.com>
+	<20160622092838.GA9075@openwall.com>
+Date: Wed, 22 Jun 2016 13:11:51 +0100
+In-Reply-To: <20160622092838.GA9075@openwall.com> (Solar Designer's message of
+	"Wed, 22 Jun 2016 12:28:38 +0300")
+Message-ID: <8760t1pgmw.fsf@camandro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-BlackCat-Spam-Score: -28
+X-Mythic-Debug: Threshold =  On = 
+Subject: Re: [oss-security] [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Solar Designer <solar@openwall.com> writes:
 
-The CVE Assignment Team received a request (on an unexpected mailing
-list) for CVE IDs for several Node.js packages. Because everything was
-open source and post-disclosure, we are sending IDs here instead.
+> On Fri, Jun 10, 2016 at 02:46:23PM -0700, John Johansen wrote:
+>> This is a forward notification of a local priv escalation flaw from
+>> security@kernel.org to the OSS security list. The CRD was for
+>> 2016-06-08 14:00:00 UTC. Patches attached to the email.
+>>=20
+>> The flaw in eCryptfs was assigned CVE-2016-1583.
+>
+> The Project Zero issue is now public:
+>
+> https://bugs.chromium.org/p/project-zero/issues/detail?id=3D836
+>
+> and it includes an exploit, which I've re-attached.  (The rest of the
+> files, including the crasher, were already posted in here by John.)
+>
+>> Subject: [PATCH 2/3] ecryptfs: forbid opening files without mmap handler
+>
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?i=
+d=3D2f36db71009304b3f0b95afacd8eba1f9f046b87
+>
+>> Subject: [PATCH 1/3] proc: prevent stacking filesystems on top
+>
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?i=
+d=3De54ad7f1ee263ffa5a2de9c609d58dfa27b21cd9
+>
+>> Subject: [PATCH 3/3] sched: panic on corrupted stack end
+>
+> Not committed?
+>
 
+Yup, it's committed:
 
-> https://nodesecurity.io/advisories/23
-> 
-> marked package before 0.3.4 for Node.js - ReDoS
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=
+=3D29d6455178a09e1dc340380c582b13356227e8df
 
-Use CVE-2015-8854.
+Cheers,
+--=20
+Lu=C3=ADs
 
-
-
-> https://nodesecurity.io/advisories/28
-> 
-> The qs module does not have an option or default for specifying object
-> depth and when parsing a string representing a deeply nested object
-> will block the event loop for long periods of time. An attacker could
-> leverage this to cause a temporary denial-of-service condition, for
-> example, in a web application, other requests would not be processed
-> while this blocking is occurring.
-
-This does not have a CVE ID, as discussed in the
-http://www.openwall.com/lists/oss-security/2014/09/30/10 post.
- 
-
-
-> https://nodesecurity.io/advisories/31
-> 
-> semver package before 4.3.2 for Node.js - ReDoS
- 
-Use CVE-2015-8855.
-
-
-
-> https://nodesecurity.io/advisories/34
-> 
-> serve-index package before 1.6.3 for Node.js - XSS
-
-Use CVE-2015-8856.
-
- 
-
-> https://nodesecurity.io/advisories/37
-> 
-> syntax-error
-
-Use CVE-2014-7192 as described in the
-http://www.openwall.com/lists/oss-security/2014/09/30/10 post and the
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7192 page.
-
-
-
-> https://nodesecurity.io/advisories/39
-> 
-> uglify-js package before 2.4.24 for Node.js - non-boolean comparison mishandling
-
-Use CVE-2015-8857.
-
- 
-
-> https://nodesecurity.io/advisories/41
-> 
-> validator package before 1.1.0 for Node.js
-
-XSS filter bypass - nested tags               Use CVE-2013-7451.
-
-XSS filter bypass - javascript: URIs          Use CVE-2013-7452.
-
-XSS filter bypass - UI redressing             Use CVE-2013-7453.
-
-XSS filter bypass - nested forbidden strings  Use CVE-2013-7454.
- 
-
-
-> https://nodesecurity.io/advisories/43
-> 
-> validator package before 2.0.0 for Node.js - XSS filter bypass - hex encoding
-
-Use CVE-2014-9772.
-
-
-
-> https://nodesecurity.io/advisories/46
-> 
-> ms package before 0.7.0 for Node.js - ReDoS
-
-Use CVE-2015-8315.
-
- 
-
-> https://nodesecurity.io/advisories/48
-> 
-> uglify-js package before 2.6.0 for Node.js - ReDoS
-
-Use CVE-2015-8858.
-
- 
-
-> https://nodesecurity.io/advisories/55
-> 
-> moment package before 2.11.2 for Node.js - ReDoS
-
-Use CVE-2016-4055.
-
- 
-
-> https://nodesecurity.io/advisories/56
-> 
-> send package before 0.11.1 for Node.js - path disclosure
-
-Use CVE-2015-8859.
-
- 
-
-> https://nodesecurity.io/advisories/57
-> 
-> tar package before 2.0.0 for Node.js - symlink mishandling
-
-Use CVE-2015-8860.
-
- 
-
-> https://nodesecurity.io/advisories/61
-> 
-> handlebars package before 4.0.0 for Node.js - injection
-
-Use CVE-2015-8861.
- 
-
-
-> https://nodesecurity.io/advisories/62
-> 
-> mustache package before 2.2.1 for Node.js - injection
-
-Use CVE-2015-8862.
-
- 
-
-> https://nodesecurity.io/advisories/76
-
-is-my-json-valid - Use CVE-2016-2537 - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-2537
-
-
-
-> https://nodesecurity.io/advisories/77
-
-hawk - Use CVE-2016-2515 - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-2515
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXF/CmAAoJEHb/MwWLVhi2r8wQAJnfaenGkAtx0d5Qg+wS13tq
-zqbibEgI5QY8ICMFCDuP5i3QFwTuRdD/jkgV0YC01jGh1t9HOscJ+s1QII9TDgNU
-t0bxFL3Gkltk3hWEmH1GcwxEr3NHm6lxgmqBFcXIwS6ogZCRgNVpQ+rOkwf38pSH
-9EBKNb3neQFmKjW1Vw49EK4Lt+frM0YEp3tk9goD2X3sYaPg7e7gXuKUs5aPjCwx
-Ay3JKl0t9R3iGoVlxOoR6mrHlyrEg8dD+G/1Qw6OgacoaX3yYYyCWfYCCvskMDUH
-uVzcDNG3sWKzSGZaMYuyj4m0vjJpZeP2RONF1/3I0syf2uFS2LNkj4N9PwWNgFqR
-mckFrRplxFI9JiLPfGJG1Tk/6giysexVMbb1cd+cnQymnWhsCKBbmxnVwjOosb04
-xNjsmH8N9T30oQo+nAlSxB559s1bcYdFJwHDna1GzGYU1oQSTlQuirkyAbGlkAgo
-kp5MLwhXls+kHGdF81GAde3CgRAJe1UVfWsvFEIsc0LqUBFpB9FFhJ1oynBsuY8h
-sQZ/1k+TrFYyks3ga72vp0yGwZ9XrcfDE1roBzE7MRwKBGY6Ar5pTLGFih9ILoBs
-WWpLX53tExs9h7NXKjvydX3NB+r8ii8VjH9B7zzH/+YXHCjKuZranAHmLYOq710a
-TPB0PkU+Ig4KgWAgKRMb
-=K29F
------END PGP SIGNATURE-----
+> Andy Lutomirski is working on virtually mapped stacks with guard pages
+> so that kernel stack overflows would be detected:
+>
+> http://www.openwall.com/lists/kernel-hardening/2016/06/15/1
+> http://www.openwall.com/lists/kernel-hardening/2016/06/20/14
+>
+> Linus wants the 1.5us overhead on task creation to be reduced before
+> this gets merged:
+>
+> http://www.openwall.com/lists/kernel-hardening/2016/06/21/10
+>
+> Alexander
+>
+>
+>
