@@ -1,46 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/12/7
-Message-ID: <CAAejdtx6_HPJ3gjhbraHDOW76EbnH0PZzxVLr5S1qYf=Hwsfsg@mail.gmail.com>
-Date: Thu, 12 May 2016 18:09:46 +0800
-From: WinsonLiu <stackexploit@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: CVE Request - OpenJPEG: Security Fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/22/6
+Message-ID: <1466632135.2458.9.camel@nixnuts.net>
+Date: Wed, 22 Jun 2016 16:48:55 -0500
+From: John Lightsey <john@...nuts.net>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: SQL injection in MovableType xml-rpc interface
 Content-Type: text/plain; charset=utf-8
 
->
-> Hi,
->
->
->> Some security issues of OpenJPEG have been fixed. Please consider
->> assigning CVE numbers to them.
->
->
->> 2. Issue 775
->
-> OpenJPEG Out-of-Bounds Access in function opj_tgt_reset of tgt.c
->
-> Fixed via
->> https://github.com/uclouvain/openjpeg/commit/1a8318f6c24623189ecb65e049267c6f2e005c0e
->
->
-> Is that a different issue than CVE-2016-1924?
->
+On Wed, 2016-06-22 at 17:34 -0400, cve-assign@...re.org wrote:
+> > SixApart just released new versions of MovableType 6.2 and 6.1 to fix an SQL
+> > injection in the xml-rpc interface. 
+> 
+> > https://movabletype.org/news/2016/06/movable_type_626_and_613_released.html
+> 
+> This says:
+> 
+> >> Previous versions, including Movable Type 6.2.4 and 6.1.2, are
+> >> susceptible to SQL injection attacks via XML-RPC interface.
+> 
+> >> AFFECTED VERSIONS OF MOVABLE TYPE
+> 
+> >>    Movable Type Pro 6.0.x, 6.1.x, 6.2.x
+> >>    Movable Type Advanced 6.0.x, 6.1.x, 6.2.x
+> 
+> Use CVE-2016-5742.
+> 
+> > The vulnerability also affects the older GPLv2 licensed MovableType
+> > 5.2.13.
+> 
+> Is there a separate public reference stating that 5.2.13 is affected?
+> Or, do you mean that you've done your own analysis and concluded
+> that 5.2.13 has the same vulnerability as 6.x? (Either one seems
+> fine, and wouldn't affect the number of CVE IDs - we are mostly
+> interested in linking the CVE to the primary-source reference about
+> the 5.2.13 vulnerability, if such a reference exists elsewhere.)
+> 
 
-Hi Moritz,
-
-You are right. Issue 775 was a duplicate of CVE-2016-1924.
-
-I didn't notice that limingxing has been reported this issue (reported at
-http://seclists.org/oss-sec/2016/q1/128 and assigned CVE-2016-1924). I have
-tested the proof-of-concept file supplied by limingxing and confirmed that
-issue 775 was a duplicate of CVE-2016-1924. It seems that limingxing did
-not report it to the official developers because I could not find any
-information about this issue on GitHub and the official developers did not
-fix it for a long time. I thought this was a new issue and reported it to
-them after I did some fuzz testing. Anyway, this issue has been fixed by
-the official developers now.
-
-Regards,
-Ke Liu of Tencent's Xuanwu LAB
-
+I sent the original vulnerability report to SixApart and based my report on the
+5.2.13 version of the code.
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
