@@ -1,136 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/20/3
-Message-Id: <E1aLrZ4-0003QN-Ce@xenbits.xen.org>
-Date: Wed, 20 Jan 2016 12:08:42 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 167 (CVE-2016-1570) - PV superpage functionality missing sanity checks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/22/1
+Message-ID: <20160622092838.GA9075@openwall.com>
+Date: Wed, 22 Jun 2016 12:28:38 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Jun 10, 2016 at 02:46:23PM -0700, John Johansen wrote:
+> This is a forward notification of a local priv escalation flaw from
+> security@...nel.org to the OSS security list. The CRD was for
+> 2016-06-08 14:00:00 UTC. Patches attached to the email.
+> 
+> The flaw in eCryptfs was assigned CVE-2016-1583.
 
-            Xen Security Advisory CVE-2016-1570 / XSA-167
-                              version 4
+The Project Zero issue is now public:
 
-            PV superpage functionality missing sanity checks
+https://bugs.chromium.org/p/project-zero/issues/detail?id=836
 
-UPDATES IN VERSION 4
-====================
+and it includes an exploit, which I've re-attached.  (The rest of the
+files, including the crasher, were already posted in here by John.)
 
-Public release.
+> Subject: [PATCH 2/3] ecryptfs: forbid opening files without mmap handler
 
-ISSUE DESCRIPTION
-=================
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=2f36db71009304b3f0b95afacd8eba1f9f046b87
 
-The PV superpage functionality lacks certain validity checks on data
-being passed to the hypervisor by guests.  This is the case for the
-page identifier (MFN) passed to MMUEXT_MARK_SUPER and
-MMUEXT_UNMARK_SUPER sub-ops of the HYPERVISOR_mmuext_op hypercall as
-well as for various forms of page table updates.
+> Subject: [PATCH 1/3] proc: prevent stacking filesystems on top
 
-IMPACT
-======
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=e54ad7f1ee263ffa5a2de9c609d58dfa27b21cd9
 
-Use of the feature, which is disabled by default, may have unknown
-effects, ranging from information leaks through Denial of Service to
-privilege escalation.
+> Subject: [PATCH 3/3] sched: panic on corrupted stack end
 
-VULNERABLE SYSTEMS
-==================
+Not committed?
 
-Only systems which enable the PV superpage feature are affected.  That
-is, only systems with an `allowsuperpage' setting on the hypervisor
-command line.  Note that in Xen 4.0.x and 3.4.x the option is named
-`allowhugepage'.
+Andy Lutomirski is working on virtually mapped stacks with guard pages
+so that kernel stack overflows would be detected:
 
-Xen versions 3.4.0, 3.4.1, and from 4.1 onwards are affected.
+http://www.openwall.com/lists/kernel-hardening/2016/06/15/1
+http://www.openwall.com/lists/kernel-hardening/2016/06/20/14
 
-Only x86 systems are affected.
+Linus wants the 1.5us overhead on task creation to be reduced before
+this gets merged:
 
-Only PV guests can exploit the vulnerability.
+http://www.openwall.com/lists/kernel-hardening/2016/06/21/10
 
-MITIGATION
-==========
+Alexander
 
-Running only HVM guests will avoid this issue.
+View attachment "exploit-description.txt" of type "text/plain" (11816 bytes)
 
-Not enabling PV superpage support (by omitting the `allowsuperpage' or
-`allowhugepage' hypervisor command line options) will avoid exposing
-the issue.
-
-CREDITS
-=======
-
-This issue was discovered by Qinghao Tang of 360 Marvel Team.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa167.patch           xen-unstable
-xsa167-4.6.patch       Xen 4.6.x, 4.5.x
-xsa167-4.4.patch       Xen 4.4.x, 4.3.x
-
-$ sha256sum xsa167*
-a71f709eef59425cb2113fa48d3b44048c6bf41063200fee1c847f6e0ed45a09  xsa167.patch
-194c1ce89292f4cbb9980baa703095bcbeb5849abf46d193e07a98a0d8301f78  xsa167-4.4.patch
-2bd786cccfd13c6732d6db8afc9e18058465efcb1bc93f894c359e3a820d5403  xsa167-4.6.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-
-However deployment of the SUPERPAGE DISABLEMENT MITIGATION is NOT
-permitted (except where all the affected systems and VMs are
-administered and used only by organisations which are members of the
-Xen Project Security Issues Predisclosure List).  Specifically,
-deployment on public cloud systems is NOT permitted.
-
-This is because disabling PV superpage support is visible to guests, so
-such deployment could lead to the rediscovery of the vulnerability.
-
-Deployment of the mitigation is permitted only AFTER the embargo ends.
-
-
-Also: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJWn3jEAAoJEIP+FMlX6CvZTOsH/2ReFJ0Yhp5da69XKvFEJR/s
-0yEFxjvqiSyBPsWjyiaAdOp/1A2sltEeDDnMy7xEoXHmon0p6IV0IR4L+fMCLjl2
-1ZI4tKpkn3zUE+IOjfu/GJ53f87XWSq/u9Ri7yZQdxFpgd3AXcLegGm8i4L/58iY
-vdwAAuczACztEN/NbWFedlGUEd5PKqKwb4wOg1uhLIMwzvjxgtejVAyZD83HgP6i
-LeWMO7EfeU8ND38Otiw9lNlKD/Ia7vpRG+BXuADLx18hbR1TU9AJ0RO1zb9JnAAj
-snYdgB6s1wzRD4/HOc+s1uaIttPPODs0IhZunylI7UVhdWKp5Qkszw/QUcmufnk=
-=5acB
------END PGP SIGNATURE-----
-
-Download attachment "xsa167.patch" of type "application/octet-stream" (2372 bytes)
-
-Download attachment "xsa167-4.4.patch" of type "application/octet-stream" (2202 bytes)
-
-Download attachment "xsa167-4.6.patch" of type "application/octet-stream" (2395 bytes)
+Download attachment "exploit.tar.gz" of type "application/x-gzip" (6377 bytes)
