@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1058" "Thursday" "18" "February" "2021" "12:53:39" "-0500" "Bill Lucy" "wtlucy@apache.org" nil "29" "[oss-security] CVE-2021-26296: Cross-Site Request Forgery (CSRF) vulnerability in Apache MyFaces" nil nil nil "2" nil nil (number mark "U       wtlucy@apach Feb 18   29/1058  " thread-indent "\"[oss-security] CVE-2021-26296: Cross-Site Request Forgery (CSRF) vulnerability in Apache MyFaces\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-26296: Cross-Site Request Forgery (CSRF) vulnerability in Apache MyFaces" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2018" "Wednesday" "22" "June" "2016" "17:34:46" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160622213446.7624B6C01D7@smtpvmsrv1.mitre.org>" "52" "[oss-security] Re: CVE request: SQL injection in MovableType xml-rpc interface" nil nil nil "6" "2016062221:34:46" "[oss-security] Re: CVE request: SQL injection in MovableType xml-rpc interface" (number mark "U       cve-assign@m Jun 22   52/2018  " thread-indent "\"[oss-security] Re: CVE request: SQL injection in MovableType xml-rpc interface\"\n") "<1466608195.2458.5.camel@nixnuts.net>" ("<1466608195.2458.5.camel@nixnuts.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15746 invoked by uid 550); 18 Feb 2021 18:58:33 -0000
+Received: (qmail 7888 invoked by uid 550); 22 Jun 2016 21:35:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,48 +12,64 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23656 invoked from network); 18 Feb 2021 17:54:21 -0000
-X-Gm-Message-State: AOAM531JvPtAAoRVcfcNS2a9kiZj9bYkIKTbnvvQGxggvrqU36+3Kl03
-	mBBIQp6mjNY1pE5rB8SjY+5UkZ6zL1ZCNNp2lQ4=
-X-Google-Smtp-Source: ABdhPJxlijSY3NcHHVgGyZxnJ63Z4FVuzIvMZISQCXKXKR/tnP8r42m+4oqKPdDjJdLvBNldkmRbXQLGI4QOhqjmsGk=
-X-Received: by 2002:a9d:67cb:: with SMTP id c11mr3786804otn.290.1613670844742;
- Thu, 18 Feb 2021 09:54:04 -0800 (PST)
-MIME-Version: 1.0
-From: Bill Lucy <wtlucy@apache.org>
-Date: Thu, 18 Feb 2021 12:53:39 -0500
-X-Gmail-Original-Message-ID: <CALwS-OMachBCyzOmdveGjsz+Ebknrc_Nh6Tq71uH-e4y9DTv5A@mail.gmail.com>
-Message-ID: <CALwS-OMachBCyzOmdveGjsz+Ebknrc_Nh6Tq71uH-e4y9DTv5A@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000007c448f05bba005f6"
-Subject: [oss-security] CVE-2021-26296: Cross-Site Request Forgery (CSRF) vulnerability in
- Apache MyFaces
+Received: (qmail 7867 invoked from network); 22 Jun 2016 21:35:00 -0000
+From: cve-assign@mitre.org
+To: john@nixnuts.net
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <1466608195.2458.5.camel@nixnuts.net>
+Message-Id: <20160622213446.7624B6C01D7@smtpvmsrv1.mitre.org>
+Date: Wed, 22 Jun 2016 17:34:46 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: SQL injection in MovableType xml-rpc interface
 
---0000000000007c448f05bba005f6
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Description:
-In the default configuration, Apache MyFaces Core versions 2.2.0 to 2.2.13,
-2.3.0 to 2.3.7, 2.3-next-M1 to 2.3-next-M4, and 3.0.0-RC1 use
-cryptographically weak implicit and explicit cross-site request forgery
-(CSRF) tokens. Due to that limitation, it is possible (although difficult)
-for an attacker to calculate a future CSRF token value and to use that
-value to trick a user into executing unwanted actions on an application.
+> SixApart just released new versions of MovableType 6.2 and 6.1 to fix an SQL
+> injection in the xml-rpc interface. 
 
-This issue is being tracked as MYFACES-4373
+> https://movabletype.org/news/2016/06/movable_type_626_and_613_released.html
 
-Mitigation:
-Existing web.xml configuration parameters can be used to direct MyFaces to
-use SecureRandom for CSRF token generation:
+This says:
 
-org.apache.myfaces.RANDOM_KEY_IN_VIEW_STATE_SESSION_TOKEN=secureRandom
-org.apache.myfaces.RANDOM_KEY_IN_CSRF_SESSION_TOKEN=secureRandom
-org.apache.myfaces.RANDOM_KEY_IN_WEBSOCKET_SESSION_TOKEN=secureRandom
+>> Previous versions, including Movable Type 6.2.4 and 6.1.2, are
+>> susceptible to SQL injection attacks via XML-RPC interface.
 
-Credit:
-Apache MyFaces would like to thank Wolfgang Ettlinger (Certitude Consulting
-GmbH)
+>> AFFECTED VERSIONS OF MOVABLE TYPE
 
-Regards,
-Bill Lucy, MyFaces PMC
+>>    Movable Type Pro 6.0.x, 6.1.x, 6.2.x
+>>    Movable Type Advanced 6.0.x, 6.1.x, 6.2.x
 
---0000000000007c448f05bba005f6--
+Use CVE-2016-5742.
+
+> The vulnerability also affects the older GPLv2 licensed MovableType
+> 5.2.13.
+
+Is there a separate public reference stating that 5.2.13 is affected?
+Or, do you mean that you've done your own analysis and concluded
+that 5.2.13 has the same vulnerability as 6.x? (Either one seems
+fine, and wouldn't affect the number of CVE IDs - we are mostly
+interested in linking the CVE to the primary-source reference about
+the 5.2.13 vulnerability, if such a reference exists elsewhere.)
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXawQKAAoJEHb/MwWLVhi25CYP/1ndEBhuECXE1ewc2We9koth
+yYPF2n523eUcrcl5gZIKsfFnZBAiGSQTiGqCpjtZ6DFF8JkGS8gr+QCe6y6yzF0x
+ayljwMsxMzHG0QMEmM0v/KKeIGacLTfsKwfOMLiVM5xsXURXZXxP7oifneTS75Rj
+wWFW1KQqz6tpQi4NNQp5jCu2R1hv+JrXTX2x/NlG5sUSsxZ96+8JFVckLqVrzLo1
+HVaZBHkYvRgdntGmt24yH6fMGBHGpTGGP2mMTiYDA736dcgk2fv6QB7HPiPAXl9D
+BYeZpa1A4vnmMaGB7rC2A56yChJ2cbcGr1AZZGlwHaIqWJhm5Qh/eP6AE7y+0ank
+0xQe9DBPzTB7YUzBzdnIIgVjA1cgTxUhfryOAdnb1ci3E6hLVSwdKbMEzaIg63fG
+nD7Vv2QBTuFhr3wkvugnHadW8oAsfPqeM6nr1uTjzhERQa6PBundQLzsDRBk3aUT
+95V8WoZ0yv+32KV5WyZzZM2VuywD6cWW85OVRQM2wFMi4Z8K91fl9qr0IaEwRr45
+U8wOnCOHCRRGLFjArlc+5uDQ5cEZBE+449ZIxUE+Pa2ljRW5oz172Dzam2jF+hS9
+5sN2dVRZ7EX6AZkXb4npt1HKivne3W770qirZmoR+W/VZCm6Fb3bOx4+Aft/2Guh
+XonC8O8zTCjrRB4/KmoS
+=CU2Q
+-----END PGP SIGNATURE-----
