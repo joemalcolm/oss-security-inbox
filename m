@@ -1,4 +1,9 @@
-Received: (qmail 27902 invoked by uid 550); 13 Oct 2022 22:55:26 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3319" "Thursday" "23" "June" "2016" "08:29:29" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160623122929.EA764332013@smtpvbsrv1.mitre.org>" "100" "[oss-security] Re: CVE for PHP 5.5.37 issues" nil nil nil "6" "2016062312:29:29" "[oss-security] Re: CVE for PHP 5.5.37 issues" (number mark "U       cve-assign@m Jun 23  100/3319  " thread-indent "\"[oss-security] Re: CVE for PHP 5.5.37 issues\"\n") "<CAEsznC7fwbsJ3JudAY4fkh3k_4TfHwaSkgZ9CB=xRQ_1Y5HDdg@mail.gmail.com>" ("<CAEsznC7fwbsJ3JudAY4fkh3k_4TfHwaSkgZ9CB=xRQ_1Y5HDdg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13826 invoked by uid 550); 23 Jun 2016 12:29:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,82 +12,112 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21710 invoked from network); 13 Oct 2022 22:19:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chrisdown.name; s=google;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7o3/R4nhZZLyRpNwfePhiinqQK1b4YFOwK4kYr/o53w=;
-        b=VFE6EgV1SLp4y5Csa2pKg5Anc/xE2TPEhQB6deYMq/JrgxKWvHCIgbAEyc15c4ttE9
-         joGPmqpqZFqKUlTmrm8a2FVvJNEKDxSOtlzGqc5eoKFMFMLnFbq1Rb/4R5TCGOBUkzJF
-         kznZtsLzDqkZLwgnnljvFXGX21mg9JEUMVg4U=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7o3/R4nhZZLyRpNwfePhiinqQK1b4YFOwK4kYr/o53w=;
-        b=oapG8zy83ZT4om/6ZzPVXRC2zMTQFdPomdq4fOAHbUoLs1eTGXWDCCIDRKQYcb2Pnk
-         SQvrsUwvBkbXhi3gu9iBRCu5IzC+9WYri9rsC37/IiIbr4eXgCh0la35soxs33U46590
-         pMoyPadT44SUWj5rSEOWaoJhLmYHF3VyO3TswAdGDu39DF6SEruyCnLUTKjF7TkjlPWt
-         MgKh4JjfvPbDqgkW+wE9mQqp0pPbri730NE3jAhw2SptbABBhpZwtibnfee3DJzovMfs
-         LCxtXKzKBBH616xdshkevcC15z1T7HDL+n3DIGFIcaJtCZmaC59gFLgEQM+FeYVZqodQ
-         lnGA==
-X-Gm-Message-State: ACrzQf3y1dA3ANT4tSF+9MwUyqtrdZpNeIWnOlfPdmFXOh9grmRXjOY2
-	rCFkpbP6lJMl1Jc+wbxvj1zEwWhZtUfSxQ==
-X-Google-Smtp-Source: AMsMyM47vIlPHpcqTh4VKXybcIQRa6dMY7i0LO5KBfb2VTzxt/FSQ9hf0ewp5dg/4cp3zUMjMlcQmw==
-X-Received: by 2002:a05:600c:4f01:b0:3b4:a8c8:2523 with SMTP id l1-20020a05600c4f0100b003b4a8c82523mr7953165wmq.199.1665699584625;
-        Thu, 13 Oct 2022 15:19:44 -0700 (PDT)
-Date: Thu, 13 Oct 2022 23:19:43 +0100
-From: Chris Down <chris@chrisdown.name>
-To: oss-security@lists.openwall.com
-Cc: shuster@seemoo.tu-darmstadt.de,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Message-ID: <Y0iO/0BAoxZmttt3@chrisdown.name>
-References: <20221013101046.GB20615@suse.de>
- <Y0iIXLUix9iFJl7m@itl-email>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="BjZi0Dww2HCTJdz+"
-Content-Disposition: inline
-In-Reply-To: <Y0iIXLUix9iFJl7m@itl-email>
-User-Agent: Mutt/2.2.7 (2022-08-07)
-Subject: Re: [oss-security] Various Linux Kernel WLAN security issues
- (RCE/DOS) found
+Received: (qmail 13783 invoked from network); 23 Jun 2016 12:29:42 -0000
+From: cve-assign@mitre.org
+To: kaplanlior@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAEsznC7fwbsJ3JudAY4fkh3k_4TfHwaSkgZ9CB=xRQ_1Y5HDdg@mail.gmail.com>
+Message-Id: <20160623122929.EA764332013@smtpvbsrv1.mitre.org>
+Date: Thu, 23 Jun 2016 08:29:29 -0400 (EDT)
+Subject: [oss-security] Re: CVE for PHP 5.5.37 issues
 
---BjZi0Dww2HCTJdz+
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Demi Marie Obenour writes:
->Are these fixes going to be backported to stable?  I did not see
->CC: stable@vger.kernel.org in any of the commit messages.
+> GD:
+>     Fixed bug #72339 (Integer Overflow in _gd2GetHeader() resulting in
+>     heap overflow). (Pierre)
+> 
+> https://bugs.php.net/bug.php?id=72339
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=7722455726bec8c53458a32851d2a87982cf0eac
 
-Greg pushed out stable rcs with them a few hours ago[0].
+Use CVE-2016-5766.
 
-0: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/refs/
 
---BjZi0Dww2HCTJdz+
-Content-Type: application/pgp-signature; name="signature.asc"
+> GD:
+>     Fixed bug #72446 (Integer Overflow in gdImagePaletteToTrueColor() resulting
+>     in heap overflow). (Pierre)
+> 
+> https://bugs.php.net/bug.php?id=72446
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=c395c6e5d7e8df37a21265ff76e48fe75ceb5ae6
 
+Use CVE-2016-5767.
+
+
+> - mbstring:
+>      Fixed bug #72402 (_php_mb_regex_ereg_replace_exec - double free). (Stas)
+> 
+> https://bugs.php.net/bug.php?id=72402
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=5b597a2e5b28e2d5a52fc1be13f425f08f47cb62
+
+Use CVE-2016-5768.
+
+
+> - mcrypt:
+>      Fixed bug #72455 (Heap Overflow due to integer overflows). (Stas)
+> 
+> https://bugs.php.net/bug.php?id=72455
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=6c5211a0cef0cc2854eaa387e0eb036e012904d0
+
+Use CVE-2016-5769 for both the mcrypt_generic issue and the mdecrypt_generic issue.
+
+
+> - SPL:
+>     Fixed bug #72262 (int/size_t confusion in SplFileObject::fread). (Stas)
+> 
+> https://bugs.php.net/bug.php?id=72262
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=7245bff300d3fa8bacbef7897ff080a6f1c23eba
+
+Use CVE-2016-5770.
+
+
+> SPL:
+>     Fixed bug #72433 (Use After Free Vulnerability in PHP's GC algorithm and
+>     unserialize). (Dmitry)
+> 
+> https://bugs.php.net/bug.php?id=72433
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=3f627e580acfdaf0595ae3b115b8bec677f203ee
+
+Use CVE-2016-5771. Note that, unlike bug #72434, this does not affect PHP 7.x.
+
+
+> - WDDX:
+>     Fixed bug #72340 (Double Free Courruption in wddx_deserialize). (Stas)
+> 
+> https://bugs.php.net/bug.php?id=72340
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=a44c89e8af7c2410f4bfc5e097be2a5d0639a60c
+
+Use CVE-2016-5772.
+
+
+> - zip:
+>     Fixed bug #72434 (ZipArchive class Use After Free Vulnerability in PHP's GC
+>     algorithm and unserialize). (Dmitry)
+> 
+> https://bugs.php.net/bug.php?id=72434
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=f6aef68089221c5ea047d4a74224ee3deead99a6
+
+Use CVE-2016-5773. Note that, unlike bug #72433, this does affect PHP 7.x.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQKTBAEBCgB9FiEECEkprPvCOwsaJqhB340hthYRgHAFAmNIjv9fFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDA4
-NDkyOUFDRkJDMjNCMEIxQTI2QTg0MURGOEQyMUI2MTYxMTgwNzAACgkQ340hthYR
-gHC6lw/+Mw+lD96tRdfD/L9uAinivGOobKRl1PdQnRuuz6rdp/WYCEiyP7J2buFD
-i/Q6wGNl7wXIWPO0S5MIlLukr+zVO/gZnMhrd44J2qZulkm4zvZinalPZB0Icd5A
-gtrUa3uJevWENRczBuX/tIY8LA2Gl8lj/foF3Iq9oaTearQSvjaejPeZukr1n2tT
-1/stjM+Lna7LPON5ij2CYXlJpMNGaOaEXXiohXWIeuS3142cCL5BRuRKvefe1YuE
-virwETyk/+HLxbeumwT3OOyeb5azvunWsz1g4Rp7EwznMFGSC5wLYBh7f1aZ50CN
-hpzN97VgSH0D/NG0Yil6viJ4JRKHmxCZDeHpIAeNwN4eesxxEPwIATTEIuKK2iKn
-zZFE3WsPkZhau8KJPyW/1WC32rjwijnmWeNXS8OC74dt92CRn7lInmugZuunCZ85
-5B6lGdgPR2U+IJnE467ZQ7pcsrpPLz+xosTGC0aiA1+DuAWewk+E+w6QShDiNQre
-hJrepHayIgETA5MPg6JyeZjyrSV7LK6kASotqT91Jx9GvUaYe5FPQjUZTeDkMzTa
-FytpwNGiD5Xa8+aGZDvcBlLSrJakOFqL2RmORPbpi5lJTtJhXR6m/2aHOg9dnGDd
-ha0I/hpatQ1wYTtOlOEWy4a+OaZqPx0hoUCrSZ6m1Nv0P6BWl7s=
-=sSyF
+iQIcBAEBCAAGBQJXa9W9AAoJEHb/MwWLVhi21HQP/2TrLMSE66XNehUsc3fp1RhQ
+W6Gx2uqOuNt5ueNZE8lSj1WB6HKDQc9gaUIAK6W0G/XFZqg9NNii1w//6zyMAAo6
+IOLjcHAOiqxHdqzlg5pHcGjV9tCzshARcE22Uu3A3BljVUycv2CdBFgwGsGAV4FU
+rx5YH2C/9pDiuN2rnN/rsD87TYJ3krciTX4tF+AV3EQSkhQYyy8nWIxMsKlV2DsC
+DaIaOvB9/10ySOyn5nQ3/2ViTO46LKCI/S7PHuhe6dAQfhXTIllKPRDB8z4dm1YD
+WA7o3TzrF+j4wlV2hrZ+VTLIgTkI3uuzqJHisp0vuYo3/PlIqP0FNKwNiM9v31lO
+7ivHLnfTVPoCcZCWtS83L6uh/GlkUy8L6k3NZdhcMmdbHp2cp3N7zyfue1WNvD3x
+m1bWL41a+VQgxF/jXHUaj814fioA8Rhe/8eXjjYRYmf0UWwEo50M4wQU1gvHm9vT
+P+6TvfvlzOIJkLQ1o1prnWRuQhH3BIeHeXJp8k6m+ujHi2orV4zyHJ2E33/pzUP5
++n6deBFsZ7J2z6U4BmaGbMjTgxOKIgrKf10VHW3elVpobwCgS57H7O2I3sLlJqjS
+RW70mCPmUYvIbC4nxQsO2kVkbQaERmDItzY70j0zOOBa1+e4ZjpnWHGEBtp56QKg
+TF8nawWbJSDCxXEIbb7U
+=VMyi
 -----END PGP SIGNATURE-----
-
---BjZi0Dww2HCTJdz+--
