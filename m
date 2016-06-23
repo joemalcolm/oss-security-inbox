@@ -1,43 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/17/4
-Message-ID: <CAAeBhPcExxcYUmgHX-SN=8agBKL=0t8utAx5qdAr-fSLW9wGZg@mail.gmail.com>
-Date: Tue, 16 Feb 2016 23:07:10 -0500
-From: David Leo <httpsonly.github.io@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/23/8
+Message-id: <etPan.576c1f7b.5aae323e.126b@me.com>
+Date: Thu, 23 Jun 2016 20:42:13 +0300
+From: Kirill Zaitsev <k.zaitsev@...com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Browser Security Tool: HTTPS Only (Why, How, Open Source, Python)
+Subject: RCE vulnerability in Openstack Murano using insecure YAML tags (CVE-2016-4972)
 Content-Type: text/plain; charset=utf-8
 
-Obviously you never read https://httpsonly.github.io/
+==============================================================
+RCE vulnerability in Openstack Murano using insecure YAML tags
+==============================================================
 
-1. The "Other Interesting Tools" section has tools to easily switch
-proxy of your browser(FoxyProxy, etc). You want HTTPS-Only internet,
-that's what this tool does; you want normal internet, just click that
-FoxyProxy icon(yes, it's really easy).
+:Date: June 23, 2016
+:CVE: CVE-2016-4972
 
-2. The "What HTTPS Doesn’t Do" section has very clear words about
-HTTPS limitations. Even though it's from US government, it's actually
-very clear words.
 
-Best Wishes,
+Affects
+~~~~~~~
+- Murano: <=2015.1.1; <=1.0.2; ==2.0.0
+- Murano-dashboard: <=2015.1.1; <=1.0.2; ==2.0.0
+- Python-muranoclient: <=0.7.2; >=0.8.0<=0.8.4
 
-On Mon, Feb 15, 2016 at 2:13 PM,  <gremlin@...mlin.ru> wrote:
-> On 2016-02-14 22:07:21 -0500, David Leo wrote:
->
->  > This tool completely locks browser - just HTTPS, nothing else.
->
-> That means, it causes effective DoS with "ssl_error_no_cypher_overlap"
-> (as it's called by Firefox) for approx. 60% of all sites.
->
-> In most cases, HTTPS is either misused or abused. But the ${subject}
-> does both misuse and abuse: it forces HTTPS even for unauthenticated
-> connections (are there any real reasons to use HTTPS instead of E2EE
-> for protecting the information which is publicly available?), while
-> not making any use of a clients' certificates.
->
-> Ds: PoS
-> Rp: >& /dev/null
->
->
-> --
-> Alexey V. Vissarionov aka Gremlin from Kremlin
-> GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8
+
+Description
+~~~~~~~~~~~
+Kirill Zaitsev from Mirantis reported a vulnerability in OpenStack
+Murano applications processing. Using extended YAML tags in Murano
+application YAML files, an attacker can perform a Remote Code
+Execution attack.
+
+Vulnerability has been verified in all currently supported branches.
+Further examination of code suggest, that it is also present in kilo and
+juno versions of murano.
+
+Patches
+~~~~~~~
+- https://review.openstack.org/#/c/333444/ (Liberty)
+- https://review.openstack.org/#/c/333425/ (Liberty)
+- https://review.openstack.org/#/c/333432/ (Liberty)
+- https://review.openstack.org/#/c/333443/ (Mitaka)
+- https://review.openstack.org/#/c/333424/ (Mitaka)
+- https://review.openstack.org/#/c/333439/ (Mitaka)
+- https://review.openstack.org/#/c/333423/ (Newton)
+- https://review.openstack.org/#/c/333440/ (Newton)
+- https://review.openstack.org/#/c/333428/ (Newton)
+
+
+Credits
+~~~~~~~
+- Kirill Zaitsev from Mirantis (CVE-2016-4972)
+
+
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/python-muranoclient/+bug/1586078
+- https://bugs.launchpad.net/murano/+bug/1586079
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4972
+
+Notes
+~~~~~
+- Fixes for this bug are going to be included in the upcoming releases
+  of murano 1.0.3(liberty), 2.0.1(mitaka), 3.0.0(newton) and 
+  python-muranoclient 0.7.3(liberty), 0.8.5(mitaka), 0.9.0(newton)
+
+
+-- 
+Kirill Zaitsev
+Murano Project Technical Lead
+Content of type "text/html" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
