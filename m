@@ -1,145 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/15
-Message-ID: <CALPTtNWcndGBwL-pf0BF_XuSA6UCQajhe6-mgj=G5xa3iK1EEA@mail.gmail.com>
-Date: Mon, 19 Sep 2016 13:55:09 -0700
-From: Reed Loden <reed@...dloden.com>
-To: oss-security@...ts.openwall.com
-Cc: "'Apple' via" <infosec@...ork.com>
-Subject: Re: CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/23/5
+Message-Id: <20160623125926.22C04B2E154@smtpvbsrv1.mitre.org>
+Date: Thu, 23 Jun 2016 08:59:26 -0400 (EDT)
+From: cve-assign@...re.org
+To: meissner@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client
 Content-Type: text/plain; charset=utf-8
 
-Was Ruby actually notified of this outside of the GitHub issue? Not sure
-they are monitoring that repository for security issues, so could have been
-missed.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-https://www.ruby-lang.org/en/security/ defines their security reporting
-processes.
+> https://sourceware.org/bugzilla/show_bug.cgi?id=20018
 
-~reed
+When we looked at this last week, we concluded that it was intentional
+glibc behavior and therefore a glibc CVE ID should not exist.
 
-On Mon, Sep 19, 2016 at 12:20 PM, Mike Santillana <
-michael.santillana@...ork.com> wrote:
+https://bugzilla.redhat.com/show_bug.cgi?id=1303699 Comment 4 is a
+private comment, but there is apparently a copy of it in the public
+https://bugzilla.redhat.com/show_bug.cgi?id=1347549 Comment 3:
 
-> Product: Ruby's OpenSSL Library
-> Version: Tested on 2.3.1 (latest)
-> Bug: IV Reuse
-> Impact: Depends on the usage of the library
->
-> Hello,
->
-> An IV reuse bug was discovered in Ruby's OpenSSL library when using
-> aes-gcm. When encrypting data with aes-*-gcm, if the IV is set before
-> setting the key, the cipher will default to using a static IV. This creates
-> a static nonce and since aes-gcm is a stream cipher, this can lead to known
-> cryptographic issues.
->
-> The documentation does not appear to specify the order of operations when
-> setting the key and IV [1]. As an example, see the following insecure code
-> snippet below:
->
-> Vulnerable Code:
->
-> def encrypt(plaintext)
->     cipher = OpenSSL::Cipher.new('aes-256-gcm')
->     iv = cipher.random_iv # Notice here the IV is set before the key
->     cipher.key = '11111111111111111111111111111111'
->     cipher.auth_data = ""
->     ciphertext = cipher.update(plaintext) + cipher.final
->     tag = cipher.auth_tag
->
->     puts "[+] Encrypting: #{plaintext}"
->     puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
-> #{bin2hex(tag)} | #{bin2hex(ciphertext)}"
-> end
->
-> A developer that uses the code above may incorrectly assume that their code
-> is secure from the pitfalls associated with IV reuse in aes-*-gcm, since
-> the ‘cipher.random_iv’ method is used. According to the documentation, this
-> should generate a random IV each time the encryption method is called.
->
-> When the code above is run with the same key and same plaintext message,
-> the following results are obtained:
->
-> Output:
-> # Run 1
-> ./gcm_encrypt.rb 'This is some secret message.'
-> [+] Encrypting: This is some secret message.
-> [+] CipherMessage (IV | Tag | Ciphertext): e32594080cca2b37f7d7e968 |
-> 8c676db7551cf046266252ee776ecaa9 | 81092d16b62902d9985656253891dc
-> 800a5bb48fb1c4ad0b7bdf6054
->
-> # Run 2
-> ./gcm_encrypt.rb 'This is some secret message.'
-> [+] Encrypting: This is some secret message.
-> [+] CipherMessage (IV | Tag | Ciphertext): 431d70714f5e5f876d1c7830 |
-> 8c676db7551cf046266252ee776ecaa9 | 81092d16b62902d9985656253891dc
-> 800a5bb48fb1c4ad0b7bdf6054
->
-> Notice that in the output above a unique IV is returned for both runs, but
-> with the same ciphertext. This proves that even though the random_iv method
-> is called, the code is defaulting to a static IV. If an attacker can
-> retrieve multiple ciphertext messages, it is possible to decrypt the
-> ciphertexts by applying the same attack one would use in a two-time pad
-> (XOR ciphertexts and crib drag).
->
-> Next review the following code snippet and output, which depicts a secure
-> implementation of the code:
->
-> Valid Code:
->
-> def encrypt(plaintext)
->     cipher = OpenSSL::Cipher.new('aes-256-gcm')
->     cipher.key = '11111111111111111111111111111111'
->     iv = cipher.random_iv # Notice here the IV is set after the key
->     cipher.auth_data = ""
->     ciphertext = cipher.update(plaintext) + cipher.final
->     tag = cipher.auth_tag
->
->     puts "[+] Encrypting: #{plaintext}"
->     puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
-> #{bin2hex(tag)} | #{bin2hex(ciphertext)}"
-> end
->
-> Output:
-> # Run 1
-> ./gcm_encrypt.rb 'This is some secret message.'
-> [+] Encrypting: This is some secret message.
-> [+] CipherMessage (IV | Tag | Ciphertext): 8beb4aa05533e90f4f4eddd3 |
-> ea1b015958a9b8bd2aafa61887309caf | 19574a9c9869b92140a57a5fd43a14
-> 9a5eaa7e5beefdff5d56cc4136
->
-> # Run 2
-> ./gcm_encrypt.rb 'This is some secret message.'
-> [+] Encrypting: This is some secret message.
-> [+] CipherMessage (IV | Tag | Ciphertext): 87361b3f1e32291602ac7b40 |
-> bce7093daa10cc9d2fad0f2b91e077f2 | 47f9a5ba55631204233ace70f169e6
-> 65846e877dca11a6e13a659540
->
-> Notice that this time both the IV and ciphertexts are both different for
-> the same plaintext. This is the intended result a developer would expect to
-> happen when using this library.
->
-> It should be noted that when I went to Ruby's github page to report this
-> bug, I noticed a developer also independently encountered this weird
-> phenomenon [2]. Since it has already been brought up to the Ruby team, I
-> have not created a new ticket.
->
-> References:
->  [1]
-> https://ruby-doc.org/stdlib-2.0.0/libdoc/openssl/rdoc/
-> OpenSSL/Cipher.html#class-OpenSSL::Cipher-label-
-> Authenticated+Encryption+and+Associated+Data+-28AEAD-29
->  [2] https://github.com/ruby/openssl/issues/49
->
-> I'd like to to request a CVE ID for this issue.
->
-> Thanks
->
-> *WeWork | Mike Santillana*
-> Security Engineer
-> 845-709-5655
-> www.wework.com
->
-> Create Your Life's Work
->
+   This flexible behaviour is allowed because it makes parsing
+   space-separated lists of addresses (as C strings) easier to manage.
+   You advance the pointer between the address blocks and call
+   inet_aton. In this case getaddrinfo uses inet_aton to determine the
+   validity of the input string, and so considers "127.0.0.1\r\nspam"
+   a valid name parameter and it is immediately converted into the
+   address structure for 127.0.0.1.
 
+The remaining concern is that there's a potentially important
+enhancement to glibc in which functionality would be added that is
+similar to the current inet_addr/inet_aton behavior but with
+"127.0.0.1\r\nspam" rejected as an invalid address. The current
+behavior possibly belongs on a list of glibc oddities but, we think,
+not on the CVE list.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXa9zNAAoJEHb/MwWLVhi2GWgP/ih9d8dC9pwcQfZ7pSBMkJdI
+r91yFb1D4VcJsxT7cVAnQjAXW8hgz9i27Olm3E3djuoBob68DBKE+0UKSQVy1j7P
+mbVT+sGgXFnYE1cv3HWXSIWowc4+AQVwQfqOJaXwS5wP8+CPx6CCvfOP3SYSrki0
+Eo4MVK/3Ea3FlNwGcXjB9QgNSPm+hHFzK86Ln4JaKNhoD9iQk3skK1q5IclLqm43
+nw1Tg9/778awoWcdvOy6s1I3zz6oUKOc9UnSEzDF8DZDQNBl2+f+IsAiPulggxcG
+dIIcJwGjaqOUNhRtTc9ZlnmfeEDaOKmFzDvY6sAz3CRU9bIHOrx+DBwbQuNpZ5O3
+xU49+NZr1eiS3s16e02QCdh6j9WVZynpXrfNkRoWRaRvb8P3xUOSkqfNVAYIwg1Y
+VaJ090zphhc3K7L8rnmnm0LwJkPlg0yUgv5baQ2RYZ/VneZY7p0HogknBNwxLyUR
+NiJAwyYJAOu/WJNreBdOFRh2pqwATxmFyfaqOPv+Lk/9zDGqH1rVHVQyxvWJoz0k
+6DpzYI7QVzFPVkKl+EItJiE3wsZNPl6q6+E8i/4cAnfj6XK9CrFVHBP4v3RURm7l
+1+2bk/9QZpldSFypHEzSC3QfNr3GDoTJZOSEAZfomiA7ovcj2yC7+3c17nuUmqvj
+axI4BNa4v14fnvU6J7S5
+=2hPX
+-----END PGP SIGNATURE-----
