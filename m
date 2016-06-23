@@ -1,39 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/02/5
-Message-ID: <20160602103328.GA6618@layer-acht.org>
-Date: Thu, 2 Jun 2016 10:33:28 +0000
-From: Holger Levsen <holger@...er-acht.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: mat doesn't remove metadata in embedded images in PDFs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/23/9
+Message-Id: <20160623185512.F3E8552E016@smtpvbsrv1.mitre.org>
+Date: Thu, 23 Jun 2016 14:55:12 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Requests: WordPress: 4.5.3 maintenance and security release: several issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-https://digitalcourage.de/blog/2016/using-tails-be-careful-embedded-metadata
-explains how mat fails to do what it's supposed to do, namely removing
-embedded meta data. The bug is that it doesnt remove metadata from images
-embedded in PDFs (while it does remove metadata from PDFs and from
-images…)
+> https://wordpress.org/news/2016/06/wordpress-4-5-3/
 
-So basically the core feature of mat is partly broken :/ So I think this
-warrants a CVE as IMHO this ain't just a missing feature and folks on
-the #debian-security IRC channel agreed.
+>  - redirect bypass in the customizer, reported by Yassine Aboukir;
 
-This issue is being tracked by it's developers as
-https://labs.riseup.net/code/issues/11067 and in Debian as
-https://bugs.debian.org/826101 and affects all versions of mat and is
-not fixed anywhere yet.
-
-Could a CVE please be assigned to this issue?
- 
-Also I wonder if similar bugs happen with other recursive formats, like an
-OpenDocument text embedding an image or embedding a pdf embedding an
-image or a zip file containing a zip file containing a .odt file
-containing an pdf containing an image…
+Use CVE-2016-5832.
 
 
--- 
-thanks,
-	Holger (not subscribed to the list, please cc: me on replies.)
+>  - XSS problem via attachment name reported by Jouko Pynnonen
 
-Download attachment "signature.asc" of type "application/pgp-signature" (812 bytes)
+Use CVE-2016-5833.
+
+
+>  - XSS problem via attachment name reported by Divyesh Prajapati
+
+Use CVE-2016-5834.
+
+
+>  - revision history information disclosure, reported independently by
+>    John Blackbourn from the WordPress security team and by Dan Moen from
+>    the Wordfence Research Team;
+
+Use CVE-2016-5835 (for both reports).
+
+
+>  - oEmbed denial of service reported by Jennifer Dodd from Automattic;
+
+Use CVE-2016-5836.
+
+
+>  - unauthorized category removal from a post, reported by David Herrera
+>    from Alley Interactive;
+
+Use CVE-2016-5837.
+
+
+>  - password change via stolen cookie, reported by Michael Adams from the
+>    WordPress security team;
+
+Use CVE-2016-5838.
+
+
+>  - and some less secure sanitize_file_name edge cases reported by Peter
+>    Westwood of the WordPress security team.
+
+Use CVE-2016-5839.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXbDAaAAoJEHb/MwWLVhi2vRsP/1cTw1/gyBFvOVlNRD4gUscp
+sVM6giF0Zex+dI8/mbpN+MVKaRVQyboyYkmIjsrpm8CkUZP+u04cxcoqcaoUOuSX
+IFr2IciixkO5oEJo8sBQdWYrkqUkUdUDqpbaVhjWF3R1/TtkPZSuFuSxcDZjSp6k
+OlRdC9kg325QJ7P6apqatAS2mnOM5N46SciRPZzuXZWBAtFlDYlBUAFmSjZri7cn
++Wv5XgLa7Tr4sgDm7SYm4J7Uq5zxm/+iFyVCbIGoTsc9/J1ueSjuqQUNxfTa9exq
+d69CzHODuv97Uh1RkeaD0vWNRujH0IfiRTi4boC/6t5QyhVUwuIUcFnWt3JMEVL5
+Zy72e9BrVCEnEOjmRNVHLtH1g5IE88qZmDMLlmDTS8B+9sR2YzqY4pxVvRSIWiLD
+GKR7UI0FOQw7L2tMcuVdTUmjDj3szeSVdrbBNqltwFGIWOVoM4YQgMbvMOLmTPUg
+1Z1WcHLBbIkUTBExOgreTynbw6qNj07Ke58FJ48HOJokDNZu1OTYS/9DipIJfeuZ
+Iz6Agxrwe/56RY4Hw0v+t73QDw5NWymRcjUIH5CRXlWaF90lte1+WD+26tqdrOce
+bUTZCtSVC4p4EaJMVBlTAhHakt/jLNlSGo+E/X1+dyBZIN2gJBM6WgM0SevoFzNq
+wejdTa3fpDC0Nxv+829x
+=QXFm
+-----END PGP SIGNATURE-----
