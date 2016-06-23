@@ -1,49 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/17
-Message-ID: <8825611a-b5ef-ffb2-9105-b55ba10dc5e7@apache.org>
-Date: Tue, 22 Nov 2016 09:57:41 +0000
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/23/6
+Message-ID: <20160623155847.2236edb8@pc1>
+Date: Thu, 23 Jun 2016 15:58:47 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2016-6816 Apache Tomcat Information Disclosure
+Cc: cve-assign@...re.org
+Subject: Out of bounds read and signed integer overflow in libarchive
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-6816 Apache Tomcat Information Disclosure
+https://blog.fuzzing-project.org/48-Out-of-bounds-read-and-signed-integer-overflow-in-libarchive.html
 
-Severity: Important
+https://groups.google.com/forum/#!topic/libarchive-discuss/sui01WaM3ic
+I recently wrote about a large number of bugs and potential security
+issues in libarchive. The release 3.2.0 missed one fix for an out of
+bounds read in the rar parser. Also I discovered one additional signed
+integer overflow issue with ubsan. Both issues are now fixed in
+libarchive 3.2.1. All issues were discovered with the help of american
+fuzzy lop.
 
-Vendor: The Apache Software Foundation
+https://github.com/libarchive/libarchive/issues/521
+Out of bounds heap read in RAR parser
+http://libarchive.github.io/google-code/issue-413/comment-0/bsdtar-invalid-read.rar
+Sample rar file
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8934
+CVE-2015-8934
 
-Versions Affected:
-Apache Tomcat 9.0.0.M1 to 9.0.0.M11
-Apache Tomcat 8.5.0 to 8.5.6
-Apache Tomcat 8.0.0.RC1 to 8.0.38
-Apache Tomcat 7.0.0 to 7.0.72
-Apache Tomcat 6.0.0 to 6.0.47
-Earlier, unsupported versions may also be affected.
+https://github.com/libarchive/libarchive/issues/717#event-697151157
+Signed integer overflow in ISO parser
+https://github.com/libarchive/libarchive/files/321672/libarchive-signed-int-overflow.zip
+Sample ISO file
 
-Description
-The code that parsed the HTTP request line permitted invalid characters.
-This could be exploited, in conjunction with a proxy that also permitted
-the invalid characters but with a different interpretation, to inject
-data into the HTTP response. By manipulating the HTTP response the
-attacker could poison a web-cache, perform an XSS attack and/or obtain
-sensitive information from requests other then their own.
+http://blog.talosintel.com/2016/06/the-poisoned-archives.html
+Also a couple of other security issues in libarchive were found by
+Cisco.
 
-Mitigation
-Users of affected versions should apply one of the following mitigations
-- Upgrade to Apache Tomcat 9.0.0.M13 or later
-  (Apache Tomcat 9.0.0.M12 has the fix but was not released)
-- Upgrade to Apache Tomcat 8.5.8 or later
-  (Apache Tomcat 8.5.7 has the fix but was not released)
-- Upgrade to Apache Tomcat 8.0.39 or later
-- Upgrade to Apache Tomcat 7.0.73 or later
-- Upgrade to Apache Tomcat 6.0.48 or later
+With the release of version 3.2.1 I consider libarchive to be
+reasonably robust against fuzzing. I've tested all supported file
+formats and fuzzed each one with afl/asan for at least one day. Of
+course that doesn't mean that no security issues are left - but the
+easy to find ones should be wiped out.
 
-Credit:
-This issue was discovered by Regis Leroy from Makina Corpus.
 
-References:
-[1] http://tomcat.apache.org/security-9.html
-[2] http://tomcat.apache.org/security-8.html
-[3] http://tomcat.apache.org/security-7.html
-[4] http://tomcat.apache.org/security-6.html
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
