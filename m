@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1565" "Monday" "24" "June" "2019" "18:27:30" "+0200" "Alexander Potapenko" "glider@google.com" "<CAG_fn=VaVOERocqqh3wUBK5BRUWvVirT-+=HdGGxib+Ad90kjg@mail.gmail.com>" "42" "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" "^Date:" nil nil "6" "2019062416:27:30" "[oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" (number mark "        glider@googl Jun 24   42/1565  " thread-indent "\"Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz\"\n") "<alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>" ("<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>" "<20190617113203.GH15432@suse.de>" "<CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>" "<alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>") nil nil nil nil nil nil nil "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2717" "Thursday" "23" "June" "2016" "15:58:47" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20160623155847.2236edb8@pc1>" "71" "[oss-security] Out of bounds read and signed integer overflow in libarchive" nil nil nil "6" "2016062313:58:47" "[oss-security] Out of bounds read and signed integer overflow in libarchive" (number mark "U       hanno@hboeck Jun 23   71/2717  " thread-indent "\"[oss-security] Out of bounds read and signed integer overflow in libarchive\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26361 invoked by uid 550); 24 Jun 2019 16:27:55 -0000
+Received: (qmail 30700 invoked by uid 550); 23 Jun 2016 13:59:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,87 +11,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26343 invoked from network); 24 Jun 2019 16:27:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=A4fukKNlCIVsYPUHeEspOwLJtqJc7T7SMqSvFMas1UU=;
-        b=c6zknyjLfKwEKGRNMAR7+Clxjpymn02nrFWOLBUuOi4B9fxztqVniPssHa7oUFBgvN
-         gkJar1S8f793nscpFTaAjh/mytvJqN01WAuc94TKQAk/cNK3jTjiWsJuhQZOleNqbOoA
-         LrtdlGxlk6UWi/qrjYWhYcZdNQM9kMjkXUYAt+q8z5fX+rD62TyXB/wjAfcKgdrRMhaf
-         MbaNGys5xIwoUlJc8UIx94F28Ho0Fc9M3MoZsatvgPGsMoY3e6R46yVXPzaVn11p5Ste
-         ZDK8o7hV2bNV9yng1fJO7cNauq+gFrfZ2ecwwen/TOz1al+3QdL4oesGcPyB99kYGrdj
-         5H3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=A4fukKNlCIVsYPUHeEspOwLJtqJc7T7SMqSvFMas1UU=;
-        b=tCi7SDnD4JIkpDSaUvPEr9q9SegO467/WwYCYH+bqCknYxElKDbkJB8mqMh88dL6gJ
-         UYYcvOJfwHfAKIisxY6G47f3lQdkZjRfAcmbTmC4JGqU/JKka22icQ5TfwjQflqsWvmI
-         6ZINv8JfDAlTdYJ1gqBft/7o1Af8Nldoy4LKjf6uA6XnUOjdUFjjxBzc9phfMIDLRMTs
-         FKiUiPZ3ZvssBF/9ojwuQg50iDiGuM2q6FrWbVSORsqyy8EXQZsn0ua0nE36ptyIaUL0
-         7k1PlHun9viz3QaXKJsktc49mlQMKKB6Fnp7vcUv4KKG8rbPcqO4MrKWSI2Dv8DT2SkP
-         hBUw==
-X-Gm-Message-State: APjAAAVpnYFi4sT2iKDxRFlZ5pt3uXMsHEKfxVkw605+PG3PtoM4bBu0
-	Ue24gb6DEiFR3SzSc0wXAG8aM4BGy3Fly1NWjc6VLErb6eY=
-X-Google-Smtp-Source: APXvYqwLjZJ9+cH8OIkm0N5wfla5U5c1TiOzHlrsq7u2UN53OQN3gWUQTSybDwUhJxRk7CHuuvKECoyqDc0MP8oiEjA=
-X-Received: by 2002:a67:2ec8:: with SMTP id u191mr24993853vsu.39.1561393662237;
- Mon, 24 Jun 2019 09:27:42 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
- <20190617113203.GH15432@suse.de> <CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>
- <alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>
-In-Reply-To: <alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>
-Message-ID: <CAG_fn=VaVOERocqqh3wUBK5BRUWvVirT-+=HdGGxib+Ad90kjg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 24 Jun 2019 18:27:30 +0200
-From: Alexander Potapenko <glider@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+Received: (qmail 30682 invoked from network); 23 Jun 2016 13:59:07 -0000
+Date: Thu, 23 Jun 2016 15:58:47 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Message-ID: <20160623155847.2236edb8@pc1>
+X-Mailer: Claws Mail 3.13.2 (GTK+ 2.24.30; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-5539-1466690337-0001-2"
+Subject: [oss-security] Out of bounds read and signed integer overflow in libarchive
 
-On Mon, Jun 24, 2019 at 5:44 PM Bob Friesenhahn
-<bfriesen@simple.dallas.tx.us> wrote:
->
-> On Mon, 24 Jun 2019, Dmitry Vyukov wrote:
-> >
-> > So what are community thoughts on automatic CVE assignment?
-> > That would definitely get some attention to these bugs by vendors
-> > (because that's open CVEs in their products then). And this should be
-> > implementable because both OSS-Fuzz and syzbot are automated enough
-> > already. However I afraid that these CVEs may be as automatically
-> > sorted into a trashcan then :)
->
-> An excess of CVEs would cause CVEs to be not very meaningful any more.
->
-> Most oss-fuzz issue detections are not CVE worthy.  For example, a
-> one-byte read "heap overflow" is not likely to cause any actual harm
-> but oss-fuzz would classify it as "heap overflow".
-There's enough information in the report though to assign the severity
-score depending on the access size, its type (read or write) the call
-stack etc.
-OSS-Fuzz deliberately doesn't do that now, but such scoring can be
-done to prune the list of potential CVE candidates.
-> Bob
-> --
-> Bob Friesenhahn
-> bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-> GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-> Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+--=_zucker.schokokeks.org-5539-1466690337-0001-2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
+https://blog.fuzzing-project.org/48-Out-of-bounds-read-and-signed-integer-o=
+verflow-in-libarchive.html
+
+https://groups.google.com/forum/#!topic/libarchive-discuss/sui01WaM3ic
+I recently wrote about a large number of bugs and potential security
+issues in libarchive. The release 3.2.0 missed one fix for an out of
+bounds read in the rar parser. Also I discovered one additional signed
+integer overflow issue with ubsan. Both issues are now fixed in
+libarchive 3.2.1. All issues were discovered with the help of american
+fuzzy lop.
+
+https://github.com/libarchive/libarchive/issues/521
+Out of bounds heap read in RAR parser
+http://libarchive.github.io/google-code/issue-413/comment-0/bsdtar-invalid-=
+read.rar
+Sample rar file
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-8934
+CVE-2015-8934
+
+https://github.com/libarchive/libarchive/issues/717#event-697151157
+Signed integer overflow in ISO parser
+https://github.com/libarchive/libarchive/files/321672/libarchive-signed-int=
+-overflow.zip
+Sample ISO file
+
+http://blog.talosintel.com/2016/06/the-poisoned-archives.html
+Also a couple of other security issues in libarchive were found by
+Cisco.
+
+With the release of version 3.2.1 I consider libarchive to be
+reasonably robust against fuzzing. I've tested all supported file
+formats and fuzzed each one with afl/asan for at least one day. Of
+course that doesn't mean that no security issues are left - but the
+easy to find ones should be wiped out.
 
 
 --=20
-Alexander Potapenko
-Software Engineer
+Hanno B=C3=B6ck
+https://hboeck.de/
 
-Google Germany GmbH
-Erika-Mann-Stra=C3=9Fe, 33
-80636 M=C3=BCnchen
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
 
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
+--=_zucker.schokokeks.org-5539-1466690337-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCgAGBQJXa+sXAAoJEKWIAHK7tR5CWcwP/1D6oNePtl7e1BxOXUJQAnOF
+vum8/2zRenWmsjKWwVol/tvU/1Q3mqCD9YDEBIiRFVkyzF6blJggMMBful8IpBB0
+Btk+FFil+XVobW2cXxo74EVAdrdwt2Q9msCwYCIlyA4py4j396XFDeCIKQDrmrCD
+8INSJz5gQnJt2arD7Oj6ONqOik+QbXtnY/kVxfsLYtM5lGj7It64Il/KPXpjIdiF
+7ZD6AlxkNy1Xdx0OMX4VChv51D/5g2j9YU8hlVJGDdhlc+CPxVjd3oDZK0PjEuoE
+229I+IgvezQ1ZT4i/QzR1M6D8qydlEWVxi1kNg5UViVbGXGJj6yEKaqK5WsouUne
+3ibB4dcjB+Y+vys8cOjg5h/xdtmoBm/iX5A7X+zznT2ch+wtDFbmmL1KEBT+tP62
+1jgYpVG/gx9IwBfQAQTmCxbjVnsG6FRFIc/ZFA0ohn8+MKeVKWASC2A8W9gvaX9j
+c2MfEf7SoXHKyMS9ev3TimddUGor8SIdYF1w2aR3qg6pt9jKjeHE1zqx9k4/OrBd
+ePebR9zg4ACR3/KQmtsgc1Ra9mvefiHVsRpZUirlmRehzNAy7pDPUvXu/wq+bEBh
+KEtvLwO+JZPd/4YKxC5x3TSeTAssF4Wh82x7mRPVag16n1VA1nL6cg0tQxQtO5bj
+U2c0P/a9YO90njYJ5HDn
+=ekhG
+-----END PGP SIGNATURE-----
+
+--=_zucker.schokokeks.org-5539-1466690337-0001-2--
