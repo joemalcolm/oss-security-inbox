@@ -1,4 +1,9 @@
-Received: (qmail 20102 invoked by uid 550); 5 Oct 2023 19:12:15 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2080" "Thursday" "23" "June" "2016" "14:55:12" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160623185512.F3E8552E016@smtpvbsrv1.mitre.org>" "71" "[oss-security] Re: CVE Requests: WordPress: 4.5.3 maintenance and security release: several issues" nil nil nil "6" "2016062318:55:12" "[oss-security] Re: CVE Requests: WordPress: 4.5.3 maintenance and security release: several issues" (number mark "U       cve-assign@m Jun 23   71/2080  " thread-indent "\"[oss-security] Re: CVE Requests: WordPress: 4.5.3 maintenance and security release: several issues\"\n") "<20160623171218.GA8259@eldamar.local>" ("<20160623171218.GA8259@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 32017 invoked by uid 550); 23 Jun 2016 18:55:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,82 +12,83 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20074 invoked from network); 5 Oct 2023 19:12:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696533123; x=1697137923; darn=lists.openwall.com;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=I8xksK+lCFMFGbn1hEuP7tEiNXGsmkEm229QG87xD2w=;
-        b=cLcycoXFe84xt8bV1JHTltnVggZUubPcoowPc1gsi1g2kcxjg0Iu5XTWQOYlvclKrp
-         C/KJBPZJlHpFJDuaSnwr/g2AX2+lVu4LiS7/0xz4AHQEyko+u37NsPzpIH/nOKGXIB4w
-         BaqKQ4EksEqbeIHOevL2oqJHAHF7FiD1uz/JPN/E+AaFcK2voz2lZ0CZlV6+AmT26flm
-         DXhvldSu9caACD1dYL9tncUrsk0mqhYfHsSWAjzk20kXjCklBxhIO2ndFqsHwBqpzLQo
-         hCWMFbhhDfka4vQFL2+bRN+EoaReGB2i2XDVtneR8yTaQoBH2pE5y6d2dJQSdLlLCn3g
-         Lrog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696533123; x=1697137923;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=I8xksK+lCFMFGbn1hEuP7tEiNXGsmkEm229QG87xD2w=;
-        b=ISXGIfWzeu1lnc2kqkCYoTrsPM/X1hHMWMRR7ZOM4FFrRDj6K5b8jVyA3VjXOAAxBU
-         Zs5EKGa5Pdtfn5yyznuP3mMT5W74eRjRIzfqTwD7whLxWwNybpISTDtS5HkEn0Kj6TEI
-         tuqpL6a07658g+CcTKqSa5+CEFI7RbThbT9eDzuxajUACU4s4K+8glJC/SgMpG4GClKz
-         +ltGHQzypap0+7F0fUsVLwCnVQUt5XOrSfqh047NXiWQSgc/d2ZUkgjVvsFKM2VSlL8m
-         N9UWHLAtyNhkhztEbp5rZ402KZwTdi6GyaMYeKCGRHzytOXWSPPTePOnt3GiZQZiFoqR
-         5Mug==
-X-Gm-Message-State: AOJu0YwbGcfSelj8yTVL5JXtHIlR/L7pJPA7m1Ic95vN10uHiANvCn5p
-	tA6G7GdJjSAOyOA6R91sVOnWAi8lONj9XQ==
-X-Google-Smtp-Source: AGHT+IGbk0We8MHUGTuS8HIHqL5O2XqowGeuKyQZ60OnuQXH0IRL2IEVT8Kge4hddCHcSGLM+tQMIQ==
-X-Received: by 2002:a17:906:7491:b0:9b9:f76f:9952 with SMTP id e17-20020a170906749100b009b9f76f9952mr670960ejl.37.1696533123010;
-        Thu, 05 Oct 2023 12:12:03 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Thu, 5 Oct 2023 21:12:01 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: "zdi@trendmicro.com" <zdi@trendmicro.com>
-Cc: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
-	Solar Designer <solar@openwall.com>
-Message-ID: <ZR8KgeGG_jLN5n4a@eldamar.lan>
-References: <7b2e3fb3afc05aa39864e62b0c87a631b746f5c7.camel@runout.at>
- <ZRb180+B34Wmg1IM@jumper.schlittermann.de>
- <20230929165914.GA31245@openwall.com>
- <SJ0PR01MB7413CB07EDE457153C8C5C3CD1C0A@SJ0PR01MB7413.prod.exchangelabs.com>
- <ZR27jCirFcyI7smg@eldamar.lan>
- <SJ0PR01MB74130DAEAADAB8F76876E418D1CBA@SJ0PR01MB7413.prod.exchangelabs.com>
- <SJ0PR01MB7413C4BC552E1212F3BEDEC3D1CAA@SJ0PR01MB7413.prod.exchangelabs.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <SJ0PR01MB7413C4BC552E1212F3BEDEC3D1CAA@SJ0PR01MB7413.prod.exchangelabs.com>
-Subject: Re: [oss-security] Exim4 MTA CVEs assigned from ZDI
+Received: (qmail 31996 invoked from network); 23 Jun 2016 18:55:25 -0000
+From: cve-assign@mitre.org
+To: carnil@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20160623171218.GA8259@eldamar.local>
+Message-Id: <20160623185512.F3E8552E016@smtpvbsrv1.mitre.org>
+Date: Thu, 23 Jun 2016 14:55:12 -0400 (EDT)
+Subject: [oss-security] Re: CVE Requests: WordPress: 4.5.3 maintenance and security release: several issues
 
-Hi ZDI team,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I do not want to land between fronts but here is my understanding:
+> https://wordpress.org/news/2016/06/wordpress-4-5-3/
 
-On Thu, Oct 05, 2023 at 05:40:58PM +0000, zdi@trendmicro.com wrote:
-> Apologies, We have not received any notifications from the
-> developers that these issues have been patched. We will be happy to
-> update our advisories once they do so.
+>  - redirect bypass in the customizer, reported by Yassine Aboukir;
 
-So this feels like a locked situation. One one side I read from Exim
-maintainers, that there was not much information provided to actually
-determine where the issue is, neither if it is specific to Exim's use
-of libspf2 or if the issue is actually in libspf2.
+Use CVE-2016-5832.
 
-On the ZDI side I read that advisories will be updated once ZDI gets
-notification from the Exim developers that the issue is patched.
 
-And on a third front, there is the libspf2 report at
-https://github.com/shevek/libspf2/pull/44 which *might* be related,
-but nobody can tell if it's the same as ZDI-23-1472. 
+>  - XSS problem via attachment name reported by Jouko Pynnonen
 
-Again, my interest is to see this situation unblocked, and just asking
-as a member of a distribution which might have affected packages and
-for which we would want to deploy updates covering the fixes.
+Use CVE-2016-5833.
 
-Thanks in advance,
 
-Regards,
-Salvatore
+>  - XSS problem via attachment name reported by Divyesh Prajapati
+
+Use CVE-2016-5834.
+
+
+>  - revision history information disclosure, reported independently by
+>    John Blackbourn from the WordPress security team and by Dan Moen from
+>    the Wordfence Research Team;
+
+Use CVE-2016-5835 (for both reports).
+
+
+>  - oEmbed denial of service reported by Jennifer Dodd from Automattic;
+
+Use CVE-2016-5836.
+
+
+>  - unauthorized category removal from a post, reported by David Herrera
+>    from Alley Interactive;
+
+Use CVE-2016-5837.
+
+
+>  - password change via stolen cookie, reported by Michael Adams from the
+>    WordPress security team;
+
+Use CVE-2016-5838.
+
+
+>  - and some less secure sanitize_file_name edge cases reported by Peter
+>    Westwood of the WordPress security team.
+
+Use CVE-2016-5839.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXbDAaAAoJEHb/MwWLVhi2vRsP/1cTw1/gyBFvOVlNRD4gUscp
+sVM6giF0Zex+dI8/mbpN+MVKaRVQyboyYkmIjsrpm8CkUZP+u04cxcoqcaoUOuSX
+IFr2IciixkO5oEJo8sBQdWYrkqUkUdUDqpbaVhjWF3R1/TtkPZSuFuSxcDZjSp6k
+OlRdC9kg325QJ7P6apqatAS2mnOM5N46SciRPZzuXZWBAtFlDYlBUAFmSjZri7cn
++Wv5XgLa7Tr4sgDm7SYm4J7Uq5zxm/+iFyVCbIGoTsc9/J1ueSjuqQUNxfTa9exq
+d69CzHODuv97Uh1RkeaD0vWNRujH0IfiRTi4boC/6t5QyhVUwuIUcFnWt3JMEVL5
+Zy72e9BrVCEnEOjmRNVHLtH1g5IE88qZmDMLlmDTS8B+9sR2YzqY4pxVvRSIWiLD
+GKR7UI0FOQw7L2tMcuVdTUmjDj3szeSVdrbBNqltwFGIWOVoM4YQgMbvMOLmTPUg
+1Z1WcHLBbIkUTBExOgreTynbw6qNj07Ke58FJ48HOJokDNZu1OTYS/9DipIJfeuZ
+Iz6Agxrwe/56RY4Hw0v+t73QDw5NWymRcjUIH5CRXlWaF90lte1+WD+26tqdrOce
+bUTZCtSVC4p4EaJMVBlTAhHakt/jLNlSGo+E/X1+dyBZIN2gJBM6WgM0SevoFzNq
+wejdTa3fpDC0Nxv+829x
+=QXFm
+-----END PGP SIGNATURE-----
