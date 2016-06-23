@@ -1,39 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/11/2
-Message-ID: <CAKG8Do6jzQUGa-hgGxa8oxYAhkz3qm8sMMXmbC8HuNJZKGqbLw@mail.gmail.com>
-Date: Mon, 11 Jul 2016 12:11:43 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-5011: util-linux: Extended partition loop in MBR partition table leads to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/23/3
+Message-ID: <20160623121432.GH26237@suse.de>
+Date: Thu, 23 Jun 2016 14:14:32 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Jun 17, 2016 at 11:22:32AM +0200, Cedric Buissart wrote:
+> Thanks for details!
+> The glibc side of the issue has its own upstream bug entry:
+> https://sourceware.org/bugzilla/show_bug.cgi?id=20018
 
-This is to disclose the following CVE:
+Should a CVE also be assigned for the glibc problem?
 
-CVE-2016-5011: util-linux: Extended partition loop in MBR partition table
-leads to DoS
-
-Description :
-The util-linux libblkid is vulnerable to a Denial of Service attack during
-MSDOS partition table parsing, in the extended partition boot record (EBR).
-If the next EBR starts at relative offset 0, parse_dos_extended() will loop
-until running out of memory. An attacker could install a specially crafted
-MSDOS partition table in a storage device and trick a user into using it.
-This library is used, among others, by systemd-udevd daemon.
-
-Upstream patch:
-libblkid: ignore extended partition at zero offset
-https://git.kernel.org/cgit/utils/util-linux/util-linux.git/commit/?id=7164a1c3
-
-Impact: Low
-CVSS3 scoring : AV:P/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H/E:H/RL:U/RC:C
-
-Reported by: Christian Moch & Michael Gruhn
-
-Best Regards,
-
--- 
-Cedric Buissart,
-Product Security
-
+Ciao, Marcus
