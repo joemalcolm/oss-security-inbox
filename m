@@ -1,41 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/15/8
-Message-ID: <a9385b640cfb4927afadd3cbf4792e81@imshyb02.MITRE.ORG>
-Date: Thu, 15 Dec 2016 12:42:05 -0500
-From: <cve-assign@...re.org>
-To: <peter@...e-magic.net>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: IrRegular Expressions resource exhaustion in regex compilation [was: Re: CVE Request: resource exhaustion in regex expression handling in WebKit]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/23/2
+Message-ID: <CAEsznC7fwbsJ3JudAY4fkh3k_4TfHwaSkgZ9CB=xRQ_1Y5HDdg@mail.gmail.com>
+Date: Thu, 23 Jun 2016 10:58:34 +0300
+From: Lior Kaplan <kaplanlior@...il.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE for PHP 5.5.37 issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> Compiling the above regex also causes excessive resource consumption in
-> the portable Irregex (IrRegular Expressions) Scheme package, which can be
-> found at http://synthcode.com/scheme/irregex/
+PHP 5.5.37 is near its release, please review these following issues for
+CVE:
 
-Use CVE-2016-9954.
+GD:
+  . Fixed bug #72339 (Integer Overflow in _gd2GetHeader() resulting in
+    heap overflow). (Pierre)
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+https://bugs.php.net/bug.php?id=72339
+http://git.php.net/?p=php-src.git;a=commitdiff;h=7722455726bec8c53458a32851d2a87982cf0eac
 
-iQIcBAEBCAAGBQJYUtTtAAoJEHb/MwWLVhi2T9MP/RGyNWSuhs4FoFjAuofBzG0v
-oFn5+4gQlR1DMi8zJ61w6CYWUeTLkxkD4WNORaSJ9gpIp5Qbk2yPN9jAJ6vDd1Q+
-FmVr2Jn7QiDXokJeUCfbEr5WT6MwbUhi5j3MejQr9UC3ufMexz1b/gHcoNb9C4T7
-s2KURQgu8k0Rur8a0Sjim0ZX5DeiLA8Hd3hNRKb5KRCAE7uBFqbw8lHdQwUApIZJ
-16JeGI7xtmbms1I9iwMM9vZvbtHp71NM20NUxb/kk3CM13mHuhWov5PaPQ5INdny
-tOR240tekYbESJFfnaZ1U5obDQqaETWq3C9zXaEbRB/lG6HsBDkBjOvLHqsCTKsr
-DiRL4z4xkX/Ko08QDPhiirLKy04w7qCMXf0IncqjutMBPZEKowrb9wuNdsJF4h8p
-M66PTlmWwPAVL2HyEJyWCwxMmw96oDgQUoP8Ktc9KqwpqxjTAQz8cr+uEa/ld+SC
-ttujAe89KYQXtMJmXTrMqP0ufNJW+PpIY67e4cqnM0ebDPzEMtSwxTCo+38DGR3M
-337DGOc6Q0EPcwJNAvt6BjSgy/dMvHE36BRHf2GW2rM2dvQPpecidmKcK4sW/Ef2
-Er8WTqni+BQ/Xxb1/jngHUwzBxzor+9CcBoJrNiIFw+OA/aRQWJf2FBmrBYIp4Aj
-A40+HIGh8NSxhfIGG/Xm
-=kqkA
------END PGP SIGNATURE-----
+
+GD:
+  . Fixed bug #72446 (Integer Overflow in gdImagePaletteToTrueColor()
+resulting
+    in heap overflow). (Pierre)
+
+https://bugs.php.net/bug.php?id=72446
+http://git.php.net/?p=php-src.git;a=commitdiff;h=c395c6e5d7e8df37a21265ff76e48fe75ceb5ae6
+
+
+- mbstring:
+   . Fixed bug #72402 (_php_mb_regex_ereg_replace_exec - double free).
+(Stas)
+
+https://bugs.php.net/bug.php?id=72402
+http://git.php.net/?p=php-src.git;a=commitdiff;h=5b597a2e5b28e2d5a52fc1be13f425f08f47cb62
+
+
+- mcrypt:
+   . Fixed bug #72455 (Heap Overflow due to integer overflows). (Stas)
+
+https://bugs.php.net/bug.php?id=72455
+http://git.php.net/?p=php-src.git;a=commitdiff;h=6c5211a0cef0cc2854eaa387e0eb036e012904d0
+
+
+- SPL:
+  . Fixed bug #72262 (int/size_t confusion in SplFileObject::fread). (Stas)
+
+https://bugs.php.net/bug.php?id=72262
+http://git.php.net/?p=php-src.git;a=commitdiff;h=7245bff300d3fa8bacbef7897ff080a6f1c23eba
+
+
+- SPL:
+  . Fixed bug #72433 (Use After Free Vulnerability in PHP's GC algorithm and
+    unserialize). (Dmitry)
+
+https://bugs.php.net/bug.php?id=72433
+http://git.php.net/?p=php-src.git;a=commitdiff;h=3f627e580acfdaf0595ae3b115b8bec677f203ee
+
+
+- WDDX:
+  . Fixed bug #72340 (Double Free Courruption in wddx_deserialize). (Stas)
+
+https://bugs.php.net/bug.php?id=72340
+http://git.php.net/?p=php-src.git;a=commitdiff;h=a44c89e8af7c2410f4bfc5e097be2a5d0639a60c
+
+
+- zip:
+  . Fixed bug #72434 (ZipArchive class Use After Free Vulnerability in
+PHP's GC
+    algorithm and unserialize). (Dmitry)
+
+https://bugs.php.net/bug.php?id=72434
+http://git.php.net/?p=php-src.git;a=commitdiff;h=f6aef68089221c5ea047d4a74224ee3deead99a6
+
+Kaplan
+
