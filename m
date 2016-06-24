@@ -1,26 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/17/2
-Message-ID: <3E9D9FEC-F5B3-42AB-BEB7-0055EE5B48C6@hortonworks.com>
-Date: Tue, 17 May 2016 01:27:14 +0000
-From: Yusaku Sako <yusaku@...tonworks.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: [CVE-2016-0731] Apache Ambari: Ambari File Browser View security vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/24/3
+Message-ID: <CAAdSu-FbGNfOsfRv9saHTCso0fPQJ+QrJ5JamZf4_gcCq7LD6w@mail.gmail.com>
+Date: Fri, 24 Jun 2016 10:14:46 -0700
+From: Alvaro Hoyos <alvaro.hoyos@...login.com>
+To: ruby-security-ann@...glegroups.com, rubysec-announce@...glegroups.com,  oss-security@...ts.openwall.com
+Subject: [CVE-2016-5697] signature wrapping attack vulnerability in ruby-saml prior to version 1.3.0
 Content-Type: text/plain; charset=utf-8
 
+Overview:
+Ruby-saml prior to version 1.3.0 is vulnerable to an XML signature wrapping
+attack. Ruby-saml users must update to 1.3.0 version which implements 3
+extra validations to mitigate this kind of attack.
 
-CVE-2016-0731: Ambari File Browser View security vulnerability
+Overall CVSS Score 6.1
 
-Severity: Important
+Fix: Add extra validations to prevent Signature wrapping attacks [1]
 
-Vendor: The Apache Software Foundation
+[1] https://github.com/onelogin/ruby-saml
 
-Versions Affected: 1.7.0 to 2.2.0
-
-Versions Fixed: 2.2.1
-
-Description: Ambari File Browser View, depending on how it is configured, allows an Ambari admin user to gain access to Ambari Server's local file system.
-
-Mitigation: Ambari users should upgrade to versions 2.2.1 or above.
-
-Reference: https://cwiki.apache.org/confluence/display/AMBARI/Ambari+Vulnerabilities
+alvaro j hoyos | chief information security officer |
+alvaro.hoyos@...login.com | +1 415.653.1893 | skype: alvaroonelogin
 
