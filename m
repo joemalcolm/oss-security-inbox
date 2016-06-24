@@ -1,45 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/04/2
-Message-Id: <20160604030014.4F48352E020@smtpvbsrv1.mitre.org>
-Date: Fri,  3 Jun 2016 23:00:14 -0400 (EDT)
-From: cve-assign@...re.org
-To: marc.deslauriers@...onical.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Dnsmasq denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/24/5
+Message-ID: <466B898A-FC0D-4106-A0AB-4DD755C3053E@nccgroup.trust>
+Date: Fri, 24 Jun 2016 18:53:53 +0000
+From: Jesse Hertz <Jesse.Hertz@...group.trust>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Linux CVE-2016-4997 (local privilege escalation) and CVE-2016-4998 (out of bounds memory access) 
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi All,
 
->  Fix crash when an A or AAAA record is defined locally,
->  in a hosts file, and an upstream server sends a reply
->  that the same name is empty.
-> 
-> http://lists.thekelleys.org.uk/pipermail/dnsmasq-discuss/2016q2/010479.html
-> http://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=commit;h=41a8d9e99be9f2cc8b02051dd322cb45e0faac87
-> https://bugs.launchpad.net/ubuntu/+source/dnsmasq/+bug/1581181
+As part of a kernel fuzzing project by myself and my colleague Tim Newsham, we are disclosing two vulnerabilities which have been assigned CVEs. Full details of the fuzzing project (with analysis of the vulnerabilities) will be released next week.
 
-Use CVE-2015-8899.
+These issues are fixed in the following commits
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ce683e5f9d04 <http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ce683e5f9d04>
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6e94e0cfb088 <http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6e94e0cfb088>
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=bdf533de6968 <http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=bdf533de6968>
 
-iQIcBAEBCAAGBQJXUkO/AAoJEHb/MwWLVhi2ECQP/24EmeCxivXRv440Aph1gohv
-plToHPOCIhrqC1u2D7zMklmSYdvwtvCc9UwBqKbj/ufgXC9EeAGj2zlmKOq8NoP1
-l427TFDVnu9vKPgN/w5GwDWuzAC7bx+qRuCxspycP3HAc5wCBXeF3m37txptQdFh
-WkrDaW+2aHaIBliD3/CsZcf2cKlcbm5vvbYQMcJKh5JiGdl5xNidYV+24HMCauU1
-Tk22jfNm4I37XTR7PZg93I37JEZguXyq7csrZpCzE7yxHGRYthQCFf5O/Jc/4S+7
-GZAXDRX51RCCVfsYTQdHBi/dMlPiUpa/1Lcsgiugg25BU9Wy4qpL4knbVMt4ZSLf
-BPR0GGtNfygX0v5S92QaiUU+T6dxPOaidxueyMSwPtuq7taZXullPyPHGS4ioFya
-+4OEwNPfqygzXVYjzRZM8925fOQBk733jwMvBuPZeuEuq3lBPFgYF0+CIOeMuAw+
-/jn8Jj5K6x4HGjBixr1VRaB6mZ/C/k7XRNjr17/QL3hjOUfj1g6Pn1q52gFwq0ny
-02jvT0RQqnGAnIrKPnuzvccsHkJlSydbR0t8JYoWDeK8btULJDqJbG5vit1jAQaL
-5Y88gTFabG9mAFLdo4q+hi+jKwKw6gplOlcUQysYleImyMAawIweZ11GodT9Q9hx
-cfPCSdvhgyVr8DR4Fmd2
-=3Y1C
------END PGP SIGNATURE-----
+And have now been integrated into stable kernel releases: 3.14.73, 4.4.14, and 4.6.3.
+
+Theses issues occurs in the same codepaths as, but are distinct from, a similar vulnerability: CVE-2016-3134 (https://bugs.chromium.org/p/project-zero/issues/detail?id=758 <https://bugs.chromium.org/p/project-zero/issues/detail?id=758>).
+
+#########
+
+CVE-2016-4997: Corrupted offset allows for arbitrary decrements in compat IPT_SO_SET_REPLACE setsockopt
+
+Risk: High
+
+Impact: Kernel memory corruption, leading to elevation of privileges or kernel code execution. This occurs in a compat_setsockopt() call that is normally restricted to root, however, Linux 3/4 kernels that support user and network namespaces can allow an unprivileged user to trigger this functionality. This is exploitable from inside a container.
+
+##########
+
+CVE-2016-4998: Out of bounds reads when processing IPT_SO_SET_REPLACE setsockopt
+
+Risk: Medium
+
+Impact: Out of bounds heap memory access, leading to a Denial of Service (or possibly heap disclosure or further impact). This occurs in a setsockopt() call that is normally restricted to root, however, Linux 3/4 kernels that support user and network namespaces can allow an unprivileged user to trigger this functionality. This is exploitable from inside a container.
+
+##########
+
+
+Best,
+-jh
+
+Content of type "text/html" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (497 bytes)
