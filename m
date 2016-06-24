@@ -1,51 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/06/1
-Message-ID: <CABfY0L3cfjwEENQTXtyx6z9Sqy6kFPqFHmQPHe_a5yzveJ8Eng@mail.gmail.com>
-Date: Sun, 5 Jun 2016 19:18:02 -0500
-From: Jodie Cunningham <jodie.cunningham@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Requesting CVE for ImageMagick DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/24/6
+Message-Id: <0c58fc24-0b8d-48e1-8df8-f580454f8e86@googlegroups.com>
+Date: Fri, 24 Jun 2016 12:01:11 -0700 (PDT)
+From: Alvaro Hoyos <alvaro.hoyos@...login.com>
+To: rubysec-announce <rubysec-announce@...glegroups.com>
+Cc: ruby-security-ann@...glegroups.com, oss-security@...ts.openwall.com
+Subject: Re: [CVE-2016-5697] signature wrapping attack vulnerability in ruby-saml prior to version 1.3.0
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 26, 2015 at 2:50 PM, Jodie Cunningham
-<jodie.cunningham@...il.com> wrote:
-> Adding cve-assign to cc
->
-> -Jodie
->
-> Hi,
->
-> I wanted to share four DoS bugs I found via fuzzing with AFL in
-> ImageMagick, as the maintainer has since corrected them. I'd like to
-> request the appropriate CVE(s) to cover these DoS bugs:
->
-> Date, File ID, ShortDescription, Bug report URL:
-> 1/24/2015 3c1c3e63 HDR file DoS, CPU
->  http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26929
->
-> 1/25/2015 d595506c MIFF file DoS, CPU
->  http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26931
->
-> 1/25/2015 c8ad6aba PDB file DoS, CPU
-> http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26932
->
-> 1/25/2015 783d8806 VICAR file DoS, CPU
-> http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26933
->
->
-> Regards,
-> -Jodie Cunningham
+Thanks to Robert Clancy from swrve.com for discovering and responsibly 
+reporting this issue.
 
+On Friday, June 24, 2016 at 11:35:34 AM UTC-7, Alvaro Hoyos wrote:
+>
+> Overview: 
+> Ruby-saml prior to version 1.3.0 is vulnerable to an XML signature 
+> wrapping attack. Ruby-saml users must update to 1.3.0 version which 
+> implements 3 extra validations to mitigate this kind of attack.
+>
+> Overall CVSS Score 6.1
+>
+> Fix: Add extra validations to prevent Signature wrapping attacks [1]
+>
+> [1] https://github.com/onelogin/ruby-saml
+>
+> alvaro j hoyos | chief information security officer | 
+> alvaro.hoyos@...login.com | +1 415.653.1893 | skype: alvaroonelogin
+>
 
-While it's a party, are there any identifiers for the above?
-
-Also here are the downstream tickets for them:
-VICAR: https://bugzilla.redhat.com/show_bug.cgi?id=1195271
-PDB: https://bugzilla.redhat.com/show_bug.cgi?id=1195269
-MIFF: https://bugzilla.redhat.com/show_bug.cgi?id=1195265
-HDR: https://bugzilla.redhat.com/show_bug.cgi?id=1195260
-
-
-Regards,
--Jodie
+Content of type "text/html" skipped
