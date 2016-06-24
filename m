@@ -1,47 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/26/3
-Message-Id: <20160826193207.933116C5275@smtpvmsrv1.mitre.org>
-Date: Fri, 26 Aug 2016 15:32:07 -0400 (EDT)
-From: cve-assign@...re.org
-To: vdronov@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request -- linux kernel: Setting a POSIX ACL via setxattr doesn't clear the setgid bit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/24/1
+Message-ID: <1466753023.11831.9.camel@ellerman.id.au>
+Date: Fri, 24 Jun 2016 17:23:43 +1000
+From: Michael Ellerman <mpe@...erman.id.au>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Linux: powerpc/tm: Always reclaim in start_thread() for exec() class syscalls
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> http://www.spinics.net/lists/linux-fsdevel/msg98328.html
-> http://marc.info/?l=linux-fsdevel&m=147162313630259&w=2
-> https://bugzilla.redhat.com/show_bug.cgi?id=1368938
-> 
-> When file permissions are modified via chmod(2) and the user is not in
-> the owning group or capable of CAP_FSETID, the setgid bit is cleared in
-> inode_change_ok(). Setting a POSIX ACL via setxattr(2) sets the file
-> permissions as well as the new ACL, but doesn't clear the setgid bit in
-> a similar way; this allows to bypass the check in chmod(2).
+We've found an issue in the handling of Transactional Memory on powerpc
+systems. An unprivileged local user can crash the kernel by starting a
+transaction, suspending it, and then calling any of the exec() class system
+calls.
 
-Use CVE-2016-7097.
+More info:
+ https://patchwork.ozlabs.org/patch/636776/
+ https://patchwork.ozlabs.org/patch/636774/ (test case)
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Could you please allocate a CVE for this?
 
-iQIcBAEBCAAGBQJXwJjjAAoJEHb/MwWLVhi284YP/ihwFVoOjVLV9YP0yvlP/659
-WSAvWtzaMIG6QuQvvJ5G9SdEhHTr7Jj1kvG0ro1pVKLHp7qjyJaKpGBTQHCcLJiP
-Y90qISQr59A9ar25u7TuCEzsBxmIxgj474jk8PQQDG3AgekMfxyWYRFiowpzZW1i
-oi4ruafp0pXwIj11iXtQH0fsyDfSZ19R9q7xCxm7P6aJKHT8OyJBcsvHmKunBodx
-usfOWEPslskKWXkR5QPLVJdDmUaemDQTWqoVxUW3DjKBqda6YnmUWlV2DcQNpKxz
-BOoak6kfSk9Oo8o37TGvFSqSRr5TEADZXQtIHSOpojK97AWY9MS1wDQI4Vw67Ift
-626pc/Eg7eI/kSXuY+/v3XFK9P5Eml9xrciRyeQEQYbU3+jYNZ36QT0mSx/wniq4
-Y9WsYw2r+FxQjj9F4Er3LEBKdGEv9Zz1B359/VvP747wIC9QYGI6X88PGxlFmp0I
-zU/lSHz0K3hp/3tAjfs9LeGNZmjW6JJqfbX0EBReF1OL1UexbXrEZ2AYWuP6x0E9
-UjrGrADbN/d6ZJljO2cgtGZURfiek3c8dFBrq44Brc4ZRs3zK5YbEORXbFd44gWM
-PRJnTHnfb+FVMcPVmeWgobMDMGjzXB6JTceS8gS6+9SNdnYgKsMuQ7ZTmAEIG2zV
-OmwRfyzqMNzGOiB7/ZS/
-=9rZk
------END PGP SIGNATURE-----
+cheers
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
