@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["506" "Friday" "11" "December" "2020" "13:14:07" "+0000" "Kaxil Naik" "kaxilnaik@apache.org" "<CAH5JyZpTnHka4PZFR60QKx_53NJsKVAYyYKHxe5Ro2P+ZgQEhg@mail.gmail.com>" "21" "[oss-security] CVE-2020-17515: Apache Airflow Reflected XSS via Origin Parameter" nil nil nil "12" "2020121113:14:07" "[oss-security] CVE-2020-17515: Apache Airflow Reflected XSS via Origin Parameter" (number mark "U       kaxilnaik@ap Dec 11   21/506   " thread-indent "\"[oss-security] CVE-2020-17515: Apache Airflow Reflected XSS via Origin Parameter\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-17515: Apache Airflow Reflected XSS via Origin Parameter" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1536" "Friday" "24" "June" "2016" "17:23:43" "+1000" "Michael Ellerman" "mpe@ellerman.id.au" "<1466753023.11831.9.camel@ellerman.id.au>" "44" "[oss-security] CVE Request: Linux: powerpc/tm: Always reclaim in start_thread() for exec() class syscalls" nil nil nil "6" "2016062407:23:43" "[oss-security] CVE Request: Linux: powerpc/tm: Always reclaim in start_thread() for exec() class syscalls" (number mark "U       mpe@ellerman Jun 24   44/1536  " thread-indent "\"[oss-security] CVE Request: Linux: powerpc/tm: Always reclaim in start_thread() for exec() class syscalls\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30220 invoked by uid 550); 11 Dec 2020 13:16:35 -0000
+Received: (qmail 26276 invoked by uid 550); 24 Jun 2016 08:40:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,40 +12,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28267 invoked from network); 11 Dec 2020 13:14:48 -0000
-X-Gm-Message-State: AOAM530RXs5SHf5cCRTkV8GcUUWBOf1Ev1yfOs3w8aYWO4QCp/ybZNfG
-	VKQdqpy7MofoBJlvE08cgy9/8uflKHoTteDN7B0=
-X-Google-Smtp-Source: ABdhPJy+GlbjGQUf4oWTOZWHELPx/b2d+Rhjn30gZTAWnu8Fy2MA6xlKd3uU0xniWvi6KoAqH2tTrKTjS2Fp6JJFvtM=
-X-Received: by 2002:aa7:d6d8:: with SMTP id x24mr11984822edr.105.1607692457887;
- Fri, 11 Dec 2020 05:14:17 -0800 (PST)
-MIME-Version: 1.0
-From: Kaxil Naik <kaxilnaik@apache.org>
-Date: Fri, 11 Dec 2020 13:14:07 +0000
-X-Gmail-Original-Message-ID: <CAH5JyZpTnHka4PZFR60QKx_53NJsKVAYyYKHxe5Ro2P+ZgQEhg@mail.gmail.com>
-Message-ID: <CAH5JyZpTnHka4PZFR60QKx_53NJsKVAYyYKHxe5Ro2P+ZgQEhg@mail.gmail.com>
+Received: (qmail 21562 invoked from network); 24 Jun 2016 07:24:09 -0000
+Message-ID: <1466753023.11831.9.camel@ellerman.id.au>
+From: Michael Ellerman <mpe@ellerman.id.au>
 To: oss-security@lists.openwall.com
-Cc: users@airflow.apache.org
-Content-Type: multipart/alternative; boundary="000000000000dc4ef705b6301144"
-Subject: [oss-security] CVE-2020-17515: Apache Airflow Reflected XSS via Origin Parameter
+Date: Fri, 24 Jun 2016 17:23:43 +1000
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
+	boundary="=-umxxbwQlu//ZfBY5O/mn"
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+Mime-Version: 1.0
+Subject: [oss-security] CVE Request: Linux: powerpc/tm: Always reclaim in start_thread()
+ for exec() class syscalls
 
---000000000000dc4ef705b6301144
+--=-umxxbwQlu//ZfBY5O/mn
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Versions Affected: < 1.10.13
+Hi,
 
-Description:
-The "origin" parameter passed to some of the endpoints like '/trigger' was
-vulnerable to XSS exploit. This issue affects Apache Airflow versions prior
-to 1.10.13.
+We've found an issue in the handling of Transactional Memory on powerpc
+systems. An unprivileged local user can crash the kernel by starting a
+transaction, suspending it, and then calling any of the exec() class system
+calls.
 
-This is same as CVE-2020-13944 but the implemented fix in Airflow 1.10.13
-did not fix the issue completely.
+More info:
+ https://patchwork.ozlabs.org/patch/636776/
+ https://patchwork.ozlabs.org/patch/636774/ (test case)
 
-Credit:
-Ali Al-Habsi of Accellion
+Could you please allocate a CVE for this?
 
-Thanks,
-Kaxil,
-on behalf of Apache Airflow PMC
+cheers
 
---000000000000dc4ef705b6301144--
+--=-umxxbwQlu//ZfBY5O/mn
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAABAgAGBQJXbN//AAoJEFHr6jzI4aWA6XkQAIwq7NZ7JjqoAFwlqU/xHDMv
+dR8wB/AciKdJr/dmV3gTOJWCuhNFBjAkoEUDBA60gdTEMP6T1nV7vXR/PMtoujBe
+glHnU/TYtXadTi8NBX6z1utwAgfbG7+WpHvEmKYacYC3y2iszQAK7HBcQhcngPXm
+Iy38B6e1FSWfign8m6CMchuruF8n9ujabVkPdHoUSb2pUAumUASf7LttxpeHaec7
+jjHBP178rmUf1nyi6soo6c+XFBKc+Ve3eVbfWTn26DUQX1HNBE+h8RkZKBIzBObA
+bv56d9w5EfkdKPpmrLdTF2cQnoaBBXiizoQLltehpGdUBVWhVpRdUbSOiL46GMcI
+3ugiaPK+1PiQG3LNiOh27hJ/IA/k9XuG70gg2kDcEhyFy5xheSwPgq9TfMzd/WIY
+AYJWx8f5KNhC9P/pn0by14/SVdWHCIPgab+wgiLEYgg5CoCurUEdewzERwt5/noE
+dlwBJ1hX/kOs0kChdWE7J2UKXlwVGokx+AsyZlOBmAXGV06qL9IfCBc2bvR43RmI
+mJ7owS06ydAQKewVya0XZrA7fQhOP0t/RV4ND7ecMQYnxJGGWFTCeRSCI3vI2PnV
+bFTz2Xl5XO5VKxGQgrq4YdhSGdjWMVjhaqy3o2GViIZNYl5s3aIhGO6hfHej/Sd7
+QHaUfZc4wbP9rYUq0xqx
+=casv
+-----END PGP SIGNATURE-----
+
+--=-umxxbwQlu//ZfBY5O/mn--
+
