@@ -1,192 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/21/1
-Message-ID: <CAB_jSYwVGQrFsH6syD=az8-4Moazj5de0xvRrYnAiRuhaG=Tgw@mail.gmail.com>
-Date: Mon, 21 Mar 2016 14:32:15 +0800
-From: Marina Glancy <marina@...dle.com>
-To: oss-security@...ts.openwall.com
-Subject: moodle security release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/25/7
+Message-Id: <20160625162517.21FF36C02B4@smtpvmsrv1.mitre.org>
+Date: Sat, 25 Jun 2016 12:25:17 -0400 (EDT)
+From: cve-assign@...re.org
+To: mpe@...erman.id.au
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Linux: powerpc/tm: Always reclaim in start_thread() for exec() class syscalls - Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-The following security notifications have now been made public. Thanks
-to OSS members for their cooperation.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Marina Glancy
-Development Process Manager
-e: marina@...dle.com
-p: +61 8 9467 4167 w: moodle.com
+> We've found an issue in the handling of Transactional Memory on powerpc
+> systems. An unprivileged local user can crash the kernel by starting a
+> transaction, suspending it, and then calling any of the exec() class system
+> calls.
+> 
+> https://patchwork.ozlabs.org/patch/636776/
 
-==============================================================================
-MSA-16-0003: Incorrect capability check when displaying users emails in
-Participants list
+>> Userspace can quite legitimately perform an exec() syscall with a
+>> suspended transaction. exec() does not return to the old process,
+>> rather it load a new one and starts that, the expectation therefore is
+>> that the new process starts not in a transaction. Currently exec() is
+>> not treated any differently to any other syscall which creates
+>> problems.
 
-Description:       Teachers who otherwise were not supposed to see students'
-                   emails could see them in the participants list
-Issue summary:     Incorrect capability check when displaying users emails in
-                   Participants list
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
-                   and earlier unsupported versions
-Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
-Reported by:       Matt Jenner
-Issue no.:         MDL-52433
-CVE identifier:    CVE-2016-2151
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52433
+Use CVE-2016-5828.
 
-==============================================================================
-MSA-16-0004: XSS from profile fields from external db
+This is not yet available at
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/arch/powerpc/kernel/process.c
+but may be there later.
 
-Description:       Moodle traditionally trusted content from external DB
-                   however it was decided that external datasources may not be
-                   aware of web security practices and data could cause
-                   problems after importing to Moodle
-Issue summary:     XSS from profile fields from external db
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
-                   and earlier unsupported versions
-Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
-Reported by:       Jay Knight
-Issue no.:         MDL-50705
-CVE identifier:    CVE-2016-2152
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-50705
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-==============================================================================
-MSA-16-0005: Reflected XSS in mod_data advanced search
-
-Description:       User with higher permissions could be tricked into clicking
-                   a link which would result in XSS attack
-Issue summary:     Reflected XSS in mod_data advanced search
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
-                   and earlier unsupported versions
-Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
-Reported by:       Ian Song
-Issue no.:         MDL-52727
-Workaround:        Educate staff to always use only modern browsers that block
-                   such attacks by default
-CVE identifier:    CVE-2016-2153
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52727
-
-==============================================================================
-MSA-16-0006: Hidden courses are shown to students in Event Monitor
-
-Description:       Users without capability to view hidden courses but with
-                   capability to subscribe to Event Monitor rules could see
-                   the names of hidden courses
-Issue summary:     Hidden courses are shown to students in Event Monitor
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10
-Versions fixed:    3.0.3, 2.9.5 and 2.8.11
-Reported by:       Roger
-Issue no.:         MDL-51167
-Workaround:        Revoke capability to subscribe to Event Monitor rules from
-                   regular users
-CVE identifier:    CVE-2016-2154
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-51167
-
-==============================================================================
-MSA-16-0007: Non-Editing Instructor role can edit exclude checkbox in Single
-View
-
-Description:       Incorrect capability check in Single View grade report
-                   could result in giving a teacher extra permission
-Issue summary:     Non-Editing Instructor role can edit exclude checkbox in
-                   Single View
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10
-Versions fixed:    3.0.3, 2.9.5 and 2.8.11
-Reported by:       Mark McKay
-Issue no.:         MDL-52378
-CVE identifier:    CVE-2016-2155
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52378
-
-==============================================================================
-MSA-16-0008: External function get_calendar_events return events that pertains
-to hidden activities
-
-Description:       Users without capability to view hidden acitivites could
-                   still see associated calendar events via web services
-Issue summary:     External function get_calendar_events return events that
-                   pertains to hidden activities
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
-                   and earlier unsupported versions
-Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
-Reported by:       Juan Leyva
-Issue no.:         MDL-52808
-CVE identifier:    CVE-2016-2156
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52808
-
-==============================================================================
-MSA-16-0009: CSRF in Assignment plugin management page
-
-Description:       CSRF possible on admin page, however exploit unlikely
-                   benefit anybody and can easily be reversed
-Issue summary:     CSRF in Assignment plugin management page
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
-                   and earlier unsupported versions
-Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
-Reported by:       Paul Holden
-Issue no.:         MDL-53031
-CVE identifier:    CVE-2016-2157
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-53031
-
-==============================================================================
-MSA-16-0010: Enumeration of category details possible without authentication
-
-Description:       Despite force login setting guests could still access
-                   course category details
-Issue summary:     Enumeration of category details possible without
-                   authentication
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
-                   and earlier unsupported versions
-Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
-Reported by:       Krista Koivisto
-Issue no.:         MDL-52774
-CVE identifier:    CVE-2016-2158
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52774
-
-==============================================================================
-MSA-16-0011: Add no referrer to links with _blank target attribute
-
-Description:       Improve security when following external links that were
-                   added with _blank target
-Issue summary:     Add no referrer to links with _blank target attribute
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
-                   and earlier unsupported versions
-Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
-Reported by:       Hugh Davenport
-Issue no.:         MDL-52651
-CVE identifier:    CVE-2016-2190
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52651
-
-==============================================================================
-MSA-16-0012: External function mod_assign_save_submission does not check due
-dates
-
-Description:       Students were able to add assignment submissions after the
-                   due date through web service
-Issue summary:     External function mod_assign_save_submission does not check
-                   due dates
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.2, 2.9 to 2.9.4, 2.8 to 2.8.10, 2.7 to 2.7.12
-                   and earlier unsupported versions
-Versions fixed:    3.0.3, 2.9.5, 2.8.11 and 2.7.13
-Reported by:       Juan Leyva
-Issue no.:         MDL-52901
-CVE identifier:    CVE-2016-2159
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52901
-
-==============================================================================
+iQIcBAEBCAAGBQJXbq+vAAoJEHb/MwWLVhi2fJcP/0BcGb5bh7e/KURhMlhCN5Pd
+FPqvNvpTdpLzDnW6ert9mD7wBrHbvf3CdSbNTUI2seRHAcV+ga4Z7gRvmqLtcTCC
+9qdsZymXU6i/ptFKImrHgPbFuqXT8ogOt87usL8RHOaAajRwWYasWsCKWOc0ZJKb
+b819G7I9aXgdLqon+EFcTm0NgU/6VxvK2hrE8b0bGkqw7rflWWIbMYxsb46VoqKe
+BklhgJZUp9kVd2hpNN1Fpv57e8kQ3JtV9obDEW16W68bpiuKIR5HEvZRsBbydNd7
+CqRG7Q4WaqUdlrr9TT3cFHQFOyDZc+rkzrn+yc39xwzOtHJGRHG8bs+wZ0IjihYg
+/VpbjOu6/H1tCBZ2FFH+WEN0PZsqtRy4P9FJzIc2hdsVaj6xC5XxMoh4vH1ryuDp
+gwMc2nZDgtZRN9XQe7n8f6Zd1M4EsSDDrBHp77WgtBmVJTOIF31iN8/tFEjzN0d7
+f5ExKTsMBiEcmK1gZ2YQnlhKtoEEpar95/meGd9FHzsrKg7TV0oc6pChWfTGV5rl
+BvrRJOOs5E433vIIPiTl40QzVPZDnCiqAnH2bzy60ugr7gxTi7vdE/M7VBdUK6yw
+6Oq25iahfH6LOgevzImbDEmQrOf07exQZinXrn+y0e6iYkaPJ78mmBtshX+XUrB7
+K4Cb5KrtVl/PVf5dy3mi
+=y7Xd
+-----END PGP SIGNATURE-----
