@@ -1,32 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/07/2
-Message-ID: <CALy8Cw7nYh_p5qR3anmUM+t5g5zV-2HuZD4E6SFiWckCMfhNMA@mail.gmail.com>
-Date: Sat, 07 May 2016 05:33:13 +0000
-From: Craig Small <csmall@....com.au>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: wordpress and mediaelement
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/25/3
+Message-Id: <20160625094538.ADFB7332009@smtpvbsrv1.mitre.org>
+Date: Sat, 25 Jun 2016 05:45:38 -0400 (EDT)
+From: cve-assign@...re.org
+To: i.elsayed92@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Fwd: out-of-bounds read in MagickCore/property.c:1396 could lead to memory leak/ Integer overflow read to RCE - ImageMagick
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-  wordpress 4.5.1 has two security issues[1], both XSS, both fixed in 4.5.2
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-One is around the plupload embedded code[2] which I'm unsure if it affects
-plupload proper or just wordpress.
-The second is around mediaelement[3] and this does affect the upstream
-program but is already fixed[4].
+> two bugs to ImageMagick
+> 
+> https://github.com/ImageMagick/ImageMagick/commit/d8ab7f046587f2e9f734b687ba7e6e10147c294b
+
+> an integer overflow that might lead to remote code execution.
+> 
+> https://github.com/ImageMagick/ImageMagick/blob/master/MagickCore/profile.c#L2025
+> 
+> An integer overflow occurs in this comparison because number_bytes is a
+> very large number like (0xFFFFFFFFFFFFFF87) and when we add offset to
+> it which we control we can overflow and the result is < length so we
+> pass this if condition.
+
+Use CVE-2016-5841.
 
 
-1: https://wordpress.org/news/2016/05/wordpress-4-5-2/
-2: https://core.trac.wordpress.org/changeset/37382/
-3: https://core.trac.wordpress.org/changeset/37371
-4:
-https://github.com/johndyer/mediaelement/commit/34834eef8ac830b9145df169ec22016a4350f06e
+> MagickCore/property.c:1401 format=(size_t) ReadPropertyUnsignedShort(endian,q+2);
+> MagickCore/property.c:1404 components=(ssize_t) ReadPropertySignedLong(endian,q+4);
+> MagickCore/property.c:1382 number_entries=(size_t) ReadPropertyUnsignedShort(endian,directory);
+> MagickCore/property.c:1396 q=(unsigned char *) (directory+(12*entry)+2);
+> 
+> we can partially control q which can be used later to read arbitrary
+> data from the process of ImageMagick.
 
+Use CVE-2016-5842.
 
- - Craig
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
--- 
-Craig Small (@smallsees)   http://enc.com.au/       csmall at : enc.com.au
-Debian GNU/Linux           http://www.debian.org/   csmall at : debian.org
-GPG fingerprint:        5D2F B320 B825 D939 04D2  0519 3938 F96B DF50 FEA5
-
+iQIcBAEBCAAGBQJXblIFAAoJEHb/MwWLVhi21FkP/14gsNPlpEBDcB2cDTXpbiS4
+EAtByZpxwno+HY0u4DzSWDDlZbhvOofI6fEXGk6gzP0ykI6EUXMv0Ji5SBUcFZWD
+N86nrfJF7in5DSbUq2So1d2Iyn/nBi8NU0eOyX5hf5Ec2yMTuDdL+IJVJNRNC7EJ
+AkPfNsZcb5zAb6MqM23m9MZeKbg3ohrm0KxC8eeW5wnfpH03pYCHI9AJcuvRx0EX
+kCilDdlXkKBov75dTK0X9FMW2fFqggIoWIcPqB5P37goi0oEgIEdbowoHA8qZeBX
+LzKLdxVFn2DDQgMOCdgvVE08XoblpQZz/QfJY4joopzzP/4C1+ol8O4DJu12CnO4
+ZrkekMyVbmMMvniRcYAzAKelccK3l8HHbyMx/o4Wqc4H52e1cnBwbqApxiyUpAJ7
+PJORtlwtn8n12J0zgZDRFQRr9rpIvvdgGaggwhGckTaL+bad1etd2//2DC+2MSyQ
+IDegwMBQ0UWBvcj94yMSP07umbBLmNppZKV6X5Zpjic7/UAHbg2erDiKx1nAsoz+
+AWEm8PuETTDEKpEfwjgP7d32zMei8PMdx+toOSjcJG1EHh/l8u+dJeLfUB3m2/gT
+fOzCRa+g0ds93GYaXIjV97wQOcvtNI/d4kmIk94eRVfq0KaViFqWKEUTHQw7VBtL
+Anv/k4HPoJ5rjKGTt7g0
+=EYAb
+-----END PGP SIGNATURE-----
