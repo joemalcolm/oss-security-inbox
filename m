@@ -1,119 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/06/6
-Message-ID: <87vb76dh98.fsf@x220.int.ebiederm.org>
-Date: Wed, 06 Jan 2016 06:28:19 -0600
-From: ebiederm@...ssion.com (Eric W. Biederman)
-To: Serge Hallyn <serge.hallyn@...ntu.com>
-Cc: oss-security@...ts.openwall.com,  cve-assign@...re.org,  john.johansen@...onical.com
-Subject: Re: Re: CVE Request: Linux kernel: privilege escalation in user namespaces
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/25/2
+Message-ID: <20160625051239.GA16648@eldamar.local>
+Date: Sat, 25 Jun 2016 07:12:39 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: David Sinquin <david@...quin.eu>, Ben Hutchings <ben@...adent.org.uk>, CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Linux CVE-2016-1237: nfsd: any user can set a file's ACL over NFS and grant access to it
 Content-Type: text/plain; charset=utf-8
 
-Serge Hallyn <serge.hallyn@...ntu.com> writes:
+Hi
 
-> Quoting Eric W. Biederman (ebiederm@...ssion.com):
->> cve-assign@...re.org writes:
->> 
->> > Use CVE-2015-8709 for the issue fixed in the
->> > https://lkml.org/lkml/2015/12/25/71 post.
->> >
->> > (This is not yet available at
->> > http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/kernel/ptrace.c
->> > and http://marc.info/?l=linux-kernel&m=145118185526359 might be the
->> > current end of the earlier discussion.)
->> >
->> > This issue has been covered in security advisories from one or more
->> > Linux distributions, e.g.,
->> >
->> >>> http://www.ubuntu.com/usn/usn-2847-1
->> >>> 
->> >>> Jann Horn discovered a ptrace issue with user namespaces in the Linux
->> >>> kernel. The namespace owner could potentially exploit this flaw by ptracing
->> >>> a root owned process entering the user namespace to elevate its privileges
->> >>> and potentially gain access outside of the namespace.
->> >>> (http://bugs.launchpad.net/bugs/1527374)
->> >
->> >
->> > There has been some discussion of whether the finding was a
->> > vulnerability discovery, e.g.,
->> >
->> >>>> Date: Fri, 18 Dec 2015 00:07:19 +0100
->> >>>> From: Jann Horn <jann@...jh.net>
->> >>>> 
->> >>>> I'm not sure whether this is CVE-worthy - the user_namespaces
->> >>>> manpage says "the process has full privileges for operations
->> >>>> inside the user namespace, but is unprivileged for operations
->> >>>> outside the namespace". ptrace()ing a process in the
->> >>>> namespace can reasonably be considered an "operation inside
->> >>>> the user namespace" ...
->> >>>> 
->> >>>> In my opinion, this patch is somewhere between hardening and
->> >>>> a security feature, but I wouldn't really call it a vuln fix.
->> >
->> >
->> >>>>> Date: Thu, 17 Dec 2015 23:54:03 +0000
->> >>>>> From: Serge Hallyn <serge.hallyn@...ntu.com>
->> >>>>> 
->> >>>>>> ptrace()ing a process in the
->> >>>>>> namespace can reasonably be considered an "operation inside
->> >>>>>> the user namespace"
->> >>>>> 
->> >>>>> Except by creating a file in the host namespace, you were, as
->> >>>>> root in the container, able to escape your namespace, right?
->> >
->> > We feel that, more generally, the usn-2847-1 mention of "and
->> > potentially gain access outside of the namespace" is a realistic
->> > concern.
->> 
->> My mind is boggling at some of the logic involved here.
->> 
->> There is no potentially gaining access outside of the namespace when it
->> is access to things that were put inside the namespace.
->> 
->> The discussion was about how to make it easier for userspace not to do
->> stupid things, not how to fix a bug in the kernel.
->> 
->> The code we have been discussing most definitely does not make it safe
->> for a arbitrary root owned processes to call setns and enter a user
->> namespace with a hostile user namespace root.  You have to close file
->> descriptors, unmap files and do I don't know what else.  Properly
->> and safely dropping privileges is a challenging problem.
->> 
->> Calling bug because it is possible to use a kernel feature wrong feels
->> completely inappropriate.
->
-> I could be wrong but think you are misunderstanding the cve.
->
-> IIRC the situation was:  if you setns(some-userns); setresgid(0,0);
-> setresuid(0,0); then between the setns and the setuids the container
-> can ptrace your task and do things using the host uids.  That's bad.
+David Sinquin reported that anyone may be able to grant themselves
+permissions to a file by setting the ACL. nfsd did not check
+permissions when setting ACLs.
 
-It is a pain but it is perfectly possible to:
-	/* Mess with caps so the next line does not clear CAP_SYS_ADMIN */
-	setresuid(container_root_uid, container_root_uid);
-	setns(some_userns);
+CVE-2016-1237 was assigned by the Debian security team for this issue
+were David Singuin initially reported the issue.
 
-And it all works without issue.
+The permission checks and inode locking were lost in a refactoring
+with commit 4ac7249ea5a0ceef9f8269f63f33cc873c3fac61 which was in
+v3.14-rc1.
 
-> You can't stop the container from messing with you in general (by
-> ptracing later - though as you say we could set nodump, but I don't
-> think people would want htat), but it shouldn't be able to mess with the
-> host root uid.
+The issue is fixed with commit
+999653786df6954a31044528ac3f7a5dadca08f4 in Linus' tree.
 
-It is a very reasonable extension and it makes it much harder to get it
-all wrong.  But that is very different from saying the kernel today is
-broken.
+Introduced in: https://git.kernel.org/linus/4ac7249ea5a0ceef9f8269f63f33cc873c3fac61 (v3.14-rc1)
 
-It really is the responsibility of the party that calls
-setns(some_userns) to make certain their process does not have anything
-you don't want the root user in the container to get his hands on.  That
-goes way beyond the root uid.
+Prerequisite: https://git.kernel.org/linus/485e71e8fb6356c08c7fc6bcce4bf02c9a9a663f 
 
-In the original conversation about all of this the issue that was raised that
-we might not know which process the user namespace belongs to and so
-might not be able to call setresuid(container_root_uid, container_root_uid) 
-ahead of time because of lack of knowledge.
+Fixed by https://git.kernel.org/linus/999653786df6954a31044528ac3f7a5dadca08f4 
 
-I am concerned that the responsibility to not be stupid when you call
-setns(some_userns) is being lost.
+Regards,
+Salvatore
 
-Eric
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
