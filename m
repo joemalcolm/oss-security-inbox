@@ -1,25 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/21/2
-Message-Id: <20160521135921.EC33352E01C@smtpvbsrv1.mitre.org>
-Date: Sat, 21 May 2016 09:59:21 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/25/4
+Message-Id: <20160625125442.479FD13B627@smtpvmsrv1.mitre.org>
+Date: Sat, 25 Jun 2016 08:54:42 -0400 (EDT)
 From: cve-assign@...re.org
-To: sploving1@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, richard.alpe@...csson.com
-Subject: Re: CVE request: -- Linux kernel: Null pointer dereference in tipc_nl_publ_dump
+To: bperry.volatile@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: libical 0.47 SEGV on unknown address
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> http://lists.openwall.net/netdev/2016/05/14/28
-> https://github.com/torvalds/linux/commit/45e093ae2830cd1264677d47ff9a95a71f5d9f9c
+> filename=segv.ics.bug
+> This bug attached had not been reported yet.
+> 
+> AddressSanitizer: SEGV on unknown address
+> 0x4fbb7f in icalproperty_new_clone
 
-> Without checking the pointer to the netlink socket attribute, it could
-> cause a null pointer dereference when parsing the nested attributes in
-> function tipc_nl_publ_dump. It allows local users to cause a denial of
-> service. This vulnerability affects Linux kernel versions from 3.19 to 4.6.
+Use CVE-2016-5823.
 
-Use CVE-2016-4951.
+
+> https://bugzilla.mozilla.org/show_bug.cgi?id=1275400 (Opened a month
+> ago. After Tyson reproed the bug in libical, no responses).
+
+Use CVE-2016-5824.
+
+
+> The following three bugs are distinct heap over-reads in libical
+> (tested against libical 0.47 and 1.0) which have had little to no
+> reception by Mozilla.
+
+> https://bugzilla.mozilla.org/show_bug.cgi?id=1280832
+
+Use CVE-2016-5825.
+
+
+> https://bugzilla.mozilla.org/show_bug.cgi?id=1281041
+
+Use CVE-2016-5826.
+
+
+> https://bugzilla.mozilla.org/show_bug.cgi?id=1281043
+
+Use CVE-2016-5827.
+
+
+MITRE has no role in determining the list charter, but
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security says
+"List Content Guidelines ... Any security issues that you post to
+oss-security should be either already public or to be made public by
+your posting." Because you apparently are publishing both the
+research methodology (i.e., AddressSanitizer) and the types of
+findings, this is close to a public disclosure but may be outside
+the spirit of the list. (We definitely would not have responded here
+if the one fully described case, segv.ics.bug, had been omitted.)
 
 - -- 
 CVE Assignment Team
@@ -29,17 +63,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXQGkEAAoJEHb/MwWLVhi21gkP/1eCj9lEnb+LDcZu56yrfV+e
-fO9tl7DUcrGlj5SwqiF1x80nAsWiIfdQkG1vKguqMWQYE3o0wT841FcTOltphUnx
-tPndKrWCfv8hkJrH+rB01MXM+8jUFe3E6tn7mCdoF5RwYrOR8MnBSFi20/ekc826
-qOw4nnFZ8eujJkBAXi58L1nSnE+tTsmtwZoGl+bE0qIR5QV4Hc1Ep26VOrQ2wxKN
-bdGz37ZweRcVemb1KdP3kzxZYGCF9x71zeFCMBw/N2I6cHgbtJCmBnAU16hanh1J
-fHlHQpt41WZ8MMoD9iBpPve92vE7jZUbZVxV9UHhYtIaJw8q5Rwnn0D1y9ObtevW
-QMqqSjKC41gHU63OviYOq/5g2nuRZ435iWw8oqg2/dXInYPXe5drnK5wv5jM+IU8
-N1UwSRXSHMaNFwT77mqF6a448M6GPIYBA4jclLAIIrPJqhK4EBZIjXNgzflxoIIA
-hXlwhu4GUxuI1usQ2fgsSbOiVCz6KsPiM9098ycZtIl7RNukHZh8itJAjAb2+fFc
-Eq0B/1J4l8U6tTXECigNZGQZG0GQxQNHH34RKVEUclfhwAMS74A2puTBREPN1Nkb
-1W8ye0M762tL1wa/0RRLml4/Ajm4MTFoBnY2e0HxmmIn3M54fmK6+cSsi2mxdPhW
-4hwVUl4K+P/OMujS4KNw
-=N8vt
+iQIcBAEBCAAGBQJXbn6tAAoJEHb/MwWLVhi2c7kQAKkdy6WSLV6WAmDF8uJWmJWE
+phCI6blik9Gts60jWous3yGJwtKGCapxAiOKPSK4Cwoftx6fgzCjrdZpmrb9PCdK
+4eBAByZhThVoFXRWQexWHJgbDG+JD+eMmNGfYMAEbCuVShqrvBeTi7jmB8BcbAzS
+XbMfP8d9cjMD+P6Hq9HRXWytRqkdvQ7J54sr0oNmefdKtjbwR5M5mcCacYKomTVf
+c0ejV1BuLWnQ/qxoz8eB+3tXUXZWtUbssXI+WnyAV88IuRc8SlSZtl/Y/dbBb68V
+XBV+nlgWRyN66gbcMufV/1Uo2/E+xfqjKuj2VXdI+oWnsjjvAo7oIMVwN8hoJE7G
+imX6srWFpfJ12qeFcD2b6Lp6KvI3wvDX3uirZ3RAzR0m0sOw/ZMR+uKx5QH4m06s
+npqpfYLx/GqtCCjkBSirHqC4KKnFwG1GDDjHPIionZLQYSNOGWsZ3AEog/6a5lma
+6k5cy+weP1HYdEnJdri01nH9xFk/A7KWbLo3q/ncQmJZiAO3fK45I/IJxjDlKgZ2
+4LUdackzFqHDUYjy7mXciRRSgaHJwWWPs5WOV3I0W4P6nYd2iyBFTtJF1/U+cD22
+GEfALIX1q2qq8BJhncP20cYLI7H8WWawVHYSpF2eyFPbfroY0zcfEiiH/54KiYrY
+7FyUt5hF3MaNWaUx3Su5
+=O5An
 -----END PGP SIGNATURE-----
