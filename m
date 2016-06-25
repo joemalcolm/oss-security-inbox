@@ -1,21 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/26/1
-Message-ID: <CALx_OUDn=wBw4XdZw6YJdRTHQigpHqYHoED6JUNEx9LppY0ERA@mail.gmail.com>
-Date: Sun, 25 Sep 2016 17:11:38 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: cookieopfer@....net
-Subject: Re: ffmpeg afl bugs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/25/5
+Message-ID: <576EA48D.1070502@oracle.com>
+Date: Sat, 25 Jun 2016 08:34:37 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
+Subject: Re: libical 0.47 SEGV on unknown address
 Content-Type: text/plain; charset=utf-8
 
->> Have fun with ffmpeg-h264-call-stack-overflow.mp4
->
-> Perhaps you meant to share this file with this community?
+On 06/24/16 06:54 AM, Brandon Perry wrote:
+> I am posting this to Full Disclosure/OSS instead of reporting it because I have
+> opened a handful of libical bugs in the Mozilla bug tracker, alerted
+> security@...illa.org <mailto:security@...illa.org>, and worked to show how and
+> where to reproduce the bugs in Thunderbird, but Mozilla hasn’t shown any care at
+> all about the bugs. Perhaps if I give a sample to the community of the bugs in
+> the bug reports, Mozilla will take the bug reports more seriously. This bug
+> attached had not been reported yet.
 
-Hmm... I think that
-docs/vuln_samples/ffmpeg-h264-call-stack-overflow.mp4 is just a sample
-file that comes with AFL (and dates back to December 2014). I doubt it
-still crashes anything, and I'm not sure what the original reporter
-was trying to say.
+Did you report them to libcial upstream?  http://libical.github.io/libical/
 
-/mz
+> My roommate mentioned Thunderbird being a second-class citizen in the Mozilla
+> world, so if this is the case, this should be made explicit in regards to bug
+> bounty expectations.
+
+While Thunderbird is still a beloved child of Mozilla, it's been told it's time
+to move out of its parents house and find its own sources of income/support:
+
+https://groups.google.com/d/msg/mozilla.governance/kAyVlhfEcXg/Eqyx1X62BQAJ
+https://blog.mozilla.org/thunderbird/2015/12/thunderbird-active-daily-inquiries-surpass-10-million/
+
+-- 
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
