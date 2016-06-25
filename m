@@ -1,4 +1,9 @@
-Received: (qmail 3423 invoked by uid 550); 5 Nov 2025 18:16:50 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6385" "Saturday" "25" "June" "2016" "12:18:42" "+0800" "redrain root" "rootredrain@gmail.com" "<CAPGxrc-M3V_ok8DFmu3fOogpX-Sr-eoy9zCMYqNGgCp73hu05Q@mail.gmail.com>" "268" "[oss-security] Ruby:HTTP Header injection in 'net/http'" nil nil nil "6" "2016062504:18:42" "[oss-security] Ruby:HTTP Header injection in 'net/http'" (number mark "U       rootredrain@ Jun 25  268/6385  " thread-indent "\"[oss-security] Ruby:HTTP Header injection in 'net/http'\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 22491 invoked by uid 550); 25 Jun 2016 04:24:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,252 +12,306 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 19946 invoked from network); 5 Nov 2025 18:03:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1762365786;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ZRalGCGur2umIUff4LjWJylLDA/j5u8ffQ/KRKnXlAk=;
-	b=gllwvhFnOFeEdou+SlDEMy7XlxmUX01EwxgzQEAXyk4feU7qS6HCJcn3lYNvwuQCPPaucv
-	0y+jJ1uidSRWE2EiA5ZORDTmKo0y8TCEYKWatpHYQNOHgXdgUm5rzPzDxDlIkY7guOcTT5
-	HZcJNV6IGasPbpv3X5N4ok9ntEhI/AI=
-X-MC-Unique: Hg4dOY9cPWerc9xgK4LZVw-1
-X-Mimecast-MFC-AGG-ID: Hg4dOY9cPWerc9xgK4LZVw_1762365783
+Received: (qmail 20198 invoked from network); 25 Jun 2016 04:18:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=LwRKXQav5zuy1dmh9oas0u1nu2e1AKVVshUlwv29qbc=;
+        b=s8zqIkWH5AVpttOWZc7Z3JPZVnnTiJkH4lF8Os/vFiQ7HjtDLag0fsCCSEKDDC6GEz
+         4dB/NnRt5+zoLXDrdIqoAWZXKABIAA898RB+lxkVDaxjSh1lv2n1MUNQtos37ZwnetIK
+         VdT2oZW6lKCwIFM3vJCAp1hNUQrYyTWcJPDYhbc1LgZ0yKIEv4qj0S96YQYUyWwlFEZN
+         mN4YoKDg9+Q9x6ri20PkhVY2AL0jSFhmRs+lBbuAhd7k3WPEJfNSXFceaVubz77xfxph
+         4G/tn4+/oyYegv98/N9IxeCMYhULsT98+PrDZvSZQrkazwwJsRSd/MrMVKXOwrDuz6rv
+         5S+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762365783; x=1762970583;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZRalGCGur2umIUff4LjWJylLDA/j5u8ffQ/KRKnXlAk=;
-        b=laBX3/BSDMLYHO3vcW6ZjRDNp8I5MRS/mZVqsEhv0cpLN55pnDHohTpfy01g3UmJoa
-         hW0wNiE8uR29AHRNp9Rh4dsnrS22Qf3WPSbmcJ9pINKYbifOO8Am9HmTeEbiqbn0TiYu
-         k86OwBkYFXNcue4kf668nKEYUYgjTI0b4d/7WSP/UPQ4M6u3mX4qiGk+bTPvbeDeS0EG
-         khhpXCBLZzU7Q0y1MVjw6TAFwnBO/GN5t56RTEc4VlnZbT+maPt241oLhhIpKh/uHIbr
-         bu0CB0h19/cH/rkzky2o4zaOsn/j2h5aw/w6ZVWHFt/rgiSSmpd7LiivoNZhm+fo2Khl
-         puOg==
-X-Gm-Message-State: AOJu0YxK3rrUjmmYn4vW5NkyfqQHEEItJae4UDbpMsRXVVn+wf7mK/On
-	VAzue5IE4T13ESHqbh5PPSKLAWptGhEMeGGihPOfS8LgBXv9fG+ESxsD4B52g7ZWqUA8vk9G41t
-	i8Lz6pXBBIgAVejwtQqvxjFeKX6gI3iEa3gSwHIlp20b151nxUOy5WC8yX4ioCEVkuCluWPVGaF
-	nBKbThALNvr96g3B7kzZdHNc8g7Vctqo5TCcjr9v1PxxrIGw5Ou/bY
-X-Gm-Gg: ASbGncuxoxt7rGqkITlCJSkm0qkhQrIKOwqd3SiGDrrV6J0af8R4ZHjTx+6AyvsDH7w
-	XGlIODOOcpSJ/s6kErHL0XRxD4hLmC4/2kNJl9hV3PMzOSvnp7onD/gOJzMjNkYse3fKSBE1l2F
-	tr6rCHsca1ovNvvHIH14OQ8pEEhTCfFjegmBbUN0+SSDtgX2VzIu88Lf4=
-X-Received: by 2002:a05:690e:151c:b0:63f:b590:305 with SMTP id 956f58d0204a3-63fd34bb3d3mr2891350d50.4.1762365782506;
-        Wed, 05 Nov 2025 10:03:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGhm+qpaaeeyo6BCosX6oSQgNjvPIzxWYANIaGAJnLLDjh/iFy41DYryJ7FPu/LzCvWtj1Kcx+GzWUwFWzUWq4=
-X-Received: by 2002:a05:690e:151c:b0:63f:b590:305 with SMTP id
- 956f58d0204a3-63fd34bb3d3mr2891303d50.4.1762365781802; Wed, 05 Nov 2025
- 10:03:01 -0800 (PST)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=LwRKXQav5zuy1dmh9oas0u1nu2e1AKVVshUlwv29qbc=;
+        b=ggcOLs2PeqKZ3SvCo6XR7ytwNFtXMHh/mDoVMmQKZjPyle/ssUD7ZGAJv0PKE4x3Yb
+         FwVxX7rgtd3qHKa1AYcFBgK5YWVudEOAkjiIV0tkNjomv/4dIpTappsBCyLkKavgJsPp
+         mJtJhQKZDMuXQWE1rC35gAvCmfodoxShV4AAzvUXKK1F+nZT27pe+/eokp0/wanhvSUm
+         kk8s4mG6qUIkMfk34tjvnpu10GBtmTAhscXlK0Wk3V63ht56/94UiEG/RCUTKRXdpp4q
+         6rqxF69pwJP8kOvtynWKnoC9O8EVVfi+uRZkq/BgQs1011YqulfwJRl/E+bmCXVm603w
+         fxhA==
+X-Gm-Message-State: ALyK8tIiP7yP2m1ZIoeYnwbuDzDhiZbdyT7gvxh75ZSTSn+QhDWQ3H21uuRTbk072lwLTTjw5OEHK7Jfi5lpUw==
+X-Received: by 10.129.159.134 with SMTP id w128mr5235433ywg.193.1466828322614;
+ Fri, 24 Jun 2016 21:18:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <aP_msOoiyHJ_M4Yx@mertle> <20251027163220.8c7ede47-6b3a-4190-ad4b-e52761b341de@korelogic.com>
- <20251028014909.GA6430@openwall.com> <76f8e74c-d9cc-4f20-8061-488598f85fe7@protonmail.com>
- <20251101030054.GA3031@openwall.com> <007B59A3-903D-48C6-8295-764499DA5190@edvina.net>
- <aafcc993-868d-4bd7-90da-de0505c24bd8@protonmail.com> <86CF08FC-173D-42AE-B0FD-451FBCA0A724@edvina.net>
- <b72f8f12-623a-4fc5-a7b6-001fa85d965c@protonmail.com> <BA9450C7-C888-41E6-9C49-8BE94CB659E9@edvina.net>
-In-Reply-To: <BA9450C7-C888-41E6-9C49-8BE94CB659E9@edvina.net>
-From: Pedro Sampaio <psampaio@redhat.com>
-Date: Wed, 5 Nov 2025 15:02:44 -0300
-X-Gm-Features: AWmQ_bnbxaMtqZQWyRO_sh_g90y8oCgTttjyVJW75dwt30Zfxpa5hPx9PUTk8WQ
-Message-ID: <CAEFhzs_s6U2xMwp3jmGK9_pOg6toiSH_4bBcp3GS7t59CUUamg@mail.gmail.com>
+From: redrain root <rootredrain@gmail.com>
+Date: Sat, 25 Jun 2016 12:18:42 +0800
+Message-ID: <CAPGxrc-M3V_ok8DFmu3fOogpX-Sr-eoy9zCMYqNGgCp73hu05Q@mail.gmail.com>
 To: oss-security@lists.openwall.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 8-wCzwSsD--GIWSL810ZoNrSgfke-_bvpKUWWY2TGEc_1762365783
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/alternative; boundary="0000000000006396190642dcc2e5"
-Subject: Re: [oss-security] Questionable CVE's reported against dnsmasq
-
---0000000000006396190642dcc2e5
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] Ruby:HTTP Header injection in 'net/http'
 
-On Wed, Nov 5, 2025 at 12:13=E2=80=AFPM Olle E. Johansson <oej@edvina.net> =
-wrote:
+TIMELINE
+rootredrain submitted a report to Ruby.
 
->
->
-> > On 4 Nov 2025, at 18:59, Art Manion <zmanion@protonmail.com> wrote:
-> >
-> > On 2025-11-04 04:03, Olle E. Johansson wrote:
-> >
-> >>> On 3 Nov 2025, at 19:07, Art Manion <zmanion@protonmail.com> wrote:
-> >
-> >>>>> CVEs against dnsmasq (CVE-2025-12198, CVE-2025-12199, CVE-2025-1220=
-0)
-> >>>>> and Kamailio (CVE-2025-12204, CVE-2025-12205, CVE-2025-12206, and
-> >>>>> CVE-2025-12207) mentioned in this thread are not yet disputed and
-> have
-> >>>>> no comments of this sort in their descriptions.
-> >>>
-> >>> I asked VulDB to mark the dnsmasq CVE IDs as disputed.
-> >
-> > The VulDB CNA decided to reject the dnsmasq CVE IDs.
-> >
-> >>>> As part of the Kamailio project I can say that we did just become
-> aware
-> >>>> of these CVEs in your email. They do not make sense. Trying to get to
-> >>>> the report, the config files used to provoke the issue can=E2=80=99t=
- be
-> downloaded.
-> >
-> >> We=E2=80=99ve gone back and this was our core developer=E2=80=99s reac=
-tion to the mail
-> we got earlier to our security address:
-> >>
-> >> "This is clearly spam, imo: vague/generic reporting, no explicit naming
-> >> of Kamailio ... the email was not sent from the vuldb.com server
-> >> but from mc20a2201.dnh.net ([185.46.57.114]) -- I would suggest to not
-> >> clink on the links, they might lead to malware, etc...
-> >
-> > I understand both sides of this problem.  Would it have helped if the
-> VulDB
-> > notification included details such as these (from CVE-2025-12207)?
-> >
-> >  https://shimo.im/docs/vVqRMVMlrycMO63y/read
-> >
-> For us that site is not trustworthy. It could be language/cultural issues.
-> One example is that the actual configuration files for some reason can=E2=
-=80=99t be
-> downloaded and the error message is
-> in a language I have no understanding of.
->
-> Trust is hard. We have to think about this. We get all kinds of strange
-> emails to our
-> security reporting email address so we=E2=80=99re very cautious unfortuna=
-tely.
->
-> How can we create some kind of trust system so that any open source
-> developer - from one person projects to large projects with massive fundi=
-ng
-> - know that a report is worth reacting to?
->
-> /O
-> > - Art
-> >
-> >
->
->
-It seems to be that there is a hidden stage during the PSIRT function that
-may require its own identification inside the CVE Program (which I assume
-is the highest source of truth for us at this moment?). And that stage is
-when a security issue is deemed not enough to become a full CVE, but it is
-still relevant for awareness purposes. Assigning a CVE ID only to have it
-disputed or rejected later seems like a process that is confusing and hard
-to manage.
+show raw
+Jun 22nd
 
-Disputes have no nuance and once the word is out, the possible damages are
-hard to revert. Oftentimes they stay perpetually open, and resolutions seem
-to not give any definitive answer, which adds to the confusion. Most CVE
-record consumers do not have a way to clearly differentiate and correctly
-prioritize them.
+Hi,
 
-What if a new ID could be created for these cases, like a lower level CVE,
-which can help raise awareness, maintain discussion history, and issues
-could be elevated or degraded to it without them getting stuck at the never
-ending vendor CVE grinder, but still benefiting from the current CVE
-infrastructure?
+I would like to report a HTTP Header injection vulnerability in
+'net/http' that allows attackers to inject arbitrary headers in
+request even create a new evil request.
 
---=20
-Pedro Sampaio | Red Hat Product Security
-851525C5A98E9DEB7E650ABDFAC8296FBC674B8F
+PoC
 
---0000000000006396190642dcc2e5
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+require 'net/http'
+http =3D Net::HTTP.new('192.168.30.214','80')
+res =3D http.get("/r.php HTTP/1.1\r\nx-injection: memeda")
 
-<div dir=3D"ltr"><div class=3D"gmail_quote gmail_quote_container"><div dir=
-=3D"ltr" class=3D"gmail_attr">On Wed, Nov 5, 2025 at 12:13=E2=80=AFPM Olle =
-E. Johansson &lt;<a href=3D"mailto:oej@edvina.net">oej@edvina.net</a>&gt; w=
-rote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0p=
-x 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><br>
-<br>
-&gt; On 4 Nov 2025, at 18:59, Art Manion &lt;<a href=3D"mailto:zmanion@prot=
-onmail.com" target=3D"_blank">zmanion@protonmail.com</a>&gt; wrote:<br>
-&gt; <br>
-&gt; On 2025-11-04 04:03, Olle E. Johansson wrote:<br>
-&gt; <br>
-&gt;&gt;&gt; On 3 Nov 2025, at 19:07, Art Manion &lt;<a href=3D"mailto:zman=
-ion@protonmail.com" target=3D"_blank">zmanion@protonmail.com</a>&gt; wrote:=
-<br>
-&gt; <br>
-&gt;&gt;&gt;&gt;&gt; CVEs against dnsmasq (CVE-2025-12198, CVE-2025-12199, =
-CVE-2025-12200)<br>
-&gt;&gt;&gt;&gt;&gt; and Kamailio (CVE-2025-12204, CVE-2025-12205, CVE-2025=
--12206, and<br>
-&gt;&gt;&gt;&gt;&gt; CVE-2025-12207) mentioned in this thread are not yet d=
-isputed and have<br>
-&gt;&gt;&gt;&gt;&gt; no comments of this sort in their descriptions.<br>
-&gt;&gt;&gt; <br>
-&gt;&gt;&gt; I asked VulDB to mark the dnsmasq CVE IDs as disputed.<br>
-&gt; <br>
-&gt; The VulDB CNA decided to reject the dnsmasq CVE IDs.<br>
-&gt; <br>
-&gt;&gt;&gt;&gt; As part of the Kamailio project I can say that we did just=
- become aware<br>
-&gt;&gt;&gt;&gt; of these CVEs in your email. They do not make sense. Tryin=
-g to get to<br>
-&gt;&gt;&gt;&gt; the report, the config files used to provoke the issue can=
-=E2=80=99t be downloaded.<br>
-&gt; <br>
-&gt;&gt; We=E2=80=99ve gone back and this was our core developer=E2=80=99s =
-reaction to the mail we got earlier to our security address:<br>
-&gt;&gt; <br>
-&gt;&gt; &quot;This is clearly spam, imo: vague/generic reporting, no expli=
-cit naming<br>
-&gt;&gt; of Kamailio ... the email was not sent from the <a href=3D"http://=
-vuldb.com" rel=3D"noreferrer" target=3D"_blank">vuldb.com</a> server<br>
-&gt;&gt; but from <a href=3D"http://mc20a2201.dnh.net" rel=3D"noreferrer" t=
-arget=3D"_blank">mc20a2201.dnh.net</a> ([185.46.57.114]) -- I would suggest=
- to not<br>
-&gt;&gt; clink on the links, they might lead to malware, etc...<br>
-&gt; <br>
-&gt; I understand both sides of this problem.=C2=A0 Would it have helped if=
- the VulDB<br>
-&gt; notification included details such as these (from CVE-2025-12207)?<br>
-&gt; <br>
-&gt;=C2=A0 <a href=3D"https://shimo.im/docs/vVqRMVMlrycMO63y/read" rel=3D"n=
-oreferrer" target=3D"_blank">https://shimo.im/docs/vVqRMVMlrycMO63y/read</a=
-><br>
-&gt; <br>
-For us that site is not trustworthy. It could be language/cultural issues. =
-One example is that the actual configuration files for some reason can=E2=
-=80=99t be downloaded and the error message is<br>
-in a language I have no understanding of.<br>
-<br>
-Trust is hard. We have to think about this. We get all kinds of strange ema=
-ils to our<br>
-security reporting email address so we=E2=80=99re very cautious unfortunate=
-ly. <br>
-<br>
-How can we create some kind of trust system so that any open source develop=
-er - from one person projects to large projects with massive funding - know=
- that a report is worth reacting to?<br>
-<br>
-/O<br>
-&gt; - Art<br>
-&gt; <br>
-&gt; <br>
-<br>
-</blockquote></div><div><br></div><div>It seems to be that there is a hidde=
-n stage during the PSIRT function that may require its own identification i=
-nside the CVE Program (which I assume is the highest=C2=A0source of truth f=
-or us at this moment?). And that stage is when a security issue is deemed n=
-ot enough to become a full CVE, but it is still relevant for awareness purp=
-oses. Assigning a CVE ID only to have it disputed or rejected later seems l=
-ike a process that is confusing and hard to manage.=C2=A0</div><div><br></d=
-iv><div>Disputes have no nuance and once the word is out, the possible dama=
-ges are hard to revert. Oftentimes they stay perpetually open, and resoluti=
-ons seem to not give any definitive answer, which adds to the confusion. Mo=
-st CVE record consumers do not have a way to clearly differentiate and corr=
-ectly prioritize them.</div><div><br></div><div>What if a new ID could be c=
-reated for these cases, like a lower level CVE, which can help raise awaren=
-ess, maintain discussion history, and issues could be elevated or degraded =
-to it without them getting stuck at the never ending vendor CVE grinder, bu=
-t still benefiting from the current CVE infrastructure?</div><br><span clas=
-s=3D"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_=
-signature"><div dir=3D"ltr"><div>Pedro Sampaio | Red Hat Product Security</=
-div><div>851525C5A98E9DEB7E650ABDFAC8296FBC674B8F<br></div></div></div></di=
-v>
+Example
 
---0000000000006396190642dcc2e5--
+Server Code:
 
+#!/usr/bin/env ruby
+require 'sinatra'
+require 'uri'
+require 'net/http'
+
+get '/' do
+  'hello world'
+end
+
+post '/' do
+  ip =3D params[:ip]
+  port =3D params[:port]
+  path =3D params[:path]
+
+  # do what you want
+  http =3D Net::HTTP.new ip, port.to_i
+  res =3D http.get path
+
+  res.body
+
+end
+
+post data:
+
+ip=3D192.168.30.214&port=3D80&path=3D/r.php%20HTTP/1.1%0d%0ax-injection: me=
+meda
+
+print_r all HTTP Headers=EF=BC=9A
+
+Create an evil request
+
+post data:
+
+server log:
+
+Suggestion:
+
+Should validate URI legality before send request
+
+btw=EF=BC=8C
+
+Cloud I have a CVEID with this vulnerability? reported by
+@redrain(rootredrain@gmail.com) and@ztz(ztz5651483@gmail.com)
+
+4 attachments:
+F100918: 123123.png
+F100919: 222333.png
+F100920: 4444.png
+F100921: 5555.png
+
+rootredrain posted a comment.
+Jun 22nd (2 days ago)
+
+The problem is this line in lib/net/http/generic_request.rb:324
+
+  def write_header(sock, ver, path)
+    buf =3D "#{@method} #{path} HTTP/#{ver}\r\n"
+    each_capitalized do |k,v|
+      buf << "#{k}: #{v}\r\n"
+    end
+    buf << "\r\n"
+    sock.write buf
+  end
+
+"#{@method} #{path} HTTP/#{ver}\r\n" should be checked here to avoid
+malicious input
+
+shugo posted a comment.
+Jun 24th (8 hrs ago)
+
+Thanks for your report.
+
+We don't consider this a vulnerability because Net::HTTP#get is not
+designed to accept malicious input.
+Applications have responsibility to verify input syntactically and
+semantically (accepting all RFC2616-compliant input would not be a
+good idea).
+
+So we would like to handle this as a normal issue.
+
+rootredrain posted a comment.
+Jun 24th (2 hrs ago)
+
+Hi shugo,
+
+Thanks for the reply. Please don't leave this problem to developers,
+they have uneven level at developing.
+
+For example, assume we have a demo website, the only thing do is
+generate a new HTTP request:
+
+#!/usr/bin/env ruby
+require 'sinatra'
+
+get '/' do
+  'hello world'
+end
+
+post '/' do
+  ip =3D params[:ip]
+  port =3D params[:port]
+  path =3D params[:path]
+
+  # send the request to another site
+  http =3D Net::HTTP.new ip, port.to_i
+  res =3D http.get path
+
+  res.body
+end
+
+It's a common demand, right ?
+
+But web developer may not realized that sinatra will auto decode url.
+Attacker can encode \r\n to %0a%0d, send to the sinatra, sinatra will
+decode url to \r\n and pass to thepath, finally cause a HTTP Header
+Injection or CRLF Injection.
+
+Please assume all input is malicious. Here is a similar vulnerability
+in python: CVE-2016-5699
+
+Here is what another HTTP lib Faraday do may change your mind.
+
+lib/faraday/connection.rb:308
+
+def url_prefix=3D(url, encoder =3D nil)
+  uri =3D url_prefix =3D Utils.URI(url)
+  self.path_prefix =3D uri.path
+  # ... ... ...
+  uri
+end
+
+uri =3D url_prefix =3D Utils.URI(url) try to convert url to URI, It will
+raise an error whenurl is invalid.
+
+lib/faraday/connection.rb:399
+
+def build_exclusive_url(url =3D nil, params =3D nil, params_encoder =3D nil)
+  url =3D nil if url.respond_to?(:empty?) and url.empty?
+  base =3D url_prefix
+  # ... ... ...
+  uri =3D url ? base + url : base
+  # ... ... ...
+end
+
+uri =3D url ? base + url : base will trigger another examination convert_to=
+_uri:
+
+def convert_to_uri(uri)
+  if uri.is_a?(URI::Generic)
+    uri
+  elsif uri =3D String.try_convert(uri)
+    parse(uri)
+  else
+    raise ArgumentError,
+          "bad argument (expected URI object or URI string)"
+  end
+end
+
+If url is invalid, it will raise an error.
+
+Please let me know if you need more info.
+
+tenderlove posted a comment.
+Jun 24th (2 hrs ago)
+
+It's a common demand, right ?
+
+I'm not sure about that.
+
+I think this is a bug we should probably address, but I don't think we
+should consider this a vulnerability. Fetching arbitrary paths from
+user input seems pretty dubious.
+
+rootredrain posted a comment.
+Jun 24th (about 1 hr ago)
+
+Hi tenderlove,
+
+Here is my point :
+All input can not be trusted.
+
+We should validate url in Net::HTTP
+
+tenderlove posted a comment.
+Jun 24th (about 1 hr ago)
+
+All input can not be trusted.
+
+Yes, people should be whitelisting paths passed in. An open proxy is
+already a vulnerability, regardless of header injection.
+
+As I said, we should treat this as a bug. But since an open proxy is
+already a security problem (that we cannot fix), then I don't think
+this bug should be treated as a security issue.
+
+shugo posted a comment.
+Jun 24th (34 mins ago)
+
+But web developer may not realized that sinatra will auto decode url.
+Attacker can encode \r\n to %0a%0d, send to the sinatra, sinatra will
+decode url to \r\n and pass to the path, finally cause a HTTP Header
+Injection or CRLF Injection.
+
+In that case, it seems to be a bug of that application, not Net::HTTP#get.
+
+I'm not against adding argument verification to Net::HTTP#get, though.
+
+rootredrain posted a comment.
+Jun 24th (29 mins ago)
+
+But since an open proxy is already a security problem
+
+Yes, an open proxy is already a vulnerability and you can't fix that,
+but attack scenarios is not only include an open proxy, but also
+include many other parts.
+
+A site like google image, user can paste image url on it, then site
+will request the resource. It's possible to suffer this attack.
+
+Some video sites allow user reference outside resource. It's possible
+to suffer this attack.
+
+So you can not treat it occur in an unusual scenarios. I still
+consider it was a security issue.
+
+rootredrain posted a comment.
+Jun 24th (27 mins ago)
+
+If you believe this is not a issue, please allow the public disclosure.
+
+tenderlove closed the report and changed the status to Informative.
+Jun 24th (23 mins ago)
+
+I've closed as informative, and I'll allow public disclosure.
+
+tenderlove requested to disclose this report publicly.
+Jun 24th (20 mins ago)
+
+rootredrain has requested mediation from HackerOne Support.
+Jun 24th (15 mins ago)
+
+The HTTP scheme handler accepts percent-encoded values as part of the URL.
+
+The generic_request.rb allows unsafe characters, it dosen't have any
+safe filtration, attackers can cause actual security threat. so we
+consider it is a vulnerability
