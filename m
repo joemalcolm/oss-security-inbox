@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["854" "Thursday" "11" "July" "2019" "13:57:19" "+0000" "Malte Kraus" "malte.kraus@suse.com" "<de14296ba908c162036a15b1aeda95586ff8ba14.camel@suse.com>" "14" "Re: [oss-security] Privileged File Access from Desktop Applications" "^CC:" nil nil "7" "2019071113:57:19" "[oss-security] Privileged File Access from Desktop Applications" (number mark "        malte.kraus@ Jul 11   14/854   " thread-indent "\"Re: [oss-security] Privileged File Access from Desktop Applications\"\n") "<20190711093326.328948dc@jabberwock.cb.piermont.com>" ("<200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>" "<20190709113036.0f12d057@jabberwock.cb.piermont.com>" "<9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>" "<20190711093326.328948dc@jabberwock.cb.piermont.com>") nil nil nil nil nil nil nil "Re: [oss-security] Privileged File Access from Desktop Applications" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6883" "Saturday" "25" "June" "2016" "10:41:16" "-0500" "Brandon Perry" "bperry.volatile@gmail.com" "<C5D9B35B-045D-41DD-9419-14D50BE494BA@gmail.com>" "140" "Re: [oss-security] libical 0.47 SEGV on unknown address" nil nil nil "6" "2016062515:41:16" "[oss-security] libical 0.47 SEGV on unknown address" (number mark "U       bperry.volat Jun 25  140/6883  " thread-indent "\"Re: [oss-security] libical 0.47 SEGV on unknown address\"\n") "<576EA48D.1070502@oracle.com>" ("<6565BB80-B75B-4CE3-819D-84CCE79F0CA3@gmail.com>" "<576EA48D.1070502@oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 4079 invoked by uid 550); 11 Jul 2019 14:55:07 -0000
+Received: (qmail 6112 invoked by uid 550); 25 Jun 2016 15:41:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,183 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9801 invoked from network); 11 Jul 2019 14:27:17 -0000
-Thread-Topic: [oss-security] Privileged File Access from Desktop Applications
-Thread-Index: AQHVNl5nUBfPP5kO8kaBFmoFEO3kG6bCamhOgAKjjwCAAF/dS4AABnIA
-Message-ID: <de14296ba908c162036a15b1aeda95586ff8ba14.camel@suse.com>
-References: <200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>
-	 <20190709113036.0f12d057@jabberwock.cb.piermont.com>
-	 <9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>
-	 <20190711093326.328948dc@jabberwock.cb.piermont.com>
-In-Reply-To: <20190711093326.328948dc@jabberwock.cb.piermont.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=malte.kraus@suse.com; 
-x-originating-ip: [188.195.245.52]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 9fef0436-ca2d-4c3d-c219-08d70607b089
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);SRVR:BN6PR18MB1267;
-x-ms-traffictypediagnostic: BN6PR18MB1267:
-x-microsoft-antispam-prvs: <BN6PR18MB1267CAD63C8110CB3D2024A084F30@BN6PR18MB1267.namprd18.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:6790;
-x-forefront-prvs: 0095BCF226
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(4636009)(396003)(366004)(39860400002)(376002)(136003)(346002)(199004)(189003)(2906002)(256004)(476003)(14444005)(478600001)(6116002)(3846002)(5640700003)(2616005)(229853002)(81166006)(44832011)(305945005)(446003)(64756008)(4744005)(11346002)(66556008)(7736002)(76116006)(86362001)(8936002)(6436002)(66946007)(6916009)(2501003)(91956017)(6486002)(66476007)(81156014)(15650500001)(66446008)(5660300002)(53936002)(66066001)(6506007)(316002)(26005)(186003)(66574012)(68736007)(2351001)(6512007)(118296001)(4326008)(486006)(8676002)(14454004)(76176011)(25786009)(99286004)(71190400001)(102836004)(36756003)(71200400001)(6246003);DIR:OUT;SFP:1102;SCL:1;SRVR:BN6PR18MB1267;H:BN6PR18MB1092.namprd18.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: suse.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: S6/8VKAoXZRontXvQhRk3kWzOP+i74/bdqEZjTA8QO+C9w44pNhgB4Xd2hOIWclLPPQ56zF5fe2tSO9T6gAEROQUBiy4DBC8oabG9daifbFFbYSpiL8MJ95OgodF5U/PMe/UwXKte4wXlfDZ1sM75c8MxcqN/+rxdIhnf7m5L1y7ZydDdQxrALYms4amk5cN2eoQ8Lshq4md9aEPoy6EFUXYym28RfCMDGqLWBXlX5pO4BsdT5jEqabRrAhChEiUjRYNv+YQtUWV1Seo4CrnH87JH3bZ6LZyGeGRNtrN5lqhRkRv8pudm4rpMrndgNXPHgNM9tTpNTCETpomtYHtmek+vuTi70EXlfer4Yz1h5BC0ELC8pC43+9WQ8YJp4o9UGqCCJeXJ840sTYdY8qjKNv4WLXLJBKwn9dfUCI0mgA=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <38495754EE31BC4FBA5F141FB910189A@namprd18.prod.outlook.com>
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9fef0436-ca2d-4c3d-c219-08d70607b089
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Jul 2019 13:57:19.2150
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 856b813c-16e5-49a5-85ec-6f081e13b527
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: malte.kraus@suse.com
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN6PR18MB1267
-X-OriginatorOrg: suse.com
-CC: "perry@piermont.com" <perry@piermont.com>
-Date: Thu, 11 Jul 2019 13:57:19 +0000
-From: Malte Kraus <malte.kraus@suse.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Privileged File Access from Desktop Applications
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 6088 invoked from network); 25 Jun 2016 15:41:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:mime-version:from:in-reply-to:date:cc:message-id:references
+         :to;
+        bh=TWqj/PInMuwTs+i/ZrXq/oM+CGCSMRDE1VgDX+sJUCg=;
+        b=hH3mExHr5098MKYQY2W6BLczMlzIG8FKudpdJF1ZW05iJPxWuRGuBs1K+XXq+hDbA9
+         L6vNLNFr/p2BdnkjNFxP/qkEw2uE2u/1m3YH0OrP6Berc9JGlzXA3+XaoyBucEK31kx5
+         2VrG0FZINAu10IfRXmwyU7CRhJMyXCCM6hfxsar7ifVrtee3gkIMKTwvwCVicS2fmzXI
+         hHyxlzl2pHKDECxCRoLb+BV4FjchpZqzpnzeQT0qOLb/TCG+nHhABzVb+DkV0+B3PlFG
+         LSnLzLJtstfxROzOxlWAuEwDSrj4FuAl2III0QQYRL4c2QcOFy0gP5ygBD7AVL2hADCz
+         1trg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:mime-version:from:in-reply-to:date:cc
+         :message-id:references:to;
+        bh=TWqj/PInMuwTs+i/ZrXq/oM+CGCSMRDE1VgDX+sJUCg=;
+        b=NJk3XgVVUvl1ZYLhkklaiJfZX7+OPloTEyPhxS7nHFEg4Wo2MXBX7yxHhi2ieAOSx6
+         aHr5xi/ACCilhpS+xnJMNLaKpASW2N3NeArNv+JL3mrGGlZhuRZwQz1v+mvJ/v0oPWan
+         k4Gt3hCcNF6cUUx1foSRCZcko86PJW5ORMaR01AWogIqm/sh6uOILB97XEaS+nbngQ0K
+         2jALrjvF/R2T/ExThp89GLAUnX7jCd11xuVSMDd2UnamzpX9MfZyHu0nKZfA6QQDWMV6
+         e57gJ+VwftiPHgW0rIU3HhKzR8zbR76ecPrkNMaRC33I+oPTgPN7xA5+68MqF+lPqcb6
+         dqCw==
+X-Gm-Message-State: ALyK8tLIiDBHyAhWPeNglvBaNUCoPHvh950PtjON4jeoAYm82zrFPBvJwwiHef/hnn/maA==
+X-Received: by 10.157.34.170 with SMTP id y39mr6518504ota.66.1466869283623;
+        Sat, 25 Jun 2016 08:41:23 -0700 (PDT)
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Content-Type: multipart/signed; boundary="Apple-Mail=_0662E968-C032-40A0-96A2-C4A8137E0627"; protocol="application/pgp-signature"; micalg=pgp-sha512
+X-Pgp-Agent: GPGMail 2.6b2
+From: Brandon Perry <bperry.volatile@gmail.com>
+In-Reply-To: <576EA48D.1070502@oracle.com>
+Date: Sat, 25 Jun 2016 10:41:16 -0500
+Cc: fulldisclosure@seclists.org
+Message-Id: <C5D9B35B-045D-41DD-9419-14D50BE494BA@gmail.com>
+References: <6565BB80-B75B-4CE3-819D-84CCE79F0CA3@gmail.com> <576EA48D.1070502@oracle.com>
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3124)
+Subject: Re: [oss-security] libical 0.47 SEGV on unknown address
 
-T24gVGh1LCAyMDE5LTA3LTExIGF0IDA5OjMzIC0wNDAwLCAgUGVycnkgRS4g
-TWV0emdlciB3cm90ZToNCj4gU28gdGhlc2UgbGlua3Mgc2VlbSB0byBzYXkg
-dGhhdCB0aGluZ3MgaGF2ZSBiZWVuIHN0cnVjdHVyZWQgc28geW91DQo+ICpj
-YW4ndCogcnVuIEdVSSBhcHBzIGFzIHJvb3QsIG5vdCB0aGF0IHRoZXJlIGlz
-IGEgc3BlY2lhbCBvciB1bnVzdWFsDQo+IHNlY3VyaXR5IHByb2JsZW0gaW4g
-V2F5bGFuZCBpZiB5b3UgcnVuIGFuIGFwcGxpY2F0aW9uIGFzIHJvb3QNCkkg
-ZGlkbid0IChpbnRlbmQgdG8pIHNheSB0aGVyZSBpcyBhbiAoYWRkaXRpb25h
-bCkgc2VjdXJpdHkgcHJvYmxlbS4gSQ0KanVzdCB0cmllZCB0byBzdWNjaW5j
-dGx5IGV4cGxhaW4gd2h5IHRoZSBkZXNrdG9wIGVudmlyb25tZW50cyBhcmUN
-CmNvbWluZyB1cCB3aXRoIHRoZXNlIEQtQnVzIGludGVyZmFjZXMgbm93Lg0K
-DQoNCi0tIA0KTWFsdGUgS3JhdXMgPG1hbHRlLmtyYXVzQHN1c2UuY29tPg0K
-U2VjdXJpdHkgRW5naW5lZXINClNVU0UgU29mdHdhcmUgU29sdXRpb25zIEdl
-cm1hbnkgR21iSCwgR0Y6IEZlbGl4IEltZW5kw7ZyZmZlciwgTWFyeQ0KSGln
-Z2lucywgU3JpIFJhc2lhaCwgSFJCIDIxMjg0IChBRyBOw7xybmJlcmcpDQo=
+--Apple-Mail=_0662E968-C032-40A0-96A2-C4A8137E0627
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_46C35C1C-5D50-4A4A-8D08-FEB9BA5DB970"
+
+
+--Apple-Mail=_46C35C1C-5D50-4A4A-8D08-FEB9BA5DB970
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+
+> On Jun 25, 2016, at 10:34 AM, Alan Coopersmith <alan.coopersmith@oracle.c=
+om> wrote:
+>=20
+> On 06/24/16 06:54 AM, Brandon Perry wrote:
+>> I am posting this to Full Disclosure/OSS instead of reporting it because=
+ I have
+>> opened a handful of libical bugs in the Mozilla bug tracker, alerted
+>> security@mozilla.org <mailto:security@mozilla.org>, and worked to show h=
+ow and
+>> where to reproduce the bugs in Thunderbird, but Mozilla hasn=E2=80=99t s=
+hown any care at
+>> all about the bugs. Perhaps if I give a sample to the community of the b=
+ugs in
+>> the bug reports, Mozilla will take the bug reports more seriously. This =
+bug
+>> attached had not been reported yet.
+>=20
+> Did you report them to libcial upstream?  http://libical.github.io/libica=
+l/ <http://libical.github.io/libical/>
+
+I had initially asked for contact information regarding reporting potential=
+ly sensitive security test cases, but after a couple of days, I decided to =
+look into another product that I figured would have more visibility and mor=
+e power to get things fixed.
+
+https://github.com/libical/libical/issues/235 <https://github.com/libical/l=
+ibical/issues/235>
+>=20
+>> My roommate mentioned Thunderbird being a second-class citizen in the Mo=
+zilla
+>> world, so if this is the case, this should be made explicit in regards t=
+o bug
+>> bounty expectations.
+>=20
+> While Thunderbird is still a beloved child of Mozilla, it's been told it'=
+s time
+> to move out of its parents house and find its own sources of income/suppo=
+rt:
+>=20
+> https://groups.google.com/d/msg/mozilla.governance/kAyVlhfEcXg/Eqyx1X62BQ=
+AJ
+> https://blog.mozilla.org/thunderbird/2015/12/thunderbird-active-daily-inq=
+uiries-surpass-10-million/
+>=20
+> --
+> 	-Alan Coopersmith-              alan.coopersmith@oracle.com
+> 	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+
+
+--Apple-Mail=_46C35C1C-5D50-4A4A-8D08-FEB9BA5DB970
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html charset=
+=3Dutf-8"></head><body style=3D"word-wrap: break-word; -webkit-nbsp-mode: s=
+pace; -webkit-line-break: after-white-space;" class=3D""><br class=3D""><di=
+v><blockquote type=3D"cite" class=3D""><div class=3D"">On Jun 25, 2016, at =
+10:34 AM, Alan Coopersmith &lt;<a href=3D"mailto:alan.coopersmith@oracle.co=
+m" class=3D"">alan.coopersmith@oracle.com</a>&gt; wrote:</div><br class=3D"=
+Apple-interchange-newline"><div class=3D""><div class=3D"">On 06/24/16 06:5=
+4 AM, Brandon Perry wrote:<br class=3D""><blockquote type=3D"cite" class=3D=
+"">I am posting this to Full Disclosure/OSS instead of reporting it because=
+ I have<br class=3D"">opened a handful of libical bugs in the Mozilla bug t=
+racker, alerted<br class=3D""><a href=3D"mailto:security@mozilla.org" class=
+=3D"">security@mozilla.org</a> &lt;<a href=3D"mailto:security@mozilla.org" =
+class=3D"">mailto:security@mozilla.org</a>&gt;, and worked to show how and<=
+br class=3D"">where to reproduce the bugs in Thunderbird, but Mozilla hasn=
+=E2=80=99t shown any care at<br class=3D"">all about the bugs. Perhaps if I=
+ give a sample to the community of the bugs in<br class=3D"">the bug report=
+s, Mozilla will take the bug reports more seriously. This bug<br class=3D""=
+>attached had not been reported yet.<br class=3D""></blockquote><br class=
+=3D"">Did you report them to libcial upstream? &nbsp;<a href=3D"http://libi=
+cal.github.io/libical/" class=3D"">http://libical.github.io/libical/</a><br=
+ class=3D""></div></div></blockquote><div><br class=3D""></div><div>I had i=
+nitially asked for contact information regarding reporting potentially sens=
+itive security test cases, but after a couple of days, I decided to look in=
+to another product that I figured would have more visibility and more power=
+ to get things fixed.</div><div><br class=3D""></div><div><a href=3D"https:=
+//github.com/libical/libical/issues/235" class=3D"">https://github.com/libi=
+cal/libical/issues/235</a></div><br class=3D""><blockquote type=3D"cite" cl=
+ass=3D""><div class=3D""><div class=3D""><br class=3D""><blockquote type=3D=
+"cite" class=3D"">My roommate mentioned Thunderbird being a second-class ci=
+tizen in the Mozilla<br class=3D"">world, so if this is the case, this shou=
+ld be made explicit in regards to bug<br class=3D"">bounty expectations.<br=
+ class=3D""></blockquote><br class=3D"">While Thunderbird is still a belove=
+d child of Mozilla, it's been told it's time<br class=3D"">to move out of i=
+ts parents house and find its own sources of income/support:<br class=3D"">=
+<br class=3D""><a href=3D"https://groups.google.com/d/msg/mozilla.governanc=
+e/kAyVlhfEcXg/Eqyx1X62BQAJ" class=3D"">https://groups.google.com/d/msg/mozi=
+lla.governance/kAyVlhfEcXg/Eqyx1X62BQAJ</a><br class=3D"">https://blog.mozi=
+lla.org/thunderbird/2015/12/thunderbird-active-daily-inquiries-surpass-10-m=
+illion/<br class=3D""><br class=3D"">-- <br class=3D""><span class=3D"Apple=
+-tab-span" style=3D"white-space:pre">	</span>-Alan Coopersmith- &nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alan.coo=
+persmith@oracle.com<br class=3D""><span class=3D"Apple-tab-span" style=3D"w=
+hite-space:pre">	</span> Oracle Solaris Engineering - http://blogs.oracle.c=
+om/alanc<br class=3D""></div></div></blockquote></div><br class=3D""></body=
+></html>=
+
+--Apple-Mail=_46C35C1C-5D50-4A4A-8D08-FEB9BA5DB970--
+
+--Apple-Mail=_0662E968-C032-40A0-96A2-C4A8137E0627
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
+
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - https://gpgtools.org
+
+iQIcBAEBCgAGBQJXbqYhAAoJEKJq8VjVbt2pRwoQAJtucDiOKUlyIVXc93RpU69u
+/eOo+f+Y7du8V7DnyYRkL8K64bKg6Uf+HF6kjwxr3ZhyzID1GURanao6vLSL2yyS
+/LN5xJGJdboZ0O+/Zvk4o9QBjHAP6G+vH5h808iF8Z/Pr5/3pLWzVH6eNKhtOvjt
+CZEK+hVTaXb06qAzm9y9+MUAecj4/xPHi63mnUCvYZubvNTSgoYah1w8gYccDdzK
+ZlGD1Us7vSN8t0C/P6+fqcQUf4dg1+956rLGR+SxFNOvQ/+YeuHQbr09FNSZ9tj+
+J3MeTcjL9t7PpQ3JlYuZUGMYNJoTtT9LzQWKtC1WgIkHxnVi66DDgiRF9Y/r83nj
+l8Ubq2qJ5Ax8O7nnRc/P6JO5AU0JsJc1vbq/3qaRn5AJzF0BRbQgKty66rlqd8ME
+Fjap3j2I/SzZtA7Yfu552yQwV/oxyS5T+PIN/HZc/f9ycYSb9QvYCfdM9RFKAMSs
+P9V2DYOOQoANFgXDdSU79jUwZm1voSToV/e+wavojiuy2r0vn6jPSuqXvHeHRKQZ
+xuNeZjaQRUd7SckzhSaSfQ/keDsw5O2dJvSYEZQYoGD1iApAC7zLCMV/FJVXSi39
+hQ66y6RwHXpEAfmebApuONCxPfz2ZWeK8NvlH59EjDEztMjB+zIJaucrlXbkVtnr
+v6GYIFX0EAckeveE5M9Y
+=ht4z
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_0662E968-C032-40A0-96A2-C4A8137E0627--
