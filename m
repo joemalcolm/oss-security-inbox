@@ -1,51 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/17/3
-Message-ID: <20161117163922.GL5329@io.lakedaemon.net>
-Date: Thu, 17 Nov 2016 16:39:22 +0000
-From: Jason Cooper <osssecurity@...edaemon.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/26/1
+Message-ID: <576F61B4.1020505@plzdonthack.me>
+Date: Sat, 25 Jun 2016 23:01:40 -0600
+From: Scotty <sbauer@...donthack.me>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-4484: - Cryptsetup Initrd root Shell
+Cc: cve-assign@...re.org
+Subject: CVE Request: Linux kernel HID: hiddev buffer overflows
 Content-Type: text/plain; charset=utf-8
 
-Hi John,
+Good evening,
 
-On Wed, Nov 16, 2016 at 04:11:57PM +0000, John Haxby wrote:
-> On 16/11/16 15:55, Jason Cooper wrote:
-> > How does this differ from an attacker setting 'init=/bin/sh' on the
-> > kernel command line?  Or, booting from attacker provided media?  Or, in
-> > OS X, booting in single user mode?
-> > 
-> > Your Discussion section at the end mentions facilities (GRUB passwords,
-> > BIOS passwords, etc) for preventing this "Developer friendliness".  How
-> > do you envision the installer enabling these while providing a failsafe
-> > that an attacker can't exploit?
-> 
-> If you set a grub password then the attacker cannot set init=/bin/sh on
-> the kernel command line without knowing the grub password.   However,
-> when the boot process prompts you for the encrypted volume password you
-> can just hit enter until you eventually get a shell prompt.  Of course,
-> the attacker needs to be able to see the console where the password is
-> typed in ...
+There is a small buffer overflow in the hiddev driver code which seems to have come due
+to a re-factor of the driver in 2008-ish.
 
-First, I'll clarify that I agree there is a bug in the initrd scripts
-for decrypting a system volume.  Anything that doesn't fail in a
-deterministic fashion is asking for trouble.
+If a user-land process calls the hiddev ioctl with the HIDIOCGUSAGES or HIDIOCSUSAGES command,
+and passes a report id of HID_REPORT_ID_UNKNOWN it bypasses a series of bounds checks. Later in
+the code the attacker can loop on some controlled value and overwrite past the bounds of the
+uref_multi array or the value array.
 
-As for your scenario, as usual, it comes down to threat models.  If you
-don't want fellow students getting in to your laptop while you're gone
-for the weekend, the above is fine.
 
-If you're a journalist in a foreign country who needs to leave her
-laptop in her hotel room while meeting a source, that's not sufficient.
-My recommendation from my original reply would be more fitting.  It
-should work with Secure Boot as well.
+	switch (cmd) {
+...
+...
+...
+		case HIDIOCGUSAGES:
+/* HEAP OVERFLOW, Attacker controls num_values */
+			for (i = 0; i < uref_multi->num_values; i++)
+				uref_multi->values[i] =
+				    field->value[uref->usage_index + i];
+			if (copy_to_user(user_arg, uref_multi,
+					 sizeof(*uref_multi)))
+				goto fault;
+			goto goodreturn;
+		case HIDIOCSUSAGES:
+/* HEAP OVERFLOW, attacker controls num_values */
+			for (i = 0; i < uref_multi->num_values; i++)
+				field->value[uref->usage_index + i] =
+				    uref_multi->values[i];
+			goto goodreturn;
+		}
 
-However, the golden rule still applies.  Physical access trumps all
-defensive measures.  The absolute best you can do is detect that
-physical access occurred.  From there, you're hoping there are no
-hardware implants or other devices outside the scope of software
-security.
+The issue has been fixed upstream here:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=93a2001bdfd5376c3dc2158653034c20392d15c5
 
-thx,
+Attached is a PoC illustrating the issue. 
 
-Jason.
+Thank you.
+
+
+View attachment "usb_hiddev.c" of type "text/x-csrc" (1677 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
