@@ -1,65 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/30/3
-Message-ID: <20160730102709.25d91e44@pc1>
-Date: Sat, 30 Jul 2016 10:27:09 -0400
-From: Hanno Böck <hanno@...eck.de>
-To: lazytyped <lazytyped@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: Use after free in my_login() function of DBD::mysql (Perl module)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/26/2
+Message-Id: <20160626094357.1CE236C0717@smtpvmsrv1.mitre.org>
+Date: Sun, 26 Jun 2016 05:43:57 -0400 (EDT)
+From: cve-assign@...re.org
+To: sbauer@...donthack.me
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Linux kernel HID: hiddev buffer overflows
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 29 Jul 2016 20:42:03 -0700
-lazytyped <lazytyped@...il.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> Well, AddressSanitizer should have told you whether the access is a
-> read access (as I suspect) or a write access. A bit of code
-> inspection (or follow up from the code maintainer) should add to the
-> picture.
+> There is a small buffer overflow in the hiddev driver code which seems to have come due
+> to a re-factor of the driver in 2008-ish.
+> 
+> If a user-land process calls the hiddev ioctl with the HIDIOCGUSAGES or HIDIOCSUSAGES command,
+> and passes a report id of HID_REPORT_ID_UNKNOWN it bypasses a series of bounds checks. Later in
+> the code the attacker can loop on some controlled value and overwrite
+> 
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=93a2001bdfd5376c3dc2158653034c20392d15c5
 
-It's my (maybe poor / limited) understanding that most use after free
-bugs are actually reads, but still can lead to code execution, e.g. if
-the read includes function pointers. This is probably not the case in
-this example (but I previously had an example where I thought it's not
-exploitable for similar reasons, and later got told by people who
-understand this stuff much better that they disagree).
+Use CVE-2016-5829.
 
-> It would be great if we could get a bit more triaging by the owner of
-> the code or the submitter before declaring the bug one thing or the
-> other (especially in these days of projects like yours that bring in
-> a lot of reports -- and don't get me wrong, this is a very valuable
-> effort).
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-I understand your wish here, but I am afraid it doesn't match up well
-with the reality we are in.
-
-I had similar discussions before, but I think there is a very obvious
-problem here: The tools we use to find these bugs (asan+afl) are dead
-simple and there are a lot of people out there using them, finding and
-reporting bugs. The number of people with a detailed knowledge of
-memory corruption on the other hand is small.
-
-Generally this is a good thing, as it means more people finding bugs.
-But we have a large number of people who can use the tools to find
-these bug classes, but who aren't neccessarily able to judge the
-severity. And that definitely includes me (although I learned a lot in
-the past year, but I've been accused both in over and underplaying bugs
-in the past).
-My approach to this is that I simply try to choose my wording that it
-matches what I know and if I can't say anything reasonable about
-exploitability I simply don't.
-
-As for CVEs, it's my impression that MITRE right now has a policy that
-they give one for almost any memory safety issue and that they don't
-require an explicit exploit scenario. E.g. my impression is that buffer
-overreads, as long as they aren't simply in a command line tool, almost
-always get CVEs.
-
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+iQIcBAEBCAAGBQJXb6MwAAoJEHb/MwWLVhi2J5wP/0/8awKnFGpO7tqUTuEQvdfW
++MpW320Q2/GvJD+vzr/QqwOTMfuGa4CTkJi1OeZPdET+zxrxdUJd2e6JGmtvWKBM
+4aXeecyvqQYvfs51xvLYYqk6oCPCnlii1QhBgm9AI2lwttfjD9y/h/ek9Fj14CJo
+6nNKcZJJub5yUI5YmeXWC+Wu6AfcIndoJoEq1+gsLE63pdLwEOF6iIgCWyj6PDey
+oQ87iIkUozv9CjamuMUlw+xB4zfXlOw/ewbMrngV0ii6Hgcau28qBdxxDko9g4nV
+SIau0Nhh3LCAfPdo18VAYNs+2wlUI5BGcZ4EDPv97LmVcaRUuFZTLWsZYP8coFvt
+VQLXphUOZCIEKmo2aIPYVCQ6QG+1ghjfnfH4AJdpDoYSIq5aEzh2q+UnVRIrOGsy
+5NqtJCEgHA+Lv7M1IK9DNUfDEBTA1vOfeT3wCHPtqp+iuZ67J6vG428t/utTV+zc
+ymLZ5I1YmAIvpeFDWkYuv/spI67HQ740ySFt2xbw9dF3JZUYqLGU9iN6vOd83Pe4
+YxCT99JdejDQeJBYcSR4JdcLCnWMquI44ocNMZmM42LyS9XEUr996ebE6sKhcDNR
+HSrAr7bPdeUq4CpmB+cl8/BMXIKK/e/0CgGo26vgmkm7qm2aNUIMHOvD0cjRGB4p
+9QjX4Our+cZXGF6a2gIv
+=Vb9B
+-----END PGP SIGNATURE-----
