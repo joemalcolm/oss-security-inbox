@@ -1,22 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/11
-Message-ID: <1480337443.36774164.1458144470684.JavaMail.zimbra@redhat.com>
-Date: Wed, 16 Mar 2016 12:07:50 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ipv4: Don't do expensive useless work during inetdev destroy
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/27/1
+Message-ID: <87oa6n9nap.fsf@mid.deneb.enyo.de>
+Date: Mon, 27 Jun 2016 08:08:14 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE request: MatrixSSL lack of RSA-CRT hardening
 Content-Type: text/plain; charset=utf-8
 
-if someone's interested, test was run with latest upstream kernelwith and
-without fix fbd40ea0:
+MatrixSSL 3.8.3 comes with this fix:
 
-upstream latest kernel v4.5-commit-9256d5a3
-time to assign 65536 addresses: 5m27s
-time to destroy the interface: 57s
+<https://github.com/matrixssl/matrixssl/blob/master/CHANGES.md#validation-of-rsa-signature-creation>
 
-upstream latest kernel v4.5-commit-9256d5a3 plus net-next commit fbd40ea0
-time to assign 65536 addresses: 5m50s
-time to destroy the interface: 2s
+I think this warrants a CVE ID because RSA-CRT key leaks from
+MatrixSSL have been observed in practice.  (I'm not sure if the
+contributing factor was a bug in the MatrixSSL bignum routines, or
+defective hardware.)
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+(There are some other changes whose description suggests they would
+warrant CVE assignment as well, but I have not looked at those.)
