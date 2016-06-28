@@ -1,55 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/17/7
-Message-Id: <20160517155228.E08766C0624@smtpvmsrv1.mitre.org>
-Date: Tue, 17 May 2016 11:52:28 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: gdk-pixbuf: Additional fixes to protect against overlows in pixops_* functions (similar to CVE-2015-7674)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/28/2
+Message-ID: <CACn5sdQFwV6SfDa=pgey+CMFp2N0RBSh69UFMtXOr9j+aZsE+A@mail.gmail.com>
+Date: Tue, 28 Jun 2016 08:57:03 +0200
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Apache Xerces getLastExtEntityInfo Use-After-Free
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> CVE-2015-7674, an integer overflow flaw in the pixops_scale_nearest
-> function, was fixed by
-> 
-> https://git.gnome.org/browse/gdk-pixbuf/commit/?id=e9a5704edaa9aee9498f1fbf6e1b70fcce2e55aa
-> 
-> There is another commit in the gdk-pixbuf repository to fix overflows
-> in the pixops_composite_nearest, pixops_composite_color_nearest and
-> pixops_process functions:
-> 
-> https://git.gnome.org/browse/gdk-pixbuf/commit/?id=dbfe8f70471864818bf458a39c8a99640895bd22
-> 
-> Can you assign an additional CVE for this since the scope for
-> CVE-2015-7674 was for the pixops_scale_nearest function?
-> 
-> The two commits were not fixed in
-> the same release, the initial one resulting in CVE-2015-7674 is
-> contained in 2.32.1, whereas the second commit came later in 2.33.1.
+Is it related with CVE-2016-2099 still unfixed in 3.1.3
+(https://issues.apache.org/jira/browse/XERCESC-2066) ?
 
-Use CVE-2015-8875 for dbfe8f70471864818bf458a39c8a99640895bd22.
+Thanks!
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXOz25AAoJEHb/MwWLVhi2uzQQAJLasmM6bKZ9byBNHW92u63I
-V8zfQ1vKPHJsQUJ+/ydbfmlyxeClfUUPYK37NLFzMtlhZjuRte8FPaYoYjayahSn
-sfGfBsw/Vtpx14t3AUofZx+NAnr37EOD/N1iXHnBKdO7YZtBkIBfB/0ts0uxnY6f
-7AYMChqNpqFI9gZdCAJjao0spCe11D203QLUygDGFZZ+/+bbEfIJZK4KZGisR0tY
-n8MZln8+QstCnuG/5/6MPa976dMe3a0bNjGuMg399qP9iDCHmGnfAmoKh68YQFMT
-NO6Q1J6TPwLKT+xRNfTzdwmZFYW2m59oj1BSZ/jvWbl/8lOn+oukBpQElwuvB6jz
-rwJWU11gMwPXPEMyEnKW9X2U3zMYVcGzPD20/j4rJJsL2vA78iCrgF6owGYZPAji
-mFFm+GovverJqJWx452UeUdsBbEYc/A5hlQN6oa0780QLas6Wo3QZdCyuPpDWnu+
-eh/U2qVk4+BGLQiZb55dlBqmVJkW7RktqUnhFYgDC7kUbR3hpprKKDj5NnSznuYG
-Jzs1LBV6h3wb4LBcILU4d+z1OcSRFYL334XHGEurtML08GTAhuqMhZT3o/YnFeut
-EStuqTBEWmQd0IEsxYhC6sP1w4+rfIfEd0X94vi6qqBettbmNguTgAgiy/SLNISl
-FshmJwoViYA7W+UAo1fz
-=rGoH
------END PGP SIGNATURE-----
+2016-06-28 8:50 GMT+02:00 Marco Grassi <marco.gra@...il.com>:
+> Hi,
+>
+> the attached xml will trigger a UAF in xerces-c version 3.1.3 and the trunk
+> version
+>
+>
+> ➜  xml cat xerces_uaf | xerces-c-3.1.3/samples/StdInParse
+> =================================================================
+> ==16010==ERROR: AddressSanitizer: heap-use-after-free on address 0xf4a0dfcc
+> at pc 0x0836c7f4 bp 0xfff9a198 sp 0xfff9a188
+> READ of size 1 at 0xf4a0dfcc thread T0
+>     #0 0x836c7f3 in
+> xercesc_3_1::ReaderMgr::getLastExtEntityInfo(xercesc_3_1::ReaderMgr::LastExtEntityInfo&)
+> const xercesc/internal/ReaderMgr.cpp:833
+>     #1 0x83a42d4 in
+> xercesc_3_1::XMLScanner::emitError(xercesc_3_1::XMLErrs::Codes,
+> xercesc_3_1::XMLExcepts::Codes, unsigned short const*, unsigned short
+> const*, unsigned short const*, unsigned short const*)
+> xercesc/internal/XMLScanner.cpp:927
+>     #2 0x8e40963 in
+> xercesc_3_1::IGXMLScanner::scanDocument(xercesc_3_1::InputSource const&)
+> xercesc/internal/IGXMLScanner.cpp:276
+>     #3 0x84b4cca in xercesc_3_1::SAXParser::parse(xercesc_3_1::InputSource
+> const&) xercesc/parsers/SAXParser.cpp:575
+>     #4 0x80533d6 in main src/StdInParse/StdInParse.cpp:186
+>     #5 0xf6dd5636 in __libc_start_main (/lib32/libc.so.6+0x18636)
+>     #6 0x80624f1
+> (/home/bob/VulnResearch/misc/xml/xerces-c-3.1.3/samples/StdInParse+0x80624f1)
+>
+> 0xf4a0dfcc is located 44 bytes inside of 56-byte region
+> [0xf4a0dfa0,0xf4a0dfd8)
+> freed by thread T0 here:
+>     #0 0xf7228034 in operator delete(void*)
+> (/usr/lib32/libasan.so.3+0xc5034)
+>     #1 0x80992df in xercesc_3_1::XMemory::operator delete(void*)
+> xercesc/util/XMemory.cpp:89
+>
+> previously allocated by thread T0 here:
+>     #0 0xf72279b4 in operator new(unsigned int)
+> (/usr/lib32/libasan.so.3+0xc49b4)
+>     #1 0x8357ad9 in xercesc_3_1::MemoryManagerImpl::allocate(unsigned int)
+> xercesc/internal/MemoryManagerImpl.cpp:40
+>     #2 0x8099042 in xercesc_3_1::XMemory::operator new(unsigned int,
+> xercesc_3_1::MemoryManager*) xercesc/util/XMemory.cpp:68
+>
+> SUMMARY: AddressSanitizer: heap-use-after-free
+> xercesc/internal/ReaderMgr.cpp:833 in
+> xercesc_3_1::ReaderMgr::getLastExtEntityInfo(xercesc_3_1::ReaderMgr::LastExtEntityInfo&)
+> const
+> Shadow bytes around the buggy address:
+>   0x3e941ba0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x3e941bb0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x3e941bc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x3e941bd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x3e941be0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+> =>0x3e941bf0: fa fa fa fa fd fd fd fd fd[fd]fd fa fa fa fa fa
+>   0x3e941c00: fd fd fd fd fd fd fd fa fa fa fa fa 00 00 00 00
+>   0x3e941c10: 00 00 00 fa fa fa fa fa 00 00 00 00 00 00 00 00
+>   0x3e941c20: fa fa fa fa 00 00 00 00 00 00 00 00 fa fa fa fa
+>   0x3e941c30: 00 00 00 00 00 00 00 00 fa fa fa fa 00 00 00 00
+>   0x3e941c40: 00 00 04 fa fa fa fa fa 00 00 00 00 00 00 04 fa
+> Shadow byte legend (one shadow byte represents 8 application bytes):
+>   Addressable:           00
+>   Partially addressable: 01 02 03 04 05 06 07
+>   Heap left redzone:       fa
+>   Heap right redzone:      fb
+>   Freed heap region:       fd
+>   Stack left redzone:      f1
+>   Stack mid redzone:       f2
+>   Stack right redzone:     f3
+>   Stack partial redzone:   f4
+>   Stack after return:      f5
+>   Stack use after scope:   f8
+>   Global redzone:          f9
+>   Global init order:       f6
+>   Poisoned by user:        f7
+>   Container overflow:      fc
+>   Array cookie:            ac
+>   Intra object redzone:    bb
+>   ASan internal:           fe
+>   Left alloca redzone:     ca
+>   Right alloca redzone:    cb
+> ==16010==ABORTING
+>
+>
+>
+> Marco
+>
+> https://marcograss.github.io/
