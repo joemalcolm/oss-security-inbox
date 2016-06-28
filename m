@@ -1,53 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/25/4
-Message-ID: <20161025104216.6d74b72d@redhat.com>
-Date: Tue, 25 Oct 2016 10:42:16 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: Gsunde Orangen <gsunde.orangen@...il.com>
-Cc: oss-security@...ts.openwall.com, Dawid Golunski <dawid@...alhackers.com>
-Subject: Re: CVE-2016-6662 - MySQL Remote Root Code Execution / Privilege Escalation ( 0day )
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/28/8
+Message-Id: <20160628225329.CD59CB2E08C@smtpvbsrv1.mitre.org>
+Date: Tue, 28 Jun 2016 18:53:29 -0400 (EDT)
+From: cve-assign@...re.org
+To: pernst@...esforce.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request - python-docx 0.8.5 - XXE
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 18 Oct 2016 22:56:18 +0200 Gsunde Orangen wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> Dawid meanwhile updated his post [1] to reflect that the fixes for
-> CVE-2016-6662 were added in 5.5.52/5.6.33/5.7.15.
-> ... But today Oracle states that those versions were still affected
-> [2], thus the fix releases are 5.5.53/5.6.34/5.7.16.
+> The python-docx package
+> (https://github.com/python-openxml/python-docx) is vulnerable to XML
+> External Entity attacks (XXE).
+> 
+> Version 0.8.6 (https://github.com/python-openxml/python-docx/releases/tag/v0.8.6)
+> contains a fix.
 
-5.5.53/5.6.34/5.7.16 change the defaults for secure_file_priv - the
-change that should break privilege escalation from FILE privilege to
-database administrator. See upstream release notes for details.
+> xml_string = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+> <!DOCTYPE w:document [
+>   <!ENTITY xxe SYSTEM "file:///etc/passwd" >
+> ...
+> updateZip('whatever.docx', 'word/document.xml', xml_string)
+> ...
+> document = docx.Document('whatever.docx')
 
-> So which one is correct? Based on the changelogs I assume [1].
+Use CVE-2016-5851.
 
-The advisory is not very explicit regarding which issue the CVE is for,
-which leaves space for using it to refer to any related change.  Mitre
-CVE description is more specific and says the id is for "general log
-can write to my.cnf".  That description is consistent with how the id
-was used by MariaDB upstream, or where Dawid's advisory says it was
-fixed.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-> And btw, Dawid: what happened with CVE-2016-6663? Still not public
-> yet?
-
-That CVE is now listed as fixed in MariaDB 5.5.52 and 10.1.18.  Based
-on information from MariaDB upstream, the CVE is used for the race
-condition issue fixed in this commit:
-
-https://github.com/MariaDB/server/commit/347eeefbfc658c8531878218487d729f4e020805
-
-MySQL fixed the issue in:
-
-https://github.com/mysql/mysql-server/commit/4e5473862e6852b0f3802b0cd0c6fa10b5253291
-
-Looking at the Oracle CPU, it seems CVE-2016-5616 is Oracle's dupe of
-CVE-2016-6663.
-
-It would be nice to have this conclusion confirmed by Oracle, but
-frankly, we're unlikely to see that.  However, Dawid, as the original
-reporter, can ask Oracle what CVEs they assigned to issues he reported,
-and share the response.
-
--- 
-Tomas Hoger / Red Hat Product Security
+iQIcBAEBCAAGBQJXcv+EAAoJEHb/MwWLVhi2iGIP/iS3BoqMNj+DVhTwEE9w+BQJ
+O6RXn8MsUBUQT8eo5HR+2gecYDP3vuj4I7BrAhFesXAkabTxsxFRHZqOOqmvG0ij
+8f+m/heZFBl9CQywSJLOT+K9eQ4442Bs01c0Ex/e+Y0RfmMP50azlIQMZaNeNQS8
++2AsgU7V2nIscTKRF39ciP2fGywsrkH+zlTbA1HSct9ZrFnPog6f4Exkoaru06lg
+lFzUJoG/JRLW8SuAZ2uNeuFEKlvhE8bfhy/TBva5IwjnBUfIAp0nQ9EjyCywTGOq
+cmMrVpq8fzhACzE8Nq+BKKFTZ07YSXFB8fYJ8U3p6ztG7iCfZ/neIiuXm8JVsJB2
+gytmOWgqjenUO/IpLgHLxAvOQ+rrRhYAC39XZT6cRrXvoyVnm8TLRmIzkNoItwrQ
+JAMtPzkEKWJurtvUuPFZ3DhpdPYXdOzczK2zS54XUONiMfw67fb/Rmx5mez6k7tr
+B/9fOB3ai+kMg1okYojgENJJhXxOtbtekPMkMY8pQJM1CvYW32So3FIn7TfrD6hX
+wJWqHfok1k5/+vki7XO7wxoNuYGObRq2IGLlz1JpZs6iR5QIIRxE4l8Lx2c43lwr
+OeEfZMClCsAo16VYRJMBOIT15hgpfmXMIekk63nhtx7NOzoCzAUTgRvv6fjQ4yNG
+x8/OUsWj1ULmPDDqpiUt
+=X9jU
+-----END PGP SIGNATURE-----
