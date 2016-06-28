@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4505" "Thursday" "11" "June" "2015" "12:30:15" "+0000" "Xen.org security team" "security@xen.org" "<E1Z31cd-0002ro-EG@xenbits.xen.org>" "133" "[oss-security] Xen Security Advisory 136 (CVE-2015-4164) - vulnerability in the iret hypercall handler" nil nil nil "6" "2015061112:30:15" "[oss-security] Xen Security Advisory 136 (CVE-2015-4164) - vulnerability in the iret hypercall handler" (number mark "        security@xen Jun 11  133/4505  " thread-indent "\"[oss-security] Xen Security Advisory 136 (CVE-2015-4164) - vulnerability in the iret hypercall handler\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1684" "Tuesday" "28" "June" "2016" "11:00:56" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160628150056.1C1B7332021@smtpvbsrv1.mitre.org>" "41" "[oss-security] Re: CVE Request: integer overflow in ALSA snd_compress_check_input" nil nil nil "6" "2016062815:00:56" "[oss-security] Re: CVE Request: integer overflow in ALSA snd_compress_check_input" (number mark "U       cve-assign@m Jun 28   41/1684  " thread-indent "\"[oss-security] Re: CVE Request: integer overflow in ALSA snd_compress_check_input\"\n") "<20160628105410.GB23113@suse.de>" ("<20160628105410.GB23113@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28649 invoked by uid 550); 11 Jun 2015 12:30:41 -0000
+Received: (qmail 21528 invoked by uid 550); 28 Jun 2016 15:01:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,151 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28168 invoked from network); 11 Jun 2015 12:30:32 -0000
-Message-Id: <E1Z31cd-0002ro-EG@xenbits.xen.org>
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.428 (Entity 5.428)
-CC: Xen.org security team <security@xen.org>
-Date: Thu, 11 Jun 2015 12:30:15 +0000
-From: Xen.org security team <security@xen.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Xen Security Advisory 136 (CVE-2015-4164) - vulnerability in the
- iret hypercall handler
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Received: (qmail 21510 invoked from network); 28 Jun 2016 15:01:08 -0000
+From: cve-assign@mitre.org
+To: meissner@suse.de
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, tiwai@suse.de
+In-Reply-To: <20160628105410.GB23113@suse.de>
+Message-Id: <20160628150056.1C1B7332021@smtpvbsrv1.mitre.org>
+Date: Tue, 28 Jun 2016 11:00:56 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: integer overflow in ALSA snd_compress_check_input
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-            Xen Security Advisory CVE-2015-4164 / XSA-136
-                              version 3
+> but there was no 2012 CVE assignment to the original fixing commit b35cc8225845 as far as I see:
+> 
+> commit b35cc8225845112a616e3a2266d2fde5ab13d3ab
+> Author: Dan Carpenter <dan.carpenter@oracle.com>
+> Date:   Wed Sep 5 15:32:18 2012 +0300
+> 
+>     ALSA: compress_core: integer overflow in snd_compr_allocate_buffer()
+>     
+>     These are 32 bit values that come from the user, we need to check for
+>     integer overflows or we could end up allocating a smaller buffer than
+>     expected.
 
-              vulnerability in the iret hypercall handler
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b35cc8225845112a616e3a2266d2fde5ab13d3ab
 
-UPDATES IN VERSION 3
-====================
+Use CVE-2012-6703.
 
-Public release.
-
-Added email header syntax to patches, for e.g. git-am.
-
-ISSUE DESCRIPTION
-=================
-
-A buggy loop in Xen's compat_iret() function iterates the wrong way
-around a 32-bit index.  Any 32-bit PV guest kernel can trigger this
-vulnerability by attempting a hypercall_iret with EFLAGS.VM set.
-
-Given the use of __get/put_user(), and that the virtual addresses in
-question are contained within the lower canonical half, the guest
-cannot clobber any hypervisor data.  Instead, Xen will take up to 2^33
-pagefaults, in sequence, effectively hanging the host.
-
-IMPACT
-======
-
-Malicious guest administrators can cause a denial of service affecting
-the whole system.
-
-VULNERABLE SYSTEMS
-==================
-
-Only 64-bit x86 (ARCH=x86_64) builds of Xen are vulnerable.  32-bit
-builds (ARCH=x86_32) (necessarily of Xen 4.2 or earlier), are not
-affected.
-
-Xen versions 3.1 or later are vulnerable.
-
-ARM systems are not vulnerable.
-
-Only 32-bit PV guests can exploit the vulnerability.
-
-MITIGATION
-==========
-
-Systems which only need to run 32-bit guests and are running Xen 4.2
-or earlier can avoid the vulnerability by using a 32-bit build of Xen
-instead of a 64-bit build.  (The dom0 operating system would have to
-be 32-bit too.)
-
-If the boot process and kernel for the guest can be controlled,
-forcing it to use a 64-bit kernel will avoid the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Andrew Cooper of Citrix.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-$ sha256sum xsa136*.patch
-b54a71cf41d333345a9b8fd5f3f1aa644000a24e20343b54e5a41cd51d14af04  xsa136.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJVeX73AAoJEIP+FMlX6CvZwMsIAIkHonCdvStKAJZ6WpWFaAeo
-dgEBdQ0tHCkuEu3PNBNy0YPklBdATwQNOjt+XZj6qDJv0HvBykZNoam0E9UCqH85
-BYS0ASvjxUQrd61PrTWGmdh9XKMj2FJRGmpumr4XnNzcOalwOLuwUmfIauEIQaMy
-0yxrgcoWk2C3oWIO54m/vObwdttNlbGInrBK1bDyrOtAX0UrHByLU7dPCe0TlE5l
-IIa7QH/FcKLp7+RhxIEOQGBvuMSnw2bcXSqCIwleGo1RpnzcA/N1P+8FNs9rWmm/
-toGYLeaQus8h9fEe51zGKOTQrf+WWuKhSjwkxSFr/HEH6xHEl+oCYvwlyB5CviM=
-=yJg0
+iQIcBAEBCAAGBQJXcpCGAAoJEHb/MwWLVhi2aMYP/j9JEZplRgptXAOO/yVII9Bd
+sUd/mJuGgc9HRMzppMPhu8GLjA0IIG1Ms0T3OL37ESBGOqKAMaWQO2E1WNl61igq
+QzrZGE6t8aYLoP4rESXWmSbZ2QQHxKpXfre48Uaek/Flc4sVMeCW0TfwZANv5CEB
+mdLLpDNDDpgUWDzAE27PG1+zSJoE+aI+HM72rKfRYTpSmzqcGbA7rxGB+/8whkVO
+yaUeIRrZ1Tn8m320+HEA7pfUF48cS5i5RCir99eViLhXlk1rTDDrHUYxhnD9cSi0
+dR9JZNLfPNhJKjAe/NjqnsLVLk97wKGP0vKnSvm9TSt26DGeg99jEelc073/tGIR
+xEgcnSZ8enle+O6T1nJFykOKolujeqzzu2AApZTSTs4uofLPl0pnIptfaC+j4Vxv
+0Myl38AzITonRBMVQprhcKg3A5AF+dMdZeRycwZauVTy4q6AgfHnLo0ahpDD515U
+T2a+2W8Yo3n8b/GDN8P4HGvo7rrVuyMyVyT53U0qgdz2Ls6qQX9Z0pAHINRJNujD
+BJivsm49vw9NnzDo0opxh9fiO3MLoT/4lot//c1NyBvEaJzrOAMic6MthYFaIGSI
+lTE796ibKjdk6v3G6YdQs5vug2HvFe4I8yYl1OPwF4Qb29DzkQ52rPT1GezD/nJA
+Avd/cqOXOsknyoDGR5k5
+=J3ot
 -----END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa136.patch"
-Content-Disposition: attachment; filename="xsa136.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
-bT4KU3ViamVjdDogeDg2L3RyYXBzOiBsb29wIGluIHRoZSBjb3JyZWN0IGRp
-cmVjdGlvbiBpbiBjb21wYXRfaXJldCgpCgpUaGlzIGlzIFhTQS0xMzYuCgpT
-aWduZWQtb2ZmLWJ5OiBBbmRyZXcgQ29vcGVyIDxhbmRyZXcuY29vcGVyM0Bj
-aXRyaXguY29tPgpSZXZpZXdlZC1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNo
-QHN1c2UuY29tPgoKLS0tIGEveGVuL2FyY2gveDg2L3g4Nl82NC9jb21wYXQv
-dHJhcHMuYworKysgYi94ZW4vYXJjaC94ODYveDg2XzY0L2NvbXBhdC90cmFw
-cy5jCkBAIC0xMTksNyArMTE5LDcgQEAgdW5zaWduZWQgaW50IGNvbXBhdF9p
-cmV0KHZvaWQpCiAgICAgICAgIH0KICAgICAgICAgZWxzZSBpZiAoIGtzcCA+
-IHJlZ3MtPl9lc3AgKQogICAgICAgICB7Ci0gICAgICAgICAgICBmb3IgKGkg
-PSA5OyBpID4gMDsgKytpKQorICAgICAgICAgICAgZm9yICggaSA9IDk7IGkg
-PiAwOyAtLWkgKQogICAgICAgICAgICAgewogICAgICAgICAgICAgICAgIHJj
-IHw9IF9fZ2V0X3VzZXIoeCwgKHUzMiAqKXJlZ3MtPnJzcCArIGkpOwogICAg
-ICAgICAgICAgICAgIHJjIHw9IF9fcHV0X3VzZXIoeCwgKHUzMiAqKSh1bnNp
-Z25lZCBsb25nKWtzcCArIGkpOwo=
-
---=separator--
