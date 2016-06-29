@@ -1,63 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/10/1
-Message-ID: <20161210004933.GB25012@Kelewan.lan>
-Date: Sat, 10 Dec 2016 01:49:34 +0100
-From: Mathieu Pasquet <mathieui@...hieui.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/29/3
+Message-ID: <3f71b0bd-71dd-723e-eed8-925bf2e2c8f7@cojocar.com>
+Date: Wed, 29 Jun 2016 09:13:12 +0200
+From: Lucian Cojocar <lucian@...ocar.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza
+Subject: CVE Request: uclibc-ng (and uclibc): ARM arch: code execution
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 09, 2016 at 09:19:06PM +0100, Salvatore Bonaccorso wrote:
-> Hi
-> 
-> Sam Whited discovered that MCabber versions 1.0.3 and before, was
-> vulnerable to an attack identical to Gajim's CVE-2015-8688 [1] which
-> can lead to a malicious actor MITMing a conversation, or adding
-> themselves as an entity on a third parties roster (thereby granting
-> themselves the associated priviledges such as observing when the user
-> is online).
-> 
-> The issue was fixed in the 1.0.4 release, with patch found at [2].
-> 
-> Can a CVE be assigned for this issue?
-> 
-> Regards,
-> Salvatore
-> 
->  [1] https://gultsch.de/gajim_roster_push_and_message_interception.html
->  [2] https://bitbucket.org/McKael/mcabber-crew/commits/6e1ead98930d7dd0a520ad17c720ae4908429033/raw
+Hi all,
 
->  [3] https://bugs.debian.org/845258
+u-clibc and uclibc-ng is used in several projects[4, 5].
 
-Hello,
+As described here[3], an attacker that controls the length parameter of
+the `memset' can also control the value of the PC register. The issue is
+similar to CVE-2011-2702. A patch has been proposed for uclibc-ng[1]. A
+denial of service proof of concept is available[2].
 
-I would like to mention that when Sam mentioned it to the MCabber team,
-I investigated the slixmpp [1] codebase to see if we we were equally
-vulnerable. It appeared that the default roster mechanism already has a
-check in place, but it creates a general event before then, which could
-be received by another handler to re-implement a Roster differently
-(like we do in poezio [2]).
+Thanks,
+Lucian
 
-This specific bug has been corrected in [3] and [4], which are available
-in slixmpp 1.2.3 (all previous versions are affected).
+[1]http://repo.or.cz/uclibc-ng.git/commit/e3848e3dd64a8d6437531488fe341354bc02eaed
+[2]http://article.gmane.org/gmane.comp.lib.uclibc-ng/27
+[3]http://mailman.uclibc-ng.org/pipermail/devel/2016-May/000890.html
+[4]https://www.uclibc.org/products.html
+[5]http://www.uclibc-ng.org/
 
-I’m not sure if this specific part warrants a CVE, as it is quite a
-specific case (but people could send arbitrary roster pushes to poezio
-before then), but I thought it would be good to mention. If it is
-considered a real security flaw, I have to say that SleekXMPP [5] [6] is
-also affected, and I will patch it if needed.
 
-Regards,
-Mathieu
-
- [1] https://github.com/poezio/slixmpp
- [2] https://github.com/poezio/poezio / https://poez.io
- [3] https://git.louiz.org/slixmpp/commit/?id=ffdb6ffd69522bb14760eca196511ac69a158831
- [4] https://git.louiz.org/slixmpp/commit/?id=ffd9436e5cca9f92ed11683173a696972da2360b
- [5] https://github.com/fritzy/SleekXMPP
- [5] https://github.com/fritzy/SleekXMPP/blob/develop/sleekxmpp/clientxmpp.py#L112-L115
-
--- 
-Mathieu Pasquet (mathieui)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
