@@ -1,19 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/17
-Message-ID: <20161109170259.GA23082@tunkki>
-Date: Wed, 9 Nov 2016 19:02:59 +0200
-From: Henri Salo <henri@...v.fi>
-To: Agostino Sarubbo <ago@...too.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/29/1
+Message-ID: <d45df96858a4de9a1d544b795d2be58c@blinkenshell.org>
+Date: Wed, 29 Jun 2016 08:28:23 +0200
+From: _rc0r <hlt99@...nkenshell.org>
+To: <oss-security@...ts.openwall.com>
+Subject: CVE Request - PECL-HTTP 3.0.0 Buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 09, 2016 at 03:48:27PM +0100, Agostino Sarubbo wrote:
-> 2016-08-13: bug discovered
-> 2016-10-20: bug reported to upstream
-> 2016-11-07: blog post about the issue
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Did upstream respond anything related to these cases?
+Hi list, hi CVE assignment team,
 
--- 
-Henri Salo
+back in March a buffer overflow was discovered in url parsing
+functions of the PECL HTTP extension.
+The bug allowed a partial overwrite of a callback function pointer
+possibly leading to execution of arbitrary code.
+
+For the original bug report to the PHP bug tracker, please see:
+
+https://bugs.php.net/bug.php?id=71719
+
+This flaw was fixed in commit [3724cd7]
+
+https://github.com/m6w6/ext-http/commit/3724cd76a28be1d6049b5537232e97ac
+567ae1f5
+
+and was included in PECL-HTTP 3.0.1 that was released the same day:
+
+https://pecl.php.net/package/pecl_http/3.0.1
+
+
+Cheers
+-----BEGIN PGP SIGNATURE-----
+
+iQIcBAEBCgAGBQJXc2nFAAoJEII4s+efq3pF1+4P/RBvkJLH9jfISkoAEijVYbJc
+YB7moTXaLGbAF1G0Tz8WWWQeKhXiq7Rn6uf4nVrVFT/MDXmX45wFSIOQfURMa8iW
+Ikdqq5Ydb5Mh7RJ6F3ri11vhjPqSxcwmav71xg50U7GQzM+paUVUZo+lNCaVn1u6
+Llg3YwKKHnvVnrggUTaWBXzL4o8eeMNPWB/gCiJthMI3KvgEqXWRC9V6sT5U1DE/
+hIkroHuqRJfbdocMyVRE3B2erXi3ijhjDqVMRqkRkB8jiCXy13BtFuoRqFXT69Ow
+pwKIKL7j3Su4kkr6OJq0D8hbU/YmhITnSzVqU5SfCoEVmn4Oab1+GFFiuMZVUd3q
+clWb1ano2cQwEazTldp54LwIz2Ov438H1jCuu8XHp8KGZpWjYQAZ0LmZdskA/Qn6
+mFx41z1doexG1hsJvgWLeKKR6zzP4yLeCY7vNUiSWBOiQiC6hUHbWfUPvfB7aEhf
+TKRAKphgJ8DRSRe9GVGNRKP2YfddwlppvP7a6l0L2q0h9ZPu0X3OqsCvcvMjLBZd
+YyH/wMpG0U5Ae8zxrnu73kYadFCmmeuj/8KfF1VLsId07ImRstZfgeUYIJ//N895
+NfqqAdJuioLAH9qOngfQIQCiCd742ZQItlgaEEqhsj6oe+HiINs95z1WKi6faVyz
+7WU95dh8voVrao+3CH2x
+=hOsV
+-----END PGP SIGNATURE-----
