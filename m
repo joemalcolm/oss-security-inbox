@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3850" "Wednesday" "6" "May" "2020" "14:32:27" "+0200" "Daniel Beck" "ml@beckweb.net" "<2EAAFD2D-2302-40AF-84DB-5DA8E46A40B2@beckweb.net>" "97" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "5" "2020050612:32:27" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n May  6   97/3850  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2640" "Wednesday" "29" "June" "2016" "09:08:49" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20160629090849.1bdac2cc@pc1>" "75" "Re: [oss-security] CVE request: MatrixSSL lack of RSA-CRT hardening" "^Date:" nil nil "6" "2016062907:08:49" "[oss-security] CVE request: MatrixSSL lack of RSA-CRT hardening" (number mark "        hanno@hboeck Jun 29   75/2640  " thread-indent "\"Re: [oss-security] CVE request: MatrixSSL lack of RSA-CRT hardening\"\n") "<87oa6n9nap.fsf@mid.deneb.enyo.de>" ("<87oa6n9nap.fsf@mid.deneb.enyo.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 29737 invoked by uid 550); 6 May 2020 12:32:39 -0000
+Received: (qmail 30448 invoked by uid 550); 29 Jun 2016 07:09:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,115 +11,91 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 30418 invoked from network); 29 Jun 2016 07:09:06 -0000
+Message-ID: <20160629090849.1bdac2cc@pc1>
+In-Reply-To: <87oa6n9nap.fsf@mid.deneb.enyo.de>
+References: <87oa6n9nap.fsf@mid.deneb.enyo.de>
+X-Mailer: Claws Mail 3.13.2 (GTK+ 2.24.30; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-10111-1467184136-0001-2"
+Date: Wed, 29 Jun 2016 09:08:49 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29713 invoked from network); 6 May 2020 12:32:39 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.14\))
-Message-Id: <2EAAFD2D-2302-40AF-84DB-5DA8E46A40B2@beckweb.net>
-Date: Wed, 6 May 2020 14:32:27 +0200
+Subject: Re: [oss-security] CVE request: MatrixSSL lack of RSA-CRT hardening
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.104.14)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1588768359;5ac56463;
-X-HE-SMSGID: 1jWJDv-0000sJ-Hb
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+--=_zucker.schokokeks.org-10111-1467184136-0001-2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-The following releases contain fixes for security vulnerabilities:
+On Mon, 27 Jun 2016 08:08:14 +0200
+Florian Weimer <fw@deneb.enyo.de> wrote:
 
-* Amazon EC2 Plugin 1.50.2
-* Copy Artifact Plugin 1.44
-* Credentials Binding Plugin 1.23
-* CVS Plugin 2.16
-* SCM Filter Jervis Plugin 0.3
+> (There are some other changes whose description suggests they would
+> warrant CVE assignment as well, but I have not looked at those.)
 
+This (from CHANGES.md) seems notable and probably deserves a CVE:
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2020-05-06/?
+-------------
+##Side Channel Vulnerability on RSA Cipher Suites
+A Bleichenbacher variant attack, where certain information is leaked
+from the results of a RSA private key operation has been reported by a
+security researcher. The code has been updated to error without
+providing any information on the premaster contents.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-1374 / CVE-2020-2181
-Credentials Binding Plugin 1.22 and earlier does not mask (i.e., replace
-with asterisks) secrets in the build log when the build contains no build
-steps.
+> Note that other side channel attacks may still be possible as
+> MatrixSSL non-FIPS crypto is not always constant-time.
+-------------
 
 
-SECURITY-1835 / CVE-2020-2182
-Credentials Binding Plugin allows specifying passwords and other secrets as
-environment variables, and will hide them from console output in builds. As
-a side effect of the fix for SECURITY-698, `$` characters in secrets are
-escaped to `$$`. This will then be expanded to `$` again once the secret is
-passed to (post) build steps.
+This also:
+-------------
+##Access Violation on Malicious TLS Record
+TLS cipher suites with CBC mode in TLS 1.1 and 1.2 could have an access
+violation (read beyond memory) with a maliciously crafted message.
+-------------
 
-Credentials Binding Plugin 1.22 and earlier does not mask the escaped form
-of the secret (containing `$$`). This occurs for example in the "Execute
-Maven top-level targets" build step included in Jenkins.
+This is probably the same bug as described here:
+https://web-in-security.blogspot.no/2016/05/curious-padding-oracle-in-opens=
+sl-cve.html
 
+Quote
+-------------
+OpenSSL is not alone. I found a similar problem in the MatrixSSL
+library, see
+https://github.com/matrixssl/matrixssl/blob/master/CHANGES.md. In that
+case, unfortunately, a bad patch of Lucky 13 lead even to a buffer
+overread vulnerability.
+-------------
 
-SECURITY-988 / CVE-2020-2183
-Copy Artifact Plugin 1.43.1 and earlier performs improper permission checks
-when determining whether a build can copy artifacts from another project
-build. This allows attackers, usually with Job/Configure permission, to
-configure jobs to copy artifacts from jobs they have no permission to
-access.
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
 
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
 
-SECURITY-1094 / CVE-2020-2184
-CVS Plugin 2.15 and earlier does not require POST requests in several HTTP
-endpoints, resulting in cross-site request forgery (CSRF) vulnerabilities.
-This allows attackers to create and manipulate tags, and to connect to an
-attacker-specified URL.
+--=_zucker.schokokeks.org-10111-1467184136-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-SECURITY-381 / CVE-2020-2185
-Amazon EC2 Plugin 1.50.1 and earlier does not use SSH host key validation
-when connecting to agents. This lack of validation could be abused using a
-man-in-the-middle attack to intercept these connections to build agents.
+iQIcBAEBCgAGBQJXc3QBAAoJEKWIAHK7tR5CC0kP/1RstkAgvaZ6fNBTnw/fyM0l
+ozAFpgENkmgwfmGt6QT/YtVZ5UBYydFEE8PmA146fo/5wh9LfP0ZxUryUnqsj2Uv
+i57hfqckeFWhjB3p1yPNGc9i0vbAn/aaoA7TLM8iaeoK7ILLJdtuXiTDoV5yP217
+iUFLjzql8+jaCpdq6YQj45OX5rCNbglxdXxwmyQDphGH6Y8lZUoakTcHDjIDXek3
+8vzocS0quT1LDZGHnGigiPJ+LWRroqqPTHWV0zooKTZ0Rwin4fUN/jFqVoLpTiHk
+4geQKP+1gtfr42NtQHFOaOWFlqOrAEc3Op8yeRC0eV/UCZ8UD/L2SHn5dZD5eQt8
+Z8SIIuLL28+wIQVUmBneibDTTdJohruDovIuhHlveDEWyLLqhIvt2XDW7Mig80DF
+lftQWAHa6N7kSGHX2eJnyEPHAcddrSKr4P6nZd51vd4Frd26UIUJmjQ/BtTdz2vi
+yNnwgv6JTqQuhNOJsOKb55LgFGDnU6hZsClI3dov5WWGnWwdJEDDcNMb/aBvpDkI
+VtCo5BAgyOZFNFLELHBrxo+1wnmpJMI0YEDgmj7+eN16bJCPHl3odFD5vXeeB3RH
+dBQ9zyhwysk49N7grw/0+VNzF9ePMrFIIstYmSZIjkGcEFyCJl7ZMmaZmGEWq9pp
+fibn4HL+dy2nksgoT/CC
+=uW9J
+-----END PGP SIGNATURE-----
 
-
-SECURITY-1408 / CVE-2020-2186
-Amazon EC2 Plugin 1.50.1 and earlier does not require POST requests in
-several HTTP endpoints, resulting in cross-site request forgery (CSRF)
-vulnerabilities. This allows an attacker to provision instances with an
-attacker-specified template ID.
-
-
-SECURITY-1528 / CVE-2020-2187
-Amazon EC2 Plugin connects to Windows agents via HTTPS.
-
-Amazon EC2 Plugin 1.50.1 and earlier unconditionally accepts self-signed
-HTTPS certificates and does not perform hostname validation when connecting
-to Windows agents. This lack of validation could be abused using a
-man-in-the-middle attack to intercept these connections to build agents.
-
-
-SECURITY-1844 / CVE-2020-2188
-Amazon EC2 Plugin provides a list of applicable credentials IDs to allow
-users configuring the plugin to select the one to use.
-
-This functionality does not correctly check permissions in Amazon EC2
-Plugin 1.50.1 and earlier, allowing any user with Overall/Read permission
-to get a list of valid credentials IDs. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-
-SECURITY-1826 / CVE-2020-2189
-SCM Filter Jervis Plugin 0.2.1 and earlier does not configure its YAML
-parser to prevent the instantiation of arbitrary types. This results in a
-remote code execution (RCE) vulnerability exploitable by users able to
-configure jobs with the filter, or control the contents of a previously
-configured job's SCM repository.
-
+--=_zucker.schokokeks.org-10111-1467184136-0001-2--
