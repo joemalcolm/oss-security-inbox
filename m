@@ -1,4 +1,9 @@
-Received: (qmail 28241 invoked by uid 550); 3 Nov 2022 19:19:28 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["632" "Wednesday" "29" "June" "2016" "09:13:12" "+0200" "Lucian Cojocar" "lucian@cojocar.com" "<3f71b0bd-71dd-723e-eed8-925bf2e2c8f7@cojocar.com>" "19" "[oss-security] CVE Request: uclibc-ng (and uclibc): ARM arch: code execution" nil nil nil "6" "2016062907:13:12" "[oss-security] CVE Request: uclibc-ng (and uclibc): ARM arch: code execution" (number mark "U       lucian@cojoc Jun 29   19/632   " thread-indent "\"[oss-security] CVE Request: uclibc-ng (and uclibc): ARM arch: code execution\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 15883 invoked by uid 550); 29 Jun 2016 07:23:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,64 +12,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22160 invoked from network); 3 Nov 2022 16:32:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FQofclfn1gKK6ebvetFjopFHZI8qpUCqfT/oGjwJxyo=;
-        b=UJX43ScnP1xid0TOif/Et+TkWOmewM/1AOQztdudKOnVmxHq+KyOzi/uqvU/P4p+aT
-         uXo7dKkkPA7bsqx7kdLkaeW3ZdQJ7kGJMsii6ChkvEQgjEDhVYFM5qp6q346O2ZXt9AY
-         UoxvmlO4ClbgwNzzo0lzAVyfCEEJjpsF4BfE/RIG85xn/Xyav86aGNh4cuwEKQY2Cxsc
-         6+Svb0DQ5wTUXOgvGf+xsd7fpcyxIW83YSmKIhyqQ0uTzLGE+Qk00tZz/dK+3zCNyua7
-         vUYuzQ/1WCNeU+gfMpKpCIbZyQeg4bFegILDK/33hke+kC2sHozYv5Dxj6EM5CEJ5iya
-         s99Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FQofclfn1gKK6ebvetFjopFHZI8qpUCqfT/oGjwJxyo=;
-        b=VXk2wD9TQXtZwyiQxrH6+rbwuRZGeD30B23pMBcOMy5uaNo6+RddkjcOdZVPcp1/4a
-         7Gyn9+yGbjdruOSZVVOFuOrMr/MuFwwBh/8gSqdG1L0pDjEZNf9WTA/8/3VxbpsUuNsS
-         QvzCBVNCNBJqapmPui9DwMq3tXdf4DZn1BMw1l1mIQHUZbns35v1n0SBsmZ6JOkQxqxu
-         5UKtAeuKqgR5XTA3GPzbr4knK4+4T/7mPWpwzS6TvZb+dy9wV1+oFrppJpZgZHUEg4Ab
-         tBtLuIUPvMZ2BvtvbvsprQq7m3qcmoF4RBfpe5atPiMcUfydfgD170zxbHythnttYQSB
-         CIlQ==
-X-Gm-Message-State: ACrzQf1ny3o88kUb8RDZevJkTYHOzFzUVqpKDi1xAp5kUUELOIcO2jiB
-	kpWTYrXW9bp06jxLUWQlO3Bimsqb1sA9eb/oCV+pB5eUJ2U=
-X-Google-Smtp-Source: AMsMyM5R2rFqF1t2ujePRRHdrVRhzTTfMHdRayZ29F3/IJbR+A1oAnO2zHmm4HyFzySpz8oWvr54uz5DiA8FWNime7g=
-X-Received: by 2002:a1f:ad49:0:b0:3b6:d5d4:99dc with SMTP id
- w70-20020a1fad49000000b003b6d5d499dcmr17989943vke.37.1667493155652; Thu, 03
- Nov 2022 09:32:35 -0700 (PDT)
-MIME-Version: 1.0
-References: <20221101170833.GA10470@openwall.com> <20221102150921.3ab3f2d0@computer>
- <Y2K1yOB7748iGI2P@wopr> <tk0n6j$10pr$1@ciao.gmane.io>
-In-Reply-To: <tk0n6j$10pr$1@ciao.gmane.io>
-From: Nicola Tuveri <nic.tuv@gmail.com>
-Date: Thu, 3 Nov 2022 18:32:22 +0200
-Message-ID: <CANm5x_MaPRcY8B6WdNM40xj8kaeqqfX2Z=EZk36MohfSk9KYNA@mail.gmail.com>
+Received: (qmail 10112 invoked from network); 29 Jun 2016 07:13:34 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=simple; d=cojocar.com; h=from:subject
+	:to:message-id:date:mime-version:content-type
+	:content-transfer-encoding; s=mail; bh=+MiDRlNGE0ystTQmtmOnVzgid
+	4M=; b=pFS9G+weq7CsVa8Ydu2oT99/NBwWqoHBJL0PeviY6NsT7VY+D+2oveJLX
+	Ck3eNzIhWWpnfZx0hvJRvzV5mfklICKcKv4XkljjWNzTt8e+Q5FcuSrjSlXQadjb
+	B8vWyNPuvCNvsnuVsI7a264UyRoO0HyQte6hAZfROwWEsac0a4=
+DomainKey-Signature: a=rsa-sha1; c=simple; d=cojocar.com; h=from:subject
+	:to:message-id:date:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=mail; b=1wkry0aTA0QV0CPV4nD
+	FBaQers80N/LV6u7/WV1NVxrafnIcQ8t0/KHfCDtAihXxETQSA3rtWc5ctBDV+UA
+	Nk0gIqtm6AamXS5sySRJ7YB3zEtgZygIeFayimVFR6IlOzED73oYCYN+7CblUH52
+	wgCK7B9ZbDPaqo0Ze4WKJP8A=
+From: Lucian Cojocar <lucian@cojocar.com>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] Re: OpenSSL X.509 Email Address 4-byte Buffer
- Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+Message-ID: <3f71b0bd-71dd-723e-eed8-925bf2e2c8f7@cojocar.com>
+Date: Wed, 29 Jun 2016 09:13:12 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.1.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE Request: uclibc-ng (and uclibc): ARM arch: code execution
 
-I can also add that at least this member of the OpenSSL Technical
-Committee is following the discussion, and I believe I am not the only
-one.
+Hi all,
 
-The feedback shared here on oss-security is read and carefully
-considered, and I know it will be discussed within OTC to continue the
-ongoing process of improving the OpenSSL project and its procedures.
+u-clibc and uclibc-ng is used in several projects[4, 5].
 
-I totally concur with Tavis Ormandy:
-> this is active prolific opensource security researchers discussing their opensource security work on the opensource security mailing list :)
+As described here[3], an attacker that controls the length parameter of
+the `memset' can also control the value of the PC register. The issue is
+similar to CVE-2011-2702. A patch has been proposed for uclibc-ng[1]. A
+denial of service proof of concept is available[2].
 
-Personally, I'd like to thank you all for the feedback so far, as it
-is in itself a contribution to the project, even when it is harsh and
-reminds us of our mistakes.
-As long as it is kept polite and constructive, as it has been so far
-here, all feedback is very welcome and valuable.
+Thanks,
+Lucian
 
-Cheers,
+[1]http://repo.or.cz/uclibc-ng.git/commit/e3848e3dd64a8d6437531488fe341354bc02eaed
+[2]http://article.gmane.org/gmane.comp.lib.uclibc-ng/27
+[3]http://mailman.uclibc-ng.org/pipermail/devel/2016-May/000890.html
+[4]https://www.uclibc.org/products.html
+[5]http://www.uclibc-ng.org/
 
-Nicola Tuveri
+
