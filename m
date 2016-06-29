@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["689" "Sunday" "17" "December" "2017" "21:27:11" "+0100" "Raphael Geissert" "atomo64@gmail.com" "<CAA7hUgEumKFGGWbfVe=j3xyxBoA0cXSDzds-=pDozm+h6X597A@mail.gmail.com>" "22" "[oss-security] Net::LDAP ruby gem, missing certificate validation" nil nil nil "12" "2017121720:27:11" "[oss-security] Net::LDAP ruby gem, missing certificate validation" (number mark "U       atomo64@gmai Dec 17   22/689   " thread-indent "\"[oss-security] Net::LDAP ruby gem, missing certificate validation\"\n") "<2313476.vPjMFccExf@thickpad>" ("<2313476.vPjMFccExf@thickpad>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1452" "Wednesday" "29" "June" "2016" "08:28:23" "+0200" "_rc0r" "hlt99@blinkenshell.org" "<d45df96858a4de9a1d544b795d2be58c@blinkenshell.org>" "41" "[oss-security] CVE Request - PECL-HTTP 3.0.0 Buffer overflow" nil nil nil "6" "2016062906:28:23" "[oss-security] CVE Request - PECL-HTTP 3.0.0 Buffer overflow" (number mark "U       hlt99@blinke Jun 29   41/1452  " thread-indent "\"[oss-security] CVE Request - PECL-HTTP 3.0.0 Buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20447 invoked by uid 550); 17 Dec 2017 20:27:24 -0000
+Received: (qmail 3252 invoked by uid 550); 29 Jun 2016 06:32:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,62 +12,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20383 invoked from network); 17 Dec 2017 20:27:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=zwpP2XlUAOnrIaVT9GzSUH/3gux8/cFWyoGe+CuIjV4=;
-        b=f6LaueKQPuTZ+nGujVG2kmrgPdenhVSLO4IQTT/m6Rik2yENuJRctX+xFCqoWL9ecD
-         x6Zsenjjif23MGoyOPre1Mh4yOXRKWCV5cTQ5TVnDXr3Dec69gPZNW+3AFQ1++jJOL9V
-         +mYCM2M3oHXCKN5xQ9n//i3umxVzBgrdWKzSSyR9aZleni2Yvl50S8nkwaXHd2ToFTEq
-         KYPUypaEvfM2TNhjDATNT8S077DOd/QsX02Et6oG2yO/em3MfaG0SFwhzEEsmtO1VOvD
-         2YLmL+MTf2JrftPVoI1PlPAAd0vF387ETYQhge0jNOQJkCSuy1o7SZVN0/4E1nbrsQXG
-         XF2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=zwpP2XlUAOnrIaVT9GzSUH/3gux8/cFWyoGe+CuIjV4=;
-        b=DOJoWwlNDuzyBBbLhAYk9rVmCYWmLtQXbf+uCSKnM959LLuf1/E06QsBI9Wbh6+2iP
-         /pT06OmtVDlBMmfCsD5prgEYY/mmgcbD4KxrW1rsueQ9M3pOQ0iRzabhM6ZN0ZIER2ya
-         3gkbOw3Rr1Flk9zFJX0OrKBWSimp9k9UDNY4GQiEhKunyorptaQ1ZhIjMLrutPsUQ6Ov
-         YpU/WQvoDp6+hQ8A0fEIGfnLFKjicKJcpd3ZpspjpYmGapNYDMTihpfYXq0kVK/xHCTG
-         QbFJgPIyUeABS8JBIpgGmqKqQW0JZc8Q59ujj3Pr/ALtTxFtUsk1pgEZcDXWZhiVoXqC
-         B+Uw==
-X-Gm-Message-State: AKGB3mKpgwLRlWJvpk7VK2m3UcNMN4CfUGF3M9oDIkEWr+dosfrvkrhG
-	vdpLFLm4/SepVkXIUwoEJSLCYeN6WNtvIHlENzimlg==
-X-Google-Smtp-Source: ACJfBovoTPebb6HFDmIb1g6woNex6J81UwwWEJNN22mp/EPc8KgvsnMGaxjOEHGg84oRu+p2nIIOhahM4H+s5OjcwzA=
-X-Received: by 10.36.211.22 with SMTP id n22mr18369829itg.5.1513542431987;
- Sun, 17 Dec 2017 12:27:11 -0800 (PST)
+Received: (qmail 32635 invoked from network); 29 Jun 2016 06:28:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=blinkenshell.org;
+	s=bs2012; t=1467181706;
+	bh=SjCDV2gqzue2NSCs/Sn6WjIVYz4Ki19MpARf/wW2aLo=;
+	h=Date:From:To:Subject:From;
+	b=EvVW3M9gQgw0k7ERFzxgNstZiyvvPC4Zl/OfWyKjzh2jKkb54Su8qTgy+M2o1u0+b
+	 bnoYzlj+s0mT3rmgaTYq9uLNlbL8LDKW7wVaPy3vh08Zyg3lGqRD3FH2YtFjT7UZ+I
+	 gG8MAIRVOlPO+OCyQRrEZWLYY5e02RM+UkYeWLjw=
+X-Virus-Scanned: Debian amavisd-new at despina.blinkenshell.org
 MIME-Version: 1.0
-In-Reply-To: <2313476.vPjMFccExf@thickpad>
-References: <2313476.vPjMFccExf@thickpad>
-From: Raphael Geissert <atomo64@gmail.com>
-Date: Sun, 17 Dec 2017 21:27:11 +0100
-Message-ID: <CAA7hUgEumKFGGWbfVe=j3xyxBoA0cXSDzds-=pDozm+h6X597A@mail.gmail.com>
-To: Open Source Security <oss-security@lists.openwall.com>
-Content-Type: multipart/alternative; boundary="001a11458fd002dc9505608f0fc9"
-Subject: [oss-security] Net::LDAP ruby gem, missing certificate validation
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=blinkenshell.org;
+	s=bs2012; t=1467181703;
+	bh=SjCDV2gqzue2NSCs/Sn6WjIVYz4Ki19MpARf/wW2aLo=;
+	h=Date:From:To:Subject:From;
+	b=jHCkAr+Gv44/Kjwjwhl11A6tgv3UTnBMTkndmR7+eaD4dCKB1mfEb4DGAm1sdLXsn
+	 hPANZ9VNd0HEje57S0w/YP5lqRGlObNiiNWX1Gm0AO6JPv9bbRw+vuKpBnf71dsoWY
+	 J/3IKN+fY/U6YI2JWw6RutDL91Nygz/K2JXHmCiY=
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date: Wed, 29 Jun 2016 08:28:23 +0200
+From: _rc0r <hlt99@blinkenshell.org>
+To: <oss-security@lists.openwall.com>
+Message-ID: <d45df96858a4de9a1d544b795d2be58c@blinkenshell.org>
+X-Sender: hlt99@blinkenshell.org
+User-Agent: RoundCube Webmail/0.7.2
+Subject: [oss-security] CVE Request - PECL-HTTP 3.0.0 Buffer overflow
 
---001a11458fd002dc9505608f0fc9
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Hi,
+Hi list, hi CVE assignment team,
 
-Just another heads up that I requested a CVE id for issue #258[1] in the
-Net::LDAP ruby gem. Versions older than 0.16.0 did not verify that the LDAP
-server's certificate matched the host it was supposed to be connecting to.
+back in March a buffer overflow was discovered in url parsing
+functions of the PECL HTTP extension.
+The bug allowed a partial overwrite of a callback function pointer
+possibly leading to execution of arbitrary code.
 
-This has now been assigned CVE-2017-17718 by MITRE.
+For the original bug report to the PHP bug tracker, please see:
 
-Older versions did not perform any kind of validation at all, but it was
-properly documented as such. Based on the changelog I believe this to have
-changed in 0.10.0 by verifying the certificate's trust chain.
+https://bugs.php.net/bug.php?id=71719
 
-[1]https://github.com/ruby-ldap/ruby-net-ldap/issues/258
+This flaw was fixed in commit [3724cd7]
 
-Cheers,
--- 
-Raphael Geissert
+https://github.com/m6w6/ext-http/commit/3724cd76a28be1d6049b5537232e97ac
+567ae1f5
 
---001a11458fd002dc9505608f0fc9--
+and was included in PECL-HTTP 3.0.1 that was released the same day:
+
+https://pecl.php.net/package/pecl_http/3.0.1
+
+
+Cheers
+-----BEGIN PGP SIGNATURE-----
+
+iQIcBAEBCgAGBQJXc2nFAAoJEII4s+efq3pF1+4P/RBvkJLH9jfISkoAEijVYbJc
+YB7moTXaLGbAF1G0Tz8WWWQeKhXiq7Rn6uf4nVrVFT/MDXmX45wFSIOQfURMa8iW
+Ikdqq5Ydb5Mh7RJ6F3ri11vhjPqSxcwmav71xg50U7GQzM+paUVUZo+lNCaVn1u6
+Llg3YwKKHnvVnrggUTaWBXzL4o8eeMNPWB/gCiJthMI3KvgEqXWRC9V6sT5U1DE/
+hIkroHuqRJfbdocMyVRE3B2erXi3ijhjDqVMRqkRkB8jiCXy13BtFuoRqFXT69Ow
+pwKIKL7j3Su4kkr6OJq0D8hbU/YmhITnSzVqU5SfCoEVmn4Oab1+GFFiuMZVUd3q
+clWb1ano2cQwEazTldp54LwIz2Ov438H1jCuu8XHp8KGZpWjYQAZ0LmZdskA/Qn6
+mFx41z1doexG1hsJvgWLeKKR6zzP4yLeCY7vNUiSWBOiQiC6hUHbWfUPvfB7aEhf
+TKRAKphgJ8DRSRe9GVGNRKP2YfddwlppvP7a6l0L2q0h9ZPu0X3OqsCvcvMjLBZd
+YyH/wMpG0U5Ae8zxrnu73kYadFCmmeuj/8KfF1VLsId07ImRstZfgeUYIJ//N895
+NfqqAdJuioLAH9qOngfQIQCiCd742ZQItlgaEEqhsj6oe+HiINs95z1WKi6faVyz
+7WU95dh8voVrao+3CH2x
+=hOsV
+-----END PGP SIGNATURE-----
