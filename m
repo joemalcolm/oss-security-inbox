@@ -1,102 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/02/1
-Message-ID: <CAFkTriKAFZKb2_5V8xtyJJQ-DaaY4XimBkZvneRD3wXYMxjnmA@mail.gmail.com>
-Date: Sun, 2 Oct 2016 13:30:21 +0800
-From: Marco Grassi <marco.gra@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: imagemagick mogrify use after free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/29/7
+Message-ID: <9846A6064BD102419D06814DD0D78DE11296CE0F@CIO-KRC-D2MBX08.osuad.osu.edu>
+Date: Wed, 29 Jun 2016 14:37:11 +0000
+From: "Cantor, Scott" <cantor.2@....edu>
+To: "c-dev@...ces.apache.org" <c-dev@...ces.apache.org>, "c-users@...ces.apache.org" <c-users@...ces.apache.org>, "security@...che.org" <security@...che.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "bugtraq@...urityfocus.com" <bugtraq@...urityfocus.com>
+Subject: CVE-2016-4463: Apache Xerces-C XML Parser Crashes on Malformed DTD
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-imagemagick identify suffers of a use after free issue, which I reported
-and has been patched, you can find a reproducer in the github bug tracker
-issue link
 
-issue: *https://github.com/ImageMagick/ImageMagick/issues/281
-<https://github.com/ImageMagick/ImageMagick/issues/281>*
-patch: *https://github.com/ImageMagick/ImageMagick/commit/d63a3c5729df59f183e9e110d5d8385d17caaad0
-<https://github.com/ImageMagick/ImageMagick/commit/d63a3c5729df59f183e9e110d5d8385d17caaad0>*
+CVE-2016-4463: Apache Xerces-C XML Parser Crashes on Malformed DTD
 
-Thanks,
+Severity: Important
 
-Marco Grassi (@marcograss) of Tencent's Keen Lab
+Vendor: The Apache Software Foundation
 
-=================================================================
-==5303==ERROR: AddressSanitizer: heap-use-after-free on address
-0x60600003c628 at pc 0x0000016cfeba bp 0x7ffeb3910f50 sp 0x7ffeb3910f48
-READ of size 4 at 0x60600003c628 thread T0
-    #0 0x16cfeb9 in SetImageDepth
-/home/bob/VulnResearch/misc/ImageMagick/MagickCore/attribute.c:1040:43
-    #1 0x16383cf in WriteTIFFImage
-/home/bob/VulnResearch/misc/ImageMagick/coders/tiff.c:3212:16
-    #2 0x18bfcfc in WriteImage
-/home/bob/VulnResearch/misc/ImageMagick/MagickCore/constitute.c:1100:14
-    #3 0x18c2594 in WriteImages
-/home/bob/VulnResearch/misc/ImageMagick/MagickCore/constitute.c:1319:13
-    #4 0x2ff1c7f in MogrifyImageCommand
-/home/bob/VulnResearch/misc/ImageMagick/MagickWand/mogrify.c:3974:17
-    #5 0x2f8cead in MagickCommandGenesis
-/home/bob/VulnResearch/misc/ImageMagick/MagickWand/mogrify.c:183:14
-    #6 0x4f5da9 in MagickMain
-/home/bob/VulnResearch/misc/ImageMagick/utilities/magick.c:145:10
-    #7 0x4f5da9 in main
-/home/bob/VulnResearch/misc/ImageMagick/utilities/magick.c:176
-    #8 0x7fc9edea082f in __libc_start_main
-/build/glibc-GKVZIf/glibc-2.23/csu/../csu/libc-start.c:291
-    #9 0x422428 in _start
-(/home/bob/VulnResearch/misc/ImageMagick/utilities/magick+0x422428)
+Versions Affected: Apache Xerces-C XML Parser library versions
+prior to V3.1.4
 
-0x60600003c628 is located 8 bytes inside of 56-byte region
-[0x60600003c620,0x60600003c658)
-freed by thread T0 here:
-    #0 0x4c23d0 in __interceptor_cfree.localalias.0
-(/home/bob/VulnResearch/misc/ImageMagick/utilities/magick+0x4c23d0)
-    #1 0x5ac708 in RelinquishMagickMemory
-/home/bob/VulnResearch/misc/ImageMagick/MagickCore/memory.c:1002:3
+Description: The Xerces-C XML parser fails to successfully parse a
+DTD that is deeply nested, and this causes a stack overflow, which
+makes a denial of service attack against many applications possible
+by an unauthenticated attacker.
 
-previously allocated by thread T0 here:
-    #0 0x4c2558 in __interceptor_malloc
-(/home/bob/VulnResearch/misc/ImageMagick/utilities/magick+0x4c2558)
-    #1 0x55c149 in NewLinkedList
-/home/bob/VulnResearch/misc/ImageMagick/MagickCore/linked-list.c:717:32
+Mitigation: Applications that are using library versions older than
+V3.1.4 should upgrade as soon as possible. Distributors of older
+versions should apply the patches from this subversion revision:
 
-SUMMARY: AddressSanitizer: heap-use-after-free
-/home/bob/VulnResearch/misc/ImageMagick/MagickCore/attribute.c:1040:43 in
-SetImageDepth
-Shadow bytes around the buggy address:
-  0x0c0c7ffff870: fd fd fd fd fd fd fd fa fa fa fa fa fd fd fd fd
-  0x0c0c7ffff880: fd fd fd fa fa fa fa fa fd fd fd fd fd fd fd fa
-  0x0c0c7ffff890: fa fa fa fa fd fd fd fd fd fd fd fa fa fa fa fa
-  0x0c0c7ffff8a0: fd fd fd fd fd fd fd fa fa fa fa fa fd fd fd fd
-  0x0c0c7ffff8b0: fd fd fd fa fa fa fa fa 00 00 00 00 00 00 00 00
-=>0x0c0c7ffff8c0: fa fa fa fa fd[fd]fd fd fd fd fd fa fa fa fa fa
-  0x0c0c7ffff8d0: fd fd fd fd fd fd fd fa fa fa fa fa fd fd fd fd
-  0x0c0c7ffff8e0: fd fd fd fa fa fa fa fa fd fd fd fd fd fd fd fa
-  0x0c0c7ffff8f0: fa fa fa fa fd fd fd fd fd fd fd fa fa fa fa fa
-  0x0c0c7ffff900: fd fd fd fd fd fd fd fa fa fa fa fa fd fd fd fd
-  0x0c0c7ffff910: fd fd fd fa fa fa fa fa fd fd fd fd fd fd fd fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==5303==ABORTING
+http://svn.apache.org/viewvc?view=revision&revision=1747619
 
+Note that the nesting limit is currently implemented as a compile-time
+constant in order to maintain ABI-compatibility.
+
+In addition, a related enhancement was made to enable applications
+to fully disable DTD processing through the use of an environment
+variable. Distributors of older versions are urged to incorporate
+this patch to enable applications to more fully protect themselves
+from future issues if they do not require DTD support. This change
+is ABI-compatible and can be found in this subversion revision:
+
+http://svn.apache.org/viewvc?view=revision&revision=1747620
+
+Credit: This issue was reported by Brandon Perry.
+
+References:
+http://xerces.apache.org/xerces-c/secadv/CVE-2016-4463.txt
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJXXqPQAAoJEDeLhFQCJ3liyRwQAI5aUjhKtZtw+51EgNizpuLa
+dvfEP27anUXLKwLXt+WIfogW3TLQ4HwyiszanO4YTlwz3qbKO3TJQXdT4kTQx6/k
+KhWr7+vsn7pBEPiiC7kj3lH7QHCd+T8/W+Xik/rKDFV1qAAKuoFgYJ31qED8I65z
+371Tdm+p2QE4Nh9M7k7LUs+yWu5XdwJIS61L3R/MpEptynuo7Onbp+sjF6OQCZHc
+u1KJ3zAlKzP4iwtxKjvoXqOnLgYwjtqC2p7nYBEXOEn4DA4Q/PMrfdYIebjUo/Wy
+CeIN5TGJ2aunMkVK0RgxCqjr0sl2cYqY8iegUqp9Iz4+rMpy5ZDLNyyjgbXgSY73
+8145xO2tscLs7bLXAXUGbLlOPxnDqVieGlYyHICFnl58I4ekfhwtMmd9d2WOlaVE
+7NEPTorFiHI+wdK2yebCLAMaJbL9KJQiJa/4xw9qvpZ4DQ7aein9jq7fklQ62crc
+Ff4h4icX4icM1/s1tvcEM1lZw8Td4UyXkwvoEmfZg7dVy4NW+XM/Kn4FUCPRnC9A
+XVAabL3K290Mz77YLqUTk733w1q/lFCxgOCJF18/OJef2azMn74QgFbLcBD16i2O
+FNxdtPsSRGNsfOGN08Uiwg9RN6uqoZ6Rxwq3hEcAiufYQHFiXldlS26koP2QMk03
+gNuHTr22AcR0ZgoW9GYP
+=eilz
+-----END PGP SIGNATURE-----
