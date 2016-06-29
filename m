@@ -1,34 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/30/2
-Message-ID: <alpine.LFD.2.20.1605301419050.26205@wniryva>
-Date: Mon, 30 May 2016 14:22:03 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2016-4453 Qemu: display: vmsvga: infinite loop in vmsvga_fifo_run() routine
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/29/6
+Message-Id: <20160629142913.D220C6C05C7@smtpvmsrv1.mitre.org>
+Date: Wed, 29 Jun 2016 10:29:13 -0400 (EDT)
+From: cve-assign@...re.org
+To: idolf@...gle.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Heap-based buffer overflow in LibTIFF when using the PixarLog compression format
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Quick Emulator(Qemu) built with the VMware-SVGA "chipset" emulation support is 
-vulnerable to an infinite loop issue. It could occur while processing VGA 
-commands via its FIFO buffer.
+> heap-based buffer overflow in
+> LibTIFF in the file libtiff/tif_pixarlog.c. The vulnerability allows an
+> attacker to control the size of the allocated heap-buffer while
+> independently controlling the data to be written to the buffer with no
+> restrictions on the size of the written data.
+> 
+> revision 1.44
+> date: 2016-06-28 17:12:19 +0200; author: erouault; commitid: 2SqWSFG5a8Ewffcz;
+> 
+> * libtiff/tif_pixarlog.c: fix potential buffer write overrun in
+> PixarLogDecode() on corrupted/unexpected images (reported by Mathias
+> Svensson)
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS.
+Use CVE-2016-5875.
 
-Upstream patch
---------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg05270.html
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1336650
-
-This issue was discovered and reported by Li Qiang of 360.cn Inc. 
-CVE-2016-4453 is assigned by Red Hat Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+iQIcBAEBCAAGBQJXc9qbAAoJEHb/MwWLVhi2SmoP/iycenqjeZtYwVOBTw09R7cq
+Bgb6m/EvOeK7dxwW+PHMLnyM1bdCk1ZL4mocOPJwrsFLj1wm8QBsCWtF2nLsV2tA
+59rtB8OEdDIL9rl/kArHf/ozqY1O8CSxFts0IqeU40/wp9SHHGK3U9N63LjqBXrP
+IvhLFvfGdXyXWISfqP1ve7VkXR8AsVZ/zJVjwPFHXbjzYMOmKeo1V6jRlTBHWEai
+TPTtmehZyG9mwVHu18QKJNI3Xc1S0evadv576MUCsyCdU5zIuVbGNPNEQXhX7/ZB
+iX9YnWxT+a+aomECJgbF5tXUZy82EqoQU+kfnMkIHUJlxImCAemFAqTeQZ8Z5cjQ
+OA73XZhUWp93P7y/ncKpWyRyIDc159R7CpKFa+fC7ax8btJp6vOx3VNM7LwdZ4Dg
+BVUprEW+eeAvqQ7dDh/lmZ4ynrwd+uWZZTRXBDPNkJvB5vifyIR+79qf8uLDIWRw
+MXMzY9ANqZQwyASiu1j0DWwrr8sWALFR3AznIH0Ny1VEJwIVLYBhp97Dh/nkyLUe
+1q+SdiSKtkvCSYlSMhehbETITlGVa6pht7Kh0PLm4ZzAkxZqq5u29hRrf7XOvMpl
+WJMY/2YqjouCRWYvotiw970plPHqOozcTz/WFGZHTNBj5fh/iFe/ZEsaF/WjpN95
+l3SBEFinwfRH77apDjF1
+=0JY6
+-----END PGP SIGNATURE-----
