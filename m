@@ -1,56 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/18/4
-Message-ID: <CAKG8Do6qnT4yPS8B=fTaoFf2x4k-cKy2ixDZLRA8aSxRkuFo2Q@mail.gmail.com>
-Date: Wed, 18 May 2016 13:40:18 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/29/5
+Message-ID: <CACG6YS21LGQ6sU3X8MTEND0dxyRMUSs23Zmr40KVJjGLBavvfQ@mail.gmail.com>
+Date: Wed, 29 Jun 2016 14:08:14 +0200
+From: Mathias Svensson <idolf@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-3698 libndp: denial of service due to insufficient validation of source of NDP messages
+Subject: CVE request: Heap-based buffer overflow in LibTIFF when using the PixarLog compression format
 Content-Type: text/plain; charset=utf-8
 
-Accidental miss-use of copy/paste : updated subject with the CVE number.
+Hello oss-security,
 
-On Tue, May 17, 2016 at 8:40 PM, Cedric Buissart <cbuissar@...hat.com>
-wrote:
+I would like to request a CVE number for a heap-based buffer overflow in
+LibTIFF in the file libtiff/tif_pixarlog.c. The vulnerability allows an
+attacker to control the size of the allocated heap-buffer while
+independently controlling the data to be written to the buffer with no
+restrictions on the size of the written data.
 
-> Dear all,
->
-> An improper input validation check, and improper origin check flaw during
-> the reception of NDP message was discovered in libndp. An attacker in a
-> non local network could use this flaw to advertise a node as a router, and
-> cause a denial of service attack, or act as a man in the middle.
->
-> The patches enforce that hop limit must be 255, to ensure that the NDP
-> message
-> has not been routed.
->
-> Patches can be found upsteam:
->
->  -  libndp: validate the IPv6 hop limit
->
-> https://github.com/jpirko/libndp/commit/a4892df306e0532487f1634ba6d4c6d4bb381c7f
->
->  -  libndb: reject redirect and router advertisements from non-link-local
->
-> https://github.com/jpirko/libndp/commit/2af9a55b38b55abbf05fd116ec097d4029115839
->   https://people.freedesktop.org/~lkundrak/.libndp/
->
-> Known affected packages : NetworkManager >= 1.0
->
-> Thanks to Julien Bernard (Viagénie) for discovering the issue
->
-> Kind regards,
-> --
-> Cedric Buissart
-> Purkynova 99
-> Brno 612 45
->
+The bug seems to be at least superficially related to CVE-2012-4447,
+however this vulnerability seems to be a separate issue and not just a case
+of an insufficient fix.
+
+The issue is fixed in CVS HEAD with the commit:
+
+revision 1.44
+date: 2016-06-28 17:12:19 +0200;  author: erouault;  state: Exp;  lines: +9
+-1;  commitid: 2SqWSFG5a8Ewffcz;
+* libtiff/tif_pixarlog.c: fix potential buffer write overrun in
+PixarLogDecode() on corrupted/unexpected images (reported by Mathias
+Svensson)
 
 
-
--- 
-Cedric Buissart,
-Product Security
-
-Purkynova 99
-Brno 612 45
+Kind regards,
+Mathias Svensson, Google Security Team
 
