@@ -1,4 +1,9 @@
-Received: (qmail 18335 invoked by uid 550); 8 Aug 2024 12:53:43 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["994" "Wednesday" "29" "June" "2016" "14:08:14" "+0200" "Mathias Svensson" "idolf@google.com" "<CACG6YS21LGQ6sU3X8MTEND0dxyRMUSs23Zmr40KVJjGLBavvfQ@mail.gmail.com>" "29" "[oss-security] CVE request: Heap-based buffer overflow in LibTIFF when using the PixarLog compression format" nil nil nil "6" "2016062912:08:14" "[oss-security] CVE request: Heap-based buffer overflow in LibTIFF when using the PixarLog compression format" (number mark "U       idolf@google Jun 29   29/994   " thread-indent "\"[oss-security] CVE request: Heap-based buffer overflow in LibTIFF when using the PixarLog compression format\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 17778 invoked by uid 550); 29 Jun 2016 12:12:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,96 +12,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32718 invoked from network); 8 Aug 2024 10:51:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1723114310;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=lQX2gD5GwfJfDTx8hy75TObU5jSslZSg4iXNnxmmHsY=;
-	b=QCTg8S2KJTqWnh20e3WI82Cy2EYsqLNZZ9fdV9GLFIKC0p1hCf0aAkMyvhDlpidT7RendA
-	0YaXl0kQGnpuaU9+k+Sm9zoSucIgIzTibgcCmM6e3kppvR+TtJBRBYouLm8hKsJ6MC6Zop
-	/KwPyNvmFCu017u5LGI3BvP+8qDE2nU=
-X-MC-Unique: dyvVXowlOh2UKatWm4M6tw-1
+Received: (qmail 15966 invoked from network); 29 Jun 2016 12:08:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=q+PuPJUA/DerG/ssM1+jG0Iy94c+A13dgu7Dd2/zS2g=;
+        b=ivHgIalRHpscJlmd/ek6Z7RB8gWkAWE/ZNvqDnMz6jbYjiczKV8JEC7b1BTxffHepL
+         uuXK1Ru0VaAi1iqNcoZzLTqZLbrZ7Fq4YJyzXI4vvPHj4cjxS3OzLcLbYFJgPv+Y9RBj
+         Ep65V8Bhw/kYbqB7YFmnuzkpPse8nPiYVhvbcFul51TdzJcUoi49sIgNSaI+VWSevjnG
+         STBfucI8B4tL7QO5af+4gf5z8NGvbd4yrgPJWQ+qr07IPHqA3uswW+zYh6brRndIqUfc
+         DjWHNqxntjHF1891WpWqXux7fGZ4thfSq6lqtezLU9c6/5IdTDyVhJZcqywg4lGUXJnS
+         HjvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723114308; x=1723719108;
-        h=message-id:in-reply-to:to:references:date:subject:mime-version
-         :content-transfer-encoding:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/c/GqOmTjXFasQi3XdVX9KaCETMQRFVkriY3ZzQkPf4=;
-        b=qz4ZlPhR4dOWPGBDTn4cmr0aZssktaXI3nU6jKnuf/Cg5Kl++/1dz5Hp/3Cc4E4q01
-         Iyckq1JdNSYwPX1VebJiIK+LXVRwVhGeCstSCCi6fa4lcq0jda072t7slf1extOYwVtZ
-         PbZYzPJv9pR+KPUqyOLouv5fPBBwB/t6USXk1BUYbV6VLysqVF3CYY7jeGw1MK78tusV
-         9J6vtJpROHEQqco18Cp5hSYG35mGSP2jaxT2LKRoWlr9REwHm+AEzfUV7apptOGDS+/t
-         MKVR+9vEltmXeiTR64bMGPhBNkFkZIn/DhhiONyS/G5ubhRBEh7ZjP4UIIDZrQZOy+Pe
-         Iuvg==
-X-Gm-Message-State: AOJu0YxShCUrg3Igt3xlVAJFLODZheuxfhBOyJAFbn+KNg8GTiEogfc3
-	kcC44LCP6P+4wv0AFGo4laJua8sHaJJrXR/VIK3p1OqCI4d79f65Ycqme+u79lY7/utpfkyyd78
-	Mvum57QXT5yPRq14m1Wh60jEvT6xVXzX9T70vduclDnL/tkPaVTyYIn/+6QBncVWaPYV/XtXSIw
-	1QiTp1bW25KpWDtgRTM0niFrMFG5/vvNnmBoWBWaa497JmJwR2pg==
-X-Received: by 2002:a5d:4f0a:0:b0:367:9904:e6b9 with SMTP id ffacd0b85a97d-36d2755fc57mr1039167f8f.44.1723114307775;
-        Thu, 08 Aug 2024 03:51:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF5oXSsHhn81+aPPRte3DIRSCVKyk1nCwsox20hJb1saAbD1udqiBgDPnege67WqsrNccZqTw==
-X-Received: by 2002:a5d:4f0a:0:b0:367:9904:e6b9 with SMTP id ffacd0b85a97d-36d2755fc57mr1039147f8f.44.1723114307135;
-        Thu, 08 Aug 2024 03:51:47 -0700 (PDT)
-From: Clemens Lang <cllang@redhat.com>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51\))
-Date: Thu, 8 Aug 2024 12:51:35 +0200
-References: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com>
- <20240806171232.6bd08942@zbook> <ZrJv8PDeCxQQJVxH@itl-email>
- <20240807144047.GA12108@test> <20240807174807.GA4206@openwall.com>
- <CADz+4x8wo6KaCU9b2s_+VkB08X7U4WWJHj66UfyvRU1qKUUd-A@mail.gmail.com>
- <20240807201640.1RD27ogN@steffen%sdaoden.eu>
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=q+PuPJUA/DerG/ssM1+jG0Iy94c+A13dgu7Dd2/zS2g=;
+        b=QarpfXiYWfrGz6oRGSRGOAPTeLzhowysWBIVNEXOGuYL9eQkIYBKAikgeEp8/k/zCF
+         9XlWewzue3iJerqhQPN84VsV8jVTkuyvp3JIa0MK8k3u9ag1F8XTgBa/SiqQ5Ougq2xg
+         csnePerV8m24YkjSmqrAb7fRfzHomTLDWz5P6naEhtFbtEXNQEOm7zbXXt7BwVhllgU7
+         abUw5dp0LFtJrCOgvvftDwe0zr3P6ua6srsArMtbsHbvDTH61tpi03BjQbaDIYEnhhXj
+         isg3LDaru5edclKVFlqt+BN/krY6BC5okTY6U0KrJ8hYA9D9grJF6p9QAzyRz62sN9Ba
+         GAgA==
+X-Gm-Message-State: ALyK8tKmZge2jMYnQuUsnzTotmdZvPIXHPJG5tcwHAY7HVTxdF7GCIB1izOHd+Mg4tC9R5N/KbLKbzqOI9hXKLx3
+X-Received: by 10.28.55.72 with SMTP id e69mr8864943wma.28.1467202114250; Wed,
+ 29 Jun 2016 05:08:34 -0700 (PDT)
+MIME-Version: 1.0
+From: Mathias Svensson <idolf@google.com>
+Date: Wed, 29 Jun 2016 14:08:14 +0200
+Message-ID: <CACG6YS21LGQ6sU3X8MTEND0dxyRMUSs23Zmr40KVJjGLBavvfQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
-In-Reply-To: <20240807201640.1RD27ogN@steffen%sdaoden.eu>
-Message-Id: <E3810E68-25CC-456F-9DC4-A03752C43E79@redhat.com>
-X-Mailer: Apple Mail (2.3776.700.51)
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] feedback requested regarding deprecation of TLS
- 1.0/1.1
+Content-Type: multipart/alternative; boundary=001a1143c52cd5df1b0536699c9b
+Subject: [oss-security] CVE request: Heap-based buffer overflow in LibTIFF when using the
+ PixarLog compression format
 
-Hello Steffen,
+--001a1143c52cd5df1b0536699c9b
+Content-Type: text/plain; charset=UTF-8
 
-> On 7. Aug 2024, at 22:16, Steffen Nurpmeso <steffen@sdaoden.eu> wrote:
->=20
-> Isn't that terribly rhetorical, and can kill sheeps indeed.
-> To reiterate that SSL/TLS are standards, they had version
-> iterations, which possibly got around some real protocol problem.
-> These offer standardized sets of ciphersuites, some of those, of
-> the elder versions, are "no longer secure".  (I am no
-> cryptographer to tell whether they ever were completely so, or
-> whether there are "mathematical tricks" to get away without brute
-> force for them.  That aside.)  That is basically it.  But, as far
-> as i understand it, even TLSv1 supported forward-secrecy stuff, ie
->=20
->  # openssl ciphers -v EECDH+AESGCM:EECDH+AES256:CHACHA20:!DHE
->=20
-> gives two members, and except for the SHA-1 MAC this looks pretty
-> modern.  But again: i am far from being an expert.
+Hello oss-security,
 
-TLS < 1.2 only supports a single signature algorithm, which uses SHA1-MD5 a=
-s digest.
-Only TLS >=3D 1.2 supports the signature_algorithms extension to negotiate =
-modern digests.
+I would like to request a CVE number for a heap-based buffer overflow in
+LibTIFF in the file libtiff/tif_pixarlog.c. The vulnerability allows an
+attacker to control the size of the allocated heap-buffer while
+independently controlling the data to be written to the buffer with no
+restrictions on the size of the written data.
 
-MD-5 is fully broken. SHA-1 is questionable. Their combination may withstan=
-d attacks a little bit longer, but probably not by much.
+The bug seems to be at least superficially related to CVE-2012-4447,
+however this vulnerability seems to be a separate issue and not just a case
+of an insufficient fix.
 
-The MAC is actually fine, since it=E2=80=99s HMAC with SHA-1, which isn=E2=
-=80=99t as affected by a SHA-1 collision attack [1].
+The issue is fixed in CVS HEAD with the commit:
+
+revision 1.44
+date: 2016-06-28 17:12:19 +0200;  author: erouault;  state: Exp;  lines: +9
+-1;  commitid: 2SqWSFG5a8Ewffcz;
+* libtiff/tif_pixarlog.c: fix potential buffer write overrun in
+PixarLogDecode() on corrupted/unexpected images (reported by Mathias
+Svensson)
 
 
-  [1]: https://security.stackexchange.com/questions/187866/why-aren-t-colli=
-sions-important-with-hmac
+Kind regards,
+Mathias Svensson, Google Security Team
 
-
---=20
-Clemens Lang
-RHEL Crypto Team
-Red Hat
-
+--001a1143c52cd5df1b0536699c9b--
