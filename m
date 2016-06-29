@@ -1,4 +1,9 @@
-Received: (qmail 13374 invoked by uid 550); 30 May 2023 16:53:55 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1985" "Wednesday" "29" "June" "2016" "06:56:57" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160629105657.7DD6F33201E@smtpvbsrv1.mitre.org>" "49" "[oss-security] Re: CVE Request - PECL-HTTP 3.0.0 Buffer overflow" nil nil nil "6" "2016062910:56:57" "[oss-security] Re: CVE Request - PECL-HTTP 3.0.0 Buffer overflow" (number mark "U       cve-assign@m Jun 29   49/1985  " thread-indent "\"[oss-security] Re: CVE Request - PECL-HTTP 3.0.0 Buffer overflow\"\n") "<d45df96858a4de9a1d544b795d2be58c@blinkenshell.org>" ("<d45df96858a4de9a1d544b795d2be58c@blinkenshell.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5660 invoked by uid 550); 29 Jun 2016 10:57:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,72 +12,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13344 invoked from network); 30 May 2023 16:53:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:Cc:To:Subject:From:
-	MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=FM47Jojk6yEM4e/93nqJ0uqAigxhXbOIxxikHNywttM=; b=jRUqbPCPRBWVLn0tt+Tpm2YCCJ
-	i5ndCPesmTTPeRzud26TwFFYDQVBGQ+XNxLsstRfOzfD038MrHY44La45KdIpELJQ7+sKPxAXMjtQ
-	c3cLoqSmAJAF0jTyCBjiaP6xj/J5g7VYrTKwcOKeVfivEYt84w1Q5KAz8WdFTgqZzP804YDkJ5VLq
-	NDXtw6PqlsSeXJIcg4mMFkpx7XHe4z/c+uV2eYo/1J6c/0Tat6Qm6bYPn/tIOBWBWm5qMoMwR0JrU
-	Y1Kb69S/BfJxcAd/y+6+2gMNKjio49zydON29QWFdMi58FoDMkRlKJ7GH/N5EioX1uwK/ugo2RKes
-	85EUW+Gg==;
-Message-ID: <33a99dc0-7403-3ac8-d3df-59544fac800d@igalia.com>
-Date: Tue, 30 May 2023 18:53:41 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Content-Language: en-GB
-From: Carlos Alberto Lopez Perez <clopez@igalia.com>
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, oss-security@lists.openwall.com
-Organization: Igalia S.L.
-Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
- security@webkit.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2023-0004
+Received: (qmail 5642 invoked from network); 29 Jun 2016 10:57:09 -0000
+From: cve-assign@mitre.org
+To: hlt99@blinkenshell.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <d45df96858a4de9a1d544b795d2be58c@blinkenshell.org>
+Message-Id: <20160629105657.7DD6F33201E@smtpvbsrv1.mitre.org>
+Date: Wed, 29 Jun 2016 06:56:57 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request - PECL-HTTP 3.0.0 Buffer overflow
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0004
-------------------------------------------------------------------------
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Date reported           : May 30, 2023
-Advisory ID             : WSA-2023-0004
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0004.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0004.html
-CVE identifiers         : CVE-2023-28204, CVE-2023-32373.
+> a buffer overflow was discovered in url parsing
+> functions of the PECL HTTP extension.
+> The bug allowed a partial overwrite of a callback function pointer
+> possibly leading to execution of arbitrary code.
+> 
+> For the original bug report to the PHP bug tracker, please see:
+> 
+>   https://bugs.php.net/bug.php?id=71719
+> 
+> included in PECL-HTTP 3.0.1 that was released the same day:
+> 
+>   https://pecl.php.net/package/pecl_http/3.0.1
+>   Release notes Version 3.0.1
+>   * Fix php-bug #71719: Buffer overflow in HTTP url parsing functions (Mike, rc0r)
+> 
+> This flaw was fixed in commit [3724cd7]
+> 
+> https://github.com/m6w6/ext-http/commit/3724cd76a28be1d6049b5537232e97ac567ae1f5
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+Use CVE-2016-5873 for the entire issue described in this commit, i.e.,
+"The parser's offset was not reset when we softfail in scheme parsing
+and continue to parse a path" and the accompanying change to maxlen in
+the php_http_url_parse function.
 
-CVE-2023-28204
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.2.
-    Credit to an anonymous researcher.
-    Impact: Processing web content may disclose sensitive information.
-    Apple is aware of a report that this issue may have been actively
-    exploited. Description: An out-of-bounds read was addressed with
-    improved input validation.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-CVE-2023-32373
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.2.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Apple is aware of a report that this issue
-    may have been actively exploited. Description: A use-after-free
-    issue was addressed with improved memory management.
-
-
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-May 30, 2023
+iQIcBAEBCAAGBQJXc6jUAAoJEHb/MwWLVhi2MLwQAK1r9jq7D6vcm23wuNd7yhwz
+y7VH1oflcJokHblJKyF+pNjZQ9tjGpsAnWqm2GHBEgH4yE297gVYg/WmhNauZZpE
+RUyCk6OCKXLBBNyFvP9YfJG7KJFp1OejEvmYFv/SD5pUquwv+hAWHwOoZucaESRH
+ivscwV1ILF4v+n61CPfMHtkmBk8XXggTnvHFGjTkQhekt2makC0pENId9SF4lzh1
+xkN9FzHJSviNkymSwX+CSvdUVjxa2UPenwAIjULw6dPZXSKgUWfCEXXFDiYI6Krt
+jeqxFMiAuKRfeCFnS3pr3wpFs2n7j7dBLL6+nH35Ex58lEaresdDRpRs5F/TIqU1
+B6xY30m0JeNaq5a6M7YEA1fWpAsLU6DuaDKkUt7uTSv525TULzmEBXhWh/ZZQbpw
+rMf+TyA+0cpgcmkTJx0ngmKpnlRuf/gCHf0/2no2N7t0dDqJR/KCEZd8NQSSbqOv
+GUNi2QYeII0b7ZibmB13W3paqqo2XzvEFeqqKCUoIrYiSEBLLKtu5nbrA9JzJd3E
+WR8RgGFpKfbntvzqXdmVyqohjh11GGY0qy9/IrSk9AYQHjGO/5/ZZXUpd50h9v7F
+pgr1tLArI/sNgnuugpyMcJX/bgvbpIPAJdg7hQGldgdoYnBCY/n4F7tZzalOzu6T
+nCkssdBqv91hfjwnGGd2
+=im8F
+-----END PGP SIGNATURE-----
