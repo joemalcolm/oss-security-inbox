@@ -1,38 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/20/6
-Message-ID: <DM2PR09MB03839F3453B0899959D2E35CA12A0@DM2PR09MB0383.namprd09.prod.outlook.com>
-Date: Mon, 20 Jun 2016 20:11:46 +0000
-From: CVE ID Requests <cve-assign@...re.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: CVE ID Requests <cve-assign@...re.org>
-Subject: RE: CVE Request: 2015 squidguard reflected XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/29/2
+Message-ID: <20160629090849.1bdac2cc@pc1>
+Date: Wed, 29 Jun 2016 09:08:49 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: MatrixSSL lack of RSA-CRT hardening
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Mon, 27 Jun 2016 08:08:14 +0200
+Florian Weimer <fw@...eb.enyo.de> wrote:
 
-Thank you for your submission. It will be reviewed by a CVE Assignment Team
-member.
+> (There are some other changes whose description suggests they would
+> warrant CVE assignment as well, but I have not looked at those.)
 
-- --
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[A PGP key is available for encrypted communications at
-http://cve.mitre.org/cve/request_id.html]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.14 (GNU/Linux)
+This (from CHANGES.md) seems notable and probably deserves a CVE:
 
-iQIcBAEBCAAGBQJXaE1MAAoJEHb/MwWLVhi2n+kP/1+D+lH+887rXCZml03OdHOu
-t1Jc9WeYcMKjOXNKQ0PQgrIyWKLvZwxnVL/6f1X6OAqt4o6c/wxeTVqEGq3appAY
-+1fkjXywatvgsE3TUBiZ9YWO2VinfWrIf3fSSshU1D9sBKoiCAqWQXGwBI+xAgJ0
-SwnoMfb+2RGA1WaETU353lL8/PcrCaEeVjbpiMVcseFnMuJ01Z0yxTEVDfO5onkF
-0n+a7nCdA5eolUqDsZFsT3w5bWOXegWCpFBv2/FCuJrW/+ifh+iKbvWWhcy7EvMb
-DMFfWrTk5KLRIdywpABxaLJHKQxW9RQgAplZX04akesrpz/eHiKGL0THfmBBiB6v
-+tDHUQ8G42vNDJIGAaHSpJsLNguC0cvUMhHPb3lscULUsaeqFAplUgYD0ZLZx9Py
-rxR6kPtcL8OMXGtkMXVZFvuIdXE/F/RKsp3ZU090EYneXNEjBihzsxg0XCCKjFD0
-1fdXuoM8kjJTDxz3FoFLskfpw4j7zCgf3ZJ3pgiJ3gIQCbwF0t3kjOQDkta/TwQJ
-3Zel/K1L0cTx3s5NiwmEd4+LKjNlkvJXKP8qajl95wEV3ha9BmnJ0qGb/ghvKWlO
-D7aADDy61MuoFSlYPT2S/JbkOi71n5N1FhPLBVQblouJbl40c4bgLmwE5fmR4hjY
-Bh3ogFJKcYL+FFDTWU6X
-=x2oy
------END PGP SIGNATURE-----
+-------------
+##Side Channel Vulnerability on RSA Cipher Suites
+A Bleichenbacher variant attack, where certain information is leaked
+from the results of a RSA private key operation has been reported by a
+security researcher. The code has been updated to error without
+providing any information on the premaster contents.
+
+> Note that other side channel attacks may still be possible as
+> MatrixSSL non-FIPS crypto is not always constant-time.
+-------------
+
+
+This also:
+-------------
+##Access Violation on Malicious TLS Record
+TLS cipher suites with CBC mode in TLS 1.1 and 1.2 could have an access
+violation (read beyond memory) with a maliciously crafted message.
+-------------
+
+This is probably the same bug as described here:
+https://web-in-security.blogspot.no/2016/05/curious-padding-oracle-in-openssl-cve.html
+
+Quote
+-------------
+OpenSSL is not alone. I found a similar problem in the MatrixSSL
+library, see
+https://github.com/matrixssl/matrixssl/blob/master/CHANGES.md. In that
+case, unfortunately, a bad patch of Lucky 13 lead even to a buffer
+overread vulnerability.
+-------------
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
