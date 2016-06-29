@@ -1,4 +1,9 @@
-Received: (qmail 5993 invoked by uid 550); 8 Apr 2026 16:51:27 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1615" "Wednesday" "29" "June" "2016" "10:29:13" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160629142913.D220C6C05C7@smtpvmsrv1.mitre.org>" "40" "[oss-security] Re: CVE request: Heap-based buffer overflow in LibTIFF when using the PixarLog compression format" nil nil nil "6" "2016062914:29:13" "[oss-security] Re: CVE request: Heap-based buffer overflow in LibTIFF when using the PixarLog compression format" (number mark "U       cve-assign@m Jun 29   40/1615  " thread-indent "\"[oss-security] Re: CVE request: Heap-based buffer overflow in LibTIFF when using the PixarLog compression format\"\n") "<CACG6YS21LGQ6sU3X8MTEND0dxyRMUSs23Zmr40KVJjGLBavvfQ@mail.gmail.com>" ("<CACG6YS21LGQ6sU3X8MTEND0dxyRMUSs23Zmr40KVJjGLBavvfQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1769 invoked by uid 550); 29 Jun 2016 14:29:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,69 +12,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 16115 invoked from network); 8 Apr 2026 16:12:01 -0000
-Authentication-Results: mail.gathman.org; iprev=pass policy.iprev="2001:470:8:809::1010" (mail.gathman.org); auth=pass (CRAM-MD5 sslbits=256) smtp.auth=stuart
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gathman.org; 
- i=@gathman.org; q=dns/txt; s=rsa2048; t=1775664697; 
- h=date : from : to : subject : in-reply-to : message-id : 
- references : mime-version : content-type : date : from : 
- subject; bh=8HuR0UQiQq3TXWvgL1kF40MKlXELsGaWhx3BddVsQ1U=; 
- b=daSyhfxEbn3AHQQz3K0mLiijiJZ8nKWpMV24MdMSgOCtNU+9ZYLSPbkt
- l4T3JOtHy36LA25BDsDk0Bujj0eoTWQ0G3U5ruEJSumsD+dEQT11Jo43Dp
- uhv9GbRiTKM0zNmk1sgAiY29VGBBZYg1a7c6HkTz+3qHqSD0TijjGe7S+U
- hhKD9OxbT5rK1iS5aTDYw/0TrW5QizhI9mHrXJ58bPoAWX/EwtRp5szFj2
- UgZ+jhEcjZgAlbUZGR8RIsxAt3qQTXsoRD/+TUHLAg+Elm4BjEGHAfo4w5
- OKAoAr+ftAUnEIn0E1fWCfd8kPPdCTnzjCPi8Fci5pgqbBbhXMcNDA==
-Date: Wed, 8 Apr 2026 12:11:33 -0400 (EDT)
-From: Stuart D Gathman <stuart@gathman.org>
-To: oss-security@lists.openwall.com
-In-Reply-To: <20260408021908.GA8285@openwall.com>
-Message-ID: <7f70dce9-af6-4c25-5b2f-544f8ccd7ba@gathman.org>
-References: <20260408021908.GA8285@openwall.com>
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="1085201697-1965025136-1775664697=:21237"
-Subject: =?UTF-8?Q?Re=3A_=5Boss-security=5D_Fwd=3A_=5Bsiren=5D_Severity=3A?=
- =?UTF-8?Q?_High_=E2=80=93_Potential_Malicious_Campaign_Underw?=
- =?UTF-8?Q?ay_Targeting_Open_Source_Developers_via_Slack?=
+Received: (qmail 1739 invoked from network); 29 Jun 2016 14:29:25 -0000
+From: cve-assign@mitre.org
+To: idolf@google.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CACG6YS21LGQ6sU3X8MTEND0dxyRMUSs23Zmr40KVJjGLBavvfQ@mail.gmail.com>
+Message-Id: <20160629142913.D220C6C05C7@smtpvmsrv1.mitre.org>
+Date: Wed, 29 Jun 2016 10:29:13 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: Heap-based buffer overflow in LibTIFF when using the PixarLog compression format
 
---1085201697-1965025136-1775664697=:21237
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Wed, 8 Apr 2026, Solar Designer wrote:
+> heap-based buffer overflow in
+> LibTIFF in the file libtiff/tif_pixarlog.c. The vulnerability allows an
+> attacker to control the size of the allocated heap-buffer while
+> independently controlling the data to be written to the buffer with no
+> restrictions on the size of the written data.
+> 
+> revision 1.44
+> date: 2016-06-28 17:12:19 +0200; author: erouault; commitid: 2SqWSFG5a8Ewffcz;
+> 
+> * libtiff/tif_pixarlog.c: fix potential buffer write overrun in
+> PixarLogDecode() on corrupted/unexpected images (reported by Mathias
+> Svensson)
 
-> Also seen at https://lists.openssf-vuln.org/g/siren/message/7
+Use CVE-2016-5875.
 
-> Subject: [siren] Severity: High – Potential Malicious Campaign Underway Targeting Open Source Developers via Slack
-> # Overview #
-> The community has received reports of an active social engineering
-> campaign targeting open source developers via Slack (including
-> ToDoGroup and related communities).  In the reported incident, an
-> attacker impersonated a well-known Linux Foundation community leader
-> and attempted to lure the victim into following a malicious link:
-etc
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-As listed in this and other recent OSS emails, platforms exploited included
-Slack, Teams, Google, etc
-
-The method is to create a convincing fake account on the centralized platform.
-
-Is this a weakness that is aggravated by centralized platforms?
-
-Federated protocols like SMTP, Matrix, XMPP, etc would require a
-deceptive domain name (like the legendary lBM.com of Arial font fame)
-for a similar attack.  (Fully decentralized protocols like SSB 
-just have pubkeys - but I suppose users might get fooled by a new
-pubkey with icons and earlier messages that look like a party
-being impersonated.)
-
-Is this evidence for a general recommendation against centralized
-platforms for open source development?  More to the surprise of
-my preconceived ideas - are fully decentralized protocols subject
-to similar social engineering?  There is not much difference between
-a Facebook internal account number and a pubkey for most end users.
-
-The issue with federated protocols is that any trusted CA can forge
-any TLS cert - a "serial reliability" problem.
---1085201697-1965025136-1775664697=:21237--
+iQIcBAEBCAAGBQJXc9qbAAoJEHb/MwWLVhi2SmoP/iycenqjeZtYwVOBTw09R7cq
+Bgb6m/EvOeK7dxwW+PHMLnyM1bdCk1ZL4mocOPJwrsFLj1wm8QBsCWtF2nLsV2tA
+59rtB8OEdDIL9rl/kArHf/ozqY1O8CSxFts0IqeU40/wp9SHHGK3U9N63LjqBXrP
+IvhLFvfGdXyXWISfqP1ve7VkXR8AsVZ/zJVjwPFHXbjzYMOmKeo1V6jRlTBHWEai
+TPTtmehZyG9mwVHu18QKJNI3Xc1S0evadv576MUCsyCdU5zIuVbGNPNEQXhX7/ZB
+iX9YnWxT+a+aomECJgbF5tXUZy82EqoQU+kfnMkIHUJlxImCAemFAqTeQZ8Z5cjQ
+OA73XZhUWp93P7y/ncKpWyRyIDc159R7CpKFa+fC7ax8btJp6vOx3VNM7LwdZ4Dg
+BVUprEW+eeAvqQ7dDh/lmZ4ynrwd+uWZZTRXBDPNkJvB5vifyIR+79qf8uLDIWRw
+MXMzY9ANqZQwyASiu1j0DWwrr8sWALFR3AznIH0Ny1VEJwIVLYBhp97Dh/nkyLUe
+1q+SdiSKtkvCSYlSMhehbETITlGVa6pht7Kh0PLm4ZzAkxZqq5u29hRrf7XOvMpl
+WJMY/2YqjouCRWYvotiw970plPHqOozcTz/WFGZHTNBj5fh/iFe/ZEsaF/WjpN95
+l3SBEFinwfRH77apDjF1
+=0JY6
+-----END PGP SIGNATURE-----
