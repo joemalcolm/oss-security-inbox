@@ -1,135 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/8
-Message-ID: <1812600.W4HMrhroht@blackgate>
-Date: Wed, 09 Nov 2016 15:40:50 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/30/4
+Message-Id: <9BC348CE-0958-4F38-A0DB-D228EE0D9E27@gmail.com>
+Date: Thu, 30 Jun 2016 15:25:16 +0800
+From: Marcel Böhme <boehme.marcel@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: jasper: use after free in jas_realloc (jas_malloc.c)
+Cc: florian@...h-krohm.de, nickc@...hat.com, Bernd Schmidt <bschmidt@...hat.com>
+Subject: CVE Request: No demangling of untrusted binaries (2)
 Content-Type: text/plain; charset=utf-8
 
-If it is suitable for a CVE please assign one. Thanks.
+Hi all,
 
-Description:
-jasper is an open-source initiative to provide a free software-based reference 
-implementation of the codec specified in the JPEG-2000 Part-1 standard.
+Another vulnerability in GNU Libiberty was found that impacts the security of binary analysis tools, such as Valgrind, GDB, Binutils (e.g., objdump, nm, ..), Gcov, or other LibBFD-based tools. An attacker might modify a program binary such that it executes malicious code upon *analysis* of the binary (e.g., to find whether it is malicious in the first place) or during the attempt to reverse-engineer an untrusted binary.
 
-A crafted image, maybe posted in the past as testcase for another bug, causes 
-in the 1.900.18 version a use-after-free. No fuzzers involved at this time.
+Workaround: Until the patches propagate to the vulnerable tools, switch off default demangling! E.g.,
+$ echo "set demangle-style none"  >>  ~/.gdbinit
+$ echo "--demangle=no" >> ~/.valgrindrc
 
-The complete ASan output:
+A stackoverflow in the libiberty demangler causes its host application to crash on a tainted branch instruction. The problem is caused by a self-reference in a mangled type string that is "remembered" for later reference. This leads to an infinite recursion during the demangling.
+* GDB exploitable classifies the stack overflow as exploitable.
+* Bug Report: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=71696
+* Patch under review: https://gcc.gnu.org/ml/gcc-patches/2016-06/msg02030.html
 
-# imginfo -f $FILE
-Corrupt JPEG data: 19 extraneous bytes before marker 0xda                                                                                                                                                                                                                      
-=================================================================                                                                                                                                                                                                              
-==21990==ERROR: AddressSanitizer: heap-use-after-free on address 
-0x619000009b80 at pc 0x7fce4229d29d bp 0x7fffab22f9a0 sp 0x7fffab22f998                                                                                                                                       
-READ of size 8 at 0x619000009b80 thread T0                                                                                                                                                                                                                                     
-    #0 0x7fce4229d29c in jas_realloc /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_malloc.c:182:21                                                                                                                                       
-    #1 0x7fce422a5e38 in mem_resize /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_stream.c:1001:14                                                                                                                                       
-    #2 0x7fce422a5e38 in mem_write /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_stream.c:1027                                                                                                                                           
-    #3 0x7fce422a30e5 in jas_stream_flushbuf /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_stream.c:822:7                                                                                                                                
-    #4 0x7fce422a4b4c in jas_stream_flush /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_stream.c:752:9                                                                                                                                   
-    #5 0x7fce422a4b4c in jas_stream_seek /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_stream.c:659                                                                                                                                      
-    #6 0x7fce42273928 in jas_image_cmpt_create /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_image.c:351:4                                                                                                                               
-    #7 0x7fce42276986 in jas_image_addcmpt /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_image.c:723:18                                                                                                                                  
-    #8 0x7fce4233e3fc in jpg_mkimage /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/jpg/jpg_dec.c:268:7                                                                                                                                            
-    #9 0x7fce4233e3fc in jpg_decode /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/jpg/jpg_dec.c:183                                                                                                                                               
-    #10 0x7fce422749bd in jas_image_decode /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_image.c:396:16                                                                                                                                  
-    #11 0x4f1330 in main /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/appl/imginfo.c:203:16                                                                                                                                                                
-    #12 0x7fce4138961f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                       
-    #13 0x418cb8 in _init (/usr/bin/imginfo+0x418cb8)                                                                                                                                                                                                                          
-                                                                                                                                                                                                                                                                               
-0x619000009b80 is located 0 bytes inside of 1056-byte region 
-[0x619000009b80,0x619000009fa0)                                                                                                                                                                                   
-freed by thread T0 here:                                                                                                                                                                                                                                                       
-    #0 0x4bff00 in free /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:38                                                                                                                                     
-    #1 0x7fce4229d359 in jas_free /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_malloc.c:225:3                                                                                                                                           
-                                                                                                                                                                                                                                                                               
-previously allocated by thread T0 here:                                                                                                                                                                                                                                        
-    #0 0x4c0208 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52                                                                                                                                   
-    #1 0x7fce4229d0b2 in jas_malloc /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_malloc.c:148:13                                                                                                                                        
-                                                                                                                                                                                                                                                                               
-SUMMARY: AddressSanitizer: heap-use-after-free /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_malloc.c:182:21 
-in jas_realloc                                                                                                              
-Shadow bytes around the buggy address:                                                                                                                                                                                                                                         
-  0x0c327fff9320: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-  0x0c327fff9330: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-  0x0c327fff9340: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-  0x0c327fff9350: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-  0x0c327fff9360: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-=>0x0c327fff9370:[fd]fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd                                                                                                                                                                                                              
-  0x0c327fff9380: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd                                                                                                                                                                                                              
-  0x0c327fff9390: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd                                                                                                                                                                                                              
-  0x0c327fff93a0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd                                                                                                                                                                                                              
-  0x0c327fff93b0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd                                                                                                                                                                                                              
-  0x0c327fff93c0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd                                                                                                                                                                                                              
-Shadow byte legend (one shadow byte represents 8 application bytes):                                                                                                                                                                                                           
-  Addressable:           00                                                                                                                                                                                                                                                    
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==21990==ABORTING
+All vulnerabilities were found with a more efficient version of the AFL fuzzer, called AFLFast.
 
-Affected version:
-1.900.18
+Update on the previously reported, related vulnerabilities:
+CVE-2016-2226: Fixed in trunk
+CVE-2016-4487: Fixed in trunk
+CVE-2016-4488: Fixed in trunk
+CVE-2016-4489: Fixed in trunk
+CVE-2016-4490: Fixed in trunk
+CVE-2016-4491: Patch under review
+CVE-2016-4492: Patch accepted
+CVE-2016-4493: Patch accepted
 
-Fixed version:
-1.900.22
+Best regards,
+- Marcel
 
-Commit fix:
-https://github.com/mdadams/jasper/commit/634ce8e8a5accc0fa05dd2c20d42b4749d4b2735
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00028-jasper-uaf-jas_realloc
-
-Timeline:
-2016-11-02: bug discovered and reported to upstream
-2016-11-06: upstream released a patch and 1.900.22
-2016-11-07: blog post about the issue
-
-Note:
-This bug was found with Address Sanitizer.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/07/jasper-use-after-free-in-jas_realloc-jas_malloc-c
+---
+Marcel Böhme
+Post-doctoral Research Fellow
+TSUNAMi Security Research Center
+National University of Singapore
