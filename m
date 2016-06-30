@@ -1,47 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/16
-Message-ID: <alpine.DEB.2.20.1611021349520.375@tvnag.unkk.fr>
-Date: Wed, 2 Nov 2016 13:57:35 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: Robert Scheck <robert@...oraproject.org>
-cc: oss-security@...ts.openwall.com
-Subject: Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/30/10
+Message-Id: <20160630154855.660056C0B4F@smtpvmsrv1.mitre.org>
+Date: Thu, 30 Jun 2016 11:48:55 -0400 (EDT)
+From: cve-assign@...re.org
+To: gustavo.grieco@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: A read out-of-bands was found in the parsing of TGA files using libgd
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2 Nov 2016, Robert Scheck wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
->> curl is not alone with this problem, as there's currently a big flux in the
->> world of network user-agents about which IDNA version to support and use.
->
-> From my point of view, this especially affects GNU libc for example.
->
-> On the other hand, I am wondering if this should be really classified as a 
-> security related issue.
+> A read out-of-bands was found in the parsing of TGA files using the
+> last revision of libgd (a6a0e7f) but older versions can be affected. A
+> reproducer and some technical details are available here:
+> 
+> https://github.com/libgd/libgd/issues/247
 
-Can this be used to trick users or give malicious actors an advantage? I think 
-yes. I think it has a security impact. To what extent can be debated, but then 
-I don't grade our security vulnerabilites.
+>> AddressSanitizer: heap-buffer-overflow ...
+>> READ of size 4
+>> ... in gdImageCreateFromTgaCtx
 
-> I guess many upstreams should be explicitly made aware of that soon. Maybe 
-> MITRE (or somebody else) could share their thoughts about this, too?
+Use CVE-2016-6132 for this buffer over-read issue.
 
-I would say so. Since IDNA2003 and IDNA2008 make clients end up on different 
-target machines, there's no doubt in my mind that this *can* be abused. I'm 
-confident that many other tools and libraries in addition to curl have the 
-same problem.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-> I reported the "ß" issue and the lack of IDNA 2008 support in cURL on Sun, 
-> 18 May 2014 17:17:03 +0200 directly to you, but I didn't classify it as a 
-> security related issue though... ;-)
-
-Then I appologize for having dropped the ball and not having seen the problem 
-correctly back then. I don't remember that occasion, but I believe you.
-
-NOTE: the IDNA 2008 fix seems to be incomplete [1] so right now it is probably 
-better to just disable IDN support in curl, at least if libidn2 powered.
-
-[1] = https://curl.haxx.se/mail/lib-2016-11/0033.html
-
--- 
-
-  / daniel.haxx.se
+iQIcBAEBCAAGBQJXdT8ZAAoJEHb/MwWLVhi2SjkQAIges7jISzaEMV4SPSu9Di8B
+4re9gzln2m8wIKQ3c9NLFGp5lR8fWCx73vSguwBUWVPBFCJZntup5rZlX/rq9P3+
+fFmMhM8g+lsDczm5bNhqUp3lQbSGzts/gPMUbEWlKYKX4sNRdwzlIoxiHq2NxwcB
+ue/Ci1nNDkL2ykvfJA8z3twOm9kFu/qMY+CG6oZ5wA6HSRiRb7kxYCmUd1HMlDKb
+JOhjyJ+qMKwAaQbQKMERSOz03tvzCzCgZvmUOjtd0lsk7a/E1Q3wwPWJ8+wyBbdw
+DZalq2JBQyFNkQ/sy9NGWpya1OSLiuly7xwH+qOGuFmxlXpB87UWq1Mkq6+Hfib5
+0pq4cKvdM3gBe1k1lXMAVxikTamvnLizMmRz+tcwHFoGCQoSTwuIegBst3vx9yIJ
+7QEiq1ergZTJEpMoG6EtxBSsOejSfhWmRYkcGkaCusYrDdT2WXFly7zWAQtnL5qT
+7X5QcpuYs/in7C0rY3UoJqOsDX7cO8b21g16Ya3pGyFjX5DIUr/ZPqSF2GcB6jXn
+/rPyeSvv1py40HWsvx8ZUQND9rgGn2g5CPIfEkYapp6IAYtJgA96jIORfuui4lEp
++PAKIvn5LVsdAMcoq50RdOpCqD9VRjA1B6EgtZsjUs1bDsdB7qujm+wBIsu9vkGo
+qhxbyEP0bA9VFaM6jxMO
+=BZV9
+-----END PGP SIGNATURE-----
