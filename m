@@ -1,54 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/30/1
-Message-ID: <20160430095250.GA19211@eldamar.local>
-Date: Sat, 30 Apr 2016 11:52:50 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/30/5
+Message-ID: <20160630121425.GA17822@eldamar.local>
+Date: Thu, 30 Jun 2016 14:14:25 +0200
 From: Salvatore Bonaccorso <carnil@...ian.org>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: vtun: denial-of-service: high CPU usage after SIGHUP
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Re: CVE Request: libgd: Invalid color index is not properly handled leading to denial of service (crash)
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-On Wed, Apr 27, 2016 at 05:58:00PM -0400, cve-assign@...re.org wrote:
+On Wed, Jun 29, 2016 at 09:27:58PM -0400, cve-assign@...re.org wrote:
 > -----BEGIN PGP SIGNED MESSAGE-----
 > Hash: SHA256
 > 
-> > https://bugs.debian.org/818489
+> > There is currently PHP upstream bug which is still marked as private:
+> > 
+> > https://bugs.php.net/bug.php?id=72494
+> > 
+> > But the libgd project references the following set of commits to this
+> > bug report:
+> > 
+> > https://github.com/libgd/libgd/compare/3fe0a71...6ff72ae
+> > 
+> > indicating that libgd does not properly handle invalid color index,
+> > which could lead to a denial of service against applications using the
+> > libgd library (in particular thus PHP).
 > 
-> Can you describe how this crosses a privilege boundary?
+> > https://github.com/libgd/libgd/commit/1ccfe21e14c4d18336f9da8515cd17db88c3de61
+> > gd_crop.c
+> > gdImageCropThreshold
+> > 
+> > + if (color < 0 || (!gdImageTrueColor(im) && color >= gdImageColorsTotal(im))) {
+> > + return NULL;
+> > + }
 > 
+> > https://github.com/libgd/libgd/commit/6ff72ae40c7c20ece939afb362d98cc37f4a1c96
+> > tests/gdimagecrop/php_bug_72494.c
+> > 
+> > im = gdImageCreate(50, 50);
+> > gdImageCropThreshold(im, 1337, 0);
+> > gdImageDestroy(im);
 > 
-> >> When you send a SIGHUP to a vtun client process and it cannot connects
-> >> to the remote server, vtun try to reconnect without sleep between each attempt.
-> >> In result, the vtun process uses lot of CPU, and write to syslog without limit.
-> 
-> Is there an important way in which this differs from "The vtun client
-> is not installed. The attacker simply writes their own program to
-> reconnect without sleeping and make many syslog calls"?
-> 
-> For example: does vtun's resource consumption belong to the root
-> account in a common scenario, but SIGHUP is accepted from an
-> unprivileged user? Are different unprivileged users successfully
-> sending SIGHUP to one another's vtun client processes? Do you mean
-> that there's a potentially common attack pattern in which a
-> man-in-the-middle attacker intentionally blocks connections to the
-> remote server in order to trick the victim into sending a SIGHUP, and
-> (in some sense) this man-in-the-middle attacker is thereby able to
-> trigger the excessive resource consumption?
-> 
-> Sometimes there are CVE IDs for "a client application inadvertently
-> starts launching a network DoS attack" but this is typically only in
-> cases where someone can send forged packets to the client application
-> in order to start the attack.
+> Use CVE-2016-6128.
 
-You are right -- I cannot think of a situation (or seems hard to find
-a realistic example) right now where this issue would cross a
-privilege boundary, and thus might just be considered as bug, but not
-a vulnerability.
+Thanks for the CVE assignment. Just for the record, my above commit
+range stated should have better been written as
 
-Thanks for your feedback, I'm fine to not have assigned an identifier
-for this.
+https://github.com/libgd/libgd/compare/3fe0a7128bac5000fdcfab888bd2a75ec0c9447d...fd623025505e87bba7ec8555eeb72dae4fb0afd
+
+including
+https://github.com/libgd/libgd/commit/a0f9f8f7bd0d3a6c6afd6d180b8e75d93aadddfa
 
 Regards,
 Salvatore
