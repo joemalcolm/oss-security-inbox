@@ -1,30 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/16/1
-Message-ID: <CABEc15Xut2gOVj1_Luzu-y7gwESwT5Q0n+dCtK6R+HOcR9cDDw@mail.gmail.com>
-Date: Sat, 16 Apr 2016 10:07:03 +0200
-From: Régis Leroy <regis.leroy@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Varnish 3 before 3.0.7 was vulnerable to HTTP Smuggling issues: Double Content Length and bad EOL
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/30/7
+Message-Id: <20160630134439.2449D6C0AE6@smtpvmsrv1.mitre.org>
+Date: Thu, 30 Jun 2016 09:44:39 -0400 (EDT)
+From: cve-assign@...re.org
+To: boehme.marcel@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, florian@...h-krohm.de, nickc@...hat.com, bschmidt@...hat.com
+Subject: Re: CVE Request: No demangling of untrusted binaries (2)
 Content-Type: text/plain; charset=utf-8
 
-Varnish 4.x serie is not impacted. Flaws Fixed in version 3.0.7 in march 2015.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Changelog is:
- * Requests with multiple Content-Length headers will now fail.
- * Stop recognizing a single CR (r) as a HTTP line separator. This
-opened up a possible cache poisoning attack in stacked installations
-where sslterminator/varnish/backend had different CR handling.
+> A stackoverflow in the libiberty demangler causes its host application
+> to crash on a tainted branch instruction. The problem is caused by a
+> self-reference in a mangled type string that is "remembered" for later
+> reference. This leads to an infinite recursion during the demangling.
+> 
+> * GDB exploitable classifies the stack overflow as exploitable.
+> 
+> * Bug Report: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=71696
+> 
+> * Patch under review: https://gcc.gnu.org/ml/gcc-patches/2016-06/msg02030.html
+> 
+> All vulnerabilities were found with a more efficient version of the AFL fuzzer, called AFLFast.
 
-https://github.com/varnish/Varnish-Cache/commit/29870c8fe95e4e8a672f6f28c5fbe692bea09e9c
-https://github.com/varnish/Varnish-Cache/commit/85e8468bec9416bd7e16b0d80cb820ecd2b330c3
+>> The patch tracks the mangled types that are currently being demangled
+>> in a new variable called work->proctypevec. If a referenced type is
+>> currently being demangled, the demangling is marked as not successful.
 
-Combinations of theses two flaws in HTTP protocol handling allows for
-"HTTP Response Splitting" attacks
-when another actor in front of Varnish3 can transmit headers in this
-form (for example):
+Use CVE-2016-6131.
 
-    Dummy: header\rContent-Length: 0\r\n
+As far as we can tell, there was only one vulnerability reported here.
+We don't understand the reference to "All vulnerabilities were found
+with" - this seems to imply more than one vulnerability. Also, we
+don't understand the parenthesized numbers such as "No demangling of
+untrusted binaries (2)" in the Subject line, and "Libiberty Demangler
+segfaults (6)" and "Fix fir PR71696 in Libiberty Demangler (6)" in the
+references.
 
-This is a one year old issue, on the old last release of this serie.
-But we still find some installations. A CVE would maybe help removal
-of 3.x installations, or at least upgrades to 3.0.7.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXdSHOAAoJEHb/MwWLVhi2SOMP/37QfylN++UvAd0PdO/ZTc00
+Vk+piwJvzeVoAv2Jp8ZwU1S4hj43LlXR9WrK0NX/lLUwId69Zao6faWGO203hDnz
+4TrmvuRyVT7jT5df6NVadwOawEeEklRuI56fBnm7e09nuchLpg1314TsiyqmHo1C
+Ca41bfkIj091KAKW3nKER37ALb2DG2dSfR4+9ksTaalhdDwaykKwy9eYHcbA7+Sd
+76Dra1MRTGgHr+YTIrqASn+lXC/ar/+rqy81oUZK38XviK8rkK+oKY6ODz9DHmED
+815kkv8iflHezxsEW5PSWP9oQ5C7wGD7bju480ziqZF/r8bjW5dwm5jeEiTd6XWj
+b1R05LqhnldiaSlYT/TqaFz6Pbu3uEbTUjOqH/Sn85MHFLVKJ3ZeLOzYUamaDRN7
+KcHQPNM2GW6zcJJax9UEd0qseCvmn04X9NrNNjL06RstrxGtLeFGRQjyRX83uRij
+mue5U2pf27YSKeVTo3CHw/q65Xwe+a/uSOoJzGYnmkGdx2Eu/3DKLsCqxP9d5BA2
+jY+MnwkvctJpBzy6kxfeSGJkZ/N7np/yzD6k/hfJrGEgTaB7qfZ8NeHX3WTjiT73
+MvkAAvICRwnLRN93buvCwMDQNl4xOSCVg3eK2slpxFxaU6/dsH/W+BUN20/Gkmf6
+dsWpgmbMAUIb6gmzPCR2
+=De4P
+-----END PGP SIGNATURE-----
