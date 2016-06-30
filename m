@@ -1,24 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/28/1
-Message-ID: <56A8F223.2050908@knoware.nl.eu.org>
-Date: Wed, 27 Jan 2016 17:36:51 +0100
-From: Rob Janssen <rob@...ware.nl.eu.org>
-To: Luca BRUNO <lucab@...ian.org>, pool@...ts.ntp.org, oss-security@...ts.openwall.com, linuxbrad@...il.com
-Cc: team@...urity.debian.org, secalert@...hat.com
-Subject: Re: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/30/1
+Message-Id: <20160630012758.B2D89EBC15E@smtpvmsrv1.mitre.org>
+Date: Wed, 29 Jun 2016 21:27:58 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: libgd: Invalid color index is not properly handled leading to denial of service (crash)
 Content-Type: text/plain; charset=utf-8
 
-Luca BRUNO wrote:
-> [cross-posted to pool-ntp and oss-sec]
->
->
-> For ntp.org admins: can those rogue server be expunged from the pools, and the whole
-> shodan.io situation clarified?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-shodan.io are the bad guys!  block them wherever possible, put them in default blocklists suggested
-for firewalls, etc.
+> There is currently PHP upstream bug which is still marked as private:
+> 
+> https://bugs.php.net/bug.php?id=72494
+> 
+> But the libgd project references the following set of commits to this
+> bug report:
+> 
+> https://github.com/libgd/libgd/compare/3fe0a71...6ff72ae
+> 
+> indicating that libgd does not properly handle invalid color index,
+> which could lead to a denial of service against applications using the
+> libgd library (in particular thus PHP).
 
-these guys really don't care.   when submitting networks for exclusion, they reply as if they will do something,
-sometimes the scanning may pause for a day or a week, then it always comes back.
+> https://github.com/libgd/libgd/commit/1ccfe21e14c4d18336f9da8515cd17db88c3de61
+> gd_crop.c
+> gdImageCropThreshold
+> 
+> + if (color < 0 || (!gdImageTrueColor(im) && color >= gdImageColorsTotal(im))) {
+> + return NULL;
+> + }
 
-Rob
+> https://github.com/libgd/libgd/commit/6ff72ae40c7c20ece939afb362d98cc37f4a1c96
+> tests/gdimagecrop/php_bug_72494.c
+> 
+> im = gdImageCreate(50, 50);
+> gdImageCropThreshold(im, 1337, 0);
+> gdImageDestroy(im);
+
+Use CVE-2016-6128.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXdHSeAAoJEHb/MwWLVhi2B5MQAJkNv180fmdDbPu+uH4oBRme
+uWdpmquumYvoNsLAL0+u605QiaEh87S5XIBbgAyY7IaXf3K3rREcz9vrhRd7dciP
+c20hx1lh6ZIdP9BH2CidC6rbjWrSatzrngi25d8x2EEWH3nyvG8HA/hGjxpOmO6W
+eeJO6FRrxc+LkLYRthfNUtL2r23AbrMN0v0BMPNdNLDoaLBd1xOL6A+IA3P5v67R
+XEZ2xhOk73pI4I7UJKfgpmtB0OgIjQjxaBLHBbhQqiug2E63W2SgqUPvb3cfyQx5
+FaU0EmnTo3Ampm5a1kHsccOQzZ/Na+CSjlMltko06Cvx/9Cn6xS3xRFLCyG4gEQ8
+PPvh/qjvSIwTyXqrYYwGlDx9UdiLa25PmJ9DcV8yPYbYShZy7eoKeqCIyyiWJLPZ
+D5WAL6DhVFz12tpCD287hlmyOziObo5dsVGyPx6FFPmHhmyjJ0gVqsaFVJWFT7Kd
+DfLIFn4D4/aCozhr9PZSEa2ebYbb9HP0deEFhfT6u+cjuhtPNREyZxIDgfPHFFut
+nlzOh2wVn4O3i+y3/JIEz+pzqOqMtIcmOs+ZpNyMw0OLTzuu+dad5JyOsz96pNES
+E1y7sbP6Ms0D9yS1dmBm41rFwXfLC2bhBctmgO4quK+2wuAOeTIgiRdhUyOTeW53
+R0kiYe8gCyZIoAhodAWN
+=/4Kb
+-----END PGP SIGNATURE-----
