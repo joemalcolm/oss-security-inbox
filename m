@@ -1,56 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/23/5
-Message-ID: <CAH8yC8k=JmgBjwV2HD_tmyg7-U-9HPLmeJMAKPk2TBm5KrsfKw@mail.gmail.com>
-Date: Thu, 22 Sep 2016 21:39:41 -0400
-From: Jeffrey Walton <noloader@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: John Byrd <jbyrd@...anticsoftware.com>
-Subject: CVE Assignment for Crypto++ and "AES and incorrect argument to _freea() under Microsoft compilers"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/30/3
+Message-ID: <5774BEE6.3090203@cock.li>
+Date: Thu, 30 Jun 2016 06:40:38 +0000
+From: "ncl@...k.li" <ncl@...k.li>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: Re: CVE request: Heap-based buffer overflow in LibTIFF when using the PixarLog compression format
 Content-Type: text/plain; charset=utf-8
 
-CVE assignment, please.
+cve-assign@...re.org:
+>> heap-based buffer overflow in
+>> LibTIFF in the file libtiff/tif_pixarlog.c. The vulnerability allows an
+>> attacker to control the size of the allocated heap-buffer while
+>> independently controlling the data to be written to the buffer with no
+>> restrictions on the size of the written data.
+> 
+>> revision 1.44
+>> date: 2016-06-28 17:12:19 +0200; author: erouault; commitid: 2SqWSFG5a8Ewffcz;
+> 
+>> * libtiff/tif_pixarlog.c: fix potential buffer write overrun in
+>> PixarLogDecode() on corrupted/unexpected images (reported by Mathias
+>> Svensson)
+> 
+> Use CVE-2016-5875.
 
-=== INTRODUCTION ===
+I think this is a duplicate with CVE-2016-5320 and CVE-2016-5314.
 
-John Byrd reported a crash in Crypto++'s AES implementation under
-Microsoft compilers due to use of `_malloca`, `AliasedWithTables` and
-`_freea`. Crypto++ can potentially free the wrong pointer when the
-pointer is adjusted to flush cache lines to avoid Bernstein's cache
-timing attacks.
-
-=== SCOPE ===
-
-The bug only affects Crypto++ 5.6.4 and was introduced at
-http://github.com/weidai11/cryptopp/commit/823bc93357da32a3a4a2b71b9915a4e124839d18.
-
-The bug is specific to Windows and Microsoft compilers because its
-guarded by `_MSC_VER`.
-
-The bug does not affect Unix and Linux; and does not affect
-non-Microsoft compilers on Windows, like ICC and Borland.
-
-=== DETAILS ===
-
-The code in question asks `_malloca` for a block of memory. The code
-also over-commits the size and adjust the pointer to a 256-byte
-boundary. The pointer is sent `AliasedWithTables` to flush cache
-lines. If `AliasedWithTables` cannot perform the flush, then it
-returns false. Upon the false return, the code reallocates, adjusts
-the pointer and calls `AliasedWithTables` again. Eventually the call
-succeeds. After the code in question completes, it frees the adjusted
-pointer and not the original pointer using `_freea`.
-
-`alloca` is on Microsoft's [SDLC banned function list
-(http://msdn.microsoft.com/en-us/library/bb288454.aspx). The code was
-migrated from `alloca`  to `_malloca` for C&A purposes.
-
-`_malloca` and `_freea` are Microsoft SDLC functions. Microsoft
-sometimes uses the heap rather than the stack for `_malloca`, and
-that's the reason `_freea` is needed.
-
-=== CORRECTION ===
-
-The issue is being tracked at https://github.com/weidai11/cryptopp/issues/302.
-
-The code will be fixed by using the correct pointer. The fix will be
-pushed within about two weeks along with CVE-2016-7420.
+CVE-2016-5875 (buffer overrun in PixarLogDecode()) is CVE-2016-5314
+(PixarLogDecode() out-of-bound writes) which causes CVE-2016-5320
+(rgb2ycbcr command execution).
