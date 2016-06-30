@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["970" "Friday" "23" "July" "2021" "14:39:33" "-0600" "Mats Wichmann" "mats@wichmann.us" nil "23" "Re: [oss-security] ipython3 may execute code from the current working directory" nil nil nil "7" nil nil (number mark "U       mats@wichman Jul 23   23/970   " thread-indent "\"Re: [oss-security] ipython3 may execute code from the current working directory\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] ipython3 may execute code from the current working directory" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["264" "Thursday" "30" "June" "2016" "15:42:24" "+0200" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdT2ie2cp7VShA-VqafyiMn-oDsv_0dGtXP-Xcf82LWihA@mail.gmail.com>" "10" "[oss-security] CVE Request: A read out-of-bands was found in the parsing of TGA files using libgd" nil nil nil "6" "2016063013:42:24" "[oss-security] CVE Request: A read out-of-bands was found in the parsing of TGA files using libgd" (number mark "U       gustavo.grie Jun 30   10/264   " thread-indent "\"[oss-security] CVE Request: A read out-of-bands was found in the parsing of TGA files using libgd\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19971 invoked by uid 550); 23 Jul 2021 20:42:09 -0000
+Received: (qmail 17856 invoked by uid 550); 30 Jun 2016 13:42:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,54 +12,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18233 invoked from network); 23 Jul 2021 20:39:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:references:subject:message-id:date:mime-version:in-reply-to
-	:content-type:content-transfer-encoding; s=sasl; bh=Hn9lSBTQixcy
-	lVDo6pcrJ1IMkNPKpfaiUNZSXIUj4eg=; b=LR9nq9U/r07Nc9ElSXgoEdxy7JXO
-	1pp4qbWPlfCid9U/HONwBOIEW+VaW2Bvl0hxC4073N9iOwomU1nM6eZ5pcNoDhn4
-	aNOjHUI7Gn5Hi3OU2hp7AJUF936I/olapMN18H5gya7Tj8Al/8mmSiQX07elT3cd
-	5T0nq2fWgcA2bvc=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=wichmann.us;
- h=from:to:references:subject:message-id:date:mime-version:in-reply-to:content-type:content-transfer-encoding; s=2018-07.pbsmtp; bh=AqgJ1amydBDqGvtzJKYy4kCnjl7Ai29irR+ruO3l7XM=; b=XQnkv6fOgzXgF8oUnuy2lLox89QHll1+qNSNUXEbaLBkVEVU0J52ixENOAlGnwM0s2HbS+fv9BigcpBqCAselbsr+oq/a/sJKYRxzfM965KwldP0ec3PdXZQWYaUtbEeWrfkMx5RoV4nVrsNVhCzjytIEOvyPzj1t5phJNcszoY=
-From: Mats Wichmann <mats@wichmann.us>
-To: oss-security@lists.openwall.com
-References: <CAGUWgD9MsQts5_jV9=nr8X6mwZyW-NU2JzYnosdMqQ0G06nH6w@mail.gmail.com>
- <20210722113545.hewzinrjmy7jon6c@jwilk.net>
-Message-ID: <85b3215f-530e-a698-ac60-57a03763fd3b@wichmann.us>
-Date: Fri, 23 Jul 2021 14:39:33 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+Received: (qmail 17838 invoked from network); 30 Jun 2016 13:42:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=g/AdUObuQUvKcuSLxYd3/QUKf9Da1NmV+vfccG614+U=;
+        b=LlX7i9kc8MX7ce12JJOR4R3zLgwCk9DTwzJ5ceAkPqj0AzWZPGDbkIPe++EfaCW1Re
+         XWIVd84znFYeY6ajLfdVRXUroqe5PqK+P4zcbey0s7P2WaTHkAUVceoPrIV9BGLYTAGw
+         fqoWp23aJByryV3oke9llt+yk8sEzpRnaCBO2xvw2azFnuASWkAXM2hCdeTp953lzwCD
+         J82ikjR6P4BdXL4NBObPcGmNP/2X/hYVD7YA/yu8gJvnHVhGNLlOF7HgJUIfTA0aGiWM
+         T1emPc98lS6srF6MZc6EwgrsDRsK2Qfv0r/gagFKlY67vk3qLCeDC4fsXmkx5WYltCzd
+         r6Tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=g/AdUObuQUvKcuSLxYd3/QUKf9Da1NmV+vfccG614+U=;
+        b=fxeA470s5zHsPr2UD6qK+HjbJdNjyPSOOuCPe5CwXmmYCHoSQNqQlAJsELkVwlGU1g
+         adgStkTIWFXuyrCvZl//ihxN9a+uM+Og6+ImQMwPtfrOvlJnJ3eY5sQ+6ZRywuQNr71t
+         2m0Zk6/Oklf0lyGYuib8fcJ+08y6O7ro5ishf2pbMqkGpHT42Xj50YY7PgtXuGQR6W4D
+         M2Y19jiTR7AWbDuEbqOJ/uI1lYd3Jn3elkgouTkZ1M+6MKt69u7QGi9ds0f+sRfdn3CU
+         XaEjoKj/mJHvFMHFovTh8Q8/5yw+tTv3WVsaZndGtpXfdCDixkEgzyTeKWldaIbNFShN
+         5TUA==
+X-Gm-Message-State: ALyK8tIs7/J0DjOuhcy2uJhpYzLh8Tc+8lDJdPv+ZkobBdgFJ4z8YM+tpgFChg2FeIlTNwvnrvE/ua4wTr5vnA==
+X-Received: by 10.107.137.95 with SMTP id l92mr15026863iod.177.1467294144742;
+ Thu, 30 Jun 2016 06:42:24 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20210722113545.hewzinrjmy7jon6c@jwilk.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-X-Pobox-Relay-ID: 
- 184DA886-EBF6-11EB-9BC5-FA9E2DDBB1FC-81526775!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] ipython3 may execute code from the current working
- directory
+From: Gustavo Grieco <gustavo.grieco@gmail.com>
+Date: Thu, 30 Jun 2016 15:42:24 +0200
+Message-ID: <CACn5sdT2ie2cp7VShA-VqafyiMn-oDsv_0dGtXP-Xcf82LWihA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] CVE Request: A read out-of-bands was found in the parsing of TGA
+ files using libgd
 
+Hi,
 
-On 7/22/21 5:35 AM, Jakub Wilk wrote:
-> * Georgi Guninski <gguninski@gmail.com>, 2021-07-22, 11:52:
->> Summary: under certain circumstances, ipython3 may execute code from=20
->> the current working directory.
->=20
-> Looks like this might be intentional? Or at least there's an option to=20
-> turn off this behavior:
->=20
-> https://github.com/ipython/ipython/blob/7.25.0/IPython/core/shellapp.py#L=
-219=20
+A read out-of-bands was found in the parsing of TGA files using the
+last revision of libgd (a6a0e7f) but older versions can be affected. A
+reproducer and some technical details are available here:
 
-normally (cpython), an empty string in sys.path doesn't mean "current=20
-directory", it means "script directory", the directory the script you're=20
-running is found in [1].  that only falls back to current directory in=20
-case there is no script directory - which happens if you invoke the=20
-interpreter interactively . So maybe ipython isn't interpreting this the=20
-same way?
+https://github.com/libgd/libgd/issues/247
 
-there have been more than one security concern about the way this makes=20
-it possible for untrusted modules to get loaded.
-
-[1]  https://docs.python.org/3/library/sys.html#sys.path
+Regards,
+Gustavo.
