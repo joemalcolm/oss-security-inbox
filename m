@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2281" "Tuesday" "16" "February" "2016" "09:45:01" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160216144501.833566C08BD@smtpvmsrv1.mitre.org>" "57" "[oss-security] Re: CVE request: Squid HTTP Caching Proxy 3.5.13, 4.0.4, 4.0.5 denial of service" nil nil nil "2" "2016021614:45:01" "[oss-security] Re: CVE request: Squid HTTP Caching Proxy 3.5.13, 4.0.4, 4.0.5 denial of service" (number mark "U       cve-assign@m Feb 16   57/2281  " thread-indent "\"[oss-security] Re: CVE request: Squid HTTP Caching Proxy 3.5.13, 4.0.4, 4.0.5 denial of service\"\n") "<56C27FE3.5030104@treenet.co.nz>" ("<56C27FE3.5030104@treenet.co.nz>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1448" "Thursday" "30" "June" "2016" "14:14:25" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160630121425.GA17822@eldamar.local>" "46" "Re: [oss-security] Re: CVE Request: libgd: Invalid color index is not properly handled leading to denial of service (crash)" nil nil nil "6" "2016063012:14:25" "[oss-security] Re: CVE Request: libgd: Invalid color index is not properly handled leading to denial of service (crash)" (number mark "U       carnil@debia Jun 30   46/1448  " thread-indent "\"Re: [oss-security] Re: CVE Request: libgd: Invalid color index is not properly handled leading to denial of service (crash)\"\n") "<20160630012758.B2D89EBC15E@smtpvmsrv1.mitre.org>" ("<20160629194243.GA12097@eldamar.local>" "<20160630012758.B2D89EBC15E@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26411 invoked by uid 550); 16 Feb 2016 14:45:15 -0000
+Received: (qmail 25810 invoked by uid 550); 30 Jun 2016 12:14:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,69 +12,91 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26389 invoked from network); 16 Feb 2016 14:45:14 -0000
-From: cve-assign@mitre.org
-To: squid3@treenet.co.nz
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <56C27FE3.5030104@treenet.co.nz>
-Message-Id: <20160216144501.833566C08BD@smtpvmsrv1.mitre.org>
-Date: Tue, 16 Feb 2016 09:45:01 -0500 (EST)
-Subject: [oss-security] Re: CVE request: Squid HTTP Caching Proxy 3.5.13, 4.0.4, 4.0.5 denial of service
+Received: (qmail 25786 invoked from network); 30 Jun 2016 12:14:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=dufYdMkb+Lh6PnL2Yoi0inknZ20zrHpfd6h/VVsHCdo=;
+        b=YNZc5h59i+q8rnF5qawGwGAOXSFkpC5TaB6Dw8lTQ/XG2Mcc+qRO/AgZppzUgOkTb/
+         U7yNAgJvFHNW6xc1vVLNN0M3bTcxLL0b6WncjR5px7ObCn3nUtDyg4wFQ7dS8G2AUiF7
+         EA71m4g6620YiRHSUZgzTLwldrlkakv6xiK+PsArOKF6p5PLvc25PT+gT05baS8gdW5a
+         ACYjuq1ZcdfivftMolunZV3EjXSUA+L0CPCPtk2SSOiZDJJQepm2ZHak/CbyKHtw3UY/
+         jPWZnqyeMdWMJ9uEtQ9VtQWiUEiFHhtp6cAY9X18EgJoFg1moe+Jo2hmcflFcRqC8/AH
+         UuOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=dufYdMkb+Lh6PnL2Yoi0inknZ20zrHpfd6h/VVsHCdo=;
+        b=hFuo3OtRhdgsxe7gYFH7ndB+KcLAsd8tGzTGYQ+xXowlGKGrpP5mJqQskBKH2ykDzx
+         oJJFHrnR+VV1rysxWpU8CLbYMTQ72tflJfdEYAxlOiwGN4vlIrkUwWoU6KLh1ODFUCaN
+         HqrpBaYI55qNq+6T3SAjD1RSF98nY+iZq0Iy7z79dN77fK2/zbwxZyfAe+qu2cL/7tQR
+         XHYeMGfl7RuIJ8SWOksjFgOoZyrqwhChrPSMEXZaNbVQFug4JaOkcS0NoR05/ZIQj1G2
+         lFAnroxHP0rDPwCrpfUJMwMnwxmqcTiaQ87UyThUFm5vwtn566YHRcKBPlbB9FGPjrkU
+         FDnw==
+X-Gm-Message-State: ALyK8tJo84QIlbxIuP8cl74vbNdtalerwtWno3FsNeRaE8modGQ8lyFgT8Gjld0KqBZjCA==
+X-Received: by 10.194.5.40 with SMTP id p8mr13642367wjp.56.1467288866755;
+        Thu, 30 Jun 2016 05:14:26 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Thu, 30 Jun 2016 14:14:25 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Message-ID: <20160630121425.GA17822@eldamar.local>
+References: <20160629194243.GA12097@eldamar.local>
+ <20160630012758.B2D89EBC15E@smtpvmsrv1.mitre.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20160630012758.B2D89EBC15E@smtpvmsrv1.mitre.org>
+User-Agent: Mutt/1.6.0 (2016-04-01)
+Subject: Re: [oss-security] Re: CVE Request: libgd: Invalid color index is
+ not properly handled leading to denial of service (crash)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> http://www.squid-cache.org/Advisories/SQUID-2016_1.txt
-
-> Patch for 3.5 is
-> <http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13981.patch>.
+On Wed, Jun 29, 2016 at 09:27:58PM -0400, cve-assign@mitre.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
 > 
-> Patch for 4.0 is
-> <http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13981.patch>.
-
-Is this correct or do you mean the 4.0 patch is
-http://www.squid-cache.org/Versions/v4/changesets/squid-4-14538.patch instead?
-
-
-> A remotely triggerable denial of service has been found in Squid
-> proxy. The proxy incorrectly handles server TLS failure which almost
-> always results in crashing the entire proxy. Denying service for all
-> other clients using it.
-
->   Bug 4437: Fix Segfault on Certain SSL Handshake Errors
->   
->   Squid after an unsuccessful try to connect to the remote server may make two
->   concurrent retries to connect to the remote SSL server, calling twice the
->   FwdState::retryOrBail() method, which may result to unexpected behaviour.
->   
->   Prevent this by just closing the connection to the remote SSL server inside
->   FwdState::connectedToPeer method on error and instead of calling the
->   FwdState::retryOrBail method, just allow comm_close handler to retry the
->   connection if required.
+> > There is currently PHP upstream bug which is still marked as private:
+> > 
+> > https://bugs.php.net/bug.php?id=72494
+> > 
+> > But the libgd project references the following set of commits to this
+> > bug report:
+> > 
+> > https://github.com/libgd/libgd/compare/3fe0a71...6ff72ae
+> > 
+> > indicating that libgd does not properly handle invalid color index,
+> > which could lead to a denial of service against applications using the
+> > libgd library (in particular thus PHP).
 > 
-> src/FwdState.cc
+> > https://github.com/libgd/libgd/commit/1ccfe21e14c4d18336f9da8515cd17db88c3de61
+> > gd_crop.c
+> > gdImageCropThreshold
+> > 
+> > + if (color < 0 || (!gdImageTrueColor(im) && color >= gdImageColorsTotal(im))) {
+> > + return NULL;
+> > + }
+> 
+> > https://github.com/libgd/libgd/commit/6ff72ae40c7c20ece939afb362d98cc37f4a1c96
+> > tests/gdimagecrop/php_bug_72494.c
+> > 
+> > im = gdImageCreate(50, 50);
+> > gdImageCropThreshold(im, 1337, 0);
+> > gdImageDestroy(im);
+> 
+> Use CVE-2016-6128.
 
-Use CVE-2016-2390.
+Thanks for the CVE assignment. Just for the record, my above commit
+range stated should have better been written as
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+https://github.com/libgd/libgd/compare/3fe0a7128bac5000fdcfab888bd2a75ec0c9447d...fd623025505e87bba7ec8555eeb72dae4fb0afd
 
-iQIcBAEBCAAGBQJWwzVEAAoJEL54rhJi8gl5CEcQAJnr/8JJbM4e1Q/o8w3AVYk0
-FUPc250Qj0z4l5Nq8j8OSx5GsLIx9uVe3NnLe50uPYlF0bdM+AEEbi4e6EJSvtdx
-772jj6N/QArkrbf4qTKWtXS812mxLW6CPewOIk+ldMeAKMKUIh3ePuST3RByxJqi
-3oZGzyQbo2MoDQgXVRQFH6uXo1+4dHqmZfOQjLiaXNEFark248mK+DELCM5P5tB6
-F9ATtcaXuqxj5jwGKm9gZUk5uDP9Ed15Wn020fi5saWDYiFJXF3XeaeURzvTnrS2
-AaKgC0Kvw6gwOams+FIxp8NQtP4XSZMefqRNeoAZdeuV76xZOXWLV9ki2RAEIsWF
-p8qfV1bvdY/+seQ4QUqkm/VmRKc3gHecBSSsnmV+YNa213fzcGXYBfP2nTIFTgwF
-cQ7ycLbMEAGwHWava8t6TJF8mE1+oWNejKBwOMPkJMI9v+mCe364V401+KIYms+a
-6qSbk3iuBoHVm3H7Z1ikcJRW92XKX9LaXTVx5JH5B9p+DRryB9u+zgC8VKAWLOAn
-5t4W3JrliAZluSpc7++6TTqOuFOBEsfJ6l66UEv5Xgoj3BhRBEFkflbYedOLfCap
-apjOXQhV5G1H48Pm6bVStDyRE3JQEbxefGkCwOJDAYOWVqULQ0yACpmng14TjQOR
-RVX4OJ1VZboeNcSMFh4H
-=evrD
------END PGP SIGNATURE-----
+including
+https://github.com/libgd/libgd/commit/a0f9f8f7bd0d3a6c6afd6d180b8e75d93aadddfa
+
+Regards,
+Salvatore
