@@ -1,58 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/06/5
-Message-Id: <20160206205039.13815332087@smtpvbsrv1.mitre.org>
-Date: Sat,  6 Feb 2016 15:50:39 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Horde: Two cross-site scripting vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/30/6
+Message-ID: <CACn5sdT2ie2cp7VShA-VqafyiMn-oDsv_0dGtXP-Xcf82LWihA@mail.gmail.com>
+Date: Thu, 30 Jun 2016 15:42:24 +0200
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: A read out-of-bands was found in the parsing of TGA files using libgd
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> Cross-site scripting in XSS in Horde_Core_VarRenderer_Html:
-> https://github.com/horde/horde/commit/11d74fa5a22fe626c5e5a010b703cd46a136f253
-> https://bugs.debian.org/813590
+A read out-of-bands was found in the parsing of TGA files using the
+last revision of libgd (a6a0e7f) but older versions can be affected. A
+reproducer and some technical details are available here:
 
-> horde/framework/Core/lib/Horde/Core/Ui/VarRenderer/Html.php
-> _renderVarInput_number
+https://github.com/libgd/libgd/issues/247
 
-Use CVE-2015-8807.
-
-
-> Reflected cross-site scripting
-> https://bugs.horde.org/ticket/14213
-> https://github.com/horde/horde/commit/f03301cf6edcca57121a15e80014c4d0f29d99a0
-> https://github.com/horde/horde/commit/ab07a1b447de34e13983b4d7ceb18b58c3a358d8
-> https://bugs.debian.org/813573
-
-> menu bar
-> horde/templates/topbar/_menubar.html.php
-
-> searchfield=[XSS]
-
-Use CVE-2016-2228.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWtlwPAAoJEL54rhJi8gl5dAIP/Rfox2KrvHpKw+/z/gdXQrsz
-M0zWsVZZtAt4mhK6AIEABbuhgSMFTyFtoeYas1uP6ULseRT3LMT0NG0d4Ekm11MA
-/s6aAhMAo1sY57CPhfFubScgG360vCOp/7g0J41m9aC7PyAiZ6fAbXjoc/gbwwzs
-jk3ZrC5L6hgDRyFUojq0uIiDKJIlzdykBFHOwtGYSC7IRvNpktcQBQpqnSDR89BK
-Lq8DMJOW9lipjs0OlTSiy/MXPXc/OnLPhQT1GxKtVIJYz0fg8xehs7iSmTvbko79
-IFD3qX9g35+yDPeEP/vQ7u892SogGD1au7lGo1AzERQbRmUaswJmXTdwnzBJgLmC
-DNgbBEyXFq30lXQRsgYKu0Le1tovgtnNOrjBkv6J21+bcW0C6xfx5p4hemcsjiK2
-mAiF1zbq2JAok9IUSC1jfzBHqdqkMopJ6v9WtteRUjKsCVswllz7IcfF/cua/UiY
-0dF8hGDCvsl6EbHv6e3dYkvR05A21i29E3IUXeV+cWKzrCOqyEqyk07TfMUUw8xS
-8EQ+HPm7XH1LsS9nYV9PR2BBgq0MxFLKs/8c1CtLfIcG0rDVFuqha1ji9FN1soKJ
-1KXHLTYxCyh3VsQbdmE96YN2ISisbrjzbrkL3bnBMY7xp3ZnhD6OPyEQK5Mt9cux
-vrzTo5RX4q7QC10RjC9u
-=nKGn
------END PGP SIGNATURE-----
+Regards,
+Gustavo.
