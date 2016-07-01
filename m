@@ -1,43 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/24/5
-Message-ID: <alpine.LFD.2.20.1605241511470.26750@wniryva>
-Date: Tue, 24 May 2016 15:40:50 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: "Daniel P. Berrange" <berrange@...hat.com>
-Subject: CVE-2014-3672 libvirt: DoS via excessive logging 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/01/4
+Message-ID: <CAK=Phk5nKihccv7WS8Wi8x7AbSDU4Osk2-Z=VF-avbCGqQ6TGA@mail.gmail.com>
+Date: Fri, 1 Jul 2016 18:12:46 -0400
+From: Sylvain Corlay <sylvain.corlay@...il.com>
+To: oss-security@...ts.openwall.com, Fernando Perez <fperez@....gov>,  Matthias Bussonnier <mbussonnier@...keley.edu>, Jamie Whitacre <whitacre@...keley.edu>
+Subject: CVE Request: ipywidgets executes untrusted JavaScript
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+*Description*
 
-A while back, Mr Andrew Sorensen reported a Qemu logging issue wherein Libvirt 
-OR Xen directed 'stderr' of Qemu to a log file on the host.
+ipywidgets version 5.1.5 (and the companion package widgetsnbextension
+1.2.3) fixes a security vulnerability which affects the usage of ipywidgets
+in conjunction with the Jupyter Notebook. (The GitHub repository for the
+project is https://github.com/ipython/ipywidgets)
 
-This can be easily exploited by a user inside guest to flood the log file with 
-endless messages, resulting in a DoS situation on the host, affecting other 
-services and guests alike.
+*Affected versions*
 
-'CVE-2014-3672' was assigned to it by Red Hat Inc.
+The affected versions of ipywidgets are:
 
-Until recently there was no remedy in sight, but quoting Mr Daniel P Berrange 
-of libvirt
+ipywidgets version 5.0.0 ≤ V ≤ 5.1.4 (and widgetsnbextension < 1.2.3), …
 
-   "Since libvirt version 1.3.3, libvirt has 'virtlogd' daemon running. The
-    QEMU stdout/err are no longer connected directly to a file on disk, instead
-    they go to a pipe connected to virtlogd. virtlogd only allows 128 kb of
-    data to be written before rolling over the logs, and only keeps 3 backups,
-    so there is no longer an uncontrolled denial of service.
+Only users who installed ipywidgets using pip or from source on the GitHub
+repository are affected.
 
-    With QEMU 2.6, it is further possible to use virtlogd in association with
-    QEMU serial ports that need to log to a file, for the same reason."
+Anaconda users are unaffected because the vulnerable version of ipywidget
+has never been released to the default conda channel.
 
-Upstream patch:
----------------
-   -> https://libvirt.org/git/?p=libvirt.git;a=commit;h=0d968ad715475a1660779bcdd2c5b38ad63db4cf
+*Resolution*
 
-Note: It's probably not feasible to back port this solution to older versions.
+We recently released ipywidgets version 5.1.5 (widgetsnbextension version
+1.2.3). You can check whether your system is affected by running the
+following command:
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+   >>> from distutils.version import LooseVersion as V
+   >>> import ipywidgets
+   >>> if V('5.0.0') <= V(ipywidgets.__version__) < V('5.1.5'):
+   >>>     print("Upgrade ipywidgets to 5.1.5")
+
+If your system is vulnerable, you will see the following output:
+
+    Upgrade ipywidgets to 5.1.5
+
+If your system is vulnerable please upgrade to ipywidgets version 5.1.5.
+Use the following command to install:
+
+   $ pip install "ipywidgets>=5.1.5"
+
+or
+
+   $ conda install "ipywidgets>=5.1.5"
+
+*Technical details*
+
+The vulnerability was discovered following an investigation of a potential
+vulnerability reported by Brian Granger to the ipython-security mailing
+list (security@...thon.org) on May 5.
+
+The reason for such behavior was determined on May 5 by Matthias Bussonnier.
+
+A fix was proposed written and reviewed, then [merged](
+https://github.com/ipython/ipywidgets/pull/591) into the development branch
+on May 20, and a non vulnerable version released on May 25.
+
+A widget snapshotting feature introduced in ipywidgets 5.0.0 (
+https://github.com/ipython/ipywidgets/pull/314/) allowed untrusted
+javascript code to execute in an untrusted notebook on loading and saving
+of a notebook.  A well crafted notebook could execute arbitrary code with
+the rights of the current user in the context of the page, the notebook
+server, and available kernels.
+
+We recommend immediate upgrade of the ipywidgets package.
+
+There is no simple configuration option that could mitigate the system for
+vulnerability. The user must upgrade to ipywidget version 5.1.5 or
+downgrade to 4.x.
+
+*Future Plan*
+
+The security issue resulted from the seemingly harmless combination of
+calls:
+
+    json = cell.get_json()
+    json = update_json(json)
+    cell.clear_output()
+    cell.from_json()
+
+The clear_output()  method has as a consequence to mark the cell as trusted
+(as it has no output that can potentially execute javascript). This is
+followed by the next call which can trigger JavaScript execution in the
+page context.
+
+We plan on improving the notebook API so that clear_output() does not
+change the trusted status of a cell (or a notebook), to prevent mistakes
+like this from having security consequences. This will lead to the slight
+behavior change that an empty cell with no output can be untrusted.
+
+We learned that we are not completely ready for fast release of security
+fixes. The time from vulnerability discovery to available fix, release, and
+announcement can and should be shorter.
+
+We encourage users who find possible security issues to notify
+security@...thon.org.
+
+Thanks!
+
+The Jupyter team
+
