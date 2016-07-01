@@ -1,130 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/17/2
-Message-ID: <20160617145146.710ad5de@pc1>
-Date: Fri, 17 Jun 2016 14:51:46 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/01/1
+Message-ID: <a60e175c-5d17-9a6e-7cc6-31e0e6ae7dcb@suse.com>
+Date: Fri, 1 Jul 2016 19:46:27 +0200
+From: Andreas Stieger <astieger@...e.com>
 To: oss-security@...ts.openwall.com
 Cc: cve-assign@...re.org
-Subject: Many invalid memory access issues in libarchive
+Subject: SQLite Tempdir Selection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-https://blog.fuzzing-project.org/47-Many-invalid-memory-access-issues-in-libarchive.html
+Posted on FD:
+> KL-001-2016-003 : SQLite Tempdir Selection Vulnerability
+>
+> Title: SQLite Tempdir Selection Vulnerability
+> Advisory ID: KL-001-2016-003
+> Publication Date: 2016.07.01
+> Publication URL: https://www.korelogic.com/Resources/Advisories/KL-001-2016-003.txt
+>
+>
+> 1. Vulnerability Details
+>
+>      Affected Vendor: SQLite/Hwaci
+>      Affected Product: SQLite
+>      Affected Version: All versions prior to 3.13.0
+>      Platform: UNIX, GNU/Linux
+>      CWE Classification: CWE-379: Creation of Temporary File in Directory
+>                          with Incorrect Permissions
+>      Impact: Data Leakage
+>      Attack vector: Local
 
-libarchive version 3.2.0 (released on April 30th) fixed a large number
-of memory access bugs that I reported to them a while ago.
+Release notes say:
+> Change the temporary directory search algorithm
+> <http://www.sqlite.org/tempfiles.html#tempdir> on Unix to allow
+> directories with write and execute permission, but without read
+> permission, to serve as temporary directories. Apply this same
+> standard to the "." fallback directory. 
 
-https://github.com/libarchive/libarchive/issues/503
-Unclear invalid memory read in CPIO parser
-http://libarchive.github.io/google-code/issue-395/comment-0/crash.cpio
-Sample file
 
-https://github.com/libarchive/libarchive/issues/504
-Null pointer access in RAR parser
-http://libarchive.github.io/google-code/issue-396/comment-0/crash.rar
-Sample file
+The covering commits seem to be:
 
-https://github.com/libarchive/libarchive/issues/505
-Null pointer access in CAB parser
-http://libarchive.github.io/google-code/issue-397/comment-0/segf.cab
-Sample file
+http://www.sqlite.org/cgi/src/info/67985761aa93fb61
+Change the temporary directory search algorithm on unix so that directories with only -wx permission are allowed. And do not allow "." to be returned if it lacks -wx permission. 
 
-https://github.com/libarchive/libarchive/issues/506
-Overlapping memcpy in CAB parser
-http://libarchive.github.io/google-code/issue-398/comment-0/memcpy.cab
-Sample file
+http://www.sqlite.org/cgi/src/info/b38fe522cfc971b3
+Fix the fix to the temporary directory search algorithm so that it continues to return "." as a fallback if that directory has the correct permissions. 
 
-https://github.com/libarchive/libarchive/issues/510
-Heap out of bounds read in LHA/LZH parser
-http://libarchive.github.io/google-code/issue-402/comment-0/bsdtar-invalid-read.lzh
-Sample file
+http://www.sqlite.org/cgi/src/info/614bb709d34e1148
+Fix the temporary directory search algorithm for unix so that it fails gracefully even if all candidate directories are inaccessible. This fixes a bug that was introduced by check-in [9b8fec60d8e].
 
-https://github.com/libarchive/libarchive/issues/511
-Stack out of bounds read in ar parser
-http://libarchive.github.io/google-code/issue-403/comment-0/bsdtar-invalid-read-stack.a
-Sample file
 
-https://github.com/libarchive/libarchive/issues/512
-Global out of bounds read in mtree parser
-http://libarchive.github.io/google-code/issue-404/comment-0/invalid-read-overflow.mtree
-Sample file
+Can a CVE please be assigned for this issue?
 
-https://github.com/libarchive/libarchive/issues/513
-Null pointe access in 7z parser
-http://libarchive.github.io/google-code/issue-405/comment-0/bsdtar-null-ptr.7z
-Sample file
-
-https://github.com/libarchive/libarchive/issues/514
-Unclear crashes in ZIP parser
-http://libarchive.github.io/google-code/issue-406/comment-0/bsdtar-zip-crash-variant1.zip
-Sample file
-
-https://github.com/libarchive/libarchive/issues/515
-Heap out of bounds read in TAR parser
-http://libarchive.github.io/google-code/issue-407/comment-0/tar-heap-overflow.tar
-Sample file
-
-https://github.com/libarchive/libarchive/issues/516
-Unclear invalid memory read in mtree parser
-http://libarchive.github.io/google-code/issue-408/comment-0/read_mtree.mtree
-Sample file
-
-https://github.com/libarchive/libarchive/issues/518
-Null pointer access in RAR parser
-http://libarchive.github.io/google-code/issue-410/comment-0/segfault.rar
-Sample file
-
-https://github.com/libarchive/libarchive/issues/523
-Heap out of bounds heap read read when reading password for malformed
-ZIP
-http://libarchive.github.io/google-code/issue-415/comment-0/pwcrash.zip
-Sample file
-
-https://github.com/libarchive/libarchive/issues/550
-Heap out of bounds read in mtree parser
-https://crashes.fuzzing-project.org/libarchive-oob-process_add_entry.mtree
-Sample file
-
-I also reported a couple of lower severity issues (leaks, hangs,
-undefined behavior issues):
-
-https://github.com/libarchive/libarchive/issues/517
-Memory leak in TAR parser
-
-https://github.com/libarchive/libarchive/issues/522
-Endless loop in ISO parser
-http://libarchive.github.io/google-code/issue-414/comment-0/hang.iso
-Sample file
-
-https://github.com/libarchive/libarchive/issues/539
-Undefined behavior / signed integer overflow in mtree parser
-
-https://github.com/libarchive/libarchive/issues/540
-Use after free in test suite
-
-https://github.com/libarchive/libarchive/issues/547
-Undefined behavior / invalid shiftleft in TAR parser
-https://crashes.fuzzing-project.org/libarchive-undefined-shiftleft
-Sample file
-
-https://github.com/libarchive/libarchive/issues/548
-Undefined behavior / signed integer overflow in TAR parser
-https://crashes.fuzzing-project.org/libarchive-undefined-signed-overflow.tar
-Sample file
-
-Unfortunately one out of bounds heap read bug in the RAR parser (sample
-file) remained unfixed. I hope a fix will find its way into the next
-version. I was interested in making libarchive more robust because once
-all issues are fixed it can serve as a safer alternative to many low
-quality command line tools for various archiving formats.
-https://github.com/libarchive/libarchive/issues/521
-http://libarchive.github.io/google-code/issue-413/comment-0/bsdtar-invalid-read.rar
+Thanks,
+Andreas
 
 
 -- 
-Hanno Böck
-https://hboeck.de/
+Andreas Stieger <astieger@...e.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG Nürnberg)
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
 
-Content of type "application/pgp-signature" skipped
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
