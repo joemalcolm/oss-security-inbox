@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2621" "Saturday" "13" "February" "2016" "23:03:06" "+0100" "Kristian Fiskerstrand" "kristian.fiskerstrand@sumptuouscapital.com" "<56BFA81A.30601@sumptuouscapital.com>" "65" "Re: [oss-security] Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software" "^Date:" nil nil "2" "2016021322:03:06" "[oss-security] Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software" (number mark "        kristian.fis Feb 13   65/2621  " thread-indent "\"Re: [oss-security] Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software\"\n") "<20160213141513.06096f21@pc1>" ("<9d8ff9da-5b07-588e-f2c5-38ba1e46b27c@halfdog.net>" "<20160213141513.06096f21@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3600" "Friday" "1" "July" "2016" "18:12:46" "-0400" "Sylvain Corlay" "sylvain.corlay@gmail.com" "<CAK=Phk5nKihccv7WS8Wi8x7AbSDU4Osk2-Z=VF-avbCGqQ6TGA@mail.gmail.com>" "105" "[oss-security] CVE Request: ipywidgets executes untrusted JavaScript" nil nil nil "7" "2016070122:12:46" "[oss-security] CVE Request: ipywidgets executes untrusted JavaScript" (number mark "U       sylvain.corl Jul  1  105/3600  " thread-indent "\"[oss-security] CVE Request: ipywidgets executes untrusted JavaScript\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27696 invoked by uid 550); 13 Feb 2016 21:56:58 -0000
+Received: (qmail 9537 invoked by uid 550); 1 Jul 2016 22:48:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,111 +11,142 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27678 invoked from network); 13 Feb 2016 21:56:58 -0000
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 21787 invoked from network); 1 Jul 2016 22:12:59 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sumptuouscapital-com.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-type;
-        bh=QJAV5VxJ8wSofYWLBYelGtwUz1Bvzej3TwwQ838GbK0=;
-        b=aJxKHkkWiebCbbC4flv5+FlLemNHJCjb+/XVJotrDcTQ3zo21HjzNk0dRjS29seac4
-         H1KverYN1xSA3CnkFctscNxkMRu5MqYRzbyaWBWEHRAA6lTeKYkb0htTIjCi5YQBZJPu
-         JQGk3n3jl6yEp94RlCsoeiUYj/WF51RbjAUN3VNdv+N8/WnrLpoRRHh6hBVmqa1ispTA
-         aliIIhRVfJbGZU3JZh3eqbBu2nfo4cXxYte9VoU4wTjgipAOHVWcbip/a30WXV7y/ZG/
-         QHfjVrtvhUTiICx9aJcwG5X7s8cVtpojDpFOekPlv572v3yn+R2SORRcFnNTkEz9Y4Uw
-         A3+Q==
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=iPLck+HLB3ct8HOdSJvmU5zp7YJmHFDsHU1Rq0/C90A=;
+        b=uBl5MvgHsocLI1r8EG4Xo1v4SKsQDC0mImAAJBf464DsvCKSSVH75065R8dyCWhG8C
+         w5fdQg1XJPqYmQ/DAZc7uuNFKOp9y7wJLXH2rzM3xW+216U+x5gXuPUV5qI+QZvgGmAk
+         qlQRQtv6rpDznIUAkkT6+8NsUxOqHiD6FA3JsEKMVzdS5OaqP7ISP2DHyRwMBPcBDDrn
+         UhhSuTGtxqID303MyZg7YyvZwT0gWj/4FXzseFUIRZjt0goKW8BXOc8ELC7hN0aL86BI
+         6Yq/isfNJ8oILVLkt3mjiB+LHHLuF8i5GMJenQyrabwa9gscj5VBVUKTa15dMt9EorOR
+         wcAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-type;
-        bh=QJAV5VxJ8wSofYWLBYelGtwUz1Bvzej3TwwQ838GbK0=;
-        b=BW3eAEA5yQTXfE8NxCFXXMw0ryWx7mCQqQaBA9/J8Hd+NKzHjnn9DQtT4E2D85iT5b
-         WepiNaBAr0M8RowJRnMI2siNePafseNvxfX55NRntNqs03p5SCd4zSeKfi72bF8HoRvd
-         pNETTMsxUhXisHwIROkuowtmtpv9eudMwrR9uYBQCzd7hjLQEgJKt7Ux58VvyQyvt7bl
-         ZdBU60esskyrolFRfalAvTx5cwMWHZbB+wvL10j5w9Px+gU9/I8qd15EJdgrXOM9C8Md
-         Wg/pXyT6xfvSXHSwubdAZ0T7+ro3wJkur/Ph6a8l7BvvBNRMmFwgE69a0NPGLNALGbQW
-         hTGg==
-X-Gm-Message-State: AG10YOQfgL7Hz80WkUxQUd1Y64XlaIaqPGj4g3fPRnbzVcSOizRZqx9fEF/ekgkBqVXJYQ==
-X-Received: by 10.25.18.25 with SMTP id h25mr2912036lfi.165.1455400606764;
-        Sat, 13 Feb 2016 13:56:46 -0800 (PST)
-References: <9d8ff9da-5b07-588e-f2c5-38ba1e46b27c@halfdog.net>
- <20160213141513.06096f21@pc1>
-Message-ID: <56BFA81A.30601@sumptuouscapital.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=iPLck+HLB3ct8HOdSJvmU5zp7YJmHFDsHU1Rq0/C90A=;
+        b=Mqsm49YhZB3V86cuvF89oPulmBWzUYmSZhiqR4wyrjDkiS/y6dnEwou+g40lLNfkqH
+         uVzLE0LdA9YiJ7GN4HhMj4q8CkkvO09u3b6+s4iakTMr29ioouIpU5MMb2zDneJdT5OR
+         w22jeNM9DD7juulR+07foDuX8pK4GHZEWGaBfAGK69d72WWr8iVNbzTxWTdX/XZdsFVg
+         oT0ddwPbbaEKXjF3isUIVjSCqOitYNtX9rOUYMsTX0txTk/PWZw2PQ5SgI8wSb7VaGSK
+         xtGlD+WPcr2sauM4vrl3EaifFddHHRQ1O8z/AvjdxQ9fWLl/WXaArb4rqaV1dDkOZ34R
+         1Dew==
+X-Gm-Message-State: ALyK8tKBoIFMs8uUNSCSt129fuxgYCFDp5aEkKuX7jnh9EmBkd8BvVD+XVBcEGcMjyuKx55XlICRwUmaM5C67A==
+X-Received: by 10.36.84.79 with SMTP id t76mr412053ita.63.1467411167254; Fri,
+ 01 Jul 2016 15:12:47 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20160213141513.06096f21@pc1>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="a4bRtLDpJsE0JxpD96jWQRFhwJfgMniGg"
-Date: Sat, 13 Feb 2016 23:03:06 +0100
-From: Kristian Fiskerstrand <kristian.fiskerstrand@sumptuouscapital.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Thoughts about security of Linux distributor
- collaboration platforms, bugtrackers for opensource software
-To: oss-security@lists.openwall.com
+From: Sylvain Corlay <sylvain.corlay@gmail.com>
+Date: Fri, 1 Jul 2016 18:12:46 -0400
+Message-ID: <CAK=Phk5nKihccv7WS8Wi8x7AbSDU4Osk2-Z=VF-avbCGqQ6TGA@mail.gmail.com>
+To: oss-security@lists.openwall.com, Fernando Perez <fperez@lbl.gov>, 
+	Matthias Bussonnier <mbussonnier@berkeley.edu>, Jamie Whitacre <whitacre@berkeley.edu>
+Content-Type: multipart/alternative; boundary=001a1135293a5d1f2305369a4983
+Subject: [oss-security] CVE Request: ipywidgets executes untrusted JavaScript
 
---a4bRtLDpJsE0JxpD96jWQRFhwJfgMniGg
-Content-Type: text/plain; charset=utf-8
+--001a1135293a5d1f2305369a4983
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-On 02/13/2016 02:15 PM, Hanno B=C3=B6ck wrote:
-> On Sat, 13 Feb 2016 05:52:44 +0000 halfdog <me@halfdog.net> wrote:
->=20
->> Hence really critical security material perhaps should not go to
->> such platforms, e.g. Ubuntu Launchpad, or the platform should be
->> modified to send security issues only in encrypted mails without
->> talkative title, members without mail public key registered
->> should get only message "Bug [Number]: Info changed" including
->> the HTTPS link to the issue in the platform.
->=20
-> This is roughly what mozilla does and I like it a lot. They have a
-> bug tracker over https and you can add a PGP key. If you don't add
-> a PGP key and report a security bug you won't get updates via mail=20
-> unencrypted.
->=20
+*Description*
 
-Sadly the bugzilla implementation, or rather the perl module they are
-using for it, is flawed and encrypts to the first public key it
-considers viable [0,1] irrespective of usage flags [2], resulting in
-un-decryptable emails unless modifying the OpenPGP certificate
-presented to secureEmail. I'd really like to see this fixed, but I'm
-not sure if the scope is proper for a project such as GSoC. I actually
-just wrote up a slight summary of such a project on [3]
+ipywidgets version 5.1.5 (and the companion package widgetsnbextension
+1.2.3) fixes a security vulnerability which affects the usage of ipywidgets
+in conjunction with the Jupyter Notebook. (The GitHub repository for the
+project is https://github.com/ipython/ipywidgets)
 
-[0] https://bugzilla.mozilla.org/show_bug.cgi?id=3D790487
-[1] https://github.com/btrott/Crypt-OpenPGP/issues/9
-[2] http://tools.ietf.org/html/rfc4880#section-5.2.3.21
-[3]
-https://download.sumptuouscapital.com/GSoC/perl-bugzilla-openpgp-potential-=
-gsoc-project.txt
+*Affected versions*
 
---=20
-----------------------------
-Kristian Fiskerstrand
-Blog: https://blog.sumptuouscapital.com
-Twitter: @krifisk
-----------------------------
-Public OpenPGP key at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-----------------------------
-Aquila non capit muscas
-The eagle does not hunt flies
+The affected versions of ipywidgets are:
 
+ipywidgets version 5.0.0 =E2=89=A4 V =E2=89=A4 5.1.4 (and widgetsnbextensio=
+n < 1.2.3), =E2=80=A6
 
---a4bRtLDpJsE0JxpD96jWQRFhwJfgMniGg
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Only users who installed ipywidgets using pip or from source on the GitHub
+repository are affected.
 
------BEGIN PGP SIGNATURE-----
+Anaconda users are unaffected because the vulnerable version of ipywidget
+has never been released to the default conda channel.
 
-iQEcBAEBCgAGBQJWv6geAAoJECULev7WN52FUfQIAKEy+r/0K/HWqxKFyzTUdRSF
-N1gncGHLtWWHuMPYmDSHPWb0uJHnPd5RM1C9/N1d6mOLwk9Mf4wfPR6g5LrwtC3j
-XfJSvLEflxAQWaeoyeTgp2Rii7sdCoVxhiij0rDA4oTlZa6YEY+IuGUhOfmZCJFD
-eeyDXa1lnL92BawLCL4Q3ekIhzxfpa5HV4CkbHVili/TXMV/q6RvjTAHG1PSGR2f
-+vaOhcNLBtiRub4aY/uwvsl6HmHbmgaqz+wkP2nM8sS+mnj2Hm4XXVqLeVxdn6SN
-+aNHz2fLesx4L5CkpXUiUkwov4VRuGN8plEkpNluUAh+MRIaqC0KTy0ZnSLD9uc=
-=6NcT
------END PGP SIGNATURE-----
+*Resolution*
 
---a4bRtLDpJsE0JxpD96jWQRFhwJfgMniGg--
+We recently released ipywidgets version 5.1.5 (widgetsnbextension version
+1.2.3). You can check whether your system is affected by running the
+following command:
+
+   >>> from distutils.version import LooseVersion as V
+   >>> import ipywidgets
+   >>> if V('5.0.0') <=3D V(ipywidgets.__version__) < V('5.1.5'):
+   >>>     print("Upgrade ipywidgets to 5.1.5")
+
+If your system is vulnerable, you will see the following output:
+
+    Upgrade ipywidgets to 5.1.5
+
+If your system is vulnerable please upgrade to ipywidgets version 5.1.5.
+Use the following command to install:
+
+   $ pip install "ipywidgets>=3D5.1.5"
+
+or
+
+   $ conda install "ipywidgets>=3D5.1.5"
+
+*Technical details*
+
+The vulnerability was discovered following an investigation of a potential
+vulnerability reported by Brian Granger to the ipython-security mailing
+list (security@ipython.org) on May 5.
+
+The reason for such behavior was determined on May 5 by Matthias Bussonnier.
+
+A fix was proposed written and reviewed, then [merged](
+https://github.com/ipython/ipywidgets/pull/591) into the development branch
+on May 20, and a non vulnerable version released on May 25.
+
+A widget snapshotting feature introduced in ipywidgets 5.0.0 (
+https://github.com/ipython/ipywidgets/pull/314/) allowed untrusted
+javascript code to execute in an untrusted notebook on loading and saving
+of a notebook.  A well crafted notebook could execute arbitrary code with
+the rights of the current user in the context of the page, the notebook
+server, and available kernels.
+
+We recommend immediate upgrade of the ipywidgets package.
+
+There is no simple configuration option that could mitigate the system for
+vulnerability. The user must upgrade to ipywidget version 5.1.5 or
+downgrade to 4.x.
+
+*Future Plan*
+
+The security issue resulted from the seemingly harmless combination of
+calls:
+
+    json =3D cell.get_json()
+    json =3D update_json(json)
+    cell.clear_output()
+    cell.from_json()
+
+The clear_output()  method has as a consequence to mark the cell as trusted
+(as it has no output that can potentially execute javascript). This is
+followed by the next call which can trigger JavaScript execution in the
+page context.
+
+We plan on improving the notebook API so that clear_output() does not
+change the trusted status of a cell (or a notebook), to prevent mistakes
+like this from having security consequences. This will lead to the slight
+behavior change that an empty cell with no output can be untrusted.
+
+We learned that we are not completely ready for fast release of security
+fixes. The time from vulnerability discovery to available fix, release, and
+announcement can and should be shorter.
+
+We encourage users who find possible security issues to notify
+security@ipython.org.
+
+Thanks!
+
+The Jupyter team
+
+--001a1135293a5d1f2305369a4983--
