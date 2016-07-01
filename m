@@ -1,53 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/13/9
-Message-ID: <1880446022.2861488.1476368746117.JavaMail.zimbra@redhat.com>
-Date: Thu, 13 Oct 2016 10:25:46 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
-To: David Howells <dhowells@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/01/2
+Message-Id: <20160701194235.46558EBC4E6@smtpvmsrv1.mitre.org>
+Date: Fri,  1 Jul 2016 15:42:35 -0400 (EDT)
+From: cve-assign@...re.org
+To: astieger@...e.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: SQLite Tempdir Selection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello, David,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Could you, please, tell, if you plan to submit that patch of yours to be merged upstream?
+>> Title: SQLite Tempdir Selection Vulnerability
+>> Publication URL: https://www.korelogic.com/Resources/Advisories/KL-001-2016-003.txt
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+>>      Affected Vendor: SQLite/Hwaci
+>>      Affected Product: SQLite
+>>      Affected Version: All versions prior to 3.13.0
+>>      Platform: UNIX, GNU/Linux
+>>      CWE Classification: CWE-379: Creation of Temporary File in Directory
+>>                          with Incorrect Permissions
+>>      Impact: Data Leakage
+>>      Attack vector: Local
 
+> Release notes say:
+>> Change the temporary directory search algorithm
+>> <http://www.sqlite.org/tempfiles.html#tempdir> on Unix to allow
+>> directories with write and execute permission, but without read
+>> permission, to serve as temporary directories. Apply this same
+>> standard to the "." fallback directory. 
 
------ Original Message -----
-From: "Greg KH" <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Sent: Thursday, October 13, 2016 2:57:17 PM
-Subject: Re: [oss-security] kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)
-
-On Thu, Oct 13, 2016 at 08:46:51AM -0400, Vladis Dronov wrote:
-> Hello,
+> The covering commits seem to be:
 > 
-> It was found that when gcc stack protector is turned on, proc_keys_show() can
-> cause a panic in the Linux kernel due to the stack corruption. This happens
-> because xbuf[] is not big enough to hold a 64-bit timeout value rendered as weeks.
-> 
-> CVE-2016-7042 was assigned to this flaw internally by the Red Hat. Please, use it
-> in the public communications regarding this flaw.
-> 
-> References:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1373966 (patch)
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1373499 (reproducer, patch)
-> 
-> Note: Unfortunately, I'm not sure if the patch was already sent to security@...nel.org
-> or alike by the patch author.
+> http://www.sqlite.org/cgi/src/info/67985761aa93fb61
+> Change the temporary directory search algorithm on unix so that
+> directories with only -wx permission are allowed. And do not allow "."
+> to be returned if it lacks -wx permission.
 
-Nope, I don't think that security@...nel.org was sent the patch, but if
-the maintainer of the subsytem already knows about it (it looks like he
-wrote the patch), then there was no need to let that alias know about
-it, right?
+Use CVE-2016-6153.
 
-Any idea if this is going to be submitted to be merged upstream?
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-thanks,
-
-greg k-h
+iQIcBAEBCAAGBQJXdsdXAAoJEHb/MwWLVhi2gRgP/3Lnd1cuFzM/pI4UqE3SfxPC
+oOPgYhaU4zcAxlmiKVhUdm5CEw5xbW3yvkpALQ5hOByNHCaVzCMmO0uDyQA5AHFF
+J/juDtFoVYBOMODFL0eGqnUGLmoWrpFkCpNHxIUVXHsroGvDACGsTUHVKx6gBrq/
+cWx82JFiCvt0syb2K7bvYdIjsq6QQvWN4J312kjL99D0zvVz+i3S54+8rO/GHS7Q
+//wTcHw7VAbs5mmeAdd77+qfvG57PfrT3bVs3JEYAh5hplHM9u3D4fWfE+dT3lE2
+Uc1kmPtIz3bQO4kpf2JhE0DArMQ3oQK0LdTSD9/Or2SRuY/nICWl2veYTiEP18bb
+oNvnA91s7Lcw9RGYhIDIDb+zcqkD7I6KwUcQkKOybknMyqKNRcKOBvK0lchME/tz
+aRUSTwv9YhorY1+Bfx3JlHBqmBlPBT9t1vPMtBCc0SlDswMat9xWcmBHFSuQfVLP
+y7HYntpVem4U86bKH2+VDkJZq9wkHbXGrWaFa3gSjvXsJibStY6P4ok9Gnz8n1DJ
++3LKycpYvQNUFi7Sh3w9hx5P2Qp74W9V41/ZeY/gNVgclPBO+41M8mGoSsSHs2jj
+DXrFyZcvxCKOY9HH1kICReYG6riyBfinWD/vSOFg6mZdDbgVc/CAh7ja69KkOqSM
+zC6vryife0xRFz+bpu3K
+=InVu
+-----END PGP SIGNATURE-----
