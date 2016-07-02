@@ -1,33 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/31/2
-Message-ID: <20160531125858.2a44a2f3@redhat.com>
-Date: Tue, 31 May 2016 12:58:58 +0200
-From: Stefan Cornelius <scorneli@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: ImageMagick CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/02/1
+Message-ID: <CAFitrpQuqhcLM2ZV9PKfqieHRD+uz+h4Ljd5DSbhiq-Dhvf8LA@mail.gmail.com>
+Date: Sat, 2 Jul 2016 02:15:24 +0100
+From: Robbie Gemmell <robbie@...che.org>
+To: "dev@...d.apache.org" <dev@...d.apache.org>, "users@...d.apache.org" <users@...d.apache.org>, announce@...che.org,  "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: [SECURITY] CVE-2016-4974: Apache Qpid: deserialization of untrusted input while using JMS ObjectMessage
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+[CVE-2016-4974] Apache Qpid: deserialization of untrusted input while
+using JMS ObjectMessage
 
-Can I have some CVEs for some ImageMagick issues:
+Severity: Moderate
 
-1) tga processing issue:
-https://github.com/ImageMagick/ImageMagick/commit/4f68e9661518463fca523c9726bb5d940a2aa6d8
+Vendor: The Apache Software Foundation
 
-2) pict/icon processing issues:
-https://github.com/ImageMagick/ImageMagick/commit/0f6fc2d5bf8f500820c3dbcf0d23ee14f2d9f734
+Versions Affected:
+Qpid AMQP 0-x JMS client 6.0.3 and earlier
+Qpid JMS (AMQP 1.0) client 0.9.0 and earlier
 
-Partial previous request:
-http://seclists.org/oss-sec/2015/q4/45
+Description:
+When applications call getObject() on a consumed JMS ObjectMessage they are
+subject to the behaviour of any object deserialization during the process
+of constructing the body to return. Unless the application has taken outside
+steps to limit the deserialization process, they can't protect against
+input that might try to make undesired use of classes available on the
+application classpath that might be vulnerable to exploitation.
 
-3) ImageMagick,GraphicsMagick: Gnuplot delegate vulnerability allowing
-command injection
-http://git.imagemagick.org/repos/ImageMagick/commit/70a2cf326ed32bedee144b961005
+Mitigation:
+Users using ObjectMessage can upgrade to Qpid AMQP 0-x JMS client
+6.0.4 or Qpid JMS (AMQP 1.0) client 0.10.0 or later, and use the new
+configuration options to whitelist trusted content permitted for
+deserialization. When so configured, attempts to deserialize input
+containing other content will be prevented. Alternatively, users of older
+client releases may utilise other means such as agent-based approach to help
+govern content permitted for deserialization in their application.
 
-4) various other issues, previous request:
-http://seclists.org/oss-sec/2016/q1/398
-
-Thanks,
--- 
-Stefan Cornelius / Red Hat Product Security
+Credit:
+This issue was discovered by Matthias Kaiser of Code White (www.code-white.com)
