@@ -1,44 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/04/6
-Message-ID: <alpine.DEB.2.20.1611040816000.375@tvnag.unkk.fr>
-Date: Fri, 4 Nov 2016 08:27:43 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: cve-assign@...re.org
-cc: robert@...oraproject.org, oss-security@...ts.openwall.com
-Subject: Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/04/3
+Message-ID: <CACn5sdSFtHbu1d45rK4Hi8=Z+KirfOZ+g=gBT5LsCWcxgfnz-w@mail.gmail.com>
+Date: Mon, 4 Jul 2016 21:13:05 +0200
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Browsing and attaching images considered harmful in Linux
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 4 Nov 2016, cve-assign@...re.org wrote:
+Hi,
 
-> In some situations, this would be a site-specific problem at a registry. 
-> Although domain names can have a variety of uses of '-' characters, the 
-> presence of a '-' as both the third character and the fourth character is 
-> often recognized as a special case. Trying to specify xn--strae-oqa.de 
-> directly when seeking a registration is very different from trying to 
-> specify (for example) x--strae-oqa.de or xn-strae-oqa.de.
+I would like to bring the attention of the oss-security list to the
+existence of many security issues in the gdk-pixbuf library and its
+dependencies causing a that attaching a corrupted image file in Linux
+has become a risky business. For instance,  there is a read
+out-of-bounds in librsvg2 (a dependency of gdk-pixbuf used to render
+svg images), which can be easily triggered if you try to attach a svg
+in Firefox. I tested it in Ubuntu 14.04 (x86_64) using the
+corresponding version of librsvg2 (2.40.2-1 with debug symbols) and
+Firefox. To reproduce:
 
-DENIC alledgedly has rules that should prevent separate registrations like in 
-the straße.de case. Still it seems that this particular host name is 
-registered by two different entities unless there's some background juggling 
-that we can't easily see from the outside.
+1. Download and unpack boom.tar.gz somewhere.
+2. gdb --args /usr/lib/firefox/firefox
+3. Execute "run" and try to attach (ctrl+o) the svg file inside boom
+directory in Firefox.
 
-Those policies are obviously not flawless and now we end up in a sutiation 
-where cients implementing different IDNA standards will end up on different 
-servers. I suppose both can also get separate HTTPS certificates by simply 
-using the puny encoded versions of their domain names when asking for them.
+Result:
 
-In addition to the IDNA confusion, I also learned that libidn2 doesn't do the 
-necessary checks so just switching to that as we did in the curl patch for the 
-advisory we're discussing here, is an insuffucient and inferior fix for this 
-problem. We need to a bigger take.
+Program received signal SIGSEGV, Segmentation fault.
+0x00007fffbb7a4c0d in rsvg_pattern_fix_fallback
+(pattern=pattern@...ry=0x7ffffffea110) at rsvg-paint-server.c:645
+645        rsvg-paint-server.c: No such file or directory.
+(gdb) bt
+#0  0x00007fffbb7a4c0d in rsvg_pattern_fix_fallback
+(pattern=pattern@...ry=0x7ffffffea110) at rsvg-paint-server.c:645
+#1  0x00007fffbb7c0650 in _set_source_rsvg_pattern
+(ctx=0x7fffc1672b00, rsvg_pattern=0x7ffffffea110, opacity=<optimized
+out>, bbox=...)
+    at rsvg-cairo-draw.c:195
+#2  0x00007fffbb7c1e4d in rsvg_cairo_render_path (ctx=0x7fffc1672b00,
+path=<optimized out>) at rsvg-cairo-draw.c:526
+#3  0x00007fffbb7bea12 in rsvg_render_path
+(ctx=ctx@...ry=0x7fffc1672b00, path=path@...ry=0x7fffc4708640) at
+rsvg-base.c:1976
+#4  0x00007fffbb7b59c8 in _rsvg_node_rect_draw (self=0x7fffc45c6f50,
+ctx=0x7fffc1672b00, dominate=0) at rsvg-shapes.c:479
+#5  0x00007fffbb7b6503 in rsvg_node_draw (self=0x7fffc45c6f50,
+ctx=0x7fffc1672b00, dominate=<optimized out>) at rsvg-structure.c:69
+#6  0x00007fffbb7b6583 in _rsvg_node_draw_children
+(self=0x7fffc8058560, ctx=0x7fffc1672b00, dominate=0) at
+rsvg-structure.c:87
+#7  0x00007fffbb7b6503 in rsvg_node_draw (self=0x7fffc8058560,
+ctx=0x7fffc1672b00, dominate=<optimized out>) at rsvg-structure.c:69
+#8  0x00007fffbb7b6903 in rsvg_node_svg_draw (self=0x7fffc4915080,
+ctx=0x7fffc1672b00, dominate=<optimized out>) at rsvg-structure.c:323
+#9  0x00007fffbb7b6503 in rsvg_node_draw (self=0x7fffc4915080,
+ctx=0x7fffc1672b00, dominate=<optimized out>) at rsvg-structure.c:69
+#10 0x00007fffbb7c2ac3 in rsvg_handle_render_cairo_sub
+(handle=handle@...ry=0x7fffc8cd3440, cr=cr@...ry=0x7fffd7d58000,
+id=id@...ry=0x0)
+    at rsvg-cairo-render.c:225
+#11 0x00007fffbb7c2ef4 in rsvg_handle_get_pixbuf_sub
+(handle=0x7fffc8cd3440, id=id@...ry=0x0) at rsvg.c:90
+#12 0x00007fffbb7c2f77 in rsvg_handle_get_pixbuf (handle=<optimized
+out>) at rsvg.c:119
+#13 0x00007fffbb9cee46 in gdk_pixbuf__svg_image_stop_load
+(data=0x7fffc50e18e0, error=0x7ffffffea6b8) at io-svg.c:160
+#14 0x00007ffff35d31fb in gdk_pixbuf_loader_close
+(loader=loader@...ry=0x7fffc4424ea0, error=error@...ry=0x0) at
+gdk-pixbuf-loader.c:821
+#15 0x00007ffff35d0e2a in gdk_pixbuf_new_from_file_at_scale
+(filename=0x7fffc4577100
+"/home/g/Work/Code/ef/gdk-pixbuf/svg/overflow-real-reap.svg",
+    width=<optimized out>, height=<optimized out>,
+preserve_aspect_ratio=<optimized out>, error=0x0) at
+gdk-pixbuf-io.c:1372
+#16 0x00007fffeafc7d19 in UpdateFilePreviewWidget
+(file_chooser=0x7fffd9d53a30, preview_widget_voidptr=<optimized out>)
+    at /build/firefox-mh9_e1/firefox-46.0.1+build1/widget/gtk/nsFilePicker.cpp:115
+#17 0x00007ffff25273b8 in g_closure_invoke () from
+/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#18 0x00007ffff2538d3d in ?? () from
+/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0
+...
 
-One. Big. Mess.
+It is interesting to note that rcx looks controllable:
 
-I've suggested curl users to simply *disable* IDN completely in their builds 
-now until we get something better done. To reduce the risk. There's no 
-schedule or plan yet for when "something better" might be ready. I'll admit my 
-energy level for this crap is very low.
+(gdb) x/i $rip
+=> 0x7fffbb7a4c0d <rsvg_pattern_fix_fallback+333>:        testb  $0x4,0xe4(%rcx)
+(gdb) info registers
+...
+rcx            0xe5e5e5e5e5e5e5e5        -1880844493789993499
+...
 
--- 
+Fortunately, this issue is already solved in the last revision of
+librsvg2 (AFAIK, this issue has no CVE, so please MITRE assign one if
+suitable). Nevertheless, I reported such vulnerability to Mozilla more
+than a month ago hoping that they will disable the svg support in the
+open/attach widget. After some discussion, it was marked as WONTFIX.
+While i understand why, i still feel it can be productive to discuss
+this here.
 
-  / daniel.haxx.se
+(the same trick can be used to crash Chrome/Chromium, since the code
+to open/attach an image is almost the same, so this is not a Firefox
+specific issue)
+
+
+Regards,
+Gustavo
+
+Download attachment "boom.tar.gz" of type "application/x-gzip" (745 bytes)
