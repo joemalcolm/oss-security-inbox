@@ -1,48 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/20/11
-Message-ID: <87lh7k5dxs.fsf@alice.fifthhorseman.net>
-Date: Wed, 20 Jan 2016 13:00:15 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Prime example of a can of worms
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/04/1
+Message-Id: <D277D08F-29E7-4DA7-9FF3-F9939B3FA314@gmail.com>
+Date: Mon, 4 Jul 2016 10:12:06 -0500
+From: Brandon Perry <bperry.volatile@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: fulldisclosure@...lists.org
+Subject: Re: [FD] libical 0.47 SEGV on unknown address
 Content-Type: text/plain; charset=utf-8
 
-On Wed 2016-01-20 12:25:42 -0500, Kurt Seifried wrote:
-> Sorry yes, although this also applies equally to keys/etc.
+I have gone ahead and just pushed my fuzzing results to Github. These were found with American Fuzzy Lop.
 
-sure, though i hope we're not in a "few keys" scenario, that would
-definitely be bad :)
+https://github.com/brandonprry/ical-fuzz <https://github.com/brandonprry/ical-fuzz>
 
-> [dkg wrote:]
->> For one, the writeup addresses probabilistic primality tests, but
->> doesn't describe proofs of primality, which are significantly more
->> expensive to generate (and still probably more expensive to verify than
->> a short Miller-Rabin test).  But these proofs provide certainty in a way
->> that probabilistic tests might not.  If we're talking about runtime
->> primality checking when communicating with a potential adversary, are
->> there proofs about the (im)possibility of generating a pseudoprime that
->> is more or less likely to pass a miller-rabin test?
->
-> I looked at this a bit and quite honestly the computational time involved
-> is just to much to be useful, unless we're talking about generating a small
-> set of highly trusted primes. For normal people, this just isn't feasible
-> (witness prime generation taking between less then a second, and more than
-> 10 minutes, nobody wants to wait 10 minutes...).
+While Mozilla lists information leaks as viable for a bug bounty [1], unless it straight up crashes Thunderbird (which heap over reads may or may not do depending on the surrounding memory), it doesn’t seem they will care much and will mark your bugs as sec-low which is not valid for the bug bounty.
 
-right, i'm not suggesting that proof generation be done at runtime, just
-that it is an example of a stronger guarantee than we have for runtime
-checks, and that it *only* applies to the "generating a small set of
-highly-trusted primes" case.
+ASan reports are in the min_crashes folder with .asan extension. Some of the ical files in the raw_queue and raw_crashes were generated using the commented out code in the icaltestparser.c file, which will result in some use-after-frees as well (some of it in the icaltestparser code actually, but not all).
 
-> Agreed, I listed the diversity more as a stop-gap for the cases where
-> people have older hard/software (e.g. Java) that will never support larger
-> primes/keys. At least then you don't get caught in dragnets for the
-> default/commonly used primes.
+You actually can’t compile Thunderbird with ASan at the moment, and haven’t been able to for some time as far as I can tell. I have spent days trying to make this work to no avail. Without this, there won’t be a clean reproduction to crash Thunderbird most likely.
 
-I agree with this analysis, but the chart in the middle of your paper
-makes it looks like the diversity is "best", while the "small set of
-heavily-evaluated primes" (i'm assuming that's what's meant with the
-"few keys" side of the X axis) is merely "good".
+[1] https://www.mozilla.org/en-US/security/client-bug-bounty/ <https://www.mozilla.org/en-US/security/client-bug-bounty/> (Security bug must be a remote exploit, the cause of a privilege escalation, or an information leak)
 
-     --dkg
+
+> On Jun 25, 2016, at 10:41 AM, Brandon Perry <bperry.volatile@...il.com> wrote:
+> 
+>> 
+>> On Jun 25, 2016, at 10:34 AM, Alan Coopersmith <alan.coopersmith@...cle.com <mailto:alan.coopersmith@...cle.com>> wrote:
+>> 
+>> On 06/24/16 06:54 AM, Brandon Perry wrote:
+>>> I am posting this to Full Disclosure/OSS instead of reporting it because I have
+>>> opened a handful of libical bugs in the Mozilla bug tracker, alerted
+>>> security@...illa.org <mailto:security@...illa.org> <mailto:security@...illa.org <mailto:security@...illa.org>>, and worked to show how and
+>>> where to reproduce the bugs in Thunderbird, but Mozilla hasn’t shown any care at
+>>> all about the bugs. Perhaps if I give a sample to the community of the bugs in
+>>> the bug reports, Mozilla will take the bug reports more seriously. This bug
+>>> attached had not been reported yet.
+>> 
+>> Did you report them to libcial upstream?  http://libical.github.io/libical/ <http://libical.github.io/libical/><http://libical.github.io/libical/ <http://libical.github.io/libical/>>
+> 
+> I had initially asked for contact information regarding reporting potentially sensitive security test cases, but after a couple of days, I decided to look into another product that I figured would have more visibility and more power to get things fixed.
+> 
+> https://github.com/libical/libical/issues/235 <https://github.com/libical/libical/issues/235> <https://github.com/libical/libical/issues/235 <https://github.com/libical/libical/issues/235>>
+>> 
+>>> My roommate mentioned Thunderbird being a second-class citizen in the Mozilla
+>>> world, so if this is the case, this should be made explicit in regards to bug
+>>> bounty expectations.
+>> 
+>> While Thunderbird is still a beloved child of Mozilla, it's been told it's time
+>> to move out of its parents house and find its own sources of income/support:
+>> 
+>> https://groups.google.com/d/msg/mozilla.governance/kAyVlhfEcXg/Eqyx1X62BQAJ
+>> https://blog.mozilla.org/thunderbird/2015/12/thunderbird-active-daily-inquiries-surpass-10-million/
+>> 
+>> --
+>> 	-Alan Coopersmith-              alan.coopersmith@...cle.com
+>> 	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+> 
+> 
+> _______________________________________________
+> Sent through the Full Disclosure mailing list
+> https://nmap.org/mailman/listinfo/fulldisclosure <https://nmap.org/mailman/listinfo/fulldisclosure>
+> Web Archives & RSS: http://seclists.org/fulldisclosure/ <http://seclists.org/fulldisclosure/>
+
+Content of type "text/html" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
