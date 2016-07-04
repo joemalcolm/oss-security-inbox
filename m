@@ -1,112 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/05/1
-Message-ID: <1649028.3J7HsOb28o@kdudka-nb>
-Date: Mon, 05 Sep 2016 14:14:32 +0200
-From: Kamil Dudka <kdudka@...hat.com>
-To: curl-users@...l.haxx.se, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Cc: Daniel Stenberg <daniel@...x.se>
-Subject: Re: [SECURITY VULNERABILITY] curl: Re-using connections with wrong client cert
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/04/2
+Message-ID: <CAJmMGNuUqFXcxZKpz36opZ_ZwRKuoUHzGJ4EU4m=Zwqf9RO1RA@mail.gmail.com>
+Date: Mon, 4 Jul 2016 17:27:14 +0000
+From: Patrick Uiterwijk <puiterwijk@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2016-1000007] Pagure: XSS in raw file endpoint
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday, August 03, 2016 09:05:26 Daniel Stenberg wrote:
-> Re-using connections with wrong client cert
-> ===========================================
-> 
-> Project cURL Security Advisory, August 3rd 2016 -
-> [Permalink](https://curl.haxx.se/docs/adv_20160803B.html)
+CVE-2016-1000007: Pagure XSS in raw file endpoint
 
-After torture-testing the patch for CVE-2016-5420, it was discovered that 
-libcurl built on top of NSS (Network Security Services) still incorrectly
-re-uses client certificates if a certificate from file is used for one TLS
-connection but no certificate is set for a subsequent TLS connection.
+Versions affected: 2.2.1 and earlier
+Fixed in versions: 2.2.2
 
-This problem was caused by an implementation detail of the NSS backend
-in libcurl, which is orthogonal to the cause of CVE-2016-5420.  Users of 
-libcurl/NSS that load client certificates from files are encouraged to
-also apply the attached follow-up patch.
+Description:
+It was found that Pagure served files in user repositories from its
+raw endpoint with content types
+that instructed the browser to parse HTML files which could lead to
+Cross-Site Scripting attack.
 
-The original patch for CVE-2016-5420 has been amended to also contain the 
-attached patch:
+Mitigation:
+Users of Pagure should update to version 2.2.2 or later.
 
-https://curl.haxx.se/CVE-2016-5420.patch
+Credit:
+This issue was discovered by Patrick Uiterwijk of Red Hat.
 
-> VULNERABILITY
-> -------------
-> 
-> libcurl did not consider client certificates when reusing TLS connections.
-> 
-> libcurl supports reuse of established connections for subsequent requests.
-> It does this by keeping a few previous connections "alive" in a connection
-> pool so that a subsequent request that can use one of them instead of
-> creating a new connection will do so.
-> 
-> When using a client certificate for a connection that was then put into the
-> connection pool, that connection could then wrongly get reused in a
-> subsequent request to that same server that either didn't use a client
-> certificate at all or that asked to use a different client certificate thus
-> trying to tell the user that it is a different entity.
-> 
-> This mistakenly using the wrong connection could of course lead to
-> applications sending requests to the wrong realms of the server using
-> authentication that it wasn't supposed to have for those operations.
-> 
-> We are not aware of any exploit of this flaw.
-> 
-> INFO
-> ----
-> 
-> This flaw also affects the curl command line tool.
-> 
-> The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-> CVE-2016-5420 to this issue.
-> 
-> AFFECTED VERSIONS
-> -----------------
-> 
-> This flaw is relevant for all versions of curl and libcurl that support
-> SSL/TLS and client certificates.
-> 
-> - Affected versions: libcurl 7.1 to and including 7.50.0
-> - Not affected versions: libcurl >= 7.50.1
-> 
-> libcurl is used by many applications, but not always advertised as such!
-> 
-> THE SOLUTION
-> ------------
-> 
-> In version 7.50.1, curl will check that re-used connections have the correct
-> client certificate (file name) before used.
-> 
-> A [patch for CVE-2016-5420](https://curl.haxx.se/CVE-2016-5420.patch) is
-> available. This patch relies on the
-> [CVE-2016-5419](https://curl.haxx.se/docs/adv_20160803A.html) patch already
-> having been applied.
-> 
-> RECOMMENDATIONS
-> ---------------
-> 
-> We suggest you take one of the following actions immediately, in order of
-> preference:
-> 
->   A - Upgrade curl and libcurl to version 7.50.1
-> 
->   B - Apply the patch to your version and rebuild
-> 
->   C - Do not use client certificates
-> 
-> TIME LINE
-> ---------
-> 
-> This was figured out by curl security team members during our work with the
-> 20160803A flaw during June 2016. We contacted distros@...nwall on July 31.
-> 
-> libcurl 7.50.1 was released on August 3 2016, coordinated with the
-> publication of this advisory.
-> 
-> CREDITS
-> -------
-> 
-> Found by the curl security team. Patch by Daniel Stenberg.
-> 
-> Thanks a lot!
-View attachment "0001-nss-refuse-previously-loaded-certificate-from-file.patch" of type "text/x-patch" (1525 bytes)
+Upstream patch:
+https://pagure.io/pagure/c/070d63983fe5daef92005ea33d3b8c693c224c77
