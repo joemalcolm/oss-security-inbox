@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2133" "Thursday" "17" "September" "2020" "10:43:53" "+1200" "Douglas Bagnall" "douglas.bagnall@catalyst.net.nz" "<a06dc6d7-b8b3-9abc-9c71-33dfdd9e459a@catalyst.net.nz>" "54" "[oss-security] Samba and CVE-2020-1472 (\"Zerologon\")" "^Date:" nil nil "9" "2020091622:43:53" "[oss-security] Samba and CVE-2020-1472 (\"Zerologon\")" (number mark "        douglas.bagn Sep 17   54/2133  " thread-indent "\"[oss-security] Samba and CVE-2020-1472 (\"Zerologon\")\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Samba and CVE-2020-1472 (\"Zerologon\")" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3049" "Tuesday" "5" "July" "2016" "18:41:22" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160705224122.7C5C242E012@smtpvbsrv1.mitre.org>" "75" "[oss-security] Re: Browsing and attaching images considered harmful in Linux" "^Cc:" nil nil "7" "2016070522:41:22" "[oss-security] Re: Browsing and attaching images considered harmful in Linux" (number mark "        cve-assign@m Jul  5   75/3049  " thread-indent "\"[oss-security] Re: Browsing and attaching images considered harmful in Linux\"\n") "<CACn5sdSFtHbu1d45rK4Hi8=Z+KirfOZ+g=gBT5LsCWcxgfnz-w@mail.gmail.com>" ("<CACn5sdSFtHbu1d45rK4Hi8=Z+KirfOZ+g=gBT5LsCWcxgfnz-w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 29995 invoked by uid 550); 17 Sep 2020 10:47:44 -0000
+Received: (qmail 17729 invoked by uid 550); 5 Jul 2016 22:41:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +11,88 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26289 invoked from network); 16 Sep 2020 22:44:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=catalyst.net.nz;
-	s=default; t=1600296237;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=7PdeCRt4DkAqAFRrCJve1tkGpCWLVVI1trC2Lz2Df10=;
-	b=ejjcKuJETw3XdRnOJm/96hUJpXaEOP2nHBvjJq8q1v4dfIq+T4ZiR7cVo9J7mVLU1b7mdi
-	nRGTPx6bTqs2rIgPYXpTX3hXg+tPE7qR5SZ/i8UmGbN2onHxhOWsy3Kp6x+zwE4vIDwMDN
-	lILB96jBRvAaKHTjxmqiU2YtN/dkvuD3aM5AWe3SWGm9XI1e4ED017z0nTGz6ndNrzlvyf
-	OCMpCZUSbmBO/2HI0rBmc8ypTNbYZDV83X0M3axj2ahxbP1g8km8YW16x/q8dom5ctVSN8
-	XKcpyYbLR5XstP9G2PV6C5dlucrnfh831JMypYZPTU8FarbVjYgkPJlXUSz2Rg==
-Message-ID: <a06dc6d7-b8b3-9abc-9c71-33dfdd9e459a@catalyst.net.nz>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=douglasb@catalyst.net.nz smtp.mailfrom=douglas.bagnall@catalyst.net.nz
-X-Spam: Yes
-Date: Thu, 17 Sep 2020 10:43:53 +1200
-From: Douglas Bagnall <douglas.bagnall@catalyst.net.nz>
+Received: (qmail 17685 invoked from network); 5 Jul 2016 22:41:34 -0000
+In-Reply-To: <CACn5sdSFtHbu1d45rK4Hi8=Z+KirfOZ+g=gBT5LsCWcxgfnz-w@mail.gmail.com>
+Message-Id: <20160705224122.7C5C242E012@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue,  5 Jul 2016 18:41:22 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Samba and CVE-2020-1472 ("Zerologon")
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Browsing and attaching images considered harmful in Linux
+To: gustavo.grieco@gmail.com
 
-In August, Microsoft patched CVE-2020-1472, which gives administrator
-access to an unauthenticated user on a Domain Controller.  Microsoft gave
-it a CVSS score of 10.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-https://portal.msrc.microsoft.com/en-us/security-guidance/advisory/CVE-2020-1472#ID0EUGAC
+> I would like to bring the attention of the oss-security list to the
+> existence of many security issues in the gdk-pixbuf library and its
+> dependencies causing a that attaching a corrupted image file in Linux
+> has become a risky business. For instance, there is a read
+> out-of-bounds in librsvg2 (a dependency of gdk-pixbuf used to render
+> svg images), which can be easily triggered if you try to attach a svg
+> in Firefox.
 
-The Samba security team was not contacted before the announcement, which
-is very sparse on detail, and was unable to learn much through an
-established (and generally quite useful) channel for discussing Microsoft
-protocols:
+> librsvg2 (2.40.2-1 with debug symbols)
 
-https://lists.samba.org/archive/cifs-protocol/2020-August/003520.html
-https://lists.samba.org/archive/cifs-protocol/2020-August/003521.html	
+> 1. Download and unpack boom.tar.gz somewhere.
+> 2. gdb --args /usr/lib/firefox/firefox
+> 3. Execute "run" and try to attach (ctrl+o) the svg file inside boom
+> directory in Firefox.
+> 
+> Result:
+> 
+> Program received signal SIGSEGV, Segmentation fault.
 
-On September 14, Secura, who found the vulnerability, released a blog
-post, a whitepaper, and an exploit:
+> 0x00007fffbb7a4c0d in rsvg_pattern_fix_fallback
+> (pattern=pattern@entry=0x7ffffffea110) at rsvg-paint-server.c:645
 
-https://www.secura.com/blog/zero-logon
+> It is interesting to note that rcx looks controllable:
+> 
+> (gdb) x/i $rip
+> => 0x7fffbb7a4c0d <rsvg_pattern_fix_fallback+333>:        testb  $0x4,0xe4(%rcx)
+> (gdb) info registers
+> ...
+> rcx            0xe5e5e5e5e5e5e5e5        -1880844493789993499
+> ...
+> 
+> Fortunately, this issue is already solved in the last revision of
+> librsvg2 (AFAIK, this issue has no CVE, so please MITRE assign one if
+> suitable). Nevertheless, I reported such vulnerability to Mozilla more
+> than a month ago hoping that they will disable the svg support in the
+> open/attach widget. After some discussion, it was marked as WONTFIX.
+> While i understand why, i still feel it can be productive to discuss
+> this here.
+> 
+> (the same trick can be used to crash Chrome/Chromium, since the code
+> to open/attach an image is almost the same, so this is not a Firefox
+> specific issue)
 
-The bug is in the Netlogon *protocol*, not an implementation flaw, so any
-implementation that correctly follows the protocol will be vulnerable.
-Samba is vulnerable.
+Use CVE-2016-6163 for this specific "read out-of-bounds in librsvg2 (a
+dependency of gdk-pixbuf used to render svg images)."
 
-HOWEVER, since Samba 4.8 (2018-03), by default Samba will insist on a
-secure netlogon channel
+(We cannot assign CVE IDs for the more general topic of "many security
+issues in the gdk-pixbuf library and its dependencies" without
+additional information.)
 
-https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html#SERVERSCHANNEL
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-The default of "server schannel = yes" gives the same protection as
-Microsoft's "FullSecureChannelProtection=1" registry key (which is the
-CVE-2020-1472 fix). I believe this mitigation was introduced in light of
-an increased awareness of protocol level bugs following BadLock, and
-particular credit should go to Stefan Metzmacher for [sort of] fixing this
-bug two years before its discovery.
-
-That is not the end of the story, though. Many distros have very old
-versions of Samba, and many people set "server schannel = auto", because
-who doesn't like auto, or because a third party thing requires it.
-
-Patches allowing more fine-grained schannel policy for these third-party
-cases are being worked on right now.
-
-
-Distros: use supported versions of Samba!
-
-People stuck with old versions of a Samba Domain Controller: set "server
-schannel = yes" in your smb.conf, now. For you, this is a low effort
-potentially catastrophic 0-day.
-
-Follow https://bugzilla.samba.org/show_bug.cgi?id=14497
-
-regards,
-Douglas Bagnall
-
+iQIcBAEBCAAGBQJXfDX+AAoJEHb/MwWLVhi2UEAP/1iLYtrHAOrC5eEye9BjJJS3
+8aZCZiBarS2FJIUWDs/W7H/8KkKNluhZJuKTQcWFcbMKzhNVNXoi2jLqD9p7O1NO
+c4/SDM8eSPLzSPHpk6m1ZU2N9WO/qA4xI4JW8Aq6AkeCSQMjsSbSraU/xXwhRHj0
+Ho4JCtlBi7YgDfzt1fOApf4lW9/0A0bVk877JdkOozXIq1nn5qHsiplqkHhw6QpN
+1Yo32YH6QMHP5ZLMrhtUorZ9BaGbFIHrrowOD9TGS35sEjO9rXmo4H+auuHQRbup
+kkPBiU8EoEy23+lxIN8twdRMpICDAAqSFr4ZmVjCywZ7I2cGAh0wzO4rwPA268aj
+9esSjut6wxZmpejy1YvJgrgkj0SYWn5jH5Obc8QYZoEBlT3l5DtDYRjN4JUsWm9n
+ben8vr+7d10F4ROkauebqop7TCexuAs50FTvrkhxDqHLeCI4yuXTRZCMBnaqf6eG
+1pqj7h0E0Wf7Zhp53J5zMGCRgn0UhG3onEauT/Ge95FisuAkAZFwz5jQBJT3iFzD
+bLraASJNVVS28xrgyLfXL/1TrIs2fkMYF0bo/RVGQlqz1vMm0VFgjU3vVgSVlgZ8
+hLdH4FFDsj6Rx2v30CHRWkdt7ILB0aVSaIUUwt+VhmBagchg1bWCjoGw/YKNpvOx
+Bcb0TMBIqWVr/5eNilJr
+=iGCG
+-----END PGP SIGNATURE-----
