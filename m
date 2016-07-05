@@ -1,102 +1,130 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/10/13
-Message-ID: <20160510194050.GA19811@mcvoy.com>
-Date: Tue, 10 May 2016 12:40:50 -0700
-From: Larry McVoy <lm@...oy.com>
-To: Michael Scherer <misc@...b.org>
-Cc: oss-security@...ts.openwall.com, security@...keeper.com
-Subject: Re: BitKeeper /tmp vulns
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/05/5
+Message-Id: CVE-2016-4979-68583
+Date: Tue, 5 Jul 2016 19:26:34 +0200 (CEST)
+From: Dirk-Willem van Gulik <dirkx@...weaving.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-4979: HTTPD webserver - X509 Client certificate based authentication can be bypassed when HTTP/2 is used [vs]
 Content-Type: text/plain; charset=utf-8
 
-In the past, at least, BitKeeper was run inside a firewall and in an
-environment where users are trusted.  As such, I suspect that you have
-just begun to scratch the surface, I wouldn't be at all surprised to
-see dozens more like this.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-We've never had anyone complain about this in a real world situation
-so we've never focussed on it.  If you care about this stuff we'll
-gladly take patches.
 
-On Tue, May 10, 2016 at 09:28:38PM +0200, Michael Scherer wrote:
-> On Tue, May 10, 2016 at 10:43:27AM -0600, Kurt Seifried wrote:
-> > Hopefully security@...keeper.com (it doesn't bounce so I assume it's valid)
-> > will review/address these.
-> 
-> So, looking at the current files included in the installer:
-> https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/import.sh#L952
-> https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/import.sh#L834
-> https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/import.sh#L709
-> 
-> from a quick check, this seems to be run with "bk import".
-> 
-> There is this file
-> https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/bk.sh#L283
-> https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/bk.sh#L337
-> nder the name bk.script
-> 
-> And apply-patch:
-> https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/applypatch.sh#L33
-> 
-> And that' just on the shell code.
-> 
-> There is also fun stuff like
-> https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/gnu/diffutils/sdiff.c
-> 
-> whose last edit is in 2000, but in 2001, someone found CVE-2001-0117
-> 
-> 
-> > On Tue, May 10, 2016 at 10:24 AM, Michael Scherer <misc@...b.org> wrote:
-> > 
-> > > On Tue, May 10, 2016 at 09:31:27AM -0600, Kurt Seifried wrote:
-> > > > Not found by me, mentioned on HackerNews:
-> > > >
-> > > > https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/bk.sh#L485
-> > >
-> > > Just to clarify, the vuln was not mentioned on HN, just the new about it
-> > > being
-> > > under a free license. Then I did a git clone, and grep /tmp and pointed on
-> > > internal
-> > > IRC that, as usual, there is a ton of /tmp issue (and then Kurt did see
-> > > and asked where I did see it,
-> > > and answered on HN (to the question "bk is now opensource").
-> > >
-> > > > BitKeeper is under Apache license so here it is.
-> > > >
-> > > > Also a quick look at the source shows a ton of other potential /tmp/
-> > > vulns,
-> > > > CC'ing bitkeeper security
-> > >
-> > > for example:
-> > >
-> > > https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/utils/bk_version#L1563
-> > >
-> > > There is also a few here:
-> > >
-> > > https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/utils/extractor.c
-> > >
-> > > but that's the installation script, so unlikely to be exploitable.
-> > >
-> > > Or in apply-patch, etc.
-> > >
-> > > But there is also a few projects that are bundled (like zlib), and a few
-> > > scripts that
-> > > are used only at installation and/or build time, so classifying everything
-> > > is more
-> > > work than what I have time to devote for the project.
-> > >
-> > > --
-> > > Michael Scherer
-> > >
-> > 
-> > 
-> > 
-> > -- 
-> > 
-> > --
-> > Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> > PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> > Red Hat Product Security contact: secalert@...hat.com
+          Security Advisory - Apache Software Foundation
+                Apache HTTPD WebServer  / httpd.apache.org
 
--- 
----
-Larry McVoy            	     lm at mcvoy.com             http://www.mcvoy.com/lm 
+	X509 Client certificate based authentication can
+           be bypassed when HTTP/2 is used
+
+                   CVE-2016-4979 / CVSS 7.5
+
+The Apache HTTPD web server (from 2.4.18-2.4.20) did not validate a X509 
+client certificate correctly when experimental module for the HTTP/2 
+protocol is used to access a resource. 
+
+The net result is that a resource that should require a valid client certificate
+in order to get access can be accessed without that credential.
+
+Background:
+- -----------
+
+Apache can control access to resources based on various things; such as 
+a password, IP address and so on. One of the options, when SSL or TLS is
+used, is gating access based on the client having access to a private-key of 
+a X509 client certificate. These client certificates are typically held on
+a chipcard (e.g. the CAC card in the US, national identity, banking cards
+or, for example, medical-chip cards in Europe). In some cases they
+are 'soft tokens' - i.e. files, often called PKCS#12 files, which are loaded
+into the browser or the 'keychain'.
+
+Gating access based on a client certificate is done by adding a line such as
+
+	SSLVerifyClient require 
+
+to the httpd configuration; along with a list of trusted client certificate
+authorities (SSLCACertificateFile).
+
+Version 2.4.17 of the Apache HTTP Server introduced an experimental feature:
+mod_http2 for the HTTP/2 protocol (RFC7540, previous versions were known as 
+Google SPDY).
+
+This module is NOT compiled in by default -and- is not enabled by default, 
+although some distribution may have chosen to do so.
+
+It is generally needs to be enabled in the 'Protocols' line in httpd by 
+adding 'h2' and/or 'h2c' to the 'http/1.1' only default. 
+
+The default distributions of the Apache Software Foundation do not include 
+this experimental feature. 
+
+Details:
+- --------
+
+- From version 2.4.18, upto and including version 2.4.20 the server failed
+to take the (failed/absent) client certificate validation into account
+when providing access to a resource over HTTP/2. This issue has been fixed 
+in version 2.4.23 (r1750779).
+
+As a result - a resource thought to be secure and requiring a valid
+client certificate - would be accessible without authentication 
+provided that the mod_http2 was loaded, h2 or h2c activated, that
+that the browser used the HTTP/2 protocol and it would do more than
+one request over a given connection.
+
+Impact:
+- -------
+
+A third party can gain access to resources on the web server without
+the requisite credentials.
+
+This can then lead to unauthorised disclosure of information.
+
+Versions affected: 
+- ------------------
+All versions from  2.4.18 to  2.4.20. The issue is fixed in
+version 2.4.23 (released 2015-6-5)
+
+Resolution:
+- -----------
+
+Upgrade to version 2.4.23 or newer.
+
+Mitigations and work arounds:
+- -----------------------------
+
+As a temporary workaround - HTTP/2 can be disabled by changing
+the configuration by removing h2 and h2c from the Protocols
+line(s) in the configuration file. 
+
+The resulting line should read:
+
+		Protocols http/1.1
+
+Credits and timeline
+- --------------------
+
+The flaw was found and reported by Erki Aring <erki@...mple.ee> 
+from Liewenthal Electronics Ltd on 2016-06-30. The issue was 
+resolved by Stefan Eissing that same day and incorporated in 
+the  release of 5th of July 2015 (thus avoiding a bank holiday).
+ 
+Apache would like to thank all involved for their help with this.
+
+Common Vulnerability Scoring (Version 3) and vector
+- ---------------------------------------------------
+
+CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N/E:F/RL:O/RC:C
+
+CVSS Base Score         7.5
+CVSS Temporal Score     7.0 
+
+1.05 / : 2339 $
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4
+Comment: This message is encrypted and/or signed with PGP (gnu-pg, gpg). Contact dirkx@...weaving.org if you cannot read it.
+
+iEYEARECAAYFAld77bQACgkQ/W+IxiHQpxuLAgCg7FFTKxgA+cXRmusLNZGccZQG
+Aj4AnRgIrXzfjn8esq4oTEuxNi5gaLgW
+=SEBP
+-----END PGP SIGNATURE-----
