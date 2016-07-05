@@ -1,60 +1,145 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/12/11
-Message-ID: <CAFkTri+WhHVtePMwvQETGoabDot8UE=ZG+Xq8jG8WXP3+C1n1Q@mail.gmail.com>
-Date: Thu, 12 May 2016 23:31:27 +0800
-From: Marco Grassi <marco.gra@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/05/4
+Message-ID: <20160705165228.GA31533@openwall.com>
+Date: Tue, 5 Jul 2016 19:52:28 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Linux Kernel bpf related UAF
+Cc: Dirk-Willem van Gulik <dirkx@...che.org>
+Subject: Fwd: CVE-2016-4979: HTTPD webserver - X509 Client certificate based authentication can be bypassed when HTTP/2 is used [vs]
 Content-Type: text/plain; charset=utf-8
 
-https://lkml.org/lkml/2016/4/17/125
+This message also appeared on the distros list earlier today, hence the
+mandatory forward to oss-security.  The Apache HTTP Server 2.4.23
+release date in this advisory looks wrong to me - actually released
+today (2016-07-05).
 
-Kudos for @revskills for pointing out ^^
-On May 12, 2016 23:27, <cve-assign@...re.org> wrote:
+----- Forwarded message from Dirk-Willem van Gulik <dirkx@...che.org> -----
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
-> > the following reproducer will cause a UAF of a previously allocated
-> memory
-> > in bpf.
-> >
-> > You can reproduce with linux kernel master, or 4.6-rc6 4.6-rc7 and maybe
-> > other kernel versions.
->
-> > int main(int argc, char **argv)
-> > ...
-> > r[0] = syscall(SYS_mmap, ...
-> > ...
-> > r[5] = syscall(SYS_bpf, ...
->
-> Use CVE-2016-4794. (We did not run any tests, or look for other
-> information, to investigate whether the same reproducer or a similar
-> reproducer affects any kernel version that's considered stable or
-> longterm.)
->
-> - --
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->   http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
->
-> iQIcBAEBCAAGBQJXNKCMAAoJEHb/MwWLVhi2g8QP/3vBTsa8xuk8NWYWsv3jwNGu
-> Ugpl+hUdkQHW4aFzxx96nePBPZpfVeNCGRMdtlCcKVb9wFNUSbRwDPBHFXrfKz9R
-> KVf9VHi4CMcBlvPS0MvGZg52SQPAAO7O7cCWpEAdhyxW2gPPxKYo98x4xNuNVlWx
-> POD/dVK9ll261g6W+CUSYPtwJgIrPSddnnNCUvbB+XIvV87MGSLp+nE6h8I3L2Yp
-> ZisKaT6z6aHqqC0bcySk6V04UlbkfL83eahAz5bWvZeywUEjYvN+kOUlgR8TOxLC
-> 8bIQ28Q043XM3VC853rhPQqe5enV6KDRrLgDu1paeFdKYcaHjGkHvkwjRfxjJZIC
-> EsNdEl2vGjB1iGTUnFiUep9BteZBRrwfmaTE1yAseaUjEAx/3UK85PpTEqmNkON6
-> 1HCInP0LOeZMcggVzBKgRKCXKJZiInxEtSBXhxnPGgxagkOD7enw86gWflSqz3ca
-> wdRm/oADgCrQk6CsSGgusCouSyndC/T6ZRCa2/7vCecm2BBi8gxRuT4TZem3A6Ij
-> x+zfK7QaMDtELPGL+/rVOSgVCTaihz7oGeBKzqJeuyAv7zN0LxYoNlBsmsoBSTYJ
-> Uftvf0T7JTR3AQd1+tB2kOnyGOW4jSCNu66xNifR29j1C7jvKB0+uh891s/3mkzo
-> Wttcn/XLKpzXFWtN+mjb
-> =DWFZ
-> -----END PGP SIGNATURE-----
->
+Date: Tue, 5 Jul 2016 15:24:31 +0200 (CEST)
+From: Dirk-Willem van Gulik <dirkx@...che.org>
+To: announce@...pd.apache.org
+Subject: CVE-2016-4979: HTTPD webserver - X509 Client certificate based authentication can be bypassed when HTTP/2 is used [vs]
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+
+          Security Advisory - Apache Software Foundation
+                Apache HTTPD WebServer  / httpd.apache.org
+
+	X509 Client certificate based authentication can
+           be bypassed when HTTP/2 is used
+
+                   CVE-2016-4979 / CVSS 7.5
+
+The Apache HTTPD web server (from 2.4.18-2.4.20) did not validate a X509 
+client certificate correctly when experimental module for the HTTP/2 
+protocol is used to access a resource. 
+
+The net result is that a resource that should require a valid client certificate
+in order to get access can be accessed without that credential.
+
+Background:
+- -----------
+
+Apache can control access to resources based on various things; such as 
+a password, IP address and so on. One of the options, when SSL or TLS is
+used, is gating access based on the client having access to a private-key of 
+a X509 client certificate. These client certificates are typically held on
+a chipcard (e.g. the CAC card in the US, national identity, banking cards
+or, for example, medical-chip cards in Europe). In some cases they
+are 'soft tokens' - i.e. files, often called PKCS#12 files, which are loaded
+into the browser or the 'keychain'.
+
+Gating access based on a client certificate is done by adding a line such as
+
+	SSLVerifyClient require 
+
+to the httpd configuration; along with a list of trusted client certificate
+authorities (SSLCACertificateFile).
+
+Version 2.4.17 of the Apache HTTP Server introduced an experimental feature:
+mod_http2 for the HTTP/2 protocol (RFC7540, previous versions were known as 
+Google SPDY).
+
+This module is NOT compiled in by default -and- is not enabled by default, 
+although some distribution may have chosen to do so.
+
+It is generally needs to be enabled in the 'Protocols' line in httpd by 
+adding 'h2' and/or 'h2c' to the 'http/1.1' only default. 
+
+The default distributions of the Apache Software Foundation do not include 
+this experimental feature. 
+
+Details:
+- --------
+
+- From version 2.4.18, upto and including version 2.4.20 the server failed
+to take the (failed/absent) client certificate validation into account
+when providing access to a resource over HTTP/2. This issue has been fixed 
+in version 2.4.23 (r1750779).
+
+As a result - a resource thought to be secure and requiring a valid
+client certificate - would be accessible without authentication 
+provided that the mod_http2 was loaded, h2 or h2c activated, that
+that the browser used the HTTP/2 protocol and it would do more than
+one request over a given connection.
+
+Impact:
+- -------
+
+A third party can gain access to resources on the web server without
+the requisite credentials.
+
+This can then lead to unauthorised disclosure of information.
+
+Versions affected: 
+- ------------------
+All versions from  2.4.18 to  2.4.20. The issue is fixed in
+version 2.4.23 (released 2015-6-5)
+
+Resolution:
+- -----------
+
+Upgrade to version 2.4.23 or newer.
+
+Mitigations and work arounds:
+- -----------------------------
+
+As a temporary workaround - HTTP/2 can be disabled by changing
+the configuration by removing h2 and h2c from the Protocols
+line(s) in the configuration file. 
+
+The resulting line should read:
+
+		Protocols http/1.1
+
+Credits and timeline
+- --------------------
+
+The flaw was found and reported by Erki Aring <erki@...mple.ee> 
+from Liewenthal Electronics Ltd on 2016-06-30. The issue was 
+resolved by Stefan Eissing that same day and incorporated in 
+the  release of 5th of July 2015 (thus avoiding a bank holiday).
+ 
+Apache would like to thank all involved for their help with this.
+
+Common Vulnerability Scoring (Version 3) and vector
+- ---------------------------------------------------
+
+CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N/E:F/RL:O/RC:C
+
+CVSS Base Score         7.5
+CVSS Temporal Score     7.0 
+
+1.05 / : 2339 $
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4
+Comment: This message is encrypted and/or signed with PGP (gnu-pg, gpg). Contact dirkx@...weaving.org if you cannot read it.
+
+iEYEARECAAYFAld7tREACgkQ/W+IxiHQpxssBwCg2PU1xiye20scB23ZEAdhuEjA
+JPoAmwUaZFh/tr2tR3opAVnFo+mSgMDi
+=zNG2
+-----END PGP SIGNATURE-----
+
+----- End forwarded message -----
