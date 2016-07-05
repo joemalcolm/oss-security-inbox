@@ -1,20 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/24
-Message-ID: <572A42A7.90407@openwall.com>
-Date: Wed, 4 May 2016 21:42:47 +0300
-From: Alexander Cherepanov <ch3root@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/05/3
+Message-ID: <1467728683@msgid.manchmal.in-ulm.de>
+Date: Tue, 5 Jul 2016 16:32:05 +0200
+From: Christoph Biedl <debian.axhn@...chmal.in-ulm.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: broken RSA keys
+Subject: CVE-2016-6160: Segmentation fault in tcprewrite (tcpreplay)
 Content-Type: text/plain; charset=utf-8
 
-On 05/04/2016 03:42 PM, Solar Designer wrote:
-> 0x115CFF61CFECFF61BE9, where we see three 32-bit limbs satisfying:
->
-> limb[1] = limb[0] + limb[2]
+Hello,
 
-This just means that the number came from two-limb number with limbs 
-limb_src[1] = limb[1] - limb[0] and limb_src[0] = limb[0] by multiplying 
-it by 2**32 + 1. HTH.
+as already reported in Debian BTS#829350, the tcprewrite program, part
+of the tcpreplay suite, does not check the size of the frames it
+processes. Huge frames may trigger a segmentation fault, and they
+occur on interfaces with an MTU of or close to 65536. For example, the
+loopback interface lo of the Linux kernel has such a value.
 
--- 
-Alexander Cherepanov
+This has been assigned CVE-2016-6160.
+
+The Debian BTS also contains a fix.
+
+    Christoph
+
+[1] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=829350
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
