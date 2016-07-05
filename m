@@ -1,37 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/2
-Message-ID: <45c3eba1-d26d-7137-f1e6-fb29322fa610@redhat.com>
-Date: Tue, 18 Oct 2016 14:06:41 +0200
-From: Adam Maris <amaris@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: kaplanlior@...il.com
-Subject: Re: CVE assignment for PHP 5.6.27 and 7.0.12
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/05/6
+Message-ID: <20160705182522.GA26179@eldamar.local>
+Date: Tue, 5 Jul 2016 20:25:22 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: libgd: global out of bounds read when encoding gif from malformed input with gd2togif
 Content-Type: text/plain; charset=utf-8
 
-On 18/10/16 09:42, Lior Kaplan wrote:
-> Hi,
->
-> Please assign a CVE for the following issue:
->
-> Bug #73147    Use After Free in unserialize()
-> https://bugs.php.net/bug.php?id=73147
-> http://git.php.net/?p=php-src.git;a=commit;h=0e6fe3a4c96be2d3e88389a5776f878021b4c59f
->
-> Thanks,
->
-> Kaplan
->
-16 bugs marked as 'security' were fixed in php 5.6.27 of which only one has CVE assigned.
-Here you request CVE for another one issue (even the documentation says it's unsafe to use
-unserialize on untrusted input).
+Hi
 
-Are you planning to obtain CVEs also for other security bugs or do you treat the rest as
-CVE-unworthy? Or are reporters/community supposed to do it?
+The following (older) issue in libgd's issue tracker can be found,
+with possible security impact for applications using the libgd
+library. If I see it correctly this is not an issue in the gd2togif
+utility but in the library. It was reported upstream as:
 
-Thanks!
+https://github.com/libgd/libgd/issues/209
 
--- 
-Adam Mariš, Red Hat Product Security
-1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
+with the fix
 
+https://github.com/libgd/libgd/commit/82b80dcb70a7ca8986125ff412bceddafc896842 (gd-2.2.0)
 
+Could you assign a CVE for this issue?
+
+Regards,
+Salvatore
