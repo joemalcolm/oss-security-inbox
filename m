@@ -1,86 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/11
-Message-ID: <alpine.DEB.2.20.1611020812160.375@tvnag.unkk.fr>
-Date: Wed, 2 Nov 2016 08:12:49 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl invalid URL parsing with '#'
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/05/8
+Message-Id: <20160705223938.1441A7BC185@smtpvmsrv1.mitre.org>
+Date: Tue,  5 Jul 2016 18:39:38 -0400 (EDT)
+From: cve-assign@...re.org
+To: marco.gra@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: BUG_ON crash in linux 4.7-rc6/master skbuff.c
 Content-Type: text/plain; charset=utf-8
 
-invalid URL parsing with '#'
-============================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Project cURL Security Advisory, November 2, 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20161102J.html)
+> this program will crash the linux kernel 4.7-rc6 and current master in a
+> voluntary panic() call triggered at a BUG_ON in net/core/skbuff.c:3051
+> 
+> kernel BUG at net/core/skbuff.c:3051!
+> 
+> in a qemu environment with kASAN enabled in a syzkaller-kind setup
 
-VULNERABILITY
--------------
+> [   59.831394] kernel BUG at net/core/skbuff.c:3051!
+> [   59.831802] invalid opcode: 0000 [#1] SMP KASAN
 
-curl doesn't parse the authority component of the URL correctly when the host
-name part ends with a '#' character, and could instead be tricked into
-connecting to a different host. This may have security implications if you for
-example use a URL parser that follows the RFC to check for allowed domains
-before using curl to request them.
+> [   59.844495]  [<ffffffff82c54dba>] udpv6_queue_rcv_skb+0x4fa/0x15b0
+> [   59.845048]  [<ffffffff82c56b36>] __udp6_lib_rcv+0xcc6/0x1d20
+> [   59.845540]  [<ffffffff82c57bb1>] udpv6_rcv+0x21/0x30
+> [   59.845975]  [<ffffffff82bf5971>] ip6_input_finish+0x3a1/0x1170
+> [   59.846510]  [<ffffffff82bf7faa>] ip6_input+0xda/0x1f0
+> [   59.846950]  [<ffffffff82bf7ed0>] ? ipv6_rcv+0x1790/0x1790
+> [   59.847418]  [<ffffffff8296ce36>] ? __netif_receive_skb+0x36/0x170
 
-Passing in `http://example.com#@...l.com/x.txt` would wrongly make curl send a
-request to evil.com while your browser would connect to example.com given the
-same URL.
+> [   59.883546] Kernel panic - not syncing: Fatal exception in interrupt
 
-The problem exists for most protocol schemes.
+> reproducer --- derp2.c
+> 
+> r[0] = syscall(SYS_mmap, ...
+> r[1] = syscall(SYS_socket, ...
+> r[3] = syscall(SYS_bind, ...
+> r[6] = syscall(SYS_sendto, ...
+> r[13] = syscall(SYS_setsockopt, ...
+> r[14] = syscall(SYS_dup, ...
+> r[21] = syscall(SYS_write, ...
 
-We are not aware of any exploit of this flaw.
+Use CVE-2016-6162.
 
-INFO
-----
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-8624 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-This flaw exists in the following curl versions.
-
-- Affected versions: curl 7.1 to and including 7.50.3
-- Not affected versions: curl >= 7.51.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.51.0, the parser function is fixed.
-
-A [patch for CVE-2016-8624](https://curl.haxx.se/CVE-2016-8624.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.51.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Strip out the parts of the URLs containing '#' before passing them to curl
-
-TIME LINE
----------
-
-It was first reported to the curl project on October 10 by Fernando Muñoz.
-
-We contacted distros@...nwall on October 19.
-
-curl 7.51.0 was released on November 2 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Thanks to Fernando Muñoz!
-
--- 
-
-  / daniel.haxx.se
+iQIcBAEBCAAGBQJXfDVGAAoJEHb/MwWLVhi2AqUQAJzw7O7PX85JseeWkL6p9e8u
+RHZtWmwh3TBgkdXuCh/GtayjL+pRdGjWs4Xz6S/vXf4iOMIxMc5BHXaaUSn1Yjpk
+SBxfhNQPCVaAMnGD4FizEpJW2IY/79RqS7VB5GVTROuqrDySEg7p+9mT/XSZ3QyU
+GKydUzilXBvq2AG3E+PVvCwXT7Nefd1tVNOWrvz1dFmOZ8lveJx2EQes8EvE2VzN
+NEMKSuTl8Ey734VynwDkCUojHLjS40c0ny0ZhXtH1UURk3xb+WM9jLtTbmBLzmJC
+sVH/rBORjvoptyR397KxuPYlXVXIjf8qRnVeZyV/y/gZhI6e8Hvxq1Df0wuZ9lzq
+k41ldbLCEYnPKBVZbT+y+LobbF6Xp57/uCmBDSm11HDTle5EvSOWXVHd/4cw5t/c
+b2IiNHTMkN9aeZVVT2yG8F9bEKBTzyIv5LbEaHhwNXgNuCfX2Ey5iZo2PBxVMBRJ
+TeMlQK7AoBVidiWVMsB4jvZMJMCMWXFXROG2istI87WbLEzRzmKhqWjAEEbXVSzh
+3lZHb0+06iH7e44mzsErURLkJlbOWSzNRo+Xl7nLCig+0wAqDYphC14bkZtNY1+z
+rb+cune9A/mQe5qSLBckzB+W83dc7JQu/sHjFZhn1AgT5MI1nq6s36Ud+xdfQgvf
+5ytAy5KDBdLxn2HCukEh
+=c6Oy
+-----END PGP SIGNATURE-----
