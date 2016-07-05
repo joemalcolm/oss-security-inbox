@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1878" "Thursday" "12" "May" "2016" "23:31:27" "+0800" "Marco Grassi" "marco.gra@gmail.com" "<CAFkTri+WhHVtePMwvQETGoabDot8UE=ZG+Xq8jG8WXP3+C1n1Q@mail.gmail.com>" "54" "[oss-security] Re: Linux Kernel bpf related UAF" nil nil nil "5" "2016051215:31:27" "[oss-security] Re: Linux Kernel bpf related UAF" (number mark "U       marco.gra@gm May 12   54/1878  " thread-indent "\"[oss-security] Re: Linux Kernel bpf related UAF\"\n") "<20160512152749.88F6A6C0689@smtpvmsrv1.mitre.org>" ("<CAFkTriLitb9v4MZn5b2HV9HGpu6VWHifgR3VZhDYoQwjGyaWBg@mail.gmail.com>" "<20160512152749.88F6A6C0689@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2240" "Tuesday" "5" "July" "2016" "18:39:38" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160705223938.1441A7BC185@smtpvmsrv1.mitre.org>" "57" "[oss-security] Re: BUG_ON crash in linux 4.7-rc6/master skbuff.c" nil nil nil "7" "2016070522:39:38" "[oss-security] Re: BUG_ON crash in linux 4.7-rc6/master skbuff.c" (number mark "U       cve-assign@m Jul  5   57/2240  " thread-indent "\"[oss-security] Re: BUG_ON crash in linux 4.7-rc6/master skbuff.c\"\n") "<CAFkTriLxASO1y5qXDr+gaUub=k580D_Zt1Zg=MUiJt4XyacKBg@mail.gmail.com>" ("<CAFkTriLxASO1y5qXDr+gaUub=k580D_Zt1Zg=MUiJt4XyacKBg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14244 invoked by uid 550); 12 May 2016 15:31:46 -0000
+Received: (qmail 7675 invoked by uid 550); 5 Jul 2016 22:39:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,95 +12,69 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14182 invoked from network); 12 May 2016 15:31:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=mRmYOqkMFwFPr3/j1tqLpYy21w3lGuIuGKUAj3yN0yw=;
-        b=LHSG3pD4nMUVtxxm9ys3Lbvf3AfAsItUHQI5fmSSY2gasGjFAd0+QHODS2NUGtJbF8
-         GhjmBLCVA69M91Uj0aRPxFqTd9kIgX5MSaJd+VNSLzUwUVrvE4CJE1EOeBWQ0tWPKPap
-         l5V+IXRCp6AX1YtOVYAv9sfkayueHzBzR12d9OqDAE7C80sWfjUqUOo0JrJDKmvCX+Al
-         EsNyEAAA9hmSyBTdasiSMFV6+GSpTpcr+NNmOtvaYSMvxTGIh8C0asJWSCBTA3qiriM3
-         sKwgbaqrLz5s/q6k7KAtLQVzebOZ2LBHMePRKr+Z+4XlU2C2uYfLQOSeBkAdIXjUFN4o
-         dP6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=mRmYOqkMFwFPr3/j1tqLpYy21w3lGuIuGKUAj3yN0yw=;
-        b=Ft48HBH6E6Vp/5UYB3eZGFI5aTLcSCmyIhsMo/uu0rs+RDDB5l0WpXoie1KZyknhTx
-         JtiqIbkNHkY6dYarz+7+lIWOpHmVVElKY5+CmOLTP31RbEaiykWxieDO361cm28iv2KS
-         mkNpbrxzMUMRKsp0VzvYkbX/6BvfJLDpBV/0GahE4tKXjOvQ1eLPj7kU1KFlcYyylhL2
-         /BsAiFi6xiCDxeTKHOkPAUEolAiMfqyp4IPDYgHLPck84O2GSW5MlvxLRJgxL23h/w8Q
-         Ueep6+/svJq8bZDaehvVN4Rf4Cl764cmESU7IfbQEbtAPDvoDANbX3CUfI7iSvTAtQxO
-         T1fw==
-X-Gm-Message-State: AOPr4FWv+BwZDphkYUo6vMEZQ83B2wqCJB/rWL1PMRz0TA5f7e+SPY1ZkWOm+hz/bvTOE+asK8VkAfNGkqDq7w==
-MIME-Version: 1.0
-X-Received: by 10.202.94.132 with SMTP id s126mr5971678oib.34.1463067087259;
- Thu, 12 May 2016 08:31:27 -0700 (PDT)
-In-Reply-To: <20160512152749.88F6A6C0689@smtpvmsrv1.mitre.org>
-References: <CAFkTriLitb9v4MZn5b2HV9HGpu6VWHifgR3VZhDYoQwjGyaWBg@mail.gmail.com>
-	<20160512152749.88F6A6C0689@smtpvmsrv1.mitre.org>
-Date: Thu, 12 May 2016 23:31:27 +0800
-Message-ID: <CAFkTri+WhHVtePMwvQETGoabDot8UE=ZG+Xq8jG8WXP3+C1n1Q@mail.gmail.com>
-From: Marco Grassi <marco.gra@gmail.com>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Content-Type: multipart/alternative; boundary=001a113d516004cf3d0532a6da07
-Subject: [oss-security] Re: Linux Kernel bpf related UAF
+Received: (qmail 7646 invoked from network); 5 Jul 2016 22:39:49 -0000
+From: cve-assign@mitre.org
+To: marco.gra@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAFkTriLxASO1y5qXDr+gaUub=k580D_Zt1Zg=MUiJt4XyacKBg@mail.gmail.com>
+Message-Id: <20160705223938.1441A7BC185@smtpvmsrv1.mitre.org>
+Date: Tue,  5 Jul 2016 18:39:38 -0400 (EDT)
+Subject: [oss-security] Re: BUG_ON crash in linux 4.7-rc6/master skbuff.c
 
---001a113d516004cf3d0532a6da07
-Content-Type: text/plain; charset=UTF-8
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-https://lkml.org/lkml/2016/4/17/125
+> this program will crash the linux kernel 4.7-rc6 and current master in a
+> voluntary panic() call triggered at a BUG_ON in net/core/skbuff.c:3051
+> 
+> kernel BUG at net/core/skbuff.c:3051!
+> 
+> in a qemu environment with kASAN enabled in a syzkaller-kind setup
 
-Kudos for @revskills for pointing out ^^
-On May 12, 2016 23:27, <cve-assign@mitre.org> wrote:
+> [   59.831394] kernel BUG at net/core/skbuff.c:3051!
+> [   59.831802] invalid opcode: 0000 [#1] SMP KASAN
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
-> > the following reproducer will cause a UAF of a previously allocated
-> memory
-> > in bpf.
-> >
-> > You can reproduce with linux kernel master, or 4.6-rc6 4.6-rc7 and maybe
-> > other kernel versions.
->
-> > int main(int argc, char **argv)
-> > ...
-> > r[0] = syscall(SYS_mmap, ...
-> > ...
-> > r[5] = syscall(SYS_bpf, ...
->
-> Use CVE-2016-4794. (We did not run any tests, or look for other
-> information, to investigate whether the same reproducer or a similar
-> reproducer affects any kernel version that's considered stable or
-> longterm.)
->
-> - --
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->   http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
->
-> iQIcBAEBCAAGBQJXNKCMAAoJEHb/MwWLVhi2g8QP/3vBTsa8xuk8NWYWsv3jwNGu
-> Ugpl+hUdkQHW4aFzxx96nePBPZpfVeNCGRMdtlCcKVb9wFNUSbRwDPBHFXrfKz9R
-> KVf9VHi4CMcBlvPS0MvGZg52SQPAAO7O7cCWpEAdhyxW2gPPxKYo98x4xNuNVlWx
-> POD/dVK9ll261g6W+CUSYPtwJgIrPSddnnNCUvbB+XIvV87MGSLp+nE6h8I3L2Yp
-> ZisKaT6z6aHqqC0bcySk6V04UlbkfL83eahAz5bWvZeywUEjYvN+kOUlgR8TOxLC
-> 8bIQ28Q043XM3VC853rhPQqe5enV6KDRrLgDu1paeFdKYcaHjGkHvkwjRfxjJZIC
-> EsNdEl2vGjB1iGTUnFiUep9BteZBRrwfmaTE1yAseaUjEAx/3UK85PpTEqmNkON6
-> 1HCInP0LOeZMcggVzBKgRKCXKJZiInxEtSBXhxnPGgxagkOD7enw86gWflSqz3ca
-> wdRm/oADgCrQk6CsSGgusCouSyndC/T6ZRCa2/7vCecm2BBi8gxRuT4TZem3A6Ij
-> x+zfK7QaMDtELPGL+/rVOSgVCTaihz7oGeBKzqJeuyAv7zN0LxYoNlBsmsoBSTYJ
-> Uftvf0T7JTR3AQd1+tB2kOnyGOW4jSCNu66xNifR29j1C7jvKB0+uh891s/3mkzo
-> Wttcn/XLKpzXFWtN+mjb
-> =DWFZ
-> -----END PGP SIGNATURE-----
->
+> [   59.844495]  [<ffffffff82c54dba>] udpv6_queue_rcv_skb+0x4fa/0x15b0
+> [   59.845048]  [<ffffffff82c56b36>] __udp6_lib_rcv+0xcc6/0x1d20
+> [   59.845540]  [<ffffffff82c57bb1>] udpv6_rcv+0x21/0x30
+> [   59.845975]  [<ffffffff82bf5971>] ip6_input_finish+0x3a1/0x1170
+> [   59.846510]  [<ffffffff82bf7faa>] ip6_input+0xda/0x1f0
+> [   59.846950]  [<ffffffff82bf7ed0>] ? ipv6_rcv+0x1790/0x1790
+> [   59.847418]  [<ffffffff8296ce36>] ? __netif_receive_skb+0x36/0x170
 
---001a113d516004cf3d0532a6da07--
+> [   59.883546] Kernel panic - not syncing: Fatal exception in interrupt
+
+> reproducer --- derp2.c
+> 
+> r[0] = syscall(SYS_mmap, ...
+> r[1] = syscall(SYS_socket, ...
+> r[3] = syscall(SYS_bind, ...
+> r[6] = syscall(SYS_sendto, ...
+> r[13] = syscall(SYS_setsockopt, ...
+> r[14] = syscall(SYS_dup, ...
+> r[21] = syscall(SYS_write, ...
+
+Use CVE-2016-6162.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXfDVGAAoJEHb/MwWLVhi2AqUQAJzw7O7PX85JseeWkL6p9e8u
+RHZtWmwh3TBgkdXuCh/GtayjL+pRdGjWs4Xz6S/vXf4iOMIxMc5BHXaaUSn1Yjpk
+SBxfhNQPCVaAMnGD4FizEpJW2IY/79RqS7VB5GVTROuqrDySEg7p+9mT/XSZ3QyU
+GKydUzilXBvq2AG3E+PVvCwXT7Nefd1tVNOWrvz1dFmOZ8lveJx2EQes8EvE2VzN
+NEMKSuTl8Ey734VynwDkCUojHLjS40c0ny0ZhXtH1UURk3xb+WM9jLtTbmBLzmJC
+sVH/rBORjvoptyR397KxuPYlXVXIjf8qRnVeZyV/y/gZhI6e8Hvxq1Df0wuZ9lzq
+k41ldbLCEYnPKBVZbT+y+LobbF6Xp57/uCmBDSm11HDTle5EvSOWXVHd/4cw5t/c
+b2IiNHTMkN9aeZVVT2yG8F9bEKBTzyIv5LbEaHhwNXgNuCfX2Ey5iZo2PBxVMBRJ
+TeMlQK7AoBVidiWVMsB4jvZMJMCMWXFXROG2istI87WbLEzRzmKhqWjAEEbXVSzh
+3lZHb0+06iH7e44mzsErURLkJlbOWSzNRo+Xl7nLCig+0wAqDYphC14bkZtNY1+z
+rb+cune9A/mQe5qSLBckzB+W83dc7JQu/sHjFZhn1AgT5MI1nq6s36Ud+xdfQgvf
+5ytAy5KDBdLxn2HCukEh
+=c6Oy
+-----END PGP SIGNATURE-----
