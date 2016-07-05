@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1226" "Thursday" "2" "February" "2017" "01:13:43" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<f5961b71dfd547828623397055e86a78@imshyb01.MITRE.ORG>" "31" "[oss-security] Re: podofo: multiple crashes" nil nil nil "2" "2017020206:13:43" "[oss-security] Re: podofo: multiple crashes" (number mark "U       cve-assign@m Feb  2   31/1226  " thread-indent "\"[oss-security] Re: podofo: multiple crashes\"\n") "<20170201164321.3c06ae76@pc1>" ("<20170201164321.3c06ae76@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["467" "Tuesday" "5" "July" "2016" "20:25:22" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160705182522.GA26179@eldamar.local>" "17" "[oss-security] CVE Request: libgd: global out of bounds read when encoding gif from malformed input with gd2togif" nil nil nil "7" "2016070518:25:22" "[oss-security] CVE Request: libgd: global out of bounds read when encoding gif from malformed input with gd2togif" (number mark "U       carnil@debia Jul  5   17/467   " thread-indent "\"[oss-security] CVE Request: libgd: global out of bounds read when encoding gif from malformed input with gd2togif\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18356 invoked by uid 550); 2 Feb 2017 06:13:56 -0000
+Received: (qmail 22480 invoked by uid 550); 5 Jul 2016 18:25:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,45 +12,58 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18309 invoked from network); 2 Feb 2017 06:13:55 -0000
-From: <cve-assign@mitre.org>
-To: <hanno@hboeck.de>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <20170201164321.3c06ae76@pc1>
-Message-ID: <f5961b71dfd547828623397055e86a78@imshyb01.MITRE.ORG>
-Date: Thu, 2 Feb 2017 01:13:43 -0500
+Received: (qmail 22462 invoked from network); 5 Jul 2016 18:25:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=7Tu3Ev7zW7jG2tglHPUWWvMGyg0ZiDxZoiOlpsf5SLg=;
+        b=b5eGjdEn59ThIbg7h1dijbAporzKaykmK5HECjW84RCqsqtHrN7Os2RRFtJr3mOubc
+         4b9kUW3gdQsbySx0ScAQK7jWvqBKz4thlPdf42VEOB0JFw3WRQjfq8OyOEEDHn0lVgHT
+         pQ7U+HJPa8qH8W0APkafDshBjSAY5k2jTRXtRKiTI0j/yBknVnPzDHLwQC0kMJCszIns
+         aolAX5QO8I9oBrUo9b7rSkVRr7fNaA5dyjpbaJtxh+0dVSeD63FWk0feZk+T6oboJDTR
+         rXFToRKqoycijwCIkvr4khChU5XrC9xImelzb6aF7du2VECrSPdYlrSI45SKlQbk9svf
+         3KBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=7Tu3Ev7zW7jG2tglHPUWWvMGyg0ZiDxZoiOlpsf5SLg=;
+        b=b4e9SgFCRJQoZd+dWEab9bJMSYIjy+MhonfDEH648ZfAshs77YPe77siNyPewr2yqw
+         uvCniSbI66d+sEPx6eJOLXrhxumRftuE3w4/ieBtlkypFn8aIxJFsSk3IhAo8YZeJSh4
+         FH1SE5JEhO6ERtFd3TaaJUVHmM3IWz8Q/4Q+ZpxUFp5PqzDGDZ/8Vh6ukpRgIHLqMP7U
+         shRwJzT/ZpiphepsiBAnBEpMFPWVZpRoeuDP28oIKQL0uIw9IE1TO7apUetBnlGp6AOL
+         8Kq9shVv8sG3n9mHUgrUKb4JtUyn5+5dJH4NudUuEnr29rNVGUjfhYmBSU8pVvtOljxS
+         +YOQ==
+X-Gm-Message-State: ALyK8tI7OQJWUpc0GdK38QElv3AHgJsnI9paLdT+aDG0/H0hJ8ZebbuwPVvUZKLxMlkyHQ==
+X-Received: by 10.194.88.65 with SMTP id be1mr16935538wjb.46.1467743112764;
+        Tue, 05 Jul 2016 11:25:12 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Tue, 5 Jul 2016 20:25:22 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Message-ID: <20160705182522.GA26179@eldamar.local>
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: podofo: multiple crashes
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.6.0 (2016-04-01)
+Subject: [oss-security] CVE Request: libgd: global out of bounds read when encoding gif from
+ malformed input with gd2togif
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi
 
-> https://sourceforge.net/p/podofo/mailman/message/34205419/
-> http://sourceforge.net/p/podofo/code/1672
-> heap overflow in the function ReadXRefSubsection
+The following (older) issue in libgd's issue tracker can be found,
+with possible security impact for applications using the libgd
+library. If I see it correctly this is not an issue in the gd2togif
+utility but in the library. It was reported upstream as:
 
-Use CVE-2015-8981.
+https://github.com/libgd/libgd/issues/209
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+with the fix
 
-iQIcBAEBCAAGBQJYksc5AAoJEHb/MwWLVhi2L68P+gLZAoW7wWrVatCgj1ZwSlAY
-jrcaqQreswFQOe2yTkK4XFJkqk35eRgQCTPtUJnO7FtowLqW2PTGynMOFswLtV2A
-6X+LBpVDAbDb9VgOi/55Zb7CchNr9OPPujMw6GEyn9fP4wLttFQL0IHw+umFtdzB
-4MTDg0vWp/3oBDu5dzHitCHTWX4cGG6NnmjYGgsL7XBqSWpknIxnnG04+lL/YERx
-SzxKCUQN6NpHuU+1n6N485dZaWJhDP2hj7sdEj8wzLZDIJ21O/wMEUjEnpLP8shn
-dreosNrl8FXaxVqFVXEPqPhOCkkbbPkkZ3CtvWy3Vye4pvVrnm4rwRwkFV9Sswsl
-NauJjxGxsicOSWwicy2rL4/83HbJ6RLg+QJG/SOoXfq80UKZvCqxquO9zfR8Gjut
-WCm9qKSBbao0xeSI9TwZGrT7KRoriGe6isqcW8vpMOFllF1DTkxTViCMPnPJ1M0h
-pVUKroGpp/Fw0RYpwiS8qhj9LTyDdu4uosLkyHnFpbuS/Limq0iuvAxx868FamkA
-B5/iiLZUztJ2sJggH5Gqpo1BXUzcarmNdmPJR/ptPEl6No5DgIOrJBuGOYM0oUtE
-U0GGpp4vuvof8Lkvh5JtFhTUKQUKwH3nAZoKYGntJvZuyOa9x4AQcnW9E4Dh5NMi
-7//LWxuMxC2wDeajjK7T
-=yYRH
------END PGP SIGNATURE-----
+https://github.com/libgd/libgd/commit/82b80dcb70a7ca8986125ff412bceddafc896842 (gd-2.2.0)
+
+Could you assign a CVE for this issue?
+
+Regards,
+Salvatore
