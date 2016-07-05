@@ -1,52 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/26/4
-Message-ID: <20161026094640.rv26wlnarguz5lyv@perpetual.pseudorandom.co.uk>
-Date: Wed, 26 Oct 2016 10:46:40 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: jasper: memory allocation failure in jas_malloc (jas_malloc.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/05/9
+Message-Id: <20160705224122.7C5C242E012@smtpvbsrv1.mitre.org>
+Date: Tue,  5 Jul 2016 18:41:22 -0400 (EDT)
+From: cve-assign@...re.org
+To: gustavo.grieco@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Browsing and attaching images considered harmful in Linux
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 26 Oct 2016 at 10:08:56 +0200, Agostino Sarubbo wrote:
-> more or less I agree with you, but since time ago I saw that similar bugs 
-> reveiced a CVE, I thought that these type of bugs could interest the community 
-> and them I'm sharing them.
-> If I'm not mistaken, CWE-789 covers these type of bugs.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-It depends on the purpose of your software, and how it runs (for example
-a one-shot command-line tool vs. a long-running daemon). If a
-command-line tool for converting JPEG2000 to JPEG (or whatever) exits
-unexpectedly due to a failed attempt to allocate multiple gigabytes
-of memory, that isn't really any worse than exiting unsuccessfully
-because an arbitrary limit on image size was exceeded: the user isn't
-getting their desired JPEG either way.
+> I would like to bring the attention of the oss-security list to the
+> existence of many security issues in the gdk-pixbuf library and its
+> dependencies causing a that attaching a corrupted image file in Linux
+> has become a risky business. For instance, there is a read
+> out-of-bounds in librsvg2 (a dependency of gdk-pixbuf used to render
+> svg images), which can be easily triggered if you try to attach a svg
+> in Firefox.
 
-Conversely, if a daemon that accepts uploaded JPEG2000 images and
-converts them to JPEG exits unexpectedly due to a failed attempt to
-allocate multiple gigabytes of memory, then that's denying service to
-the service's other users as well, which is an instance CWE-789.
+> librsvg2 (2.40.2-1 with debug symbols)
 
-For a general-purpose library like jasper, which could be used in
-either of those contexts, I suspect the best you can do is to make sure
-conversion gracefully fails with an appropriate error report (error code
-or exception or whatever you use) if memory can't be allocated or if
-a library-user-specified limit is exceeded - then the library user can
-handle that however they want to, for example by exiting (appropriate
-for a command-line tool) or by reporting an error but continuing to
-accept new requests (appropriate for a daemon).
+> 1. Download and unpack boom.tar.gz somewhere.
+> 2. gdb --args /usr/lib/firefox/firefox
+> 3. Execute "run" and try to attach (ctrl+o) the svg file inside boom
+> directory in Firefox.
+> 
+> Result:
+> 
+> Program received signal SIGSEGV, Segmentation fault.
 
-Denial-of-service is basically a failure of the "availability" security
-property: the actions of a malicious user make the service unavailable to
-its non-malicious users. However, imposing arbitrary limits can also be
-argued to be a failure of availability: if you put a limit of, say, 100M
-on the uncompressed size of images you are willing to work with, then
-that's denying service to non-malicious users whose images happen to
-need 102M. Choosing where to draw the line is a trade-off rather than an
-absolute, and library code rarely has enough information or configurability
-to make an informed decision about the right place for that trade-off.
+> 0x00007fffbb7a4c0d in rsvg_pattern_fix_fallback
+> (pattern=pattern@...ry=0x7ffffffea110) at rsvg-paint-server.c:645
 
-(I recognise the hypocrisy in saying this as a maintainer of D-Bus,
-whose messages have a completely arbitrary size limit chosen to make
-it obvious that 32-bit arithmetic on message sizes never overflows :-)
+> It is interesting to note that rcx looks controllable:
+> 
+> (gdb) x/i $rip
+> => 0x7fffbb7a4c0d <rsvg_pattern_fix_fallback+333>:        testb  $0x4,0xe4(%rcx)
+> (gdb) info registers
+> ...
+> rcx            0xe5e5e5e5e5e5e5e5        -1880844493789993499
+> ...
+> 
+> Fortunately, this issue is already solved in the last revision of
+> librsvg2 (AFAIK, this issue has no CVE, so please MITRE assign one if
+> suitable). Nevertheless, I reported such vulnerability to Mozilla more
+> than a month ago hoping that they will disable the svg support in the
+> open/attach widget. After some discussion, it was marked as WONTFIX.
+> While i understand why, i still feel it can be productive to discuss
+> this here.
+> 
+> (the same trick can be used to crash Chrome/Chromium, since the code
+> to open/attach an image is almost the same, so this is not a Firefox
+> specific issue)
 
-    S
+Use CVE-2016-6163 for this specific "read out-of-bounds in librsvg2 (a
+dependency of gdk-pixbuf used to render svg images)."
+
+(We cannot assign CVE IDs for the more general topic of "many security
+issues in the gdk-pixbuf library and its dependencies" without
+additional information.)
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXfDX+AAoJEHb/MwWLVhi2UEAP/1iLYtrHAOrC5eEye9BjJJS3
+8aZCZiBarS2FJIUWDs/W7H/8KkKNluhZJuKTQcWFcbMKzhNVNXoi2jLqD9p7O1NO
+c4/SDM8eSPLzSPHpk6m1ZU2N9WO/qA4xI4JW8Aq6AkeCSQMjsSbSraU/xXwhRHj0
+Ho4JCtlBi7YgDfzt1fOApf4lW9/0A0bVk877JdkOozXIq1nn5qHsiplqkHhw6QpN
+1Yo32YH6QMHP5ZLMrhtUorZ9BaGbFIHrrowOD9TGS35sEjO9rXmo4H+auuHQRbup
+kkPBiU8EoEy23+lxIN8twdRMpICDAAqSFr4ZmVjCywZ7I2cGAh0wzO4rwPA268aj
+9esSjut6wxZmpejy1YvJgrgkj0SYWn5jH5Obc8QYZoEBlT3l5DtDYRjN4JUsWm9n
+ben8vr+7d10F4ROkauebqop7TCexuAs50FTvrkhxDqHLeCI4yuXTRZCMBnaqf6eG
+1pqj7h0E0Wf7Zhp53J5zMGCRgn0UhG3onEauT/Ge95FisuAkAZFwz5jQBJT3iFzD
+bLraASJNVVS28xrgyLfXL/1TrIs2fkMYF0bo/RVGQlqz1vMm0VFgjU3vVgSVlgZ8
+hLdH4FFDsj6Rx2v30CHRWkdt7ILB0aVSaIUUwt+VhmBagchg1bWCjoGw/YKNpvOx
+Bcb0TMBIqWVr/5eNilJr
+=iGCG
+-----END PGP SIGNATURE-----
