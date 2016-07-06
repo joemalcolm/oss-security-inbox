@@ -1,66 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/6
-Message-ID: <etPan.56e0cfd4.9be1f21.1ae@MonkeyBook>
-Date: Wed, 9 Mar 2016 20:37:24 -0500
-From: John Scott <jms3rd@...il.com>
-To: oss-security@...ts.openwall.com, cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>,  "Boyle, Stephen V." <sboyle@...re.org>, "David A. Wheeler" <dwheeler@...eeler.com>
-Subject: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/06/3
+Message-ID: <03907aa5-5c2d-8bac-9053-7130e3159d62@redhat.com>
+Date: Wed, 6 Jul 2016 12:10:19 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Malicious primary DNS servers can crash secondaries
 Content-Type: text/plain; charset=utf-8
 
-Could this process be a whole lot less opaque? It seems there are more smart people outside the room who would love to participate, help, etc. than are inside MITRE.
-Maybe this whole thing could be turned into a public/private partnership with one of the larger  groups, OSI, Linux Foundation, etc. 
-js
+It turns out that most DNS server implementations do not implement 
+reasonable restrictions for zone sizes.  This allows an explicitly 
+configured primary DNS server for a zone to crash a secondary DNS 
+server, affecting service of other zones hosted on the same secondary 
+server.
 
--------------------------------------------
-John Scott
- 240.401.6574
-< jms3rd@...il.com >
-http://powdermonkey.blogs.com
-@johnmscott
+Some references:
 
-On March 9, 2016 at 3:29:42 PM, Boyle, Stephen V. (sboyle@...re.org) wrote:
+https://lists.dns-oarc.net/pipermail/dns-operations/2016-July/015058.html
+https://lists.dns-oarc.net/pipermail/dns-operations/2016-July/015075.html
+https://gitlab.labs.nic.cz/labs/knot/merge_requests/541
+https://www.nlnetlabs.nl/bugs-script/show_bug.cgi?id=790
 
-Hi Kurt and David,  
+PowerDNS is reportedly affected as well, but I did not find a public bug 
+for this issue.
 
-The CVE team is holding a series of internal meetings related to the referenced issues, including one tomorrow. There is not a meeting with the Editorial Board (or a subset of Editorial Board members) scheduled for or being held tomorrow.  
-
-We would like to propose an Editorial Board meeting to address issues related to CVE operations, scalability, and community feedback, as was first suggested by Kent Landfield on January 5, 2016. (Full discussion thread available at: http://common-vulnerabilities-and-exposures-cve-editorial-board.1128451.n5.nabble.com/CVE-Advancements-tt81.html)  
-
-The internal meetings referenced above will enable us to come to that Editorial Board meeting with specific recommendations and proposed next steps.  
-
-Best Regards,  
-The MITRE CVE Team  
-
------Original Message-----  
-From: Kurt Seifried [mailto:kseifried@...hat.com]  
-Sent: Wednesday, March 09, 2016 2:06 PM  
-To: David A. Wheeler <dwheeler@...eeler.com>; cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>  
-Cc: oss-security <oss-security@...ts.openwall.com>  
-Subject: Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies  
-
-On Wed, Mar 9, 2016 at 12:04 PM, David A. Wheeler <dwheeler@...eeler.com>  
-wrote:  
-
-> All - I've chatted with some of the people who fund the CVE work at MITRE.  
-> I've learned that CVEs *are* being issued, but obviously that is happening  
-> too slowly.  
->  
-> They're having a meeting tomorrow (March 10) to try to figure out what  
-> the problems are and how to fix it. I don't know what they'll do.  
-> However, I'm hopeful that this will mean that the CVE work will get  
-> back on track soon.  
->  
-> --- David A. Wheeler  
->  
-
-This is literally the first I'm hearing of this, will any board members be  
-present?  
-
-
---  
-
---  
-Kurt Seifried -- Red Hat -- Product Security -- Cloud  
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993  
-Red Hat Product Security contact: secalert@...hat.com  
-
+Florian
