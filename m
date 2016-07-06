@@ -1,62 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/2
-Message-Id: <20160818033014.3FFE33AE001@smtpvbsrv1.mitre.org>
-Date: Wed, 17 Aug 2016 23:30:14 -0400 (EDT)
-From: cve-assign@...re.org
-To: peter@...e-magic.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for buffer overrun in CHICKEN process-execute and process-spawn posix procedures
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/06/1
+Message-ID: <CACn5sdRd0v7iDR8E46n=waV4_mi5kReH-FzOk1tMnWm7rszhzQ@mail.gmail.com>
+Date: Wed, 6 Jul 2016 09:20:59 +0200
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Browsing and attaching images considered harmful in Linux
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+2016-07-06 0:41 GMT+02:00  <cve-assign@...re.org>:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+>> I would like to bring the attention of the oss-security list to the
+>> existence of many security issues in the gdk-pixbuf library and its
+>> dependencies causing a that attaching a corrupted image file in Linux
+>> has become a risky business. For instance, there is a read
+>> out-of-bounds in librsvg2 (a dependency of gdk-pixbuf used to render
+>> svg images), which can be easily triggered if you try to attach a svg
+>> in Firefox.
+>
+>> librsvg2 (2.40.2-1 with debug symbols)
+>
+>> 1. Download and unpack boom.tar.gz somewhere.
+>> 2. gdb --args /usr/lib/firefox/firefox
+>> 3. Execute "run" and try to attach (ctrl+o) the svg file inside boom
+>> directory in Firefox.
+>>
+>> Result:
+>>
+>> Program received signal SIGSEGV, Segmentation fault.
+>
+>> 0x00007fffbb7a4c0d in rsvg_pattern_fix_fallback
+>> (pattern=pattern@...ry=0x7ffffffea110) at rsvg-paint-server.c:645
+>
+>> It is interesting to note that rcx looks controllable:
+>>
+>> (gdb) x/i $rip
+>> => 0x7fffbb7a4c0d <rsvg_pattern_fix_fallback+333>:        testb  $0x4,0xe4(%rcx)
+>> (gdb) info registers
+>> ...
+>> rcx            0xe5e5e5e5e5e5e5e5        -1880844493789993499
+>> ...
+>>
+>> Fortunately, this issue is already solved in the last revision of
+>> librsvg2 (AFAIK, this issue has no CVE, so please MITRE assign one if
+>> suitable). Nevertheless, I reported such vulnerability to Mozilla more
+>> than a month ago hoping that they will disable the svg support in the
+>> open/attach widget. After some discussion, it was marked as WONTFIX.
+>> While i understand why, i still feel it can be productive to discuss
+>> this here.
+>>
+>> (the same trick can be used to crash Chrome/Chromium, since the code
+>> to open/attach an image is almost the same, so this is not a Firefox
+>> specific issue)
+>
+> Use CVE-2016-6163 for this specific "read out-of-bounds in librsvg2 (a
+> dependency of gdk-pixbuf used to render svg images)."
 
-> http://lists.nongnu.org/archive/html/chicken-announce/2016-08/msg00001.html
+Thanks!
 
-> I would like to request a CVE for a buffer overrun that
-> was detected in CHICKEN Scheme's "process-execute" and
-> "process-spawn" procedures from the posix unit.
-> 
-> CHICKEN preallocated an argument array of ARG_MAX items (or 256 if
-> that was undefined), and an environment array of ENV_MAX items
-> (or 1024 if that was undefined), and did not verify that the arguments
-> or environment lists were less than this size, resulting in a buffer
-> overrun if these lists were longer.
+>
+> (We cannot assign CVE IDs for the more general topic of "many security
+> issues in the gdk-pixbuf library and its dependencies" without
+> additional information.)
 
-Use CVE-2016-6830.
+I only hope to encourage package maintainers to keep gdk-pixbuf and
+its dependencies always in the last version.
 
 
-> The bugfix also fixed a memory leak in the same piece of code, which
-> could potentially be used to cause resource exhaustion/denial of
-> service situation.
-
->> a memory leak existed in this code, which would be
->> triggered when an error is raised during argument and environment
->> processing (e.g., if one of the arguments wasn't a string).
-
-> Does this warrant another CVE?
-
-Yes, use CVE-2016-6831 for the memory leak.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXtSRnAAoJEHb/MwWLVhi21jEQAKZvWLvq/uy2d4j31FTcH3Sx
-OjM5j9I+2/szLaexJcEHjQGLUL34NDem+CEizZa1lU2NXKFFlYYXE8CGDGtVyvG9
-M21Dxfq6QiSJv6WacORbLawUK6txSfBajOBu+DL36lr+Y6FSejh5zxwg/97E1Z97
-J+bpICS96zSUDx21rTVj6a7AT+C48vHsGXdZ214yiui6Grs1UjKEwbyJvYONJnEh
-qaUfZwxd1DMrp9mYLbTzC7YoaA8cpK4pa2XMj866Ek9zqd55W+IFrxTg7bapHrRY
-elZdeTuXyg4POQ/ZJFUkkRVUZt5Dfa5r2nhG6O6oYxCNIWcjCwNkEH3vy8Fqnstp
-60tAC2Plt/F58Or5rcgBMIPckf01rolGj23EOCKihuAqZC8iXyisaTWC80Bzvx9P
-9L3RBU4p956GpRvDyMONdq30bGgI5ICtpV6yJUgiuMIR3npoCkZqH8/ONSrxZjdj
-jPeikuZNGpzRmDqiKijG8PqXutTlnxNqiZ2sntFIzEgMrRYLtpaEqkXGJBOJiF/v
-NiVOPbvlnVNfkbLBj4MjFwhxD10a8Nb+VuIUJaSVAEUszFlpTCiA/cj1t3ZZb5MG
-bPumWrj0+22vn+C2V3KVlsevP8co68ggxydx2RYsbJ2gEQ7gkM904HFNkPfk1ZS2
-CpJ18WYaF6DGQvTX6wie
-=BpnE
------END PGP SIGNATURE-----
+>
+> - --
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQIcBAEBCAAGBQJXfDX+AAoJEHb/MwWLVhi2UEAP/1iLYtrHAOrC5eEye9BjJJS3
+> 8aZCZiBarS2FJIUWDs/W7H/8KkKNluhZJuKTQcWFcbMKzhNVNXoi2jLqD9p7O1NO
+> c4/SDM8eSPLzSPHpk6m1ZU2N9WO/qA4xI4JW8Aq6AkeCSQMjsSbSraU/xXwhRHj0
+> Ho4JCtlBi7YgDfzt1fOApf4lW9/0A0bVk877JdkOozXIq1nn5qHsiplqkHhw6QpN
+> 1Yo32YH6QMHP5ZLMrhtUorZ9BaGbFIHrrowOD9TGS35sEjO9rXmo4H+auuHQRbup
+> kkPBiU8EoEy23+lxIN8twdRMpICDAAqSFr4ZmVjCywZ7I2cGAh0wzO4rwPA268aj
+> 9esSjut6wxZmpejy1YvJgrgkj0SYWn5jH5Obc8QYZoEBlT3l5DtDYRjN4JUsWm9n
+> ben8vr+7d10F4ROkauebqop7TCexuAs50FTvrkhxDqHLeCI4yuXTRZCMBnaqf6eG
+> 1pqj7h0E0Wf7Zhp53J5zMGCRgn0UhG3onEauT/Ge95FisuAkAZFwz5jQBJT3iFzD
+> bLraASJNVVS28xrgyLfXL/1TrIs2fkMYF0bo/RVGQlqz1vMm0VFgjU3vVgSVlgZ8
+> hLdH4FFDsj6Rx2v30CHRWkdt7ILB0aVSaIUUwt+VhmBagchg1bWCjoGw/YKNpvOx
+> Bcb0TMBIqWVr/5eNilJr
+> =iGCG
+> -----END PGP SIGNATURE-----
