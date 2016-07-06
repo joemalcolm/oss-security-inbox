@@ -1,36 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/1
-Message-ID: <56E0BE38.6030400@igalia.com>
-Date: Thu, 10 Mar 2016 01:22:16 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/06/4
+Message-Id: <20160706110353.A6EF56C0CFF@smtpvmsrv1.mitre.org>
+Date: Wed,  6 Jul 2016 07:03:53 -0400 (EDT)
+From: cve-assign@...re.org
+To: fweimer@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Malicious primary DNS servers can crash secondaries
 Content-Type: text/plain; charset=utf-8
 
-On 06/03/16 19:46, Alan Coopersmith wrote:
-> On 03/ 4/16 04:07 PM, Tim wrote:
->> * No moderation required.  Let the public decide if they believe the
->>    researcher or vendor.  If a moderator does bother to look over the
->>    content, they could deduplicate/link issues together and address any
->>    confusion, but beyond that, it isn't their job to decide what is a
->>    vulnerability and what isn't.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> https://lists.dns-oarc.net/pipermail/dns-operations/2016-July/015058.html
 > 
-> If the site displays *any* user-submitted text, you need at least enough
-> moderation to filter out spammers & trolls.
-> 
+> BIND 9, knot DNS and Power
+> DNS slave servers received unlimited zone information and died.
+> NSD slave DNS server received unlimited zone data and /tmp became full.
 
-I don't think you need that level of moderation if you implement basic
-measures against spammers like requiring the creation of an account with
-e-mail verification.
+For consistency, it seems best to provide all of the CVE IDs together:
 
-Just look to all the public bugzillas out there that allow commenting
-(mozilla, webkit, redhat, gnome, etc). I don't think they have a problem
-with spam. But you have to create an account first to do any comment.
+BIND 9:    CVE-2016-6170
+Knot DNS:  CVE-2016-6171
+PowerDNS:  CVE-2016-6172
+NSD:       CVE-2016-6173
 
-Of course any account used for spam is blocked by the moderators. So the
-spammer has to create a new one, which is just not worth the effort.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
+iQIcBAEBCAAGBQJXfOSvAAoJEHb/MwWLVhi2D40P/Re3q1hB5fMa1xURAlXul+9U
+FordlgC0zRFq/HuE3ZnDqpuCAmcExpp8fxClIwGKFHu0R1bfqYqnlPlsnLShpGfr
+uAN2Ca0KFR/km6TYSpEXk4nRsLB23ynpB+/7+6i8SHzeVYm/T1d2RVy09jBtqzYl
+gCcgSezWDa+CtwoF5aY7MwN5esYu54tPgGX6bvI8RnMhzg8hC+vF3btspcwMQyli
+uA4/mbZKwQgxiXbDdfKeHcDrnpcaWSBEQtEwSEr3QYnEve3AeUCnxRDMqAYUCWy1
+fgPO5ZEWRjzSjXKFvTucupgVMGWjHFReWRqL+K9E4Lw3PtGeeKs1L0gIfizcbWrE
+H3CGmIomD6mBqxg5LaQeYVGWikG6Xym11J+IIP3Y8FV3UkWpdEhA3dk3HSGmYHh+
+PUwFYHcQUfuIkqYR6B3XnaYOa0VBIqhV34ECKY9TQF54oFaEVt1hMj5zrPIFS5ML
+y2z+HsvhGYYwEydwvE110n5BR0cJKtELwAHT/YHPh62Fd+j5K7zaayaQvoccIE6Q
+C75Ez05wugIZUmuRMWcEc4HZ2Ak88Mcc3ke92WSR6dA6o30ZRSXN71F92aAVUuzZ
+vH6e6yJO+lRxpC1xTRiQglgn5sANOWCsW5R8+ZgYG/K7Hc1h+7RTkAux+qn52Bch
+kp4BKN3bOsKMC/RXfK4X
+=R3BK
+-----END PGP SIGNATURE-----
