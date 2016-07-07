@@ -1,36 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/1
-Message-ID: <20160115014642.GE16572@netmeister.org>
-Date: Thu, 14 Jan 2016 20:46:42 -0500
-From: Jan Schaumann <jschauma@...meister.org>
-To: Qualys Security Advisory <qsa@...lys.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/07/1
+Message-ID: <20160707114924.GA15061@eldamar.local>
+Date: Thu, 7 Jul 2016 13:49:24 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: perl5-porters@...l.org
+Subject: CVE Request: perl: XSLoader: could load shared library from incorrect location
 Content-Type: text/plain; charset=utf-8
 
-Qualys Security Advisory <qsa@...lys.com> wrote:
-> On Thu, Jan 14, 2016 at 01:11:29PM -0500, Jan Schaumann wrote:
-> > Why is version 5.3 not affected?
-> 
-> The information leak is in resend_bytes() ["if (out_start < out_last)"
-> should be "if (out_start <= out_last)"], but in OpenSSH 5.3, there is no
-> call to resend_bytes(), at all (roaming_client.c does not even exist).
+Hi,
 
-Thanks.
+Jakub Wilk reported in [1] that the Perl module List::MoreUtils tried
+to load code from a subdirectory of the current working directory
+despite explicitly removing the current directory from @INC, which
+could lead to the execution of arbitrary code if cwd is unstrusted, as
+demonstrated in the bugreport.
 
-I see resend_bytes() being added on 2009-06-27 in roaming_common.c:
-https://github.com/openssh/openssh-portable/commit/466df219615d72e48ff9103ec67521447f23a158
+While analyzing the issue[2], it turns out that the issue is actually in
+XSLoader, which uses caller() information to locate the .so file to
+load. This can be incorrect if XSLoader::load() is called in a string
+eval. The fix commited upstream is [3].
 
-"2009/06/27 09:32:43
+@MITRE: Could you please assign a CVE for this issue in XSLoader? Do
+you think List::MoreUtils needs a separate CVE as well, despite the
+underlying issue lying in XSLoader[4]?
 
-[roaming_common.c roaming.h]
-It may be necessary to retransmit some data when resuming, so add it
-to a buffer when roaming is enabled.
-"
+Regards,
+Salvatore
 
-That's three days before the version was bumped to 5.3.
-
-I'm afraid I haven't had the time to test your PoC against 5.3, but I
-just want to make sure that we're not overlooking a vulnerable version.
-
--Jan
+ [1] https://bugs.debian.org/829138
+ [2] https://rt.cpan.org/Ticket/Display.html?id=115808
+ [3] http://perl5.git.perl.org/perl.git/commitdiff/08e3451d7
+ [4] https://bugs.debian.org/829578
