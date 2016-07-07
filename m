@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1624" "Wednesday" "5" "July" "2017" "11:22:54" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<FEB98110-2F76-4716-84F8-3F26EC9D91DA@me.com>" "40" "[oss-security] File upload vulnerability in Kindeditor <= 4.1.12" "^Date:" nil nil "7" "2017070515:22:54" "[oss-security] File upload vulnerability in Kindeditor <= 4.1.12" (number mark "        larry0@me.co Jul  5   40/1624  " thread-indent "\"[oss-security] File upload vulnerability in Kindeditor <= 4.1.12\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3277" "Thursday" "7" "July" "2016" "16:27:08" "+0000" "Seaman, Chad" "cseaman@akamai.com" "<026336DF-456D-4D42-80B3-A36C74177F72@akamai.com>" "86" "Re: [oss-security] CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack" nil nil nil "7" "2016070716:27:08" "[oss-security] CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack" (number mark "U       cseaman@akam Jul  7   86/3277  " thread-indent "\"Re: [oss-security] CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack\"\n") "<f24b7778-0446-c5d1-4905-e75a580fcbc4@redhat.com>" ("<20160613144048.9BBA942E034@smtpvbsrv1.mitre.org>" "<f24b7778-0446-c5d1-4905-e75a580fcbc4@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24487 invoked by uid 550); 5 Jul 2017 15:23:09 -0000
+Received: (qmail 30092 invoked by uid 550); 7 Jul 2016 16:27:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +11,124 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24466 invoked from network); 5 Jul 2017 15:23:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=04042017;
-	t=1499268176; bh=TeE/0CtvBvNa1mGb7Y5yoW0bv8I1kas86GFTcRcMuk8=;
-	h=From:Content-type:Subject:Message-id:Date:To:MIME-version;
-	b=xqxqkwzusjPrd9rrM/+iCbIyXwpqgibrgtc3PUBBdnsZM78N1V0kbPVZPv+sgi0cM
- 4IjqWEEFVP2SiRunykjmUMjBfvQB8L8fdW2+Y9ChH5Glm8ImeHJvsPR8DQWVu61VG0
- Zx/2REPcET/7o3711BQTJJ3baKmYqhTgi3UxLSQCUzKch+wlPCHc30iuUws+U0v76H
- py74fS3cSDHEXFoChutsKv0MP3GTLmNxJTGEFaD+u19Yh2P4icxh7oSeN8UxvqNlPL
- UgyCjjdZqtnSdXlT9ZiALcfRBVrv4rt9HuA+tGiIPxKexd6O8d7unNKksqW5lRNQ3y
- fBGD3ViUKIHOA==
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
- definitions=2017-07-05_10:,, signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- clxscore=1034 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1701120000 definitions=main-1707050260
-Content-type: text/plain; charset=utf-8
-Content-transfer-encoding: quoted-printable
-Message-id: <FEB98110-2F76-4716-84F8-3F26EC9D91DA@me.com>
-MIME-version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
-Date: Wed, 05 Jul 2017 11:22:54 -0400
-From: "Larry W. Cashdollar" <larry0@me.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] File upload vulnerability in Kindeditor <= 4.1.12
-To: Open Source Security <oss-security@lists.openwall.com>
+Received: (qmail 30065 invoked from network); 7 Jul 2016 16:27:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; s=a1;
+	t=1467908829; bh=yu/HjTWieBTidyRD6LeaCSSDho4ZsPb9SRUcQFkdYz0=;
+	l=3369; h=From:To:CC:Date:References:In-Reply-To:From;
+	b=yi4fhdeAoYogKXqY+aaH51K6ZwknruoQ40FxV91+IGtCOpT4wq7mthbh1TbsTadhi
+	 tzA4K5G22VAHKmDRceY9nTQmjavaQv9DNYwCbYA53/R8U6KYGZoT2BDPSfBhPunm3V
+	 26CMZ7v/nxtnhcq0wzrEg+8NbDP2IcNX/AVKztVs=
+From: "Seaman, Chad" <cseaman@akamai.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+CC: "huzaifas@redhat.com" <huzaifas@redhat.com>, "cve-assign@mitre.org"
+	<cve-assign@mitre.org>
+Thread-Topic: [oss-security] CVE Request: IKEv1 protocol is vulnerable to DoS
+ amplification attack
+Thread-Index: AQHR2GxoVF6G0srNb0Wm0Wr8HaAocg==
+Date: Thu, 7 Jul 2016 16:27:08 +0000
+Message-ID: <026336DF-456D-4D42-80B3-A36C74177F72@akamai.com>
+References: <20160613144048.9BBA942E034@smtpvbsrv1.mitre.org>
+ <f24b7778-0446-c5d1-4905-e75a580fcbc4@redhat.com>
+In-Reply-To: <f24b7778-0446-c5d1-4905-e75a580fcbc4@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator:
+x-pgp-agent: GPGMail 2.6b2
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.19.132.69]
+Content-Type: multipart/signed;
+	boundary="Apple-Mail=_1AC08BF9-92AF-492D-A902-FE315099276C";
+	protocol="application/pgp-signature"; micalg=pgp-sha512
+MIME-Version: 1.0
+Subject: Re: [oss-security] CVE Request: IKEv1 protocol is vulnerable to DoS
+ amplification attack
 
-Title: File upload vulnerability in Kindeditor <=3D 4.1.12
-Author: Larry W. Cashdollar, @_larry0
-Date: 2017-06-14
-CVE-ID:[CVE-2017-1002024]
-Download Site: http://kindeditor.org/ https://github.com/kindsoft/kindedito=
-r/
-Vendor: KindSoft
-Vendor Notified: 2017-06-15
-Vendor Contact:
-Advisory: http://www.vapidlabs.com/advisory.php?v=3D195
-Description: KindEditor is a lightweight, Open Source(LGPL), cross browser,=
- web based WYSIWYG HTML editor. KindEditor has the ability to convert stand=
-ard text areas to rich text editing.
-Vulnerability:
-It appears there is a remote file upload vulnerability in kindeditor<=3D 4.=
-1.12 specifically in kindeditor/php/upload_json.php. The file doesn't sanit=
-ize user input or check that a user should be uploading files to the system=
-.  It appears it doesn't allow .php, phtml, shtml or other executable exten=
-sions. You can upload .html and call it as its uploaded to the web server p=
-ath. But no server side code exec.
+--Apple-Mail=_1AC08BF9-92AF-492D-A902-FE315099276C
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=windows-1252
 
-Exploit Code:
-	=E2=80=A2 A simple curl request to kindeditor/php/upload_json.php?dir=3Dfi=
-le with the data filename=3Dtest.html set via POST request is all that's re=
-quire to exploit this vulnerability:
-	=E2=80=A2=20=20
-	=E2=80=A2 $ curl -F "imgFile=3D@test.html" http://example.com/kindeditor/p=
-hp/upload_json.php?dir=3Dfile
-	=E2=80=A2=20=20
-	=E2=80=A2 {"error":0,"url":"/kindeditor/php/../attached/file/20170613/2017=
-0613203236_37481.html"}
+Hi All,
+
+I=92m Chad Seaman @ Akamai, the researcher who found, researched, and wrote=
+ the paper on the IKEv1 and IKEv2 flaws that could lead to amplification at=
+tacks.
+
+The opening e-mail states that IKEv2 is not believed to be affected, I can =
+confirm that in some cases some implementations are indeed affected.
+
+There was some doubts about IKEv2 being affected and I was contacted by a C=
+isco engineer as well as one of the RFC authors, we constructed multiple IK=
+Ev2 probe payloads and did a series of secondary scans that specifically ta=
+rgeted IKEv2 hosts to confirm these results.
+
+Where hosts should respond once based on IKEv2 RFC specs, hundreds of thous=
+ands reply multiple times, roughly 110,000 reply 21 times or more per singl=
+e probe, some of the worst offenders responded thousands of times.
+
+Regards,
+Chad
 
 
-This vulnerability is being actively exploited in the wild to deface sites.=
-  The software vendor has not responded to the issue I posted three weeks a=
-go.
+> On Jun 14, 2016, at 10:34 AM, Paul Wouters <pwouters@redhat.com> wrote:
+>=20
+> On 06/13/2016 10:40 AM, cve-assign@mitre.org wrote:
+>>> Its not libreswan which is flawed, but its the protocol which they are =
+trying to implement.
+>>=20
+>>> which implement IKEv1 are flawed, since they follow this protocol
+>>=20
+>> Many protocols could be described as "flawed." The IKEv1 protocol amplif=
+ication concern does not make it flawed in a way that would lead to a per-p=
+rotocol
+>> CVE ID assignment.
+>=20
+> Then you should pull the CVE-2016-5361 which deals with retransmission am=
+plification in IKEv1
+>=20
+> We are maintaining the
+>> CVE-2016-5361 ID assignment for the upstream announcement of "libreswan =
+3.16 vulnerable to DDOS attack. Please upgrade to 3.17"
+>=20
+> That statement on the libreswan website is clearly referring to CVE-2016-=
+3071 not CVE-2016-5361.
+>=20
+> and
+>> accompanying upstream patch, as described in the http://www.openwall.com=
+/lists/oss-security/2016/06/10/4 post.
+>=20
+> Which again clearly refers to CVE-2016-5361 and not CVE-2016-3071
+>=20
+> So again, please fix CVE-2016-5361 or drop it.
+>=20
+> Paul
 
-https://github.com/kindsoft/kindeditor/issues/249
 
+--Apple-Mail=_1AC08BF9-92AF-492D-A902-FE315099276C
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="signature.asc"
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Message signed with OpenPGP using GPGMail
 
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - https://gpgtools.org
+
+iQIcBAEBCgAGBQJXfoLcAAoJEC57VEfLhVK+v1oP/3rIw3i9t5YNGNuLt+sLSqmw
+1BgNi3Y4FZduq2nAao33FrPbtAsBqQlSoqd4pZs3SF4rzhdI/nWcg7qCzI6xhqOo
+KnMPCGsImtSuSEKdQPXEDGWecPNCyLmF3Q11zPXfQkxV7XpzSoKn37LFqtHiUs6D
+SwB7fp3tKouCMBmND26cQPD2Mmhvh3xx6WLcpa2y6PJ1FFgH/SindaGoHw7olJ16
+V62ZqnWk/rU+uWui9NwtJKZMtx2Mq82aDDoQDfDafLUAUD6tblf9Te0dsdGZ4Bb9
+uR/yBk+l/tYT4arM4mxzoIRB4QzOBOtwB1vUaBrtCpFngH8dwxNiRF3nBU84hSb5
+wFIV6GWyI5BEzbHvU2WZEsP9wUmMYa7SUShUt6zwQvvVW/NzREZidHWVbwLge0iE
++cP8jdpho0e7kt6/1b+cUKUXkpydS1Rn39b4nu5W6Q/5a8fTRZ1UpN3W8BtKO2xJ
+kEiYWQCrgzLMqvSk4KS9WIME+WAP5rc7SvJtlYIpIIPK5iWCOfGtByW7pwtlx8Wb
+33r4Q11KhXoPb+DxAP4ng0w15u0DUkNUwnaOEujyswy45a6+JTNV8ftLOjw/ad1s
+on5QIiUpm3gPmeei8ZU9DAl3QRWiG/SNGRGtGUwIsO/VuR+/+3LT5GcrCnEq3X7X
+30nxSTC7gSYSeVotHMqI
+=65j+
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_1AC08BF9-92AF-492D-A902-FE315099276C--
