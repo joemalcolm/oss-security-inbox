@@ -1,78 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/24/3
-Message-ID: <20160524085113.GA29535@openwall.com>
-Date: Tue, 24 May 2016 11:51:13 +0300
-From: Solar Designer <solar@...nwall.com>
-To: Yue Liu <liuyue0310@...il.com>
-Cc: oss-security@...ts.openwall.com, David Anderson <davea42@...uxmail.org>
-Subject: Re: CVE request: Multiple vunerabilities in libdwarf & dwarfdump
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/07/3
+Message-ID: <026336DF-456D-4D42-80B3-A36C74177F72@akamai.com>
+Date: Thu, 7 Jul 2016 16:27:08 +0000
+From: "Seaman, Chad" <cseaman@...mai.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "huzaifas@...hat.com" <huzaifas@...hat.com>, "cve-assign@...re.org" <cve-assign@...re.org>
+Subject: Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi All,
 
-On oss-security it is strongly preferred that actual content (rather
-than just links) be included in the postings for long-term archival,
-as long as the message doesn't exceed 200 KB (including MIME overhead).
+I’m Chad Seaman @ Akamai, the researcher who found, researched, and wrote the paper on the IKEv1 and IKEv2 flaws that could lead to amplification attacks.
 
-On Tue, May 24, 2016 at 04:01:42PM +0800, Yue Liu wrote:
-> There are multiple vunerabilities in libdwarf&dwarfdump which were
-> discovered by Yue Liu(lieanu <liuyue0310@...il.com>) and Qixue Xiao.
+The opening e-mail states that IKEv2 is not believed to be affected, I can confirm that in some cases some implementations are indeed affected.
+
+There was some doubts about IKEv2 being affected and I was contacted by a Cisco engineer as well as one of the RFC authors, we constructed multiple IKEv2 probe payloads and did a series of secondary scans that specifically targeted IKEv2 hosts to confirm these results.
+
+Where hosts should respond once based on IKEv2 RFC specs, hundreds of thousands reply multiple times, roughly 110,000 reply 21 times or more per single probe, some of the worst offenders responded thousands of times.
+
+Regards,
+Chad
+
+
+> On Jun 14, 2016, at 10:34 AM, Paul Wouters <pwouters@...hat.com> wrote:
 > 
-> Vulnerabilities DW201605-001 to DW201605-019 in
-> https://www.prevanders.net/dwarfbug.html
-
-I've attached the current content of the above web page to this message,
-as text/plain.
-
-> And anther one https://bugzilla.redhat.com/show_bug.cgi?id=1330237
-
-Here it is:
-
----
-Description of problem:
-There is a NULL pointer dereference bug in libdwarf-20160115 and latest git code.
-
-The bug is at file dwarf_leb.c:147
- 143             byte_length++;
- 144             if (byte_length > BYTESLEBMAX) {
- 145                 /*  Erroneous input. What to do?
- 146                     Abort? Return error? Just stop here?*/
- 147                 *leb128_length = BYTESLEBMAX;               <- $pc
- 148                 return number;
- 149             }
- 150         }
-
-which triggered by dwarf_form.c:918
- 913             *return_sval = (Dwarf_Signed) ret_value;
- 914             return DW_DLV_OK;
- 915             }
- 916
- 917         case DW_FORM_sdata:
- 918             ret_value =
- 919                 (_dwarf_decode_s_leb128(attr->ar_debug_ptr, NULL));
- 920             *return_sval = ret_value;
- 921             return DW_DLV_OK;
- 922
-
-Version-Release number of selected component (if applicable):
-Tested in libdwarf-20160115 and latest git code
----
-
-> All vulnerabilities have been fixed in upstream.
+> On 06/13/2016 10:40 AM, cve-assign@...re.org wrote:
+>>> Its not libreswan which is flawed, but its the protocol which they are trying to implement.
+>> 
+>>> which implement IKEv1 are flawed, since they follow this protocol
+>> 
+>> Many protocols could be described as "flawed." The IKEv1 protocol amplification concern does not make it flawed in a way that would lead to a per-protocol
+>> CVE ID assignment.
 > 
-> POC: https://sourceforge.net/p/libdwarf/regressiontests/ci/master/tree/liu/
+> Then you should pull the CVE-2016-5361 which deals with retransmission amplification in IKEv1
+> 
+> We are maintaining the
+>> CVE-2016-5361 ID assignment for the upstream announcement of "libreswan 3.16 vulnerable to DDOS attack. Please upgrade to 3.17"
+> 
+> That statement on the libreswan website is clearly referring to CVE-2016-3071 not CVE-2016-5361.
+> 
+> and
+>> accompanying upstream patch, as described in the http://www.openwall.com/lists/oss-security/2016/06/10/4 post.
+> 
+> Which again clearly refers to CVE-2016-5361 and not CVE-2016-3071
+> 
+> So again, please fix CVE-2016-5361 or drop it.
+> 
+> Paul
 
-Unfortunately, some of the PoCs are a bit too large to attach.  While
-the above directory is ~110 KB under tar.xz, the PoC attached to Red Hat
-Bugzilla Bug 1330237 is ~150 KB under xz.
 
-So let's keep just the vulnerability detail in here for now.
-
-One of the reasons why I am posting this is to provide an example of
-what content to include in oss-security postings going forward.  Also,
-it's a call for smaller PoCs (for further occasions; no need to rework
-these PoCs now), so that those could be included as well.
-
-Alexander
-
-View attachment "dwarfbug.txt" of type "text/plain" (17124 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
