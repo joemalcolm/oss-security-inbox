@@ -1,46 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/30/13
-Message-ID: <d14b218f69c243e8882399bdea634e66@imshyb02.MITRE.ORG>
-Date: Sun, 30 Oct 2016 15:49:53 -0400
-From: <cve-assign@...re.org>
-To: <gustavo.grieco@...il.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request - mujs Heap-Buffer-Overflow write and OOB Read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/08/6
+Message-ID: <CA+PdXcs2t_Jj2m+jx9Q2TbfstaX_PijmfYEcJm=LZMk-Xy4m0g@mail.gmail.com>
+Date: Fri, 8 Jul 2016 15:43:31 -0400
+From: Glenn Randers-Pehrson <glennrp@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: CVE ID Requests <cve-assign@...re.org>
+Subject: Re: On anonymous CVE assignments
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+*CVE*-*2016*-*3751*(H)
 
-> Despite CVE-2016-7563 looks fixed in the mujs bug tracker, it was not
-> properly patched:
-> 
-> http://bugs.ghostscript.com/show_bug.cgi?id=697136#c4
+On Fri, Jul 8, 2016 at 9:55 AM, Kurt Seifried <kseifried@...hat.com> wrote:
 
->> AddressSanitizer: heap-buffer-overflow
->> READ of size 1
+> Also if projects don't like "Surprise" CVEs one way to deal with that is to
+> request the CVE's themselves when they know something is a security
+> vulnerability. Also making it easy to contact them helps, the harder you
+> make it for a security researcher to deal with you, the less likely they
+> are to.
+>
 
-Use CVE-2016-9109 for the issue of an incomplete fix for
-CVE-2016-7563.
+It's hard to do that when a "surprise" CVE was never sent to the project,
+for example  *CVE*-*2016*-*3751*(H) which just appeared in an Android
+security
+bulletin.  It claims that libpng has a bug that allows privilidge escalation
+and was reported 3 Dec 2015. I'm guessing that it is a duplicate of
+CVE-2015-8126 or CVE-2015-8472, but it's hard to tell for sure without
+seeing it.  All I've been able to find out is that it is a "reserved" CVE,
+with
+no clue as to who reserved it.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Glenn Randers-Pehrson
+libpng custodian
 
-iQIcBAEBCAAGBQJYFkuiAAoJEHb/MwWLVhi2RYQP/RUxITs9d7YwygKvsonPO6KY
-G0w5aAZSoJQq5SuQHFpU5B6CBfMfGB4iSWTrdLhu71hSBHlFMoca8Q4Rlirnnefh
-mrK2dUlB4ZeY9iAu/WAsi7svdMhbsaNWD4FchYdm8PTBP10Q0pHCilPAmJI4/fev
-vZIeSeHl0KcYD104MtYD2ek6bOUm56Dxuf2nBTRfVJNBZa/q1FRS62cg+Nkwo4Hx
-sfvepzy26nE0PzCFn1GcPu3H0SuWe1nkgfSwgZjFSDAg+OwueJLAFnm/Y+xloUWv
-lD3WiHU1cESxY4SyH3UgUa2QgNTI0zauLxLzcwLOYMF2rh8UlACG2DqOckgI9Bkk
-GYetbtkGbnZOmwBTEFPdKfFISEo5dBBPRWTxFXnepCnwjU/Gl1gLt07s4/90UM/7
-+w+kXl0boDt7W7PUYxyn6lkYUbT6Irodxvk1QDe5LcI5eyU8+QN2yNW1t8sp7qAi
-578PKtcezerFo0L9WHSvNcV3+CM9mO00LdI6ZxCEy8qmc5s5yrnbtIElaNdJfOek
-1riKd3yPvz3T/2EGbpVXE/9gkpz4My37e+bhhkBhzScp6pcM6tOcycBvSzM1LKls
-HNh0uzMpzadWQA474KQsCoXAZ+M3N1ViBmUs0KUCGs9NAqxjYV/pKtONiKUqTHbJ
-4cNzu7H/SxrQp0e6nt3h
-=vKjs
------END PGP SIGNATURE-----
