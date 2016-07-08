@@ -1,33 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/08/3
-Message-ID: <alpine.LFD.2.20.1606081531020.11110@wniryva>
-Date: Wed, 8 Jun 2016 15:32:44 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE Request Qemu: scsi: megasas: information leakage in megasas_ctrl_get_info
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/08/3
+Message-ID: <CAEsznC46-6Z7vLuP2FDuNVATcOkGV8jERu8q059AFaP=TjusPA@mail.gmail.com>
+Date: Fri, 8 Jul 2016 15:39:03 +0200
+From: Lior Kaplan <kaplanlior@...il.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: On anonymous CVE assignments
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi,
 
-Quick Emulator(Qemu) built with the MegaRAID SAS 8708EM2 Host Bus Adapter 
-emulation support is vulnerable to an information leakage issue. It could 
-occur while processing MegaRAID Firmware Interface(MFI) command to read device 
-control information in 'megasas_ctrl_get_info'.
+I'm sorry for sending this to the cve-assign mail, but I think this is
+important to how CVE assignment process should work and the importance of
+cooperating with the upstream projects.
 
-A privileged user inside guest could use this flaw to leak host memory bytes.
+In the past year+ I've been dealing with CVE assignment and the PHP
+project. During this period we managed to work closer with the Linux
+distributions and also to improve the internal process regarding CVE
+requests.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-06/msg01969.html
+I've blogged about a recent problem I encountered with is request and
+assignment of CVE for issues almost a year old without any public info
+about this ("anonymous requests"). Meaning that me, being part of upstream
+(incl. the security team), don't even know we've got CVE assigned and can
+update things on our side (and also other relevant upstreams such as libgd).
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1343909
+More details at
+https://liorkaplan.wordpress.com/2016/07/07/anonymous-cve-requests/
 
-This issue was reportd by Li Qiang of 360.cn Inc.
+I'll be happy to be referred to the right forum to further discuss this.
+Till then, I hope you'll take these remakes into consideration, so the
+whole eco system could work more smoothly.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Kaplan
+The PHP project
+
