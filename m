@@ -1,41 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/26/4
-Message-ID: <20161226145559.GU31189@scully.more-magic.net>
-Date: Mon, 26 Dec 2016 15:55:59 +0100
-From: Peter Bex <peter@...e-magic.net>
-To: oss-security@...ts.openwall.com
-Cc: security@...pal.org, security@...milo.org
-Subject: Re: PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/08/2
+Message-ID: <f1a94b45-2ea5-8943-b676-c07456992798@uni-konstanz.de>
+Date: Fri, 8 Jul 2016 14:19:02 +0200
+From: Jens Erat <jens.erat@...-konstanz.de>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: several SOGo issues (DOS, XSS, information leakage)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Dec 26, 2016 at 03:46:50PM +0100, Hanno Böck wrote:
-> Hi,
+Thank you for your reply.
+
+Am 15.06.2016 um 04:40 schrieb cve-assign@...re.org:
+> We have a few questions about this. First, several of the
+> https://sogo.nu/bugs URLs provide an "Access Denied" response and we
+> were wondering whether that was intentional. MITRE has no role in
+> determining the list charter, but
+> http://oss-security.openwall.org/wiki/mailing-lists/oss-security says
+> "List Content Guidelines ... Any security issues that you post to
+> oss-security should be either already public or to be made public by
+> your posting."
+>
+> When required, CVE IDs can be assigned based on commits in conjunction
+> with non-public bug reports; this potentially addresses all of the
+> cases except for SOGo #3670, which is apparently not yet public at
+> all.
+
+I had inverse publishing the issues, apart from #3670 as the fix was released just recently.
+
+
+> Also, your message didn't mention whether you are making the CVE
+> request on behalf of the Inverse team, or whether you are noting
+> issues that are security-related from your own perspective.
+
+I'm not requesting on behalf of the Inverse team ("from by own perspective"). Inverse already confirmed the issues (and fixed most of them), but SOGo has a history of missing CVEs even for nasty issues.
+
+ 
+> Going through the list of public issues:
 > 
-> Given I had plenty of time on the train to 33c3 I did a quick
-> lookaround on what contains PHPMailer. As the details of the vuln
-> aren't clear yet this doesn't necessarily mean they're vulnerable, just
-> that they ship the affected code.
+> SOGo #3510 - is the ultimate case of the entire issue summarized by
+> "copies the attachment (into memcached?) and then eliminates the copy
+> in the sogod. The memcached copy stays forever/until the SOGo service
+> is restarted"? Or is there a second implementation error? It seems
+> that part of the issue, but not all of it, is a feature request (SOGo
+> #3135) suggesting that SOGo should have size limits because
+> configuring limits at the level of the web server and SMTP server
+> disrupts the user experience.
 
-It looks like the vulnerability is due to a missing escaping of shell
-arguments in the sender's e-mail address.  This commit seems to be
-the one that fixes the bug:
-https://github.com/PHPMailer/PHPMailer/commit/4835657cd639fbd09afd33307cef164edf807cdc#diff-ace81e501931d8763b49f2410cf3094dR1449
+The issues was resolved by limiting the upload size, which _also_ was a feature request (but now got important due to the possible DOS attack). Further investigation showed that not memcached was the issue but temporary files kept around, but the rest of the argument stayed the same.
 
-So it depends on whether a web form allows one to control the "from"
-mail address or not.
 
-> Drupal doesn't contain PHPMailer, although mentioned in the advisory.
-> But there are probably plugins and extensions using it. I also saw it
-> used in some wordpress themes.
+> SOGo #3695 is listed twice but the second one has 3696 in the URL. We
+> are guessing that the second "SOGo #3695" is just a "SOGo #3696" typo.
+> More importantly, are there two distinct code problems? Or is it a
+> single code problem that is reachable with different attack vectors?
 
-I noticed this Drupal module: https://www.drupal.org/project/phpmailer
-which has some sort of integration with the widely used mimemail module.
-The linked module http://drupal.org/project/smtp also uses PHPMailer.
-There are undoubtedly more modules that do.
+These have been two different issues within related code, that have been resolved together:
 
-The LCMS system Chamilo also uses PHPMailer for sending mails internally.
+1. Not all private information removed for the public free/busy view
+2. It was possible to join appointments based on the UID of the public free/busy view from different users, to know who has appointments with whom
 
-Cheers,
-Peter Bex
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+> SOGo #3718 has two identical
+> "Issue: https://sogo.nu/bugs/view.php?id=3718" lines. Was one of them
+> supposed to be a different URL?
+
+I duplicated the line by accident.
+
+
+> SOGo #2598 - we are able to assign CVE-2014 IDs. Does "SOGo #2598:
+> Script injection in calendar title ... Reporter: Jens Erat" mean that
+> your own discovery was only about the calendar title, and that
+> additional attack vectors ("contacts module" and "CSS dialogs") were
+> follow-on discoveries by the Inverse team?
+
+The (now public) issue log says I realized the issue also exists with contacts, and the CSS stuff was not an additional attack vector, but a regression fix.
+
+
+-- 
+Jens Erat
+Universität Konstanz
+Kommunikations-, Infomations-, Medienzentrum (KIM)
+Abteilung Basisdienste
+D-78457 Konstanz
+Mail: jens.erat@...-konstanz.de 
+
+
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4913 bytes)
