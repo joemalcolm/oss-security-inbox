@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3362" "Sunday" "31" "May" "2015" "14:37:43" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150531183743.509626C0070@smtpvmsrv1.mitre.org>" "78" "[oss-security] Re: CVE request: vulnerability in wpa_supplicant and hostapd" nil nil nil "5" "2015053118:37:43" "[oss-security] Re: CVE request: vulnerability in wpa_supplicant and hostapd" (number mark "        cve-assign@m May 31   78/3362  " thread-indent "\"[oss-security] Re: CVE request: vulnerability in wpa_supplicant and hostapd\"\n") "<20150509170659.GA8826@w1.fi>" ("<20150509170659.GA8826@w1.fi>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1178" "Friday" "8" "July" "2016" "15:39:03" "+0200" "Lior Kaplan" "kaplanlior@gmail.com" "<CAEsznC46-6Z7vLuP2FDuNVATcOkGV8jERu8q059AFaP=TjusPA@mail.gmail.com>" "31" "[oss-security] On anonymous CVE assignments" "^Cc:" nil nil "7" "2016070813:39:03" "[oss-security] On anonymous CVE assignments" (number mark "        kaplanlior@g Jul  8   31/1178  " thread-indent "\"[oss-security] On anonymous CVE assignments\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11286 invoked by uid 550); 31 May 2015 18:37:55 -0000
+Received: (qmail 21944 invoked by uid 550); 8 Jul 2016 13:39:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,91 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11265 invoked from network); 31 May 2015 18:37:54 -0000
-In-Reply-To: <20150509170659.GA8826@w1.fi>
-Message-Id: <20150531183743.509626C0070@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Sun, 31 May 2015 14:37:43 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 21911 invoked from network); 8 Jul 2016 13:39:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=l3bV9GalfiYK7QAV3RATmyF8MnNf7QCmg6wKNiEndkA=;
+        b=IygUSSV1onkSp/iVLV3F32V4TqaozzU/Sww+lc5hswwGxbGn7NpmD9XJoJmMZmxxUv
+         46t3s5bsq374ubs2t+z96+grct4dXHYmmDZPWCdcUlS++7tIZKPCsyLG9Ubkg0ZA/tms
+         6Ql/d6e039GIU8DGgmZXRQr7na0hg5VeTijtnUcH5PgplQtg7zxmjyaQslsk6osFxk2t
+         owfQLzRcRy85kKGt7vv/3M+cHdJpOmIlKnsq7W8lXG/RfhnWLCIuWO+1OSkY2VU9YTpq
+         5kwNSlBVzrHyJTCZaSzeC+veOyZHdoUFUBQDqqT/LiW9yR+RmJuZRIsIwKt3f3id46FR
+         cDKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=l3bV9GalfiYK7QAV3RATmyF8MnNf7QCmg6wKNiEndkA=;
+        b=P05FGkRUdbXWbRrEftVW0S+i4IWIiFzsUudgK8EJxLyt9irrNC5E2lm3KVn38QRc0n
+         MmtU5wUducfVIFDbOiP9WNkv2Z/j4exByfgkx6moNYmnByqkyOk7+/DQLm4mWbJTk0SE
+         nkvcrWJN+GI97s4gQwtGuy8GAkUw+Wea6/o7SW8BZ+fAJcd2JOY2Reiqqijt9Aqp/T1i
+         kf4cmGsww2tQhtGG6Dmj0z4D29y0KaFr9J26yRnJCIj144rZZRiYYM0MHg4mQF7FHGKk
+         jQUxbgulMj8PtWFdlxyGU5VsV70IdHyO1LjGqcVSZvJ8uf0cGZUPu3n8hRMfOMZOO53o
+         l+kQ==
+X-Gm-Message-State: ALyK8tJvzomNqSPeABax6mIxsixCT1SYl4A7ejrLodPfd4KD7hjvQw3yCbfiHiypSvrFM80VISoxkn+WdSjKwg==
+X-Received: by 10.36.209.196 with SMTP id w187mr3429911itg.2.1467985143736;
+ Fri, 08 Jul 2016 06:39:03 -0700 (PDT)
+MIME-Version: 1.0
+Message-ID: <CAEsznC46-6Z7vLuP2FDuNVATcOkGV8jERu8q059AFaP=TjusPA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=94eb2c0b146e0731fb05371fed68
+Cc: oss-security@lists.openwall.com
+Date: Fri, 8 Jul 2016 15:39:03 +0200
+From: Lior Kaplan <kaplanlior@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: vulnerability in wpa_supplicant and hostapd
-To: j@w1.fi
+Subject: [oss-security] On anonymous CVE assignments
+To: cve-assign@mitre.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--94eb2c0b146e0731fb05371fed68
+Content-Type: text/plain; charset=UTF-8
 
->> There are currently 5 sets of advisories+patches at:
->> http://w1.fi/security/
+Hi,
 
-> No CVE has been requested for 2015-[234] prior to this
+I'm sorry for sending this to the cve-assign mail, but I think this is
+important to how CVE assignment process should work and the importance of
+cooperating with the upstream projects.
 
-2015-2 has one CVE ID, 2015-3 has one CVE ID, and 2015-4 has four CVE
-IDs, for a total of six. See below.
+In the past year+ I've been dealing with CVE assignment and the PHP
+project. During this period we managed to work closer with the Linux
+distributions and also to improve the internal process regarding CVE
+requests.
 
-> http://w1.fi/security/2015-2/wps-upnp-http-chunked-transfer-encoding.txt
-> http://w1.fi/security/2015-2/0001-WPS-Fix-HTTP-chunked-transfer-encoding-parser.patch
-> Vulnerable versions ... hostapd v0.7.0-v2.4 ... wpa_supplicant v0.7.0-v2.4
+I've blogged about a recent problem I encountered with is request and
+assignment of CVE for issues almost a year old without any public info
+about this ("anonymous requests"). Meaning that me, being part of upstream
+(incl. the security team), don't even know we've got CVE assigned and can
+update things on our side (and also other relevant upstreams such as libgd).
 
-> The HTTP implementation used for the UPnP operations uses a signed
-> integer for storing the length of a HTTP chunk when the chunked
-> transfer encoding and may end up using a negative value
+More details at
+https://liorkaplan.wordpress.com/2016/07/07/anonymous-cve-requests/
 
-Use CVE-2015-4141.
+I'll be happy to be referred to the right forum to further discuss this.
+Till then, I hope you'll take these remakes into consideration, so the
+whole eco system could work more smoothly.
 
+Kaplan
+The PHP project
 
-> http://w1.fi/security/2015-3/integer-underflow-in-ap-mode-wmm-action-frame.txt
-> http://w1.fi/security/2015-3/0001-AP-WMM-Fix-integer-underflow-in-WMM-Action-frame-par.patch
-> Vulnerable versions ... hostapd v0.5.5-v2.4 ... wpa_supplicant v0.7.0-v2.4
-
-> The frame length is previously verified to be large enough to include
-> the IEEE 802.11 header, but the couple of additional bytes after this
-> header are not explicitly verified and as a result of this, there may
-> be an integer underflow
-
-Use CVE-2015-4142.
-
-
-> http://w1.fi/security/2015-4/eap-pwd-missing-payload-length-validation.txt
-> Vulnerable versions ... hostapd v1.0-v2.4 ... wpa_supplicant v1.0-v2.4
-
-Use CVE-2015-4143 for the "The length of the received Commit and
-Confirm message payloads was not checked before reading them. This
-could result in a buffer read overflow when processing an invalid
-message." issues in both
-0001-EAP-pwd-peer-Fix-payload-length-validation-for-Commi.patch and
-0002-EAP-pwd-server-Fix-payload-length-validation-for-Com.patch.
-
-Use CVE-2015-4144 for "The remaining number of bytes in the message
-could be smaller than the Total-Length field size, so the length needs
-to be explicitly checked prior to reading the field and decrementing
-the len variable. This could have resulted in the remaining length
-becoming negative and interpreted as a huge positive integer." in both
-0003-EAP-pwd-peer-Fix-Total-Length-parsing-for-fragment-r.patch and
-0004-EAP-pwd-server-Fix-Total-Length-parsing-for-fragment.patch.
-
-Use CVE-2015-4145 for "check that there is no already started fragment
-in progress before allocating a new buffer for reassembling fragments.
-This avoid a potential memory leak when processing invalid message."
-in both
-0003-EAP-pwd-peer-Fix-Total-Length-parsing-for-fragment-r.patch and
-0004-EAP-pwd-server-Fix-Total-Length-parsing-for-fragment.patch.
-
-Use CVE-2015-4146 for
-0005-EAP-pwd-peer-Fix-asymmetric-fragmentation-behavior.patch.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVa1RZAAoJEKllVAevmvmsb4EIAKreo8c4uu04HwgAZLyRAHy5
-yUnVt5iFEmEtyhK1rs58oKYEx0oEX9hgcPLUcdPyo49PFBtOCyrXgMap1KlW5YCD
-5EryeqRLbnOinjGPBoRWrpGN+/zQleCSeMmZq9y1groeIFQpLFdJxOKMwDxOnuf5
-LiDhxr/PeRyed9qttCZEVExLNY/HsoZPm6bAcUuGmDpy4ES49ge2vslLtOs7xfBx
-NzzGuNGELtr2h7uEIXHA/glXE42A3h9y4IzznfPb0c2yURKU3TQ7ljkdpv/hYK8u
-bWN3186dkvTgi6FiKQojM7m9DNEt/V6grPGhbu9/m19IdMW6apCwG9BHbkeqYL8=
-=TOs/
------END PGP SIGNATURE-----
+--94eb2c0b146e0731fb05371fed68--
