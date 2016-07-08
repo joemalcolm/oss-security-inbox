@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1354" "Monday" "14" "November" "2016" "22:27:07" "-0500" "Leo Famulari" "leo@famulari.name" "<20161115032707.GA5104@jasmine>" "43" "Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell" nil nil nil "11" "2016111503:27:07" "[oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell" (number mark "U       leo@famulari Nov 14   43/1354  " thread-indent "\"Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell\"\n") "<88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>" ("<88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1339" "Friday" "8" "July" "2016" "11:16:33" "+0300" "Paul Wouters" "pwouters@redhat.com" "<e97fc0b3-06b5-41af-8379-111486ab1a0c@redhat.com>" "22" "Re: [oss-security] CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack" nil nil nil "7" "2016070808:16:33" "[oss-security] CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack" (number mark "U       pwouters@red Jul  8   22/1339  " thread-indent "\"Re: [oss-security] CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack\"\n") "<026336DF-456D-4D42-80B3-A36C74177F72@akamai.com>" ("<20160613144048.9BBA942E034@smtpvbsrv1.mitre.org>" "<f24b7778-0446-c5d1-4905-e75a580fcbc4@redhat.com>" "<026336DF-456D-4D42-80B3-A36C74177F72@akamai.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15420 invoked by uid 550); 15 Nov 2016 04:07:43 -0000
+Received: (qmail 15876 invoked by uid 550); 8 Jul 2016 08:16:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,77 +12,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24246 invoked from network); 15 Nov 2016 03:27:21 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=famulari.name; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to:x-me-sender:x-me-sender:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=x/43VSc8RmLqHmX6FLN6/8O6Scs=; b=uaeWQ+
-	fbbdcAdmSE8Nde/2PNaEufMOo3K3I24td1wvqcmm/bypCP9j8iK6h0pTcnxMQSnk
-	K9WTuRih+CKptNlC2l115UKeMoEh7AkcPv6QKkXj+VEJEB3YEyiz6RVELciNkde1
-	TDzP9gvQpWI9Se4K1x1NCsvHzHBATXnlbDEMs=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-me-sender
-	:x-me-sender:x-sasl-enc:x-sasl-enc; s=smtpout; bh=x/43VSc8RmLqHm
-	X6FLN6/8O6Scs=; b=UlXR5T2SMx0MiIiZiVL/5pZrCcrLGtTFtQVNtXM2ksZJ26
-	08FXROwzVMvBmCLVRawg0te7wtrbX1hyV/4PFrYE+xUq/P2i5jYe1RJrGuVhFRuv
-	exAtOxRck8HKojKGxhr1A+D4icQeEdRoq+Inzgeb9E/ErshFg1JaatgnaFYsE=
-X-ME-Sender: <xms:joAqWHo_OUtPG3m9QziNtpDz_PmNPFNDnWTBoRXHJOjaBYzY3qlwtQ>
-X-Sasl-enc: jy5zBb8nLL+S1Vt3Jk/73Fz8ssALOZvuDvWq9stH7kSw 1479180430
-Date: Mon, 14 Nov 2016 22:27:07 -0500
-From: Leo Famulari <leo@famulari.name>
+Received: (qmail 15858 invoked from network); 8 Jul 2016 08:16:47 -0000
 To: oss-security@lists.openwall.com
-Cc: fulldisclosure@seclists.org, bugtraq@securityfocus.com
-Message-ID: <20161115032707.GA5104@jasmine>
-References: <88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>
+References: <20160613144048.9BBA942E034@smtpvbsrv1.mitre.org>
+ <f24b7778-0446-c5d1-4905-e75a580fcbc4@redhat.com>
+ <026336DF-456D-4D42-80B3-A36C74177F72@akamai.com>
+Cc: "huzaifas@redhat.com" <huzaifas@redhat.com>,
+        "cve-assign@mitre.org" <cve-assign@mitre.org>
+From: Paul Wouters <pwouters@redhat.com>
+Message-ID: <e97fc0b3-06b5-41af-8379-111486ab1a0c@redhat.com>
+Date: Fri, 8 Jul 2016 11:16:33 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.1.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="J/dobhs11T7y2rNN"
-Content-Disposition: inline
-In-Reply-To: <88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>
-User-Agent: Mutt/1.7.1 (2016-10-04)
-Subject: Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell
+In-Reply-To: <026336DF-456D-4D42-80B3-A36C74177F72@akamai.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Fri, 08 Jul 2016 08:16:35 +0000 (UTC)
+Subject: Re: [oss-security] CVE Request: IKEv1 protocol is vulnerable to DoS
+ amplification attack
 
---J/dobhs11T7y2rNN
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 07/07/2016 07:27 PM, Seaman, Chad wrote:
+> Hi All,
+> 
+> I’m Chad Seaman @ Akamai, the researcher who found, researched, and wrote the paper on the IKEv1 and IKEv2 flaws that could lead to amplification attacks.
+> 
+> The opening e-mail states that IKEv2 is not believed to be affected, I can confirm that in some cases some implementations are indeed affected.
+> 
+> There was some doubts about IKEv2 being affected and I was contacted by a Cisco engineer as well as one of the RFC authors, we constructed multiple IKEv2
+> probe payloads and did a series of secondary scans that specifically targeted IKEv2 hosts to confirm these results.
+> 
+> Where hosts should respond once based on IKEv2 RFC specs, hundreds of thousands reply multiple times, roughly 110,000 reply 21 times or more per single
+> probe, some of the worst offenders responded thousands of times.
+> 
 
-On Mon, Nov 14, 2016 at 08:45:51PM +0000, Hector Marco wrote:
-> Hello All,
->=20
-> Affected package
-> ----------------
-> Cryptsetup <=3D 2:1
+Are you sure those replies did not come from IKEv1 servers that do not implement IKEv2 ? A bunch of implementations just copy the incoming header
+to construct the outgoing header. You can detect this by sending an bogus IKEv3 packet and see if they reply the same to that.
 
-Hi,
+Can you confirm your test actually got a valid IKE_INIT reply that was re-send multiple times? If so, can you detect the vendor behind it? I can probably help
+fingerprint that to determine.
 
-Can you clarify which versions are affected?
+Paul
 
-The latest upstream version is 1.7.3:
-
-https://gitlab.com/cryptsetup/cryptsetup/commits/master
-
-What is the 2:1 version?
-
---J/dobhs11T7y2rNN
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIcBAEBCAAGBQJYKoCIAAoJECZG+jC6yn8Ih20P/1K0ETdOCLovkNsYMAPxUeNF
-KEEbuAHPN3aU24aa/D9MVRLSV423KuoQUOTDgetYzSh0cf0SyZzoa+RM7dPPdOU4
-jPF6ka4vThGNl/KnyYH8tynGEjDFG6ZDa+TXc2ySRGnT1vU2iVbzEdhRAyDwPVuY
-lwa1n1eZGBXDMO3SVNNZjIwzUzRhZSER7knDmCUV3/313NeOtBK3xQu0quOcZdEv
-OPsJxJatbW+yUJ2CqdNo+fKIzdV8+xT2u/5eV3VKp6MELbsrGOVgcNkMS5m1EUih
-hUZ3sqotj/T6ua39P7BA0FOpT8Oc8C9v6A/yA3F89IXQWXKOboq/yzppTjlBHXZ8
-icCan3Ml0fjoqfWIShwHKq1LBwEI3Bhjh4bp+WxRE3/O2P6iIid4f/NiJKN7iDRp
-UbjqWL39zDgbnUaHzhzLxTLfI9lUqdZ2gOf1Pkj9l+4R2gtpHe56b1PxFIQGreTF
-K6fUqOqrqofuvpOxojczWmzPhNnQFLgZpfUpx/Ku83Z46Ydpn374aQI7UsrzJDQa
-Y36G48PMlNVLpZoDMExTbX3Mle6IcqSXayQSUi28RwdzNXQreoWWsJerx0qDbWQw
-D/VNhO0LcoGj1Z1wxXPr6UepnpEKVvfBA+vcVbez3g7xUWha9OQQSRMOfjvUOLMc
-0PHNQ8qGFZyHIuY6vv3K
-=AA7L
------END PGP SIGNATURE-----
-
---J/dobhs11T7y2rNN--
