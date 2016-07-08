@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1402" "Friday" "23" "November" "2018" "09:34:51" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<8770596.Fmibit0Khg@overwatch>" "40" "Re: [oss-security] Crashes and memory safety bugs in dcraw" "^Date:" nil nil "11" "2018112308:34:51" "[oss-security] Crashes and memory safety bugs in dcraw" (number mark "        ago@gentoo.o Nov 23   40/1402  " thread-indent "\"Re: [oss-security] Crashes and memory safety bugs in dcraw\"\n") "<20181123092217.7e4a0f84@computer>" ("<20181123092217.7e4a0f84@computer>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1038" "Friday" "8" "July" "2016" "15:43:31" "-0400" "Glenn Randers-Pehrson" "glennrp@gmail.com" "<CA+PdXcs2t_Jj2m+jx9Q2TbfstaX_PijmfYEcJm=LZMk-Xy4m0g@mail.gmail.com>" "28" "Re: [oss-security] On anonymous CVE assignments" nil nil nil "7" "2016070819:43:31" "[oss-security] On anonymous CVE assignments" (number mark "U       glennrp@gmai Jul  8   28/1038  " thread-indent "\"Re: [oss-security] On anonymous CVE assignments\"\n") "<CANO=Ty3S0SmpoUVj5ZiQL9RF99PL7Kxt4SpDJQt2D_1SDwQmsw@mail.gmail.com>" ("<CAEsznC46-6Z7vLuP2FDuNVATcOkGV8jERu8q059AFaP=TjusPA@mail.gmail.com>" "<CANO=Ty3S0SmpoUVj5ZiQL9RF99PL7Kxt4SpDJQt2D_1SDwQmsw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29905 invoked by uid 550); 23 Nov 2018 08:35:09 -0000
+Received: (qmail 11538 invoked by uid 550); 8 Jul 2016 19:43:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29881 invoked from network); 23 Nov 2018 08:35:08 -0000
-Message-ID: <8770596.Fmibit0Khg@overwatch>
-In-Reply-To: <20181123092217.7e4a0f84@computer>
-References: <20181123092217.7e4a0f84@computer>
-MIME-Version: 1.0
-Content-Type: multipart/alternative; boundary="nextPart5062658.U8SEKzg649"
-Content-Transfer-Encoding: 7Bit
-Date: Fri, 23 Nov 2018 09:34:51 +0100
-From: Agostino Sarubbo <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Crashes and memory safety bugs in dcraw
+Received: (qmail 11519 invoked from network); 8 Jul 2016 19:43:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=fqD72NT7E63AlZqtAAxY4DbVKaDlnbTtKpluDsvbD44=;
+        b=isvwZtlvaxhnHeIRwry3QsMM69wh0sEHt0dv/KyPI0MgyE/G9uzJxXjPK3jgrtjkJk
+         YvaeshOZXbOFi4jzqCbosnOCGaU8f3eGSFHPJYX5+yH6EkZPymEVxttFSsIZB2EU/6mp
+         8FXd4Sje0onrIYiHT7S1AkOOjMLWl8SqEUtsg72nPgT78qavKOVKS1JOKfvh6JjUtlmE
+         2+jGTM3yiPzNGmtOvFBMTHK+g7CS3yLFqr2/kgc0vUteeH7cjCkiCBil6G0jshV9UAhM
+         gMCTzbokNEalbSahIFlfHZ173RsWywQdz28tbpyjfQMCYKSYF96SDDHFxyw/nzD6YRqh
+         WxLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=fqD72NT7E63AlZqtAAxY4DbVKaDlnbTtKpluDsvbD44=;
+        b=CL9+YQ11mvicL+yIVejNg9Y+gdTjvqDgIG3JutfJ0vdb0+GNOBJGofFJwo1cBm4SRO
+         Qc+4zHVIonw5uE1xTTtAfVcG6anhQkXvhjpWNohoQSimHY6Ld3YDUTtQoQqebA0oAzSb
+         REYsMSs2khknjsdvyTvtdmEZh8Yj9dlsL6HmHk96+BqZBOByC8SToXy9HjNmetz1ZMc/
+         DBANwlXENLzH/YCmpgt805V0t5gY9Jrc7ghRrduHSJrLoSFLWFMGA6mz6/18ASH5K+ps
+         MnpQL4mHKBqFjIa5041kNbgYCoEzKNkOxj2foBPUkYSZAW2ddjkqDqD9GjIy/rR+quVC
+         yf7g==
+X-Gm-Message-State: ALyK8tISHekfHvh1pRoV6DH1yVF2GypOS2kGMNVkBNpllAdtDkdCLtFQ7YK5V5ytPZ0kh99HjOFkiTv4aQqmZw==
+X-Received: by 10.36.60.87 with SMTP id m84mr5230609ita.4.1468007011684; Fri,
+ 08 Jul 2016 12:43:31 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <CANO=Ty3S0SmpoUVj5ZiQL9RF99PL7Kxt4SpDJQt2D_1SDwQmsw@mail.gmail.com>
+References: <CAEsznC46-6Z7vLuP2FDuNVATcOkGV8jERu8q059AFaP=TjusPA@mail.gmail.com>
+ <CANO=Ty3S0SmpoUVj5ZiQL9RF99PL7Kxt4SpDJQt2D_1SDwQmsw@mail.gmail.com>
+From: Glenn Randers-Pehrson <glennrp@gmail.com>
+Date: Fri, 8 Jul 2016 15:43:31 -0400
+Message-ID: <CA+PdXcs2t_Jj2m+jx9Q2TbfstaX_PijmfYEcJm=LZMk-Xy4m0g@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Cc: CVE ID Requests <cve-assign@mitre.org>
+Content-Type: multipart/alternative; boundary=001a114aa626759a13053725047a
+Subject: Re: [oss-security] On anonymous CVE assignments
 
---nextPart5062658.U8SEKzg649
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
+--001a114aa626759a13053725047a
+Content-Type: text/plain; charset=UTF-8
 
-On venerd=C3=AC 23 novembre 2018 09:22:17 CET Hanno B=C3=B6ck wrote:
-> Segfault / memory read on invalid address in crop_masked_pixels
-> =3D=3D6511=3D=3DERROR: AddressSanitizer: SEGV on unknown address 0x7fa0aa=
-2ad79e (pc
-> 0x0000005992fe bp 0x7ffdd236bb50 sp 0x7ffdd236b9e0 T0) =3D=3D6511=3D=3DTh=
-e signal
-> is caused by a READ memory access.
->     #0 0x5992fd in crop_masked_pixels /mnt/ram/dcraw/dcraw.c:3775:20
->     #1 0x668a33 in main /mnt/ram/dcraw/dcraw.c:10406:7
->     #2 0x7fa05f3264ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
->     #3 0x41c629 in _start (/mnt/ram/dcraw/a.out+0x41c629)
->=20
-> Invalid memory read in crop_masked_pixels
-> =3D=3D6893=3D=3DERROR: AddressSanitizer: SEGV on unknown address 0x7f5514=
-dad79e (pc
-> 0x0000005992fe bp 0x7ffc83994ad0 sp 0x7ffc83994960 T0) =3D=3D6893=3D=3DTh=
-e signal
-> is caused by a READ memory access.
->     #0 0x5992fd in crop_masked_pixels /mnt/ram/dcraw/dcraw.c:3775:20
->     #1 0x668a33 in main /mnt/ram/dcraw/dcraw.c:10406:7
->     #2 0x7f54c9df64ca in __libc_start_main (/lib64/libc.so.6+0x234ca)
->     #3 0x41c629 in _start (/mnt/ram/dcraw/a.out+0x41c629)
+*CVE*-*2016*-*3751*(H)
 
-Hi Hanno,
+On Fri, Jul 8, 2016 at 9:55 AM, Kurt Seifried <kseifried@redhat.com> wrote:
 
-are the first and the third similar or I'm missing something?
-TIA
+> Also if projects don't like "Surprise" CVEs one way to deal with that is to
+> request the CVE's themselves when they know something is a security
+> vulnerability. Also making it easy to contact them helps, the harder you
+> make it for a security researcher to deal with you, the less likely they
+> are to.
+>
 
---=20
-Agostino Sarubbo
-Gentoo Linux Developer
+It's hard to do that when a "surprise" CVE was never sent to the project,
+for example  *CVE*-*2016*-*3751*(H) which just appeared in an Android
+security
+bulletin.  It claims that libpng has a bug that allows privilidge escalation
+and was reported 3 Dec 2015. I'm guessing that it is a duplicate of
+CVE-2015-8126 or CVE-2015-8472, but it's hard to tell for sure without
+seeing it.  All I've been able to find out is that it is a "reserved" CVE,
+with
+no clue as to who reserved it.
 
---nextPart5062658.U8SEKzg649--
+Glenn Randers-Pehrson
+libpng custodian
 
-
-
+--001a114aa626759a13053725047a--
