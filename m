@@ -1,50 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/03/8
-Message-ID: <5751DAF8.6060901@pipping.org>
-Date: Fri, 3 Jun 2016 21:31:04 +0200
-From: Sebastian Pipping <sebastian@...ping.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: expat hash collision fix too predictable?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/08/5
+Message-Id: <20160708140710.C1C3F6FCE57@smtpvmsrv1.mitre.org>
+Date: Fri,  8 Jul 2016 10:07:10 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: perl: XSLoader: could load shared library from incorrect location
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-
-On 05.04.2012 11:30, Marcus Meissner wrote:
-> Hi,
+> Jakub Wilk reported in [1] that the Perl module List::MoreUtils tried
+> to load code from a subdirectory of the current working directory
+> despite explicitly removing the current directory from @INC, which
+> could lead to the execution of arbitrary code if cwd is untrusted, as
+> demonstrated in the bugreport.
 > 
-> while reviewing a expat regression (likely caused by the hash collision denial of service fix, but unclear)
-> i stumbled about the randomness it uses.
+> While analyzing the issue[2], it turns out that the issue is actually in
+> XSLoader, which uses caller() information to locate the .so file to
+> load. This can be incorrect if XSLoader::load() is called in a string
+> eval. The fix commited upstream is [3].
 > 
-> 	static unsigned long
-> 	generate_hash_secret_salt(void)
-> 	{
-> 	  unsigned int seed = time(NULL) % UINT_MAX;
-> 	  srand(seed);
-> 	  return rand();
-> 	}
+> @MITRE: Could you please assign a CVE for this issue in XSLoader? Do
+> you think List::MoreUtils needs a separate CVE as well, despite the
+> underlying issue lying in XSLoader[4]?
 > 
-> and it is seeded once at parser object creation.
-> 
-> This is better than not seeding, but I am not sure if it is sufficient.
-> 
-> Ciao, Marcus
-> 
+>  [1] https://bugs.debian.org/829138
+>  [2] https://rt.cpan.org/Ticket/Display.html?id=115808
+>  [3] http://perl5.git.perl.org/perl.git/commit/08e3451d7b3b714ad63a27f1b9c2a23ee75d15ee
+>  [4] https://bugs.debian.org/829578
 
-Please excuse bumping this thread.  It think it may need another CVE:
+Use CVE-2016-6185 for the XSLoader vulnerability.
 
-The call to srand(3) can reduce the security of the calling application,
-depending on what it is doing with srand(3)/random(3).  This behavior is
-recognized as a bug by Fedora, too
-(https://bugzilla.redhat.com/show_bug.cgi?id=1197087).
+There is not currently a separate CVE for List::MoreUtils. As far as
+we can tell, the "Sun Jul 03 14:20:04 2016" section of 115808 gives
+possible reasons for List::MoreUtils to be fixed independently, but
+doesn't directly argue that List::MoreUtils was responsible for a
+vulnerability on its own. Actually, it might imply the opposite, with
+the "Even if List::MoreUtils is not at fault, I think this patch is
+helpful" wording.
 
-There are multiple related commits in Expat's Git repository.  I am
-happy to extract a single to-the-point patch for your version of Expat
-and operating system platform from that for you, if needed.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Best
-
-
-
-Sebastian
-
+iQIcBAEBCAAGBQJXf7JGAAoJEHb/MwWLVhi2cTEP/3GVbvUCtrt1qhknJqIsOkBk
+hM6MiFHbF2Au0x3BoLT982ivdZmzTHSWgFzJhmEqo59Q3tbfvtsBsrqxmjaDhKoM
+6JQHbafMtd9HsgPfn6lzd20nWDc8Z+TW+yPigWT9cnXWJ+GGqGtU4shE/Bd0RWqU
+SHuO5TVA4veZdcXyUNlmGxar7NtEbjH2/Yfa10hE3CgRyWSKc8xZBP68/qNKSGnU
+E+dP4G1nbB/8KTlDXB7JcWGiqWXI704h0PoAbgTD4v/JizZmz4gZWoKgoeXfukOf
+SMES/QmVH8sEUIjgwstuf0VPjzQlJ+yLHDzJspODtCeGNvgcmZCA/O0HY0oQjpLA
+W8+EWNhkMS6j641owiNwhgok2xpWe39crqK1EzIBWcZijByTB7SZwDcuvzxq8rhH
+st3k10lF+VT26t4e8D6wFSi44xld+Qc2ngIUMAyrGmEp01p3jppnnpAMtpSpKRQ4
+hJN19AkiIAyMPIEHbuv19yMvWYnfBu34rW3ZleYsl1ZTqPz8wxTdsbthYfhPz1L7
+NauVi4xlVKYqNrD8O4hV0OFolYXzn8o5WKVWaSby+nszL/mELzQCPlog5QUnqmSy
+5+Pl5a7Ae8eZCAlsI8iuvDBcFeMHzNojHIJEk0m06riTB3uiDug9X5Cgp7QZ6AbN
+T5OSd5vKksMXgbMqIKIi
+=NaWX
+-----END PGP SIGNATURE-----
