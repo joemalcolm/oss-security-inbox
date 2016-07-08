@@ -1,73 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/01/2
-Message-ID: <CAEsznC4-QChSbpYPR8cDCdjOyGpiseTv0VYwSra2+ttkiBNm=A@mail.gmail.com>
-Date: Tue, 1 Nov 2016 10:58:28 +0200
-From: Lior Kaplan <kaplanlior@...il.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE assignment for PHP 5.6.27 and 7.0.12
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/08/4
+Message-ID: <CANO=Ty3S0SmpoUVj5ZiQL9RF99PL7Kxt4SpDJQt2D_1SDwQmsw@mail.gmail.com>
+Date: Fri, 8 Jul 2016 07:55:40 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: CVE ID Requests <cve-assign@...re.org>
+Subject: Re: On anonymous CVE assignments
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 18, 2016 at 7:34 PM, <cve-assign@...re.org> wrote:
+I'm hoping to make this better with the DWF by including more meta data in
+the CVE data (e.g. affected products/versions) which will make it much
+easier to automate notification in the future (e.g. "if affected product ==
+php then email security@....net" or whatever). Part of the problem is that
+for an org like MITRE or the DWF to do all the coordination around security
+issues (as opposed to straight up CVE assignments) is highly labor
+intensive and difficult to scale.
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
+Also if projects don't like "Surprise" CVEs one way to deal with that is to
+request the CVE's themselves when they know something is a security
+vulnerability. Also making it easy to contact them helps, the harder you
+make it for a security researcher to deal with you, the less likely they
+are to.
+
+On Fri, Jul 8, 2016 at 7:39 AM, Lior Kaplan <kaplanlior@...il.com> wrote:
+
+> Hi,
 >
-> > Please assign a CVE for the following issue:
-> >
-> > Bug #73147    Use After Free in unserialize()
-> > https://bugs.php.net/bug.php?id=73147
-> > http://git.php.net/?p=php-src.git;a=commit;h=
-> 0e6fe3a4c96be2d3e88389a5776f878021b4c59f
+> I'm sorry for sending this to the cve-assign mail, but I think this is
+> important to how CVE assignment process should work and the importance of
+> cooperating with the upstream projects.
 >
-> Can you clarify what should be the scope of this CVE?
-> zend_unset_property doesn't exist at all in PHP 7.0.11. The
-> 0e6fe3a4c96be2d3e88389a5776f878021b4c59f commit adds
-> zend_unset_property for PHP 7.0.12, and arranges for
-> zend_unset_property to be called only from
-> "ZEND_METHOD(CURLFile, __wakeup)" in ext/curl/curl_file.c.
+> In the past year+ I've been dealing with CVE assignment and the PHP
+> project. During this period we managed to work closer with the Linux
+> distributions and also to improve the internal process regarding CVE
+> requests.
 >
-> We're not sure whether that affects anything outside of the CURLFile
-> implementation. However, 73147 discusses other concerns such as "The
-> similar bug can be also triggered via Exception::__toString with
-> DateInterval::__wakeup" and "The problem is that every __wakeup that
-> modifies any property would produce the same problem."
+> I've blogged about a recent problem I encountered with is request and
+> assignment of CVE for issues almost a year old without any public info
+> about this ("anonymous requests"). Meaning that me, being part of upstream
+> (incl. the security team), don't even know we've got CVE assigned and can
+> update things on our side (and also other relevant upstreams such as
+> libgd).
 >
-> There seems to be a related code change between 7.0.11 and 7.0.12 that
-> arranges for additional calls to zend_unset_property:
+> More details at
+> https://liorkaplan.wordpress.com/2016/07/07/anonymous-cve-requests/
 >
->   http://git.php.net/?p=php-src.git;a=blobdiff;f=Zend/zend_exceptions.c;h=
-> f21968733581a3cb672d039bec16ce6f17a93db9;hp=95d18f45fbea8808c00975b5df4619
-> d5d6745ab0;hb=689a9b8def07875641b3132a82c701fb7acb676c;hpb=
-> 4165d976066129000d947ffa3be73f91e9867635
+> I'll be happy to be referred to the right forum to further discuss this.
+> Till then, I hope you'll take these remakes into consideration, so the
+> whole eco system could work more smoothly.
 >
-> So, some of the options include:
->
-> 1. 0e6fe3a4c96be2d3e88389a5776f878021b4c59f is a complete security
-> patch that fixes everything discussed in 73147, including the "other
-> concerns" mentioned above.
->
-> 2. 0e6fe3a4c96be2d3e88389a5776f878021b4c59f fixes only the CURLFile
-> implementation. The "other concerns" mentioned above are
-> vulnerabilities that still exist in 7.0.12.
->
-> 3. The combination of 0e6fe3a4c96be2d3e88389a5776f878021b4c59f and the
-> above Zend/zend_exceptions.c diff is a complete security patch that
-> fixes everything discussed in 73147, including the "other concerns"
-> mentioned above. There only needs to be one CVE ID associated with
-> this complete security patch.
->
-> 4. The combination of 0e6fe3a4c96be2d3e88389a5776f878021b4c59f and the
-> above Zend/zend_exceptions.c diff is a complete security patch that
-> fixes everything discussed in 73147, including the "other concerns"
-> mentioned above. There should be one CVE ID for the security fix to
-> the CURLFile implementation, and a separate CVE ID for the security
-> fix found in Zend/zend_exceptions.c.
->
-> Which of the above (1 through 4) is correct and/or preferred?
+> Kaplan
+> The PHP project
 >
 
-I've asked Stas (who fixed the issue) and #2 is the current situation.
 
-Kaplan
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
