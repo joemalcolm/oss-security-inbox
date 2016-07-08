@@ -1,35 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/19
-Message-ID: <20160316205050.GB2990@pisco.westfalen.local>
-Date: Wed, 16 Mar 2016 21:50:50 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/08/1
+Message-ID: <e97fc0b3-06b5-41af-8379-111486ab1a0c@redhat.com>
+Date: Fri, 8 Jul 2016 11:16:33 +0300
+From: Paul Wouters <pwouters@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Three CVE requests for PHP
+Cc: "huzaifas@...hat.com" <huzaifas@...hat.com>, "cve-assign@...re.org" <cve-assign@...re.org>
+Subject: Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign CVE IDs (these need to be CVE-2015-XXXX) for these
-vulnerabilities fixed in the PHP implementations by php.net and HHVM.
-These are all fixed in PHP 5.6.13, PHP 5.5.29, PHP 5.4.45 and HHVM 3.12.1.
+On 07/07/2016 07:27 PM, Seaman, Chad wrote:
+> Hi All,
+> 
+> I’m Chad Seaman @ Akamai, the researcher who found, researched, and wrote the paper on the IKEv1 and IKEv2 flaws that could lead to amplification attacks.
+> 
+> The opening e-mail states that IKEv2 is not believed to be affected, I can confirm that in some cases some implementations are indeed affected.
+> 
+> There was some doubts about IKEv2 being affected and I was contacted by a Cisco engineer as well as one of the RFC authors, we constructed multiple IKEv2
+> probe payloads and did a series of secondary scans that specifically targeted IKEv2 hosts to confirm these results.
+> 
+> Where hosts should respond once based on IKEv2 RFC specs, hundreds of thousands reply multiple times, roughly 110,000 reply 21 times or more per single
+> probe, some of the worst offenders responded thousands of times.
+> 
 
-1. Buffer over-read in exif_read_data with TIFF IFD tag byte value of 32 bytes
-https://bugs.php.net/bug.php?id=70385
-https://github.com/facebook/hhvm/commit/06f3fc8091d8da793552db0e4d9a0d4add9c0bcc
+Are you sure those replies did not come from IKEv1 servers that do not implement IKEv2 ? A bunch of implementations just copy the incoming header
+to construct the outgoing header. You can detect this by sending an bogus IKEv3 packet and see if they reply the same to that.
 
-2 ZipArchive::extractTo allows for directory traversal when creating directories
-https://bugs.php.net/bug.php?id=70350
-https://github.com/facebook/hhvm/commit/65c95a01541dd2fbc9c978ac53bed235b5376686
+Can you confirm your test actually got a valid IKE_INIT reply that was re-send multiple times? If so, can you detect the vendor behind it? I can probably help
+fingerprint that to determine.
 
-3. HAVAL gives wrong hashes in specific cases
-https://bugs.php.net/bug.php?id=70312
-https://github.com/facebook/hhvm/commit/918b174fa1e9924a9ecaecb08efcfdcab3db6151
-
-Cheers,
-        Moritz
-
-
-
-
-
+Paul
 
