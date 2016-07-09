@@ -1,63 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/23/7
-Message-ID: <9cfba660-64cf-c287-2be2-2545c46afac3@gentoo.org>
-Date: Fri, 23 Sep 2016 14:35:41 +0200
-From: Thomas Deutschmann <whissi@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/09/5
+Message-ID: <20160709192458.GA30952@openwall.com>
+Date: Sat, 9 Jul 2016 22:24:58 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVEs for vulnerabilities listed in MySQL 5.6.33 release note
+Subject: CVE-2016-4971: wget < 1.18 trusts server-provided filename on HTTP to FTP redirects
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-the MySQL 5.6.33 changelog [1] lists multiple fixed vulnerabilities but
-I can't find CVEs for all of these problems. Am I missing something? If
-not, could you please assign CVEs which would help tracking the status
-of these problems in MariaDB and Percona-Server (see Percona's latest
-release notes for their 5.6.32-based fork [2] which seems to address
-vulnerabilities listed in 5.6.33):
+In 2010, several command-line programs were fixed to distrust filenames
+provided by HTTP servers via Location and Content-Disposition headers.
+wget gained --trust-server-names and --content-disposition options to
+let users revert to the old (risky) behavior.
 
-> For mysqld_safe, the argument to --malloc-lib now must be one of the
->  directories /usr/lib, /usr/lib64, /usr/lib/i386-linux-gnu, or 
-> /usr/lib/x86_64-linux-gnu. In addition, the --mysqld and 
-> --mysqld-version options can be used only on the command line and not
-> in an option file. (Bug #24464380)
+http://www.ocert.org/advisories/ocert-2010-001.html
+http://www.openwall.com/lists/oss-security/2010/05/17/1
+http://www.openwall.com/lists/oss-security/2010/08/17/2
 
-This one seems to be related to CVE-2016-6662 but one could argue this
-deserve its one CVE.
+As it turns out, the fix for wget was incomplete, not covering the
+special case of HTTP to FTP redirects.  This is addressed in wget 1.18
+released a month ago:
 
+https://lists.gnu.org/archive/html/info-gnu/2016-06/msg00004.html
 
-> It was possible to write log files ending with .ini or .cnf that 
-> later could be parsed as option files. The general query log and
-> slow query log can no longer be written to a file ending with .ini
-> or .cnf. (Bug #24388753)
+"This version fixes a security vulnerability (CVE-2016-4971) present in
+all old versions of wget.  The vulnerability was discovered by Dawid
+Golunski which were reported to us by Beyond Security's SecuriTeam.
 
-This is CVE-2016-6662.
+On a server redirect from HTTP to a FTP resource, wget would trust the
+HTTP server and uses the name in the redirected URL as the destination
+filename.
+This behaviour was changed and now it works similarly as a redirect from
+HTTP to another HTTP resource so the original name is used as
+the destination file.  To keep the previous behaviour the user must
+provide --trust-server-names."
 
+Upstream commit:
 
-> Privilege escalation was possible by exploiting the way REPAIR TABLE
-> used temporary files. (Bug #24388746)
+http://git.savannah.gnu.org/cgit/wget.git/commit/?id=e996e322ffd42aaa051602da182d03178d0f13e1
 
-This one seems to be without a CVE (I guess this isn't CVE-2016-6663).
+Exploit:
 
+http://legalhackers.com/advisories/Wget-Arbitrary-File-Upload-Vulnerability-Exploit.txt
 
-Thanks!
+(also attached to this message).  A component of the attack - making
+wget download a .wgetrc first - was described here:
 
+http://www.openwall.com/lists/oss-security/2010/05/18/13
 
+but there are also new tricks: the HTTP to FTP redirect, and the use of
+post_file to make wget POST a file from the server with the cron job.
 
-See also:
-=========
-[1] https://dev.mysql.com/doc/relnotes/mysql/5.6/en/news-5-6-33.html
+Alexander
 
-[2]
-https://www.percona.com/blog/2016/09/21/percona-server-5-6-32-78-1-is-now-available/
-
-
--- 
-Regards,
-Thomas
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (952 bytes)
+View attachment "Wget-Arbitrary-File-Upload-Vulnerability-Exploit.txt" of type "text/plain" (16266 bytes)
