@@ -1,21 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/03/7
-Message-ID: <20160303102809.GH20296@bendel.debian.org>
-Date: Thu, 3 Mar 2016 10:28:09 +0000
-From: Cord Beermann <cord@...ian.org>
-To: "Adam D. Barratt" <adam@...m-barratt.org.uk>
-Cc: oss-security@...ts.openwall.com, cypherpunks@...nks.org, debian-legal@...ts.debian.org, listmaster@...ts.debian.org
-Subject: Re: According to www.virustotal.com, lists.debian.org are hosting attachment .DOC virus
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/09/4
+Message-ID: <CA+PdXcs3nHUMs8cnF_XMNOOq7_yARB_qK_6kr4bufvgRYFUySA@mail.gmail.com>
+Date: Sat, 9 Jul 2016 12:35:27 -0400
+From: Glenn Randers-Pehrson <glennrp@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: On anonymous CVE assignments
 Content-Type: text/plain; charset=utf-8
 
-Hallo! Du (Adam D. Barratt) hast geschrieben:
+On Fri, Jul 8, 2016 at 3:43 PM, Glenn Randers-Pehrson <glennrp@...il.com>
+wrote:
 
-> If you want an answer from those who deal with lists, you have to ask them.
-> debian-legal@ is just another mailing list.
+> *CVE*-*2016*-*3751*(H)
+>
+> On Fri, Jul 8, 2016 at 9:55 AM, Kurt Seifried <kseifried@...hat.com>
+> wrote:
+>
+>> Also if projects don't like "Surprise" CVEs one way to deal with that is
+>> to
+>> request the CVE's themselves when they know something is a security
+>> vulnerability. Also making it easy to contact them helps, the harder you
+>> make it for a security researcher to deal with you, the less likely they
+>> are to.
+>>
+>
+> It's hard to do that when a "surprise" CVE was never sent to the project,
+> for example  *CVE*-*2016*-*3751*(H) which just appeared in an Android
+> security
+> bulletin.  It claims that libpng has a bug that allows privilidge
+> escalation
+> and was reported 3 Dec 2015. I'm guessing that it is a duplicate of
+> CVE-2015-8126 or CVE-2015-8472, but it's hard to tell for sure without
+> seeing it.  All I've been able to find out is that it is a "reserved" CVE,
+> with
+> no clue as to who reserved it.
+>
 
-The file has been removed. 
+I still haven't seen the CVE, but it seems that it is a report against a
+fork of libpng, that had fallen several years out-of-date, and the CVE
+is just a private catch-all for updating the fork to current libpng status.
 
-Yours,
-        Cord, Debian Listmaster of the day
--- 
-https://lists.debian.org
+
+> Glenn Randers-Pehrson
+> libpng custodian
+>
+>
+
