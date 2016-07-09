@@ -1,4 +1,9 @@
-Received: (qmail 1377 invoked by uid 550); 1 Sep 2022 10:36:11 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1390" "Saturday" "9" "July" "2016" "12:35:27" "-0400" "Glenn Randers-Pehrson" "glennrp@gmail.com" "<CA+PdXcs3nHUMs8cnF_XMNOOq7_yARB_qK_6kr4bufvgRYFUySA@mail.gmail.com>" "42" "Re: [oss-security] On anonymous CVE assignments" nil nil nil "7" "2016070916:35:27" "[oss-security] On anonymous CVE assignments" (number mark "U       glennrp@gmai Jul  9   42/1390  " thread-indent "\"Re: [oss-security] On anonymous CVE assignments\"\n") "<CA+PdXcs2t_Jj2m+jx9Q2TbfstaX_PijmfYEcJm=LZMk-Xy4m0g@mail.gmail.com>" ("<CAEsznC46-6Z7vLuP2FDuNVATcOkGV8jERu8q059AFaP=TjusPA@mail.gmail.com>" "<CANO=Ty3S0SmpoUVj5ZiQL9RF99PL7Kxt4SpDJQt2D_1SDwQmsw@mail.gmail.com>" "<CA+PdXcs2t_Jj2m+jx9Q2TbfstaX_PijmfYEcJm=LZMk-Xy4m0g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5785 invoked by uid 550); 9 Jul 2016 16:35:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,135 +12,81 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18106 invoked from network); 1 Sep 2022 03:01:53 -0000
+Received: (qmail 5765 invoked from network); 9 Jul 2016 16:35:40 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:to:references:date:subject:mime-version:from
-         :from:to:cc;
-        bh=qiLW2AnqSbBSZ3KqzsqLJ7AT3Bt3Fa3yIHDvr0wbG4M=;
-        b=Ph+cL7PqTVjKwuF5NblIogXZUxu7GW+P9f8/+xwzuKLreGnKW4fLIasb4/f3kqzoyi
-         4aybWCTWzPnP86u3Bt+djUVkxGP8PSrJMCpRKJkG1NYHH0bQ3I9V4k4bokWSu06sCxHY
-         ZahKexIy9E+PQrdv16FAuzWm1zAOqNORQHlAGiy6PyzD1/gWDvAz23TNq/swQ21fqViC
-         wBVoQBGhoCkGWfT6nQd8+NO+Mep08S1sK74crouPlv5asS23WNcLEo/NlWsX+cXdiXMq
-         86bkzHGsMMb7HEizmdqy4sY7VEIWQo4wS5i1ZLMexUzRcH9SioVFG4Pc+Ugv2AhmDWxX
-         Jy0Q==
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=XYw+ZHNGEOQlzhP46ranld/aYEHfH39YbGxm/8sgEaU=;
+        b=hGRLn46mqea640p6sW4dLOjJeMikt9Dwxgvdxb9IbkXWnF+AbXg96zqarh9PjC3BUs
+         5KO6Qo//7iBiOAoR098E3tWGrC4bh+hxYEwwdA9XBtInvpwVKDdUjLfOhlAvfuMm7M0R
+         d3hRyAinbwNiabAxECXeQLeY3tHWE+RrQMghIrfYMADyjJrQO37z+9O8QQ/dREYRei/M
+         Lmtjecu+gs+Ahr5kq9Zv0Tvr+9h/AUHUmNhNSDFao3b0AUd3s0YzhhfXOnPY8bFm7Xlw
+         eT275R5VCMbkgauXkJnrixKn8C0NiOUj8Kk6jS/WOphZe1fLJIZlg0MCdCgH1R0kUgyY
+         Xzxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=message-id:in-reply-to:to:references:date:subject:mime-version:from
-         :x-gm-message-state:from:to:cc;
-        bh=qiLW2AnqSbBSZ3KqzsqLJ7AT3Bt3Fa3yIHDvr0wbG4M=;
-        b=4+wj1AjMtL66NxF6l/J/clzExgq9mdbTquPM/ntDS1yMs4qss95dEr/K9f5ct31cic
-         nuWHobVB10p3bBV4m1FTyrQx+WQhl46QuKRkey8zgzyffKXVXeo7hjpaISvK0TdhNBPH
-         rTBO8vYvMRvT9LhKShD+OZVh5HjTXJXIrbdct3oguErEibxFf4wEstUSIhS5PPL3AWYM
-         MhJChirMDaqC4Jso/+u2Ary4T8aQqdI5WBv08Xu6xF8kwmmDduYWXhqeCXE4HN8D3mzT
-         KDQHyHiIDQ2ebi2lZ9T+ewpJHieUG5JxH7QYFqeOceF+NTTtSER+OhTH27zbZIWaCJmt
-         2btg==
-X-Gm-Message-State: ACgBeo1h8rn+jMQkhjiyCmz3sq6Hi52187MVcsgaIekeDnVJsU7CWLBF
-	+k1xTnJE6CYSoyd12hMMpTFRIQgX2Gk=
-X-Google-Smtp-Source: AA6agR6rQorUoWSb5cFRcuxrAqMh7M6g0zQCpRgkAQ3t42Hke86U5HFs+wW3h+RLINW6oz28ev4PTA==
-X-Received: by 2002:a63:5c42:0:b0:42b:452f:8e66 with SMTP id n2-20020a635c42000000b0042b452f8e66mr24656885pgm.323.1662001300661;
-        Wed, 31 Aug 2022 20:01:40 -0700 (PDT)
-From: Roxana Bradescu <roxxbee@gmail.com>
-X-Google-Original-From: Roxana Bradescu <roxabee@chromium.org>
-Content-Type: multipart/signed;
-	boundary="Apple-Mail=_EA8F1001-C3E3-413F-9803-6BBE777BE362";
-	protocol="application/pgp-signature";
-	micalg=pgp-sha256
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
-Date: Wed, 31 Aug 2022 20:01:38 -0700
-References: <7378c405-5150-ebea-b81d-74f32cff7516@lexfo.fr>
- <Yw5cq12s590/JbIJ@pisco.westfalen.local>
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=XYw+ZHNGEOQlzhP46ranld/aYEHfH39YbGxm/8sgEaU=;
+        b=Vewj9zDbyFWtzbRxJX0TtJSKt8OAgSonv2u0fxM4DyYMPou6ZsO8+57G0Y0uBR84zW
+         i42Ta5KirqesktEzsPyVPX7KWaOUVM5nod0Ep9tr+24iLag5xLvr9Zik8AlQaiRB3sAT
+         qwhiUA5rvZjN8VIPP98xrMrPPHoTyowt2HaIYlrue/wJCdh3aRLpiSns3z4R4eo3NYuZ
+         64suGzSm6ofgTJYslsoNj7mTW1zWpbQZJdU3yjcCkIsdA4wvhjMF3z4iNgZXTfucLtL3
+         csj1EaiSc+KXFMhYiTyNshIv0W9CM5IN1VgtOtGeXopfpzpON2ZoDkEXG8MWch2hkLc2
+         ee9g==
+X-Gm-Message-State: ALyK8tIFFZqfFLywuUQAJjELwJmfA3dz0erBrbm/ftAEHU4WyO3I1BHbB5QQKHnz/tDBz9JCHrJWMkZN8SLP9g==
+X-Received: by 10.107.155.145 with SMTP id d139mr14249180ioe.36.1468082128322;
+ Sat, 09 Jul 2016 09:35:28 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <CA+PdXcs2t_Jj2m+jx9Q2TbfstaX_PijmfYEcJm=LZMk-Xy4m0g@mail.gmail.com>
+References: <CAEsznC46-6Z7vLuP2FDuNVATcOkGV8jERu8q059AFaP=TjusPA@mail.gmail.com>
+ <CANO=Ty3S0SmpoUVj5ZiQL9RF99PL7Kxt4SpDJQt2D_1SDwQmsw@mail.gmail.com> <CA+PdXcs2t_Jj2m+jx9Q2TbfstaX_PijmfYEcJm=LZMk-Xy4m0g@mail.gmail.com>
+From: Glenn Randers-Pehrson <glennrp@gmail.com>
+Date: Sat, 9 Jul 2016 12:35:27 -0400
+Message-ID: <CA+PdXcs3nHUMs8cnF_XMNOOq7_yARB_qK_6kr4bufvgRYFUySA@mail.gmail.com>
 To: oss-security@lists.openwall.com
-In-Reply-To: <Yw5cq12s590/JbIJ@pisco.westfalen.local>
-Message-Id: <269D4AA0-E239-4314-ABD4-0DDCF71CEE35@chromium.org>
-X-Mailer: Apple Mail (2.3696.120.41.1.1)
-Subject: Re: [oss-security] CVE-2022-31790 CVE-2022-31789: Watchguard
- XTM/Firebox firewalls: Multiple vulnerabilities
+Content-Type: multipart/alternative; boundary=001a11402d02c287ae0537368139
+Subject: Re: [oss-security] On anonymous CVE assignments
 
---Apple-Mail=_EA8F1001-C3E3-413F-9803-6BBE777BE362
-Content-Type: multipart/alternative;
-	boundary="Apple-Mail=_82848D95-AF52-47B5-AC39-6E2FE9381723"
+--001a11402d02c287ae0537368139
+Content-Type: text/plain; charset=UTF-8
+
+On Fri, Jul 8, 2016 at 3:43 PM, Glenn Randers-Pehrson <glennrp@gmail.com>
+wrote:
+
+> *CVE*-*2016*-*3751*(H)
+>
+> On Fri, Jul 8, 2016 at 9:55 AM, Kurt Seifried <kseifried@redhat.com>
+> wrote:
+>
+>> Also if projects don't like "Surprise" CVEs one way to deal with that is
+>> to
+>> request the CVE's themselves when they know something is a security
+>> vulnerability. Also making it easy to contact them helps, the harder you
+>> make it for a security researcher to deal with you, the less likely they
+>> are to.
+>>
+>
+> It's hard to do that when a "surprise" CVE was never sent to the project,
+> for example  *CVE*-*2016*-*3751*(H) which just appeared in an Android
+> security
+> bulletin.  It claims that libpng has a bug that allows privilidge
+> escalation
+> and was reported 3 Dec 2015. I'm guessing that it is a duplicate of
+> CVE-2015-8126 or CVE-2015-8472, but it's hard to tell for sure without
+> seeing it.  All I've been able to find out is that it is a "reserved" CVE,
+> with
+> no clue as to who reserved it.
+>
+
+I still haven't seen the CVE, but it seems that it is a report against a
+fork of libpng, that had fallen several years out-of-date, and the CVE
+is just a private catch-all for updating the fork to current libpng status.
 
 
---Apple-Mail=_82848D95-AF52-47B5-AC39-6E2FE9381723
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+> Glenn Randers-Pehrson
+> libpng custodian
+>
+>
 
-
-
-> On Aug 30, 2022, at 11:53 AM, Moritz M=C3=BChlenhoff <jmm@inutil.org> wro=
-te:
->=20
-> Charles Fol wrote:
->> Hello,
->>=20
->> While performing a red-team assessment we discovered a few vulnerabiliti=
-es
->> on Watchguard firewalls of the XTM/Firebox brand:
->=20
-> Why was this posted to oss-sec? These are proprietary network
-> devices AFAICT?
->=20
-> Cheers,
->        Moritz
-
-
-Might want to post this to fulldisclosure@seclists.org <mailto:fulldisclosu=
-re@seclists.org>
-
-=E2=80=94
-Regards, Roxana
-
---Apple-Mail=_82848D95-AF52-47B5-AC39-6E2FE9381723
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
-
-<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; charset=
-=3Dutf-8"></head><body style=3D"word-wrap: break-word; -webkit-nbsp-mode: s=
-pace; line-break: after-white-space;" class=3D""><br class=3D""><div><br cl=
-ass=3D""><blockquote type=3D"cite" class=3D""><div class=3D"">On Aug 30, 20=
-22, at 11:53 AM, Moritz M=C3=BChlenhoff &lt;<a href=3D"mailto:jmm@inutil.or=
-g" class=3D"">jmm@inutil.org</a>&gt; wrote:</div><br class=3D"Apple-interch=
-ange-newline"><div class=3D""><div class=3D"">Charles Fol wrote:<br class=
-=3D""><blockquote type=3D"cite" class=3D"">Hello,<br class=3D""><br class=
-=3D"">While performing a red-team assessment we discovered a few vulnerabil=
-ities<br class=3D"">on Watchguard firewalls of the XTM/Firebox brand:<br cl=
-ass=3D""></blockquote><br class=3D"">Why was this posted to oss-sec? These =
-are proprietary network<br class=3D"">devices AFAICT?<br class=3D""><br cla=
-ss=3D"">Cheers,<br class=3D""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mo=
-ritz<br class=3D""></div></div></blockquote></div><br class=3D""><div class=
-=3D""><br class=3D""></div><div class=3D"">Might want to post this to&nbsp;=
-<a href=3D"mailto:fulldisclosure@seclists.org" class=3D"">fulldisclosure@se=
-clists.org</a>&nbsp;</div><div class=3D""><br class=3D""></div><div class=
-=3D"">=E2=80=94</div><div class=3D"">Regards, Roxana</div></body></html>=
-
---Apple-Mail=_82848D95-AF52-47B5-AC39-6E2FE9381723--
-
---Apple-Mail=_EA8F1001-C3E3-413F-9803-6BBE777BE362
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEgZzAKV63cJrecgABXEIiv89pXdUFAmMQIJIACgkQXEIiv89p
-XdWJ7w/8Diovq83J1p649IeYERo6Rq2PzTyUBhPN6UDXvHWVGRsvQ6F/s1VKpb3O
-BIoYpes3Z+pYIIctalWmFkzPlvh2wCxzXwvmmtTYkYXNsej0tSjdyQkrANua9MW3
-bm3EA2GC6nJTM7HXx3AlY+ay4f8aXpE67nGmQj34MxQIh8S+FG9p6Tp5Da26K5aR
-A55qKMB0+1XJ3Rr6uqh9eLHCpoK8EhX4IrYJEStNkMxrtNNxMLH4OCuzyvF0DQOS
-xJwv1I0j8X4L8yCSGKsEJLJsZKAA2Pp/1ShgjA5QXe13uN6E4Fu1ZEmnTEOKUIaE
-dQhT0c3EqaQSGLONScTBY+IOItvLuZ51+IHGZm4/BAx9SQSaP/vv+8vvpZcdr1ZG
-ud3mNF9TkGaJMmivoS6iR8A7u0ykKJk9QFmOmXEEnB6rbztt19GxdFK2AhwzQp9t
-vGx7geU9xNUtr0W5Zco/1wedVP37QHYoipzShyfwF37HfINpsII7vxvkmcUUar6m
-MgUBM/COFiDozINEL3cO/AEaGb4+w9E0BK1uHlk0/YedhcRrH4T5u6eCZABw5Bus
-oJGZWF1b9tiLjgAYO3B30G9bA6DZ1ZKAAVhV0ysuvGgenw3FzUuNYDTaguSi7aGp
-hlsOK1vPL0349H//79GnZkzadhoIwMM4sHpe9Bufxy3EBBGdSW0=
-=5afB
------END PGP SIGNATURE-----
-
---Apple-Mail=_EA8F1001-C3E3-413F-9803-6BBE777BE362--
+--001a11402d02c287ae0537368139--
