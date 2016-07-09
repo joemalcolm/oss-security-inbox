@@ -1,42 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/03/8
-Message-Id: <20160803121604.097D66C19BE@smtpvmsrv1.mitre.org>
-Date: Wed,  3 Aug 2016 08:16:04 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/09/2
+Message-Id: <20160709143603.3DE4F6C1D65@smtpvmsrv1.mitre.org>
+Date: Sat,  9 Jul 2016 10:36:03 -0400 (EDT)
 From: cve-assign@...re.org
-To: rootredrain@...il.com
+To: john.johansen@...onical.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request:Heap overflow vulns in MuPDF
+Subject: Re: CVE request: apparmor: oops in apparmor_setprocattr()
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> The location of this vulnerability is at pdf_load_mesh_params function, at
-> source/pdf/pdf-shade.c
-> 
-> n = (pdf_array_len(ctx, obj) - 4) / 2;
-> 
-> the length of array return from pdf_array_len not be checked. But the
-> max size of "shade->u.m.C0/C1" is defined as a macro(32 as default). So if
-> I make a pdf which have a large decode array. This code will cause a heap
-> overflow.
-> 
-> And the overflow data could be control, And on the memory I overflow, I
-> found a struct which full of function point. Maybe I can let it point to
-> got table for a chance to call "system"
-> 
-> issue:
-> http://bugs.ghostscript.com/show_bug.cgi?id=696954
-> 
-> fix code:
-> http://git.ghostscript.com/?p=mupdf.git;h=39b0f07dd960f34e7e6bf230ffc3d87c41ef0f2e
+> http://marc.info/?l=linux-kernel&m=146793642811929&w=2
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=30a46a4647fd1df9cf52e43bf467f0d9265096ca
 
->> Make sure that number of colors in mesh params is valid.
+>> Note: it may be possible to get a local privilege escalation out of this 
+>> bug.
 
->> -               n = (pdf_array_len(ctx, obj) - 4) / 2;
->> +               n = fz_mini(FZ_MAX_COLORS, (pdf_array_len(ctx, obj) - 4) / 2);
+>>> apparmor: fix oops, validate buffer size in apparmor_setprocattr()
+    
+>>> When proc_pid_attr_write() was changed to use memdup_user apparmor's
+>>> (interface violating) assumption that the setprocattr buffer was always
+>>> a single page was violated.
 
-Use CVE-2016-6525.
+Use CVE-2016-6187.
 
 - -- 
 CVE Assignment Team
@@ -46,17 +33,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXod95AAoJEHb/MwWLVhi2vJsP/3mNzGB1iKiPpJuwf/CV+WTk
-Y1wTcD45iQMF5BxDWKaLbZkTzqIhLw7elQFn0EW5Yybc/v9h11Ok3qSP3vm4m7AY
-WIN/2r3T2JWaFyjogmvRn2o5+N5ffaqMFNxL5xV4DclQHqitSdztic9Ud0Kthpqu
-9rT/91hFTWzS7jzlwmMrurrTWQ4fDD7H8/c4QXGNu4E3iaYLEJuz6OUbyAn5N2/j
-B4dKCnDrkd+4nEneBFGS5FWak90g7BZQ7No9XugmsufiO26CzCv4SYDT2P+HGSul
-UDxUIJLxM2Uo7vL25UMiSTRT04jzpggdL/95QFUVzjvYZ/5Srpv/lYCoKV6+CpOF
-FIFGoeqMegIMKUcm7oGwRLpiJRZ7e2OUyZ3vVkCtohgmWHHq5UZ025FopRQZiYTi
-MlCjJm61RGZGQRefVuC56UH2GgQ7VWEtT7T4Lbqtyu9Oyuy7GM/YrDhgu8GFp16K
-L51V/3ohw3HrYtMlVIBP4orrhm7LLOZOG5jSO3yy88TgHGByqjlnhcMtvsWHsP1y
-NSG+xZGr85tx71Bpp8rvEKbsZKY0q7bJ/05kF1CrPeeJfex2nUX0TocUFKkZsqwh
-NKVXeOkjMv4TLpZ2z6dH5CX0NNVPZodBJJ5sJQW9Mk0lPnIOLS+Argm9OI7CKFbY
-h/Vh2BSu7slwycmNpQjZ
-=ZFaZ
+iQIcBAEBCAAGBQJXgQtrAAoJEHb/MwWLVhi2z0wQAIz473jwzdiwtT1tVaOHxuLj
+5ptbSsvbr9tiMfiiyKzvxI3bDvXr/6GRI8bfxYq/m+tPA3C9N15pW/7CJqcNW5FH
+W7aUiGHqikPMb+nEulObtl8Ib2xnkCmA3vB8WMARavvQzFjlZ2llx20cAOKtO07F
+pBkhK1/RHiYVHI7eareqsB9KCrgibiiO58OhrYHtOJhcgGwOPE4Hr1jeg3je53dp
+PQWXNOah9lQ9aUV2hXKArDRlEWehH4CTC8fM4Lr5v7Hw3tTa2LAQoOC/dPSdYiJJ
+i5KwtXQlSjEbDElg7VBdspA5jntIGKq3XCC9pep0wHh8XtbPNOiJwKSs196nxny/
+uS9ChoS4MFWgpNe2MY7wANAWlqNdcnicyQpiiYsyy/W3luumd3LaYayiITjzWPGM
+wu29GhYRIcRhaJ3BBzdGKLITCpqrOdlHRkJONYgzfZyFTND7bbC0JkJ70x/JOPww
+S16HjC3BEtH+H/3pnYLtZ+PnZ36vdP01Dbp3oRuICcloMSXm5d9eeMQX5JhUq2ms
+xLrr0kxwo0fxYAS6C8lR7fAX/ueCY980AcPRWlMzZbeHxsfK+1CMN8Of233PTxx6
+WpvN5iSg8OydurewOJKHUdrYERON/afF/FcfqN3vNDHM9oDHXMKlcp0s7APMZf7K
+EBChJPlAsaURokHYcm0L
+=roE2
 -----END PGP SIGNATURE-----
