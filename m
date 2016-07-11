@@ -1,45 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/08/6
-Message-ID: <58beef31-d838-42a0-cafc-85221417785c@redhat.com>
-Date: Tue, 8 Nov 2016 14:06:14 +0100
-From: Andrej Nemec <anemec@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE Request: Cryptography 1.5.3: HKDF might return an empty byte-string
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/11/4
+Message-ID: <CAKG8Do4_-amOBNVDiSviBPqT6hQBcAQG5h9_L+JGderoQx0cOw@mail.gmail.com>
+Date: Mon, 11 Jul 2016 13:32:18 +0200
+From: Cedric Buissart <cbuissar@...hat.com>
+To: Hanno Böck <hanno@...eck.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2016-5011: util-linux: Extended partition loop in MBR partition table leads to DoS
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+On Mon, Jul 11, 2016 at 12:51 PM, Hanno Böck <hanno@...eck.de> wrote:
 
-A security issue was fixed in Cryptography 1.5.3 and disclosed publicly
-in the changelog, posted below:
+> On Mon, 11 Jul 2016 12:11:43 +0200
+> Cedric Buissart <cbuissar@...hat.com> wrote:
+>
+> > CVE-2016-5011: util-linux: Extended partition loop in MBR partition
+> > table leads to DoS
+>
+> Have you discovered this bug or do you know how it was discovered?
+>
+It was reported to us by Michael Gruhn & Christian Moch
 
-1.5.3 - 2016-11-05
+>
+> Was it found with fuzzing or code inspection?
+>
+I do not know, there was no info on the discovery method in the report.
 
-* Security issue: Fixed a bug where HKDF would return an empty
-byte-string if used with a length less than algorithm.digest_size.
-Credit to Markus Döring for reporting the issue.
+>
+> I have done fuzzing on partitioning tools before, however I hadn't
+> found anything, this bug indicates I haven't looked enough :-)
+>
+I looked at other projects to see what is being done to prevent this
+particular loop from happening. Until now, tools I checked are protected
+either by detecting the loop (i.e.: actively searching for a relative
+offset of 0 for the next EBR, as done by this util-linux patch; partprobe
+and fdisk are doing that), or enforcing a limit on the maximum number of
+partitions for a device (Linux kernel, kpartx & other tools I currently
+checked)
 
-Changelog:
+>
+>
+> --
+> Hanno Böck
+> https://hboeck.de/
+>
+> mail/jabber: hanno@...eck.de
+> GPG: BBB51E42
+>
 
-https://cryptography.io/en/latest/changelog/#id1
 
-Upstream bug:
-
-https://github.com/pyca/cryptography/issues/3211
-
-Upstream patch:
-
-https://github.com/pyca/cryptography/commit/b924696b2e8731f39696584d12cceeb3aeb2d874
-
-Mitre, would you mind assigning a CVE number for this issue? Thanks!
-
-Best Regards,
 
 -- 
-Andrej Nemec, Red Hat Product Security
-3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
+Cedric Buissart,
+Product Security
 
-
-Content of type "text/html" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
