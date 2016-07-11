@@ -1,80 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/21/2
-Message-ID: <20160621134122.4118704e@redhat.com>
-Date: Tue, 21 Jun 2016 13:41:22 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: Sebastian Krahmer <krahmer@...e.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: SELinux troubles
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/11/5
+Message-ID: <CABrd9SS+ThMG53SSycdE_Cg4e1VqKd+ToY7G_noNc=e3jf-u_Q@mail.gmail.com>
+Date: Mon, 11 Jul 2016 16:08:10 +0100
+From: Ben Laurie <benl@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: apparmor: oops in apparmor_setprocattr()
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 21 Jun 2016 11:45:01 +0200 Sebastian Krahmer wrote:
+On 9 July 2016 at 07:41, John Johansen <john.johansen@...onical.com> wrote:
+> There is a potential privilege escalation in apparmor's setprocattr() interface.
+>
+> https://lkml.org/lkml/2016/7/7/906
+>
+> introduced by: 30a46a4647fd1df9cf52e43bf467f0d9265096ca
+> fixed by: 30a46a4647fd1df9cf52e43bf467f0d9265096ca
 
-> 1)
-> 
-> This bug is mitigated since setroubleshoot that is found on RHEL 7.2,
-> by running it as a dedicated user (untested).
-> 
-> Shell injection issue in setroubleshoot/audit_data.py:
-> 
-> def _set_tpath(self):
-> [...]
-> 	if path.startswith("/") == False and inodestr:
-> 		import subprocess
-> 		command = "locate -b '\%s'" % path
-> 		try:
-> 	    	    output = subprocess.check_output(command,
-> 		 	                             stderr=subprocess.STDOUT,
->                                                      shell=True)
-> [...]
-> 
-> 
-> taking 'path' off AVC denial messages and constructing a command thats
-> passed to "sh -c".  o.O
-> Note that AVC denial messages appear outside of containers, so
-> a setroubleshoot is usually run on the host, processing AVC messages
-> from containers. This allows for an easy breakout.
-> 
-> 
-> 2)
-> 
-> I did not test this, but even though the run_fix() function in
-> SetroubleshootFixit.py is protected by auth_admin polkit rules, it looks
-> like theres good chance to pass XML documents via setroubleshoots
-> RPC/DBUS API that contains evil local_id or analysis_id fields and trick
-> real admins to "fix" AVC denials that inject code:
-> 
-> [...]
->     def run_fix(self, local_id, analysis_id):
->          import commands
->          command = "sealert -f %s -P %s" % ( local_id, analysis_id)
->          return commands.getoutput(command)
-> [...]
-> 
-> This is not mitigated by the run-as-user, since SetroubleshootFixit.py
-> still runs as root (and probably needs to).
+I assume its not actually introduced and fix by the same commit. :-)
 
-CVE-2016-4989 was assigned to the issues above.
-
-
-There are additional similar problems in setroubleshoot and
-setroubleshoot-plugins:
-
-- CVE-2016-4445, setroubleshoot, affecting 'sealert --fix'.  Problem was
-  already fixed in version 3.2.23.
-
-  https://github.com/fedora-selinux/setroubleshoot/commit/2d12677629ca319310f6263688bb1b7f676c01b7
-
-- CVE-2016-4444, setroubleshoot-plugins, allow_execmod plugin.  Also
-  previously fixed in versoin 3.2.23.
-
-  https://github.com/fedora-selinux/setroubleshoot/commit/5cd60033ea7f5bdf8c19c27b23ea2d773d9b09f5
-
-- CVE-2016-4446, setroubleshoot-plugins, allow_execstack plugin.
-  Similar to the previous one, only using commands.getoutput instead of
-  commands.getstatusoutput.
-
-  https://github.com/fedora-selinux/setroubleshoot/blob/setroubleshoot-plugins-3.3.4/plugins/src/allow_execstack.py#L29
-
--- 
-Tomas Hoger / Red Hat Product Security
+>
+> Could you assign a CVE for this issue?
+>
+> thanks
+> John
+>
