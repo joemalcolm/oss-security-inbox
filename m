@@ -1,34 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/07/3
-Message-ID: <alpine.LFD.2.20.1610071644500.8956@wniryva>
-Date: Fri, 7 Oct 2016 16:46:11 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request Qemu: usb: hcd-ehci: memory leak in ehci_process_itd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/11/3
+Message-ID: <20160711125157.7ed792f4@pc1>
+Date: Mon, 11 Jul 2016 12:51:57 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, Cedric Buissart <cbuissar@...hat.com>
+Subject: Re: CVE-2016-5011: util-linux: Extended partition loop in MBR partition table leads to DoS
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Mon, 11 Jul 2016 12:11:43 +0200
+Cedric Buissart <cbuissar@...hat.com> wrote:
 
-Qemu emulator(Qemu) built with the USB EHCI emulation support is vulnerable to 
-a memory leakage flaw. It could occur while processing isochronous transfer 
-descriptors(iTD), with buffer page select(PG) index that falls beyond buffer 
-page array area.
+> CVE-2016-5011: util-linux: Extended partition loop in MBR partition
+> table leads to DoS
 
-A privileged user inside guest could use this flaw to leak Qemu memory bytes 
-leading to a DoS on the host.
+Have you discovered this bug or do you know how it was discovered?
 
-Upstream fix:
--------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg06609.html
+Was it found with fuzzing or code inspection?
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1382668
+I have done fuzzing on partitioning tools before, however I hadn't
+found anything, this bug indicates I haven't looked enough :-)
 
-This issue was reported by Li Qiang of 360.cn Inc.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
