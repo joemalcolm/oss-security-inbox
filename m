@@ -1,50 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/08/14
-Message-Id: <20160608204936.89CF8ABC0C1@smtpvmsrv1.mitre.org>
-Date: Wed,  8 Jun 2016 16:49:36 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, psirt@...wei.com, liqiang6-s@....cn
-Subject: Re: CVE Request Qemu: scsi: esp: OOB r/w access while processing ESP_FIFO
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/11/9
+Message-ID: <5783F915.1010104@canonical.com>
+Date: Mon, 11 Jul 2016 14:52:53 -0500
+From: Tyler Hicks <tyhicks@...onical.com>
+To: oss-security@...ts.openwall.com
+Cc: John Johansen <john.johansen@...onical.com>
+Subject: Re: CVE request: apparmor: oops in apparmor_setprocattr()
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> Quick Emulator(Qemu) built with the ESP/NCR53C9x controller emulation support
-> is vulnerable to an OOB r/w access issue. The controller uses 16-byte FIFO
-> buffer the information transfer. The OOB r/w occurs while reading/writing to
-> this buffer in esp_reg_read() and esp_reg_write() routines.
+On 07/11/2016 10:08 AM, Ben Laurie wrote:
+> On 9 July 2016 at 07:41, John Johansen <john.johansen@...onical.com> wrote:
+>> There is a potential privilege escalation in apparmor's setprocattr() interface.
+>>
+>> https://lkml.org/lkml/2016/7/7/906
+>>
+>> introduced by: 30a46a4647fd1df9cf52e43bf467f0d9265096ca
+>> fixed by: 30a46a4647fd1df9cf52e43bf467f0d9265096ca
 > 
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> resulting in DoS OR potentially leverage it to execute arbitrary code with
-> privileges of the Qemu process on the host.
+> I assume its not actually introduced and fix by the same commit. :-)
+
+The correct hashes are:
+
+introduced by: bb646cdb12e75d82258c2f2e7746d5952d3e321a
+fixed by: 30a46a4647fd1df9cf52e43bf467f0d9265096ca
+
+Tyler
+
 > 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1343323
-> https://lists.gnu.org/archive/html/qemu-devel/2016-06/msg01507.html
-> http://git.qemu.org/?p=qemu.git;a=commit;h=ff589551c8e8e9e95e211b9d8daafb4ed39f1aec
+>>
+>> Could you assign a CVE for this issue?
+>>
+>> thanks
+>> John
+>>
 
-Use CVE-2016-5338.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXWIM2AAoJEHb/MwWLVhi2qZMQAKFtExzVCnlnvI+HcKlNrYDP
-KYs8RZZsL35htugWCWGhKd1bu5DZCgKicQJv6Ffxfjbg8mg+X0Gm4hvO4o7swfKL
-p9+yHXzO4ULSz2GhlUQmyH5B+oO/0o8fCgLE1B04ngOqLiWDi1qRjjs1FXGBTlgF
-RD0RyhNpzAQVQrBwJugpxd6mZ/b/IZ8MqwxcigWwqOwsIdFsT3YTso2dG63t0a4n
-JHfC+6bFxDw82AZcJ32jgul59eQAuUrH4/2qMymaHnxLHIexitLl5QpATyKPhSJ9
-59lHlEROszYTuRyCQzSJSWahIcbiUXGD4GEkvLyqHzt2GdhjCxHVgPZ3QizHONPz
-UDwU91RzZefYE2MCz17QE076n953pQpum/elMpDvsNxwqReR9raT8E67BNccp+kn
-LU+J5TdLG41OLrtlKCsseb/2tz8rU0AbHz4kM+r1E7Xj0j180BmL4JPYec4UEsGj
-ApB/iAZ2NMpidkOxOUGJSDYq84paN4+2PHyZLdXEdPjTGbJGOe1mt4FxVsuT/+sf
-FebH7drSRihl3Fwtb/0mcNHD78nAvGLEn1WzJsbz89cXvcZbtnJ3ay7pqqIU2Gzg
-F+QGveEDtq66cFIUBSFpuXvehuqsSarfKcf1el5/xYKKQZO8fsQMmXb6UzVp95Xy
-gFwKGtK+wk7BMTXrDUU7
-=ThnN
------END PGP SIGNATURE-----
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
