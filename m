@@ -1,28 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/17/4
-Message-ID: <20160817151710.GB5876@kroah.com>
-Date: Wed, 17 Aug 2016 17:17:10 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/11/2
+Message-ID: <CAKG8Do6jzQUGa-hgGxa8oxYAhkz3qm8sMMXmbC8HuNJZKGqbLw@mail.gmail.com>
+Date: Mon, 11 Jul 2016 12:11:43 +0200
+From: Cedric Buissart <cbuissar@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-5696: linux kernel - challange ack information leak.
+Subject: CVE-2016-5011: util-linux: Extended partition loop in MBR partition table leads to DoS
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 17, 2016 at 05:01:45PM +0200, Gsunde Orangen wrote:
-> > > Heh, fair enough.  This fix is now in the kernels that were released
-> today
-> > > (4.7.1, 4.6.7, 4.4.18, and 3.14.76), hope that helps.
-> It seems that Greg keeps on being bothered with questions ;-)
-> Here's one more: the relevant Upstream commit
-> 75ff39ccc1bd5d3c455b6822ab09e533c551f758
-> is referenced in all change logs of yesterday's kernel releases...
-> ... Except for: 4.7.1 (https://cdn.kernel.org/pub/
-> linux/kernel/v4.x/ChangeLog-4.7.1)
-> Did 4.7.1 miss the fix?
+Hi,
 
-No, it was already in 4.7 when it was released:
-	$ git describe --contains 75ff39ccc1bd5d3c455b6822ab09e533c551f758
-	v4.7~2^2~27
+This is to disclose the following CVE:
 
-thanks,
+CVE-2016-5011: util-linux: Extended partition loop in MBR partition table
+leads to DoS
 
-greg k-h
+Description :
+The util-linux libblkid is vulnerable to a Denial of Service attack during
+MSDOS partition table parsing, in the extended partition boot record (EBR).
+If the next EBR starts at relative offset 0, parse_dos_extended() will loop
+until running out of memory. An attacker could install a specially crafted
+MSDOS partition table in a storage device and trick a user into using it.
+This library is used, among others, by systemd-udevd daemon.
+
+Upstream patch:
+libblkid: ignore extended partition at zero offset
+https://git.kernel.org/cgit/utils/util-linux/util-linux.git/commit/?id=7164a1c3
+
+Impact: Low
+CVSS3 scoring : AV:P/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H/E:H/RL:U/RC:C
+
+Reported by: Christian Moch & Michael Gruhn
+
+Best Regards,
+
+-- 
+Cedric Buissart,
+Product Security
+
