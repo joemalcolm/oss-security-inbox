@@ -1,57 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/05/4
-Message-ID: <3355e013913e410fb611ac9aa61e8d5f@imshyb02.MITRE.ORG>
-Date: Sat, 5 Nov 2016 11:59:56 -0400
-From: <cve-assign@...re.org>
-To: <caiqian@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: linux kernel - local DoS with cgroup offline code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/11/7
+Message-ID: <150590619.3922934.1468259391266.JavaMail.zimbra@redhat.com>
+Date: Mon, 11 Jul 2016 13:49:51 -0400 (EDT)
+From: CAI Qian <caiqian@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: cvs request: local DoS using rename syscall on overlayfs on top of xfs to crash the kernel
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+I am requesting a CVE for this flaw.
 
-> A malicious user who can run an arbitrary image with a non-privileged user
-> in a Container-as-a-service cloud environment could use the exploit to
-> deadlock the container nodes to deny the service for other users.
+An unprivileged user could run an exploit using rename syscall on
+overlayfs on top of xfs to crash the kernel caused a denial of
+service.
 
-> container> $ trinity -D --disable-fds=memfd --disable-fds=timerfd \
->              --disable-fds=pipes --disable-fds=testfile \
->              --disable-fds=sockets --disable-fds=perf \
->              --disable-fds=epoll --disable-fds=eventfd \
->              --disable-fds=drm
+Exploit:
+https://github.com/linux-test-project/ltp/blob/master/testcases/kernel/syscalls/rename/rename13.c
 
-> # systemctl status docker
-> <hang...>
-
-> task kworker/45:4:146035 blocked for more than 120 seconds.
-
-> "cgroup is trying to offline a cpuset css, which
-> takes place under cgroup_mutex. The offlining ends up trying to drain
-> active usages of a sysctl table which apparently is not happening." There is
-> no fix at this time as far as I can tell.
-
-Use CVE-2016-9191.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYHgGZAAoJEHb/MwWLVhi2lQsP/1q0DTwdkQ5NOL3xfeD48Lye
-JiAOHPKs+X9iAfnpB/3rNiq6RvBPLXr12LPfKGcxiBasPf5mAq4sa1xzNhcXGerD
-678Ch0m+sMKjTfLLTusSeu2WFDKG07Fs7yoiQs4juIfbjJ178nh7RJDz/V7lao0+
-pBv1SUYrIgrZ5dRNNzUp380eOdVNmi5fWPiHvXxIR6PwXZsCu5GZNjowMAIOFgBB
-XedYPtBhG+lbbrvQm9kyj/IoSsw8cKfyhCcDy+T5JE4UcOYWrYpixmgwNZTUXn0l
-BUM8uMWeI2DgMEFDjzjdVL4KY3ktkcXUTbBh7EGYg5zpDiMm3oNbqsS1kv+m+/BQ
-/BHikPAkC+x2W35fzWp/lIJZojBUkkeDCNHU+tc+lVBVVZpo+zEq6puv61GwSTEE
-G2GgnHEeA33XW3AixqFpe2rGY9PIKw92kSIRfAH1aPg1i77Y34m1uqrpJ+HifuK/
-qxowp64tKzwiDgzJqZmTdEYX22EVWqhb1DbukY1cgVM9BkEuI0+ZwrVeAmvy7k/7
-Scp2LmwwN2AdLRagOhzKUSwORKeg6xd5gHDm5F9rhI/GhX/+soNMXKcYKBbq0jDh
-+jBAl2oGnhELCnf026nVtrqmqMLS9SquwBXmtHTjdUV88co2NqstBR+oAlAeKrnd
-W1Lyt8V0wHy00wNFmEJs
-=jJL2
------END PGP SIGNATURE-----
+Patch can be found here with more in depth description,
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=11f3710417d026ea2f4fcf362d866342c5274185
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=54d5ca871e72f2bb172ec9323497f01cd5091ec7
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=9409e22acdfc9153f88d9b1ed2bd2a5b34d2d3ca
+   CAI Qian
