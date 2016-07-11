@@ -1,31 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/15/3
-Message-ID: <20160815075301.GD6359@kroah.com>
-Date: Mon, 15 Aug 2016 09:53:01 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/11/6
+Message-ID: <4a28b9ab-e52e-8de1-3b83-d7dbb1881653@redhat.com>
+Date: Mon, 11 Jul 2016 17:19:23 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-5696: linux kernel - challange ack information leak.
+Subject: Re: CVE-2016-5011: util-linux: Extended partition loop in MBR partition table leads to DoS
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 15, 2016 at 06:23:04AM +0000, Sona Sarmadi wrote:
-> > > This vulnerability is currently only fixed in mainline kernels (4.7 &
-> > > 4.8). Does anyone know if there is any work ongoing to backport this
-> > > fix to the  older versions?
-> > 
-> > I just added the fix for this issue to the stable kernel queues and it will
-> > show up in the next stable releases, in about 2 days after it passes all of
-> > the needed review.
-> > 
-> > Hope this helps,
-> > 
-> > greg k-h
-> 
-> Great, thanks, this helps :)
+On 07/11/2016 01:32 PM, Cedric Buissart wrote:
 
-You can _always_ just apply the patch to your local tree, there's never
-a need to wait for me to get a kernel out.  That's the advantage of
-having the source for your systems :)
+> I looked at other projects to see what is being done to prevent this
+> particular loop from happening. Until now, tools I checked are protected
+> either by detecting the loop (i.e.: actively searching for a relative
+> offset of 0 for the next EBR, as done by this util-linux patch; partprobe
+> and fdisk are doing that), or enforcing a limit on the maximum number of
+> partitions for a device (Linux kernel, kpartx & other tools I currently
+> checked)
 
-thanks,
+How does util-linux protect against loops which are non-empty?  Does it 
+reject negative offsets?
 
-greg k-h
+Thanks,
+Florian
