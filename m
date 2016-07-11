@@ -1,59 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/12/5
-Message-ID: <6e56a280b1e54957ad767f3bc5284e90@imshyb02.MITRE.ORG>
-Date: Mon, 12 Dec 2016 13:00:09 -0500
-From: <cve-assign@...re.org>
-To: <kaplanlior@...il.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <security@....net>
-Subject: Re: CVE assignment for PHP 5.6.28, 5.6.29, 7.0.13, 7.0.14 and 7.1.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/11/8
+Message-Id: <20160711191842.9D88F42E004@smtpvbsrv1.mitre.org>
+Date: Mon, 11 Jul 2016 15:18:42 -0400 (EDT)
+From: cve-assign@...re.org
+To: caiqian@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: cvs request: local DoS using rename syscall on overlayfs on top of xfs to crash the kernel - Linux kernel
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Fixed in PHP 5.6.28, 7.0.13 and 7.1.0:
-> Bug #72696    imagefilltoborder stackoverflow on truecolor images
-> https://bugs.php.net/bug.php?id=72696
-> https://github.com/php/php-src/commit/863d37ea66d5c960db08d6f4a2cbd2518f0f80d1
+> I am requesting a CVE for this flaw.
+> 
+> An unprivileged user could run an exploit using rename syscall on
+> overlayfs on top of xfs to crash the kernel caused a denial of
+> service.
+> 
+> Exploit:
+> https://github.com/linux-test-project/ltp/blob/master/testcases/kernel/syscalls/rename/rename13.c
+> 
+> Patch can be found here with more in depth description
 
-Use CVE-2016-9933. The scope of this CVE is only the missing
-"color < 0" test in older versions.
-https://github.com/libgd/libgd/commit/77f619d48259383628c3ec4654b1ad578e9eb40e
-is also about comparisons to "im->colorsTotal - 1" - if that's also a
-libgd vulnerability fix, and someone wants a CVE ID for that, please
-let us know.
-
-
-> Fixed in PHP 5.6.28, 7.0.13 and 7.1.0:
-> Bug #73331    NULL Pointer Dereference in WDDX Packet Deserialization with
-> PDORow
-> https://bugs.php.net/bug.php?id=73331
-> https://github.com/php/php-src/commit/6045de69c7dedcba3eadf7c4bba424b19c81d00d
-
-Use CVE-2016-9934. The scope of this CVE is everything fixed by
-6045de69c7dedcba3eadf7c4bba424b19c81d00d. We could not immediately
-determine whether the new "pdo_row_ce->unserialize =
-zend_class_unserialize_deny" line, by itself, could stand as an
-independent fix for a subset of the problem.
+As far as we can tell, there are circumstances in which each of the
+two parts of the patch could be relevant, and thus we are assigning
+two CVE IDs.
 
 
-> Fixed in PHP 5.6.29 and 7.0.14:
-> Bug #73631    Invalid read when wddx decodes empty boolean element
-> https://bugs.php.net/bug.php?id=73631
-> https://github.com/php/php-src/commit/66fd44209d5ffcb9b3d1bc1b9fd8e35b485040c0
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=11f3710417d026ea2f4fcf362d866342c5274185
 
-Use CVE-2016-9935.
+This patch is present in 4.6 but not in 4.5.5.
+
+Use CVE-2016-6197.
 
 
-> Fixed in PHP 7.0.14 and 7.1.0:
-> Bug #72978    Use After Free in PHP7 unserialize()
-> https://bugs.php.net/bug.php?id=72978
-> https://github.com/php/php-src/commit/b2af4e8868726a040234de113436c6e4f6372d17
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=54d5ca871e72f2bb172ec9323497f01cd5091ec7
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=9409e22acdfc9153f88d9b1ed2bd2a5b34d2d3ca
 
-Use CVE-2016-9936. The b2af4e8868726a040234de113436c6e4f6372d17 commit
-message is "Complete the fix of bug #70172 for PHP 7." Because 70172
-is referenced by CVE-2015-6834, it is possible to say that
-CVE-2016-9936 exists because of an incomplete fix for CVE-2015-6834.
+These patches are present in both 4.6 and 4.5.5.
+(https://www.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.5.5 lists
+them.)
+
+Use CVE-2016-6198.
 
 - -- 
 CVE Assignment Team
@@ -63,17 +51,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYTuTBAAoJEHb/MwWLVhi2tzwQAJNkrZlt5Jz6HNM4QAS4uZgw
-TBOaGJXVjJF3DQDyR2jb+wYDnMkCWWON0lTw4pUj1sL8JgmxI+R0cT/eTVIBqyGZ
-zyUFzmMSXbt0HQ58Er1v2kZYOnjalD6q8UsME66wO0qVNRDDwpiS93j4yqc42RhH
-l1KcO7DjfbOyEIN/ZNzSLKn9L5Sn/bT0paeXdr5TfmqMDzGHwM0V7NgrjmJeJMTt
-OteCcYQz+r9vLmvM8Ol8Jlj4f5GZvbB8ClBjNmvhUANyxwZjVQ56a1hP/a+w6aw7
-VBTJ9Jpj8SvdBNweTrehLD8e7XwePyN/YuJ8tQ6lhrxL+Xtt6TDt/ug7fpGASoVn
-VD93ExsIokXlgHDJ+4Jfqt0h0f7j2F2Ri7yTmpGCxBrBeIYgFJ949Ak+W2u9OJQz
-51IEO8hUfYbtLqgRw30ZfW2pqYZQ5z75amlbgfb9qvgtcdxBI14/B+cehqrRXJhK
-PbebZHfU/EVb+ZFMJLROsKT5NedrTT5T3oWGaYamRTQm/0Zx0f2YeJT5j/5kJJFz
-YfB2IPdU2a/fdg8H3lZuKU8ti4Y/3ySSdzAzRaXK+TIAds7wfkUdKm+C5hgyjGgX
-NK7XO/omrEyUsWdvI/4cKuIWb0yjcoLqB5yZWcIzU/D7/RynAmj92s1G8bAO8rga
-SJV6zg4FuvvBpDH+1rJJ
-=QPcf
+iQIcBAEBCAAGBQJXg+/uAAoJEHb/MwWLVhi2ixYQAJxC7wXlFmCX+ZuJueWhtsPU
+PxN8mRCizwA4IuOrYO1EwtrdoGUSQAePX0YBl35NZJ8/K2OcV1J+rwLOkeHP67ep
+KXGn3iSjL15B1NeRxztpKwnV3alkuOVljQIM0IRasfYK8oCEX/g+UstyxW0AJNqe
+HBFzdgG+XERbqN0uLd5uBtLzz/nCK37e6xWA43augQU+cI5B+URYpcy2n50wiQVG
+o3WOreou1RSveyJSbVU4csN6xpgn6KFOi5+sdV0vjyR92BxICFCoJ1lIHHmVm+LF
+kT63D7zKFdY3kFqBIKaHhUmnti3a4jddWxnCfAJYcJ7L0+md4DpDJ/uEQTJ1BNXQ
+Yw1a3jev4ji2Ajbvlf2lhQHvC1at3jTiQBEHJBOZjLVsxZ2jl35TU3PmLVyR5JHN
+cdo2oYVsiNpcfHhkDHQNQAugard2aWYRz+IeF2V1dGNT8JyAL0cAO11c5+Hj/nyc
+zGx+NfMq9wPn5RQT1+79IABxbQrJyd1ppfwPiWhyVNwkInkJC3WzZIeXanLaJkLc
+wwXyTNGcx9s+zxXlM2tnlyhLCB66iY798T2oBs6mR5ID8NRkGYzli8sb4ZcoiAuJ
+rYonHjVJnmYW6Tuz3Yc9Jj9i/UtnSYFWfshfHs8HpKwoA4XPUYw6CM2dNO7e4H9/
+xARF3BLpcTyZdqCS/3ao
+=aGT3
 -----END PGP SIGNATURE-----
