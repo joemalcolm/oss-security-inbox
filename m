@@ -1,47 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/12/2
-Message-ID: <20160212023031.GA4879@openwall.com>
-Date: Fri, 12 Feb 2016 05:30:31 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/12/2
+Message-ID: <CALJHwhSqW32_ii65vffOokARjT2efpK=iSfDuqVK62ay0+jB3w@mail.gmail.com>
+Date: Tue, 12 Jul 2016 18:20:18 +1000
+From: Wade Mealing <wmealing@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: STARTTLS for this list?
+Subject: Re: CVE-2016-5389: linux kernel - challange ack information leak.
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 11, 2016 at 06:05:26PM -0800, Seth Arnold wrote:
-> It doesn't seem like a top priority to me: STARTTLS solves one set of
-> problems and introduces a much larger set of problems. I'm not sure any of
-> the solved problems are actually pressing problems to a public mail list.
+I've since been contacted by the researcher and have been told that
+CVE-2016-5696 was reserved by mitre for this issue.  I'd like to
+withdraw the usage of this CVE number and use CVE-2016-5696.
 
-That's my current feeling, too - for this mailing list at this time.
+Sorry for any confusion.
 
-> Hosting a mail list is already miserable enough (for example, I don't
-> think mail From: google addresses actually makes to Google users;
+Wade Mealing
 
-You're right - as discussed before, it does not, because of DMARC.
-(This applies to senders from google.com and some other Google domains,
-but luckily not yet to senders from gmail.com.  However, recipients at
-gmail.com are also affected whenever someone posts from google.com.
-Also, Yahoo's free e-mail and a few others are affected.)
-
-Working around this is actually planned (especially as Google intends to
-extend this to Gmail senders).  STARTTLS currently is not.
-
-> also, I
-> don't know how the moderators manage to keep this list spam-free with zero
-> mistakes, either false positives or false negatives.) --
-
-It's a combination of scripting and manual message moderation.  There
-are occasional mistakes (I posted about a badly delayed wrong-charset
-message not so long ago), but they are few (at least that I'm aware of).
-I think we manage pretty well, considering that most messages arrive to
-the list within minutes.
-
-> adding a half-dozen
-> more reasons why mail delivery can fail is surely not fun.
-
-Right.  And supporting TLS, even if only client-side, also adds to the
-server's attack surface.  That said, we might be forced to, eventually.
-
-I am actually in favor of opportunistic encryption in general.
-
-Alexander
+On Tue, Jul 12, 2016 at 2:33 PM, Wade Mealing <wmealing@...hat.com> wrote:
+> Gday,
+>
+> Red Hat Product Security has been made aware of an important issue in
+> the Linux kernel's implementation of challenge ACKS as specified in
+> RFC 5961. An attacker which knows a connections client IP, server IP
+> and server port can abuse the challenge ACK mechanism
+> to determine the accuracy of a normally 'blind' attack on the client or server.
+>
+> Successful exploitation of this flaw could allow a remote attacker to
+> inject or control a TCP stream contents in a connection between a
+> Linux device and its connected client/server.
+>
+> * This does NOT mean that cryptographic information is exposed.
+> * This is not a Man in the Middle (MITM) attack.
+>
+> This was reported to Red Hat by Yue Cao, part of the Cyber Security
+> Group in the University of California
+>
+> Thanks,
+>
+> Wade Mealing
+> Red Hat Product Security Team
+>
+> Red Hat Bugzilla:
+>
+> https://bugzilla.redhat.com/show_bug.cgi?id=1354708
+>
+> Patch:
+>
+> https://www.mail-archive.com/netdev@vger.kernel.org/msg118677.html
