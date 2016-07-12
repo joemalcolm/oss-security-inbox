@@ -1,92 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/21/2
-Message-ID: <57188B65.4080501@sysdream.com>
-Date: Thu, 21 Apr 2016 09:12:21 +0100
-From: Sysdream Labs <labs@...dream.com>
-To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
-Subject: Wordpress iThemes Security (Better WP Security) Insecure Backup/Logfile Generation (access rights)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/12/3
+Message-ID: <20160712091158.4wlwrde7wbcj6swo@jwilk.net>
+Date: Tue, 12 Jul 2016 11:14:53 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Pylint checks not as static as one would think
 Content-Type: text/plain; charset=utf-8
 
-Wordpress iThemes Security (Better WP Security) Insecure Backup/Logfile Generation (access rights)
-==================================================================================================
+* Jakub Wilk <jwilk@...lk.net>, 2014-09-29, 14:32:
+>$ cat moo.py
+>from _moo import *
+>
+>$ cat moo.c
+>#include <stdio.h>
+>#include <signal.h>
+>void __attribute__((constructor)) moo() {
+>	printf("moo!\n");
+>	kill(0, SIGSEGV);
+>}
+>
+>$ gcc -Wall -shared -fPIC moo.c -o _moo.so
+>
+>$ pylint moo.py
+>No config file found, using default configuration
+>moo!
+>Segmentation fault
 
+This was fixed in Pylint 1.4.0:
 
-Description
-===========
+|   * Added new options for controlling the loading of C extensions.
+|     By default, only C extensions from the stdlib will be loaded
+|     into the active Python interpreter for inspection, because they
+|     can run arbitrary code on import. The option
+|     `--extension-pkg-whitelist` can be used to specify modules
+|     or packages that are safe to load.
 
-A vulnerability has been found in iThemes Security backup function that may allow attackers to gain access to backup/log files.
+Beware that by default Pylint reads configuration file from cwd, and 
+this configuration file can whitelist malicious extensions. You probably 
+want to use --rcfile=/dev/null when cwd is untrusted.
 
-
-By default, when using the "database backup on filesystem" feature, iThemes Security saves the backup files in a world-readable directory :
-
-wp-content/uploads/ithemes-security/backups
-
-The .htaccess file is generated during the plugin initial setup/update, only if the wp-content/uploads/ithemes-security/backups exists (or wp-content/uploads/ithemes-security/logs). Note that it does *NOT* exists by default.
-
-When running a backup, the ITSEC_Backup class creates the directory but *without* any .htaccess file inside.
-The same thing happens with log saving.
-
-If the webserver has directory listing enabled, then anybody can download the complete database backup or view the log files.
-
-
-**Access Vector**: remote
-
-**Security Risk**: high
-
-**Vulnerability**: CWE-219
-
-**CVSS Base Score**: 7.5
-
----------------
-Vulnerable code
----------------
-
-The vulnerable code is located in core/modules/backup/class-itsec-backup.php, line 246 :
-
-    if ( ! is_dir( $itsec_globals['ithemes_backup_dir'] ) ) {
-        @mkdir( trailingslashit( $itsec_globals['ithemes_dir'] ) . 'backups' );
-    }
-
-And in core/class-itsec-logger.php, line 31 :
-
-    //Make sure the logs directory was created
-    if ( ! is_dir( $itsec_globals['ithemes_log_dir'] ) ) {
-            @mkdir( trailingslashit( $itsec_globals['ithemes_dir'] ) . 'logs' );
-    }
-
-The application creates the backup/log directory, but *not* the .htaccess/index file inside.
-
---------
-Solution
---------
-
-Add a default index file file inside the backup folder when creating the directory or store the backups outside of the web root.
-
-Update iThemes Security to version >= 5.3.1
-
-Timeline (dd/mm/yyyy)
-=====================
-
-* 26/02/2016 : Initial contact with iThemes.
-* 26/02/2016 : iThemes confirms the vulnerabilities.
-* 29/02/2016 : iThemes publishes a new version (5.3.1) of iThemes Security that fixes the vulnerabilities.
-
-Credits
-=======
-
-* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
-
-
+And here's another code execution bug:
+https://github.com/PyCQA/pylint/issues/959
 
 -- 
-SYSDREAM Labs <labs@...dream.com>
-
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
-
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Jakub Wilk
