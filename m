@@ -1,22 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/20/4
-Message-ID: <CAGkEBR4b5rY10cp0Ua=K6fCzofiK-PrOMj9kZfpTHqtsi7Yn+g@mail.gmail.com>
-Date: Fri, 19 Feb 2016 21:07:30 +0530
-From: Shravan Kumar <shravan.kumar@...urelayer7.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/12/1
+Message-ID: <CALJHwhTAvhAB0DPe2m7h1X_uoz9R5adTOpr-YVXUd6pX3WVNyg@mail.gmail.com>
+Date: Tue, 12 Jul 2016 14:33:54 +1000
+From: Wade Mealing <wmealing@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple XSS vulnerabilities in Refinery CMS
+Subject: CVE-2016-5389: linux kernel - challange ack information leak.
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Gday,
 
-I would like to publically disclose  Multiple XSS Vulnerabilities Found in
-Refinery CMS.
+Red Hat Product Security has been made aware of an important issue in
+the Linux kernel's implementation of challenge ACKS as specified in
+RFC 5961. An attacker which knows a connections client IP, server IP
+and server port can abuse the challenge ACK mechanism
+to determine the accuracy of a normally 'blind' attack on the client or server.
 
-The Technical details and the POC can be found in this report
+Successful exploitation of this flaw could allow a remote attacker to
+inject or control a TCP stream contents in a connection between a
+Linux device and its connected client/server.
 
-https://securelayer7.net/penetration-testing-reports/Penetration-testing-report--open-source-Ruby-on-rails-Refinery-CMS.pdf
+* This does NOT mean that cryptographic information is exposed.
+* This is not a Man in the Middle (MITM) attack.
 
-Thanks & Regards,
+This was reported to Red Hat by Yue Cao, part of the Cyber Security
+Group in the University of California
 
-Shravan Kumar
+Thanks,
 
+Wade Mealing
+Red Hat Product Security Team
+
+Red Hat Bugzilla:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1354708
+
+Patch:
+
+https://www.mail-archive.com/netdev@vger.kernel.org/msg118677.html
