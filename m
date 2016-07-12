@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2276" "Wednesday" "18" "October" "2017" "16:55:07" "-0400" "Robert Watson" "robertcwatson1@gmail.com" "<CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>" "64" "Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync" "^Date:" nil nil "10" "2017101820:55:07" "[oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync" (number mark "        robertcwatso Oct 18   64/2276  " thread-indent "\"Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync\"\n") "<CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com>" ("<20171017162507.e7lx6fbnleugoxxa@waldi.eu.org>" "<CAOfWR+EHYftu3Hqbu0qGvk_kk3au-Gkj_WEH95syC3n-QuNnxg@mail.gmail.com>" "<CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["785" "Tuesday" "12" "July" "2016" "15:40:56" "+0300" "0ang3el 0ang3el" "0ang3el@gmail.com" "<CADP2s3YfJGbJGhNmGSmWo-=QQVHiE_SHimDQL1WaopCYPBfjdw@mail.gmail.com>" "23" "[oss-security] Vulnerabilities in Apache Archiva" nil nil nil "7" "2016071212:40:56" "[oss-security] Vulnerabilities in Apache Archiva" (number mark "U       0ang3el@gmai Jul 12   23/785   " thread-indent "\"[oss-security] Vulnerabilities in Apache Archiva\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11792 invoked by uid 550); 19 Oct 2017 09:31:13 -0000
+Received: (qmail 31791 invoked by uid 550); 12 Jul 2016 14:19:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,107 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27940 invoked from network); 18 Oct 2017 20:56:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=kSshIgWmPPDLqgsjYSRLjqr2gY1pwsb9qCRZuIXuXQ0=;
-        b=aR3QpOPJr1DW/zqwQikDJzavERkUpoO/3NLNNQe6ikBq14mO+59KM5Yh4QDZIFmOYe
-         d5AMyhfpeBy9/MylyLCxP5T+wLOV/Ke6N/S86vKP+NxuuYZaNyMbecVADvMs1hdOIeLE
-         rPQEHZF3LPFgRzFzIDePw+tq+zFOIQNm3ULdVczBXpEsgGIlU3yYOajIPKjuaOd4BQv2
-         sOnVSYPMwduIitzJIQf8whaOZ+4D13T+SIkxAQYITM2JRXpIleN3XIL0huW5wsP9qWXw
-         iLyECJRbefW/Veq5WzP7ijoganV6hjp5UrJiGeHdApd8N0/UefDPfxQCqdbYQmky6t8O
-         rwzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=kSshIgWmPPDLqgsjYSRLjqr2gY1pwsb9qCRZuIXuXQ0=;
-        b=XYsofQfEwbhusFLQ8Q8iNdh9+2duwzUtybeYnOPJCu+fXfI4AvDsvsgMHEnQukQWIX
-         FYRgJg1w6iUvjjf0Iogafi42IrKW880ZxP5sJpq6Q1zPODqfL6DQWeDPtBTEIS6GYhqZ
-         4zTUQRMEeqMji9i/wr0L2toOS8AHvMP6ViLNM6Gj0qNprFeFpiYIEPLzikoF23TyzdRv
-         3JIDjQ7xCGAExqZXW9ahexMYBwFiK3RUfsKQTc2m+yBWQ2lvfDbPCp0LqVGNHcsYc193
-         asCKheBfeRpbxEo0vtSdtaSZHZLSszd/1QEyyuIRnMrt865WYMIJfSOEWc8OjVuJ9e0v
-         OAMA==
-X-Gm-Message-State: AMCzsaWbyb8DhsnNlCdIbrdhfSFn4hcjxd/+n1B6u/BAEVCRlpJecdb4
-	YJIXAeRNhpdqlztL+UNdSlV0X6YlJJExuxxu7Hs=
-X-Google-Smtp-Source: ABhQp+RxV6jUdVtAUZFZhdiJ9Jb0IhPsi8CFy4dWloYlURMQ62+j8+BkJN84XcU51BUx1SOV4uVhLOyolumNZuywX9Y=
-X-Received: by 10.28.8.145 with SMTP id 139mr7910610wmi.115.1508360148119;
- Wed, 18 Oct 2017 13:55:48 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com>
-References: <20171017162507.e7lx6fbnleugoxxa@waldi.eu.org> <CAOfWR+EHYftu3Hqbu0qGvk_kk3au-Gkj_WEH95syC3n-QuNnxg@mail.gmail.com>
- <CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com>
-Message-ID: <CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="001a1144497ed2752c055bd87696"
-Date: Wed, 18 Oct 2017 16:55:07 -0400
-From: Robert Watson <robertcwatson1@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in
- Debian mirror script ftpsync
+Received: (qmail 7834 invoked from network); 12 Jul 2016 12:41:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=vY4+hXN+mGr7EtK7glLm/fe+esIleF++FZe9ZfK/jAk=;
+        b=L7n2EI56xyGVU2sL4GWOwO/1blF01hzBA0SlIy3Zo9HcM3w16O1vCyLp+i7ZAUwp9+
+         mS81mQaEsEkUpotZI9spxyHY/QRaZTD+ZCT1ijUadCMil9rct+JWD9R+RITSLdyo+QtV
+         NBvoXADI1mAwu3HRqB8KSfMz73enfZpO14agEFcjiDnNNOsJrNdc8hAvgRw885Exk4vc
+         KcPefOrBoSyxbPxFvWuInOWNReP96B+OVgbNheg5IaKl3XM5nMFn5DjgU3q6zbfK4KOs
+         iIf6WWv4c2jqQ2i/Wc7AfH/nU7YiNwa++HyhL+fgdo0kmtXq9NUjphN5fJpz5t5KiVsa
+         7cbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=vY4+hXN+mGr7EtK7glLm/fe+esIleF++FZe9ZfK/jAk=;
+        b=kTnsz3UC6KuSaLHmoyNhkZ25lVhfLd2Or0/CSv1K+VrS/jjOB09uRs/TLhqu1Hc7SG
+         DnH5k498ynwJy2GJwIiR2fcx26ID45yrTD2Cp18W7Eo8NYPOujxxc8MoYQMNt6hs0Fc2
+         XTIUe82pWeYDYAknQLkuDqSH6Des+QYPVd6ThP6xxqoFhT8I4wDxuYDMTDU+n8RdYT76
+         cPgcMeDiEWV0UFIpyGIi1TWE8PNlU2qr8tD1CUm5WFMIrG7iSxpfGfLWclu1NJlnFggW
+         DakthL44fN+HB2Fui6gaSTV6aeXC3g1rllBZDqFPwqu4/XhKn3tTXRrYY01aM7nxUrMf
+         eNSw==
+X-Gm-Message-State: ALyK8tJZYX1+i81aC3cER8OFvZKyg28UIB85DM/A0f3k8PuHzzKKPdGbljIKe2XrGWHY4K35pepYwQ2BwT/5uQ==
+X-Received: by 10.28.193.134 with SMTP id r128mr15282051wmf.35.1468327256905;
+ Tue, 12 Jul 2016 05:40:56 -0700 (PDT)
+MIME-Version: 1.0
+From: 0ang3el 0ang3el <0ang3el@gmail.com>
+Date: Tue, 12 Jul 2016 15:40:56 +0300
+Message-ID: <CADP2s3YfJGbJGhNmGSmWo-=QQVHiE_SHimDQL1WaopCYPBfjdw@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=94eb2c0d1b2a8fddc805376f94d5
+Subject: [oss-security] Vulnerabilities in Apache Archiva
 
---001a1144497ed2752c055bd87696
-Content-Type: text/plain; charset="UTF-8"
+--94eb2c0d1b2a8fddc805376f94d5
+Content-Type: text/plain; charset=UTF-8
 
-May be that this convo should be migrated somewhere else, but I'd really
-like to understand how this has anything to do with symlinks. Been
-programming Unix/Linux for 30 years but now need to be a real SysAdmin so
-need to correct my misconceptions.
+Hello!
 
-Removing the ability for rsync to copy symlinks pointing to targets outside
-the mirror tree would greatly cripple it. I need to understand how the
-danger is worth the loss of this functionality.
+I have recently found three vulnerabilities in ws-xmlrpc library -
+https://ws.apache.org/xmlrpc/. Apache Security Team have assigned three CVE
+numbers for Apache Archiva project as it uses ws-xmlrpc library.
 
-Can you or anyone help me with this?
+Here is the list of vulnerabilities with CVE numbers:
 
+   - CVE-2016-5002 - SSRF attack via loading external DTD in ws-xmlrpc.
+   - CVE-2016-5003 - Deserialization of untrusted data via serializable
+   data type in ws-xmlrpc.
+   - CVE-2016-5004 - DoS attack via Content-Encoding header in ws-xmlrpc.
 
+Technical details regarding vulnerabilities are in this post -
+https://0ang3el.blogspot.ru/2016/07/beware-of-ws-xmlrpc-library-in-your.html
+.
 
+Regards, 0ang3el.
 
-
-*Trust in truth keeps hope aliverobertcwatson1@gmail.com
-<robertcwatson1@gmail.com>webmaster@civicchorale.org
-<webmaster@civicchorale.org>alpha.docsalvager.info
-<http://alpha.docsalvager.info>www.CivicChorale.org
-<http://www.CivicChorale.org>*
-
-On Wed, Oct 18, 2017 at 9:30 AM, Ben Tasker <ben@bentasker.co.uk> wrote:
-
-> On Wed, Oct 18, 2017 at 1:55 PM, Robert Watson <robertcwatson1@gmail.com>
-> wrote:
->
-> > Since security is determined by file and directory permissions and
-> > ownership, not by symlinks, wouldn't the fact that a malicious user did
-> not
-> > have permissions to access the symlink's target file/directory prevent
-> any
-> > harm?
-> >
->
-> If I'm reading the original correctly, then the user that will access the
-> target will be the user your HTTP daemon runs as (so, for sake of example,
-> nginx).
->
-> There's stuff that will be protected by permissions (for example, you
-> shouldn't be able to pull down /etc/shadow - so long as nginx/apache isn't
-> running as root), but there are other files that you might consider
-> sensitive(ish). Pulling down /etc/passwd would give you a list of known
-> good usernames to better target brute-force attempts (for example). Or
-> perhaps using it to grab the config file of some dynamic site on the same
-> server etc.
->
-> So there is potential scope for abuse there, and others probably have
-> better imaginations than I do.
->
-> The "nice" thing about it is: if an attacker gets access to the upstream
-> mirror they still may not be able to mess with the packages themselves (as
-> they're signed), but with this they can still potentially be hostile to
-> downstream.
->
->
-> --
-> Ben Tasker
-> https://www.bentasker.co.uk
->
-
---001a1144497ed2752c055bd87696--
+--94eb2c0d1b2a8fddc805376f94d5--
