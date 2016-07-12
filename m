@@ -1,65 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/3
-Message-Id: <20160822065107.12D721BE0E5@smtpvbsrv1.mitre.org>
-Date: Mon, 22 Aug 2016 02:51:07 -0400 (EDT)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/12/7
+Message-ID: <e2b42449-584c-9d7f-070e-b65b3150d3bc@redhat.com>
+Date: Tue, 12 Jul 2016 22:46:04 +0300
+From: Paul Wouters <pwouters@...hat.com>
+To: oss-security@...ts.openwall.com, huzaifas@...hat.com
 Cc: cve-assign@...re.org
-Subject: Re: Path traversal vulnerability in WordPress Core Ajax handlers
+Subject: Re: Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> https://sumofpwn.nl/advisory/2016/path_traversal_vulnerability_in_wordpress_core_ajax_handlers.html
-> https://core.trac.wordpress.org/ticket/37490
-
-> A path traversal vulnerability was found in the Core Ajax handlers of
-> the WordPress Admin API. This issue can (potentially) be used by an
-> authenticated user (Subscriber) to create a denial of service condition
-> of an affected WordPress site.
+On 06/14/2016 05:34 PM, Paul Wouters wrote:
+> On 06/13/2016 10:40 AM, cve-assign@...re.org wrote:
+>>> Its not libreswan which is flawed, but its the protocol which they are trying to implement.
+>>
+>>> which implement IKEv1 are flawed, since they follow this protocol
+>>
+>> Many protocols could be described as "flawed." The IKEv1 protocol amplification concern does not make it flawed in a way that would lead to a per-protocol
+>> CVE ID assignment.
 > 
-> OVE-20160712-0036
+> Then you should pull the CVE-2016-5361 which deals with retransmission amplification in IKEv1
+> 
+>  We are maintaining the
+>> CVE-2016-5361 ID assignment for the upstream announcement of "libreswan 3.16 vulnerable to DDOS attack. Please upgrade to 3.17"
+> 
+> That statement on the libreswan website is clearly referring to CVE-2016-3071 not CVE-2016-5361.
+> 
+>  and
+>> accompanying upstream patch, as described in the http://www.openwall.com/lists/oss-security/2016/06/10/4 post.
+> 
+> Which again clearly refers to CVE-2016-5361 and not CVE-2016-3071
+> 
+> So again, please fix CVE-2016-5361 or drop it.
 
->> allows for a denial of service condition as the logged in attacker can
->> use this flaw to read up to 8 KB of data from /dev/random. Doing this
->> repeatedly will deplete the entropy pool, which causes /dev/random to
->> block; blocking the PHP scripts. Using a very simple script, it is
->> possible for an authenticated user (Subscriber) to bring down a
->> WordPress site. It is also possible to trigger this issue via
->> Cross-Site Request Forgery as the nonce check is done too late in this
->> case.
+I have tested openswan and strongswan and confirmed it contains the same amplification that is inherent in being IKEv1 compliant.
 
->> wp-admin/admin-ajax.php
+Neither implementation has applied the hardening that libreswan has applied for this that was the original information that caused
+CVE-2016-5361 to be issued for libreswan.
 
->> plugin=../../../../../../../../../../dev/random&action=update-plugin
+I believe MITRE needs to fix the inconsistency in the issuance of CVE-2016-5361, expand it to be about the IKEv1 protocol, and gather
+the other vendor information and patches, or issue additional vendor specific CVE's. I believe the first solution is better.
 
->> WordPress version 4.6 mitigates this vulnerability by moving the CSRF
->> check to the top of the affected method(s).
-
-Use CVE-2016-6896 for the directory traversal vulnerability, and
-CVE-2016-6897 for the CSRF. (These two vulnerabilities have different
-affected versions.)
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXuqCFAAoJEHb/MwWLVhi2OjkP/0xA4Oj1fAED71fR5c2zMtg4
-fFuRRrbSltEIpWbLFi4vg7VAkOhYOqH6LbDPtehXDrZxJ5AFX7ifYyjprvxSLYvn
-STcG7ve521b+tPy+0GzdlrHpGRbk81Ekh57Gny9rXEym0msdWJD/zaDV0poJbdEV
-E76DEZuZ4eq1XoBQ6FsTvRFinsA7tCB5LjmCa+lZuG9xf4AYFDlMAUJu7I+/uxGO
-Ep/CUqYwASjZ50IYBwhbk138PbjEw1iZmcYytlkifACRk9GNmkb2ctt4QKoCIWml
-HPY6BnB26CKDGk490MPjLg6+jkAA1v+bTBru5dSMoLw3icAWfHefW/P5yH0S/HoX
-eU/RIaaxovd4fkKfzz8lBhWkARGPZrPUGyOIpvaLLgMPLF10xcBraJ32ygrPNndy
-ph418Yr4ZCraR9Tdg/EBZlS6Dlhztr16I+Z1FzXIyVemkxafYNAqhqJXUYgx9TFw
-IgS7Isk4+2XJQU0u76lIEFGBHsHV2j9tif6lu1ZsrZDKG2OhI09+KHW1wp8gTQKG
-QxlbBcl/sD4NBLm58vwdvLm9lMCxc6vv9jdK5hhfz4ATWHSsjTi1O6DC787qCfqW
-pnOjNghR3stX7DxzDQmMVFB30OaGMHQ5PGVk5CgK4SmBJuwtxYOBFK919f4KPmz6
-8ZrtIoD+v972q+r5kaMU
-=WwXr
------END PGP SIGNATURE-----
+Paul
