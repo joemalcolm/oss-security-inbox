@@ -1,18 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/07/3
-Message-ID: <87inyq0yp4.fsf@alice.fifthhorseman.net>
-Date: Sat, 07 May 2016 09:44:55 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Subject: Re: broken RSA keys
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/12/6
+Message-ID: <CAKG8Do4-EQkguy1Q+=khZsnPNXLDn5bueBAgPg+FuDvffLST8A@mail.gmail.com>
+Date: Tue, 12 Jul 2016 17:20:57 +0200
+From: Cedric Buissart <cbuissar@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2016-5011: util-linux: Extended partition loop in MBR partition table leads to DoS
 Content-Type: text/plain; charset=utf-8
 
-On Thu 2016-05-05 07:21:14 -0400, Solar Designer wrote:
-> Thanks.  I guess when I imported a PGP 2.6 key to GPG, I just did not
-> notice this detail, and GPG continued to use the V3 format key for me.
+On Mon, Jul 11, 2016 at 5:19 PM, Florian Weimer <fweimer@...hat.com> wrote:
 
-FWIW, newer versions of GnuPG (since 2.1.0) have completely dropped
-support for v3 keys.  This silly construction of the keyid is only one
-of the problems with the v3 format.
+> On 07/11/2016 01:32 PM, Cedric Buissart wrote:
+>
+> I looked at other projects to see what is being done to prevent this
+>> particular loop from happening. Until now, tools I checked are protected
+>> either by detecting the loop (i.e.: actively searching for a relative
+>> offset of 0 for the next EBR, as done by this util-linux patch; partprobe
+>> and fdisk are doing that), or enforcing a limit on the maximum number of
+>> partitions for a device (Linux kernel, kpartx & other tools I currently
+>> checked)
+>>
+>
+> How does util-linux protect against loops which are non-empty?  Does it
+> reject negative offsets?
+>
+Indeed, the the patch wasn't sufficient.
+The following has been added, in order to prevent jumping back to a
+precedent EBR :
+https://github.com/karelzak/util-linux/commit/50d1594c2e6142a3b51d2143c74027480df082e0
 
-         --dkg
+
+>
+> Thanks,
+> Florian
+>
+
+
+
+-- 
+Cedric Buissart,
+Product Security
+
