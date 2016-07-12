@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["731" "Friday" "24" "July" "2015" "08:50:49" "+0900" "Philip Pettersson" "philip.pettersson@gmail.com" "<CAHQ_-nR8WGDK58PmsmhPp8ApnmwjrLRxeyCKTsfRL83ZUZjTxA@mail.gmail.com>" "16" "Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" nil nil nil "7" "2015072323:50:49" "[oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" (number mark "        philip.pette Jul 24   16/731   " thread-indent "\"Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser\"\n") "<87h9oud89s.fsf@lysator.liu.se>" ("<20150723170954.GA17931@localhost.localdomain>" "<87h9oud89s.fsf@lysator.liu.se>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1313" "Tuesday" "12" "July" "2016" "18:20:18" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhSqW32_ii65vffOokARjT2efpK=iSfDuqVK62ay0+jB3w@mail.gmail.com>" "39" "[oss-security] Re: CVE-2016-5389: linux kernel - challange ack information leak." "^Date:" nil nil "7" "2016071208:20:18" "[oss-security] Re: CVE-2016-5389: linux kernel - challange ack information leak." (number mark "        wmealing@red Jul 12   39/1313  " thread-indent "\"[oss-security] Re: CVE-2016-5389: linux kernel - challange ack information leak.\"\n") "<CALJHwhTAvhAB0DPe2m7h1X_uoz9R5adTOpr-YVXUd6pX3WVNyg@mail.gmail.com>" ("<CALJHwhTAvhAB0DPe2m7h1X_uoz9R5adTOpr-YVXUd6pX3WVNyg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1426 invoked by uid 550); 23 Jul 2015 23:51:01 -0000
+Received: (qmail 31826 invoked by uid 550); 12 Jul 2016 08:20:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1400 invoked from network); 23 Jul 2015 23:51:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=m0np8AicxEaRm1CpADwhOEEo/+GzwHxYvUJRKc4KfKQ=;
-        b=M/Tf41E7yPcVOyDMup505vrudFJ+03wbOsQ8kRuFZjyUT0Z8n0zoi9Q7ln/4VPLl3k
-         H1FGbGLqQr8XYVjqQ9gmgIkLTE8Q01buMeBRgtaaLUfJSiDndiKgrm2Ok3UyRSFeqJSy
-         G7qvW+L6w3WAeArOyjOQdEuo0sxXXC+7wWM83owQeJbHuEISDOqbhYDyUA+JEvmd9UVi
-         hRsxzc3CtSnFrWXoqCLD+ogs0z0fG4VQEhAmKCeBKHkw11UANnPi0fYYPSKW+uIxkwdu
-         Svypa+lzsq2/1b50Dv6ILs5cfUNhl+BVWowLfMPxq0VbbbuKkesgAfXPmMRnIO9CnvIM
-         LqTw==
+Received: (qmail 31808 invoked from network); 12 Jul 2016 08:20:31 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=vJxSTbNByAYCxv0aCrj1mljhLK5y+djMoxtHbHlBo6M=;
+        b=D4mxf8MUPuIoKiKBhT8pNNWuv4493hY3yI4ttlzxRYer+ulnf0IyVarMQBF/icXQPi
+         pS5J4ZnJqsDpn4V4g40rJ9PTDgztcB/APszgD5t2U2IpLR6j8bgI2WzYon1lBHtO3a6o
+         fEEC8pNf0I8AbZ4BfBHMxSBBWykvtKb60Dyjro3g0MdjWaXCkp3QMiQ/MtkXVbZK+b5/
+         VzuQS/MjzJQ8AwpTS7K4kzGzcegBeHffe7Ir6iMktLnBMLTzejQn8Bk1QMQ87HLRiodz
+         NXvhqzk0CVajGkS8t2VmZcQMtKk8m9iXbBu4d+VlvoGOmk1CKm0/6zGkzS9kTJHm96ja
+         DMvg==
+X-Gm-Message-State: ALyK8tLWaxI9VM8SOcLuUi88gvy9ghGRN8URdReWIpHJ6QUub0prqKZ5LrgVZBUTLPyDIKTh7vvVL+s6KnuZszkx
+X-Received: by 10.36.149.69 with SMTP id m66mr1448614itd.85.1468311619155;
+ Tue, 12 Jul 2016 01:20:19 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 10.180.73.244 with SMTP id o20mr1385325wiv.31.1437695449165;
- Thu, 23 Jul 2015 16:50:49 -0700 (PDT)
-In-Reply-To: <87h9oud89s.fsf@lysator.liu.se>
-References: <20150723170954.GA17931@localhost.localdomain>
-	<87h9oud89s.fsf@lysator.liu.se>
-Message-ID: <CAHQ_-nR8WGDK58PmsmhPp8ApnmwjrLRxeyCKTsfRL83ZUZjTxA@mail.gmail.com>
+In-Reply-To: <CALJHwhTAvhAB0DPe2m7h1X_uoz9R5adTOpr-YVXUd6pX3WVNyg@mail.gmail.com>
+References: <CALJHwhTAvhAB0DPe2m7h1X_uoz9R5adTOpr-YVXUd6pX3WVNyg@mail.gmail.com>
+Message-ID: <CALJHwhSqW32_ii65vffOokARjT2efpK=iSfDuqVK62ay0+jB3w@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Cc: Qualys Security Advisory <qsa@qualys.com>
-Date: Fri, 24 Jul 2015 08:50:49 +0900
-From: Philip Pettersson <philip.pettersson@gmail.com>
+Date: Tue, 12 Jul 2016 18:20:18 +1000
+From: Wade Mealing <wmealing@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Qualys Security Advisory - CVE-2015-3245
- userhelper - CVE-2015-3246 libuser
+Subject: [oss-security] Re: CVE-2016-5389: linux kernel - challange ack information leak.
 To: oss-security@lists.openwall.com
 
-On Fri, Jul 24, 2015 at 3:43 AM, Leif Nixon <nixon@lysator.liu.se> wrote:
-> Qualys Security Advisory <qsa@qualys.com> writes:
->
->> Hello, it is July 23, 2015, 17:00 UTC, the Coordinated Release Date for
->> CVE-2015-3245 and CVE-2015-3246.  Please find our advisory below, and
->> our exploit attached.
->
-> *Why* are you releasing a full exploit just minutes after the patch is
-> released?
->
-> (Disclosure: I am employed by Red Hat, but this is my purely personal question.)
+I've since been contacted by the researcher and have been told that
+CVE-2016-5696 was reserved by mitre for this issue.  I'd like to
+withdraw the usage of this CVE number and use CVE-2016-5696.
 
-That's how coordinated release dates work. Instead of trying to shame
-Qualys for not following your arbitrary views on what is and isn't
-"Responsible Disclosure", perhaps you should make sure Red Hat
-releases patches hours before the CRD, like Ubuntu does?
+Sorry for any confusion.
+
+Wade Mealing
+
+On Tue, Jul 12, 2016 at 2:33 PM, Wade Mealing <wmealing@redhat.com> wrote:
+> Gday,
+>
+> Red Hat Product Security has been made aware of an important issue in
+> the Linux kernel's implementation of challenge ACKS as specified in
+> RFC 5961. An attacker which knows a connections client IP, server IP
+> and server port can abuse the challenge ACK mechanism
+> to determine the accuracy of a normally 'blind' attack on the client or server.
+>
+> Successful exploitation of this flaw could allow a remote attacker to
+> inject or control a TCP stream contents in a connection between a
+> Linux device and its connected client/server.
+>
+> * This does NOT mean that cryptographic information is exposed.
+> * This is not a Man in the Middle (MITM) attack.
+>
+> This was reported to Red Hat by Yue Cao, part of the Cyber Security
+> Group in the University of California
+>
+> Thanks,
+>
+> Wade Mealing
+> Red Hat Product Security Team
+>
+> Red Hat Bugzilla:
+>
+> https://bugzilla.redhat.com/show_bug.cgi?id=1354708
+>
+> Patch:
+>
+> https://www.mail-archive.com/netdev@vger.kernel.org/msg118677.html
