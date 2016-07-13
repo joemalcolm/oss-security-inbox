@@ -1,25 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/02/3
-Message-Id: <20161002154541.522FC6CC0E3@smtpvmsrv1.mitre.org>
-Date: Sun,  2 Oct 2016 11:45:41 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/13/8
+Message-Id: <20160713165940.E24C88BCE32@smtpvmsrv1.mitre.org>
+Date: Wed, 13 Jul 2016 12:59:40 -0400 (EDT)
 From: cve-assign@...re.org
-To: marco.gra@...il.com
+To: caiqian@...hat.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: imagemagick mogrify use after free
+Subject: Re: cve request: local DoS by overflowing kernel mount table using shared bind mount
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://github.com/ImageMagick/ImageMagick/issues/281
-> https://github.com/ImageMagick/ImageMagick/commit/d63a3c5729df59f183e9e110d5d8385d17caaad0
+> It was reported that the mount table expands by a power-of-two
+> with each bind mount command.
 
->> AddressSanitizer: heap-use-after-free
->> READ of size 4
+> If the system is configured in the way that a non-root user
+> allows bind mount even if with limit number of bind mount
+> allowed, a non-root user could cause a local DoS by quickly
+> overflow the mount table.
 
->> magick/attribute.c
+> it will cause a deadlock for the whole system,
 
-Use CVE-2016-7906.
+>> form of unlimited memory consumption that is causing the problem
+
+Use CVE-2016-6213.
 
 - -- 
 CVE Assignment Team
@@ -29,17 +33,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX8SsRAAoJEHb/MwWLVhi2lOoP/3hkMq06zT1dP90mnGALwTqX
-nwKllShGOAfGlGdtJi7LiE+CeSfgXcyMOc666VG26dQb19Aj6moFemWIEZ4GVC5v
-WNNGrSVRJvZAlW1LEN1tVwenv4kuevJI5KhoPRWXmUYkbsxdRwKS8pkPKyoYvs5v
-c5ttxtdooyvRky2YvRReJ6Qgci0A61D3w8j47qC7yMcI3LJhX0us9WbWTnaLG7x8
-ZF+DqtLBUcAgc08RTw1nUUDqxVNeGLAwnu8Ak+f5GQCudd9g570wXjL0UPznLOnC
-Wz4fAFfU5NSayq3S/GiileILeDTHJ79ObkOiC9WIjltoRn8iercvs/6tXpvMAWFo
-J2WlfitHrepRrK3R517kpnxSTmJyYU6pEu1DtA10DjHo0KFYOLy0+D/N6r8IufNj
-mNCKPgtJO6JdNsHrhNBC/dYxkB/3QiGOWayF3dK/MxhD8irfr7gR2w5q2PfTAn+/
-dJ4MLvZl+nMPh6Hb7gtIWHHVmryJtoVCwSJIEO3JpNvVnViyGw9iRhRutdDL5rbK
-0JEz/2wJ0eDXJ9J/fI+K1Z/Dcc9rgXBeTuAdirkuJWnAd/6ngChoJYHKd0lAIFzT
-tyP+64xEg+XYbG7Cj3MrXrQjaDJdGW/b9uW5rwqgqduWEXvUQS91O/r3CERu6cLu
-7dpxAcUqkCcF0KlNm7HU
-=C5KK
+iQIcBAEBCAAGBQJXhnMiAAoJEHb/MwWLVhi25Q4P/ig8NsIq4e7iKjGBPBiX8Esd
+rxxdLpmyNfHNqMYelHMtnQXxKlewpg0RanD9tmkeuAcrCsCMrh6dejE1ioPxRhuA
+QOkhnjYhT/uFXPocgyf6EvVR9BzMiX7OmDXqaBBAjifbvfw5EqnZqj7Gyc8g0Scn
+1/uoL9DLf6USbK8Gmho0r2mxtFf0DvhvtSRPSsw9HQjH7kQEMgzjG0bmOsTyGtWB
+XEXERVynveoQmalW2vm+p6TPHHaKrTBrmXPxhgjxynMj1EX6V2j1Om3bQiuJmKUR
+1KVN5pewgVy9ZV0Jk4pAVrYO+U0qvLflZBHknceWlz9YzfZyJYKaiv0RH8RwXYfC
+P1ezDLsuBNup0tgAx+i++05cIFGFRV4ts60wxNJnUcgE21LAZ6qL8LFjZ1ixA9jM
+LjESRjdNw4MeeQOAHt/YzskhP6hTanlZvmLNYyuhZB6a0FXV18xEPVPrlyb5+odD
+2w7jTQqBnWfOTYPAaPPDc72n88y+5jxvGVXLBCcswvwIj0kTwUlZHTD+CSEylXlL
+apZMLo2tgJ+3SsWuiMaSWfZDL79M2fvLkYZ6KVsnONMGRgjIDAwdvp+VgbIfdWlu
+sLS3Rjx9pkjRpt+M6YM7OIIdNYiBgPRZFl6XDv4TIbuA5g/vuJTg44JIJDfj7MiT
+iqRuPFgATt2oMZqUmeZu
+=8iz3
 -----END PGP SIGNATURE-----
