@@ -1,42 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/14/9
-Message-ID: <20160114181128.GD16572@netmeister.org>
-Date: Thu, 14 Jan 2016 13:11:29 -0500
-From: Jan Schaumann <jschauma@...meister.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/13/11
+Message-ID: <CAGkswnQeO6oXv+so+DRCMWHqpVKuKYjZ3dTo=gZo2GzycdArhw@mail.gmail.com>
+Date: Wed, 13 Jul 2016 14:53:03 -0300
+From: Franco Costantini <franco.costantini.20@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
+Cc: gustavo.grieco@...g.fr
+Subject: CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7
 Content-Type: text/plain; charset=utf-8
 
-Qualys Security Advisory <qsa@...lys.com> wrote:
- 
-> Since version 5.4 (released on March 8, 2010), the OpenSSH client
-> supports an undocumented feature called roaming:
+This issue was reported to Redhat secalert, they asked me to disclose it
+publicly.
 
-Why is version 5.3 not affected?
+A write out-of-bounds parsing an ico file was found in gdk-pixbuf 2.30.7.
+It's tested in Ubuntu 14.04, other versions can be affected (in Debian 8,
+an assert inside gtk3 stops the execution before the crash). This issue can
+be reproduced using eog:
 
-The change appears to have been introduced in
+ (gdb) run crash.ico
+ Starting program: /usr/bin/eog crash.ico
+ [Thread debugging using libthread_db enabled]
+ Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+ [New Thread 0x7fffec58e700 (LWP 3709)]
+ [New Thread 0x7fffebd8d700 (LWP 3710)]
+ [New Thread 0x7fffe9656700 (LWP 3711)]
+ [New Thread 0x7fffe8e55700 (LWP 3712)]
 
-http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/clientloop.c.diff?r1=1.211&r2=1.212
+ (eog:3705): EOG-WARNING **: Couldn't load icon: Icon 'image-loading' not
+present in theme
 
-https://github.com/openssh/openssh-portable/commit/c5564e1c4c41ae9af96973e2996e2a4285acbae8#diff-de6290efbc1504e2b727aee24e88db02
+ Program received signal SIGSEGV, Segmentation fault.
+ [Switching to Thread 0x7fffe9656700 (LWP 3711)]
+ 0x00007fffd83b428c in OneLine32 (context=0x7fffe0029820) at io-ico.c:589
+ (gdb) bt
+ #0  0x00007fffd83b428c in OneLine32 (context=0x7fffe0029820) at
+io-ico.c:589
+ #1  OneLine (context=0x7fffe0029820) at io-ico.c:800
+ #2  gdk_pixbuf__ico_image_load_increment (data=0x7fffe0029820,
+     buf=0x7fffe001b852 "", size=0, error=0x7fffe9655b68) at io-ico.c:891
+ #3  0x00007ffff53e2665 in gdk_pixbuf_loader_load_module (
+     loader=loader@...ry=0x7df420, image_type=image_type@...ry=0x0,
+     error=error@...ry=0x7fffe9655b68) at gdk-pixbuf-loader.c:443
+ #4  0x00007ffff53e2ee8 in gdk_pixbuf_loader_close (loader=0x7df420,
+     error=0xaa1aa0) at gdk-pixbuf-loader.c:808
+ #5  0x00000000004236ab in eog_image_load ()
+ #6  0x00000000004275d7 in ?? ()
+ #7  0x0000000000425959 in ?? ()
+ #8  0x00007ffff43eff05 in ?? () from /lib/x86_64-linux-gnu/libglib-2.0.so.0
+ #9  0x00007ffff3f53184 in start_thread (arg=0x7fffe9656700)
+     at pthread_create.c:312
+ #10 0x00007ffff3c8037d in clone ()
+     at ../sysdeps/unix/sysv/linux/x86_64/clone.S:111
 
-on 2009-05-28.
+The affected function is here:
 
-OpenSSH 5.3 appears to have been named in
-https://github.com/openssh/openssh-portable/commit/cd6b1a27cbb9400565811f908ca536937d875b8f
-on 2009-06-30.
+ static void OneLine32 (struct ico_progressive_state *context)
+{
+        gint X;
+        guchar *Pixels;
 
-I also see:
+        X = 0;
+        if (context->Header.Negative == 0)
+                Pixels = (context->pixbuf->pixels +
+                          context->pixbuf->rowstride *
+                          (context->Header.height - context->Lines - 1));
+        else
+                Pixels = (context->pixbuf->pixels +
+                          context->pixbuf->rowstride *
+                          context->Lines);
+        while (X < context->Header.width) {
+                Pixels[X * 4 + 0] = context->LineBuf[X * 4 + 2];
+                Pixels[X * 4 + 1] = context->LineBuf[X * 4 + 1];
+                Pixels[X * 4 + 2] = context->LineBuf[X * 4 + 0];
+                Pixels[X * 4 + 3] = context->LineBuf[X * 4 + 3];
+                X++;
+        }
+}
 
-$ ssh -V
-OpenSSH_5.3p1, OpenSSL 1.0.0-fips 29 Mar 2010
-$ ssh -o UseSomeBogusOption=yes `hostname` date
-command-line: line 0: Bad configuration option: UseSomeBogusOption
-$ ssh -o UseRoaming=no `hostname` date
-Thu Jan 14 09:27:24 PST 2016
-$ 
+The value of context->Header.height in OneLine32 is a very large number
+(probably it wasn't validated correctly). Such value is used to calculate
+where to write, resulting in an overflow where Pixels is written.
 
-which suggests that OpenSSH 5.3p1 at the very least _knows_ about the
-UseRoaming option.
+This issue was found using QuickFuzz, the file to reproduce it is attached.
+Please assign a CVE if suitable.
 
--Jan
+Regards, Franco
+
+Content of type "text/html" skipped
+
+Download attachment "crash.ico.tar.gz" of type "application/x-gzip" (158 bytes)
