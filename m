@@ -1,88 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/29/3
-Message-ID: <CAC9YFzf4JBQW5oSk49xAqWv9EwqVU+i_5vcAj5A8gkWw2Tu9Cw@mail.gmail.com>
-Date: Mon, 29 Feb 2016 19:31:17 +0000
-From: Rafael Mendonça França <rafaelmfranca@...il.com>
-To: "rubyonrails-security@...glegroups.com" <rubyonrails-security@...glegroups.com>, security@...e.de,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "ruby-security-ann@...glegroups.com" <ruby-security-ann@...glegroups.com>
-Subject: [CVE-2016-2098] Possible remote code execution vulnerability in Action Pack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/13/12
+Message-Id: <20160713181134.26BA78BC19E@smtpvmsrv1.mitre.org>
+Date: Wed, 13 Jul 2016 14:11:34 -0400 (EDT)
+From: cve-assign@...re.org
+To: gustavo.grieco@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: A read out-of-bands was found in the parsing of TGA files using libgd
 Content-Type: text/plain; charset=utf-8
 
-There is a possible remote code execution vulnerability in Action Pack.
-This vulnerability has been assigned the CVE identifier CVE-2016-2098.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Versions Affected:  3.2.x, 4.0.x, 4.1.x, 4.2.x
-Not affected:       5.0+
-Fixed Versions:     3.2.22.2, 4.1.14.2, 4.2.5.2
+> https://github.com/libgd/libgd/issues/247#issuecomment-232084241
+> 
+> a read out-of-bound
 
-Impact
-------
-Applications that pass unverified user input to the `render` method in a
-controller or a view may be vulnerable to a code injection.
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 4
 
-Impacted code will look like this:
+> The problem is
+> https://github.com/libgd/libgd/blob/gd-2.2.2/src/gd_tga.c#L102. In
+> this case tga->bits == TGA_BPP_8 && tga->alphabits == 1, but the code
+> in the if body assumes tga->bits == TGA_BPP_32. The comment above the
+> respective code block already hints, that this combination is not
+> supported. The condition is supposed to be:
+> 
+>    } else if (tga->bits == TGA_BPP_32 && tga->alphabits) {
 
-```ruby
-class TestController < ApplicationController
-  def show
-    render params[:id]
-  end
-end
-```
+> https://github.com/libgd/libgd/commit/10ef1dca63d62433fda13309b4a228782db823f7
 
-An attacker could use the request parameters to coerce the above example
-to execute arbitrary ruby code.
+> the libgd developers confirmed that this issue is not the
+> same as CVE-2016-6132
 
-All users running an affected release should either upgrade or use one of the
-workarounds immediately.
+Use CVE-2016-6214.
 
-Releases
---------
-The FIXED releases are available at the normal locations.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Workarounds
------------
-A workaround to this issue is to not pass arbitrary user input to the `render`
-method. Instead, verify that data before passing it to the `render` method.
-
-For example, change this:
-
-```ruby
-def show
-  render params[:id]
-end
-```
-
-To this:
-
-```ruby
-def show
-  render verify_id(params[:id])
-end
-
-private
-def verify_id(id)
-  # add verification logic particular to your application here
-end
-```
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided a patch for
-it. It is in git-am format and consist of a single changeset.
-
-* 3-2-secure_inline_with_params.patch - Patch for 3.2 series
-* 4-1-secure_inline_with_params.patch - Patch for 4.1 series
-* 4-2-secure_inline_with_params.patch - Patch for 4.2 series
-
-Credits
--------
-Thanks to both Tobias Kraze from makandra and joernchen of Phenoelit
-for reporting this!
-
-Content of type "text/html" skipped
-
-Download attachment "4-2-secure_inline_with_params.patch" of type "application/octet-stream" (3693 bytes)
-
-Download attachment "3-2-secure_inline_with_params.patch" of type "application/octet-stream" (5472 bytes)
-
-Download attachment "4-1-secure_inline_with_params.patch" of type "application/octet-stream" (3697 bytes)
+iQIcBAEBCAAGBQJXhoP0AAoJEHb/MwWLVhi2CXgP/0BrhP3KJ9rAB74j3KghawYu
+7sVjfO28PWfCd4aEhor1/T4UFWU7u2LWJ2uBfMG+aDbUOn3WHezSo1+6HreoJmRn
+X95QK52iQ7/+9ZcO0+AqbRkiP/ZhkRBq9q5jzfSDSBKwPwgc+wkYj3CvaSD9f1A7
+zqJ2+y65l1jceyc/ytmFM4vA0vfRVKwaNCrYCYTVxfqPUoSZqsOTpp3yoj0l4kZM
+MJs7fVPbkeyWK+5S80VgSMSMoRAezackJq3GiTnonbnNn6Zxy8dX0of0eRxfzBVZ
+o6EhPWcawE49oOdo50GSWAN+CkPj+HMlT427/DWyvNpcuugxKlEx9eEefzSKdLAW
+RqUJde6c3np/tWp0Vl3DMxQEsUojUX1MV294uixvGlh5M4FUmbir/OF8kyEsjRJ1
+6ZfoJRaI/JOGTbaEHOy1qjH4FoOXmDUGnDccUs6fv834UOrPVK9vNXlql++8nPxh
+JPHDkjv2ZO+MEV+m4EZM7FdA03oK5Hum3qWvnsmqbHMSMfCMQgUcfustMVsEreJF
+t5DT04HRFGVfk4DcYMu17bdyPQNPhsfqP9Dx34cHp8FYJ5M/1h9nzjFmKWyf2Tqw
+39ua05QjA7VNx/m3XQBnMwKQAGfhKzoQger0mbMPO+E9fENh3PmzWJO02xtkrQAZ
+iHWVDcQfP5wIpp/QdtCm
+=W+Ut
+-----END PGP SIGNATURE-----
