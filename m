@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["765" "Thursday" "11" "May" "2017" "12:21:53" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<1731133438.6882472.1494519713367.JavaMail.zimbra@redhat.com>" "27" "[oss-security] CVE-2017-7472 Linux kernel: KEYS: fix keyctl_set_reqkey_keyring() to not leak thread keyrings" nil nil nil "5" "2017051116:21:53" "[oss-security] CVE-2017-7472 Linux kernel: KEYS: fix keyctl_set_reqkey_keyring() to not leak thread keyrings" (number mark "U       vdronov@redh May 11   27/765   " thread-indent "\"[oss-security] CVE-2017-7472 Linux kernel: KEYS: fix keyctl_set_reqkey_keyring() to not leak thread keyrings\"\n") "<2045504338.6880508.1494519270013.JavaMail.zimbra@redhat.com>" ("<2045504338.6880508.1494519270013.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2104" "Wednesday" "13" "July" "2016" "11:41:53" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160713154153.BC9736C0989@smtpvmsrv1.mitre.org>" "54" "[oss-security] Re: CVE requests for Drupal Core - SA-CORE-2016-002" nil nil nil "7" "2016071315:41:53" "[oss-security] Re: CVE requests for Drupal Core - SA-CORE-2016-002" (number mark "U       cve-assign@m Jul 13   54/2104  " thread-indent "\"[oss-security] Re: CVE requests for Drupal Core - SA-CORE-2016-002\"\n") "<CAMYtjAppEswaDgzgB4Wf9vPFJZVcco3M1KTR68hVCawtR4u1xQ@mail.gmail.com>" ("<CAMYtjAppEswaDgzgB4Wf9vPFJZVcco3M1KTR68hVCawtR4u1xQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7976 invoked by uid 550); 11 May 2017 16:22:06 -0000
+Received: (qmail 25970 invoked by uid 550); 13 Jul 2016 15:42:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,51 +12,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7953 invoked from network); 11 May 2017 16:22:05 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 85EAAC057FA8
-Authentication-Results: ext-mx08.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx08.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=vdronov@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 85EAAC057FA8
-Date: Thu, 11 May 2017 12:21:53 -0400 (EDT)
-From: Vladis Dronov <vdronov@redhat.com>
-To: oss-security@lists.openwall.com
-Message-ID: <1731133438.6882472.1494519713367.JavaMail.zimbra@redhat.com>
-In-Reply-To: <2045504338.6880508.1494519270013.JavaMail.zimbra@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.40.1.12, 10.4.195.3]
-Thread-Topic: CVE-2017-7472 Linux kernel: KEYS: fix keyctl_set_reqkey_keyring() to not leak thread keyrings
-Thread-Index: 0cmp5i6vtxZ/c2BCxksViljVZTngJw==
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Thu, 11 May 2017 16:21:53 +0000 (UTC)
-Subject: [oss-security] CVE-2017-7472 Linux kernel: KEYS: fix keyctl_set_reqkey_keyring()
- to not leak thread keyrings
+Received: (qmail 25952 invoked from network); 13 Jul 2016 15:42:05 -0000
+From: cve-assign@mitre.org
+To: pere@orga.cat
+Cc: cve-assign@mitre.org, security@drupal.org, oss-security@lists.openwall.com
+In-Reply-To: <CAMYtjAppEswaDgzgB4Wf9vPFJZVcco3M1KTR68hVCawtR4u1xQ@mail.gmail.com>
+Message-Id: <20160713154153.BC9736C0989@smtpvmsrv1.mitre.org>
+Date: Wed, 13 Jul 2016 11:41:53 -0400 (EDT)
+Subject: [oss-security] Re: CVE requests for Drupal Core - SA-CORE-2016-002
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A vulnerability was found in the Linux kernel from v2.6.29-rc1 (since
-commit d84f4f992cbd) upto v4.11-rc8 (commit c9f838d104). It was found
-that keyctl_set_reqkey_keyring() function leaks thread keyring which
-allows unprivileged local user to exhaust kernel memory and thus to
-cause DoS.
+> https://www.drupal.org/SA-CORE-2016-002
+> 
+> Saving user accounts can sometimes grant the user all roles (User
+> module - Drupal 7 - Moderately Critical)
+> 
+> A vulnerability exists in the User module, where if some specific
+> contributed or custom code triggers a rebuild of the user profile
+> form, a registered user can be granted all user roles on the site.
+> This would typically result in the user gaining administrative access.
 
-cvss3=5.5/CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H
-cwe=CWE-400
+Use CVE-2016-6211.
 
-References:
 
-https://lkml.org/lkml/2017/4/1/235
+> https://www.drupal.org/SA-CORE-2016-002
+> https://www.drupal.org/node/2749333
+> 
+> Views can allow unauthorized users to see Statistics information
+> (Views module - Drupal 8 - Less Critical)
+> 
+> An access bypass vulnerability exists in the Views module, where users
+> without the "View content count" permission can see the number of hits
+> collected by the Statistics module for results in the view.
+> 
+> The same vulnerability exists in the Drupal 7 Views module (see
+> SA-CONTRIB-2016-036).
 
-https://lkml.org/lkml/2017/4/3/724
+Use CVE-2016-6212 for both the issue in Drupal Core and the issue
+in the Drupal 7 Views module.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1442086
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-https://bugzilla.novell.com/show_bug.cgi?id=1034862
-
-Upstream patch:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c9f838d104fed6f2f61d68164712e3204bf5271b
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+iQIcBAEBCAAGBQJXhmCYAAoJEHb/MwWLVhi2ynoQALLaB0MVbyjGwof2sl9iAbiX
+pTLnCnGhO6ecpwWJdtRB4W4DEF6L/h3X7ggiohGaD6okdQtjLF8ykSrvb2mciAsE
+gOjNpN9qK16hjAcd2DtSnXn32Qz1tFpFYYIWdSthO1hlI6Sr24B3E9lYtBoAhC1/
+VudXovTed0jBW95EvS0lWPMYcOGEtSoQ3rLOKEcnQqzIrlH6hs3bRQNsZLgupsB1
+dGY4gsHFleDZKyZLP15KWbONnyfS6jHp7SIXne977vgWKpDYy/5+XSN7YvKks/Ju
+q3a0oLn8N4CreZrCIWl6CbgG0iA75xzlgsgayg+xRabFEavL2EonPPJIvBj3TxtM
+d2RVPnfGGuLmvOh+c5fBYs6gVftRJa9nUaIXou+1Xs6LQo5RDypFPCDzpblcWSe8
+QX0AXVE/lCGP1szzCXPqUFWoXMFvwlnFnIwPpJrwO/eADc8P6XsOwsvDbqMFEzlI
+r5Mj+d0/5q5NrCf9GWjSi7YTrDQa1ft8SkUsgyCtRwmYIhUyuSIzStoPM+MvLOQv
+grzXK6F4QqH33z7ru+fdbq5XIIGmk2dQOtgY+MZXxVDNcVmSgZOvwInMMUgnuKpR
+uF78CqNit4FfzyOngGGDR901xfxY9PuHjAbdY2rwITsflsFPWw6z8O+7z0T98IWo
+XXHA0Ya2kF2RiLDCX1fN
+=CcX4
+-----END PGP SIGNATURE-----
