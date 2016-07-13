@@ -1,28 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/6
-Message-ID: <56E9516E.4030608@gmail.com>
-Date: Wed, 16 Mar 2016 13:28:30 +0100
-From: FEIST Josselin <josselin.feist@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/13/4
+Message-ID: <CAMYtjAppEswaDgzgB4Wf9vPFJZVcco3M1KTR68hVCawtR4u1xQ@mail.gmail.com>
+Date: Wed, 13 Jul 2016 10:12:23 +0200
+From: Pere Orga <pere@...a.cat>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request : Use-after-free in gifcolor
+Cc: Drupal Security Team <security@...pal.org>
+Subject: CVE requests for Drupal Core - SA-CORE-2016-002
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi
 
-Multiples double-free / use-after-free (with the same root origin) were
-reported in giflib (https://sourceforge.net/projects/giflib/) on
-February 18.
-It affects the utility gifcolor. More information here:
-https://sourceforge.net/p/giflib/bugs/83/
-The fixed version should be release soon.
+Please can I have CVE IDs assigned to the following Drupal
+vulnerabilities (see https://www.drupal.org/SA-CORE-2016-002):
 
-Since the vuln is medium/severe (double-free/use-after-free), but the
-attack surface is low (it affects only gifcolor, no the lib itself),
-could it be possible to receive a CVE number for it ?
+Saving user accounts can sometimes grant the user all roles (User
+module - Drupal 7 - Moderately Critical)
+Views can allow unauthorized users to see Statistics information
+(Views module - Drupal 8 - Less Critical)
 
-It was found with the help of the static analyzer GUEB.
+And for the Views contrib module (SA-CONTRIB-2016-036)
+https://www.drupal.org/node/2749333
 
-Thanks !
-Best regards,
-Josselin Feist
+Thanks
+Pere Orga on behalf of the Drupal Security team
 
