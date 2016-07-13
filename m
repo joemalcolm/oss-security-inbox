@@ -1,4 +1,9 @@
-Received: (qmail 23568 invoked by uid 550); 6 Nov 2023 18:05:28 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1499" "Wednesday" "13" "July" "2016" "12:59:40" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160713165940.E24C88BCE32@smtpvmsrv1.mitre.org>" "39" "[oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount" nil nil nil "7" "2016071316:59:40" "[oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount" (number mark "U       cve-assign@m Jul 13   39/1499  " thread-indent "\"[oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount\"\n") "<1929364718.4484556.1468421564523.JavaMail.zimbra@redhat.com>" ("<1929364718.4484556.1468421564523.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 18396 invoked by uid 550); 13 Jul 2016 16:59:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,44 +12,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15437 invoked from network); 6 Nov 2023 17:59:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sudo.ws; s=selector2;
-	t=1699293546; h=from:from:reply-to:subject:subject:date:date:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=FPaGwDyyMa2XdE4kZjkSVnVwELLFXtaoBRztskCW6Lo=;
-	b=K4rDFpSiH2czRNsU2WpXGYALJ5BSwxqlxsABZiJveS+7a/gbh2ebSyLj0OOtWcV1jFZnEO
-	POgVLS8eVBEGBFxjkoUS9G4luwWSEnQC8pFtVq92kat6iSaV4RPo/r/agmjhT7X/mwAiPO
-	ef2Q623Nu/VNQs294cVTLxLBXL8PL4aAGdRUo6NwYHOaWt7xsPRLXPmYd5NXnrkagtjMS/
-	eyiZHs3nauqerKitOVKNU5XFdrvxBfLRHJiwWtO/3j1t3Q5bMDpHyOLlxsSuNv1tM0lMnI
-	TaxC0G7H0dTj3eLKM1KWA/JlMGLTMo+CunViGGgYd0TgzTy4VS+s6AitwmPwig==
-From: "Todd C. Miller" <Todd.Miller@sudo.ws>
-To: oss-security@lists.openwall.com
-In-reply-to: Your message of "Mon, 06 Nov 2023 16:53:27 +0100."
-             <20231106155327.vekxv4lvtal44aaw@jwilk.net>
-References: <9db1110b-7dbb-4e32-b174-b62672181c8e@oracle.com> <20231106155327.vekxv4lvtal44aaw@jwilk.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <45246.1699293546.1@xerxes.sudo.ws>
-Date: Mon, 06 Nov 2023 10:59:06 -0700
-Message-ID: <cc507107186fdcc6@millert.dev>
-Subject: Re: [oss-security] Session File Relative Path Traversal in sudo-rs
+Received: (qmail 18378 invoked from network); 13 Jul 2016 16:59:52 -0000
+From: cve-assign@mitre.org
+To: caiqian@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <1929364718.4484556.1468421564523.JavaMail.zimbra@redhat.com>
+Message-Id: <20160713165940.E24C88BCE32@smtpvmsrv1.mitre.org>
+Date: Wed, 13 Jul 2016 12:59:40 -0400 (EDT)
+Subject: [oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount
 
-On Mon, 06 Nov 2023 16:53:27 +0100, Jakub Wilk wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> The original sudo implementation is affected too:
-> https://github.com/sudo-project/sudo/commit/7363ad7b3230b7b0
->
-> https://ferrous-systems.com/blog/sudo-rs-audit/ says it's "a lower 
-> security severity due to [sudo's] use of the openat function", but I 
-> can't see how openat() would help.
+> It was reported that the mount table expands by a power-of-two
+> with each bind mount command.
 
-That is correct, openat() does not prevent opening a relative (or
-absolute) pathname.  Sudo 1.9.15, released today, includes the
-commit you reference above.
+> If the system is configured in the way that a non-root user
+> allows bind mount even if with limit number of bind mount
+> allowed, a non-root user could cause a local DoS by quickly
+> overflow the mount table.
 
-I consider this to be very low impact as it requires the ability
-to create a user with a name that would be treated as an absolute
-or relative pathname.
+> it will cause a deadlock for the whole system,
 
- - todd
+>> form of unlimited memory consumption that is causing the problem
+
+Use CVE-2016-6213.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXhnMiAAoJEHb/MwWLVhi25Q4P/ig8NsIq4e7iKjGBPBiX8Esd
+rxxdLpmyNfHNqMYelHMtnQXxKlewpg0RanD9tmkeuAcrCsCMrh6dejE1ioPxRhuA
+QOkhnjYhT/uFXPocgyf6EvVR9BzMiX7OmDXqaBBAjifbvfw5EqnZqj7Gyc8g0Scn
+1/uoL9DLf6USbK8Gmho0r2mxtFf0DvhvtSRPSsw9HQjH7kQEMgzjG0bmOsTyGtWB
+XEXERVynveoQmalW2vm+p6TPHHaKrTBrmXPxhgjxynMj1EX6V2j1Om3bQiuJmKUR
+1KVN5pewgVy9ZV0Jk4pAVrYO+U0qvLflZBHknceWlz9YzfZyJYKaiv0RH8RwXYfC
+P1ezDLsuBNup0tgAx+i++05cIFGFRV4ts60wxNJnUcgE21LAZ6qL8LFjZ1ixA9jM
+LjESRjdNw4MeeQOAHt/YzskhP6hTanlZvmLNYyuhZB6a0FXV18xEPVPrlyb5+odD
+2w7jTQqBnWfOTYPAaPPDc72n88y+5jxvGVXLBCcswvwIj0kTwUlZHTD+CSEylXlL
+apZMLo2tgJ+3SsWuiMaSWfZDL79M2fvLkYZ6KVsnONMGRgjIDAwdvp+VgbIfdWlu
+sLS3Rjx9pkjRpt+M6YM7OIIdNYiBgPRZFl6XDv4TIbuA5g/vuJTg44JIJDfj7MiT
+iqRuPFgATt2oMZqUmeZu
+=8iz3
+-----END PGP SIGNATURE-----
