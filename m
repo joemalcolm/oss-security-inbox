@@ -1,35 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/11/3
-Message-ID: <CFA7B491-4950-4B93-A00D-AD33B7EDD420@trust-in-soft.com>
-Date: Mon, 11 Apr 2016 08:42:15 +0000
-From: Pascal Cuoq <cuoq@...st-in-soft.com>
-To: "cve-assign@...re.org" <cve-assign@...re.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Nikos Mavrogiannopoulos <n.mavrogiannopoulos@...il.com>
-Subject: Infinite loops parsing malicious DER certificates in libtasn1 4.7
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/13/3
+Message-ID: <CACG6YS0Q_DcgZ+N9_X1PcdTZ45hkVDe4JYEF-hMaL92b2wh0rw@mail.gmail.com>
+Date: Wed, 13 Jul 2016 10:05:26 +0200
+From: Mathias Svensson <idolf@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Information leak in LibTIFF
 Content-Type: text/plain; charset=utf-8
 
-The libtasn1 library, in its 4.7 version, can loop for a long time or indefinitely when it is used to parse DER representations of X509 certificates, leading to a denial of service. Some of these loops may in addition increase heap or stack usage, leading to more issues.
+Hello oss-security,
 
-These issues were found by Pascal Cuoq and Miod Vallat using american fuzzy lop. They are fixed in libtasn1 version 4.8.
+I would like to request a CVE number for an information leak in LibTIFF,
+specifically in the file libtiff/tif_read.c.
 
-Proof of concept, using the test files distributed in http://ftp.gnu.org/gnu/libtasn1/libtasn1-4.8.tar.gz :
+The vulnerability allows an attacker to specify a negative index into the
+file-content buffer and copy data from that position until the end of the
+buffer.
 
-~/libtasn1-4.8 $ asn1Decoding -v
-asn1Decoding (libtasn1) 4.7
-…
-~/libtasn1-4.8 $ asn1Decoding tests/pkix.asn tests/invalid-x509/id-000000.der PKIX1.Certificate
-tests/pkix.asn:332: Warning: VisibleString is a built-in ASN.1 type.
-tests/pkix.asn:334: Warning: NumericString is a built-in ASN.1 type.
-tests/pkix.asn:336: Warning: IA5String is a built-in ASN.1 type.
-tests/pkix.asn:338: Warning: TeletexString is a built-in ASN.1 type.
-tests/pkix.asn:340: Warning: PrintableString is a built-in ASN.1 type.
-tests/pkix.asn:342: Warning: UniversalString is a built-in ASN.1 type.
-tests/pkix.asn:345: Warning: BMPString is a built-in ASN.1 type.
-tests/pkix.asn:349: Warning: UTF8String is a built-in ASN.1 type.
-Parse: done.
-^C
+This will allow an attacker to crash the process by accessing unmapped
+memory and (depending on how LibTIFF is used) might also allow an attacker
+to leak sensitive information.
+
+The issue is fixed in CVS HEAD with the commit:
+
+revision 1.49
+date: 2016-07-10 20:00:21 +0200;  author: erouault;  state: Exp;  lines: +6
+-3;  commitid: YhOZoKv5OA9gNNdz;
+* libtiff/tif_read.c: Fix out-of-bounds read on
+memory-mapped files in TIFFReadRawStrip1() and TIFFReadRawTile1()
+when stripoffset is beyond tmsize_t max value (reported by
+Mathias Svensson)
 
 
-
-
+Kinds regards,
+Mathias Svensson
+Google Security Team
 
