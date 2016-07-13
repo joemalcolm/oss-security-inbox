@@ -1,33 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/25/5
-Message-ID: <576EA48D.1070502@oracle.com>
-Date: Sat, 25 Jun 2016 08:34:37 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
-Subject: Re: libical 0.47 SEGV on unknown address
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/13/2
+Message-ID: <5785E1FC.8090907@canonical.com>
+Date: Wed, 13 Jul 2016 01:38:52 -0500
+From: Tyler Hicks <tyhicks@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Requests: Information exposure caused by ecryptfs-setup-swap failures
 Content-Type: text/plain; charset=utf-8
 
-On 06/24/16 06:54 AM, Brandon Perry wrote:
-> I am posting this to Full Disclosure/OSS instead of reporting it because I have
-> opened a handful of libical bugs in the Mozilla bug tracker, alerted
-> security@...illa.org <mailto:security@...illa.org>, and worked to show how and
-> where to reproduce the bugs in Thunderbird, but Mozilla hasn’t shown any care at
-> all about the bugs. Perhaps if I give a sample to the community of the bugs in
-> the bug reports, Mozilla will take the bug reports more seriously. This bug
-> attached had not been reported yet.
+Hello - I'd like to request two CVEs. The flaws are in the
+ecryptfs-setup-swap script that is provided by the upstream
+ecryptfs-utils project. The script can be used to convert an existing,
+unencrypted swap partition into a swap partition that is encrypted.
+System admins may use this tool and the Ubuntu installer uses it when
+the user opts into home directory encryption.
 
-Did you report them to libcial upstream?  http://libical.github.io/libical/
+On systems using systemd 211 or newer and GPT partitioning, the
+unencrypted swap partition was being automatically activated during boot
+and the encrypted swap was not used. This was due to ecryptfs-setup-swap
+not marking the swap partition as "no-auto", as defined by the
+Discoverable Partitions Spec:
 
-> My roommate mentioned Thunderbird being a second-class citizen in the Mozilla
-> world, so if this is the case, this should be made explicit in regards to bug
-> bounty expectations.
 
-While Thunderbird is still a beloved child of Mozilla, it's been told it's time
-to move out of its parents house and find its own sources of income/support:
+https://www.freedesktop.org/wiki/Specifications/DiscoverablePartitionsSpec/
 
-https://groups.google.com/d/msg/mozilla.governance/kAyVlhfEcXg/Eqyx1X62BQAJ
-https://blog.mozilla.org/thunderbird/2015/12/thunderbird-active-daily-inquiries-surpass-10-million/
+Details of the two issues needing CVEs:
 
--- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+ecryptfs-setup-swap improperly configures encrypted swap when using GPT
+partitioning
+Bug: https://launchpad.net/bugs/1447282
+Fix: https://bazaar.launchpad.net/~ecryptfs/ecryptfs/trunk/revision/857
+(Please ignore the inaccurate commit message for commit 857)
+
+ecryptfs-setup-swap improperly configures encrypted swap when using GPT
+partitioning on a NVMe or MMC drive. This bug is due to an incomplete
+fix for bug 1447282.
+Bug: https://launchpad.net/bugs/1597154
+Fix: https://bazaar.launchpad.net/~ecryptfs/ecryptfs/trunk/revision/882
+
+Tyler
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
