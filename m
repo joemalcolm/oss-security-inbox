@@ -1,43 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/20
-Message-ID: <20160818165452.GA6708@openwall.com>
-Date: Thu, 18 Aug 2016 19:54:52 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Libgcrypt and GnuPG 1.4 RNG output prediction
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/13/7
+Message-Id: <20160713154153.BC9736C0989@smtpvmsrv1.mitre.org>
+Date: Wed, 13 Jul 2016 11:41:53 -0400 (EDT)
+From: cve-assign@...re.org
+To: pere@...a.cat
+Cc: cve-assign@...re.org, security@...pal.org, oss-security@...ts.openwall.com
+Subject: Re: CVE requests for Drupal Core - SA-CORE-2016-002
 Content-Type: text/plain; charset=utf-8
 
-Here's what Werner wrote in that message, regarding the CVE ID:
-> Sorry, that was my typo.  It is correct in the NEWS files and the commit
-> messages.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> https://www.drupal.org/SA-CORE-2016-002
 > 
-> The reseachers forwarded me a mail with the CVE but I have not been put
-> the loop, neither from RedHat, nor from Debian (as they usually do).
+> Saving user accounts can sometimes grant the user all roles (User
+> module - Drupal 7 - Moderately Critical)
+> 
+> A vulnerability exists in the User module, where if some specific
+> contributed or custom code triggers a rebuild of the user profile
+> form, a registered user can be granted all user roles on the site.
+> This would typically result in the user gaining administrative access.
 
-More interesting are these tweets:
+Use CVE-2016-6211.
 
-<@gnupg> @hanno They will present their paper at http://CCS2016.org.  A preprint can now be found here: http://formal.iti.kit.edu/~klebanov/
-<gnupg> The paper about the Libgcrypt RNG bug has meanwhile been published:\nhttp://formal.iti.kit.edu/~klebanov/pubs/libgcrypt-cve-2016-6313.pdf
 
-On Thu, Aug 18, 2016 at 05:37:20PM +0100, Andrew Gallagher wrote:
-> Werner used PGP/MIME, but something appears to have deleted the first
-> mime-boundary, rendering the message unparseable. If you view the
-> source you can see the plaintext, but MIME mail clients (including the
-> openwall mailing list archive) can't.
+> https://www.drupal.org/SA-CORE-2016-002
+> https://www.drupal.org/node/2749333
+> 
+> Views can allow unauthorized users to see Statistics information
+> (Views module - Drupal 8 - Less Critical)
+> 
+> An access bypass vulnerability exists in the Views module, where users
+> without the "View content count" permission can see the number of hits
+> collected by the Statistics module for results in the view.
+> 
+> The same vulnerability exists in the Drupal 7 Views module (see
+> SA-CONTRIB-2016-036).
 
-Yes, unfortunately.  I investigated this yesterday, and it appears to be
-a long-standing bug in ezmlm-idx (hopefully already patched in newer
-versions, but I didn't check), which is triggered by Gnus, depending on
-a combination of settings on both sides - specifically, when a MIME
-section does not include a Content-Type header, yet the list is
-configured to remove sections with some MIME types.  The MIME type
-should then default to text/plain, and the section preserved, but
-ezmlm-idx would forget to set a flag indicating that such section is OK
-to keep.  I think I've patched this on the server now, but I didn't
-test.  Previous discoveries of the bug:
+Use CVE-2016-6212 for both the issue in Drupal Core and the issue
+in the Drupal 7 Views module.
 
-https://lists.oasis-open.org/archives/docbook/200402/msg00068.html
-https://web.archive.org/web/20051201155347/http://www.csi.hu/mw/ezmlm-idx_mimeremove_bug.txt
-http://osdir.com/ml/mail.ezmlm/2002-07/msg00016.html
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Alexander
+iQIcBAEBCAAGBQJXhmCYAAoJEHb/MwWLVhi2ynoQALLaB0MVbyjGwof2sl9iAbiX
+pTLnCnGhO6ecpwWJdtRB4W4DEF6L/h3X7ggiohGaD6okdQtjLF8ykSrvb2mciAsE
+gOjNpN9qK16hjAcd2DtSnXn32Qz1tFpFYYIWdSthO1hlI6Sr24B3E9lYtBoAhC1/
+VudXovTed0jBW95EvS0lWPMYcOGEtSoQ3rLOKEcnQqzIrlH6hs3bRQNsZLgupsB1
+dGY4gsHFleDZKyZLP15KWbONnyfS6jHp7SIXne977vgWKpDYy/5+XSN7YvKks/Ju
+q3a0oLn8N4CreZrCIWl6CbgG0iA75xzlgsgayg+xRabFEavL2EonPPJIvBj3TxtM
+d2RVPnfGGuLmvOh+c5fBYs6gVftRJa9nUaIXou+1Xs6LQo5RDypFPCDzpblcWSe8
+QX0AXVE/lCGP1szzCXPqUFWoXMFvwlnFnIwPpJrwO/eADc8P6XsOwsvDbqMFEzlI
+r5Mj+d0/5q5NrCf9GWjSi7YTrDQa1ft8SkUsgyCtRwmYIhUyuSIzStoPM+MvLOQv
+grzXK6F4QqH33z7ru+fdbq5XIIGmk2dQOtgY+MZXxVDNcVmSgZOvwInMMUgnuKpR
+uF78CqNit4FfzyOngGGDR901xfxY9PuHjAbdY2rwITsflsFPWw6z8O+7z0T98IWo
+XXHA0Ya2kF2RiLDCX1fN
+=CcX4
+-----END PGP SIGNATURE-----
