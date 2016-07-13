@@ -1,36 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/01/1
-Message-ID: <alpine.DEB.2.20.1610311531190.20334@di7>
-Date: Mon, 31 Oct 2016 15:35:41 -0700 (PDT)
-From: dormando <dormando@...ia.net>
-To: oss-security@...ts.openwall.com
-Subject: Memcached 1.4.32 and earlier buffer overflow.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/13/5
+Message-ID: <CACn5sdQdx5A0vn88nZHTkYE_T6cgP8zrcPfeFBKUGp-W7AjdKA@mail.gmail.com>
+Date: Wed, 13 Jul 2016 14:35:07 +0200
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: A read out-of-bands was found in the parsing of TGA files using libgd
 Content-Type: text/plain; charset=utf-8
 
-Release notes with tarball here:
-https://github.com/memcached/memcached/wiki/ReleaseNotes1433
+Another read out-of-bounds was found in the process of fixing
+CVE-2016-6132. Details are here:
 
-Copy/paste from the relase notes:
-Serious remote code execution bugs are fixed in this release.
+https://github.com/libgd/libgd/issues/247#issuecomment-232084241
 
-The bugs are related to the binary protocol as well as SASL authentication
-of the binary protocol.
+In fact, the libgd developers confirmed that this issue is not the
+same as CVE-2016-6132. Please assign a CVE if suitable.
+Fortunately, both issues are fixed now.
 
-If you do not use the binary protocol at all, a workaround is to start
-memcached with -B ascii - otherwise you will need the patch in this
-release.
+Thanks!
 
-The diff may apply cleanly to older versions as the affected code has not
-changed in a long time.
-
-Full details of the issues may be found here:
-http://blog.talosintel.com/2016/10/memcached-vulnerabilities.html
-
-In summary: two binary protocol parsing errors, and a SASL authentication
-parsing error allows buffer overflows of keys into arbitrary memory
-space. With enough work undesireable effects are possible.
-
-CVE's were requested and assigned by the reporter. I unfortunately don't
-have them handy :(
-
--Dormando
+2016-06-30 17:48 GMT+02:00  <cve-assign@...re.org>:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+>> A read out-of-bands was found in the parsing of TGA files using the
+>> last revision of libgd (a6a0e7f) but older versions can be affected. A
+>> reproducer and some technical details are available here:
+>>
+>> https://github.com/libgd/libgd/issues/247
+>
+>>> AddressSanitizer: heap-buffer-overflow ...
+>>> READ of size 4
+>>> ... in gdImageCreateFromTgaCtx
+>
+> Use CVE-2016-6132 for this buffer over-read issue.
+>
+> - --
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQIcBAEBCAAGBQJXdT8ZAAoJEHb/MwWLVhi2SjkQAIges7jISzaEMV4SPSu9Di8B
+> 4re9gzln2m8wIKQ3c9NLFGp5lR8fWCx73vSguwBUWVPBFCJZntup5rZlX/rq9P3+
+> fFmMhM8g+lsDczm5bNhqUp3lQbSGzts/gPMUbEWlKYKX4sNRdwzlIoxiHq2NxwcB
+> ue/Ci1nNDkL2ykvfJA8z3twOm9kFu/qMY+CG6oZ5wA6HSRiRb7kxYCmUd1HMlDKb
+> JOhjyJ+qMKwAaQbQKMERSOz03tvzCzCgZvmUOjtd0lsk7a/E1Q3wwPWJ8+wyBbdw
+> DZalq2JBQyFNkQ/sy9NGWpya1OSLiuly7xwH+qOGuFmxlXpB87UWq1Mkq6+Hfib5
+> 0pq4cKvdM3gBe1k1lXMAVxikTamvnLizMmRz+tcwHFoGCQoSTwuIegBst3vx9yIJ
+> 7QEiq1ergZTJEpMoG6EtxBSsOejSfhWmRYkcGkaCusYrDdT2WXFly7zWAQtnL5qT
+> 7X5QcpuYs/in7C0rY3UoJqOsDX7cO8b21g16Ya3pGyFjX5DIUr/ZPqSF2GcB6jXn
+> /rPyeSvv1py40HWsvx8ZUQND9rgGn2g5CPIfEkYapp6IAYtJgA96jIORfuui4lEp
+> +PAKIvn5LVsdAMcoq50RdOpCqD9VRjA1B6EgtZsjUs1bDsdB7qujm+wBIsu9vkGo
+> qhxbyEP0bA9VFaM6jxMO
+> =BZV9
+> -----END PGP SIGNATURE-----
