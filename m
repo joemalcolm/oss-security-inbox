@@ -1,56 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/29/9
-Message-Id: <20160729204337.9530672E027@smtpvbsrv1.mitre.org>
-Date: Fri, 29 Jul 2016 16:43:37 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: paps: heap overflow when processing crafted file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/13/13
+Message-ID: <20160713224500.GD12156@kroah.com>
+Date: Thu, 14 Jul 2016 07:45:00 +0900
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Cc: caiqian@...hat.com, cve-assign@...re.org
+Subject: Re: Re: cve request: local DoS by overflowing kernel mount table using shared bind mount
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> The bug comes from the fuzzer, which did not pass an empty file.
-> Later, I discovered that an empty file has the same behaviour of 
-> the crafted.
+On Wed, Jul 13, 2016 at 12:59:40PM -0400, cve-assign@...re.org wrote:
+> > It was reported that the mount table expands by a power-of-two
+> > with each bind mount command.
 > 
-> In other words:
-> - The same crash happen for the empty and crafted file.
-> - The patch covers both cases (when the file is empty and when 
-> contains random data).
+> > If the system is configured in the way that a non-root user
+> > allows bind mount even if with limit number of bind mount
+> > allowed, a non-root user could cause a local DoS by quickly
+> > overflow the mount table.
+> 
+> > it will cause a deadlock for the whole system,
+> 
+> >> form of unlimited memory consumption that is causing the problem
+> 
+> Use CVE-2016-6213.
 
-Right, the file does not need to be empty (file length of zero), but
-inbuf->len needs to end up being zero, which means that the g_iconv
-calls produce zero output bytes for every line of the input file.
-After the buffer under-read, if there isn't a crash, the return value
-of read_file can be the empty string, which wasn't intended to be a
-possible return value. However, we haven't seen information indicating
-that this causes a security problem in later code. This is a
-command-line program, and the available information is that there is
-sometimes a non-exploitable crash when operating on an invalid file.
-For now, we are categorizing this as an inconvenience to the user, not
-a vulnerability: there is no CVE ID.
+A CVE for an "improperly configured system"?  Huh?  What distro has such
+a configuration set by default?  This isn't a kernel bug, so what is
+this CVE classified as being "against"?  It better not be against the
+Linux kernel...
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+confused,
 
-iQIcBAEBCAAGBQJXm79CAAoJEHb/MwWLVhi2N+UP+wePxHygX5ysWdiPbuqKjS8h
-whEFNT7IOmFKBcZOEF1DGZs8Avwet2qbeFOvEU3HymEQEzyepLCn4vP5iPQHzqiT
-ZFHD/cH/mKdr4IBwvFY6ipItanLSPd7kwXriFxwGJwwOzTWqT/2JwOxt4zUDL1xK
-lFjRI2tpqPMkDFRRwogaculT/vx3c72K5tj0CgJHyXAkz+xJL4ZfKVTVnEyybJsf
-1ihnu2uXQUUy9cwMb15X/a/3Zp9SwaSPmOq7U12aZMxYE1HdirFYhbfIbhQvhpvi
-DZyLvu/h6T0z465Yguq+ru7Q9eArWEu3JDjr4H2uIjWnOIlcc5tifidnz+nYWS3S
-8yfZnvLUf3gziwKYBPJTz+SyyEK0fba3zq+aifNpjU82jHsFSQ5jG+099QDA+ABM
-GEoM++3Avi6wCwPafSi/zJgh/HV0gxsQbqw4dJ2V3PdXcU9Gd5kqEiwEabXecX7q
-hbNx+Xkagip07CBLpdEdYSkaw6jbqXWjjzeYcy66GxVv1bI93VLDLfmC7vsKUY17
-stgbEQEt89J+bWcVC1HpBp1zWNT42bn06JhAeYU4iAhYcuvWitUCo6qJwunuqknr
-17NZqaTaG0AsWXnQIGLHpCQNlAmfXKHBph097Lj/SUxE9NpxECTY3ewQT+JKdylG
-Qk0Mx1+5uqMRiN8yKRhP
-=979d
------END PGP SIGNATURE-----
+greg k-h
