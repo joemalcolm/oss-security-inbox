@@ -1,4 +1,9 @@
-Received: (qmail 20122 invoked by uid 550); 13 Sep 2023 09:38:38 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["795" "Thursday" "14" "July" "2016" "07:45:00" "+0900" "Greg KH" "greg@kroah.com" "<20160713224500.GD12156@kroah.com>" "23" "Re: [oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount" nil nil nil "7" "2016071322:45:00" "[oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount" (number mark "U       greg@kroah.c Jul 14   23/795   " thread-indent "\"Re: [oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount\"\n") "<20160713165940.E24C88BCE32@smtpvmsrv1.mitre.org>" ("<1929364718.4484556.1468421564523.JavaMail.zimbra@redhat.com>" "<20160713165940.E24C88BCE32@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 22382 invoked by uid 550); 13 Jul 2016 22:45:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,50 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15650 invoked from network); 13 Sep 2023 09:32:20 -0000
-Authentication-Results: apache.org; auth=none
-Message-ID: <64f0e35f-4579-c9a6-5820-693c1b5f8395@apache.org>
-Date: Wed, 13 Sep 2023 10:31:03 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-From: Mark Thomas <markt@apache.org>
+Received: (qmail 22360 invoked from network); 13 Jul 2016 22:45:25 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=smtpout; bh=jiXwYy1rf0COkR6tE9ivPmli39o=; b=SRIQP
+	4OsWSCUVSyChrjqbfccsDOIH+KFnsmHG5s81/V8Tze7gmna4ORJgF9C81kIhQcdz
+	rgQZ0tPlGVTbr2meEXfiNXmG6OfUCzZ1mRoSalUTKo+Rjo8eTncX3CdcB0Zm4Vg2
+	McED8/ictFbU8vxtoTBBLEeccQXSYxv/i4Zt/k=
+X-Sasl-enc: zHtnZCTr4TuxC7M1AXI5idfMGBF1fc0UqUhvXcNUxntt 1468449912
+Date: Thu, 14 Jul 2016 07:45:00 +0900
+From: Greg KH <greg@kroah.com>
 To: oss-security@lists.openwall.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] [SECURITY] CVE-2023-41081 Apache Tomcat Connectors (mod_jk)
- Information Disclosure
+Cc: caiqian@redhat.com, cve-assign@mitre.org
+Message-ID: <20160713224500.GD12156@kroah.com>
+References: <1929364718.4484556.1468421564523.JavaMail.zimbra@redhat.com>
+ <20160713165940.E24C88BCE32@smtpvmsrv1.mitre.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20160713165940.E24C88BCE32@smtpvmsrv1.mitre.org>
+User-Agent: Mutt/1.6.2 (2016-07-01)
+Subject: Re: [oss-security] Re: cve request: local DoS by overflowing kernel
+ mount table using shared bind mount
 
-CVE-2023-41081 Apache Tomcat Connectors (mod_jk) Information Disclosure
+On Wed, Jul 13, 2016 at 12:59:40PM -0400, cve-assign@mitre.org wrote:
+> > It was reported that the mount table expands by a power-of-two
+> > with each bind mount command.
+> 
+> > If the system is configured in the way that a non-root user
+> > allows bind mount even if with limit number of bind mount
+> > allowed, a non-root user could cause a local DoS by quickly
+> > overflow the mount table.
+> 
+> > it will cause a deadlock for the whole system,
+> 
+> >> form of unlimited memory consumption that is causing the problem
+> 
+> Use CVE-2016-6213.
 
-Severity: Important
+A CVE for an "improperly configured system"?  Huh?  What distro has such
+a configuration set by default?  This isn't a kernel bug, so what is
+this CVE classified as being "against"?  It better not be against the
+Linux kernel...
 
-Vendor: The Apache Software Foundation
+confused,
 
-Versions Affected:
-- Apache Tomcat Connectors mod_jk Connector 1.2.0 to 1.2.48
-
-Description:
-In some circumstances, such as when a configuration included
-"JkOptions +ForwardDirectories" but the configuration did not provide 
-explicit mounts for all possible proxied requests, mod_jk would use an 
-implicit mapping and map the request to the first defined worker. Such 
-an implicit mapping could result in the unintended exposure of the 
-status worker and/or bypass security constraints configured in httpd. As 
-of JK 1.2.49, the implicit mapping functionality has been removed and 
-all mappings must now be via explicit configuration.
-Only mod_jk is affected by this issue. The ISAPI redirector is not affected.
-
-Mitigation:
-Users of affected versions should apply one of the following mitigations:
-- Upgrade to Apache Tomcat Connector (mod_jk) 1.2.49 or later.
-- Ensure explicit mounts are configured for all possible proxied
-   requests
-
-Credit:
-This vulnerability was reported responsibly to the Tomcat security team 
-by Karl von Randow.
-
-References:
-[1] http://tomcat.apache.org/security-jk.html
+greg k-h
