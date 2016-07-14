@@ -1,4 +1,9 @@
-Received: (qmail 21999 invoked by uid 550); 25 May 2022 16:43:38 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2286" "Thursday" "14" "July" "2016" "14:09:43" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160714180943.CEF62B2E017@smtpvbsrv1.mitre.org>" "54" "[oss-security] Re: CVE Requests: Information exposure caused by ecryptfs-setup-swap failures" nil nil nil "7" "2016071418:09:43" "[oss-security] Re: CVE Requests: Information exposure caused by ecryptfs-setup-swap failures" (number mark "U       cve-assign@m Jul 14   54/2286  " thread-indent "\"[oss-security] Re: CVE Requests: Information exposure caused by ecryptfs-setup-swap failures\"\n") "<5785E1FC.8090907@canonical.com>" ("<5785E1FC.8090907@canonical.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21676 invoked by uid 550); 14 Jul 2016 18:09:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,73 +12,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18034 invoked from network); 25 May 2022 15:41:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1653493269;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=6BLhoI0zKjr+oAAuiBIo587xrcGGciqJX9XM7NiICFg=;
-	b=FfJ3cjA91gdYS+TItEQpN5eiOHm30RYDPALXb57XytEXyUlw0gqm5tA/SX0jnVExZyEhZA
-	lTFKHR1GM7tFnyKo+vowf3fRcDeFPW/cbDWEhFLA4LQlWE2Q4qMwe/bloTDiSglMkySzF+
-	MI37kuh0GYiFWkPbOVfIGrIgXj7iS1o=
-X-MC-Unique: ecsCagXWOk-VLqsWBAgILg-1
-From: Kamil Dudka <kdudka@redhat.com>
-To: Marc Deslauriers <marc.deslauriers@canonical.com>
-Cc: oss-security@lists.openwall.com, Guilherme de Almeida Suckevicz <gsuckevi@redhat.com>
-Date: Wed, 25 May 2022 17:41:03 +0200
-Message-ID: <4449206.LvFx2qVVIh@nbkamil>
-In-Reply-To: <24add3d4-c09d-76d7-0dee-6e0c089ff0e6@canonical.com>
-References: <e410d6e9-53cb-e83e-0dbc-412467ba21db@redhat.com> <5618910.DvuYhMxLoT@nbkamil> <24add3d4-c09d-76d7-0dee-6e0c089ff0e6@canonical.com>
-MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.78 on 10.11.54.4
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=kdudka@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-Subject: Re: [oss-security] Re: CVE-2022-1348 logrotate: potential DoS from unprivileged users via the state file
+Received: (qmail 21654 invoked from network); 14 Jul 2016 18:09:56 -0000
+From: cve-assign@mitre.org
+To: tyhicks@canonical.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <5785E1FC.8090907@canonical.com>
+Message-Id: <20160714180943.CEF62B2E017@smtpvbsrv1.mitre.org>
+Date: Thu, 14 Jul 2016 14:09:43 -0400 (EDT)
+Subject: [oss-security] Re: CVE Requests: Information exposure caused by ecryptfs-setup-swap failures
 
-On Wednesday, May 25, 2022 4:07:34 PM CEST Marc Deslauriers wrote:
-> On 2022-05-25 09:37, Kamil Dudka wrote:
-> > On Wednesday, May 25, 2022 3:19:31 PM CEST Marc Deslauriers wrote:
-> >> On 2022-05-18 09:54, Kamil Dudka wrote:
-> >>> The current version of the patch to fix CVE-2022-1348 in logrotate is
-> >>> attached.  We are going to apply the patch upstream on May 25th, when
-> >>> the embargo is lifted.
-> >> 
-> >> FWIW, I don't think the patch actually works when logrotate is built with
-> >> ACL support...
-> >> 
-> >> Marc.
-> > 
-> > You are right.  Although the patch mitigates the security issue, it is not
-> > 
-> > perfect.  I had already opened an upstream pull request to improve it:
-> >     https://github.com/logrotate/logrotate/pull/446
-> > 
-> > I might create a bug fix release soon with the patch included.
-> > 
-> > Sorry for the troubles!
-> > 
-> > Kamil
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> ecryptfs-setup-swap script that is provided by the upstream
+> ecryptfs-utils project. The script can be used to convert an existing,
+> unencrypted swap partition into a swap partition that is encrypted.
+> System admins may use this tool and the Ubuntu installer uses it when
+> the user opts into home directory encryption.
 > 
-> Oh! I had not seen that pull request. Thanks, that should solve the issue!
-> 
-> Marc.
+> On systems using systemd 211 or newer and GPT partitioning, the
+> unencrypted swap partition was being automatically activated during boot
+> and the encrypted swap was not used. This was due to ecryptfs-setup-swap
+> not marking the swap partition as "no-auto", as defined by the
+> Discoverable Partitions Spec
 
-Thanks for confirmation!  I have merged the pull request and released 3.20.1:
+> ecryptfs-setup-swap improperly configures encrypted swap when using GPT
+> partitioning
+> Bug: https://launchpad.net/bugs/1447282
+> Fix: https://bazaar.launchpad.net/~ecryptfs/ecryptfs/trunk/revision/857
+> (Please ignore the inaccurate commit message for commit 857)
 
-    https://github.com/logrotate/logrotate/releases/tag/3.20.1
-
-The following two commits should be cherry-picked for older releases
-of logrotate (from 3.17.0 to 3.19.0):
-
-    https://github.com/logrotate/logrotate/commit/1f76a381e2caa0603ae3dbc51ed0f1aa0d6658b9
-    https://github.com/logrotate/logrotate/commit/addbd293242b0b78aa54f054e6c1d249451f137d
-
-Kamil
+Use CVE-2015-8946.
 
 
+> ecryptfs-setup-swap improperly configures encrypted swap when using GPT
+> partitioning on a NVMe or MMC drive. This bug is due to an incomplete
+> fix for bug 1447282.
+> Bug: https://launchpad.net/bugs/1597154
+> Fix: https://bazaar.launchpad.net/~ecryptfs/ecryptfs/trunk/revision/882
+
+Use CVE-2016-6224.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXh9TcAAoJEHb/MwWLVhi2VUAP/RibsMY5eaJJQfehovvPDDZL
+N4qZ33Rn347WoQnvnHm+dSaxC6Jys2jtGCyqJZ4xTxJXUFIZzsBDyIVONpuUd6Sz
+mrnLDSPtBAvfzrBYcUbVoJLMYAoYWC27I9NcnwttE4MTLBvlDLhws2ncZJ+werph
+bSVzBS8qGPj7LFJGTP1YiFj9qTbnbJwxRAvPIIz2wAcTyOljKcQTmpGXYoqSZIOV
+oE6jSlA9HIsvgLS+VHuOzqWJTfABcjEtN6VHJEQovp0DI8EfrWenYMpGH8kFCgtO
+KW3Y45IgJeEksbfIfX2ehlWkOEABZsRsg9sjFZGlVrLUCDsN35ooVLOLIvE+yebU
+StESPy77rxhkjS709PBr+JeKMS276AIqoK/5TRu9B7Y5Lmz5FuPLhlOn79JJfoLW
+XUoFrF9U9MeJk8EV1Hm+x3uU0EvVvWOXvtpL4VdrOfLBhihvUf8SXn3e2IkYxbuj
+erfnb/0EIILAj+oulMAmyQ2gcN0JNso4nDWNFua+0+TBd1Ep5OPV5AgogxXemew8
+L5Z3hQkSwFGbXrIkdUSYm+MD/VyxMC7lwSOIYs2S3hwtnN/m1eILOzgYGqTt6Tls
+/sjTgi2l1v+sJeQPoFTo7Riuzqe7F+kUlBCjg8lyi9QF5evvlrWIhxS1kHmlrQlI
+we6cyqgnjlYJRq+QWyvm
+=11vA
+-----END PGP SIGNATURE-----
