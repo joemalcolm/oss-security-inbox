@@ -1,4 +1,9 @@
-Received: (qmail 1723 invoked by uid 550); 17 Nov 2024 00:37:53 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2100" "Thursday" "14" "July" "2016" "12:26:42" "-0400" "Jessica Frazelle" "me@jessfraz.com" "<CAEk6tEy06LoWDWfCcBrWBPO7n0mLYajNU69dMVSg9JGQ6e5p-A@mail.gmail.com>" "69" "Re: [oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount" nil nil nil "7" "2016071416:26:42" "[oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount" (number mark "U       me@jessfraz. Jul 14   69/2100  " thread-indent "\"Re: [oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount\"\n") "<1209678068.4908811.1468512902793.JavaMail.zimbra@redhat.com>" ("<1929364718.4484556.1468421564523.JavaMail.zimbra@redhat.com>" "<20160713165940.E24C88BCE32@smtpvmsrv1.mitre.org>" "<20160713224500.GD12156@kroah.com>" "<1209678068.4908811.1468512902793.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13881 invoked by uid 550); 15 Jul 2016 02:17:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,120 +12,109 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 32745 invoked from network); 17 Nov 2024 00:37:36 -0000
-Date: Sun, 17 Nov 2024 01:37:36 +0100
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 7714 invoked from network); 14 Jul 2016 16:27:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=jessfraz.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=BzosMZgJxLqEdFV8VkaQK9UGQ+mQ74HR58DBVE4ycoc=;
+        b=U9ZfTqCgqquqT1MeXjGE/a1JZ9iOPgHPYuFi6qLmKfEQ8MGD+1UUZvs/+GEH2Zlruv
+         SOdCxDPt2c5bXtiugMfv5HCaSLUu6FrsXO95zujYA5NZ0fLg1ODrTIbr6XaxOxOwDXur
+         FJObNXD5QxIpqqkr9znt259tsNLuqsRKLRock=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=BzosMZgJxLqEdFV8VkaQK9UGQ+mQ74HR58DBVE4ycoc=;
+        b=kbNhVij2FgEa3hKmH1TskCSOJrb3VIa/2MZ0FPY3uJ97/TAlv9f5pqA71+/qqOxmW+
+         sW+n+Nr0isFrnFGooy/J78QuRSAefT42egKjbkA8y+vivrqPlrWi4CDyzYoJ4swHttVk
+         QtzqQZtJ8WIj2LZjCMDp7PzfA647tak3RONk5ibATBW6cZ/oGLQwmLBXp38tDsiD9axc
+         1v/ad5QmedpSH8sSyhaTsCKUi+9pdpJ4ggKQbxdsgL6I3gTAil++A7oKhfzh/K9pkt85
+         EQWLS9yb/KzHgNMT3DNJOmb5RSWiMaBST1EVBm+6o82/fvBSGPPwkM8wxcm1sqGrHHQs
+         el2Q==
+X-Gm-Message-State: ALyK8tK6gxx533DjUYmnpFXcrzR5MseHP9ue8wCRwPPxdvhLEBHkGcg/BDUrZZTcgti1iFJ8B7/gVHFcHFjn5UdI
+X-Received: by 10.36.34.3 with SMTP id o3mr28890238ito.50.1468513621856; Thu,
+ 14 Jul 2016 09:27:01 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <1209678068.4908811.1468512902793.JavaMail.zimbra@redhat.com>
+References: <1929364718.4484556.1468421564523.JavaMail.zimbra@redhat.com>
+ <20160713165940.E24C88BCE32@smtpvmsrv1.mitre.org> <20160713224500.GD12156@kroah.com>
+ <1209678068.4908811.1468512902793.JavaMail.zimbra@redhat.com>
+From: Jessica Frazelle <me@jessfraz.com>
+Date: Thu, 14 Jul 2016 12:26:42 -0400
+Message-ID: <CAEk6tEy06LoWDWfCcBrWBPO7n0mLYajNU69dMVSg9JGQ6e5p-A@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Message-ID: <20241117003736.GA2085@openwall.com>
-References: <20241116233927.GA703@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241116233927.GA703@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] PostgreSQL: 4 CVEs fixed in 17.1, 16.5, 15.9, 14.14, 13.17, 12.21
+Cc: Greg KH <greg@kroah.com>, cve-assign@mitre.org
+Content-Type: text/plain; charset=UTF-8
+Subject: Re: [oss-security] Re: cve request: local DoS by overflowing kernel
+ mount table using shared bind mount
 
-If someone in here contributes to or follows PostgreSQL development or
-announcements (which I normally don't), I'd appreciate if if they start
-bringing the relevant announcements to here.  Ditto for other projects.
+it's running systemd in a container... isn't it...
 
-On Sun, Nov 17, 2024 at 12:39:27AM +0100, Solar Designer wrote:
-> As announced in:
-> 
-> https://www.postgresql.org/about/news/postgresql-171-165-159-1414-1317-and-1221-released-2955/
-> https://www.postgresql.org/message-id/173159332163.1547975.13346191756810493274%40wrigleys.postgresql.org
-> 
-> new PostgreSQL updates to all supported versions fix 4 CVEs and 35
-> non-security bugs.
-> 
-> CVE-2024-10976 PostgreSQL row security below e.g. subqueries disregards user ID changes (CVSS 4.2)
-> CVE-2024-10977 PostgreSQL libpq retains an error message from man-in-the-middle (CVSS 3.1)
-> CVE-2024-10978 PostgreSQL SET ROLE, SET SESSION AUTHORIZATION reset to wrong user ID (CVSS 4.2)
-> CVE-2024-10979 PostgreSQL PL/Perl environment variable changes execute arbitrary code (CVSS 8.8)
+On Thu, Jul 14, 2016 at 12:18 PM, Jessica Frazelle <me@jessfraz.com> wrote:
+> what is the use case for mounting /mnt:/mnt in a container?
+>
+> On Thu, Jul 14, 2016 at 12:15 PM, CAI Qian <caiqian@redhat.com> wrote:
+>> Maybe this is a better reproducer using docker. It is exploitable even with
+>> user namespace enabled.
+>>
+>> # docker run -it -v /mnt/:/mnt/:shared --cap-add=SYS_ADMIN rhel7 /bin/bash
+>>
+>> # cat /proc/self/uid_map
+>>          0        995      65536
+>>
+>> # cat /proc/self/gid_map
+>>          0        992      65536
+>>
+>> (insider container) # for i in `seq 1 20`; mount -o bind /mnt/1 /mnt/2; done
+>>    CAI Qian
+>>
+>> ----- Original Message -----
+>>> From: "Greg KH" <greg@kroah.com>
+>>> To: oss-security@lists.openwall.com
+>>> Cc: caiqian@redhat.com, cve-assign@mitre.org
+>>> Sent: Wednesday, July 13, 2016 6:45:00 PM
+>>> Subject: Re: [oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount
+>>>
+>>> On Wed, Jul 13, 2016 at 12:59:40PM -0400, cve-assign@mitre.org wrote:
+>>> > > It was reported that the mount table expands by a power-of-two
+>>> > > with each bind mount command.
+>>> >
+>>> > > If the system is configured in the way that a non-root user
+>>> > > allows bind mount even if with limit number of bind mount
+>>> > > allowed, a non-root user could cause a local DoS by quickly
+>>> > > overflow the mount table.
+>>> >
+>>> > > it will cause a deadlock for the whole system,
+>>> >
+>>> > >> form of unlimited memory consumption that is causing the problem
+>>> >
+>>> > Use CVE-2016-6213.
+>>>
+>>> A CVE for an "improperly configured system"?  Huh?  What distro has such
+>>> a configuration set by default?  This isn't a kernel bug, so what is
+>>> this CVE classified as being "against"?  It better not be against the
+>>> Linux kernel...
+>>>
+>>> confused,
+>>>
+>>> greg k-h
+>>>
+>
+>
+>
+> --
+>
+>
+> Jessie Frazelle
+> 4096R / D4C4 DD60 0D66 F65A 8EFC  511E 18F3 685C 0022 BFF3
+> pgp.mit.edu
 
-Turns out these releases caused two regressions and there "is planning
-for an out-of-cycle release on November 21, 2024" to address them:
 
-https://www.postgresql.org/message-id/173171334532.1547978.1518068370217143844%40wrigleys.postgresql.org
 
----
-From: 	PostgreSQL Global Development Group <announce-noreply(at)postgresql(dot)org>
-To: 	PostgreSQL Announce <pgsql-announce(at)lists(dot)postgresql(dot)org>
-Subject: 	Out-of-cycle release scheduled for November 21, 2024
-Date: 	2024-11-15 23:29:05
-Message-ID: 	173171334532.1547978.1518068370217143844@wrigleys.postgresql.org
+-- 
 
-The PostgreSQL Global Development Group is planning for an out-of-cycle release on November 21, 2024 to address two regressions that were released as part of the [November 14, 2024 update release](https://www.postgresql.org/about/news/postgresql-171-165-159-1414-1317-and-1221-released-2955/), which included releases for [17.1, 16.5, 15.9, 14.14, 13.19, and 12.21](https://www.postgresql.org/about/news/postgresql-171-165-159-1414-1317-and-1221-released-2955/). As part of this release, we will issue fixes for all supported versions (17.2, 16.6, 15.10, 14.15, 13.20), and for 12.22, even though PostgreSQL 12 is now EOL.
 
-While these regressions may not impact all users, the PostgreSQL Global Development Group determined that it would be better to address these sooner than the [next scheduled release on February 13, 2025](https://www.postgresql.org/developer/roadmap/). A high-level description of the regressions are as follows.
-
-1. The fix for [CVE-2024-10978](https://www.postgresql.org/support/security/CVE-2024-10978/) [prevented `ALTER USER ... SET ROLE ...` from having any effect](https://www.postgresql.org/message-id/CADOZwSb0UsEr4_UTFXC5k7%3DfyyK8uKXekucd%2B-uuGjJsGBfxgw%40mail.gmail.com). This will be fixed in the upcoming release.
-
-2. Certain PostgreSQL extensions took a dependency on an Application Build Interface (ABI) that was modified in this release and [caused them to break](https://www.postgresql.org/message-id/CABOikdNmVBC1LL6pY26dyxAS2f%2BgLZvTsNt%3D2XbcyG7WxXVBBQ%40mail.gmail.com). Currently, this can be mitigated by rebuilding the extensions against the updated definition.
-
-If you are impacted by either of these issues, we advise to wait for the availability of 17.2, 16.6, 15.10, 14.15, 13.20, and 12.22 before upgrading.
----
-
-https://www.postgresql.org/message-id/CADOZwSb0UsEr4_UTFXC5k7%3DfyyK8uKXekucd%2B-uuGjJsGBfxgw%40mail.gmail.com
-
----
-From: 	Etienne LAFARGE <etienne(dot)lafarge(at)gmail(dot)com>
-To: 	pgsql-bugs(at)lists(dot)postgresql(dot)org
-Subject: 	Today's Postgres Releases break login roles
-Date: 	2024-11-15 14:47:26
-Message-ID: 	CADOZwSb0UsEr4_UTFXC5k7=fyyK8uKXekucd+-uuGjJsGBfxgw@mail.gmail.com
-
-Hello,
-
-Today, when upgrading from Postgres 15.8 to 15.9, we realized that the
-login role set for a user (with ALTER USER my_user SET ROLE my_role) was
-not automatically set upon login any more.
-
-This is particularly problematic for users of HashiCorp Vault's dynamic
-users (like us), who often rely on ALTER ROLE xxx SET ROLE yyy to make sure
-that dynamic & short-lived users created by vault create postgres resources
-as a long-lived role, and not as themselves.
-
-We suspect this commit
-<https://git.postgresql.org/gitweb/?p=postgresql.git;a=commitdiff;h=a5d2e6205>
-to be the one that introduced this behavioral change.
-
-I made a little testbench with docker compose so that the problem can be
-reproduced easily and quickly (with comprehensive reproduction steps in the
-README): https://github.com/elafarge/pg_role_bug_reproduction_testbench
-(feel free to change the
-
-I'm at your disposal if you have any questions.
-
-Kind Regards,
--Etienne
----
-
----
-From: 	Pavan Deolasee <pavan(dot)deolasee(at)gmail(dot)com>
-To: 	pgsql-hackers <pgsql-hackers(at)postgresql(dot)org>
-Cc: 	Noah Misch <noah(at)leadboat(dot)com>, Tom Lane <tgl(at)sss(dot)pgh(dot)pa(dot)us>
-Subject: 	Potential ABI breakage in upcoming minor releases
-Date: 	2024-11-14 10:48:02
-Message-ID: 	CABOikdNmVBC1LL6pY26dyxAS2f+gLZvTsNt=2XbcyG7WxXVBBQ@mail.gmail.com
-
-Hello,
-
-Commit 51ff46de29f67d73549b2858f57e77ada8513369 (backported all the way
-back to v12) added a new member to `ResultRelInfo` struct. This can
-potentially cause ABI breakage for the extensions that allocate the struct
-and pass it down to the PG code. The previously built extensions may
-allocate a shorter struct, while the new PG code would expect a larger
-struct, thus overwriting some memory unintentionally.
-
-A better approach may have been what Tom did in
-8cd190e13a22dab12e86f7f1b59de6b9b128c784, but I understand it might be too
-late to change this since the releases are already tagged. Nevertheless, I
-thought of bringing it up if others have different views.
-
-Thanks,
-Pavan
----
-
-Alexander
+Jessie Frazelle
+4096R / D4C4 DD60 0D66 F65A 8EFC  511E 18F3 685C 0022 BFF3
+pgp.mit.edu
