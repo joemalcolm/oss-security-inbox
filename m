@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3518" "Saturday" "13" "February" "2016" "17:11:02" "+0300" "Yuriy M. Kaminskiy" "yumkam@gmail.com" "<m3k2m8d7k9.fsf@gmail.com>" "107" "[oss-security] snprintf return value misuse in a lot of projects" "^Date:" nil nil "2" "2016021314:11:02" "[oss-security] snprintf return value misuse in a lot of projects" (number mark "        yumkam@gmail Feb 13  107/3518  " thread-indent "\"[oss-security] snprintf return value misuse in a lot of projects\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1046" "Thursday" "14" "July" "2016" "11:44:33" "+0530" "Huzaifa Sidhpurwala" "huzaifas@redhat.com" "<30653c2b-5754-e3a1-94d4-9ead3e9ca65b@redhat.com>" "31" "[oss-security] CVE Requests: HarfBuzz - Chromium CVE issues" nil nil nil "7" "2016071406:14:33" "[oss-security] CVE Requests: HarfBuzz - Chromium CVE issues" (number mark "U       huzaifas@red Jul 14   31/1046  " thread-indent "\"[oss-security] CVE Requests: HarfBuzz - Chromium CVE issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13562 invoked by uid 550); 13 Feb 2016 14:15:30 -0000
+Received: (qmail 10189 invoked by uid 550); 14 Jul 2016 06:14:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,125 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13488 invoked from network); 13 Feb 2016 14:15:17 -0000
-X-Injected-Via-Gmane: http://gmane.org/
-Message-ID: <m3k2m8d7k9.fsf@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: ppp37-190-56-5.pppoe.spdop.ru
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-Cancel-Lock: sha1:6HYjkWn8E8CCA97pnYP7LQspcwg=
-Date: Sat, 13 Feb 2016 17:11:02 +0300
-From: yumkam@gmail.com (Yuriy M. Kaminskiy)
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] snprintf return value misuse in a lot of projects
-To: oss-security@lists.openwall.com
+Received: (qmail 10170 invoked from network); 14 Jul 2016 06:14:48 -0000
+To: oss-security@lists.openwall.com,
+        Mitre CVE assign department <cve-assign@mitre.org>
+From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
+Message-ID: <30653c2b-5754-e3a1-94d4-9ead3e9ca65b@redhat.com>
+Date: Thu, 14 Jul 2016 11:44:33 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Thu, 14 Jul 2016 06:14:36 +0000 (UTC)
+Subject: [oss-security] CVE Requests: HarfBuzz - Chromium CVE issues
 
-Hello!
+Hello,
 
-Not sure if this is right place (feel free to forward elsewhere), but
-this may be important:
-
-I noticed dangerous pattern in a lot of projects, where snprintf(3)
-return value is used without checking, with potentially disasterous
-consequences:
-
-   p += snprintf(p, end-p,[....]);
-   *p++ = '\n';
-
-or
-
-   len = snprintf(p, [...]);
-   write(fd, p, len);
-
-and alike.
-
-When formatted string will overflow supplied buffer, or some error
-happens, snprintf() returns value *LARGER* (or equal) than buffer size,
-or -1.
-
-Obviously, in above patterns this would end up in disaster - with DoS or
-host memory exposure at minimum (2nd) and buffer overflow with
-possible code execution (1st).
-
-And there are yet another very common pattern:
-
-  p += snprintf(p, end-p,[....]);
-  p += snprintf(p, end-p,[....]);
-  p += snprintf(p, end-p,[....]);
-  ...
-  
-which may be 'barely safe' by posix (if you'd read `man 3posix snprintf`,
-you'd expect 2nd line is [somewhat] safe (end-p is negative, then
-casted to size_t and produce value larger than (size_t)INT_MAX, that
-should result in error EOVERFLOW), and third and following will dance
-around last byte, likely remaining safe), but it is TOTALLY
-broken on glibc, as glibc's snprintf DOES NOT follow posix, and accepts
-*any* size.
-
-So, that's again buffer overflow with possible code execution.
-
-BTW, somewhat safer variant of above code:
-     p += snprintf(p, end-p, "%s", str);
-     if(p >=end) {...}
-or
-     p += snprintf(p, min(end-p, 0), "%s", str);
-
-(with check after each snprintf) is not completely safe either: imagine
-32-bit machine,
-
-     p  =(char*)0xfffffff0;
-     end=(char*)0xfffffff5;
-     str="11111111111111111111111";
-
-(that said, I doubt it is practically exploitable in most cases).
-
-Safe variants: (verbose)
-
-     char *p = buf;
-     char *end = buf + sizeof(buf);
-     ...
-     int rc = snprintf(p, end-p,...);
-     if (rc < 0) {
-          /* return -errno; assert(rc >= 0);... handle error, optional */;
-          /* or safely *do nothing*; most importantly: don't advance pointer! */
-     } else if (rc >= end-p) {
-          /* return -EOVERFLOW; assert(rc < end-p);... handle overflow, optional */;
-          p = end; /* move next pointer to end of buffer, mandatory for NDEBUG */
-     } else {
-          /* normal case */
-          p += rc;
-     }
-     ...
-     if (p == end) { /* maybe handle overflow once in the end */ }
-     
-or (minimized):
-
-     int n = 0;
-     ...
-     int rc = snprintf(buf+n, sizeof(buf)-n,...);
-     /* ignores errors and handles overflows in a safe way */
-     n += min(sizeof(buf)-n, max(0, rc));
-     ...
-     if (n == sizeof(buf)) { /* maybe handle overflow once in the end */ }
-
-Quick search on https://codesearch.debian.net/ shows over 500 cases of
-definite misuse ( [-+]=\s*v?snprintf ) and 2 times more of code that
-requires review ( [=]\s*v?snprintf ).
+Google released a chromium advisory[0], in which a bunch of harfbuzz
+issues were mentioned. However only one CVE was assigned to multiple
+issues as per https://bugs.chromium.org/p/chromium/issues/detail?id=544270
 
 
-P.S. That said, in most cases, the use of sprintf->snprintf replacement was
-pure cargo cult, buffer size was sufficient to fit any possible string,
-overflow can never happen, and this flaw is not really exploitable. (And
-it makes whole expedition on fixing those bugs rather boring thing).
+Looking a bit into the attached bug and going a few links down, i
+realized that there are atleast 3 issues in here which are CVE worthy.
+Details as follows:
 
-However, in some cases overflow possible and exploitable (there were
-reason why people tried to replace sprintf with snprintf, right?).
+1. Heap based buffer overflow:
+https://github.com/behdad/harfbuzz/issues/139#issuecomment-146984679
+
+2. Fix hmtx wrong table length check:
+https://github.com/behdad/harfbuzz/issues/139#issuecomment-148289957
+
+3. heap-buffer-overflow in hb_ot_face_metrics_accelerator_t::get_advance
+https://github.com/behdad/harfbuzz/issues/156
+
+Can MITRE please assign CVEs to these issues?
+
+Also, assuming we still have a policy of one issue one CVE, how does
+MITRE plan to handle vendors who assign one CVE to multiple non-related
+issues?
 
 
-P.P.S. I often found similar sequences in formatting logging code
-(vsnprintf); if you can remotely feed oversized log entry (typical limit
-is 1k or 4k), and there are one of above dangerous patterns, then it is
-likely exploitable.
-
+[0]
+http://googlechromereleases.blogspot.in/2016/01/stable-channel-update_20.html
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
