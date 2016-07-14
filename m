@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["746" "Wednesday" "13" "May" "2015" "19:09:49" "+0300" "DaKnOb" "daknob.mac@gmail.com" "<63E299CE-40BE-4F1D-BFC0-5278B8E51C57@gmail.com>" "20" "[oss-security] Request 2 CVE-IDs for Zeus Voting System" nil nil nil "5" "2015051316:09:49" "[oss-security] Request 2 CVE-IDs for Zeus Voting System" (number mark "        daknob.mac@g May 13   20/746   " thread-indent "\"[oss-security] Request 2 CVE-IDs for Zeus Voting System\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1898" "Thursday" "14" "July" "2016" "14:16:02" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160714181602.59527B2E012@smtpvbsrv1.mitre.org>" "48" "[oss-security] Re: CVE request: Information leak in LibTIFF" nil nil nil "7" "2016071418:16:02" "[oss-security] Re: CVE request: Information leak in LibTIFF" (number mark "U       cve-assign@m Jul 14   48/1898  " thread-indent "\"[oss-security] Re: CVE request: Information leak in LibTIFF\"\n") "<CACG6YS0Q_DcgZ+N9_X1PcdTZ45hkVDe4JYEF-hMaL92b2wh0rw@mail.gmail.com>" ("<CACG6YS0Q_DcgZ+N9_X1PcdTZ45hkVDe4JYEF-hMaL92b2wh0rw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5207 invoked by uid 550); 13 May 2015 16:17:49 -0000
+Received: (qmail 2019 invoked by uid 550); 14 Jul 2016 18:16:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30657 invoked from network); 13 May 2015 16:10:03 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:content-type:subject:date:message-id:cc:to:mime-version;
-        bh=x5CbCRBInv/6tDemTYQwOuk6zir81TD38T12jmzeznA=;
-        b=Lv9ixdqo1CmZLzBaU+B2Jb04ZBZyl8Bm9CEMNUNf9Y26De+TS2Ax0zvqrmBxLhGV6S
-         VvllL8ynPlsOFP43YyynO1Tm7bKhlWX1B8UaoeyY+LnJZj+HJ3zXtCsaIlgVq0FkbKGS
-         8Cylxjk4Qwf8PGWow85z+gnf/jNzSX99MF73HslwM3qpZakgxcZ8N/M5TswHCrbVKKY8
-         NFjxG6bbCtuvxafBiwyqN4oUnS2MKW4aJyIUmjQRMV72u2bsfWwT/Ctvh3IxuFw5DKhG
-         iYZ4EMQxTw75na8tRrzkDkw6feBpkaI122a1RkoQNDedleo/WgsOLoRKFja4M7HpKLfl
-         +frA==
-X-Received: by 10.194.192.72 with SMTP id he8mr42105709wjc.11.1431533391782;
-        Wed, 13 May 2015 09:09:51 -0700 (PDT)
-Content-Type: multipart/alternative; boundary="Apple-Mail=_FB8597E9-3A95-4D8F-92A3-AB61B48AAA47"
-Message-Id: <63E299CE-40BE-4F1D-BFC0-5278B8E51C57@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-X-Mailer: Apple Mail (2.1878.6)
-Cc: cve-assign@mitre.org
-Date: Wed, 13 May 2015 19:09:49 +0300
-From: DaKnOb <daknob.mac@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Request 2 CVE-IDs for Zeus Voting System
-To: OSS Security List <oss-security@lists.openwall.com>
+Received: (qmail 1994 invoked from network); 14 Jul 2016 18:16:13 -0000
+From: cve-assign@mitre.org
+To: idolf@google.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CACG6YS0Q_DcgZ+N9_X1PcdTZ45hkVDe4JYEF-hMaL92b2wh0rw@mail.gmail.com>
+Message-Id: <20160714181602.59527B2E012@smtpvbsrv1.mitre.org>
+Date: Thu, 14 Jul 2016 14:16:02 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: Information leak in LibTIFF
 
---Apple-Mail=_FB8597E9-3A95-4D8F-92A3-AB61B48AAA47
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=windows-1252
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Zeus (https://github.com/grnet/zeus) is a fork of Helios that is actively d=
-eveloped by GRNET (http://www.grnet.gr/) and is considered to be used in Gr=
-eek Elections (starts with small and rolls out to larger elections).=20
+> I would like to request a CVE number for an information leak in LibTIFF,
+> specifically in the file libtiff/tif_read.c.
+> 
+> The vulnerability allows an attacker to specify a negative index into the
+> file-content buffer and copy data from that position until the end of the
+> buffer.
+> 
+> This will allow an attacker to crash the process by accessing unmapped
+> memory and (depending on how LibTIFF is used) might also allow an attacker
+> to leak sensitive information.
+> 
+> The issue is fixed in CVS HEAD with the commit:
+> 
+> revision 1.49
+> date: 2016-07-10 20:00:21 +0200;  author: erouault;
+> commitid: YhOZoKv5OA9gNNdz;
+> * libtiff/tif_read.c: Fix out-of-bounds read on
+> memory-mapped files in TIFFReadRawStrip1() and TIFFReadRawTile1()
+> when stripoffset is beyond tmsize_t max value (reported by
+> Mathias Svensson)
 
-Two XSS vulnerabilities that allow JavaScript Execution have been found, on=
-e of which has a PoC running JavaScript / Modifying HTML in the voter=92s b=
-rowser during the voting process.
+Use CVE-2016-6223.
 
-XSS #1 - https://github.com/grnet/zeus/issues/28
-XSS #2 - https://github.com/grnet/zeus/issues/29
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Thank you,
-Antonios A. Chariton=
-
---Apple-Mail=_FB8597E9-3A95-4D8F-92A3-AB61B48AAA47--
+iQIcBAEBCAAGBQJXh9YEAAoJEHb/MwWLVhi2NZIP/AlJLMTfzlrz/si4ZZdxud9U
+yJTUt7t/zzzH7oLx0rzZb+hivMp6Z5P5Cqhn8eVzTj+hOMFTaZek+sBaf034WKxN
+qZyaVdu4VHs1gpJNJpP7t0toXdUmNMh2CKsx7PUEfrM73o+VeiwaWgG8UvuJO5vd
+28sspVqmhtfOmsPtx6mnIabnHtZG0N4TE/FUVKF9mRp73xlxhxB3gkwAzAXy5sRh
+R23M0qU5v5HkryvUvKoA0sQ3H6dgMDMqUE/Gq6B67t2Lm98E0DLPnayCn5x/Jkzf
+IrNGI8e2yRjqggeXKO/SRfmZSR/1qM43vGuHeYbgn0ZOJPPrFIv9+BY9uN6fIfpH
+ox5x2GXFVMp79Rwnea2ywy0Z6mCBLvmFCs8In2B4GxoVJ+MUVAuhyFUqctgrZ81L
+5uphXH8KDhKiY5k/qa6T9j2eNz13Por3UvK0irEixsgaUQzEz3wNUy8mW56L0mB0
+4sCZVlH5zt5/eIDHRWxHrbBR3Oo27R21ONVP2MJTthcVthCiLnMvZEcNOOp7//MR
+1FWYp3qsPrc858j7ZWtyXvpROscv/ivN7V6xzPvjYal+qVs4RPexwJ3/pUn63fms
+mEZdDlbzR7ecLPXRHksx99FgT9R/ETgugd1oYKwgCo+zVgCHGrJH3XvhQQsHgCK+
+A/ao2iuPSnQu1eG2aUSi
+=Bszf
+-----END PGP SIGNATURE-----
