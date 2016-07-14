@@ -1,70 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/04/3
-Message-ID: <56B34796.7080408@redhat.com>
-Date: Thu, 4 Feb 2016 12:44:06 +0000
-From: Tristan Cacqueray <tdecacqu@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/15/2
+Message-ID: <CAEk6tEy06LoWDWfCcBrWBPO7n0mLYajNU69dMVSg9JGQ6e5p-A@mail.gmail.com>
+Date: Thu, 14 Jul 2016 12:26:42 -0400
+From: Jessica Frazelle <me@...sfraz.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2016-006] Glance image status manipulation through locations removal (CVE-2016-0757)
+Cc: Greg KH <greg@...ah.com>, cve-assign@...re.org
+Subject: Re: Re: cve request: local DoS by overflowing kernel mount table using shared bind mount
 Content-Type: text/plain; charset=utf-8
 
-=================================================================
-OSSA-2016-006: Glance image status manipulation through locations
-               removal
-=================================================================
+it's running systemd in a container... isn't it...
 
-:Date: February 03, 2016
-:CVE: CVE-2016-0757
+On Thu, Jul 14, 2016 at 12:18 PM, Jessica Frazelle <me@...sfraz.com> wrote:
+> what is the use case for mounting /mnt:/mnt in a container?
+>
+> On Thu, Jul 14, 2016 at 12:15 PM, CAI Qian <caiqian@...hat.com> wrote:
+>> Maybe this is a better reproducer using docker. It is exploitable even with
+>> user namespace enabled.
+>>
+>> # docker run -it -v /mnt/:/mnt/:shared --cap-add=SYS_ADMIN rhel7 /bin/bash
+>>
+>> # cat /proc/self/uid_map
+>>          0        995      65536
+>>
+>> # cat /proc/self/gid_map
+>>          0        992      65536
+>>
+>> (insider container) # for i in `seq 1 20`; mount -o bind /mnt/1 /mnt/2; done
+>>    CAI Qian
+>>
+>> ----- Original Message -----
+>>> From: "Greg KH" <greg@...ah.com>
+>>> To: oss-security@...ts.openwall.com
+>>> Cc: caiqian@...hat.com, cve-assign@...re.org
+>>> Sent: Wednesday, July 13, 2016 6:45:00 PM
+>>> Subject: Re: [oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount
+>>>
+>>> On Wed, Jul 13, 2016 at 12:59:40PM -0400, cve-assign@...re.org wrote:
+>>> > > It was reported that the mount table expands by a power-of-two
+>>> > > with each bind mount command.
+>>> >
+>>> > > If the system is configured in the way that a non-root user
+>>> > > allows bind mount even if with limit number of bind mount
+>>> > > allowed, a non-root user could cause a local DoS by quickly
+>>> > > overflow the mount table.
+>>> >
+>>> > > it will cause a deadlock for the whole system,
+>>> >
+>>> > >> form of unlimited memory consumption that is causing the problem
+>>> >
+>>> > Use CVE-2016-6213.
+>>>
+>>> A CVE for an "improperly configured system"?  Huh?  What distro has such
+>>> a configuration set by default?  This isn't a kernel bug, so what is
+>>> this CVE classified as being "against"?  It better not be against the
+>>> Linux kernel...
+>>>
+>>> confused,
+>>>
+>>> greg k-h
+>>>
+>
+>
+>
+> --
+>
+>
+> Jessie Frazelle
+> 4096R / D4C4 DD60 0D66 F65A 8EFC  511E 18F3 685C 0022 BFF3
+> pgp.mit.edu
 
 
-Affects
-~~~~~~~
-- Glance: <=2015.1.2, >=11.0.0 <= 11.0.1
+
+-- 
 
 
-Description
-~~~~~~~~~~~
-Erno Kuvaja from HPE reported a vulnerability in Glance. By removing
-the last location of an image, an authenticated user may change the
-image status back to queued and may be able to upload new image data
-resulting in a broken Glance's immutability promise. A malicious
-tenant may exploit this flaw to silently replace image data it owns,
-regardless of the original creator or the visibility settings. Only
-setups with show_multiple_locations enabled (not default) are
-affected.
-
-
-Patches
-~~~~~~~
-- https://review.openstack.org/275735 (Kilo)
-- https://review.openstack.org/275736 (Liberty)
-- https://review.openstack.org/275737 (Mitaka)
-
-
-Credits
-~~~~~~~
-- Erno Kuvaja from HPE (CVE-2016-0757)
-
-
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/bugs/1525915
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-0757
-
-
-Notes
-~~~~~
-- This fix will be included in future 2015.1.3 (kilo) and 11.0.2
-  (liberty) releases.
-- The proposed fix prevents the removal of the last location of an
-  image so that an active image is always available. This action was
-  previously incorrectly allowed and the fix might break some users who
-  are relying on the false assumption that it would be ok to replace
-  the data of existing image in the special case that the multiple
-  locations has been configured.
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Jessie Frazelle
+4096R / D4C4 DD60 0D66 F65A 8EFC  511E 18F3 685C 0022 BFF3
+pgp.mit.edu
