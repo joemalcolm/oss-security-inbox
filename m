@@ -1,24 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/16
-Message-ID: <20160314132948.684c7681@redhat.com>
-Date: Mon, 14 Mar 2016 13:29:48 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com, Carlos Alberto Lopez Perez <clopez@...lia.com>
-Subject: Re: WebKitGTK+ Security Advisory WSA-2016-0002
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/14/5
+Message-ID: <35D91F81-1E00-4305-8DED-848D88C8CD58@nccgroup.trust>
+Date: Thu, 14 Jul 2016 21:09:34 +0000
+From: Jesse Hertz <Jesse.Hertz@...group.trust>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: #NA-Disclosure <na-disclosure@...group.trust>
+Subject: Multiple Bugs in OpenBSD Kernel 
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 11 Mar 2016 15:25:39 +0100 Carlos Alberto Lopez Perez wrote:
+Hi All,
 
-> Advisory ID        : WSA-2016-0002
-> Advisory URL       : http://webkitgtk.org/security/WSA-2016-0002.html
-> CVE identifiers    : CVE-2016-1723, CVE-2016-1724, CVE-2016-1725,
->                      CVE-2016-1726, CVE-2016-1727, CVE-2016-1728.
-> 
-> Several vulnerabilities were discovered on WebKitGTK+.
+As part of NCC Group’s Project Triforce, a generic syscall fuzzing effort by
+myself and Tim Newsham, several new vulnerabilities were discovered in the
+OpenBSD kernel. These have all been fixed now.
 
-Are further details of these issues available anywhere?  WSA only
-re-uses Mitre CVE descriptions derived form Apple advisories, but is
-there info which bugs/commits these CVEs correspond to?
+Attached are source files for each issue that include a full writeup of the
+issue, links to the patches, as well as a PoC to demonstrate the issue. We are
+requesting CVEs for all but the last issue (which is root-only). The following list contains brief
+description of each issue, ordered from highest to lowest severity.
 
--- 
-Tomas Hoger / Red Hat Product Security
+mmap_panic: Malicious calls to mmap() can trigger an allocation panic or trigger memory corruption.
+kevent_panic: Any user can panic the kernel with the kevent system call.
+thrsleep_panic: Any user can panic the kernel with the __thrsleep system call.
+thrsigdivert_panic: Any user can panic the kernel with the __thrsigdivert system call.
+ufs_getdents_panic: Any user can panic the kernel with the getdents system call.
+mount_panic: Root users, or users on systems with kern.usermount set to true, can trigger a kernel panic when mounting a tmpfs filesystem.
+unmount_panic: Root users, or users on systems with kern.usermount set to true, can trigger a kernel panic when unmounting a filesystem.
+tmpfs_mknod_panic: Root can panic kernel with mknod on a tmpfs filesystem.
+
+Errata have been issued which cover some of these issues on http://www.openbsd.org/errata59.html <http://www.openbsd.org/errata59.html> and http://www.openbsd.org/errata58.html <http://www.openbsd.org/errata58.html>.
+
+NCC Group would like to thank the OpenBSD development team for clear
+communication and a quick turnaround on these issues.
+
+Best,
+-jh
+
+
+
+Content of type "text/html" skipped
+
+Download attachment "kevent_panic.c" of type "application/octet-stream" (2894 bytes)
+
+Content of type "text/html" skipped
+
+Download attachment "mmap_panic.c" of type "application/octet-stream" (6944 bytes)
+
+Content of type "text/html" skipped
+
+Download attachment "mount_panic.c" of type "application/octet-stream" (2220 bytes)
+
+Content of type "text/html" skipped
+
+Download attachment "thrsigdivert_panic.c" of type "application/octet-stream" (2741 bytes)
+
+Content of type "text/html" skipped
+
+Download attachment "thrsleep_panic.c" of type "application/octet-stream" (2507 bytes)
+
+Content of type "text/html" skipped
+
+Download attachment "tmpfs_mknod_panic.c" of type "application/octet-stream" (1906 bytes)
+
+Content of type "text/html" skipped
+
+Download attachment "ufs_getdents_panic.c" of type "application/octet-stream" (2744 bytes)
+
+Content of type "text/html" skipped
+
+Download attachment "unmount_panic.c" of type "application/octet-stream" (2122 bytes)
+
+Content of type "text/html" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (497 bytes)
