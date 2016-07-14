@@ -1,44 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/23/2
-Message-Id: <20161023010359.42F65336005@smtpvbsrv1.mitre.org>
-Date: Sat, 22 Oct 2016 21:03:59 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: jasper: memory allocation failure in jas_malloc (jas_malloc.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/14/1
+Message-ID: <30653c2b-5754-e3a1-94d4-9ead3e9ca65b@redhat.com>
+Date: Thu, 14 Jul 2016 11:44:33 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>
+Subject: CVE Requests: HarfBuzz - Chromium CVE issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> https://blogs.gentoo.org/ago/2016/10/18/jasper-memory-allocation-failure-in-jas_malloc-jas_malloc-c
-> 
-> AddressSanitizer failed to allocate 0x1000002000 bytes of LargeMmapAllocator
-> 
-> 0x7f4f0474e170 in jas_malloc ... jasper-1.900.5/src/libjasper/base/jas_malloc.c:117:9
-> 0x7f4f04764b4f in bmp_getinfo ... jasper-1.900.5/src/libjasper/bmp/bmp_dec.c:297:25
+Google released a chromium advisory[0], in which a bunch of harfbuzz
+issues were mentioned. However only one CVE was assigned to multiple
+issues as per https://bugs.chromium.org/p/chromium/issues/detail?id=544270
 
-Use CVE-2016-8886.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Looking a bit into the attached bug and going a few links down, i
+realized that there are atleast 3 issues in here which are CVE worthy.
+Details as follows:
 
-iQIcBAEBCAAGBQJYDAr6AAoJEHb/MwWLVhi2PDYP/1NmmhW+xfJZfBR9Ol7iijk4
-VYpDfu7DCS8DO/QR2lZZBFJlzZnoe9gtjFgK24s2bj/W3zCwT2wtSzyw+8FLD9DZ
-vWLYte57WNG/e992kUe+Oi0lyittYAz2SRCGGnBj71GE+1P47kx7+lFGAMpphBWC
-syae4OB/mhZ9ynqmXIXejr4oV/OkowEwFfHcU57ph/p4KbaEZTlZohXiHE3v5kHy
-69JHq0ICFpZU4v8WtuUAeDGYTNszTO+LYboO657EMciIYG5lUiIu2EjxvBn8Av+W
-Jj1sg/m+jKMFuVjBv2luKnDU+ljzGyf8106PYFjwlb2ox+bd133hmFJyX0c0H6p/
-VcbY9GOatGle6Mg00OQ+BpIsZ+EonJUc3KH7a+W6GzPAIoPUhaC3nJ5zrgClGVXT
-3oW67lbGeRtEPRz0N+0y0lU38wOE0Zpfdo+3U15ggxvA/W/FPL+pN7KhH2DDMrmH
-sOa/GPzV21eIBh9LVzWOOLV44gviAq7PBuTkt5vkerxV1T8u8JZLmCKgKwMuGPGF
-sPZnkIlM/I01l1TriUZ372jkY2ytTSye3VTWP6KJAA1sonzf/6Rayj73/YIiO2eL
-tbsMlHczFAWHzPQcF/CxCTbYjbVneqjF+0G5UupZcfO7+zeV3RDMp+sbq0Djw1f5
-mKQTqhF8qFf6hiYaVlbf
-=Cy/w
------END PGP SIGNATURE-----
+1. Heap based buffer overflow:
+https://github.com/behdad/harfbuzz/issues/139#issuecomment-146984679
+
+2. Fix hmtx wrong table length check:
+https://github.com/behdad/harfbuzz/issues/139#issuecomment-148289957
+
+3. heap-buffer-overflow in hb_ot_face_metrics_accelerator_t::get_advance
+https://github.com/behdad/harfbuzz/issues/156
+
+Can MITRE please assign CVEs to these issues?
+
+Also, assuming we still have a policy of one issue one CVE, how does
+MITRE plan to handle vendors who assign one CVE to multiple non-related
+issues?
+
+
+[0]
+http://googlechromereleases.blogspot.in/2016/01/stable-channel-update_20.html
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
