@@ -1,30 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/14/6
-Message-ID: <alpine.LFD.2.20.1610141638130.13950@wniryva>
-Date: Fri, 14 Oct 2016 16:42:09 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Huawei PSIRT <psirt@...wei.com>
-Subject: CVE request Qemu: dma: rc4030 divide by zero error in set_next_tick
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/14/3
+Message-Id: <20160714180943.CEF62B2E017@smtpvbsrv1.mitre.org>
+Date: Thu, 14 Jul 2016 14:09:43 -0400 (EDT)
+From: cve-assign@...re.org
+To: tyhicks@...onical.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Requests: Information exposure caused by ecryptfs-setup-swap failures
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Quick Emulator(Qemu) built with the JAZZ RC4030 chipset emulation support is 
-vulnerable to a divide by zero issue. It could occur while computing its 
-periodic timer's next tick value.
+> ecryptfs-setup-swap script that is provided by the upstream
+> ecryptfs-utils project. The script can be used to convert an existing,
+> unencrypted swap partition into a swap partition that is encrypted.
+> System admins may use this tool and the Ubuntu installer uses it when
+> the user opts into home directory encryption.
+> 
+> On systems using systemd 211 or newer and GPT partitioning, the
+> unencrypted swap partition was being automatically activated during boot
+> and the encrypted swap was not used. This was due to ecryptfs-setup-swap
+> not marking the swap partition as "no-auto", as defined by the
+> Discoverable Partitions Spec
 
-A privileged guest user could use this flaw to crash the Qemu process instance 
-on the host resulting in DoS.
+> ecryptfs-setup-swap improperly configures encrypted swap when using GPT
+> partitioning
+> Bug: https://launchpad.net/bugs/1447282
+> Fix: https://bazaar.launchpad.net/~ecryptfs/ecryptfs/trunk/revision/857
+> (Please ignore the inaccurate commit message for commit 857)
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02577.html
+Use CVE-2015-8946.
 
-This issue was reported by Huawei Product Security Incident Response Team 
-(PSIRT), Huawei Inc.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+> ecryptfs-setup-swap improperly configures encrypted swap when using GPT
+> partitioning on a NVMe or MMC drive. This bug is due to an incomplete
+> fix for bug 1447282.
+> Bug: https://launchpad.net/bugs/1597154
+> Fix: https://bazaar.launchpad.net/~ecryptfs/ecryptfs/trunk/revision/882
+
+Use CVE-2016-6224.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXh9TcAAoJEHb/MwWLVhi2VUAP/RibsMY5eaJJQfehovvPDDZL
+N4qZ33Rn347WoQnvnHm+dSaxC6Jys2jtGCyqJZ4xTxJXUFIZzsBDyIVONpuUd6Sz
+mrnLDSPtBAvfzrBYcUbVoJLMYAoYWC27I9NcnwttE4MTLBvlDLhws2ncZJ+werph
+bSVzBS8qGPj7LFJGTP1YiFj9qTbnbJwxRAvPIIz2wAcTyOljKcQTmpGXYoqSZIOV
+oE6jSlA9HIsvgLS+VHuOzqWJTfABcjEtN6VHJEQovp0DI8EfrWenYMpGH8kFCgtO
+KW3Y45IgJeEksbfIfX2ehlWkOEABZsRsg9sjFZGlVrLUCDsN35ooVLOLIvE+yebU
+StESPy77rxhkjS709PBr+JeKMS276AIqoK/5TRu9B7Y5Lmz5FuPLhlOn79JJfoLW
+XUoFrF9U9MeJk8EV1Hm+x3uU0EvVvWOXvtpL4VdrOfLBhihvUf8SXn3e2IkYxbuj
+erfnb/0EIILAj+oulMAmyQ2gcN0JNso4nDWNFua+0+TBd1Ep5OPV5AgogxXemew8
+L5Z3hQkSwFGbXrIkdUSYm+MD/VyxMC7lwSOIYs2S3hwtnN/m1eILOzgYGqTt6Tls
+/sjTgi2l1v+sJeQPoFTo7Riuzqe7F+kUlBCjg8lyi9QF5evvlrWIhxS1kHmlrQlI
+we6cyqgnjlYJRq+QWyvm
+=11vA
+-----END PGP SIGNATURE-----
