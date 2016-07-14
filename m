@@ -1,33 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/5
-Message-ID: <alpine.LFD.2.20.1609161709040.28695@wniryva>
-Date: Fri, 16 Sep 2016 17:10:41 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request Qemu: scsi: mptsas: OOB access when freeing MPTSASRequest object
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/14/6
+Message-ID: <AC2FF540-C9A4-4A44-97D5-10E9E0874B24@nccgroup.trust>
+Date: Thu, 14 Jul 2016 21:23:35 +0000
+From: Jesse Hertz <Jesse.Hertz@...group.trust>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: #NA-Disclosure <na-disclosure@...group.trust>
+Subject: Re: Multiple Bugs in OpenBSD Kernel
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+It appears that me using HTML emails may have made the attachments unreadable on the web interface or for some users. Apologies. Here are the attachments again in a plaintext email.
 
-Quick emulator(Qemu) built with the LSI SAS1068 Host Bus emulation support, is 
-vulnerable to an invalid memory access issue. It could occur while processing 
-scsi io requests in mptsas_process_scsi_io_request.
+I would also like to note (thanks to tj@...nbsd for pointing this out!) that with regard to the bugs requiring kern.usermount:
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-instance on the host resulting in DoS.
+“these bugs are now root-only in -current since the kern.usermount option
+was disabled and will be removed entirely. may be worth a mention on your
+write-up. https://marc.info/?l=openbsd-cvs&m=146851081629533&w=2” 
 
-Upstream patch
---------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg03604.html
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1376776
 
-This issue was reported by Li Qiang of 360.cn Inc.
+Download attachment "kevent_panic.c" of type "application/octet-stream" (2981 bytes)
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Download attachment "mmap_panic.c" of type "application/octet-stream" (7134 bytes)
+
+Download attachment "mount_panic.c" of type "application/octet-stream" (2290 bytes)
+
+Download attachment "thrsigdivert_panic.c" of type "application/octet-stream" (2815 bytes)
+
+Download attachment "thrsleep_panic.c" of type "application/octet-stream" (2579 bytes)
+
+Download attachment "tmpfs_mknod_panic.c" of type "application/octet-stream" (1976 bytes)
+
+Download attachment "ufs_getdents_panic.c" of type "application/octet-stream" (2836 bytes)
+
+Download attachment "unmount_panic.c" of type "application/octet-stream" (2199 bytes)
