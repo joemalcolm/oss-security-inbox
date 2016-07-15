@@ -1,40 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/05/8
-Message-ID: <568BB21D.1060200@suse.de>
-Date: Tue, 5 Jan 2016 13:07:57 +0100
-From: Andreas Stieger <astieger@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/15/1
+Message-ID: <CABBnxRbnOo12JO-n6ydrYROkXqU2cR-ifw7LQtuiWJy-NAQrwA@mail.gmail.com>
+Date: Fri, 15 Jul 2016 08:12:10 +0800
+From: Anonymous <ihunan@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: cacti: SQL injection vulnerability in graphs_new.php
+Cc: cve-assign@...re.org
+Subject: Re: CVE Request: libgd: Out-Of-Bounds Read in function read_image_tga of gd_tga.c
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Fixed via https://github.com/libgd/libgd/commit/3c2b605d72e8b080dace1d98a6e50b46c1d12186
+And cc cve-assign explicitly.
 
-On 01/05/2016 12:12 PM, Salvatore Bonaccorso wrote:
-> On Tue, Jan 05, 2016 at 10:20:23AM +0100, Andreas Stieger wrote:
->> On 01/05/2016 12:58 AM, cve-assign@...re.org wrote:
->>>> Another SQL injection vulnerability via graphs_new.php in cacti was
->>>> found, reported to the bug http://bugs.cacti.net/view.php?id=2652
->>> http://bugs.cacti.net/view.php?id=2652 is CVE-2015-8604.
->> Check against a possible duplicate assignment with CVE-2015-8377?
->>
->> http://seclists.org/fulldisclosure/2015/Dec/att-57/cacti_sqli%281%29.txt
->>
->> https://bugzilla.redhat.com/show_bug.cgi?id=1291222
->> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-8377
->> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8377
-> Theree are two different vulnerabilities here, see second comment in
-> http://bugs.cacti.net/view.php?id=2652 which describe both, the
-> CVE-2015-8377 and the new assigned one (CVE-2015-8604).
-
-Thanks for the clarification,
-Andreas
-
--- 
-Andreas Stieger <astieger@...e.de>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG Nürnberg)
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+2016-07-12 15:08 Salvatore Bonaccorso <carnil@...ian org>:
+> Hi
+>
+> Another issue was reported in the libgd issue tracker, an
+> out-of-bounds reads in read_image_tga in gd_tga.c:
+>
+> https://github.com/libgd/libgd/issues/248
+>
+> Pull request: https://github.com/libgd/libgd/pull/251
+>
+> Upstream issue contains a reproducer for the issue and Ondřej Surý
+> confirmed that this is not a duplicate of issue #247. Could you assign
+> a CVE for this issue?
+>
+> Regards,
+> Salvatore
