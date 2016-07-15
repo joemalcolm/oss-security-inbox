@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1890" "Monday" "18" "April" "2016" "11:45:05" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160418154505.3B1773320BD@smtpvbsrv1.mitre.org>" "45" "[oss-security] Re: Qemu: usb: Infinite loop vulnerability in usb_ehci using siTD process" nil nil nil "4" "2016041815:45:05" "[oss-security] Re: Qemu: usb: Infinite loop vulnerability in usb_ehci using siTD process" (number mark "U       cve-assign@m Apr 18   45/1890  " thread-indent "\"[oss-security] Re: Qemu: usb: Infinite loop vulnerability in usb_ehci using siTD process\"\n") "<alpine.LFD.2.20.1604181740160.24870@wniryva>" ("<alpine.LFD.2.20.1604181740160.24870@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["610" "Friday" "15" "July" "2016" "08:12:10" "+0800" "Anonymous" "ihunan@gmail.com" "<CABBnxRbnOo12JO-n6ydrYROkXqU2cR-ifw7LQtuiWJy-NAQrwA@mail.gmail.com>" "21" "Re: [oss-security] CVE Request: libgd: Out-Of-Bounds Read in function read_image_tga of gd_tga.c" nil nil nil "7" "2016071500:12:10" "[oss-security] CVE Request: libgd: Out-Of-Bounds Read in function read_image_tga of gd_tga.c" (number mark "U       ihunan@gmail Jul 15   21/610   " thread-indent "\"Re: [oss-security] CVE Request: libgd: Out-Of-Bounds Read in function read_image_tga of gd_tga.c\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17624 invoked by uid 550); 18 Apr 2016 15:45:18 -0000
+Received: (qmail 30187 invoked by uid 550); 15 Jul 2016 02:02:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,57 +12,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17599 invoked from network); 18 Apr 2016 15:45:16 -0000
-From: cve-assign@mitre.org
-To: ppandit@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, dushaobo@360.cn
-In-Reply-To: <alpine.LFD.2.20.1604181740160.24870@wniryva>
-Message-Id: <20160418154505.3B1773320BD@smtpvbsrv1.mitre.org>
-Date: Mon, 18 Apr 2016 11:45:05 -0400 (EDT)
-Subject: [oss-security] Re: Qemu: usb: Infinite loop vulnerability in usb_ehci using siTD process
+Received: (qmail 17488 invoked from network); 15 Jul 2016 00:12:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=BJKEzrCPZgvCp650qaImfoAixrhgzyhvMBhj1BQoNOU=;
+        b=nBW5H8/0FGrP/gg6j4r1+3y6WEcEqg8oJJUPeQFwuX2xTGXDZ0LXU11fHbeLy7s1qa
+         CAUMca9/Zjp0mhsPYorRYGxaEeKZYN0ng2LH09FKiwphaKdcGqAtF7lbaHoj0nIJcdhu
+         SuMzBVz5yUGM9/lGCDSLoFGt4SIDIBaYVJ+dSaZWF4GDJT18cFdHbIO5DCjIR7ejSV1p
+         U+Wo6xeldykEoE2Kcfabm/+pp80a+VnvIRZ4PKFS+/44hu8oDrhU9xiV1p6YRHfMR/2z
+         cOnEs/7JWLdhtKhaVT1j8mCpDxGoMpdrx03xIs3VZQMw6evI6VbHuKKSYYSb0/V1TEsD
+         5khQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=BJKEzrCPZgvCp650qaImfoAixrhgzyhvMBhj1BQoNOU=;
+        b=RXntFwwIXuuDtrTLp0lSbNPaV0YtDTcVN5BuKqn0lCXumnGmlSc/gu3aJ08jL+mdyI
+         njSfFrFBBsWXYKpCfwe+kcPOl4lG9v5XP39R3N8Qu5F0xxUpqSlsykhdCXq6keIEWrHg
+         Br/GxvaV9krjVVM28lur34MO9OtkhB1NhAxYOUbBelUFgJ4roLRqRsr+W5Fks5cxOtpH
+         +LFfEXICcxEa5JQCytMEUIt2LbhFBqqUWod7jgJsL6dJWADIwQqkv7Td2NGSao4tJeGR
+         jTvxy4MjFNm9SDkwFxBKryLYqZa1JvUMRaGhEjNOwb++YezFfDX2aR61Qdem2kYpr7jc
+         AS+g==
+X-Gm-Message-State: ALyK8tJxbH59lFFFiJuuK1M/L4kMSZ7IruGzo0Tdp4xsuP7vc5Fe+O+Qt4c1vrjT4NpinBSLMTHQEcZ0Yw6euw==
+X-Received: by 10.31.114.203 with SMTP id n194mr8437054vkc.55.1468541531039;
+ Thu, 14 Jul 2016 17:12:11 -0700 (PDT)
+MIME-Version: 1.0
+From: Anonymous <ihunan@gmail.com>
+Date: Fri, 15 Jul 2016 08:12:10 +0800
+Message-ID: <CABBnxRbnOo12JO-n6ydrYROkXqU2cR-ifw7LQtuiWJy-NAQrwA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE Request: libgd: Out-Of-Bounds Read in function
+ read_image_tga of gd_tga.c
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Fixed via https://github.com/libgd/libgd/commit/3c2b605d72e8b080dace1d98a6e=
+50b46c1d12186
+And cc cve-assign explicitly.
 
-> Qemu emulator built with the USB EHCI emulation support is vulnerable to an
-> infinite loop issue. It occurs during communication between host controller
-> interface(EHCI) and a respective device driver. These two communicate via a
-> split isochronous transfer descriptor list(siTD) and an infinite loop unfolds
-> if there is a closed loop in this list.
-> 
-> A privileged user inside guest could use this flaw to consume excessive CPU
-> cycles & resources on the host.
-> 
-> This issue is similar to CVE-2015-8558, but using siTD instead of iTD.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1325129
-> https://lists.gnu.org/archive/html/qemu-devel/2016-04/msg02691.html
-
-Use CVE-2016-4037.
-
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/usb/hcd-ehci.c but
-that may be an expected place for a later update.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXFQCaAAoJEHb/MwWLVhi2nh0P/iCA8MRdrSfpTjtl3f3Y33KQ
-dS2Kl9K4SeLoSTlo2AsO2+SfW72MW8fvKqOocfsOjIyGfh4rTvU+SxVMM2j4VnmL
-/JQtfsrbyuHXjFrnwUdrd8OjMVsjbJVJkjE1kk+DZrI9xaQZjA0VlAvypYJi05Sd
-uu1k5rN/jjFFvPx7ZgfVDVra+OgqGmrdxgpWpdcwdA+TTXXn9yPwTZBkFbDYB+cn
-v4jlQPnd2aofX6TK0BCl1y3QGHMMwTJfjy5PGicmTFd1a3zmGbV64dnRKvyqZrr3
-HqXrXAwVMonStMvTjCi4L4QegP0t/Z86b9MbVCpt0Uk7dpwu/cAl3OoPxFB5hogY
-q0Na34hkDSbtWMmcCUKCJqatnRsC7C30FwzXVfA7+hWWs05mFHWVzgt5qqaIigr0
-KelHweWIwPUONmlSDTjY9+bqZhvkmtSqjradkKcEJ79llf64Ztl9GR9vV5fg8HXy
-rnxxVufTMXNAUeygbbul9zGv1bmUJiGGUAAxZVpjJZxKgr7ASSG9P0QOQ+BKWjAg
-j/uy5cTYVoso+9hsq40DNvDUxSYGm1S/FWuLzSxYveT00PyoMEQZMsTw8TpNY4ua
-/qBrIIVgUccZY9MSWHGB/0gGM1Fxz+LLsOEEX1LhRQk76z7u2gPSthoEh7AzMTYY
-cCsXHG7ryKLkktIUUu6i
-=NDYf
------END PGP SIGNATURE-----
+2016-07-12 15:08 Salvatore Bonaccorso <carnil@debian org>:
+> Hi
+>
+> Another issue was reported in the libgd issue tracker, an
+> out-of-bounds reads in read_image_tga in gd_tga.c:
+>
+> https://github.com/libgd/libgd/issues/248
+>
+> Pull request: https://github.com/libgd/libgd/pull/251
+>
+> Upstream issue contains a reproducer for the issue and Ond=C5=99ej Sur=C3=
+=BD
+> confirmed that this is not a duplicate of issue #247. Could you assign
+> a CVE for this issue?
+>
+> Regards,
+> Salvatore
