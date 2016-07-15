@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1982" "Sunday" "10" "January" "2021" "19:38:29" "+0100" "Solar Designer" "solar@openwall.com" "<20210110183829.GA2703@openwall.com>" "39" "Re: [oss-security] Gentoo's \"contributing back\" linux-distros tasks" nil nil nil "1" "2021011018:38:29" "[oss-security] Gentoo's \"contributing back\" linux-distros tasks" (number mark "U       solar@openwa Jan 10   39/1982  " thread-indent "\"Re: [oss-security] Gentoo's \"contributing back\" linux-distros tasks\"\n") "<749d9302-fcd1-4dc5-15d6-27802f36b081@gentoo.org>" ("<20201012123020.GA26643@openwall.com>" "<749d9302-fcd1-4dc5-15d6-27802f36b081@gentoo.org>") nil nil nil nil nil nil nil "Re: [oss-security] Gentoo's \"contributing back\" linux-distros tasks" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2188" "Friday" "15" "July" "2016" "10:14:52" "+0200" "Justin Ross" "jross@apache.org" "<CANVjZ_R-e0M_JQ66CNpBN2YbcKj46gHyZYBCNoEj9WPA3JyNuw@mail.gmail.com>" "61" "[oss-security] [SECURITY] CVE-2016-4467: Apache Qpid Proton: Failure to verify that the server host name matches the certificate host name on Windows" nil nil nil "7" "2016071508:14:52" "[oss-security] [SECURITY] CVE-2016-4467: Apache Qpid Proton: Failure to verify that the server host name matches the certificate host name on Windows" (number mark "U       jross@apache Jul 15   61/2188  " thread-indent "\"[oss-security] [SECURITY] CVE-2016-4467: Apache Qpid Proton: Failure to verify that the server host name matches the certificate host name on Windows\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21615 invoked by uid 550); 10 Jan 2021 18:39:31 -0000
+Received: (qmail 7618 invoked by uid 550); 15 Jul 2016 08:16:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +12,80 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20284 invoked from network); 10 Jan 2021 18:38:43 -0000
-Date: Sun, 10 Jan 2021 19:38:29 +0100
-From: Solar Designer <solar@openwall.com>
-To: Yury German <blueknight@gentoo.org>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20210110183829.GA2703@openwall.com>
-References: <20201012123020.GA26643@openwall.com> <749d9302-fcd1-4dc5-15d6-27802f36b081@gentoo.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <749d9302-fcd1-4dc5-15d6-27802f36b081@gentoo.org>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Gentoo's "contributing back" linux-distros tasks
+Received: (qmail 7240 invoked from network); 15 Jul 2016 08:15:11 -0000
+X-Gm-Message-State: ALyK8tJlWfq6Dq5t72jih2ZjA284WISDx3pm8+e71yezL0jhBDwPZ9qEq/5Qg7fuuZ7scAch255RDrAjfb02Xg==
+X-Received: by 10.28.197.66 with SMTP id v63mr4895496wmf.8.1468570492420; Fri,
+ 15 Jul 2016 01:14:52 -0700 (PDT)
+MIME-Version: 1.0
+From: Justin Ross <jross@apache.org>
+Date: Fri, 15 Jul 2016 10:14:52 +0200
+X-Gmail-Original-Message-ID: <CANVjZ_R-e0M_JQ66CNpBN2YbcKj46gHyZYBCNoEj9WPA3JyNuw@mail.gmail.com>
+Message-ID: <CANVjZ_R-e0M_JQ66CNpBN2YbcKj46gHyZYBCNoEj9WPA3JyNuw@mail.gmail.com>
+To: "users@qpid.apache.org" <users@qpid.apache.org>, "dev@qpid.apache.org" <dev@qpid.apache.org>, announce@apache.org, 
+	security@apache.org
+Cc: oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Content-Type: multipart/alternative; boundary=94eb2c0d789c8750190537a83688
+Subject: [oss-security] [SECURITY] CVE-2016-4467: Apache Qpid Proton: Failure to verify that
+ the server host name matches the certificate host name on Windows
 
-On Mon, Oct 12, 2020 at 02:36:55PM -0400, Yury German wrote:
-> On 10/12/20 8:30 AM, Solar Designer wrote:
-> > 13. Keep track of per-report and per-issue handling and disclosure
-> > timelines (at least times of notification of the private list and of
-> > actual public disclosure), at regular intervals produce and share
-> > statistics (most notably, the average embargo duration) as well as the
-> > raw data (except on issues that are still under embargo) by posting to
-> > oss-security - primary: Gentoo, backup: Amazon
-> >
-> > and we saw some contributions from Gentoo on these, most notable being
-> > their work on the statistics (task 13 above):
-> >
-> > https://oss-security.openwall.org/wiki/mailing-lists/distros/stats
-> >
-> > Unfortunately, the last update of these statistics ("Last modified:
-> > 2019/10/15 01:52 by kristianf") is also when the contributions ceased.
-[...]
-> Currently I have been maintaining the statistics for the list, but there
-> was a time from October to January that I was off the list and do not
-> have the archive of the messages. I will need to work with someone to
-> fill out those statistics as K_F is currently not available.
-> 
-> I will be able to continue with Task 13, and will catch up during the
-> weekend.
+--94eb2c0d789c8750190537a83688
+Content-Type: text/plain; charset=UTF-8
 
-We had some discussions on the above with Gentoo folks off-list.  The
-outcome is that Gentoo is unable to continue handling the statistics
-task from the beginning of 2021 and on.  Yury has left Gentoo's security
-team (and thus is now unsubscribed from linux-distros), but is
-nevertheless willing to update the statistics until the end of 2020 as
-he had kindly offered, in his personal capacity.  Thank you, Yury!
+CVE-ID: CVE-2016-4467
 
-As to the missing period when Yury was off list, I am suggesting he uses
-the headers-only archive I've just posted publicly to try and map issues
-to oss-security postings.  Where headers are not enough, Yury will need
-to ping me or someone from Gentoo who was on the list at the time to
-help match things.
+Severity: Medium
 
-Alexander
+Affected versions: 0.8 through 0.13.0 (inclusive)
+
+Fixed in Versions: 0.13.1 and later
+
+Short Description:
+
+The Proton C client and C-based client bindings may fail to verify that the
+server host name matches the domain name in the subject's Common Name (CN)
+or subjectAltName field in X.509 certificates when running on Windows
+operating systems.
+
+Description:
+
+Messaging applications using the Proton C library to provide SSL/TLS
+authentication on Windows can falsely authenticate a server whose name does
+not match the server name in the connection specifier.  Proton C bindings
+are affected to a greater or lesser degree depending on how they use the
+underlying Proton C library.
+
+In Proton C, this can only happen if PN_SSL_VERIFY_PEER_NAME has been
+specified as the verification mode and pn_ssl_set_peer_hostname() has not
+been called at all or has been called with a NULL value for a particular
+pn_ssl_t object.
+
+In the Proton C++ binding, this will always happen unless the application
+has separately specified a virtual_host name for an SSL/TLS connection.
+
+In the Proton Python and Ruby bindings, this will only happen if the
+application has separately specified a NULL virtual_host name for an
+SSL/TLS connection after creating the connection but before the
+authentication step.
+
+This issue only occurs on Windows versions of Proton that use the default
+SChannel-based security layer.
+
+In any of the preceding cases, it is possible for a man-in-the-middle
+attacker to spoof an SSL/TLS server if they had a certificate that was
+valid for any of the application's Certificate Authorities.
+
+Resolution:
+
+Proton release 0.13.1 resolves this issue in the SChannel-based security
+layer by obtaining a default non-NULL peer hostname from the associated
+connection address when initialized and by always failing hostname
+verification if PN_SSL_VERIFY_PEER_NAME has been specified along with a
+NULL peer hostname.  This resolution matches the associated behaviour of
+the OpenSSL-based security layer.
+
+References:
+
+PROTON-1228
+PROTON-1233
+
+--94eb2c0d789c8750190537a83688--
