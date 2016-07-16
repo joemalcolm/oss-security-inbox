@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5419" "Friday" "15" "January" "2021" "21:14:03" "+0500" "Alexander E. Patrakov" "patrakov@gmail.com" "<CAN_LGv2FGF9z4oiLdXnbpkuabXy78JktatTnQzMc05MLwN2v3w@mail.gmail.com>" "149" "[oss-security] Re: [vs] Cinnamon lock screen bypass in multiple distributions" nil nil nil "1" "2021011516:14:03" "[oss-security] Re: [vs] Cinnamon lock screen bypass in multiple distributions" (number mark "U       patrakov@gma Jan 15  149/5419  " thread-indent "\"[oss-security] Re: [vs] Cinnamon lock screen bypass in multiple distributions\"\n") "<CAEY=M4GQSAxjuV47-e28TJ2_U-oweZhSdND8G1SJucdv9DMJ8Q@mail.gmail.com>" ("<CAN_LGv26rBQA_Vg37XNVGhkcAw2rTtun+mP=PnoOop7aN13XXw@mail.gmail.com>" "<CAEY=M4GQSAxjuV47-e28TJ2_U-oweZhSdND8G1SJucdv9DMJ8Q@mail.gmail.com>") nil nil nil nil nil nil nil "[oss-security] Re: [vs] Cinnamon lock screen bypass in multiple distributions" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1645" "Saturday" "16" "July" "2016" "10:30:58" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160716143058.3247F6C0D94@smtpvmsrv1.mitre.org>" "41" "[oss-security] Re: CVE Request: Zend Framework: Potential SQL injection in ORDER and GROUP statements of Zend_Db_Select" nil nil nil "7" "2016071614:30:58" "[oss-security] Re: CVE Request: Zend Framework: Potential SQL injection in ORDER and GROUP statements of Zend_Db_Select" (number mark "U       cve-assign@m Jul 16   41/1645  " thread-indent "\"[oss-security] Re: CVE Request: Zend Framework: Potential SQL injection in ORDER and GROUP statements of Zend_Db_Select\"\n") "<20160716034337.GA10235@eldamar.local>" ("<20160716034337.GA10235@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 6062 invoked by uid 550); 15 Jan 2021 16:14:56 -0000
+Received: (qmail 13783 invoked by uid 550); 16 Jul 2016 14:31:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,190 +12,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6028 invoked from network); 15 Jan 2021 16:14:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=I9i6CXjGQD/otCq/6Q+5yYeDTCfp7osi0a0SKRhRnB4=;
-        b=ghURn+vvwHIQz1znWSF9i5XX68p0OoifRZXZ/HhsnXyEtYqc+96cFMdH8jF0facvKy
-         80IoKiBOktVQUItcU68u1dsXurU9AS9xIzs4G4CUo0nY29HYrCgOCnwz9oEgpd0mzGoL
-         xWPvfrWMcE3nkPs7eNVVVwLv48UeWr9EPpUECmL7rzJFGlmDIsGSWOz/Pd4xFeU14pRz
-         IfWQyQApZm/fobrc03oFsrrKsTF8UE6/hi334bA5+SCwcEbLm/XcOsOBcZrSS0fIRSJl
-         +dSZt9+onBTdplvNfUCqP2Xq9nsI8A3GKyvTUmKv9KICUEXh2piPixULX8FHD+CRVf5C
-         4PqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=I9i6CXjGQD/otCq/6Q+5yYeDTCfp7osi0a0SKRhRnB4=;
-        b=iuSbONhWkxmEzxRY1l9UcI1GciaMXnkTT8nJzgXgWv3kKdehl52sajGK4FG3hX9s4Y
-         okDH8BtW9p9SgxhzoIZp0c61nkDX03KOgf1/oTyTBHILFTpAgkkFNma4xN+fzrm5n6pw
-         Ez99OtCja185CjJkX3baPI4Mx3tjy7ijEIUrP08V90tcYO2KJAqj7xKjZdG5d7qzEwoZ
-         ioENrAD86UVQKegLjHrxTQ77WhAAwzzBjruIa6j15EY6hJMjMA+iXOgY4TS0VSEcGI0u
-         eketI2RRryIABO/+1EFZzGBjnsrcF/xWURPkevbNwqtMadRBRVFWlL4gDxpeqjbzfI/l
-         8nxA==
-X-Gm-Message-State: AOAM531T5PjWAklp1khjJ8ClXf2n/Sb2PRfYzmOAFfjx1k2TuPcuKfpM
-	vlfLuh2q2vCO7r7+LTCSrz9Mo0Z+JR8HUgWKVgO0NHPNZGw=
-X-Google-Smtp-Source: ABdhPJyjZpJQ1mreINM3kfDY5JyPwluv1rNmOrHzxHazhsgG5bh/OBhk66JmpHs0I2ndxWQYHxxQe0SUeWHhK1HWBFc=
-X-Received: by 2002:ac8:59d6:: with SMTP id f22mr11198114qtf.230.1610727279243;
- Fri, 15 Jan 2021 08:14:39 -0800 (PST)
-MIME-Version: 1.0
-References: <CAN_LGv26rBQA_Vg37XNVGhkcAw2rTtun+mP=PnoOop7aN13XXw@mail.gmail.com>
- <CAEY=M4GQSAxjuV47-e28TJ2_U-oweZhSdND8G1SJucdv9DMJ8Q@mail.gmail.com>
-In-Reply-To: <CAEY=M4GQSAxjuV47-e28TJ2_U-oweZhSdND8G1SJucdv9DMJ8Q@mail.gmail.com>
-From: "Alexander E. Patrakov" <patrakov@gmail.com>
-Date: Fri, 15 Jan 2021 21:14:03 +0500
-Message-ID: <CAN_LGv2FGF9z4oiLdXnbpkuabXy78JktatTnQzMc05MLwN2v3w@mail.gmail.com>
-To: Clement Lefebvre <clement.lefebvre@linuxmint.com>, oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000004f368105b8f2ab1b"
-Subject: [oss-security] Re: [vs] Cinnamon lock screen bypass in multiple distributions
+Received: (qmail 13765 invoked from network); 16 Jul 2016 14:31:09 -0000
+From: cve-assign@mitre.org
+To: carnil@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, taffit@debian.org
+In-Reply-To: <20160716034337.GA10235@eldamar.local>
+Message-Id: <20160716143058.3247F6C0D94@smtpvmsrv1.mitre.org>
+Date: Sat, 16 Jul 2016 10:30:58 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: Zend Framework: Potential SQL injection in ORDER and GROUP statements of Zend_Db_Select
 
---0000000000004f368105b8f2ab1b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-As this is already public, no need to hold it on the distros list.
+> The Zend Framework project released security advisory ZF2016-02 to
+> address a potential SQL injection in ORDER and GROUP statements of
+> Zend_Db_Select.
 
-=D0=BF=D1=82, 15 =D1=8F=D0=BD=D0=B2. 2021 =D0=B3. =D0=B2 21:05, Clement Lef=
-ebvre <
-clement.lefebvre@linuxmint.com>:
+> https://github.com/zendframework/zf1/commit/bf3f40605be3d8f136a07ae991079a7dcb34d967
+> https://framework.zend.com/security/advisory/ZF2016-02
 
-> Hi Alexander,
->
-> Many thanks for contacting us. I think it's fixed on our side, but the way
-> to reproduce it is slightly different. We use the virtual keyboard and lo=
-ng
-> press E, then press E with the bar on top.
->
-> You can find the issue and resolution at
-> https://github.com/linuxmint/cinnamon-screensaver/issues/354.
->
-> It's a regression (or improvement depending on the way to look at it) in
-> Xorg. You correctly identified this. It affects libcaribou.
->
-> We sent them an MR but I don't think they care... their project looks
-> dead: https://gitlab.gnome.org/GNOME/caribou/-/merge_requests/3.
->
-> We urged the Arch and Debian maintainers of Cinnamon to take action on
-> github already but no CVE was done. Like you, we don't really know if this
-> should be against Xorg or libcaribou.
->
-> We patched caribou in all Mint releases that were affected (Mint 19.x,
-> Mint 20.x and LMDE 4).
->
-> Mint 18.x is also affected but the versions of Cinnamon over there are
-> lesser than 4.2, so they don't have an on-screen keyboard in their
-> screensaver.
->
-> Regards,
->
-> Clement Lefebvre
-> Linux Mint
->
->
->
-> On Fri, Jan 15, 2021 at 3:28 PM Alexander E. Patrakov <patrakov@gmail.com>
-> wrote:
->
->> Hi,
->>
->> I found a trivial way to bypass the screen lock in the Cinnamon DE.
->> However, I don't know how to contact Cinnamon or Linux Mint people
->> properly, that's why I am posting here. Also, I am not sure whether
->> this is a Cinnamon bug or Xorg bug.
->>
->> For the exploit to work, more than one keyboard layout needs to be
->> configured in Cinnamon keyboard settings, on the "layouts" tab. In the
->> demo VMs linked below, that's English and Russian. Instructions:
->>
->> 1. Boot the system. Or, boot a demo VM using the provided ./start.sh
->> script.
->> 2. Log in. In the demo VMs, the username is "user" and the password is
->> "password".
->> 3. Lock the screen, using the "Lock Screen" icon in the main menu.
->> 4.  Click the following using your mouse. On real hardware, a
->> touchscreen also works, so watch out for cats doing this by accident
->> ;) Important: do not use a hardware keyboard.
->>
->>  * The virtual keyboard button at the bottom. The virtual keyboard
->> should appear.
->>  * The country flag or two-letter code on the left of the password
->> field. It should switch to RU, Russian.
->>  * The "q" virtual key, maybe more than once (what apparently matters
->> is that the character is not in the layout indicated in the password
->> field).
->>
->> You may need to wait a few seconds for cinnamon-screensaver to actually
->> crash.
->>
->> Distributions affected:
->>
->> Linux Mint 20.1 with Cinnamon DE:
->>
->> https://u.pcloud.link/publink/show?code=3DkZBnOYXZq6WVUsKA6VQgrz9HgBGiyB=
-C2JreX
->> cinnamon-screensaver
->> <https://u.pcloud.link/publink/show?code=3DkZBnOYXZq6WVUsKA6VQgrz9HgBGiy=
-BC2JreXcinnamon-screensaver>
->> 4.8.1+ulyssa, xserver-xorg-core 2:1.20.8-2ubuntu2.6
->> Note: if one updates the xserver-xorg-core package using apt (to
->> 2:1.20.9-2ubuntu1.1~20.04.1) and reboots the VM, the bug is no longer
->> reproducible, so it may be a Xorg problem, not Cinnamon DE problem,
->> after all. The changelog entry for 2:1.20.8-2ubuntu6 does ring a bell,
->> it's for CVE-2020-14345 "Correct bounds checking in XkbSetNames()",
->>
->> https://gitlab.freedesktop.org/xorg/xserver/-/commit/f7cd1276bbd4fe3a970=
-0096dec33b52b8440788d
->> . However, the _XkbCheckRequestBounds() function added by this patch
->> also exists in the xorg-server version used by Arch Linux, so this
->> can't be it.
->>
->> Debian Testing:
->>
->> https://u.pcloud.link/publink/show?code=3DkZGwUYXZC1oC2dQq0TzDxhB0OBAL87=
-B7JAaV
->> This distribution has 4.8.1-2, the only patch is for the path to PNG
->> versions of country flags. xserver-xorg-core is at 2:1.20.10-2, the
->> only patch is for a MIPS-specific build issue, obviously irrelevant
->> here. Dist-upgrading to Debian Unstable and rebooting does not fix the
->> bug.
->>
->> Arch Linux:
->> https://u.pcloud.link/publink/show?code=3DkZWfUYXZ7gbkkdrvvALNp1WkDy2EkJ=
-CjBAH7
->> This distribution also has the latest released cinnamon-screensaver,
->> 4.8.1-1. xorg-server version is 1.20.10-3, the only patches applied
->> are for the build system, not for C code.
->>
->> Note: for the purpose of not destroying the evidence, the VMs above
->> use "snapshot=3Don", so all changes will be lost on shutdown. Rebooting
->> is OK.
->>
->> Distributions not affected:
->>
->> Fedora 33 (automatically switches the layout to US)
->> cinnamon-screensaver 4.6.0-2.fc33
->> xorg-x11-server-common-1.20.10-1.fc33 in updates
->>
->> Fedora 34 pre-release (Rawhide, also automatically switches the layout to
->> US)
->> cinnamon-screensaver 4.8.1-1.fc34
->> xorg-x11-server-common 1.20.10-1.fc34
->>
->> Debian 10 (cinnamon-screensaver 3.8.2-1 does not have a virtual keyboard)
->>
->> I have not tested anything else. The above data points do not let me
->> conclude which package is responsible, so I cannot file a CVE at this
->> point.
->>
->> --
->> Alexander E. Patrakov
->> CV: http://u.pc.cd/wT8otalK
->>
->
+>> This security fix can be considered as an improvement of the previous
+>> ZF2014-04.
 
---=20
-Alexander E. Patrakov
-CV: http://u.pc.cd/wT8otalK
+Use CVE-2016-6233.
 
---0000000000004f368105b8f2ab1b--
+This vulnerability exists because of an incomplete fix for
+CVE-2014-4914. (The CVE ID assignment for ZF2014-04 was in the
+http://www.openwall.com/lists/oss-security/2014/07/11/4 post.)
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXikTFAAoJEHb/MwWLVhi2eLUP/2dZUfNgmcqUgI0D7zGFOjAC
+AZfk2kVe0S6dvMtcga6G+O+XEib8cgZldvak7uCC0UH3XGuUc9HWPnaVvTX8SBKE
+w+CMG7jWqSNNdWOF05m+yh7xlci2I/RV+Tu5Gm6jmLcpMbCnlHoibQsbAiWmGRgJ
+KCv1ktT/yMx9LPHPZVOR1MtJUBbv8adJzOkywJYiEYzDf7H61CUNEHi51hR/8mCu
+2NcOLAi4rIlWYvHuUiNOtnd8ZKYk56QwLVo7HZ9XaMDlvBf1XDxm8VrAX3kZmLKv
+4WHKnk37H7W2XHw4KBksBNsZ/KANFk0wjsvWz3etsiUdm2JNvOKOjyURNraEEa4q
+VtwYCNB7CuB9tnuykO1qRm+dI5iGLUja5xRkSXzz/DHbnFpVp/4+kS3JRwWyGk8J
+ESzifKuJLNMIwS1/LWKwjP0kIbfpoP7CixtBHIcayJIF8VRAQZJrVBPzHZHXbDnQ
+TzeAOTRaXqrxcsY1YhKJVgmN0IdQ8RcIWsrvKnZMY+whBd21/lghOFi2Ony6ycVf
+ZvCKSAIWpufGA7y+ZHlDacyp3z1At0FdjU2b1Uqkp6CaX2h7V06nMlJhgMxWvOll
+4x32KeSL6YaNIgYMx/PgrMbzqUbZH3442myXFM5BA1AmD3HkDtGNsxcbBbF06ii2
+DpO/xTBvwbInmtUy/sWA
+=p31W
+-----END PGP SIGNATURE-----
