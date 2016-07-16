@@ -1,43 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/04/12
-Message-ID: <20161104165959.zifap46bmaxapmda@harbard.iaik.tugraz.at>
-Date: Fri, 4 Nov 2016 17:59:59 +0100
-From: Nicolas Braud-Santoni <nicolas@...ud-santoni.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/16/2
+Message-ID: <86413253.kTlB1PI1Wh@asterixp50>
+Date: Sat, 16 Jul 2016 12:05:39 +0200
+From: David Faure <faure@....org>
 To: oss-security@...ts.openwall.com
-Cc: security@...ian.org, ross@...listi.us
-Subject: CVE request: Escape Sequence Command Execution vulnerability in Terminology 0.7
+Cc: kde-security@....org
+Subject: CVE Request for KNewStuff/KArchive issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-Terminology 0.7.0 suffers from a bug similar to CVE-2003-0063, where an
-attacker able to print character escape sequences can modify the window
-title and then insert it back in the terminal's input buffer, resulting
-in arbitrary terminal input, including code execution as a local user.
+Could I get a CVE number for the issue below?
 
-A concrete attack scenario can work as follows: the attacker gets a
-string triggering the vulnerability into a log file (or any other thing
-that eventually gets displayed to the user).  When it is, at some later
-point, displayed to the user, "echo 'evil'\n" gets written to the user's
-terminal's input buffer, resulting in that command being executed by the
-user's shell.
+When using KNewStuff, one of the KDE Frameworks, to download and install files 
+from the internet (e.g. a wallpaper, a plasma applet, etc.), it was possible 
+to download a maliciously crafted archive file (e.g. tar.gz or zip) containing 
+relative paths leading to outside the extraction directory (say 
+"../../../.bashrc" for instance).
 
-For example:
+The fix has already been reviewed and submitted:
+   https://git.reviewboard.kde.org/r/128185/
+This fix is one layer below KNewStuff, in the framework called KArchive, which 
+handles extraction of .tar.gz / .zip archives. KArchive now prevents files from 
+being written outside of the extraction directory, in all cases.
 
-> printf "\e]2;echo 'evil'\n\a\e]2;?\a"
+Versions up to KArchive 5.23.0 are affected, the fix is in KArchive 5.24.0, 
+which I released a week ago.
 
+To my knowledge, no CVE has been requested for this yet, but to make sure, you 
+could check if someone else from kde-security emailed you in the past month 
+already (issue known since June 14, 2016, sorry for the delay on my part).
 
-The issue was fixed in Terminology by
-commit b80bedc7c21ecffe99d8d142930db696eebdd6a5 :
+Thanks.
 
-  https://git.enlightenment.org/apps/terminology.git/commit/?id=b80bedc7c21ecffe99d8d142930db696eebdd6a5
+-- 
+David Faure, faure@....org, http://www.davidfaure.fr
+Working on KDE Frameworks 5
 
-I would like to apply for a CVE number for this issue,
-on behalf of the Debian security team.
-
-
-Best regards,
-
-  Nicolas Braud-Santoni
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
