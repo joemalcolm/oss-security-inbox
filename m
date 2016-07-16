@@ -1,30 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/22/7
-Message-ID: <CAH8yC8ne0XPZ5x_Nuazcpjcyc4xKg_fwDydBmMXYDjeADsPYvA@mail.gmail.com>
-Date: Thu, 22 Dec 2016 06:06:41 -0500
-From: Jeffrey Walton <noloader@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-9963 Exim private information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/16/5
+Message-ID: <1A3BE2DB-669B-4519-B07B-F1F51C5BA6D5@nccgroup.trust>
+Date: Sat, 16 Jul 2016 19:14:58 +0000
+From: Jesse Hertz <Jesse.Hertz@...group.trust>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "cve-assign@...re.org" <cve-assign@...re.org>
+Subject: Re: Multiple Bugs in OpenBSD Kernel 
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 22, 2016 at 5:40 AM, Heiko Schlittermann
-<hs@...littermann.de> wrote:
-> Kurt H Maier <khm@...ops.net> (Do 22 Dez 2016 01:57:33 CET):
->> On Thu, Dec 22, 2016 at 12:24:09AM +0100, Heiko Schlittermann wrote:
->> >
->> > In case the distros are ready already, we could release on 23rd, but I
->> > need feedbeck from the distros and ack from the other developers.
->> >
->> Please pursue this possibility.
->
-> Ok, I asked the distro@vs… list to get clearance. If the major distros
-> supporting Exim give their ok, we're prepared to release sooner. Stay
-> tuned.
+Hi, can you please assign CVE’s for the issues mentioned.
+> On Jul 14, 2016, at 5:23 PM, Jesse Hertz <Jesse.Hertz@...group.trust> wrote:
+> 
+> It appears that me using HTML emails may have made the attachments unreadable on the web interface or for some users. Apologies. Here are the attachments again in a plaintext email.
+> 
+> I would also like to note (thanks to tj@...nbsd for pointing this out!) that with regard to the bugs requiring kern.usermount:
+> 
+> “these bugs are now root-only in -current since the kern.usermount option
+> was disabled and will be removed entirely. may be worth a mention on your
+> write-up. https://marc.info/?l=openbsd-cvs&m=146851081629533&w=2”
+> 
+> 
+> <kevent_panic.c><mmap_panic.c><mount_panic.c><thrsigdivert_panic.c><thrsleep_panic.c><tmpfs_mknod_panic.c><ufs_getdents_panic.c><unmount_panic.c>
 
-Its probably worth mentioning the only people who are at a
-disadvantage now are the good guys and decision makers.
 
-The bad guys already knew about the problem, or the motivated ones
-found it after the partial disclosure.
-
-Jeff
+Download attachment "signature.asc" of type "application/pgp-signature" (497 bytes)
