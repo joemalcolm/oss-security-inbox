@@ -1,36 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/20/5
-Message-ID: <20160420091832.GA580@lorien.valinor.li>
-Date: Wed, 20 Apr 2016 11:18:32 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: CVE Request: perl: denial-of-service / Regexp-matching "hangs" indefinitely on illegal input using binmode :utf8 using 100%CPU
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/16/4
+Message-Id: <20160716143058.3247F6C0D94@smtpvmsrv1.mitre.org>
+Date: Sat, 16 Jul 2016 10:30:58 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, taffit@...ian.org
+Subject: Re: CVE Request: Zend Framework: Potential SQL injection in ORDER and GROUP statements of Zend_Db_Select
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A bug in perl can cause regular expressions an malformed UTF8 inputs
-to go into a forever loop and consume 100% CPU. The issue was found to
-drive a realworld web application into an infinite loop"
+> The Zend Framework project released security advisory ZF2016-02 to
+> address a potential SQL injection in ORDER and GROUP statements of
+> Zend_Db_Select.
 
-The Upstream bugreport about this issue:
+> https://github.com/zendframework/zf1/commit/bf3f40605be3d8f136a07ae991079a7dcb34d967
+> https://framework.zend.com/security/advisory/ZF2016-02
 
-https://rt.perl.org/Public/Bug/Display.html?id=123562
+>> This security fix can be considered as an improvement of the previous
+>> ZF2014-04.
 
-Upstream commit:
+Use CVE-2016-6233.
 
-http://perl5.git.perl.org/perl.git/commitdiff/22b433eff9a1ffa2454e18405a56650f07b385b5
-(which e.g. has been as well cherry-picked back to the maint-5.22
-branch).
+This vulnerability exists because of an incomplete fix for
+CVE-2014-4914. (The CVE ID assignment for ZF2014-04 was in the
+http://www.openwall.com/lists/oss-security/2014/07/11/4 post.)
 
-It as well was reported in Debian as:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-https://bugs.debian.org/821848
-
-Could you assign a CVE for this issue?
-
-Regards,
-Salvatore
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQIcBAEBCAAGBQJXikTFAAoJEHb/MwWLVhi2eLUP/2dZUfNgmcqUgI0D7zGFOjAC
+AZfk2kVe0S6dvMtcga6G+O+XEib8cgZldvak7uCC0UH3XGuUc9HWPnaVvTX8SBKE
+w+CMG7jWqSNNdWOF05m+yh7xlci2I/RV+Tu5Gm6jmLcpMbCnlHoibQsbAiWmGRgJ
+KCv1ktT/yMx9LPHPZVOR1MtJUBbv8adJzOkywJYiEYzDf7H61CUNEHi51hR/8mCu
+2NcOLAi4rIlWYvHuUiNOtnd8ZKYk56QwLVo7HZ9XaMDlvBf1XDxm8VrAX3kZmLKv
+4WHKnk37H7W2XHw4KBksBNsZ/KANFk0wjsvWz3etsiUdm2JNvOKOjyURNraEEa4q
+VtwYCNB7CuB9tnuykO1qRm+dI5iGLUja5xRkSXzz/DHbnFpVp/4+kS3JRwWyGk8J
+ESzifKuJLNMIwS1/LWKwjP0kIbfpoP7CixtBHIcayJIF8VRAQZJrVBPzHZHXbDnQ
+TzeAOTRaXqrxcsY1YhKJVgmN0IdQ8RcIWsrvKnZMY+whBd21/lghOFi2Ony6ycVf
+ZvCKSAIWpufGA7y+ZHlDacyp3z1At0FdjU2b1Uqkp6CaX2h7V06nMlJhgMxWvOll
+4x32KeSL6YaNIgYMx/PgrMbzqUbZH3442myXFM5BA1AmD3HkDtGNsxcbBbF06ii2
+DpO/xTBvwbInmtUy/sWA
+=p31W
+-----END PGP SIGNATURE-----
