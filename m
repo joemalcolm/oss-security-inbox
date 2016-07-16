@@ -1,65 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/05/11
-Message-ID: <CAFGhKbxmdh=rjvzWE2QRh_c_Wwq7mVm2JYhN=Q_LTw1USq-XeA@mail.gmail.com>
-Date: Sat, 5 Mar 2016 20:49:13 +0000
-From: Charlemagne Lasse <charlemagnelasse@...il.com>
-To: dcoffin@...ercom.net
-Cc: darktable-dev@...ts.darktable.org, exact-image@...ctcode.de,  rene@...ctcode.de, xbmc-addons@...ts.sourceforge.net,  rawstudio-users@...studio.org, Gábor Horváth <ghorvath@....bme.hu>,  Anders Brander <anders@...nder.dk>, ufraw-devel@...ts.sourceforge.net,  oss-security@...ts.openwall.com
-Subject: Re: Missing fixes for CVEs in upstream dcraw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/16/3
+Message-Id: <20160716142508.AAA966C0D8A@smtpvmsrv1.mitre.org>
+Date: Sat, 16 Jul 2016 10:25:08 -0400 (EDT)
+From: cve-assign@...re.org
+To: faure@....org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, kde-security@....org
+Subject: Re: CVE Request for KNewStuff/KArchive issue
 Content-Type: text/plain; charset=utf-8
 
-Thanks for the answer.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-It is a rather odd decision to ignore an existing fix for
-CVE-2013-1438. This also means that dcraw cannot be used when any
-untrusted person has access (or he can DoS a service).
+> When using KNewStuff, one of the KDE Frameworks, to download and install files
+> from the internet (e.g. a wallpaper, a plasma applet, etc.), it was possible
+> to download a maliciously crafted archive file (e.g. tar.gz or zip) containing
+> relative paths leading to outside the extraction directory (say
+> "../../../.bashrc" for instance).
+> 
+> The fix has already been reviewed and submitted:
+>    https://git.reviewboard.kde.org/r/128185/
+> This fix is one layer below KNewStuff, in the framework called KArchive, which
+> handles extraction of .tar.gz / .zip archives. KArchive now prevents files from
+> being written outside of the extraction directory, in all cases.
 
-Rene Rebe, is it possible to disable dcraw support in the
-perl/php/python bindings of exactimage to work around this problem on
-webservices?
+>> Switch to Tar's default behavior to avoid extraction
+>> to arbitrary system locations outside of extraction folder. Instead,
+>> extract such files to root location in extraction folder.
+>> 
+>> Submitted with commit 0cb243f64eef45565741b27364cece7d5c349c37 ... to branch master
 
+Use CVE-2016-6232.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-2016-03-05 2:34 GMT+00:00  <dcoffin@...ll.cybercom.net>:
-> Hi Guys,
->
->      CVE-2015-3885 was fixed in v9.26 and CVE-2015-8366 will
-> be fixed in v9.27.  Overrunning an automatic array is how most
-> hijacks happen, and overrunning a malloc'd buffer is probably
-> not good either.
->
->      CVE-2013-1438 seems designed to prevent dcraw from entering
-> an infinite or very time-consuming loop.  I'm not interested in
-> this because there are infinitely many ways to create a loop in
-> a TIFF file, and solving the Halting Problem is beyond the scope
-> of dcraw.
->                                 Dave Coffin  3/4/2016
->
-> On Sat, Feb 27, 2016 at 02:28:18PM +0000, Charlemagne Lasse wrote:
->> Hi,
->>
->> it looks like there are a number of CVE against dcraw. All of them were
->> fixed in the downstream project libRAW but none of them were fixed by
->> you in the upstream project dcraw. When can we expect that these are
->> fixed in dcraw? The list of CVE's I know about are:
->>
->> CVE-2015-8366
->> https://github.com/LibRaw/LibRaw/commit/89d065424f09b788f443734d44857289489ca9e2
->>
->> CVE-2015-3885
->> https://bugzilla.redhat.com/attachment.cgi?id=1027072
->>
->> CVE-2013-1438
->> https://sourceforge.net/p/ufraw/bugs/361/attachment/0001-CVE-2013-1438-fix-various-security-issues.patch
->>
->> Several other downstream projects may still be affected. I've Cc'ed the
->> ones which I know
->>
->> darktable
->> exactimage
->> kodi/xbmc
->> rawstudio
->> rawtherapee
->> ufraw
->>
->> Thanks
+iQIcBAEBCAAGBQJXikNtAAoJEHb/MwWLVhi245oP/2iuIOTUeddF7pINd0p9zPom
+5OcVSolQNy3gaqYc/XlE36FbfnoLafjxW0NUO6xKWBs+ftbctcYWuCSJ4g8jodbI
++fFzuSCGzVwYbZR3L+Ew2pzs0HM34B4lql1lb8PNl++qXA4pQf1V/XrkaHL7ucUX
+T/k/UAN3KNq1yluM+oxNcTajnzMd5rBKMwXgm1zDVx8k2A0NEgmUBbR6Iq5/MZRZ
++SMOFEYR9pJdc8CXjCr7MkvcYY+5/XQ8zQxj53N4yxpaPGPBQ+zbbKK5//IppWa+
+AQEQHGn5nIz+FjekWMFm7vKXO61LFgwLFM1ZWD26ovb8NaFW2glgxtq3lB6suw94
+8uKSW5YMnEnizcdUmNhHsdWjAGwU5AkEWagh07bd5XkE/4+DWXtfz0uBqrThXytb
+9cY1YBth/9FYzac8ldfHxPjsc4dFuqG7Z+EdiR/mz4Emsjgca3YUcRfrz+M4+Xue
++TlpNX4JtraXe/Op2OvQTgJVzkpqNTVlvfxKO+GKJX4NN0wYlQJG8DdcKm0HgtvE
+Ne1y/aMrOiB5JdP4I0OCuqGCx7MzGTNuiSXlNfEl0BWLg0Hmp3JIQ8SUMjTxi65N
+0oXRxexw5BDw0voT5mHnD7mJjc1xMhtnMGaSmqjUJ8G2IaDf6l0m3l0pRU9WcdxY
+fhHlAGOcUjFrFCQPvrv/
+=F3ot
+-----END PGP SIGNATURE-----
