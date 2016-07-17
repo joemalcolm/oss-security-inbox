@@ -1,53 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/20/1
-Message-ID: <cc5ec17a-0cae-f262-b865-243d67045ef9@securify.nl>
-Date: Sat, 20 Aug 2016 11:05:10 +0200
-From: Summer of Pwnage <lists@...urify.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/17/2
+Message-ID: <CAMYtjAo9z9reKrVDUDu5gAm0zC_Ofm=XLPVhD34c-D2wX000oA@mail.gmail.com>
+Date: Sun, 17 Jul 2016 09:48:54 +0200
+From: Pere Orga <pere@...a.cat>
 To: oss-security@...ts.openwall.com
-Subject: Path traversal vulnerability in WordPress Core Ajax handlers
+Cc: Drupal Security Team <security@...pal.org>
+Subject: CVE requests for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-Path traversal vulnerability in WordPress Core Ajax handlers
-------------------------------------------------------------------------
-Yorick Koster, July 2016
+Hi
 
-------------------------------------------------------------------------
-Abstract
-------------------------------------------------------------------------
-A path traversal vulnerability was found in the Core Ajax handlers of
-the WordPress Admin API. This issue can (potentially) be used by an
-authenticated user (Subscriber) to create a denial of service condition
-of an affected WordPress site.
+Please can I have CVE IDs assigned to the following vulnerabilities:
 
-------------------------------------------------------------------------
-OVE ID
-------------------------------------------------------------------------
-OVE-20160712-0036
+Webform Multiple File Upload - Remote code execution - SA-CONTRIB-2016-038
+https://www.drupal.org/node/2765573
 
-------------------------------------------------------------------------
-See also
-------------------------------------------------------------------------
-#37490 - Improve capability checks in wp_ajax_update_plugin() and
-wp_ajax_delete_plugin()
+Coder - Remote code execution - SA-CONTRIB-2016-039
+https://www.drupal.org/node/2765575
 
-------------------------------------------------------------------------
-Tested versions
-------------------------------------------------------------------------
-This issue was successfully tested on the WordPress version 4.5.3.
+RESTWS - Remote code execution - SA-CONTRIB-2016-040
+https://www.drupal.org/node/2765567
 
-------------------------------------------------------------------------
-Fix
-------------------------------------------------------------------------
-WordPress version 4.6 mitigates this vulnerability by moving the CSRF
-check to the top of the affected method(s).
+Regards
+-- 
+Pere Orga on behalf of the Drupal Security team
 
-------------------------------------------------------------------------
-Details
-------------------------------------------------------------------------
-https://sumofpwn.nl/advisory/2016/path_traversal_vulnerability_in_wordpress_core_ajax_handlers.html
-
-------------------------------------------------------------------------
-Summer of Pwnage (https://sumofpwn.nl) is a Dutch community project. Its
-goal is to contribute to the security of popular, widely used OSS
-projects in a fun and educational way.
