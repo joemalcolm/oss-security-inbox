@@ -1,4 +1,9 @@
-Received: (qmail 13790 invoked by uid 550); 2 Nov 2022 10:18:35 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3935" "Sunday" "17" "July" "2016" "16:00:08" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160717200008.8EDEC3AE001@smtpvbsrv1.mitre.org>" "86" "[oss-security] Re: CVE Requests: HarfBuzz - Chromium CVE issues" nil nil nil "7" "2016071720:00:08" "[oss-security] Re: CVE Requests: HarfBuzz - Chromium CVE issues" (number mark "U       cve-assign@m Jul 17   86/3935  " thread-indent "\"[oss-security] Re: CVE Requests: HarfBuzz - Chromium CVE issues\"\n") "<30653c2b-5754-e3a1-94d4-9ead3e9ca65b@redhat.com>" ("<30653c2b-5754-e3a1-94d4-9ead3e9ca65b@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 25872 invoked by uid 550); 17 Jul 2016 20:00:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,69 +12,98 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32566 invoked from network); 2 Nov 2022 03:37:55 -0000
-Mime-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ayaya.dev; s=key1;
-	t=1667360264;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=VRY+a19xyZupVz2P2o9N+7mxT/iQfRmcjvrMFMtm+yk=;
-	b=NpDlqYvWQqXTU660S37zdrV2sRMJTltBMm0CTh0RseAR4wYZ7YFDPzS1P+Rx54FJ8OLI78
-	1VjiHFUM537QcBxOoN/n5hSdpg2U8fTDGTC/QRMOqiJqZnSV1kc4WrAQpnQHMzgqGrRAK+
-	ZkifqEaqD3H8huef4t8uAN6LCvI5l7s=
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 02 Nov 2022 04:37:43 +0100
-Message-Id: <CO1HVUSF8YCE.38QUAT9ASBE5V@sumire>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "alice" <alice@ayaya.dev>
-To: <oss-security@lists.openwall.com>
-References: <20221101170833.GA10470@openwall.com>
- <Y2FhxvA/2e7xFUiF@itl-email>
- <alpine.BSF.2.21.9999.2211020631160.34372@aneurin.horsfall.org>
- <CAPWQ=1TzQ_e2yHZMXx6Tm4UJG3owZypShvm+VDoxEMcDSDxX+A@mail.gmail.com>
- <CAH8yC8mzcw-C257znYHH+qSyXoFVJWaAD=3dbvH3ZxymUtZU0A@mail.gmail.com>
- <Y2HcWkqpp9KhX80r@itl-email>
-In-Reply-To: <Y2HcWkqpp9KhX80r@itl-email>
-X-Migadu-Flow: FLOW_OUT
-Subject: Re: [oss-security] OpenSSL X.509 Email Address 4-byte Buffer
- Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer
- Overflow (CVE-2022-3786)
+Received: (qmail 25845 invoked from network); 17 Jul 2016 20:00:20 -0000
+From: cve-assign@mitre.org
+To: huzaifas@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <30653c2b-5754-e3a1-94d4-9ead3e9ca65b@redhat.com>
+Message-Id: <20160717200008.8EDEC3AE001@smtpvbsrv1.mitre.org>
+Date: Sun, 17 Jul 2016 16:00:08 -0400 (EDT)
+Subject: [oss-security] Re: CVE Requests: HarfBuzz - Chromium CVE issues
 
-On Wed Nov 2, 2022 at 3:56 AM CET, Demi Marie Obenour wrote:
-> On Tue, Nov 01, 2022 at 04:57:25PM -0400, Jeffrey Walton wrote:
-> > On Tue, Nov 1, 2022 at 3:55 PM Pavan Maddamsetti
-> > <pavan.maddamsetti@gmail.com> wrote:
-> > >
-> > > https://github.com/RustCrypto
-> >=20
-> > I hope this does not start a war.. The problem with Rust is, it's only
-> > guaranteed to work on i686 and x86_64.
-> >=20
-> > Trying to compile Rust programs on armel, armhf, aarch64 and PowerPC
-> > has been excruciatingly painful. The tool cannot compile its own
-> > cargo's on those platforms. I gave up trying to use Rust on anything
-> > but x86_64.
->
-> Rust should certainly be able to compile its own Cargo, so this is an
-> outright bug.  Please report it.  If the instructions are confusing
-> enough that it is easy to make a mistake, that=E2=80=99s a bug in the
-> documentation.
-alpine linux successfully manages to build rust with itself for x86_64,
-i586 (currently, might be pentium4 x86 in the future), armhf (v6+hf),
-armv7, aarch64, ppc64le, s390x, and riscv64. s390x/riscv64 were the
-hardest to get to work here, and the ecosystem has a few issues on those
-architectures (old libc/nix crate versions, rustls crate not having asm
-for s390x/riscv64 (+ ppc64le), to name two), but the same really goes
-for a lot of software even in c/++ in general on those architectures
-lacking support.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-so yes, this seems like a bug that should be reported.
+> atleast 3 issues in here which are CVE worthy
+> 
+> 1. Heap based buffer overflow:
+> https://github.com/behdad/harfbuzz/issues/139#issuecomment-146984679
+> 
+> 2. Fix hmtx wrong table length check:
+> https://github.com/behdad/harfbuzz/issues/139#issuecomment-148289957
+> 
+> 3. heap-buffer-overflow in hb_ot_face_metrics_accelerator_t::get_advance
+> https://github.com/behdad/harfbuzz/issues/156
 
-> --=20
-> Sincerely,
-> Demi Marie Obenour (she/her/hers)
-> Invisible Things Lab
+As far as we can tell, these correspond to:
 
+1 - https://github.com/behdad/harfbuzz/commit/f96664974774bfeb237a7274f512f64aaafb201e
+    fixed in 1.0.5
+
+2 - https://github.com/behdad/harfbuzz/commit/63ef0b41dc48d6112d1918c1b1de9de8ea90adb5
+    fixed in 1.0.6
+
+3 - https://github.com/behdad/harfbuzz/commit/df698f3299d92867e3305715f675b2621c316acd
+    the unpatched code is not in any release; the patched code is new in 1.1.0
+
+df698f3299d92867e3305715f675b2621c316acd mentions "I rewrote the table
+checking yesterday ... and introduced the exact same issue again." Is
+there a particular motivation for having a CVE ID? We don't know of
+anyone who is shipping products based on unreleased HarfBuzz code
+obtained from GitHub, and the one-day existence of the problematic
+code also seems to suggest minimal real-world relevance. The HarfBuzz
+documentation doesn't specifically recommend that people ship
+unreleased HarfBuzz code. A CVE ID isn't, in general, required for
+each issue noted at any arbitrary point during development.
+
+Would it be OK to keep CVE-2016-2052 for
+63ef0b41dc48d6112d1918c1b1de9de8ea90adb5 (which is really a "before
+1.0.6" issue as stated in that CVE), and assign one new ID for
+f96664974774bfeb237a7274f512f64aaafb201e (the "before 1.0.5" issue)?
+
+> how does
+> MITRE plan to handle vendors who assign one CVE to multiple non-related
+> issues?
+
+Anyone is free to submit new CVE ID requests with sufficient
+information to show that additional IDs are required. Typically this
+means that the requester should, for example, track down all of the
+upstream version information.
+
+In general, it is not realistic to expect that the "multiple
+non-related issues" case can be completely eliminated when CVE IDs
+are originally assigned. When product A repackages code from product
+B, there can be a disparity in whether the B maintainers are as
+interested in CVE as the A maintainers. Also, the A maintainers do not
+necessarily have any motivation for investigating the precise details
+of what was fixed in B, unless the A maintainers are backporting
+patches. For example, A might just be updating to the latest version
+of B, because the B Release Notes stated that it was a security
+update. Suppose that the A maintainers confirm that the B maintainers
+have not been, and will not be, using CVE IDs themselves. Would it be
+better for the A maintainers to use one CVE ID immediately, or should
+everyone wait (potentially forever) for someone to investigate the
+precise details?
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXi+MCAAoJEHb/MwWLVhi2wgAQAJLXVA40PHjC/4BOS7shFg+L
+XuoF2XzKGCh76iqAw0ZJK4ID6vRLfrn82hxFZfNqBm1K22QCVXk8Mg2m4NKkWMtf
+ukfNCaBoZaV66+YHJkCoVuADfkvfOtzCjh0KZef1f6pPboH9T0h6MuUK3Tj377Yg
+b3JE0Lo3uOWEWqNvd5l4abyIBksKfRhbqCaMm7PvPqWnlAm6klPs3CXgdGOmuZH1
+o/j19BRNIzqVMYSpakeCJABp03gNMdcG2ralIYtMABNbaUVbBEsCyacMhiMTuXn4
+Y5Q676tfQFy3fAUPfC0C98qa0YsbiY1DigQtbPx3sVtssL5sOSWdRXfJ7iG7NdV7
+4YvVq17R9W2+pDvuZGa8jXXY3rRb3QoWz/RdyqlAGy8Dacgm44+zV7pot0ViM5l8
+kHPpVJHQ66ggM4zLMF/Os2Fh+u1KUOf/6EYJhZhMlE/NncJuZWgHzY9KsZelutja
+FiF3UotH95sSLoCpV12nUKXZaQ8J7X7f54SOK3n6cygFdMnObx1C93/3FUASnay4
+e20ZjIs/O++42kmDnd0tpGVP2ZvDFPJ+deUxAtxKL9g3DzyAyvXhGba9g+zgbIB/
+KM2dMvlgM1WshMOoOL9x3lS2/wsZkhivxF+Wamg/F7348MXk2C9oJqI57MNsYPGt
+wGEjdlgK1yth7LE1EIrc
+=QsMP
+-----END PGP SIGNATURE-----
