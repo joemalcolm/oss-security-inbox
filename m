@@ -1,27 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/11
-Message-ID: <alpine.LFD.2.20.1612081659560.28510@wniryva>
-Date: Thu, 8 Dec 2016 17:13:36 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: liqiang6-s@....cn
-Subject: CVE request Qemu: char: use after free issue in char backend
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/17/3
+Message-ID: <578B3ADF.7080604@securify.nl>
+Date: Sun, 17 Jul 2016 09:59:27 +0200
+From: Summer of Pwnage <lists@...urify.nl>
+To: oss-security@...ts.openwall.com
+Subject: Multiple stored Cross-Site Scripting vulnerabilities affecting three WordPress Plugins
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Please see attached advisories for more information. These issues were 
+found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
+project. Its goal is to contribute to the security of popular, widely 
+used OSS projects in a fun and educational way.
 
-Quick Emulator(Qemu) built with the 'chardev' backend support is vulnerable to 
-a use after free issue. It could occur while hotplug and unplugging the device 
-in the guest.
 
-A guest user/process could use this flaw to crash a Qemu process on the host 
-resulting in DoS.
+View attachment "persistent_cross_site_scripting_in_all_in_one_seo_pack_wordpress_plugin.txt" of type "text/plain" (5890 bytes)
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg05597.html
+View attachment "persistent_cross_site_scripting_in_wordpress_activity_log_plugin.txt" of type "text/plain" (4374 bytes)
 
-Thank you
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+View attachment "persistent_cross_site_scripting_in_wp_live_chat_support_plugin.txt" of type "text/plain" (5969 bytes)
