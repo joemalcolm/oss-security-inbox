@@ -1,51 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/28/6
-Message-ID: <CAJ_zFkLCxTbJsZM7H53Kpd_OtBCPaiFowvoHJ0K-h6=e7u_Xog@mail.gmail.com>
-Date: Wed, 28 Sep 2016 11:16:10 -0700
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/17/1
+Message-ID: <CAFkTriKABkDUui3D70ct6VSAXQ6=CHpkjwW5ji4OTM3wpYnABg@mail.gmail.com>
+Date: Sat, 16 Jul 2016 14:58:45 -1000
+From: Marco Grassi <marco.gra@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: ImageMagick identify "d:" hangs
+Subject: multiple memory corruption issues in lepton
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 27, 2016 at 7:56 AM, Bob Friesenhahn
-<bfriesen@...ple.dallas.tx.us> wrote:
->
-> On Tue, 27 Sep 2016, Jakub Wilk wrote:
->
->> * Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>, 2016-09-27, 08:48:
->>>
->>> From my own investigations, I used
->>>
->>>  identify -debug all "d:"
->>>
->>> and see that a temporary file is reported to be created and then the program hangs which no apparent CPU usage.
->>
->>
->> strace tells me that it waits for input on stdin.
->> This is a simpler way to make it "hang":
->>
->>  identify -
->
->
-> This is what I expected was happening.  The main thing to investigate is if the "ImageTragick" patches distributions are using do protect against this possible issue as well.
->
+Hello,
 
-You know, you reminded me that the pdf and/or the ps delegate probably
-allows filesystem enumeration via filenameforall, as far as I know
-that's permitted with -dSAFER. I think that's probably unexpected.
+I just reported on dropbox/lepton github project some memory corruption
+issues, with reproducers.
 
-For example, if you try to identify a file like this, it will list
-local usernames on stdout, I guess a real attack would have to encode
-that in the output somehow, but I only know enough postscript to know
-i'd rather write bf. Might be a fun exercise for masochistic hackers
-though.
+https://github.com/dropbox/lepton/issues/26
 
-$ cat whatever.jpeg
-%PDF-1.0
-(/home/*) {==} 256 string filenameforall
-$ identify whatever.jpeg
-(/home/taviso)
-identify.im6: Postscript delegate failed `whatever.jpeg': No such file
-or directory @ error/pdf.c/ReadPDFImage/677.
+Marco
 
-Tavis.
+https://marcograss.github.io
+
