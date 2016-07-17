@@ -1,45 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/23/3
-Message-ID: <20160423150350.GA28424@eldamar.local>
-Date: Sat, 23 Apr 2016 17:03:50 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: Roundcube: XSS issue in SVG image handling and protection for download urs against CSRF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/17/4
+Message-ID: <578B3B55.6090006@securify.nl>
+Date: Sun, 17 Jul 2016 10:01:25 +0200
+From: Summer of Pwnage <lists@...urify.nl>
+To: oss-security@...ts.openwall.com
+Subject: Multiple reflected Cross-Site Scripting vulnerabilities affecting seven WordPress Plugins
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Please see attached advisories for more information. These issues were 
+found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
+project. Its goal is to contribute to the security of popular, widely 
+used OSS projects in a fun and educational way.
 
-Roundcube recently released new versions:
 
-https://github.com/roundcube/roundcubemail/wiki/Changelog
 
-There are at least the following two fixes:
+View attachment "cross_site_scripting_vulnerability_in_email_users_wordpress_plugin.txt" of type "text/plain" (4172 bytes)
 
-Fix XSS issue in SVG images handling (#4949):
----------------------------------------------
+View attachment "cross_site_scripting_vulnerability_in_google_forms_wordpress_plugin.txt" of type "text/plain" (4307 bytes)
 
-Upstream issue:
-  https://github.com/roundcube/roundcubemail/issues/4949
+View attachment "cross_site_scripting_vulnerability_in_master_slider_wordpress_plugin.txt" of type "text/plain" (4778 bytes)
 
-Fix for master branch:
-  https://github.com/roundcube/roundcubemail/commit/40d7342dd9c9bd2a1d613edc848ed95a4d71aa18
+View attachment "cross_site_scripting_vulnerability_in_profile_builder_wordpress_plugin.txt" of type "text/plain" (4071 bytes)
 
-Fix for 1.1 branch:
-  https://github.com/roundcube/roundcubemail/commit/7bbefdb63b12e2344cf1cb87aeb6e3933b4063e0
+View attachment "cross_site_scripting_vulnerability_in_simple_membership_wordpress_plugin.txt" of type "text/plain" (4512 bytes)
 
-Protect download urls against CSRF using unique request tokens (#4957):
------------------------------------------------------------------------
+View attachment "cross_site_scripting_vulnerability_in_top_10___popular_posts_plugin_for_wordpress.txt" of type "text/plain" (3965 bytes)
 
-Upstrema issue:
-  https://github.com/roundcube/roundcubemail/issues/4957
-
-Fix for master branch:
-  https://github.com/roundcube/roundcubemail/commit/4a408843b0ef816daf70a472a02b78cd6073a4d5
-
-Fix for the 1.1 brach:
-  https://github.com/roundcube/roundcubemail/commit/699af1e5206ed9114322adaa3c25c1c969640a53
-
-Could you assign CVEs for those issues?
-
-Regards,
-Salvatore
+View attachment "cross_site_scripting_vulnerability_in_wp_no_external_links_wordpress_plugin.txt" of type "text/plain" (3998 bytes)
