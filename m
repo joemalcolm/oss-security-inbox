@@ -1,82 +1,158 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/26/8
-Message-Id: <20160726192245.12A9C72E005@smtpvbsrv1.mitre.org>
-Date: Tue, 26 Jul 2016 15:22:45 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/17/7
+Message-Id: <20160717153008.3C3C16C10F9@smtpvmsrv1.mitre.org>
+Date: Sun, 17 Jul 2016 11:30:08 -0400 (EDT)
 From: cve-assign@...re.org
-To: jesse.hertz@...group.trust
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, Tim.Newsham@...group.trust
-Subject: Re: CVE Request: Any User Can Panic Kernel Through Sysctl on OpenBSD
+To: Jesse.Hertz@...group.trust
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, na-disclosure@...group.trust
+Subject: Re: Multiple Bugs in OpenBSD Kernel
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Any user can panic the kernel by using the sysctl call. If a
-> user can manage to map a page at address zero, they may be able
-> to gain kernel code execution and escalate privileges (OpenBSD fortunately prevents this by default).
-> 
-> Description:
-> When processing sysctl calls, OpenBSD dispatches through a number
-> of intermediate helper functions. For example, if the first integer
-> in the path is 10, sys_sysctl() will call through vfs_sysctl() for
-> further processing. vfs_sysctl() performs a table lookup based on
-> the second byte, and if the byte is 19, it selects the tmpfs_vfsops
-> table and dispatches further processing through the vfs_sysctl method:
-> 
->     if (name[0] != VFS_GENERIC) {
->         for (vfsp = vfsconf; vfsp; vfsp = vfsp->vfc_next)
->             if (vfsp->vfc_typenum == name[0])
->                 break;
-> 
->         if (vfsp == NULL)
->             return (EOPNOTSUPP);
-> 
->         return ((*vfsp->vfc_vfsops->vfs_sysctl)(&name[1], namelen - 1,
->             oldp, oldlenp, newp, newlen, p));
->     }
-> 
-> Unfortunately, the definition for tmpfs_vfsops leaves this method NULL:
+> mmap_panic: Malicious calls to mmap() can trigger an allocation panic
+> or trigger memory corruption.
 
-> struct vfsops tmpfs_vfsops = {
-> 
->     NULL,               /* vfs_sysctl */
+> http://seclists.org/oss-sec/2016/q3/att-68/mmap_panic_c.bin
 
-> Trying to read or write a sysctl path starting with (10,19) results
-> in a NULL pointer access and a panic of
-> "attempt to execute user address 0x0 in supervisor mode".
-> Since any user can perform a sysctl read, this issue can be abused
-> by any logged in user to panic the system.
-> 
-> Fortunately, OpenBSD intentionally prevents users from attempting to map a page
-> at the NULL address. If an attacker is able to get such a mapping,
-> they may be able to cause the kernel to jump to code mapped at this
-> address (if other security protections such as SMAP/SMEP aren't in place).
-> This would allow an attacker to gain kernel code execution and
-> escalate their privileges.
-> 
-> Reproduction:
-> Run the PoC sysctl_tmpfs_panic.c program. It will pccess
-> the (10,19,0) sysctl path and trigger a panic of
-> "attempt to execute user address 0x0 in supervisor mode".
-> NCC Group was able to reproduce this issue on OpenBSD 5.9 release
-> running amd64.
-> 
-> Recommendation:
-> Include a NULL-pointer check in vfs_sysctl() before dispatching to
-> the vfs_sysctl method. Alternately, include a vfs_sysctl method
-> in the tmpfs_vfsops table.
-> 
-> Fixed: http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/kern/vfs_subr.c.diff?r1=1.248&r2=1.249
->        http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/tmpfs/tmpfs_vfsops.c.diff?r1=1.9&r2=1.10
+>> When a user provides the __MAP_NOFAULT flag to mmap, the
+>> kernel calls amap_alloc() which calls malloc() with a size derived 
+>> from the user-passed size. This is called through
+>> sys_mmap(), uvm_mmapfile() and uvm_map() without ever
+>> validating the user-provided size. This can result in a panic
+>> in malloc. For example when requesting a mapping of
+>> 0x222.1111.0000 bytes, amap_alloc() will compute that it needs
+>> 0x2221.1110 slots and amap_alloc1() will compute that it needs
+>> 0x2221.1200 total slots and will call malloc() to allocate
+>> 0x2.2211.2000 bytes resulting in a panic of
+>> "panic: malloc: allocation too large, type = 98, size = 9161482240".
 
->     int name[] = { 10, 19, 0 }; // vfs.tmpfs.0
->     char buf[16];
->     size_t sz = sizeof buf;
->     int x;
-> 
->     x = sysctl(name, 3, buf, &sz, 0, 0);
+Use CVE-2016-6239 for this general "too large" issue.
 
-Use CVE-2016-6350.
+
+>> Besides causing a panic, the amap_alloc() code can also miscalculate 
+>> the allocation size which would cause an undersized allocation in 
+>> amap_alloc1(). This could lead to memory corruption later. There are 
+>> two causes.
+
+>> First amap_alloc() computes slots from a size_t size into
+>> an integer slots variable:
+>> If the original size is larger 0x1000.0000.0000 or larger it will
+>> result in a truncated value of slots, resulting in an undersized amap.
+
+Use CVE-2016-6240 for this first "miscalculate" issue.
+
+
+>> The second problem arises in amap_alloc1():
+>> The number of slots is rounded up so that the slot entries fill
+>> full pages. This rounding up happens in the integer "totalslots"
+>> variable, and can overflow the original "slots" value. This
+>> can happen when requesting an allocation of size 0xfff.ffff.0000,
+>> for example. In this case amap_alloc() computes that
+>> 0xffff.fff0 slots are needed and amap_alloc1() computes
+>> that zero totalslots are needed, and allocates an amap of zero
+>> bytes. If the amap->am_slots, amap->am_bckptr or amap->am_anon
+>> fields are later accessed, it can lead to out-of-memory
+>> reads and writes on the kernel allocation heap.
+
+Use CVE-2016-6241 for this second "miscalculate" issue.
+
+
+> kevent_panic: Any user can panic the kernel with the kevent system
+> call.
+
+> http://seclists.org/oss-sec/2016/q3/att-68/kevent_panic_c.bin
+
+>> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/kern/kern_event.c.diff?r1=1.72&r2=1.73
+>> 
+>> If the original ident value is overly large, the value of "size" will
+>> be correspondingly large, and can trigger an assertion in mallocarray().
+>> This can be abused by any user to cause a kernel panic.
+
+Use CVE-2016-6242.
+
+
+> thrsleep_panic: Any user can panic the kernel with the __thrsleep
+> system call.
+
+> http://seclists.org/oss-sec/2016/q3/att-68/thrsleep_panic_c.bin
+
+>> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/kern/kern_synch.c?rev=1.132&content-type=text/x-cvsweb-markup
+>> 
+>>         if (timespeccmp(tsp, &now, <))
+>>         ...
+>>         if (to_ticks > INT_MAX)
+>>             to_ticks = INT_MAX;
+>> 
+>> This validation is insufficient. Some values of the user-provided
+>> tsp can be in the future and still lead to a negative to_ticks value
+>> after conversion. This condition triggers a panic in timeout_add 
+
+Use CVE-2016-6243.
+
+
+> thrsigdivert_panic: Any user can panic the kernel with the
+> __thrsigdivert system call.
+
+> http://seclists.org/oss-sec/2016/q3/att-68/thrsigdivert_panic_c.bin
+
+>>         if (ts.tv_nsec < 0 || ts.tv_nsec >= 1000000000)
+>>             timeinvalid = 1;
+>>         ...
+>>             if (to_ticks > INT_MAX)
+>>                 to_ticks = INT_MAX;
+>> 
+>> 
+>> This validation is insufficient. Some values of the user-provided
+>> ts can lead to a negative to_ticks value after conversion. This 
+>> condition triggers a panic in timeout_add
+
+Use CVE-2016-6244.
+
+
+> ufs_getdents_panic: Any user can panic the kernel with the getdents
+> system call.
+
+> http://seclists.org/oss-sec/2016/q3/att-68/ufs_getdents_panic_c.bin
+
+>> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/ufs/ufs/ufs_vnops.c.diff?r1=1.128&r2=1.129
+>> 
+>> By providing an overly
+>> large size, a caller can trigger a panic in the kernel
+>> of "malloc: allocation too large" or "out of space in kmem_map".
+
+Use CVE-2016-6245.
+
+
+> mount_panic: Root users, or users on systems with kern.usermount set
+> to true, can trigger a kernel panic when mounting a tmpfs filesystem.
+
+> http://seclists.org/oss-sec/2016/q3/att-68/mount_panic_c.bin
+
+>> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/tmpfs/tmpfs_vfsops.c.diff?r1=1.8&r2=1.9
+>> 
+>> The tmpfs filesystem allows the mounting user to specify a
+>> username, a groupname or a device name for the root node of
+>> the filesystem. A user that specifies a value of VNOVAL for
+>> any of these fields will trigger an assert in tmpfs_alloc_node
+
+Use CVE-2016-6246.
+
+
+> unmount_panic: Root users, or users on systems with kern.usermount set
+> to true, can trigger a kernel panic when unmounting a filesystem.
+
+> http://seclists.org/oss-sec/2016/q3/att-68/unmount_panic_c.bin
+
+>> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/kern/vfs_syscalls.c.diff?r1=1.261&r2=1.262
+>> 
+>> When the unmount system call is called with the MNT_DOOMED flag
+>> set, it does not sync vnodes. This can lead to a condition where
+>> there is still a vnode on the mnt_vnodelist, which triggers a
+>> panic in dounmount
+
+Use CVE-2016-6247.
 
 - -- 
 CVE Assignment Team
@@ -86,17 +162,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXl7ebAAoJEHb/MwWLVhi2RRUQAKkrnjJ8NqE2b7z29QMk+jdI
-nM1jbtV5seUvzxvVkk83jHCE4icLl3rDH23QAc9zRuMsVH6uXnIx7Cx37xlk9a54
-YwNjnVZk8zIior3yQOY5/JzXkr/AaK2Pb5SQVRyHiJRD9ApA97DvWxJGGWFhCxLc
-M/S2BeiB15L05dC0wKEJFKx4OV4ScpB2uy/T+gORpqRkWHhI1h/xCYeG2wNTSGaI
-DBQTvtR1MYwqz7jax1jFPyaUAW4Jg21qCP9L20Ds+G9Yw3DzVP+k3c06l2PMcuM+
-zr9ajStH3NDSMkqYkfhYXFGDzUo5z8BFnRdJmAkFTcYQGJz2PkwNeRGw4put5/lB
-sVzYCnP8SXM2LVjOYzwxI6LyNvtnK5HhqE7PD5hf81rNDQHqDb01g0l2EE1psyNs
-/cSMhJzQL9ioZTbjTDtvpWpopZVeIt9BUWQGXFb7QviQpNcFPXsvT2A4wwimm3HE
-dXlfMzARDBlkU/2qRfXJAfqtTM5MI5KlPLIREEwOjUMbwgnynENeHdLjob2EJLE7
-7ofXZE+azTK03wx4e/3aJwWfy5Ff+lXXb50AJOutS74oRii8gSHywMIZLV+0k6nN
-Klkk1UYBdgkBc6HW42yK/veQ/tEc1Vwm3edpD+WWlo1y3kju6vig5fB7jhpD+vQc
-dfRSQioVwzON5g8m+tx+
-=DboK
+iQIcBAEBCAAGBQJXi6P4AAoJEHb/MwWLVhi2mOEP/08xXUSqCwZYw3SIDVtaR0Uz
+UJuvIKakjyuG0IBHUfOuZO1pdw15fj64UwuVF3vR4PAsMVYDp2N8iCSUa1OUHQ3Z
+qXQBqKsnunzk9Vz11Qkehju+rBJf10W0DxWW65MONwjWOKnzMghPCx0NRGGo/iP8
+usKpb2kOy9BIH1hGKl+MxUlKVf6x2sMoXLvaEab9TTY45MUB9iPmQ8sfrZokPu9D
+PCG2zq9/cZ8wnNdMU7kyfsjUMV8glPl4gw1NLehnuxyjD+qLAWkzL6CCPR441v8N
+9J+LCylCnaO/ucJghDnf7U2LkDioevPDSeRpR+SmGSO/2hha7P1mdvApuYHjUxso
+Tg5Ii17EwaVlGsWQr1Hmd8WeQmRb23N5PmpEATBdWi/kUTImEIBJ0JvrfNhIwEEs
+JD3BSrBGHvQtFAnAQtBsB2TgNGHveqhCMxKHeDvuJojnKRpdElwI2WlflKJ08Z4T
+LZcrMrmMSlbFHwgO7aG6XikTtu7mvjSoiAn0Qd9iKod4b1V55WnjzIf0sWFrZtg/
+WCi/i07pG+AxlV9AFJdP9WnjAVd/BCehAWt6K7gPsP1IN/xrK53X2b7H+KA46zEB
+F3ADwW8W3gPz7bsQDAf7R6kY6CHYFk2lSFOf4tXCLRi4qoyoqiJNr6zv5odSm/0w
+eNbK0SxfchFOCL0QvP/D
+=gRCL
 -----END PGP SIGNATURE-----
