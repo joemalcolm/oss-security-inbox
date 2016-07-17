@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["10766" "Tuesday" "22" "September" "2015" "10:10:03" "+0000" "Xen.org security team" "security@xen.org" "<E1ZeKWR-0000te-26@xenbits.xen.org>" "237" "[oss-security] Xen Security Advisory 142 - libxl fails to honour readonly flag on disks with qemu-xen" nil nil nil "9" "2015092210:10:03" "[oss-security] Xen Security Advisory 142 - libxl fails to honour readonly flag on disks with qemu-xen" (number mark "        security@xen Sep 22  237/10766 " thread-indent "\"[oss-security] Xen Security Advisory 142 - libxl fails to honour readonly flag on disks with qemu-xen\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6421" "Sunday" "17" "July" "2016" "11:30:08" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160717153008.3C3C16C10F9@smtpvmsrv1.mitre.org>" "168" "[oss-security] Re: Multiple Bugs in OpenBSD Kernel" nil nil nil "7" "2016071715:30:08" "[oss-security] Re: Multiple Bugs in OpenBSD Kernel" (number mark "U       cve-assign@m Jul 17  168/6421  " thread-indent "\"[oss-security] Re: Multiple Bugs in OpenBSD Kernel\"\n") "<35D91F81-1E00-4305-8DED-848D88C8CD58@nccgroup.trust>" ("<35D91F81-1E00-4305-8DED-848D88C8CD58@nccgroup.trust>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20082 invoked by uid 550); 22 Sep 2015 10:10:46 -0000
+Received: (qmail 15884 invoked by uid 550); 17 Jul 2016 15:30:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,255 +11,181 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19953 invoked from network); 22 Sep 2015 10:10:30 -0000
-Message-Id: <E1ZeKWR-0000te-26@xenbits.xen.org>
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.428 (Entity 5.428)
-CC: Xen.org security team <security@xen.org>
-Date: Tue, 22 Sep 2015 10:10:03 +0000
-From: Xen.org security team <security@xen.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Xen Security Advisory 142 - libxl fails to honour readonly flag
- on disks with qemu-xen
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Received: (qmail 15834 invoked from network); 17 Jul 2016 15:30:20 -0000
+From: cve-assign@mitre.org
+To: Jesse.Hertz@nccgroup.trust
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, na-disclosure@nccgroup.trust
+In-Reply-To: <35D91F81-1E00-4305-8DED-848D88C8CD58@nccgroup.trust>
+Message-Id: <20160717153008.3C3C16C10F9@smtpvmsrv1.mitre.org>
+Date: Sun, 17 Jul 2016 11:30:08 -0400 (EDT)
+Subject: [oss-security] Re: Multiple Bugs in OpenBSD Kernel
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-                    Xen Security Advisory XSA-142
+> mmap_panic: Malicious calls to mmap() can trigger an allocation panic
+> or trigger memory corruption.
 
-        libxl fails to honour readonly flag on disks with qemu-xen
+> http://seclists.org/oss-sec/2016/q3/att-68/mmap_panic_c.bin
 
-ISSUE DESCRIPTION
-=================
+>> When a user provides the __MAP_NOFAULT flag to mmap, the
+>> kernel calls amap_alloc() which calls malloc() with a size derived 
+>> from the user-passed size. This is called through
+>> sys_mmap(), uvm_mmapfile() and uvm_map() without ever
+>> validating the user-provided size. This can result in a panic
+>> in malloc. For example when requesting a mapping of
+>> 0x222.1111.0000 bytes, amap_alloc() will compute that it needs
+>> 0x2221.1110 slots and amap_alloc1() will compute that it needs
+>> 0x2221.1200 total slots and will call malloc() to allocate
+>> 0x2.2211.2000 bytes resulting in a panic of
+>> "panic: malloc: allocation too large, type = 98, size = 9161482240".
 
-Callers of libxl can specify that a disk should be read-only to the
-guest.  However, there is no code in libxl to pass this information to
-qemu-xen (the upstream-based qemu); and indeed there is no way in qemu
-to make a disk read-only.
+Use CVE-2016-6239 for this general "too large" issue.
 
-The vulnerability is exploitable only via devices emulated by the
-device model, not the parallel PV devices for supporting PVHVM.
-Normally the PVHVM device unplug protocol renders the emulated devices
-inaccessible early in boot.
 
-IMPACT
-======
+>> Besides causing a panic, the amap_alloc() code can also miscalculate 
+>> the allocation size which would cause an undersized allocation in 
+>> amap_alloc1(). This could lead to memory corruption later. There are 
+>> two causes.
 
-Malicious guest administrators or (in some situations) users may be
-able to write to supposedly read-only disk images.
+>> First amap_alloc() computes slots from a size_t size into
+>> an integer slots variable:
+>> If the original size is larger 0x1000.0000.0000 or larger it will
+>> result in a truncated value of slots, resulting in an undersized amap.
 
-CDROM devices (that is, devices specified to be presented to the guest
-as CDROMs, regardless of the nature of the backing storage on the
-host) are not affected.
+Use CVE-2016-6240 for this first "miscalculate" issue.
 
-VULNERABLE SYSTEMS
-==================
 
-Only systems using qemu-xen (rather than qemu-xen-traditional) as the
-device model version are vulnerable.
+>> The second problem arises in amap_alloc1():
+>> The number of slots is rounded up so that the slot entries fill
+>> full pages. This rounding up happens in the integer "totalslots"
+>> variable, and can overflow the original "slots" value. This
+>> can happen when requesting an allocation of size 0xfff.ffff.0000,
+>> for example. In this case amap_alloc() computes that
+>> 0xffff.fff0 slots are needed and amap_alloc1() computes
+>> that zero totalslots are needed, and allocates an amap of zero
+>> bytes. If the amap->am_slots, amap->am_bckptr or amap->am_anon
+>> fields are later accessed, it can lead to out-of-memory
+>> reads and writes on the kernel allocation heap.
 
-Only systems using libxl or libxl-based toolstacks are vulnerable.
-(This includes xl, and libvirt with the libxl driver.)
+Use CVE-2016-6241 for this second "miscalculate" issue.
 
-All versions of libxl which support qemu-xen are vulnerable.  The
-affected code was introduced in Xen 4.1.
 
-If the host and guest together usually support PVHVM, the issue is
-exploitable only if the malicious guest administrator has control of
-the guest kernel or guest kernel command line.
+> kevent_panic: Any user can panic the kernel with the kevent system
+> call.
 
-MITIGATION
-==========
+> http://seclists.org/oss-sec/2016/q3/att-68/kevent_panic_c.bin
 
-Switching to qemu-xen-traditional will avoid this vulnerability.
-This can be done with
-   device_model_version="qemu-xen-traditional"
-in the xl configuration file.
+>> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/kern/kern_event.c.diff?r1=1.72&r2=1.73
+>> 
+>> If the original ident value is overly large, the value of "size" will
+>> be correspondingly large, and can trigger an assertion in mallocarray().
+>> This can be abused by any user to cause a kernel panic.
 
-Using stub domain device models (which necessarily involves switching
-to qemu-xen-traditional) will also avoid this vulnerability.
-This can be done with
-   device_model_stubdomain_override=true
-in the xl configuration file.
+Use CVE-2016-6242.
 
-Either of these mitigations is liable to have other guest-visible
-effects or even regressions.
 
-It may be possible, depending on the configuration, to make the
-underlying storage object readonly, or to make it reject writes.
+> thrsleep_panic: Any user can panic the kernel with the __thrsleep
+> system call.
 
-RESOLUTION
-==========
+> http://seclists.org/oss-sec/2016/q3/att-68/thrsleep_panic_c.bin
 
-There is no reasonable resolution because Qemu does not (at the time
-of writing) support presenting a read-only block device to a guest as
-a disk.
+>> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/kern/kern_synch.c?rev=1.132&content-type=text/x-cvsweb-markup
+>> 
+>>         if (timespeccmp(tsp, &now, <))
+>>         ...
+>>         if (to_ticks > INT_MAX)
+>>             to_ticks = INT_MAX;
+>> 
+>> This validation is insufficient. Some values of the user-provided
+>> tsp can be in the future and still lead to a negative to_ticks value
+>> after conversion. This condition triggers a panic in timeout_add 
 
-The attached patch corrects the weakness in the libxl code, by
-rejecting the unsupported configurations, rather than allowing them to
-run but with the device perhaps writeable by the guest.  Applying it
-should increase confidence and avoid future configuration errors, but
-will break affected configurations specifying read-only disk devices.
+Use CVE-2016-6243.
 
-xsa142-4.6.patch                 Xen 4.6.x and later
-xsa142-4.5.patch                 Xen 4.3.x to 4.5.x inclusive
 
-$ sha256sum xsa142*.patch
-9ec0649f39720bc692be03c87ebea0506d6ec574f339fc745e41b31643240124  xsa142-4.5.patch
-65f01167bfc141048261f56b99ed9b48ec7ff6e98155454ced938a17ec20e7d1  xsa142-4.6.patch
-$
+> thrsigdivert_panic: Any user can panic the kernel with the
+> __thrsigdivert system call.
 
-NOTE REGARDING LACK OF EMBARGO
-==============================
+> http://seclists.org/oss-sec/2016/q3/att-68/thrsigdivert_panic_c.bin
 
-This issue was discussed in public in the Red Hat bugzilla:
-  https://bugzilla.redhat.com/show_bug.cgi?id=1257893
+>>         if (ts.tv_nsec < 0 || ts.tv_nsec >= 1000000000)
+>>             timeinvalid = 1;
+>>         ...
+>>             if (to_ticks > INT_MAX)
+>>                 to_ticks = INT_MAX;
+>> 
+>> 
+>> This validation is insufficient. Some values of the user-provided
+>> ts can lead to a negative to_ticks value after conversion. This 
+>> condition triggers a panic in timeout_add
 
-CREDITS
-=======
+Use CVE-2016-6244.
 
-Thanks to Michael Young of Durham University for bring this problem to
-our attention.
 
+> ufs_getdents_panic: Any user can panic the kernel with the getdents
+> system call.
+
+> http://seclists.org/oss-sec/2016/q3/att-68/ufs_getdents_panic_c.bin
+
+>> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/ufs/ufs/ufs_vnops.c.diff?r1=1.128&r2=1.129
+>> 
+>> By providing an overly
+>> large size, a caller can trigger a panic in the kernel
+>> of "malloc: allocation too large" or "out of space in kmem_map".
+
+Use CVE-2016-6245.
+
+
+> mount_panic: Root users, or users on systems with kern.usermount set
+> to true, can trigger a kernel panic when mounting a tmpfs filesystem.
+
+> http://seclists.org/oss-sec/2016/q3/att-68/mount_panic_c.bin
+
+>> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/tmpfs/tmpfs_vfsops.c.diff?r1=1.8&r2=1.9
+>> 
+>> The tmpfs filesystem allows the mounting user to specify a
+>> username, a groupname or a device name for the root node of
+>> the filesystem. A user that specifies a value of VNOVAL for
+>> any of these fields will trigger an assert in tmpfs_alloc_node
+
+Use CVE-2016-6246.
+
+
+> unmount_panic: Root users, or users on systems with kern.usermount set
+> to true, can trigger a kernel panic when unmounting a filesystem.
+
+> http://seclists.org/oss-sec/2016/q3/att-68/unmount_panic_c.bin
+
+>> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/kern/vfs_syscalls.c.diff?r1=1.261&r2=1.262
+>> 
+>> When the unmount system call is called with the MNT_DOOMED flag
+>> set, it does not sync vnodes. This can lead to a condition where
+>> there is still a vnode on the mnt_vnodelist, which triggers a
+>> panic in dounmount
+
+Use CVE-2016-6247.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJWASalAAoJEIP+FMlX6CvZkVgIAKUhbsVLSK95wRJzNdOrcVgU
-c1lCtgZRX2kbc9f05rxbNyadVsQYyT1/i+0wErAsXUKWgNKiKYUFAUaN8382Uim0
-1UaJVEcjj5PWWB8rT6EoXqK84ODaLfUwXQosBEhbwKTEMMb0GQu2tIlh4Bc58KI6
-SzMFF2IQPvKcHGQFGLmPmxUARXjHXN7WXrAlFn9hXfNmepHnJsOR2MjvFvucYgr0
-2tTiZBkRVt8XRH7Ll1nKFD7zu9LlfHA8WHAdddNCawkSO9mxbc58k+0zg1i2gaMx
-locAjLK8UXYaFJEi52kqz7qGWItXfFMY8bTmAhexMpbwUu170stsWQfCxyGiWtU=
-=BFh1
+iQIcBAEBCAAGBQJXi6P4AAoJEHb/MwWLVhi2mOEP/08xXUSqCwZYw3SIDVtaR0Uz
+UJuvIKakjyuG0IBHUfOuZO1pdw15fj64UwuVF3vR4PAsMVYDp2N8iCSUa1OUHQ3Z
+qXQBqKsnunzk9Vz11Qkehju+rBJf10W0DxWW65MONwjWOKnzMghPCx0NRGGo/iP8
+usKpb2kOy9BIH1hGKl+MxUlKVf6x2sMoXLvaEab9TTY45MUB9iPmQ8sfrZokPu9D
+PCG2zq9/cZ8wnNdMU7kyfsjUMV8glPl4gw1NLehnuxyjD+qLAWkzL6CCPR441v8N
+9J+LCylCnaO/ucJghDnf7U2LkDioevPDSeRpR+SmGSO/2hha7P1mdvApuYHjUxso
+Tg5Ii17EwaVlGsWQr1Hmd8WeQmRb23N5PmpEATBdWi/kUTImEIBJ0JvrfNhIwEEs
+JD3BSrBGHvQtFAnAQtBsB2TgNGHveqhCMxKHeDvuJojnKRpdElwI2WlflKJ08Z4T
+LZcrMrmMSlbFHwgO7aG6XikTtu7mvjSoiAn0Qd9iKod4b1V55WnjzIf0sWFrZtg/
+WCi/i07pG+AxlV9AFJdP9WnjAVd/BCehAWt6K7gPsP1IN/xrK53X2b7H+KA46zEB
+F3ADwW8W3gPz7bsQDAf7R6kY6CHYFk2lSFOf4tXCLRi4qoyoqiJNr6zv5odSm/0w
+eNbK0SxfchFOCL0QvP/D
+=gRCL
 -----END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa142-4.5.patch"
-Content-Disposition: attachment; filename="xsa142-4.5.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSAwN2NhMDA3MDNmNzZhZDM5MmVkYTVlZTUyY2NlMTE5N2NmNDljMzBh
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBTdGVmYW5vIFN0YWJl
-bGxpbmkgPHN0ZWZhbm8uc3RhYmVsbGluaUBldS5jaXRyaXguY29tPgpTdWJq
-ZWN0OiBbUEFUQ0ggdjIuMSBmb3ItNC41XSBsaWJ4bDogaGFuZGxlIHJlYWQt
-b25seSBkcml2ZXMgd2l0aCBxZW11LXhlbgoKVGhlIGN1cnJlbnQgbGlieGwg
-Y29kZSBkb2Vzbid0IGRlYWwgd2l0aCByZWFkLW9ubHkgZHJpdmVzIGF0IGFs
-bC4KClVwc3RyZWFtIFFFTVUgYW5kIHFlbXUteGVuIG9ubHkgc3VwcG9ydCBy
-ZWFkLW9ubHkgY2Ryb20gZHJpdmVzOiBtYWtlCnN1cmUgdG8gc3BlY2lmeSAi
-cmVhZG9ubHk9b24iIGZvciBjZHJvbSBkcml2ZXMgYW5kIHJldHVybiBlcnJv
-ciBpbiBjYXNlCnRoZSB1c2VyIHJlcXVlc3RlZCBhIG5vbi1jZHJvbSByZWFk
-LW9ubHkgZHJpdmUuCgpUaGlzIGlzIFhTQS0xNDIsIGRpc2NvdmVyZWQgYnkg
-TGluIExpdQooaHR0cHM6Ly9idWd6aWxsYS5yZWRoYXQuY29tL3Nob3dfYnVn
-LmNnaT9pZD0xMjU3ODkzKS4KClNpZ25lZC1vZmYtYnk6IFN0ZWZhbm8gU3Rh
-YmVsbGluaSA8c3RlZmFuby5zdGFiZWxsaW5pQGV1LmNpdHJpeC5jb20+CgpC
-YWNrcG9ydCB0byBYZW4gNC41IGFuZCBlYXJsaWVyLCBhcHJvcG9zIG9mIHJl
-cG9ydCBhbmQgcmV2aWV3IGZyb20KTWljaGFlbCBZb3VuZy4KClNpZ25lZC1v
-ZmYtYnk6IElhbiBKYWNrc29uIDxpYW4uamFja3NvbkBldS5jaXRyaXguY29t
-PgotLS0KIHRvb2xzL2xpYnhsL2xpYnhsX2RtLmMgfCAgIDEzICsrKysrKysr
-Ky0tLS0KIDEgZmlsZSBjaGFuZ2VkLCA5IGluc2VydGlvbnMoKyksIDQgZGVs
-ZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvdG9vbHMvbGlieGwvbGlieGxfZG0u
-YyBiL3Rvb2xzL2xpYnhsL2xpYnhsX2RtLmMKaW5kZXggYjRjZTUyMy4uZDc0
-ZmIxNCAxMDA2NDQKLS0tIGEvdG9vbHMvbGlieGwvbGlieGxfZG0uYworKysg
-Yi90b29scy9saWJ4bC9saWJ4bF9kbS5jCkBAIC03OTcsMTMgKzc5NywxOCBA
-QCBzdGF0aWMgY2hhciAqKiBsaWJ4bF9fYnVpbGRfZGV2aWNlX21vZGVsX2Fy
-Z3NfbmV3KGxpYnhsX19nYyAqZ2MsCiAgICAgICAgICAgICBpZiAoZGlza3Nb
-aV0uaXNfY2Ryb20pIHsKICAgICAgICAgICAgICAgICBpZiAoZGlza3NbaV0u
-Zm9ybWF0ID09IExJQlhMX0RJU0tfRk9STUFUX0VNUFRZKQogICAgICAgICAg
-ICAgICAgICAgICBkcml2ZSA9IGxpYnhsX19zcHJpbnRmCi0gICAgICAgICAg
-ICAgICAgICAgICAgICAoZ2MsICJpZj1pZGUsaW5kZXg9JWQsbWVkaWE9Y2Ry
-b20sY2FjaGU9d3JpdGViYWNrLGlkPWlkZS0laSIsCi0gICAgICAgICAgICAg
-ICAgICAgICAgICAgZGlzaywgZGV2X251bWJlcik7CisgICAgICAgICAgICAg
-ICAgICAgICAgICAoZ2MsICJpZj1pZGUsaW5kZXg9JWQscmVhZG9ubHk9JXMs
-bWVkaWE9Y2Ryb20sY2FjaGU9d3JpdGViYWNrLGlkPWlkZS0laSIsCisgICAg
-ICAgICAgICAgICAgICAgICAgICAgZGlzaywgZGlza3NbaV0ucmVhZHdyaXRl
-ID8gIm9mZiIgOiAib24iLCBkZXZfbnVtYmVyKTsKICAgICAgICAgICAgICAg
-ICBlbHNlCiAgICAgICAgICAgICAgICAgICAgIGRyaXZlID0gbGlieGxfX3Nw
-cmludGYKLSAgICAgICAgICAgICAgICAgICAgICAgIChnYywgImZpbGU9JXMs
-aWY9aWRlLGluZGV4PSVkLG1lZGlhPWNkcm9tLGZvcm1hdD0lcyxjYWNoZT13
-cml0ZWJhY2ssaWQ9aWRlLSVpIiwKLSAgICAgICAgICAgICAgICAgICAgICAg
-ICBkaXNrc1tpXS5wZGV2X3BhdGgsIGRpc2ssIGZvcm1hdCwgZGV2X251bWJl
-cik7CisgICAgICAgICAgICAgICAgICAgICAgICAoZ2MsICJmaWxlPSVzLGlm
-PWlkZSxpbmRleD0lZCxyZWFkb25seT0lcyxtZWRpYT1jZHJvbSxmb3JtYXQ9
-JXMsY2FjaGU9d3JpdGViYWNrLGlkPWlkZS0laSIsCisgICAgICAgICAgICAg
-ICAgICAgICAgICAgZGlza3NbaV0ucGRldl9wYXRoLCBkaXNrLCBkaXNrc1tp
-XS5yZWFkd3JpdGUgPyAib2ZmIiA6ICJvbiIsIGZvcm1hdCwgZGV2X251bWJl
-cik7CiAgICAgICAgICAgICB9IGVsc2UgeworICAgICAgICAgICAgICAgIGlm
-ICghZGlza3NbaV0ucmVhZHdyaXRlKSB7CisgICAgICAgICAgICAgICAgICAg
-IExJQlhMX19MT0coY3R4LCBMSUJYTF9fTE9HX0VSUk9SLCAicWVtdS14ZW4g
-ZG9lc24ndCBzdXBwb3J0IHJlYWQtb25seSBkaXNrIGRyaXZlcnMiKTsKKyAg
-ICAgICAgICAgICAgICAgICAgcmV0dXJuIE5VTEw7CisgICAgICAgICAgICAg
-ICAgfQorCiAgICAgICAgICAgICAgICAgaWYgKGRpc2tzW2ldLmZvcm1hdCA9
-PSBMSUJYTF9ESVNLX0ZPUk1BVF9FTVBUWSkgewogICAgICAgICAgICAgICAg
-ICAgICBMSUJYTF9fTE9HKGN0eCwgTElCWExfX0xPR19XQVJOSU5HLCAiY2Fu
-bm90IHN1cHBvcnQiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-IiBlbXB0eSBkaXNrIGZvcm1hdCBmb3IgJXMiLCBkaXNrc1tpXS52ZGV2KTsK
-LS0gCjEuNy4xMC40Cgo=
-
---=separator
-Content-Type: application/octet-stream; name="xsa142-4.6.patch"
-Content-Disposition: attachment; filename="xsa142-4.6.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogU3RlZmFubyBTdGFiZWxsaW5pIDxzdGVmYW5vLnN0YWJlbGxpbmlA
-ZXUuY2l0cml4LmNvbT4KU3ViamVjdDogW1BBVENIIHYyIGZvci00LjZdIGxp
-YnhsOiBoYW5kbGUgcmVhZC1vbmx5IGRyaXZlcyB3aXRoIHFlbXUteGVuCkRh
-dGU6IFR1ZSwgMTUgU2VwIDIwMTUgMTA6NTI6MTQgKzAxMDAKClRoZSBjdXJy
-ZW50IGxpYnhsIGNvZGUgZG9lc24ndCBkZWFsIHdpdGggcmVhZC1vbmx5IGRy
-aXZlcyBhdCBhbGwuCgpVcHN0cmVhbSBRRU1VIGFuZCBxZW11LXhlbiBvbmx5
-IHN1cHBvcnQgcmVhZC1vbmx5IGNkcm9tIGRyaXZlczogbWFrZQpzdXJlIHRv
-IHNwZWNpZnkgInJlYWRvbmx5PW9uIiBmb3IgY2Ryb20gZHJpdmVzIGFuZCBy
-ZXR1cm4gZXJyb3IgaW4gY2FzZQp0aGUgdXNlciByZXF1ZXN0ZWQgYSBub24t
-Y2Ryb20gcmVhZC1vbmx5IGRyaXZlLgoKVGhpcyBpcyBYU0EtMTQyLCBkaXNj
-b3ZlcmVkIGJ5IExpbiBMaXUKKGh0dHBzOi8vYnVnemlsbGEucmVkaGF0LmNv
-bS9zaG93X2J1Zy5jZ2k/aWQ9MTI1Nzg5MykuCgpTaWduZWQtb2ZmLWJ5OiBT
-dGVmYW5vIFN0YWJlbGxpbmkgPHN0ZWZhbm8uc3RhYmVsbGluaUBldS5jaXRy
-aXguY29tPgotLS0KIHRvb2xzL2xpYnhsL2xpYnhsX2RtLmMgfCAgIDEzICsr
-KysrKysrKy0tLS0KIDEgZmlsZSBjaGFuZ2VkLCA5IGluc2VydGlvbnMoKyks
-IDQgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvdG9vbHMvbGlieGwvbGli
-eGxfZG0uYyBiL3Rvb2xzL2xpYnhsL2xpYnhsX2RtLmMKaW5kZXggMDJjMDE2
-Mi4uNDY4ZmY5YyAxMDA2NDQKLS0tIGEvdG9vbHMvbGlieGwvbGlieGxfZG0u
-YworKysgYi90b29scy9saWJ4bC9saWJ4bF9kbS5jCkBAIC0xMTEwLDEzICsx
-MTEwLDE4IEBAIHN0YXRpYyBpbnQgbGlieGxfX2J1aWxkX2RldmljZV9tb2Rl
-bF9hcmdzX25ldyhsaWJ4bF9fZ2MgKmdjLAogICAgICAgICAgICAgaWYgKGRp
-c2tzW2ldLmlzX2Nkcm9tKSB7CiAgICAgICAgICAgICAgICAgaWYgKGRpc2tz
-W2ldLmZvcm1hdCA9PSBMSUJYTF9ESVNLX0ZPUk1BVF9FTVBUWSkKICAgICAg
-ICAgICAgICAgICAgICAgZHJpdmUgPSBsaWJ4bF9fc3ByaW50ZgotICAgICAg
-ICAgICAgICAgICAgICAgICAgKGdjLCAiaWY9aWRlLGluZGV4PSVkLG1lZGlh
-PWNkcm9tLGNhY2hlPXdyaXRlYmFjayxpZD1pZGUtJWkiLAotICAgICAgICAg
-ICAgICAgICAgICAgICAgIGRpc2ssIGRldl9udW1iZXIpOworICAgICAgICAg
-ICAgICAgICAgICAgICAgKGdjLCAiaWY9aWRlLGluZGV4PSVkLHJlYWRvbmx5
-PSVzLG1lZGlhPWNkcm9tLGNhY2hlPXdyaXRlYmFjayxpZD1pZGUtJWkiLAor
-ICAgICAgICAgICAgICAgICAgICAgICAgIGRpc2ssIGRpc2tzW2ldLnJlYWR3
-cml0ZSA/ICJvZmYiIDogIm9uIiwgZGV2X251bWJlcik7CiAgICAgICAgICAg
-ICAgICAgZWxzZQogICAgICAgICAgICAgICAgICAgICBkcml2ZSA9IGxpYnhs
-X19zcHJpbnRmCi0gICAgICAgICAgICAgICAgICAgICAgICAoZ2MsICJmaWxl
-PSVzLGlmPWlkZSxpbmRleD0lZCxtZWRpYT1jZHJvbSxmb3JtYXQ9JXMsY2Fj
-aGU9d3JpdGViYWNrLGlkPWlkZS0laSIsCi0gICAgICAgICAgICAgICAgICAg
-ICAgICAgZGlza3NbaV0ucGRldl9wYXRoLCBkaXNrLCBmb3JtYXQsIGRldl9u
-dW1iZXIpOworICAgICAgICAgICAgICAgICAgICAgICAgKGdjLCAiZmlsZT0l
-cyxpZj1pZGUsaW5kZXg9JWQscmVhZG9ubHk9JXMsbWVkaWE9Y2Ryb20sZm9y
-bWF0PSVzLGNhY2hlPXdyaXRlYmFjayxpZD1pZGUtJWkiLAorICAgICAgICAg
-ICAgICAgICAgICAgICAgIGRpc2tzW2ldLnBkZXZfcGF0aCwgZGlzaywgZGlz
-a3NbaV0ucmVhZHdyaXRlID8gIm9mZiIgOiAib24iLCBmb3JtYXQsIGRldl9u
-dW1iZXIpOwogICAgICAgICAgICAgfSBlbHNlIHsKKyAgICAgICAgICAgICAg
-ICBpZiAoIWRpc2tzW2ldLnJlYWR3cml0ZSkgeworICAgICAgICAgICAgICAg
-ICAgICBMSUJYTF9fTE9HKGN0eCwgTElCWExfX0xPR19FUlJPUiwgInFlbXUt
-eGVuIGRvZXNuJ3Qgc3VwcG9ydCByZWFkLW9ubHkgZGlzayBkcml2ZXJzIik7
-CisgICAgICAgICAgICAgICAgICAgIHJldHVybiBFUlJPUl9JTlZBTDsKKyAg
-ICAgICAgICAgICAgICB9CisKICAgICAgICAgICAgICAgICBpZiAoZGlza3Nb
-aV0uZm9ybWF0ID09IExJQlhMX0RJU0tfRk9STUFUX0VNUFRZKSB7CiAgICAg
-ICAgICAgICAgICAgICAgIExJQlhMX19MT0coY3R4LCBMSUJYTF9fTE9HX1dB
-Uk5JTkcsICJjYW5ub3Qgc3VwcG9ydCIKICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAiIGVtcHR5IGRpc2sgZm9ybWF0IGZvciAlcyIsIGRpc2tz
-W2ldLnZkZXYpOwotLSAKMS43LjEwLjQK
-
---=separator--
