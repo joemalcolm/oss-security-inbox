@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1455" "Thursday" "17" "December" "2015" "15:03:40" "+0100" "Daniele Bianco" "danbia@ocert.org" "<20151217140340.GX4273@ns360119.ovh.net>" "55" "[oss-security] [oCERT 2015-011] PyAMF input sanitization errors (XXE)" nil nil nil "12" "2015121714:03:40" "[oss-security] [oCERT 2015-011] PyAMF input sanitization errors (XXE)" (number mark "U       danbia@ocert Dec 17   55/1455  " thread-indent "\"[oss-security] [oCERT 2015-011] PyAMF input sanitization errors (XXE)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1602" "Monday" "18" "July" "2016" "10:33:12" "+0300" "Solar Designer" "solar@openwall.com" "<20160718073312.GA29485@openwall.com>" "39" "Re: [oss-security] CVE request for webkit js engine javascriptcore" nil nil nil "7" "2016071807:33:12" "[oss-security] CVE request for webkit js engine javascriptcore" (number mark "U       solar@openwa Jul 18   39/1602  " thread-indent "\"Re: [oss-security] CVE request for webkit js engine javascriptcore\"\n") "<CA+VUd4jXjoWWsNBhsy8B6yoE5GtHhF4zjocWkxvj-axatyY+QQ@mail.gmail.com>" ("<CA+VUd4jXjoWWsNBhsy8B6yoE5GtHhF4zjocWkxvj-axatyY+QQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32005 invoked by uid 550); 17 Dec 2015 14:03:57 -0000
+Received: (qmail 30250 invoked by uid 550); 18 Jul 2016 07:33:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,73 +12,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31961 invoked from network); 17 Dec 2015 14:03:52 -0000
-Date: Thu, 17 Dec 2015 15:03:40 +0100
-From: Daniele Bianco <danbia@ocert.org>
-To: oss-security@lists.openwall.com, ocert-announce@lists.ocert.org,
-        bugtraq@securityfocus.com
-Message-ID: <20151217140340.GX4273@ns360119.ovh.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Received: (qmail 30232 invoked from network); 18 Jul 2016 07:33:23 -0000
+Date: Mon, 18 Jul 2016 10:33:12 +0300
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20160718073312.GA29485@openwall.com>
+References: <CA+VUd4jXjoWWsNBhsy8B6yoE5GtHhF4zjocWkxvj-axatyY+QQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-X-GPG-Key: 0x9544A497
-X-GPG-Fingerprint: 88A7 43F4 F28F 1B9D 6F2D  4AC5 AE75 822E 9544 A497
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Subject: [oss-security] [oCERT 2015-011] PyAMF input sanitization errors (XXE)
+In-Reply-To: <CA+VUd4jXjoWWsNBhsy8B6yoE5GtHhF4zjocWkxvj-axatyY+QQ@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE request for webkit js engine javascriptcore
 
+Hi,
 
-#2015-011 PyAMF input sanitization errors (XXE)
+On Mon, Jul 18, 2016 at 02:25:17PM +0800, jun3 June wrote:
+> Please can I have CVE IDs assigned to the following vulnerabilities:
+> 
+> 1.javascriptcore vulnerability:
+> 
+> https://bugs.webkit.org/show_bug.cgi?id=158411
+> 
+> 2.the fix has landed in r201787: <http://trac.webkit.org/r201787>
 
-Description:
+As a list moderator, I already regret having (reluctantly) accepted your
+message.  I thought it was just lacking detail in message body, which is
+against oss-security list content guidelines:
 
-PyAMF is a Python module that implements the Action Message Format (AMF)
-protocol, allowing Flash interoperation with various web frameworks.
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
-PyAMF suffers from insufficient AMF input payload sanitization which
-results in the XML parser not preventing the processing of XML external
-entities (XXE).
+"At least the most essential part of your message (e.g., vulnerability
+detail or a PoC exploit) should in fact be in the message itself (and in
+plain text), rather than only included by reference to an external
+resource.  Posting links to relevant external resources as well is
+acceptable, but posting only links is not."
 
-A specially crafted AMF payload, containing malicious references to XML
-external entities, can be used to trigger Denial of Service (DoS)
-conditions or arbitrarily return the contents of files that are accessible
-with the running application privileges.
+So I thought I'd just point out this to you like I do now (but
+off-list), for further occasions.  However, as it turns out the URL
+https://bugs.webkit.org/show_bug.cgi?id=158411 says "You are not
+authorized to access bug #158411. To see this bug, you must first log in
+to an account with the appropriate permissions." and the other URL is
+lacking direct detail on the bug as well (only talking about the fix).
 
-Affected version:
+BTW, is it one vulnerability or more?  You wrote "vulnerabilities".
 
-PyAMF <= 0.7.2
+Please post the detail in a "reply" to this message, and please
+include detail (not only URLs) in your postings going forward.  This
+last request/reminder applies to everyone posting to oss-security.
 
-Fixed version:
+Thanks,
 
-PyAMF >= 0.8.0
-
-Credit: vulnerability reported by Nicolas Grégoire <nicolas [dot] gregoire [at] agarri [dot] fr>
-
-CVE:
-
-CVE-2015-8549
-
-Timeline:
-
-2015-12-01: vulnerability report received
-2015-12-02: contacted maintainer
-2015-12-04: maintainer commits patch via public pull request
-2015-12-12: reporter confirms patch
-2015-12-14: contacted affected vendors
-2015-12-14: assigned CVE
-2015-12-17: advisory release
-
-References:
-
-https://github.com/hydralabs/pyamf/pull/58
-
-Permalink:
-
-http://www.ocert.org/advisories/ocert-2015-011.html
-
---
-  Daniele Bianco      Open Source Computer Security Incident Response Team
-  <danbia@ocert.org>                                  http://www.ocert.org
-
-  GPG Key 0x9544A497
-  GPG Key fingerprint = 88A7 43F4 F28F 1B9D 6F2D  4AC5 AE75 822E 9544 A497
+Alexander
