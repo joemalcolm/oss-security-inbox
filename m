@@ -1,4 +1,9 @@
-Received: (qmail 13923 invoked by uid 550); 15 May 2025 15:10:01 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3364" "Monday" "18" "July" "2016" "10:51:32" "+0530" "Huzaifa Sidhpurwala" "huzaifas@redhat.com" "<3e7ac139-077b-9d9e-7ad0-ed90083d8937@redhat.com>" "74" "Re: [oss-security] Re: CVE Requests: HarfBuzz - Chromium CVE issues" nil nil nil "7" "2016071805:21:32" "[oss-security] Re: CVE Requests: HarfBuzz - Chromium CVE issues" (number mark "U       huzaifas@red Jul 18   74/3364  " thread-indent "\"Re: [oss-security] Re: CVE Requests: HarfBuzz - Chromium CVE issues\"\n") "<20160717200008.8EDEC3AE001@smtpvbsrv1.mitre.org>" ("<20160717200008.8EDEC3AE001@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 29828 invoked by uid 550); 18 Jul 2016 05:21:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,62 +12,94 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13896 invoked from network); 15 May 2025 15:10:01 -0000
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=spacehopper.org;
-	s=s3e; t=1747321791; h=from:from:subject:subject:date:date:message-id:message-id:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Ch+LTNZw3sqFbkiqkXQICNkDJtDhztkku3c8AKYyty8=;
-	b=V5WOc8rx6nyF/MvAq59N/ZOuug3PE3eZndeAps2T8X3Pme3fsgQKUwGDiDnAt3dVzvVLfy
-	ZhmPZLWnzzb6+7AA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spacehopper.org;
-	s=s3; t=1747321791; h=from:from:subject:subject:date:date:message-id:message-id:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Ch+LTNZw3sqFbkiqkXQICNkDJtDhztkku3c8AKYyty8=;
-	b=eW7RRId9xUgtINj7gASKvnNGXG+o/DUllikrKCEpXNTRQh8UGyt5iiya3qhBW7hLd1YaZ8
-	uh2p3lyGKymsE/1G8erqf2Cr/jc31IkMri6VDL8ir6NGYt/EH5pVkD82HARnYC4K09Jym3
-	+3LXCNpi8lqv5ou11rlWjfQS0eXThohlxYfHLIrQHkywTjVeHsAaGa4mX0IFipsLSoqTGd
-	mSt8BZSuQzE1YZs2rp3NK+d/u7kuMwS1sbwUHrIokMN9MPfNjYdqkYLNlJ1iqcp7Oor9bc
-	PIYZ72jqy+BRLomH1SBiIDfiWexmqoYGRuSG3DlbJtbroW4ZElSnIuIO/wuVvA==
-Date: Thu, 15 May 2025 16:09:51 +0100
-From: Stuart Henderson <stu@spacehopper.org>
-To: oss-security@lists.openwall.com
-Message-ID: <yxzsn67mzkjf2bxwkjah6u5q54yg2mqj7tlysm7mjeo4xytwhr@24dslwvnetyr>
-References: <aCISrQTbLQjaxBZS@kasco.suse.de>
- <CAK84RTXnye4-qBA0Yfachi-8gQHZc2bdcSS=9Zi4cfpaDhCFmg@mail.gmail.com>
- <aCR-A6lIgS2h8efj@kasco.suse.de>
+Received: (qmail 29810 invoked from network); 18 Jul 2016 05:21:47 -0000
+To: cve-assign@mitre.org
+References: <20160717200008.8EDEC3AE001@smtpvbsrv1.mitre.org>
+Cc: oss-security@lists.openwall.com
+From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
+Message-ID: <3e7ac139-077b-9d9e-7ad0-ed90083d8937@redhat.com>
+Date: Mon, 18 Jul 2016 10:51:32 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aCR-A6lIgS2h8efj@kasco.suse.de>
-Subject: Re: [oss-security] screen: Multiple Security Issues in Screen
- (mostly affecting release 5.0.0 and setuid-root installations)
+In-Reply-To: <20160717200008.8EDEC3AE001@smtpvbsrv1.mitre.org>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Mon, 18 Jul 2016 05:21:35 +0000 (UTC)
+Subject: Re: [oss-security] Re: CVE Requests: HarfBuzz - Chromium CVE issues
 
-On 2025/05/14 13:26, Matthias Gerstner wrote:
-> Hi,
+On 07/18/2016 01:30 AM, cve-assign@mitre.org wrote:
+>> atleast 3 issues in here which are CVE worthy
 > 
-> On Tue, May 13, 2025 at 03:48:31PM -0700, Mark Esler wrote:
-> > Cheers for the report Matthias and SUSE Security!
+>> 1. Heap based buffer overflow:
+>> https://github.com/behdad/harfbuzz/issues/139#issuecomment-146984679
 > 
-> thanks!
+>> 2. Fix hmtx wrong table length check:
+>> https://github.com/behdad/harfbuzz/issues/139#issuecomment-148289957
 > 
-> > Could you please comment on the affectedness of upstream screen 5.0.1?
-> > 
-> > https://git.savannah.gnu.org/cgit/screen.git/commit/?h=screen-v5&id=464c8d8f945f53f8cbb854517279349e09d74756
-> > 
-> > This version was released ~an hour before your initial oss post. It appears
-> > that upstream landed the patches, which may be worth mentioning in your
-> > timeline.
+>> 3. heap-buffer-overflow in hb_ot_face_metrics_accelerator_t::get_advance
+>> https://github.com/behdad/harfbuzz/issues/156
 > 
-> Indeed, this is the bugfix release announced by upstream here:
+> As far as we can tell, these correspond to:
 > 
-> https://lists.gnu.org/archive/html/screen-users/2025-05/msg00005.html
+> 1 - https://github.com/behdad/harfbuzz/commit/f96664974774bfeb237a7274f512f64aaafb201e
+>     fixed in 1.0.5
+> 
+> 2 - https://github.com/behdad/harfbuzz/commit/63ef0b41dc48d6112d1918c1b1de9de8ea90adb5
+>     fixed in 1.0.6
+> 
+> 3 - https://github.com/behdad/harfbuzz/commit/df698f3299d92867e3305715f675b2621c316acd
+>     the unpatched code is not in any release; the patched code is new in 1.1.0
+> 
+> df698f3299d92867e3305715f675b2621c316acd mentions "I rewrote the table
+> checking yesterday ... and introduced the exact same issue again." Is
+> there a particular motivation for having a CVE ID? We don't know of
+> anyone who is shipping products based on unreleased HarfBuzz code
+> obtained from GitHub, and the one-day existence of the problematic
+> code also seems to suggest minimal real-world relevance. The HarfBuzz
+> documentation doesn't specifically recommend that people ship
+> unreleased HarfBuzz code. A CVE ID isn't, in general, required for
+> each issue noted at any arbitrary point during development.
+> 
+> Would it be OK to keep CVE-2016-2052 for
+> 63ef0b41dc48d6112d1918c1b1de9de8ea90adb5 (which is really a "before
+> 1.0.6" issue as stated in that CVE), and assign one new ID for
+> f96664974774bfeb237a7274f512f64aaafb201e (the "before 1.0.5" issue)?
+> 
+Sure, i dont mind as long as its communicated well etc!
+>> how does
+>> MITRE plan to handle vendors who assign one CVE to multiple non-related
+>> issues?
+> 
+> Anyone is free to submit new CVE ID requests with sufficient
+> information to show that additional IDs are required. Typically this
+> means that the requester should, for example, track down all of the
+> upstream version information.
+> 
+> In general, it is not realistic to expect that the "multiple
+> non-related issues" case can be completely eliminated when CVE IDs
+> are originally assigned. When product A repackages code from product
+> B, there can be a disparity in whether the B maintainers are as
+> interested in CVE as the A maintainers. Also, the A maintainers do not
+> necessarily have any motivation for investigating the precise details
+> of what was fixed in B, unless the A maintainers are backporting
+> patches. For example, A might just be updating to the latest version
+> of B, because the B Release Notes stated that it was a security
+> update. Suppose that the A maintainers confirm that the B maintainers
+> have not been, and will not be, using CVE IDs themselves. Would it be
+> better for the A maintainers to use one CVE ID immediately, or should
+> everyone wait (potentially forever) for someone to investigate the
+> precise details?
+> 
 
-There are two different versions of the tar.gz; at present, some of the
-gnu.org mirrors have one, some have another. The earlier one includes
-.o and other generated files, also there are differences to some source
-and headers around WINESC_WIN_CARET.
+This means that, if you dont have motivation for investigating the
+individual issues, it is ok to assign CVEs to multiple unrelated issues?
 
-It would probably be helpful to make a 5.0.2 release to make it a little
-more clear.
+It so, that means everyone is free to do the above mentioned.
 
+
+
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
