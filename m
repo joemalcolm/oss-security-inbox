@@ -1,72 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/21/8
-Message-ID: <57191209.7090902@canonical.com>
-Date: Thu, 21 Apr 2016 13:46:49 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/10
+Message-ID: <578D140E.1040206@mvista.com>
+Date: Mon, 18 Jul 2016 10:38:22 -0700
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-Cc: security@....net, Lior Kaplan <kaplan@...ian.org>, Ondřej Surý <ondrej@...ian.org>
-Subject: Re: CVE request: PHP issues fixed in 7.0.5, 5.6.20 and 5.5.34 releases
+Subject: Re: CVE-2016-5321: libtiff 4.0.6 DumpModeDecode(): Ddos
 Content-Type: text/plain; charset=utf-8
 
-On 2016-04-21 01:42 PM, Salvatore Bonaccorso wrote:
-> Hi,
+
+Hello,
+
+If I am not mistaken, this maybe the fix for this CVE.
+
+https://github.com/vadz/libtiff/commit/d9783e4a1476b6787a51c5ae9e9b3156527589f0
+
+can someone confirm
+
+regards,
+Armin
+
+On 06/14/2016 07:35 PM, 张开翔 wrote:
+> Details
+> =======
 > 
-> On Mon, Apr 11, 2016 at 09:41:41PM +0200, Matthias Geerdsen wrote:
->> -----BEGIN PGP SIGNED MESSAGE-----
->> Hash: SHA256
->>
->> Hi,
->>
->> could you please provide CVE IDs for the following PHP issues fixed in
->> the latest releases, as I have not yet seen any IDs yet:
->>
->> - -  Buffer over-write in finfo_open with malformed magic file
->> https://bugs.php.net/bug.php?id=71527
->> http://bugs.gw.com/view.php?id=522
->>
->> - - Integer overflow in php_raw_url_encode
->> https://bugs.php.net/bug.php?id=71798
->> https://git.php.net/?p=php-src.git;a=commit;h=95433e8e339dbb6b5d5541473c
->> 1661db6ba2c451
->>
->>
->> - - php_snmp_error() Format String Vulnerability
->> https://bugs.php.net/bug.php?id=71704
->> https://git.php.net/?p=php-src.git;a=commit;h=6e25966544fb1d2f3d7596e060
->> ce9c9269bbdcf8
->>
->>
->> - - Invalid memory write in phar on filename containing \0 inside name
->> https://bugs.php.net/bug.php?id=71860
->> https://gist.github.com/smalyshev/80b5c2909832872f2ba2
->>
->>
->> - - AddressSanitizer: negative-size-param (-1) in mbfl_strcut
->> https://bugs.php.net/bug.php?id=71906
->> https://gist.github.com/smalyshev/d8355c96a657cc5dba70
+> Product: libtiff
+> Affected Versions: <= 4.0.6
+> Vulnerability Type: illegel read
+> Vendor URL: http://www.remotesensing.org/libtiff/
+> Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
+> CVE ID: CVE-2016-5321
+> Tested system version:
+>        fedora23 32bit
+>        fedora23 64bit
+>        CentOS Linux release 7.1.1503 64bit
 > 
-> Can CVE identiers be assigned for those?
 > 
-> The recent Ubuntu USN 2952-1 as well fixed some other issues without
-> CVE identifers, cf. http://www.ubuntu.com/usn/usn-2952-1/
+> Introduction
+> =======
 > 
-
-FYI, here is information on the two issues that didn't have CVE numbers in the
-Ubuntu update:
-
-1- libxml_disable_entity_loader setting is shared between threads
-
-https://bugs.php.net/bug.php?id=64938
-https://bugs.launchpad.net/ubuntu/+source/php5/+bug/1509817
-http://framework.zend.com/security/advisory/ZF2015-06
-http://git.php.net/?p=php-src.git;a=commit;h=de31324c221c1791b26350ba106cc26bad23ace9
-
-2- openssl_random_pseudo_bytes() is not cryptographically secure
-
-https://bugs.php.net/bug.php?id=70014
-https://bugs.launchpad.net/ubuntu/+source/php5/+bug/1534203
-http://git.php.net/?p=php-src.git;a=commit;h=16023f3e3b9c06cf677c3c980e8d574e4c162827
-
-Marc.
-
-
+> It was always corrupted when I use tiffcrop command followed by a crafted TIFF image.The vulnerbility exists in fuction DumpModeDecode() whitout checking the value of output parameters, Attackers could exploit this issue to cause denial-of-service.
+> 
+> 
+> Here is the stack info:
+> gdb –args ./tiffcrop DumpModeDecode.tif tmpout.tif
+> --- ---
+> __memcpy_ssse3_back () at ../sysdeps/x86_64/multiarch/memcpy-ssse3-back.S:2709
+> 2709                   movdqu    %xmm0, 36(%rdi)
+> Program received signal SIGSEGV, Segmentation fault.
+> __memcpy_ssse3_back () at ../sysdeps/x86_64/multiarch/memcpy-ssse3-back.S:2709
+> 2709                   movdqu    %xmm0, 36(%rdi)
+> (gdb) bt
+> #0  __memcpy_ssse3_back () at ../sysdeps/x86_64/multiarch/memcpy-ssse3-back.S:2709
+> #1  0x00007ffff7ad6a79 in DumpModeDecode (tif=0x662010, buf=<optimized out>, cc=52, s=<optimized out>) at tif_dumpmode.c:103
+> #2  0x00007ffff7ba3739 in TIFFReadEncodedTile (tif=tif@...ry=0x662010, tile=8, buf=0x0, size=52, size@...ry=-1) at tif_read.c:668
+> #3  0x00007ffff7ba3a01 in TIFFReadTile (tif=tif@...ry=0x662010, buf=<optimized out>, x=x@...ry=0, y=y@...ry=0, z=z@...ry=0, s=s@...ry=8) at tif_read.c:641
+> #4  0x0000000000443e41 in readSeparateTilesIntoBuffer (bps=208, spp=9, tl=1, tw=2, imagewidth=2, imagelength=1, obuf=0x662ce0 "\200\177\335\367\377\177", in=0x662010) at tiffcrop.c:994
+> #5  loadImage (in=in@...ry=0x662010, image=image@...ry=0x7fffffff7960, dump=dump@...ry=0x7fffffffc270, read_ptr=read_ptr@...ry=0x7fffffff7920) at tiffcrop.c:6079
+> #6  0x0000000000403209 in main (argc=<optimized out>, argv=<optimized out>) at tiffcrop.c:2278
+> (gdb) p buf
+> $6 = 0x0
+> 
