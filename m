@@ -1,64 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/10/1
-Message-ID: <20160110142405.GA11741@eldamar.local>
-Date: Sun, 10 Jan 2016 15:24:05 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: netfilter-persistent: (local) information leak due to world-readable rules files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/12
+Message-ID: <20160718182341.GC18755@netmeister.org>
+Date: Mon, 18 Jul 2016 14:23:41 -0400
+From: Jan Schaumann <jschauma@...meister.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: A CGI application vulnerability for PHP, Go, Python and others
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Richard Rowe <arch.richard@...il.com> wrote:
+ 
+> The consequence is that an attacker can force a proxy of their choice to be
+> used. This proxy receives the full request for anything sent over HTTP
+> using a vulnerable client. It can also act in a malicious way to tie up
+> server resources (a "reverse slowloris").
 
-Thanks for your reply, really appreciated that you took time to review
-the request.
+I know you mentioned it on https://httpoxy.org/, but I think it's worth
+stressing explicitly again:  use of HTTPS for all requests made by the
+application, internal as well as external, defeats this vulnerability
+(provided certificates are actually verified).
 
-On Thu, Jan 07, 2016 at 07:54:24PM -0500, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
-> 
-> > iptables-persistent (in Debian) is a loader for netfilter configuration
-> > using a plugin-based architecture.
-> > 
-> > iptables-persistent is vulnerable to a (local) information leak due to
-> > world-readable rules files. It was reported in Debian in
-> > 
-> > https://bugs.debian.org/764645
-> > 
-> > And fixed via
-> > 
-> > https://anonscm.debian.org/cgit/collab-maint/iptables-persistent.git/commit/?id=37905034f07e94c4298a1762b39b7bbd4063c0df
-> 
-> Do you have any further information about why this should be
-> considered a vulnerability in general? We realize that it might, at
-> least, be considered a vulnerability for Debian systems because of
-> "Tags: security" in the original report.
-> 
-> For example, is there a specific piece of data in the files that is
-> always supposed to be private?
-> 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=764645#5 indicates
-> that an unprivileged user can obtain information by directly opening
-> the files, but cannot obtain this information with an
-> "/sbin/iptables -L" command. This does not, by itself, establish that
-> a security feature has been defeated. It is possible that it was
-> simply inconvenient to implement the -L option in a way that provided
-> access to unprivileged users.
-> 
-> What we are trying to avoid is a situation in which CVE IDs are
-> assigned solely because a system administrator might not want files to
-> be readable by unprivileged users. For example, maybe someone would
-> prefer stricter /etc/hosts.allow permissions to prevent rogue local
-> users from discovering the names of other hosts that possibly have
-> symmetric "allow" policies.
-
-I can follow the reasoning. I agree that it might be borderline to
-actually request a CVE for this issue. The situation which I had in
-mind is a multi-user system, where the administrator has set some
-iptables rules up, and the regular users of the system should not
-know about how they are set up. If the admin uses iptables-persistent
-from Debian these set rules (restored after boot) are disclosed though
-to the users via the files /etc/iptables/rules.{v4,v6}.
-
-Regards,
-Salvatore
+-Jan
