@@ -1,43 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/22/2
-Message-ID: <56F1B372.9070401@eng.utah.edu>
-Date: Tue, 22 Mar 2016 15:04:50 -0600
-From: Scotty Bauer <sbauer@....utah.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/8
+Message-ID: <20160718145438.GB10685@ZEDAT.FU-Berlin.DE>
+Date: Mon, 18 Jul 2016 16:54:38 +0200
+From: Alexander Sulfrian <asulfrian@...AT.FU-Berlin.DE>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption
+Subject: CVE request: flex: Buffer overflow in generated code (yy_get_next_buffer)
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+
+flex upstream change some integer type in 2.5.36[1] to unsigned integer
+types (size_t). Especially the num_to_read variable in
+yy_get_next_buffer is critical, because the buffer is resized if this
+value is _less_ or equal to zero.
+
+With special crafted input it is possible, that the buffer is not
+resized if the input is larger than the default buffer size of 16k. This
+allows a heap buffer overflow.
+
+It may be also remote usable, it depends on the software that is build
+using flex. We noticed for example, that bogofilter segfaults sometimes
+depending on the incoming mail.
 
 
-On 03/22/2016 02:58 PM, Solar Designer wrote:
-> Apparently, this vulnerability is being used to root older Android
-> devices, and as a result it has just been fixed for older Android:
-> 
-> https://source.android.com/security/advisory/2016-03-18.html
-> 
-> "Google has become aware of a rooting application using an unpatched
-> local elevation of privilege vulnerability in the kernel on some Android
-> devices (CVE-2015-1805).  For this application to affect a device, the
-> user must first install it.  We already block installation of rooting
-> applications that use this vulnerability - both within Google Play and
-> outside of Google Play - using Verify Apps, and have updated our systems
-> to detect applications that use this specific vulnerability.
-> 
-> To provide a final layer of defense for this issue, partners were
-> provided with a patch for this issue on March 16, 2016.  Nexus updates
-> are being created and will be released within a few days.  Source code
-> patches for this issue have been released to the Android Open Source
-> Project (AOSP) repository."
-> 
-> The advisory above includes a bit more information, including links to
-> AOSP commits, but no information on how the vulnerability is exploited,
-> nor even the names of the "rooting applications".
-> 
-> I heard of this from a tweet by @DaveManouchehri, asking for "the APK
-> (or name) of the app that's exploiting CVE-2015-1805" - unfortunately, I
-> have no answer.
+Upstream already noticed that this may be a problem[2] but did not
+escalate it as a security issue. Upstream also changed some other type
+back from size_t to int (for example in [3]) so maybe it is not
+sufficient to only change num_to_read back to int.
 
-Kingroot is the application it was discovered in by the Zimperium folks. 
+The upstream fix is contained in 2.6.1, but there are more integer type
+fixes in the master branch of flex (currently not in a released
+version).
 
 
+As the issue is in the generated code during compile time, it is not
+sufficient to fix flex, but all binaries using flex as build-dependency
+may need a rebuild after fixing flex. Additinally there may be packages,
+that supply the generated source in the release-tar and do not use flex
+during building.
 
+
+Could you please assign a CVE for this issue?
+
+
+Thanks,
+Alexander Sulfrian
+
+
+1: https://github.com/westes/flex/commit/9ba3187a537d6a58d345f2874d06087fd4050399
+2: https://github.com/westes/flex/commit/a5cbe929ac3255d371e698f62dc256afe7006466
+3: https://github.com/westes/flex/commit/7a7c3dfe1bcb8230447ba1656f926b4b4cdfc457
