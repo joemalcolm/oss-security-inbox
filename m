@@ -1,47 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/15/3
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BB6272@EX02.corp.qihoo.net>
-Date: Wed, 15 Jun 2016 02:32:46 +0000
-From: 张开翔 <zhangkaixiang@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-5316: libtiff 4.0.6  tif_pixarlog.c:  PixarLogCleanup() Segmentation fault
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/9
+Message-ID: <349F8012416243FAAB5472AF1AD20C37@W340>
+Date: Mon, 18 Jul 2016 18:40:45 +0200
+From: "Stefan Kanthak" <stefan.kanthak@...go.de>
+To: <oss-security@...ts.openwall.com>
+Cc: <fulldisclosure@...lists.org>, <bugtraq@...urityfocus.com>
+Subject: [CVE-2016-1281] NOT FIXED: VeraCrypt*Setup*.exe still vulnerable to DLL hijacking
 Content-Type: text/plain; charset=utf-8
 
+Hi @ll,
 
-Details
-=======
+this is basically a followup to <http://seclists.org/oss-sec/2016/q1/58>
 
-Product: libtiff
-Affected Versions: <= 4.0.6
-Vulnerability Type: illegel read
-Vendor URL: http://www.remotesensing.org/libtiff/
-CVE ID: CVE-2016-5316
-Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
+CVE-2016-1281 is NOT FIXED!
 
-Introduction
-=======
+I've retested the current "VeraCrypt Setup 1.17.exe" on a fully
+patched Windows 7, and it is STILL (or AGAIN) vulnerable there.
 
-Segmentation fault ocurrs in PixarLogCleanup() in tif_pixarlog.c when using rgb2ycbcr tool followed a crafted TIFF image. Attackers cound exploit this issue to cause denial-of-service.
+The following DLLs are loaded from the "application directory"
+and their DllMain() executed: VSSAPI.dll, ATL.dll, VSSTrace.dll.
 
+See <https://cwe.mitre.org/data/definitions/426.html>,
+<https://cwe.mitre.org/data/definitions/427.html> and
+<https://capec.mitre.org/data/definitions/471.html> for details
+about this well-known and well-documented beginner's error!
 
-Here is the stack info:
-gdb –args ./rgb2ycbcr PixarLogCleanup.tif tmpout.tif
---- ---
-Program received signal SIGSEGV, Segmentation fault.
-__GI___libc_free (mem=0x75757575) at malloc.c:2952
-2952           if (chunk_is_mmapped (p))                       /* release mmapped memory. */
-Missing separate debuginfos, use: dnf debuginfo-install libjpeg-turbo-1.4.1-2.fc23.i686 zlib-1.2.8-9.fc23.i686
-(gdb) bt
-#0  __GI___libc_free (mem=0x75757575) at malloc.c:2952
-#1  0xb7df0a4c in zcfree () from /usr/lib/libz.so.1
-#2  0xb7dedd3e in inflateEnd () from /usr/lib/libz.so.1
-#3  0xb7f72044 in PixarLogCleanup (tif=0x804f148) at tif_pixarlog.c:1264
-#4  0xb7ec29ae in TIFFReadDirectory (tif=0x804f148) at tif_dirread.c:3412
-#5  0x0804942d in main (argc=3, argv=0xbffff3a4) at rgb2ycbcr.c:132
+Due to the application manifest embedded in the executable installer
+which specifies "requireAdministrator" the installer is run with
+administrative privileges ("protected" administrators are prompted
+for consent, unprivileged standard users are prompted for an
+administrator password); execution of the DLLs therefore results
+in an escalation of privilege!
+
+For software downloaded with a web browser the "application
+directory" is typically the user's "Downloads" directory: see
+<https://insights.sei.cmu.edu/cert/2008/09/carpet-bombing-and-directory-poisoning.html>,
+<http://blog.acrossecurity.com/2012/02/downloads-folder-binary-planting.html>
+and <http://seclists.org/fulldisclosure/2012/Aug/134> for prior
+art!
 
 
-References:
-[1] http://www.remotesensing.org/libtiff/
+Mitigation:
+~~~~~~~~~~~
 
-Thank you!
-Best Regards,
+DUMP executable installers, build packages for the target OS' native
+installer instead!
+
+See <http://home.arcor.de/skanthak/!execute.html>
+as well as <http://home.arcor.de/skanthak/sentinel.html> for the long
+sad story of these vulnerabilities.
+
+
+stay tuned
+Stefan Kanthak
+
+
+Timeline:
+~~~~~~~~~
+
+2015-12-23    vulnerability report sent to author
+
+2016-01-03    author confirmed vulnerability, got CVE-2016-1281
+
+              worked with author until he finally was able to build
+              an installer which didn't show this vulnerability.
+
+              Also notified author:
+              "as soon as Microsoft introduces new/other dependencies
+               between Windows' system DLLs or refactors them (again)
+               this vulnerability will VERY likely resurface again."
+
+2016-01-11    report published by author (see above)
+
+2016-07-01    vulnerability report sent to author ("I told you so!")
+
+              NO RESPONSE
+
+2016-07-17    report published
