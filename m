@@ -1,42 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/14
-Message-ID: <CANO=Ty0RLssvD7QB__g0Cm=cpXb3dOWhZK=anOqdMuVOEtSb=g@mail.gmail.com>
-Date: Tue, 1 Mar 2016 12:25:24 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/16
+Message-ID: <CANO=Ty322LOtzmR3Dwi3ZtmKX1TPhyrBUu1xdnnG3BRkDo9_bg@mail.gmail.com>
+Date: Mon, 18 Jul 2016 14:27:03 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: CVE ID Requests <cve-assign@...re.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE's for SSLv2 support
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: A CGI application vulnerability for PHP, Go, Python and others
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 1, 2016 at 12:12 PM, <cve-assign@...re.org> wrote:
+On Mon, Jul 18, 2016 at 1:33 PM, Solar Designer <solar@...nwall.com> wrote:
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
+> On Mon, Jul 18, 2016 at 02:23:41PM -0400, Jan Schaumann wrote:
+> > Richard Rowe <arch.richard@...il.com> wrote:
+> >
+> > > The consequence is that an attacker can force a proxy of their choice
+> to be
+> > > used. This proxy receives the full request for anything sent over HTTP
+> > > using a vulnerable client. It can also act in a malicious way to tie up
+> > > server resources (a "reverse slowloris").
+> >
+> > I know you mentioned it on https://httpoxy.org/, but I think it's worth
+> > stressing explicitly again:  use of HTTPS for all requests made by the
+> > application, internal as well as external, defeats this vulnerability
+> > (provided certificates are actually verified).
 >
-> > If a crypto library (e.g. OpenSSL, NSS) supports AND enables SSLv2 by
-> > default should it receive a CVE?
+> Certificates being actually verified doesn't help against use of this
+> trick for host/port scanning or DoS attacks on third-parties.  What does
+> fully defeat this vulnerability is if the application or library only
+> checks a different env var like HTTPS_PROXY for HTTPS connections.  So I
+> guess whether use of HTTPS fully defeats or partially mitigates the
+> issue varies by the application or library invoked from a CGI program.
 >
-> There's no general answer to that question. CVE ID assignments are not
-> based on outsiders making guesses about the expectations of a product's
-> customers. For example, there might be a crypto library intended for
-> communication on isolated networks to high-value embedded devices that
-> support only SSLv2, and cannot and will not ever be updated.
+> Alexander
 >
->
-I guess my confusion is: what would be the downside to assigning a CVE in
-such a case, such a "false positive" would be easily explained ("yes we
-support SSLv2, but only for use on closed network"[1]) but more to the
-point by drawing a line in the sand of "SSLv2 is worth a CVE" we'd be much
-more easily able to track which products are using SSLv2 by default (and
-thus putting us at risk). From your web page "CVE is a dictionary of
-publicly known information security vulnerabilities and exposures."
 
-Does SSLv2 not pretty much exactly fit this definition now?
+More to the point to quote myself:
 
-[1] which begs the question why they're even using SSLv2 but I digress =)
+https://access.redhat.com/security/vulnerabilities/httpoxy
 
+==
+Please note that the "Proxy" header is not an official standard header, nor
+is it in the provisional header registry. The "Proxy" header should not be
+used by any standards compliant applications or clients.
+==
 
--- 
+Case in point:
+
+http://www.iana.org/assignments/message-headers/message-headers.xhtml
+
+You will note that the "Proxy" header is not there. It's a common
+convention to support it, and as it turns out, a bad one (seriously, in
+what use case do you want to let a client specify the proxy that a server
+then uses to handle outgoing requests?). We also asked several large web
+CDN firms to check their logs for the "Proxy" header, and none reported
+seeing it used in the wild. Literally the only use case for this header now
+is for attackers.
 
 --
 Kurt Seifried -- Red Hat -- Product Security -- Cloud
