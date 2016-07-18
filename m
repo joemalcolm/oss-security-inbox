@@ -1,48 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/29/6
-Message-Id: <20160529195359.7CDC6332014@smtpvbsrv1.mitre.org>
-Date: Sun, 29 May 2016 15:53:59 -0400 (EDT)
-From: cve-assign@...re.org
-To: luismiguelmerino@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: OpenNTPD not verifying CN during HTTPS constraints request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/15
+Message-ID: <20160718193358.GA4942@openwall.com>
+Date: Mon, 18 Jul 2016 22:33:59 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: A CGI application vulnerability for PHP, Go, Python and others
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> Common Name verification was disabled while configuring the HTTPS request,
-> allowing upstream network attackers to intercept and forward the request to
-> a malicious server that could provide forged timestamp
-> constraints presenting valid certificates without the server noticing it.
+On Mon, Jul 18, 2016 at 02:23:41PM -0400, Jan Schaumann wrote:
+> Richard Rowe <arch.richard@...il.com> wrote:
+>  
+> > The consequence is that an attacker can force a proxy of their choice to be
+> > used. This proxy receives the full request for anything sent over HTTP
+> > using a vulnerable client. It can also act in a malicious way to tie up
+> > server resources (a "reverse slowloris").
 > 
-> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/usr.sbin/ntpd/constraint.c.diff?r1=1.27&r2=1.28
+> I know you mentioned it on https://httpoxy.org/, but I think it's worth
+> stressing explicitly again:  use of HTTPS for all requests made by the
+> application, internal as well as external, defeats this vulnerability
+> (provided certificates are actually verified).
 
->> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/usr.sbin/ntpd/constraint.c
->> Revision 1.28
->> stop disabling server name verification
+Certificates being actually verified doesn't help against use of this
+trick for host/port scanning or DoS attacks on third-parties.  What does
+fully defeat this vulnerability is if the application or library only
+checks a different env var like HTTPS_PROXY for HTTPS connections.  So I
+guess whether use of HTTPS fully defeats or partially mitigates the
+issue varies by the application or library invoked from a CGI program.
 
-Use CVE-2016-5117.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXS0fJAAoJEHb/MwWLVhi2bmAP/RU7Ksh8OPSWaen7I9Rof/fB
-ckApEVEEeLVs52LSO/re3hmIqB+TiM9N6nMUYVT/EZajaFTZb2KALJcLU2sn7jWd
-soEusAUwGTv6hiDKUrgK64suJIogNNAwuzkCozabvn8j0B4NT5SmxR7oMdaF2qZH
-6h9jdmxCW1A2c9oyRpyWIpdcf241ir7DGqeEhS3aWir5211UHCysAmX4sxHtlG6Q
-dzUsoJWOamlWEDTA5NP85dmJGhThiIN4eliJm9Ui1tQ+SqKzFzDEcpUf/TbF4CGc
-MOWm4GQzG0omH48kGJ75KzMYE5Af26b8OsmCk1YZKCt8s+PSvnFRe2aZLI1QQ4IL
-53kp+64P4XRPAemHeCDI7Zzf6GjczivYks46zRX42tHwEGwSx10MZxW0U+NdUWmT
-ru3HyniFjRyLJ3X+jPnP+iftk5N2KsFrXUhVaSIQgTxST8CNAO/iiZUUs4YEnBJT
-BDqTKr21CTWi7QgCl5vTrw2/LMIRhYu0nhHuI6X41RvdR2dgDizeYFEsliVrNw8g
-6pw9CoF7qhBDi+A3X8FvOI94wE8u7OHRqNL80NjP26/gNI5JNmEcxN7wbOXFrN4W
-SUfvSQk5TV63Cxq52veTLHebHxzjevW9feyQYsu0QMJWM5q3d8/r5AQDKnzOj6dg
-nKZvo7u8C1L7lbNmWrVs
-=4Wi8
------END PGP SIGNATURE-----
+Alexander
