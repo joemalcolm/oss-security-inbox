@@ -1,60 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/02/12
-Message-Id: <20160802234818.3884B6CC7C9@smtpvmsrv1.mitre.org>
-Date: Tue,  2 Aug 2016 19:48:18 -0400 (EDT)
-From: cve-assign@...re.org
-To: jesse.hertz@...group.trust
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, Tim.Newsham@...group.trust
-Subject: Re: CVE Request: Denial-of-Service / Unexploitable Memory Corruption in mmap() on OpenBSD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/7
+Message-ID: <20160718145653.GA2103@openwall.com>
+Date: Mon, 18 Jul 2016 17:56:53 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Richard Rowe <arch.richard@...il.com>
+Subject: Re: A CGI application vulnerability for PHP, Go, Python and others
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Jul 19, 2016 at 02:00:53AM +1200, Richard Rowe wrote:
+> The Apache Software Foundation have an advisory available at
+> https://www.apache.org/security/asf-httpoxy-response.txt
 
-> Any user can trigger a panic by requesting a large mapping
-> that overlaps with an existing mapping.
+Neither the Apache advisory above nor the httpoxy website currently
+mention the below detail, so I thought I'd post:
 
-> There is a flaw in uvm_map_isavail() when the requested size is very
-> large.
+Apache httpd trunk's suexec wrapper was patched to filter out HTTP_PROXY
+on February 13, 2015:
 
-> Due to an integer overflow that can occur when computing
-> "addr + sz" it is possible for the end_ptr map to be
-> computed incorrectly
+http://mail-archives.apache.org/mod_mbox/httpd-cvs/201502.mbox/%3C20150213232410.B89BCAC0110@hades.apache.org%3E
+http://svn.apache.org/r1659711
+https://svn.apache.org/repos/asf/httpd/httpd/trunk/CHANGES
 
-> eventually call uvm_map_fix_space() which
-> performs its own sanity lookup with uvm_mapent_addr_insert(),
-> and panics if an overlapping mapping is added
+  *) suexec: Filter out the HTTP_PROXY environment variable because it is
+     treated as alias for http_proxy by some programs. [Stefan Fritsch]
 
-> it does not appear to be possible
-> to make a mapping above the stack segment. All wrap-around mappings
-> lower than this address overlap with the stack segment and result
-> in a panic.
+The httpoxy website refers to a posting by Stefan Fritsch:
 
->     pg = mmap(NULL, 4096, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+http://mail-archives.apache.org/mod_mbox/httpd-dev/201502.mbox/%3C2651807.jIIY3NPtlf@k%3E
 
->     p = mmap(pg+4096, 0xffffff0000000000, 0, 0, fd, 0);
+but not yet to its apparent outcome, above.
 
-Use CVE-2016-6522.
+httpd 2.4.23's suexec does not yet include this change (different branch).
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Of course, it's just suexec, which isn't always used, so it was not a
+complete fix anyway.
 
-iQIcBAEBCAAGBQJXoS62AAoJEHb/MwWLVhi2NtgP/RH6AK7RrZqwEUIPfFv7Mxrr
-bTD80zaFxPgPUVe+I6ZyUMUVbvzcbzzE0ltZNPAu0i1kgKVlFTJD975jQU1P+8Qq
-BacOj2pCd7uPGFrkZiYzi8TaRF1guAulQ2RJTmwmGYwULDknm5MeOyDVQLIRor/d
-FrF5wLzQbi1SOOBeIvD9TLRVgyrBxTZVsYgi+933PATIU/PhntH5q4wsH0TTxWnB
-q418AtW36B4iatxKMMRPG9L7IHh6ZGp4gfxcmunG3G0CFynX9kh1uW+hMBP+5sM8
-OR6PKNSPL9Fol8UN8PesEhgvhfWiRG4ZICHd6WI4ZGHqC4Lm5ndBu+2DH+ccoFFj
-nl8z1f6yQ1mpCy2aUCTnyrCSOJvIvuAKiyUJPpzVxh/ISrfrWt7Yqx9kZ7fIEUHq
-l1EESiuB1glkDfjSQ7x0mSv30rRTzEUerP+qpyK9zrp2C8JCSrJyd/KKaEEdZefw
-JKLC55qbhC9h/JKOsswowMhzd+brb81Ew6gcvKphoJa55WH3sxtFHaFg2t6cgq1Y
-INHzhIiKnNq01htGDlRtJH2Ox2+KhscEPeBXlVX4bSVigVy5nJ1RDHZpE6J1jL6Y
-sy/novadV8MyOTUZOSqUeqEf2DJQdZ2aw0WrMPhJeDRhV32VUnbVo8RXoSp9VzsM
-9GxgVB48+E3J2PXvBkOF
-=Ajrp
------END PGP SIGNATURE-----
+Alexander
