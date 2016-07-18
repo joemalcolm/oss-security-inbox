@@ -1,38 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/25/8
-Message-ID: <nd3k26$2sr$1@ger.gmane.org>
-Date: Fri, 25 Mar 2016 16:04:38 +0100
-From: Jörg Schaible <joerg.schaible@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/5
+Message-ID: <CAMqf4yDbXfYqFYHbMnMbrhcYfmjC56ok5+3VvNYfKndtsuECgA@mail.gmail.com>
+Date: Tue, 19 Jul 2016 02:00:53 +1200
+From: Richard Rowe <arch.richard@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request - XStream: XXE vulnerability
+Subject: A CGI application vulnerability for PHP, Go, Python and others
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hello,
 
-XStream (x-stream.github.io) is a Java library to marshal Java objects into 
-XML and back. For this purpose it supports a lot of different XML parsers. 
-Some of those can also process external entities which was enabled by 
-default.
+The Vend security team would like to publicly disclose a vulnerability
+we've (re)discovered in CGI and PHP web applications. Here's a two line
+summary:
 
-An attacker could therefore provide manipulated XML as input to access data 
-on the file system, see 
-https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing
 
-Since XStream 1.4.9 all parsers are configured to ignore external entities 
-by default as far as such behavior is configurable:
-http://x-stream.github.io/changes.html#1.4.9
+   -
 
-Luckily XStream's default parser Xpp3 does not parse entities at all. 
-However, all application that use XStream >= 1.4.8 explicitly with parsers 
-based on StAX, W3C DOM, Dom4J, JDOM or JDOM2 were affected unless the 
-parsers had been properly configured manually.
+   RFC 3875 (CGI) puts the HTTP Proxy header from a request into the
+   environment variables as HTTP_PROXY
 
-Applications using XOM or explicitly BEA's old StAX reference parser are 
-still vulnerable, we found no way to deactivate processing of external 
-entities for those two.
+
+   -
+
+   HTTP_PROXY is a popular environment variable used to configure an
+   outgoing proxy
+
+
+The consequence is that an attacker can force a proxy of their choice to be
+used. This proxy receives the full request for anything sent over HTTP
+using a vulnerable client. It can also act in a malicious way to tie up
+server resources (a "reverse slowloris").
+
+For the purposes of general disclosure to the wider ecosystem, we've
+prepared a website that describes the issue and collects common
+mitigations: https://httpoxy.org/ - but I'll continue with some notes below.
+
+Particularly affected is anything using the Guzzle HTTP library for PHP,
+but also many other languages and frameworks when deployed under 'real' CGI
+(PHP's userspace is basically emulated CGI), including Go's net/http and
+Python's requests. This bug appears to be more than 15 years old, and was
+fixed in a piecemeal fashion in other software (e.g. curl, libwww-perl,
+Ruby).
+
+The good news, however, is that stripping any Proxy request header is easy
+(because it is undefined by IETF and not listed in IANA's registry of
+message headers) - there should be no standard use for the header at all.
+
+Over the past two weeks, we've disclosed to the language teams affected
+(PHP, Python, Go, HHVM), as well as common CGI implementation vendors
+(Nginx, Apache). CERT have been involved in this process, and we’ve had the
+help of the Red Hat Product Security team. All these teams will probably
+have good advisories for their own specific affected software.
+
+The Apache Software Foundation have an advisory available at
+https://www.apache.org/security/asf-httpoxy-response.txt
+
+The original discovery in 2001 seems to have been by Randal L. Schwartz.
+2016 discovery was made by Scott Geary, research and disclosure
+co-ordinated by Dominic Scheirlinck, colleagues of mine.
 
 Regards,
-Jörg
-
-On behalf of the XStream community
+Richard
 
