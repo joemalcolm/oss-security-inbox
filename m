@@ -1,44 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/26/1
-Message-Id: <20160126070048.A1A8F36E002@smtpvbsrv1.mitre.org>
-Date: Tue, 26 Jan 2016 02:00:48 -0500 (EST)
-From: cve-assign@...re.org
-To: luto@...nel.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: x86 Linux TLB flush bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/6
+Message-ID: <CANO=Ty1zwb63tApRBJsjpD3DoPO-FRcQtLTMqqo-Y_a-363TCA@mail.gmail.com>
+Date: Mon, 18 Jul 2016 08:17:03 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: A CGI application vulnerability for PHP, Go, Python and others
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Also the current list of CVEs is:
 
->> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=71b3c126e61177eb693423f2e18a1914205b165e
+CVE-2016-5385 PHP
+CVE-2016-5386 Go
+CVE-2016-5387 Apache HTTPD
+CVE-2016-1000104 mod_fcgi
+CVE-2016-1000105 Nginx cgi script
+CVE-2016-5388 Tomcat
+CVE-2016-1000107 Erlang HTTP Server
+CVE-2016-1000108 YAWS
+CVE-2016-1000109 HHVM FastCGI
+CVE-2016-1000110 Python CGIHandler
+CVE-2016-1000111 Python twisted
 
-> The upshot is that, in principle, when Linux invalidates a paging
-> structure that is not in use locally, it could, in principle, race
-> against another CPU that is switching to a process that uses the
-> paging structure in question.
+there will of course be more. From my Google doc:
 
-Use CVE-2016-2069.
+CVE counting for httpoxy
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+This document essentially discusses the CVE counting strategy for the
+httpoxy issue.
 
-iQIcBAEBCAAGBQJWpxegAAoJEL54rhJi8gl5ytsP/j4gQyyXkeuWkAMZXoa4wRP3
-OteVx9I9kzg/ZKifHDome0jnEbEViBKAAyTTN5a+59ul0TwCvMUyoxyUQOn23i3G
-poWglkXd3z2OpODIwykJ1iTf01Jtq1yTEqzdFvyhygNLi8wOSBUOyrgnMafMG7Dm
-GWklTpur/i83dSP4fIPNOkqZR/5F5J/pqyDCVooIekgjNHRVKpPRBBtOiHh1bujs
-h7pH7i6m/AwgEfPS6rWCLmPmOcJILdgSPPhV6gvfucw+1KBsXF0B0jwMTuz8pfMf
-xldKD7ghfjamR2oRZyvxw5jM1cGN7CZeiKPAC8Dlc4Q2krxr/6izp1GCop5Adhyt
-TcfyPRbg9U/ugVmmbUVG/ewWtXIr3euIgzuG2UcIufCmCbtb9GsAjCmkT5wPUypS
-E9Oz3tKthyxhdIjEMyjXS2R+3TQpxmFS+f7dQW+FoJzTPQa3HtwB5DeLVQ4n/tDE
-tqqUsC+QT50oJUQg3oGpzN0LIhpuIFakNwar4k5V04Yze8Hxzw1boRPe0weMPMLv
-3LK3zqjEoXSh25fa7UljmCv1oQ+F//A680I/nmZqBflCFZu1tlatUWbzeE7BqRLi
-3u9qAh0a3N7ONwanXFeAL9iOcpT7ZUAQ03psF/VHn6my/4RFZvKQDCDeDCkFZEbm
-NW6NJVpsBgkt7fHjmiPd
-=Toxm
------END PGP SIGNATURE-----
+Essentially there are two main cases where a CVE is assigned for the
+httpoxy issue:
+
+
+   1.
+
+   A web server, programming language or framework (and in some limited
+   situations the application itself) sets the environmental variable
+   HTTP_PROXY from the user supplied Proxy header in the web request, or sets
+   a similarly used variable (essentially when the request header turns from
+   harmless data into a potentially harmful environmental variable)
+   2.
+
+   A web application makes use of HTTP_PROXY or similar variable unsafely
+   (e.g. fails to check the request type) resulting in an attacker controlled
+   proxy being used (essentially when HTTP_PROXY is actually used unsafely)
+
+
+Some  examples of situations where a web server, programming language or
+framework would qualify for a CVE regarding httpoxy:
+
+
+   1.
+
+   PHP passes the proxy as HTTP_PROXY, as such applications commonly import
+   and use HTTP_*
+   2.
+
+   mod_cgi/fast_cgi and related CGI programs set HTTP_PROXY based on the
+   request header
+   3.
+
+   An application uses an HTTP request library that trusts HTTP_PROXY
+   resulting in attacker control of requests
+
+
+Some  examples of situations where a web server, programming language or
+framework would NOT qualify for a CVE regarding httpoxy:
+
+
+   1.
+
+   A web server such as Apache passes the proxy header to a programming
+   language or framework
+   2.
+
+   A library trusts HTTP_PROXY, the library does not earn a CVE, the
+   application using it would qualify for a CVE, and generally speaking
+   whatever set the HTTP_PROXY variable would also earn a CVE
+
+
+
+
+
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
