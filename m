@@ -1,86 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/17/1
-Message-ID: <7cc09c7a-01f9-de00-5dfd-d022104c66ea@treenet.co.nz>
-Date: Sun, 18 Dec 2016 03:30:26 +1300
-From: Amos Jeffries <squid3@...enet.co.nz>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request - squid HTTP proxy multiple Information Disclosure issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/1
+Message-ID: <CAAYo3BvcTv66Cr5m6p32u+AXLx1eyFwM+mfb2O4rZOHtnk__mw@mail.gmail.com>
+Date: Mon, 18 Jul 2016 12:12:11 +1000
+From: David Black <dblack@...assian.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request for the Play Framework
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 15 July 2016 at 21:54, <cve-assign@...re.org> wrote:
 
-Two issues have been fixed in the latest Squid HTTP Proxy releases, both
-result in Cookie headers and other client-specific private information
-being delivered on cached responses to the wrong clients. Since Cookie
-often carries security credentials or session keys we consider these
-issues to have a high severity rating.
-
-
-Issue #1:
-
- Incorrect processing of responses to If-None-Modified HTTP conditional
-requests leads to client-specific Cookie data being leaked to other
-clients. Attack requests can easily be crafted by a client to probe a
-cache for this information.
-
-Vulnerable Squid Versions:
- 3.1.10 up to and including 3.1.23
- 3.2.0.3 up to and including 3.5.22
- 4.0.1 up to and including 4.0.16
-
-Reference URLs will be:
- <http://www.squid-cache.org/Advisories/SQUID-2016_11.txt>
- <http://bugs.squid-cache.org/show_bug.cgi?id=4169>
- <http://www.squid-cache.org/Versions/v3/3.1/changesets/SQUID-2016_11.patch>
- <http://www.squid-cache.org/Versions/v3/3.2/changesets/SQUID-2016_11.patch>
- <http://www.squid-cache.org/Versions/v3/3.3/changesets/SQUID-2016_11.patch>
- <http://www.squid-cache.org/Versions/v3/3.4/changesets/SQUID-2016_11.patch>
- <http://www.squid-cache.org/Versions/v3/3.5/changesets/SQUID-2016_11.patch>
- <http://www.squid-cache.org/Versions/v4/changesets/SQUID-2016_11.patch>
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+> > In version 2.5.0 of the Play Framework a CSRF bypass that depends upon
+> > an implementation bug in chrome's beacon api was fixed.
+>
+> We think additional information would help in deciding whether this is
+> commonly recognized as a Play Framework vulnerability (which would
+> have a CVE ID) or Play Framework security hardening (which would not
+> have a CVE ID). Our understanding thus far is:
+>
+>   - Play Framework is not an Atlassian product
+>
 
 
-For Mitre: the CVE critical leak was due to these lines in
-src/client_side_reply.cc:
-
-     bool matchedIfNoneMatch = false;
-     if (r.header.has(HDR_IF_NONE_MATCH)) {
-        if (!e->hasIfNoneMatchEtag(r)) {
-...
--            http->logType = LOG_TCP_MISS;
--            sendMoreData(result);
-
-This last line should have called "  processMiss(result); ". The
-remainder of the patch changes are behaviour fixes to ensure other leaks
-can not occur in any related HTTP transaction cases.
+Correct.
 
 
 
-Issue #2:
-
- Incorrect HTTP Request header comparison results in Collapsed
-Forwarding feature mistakenly identifying some private responses as
-being suitable for delivery to multiple clients.
-
- The current fix is not quite complete. However we believe the remaining
-headers leaked are not a serious security issue.
-
-Vulnerable Squid Versions:
- 3.5.0.1 up to and including 3.5.22
- 4.0.1 up to and including 4.0.16
-
-Reference URLs:
- <http://www.squid-cache.org/Advisories/SQUID-2016_10.txt>
- <http://www.squid-cache.org/Versions/v4/changesets/squid-4-14956.patch>
- for squid-3.5 excluding 3.5.22:
-<http://www.squid-cache.org/Versions/v3/3.5/changesets/SQUID-2016_10_a.patch>
- for 3.5.22 only:
- <http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14127.patch>
-
-
-
-Amos Jeffries
-The Squid Software Foundation
+>
+>   -
+> https://github.com/playframework/playframework/pull/5527#discussion-diff-51786858
+>     says "In order to make Play's CSRF filter more resilient to
+>     browser plugin vulnerabilities and new extensions, the default
+>     configuration for the CSRF filter has been made far more
+>     conservative."
+>
+>   - Chromium issue 490015 has some debate about whether it is a
+>     Chrome/Chromium vulnerability, e.g., "The issue is whether it's
+>     the browser responsibility to act as a nanny to weak websites, or
+>     we should leave weak websites as sacrifice for great justice."
+>     versus "To be clear, this is a security bug ... There is a
+>     security bug in Chrome, but no action is being done."
+>
+> Typically, it would be best not to have a CVE for Play Framework if
+> the essence of the Play Framework problem is "the product did not
+> proactively add workarounds for all browser-level vulnerabilities that
+> might be discovered later."
+>
 
 
+Perhaps the question(s) should also be - "should a CVE be assigned to
+chrome/chromium?" or perhaps in general for CSRF protection implementations
+that make an assumption that at least currently does not hold up in a
+widely used browser (content-type is not as restricted in cross-domain
+requests as some have assumed) ?
 
-Download attachment "signature.asc" of type "application/pgp-signature" (835 bytes)
+
+-- 
+David Black / Security Engineer.
+
