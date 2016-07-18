@@ -1,40 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/07/4
-Message-ID: <alpine.GSO.2.20.1609062029590.6469@freddy.simplesystems.org>
-Date: Tue, 6 Sep 2016 20:50:23 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security@...ts.openwall.com
-Subject: GraphicsMagick 1.3.25 fixes some security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/14
+Message-Id: <0e221d12-4d59-429d-ba36-80711fca156c@googlegroups.com>
+Date: Mon, 18 Jul 2016 11:56:22 -0700 (PDT)
+From: Tim Graham <timograham@...il.com>
+To: django-announce <django-announce@...glegroups.com>
+Cc: django-developers@...glegroups.com, django-users@...glegroups.com,  oss-security@...ts.openwall.com
+Subject: [ANNOUNCE] Django security releases issued: 1.10 release candidate 1, 1.9.8, and 1.8.14
 Content-Type: text/plain; charset=utf-8
 
-Yesterday GraphicsMagick 1.3.25 was released.  It fixes several 
-security issues:
+Today the Django team issued 1.10 release candidate 1, 1.9.8, and 1.8.14 as 
+part of our security process. This releases address a security issue, and 
+we encourage all users to upgrade as soon as possible.
 
-1. A last instance of CVE-2016-2317 (heap buffer overflow) in the MVG 
-rendering code (also impacts SVG).  This problem was originally 
-reported by Gustavo Grieco.
+Details are available on the Django project weblog:
 
-2. A possible heap overflow of the EscapeParenthesis() function. 
-While I was not able to reproduce it for myself, the implementation is 
-replaced with a different algorithm.  This problem was reported by 
-Gustavo Grieco.
+https://www.djangoproject.com/weblog/2016/jul/18/security-releases/
 
-3. The Utah RLE reader did not validate that header information was 
-reasonable given the file size and so it could cause huge memory 
-allocations and/or consume huge amounts of CPU.  This problem was 
-reported by Agostino Sarubbo.
+As a reminder, we ask that potential security issues be reported via 
+private email to security@...ngoproject.com and not via Django's Trac 
+instance or the django-developers list. Please see 
+https://www.djangoproject.com/security for further information.
 
-4. The TIFF reader had a bug pertaining to use of TIFFGetField() when 
-a 'count' value is returned.  The bug caused a heap read overflow (due 
-to using strlcpy() to copy a possibly unterminated string) which could 
-allow an untrusted file to crash the software.
-
-The project appreciates the time and effort that various security 
-researchers have expended to identify security issues with the 
-software so that they may be fixed.
-
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Content of type "text/html" skipped
