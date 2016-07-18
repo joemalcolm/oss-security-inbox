@@ -1,50 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/4
-Message-ID: <da73f650466b4b789d5d46768478703d@imshyb02.MITRE.ORG>
-Date: Thu, 8 Dec 2016 01:34:10 -0500
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liq3ea@...il.com>
-Subject: Re: CVE request Qemu: display: virtio-gpu-3d: information leakage in virgl_cmd_get_capset
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/2
+Message-ID: <3e7ac139-077b-9d9e-7ad0-ed90083d8937@redhat.com>
+Date: Mon, 18 Jul 2016 10:51:32 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Requests: HarfBuzz - Chromium CVE issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> Quick Emulator built with the Virtio GPU Device emulator support is vulnerable
-> to an information leakage issue. It could occur while processing
-> 'VIRTIO_GPU_CMD_GET_CAPSET' command.
+On 07/18/2016 01:30 AM, cve-assign@...re.org wrote:
+>> atleast 3 issues in here which are CVE worthy
 > 
-> A guest user/process could use this flaw to leak contents of the host memory
-> bytes.
+>> 1. Heap based buffer overflow:
+>> https://github.com/behdad/harfbuzz/issues/139#issuecomment-146984679
 > 
-> http://lists.gnu.org/archive/html/qemu-devel/2016-11/msg00059.html
+>> 2. Fix hmtx wrong table length check:
+>> https://github.com/behdad/harfbuzz/issues/139#issuecomment-148289957
+> 
+>> 3. heap-buffer-overflow in hb_ot_face_metrics_accelerator_t::get_advance
+>> https://github.com/behdad/harfbuzz/issues/156
+> 
+> As far as we can tell, these correspond to:
+> 
+> 1 - https://github.com/behdad/harfbuzz/commit/f96664974774bfeb237a7274f512f64aaafb201e
+>     fixed in 1.0.5
+> 
+> 2 - https://github.com/behdad/harfbuzz/commit/63ef0b41dc48d6112d1918c1b1de9de8ea90adb5
+>     fixed in 1.0.6
+> 
+> 3 - https://github.com/behdad/harfbuzz/commit/df698f3299d92867e3305715f675b2621c316acd
+>     the unpatched code is not in any release; the patched code is new in 1.1.0
+> 
+> df698f3299d92867e3305715f675b2621c316acd mentions "I rewrote the table
+> checking yesterday ... and introduced the exact same issue again." Is
+> there a particular motivation for having a CVE ID? We don't know of
+> anyone who is shipping products based on unreleased HarfBuzz code
+> obtained from GitHub, and the one-day existence of the problematic
+> code also seems to suggest minimal real-world relevance. The HarfBuzz
+> documentation doesn't specifically recommend that people ship
+> unreleased HarfBuzz code. A CVE ID isn't, in general, required for
+> each issue noted at any arbitrary point during development.
+> 
+> Would it be OK to keep CVE-2016-2052 for
+> 63ef0b41dc48d6112d1918c1b1de9de8ea90adb5 (which is really a "before
+> 1.0.6" issue as stated in that CVE), and assign one new ID for
+> f96664974774bfeb237a7274f512f64aaafb201e (the "before 1.0.5" issue)?
+> 
+Sure, i dont mind as long as its communicated well etc!
+>> how does
+>> MITRE plan to handle vendors who assign one CVE to multiple non-related
+>> issues?
+> 
+> Anyone is free to submit new CVE ID requests with sufficient
+> information to show that additional IDs are required. Typically this
+> means that the requester should, for example, track down all of the
+> upstream version information.
+> 
+> In general, it is not realistic to expect that the "multiple
+> non-related issues" case can be completely eliminated when CVE IDs
+> are originally assigned. When product A repackages code from product
+> B, there can be a disparity in whether the B maintainers are as
+> interested in CVE as the A maintainers. Also, the A maintainers do not
+> necessarily have any motivation for investigating the precise details
+> of what was fixed in B, unless the A maintainers are backporting
+> patches. For example, A might just be updating to the latest version
+> of B, because the B Release Notes stated that it was a security
+> update. Suppose that the A maintainers confirm that the B maintainers
+> have not been, and will not be, using CVE IDs themselves. Would it be
+> better for the A maintainers to use one CVE ID immediately, or should
+> everyone wait (potentially forever) for someone to investigate the
+> precise details?
+> 
 
-Use CVE-2016-9908.
+This means that, if you dont have motivation for investigating the
+individual issues, it is ok to assign CVEs to multiple unrelated issues?
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/display/virtio-gpu-3d.c but
-that may be an expected place for a later update.
+It so, that means everyone is free to do the above mentioned.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYSPv1AAoJEHb/MwWLVhi2qoIQAIk8ONXgNCxXa2Ikd9HOn88n
-h8NNQszbalHBui/MHF9vQhJGRGJ4iRZdu9mSnLgxJU+6huTkaWFYevul2Vwb7SEb
-HgS2SQx5d3hLwObCjSqHt/PfuT6lPDlH6h0Gjt4lViFUPAPPORc/5bI0jRAGWd2N
-pC9tsUNsq9dl00pdyox6KpqiklsvVVPKA7spkPMw5uAR2DK/B7HTyJeKuaKJ2XQq
-wVkgpCa6im86AW+zV14KRMwftNUO5H0zkXOkib/h/DuVUNzhClY2PStxePLTmqTi
-pnaSeZcTr5Ti/FMMhtOtS5LOlV35wkpah/dHzDFNZW5Fk54AAeoxVsPr6tKa3VdH
-a5izyLu05pk/B84cvOL2wl93Stt2NnZudI1JqUvPt5nfwDasVL8g/5XbHgmZhqcN
-74uZf5Zo9V9ae0dET73laQTcIXUy6vEk7nvV0mmA5uTrLVS4fGMdOJI9gQVAZkqW
-+NzWs1FJZpNRo4kQCszAC39agb2FXRseMNO8h2bON5CgyPtpa5pL+mVNJ00iPmri
-8X8RDM3h6VupDy1gF6eBFzVRVnhxgvxHf3g8P5qcoxLr0/U75XcPthy9943NDr6C
-FU6G897DnS9UkWhc1M+g3sLgj/wO1KrpSzf+ppshD5IOxsraAWg5AXRXvEPs6Du0
-vmgrb/UXnHL9UxJjy7Xo
-=/c0X
------END PGP SIGNATURE-----
+
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
