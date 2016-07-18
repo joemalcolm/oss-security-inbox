@@ -1,55 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/30/1
-Message-ID: <20161030053557.GA3024@openwall.com>
-Date: Sun, 30 Oct 2016 06:35:57 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-5195 test case
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/13
+Message-ID: <20160718205351.658cc486@pc1>
+Date: Mon, 18 Jul 2016 20:53:51 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: libupnp write files via POST
 Content-Type: text/plain; charset=utf-8
 
-Hi Andy,
+Hi,
 
-On Thu, Oct 27, 2016 at 08:35:01AM -0700, Andy Lutomirski wrote:
-> I sat on this longer than makes any sense given how easy to reproduce
-> CVE-2016-5195 is, but here's a reasonably portable reproducer.  It's
-> intended to have no side effects, but your mileage may vary.
-> 
-> https://github.com/amluto/vulnerabilities/blob/master/others/CVE-2016-5195/test_CVE-2016-5195.c
-> 
-> This will use /proc/self/mem or ptrace automatically, and it's
-> intended to be portable to a wide range of kernels.
+Wanted to point out this report by Matthew Garret (not sure if there's
+anything else than a couple of tweets public):
+https://twitter.com/mjg59/status/755062278513319936
 
-Unfortunately, it still didn't work on systems without O_TMPFILE or/and
-without a defined PR_SET_PTRACER_ANY.
+Notable:
+"Reported this to upstream 8 months ago without response, so: libupnp's
+default behaviour allows anyone to write to your filesystem"
+"Seriously. Find a device running a libupnp based server (Shodan says
+there's rather a lot), and POST a file to /testfile. Then GET /testfile"
+"…and yeah if the server is running as root (it is) and is using / as
+the web root (probably not, but maybe) this gives full host fs access"
 
-Attached is a slightly more portable version.
+And later on:
+"Emailed the Debian security team a couple of months ago, no response"
 
-> It's an improved
-> version of the test case I originally sent out to distros (oops!).
+Not good...
 
-Why "oops"?  Do you mean just the distros vs. linux-distros issue?
+Patch:
+https://github.com/mjg59/pupnp-code/commit/be0a01bdb83395d9f3a5ea09c1308a4f1a972cbd
 
-It's OK to send reproducers to the [linux-]distros list (the appropriate
-one) as long as you intend to make them public shortly after public
-disclosure of the issue itself (the earliest of: a few days or when
-other public exploits/reproducers show up).  I think for most issues,
-which are not high impact or/and where non-trivial pre-conditions need
-to be met, it makes sense to make the (non-weaponized) reproducers
-public right away (on the initial public disclosure date, along with
-full vulnerability detail), but occasionally there will be issues like
-this where delaying posting the reproducer a little bit makes sense.
-It's just that I think you shouldn't have delayed as much.  Ideally, you
-should have made a posting in here without the reproducer on the initial
-public disclosure date (in fact, that's your responsibility per the
-[linux-]distros list policy), and as others made reproducers available
-within a day, you should have also posted yours the next day.
+-- 
+Hanno Böck
+https://hboeck.de/
 
-Just my opinion.
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-Thank you for your help in handling of this issue!
-
-Alexander
-
-View attachment "test_CVE-2016-5195.c" of type "text/x-c" (5069 bytes)
-
-View attachment "test_CVE-2016-5195.c.diff" of type "text/plain" (740 bytes)
+Content of type "application/pgp-signature" skipped
