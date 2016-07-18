@@ -1,56 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/9
-Message-ID: <8bccaa90-c192-4f98-673c-26816137e513@redhat.com>
-Date: Fri, 18 Nov 2016 14:01:05 +0000
-From: Tristan Cacqueray <tdecacqu@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/4
+Message-ID: <20160718073312.GA29485@openwall.com>
+Date: Mon, 18 Jul 2016 10:33:12 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2016-013] Network information disclosure through Heat template source URL (CVE-2016-9185)
+Subject: Re: CVE request for webkit js engine javascriptcore
 Content-Type: text/plain; charset=utf-8
 
-==============================================================================
-OSSA-2016-013: Network information disclosure through Heat template
-source URL
-==============================================================================
+Hi,
 
-:Date: November 18, 2016
-:CVE: CVE-2016-9185
+On Mon, Jul 18, 2016 at 02:25:17PM +0800, jun3 June wrote:
+> Please can I have CVE IDs assigned to the following vulnerabilities:
+> 
+> 1.javascriptcore vulnerability:
+> 
+> https://bugs.webkit.org/show_bug.cgi?id=158411
+> 
+> 2.the fix has landed in r201787: <http://trac.webkit.org/r201787>
 
+As a list moderator, I already regret having (reluctantly) accepted your
+message.  I thought it was just lacking detail in message body, which is
+against oss-security list content guidelines:
 
-Affects
-~~~~~~~
-- Heat: <=5.0.3, >=6.0.0 <=6.1.0 and ==7.0.0
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
+"At least the most essential part of your message (e.g., vulnerability
+detail or a PoC exploit) should in fact be in the message itself (and in
+plain text), rather than only included by reference to an external
+resource.  Posting links to relevant external resources as well is
+acceptable, but posting only links is not."
 
-Description
-~~~~~~~~~~~
-Tom Patzig from SAP reported a vulnerability in Heat. By launching a
-new Heat stack with a local URL an authenticated user may conduct
-network discovery revealing internal network configuration. All Heat
-setup are affected.
+So I thought I'd just point out this to you like I do now (but
+off-list), for further occasions.  However, as it turns out the URL
+https://bugs.webkit.org/show_bug.cgi?id=158411 says "You are not
+authorized to access bug #158411. To see this bug, you must first log in
+to an account with the appropriate permissions." and the other URL is
+lacking direct detail on the bug as well (only talking about the fix).
 
+BTW, is it one vulnerability or more?  You wrote "vulnerabilities".
 
-Patches
-~~~~~~~
-- https://review.openstack.org/393149 (Liberty)
-- https://review.openstack.org/393148 (Mitaka)
-- https://review.openstack.org/393147 (Newton)
-- https://review.openstack.org/393146 (Ocata)
+Please post the detail in a "reply" to this message, and please
+include detail (not only URLs) in your postings going forward.  This
+last request/reminder applies to everyone posting to oss-security.
 
+Thanks,
 
-Credits
-~~~~~~~
-- Tom Patzig from SAP (CVE-2015-9185)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1606500
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-9185
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Alexander
