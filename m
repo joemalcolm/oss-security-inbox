@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1639" "Tuesday" "24" "March" "2015" "11:51:21" "+0100" "Marcus Meissner" "meissner@suse.de" "<20150324105121.GF23630@suse.de>" "40" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032410:51:21" "[oss-security] CVE for Kali Linux" (number mark "        meissner@sus Mar 24   40/1639  " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<20150323214101.GA23630@suse.de>" ("<550EE478.70005@redhat.com>" "<E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com>" "<20150322172300.GA21110@openwall.com>" "<550F2754.5060704@openwall.com>" "<20150323103854.GA28211@suse.de>" "<551081E2.8000607@openwall.com>" "<20150323214101.GA23630@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1346" "Monday" "18" "July" "2016" "19:42:17" "-0800" "Michael McNally" "mcnally@isc.org" "<a8099639-6200-2e90-f14c-415791387826@isc.org>" "32" "[oss-security] ISC security issue CVE-2016-2775 (potential denial-of-service attack against lwres functionality in BIND)" nil nil nil "7" "2016071903:42:17" "[oss-security] ISC security issue CVE-2016-2775 (potential denial-of-service attack against lwres functionality in BIND)" (number mark "U       mcnally@isc. Jul 18   32/1346  " thread-indent "\"[oss-security] ISC security issue CVE-2016-2775 (potential denial-of-service attack against lwres functionality in BIND)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1957 invoked by uid 550); 24 Mar 2015 10:51:34 -0000
+Received: (qmail 31780 invoked by uid 550); 19 Jul 2016 03:42:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1927 invoked from network); 24 Mar 2015 10:51:33 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20150324105121.GF23630@suse.de>
-References: <550EE478.70005@redhat.com>
- <E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com>
- <20150322172300.GA21110@openwall.com>
- <550F2754.5060704@openwall.com>
- <20150323103854.GA28211@suse.de>
- <551081E2.8000607@openwall.com>
- <20150323214101.GA23630@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20150323214101.GA23630@suse.de>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Jennifer_Guild=2C_Dilip_?=
- =?iso-8859-1?Q?Upmanyu=2C_Graham_Norton=2C_HRB_21284_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Date: Tue, 24 Mar 2015 11:51:21 +0100
-From: Marcus Meissner <meissner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE for Kali Linux
+Received: (qmail 31759 invoked from network); 19 Jul 2016 03:42:33 -0000
 To: oss-security@lists.openwall.com
+From: Michael McNally <mcnally@isc.org>
+Message-ID: <a8099639-6200-2e90-f14c-415791387826@isc.org>
+Date: Mon, 18 Jul 2016 19:42:17 -0800
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:45.0)
+ Gecko/20100101 Thunderbird/45.1.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] ISC security issue CVE-2016-2775 (potential denial-of-service attack
+ against lwres functionality in BIND)
 
-On Mon, Mar 23, 2015 at 10:41:01PM +0100, Marcus Meissner wrote:
-> On Tue, Mar 24, 2015 at 12:13:06AM +0300, Alexander Cherepanov wrote:
-> > On 2015-03-23 13:38, Marcus Meissner wrote:
-> > >>There are some attacks even if you verify signatures, e.g. serving
-> > >>old, known-vulnerable versions. HTTPS can help here (until
-> > >>signatures start to be widely accompanied by expiring timestamps or
-> > >>something).
-> > >
-> > >SUSE has added an expiry tag in the YUM metadata for such cases.
-> > 
-> > It's nice to see progress in this area. Does SUSE guard against
-> > other attacks from [1] too?
-> > 
-> > [1] https://isis.poly.edu/~jcappos/papers/cappos_pmsec_tr08-02.pdf
-> 
-> Our statements from 2008 (7 years ago) still stand and our package
-> manager does the full repository signing since 2006 already.
-> 
-> https://lizards.opensuse.org/2008/07/16/package-management-security-on-opensuse/
-> 
-> "Endless Data Attack" is open, as it is hard to solve for openSUSE with
-> its public mirror system.
-> 
-> The expiry was something added a bit later after the paper to address
-> the downgrade and replay attacks.
+Earlier today ISC disclosed a vulnerability affecting BIND (specifically
+affecting lightweight resolution functionality in BIND, NOT normal DNS
+resolution.  The bug affects the lwresd program or named if is configured
+to do lightweight resolution using the "lwres" configuration statement.)
 
-Some more notes.
+The defect was publicly disclosed as CVE-2016-2775 and the official
+vulnerability disclosure is here:
 
-While the "Update Scenario" is well covered, we are of course facing issues of "bringing up a system".
+  https://kb.isc.org/article/AA-01393/74/CVE-2016-2775
 
-Like discussed in the thread, how does the customer find a known good ISO image
-for download.
+Ordinarily we try to give advance notice to packagers when we are
+preparing new releases of BIND.  Unfortunately our timetable for this
+incident changed in mid-course when the reporting party informed us
+that reproduction code was already available in a public bug repository.
 
-While our installer is protecting itself with GPG signatures, but there is need for
-the root of trust of the CD medium itself.
+We apologize for the inconvenience caused by the acceleration of our
+disclosure timetable.
 
-So for SUSE we publish SHA256 checksums on the https://download.suse.com/ website at least.
-For openSUSE the GPG/SHA and MD5 are on http://software.opensuse.org/132/de .
+New releases of BIND are available which fix the lwres issue
+(CVE-2016-2775) and include fixes for a few regressions which
+had been introduced in recent versions.  You can find them in
+the usual place on our site:
 
-Ciao, Marcus
+  https://www.isc.org/downloads
+
+A standalone patch diff addressing only CVE-2016-2775 can be made
+available upon request to any parties who want only the lwres CVE
+fix and not the other regression fixes.  Contact security-officer@isc.org
+if you wish to request it.
+
+Michael McNally
+(for ISC Security Officer)
