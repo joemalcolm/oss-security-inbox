@@ -1,84 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/16
-Message-ID: <20160818145724.GA32181@kroah.com>
-Date: Thu, 18 Aug 2016 16:57:24 +0200
-From: Greg KH <greg@...ah.com>
-To: Marcus Meissner <meissner@...e.de>
-Cc: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org, security@...nel.org
-Subject: Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/19/1
+Message-ID: <a8099639-6200-2e90-f14c-415791387826@isc.org>
+Date: Mon, 18 Jul 2016 19:42:17 -0800
+From: Michael McNally <mcnally@....org>
+To: oss-security@...ts.openwall.com
+Subject: ISC security issue CVE-2016-2775 (potential denial-of-service attack against lwres functionality in BIND)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 18, 2016 at 04:39:57PM +0200, Marcus Meissner wrote:
-> On Thu, Aug 18, 2016 at 04:30:14PM +0200, Greg KH wrote:
-> > On Thu, Aug 18, 2016 at 04:22:16PM +0200, Marcus Meissner wrote:
-> > > Hi,
-> > > 
-> > > I think this does not have a CVE yet, please assign.
-> > > 
-> > > https://www.spinics.net/lists/linux-usb/msg144177.html
-> > > 
-> > > Headline:         Linux Kernel Panic Over USB with HID Keyboard wMaxPacketSize
-> > > Platforms:        Ubuntu
-> > > Versions:         Linux Kernel 4.4.0-22-generic
-> > 
-> > Huh?  It's much more pervasive than just that single platform or single
-> > version.
-> 
-> That was the quote from the original e-mail. I read further on it affects
-> more kernel versions.
->  
-> > > CVSS Score:       4.7
-> > > CVSS Vector:      AV:L/AC:M/Au:N/C:N/I:N/A:C
-> > > Filed Defects:    
-> > > Related Defects:  
-> > > CWE Tags:         
-> > > Cycle:            
-> > > Found by:         Jake Lamberson
-> > > 
-> > > 
-> > > Linux Kernel panics when using an OHCI controller if a USB device reports being 
-> > > a generic HID keyboard and reports a wMaxPacketSize of over 4095. The OHCI
-> > > controller driver fails to reserve bandwidth for the device, causing the 
-> > > keyboard handler to fail when attaching to the HID. Later, when the device is 
-> > > removed, the system crashes due to a null pointer dereference in a linked list 
-> > > of endpoint descriptors. The crash can be re-created using a Facedancer and UMAP 
-> > > software. Given an appropriately configured Facedancer and UMAP setup, the crash 
-> > > can be re-created with: 
-> > > sudo board=facedancer21 python3 umap.py -P /dev/serial_device_here -f 03:00:00:E:0046 -l LOG
-> > > 
-> > > Note: OHCI is a USB 1.1 controller standard that can be included with devices
-> > > that support either USB 1.1 or 2.0 as their highest USB spec. USB 3.0 devices
-> > > all use xHCI, which implements USB 1.1, 2.0, and 3.0, making them immune to
-> > > this particular bug.
-> > > 
-> > > -----------------
-> > > 
-> > > The proposed fixing patch is here:
-> > > https://www.spinics.net/lists/linux-usb/msg144269.html
-> > > 
-> > > 
-> > > It has not yet been committed to the USB tree or to Linus Tree as far as I see.
-> > 
-> > Not true, it is commit id aed9d65ac3278d4febd8665bd7db59ef53e825fe in
-> > the usb tree and in linux-next and will be sent to Linus tomorrow.
-> 
-> Ah sorry, only looked briefly.
+Earlier today ISC disclosed a vulnerability affecting BIND (specifically
+affecting lightweight resolution functionality in BIND, NOT normal DNS
+resolution.  The bug affects the lwresd program or named if is configured
+to do lightweight resolution using the "lwres" configuration statement.)
 
-This was also asked about 2 hours ago on the linux-usb mailing list, why
-all of the sudden interest in something that we had been discussing for
-weeks now in public?
+The defect was publicly disclosed as CVE-2016-2775 and the official
+vulnerability disclosure is here:
 
-> > And are we really assigning CVE numbers for when you use an active
-> > "hardware test probe"?  If so, how many are people going to be assigning
-> > for these same problems on other operating systems?  :)
-> 
-> I think attaching malicious USB devices and crashing the kernel should
-> probably get CVE ids, or do you think it should not?
+  https://kb.isc.org/article/AA-01393/74/CVE-2016-2775
 
-I don't know, that's why I'm asking, it requires "physical presence"
-which is much different from most threat models that people work to
-protect against.
+Ordinarily we try to give advance notice to packagers when we are
+preparing new releases of BIND.  Unfortunately our timetable for this
+incident changed in mid-course when the reporting party informed us
+that reproduction code was already available in a public bug repository.
 
-thanks,
+We apologize for the inconvenience caused by the acceleration of our
+disclosure timetable.
 
-rgeg k-h
+New releases of BIND are available which fix the lwres issue
+(CVE-2016-2775) and include fixes for a few regressions which
+had been introduced in recent versions.  You can find them in
+the usual place on our site:
+
+  https://www.isc.org/downloads
+
+A standalone patch diff addressing only CVE-2016-2775 can be made
+available upon request to any parties who want only the lwres CVE
+fix and not the other regression fixes.  Contact security-officer@....org
+if you wish to request it.
+
+Michael McNally
+(for ISC Security Officer)
