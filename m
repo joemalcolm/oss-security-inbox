@@ -1,53 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/5
-Message-ID: <87oaca9jeo.fsf@mid.deneb.enyo.de>
-Date: Mon, 25 Jan 2016 09:02:07 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Linux potential division by zero in TCP code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/19/8
+Message-ID: <871t2pycqx.fsf_-_@x220.int.ebiederm.org>
+Date: Tue, 19 Jul 2016 08:32:38 -0500
+From: ebiederm@...ssion.com (Eric W. Biederman)
+To: Sebastian Krahmer <krahmer@...e.com>
+Cc: oss-security@...ts.openwall.com, pkg-shadow-devel@...ts.alioth.debian.org, "Serge E. Hallyn" <serge@...lyn.com> 
+Subject: Re: subuid security patches for shadow package
 Content-Type: text/plain; charset=utf-8
 
-While looking for something else entirely, I came across this commit,
-initially reported at <https://lkml.org/lkml/2015/12/21/435>:
 
-commit 8b8a321ff72c785ed5e8b4cf6eda20b35d427390
-Author: Yuchung Cheng <ycheng@...gle.com>
-Date:   Wed Jan 6 12:42:38 2016 -0800
+Adding the shadow-development list, so there is a chance other people
+familiar with the code can comment as well.
 
-    tcp: fix zero cwnd in tcp_cwnd_reduction
-    
-    Patch 3759824da87b ("tcp: PRR uses CRB mode by default and SS mode
-    conditionally") introduced a bug that cwnd may become 0 when both
-    inflight and sndcnt are 0 (cwnd = inflight + sndcnt). This may lead
-    to a div-by-zero if the connection starts another cwnd reduction
-    phase by setting tp->prior_cwnd to the current cwnd (0) in
-    tcp_init_cwnd_reduction().
-    
-    To prevent this we skip PRR operation when nothing is acked or
-    sacked. Then cwnd must be positive in all cases as long as ssthresh
-    is positive:
-    
-    1) The proportional reduction mode
-       inflight > ssthresh > 0
-    
-    2) The reduction bound mode
-      a) inflight == ssthresh > 0
-    
-      b) inflight < ssthresh
-         sndcnt > 0 since newly_acked_sacked > 0 and inflight < ssthresh
-    
-    Therefore in all cases inflight and sndcnt can not both be 0.
-    We check invalid tp->prior_cwnd to avoid potential div0 bugs.
-    
-    In reality this bug is triggered only with a sequence of less common
-    events.  For example, the connection is terminating an ECN-triggered
-    cwnd reduction with an inflight 0, then it receives reordered/old
-    ACKs or DSACKs from prior transmission (which acks nothing). Or the
-    connection is in fast recovery stage that marks everything lost,
-    but fails to retransmit due to local issues, then receives data
-    packets from other end which acks nothing.
+Sebastian Krahmer <krahmer@...e.com> writes:
 
+> On Tue, Jul 19, 2016 at 11:39:15AM +0200, Sebastian Krahmer wrote:
+>> Hi
+>> 
+>> The shadow package contains newuidmap and newgidmap suid
+>> binaries in order to allow users to take advantage of the
+>> userns feature of uid-mappings.
+>> 
+>> I added patches here:
+>> 
+>> https://bugzilla.suse.com/show_bug.cgi?id=979282
+>> 
+>> they consist of:
+>> 
+>> 1) Removing getlogin() to find out about users.
+>>    It relies on utmp, which is not a trusted base of info (group writable).
+>> 
+>> 2) Cleaning up UID retrieval and computation. The 'long long' code was
+>>    totally unclear to me, as the numbers are converted to ulong right
+>>    afterwards anyway. Additionally there was a *int overflow*, which can be
+>>    tested via 'newuidmap $$ 0 10000 -1' (given that 10000 is listed as allowed)
+>>    which produces no error but tries to write large "count" values to the uid_map
+>>    file. Kernel may check for overflows itself, but it should not be allowed
+>>    by a suid binary to be written in the first place.
+>
+> After checking some kernels, it looks like this int wrap is exploitable as a LPE,
+> as kernel is using 32bit uid's that are truncated from unsigned longs (64bit on x64)
+> as returned by simple_strtoul() [map_write()]. So newuidmap and kernel have an entire
+> different view on the upper and lower bounds, making newuidmap overflow (and pass)
+> and still being in bounds inside the kernel.
+>
+> Maybe it would be wise to align integer widths of kernel and the userspace
+> tools.
+>
+> So everyone shipping newuidmap as mode 04755 should fix it. :)
 
-I haven't analyzed this, but it looks potentially security-relvant
-(although the last paragraph above suggests it's not entirely
-straightforward to trigger).
+Thank you for the review and looking at this.  I agree that the integer
+size issues should all be locked down and handled more clearly.
+
+I think it should be code in have_sub_uids and have_sub_gids that should
+be catching overflows and the like.  Limiting things to what is actually
+allowed by the subuid file.
+
+I also agree that the kernel is permitting more than it needs to which
+in case like this is not helpful.
+
+The issues with the library functions get_my_pwent and getulong I will
+have to come up to speed on before I comment knowledgably, but they
+definitely appear to be worth looking at.
+
+Eric
