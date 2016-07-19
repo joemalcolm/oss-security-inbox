@@ -1,30 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/30/4
-Message-ID: <183593889.43262406.1459342377531.JavaMail.zimbra@redhat.com>
-Date: Wed, 30 Mar 2016 08:52:57 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/19/7
+Message-ID: <20160719125119.GA7146@suse.de>
+Date: Tue, 19 Jul 2016 14:51:19 +0200
+From: Sebastian Krahmer <krahmer@...e.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request -- linux kernel: crash on invalid USB device descriptors (ims-pcu driver)
+Cc: ebiederm@...ssion.com
+Subject: Re: subuid security patches for shadow package
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Tue, Jul 19, 2016 at 11:39:15AM +0200, Sebastian Krahmer wrote:
+> Hi
+> 
+> The shadow package contains newuidmap and newgidmap suid
+> binaries in order to allow users to take advantage of the
+> userns feature of uid-mappings.
+> 
+> I added patches here:
+> 
+> https://bugzilla.suse.com/show_bug.cgi?id=979282
+> 
+> they consist of:
+> 
+> 1) Removing getlogin() to find out about users.
+>    It relies on utmp, which is not a trusted base of info (group writable).
+> 
+> 2) Cleaning up UID retrieval and computation. The 'long long' code was
+>    totally unclear to me, as the numbers are converted to ulong right
+>    afterwards anyway. Additionally there was a *int overflow*, which can be
+>    tested via 'newuidmap $$ 0 10000 -1' (given that 10000 is listed as allowed)
+>    which produces no error but tries to write large "count" values to the uid_map
+>    file. Kernel may check for overflows itself, but it should not be allowed
+>    by a suid binary to be written in the first place.
 
-If possible, we would like to obtain a CVE-ID for the following
-securuty flaw.
+After checking some kernels, it looks like this int wrap is exploitable as a LPE,
+as kernel is using 32bit uid's that are truncated from unsigned longs (64bit on x64)
+as returned by simple_strtoul() [map_write()]. So newuidmap and kernel have an entire
+different view on the upper and lower bounds, making newuidmap overflow (and pass)
+and still being in bounds inside the kernel.
 
-A device pretending to be a device driven by the ims-pcu driver,
-but leaving out either of the two interfaces present on the genuine
-device will crash the driver and possibly the kernel. Thus, DoS
-with physical access is possible. Kernels since v3.10 are vulnerable.
+Maybe it would be wise to align integer widths of kernel and the userspace
+tools.
 
-Initial reference with a proposed fix:
-https://bugzilla.novell.com/show_bug.cgi?id=971628
+So everyone shipping newuidmap as mode 04755 should fix it. :)
 
-An upstream patch:
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=a0ad220c96692eda76b2e3fd7279f3dcd1d8a8ff
+Sebastian
 
-Red Hat security Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=1320060
+-- 
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.com - SuSE Security Team
+
