@@ -1,84 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/21
-Message-ID: <55378cfd01cb465480674eec75226bf6@imshyb02.MITRE.ORG>
-Date: Mon, 5 Dec 2016 17:13:43 -0500
-From: <cve-assign@...re.org>
-To: <meissner@...e.de>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: zlib security issues found during audit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/19/3
+Message-ID: <CAKws9z0pq63ZK2q_zVgoYF+U+evLNvqD5v=7HKnOy5H263Z8rA@mail.gmail.com>
+Date: Tue, 19 Jul 2016 00:56:58 -0400
+From: Scott Arciszewski <scott@...agonie.com>
+To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
+Subject: Ruining the Magic of Magento's Encryption Library
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello mcrypt, my old friend
+I've come to exploit you again
+Because a version slowly rotting
+Is well-deserved for a boycotting
+And the S-box that was planted in its GOST
+Still remains
+Within the sound of silence
 
-> https://wiki.mozilla.org/MOSS/Secure_Open_Source/Completed#zlib
-> https://wiki.mozilla.org/images/0/09/Zlib-report.pdf
-> https://docs.google.com/document/d/10i1KZS5so8xDqH2rplRa2xet0tyTvvJlLbQQmZIUIKE/edit
+~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~
 
-> had some findings (1 medium, 4 low)
+Let's talk about Magento.
 
-Here are 4 CVE IDs; it is not a one-to-one mapping.
+The Wikipedia page for Magento begins, "Magento is an open-source
+e-commerce platform written in PHP." This bears emphasis: e-commerce
+platform.
 
-> Finding 1: Incompatible declarations for external linkage function deflate (Medium)
-> Fix: https://github.com/madler/zlib/commit/3fb251b363866417122fe54a158a1ac5a7837101
+When I hear e-commerce, I think "financial information". I think "credit
+card numbers" and "probably PCI-DSS violations should anything be obviously
+stupid".
 
-We feel that the scope of CVE should, ideally, omit unexploitable
-code-quality issues. The PDF report has a number of comments about
-Finding 1; however, one comment is "current compilers process this
-code without issues." A finding can be important to the practice of
-software development without being important for vulnerability
-management. For now, the answer is that there is no CVE ID.
+Let's look at how Magento implements cryptography, with a series of
+exhibits followed by an explanation of what's happening and why it's
+dangerous:
 
+  A.
+https://github.com/magento/magento2/blob/6ea7d2d85cded3fa0fbcf4e7aa0dcd4edbf568a6/lib/internal/Magento/Framework/Encryption/Encryptor.php#L268-L320
+  B.
+https://github.com/magento/magento2/blob/6ea7d2d85cded3fa0fbcf4e7aa0dcd4edbf568a6/lib/internal/Magento/Framework/Encryption/Encryptor.php#L390-L399
+  C.
+https://github.com/magento/magento2/blob/6ea7d2d85cded3fa0fbcf4e7aa0dcd4edbf568a6/lib/internal/Magento/Framework/Encryption/Crypt.php#L63-L77
 
-> Finding 2: Accessing a buffer of char via a pointer to unsigned int (Low)
-> UNRESOLVED:This issue remains under discussion
+D.
+https://github.com/magento/magento2/blob/6ea7d2d85cded3fa0fbcf4e7aa0dcd4edbf568a6/lib/internal/Magento/Framework/Encryption/Encryptor.php#L170
 
-There is no CVE ID. The PDF report mentions, for example, "There are several
-possible fixes ... Do nothing."
+If you looked at the code, I promise this is every bit as bad as it looks
+at a glance.
 
+EXHIBIT A
+=========
 
-> Finding 3: Out-of-bounds pointer arithmetic in inftrees.c (Low)
+Magento's decryption expects up to 4 strings concatenated by a : character.
+Depending on the number of pieces, it assumes a totally different setup:
 
-> https://github.com/madler/zlib/commit/6a043145ca6e9c55184013841a67b2fef87e44c0
+1 piece: Blowfish, in ECB mode!
+2 or 3 pieces: Probably blowfish, but maybe AES or Rijndael-256, depending
+on the integer supplied by the attacker.
+4 pieces: We finally get an initialization vector, which means CBC mode can
+be used.
 
-Use CVE-2016-9840.
+At no point do they authenticate _anything_, so no matter what:
 
+- You get to control which branch is selected by breaking pieces off the
+attacker-chosen message.
+- You get to choose the ciphertext that the attempted decryption is
+performed upon.
 
-> https://github.com/madler/zlib/commit/9aaec95e82117c1cb0f9624264c3618fc380cecb
+EXHIBIT B
+=========
 
-Use CVE-2016-9841.
+If you thought the ability to be encrypted with AES was a saving grace, too
+bad. They hard-code your choice to ECB mode.
 
+The only way you can get CBC mode (which, again, is unauthenticated) is to
+use the non-standard Rijndael256 cipher.
 
-> Finding 4: Undefined left shift of negative number (Low)
-> Fix: https://github.com/madler/zlib/commit/e54e1299404101a5a9d0cf5e45512b543967f958
+EXHIBIT C
+=========
 
-Use CVE-2016-9842.
+If you thought it couldn't possibly get any worse, Magento's encryption
+library will either:
 
+- Give you an IV consisting entirely of NULL bytes.
+- Generate it, using rand(), on a 62-character keyspace.
 
-> Finding 5: Big-endian out-of-bounds pointer (Low)
-> Fix: https://github.com/madler/zlib/commit/d1d577490c15a0c6862473d7576352a9f18ef811
+(Y'know, because it's not XORed with the plaintext in CBC mode and biases
+aren't a concern or anything.)
 
-Use CVE-2016-9843.
+EXHIBIT D
+=========
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Yes, that is how Magento hashes passwords. Which is weird: They go out of
+their way to compare strings in constant-time, but
 
-iQIcBAEBCAAGBQJYReVZAAoJEHb/MwWLVhi22fMP/j6Pw7FkFDrKLjy/okWP/QoM
-imxWROlUse9/xACgcA+9eMiGbkm54ntx20bpEWOAUA8+H1KW+bvCrcFX3a6d1IuE
-vVrI0XcKQiKwVngem5XPEcvtAwFa85U4RUFZmYcqPYe7n0Yo7LoWwH9HI6/8Mziq
-yGIKgcPfY88FA8YM0DeSmkwQJ7WByKF4TzoChd6pK2NlwP1SFa2lMgrg4JhM9PAs
-9d2ye1OkVvVV1BPnjhVFe8S0Ze8IeOy1jeKS4lUbpgIZn4WdbERQ3ORAPuhRxAdZ
-mn7/MbulenkQKd3vnEKmA8qK5p/h6E8jnCUCbasgAtsareZHgPmDd7NON3LmmAYG
-q0X8Rrk13i2h+gpGVJlT7D4Gx/n3gIEBbSKNmBIPjQmXH/sOQN/0XLls/Cock4Pm
-mjw3mIFLu/CQ1JNBdMQpY9zMpAHQzMX0qAfiJa0f/UfaN4k8A6uQAJWWskl48aBs
-xp/dz2nOVJcCwmbmkKsfied610QLC8yXwXGmh+TTPxpSXxkr0+o3r5m8S7sjkMJA
-Uuctv6UEKx6wqJum1G7UDcpkQVzSJOXvZ2TKzMhHirjfrUlg7Bfg31kQj0IfKicn
-VeLM3IBnrvl08u1Dpi9A62YSPtuQQZ+8XqcVfUB/0Wf+0uaV/Wp5as0ylPWMlpBK
-9foWchAV8inhIVAMDbwQ
-=P6rB
------END PGP SIGNATURE-----
+PUTTING IT ALL TOGETHER
+=======================
+
+An attacker has a great deal of control over the ciphertext, and
+incidentally which cipher mode is used by the decryption routine.
+Nothing is authenticated. At all.
+ECB mode everywhere.
+When CBC mode is actually used, it's used with a laughably weak IV and a
+non-standard cipher. Also, unauthenticated.
+
+Magento, one of the largest open source e-commerce platforms, ships a
+broken cryptography library that clueless developers are probably using to
+encrypt your credit card information for their client's customers.
+
+Given the prevalence of ECB mode, and the weak IV used in CBC mode, you
+should assume anything you encrypted with Magento's encryption library is
+both:
+
+- Decryptable, if an attacker can alter plaintexts or ciphertexts and study
+the output of either operation, without the key
+- Forgeable
+
+This cryptography implementation is very irresponsible and, because
+cryptography is involved, warrants immediate full disclosure so everyone
+can cease to use their broken crypto as soon as possible.
+
+If you need a remediation strategy, I've got you covered:
+https://paragonie.com/blog/2015/11/choosing-right-cryptography-library-for-your-php-project-guide
+
+Scott Arciszewski
+Chief Development Officer
+Paragon Initiative Enterprises <https://paragonie.com>
+
