@@ -1,34 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/14/8
-Message-ID: <alpine.LFD.2.20.1610141642160.13950@wniryva>
-Date: Fri, 14 Oct 2016 16:44:16 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Huawei PSIRT <psirt@...wei.com>
-Subject: CVE request Qemu: net: OOB buffer access in rocker switch emulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/19/6
+Message-ID: <20160719093915.GA29047@suse.de>
+Date: Tue, 19 Jul 2016 11:39:15 +0200
+From: Sebastian Krahmer <krahmer@...e.com>
+To: oss-security@...ts.openwall.com
+Cc: ebiederm@...ssion.com
+Subject: subuid security patches for shadow package
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi
 
-Quick Emulator(Qemu) built with the Rocker switch emulation support is 
-vulnerable to an OOB read access issue. It could occur while performing a DMA 
-access 'TEST_DMA_CTRL_INVERT' test.
+The shadow package contains newuidmap and newgidmap suid
+binaries in order to allow users to take advantage of the
+userns feature of uid-mappings.
 
-A privileged guest user could use this issue to crash the Qemu process 
-instance on the host resulting in DoS.
+I added patches here:
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02501.html
+https://bugzilla.suse.com/show_bug.cgi?id=979282
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1384896
+they consist of:
 
-This issue was reported by Huawei Product Security Incident Response Team 
-(PSIRT), Huawei Inc.
+1) Removing getlogin() to find out about users.
+   It relies on utmp, which is not a trusted base of info (group writable).
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+2) Cleaning up UID retrieval and computation. The 'long long' code was
+   totally unclear to me, as the numbers are converted to ulong right
+   afterwards anyway. Additionally there was a *int overflow*, which can be
+   tested via 'newuidmap $$ 0 10000 -1' (given that 10000 is listed as allowed)
+   which produces no error but tries to write large "count" values to the uid_map
+   file. Kernel may check for overflows itself, but it should not be allowed
+   by a suid binary to be written in the first place.
+
+Theoretically theres also a TOCTOU issue in newuidmap, since the
+st_uid fields of the stat on /proc/pid may change over time
+(suid being executed), but to my analsysis such twists have no gain
+for the attacker.
+
+Patch should be tested by upstream, since I am not sure what the
+getlogin() code (shared uids??) was about at all.
+
+Sebastian
+
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.com - SuSE Security Team
+
