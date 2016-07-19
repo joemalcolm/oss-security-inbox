@@ -1,29 +1,146 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/19/8
-Message-ID: <CAL8hw9GTBixuPdUDvyanNNGPp3_tFAad=QWfFX3FEhjPyaAMhw@mail.gmail.com>
-Date: Tue, 19 Apr 2016 15:09:32 +0000
-From: Nathan Van Gheem <vangheem@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE Request: Privilege escalation in webdav
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/19/4
+Message-ID: <CAKws9z1pthfTVXjyyuXpbGK1Ya7bPk91QzY_4Mc61MxAJJ4rQA@mail.gmail.com>
+Date: Tue, 19 Jul 2016 01:03:26 -0400
+From: Scott Arciszewski <scott@...agonie.com>
+To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
+Subject: Re: Ruining the Magic of Magento's Encryption Library
 Content-Type: text/plain; charset=utf-8
 
-Can a CVE be assigned to this issue, please?
+EXHIBIT D
+=========
 
-https://plone.org/security/20160419/privilege-escalation-in-webdav
+Yes, that is how Magento hashes passwords. Which is weird: They go out of
+their way to compare strings in constant-time, but they don't use a proper
+password hashing method (e.g. bcrypt).
 
-A missing webdav security declaration would allow unauthorized webdav
-access.
+(Part of the sentence was lobbed off, due to stupidity and/or insanity
+caused by exposure to Magento's source code.)
 
-The relevant code is:
 
-https://plone.org/security/20150910/
+Scott Arciszewski
+Chief Development Officer
+Paragon Initiative Enterprises <https://paragonie.com>
 
-The vendor credits with the discovery: Thomas Mogensen
+On Tue, Jul 19, 2016 at 12:56 AM, Scott Arciszewski <scott@...agonie.com>
+wrote:
 
-Thanks, let me know if you'd like more information.
-
--- 
-Nathan Van Gheem
-Director of Solutions Engineering
-Wildcard Corp
+> Hello mcrypt, my old friend
+> I've come to exploit you again
+> Because a version slowly rotting
+> Is well-deserved for a boycotting
+> And the S-box that was planted in its GOST
+> Still remains
+> Within the sound of silence
+>
+> ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8<
+> ~
+>
+> Let's talk about Magento.
+>
+> The Wikipedia page for Magento begins, "Magento is an open-source
+> e-commerce platform written in PHP." This bears emphasis: e-commerce
+> platform.
+>
+> When I hear e-commerce, I think "financial information". I think "credit
+> card numbers" and "probably PCI-DSS violations should anything be obviously
+> stupid".
+>
+> Let's look at how Magento implements cryptography, with a series of
+> exhibits followed by an explanation of what's happening and why it's
+> dangerous:
+>
+>   A.
+> https://github.com/magento/magento2/blob/6ea7d2d85cded3fa0fbcf4e7aa0dcd4edbf568a6/lib/internal/Magento/Framework/Encryption/Encryptor.php#L268-L320
+>   B.
+> https://github.com/magento/magento2/blob/6ea7d2d85cded3fa0fbcf4e7aa0dcd4edbf568a6/lib/internal/Magento/Framework/Encryption/Encryptor.php#L390-L399
+>   C.
+> https://github.com/magento/magento2/blob/6ea7d2d85cded3fa0fbcf4e7aa0dcd4edbf568a6/lib/internal/Magento/Framework/Encryption/Crypt.php#L63-L77
+>
+> D.
+> https://github.com/magento/magento2/blob/6ea7d2d85cded3fa0fbcf4e7aa0dcd4edbf568a6/lib/internal/Magento/Framework/Encryption/Encryptor.php#L170
+>
+> If you looked at the code, I promise this is every bit as bad as it looks
+> at a glance.
+>
+> EXHIBIT A
+> =========
+>
+> Magento's decryption expects up to 4 strings concatenated by a :
+> character. Depending on the number of pieces, it assumes a totally
+> different setup:
+>
+> 1 piece: Blowfish, in ECB mode!
+> 2 or 3 pieces: Probably blowfish, but maybe AES or Rijndael-256, depending
+> on the integer supplied by the attacker.
+> 4 pieces: We finally get an initialization vector, which means CBC mode
+> can be used.
+>
+> At no point do they authenticate _anything_, so no matter what:
+>
+> - You get to control which branch is selected by breaking pieces off the
+> attacker-chosen message.
+> - You get to choose the ciphertext that the attempted decryption is
+> performed upon.
+>
+> EXHIBIT B
+> =========
+>
+> If you thought the ability to be encrypted with AES was a saving grace,
+> too bad. They hard-code your choice to ECB mode.
+>
+> The only way you can get CBC mode (which, again, is unauthenticated) is to
+> use the non-standard Rijndael256 cipher.
+>
+> EXHIBIT C
+> =========
+>
+> If you thought it couldn't possibly get any worse, Magento's encryption
+> library will either:
+>
+> - Give you an IV consisting entirely of NULL bytes.
+> - Generate it, using rand(), on a 62-character keyspace.
+>
+> (Y'know, because it's not XORed with the plaintext in CBC mode and biases
+> aren't a concern or anything.)
+>
+> EXHIBIT D
+> =========
+>
+> Yes, that is how Magento hashes passwords. Which is weird: They go out of
+> their way to compare strings in constant-time, but
+>
+> PUTTING IT ALL TOGETHER
+> =======================
+>
+> An attacker has a great deal of control over the ciphertext, and
+> incidentally which cipher mode is used by the decryption routine.
+> Nothing is authenticated. At all.
+> ECB mode everywhere.
+> When CBC mode is actually used, it's used with a laughably weak IV and a
+> non-standard cipher. Also, unauthenticated.
+>
+> Magento, one of the largest open source e-commerce platforms, ships a
+> broken cryptography library that clueless developers are probably using to
+> encrypt your credit card information for their client's customers.
+>
+> Given the prevalence of ECB mode, and the weak IV used in CBC mode, you
+> should assume anything you encrypted with Magento's encryption library is
+> both:
+>
+> - Decryptable, if an attacker can alter plaintexts or ciphertexts and
+> study the output of either operation, without the key
+> - Forgeable
+>
+> This cryptography implementation is very irresponsible and, because
+> cryptography is involved, warrants immediate full disclosure so everyone
+> can cease to use their broken crypto as soon as possible.
+>
+> If you need a remediation strategy, I've got you covered:
+> https://paragonie.com/blog/2015/11/choosing-right-cryptography-library-for-your-php-project-guide
+>
+> Scott Arciszewski
+> Chief Development Officer
+> Paragon Initiative Enterprises <https://paragonie.com>
+>
 
