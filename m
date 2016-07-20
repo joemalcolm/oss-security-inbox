@@ -1,71 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/20/3
-Message-ID: <5202386.CNWfkh1GhB@blackgate>
-Date: Thu, 20 Oct 2016 09:27:24 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/20/4
+Message-ID: <53f41165-852c-64d5-5de6-72ad095c4cc2@securify.nl>
+Date: Wed, 20 Jul 2016 18:26:24 +0200
+From: Summer of Pwnage <lists@...urify.nl>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: imagemagick: memory allocation failure in AcquireMagickMemory (memory.c) (incomplete fix for CVE-2016-8862)
+Subject: Multiple vulnerabilities affecting five WordPress Plugins (XSS, CSRF & SQLi)
 Content-Type: text/plain; charset=utf-8
 
-Description:
-imagemagick is a software suite to create, edit, compose, or convert bitmap 
-images.
+Please see attached advisories for more information. These issues were 
+found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
+project. Its goal is to contribute to the security of popular, widely 
+used OSS projects in a fun and educational way.
 
-Another round of fuzzing pointed out that the memory allocation failure I 
-discovered is still reproducible in the 7.0.3.4 version.
-As usual, the upstream security policy are enabled.
 
-The interesting part of the ASan stacktrace(not full because is a copy past of 
-the one in the provious post):
 
-# identify $FILE
-   #9 0x7f467fd11c67 in AcquireMagickMemory /tmp/portage/media-
-gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/memory.c:460:10
-    #10 0x7f467fd11c67 in AcquireQuantumMemory /tmp/portage/media-
-gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/memory.c:533
-    #11 0x7f4673379018 in ReadRLEImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/coders/rle.c:267:36
-    #12 0x7f467faeca85 in ReadImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/constitute.c:496:13
-    #13 0x7f467fff4def in ReadStream /tmp/portage/media-
-gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/stream.c:1012:9
-    #14 0x7f467faeb69d in PingImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/constitute.c:226:9
-    #15 0x7f467faebeae in PingImages /tmp/portage/media-
-gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/constitute.c:326:10
-    #16 0x7f467f40f4da in IdentifyImageCommand /tmp/portage/media-
-gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickWand/identify.c:319:18
-    #17 0x7f467f48a844 in MagickCommandGenesis /tmp/portage/media-
-gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickWand/mogrify.c:183:14
-    #18 0x4f1fae in MagickMain /tmp/portage/media-
-gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/utilities/magick.c:145:10
-    #19 0x4f1fae in main /tmp/portage/media-
-gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/utilities/magick.c:176
-    #20 0x7f467e35d61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #21 0x4192a8 in _init (/usr/bin/magick+0x4192a8)
-Affected version:
-7.0.3.4
+View attachment "cross_site_request_forgery_in_icegram_wordpress_plugin.txt" of type "text/plain" (3178 bytes)
 
-Fixed version:
-N/A
+View attachment "cross_site_scripting_vulnerability_in_paid_memberships_pro_wordpress_plugin.txt" of type "text/plain" (3630 bytes)
 
-Commit fix:
+View attachment "multiple_cross_site_scripting_vulnerabilities_in_ninja_forms_wordpress_plugin.txt" of type "text/plain" (4193 bytes)
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+View attachment "multiple_sql_injection_vulnerabilities_in_wordpress_video_player.txt" of type "text/plain" (5587 bytes)
 
-CVE:
-N/A
-
-Timeline:
-2016-10-13: bug re-discovered
-2016-10-13: bug re-reported to upstream
-2016-10-20: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/10/20/imagemagick-memory-allocation-failure-in-acquiremagickmemory-memory-c-incomplete-fix-for-cve-2016-8862/
+View attachment "persistent_cross_site_scripting_in_woocommerce_using_image_metadata__exif_.txt" of type "text/plain" (7397 bytes)
