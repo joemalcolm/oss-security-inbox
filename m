@@ -1,40 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/13
-Message-Id: <20160316174622.56D53132E53B@smtpvbsrv1.mitre.org>
-Date: Wed, 16 Mar 2016 13:46:22 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/20/5
+Message-Id: <20160720195331.65E75332026@smtpvbsrv1.mitre.org>
+Date: Wed, 20 Jul 2016 15:53:31 -0400 (EDT)
 From: cve-assign@...re.org
-To: speirofr@...il.com
+To: hanno@...eck.de
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: The minissdpd (v 1.2.20130907-3) is affected by an improper validation of array index weakness
+Subject: Re: libupnp write files via POST
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> http://speirofr.appspot.com/files/advisory/SPADV-2016-02.md
-> 
-> https://bugs.debian.org/816759
+> https://twitter.com/mjg59/status/755062278513319936
+> https://github.com/mjg59/pupnp-code/commit/be0a01bdb83395d9f3a5ea09c1308a4f1a972cbd
 
+This can have a CVE ID: from our perspective the product is exposing
+unnecessary functionality, end users typically would consider the
+functionality unwanted and unsafe, the behavior violates the
+expectations of users familiar with similar products, the behavior
+isn't (as far as we know) required or suggested by any protocol or
+specification, and the behavior is implemented in a confusing way.
 
-> https://github.com/miniupnp/miniupnp/commit/b238cade9a173c6f751a34acf8ccff838a62aa47
+Use CVE-2016-6255.
 
->> The problem is the incorrect validation ... that does not consider
->> negative length values
+Another observation is that it is not necessary for a user to write a
+libupnp-based application in order to encounter the vulnerability.
+(One might conceivably argue that, if exploitation required a custom
+application, the application author would be responsible for verifying
+that the code met expectations as far as whether a web server should
+exist and what types of read and write access should be allowed.)
+Instead, anyone can build the unpatched code from GitHub, go to the
+upnp/sample directory, and execute the tv_device script with no
+arguments. This apparently starts the web server on port 49152 by
+default. The web server accepts unauthenticated POST requests and
+stores the data to the client-specified filename within the
+upnp/sample/web directory. It also accepts unauthenticated GET
+requests for those files.
 
-> - if(p+l > buf+n) {
-> + if(l > (unsigned)(buf+n-p)) {
-
-Use CVE-2016-3178.
-
-
-> https://github.com/miniupnp/miniupnp/commit/140ee8d2204b383279f854802b27bdb41c1d5d1a
-
->> the error handling code ... attempts to free the undefined memory
->> contents
-
-> + memset(newserv, 0, sizeof(struct service)); /* set pointers to NULL */
-
-Use CVE-2016-3179.
+Common user expectations, based on experience with any popular
+general-purpose web server, are that defaulting to unauthenticated
+POSTs with readable uploads should not happen unless specifically
+called out in the documentation. This is the main reason for the CVE.
+Also, if the POST behavior were important, the web server should at
+least follow RFC 2616 section 9.5 and return a 201 status when it
+creates a file in the upnp/sample/web directory. It currently returns
+200, which makes it somewhat harder for a person auditing an
+application to notice that the POSTs are actually successful.
 
 - -- 
 CVE Assignment Team
@@ -44,17 +55,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW6ZuJAAoJEL54rhJi8gl5+zcP/1oXalzOckVO1akQQK2c/xSP
-FyC7bnNx0JYfA85zkZoy5PLOypFlLtLoOUOsCgjeVCjQ6KVBQGMustr/qkMH9ooW
-AHuOHRyvwIUtMP5PO3ffgetNqoQeLr0kEwyDH7dXtF35VOVhtrylzxVq9MlySboe
-Y64R5ZMN5EhbU9cE/uwyTpMnAfbgyKPClgf4N1vxgiAB9pzQm+6wTpVKr1O3+j3g
-PFPymfnjZzpbSVzLskj4I6hoywoG1x0Mvd0QfDLgSX+xZ3Z1AGw+efSZrqovlNoP
-ybM9nkhagW878NK4xiD4Wv0I5gRrhW+UElxNvvRKYgSL9qL2gmj1E6hVdhWULy9p
-d9U/zpVcdjLKxNgnyJmQFzc3cEtgWhQfENEKqEq8G4Vdm5d4yrNlaaAiPUkvBzRu
-su4XE8z/EcUfaN3iHNvBiu3PX2Oo1l9GhxE1f1DfjbhDqxN86tAOlzmjK5AS0uY8
-2NQ2zxDPffqwVvgUThmnA+0Jre9i//uiGiIqi1O5Pj6UkRzmObPwY39YmVJ/pssS
-BepEvpJbrgLxyhWdhqfEYSyNKcnJzkq/Kr+YPJER1zjy9BLpdDA/jmXclN15gWpj
-j+Wxap24GneDKxpNZXuaYqOKcMdoAEca55k2BDjZbKRCxImTugByf1yGwz89cRDV
-Wvd/xLNzXI4eTnWsa4d1
-=RWDk
+iQIcBAEBCAAGBQJXj9YtAAoJEHb/MwWLVhi2nu4QAIIcgm14o54j2URjIQ7GD1+k
+1s1NQKsZJVGtTjiVtUgHoMmnkfRw1no2k4kHLF/FuJYzGj6mjzyH7czgAruFvNFs
+SPuZtGH38LaQdjZ9DFXhdmTNR/i8eIyQozdXc8XPefxW327o5vlXMdh/LvrcBeCN
+RZff98ZH1pizCBQXk8bWRgMEdSfXvI816eCeme2zoJ+69UKJVxs68mHbt0kJdnPc
+vrawWBDSLxIIFLEY0Rj0qq6dQqmrirst5rYoLrGelZdEyZU4AKV6f2YzOgQCWze5
+7HW6Cjpl69mXF86DcQ1+zaPITPga0iE3dQnVjvBp/x8Zm/gRd0lia3ewhZAp5NjQ
+faE8YgVOEI/JCyPm/1xqV1Ol952ebb6fM6s5nkpug0Ejt5EZdFFbHggUKl6njUsm
+5+CyQHfXNe4s6xmevW+QIX23Rmx0Ox/ZcXTJ2kKDrLuxVxWyXceo7hcSNz4PaP/T
+BUSqJN2PessLWB8FRG0idF9+vQNrOMdsHxM6cG4VDWgOmN45RRnqvVLjaqOQbtL4
+EH6TfvQynAvOobpiHmKT3E4yUlJU9nto1j5AyA6jgez7J2aO+x4dGmFziS3kkEJo
+B2+T2aOlD8xI5lIfimy6wKNUUtCVLBhX666G3QCZ40JwzqVCyaInXuUSgTJNLk6s
+xrXrtoajVVmMZ/mUOlLC
+=Aj9J
 -----END PGP SIGNATURE-----
