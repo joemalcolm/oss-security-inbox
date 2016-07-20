@@ -1,96 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/17/8
-Message-Id: <20160717200008.8EDEC3AE001@smtpvbsrv1.mitre.org>
-Date: Sun, 17 Jul 2016 16:00:08 -0400 (EDT)
-From: cve-assign@...re.org
-To: huzaifas@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Requests: HarfBuzz - Chromium CVE issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/20/6
+Message-ID: <2fcfb94f-179b-eae1-817a-e940d793b2e9@suse.com>
+Date: Wed, 20 Jul 2016 22:37:00 +0200
+From: Andreas Stieger <andreas.stieger@...e.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE request: multiple issues fixed in GNU libidn 1.33
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> atleast 3 issues in here which are CVE worthy
-> 
-> 1. Heap based buffer overflow:
-> https://github.com/behdad/harfbuzz/issues/139#issuecomment-146984679
-> 
-> 2. Fix hmtx wrong table length check:
-> https://github.com/behdad/harfbuzz/issues/139#issuecomment-148289957
-> 
-> 3. heap-buffer-overflow in hb_ot_face_metrics_accelerator_t::get_advance
-> https://github.com/behdad/harfbuzz/issues/156
+The GNU libidn 1.33 release was announced with the following:
 
-As far as we can tell, these correspond to:
+https://lists.gnu.org/archive/html/help-libidn/2016-07/msg00009.html
 
-1 - https://github.com/behdad/harfbuzz/commit/f96664974774bfeb237a7274f512f64aaafb201e
-    fixed in 1.0.5
+> ** libidn: Fix out-of-bounds stack read in idna_to_ascii_4i.
+> See tests/tst_toascii64oob.c for regression check (and the comment in
+> it how to use it).  Reported by Hanno Böck <address@...den>.
 
-2 - https://github.com/behdad/harfbuzz/commit/63ef0b41dc48d6112d1918c1b1de9de8ea90adb5
-    fixed in 1.0.6
+Test:
+http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=9a1a7e15d0706634971364493fbb06e77e74726c
+Fix:
+http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=f20ce1128fb7f4d33297eee307dddaf0f92ac72d
+Changelog:
+http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=d4c533a5d975bf49090d3cd40acd230b8f79dd32
+Follow-up memory leak fix:
+http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=11abd0e02c16f9e0b6944aea4ef0f2df44b42dd4
 
-3 - https://github.com/behdad/harfbuzz/commit/df698f3299d92867e3305715f675b2621c316acd
-    the unpatched code is not in any release; the patched code is new in 1.1.0
+> ** idn: Solve out-of-bounds-read when reading one zero byte as input.
+> Also replaced fgets with getline.  Reported by Hanno Böck <address@...den>.
 
-df698f3299d92867e3305715f675b2621c316acd mentions "I rewrote the table
-checking yesterday ... and introduced the exact same issue again." Is
-there a particular motivation for having a CVE ID? We don't know of
-anyone who is shipping products based on unreleased HarfBuzz code
-obtained from GitHub, and the one-day existence of the problematic
-code also seems to suggest minimal real-world relevance. The HarfBuzz
-documentation doesn't specifically recommend that people ship
-unreleased HarfBuzz code. A CVE ID isn't, in general, required for
-each issue noted at any arbitrary point during development.
+Fix:
+http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=570e68886c41c2e765e6218cb317d9a9a447a041
+Follow-up fix:
+http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=5e3cb9c7b5bf0ce665b9d68f5ddf095af5c9ba60
 
-Would it be OK to keep CVE-2016-2052 for
-63ef0b41dc48d6112d1918c1b1de9de8ea90adb5 (which is really a "before
-1.0.6" issue as stated in that CVE), and assign one new ID for
-f96664974774bfeb237a7274f512f64aaafb201e (the "before 1.0.5" issue)?
+> ** libidn: stringprep_utf8_nfkc_normalize reject invalid UTF-8.
+> It was always documented to only accept UTF-8 data, but now it doesn't
+> crash when presented with such data.  Reported by Hanno Böck.
 
-> how does
-> MITRE plan to handle vendors who assign one CVE to multiple non-related
-> issues?
+Test / Fix:
+http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=1fbee57ef3c72db2206dd87e4162108b2f425555
+Changelog:
+http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=1d2413555dcd1fef26b80445a00a4637965a2df0
 
-Anyone is free to submit new CVE ID requests with sufficient
-information to show that additional IDs are required. Typically this
-means that the requester should, for example, track down all of the
-upstream version information.
+Could CVEs please be assigned?
 
-In general, it is not realistic to expect that the "multiple
-non-related issues" case can be completely eliminated when CVE IDs
-are originally assigned. When product A repackages code from product
-B, there can be a disparity in whether the B maintainers are as
-interested in CVE as the A maintainers. Also, the A maintainers do not
-necessarily have any motivation for investigating the precise details
-of what was fixed in B, unless the A maintainers are backporting
-patches. For example, A might just be updating to the latest version
-of B, because the B Release Notes stated that it was a security
-update. Suppose that the A maintainers confirm that the B maintainers
-have not been, and will not be, using CVE IDs themselves. Would it be
-better for the A maintainers to use one CVE ID immediately, or should
-everyone wait (potentially forever) for someone to investigate the
-precise details?
+Thanks,
+Andreas
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+-- 
+Andreas Stieger <andreas.stieger@...e.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG Nürnberg)
 
-iQIcBAEBCAAGBQJXi+MCAAoJEHb/MwWLVhi2wgAQAJLXVA40PHjC/4BOS7shFg+L
-XuoF2XzKGCh76iqAw0ZJK4ID6vRLfrn82hxFZfNqBm1K22QCVXk8Mg2m4NKkWMtf
-ukfNCaBoZaV66+YHJkCoVuADfkvfOtzCjh0KZef1f6pPboH9T0h6MuUK3Tj377Yg
-b3JE0Lo3uOWEWqNvd5l4abyIBksKfRhbqCaMm7PvPqWnlAm6klPs3CXgdGOmuZH1
-o/j19BRNIzqVMYSpakeCJABp03gNMdcG2ralIYtMABNbaUVbBEsCyacMhiMTuXn4
-Y5Q676tfQFy3fAUPfC0C98qa0YsbiY1DigQtbPx3sVtssL5sOSWdRXfJ7iG7NdV7
-4YvVq17R9W2+pDvuZGa8jXXY3rRb3QoWz/RdyqlAGy8Dacgm44+zV7pot0ViM5l8
-kHPpVJHQ66ggM4zLMF/Os2Fh+u1KUOf/6EYJhZhMlE/NncJuZWgHzY9KsZelutja
-FiF3UotH95sSLoCpV12nUKXZaQ8J7X7f54SOK3n6cygFdMnObx1C93/3FUASnay4
-e20ZjIs/O++42kmDnd0tpGVP2ZvDFPJ+deUxAtxKL9g3DzyAyvXhGba9g+zgbIB/
-KM2dMvlgM1WshMOoOL9x3lS2/wsZkhivxF+Wamg/F7348MXk2C9oJqI57MNsYPGt
-wGEjdlgK1yth7LE1EIrc
-=QsMP
------END PGP SIGNATURE-----
+
