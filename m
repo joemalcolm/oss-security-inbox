@@ -1,4 +1,9 @@
-Received: (qmail 7895 invoked by uid 550); 27 Oct 2025 18:48:40 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2815" "Wednesday" "20" "July" "2016" "11:14:53" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160720151453.E969FB2E027@smtpvbsrv1.mitre.org>" "72" "[oss-security] Re: subuid security patches for shadow package" nil nil nil "7" "2016072015:14:53" "[oss-security] Re: subuid security patches for shadow package" (number mark "U       cve-assign@m Jul 20   72/2815  " thread-indent "\"[oss-security] Re: subuid security patches for shadow package\"\n") "<20160719093915.GA29047@suse.de>" ("<20160719093915.GA29047@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21554 invoked by uid 550); 20 Jul 2016 15:15:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,111 +12,84 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 19678 invoked from network); 27 Oct 2025 17:35:20 -0000
-Authentication-Results: apache.org; auth=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
-	t=1761586510; bh=0df3oUk7YPlDGmfCHl3phnnFlKiftrbkzAFXo4ZEoC8=;
-	h=Date:From:Subject:To:From;
-	b=KcBrB1PIM4ODO3Lx9W9LWuBtkHFlqDDr6mNSNSU6EPXmVuBj65XYIl6Lk7UNPcZeg
-	 /lcrk7LbKolAW2KaXgQ+RIQoUEz0cNPHjXmWe+jk0Zhx2DIS6XK3tcDM4v/t0zz6nS
-	 Zqkc0NqpdOKFOCHgPr9FxSEEEYjDue6l4VBGfjTum/EdPkbx+/pnHWZJO+Atq0C0vk
-	 8TVfDL+Q3nUI6CkSqJtgXPX4qy8n1mbXYiRBE039xRPhcX9oGEAgiOCcPI23paNTg5
-	 CrYbvLqebGjjIzhRo7C9bT+cYMRVbeuOc3klJW4KYctqt7dtRfqHXyacd1j4g2ofss
-	 aVVWDWZD92PkQ==
-Message-ID: <87bea380-400a-4fe2-8984-908f67ae7b97@apache.org>
-Date: Mon, 27 Oct 2025 17:35:09 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Mark Thomas <markt@apache.org>
-To: oss-security@lists.openwall.com
-Content-Language: en-GB
-Autocrypt: addr=markt@apache.org; keydata=
- xsFNBEq0DukBEAD4jovHOPJDxoD+JnO1Go2kiwpgRULasGlrVKuSUdP6wzcaqWmXpqtOJKKw
- W2MQFQLmg7nQ9RjJwy3QCbKNDJQA/bwbQT1F7WzTCz2S6vxC4zxKck4t6RZBq2dJsYKF0CEh
- 6ZfY4dmKvhq+3istSoFRdHYoOPGWZpuRDqfZPdGm/m335/6KGH59oysn1NE7a2a+kZzjBSEg
- v23+l4Z1Rg7+fpz1JcdHSdC2Z+ZRxML25eVatRVz4yvDOZItqDURP24zWOodxgboldV6Y88C
- 3v/7KRR+1vklzkuA2FqF8Q4r/2f0su7MUVviQcy29y/RlLSDTTYoVlCZ1ni14qFU7Hpw43KJ
- tgXmcUwq31T1+SlXdYjNJ1aFkUi8BjCHDcSgE/IReKUanjHzm4XSymKDTeqqzidi4k6PDD4j
- yHb8k8vxi6qT6Udnlcfo5NBkkUT1TauhEy8ktHhbl9k60BvvMBP9l6cURiJg1WS77egI4P/8
- 2oPbzzFiGFqXyJKULVgxtdQ3JikCpodp3f1fh6PlYZwkW4xCJLJucJ5MiQp07HAkMVW5w+k8
- Xvuk4i5quh3N+2kzKHOOiQCDmN0sz0XjOE+7XBvM1lvz3+UarLfgSVmW8aheLd7eaIl5ItBk
- 8844ZJ60LrQ+JiIqvqJemxyIM6epoZvY5a3ZshZpcLilC5hW8QARAQABzSJNYXJrIEUgRCBU
- aG9tYXMgPG1hcmt0QGFwYWNoZS5vcmc+wsF3BBMBCgAhBQJKtA7pAhsDBQsJCAcDBRUKCQgL
- BRYCAwEAAh4BAheAAAoJEBDAHFovYFnn2YgQAKN6FLG/I1Ij3PUlC/XNlhasQxPeE3w2Ovtt
- weOQPYkblJ9nHtGH5pNqG2/qoGShlpI04jJy9GxWKOo7NV4v7M0mbVlCXVgjdlvMFWdL7lno
- cggwJAFejQcYlVtxyhu4m50LBvBunEhxCbQcKnnWmkB7Ocm0Ictaqjc9rCc1F/aNhVMUpJ0z
- G1kyTp9hxvN6TbCQlacMx5ocTWzL0zn6QZhbUfrYwfxYJmSnkVYZOYzXIXIsLN5sJ9Q4P8tj
- Y4qWgd+bQvOqPWrkzL9LVRnGOrSYIsoM5zWdoj1g1glMzK/ZqJdRqqqBhe6FYTbXipz8oX8i
- mCebcaxZnfLhGiqqX+yDa3YUwDiqom+sZOc0iXGvKkqltPLpNeF0MVT7aZjalsQ/v2Ysb24R
- Ql9FfjfWmvT8ZPWz8Kore1AI4UcIIgFVtM+zuLlL9CIsGjg+gHDE2dhZDY0qfizlHL9CoAWU
- DM3pIfxM2V4BRn1xO+j/mModhjmYLZvnFVz4KGkNO7wRkofAANIWYo3WI5x83BGDH371t3NR
- rrpSSFP0XpQX6/Leaj2j6U6puABL2qBxhscsO6chc3u4/+019ff+peZVsc9ttcTQXsKIujmM
- b8p2sk5usmv6PKVX3oW/RAxpbVHU5kZ5px1Hq7mMQdZfLs5ff4YymXBH02z4/RmSzPam0Xb5
- zsFNBEq0DukBEADCNEkws5YroBmbu8789Xf006gTl5LzD/Hdt3sAp9iCfPgucO+l7U+xbo1X
- HTMJQwEVfS+Rx3RbaLYRG+hU7FuJLQB/5NaCDNRuqw5KHyQtJUH+zo84IqqfMzG8aOSdHg1y
- r2xKH4QTmgQONBu/W0xEZmZro6TjYNwkk2pwXK2yuImZPUOy+mK1qF8Wm3hTtkPE+FFSNFIa
- eHDoTGmx/0Riu/K7dNJTrC0TlRpn2K6d60zB53YYTc+0DYSDyB0FupXiAx/+XEGn3Q7eNi2B
- V6w50v5r51QP8zptiFflMfFKNAfV8xS5MteQd98YS5qqd/LPo3gS5HFPQaSL0k3RTClv7fQN
- HcZFqmv0OWpix6zm2npYxhqsTDGeSa52/uXehVXF5JubYFifMSLpbGVZqdrmG5hr2cycxsjF
- iY0zJOaRitmN/JWbOGLiwrcN4ukKNyFntFG5jPaFnJdx9rHfyJNeF9cgv9JlZeFxJ6WqIAhl
- KOuH3K8/py0SPE6ZOFfRo0YUxvh25K/siOcPLm613aOxyY7YfQ8ME2vgn7I0mAtg9am+YFDa
- bGqj839odwZdzZv2T2mUHnybFTJFBuMWGWKYstYDS6eZEmhupbPvUKkDug/mO+gdo+pSKF9Y
- S6DM5RtCdTNJq4NZY50ypBb5RSj+INHPocIp2V/DDTbzySsu6wARAQABwsFfBBgBCgAJBQJK
- tA7pAhsMAAoJEBDAHFovYFnnLe0P/i34oK5cE2LlqUEITEcTO94x1EX0UmtKokRfQ3AYWK8X
- eFD8cmSty72hMkL+1c0V//4Qc53SUyLIWXk8FKWF7hdL3zyuBqlRb55721CYC35GA/jR90p0
- k1vr701gaat2cNTOVC0/6H9cE5yYXT+zMr9TSiKCDwONhhSbmAJZc6X0fgsmCD7I5xUI5Vri
- hN/Wx0CZBtrXGUyE4hgFaYSGptZmkY5Ln1e+nI185Bda7bpLwcAIGrI9nYtVXgf71ybGKdPP
- tFfXIoPXuctn99M7NnWBhNuGDms2YWkOC7eeWBTxKkZDWR3vRmRy52B6GxR7USk/KXs7yqGP
- kfT/c4CZFfOurZUXXuC3PvOme0DQmqwExtJormoG4Fy6suEFPrfhYMigTy7kSbVTCOBMjQLH
- +U/FFNshvg9+M/ZvaKT+0lpRvBSuG5ngsC0bO0xWsXhb6qfH2h53g4VcwFvCBL5IfqgAeUbC
- nGGHNcGWpmwdeb7D7ahrNZSHEUUYR7lTbjkYS01/QDOcEwNZOqDRIJUQOOUq35721VeROkdh
- ZmMZtFlsQeQJsWoqGrQo/kEYicVlMVOgjmOOzOa5fRb/IqlGlBn4a4me3hWthLLtMy+OOEim
- 6ENjntVTBQiTP/YqrxWDbCkaD7b2e9wY5N3JlRxMIQHfcHaND3PRdQSn7oHYXmJl
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2025-61795: Apache Tomcat: Delayed cleaning of multi-part upload
- temporary files may lead to DoS
+Received: (qmail 21505 invoked from network); 20 Jul 2016 15:15:06 -0000
+From: cve-assign@mitre.org
+To: krahmer@suse.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20160719093915.GA29047@suse.de>
+Message-Id: <20160720151453.E969FB2E027@smtpvbsrv1.mitre.org>
+Date: Wed, 20 Jul 2016 11:14:53 -0400 (EDT)
+Subject: [oss-security] Re: subuid security patches for shadow package
 
-Severity: low
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Affected versions:
+> 1) Removing getlogin() to find out about users.
+>    It relies on utmp, which is not a trusted base of info (group writable).
 
-- Apache Tomcat 11.0.0-M1 through 11.0.11
-- Apache Tomcat 10.1.0-M1 through 10.1.46
-- Apache Tomcat 9.0.0.M1 through 9.0.109
-- Apache Tomcat 8.5.0 through 8.5.100
-- Apache Tomcat 3 before 8.5.0 unknown
+Possibly the concern is that the utmp entry might have a spoofed
+username associated with the correct uid, and the attacker's goal is
+to obtain unauthorized group privileges. We have not studied the code
+in detail, but shadow-4.2.1/src/newgrp.c seems to have this sequence
+of calls:
 
-Description:
+  pwd = get_my_pwent ();
+     [ note that this calls getlogin ]
+  grp = xgetgrgid (pwd->pw_gid);
+  gid = grp->gr_gid;
+  setgid (gid)
 
-Improper Resource Shutdown or Release vulnerability in Apache Tomcat.
-
-If an error occurred (including exceeding limits) during the processing 
-of a multipart upload, temporary copies of the uploaded parts written to 
-disc were not cleaned up immediately but left for the garbage collection 
-process to delete. Depending on JVM settings, application memory usage 
-and application load, it was possible that space for the temporary 
-copies of uploaded parts would be filled faster than GC cleared it, 
-leading to a DoS.
+Use CVE-2016-6251 for the potentially unsafe use of getlogin.
 
 
+>    there was a *int overflow*, which can be
+>    tested via 'newuidmap $$ 0 10000 -1' (given that 10000 is listed as allowed)
+>    which produces no error but tries to write large "count" values to the uid_map
+>    file
 
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.11, from 
-10.1.0-M1 through 10.1.46, from 9.0.0.M1 through 9.0.109.
+>> After checking some kernels, it looks like this int wrap is exploitable as a LPE,
+>> as kernel is using 32bit uid's that are truncated from unsigned longs (64bit on x64)
+>> as returned by simple_strtoul() [map_write()]. So newuidmap and kernel have an entire
+>> different view on the upper and lower bounds, making newuidmap overflow (and pass)
+>> and still being in bounds inside the kernel.
+>> 
+>> So everyone shipping newuidmap as mode 04755 should fix it. :)
 
-The following versions were EOL at the time the CVE was created but are
-known to be affected: 8.5.0 though 8.5.100. Other, older, EOL versions 
-may also be affected.
-Users are recommended to upgrade to version 11.0.12 or later, 10.1.47 or 
-later or 9.0.110 or later which fixes the issue.
+shadow-4.2.1/src/Makefile.in has:
 
-Credit:
+  suidubins = chage chfn chsh expiry gpasswd newgrp passwd newuidmap newgidmap
 
-sw0rd1ight (https://github.com/sw0rd1ight) (finder)
+Use CVE-2016-6252 for the incorrect integer handling.
 
-References:
 
-https://lists.apache.org/thread/wm9mx8brmx9g4zpywm06ryrtvd3160pp
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2025-61795
+> From: ebiederm@xmission.com (Eric W. Biederman)
+> 
+> Adding the shadow-development list, so there is a chance other people
+> familiar with the code can comment as well.
+
+There are no replies yet after the
+http://lists.alioth.debian.org/pipermail/pkg-shadow-devel/2016-July/011017.html
+post.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXj5TsAAoJEHb/MwWLVhi2x6cP/1MqBp/UizSC/Omsgd08miga
+HwWaU2OmWD+3eXXvyHMevNaAKrtgk385Hb7anlZmFL3g+qveQ6z1mlfpOM0RnzP2
+1Ugbuj6MWNva98dHEXXIqfl1imsXmUJVsFGZcDZ6lHiLjCDiwWWs6F6R+N3dNKDn
+dxcG70pxp8Id63Gednmfv+kzE8STW6cephtY7Iwm2YDBrWfVuDbuNMYOODnfv3Sq
+CPN+U+NrzFmZONMOyhsq0FxhPRYSEAiM2Z90su0p1hLXW+OEJ4r/2ntPgbOoaN2y
+jUEFLlsDLrQqTjyhq+l6APHwR+v4riLqdCpen6Mu/p1d6IY880jjWpLAxX02mQw1
+55o00PaKHutIusR7CJo+6GnYeL+DqViUB6ROwZhvScxsFDp/qug3awgjPr5BY4Pk
+MtawRi5Ul5lvn1vZiHTnBFjPsg1GrBKSWHtI51wnyPdm/R75AwriHBEVZvBJAczh
+ej7WFm0aNg6HfTIJsUWkqP27n7BYjukGYC6ntbDX+TBPLeRC4f9bhqPAHtDsVvRm
+zGaPylqu7hskxe5vb8fkht37jgjBgxn2cAcaPmT8vYR4eFqYk3oKP+ON4vON+nbD
+6ofFyLMqTgzKJySLDsOKZ0nYbIsxceJzqEuwMyl/q9QEbhEop0rFq0UmeppUoZg3
+3bg8yO0WagWNIOKO+lEd
+=+wdJ
+-----END PGP SIGNATURE-----
