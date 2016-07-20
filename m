@@ -1,51 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/17/1
-Message-ID: <CAKG8Do6ip4RSonV48gxBtAFU8X2MEAQUC=j-Giz1fLhtEP1p+A@mail.gmail.com>
-Date: Fri, 17 Jun 2016 11:22:32 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/20/7
+Message-ID: <20160720214852.GA23823@nekral.nekral.homelinux.net>
+Date: Wed, 20 Jul 2016 23:48:52 +0200
+From: Nicolas François <nicolas.francois@...traliens.net>
+To: "Eric W. Biederman" <ebiederm@...ssion.com>
+Cc: Sebastian Krahmer <krahmer@...e.com>, oss-security@...ts.openwall.com, pkg-shadow-devel@...ts.alioth.debian.org
+Subject: Re: [Pkg-shadow-devel] subuid security patches for shadow package
 Content-Type: text/plain; charset=utf-8
 
-Hi Tim,
+Hi,
 
-On Wed, Jun 15, 2016 at 6:54 PM, Tim <tim-security@...tinelchicken.org>
-wrote:
+The first point looks like a non issue to me.
 
->
-> Here are the additional details I promised:
->
-> http://blog.blindspotsecurity.com/2016/06/advisory-http-header-injection-in.html
->
-> The gist of it is that protocol injection can occur not only if an
-> application sets a header based on user-supplied values, but also if
-> the application ever tries to fetch a URL specified by an attacker
-> (SSRF case) OR if the application ever accesses any malicious web
-> server (redirection case).  URLs of the following form allow
-> injection into the HTTP stream:
->
->   http://127.0.0.1%0d%0aX-injected:%20header%0d%0ax-leftover:%20:12345/foo
->   http://localhost%00%0d%0ax-bar:%20:12345/foo
->
-> More details in the blog post, of course.
->
-
-Thanks for details!
-The glibc side of the issue has its own upstream bug entry:
-https://sourceware.org/bugzilla/show_bug.cgi?id=20018
-
->
-> Best regards,
-> tim
->
+getlogin() is used to differentiate users with the same UID.
+The result of getlogin() is checked: if it returns a username that do not
+have the UID returned by getuid(), it will be ignored.
 
 
-
+Best Regards,
 -- 
-Cedric Buissart,
-Product Security
+Nekral
 
-Purkynova 111
-Brno 612 45
-Czech Republic
 
+
+On Tue, Jul 19, 2016 at 08:32:38AM -0500, Eric W. Biederman wrote:
+> 
+> Adding the shadow-development list, so there is a chance other people
+> familiar with the code can comment as well.
+> 
+> Sebastian Krahmer <krahmer@...e.com> writes:
+> 
+> > On Tue, Jul 19, 2016 at 11:39:15AM +0200, Sebastian Krahmer wrote:
+> >> Hi
+> >> 
+> >> The shadow package contains newuidmap and newgidmap suid
+> >> binaries in order to allow users to take advantage of the
+> >> userns feature of uid-mappings.
+> >> 
+> >> I added patches here:
+> >> 
+> >> https://bugzilla.suse.com/show_bug.cgi?id=979282
+> >> 
+> >> they consist of:
+> >> 
+> >> 1) Removing getlogin() to find out about users.
+> >>    It relies on utmp, which is not a trusted base of info (group writable).
+> >> 
+> >> 2) Cleaning up UID retrieval and computation. The 'long long' code was
+> >>    totally unclear to me, as the numbers are converted to ulong right
+> >>    afterwards anyway. Additionally there was a *int overflow*, which can be
+> >>    tested via 'newuidmap $$ 0 10000 -1' (given that 10000 is listed as allowed)
+> >>    which produces no error but tries to write large "count" values to the uid_map
+> >>    file. Kernel may check for overflows itself, but it should not be allowed
+> >>    by a suid binary to be written in the first place.
+> >
+> > After checking some kernels, it looks like this int wrap is exploitable as a LPE,
+> > as kernel is using 32bit uid's that are truncated from unsigned longs (64bit on x64)
+> > as returned by simple_strtoul() [map_write()]. So newuidmap and kernel have an entire
+> > different view on the upper and lower bounds, making newuidmap overflow (and pass)
+> > and still being in bounds inside the kernel.
+> >
+> > Maybe it would be wise to align integer widths of kernel and the userspace
+> > tools.
+> >
+> > So everyone shipping newuidmap as mode 04755 should fix it. :)
+> 
+> Thank you for the review and looking at this.  I agree that the integer
+> size issues should all be locked down and handled more clearly.
+> 
+> I think it should be code in have_sub_uids and have_sub_gids that should
+> be catching overflows and the like.  Limiting things to what is actually
+> allowed by the subuid file.
+> 
+> I also agree that the kernel is permitting more than it needs to which
+> in case like this is not helpful.
+> 
+> The issues with the library functions get_my_pwent and getulong I will
+> have to come up to speed on before I comment knowledgably, but they
+> definitely appear to be worth looking at.
+> 
+> Eric
+> 
+> _______________________________________________
+> Pkg-shadow-devel mailing list
+> Pkg-shadow-devel@...ts.alioth.debian.org
+> http://lists.alioth.debian.org/cgi-bin/mailman/listinfo/pkg-shadow-devel
