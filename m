@@ -1,26 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/20
-Message-ID: <20160503235110.GD1250@sentinelchicken.org>
-Date: Tue, 3 May 2016 16:51:10 -0700
-From: Tim <tim-security@...tinelchicken.org>
-To: Seth Arnold <seth.arnold@...onical.com>, oss-security@...ts.openwall.com
-Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/20/3
+Message-ID: <14ffaef2-f635-7267-9976-7a9329468099@lightbend.com>
+Date: Wed, 20 Jul 2016 09:15:26 -0700
+From: Will Sargent <will.sargent@...htbend.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request for the Play Framework
 Content-Type: text/plain; charset=utf-8
 
+> > In version 2.5.0 of the Play Framework a CSRF bypass that depends upon
+> > an implementation bug in chrome's beacon api was fixed.
+>
+> We think additional information would help in deciding whether this is
+> commonly recognized as a Play Framework vulnerability (which would
+> have a CVE ID) or Play Framework security hardening (which would not
+> have a CVE ID). Our understanding thus far is:
+>
+>   - Play Framework is not an Atlassian product
+>
+>   - https://github.com/playframework/playframework/pull/5527#discussion-diff-51786858
+>     says "In order to make Play's CSRF filter more resilient to
+>     browser plugin vulnerabilities and new extensions, the default
+>     configuration for the CSRF filter has been made far more
+>     conservative."
+>
+>   - Chromium issue 490015 has some debate about whether it is a
+>     Chrome/Chromium vulnerability, e.g., "The issue is whether it's
+>     the browser responsibility to act as a nanny to weak websites, or
+>     we should leave weak websites as sacrifice for great justice."
+>     versus "To be clear, this is a security bug ... There is a
+>     security bug in Chrome, but no action is being done."
+>
+> Typically, it would be best not to have a CVE for Play Framework if
+> the essence of the Play Framework problem is "the product did not
+> proactively add workarounds for all browser-level vulnerabilities that
+> might be discovered later."
 
-> Or, replace the strings with arrays and use execve() instead of system().
- 
-^^^
+Thanks for your review -- Play is proactive about security, but does
+rely on the integrity of the browser to implement key security features
+(CORS, Same Origin Policy, security headers, etc) for that functionality.
 
-That.
+Regarding your other questions, Play Framework ("Play" for short) is an
+open source project -- the source code is owned and licensed by
+Lightbend.  You can read more about it here:
 
-system() should be taken out into the street and shot.  There's just
-no good reason for a respectable programmer to use it.
+https://www.playframework.com/community-process#Implementation-decisions
 
-Not saying that's the *only* thing they would need to do, but we need
-to encourage development platforms, in general, to stop offering up
-awful interfaces like this.  Heck, Node.js offers a child_process.exec()
-call that isn't exec at all.  It is (approximately) system().  Surely
-that won't lead to any problems...
+For reference, there is a mailing list for reporting vulnerabilities at
+security@...yframework.org.
 
-tim
+The mailing list for receiving Play Framework security announcements is
+at https://groups.google.com/forum/#!forum/play-framework-security
+
+And the HTML page for viewing Play security advisories reports is at
+https://www.playframework.com/security/vulnerability
+
+Thanks,
+Will Sargent
+Lightbend, Play Team
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
