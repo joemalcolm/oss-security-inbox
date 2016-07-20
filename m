@@ -1,4 +1,9 @@
-Received: (qmail 19625 invoked by uid 550); 21 Jan 2025 00:49:13 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1836" "Wednesday" "20" "July" "2016" "22:37:00" "+0200" "Andreas Stieger" "andreas.stieger@suse.com" "<2fcfb94f-179b-eae1-817a-e940d793b2e9@suse.com>" "57" "[oss-security] CVE request: multiple issues fixed in GNU libidn 1.33" nil nil nil "7" "2016072020:37:00" "[oss-security] CVE request: multiple issues fixed in GNU libidn 1.33" (number mark "U       andreas.stie Jul 20   57/1836  " thread-indent "\"[oss-security] CVE request: multiple issues fixed in GNU libidn 1.33\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 26503 invoked by uid 550); 20 Jul 2016 20:41:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,105 +12,74 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 29892 invoked from network); 20 Jan 2025 23:47:40 -0000
-Message-ID: <9ce624fb-1a7c-4ccb-8816-7aadbb754e50@gentoo.org>
-Date: Mon, 20 Jan 2025 18:47:27 -0500
+Received: (qmail 25625 invoked from network); 20 Jul 2016 20:37:38 -0000
+To: cve-assign@mitre.org
+From: Andreas Stieger <andreas.stieger@suse.com>
+Organization: SUSE Linux GmbH
+Cc: oss-security@lists.openwall.com
+Message-ID: <2fcfb94f-179b-eae1-817a-e940d793b2e9@suse.com>
+Date: Wed, 20 Jul 2016 22:37:00 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com, Christian Brabandt <cb@256bit.org>
-References: <Z47IfZiDnNqGAmCt@256bit.org>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <Z47IfZiDnNqGAmCt@256bit.org>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------Y2M70qUHBpl4VyScIfRJuorG"
-Subject: Re: [oss-security] Subject: [vim-security] segmentation fault in
- win_line() in Vim < 9.1.1043
-
---------------Y2M70qUHBpl4VyScIfRJuorG
-Content-Type: multipart/mixed; boundary="------------BH3KGcWhDoe1H7zUAnLLrsYK";
- protected-headers="v1"
-From: Eli Schwartz <eschwartz@gentoo.org>
-To: oss-security@lists.openwall.com, Christian Brabandt <cb@256bit.org>
-Message-ID: <9ce624fb-1a7c-4ccb-8816-7aadbb754e50@gentoo.org>
-Subject: Re: [oss-security] Subject: [vim-security] segmentation fault in
- win_line() in Vim < 9.1.1043
-References: <Z47IfZiDnNqGAmCt@256bit.org>
-In-Reply-To: <Z47IfZiDnNqGAmCt@256bit.org>
-
---------------BH3KGcWhDoe1H7zUAnLLrsYK
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] CVE request: multiple issues fixed in GNU libidn 1.33
 
-On 1/20/25 5:04 PM, Christian Brabandt wrote:
-> segmentation fault in win_line() in Vim < 9.1.1043
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
-> Date: 20.01.2025
-> Severity: Medium
-> CVE: CVE-2025-24014
-> CWE: Out-of-bounds Write (CWE-787)
->=20
-> In silent Ex mode (-s -e), Vim typically doesn't show a screen and just
-> operates silently in batch mode. However, it is still possible to
-> trigger the function that handles the scrolling of a gui version of Vim
-> by feeding some binary characters to Vim. The function that handles the
-> scrolling however may be triggering a redraw, which will access the
-> ScreenLines pointer, even so this variable hasn't been allocated
-> (since there is no screen).
->=20
-> In Patch 9.1.1043 Vim will therefore skip the redraw attempt, by testing
-> whether the ScreenLines pointer is NULL.
->=20
-> Impact is medium since the user must intentionally and explicitly feed
-> some binary data to Vim in ex mode.
->=20
-> The Vim project would like to thank github user @fizz-is-on-the-way
-> for reporting this issue.
->=20
-> The issue has been fixed as of Vim patch v9.1.1003
->=20
-> References:
-> https://github.com/vim/vim/commit/9d1bed5eccdbb46a26b8a484f5e9163c40e63919
-> https://github.com/vim/vim/security/advisories/GHSA-j3g9-wg22-v955
+Hello,
 
+The GNU libidn 1.33 release was announced with the following:
 
-It seems strange to me to say that it is a vulnerability, for a vim
-option that accepts a full-blown script to also crash when fuzzed.
+https://lists.gnu.org/archive/html/help-libidn/2016-07/msg00009.html
 
-It's not an attack vector to crash /bin/bash when fed a malformed
-script, so why is there anything to comment on with regard to vim either?
+> ** libidn: Fix out-of-bounds stack read in idna_to_ascii_4i.
+> See tests/tst_toascii64oob.c for regression check (and the comment in
+> it how to use it).  Reported by Hanno B=C3=B6ck <address@hidden>.
 
-How is this "medium" impact?
+Test:
+http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=3D9a1a7e15d070663497=
+1364493fbb06e77e74726c
+Fix:
+http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=3Df20ce1128fb7f4d332=
+97eee307dddaf0f92ac72d
+Changelog:
+http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=3Dd4c533a5d975bf4909=
+0d3cd40acd230b8f79dd32
+Follow-up memory leak fix:
+http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=3D11abd0e02c16f9e0b6=
+944aea4ef0f2df44b42dd4
+
+> ** idn: Solve out-of-bounds-read when reading one zero byte as input.
+> Also replaced fgets with getline.  Reported by Hanno B=C3=B6ck <address@h=
+idden>.
+
+Fix:
+http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=3D570e68886c41c2e765=
+e6218cb317d9a9a447a041
+Follow-up fix:
+http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=3D5e3cb9c7b5bf0ce665=
+b9d68f5ddf095af5c9ba60
+
+> ** libidn: stringprep_utf8_nfkc_normalize reject invalid UTF-8.
+> It was always documented to only accept UTF-8 data, but now it doesn't
+> crash when presented with such data.  Reported by Hanno B=C3=B6ck.
+
+Test / Fix:
+http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=3D1fbee57ef3c72db220=
+6dd87e4162108b2f425555
+Changelog:
+http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=3D1d2413555dcd1fef26=
+b80445a00a4637965a2df0
+
+Could CVEs please be assigned?
+
+Thanks,
+Andreas
 
 --=20
-Eli Schwartz
+Andreas Stieger <andreas.stieger@suse.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imend=C3=B6rffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG N=C3=BCrnberg)
 
---------------BH3KGcWhDoe1H7zUAnLLrsYK--
 
---------------Y2M70qUHBpl4VyScIfRJuorG
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCZ47gjwUDAAAAAAAKCRCEp9ErcA0vVyQk
-AP9oPs8pF50l74vf21xxA4wBomlYwCaZEkBL4+oeAgm6ZAD/YdPkM3tgt3yNoKirOGYeVS1yARCb
-gu+L5qTDZvKLSAI=
-=ZWn1
------END PGP SIGNATURE-----
-
---------------Y2M70qUHBpl4VyScIfRJuorG--
