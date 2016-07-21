@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1665" "Wednesday" "28" "September" "2016" "13:26:59" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160928172659.DF3656C5385@smtpvmsrv1.mitre.org>" "43" "[oss-security] Re: CVE Request - OpenSLP 2.0 Memory Corruption" "^Cc:" nil nil "9" "2016092817:26:59" "[oss-security] Re: CVE Request - OpenSLP 2.0 Memory Corruption" (number mark "        cve-assign@m Sep 28   43/1665  " thread-indent "\"[oss-security] Re: CVE Request - OpenSLP 2.0 Memory Corruption\"\n") "<alpine.LNX.2.00.1609281110050.22653@forced.attrition.org>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["505" "Thursday" "21" "July" "2016" "22:21:59" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160721202159.GA32017@eldamar.local>" "18" "Re: [oss-security] Re: [Pkg-shadow-devel] subuid security patches for shadow package" nil nil nil "7" "2016072120:21:59" "[oss-security] Re: [Pkg-shadow-devel] subuid security patches for shadow package" (number mark "U       carnil@debia Jul 21   18/505   " thread-indent "\"Re: [oss-security] Re: [Pkg-shadow-devel] subuid security patches for shadow package\"\n") "<20160720214852.GA23823@nekral.nekral.homelinux.net>" ("<20160719093915.GA29047@suse.de>" "<20160719125119.GA7146@suse.de>" "<871t2pycqx.fsf_-_@x220.int.ebiederm.org>" "<20160720214852.GA23823@nekral.nekral.homelinux.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 16023 invoked by uid 550); 28 Sep 2016 17:27:12 -0000
+Received: (qmail 15786 invoked by uid 550); 21 Jul 2016 20:22:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16000 invoked from network); 28 Sep 2016 17:27:11 -0000
-In-Reply-To: <alpine.LNX.2.00.1609281110050.22653@forced.attrition.org>
-Message-Id: <20160928172659.DF3656C5385@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Wed, 28 Sep 2016 13:26:59 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request - OpenSLP 2.0 Memory Corruption
-To: jericho@attrition.org
+Received: (qmail 15768 invoked from network); 21 Jul 2016 20:22:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=P6eV00QMwqgn4bD2vC6qajpNw/FHXhPx8ED793w5eH4=;
+        b=YT7sBj+JrqD94u9o3UzMAtF3V26yw2XesmR75vMpYv+1StzSpvBRhcXcXyBOYz0nWE
+         octNoKQ/LJ3dF45lS2Syi2bi1UhBDIE7pevVw9cwD+9KBn5KZgWyXhz5AFwlXUHvP8+z
+         pmG8JVccTX2U5/Dal5jD1iWbHRELeUR5Qap14TXEDWAiE0JmORMtJAuozbA73vCrc+gQ
+         9DmYoTQx04aL+Z0Ctd14I1bF1aC31pkZb749OsubaRwKP+krLsqWj3F8ijaoG81Y2ODh
+         CF/3ZljBSvm4l/XAyabR6+rJN75sPv1bWCb/O8J3FLMGcBHxFOGaS9h1lTE/dPmsQ0Hy
+         sVZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=P6eV00QMwqgn4bD2vC6qajpNw/FHXhPx8ED793w5eH4=;
+        b=ZV+hmgLCRWs+oKohGYwQhFItYH+OAWaw2oEuByuqjdWoTRfqfGAlN1sIEdGCdRQDte
+         r4YaMszb9FbcIcVjybqFlkGPFCpH5a2VWHuRKE6FJmT/FjhcYKjrwgDaxf9AuMGN4tds
+         aEKQwURwoVLwIeRE04pnnmGn45zj0L7isLsoX3pOVmsdEPkIvGL83H/24Tz4x5H3qUtc
+         Dd8NnrO7MRZq/WV+mlmyag9AS2sXoXncycxASMisVonC4+HHUpmN84IwbSJj8fPVaFr7
+         i28fh77JypSYNTWODUPQ2FCBvV6fpXDxaVAHpjedjWU6EC8eAWfOag0iO9YgnVwQ7jeY
+         Kg3g==
+X-Gm-Message-State: ALyK8tJRBHcupb3JDGjt/AYgJRO+AwIrl9HsDV3PFHnQIf5j+3BoE8o6Ej673J9rpnnkIA==
+X-Received: by 10.28.56.3 with SMTP id f3mr19026512wma.31.1469132527616;
+        Thu, 21 Jul 2016 13:22:07 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Thu, 21 Jul 2016 22:21:59 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: "Eric W. Biederman" <ebiederm@xmission.com>,
+	Sebastian Krahmer <krahmer@suse.com>,
+	oss-security@lists.openwall.com,
+	pkg-shadow-devel@lists.alioth.debian.org,
+	CVE Assignments MITRE <cve-assign@mitre.org>
+Message-ID: <20160721202159.GA32017@eldamar.local>
+References: <20160719093915.GA29047@suse.de>
+ <20160719125119.GA7146@suse.de>
+ <871t2pycqx.fsf_-_@x220.int.ebiederm.org>
+ <20160720214852.GA23823@nekral.nekral.homelinux.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20160720214852.GA23823@nekral.nekral.homelinux.net>
+User-Agent: Mutt/1.6.0 (2016-04-01)
+Subject: Re: [oss-security] Re: [Pkg-shadow-devel] subuid security patches
+ for shadow package
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> : : https://sourceforge.net/p/openslp/mercurial/ci/34fb3aa5e6b4997fa21cb614e480de36da5dbc9a/
+On Wed, Jul 20, 2016 at 11:48:52PM +0200, Nicolas François wrote:
+> Hi,
 > 
-> : Use CVE-2016-7567.
+> The first point looks like a non issue to me.
 > 
-> Why did this get a 2016 CVE?
+> getlogin() is used to differentiate users with the same UID.
+> The result of getlogin() is checked: if it returns a username that do not
+> have the UID returned by getuid(), it will be ignored.
 
->> Bug 151: Fix memory corruption due to possible overflow in SLPFoldWhiteSpace
->> 
->> 2015-12-01
+@MITRE CVE assignment team: This is for CVE-2016-6251. See above and
+https://bugzilla.redhat.com/show_bug.cgi?id=1358622#c2 . 
 
-"possible overflow" in the 2015 reference was not interpreted to mean
-a definitive statement of a security problem, and the defining
-reference is the
-http://www.openwall.com/lists/oss-security/2016/09/27/4 posting
-itself, which occurred in 2016. In other words, either a CVE-2015-
-number or a CVE-2016- number may have been reasonable but we chose the
-latter.
+Should this CVE be REJECTED?
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX6/yDAAoJEHb/MwWLVhi2gXgQALabK0bQBMvo1WbF4nbg2zDB
-nJxmBxNLCbIE0EzGimrh/ytHwHO2eBpVxRsHTGBD9gkiKWi6IdlNk6nPqNndwmGf
-XfNVA/HCAd5LbuvkxOgYtAxTEWfvbvUqty5xtXl8Fr9OzBzO8D3a6IheTRgTqdP0
-VhOBUiLi9G/EEuDGIKP1ly5/1UhSWGc83itsjlR/4751EnXPkIX7xkp8QLged5pR
-YAoxVg66bbmuL5g9PKA+1Vit5MmlookIJ8t6CYcPHoSolmRc4Wfa7WDMxgxZrp63
-BkML/2DlFoM/zWP9APLOtlLN+tx2NuQKDv01f7t6zXD4nmZug/kK5CwOSErooM+l
-e/dga/C4SUzNzH1VHppFYyeZtzBBV7ggsW1d6GUp6OKQaBbd32st+18Qb9qiQ3HA
-Ina1/a+kiAL7yrSY07Rc06Z1P8KzhQTWK/apEnE/bLdSLtuFmDZtr0u80auLfZvy
-KOMOa1+UOhome6x8cs+oCMTF5/DxPF2+K1Jyss6uW8tFlfywLsnmkC7KLRSzsqzu
-KKEyrf5vCuZELF5V6UjYdgELTYcNJZmhjgBk8ReKofJ5AXHW+hRy7EagZnQ+9DX2
-K+Y6JubZxBI2Ie/8TZ+ec4Vf23E8xjPiRr7qxSYWxmBvzjNhwaWhgn1FQ0yG/+t3
-cYwq0Wg1ktDWw26KYtvm
-=l+Su
------END PGP SIGNATURE-----
+Regards,
+Salvatore
