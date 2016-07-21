@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1726" "Wednesday" "5" "October" "2016" "13:45:02" "-0400" "David Manouchehri" "david.manouchehri@riseup.net" "<CAJEJqRz_5LVLYTd1eqEQQhu3jz=6+txBK7_OKZe6Lytov1dRSA@riseup.net>" "35" "[oss-security] CVE request: sunxi-debug (root privilege escalation in Allwinner kernel)" nil nil nil "10" "2016100517:45:02" "[oss-security] CVE request: sunxi-debug (root privilege escalation in Allwinner kernel)" (number mark "U       david.manouc Oct  5   35/1726  " thread-indent "\"[oss-security] CVE request: sunxi-debug (root privilege escalation in Allwinner kernel)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2520" "Thursday" "21" "July" "2016" "20:41:48" "+0200" "Peter Bex" "peter@more-magic.net" "<20160721184148.GO26276@scully.more-magic.net>" "69" "Re: [oss-security] A CGI application vulnerability for PHP, Go, Python and others" nil nil nil "7" "2016072118:41:48" "[oss-security] A CGI application vulnerability for PHP, Go, Python and others" (number mark "U       peter@more-m Jul 21   69/2520  " thread-indent "\"Re: [oss-security] A CGI application vulnerability for PHP, Go, Python and others\"\n") "<CANO=Ty1zwb63tApRBJsjpD3DoPO-FRcQtLTMqqo-Y_a-363TCA@mail.gmail.com>" ("<CAMqf4yDbXfYqFYHbMnMbrhcYfmjC56ok5+3VvNYfKndtsuECgA@mail.gmail.com>" "<CANO=Ty1zwb63tApRBJsjpD3DoPO-FRcQtLTMqqo-Y_a-363TCA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 4023 invoked by uid 550); 5 Oct 2016 18:11:26 -0000
+Received: (qmail 28512 invoked by uid 550); 21 Jul 2016 18:41:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,58 +12,90 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15880 invoked from network); 5 Oct 2016 17:45:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
-	t=1475689519; bh=ZNk5FqJjJ0Xdx4oCIf3xhzT8H892Oppuier0u5NyK+w=;
-	h=From:Date:Subject:To:Cc:From;
-	b=X5W3cOWlfH5fs5pPdPjivCeQfi/paeNzXzySC4zjeLvUclsY68jzfOosyyYxs7+88
-	 qoCZQE6HDNbILD1gtlJBPziP7es1MNjVl8fhCCQP5O9y7NsLBY6aJjMvxHRe4AX4li
-	 XE6DHWDo5GDLr8i+nzcUqmeGhC9MDmw11grogu4s=
-X-Gm-Message-State: AA6/9RkAeZarZhNZE3whwRGuyC0rPaXbhNwhZaMFHxS7BHWZ6glKARiqmlcMbDKfJ3dXf84xNQMQvjLo9VeycA==
-X-Received: by 10.200.53.82 with SMTP id z18mr10595150qtb.82.1475689518252;
- Wed, 05 Oct 2016 10:45:18 -0700 (PDT)
+Received: (qmail 28484 invoked from network); 21 Jul 2016 18:41:16 -0000
+Date: Thu, 21 Jul 2016 20:41:48 +0200
+From: Peter Bex <peter@more-magic.net>
+To: oss-security@lists.openwall.com
+Message-ID: <20160721184148.GO26276@scully.more-magic.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <CAMqf4yDbXfYqFYHbMnMbrhcYfmjC56ok5+3VvNYfKndtsuECgA@mail.gmail.com>
+ <CANO=Ty1zwb63tApRBJsjpD3DoPO-FRcQtLTMqqo-Y_a-363TCA@mail.gmail.com>
 MIME-Version: 1.0
-From: David Manouchehri <david.manouchehri@riseup.net>
-Date: Wed, 5 Oct 2016 13:45:02 -0400
-X-Gmail-Original-Message-ID: <CAJEJqRz_5LVLYTd1eqEQQhu3jz=6+txBK7_OKZe6Lytov1dRSA@mail.gmail.com>
-Message-ID: <CAJEJqRz_5LVLYTd1eqEQQhu3jz=6+txBK7_OKZe6Lytov1dRSA@riseup.net>
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
-Cc: eva.wu@allwinnertech.com
-Content-Type: multipart/alternative; boundary=001a113a7a1c88e044053e21bdf3
-Subject: [oss-security] CVE request: sunxi-debug (root privilege escalation in Allwinner kernel)
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="0et/Au7PJwzVwd4K"
+Content-Disposition: inline
+In-Reply-To: <CANO=Ty1zwb63tApRBJsjpD3DoPO-FRcQtLTMqqo-Y_a-363TCA@mail.gmail.com>
+X-PGP-Key: http://www.more-magic.net/peter-bex.asc
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: Re: [oss-security] A CGI application vulnerability for PHP, Go,
+ Python and others
 
---001a113a7a1c88e044053e21bdf3
-Content-Type: text/plain; charset=UTF-8
+--0et/Au7PJwzVwd4K
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The official Allwinner 3.4 kernels (H3, H8 and A83T) shipped a driver
-called sunxi-debug, which allows any process (file permissions are set to
-666) to escalate to root without any interaction.
+On Mon, Jul 18, 2016 at 08:17:03AM -0600, Kurt Seifried wrote:
+> Essentially there are two main cases where a CVE is assigned for the
+> httpoxy issue:
+>=20
+>    1.
+>=20
+>    A web server, programming language or framework (and in some limited
+>    situations the application itself) sets the environmental variable
+>    HTTP_PROXY from the user supplied Proxy header in the web request, or =
+sets
+>    a similarly used variable (essentially when the request header turns f=
+rom
+>    harmless data into a potentially harmful environmental variable)
 
-Full PoC/"exploit" is simply:
+This isuee affects the CHICKEN egg "spiffy-cgi-handlers", which is an
+optional add-on to add CGI and FastCGI support to the Spiffy web server.
+Could I have a CVE for this issue?
 
-echo "rootmydevice" > /proc/sunxi_debug/sunxi_debug
+All versions before 0.5 are affected.  An announcement was made to
+http://lists.gnu.org/archive/html/chicken-announce/2016-07/msg00000.html
 
-This was originally spotted in April 2016 and removed after media coverage
-in May. If a CVE could be assigned to it, that would be appreciated.
+The spiffy-cgi-handlers code was part of the spiffy web server before
+version 5.0, so earlier versions of that egg were also affected.  Strictly
+speaking, I think this deserves another CVE because it's a different
+piece of software.
 
-Thanks,
+>    2.
+>=20
+>    A web application makes use of HTTP_PROXY or similar variable unsafely
+>    (e.g. fails to check the request type) resulting in an attacker contro=
+lled
+>    proxy being used (essentially when HTTP_PROXY is actually used unsafel=
+y)
 
-David Manouchehri
+I believe this affects the CHICKEN egg "http-client", when used in a CGI
+context when the calling server unsafely passes "Proxy" as "HTTP_PROXY".
+Could I have a CVE for this issue as well?
 
-References:
+It affects http-client versions before 0.10 (the very first version, 0.1,
+is not affected because it had no proxy support).
 
-https://github.com/Manouchehri/linux-3.4-sunxi/blob/master/arch/arm/mach-sunxi/sunxi-debug.c#L41-L52
-(The
-original repository has had the backdoor erased from history.)
-http://irclog.whitequark.org/linux-sunxi/2016-04-29#16314390
-http://forum.armbian.com/index.php/topic/1108-security-alert-for-allwinner-sun8i-h3a83th8/
-https://www.rapid7.com/db/modules/post/multi/escalate/allwinner_backdoor
-http://www.theregister.co.uk/2016/05/09/allwinners_allloser_custom_kernel_has_a_nasty_root_backdoor/
-http://arstechnica.com/security/2016/05/chinese-arm-vendor-left-developer-backdoor-in-kernel-for-android-pi-devices/
-http://www.androidauthority.com/chinese-arm-vendor-left-developer-backdoor-in-kernel-for-android-692146/
-http://news.softpedia.com/news/chinese-arm-chip-vendor-left-god-mode-feature-in-android-kernel-code-504037.shtml
-https://www.heise.de/security/meldung/Allwinner-vergisst-Root-Cheatcode-im-Kernel-fuer-Sunxi-SoCs-3207356.html
-https://news.ycombinator.com/item?id=11672590
-https://olimex.wordpress.com/2016/05/10/how-to-root-any-allwinner-device-running-android-and-most-of-the-chinese-pi-clones-which-bet-on-allwinner-android-linux-kernel/
+An announcement for this is included in the message at the
+aforementioned URL.
 
---001a113a7a1c88e044053e21bdf3--
+Cheers,
+Peter Bex
+
+--0et/Au7PJwzVwd4K
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJXkRdsAAoJEBEdufnLRYmwK14IAIYmtdCfnUayq9gtcVKYk8CN
+kdxlmT/7J4zB1dVXwXlUM4gWUd1ZWc/V2aPFuqaNtNSGiqZzVBNjvtp/Iv39qnn3
+oPfX5E4HPKMDnNrkeox2wVp0wLUEuLNmu8lk9Cf90cOvOuwzP7h/qoceP7CG4ZDr
+tEr+KMK2wEymAfrXt6c1rBSQvE3TpcEDKj8tqA8sUDV7dXzv2MLSw+U094Xfl4Ys
+Egs0jstjExRLbJJaRg/K2iXxunXFS9zKp4TvxXbbjdu0ka6STtuU5bZFrnydfqHQ
+du1zx9SiJhx1avM6wUjwjre1K4TPz9gb8E5p4go1HmwOv3V78dyVdDWyh2rsO9o=
+=OuLX
+-----END PGP SIGNATURE-----
+
+--0et/Au7PJwzVwd4K--
