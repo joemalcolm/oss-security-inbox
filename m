@@ -1,64 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/29/5
-Message-Id: <20160529184648.168BA33201D@smtpvbsrv1.mitre.org>
-Date: Sun, 29 May 2016 14:46:48 -0400 (EDT)
-From: cve-assign@...re.org
-To: fernando@...l-life.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: libgd - gdCtxPrintf memory leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/21/5
+Message-ID: <CAFkTriJ_Gdghr4XZY3VbdtsmWN46ZMmPo9TX9c-CPebpwVhz2A@mail.gmail.com>
+Date: Thu, 21 Jul 2016 21:42:44 +0800
+From: Marco Grassi <marco.gra@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: mupdf library use after free
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> https://github.com/libgd/libgd/issues/211
-> 
-> length from the failed vsnprintf attempt to copy more than 8000 chars
-> on a 4096 buffer ... libgd returns this length as is and PHP prints
-> more information from memory than it should.
+I disclosed a UAF in MuPDF, you can find the reproducer and report here:
 
-> https://github.com/libgd/libgd/commit/4dc1a2d7931017d3625f2d7cff70a17ce58b53b4
-> 
-> xbm: avoid stack overflow (read) with large names #211
-> 
-> We use the name passed in to printf into a local stack buffer which is
-> limited to 4000 bytes. So given a large enough value, lots of stack
-> data is leaked.
+http://bugs.ghostscript.com/show_bug.cgi?id=696941
 
-Use CVE-2016-5116.
+I put a partially symbolicated ASAN report here for reference
 
+Marco
 
-> PHP devs marked it as a "not a bug" because the bundled version of
-> libgd with PHP 5.5 is not vulnerable, however using PHP with
-> systemwide libgd is a common practice.
+-----
 
-For purposes of CVE ID assignment, we do not feel that it's necessary
-to suggest a decision about whether this must also be considered a
-vulnerability in any PHP 5.5.x releases.
-4dc1a2d7931017d3625f2d7cff70a17ce58b53b4 indicates that it's an
-upstream bug, and the bug has plausible security relevance in some
-contexts (which might be contexts involving integration of libgd and
-PHP, or might be non-PHP contexts).
+➜  mupdf ./mupdf_debug/build/debug/mupdf-x11 mucrash1.pdf 2>&1 |
+asan_symbolize-3.8
+warning: broken xref section, proceeding anyway.
+=================================================================
+==24575==ERROR: AddressSanitizer: heap-use-after-free on address
+0x61700000fda8 at pc 0x0000006b0a54 bp 0x7ffcb040dbb0 sp 0x7ffcb040dba8
+READ of size 4 at 0x61700000fda8 thread T0
+    #0 0x6b0a53 in pdf_load_xref
+/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/source/pdf/pdf-xref.c:1188
+    #1 0x6b0a53 in ?? ??:0
+    #2 0x6aac73 in pdf_init_document
+/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/source/pdf/pdf-xref.c:1440
+    #3 0x6aac73 in ?? ??:0
+    #4 0x6ad4ae in pdf_open_document
+/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/source/pdf/pdf-xref.c:2347
+    #5 0x6ad4ae in ?? ??:0
+    #6 0x5183d2 in fz_open_document
+/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/source/fitz/document.c:129
+    #7 0x5183d2 in ?? ??:0
+    #8 0x4fbb2b in pdfapp_open_progressive
+/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/platform/x11/pdfapp.c:317
+    #9 0x4fbb2b in ?? ??:0
+    #10 0x4fb708 in pdfapp_open
+/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/platform/x11/pdfapp.c:213
+    #11 0x4fb708 in ?? ??:0
+    #12 0x4f01df in main
+/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/platform/x11/x11_main.c:888
+    #13 0x4f01df in ?? ??:0
+    #14 0x7f6b723ef82f in __libc_start_main
+/build/glibc-GKVZIf/glibc-2.23/csu/../csu/libc-start.c:291
+    #15 0x7f6b723ef82f in ?? ??:0
+    #16 0x41ad98 in _start ??:?
+    #17 0x41ad98 in ?? ??:0
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+0x61700000fda8 is located 296 bytes inside of 768-byte region
+[0x61700000fc80,0x61700000ff80)
+freed by thread T0 here:
+    #0 0x4bad40 in __interceptor_cfree.localalias.0 asan_malloc_linux.cc.o:?
+    #1 0x4bad40 in ?? ??:0
+    #2 0x516018 in fz_free_default
+/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/source/fitz/memory.c:225
+    #3 0x516018 in ?? ??:0
 
-iQIcBAEBCAAGBQJXSzioAAoJEHb/MwWLVhi2otMQAIa8J38OGLLay1kQr/aEq4q9
-4dGoTKtxLdlVWVjlb/jhrWHQNY9YDj4tfTHJROKbCakdSTtyaD9r1aTkaTY6Ks8y
-H+TEUtzwGFYNeT/4JvKeF77i+u9ILVVeKIF0ZLL6VjKhDSO8zrBXsWx5fcofa4gH
-mjrxhOWw81W6N0jT0kxajqZuFWB5d6zLNovw5T3BG4g7kl0yOB//dCUhil/Zey7I
-bNJTj7+2TVCTI9s1+4Rs2AqU6XdrrGUSP8iTRiaBXgLMKny2a9X08hVmxZw6B2tW
-70NN8pTd/yQc9G77oHMDoNOc0nDV3/ZSQyt4abs4PWowbfOcZdnvIVBDyOKzY7Ev
-55QIyizv0Se7/QV0bn3C5/3DiuV9olVy9rJ0OyxDdLCALcDyozG+L62ZyicQMtae
-/s2HJWa4numcn69fwr1nzYYnvwZWO3Bh+SsnQfrCv973t25mJNnA3CL4UMtWSH6c
-Qbh5/eLZUkRIBYFCaD2uoCjXLXrTwwZ8BNiN+cUc99NjYCkwAE8crtO6D623yymt
-6CZkKdr9UkbDCF3oU3ZFecEBCs6wk368PoDmIoopNXwN6lkTfKFH7UmawhsB4jQw
-SnM2CKgANYCzFPKop8nsoBI/o8bEn4qBkZ3G8qRoI+NpvZvZ06IIYsti8cqAUChK
-9MEsup58hdRErJXYoUPJ
-=yK1x
------END PGP SIGNATURE-----
+previously allocated by thread T0 here:
+    #0 0x4baec8 in malloc ??:?
+    #1 0x4baec8 in ?? ??:0
+    #2 0x515f68 in fz_malloc_default
+/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/source/fitz/memory.c:213
+    #3 0x515f68 in ?? ??:0
+    #4 0x6b9aae in pdf_xref_find_subsection
+/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/source/pdf/pdf-xref.c:740
+    #5 0x6b9aae in ?? ??:0
+
+SUMMARY: AddressSanitizer: heap-use-after-free
+(/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/build/debug/mupdf-x11+0x6b0a53)
+Shadow bytes around the buggy address:
+  0x0c2e7fff9f60: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2e7fff9f70: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2e7fff9f80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2e7fff9f90: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c2e7fff9fa0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+=>0x0c2e7fff9fb0: fd fd fd fd fd[fd]fd fd fd fd fd fd fd fd fd fd
+  0x0c2e7fff9fc0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c2e7fff9fd0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c2e7fff9fe0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c2e7fff9ff0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2e7fffa000: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==24575==ABORTING
+
