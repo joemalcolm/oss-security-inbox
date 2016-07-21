@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3967" "Thursday" "4" "January" "2018" "11:57:45" "-0500" "Michael Orlitzky" "michael@orlitzky.com" "<ec8d70cd-bf3a-b920-4505-d95a441ad2d7@orlitzky.com>" "97" "[oss-security] CVE-2017-18018: GNU chown and chgrp (coreutils) privilege escalation via recursive dereferences" "^Date:" nil nil "1" "2018010416:57:45" "[oss-security] CVE-2017-18018: GNU chown and chgrp (coreutils) privilege escalation via recursive dereferences" (number mark "        michael@orli Jan  4   97/3967  " thread-indent "\"[oss-security] CVE-2017-18018: GNU chown and chgrp (coreutils) privilege escalation via recursive dereferences\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1502" "Thursday" "21" "July" "2016" "10:09:20" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160721140920.5C8D06C49AA@smtpvmsrv1.mitre.org>" "42" "[oss-security] Re: mupdf library use after free" nil nil nil "7" "2016072114:09:20" "[oss-security] Re: mupdf library use after free" (number mark "U       cve-assign@m Jul 21   42/1502  " thread-indent "\"[oss-security] Re: mupdf library use after free\"\n") "<CAFkTriJ_Gdghr4XZY3VbdtsmWN46ZMmPo9TX9c-CPebpwVhz2A@mail.gmail.com>" ("<CAFkTriJ_Gdghr4XZY3VbdtsmWN46ZMmPo9TX9c-CPebpwVhz2A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28607 invoked by uid 550); 4 Jan 2018 16:58:09 -0000
+Received: (qmail 7574 invoked by uid 550); 21 Jul 2016 14:09:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,121 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28579 invoked from network); 4 Jan 2018 16:58:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
-	t=1515085077; bh=FMtmDcHFgTIhUsB/D6WBEqJIK8+bGuHN5sfYdNIbj0Y=;
-	h=To:From:Subject:Date;
-	b=QX96AdiI+ZCZ0Az3/7v1964BbDFsonfSiiIZHQx1gqjMZlxoy1f/B0oTw87XqtpLo
-	 6SM/ewhPFORRK40f9DJwO/QsrLuAIJSQ4sBHanU/QPU1MCUY0WclmPcOymK8tJfGRV
-	 irrVUoTEewBEiB3ZxAixi/DMsXhXKl8eLYzpUNZo=
-Message-ID: <ec8d70cd-bf3a-b920-4505-d95a441ad2d7@orlitzky.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-Date: Thu, 4 Jan 2018 11:57:45 -0500
-From: Michael Orlitzky <michael@orlitzky.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2017-18018: GNU chown and chgrp (coreutils) privilege escalation
- via recursive dereferences
-To: oss-security@lists.openwall.com
+Received: (qmail 7505 invoked from network); 21 Jul 2016 14:09:32 -0000
+From: cve-assign@mitre.org
+To: marco.gra@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAFkTriJ_Gdghr4XZY3VbdtsmWN46ZMmPo9TX9c-CPebpwVhz2A@mail.gmail.com>
+Message-Id: <20160721140920.5C8D06C49AA@smtpvmsrv1.mitre.org>
+Date: Thu, 21 Jul 2016 10:09:20 -0400 (EDT)
+Subject: [oss-security] Re: mupdf library use after free
 
-Product: GNU chown and chgrp (coreutils)
-Versions-affected: 8.29 and earlier (all)
-Author: Michael Orlitzky
-Bug-report:
-http://lists.gnu.org/archive/html/coreutils/2017-12/msg00045.html
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+> I disclosed a UAF in MuPDF, you can find the reproducer and report here:
+> 
+> http://bugs.ghostscript.com/show_bug.cgi?id=696941
+> 
+> mupdf ./mupdf_debug/build/debug/mupdf-x11 mucrash1.pdf
+> 
+> AddressSanitizer: heap-use-after-free ...
+> READ of size 4
+> 
+> #0 0x6b0a53 in pdf_load_xref
+> ... source/pdf/pdf-xref.c
 
-== Summary ==
+Use CVE-2016-6265.
 
-The chown program in GNU coreutils is vulnerable to a race condition
-when using the POSIX "-R -L" options to follow symlinks recursively.
-In the presence of symlinks, the recursive directory traversal is not
-guaranteed to be performed depth-first. As a result, the "new owner" may
-be able to introduce a symlink at a point in the traversal that has yet
-to be reached. When it is reached, chown will be performed on the target
-of that symlink -- a situation that is often exploitable to gain root
-privileges.
+As far as we can tell, this is not yet referenced on the
+http://git.ghostscript.com/?p=mupdf.git;a=shortlog page.
 
-The chgrp program is implemented with chown and is vulnerable in the
-same way when used on group-writable paths.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-== Details ==
-
-When calling GNU chown recursively, there is an "obvious" race
-condition that is handled correctly:
-
-  mjo $ sudo mkdir -p foo/bar
-  mjo $ sudo chown --verbose --recursive mjo foo
-  changed ownership of 'foo/bar' from root to mjo
-  changed ownership of 'foo' from root to mjo
-
-If the order was switched (that is, if the traversal was not
-depth-first), then there would be a period of time where mjo (as the
-owner of "foo") could do bad things to "foo/bar" before chown was
-called on it. But so far so good: the order above is safe, and chown
-does not follow symlinks by default with "--recursive" or "-R".
-
-The bad news: if, in addition, you pass the POSIX "-L" flag to chown,
-then the new owner of "foo" can exploit the situation. The main idea
-is to use a symlink that points up, to reorder the traversal, and then
-to exploit the aforementioned race condition. If you're lucky, the
-race can be won with a naive loop in a second shell. The unlucky (or
-merely impatient) reader might want to add some sleep() calls after
-the printf() statements in src/chown-core.c.
-
-=== Terminal 1 (root) ===
-
-  root # mkdir -p /var/www/chown-test && cd /var/www
-  root # mkdir chown-test/foo
-  root # mkdir chown-test/bar
-  root # ln -s ../bar chown-test/foo/quux
-  root # touch chown-test/bar/baz
-
-=== Terminal 2 (mjo) ===
-
-  mjo $ cd /var/www/chown-test/bar
-  mjo $ while true; do ln -s -f /etc/passwd ./baz; done;
-
-=== Terminal 1 (root) ===
-
-  root # chown --verbose --recursive -L mjo chown-test
-  changed ownership of 'chown-test/foo/quux/baz' from root to mjo
-  changed ownership of 'chown-test/foo/quux' from root to mjo
-  changed ownership of 'chown-test/foo' from root to mjo
-  changed ownership of 'chown-test/bar/baz' from root to mjo
-  ownership of 'chown-test/bar' retained as mjo
-  changed ownership of 'chown-test' from root to mjo
-
-The verbose output shows that happens. The depth-first traversal
-follows the symlink and changes ownership of "foo/quux" (which points
-to "bar") before it changes ownership of "bar/baz". Between the two
-operations, mjo should be able to replace "bar/baz" with a symlink to
-a path of his choosing. Indeed, the attack has worked, because mjo now
-owns /etc/passwd:
-
-  root # ls -l /etc/passwd
-  -rw-r--r-- 1 mjo root 1.5K 2017-12-17 18:34 /etc/passwd
-
-Note that the "--dereference" flag implies the same problem. Along
-with "--recursive", the "--dereference" flag forces you to set either
-"-H" or "-L", and in that context, choosing "-H" won't prevent the
-link itself from being dereferenced.
-
-The chgrp program is vulnerable in exactly the same way, but to a
-lesser extent. With chown, the new owner can always replace files in
-the directories that he now owns; with chgrp, those directories need
-to be group-writable. But beware that any member of the new group can
-try to exploit the situation. The same considerations apply when chown
-is used to change groups instead of (or in addition to) ownership.
-
-
-== Mitigation ==
-
-The two flags "-R" and "-L" are specified by POSIX, so their behavior
-can't be changed much. Avoid using chown or chgrp recursively. And if
-you do, don't also use "-L".
+iQIcBAEBCAAGBQJXkNc6AAoJEHb/MwWLVhi24isQALZ8CLX1M0+Hva0aICremI3a
+yyL7gQLxK/+Pda3uq20K1J/phQWGU4PUB8Xda1JHxJu6iAdxXvbXrarHtwdvUx5n
+1axHjaEsFwVPh3jivU2Dy3mQuRomcSEYS8AojdAhNNC84z+DBEXroRi0ugS84AkN
+IwRQTY3hAu9kV3Vq5wh2kKPBfUPSIq4X4l0+pulwahLzEZtPs2fUUiV+ft5T3UtU
+lJuHz9n1nhiY0ScItic6fPu34U2iFT8CGSp/0Tigu8gIMkHkcoPIVK7cq1HhVMI4
+gGgn0fLNa/6qldR1XLeRIK4rFWg5i5b5JxuPEVk4zQ3trFNUZT9PvMKoKJwNeTj7
+s6k0yCOLBs0izrVBN66eD+zlgLywuaGzqfszuA7I+dUCB2bfeJV0/PEZS6hV6gSP
+Csnimw7qPAf7c5Zw9NVtqsu3ojRq2GtWat/YoG31+z5lOlokfnkxRw6EheDjYmdM
+wsS+aU211em9oO3pFgXtn6Rv/ipaloQFG2RwBEXdZb1hTuNkkoWWHdV9dn4RVCCC
+VPX21ROUVd85KDd45yEliZOtqA65GdDoNmvzKOaYXZSsLbXI2ywKZ5GYWvguQfe7
+TIfrkm4wqzWjVwWS93GpoJNpwc13gu+LJ3YfRND8U4klJPCzF/BxG/jqRk/4RaQu
+ioc3SAefDUtrPooRl3g4
+=4FHP
+-----END PGP SIGNATURE-----
