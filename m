@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2323" "Monday" "16" "January" "2017" "12:00:26" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<1672685.X2bF2OodFF@blackgate>" "67" "[oss-security] jasper: invalid memory read in jas_matrix_asl (jas_seq.c)" nil nil nil "1" "2017011611:00:26" "[oss-security] jasper: invalid memory read in jas_matrix_asl (jas_seq.c)" (number mark "U       ago@gentoo.o Jan 16   67/2323  " thread-indent "\"[oss-security] jasper: invalid memory read in jas_matrix_asl (jas_seq.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2106" "Thursday" "21" "July" "2016" "09:48:06" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160721134806.0BEC342E2D6@smtpvbsrv1.mitre.org>" "59" "[oss-security] Re: CVE Request: uclibc-ng (and uclibc): ARM arch: code execution" nil nil nil "7" "2016072113:48:06" "[oss-security] Re: CVE Request: uclibc-ng (and uclibc): ARM arch: code execution" (number mark "U       cve-assign@m Jul 21   59/2106  " thread-indent "\"[oss-security] Re: CVE Request: uclibc-ng (and uclibc): ARM arch: code execution\"\n") "<3f71b0bd-71dd-723e-eed8-925bf2e2c8f7@cojocar.com>" ("<3f71b0bd-71dd-723e-eed8-925bf2e2c8f7@cojocar.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7364 invoked by uid 550); 16 Jan 2017 11:00:47 -0000
+Received: (qmail 14123 invoked by uid 550); 21 Jul 2016 13:48:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,81 +12,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7186 invoked from network); 16 Jan 2017 11:00:44 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Date: Mon, 16 Jan 2017 12:00:26 +0100
-Message-ID: <1672685.X2bF2OodFF@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] jasper: invalid memory read in jas_matrix_asl (jas_seq.c)
+Received: (qmail 14104 invoked from network); 21 Jul 2016 13:48:17 -0000
+From: cve-assign@mitre.org
+To: lucian@cojocar.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <3f71b0bd-71dd-723e-eed8-925bf2e2c8f7@cojocar.com>
+Message-Id: <20160721134806.0BEC342E2D6@smtpvbsrv1.mitre.org>
+Date: Thu, 21 Jul 2016 09:48:06 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: uclibc-ng (and uclibc): ARM arch: code execution
 
-Description:
-jasper is an open-source initiative to provide a free software-based reference 
-implementation of the codec specified in the JPEG-2000 Part-1 standard.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Another round of fuzzing shows that a crafted image causes an invalid memory 
-read.
+http://www.uclibc-ng.org/ says "History ... uClibc-ng is a spin-off of
+uClibc."
 
-The complete ASan output:
+> This was fixed in version 1.0.16
+> http://repo.or.cz/uclibc-ng.git/commit/e3848e3dd64a8d6437531488fe341354bc02eaed
+> http://mailman.uclibc-ng.org/pipermail/devel/2016-July/001067.html
 
-# imginfo -f $FILE
-==26941==ERROR: AddressSanitizer: SEGV on unknown address 0x62c80000a400 (pc 
-0x7f28c74e48ee bp 0x7ffcececdb70 sp 0x7ffcececdaf0 T0)
-==26941==The signal is caused by a READ memory access.
-    #0 0x7f28c74e48ed in jas_matrix_asl /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/base/jas_seq.c:376:11
-    #1 0x7f28c7545f0e in jpc_dec_tiledecode /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:1107:6
-    #2 0x7f28c7536cdf in jpc_dec_process_sod /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:658:7
-    #3 0x7f28c75406b3 in jpc_dec_decode /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:425:10
-    #4 0x7f28c75406b3 in jpc_decode /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:262
-    #5 0x7f28c74a2b84 in jas_image_decode /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/base/jas_image.c:444:16
-    #6 0x509eed in main /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/appl/imginfo.c:219:16
-    #7 0x7f28c65aa61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #8 0x419978 in _init (/usr/bin/imginfo+0x419978)
+>> libc/string/arm/memset.S
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/base/jas_seq.c:376:11 
-in jas_matrix_asl
-==26941==ABORTING
+>> bugfix: ARM: memset.S: use unsigned comparisons
+>> 
+>> The 'BLT' instruction checks for *signed* values. So if a3, length
+>> parameter of memset, is negative, then value added to the PC will be
+>> large.
+>> 
+>> memset(buf, 0xaa, 0xffff0000) triggers the bug.
 
-Affected version:
-1.900.27
 
-Fixed version:
-N/A
+> http://mailman.uclibc-ng.org/pipermail/devel/2016-May/000890.html
+> 
+> an attacker that controls the length parameter of
+> the `memset' can also control the value of the PC register. The issue is
+> similar to CVE-2011-2702.
 
-Commit fix:
-N/A
+>> The attack is a bit unrealistic, as it requires that the
+>> application that uses uClibc allows a user to control a memory chunk
+>> larger than 2GB.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+> denial of service proof of concept
+> 
+> http://article.gmane.org/gmane.comp.lib.uclibc-ng/27
 
-CVE:
-N/A
+Use CVE-2016-6264.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00053-jasper-invalidread-jas_matrix_asl
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Timeline:
-2016-11-20: bug discovered and reported upstream
-2017-01-16: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/01/16/jasper-invalid-memory-read-in-jas_matrix_asl-jas_seq-c
-
---
-Agostino
+iQIcBAEBCAAGBQJXkNIpAAoJEHb/MwWLVhi2PgQP/1GXbqRoO4iat1l6WABZ44PN
+lf9A6gqRtELgzs3V6fArIYpBHzNSFFUFZQYwMAXi0NGciRwNEWwxmnxmEo2yQ0my
+/yX50tijfwgOn3/Rs0LJTGxDyfFkAC/Cp0IruKssMdlIBhk44WcBE29p84rQ5yCT
+E/qoF+i0mHuFDwqC3f9wgUG14kgEd6TUZ7TG1WAwiwnmLhkS+TH8kE0FqfVMbXML
++QGedNg97XX1PAPeVD5S4QPRGtFmH09u4f9rFiE/zeebzk0t3ErVd403aB7meMkx
+MnsWZlqFFU3U9iZOItO68OvXpWcH1JGqbyfBZ2sTlldtzLWkqPcqTRmtMJVU3ryY
+V52wrxqIMWcd88QSpZnx976WLCQx7cTCVRc5QwXbI2XEGWYTlFbw8ijJ6CpowrN4
+4/Qzz7Mf7u9CdQjb/vGbsie3uKGelYNslN2Ihq0AcCPQarCl5fUNiqEtNogycvB5
+VNA/hKVHGAklmAUhIgajOkVg1TblcAZ1a2YOAoJzRqjGXqAky7i8QfXKZL7rqAir
+va0SK9ldEcd9sPr0VCEO8i8SF6hHNdYM9dx+NVRmJAZ5+Hl7GVYdZUIau1dCLfZT
+kTomgLWA16lofyebMMoPxv2It5wgq7lvrfaryZV5fzIEVfBbXbc9MSpRVTZEI2P8
+vVLQwRK1FNQMM0L41u57
+=r44f
+-----END PGP SIGNATURE-----
