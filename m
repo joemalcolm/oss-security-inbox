@@ -1,40 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/11/3
-Message-ID: <20160311110954.7e04e562@pc1>
-Date: Fri, 11 Mar 2016 11:09:54 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: ProFTPD before 1.3.5b/1.3.6rc2 uses 1024 bit Diffie Hellman parameters for TLS even if user sets manual parameters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/21/2
+Message-ID: <2436f805-5fbc-ebe3-0d5c-b47903803427@cojocar.com>
+Date: Wed, 20 Jul 2016 21:31:28 -0700
+From: Lucian Cojocar <lucian@...ocar.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: uclibc-ng (and uclibc): ARM arch: code execution
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 06/29/2016 12:13 AM, Lucian Cojocar wrote:
+> Hi all,
+> 
+> u-clibc and uclibc-ng is used in several projects[4, 5].
+> 
+> As described here[3], an attacker that controls the length parameter of
+> the `memset' can also control the value of the PC register. The issue is
+> similar to CVE-2011-2702. A patch has been proposed for uclibc-ng[1]. A
+> denial of service proof of concept is available[2].
+> 
 
-The ProFTPD daemon supports TLS encrypted connections via the mod_tls
-module. This module has a configuration option
-TLSDHParamFile
-to specify user-defined Diffie Hellman parameters.
+This was fixed in version 1.0.16 of uclibc-ng[1]
 
-Versions older than 1.3.5b / 1.3.6rc2 had a bug that would cause the
-software to ignore the parameters and use Diffie Hellman key exchanges
-with 1024 bit:
-http://bugs.proftpd.org/show_bug.cgi?id=4230
+[1] http://mailman.uclibc-ng.org/pipermail/devel/2016-July/001067.html
 
-The release notes[1] are confusing, as they mention only problems with
-keys smaller than 2048 bit, but I was also able to reproduce this issue
-with 4096 bit keys. But anyway, it is fixed in the latest versions for
-all key sizes I have tested.
+Lucian
 
-As 1024 bit DH is considered dangerously small these days and breakable
-by a powerful attacker I think this should be considered a security
-vulnerability.
-
-[1] http://proftpd.org/docs/RELEASE_NOTES-1.3.5b
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+> 
+> [1]http://repo.or.cz/uclibc-ng.git/commit/e3848e3dd64a8d6437531488fe341354bc02eaed
+> [2]http://article.gmane.org/gmane.comp.lib.uclibc-ng/27
+> [3]http://mailman.uclibc-ng.org/pipermail/devel/2016-May/000890.html
+> [4]https://www.uclibc.org/products.html
+> [5]http://www.uclibc-ng.org/ 
