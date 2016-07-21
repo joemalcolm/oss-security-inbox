@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["615" "Sunday" "22" "March" "2015" "16:48:51" "-0700" "Russ Allbery" "eagle@eyrie.org" "<877fu8bnks.fsf@hope.eyrie.org>" "13" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032223:48:51" "[oss-security] CVE for Kali Linux" (number mark "        eagle@eyrie. Mar 22   13/615   " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<550F2754.5060704@openwall.com>" ("<550EE478.70005@redhat.com>" "<E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com>" "<20150322172300.GA21110@openwall.com>" "<550F2754.5060704@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3436" "Thursday" "21" "July" "2016" "09:27:41" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160721132741.69F8142E026@smtpvbsrv1.mitre.org>" "90" "[oss-security] Re: CVE request: multiple issues fixed in GNU libidn 1.33" nil nil nil "7" "2016072113:27:41" "[oss-security] Re: CVE request: multiple issues fixed in GNU libidn 1.33" (number mark "U       cve-assign@m Jul 21   90/3436  " thread-indent "\"[oss-security] Re: CVE request: multiple issues fixed in GNU libidn 1.33\"\n") "<2fcfb94f-179b-eae1-817a-e940d793b2e9@suse.com>" ("<2fcfb94f-179b-eae1-817a-e940d793b2e9@suse.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 4016 invoked by uid 550); 22 Mar 2015 23:49:05 -0000
+Received: (qmail 19807 invoked by uid 550); 21 Jul 2016 13:27:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,33 +11,103 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3989 invoked from network); 22 Mar 2015 23:49:05 -0000
-In-Reply-To: <550F2754.5060704@openwall.com> (Alexander Cherepanov's message
-	of "Sun, 22 Mar 2015 23:34:28 +0300")
-Organization: The Eyrie
-References: <550EE478.70005@redhat.com>
-	<E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com>
-	<20150322172300.GA21110@openwall.com> <550F2754.5060704@openwall.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-Message-ID: <877fu8bnks.fsf@hope.eyrie.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-Date: Sun, 22 Mar 2015 16:48:51 -0700
-From: Russ Allbery <eagle@eyrie.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE for Kali Linux
-To: oss-security@lists.openwall.com
+Received: (qmail 19778 invoked from network); 21 Jul 2016 13:27:53 -0000
+From: cve-assign@mitre.org
+To: andreas.stieger@suse.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <2fcfb94f-179b-eae1-817a-e940d793b2e9@suse.com>
+Message-Id: <20160721132741.69F8142E026@smtpvbsrv1.mitre.org>
+Date: Thu, 21 Jul 2016 09:27:41 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: multiple issues fixed in GNU libidn 1.33
 
-Alexander Cherepanov <ch3root@openwall.com> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> There are some attacks even if you verify signatures, e.g. serving old,
-> known-vulnerable versions. HTTPS can help here (until signatures start
-> to be widely accompanied by expiring timestamps or something).
+> The GNU libidn 1.33 release was announced with the following:
+> 
+> https://lists.gnu.org/archive/html/help-libidn/2016-07/msg00009.html
 
-Debian is indeed moving in exactly that direction, using the Valid-Until
-attribute of the archive metadata.  This currently isn't (yet?) enabled
-for the main stable archive, but is for the unstable and testing archives,
-the security archive, and the backports archive.
+> ** libidn: Fix out-of-bounds stack read in idna_to_ascii_4i.
+> See tests/tst_toascii64oob.c for regression check (and the comment in
+> it how to use it). Reported by Hanno Boeck
 
--- 
-Russ Allbery (eagle@eyrie.org)              <http://www.eyrie.org/~eagle/>
+> Test:
+> http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=9a1a7e15d0706634971364493fbb06e77e74726c
+> Fix:
+> http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=f20ce1128fb7f4d33297eee307dddaf0f92ac72d
+> Changelog:
+> http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=d4c533a5d975bf49090d3cd40acd230b8f79dd32
+> Follow-up memory leak fix:
+> http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=11abd0e02c16f9e0b6944aea4ef0f2df44b42dd4
+
+> lib/idna.c
+
+Use CVE-2016-6261.
+
+There is no CVE ID for a memory leak. The memory leak was a
+consequence of the original fix, and was eliminated minutes later
+during development.
+
+
+> ** idn: Solve out-of-bounds-read when reading one zero byte as input.
+> Also replaced fgets with getline. Reported by Hanno Boeck
+
+idn is described at
+http://git.savannah.gnu.org/cgit/libidn.git/tree/src/idn.c as "Command
+line interface to the internationalized domain name library." An
+out-of-bounds read in a command-line program is not always security
+relevant. Also, msg00009.html lists the various items as "Noteworthy
+changes" and not specifically as security fixes. We think you might
+mean that someone can use idn to convert a file, and then send the
+converted file to an untrusted party. If there is an out-of-bounds
+read, then the converted file might include arbitrary data from
+process memory.
+
+> Fix:
+> http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=570e68886c41c2e765e6218cb317d9a9a447a041
+
+Use CVE-2015-8948.
+
+
+> Follow-up fix:
+> http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=5e3cb9c7b5bf0ce665b9d68f5ddf095af5c9ba60
+
+Use CVE-2016-6262.
+
+
+> ** libidn: stringprep_utf8_nfkc_normalize reject invalid UTF-8.
+> It was always documented to only accept UTF-8 data, but now it doesn't
+> crash when presented with such data. Reported by Hanno Boeck.
+
+> Test / Fix:
+> http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=1fbee57ef3c72db2206dd87e4162108b2f425555
+> Changelog:
+> http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=1d2413555dcd1fef26b80445a00a4637965a2df0
+
+> lib/nfkc.c
+
+Use CVE-2016-6263.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXkMzMAAoJEHb/MwWLVhi2ZDgP+QE2UHxAjG+0ISqnjZPN8vx3
+0Qr5kqKPggmbRomcHJeQmpq3PNir190KkSLo5dOwz2mPoafMsKmvA1jaropmsk/1
+Ic87+9b8dbQIJDVzeCLXx4uIzOkfBpE6tw1M348fSl0v6qBQcUStOLKeeDmP5t3S
+rZZRbc/Xn45XanXRPzsaEOVMRS9xyeokip/kLP6zcEux6K8jF2eCIib/FasKZjKD
+7GVOh244omUJirJn8Mwx60NsEM5h/NsXIoaAOXeAjY9TmM0XcSq8iVpqwciIPidf
+gJo9eqe7t8sQdMQxL5fWztqoP4coG0XviAHAeimH9Ibi+wg4H5eU3e6ZTg7yGDKR
+0FmDnge/fNiN4z9WmcV2Ajs4m94ECLhhQo9W3snghrUhqGZc+pDYIOvLdJAFrua7
+qGcdNRgZrXEOzxJ1Q53aRbjpioHZux02VYAmS2bl4tM+4ZjqF9COTJls8JxCJTfB
+VIWGade1/n3VajORtj6CIPAFaEwpNQ2z1rm82d0csuvxGb3YigfSC4I8W0F7RcAj
+JXPrXrF5uIHX1yFKxMRlKC9Qh13733DSyrhh+MiRvTESVZ7j3Wb4XgWTAE7Sb9Jl
+WdG1p5Yf928LzfDbDBkA+TY5tO6Mou8bv9Ef09pK/5e6tmvCX5BTNS+SQa85vsxR
+wVKg00/ZPnQxPefKPgxx
+=dlS/
+-----END PGP SIGNATURE-----
