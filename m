@@ -1,24 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/5
-Message-Id: <20160314042536.C674F52E003@smtpvbsrv1.mitre.org>
-Date: Mon, 14 Mar 2016 00:25:36 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/21/7
+Message-Id: <20160721140920.5C8D06C49AA@smtpvmsrv1.mitre.org>
+Date: Thu, 21 Jul 2016 10:09:20 -0400 (EDT)
 From: cve-assign@...re.org
-To: vdronov@...hat.com
+To: marco.gra@...il.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request -- linux kernel: crash on invalid USB device descriptors (wacom driver)
+Subject: Re: mupdf library use after free
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> http://seclists.org/bugtraq/2016/Mar/60
-> https://bugzilla.redhat.com/show_bug.cgi?id=1283375
-> https://bugzilla.redhat.com/show_bug.cgi?id=1283377
+> I disclosed a UAF in MuPDF, you can find the reproducer and report here:
 > 
-> This security flaw is specific for Red Hat Enterprise Linux 7
-> (RHEL7).
+> http://bugs.ghostscript.com/show_bug.cgi?id=696941
+> 
+> mupdf ./mupdf_debug/build/debug/mupdf-x11 mucrash1.pdf
+> 
+> AddressSanitizer: heap-use-after-free ...
+> READ of size 4
+> 
+> #0 0x6b0a53 in pdf_load_xref
+> ... source/pdf/pdf-xref.c
 
-Use CVE-2016-3139.
+Use CVE-2016-6265.
+
+As far as we can tell, this is not yet referenced on the
+http://git.ghostscript.com/?p=mupdf.git;a=shortlog page.
 
 - -- 
 CVE Assignment Team
@@ -28,17 +36,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW5jz1AAoJEL54rhJi8gl5McgQAIHTUV/sauiPO/x3asecOjjg
-8JywnKa4p1Hj+yc/VzDqPAfBciwVPD9g1qEXG/t1HE95yfLFx3ZcF4JA8026UpQE
-lpK2thpIDt7EQ41cbmuq8GwhJsHZCZPT2Xerk/SC0bGmKnfo34ksJDIvuMjFjdcW
-p5PbcuqL42B3So+02G6CtLr80u/wmDS4KxmJwmnBt4sisS1EUJB+uXPzNjAXeFdf
-OsbGSOm3m7YoqSxVlVDOnz0OPPusYmUiD93DEzfK22Mak16PdzRr4+8DTOUrMYxd
-77BI4TUMHQf+jB9/WWNctiS6cvSST3DbppfX7odgVEDeWQoneGt7wH39VpZD0lmx
-qEl+2Hul8MntEIUIp7ToeFxeL6vugarwV7Zc3P93y68EgvvtarzBNm/rZvRpUlhX
-0dk0yhL4rK44/MsOYY7pZtuxqAgECgjlJpfN9zIdjtMBHcuI0LULevQ0dB3Fgf/s
-F/RtuTbh7afV/qubtNMuBgLlB4hzHPmJBEpE8VojGVk+K8Wx8g+mV8jsobYLU5Ph
-j4UC85gDh8oHRvucXxNZqLiqVVWwNZR9lImDKpzIYGTTIcVNd5F6vYz2Z40TYikV
-TbRuZAXRpy2ajO6mEQDYwlEKON6g12jRHvJ25KVo54n2CP+nyIj4iFyX1D6SGenC
-osv/QC87lr+vOSk6EfAX
-=TM86
+iQIcBAEBCAAGBQJXkNc6AAoJEHb/MwWLVhi24isQALZ8CLX1M0+Hva0aICremI3a
+yyL7gQLxK/+Pda3uq20K1J/phQWGU4PUB8Xda1JHxJu6iAdxXvbXrarHtwdvUx5n
+1axHjaEsFwVPh3jivU2Dy3mQuRomcSEYS8AojdAhNNC84z+DBEXroRi0ugS84AkN
+IwRQTY3hAu9kV3Vq5wh2kKPBfUPSIq4X4l0+pulwahLzEZtPs2fUUiV+ft5T3UtU
+lJuHz9n1nhiY0ScItic6fPu34U2iFT8CGSp/0Tigu8gIMkHkcoPIVK7cq1HhVMI4
+gGgn0fLNa/6qldR1XLeRIK4rFWg5i5b5JxuPEVk4zQ3trFNUZT9PvMKoKJwNeTj7
+s6k0yCOLBs0izrVBN66eD+zlgLywuaGzqfszuA7I+dUCB2bfeJV0/PEZS6hV6gSP
+Csnimw7qPAf7c5Zw9NVtqsu3ojRq2GtWat/YoG31+z5lOlokfnkxRw6EheDjYmdM
+wsS+aU211em9oO3pFgXtn6Rv/ipaloQFG2RwBEXdZb1hTuNkkoWWHdV9dn4RVCCC
+VPX21ROUVd85KDd45yEliZOtqA65GdDoNmvzKOaYXZSsLbXI2ywKZ5GYWvguQfe7
+TIfrkm4wqzWjVwWS93GpoJNpwc13gu+LJ3YfRND8U4klJPCzF/BxG/jqRk/4RaQu
+ioc3SAefDUtrPooRl3g4
+=4FHP
 -----END PGP SIGNATURE-----
