@@ -1,46 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/16/1
-Message-ID: <20160716034337.GA10235@eldamar.local>
-Date: Sat, 16 Jul 2016 05:43:37 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: taffit@...ian.org
-Subject: CVE Request: Zend Framework: Potential SQL injection in ORDER and GROUP statements of Zend_Db_Select
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/21/4
+Message-Id: <20160721132741.69F8142E026@smtpvbsrv1.mitre.org>
+Date: Thu, 21 Jul 2016 09:27:41 -0400 (EDT)
+From: cve-assign@...re.org
+To: andreas.stieger@...e.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: multiple issues fixed in GNU libidn 1.33
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The Zend Framework project released security advisory ZF2016-02[0] to
-address a potential SQL injection in ORDER and GROUP statements of
-Zend_Db_Select.
+> The GNU libidn 1.33 release was announced with the following:
+> 
+> https://lists.gnu.org/archive/html/help-libidn/2016-07/msg00009.html
 
->From the advisory:
+> ** libidn: Fix out-of-bounds stack read in idna_to_ascii_4i.
+> See tests/tst_toascii64oob.c for regression check (and the comment in
+> it how to use it). Reported by Hanno Boeck
 
-> The implementation of ORDER BY and GROUP BY in Zend_Db_Select of ZF1
-> is vulnerable by the following SQL injection:
->
-> $db = Zend_Db::factory(/* options here */);
-> $select = new Zend_Db_Select($db);
-> $select->from('p');
-> $select->order("MD5(\"(\");DELETE FROM p2; #)"); // same with group()
->
-> The above $select will render the following SQL statement:
->
-> SELECT `p`.* FROM `p` ORDER BY MD5("");DELETE FROM p2; #) ASC
->
-> instead of the correct one:
->
-> SELECT `p`.* FROM `p` ORDER BY "MD5("""");DELETE FROM p2; #)" ASC
->
-> This security fix can be considered as an improvement of the previous
-> ZF2014-04.
+> Test:
+> http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=9a1a7e15d0706634971364493fbb06e77e74726c
+> Fix:
+> http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=f20ce1128fb7f4d33297eee307dddaf0f92ac72d
+> Changelog:
+> http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=d4c533a5d975bf49090d3cd40acd230b8f79dd32
+> Follow-up memory leak fix:
+> http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=11abd0e02c16f9e0b6944aea4ef0f2df44b42dd4
 
-Upstream commit is at [1] as bf3f40605be3d8f136a07ae991079a7dcb34d967.
+> lib/idna.c
 
- [0] https://framework.zend.com/security/advisory/ZF2016-02
- [1]  https://github.com/zendframework/zf1/commit/bf3f40605be3d8f136a07ae991079a7dcb34d967
+Use CVE-2016-6261.
 
-Could you please assign a CVE for this issue.
+There is no CVE ID for a memory leak. The memory leak was a
+consequence of the original fix, and was eliminated minutes later
+during development.
 
-Regards,
-Salvatore
+
+> ** idn: Solve out-of-bounds-read when reading one zero byte as input.
+> Also replaced fgets with getline. Reported by Hanno Boeck
+
+idn is described at
+http://git.savannah.gnu.org/cgit/libidn.git/tree/src/idn.c as "Command
+line interface to the internationalized domain name library." An
+out-of-bounds read in a command-line program is not always security
+relevant. Also, msg00009.html lists the various items as "Noteworthy
+changes" and not specifically as security fixes. We think you might
+mean that someone can use idn to convert a file, and then send the
+converted file to an untrusted party. If there is an out-of-bounds
+read, then the converted file might include arbitrary data from
+process memory.
+
+> Fix:
+> http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=570e68886c41c2e765e6218cb317d9a9a447a041
+
+Use CVE-2015-8948.
+
+
+> Follow-up fix:
+> http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=5e3cb9c7b5bf0ce665b9d68f5ddf095af5c9ba60
+
+Use CVE-2016-6262.
+
+
+> ** libidn: stringprep_utf8_nfkc_normalize reject invalid UTF-8.
+> It was always documented to only accept UTF-8 data, but now it doesn't
+> crash when presented with such data. Reported by Hanno Boeck.
+
+> Test / Fix:
+> http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=1fbee57ef3c72db2206dd87e4162108b2f425555
+> Changelog:
+> http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=1d2413555dcd1fef26b80445a00a4637965a2df0
+
+> lib/nfkc.c
+
+Use CVE-2016-6263.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXkMzMAAoJEHb/MwWLVhi2ZDgP+QE2UHxAjG+0ISqnjZPN8vx3
+0Qr5kqKPggmbRomcHJeQmpq3PNir190KkSLo5dOwz2mPoafMsKmvA1jaropmsk/1
+Ic87+9b8dbQIJDVzeCLXx4uIzOkfBpE6tw1M348fSl0v6qBQcUStOLKeeDmP5t3S
+rZZRbc/Xn45XanXRPzsaEOVMRS9xyeokip/kLP6zcEux6K8jF2eCIib/FasKZjKD
+7GVOh244omUJirJn8Mwx60NsEM5h/NsXIoaAOXeAjY9TmM0XcSq8iVpqwciIPidf
+gJo9eqe7t8sQdMQxL5fWztqoP4coG0XviAHAeimH9Ibi+wg4H5eU3e6ZTg7yGDKR
+0FmDnge/fNiN4z9WmcV2Ajs4m94ECLhhQo9W3snghrUhqGZc+pDYIOvLdJAFrua7
+qGcdNRgZrXEOzxJ1Q53aRbjpioHZux02VYAmS2bl4tM+4ZjqF9COTJls8JxCJTfB
+VIWGade1/n3VajORtj6CIPAFaEwpNQ2z1rm82d0csuvxGb3YigfSC4I8W0F7RcAj
+JXPrXrF5uIHX1yFKxMRlKC9Qh13733DSyrhh+MiRvTESVZ7j3Wb4XgWTAE7Sb9Jl
+WdG1p5Yf928LzfDbDBkA+TY5tO6Mou8bv9Ef09pK/5e6tmvCX5BTNS+SQa85vsxR
+wVKg00/ZPnQxPefKPgxx
+=dlS/
+-----END PGP SIGNATURE-----
