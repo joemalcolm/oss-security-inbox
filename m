@@ -1,21 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/03/9
-Message-ID: <20161103225435.GA3298@jasmine>
-Date: Thu, 3 Nov 2016 18:54:35 -0400
-From: Leo Famulari <leo@...ulari.name>
-To: oss-security@...ts.openwall.com
-Cc: dickey@...isible-island.net, fulldisclosure@...lists.org, cve-assign@...re.org
-Subject: Re: CVE request:Lynx invalid URL parsing with '?'
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/21/9
+Message-ID: <20160721202159.GA32017@eldamar.local>
+Date: Thu, 21 Jul 2016 22:21:59 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: "Eric W. Biederman" <ebiederm@...ssion.com>, Sebastian Krahmer <krahmer@...e.com>, oss-security@...ts.openwall.com, pkg-shadow-devel@...ts.alioth.debian.org, CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: Re: [Pkg-shadow-devel] subuid security patches for shadow package
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 03, 2016 at 05:58:14PM +0800, redrain root wrote:
-> I can't find any bugtracker in lynx ,so i will disclose by this mail and
-> sent to the author dickey@...isible-island.net.
+Hi,
+
+On Wed, Jul 20, 2016 at 11:48:52PM +0200, Nicolas François wrote:
+> Hi,
 > 
-> redrain (rootredrain@...il.com)
-> Date:2016-11-03
-> Version: 2.8.8pre.4、2.8.9dev.8 and earlier
+> The first point looks like a non issue to me.
+> 
+> getlogin() is used to differentiate users with the same UID.
+> The result of getlogin() is checked: if it returns a username that do not
+> have the UID returned by getuid(), it will be ignored.
 
-FYI, as far as I can tell, this bug is present in 2.8.9dev.9 as well.
+@MITRE CVE assignment team: This is for CVE-2016-6251. See above and
+https://bugzilla.redhat.com/show_bug.cgi?id=1358622#c2 . 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Should this CVE be REJECTED?
+
+Regards,
+Salvatore
