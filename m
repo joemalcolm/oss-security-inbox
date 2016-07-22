@@ -1,26 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/06/3
-Message-ID: <03907aa5-5c2d-8bac-9053-7130e3159d62@redhat.com>
-Date: Wed, 6 Jul 2016 12:10:19 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Malicious primary DNS servers can crash secondaries
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/22/2
+Message-ID: <1145026931.4188822.1469215093907.JavaMail.yahoo@mail.yahoo.com>
+Date: Fri, 22 Jul 2016 19:18:13 +0000 (UTC)
+From: Tim Allison <tallison@...che.org>
+To: "security@...che.org" <security@...che.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "bugtraq@...urityfocus.com" <bugtraq@...urityfocus.com>,  "dev@....apache.org" <dev@....apache.org>,  "user@....apache.org" <user@....apache.org>
+Subject: [CVE-2016-5000] XML External Entity (XXE) Vulnerability in Apache POI's XLSX2CSV Example
 Content-Type: text/plain; charset=utf-8
 
-It turns out that most DNS server implementations do not implement 
-reasonable restrictions for zone sizes.  This allows an explicitly 
-configured primary DNS server for a zone to crash a secondary DNS 
-server, affecting service of other zones hosted on the same secondary 
-server.
+CVE-2016-5000: XML External Entity (XXE) Vulnerability in Apache POI's XLSX2CSV Example 
 
-Some references:
+Severity: Important 
 
-https://lists.dns-oarc.net/pipermail/dns-operations/2016-July/015058.html
-https://lists.dns-oarc.net/pipermail/dns-operations/2016-July/015075.html
-https://gitlab.labs.nic.cz/labs/knot/merge_requests/541
-https://www.nlnetlabs.nl/bugs-script/show_bug.cgi?id=790
+Vendor: The Apache Software Foundation 
 
-PowerDNS is reportedly affected as well, but I did not find a public bug 
-for this issue.
+Versions Affected: POI 3.5-3.13 
 
-Florian
+Description: 
+
+Apache POI's XLSX2CSV example uses Java's XML components to parse OpenXML files. Applications and users that use XLSX2CSV and accept such files from end-users are vulnerable to XML External Entity (XXE) attacks, which allow remote attackers to bypass security restrictions and read arbitrary files via a crafted OpenXML document that provides an XML external entity declaration in conjunction with an entity reference.
+
+Mitigation: Upgrade to 3.14 or higher 
+
+
+Credit: This issue was discovered by Mauro Gentile of Minded Security.
