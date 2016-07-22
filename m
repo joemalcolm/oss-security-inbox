@@ -1,33 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/02/3
-Message-ID: <alpine.LFD.2.20.1612021331570.5998@wniryva>
-Date: Fri, 2 Dec 2016 13:40:12 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: wjjzhang <wjjzhang@...cent.com>
-Subject: CVE request Qemu: net: mcf_fec: infinite loop while receiving data in mcf_fec_receive
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/22/3
+Message-ID: <20160722202704.GA6498@kroah.com>
+Date: Fri, 22 Jul 2016 13:27:04 -0700
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Cc: "cve-assign@...re.org" <cve-assign@...re.org>, Marco Grassi <marco.gra@...il.com>
+Subject: Re: panic at big_key_preparse #4.7-r6/rc7 & master
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Fri, Jul 22, 2016 at 10:54:09PM +0800, zer0mem@...oo.com wrote:
+> Hi,
+> 
+> Following code will panic 4.7-rc6/rc7 & master
+> 
+> However will not panic at latest stable 4.6.4 kernel apparently
 
-Quick Emulator(Qemu) built with the ColdFire Fast Ethernet Controller emulator 
-support is vulnerable to an infinite loop issue. It could occur while 
-receiving packets in 'mcf_fec_receive'.
+Did you email the Linux kernel developers responsible for this code to
+report this?
 
-A privileged user/process inside guest could use this issue to crash the Qemu 
-process on the host leading to DoS.
+thanks,
 
-Upstream patch
---------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-11/msg05324.html
-
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1400829
-
-This issue was reported by Wjjzhang of Tencent.com.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+greg k-h
