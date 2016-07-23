@@ -1,36 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/14/10
-Message-ID: <20160914223729.GL25324@hunt>
-Date: Wed, 14 Sep 2016 15:37:29 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/23/2
+Message-ID: <ec9146bf-2667-749a-8250-6dd28b319c8b@web.de>
+Date: Sat, 23 Jul 2016 16:36:58 +0200
+From: Walter <dpankraz1@....de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: ADOdb PDO driver: incorrect quoting may allow SQL injection
+Subject: XSS vulnerability in ILIAS before version 5.1.3, 5.0.11 and 4.4.14
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 14, 2016 at 10:22:58AM -0600, Kurt Seifried wrote:
-> Ideally people should get CVEs and then post to oss-security with the
-> information and the CVE. A lot of people consume the list data and the
-> current method means that people end up searching their DBs, making sure
-> it's new, then entering it, then updating it with a CVE. If people got CVEs
-> first this would vastly simplify things.
+A cross-site scripting vulnerability in ILIAS <http://www.ilias.de>
+(Integrated Learning, Information and Work Cooperation System) version
+5.1.2 has been found by Quadas.
 
-I don't like the idea of waiting on CVE assignment before posting
-information here:
+Impact:
 
-- MITRE's team does impressive work, but some assignments take
-  significantly longer than others; a request here, publicly, allows users
-  to mitigate or fix before a number is known.
+    This remotely accessible vulnerability is always reproducible and
+    possibly works in any version before 5.1.3, 5.0.11 and 4.4.14.
+    An attacker can supply java script code in the filename of an
+    uploaded file, which will be executed in browsers of other users. It
+    is not
+    required to open this file. Browsing into the folder will trigger
+    the code execution.
 
-- In cases when there are no fixes yet, or incomplete fixes, it may not be
-  known how many CVEs are even needed -- making the issues widely known
-  earlier increases the chances of someone preparing patches, to clarify
-  how many issues existed.
+Exploit:
 
-- With MITRE's reduced scope of CVE coverage, there's the risk that
-  software that's important to list members or the wider computing public
-  may not get a number at all. Not getting a number assigned may give the
-  impression that the issue isn't important.
+  * log in
+  * open a folder you can upload a file to
+  * select the "upload files"-dialog
+  * drop a random file in
+  * write code (e.g. JavaScript) in the filename
+  * upload file
 
-Thanks
+    From this moment the code will run on any user's web browser who
+    opens the folder you uploaded the file in.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+
+Patch:
+
+    Vulnerability was fixed with version 5.1.3, 5.0.11 and 4.4.14.
+    Ticket-ID was 0017977 but unfortunately the ticket was set on
+    private view status. Link to the ticket
+    <http://www.ilias.de/mantis/view.php?id=17977> (account is required)
+    Surprisingly there are no commits on GitHub
+    <https://github.com/ILIAS-eLearning/ILIAS>.
+
+
+Can a CVE-ID be assigned please?
+
