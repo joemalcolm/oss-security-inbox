@@ -1,32 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/6
-Message-Id: <20161008153429.C0F6142E066@smtpvbsrv1.mitre.org>
-Date: Sat,  8 Oct 2016 11:34:29 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/23/1
+Message-Id: <20160723020426.70DC352E00B@smtpvbsrv1.mitre.org>
+Date: Fri, 22 Jul 2016 22:04:26 -0400 (EDT)
 From: cve-assign@...re.org
-To: labs@...dream.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, spip-team-owner@...o.net
-Subject: Re: SPIP vulnerabilities: request for 5 CVE
+To: peter@...e-magic.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: A CGI application vulnerability for PHP, Go, Python and others - CHICKEN eggs
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> * Template Compiler/Composer PHP Code Execution
-> https://core.spip.net/projects/spip/repository/revisions/23186
-> https://core.spip.net/projects/spip/repository/revisions/23189
-> https://core.spip.net/projects/spip/repository/revisions/23192
+> This issue affects the CHICKEN egg "spiffy-cgi-handlers", which is an
+> optional add-on to add CGI and FastCGI support to the Spiffy web server.
+> 
+> All versions before 0.5 are affected. An announcement was made to
+> http://lists.gnu.org/archive/html/chicken-announce/2016-07/msg00000.html
 
-Use CVE-2016-7998.
+>> a HTTP server which converts the Proxy header as a
+>> HTTP_PROXY environment variable. The spiffy-cgi-handlers egg will do
+>> that in the default setup.
+
+> The spiffy-cgi-handlers code was part of the spiffy web server before
+> version 5.0, so earlier versions of that egg were also affected. Strictly
+> speaking, I think this deserves another CVE because it's a different
+> piece of software.
+> 
+> Could I have a CVE for this issue?
+
+Use CVE-2016-6286 for this code, as found either in the
+spiffy-cgi-handlers egg or in the spiffy web server. (Moving a piece
+of code from one software product to another doesn't generate a second
+CVE ID.)
 
 
-> * Server Side Request Forgery
-> https://core.spip.net/projects/spip/repository/revisions/23188
-> https://core.spip.net/projects/spip/repository/revisions/23193
+> I believe this affects the CHICKEN egg "http-client", when used in a CGI
+> context when the calling server unsafely passes "Proxy" as "HTTP_PROXY".
+> Could I have a CVE for this issue as well?
 
-(In other words, the :// substring is rejected to prevent
-outbound network traffic.)
-
-Use CVE-2016-7999.
+Use CVE-2016-6287.
 
 - -- 
 CVE Assignment Team
@@ -36,17 +48,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX+RA3AAoJEHb/MwWLVhi2GqIQAKupTLee7N5Q7UpyJJkiM8ek
-CHcI1zwsMiH1MKmXkUCxiSW12C7Av9D9AW057G7N18HmL8bIuRHwBUDtsFq6zlAQ
-526Vm7CJDRuO74UK2ximr47KodVBd09fJonRl7MPEDXgllppCvkmh/1ctKTdrJ8+
-6DKd5ErXO/zoAWFIgfXwXllYBFKnzrH9gqYJO8X1T5UFQ/Mka6WDzkVH83h4D96e
-8dcrHT9yISaF8kyPf/qwrkgxEzXE4lfECZZI4sVI4lu1KCVAtx07DiWXAT+D7VW2
-BuTylk9PxONmGmL6ZTeYSEOSYT+QqheBn2ZniSpS4r7M9dAytKtjxFSR2a3AFXu9
-9F6uyTdOcKJZv1hhBg6O6eGYQlip83KvySAXm+USPd90oU3DDEqhisVl211ZNqWj
-pj4Pl8gTAftRWlZz//URJvpwATa1r0hl1fnuBdQxnfdoPvhiMNqQBBu8BICJXTby
-Hc9A/6RLMX4kFmzg+ReqTnFlg2xGroplayg8u/oAH/C0c5tId9m34i2/rX1B9naY
-lfpjHADIejCh+FEU6uR23lza6UR8cgNYwrSaexED1y6tG9ec1RdtpohAL9WKf0Kx
-BqwWCoKLZYYisfQMtGfD4F4/Qp08F68QkAslfz1xXqeYv1wlHIEDI9xKXpc/fovM
-mLEFfwUdXnAHGHUyumCj
-=v5y8
+iQIcBAEBCAAGBQJXktAdAAoJEHb/MwWLVhi25n4QALaJxLjnoIvN/GUErP1UObu1
+JNBU160mBi8S9MW28AVzx6DNgzWBtnd7ymtpXRHkbMjWCc+ORQnJPvnm39Tatt6l
+LP48zvXOr2gbLarh9izTtACqwmgF0jbacwc2J5tqhZ7rk6Y6FpVgAIAntS1qK1bY
+NIez74JZlNVvnKix0pOweuAswOM1V7zwDYdvMUjdpzh7gfC8AiJX09e46G1WEkSr
+THXXzUWud+USZAme9s6fD9nLvrr/Tlv2fGnZyp9APGz4Tcs+tbRiE+wtfYK5Cu1K
+MySc1jIoDf+cZKDQgPoDBHovoAn9oBBzq4fa9ph2Y6MuY6ktGT5OzHZqfqHy0MKe
+EnLZvMWkhD0F/U8kIFBo4wjPpo7aRQE7L8W+mGL/QwucExb1Bbn7h6XYJ69fQCny
+NcD+uDPta0tPmJcQ3OY8GCu5MhwI01WZhMBi+eLbrwxpVITezISXbIEhozXtZeJz
+5U+Lpw2rJUPq+1cLbGPlP1cvT+zGHzFLyQIukzqK/AdCLrnAyynL2lrTsoPmrFkK
+fNRU/UYfnEQb2ehiSr7Ho5lCCyNewJdwq0Zrktw2EReVu/tlLNMyutUH3B9jSN2x
+pL1Q5EVeq34u/dI95wzw4yVh4HDN4bXhPPtOdaQ2YgXnJ4AMSjRisSuE3ISOYLxZ
+dTOiEBp3s/l3QRrWkdIk
+=53io
 -----END PGP SIGNATURE-----
