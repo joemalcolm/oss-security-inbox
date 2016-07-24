@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1711" "Saturday" "24" "June" "2017" "23:26:00" "+0800" "Shawn" "citypw@gmail.com" "<CABniQZPtHV+-XiHPRUGcDe+KwEd1JpPdcDb2Xn63t2Z_Os6ETQ@mail.gmail.com>" "51" "Re: [oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method" "^Cc:" nil nil "6" "2017062415:26:00" "[oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method" (number mark "        citypw@gmail Jun 24   51/1711  " thread-indent "\"Re: [oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method\"\n") "<CAADWXX8JYe-AewtzoY6VBVLPTs+UvnfZst76vL4tccf6x9cY=g@mail.gmail.com>" ("<20170624005003.GB27479@grsecurity.net>" "<CAADWXX8JYe-AewtzoY6VBVLPTs+UvnfZst76vL4tccf6x9cY=g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1346" "Sunday" "24" "July" "2016" "11:06:25" "+0300" "Lior Kaplan" "kaplanlior@gmail.com" "<CAEsznC7xLCYBp0NBWzQzzBMiYz-shG7NEVvNeLTb2U_xMSpBVQ@mail.gmail.com>" "46" "[oss-security] Fwd: CVE for PHP 5.5.38 issues" nil nil nil "7" "2016072408:06:25" "[oss-security] Fwd: CVE for PHP 5.5.38 issues" (number mark "U       kaplanlior@g Jul 24   46/1346  " thread-indent "\"[oss-security] Fwd: CVE for PHP 5.5.38 issues\"\n") "<CAEsznC6-RyAhkT5P26hYi00pO8=kG-n_iQqC8vcSCuS9P3=yvg@mail.gmail.com>" ("<CAEsznC6-RyAhkT5P26hYi00pO8=kG-n_iQqC8vcSCuS9P3=yvg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25767 invoked by uid 550); 24 Jun 2017 15:37:22 -0000
+Received: (qmail 13415 invoked by uid 550); 24 Jul 2016 08:06:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,95 +11,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3658 invoked from network); 24 Jun 2017 15:26:13 -0000
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 13364 invoked from network); 24 Jul 2016 08:06:38 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Yte0345DvZuhb3d1MuiKM6rir8J1IDlEfRu/l2eN/uE=;
-        b=YQSNmqkGUBOWeA+Gi39rp3CGVQjwnJ7FrE3oDlhNzUYbMFqpQEHUB4t1XTmXGHVNRm
-         IWRe4eBQdnjTrCyGGFg2xRHZRbxNduyynrp334OTew/5B6JvPf3L/7hiQ7R7F933k2k8
-         UcMxBm/VXCnSTiuYCMgnw12nN7bITzJK+POOlZn5+vBuARGbuHeILyXvXZPv5QhY1CWw
-         unPVjH7KlOOMHmDvuvGSG+EHv31rzkhwE79+7jTaigVXVkJdr7OA/290aVSGIvCNfRnH
-         AIX8lzpGfrSbnlHP0RRxPBqk47/2wVIX1/6N4Yr2a2I6BCTd/vsD4gZ57ve3AfaKqca3
-         9MVw==
+        bh=5XJbPp1AIOUNWBhTBEXtGiI1bF19q+215iSy1lz3d8Y=;
+        b=SAeZCC06jYd17oyll4D4LB4mBd1Krqz6471t87sDKfeqewDHQSLN61h9qduPCsSWvW
+         X7mhkab/UJZZVXEQh/0JRkwXGfIDBmmYTO33/WCxHCIB+jqlGVoq1YHmPdis8N6VwoDB
+         eO7JhoRcWy1WpsG9HLLx4HPSdvURtV80+54drsvNA8KAb3quDqW09CaramiGNXEANNnc
+         5n7eC+SJdYZ73jJymXP6Kx8xms5ZCu5SLzHmGPDcC6WOkO2dLWcIaQg2s4tpEeEQPvaU
+         nQps+5xJBj88WB+vcvy6yxpvN8XSp88mYeHzf3NUGVUZqGurMmHkrALMiYArs4+ffaHb
+         i8Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
+        d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Yte0345DvZuhb3d1MuiKM6rir8J1IDlEfRu/l2eN/uE=;
-        b=m3etcR54oEAmhwBHTSSAqfFR+wLmbzXYRONUBFP/Bs8XT8zt0+MKUeebQECGex6q54
-         OCkoR8l/pFOJBdGccrS63dyUewqeZuGSOiXIuZsOJ7akwLd3funMiVDIpP2h3kXBQY4u
-         x+Hsl9jPtrqhTIT8KJv0q6YEwyxeCsU9cvvRw5mJHM+lO4YRIR+p+yJ6UNecHGFZzIoX
-         jko8nBPfg+mbGNnNV3TpxZkKVYhxqZxYiqJMu71Zgsa6edTAX+6vylwDb3u4Qi347Oi0
-         Sg0Rq/R/fKousEXeE9Jpob9PHWf9scz24tl/XTaLylqe95VcVIS7eY5Nohc8oUQP6o9u
-         LCUA==
-X-Gm-Message-State: AKS2vOwcIjcnRY7o7hipQkpEwPZAcSuM7WQkWzY+WbnXMdQHhHTr0GEe
-	+nSPaMBqQ5ipwrBf+B1uk93CXf9a/w==
-X-Received: by 10.13.235.20 with SMTP id u20mr1842798ywe.45.1498317961272;
- Sat, 24 Jun 2017 08:26:01 -0700 (PDT)
+        bh=5XJbPp1AIOUNWBhTBEXtGiI1bF19q+215iSy1lz3d8Y=;
+        b=BjykIE6QIteFQGepZfVbQbfvomuKHk11my10E3GpZvQ0pL7FRTImCEoxz9nvdTnCWH
+         u/4/fY0UCKoQYV97uuGeaFgnqSqUVdX81XYk+gS0f4kfz6+FqSS4taXZl1lwFfPUvrDJ
+         Ltg70DiYB+i2zyVQh4GEll5IcL9Vdi5McQ1Fz8DC8wQcpN3objtk4dsq6/Lo5XuER6PU
+         JtIyGsef7aT8/0LEs+j8SigS9ffxBjxjdv0j/vTZ+N0KKBVb3yfrX4qBhoOeDn9Zu6Oo
+         DItKcuF15PgxwhVnnaQwvjTZtdl8K+bJMhNFehKFjoJQAqWU40/c2B9B+N15ddELC4XB
+         BdNg==
+X-Gm-Message-State: AEkoouvmakrmfBl6kJykRDeU502B8VubIWjauccYClCB+5zC+Rm+PFz1aZmaJFtJxZ4HBOJ6+HOUmJTLFm9YYQ==
+X-Received: by 10.36.93.9 with SMTP id w9mr14854205ita.2.1469347586174; Sun,
+ 24 Jul 2016 01:06:26 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAADWXX8JYe-AewtzoY6VBVLPTs+UvnfZst76vL4tccf6x9cY=g@mail.gmail.com>
-References: <20170624005003.GB27479@grsecurity.net> <CAADWXX8JYe-AewtzoY6VBVLPTs+UvnfZst76vL4tccf6x9cY=g@mail.gmail.com>
-Message-ID: <CABniQZPtHV+-XiHPRUGcDe+KwEd1JpPdcDb2Xn63t2Z_Os6ETQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: Brad Spengler <spender@grsecurity.net>, pageexec@freemail.hu, 
-	kernel-hardening@lists.openwall.com
-Date: Sat, 24 Jun 2017 23:26:00 +0800
-From: Shawn <citypw@gmail.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities,
- refcount_t UAF, and an ignored Secure Boot bypass / rootkit method
-To: oss-security@lists.openwall.com
+In-Reply-To: <CAEsznC6-RyAhkT5P26hYi00pO8=kG-n_iQqC8vcSCuS9P3=yvg@mail.gmail.com>
+References: <CAEsznC6-RyAhkT5P26hYi00pO8=kG-n_iQqC8vcSCuS9P3=yvg@mail.gmail.com>
+From: Lior Kaplan <kaplanlior@gmail.com>
+Date: Sun, 24 Jul 2016 11:06:25 +0300
+Message-ID: <CAEsznC7xLCYBp0NBWzQzzBMiYz-shG7NEVvNeLTb2U_xMSpBVQ@mail.gmail.com>
+To: cve-assign@mitre.org
+Cc: "security@php.net" <security@php.net>, oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a1143ddc8ed19d805385d242d
+Subject: [oss-security] Fwd: CVE for PHP 5.5.38 issues
 
-Hi Linus,
+--001a1143ddc8ed19d805385d242d
+Content-Type: text/plain; charset=UTF-8
 
-Not sure how you got the conclusion like "Their patches are pure
-garbage."( https://www.spinics.net/lists/kernel/msg2540934.html). I'm
-wondering why there's a group of ppl called themselves KSPP got paid
-by big corps are still trying to copy+paste PaX/Grsecurity to the
-upstream if you think it's a garbage? Did you try to tell KSPP guys to
-stop their work( cc'ing kernel-hardening mailinglist)? It's so obvious
-to see the most security work( more than just a specific OS)
-originally done by PaX/Grsecurity:
+Hi,
 
-https://github.com/hardenedlinux/grsecurity-101-tutorials/blob/master/kernel_mitigation.md
+PHP 5.5.38 was released over the weekend, with a few security fixes, see
+list bellow (I removed issues already have CVE assigned to them).
 
-And my customers has been suffering from your philosophical ideas of
-"A bug is bug" for too long. I really respect your contributions(
-linux kernel/git) to the FLOSS world. But even the open source king
-can't change the truth:
+Source code is at
+http://git.php.net/?p=php-src.git;a=shortlog;h=refs/tags/php-5.5.38
 
-https://github.com/hardenedlinux/grsecurity-101-tutorials/blob/master/kernel_vuln_exp.md
+- Core:
+   . Fixed bug #70480 (php_url_parse_ex() buffer overflow read). (Stas)
+   . Fixed bug #72513 (Stack-based buffer overflow vulnerability in
+     virtual_file_ex). (loianhtuan at gmail dot com)
+   . Fixed bug #72562 (Use After Free in unserialize() with Unexpected Session
+     Deserialization). (taoguangchen at icloud dot com)
 
-btw: You didn't answer Brad's question.
+- EXIF:
+   . Fixed bug #72603 (Out of bound read in exif_process_IFD_in_MAKERNOTE).
+     (Stas)
+   . Fixed bug #72618 (NULL Pointer Dereference in exif_process_user_comment).
+     (Stas)
 
-
-On Sat, Jun 24, 2017 at 9:04 AM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
-> On Fri, Jun 23, 2017 at 5:50 PM, Brad Spengler <spender@grsecurity.net> wrote:
->>
->> BTW, we're happy to go toe-to-toe with you here in public on actual facts
->> instead of pathetic ad hominems.
->
-> Quite frankly, I'd much rather see *you* actually send in patches that
-> are acceptable for inclusion, something you've never done.
->
-> As it is, other people have tried to clean up parts of the grsecurity
-> patches, and tried to make them acceptable.
->
-> Wouldn't it be nice if you actually tried to make the baseline actually better?
->
-> Please.
->
->                 Linus
+- Intl:
+   . Fixed bug #72533 (locale_accept_from_http out-of-bounds access). (Stas)
 
 
+- SNMP:
+   . Fixed bug #72479 (Use After Free Vulnerability in SNMP with GC and
+     unserialize()). (taoguangchen at icloud dot com)
 
--- 
-GNU powered it...
-GPL protect it...
-God blessing it...
+- Xmlrpc:
+   . Fixed bug #72606 (heap-buffer-overflow (write) simplestring_addn
+simplestring.c).
+     (Stas)
 
-regards
-Shawn
+- Zip:
+   . Fixed bug #72520 (Stack-based buffer overflow vulnerability in
+     php_stream_zip_opener). (loianhtuan at gmail dot com)
+
+Thanks,
+
+Kaplan
+
+--001a1143ddc8ed19d805385d242d--
