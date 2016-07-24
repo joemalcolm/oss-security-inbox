@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1750" "Tuesday" "2" "June" "2015" "22:35:02" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150603023502.B967F72E055@smtpvbsrv1.mitre.org>" "41" "[oss-security] Re: Stack out of bounds read access in uudecode / sharutils" nil nil nil "6" "2015060302:35:02" "[oss-security] Re: Stack out of bounds read access in uudecode / sharutils" (number mark "        cve-assign@m Jun  2   41/1750  " thread-indent "\"[oss-security] Re: Stack out of bounds read access in uudecode / sharutils\"\n") "<20150603010028.2c166570@pc1>" ("<20150603010028.2c166570@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4790" "Sunday" "24" "July" "2016" "11:40:19" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160724154019.E876633201D@smtpvbsrv1.mitre.org>" "123" "[oss-security] Re: Fwd: CVE for PHP 5.5.38 issues" nil nil nil "7" "2016072415:40:19" "[oss-security] Re: Fwd: CVE for PHP 5.5.38 issues" (number mark "U       cve-assign@m Jul 24  123/4790  " thread-indent "\"[oss-security] Re: Fwd: CVE for PHP 5.5.38 issues\"\n") "<CAEsznC7xLCYBp0NBWzQzzBMiYz-shG7NEVvNeLTb2U_xMSpBVQ@mail.gmail.com>" ("<CAEsznC7xLCYBp0NBWzQzzBMiYz-shG7NEVvNeLTb2U_xMSpBVQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7383 invoked by uid 550); 3 Jun 2015 02:35:19 -0000
+Received: (qmail 7580 invoked by uid 550); 24 Jul 2016 15:40:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +11,136 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7335 invoked from network); 3 Jun 2015 02:35:14 -0000
-In-Reply-To: <20150603010028.2c166570@pc1>
-Message-Id: <20150603023502.B967F72E055@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue,  2 Jun 2015 22:35:02 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Stack out of bounds read access in uudecode / sharutils
-To: hanno@hboeck.de
+Received: (qmail 7526 invoked from network); 24 Jul 2016 15:40:32 -0000
+From: cve-assign@mitre.org
+To: kaplanlior@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@php.net
+In-Reply-To: <CAEsznC7xLCYBp0NBWzQzzBMiYz-shG7NEVvNeLTb2U_xMSpBVQ@mail.gmail.com>
+Message-Id: <20160724154019.E876633201D@smtpvbsrv1.mitre.org>
+Date: Sun, 24 Jul 2016 11:40:19 -0400 (EDT)
+Subject: [oss-security] Re: Fwd: CVE for PHP 5.5.38 issues
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-> https://blog.fuzzing-project.org/13-Stack-out-of-bounds-read-access-in-uudecode-sharutils.html
+> https://bugs.php.net/70480 (php_url_parse_ex() buffer overflow read). (Stas)
+> http://git.php.net/?p=php-src.git;a=commit;h=629e4da7cc8b174acdeab84969cbfc606a019b31
 
-What are the realistic scenarios in which this has a security impact?
+Use CVE-2016-6288.
 
-For example, can any of these occur on actual systems?
 
-1. The attacker e-mails a uuencoded file to their own mailbox on a
-web-based mail service. This service has a feature in which decoded
-data is presented to the recipient. (The server operates on the data
-with the uudecode program, not with any other implementation of the
-uudecode algorithm. The attacker gains read access to unintended parts
-of the server's memory.)
+> https://bugs.php.net/72513 (Stack-based buffer overflow vulnerability in
+> virtual_file_ex). (loianhtuan at gmail dot com)
+> http://git.php.net/?p=php-src.git;a=commit;h=0218acb7e756a469099c4ccfb22bce6c2bd1ef87
 
-2. A web site allows users to do HTTP uploads of data in uuencoded
-format, and supports requests for decoded versions of the data. Same
-parenthesized description as above.
+Use CVE-2016-6289.
 
-3. The attacker composes a news article with crafted uuencoded data
-and posts it to the alt.sources Usenet newsgroup. The attacker is
-subscribed to this newsgroup in their own account on a web-based
-Usenet news reading service. Same parenthesized description as above.
+
+> https://bugs.php.net/72562 (Use After Free in unserialize() with Unexpected Session
+> Deserialization). (taoguangchen at icloud dot com)
+> http://git.php.net/?p=php-src.git;a=commit;h=3798eb6fd5dddb211b01d41495072fd9858d4e32
+
+Use CVE-2016-6290.
+
+
+> https://bugs.php.net/72603 (Out of bound read in exif_process_IFD_in_MAKERNOTE).
+> (Stas)
+> http://git.php.net/?p=php-src.git;a=commit;h=eebcbd5de38a0f1c2876035402cb770e37476519
+
+Use CVE-2016-6291.
+
+
+> https://bugs.php.net/72618 (NULL Pointer Dereference in exif_process_user_comment).
+> (Stas)
+> http://git.php.net/?p=php-src.git;a=commit;h=41131cd41d2fd2e0c2f332a27988df75659c42e4
+
+Use CVE-2016-6292.
+
+
+> https://bugs.php.net/72533 (locale_accept_from_http out-of-bounds access). (Stas)
+> This bug is inside libicu
+
+> http://git.php.net/?p=php-src.git;a=commit;h=aa82e99ed8003c01f1ef4f0940e56b85c5b032d4
+
+The related upstream code can be found in the
+http://source.icu-project.org/repos/icu/icu/trunk/source/common/uloc.cpp
+file.
+
+What we will do for now is assign one CVE ID for the "ICU for C/C++"
+product and a separate CVE ID for PHP. In other words, the bug #72533
+discoverer has indicated that it is a bug in that ICU product.
+However, it is a bug at a different level within the PHP distribution,
+because aa82e99ed8003c01f1ef4f0940e56b85c5b032d4 implies that PHP is
+intended to operate safely even with an unpatched copy of the ICU
+library.
+
+Use CVE-2016-6293 for ICU for C/C++.
+
+Use CVE-2016-6294 for PHP.
+
+(If there happens to be further information indicating that
+uloc_acceptLanguageFromHTTP was supposed to be using the tmp array as
+originally written, then we can reject CVE-2016-6293.)
+
+
+> https://bugs.php.net/72479 (Use After Free Vulnerability in SNMP with GC and
+> unserialize()). (taoguangchen at icloud dot com)
+> http://git.php.net/?p=php-src.git;a=commit;h=cab1c3b3708eead315e033359d07049b23b147a3
+
+Use CVE-2016-6295.
+
+
+> https://bugs.php.net/72606 (heap-buffer-overflow (write) simplestring_addn
+> simplestring.c). (Stas)
+> This code seems to be part of libxmlrpc ... http://xmlrpc-epi.sourceforge.net/
+
+Specifically, the problematic upstream code can be found at
+https://sourceforge.net/projects/xmlrpc-epi/files/xmlrpc-epi-base/0.54.2/xmlrpc-epi-0.54.2.tar.bz2/download
+in the xmlrpc-epi-0.54.2/src directory.
+
+> http://git.php.net/?p=php-src.git;a=commit;h=e6c48213c22ed50b2b987b479fcc1ac709394caa
+
+Use CVE-2016-6296 for this vulnerability in the xmlrpc-epi product.
+(The same CVE ID applies to the copy of the code that is shipped in
+the PHP distribution.)
+
+(Incidentally, although MITRE cannot be a vulnerability coordinator
+for this issue, we noticed that "[2016-07-18 00:16 UTC]" comment in
+72606 seems to refer to a different product. The mentioned
+http://gggeek.github.io/phpxmlrpc/ page says "This is also not the
+library which can be compiled as a php extension and has been bundled
+with php since version 4.1.0" and links to
+http://xmlrpc-epi.sourceforge.net/ to point out that it is NOT that
+codebase. See also the
+https://sourceforge.net/p/xmlrpc-epi/git/ci/master/tree/AUTHORS page.)
+
+
+> https://bugs.php.net/72520 (Stack-based buffer overflow vulnerability in
+> php_stream_zip_opener). (loianhtuan at gmail dot com)
+> http://git.php.net/?p=php-src.git;a=commit;h=81406c0c1d45f75fcc7972ed974d2597abb0b9e9
+
+Use CVE-2016-6297.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJVbmbWAAoJEKllVAevmvms0BQIAIEpR/65912H2dyOkptzXc3a
-yvCUShXy4vInB4X4Y7qdRqNDnEw1omG6gzEauNU545Tnxd3iy0Mx1QmzCHQZIHCl
-OH6Y26y+daHICe70uxSzbjXmnGQeeT6JOTV4kPlEuU/GNcRbVsq0CxH2hlIXmweo
-D7YYUEH4tcGQQfJrh/sG4w/PiujlimQBynRONJyGOz5yVA5LTp1yl6Vw1hz6GpoS
-BazzQP/d+O5thgL0pXkenkwRGbbKP1N2vT9SNCCB04nTM1djY6DQ+2OenaEHSidq
-NyKSkxLYNUmP170gXMZvJwS0ruaXpKz4GUYFFwd+Tk1Cy92jyOFyW9IYOv3TF1E=
-=xMZZ
+iQIcBAEBCAAGBQJXlODkAAoJEHb/MwWLVhi2PLcP/1/ENMBAz8i3UQ6I46x+6bMB
+zQMSUWE4uJphTLiQU5Ley1iGLb6cqluJ/xKZh5Lx/kbfunUSIE7NTpY6S9xO9yV4
+tbEYgT3/rE2QSYHkmEAPy1NNRwQMnim1DYeG4erTjFTAf7slEncqz8uphPasz2ws
+R4BlyPxw/NYDjcS5lXyevpLyFnuS+4uJ5kpNTXJ8xgsVJpisxW8FyhzNrnFIRSyE
+akyoDTBllvrJpbavMBHBthydGsiwX+lfUb985eWrQnzz8V+wSpNM/y+W4kRAFpd1
+0eLujLnxbpoiGfZ145qxIlPTFmH40KL1yfqPHudg+U/1WwCVZ6Hhi2pYSfOs2q3w
+RKmyUTrD502UXlhZiC6yQIKVzqFsjKrS7a4F39UCuI1X+Goyav7PUWvC7aPbme8B
+utfEbhT0EB9W1qnSN8ULIXABJdq00HGbW/qiFSjU+fexSl4H0+xMD4o6GPAboy6a
+K8uHTgIMKdnlf8khEGTryMg7+iy4IuM+c29wo+9CXS5ULPt/ISDQKGCvVPOt7ry8
+4zjnoKhmMkRGWy1Id/4YxVVBkLb+xp38/CEO8u2QJnCyvQvbN36fX3dAlvEs70ft
+w9GKmP70SS/H08E+iSAZTfeWVZZSA8PfAT4O1RLEp9QFzWw7Xl8GQHfoErtySxgj
+Q55iDuHdNurMnz8RJY7T
+=v2Jy
 -----END PGP SIGNATURE-----
