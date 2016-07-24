@@ -1,43 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/26/5
-Message-Id: <20160526181856.014BE7BC0A1@smtpvmsrv1.mitre.org>
-Date: Thu, 26 May 2016 14:18:56 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: roundcube: XSS vulnerability in mail content page
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/24/1
+Message-ID: <CAEsznC7xLCYBp0NBWzQzzBMiYz-shG7NEVvNeLTb2U_xMSpBVQ@mail.gmail.com>
+Date: Sun, 24 Jul 2016 11:06:25 +0300
+From: Lior Kaplan <kaplanlior@...il.com>
+To: cve-assign@...re.org
+Cc: "security@....net" <security@....net>, oss-security@...ts.openwall.com
+Subject: Fwd: CVE for PHP 5.5.38 issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> Fix XSS issue in href attribute on area tag (#5240)
-> https://github.com/roundcube/roundcubemail/issues/5240
-> https://github.com/roundcube/roundcubemail/pull/5241
-> 
-> <img src=# usemap=#foo width=100%><map name="foo"><area href=[XSS] shape=default>
+PHP 5.5.38 was released over the weekend, with a few security fixes, see
+list bellow (I removed issues already have CVE assigned to them).
 
-Use CVE-2016-5103.
+Source code is at
+http://git.php.net/?p=php-src.git;a=shortlog;h=refs/tags/php-5.5.38
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+- Core:
+   . Fixed bug #70480 (php_url_parse_ex() buffer overflow read). (Stas)
+   . Fixed bug #72513 (Stack-based buffer overflow vulnerability in
+     virtual_file_ex). (loianhtuan at gmail dot com)
+   . Fixed bug #72562 (Use After Free in unserialize() with Unexpected Session
+     Deserialization). (taoguangchen at icloud dot com)
 
-iQIcBAEBCAAGBQJXRzsvAAoJEHb/MwWLVhi2KlcQAK5YCa0J9EAyeVL8wtTL5fQd
-ZULIXbjQ5jFSR/FP0zh7BFtpWPZCcfEsUcuxW2fC76NStQyeypLMBbGo+z0GMe0v
-O0QmN1Jdk7DqpPo/g3nfX8v5S0XJdUNEXOXIgfB6RXGYLP6+j9uX5ZOgVIjFvXSi
-XSrzh2YcDfuytqxZoUJkpgtfz8OGaSoJWRdC6MoF2ytmuZ9suB7OowKQyNRLszO+
-dGeEh7T+MxepmDGTF3AQ0ssm7g7wEyC6ojBqsMdmZCVFbR84brDB8wc4ZWQYkI3e
-ap0e/7dHyfzAzV3GN6BYvaz0rr/Wci8URQV+bRkObpRj8cKqAs/m2eaXOONxgCzn
-Lw6WS4pVdgIFemvKV+Du/hewUHgo60g7dKQ1cw13UVO+VcQNv50wBpoc+W0KLR1r
-hYAwEjN3V+pNvQZ+zNsO7IG2cVzGFWSBH3/amK9bAC3PZXRyY4bAbhF0GTEidgV5
-f/qH8O4Y7TLHXunDwSStPtPpS94G6mHsOKaeHYdWODSs+2alJn+1MioLcAFdYq7G
-sQ8QI4GoCN0JzVYMPMfTklByAtIrxG9cbpLa/X+/xSsbbXlIk+BJbGTD0Uz8iK4R
-84J05w1ErGlJ0lphq5VfZbRIeM2wpLiVh58XAmiu7fh4+Z+JJpVR9ZzAdbS7TTj+
-pkXD/GkrGu3Omjv8JSVl
-=HbY0
------END PGP SIGNATURE-----
+- EXIF:
+   . Fixed bug #72603 (Out of bound read in exif_process_IFD_in_MAKERNOTE).
+     (Stas)
+   . Fixed bug #72618 (NULL Pointer Dereference in exif_process_user_comment).
+     (Stas)
+
+- Intl:
+   . Fixed bug #72533 (locale_accept_from_http out-of-bounds access). (Stas)
+
+
+- SNMP:
+   . Fixed bug #72479 (Use After Free Vulnerability in SNMP with GC and
+     unserialize()). (taoguangchen at icloud dot com)
+
+- Xmlrpc:
+   . Fixed bug #72606 (heap-buffer-overflow (write) simplestring_addn
+simplestring.c).
+     (Stas)
+
+- Zip:
+   . Fixed bug #72520 (Stack-based buffer overflow vulnerability in
+     php_stream_zip_opener). (loianhtuan at gmail dot com)
+
+Thanks,
+
+Kaplan
+
