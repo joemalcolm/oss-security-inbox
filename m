@@ -1,4 +1,9 @@
-Received: (qmail 5912 invoked by uid 550); 7 Aug 2024 12:39:13 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2547" "Monday" "25" "July" "2016" "10:54:07" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<5CB94822-FFC0-4948-9F78-96523639E28D@me.com>" "58" "[oss-security] Huge-IT Portfolio Gallery manager v1.1.5 SQL Injection and XSS" nil nil nil "7" "2016072514:54:07" "[oss-security] Huge-IT Portfolio Gallery manager v1.1.5 SQL Injection and XSS" (number mark "U       larry0@me.co Jul 25   58/2547  " thread-indent "\"[oss-security] Huge-IT Portfolio Gallery manager v1.1.5 SQL Injection and XSS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 12038 invoked by uid 550); 25 Jul 2016 14:54:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,65 +12,87 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26240 invoked from network); 6 Aug 2024 22:23:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722983005; x=1723587805; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=sYRlRKvw4Hys6IU3181XXQeKjSiiNke53SOHSpDXDSM=;
-        b=bApmXkeSbUOiLEixwAKpzt5WiOMTnQVNa7F5Iz8HemVlDqX5RDrsiEedfM3VDETdoC
-         A5gMZcGOORm45FLsy3q+ONdZsRnOPcXGpKFf6pFfGqx11gql82L4GOqUrk4bu63SNefR
-         rAytk0kr/0A+xzZ/ntUUjj3TvNeArJol0ZYNtznDtwkEkJ89Ob8QSOh3KTKDjhjmgEJI
-         1XuEELItQk9D+8cMM88sxIJ2ViAXNP0R01UGS9gr+/+napYZZXrWl3lbqARvmuiWw3f4
-         mCMSE1nL6GN9Kcaf/CvYSy6yowCzKoH7vMbHqxLScMDqZw764n0AiG8s1gxfhVZ1vBkk
-         TliA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722983005; x=1723587805;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sYRlRKvw4Hys6IU3181XXQeKjSiiNke53SOHSpDXDSM=;
-        b=mN/+gBsRMpLdTL5vekmwqvqoILWn+5/L7iqON2caa597ohlWn1z6jZ9Zr5phAyOSLg
-         wG2N/sfNoz0ew0NukJ/a1EY+0SvwlfExyAF/1O+Zho64shQCwwRjOWKnFF3E2peruVL2
-         qzAFZ0BUxZ8Lwr89U+PlYl37psgFGu5R5eRZu4mrRrIXTP26T+2nBl6GZ/Uwj+n8gf65
-         fxlnFr3c9uqz9ZJYf4xjQRlWpPfi+jnaC26sQjTdbJ7jPBHRc0YfL57gdb8B4qqG4vlt
-         fhs3l8il+mlRInv/5WSvnLDVv/P+5WedOoU9RJg56OxR/VvLsD1+iSfpV587L2qImkMB
-         1Q8w==
-X-Gm-Message-State: AOJu0Yx5L89cWpuYEe0oKGw6zrESTats/pc6IiG8R752tn6+YRBv6sqL
-	5zVsZG4Y0ru+ZFOySUw9KxkfF50btmpltRE56bz2WIKWNGtbN2Z6tMvLpw==
-X-Google-Smtp-Source: AGHT+IHE1iewtBdpzhyYN8ID++aYumd+a14yPR34zYkAg7TEZ7vKQcg6PaueG9kstG1KIPMWn7+3tg==
-X-Received: by 2002:a05:6820:1503:b0:5d5:b49c:b6ed with SMTP id 006d021491bc7-5d671459f57mr16228832eaf.5.1722983005383;
-        Tue, 06 Aug 2024 15:23:25 -0700 (PDT)
-Message-ID: <1dfc8a2f-cc26-4e05-b41d-0398c925226d@gmail.com>
-Date: Tue, 6 Aug 2024 17:23:24 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com
-References: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com>
- <20240806171232.6bd08942@zbook> <ZrJQpDftQthxOT2g@symphytum.spacehopper.org>
-Content-Language: en-US
-From: Bob Friesenhahn <bobjfriesenhahn@gmail.com>
-In-Reply-To: <ZrJQpDftQthxOT2g@symphytum.spacehopper.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] feedback requested regarding deprecation of TLS
- 1.0/1.1
+Received: (qmail 12000 invoked from network); 25 Jul 2016 14:54:34 -0000
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
+ definitions=2016-07-25_07:,, signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ clxscore=1015 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1603290000 definitions=main-1607250173
+From: "Larry W. Cashdollar" <larry0@me.com>
+Content-type: text/plain; charset=utf-8
+Content-transfer-encoding: quoted-printable
+Message-id: <5CB94822-FFC0-4948-9F78-96523639E28D@me.com>
+Date: Mon, 25 Jul 2016 10:54:07 -0400
+To: Open Source Security <oss-security@lists.openwall.com>
+MIME-version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
+	t=1469458451; bh=8maFl2dUiP99a/tJ89a4v1cYfNVSJ3YL48Es6yQyvPE=;
+	h=From:Content-type:Subject:Message-id:Date:To:MIME-version;
+	b=XP9Zg5TkWH+HSFulVlzq+ungZs7r+qZ9dXusG6OwhQAamtaffNx5iv+EnFHmyT/Jc
+ qkbO1u62gYbyJmmkIz6FAETcCrEdjMZbl5QQLsjjolrnIQ/IyKKDrWSQE3/M/hMPvw
+ tQegzxHGfD1Nj87fBeEWkUmC6BhsUOHtjamRxAw8Ufx+WiW7xbNcV7o7z8Jp/+TCy2
+ 4ZEH8siFHPtKod05KGZoLccwF+MbPAnxWAM57rxzD6FDPzqaVPCTDz5eH28OXqSiLW
+ uorqY0/Z2JvXCkEw7hgGuWfr3vXEhrKnLJhMLeRLOXdwkZcrIQnb668lhJnUtMzS38
+ J5QMfuGbt6UTg==
+Subject: [oss-security] Huge-IT Portfolio Gallery manager v1.1.5 SQL Injection and XSS
 
-On 8/6/24 11:34, Stuart Henderson wrote:
+Title: Huge-IT Portfolio Gallery manager v1.1.5 SQL Injection and XSS
+Author: Larry W. Cashdollar, @_larry0
+Date: 2016-07-15
+Download Site: http://huge-it.com/joomla-portfolio-gallery/
+Vendor: Huge IT
+Vendor Notified: 2016-07-16
+Vendor Contact: info@huge-it.com
+Description: Huge-IT Portfolio Gallery extension can do wonders with your w=
+ebsite. If you wish to show your photos, videos, enclosing the additional i=
+mages and videos, then this Portfolio Gallery extension is what you need.
+Vulnerability:
+The attacker must be logged in with at least manager level access or access=
+ to the administrative panel to exploit this vulnerability:
 
-> On 2024/08/06 17:12, Marco Moock wrote:
->> As a user, this is acceptable for me, but I know there are still
->> machines outside that only offer such old versions.
->> Some of them can't be upgraded easily because the vendor doesn't
->> provide any new versions.
-> BTW, mainstream web browsers disabled pre-1.2 TLS by default around 2020.
-FYI, I have old networking equipment for which there is no way to update 
-the firmware, but the hardware is still in use.  I find it necessary to 
-enable pre-1.2 TLS support in the browser in order to administer the 
-equipment.
+XSS line 156 in : ./administrator/components/com_portfoliogallery/views/vid=
+eo/tmpl/default.php
 
-It seems important to consider the use cases before disabling old protocols.
+155                         <textarea rows=3D"3" cols=3D"50" class=3D"text-=
+area" disab    led >
+156                     <?php echo $_GET['edit'];?>
+157                         </textarea>
 
-Bob
 
+In file administrator/components/com_portfoliogallery/models/portfoliogalle=
+ry.php:=20=20
+
+variable id is passed without any sanitization to the SQL query being built=
+ starting at line 53:
+
+ 50     public function getPropertie() {
+ 51         $db =3D JFactory::getDBO();
+ 52         $id_cat =3D JRequest::getVar('id');
+ 53         $query =3D $db->getQuery(true);
+ 54         $query->select('#__huge_itportfolio_images.name as name,'
+ 55                 . '#__huge_itportfolio_images.id ,'
+ 56                 . '#__huge_itportfolio_portfolios.name as portName,'
+ 57                 . 'portfolio_id,#__huge_itportfolio_images.category as =
+categ    ory, #__huge_itportfolio_images.description as description,image_u=
+rl,sl_url,    sl_type,link_target,#__huge_itportfolio_images.ordering,#__hu=
+ge_itportfolio_    images.published,published_in_sl_width');
+ 58         $query->from(array('#__huge_itportfolio_portfolios' =3D> '#__hu=
+ge_itpo    rtfolio_portfolios', '#__huge_itportfolio_images' =3D> '#__huge_=
+itportfolio_im    ages'));
+ 59         $query->where('#__huge_itportfolio_portfolios.id =3D portfolio_=
+id')->w    here('portfolio_id=3D' . $id_cat);
+ 60         $query->order('ordering asc');
+ 61         $db->setQuery($query);
+ 62         $results =3D $db->loadObjectList();
+ 63         return $results;
+
+CVE-2016-1000115 XSS
+CVE-2016-1000116 SQLi
+
+Exploit Code:
+	=E2=80=A2 sqlmap  --load-cookies=3Dcookies.txt -u "http://192.168.0.125/ad=
+ministrator/index.php?option=3Dcom_portfoliogallery&view=3Dportfoliogallery=
+&id=3D*" --dbms mysql --dump
+Advisory: http://www.vapidlabs.com/advisory.php?v=3D165=
