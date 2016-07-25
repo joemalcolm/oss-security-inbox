@@ -1,57 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/7
-Message-Id: <20160908065608.DCC8913A1BE@smtpvmsrv1.mitre.org>
-Date: Thu,  8 Sep 2016 02:56:08 -0400 (EDT)
-From: cve-assign@...re.org
-To: yi@...i.me
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request : Libtorrent 1.1.0 inflate_gzip denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/25/3
+Message-ID: <20160725011319.GA17899@kroah.com>
+Date: Sun, 24 Jul 2016 18:13:19 -0700
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE-2016-5400 - linux kernel: denial of service in airspy USB driver.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Mon, Jul 25, 2016 at 10:51:16AM +1000, Wade Mealing wrote:
+> Hit send too early,
+> 
+> 
+> Upstream patch:
+> https://git.linuxtv.org/media_tree.git/commit/?id=eca2d34b9d2ce70165a50510659838e28ca22742
+> 
+> Maintainer has yet to send to LKML.
 
-> I recently opened a bug on "Libtorrent 1.1.0" regarding malformed GZIP
-> encoded responses that causes  denial of service.
-> 
-> For example, an attacker-controlled torrent tracker can crash victim torrent 
-> clients by sending malformed GZIP responses.
-> 
-> This bug has been fixed by the maintainer in master and the branch RC_1_1:
-> 
-> https://github.com/arvidn/libtorrent/issues/1021
-> 
-> https://github.com/arvidn/libtorrent/pull/1022
-> 
-> I also tested the bug with two "Libtorrent based" softwares :
-> qBittorrent and Deluge. Both of them were affected and crashed on
-> receiving the malformed response.
+If it's in the media tree, it doesn't go to lkml.
 
-> https://github.com/arvidn/libtorrent/commit/debf3c6e3688aab8394fe5c47737625faffe6f9e
-> 
-> puff.cpp
+Any reason why this isn't tagged for a stable kernel release?
 
-Use CVE-2016-7164.
+thanks,
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX0QmmAAoJEHb/MwWLVhi2oXIP/ibAPUZFAW/XXP6iss3b04nk
-SLf+84eQSmM/2SwvyenV3esac9tUjzeJVqpAE2X66gI8hyYPd7sc4L4+nAgQcdfz
-5A6oeoQS2P0j9uSi5IdURWwKIFoXIcFIdW3qzC9oojtYdEVP+Xo4MkesW6kDKX2o
-eLA0cxtvfQk7NQqfLCKpRZZHlIbcco90sdQ3Flo+MrSaQZ87YR0ObnA4igFmOZQa
-Mf/M2gvRI703yLITvYrv1GmNDmi01q352jQrhYw3RUAvsHfv+ZbWlAKNOH4r7uMV
-u2S6gv4gI7ksEBg1HzUn0rk1Z3L0OuacCaaeKS+NfV12bVsZR+oaI8lz2L5weiOD
-LY5Z8Cecm58UgDfU5cRZyoug2caOkprVlABhuPcIazofH69Jz2h7ATiAniosL2qX
-3x+OPfZmAzkMC9C/6q2ga+ZjrEEjGEAEITV263K7vZaBTXRp+QLLZFOUHsyZO2wP
-MANrF9ELcaB6mnG0N1W5PmJJmaEKnkA19XmoLBHr9zzbWhS8n7Rm2ryQKSWphW6o
-P8579s3A6no+xxmsFbHU5aCwCQA/fwG2vV9ZLcaAq95k4ZxMwLT1Q+XLGa5idzHZ
-FvDvdpTNIgyJLOO1boSlrqx5u8O7n02Zs6WTtdfvnen1GF8Qpef1Un/bzuRDbq+C
-Op5ntMq/hNVu53sg1i+T
-=yPhy
------END PGP SIGNATURE-----
+greg k-h
