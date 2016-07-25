@@ -1,36 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/05/4
-Message-ID: <87io22kiea.fsf@natryn.nanepng.ngu.pk>
-Date: Fri, 05 Feb 2016 15:32:29 -0500
-From: anarcat <anarcat@...ngeseeds.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/25/7
+Message-ID: <CAK0Odpw=eJnFMWzwyoeit1PTGMkVW0NNf0GFc+p0MXLiMXryow@mail.gmail.com>
+Date: Mon, 25 Jul 2016 11:49:28 +0200
+From: Bálint Réczey <balint@...intreczey.hu>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: tiff: Out-of-bounds write for invalid images using LogL compression
+Cc: "Eric W. Biederman" <ebiederm@...ssion.com>,  Shadow package maintainers <pkg-shadow-devel@...ts.alioth.debian.org>
+Subject: Re: Re: [Pkg-shadow-devel] subuid security patches for shadow package
 Content-Type: text/plain; charset=utf-8
 
-So from what I understand, this issue is only related to the *sample*
-code in php-openid, correct?
+Hi,
 
-You also report that this code is in "use verbatim" in "the vast
-majority of sites", yet looking at the Debian code base, the only
-samples of that code I could find are in php-openid itself and the SAML
-library:
+While this is not immediately clear from the Shadow homepage the
+development continued on GitHub where I have opened two issues
+for the two potential security problems:
 
-https://codesearch.debian.net/search?perpkg=1&q=getTrustRoot
+Incorrect integer handling CVE-2016-6252:
+https://github.com/shadow-maint/shadow/issues/27
 
-(jglobus seems to be a false positive there)
+Potentially unsafe use of getlogin CVE-2016-6251:
+https://github.com/shadow-maint/shadow/issues/28
 
-I have reviewed the usage of the openid.realm field in the Debian source
-code and, in general, it doesn't seem to use the `Host:` header:
+Probably upstream's issue tracker would be the best place
+to discuss the fixes in detail. With upstream development
+happening on GitHub the pkg-shadow-devel list could host
+mostly Debian-packaging releated discussions and probably
+not all oss-security subscribers would like to get all the
+messages.
 
-https://codesearch.debian.net/search?perpkg=1&q=openid.realm
+Cheers,
+Balint
 
-Furthermore, I am not sure the attack works even on the theoritical
-level: how would the user reach the proper website if the Host header is
-changed?
-
-A.
--- 
-Never attribute to malice that which can be adequately explained by
-stupidity, but don't rule out malice.
-                         - Albert Einstein
-
+2016-07-25 10:39 GMT+02:00 Sebastian Krahmer <krahmer@...e.com>:
+> On Mon, Jul 25, 2016 at 10:03:31AM +0200, Sebastian Krahmer wrote:
+>> On Wed, Jul 20, 2016 at 11:48:52PM +0200, Nicolas François wrote:
+>> > Hi,
+>> >
+>> > The first point looks like a non issue to me.
+>> >
+>> > getlogin() is used to differentiate users with the same UID.
+>> > The result of getlogin() is checked: if it returns a username that do not
+>> > have the UID returned by getuid(), it will be ignored.
+>> >
+>> >
+>> > Best Regards,
+>> > --
+>> > Nekral
+>>
+>> I agree that its not a severe issue. But its dubious code at best.
+>> I couldnt even imagine someone would have usernames with different UID's?
+>> Maybe such configs should not be encouraged and potential issues with
+>> that discussed.
+>>
+>> My understanding of secure coding is that getlogin() should not
+>> be trusted. Having same username with multiple UIDs is also to be avoided
+>> IMHO, since its asking for trouble (I dont know if thats some requirement
+>> of LSB or POSIX or so?)
+>
+> Err, sorry. Shared UID, different name (the other way around, thanks Alex).
+> But then you are open to GID hopping attacks (as also previously
+> pointed out) since you actually _do_ rely on getlogin() trust.
+>
+> Sebastian
+>
+> --
+>
+> ~ perl self.pl
+> ~ $_='print"\$_=\47$_\47;eval"';eval
+> ~ krahmer@...e.com - SuSE Security Team
+>
