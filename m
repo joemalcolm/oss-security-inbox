@@ -1,104 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/8
-Message-ID: <3959521.p6bvcEHnKb@arcadia>
-Date: Sat, 08 Oct 2016 22:05:12 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/25/10
+Message-ID: <57962D36.9000102@cleal.org>
+Date: Mon, 25 Jul 2016 16:16:06 +0100
+From: Dominic Cleal <dominic@...al.org>
 To: oss-security@...ts.openwall.com
-Subject: libav: null pointer dereference in get_vlc2 (get_bits.h)
+Cc: foreman-security@...glegroups.com
+Subject: CVE-2016-4451, CVE-2016-4475: Foreman organizations/locations API/UI privilege escalations
 Content-Type: text/plain; charset=utf-8
 
-Description:
-Libav is an open source set of tools for audio and video processing.
+1) CVE-2016-4451: organizations/locations privilege escalation in
+Foreman API
 
-A crafted file causes a NULL pointer access.
+When accessing Foreman as a user limited to specific organization, if
+users know other organization id and have unlimited filters they can
+access/modify other organization data. They just have to set the id as
+API parameter.
 
-This issue was discovered the past year, but I didn’t make the report and I 
-didn’t follow the state because of a lack of time.
-Since I saw that the issue does not happen anymore on the git head, I 
-asked to a libav developer (Luca Barbato) about. He said that the commit 
-e5b019725f53b79159931d3a7317107cbbfd0860 make the issue not 
-anymore reachable through the provided testcase, but the issue is still 
-here (maybe another round of fuzzing will re-discover it on master)
-
-The complete ASan output:
-
-# avconv -i $FILE -f null -
-ASAN:SIGSEGV
-===============================================
-==================
-==20876==ERROR: AddressSanitizer: SEGV on unknown address 
-0x0000000000fc (pc 0x7f5273202c6c bp 0x7ffc8442a690 sp 
-0x7ffc8442a520 T0)
-    #0 0x7f5273202c6b in get_vlc2 /var/tmp/portage/media-
-video/libav-11.3/work/libav-11.3/libavcodec/get_bits.h:530:5
-    #1 0x7f5273202c6b in mpeg4_decode_sprite_trajectory 
-/var/tmp/portage/media-
-video/libav-11.3/work/libav-11.3/libavcodec/mpeg4videodec.c:182
-    #2 0x7f527322cbd8 in decode_vop_header /var/tmp/portage/media-
-video/libav-11.3/work/libav-11.3/libavcodec/mpeg4videodec.c:2232:13
-    #3 0x7f527322cbd8 in ff_mpeg4_decode_picture_header 
-/var/tmp/portage/media-
-video/libav-11.3/work/libav-11.3/libavcodec/mpeg4videodec.c:2491
-    #4 0x7f52731fa9ae in mpeg4_decode_header /var/tmp/portage/media-
-video/libav-11.3/work/libav-11.3/libavcodec/mpeg4video_parser.c:92:11
-    #5 0x7f52731fa9ae in mpeg4video_parse /var/tmp/portage/media-
-video/libav-11.3/work/libav-11.3/libavcodec/mpeg4video_parser.c:132
-    #6 0x7f52735c88e6 in av_parser_parse2 /var/tmp/portage/media-
-video/libav-11.3/work/libav-11.3/libavcodec/parser.c:157:13
-    #7 0x7f52754f84dd in parse_packet /var/tmp/portage/media-
-video/libav-11.3/work/libav-11.3/libavformat/utils.c:794:15
-    #8 0x7f52754d5e64 in read_frame_internal /var/tmp/portage/media-
-video/libav-11.3/work/libav-11.3/libavformat/utils.c:960:24
-    #9 0x7f52754e3783 in avformat_find_stream_info 
-/var/tmp/portage/media-
-video/libav-11.3/work/libav-11.3/libavformat/utils.c:2156:15
-    #10 0x4f62f6 in open_input_file /var/tmp/portage/media-
-video/libav-11.3/work/libav-11.3/avconv_opt.c:726:11
-    #11 0x4f474f in open_files /var/tmp/portage/media-
-video/libav-11.3/work/libav-11.3/avconv_opt.c:2127:15
-    #12 0x4f3f62 in avconv_parse_options /var/tmp/portage/media-
-video/libav-11.3/work/libav-11.3/avconv_opt.c:2164:11
-    #13 0x528727 in main /var/tmp/portage/media-
-video/libav-11.3/work/libav-11.3/avconv.c:2629:11
-    #14 0x7f527027eaa4 in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.20-r2/work/glibc-2.20/csu/libc-start.c:289
-    #15 0x43a5d6 in _start (/usr/bin/avconv+0x43a5d6)
-
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-
-video/libav-11.3/work/libav-11.3/libavcodec/get_bits.h:530 get_vlc2
-==20876==ABORTING
-
-Affected version:
-11.3 (and maybe past versions) to 11.7
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Timeline:
-2015-07-27: bug discovered
-2016-09-14: bug reported to upstream
-2016-09-24: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug does not affect ffmpeg.
-The stacktrace is about 11.3 but as said before, the issue is present on 
-11.7 too.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/09/07/libav-null-pointer-dereference-in-get_vlc2_get_bits_h/[1] 
+Affects Foreman 1.7 and higher
+Fix released in Foreman 1.12.0 and 1.11.3
 
 
---------
-[1] https://blogs.gentoo.org/ago/2016/09/07/libav-null-pointer-dereference-in-get_vlc2_get_bits_h/
+2) CVE-2016-4475: privilege escalation in organizations/locations API and UI
 
+When accessing Foreman as a user limited to specific organization or
+location, these are not taken into account in the API or parts of the
+UI. This allows a user to view, edit and delete organizations and
+locations they are not associated with if they have the requisite
+permissions.
+
+Affects Foreman 1.1 and higher
+Fix released in Foreman 1.12.0 and 1.11.4
+
+
+Mitigation for both vulnerabilities: make sure you have filters
+restricted to organizations or locations when you limit user by
+assigning them to particular organizations or locations.
+
+Patches:
+https://github.com/theforeman/foreman/commit/1144040f444b4bf4aae81940a150b26b23b4623c
+https://github.com/theforeman/foreman/commit/a30ab44ed6f140f1791afc51a1e448afc2ff28f9
+
+More information:
+https://theforeman.org/security.html#2016-4451
+http://projects.theforeman.org/issues/15182
+https://theforeman.org/security.html#2016-4475
+http://projects.theforeman.org/issues/15268
+https://theforeman.org
+
+-- 
+Dominic Cleal
+dominic@...al.org
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
