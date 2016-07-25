@@ -1,39 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/02/6
-Message-ID: <19b69f94-6f96-fc5f-5384-17ee2c399f43@redhat.com>
-Date: Thu, 2 Jun 2016 13:57:57 +0200
-From: Adam Maris <amaris@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/25/4
+Message-ID: <CALJHwhQrJUeWwJ6u=kQ_=LU5AGMgQoN_rEE4rGieMwe+JspG2A@mail.gmail.com>
+Date: Mon, 25 Jul 2016 12:16:54 +1000
+From: Wade Mealing <wmealing@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: bad USB host adapter implementation can corrupt memory/brick machine
+Subject: Re: Re: CVE-2016-5400 - linux kernel: denial of service in airspy USB driver.
 Content-Type: text/plain; charset=utf-8
 
-On 02/06/16 11:10, Marcus Meissner wrote:
+> Any reason why this isn't tagged for a stable kernel release?
 
-> Hi,
->
-> reported here:
->
-> https://marc.info/?l=linux-usb&m=146480770532266&w=2
->
-> issue is that the Frescologic device id 1009 host controller apparently
-> has a broken XHCI STREAMS implementation which would lead to memory corruptions
->
-> Redhat might have already assigned a CVE.
->
-> I am not sure if this is controllable for code execution, but at least USB devices can be used
-> to brick a machine with the kernel running (local denial of service)?
->
-> Ciao, Marcus
+Patch was sent to airspy maintainer by James Patrick-Evans (The flaw
+submitter) on July 17th.  I have no control over maintainers.
 
-Red Hat hasn't assigned CVE. Overall, this has only minor security
-implications. Bricking machine doesn't seem to be easily reproducible,
-since on the second tested mobo it merely showed as a random memory
-corruption and hard locked system. It requires specific class of
-external usb devices getting plugged into machine with specific broken
-xhci controller.
+LKML process is likely best kept off list.
 
--- 
-Adam Mariš, Red Hat Product Security
-1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
+Thanks,
 
+Wade Mealing
 
+On Mon, Jul 25, 2016 at 11:13 AM, Greg KH <greg@...ah.com> wrote:
+> On Mon, Jul 25, 2016 at 10:51:16AM +1000, Wade Mealing wrote:
+>> Hit send too early,
+>>
+>>
+>> Upstream patch:
+>> https://git.linuxtv.org/media_tree.git/commit/?id=eca2d34b9d2ce70165a50510659838e28ca22742
+>>
+>> Maintainer has yet to send to LKML.
+>
+> If it's in the media tree, it doesn't go to lkml.
+>
+> Any reason why this isn't tagged for a stable kernel release?
+>
+> thanks,
+>
+> greg k-h
