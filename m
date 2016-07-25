@@ -1,4 +1,9 @@
-Received: (qmail 17682 invoked by uid 550); 24 Feb 2026 22:01:43 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1732" "Monday" "25" "July" "2016" "16:20:29" "+0100" "Dominic Cleal" "dominic@cleal.org" "<57962E3D.3090209@cleal.org>" "58" "[oss-security] CVE-2016-4995: Foreman information disclosure through unauthorized template previews" nil nil nil "7" "2016072515:20:29" "[oss-security] CVE-2016-4995: Foreman information disclosure through unauthorized template previews" (number mark "U       dominic@clea Jul 25   58/1732  " thread-indent "\"[oss-security] CVE-2016-4995: Foreman information disclosure through unauthorized template previews\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 10171 invoked by uid 550); 25 Jul 2016 15:20:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,124 +12,76 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 23954 invoked from network); 24 Feb 2026 21:44:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tu-dortmund.de;
-	s=unimail; t=1771969475;
-	bh=TEJy/R1V/gzZIIke+3UH24BnnWMitMfpmfpvfmzl8fg=;
-	h=Date:To:From:Subject;
-	b=RloH8hEaZsr4eH2lHQtquul67rltg1o1v5sxMLCbRvEjANzDl+cfBcfk9h2Js4Peh
-	 E66eAi7gOuzzjs3JL/9ZYsNFTOH7OIDB4rfETQt0Ue5OQkB3TIzXRt+B+YEcgbPz1E
-	 FLvIbvA6oUK2ViGDSAx4NzmtCYv/DlpQ29x1wF9Y=
-Message-ID: <6b70985a-cc52-49a8-b4fe-4345bf33b51d@tu-dortmund.de>
-Date: Tue, 24 Feb 2026 22:45:09 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
+Received: (qmail 10151 invoked from network); 25 Jul 2016 15:20:40 -0000
 To: oss-security@lists.openwall.com
-From: Jan Bessai <jan.bessai@tu-dortmund.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] Unsound Workshop at ECOOP 2026
+Cc: foreman-security@googlegroups.com
+From: Dominic Cleal <dominic@cleal.org>
+Message-ID: <57962E3D.3090209@cleal.org>
+Date: Mon, 25 Jul 2016 16:20:29 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="aPN0AJOHnecNjiU06iCfIAcKRokk2Vb4K"
+Subject: [oss-security] CVE-2016-4995: Foreman information disclosure through unauthorized
+ template previews
 
-UNSOUND 2026 - Sources of Unsoundness in Type Systems and Verification
-Workshop co-located with ECOOP 2026, Brussels, Belgium
+--aPN0AJOHnecNjiU06iCfIAcKRokk2Vb4K
+Content-Type: multipart/mixed; boundary="MXdecD7UsSddQMvjjnVLF0q29HhkJLsiU"
+From: Dominic Cleal <dominic@cleal.org>
+To: oss-security@lists.openwall.com
+Cc: foreman-security@googlegroups.com
+Message-ID: <57962E3D.3090209@cleal.org>
+Subject: CVE-2016-4995: Foreman information disclosure through unauthorized
+ template previews
 
-https://2026.ecoop.org/home/unsound-2026
+--MXdecD7UsSddQMvjjnVLF0q29HhkJLsiU
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-The 3rd UNSOUND workshop covers all aspects of unsoundness in type 
-system and verification tools and theories. It is meant to entertain a 
-community-wide discussion on possible sources of unsoundness and how to 
-avert, address, and tackle them. We are particularly interested in the 
-presentation of previously unknown or lesser known problems as well as 
-discussions of well-known soundness holes and how they affect the 
-day-to-day of programming language researchers and users.
+CVE-2016-4995: Foreman information disclosure through unauthorized
+template previews
 
-Important Dates:
---------------------------
-2026-03-31: Submission Deadline
-2026-04-14: Author Notification
-2026-06-30: Workshop Date
+Users who are logged in with permissions to view some hosts are able to
+preview provisioning templates for any host by specifying its hostname
+in the URL, as the specific view_hosts permissions and filters aren=E2=80=
+=99t
+checked.
 
-Goals
------------
-The goals of the workshop are:
-- To discover sources of unsoundness in different type systems and 
-verification tools
-- To share experiences and exploits on how different tools can either be 
-broken or expose confusing behaviour
-- To broaden the attention of researchers to topics which so far escaped 
-their focused area of research; e.g., from only type correctness to also 
-avoiding stack overflows
-- To challenge assumptions uncritically assumed as valid reasoning 
-principles in the field
-- To connect researchers from different areas of type systems and 
-verification
-- To engage with and encourage the next generation of researchers in 
-verification
+If the organization or location features are enabled, the user will
+still be restricted to their associated orgs/locs.
 
-Examples for possible contributions would be:
-- Defining soundness and how it can diverge between languages and tools.
-- Exploring the divergences between user assumptions and actual 
-definitions of soundness.
-- Summarising common sources of unsoundness and why they emerge.
-- Reporting logic errors in the specification of a verification tool, 
-e.g., universe inconsistencies.
-- Finding bugs in the implementation of type & proof checkers.
-- Discovering overconfident generalisations of sound subsystems to 
-larger settings, e.g., imperative techniques in OO settings.
-- Formally characterising escape hatches, which most practical systems 
-possess, and finding how to use them without compromising the soundness 
-of the parts of a program that don’t use them.
-- Reporting on unexpected soundness holes in type systems for dynamic 
-languages, which can lead to more surprises at runtime.
-- Disproving soundness statements in published papers.
-- Finding statements proven in published literature that should no 
-longer be trusted because they relied on a broken system.
-- Simply proving False in a verification tool or exhibiting 
-non-termination in a total language; in particular, we are interested in 
-practical ways to trick available tools to accept wrong input.
-- Breaking reasoning about programs with types by breaking the type 
-system of the programming language in new and interesting ways.
-- Bad interactions between axiomatic choices in libraries used in proofs.
-- Impacts of the false sense of security when the chain of trust is 
-broken by subtle unsoundness in verification tools.
+Affects Foreman 1.11.0 and higher
+Fix released in Foreman 1.12.1 and 1.11.4
 
-Call for Presentations
---------------------------------
-The submission should consist in a two-page extended abstract. 
-Additional material (bibliography, related work, and code examples) will 
-not count toward this limit. We strongly encourage authors to include 
-instructions to reproduce results or exploits.
+Patch:
+https://github.com/theforeman/foreman/commit/c3c186de12be15e55d9582e54659f7=
+65304a1073
 
-There will be a friendly and open-minded peer review process, focusing 
-on checking that the submitted material is appropriate for presentation 
-at the workshop and likely to spur interesting conversations.
+More information:
+https://theforeman.org/security.html#2016-4995
+http://projects.theforeman.org/issues/15490
+https://theforeman.org
 
-Accepted extended abstract will be made publicly available on the 
-workshop webpage. However, presentation at UNSOUND does not count as 
-prior publication, will not appear in formal proceedings, and can later 
-be published at a conference of the authors’ choosing.
+--=20
+Dominic Cleal
+dominic@cleal.org
 
-Instruction to Authors and Submission guidelines
----------------------------------------------------------------------
-Submissions should be made via Easychair
-https://easychair.org/conferences?conf=unsound2026
-by 2026-03-31 (AoE).
 
-Submitted abstracts should be in portable document format (PDF), 
-formatted using the ACM SIGPLAN style guidelines. Authors should use the 
-acmart format, with the acmsmall sub-format for ACM proceedings. For 
-details, see:
+--MXdecD7UsSddQMvjjnVLF0q29HhkJLsiU--
 
-http://www.sigplan.org/Resources/Author/#acmart-format
+--aPN0AJOHnecNjiU06iCfIAcKRokk2Vb4K
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-It is recommended to use the review option when submitting an abstract; 
-this option enables line numbers for easy reference in reviews.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-Who is involved?
---------------------------
-Unsound is currently managed by Jan Bessai, Colin Stebbins Gordon, 
-Vasileios Koutavas, Marco Servetto, and Lionel Parreaux.
+iEYEARECAAYFAleWLj0ACgkQfH0ybywrcsyyJgCbBkIoGLP5Hn5Xg9N3mPw/nnI/
+46wAni6xNCWM17TTKfcV0WL/JoQpn/b6
+=P+s7
+-----END PGP SIGNATURE-----
 
-You can chat with us at unsound2026@easychair.org
+--aPN0AJOHnecNjiU06iCfIAcKRokk2Vb4K--
