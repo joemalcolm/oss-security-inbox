@@ -1,21 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/11
-Message-ID: <20161010151839.mo6smghxskni47ht@perpetual.pseudorandom.co.uk>
-Date: Mon, 10 Oct 2016 16:18:39 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/25/8
+Message-ID: <20160725121351.GA746@openwall.com>
+Date: Mon, 25 Jul 2016 15:13:51 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: fd.o #98157: dbus format string vulnerability fixed in 1.10.12
+Cc: "Eric W. Biederman" <ebiederm@...ssion.com>, pkg-shadow-devel@...ts.alioth.debian.org
+Subject: Re: Re: [Pkg-shadow-devel] subuid security patches for shadow package
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 10 Oct 2016 at 14:55:16 +0200, Szabolcs Nagy wrote:
-> * Simon McVittie <smcv@...ian.org> [2016-10-10 13:15:18 +0100]:
-> > Please reference fd.o #98157 or
-> > <https://bugs.freedesktop.org/show_bug.cgi?id=98157> in any notices
-> > that refer to this vulnerability.
-> 
-> "You are not authorized to access bug #98157. To see this bug, you must first log in to an account with the appropriate permissions."
+Replying out of context (not related to the specific getlogin() issue):
 
-It's unlocked now. Sorry, I was still part way through juggling
-releases at the time I sent this out.
+On Mon, Jul 25, 2016 at 10:39:30AM +0200, Sebastian Krahmer wrote:
+> Err, sorry. Shared UID, different name
 
-    S
+As a special case, this is common practice for UID 0 (root) accounts of
+multiple sysadmins, providing poor man's accountability (due to the
+different account names getting in all the usual logs, without having to
+check which specific SSH key, etc. was used for a given login session).
+We even have a tool to support it for single-user mode logins as well:
+
+http://www.openwall.com/msulogin/
+
+The far more common alternative to it is to use su or sudo from the
+multiple sysadmins' non-root accounts.  A problem with it is that if use
+of those non-root accounts is not restricted solely to su/sudo from
+them, but they are also used to run other programs as non-root, then any
+of those other programs may take over the root account (possibly in
+multiple steps, such as by substituting shell aliases and waiting for
+the sysadmin to run su/sudo next time).  To avoid this, we'd arrive at
+the need to have two non-root accounts per sysadmin (and to have su/sudo
+available to only one set of those accounts, so as not to expose those
+programs' vulnerabilities to the other set of accounts, nor to regular
+users of the system, unnecessarily), - or to have per-sysadmin root
+accounts.  The latter is simpler.
+
+Alexander
