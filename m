@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1678" "Wednesday" "12" "August" "2015" "10:39:00" "+0200" "Adam Maris" "amaris@redhat.com" "<55CB0624.2080003@redhat.com>" "44" "Re: [oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities" nil nil nil "8" "2015081208:39:00" "[oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities" (number mark "        amaris@redha Aug 12   44/1678  " thread-indent "\"Re: [oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities\"\n") "<55CA41A6.600@bluefrostsecurity.de>" ("<55CA41A6.600@bluefrostsecurity.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1087" "Monday" "25" "July" "2016" "10:03:31" "+0200" "Sebastian Krahmer" "krahmer@suse.com" "<20160725080331.GB24232@suse.de>" "36" "Re: [oss-security] Re: [Pkg-shadow-devel] subuid security patches for shadow package" nil nil nil "7" "2016072508:03:31" "[oss-security] Re: [Pkg-shadow-devel] subuid security patches for shadow package" (number mark "U       krahmer@suse Jul 25   36/1087  " thread-indent "\"Re: [oss-security] Re: [Pkg-shadow-devel] subuid security patches for shadow package\"\n") "<20160720214852.GA23823@nekral.nekral.homelinux.net>" ("<20160719093915.GA29047@suse.de>" "<20160719125119.GA7146@suse.de>" "<871t2pycqx.fsf_-_@x220.int.ebiederm.org>" "<20160720214852.GA23823@nekral.nekral.homelinux.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24345 invoked by uid 550); 12 Aug 2015 08:39:15 -0000
+Received: (qmail 7856 invoked by uid 550); 25 Jul 2016 08:03:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24327 invoked from network); 12 Aug 2015 08:39:14 -0000
-References: <55CA41A6.600@bluefrostsecurity.de>
-Message-ID: <55CB0624.2080003@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
-MIME-Version: 1.0
-In-Reply-To: <55CA41A6.600@bluefrostsecurity.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-Date: Wed, 12 Aug 2015 10:39:00 +0200
-From: Adam Maris <amaris@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE request - OpenSSH 6.9 PAM privilege separation
- vulnerabilities
-To: oss-security@lists.openwall.com
+Received: (qmail 7838 invoked from network); 25 Jul 2016 08:03:43 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Mon, 25 Jul 2016 10:03:31 +0200
+From: Sebastian Krahmer <krahmer@suse.com>
+To: "Eric W. Biederman" <ebiederm@xmission.com>,
+	oss-security@lists.openwall.com,
+	pkg-shadow-devel@lists.alioth.debian.org
+Message-ID: <20160725080331.GB24232@suse.de>
+References: <20160719093915.GA29047@suse.de>
+ <20160719125119.GA7146@suse.de>
+ <871t2pycqx.fsf_-_@x220.int.ebiederm.org>
+ <20160720214852.GA23823@nekral.nekral.homelinux.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20160720214852.GA23823@nekral.nekral.homelinux.net>
+Organization: SUSE Linux GmbH, GF: Felix =?utf-8?Q?Imend?=
+ =?utf-8?Q?=F6rffer?= =?utf-8?Q?=2C?= Jane Smithard, Graham Norton, HRB 21284
+ (AG Nuernberg)
+User-Agent: Outlook
+Subject: Re: [oss-security] Re: [Pkg-shadow-devel] subuid security patches
+ for shadow package
 
+On Wed, Jul 20, 2016 at 11:48:52PM +0200, Nicolas François wrote:
+> Hi,
+> 
+> The first point looks like a non issue to me.
+> 
+> getlogin() is used to differentiate users with the same UID.
+> The result of getlogin() is checked: if it returns a username that do not
+> have the UID returned by getuid(), it will be ignored.
+> 
+> 
+> Best Regards,
+> -- 
+> Nekral
 
-On 11/08/15 20:40, Moritz Jodeit wrote:
-> Hello list,
->
-> could you please assign two CVE IDs for the following two security
-> issues fixed in OpenSSH 7.0 (directly taken from the release notes [1]):
->
->   * sshd(8): Portable OpenSSH only: Fixed a privilege separation
->     weakness related to PAM support. Attackers who could successfully
->     compromise the pre-authentication process for remote code
->     execution and who had valid credentials on the host could
->     impersonate other users.  Reported by Moritz Jodeit.
->
->   * sshd(8): Portable OpenSSH only: Fixed a use-after-free bug
->     related to PAM support that was reachable by attackers who could
->     compromise the pre-authentication process for remote code
->     execution. Also reported by Moritz Jodeit.
->
-> [1] http://www.openssh.com/txt/release-7.0
->
-> Thank you,
-> Moritz
-Could you assign CVEs for the other two issues as well?
+I agree that its not a severe issue. But its dubious code at best.
+I couldnt even imagine someone would have usernames with different UID's?
+Maybe such configs should not be encouraged and potential issues with
+that discussed.
 
-  * sshd(8): fix circumvention of MaxAuthTries using keyboard-
-    interactive authentication. By specifying a long, repeating
-    keyboard-interactive "devices" string, an attacker could request
-    the same authentication method be tried thousands of times in
-    a single pass. The LoginGraceTime timeout in sshd(8) and any
-    authentication failure delays implemented by the authentication
-    mechanism itself were still applied. Found by Kingcope.
+My understanding of secure coding is that getlogin() should not
+be trusted. Having same username with multiple UIDs is also to be avoided
+IMHO, since its asking for trouble (I dont know if thats some requirement
+of LSB or POSIX or so?)
 
-  * sshd(8): OpenSSH 6.8 and 6.9 incorrectly set TTYs to be world-
-    writable. Local attackers may be able to write arbitrary messages
-    to logged-in users, including terminal escape sequences.
-    Reported by Nikolay Edigaryev.
+So, I am open for discussion about this point, as removing getlogin()
+should not break valid configs. If it can be removed without breakage,
+it should.
 
-Or have they CVEs already?
-
-Thanks.
+Sebastian
 
 -- 
-Adam Maris / Red Hat Product Security
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@suse.com - SuSE Security Team
 
