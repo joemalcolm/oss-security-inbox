@@ -1,53 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/6
-Message-Id: <20160908065434.2F43213A1BE@smtpvmsrv1.mitre.org>
-Date: Thu,  8 Sep 2016 02:54:34 -0400 (EDT)
-From: cve-assign@...re.org
-To: winsonliu@...cent.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: OpenJPEG Integer Overflow Issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/25/9
+Message-id: <5CB94822-FFC0-4948-9F78-96523639E28D@me.com>
+Date: Mon, 25 Jul 2016 10:54:07 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Huge-IT Portfolio Gallery manager v1.1.5 SQL Injection and XSS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Title: Huge-IT Portfolio Gallery manager v1.1.5 SQL Injection and XSS
+Author: Larry W. Cashdollar, @_larry0
+Date: 2016-07-15
+Download Site: http://huge-it.com/joomla-portfolio-gallery/
+Vendor: Huge IT
+Vendor Notified: 2016-07-16
+Vendor Contact: info@...e-it.com
+Description: Huge-IT Portfolio Gallery extension can do wonders with your website. If you wish to show your photos, videos, enclosing the additional images and videos, then this Portfolio Gallery extension is what you need.
+Vulnerability:
+The attacker must be logged in with at least manager level access or access to the administrative panel to exploit this vulnerability:
 
-> I reported a security issue of OpenJPEG some days ago and it has been
-> fixed now. The fix is available at
-> https://github.com/uclouvain/openjpeg/commit/c16bc057ba3f125051c9966cf1f5b68a05681de4
-> and
-> https://github.com/uclouvain/openjpeg/commit/ef01f18dfc6780b776d0674ed3e7415c6ef54d24
-> 
-> An integer overflow issue exists in function opj_pi_create_decode of
-> pi.c. It can lead to Out-Of-Bounds Read and Out-Of-Bounds Write in
-> function opj_pi_next_cprl of pi.c (function opj_pi_next_lrcp,
-> opj_pi_next_rlcp, opj_pi_next_rpcl, opj_pi_next_pcrl may also be
-> vulnerable). This vulnerability allows remote attackers to execute
-> arbitrary code on vulnerable installations of OpenJPEG.
-> 
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 2
+XSS line 156 in : ./administrator/components/com_portfoliogallery/views/video/tmpl/default.php
 
-Use CVE-2016-7163.
+155                         <textarea rows="3" cols="50" class="text-area" disab    led >
+156                     <?php echo $_GET['edit'];?>
+157                         </textarea>
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX0QmeAAoJEHb/MwWLVhi2SEUQAJvisRFvAjK9IUHMHU4aRkbn
-q9iW+T0WKW0ZcuUphsFfVdRy6UiTwabpTmv7G+QVP5f94PJeRtJLld+1KhC/WuGA
-YFI6njO+oyFQZUfn6NUGN+tpeTKiggsqSNftQk1TI7UYa7s9pmVxnZCqBSm4Wv3p
-+sknI6512MXWiaIEffk4yGMwZpjdeNquGfxWh6xVin3IE1e65xcpJEvZ9wvvFS34
-y8EixiRrC0pryN9eEcmfat2yZCMdHzuCPVk1rvUfVrTIqVxTWg2pNyCfCx3eMdk+
-y55TvqFA2D6f/Es8njxPQlxO1c8XIAqnlX6FnUWI9T+doEpKzBlQGjlUq0Pigwty
-OsiKMKGyYc3GV2+FJwFWbb1Iwap4jJdjta5pqBPLOMaiun44euOeDIkjBaPCqYYG
-m17WNAlt87rwaynbcEMf7DnStQRRstD98invsCDMScar5H/iVYjun2Vga+6Kjj4Z
-ZyqKH0frrW6tMYRA2jQw8G7N8zejfAjzAy+sFPhQkQBWybHYVL4tQNaETaQ+DGWb
-7Q22gSQnGZD8P4YozJaSOxbVsU7NKFeEHPlS3VWDmiXCwARJz4WpFRb+OhZLO8O9
-ZIbDkOXK6fJnZA/UKximUSpi6tYyWebjB6ObLB0n3EIbmXo8dQj9hYU3IW6d6DTA
-KQcQYU4f5/THNjpi6MnK
-=Hb3K
------END PGP SIGNATURE-----
+In file administrator/components/com_portfoliogallery/models/portfoliogallery.php:  
+
+variable id is passed without any sanitization to the SQL query being built starting at line 53:
+
+ 50     public function getPropertie() {
+ 51         $db = JFactory::getDBO();
+ 52         $id_cat = JRequest::getVar('id');
+ 53         $query = $db->getQuery(true);
+ 54         $query->select('#__huge_itportfolio_images.name as name,'
+ 55                 . '#__huge_itportfolio_images.id ,'
+ 56                 . '#__huge_itportfolio_portfolios.name as portName,'
+ 57                 . 'portfolio_id,#__huge_itportfolio_images.category as categ    ory, #__huge_itportfolio_images.description as description,image_url,sl_url,    sl_type,link_target,#__huge_itportfolio_images.ordering,#__huge_itportfolio_    images.published,published_in_sl_width');
+ 58         $query->from(array('#__huge_itportfolio_portfolios' => '#__huge_itpo    rtfolio_portfolios', '#__huge_itportfolio_images' => '#__huge_itportfolio_im    ages'));
+ 59         $query->where('#__huge_itportfolio_portfolios.id = portfolio_id')->w    here('portfolio_id=' . $id_cat);
+ 60         $query->order('ordering asc');
+ 61         $db->setQuery($query);
+ 62         $results = $db->loadObjectList();
+ 63         return $results;
+
+CVE-2016-1000115 XSS
+CVE-2016-1000116 SQLi
+
+Exploit Code:
+	• sqlmap  --load-cookies=cookies.txt -u "http://192.168.0.125/administrator/index.php?option=com_portfoliogallery&view=portfoliogallery&id=*" --dbms mysql --dump
+Advisory: http://www.vapidlabs.com/advisory.php?v=165
