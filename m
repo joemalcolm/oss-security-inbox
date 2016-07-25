@@ -1,33 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/13/13
-Message-ID: <20160713224500.GD12156@kroah.com>
-Date: Thu, 14 Jul 2016 07:45:00 +0900
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Cc: caiqian@...hat.com, cve-assign@...re.org
-Subject: Re: Re: cve request: local DoS by overflowing kernel mount table using shared bind mount
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/25/13
+Message-ID: <20160725133417.43b97c67@pc1>
+Date: Mon, 25 Jul 2016 13:34:17 -0400
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Use after free in my_login() function of DBD::mysql (Perl module)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 13, 2016 at 12:59:40PM -0400, cve-assign@...re.org wrote:
-> > It was reported that the mount table expands by a power-of-two
-> > with each bind mount command.
-> 
-> > If the system is configured in the way that a non-root user
-> > allows bind mount even if with limit number of bind mount
-> > allowed, a non-root user could cause a local DoS by quickly
-> > overflow the mount table.
-> 
-> > it will cause a deadlock for the whole system,
-> 
-> >> form of unlimited memory consumption that is causing the problem
-> 
-> Use CVE-2016-6213.
+https://blog.fuzzing-project.org/50-Use-after-free-in-my_login-function-of-DBDmysql-Perl-module.html
 
-A CVE for an "improperly configured system"?  Huh?  What distro has such
-a configuration set by default?  This isn't a kernel bug, so what is
-this CVE classified as being "against"?  It better not be against the
-Linux kernel...
+DBD::mysql versions 4.033 and earlier have a use after free bug in the
+my_login() function. DBD::mysql is a Perl module providing bindings to
+the mysql database. The issue was fixed in version 4.034.
 
-confused,
+This issue was discovered with Address Sanitizer.
 
-greg k-h
+https://github.com/perl5-dbi/DBD-mysql/pull/45
+Pull request / patch
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
