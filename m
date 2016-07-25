@@ -1,51 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/11/3
-Message-ID: <20160111140335.01d4a4f6@redhat.com>
-Date: Mon, 11 Jan 2016 14:03:35 +0100
-From: Stefan Cornelius <scorneli@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Integer overflow in the JasPer's jas_matrix_create() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/25/5
+Message-ID: <20160725080331.GB24232@suse.de>
+Date: Mon, 25 Jul 2016 10:03:31 +0200
+From: Sebastian Krahmer <krahmer@...e.com>
+To: "Eric W. Biederman" <ebiederm@...ssion.com>, oss-security@...ts.openwall.com, pkg-shadow-devel@...ts.alioth.debian.org
+Subject: Re: Re: [Pkg-shadow-devel] subuid security patches for shadow package
 Content-Type: text/plain; charset=utf-8
 
-On Thu,  7 Jan 2016 21:41:57 -0500 (EST)
-cve-assign@...re.org wrote:
+On Wed, Jul 20, 2016 at 11:48:52PM +0200, Nicolas François wrote:
+> Hi,
+> 
+> The first point looks like a non issue to me.
+> 
+> getlogin() is used to differentiate users with the same UID.
+> The result of getlogin() is checked: if it returns a username that do not
+> have the UID returned by getuid(), it will be ignored.
+> 
+> 
+> Best Regards,
+> -- 
+> Nekral
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
-> 
-> >> https://bugzilla.redhat.com/show_bug.cgi?id=1294039  
-> 
-> > We find a vulnerability in the way JasPer's jas_matrix_create()
-> > function parsed certain JPEG 2000 image files.
-> > 
-> > jas_matrix_t *jas_matrix_create(int numrows, int numcols)
-> > {
-> >         .......
-> > 
-> >         if (matrix->maxrows_ > 0) {
-> >                 if (!(matrix->rows_ = jas_malloc(matrix->maxrows_ *
-> >                   sizeof(jas_seqent_t *)))) {
-> >   
-> 
-> > matrix->maxrows_ > 0 ,but matrix->maxrows_ *sizeof(jas_seqent_t *)
-> > can cause Integer overflow.
-> > 
-> > Despite this library is used by many programs
-> > (http://www.ece.uvic.ca/~frodo/jasper/#overview), there is no one
-> > providing support.  
-> 
-> Use CVE-2015-8751.
-> 
+I agree that its not a severe issue. But its dubious code at best.
+I couldnt even imagine someone would have usernames with different UID's?
+Maybe such configs should not be encouraged and potential issues with
+that discussed.
 
-Hi,
+My understanding of secure coding is that getlogin() should not
+be trusted. Having same username with multiple UIDs is also to be avoided
+IMHO, since its asking for trouble (I dont know if thats some requirement
+of LSB or POSIX or so?)
 
-Just a quick heads-up: We at Red Hat originally fixed this as part of
-the patch for CVE-2008-3520. This was a rather big patch and
-closed a lot of potential integer overflows (originally from
-OpenBSD?). I imagine a lot of distros used the same patch.
+So, I am open for discussion about this point, as removing getlogin()
+should not break valid configs. If it can be removed without breakage,
+it should.
 
-The original description for CVE-2008-3520 is quite general, so I'm
-not sure if that's enough to say that CVE-2015-8751 is a dupe or not.
+Sebastian
 
 -- 
-Stefan Cornelius / Red Hat Product Security
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.com - SuSE Security Team
+
