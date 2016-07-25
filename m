@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3183" "Saturday" "15" "June" "2019" "15:22:22" "-0400" "Alex Gaynor" "alex.gaynor@gmail.com" "<CAFRnB2WaDePSyVbXkV3tVVeqJXihytA-sDip9hTZcuf5BHoX9g@mail.gmail.com>" "79" "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" "^Date:" nil nil "6" "2019061519:22:22" "[oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" (number mark "        alex.gaynor@ Jun 15   79/3183  " thread-indent "\"Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz\"\n") "<20190615205947.56f2315d@computer>" ("<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>" "<20190615205947.56f2315d@computer>") nil nil nil nil nil nil nil "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2052" "Monday" "25" "July" "2016" "11:49:28" "+0200" "=?UTF-8?B?QsOhbGludCBSw6ljemV5?=" "balint@balintreczey.hu" "<CAK0Odpw=eJnFMWzwyoeit1PTGMkVW0NNf0GFc+p0MXLiMXryow@mail.gmail.com>" "62" "Re: [oss-security] Re: [Pkg-shadow-devel] subuid security patches for shadow package" nil nil nil "7" "2016072509:49:28" "[oss-security] Re: [Pkg-shadow-devel] subuid security patches for shadow package" (number mark "U       balint@balin Jul 25   62/2052  " thread-indent "\"Re: [oss-security] Re: [Pkg-shadow-devel] subuid security patches for shadow package\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17461 invoked by uid 550); 15 Jun 2019 19:22:48 -0000
+Received: (qmail 29874 invoked by uid 550); 25 Jul 2016 09:50:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,121 +11,106 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17409 invoked from network); 15 Jun 2019 19:22:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=b76X7dGIP7P+ph1r/taw5AQhYRyuV8w31Jte3v7VhCI=;
-        b=PIyfpXxKiMRfVGppwVxN8M5A1txRmYbeDJIVTxZ1fDGvrXu9UryXv1mQ/VLqq5wgTw
-         mYzwg+eAQaKeUh3iy1HcN10Tr0S17wD5VkZEMJZL6eaDiZ68WLezZn+xNtRTqAIuAeaZ
-         toyElGvU2h5B+0imvwyQa5WEwrXjSLzVhX+KykTXxQW8UQywnYnwMoNMXA4ekXg5+Q++
-         QxTmhiHzaDsqWcRb3pM1+MSpuEB6Gpwupvma2GriHkNjYjqir99uk+4ecUH7XBgGu7Lb
-         RiIArl93zA2P97JBR2CrHfaNSEKooRJFEXvrvbV2lgx33U8PA7BZE92gnOn8b3hYaVM5
-         o0YA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=b76X7dGIP7P+ph1r/taw5AQhYRyuV8w31Jte3v7VhCI=;
-        b=eXZhqAL9ci+RT7UT2dregsY2zVEHnACgSgzHR6mTF0q9FOJiSOf6ttjXuMOrnYlK3I
-         Bkw/05TSYcxPmAmb8GOUmFZro6hQTKVetvB/YZBQzm0IM1gxEyvWz3PweIYZHkvVid11
-         vQ/4LkprK70BhLUqMkHXb8Ry8uMjUv5AdDuq6JKMt4PdSiuCqQRLRse7NJy/nkWSwyNL
-         pJr9jbuQUP2UVRwm2/iNcMYUltChOM5MWi6xTfHOTJWKWh/QkvRP4iNpuiCTufuV0K0X
-         ooGLrgbxKIZvm0cprTKm5UgtQu59aaWS2EGqDTjv1v2kaD/IPaPpGJz5s6yBTZTV6wU6
-         eiRg==
-X-Gm-Message-State: APjAAAV1SXjTsrjGA9m5PE3nsVytbSw5jEGXTaOXUsUuUCKX+IzzfJ1C
-	2kKr0nrIDpfnSfwztxRP7U/QNUj5Y2rflyJWU48LkW8iHOI=
-X-Google-Smtp-Source: APXvYqxCmNgOhd3/L1TIGuXQ3MnDNSxlaISgonoL7zrCfec0uaQzt4HN2KMptTYFEjmn3dLnKJpXG0BKlwejA+0zI6w=
-X-Received: by 2002:aca:3242:: with SMTP id y63mr5653796oiy.148.1560626555145;
- Sat, 15 Jun 2019 12:22:35 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
- <20190615205947.56f2315d@computer>
-In-Reply-To: <20190615205947.56f2315d@computer>
-Message-ID: <CAFRnB2WaDePSyVbXkV3tVVeqJXihytA-sDip9hTZcuf5BHoX9g@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000725457058b61afb4"
-Date: Sat, 15 Jun 2019 15:22:22 -0400
-From: Alex Gaynor <alex.gaynor@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz
+Received: (qmail 29853 invoked from network); 25 Jul 2016 09:49:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:sender:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=KeLHC0AbIscMmznO/ZuHv6SG34MLQMd+ThErgFql4pc=;
+        b=v19mLgYkGlcRiK+Zoi7fPkmWq3sKOtX8LQAUc9IoZDrKbC7H2tEu8e0QTSeIYnmOl+
+         Bu/8iPQlT4eTznzkOhiCvXmwRi5Qq7cLsJ+SHVcGXcY8JUxoZ6Zp81DjwO2Ft0MYEwN7
+         TFwb+7PthBTNaZM9eC5AvVMZBcwUo4BxTYl9fcmxMvYeZ5V+kxm9pubDt18FSYvAuxE9
+         8FmBeZS5Vs5O5EPI9GGEjwZL4CiY3mN3owr808qDVKI/7Zcpw89AHo/jTFjoTrhTf2qu
+         yjCS1b1/YEJElj/2PCit6/xUPylerLWx4M6a/sP2pNaes8ajE7N4/sPw3tkrhKkb419R
+         4hCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:reply-to:sender:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=KeLHC0AbIscMmznO/ZuHv6SG34MLQMd+ThErgFql4pc=;
+        b=Ssmw1EQckDpn5QjddHtfoq/JHFGQu1QT6GCsYMyIIx9lLzQt4zH+Ed5aQPqKKnd2sN
+         UKCyJ3iVonjie2IirCQc0v4f+7mS8A0Ec7Otb2CwiNUpMERBgr3NFchkM0MdOY/eTpa/
+         OliD3XJG1bFENUTXe8lmBaV1rjsbLmTNxJ5xqkAa7TFeuNgM5EUNslSYvAETZfMQxZ9z
+         3PZd3q3e7nPgHVwolCKfg9q/ejsYl98exBZurgbkQMFzgHoyUbx++YMCRbiGg2DSHXQ3
+         z2+1zS99uI03tGHyjP/jt2GXfh2b6rEto1DaprEFrQWMDdlW2jvR7mS/VkIKUDFDep3K
+         D7WQ==
+X-Gm-Message-State: AEkoousmp3cMuk0zlLAcz6LQaV7bROe597cn74W4daLHnQOMcrZ8v91wFqVJrSFtx/cC3Bhf/Khf4SwuQgSqFg==
+X-Received: by 10.159.40.67 with SMTP id c61mr7928027uac.82.1469440187467;
+ Mon, 25 Jul 2016 02:49:47 -0700 (PDT)
+MIME-Version: 1.0
+Sender: rbalint@gmail.com
+From: =?UTF-8?B?QsOhbGludCBSw6ljemV5?= <balint@balintreczey.hu>
+Date: Mon, 25 Jul 2016 11:49:28 +0200
+X-Google-Sender-Auth: ZavP2BOWfPZjIrg0MFx06HOMemg
+Message-ID: <CAK0Odpw=eJnFMWzwyoeit1PTGMkVW0NNf0GFc+p0MXLiMXryow@mail.gmail.com>
 To: oss-security@lists.openwall.com
-
---000000000000725457058b61afb4
-Content-Type: text/plain; charset="UTF-8"
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>, 
+	Shadow package maintainers <pkg-shadow-devel@lists.alioth.debian.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Re: [Pkg-shadow-devel] subuid security patches for
+ shadow package
 
-You are completely right that this is not a novel phenomenon, though I
-think the scale at which OSS-Fuzz has found vulnerabilities has genuinely
-exacerbated this problem.
+Hi,
 
-While it's true, some of the bugs found will not be exploitable, I think we
-should not be overly dismissive.
-https://scarybeastsecurity.blogspot.com/2016/11/0day-exploit-advancing-expl=
-oitation.html
-is
-an example of such a script-less exploit.
-https://scarybeastsecurity.blogspot.com/2017/05/bleed-continues-18-byte-fil=
-e-14k-bounty.html
-is
-an example of exploiting use of uninitialized value (one of the most common
-bug classes in OSS-Fuzz, probably because so few people test with MSAN).
+While this is not immediately clear from the Shadow homepage the
+development continued on GitHub where I have opened two issues
+for the two potential security problems:
 
-I think you're quite right that the central challenge here is the mismatch
-between how Linux distributions operate and what their claims/people's
-expectations are.
+Incorrect integer handling CVE-2016-6252:
+https://github.com/shadow-maint/shadow/issues/27
 
-Alex
+Potentially unsafe use of getlogin CVE-2016-6251:
+https://github.com/shadow-maint/shadow/issues/28
 
-PS: I'd be remiss if I didn't at least mention that basically all the bug
-classes we're discussing are induced by C/C++'s memory unsafety and better
-programming language prevent them outright.
+Probably upstream's issue tracker would be the best place
+to discuss the fixes in detail. With upstream development
+happening on GitHub the pkg-shadow-devel list could host
+mostly Debian-packaging releated discussions and probably
+not all oss-security subscribers would like to get all the
+messages.
 
-On Sat, Jun 15, 2019 at 3:01 PM Hanno B=C3=B6ck <hanno@hboeck.de> wrote:
+Cheers,
+Balint
 
-> Hi Alex,
+2016-07-25 10:39 GMT+02:00 Sebastian Krahmer <krahmer@suse.com>:
+> On Mon, Jul 25, 2016 at 10:03:31AM +0200, Sebastian Krahmer wrote:
+>> On Wed, Jul 20, 2016 at 11:48:52PM +0200, Nicolas Fran=C3=A7ois wrote:
+>> > Hi,
+>> >
+>> > The first point looks like a non issue to me.
+>> >
+>> > getlogin() is used to differentiate users with the same UID.
+>> > The result of getlogin() is checked: if it returns a username that do =
+not
+>> > have the UID returned by getuid(), it will be ignored.
+>> >
+>> >
+>> > Best Regards,
+>> > --
+>> > Nekral
+>>
+>> I agree that its not a severe issue. But its dubious code at best.
+>> I couldnt even imagine someone would have usernames with different UID's?
+>> Maybe such configs should not be encouraged and potential issues with
+>> that discussed.
+>>
+>> My understanding of secure coding is that getlogin() should not
+>> be trusted. Having same username with multiple UIDs is also to be avoided
+>> IMHO, since its asking for trouble (I dont know if thats some requirement
+>> of LSB or POSIX or so?)
 >
-> I think what you're describing has been going on for a while, even
-> before oss-fuzz.
-> A combination of compiler sanitizers and better fuzzing techniques has
-> scaled up bug finding and fixing to a level we haven't had before.
+> Err, sorry. Shared UID, different name (the other way around, thanks Alex=
+).
+> But then you are open to GID hopping attacks (as also previously
+> pointed out) since you actually _do_ rely on getlogin() trust.
 >
-> For distributions that promise to backport all security fixes that
-> creates a situation where it's almost impossible to keep that promise,
-> they just don't have the manpower to scale up at the same speed as
-> people find bugs.
-> Maybe the main takeaway here is to just recognize that, and maybe
-> distros should be more honest here and be clear what they can and can't
-> do. And if you run a parser in a high risk environment you may not want
-> to rely on the outdated version shipping in some LTS distribution.
->
->
-> But I also think it's good to keep some perspective of the bugs we're
-> talking about.
-> Many of the bugs oss-fuzz finds are of bug classes where it's quite
-> unlikely that they directly lead to a security issue (e.g. out of
-> bounds memory reads - which asan controversially calls "overflows").
-> Even for the scarier looking vulns like write buffer overflows and use
-> after free the situation is that these are usually not straightforward
-> to exploit. All modern distributions have a combination of stack
-> canaries, ASLR and nonexecutable memory. It's my understanding that
-> while it's often possible to bypass those, doing so in non-scripting
-> scenarios (e.g. in an image parser) is really hard and often impossible.
->
-> I guess therefore it's still an overall win. While there's a number of
-> bugs unfixed with public information, in the long term we'll get more
-> robust code and the number of bugs present should be in steep decline.
->
+> Sebastian
 >
 > --
-> Hanno B=C3=B6ck
-> https://hboeck.de/
 >
-> mail/jabber: hanno@hboeck.de
-> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+> ~ perl self.pl
+> ~ $_=3D'print"\$_=3D\47$_\47;eval"';eval
+> ~ krahmer@suse.com - SuSE Security Team
 >
-
-
---=20
-All that is necessary for evil to succeed is for good people to do nothing.
-
---000000000000725457058b61afb4--
