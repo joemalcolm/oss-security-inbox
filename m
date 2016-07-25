@@ -1,57 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/23/8
-Message-Id: <20160923152407.120626C54F4@smtpvmsrv1.mitre.org>
-Date: Fri, 23 Sep 2016 11:24:07 -0400 (EDT)
-From: cve-assign@...re.org
-To: chaojianhu@...mail.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request Qemu: hw: net: Fix a heap overflow in xlnx.xps-ethernetlite
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/25/6
+Message-ID: <20160725083930.GA31840@suse.de>
+Date: Mon, 25 Jul 2016 10:39:30 +0200
+From: Sebastian Krahmer <krahmer@...e.com>
+To: "Eric W. Biederman" <ebiederm@...ssion.com>, oss-security@...ts.openwall.com, pkg-shadow-devel@...ts.alioth.debian.org
+Subject: Re: Re: [Pkg-shadow-devel] subuid security patches for shadow package
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> The .receive callback of xlnx.xps-ethernetlite doesn't check the length
-> of data before calling memcpy. As a result, the NetClientState object in
-> heap will be overflowed. Attackers may leverage it to execute arbitrary
-> code with privileges of the qemu process on the host.
+On Mon, Jul 25, 2016 at 10:03:31AM +0200, Sebastian Krahmer wrote:
+> On Wed, Jul 20, 2016 at 11:48:52PM +0200, Nicolas François wrote:
+> > Hi,
+> > 
+> > The first point looks like a non issue to me.
+> > 
+> > getlogin() is used to differentiate users with the same UID.
+> > The result of getlogin() is checked: if it returns a username that do not
+> > have the UID returned by getuid(), it will be ignored.
+> > 
+> > 
+> > Best Regards,
+> > -- 
+> > Nekral
 > 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg01598.html
-> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg01877.html
+> I agree that its not a severe issue. But its dubious code at best.
+> I couldnt even imagine someone would have usernames with different UID's?
+> Maybe such configs should not be encouraged and potential issues with
+> that discussed.
+> 
+> My understanding of secure coding is that getlogin() should not
+> be trusted. Having same username with multiple UIDs is also to be avoided
+> IMHO, since its asking for trouble (I dont know if thats some requirement
+> of LSB or POSIX or so?)
 
-Yes, this was already assigned CVE-2016-7161. Other references are:
+Err, sorry. Shared UID, different name (the other way around, thanks Alex).
+But then you are open to GID hopping attacks (as also previously
+pointed out) since you actually _do_ rely on getlogin() trust.
 
-  http://git.qemu.org/?p=qemu.git;a=commit;h=a0d1cbdacff5df4ded16b753b38fdd9da6092968
-  http://patchwork.ozlabs.org/patch/657076/
+Sebastian
 
->> I created a CVE, but I can't access it. Do you know how to expose the CVE?
->> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-7161
+-- 
 
-This resulted from the https://cveform.mitre.org web site, not an
-oss-security post. In that situation, the "Select a request type"
-"Notify CVE about a publication" process could have been used. At the
-moment, that process is not used for a vulnerability that has an
-oss-security post.
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.com - SuSE Security Team
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX5UhtAAoJEHb/MwWLVhi2S3UP/R3rj9yUK8LxskuVYnFoIwxZ
-mUZOJYVo5yTfV416+mFy9JU9ztqk2+JnidQ+iOZ1p3zpc352r6gftyLl0cghu2jx
-vzN2OuBeXPBUWsgBLa3fFyNz+7gHTwNO0ISmg11y5717QvGeC00jFcfVCp9awpiS
-AvnbVqhVr5LFfN5zrT456r3E1QbcV4gS0bbgob9RYDUf5YNDCelp4iY4jbZV/Ns2
-06nrDsz6aWKyXzlebpfyPBpn04HyqiXEUwTkex0HH2YjmH+iDYVdBBYmLwwOSoLY
-p+ybpHfETfvL0xIASMPVFHETZmlcS8aeInzJ0726zcYDwxSoWjRsxyJ8Qt2UI0ux
-ZpfhFSMWumPhqJbpD37laElxaSxgOdpY61UBW6ZgIMO1wO64v6dRuSMHXSVJXXFs
-olOAR5zp5UCLgMW8CBgzAU6DnpnYAzF14O+h+24g3W9DhXmX5oXSdY1FyP1D+Vsq
-K7NH87RCygBm9VVXVo5ErGCI08bzJaYSDju9lefEU0ldsq5zGXVCFK7HBhKOpvrT
-YGE1uhU1rjS+TtSAuJ2UbqIJBcT9WGGmVNk+Cv1PVvWBvxrUkZiDey9rjQjDm1Ng
-YrPX94o+rtn5QGG0T9VDoSBfMmf+5mp5Jkcq34R/ol5k56wpEr5BXyARc8iFj13C
-KownOKU8+XCHIPViQvEu
-=4P8S
------END PGP SIGNATURE-----
