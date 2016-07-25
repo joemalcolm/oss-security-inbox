@@ -1,47 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/02/3
-Message-ID: <57278CD6.2030209@shadura.me>
-Date: Mon, 2 May 2016 19:22:30 +0200
-From: Andrew Shadura <andrew@...dura.me>
-To: Kallithea <kallithea-general@...onservancy.org>
-Cc: oss-security@...ts.openwall.com
-Subject: [SECURITY ISSUES] CVE-2016-3691 and CVE-2016-3114
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/25/14
+Message-ID: <alpine.LFD.2.20.1607260055500.12460@wniryva>
+Date: Tue, 26 Jul 2016 01:07:33 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request Qemu: scsi: esp: oob write access while reading ESP command 
 Content-Type: text/plain; charset=utf-8
 
-Hello everyone,
+   Hello,
 
-We've discovered the following security issues in Kallithea.
+Quick Emulator(Qemu) built with the ESP/NCR53C9x controller emulation support 
+is vulnerable to an OOB write access issue. It could occur while doing DMA 
+read into ESP command buffer 's->cmdbuf'; It could write past the 's->cmdbuf' 
+area, if it was transferring more than 16 bytes in esp_do_dma().
 
-CVE-2016-3114: Privilege escalation
-===================================
+A privileged user inside guest could use this flaw to crash the Qemu process 
+resulting in DoS OR potentially leverage it to execute arbitrary code with 
+privileges of the Qemu process on the host.
 
-The vulnerability that allowed logged-in users to edit or
-delete open pull requests associated with any repository to which
-they had read access, plus a related vulnerability allowing logged-in
-users to delete any comment from any repository, provided they could
-determine the comment ID and had read access to just one repository.
+Upstream patches:
+-----------------
+   -> http://git.qemu.org/?p=qemu.git;a=commit;h=926cde5f3e4d2504ed161ed0
+   -> http://git.qemu.org/?p=qemu.git;a=commit;h=cc96677469388bad3d664793
 
-CVE-2016-3691: CSRF protection bypass
-=====================================
+This issue was discovered by Li Qiang of 360.cn Inc.
 
-Routes allows GET requests to override the HTTP method, which breaks
-the Kallithea CSRF protection (which only applies to POST requests).
-
-The attacker might misuse GET requests method overriding to trick user
-into issuing a request with a different method, thus bypassing the
-CSRF protection.
-
-Resolution
-==========
-
-Søren Løvborg wrote patches fixing these issues, both of which are
-included in the release 0.3.2. Users are advised to upgrade as soon as
-possible.
-
--- 
-Cheers,
-  Andrew
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
