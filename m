@@ -1,29 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/12/1
-Message-ID: <alpine.LFD.2.20.1608120639040.19256@wniryva>
-Date: Fri, 12 Aug 2016 06:44:29 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request: Qemu net: vmxnet3: use after free while writing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/25/2
+Message-ID: <CALJHwhSoHKvrNxFbYL4HJk4GtxHxaetQWBZQQf8ROVYqm+N=dg@mail.gmail.com>
+Date: Mon, 25 Jul 2016 10:51:16 +1000
+From: Wade Mealing <wmealing@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2016-5400 - linux kernel: denial of service in airspy USB driver.
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hit send too early,
 
-Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support is 
-vulnerable to a use-after-free issue. It could occur while writing to the 
-device once it's disabled.
-
-A privileged user inside guest could use this issue to crash the Qemu 
-instance resulting in DoS.
 
 Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg01602.html
+https://git.linuxtv.org/media_tree.git/commit/?id=eca2d34b9d2ce70165a50510659838e28ca22742
 
-This issue was reported by Li Qiang of 360.cn Inc.
+Maintainer has yet to send to LKML.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+On Mon, Jul 25, 2016 at 10:50 AM, Wade Mealing <wmealing@...hat.com> wrote:
+> Hello All,
+>
+> A flaw was found in the linux kernel's implementation of the airspy
+> USB device driver in which a leak was found when a subdev or SDR are
+> plugged into the host.
+>
+> An attacker can create an targeted USB device which can emulate 64 of
+> these devices. Then by emulating an additional device which
+> continuously connects and disconnects, each connection attempt will
+> leak memory which can not be recovered.
+>
+> This issue was assigned CVE-2016-5400.
+>
+> Wade Mealing
+> Red Hat Product Security Team
