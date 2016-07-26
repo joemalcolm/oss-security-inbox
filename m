@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["890" "Tuesday" "2" "May" "2017" "13:08:43" "+0000" "Ari Kauppi" "Ari.Kauppi@synopsys.com" "<AEE7726B-5FE6-4972-BEFB-8CED939E875F@synopsys.com>" "31" "[oss-security] CVE-2017-7895 Linux kernel: nfsd: Remote arbitrary memory read" nil nil nil "5" "2017050213:08:43" "[oss-security] CVE-2017-7895 Linux kernel: nfsd: Remote arbitrary memory read" (number mark "U       Ari.Kauppi@s May  2   31/890   " thread-indent "\"[oss-security] CVE-2017-7895 Linux kernel: nfsd: Remote arbitrary memory read\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2000" "Tuesday" "26" "July" "2016" "15:21:12" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160726192112.03BBD72E01E@smtpvbsrv1.mitre.org>" "46" "[oss-security] Re: CVE request Qemu: scsi: esp: oob write access while reading ESP command" nil nil nil "7" "2016072619:21:12" "[oss-security] Re: CVE request Qemu: scsi: esp: oob write access while reading ESP command" (number mark "U       cve-assign@m Jul 26   46/2000  " thread-indent "\"[oss-security] Re: CVE request Qemu: scsi: esp: oob write access while reading ESP command\"\n") "<alpine.LFD.2.20.1607260055500.12460@wniryva>" ("<alpine.LFD.2.20.1607260055500.12460@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15758 invoked by uid 550); 2 May 2017 13:17:43 -0000
+Received: (qmail 22083 invoked by uid 550); 26 Jul 2016 19:21:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,52 +12,58 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29885 invoked from network); 2 May 2017 13:08:57 -0000
-From: Ari Kauppi <Ari.Kauppi@synopsys.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: CVE-2017-7895 Linux kernel: nfsd: Remote arbitrary memory read
-Thread-Index: AQHSw0U5MXLgkEqj306gv9Uv2FYh7Q==
-Date: Tue, 2 May 2017 13:08:43 +0000
-Message-ID: <AEE7726B-5FE6-4972-BEFB-8CED939E875F@synopsys.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.112.3.24]
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <0607F1A9B06E6F48A366C376D9A3A4FE@internal.synopsys.com>
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2017-7895 Linux kernel: nfsd: Remote arbitrary memory read
+Received: (qmail 22065 invoked from network); 26 Jul 2016 19:21:24 -0000
+From: cve-assign@mitre.org
+To: ppandit@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn
+In-Reply-To: <alpine.LFD.2.20.1607260055500.12460@wniryva>
+Message-Id: <20160726192112.03BBD72E01E@smtpvbsrv1.mitre.org>
+Date: Tue, 26 Jul 2016 15:21:12 -0400 (EDT)
+Subject: [oss-security] Re: CVE request Qemu: scsi: esp: oob write access while reading ESP command
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Linux kernel NFSv3 server is vulnerable to a remote arbitrary memory read a=
-ttack.
+> Quick Emulator(Qemu) built with the ESP/NCR53C9x controller emulation support
+> is vulnerable to an OOB write access issue. It could occur while doing DMA
+> read into ESP command buffer 's->cmdbuf'; It could write past the 's->cmdbuf'
+> area, if it was transferring more than 16 bytes in esp_do_dma().
+>
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> resulting in DoS OR potentially leverage it to execute arbitrary code with
+> privileges of the Qemu process on the host.
+>
+> Upstream patches:
+> -----------------
+>    -> http://git.qemu.org/?p=qemu.git;a=commit;h=926cde5f3e4d2504ed161ed0cb771ac7cad6fd11
+>    -> http://git.qemu.org/?p=qemu.git;a=commit;h=cc96677469388bad3d66479379735cf75db069e3
 
-A specifically crafted request can extract chunks of arbitrary memory from =
-both
-kernel-space and user-space.
+>> scsi: esp: make cmdbuf big enough for maximum CDB size
+>>
+>> Increase the command buffer size to 32, which is maximum when
+>> 's->do_cmd' is set, and add a check on 'len' to avoid OOB access.
 
-The attack vector requires write access to a NFS mount on the target host.
+Use CVE-2016-6351.
 
-The issue has been verified to be reproducible on multiple baselines. At le=
-ast
-2.6.32, 3.2, 4.4, 4.8 and 4.10 baselines (and distributions derived from th=
-ose)
-have been confirmed to be vulnerable. Fixed in 4.11 release. Most probably
-this has been introduced about 10 years ago due to fs/nfsd changes for 2.6.=
-22.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N (7.7 / High)
-
-Upstream patch:
-https://git.kernel.org/linus/13bf9fbff0e5e099e2b6f003a0ab8ae145436309
-
-This issue was found by Ari Kauppi from Synopsys Ltd with Synopsys Defensics
-fuzzer combined with KASAN.
-
-Thanks,
-
---
-Ari Kauppi / Synopsys Ltd.=
+iQIcBAEBCAAGBQJXl7ePAAoJEHb/MwWLVhi2DkcP/0Cve7oqMMMa06UgbrOLGj1S
+eXWNyPD1oL112rkjfYNjTQZwKVb4nmZoKGoibqcnlZLJkzH88Cvpl0tF1YVKPfoG
+TsvXjXfiABZTeFGUfKJfjQEp9YeIuosAMfp2Dj/Cpe5WK0NYF6ZakqG1A9gWzNvv
+dRqlB6eoaqjWKgycTGcRiqcHfIflaGnI8W+syumDQQ6y873ILk9WdLcA9AZnvDUs
+4/EITZCHaEBDNOoK8jP+FcctPNwYSGwfqcDxrT/h6bb7zpd5yT6JQWu0EZPetzVV
+RPFE8/Owf+OIwNJtqbz+lKRV6vi1G0gB824rEupY1ZUWTPRNTl/FNuuhfpVdIklu
+WhKZJKP76RIzC9HChsbpPfzxYbg7GxMr+XWp24X2EptIfZJmvVA4Y3C99+b2wvLb
+y8AMwTZzKLLuOunAQ+4/10n21u+3EZxeJvMgUD5BipoZnEwoPgkKD+2sHtKNnXaH
+imEZ0f789i1mrIx673rXowjoReXRGQUic/yhRAWnsbnz3Jz6xclbmrPN6W2XZScH
+XPV0e1/u3AqZJ7ZQgbospB8Co06mYWJfYfnPFQIniVSf8sf32Rs+wUKsT0+V8NzW
+o4qi7w/kX40Zy1K+DTNfCRa44nH7OFirt0CpQxrKuDo1mhn94nAWdJ5hMx1LfA0G
+bjCLFVM2rEcNXi7FM6Fi
+=Rrsy
+-----END PGP SIGNATURE-----
