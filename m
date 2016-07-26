@@ -1,29 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/23/1
-Message-ID: <20160423062715.GA7765@eldamar.local>
-Date: Sat, 23 Apr 2016 08:27:15 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: jq: heap buffer overflow in tokenadd() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/26/5
+Message-ID: <1304293369.8684866.1469539505676.JavaMail.zimbra@redhat.com>
+Date: Tue, 26 Jul 2016 09:25:05 -0400 (EDT)
+From: CAI Qian <caiqian@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: cve request: systemd-machined: information exposure for docker containers
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Once docker containers register themselves to systemd-machined
+by oci-register-machine. Any unprivileged user could run
+machinectl to list every single containers running in the host
+even if the containers do not belong to this user (including containers
+belong to the root user), and access sensitive information associated
+with any individual container including its internal IP address, OS
+version, running processes, and file path for its rootfs.
 
-Could you assign a CVE for the following issue in jq, a lightweight
-and flexible command-line JSON processor.
+$ machinectl status cc8d10c7b9892b75843d200d54d34a3a
+cc8d10c7b9892b75843d200d54d34a3a(63633864313063376239383932623735)
+           Since: Mon 2016-07-25 17:55:36 UTC; 34s ago
+          Leader: 43494 (sleep)
+         Service: docker; class container
+            Root: /var/mnt/overlay/overlay/0429684e3da515ae4f11b8514c7b20f759613
+         Address: 172.17.0.2
+                  fe80::42:acff:fe11:2
+              OS: Red Hat Enterprise Linux Server 7.2 (Maipo)
+            Unit: docker-cc8d10c7b9892b75843d200d54d34a3a9435fe0f65527c254ebfd2d
+                  └─43494 sleep 3000
 
-Upstream report:
-
-https://github.com/stedolan/jq/issues/995
-
-Upstream commit:
-
-https://github.com/stedolan/jq/commit/8eb1367ca44e772963e704a700ef72ae2e12babd
-
-Reports:
-
-https://bugs.debian.org/802231
-https://bugzilla.redhat.com/show_bug.cgi?id=1328747
-
-Regards,
-Salvatore
+   CAI Qian
