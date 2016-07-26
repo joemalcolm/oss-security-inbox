@@ -1,55 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/07/7
-Message-Id: <20160107182324.DD9B272E06A@smtpvbsrv1.mitre.org>
-Date: Thu,  7 Jan 2016 13:23:24 -0500 (EST)
-From: cve-assign@...re.org
-To: guillaume.ayoub@...ea.fr
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for radicale
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/26/2
+Message-Id: <E1bS16r-00051A-AE@xenbits.xenproject.org>
+Date: Tue, 26 Jul 2016 12:05:17 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 183 (CVE-2016-6259) - x86: Missing SMAP whitelisting in 32-bit exception / event delivery
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> here are for me the 3 real independent vulnerabilities
-> reported and fixed in 1.1:
+            Xen Security Advisory CVE-2016-6259 / XSA-183
+                              version 5
 
-OK, we will keep the two CVE IDs already assigned in
+    x86: Missing SMAP whitelisting in 32-bit exception / event delivery
 
-  http://www.openwall.com/lists/oss-security/2016/01/06/4
+UPDATES IN VERSION 5
+====================
 
-and add one more CVE ID for the third issue.
+Public release.
 
+ISSUE DESCRIPTION
+=================
 
-> 3. "On MS Windows the filesystem backend allows access to the first
-> level of files on a drive."
-> 
-> The filesystem backend is the default storage backend. When used, it 
-> converts paths like /c:/filename/dummy to c:\filename, and allowing 
-> anybody to read/write anything anywhere, by sending requests with 
-> particular paths and contents.
+Supervisor Mode Access Prevention is a hardware feature designed to make
+an Operating System more robust, by raising a pagefault rather than
+accidentally following a pointer into userspace.  However, legitimate
+accesses into userspace require whitelisting, and the exception delivery
+mechanism for 32bit PV guests wasn't whitelisted.
 
-Use CVE-2016-1505.
+IMPACT
+======
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+A malicious 32-bit PV guest kernel can trigger a safety check, crashing
+the hypervisor and causing a denial of service to other VMs on the host.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen version 4.5 and newer are vulnerable.  Versions 4.4 and older are
+not, due to not having software support for SMAP.
+
+The vulnerability is only exposed on x86 hardware supporting the SMAP
+feature (Intel Broadwell and later CPUs).  The vulnerability is not
+exposed on ARM hardware, or x86 hardware which do not support SMAP.
+
+The vulnerability is only exposed to x86 32bit PV guests.  The
+vulnerability is not exposed to 64bit PV guests or HVM guests.
+
+MITIGATION
+==========
+
+Running only HVM guests or 64-bit PV guests, avoids the vulnerability.
+
+Disabling SMAP in the hypervisor by booting Xen with "smap=0" on the
+command line will avoid this vulnerability.  (Depending on the
+circumstances this workaround may pose a small risk of increasing the
+impact of other, possibly unknown, vulnerabilities.)
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa183.patch           xen-unstable, 4.7.x
+xsa183-4.6.patch       Xen 4.6.x, 4.5.x
+
+$ sha256sum xsa183*
+ea0ea4b294332814330f222e6d78eea3b19c394eac8ae22feb4a5bd21e90331f  xsa183-unstable.patch
+0fee41f21a3eb4af1487590098047f4625688bcef7419572a8f418f9fb728468  xsa183-4.6.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches described above (or others which are
+substantially similar) is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
+
+But: Deployment of the "smap=0" mitigation is NOT permitted (except
+where all the affected systems and VMs are administered and used only
+by organisations which are members of the Xen Project Security Issues
+Predisclosure List).  Specifically, deployment on public cloud systems
+is NOT permitted.  This is because this produces a guest-visible
+change which could lead to rediscovery of the vulnerability.
+
+And: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWjqzGAAoJEL54rhJi8gl5ls8P/3X6IIeZYgpQ9bwDGeVTdPiu
-qkeJl0cLsikGu2+uyfSTVA5s869DUXERPHLAAVq96LJBm6uWK/w22Z+3D8QPZBqF
-IjfR5uMe6HMizpBEiJb2MXWBS1kcjKBOU7kJKBHbToYnJCzhX8WIPW7EG69W/d+/
-K4ILFTTXwO/bZunY4wdIM08mE+LQZZEvdGTLm8roIGoorl/qC/ox0ZSWx+mmkf2p
-PY/KPSnIPG/4gfF+50lCtluV73fI0i1m9si6IBSlwaWA9Bij1tBrtmj+TnBCKu5n
-KW8nRQYwGK6WKh9xZ87fxavRh7jnrwWUYNGpK/NC11DANGa9PLkz4w/oufEm3G00
-4Zxd7orjvO81bD3UHiv8hYPEAHtkqBxyoDItctR+yZ0owFDd/EbrIie9yPGheeW8
-EgosX7xs5nQ/YNIip2FdGZvS+kjhMvf0O/teO6exdMGlPv1UnFwCl67XyRbp8qt3
-+8kaEzAgib84Jg/jEvE353MJ+kHS0FJaA6GI282lRC13OZfLVqi621KXr7xVqstD
-WCb0wOza2tCsmcE3nvMqmqKpIrWk+O5MPtcq5yXmpQV/LonJIqF5gQUcrW0iKEdM
-LFrSp20MgnrX31nRSlSvNiTijcZBCPqgi+yBhuFLbtYs95YAlLhXen7oB53NF8zn
-YEwGYy/Oa476zqRq3/FP
-=SRvk
+iQEcBAEBAgAGBQJXl0M9AAoJEIP+FMlX6CvZYB4IAIkCjnrkDBqYcPJrnAAjNDGL
+v/qJiE6NAKlvqyi/pRkDodAk+5CLvvjDHmTBtqvT+7SU3ixt4C80MLiVMCuJVsUw
+kMcp95KsJne1TSoivAqSXED+J3gkIWXG8PYvpUOwwOqr0aJViuN9Uv52g0+MVUsW
+OnkHzYzyyMkIRi0bIzXmhvGeHTUxVhcz8RjMWsjD9FPb+i6lu/kfNUvpiecVa0mx
+0J7ByS5l4iEefCH+beT35NFg1BfQINU3cMmDM/i8pklRuJI+HKCYFzPGJyl2+Ccr
+0Zd7Lgub2jGsJjgXjBBPCHw/CCdlmX7RiiAvnIQU5adBtCIk6p0T0ugcGXwTIAw=
+=ydwH
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa183-unstable.patch" of type "application/octet-stream" (2681 bytes)
+
+Download attachment "xsa183-4.6.patch" of type "application/octet-stream" (2701 bytes)
