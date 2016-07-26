@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["847" "Tuesday" "10" "November" "2020" "13:11:24" "+0000" "Kaxil Naik" "kaxilnaik@gmail.com" "<CAH5JyZqaxXZGfSivNw-SMdCzY-x2nf2j_VWuC9=f5vOyRxnwow@mail.gmail.com>" "27" "[oss-security] [CVE-2020-13927] - Insecure Default Configuration for Experimental API in Airflow < 1.10.11" nil nil nil "11" "2020111013:11:24" "[oss-security] [CVE-2020-13927] - Insecure Default Configuration for Experimental API in Airflow < 1.10.11" (number mark "U       kaxilnaik@gm Nov 10   27/847   " thread-indent "\"[oss-security] [CVE-2020-13927] - Insecure Default Configuration for Experimental API in Airflow < 1.10.11\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-13927] - Insecure Default Configuration for Experimental API in Airflow < 1.10.11" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3765" "Tuesday" "26" "July" "2016" "15:22:45" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160726192245.12A9C72E005@smtpvbsrv1.mitre.org>" "92" "[oss-security] Re: CVE Request: Any User Can Panic Kernel Through Sysctl on OpenBSD" "^Cc:" nil nil "7" "2016072619:22:45" "[oss-security] Re: CVE Request: Any User Can Panic Kernel Through Sysctl on OpenBSD" (number mark "U       cve-assign@m Jul 26   92/3765  " thread-indent "\"[oss-security] Re: CVE Request: Any User Can Panic Kernel Through Sysctl on OpenBSD\"\n") "<4CC16782-C45C-496F-BFC3-FE533E54B172@nccgroup.trust>" ("<4CC16782-C45C-496F-BFC3-FE533E54B172@nccgroup.trust>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23591 invoked by uid 550); 10 Nov 2020 14:12:39 -0000
+Received: (qmail 32079 invoked by uid 550); 26 Jul 2016 19:22:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,105 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 32055 invoked from network); 26 Jul 2016 19:22:56 -0000
+In-Reply-To: <4CC16782-C45C-496F-BFC3-FE533E54B172@nccgroup.trust>
+Message-Id: <20160726192245.12A9C72E005@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, Tim.Newsham@nccgroup.trust
+Date: Tue, 26 Jul 2016 15:22:45 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27671 invoked from network); 10 Nov 2020 13:11:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=nQQN/Etg6YEnAxae7xm+tyfraDwFOLW4OPrnu1f5KxM=;
-        b=rXW2WS21LUZkzilxjM6ZZuG4zfsYzxelCAo34DOa4Jaci3p6h75NrZCv7lG45JNAn1
-         /yDr4gItm5PhBwCVY/Xwxx1xvurz9VNoC6Es8arVhwvsnt+U3vOJIyFUQwvPtOGO/NEO
-         eukhuNGw/iNxOLUkXysOjk7mPM3przywmRxQEpDEoEQZOFC4Vel2OI4vgRPLrUnW3pYx
-         9aU8V0odTM0IAPhzM3LsFDBNNQA8iRur4SWZQIysfEyfhqRsAKYA6SuVmdCKwsZ4Xk9c
-         Jiucmto8wlXkpkNloR2RUjpQjmjeN1Qq5qVxltaKtEJKVuj1nWtkGIXyhUGoPLckG/l6
-         W0sg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=nQQN/Etg6YEnAxae7xm+tyfraDwFOLW4OPrnu1f5KxM=;
-        b=mH5ET5LMmDsyfahpRqQywe7cgnhb6M4Rv++QSHUzkPtakztzDUDEAxdTZvdVuVhc0j
-         j2OOpvvT/rCOgIFki3cohqSRkKXkUNIC1zghQFur18BADjX4Fe3GZNDc2HlcYwAcuDQo
-         iq4VeBseQNB2O5VP1//KYcuQ7dYnTxphXahqrRdGbi1xzx+6B3fgXDyKjO5ny3e+Svwl
-         YOsc0tO/OlR/eLT8j27s13plQ2NgEh2ui/+pBo9sfUghV4Pk1Ta1vviQPx0YJazO+Fug
-         LN/gxeuYWxFHRMo7uNof/jXTuXgBmLFQbHMVr+rUVkzTD52rhbTCuy9YoX9bgvz4uqvc
-         yxFQ==
-X-Gm-Message-State: AOAM531Zzq9Lq7/+zDJ9CeFG59meuebF5YsQOU6dKhhT2KcM2daCxd6t
-	wS+bFbQaJNQ5afGCHDVW6KrkYewsH86zGxX8oJ+gDwQx8rVfXg==
-X-Google-Smtp-Source: ABdhPJzpOwa6ehZaXXCmR5k61/URIr6Zgi0UvC11uex9r0DkmgKEJvzepRkuIfv89yKUaJJad7rWp4cLeHyiwdAYURE=
-X-Received: by 2002:a17:906:5c43:: with SMTP id c3mr4190104ejr.390.1605013894828;
- Tue, 10 Nov 2020 05:11:34 -0800 (PST)
-MIME-Version: 1.0
-From: Kaxil Naik <kaxilnaik@gmail.com>
-Date: Tue, 10 Nov 2020 13:11:24 +0000
-Message-ID: <CAH5JyZqaxXZGfSivNw-SMdCzY-x2nf2j_VWuC9=f5vOyRxnwow@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Cc: dev@airflow.apache.org
-Content-Type: multipart/alternative; boundary="0000000000000f966805b3c06bbb"
-Subject: [oss-security] [CVE-2020-13927] - Insecure Default Configuration for Experimental
- API in Airflow < 1.10.11
+Subject: [oss-security] Re: CVE Request: Any User Can Panic Kernel Through Sysctl on OpenBSD
+To: jesse.hertz@nccgroup.trust
 
---0000000000000f966805b3c06bbb
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Versions Affected: <1.10.11
+> Any user can panic the kernel by using the sysctl call. If a
+> user can manage to map a page at address zero, they may be able
+> to gain kernel code execution and escalate privileges (OpenBSD fortunately prevents this by default).
+> 
+> Description:
+> When processing sysctl calls, OpenBSD dispatches through a number
+> of intermediate helper functions. For example, if the first integer
+> in the path is 10, sys_sysctl() will call through vfs_sysctl() for
+> further processing. vfs_sysctl() performs a table lookup based on
+> the second byte, and if the byte is 19, it selects the tmpfs_vfsops
+> table and dispatches further processing through the vfs_sysctl method:
+> 
+>     if (name[0] != VFS_GENERIC) {
+>         for (vfsp = vfsconf; vfsp; vfsp = vfsp->vfc_next)
+>             if (vfsp->vfc_typenum == name[0])
+>                 break;
+> 
+>         if (vfsp == NULL)
+>             return (EOPNOTSUPP);
+> 
+>         return ((*vfsp->vfc_vfsops->vfs_sysctl)(&name[1], namelen - 1,
+>             oldp, oldlenp, newp, newlen, p));
+>     }
+> 
+> Unfortunately, the definition for tmpfs_vfsops leaves this method NULL:
 
-Description:
-The previous default setting for Airflow's Experimental API was to allow
-all API requests without authentication, but this
-poses security risks to users who miss this fact.
+> struct vfsops tmpfs_vfsops = {
+> 
+>     NULL,               /* vfs_sysctl */
 
+> Trying to read or write a sysctl path starting with (10,19) results
+> in a NULL pointer access and a panic of
+> "attempt to execute user address 0x0 in supervisor mode".
+> Since any user can perform a sysctl read, this issue can be abused
+> by any logged in user to panic the system.
+> 
+> Fortunately, OpenBSD intentionally prevents users from attempting to map a page
+> at the NULL address. If an attacker is able to get such a mapping,
+> they may be able to cause the kernel to jump to code mapped at this
+> address (if other security protections such as SMAP/SMEP aren't in place).
+> This would allow an attacker to gain kernel code execution and
+> escalate their privileges.
+> 
+> Reproduction:
+> Run the PoC sysctl_tmpfs_panic.c program. It will pccess
+> the (10,19,0) sysctl path and trigger a panic of
+> "attempt to execute user address 0x0 in supervisor mode".
+> NCC Group was able to reproduce this issue on OpenBSD 5.9 release
+> running amd64.
+> 
+> Recommendation:
+> Include a NULL-pointer check in vfs_sysctl() before dispatching to
+> the vfs_sysctl method. Alternately, include a vfs_sysctl method
+> in the tmpfs_vfsops table.
+> 
+> Fixed: http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/kern/vfs_subr.c.diff?r1=1.248&r2=1.249
+>        http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/tmpfs/tmpfs_vfsops.c.diff?r1=1.9&r2=1.10
 
->From Airflow 1.10.11 the default has been changed to deny all
-requests by default and is documented at
-https://airflow.apache.org/docs/1.10.11/security.html#api-authentication .
+>     int name[] = { 10, 19, 0 }; // vfs.tmpfs.0
+>     char buf[16];
+>     size_t sz = sizeof buf;
+>     int x;
+> 
+>     x = sysctl(name, 3, buf, &sz, 0, 0);
 
-Note this change fixes it for new installs but existing users need to
-change their config to default
-`[api] auth_backend = airflow.api.auth.backend.deny_all` as mentioned in
-the Updating Guide:
+Use CVE-2016-6350.
 
-https://github.com/apache/airflow/blob/1.10.11/UPDATING.md#experimental-api-will-deny-all-request-by-default
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-Credits:
-Reported by Anonymous User
-
---0000000000000f966805b3c06bbb--
+iQIcBAEBCAAGBQJXl7ebAAoJEHb/MwWLVhi2RRUQAKkrnjJ8NqE2b7z29QMk+jdI
+nM1jbtV5seUvzxvVkk83jHCE4icLl3rDH23QAc9zRuMsVH6uXnIx7Cx37xlk9a54
+YwNjnVZk8zIior3yQOY5/JzXkr/AaK2Pb5SQVRyHiJRD9ApA97DvWxJGGWFhCxLc
+M/S2BeiB15L05dC0wKEJFKx4OV4ScpB2uy/T+gORpqRkWHhI1h/xCYeG2wNTSGaI
+DBQTvtR1MYwqz7jax1jFPyaUAW4Jg21qCP9L20Ds+G9Yw3DzVP+k3c06l2PMcuM+
+zr9ajStH3NDSMkqYkfhYXFGDzUo5z8BFnRdJmAkFTcYQGJz2PkwNeRGw4put5/lB
+sVzYCnP8SXM2LVjOYzwxI6LyNvtnK5HhqE7PD5hf81rNDQHqDb01g0l2EE1psyNs
+/cSMhJzQL9ioZTbjTDtvpWpopZVeIt9BUWQGXFb7QviQpNcFPXsvT2A4wwimm3HE
+dXlfMzARDBlkU/2qRfXJAfqtTM5MI5KlPLIREEwOjUMbwgnynENeHdLjob2EJLE7
+7ofXZE+azTK03wx4e/3aJwWfy5Ff+lXXb50AJOutS74oRii8gSHywMIZLV+0k6nN
+Klkk1UYBdgkBc6HW42yK/veQ/tEc1Vwm3edpD+WWlo1y3kju6vig5fB7jhpD+vQc
+dfRSQioVwzON5g8m+tx+
+=DboK
+-----END PGP SIGNATURE-----
