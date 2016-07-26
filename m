@@ -1,27 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/11/7
-Message-ID: <CAFRnB2V=ZFt83v6sBnYOj8-nwfRk-G-pf6bB9y9RS250mz_zSQ@mail.gmail.com>
-Date: Thu, 11 Feb 2016 16:05:53 -0500
-From: Alex Gaynor <alex.gaynor@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: STARTTLS for this list?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/26/9
+Message-Id: <20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>
+Date: Tue, 26 Jul 2016 15:24:13 -0400 (EDT)
+From: cve-assign@...re.org
+To: caiqian@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: cve request: systemd-machined: information exposure for docker containers
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Not sure if anyone saw, but gmail has been rolling out UI indicators for
-MTAs which don't use TLS:
-https://gmailblog.blogspot.com/2016/02/making-email-safer-for-you-posted-by.html
+> Once docker containers register themselves to systemd-machined
+> by oci-register-machine. Any unprivileged user could run
+> machinectl to list every single containers running in the host
+> even if the containers do not belong to this user (including containers
+> belong to the root user), and access sensitive information associated
+> with any individual container including its internal IP address, OS
+> version, running processes, and file path for its rootfs.
+> 
+> $ machinectl status cc8d10c7b9892b75843d200d54d34a3a
+> cc8d10c7b9892b75843d200d54d34a3a(63633864313063376239383932623735)
+>            Since: Mon 2016-07-25 17:55:36 UTC; 34s ago
+>           Leader: 43494 (sleep)
+>          Service: docker; class container
+>             Root: /var/mnt/overlay/overlay/0429684e3da515ae4f11b8514c7b20f759613
+>          Address: 172.17.0.2
+>                   fe80::42:acff:fe11:2
+>               OS: Red Hat Enterprise Linux Server 7.2 (Maipo)
+>             Unit: docker-cc8d10c7b9892b75843d200d54d34a3a9435fe0f65527c254ebfd2d
+>                   43494 sleep 3000
 
-I was surprised to see this indicator on mail from oss-security. Does
-anyone know who has the keys to `list.openwall.com` so they can turn on
-STARTTLS for outbound email?
+Use CVE-2016-6349.
 
-Alex
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
--- 
-"I disapprove of what you say, but I will defend to the death your right to
-say it." -- Evelyn Beatrice Hall (summarizing Voltaire)
-"The people's good is the highest law." -- Cicero
-GPG Key fingerprint: 125F 5C67 DFE9 4084
-
+iQIcBAEBCAAGBQJXl7elAAoJEHb/MwWLVhi2RWIQAKaV9Wfr8YVQfKU+Skfs5Aw5
+10D1SpGzb6X64u7ZBPtBINph6DcANhKRVnsLzhyK64m7tOXlU+f3ZuJJkpYILj/L
+dqpGgpm4Rr3g3CbOBXQzv3MoxI1x6UBpQ0tD4YJR2l4MUBH+WDNTgS2HGsonDgHW
+Y2nLzn/xLbnxBJPhtuTxB3rsSYW5HoLv3rU135z++sgckn9wEpMCLKn4RabJX5pn
+VlvwyvgtS0KQIjxwvc+Fzek3A8JmVmc0Sdv9xv+oUPSpcVx+9UQuJ4IM3JrItkyX
+ozFJvettlVz5DGP+Il19Bsj4VgnqfbIY4hV9G5W3Zvvvj+0NQbqXeA4rz8s6RRaU
+VzGZLfxaSt3giTqLYIVQIe5z/B8zzdeyJv8Sq1p54Wlnw3mhV7jy071Tv85Wuy5C
+WgwlrGw7weXeiDUCDtJccKj+Vulmkl9fA6yZZOTsi1eLdncsRZurdoRKtbu35yS8
+uUx7iv855mq0HcEmONagKuVuuZehESJQ1DgIGDs2U0r4oWwAYkmYfvTdfjqni76c
+CA+qdQZUKXKmg/VBSAxawyO5DeP5sqf8e/W5mGyV9ryEA7d5Td+PhP2/hyYqF/gm
+cWYAMkuS8Twty3XWceKE01ToBU2E3RsOlJTtA7Y5Su7Za/MyoOO0XgZ5LpU2lMhQ
+azlA01pX7DjSmXNbCCZF
+=mOLg
+-----END PGP SIGNATURE-----
