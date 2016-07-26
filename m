@@ -1,16 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/25/5
-Message-ID: <20161125184843.GJ10528@kcwu.csie.org>
-Date: Sat, 26 Nov 2016 02:48:44 +0800
-From: Kuang-che Wu <kcwu@...e.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: CVE request: w3m - multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/26/12
+Message-Id: <20160726235219.33E1C72E003@smtpvbsrv1.mitre.org>
+Date: Tue, 26 Jul 2016 19:52:19 -0400 (EDT)
+From: cve-assign@...re.org
+To: asulfrian@...AT.FU-Berlin.DE
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: flex: Buffer overflow in generated code (yy_get_next_buffer)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 23, 2016 at 08:29:24PM -0500, cve-assign@...re.org wrote:
-> CVE-2016-9621 - https://github.com/tats/w3m/issues/29 global-buffer-overflow write
-sorry, I found I have reported this twice. It was assigned as CVE-2016-9429.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> flex upstream change some integer type in 2.5.36[1] to unsigned integer
+> types (size_t). Especially the num_to_read variable in
+> yy_get_next_buffer is critical, because the buffer is resized if this
+> value is _less_ or equal to zero.
+> 
+> With special crafted input it is possible, that the buffer is not
+> resized if the input is larger than the default buffer size of 16k. This
+> allows a heap buffer overflow.
+> 
+> It may be also remote usable, it depends on the software that is build
+> using flex. We noticed for example, that bogofilter segfaults sometimes
+> depending on the incoming mail.
+> 
+> Upstream already noticed that this may be a problem[2] but did not
+> escalate it as a security issue.
+
+Use CVE-2016-6354 for this num_to_read issue.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+> Upstream also changed some other type
+> back from size_t to int (for example in [3]) so maybe it is not
+> sufficient to only change num_to_read back to int.
+> 
+> The upstream fix is contained in 2.6.1, but there are more integer type
+> fixes in the master branch of flex (currently not in a released
+> version).
+> 
+> As the issue is in the generated code during compile time, it is not
+> sufficient to fix flex, but all binaries using flex as build-dependency
+> may need a rebuild after fixing flex. Additionally there may be packages,
+> that supply the generated source in the release-tar and do not use flex
+> during building.
+
+> 1: https://github.com/westes/flex/commit/9ba3187a537d6a58d345f2874d06087fd4050399
+> 2: https://github.com/westes/flex/commit/a5cbe929ac3255d371e698f62dc256afe7006466
+> 3: https://github.com/westes/flex/commit/7a7c3dfe1bcb8230447ba1656f926b4b4cdfc457
+
+As far as we know, there has not been any discussion specifically
+showing that there is a security issue associated with any of the
+changes other than the num_to_read change. Accordingly, there are no
+other CVE IDs at this time.
+
+7a7c3dfe1bcb8230447ba1656f926b4b4cdfc457 refers to "sf 184, 187" - in other words,
+
+  https://sourceforge.net/p/flex/bugs/184/
+  https://sourceforge.net/p/flex/bugs/187/
+
+Among the concerns cited is "POSIX mandates that yyleng has type int,
+but flex defines it as yy_size_t. This breaks programs that use the
+POSIX-compatible declaration." The MITRE CVE team has not been
+studying 7a7c3dfe1bcb8230447ba1656f926b4b4cdfc457 or the mentioned
+master-branch commits - the only point is that integer types sometimes
+need to be changed without a security-related motivation.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXl/dBAAoJEHb/MwWLVhi2lpAP/RsWLefTG5FJUYhTUPpjU8pZ
+lcbXV25XxNM3WMUoiVLMUnXAd+ZfVUQGWVgU4ZgXSXfuxLz5gdfoePPUJZ/d44py
+nWcCfrXMBN7a4I1/YYzFmH2pA1i/QGY36XqJlxFRwDneCYJ9wDRpzAjqaEJMIe21
+NJjTVd//X+nmcGRRbFlvBwMGp84Ajjuxotia1Fymqcsdv5KMF2btOiw5jgWPd4mo
+sFj4nR594LEfJn5lCU39vNcVzWQtRzxewQwamesED6EId3VhuOCcm70JJ+lez4n4
+gYdeew1MZw6P+Lc6nLqE7Fjtwl6mkKT8JrAkQCtLq2EtkmQn4MppOm2gf7XDyzOF
+Vkoc/r0Bw7wlL0DrRWOEV2LUlMjO2MR7WIc/PTalGje3RVZRSFVY0hEJZ9e3zWkG
+YoTqrLn3i48t4/1hAS5FddHlDrH95/xreubKqcolE5WNLAOdCiEWGj1pgqZGA17J
+PHQ2jxi34hyAK9Ob4BaB8rPrBe4iP9GytBsyrtQ2o2rRCu6g4CLzrUil7IDZOkWW
+LtXPDaY/+ZDgq8luebVxrkmcDnWJO7yCu2OgT0NPvoQlCnqFpUQ8jrv/T6MgBucd
+7HaIydewUc96qmx1eSsnICcoXbelJt36n5ipiPLOaDikXMVKznpgeSBagHWVpVSj
+5Nz46batU7sC/BdPWUos
+=YRxV
+-----END PGP SIGNATURE-----
