@@ -1,35 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/25/1
-Message-ID: <0e925c8eb72143eaa942d7abbd5ddd70@imshyb02.MITRE.ORG>
-Date: Thu, 24 Nov 2016 19:51:34 -0500
-From: <cve-assign@...re.org>
-To: <dmoppert@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: icu: stack-based buffer overflow in uloc_getDisplayName
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/26/8
+Message-Id: <20160726192245.12A9C72E005@smtpvbsrv1.mitre.org>
+Date: Tue, 26 Jul 2016 15:22:45 -0400 (EDT)
+From: cve-assign@...re.org
+To: jesse.hertz@...group.trust
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, Tim.Newsham@...group.trust
+Subject: Re: CVE Request: Any User Can Panic Kernel Through Sysctl on OpenBSD
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1383569
+> Any user can panic the kernel by using the sysctl call. If a
+> user can manage to map a page at address zero, they may be able
+> to gain kernel code execution and escalate privileges (OpenBSD fortunately prevents this by default).
+> 
+> Description:
+> When processing sysctl calls, OpenBSD dispatches through a number
+> of intermediate helper functions. For example, if the first integer
+> in the path is 10, sys_sysctl() will call through vfs_sysctl() for
+> further processing. vfs_sysctl() performs a table lookup based on
+> the second byte, and if the byte is 19, it selects the tmpfs_vfsops
+> table and dispatches further processing through the vfs_sysctl method:
+> 
+>     if (name[0] != VFS_GENERIC) {
+>         for (vfsp = vfsconf; vfsp; vfsp = vfsp->vfc_next)
+>             if (vfsp->vfc_typenum == name[0])
+>                 break;
+> 
+>         if (vfsp == NULL)
+>             return (EOPNOTSUPP);
+> 
+>         return ((*vfsp->vfc_vfsops->vfs_sysctl)(&name[1], namelen - 1,
+>             oldp, oldlenp, newp, newlen, p));
+>     }
+> 
+> Unfortunately, the definition for tmpfs_vfsops leaves this method NULL:
 
-> http://bugs.icu-project.org/trac/ticket/10891
-> http://bugs.icu-project.org/trac/changeset/35699
+> struct vfsops tmpfs_vfsops = {
+> 
+>     NULL,               /* vfs_sysctl */
 
-> https://bugs.php.net/bug.php?id=67397
+> Trying to read or write a sysctl path starting with (10,19) results
+> in a NULL pointer access and a panic of
+> "attempt to execute user address 0x0 in supervisor mode".
+> Since any user can perform a sysctl read, this issue can be abused
+> by any logged in user to panic the system.
+> 
+> Fortunately, OpenBSD intentionally prevents users from attempting to map a page
+> at the NULL address. If an attacker is able to get such a mapping,
+> they may be able to cause the kernel to jump to code mapped at this
+> address (if other security protections such as SMAP/SMEP aren't in place).
+> This would allow an attacker to gain kernel code execution and
+> escalate their privileges.
+> 
+> Reproduction:
+> Run the PoC sysctl_tmpfs_panic.c program. It will pccess
+> the (10,19,0) sysctl path and trigger a panic of
+> "attempt to execute user address 0x0 in supervisor mode".
+> NCC Group was able to reproduce this issue on OpenBSD 5.9 release
+> running amd64.
+> 
+> Recommendation:
+> Include a NULL-pointer check in vfs_sysctl() before dispatching to
+> the vfs_sysctl method. Alternately, include a vfs_sysctl method
+> in the tmpfs_vfsops table.
+> 
+> Fixed: http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/kern/vfs_subr.c.diff?r1=1.248&r2=1.249
+>        http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/tmpfs/tmpfs_vfsops.c.diff?r1=1.9&r2=1.10
 
-> Note that the PHP bug is exactly the same flaw, but they worked around
-> it by limiting the length of strings passed to icu.  I don't believe
-> this needs a separate CVE even though it was "fixed" independently.
+>     int name[] = { 10, 19, 0 }; // vfs.tmpfs.0
+>     char buf[16];
+>     size_t sz = sizeof buf;
+>     int x;
+> 
+>     x = sysctl(name, 3, buf, &sz, 0, 0);
 
-Use CVE-2014-9911 for the ICU vulnerability, and use CVE-2014-9912 for
-the PHP vulnerability. Admittedly, the code changes in ICU and PHP had
-the same motivation. However, the code is not shared between
-ures_getByKeyWithFallback in ICU and get_icu_disp_value_src_php in
-PHP. Thus, two CVE IDs exist. This is also consistent with similar
-ICU/PHP situations in the
-http://www.openwall.com/lists/oss-security/2016/07/24/2 and
-http://www.openwall.com/lists/oss-security/2016/09/15/10 posts.
+Use CVE-2016-6350.
 
 - -- 
 CVE Assignment Team
@@ -39,17 +86,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYN4pmAAoJEHb/MwWLVhi2iXQP/0p5ye6sA3p3BNLXi1HvLKN3
-kTljswgWfZxD5/GINLjMGzf0Gr94weE6GfbxmrYbenjmghKTPU+tRgfpOd6TwteU
-kai0Vuluk020bYb9d769qyYc47rzKZ0h5FJCc/Ef+kQNWPMOHS+ogF8D11p575W0
-gFZyiw9h5HNHT7A5VV1NisFN607Q3IwJncNZfI1PLwZJ/t1dtNI8HGsKZCo5tlKq
-ZdWIibAuVThj9k4OKmZfdxe3SHInFv2dfDoLXwQH+hwnLLs7xkN3X5Tu/PXpkqtV
-cc/eqZTRW1TSxou4p0S8T7d410z3WArVecVNfFZxv58xua+Goj/bXwPRuAUQTY8q
-SpuR3NDwFoM23IURqTStQ/+NXbhGtjJpUltQjZ776hBEm/S/rljYMA5sJs4sBtjI
-VsiA8jqjeewOheQQnEOA/VVH8JvQQ8AATOKD6gRkDCuxTYwhemabzR9jUOpVP/Cv
-9f/4e/KIYug2wHcfTtEoqZEGtgIEQRdcGpEjOq7y7X9ETMWnTRNh1iIzKVOilFyv
-uCcNE1m0JJPALb0p72AqDb5rEL8cWynrvNQrcLifONF5/65uEa+5Hi4rXhayaQN1
-MDo0OTwKJUw90vhEeLP+hTx3bQJtp6bRTfz1avIhEmG0DmoErm9opAj/pK7o8uWV
-1EQnxE97WQjHimhYejXd
-=jGfq
+iQIcBAEBCAAGBQJXl7ebAAoJEHb/MwWLVhi2RRUQAKkrnjJ8NqE2b7z29QMk+jdI
+nM1jbtV5seUvzxvVkk83jHCE4icLl3rDH23QAc9zRuMsVH6uXnIx7Cx37xlk9a54
+YwNjnVZk8zIior3yQOY5/JzXkr/AaK2Pb5SQVRyHiJRD9ApA97DvWxJGGWFhCxLc
+M/S2BeiB15L05dC0wKEJFKx4OV4ScpB2uy/T+gORpqRkWHhI1h/xCYeG2wNTSGaI
+DBQTvtR1MYwqz7jax1jFPyaUAW4Jg21qCP9L20Ds+G9Yw3DzVP+k3c06l2PMcuM+
+zr9ajStH3NDSMkqYkfhYXFGDzUo5z8BFnRdJmAkFTcYQGJz2PkwNeRGw4put5/lB
+sVzYCnP8SXM2LVjOYzwxI6LyNvtnK5HhqE7PD5hf81rNDQHqDb01g0l2EE1psyNs
+/cSMhJzQL9ioZTbjTDtvpWpopZVeIt9BUWQGXFb7QviQpNcFPXsvT2A4wwimm3HE
+dXlfMzARDBlkU/2qRfXJAfqtTM5MI5KlPLIREEwOjUMbwgnynENeHdLjob2EJLE7
+7ofXZE+azTK03wx4e/3aJwWfy5Ff+lXXb50AJOutS74oRii8gSHywMIZLV+0k6nN
+Klkk1UYBdgkBc6HW42yK/veQ/tEc1Vwm3edpD+WWlo1y3kju6vig5fB7jhpD+vQc
+dfRSQioVwzON5g8m+tx+
+=DboK
 -----END PGP SIGNATURE-----
