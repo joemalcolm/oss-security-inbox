@@ -1,36 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/03/6
-Message-ID: <CAH9eYVqvceWHY8M0BhqUaE0=UMKxGvNWMvimypCYqpGMsqMTQg@mail.gmail.com>
-Date: Fri, 3 Jun 2016 11:26:53 -0400
-From: Brian Demers <bdemers@...che.org>
-To: dev@...ro.apache.org, "user@...ro.apache.org" <user@...ro.apache.org>, security@...ro.apache.org,  announce@...ro.apache.org, "security@...che.org" <security@...che.org>,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [Announce] CVE-2016-4437: Apache Shiro information disclosure vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/26/11
+Message-Id: <20160726213218.C0BD36C49F4@smtpvmsrv1.mitre.org>
+Date: Tue, 26 Jul 2016 17:32:18 -0400 (EDT)
+From: cve-assign@...re.org
+To: franco.costantini.20@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, gustavo.grieco@...g.fr
+Subject: Re: CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Vendor:
-The Apache Software Foundation
+> A write out-of-bounds parsing an ico file was found in gdk-pixbuf 2.30.7.
+>  #0  0x00007fffd83b428c in OneLine32 (context=0x7fffe0029820) at io-ico.c:589
+>  #1  OneLine (context=0x7fffe0029820) at io-ico.c:800
+>  #2  gdk_pixbuf__ico_image_load_increment (data=0x7fffe0029820,
+>      buf=0x7fffe001b852 "", size=0, error=0x7fffe9655b68) at io-ico.c:891
+> 
+> The affected function is here:
+> 
+>  static void OneLine32 (struct ico_progressive_state *context)
+> {
+>         gint X;
+>         guchar *Pixels;
+> 
+>         X = 0;
+>         if (context->Header.Negative == 0)
+>                 Pixels = (context->pixbuf->pixels +
+>                           context->pixbuf->rowstride *
+>                           (context->Header.height - context->Lines - 1));
+>         else
+>                 Pixels = (context->pixbuf->pixels +
+>                           context->pixbuf->rowstride *
+>                           context->Lines);
+>         while (X < context->Header.width) {
+>                 Pixels[X * 4 + 0] = context->LineBuf[X * 4 + 2];
+>                 Pixels[X * 4 + 1] = context->LineBuf[X * 4 + 1];
+>                 Pixels[X * 4 + 2] = context->LineBuf[X * 4 + 0];
+>                 Pixels[X * 4 + 3] = context->LineBuf[X * 4 + 3];
+>                 X++;
+>         }
+> }
+> 
+> The value of context->Header.height in OneLine32 is a very large number
+> (probably it wasn't validated correctly). Such value is used to calculate
+> where to write, resulting in an overflow where Pixels is written.
 
-Versions Affected:
-1.0.0-incubating - 1.2.4
+Use CVE-2016-6352.
 
-Description:
-A default cipher key is used for the "remember me" feature when not
-explicitly configured.  A request that included a specially crafted request
-parameter could be used to execute arbitrary code or access content that
-would otherwise be protected by a security constraint.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Mitigation:
-Users should upgrade to 1.2.5 [1],  ensure a secret cipher key is
-configured [2], or disable the "remember me" feature. [3]
-
-All binaries (.jars) are available in Maven Central already.
-
-References:
-[1] http://shiro.apache.org/download.html
-[2] http://shiro.apache.org/configuration.html#Configuration-ByteArrayValues
-[3] If using a shiro.ini, "remember me" can be disabled adding the
-following config line in the '[main]' section:
-  securityManager.rememberMeManager = null
-
+iQIcBAEBCAAGBQJXl9U9AAoJEHb/MwWLVhi28xQP/1zBqPYG123HPUFPnXTWGwze
+sGFujS/ujI5pnHeSG4mQtDVQmAbVwzhBFzzs1OfIsDFNDCvLiZdOJd7EJaTjnjK0
+S4yLI65ch0WFZj5ryloElr8Fz3SpPG0fe1pMP7Ozy+XcZQuk6DhWvfXoh7hT1L3g
+H2+Tk6VLnFukQ14+wFo0QrSg/sYdXnZw1bO7sD6RVuV0Kq/hNeZkk30pAElTe8j4
+DmdvGk24KYz7kEjJ7oBH12lLk+fkCar0p6ns34xqjxHmlwH/ZyQv/CFGyONiDuS0
+nKQ8sXAYdDUWNZXL+gCksa3xP7RrNckEU1tR7sgxJ05gYtJc2ynmtIzaKcNnPBqQ
+HZFsdCNH5Jhps7TQgKDO7P5ODfn4TV+npbk0m+9bMycm32ZQIMaJN3ogGCol9fMl
+HSSReoF8vqp8MN2jXk7/sSeethQBdQGztq0DumaTqAZQgT+hCbCuRGBHKjPWuKDc
+KJSmjYr6S0vh2uKPgpKp5K2YaFp7wyrFunpYpAlY39OoKmBAvfnH61Ot9zAPNwZk
+OVn6cXRKNALZvJcYQWpovJQafYXkQjvDZDNSFmf+2IlG63L+xe59s4wyDDFMrfdH
+NuVT245u/Tzry++Zpd7ngllQnmnXgU9/afi3BJ8kSbYtD4Yv7IBD4jL5BuE7IjUv
+RZAyaUwhZ7VlgAGBBpN/
+=7A2U
+-----END PGP SIGNATURE-----
