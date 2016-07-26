@@ -1,56 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/06/2
-Message-ID: <CADLX=aEKUrGPtwetOuaJ=udOq=tA6AL9ozc=S2YCq1C5yFO7MQ@mail.gmail.com>
-Date: Sun, 6 Mar 2016 12:58:46 +0530
-From: Rahul Pratap Singh <techno.rps@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/26/7
+Message-Id: <20160726192112.03BBD72E01E@smtpvbsrv1.mitre.org>
+Date: Tue, 26 Jul 2016 15:21:12 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
+Subject: Re: CVE request Qemu: scsi: esp: oob write access while reading ESP command
 Content-Type: text/plain; charset=utf-8
 
-I am also sailing on the same boat. Thanks for raising this question. I
-reported multiple advisories to oss-sec and cve-assign. Never got even a
-single reply. Even, I saw, CVE-ID was assigned to same product for similar
-vulnerability few years back. Now, I eschew requesting CVE.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+> Quick Emulator(Qemu) built with the ESP/NCR53C9x controller emulation support
+> is vulnerable to an OOB write access issue. It could occur while doing DMA
+> read into ESP command buffer 's->cmdbuf'; It could write past the 's->cmdbuf'
+> area, if it was transferring more than 16 bytes in esp_do_dma().
+>
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> resulting in DoS OR potentially leverage it to execute arbitrary code with
+> privileges of the Qemu process on the host.
+>
+> Upstream patches:
+> -----------------
+>    -> http://git.qemu.org/?p=qemu.git;a=commit;h=926cde5f3e4d2504ed161ed0cb771ac7cad6fd11
+>    -> http://git.qemu.org/?p=qemu.git;a=commit;h=cc96677469388bad3d66479379735cf75db069e3
 
-Regards,
-Rahul Pratap Singh
+>> scsi: esp: make cmdbuf big enough for maximum CDB size
+>>
+>> Increase the command buffer size to 32, which is maximum when
+>> 's->do_cmd' is set, and add a check on 'len' to avoid OOB access.
 
-On Sun, Mar 6, 2016 at 11:57 AM, <gremlin@...mlin.ru> wrote:
+Use CVE-2016-6351.
 
-> On 2016-03-05 20:20:39 +0300, Solar Designer wrote:
->
->  >> I think it's been said on this list previously -- these are
->  >> two separate activities:
->  >> 1. Assigning IDs
->
->  > Problem solved:
->  > http://www.openwall.com/ove
->
-> Hmmm... sorry to say, but I've garbaged 21 IDs by simply visiting
-> this page and reloading it twice just to see what would happen :-)
->
-> So I'd suggest adding a BRB (Big Red Button) for those who actually
-> need an ID, and displaying some statistics ("1234 IDs were assigned
-> today") for everyone else.
->
-> Style suggestion:
->
-> [form action='.' method='post']
-> [input style='background:red;color:white;padding:16px;font-size:32px'
-> name='request' value='GET ID' type='submit']
-> [/form]
->
-> Looks nice for me.
->
->  >> 2. Analysis, deconfliction, write-up
->  > Having IDs is of some use even without or before all of that.
->
-> Yes. So prepare for the above link to become really popular.
->
->
-> --
-> Alexey V. Vissarionov aka Gremlin from Kremlin
-> GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8
->
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
+iQIcBAEBCAAGBQJXl7ePAAoJEHb/MwWLVhi2DkcP/0Cve7oqMMMa06UgbrOLGj1S
+eXWNyPD1oL112rkjfYNjTQZwKVb4nmZoKGoibqcnlZLJkzH88Cvpl0tF1YVKPfoG
+TsvXjXfiABZTeFGUfKJfjQEp9YeIuosAMfp2Dj/Cpe5WK0NYF6ZakqG1A9gWzNvv
+dRqlB6eoaqjWKgycTGcRiqcHfIflaGnI8W+syumDQQ6y873ILk9WdLcA9AZnvDUs
+4/EITZCHaEBDNOoK8jP+FcctPNwYSGwfqcDxrT/h6bb7zpd5yT6JQWu0EZPetzVV
+RPFE8/Owf+OIwNJtqbz+lKRV6vi1G0gB824rEupY1ZUWTPRNTl/FNuuhfpVdIklu
+WhKZJKP76RIzC9HChsbpPfzxYbg7GxMr+XWp24X2EptIfZJmvVA4Y3C99+b2wvLb
+y8AMwTZzKLLuOunAQ+4/10n21u+3EZxeJvMgUD5BipoZnEwoPgkKD+2sHtKNnXaH
+imEZ0f789i1mrIx673rXowjoReXRGQUic/yhRAWnsbnz3Jz6xclbmrPN6W2XZScH
+XPV0e1/u3AqZJ7ZQgbospB8Co06mYWJfYfnPFQIniVSf8sf32Rs+wUKsT0+V8NzW
+o4qi7w/kX40Zy1K+DTNfCRa44nH7OFirt0CpQxrKuDo1mhn94nAWdJ5hMx1LfA0G
+bjCLFVM2rEcNXi7FM6Fi
+=Rrsy
+-----END PGP SIGNATURE-----
