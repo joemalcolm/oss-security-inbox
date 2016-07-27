@@ -1,33 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/14/10
-Message-ID: <20160614211623.GB11505@sentinelchicken.org>
-Date: Tue, 14 Jun 2016 14:16:24 -0700
-From: Tim <tim-security@...tinelchicken.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/27/11
+Message-ID: <CACn5sdRcZ7YGWxfGf2NsJnb0tiJkCZQR7jkARtJZoZujjcFJ6A@mail.gmail.com>
+Date: Wed, 27 Jul 2016 22:26:01 +0200
+From: Gustavo Grieco <gustavo.grieco@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client
+Subject: Re: Re: CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7
 Content-Type: text/plain; charset=utf-8
 
+> Use CVE-2016-6352.
 
-> I would like to request a CVE for a Python header injection flaw in
-> urrlib2/urllib/httplib/http.client.
-> 
-> HTTPConnection.putheader() allows unsafe characters, which can be used to
-> inject additional headers.
-> 
-> Upstream bug with reproducer :
-> https://bugs.python.org/issue22928
+Also, the upstream report is here:
 
+https://bugzilla.gnome.org/show_bug.cgi?id=769170#
 
-Thank you for requesting a CVE Cedric.  I have additional information
-about this bug, including an additional exploitation path, which I
-shared with Python security on January 14, 2016.  Unfortunately, they
-have apparently failed to act to notify the public or acquire a CVE.
-(They stopped responding to me months ago.)  I'll post the additional
-information soon, once I am back at my desk.
+and they said:
 
-In the mean time, do you happen to have specific information on which
-versions of the 2.x and 3.x upstream branches were affected/fixed?
-
-Thanks!
-tim
+> I have reproduced this with 2.30.7, 2.31.1 and 2.35.2. It doesn't happen with 2.26.1.
