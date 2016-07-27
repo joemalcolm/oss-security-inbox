@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1320" "Wednesday" "7" "April" "2021" "19:16:07" "+0800" "=?UTF-8?B?6ams5ZOy5a6H?=" "zheyuma97@gmail.com" nil "33" "[oss-security] CVE-2021-3483: Linux kernel: a use-after-free bug in nosy driver" nil nil nil "4" nil nil (number mark "U       zheyuma97@gm Apr  7   33/1320  " thread-indent "\"[oss-security] CVE-2021-3483: Linux kernel: a use-after-free bug in nosy driver\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-3483: Linux kernel: a use-after-free bug in nosy driver" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2880" "Wednesday" "27" "July" "2016" "19:05:38" "+0200" "Christian Rebischke" "Chris.Rebischke@archlinux.org" "<20160727170537.GA3330@motoko>" "72" "Re: [oss-security] Re: cve request: systemd-machined: information exposure for docker containers" "^Date:" nil nil "7" "2016072717:05:38" "[oss-security] Re: cve request: systemd-machined: information exposure for docker containers" (number mark "        Chris.Rebisc Jul 27   72/2880  " thread-indent "\"Re: [oss-security] Re: cve request: systemd-machined: information exposure for docker containers\"\n") "<20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>" ("<1304293369.8684866.1469539505676.JavaMail.zimbra@redhat.com>" "<20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3308 invoked by uid 550); 7 Apr 2021 11:24:11 -0000
+Received: (qmail 1544 invoked by uid 550); 27 Jul 2016 17:08:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +11,92 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28245 invoked from network); 7 Apr 2021 11:16:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=5WO9KPEbZLWOxfnJ0wWa7vulMIJaL9OctXbMfAdDzAY=;
-        b=NYaJ0PTBRO2vBahBOcAOpY3phfD8B9xBlx4vKvlKPUWlPNpHhbqdEV8PTqdKmvnqdL
-         tKJlr2smrSwgYcVpnCOV2Wq5JUivDCxTMus7EIzyJ99pUO7+liTIaeAaegRPVBztBKuB
-         sif3I1fJFu5mNVEN9DL61+QaD1prRrMIonLaBgnUtCGt0kiuklMxV6JwvVOhalubxalq
-         DolYnHSy93nyvh0x2FckeqCZA2zCrqZOB7dHd+WZUldJ+OiRLtIF9N9Oxn9M6mTR/JVc
-         8YTS8c/ju7nT6FNz5TZaEU3XUWz4dvR0Fgizk4641h2VnP5/GYhNd8X70aXjZm+rVAV0
-         H0Mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=5WO9KPEbZLWOxfnJ0wWa7vulMIJaL9OctXbMfAdDzAY=;
-        b=mqDy91QFWqkA6/vQd6ZgiH5OCfWAq9P+HXz7i63NHHDhVczCOImoLgHY2oZ2c9BIEG
-         Xa4KI1DQ43cKFnRHU7fBOEWgM8o5MKowo6qiqTsUvFW1rNLGk1Nm2CeQib57BQpizjed
-         pdIC3peJDh7kR9Rh21Jmvkhe7oNpxYCdt/s11o7m/t7A/+NyG8lXLcRRx87hSTr3y92u
-         Cc+S3+I5KfB3I7vPKA5m4FqhViVBccNQxavBd0edXYa238v0lNrz1U4Za1FFz4KYUonH
-         sj0kQ1NnGfD9uDjxLeCRCTQQUT9yl408jXPaEU6kkUvnJndI5UBsQxDzx6L/A7f2p1fu
-         e2Bw==
-X-Gm-Message-State: AOAM530+yDgrtis7XzvjEYA4MuE3sXv3JyMKIJ+JTO46VBbKFS/IZiaW
-	RqEDteEo8j5mcKDmPYyY4QoVS1VJjw0E5XYKxyWxYhS0km28
-X-Google-Smtp-Source: ABdhPJzw0+gpGWoZRFxahOX/VtWziBDbqFqblQ+cpkrqu5nFgA5aY42fzj/AUtbl/te9hszGiF03ELmGF4RGbtdIWuY=
-X-Received: by 2002:a05:6830:1404:: with SMTP id v4mr2471347otp.2.1617794178775;
- Wed, 07 Apr 2021 04:16:18 -0700 (PDT)
+Received: (qmail 32453 invoked from network); 27 Jul 2016 17:05:53 -0000
+Message-ID: <20160727170537.GA3330@motoko>
+References: <1304293369.8684866.1469539505676.JavaMail.zimbra@redhat.com>
+ <20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>
 MIME-Version: 1.0
-From: =?UTF-8?B?6ams5ZOy5a6H?= <zheyuma97@gmail.com>
-Date: Wed, 7 Apr 2021 19:16:07 +0800
-Message-ID: <CAMhUBj=2rfJDZyO01nDEof8c-bS5Y+tLL0NKJzDXJqTgTTariQ@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="YZ5djTAD1cGYuMQK"
+Content-Disposition: inline
+In-Reply-To: <20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>
+User-Agent: Mutt/1.6.2 (2016-07-01)
+Date: Wed, 27 Jul 2016 19:05:38 +0200
+From: Christian Rebischke <Chris.Rebischke@archlinux.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: cve request: systemd-machined: information
+ exposure for docker containers
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2021-3483: Linux kernel: a use-after-free bug in nosy driver
+
+--YZ5djTAD1cGYuMQK
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Jul 26, 2016 at 03:24:13PM -0400, cve-assign@mitre.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>=20
+> > Once docker containers register themselves to systemd-machined
+> > by oci-register-machine. Any unprivileged user could run
+> > machinectl to list every single containers running in the host
+> > even if the containers do not belong to this user (including containers
+> > belong to the root user), and access sensitive information associated
+> > with any individual container including its internal IP address, OS
+> > version, running processes, and file path for its rootfs.
+> >=20
+> > $ machinectl status cc8d10c7b9892b75843d200d54d34a3a
+> > cc8d10c7b9892b75843d200d54d34a3a(63633864313063376239383932623735)
+> >            Since: Mon 2016-07-25 17:55:36 UTC; 34s ago
+> >           Leader: 43494 (sleep)
+> >          Service: docker; class container
+> >             Root: /var/mnt/overlay/overlay/0429684e3da515ae4f11b8514c7b=
+20f759613
+> >          Address: 172.17.0.2
+> >                   fe80::42:acff:fe11:2
+> >               OS: Red Hat Enterprise Linux Server 7.2 (Maipo)
+> >             Unit: docker-cc8d10c7b9892b75843d200d54d34a3a9435fe0f65527c=
+254ebfd2d
+> >                   43494 sleep 3000
+>=20
+> Use CVE-2016-6349.
 
 Hello,
+I don't think that the bug for this problem lies in systemd.
+It's more a design mistake in docker or oci-register-machine.
+I have forwarded this issue to the systemd developer team and I don't
+think they will fix this in the future. In their opinion it's a
+bug in docker or oci-register-machine:
 
-I found a bug in the latest Linux kernel. The
-location of the bug is Linux/drivers/firewire/nosy.c.   Nosy is an
-IEEE 1394 packet sniffer which is used for protocol analysis and in the
-development of IEEE 1394 drivers, applications, or firmware.
+https://github.com/systemd/systemd/issues/3815
 
-For each device, the nosy driver allocates a pcilynx structure. A
-use-after-free might happen in the following scenario:
+by the way.. I would feel glad if the security researchers would first
+message the developers and then assign a CVE a bug. This is the normal
+way for a full disclosure.
 
-1. Open nosy device for the first time and call ioctl with command
-NOSY_IOC_START, then a new client A will be malloced and added to
-doubly linked list.
-2. Open nosy device for the second time and call ioctl with command
-NOSY_IOC_START, then a new client B will be malloced and added to
-doubly linked list.
-3. Call ioctl with command NOSY_IOC_START for client A, then client A
-will be readded to the doubly linked list. Now the doubly linked list
-is messed up.
-4. Close the first nosy device and nosy_release will be called. In
-nosy_release, client A will be unlinked and freed.
-5. Close the second nosy device, and client A will be referenced,
-resulting in UAF.
+best regards,
 
-The root cause of this bug is that the element in the doubly linked
-list is reentered into the list.
+Christian Rebischke
 
-Here is the commit to patch this BUG:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=829933ef05a951c8ff140e814656d73e74915faf
+--YZ5djTAD1cGYuMQK
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Regards,
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-Zheyu Ma
+iQIcBAEBCgAGBQJXmOnhAAoJENIUYePf4gYNNf0P/jfo7WqpnnKxFyzOJ1Z61/Dn
+4O4AKDZzj2TEBB0DbariZGu3KXc36GfSFPZKvuKdZd97MqPaeUwRx68+Ib9Ho2kN
+FLnoqmVRyDFLQBe/axx0T9kQ2yCXpOm9BoqUYKOzgMyPBybEbV/KSG2v45/oXn2v
+XdhLg1QWINvPkvl+VvRSEl/F+JTmyjTTTgWbMuvnJSORNQVNmwSUiBY5Wttrb8Au
+eWibwyzIMkXWzC8sH+Md4nU9mAdmg3DOMJzKAZj5ltKAxt++1EXLE4qWe8pWtjR0
+8ffw0RGynmvXf30Ketgc9nHpD7FOiLOFBZtEj0epyUhIplKLB1umrjPicmcJh/7k
+f+B5SeMYj3PPozIpTvrNnp6o6iI0TUqQIyqaDzrIYzq+rV2goH8nyvdtMA5IDRUz
+Wij4FI9B0rmPwzIRsnUmWnxkLskiNcGdcbTrv5L9tMLQrE821YTc8TnItlZUFz7j
+Z5MFJSA2Hq5ReU0sf3kuPE7IM8UW3VLO5FnJkH4rGwOWPHSb4OsJYU+6mjAp5nQQ
+AXMIJ2o23YMGAdmO4v5V5S65z5K0tbc4hAM4E5hp/s0DDErNMD7lhDJn/WryDGKI
+umFr1jracHPzyGTHWhqc4eqQrtHBN+RboYWUORn5V2NAYgXOE2IcE8nQE8mhfZ24
+2AyTfgozRDLA1a6Gg+vT
+=lwap
+-----END PGP SIGNATURE-----
+
+--YZ5djTAD1cGYuMQK--
