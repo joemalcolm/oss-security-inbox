@@ -1,25 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/12
-Message-ID: <20161018174426.GB29378@motoko>
-Date: Tue, 18 Oct 2016 19:44:37 +0200
-From: Christian Rebischke <Chris.Rebischke@...hlinux.org>
-To: oss-security@...ts.openwall.com
-Subject: veracrypt security fixes in 1.19
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/27/13
+Message-ID: <CAEk6tEx0JRNX9q0k8JH2PNkGJO59WVVMhh4=3DkoQFMNkqY9LA@mail.gmail.com>
+Date: Wed, 27 Jul 2016 13:49:14 -0700
+From: Jessica Frazelle <me@...sfraz.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: cve request: systemd-machined: information exposure for docker containers
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-I don't think this was topic in this mailinglist before.
-Veracrypt has fixed several security issues [1].
-Are there any CVEs available for this issues?
+To be clear this is ONLY in Red Hat's fork of docker which is unsupported
+by Docker. There is no oci-register-machine in docker itself.
 
-In case of no, will be any CVEs assigned for the issues in
-veracrypt <= 1.18?
+On Wednesday, July 27, 2016, Jesse Hertz <jesse.hertz@...group.trust> wrote:
 
-Best regards,
+> Just to chime in here, since a docker container would be inside its own
+> PID namespace, running ‘ps’ inside a container would not show you other
+> processes/containers running on the same host.
+> A similar “vulnerability" I “found” was patched in Docker earlier (tl;dr
+> '/proc/sched_debug’ is not pid namespace aware).
+>
+> -jh
+> > On Jul 27, 2016, at 4:00 PM, Christian Rebischke <
+> Chris.Rebischke@...hlinux.org <javascript:;>> wrote:
+> >
+> > On Wed, Jul 27, 2016 at 01:27:08PM -0400, Daniel J Walsh wrote:
+> >>
+> >>
+> >> On 07/27/2016 01:05 PM, Christian Rebischke wrote:
+> >>> On Tue, Jul 26, 2016 at 03:24:13PM -0400, cve-assign@...re.org
+> <javascript:;> wrote:
+> >>>> -----BEGIN PGP SIGNED MESSAGE-----
+> >>>> Hash: SHA256
+> >>>>
+> >>>>> Once docker containers register themselves to systemd-machined
+> >>>>> by oci-register-machine. Any unprivileged user could run
+> >>>>> machinectl to list every single containers running in the host
+> >>>>> even if the containers do not belong to this user (including
+> containers
+> >>>>> belong to the root user), and access sensitive information associated
+> >>>>> with any individual container including its internal IP address, OS
+> >>>>> version, running processes, and file path for its rootfs.
+> >>>>>
+> >>>>> $ machinectl status cc8d10c7b9892b75843d200d54d34a3a
+> >>>>> cc8d10c7b9892b75843d200d54d34a3a(63633864313063376239383932623735)
+> >>>>>           Since: Mon 2016-07-25 17:55:36 UTC; 34s ago
+> >>>>>          Leader: 43494 (sleep)
+> >>>>>         Service: docker; class container
+> >>>>>            Root:
+> /var/mnt/overlay/overlay/0429684e3da515ae4f11b8514c7b20f759613
+> >>>>>         Address: 172.17.0.2
+> >>>>>                  fe80::42:acff:fe11:2
+> >>>>>              OS: Red Hat Enterprise Linux Server 7.2 (Maipo)
+> >>>>>            Unit:
+> docker-cc8d10c7b9892b75843d200d54d34a3a9435fe0f65527c254ebfd2d
+> >>>>>                  43494 sleep 3000
+> >>>> Use CVE-2016-6349.
+> >>> Hello,
+> >>> I don't think that the bug for this problem lies in systemd.
+> >>> It's more a design mistake in docker or oci-register-machine.
+> >>> I have forwarded this issue to the systemd developer team and I don't
+> >>> think they will fix this in the future. In their opinion it's a
+> >>> bug in docker or oci-register-machine:
+> >>>
+> >>> https://github.com/systemd/systemd/issues/3815
+> >>>
+> >>> by the way.. I would feel glad if the security researchers would first
+> >>> message the developers and then assign a CVE a bug. This is the normal
+> >>> way for a full disclosure.
+> >>>
+> >>> best regards,
+> >>>
+> >>> Christian Rebischke
+> >> Why is this a bug in oci-register-machine?  All it is doing is calling
+> >> the systemd-machine call to register with it using the three flags
+> >> available.
+> >> Is systemd saying we should not use that call?
+> >
+> > Let me quote Lennart Poettering:
+> >
+> > ---
+> > machined is a system service and is for registering containers running
+> > on the system. There's no concept of "user containers" with that, and
+> > unprivileged users do not have the privileges to even register any
+> > containers with machined.
+> >
+> > If you ask me the CVE is complete and utter rubbish. At least against
+> > systemd. If Docker knows a concept of user containers, then good for
+> > them, but in that case they shouldn't register them with machined
+> > really, if they are not supposed to be visible on the host.
+> >
+> > Generally though I think the CVE is without merit entirely, after all
+> > "ps" is generally unrestricted, and hence you can always see container
+> > processes running on the host anyway.
+> > ---
+> >
+> > In my opinion I would say you shouldn't use this call if you don't want
+> > an information leak. Even if systemd would fix the output of
+> > `machinectl status ..`. The information leak would still be there
+> > because you could still see informations about the container with `ps`
+> > or other tools. systemd is not designed for 'user containers'.
+> >
+> > If yo have further questions. I would say that you ask the
+> > systemd-developers on their mailing list directly.
+>
+>
 
-Christian Rebischke
+-- 
 
 
-[1] https://ostif.org/the-veracrypt-audit-results/
+Jessie Frazelle
+4096R / D4C4 DD60 0D66 F65A 8EFC  511E 18F3 685C 0022 BFF3
+pgp.mit.edu <http://pgp.mit.edu/pks/lookup?op=get&search=0x18F3685C0022BFF3>
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
