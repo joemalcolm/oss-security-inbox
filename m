@@ -1,40 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/06/6
-Message-ID: <b002dfc4-7395-1991-2c14-995fa46dc930@redhat.com>
-Date: Tue, 6 Dec 2016 14:51:26 +0100
-From: Andrej Nemec <anemec@...hat.com>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: dkaspar@...hat.com
-Subject: Tcsh: Out-of-bounds read in c_substitute()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/27/1
+Message-Id: <20160727013203.C008FABC4E2@smtpvmsrv1.mitre.org>
+Date: Tue, 26 Jul 2016 21:32:03 -0400 (EDT)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Use after free in my_login() function of DBD::mysql (Perl module)
 Content-Type: text/plain; charset=utf-8
 
-Hello folks,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-We were made aware of an out-of-bounds read issue that was reported to
-Tcsh upstream and fixed. This issue could result in a crash after
-starting tcsh and hitting TAB on some systems.
+> https://blog.fuzzing-project.org/50-Use-after-free-in-my_login-function-of-DBDmysql-Perl-module.html
+> 
+> DBD::mysql versions 4.033 and earlier have a use after free bug in the
+> my_login() function. DBD::mysql is a Perl module providing bindings to
+> the mysql database. The issue was fixed in version 4.034.
+> 
+> https://github.com/perl5-dbi/DBD-mysql/pull/45
 
-Right now, the issue is contained in Fedora/RHEL, because we're using
-glibc's sysmalloc (not the builtin malloc), which masks the issue.
-Fedora maintainer decided to fix this anyway just to be safe. As far as
-our systems are concerned we don't consider this a security issue for
-now. I am looking forward to hearing other opinions if anyone is interested.
+>> When my_login fails the code tries to call mysql_errno on the mysql
+>> connection. However my_login has already free'd that connection
+>> variable, therefore causing a use-after-free error.
+>> 
+>> This patch changes that so that the free happens after the call to the
+>> error functions.
+>> 
+>> https://github.com/perl5-dbi/DBD-mysql/commit/cf0aa7751f6ef8445e9310a64b14dc81460ca156
 
-Bug report:
+Use CVE-2015-8949.
 
-http://mx.gw.com/pipermail/tcsh-bugs/2016-December/001103.html
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Upstream fix:
-
-https://github.com/tcsh-org/tcsh/commit/6a542dc4fb2ba26518a47e9b3a9bcd6a91b94596
-
-Best Regards,
-
--- 
-Andrej Nemec, Red Hat Product Security
-3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQIcBAEBCAAGBQJXmA3NAAoJEHb/MwWLVhi2T50P/2JWP75tgnyR/hKJzXM3Tunj
+W2mE0M2ELKLJj3e+CDn97LgOl2jsv2CcpIo3VGuTYMeHZ/99wP2HRp7da0WSYMBI
+CILmexHgb4bLWCbUg5H1P+Af2CCHGWcGz9ZlW5epwBD/bNaWw8ESDI46ua9j/QYj
+9qpXfVZdzKGlfnO891gnwwmjzWQXPOw0YGCNs9xCPD5FNcM6S+pnUEPc8GU6G1QW
+EdhzJnoCFCBAZRSrgHsU6h5nSpoLALMm/0f/h5Z3JWLUhD+ZRUeB3KVE0h5k4XTI
+a2JZT7WYJRA7RBiazy+NSR6eh0zwDz1cBeHrZwuWMZQIP3epyL5VkGBxNZAwjycC
+HEGqVOO3LLiWbjStDE0s8vad6b1XUZmQgOTr/gWAnb1R+PJm7rNSzCW2YL3t1jNy
+V0xKpt/k2XIcrblTs3yaVw3Z5vUqJ87PjstHyA0aKzO/ID3lhT6DkQiuX4alOp9s
+TQRbdX4PBjyzYSl15lNYAEosdZJeL+LTSYVABeD/Psppl8lcOzjDGEshUALEDLYn
+LZMHpRxB2L7as+foW4xS9k6ueAfpwZgO/wORVZOHPtZaIDNMB/E+ZUcP3ubMgoro
+SClTjv8oW6RWfcaVTjet/+eu0UfojDo17OXlpgoltWfXLCOf+b1hu8K5qsHYb4/s
+wmAXCt8jSR66BgFTq8ft
+=fO5Z
+-----END PGP SIGNATURE-----
