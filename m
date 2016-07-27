@@ -1,50 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/12
-Message-Id: <20161010175012.4CD3AB2E051@smtpvbsrv1.mitre.org>
-Date: Mon, 10 Oct 2016 13:50:12 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE request Qemu: usb: xHCI: infinite loop vulnerability in xhci_ring_fetch
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/27/10
+Message-ID: <20160727200021.GB3330@motoko>
+Date: Wed, 27 Jul 2016 22:00:21 +0200
+From: Christian Rebischke <Chris.Rebischke@...hlinux.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: cve request: systemd-machined: information exposure for docker containers
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> Quick Emulator(Qemu) built with the USB xHCI controller emulation support is
-> vulnerable to an infinite loop issue. It could occur while processing USB
-> command ring in 'xhci_ring_fetch'.
+On Wed, Jul 27, 2016 at 01:27:08PM -0400, Daniel J Walsh wrote:
 > 
-> A privileged user/process inside guest could use this issue to crash the Qemu
-> process on the host leading to DoS.
 > 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg01265.html
+> On 07/27/2016 01:05 PM, Christian Rebischke wrote:
+> > On Tue, Jul 26, 2016 at 03:24:13PM -0400, cve-assign@...re.org wrote:
+> >> -----BEGIN PGP SIGNED MESSAGE-----
+> >> Hash: SHA256
+> >>
+> >>> Once docker containers register themselves to systemd-machined
+> >>> by oci-register-machine. Any unprivileged user could run
+> >>> machinectl to list every single containers running in the host
+> >>> even if the containers do not belong to this user (including containers
+> >>> belong to the root user), and access sensitive information associated
+> >>> with any individual container including its internal IP address, OS
+> >>> version, running processes, and file path for its rootfs.
+> >>>
+> >>> $ machinectl status cc8d10c7b9892b75843d200d54d34a3a
+> >>> cc8d10c7b9892b75843d200d54d34a3a(63633864313063376239383932623735)
+> >>>            Since: Mon 2016-07-25 17:55:36 UTC; 34s ago
+> >>>           Leader: 43494 (sleep)
+> >>>          Service: docker; class container
+> >>>             Root: /var/mnt/overlay/overlay/0429684e3da515ae4f11b8514c7b20f759613
+> >>>          Address: 172.17.0.2
+> >>>                   fe80::42:acff:fe11:2
+> >>>               OS: Red Hat Enterprise Linux Server 7.2 (Maipo)
+> >>>             Unit: docker-cc8d10c7b9892b75843d200d54d34a3a9435fe0f65527c254ebfd2d
+> >>>                   43494 sleep 3000
+> >> Use CVE-2016-6349.
+> > Hello,
+> > I don't think that the bug for this problem lies in systemd.
+> > It's more a design mistake in docker or oci-register-machine.
+> > I have forwarded this issue to the systemd developer team and I don't
+> > think they will fix this in the future. In their opinion it's a
+> > bug in docker or oci-register-machine:
+> >
+> > https://github.com/systemd/systemd/issues/3815
+> >
+> > by the way.. I would feel glad if the security researchers would first
+> > message the developers and then assign a CVE a bug. This is the normal
+> > way for a full disclosure.
+> >
+> > best regards,
+> >
+> > Christian Rebischke
+> Why is this a bug in oci-register-machine?  All it is doing is calling
+> the systemd-machine call to register with it using the three flags
+> available.
+> Is systemd saying we should not use that call?
 
-Use CVE-2016-8576.
+Let me quote Lennart Poettering:
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/usb/hcd-xhci.c but
-that may be an expected place for a later update.
+---
+machined is a system service and is for registering containers running
+on the system. There's no concept of "user containers" with that, and
+unprivileged users do not have the privileges to even register any
+containers with machined.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+If you ask me the CVE is complete and utter rubbish. At least against
+systemd. If Docker knows a concept of user containers, then good for
+them, but in that case they shouldn't register them with machined
+really, if they are not supposed to be visible on the host.
 
-iQIcBAEBCAAGBQJX+9QuAAoJEHb/MwWLVhi227sP/j2SzIXfALbHnYVcFBjeESHT
-cpjqznKkdukL1ETxQrO7VTi+BHkIbWB49Ey0PdvxXCR3cg/oRTE6WozOIefxNEtP
-O6rinOZTu8Fwubv3h9VDEi7g/qRPkkvaxKDUjyUNLerz5fvBMPubAPlxjgDOJeuu
-cplrkPTehzHIarXH0GViJ1V0I7f1As1T+PrQvfjP55ZOawefWwj1fJRDjzAuddhZ
-ggO0hSxk2pz+YjC2NAYcKCQ2uPUNVkJa7CqqwQBvQUMCdmESGUSYrWAnpBd3V5rX
-rRfvF7w7vHWmgU4XoKxJDHm6nr+l6HECS1uEi5+4N/NDLUhsE6MRKH9/zdJMsMCe
-jkAydq0lnOTBrB/lyVVBeTbAz5jtZNvIQWPwGVHH5bZjiCb8jJbn8vc8+E5OWSFx
-UA04ab3p2GjiY4QQIz8jNSlF/JAQzorkmRi3ZTR5jVeMr+Ca/OgkMRvurBI2LZFh
-HM61RVhU3Ix/ed/24SXQ30yTscNbX1iampTRYZKjVPzgIM2x+sfe+O8AtgVYPwPn
-iqnoHRp8sFYHalP0xcda9kQjmgUadcx7cCC6yzDF+6OKbA8vS2rmviJad12IpozE
-IEcmXHVxenxSjop9unjmEEc2NlQ11ygHxuDEldrKUFibmtEDFQs9k0cJzFckH4Qq
-qNTrXolM1XmhrzPru8jl
-=WSUH
------END PGP SIGNATURE-----
+Generally though I think the CVE is without merit entirely, after all
+"ps" is generally unrestricted, and hence you can always see container
+processes running on the host anyway.
+---
+
+In my opinion I would say you shouldn't use this call if you don't want
+an information leak. Even if systemd would fix the output of 
+`machinectl status ..`. The information leak would still be there
+because you could still see informations about the container with `ps`
+ or other tools. systemd is not designed for 'user containers'. 
+
+If yo have further questions. I would say that you ask the
+systemd-developers on their mailing list directly. 
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
