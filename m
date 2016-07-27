@@ -1,24 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/7
-Message-Id: <20161016025407.15BD46C0D67@smtpvmsrv1.mitre.org>
-Date: Sat, 15 Oct 2016 22:54:07 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/27/6
+Message-Id: <20160727154746.8942C6C1043@smtpvmsrv1.mitre.org>
+Date: Wed, 27 Jul 2016 11:47:46 -0400 (EDT)
 From: cve-assign@...re.org
-To: ago@...too.org
+To: carnil@...ian.org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: graphicsmagick: memory allocation failure in ReadPCXImage (pcx.c)
+Subject: Re: CVE Request: DBD-mysql: use-after-free in mysql_dr_error
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://blogs.gentoo.org/ago/2016/09/15/graphicsmagick-memory-allocation-failure-in-readpcximage-pcx-c/
-> 
-> AddressSanitizer failed to allocate 0x4cd6a6000 bytes of LargeMmapAllocator
-> 0x7ff8e887beba in ReadPCXImage ... GraphicsMagick-1.3.25/coders/pcx.c:467:16
-> 
-> http://hg.code.sf.net/p/graphicsmagick/code/rev/b9edafd479b9
+> https://github.com/perl5-dbi/DBD-mysql/pull/27
+> https://github.com/perl5-dbi/DBD-mysql/commit/a56ae87a4c1c1fead7d09c3653905841ccccf1cc
+> https://rt.cpan.org/Public/Bug/Display.html?id=97625
 
-Use CVE-2016-8683.
+>> https://rt.cpan.org/Public/Bug/Display.html?id=97625#txn-1393444
+
+>> The big problem with lost connections is that business logic wants to
+>> keep reporting errors to a file in case of lost server connections.
+>> This is related to RT #85919, though the root cause is this use-after
+>> free here.
+
+>> AddressSanitizer: heap-use-after-free
+
+Use CVE-2014-9906.
 
 - -- 
 CVE Assignment Team
@@ -28,17 +34,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYAudpAAoJEHb/MwWLVhi2gGgP/Ap9/pDnuCPqVn/qnhRromrx
-9QKzln7BUKzpxejBtCjEdD6goq8EB8okxves+eVeBEJPMX+EdhqOTWotZw8xSip/
-b8gSBWG7NcTXVu/G8EHW1wlc8J3QRRRtQobNgCpRiURy31FQKqZdLYzhZndntbFH
-GiyxfdSR+zV+l0uE5EsDYIffL0o2HDTOzx/cDJE3Wn6X39xOqGXXciwLoopE1kD4
-p52FNXZjsy6TSO7bXBjVhYgGVF/HgoK7dqwglJ5vHFSkuG0mga4FjMOo+jBYRI9O
-0TMhtigGVyr6YYSPqJS03tZEfhExbY3Vvrj7ZEH0PIqnxNG/VbruZwYkCtwgo3Bq
-F93DTl2vfDTvn8VQuoSgmO+P/8nTfc4G/XlLuvuuGX03Yag7bjKhi34G2BTObbQJ
-2OHB47g+iCoDSCxQyeOIm25safvTEGm7G/bUp711E8IKfpnp39bbihM4NdLUfeVK
-ZqHiLYrlC6STGG+Ck+x5qhk0BF6u0iSGXldm+AJDKJVC4HLqS5rs0co/8ehXHw0l
-syc9sH4FZhCgFWikJs/hcdFwBkysGBFownL+VUIX+2xFfccV0RdvBQbnkD5pNaTn
-ufQHHiYdisPRs9md0jyHKt9ZX3N+kBjiDw/aoLE/1kkXJrxnzRIfG23tGLrIJT20
-tpTSMf9s9E/DW3wIsppH
-=HEJV
+iQIcBAEBCAAGBQJXmNb9AAoJEHb/MwWLVhi2xlMQAK+b8lwVuQoS2/h2oq8BEQ2Y
+UQdhvmjnJimPcYAsRxW16QTRAMMDalk/JWy52Z9RrQawxtnBTstug/hjG9oFGBI9
+jnBVlkD/x02u6XKau7cbbuVJNj3bDB6vH5nd/nmNOVphANn5QfUqRsARmW3PH7KK
+0rtfvkQtv8DSvZlmAubbQNu3puGdZgxEyai9PWDxPMvih822s5qARfjKVz1N1D+n
+waFrLdPtt3msWsdVWpuezvIzLo219YQzjSJ8dOg0RDnFn3WVXOkV2SKC0JIrZG02
+/JDhfZnVk8MxIKPHYrCtqOEdWqyvt2UEhWuyA272aotuB1zXw4CYNL3AfS49lOos
+WM/at9hwoDI7KQvI2Px4vfP0oinZplcGwxmW7IATI3hoDi6jPq3KbU/MVU1ifCfV
+swJvgD5FHJJUW0y5C7C8Wak9EgQ6B2aQUXwalKBGgQgAwkmuc1gXenKMWv6OLYRe
+xdKYpIdDnU7fxQQjwyPPQs5TVy1MPGqBuGCIL1E9xeKDMR92PqUb6i8bRxMY5bkt
+lFEZiEMh3OJ9JLL6x6gzLZFs3XOtmYUBRGG8JxBOpPjX0tjZsFUogBS3/CAOpsuZ
+Gzptk7MXfukP3AqC2D5ruGeDp8pF5TPPUhFhwcl51eQBZiIIcOr6tB8ZC7xHwxeh
+5jAxK3akfvVbLAjehOMP
+=Daax
 -----END PGP SIGNATURE-----
