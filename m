@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["10129" "Tuesday" "20" "November" "2018" "13:26:28" "+0000" "Xen.org security team" "security@xen.org" "<E1gP62u-0000f9-0t@xenbits.xenproject.org>" "227" "[oss-security] Xen Security Advisory 279 v2 - x86: DoS from attempting to use INVPCID with a non-canonical addresses" nil nil nil "11" "2018112013:26:28" "[oss-security] Xen Security Advisory 279 v2 - x86: DoS from attempting to use INVPCID with a non-canonical addresses" (number mark "U       security@xen Nov 20  227/10129 " thread-indent "\"[oss-security] Xen Security Advisory 279 v2 - x86: DoS from attempting to use INVPCID with a non-canonical addresses\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7737" "Wednesday" "27" "July" "2016" "17:05:25" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160727150525.GA9279@eldamar.local>" "155" "[oss-security] CVE Request: DBD-mysql: use-after-free in mysql_dr_error" nil nil nil "7" "2016072715:05:25" "[oss-security] CVE Request: DBD-mysql: use-after-free in mysql_dr_error" (number mark "U       carnil@debia Jul 27  155/7737  " thread-indent "\"[oss-security] CVE Request: DBD-mysql: use-after-free in mysql_dr_error\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26548 invoked by uid 550); 20 Nov 2018 13:26:48 -0000
+Received: (qmail 9988 invoked by uid 550); 27 Jul 2016 15:05:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,244 +12,195 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26443 invoked from network); 20 Nov 2018 13:26:47 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 9970 invoked from network); 27 Jul 2016 15:05:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=gSbOxmyFPeqcMkatrLyKR5vgN1Gy5pZonZX6FE2AZpI=;
+        b=f58CFqY86yvYIpYpza5eWj5vAygD/1zLXpfsad3RUCbmCJ56VFwPon84yTitPWx8xZ
+         ABiqDs2lszWKoLjJD402UW5PC1LNoGduEa4S7eYNFqua7SwT1gk6wyPOT8OL3jNhiGBz
+         MYQ0xtJbWdPystgKVD3tjhptKdj1Ke9XoxmCaHXwsO2eCQLHyL4Mr79SNigHfs7/5Ya2
+         E19yoQJJ4endX50oS6/1W6rfq8kIUdGXJBkt2jsnHVVSkp4rdwsKDlZdGLIh06uBwW6h
+         Tjrddb04C9vTVif+V2IuwL3tIaqEZtkncfHwsC+lqXIcimRX8wci3+FZ+uLpKsY2fn2A
+         woEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=gSbOxmyFPeqcMkatrLyKR5vgN1Gy5pZonZX6FE2AZpI=;
+        b=j/LDaZF1THEQgXR3fK/+f/uVR6cS+rfp9ymNwdJd9WCDkV3dMAmXm6jH/um3+wGMu2
+         rJsvkFjVFfDUT15LczwICs/Rfd9b9eQsDZ0fQEg6OAFvEgtWpKuNBSeER9y314CzYim8
+         Qs0V+wyG89szuNiBJdMQY3FDWLGVI1TtTtTtGwvd23v1XkXjlFsyFDUt7R/RxnepF5yk
+         FS/0Yeg3b2HHXf8xa5fUESILY/7nYZMEFOC9bECZvDmJYDjMK9h1YX0Hv8/n6PpyceeX
+         2h/CG6dTBQq1/FQK5QUxSEJibJEq87+lNxy7AfpZFINZEjldMZyAF18bV4SIvJAKbrGH
+         gbsw==
+X-Gm-Message-State: AEkooutETJSUlEetXATjwPVBN2KCh1t7dIFMP/qVW7V01vbVeRjDTuySnwNpxSXN8KcWfA==
+X-Received: by 10.28.103.6 with SMTP id b6mr34639108wmc.89.1469631933422;
+        Wed, 27 Jul 2016 08:05:33 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Wed, 27 Jul 2016 17:05:25 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Message-ID: <20160727150525.GA9279@eldamar.local>
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.508 (Entity 5.508)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1gP62u-0000f9-0t@xenbits.xenproject.org>
-Date: Tue, 20 Nov 2018 13:26:28 +0000
-Subject: [oss-security] Xen Security Advisory 279 v2 - x86: DoS from attempting to use
- INVPCID with a non-canonical addresses
-
---=separator
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+User-Agent: Mutt/1.6.0 (2016-04-01)
+Subject: [oss-security] CVE Request: DBD-mysql: use-after-free in mysql_dr_error
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi
 
-                    Xen Security Advisory XSA-279
-                              version 2
+While looking at the fix for CVE-2015-8949 in DBD-mysql, I noticed
+upstream ticket at:
 
- x86: DoS from attempting to use INVPCID with a non-canonical addresses
+https://rt.cpan.org/Public/Bug/Display.html?id=97625
+https://github.com/perl5-dbi/DBD-mysql/pull/27
 
-UPDATES IN VERSION 2
-====================
+> On exceptions (usually dr_error) valgrind and -faddress-sanitizer find
+> use-after-free in mysql_dr_error at sv_setpv(errstr, what) as errstr
+> and errstate below was already freed.
+> 
+> I'm working on a patch.
+> 
+> repro with asan or valgrind, eg like this:
+> 
+> perl5.14.4d-nt Makefile --testuser=nosuchuser
+> make
+> valgrind perl5.14.4d-nt -Iblib/arch -Iblib/lib t/30insertfetch.t 
+> 
+> valgrind sample:
+> 
+> this one accesses MYSQL* sock in mysql_db_login after being freed in
+> mysql_dr_connect
+> 
+> ==13578== Invalid read of size 4
+> ==13578==    at 0x6C1C9B5: mysql_errno (in /usr/lib/x86_64-linux-gnu/libmysqlclient.so.18.0.0)
+> ==13578==    by 0x69C8001: mysql_db_login (dbdimp.c:2099)
+> ==13578==    by 0x69D2E3F: XS_DBD__mysql__db__login (mysql.xsi:104)
+> ==13578==    by 0x57C4AB: Perl_pp_entersub (pp_hot.c:3046)
+> ==13578==    by 0x510BC2: Perl_runops_debug (dump.c:2266)
+> ==13578==    by 0x44CC3F: Perl_call_sv (perl.c:2648)
+> ==13578==    by 0x6165339: XS_DBI_dispatch (DBI.xs:3765)
+> ==13578==    by 0x57C4AB: Perl_pp_entersub (pp_hot.c:3046)
+> ==13578==    by 0x510BC2: Perl_runops_debug (dump.c:2266)
+> ==13578==    by 0x44BB39: S_run_body (perl.c:2366)
+> ==13578==    by 0x44AF02: perl_run (perl.c:2284)
+> ==13578==    by 0x41C4BC: main (perlmain.c:120)
+> ==13578==  Address 0x6833c10 is 144 bytes inside a block of size 1,272 free'd
+> ==13578==    at 0x40282F4: free (vg_replace_malloc.c:446)
+> ==13578==    by 0x51172F: Perl_safesysfree (util.c:284)
+> ==13578==    by 0x69C7AD0: mysql_dr_connect (dbdimp.c:1959)
+> ==13578==    by 0x69C7E9D: my_login (dbdimp.c:2046)
+> ==13578==    by 0x69C7FBE: mysql_db_login (dbdimp.c:2097)
+> ==13578==    by 0x69D2E3F: XS_DBD__mysql__db__login (mysql.xsi:104)
+> ==13578==    by 0x57C4AB: Perl_pp_entersub (pp_hot.c:3046)
+> ==13578==    by 0x510BC2: Perl_runops_debug (dump.c:2266)
+> ==13578==    by 0x44CC3F: Perl_call_sv (perl.c:2648)
+> ==13578==    by 0x6165339: XS_DBI_dispatch (DBI.xs:3765)
+> ==13578==    by 0x57C4AB: Perl_pp_entersub (pp_hot.c:3046)
+> ==13578==    by 0x510BC2: Perl_runops_debug (dump.c:2266)
+> ==13578== 
+> 
+> this one accesses imp_xxh->com.attr.Errstr in mysql_db_login after
+> being freed in mysql_dr_connect.
+> 
+> ==13578== Invalid read of size 1
+> ==13578==    at 0x402A062: strlen (mc_replace_strmem.c:399)
+> ==13578==    by 0x5B0F38: Perl_sv_setpv (sv.c:4568)
+> ==13578==    by 0x69C4C5C: mysql_dr_error (dbdimp.c:1441)
+> ==13578==    by 0x69C8015: mysql_db_login (dbdimp.c:2099)
+> ==13578==    by 0x69D2E3F: XS_DBD__mysql__db__login (mysql.xsi:104)
+> ==13578==    by 0x57C4AB: Perl_pp_entersub (pp_hot.c:3046)
+> ==13578==    by 0x510BC2: Perl_runops_debug (dump.c:2266)
+> ==13578==    by 0x44CC3F: Perl_call_sv (perl.c:2648)
+> ==13578==    by 0x6165339: XS_DBI_dispatch (DBI.xs:3765)
+> ==13578==    by 0x57C4AB: Perl_pp_entersub (pp_hot.c:3046)
+> ==13578==    by 0x510BC2: Perl_runops_debug (dump.c:2266)
+> ==13578==    by 0x44BB39: S_run_body (perl.c:2366)
+> ==13578==  Address 0x6833c17 is 151 bytes inside a block of size 1,272 free'd
+> ==13578==    at 0x40282F4: free (vg_replace_malloc.c:446)
+> ==13578==    by 0x51172F: Perl_safesysfree (util.c:284)
+> ==13578==    by 0x69C7AD0: mysql_dr_connect (dbdimp.c:1959)
+> ==13578==    by 0x69C7E9D: my_login (dbdimp.c:2046)
+> ==13578==    by 0x69C7FBE: mysql_db_login (dbdimp.c:2097)
+> ==13578==    by 0x69D2E3F: XS_DBD__mysql__db__login (mysql.xsi:104)
+> ==13578==    by 0x57C4AB: Perl_pp_entersub (pp_hot.c:3046)
+> ==13578==    by 0x510BC2: Perl_runops_debug (dump.c:2266)
+> ==13578==    by 0x44CC3F: Perl_call_sv (perl.c:2648)
+> ==13578==    by 0x6165339: XS_DBI_dispatch (DBI.xs:3765)
+> ==13578==    by 0x57C4AB: Perl_pp_entersub (pp_hot.c:3046)
+> ==13578==    by 0x510BC2: Perl_runops_debug (dump.c:2266)
+> ...
+> 
+> 
+> asan sample:
+> 
+> =================================================================
+> ==19289==ERROR: AddressSanitizer: heap-use-after-free on address 0x61a000017517 at pc 0x4566a6 bp 0x7fffa3b3c6b0 sp 0x7fffa3b3c688
+> READ of size 69 at 0x61a000017517 thread T0
+>     #0 0x4566a5 in __interceptor_strlen (/usr/local/bin/perl5.21.2d-nt-asan@ed9113fa+0x4566a5)
+>     #1 0x7fc292e0fbe1 in Perl_sv_setpv /home/rurban/Perl/src/build-5.21.2d-nt-asan@ed9113fa/sv.c:4772
+>     #2 0x7fc28de0fe96 in mysql_dr_error /home/rurban/Perl/DBD-mysql/dbdimp.c:1441
+>     #3 0x7fc28de2f2f6 in mysql_db_login /home/rurban/Perl/DBD-mysql/dbdimp.c:2099
+>     #4 0x7fc28de91793 in XS_DBD__mysql__db__login /home/rurban/Perl/DBD-mysql/./mysql.xsi:104
+>     #5 0x7fc292cbdf03 in Perl_pp_entersub /home/rurban/Perl/src/build-5.21.2d-nt-asan@ed9113fa/pp_hot.c:2784
+>     #6 0x7fc2929b16ba in Perl_runops_debug /home/rurban/Perl/src/build-5.21.2d-nt-asan@ed9113fa/dump.c:2361
+>     #7 0x7fc29230b117 in Perl_call_sv /home/rurban/Perl/src/build-5.21.2d-nt-asan@ed9113fa/perl.c:2707
+>     #8 0x7fc28e406455 in XS_DBI_dispatch /home/rurban/.cpan/build/DBI-1.631-PzCBar/DBI.xs:3765
+>     #9 0x7fc292cbdf03 in Perl_pp_entersub /home/rurban/Perl/src/build-5.21.2d-nt-asan@ed9113fa/pp_hot.c:2784
+>     #10 0x7fc2929b16ba in Perl_runops_debug /home/rurban/Perl/src/build-5.21.2d-nt-asan@ed9113fa/dump.c:2361
+>     #11 0x7fc292301a85 in S_run_body /home/rurban/Perl/src/build-5.21.2d-nt-asan@ed9113fa/perl.c:2408
+>     #12 0x7fc2922fd5a2 in perl_run /home/rurban/Perl/src/build-5.21.2d-nt-asan@ed9113fa/perl.c:2331
+>     #13 0x47b95f in main /usr/src/perl/build-5.21.2d-nt-asan@ed9113fa/perlmain.c:114
+>     #14 0x7fc291147b44 (/lib/x86_64-linux-gnu/libc.so.6+0x21b44)
+>     #15 0x47b2dc in _start (/usr/local/bin/perl5.21.2d-nt-asan@ed9113fa+0x47b2dc)
+> 
+> 0x61a000017517 is located 151 bytes inside of 1272-byte region [0x61a000017480,0x61a000017978)
+> freed by thread T0 here:
+>     #0 0x465079 in __interceptor_free (/usr/local/bin/perl5.21.2d-nt-asan@ed9113fa+0x465079)
+> 
+> previously allocated by thread T0 here:
+>     #0 0x4652c9 in calloc (/usr/local/bin/perl5.21.2d-nt-asan@ed9113fa+0x4652c9)
+> 
+> SUMMARY: AddressSanitizer: heap-use-after-free ??:0 __interceptor_strlen
+> Shadow bytes around the buggy address:
+>   0x0c347fffae50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>   0x0c347fffae60: 00 00 00 00 02 fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c347fffae70: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c347fffae80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c347fffae90: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+> =>0x0c347fffaea0: fd fd[fd]fd fd fd fd fd fd fd fd fd fd fd fd fd
+>   0x0c347fffaeb0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+>   0x0c347fffaec0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+>   0x0c347fffaed0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+>   0x0c347fffaee0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+>   0x0c347fffaef0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+> Shadow byte legend (one shadow byte represents 8 application bytes):
+>   Addressable:           00
+>   Partially addressable: 01 02 03 04 05 06 07 
+>   Heap left redzone:     fa
+>   Heap right redzone:    fb
+>   Freed heap region:     fd
+>   Stack left redzone:    f1
+>   Stack mid redzone:     f2
+>   Stack right redzone:   f3
+>   Stack partial redzone: f4
+>   Stack after return:    f5
+>   Stack use after scope: f8
+>   Global redzone:        f9
+>   Global init order:     f6
+>   Poisoned by user:      f7
+>   ASan internal:         fe
+> ==19289==ABORTING
 
-Public release.
+addressed with commit:
 
-ISSUE DESCRIPTION
-=================
+https://github.com/perl5-dbi/DBD-mysql/commit/a56ae87a4c1c1fead7d09c3653905841ccccf1cc
 
-The INVPCID instruction raises #GP[0] if an attempt is made to
-invalidate a non-canonical address.  Older flushing mechanisms such as
-INVLPG tolerate this without error, and perform no action.
+and included in 4.029.
 
-There is one guest accessible path in Xen where a non-canonical
-address was passed into the TLB flushing code.  This previously had no
-ill effect, but became vulnerable with the introduction of PCID to
-reduce the performance hit from the Meltdown mitigations.
+Can this get a separate CVE?
 
-IMPACT
-======
-
-A buggy or malicious PV guest can crash the host.
-
-VULNERABLE SYSTEMS
-==================
-
-Only hardware which supports the INVPCID instruction is vulnerable.  This is
-available on Intel Haswell processors and later.  AMD x86 processors are not
-known to support this instruction, and ARM processors are entirely unaffected.
-
-Only versions of Xen with PCID support are vulnerable.  Support first appeared
-in Xen 4.11 but was backported to the stable trees as part of the Meltdown
-(XSA-254 / CVE-2017-5754) fixes.  Xen 4.10.2, 4.9.3, 4.8.4 as well as the
-stable-4.7 and 4.6 branches are vulnerable.
-
-The vulnerability is only exposed to 64-bit PV guests.  32-bit PV guests, as
-well as HVM/PVH guests cannot exploit the vulnerability.
-
-MITIGATION
-==========
-
-Booting Xen with `pcid=0` or `invpcid=0` on the command line will work around
-the issue.  Alternatively, running untrusted 64bit PV guests inside xen-shim
-will work around the issue.
-
-CREDITS
-=======
-
-This issue was discovered by Matthew Daley.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa279.patch             xen-unstable, Xen 4.11.x, Xen 4.10.x
-xsa279-4.9.patch         Xen 4.9.x ... 4.7.x
-
-$ sha256sum xsa279*
-40319fcf33348176eb14d7fc7c68c255cc7291013242ea444de6d00602024a11  xsa279.meta
-0c1d50effe6645051a15dd83af57088dd4a055e26a23b1fa9e6c3722a7973f5d  xsa279.patch
-fd34f29bc7e53359585135408cbbd12e12a003f59b135e81cc44186c5cddd40d  xsa279-4.9.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlv0C2oMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZKtwH/iNT0SP+by+n+HfWJfl4hZgJ4ZU3ZJDXyxuMchHv
-ZXYxW9FEab34qjOtRKToIYaPybjULbCNf2EeSmdwuHS55BP+GlnGT27gCU0FSECJ
-bfCkXFAJh04SjjzInOQxyfMUPmCztnwQvzADPJkxp1+nc++9P66Y44AwzUrRHsT1
-A/dryLbZP/WiFyfYBnBPeh8Ib2eaAA1cxWLVbHwYlrrzgwf8pLHtKObW1TiSS/gr
-inPqwvcU3dwj3OnsB2KuWodgP7cN/YyE/pdCiSiR7xZqcWN5/bdodwARhGTc2XY3
-2OLodVSz962xjmCku7YN0ntiuU1C/c7w2dT5KsF9H/mPwl4=
-=f39b
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa279.meta"
-Content-Disposition: attachment; filename="xsa279.meta"
-Content-Transfer-Encoding: base64
-
-ewogICJYU0EiOiAyNzksCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
-Im1hc3RlciIsCiAgICAiNC4xMSIsCiAgICAiNC4xMCIsCiAgICAiNC45IiwK
-ICAgICI0LjgiLAogICAgIjQuNyIKICBdLAogICJUcmVlcyI6IFsKICAgICJ4
-ZW4iCiAgXSwKICAiUmVjaXBlcyI6IHsKICAgICI0LjEwIjogewogICAgICAi
-UmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJs
-ZVJlZiI6ICJlOTA3NDYwZmQ2MWMzNTA0ODdmZmVlNWQ4YWEzNzViZWY1NmJj
-ODFjIiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAyNzUK
-ICAgICAgICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAg
-ICAgInhzYTI3OS5wYXRjaCIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAg
-IH0KICAgIH0sCiAgICAiNC4xMSI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAg
-ICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiZGVhOWZj
-MGUwMmQ5MmY1ZTZkNDY2ODBhYTBhNTJmYTc1OGVjYTljNCIsCiAgICAgICAg
-ICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAgMjc1LAogICAgICAgICAgICAy
-NzYsCiAgICAgICAgICAgIDI3NwogICAgICAgICAgXSwKICAgICAgICAgICJQ
-YXRjaGVzIjogWwogICAgICAgICAgICAieHNhMjc5LnBhdGNoIgogICAgICAg
-ICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjciOiB7CiAg
-ICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAi
-U3RhYmxlUmVmIjogIjljODI3NTk0NDgyOWM1NWFmM2RjNzA4NzEyY2E1YzEy
-MGIxYmIzMjgiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAgICAgICAg
-IDI3NQogICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAg
-ICAgICAgICAieHNhMjc5LTQuOS5wYXRjaCIKICAgICAgICAgIF0KICAgICAg
-ICB9CiAgICAgIH0KICAgIH0sCiAgICAiNC44IjogewogICAgICAiUmVjaXBl
-cyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6
-ICJkNjc5OGNlMzU3MDdhNDg1ZDljMTMyMzE5ZDcwZGQ2NTQ2MjBlNWU1IiwK
-ICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAyNzUKICAgICAg
-ICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhz
-YTI3OS00LjkucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9
-CiAgICB9LAogICAgIjQuOSI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAg
-ICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiZjEzOTgzZGIx
-MjBmNWU1NmRmZWZiZWU1ZDU2Njc4ZDJkNDNlMjkxNCIsCiAgICAgICAgICAi
-UHJlcmVxcyI6IFsKICAgICAgICAgICAgMjc1CiAgICAgICAgICBdLAogICAg
-ICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EyNzktNC45LnBh
-dGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAg
-ICJtYXN0ZXIiOiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4i
-OiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogIjFkZTM0NTllMDk2MWZmMzIz
-MzM5MmNmMjFhNjljYWZlOTAwNmRlNTkiLAogICAgICAgICAgIlByZXJlcXMi
-OiBbCiAgICAgICAgICAgIDI3NSwKICAgICAgICAgICAgMjc2LAogICAgICAg
-ICAgICAyNzcKICAgICAgICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsK
-ICAgICAgICAgICAgInhzYTI3OS5wYXRjaCIKICAgICAgICAgIF0KICAgICAg
-ICB9CiAgICAgIH0KICAgIH0KICB9Cn0=
-
---=separator
-Content-Type: application/octet-stream; name="xsa279.patch"
-Content-Disposition: attachment; filename="xsa279.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
-bT4KU3ViamVjdDogeDg2L21tOiBEb24ndCBwZXJmb3JtIGZsdXNoIGFmdGVy
-IGZhaWxpbmcgdG8gdXBkYXRlIGEgZ3Vlc3RzIEwxZQoKSWYgdGhlIEwxZSB1
-cGRhdGUgaGFzbid0IG9jY3VyZWQsIHRoZSBmbHVzaCBjYW5ub3QgZG8gYW55
-dGhpbmcgdXNlZnVsLiAgVGhpcwpza2lwcyB0aGUgcG90ZW50aWFsbHkgZXhw
-ZW5zaXZlIHZjcHVtYXNrX3RvX3BjcHVtYXNrKCkgY29udmVyc2lvbiwgYW5k
-CmJyb2FkY2FzdCBUTEIgc2hvb3Rkb3duLgoKTW9yZSBpbXBvcnRhbnRseSBo
-b3dldmVyLCB3ZSBtaWdodCBiZSBpbiB0aGUgZXJyb3IgcGF0aCBkdWUgdG8g
-YSBiYWQgdmEKcGFyYW1ldGVyIGZyb20gdGhlIGd1ZXN0LCBhbmQgdGhpcyBz
-aG91bGQgbm90IHByb3BhZ2F0ZSBpbnRvIHRoZSBUTEIgZmx1c2hpbmcKbG9n
-aWMuICBUaGUgSU5WUENJRCBpbnN0cnVjdGlvbiBmb3IgZXhhbXBsZSByYWlz
-ZXMgI0dQIGZvciBhIG5vbi1jYW5vbmljYWwKYWRkcmVzcy4KClRoaXMgaXMg
-WFNBLTI3OS4KClJlcG9ydGVkLWJ5OiBNYXR0aGV3IERhbGV5IDxtYXR0ZEBi
-dWdmdXp6LmNvbT4KU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5k
-cmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVs
-aWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KCmRpZmYgLS1naXQgYS94ZW4vYXJj
-aC94ODYvbW0uYyBiL3hlbi9hcmNoL3g4Ni9tbS5jCmluZGV4IDcwM2YzMzAu
-Ljc1NjYzYzYgMTAwNjQ0Ci0tLSBhL3hlbi9hcmNoL3g4Ni9tbS5jCisrKyBi
-L3hlbi9hcmNoL3g4Ni9tbS5jCkBAIC00MTU1LDYgKzQxNTUsMTQgQEAgc3Rh
-dGljIGludCBfX2RvX3VwZGF0ZV92YV9tYXBwaW5nKAogICAgIGlmICggcGwx
-ZSApCiAgICAgICAgIHVubWFwX2RvbWFpbl9wYWdlKHBsMWUpOwogCisgICAg
-LyoKKyAgICAgKiBBbnkgZXJyb3IgYXQgdGhpcyBwb2ludCBtZWFucyB0aGF0
-IHdlIGhhdmVuJ3QgY2hhbmdlIHRoZSBMMWUuICBTa2lwIHRoZQorICAgICAq
-IGZsdXNoLCBhcyBpdCB3b24ndCBkbyBhbnl0aGluZyB1c2VmdWwuICBGdXJ0
-aGVybW9yZSwgdmEgaXMgZ3Vlc3QKKyAgICAgKiBjb250cm9sbGVkIGFuZCBu
-b3QgbmVjZXNzZXJpbHkgYXVkaXRlZCBieSB0aGlzIHBvaW50LgorICAgICAq
-LworICAgIGlmICggcmMgKQorICAgICAgICByZXR1cm4gcmM7CisKICAgICBz
-d2l0Y2ggKCBmbGFncyAmIFVWTUZfRkxVU0hUWVBFX01BU0sgKQogICAgIHsK
-ICAgICBjYXNlIFVWTUZfVExCX0ZMVVNIOgo=
-
---=separator
-Content-Type: application/octet-stream; name="xsa279-4.9.patch"
-Content-Disposition: attachment; filename="xsa279-4.9.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
-bT4KU3ViamVjdDogeDg2L21tOiBEb24ndCBwZXJmb3JtIGZsdXNoIGFmdGVy
-IGZhaWxpbmcgdG8gdXBkYXRlIGEgZ3Vlc3RzIEwxZQoKSWYgdGhlIEwxZSB1
-cGRhdGUgaGFzbid0IG9jY3VyZWQsIHRoZSBmbHVzaCBjYW5ub3QgZG8gYW55
-dGhpbmcgdXNlZnVsLiAgVGhpcwpza2lwcyB0aGUgcG90ZW50aWFsbHkgZXhw
-ZW5zaXZlIHZjcHVtYXNrX3RvX3BjcHVtYXNrKCkgY29udmVyc2lvbiwgYW5k
-CmJyb2FkY2FzdCBUTEIgc2hvb3Rkb3duLgoKTW9yZSBpbXBvcnRhbnRseSBo
-b3dldmVyLCB3ZSBtaWdodCBiZSBpbiB0aGUgZXJyb3IgcGF0aCBkdWUgdG8g
-YSBiYWQgdmEKcGFyYW1ldGVyIGZyb20gdGhlIGd1ZXN0LCBhbmQgdGhpcyBz
-aG91bGQgbm90IHByb3BhZ2F0ZSBpbnRvIHRoZSBUTEIgZmx1c2hpbmcKbG9n
-aWMuICBUaGUgSU5WUENJRCBpbnN0cnVjdGlvbiBmb3IgZXhhbXBsZSByYWlz
-ZXMgI0dQIGZvciBhIG5vbi1jYW5vbmljYWwKYWRkcmVzcy4KClRoaXMgaXMg
-WFNBLTI3OS4KClJlcG9ydGVkLWJ5OiBNYXR0aGV3IERhbGV5IDxtYXR0ZEBi
-dWdmdXp6LmNvbT4KU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5k
-cmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVs
-aWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KCi0tLSBhL3hlbi9hcmNoL3g4Ni9t
-bS5jCisrKyBiL3hlbi9hcmNoL3g4Ni9tbS5jCkBAIC00ODk0LDYgKzQ4OTQs
-MTQgQEAgc3RhdGljIGludCBfX2RvX3VwZGF0ZV92YV9tYXBwaW5nKAogICAg
-IGlmICggcGwxZSApCiAgICAgICAgIGd1ZXN0X3VubWFwX2wxZShwbDFlKTsK
-IAorICAgIC8qCisgICAgICogQW55IGVycm9yIGF0IHRoaXMgcG9pbnQgbWVh
-bnMgdGhhdCB3ZSBoYXZlbid0IGNoYW5nZSB0aGUgbDFlLiAgU2tpcCB0aGUK
-KyAgICAgKiBmbHVzaCwgYXMgaXQgd29uJ3QgZG8gYW55dGhpbmcgdXNlZnVs
-LiAgRnVydGhlcm1vcmUsIHZhIGlzIGd1ZXN0CisgICAgICogY29udHJvbGxl
-ZCBhbmQgbm90IG5lY2Vzc2VyaWx5IGF1ZGl0ZWQgYnkgdGhpcyBwb2ludC4K
-KyAgICAgKi8KKyAgICBpZiAoIHJjICkKKyAgICAgICAgcmV0dXJuIHJjOwor
-CiAgICAgc3dpdGNoICggZmxhZ3MgJiBVVk1GX0ZMVVNIVFlQRV9NQVNLICkK
-ICAgICB7CiAgICAgY2FzZSBVVk1GX1RMQl9GTFVTSDoK
-
---=separator--
+Regards,
+Salvatore
