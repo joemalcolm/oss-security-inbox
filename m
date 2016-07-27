@@ -1,4 +1,9 @@
-Received: (qmail 13987 invoked by uid 550); 17 Dec 2023 11:21:41 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2302" "Wednesday" "27" "July" "2016" "20:30:01" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1607271946420.18244@wniryva>" "68" "[oss-security] CVE-2016-5403 Qemu: virtio: unbounded memory allocation on host via guest leading to DoS" nil nil nil "7" "2016072715:00:01" "[oss-security] CVE-2016-5403 Qemu: virtio: unbounded memory allocation on host via guest leading to DoS" (number mark "U       ppandit@redh Jul 27   68/2302  " thread-indent "\"[oss-security] CVE-2016-5403 Qemu: virtio: unbounded memory allocation on host via guest leading to DoS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 30128 invoked by uid 550); 27 Jul 2016 15:00:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,48 +12,86 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13959 invoked from network); 17 Dec 2023 11:21:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1702812121;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zF5eVfh6MVmdnfSUkPBJkjjjxJuaYjkrkp9htTlJsV0=;
-	b=UPuWJozUtn05ZNC+1483PEu1nFjWJwFdliDo2O8xr7FUOUlIThaSZc7yQYy5pBnJhUbDy+
-	sjShhbjhy+tNPRPGbln7Z7wT5Kqtd2ciHydwaO/x5QP2z4ZFz9gi7TPLyTlArPj4l4B8o1
-	T8BX/i+TSMLqJc4yLjaDx/D3Qy/Y1Ws=
-X-MC-Unique: N-VwixNMN6-HzWhgdqObRg-1
-From: Florian Weimer <fweimer@redhat.com>
-To: Matthias Gerstner <mgerstner@suse.de>
-Cc: oss-security@lists.openwall.com
-References: <ZXr2P6zT-PLtWShn@kasco.suse.de>
-Date: Sun, 17 Dec 2023 12:21:53 +0100
-In-Reply-To: <ZXr2P6zT-PLtWShn@kasco.suse.de> (Matthias Gerstner's message of
-	"Thu, 14 Dec 2023 13:34:05 +0100")
-Message-ID: <87msu95b1q.fsf@oldenburg.str.redhat.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.3 (gnu/linux)
+Received: (qmail 30104 invoked from network); 27 Jul 2016 15:00:19 -0000
+Date: Wed, 27 Jul 2016 20:30:01 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Stefan Hajnoczi <shajnocz@redhat.com>, sstabellini@kernel.org,
+        zhenhaohong@gmail.com
+Message-ID: <alpine.LFD.2.20.1607271946420.18244@wniryva>
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain
-Subject: Re: [oss-security] budgie-extras: multiple predictable /tmp path
- issues in various applications
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Wed, 27 Jul 2016 15:00:07 +0000 (UTC)
+Subject: [oss-security] CVE-2016-5403 Qemu: virtio: unbounded memory allocation on host via
+ guest leading to DoS
 
-* Matthias Gerstner:
+   Hello,
 
-> As a quick fix for all of these issues I suggested to use
-> `$XDG_RUNTIME_DIR` instead of /tmp. This directory is private to the
-> logged in user and cannot be manipulated by other users in the system.
+Quick emulator(Qemu) built with the virtio framework is vulnerable to an 
+unbounded memory allocation issue. It was found that a malicious guest user 
+could submit more requests than the virtqueue size permits, without waiting 
+for their completion. This requires reusing vring descriptors in more than one 
+request, which is incorrect but possible. Processing a request allocates a 
+'VirtQueueElement' object and therefore causes unbounded memory allocation 
+controlled by the guest.
 
-Note that on some systems, the XDG_RUNTIME_DIR directory is unavailable
-after user UID switching (e.g., with sudo) because these systems follow
-the specification to the letter and provide a XDG_RUNTIME_DIR setting
-for the logged-in user instead of the current user.  So while it looks
-like a good solution for most cases, it breaks a couple of use cases (or
-still needs fallback even on systems that nominally have XDG_RUNTIME_DIR
-support).
+A privileged guest user could use this flaw to potentially crash the guest 
+resulting in DoS. Memory exhaustion would also affect other guests and 
+services running on the host.
 
-Thanks,
-Florian
+This issue was discovered by Zhenhao Hong of the 360 Marvel Team.
 
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1358359
+
+Given below is a proposed patch to fix this issue:
+
+===
+virtio: error out if guest exceeds virtqueue size
+
+A broken or malicious guest can submit more requests than the virtqueue
+size permits.
+
+The guest can submit requests without bothering to wait for completion
+and is therefore not bound by virtqueue size.  This requires reusing
+vring descriptors in more than one request, which is incorrect but
+possible.  Processing a request allocates a VirtQueueElement and
+therefore causes unbounded memory allocation controlled by the guest.
+
+Exit with an error if the guest provides more requests than the
+virtqueue size permits.  This bounds memory allocation and makes the
+buggy guest visible to the user.
+
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
+  hw/virtio/virtio.c | 5 +++++
+  1 file changed, 5 insertions(+)
+
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 18153d5..398c03f 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -561,6 +561,11 @@ void *virtqueue_pop(VirtQueue *vq, size_t sz)
+
+      max = vq->vring.num;
+
++    if (vq->inuse >= max) {
++        error_report("Virtqueue size exceeded");
++        exit(1);
++    }
++
+      i = head = virtqueue_get_head(vq, vq->last_avail_idx++);
+      if (virtio_vdev_has_feature(vdev, VIRTIO_RING_F_EVENT_IDX)) {
+          vring_set_avail_event(vq, vq->last_avail_idx);
+-- 
+2.7.4
+===
+
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
