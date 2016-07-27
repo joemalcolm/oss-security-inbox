@@ -1,47 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/06/12
-Message-ID: <CAN0s7yS36t6L-xuwAqXH493TsmcQT5rb2LJ-Z3FYA8AsFE_+sw@mail.gmail.com>
-Date: Sun, 6 Mar 2016 21:12:03 +0200
-From: Elad Alfassa <elad@...oraproject.org>
-To: oss-security@...ts.openwall.com
-Subject: Transmission BT 2.90 Mac malware. Website compromised?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/27/4
+Message-ID: <alpine.LFD.2.20.1607271946420.18244@wniryva>
+Date: Wed, 27 Jul 2016 20:30:01 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Stefan Hajnoczi <shajnocz@...hat.com>, sstabellini@...nel.org, zhenhaohong@...il.com
+Subject: CVE-2016-5403 Qemu: virtio: unbounded memory allocation on host via guest leading to DoS
 Content-Type: text/plain; charset=utf-8
 
-Hello oss-security.
+   Hello,
 
-According to these three links,
-https://www.reddit.com/r/netsec/comments/498bb7/transmissionbt_290_for_osx_contains_malware/
-http://www.cnbc.com/2016/03/06/reuters-america-apple-users-targeted-in-first-known-mac-ransomware-campaign.html
-https://forum.transmissionbt.com/viewtopic.php?f=4&t=17834
+Quick emulator(Qemu) built with the virtio framework is vulnerable to an 
+unbounded memory allocation issue. It was found that a malicious guest user 
+could submit more requests than the virtqueue size permits, without waiting 
+for their completion. This requires reusing vring descriptors in more than one 
+request, which is incorrect but possible. Processing a request allocates a 
+'VirtQueueElement' object and therefore causes unbounded memory allocation 
+controlled by the guest.
 
-and the project homepage https://www.transmissionbt.com/
+A privileged guest user could use this flaw to potentially crash the guest 
+resulting in DoS. Memory exhaustion would also affect other guests and 
+services running on the host.
 
-The mac build of version 2.90 of the popular Transmission bittorent
-client was infected by malware. However, there's not much information
-about the source of the actual malware:
+This issue was discovered by Zhenhao Hong of the 360 Marvel Team.
 
-* How did it get to the official download location? Was it a
-compromised server or someone with access abusing it to distribute
-malware? What steps did the transmission project take to ensure that
-the attacker no longer has access to their server? When were the
-infected files uploaded to the server? And, most importantly, are
-builds for other platforms and source code archive download affected
-in any way?
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1358359
 
-Transmission is included in many Linux distributions (default in some
-of them). If the source code archives (which are not signed, there's
-only a checksum on their website, but if it was compromised then it's
-not exactly useful) used by these distributions to build Transmission
-were tampered with as well this might mean malicious code is already
-inside the Transmission packages in these distributions. While the
-malware mentioned in the link above is Mac specific, it is still
-possible that other downloads have been infected by different types of
-malware.
+Given below is a proposed patch to fix this issue:
 
-Since I couldn't find any security related email address or mailing
-list for the transmission project specifically, I'm sending this to
-oss-security in hopes that relevant people will see this and will shed
-more light on this story.
+===
+virtio: error out if guest exceeds virtqueue size
 
+A broken or malicious guest can submit more requests than the virtqueue
+size permits.
+
+The guest can submit requests without bothering to wait for completion
+and is therefore not bound by virtqueue size.  This requires reusing
+vring descriptors in more than one request, which is incorrect but
+possible.  Processing a request allocates a VirtQueueElement and
+therefore causes unbounded memory allocation controlled by the guest.
+
+Exit with an error if the guest provides more requests than the
+virtqueue size permits.  This bounds memory allocation and makes the
+buggy guest visible to the user.
+
+Signed-off-by: Stefan Hajnoczi <stefanha@...hat.com>
+---
+  hw/virtio/virtio.c | 5 +++++
+  1 file changed, 5 insertions(+)
+
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 18153d5..398c03f 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -561,6 +561,11 @@ void *virtqueue_pop(VirtQueue *vq, size_t sz)
+
+      max = vq->vring.num;
+
++    if (vq->inuse >= max) {
++        error_report("Virtqueue size exceeded");
++        exit(1);
++    }
++
+      i = head = virtqueue_get_head(vq, vq->last_avail_idx++);
+      if (virtio_vdev_has_feature(vdev, VIRTIO_RING_F_EVENT_IDX)) {
+          vring_set_avail_event(vq, vq->last_avail_idx);
 -- 
--Elad.
+2.7.4
+===
+
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
