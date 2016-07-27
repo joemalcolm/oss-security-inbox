@@ -1,62 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/02/9
-Message-Id: <20160302165826.F2E3034E00C@smtpvbsrv1.mitre.org>
-Date: Wed,  2 Mar 2016 11:58:26 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, benh@...ian.org
-Subject: Re: CVE Request: Linux: aio write triggers integer overflow in some network protocols
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/27/3
+Message-Id: <6EB473C2-2849-4E3E-99B0-BAF01AFD8718@beckweb.net>
+Date: Wed, 27 Jul 2016 14:35:03 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Jenkins plugin 'Cucumber Reports' 1.3.0 to 2.5.1 disabled XSS protection mechanism
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> https://git.kernel.org/linus/4c185ce06dca14f5cea192f5a2c981ef50663f2b
-> https://git.kernel.org/cgit/linux/kernel/git/stable/linux-stable.git/commit?id=c4f4b82694fe48b02f7a881a1797131a6dad1364
+Please assign a CVE to this issue:
 
-> For an upcoming Linux DSA in Debian we would use something like:
+Cucumber Reports Plugin disables Content-Security-Policy for archived and workspace files
 
->> Ben Hawkes of Google Project Zero reported that the AIO interface
->> permitted reading or writing 2 GiB of data or more in a single
->> chunk, which could lead to an integer overflow when applied to
->> certain filesystems, socket or device types. The full security
->> impact has not been evaluated.
+Jenkins 1.641 and 1.625.3 introduced Content-Security-Policy HTTP headers as protection against Cross-Site Scripting attacks using workspace files and archived artifacts served using DirectoryBrowserSupport (SECURITY-95). The Cucumber Reports Plugin disabled this XSS protection until Jenkins was restarted whenever a Cucumber Report was viewed by any user to work around the Content-Security-Policy limitations.
 
-Use CVE-2015-8830.
+Affected versions
+Cucumber Reports Plugin 1.3.0 to 2.5.1 (inclusive).
 
+Fix
+Users of Cucumber Reports Plugin should update it to version 2.6.0 or newer.
 
-> The issue was initially already addressed via
-> 
-> https://git.kernel.org/linus/a70b52ec1aaeaf60f4739edb1b422827cb6f3893 (v3.5-rc1)
+Advisory:
+https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2016-07-27
 
->> vfs: make AIO use the proper rw_verify_area() area helpers
+Thanks!
 
->> We had for some reason overlooked the AIO interface, and it didn't use
->> the proper rw_verify_area() helper function that checks (for example)
->> mandatory locking on the file, and that the size of the access doesn't
->> cause us to overflow the provided offset limits etc.
+Daniel
 
-Use CVE-2012-6701.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJW1xpIAAoJEL54rhJi8gl54+gP/3xs5oGqviUpGoHB48CvNPoS
-KGbJaCaOxh7eIaGE3m5igl3qV8oyCHjWdzz8QzC3nxDvzjafbDIOupIa+qo1tBUb
-iwdcLROQQSLH0D+8zq7Oe5R67DfrG324TFNyCk04qbf2wezcRn/LCibtr3U4KWTo
-8164s6WfTAToIRUauu4r+4DXvtgyEQnRHOaJ42eUP9CJKdyB9GO0hV6IxI1RKBqr
-GA8kgdJC2cEPQUrvNzmEdlLPsUmbd8BaQWzokG97B6bsPhIFBeNmblhF/LKbi2CH
-+TMxgxROXUsiNfG8KC9QzB+7AjoAy6Krp6uUIeMRcoz4uIi9cUhukzz2qGDfboMf
-jXeS5qMq2bM+8VwXT+ywtqFBox/OKrE4C7raXFloRuwBaw7sxdAUJzVfDvH6BjIm
-BC/wobWPub6R9aUZuj2o7LExonJSRNJgQkeouzq3IPOwTUwDqI3/p+R3v7xkaeVE
-h4LbAWqrHXcRdEk+mevUJRSvlB0lECzV7AZ5kEkzI+nxfjdl9hYv+5pNjSUuX5dY
-VbZXrmpeyLpxWLi71JKxEpEru6ur2M0iL4RFt1jp6V3VX0L/zoxUkQBiOwsizklW
-vwgWPxbFdB6w5V4VJleOMwNBsknncGwgvVAW7Vlk5T0jKWQN5bpOrhmfViQba/59
-/cclvsCg9+nqVesGsKd8
-=0V4z
------END PGP SIGNATURE-----
