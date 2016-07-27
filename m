@@ -1,33 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/27/10
-Message-ID: <CAKkdKCBWncYOSs+QeD0xR4qs=Mfyto=136MyxO1Zb_1CQiNvRg@mail.gmail.com>
-Date: Wed, 27 Apr 2016 15:36:31 -0400
-From: Tony Homer <tony--@...che.org>
-To: dev@...dova.apache.org, private@...dova.apache.org,  "JPCERT/CC" <vuls@...ert.or.jp>, security@...che.org, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/27/15
+Message-ID: <87d1lyiuhk.fsf@camandro.org>
+Date: Wed, 27 Jul 2016 23:31:03 +0100
+From: Luis Henriques <henrix@...andro.org>
+To: Wade Mealing <wmealing@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE-2016-5400 - linux kernel: denial of service in airspy USB driver.
 Content-Type: text/plain; charset=utf-8
 
-CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS
+Wade Mealing <wmealing@...hat.com> writes:
 
-Severity:
-High
+> Hit send too early,
+>
+>
+> Upstream patch:
+> https://git.linuxtv.org/media_tree.git/commit/?id=eca2d34b9d2ce70165a50510659838e28ca22742
+>
 
-Vendor:
-The Apache Software Foundation
+I believe the above commit isn't really related with CVE-2016-5400;
+the following commit in mainline claims to fix this issue:
 
-Versions Affected:
-cordova-ios 3.9.1 and below
+commit aa93d1fee85c890a34f2510a310e55ee76a27848
+Author: James Patrick-Evans <james@...-e.com>
+Date:   Fri Jul 15 16:40:45 2016 +0100
 
-Description:
-Apache Cordova iOS contains 2 methods to bypass the URL access
-restrictions provided by the whitelist. An attacker can use any of the
-2 methods to load malicious resources in an app that uses a whitelist
-to only load trusted resources.
+    media: fix airspy usb probe error path
 
-Upgrade path:
-Developers who are concerned about this issue should install version
-4.0.0 or higher of the cordova-ios platform.
+Cheers,
+-- 
+Luís
 
-Credit:
-This issue was discovered by Muneaki Nishimura (nishimunea) of Recruit
-Technologies Co.,Ltd.
+
+> Maintainer has yet to send to LKML.
+>
+>
+> On Mon, Jul 25, 2016 at 10:50 AM, Wade Mealing <wmealing@...hat.com> wrote:
+>> Hello All,
+>>
+>> A flaw was found in the linux kernel's implementation of the airspy
+>> USB device driver in which a leak was found when a subdev or SDR are
+>> plugged into the host.
+>>
+>> An attacker can create an targeted USB device which can emulate 64 of
+>> these devices. Then by emulating an additional device which
+>> continuously connects and disconnects, each connection attempt will
+>> leak memory which can not be recovered.
+>>
+>> This issue was assigned CVE-2016-5400.
+>>
+>> Wade Mealing
+>> Red Hat Product Security Team
