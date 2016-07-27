@@ -1,63 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/15/4
-Message-Id: <20160715115441.2B51D6C4292@smtpvmsrv1.mitre.org>
-Date: Fri, 15 Jul 2016 07:54:41 -0400 (EDT)
-From: cve-assign@...re.org
-To: dblack@...assian.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for the Play Framework
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/27/9
+Message-ID: <398a8ff1-a2ea-9140-c695-c1969ffc58af@redhat.com>
+Date: Wed, 27 Jul 2016 13:27:08 -0400
+From: Daniel J Walsh <dwalsh@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: cve request: systemd-machined: information exposure for docker containers
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-> In version 2.5.0 of the Play Framework a CSRF bypass that depends upon
-> an implementation bug in chrome's beacon api was fixed.
 
-We think additional information would help in deciding whether this is
-commonly recognized as a Play Framework vulnerability (which would
-have a CVE ID) or Play Framework security hardening (which would not
-have a CVE ID). Our understanding thus far is:
-
-  - Play Framework is not an Atlassian product
-
-  - https://github.com/playframework/playframework/pull/5527#discussion-diff-51786858
-    says "In order to make Play's CSRF filter more resilient to
-    browser plugin vulnerabilities and new extensions, the default
-    configuration for the CSRF filter has been made far more
-    conservative."
-
-  - Chromium issue 490015 has some debate about whether it is a
-    Chrome/Chromium vulnerability, e.g., "The issue is whether it's
-    the browser responsibility to act as a nanny to weak websites, or
-    we should leave weak websites as sacrifice for great justice."
-    versus "To be clear, this is a security bug ... There is a
-    security bug in Chrome, but no action is being done."
-
-Typically, it would be best not to have a CVE for Play Framework if
-the essence of the Play Framework problem is "the product did not
-proactively add workarounds for all browser-level vulnerabilities that
-might be discovered later."
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXiM35AAoJEHb/MwWLVhi2loIP/jPajrxasGvKZoI0KtBapJAR
-QgeiNrem6Va0JL+j5AoTAXNWLhLCl5/geXn7GJuCGP2dt3MDKAMCQEnj2zhhjTha
-FHmxzVfqOUAt3JsNZ7cium+pn6bKMybwrTQYW2YO2Vald+0JWm74QbYBLU+ZLZTn
-CgSROeAwtpDvqislJLksajGn6U19L6U+S08uRWOHqEHFoeatF4xBhQySAeThvDop
-QcxY0xaAnFNvv8RvYg0F6xaVcrylrkWmAmnFMt50RtfiJUXHMfzintK8ypypjQzr
-DMF5So2QIbUht/fha5dpK7q3Yms3BnZ1kT2VRoCZGBFx3pY6cJ2YpdfddD4e9jdb
-oOaOSK7gr7nUo4D8g/jeSHfhA1smrshrVi4dFFwFHXbj5xiF3dACzOmUBHBQ4hi6
-B9RyrihdXpt1rsMAC8t3BitgaIou6yyrDRINb2hlu3OWiUFiUPNOJ314eTJWlNv9
-TJcmqCM6hxM7L4/MWQp8GF+xCDpxnIWDTjrUUGbmFY1IjAIHOsXR3ctzwVdln2Sg
-6ptiUPFn0hztEv1mPUVbJ/a4egATHjftNnznXNuzEdHxqwc49RwbgChsdDhkD2Kr
-s990pECojFG9W22C4Ke32hXikhZfGSTuhpW06zks/dfbzxNbxPp21axAnG0uNI8i
-G5NoAaXXknSzpZ/e5Dx3
-=RxGV
------END PGP SIGNATURE-----
+On 07/27/2016 01:05 PM, Christian Rebischke wrote:
+> On Tue, Jul 26, 2016 at 03:24:13PM -0400, cve-assign@...re.org wrote:
+>> -----BEGIN PGP SIGNED MESSAGE-----
+>> Hash: SHA256
+>>
+>>> Once docker containers register themselves to systemd-machined
+>>> by oci-register-machine. Any unprivileged user could run
+>>> machinectl to list every single containers running in the host
+>>> even if the containers do not belong to this user (including containers
+>>> belong to the root user), and access sensitive information associated
+>>> with any individual container including its internal IP address, OS
+>>> version, running processes, and file path for its rootfs.
+>>>
+>>> $ machinectl status cc8d10c7b9892b75843d200d54d34a3a
+>>> cc8d10c7b9892b75843d200d54d34a3a(63633864313063376239383932623735)
+>>>            Since: Mon 2016-07-25 17:55:36 UTC; 34s ago
+>>>           Leader: 43494 (sleep)
+>>>          Service: docker; class container
+>>>             Root: /var/mnt/overlay/overlay/0429684e3da515ae4f11b8514c7b20f759613
+>>>          Address: 172.17.0.2
+>>>                   fe80::42:acff:fe11:2
+>>>               OS: Red Hat Enterprise Linux Server 7.2 (Maipo)
+>>>             Unit: docker-cc8d10c7b9892b75843d200d54d34a3a9435fe0f65527c254ebfd2d
+>>>                   43494 sleep 3000
+>> Use CVE-2016-6349.
+> Hello,
+> I don't think that the bug for this problem lies in systemd.
+> It's more a design mistake in docker or oci-register-machine.
+> I have forwarded this issue to the systemd developer team and I don't
+> think they will fix this in the future. In their opinion it's a
+> bug in docker or oci-register-machine:
+>
+> https://github.com/systemd/systemd/issues/3815
+>
+> by the way.. I would feel glad if the security researchers would first
+> message the developers and then assign a CVE a bug. This is the normal
+> way for a full disclosure.
+>
+> best regards,
+>
+> Christian Rebischke
+Why is this a bug in oci-register-machine?  All it is doing is calling
+the systemd-machine call to register with it using the three flags
+available.
+Is systemd saying we should not use that call?
