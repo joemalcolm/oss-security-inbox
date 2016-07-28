@@ -1,4 +1,9 @@
-Received: (qmail 6128 invoked by uid 550); 4 Jun 2026 16:29:36 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["714" "Thursday" "28" "July" "2016" "09:32:34" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160728073234.GA8817@lorien.valinor.li>" "20" "[oss-security] CVE Request: redis: World readable .rediscli_history" "^Date:" nil nil "7" "2016072807:32:34" "[oss-security] CVE Request: redis: World readable .rediscli_history" (number mark "U       carnil@debia Jul 28   20/714   " thread-indent "\"[oss-security] CVE Request: redis: World readable .rediscli_history\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 24416 invoked by uid 550); 28 Jul 2016 07:32:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,82 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1698 invoked from network); 4 Jun 2026 16:11:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1780589497;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=QzurPM3oI1NA4YzYmhRejdeGXfv/qispZiAqio+KRM8=;
-	b=X+sehXib4jYczqeanTG0OEWcBT/zNhqQvkW0fYQF6/4sSqYB0xYHs2MQtiUZFfATVjeMOv
-	em8QteSAKlwnK/juyqUf2iHL7PhpWWT8Tt+SkvVWi7nxe0OWCaKRgR8uxK/0rtx0IK0R9X
-	OM/NVRVBJu0v07e2fvfOcvszcaUQ1J3qw/qyi2+Yd8q/Rg7F4h8GPu688ABR4i4osGRcXB
-	dRzMPG2NInejPOxgT8KPF/HbgWqETw+IZ4qZdnATwaXNdrLSesTchZbqXTXH4rAsOlZSl6
-	SZ4FtWY7U1Pb4n5abz0t/c2ZyE5woZIja0Wp1+YgKsT43+RO/uXhA/U/xLqWcw==
-Message-ID: <fdb31ed1-a264-4450-a35e-faeb57e3f63d@cpansec.org>
-Date: Thu, 4 Jun 2026 17:11:36 +0100
+Received: (qmail 24392 invoked from network); 28 Jul 2016 07:32:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=0vz1NaVUbw1tR4I6FVOq2ecDWmQcna+Pw1I6Sk+KwpI=;
+        b=w8nuJIGvXqW5DwJfabzOTYFujEgCKnP0gzDuhcunSvNwqP7mXBVZr9uQzOhlUoV2gq
+         Xei0wSiTU4sCLu3cY4z/BCex7yz6XR8t6bUM/RB34OIl+pSg4We6djgJPPbT3h7c9G5a
+         bCVUC0/676pkD2fJtFoD5lED0JdOinwFqKiy5UtIgP6f8iVTovhkF4eg8hevfe3Ve3d0
+         uRV6a/NJQdgYz0dRnh5MO2uMSVVn4Na6jtWXkfbfprqsNdw2zPX1Dr+T2oolGqWt5vjz
+         UejV0kejtltvopMmi9IrH8Qjo5YRUWVBYu+fm98TF/ol3KkEPGlnz7cVmKkE6aU7ASDq
+         F6nA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=0vz1NaVUbw1tR4I6FVOq2ecDWmQcna+Pw1I6Sk+KwpI=;
+        b=C3HtkkodpROA7AXCaPoJUpQ3rsj54zHyEJIx5nvxQTxhZw9UyUJ6fGv4ZX98MJ6caW
+         tT8loeaFtCYKGl2RqiNOtVKnJv+8NI6rOYQ2waz/Xd+uaaZfoscuN4ms2JyEAdlDc2XW
+         yV5h9sf+7I7TY3zW1IYQpOBsJWRC4qAYP4bUfCp6KcJqUi3OtC/qHgRxRxVfciZWYyJZ
+         i3FBuzK7V9j6noKInJ7LyOAUFD3hRtcoYt05u7Yd0GNojO09zj6pkCQKAm+AqwrwwVpu
+         Vrd5cJzXMZElR2YD/grJ4ttOlk9Hfua/XJt8R5F3mZJyuBMQziBLookNFRj4NpUJ1u2i
+         NKMw==
+X-Gm-Message-State: AEkoouulnA216p/FJpaBZ5EzyRk4klRGr23Zw5SWXW+XmHZ0BC0eRejVVUi/sd0/Ipf8aA==
+X-Received: by 10.194.238.170 with SMTP id vl10mr32189612wjc.18.1469691155678;
+        Thu, 28 Jul 2016 00:32:35 -0700 (PDT)
+Message-ID: <20160728073234.GA8817@lorien.valinor.li>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Robert Rothenberg <rrwo@cpansec.org>
-Content-Language: en-GB
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: rrwo@cpansec.org
-X-GND-Cause: dmFkZTE4XO4w5q0DfdQGF2SjyLFRnYY/swnry/P6G9toRxGYJpyqdAo3LtDoGtC4AyUE+59adOBY5uhd6+dx003KPjV+Fjc7WZ/cJROWJl0vyVb/7fQY9EZlic0bfqv56YXiWoR4J0MZGwCwsnyk1u6zzH+HBJ+hxOKr7WF7fmVCKfWLnjYZQuqcJknUy89+6RXL/7XPqnMvPC6YnUTYUX0RxURWzE1OTXA75Dtdeh+E1gURqXJUIHqZamMyDTyEug7KSVh0HSNRaFNT6ficKRpnWDr1ZtHPCnfU1z5MtDpp7VKXZBf7EDxez78A0HxuS6NW3XryERClqIsO1wJ3yjl0SwsEgRbCDmVt7fJPZNt+r0cVDbYX1daWm+Q0bcGJdwhy+MnP8uBF8x/1fyaKUUY9zwjEXudenezxn7xSGW8RPrfr79K5PfxKcith8JE3qf5DFl1pgpl3X3d803y7bipoKdWTx689cjbyoMJ4bM9l2OsZ4ESDLMXxsV/FKppG3DNUtgQ5XYDEJt5Fb90Yty4/3rM6C0Jb+Pa7IyHE29175qqtwb89DTNAspuUXc9ybfO7f+5K7SMYTqtb6BQ034Cqnwu9oqw4vm/GH4K60Rz3JQDA0/e9vY32rvikdonLLTJPU3RC8qMpy4FAXuAgLjxbqQJpnzQ3vtDjGsxPu+xOWL0WIw
-X-GND-State: clean
-X-GND-Score: -6
-Subject: [oss-security] CVE-2026-49942: Net::CIDR::Set versions through 0.20 for Perl did not
- validate network masks
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Date: Thu, 28 Jul 2016 09:32:34 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: [oss-security] CVE Request: redis: World readable .rediscli_history
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
 
-========================================================================
-CVE-2026-49942                                       CPAN Security Group
-========================================================================
+Hi
 
-         CVE ID:  CVE-2026-49942
-   Distribution:  Net-CIDR-Set
-       Versions:  through 0.20
+>From the Debian bug report at https://bugs.debian.org/832460:
+> redis-cli stores its history in ~/.rediscli_history, this file is
+> created with permissions 0644. Home folders are world readable as well
+> in debian, so any user can access other users redis history, including
+> AUTH commands, which include credentials.
+> 
+> I've contacted upstream on 2016-05-30 without any reaction at all and
+> discovered this bug was first reported 3 years ago, still unfixed.
+> @RedisLabs keeps referring to their paid support on twitter.
+> 
+> Demo: `cat /home/*/.rediscli_history`
 
-       MetaCPAN:  https://metacpan.org/dist/Net-CIDR-Set
-       VCS Repo:  https://github.com/robrwo/perl-Net-CIDR-Set
+Upstream report: https://github.com/antirez/redis/issues/3284
 
+Could you please assign a CVE for this issue in redis?
 
-Net::CIDR::Set versions through 0.20 for Perl did not validate network
-masks
-
-Description
------------
-Net::CIDR::Set versions through 0.20 for Perl did not validate network
-masks.
-
-The mask portion of a network mask could contain Unicode digits such as
-the Arabic-Indic One (U+0661), or non-digits, which were ignored.
-This could allow network masks to accept larger networks.
-
-Leading zeros were also accepted, but treated as decimal instead of
-octal.    This could lead to confusion about what networks are
-acceptable.
-
-Problem types
--------------
-- CWE-1289 Improper Validation of Unsafe Equivalence in Input
-
-Solutions
----------
-Upgrade to version 0.21.
-
-
-References
-----------
-https://metacpan.org/release/RRWO/Net-CIDR-Set-0.21/changes
-https://nvd.nist.gov/vuln/detail/CVE-2025-40911
-https://nvd.nist.gov/vuln/detail/CVE-2026-45191
-
-Timeline
---------
-- 2026-05-13: Issue reported to CPANSec
-- 2026-06-02: Net::CIDR::Set version 0.21 released with fix
-
-
+Regards,
+Salvatore
