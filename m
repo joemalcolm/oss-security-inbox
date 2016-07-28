@@ -1,42 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/09/1
-Message-ID: <56B9555C.9090009@geeklan.co.uk>
-Date: Tue, 9 Feb 2016 02:56:28 +0000
-From: Sevan Janiyan <venture37@...klan.co.uk>
-To: oss-security@...ts.openwall.com
-Subject: Libreoffice updater runs over http
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/10
+Message-Id: <20160728162220.B178134EAE6@smtpvbsrv1.mitre.org>
+Date: Thu, 28 Jul 2016 12:22:20 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: redis: World readable .rediscli_history
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-Looking into the validity of an issue which was reported[1] a couple of
-years back, it seems that it's still possible to spoof the availability
-of an update for LibreOffice.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Unfortunately, I've not been able to get the download to happen as I
-need to look into what happens when the application requests PROPFIND
-/check.php?pkgfmt=dmg HTTP/1.1
-At this point the download is marked as stalled whilst attempting to
-download LibreOffice 9.9.9 I'd announced.
+> https://bugs.debian.org/832460
 
-Though the original report used Windows, I repeated on OS X trying to
-see if libreoffice could just download a mp4 video, later changed to a dmg.
-Using the following check.php
-<?php
-echo '<?xml version="1.0" encoding="utf-8"?>
-<inst:description xmlns:inst="http://update.libreoffice.org/description">
-<inst:id>LibreOffice 9.9.9</inst:id>
-<inst:gitid>123456789</inst:gitid>
-<inst:os>MacOSX</inst:os>
-<inst:arch>x86</inst:arch>
-<inst:version>9.9.9</inst:version>
-<inst:buildid>9999</inst:buildid>
-<inst:update type="application/octet-stream"
-src="http://update.libreoffice.org/update.dmg"/>
-</inst:description>';
-?>
+>> redis-cli stores its history in ~/.rediscli_history, this file is
+>> created with permissions 0644. Home folders are world readable as well
+>> in debian, so any user can access other users' redis history, including
+>> AUTH commands, which include credentials.
+>>
+>> I've contacted upstream on 2016-05-30 without any reaction at all and
+>> discovered this bug was first reported 3 years ago, still unfixed.
+>> @RedisLabs keeps referring to their paid support on twitter.
+>>
+>> Demo: `cat /home/*/.rediscli_history`
 
-Is this of concern at this stage?
+> Upstream report: https://github.com/antirez/redis/issues/3284
 
+>>> https://github.com/antirez/redis/pull/3322
+>>> https://github.com/antirez/redis/pull/1418
 
-Sevan
-[1] http://www.waraxe.us/advisory-99.html
+> Could you please assign a CVE for this issue in redis?
+
+As far as we can tell, this is being presented as a vulnerability in
+Redis, not a vulnerability in Linenoise.
+https://github.com/antirez/linenoise/blob/master/README.markdown says
+"A minimal, zero-config, BSD licensed, readline replacement used in
+Redis, MongoDB, and Android." Because it has a "minimal" design goal,
+it seems reasonable to argue that the linenoiseHistorySave function
+itself should not be making umask changes, because it cannot know
+whether history elements are potentially sensitive information within
+an arbitrary application that uses Linenoise. Also, the "History"
+section of README.markdown says "Linenoise has direct support for
+persisting the history into an history file. The functions
+linenoiseHistorySave and linenoiseHistoryLoad do just that. Both
+functions return -1 on error and 0 on success." It does not offer any
+guidance about whether this is typically safe.
+
+Admittedly, there is a counterargument that command history is always
+sensitive information, and that the design of the linenoiseHistorySave
+function is fundamentally wrong. We are not currently using that
+perspective for CVE ID assignments. (Also,
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=832460#20 suggests
+that there isn't a huge amount of affected code.)
+
+Use CVE-2013-7458 for the Redis vulnerability.
+
+If there are other issues (such as in the
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=832460#25 report)
+that also need CVE IDs, please send a message about the others.
+Separate CVE IDs are also useful for host-based vulnerability
+scanning, e.g., a vulnerability check for a readable
+~/.rediscli_history file completely covers CVE-2013-7458. A check for
+a readable ~/.dbshell file (if that is indeed a vulnerability) would
+map to a different CVE ID.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXmjBnAAoJEHb/MwWLVhi2XbUP/0Hx1N1IVhL3BJH+Ja5IBWrO
+b7EhDkUl/31ZdT+iSJFbyt1VYLt2K+x54SwyDE3qhcXriU+kzOGJzgHep1TwAUbD
+/vVKaNiLS6yAM9NRNpLI/IPL2Z6Xzt54cgYxYW/d7btRctFJKza9vKCkQeuIWtEN
+oR9Gfq3901wPxskRSKgzo6n5run1SfvRQ+icx8QO/7pqtPXfWiwweZXQYH/vIENe
+VdG5Hc/BFiJoPaWBQnP9z/Wmp1e9vtJjxzVZmFSWI8mq7MLCZgXqsBTpuxgrR+uB
+SUg5RexMz9zIfUmCZJ966SuDzc7Pg2FcmknrZcWmD2gZORZxRFJ4PXpya6znRaCU
+HCwh7dn+956EVs+UqOS0z1zBPKA3iOyVBSV7P4uwZ9X17UF2rVnVUTW2/NnR5zaA
+4hO+dtDMcHN43ESv3gakwPcvazsSkix+ACiWYJqwdR76EnAZIPtv+kscGtgq7sC/
+oQts0akBLAF49ppNCoHyJx87w8aOJ2jzcM7D41Yr8y0nVDFwux8zniw51N7i0/LX
+r27waQaRkrGSGCTPyovCAVrN9sh3qK/8TKGHpvN9z4wO4fi89PK/ZadixWpDTZFd
+neI9zWY1h/AMuT1oPay2lWy5Kj3G5Px253wX7DPDJTgreCbZN2Iupac7hULA28oG
+qEIvs2HrpjkHZZxW5NMN
+=Xa5w
+-----END PGP SIGNATURE-----
