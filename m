@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5873" "Thursday" "7" "May" "2015" "12:36:39" "+0300" "Vasily Kulikov" "segoon@openwall.com" "<20150507093639.GA4522@cachalot>" "157" "[oss-security] Linux kernel pointer poisoning (was: CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam)" nil nil nil "5" "2015050709:36:39" "[oss-security] Linux kernel pointer poisoning (was: CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam)" (number mark "        segoon@openw May  7  157/5873  " thread-indent "\"[oss-security] Linux kernel pointer poisoning (was: CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam)\"\n") "<20150502125329.GA6820@openwall.com>" ("<CADOUnBK=jW36v6X2Q6EXLL35Wxqait7cWJR-adCFwRaMJtucPQ@mail.gmail.com>" "<20150502125329.GA6820@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1596" "Thursday" "28" "July" "2016" "12:20:22" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160728162022.A49C58BC3D3@smtpvmsrv1.mitre.org>" "38" "[oss-security] Re: CVE Request Qemu: virtio: infinite loop in virtqueue_pop" "^Cc:" nil nil "7" "2016072816:20:22" "[oss-security] Re: CVE Request Qemu: virtio: infinite loop in virtqueue_pop" (number mark "        cve-assign@m Jul 28   38/1596  " thread-indent "\"[oss-security] Re: CVE Request Qemu: virtio: infinite loop in virtqueue_pop\"\n") "<alpine.LFD.2.20.1607281725190.28945@wniryva>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7357 invoked by uid 550); 7 May 2015 09:36:53 -0000
+Received: (qmail 19853 invoked by uid 550); 28 Jul 2016 16:20:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,192 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7305 invoked from network); 7 May 2015 09:36:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=59nYlAsoVR1DrOfzPBHJrrJLNiXLRSrkt+n7VjH7xxc=;
-        b=LuwKBxdZaxjIM2rsRc9CMvIKiXJfpE9Gj7OZsDp+ZF6SeNW3YVMXuPkdEcEUXaPaK4
-         ydm/LtxS61CEOFvdd/WZ6Z0YUTh1zXEJaFS2QTNybPZpJ+O0Aw60TFDmwve136iwxSX6
-         6dMdJZC2ytsVC0QyIId8a8yn3djA5F72Rzl9v8iw9dRGOmmL7jAOmtksixfVt6sj7/fN
-         5hk8Pp6PzltY8bVRw2jEf4u8TJddYc+zgPGGUntVDqdZy5vntdZTEU0puxQBRtTEKyh6
-         kKBPnEHO8cYM0mRNsSZ4jGPlPXASc3/VsQ1NDV4y3uhFVieTNAZEJB1DSlGgZ2KottH2
-         Nfjg==
-X-Received: by 10.152.238.43 with SMTP id vh11mr2327270lac.45.1430991401023;
-        Thu, 07 May 2015 02:36:41 -0700 (PDT)
-Message-ID: <20150507093639.GA4522@cachalot>
-References: <CADOUnBK=jW36v6X2Q6EXLL35Wxqait7cWJR-adCFwRaMJtucPQ@mail.gmail.com>
- <20150502125329.GA6820@openwall.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20150502125329.GA6820@openwall.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Cc: Wen Xu <hotdog3645@gmail.com>, oss-security@lists.openwall.com,
-	kernel-hardening@lists.openwall.com
-Date: Thu, 7 May 2015 12:36:39 +0300
-From: Vasily Kulikov <segoon@openwall.com>
+Received: (qmail 19835 invoked from network); 28 Jul 2016 16:20:35 -0000
+In-Reply-To: <alpine.LFD.2.20.1607281725190.28945@wniryva>
+Message-Id: <20160728162022.A49C58BC3D3@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn
+Date: Thu, 28 Jul 2016 12:20:22 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Sender: Vasiliy Kulikov <segooon@gmail.com>
-Subject: [oss-security] Linux kernel pointer poisoning (was: CVE request for a fixed bug
- existed in all versions of linux kernel from KeenTeam)
-To: Solar Designer <solar@openwall.com>
+Subject: [oss-security] Re: CVE Request Qemu: virtio: infinite loop in virtqueue_pop
+To: ppandit@redhat.com
 
-[cc'ed kernel-hardening@]
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Sat, May 02, 2015 at 15:53 +0300, Solar Designer wrote:
-> Then, perhaps we should harden the poison pointers to be either below
-> typical mmap_min_addr or in an unmapped portion of kernel space?  Do I
-> understand correctly that, short of possible mmap_min_addr bypasses in
-> general (if relevant), this would mitigate the issue?
+> Quick emulator(Qemu) built with the virtio framework is vulnerable to an
+> infinite loop issue. It could occur if the guest was to set the I/O descriptor
+> buffer length to be zero. A privileged user inside guest could use this flaw
+> to potentially crash the Qemu instance on the host resulting in DoS.
 > 
-> Right now, they are:
-> 
-> /*
->  * These are non-NULL pointers that will result in page faults
->  * under normal circumstances, used to verify that nobody uses
->  * non-initialized list entries.
->  */
-> #define LIST_POISON1  ((void *) 0x00100100 + POISON_POINTER_DELTA)
-> #define LIST_POISON2  ((void *) 0x00200200 + POISON_POINTER_DELTA)
-> 
-> I'd change them to e.g.:
-> 
-> #define LIST_POISON1  ((void *) 0x00000100 + POISON_POINTER_DELTA)
-> #define LIST_POISON2  ((void *) 0x00000200 + POISON_POINTER_DELTA)
-> 
-> where POISON_POINTER_DELTA would normally be 0 on 32-bit x86, so they'd
-> be below mmap_min_addr on that arch.  Meanwhile, a mitigation appears to
-> be to set mmap_min_addr higher than 0x00200200 (slightly over 2 MB), but
-> that's not great as it leaves significantly less ASCII-armored space for
-> libraries.
-> 
-> BTW, it appears that on x86_64 POISON_POINTER_DELTA is
-> 0xdead000000000000 by default, which I guess would hit an unmapped page
-> even with the current LIST_POISON2 value?  If so, is the bug at worst a
-> kernel Oops on x86_64 unless someone changed POISON_POINTER_DELTA in
-> their build?
-> 
-> config ILLEGAL_POINTER_VALUE
-> 	hex
-> 	default 0 if X86_32
-> 	default 0xdead000000000000 if X86_64
-> 
-> Regardless, as a supporter of that kernel patch, I am embarrassed!
+> https://lists.gnu.org/archive/html/qemu-devel/2016-07/msg06246.html
 
-Besides setting current poison pointer constant to sane values we should
-also think of API clearness and usability.  I'd want to also slightly
-change the macros in question to ease common kernel developer to
-introduce new poison pointer constants for new subsystems.
+Use CVE-2016-6490.
 
-What do we want from the API?
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/virtio/virtio.c but
+that may be an expected place for a later update.
 
-1) poisoned pointer base must be non-mmap'able
-2) all poisoned pointers (i.e. base+offset) must be non-mmap'able
-3) a small offset relative to poisoned pointers must be non-mmap'able
-4) poisoned pointers from different subsystems should be different
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-A kernel developer might want to pass a subsystem id to a macro instead
-of explicit math, like in the following patch:
-
-diff --git a/include/linux/poison.h b/include/linux/poison.h
-index 7b2a7fc..5cdff6b 100644
---- a/include/linux/poison.h
-+++ b/include/linux/poison.h
-@@ -1,40 +1,54 @@
- #ifndef _LINUX_POISON_H
- #define _LINUX_POISON_H
-+#include <linux/bug.h>
- 
- /********** include/linux/list.h **********/
- 
- /*
-  * Architectures might want to move the poison pointer offset
-  * into some well-recognized area such as 0xdead000000000000,
-- * that is also not mappable by user-space exploits:
-+ * that is also not mappable by user-space exploits,
-+ * by adjusting CONFIG_ILLEGAL_POINTER_VALUE:
-  */
- #ifdef CONFIG_ILLEGAL_POINTER_VALUE
- # define POISON_POINTER_DELTA _AC(CONFIG_ILLEGAL_POINTER_VALUE, UL)
- #else
- # define POISON_POINTER_DELTA 0
- #endif
-+/* 
-+ * Poisoned pointers of different subsystems should be different
-+ * but must not move far away from POISON_POINTER_DELTA.
-+ * Otherwise poisoned pointer might be mmap'able on some architectures.
-+ */
-+#define POISON_AREA_SIZE 0x1000
-+#define POISON_POINTER(x) \
-+	({ \
-+		BUILD_BUG_ON(x >= POISON_AREA_SIZE); \
-+       	((void *)(x) + POISON_POINTER_DELTA);})
- 
- /*
-  * These are non-NULL pointers that will result in page faults
-  * under normal circumstances, used to verify that nobody uses
-  * non-initialized list entries.
-  */
--#define LIST_POISON1  ((void *) 0x00100100 + POISON_POINTER_DELTA)
--#define LIST_POISON2  ((void *) 0x00200200 + POISON_POINTER_DELTA)
-+#define LIST_POISON1  POISON_POINTER(0x0100)
-+#define LIST_POISON2  POISON_POINTER(0x0200)
- 
- /********** include/linux/timer.h **********/
- /*
-  * Magic number "tsta" to indicate a static timer initializer
-  * for the object debugging code.
-  */
--#define TIMER_ENTRY_STATIC	((void *) 0x74737461)
-+#define TIMER_ENTRY_STATIC	((void*)0x0300 + POISON_POINTER_DELTA)
-+// FIXME
-+//#define TIMER_ENTRY_STATIC	POISON_POINTER(0x0300)
- 
- /********** mm/debug-pagealloc.c **********/
- #define PAGE_POISON 0xaa
- 
- /********** mm/page_alloc.c ************/
- 
--#define TAIL_MAPPING	((void *) 0x01014A11 + POISON_POINTER_DELTA)
-+#define TAIL_MAPPING	POISON_POINTER(0x0400)
- 
- /********** mm/slab.c **********/
- /*
-
-
-
-POISON_POINTER() checks whether an offset argument is sane.  If it is
-not, it leads to a build failure:
-
-  CC      mm/page_alloc.o
-  mm/page_alloc.c: In function 'free_pages_prepare':
-  mm/page_alloc.c:840:23: error: call to '__compiletime_assert_840' declared with attribute error: BUILD_BUG_ON failed: 0x0111400 >= POISON_AREA_SIZE
-  mm/page_alloc.c: In function 'prep_compound_page':
-  mm/page_alloc.c:447:16: error: call to '__compiletime_assert_447' declared with attribute error: BUILD_BUG_ON failed: 0x0111400 >= POISON_AREA_SIZE
-  make[1]: *** [mm/page_alloc.o] Error 1
-  make: *** [mm] Error 2
-
-
-Two questions here:
-
-a) how to fairy use arch-specific non-mmap'able zone to resolve (2) and
-(3)?  Current 0x1000 is a hardcoded copy-pasted default value of
-DEFAULT_MMAP_MIN_ADDR.  Using DEFAULT_MMAP_MIN_ADDR instead of 0x1000
-might not be a solution -- we don't want a build to fail in this case,
-user must be able to use DEFAULT_MMAP_MIN_ADDR=0 too.
-
-b) how to check for an insane POISON_POINTER() arg in case of
-TIMER_ENTRY_STATIC (and such)?  The current implementation of
-POISON_POINTER() fails as following:
-
-mm/page_alloc.c: In function 'free_pages_prepare':
-mm/page_alloc.c:840:23: error: call to '__compiletime_assert_840' declared with attribute error: BUILD_BUG_ON failed: 0x0111400 >= POISON_AREA_SIZE
-
-
-Thanks,
-
--- 
-Vasily Kulikov
-http://www.openwall.com - bringing security into open computing environments
+iQIcBAEBCAAGBQJXmjADAAoJEHb/MwWLVhi2KZ8P/jkyKrIQY2ryaoptTvhMn41U
+D1TgFaTnQwZAfCLeF4r45Uy1h2G4TmsE+XHnk2gOaqFkBFiYRKBEOKqv7pEszohC
+MvKyQC2WPIuQnM8Y/KIy4Xgpw/UVjQfnWtg2dW6Hb4kg/H7WL602vIlE0yxa2BGz
+ZpBRQViB/qOn9MI4+5lHdc5jSGlVBLJUEK7Ckm83AejMwF7VVeFfnxM/jGreBH1/
+SejweRYV2c9nKsYH41wBvTD482Ee+hLY5cC2CDMKsG/NB015KGY66yzh41vUDLXI
+Rc3nxjD9PSxaPvzXyl8ha6cnYZy4H5qWmEUhC96hoPPEOgtiatE8Ekcf8q7reUVM
+MI9LXjSaZy7MZOTuS75Ha2lKPqPaBHuCpe/SxpS3vD4BjG7ZpZrTthyZYO1eJz49
+f7FxXVb1TLc0GjkWLlWh31EuABldZzwBFXqOIfyYrCsoPngfSgViq1i2GjKgz+XB
+5D8mz8jXTcklV2P7EE8nj72aT6YHbwi089oR5oNQzWDAsz86oTYqXghSHHs6MRRx
+NweiubIUxDvDVYuGtHlJbVLAUIKeV5O1zIfqAs4YxkC0ADqaz29KWEL5+IBd84nJ
+Gg4NJYg1VhztrGCwUmMeqflT1OaduIZkSGgGnzv24oYpoSxF2ZZB3KhSIu/atT50
+lmUdCpS6w6UUlT6LMSLd
+=7n+b
+-----END PGP SIGNATURE-----
