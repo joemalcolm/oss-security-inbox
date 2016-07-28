@@ -1,26 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/9
-Message-ID: <20160301181812.GY13281@symphytum.spacehopper.org>
-Date: Tue, 1 Mar 2016 18:18:12 +0000
-From: Stuart Henderson <stu@...cehopper.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/8
+Message-ID: <bb3afc7b-f1ad-4102-1c47-af1080fe5cff@redhat.com>
+Date: Thu, 28 Jul 2016 11:08:30 -0400
+From: Daniel J Walsh <dwalsh@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: CVE ID Requests <cve-assign@...re.org>
-Subject: Re: CVE's for SSLv2 support
+Subject: Re: cve request: systemd-machined: information exposure for docker containers
 Content-Type: text/plain; charset=utf-8
 
-On 2016/03/01 17:39, Loganaden Velvindron wrote:
-> Btw, FreeBSD has done some work there:
-> https://wiki.freebsd.org/LibreSSL/PatchingPorts#SSLv2.2FSSLv3_method_failures
 
-Debian did most of that work for SSLv2 years ago. Quite a lot was
-upstreamed and a bunch more in patches, this really made it easier
-to disable SSLv2 support in OpenSSL when we did it in OpenBSD.
 
-> Linking with LibreSSL would help uncover those cases, and assign CVEs :)
-
-There shouldn't be all that many left for SSLv2. There are a number
-of patches in OpenBSD ports for SSLv*3* removal, some upstreamed -
-if OS/distros are already going through ABI change pain at this
-point to drop SSLv2, why not go the whole hog and drop v3 as well
-while you're at it?
-
+On 07/28/2016 10:42 AM, Simon McVittie wrote:
+> On Thu, 28 Jul 2016 at 08:34:35 -0400, Daniel J Walsh wrote:
+>> Lennart is wrong when he states that this only effects "user"
+>> containers, any container that registers with
+>> machinectl, will have this information revealed to non privileged user
+>> processes.
+> *Which* unprivileged user processes?
+>
+> If the unprivileged user processes are not in a container, they can get a
+> significant amount of the same information by reading the host's /proc.
+>
+> If the unprivileged user processes are in a container or other confinement
+> that prevents them from looking at the host's /proc, then one of the other
+> things that confinement can/should prevent is unfiltered access to the host
+> system's D-Bus system bus, which is how machinectl talks to systemd-machined.
+>
+> Lennart also points out on the systemd bug that the
+> methods in question can be access-controlled (at your
+> own risk, the policy language is horrible) by modifying
+> /etc/dbus-1/system.d/org.freedesktop.machine1.conf. They don't appear to
+> be mediated by /usr/share/polkit-1/actions/org.freedesktop.machine1.policy
+> too, but they could be; that would be an enhancement request for systemd
+> upstream.
+>
+> I think the bottom line here is that if the author of a container integration
+> tool chooses to publish information in a central registry (systemd-machined),
+> then they shouldn't be surprised to find the central registry's security model
+> getting applied to that information.
+>
+>     S
+So we can add documentation to oci-register-machine that if you use it,
+this information
+will not be available to the system.  If you don't want this information
+revealed you can
+uninstall the package, but tools like journalctl -M will no longer work
+for docker/runc containers.
