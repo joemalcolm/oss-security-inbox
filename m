@@ -1,47 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/05/8
-Message-Id: <20160705223938.1441A7BC185@smtpvmsrv1.mitre.org>
-Date: Tue,  5 Jul 2016 18:39:38 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/15
+Message-Id: <20160728201723.046E4332028@smtpvbsrv1.mitre.org>
+Date: Thu, 28 Jul 2016 16:17:23 -0400 (EDT)
 From: cve-assign@...re.org
-To: marco.gra@...il.com
+To: i.elsayed92@...il.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: BUG_ON crash in linux 4.7-rc6/master skbuff.c
+Subject: Re: CVE-Request Buffer overflow ImageMagick
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> this program will crash the linux kernel 4.7-rc6 and current master in a
-> voluntary panic() call triggered at a BUG_ON in net/core/skbuff.c:3051
+> I would like to request a CVE for a buffer overflow in ImageMagick
+> that was fixed in the following commit:
+> https://github.com/ImageMagick/ImageMagick/commit/dd84447b63a71fa8c3f47071b09454efc667767b
 > 
-> kernel BUG at net/core/skbuff.c:3051!
+> to run the PoC try:
+> magick convert -clip PoC1  <<<-- This will run the first PoC
 > 
-> in a qemu environment with kASAN enabled in a syzkaller-kind setup
-
-> [   59.831394] kernel BUG at net/core/skbuff.c:3051!
-> [   59.831802] invalid opcode: 0000 [#1] SMP KASAN
-
-> [   59.844495]  [<ffffffff82c54dba>] udpv6_queue_rcv_skb+0x4fa/0x15b0
-> [   59.845048]  [<ffffffff82c56b36>] __udp6_lib_rcv+0xcc6/0x1d20
-> [   59.845540]  [<ffffffff82c57bb1>] udpv6_rcv+0x21/0x30
-> [   59.845975]  [<ffffffff82bf5971>] ip6_input_finish+0x3a1/0x1170
-> [   59.846510]  [<ffffffff82bf7faa>] ip6_input+0xda/0x1f0
-> [   59.846950]  [<ffffffff82bf7ed0>] ? ipv6_rcv+0x1790/0x1790
-> [   59.847418]  [<ffffffff8296ce36>] ? __netif_receive_skb+0x36/0x170
-
-> [   59.883546] Kernel panic - not syncing: Fatal exception in interrupt
-
-> reproducer --- derp2.c
+> The vulnerability gets triggered at 
 > 
-> r[0] = syscall(SYS_mmap, ...
-> r[1] = syscall(SYS_socket, ...
-> r[3] = syscall(SYS_bind, ...
-> r[6] = syscall(SYS_sendto, ...
-> r[13] = syscall(SYS_setsockopt, ...
-> r[14] = syscall(SYS_dup, ...
-> r[21] = syscall(SYS_write, ...
+> https://github.com/ImageMagick/ImageMagick/blob/master/MagickCore/property.c#L697
+> 
+> (void) CopyMagickMemory(attribute,(char *) info,(size_t) count);
+> 
+> The info ptr points at the end of the PoC image. The out-of-bound read
+> occurs when info+count is > image_size. The attribute ptr then points
+> to data that is read from the memory.
+> 
+> backtrace
+> #9  0x000000000043a5f8 in CopyMagickMemory ... at MagickCore/memory.c:696
+> #10 0x000000000046f0ff in Get8BIMProperty ... at MagickCore/property.c:698
+> 
+> PoC1: reads 0xff5f extra bytes from the memory
+> 
+> PoC2: reads 0xb0ff5f bytes of the memory (it is likely that this PoC
+> causes a crash because the memory segment isn't mapped or doesn't have
+> the correct permissions)
+> 
+> The read out-of-bound could lead to memory leak because the data read
+> is then written into the output image using SetImageProperty which is
+> called after the read
+> 
+> The PoC has been tested on 
+> version: ImageMagick 7.0.2-1 Q16 x86_64 2016-06-19 http://www.imagemagick.org
 
-Use CVE-2016-6162.
+>> We can reproduce it and will have a patch to fix it in GIT master
+>> branch @ https://github.com/ImageMagick/ImageMagick later today. The
+>> patch will be available in the beta releases of ImageMagick @
+>> http://www.imagemagick.org/download/beta/ by sometime tomorrow.
+
+Use CVE-2016-6491.
 
 - -- 
 CVE Assignment Team
@@ -51,17 +60,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXfDVGAAoJEHb/MwWLVhi2AqUQAJzw7O7PX85JseeWkL6p9e8u
-RHZtWmwh3TBgkdXuCh/GtayjL+pRdGjWs4Xz6S/vXf4iOMIxMc5BHXaaUSn1Yjpk
-SBxfhNQPCVaAMnGD4FizEpJW2IY/79RqS7VB5GVTROuqrDySEg7p+9mT/XSZ3QyU
-GKydUzilXBvq2AG3E+PVvCwXT7Nefd1tVNOWrvz1dFmOZ8lveJx2EQes8EvE2VzN
-NEMKSuTl8Ey734VynwDkCUojHLjS40c0ny0ZhXtH1UURk3xb+WM9jLtTbmBLzmJC
-sVH/rBORjvoptyR397KxuPYlXVXIjf8qRnVeZyV/y/gZhI6e8Hvxq1Df0wuZ9lzq
-k41ldbLCEYnPKBVZbT+y+LobbF6Xp57/uCmBDSm11HDTle5EvSOWXVHd/4cw5t/c
-b2IiNHTMkN9aeZVVT2yG8F9bEKBTzyIv5LbEaHhwNXgNuCfX2Ey5iZo2PBxVMBRJ
-TeMlQK7AoBVidiWVMsB4jvZMJMCMWXFXROG2istI87WbLEzRzmKhqWjAEEbXVSzh
-3lZHb0+06iH7e44mzsErURLkJlbOWSzNRo+Xl7nLCig+0wAqDYphC14bkZtNY1+z
-rb+cune9A/mQe5qSLBckzB+W83dc7JQu/sHjFZhn1AgT5MI1nq6s36Ud+xdfQgvf
-5ytAy5KDBdLxn2HCukEh
-=c6Oy
+iQIcBAEBCAAGBQJXmmfOAAoJEHb/MwWLVhi2IfMP/11wKvLq+QNlKEQhhkEjqtHo
+TKeWjJoiuLQnZENiE1QXQ5JC2tZFaDHyqcun9Kf9CIAUaskSxQM7iEmsPvfyqYaA
+4Q/Rzj7ECKyvBR5DUszKgpiOzA8UFBzNUaRijNQfSttefTBhOm76l4jGLFCiSyTU
+h3/QrvvaYJBOcYnyFcvRW+p7XxCR/ZFeoqo9HExMYLZDIt2XaBS2/+Baea7gDPsZ
+SUhG701l7W5RGoQYLszoUm0Bz54AH9253fzl0TKlC/XQqSQ33eUi5gWgzXCNr4dx
+Vuaf1oaPRh3khNQi04/HGnQY3dMrOUPWz2LXb5IDJAxSoGBDLShwhdmGaTqLOgJq
+MwQVItboa+pP8FwXeHQdn3ILYux1LXTZwNrQrDwpM5OBR5OyGYNa9XhcAZAMb7l2
+sawjvOG0SvGU4FGaiELy1E9B6QxOOY7ZlOHXUY1Wrqaa1hFKU/30btWcprAj23jc
+vnvxKMq2FHJRDGCKFSgtOVtdush551sPWKkdlsb7mENT9Xu0cuCZAYkrwjgiNb7K
+87uWrfyIIsWkNBm/V58hhP5qwx1LsX13Fq7uv40snnGPjGBhxjdWeinbnsEemxYr
+vPNMq7eOhRTAyLJ2k+DE6jsV89I6vMkNl6/JblZjrG9HNyFVCl1LGCJ3ZtUib/pK
+VtsKTtJ1QXnPAwVPaNnf
+=mi15
 -----END PGP SIGNATURE-----
