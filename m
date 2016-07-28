@@ -1,46 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/30/2
-Message-ID: <CADSYzssrDfG2UtGBxVEhS=M5AC7jgufh6GeVKQb6xZGBP9DO1Q@mail.gmail.com>
-Date: Fri, 30 Dec 2016 14:02:07 -0200
-From: Dawid Golunski <dawid@...alhackers.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/7
+Message-ID: <20160728144249.GB23522@perpetual.pseudorandom.co.uk>
+Date: Thu, 28 Jul 2016 15:42:49 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Zend Framework (zend-mail) < 2.4.11 Remote Code Execution (CVE-2016-10034)
+Subject: Re: cve request: systemd-machined: information exposure for docker containers
 Content-Type: text/plain; charset=utf-8
 
-Zend Framework / zend-mail < 2.4.11    Remote Code Execution (CVE-2016-10034)
-zend-mail < 2.7.2
+On Thu, 28 Jul 2016 at 08:34:35 -0400, Daniel J Walsh wrote:
+> Lennart is wrong when he states that this only effects "user"
+> containers, any container that registers with
+> machinectl, will have this information revealed to non privileged user
+> processes.
 
-Discovered by Dawid Golunski (@dawid_golunski)
-https://legalhackers.com
+*Which* unprivileged user processes?
 
-Desc:
-An independent research uncovered a critical vulnerability in zend-mail, a
-Zend Framework's component that could potentially be used by (unauthenticated)
-remote attackers to achieve remote arbitrary code execution in the context
-of the web server user and remotely compromise the target web application.
+If the unprivileged user processes are not in a container, they can get a
+significant amount of the same information by reading the host's /proc.
 
-To exploit the vulnerability an attacker could target common website
-components such as contact/feedback forms, registration forms, password
-email resets and others that send out emails with the help of a vulnerable
-version of the zend-mail class.
+If the unprivileged user processes are in a container or other confinement
+that prevents them from looking at the host's /proc, then one of the other
+things that confinement can/should prevent is unfiltered access to the host
+system's D-Bus system bus, which is how machinectl talks to systemd-machined.
 
-The latest full advisory / PoC exploit at:
+Lennart also points out on the systemd bug that the
+methods in question can be access-controlled (at your
+own risk, the policy language is horrible) by modifying
+/etc/dbus-1/system.d/org.freedesktop.machine1.conf. They don't appear to
+be mediated by /usr/share/polkit-1/actions/org.freedesktop.machine1.policy
+too, but they could be; that would be an enhancement request for systemd
+upstream.
 
-http://legalhackers.com/advisories/ZendFramework-Exploit-ZendMail-Remote-Code-Exec-CVE-2016-10034-Vuln.html
+I think the bottom line here is that if the author of a container integration
+tool chooses to publish information in a central registry (systemd-machined),
+then they shouldn't be surprised to find the central registry's security model
+getting applied to that information.
 
-Video / PoC:
-
-https://legalhackers.com/videos/ZendFramework-Exploit-Remote-Code-Exec-Vuln-CVE-2016-10034-PoC.html
-
-For updates, follow:
-
-https://twitter.com/dawid_golunski
-
-
---
-Regards,
-Dawid Golunski
-https://legalhackers.com
-t: @dawid_golunski
-
-View attachment "zend.txt" of type "text/plain" (8273 bytes)
+    S
