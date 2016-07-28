@@ -1,44 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/03/4
-Message-ID: <20160303084422.GD2384@sivokote.iziade.m$>
-Date: Thu, 3 Mar 2016 10:44:22 +0200
-From: Georgi Guninski <guninski@...inski.com>
-To: oss-security@...ts.openwall.com, cypherpunks@...nks.org, debian-legal@...ts.debian.org
-Subject: According to www.virustotal.com, lists.debian.org are hosting attachment .DOC virus
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/14
+Message-ID: <1668779.EJMXeZi6qq@arcadia>
+Date: Thu, 28 Jul 2016 21:33:31 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: paps: heap overflow when processing crafted file
 Content-Type: text/plain; charset=utf-8
 
-According to www.virustotal.com, lists.debian.org 
-are hosting attachment .DOC virus.
+Hello,
 
-Would someone confirm or deny this?
+it was discovered during fuzzing that a crafted file causes an heap overflow 
+in paps ( https://sourceforge.net/projects/paps/ ).
 
-Warning:  DO NOT OPEN THE .DOC!
-Discalimer: Nothing personal against Debian
+Details, included stracktrace at:
+https://blogs.gentoo.org/ago/2016/07/28/paps-heap-based-buffer-overflow-in-read_file-paps-c/
 
-https://lists.debian.org/debian-consultants/2016/01/msg00000.html
-links to:
 
-https://lists.debian.org/debian-consultants/2016/01/docyrW4BlUhzH.doc
+If it is suitable for a CVE, please assign one.
 
-Submitting the last .doc URL at:
-https://www.virustotal.com
-and then going to:
-Go to downloaded file analysis
-gives:
-https://www.virustotal.com/en/file/c7210dc26e00a0d9f9bf8fb3b4850d52b62bb5836a7fa34bb669fc1b1553005e/analysis/1456991242/
-
-SHA256: 	c7210dc26e00a0d9f9bf8fb3b4850d52b62bb5836a7fa34bb669fc1b1553005e
-File name: 	docyrW4BlUhzH.doc
-Detection ratio: 	17 / 54
-
-the first few results are:
-AVG 	W97M/Downloader 	20160303
-AVware 	Trojan-Downloader.O97M.Adnel.n (v) 	20160303
-AegisLab 	W97M.Gen!c 	20160303
-Arcabit 	HEUR.VBA.Trojan.e 	20160303
-Avast 	VBA:Downloader-ABC [Trj] 	20160303
-ESET-NOD32 	VBA/TrojanDownloader.Agent.AOM 	20160303
-
-and some report it as clean.
-
-The .doc is downloadable with the same checksum.
+Thanks.
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
