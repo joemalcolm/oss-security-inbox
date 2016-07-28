@@ -1,90 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/6
-Message-ID: <CANO=Ty1zwb63tApRBJsjpD3DoPO-FRcQtLTMqqo-Y_a-363TCA@mail.gmail.com>
-Date: Mon, 18 Jul 2016 08:17:03 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: A CGI application vulnerability for PHP, Go, Python and others
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/13
+Message-Id: <5FE87C7D-93F9-45CE-91F4-4C29BEB1A8E2@gmail.com>
+Date: Thu, 28 Jul 2016 19:50:14 +0100
+From: Ibrahim el-sayed <i.elsayed92@...il.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE-Request Buffer overflow ImageMagick
 Content-Type: text/plain; charset=utf-8
 
-Also the current list of CVEs is:
+Hi CVE Assignemnt Team,
+I would like to request a CVE for a buffer overflow in ImageMagick that was fixed in the following commit:
+https://github.com/ImageMagick/ImageMagick/commit/dd84447b63a71fa8c3f47071b09454efc667767b <https://github.com/ImageMagick/ImageMagick/commit/dd84447b63a71fa8c3f47071b09454efc667767b>
 
-CVE-2016-5385 PHP
-CVE-2016-5386 Go
-CVE-2016-5387 Apache HTTPD
-CVE-2016-1000104 mod_fcgi
-CVE-2016-1000105 Nginx cgi script
-CVE-2016-5388 Tomcat
-CVE-2016-1000107 Erlang HTTP Server
-CVE-2016-1000108 YAWS
-CVE-2016-1000109 HHVM FastCGI
-CVE-2016-1000110 Python CGIHandler
-CVE-2016-1000111 Python twisted
-
-there will of course be more. From my Google doc:
-
-CVE counting for httpoxy
-
-This document essentially discusses the CVE counting strategy for the
-httpoxy issue.
-
-Essentially there are two main cases where a CVE is assigned for the
-httpoxy issue:
+Details of the vulnerability in the forwarded message:
 
 
-   1.
-
-   A web server, programming language or framework (and in some limited
-   situations the application itself) sets the environmental variable
-   HTTP_PROXY from the user supplied Proxy header in the web request, or sets
-   a similarly used variable (essentially when the request header turns from
-   harmless data into a potentially harmful environmental variable)
-   2.
-
-   A web application makes use of HTTP_PROXY or similar variable unsafely
-   (e.g. fails to check the request type) resulting in an attacker controlled
-   proxy being used (essentially when HTTP_PROXY is actually used unsafely)
 
 
-Some  examples of situations where a web server, programming language or
-framework would qualify for a CVE regarding httpoxy:
-
-
-   1.
-
-   PHP passes the proxy as HTTP_PROXY, as such applications commonly import
-   and use HTTP_*
-   2.
-
-   mod_cgi/fast_cgi and related CGI programs set HTTP_PROXY based on the
-   request header
-   3.
-
-   An application uses an HTTP request library that trusts HTTP_PROXY
-   resulting in attacker control of requests
-
-
-Some  examples of situations where a web server, programming language or
-framework would NOT qualify for a CVE regarding httpoxy:
-
-
-   1.
-
-   A web server such as Apache passes the proxy header to a programming
-   language or framework
-   2.
-
-   A library trusts HTTP_PROXY, the library does not earn a CVE, the
-   application using it would qualify for a CVE, and generally speaking
-   whatever set the HTTP_PROXY variable would also earn a CVE
+> Begin forwarded message:
+> 
+> From: Ibrahim el-sayed <i.elsayed92@...il.com>
+> Subject: Re: Read out-of-bound could lead to memory leak
+> Date: June 27, 2016 at 3:44:40 AM GMT+1
+> To: security@...gemagick.org
+> 
+> PS:
+> to run the PoC try:
+> magick convert -clip PoC1  <<<-- This will run the first PoC
+> 
+> 
+> On Mon, Jun 27, 2016 at 3:09 AM, Ibrahim el-sayed <i.elsayed92@...il.com <mailto:i.elsayed92@...il.com>> wrote:
+> Hi Imagemagick security team,
+> The vulnerability gets triggered at
+> https://github.com/ImageMagick/ImageMagick/blob/master/MagickCore/property.c#L697 <https://github.com/ImageMagick/ImageMagick/blob/master/MagickCore/property.c#L697>
+>  (void) CopyMagickMemory(attribute,(char *) info,(size_t) count);
+> The info ptr points at the end of the PoC image. The out-of-bound read occurs when info+count is > image_size. The attribute ptr then points to data that is read from the memory.
+> 
+> backtrace
+> #9  0x000000000043a5f8 in CopyMagickMemory (destination=0x7f760dd5c010, source=0x239b3b8, size=3878239) at MagickCore/memory.c:696
+> #10 0x000000000046f0ff in Get8BIMProperty (image=<optimized out>, key=<optimized out>, exception=<optimized out>) at MagickCore/property.c:698
+> #11 GetImageProperty (image=0x238bf00, property=0x2361c50 "8BIM:1999,2998:#1", exception=0x23580a0) at MagickCore/property.c:2201
+> #12 0x0000000000416ceb in ClipImagePath (image=0x238bf00, pathname=0xbb5a89 "#1", inside=<optimized out>, exception=0x23580a0) at MagickCore/image.c:723
+> #13 0x0000000000416b66 in ClipImage (image=0x7f760dd5c010, exception=0x765abe <XDisplayImage+11038>) at MagickCore/image.c:695
+> #14 0x0000000000a40f5d in MogrifyImage (image_info=0x235e4a0, argc=<optimized out>, argv=0x2361858, image=0x7ffcf1b60098, exception=0x23580a0) at MagickWand/mogrify.c:1084
+> #15 0x0000000000aae42e in MogrifyImages (image_info=0x235e4a0, post=MagickTrue, argc=2, argv=0x2361858, images=0x7ffcf1b60098, exception=0x23580a0) at MagickWand/mogrify.c:8908
+> 
+> Attached two PoC files:
+> PoC1: reads 0xff5f extra bytes from the memory
+> PoC2: reads 0xb0ff5f bytes of the memory (it is likely that this PoC causes a crash because the memory segment isn't mapped or doesn't have the correct permissions)
+> 
+> The read out-of-bound could lead to memory leak because the data read is then written into the output image using SetImageProperty which is called after the read
+> 
+> The PoC has been tested on
+> version: ImageMagick 7.0.2-1 Q16 x86_64 2016-06-19 http://www.imagemagick.org <http://www.imagemagick.org/>
+> 
+> --
+> Regards
+> Ibrahim M. El-Sayed
+> Security Engineer
+> Website: https://www.ibrahim-elsayed.com <https://www.ibrahim-elsayed.com/>
+> @ibrahim_mosaad
+> 
+> 
+> 
+> --
+> Regards
+> Ibrahim M. El-Sayed
+> Security Engineer
+> Website: https://www.ibrahim-elsayed.com <https://www.ibrahim-elsayed.com/>
+> @ibrahim_mosaad
 
 
 
 
 
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+> Begin forwarded message:
+> 
+> From: vir.prudens.non.contra.ventum.mingit@...gemagick.org
+> Subject: Re: Read out-of-bound could lead to memory leak
+> Date: July 25, 2016 at 1:56:01 AM GMT+1
+> To: vir.prudens.non.contra.ventum.mingit@...gemagick.org, i.elsayed92@...il.com
+> 
+> Ibrahim el-sayed <i.elsayed92@...il.com> wrote:
+> 
+>> Are you sure you run it the following way:
+>> magick convert -clip PoC1 /dev/null
+> 
+> Thanks for the problem report.  We can reproduce it and will have a patch to fix it in GIT master branch @ https://github.com/ImageMagick/ImageMagick later today.  The patch will be available in the beta releases of ImageMagick @ http://www.imagemagick.org/download/beta/ by sometime tomorrow.
+> 
+> The ImageMagick Development Team
 
+
+
+Content of type "text/html" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
