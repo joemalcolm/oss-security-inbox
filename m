@@ -1,86 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/8
-Message-ID: <alpine.DEB.2.20.1611020810390.375@tvnag.unkk.fr>
-Date: Wed, 2 Nov 2016 08:11:10 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl_getdate read out of bounds
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/3
+Message-ID: <02218f3b-90ba-87cb-f0f9-2e576eae6917@suse.com>
+Date: Thu, 28 Jul 2016 13:34:27 +0200
+From: Andreas Stieger <astieger@...e.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE request: Wireshark 2.0.5 and 1.12.13 security releases
 Content-Type: text/plain; charset=utf-8
 
-curl_getdate read out of bounds
-===============================
+Hello
 
-Project cURL Security Advisory, November 2, 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20161102G.html)
+Wireshark 2.0.5 and 1.12.13 were announced to contain fixes of the usual
+dissector crash / endless loop read from wire or capture file type:
 
-VULNERABILITY
--------------
+https://www.wireshark.org/lists/wireshark-announce/201607/msg00001.html
 
-The `curl_getdate` converts a given date string into a numerical timestamp and
-it supports a range of different formats and possibilites to express a date
-and time. The underlying date parsing function is also used internally when
-parsing for example HTTP cookies (possibly received from remote servers) and
-it can be used when doing conditional HTTP requests.
 
-The date parser function uses the libc sscanf() function at two places, with
-the parsing strings "%02d:%02d" and ""%02d:%02d:%02d". The intent being that
-it would parse either a string with HH:MM (two digits colon two digits) or
-HH:MM:SS (two digits colon two digits colon two digits). If instead the piece
-of time that was sent in had the final digit cut off, thus ending with a
-single-digit, the date parser code would advance its read pointer one byte too
-much and end up reading out of bounds.
+CORBA IDL dissector crash on 64-bit Windows (wnpa-sec-2016-39)
+It may be possible to make Wireshark crash by injecting a malformed
+packet onto the wire or by convincing someone to read a malformed packet
+trace file. Affects 2.0.0 to 2.0.4, fixed in 2.0.5
+https://www.wireshark.org/security/wnpa-sec-2016-39.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12495
 
-We are not aware of any exploit of this flaw.
+NDS dissector crash (wnpa-sec-2016-40)
+It may be possible to make Wireshark crash by injecting a malformed
+packet onto the wire or by convincing someone to read a malformed packet
+trace file. Affects 1.12.0 to 1.12.12, fixed in 1.12.13.
+https://www.wireshark.org/security/wnpa-sec-2016-40.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12576
 
-INFO
-----
+PacketBB dissector could divide by zero (wnpa-sec-2016-41)
+The PacketBB dissector could divide by zero. It may be possible to make
+Wireshark crash by injecting a malformed packet onto the wire or by
+convincing someone to read a malformed packet trace file. Affects 2.0.0
+to 2.0.4, 1.12.0 to 1.12.12, fixed in 2.0.5, 1.12.13.
+https://www.wireshark.org/security/wnpa-sec-2016-41.html
+\https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12577
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-8621 to this issue.
+wnpa-sec-2016-42
+WSP infinite loop (wnpa-sec-2016-42)
+The WSP dissector could go into an infinite loop. It may be possible to
+make Wireshark consume excessive CPU resources by injecting a malformed
+packet onto the wire or by convincing someone to read a malformed packet
+trace file. Affects 2.0.0 to 2.0.4, 1.12.0 to 1.12.12 , fixed in 2.0.5,
+1.12.13
+https://www.wireshark.org/security/wnpa-sec-2016-42.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12594
 
-AFFECTED VERSIONS
------------------
+MMSE infinite loop (wnpa-sec-2016-43)
+The MMSE dissector could go into an infinite loop. It may be possible to
+make Wireshark consume excessive CPU resources by injecting a malformed
+packet onto the wire or by convincing someone to read a malformed packet
+trace file. Affects 1.12.0 to 1.12.12, fixed 1.12.13
+https://www.wireshark.org/security/wnpa-sec-2016-43.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12624
 
-This flaw exists in the following curl versions.
+RLC long loop (wnpa-sec-2016-44)
+The RLC dissector could go into a long loop. It may be possible to make
+Wireshark consume excessive CPU resources by injecting a malformed
+packet onto the wire or by convincing someone to read a malformed packet
+trace file. Affects  2.0.0 to 2.0.4, 1.12.0 to 1.12.12, fixed in 2.0.5,
+1.12.13.
+https://www.wireshark.org/security/wnpa-sec-2016-44.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12624
 
-- Affected versions: curl 7.12.2 to and including 7.50.3
-- Not affected versions: curl < 7.12.2 and curl >= 7.51.0
+LDSS dissector crash (wnpa-sec-2016-45)
+The LDSS dissector could crash. It may be possible to make Wireshark
+crash by injecting a malformed packet onto the wire or by convincing
+someone to read a malformed packet trace file. Affects 2.0.0 to 2.0.4,
+1.12.0 to 1.12.12, fixed in 2.0.5, 1.12.13.
+https://www.wireshark.org/security/wnpa-sec-2016-45.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12662
 
-libcurl is used by many applications, but not always advertised as such!
+RLC dissector crash (wnpa-sec-2016-46)
+The RLC dissector could crash. It may be possible to make Wireshark
+crash by injecting a malformed packet onto the wire or by convincing
+someone to read a malformed packet trace file. Affects 2.0.0 to 2.0.4,
+1.12.0 to 1.12.12, fixed in 2.0.5, 1.12.13.
+https://www.wireshark.org/security/wnpa-sec-2016-46.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12664
 
-THE SOLUTION
-------------
+OpenFlow long loop (wnpa-sec-2016-47)
+The OpenFlow dissector (and possibly others) could go into a long loop.
+It may be possible to make Wireshark consume excessive CPU resources by
+injecting a malformed packet onto the wire or by convincing someone to
+read a malformed packet trace file. Affects 2.0.0 to 2.0.4, 1.12.0 to
+1.12.12, fixed in 2.0.5, 1.12.13.
+https://www.wireshark.org/security/wnpa-sec-2016-47.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12659
 
-In version 7.51.0, the parser function is fixed.
+MMSE, WAP, WBXML, and WSP infinite loop (wnpa-sec-2016-48)
+The MMSE, WAP, WBXML, and WSP dissectors could go into an infinite loop.
+It may be possible to make Wireshark crash by injecting a malformed
+packet onto the wire or by convincing someone to read a malformed packet
+trace file. Affects 2.0.0 to 2.0.4, fixed in 2.0.5.
+https://www.wireshark.org/security/wnpa-sec-2016-48.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12661
 
-A [patch for CVE-2016-8621](https://curl.haxx.se/CVE-2016-8621.patch) is
-available.
+WBXML crash (wnpa-sec-2016-49)
+The WBXML dissector could crash. It may be possible to make Wireshark
+crash by injecting a malformed packet onto the wire or by convincing
+someone to read a malformed packet trace file. Affects 2.0.0 to 2.0.4,
+fixed in 2.0.5
+https://www.wireshark.org/security/wnpa-sec-2016-49.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12663
 
-RECOMMENDATIONS
----------------
 
-We suggest you take one of the following actions immediately, in order of
-preference:
+Could CVE please be assigned?
 
-  A - Upgrade curl and libcurl to version 7.51.0
-
-  B - Apply the patch to your version and rebuild
-
-TIME LINE
----------
-
-It was first reported to the curl project on October 3 by Lu�t Nguy�n.
-
-We contacted distros@...nwall on October 19.
-
-curl 7.51.0 was released on November 2 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Thanks to Lu�t Nguy�n.
+With kind regards,
+Andreas Stieger
 
 -- 
+Andreas Stieger <astieger@...e.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG Nürnberg)
 
-  / daniel.haxx.se
+
