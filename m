@@ -1,4 +1,9 @@
-Received: (qmail 19539 invoked by uid 550); 1 Feb 2024 00:47:41 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["582" "Thursday" "28" "July" "2016" "17:31:12" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1607281725190.28945@wniryva>" "17" "[oss-security] CVE Request Qemu: virtio: infinite loop in virtqueue_pop" "^cc:" nil nil "7" "2016072812:01:12" "[oss-security] CVE Request Qemu: virtio: infinite loop in virtqueue_pop" (number mark "U       ppandit@redh Jul 28   17/582   " thread-indent "\"[oss-security] CVE Request Qemu: virtio: infinite loop in virtqueue_pop\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21661 invoked by uid 550); 28 Jul 2016 12:01:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,61 +11,34 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 21640 invoked from network); 28 Jul 2016 12:01:29 -0000
+X-X-Sender: pjp@javelin
+Message-ID: <alpine.LFD.2.20.1607281725190.28945@wniryva>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.26]); Thu, 28 Jul 2016 12:01:17 +0000 (UTC)
+cc: Li Qiang <liqiang6-s@360.cn>
+Date: Thu, 28 Jul 2016 17:31:12 +0530 (IST)
+From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18402 invoked from network); 1 Feb 2024 00:47:35 -0000
-Date: Thu, 1 Feb 2024 01:49:52 +0100
-From: Solar Designer <solar@openwall.com>
-To: Aleksa Sarai <cyphar@cyphar.com>
-Cc: oss-security@lists.openwall.com, dev@opencontainers.org
-Message-ID: <20240201004952.GA670@openwall.com>
-References: <20240131.201014-manual.rungs.vicious.preface-640Q4W5TLTW7@cyphar.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240131.201014-manual.rungs.vicious.preface-640Q4W5TLTW7@cyphar.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] runc: CVE-2024-21626: high severity container breakout attack
+Subject: [oss-security] CVE Request Qemu: virtio: infinite loop in virtqueue_pop
+To: oss security list <oss-security@lists.openwall.com>
 
-Hello Aleksa,
+   Hello,
 
-Thank you and others you credit for doing much more than fixing the
-immediate issue, and for disclosing this in so much detail.
+Quick emulator(Qemu) built with the virtio framework is vulnerable to an 
+infinite loop issue. It could occur if the guest was to set the I/O descriptor 
+buffer length to be zero. A privileged user inside guest could use this flaw 
+to potentially crash the Qemu instance on the host resulting in DoS.
 
-On Thu, Feb 01, 2024 at 07:33:01AM +1100, Aleksa Sarai wrote:
-> This is a notification to vendors that use runc about a high-severity
-> vulnerability (CVE-2024-21626) with several exploit methods which allow
-> for full container breakouts due to an internal file descriptor leak.
+Upstream fix:
+-------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-07/msg06246.html
 
-> The core issue is a file descriptor leak, and while we do O_CLOEXEC all
-> file descriptors before executing the container code, the file
-> descriptor is open when doing setcwd(2) which means that the reference
-> can be kept alive into the container by configuring the working
-> directory to be a path resolved through the file descriptor (and the
-> non-dumpable bit is unset after execve(2) meaning that there are
-> multiple ways to attack this other than bad configurations).
+This issue was discovered by Li Qiang of 360.cn Inc.
 
-What's setcwd(2)?  Perhaps you meant something else?
-
-> There is also an execve(2)-based attack that makes simple verification
-> unworkable and was particularly hairy to fix (the patch involves doing
-> //go:linkname to access Go runtime internals, because the only way to
-> defend against it entirely is to close all unneeded file descriptors --
-> for the same reason that #!-based tricks meant that CVE-2019-5736
-> required drastic measures).
-
-For reference, here are the threads you started on CVE-2019-5736 and its
-exploit back in 2019:
-
-https://www.openwall.com/lists/oss-security/2019/02/11/2
-https://www.openwall.com/lists/oss-security/2019/02/13/3
-
-In one of the messages:
-
-https://www.openwall.com/lists/oss-security/2019/02/13/1
-
-you mentioned having sent your "AT_THIS_ROOT patchset to LKML -- which
-allows userspace processes to block resolution of magic links."  What's
-the current status of this effort, and does/would it help against this
-new issue?
-
-Alexander
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
