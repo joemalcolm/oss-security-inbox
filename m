@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1086" "Friday" "19" "January" "2018" "05:22:58" "-0800" "i@cloudlinux.com" "i@cloudlinux.com" "<CA+-XxSE1d+8b7cbfs7BknJQ9yy7w4sw=0EVwf=gpz43JAVWyhQ@mail.gmail.com>" "24" "Re: [oss-security] How to deal with reporters who don't want their bugs fixed?" "^Date:" nil nil "1" "2018011913:22:58" "[oss-security] How to deal with reporters who don't want their bugs fixed?" (number mark "        i@cloudlinux Jan 19   24/1086  " thread-indent "\"Re: [oss-security] How to deal with reporters who don't want their bugs fixed?\"\n") "<efa92101-facb-84ff-7582-78583e8c7381@hpe.com>" ("<20180118220124.GA9185@openwall.com>" "<efa92101-facb-84ff-7582-78583e8c7381@hpe.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3588" "Thursday" "28" "July" "2016" "12:22:20" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160728162220.B178134EAE6@smtpvbsrv1.mitre.org>" "78" "[oss-security] Re: CVE Request: redis: World readable .rediscli_history" "^Cc:" nil nil "7" "2016072816:22:20" "[oss-security] Re: CVE Request: redis: World readable .rediscli_history" (number mark "        cve-assign@m Jul 28   78/3588  " thread-indent "\"[oss-security] Re: CVE Request: redis: World readable .rediscli_history\"\n") "<20160728073234.GA8817@lorien.valinor.li>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17774 invoked by uid 550); 19 Jan 2018 13:36:00 -0000
+Received: (qmail 29883 invoked by uid 550); 28 Jul 2016 16:22:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,66 +11,91 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5570 invoked from network); 19 Jan 2018 13:23:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cloudlinux-com.20150623.gappssmtp.com; s=20150623;
-        h=in-reply-to:references:from:mime-version:date:message-id:subject:to;
-        bh=2NYFUaPL8ITic4AxkrHBe/IzAeM4IXB9bnP7FtgHRes=;
-        b=tvAeXKbVE1Xj9cjCa3sfmih8nK7a250buDKIidgt/UVcAFYkCEZFd708Qcl23Py3Dk
-         bRrRV1OHDgljd3BNJKSPaFR7BNQCewaX2tFcwuGNzAyQoks5+4YQI++3kF2h3E6CzXvH
-         PwBPP9NkrdmUXMkk/iUq2x8r8XVenDCc6aOaAhR3aYQvRGVchb5v46gvjnTqtU0QzDS2
-         eJjI3bm+ofzzmTWgdGxKYrkZWZ2XFquxGklDcWKcwyOHXgcocKLmoMhf4F4T0RmLnp0g
-         W/fHm5y0W4B0f/3GzyM3Ry4bIsP0PhWBrTLIG/ehHa6i5b0PQINubc+q0VmafeJ+4roI
-         IVPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:in-reply-to:references:from:mime-version:date
-         :message-id:subject:to;
-        bh=2NYFUaPL8ITic4AxkrHBe/IzAeM4IXB9bnP7FtgHRes=;
-        b=BqIijXgrt5VDuDCRy4M1WFueFU++FCCS/Kd/xNiI8xVU5P5/rvp9QVJWrBHKE9TRA2
-         Hdjyw2wvXOiqELD97Fa4zldAGnps4Uu+4Qj6Lqg+Nw8BO2F+g2UyUxuWVNeYSsCtfgzd
-         0KOPoVL77+aAuL+6k6Wv2IKXisrNceksVJjTtCZwHaNqxTHzoZF3G7ciVxuK7sX50Pkb
-         g/zp2fSBAskArEPPhLSgL9iLMDHoJCvLiSoCx/VxY1LXs1CqHqnQdvKFNSen3asARs6E
-         zt44RAVwIrrjmzNViqhkqpK4ZMjnUHpyXjIh2aeL5h9DsRhrm4lb4ffJ/gQ65Fv8WCX1
-         2RrA==
-X-Gm-Message-State: AKwxytcBhTAzz9Th+5zsQZRbs3/TE6nhyTM+fvXVZKobwuMIgnQYueu2
-	8gKRA+PIT5LaApZms0WIBK3SEKQU4gknPCA1ji+bcQ==
-X-Google-Smtp-Source: ACJfBov7siTpmyVSsrJeBxYRZteXIyn9qJaPMGNF83doPMWVIlXjO96EIM6nF16E+XDtum//mhlbX19qQJOqZH5FDr4=
-X-Received: by 10.36.13.209 with SMTP id 200mr32612603itx.25.1516368179334;
- Fri, 19 Jan 2018 05:22:59 -0800 (PST)
-In-Reply-To: <efa92101-facb-84ff-7582-78583e8c7381@hpe.com>
-References: <20180118220124.GA9185@openwall.com> <efa92101-facb-84ff-7582-78583e8c7381@hpe.com>
-MIME-Version: 1.0
-Message-ID: <CA+-XxSE1d+8b7cbfs7BknJQ9yy7w4sw=0EVwf=gpz43JAVWyhQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Fri, 19 Jan 2018 05:22:58 -0800
-From: i@cloudlinux.com
+Received: (qmail 29865 invoked from network); 28 Jul 2016 16:22:32 -0000
+In-Reply-To: <20160728073234.GA8817@lorien.valinor.li>
+Message-Id: <20160728162220.B178134EAE6@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 28 Jul 2016 12:22:20 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] How to deal with reporters who don't want their
- bugs fixed?
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Request: redis: World readable .rediscli_history
+To: carnil@debian.org
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-We have seen "semi-public" with Meltdown -- I think it was dreadful. I
-would prefer private to "semi-public" any day.
------BEGIN PGP SIGNATURE-----
-Version: FlowCrypt 5.1.8 Gmail Encryption flowcrypt.com
-Comment: Seamlessly send, receive and search encrypted email
+> https://bugs.debian.org/832460
 
-wsFcBAEBCAAQBQJaYfEwCRDNe7NtZrd+DQAA/i4P/jjhkbmnFTDXU+ksSwYS
-x0pyAPKj0Qzbn/fS2QVMcmRnZl2U3oYDpwRIJbRnLV+NGwFeqBMHVqx+kFMB
-DeNMxqtlt6N15RbyjphLLK20QwdqD7RuqXh9xhV2eCm0SRk2hnzIw/z/u8Hq
-CnQRXgsT6eiscvT+/uHzI628lGz7N5J+c7h4RoNbbtNVx64BDDEvsrWZgbKJ
-9iW65HQ6S+lu6UiDXaGcbRJ5bYbbAumg0E/5KZMBlvc7ADQddiFg/nM2M+zW
-JQX8ZqHOkMmOMvtuR6QkkkQqibWKEyRjwyTSexocdfU1azeZYS4BGk/t0m4o
-cjCgEwbguLgfCoye1y9jIuNIMFyMSq9scoU84PqFlRWTjDkjsaR+Sjtp/0sf
-S07vlRXAe2t9ZuBOU8/H5Vf9GNQKg9oV3OfKvAu5QGAGos/rjkSLSIgqZl/n
-815jHyM63IDBB+cYBCNxoRhxdzklrxi5smjtm25vD58SZxtyND0e2oXXnrnH
-B60dT9tH4PPfyFigSfNU34R8yJC8cvOOaSvFu3dV0MUexMs0vVayyHzVccwe
-sZsfeTBI/8VyfRChcF9vshrBn2MdGhOG8rYxvm0wqBU0ISQPf8Cv9P7c6jPq
-2mmjBDdH2hckos3VbyYgdqFbo7A0OMTN0a06mPgjreLL8eQZ33CTAk3DBo1A
-r8lx
-=Crf/
+>> redis-cli stores its history in ~/.rediscli_history, this file is
+>> created with permissions 0644. Home folders are world readable as well
+>> in debian, so any user can access other users' redis history, including
+>> AUTH commands, which include credentials.
+>>
+>> I've contacted upstream on 2016-05-30 without any reaction at all and
+>> discovered this bug was first reported 3 years ago, still unfixed.
+>> @RedisLabs keeps referring to their paid support on twitter.
+>>
+>> Demo: `cat /home/*/.rediscli_history`
+
+> Upstream report: https://github.com/antirez/redis/issues/3284
+
+>>> https://github.com/antirez/redis/pull/3322
+>>> https://github.com/antirez/redis/pull/1418
+
+> Could you please assign a CVE for this issue in redis?
+
+As far as we can tell, this is being presented as a vulnerability in
+Redis, not a vulnerability in Linenoise.
+https://github.com/antirez/linenoise/blob/master/README.markdown says
+"A minimal, zero-config, BSD licensed, readline replacement used in
+Redis, MongoDB, and Android." Because it has a "minimal" design goal,
+it seems reasonable to argue that the linenoiseHistorySave function
+itself should not be making umask changes, because it cannot know
+whether history elements are potentially sensitive information within
+an arbitrary application that uses Linenoise. Also, the "History"
+section of README.markdown says "Linenoise has direct support for
+persisting the history into an history file. The functions
+linenoiseHistorySave and linenoiseHistoryLoad do just that. Both
+functions return -1 on error and 0 on success." It does not offer any
+guidance about whether this is typically safe.
+
+Admittedly, there is a counterargument that command history is always
+sensitive information, and that the design of the linenoiseHistorySave
+function is fundamentally wrong. We are not currently using that
+perspective for CVE ID assignments. (Also,
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=832460#20 suggests
+that there isn't a huge amount of affected code.)
+
+Use CVE-2013-7458 for the Redis vulnerability.
+
+If there are other issues (such as in the
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=832460#25 report)
+that also need CVE IDs, please send a message about the others.
+Separate CVE IDs are also useful for host-based vulnerability
+scanning, e.g., a vulnerability check for a readable
+~/.rediscli_history file completely covers CVE-2013-7458. A check for
+a readable ~/.dbshell file (if that is indeed a vulnerability) would
+map to a different CVE ID.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXmjBnAAoJEHb/MwWLVhi2XbUP/0Hx1N1IVhL3BJH+Ja5IBWrO
+b7EhDkUl/31ZdT+iSJFbyt1VYLt2K+x54SwyDE3qhcXriU+kzOGJzgHep1TwAUbD
+/vVKaNiLS6yAM9NRNpLI/IPL2Z6Xzt54cgYxYW/d7btRctFJKza9vKCkQeuIWtEN
+oR9Gfq3901wPxskRSKgzo6n5run1SfvRQ+icx8QO/7pqtPXfWiwweZXQYH/vIENe
+VdG5Hc/BFiJoPaWBQnP9z/Wmp1e9vtJjxzVZmFSWI8mq7MLCZgXqsBTpuxgrR+uB
+SUg5RexMz9zIfUmCZJ966SuDzc7Pg2FcmknrZcWmD2gZORZxRFJ4PXpya6znRaCU
+HCwh7dn+956EVs+UqOS0z1zBPKA3iOyVBSV7P4uwZ9X17UF2rVnVUTW2/NnR5zaA
+4hO+dtDMcHN43ESv3gakwPcvazsSkix+ACiWYJqwdR76EnAZIPtv+kscGtgq7sC/
+oQts0akBLAF49ppNCoHyJx87w8aOJ2jzcM7D41Yr8y0nVDFwux8zniw51N7i0/LX
+r27waQaRkrGSGCTPyovCAVrN9sh3qK/8TKGHpvN9z4wO4fi89PK/ZadixWpDTZFd
+neI9zWY1h/AMuT1oPay2lWy5Kj3G5Px253wX7DPDJTgreCbZN2Iupac7hULA28oG
+qEIvs2HrpjkHZZxW5NMN
+=Xa5w
 -----END PGP SIGNATURE-----
