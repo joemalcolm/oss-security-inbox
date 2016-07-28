@@ -1,89 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/8
-Message-ID: <02ce68e5bcd74bd18aa952eb5cc10432@imshyb02.MITRE.ORG>
-Date: Sun, 4 Dec 2016 22:22:50 -0500
-From: <cve-assign@...re.org>
-To: <hanno@...eck.de>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: gstreamer multiple issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/16
+Message-Id: <20160728210138.B68BC42E01D@smtpvbsrv1.mitre.org>
+Date: Thu, 28 Jul 2016 17:01:38 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: paps: heap overflow when processing crafted file
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://bugzilla.gnome.org/show_bug.cgi?id=774859
-> https://cgit.freedesktop.org/gstreamer/gst-plugins-good/commit/?id=153a8ae752c90d07190ef45803422a4f71ea8bff 
+> it was discovered during fuzzing that a crafted file causes an heap overflow
+> in paps ( https://sourceforge.net/projects/paps/ ).
 
-> Invalid memory read in flx_decode_chunks (gst-plugins-good)
->> AddressSanitizer: SEGV on unknown address
->> flx_decode_chunks ... gstreamer/gst-plugins-good/gst/flx/gstflxdec.c:255:9
+We would need someone to contribute additional risk analysis before we
+would assign a CVE ID. We realize that
+https://blogs.gentoo.org/ago/2016/07/28/paps-heap-based-buffer-overflow-in-read_file-paps-c/
+says "It provides both a stand alone command line tool as well as a
+library." The https://sourceforge.net/p/paps/code/ci/master/tree/src/
+code has the library (in libpaps.c) whereas the
+https://github.com/dov/paps code does not. In any case,
+https://blogs.gentoo.org/ago/2016/07/28/paps-heap-based-buffer-overflow-in-read_file-paps-c/
+is about a buffer under-read in the read_file function, which is only
+called from main (not called from any library code). Also, the patch
+is apparently only about handling empty files, not about handling any
+other type of crafted file. If the user runs the command-line program
+on an empty file, a "heap-buffer-overflow ... READ of size 1" occurs
+when trying to read the last character of the file to determine if
+it's a \n character. To avoid this impact, the user can simply stop
+running paps on empty files.
 
-Use CVE-2016-9807.
-
-
-> It also fixes the second flic
-> bug reported by Chris Evans described here:
-> https://scarybeastsecurity.blogspot.com/2016/11/0day-poc-incorrect-fix-for-gstreamer.html
-
->> the format permits multiple skip and count pairs per canvas line. And
->> the skip counts are considered individually rather than cumulatively.
->> Therefore, it.s possible to get the skip + count check to pass while
->> still writing off the end of the line.
-
-Use CVE-2016-9808 for this Chris Evans discovery. (As far as we can
-tell, this "second flic bug" exists because of an incomplete fix for
-CVE-2016-9635.)
-
-
-> The fix is a larger rewrite of the affected code paths and probably
-> fixed a bunch of other issues on the way.
-
-There isn't a CVE ID that applies to the entirety of
-153a8ae752c90d07190ef45803422a4f71ea8bff. If anyone has discovered
-other vulnerabilities that were already fixed in
-153a8ae752c90d07190ef45803422a4f71ea8bff, and requires additional CVE
-IDs for them, please let us know specifically what was found.
-
-
-> https://bugzilla.gnome.org/show_bug.cgi?id=774896
-> h264: one byte heap off by one read in gst_h264_parse_set_caps
-> (gst-plugins-bad)
->> This doesn't crash gstreamer
-
-Use CVE-2016-9809.
-
-
-> https://bugzilla.gnome.org/show_bug.cgi?id=774897
-> Invalid memory read in glib caused by one invalid unref call in the
-> flxdec decoder. (gst-plugins-good)
->> Don't unref() parent in the chain function
->> ... We don't own the reference here, it is owned by the caller
-
-Use CVE-2016-9810.
-
-
-> https://bugzilla.gnome.org/show_bug.cgi?id=774902
-> 4 byte heap out of bounds read in windows_icon_typefind
-> (gst-plugins-base)
-
-Use CVE-2016-9811.
-
-
-> https://bugzilla.gnome.org/show_bug.cgi?id=775048
-> 2 byte heap out of bounds read in gst_mpegts_section_new
-> (gst-plugins-bad).
->> The smallest section ever needs to be at least 3 bytes (i.e. just the short
->> header).
->> Non-short headers need to be at least 11 bytes long
-
-Use CVE-2016-9812.
-
-
-> https://bugzilla.gnome.org/show_bug.cgi?id=775120
-> null pointer deref (segfault) in mpegts decoder / _parse_pat
-> (gst-plugins-bad)
-
-Use CVE-2016-9813.
+Because we don't see any other risk, we are not providing a CVE ID at
+this time.
 
 - -- 
 CVE Assignment Team
@@ -93,17 +42,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYRNj9AAoJEHb/MwWLVhi2zFoP/05dkTQfY310j9qyhOcY4sh9
-MjZxlRg24s+vJLMIf5+c9u6FCkCKtlu3Su8e2eli+HKMIEGhY9uTihI/L+yDpJ7J
-SJitxtmWgdq4BpiMi0HUxZE2j8aMbwKUk8rSBqH7ykAulmnDKiE40OE57uh1cl3k
-srPYvHzMxJJJ75Z4XE2URpJ9xQ6Qs1DtcW9CbKGA8vx6iTRvDVwW1//QJ9mTTwXl
-GhXXr8rewljBujD8WewQ00PppODsuqaCpnLEDYHYESxj/59g+shdyTL6mBbhhPN4
-81DNXDj0X3QI3l+x0I5VWJb9VSb1QIsfVRQxFIzu20FS4boMX4kHozESFTs1yM5U
-d2MgUdE3BGmVvqhHE23GtITlOQuk26DCUJ0XbbfiFMwjklIjSWIm85jmCX9vRn3w
-XQjExsxo3q4vrdNKyWIMusYAiIK9JhksZFv+pM2JjaQ748aBbIIiN42bHTXFbs01
-Bg3r2s4LhEAMaLxLKN2N0MqP3zEbVJB+qrSqKIbx/tc7RWQmXmY/Lz66bxzedqoo
-nPhZc1VVQ5wgKVRp8XEpFyt3/Eoia/71baWD+woGweEqLx2SKf+TUGgJi1ITNMdH
-KNVz12t1BX4aF4WkJLK5n4IQ7VnXUOfkcdNxlz62FMafRFGpJVHo/iDxAQRwsNuS
-oSlUKYsfGeUSG/DejAQk
-=1SLG
+iQIcBAEBCAAGBQJXmnJYAAoJEHb/MwWLVhi2bCMP/i+FA2Xil4NRi7Qwn+2v+F11
+o3Hl5Ef1Xooj3qPBCpK+Y5bUHRHhAUGD/kwe7DUx4RO96VyBAwKULSnhPz6BvZ87
+8LWGqh0cY6p8+kCZE8yFiSgwOi9MwHz4RMkjsYtsWlVVBtBsqakf7hZ2FZ5x3rRi
+xcjy6AEWpuhFDqFVXzaZm+BaNyn5ZwxuodxM7KPKkp0NM3hWn4Rp+vL2K/d/GI3a
+AvKLOEVZAbJpfXSt5Po86mX0n0Cn5gMFGmCumxsvZoygZLsASgE6F9pPWsg9wOrh
+GwCwL4S2Zk56x9w9j7RK1lX8jwkTW7tqw8YqUePihUDrhkbKhWG7DtOW+7WKi2yP
+MOAl23ODkf71WT9LC7gxtOHSKhN14rr26VpawhLI4YEMXHIcJFTqBaprVUPLcbAb
+m+bR2hFqXmSpYj4CcjIzFp6WvlpTKRJPQWb6+cZtOJmqCpyuG23Uf3tjYqyktYSV
+HXTdmU1s5vmaUGzjh/5OOLXs8CprrmwWTMWvR7x48D+ZW+P+0XVOZ9Hr6NmoJhfp
+XQjUUhLwcNy9RAeiX9wp5o73XoGi+AtkXR9ZvZGjQmsK+e5h52IMZi8eMCqUHkMw
+rlYSQ3eynlNbQEcbi19m2XS40mfyApkIiqylbTDD2WZ6JgqcfUOUAHoAo6DwVeFt
+YhpgVbqRajNuWJco7FBh
+=Q5EF
 -----END PGP SIGNATURE-----
