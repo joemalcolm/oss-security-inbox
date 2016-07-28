@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["523" "Tuesday" "6" "March" "2018" "09:46:24" "-0500" "Tim Graham" "timograham@gmail.com" "<CAD-rxRC=Sra9eOmzTq1rbkSTzyFCAMALqChi5HdK8f1aaHOgZg@mail.gmail.com>" "10" "[oss-security] Django security releases issued: 2.0.3, 1.11.11, and 1.8.19" nil nil nil "3" "2018030614:46:24" "[oss-security] Django security releases issued: 2.0.3, 1.11.11, and 1.8.19" (number mark "U       timograham@g Mar  6   10/523   " thread-indent "\"[oss-security] Django security releases issued: 2.0.3, 1.11.11, and 1.8.19\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1423" "Thursday" "28" "July" "2016" "15:42:49" "+0100" "Simon McVittie" "smcv@debian.org" "<20160728144249.GB23522@perpetual.pseudorandom.co.uk>" "30" "Re: [oss-security] cve request: systemd-machined: information exposure for docker containers" "^Date:" nil nil "7" "2016072814:42:49" "[oss-security] cve request: systemd-machined: information exposure for docker containers" (number mark "        smcv@debian. Jul 28   30/1423  " thread-indent "\"Re: [oss-security] cve request: systemd-machined: information exposure for docker containers\"\n") "<4b0070a9-e8c3-ac69-a410-2269d9d08b71@redhat.com>" ("<1304293369.8684866.1469539505676.JavaMail.zimbra@redhat.com>" "<20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>" "<20160727170537.GA3330@motoko>" "<398a8ff1-a2ea-9140-c695-c1969ffc58af@redhat.com>" "<20160727200021.GB3330@motoko>" "<B760F07C-908F-431A-8BCE-A3AE9E93E33F@nccgroup.trust>" "<CAEk6tEx0JRNX9q0k8JH2PNkGJO59WVVMhh4=3DkoQFMNkqY9LA@mail.gmail.com>" "<4b0070a9-e8c3-ac69-a410-2269d9d08b71@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3174 invoked by uid 550); 6 Mar 2018 14:46:57 -0000
+Received: (qmail 22274 invoked by uid 550); 28 Jul 2016 14:43:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3133 invoked from network); 6 Mar 2018 14:46:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=sRtymH4xVXgp/ij7B1LfzZU4LSNHC8Ti6iagyJrLp0o=;
-        b=Bui2HS+v56RTxTODX/OTT/noEz7sH5fUVcLXZw00k17WBAnO5gqqpfHnT4xq8nckr9
-         rcuV1OX7nB7MeO9bETf3B9JISJNxlH2pv/Adsp078+oM9mQkDqV3Kak+XVAsRnehrBXP
-         cZRpxrYf2pLsxpOjVUhcEB1oC6/eEfvkizJG79O5F7mmZK3pxpJK95EpvhqZHebADblW
-         1Vl6VSzeK4cyzpzGbUbenbbdYF7yFlDjLvo4nA6O8wvKZmOf0agTEqhgRA7ZWKF6Sx7C
-         apeXekakXv73VxusI0aEZ9HvA9AtYFagcVi/VBrQcjNS/aa/gtNIULKfpDB6vAzLkNlH
-         Gdcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=sRtymH4xVXgp/ij7B1LfzZU4LSNHC8Ti6iagyJrLp0o=;
-        b=U6VMF+PO/0j24OF0JY8yKr7KGsTXhLHQtOADG09dLUGpRNTN514LvlNrBggQbRtrF3
-         SMfhiDecBvzToO3bmDcEuN2AYk/OQxK0mhQ9+TkPw+4nSLF7NzvrFsGS0Zg2yyxedvkn
-         io5gVapfBcP6CZ12cW7GotigwsQqMpcduSvzD1kFZydP7aANbOpj/jEjWl8lC4uv6Zjv
-         MkJ2NFeO6aGAPcKbEekKsHXr67MTOdw6t8RTT3CSJaelhn4zvkJyN/el+7YYPoImKuO9
-         qHhTmoQq+v7wUytr6QzOq+5Yd5RpxjvvUCRgw5wNOvz8ikjvN3OFaBAAoAw94qR+iauN
-         4TdQ==
-X-Gm-Message-State: AElRT7HfYjmmrfCwSTvuFI+8JWU14BOMiE4XglNy9f2+14uA2wFJjVxk
-	nZQVpWviFX8HvXI7unPjTwJLJOVR6vtVbbYxL2RLbXVu
-X-Google-Smtp-Source: AG47ELs3I/11s7Z0qX3PHLOqooHboLhV4EXO3JHAO9Wn3cTAANtpVjkdThBEB4izY3dJdMYEncXpv5ixU+3E4Cx+iFY=
-X-Received: by 10.55.74.2 with SMTP id x2mr26994099qka.314.1520347604456; Tue,
- 06 Mar 2018 06:46:44 -0800 (PST)
+Received: (qmail 22227 invoked from network); 28 Jul 2016 14:43:01 -0000
+Message-ID: <20160728144249.GB23522@perpetual.pseudorandom.co.uk>
+References: <1304293369.8684866.1469539505676.JavaMail.zimbra@redhat.com>
+ <20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>
+ <20160727170537.GA3330@motoko>
+ <398a8ff1-a2ea-9140-c695-c1969ffc58af@redhat.com>
+ <20160727200021.GB3330@motoko>
+ <B760F07C-908F-431A-8BCE-A3AE9E93E33F@nccgroup.trust>
+ <CAEk6tEx0JRNX9q0k8JH2PNkGJO59WVVMhh4=3DkoQFMNkqY9LA@mail.gmail.com>
+ <4b0070a9-e8c3-ac69-a410-2269d9d08b71@redhat.com>
 MIME-Version: 1.0
-From: Tim Graham <timograham@gmail.com>
-Date: Tue, 6 Mar 2018 09:46:24 -0500
-Message-ID: <CAD-rxRC=Sra9eOmzTq1rbkSTzyFCAMALqChi5HdK8f1aaHOgZg@mail.gmail.com>
-To: django-announce@googlegroups.com
-Cc: "Django developers (Contributions to Django itself)" <django-developers@googlegroups.com>, django-users@googlegroups.com, 
-	oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Django security releases issued: 2.0.3, 1.11.11, and 1.8.19
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4b0070a9-e8c3-ac69-a410-2269d9d08b71@redhat.com>
+User-Agent: Mutt/1.6.0 (2016-04-01)
+Date: Thu, 28 Jul 2016 15:42:49 +0100
+From: Simon McVittie <smcv@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] cve request: systemd-machined: information
+ exposure for docker containers
+To: oss-security@lists.openwall.com
 
-Today the Django team issued Django 2.0.3, 1.11.11, and 1.8.19 as part
-of our security process. These releases address two security issues,
-and we encourage all users to upgrade as soon as possible:
+On Thu, 28 Jul 2016 at 08:34:35 -0400, Daniel J Walsh wrote:
+> Lennart is wrong when he states that this only effects "user"
+> containers, any container that registers with
+> machinectl, will have this information revealed to non privileged user
+> processes.
 
-https://www.djangoproject.com/weblog/2018/mar/06/security-releases/
+*Which* unprivileged user processes?
 
-As a reminder, we ask that potential security issues be reported via
-private email to security@djangoproject.com and not via Django's Trac
-instance or the django-developers list. Please see
-https://www.djangoproject.com/security for further information.
+If the unprivileged user processes are not in a container, they can get a
+significant amount of the same information by reading the host's /proc.
+
+If the unprivileged user processes are in a container or other confinement
+that prevents them from looking at the host's /proc, then one of the other
+things that confinement can/should prevent is unfiltered access to the host
+system's D-Bus system bus, which is how machinectl talks to systemd-machined.
+
+Lennart also points out on the systemd bug that the
+methods in question can be access-controlled (at your
+own risk, the policy language is horrible) by modifying
+/etc/dbus-1/system.d/org.freedesktop.machine1.conf. They don't appear to
+be mediated by /usr/share/polkit-1/actions/org.freedesktop.machine1.policy
+too, but they could be; that would be an enhancement request for systemd
+upstream.
+
+I think the bottom line here is that if the author of a container integration
+tool chooses to publish information in a central registry (systemd-machined),
+then they shouldn't be surprised to find the central registry's security model
+getting applied to that information.
+
+    S
