@@ -1,34 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/25/2
-Message-ID: <CALJHwhSoHKvrNxFbYL4HJk4GtxHxaetQWBZQQf8ROVYqm+N=dg@mail.gmail.com>
-Date: Mon, 25 Jul 2016 10:51:16 +1000
-From: Wade Mealing <wmealing@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-5400 - linux kernel: denial of service in airspy USB driver.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/9
+Message-Id: <20160728162022.A49C58BC3D3@smtpvmsrv1.mitre.org>
+Date: Thu, 28 Jul 2016 12:20:22 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
+Subject: Re: CVE Request Qemu: virtio: infinite loop in virtqueue_pop
 Content-Type: text/plain; charset=utf-8
 
-Hit send too early,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+> Quick emulator(Qemu) built with the virtio framework is vulnerable to an
+> infinite loop issue. It could occur if the guest was to set the I/O descriptor
+> buffer length to be zero. A privileged user inside guest could use this flaw
+> to potentially crash the Qemu instance on the host resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-07/msg06246.html
 
-Upstream patch:
-https://git.linuxtv.org/media_tree.git/commit/?id=eca2d34b9d2ce70165a50510659838e28ca22742
+Use CVE-2016-6490.
 
-Maintainer has yet to send to LKML.
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/virtio/virtio.c but
+that may be an expected place for a later update.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-On Mon, Jul 25, 2016 at 10:50 AM, Wade Mealing <wmealing@...hat.com> wrote:
-> Hello All,
->
-> A flaw was found in the linux kernel's implementation of the airspy
-> USB device driver in which a leak was found when a subdev or SDR are
-> plugged into the host.
->
-> An attacker can create an targeted USB device which can emulate 64 of
-> these devices. Then by emulating an additional device which
-> continuously connects and disconnects, each connection attempt will
-> leak memory which can not be recovered.
->
-> This issue was assigned CVE-2016-5400.
->
-> Wade Mealing
-> Red Hat Product Security Team
+iQIcBAEBCAAGBQJXmjADAAoJEHb/MwWLVhi2KZ8P/jkyKrIQY2ryaoptTvhMn41U
+D1TgFaTnQwZAfCLeF4r45Uy1h2G4TmsE+XHnk2gOaqFkBFiYRKBEOKqv7pEszohC
+MvKyQC2WPIuQnM8Y/KIy4Xgpw/UVjQfnWtg2dW6Hb4kg/H7WL602vIlE0yxa2BGz
+ZpBRQViB/qOn9MI4+5lHdc5jSGlVBLJUEK7Ckm83AejMwF7VVeFfnxM/jGreBH1/
+SejweRYV2c9nKsYH41wBvTD482Ee+hLY5cC2CDMKsG/NB015KGY66yzh41vUDLXI
+Rc3nxjD9PSxaPvzXyl8ha6cnYZy4H5qWmEUhC96hoPPEOgtiatE8Ekcf8q7reUVM
+MI9LXjSaZy7MZOTuS75Ha2lKPqPaBHuCpe/SxpS3vD4BjG7ZpZrTthyZYO1eJz49
+f7FxXVb1TLc0GjkWLlWh31EuABldZzwBFXqOIfyYrCsoPngfSgViq1i2GjKgz+XB
+5D8mz8jXTcklV2P7EE8nj72aT6YHbwi089oR5oNQzWDAsz86oTYqXghSHHs6MRRx
+NweiubIUxDvDVYuGtHlJbVLAUIKeV5O1zIfqAs4YxkC0ADqaz29KWEL5+IBd84nJ
+Gg4NJYg1VhztrGCwUmMeqflT1OaduIZkSGgGnzv24oYpoSxF2ZZB3KhSIu/atT50
+lmUdCpS6w6UUlT6LMSLd
+=7n+b
+-----END PGP SIGNATURE-----
