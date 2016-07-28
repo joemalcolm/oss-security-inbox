@@ -1,39 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/1
-Message-ID: <3230301C09DEF9499B442BBE162C5E48AC0EAB12@sestoex09.enea.se>
-Date: Wed, 14 Dec 2016 08:19:09 +0000
-From: Sona Sarmadi <sona.sarmadi@...a.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "cve-assign@...re.org" <cve-assign@...re.org>
-Subject: vulnerable version: 4.8.12 and previous versions but xml file says: cpe:/o:linux:linux_kernel:4.8.12"/>  
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/2
+Message-ID: <alpine.LFD.2.20.1607281651320.26930@wniryva>
+Date: Thu, 28 Jul 2016 17:00:39 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: paulus@....ibm.com, David Gibson <dgibson@...hat.com>
+Subject: CVE-2016-5412 Kernel: powerpc: kvm: Infinite loop via H_CEDE hypercall when running under hypervisor-mode
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+   Hello,
 
-It seems that nvd.xml files (e.g. nvdcve-2.0-2016.xml) does not list vulnerable versions correctly. One example is the following CVE. Vulnerable versions are according to the link below "linux kernel 4.8.12 and previous versions":
+Linux kernel built with for the PowerPC platform with KVM Virtualisation with 
+hypervisor-mode support(CONFIG_KVM_BOOK3S_64_HV) enabled is vulnerable to a 
+DoS issue. It could occur if a guest kernel running under hypervisor-mode KVM 
+(i.e. "HV KVM" rather than "PR KVM"), does the H_CEDE hypercall while a 
+suspended transaction exists, the host CPU may, under certain circumstances, 
+hang in an infinite loop with interrupts disabled.
 
-https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-8655 
+A user/process inside guest could use this flaw to crash the host kernel 
+resulting in DoS.
 
-      Race condition in net/packet/af_packet.c in the Linux kernel through 4.8.12 ..
+Upstream patches:
+-----------------
+   -> https://marc.info/?l=kvm&m=146968629127349&w=2
+
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1349916
 
 
-Vulnerable software and versions
-+ Configuration 1
-* OR
-* cpe:/o:linux:linux_kernel:4.8.12 and previous versions
-
-While in the xml file it just mention "cpe:/o:linux:linux_kernel:4.8.12"
-
-nvdcve-2.0-2016.xml:
-..
-<entry id="CVE-2016-9919">
-    <vuln:vulnerable-configuration id="http://nvd.nist.gov/">
-      <cpe-lang:logical-test operator="OR" negate="false">
-        <cpe-lang:fact-ref name="cpe:/o:linux:linux_kernel:4.8.12"/>  
-      </cpe-lang:logical-test>
-    </vuln:vulnerable-configuration>
-    <vuln:vulnerable-software-list>
-      <vuln:product>cpe:/o:linux:linux_kernel:4.8.12</vuln:product>
-
-Cheers
-//Sona
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
