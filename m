@@ -1,4 +1,9 @@
-Received: (qmail 3310 invoked by uid 550); 8 Aug 2022 11:07:48 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2201" "Friday" "29" "July" "2016" "13:28:48" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160729172848.B025EABC9D4@smtpvmsrv1.mitre.org>" "55" "[oss-security] Re: CVE request: mongodb: world-readable .dbshell history file" nil nil nil "7" "2016072917:28:48" "[oss-security] Re: CVE request: mongodb: world-readable .dbshell history file" (number mark "U       cve-assign@m Jul 29   55/2201  " thread-indent "\"[oss-security] Re: CVE request: mongodb: world-readable .dbshell history file\"\n") "<20160729170700.977@usenet.piggo.com>" ("<20160729170700.977@usenet.piggo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5907 invoked by uid 550); 29 Jul 2016 17:29:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,81 +12,67 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1763 invoked from network); 8 Aug 2022 11:07:22 -0000
-Date: Mon, 8 Aug 2022 13:07:13 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Cc: David Bouman <dbouman03@gmail.com>
-Message-ID: <20220808110713.GA18509@openwall.com>
-References: <d5567e4b-884c-9449-1cfc-0c21b6a4a752@gmail.com> <YmLRsltx7Y1s0vo2@eldamar.lan>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YmLRsltx7Y1s0vo2@eldamar.lan>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Linux: UaF due to concurrency issue in io_uring timeouts
+Received: (qmail 5886 invoked from network); 29 Jul 2016 17:29:00 -0000
+From: cve-assign@mitre.org
+To: seb@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20160729170700.977@usenet.piggo.com>
+Message-Id: <20160729172848.B025EABC9D4@smtpvmsrv1.mitre.org>
+Date: Fri, 29 Jul 2016 13:28:48 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: mongodb: world-readable .dbshell history file
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Jayden and David have recently published a lengthy write-up on this
-vulnerability, here:
-
-https://ruia-ruia.github.io/2022/08/05/CVE-2022-29582-io-uring/
-
-and exploit here:
-
-https://github.com/Ruia-ruia/CVE-2022-29582-Exploit
-
-Alexander
-
-On Fri, Apr 22, 2022 at 06:02:58PM +0200, Salvatore Bonaccorso wrote:
-> Hi David,
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=832908
 > 
-> On Fri, Apr 22, 2022 at 02:43:27AM +0200, David Bouman wrote:
-> > Hello list,
-> > 
-> > We (Jayden Rivers and David Bouman) are disclosing a bug we found in the
-> > Linux kernel's io_uring subsystem. We have written a local privilege
-> > escalation PoC that can successfully elevate to system root from an
-> > unprivileged process (in a container). We will be releasing a blog post
-> > (including exploit code) in a week or two. It should be noted that unlike
-> > many Linux vulnerabilities that have surfaced recently, triggering this one
-> > does not require an attacker to have any kind of privileges (e.g. in a user
-> > namespace). This leaves many systems vulnerable.
-> > 
-> > We are still looking for a CNA representative that can assign a CVE number
-> > for this vulnerability; please contact us!
-> > 
-> > Kernel versions 5.10+ are affected, and linux-stable patches are already
-> > pushed. The upstream patch commit is
-> > e677edbcabee849bfdd43f1602bccbecf736a646 ("io_uring: fix race between
-> > timeout flush and removal").
-> > 
-> > When the IORING_OP_TIMEOUT (T) and IORING_OP_LINK_TIMEOUT (LT) opcodes are
-> > combined in a linked submission queue entry, and another request (B)
-> > finishes, a race might occur: namely, when due to the completion of B, T is
-> > cancelled (through the completion event count), and LT is canceled by its
-> > hrtimer at the same time. Whilst T is still being cleaned up, LT is already
-> > freed by a different execution context, and since they are linked, the
-> > cleanup of T retains a dangling reference to the now-freed LT. Hence,
-> > there's a use-after-free.
-> > 
-> > Exploitation-wise, the attacker can reallocate LT to another `struct
-> > io_kiocb` and defer the UaF to e.g. a `struct file` (this is the technique
-> > we will describe in aforementioned blog post).
-> > 
-> > The race window is quite tight and the scenario is complicated, so the race
-> > can only be won very infrequently in our experience.
-> > 
-> > It is advised to upgrade your kernel to latest ASAP.
-> > 
-> > Greetings,
-> > 
-> > Jayden Rivers & David Bouman
+> | During the report on redis-tools
+> | (https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=832460), lamby@
+> | linked to a codesearch and the same bug was found in mongodb-clients.
+> |
+> | mongodb-clients stores its history in ~/.dbshell, this file is created
+> | with permissions 0644. Home folders are world readable as well in
+> | debian, so any user can access other users mongodb history, even though
+> | db.auth commands don't appear to be logged like redis did.
+> |
+> | I filed a bug on upstream as well:
+> | https://jira.mongodb.org/browse/SERVER-25335
 > 
-> This has CVE-2022-29582 assigned.
+> The mongodb client doesn't store authentication commands, but there's
+> still information leakage, though, even if only about database and
+> collection names, or data structure.
 > 
-> https://www.cve.org/CVERecord?id=CVE-2022-29582
+> As for data itself, the history could also contain sensitive
+> information; for instance, if usernames for some other service were
+> stored in a mongo collection, the history could contain lines like:
 > 
-> Regards,
-> Salvatore
+>   db.users.find({user:"foo"})
+> 
+> or even:
+> 
+>   db.users.update({user:"foo"},{$set:{password:"OhComeOnNow"}})
+
+Use CVE-2016-6494.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXm5HHAAoJEHb/MwWLVhi20SgQAKIXsSDuAQzAY3DN67osMxAg
+BuEh9En380VzBzqz+O83tjJyqJ6kx+Ed9WWc6Yl4nd0rUW1YdnOSvK+RF1c0nN2s
+ndfb3cHkC2sTCfJyh5GvDdthYLr0Th0GabAzmgOoc4QhCSHykxxGFHgEhI5Wem6T
+MclVy95MpBRb3g2XNH2ue96CxRFK2buT3fZerewZe8OBh7dh6nxDEKfLKodz8zaK
+vUgINsgoP53GuhlCJYExf9O4JLY2wn3CFjWTGfoMY7wDxl9Rr5VwOuBaSgO6i+Ay
+MxjMApDumENwSBtXtUQ/54WPez4IxqWU193gq31V4kVWEfBvlb9QHUsd1qyWsQVp
+OtboCgvY2K0u5O9ZVK/H+zJDhqe/fxw2HjMxlwju3ENORuCUFpz/nErLWXSc+iaj
+C2WmJPD0O+8mzJnOCjY8WuHJtetGorivbbKTbWk2C5r3NHMI7X9DYKiiz5ISD6Us
+kXVjWxXdHqfCVG3JvpmJi78Pw/+DPgw9D3sg4BTY+bhEB+Gguvh8TMVTkjtOSsBh
+i5ORa+1EhvGhYVXVZJZUK0bvEH/Pxuh6Yc2WX8LWFG2Fauw5d+1sSovLls6oLnp7
+xDXqv7DN6NTu3iza24JWfsZBOUTVKminX42EonOu7yOVtW5oIRO6wCALd0OiL/SP
+EOsVcn9sPCF9HQog0jSZ
+=OQs9
+-----END PGP SIGNATURE-----
