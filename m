@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["687" "Monday" "29" "June" "2015" "12:52:13" "-0400" "Giancarlo Canales" "gcanalesb@me.com" "<1E5ABE12-1C64-492D-AEA4-FAC8EE1B2151@me.com>" "27" "[oss-security] CVE request: Stack overflow in redcarpet's header_anchor" nil nil nil "6" "2015062916:52:13" "[oss-security] CVE request: Stack overflow in redcarpet's header_anchor" (number mark "        gcanalesb@me Jun 29   27/687   " thread-indent "\"[oss-security] CVE request: Stack overflow in redcarpet's header_anchor\"\n") "<9F15CD0F-3D8D-4987-BB87-BAE3D4F728C1@me.com>" ("<9F15CD0F-3D8D-4987-BB87-BAE3D4F728C1@me.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1470" "Friday" "29" "July" "2016" "12:25:30" "-0400" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20160729122530.3574dcaf@pc1>" "41" "Re: [oss-security] CVE request: multiple issues fixed in GNU libidn 1.33" nil nil nil "7" "2016072916:25:30" "[oss-security] CVE request: multiple issues fixed in GNU libidn 1.33" (number mark "U       hanno@hboeck Jul 29   41/1470  " thread-indent "\"Re: [oss-security] CVE request: multiple issues fixed in GNU libidn 1.33\"\n") "<2fcfb94f-179b-eae1-817a-e940d793b2e9@suse.com>" ("<2fcfb94f-179b-eae1-817a-e940d793b2e9@suse.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26603 invoked by uid 550); 29 Jun 2015 16:52:42 -0000
+Received: (qmail 27992 invoked by uid 550); 29 Jul 2016 16:25:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26580 invoked from network); 29 Jun 2015 16:52:41 -0000
-X-Proofpoint-Virus-Version: vendor=fsecure
- engine=2.50.10432:5.14.151,1.0.33,0.0.0000
- definitions=2015-06-29_03:2015-06-29,2015-06-29,1970-01-01 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- suspectscore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=7.0.1-1412110000 definitions=main-1506290270
-Content-type: text/plain; charset=us-ascii
-MIME-version: 1.0 (1.0)
-X-Mailer: iPhone Mail (12F70)
-In-reply-to: <9F15CD0F-3D8D-4987-BB87-BAE3D4F728C1@me.com>
-Content-transfer-encoding: quoted-printable
-Message-id: <1E5ABE12-1C64-492D-AEA4-FAC8EE1B2151@me.com>
-References: <9F15CD0F-3D8D-4987-BB87-BAE3D4F728C1@me.com>
-Cc: "cve-assign@mitre.org" <cve-assign@mitre.org>
-Date: Mon, 29 Jun 2015 12:52:13 -0400
-From: Giancarlo Canales <gcanalesb@me.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: Stack overflow in redcarpet's header_anchor
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 27970 invoked from network); 29 Jul 2016 16:25:45 -0000
+Date: Fri, 29 Jul 2016 12:25:30 -0400
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20160729122530.3574dcaf@pc1>
+In-Reply-To: <2fcfb94f-179b-eae1-817a-e940d793b2e9@suse.com>
+References: <2fcfb94f-179b-eae1-817a-e940d793b2e9@suse.com>
+X-Mailer: Claws Mail 3.13.2 (GTK+ 2.24.30; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-12944-1469809534-0001-2"
+Subject: Re: [oss-security] CVE request: multiple issues fixed in GNU libidn
+ 1.33
 
-After examining the redcarpet source code, I noticed that header_anchor use=
-s variable length arrays (VLA) without any range checking.
+--=_zucker.schokokeks.org-12944-1469809534-0001-2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-This is conducive to a stack overflow, followed by the potential for arbitr=
-ary code execution.
+Thanks for raising this.
 
-Redcarpet is a Markdown parser library.
+libidn is also bundled in glibc, I have reported those a while ago:
+https://sourceware.org/bugzilla/show_bug.cgi?id=3D19728
+https://sourceware.org/bugzilla/show_bug.cgi?id=3D19729
 
-I'm requesting a CVE number for this vulnerability.
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
 
-Title: Stack overflow in redcarpet's header_anchor
-Products: redcarpet
-Affects: v3.3.0 - v3.3.1
-Type: Stack overflow
-First CVE request: Yes
-Fixed: Yes, v3.3.2
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
 
-Fix:
-https://github.com/vmg/redcarpet/commit/2cee777c1e5babe8a1e2683d31ea75cc4af=
-e55fb
+--=_zucker.schokokeks.org-12944-1469809534-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
 
-Changelog:
-https://github.com/vmg/redcarpet/blob/master/CHANGELOG.md
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-Thanks,=20
+iQIcBAEBCgAGBQJXm4N6AAoJEKWIAHK7tR5CpZ4P/33A++se/GXVbuyelSDSSCX5
+4owK0nyeKtw0oxO4scnVOyPdQ7RyY1n+DyZW74txwrajniUhTqXlP1noxm0l9A1P
++RONH7/ybRZBqoHaADvAirO24jYkHNbDbeD93rnfkxmU022aqNBjVBLpUPuotJWp
+cXEEI8cQzA6d1mTvkZbURfAVx8bkLK3HYLuOgPs1VxDmKPxSzuPQ5SfPDQZEIpXt
+v9N99Z4X4nxzf/muxwTI8EwC37hO+AbAtpxaKVV93wbNmUv1wJhyyksQGNjAnihW
+jak93zq2JwTye+IuXXkAxxZg4t4NgkXrLpZD04xRMgtoxTbDiYvsrV+3tjc0Jkqe
+YwZvsb4jKQyCJvg27OjHt2ENnP7gvwhztvFYxwtVhL7Tl6WecGbUhXSSodU1yhrK
+4PkAybiuqFcR7plN/GfBzALt1FFM6AOz1AE5nu7HbRiXHIb4QwnljVN79k2e9Ox2
+flAHhUbjvB7GPm9GrFj/6N59liti4Dy0mkD0PFNfWOg3+9VfNjWDa+VXuv74dtHo
+AzhqmnHVomlg+nhIjSFWeoFmumJgnvQLiNeMiu3hUzlS72gPPgyFV1UUAsAWQbYy
+xpWHMe1q8XvrlaEVjHygHb4qh0dqJ+tSikLbVKKewS0MtfWhWdKmorIsBdetwf79
+QJmXTNPMAN6kLzUGl/eb
+=HoiE
+-----END PGP SIGNATURE-----
 
-Giancarlo Canales Barreto=
+--=_zucker.schokokeks.org-12944-1469809534-0001-2--
