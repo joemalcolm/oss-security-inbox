@@ -1,56 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/15
-Message-Id: <20160728201723.046E4332028@smtpvbsrv1.mitre.org>
-Date: Thu, 28 Jul 2016 16:17:23 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/29/9
+Message-Id: <20160729204337.9530672E027@smtpvbsrv1.mitre.org>
+Date: Fri, 29 Jul 2016 16:43:37 -0400 (EDT)
 From: cve-assign@...re.org
-To: i.elsayed92@...il.com
+To: ago@...too.org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-Request Buffer overflow ImageMagick
+Subject: Re: paps: heap overflow when processing crafted file
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> I would like to request a CVE for a buffer overflow in ImageMagick
-> that was fixed in the following commit:
-> https://github.com/ImageMagick/ImageMagick/commit/dd84447b63a71fa8c3f47071b09454efc667767b
+> The bug comes from the fuzzer, which did not pass an empty file.
+> Later, I discovered that an empty file has the same behaviour of 
+> the crafted.
 > 
-> to run the PoC try:
-> magick convert -clip PoC1  <<<-- This will run the first PoC
-> 
-> The vulnerability gets triggered at 
-> 
-> https://github.com/ImageMagick/ImageMagick/blob/master/MagickCore/property.c#L697
-> 
-> (void) CopyMagickMemory(attribute,(char *) info,(size_t) count);
-> 
-> The info ptr points at the end of the PoC image. The out-of-bound read
-> occurs when info+count is > image_size. The attribute ptr then points
-> to data that is read from the memory.
-> 
-> backtrace
-> #9  0x000000000043a5f8 in CopyMagickMemory ... at MagickCore/memory.c:696
-> #10 0x000000000046f0ff in Get8BIMProperty ... at MagickCore/property.c:698
-> 
-> PoC1: reads 0xff5f extra bytes from the memory
-> 
-> PoC2: reads 0xb0ff5f bytes of the memory (it is likely that this PoC
-> causes a crash because the memory segment isn't mapped or doesn't have
-> the correct permissions)
-> 
-> The read out-of-bound could lead to memory leak because the data read
-> is then written into the output image using SetImageProperty which is
-> called after the read
-> 
-> The PoC has been tested on 
-> version: ImageMagick 7.0.2-1 Q16 x86_64 2016-06-19 http://www.imagemagick.org
+> In other words:
+> - The same crash happen for the empty and crafted file.
+> - The patch covers both cases (when the file is empty and when 
+> contains random data).
 
->> We can reproduce it and will have a patch to fix it in GIT master
->> branch @ https://github.com/ImageMagick/ImageMagick later today. The
->> patch will be available in the beta releases of ImageMagick @
->> http://www.imagemagick.org/download/beta/ by sometime tomorrow.
-
-Use CVE-2016-6491.
+Right, the file does not need to be empty (file length of zero), but
+inbuf->len needs to end up being zero, which means that the g_iconv
+calls produce zero output bytes for every line of the input file.
+After the buffer under-read, if there isn't a crash, the return value
+of read_file can be the empty string, which wasn't intended to be a
+possible return value. However, we haven't seen information indicating
+that this causes a security problem in later code. This is a
+command-line program, and the available information is that there is
+sometimes a non-exploitable crash when operating on an invalid file.
+For now, we are categorizing this as an inconvenience to the user, not
+a vulnerability: there is no CVE ID.
 
 - -- 
 CVE Assignment Team
@@ -60,17 +40,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXmmfOAAoJEHb/MwWLVhi2IfMP/11wKvLq+QNlKEQhhkEjqtHo
-TKeWjJoiuLQnZENiE1QXQ5JC2tZFaDHyqcun9Kf9CIAUaskSxQM7iEmsPvfyqYaA
-4Q/Rzj7ECKyvBR5DUszKgpiOzA8UFBzNUaRijNQfSttefTBhOm76l4jGLFCiSyTU
-h3/QrvvaYJBOcYnyFcvRW+p7XxCR/ZFeoqo9HExMYLZDIt2XaBS2/+Baea7gDPsZ
-SUhG701l7W5RGoQYLszoUm0Bz54AH9253fzl0TKlC/XQqSQ33eUi5gWgzXCNr4dx
-Vuaf1oaPRh3khNQi04/HGnQY3dMrOUPWz2LXb5IDJAxSoGBDLShwhdmGaTqLOgJq
-MwQVItboa+pP8FwXeHQdn3ILYux1LXTZwNrQrDwpM5OBR5OyGYNa9XhcAZAMb7l2
-sawjvOG0SvGU4FGaiELy1E9B6QxOOY7ZlOHXUY1Wrqaa1hFKU/30btWcprAj23jc
-vnvxKMq2FHJRDGCKFSgtOVtdush551sPWKkdlsb7mENT9Xu0cuCZAYkrwjgiNb7K
-87uWrfyIIsWkNBm/V58hhP5qwx1LsX13Fq7uv40snnGPjGBhxjdWeinbnsEemxYr
-vPNMq7eOhRTAyLJ2k+DE6jsV89I6vMkNl6/JblZjrG9HNyFVCl1LGCJ3ZtUib/pK
-VtsKTtJ1QXnPAwVPaNnf
-=mi15
+iQIcBAEBCAAGBQJXm79CAAoJEHb/MwWLVhi2N+UP+wePxHygX5ysWdiPbuqKjS8h
+whEFNT7IOmFKBcZOEF1DGZs8Avwet2qbeFOvEU3HymEQEzyepLCn4vP5iPQHzqiT
+ZFHD/cH/mKdr4IBwvFY6ipItanLSPd7kwXriFxwGJwwOzTWqT/2JwOxt4zUDL1xK
+lFjRI2tpqPMkDFRRwogaculT/vx3c72K5tj0CgJHyXAkz+xJL4ZfKVTVnEyybJsf
+1ihnu2uXQUUy9cwMb15X/a/3Zp9SwaSPmOq7U12aZMxYE1HdirFYhbfIbhQvhpvi
+DZyLvu/h6T0z465Yguq+ru7Q9eArWEu3JDjr4H2uIjWnOIlcc5tifidnz+nYWS3S
+8yfZnvLUf3gziwKYBPJTz+SyyEK0fba3zq+aifNpjU82jHsFSQ5jG+099QDA+ABM
+GEoM++3Avi6wCwPafSi/zJgh/HV0gxsQbqw4dJ2V3PdXcU9Gd5kqEiwEabXecX7q
+hbNx+Xkagip07CBLpdEdYSkaw6jbqXWjjzeYcy66GxVv1bI93VLDLfmC7vsKUY17
+stgbEQEt89J+bWcVC1HpBp1zWNT42bn06JhAeYU4iAhYcuvWitUCo6qJwunuqknr
+17NZqaTaG0AsWXnQIGLHpCQNlAmfXKHBph097Lj/SUxE9NpxECTY3ewQT+JKdylG
+Qk0Mx1+5uqMRiN8yKRhP
+=979d
 -----END PGP SIGNATURE-----
