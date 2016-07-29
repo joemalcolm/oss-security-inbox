@@ -1,65 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/30/1
-Message-Id: <20160630012758.B2D89EBC15E@smtpvmsrv1.mitre.org>
-Date: Wed, 29 Jun 2016 21:27:58 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: libgd: Invalid color index is not properly handled leading to denial of service (crash)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/29/2
+Message-ID: <700c370f-9fc4-7913-9d26-01574b218dba@redhat.com>
+Date: Fri, 29 Jul 2016 14:19:38 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>
+Subject: CVE Request: nettle's RSA code is vulnerable to cache sharing related attacks
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi All,
 
-> There is currently PHP upstream bug which is still marked as private:
-> 
-> https://bugs.php.net/bug.php?id=72494
-> 
-> But the libgd project references the following set of commits to this
-> bug report:
-> 
-> https://github.com/libgd/libgd/compare/3fe0a71...6ff72ae
-> 
-> indicating that libgd does not properly handle invalid color index,
-> which could lead to a denial of service against applications using the
-> libgd library (in particular thus PHP).
+The following whitepaper talks about libgcrypt's RSA code being
+vulnerable to a cache timing attack, which the paper claims is fixed in
+1.6.3.
 
-> https://github.com/libgd/libgd/commit/1ccfe21e14c4d18336f9da8515cd17db88c3de61
-> gd_crop.c
-> gdImageCropThreshold
-> 
-> + if (color < 0 || (!gdImageTrueColor(im) && color >= gdImageColorsTotal(im))) {
-> + return NULL;
-> + }
+It seems nettle is also vulnerable to this flaw. Which was confirmed by
+upstream via:
+https://lists.lysator.liu.se/pipermail/nettle-bugs/2016/003093.html
 
-> https://github.com/libgd/libgd/commit/6ff72ae40c7c20ece939afb362d98cc37f4a1c96
-> tests/gdimagecrop/php_bug_72494.c
-> 
-> im = gdImageCreate(50, 50);
-> gdImageCropThreshold(im, 1337, 0);
-> gdImageDestroy(im);
+The above link also contains a proposed patch, will be committed soon.
 
-Use CVE-2016-6128.
+I would like to request a CVE id for the flaw in nettle.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Note: libgcrypt-1.6.3. release notes talk about 2 cves being fixed, but
+they dont mention this paper at all. (I am going to talk to the
+researchers to figure this out)
 
-iQIcBAEBCAAGBQJXdHSeAAoJEHb/MwWLVhi2B5MQAJkNv180fmdDbPu+uH4oBRme
-uWdpmquumYvoNsLAL0+u605QiaEh87S5XIBbgAyY7IaXf3K3rREcz9vrhRd7dciP
-c20hx1lh6ZIdP9BH2CidC6rbjWrSatzrngi25d8x2EEWH3nyvG8HA/hGjxpOmO6W
-eeJO6FRrxc+LkLYRthfNUtL2r23AbrMN0v0BMPNdNLDoaLBd1xOL6A+IA3P5v67R
-XEZ2xhOk73pI4I7UJKfgpmtB0OgIjQjxaBLHBbhQqiug2E63W2SgqUPvb3cfyQx5
-FaU0EmnTo3Ampm5a1kHsccOQzZ/Na+CSjlMltko06Cvx/9Cn6xS3xRFLCyG4gEQ8
-PPvh/qjvSIwTyXqrYYwGlDx9UdiLa25PmJ9DcV8yPYbYShZy7eoKeqCIyyiWJLPZ
-D5WAL6DhVFz12tpCD287hlmyOziObo5dsVGyPx6FFPmHhmyjJ0gVqsaFVJWFT7Kd
-DfLIFn4D4/aCozhr9PZSEa2ebYbb9HP0deEFhfT6u+cjuhtPNREyZxIDgfPHFFut
-nlzOh2wVn4O3i+y3/JIEz+pzqOqMtIcmOs+ZpNyMw0OLTzuu+dad5JyOsz96pNES
-E1y7sbP6Ms0D9yS1dmBm41rFwXfLC2bhBctmgO4quK+2wuAOeTIgiRdhUyOTeW53
-R0kiYe8gCyZIoAhodAWN
-=/4Kb
------END PGP SIGNATURE-----
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
