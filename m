@@ -1,24 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/07/1
-Message-ID: <CAF5d3DCBfzbqYAA3y06QX50YRfLJEkXkW_k+agEpverKZSKuGw@mail.gmail.com>
-Date: Wed, 7 Dec 2016 11:16:50 +0800
-From: haojun hou <haojunhou@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: mr@...buckingham.com, cve-assign@...re.org
-Subject: CVE request - BigTree CMS 4.2.13 - Cross-Site Scripting (XSS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/29/8
+Message-Id: <20160729172848.B025EABC9D4@smtpvmsrv1.mitre.org>
+Date: Fri, 29 Jul 2016 13:28:48 -0400 (EDT)
+From: cve-assign@...re.org
+To: seb@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: mongodb: world-readable .dbshell history file
 Content-Type: text/plain; charset=utf-8
 
-If suitable for a CVE please assign one for BigTree CMS reflected
-cross-site scripting vulnerability. Thanks.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Affected version: 4.2.13
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=832908
+> 
+> | During the report on redis-tools
+> | (https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=832460), lamby@
+> | linked to a codesearch and the same bug was found in mongodb-clients.
+> |
+> | mongodb-clients stores its history in ~/.dbshell, this file is created
+> | with permissions 0644. Home folders are world readable as well in
+> | debian, so any user can access other users mongodb history, even though
+> | db.auth commands don't appear to be logged like redis did.
+> |
+> | I filed a bug on upstream as well:
+> | https://jira.mongodb.org/browse/SERVER-25335
+> 
+> The mongodb client doesn't store authentication commands, but there's
+> still information leakage, though, even if only about database and
+> collection names, or data structure.
+> 
+> As for data itself, the history could also contain sensitive
+> information; for instance, if usernames for some other service were
+> stored in a mongo collection, the history could contain lines like:
+> 
+>   db.users.find({user:"foo"})
+> 
+> or even:
+> 
+>   db.users.update({user:"foo"},{$set:{password:"OhComeOnNow"}})
 
-Reported by Tim Buckingham in
-https://github.com/bigtreecms/BigTree-CMS/issues/264
-<https://github.com/bigtreecms/BigTree-CMS/pull/256>
+Use CVE-2016-6494.
 
-Fixed in:
-https://github.com/bigtreecms/BigTree-CMS/commit/59ebef5978f80e2fdc7b4db4a28b668c5a39fbc3
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Thanks & Regards
-
+iQIcBAEBCAAGBQJXm5HHAAoJEHb/MwWLVhi20SgQAKIXsSDuAQzAY3DN67osMxAg
+BuEh9En380VzBzqz+O83tjJyqJ6kx+Ed9WWc6Yl4nd0rUW1YdnOSvK+RF1c0nN2s
+ndfb3cHkC2sTCfJyh5GvDdthYLr0Th0GabAzmgOoc4QhCSHykxxGFHgEhI5Wem6T
+MclVy95MpBRb3g2XNH2ue96CxRFK2buT3fZerewZe8OBh7dh6nxDEKfLKodz8zaK
+vUgINsgoP53GuhlCJYExf9O4JLY2wn3CFjWTGfoMY7wDxl9Rr5VwOuBaSgO6i+Ay
+MxjMApDumENwSBtXtUQ/54WPez4IxqWU193gq31V4kVWEfBvlb9QHUsd1qyWsQVp
+OtboCgvY2K0u5O9ZVK/H+zJDhqe/fxw2HjMxlwju3ENORuCUFpz/nErLWXSc+iaj
+C2WmJPD0O+8mzJnOCjY8WuHJtetGorivbbKTbWk2C5r3NHMI7X9DYKiiz5ISD6Us
+kXVjWxXdHqfCVG3JvpmJi78Pw/+DPgw9D3sg4BTY+bhEB+Gguvh8TMVTkjtOSsBh
+i5ORa+1EhvGhYVXVZJZUK0bvEH/Pxuh6Yc2WX8LWFG2Fauw5d+1sSovLls6oLnp7
+xDXqv7DN6NTu3iza24JWfsZBOUTVKminX42EonOu7yOVtW5oIRO6wCALd0OiL/SP
+EOsVcn9sPCF9HQog0jSZ
+=OQs9
+-----END PGP SIGNATURE-----
