@@ -1,52 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/29/4
-Message-Id: <20160529174522.13B2B33202D@smtpvbsrv1.mitre.org>
-Date: Sun, 29 May 2016 13:45:22 -0400 (EDT)
-From: cve-assign@...re.org
-To: gustavo.grieco@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Mplayer/Mencoder read out-of-bounds parsing a mp3 file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/29/5
+Message-ID: <20160729115843.386c87dc@pc1>
+Date: Fri, 29 Jul 2016 11:58:43 -0400
+From: Hanno Böck <hanno@...eck.de>
+To: lazytyped <lazytyped@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: Use after free in my_login() function of DBD::mysql (Perl module)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, 28 Jul 2016 06:31:20 -0700
+lazytyped <lazytyped@...il.com> wrote:
 
-> A read out-of-bounds parsing a mp3 file was found in the last revision
-> of mplayer. Technical details and a reproducer are available here:
+> Quick question:
 > 
-> https://trac.mplayerhq.hu/ticket/2298
+> - I guess the affecting function call is the following:
+> 
+>    do_error(dbh, mysql_errno(imp_dbh->pmysql),
+>                   mysql_error(imp_dbh->pmysql) 
+> ,mysql_sqlstate(imp_dbh->pmysql));
+> 
+> which one of those calls provides an exploitation path? They seem all 
+> reads off the free'd structure.
+> 
+> I see in the bug report: " (I think use after free's can be serious
+> and potentially lead to malfunction and security issues)" and would
+> like to understand more about the rationale.
 
->> Component:  libavcodec
->> libavformat version 57.34.103 (internal)
->> 
->> AddressSanitizer: heap-buffer-overflow
->> READ of size 4
->> 
->> in avcodec_decode_audio4
+Hi,
 
-Use CVE-2016-5115 for this libavcodec issue. We did not check whether
-this affects any versions of FFmpeg. libavformat version 57.34.103 is
-more recent than in FFmpeg 3.0.2, for example.
+I don't have a practical exploit scenario, thus my careful wording (the
+best answer to "is this exploitable?" is often simply "I don't know").
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+It's a use after free, should be undeniable that it should be fixed.
 
-iQIcBAEBCAAGBQJXSyoVAAoJEHb/MwWLVhi2sOkP/3FeYYp5pcAVPHm4Lx3qM9Rr
-LZYC8ph+Cn8HSTxMhOO+jtTe7DdlXkMvHWMRDGAreaw/RKTT4OjY+iF3u2zdpd6n
-Txw31NSKyToof4jVWTojxibkjUa3mAXdNYo9hIW9DL5YBtIz0mYLxoRu5gnNg+V4
-pMN/aSKVfiB9W4W36tpo6al8fyEOHakYgqetbkOpV9O40j1nfO9qywGrLA+tWg6Z
-b+aLByyLRTYbCoTuuEKYhP/wE78KnVLZRxzoMPSGL0rCFDeQYYBR9ha5bW3n3Dzo
-zPag7BqUafbIDOfnhPmbh+FkGqySuHTJxqfZycPH4RymDMzLW0Wb5wtuI+xc13Nx
-c7SpdLhX1fQcXBwPUmv0qdhbDMPpGgoovRPvKxCDH2sXR7+ZCtP7QUv2wO7gqe3w
-mMqJsORLguf81m4r95QC/Nm0np6GVwDEkNCaQkJft8p3CbACib2NoY3i2OSBEqKB
-RO5n4Wq6TIeMpoNTQhTxN2Zhni/ZQ+88Uo2qQP5YPH2griPAUADXopypv7hhCSsx
-UZpiLvdRJrMevXMU1D8llqvTfOtYzVoJ7IWlDbg+vtJhQEwyMhT0HYjamkLVusm9
-TnfIshGwWKq3jtre3xqDez24S/N9zvTA9FaFQtJb+we95n5cSrZJb17RhOii52M+
-tZGsRx2O5Wsp/74wvnli
-=nzCw
------END PGP SIGNATURE-----
+But my highlevel understanding of what could happen in such a case: In a
+multithreaded application using that module it may be possible that
+another thread is allocating the free'd memory before do_error is
+called and may fill the memory of the struct with attacker-controlled
+content. Would require careful analysis of what do_error does exactly
+whether that could lead to further bad things.
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
