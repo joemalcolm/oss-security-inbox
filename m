@@ -1,31 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/25/4
-Message-ID: <56CDF5E0.7080402@oracle.com>
-Date: Wed, 24 Feb 2016 10:26:40 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-CC: "X.Org Security Team" <xorg-security@...ts.x.org>
-Subject: Re: [Pixman] create_bits(): Cast the result of height * stride to size_t
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/29/7
+Message-Id: <20160729170334.5334AB2E0A7@smtpvbsrv1.mitre.org>
+Date: Fri, 29 Jul 2016 13:03:34 -0400 (EDT)
+From: cve-assign@...re.org
+To: huzaifas@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: nettle's RSA code is vulnerable to cache sharing related attacks
 Content-Type: text/plain; charset=utf-8
 
-On 02/24/16 04:10 AM, Gustavo Grieco wrote:
->   Hi,
->
-> There is an (old) integer overflow in create_bits in the pixman library.
-> Patch and details are available here:
->
-> https://web.archive.org/web/20141227044037/http://lists.freedesktop.org/archives/pixman/2014-April/003244.html
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The quoted patch was applied to the master branch of the pixman git repo as:
+> The following whitepaper talks about libgcrypt's RSA code being
+> vulnerable to a cache timing attack, which the paper claims is fixed in
+> 1.6.3.
 
-https://cgit.freedesktop.org/pixman/commit/?id=857e40f3d2bc2cfb714913e0cd7e6184cf69aca3
+As far as we can tell, your message did not provide a link to a
+whitepaper, and any attachment did not arrive either through direct
+email or in any of the oss-security list archives.
 
-and to the pixman-0.32 branch as:
+> It seems nettle is also vulnerable to this flaw. Which was confirmed by
+> upstream via:
+> https://lists.lysator.liu.se/pipermail/nettle-bugs/2016/003093.html
+> 
+> The above link also contains a proposed patch, will be committed soon.
 
-https://cgit.freedesktop.org/pixman/commit/?id=50d7b5fa8ea2ae119f35c20ab0dd0413d5103cbb
+We think the commit already occurred:
 
-It is included in pixman 0.32.6 and later releases.
+  https://git.lysator.liu.se/nettle/nettle/commit/3fe1d6549765ecfb24f0b80b2ed086fdc818bff3
 
--- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+> I would like to request a CVE id for the flaw in nettle.
+
+Use CVE-2016-6489 for the vulnerability that was fixed in
+3fe1d6549765ecfb24f0b80b2ed086fdc818bff3.
+
+At this point, we are not assigning any CVE IDs for potential
+"incomplete fix" issues mentioned in the 003093.html post, such as
+"The CRT code used for RSA signing uses other functions which may
+leak, in particular division functions with branches depending on
+secret data ... exponents use a normalized size field (so top limb is
+non-zero). This might still leak information about the top exponent
+bits ... Mini-gmp builds don't try to be side-channel silent."
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXm4v1AAoJEHb/MwWLVhi2e1gP+wSLsNAZzwAJjOhLjYX2vzob
+CjfELfdo2uvAJvfydPIUD+T4j0gnHuSAPXJEtXwC9VdRPla5J202B2admS2wnKk+
+AXy14vW3trEYvcs4Gp7uqMMoS6K1Qb+rnbOOTsYKcirUk8Ml6yuHS9wDugUwrlyg
+G9VipRYFZCSz0pqiz4Lv1mc4ViMz7uQbUZ9oPWthwr8RDhJebdXlab1Co5FwPf8s
+IUOrubPlH/rSGsJ/zSWE3HsP8Qcfe3Mg7Rph4mqYiv/amefRcABjyKSo2lgGUcdZ
+RoM148KjY+3ys5hEwgYGv4PL7lkm698/lShsgBjyTlyQYpCRHMywBzK9ZorgZA49
+Mt+bghgMJEPilWxzwVsoQ53vPjs4IH4p8O1ba0NeBYfX/Crd9q25NMV7FCzzkO1R
+H8yRdITvBg9DmDifvWJT9mlnKmtkHEg3sPYr0QSVWI5qUKo4v1XYnNrr9K88rUUq
++ai5/h13gN2hIQW6sc+S/01jO30X4rfL6+REhqz3ri8mi3LRLxj1n8ElaQEO/ulh
+USC88qdZpMDIwLl5e3WL11CjZ9EbtxGaFLwzScCm5cFXPPqZmVp1h7iX90380ItT
+rRzJ9sfCew+bWFly7l60oefy+OP8u2mIbUMK+dzzm5dkcu+n67uMWB3Rb2/64OpO
+WDByvQZt5Gaz6zeYp81s
+=Z0L4
+-----END PGP SIGNATURE-----
