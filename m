@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1810" "Friday" "24" "July" "2015" "11:47:31" "+0200" "Leif Nixon" "nixon@lysator.liu.se" "<871tfxdgzw.fsf@lysator.liu.se>" "46" "Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" nil nil nil "7" "2015072409:47:31" "[oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" (number mark "        nixon@lysato Jul 24   46/1810  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser\"\n") "<CAHQ_-nR8WGDK58PmsmhPp8ApnmwjrLRxeyCKTsfRL83ZUZjTxA@mail.gmail.com>" ("<20150723170954.GA17931@localhost.localdomain>" "<87h9oud89s.fsf@lysator.liu.se>" "<CAHQ_-nR8WGDK58PmsmhPp8ApnmwjrLRxeyCKTsfRL83ZUZjTxA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5420" "Friday" "29" "July" "2016" "09:47:31" "+0000" "=?utf-8?B?5byg5byA57+U?=" "zhangkaixiang@360.cn" "<5EDB84F4B23F5B4DB6500A89258280E0BD067A@EX02.corp.qihoo.net>" "92" "[oss-security] cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node" nil nil nil "7" "2016072909:47:31" "[oss-security] cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node" (number mark "U       zhangkaixian Jul 29   92/5420  " thread-indent "\"[oss-security] cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28590 invoked by uid 550); 24 Jul 2015 10:00:42 -0000
+Received: (qmail 9380 invoked by uid 550); 29 Jul 2016 09:54:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,116 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22076 invoked from network); 24 Jul 2015 09:47:46 -0000
-References: <20150723170954.GA17931@localhost.localdomain>
-	<87h9oud89s.fsf@lysator.liu.se>
-	<CAHQ_-nR8WGDK58PmsmhPp8ApnmwjrLRxeyCKTsfRL83ZUZjTxA@mail.gmail.com>
-In-Reply-To: <CAHQ_-nR8WGDK58PmsmhPp8ApnmwjrLRxeyCKTsfRL83ZUZjTxA@mail.gmail.com>
-	(Philip Pettersson's message of "Fri, 24 Jul 2015 08:50:49 +0900")
-Message-ID: <871tfxdgzw.fsf@lysator.liu.se>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-Date: Fri, 24 Jul 2015 11:47:31 +0200
-From: Leif Nixon <nixon@lysator.liu.se>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser
-To: oss-security@lists.openwall.com
+Received: (qmail 5864 invoked from network); 29 Jul 2016 09:47:43 -0000
+From: =?utf-8?B?5byg5byA57+U?= <zhangkaixiang@360.cn>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+CC: "cve-assign@mitre.org" <cve-assign@mitre.org>
+Thread-Topic: cve request: docker swarmkit Dos occurs by repeatly joining
+ and quitting swam cluster as a node
+Thread-Index: AdHpfi2HU0Jb8SliQ/WmwYWnaJkSWQ==
+Date: Fri, 29 Jul 2016 09:47:31 +0000
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BD067A@EX02.corp.qihoo.net>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.18.25.62]
+Content-Type: multipart/alternative;
+	boundary="_000_5EDB84F4B23F5B4DB6500A89258280E0BD067AEX02corpqihoonet_"
+MIME-Version: 1.0
+Subject: [oss-security] cve request: docker swarmkit Dos occurs by repeatly joining and
+ quitting swam cluster as a node
 
-Philip Pettersson <philip.pettersson@gmail.com> writes:
+--_000_5EDB84F4B23F5B4DB6500A89258280E0BD067AEX02corpqihoonet_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-> On Fri, Jul 24, 2015 at 3:43 AM, Leif Nixon <nixon@lysator.liu.se> wrote:
->> Qualys Security Advisory <qsa@qualys.com> writes:
->>
->>> Hello, it is July 23, 2015, 17:00 UTC, the Coordinated Release Date for
->>> CVE-2015-3245 and CVE-2015-3246.  Please find our advisory below, and
->>> our exploit attached.
->>
->> *Why* are you releasing a full exploit just minutes after the patch is
->> released?
->>
->> (Disclosure: I am employed by Red Hat, but this is my purely personal question.)
->
-> That's how coordinated release dates work. Instead of trying to shame
-> Qualys for not following your arbitrary views on what is and isn't
-> "Responsible Disclosure", perhaps you should make sure Red Hat
-> releases patches hours before the CRD, like Ubuntu does?
+RG9ja2VyIHN3YXJta2l0IGlzIHVzZWQgdG8gZm9ybSBhIHN3YXJtLCBjb29y
+ZGluYXRpbmcgdGFza3MuIE9uY2UgYSBtYWNoaW5lIGpvaW5zLCBpdCBiZWNv
+bWVzIGEgU3dhcm0gTm9kZS4gTm9kZXMgY2FuIGVpdGhlciBiZSB3b3JrZXIg
+bm9kZXMgb3IgbWFuYWdlciBub2Rlcy4NCiBJIGZvdW5kIGEgdnVsbmVyYWJp
+bGl0eSBpbiBkb2NrZXIgb2YgdGhlIGxhdGVzdCB2ZXJzaW9uIHdoaWNoIGNv
+dWxkIGNhdXNlIGEgRGVuaWFsIG9mIFNlcnZpY2UsIGl0IHJlc3VsdHMgaW4g
+YSBtYWNoaW5lIGNvdWxkIG5vdCBqb2luIHRoZSBzd2FybSBjbHVzdGVyIGFm
+dGVyIGFub3RoZXIgbm9kZeKAmXMgcmVwZWF0ZWRseQ0Kam9pbmluZyBhbmQg
+cXVpdHRpbmcgdGhlIHN3YXJtIGZvciBtYW55IHRpbWVzKHRha2luZyBteSB0
+ZXN0aW5nIGFzIGV4YW1wbGUgLCBpdCBzaG91bGQgbmVlZCBhdCBsZWFzdCBv
+bmUgdGhvdXNhbmQgdGltZXMuIClNb3Jlb3ZlciwgdGhlIGRvY2tlciBkZWJ1
+Z2dpbmcgaW5mbyBpbmRpY2F0ZXMNCnRoZSBEaXNwYXRjaGVyIGlzIHN0b3Bw
+ZWQgYW5kIGNhIHNlcnZlciBtYXkgZXhpdGVkIHNvbWV0aW1lcy4NCg0KDQoj
+IGRvY2tlciB2ZXJzaW9uDQpDbGllbnQ6DQpWZXJzaW9uOiAgICAgIDEuMTIu
+MC1kZXYNCkFQSSB2ZXJzaW9uOiAgMS4yNQ0KR28gdmVyc2lvbjogICBnbzEu
+Ni4zDQpHaXQgY29tbWl0OiAgIDljMWJlNTQtdW5zdXBwb3J0ZWQNCkJ1aWx0
+OiAgICAgICAgRnJpIEp1bCAyOSAxNTo0MDo1MiAyMDE2DQpPUy9BcmNoOiAg
+ICAgIGxpbnV4L2FtZDY0DQoNClNlcnZlcjoNClZlcnNpb246ICAgICAgMS4x
+Mi4wLWRldg0KQVBJIHZlcnNpb246ICAxLjI1DQpHbyB2ZXJzaW9uOiAgIGdv
+MS42LjMNCkdpdCBjb21taXQ6ICAgOWMxYmU1NC11bnN1cHBvcnRlZA0KQnVp
+bHQ6ICAgICAgICBGcmkgSnVsIDI5IDE1OjQwOjUyIDIwMTYNCk9TL0FyY2g6
+ICAgICAgbGludXgvYW1kNjQNCg0KIyBkb2NrZXIgc3dhcm0gaW5pdA0KU3dh
+cm0gaW5pdGlhbGl6ZWQ6IGN1cnJlbnQgbm9kZSAoMjNtNmtzcjk2d2hzdnVv
+OGx6b2tlbmp1MykgaXMgbm93IGEgbWFuYWdlci4NCg0KVG8gYWRkIGEgd29y
+a2VyIHRvIHRoaXMgc3dhcm0sIHJ1biB0aGUgZm9sbG93aW5nIGNvbW1hbmQ6
+DQogICAgZG9ja2VyIHN3YXJtIGpvaW4gXA0KICAgIC0tdG9rZW4gU1dNVEtO
+LTEtMzBmNmlienBzY3FoMDVxcWRvZzg1a3RyOHB0Y3c3dHRuNHd5NWN3aXh5
+MXdmY2hoYjktYWxqZXd0ZG41NzI3ZzFwbGR4bmV2amg1MSBcDQogICAgeHgu
+eHgueHgueHg6MjM3Nw0KDQpUbyBhZGQgYSBtYW5hZ2VyIHRvIHRoaXMgc3dh
+cm0sIHJ1biB0aGUgZm9sbG93aW5nIGNvbW1hbmQ6DQogICAgZG9ja2VyIHN3
+YXJtIGpvaW4gXA0KICAgIC0tdG9rZW4gU1dNVEtOLTEtMzBmNmlienBzY3Fo
+MDVxcWRvZzg1a3RyOHB0Y3c3dHRuNHd5NWN3aXh5MXdmY2hoYjktMHAwODZ6
+MnNkYm5wdm9nbmptdTc2Z3BpNiBcDQogICAgeHgueHgueHgueHggOjIzNzcN
+Cg0KTG9naW4gbWFjaGluZSBBMSBhbmQgam9pbiB0aGUgc3dhcm0gLGFuZCB0
+aGVuIHF1aXR0ZWQgdGhlIHN3YXJtLg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCiMgZG9ja2VyIHN3
+YXJtIGpvaW4gLS10b2tlbiBTV01US04tMS0zMGY2aWJ6cHNjcWgwNXFxZG9n
+ODVrdHI4cHRjdzd0dG40d3k1Y3dpeHkxd2ZjaGhiOS1hbGpld3RkbjU3Mjdn
+MXBsZHhuZXZqaDUxIHh4Lnh4Lnh4Lnh4OjIzNzcNClRoaXMgbm9kZSBqb2lu
+ZWQgYSBzd2FybSBhcyBhIHdvcmtlci4NCiMgZG9ja2VyIHN3YXJtIGxlYXZl
+IC0tZm9yY2UNCk5vZGUgbGVmdCB0aGUgc3dhcm0uDQoNCkxvZ2luIG1hY2hp
+bmUgQTIgLCByZXBlYXRlZGx5IGpvaW4gYW5kIHF1aXQgdGhlIHN3YXJtIGZv
+ciAxMDAwIHRpbWVzLg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCiMgZm9yIGkgaW4gezEuLjEwMDB9
+OyBkbyBkb2NrZXIgc3dhcm0gbGVhdmUgLS1mb3JjZSA7IGRvY2tlciBzd2Fy
+bSBqb2luIC0tdG9rZW4gU1dNVEtOLTEtMzBmNmlienBzY3FoMDVxcWRvZzg1
+a3RyOHB0Y3c3dHRuNHd5NWN3aXh5MXdmY2hoYjktYWxqZXd0ZG41NzI3ZzFw
+bGR4bmV2amg1MSB4eC54eC54eC54eDoyMzc3IDtkb25lDQpUaGlzIG5vZGUg
+am9pbmVkIGEgc3dhcm0gYXMgYSB3b3JrZXIuDQpOb2RlIGxlZnQgdGhlIHN3
+YXJtLg0KVGhpcyBub2RlIGpvaW5lZCBhIHN3YXJtIGFzIGEgd29ya2VyLg0K
+Tm9kZSBsZWZ0IHRoZSBzd2FybS4NClRoaXMgbm9kZSBqb2luZWQgYSBzd2Fy
+bSBhcyBhIHdvcmtlci4NCk5vZGUgbGVmdCB0aGUgc3dhcm0uDQpUaGlzIG5v
+ZGUgam9pbmVkIGEgc3dhcm0gYXMgYSB3b3JrZXIuDQpOb2RlIGxlZnQgdGhl
+IHN3YXJtLg0KVGhpcyBub2RlIGpvaW5lZCBhIHN3YXJtIGFzIGEgd29ya2Vy
+Lg0KTm9kZSBsZWZ0IHRoZSBzd2FybS4NCg0KQWZ0ZXIgZmluaXNoaW5nIHRo
+YXQsIExvZ2luIG1hY2hpbmUgQTEgYWdhaW4gYW5kIGF0dGVtcHQgdG8gam9p
+biB0aGUgc3dhcm0sIGl0IGZhaWxlZC4NCi0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQojIGRvY2tl
+ciBzd2FybSBqb2luIC0tdG9rZW4gU1dNVEtOLTEtMzBmNmlienBzY3FoMDVx
+cWRvZzg1a3RyOHB0Y3c3dHRuNHd5NWN3aXh5MXdmY2hoYjktYWxqZXd0ZG41
+NzI3ZzFwbGR4bmV2amg1MSB4eC54eC54eC54eDoyMzc3DQpFcnJvciByZXNw
+b25zZSBmcm9tIGRhZW1vbjogVGltZW91dCB3YXMgcmVhY2hlZCBiZWZvcmUg
+bm9kZSB3YXMgam9pbmVkLiBBdHRlbXB0IHRvIGpvaW4gdGhlIGNsdXN0ZXIg
+d2lsbCBjb250aW51ZSBpbiB0aGUgYmFja2dyb3VuZC4gVXNlICJkb2NrZXIg
+aW5mbyIgY29tbWFuZCB0byBzZWUgdGhlIGN1cnJlbnQgc3dhcm0gc3RhdHVz
+IG9mIHlvdXIgbm9kZS4NCg0KICBTb21lIGRlYnVnZ2luZyBpbmZvcm1hdGlv
+biBvZiBkb2NrZXIgZGFlbW9uLg0KICAtLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCnRpbWU9IjIw
+MTYtMDctMjlUMTU6MjQ6MDIuMzc0NTYwODE1KzA4OjAwIiBsZXZlbD1lcnJv
+ciBtc2c9ImZhaWxlZCB0byByZW1vdmUgbm9kZSIgZXJyb3I9InJwYyBlcnJv
+cjogY29kZSA9IDEwIGRlc2MgPSBkaXNwYXRjaGVyIGlzIHN0b3BwZWQiIG1l
+dGhvZD0iKCpEaXNwYXRjaGVyKS5TZXNzaW9uIiBub2RlLmlkPWIxMXRhNXA4
+ZzJ3Z3kxMHZ5emdzaTZvY20gbm9kZS5zZXNzaW9uPTFhcGg4c2NzZXduODlq
+M2g1bzNlbWdkcWwNCnRpbWU9IjIwMTYtMDctMjlUMTU6MjQ6MDIuMzc0NjA0
+ODk4KzA4OjAwIiBsZXZlbD1lcnJvciBtc2c9IiBzZXNzaW9uIGZhaWxlZCIg
+ZXJyb3I9InJwYyBlcnJvcjogY29kZSA9IDEgZGVzYyA9IGNvbnRleHQgY2Fu
+Y2VsZWQiIG1vZHVsZT1hZ2VudA0KICAgICAgICAgdGltZT0iMjAxNi0wNy0y
+OVQxNToyNDoxNC4wNjkzNDcwNzQrMDg6MDAiIGxldmVsPWRlYnVnIG1zZz0i
+aGVhcnRiZWF0IGV4cGlyYXRpb24iDQp0aW1lPSIyMDE2LTA3LTI5VDE1OjI0
+OjE0LjA2OTQyODgzNCswODowMCIgbGV2ZWw9ZXJyb3IgbXNnPSJmYWlsZWQg
+ZGVyZWdpc3RlcmluZyBub2RlIGFmdGVyIGhlYXJ0YmVhdCBleHBpcmF0aW9u
+IiBlcnJvcj0icnBjIGVycm9yOiBjb2RlID0gMTAgZGVzYyA9IGRpc3BhdGNo
+ZXIgaXMgc3RvcHBlZCINCuKApiDigKYNCg0KUGxlYXNlIGFzc2lnbiBDVkUg
+SURzIGZvciB0aGUgc2VjdXJpdHkgaXNzdWUgPw0KDQogIEJlc3QgcmVnYXJk
+cyYNCiAgS2FpeGlhbmcgWmhhbmcgb2YgdGhlIENsb3VkIFNlY3VyaXR5IFRl
+YW0sIFFpaG9vIDM2MA0KDQoNCg==
 
-Oh, hi there.
-
-My views are not very arbitrary; rather they are based on years of
-trying to defend big infrastructures.
-
-As I see it, there are two reasons for releasing working exploits
-without warning;
-
-1) Forcing the hand of a non-responsive vendor,
-
-2) Stroking a weak ego by showing off. (Or for marketing, but that comes
-   to the same thing.)
-
-Except for case 1, releasing a working exploit *does not help anybody*
-except the kiddies. If there are other reasons, I'd like to be told
-about them.
-
-If Qualys had released a slightly less detailed advisory, or even just
-left off the actual exploit, and given users a day or two to patch their
-systems before going full disclosure, the risk to innocent bystanders
-would have been much reduced.
-
--- 
-Leif Nixon
-------------------------------------------------------------------------------
-"supercomputer specialists are charming, polite [and] witty" -- Wired Magazine
-------------------------------------------------------------------------------
+--_000_5EDB84F4B23F5B4DB6500A89258280E0BD067AEX02corpqihoonet_--
