@@ -1,38 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/21/6
-Message-ID: <1513601.hM9JZeBEYn@blackgate>
-Date: Fri, 21 Oct 2016 17:07:22 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/29/6
+Message-ID: <20160729122530.3574dcaf@pc1>
+Date: Fri, 29 Jul 2016 12:25:30 -0400
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: potrace: memory allocation failure
+Subject: Re: CVE request: multiple issues fixed in GNU libidn 1.33
 Content-Type: text/plain; charset=utf-8
 
-On Saturday 08 October 2016 22:30:54 Agostino Sarubbo wrote:
-> A crafted image, through a fuzz testing, causes the memory allocation to
-> fail.
-> 
-> This is the first case where my ASan symbolyzer didn’t start up correctly.
-> I’m  reporting only what it prints at the end (not useful at all but
-> demostrates a bit that the issue exist)
+Thanks for raising this.
 
-I worked on it and now I'm able to get the full stacktrace, which has been 
-updated on the post.
+libidn is also bundled in glibc, I have reported those a while ago:
+https://sourceware.org/bugzilla/show_bug.cgi?id=19728
+https://sourceware.org/bugzilla/show_bug.cgi?id=19729
 
-For completeness I'm pasting the interesting trace here:
+-- 
+Hanno Böck
+https://hboeck.de/
 
-   #9 0x500bcb in bm_new /tmp/portage/media-
-gfx/potrace-1.13/work/potrace-1.13/src/bitmap.h:76:30
-    #10 0x500bcb in bm_readbody_bmp /tmp/portage/media-
-gfx/potrace-1.13/work/potrace-1.13/src/bitmap_io.c:559
-    #11 0x500bcb in bm_read /tmp/portage/media-
-gfx/potrace-1.13/work/potrace-1.13/src/bitmap_io.c:133
-    #12 0x4f8608 in process_file /tmp/portage/media-
-gfx/potrace-1.13/work/potrace-1.13/src/main.c:1058:9
-    #13 0x4f5904 in main /tmp/portage/media-
-gfx/potrace-1.13/work/potrace-1.13/src/main.c:1214:7
-    #14 0x7f167735c61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #15 0x4190b8 in getenv (/usr/bin/potrace+0x4190b8)
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
---
-Agostino
+Content of type "application/pgp-signature" skipped
