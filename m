@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["702" "Monday" "30" "May" "2016" "14:22:03" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1605301419050.26205@wniryva>" "24" "[oss-security] CVE-2016-4453 Qemu: display: vmsvga: infinite loop in vmsvga_fifo_run() routine" "^cc:" nil nil "5" "2016053008:52:03" "[oss-security] CVE-2016-4453 Qemu: display: vmsvga: infinite loop in vmsvga_fifo_run() routine" (number mark "U       ppandit@redh May 30   24/702   " thread-indent "\"[oss-security] CVE-2016-4453 Qemu: display: vmsvga: infinite loop in vmsvga_fifo_run() routine\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1122" "Friday" "29" "July" "2016" "15:16:18" "+0000" "=?UTF-8?B?U8OpYmFzdGllbg==?= Delafond" "seb@debian.org" "<20160729170700.977@usenet.piggo.com>" "36" "[oss-security] CVE request: mongodb: world-readable .dbshell history file" nil nil nil "7" "2016072915:16:18" "[oss-security] CVE request: mongodb: world-readable .dbshell history file" (number mark "U       seb@debian.o Jul 29   36/1122  " thread-indent "\"[oss-security] CVE request: mongodb: world-readable .dbshell history file\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3701 invoked by uid 550); 30 May 2016 08:52:26 -0000
+Received: (qmail 13397 invoked by uid 550); 29 Jul 2016 15:16:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,42 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3673 invoked from network); 30 May 2016 08:52:25 -0000
-X-X-Sender: pjp@javelin
-Message-ID: <alpine.LFD.2.20.1605301419050.26205@wniryva>
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Mon, 30 May 2016 08:52:13 +0000 (UTC)
-cc: Li Qiang <liqiang6-s@360.cn>
-Date: Mon, 30 May 2016 14:22:03 +0530 (IST)
-From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2016-4453 Qemu: display: vmsvga: infinite loop in vmsvga_fifo_run()
- routine
-To: oss security list <oss-security@lists.openwall.com>
+Received: (qmail 13378 invoked from network); 29 Jul 2016 15:16:49 -0000
+X-Injected-Via-Gmane: http://gmane.org/
+To: oss-security@lists.openwall.com
+From: =?UTF-8?Q?S=C3=A9bastien?= Delafond <seb@debian.org>
+Date: Fri, 29 Jul 2016 15:16:18 +0000 (UTC)
+Message-ID: <20160729170700.977@usenet.piggo.com>
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: static.60.129.47.78.clients.your-server.de
+User-Agent: slrn/1.0.2 (Linux)
+Subject: [oss-security] CVE request: mongodb: world-readable .dbshell history file
 
-   Hello,
+Hello,
 
-Quick Emulator(Qemu) built with the VMware-SVGA "chipset" emulation support is 
-vulnerable to an infinite loop issue. It could occur while processing VGA 
-commands via its FIFO buffer.
+from https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=832908:
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS.
+,----
+| During the report on redis-tools
+| (https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=832460), lamby@
+| linked to a codesearch and the same bug was found in mongodb-clients.
+| 
+| mongodb-clients stores its history in ~/.dbshell, this file is created
+| with permissions 0644. Home folders are world readable as well in
+| debian, so any user can access other users mongodb history, even though
+| db.auth commands don't appear to be logged like redis did.
+| 
+| I filed a bug on upstream as well:
+| https://jira.mongodb.org/browse/SERVER-25335
+`----
 
-Upstream patch
---------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg05270.html
+The mongodb client doesn't store authentication commands, but there's
+still information leakage, though, even if only about database and
+collection names, or data structure.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1336650
+As for data itself, the history could also contain sensitive
+information; for instance, if usernames for some other service were
+stored in a mongo collection, the history could contain lines like:
 
-This issue was discovered and reported by Li Qiang of 360.cn Inc. 
-CVE-2016-4453 is assigned by Red Hat Inc.
+  db.users.find({user:"foo"})
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+or even:
+
+  db.users.update({user:"foo"},{$set:{password:"OhComeOnNow"}})
+
+Cheers,
+
+--Seb
+
