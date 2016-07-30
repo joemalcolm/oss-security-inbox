@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["327" "Monday" "18" "July" "2016" "14:25:17" "+0800" "jun3 June" "xxjun3@gmail.com" "<CA+VUd4jXjoWWsNBhsy8B6yoE5GtHhF4zjocWkxvj-axatyY+QQ@mail.gmail.com>" "14" "[oss-security] CVE request for webkit js engine javascriptcore" nil nil nil "7" "2016071806:25:17" "[oss-security] CVE request for webkit js engine javascriptcore" (number mark "U       xxjun3@gmail Jul 18   14/327   " thread-indent "\"[oss-security] CVE request for webkit js engine javascriptcore\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3501" "Saturday" "30" "July" "2016" "10:27:09" "-0400" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20160730102709.25d91e44@pc1>" "82" "Re: [oss-security] Re: Use after free in my_login() function of DBD::mysql (Perl module)" "^Cc:" nil nil "7" "2016073014:27:09" "[oss-security] Re: Use after free in my_login() function of DBD::mysql (Perl module)" (number mark "        hanno@hboeck Jul 30   82/3501  " thread-indent "\"Re: [oss-security] Re: Use after free in my_login() function of DBD::mysql (Perl module)\"\n") "<83a44672-b86b-08c3-689e-f55675c5f6b7@gmail.com>" ("<20160727013203.C008FABC4E2@smtpvmsrv1.mitre.org>" "<abec12ab-d311-cbe6-f256-5c9df0af2008@gmail.com>" "<20160729115843.386c87dc@pc1>" "<83a44672-b86b-08c3-689e-f55675c5f6b7@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30620 invoked by uid 550); 18 Jul 2016 06:36:53 -0000
+Received: (qmail 3477 invoked by uid 550); 30 Jul 2016 14:27:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,103 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 3456 invoked from network); 30 Jul 2016 14:27:24 -0000
+Message-ID: <20160730102709.25d91e44@pc1>
+In-Reply-To: <83a44672-b86b-08c3-689e-f55675c5f6b7@gmail.com>
+References: <20160727013203.C008FABC4E2@smtpvmsrv1.mitre.org>
+	<abec12ab-d311-cbe6-f256-5c9df0af2008@gmail.com>
+	<20160729115843.386c87dc@pc1>
+	<83a44672-b86b-08c3-689e-f55675c5f6b7@gmail.com>
+X-Mailer: Claws Mail 3.13.2 (GTK+ 2.24.30; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-4578-1469888834-0001-2"
+Cc: oss-security@lists.openwall.com
+Date: Sat, 30 Jul 2016 10:27:09 -0400
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26597 invoked from network); 18 Jul 2016 06:25:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Kjzgcz3NRuv/hw/FNScy5wb410+UfyFiMKSEDfVDIwQ=;
-        b=yEBkXnCMprrrh9eyi3ui3TSYMgj+vP3YAtNrR68G+7sEJizfzJwOdUcIDQJqr/HA+p
-         pCgIkPzRZix5HJoH456dT2+Z/AmkPDsGsWaKdLoU8fJN9bsjKyAGz7ZCY9qhJuQ12/Yz
-         bqTJPNn82pj3bFkV8sOAdhbwqfZ5ZOVmK5DSVznMfVBX8Lue91K6DQ7ziDWfr1S89oa6
-         BV8JDG42VVNqt3Q+DnFjN7LX8rkl9r57mxIWwxxuRozxIsnmaLb50OCeR1aZXvdgQ8T+
-         ECzNbTd0/bbXPqjTTsIVOapjjm9OmsKyfPCXYAEno5fu1u7VjOgy8E5TCTfGH/CCkFAC
-         xMIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Kjzgcz3NRuv/hw/FNScy5wb410+UfyFiMKSEDfVDIwQ=;
-        b=Wfbm4MKXHUPs4ZwTw231FP7Owf14LZFjdzXwy207f/8Xe8gEaPd697K67o7iwEXxza
-         b2O1ViHbswdde0Kfpr8sKFfwT9Hcja+ZlwJ5QCS+M1BdBWQbTHczIrKFdA795OzNpy3j
-         E5kSjMObZRdsrdB6sLUMaNuSwn5VuThSJFmc+LrMCz5k/19gqtZbXWzoPpNsF9xyv1Ff
-         brW1I9M+vaUHpA77ZuCm4Bgz1o5Qds6R5OeNokEDuU0+3Zf2Swg06RwsJBIT4M0NcREf
-         tc/IEdDNybFFSrDb0DhugJZa2nSR1DclYPjyD2qdPISMoUlRA5VDp2M4A0iyCpjETWXi
-         SN/g==
-X-Gm-Message-State: ALyK8tJnXY6pKriR2jl0zFwoKpbEs0hpdbVnJMith/aW5ad5ljcwy4MgFYchB4raRuCwi/2aCSKGrvxrMP42cA==
-X-Received: by 10.36.10.145 with SMTP id 139mr37537476itw.68.1468823118260;
- Sun, 17 Jul 2016 23:25:18 -0700 (PDT)
-MIME-Version: 1.0
-From: jun3 June <xxjun3@gmail.com>
-Date: Mon, 18 Jul 2016 14:25:17 +0800
-Message-ID: <CA+VUd4jXjoWWsNBhsy8B6yoE5GtHhF4zjocWkxvj-axatyY+QQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a1144b53033adde0537e308f5
-Subject: [oss-security] CVE request for webkit js engine javascriptcore
+Subject: Re: [oss-security] Re: Use after free in my_login() function of
+ DBD::mysql (Perl module)
+To: lazytyped <lazytyped@gmail.com>
 
---001a1144b53033adde0537e308f5
+--=_zucker.schokokeks.org-4578-1469888834-0001-2
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi
+On Fri, 29 Jul 2016 20:42:03 -0700
+lazytyped <lazytyped@gmail.com> wrote:
 
-Please can I have CVE IDs assigned to the following vulnerabilities:
+> Well, AddressSanitizer should have told you whether the access is a
+> read access (as I suspect) or a write access. A bit of code
+> inspection (or follow up from the code maintainer) should add to the
+> picture.
 
-1.javascriptcore vulnerability:
+It's my (maybe poor / limited) understanding that most use after free
+bugs are actually reads, but still can lead to code execution, e.g. if
+the read includes function pointers. This is probably not the case in
+this example (but I previously had an example where I thought it's not
+exploitable for similar reasons, and later got told by people who
+understand this stuff much better that they disagree).
 
-https://bugs.webkit.org/show_bug.cgi?id=158411
+> It would be great if we could get a bit more triaging by the owner of
+> the code or the submitter before declaring the bug one thing or the
+> other (especially in these days of projects like yours that bring in
+> a lot of reports -- and don't get me wrong, this is a very valuable
+> effort).
 
-2.the fix has landed in r201787: <http://trac.webkit.org/r201787>
+I understand your wish here, but I am afraid it doesn't match up well
+with the reality we are in.
 
---001a1144b53033adde0537e308f5--
+I had similar discussions before, but I think there is a very obvious
+problem here: The tools we use to find these bugs (asan+afl) are dead
+simple and there are a lot of people out there using them, finding and
+reporting bugs. The number of people with a detailed knowledge of
+memory corruption on the other hand is small.
+
+Generally this is a good thing, as it means more people finding bugs.
+But we have a large number of people who can use the tools to find
+these bug classes, but who aren't neccessarily able to judge the
+severity. And that definitely includes me (although I learned a lot in
+the past year, but I've been accused both in over and underplaying bugs
+in the past).
+My approach to this is that I simply try to choose my wording that it
+matches what I know and if I can't say anything reasonable about
+exploitability I simply don't.
+
+As for CVEs, it's my impression that MITRE right now has a policy that
+they give one for almost any memory safety issue and that they don't
+require an explicit exploit scenario. E.g. my impression is that buffer
+overreads, as long as they aren't simply in a command line tool, almost
+always get CVEs.
+
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: BBB51E42
+
+--=_zucker.schokokeks.org-4578-1469888834-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCgAGBQJXnLk9AAoJEKWIAHK7tR5C/Q0P/0xBFDIlIXhHDeVvhcTqDH9+
+RU7Pq+T/qmndNao0yWw0IexwhyqudN9ymZpg6a3xSjZ7mPLUKwyPW4ZTx/zEBwsY
+Jmcw23xqLbGdrMbchIxMS/4II0Z26u1uP8nze9mIgX5C9NDV8/lcmQv7UoiIdP+9
+XmXiSNHxruBmAR+hQTCLF9ihW/gHL2PB7+X7TTYyB5acaf4jOKkKKHtOnJrPNp1D
+dw/LsxKV2iM4enqY/5Ti5N5AZrk4Cj4n+o2YgBqmsO4VCHXoRAx0P7j1fbwMxOvf
+D7Wkl/tWzSMzRbYagUjunHLhlmOI0GkQfJYauHlPTrhI+blP2vNL79KWRQY7wnXc
+edZDScSmKz1V0HmSptmK1Deb/xBNMJYZFfnZJCwq/G1qbCtAME8wBRTZj+MzrbIk
+e3dvb6WyhbSS8v3p9OzGhqzJPj7dFdNzkze03Njqe9fOT/yUowEHaIwtjKlAw/BO
+DV3KeFZPKnYbEvQUvv3IjqA+tWOvK8iHoTOWX/rklDA3nRNDaZLYlMeBbhbqUiQD
+wjBPBGrJd663El3wDSwVx95Oc9i4/6t4PsmUCH0n4vdrM4b1c3nLSc4NKSadrtW0
+4jF4y+bvj9W2bc1dRPswvgRAXae79wepakZts/8RDTjoFGzY6+KPysFQuUJGPSWG
+RsncymnJfPQ511RxeI6v
+=R0oF
+-----END PGP SIGNATURE-----
+
+--=_zucker.schokokeks.org-4578-1469888834-0001-2--
