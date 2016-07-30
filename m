@@ -1,69 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/07/5
-Message-ID: <80dec0d7-75a1-6319-6ad9-d316d4bb7d34@sysdream.com>
-Date: Fri, 7 Oct 2016 16:35:57 +0200
-From: Sysdream Labs <labs@...dream.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com, spip-team-owner@...o.net
-Subject: Re: SPIP vulnerabilities: request for 5 CVE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/30/1
+Message-ID: <83a44672-b86b-08c3-689e-f55675c5f6b7@gmail.com>
+Date: Fri, 29 Jul 2016 20:42:03 -0700
+From: lazytyped <lazytyped@...il.com>
+To: Hanno Böck <hanno@...eck.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: Use after free in my_login() function of DBD::mysql (Perl module)
 Content-Type: text/plain; charset=utf-8
 
-Thanks.
-
-> 
-> Is there public information about this already on an spip.net web site
-> (such as a Redmine revision) or the https://sysdream.com/news/lab/ web
-> site? Is this unrelated to the valider_xml.php script?
-> 
-
-All the fixes related to the issues are here:
-
-* https://core.spip.net/projects/spip/repository/revisions/23179
-* https://core.spip.net/projects/spip/repository/revisions/23180
-* https://core.spip.net/projects/spip/repository/revisions/23181
-* https://core.spip.net/projects/spip/repository/revisions/23182
-* https://core.spip.net/projects/spip/repository/revisions/23183
-* https://core.spip.net/projects/spip/repository/revisions/23184
-* https://core.spip.net/projects/spip/repository/revisions/23185
-* https://core.spip.net/projects/spip/repository/revisions/23186
-* https://core.spip.net/projects/spip/repository/revisions/23187
-* https://core.spip.net/projects/spip/repository/revisions/23188
-* https://core.spip.net/projects/spip/repository/revisions/23189
-* https://core.spip.net/projects/spip/repository/revisions/23190
-* https://core.spip.net/projects/spip/repository/revisions/23191
-* https://core.spip.net/projects/spip/repository/revisions/23192
-* https://core.spip.net/projects/spip/repository/revisions/23193
-* https://core.spip.net/projects/spip/repository/revisions/23200
-* https://core.spip.net/projects/spip/repository/revisions/23201
-* https://core.spip.net/projects/spip/repository/revisions/23202
 
 
-We will point to the revision numbers in our announcements.
+On 7/29/16 8:58 AM, Hanno Böck wrote:
+> On Thu, 28 Jul 2016 06:31:20 -0700
+> lazytyped <lazytyped@...il.com> wrote:
+>
+>> Quick question:
+>>
+>> - I guess the affecting function call is the following:
+>>
+>>     do_error(dbh, mysql_errno(imp_dbh->pmysql),
+>>                    mysql_error(imp_dbh->pmysql)
+>> ,mysql_sqlstate(imp_dbh->pmysql));
+>>
+>> which one of those calls provides an exploitation path? They seem all
+>> reads off the free'd structure.
+>>
+>> I see in the bug report: " (I think use after free's can be serious
+>> and potentially lead to malfunction and security issues)" and would
+>> like to understand more about the rationale.
+> Hi,
+>
+> I don't have a practical exploit scenario, thus my careful wording (the
+> best answer to "is this exploitable?" is often simply "I don't know").
+>
+> It's a use after free, should be undeniable that it should be fixed.
 
-So we still need CVE for :
+Yes, but whether this is a security bug or not is a different matter. 
+The main reason why I'm bringing this up is that security bugs have a 
+significantly different treatment by OS teams and a quite different 
+expectation of turnaround time by users/customers.
 
-* Template Compiler/Composer PHP Code Execution
+But once a CVE is out (as is in this case), the bug has been officially 
+declared as a security issue, there is no turning back.
 
-https://core.spip.net/projects/spip/repository/revisions/23186
-https://core.spip.net/projects/spip/repository/revisions/23189
-https://core.spip.net/projects/spip/repository/revisions/23192
+So, yes, a use-after-free is a bug, but not necessarily a security one, 
+yet the CVE makes it as much, with all the associated process. It would 
+be great if we could get a bit more triaging by the owner of the code or 
+the submitter before declaring the bug one thing or the other 
+(especially in these days of projects like yours that bring in a lot of 
+reports -- and don't get me wrong, this is a very valuable effort).
 
-* Server Side Request Forgery
-https://core.spip.net/projects/spip/repository/revisions/23188
-https://core.spip.net/projects/spip/repository/revisions/23193
+>
+> But my highlevel understanding of what could happen in such a case: In a
+> multithreaded application using that module it may be possible that
+> another thread is allocating the free'd memory before do_error is
+> called and may fill the memory of the struct with attacker-controlled
+> content. Would require careful analysis of what do_error does exactly
+> whether that could lead to further bad things.
 
-Best regards,
--- 
-SYSDREAM Labs <labs@...dream.com>
+Well, AddressSanitizer should have told you whether the access is a read 
+access (as I suspect) or a write access. A bit of code inspection (or 
+follow up from the code maintainer) should add to the picture.
 
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
-
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
+As things stand right now, it seems that this could be turned into an 
+infoleak (despite some CVSS high scores I've seen around). But 
+notwithstanding this, I think it might help the community in general if 
+we do not just blindly characterize bugs based on what class they 
+belong, but we get a bit more information/effort around them.
 
 
+        -  Enrico
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+>
+
