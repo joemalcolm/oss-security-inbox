@@ -1,64 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/13/7
-Message-Id: <20160713154153.BC9736C0989@smtpvmsrv1.mitre.org>
-Date: Wed, 13 Jul 2016 11:41:53 -0400 (EDT)
-From: cve-assign@...re.org
-To: pere@...a.cat
-Cc: cve-assign@...re.org, security@...pal.org, oss-security@...ts.openwall.com
-Subject: Re: CVE requests for Drupal Core - SA-CORE-2016-002
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/30/3
+Message-ID: <20160730102709.25d91e44@pc1>
+Date: Sat, 30 Jul 2016 10:27:09 -0400
+From: Hanno Böck <hanno@...eck.de>
+To: lazytyped <lazytyped@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: Use after free in my_login() function of DBD::mysql (Perl module)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Fri, 29 Jul 2016 20:42:03 -0700
+lazytyped <lazytyped@...il.com> wrote:
 
-> https://www.drupal.org/SA-CORE-2016-002
-> 
-> Saving user accounts can sometimes grant the user all roles (User
-> module - Drupal 7 - Moderately Critical)
-> 
-> A vulnerability exists in the User module, where if some specific
-> contributed or custom code triggers a rebuild of the user profile
-> form, a registered user can be granted all user roles on the site.
-> This would typically result in the user gaining administrative access.
+> Well, AddressSanitizer should have told you whether the access is a
+> read access (as I suspect) or a write access. A bit of code
+> inspection (or follow up from the code maintainer) should add to the
+> picture.
 
-Use CVE-2016-6211.
+It's my (maybe poor / limited) understanding that most use after free
+bugs are actually reads, but still can lead to code execution, e.g. if
+the read includes function pointers. This is probably not the case in
+this example (but I previously had an example where I thought it's not
+exploitable for similar reasons, and later got told by people who
+understand this stuff much better that they disagree).
+
+> It would be great if we could get a bit more triaging by the owner of
+> the code or the submitter before declaring the bug one thing or the
+> other (especially in these days of projects like yours that bring in
+> a lot of reports -- and don't get me wrong, this is a very valuable
+> effort).
+
+I understand your wish here, but I am afraid it doesn't match up well
+with the reality we are in.
+
+I had similar discussions before, but I think there is a very obvious
+problem here: The tools we use to find these bugs (asan+afl) are dead
+simple and there are a lot of people out there using them, finding and
+reporting bugs. The number of people with a detailed knowledge of
+memory corruption on the other hand is small.
+
+Generally this is a good thing, as it means more people finding bugs.
+But we have a large number of people who can use the tools to find
+these bug classes, but who aren't neccessarily able to judge the
+severity. And that definitely includes me (although I learned a lot in
+the past year, but I've been accused both in over and underplaying bugs
+in the past).
+My approach to this is that I simply try to choose my wording that it
+matches what I know and if I can't say anything reasonable about
+exploitability I simply don't.
+
+As for CVEs, it's my impression that MITRE right now has a policy that
+they give one for almost any memory safety issue and that they don't
+require an explicit exploit scenario. E.g. my impression is that buffer
+overreads, as long as they aren't simply in a command line tool, almost
+always get CVEs.
 
 
-> https://www.drupal.org/SA-CORE-2016-002
-> https://www.drupal.org/node/2749333
-> 
-> Views can allow unauthorized users to see Statistics information
-> (Views module - Drupal 8 - Less Critical)
-> 
-> An access bypass vulnerability exists in the Views module, where users
-> without the "View content count" permission can see the number of hits
-> collected by the Statistics module for results in the view.
-> 
-> The same vulnerability exists in the Drupal 7 Views module (see
-> SA-CONTRIB-2016-036).
+-- 
+Hanno Böck
+https://hboeck.de/
 
-Use CVE-2016-6212 for both the issue in Drupal Core and the issue
-in the Drupal 7 Views module.
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXhmCYAAoJEHb/MwWLVhi2ynoQALLaB0MVbyjGwof2sl9iAbiX
-pTLnCnGhO6ecpwWJdtRB4W4DEF6L/h3X7ggiohGaD6okdQtjLF8ykSrvb2mciAsE
-gOjNpN9qK16hjAcd2DtSnXn32Qz1tFpFYYIWdSthO1hlI6Sr24B3E9lYtBoAhC1/
-VudXovTed0jBW95EvS0lWPMYcOGEtSoQ3rLOKEcnQqzIrlH6hs3bRQNsZLgupsB1
-dGY4gsHFleDZKyZLP15KWbONnyfS6jHp7SIXne977vgWKpDYy/5+XSN7YvKks/Ju
-q3a0oLn8N4CreZrCIWl6CbgG0iA75xzlgsgayg+xRabFEavL2EonPPJIvBj3TxtM
-d2RVPnfGGuLmvOh+c5fBYs6gVftRJa9nUaIXou+1Xs6LQo5RDypFPCDzpblcWSe8
-QX0AXVE/lCGP1szzCXPqUFWoXMFvwlnFnIwPpJrwO/eADc8P6XsOwsvDbqMFEzlI
-r5Mj+d0/5q5NrCf9GWjSi7YTrDQa1ft8SkUsgyCtRwmYIhUyuSIzStoPM+MvLOQv
-grzXK6F4QqH33z7ru+fdbq5XIIGmk2dQOtgY+MZXxVDNcVmSgZOvwInMMUgnuKpR
-uF78CqNit4FfzyOngGGDR901xfxY9PuHjAbdY2rwITsflsFPWw6z8O+7z0T98IWo
-XXHA0Ya2kF2RiLDCX1fN
-=CcX4
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
