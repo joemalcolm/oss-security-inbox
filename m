@@ -1,90 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/25/8
-Message-ID: <CACn5sdT9ezjtWQdgO0Lv=QRVEyiZ5Ot8wf+4Ch+-8KrgoJqp+w@mail.gmail.com>
-Date: Thu, 25 Feb 2016 14:18:07 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: reads out-of-bounds with cpio 2.11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/30/2
+Message-ID: <20160730101658.05bf4020@pc1>
+Date: Sat, 30 Jul 2016 10:16:58 -0400
+From: Hanno Böck <hanno@...eck.de>
+To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Cc: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>
+Subject: Re: CVE Request: nettle's RSA code is vulnerable to cache sharing related attacks
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Fri, 29 Jul 2016 14:19:38 +0530
+Huzaifa Sidhpurwala <huzaifas@...hat.com> wrote:
 
-Two reads out-of-bounds in cpio 2.11 were found in the parsing of cpio
-files (other version are probably affected).  Find attached a test case to
-reproduce them. The ASAN report of the first one is here:
+> The following whitepaper talks about libgcrypt's RSA code being
+> vulnerable to a cache timing attack, which the paper claims is fixed
+> in 1.6.3.
+> 
+> It seems nettle is also vulnerable to this flaw. Which was confirmed
+> by upstream via:
+> https://lists.lysator.liu.se/pipermail/nettle-bugs/2016/003093.html
+> 
+> The above link also contains a proposed patch, will be committed soon.
 
-$ ./cpio -i < overflow.cpio
+FYI, this patch had some unintended side effects:
+https://lists.lysator.liu.se/pipermail/nettle-bugs/2016/003104.html
 
-./cpio: warning: skipped 8 bytes of junk
-=================================================================
-==31838==ERROR: AddressSanitizer: heap-buffer-overflow on address
-0x60200000edb2 at pc 0x7fb81910ba28 bp 0x7fffa1c286d0 sp 0x7fffa1c27e80
-READ of size 2 at 0x60200000edb2 thread T0
-    #0 0x7fb81910ba27 in strchr
-(/usr/lib/x86_64-linux-gnu/libasan.so.2+0x6ea27)
-    #1 0x407174 in path_contains_symlink
-/home/vagrant/repos/cpio-2.11+dfsg/src/copyin.c:718
-    #2 0x40bce0 in process_copy_in
-/home/vagrant/repos/cpio-2.11+dfsg/src/copyin.c:1524
-    #3 0x4165c6 in main /home/vagrant/repos/cpio-2.11+dfsg/src/main.c:746
-    #4 0x7fb818cf9ec4 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
-    #5 0x403408  (/home/vagrant/repos/cpio-2.11+dfsg/src/cpio+0x403408)
+They replaced GMP's mpz_powm with mpz_powm_sec, however the latter is
+not equivalent. It requires odd moduli and will crash with a floating
+point exception if the modulus is even.
 
-0x60200000edb2 is located 0 bytes to the right of 2-byte region
-[0x60200000edb0,0x60200000edb2)
-allocated by thread T0 here:
-    #0 0x7fb81913176a in realloc
-(/usr/lib/x86_64-linux-gnu/libasan.so.2+0x9476a)
-    #1 0x43da22 in xrealloc
-/home/vagrant/repos/cpio-2.11+dfsg/gnu/xmalloc.c:59
-    #2 0x40b5ab in process_copy_in
-/home/vagrant/repos/cpio-2.11+dfsg/src/copyin.c:1437
-    #3 0x4165c6 in main /home/vagrant/repos/cpio-2.11+dfsg/src/main.c:746
-    #4 0x7fb818cf9ec4 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
+This is actually a bug class that may turn out to be interesting, I
+recently experienced something very similar (but more severe) in
+matrixssl (writeup on that will follow as soon as I find time for it).
+Bignum libraries have certain conditions on how their input is formed
+and don't behave well if the input isn't what they expect. These
+conditions usually make sense in the average use case, but not
+neccessarily if an attacker can control some of the input.
 
-and the second one is here:
 
-$ ./cpio -t < overflow.cpio
+-- 
+Hanno Böck
+https://hboeck.de/
 
-./cpio: warning: skipped 8 bytes of junk
-=================================================================
-==3962==ERROR: AddressSanitizer: heap-buffer-overflow on address
-0x60200000edb2 at pc 0x7f705ab831b1 bp 0x7ffc620c3f70 sp 0x7ffc620c3720
-READ of size 3 at 0x60200000edb2 thread T0
-    #0 0x7f705ab831b0  (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x5e1b0)
-    #1 0x7f705ab837b7 in __interceptor_vprintf
-(/usr/lib/x86_64-linux-gnu/libasan.so.2+0x5e7b7)
-    #2 0x7f705ab838a9 in __interceptor_printf
-(/usr/lib/x86_64-linux-gnu/libasan.so.2+0x5e8a9)
-    #3 0x403d55 in list_file
-/home/vagrant/repos/cpio-2.11+dfsg/src/copyin.c:180
-    #4 0x40b958 in process_copy_in
-/home/vagrant/repos/cpio-2.11+dfsg/src/copyin.c:1478
-    #5 0x4165c6 in main /home/vagrant/repos/cpio-2.11+dfsg/src/main.c:746
-    #6 0x7f705a781ec4 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
-    #7 0x403408  (/home/vagrant/repos/cpio-2.11+dfsg/src/cpio+0x403408)
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-0x60200000edb2 is located 0 bytes to the right of 2-byte region
-[0x60200000edb0,0x60200000edb2)
-allocated by thread T0 here:
-    #0 0x7f705abb976a in realloc
-(/usr/lib/x86_64-linux-gnu/libasan.so.2+0x9476a)
-    #1 0x43da22 in xrealloc
-/home/vagrant/repos/cpio-2.11+dfsg/gnu/xmalloc.c:59
-    #2 0x40b5ab in process_copy_in
-/home/vagrant/repos/cpio-2.11+dfsg/src/copyin.c:1437
-    #3 0x4165c6 in main /home/vagrant/repos/cpio-2.11+dfsg/src/main.c:746
-    #4 0x7f705a781ec4 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
-
-These issues were found using QuickFuzz.
-
-Regards,
-Gustavo.
-
-Content of type "text/html" skipped
-
-Download attachment "overflow.cpio" of type "application/x-cpio" (282 bytes)
+Content of type "application/pgp-signature" skipped
