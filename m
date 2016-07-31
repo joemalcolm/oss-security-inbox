@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5220" "Thursday" "5" "April" "2018" "12:37:58" "+0200" "Daniel Beck" "ml@beckweb.net" "<8E8091B7-344D-458B-A6C5-D3E0F71666AA@beckweb.net>" "172" "Re: [oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "4" "2018040510:37:58" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Apr  5  172/5220  " thread-indent "\"Re: [oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") "<0A92B24E-DD0F-4B77-8CF5-C6C997D305E5@beckweb.net>" ("<0A92B24E-DD0F-4B77-8CF5-C6C997D305E5@beckweb.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7851" "Sunday" "31" "July" "2016" "13:34:02" "+0200" "=?UTF-8?B?16TXkNeZINek15k=?=" "phi.reporter@walla.co.il" "<~001579DDE384E5CD7001385@walla.co.il>" "133" "[oss-security] badUSB exploit - affects all Linux distros" "^Date:" nil nil "7" "2016073111:34:02" "[oss-security] badUSB exploit - affects all Linux distros" (number mark "        phi.reporter Jul 31  133/7851  " thread-indent "\"[oss-security] badUSB exploit - affects all Linux distros\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 2001 invoked by uid 550); 5 Apr 2018 10:38:12 -0000
+Received: (qmail 5989 invoked by uid 550); 31 Jul 2016 12:10:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,191 +11,147 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 26398 invoked from network); 31 Jul 2016 11:34:15 -0000
+X-Authentication-Warning: mail-api78.walla.co.il: informix set sender to phi.reporter@walla.co.il using -f
+Message-Id: <~001579DDE384E5CD7001385@walla.co.il>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="=-DPGdphg/K7cVUd3LFFaJ"
+Date: Sun, 31 Jul 2016 13:34:02 +0200
+From: =?UTF-8?b?16TXkNeZINek15k=?= <phi.reporter@walla.co.il>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1983 invoked from network); 5 Apr 2018 10:38:11 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Date: Thu, 5 Apr 2018 12:37:58 +0200
-References: <0A92B24E-DD0F-4B77-8CF5-C6C997D305E5@beckweb.net>
+Subject: [oss-security] badUSB exploit - affects all Linux distros
 To: oss-security@lists.openwall.com
-In-Reply-To: <0A92B24E-DD0F-4B77-8CF5-C6C997D305E5@beckweb.net>
-Message-Id: <8E8091B7-344D-458B-A6C5-D3E0F71666AA@beckweb.net>
-X-Mailer: Apple Mail (2.3273)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1522924691;4fb35798;
-X-HE-SMSGID: 1f42HH-0004t6-TO
-Subject: Re: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
+--=-DPGdphg/K7cVUd3LFFaJ
+Content-Type: text/plain; name=message.txt
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=message.txt
 
-> On 26. Mar 2018, at 13:22, Daniel Beck <ml@beckweb.net> wrote:
->=20
-> SECURITY-261
-> GitHub Pull Request Builder Plugin stored serialized objects in `build.xm=
-l`=20
-> files that contained the credential used to poll Jenkins. This can be use=
-d=20
-> by users with master file system access to obtain GitHub credentials.
->=20
-> Since 1.40.0, the plugin no longer stores serialized objects containing t=
-he=20
-> credential on disk.
->=20
-> Builds started before the plugin was updated to 1.40.0 will retain the=20
-> encoded credentials on disk. We strongly recommend revoking old GitHub=20
-> credentials used in Jenkins.
+VGl0bGU6IGJhZFVTQiBleHBsb2l0IC0gYWZmZWN0cyBhbGwgTGludXggZGlz
+dHJvcwotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0KCkRlYXIgb3NzLXNlY3VyaXR5IG1haWwgbGlz
+dCBtZW1iZXJzLAoKUGxlYXNlLCBJIHVyZ2UgeW91IHRvIGZpeCB0aGUga25v
+d24gYmFkVVNCIHNlY3VyaXR5IGV4cGxvaXQgdGhhdCBleGlzdHMgaW4gYW55
+IExpbnV4IGRpc3Ryby4KClRoZXJlIGlzIGF2YWlsYWJsZSAodG8gdGhlIGdl
+bmVyYWwgcHVibGljKSBhIHJlbGF0aXZlbHkgY2hlYXAgcHJvZHVjdCB3aGlj
+aCBkb2VzIHRoZSAicnViYmVyZHVja3kiIGF0dGFjaywgaXQgdXNlcyB0aGUg
+YmFkVVNCIGV4cGxvaXQuClNlZSB0aGUgbGluayAoZm91bmQgaXQgYnkgc2Vh
+cmNoaW5nICJydWJiZXJkdWNreSIgaW4gZ29vZ2xlIC0gY2xpY2tlZCBmaXJz
+dCByZXN1bHQpOgpodHRwOi8vaGFrc2hvcC5teXNob3BpZnkuY29tL3Byb2R1
+Y3RzL3VzYi1ydWJiZXItZHVja3ktZGVsdXhlClRoYXQgaXMgKmNyb3NzLXBs
+YXRmb3JtKiBkdWUgdG8gVVNCJ3MgbmF0dXJlIC0gaXQgYWZmZWN0cyBBTEwg
+TGludXggZGlzdHJvcy4KClRoZXJlZm9yZSBJIHN1c3BlY3QgdGhhdCBMaW51
+eCBmYWlscyB0byBwcm90ZWN0IGFnYWluc3QgdGhhdCwKYmVjYXVzZSB0aGF0
+IHRoZSAicnViYmVyZHVja3kiIGF0dGFjayBjYW4gInR5cGUiIHRoZSBmb2xs
+b3dpbmcgY29tbWFuZHM6CgogICAgMS4gQ29weS1wYXN0ZSBhIGJhc2ggc2Ny
+aXB0CiAgICAyLiBjaG1vZCBpdCBzbyB0aGF0IGl0IHdpbGwgZXhlY3V0ZSAo
+dW5kZXIgbm9ybWFsIHVzZXIgLSBOT1Qgcm9vdCkKICAgIDMuIG1hbHdhcmUg
+aXMgYWN0aXZlLi4uIAoKTm90ZSB0aGF0IGJ5IGRlZmF1bHQgLSBMaW51eCdz
+IGZpcmV3YWxsIGlzIGRpc2FibGVkLCB0aGVyZWZvcmUgYWxsb3dpbmcgYW4g
+ZWFzeSBhY2Nlc3MgdG8gdGhlIGF0dGFja2VyIHZpYSBpbnRlcm5ldC4KCklu
+IGFkZGl0aW9uLCBpdCBpcyBwb3NzaWJsZSB0byBwcm9ncmFtIGEgVVNCIGZs
+YXNoIGRyaXZlIHRvIGJlaGF2ZSBsaWtlIGEga2V5Ym9hcmQsIGJlY2F1c2Ug
+dGhhdCB0aGUgZWxlY3RyaWNhbCBmdW5jdGlvbmFsaXR5IGlzIGF2YWlsYWJs
+ZSAoeW91IG9ubHkgbmVlZCBhIGRpZmZlcmVudCBkcml2ZXIpLgpUaGVyZWZv
+cmUgdGhlIHVzZXIgd291bGQgdGhpbmsgdGhhdCBoZSBjb25uZWN0IGEgVVNC
+IGZsYXNoIGRyaXZlLCBidXQgYWN0dWFsbHkgaGUgY29ubmVjdHMgYSBVU0Ig
+a2V5Ym9hcmQuCgotLS0tLS0tLS0tLS0tLS0tLQoKTXkgc29sdXRpb24gdG8g
+dGhpcyBleHBsb2l0OgoKT24gdGhlIGNvbm5lY3Rpb24gb2YgYSBkZXZpY2Ug
+dGhhdCBoYXMgYSBkaXJlY3QgcGh5c2ljYWwgYWNjZXNzLCB0aGUgT1Mgc2hv
+dWxkIHBlcm1pdCB0aGUgZGV2aWNlIHRvIHBlcmZvcm0gYWN0aW9ucyBiYXNl
+ZCBvbiB3aGF0IHRoZSB1c2VycyBhbGxvd3MgaXQgdG8gZG8uCkRvZXMgdGhl
+IHVzZXIgYWxsb3cgYSBVU0IgZmxhc2ggZHJpdmUgdG8gYWN0IGxpa2UgYSBV
+U0Iga2V5Ym9hcmQ/IFByb2JhYmx5IG5vdCEKQWxzbywgaWYgZnJvbSBhIHNp
+bmdsZSBVU0IgcG9ydCAtIHRoZSBPUyBkZXRlY3QgYSBVU0IgZmxhc2ggZHJp
+dmUgQU5EIGEgVVNCIGtleWJvYXJkIC0gdGhpcyBraW5kIG9mIGV2ZW50IHNo
+b3VsZCBsaWdodCBhIHJlZCBhbGVydCAoISkuCgpUaHVzLCB1cG9uIGNvbm5l
+Y3Rpb24gb2YgdGhlIFVTQiBzdGljaywgdGhlIE9TIHNob3VsZCBhc2sgdGhl
+IHVzZXI6CkRvIHlvdSBhbGxvdyB0aGUgVVNCIHN0aWNrIHRvIGFjdCBhczoK
+KDEpIC4uCigyKSAuLgooMykgLi4KCldoaWxlIHRoZSBvcHRpb25zICgxKSB0
+byAoMykgYXJlIHRoZSBkZXZpY2VzIHRoYXQgdGhlIFVTQiBzdGljayBwcmVz
+ZW50cyBpdHNlbGYgdG8gdGhlIFBDLgoKQnkgZGVmYXVsdDogCkxpbnV4IHNo
+b3VsZCBhbGxvdyB0aGF0IG9ubHkgYSBzaW5nbGUga2V5Ym9hcmQgaXMgdXNl
+ZCBhdCBhIHNpbmdsZSB0aW1lICh3aGljaCBpcyB0aGUga2V5Ym9hcmQgdGhh
+dCB3YXMgY29ubmVjdGVkIGZpcnN0KS4gVGhpcyBiZWhhdmlvciBtYXkgYmUg
+bW9kaWZpZWQgdmlhIHRoZSBVU0IgcGVybWlzc2lvbnMgc3lzdGVtICh3aGlj
+aCBzaG91bGQgYmUgd3JpdHRlbikuCgotLS0tLS0tLS0tLS0tLS0tLQoKVGhl
+IGZvbGxvd2luZyBhcmUgcXVvdGVzIG9mIHF1ZXN0aW9ucyB3aGljaCBJIHdh
+cyBhc2tlZCByZWdhcmRpbmcgdGhpcyBleHBsb2l0IGFuZCBteSBzb2x1dGlv
+biB0byBpdC4KTXkgYW5zd2VycyB0byB0aGVzZSBxdWVzdGlvbnMgYXBwZWFy
+IGltbWVkaWF0ZWx5IGFmdGVyIHRoZSBxdW90ZXMuCgoiLSBIb3cgd291bGQg
+YSB1c2VyIGludGVyYWN0IHdoZW4gcGx1Z2dpbmcgaW4gdGhlIGZpcnN0IGtl
+eWJvYXJkIG9yIG1vdXNlPyIKVGhlIGZpcnN0IGtleWJvYXJkIGFuZCBtb3Vz
+ZSBhcmUgbm9ybWFsbHkgY29ubmVjdGVkIHdoZW4gcG93ZXJpbmcgb24gdGhl
+IFBDLgpUaGUgYmVoYXZpb3VyIHNob3VsZCBiZSBsaWtlIHRvZGF5IC0gbm8g
+cmVzdHJpY3Rpb25zIGZvciB0aGUgZmlyc3Qga2V5Ym9hcmQgYW5kIG1vdXNl
+LgooTm9ybWFsbHkgdGhlIFVTQiBmbGFzaCBkcml2ZSBpcyBjb25uZWN0ZWQg
+b25seSAqYWZ0ZXIqIHRoYXQgdGhlIG5vcm1hbCBrZXlib2FyZCAmIG1vdXNl
+IGFyZSBhbHJlYWR5IGNvbm5lY3RlZC4pCgoiLSBXaGF0IGlmIHRoZSBtYWxp
+Y2lvdXMgZGV2aWNlIHdhcyBmaXJzdCBvbmx5IGJlY2F1c2UgaXQgd2FzICdl
+YXJsaWVyJyBpbiB0aGUgVVNCIG5ldHdvcms/IgpJZiBieSAiZWFybGllciBp
+biB0aGUgVVNCIG5ldHdvcmsiIHlvdSBtZWFuIDoKICogImNvbm5lY3RlZCBi
+ZWZvcmUgdGhlIGtleWJvYXJkIGFuZCBtb3VzZSIgdGhlbiBmb3Igbm93IHRo
+ZXJlIGlzIG5vdCBtdWNoIEkgY2FuIHRoaW5rIG9mLiBCdXQgbm9ybWFsbHkg
+dGhhdCBkb2VzIG5vdCBoYXBwZW4sIGFuZCAqc29tZSogcHJvdGVjdGlvbiBp
+cyBiZXR0ZXIgdGhhbiBub25lLgogKiAiY29ubmVjdGVkIGluIHBhcmFsbGVs
+IChzYW1lIHRpbWUpIHRvIGtleWJvYXJkICYgbW91c2UiIHRoZW4gYWxlcnQg
+dGhlIHVzZXIgdGhhdCBoZSBuZWVkcyB0byByZW1vdmUgb25lIG9mIHRoZW0g
+aW4gb3JkZXIgdG8gcHJvY2VlZC4KCiItIEhvdyB3b3VsZCB0aGUgc3lzdGVt
+IHRlbGwgYSBrZXlib2FyZC13aXRoLWh1YiB0aGF0IGEgdXNlciBpbnRlbmRl
+ZCB0byBidXkgZnJvbSBhIGtleWJvYXJkLXdpdGgtaHViIHRoYXQgYSB1c2Vy
+IGRpZG4ndCBpbnRlbmQgdG8gYnV5PyIKSHVicyBhcmVuJ3QgdGhlIG5vcm0u
+CkluIGNhc2UgdGhhdCBzb21lb25lIGhhcyBhIGh1YiAoZG91YnRmdWwuLikg
+dGhlbiBoZSBjYW4gYWx3YXlzIGRpc2FibGUgdGhlIHNlY3VyaXR5IGJlaGF2
+aW91ci4gSSBzaW5jZXJlbHkgYmVsaWV2ZSB0aGF0IG1vc3Qgb2YgdGhlIHBl
+b3BsZSB3b3VsZCBwcmVmZXIgdG8gaGF2ZSBtb3JlIHByb3RlY3Rpb24gYW5k
+IGxpdHRsZSBkaXNjb21mb3J0IHRoYW4gaGF2aW5nIHRoaXMgaHVnZSBleHBs
+b2l0LgoKIi0gV2hhdCB3b3VsZCB0aGUgaW50ZXJhY3Rpb24gbG9vayBsaWtl
+IG9uIGEgY29tcHV0ZXIgd2l0aCBubyBkaXNwbGF5cz8gV2l0aCBhIGRvemVu
+IGRpc3BsYXlzPyBXaXRoIGEgZG96ZW4gc2VhdHM/IgpXaXRoIG5vIGRpc3Bs
+YXlzOiBEb2VzIGl0IGNvbm5lY3QgdmlhIHNzaD8gSWYgc28sIHRoZW4gaGUg
+Y291bGQgc2VlIHRoZSBtZXNzYWdlLiBJZiBub3QgdGhlbiBhIHNvdW5kL2Jl
+ZXAgd291bGQgYmUgYWN0aXZhdGVkLiBJZiBoYXZpbmcgbm8gc3BlYWtlcnMg
+dGhlbiB0aGUgdXNlciBzaG91bGQgdW5kZXJzdGFuZCB0aGF0IHNvbWV0aGlu
+ZyBpcyB3cm9uZy4uLiBCdXQgSSB0aGluayB0aGF0IHRoaXMgaXMgcmFyZWx5
+IGhhcHBlbiwgdGhlcmVmb3JlIGlmIGl0IGRvZXMgaGFwcGVuIC0gdGhlbiBp
+dCBpcyBwcm9iYWJseSg/PykgdGhlIFVTQiBleHBsb2l0LgpXaXRoIGRvemVu
+IG9mIGRpc3BsYXlzOiBTaW1wbHkgZGlzcGxheSBhbiBhbGVydCB3aW5kb3cg
+b2Ygc29tZSBzb3J0IG9uIG9uZSBvZiB0aGUgZGVza3RvcCAoaXMgdGhpcyBy
+ZWFsbHkgYSBwcm9ibGVtPyBIb3cgZG9lcyBMaW51eCBtYW5hZ2VzIHRvIGRp
+c3BsYXkgZXJyb3JzIHdpdGggZG96ZW4gb2YgZGlzcGxheXMgaW4gb3RoZXIg
+c2NlbmFyaW9zPykuCldpdGggYSBkb3plbiBzZWF0czogV2hhdCBkbyB5b3Ug
+bWVhbiBieSAic2VhdHMiID8KClVTQiBpcyB2ZXJ5IGZsZXhpYmxlIGluZGVl
+ZCwgYnV0IG1vc3QgcGVvcGxlIHdvdWxkIHByZWZlciB0byBrbm93IHRoYXQg
+dGhlaXIgc3lzdGVtIGlzIHNlY3VyZSB0aGFuIHNwZW5kaW5nIGZldyBtaW51
+dGVzIChvciBoYWxmIGFuIGhvdXIgaW4gd29yc3QgY2FzZSkgaW4gdW5kZXJz
+dGFuZGluZyB0aGUgKHJhcmUpIHByb2JsZW0gYW5kIGZpeGluZyBpdC4KCi0t
+LS0tLS0tLS0tLS0tLS0tCgpJIG9wZW5lZCBhIGJ1ZyByZXBvcnQgYXQgbGF1
+bmNocGFkIGZvciBVYnVudHU6Cmh0dHBzOi8vYnVncy5sYXVuY2hwYWQubmV0
+L3VidW50dS8rYnVnLzEzOTM2MTIKKFJlYWQgbXkgcG9zdDogImpvaG5tbmUg
+KHBoaS1yZXBvcnRlcikgd3JvdGUgb24gMjAxNi0wNi0yNzogIikKCkl0IGlz
+IHJlY29tbWVuZGVkIHRvIHJlYWQgdGhlIGR1cGxpY2F0ZSBidWcgcmVwb3J0
+IHRoYXQgSSBvcGVuZWQgYXQgdGhlIGZvbGxvd2luZyBVUkw6Cmh0dHBzOi8v
+YnVncy5sYXVuY2hwYWQubmV0L3VidW50dS8rYnVnLzE1OTA5OTAKKERpc2N1
+c3NlZCB3aXRoICJTZXRoIEFybm9sZCAoc2V0aC1hcm5vbGQpIikKCkFsc28s
+IHNvcnJ5IC0gSSBhbSBOT1QgYW4gZXhwZXJ0IGluIFVidW50dSwgbmVpdGhl
+ciBpbiBMaW51eCwgdGhlcmVmb3JlIEkgY2FuJ3Qgc3VnZ2VzdCBob3cgdG8g
+aW1wbGVtZW50IHRoZSBiZWhhdmlvciB0aGF0IEkgb2ZmZXJlZC4KClRoZXJl
+IGlzIGEgY29tbW9uIHNjZW5hcmlvIGZvciBMaW51eCwgaW4gd2hpY2g6CiAg
+MS4gQSBrZXlib2FyZCBhbmQgYSBzY3JlZW4gaXMgYWxyZWFkeSBhdmFpbGFi
+bGUuCiAgICAgSWYgdGhlIHNjcmVlbiBpc24ndCBhdmFpbGFibGUsIHRoZW4g
+dGhlIHVzZXIgaXMgYWJsZSB0byBjb25uZWN0IHZpYSBuZXR3b3JrLgogIDIu
+IEFub3RoZXIgVVNCIHN0aWNrIGlzIGNvbm5lY3RlZCB0byB0aGUgUEMuCiAg
+ICAgSWYgdGhlIFVTQiBiZWhhdmVzIGxpa2UgYSBrZXlib2FyZCwgYW4gaW50
+ZXJhY3RpdmUgcHJvZ3JhbSAoZWl0aGVyIEdVSSBvciBjb21tYW5kLWxpbmUp
+IGNvdWxkIGluaXRpYXRlIC0gYWxlcnRpbmcgdGhlIHVzZXIgb24gdGhlIHBy
+b2JsZW0gYW5kIHN1Z2dlc3RpbmcgdG8gYmxvY2sgaXQuCiAgICAgClRoaXMg
+aXMgdGhlIG1vc3QgY29tbW9uIGFuZCBiYXNpYyBzZXR1cCBmb3IgdGhpcyBl
+eHBsb2l0IHRvIGJlIGV2ZXIgdXNlZC4KCkJ5IGRlZmF1bHQgeW91ICh0aGUg
+ZGV2ZWxvcGVycykgbWF5IGRpc2FibGUgdGhpcyBzZWN1cml0eSBwYXRjaCwg
+YnV0IHRoZSB1c2VyIHNob3VsZCBiZSBhYmxlIHRvIGNob29zZSB3aGV0aGVy
+IGhlIHdhbnRzIHRvIGVuYWJsZSBpdCAoSSdtIHN1cmUgdGhhdCBtb3N0IHBl
+b3BsZSB3b3VsZCBlbmFibGUgaXQuLikuCgpQbGVhc2UgcmVwbHkgdG8gbXkg
+RU1haWwsIHNvIHRoYXQgSSdsbCBrbm93IHRoYXQgeW91IHJlY2VpdmVkIGl0
+LgoKVGhhbmsgeW91LgoKQmVzdCByZWdhcmRzLgoK
 
-CVE-2018-1000142
-
-
-> SECURITY-262
-> GitHub Pull Request Builder Plugin stored the webhook secret shared betwe=
-en=20
-> Jenkins and GitHub in plain text.
->=20
-> This allowed users with Jenkins master local file system access and Jenki=
-ns=20
-> administrators to retrieve the stored password. The latter could result i=
-n=20
-> exposure of the passwords through browser extensions, cross-site scriptin=
-g=20
-> vulnerabilities, and similar situations.
->=20
-> GitHub Pull Request Builder Plugin 1.32.1 and newer stores the webhook=20
-> secret encrypted on disk.
-
-CVE-2018-1000143
-
-
-> SECURITY-308
-> Cucumber Living Documentation Plugin disabled the 'Content-Security-Polic=
-y'=20
-> HTTP header XSS protection for files served by Jenkins until Jenkins was=
-=20
-> restarted whenever a Cucumber peport was viewed by any user.
->=20
-> This has been addressed in version 1.1.0 of the plugin, and it will now=20
-> request that users manually change the Content-Security-Policy option in=
-=20
-> Jenkins.
-
-CVE-2018-1000144
-
-
-> SECURITY-373
-> Perforce Plugin encrypts its credentials using DES and a public key store=
-d=20
-> in its public source code, so it only serves as basic obfuscation. This=20
-> allowed users with Jenkins master local file system access and Jenkins=20
-> administrators to retrieve the stored password. The latter could result i=
-n=20
-> exposure of the passwords through browser extensions, cross-site scriptin=
-g=20
-> vulnerabilities, and similar situations.
->=20
-> As of publication of this advisory, there is no fix. The plugin has been=
-=20
-> removed from publication at the request of its former maintainers.
-
-CVE-2018-1000145
-
-
-> SECURITY-504
-> vSphere Plugin disabled SSL/TLS certificate validation unconditionally,
-> allowing potential man-in-the-middle attacks.
->=20
-> vSphere Plugin 2.17 now has SSL/TLS certificate validation enabled by
-> default.
-
-CVE-2018-1000151
-
-
-> SECURITY-519
-> Liquibase Runner Plugin allows users with Job/Configure permission to=20
-> configure its build step in a way that loads arbitrary class files into t=
-he=20
-> Jenkins master JVM, resulting in arbitrary code execution.
->=20
-> As of publication of this advisory, there is no fix.
-
-CVE-2018-1000146
-
-
-> SECURITY-536
-> Perforce Plugin implements its own credential encryption using DES and an=
-=20
-> encryption key stored in its public source code. This is not considered a=
-=20
-> secret by Jenkins, resulting in potential exposure of Perforce credential=
-s=20
-> stored in job configurations to users with Extended Read permission.
-> While these are encrypted, this can only be considered basic obfuscation=
-=20
-> due to the hard-coded public encryption key used.
->=20
-> As of publication of this advisory, there is no fix.
-
-CVE-2018-1000147
-
-
-> SECURITY-545
-> Copy To Slave Plugin allows users with Job/Configure permissions to=20
-> configure it in such a way that it allows obtaining arbitrary files=20
-> accessible to the Jenkins master process from the Jenkins master file
-> system.
->=20
-> As of publication of this advisory, there is no fix.
-
-CVE-2018-1000148
-
-
-> SECURITY-630
-> Ansible Plugin disabled host key verification by default, having it only =
-as=20
-> an opt-in option.
->=20
-> Ansible Plugin 1.0 now enables host key verification by default, adding=20
-> options allowing users to opt out.
->=20
-> Existing configurations that previously did not opt into host key=20
-> verification will have host key verification enabled after update, possib=
-ly=20
-> resulting in failures.
-
-CVE-2018-1000149
-
-
-> SECURITY-736
-> Reverse Proxy Auth Plugin persisted a cache of granted authorities (group=
-=20
-> memberships) on disk.
->=20
-> This could allow users with local Jenkins master file system access to=20
-> obtain group membership information of Jenkins users.
-
-CVE-2018-1000150
-
-
-> SECURITY-745
-> vSphere Plugin did not perform permission checks on methods implementing=
-=20
-> form validation. This allowed users with Overall/Read access to Jenkins t=
-o=20
-> perform various actions such as:
->=20
-> * Connect to an attacker-specified vSphere server using attacker-specifie=
-d=20
->  credentials IDs obtained through another method, capturing credentials=20
->  stored in Jenkins
-> * Connect to configured vSphere servers and looking up information,=20
->  potentially resulting in denial of service
->=20
-> Additionally, these form validation methods did not require POST requests=
-,=20
-> resulting in a CSRF vulnerability.
->=20
-> These form validation methods now require POST requests and appropriate=20
-> user permissions.
-
-CVE-2018-1000152 (improper authorization) and CVE-2018-1000153 (CSRF)
-
+--=-DPGdphg/K7cVUd3LFFaJ--
