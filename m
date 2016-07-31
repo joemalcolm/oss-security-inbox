@@ -1,48 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/09/6
-Message-Id: <20160609153207.6011C3AE009@smtpvbsrv1.mitre.org>
-Date: Thu,  9 Jun 2016 11:32:07 -0400 (EDT)
-From: cve-assign@...re.org
-To: meissner@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: haproxy remote denial of service via reqdeny
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/31/5
+Message-ID: <20160731172448.GA3127@fear.qoop.org>
+Date: Sun, 31 Jul 2016 12:24:48 -0500
+From: "Joshua J. Drake" <oss-security-dbduaf@...p.org>
+To: oss-security@...ts.openwall.com
+Cc: lazytyped <lazytyped@...il.com>
+Subject: Re: Re: Use after free in my_login() function of DBD::mysql (Perl module)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Certainly buffer overread and related errors can sometimes be security
+vulnerabilities. The biggest question that differentiates those cases from
+non-security bugs (aka "lame bugs") is whether or not the the out-of-bounds
+data can actually be accessed by an attacker (directly or otherwise).If the
+data is read (and thus would cause an ASAN failure) then it's conceivable that
+nothing is actually done with the out of bound data at all... Writes are
+generally easier to make assumptions about.
 
-> This is a remote denial of service against haproxy (uncontrollable crash).
+In the future, Maybe it would help to partner with someone more experienced to
+determine severity before public disclosure. Also, asking the list for its
+collective advice might also prove fruitful (instead of asking for a CVE
+straight away).
+
+Don't be afraid to be more explicit. If you don't know -- just say "I don't
+know if attackers can get anything out of this, but similar bugs like" .. <real quote>"use
+after free's can be serious and potentially lead to malfunction and security
+issues."</real quote> "Do you see any potential for abuse by attackers?"A
+
+Also, realize that this type of inquiry will help both you and the developer
+learn about security bugs and in general will lead to improved awareness to all
+parties that happen across your communications.
+
+Again, just my $0.02 when I read this thread.
+
+Joshua
+
+On Sat, Jul 30, 2016 at 10:27:09AM -0400, Hanno Böck wrote:
+> On Fri, 29 Jul 2016 20:42:03 -0700
+> lazytyped <lazytyped@...il.com> wrote:
 > 
-> http://git.haproxy.org/?p=haproxy-1.6.git;a=commit;h=60f01f8c89e4fb2723d5a9f2046286e699567e0b
+> > Well, AddressSanitizer should have told you whether the access is a
+> > read access (as I suspect) or a write access. A bit of code
+> > inspection (or follow up from the code maintainer) should add to the
+> > picture.
+> 
+> It's my (maybe poor / limited) understanding that most use after free
+> bugs are actually reads, but still can lead to code execution, e.g. if
+> the read includes function pointers. This is probably not the case in
+> this example (but I previously had an example where I thought it's not
+> exploitable for similar reasons, and later got told by people who
+> understand this stuff much better that they disagree).
+> 
+> > It would be great if we could get a bit more triaging by the owner of
+> > the code or the submitter before declaring the bug one thing or the
+> > other (especially in these days of projects like yours that bring in
+> > a lot of reports -- and don't get me wrong, this is a very valuable
+> > effort).
+> 
+> I understand your wish here, but I am afraid it doesn't match up well
+> with the reality we are in.
+> 
+> I had similar discussions before, but I think there is a very obvious
+> problem here: The tools we use to find these bugs (asan+afl) are dead
+> simple and there are a lot of people out there using them, finding and
+> reporting bugs. The number of people with a detailed knowledge of
+> memory corruption on the other hand is small.
+> 
+> Generally this is a good thing, as it means more people finding bugs.
+> But we have a large number of people who can use the tools to find
+> these bug classes, but who aren't neccessarily able to judge the
+> severity. And that definitely includes me (although I learned a lot in
+> the past year, but I've been accused both in over and underplaying bugs
+> in the past).
+> My approach to this is that I simply try to choose my wording that it
+> matches what I know and if I can't say anything reasonable about
+> exploitability I simply don't.
+> 
+> As for CVEs, it's my impression that MITRE right now has a policy that
+> they give one for almost any memory safety issue and that they don't
+> require an explicit exploit scenario. E.g. my impression is that buffer
+> overreads, as long as they aren't simply in a command line tool, almost
+> always get CVEs.
 
->> is filled only
->> by actions "http-request deny" and "http-request tarpit". It's then used
->> in the deny code path to emit the proper error message, but is used
->> uninitialized when the deny comes from a "reqdeny" rule, causing random
->> behaviours ranging from returning a 200, an empty response, or crashing
->> the process.
-
-Use CVE-2016-5360.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXWYtiAAoJEHb/MwWLVhi2jiYP/15CBap1NSe+nJG8HRO/Kxwe
-hIxfrw/B8r0HtM6+nB0rfkXhQGbzIhSe47P0IDHHHyHI97EiX3cOoQcxieMEcOQ1
-UgXb+IOvYnXNxW2vOs4OWCQi1DRLjSwaIPLvAtGdukLFG1BlefehXmuzAW0A+jpB
-gzfgBgqYmvKfnnUScBGb+01SYXf1l3QgIBQ0tcyAADAbK2ogQxjWN+KpD3BGu9yL
-fAQjLk/qpHoz79G/GNb9KDSYYlqipr07mLsmraa0tVzav3yoR2w92avpetlPV1Eq
-dFdomo0zCSO3eZ1yl1wg1uIPE0PVYw2JmWu4LLpAfTSSFbEKorcSANGS9zbLBGJi
-YLSjCqoLctPCF/6jaHBZV593fNGgFlg6DnBTeCGlSImH9ODmGlzOiLwF5rsrffSK
-IH+Odqc6q1iJdagxcgPFbNIx8S/pb7ZfScUd5ubOFKSsIEi3UrWxREsa1PB6NIeb
-7z2J5gcaftc6lUn1+pH3+nrzPLQ6JbvydXONxWPlxt4oztK94nzHOCnbs2cOhGfM
-IwSlr8L1nI5TWvLkvwabKtYPeLxGVECHQ5akG2MTPzez8RBx1Gu6XUrwU0Wlc/xi
-ctj0Tp2FV1/qnk3OEubzZ7p0iva4VPWx1rkZdcX/V0Mg+8UvSu+IklCm+1uJy3yk
-LRnf/DS6Fuq2/DbEK9kC
-=XzKt
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (812 bytes)
