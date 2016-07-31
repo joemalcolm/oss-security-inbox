@@ -1,79 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/25/2
-Message-ID: <trinity-791b10d9-ee4c-4418-ab3c-338e17152b44-1474834018724@3capp-gmx-bs68>
-Date: Sun, 25 Sep 2016 22:06:58 +0200
-From: cookieopfer@....net
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/31/3
+Message-ID: <20160731133956.GB15386@kroah.com>
+Date: Sun, 31 Jul 2016 06:39:56 -0700
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: ffmpeg afl bugs
+Subject: Re: badUSB exploit - affects all Linux distros
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Sun, Jul 31, 2016 at 01:34:02PM +0200, פאי פי wrote:
+> Title: badUSB exploit - affects all Linux distros
+> ---------------------------------------------------------
+> 
+> Dear oss-security mail list members,
+> 
+> Please, I urge you to fix the known badUSB security exploit that exists in any Linux distro.
 
-couldn't build ffmpeg, because of
-"register size specification" error.
+First off, it is not an "exploit", is is "working as designed". :)
 
-tried to catch this overflow from afl
-fuzzer:
+> There is available (to the general public) a relatively cheap product
+> which does the "rubberducky" attack, it uses the badUSB exploit.
 
+Not really, that device just acts like the USB device it said it is (a
+keyboard).  This device has been around for years and is very useful for
+development efforts.
 
-$ ./ffmpeg -i /tmp/ffmpeg-h264-call-stack-overflow.mp4 19.mp3
-ffmpeg version N-81723-g6d9a46e Copyright (c) 2000-2016 the FFmpeg developers
-  built with gcc 4.4.5 (Debian 4.4.5-8)
-  configuration: --disable-yasm
-  libavutil      55. 30.100 / 55. 30.100
-  libavcodec     57. 57.101 / 57. 57.101
-  libavformat    57. 50.100 / 57. 50.100
-  libavdevice    57.  0.102 / 57.  0.102
-  libavfilter     6. 62.100 /  6. 62.100
-  libswscale      4.  1.100 /  4.  1.100
-  libswresample   2.  1.100 /  2.  1.100
-bla
-bla
-bla
-bla
-bla
-bla
-bla
-bla
-bla
-bla
-bla
-bla
-bla
-bla
-bla
-[mov,mp4,m4a,3gp,3g2,mj2 @ 0xa256360] overread end of atom 'stsd' by 4294967134 bytes
-bla
-bla
-bla
-bla
-bla
-bla
-Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/tmp/ffmpeg-h264-call-stack-overflow.mp4':
-  Metadata:
-    major_brand     : mp42
-    minor_version   : 19529854
-    compatible_brands: mp42isom
-    creation_time   : 2014-11-14T07:34:24.000000Z
-  Duration: 00:02:55.78, bitrate: 0 kb/s
-    Stream #0:0(eng): Data: none ([0][16][0]1 / 0x31001000), 3 kb/s (default)
-    Metadata:
-      creation_time   : 2014-11-14T07:34:24.000000Z
-      handler_name    : dia Handler
-Output #0, mp3, to '19.mp3':
-Output file #0 does not contain any stream
+>     1. Copy-paste a bash script
+>     2. chmod it so that it will execute (under normal user - NOT root)
+>     3. malware is active... 
 
+So can your USB keyboard :)
 
+Anyway, Linux (the kernel), provides you the abilities to disable all
+USB devices and only enable the ones you deem "safe", whenever you
+decide to.  It is up to you how you determine this.  By default, most
+Linux distros do not enable this option for obvious reasons.
 
+> Note that by default - Linux's firewall is disabled, therefore
+> allowing an easy access to the attacker via internet.
 
+No, that's your distro's decision, many enable it by default.
 
+Anyway, best of luck, but this is a distro-specific issue and I suggest
+working with your distro to enable that option by default if you so
+desire it.
 
+thanks,
 
-
-
-./libavformat/mov.c
-$ grep -n bla ./libavformat/mov.c
-4789:              printf("bla\n");
-
-
-Have fun with ffmpeg-h264-call-stack-overflow.mp4
+greg k-h
