@@ -1,33 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/27/16
-Message-ID: <20160727232758.GA21326@kroah.com>
-Date: Wed, 27 Jul 2016 16:27:58 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/31/4
+Message-ID: <20160731134344.GA15745@kroah.com>
+Date: Sun, 31 Jul 2016 06:43:44 -0700
 From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: Wade Mealing <wmealing@...hat.com>
-Subject: Re: Re: CVE-2016-5400 - linux kernel: denial of service in airspy USB driver.
+Subject: Re: badUSB exploit - affects all Linux distros
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 27, 2016 at 11:31:03PM +0100, Luis Henriques wrote:
-> Wade Mealing <wmealing@...hat.com> writes:
+On Sun, Jul 31, 2016 at 06:39:56AM -0700, Greg KH wrote:
+> On Sun, Jul 31, 2016 at 01:34:02PM +0200, פאי פי wrote:
+> > Title: badUSB exploit - affects all Linux distros
+> > ---------------------------------------------------------
+> > 
+> > Dear oss-security mail list members,
+> > 
+> > Please, I urge you to fix the known badUSB security exploit that exists in any Linux distro.
 > 
-> > Hit send too early,
-> >
-> >
-> > Upstream patch:
-> > https://git.linuxtv.org/media_tree.git/commit/?id=eca2d34b9d2ce70165a50510659838e28ca22742
-> >
-> 
-> I believe the above commit isn't really related with CVE-2016-5400;
-> the following commit in mainline claims to fix this issue:
-> 
-> commit aa93d1fee85c890a34f2510a310e55ee76a27848
-> Author: James Patrick-Evans <james@...-e.com>
-> Date:   Fri Jul 15 16:40:45 2016 +0100
-> 
->     media: fix airspy usb probe error path
+> First off, it is not an "exploit", is is "working as designed". :)
 
-Ah, thanks, that will show up in the next round of stable kernel
-updates.
+Also, please see the archives when this was discussed last time, there
+is lots of information about it there, I suggest starting with that.
+
+thanks,
 
 greg k-h
