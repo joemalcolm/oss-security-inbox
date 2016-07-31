@@ -1,39 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/02/12
-Message-ID: <20160602180240.GA23506@layer-acht.org>
-Date: Thu, 2 Jun 2016 18:02:40 +0000
-From: Holger Levsen <holger@...er-acht.org>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: mat doesn't remove metadata in embedded images in PDFs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/31/6
+Message-ID: <579E6CC0.2020509@plzdonthack.me>
+Date: Sun, 31 Jul 2016 15:25:20 -0600
+From: Scott Bauer <sbauer@...donthack.me>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Linux >= 4.5 double fetch leading to heap overflow
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 02, 2016 at 12:21:34PM -0400, cve-assign@...re.org wrote:
-> We think you mean that a CVE ID can exist with the rationale of:
-> 
->   - as of version 0.7, there will be a required security update in
->     which the embedded-in-a-PDF security problem is resolved
-> 
->   - the CVE ID is needed to tag that required security update
-> 
->   - as of version 0.7, the https://mat.boum.org/ text may be changed
->     from "images embedded inside PDF may not be cleaned" to something
->     like "images embedded inside complex documents may not be cleaned,
->     but users can rely on cleaning in the specific case of PDF
->     documents"
-> 
-> Does that match your intention for the CVE ID?
+Good afternoon,
 
-yes.
+For Mitre:
 
-Though I disagree with the 3rd paragraph a bit, I don't think it's that
-hard to recursivly process files, eg both
-https://tracker.debian.org/pkg/strip-nondeterminism (in perl) and
-https://tracker.debian.org/pkg/diffoscope (in python) do that.
+Some code was moved from btrfs to the generic vfs ioctl:
+(https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/fs/ioctl.c?h=v4.5&id=54dbc15172375641ef03399e8f911d7165eb90fb).
+
+During the port a double fetch with userland was introduced which can lead to an undersized allocation and subsequent heap overflow
+with potentially controlled data. It has been patched in upstream here:
+
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=10eec60ce79187686e052092e5383c99b4420a20
 
 
--- 
-cheers,
-	Holger
+For OSS-sec:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (812 bytes)
+attached is a PoC. I attempted to write an exploit for this but that's not really my forte. I feel like this bug
+has the potential for a workable user->root exploit but I couldn't do it.
+
+1: You can control which cache the overflow happens on. I picked the same cache as the File struct.
+2: the code writes 2 different width zeros past the allocation, one 32 bit and the other 64 bit.
+3: I attempted to overflow and write the 32 bit 0 to the top half of a pointer so it would point to userland,
+but I couldn't find a suitable structure to overflow into.
+
+So if anyone plays around with this and gets a workable exploit please share the details as I'm looking to expand my exploitation knowledge, and techniques.
+
+
+Thank you,
+--Scott
+
+For the poc:
+gcc -pthread doublefetch.c
+./a.out 7 65534 1000000 0
+
+
+
+View attachment "doublefetch.c" of type "text/x-csrc" (3196 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
