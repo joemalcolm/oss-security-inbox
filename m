@@ -1,54 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/09/13
-Message-Id: <20160309231638.532136C0402@smtpvmsrv1.mitre.org>
-Date: Wed,  9 Mar 2016 18:16:38 -0500 (EST)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Heap use after free in Pidgin-OTR plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/31/2
+Message-ID: <7e3c5ba7-1efc-bb16-e041-80cc968cea5b@securify.nl>
+Date: Sun, 31 Jul 2016 14:44:19 +0200
+From: Summer of Pwnage <lists@...urify.nl>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities affecting four WordPress Plugins & one Theme
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Please see attached advisories for more information. These issues were 
+found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
+project. Its goal is to contribute to the security of popular, widely 
+used OSS projects in a fun and educational way.
 
-> https://blog.fuzzing-project.org/39-Heap-use-after-free-in-Pidgin-OTR-plugin.html
-> 
-> The pidgin-otr plugin version 4.0.2 fixes a heap use after free error.
-> The bug is triggered when a user tries to authenticate a buddy and
-> happens in the function create_smp_dialog.
-> 
-> This bug was already independently discovered and reported in the otr
-> bug tracker.
-> https://bugs.otr.im/issues/88
-> 
-> Upstream bug report (contains Address Sanitizer stack trace):
-> https://bugs.otr.im/issues/128
-> Commit / fix:
-> https://bugs.otr.im/projects/pidgin-otr/repository/revisions/aaf551b9dd5cbba8c4abaa3d4dc7ead860efef94
+View attachment "cross_site_scripting_in_code_snippets_wordpress_plugin.txt" of type "text/plain" (3471 bytes)
 
->> gtk-dialog.c
+View attachment "cross_site_scripting_vulnerability_in_colorway_wordpress_theme.txt" of type "text/plain" (4875 bytes)
 
-Use CVE-2015-8833.
+View attachment "insert_php_wordpress_plugin_allows_authenticated_user_to_execute_arbitrary_php.txt" of type "text/plain" (3041 bytes)
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+View attachment "multiple_vulnerabilities_in_all_in_one_wp_security___firewall_plugin_login_captcha.txt" of type "text/plain" (6333 bytes)
 
-iQIcBAEBCAAGBQJW4K5zAAoJEL54rhJi8gl5qJIP/0TSzlXZQnc69Kt5bNsE2ovq
-VwQkjUo4BiwB5ewuoSyNjDtEIrqOFSVesEFRFK33QfLCVELk7NtRf4QCMHgW6TuZ
-HiK3grAbg8PtbcvMsKQTlo55BrZ5YBovXAsYmMeBmuZ7pp8wNYjAMvtjnnlwBesF
-20nxsVSjVmQUAwUSgtrdQXMqXlNltcsq8HhXOSkTBFxTk/R6J/KfoW33EfcxFv0s
-5zy/SU/sU6rI/0Gy4t4pPs/c2j7ApA9SmYfBel6xpdnCb2u3GSczz7O6+jEcRNzB
-IqxvAOMkeIGHc0QHOd9naYkW2gyIP3Y0s4fTydzHrfU/aQ1ICWH0FHAcmcJIRKvF
-diV7f1td8yzDlbk+TAsrp5RyxhzkagIJLeJhASYguPz5yELqS6cYqb4ie5LageNd
-UBji9ulEPgHaAmQPMOZH6oJZE9YO9HKWJ3HOmEQ11DrbHlXkYA6ez0oLu53gRxB9
-wuyo01YH7hF+FhMxRUL7RYNwyj06dBhohlWj8rRPIAhlrp7Pc/WAsAR1c3FJgCwk
-2FmfpJ6BrCMumP+6EAGpbXegbBTMCOrvgpLc7UBYNnb+PvGyfwChLBSTIwrKzhga
-FyH4O8lnB925tHofpCK0OEWWHOi0N6JKlChLKwEt1eMhUk7SnRsqNjyAdV1Kqk1u
-bHI5urvjRUc0ka/E3oiK
-=o1S3
------END PGP SIGNATURE-----
+View attachment "stored_cross_site_scripting_vulnerability_in_easy_testimonials_wordpress_plugin.txt" of type "text/plain" (3122 bytes)
