@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["851" "Monday" "25" "November" "2019" "17:58:39" "+0000" "Simon McVittie" "smcv@debian.org" nil "24" nil "^Date:" nil nil "11" nil nil (number mark "        smcv@debian. Nov 25   24/851   " thread-indent "\"Re: [oss-security] Lots of bugs in 32-bit x86 Linux entry code\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Lots of bugs in 32-bit x86 Linux entry code" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4895" "Monday" "1" "August" "2016" "12:04:08" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160801160408.622033AE01F@smtpvbsrv1.mitre.org>" "117" "[oss-security] Re: CVE request: Wireshark 2.0.5 and 1.12.13 security releases" nil nil nil "8" "2016080116:04:08" "[oss-security] Re: CVE request: Wireshark 2.0.5 and 1.12.13 security releases" (number mark "U       cve-assign@m Aug  1  117/4895  " thread-indent "\"[oss-security] Re: CVE request: Wireshark 2.0.5 and 1.12.13 security releases\"\n") "<02218f3b-90ba-87cb-f0f9-2e576eae6917@suse.com>" ("<02218f3b-90ba-87cb-f0f9-2e576eae6917@suse.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21791 invoked by uid 550); 25 Nov 2019 17:58:55 -0000
+Received: (qmail 9784 invoked by uid 550); 1 Aug 2016 16:04:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +11,130 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21773 invoked from network); 25 Nov 2019 17:58:54 -0000
-Message-ID: <20191125175839.GB197885@espresso.pseudorandom.co.uk>
-References: <CALCETrW1z0gCLFJz-1Jwj_wcT3+axXkP_wOCxY8JkbSLzV80GA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CALCETrW1z0gCLFJz-1Jwj_wcT3+axXkP_wOCxY8JkbSLzV80GA@mail.gmail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
-Date: Mon, 25 Nov 2019 17:58:39 +0000
-From: Simon McVittie <smcv@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Lots of bugs in 32-bit x86 Linux entry code
-To: oss-security@lists.openwall.com
+Received: (qmail 9763 invoked from network); 1 Aug 2016 16:04:20 -0000
+From: cve-assign@mitre.org
+To: astieger@suse.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <02218f3b-90ba-87cb-f0f9-2e576eae6917@suse.com>
+Message-Id: <20160801160408.622033AE01F@smtpvbsrv1.mitre.org>
+Date: Mon,  1 Aug 2016 12:04:08 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: Wireshark 2.0.5 and 1.12.13 security releases
 
-On Mon, 25 Nov 2019 at 08:05:12 -0800, Andy Lutomirski wrote:
-> It turns out that there are essentially no upstream development
-> resources dedicated to x86_32 Linux. Perhaps unsurprisingly, it was
-> badly broken.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-To clarify, which of these do you mean?
+> Wireshark 2.0.5 and 1.12.13 were announced to contain fixes of the usual
+> dissector crash / endless loop read from wire or capture file type:
 
-A. IA-32 (uname -m: i?86) Linux kernels are buggy/vulnerable when running
-   IA-32 (i?86-linux-*) user-space processes (which are the only user-space
-   that these kernels support)
+We think one typo ended up in your
+http://openwall.com/lists/oss-security/2016/07/28/3 post:
 
-B. x86_64 (aka AMD64, uname -m: x86_64) Linux kernels are buggy/vulnerable
-   when running IA-32 (i?86-linux-*) user-space processes, but not when
-   running x86_64 (x86_64-linux-*) user-space processes
+> MMSE infinite loop (wnpa-sec-2016-43)
+> The MMSE dissector could go into an infinite loop. It may be possible to
+> make Wireshark consume excessive CPU resources by injecting a malformed
+> packet onto the wire or by convincing someone to read a malformed packet
+> trace file. Affects 1.12.0 to 1.12.12, fixed 1.12.13
+> https://www.wireshark.org/security/wnpa-sec-2016-43.html
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12624
+> 
+> RLC long loop (wnpa-sec-2016-44)
+> The RLC dissector could go into a long loop. It may be possible to make
+> Wireshark consume excessive CPU resources by injecting a malformed
+> packet onto the wire or by convincing someone to read a malformed packet
+> trace file. Affects  2.0.0 to 2.0.4, 1.12.0 to 1.12.12, fixed in 2.0.5,
+> 1.12.13.
+> https://www.wireshark.org/security/wnpa-sec-2016-44.html
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12624
 
-C. x86_64 (AMD64) Linux kernels are buggy/vulnerable when running x32
-   (x86_64-linux-gnux32) processes
+wnpa-sec-2016-44 is Wireshark bug 12660, not 12624. Here are
+the 11 CVE IDs:
 
-D. something else?
 
-If I'm understanding correctly, you are reporting A, and only A?
+CVE-2016-6503
+http://www.wireshark.org/security/wnpa-sec-2016-39.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12495
+https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=581a17af40b84ef0c9e7f41ed0795af345b61ce1
 
-Thanks,
-    smcv
+
+CVE-2016-6504
+http://www.wireshark.org/security/wnpa-sec-2016-40.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12576
+https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=9eacbb4d48df647648127b9258f9e5aeeb0c7d99
+
+
+CVE-2016-6505
+http://www.wireshark.org/security/wnpa-sec-2016-41.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12577
+https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=94e97e45cf614c7bb8fe90c23df52910246b2c95
+
+
+CVE-2016-6506
+http://www.wireshark.org/security/wnpa-sec-2016-42.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12594
+https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=a9d5256890c9189c7461bfce6ed6edce5d861499
+
+
+CVE-2016-6507
+http://www.wireshark.org/security/wnpa-sec-2016-43.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12624
+https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=b5a10743258bd016c07ebf6479137fda3d172a0f
+
+
+CVE-2016-6508
+http://www.wireshark.org/security/wnpa-sec-2016-44.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12660
+https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=6cf9616df68a4db7e436bb77392586ff9ad84feb
+
+
+CVE-2016-6509
+http://www.wireshark.org/security/wnpa-sec-2016-45.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12662
+https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=5a469ddc893f7c1912d0e15cc73bd3011e6cc2fb
+
+
+CVE-2016-6510
+http://www.wireshark.org/security/wnpa-sec-2016-46.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12664
+https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=47a5fa850b388fcf4ea762073806f01b459820fe
+
+
+CVE-2016-6511
+http://www.wireshark.org/security/wnpa-sec-2016-47.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12659
+https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=56706427f53cc64793870bf072c2c06248ae88f3
+
+
+CVE-2016-6512
+http://www.wireshark.org/security/wnpa-sec-2016-48.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12661
+https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=2193bea3212d74e2a907152055e27d409b59485e
+
+
+CVE-2016-6513
+http://www.wireshark.org/security/wnpa-sec-2016-49.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12663
+https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=347f071f1b9180563c28b0f3d0627b91eb456c72
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXn3I1AAoJEHb/MwWLVhi2UdAP/06WJAU6wBEINx2Q8T7lXtGw
+PT+IooGuVUxKd16B7UH2zM1ccnjnLyne5W6rDPmLVoQ93i03pSOVsXx2INyXT1Is
+v55zOj1ifYCCFRaiRueD9zFtdooa2rUKJbGqUuv3IActhX/kSTvcAFahGjbA+fyy
+h8ea4aAie86710v2HsSE6g0sVj00WT9oAn7oTCdtyO2m0TyDJ0Al0s0HUeOrJjw2
+CLnsnT35KtWDQ8YnAckBEMZ/LfXK2H+WQLZGrp3TE2dRVkt3bK+9lW5HVO5efD5m
+c2GbP17vGZH/FukGZXbgRszXPpGpb05/4VJ9I2jZfyYN336/qALwS0b4WEwUFZIj
+qXjSUiCDGLyGNaF5P2URY5jIWkLysKViZFG0xvDOECwOjUmvPgKHjjCunUQcvHns
+yzyghuaJoRQiXw1k6bXaH5YsXHo6maahejTDhZolPpZdQ9VdRB2R2m7m0MR1eGay
+3OuxCvZVPtwxLjgFkhSb3rgaOMGgSWkd9Djh9NLRvhrI7kCob57XXG5JbxFb2okZ
+zXu2dQG/XbbX3OWydYfXrQDiqIbzNSpV2sABGqtzcl0/KiGN40JzILSzobxuA+o3
+qBaslvgcTS1xzwgC1V5co1b/vIA9CCpdGDbrQVfO700/xHqjRr7D9FnICnkWaeKn
+0KVjTOG4zF2op/nuy7ug
+=95/1
+-----END PGP SIGNATURE-----
