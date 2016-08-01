@@ -1,60 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/19/3
-Message-ID: <CAN10O-b=zyuz3qvV3C_i0z8c-KJgwxkqppY3FVKF9=+RAKFPEw@mail.gmail.com>
-Date: Fri, 19 Aug 2016 09:59:16 +1000
-From: x ksi <s3810@...stk.edu.pl>
-To: oss-security@...ts.openwall.com
-Cc: eric.pruitt@...il.com, cve-assign@...re.org
-Subject: Re: Re: CVE request - slock, all versions NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/01/7
+Message-Id: <20160801234902.577386C4E23@smtpvmsrv1.mitre.org>
+Date: Mon,  1 Aug 2016 19:49:02 -0400 (EDT)
+From: cve-assign@...re.org
+To: sbauer@...donthack.me
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Linux >= 4.5 double fetch leading to heap overflow
 Content-Type: text/plain; charset=utf-8
 
-Hey,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Just for the record... http://s1m0n.dft-labs.eu/files/slock/ . Vendor
-was notified about this issue on 2015-11-13.
+> Some code was moved from btrfs to the generic vfs ioctl:
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/fs/ioctl.c?h=v4.5&id=54dbc15172375641ef03399e8f911d7165eb90fb
+> 
+> During the port a double fetch with userland was introduced which can lead to an undersized allocation and subsequent heap overflow
+> with potentially controlled data. It has been patched in upstream here:
+> 
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=10eec60ce79187686e052092e5383c99b4420a20
 
+>> vfs: ioctl: prevent double-fetch in dedupe ioctl
+>> 
+>> This prevents a double-fetch from user space that can lead to to an
+>> undersized allocation and heap overflow.
 
-Thanks,
-F
+> I attempted to write an exploit for this but that's not really my forte. I feel like this bug
+> has the potential for a workable user->root exploit but I couldn't do it.
+> 
+> 1: You can control which cache the overflow happens on. I picked the same cache as the File struct.
+> 2: the code writes 2 different width zeros past the allocation, one 32 bit and the other 64 bit.
+> 3: I attempted to overflow and write the 32 bit 0 to the top half of a pointer so it would point to userland,
+> but I couldn't find a suitable structure to overflow into.
 
-2016-08-19 7:13 GMT+10:00  <cve-assign@...re.org>:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
->> The screen locking application slock (http://tools.suckless.org/slock/)
->> calls crypt(3) and uses the return value for strcmp(3) without checking
->> to see if the return value of crypt(3) was a NULL pointer. If the hash
->> returned by (getspnam()->sp_pwdp) is invalid, crypt(3) will return NULL
->> and set errno to EINVAL. This will cause slock to segfault which then
->> leaves the machine unprotected. A couple of common scenarios where this
->> might happen are:
->>
->> - a machine using NSS for authentication; on the machine I discovered
->>   this bug, (getspnam()->sp_pwdp) returns "*".
->> - the user's account has been disabled for one reason or another; maybe
->>   account expiry or password expiry.
->
-> Use CVE-2016-6866.
->
-> - --
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->   http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
->
-> iQIcBAEBCAAGBQJXtiRVAAoJEHb/MwWLVhi2sacP+gMeIHHCDQ9cy+JpK1eCnSCS
-> sazQCwgyDrGdrT9a842vGgkenEmHfeIwJHlpsMsmB4SBhRjUkWSMDKwh/VYyIFAI
-> U3bIi2B3jqG70onrQJnHPYisz/shOdyv5m4GxTCFVn17i0R4iJ9h3yO7coFG2QMT
-> GxMlm+QkxvUiTz4hEKI6pt7Cpca/5819cqs7fJr368zP1KB54b0dIRNFzFYMOyqk
-> Q6M9SvJICMz5j5rrxYFijhfTrB8AiuU0XNgwZs/sJhRXy8xdf1n+m5C60eDLG+o4
-> Qx2KzHhlDScl680OQNi77MCSHq8Ffb5bEWZDsxujqcN3p4JDGMTBKAJ2vWfDajog
-> 7Ugaqz4ddnj2EY8+ZL6jPzxq1HqBbUmwCCCwvoeltF6etclaGB4Hps6p7ffB3zQy
-> rXsAUC659T/xPURObeHB+krNEadz/lcx1/ucA7+DXmtBmd/oHDYsbwU91M/z+oCQ
-> 6K/CIT2ZTKbUPDP8mdQfpgPsURRXc+oMl8AsUf9OBlnNPn1MGeGfbNOUZz8tJnuT
-> coI//OylyihxjQaOK36vxTu4WtMtvH+bR6tH39TSTxyyKiOFG4xavWCJpshUwDa0
-> tx9QK6RbbWLfIm+PaSkiFqpsZ+oy25DI2FmUPe47u8qStCAVm5TSnOi3/YuPfTMr
-> osR1b1FAQ/zhY7kYhD1n
-> =HbWC
-> -----END PGP SIGNATURE-----
+> pthread_create(&race_car, NULL, size_change, range);
+
+Use CVE-2016-6516.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXn97QAAoJEHb/MwWLVhi2cCAP/2C+AHkxRISZ5YCq50+Vvj5d
+iLeqbqdcrdI8yfdPNL6k9QpH8VL1SOtiofxXaySHU7Fde1eh2IRTtLq2jbYpPhhP
+YOqkc2kaZvkboRrVVacm4nUko1WfMlzfGUsd48GALKvlzHRPxlxhAIx3we/2+YwD
+gZWUDITE5zQiN4ShbsUGdTMVkQYUzIYEhYD7w0o4kFmVKwTuq1w0GZQsvq56df3x
+IL2rhmEq7YtK3uCMQrFFZKlvUcDWke5ri9pu9D7YoDkOVM2aMLivA/FMN1y2Blbt
+FdDUaqerMVZFgJl0PB1YIsnpdFpUliptCDsXcbRGOC2xsXAPSbNoAsoRlyZ7WrNJ
+wAX2F7e+WIj7MdArNaNeIUt5ltXh5KPVwpgjzV2Z+UwU6ySt/iRAy1eyONrqvJz0
+hVxIYw2uGUu6hvHp/VslmLx9jeASZogESxlZYytUrgNFUnbRJFVeJHOPMf9kKcEk
+8vg2mmwlOdC47AWsh3vWqTs5ap/lRYuK9urR1OvtJxY9sUbm1Fwv31O4BuySjQHy
+N0ScMNUXGvXkU2+v6CYOGq1eKojAXUN8pQRRpwmJvk/PmLZ0SNKaW/EdStDxTu4d
+Jd/Dqk8z6HpqbbdCQpPGBSPfMiAmGYMSPQbxyoYTgTZbC40u+4C+hJXJvC3iVvZ8
+rXIC5MKykZB1QuBz5ecG
+=UAFW
+-----END PGP SIGNATURE-----
