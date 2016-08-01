@@ -1,27 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/25/8
-Message-ID: <20160525135228.GA13576@eldamar.local>
-Date: Wed, 25 May 2016 15:52:28 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: roundcube: XSS vulnerability in mail content page
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/01/1
+Message-ID: <775c7553-e1e7-24a4-e4d4-0038a94a97eb@redhat.com>
+Date: Mon, 1 Aug 2016 10:32:53 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request: nettle's RSA code is vulnerable to cache sharing related attacks
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On 07/29/2016 10:33 PM, cve-assign@...re.org wrote:
+>> The following whitepaper talks about libgcrypt's RSA code being
+>> vulnerable to a cache timing attack, which the paper claims is fixed in
+>> 1.6.3.
+> 
+> As far as we can tell, your message did not provide a link to a
+> whitepaper, and any attachment did not arrive either through direct
+> email or in any of the oss-security list archives.
+> 
 
-Can you please assign a CVE for the following XSS vulnerability in
-roundcube fixed with the recent 1.2 release:
+Here is the paper i am referring to:
 
-RELEASE 1.2.0
--------------
-[...]
-- Fix XSS issue in href attribute on area tag (#5240)
+https://eprint.iacr.org/2016/596.pdf
 
-References:
-https://github.com/roundcube/roundcubemail/issues/5240
-https://github.com/roundcube/roundcubemail/pull/5241
 
-Thanks in advance,
-
-Regards,
-Salvatore
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
