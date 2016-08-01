@@ -1,123 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/9
-Message-ID: <2620117.JbBQOqU5X0@blackgate>
-Date: Tue, 18 Oct 2016 17:17:37 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/02/2
+Message-ID: <CAFdyfB2D-63JUZbO_tU8sx2_pbS1e30cBemu81PNKABufdogpg@mail.gmail.com>
+Date: Mon, 1 Aug 2016 23:27:23 +0100
+From: Dario Bertini <berdario@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: libwmf: memory allocation failure in wmf_malloc (api.c)
+Subject: CVE Request: CSRF in Grails console
 Content-Type: text/plain; charset=utf-8
 
-Description:
-libwmf is a library for reading vector images in Microsøft’s native Windøws 
-Metafile Format (WMF) and for either (a) displaying them in, e.g., an X 
-window; or (b) converting them to more standard/open file formats such as, 
-e.g., the W3C’s XML-based Scaleable Vector Graphic (SVG) format.
+The Grails console (aka Grails Debug Console, Grails Web Console) was
+vulnerable to CSRF.
 
-A fuzzing through imagemagick revealed a memory allocation failure. It was 
-first reported to imagemagick developers(to double-check) which stated that 
-the issue is in libwmf.
-Since the libwmf project is dead the issue has not been reported elsewhere.
+https://grails.org/plugin/console
+https://github.com/sheehan/grails-console
 
-The complete ASan output:
+(this is the plugin, not to be confused with the command line grails
+console: http://docs.grails.org/3.1.1/ref/Command%20Line/console.html
+)
 
-# identify $FILE
-==25497==ERROR: AddressSanitizer failed to allocate 0xfe769000 (4269182976) 
-bytes of LargeMmapAllocator (error code: 12)                                                                                                                                                       
-==25497==Process memory map follows:                                                                                                                                                                                                                                           
-[..cut here..]
-==25497==End of process memory map.
-==25497==AddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:183 "((0 && "unable to mmap")) != 
-(0)" (0x0, 0x0)
-    #0 0x4c9f9d in AsanCheckFailed /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67
-    #1 0x4d0ad3 in __sanitizer::CheckFailed(char const*, int, char const*, 
-unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:159
-    #2 0x4d0cc1 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char 
-const*, char const*, int, bool) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:183
-    #3 0x4d9cfa in __sanitizer::MmapOrDie(unsigned long, char const*, bool) 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_posix.cc:122
-    #4 0x42208f in 
-__sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, 
-unsigned long, unsigned long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1033
-    #5 0x42208f in 
-__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
-__asan::AsanMapUnmapCallback>, 
-__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->, __sanitizer::LargeMmapAllocator 
->::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-
-devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1302
-    #6 0x42208f in __asan::Allocator::Allocate(unsigned long, unsigned long, 
-__sanitizer::BufferedStackTrace*, __asan::AllocType, bool) 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:368
-    #7 0x42208f in __asan::asan_malloc(unsigned long, 
-__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:718
-    #8 0x4c0661 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:53
-    #9 0x7f7173b4d337 in wmf_malloc /tmp/portage/media-libs/libwmf-0.2.8.4-
-r6/work/libwmf-0.2.8.4/src/api.c:482
-    #10 0x7f7173b5d2f8 in wmf_scan /tmp/portage/media-libs/libwmf-0.2.8.4-
-r6/work/libwmf-0.2.8.4/src/player.c:143
-    #11 0x7f7173d6dcf7 in ReadWMFImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/coders/wmf.c:2675:13
-    #12 0x7f717fde7b12 in ReadImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:496:13
-    #13 0x7f718057f406 in ReadStream /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/stream.c:1012:9
-    #14 0x7f717fde65ca in PingImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:226:9
-    #15 0x7f717fde6e25 in PingImages /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:326:10
-    #16 0x7f717f66c4c3 in IdentifyImageCommand /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/identify.c:319:18
-    #17 0x7f717f70226a in MagickCommandGenesis /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/mogrify.c:183:14
-    #18 0x4f1fb5 in MagickMain /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:145:10
-    #19 0x4f1fb5 in main /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:176
-    #20 0x7f717e5a661f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #21 0x419138 in _init (/usr/bin/magick+0x419138)
+The fix has been made available in versions 1.5.10, 2.0.7. Versions up
+to 1.5.9 and 2.0.6 are affected.
 
-Affected version:
-0.2.8.4
+This allows an attacker to (create pages that when visited by a victim
+will) forge requests that will execute arbitrary groovy code on the
+backend (the documentation explains how to enable it in production,
+and granting access to administrators only, so this is not simply a
+development tool).
 
-Fixed version:
-N/A
+Bug tracker: https://github.com/sheehan/grails-console/issues/54
+fix commit: https://github.com/sheehan/grails-console/commit/155e0f5f0fe3b3bd7027d730fa00bf0655f28207
 
-Commit fix:
-N/A
+Could you allocate a CVE id for this?
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+Thank you
 
-CVE:
-N/A
+On a more general note to Grails programmers, Caveat Auditor:
 
-Timeline:
-2016-09-14: bug discovered
-2016-10-18: blog post about the issue
+Unfortunately the Grails framework itself ships with some horribly
+insecure defaults. As of 3.1.9 the template code dropped by `grails
+create-app` will have a UrlMappings.groovy that will allow access to
+Grails controllers actions via any HTTP method. CSRF protection is
+also not enabled by default, and there's no documentation on how to
+enable it globally. Some deprecated builtin modules in widespread but
+old Grails versions (i.e. formRemote) also make it impossible to add
+csrf protection to the associated endpoints.
 
-Note:
-This bug was found with American Fuzzy Lop.
+On the bright side, Grails 3.1 added explicit rest mappings:
+http://docs.grails.org/latest/guide/theWebLayer.html#restfulMappings
 
-Permalink:
-https://blogs.gentoo.org/ago/2016/10/18/libwmf-memory-allocation-failure-in-wmf_malloc-api-c
+which makes it clearer which methods are allowed for every action, and
+harder to forget about it. Compare to allowedMethods
+http://docs.grails.org/latest/ref/Controllers/allowedMethods.html
+which can be distant tens/hundreds line of code from the actual
+controller-action they are protecting, and moreover can be easily
+forgotten in a new file, also because they aren't added by default
+when creating a controller with `grails create-controller`
+
+It's thus likely that you might find more csrf vulnerabilities in
+other open source plugins, as well as in your closed source
+applications.
