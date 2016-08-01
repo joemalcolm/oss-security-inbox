@@ -1,29 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/10/12
-Message-ID: <CABEk9YzSs+SRPKeL95=Pd7sMZ4Ud+H67UOZMwjjudMs5n0iknw@mail.gmail.com>
-Date: Tue, 10 May 2016 15:35:09 -0400
-From: Kangjie Lu <kangjielu@...il.com>
-To: oss-security@...ts.openwall.com, Chengyu Song <csong84@...ech.edu>,  Insu Yun <insu@...ech.edu>, Taesoo Kim <taesoo@...ech.edu>
-Subject: CVE Request: x25: a kernel infoleak in x25_negotiate_facilities()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/01/5
+Message-ID: <579F7AF1.2090108@gmail.com>
+Date: Mon, 1 Aug 2016 18:38:09 +0200
+From: "petrella.pietro" <petrella.pietro@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE:Request - Path Traversal Barebone.jsp - Liferay 5.1.0
 Content-Type: text/plain; charset=utf-8
 
-Hello,
 
+I discovered a /directory traversal issue /on *minifierBundleDir 
+*/barebone.jsp /_variable___on a website with *Liferay 5.1.0*. I don't 
+exclude that this vulnerability is present in other Liferay versions as 
+well.
 
-In function  x25_negotiate_facilities()  of file net/x25/x25_facilities.c,
-the stack object "dte_facilities" is allocated in x25_rx_call_request(),
-which is supposed to be initialized in x25_negotiate_facilities. However,
-5 fields (8 bytes in total) are not initialized. This object is then copied
-to
-userland via copy_to_user, thus an infoleak occurs.
+However, i report the following vulnerable URL of example:
 
-Fix info: https://lkml.org/lkml/2016/5/8/59
-Patch applied: https://lkml.org/lkml/2016/5/9/1100
+https://mysite.it/html/js/barebone.jsp?browserId=firefox&themeId=sometheme&colorSchemeId=01&minifierType=js&minifierBundleId=javascript.barebone.files&*minifierBundleDir**=**/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E%2Fetc%2Fhosts%00.html*&t=1429132297000
 
+It's important to note that the url requested is built in the following 
+manner:
+- only .. "encoded characters" are permitted when you insert the 
+traversal request
+- At the end of the file is necessary insert *%00* and *.html* otherwise 
+the request is not accepted
 
-Please help assign a CVE to it.
+So, to navigate filesystem is recommended to use Burp Suite "repeater 
+tab" tool.
 
+If there are no CVE about this finding, at this pourpose i require a CVE 
+please.
 
-Thanks,
-Kangjie Lu
+Thank you
+Pietro
+
+-- -- -- -- --
+Pietro Petrella
+Information Security Consultant
+(CISSP, OPST, RHCE, ISO 27001:2013)
+PGP: 5017 E6A8 9E1E 5B39 8C52 05C7 81A5 C3C9 8ED5 4730
+
 
