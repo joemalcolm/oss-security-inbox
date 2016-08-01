@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3074" "Friday" "3" "April" "2015" "01:09:39" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<551E2093.5000902@gmail.com>" "72" "Re: [oss-security] membership request  to the closed linux-distros security mailing list" nil nil nil "4" "2015040305:09:39" "[oss-security] membership request to the closed linux-distros security mailing list" (number mark "        danielmicay@ Apr  3   72/3074  " thread-indent "\"Re: [oss-security] membership request  to the closed linux-distros security mailing list\"\n") "<20150402234357.GB9941@hunt>" ("<550C19ED.9030901@enea.com>" "<20150402234357.GB9941@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1367" "Monday" "1" "August" "2016" "18:38:09" "+0200" "petrella.pietro" "petrella.pietro@gmail.com" "<579F7AF1.2090108@gmail.com>" "38" "[oss-security] CVE:Request - Path Traversal Barebone.jsp - Liferay 5.1.0" nil nil nil "8" "2016080116:38:09" "[oss-security] CVE:Request - Path Traversal Barebone.jsp - Liferay 5.1.0" (number mark "U       petrella.pie Aug  1   38/1367  " thread-indent "\"[oss-security] CVE:Request - Path Traversal Barebone.jsp - Liferay 5.1.0\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5685 invoked by uid 550); 3 Apr 2015 05:09:58 -0000
+Received: (qmail 15737 invoked by uid 550); 1 Aug 2016 17:08:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,104 +11,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5661 invoked from network); 3 Apr 2015 05:09:57 -0000
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 1555 invoked from network); 1 Aug 2016 16:38:24 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type;
-        bh=ZgGAmzcmNUVsm+si0sQkKsbS6T7XDD11chXytEVP0e8=;
-        b=eeDD6nsMgjwq6G7AMv9yopg8fQx9BQeSKTUoyxutRnucHRDncPKs2PloTSnsW+YGYj
-         9LE443cpqhtMVSE5gdB2Oebig8bFwriTex4Xj5QPsGSR9AgVYB5dVQN5NQRMJCZTFfyA
-         ZhnIkRwTWd0S703gsJD2d6V7AV03zX+oN/ZVzMZ57fT36pDLt+IxGPPpR/0YAMGns4PB
-         1lUEVx1OaDxK+vVnwr0dUJLlG3dZucFt3j5v9RlXH7Ik+OjEvc770FFdf4su0I1a+tss
-         HbWZbdPejcrGJ+iMLVyA/CMW+qw1crGIioy2P5l01nb5FTDgBVJPRcavl1OMN0uMYdX8
-         GBdw==
-X-Received: by 10.50.4.97 with SMTP id j1mr2061735igj.46.1428037785657;
-        Thu, 02 Apr 2015 22:09:45 -0700 (PDT)
-Message-ID: <551E2093.5000902@gmail.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-MIME-Version: 1.0
-References: <550C19ED.9030901@enea.com> <20150402234357.GB9941@hunt>
-In-Reply-To: <20150402234357.GB9941@hunt>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="VljEpE6vBLsfBG0MW5Sw9H73IHTONDjCD"
-Date: Fri, 03 Apr 2015 01:09:39 -0400
-From: Daniel Micay <danielmicay@gmail.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] membership request  to the closed linux-distros
- security mailing list
+        h=from:subject:to:message-id:date:user-agent:mime-version;
+        bh=Xi96YAKsIRp/0QR/jRyhcB0M0KC1Si8BLgehrVL2Aj8=;
+        b=rp5mqTKxTy3ykqJ5hh8q2CiPNILv7Lhx4kDUEw1Dc2Pv0505xj2yPZXdA2hXAoGLSQ
+         uVPqfIIrZ8nLiQRm1206nvsouNHUoxt2yhqIVIceFXbZXX7HP1wml6x9RgWWhnJQ7/55
+         QnhtBVPrelJZLWbanlSs9YSZNde00g2Lg/DOVpjbuGI9KWndu6tM0PW9M9hHifHZi3X4
+         MZP6iOKjusrkmsTF5tZNOp+EiuErqOSfwCD/Xo2ymbb+Go+icUVNTtN1DVGOi7xKnh0/
+         VDx3FwF+hD426S1fqqzMHNmvKA57WvZljtW+at6vanY8bUKyTNMhXncd3WtqSr0CrtV2
+         epxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:subject:to:message-id:date:user-agent
+         :mime-version;
+        bh=Xi96YAKsIRp/0QR/jRyhcB0M0KC1Si8BLgehrVL2Aj8=;
+        b=GUV+V7kSeHZbJiSK6GNOrhUSOEbh9Bk1W3hDQ63OFh/sx+JscgKXj0AtX/dVGu0I/0
+         CPEOTrC8xYMIZCK1GXoMqrwog3eHjvC4vXsgUlnz2BrLiCCYUsydzpJbaWgQ8PtvDIFG
+         sTXAnUPTzplYHLx5QFP1Q8WbplK5YqVCBxXl6GJ1VyA1nCl0iKHMaEDDit1jiPUwXjqj
+         cIgWbFAUrEvY2itluaJHdaGld+jebcXk2RK7KqNU/nofQlRIhOFvKN1WSxOq4grH1xOA
+         h7Iy+63fONn+FXVY9temdFZ278gSLOEZ1pdNZoW6TrAnOPQWo3ct924OlYktrTLdaONQ
+         edmg==
+X-Gm-Message-State: AEkoouuqzqz5WLv2Xj6gci63mf759xH1gIKt0jHs4W3Vt/uunlpMuG6/cw0F7psBk270eA==
+X-Received: by 10.28.169.203 with SMTP id s194mr58618600wme.95.1470069492103;
+        Mon, 01 Aug 2016 09:38:12 -0700 (PDT)
+From: "petrella.pietro" <petrella.pietro@gmail.com>
 To: oss-security@lists.openwall.com
+Message-ID: <579F7AF1.2090108@gmail.com>
+Date: Mon, 1 Aug 2016 18:38:09 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.2
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="------------030102090602080605060502"
+Subject: [oss-security] CVE:Request - Path Traversal Barebone.jsp - Liferay
+ 5.1.0
 
---VljEpE6vBLsfBG0MW5Sw9H73IHTONDjCD
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
-
-On 02/04/15 07:43 PM, Seth Arnold wrote:
-> On Fri, Mar 20, 2015 at 02:00:29PM +0100, Sona Sarmadi wrote:
->> On behalf of Enea  Software AB, I would like to request membership to
->> the closed linux-distros security mailing list.
->=20
-> Speaking strictly for myself, I'm still somewhat skeptical; the security
-> announce archives http://mail.lists.enea.com/pipermail/security-announce/
-> do show some security updates, but (guessing) 15% of the actual patch
-> links I tried to follow no longer exist.
->=20
-> Furthermore, the advisories all suggest downloading patches via http and
-> offer no mechanism to validate the patches before applying them. Consider
-> this recent advisory:
-> http://mail.lists.enea.com/pipermail/security-announce/20150326/000064.ht=
-ml
->=20
-> - there's no gpg signature on this advisory
-> - there's no cryptographic checksums in the advisory to authenticate
->   the patch even if the advisory were signed
-> - there's no ascii-armored signatures in the patches
-> - there's no detached signatures at
->   http://linux.enea.com/5.0-beta-m400/patches/
->   or at
->   http://linux.enea.com/4.0/patches/
->=20
-> If downloading patches and applying them by hand is really the
-> distribution model Enea has chosen, then it feels like the provenance
-> of updates is seriously lacking.
->=20
-> In my opinion, until some more of the security basics are covered,
-> joining linux-distros@ is premature.
-
-I guess Ubuntu has to be dropped from the linux-distros then, because
-www.ubuntu.com appears to be http-only and the ISO download is entirely
-insecure. The security notices are also served insecurely there:
-
-http://www.ubuntu.com/usn/
-
-Am I missing something... ? It doesn't make much sense to criticize this
-when you folks are doing the same. I do get the impression that Enea
-Linux is handling security poorly (where are all of the other issues?)
-but this bothered me.
+--------------030102090602080605060502
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
---VljEpE6vBLsfBG0MW5Sw9H73IHTONDjCD
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+I discovered a /directory traversal issue /on *minifierBundleDir 
+*/barebone.jsp /_variable___on a website with *Liferay 5.1.0*. I don't 
+exclude that this vulnerability is present in other Liferay versions as 
+well.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+However, i report the following vulnerable URL of example:
 
-iQIcBAEBCAAGBQJVHiCYAAoJEPnnEuWa9fIqaZgP/RCJ9u6D/Yhh6a3va33Y22L9
-UyIBUrpmb2pA6TI6l/RJdEd3vaxHYr+iy8xjWB+mvdb0jwb0InsKWY+c0r5Og1LV
-BVsRtc3rWbSBH+ZDLwBIZiJPVWOsSvOwq9FE+34VZoBEOAq92Q2alYDDGDi+whYl
-+qxY13r8hRLPvKlT81rLysDOlGEvZp/E0hRoIAOAFKSTxx0dQ6ewwE4RkmeeM4+O
-rlDSK8c1bSd/Bg2iUaghLjcxCvb/nIFNdO6ontmMl4NKrPoD7IDhf+47ApwtmzBT
-kK3nadyvFbK1HX+aPAH9jmN01UWyXr8kBI4gKovkH8Ab4frZ15+BagE1Ok9ejaJo
-ksnvSAxUh/tYJT2k42ZT4tiWjGBDTnVc0RDJyJkAC/jV22aptXINfXtCD73IW/IL
-inLqfmYBHgCUe5m93OoRHG7iL8UQkF3PsbUW7wppEcWVLs39/OTBniCSp4f55aKv
-kQ5Abd9Bh7dXh+ArX869mGK741Eeyl6t3TfmGA9e7EVr5PPOflRhP8uyi++Xt3q3
-M0ZMr+vvRK6+pvMqbfl2Iuam7vwuiscdg76lbN91xwuBX+XdiibotIO6suMBIdKq
-Rp/YDXPbaH07LT4yt2mrcaiB+YHy03pPUej6cb+TIQBPCKKUaxveYb5Ev2ge0LVZ
-f6rvU8w1V8PknOtqcDgr
-=Tlx6
------END PGP SIGNATURE-----
+https://mysite.it/html/js/barebone.jsp?browserId=firefox&themeId=sometheme&colorSchemeId=01&minifierType=js&minifierBundleId=javascript.barebone.files&*minifierBundleDir**=**/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E%2Fetc%2Fhosts%00.html*&t=1429132297000
 
---VljEpE6vBLsfBG0MW5Sw9H73IHTONDjCD--
+It's important to note that the url requested is built in the following 
+manner:
+- only .. "encoded characters" are permitted when you insert the 
+traversal request
+- At the end of the file is necessary insert *%00* and *.html* otherwise 
+the request is not accepted
+
+So, to navigate filesystem is recommended to use Burp Suite "repeater 
+tab" tool.
+
+If there are no CVE about this finding, at this pourpose i require a CVE 
+please.
+
+Thank you
+Pietro
+
+-- -- -- -- --
+Pietro Petrella
+Information Security Consultant
+(CISSP, OPST, RHCE, ISO 27001:2013)
+PGP: 5017 E6A8 9E1E 5B39 8C52 05C7 81A5 C3C9 8ED5 4730
+
+
+--------------030102090602080605060502--
