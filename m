@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2335" "Tuesday" "30" "June" "2015" "10:32:56" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<5592C4B8.4080803@redhat.com>" "53" "[oss-security] Re: Question about world readable config files and commented warnings" nil nil nil "6" "2015063016:32:56" "[oss-security] Re: Question about world readable config files and commented warnings" (number mark "        kseifried@re Jun 30   53/2335  " thread-indent "\"[oss-security] Re: Question about world readable config files and commented warnings\"\n") "<20150630155505.7B34152E4F5@smtpvbsrv1.mitre.org>" ("<20150630155505.7B34152E4F5@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1701" "Monday" "1" "August" "2016" "12:24:21" "+0200" "Shiz" "hi@shiz.me" "<291B6ECE-2D59-435D-A986-4582022C9B21@shiz.me>" "46" "Re: [oss-security] cve request: systemd-machined: information exposure for docker containers" "^Date:" nil nil "8" "2016080110:24:21" "[oss-security] cve request: systemd-machined: information exposure for docker containers" (number mark "        hi@shiz.me   Aug  1   46/1701  " thread-indent "\"Re: [oss-security] cve request: systemd-machined: information exposure for docker containers\"\n") "<20160728144249.GB23522@perpetual.pseudorandom.co.uk>" ("<1304293369.8684866.1469539505676.JavaMail.zimbra@redhat.com>" "<20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>" "<20160727170537.GA3330@motoko>" "<398a8ff1-a2ea-9140-c695-c1969ffc58af@redhat.com>" "<20160727200021.GB3330@motoko>" "<B760F07C-908F-431A-8BCE-A3AE9E93E33F@nccgroup.trust>" "<CAEk6tEx0JRNX9q0k8JH2PNkGJO59WVVMhh4=3DkoQFMNkqY9LA@mail.gmail.com>" "<4b0070a9-e8c3-ac69-a410-2269d9d08b71@redhat.com>" "<20160728144249.GB23522@perpetual.pseudorandom.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 23976 invoked by uid 550); 30 Jun 2015 16:33:12 -0000
+Received: (qmail 32228 invoked by uid 550); 1 Aug 2016 14:39:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,73 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23957 invoked from network); 30 Jun 2015 16:33:11 -0000
-Message-ID: <5592C4B8.4080803@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-MIME-Version: 1.0
-References: <20150630155505.7B34152E4F5@smtpvbsrv1.mitre.org>
-In-Reply-To: <20150630155505.7B34152E4F5@smtpvbsrv1.mitre.org>
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="roBnwOCQ6G8KIUgbJBFcPd9DxqB77biM6"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-CC: oss-security@lists.openwall.com
-Date: Tue, 30 Jun 2015 10:32:56 -0600
-From: Kurt Seifried <kseifried@redhat.com>
+Received: (qmail 8150 invoked from network); 1 Aug 2016 10:24:50 -0000
+Content-Type: multipart/signed; boundary="Apple-Mail=_94C82A49-DDCD-456C-8DB3-6E579C2B95EC"; protocol="application/pgp-signature"; micalg=pgp-sha256
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Pgp-Agent: GPGMail
+In-Reply-To: <20160728144249.GB23522@perpetual.pseudorandom.co.uk>
+Message-Id: <291B6ECE-2D59-435D-A986-4582022C9B21@shiz.me>
+References: <1304293369.8684866.1469539505676.JavaMail.zimbra@redhat.com> <20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org> <20160727170537.GA3330@motoko> <398a8ff1-a2ea-9140-c695-c1969ffc58af@redhat.com> <20160727200021.GB3330@motoko> <B760F07C-908F-431A-8BCE-A3AE9E93E33F@nccgroup.trust> <CAEk6tEx0JRNX9q0k8JH2PNkGJO59WVVMhh4=3DkoQFMNkqY9LA@mail.gmail.com> <4b0070a9-e8c3-ac69-a410-2269d9d08b71@redhat.com> <20160728144249.GB23522@perpetual.pseudorandom.co.uk>
+X-Mailer: Apple Mail (2.3124)
+Date: Mon, 1 Aug 2016 12:24:21 +0200
+From: Shiz <hi@shiz.me>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Question about world readable config files and commented warnings
-To: cve-assign@mitre.org
+Subject: Re: [oss-security] cve request: systemd-machined: information exposure for docker containers
+To: oss-security@lists.openwall.com
 
---roBnwOCQ6G8KIUgbJBFcPd9DxqB77biM6
-Content-Type: text/plain; charset=windows-1252
+--Apple-Mail=_94C82A49-DDCD-456C-8DB3-6E579C2B95EC
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-On 06/30/2015 09:55 AM, cve-assign@mitre.org wrote:
->> # Database URI for the database that stores the package information. If =
-it
->> # contains a password, make sure to adjust the permissions of the config
+
+> On 28 Jul 2016, at 16:42, Simon McVittie <smcv@debian.org> wrote:
 >=20
-> In the "If it contains a password, make sure" scenario that you
-> mentioned, it seems entirely reasonable for the default permissions to
-> reflect the author's preference for the normal case. (A password in a
-> URI might be rare.) In other words, the author may want to optimize
-> for situations where configuration data is read by users or
-> administrators who login with an unprivileged account for most
-> day-to-day work. Alternatively, in some cases a configuration approach
-> could be redesigned to use separate files for sensitive data elements.
+> *Which* unprivileged user processes?
+>=20
+> If the unprivileged user processes are not in a container, they can get a
+> significant amount of the same information by reading the host's /proc.
 
-Ok, so does a situation where the author creates the config file with
-that warning, and then a vendor repackages and ships it, still world
-readable, still with the warning, warrant a CVE?
+Except if a host is running with hidepid=3D{1,2}, which is not entirely unc=
+ommon
+especially in hardened systems. In that regard it /does/ qualify as infolea=
+k.
 
+- Shiz
 
---=20
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
-
---roBnwOCQ6G8KIUgbJBFcPd9DxqB77biM6
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+--Apple-Mail=_94C82A49-DDCD-456C-8DB3-6E579C2B95EC
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
 
-iQIcBAEBAgAGBQJVksS4AAoJEBYNRVNeJnmTincP/RJeYaH88LR+QlLqyB3Hc0P6
-bpdhkSBbzMKsBX6XbaASJlgQ2+C2s8cGGwN3dYwGW4T9ZYj408vcjjbGi0gyasHK
-G/rlx7DXIxo9A0IQX7TlDNOEEWW0aNNup6z/f9Il8LlEMiryncp/ZryaB+6sQ4Ae
-g1jfoJHZnUHtbYOTSkNwynGumpMgKd+eBJzulklCH92W2Lna4cYeFPbdCSxYGZdD
-Y5s1rTtvtG7VrafZBtamtNG0DxBzc54sfqe2FXHIp9vUXMmKooHtMXcJVsWfmNiI
-dKC8rGW3nBSP3chgC3lBawSQGZZ3O/yqiVhj6IN9oe5c7gTx11lfyzBo1eCUi416
-HZHG4GDD6CC3bjIpiZbJWs1bGCYwrWqDxq8dAJvRWQdPrhUS6FVnYo06Cowl9Jp6
-1dPvnU/M9jBQga2JN618I+zm/AYOoE7HZ6Zu/ezt1sU5h6X37OIJ3iIfT0qZUFWu
-Oq9M6FsTIZFRByb9XMfmuhENT75gIP4z44Ok/uup9W6/l+2RTFcZimIP4UYHz5v6
-JqO6lHOS7Es0mtG70A8Pt2DQ03Iol+lIv4quRuJMwSKUeb2NLZZNo6iWhf89IBSk
-E9FZDV1Hr09tZf51CColJ3wSU6n7uwiqtdtv+KMRRK/x3WcvH2obEolHBOJ9e0nn
-g6VunEsrhitcetDHIX0O
-=02Mh
+iQIcBAEBCAAGBQJXnyNlAAoJEI8YjKeZk+kH2VUP/irSOoqD8hoGpUdLpuQ2Ab+p
+2jtcVZJEBF9x3beeyLpbFAfmigC+RHPOWYd34ARGjcKSKnQMHac1Sjd8eFVwgC66
+y9KarPCh5QGZvgzoexLwBWk+ZIhUbItyh4I3lmootDWpQgFas3Jdy+/gmHV1mfKX
+b603kjRL0vW65P09MA64KOoZjxHiCImDrzFV4iRJjVJPDqLf7N5M0v/vljQA3Dry
+42StfotxF0wZL5ubJjLLJvLc60t4IN0oEuQWXLrLKJ3iMCITdLYIiReBZSLO5xge
+HTEZlXwBw4DYZKdo7EOWhlWGe7IPJZUsaPoMPhIXbl/pHJ2Z+1gHbhA/v6e8xcuT
+WUQjLPNS4+/Ws2AumNkRCS4pE6uLAzPXOa0FKbuMEkkE2bnSvGhJmnQfCAxUtwDC
+/Z1NXrP8YA6C6rbhztCXfa3cuqaFxFURXEOQWjU0r2JiFJSkNLH9jWDfu0Vlu96V
+5uNKZV91VoiSaQoTJaQv5os5IWO7V1+9yeBP1dCD8orCbjWtFi8okRfx1fWKhAIB
+BK3JU9lrVT4X9fkCYdS5tl994btmRroOsZLAIJs5ErG4qxpEsugxSq0PcYnIp9Qe
+wVR7eSmrIMVD6VoLfSJ2lyVKLZyWc5W507SSYso6xCYN4h9f2echs8c6Fu7Yx6z1
+RaEnhDn2O+nLW5fngmsV
+=jE4F
 -----END PGP SIGNATURE-----
 
---roBnwOCQ6G8KIUgbJBFcPd9DxqB77biM6--
+--Apple-Mail=_94C82A49-DDCD-456C-8DB3-6E579C2B95EC--
