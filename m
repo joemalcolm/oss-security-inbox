@@ -1,51 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/23/6
-Message-ID: <20160623155847.2236edb8@pc1>
-Date: Thu, 23 Jun 2016 15:58:47 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/01/6
+Message-ID: <CAPiURgU=B9-scN=io0cJrS-4FfrLCnJ=MFiBSfMoKyCG-L0kQA@mail.gmail.com>
+Date: Mon, 1 Aug 2016 14:19:59 -0700
+From: Grant Ridder <shortdudey123@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Out of bounds read and signed integer overflow in libarchive
+Cc: seb@...ian.org, CVE ID Requests <cve-assign@...re.org>, mongodb-user@...glegroups.com
+Subject: Re: Re: CVE request: mongodb: world-readable .dbshell history file
 Content-Type: text/plain; charset=utf-8
 
-https://blog.fuzzing-project.org/48-Out-of-bounds-read-and-signed-integer-overflow-in-libarchive.html
+FWIW, the vendor has closed https://jira.mongodb.org/browse/SERVER-25335
+with "Works as Designed"
 
-https://groups.google.com/forum/#!topic/libarchive-discuss/sui01WaM3ic
-I recently wrote about a large number of bugs and potential security
-issues in libarchive. The release 3.2.0 missed one fix for an out of
-bounds read in the rar parser. Also I discovered one additional signed
-integer overflow issue with ubsan. Both issues are now fixed in
-libarchive 3.2.1. All issues were discovered with the help of american
-fuzzy lop.
+-Grant
 
-https://github.com/libarchive/libarchive/issues/521
-Out of bounds heap read in RAR parser
-http://libarchive.github.io/google-code/issue-413/comment-0/bsdtar-invalid-read.rar
-Sample rar file
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8934
-CVE-2015-8934
+On Fri, Jul 29, 2016 at 10:28 AM, <cve-assign@...re.org> wrote:
 
-https://github.com/libarchive/libarchive/issues/717#event-697151157
-Signed integer overflow in ISO parser
-https://github.com/libarchive/libarchive/files/321672/libarchive-signed-int-overflow.zip
-Sample ISO file
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+> > https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=832908
+> >
+> > | During the report on redis-tools
+> > | (https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=832460), lamby@
+> > | linked to a codesearch and the same bug was found in mongodb-clients.
+> > |
+> > | mongodb-clients stores its history in ~/.dbshell, this file is created
+> > | with permissions 0644. Home folders are world readable as well in
+> > | debian, so any user can access other users mongodb history, even though
+> > | db.auth commands don't appear to be logged like redis did.
+> > |
+> > | I filed a bug on upstream as well:
+> > | https://jira.mongodb.org/browse/SERVER-25335
+> >
+> > The mongodb client doesn't store authentication commands, but there's
+> > still information leakage, though, even if only about database and
+> > collection names, or data structure.
+> >
+> > As for data itself, the history could also contain sensitive
+> > information; for instance, if usernames for some other service were
+> > stored in a mongo collection, the history could contain lines like:
+> >
+> >   db.users.find({user:"foo"})
+> >
+> > or even:
+> >
+> >   db.users.update({user:"foo"},{$set:{password:"OhComeOnNow"}})
+>
+> Use CVE-2016-6494.
+>
+> - --
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQIcBAEBCAAGBQJXm5HHAAoJEHb/MwWLVhi20SgQAKIXsSDuAQzAY3DN67osMxAg
+> BuEh9En380VzBzqz+O83tjJyqJ6kx+Ed9WWc6Yl4nd0rUW1YdnOSvK+RF1c0nN2s
+> ndfb3cHkC2sTCfJyh5GvDdthYLr0Th0GabAzmgOoc4QhCSHykxxGFHgEhI5Wem6T
+> MclVy95MpBRb3g2XNH2ue96CxRFK2buT3fZerewZe8OBh7dh6nxDEKfLKodz8zaK
+> vUgINsgoP53GuhlCJYExf9O4JLY2wn3CFjWTGfoMY7wDxl9Rr5VwOuBaSgO6i+Ay
+> MxjMApDumENwSBtXtUQ/54WPez4IxqWU193gq31V4kVWEfBvlb9QHUsd1qyWsQVp
+> OtboCgvY2K0u5O9ZVK/H+zJDhqe/fxw2HjMxlwju3ENORuCUFpz/nErLWXSc+iaj
+> C2WmJPD0O+8mzJnOCjY8WuHJtetGorivbbKTbWk2C5r3NHMI7X9DYKiiz5ISD6Us
+> kXVjWxXdHqfCVG3JvpmJi78Pw/+DPgw9D3sg4BTY+bhEB+Gguvh8TMVTkjtOSsBh
+> i5ORa+1EhvGhYVXVZJZUK0bvEH/Pxuh6Yc2WX8LWFG2Fauw5d+1sSovLls6oLnp7
+> xDXqv7DN6NTu3iza24JWfsZBOUTVKminX42EonOu7yOVtW5oIRO6wCALd0OiL/SP
+> EOsVcn9sPCF9HQog0jSZ
+> =OQs9
+> -----END PGP SIGNATURE-----
+>
 
-http://blog.talosintel.com/2016/06/the-poisoned-archives.html
-Also a couple of other security issues in libarchive were found by
-Cisco.
-
-With the release of version 3.2.1 I consider libarchive to be
-reasonably robust against fuzzing. I've tested all supported file
-formats and fuzzed each one with afl/asan for at least one day. Of
-course that doesn't mean that no security issues are left - but the
-easy to find ones should be wiped out.
-
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
