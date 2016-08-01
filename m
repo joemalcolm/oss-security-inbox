@@ -1,49 +1,127 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/18/8
-Message-ID: <CALq7B36t-pvYNou7MEKdncoXMbMzwkXgScj1sF=KqjObnZ2iag@mail.gmail.com>
-Date: Wed, 17 Feb 2016 15:04:42 +0530
-From: Sandeep Kamble <sandeepk.l337@...il.com>
-To: Florent Daigniere <florent.daigniere@...stmatta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/01/4
+Message-Id: <20160801160408.622033AE01F@smtpvbsrv1.mitre.org>
+Date: Mon,  1 Aug 2016 12:04:08 -0400 (EDT)
+From: cve-assign@...re.org
+To: astieger@...e.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Re: Umbraco - The open source ASP.NET CMS Multiple Vulnerabilities
+Subject: Re: CVE request: Wireshark 2.0.5 and 1.12.13 security releases
 Content-Type: text/plain; charset=utf-8
 
-I think CVE-2012-1301 is more about behaving like an open proxy. In this
-bug attacker able to perform SSRF and using this attacker able to perform
-port scanning etc.
-On 17 Feb 2016 13:30, "Florent Daigniere" <florent.daigniere@...stmatta.com>
-wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> On Tue, 2016-02-16 at 17:23 -0500, cve-assign@...re.org wrote:
-> > > http://issues.umbraco.org/issue/U4-7457
-> > > SSRF
-> >
-> > > the feedproxy.aspx is used to access the external resources using
-> > > the URL GET parameter.
-> >
-> > > http://local/Umbraco/feedproxy.aspx?url=http://bobsite/index
-> > >
-> > > once you change the URL to the
-> > > http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:80/index,
-> > > you able
-> > > to access the localhost application of the server.
-> > >
-> > > Using this payload change the port number to perform port scanning
-> > > of the
-> > > server. It will be helpful to find the more details of the server.
-> > > For example:
-> > >
-> > > http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:25/index
-> > > http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:8080/index
-> > >
-> > > If the port number is closed, you will find the error message on
-> > > the
-> > > feedproxy.aspx page.
-> >
-> > Use CVE-2015-8813.
-> >
->
-> How different is it from CVE-2012-1301 ? Have they re-introduced it?
->
-> Florent
+> Wireshark 2.0.5 and 1.12.13 were announced to contain fixes of the usual
+> dissector crash / endless loop read from wire or capture file type:
 
+We think one typo ended up in your
+http://openwall.com/lists/oss-security/2016/07/28/3 post:
+
+> MMSE infinite loop (wnpa-sec-2016-43)
+> The MMSE dissector could go into an infinite loop. It may be possible to
+> make Wireshark consume excessive CPU resources by injecting a malformed
+> packet onto the wire or by convincing someone to read a malformed packet
+> trace file. Affects 1.12.0 to 1.12.12, fixed 1.12.13
+> https://www.wireshark.org/security/wnpa-sec-2016-43.html
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12624
+> 
+> RLC long loop (wnpa-sec-2016-44)
+> The RLC dissector could go into a long loop. It may be possible to make
+> Wireshark consume excessive CPU resources by injecting a malformed
+> packet onto the wire or by convincing someone to read a malformed packet
+> trace file. Affects  2.0.0 to 2.0.4, 1.12.0 to 1.12.12, fixed in 2.0.5,
+> 1.12.13.
+> https://www.wireshark.org/security/wnpa-sec-2016-44.html
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12624
+
+wnpa-sec-2016-44 is Wireshark bug 12660, not 12624. Here are
+the 11 CVE IDs:
+
+
+CVE-2016-6503
+http://www.wireshark.org/security/wnpa-sec-2016-39.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12495
+https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=581a17af40b84ef0c9e7f41ed0795af345b61ce1
+
+
+CVE-2016-6504
+http://www.wireshark.org/security/wnpa-sec-2016-40.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12576
+https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=9eacbb4d48df647648127b9258f9e5aeeb0c7d99
+
+
+CVE-2016-6505
+http://www.wireshark.org/security/wnpa-sec-2016-41.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12577
+https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=94e97e45cf614c7bb8fe90c23df52910246b2c95
+
+
+CVE-2016-6506
+http://www.wireshark.org/security/wnpa-sec-2016-42.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12594
+https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=a9d5256890c9189c7461bfce6ed6edce5d861499
+
+
+CVE-2016-6507
+http://www.wireshark.org/security/wnpa-sec-2016-43.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12624
+https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=b5a10743258bd016c07ebf6479137fda3d172a0f
+
+
+CVE-2016-6508
+http://www.wireshark.org/security/wnpa-sec-2016-44.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12660
+https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=6cf9616df68a4db7e436bb77392586ff9ad84feb
+
+
+CVE-2016-6509
+http://www.wireshark.org/security/wnpa-sec-2016-45.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12662
+https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=5a469ddc893f7c1912d0e15cc73bd3011e6cc2fb
+
+
+CVE-2016-6510
+http://www.wireshark.org/security/wnpa-sec-2016-46.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12664
+https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=47a5fa850b388fcf4ea762073806f01b459820fe
+
+
+CVE-2016-6511
+http://www.wireshark.org/security/wnpa-sec-2016-47.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12659
+https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=56706427f53cc64793870bf072c2c06248ae88f3
+
+
+CVE-2016-6512
+http://www.wireshark.org/security/wnpa-sec-2016-48.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12661
+https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=2193bea3212d74e2a907152055e27d409b59485e
+
+
+CVE-2016-6513
+http://www.wireshark.org/security/wnpa-sec-2016-49.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12663
+https://code.wireshark.org/review/gitweb?p=wireshark.git;a=commit;h=347f071f1b9180563c28b0f3d0627b91eb456c72
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXn3I1AAoJEHb/MwWLVhi2UdAP/06WJAU6wBEINx2Q8T7lXtGw
+PT+IooGuVUxKd16B7UH2zM1ccnjnLyne5W6rDPmLVoQ93i03pSOVsXx2INyXT1Is
+v55zOj1ifYCCFRaiRueD9zFtdooa2rUKJbGqUuv3IActhX/kSTvcAFahGjbA+fyy
+h8ea4aAie86710v2HsSE6g0sVj00WT9oAn7oTCdtyO2m0TyDJ0Al0s0HUeOrJjw2
+CLnsnT35KtWDQ8YnAckBEMZ/LfXK2H+WQLZGrp3TE2dRVkt3bK+9lW5HVO5efD5m
+c2GbP17vGZH/FukGZXbgRszXPpGpb05/4VJ9I2jZfyYN336/qALwS0b4WEwUFZIj
+qXjSUiCDGLyGNaF5P2URY5jIWkLysKViZFG0xvDOECwOjUmvPgKHjjCunUQcvHns
+yzyghuaJoRQiXw1k6bXaH5YsXHo6maahejTDhZolPpZdQ9VdRB2R2m7m0MR1eGay
+3OuxCvZVPtwxLjgFkhSb3rgaOMGgSWkd9Djh9NLRvhrI7kCob57XXG5JbxFb2okZ
+zXu2dQG/XbbX3OWydYfXrQDiqIbzNSpV2sABGqtzcl0/KiGN40JzILSzobxuA+o3
+qBaslvgcTS1xzwgC1V5co1b/vIA9CCpdGDbrQVfO700/xHqjRr7D9FnICnkWaeKn
+0KVjTOG4zF2op/nuy7ug
+=95/1
+-----END PGP SIGNATURE-----
