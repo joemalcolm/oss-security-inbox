@@ -1,57 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/09/5
-Message-ID: <20160709192458.GA30952@openwall.com>
-Date: Sat, 9 Jul 2016 22:24:58 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/02/9
+Message-ID: <c89a113a-34d1-fb62-dd5d-f1a0b32eec67@securify.nl>
+Date: Tue, 2 Aug 2016 20:49:58 +0200
+From: Summer of Pwnage <lists@...urify.nl>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2016-4971: wget < 1.18 trusts server-provided filename on HTTP to FTP redirects
+Subject: Multiple vulnerabilities affecting seven WordPress (XSS, CSRF, SQLi)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please see attached advisories for more information. These issues were 
+found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
+project. Its goal is to contribute to the security of popular, widely 
+used OSS projects in a fun and educational way.
 
-In 2010, several command-line programs were fixed to distrust filenames
-provided by HTTP servers via Location and Content-Disposition headers.
-wget gained --trust-server-names and --content-disposition options to
-let users revert to the old (risky) behavior.
 
-http://www.ocert.org/advisories/ocert-2010-001.html
-http://www.openwall.com/lists/oss-security/2010/05/17/1
-http://www.openwall.com/lists/oss-security/2010/08/17/2
+View attachment "cross_site_request_forgery_in_alo_easymail_newsletter_wordpress_plugin.txt" of type "text/plain" (4585 bytes)
 
-As it turns out, the fix for wget was incomplete, not covering the
-special case of HTTP to FTP redirects.  This is addressed in wget 1.18
-released a month ago:
+View attachment "cross_site_scripting_in_contact_bank_wordpress_plugin.txt" of type "text/plain" (3767 bytes)
 
-https://lists.gnu.org/archive/html/info-gnu/2016-06/msg00004.html
+View attachment "cross_site_scripting_in_uji_countdown_wordpress_plugin.txt" of type "text/plain" (5928 bytes)
 
-"This version fixes a security vulnerability (CVE-2016-4971) present in
-all old versions of wget.  The vulnerability was discovered by Dawid
-Golunski which were reported to us by Beyond Security's SecuriTeam.
+View attachment "cross_site_scripting_in_wangguard_wordpress_plugin.txt" of type "text/plain" (4501 bytes)
 
-On a server redirect from HTTP to a FTP resource, wget would trust the
-HTTP server and uses the name in the redirected URL as the destination
-filename.
-This behaviour was changed and now it works similarly as a redirect from
-HTTP to another HTTP resource so the original name is used as
-the destination file.  To keep the previous behaviour the user must
-provide --trust-server-names."
+View attachment "cross_site_scripting_vulnerability_in_booking_calendar_wordpress_plugin.txt" of type "text/plain" (4946 bytes)
 
-Upstream commit:
+View attachment "sql_injection_vulnerability_in_booking_calendar_wordpress_plugin.txt" of type "text/plain" (4023 bytes)
 
-http://git.savannah.gnu.org/cgit/wget.git/commit/?id=e996e322ffd42aaa051602da182d03178d0f13e1
-
-Exploit:
-
-http://legalhackers.com/advisories/Wget-Arbitrary-File-Upload-Vulnerability-Exploit.txt
-
-(also attached to this message).  A component of the attack - making
-wget download a .wgetrc first - was described here:
-
-http://www.openwall.com/lists/oss-security/2010/05/18/13
-
-but there are also new tricks: the HTTP to FTP redirect, and the use of
-post_file to make wget POST a file from the server with the cron job.
-
-Alexander
-
-View attachment "Wget-Arbitrary-File-Upload-Vulnerability-Exploit.txt" of type "text/plain" (16266 bytes)
+View attachment "stored_cross_site_scripting_vulnerability_in_wp_live_chat_support_wordpress_plugin.txt" of type "text/plain" (5875 bytes)
