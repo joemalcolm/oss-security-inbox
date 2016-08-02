@@ -1,34 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/14
-Message-ID: <alpine.LFD.2.20.1610280151370.5357@wniryva>
-Date: Fri, 28 Oct 2016 01:54:24 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request Qemu: net: eepro100 memory leakage at device unplug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/02/1
+Message-Id: <20160802000720.DF2953AE011@smtpvbsrv1.mitre.org>
+Date: Mon,  1 Aug 2016 20:07:20 -0400 (EDT)
+From: cve-assign@...re.org
+To: petrella.pietro@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE:Request - Path Traversal Barebone.jsp - Liferay 5.1.0
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Quick Emulator(Qemu) built with the i8255x (PRO100) NIC emulation support is 
-vulnerable to a memory leakage issue. It could occur while unplugging the 
-device, and doing so repeatedly would result in leaking host memory affecting, 
-other services on the host.
+> I discovered a directory traversal issue on minifierBundleDir
+> barebone.jsp variable on a website with Liferay 5.1.0.
+> 
+> However, i report the following vulnerable URL of example:
+> 
+> /html/js/barebone.jsp?minifierBundleDir=/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E%2Fetc%2Fhosts%00.html
+> 
+> It's important to note that the url requested is built in the following 
+> manner:
+> - only .. "encoded characters" are permitted when you insert the 
+> traversal request
+> - At the end of the file is necessary insert %00 and .html otherwise
+> the request is not accepted
 
-A privileged user inside guest could use this flaw to cause a DoS on the host 
-and/or potentially crash the Qemu process on the host.
+Use CVE-2016-6517.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg03024.html
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1389538
-
-This issue was reported by Li Qiang of 360.cn Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+iQIcBAEBCAAGBQJXn95qAAoJEHb/MwWLVhi2EagP+wbDTXE/Nu6kzML6gHfT1YL/
+ASt1JVhMFSk/1HLg3/ZLC1+lj7UVjj8Dhe/6xR+VZjbhT+lfZT0mkMJMlXjkpW56
+Xr4QbP1rsgoZD3gIn3vZt714Kg2Slk+FgtYxnxXr14IkfjndbLRGteCTMp1oof2u
+ZLwyHQkX8aa+QWF/NmfGaGqVmXmpD3tEkhwPujqNPfvdeY+qnsTflJnckHFPrNrm
+XLwGnPE5oCYaTWR4Mik7fElYtm+KitiwLN1SNi8mtjhvftlpojNtpeTUyq0oZrkh
+pmMIWLJW6sEhniWJ1AEnKngbZjDYA6JmP5sLkhP/vvGKTAUqb+5/XMDW1BgDr9Z5
++bmfGN1y+6hzbN/O1Eau6Xt0eFLyVTokc3bAszxB6+Oq3Mu3EXyRgF1wwwo2cT5i
+XJ6Ait8TD6alYs4Apz6SVk81FkmmF42/sMdXMqpkrAekaLwX2iCtDimaCthZLJGJ
+2rwT3ajPb+YMoeTXAGwipYxcHXh08A5YRZEgW1xzevJDng8qTNycPqb9QF2QmSHo
+5LGU29Ct1om7rMzSeYoF/ZqYVlq8yOTK0NdkdNsxr52yKS4KNY1ebM7X9IrYfdcT
+7ZRJGcIc0xS1ZfrW8WcfUWYnS6ke31nmXFLb6e73EmgM4+SX4lO1mIeBqGjekZYv
+P1MEHsLUulw40je0Ag1O
+=jL50
+-----END PGP SIGNATURE-----
