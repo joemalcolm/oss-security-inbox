@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4850" "Monday" "1" "May" "2017" "11:30:37" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<293903.679211752-sendEmail@localhost>" "106" "[oss-security] ettercap: etterfilter: heap-based buffer overflow write" nil nil nil "5" "2017050111:30:37" "[oss-security] ettercap: etterfilter: heap-based buffer overflow write" (number mark "U       ago@gentoo.o May  1  106/4850  " thread-indent "\"[oss-security] ettercap: etterfilter: heap-based buffer overflow write\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1460" "Tuesday" "2" "August" "2016" "17:14:37" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160802211437.0BF366CC689@smtpvmsrv1.mitre.org>" "38" "[oss-security] Re: CVE Request ImageMagick buffer overflow" nil nil nil "8" "2016080221:14:37" "[oss-security] Re: CVE Request ImageMagick buffer overflow" (number mark "U       cve-assign@m Aug  2   38/1460  " thread-indent "\"[oss-security] Re: CVE Request ImageMagick buffer overflow\"\n") "<CAJvHH_QoBJyo_qyOdgE-G=pMhZCfD0pt2f3WHhGjnw9KZMC5qA@mail.gmail.com>" ("<CAJvHH_QoBJyo_qyOdgE-G=pMhZCfD0pt2f3WHhGjnw9KZMC5qA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30544 invoked by uid 550); 1 May 2017 11:30:56 -0000
+Received: (qmail 15448 invoked by uid 550); 2 Aug 2016 21:14:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,118 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30468 invoked from network); 1 May 2017 11:30:56 -0000
-Message-ID: <293903.679211752-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 1 May 2017 11:30:37 +0000
-MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-646265.998789207"
-Subject: [oss-security] ettercap: etterfilter: heap-based buffer overflow write
+Received: (qmail 15427 invoked from network); 2 Aug 2016 21:14:48 -0000
+From: cve-assign@mitre.org
+To: i.elsayed92@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAJvHH_QoBJyo_qyOdgE-G=pMhZCfD0pt2f3WHhGjnw9KZMC5qA@mail.gmail.com>
+Message-Id: <20160802211437.0BF366CC689@smtpvmsrv1.mitre.org>
+Date: Tue,  2 Aug 2016 17:14:37 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request ImageMagick buffer overflow
 
-------MIME delimiter for sendEmail-646265.998789207
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Description:
-ettercap is a comprehensive suite for man in the middle attacks.
+> I would like to request a CVE for a buffer overflow that was found in
+> ImageMagick. You can find the fix in the following commit:
+> https://github.com/ImageMagick/ImageMagick/commit/76401e172ea3a55182be2b8e2aca4d07270f6da6
 
-There is an heap overflow write in etterfilter if it parses a malformed filter.
+>> 2016-07-01 7.0.2-7
+>> 
+>> Evaluate lazy pixel cache morphology to prevent buffer overflow (bug report
+>> from Ibrahim M. El-Sayed).
+>> 
+>> MagickCore/enhance.c
 
-The complete ASan output:
+Use CVE-2016-6520.
 
-# etterfilter $FILE
-etterfilter 0.8.2 copyright 2001-2015 Ettercap Development Team                                                                                                                                                   
-                                                                                                                                                                                                                  
-                                                                                                                                                                                                                  
- 14 protocol tables loaded:                                                                                                                                                                                       
-        DECODED DATA udp tcp esp gre icmp ipv6 ip arp wifi fddi tr eth                                                                                                                                            
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
- 13 constants loaded:
-        VRRP OSPF GRE UDP TCP ESP ICMP6 ICMP PPTP PPPOE IP6 IP ARP 
-
-=================================================================
-==3961==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61d00000a8da at pc 0x7fb38ebea5b8 bp 0x7fff8bc36cc0 sp 0x7fff8bc36cb8
-WRITE of size 1 at 0x61d00000a8da thread T0
-    #0 0x7fb38ebea5b7 in strescape /tmp/portage/net-analyzer/ettercap-9999/work/ettercap-9999/src/ec_strings.c:182:23
-    #1 0x51342c in encode_const /tmp/portage/net-analyzer/ettercap-9999/work/ettercap-9999/utils/etterfilter/ef_encode.c:134:27
-    #2 0x538e70 in yylex /tmp/portage/net-analyzer/ettercap-9999/work/ettercap-9999_build/utils/etterfilter/ef_syntax.l:173:8
-    #3 0x53fe67 in yyparse /tmp/portage/net-analyzer/ettercap-9999/work/ettercap-9999_build/utils/ef_grammar.c:1223:16
-    #4 0x51fadf in main /tmp/portage/net-analyzer/ettercap-9999/work/ettercap-9999/utils/etterfilter/ef_main.c:81:8
-    #5 0x7fb38d81178f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #6 0x41abf8 in _start (/usr/bin/etterfilter+0x41abf8)
-
-AddressSanitizer can not describe address in more detail (wild memory access suspected).
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/net-analyzer/ettercap-9999/work/ettercap-9999/src/ec_strings.c:182:23 in strescape
-Shadow bytes around the buggy address:
-  0x0c3a7fff94c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c3a7fff94d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c3a7fff94e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c3a7fff94f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c3a7fff9500: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x0c3a7fff9510: fa fa fa fa fa fa fa fa fa fa fa[fa]fa fa fa fa
-  0x0c3a7fff9520: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c3a7fff9530: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c3a7fff9540: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c3a7fff9550: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c3a7fff9560: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==3961==ABORTING
-
-Affected version:
-0.8.2
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-8366
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00224-ettercap-heapoverflow-strescape
-
-Timeline:
-2017-03-21: bug discovered and reported to upstream
-2017-04-29: blog post about the issue
-2017-04-30: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/29/ettercap-etterfilter-heap-based-buffer-overflow-write/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-646265.998789207--
-
+iQIcBAEBCAAGBQJXoQy/AAoJEHb/MwWLVhi26RoP/A3Phfv7ZYopbu2nA2iNS/qB
+vY9vU+qLHin7ZO5w/ZRRSuB2mPXa7pMlQLV5qaRrYFg/C76wicJefeCY3eX2Y/jD
+BOf672Ih7UGk8Tgm4wmluZ2axD+EPAOt+qDInccS0SG93yIXAJGb3QHG13aEQjLp
++FFTENAEINPW0KtcE2FAE4BruYpR6kwswDtaeNFA4YJWEqRnhPtOBidR0V1rPSrI
+4sUVzkeb1RCipCJ8uyltUe+s3O9utoZSTMrV+RSXfoXueaERU37Fo5YJY586CmvS
+gTRklzyfIRiWNK5UH9bIjIiAESUbCbbcURXoGX3w0EXihlZBjwpA/fzLhao4UYk+
+aeDmhW74vKIljg1ySYH9GbcWYqOYFqma20F8FB0Zfar5cYvTXCgCqYOgFqLZCWcC
+bC4Ex/owNHNxG4vZygaQU2/yNrmFjASveNC0CsTBSGknO9yFgnQfi7psFFdEFCL9
+Xy2syOKKaDZTRN0YQlC52/MU0Hoh15MgZHbDVzTbIwDwOx4it74HQbzsYv1/wJ0G
+RRomamCqEvNp90TJDav/1yRJDsWfHfGXLqLiwqfJVdzuLKYCOmGLP8K3059Q4rw1
+xT/Yor8pdcmniVLz+KyZrHl6xNvOFVRN0GCphAU/mLtmJr/EaYdevyz9WyeFvQA5
+DNWeQmPGew1VJofR0Slz
+=3+w9
+-----END PGP SIGNATURE-----
