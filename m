@@ -1,37 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/14/4
-Message-ID: <1797555053.495533413.810249.dregad-mantisbt.org@news.gmane.org>
-Date: Wed, 14 Sep 2016 11:03:34 +0200
-From: Anonymous <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: ADOdb PDO driver: incorrect quoting may allow SQL injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/02/6
+Message-ID: <CAJvHH_QoBJyo_qyOdgE-G=pMhZCfD0pt2f3WHhGjnw9KZMC5qA@mail.gmail.com>
+Date: Tue, 2 Aug 2016 10:39:49 +0100
+From: Ibrahim el-sayed <i.elsayed92@...il.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request ImageMagick buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Andreas Stieger <astieger@...e.com> wrote:
-
-Hi Andreas
-
-Many thanks for your reply. 
-
-> I noticed that in your original e-mail to this list, you did not cc
-> cve-assign.
-
-That's true, but I never did in the past, as this mailing list is (or was?)
-monitored by mitre, so posting here has been sufficient until now. 
-
-Furthermore in this case I was not quite certain that a CVE was actually
-required for this, so I was kind of hoping for guidance. 
-
-> Also note that there are new procedures, including a request
-> form, in addition to the previous recommendation to contact a CNA
-> https://cve.mitre.org/cve/request_id.html
-
-I was not aware of that, thanks for the heads up. Will follow these
-guidelines and use the form in the future. 
-
-Cheers
-Damien
+Hi CVE assignemnt team,
+I would like to request a CVE for a buffer overflow that was found in
+ImageMagick. You can find the fix in the following commit:
+https://github.com/ImageMagick/ImageMagick/commit/76401e172ea3a55182be2b8e2aca4d07270f6da6
 
 
-
+Cheers,
+Ibrahim M. El-Sayed
+Security Engineer
+Website: https://www.ibrahim-elsayed.com
+@ibrahim_mosaad
 
