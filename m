@@ -1,28 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/13
-Message-ID: <6cee47b1-cbd8-e209-4537-c30fde328b64@securify.nl>
-Date: Thu, 10 Nov 2016 19:18:56 +0100
-From: Summer of Pwnage <lists@...urify.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/02/5
+Message-ID: <480c99be-40aa-fb0c-3656-d3cb98c058da@redhat.com>
+Date: Tue, 2 Aug 2016 10:14:31 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities affecting three WordPress Plugins (XSS, info disclosure & DoS)
+Subject: glibc: Per-thread memory leak in __res_vinit with IPv6 nameservers (CVE-2016-5417)
 Content-Type: text/plain; charset=utf-8
 
-Please see attached advisories for more information. These issues were 
-found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
-project. Its goal is to contribute to the security of popular, widely 
-used OSS projects in a fun and educational way.
+We have assigned CVE-2016-5417 to a memory leak in glibc.  It was 
+introduced in glibc 2.22, with commit 
+2212c1420c92a33b0e0bd9a34938c9814a56c0f7 (which also caused other 
+regressions, which is why we backed it out in Fedora).
 
+The leak is triggered if name resolution functions are called in such a 
+way that internal resolver data structures are only initialized 
+partially.  The memory leak was independently reported as occurring 
+during Apache httpd testing, so we found it prudent to treat it as a 
+very minor security vulnerability.
 
-
-
-
-
-View attachment "information_disclosure_race_condition_in_w3_total_cache_wordpress_plugin.txt" of type "text/plain" (4933 bytes)
-
-View attachment "persistent_cross_site_scripting_in_wp_google_maps_plugin_via_csrf.txt" of type "text/plain" (6025 bytes)
-
-View attachment "reflected_cross_site_scripting_vulnerability_in_w3_total_cache_plugin.txt" of type "text/plain" (3514 bytes)
-
-View attachment "stored_cross_site_scripting_vulnerability_in_404_to_301_wordpress_plugin.txt" of type "text/plain" (3173 bytes)
-
-View attachment "weak_validation_of_amazon_sns_push_messages_in_w3_total_cache_wordpress_plugin.txt" of type "text/plain" (5525 bytes)
+Florian
