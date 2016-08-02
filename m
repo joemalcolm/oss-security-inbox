@@ -1,92 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/26/10
-Message-ID: <CACn5sdSdMmGQrUjKfCsxdXRMDqwmGes82PrKxHqw83gkJ-+W6w@mail.gmail.com>
-Date: Tue, 26 Jul 2016 22:37:46 +0200
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/02/10
+Message-Id: <20160802211437.0BF366CC689@smtpvmsrv1.mitre.org>
+Date: Tue,  2 Aug 2016 17:14:37 -0400 (EDT)
+From: cve-assign@...re.org
+To: i.elsayed92@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request ImageMagick buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Explicitly adding cve-assign to CC, this seems to have fallen through
-the cracks.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Regards,
+> I would like to request a CVE for a buffer overflow that was found in
+> ImageMagick. You can find the fix in the following commit:
+> https://github.com/ImageMagick/ImageMagick/commit/76401e172ea3a55182be2b8e2aca4d07270f6da6
 
-2016-07-13 19:53 GMT+02:00 Franco Costantini <franco.costantini.20@...il.com>:
-> This issue was reported to Redhat secalert, they asked me to disclose it
-> publicly.
->
-> A write out-of-bounds parsing an ico file was found in gdk-pixbuf 2.30.7.
-> It's tested in Ubuntu 14.04, other versions can be affected (in Debian 8, an
-> assert inside gtk3 stops the execution before the crash). This issue can be
-> reproduced using eog:
->
->  (gdb) run crash.ico
->  Starting program: /usr/bin/eog crash.ico
->  [Thread debugging using libthread_db enabled]
->  Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
->  [New Thread 0x7fffec58e700 (LWP 3709)]
->  [New Thread 0x7fffebd8d700 (LWP 3710)]
->  [New Thread 0x7fffe9656700 (LWP 3711)]
->  [New Thread 0x7fffe8e55700 (LWP 3712)]
->
->  (eog:3705): EOG-WARNING **: Couldn't load icon: Icon 'image-loading' not
-> present in theme
->
->  Program received signal SIGSEGV, Segmentation fault.
->  [Switching to Thread 0x7fffe9656700 (LWP 3711)]
->  0x00007fffd83b428c in OneLine32 (context=0x7fffe0029820) at io-ico.c:589
->  (gdb) bt
->  #0  0x00007fffd83b428c in OneLine32 (context=0x7fffe0029820) at
-> io-ico.c:589
->  #1  OneLine (context=0x7fffe0029820) at io-ico.c:800
->  #2  gdk_pixbuf__ico_image_load_increment (data=0x7fffe0029820,
->      buf=0x7fffe001b852 "", size=0, error=0x7fffe9655b68) at io-ico.c:891
->  #3  0x00007ffff53e2665 in gdk_pixbuf_loader_load_module (
->      loader=loader@...ry=0x7df420, image_type=image_type@...ry=0x0,
->      error=error@...ry=0x7fffe9655b68) at gdk-pixbuf-loader.c:443
->  #4  0x00007ffff53e2ee8 in gdk_pixbuf_loader_close (loader=0x7df420,
->      error=0xaa1aa0) at gdk-pixbuf-loader.c:808
->  #5  0x00000000004236ab in eog_image_load ()
->  #6  0x00000000004275d7 in ?? ()
->  #7  0x0000000000425959 in ?? ()
->  #8  0x00007ffff43eff05 in ?? () from /lib/x86_64-linux-gnu/libglib-2.0.so.0
->  #9  0x00007ffff3f53184 in start_thread (arg=0x7fffe9656700)
->      at pthread_create.c:312
->  #10 0x00007ffff3c8037d in clone ()
->      at ../sysdeps/unix/sysv/linux/x86_64/clone.S:111
->
-> The affected function is here:
->
->  static void OneLine32 (struct ico_progressive_state *context)
-> {
->         gint X;
->         guchar *Pixels;
->
->         X = 0;
->         if (context->Header.Negative == 0)
->                 Pixels = (context->pixbuf->pixels +
->                           context->pixbuf->rowstride *
->                           (context->Header.height - context->Lines - 1));
->         else
->                 Pixels = (context->pixbuf->pixels +
->                           context->pixbuf->rowstride *
->                           context->Lines);
->         while (X < context->Header.width) {
->                 Pixels[X * 4 + 0] = context->LineBuf[X * 4 + 2];
->                 Pixels[X * 4 + 1] = context->LineBuf[X * 4 + 1];
->                 Pixels[X * 4 + 2] = context->LineBuf[X * 4 + 0];
->                 Pixels[X * 4 + 3] = context->LineBuf[X * 4 + 3];
->                 X++;
->         }
-> }
->
-> The value of context->Header.height in OneLine32 is a very large number
-> (probably it wasn't validated correctly). Such value is used to calculate
-> where to write, resulting in an overflow where Pixels is written.
->
-> This issue was found using QuickFuzz, the file to reproduce it is attached.
-> Please assign a CVE if suitable.
->
-> Regards, Franco
+>> 2016-07-01 7.0.2-7
+>> 
+>> Evaluate lazy pixel cache morphology to prevent buffer overflow (bug report
+>> from Ibrahim M. El-Sayed).
+>> 
+>> MagickCore/enhance.c
+
+Use CVE-2016-6520.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXoQy/AAoJEHb/MwWLVhi26RoP/A3Phfv7ZYopbu2nA2iNS/qB
+vY9vU+qLHin7ZO5w/ZRRSuB2mPXa7pMlQLV5qaRrYFg/C76wicJefeCY3eX2Y/jD
+BOf672Ih7UGk8Tgm4wmluZ2axD+EPAOt+qDInccS0SG93yIXAJGb3QHG13aEQjLp
++FFTENAEINPW0KtcE2FAE4BruYpR6kwswDtaeNFA4YJWEqRnhPtOBidR0V1rPSrI
+4sUVzkeb1RCipCJ8uyltUe+s3O9utoZSTMrV+RSXfoXueaERU37Fo5YJY586CmvS
+gTRklzyfIRiWNK5UH9bIjIiAESUbCbbcURXoGX3w0EXihlZBjwpA/fzLhao4UYk+
+aeDmhW74vKIljg1ySYH9GbcWYqOYFqma20F8FB0Zfar5cYvTXCgCqYOgFqLZCWcC
+bC4Ex/owNHNxG4vZygaQU2/yNrmFjASveNC0CsTBSGknO9yFgnQfi7psFFdEFCL9
+Xy2syOKKaDZTRN0YQlC52/MU0Hoh15MgZHbDVzTbIwDwOx4it74HQbzsYv1/wJ0G
+RRomamCqEvNp90TJDav/1yRJDsWfHfGXLqLiwqfJVdzuLKYCOmGLP8K3059Q4rw1
+xT/Yor8pdcmniVLz+KyZrHl6xNvOFVRN0GCphAU/mLtmJr/EaYdevyz9WyeFvQA5
+DNWeQmPGew1VJofR0Slz
+=3+w9
+-----END PGP SIGNATURE-----
