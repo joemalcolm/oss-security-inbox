@@ -1,54 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/28/8
-Message-Id: <20160128164512.6AF96B2E1AC@smtpvbsrv1.mitre.org>
-Date: Thu, 28 Jan 2016 11:45:12 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/02/13
+Message-Id: <20160802235000.50B4F6CC7DC@smtpvmsrv1.mitre.org>
+Date: Tue,  2 Aug 2016 19:50:00 -0400 (EDT)
 From: cve-assign@...re.org
-To: xiaoqixue_1@....com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: an out of bound read is found in libdwarf -20151114
+To: chenruiqi@....cn
+Cc: cve-assign@...re.org, limingxing@....cn, oss-security@...ts.openwall.com
+Subject: Re: CVE request: XSS vulns in Dotclear v2.9.1
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-[ The Subject line was changed from the original
-"Re:Re: Buffer Overflow in lha compression utility" because that
-was unrelated to the topic. ]
-
-> http://www.openwall.com/lists/oss-security/2016/01/19/3
-
-> an out of bound read is found in libdwarf -20151114.
+> I found some XSS vulns in Dotclear v2.9.1
 > 
-> *** DWARF CHECK: DW_DLE_DEBUG_FRAME_LENGTH_NOT_MULTIPLE
-> len=0x00000010, len size=0x00000004, extn size=0x00000000, totl
-> length=0x00000014, addr size=0x00000008, mod=0x00000004 must be zero
-> in cie, offset 0x00000000. ***
-> 7   ==53495== Invalid read of size 2
->   1 ==53495==    at 0x4C2F7E0: memcpy@@GLIBC_2.14 (in
-> /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
->   2 ==53495==    by 0x43287F: dwarf_read_cie_fde_prefix (dwarf_frame2.c:934)
+> There are two reflected XSS vulns in Dotclear v2.9.1 media manager
+> 
+> /admin/media.php
+> line 34 $link_type = !empty($_REQUEST['link_type']) ? $_REQUEST['link_type'] : null;
+> line 62 $q = isset($_REQUEST['q']) ? $_REQUEST['q'] : null;
+> 
+> /dotclear/admin/media.php?q=[XSS]
+> /dotclear/admin/media.php?link_type=[XSS]
+> 
+> Fix Code:
+> https://hg.dotclear.org/dotclear/rev/40d0207e520d
 
-Use CVE-2016-2091.
+Use CVE-2016-6523 for both of these issues.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWqkTOAAoJEL54rhJi8gl5rSQP/jeiWzTqajFg+zQat/7oiqrF
-dEclF+0xce6DBqrRwdqW+K5rYDiOFgjpXTzIJytQ02ekrsL0kgKuBOJIDtde8C3/
-wx2anCEr+AbdUwyUjGvKnfyq+VO5ArA/tgvzNuOE5lLS/UlUUDKoYeJQK4olahAc
-k7Lw16y6u61d4eNzDfdE85RFa4ze+TVEC1rIt2rq3dXCxIf81GFvifVXvesgG2td
-EEwnDJUMRAL4fFBsYqZf5uU19B6QqWIRj9Yxmaeo6Levk5ssAqWk88DJgJcaxM2s
-S8hUjMKT25vvXRLmwqklA9Mg6Fv4eAdeQQ9jJ8l7u/g7u/jDr+MC+6FWuP02aO1S
-xbAf4PIFHp/e/zjmUJ2V52nbcYuIWjo5HdacTuHNEJS7HkmGfOTbwPHYqiAGzm00
-zi8bdXgfZnndgFYwzRB1uNIRaqjdZH1RkA7CK9CDUmbRq4y2y3k310kuVhwZBxAQ
-rNCUiY8uIYUay07nYK7947R2a8KYHxGrHpZAbjd5knONwi7Req0h/B063i7xYOzM
-K2Qs8bny21qZxOXei0Daej7tWAjzmV7d4KQm5IeZN0nvRiqKOCuc1V4qMvGvikH1
-Mtu8XuhHYEP1TGEg0NbgJVUpAXirsgphJF/+RueC4P0bVXfrlLkmDGjljC9kHdGv
-VkDBB/uOHOFYYZ+Fa7O9
-=Xfoe
+iQIcBAEBCAAGBQJXoS7KAAoJEHb/MwWLVhi2FuoP/2KQzJImOr3YJbBtmeneygL+
+0I3PRHXCV9rEgnDG5zJKf7ErqWZuC+9NB+yrUc+rHFsaFeCKNobVx+GU/aBN+rUU
+nOKLTdsEU1y2y9GT4PPrD5Sas68ubR858oGRB5vwQluMe/DKnQ0lJhIKJ69o3OdK
+yoRYoGDvytmsgJLXheq2AZGEvIliyqliIhZhyoFLKtrqzGONE4OscJM9QP1WbJSQ
+W7id+L+pBDWw3aKc5RpnKM6jI4olmREJ7pf34qJzmaGqZIQF7dijSlQ9RlRXfulk
+rHsK7R6kn7QbzxYKv5gpQyLlGeGbFI9UKgOqDgz41rXsjRh1Yk3WnJqwqIQ5jek7
+YnJPj45zbcpG6KxYa0UVpqUDHC7MwHZVR4RI1d0o295esApCyI6ExxhXygaEmksR
+HoJCpVwQPMhnqG5VOZgQ2JegFOMiWBonan0a434QyXq1j5Gv0iKCiusg6B5Mxwi1
+Kq8lmIduOUEhvUSNmsoq/MsrdtT0rZ91jN9b8IPKdgAMBS4ecWe9ShE7arLJbERo
+V8v3CuT4s7vEKPnGXPiRGISza7pqEKJ1YTHxPAELH4TQ2o2121eQvcC3qyI9KkyF
+WLlqJ9KTHnU9itqTy/vcrN9/vHWQgGqG2GHGJlXNwXCj0KEuLAdLP7hx9Eupfq9w
+6cOz5yeoD/nf1pC1FkH/
+=wolV
 -----END PGP SIGNATURE-----
