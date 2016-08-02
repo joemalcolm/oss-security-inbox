@@ -1,29 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/3
-Message-ID: <CACn5sdSYYWs41o-5MQNr4LHjV_=MWE_H3=kfnWT8z1X3up=g-g@mail.gmail.com>
-Date: Tue, 3 May 2016 15:42:27 +0200
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Jansson: stack exhaustion parsing a JSON file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/02/3
+Message-ID: <6D072F0A5597B449BEE8A9770E0BDBEA018CFE1E@EX01.corp.qihoo.net>
+Date: Tue, 2 Aug 2016 06:13:03 +0000
+From: 陈瑞琦 <chenruiqi@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: limingxing <limingxing@....cn>
+Subject: CVE request: XSS vulns in Dotclear v2.9.1
 Content-Type: text/plain; charset=utf-8
 
-2016-05-02 14:46 GMT+02:00 <cve-assign@...re.org>:
+I found some XSS vulns in Dotclear v2.9.1
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
-> > https://github.com/akheron/jansson/issues/282
->
-> > It takes a less than 100kb json file to crash the library, which is
-> > bad if you are receiving untrusted inputs.
->
-> >> https://github.com/akheron/jansson/blob/master/README.rst
-> >> Jansson is a C library for encoding, decoding and manipulating JSON
-> data.
->
-> Use CVE-2016-4425.
->
+Title: XSS vulns in Dotclear v2.9.1
+Author: Chen Ruiqi, Chenruiqi@....cn
+Date: 2016-08-01
+Download Site: https://dotclear.org/download
+Vendor: dotclear.org
+Vendor Notified: 2016-08-01
+Vendor Contact: security@...clear.net
+--------------------------------------------------------------------------------------------------------
+Discription:
+Dotclear is an open source blog publishing application distributed under the GNU GPLv2. Developed originally by Olivier Meunier from 2002, Dotclear has now attracted a solid team of developers.[2] It is relatively popular in French speaking countries, where it is used by several major blogging platforms (Gandi Blogs,[3] Marine nationale,[4] etc.).(Wiki)
+-----------------------------------------------------------------------------------------------------------
+Vulnerability:
+There are two reflected XSS vulns in Dotclear v2.9.1 media manager
 
-It was fixed here: https://github.com/akheron/jansson/pull/284
+/admin/media.php
+line 34 $link_type = !empty($_REQUEST['link_type']) ? $_REQUEST['link_type'] : null;
+line 62 $q = isset($_REQUEST['q']) ? $_REQUEST['q'] : null;
 
+Lack of filter before put the user-input into the page.
+--------------------------------------------------------------------------------------------------------
+PoC Code:
+http://*.*.*.*/dotclear/admin/media.php?q=77777%3C%2Fspan%3E%3Cscript%3Ealert(1)%3C/script%3E&popup=0&select=0&plugin_id=&post_id=&link_type=
+http://*.*.*.*/dotclear/admin/media.php?q=77777&popup=0&select=0&plugin_id=&post_id=&link_type=8888%22%3E%3Cscript%3Ealert(1)%3C/script%3E
+----------------------------------------------------------------------------------------------------------
+Fix Code:
+https://hg.dotclear.org/dotclear/rev/40d0207e520d
+
+
+Could you assign CVE id for those?
+
+Thank you
+
+Chen Ruiqi
+Codesafe Team
