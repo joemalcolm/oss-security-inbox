@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1552" "Wednesday" "25" "January" "2017" "03:43:30" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<a5d4cb3c0ee94490ae2c932b076f42a6@imshyb01.MITRE.ORG>" "37" "[oss-security] Re: CVE request Virglrenderer: host memory leakage when creating decode context" nil nil nil "1" "2017012508:43:30" "[oss-security] Re: CVE request Virglrenderer: host memory leakage when creating decode context" (number mark "U       cve-assign@m Jan 25   37/1552  " thread-indent "\"[oss-security] Re: CVE request Virglrenderer: host memory leakage when creating decode context\"\n") "<alpine.LFD.2.20.1701241256280.7971@wniryva>" ("<alpine.LFD.2.20.1701241256280.7971@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["396" "Tuesday" "2" "August" "2016" "06:26:37" "+0000" "=?UTF-8?B?U8OpYmFzdGllbg==?= Delafond" "seb@debian.org" "<20160802082351.560@usenet.piggo.com>" "15" "[oss-security] Re: CVE request: mongodb: world-readable .dbshell history file" nil nil nil "8" "2016080206:26:37" "[oss-security] Re: CVE request: mongodb: world-readable .dbshell history file" (number mark "U       seb@debian.o Aug  2   15/396   " thread-indent "\"[oss-security] Re: CVE request: mongodb: world-readable .dbshell history file\"\n") "<CAPiURgU=B9-scN=io0cJrS-4FfrLCnJ=MFiBSfMoKyCG-L0kQA@mail.gmail.com>" ("<20160729170700.977@usenet.piggo.com>" "<20160729172848.B025EABC9D4@smtpvmsrv1.mitre.org>" "<CAPiURgU=B9-scN=io0cJrS-4FfrLCnJ=MFiBSfMoKyCG-L0kQA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13371 invoked by uid 550); 25 Jan 2017 08:43:43 -0000
+Received: (qmail 13396 invoked by uid 550); 2 Aug 2016 06:26:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,52 +12,32 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13312 invoked from network); 25 Jan 2017 08:43:42 -0000
-From: <cve-assign@mitre.org>
-To: <ppandit@redhat.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
-	<liqiang6-s@360.cn>
-In-Reply-To: <alpine.LFD.2.20.1701241256280.7971@wniryva>
-Message-ID: <a5d4cb3c0ee94490ae2c932b076f42a6@imshyb01.MITRE.ORG>
-Date: Wed, 25 Jan 2017 03:43:30 -0500
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE request Virglrenderer: host memory leakage when creating decode context
+Received: (qmail 13377 invoked from network); 2 Aug 2016 06:26:55 -0000
+X-Injected-Via-Gmane: http://gmane.org/
+To: oss-security@lists.openwall.com
+From: =?UTF-8?Q?S=C3=A9bastien?= Delafond <seb@debian.org>
+Date: Tue, 2 Aug 2016 06:26:37 +0000 (UTC)
+Message-ID: <20160802082351.560@usenet.piggo.com>
+References: <20160729170700.977@usenet.piggo.com>
+ <20160729172848.B025EABC9D4@smtpvmsrv1.mitre.org>
+ <CAPiURgU=B9-scN=io0cJrS-4FfrLCnJ=MFiBSfMoKyCG-L0kQA@mail.gmail.com>
+X-Complaints-To: usenet@blaine.gmane.org
+User-Agent: slrn/1.0.2 (Linux)
+Cc: mongodb-user@googlegroups.com
+Subject: [oss-security] Re: CVE request: mongodb: world-readable .dbshell history file
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 2016-08-01, Grant Ridder <shortdudey123@gmail.com> wrote:
+> FWIW, the vendor has closed
+> https://jira.mongodb.org/browse/SERVER-25335 with "Works as
+> Designed"
 
-> Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support
-> for the virtio GPU, is vulnerable to memory leakage issue. It could occur when
-> a guest tries to create decode context via 'VIRTIO_GPU_CMD_CTX_CREATE'
-> command.
-> 
-> A guest user/process could use this flaw to leak host memory resulting in DoS.
-> 
-> https://cgit.freedesktop.org/virglrenderer/commit/?id=747a293ff6055203e529f083896b823e22523fe7
-> https://bugzilla.redhat.com/show_bug.cgi?id=1415944
+Whatever the umask value is, an application should apply proper
+permissions on files deemed sensitive. For instance, ssh-keygen(1)
+will never create a world-readable private key, regardless of what the
+umask is.
 
-Use CVE-2016-10163.
+Cheers,
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+--Seb
 
-iQIcBAEBCAAGBQJYiGPEAAoJEHb/MwWLVhi2YPwP/1lOP3BYfiiEYcQIfnmTdDII
-r9Vh3OY9OQGN1gpUepaTGOgINwO5Pue9JI7mQaBEf7aV2eWnQjmqs+HDHhqAT2RA
-vPo+LeRqDKwe8kMRF/cxW0HYHo3lw8mIE6dXiwQNYz2R0vGmNMfLwpx1F5oPzqFP
-YDcBFqhonAVcHZwAtfnqqD0RmFLCv9kn6MEH0J5Pjzc3aE7nrefynPyjtoIfKWb3
-PuahXTdR458uq8GodQemjoamesqEFBCdWim3ycTQrNF6Z5TzBTtzdjuWAhUJ8fN0
-GRrDHpVtSSiJcUqlZziz3W0tv1LPUtYutcG1bluxOrCHEATJSrvpkRaP70hp0E94
-sOcYQ7Gs+uBWgYOKkurG0msq+/Hn60KwNr4omciA2LD3X3ehPl3BcN1YvRBxTt6r
-c4wNfEpZAZasz1A6GRnhDBmtTg/KXf30y+/FY5WQ6X6QEkd9elSD0reNAyL+y/Ul
-kx4djZxCGd0mBkp95n90QOZEwXvlxj9wagqGJaz9DF93Y5vBrTop33gRW6pszbid
-JqPf1HuGb0I/azGvKLSZNQzHzTJ57QESGJhjiNTk9rdc0sw4notWd4qTZ4P/tt73
-1dYooaV31dFKqe1LUm6iaLCG0/FU5xYOHTFe+MeUZDxeo332Cw431+JNgyv7ZuDy
-o7wPhJVeTbxHkNmYV/tm
-=ak6W
------END PGP SIGNATURE-----
+
