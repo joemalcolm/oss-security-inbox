@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["197" "Thursday" "6" "September" "2018" "15:17:25" "+0200" "Jakub Wilk" "jwilk@jwilk.net" "<20180906131725.5dyq5xjweg5ljet4@jwilk.net>" "7" "Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" "^Date:" nil nil "9" "2018090613:17:25" "[oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" (number mark "        jwilk@jwilk. Sep  6    7/197   " thread-indent "\"Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?\"\n") "<20180905233220.GK1664@takahe.colorado.edu>" ("<CAJ_zFkLXTpjCijqNsHs0ZR4NdVwM+16ojUmxjYu0aZAgW=QhKQ@mail.gmail.com>" "<20180903105747.dihmczuqhl4kcnx5@suse.de>" "<CAJ_zFkLOkSWe8x5N9Mf9bx1J9+oLnzNtHzTfEDXg0JGPj7N7DA@mail.gmail.com>" "<CAJ_zFk++=BcFw0mU1NefSCkGqo3RzRjePQwPo0mCUzL=QeGBiA@mail.gmail.com>" "<F21BEEA3-4932-472D-9FEA-A318F543861D@gmail.com>" "<CAJ_zFkLmua6XK9iRV-TRQsXKXo=s9Y32FQjOM5UB_UPrrNsAxw@mail.gmail.com>" "<CAJ_zFkLvLBnn8OO6Q3JuqyvpRKoo=63wE1meqsT_jR4USir4DQ@mail.gmail.com>" "<20180905150128.5f9430f4@jabberwock.cb.piermont.com>" "<74d8474f-f18b-7543-a8a8-6072a416aca6@gathman.org>" "<20180905233220.GK1664@takahe.colorado.edu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2889" "Tuesday" "2" "August" "2016" "18:43:16" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160802224316.0A523B2E007@smtpvbsrv1.mitre.org>" "67" "[oss-security] Re: CVE Request: CSRF in Grails console" nil nil nil "8" "2016080222:43:16" "[oss-security] Re: CVE Request: CSRF in Grails console" (number mark "U       cve-assign@m Aug  2   67/2889  " thread-indent "\"[oss-security] Re: CVE Request: CSRF in Grails console\"\n") "<CAFdyfB2D-63JUZbO_tU8sx2_pbS1e30cBemu81PNKABufdogpg@mail.gmail.com>" ("<CAFdyfB2D-63JUZbO_tU8sx2_pbS1e30cBemu81PNKABufdogpg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9257 invoked by uid 550); 6 Sep 2018 13:17:44 -0000
+Received: (qmail 6016 invoked by uid 550); 2 Aug 2016 22:43:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,39 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9226 invoked from network); 6 Sep 2018 13:17:43 -0000
-Message-ID: <20180906131725.5dyq5xjweg5ljet4@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <CAJ_zFkLXTpjCijqNsHs0ZR4NdVwM+16ojUmxjYu0aZAgW=QhKQ@mail.gmail.com>
- <20180903105747.dihmczuqhl4kcnx5@suse.de>
- <CAJ_zFkLOkSWe8x5N9Mf9bx1J9+oLnzNtHzTfEDXg0JGPj7N7DA@mail.gmail.com>
- <CAJ_zFk++=BcFw0mU1NefSCkGqo3RzRjePQwPo0mCUzL=QeGBiA@mail.gmail.com>
- <F21BEEA3-4932-472D-9FEA-A318F543861D@gmail.com>
- <CAJ_zFkLmua6XK9iRV-TRQsXKXo=s9Y32FQjOM5UB_UPrrNsAxw@mail.gmail.com>
- <CAJ_zFkLvLBnn8OO6Q3JuqyvpRKoo=63wE1meqsT_jR4USir4DQ@mail.gmail.com>
- <20180905150128.5f9430f4@jabberwock.cb.piermont.com>
- <74d8474f-f18b-7543-a8a8-6072a416aca6@gathman.org>
- <20180905233220.GK1664@takahe.colorado.edu>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20180905233220.GK1664@takahe.colorado.edu>
-User-Agent: NeoMutt/20180716
-X-Ovh-Tracer-Id: 2947887431339857830
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedtjedriedvgdeifecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecu
-Date: Thu, 6 Sep 2018 15:17:25 +0200
-From: Jakub Wilk <jwilk@jwilk.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS
- coders in policy.xml by default?
-To: oss-security@lists.openwall.com
+Received: (qmail 5993 invoked from network); 2 Aug 2016 22:43:28 -0000
+From: cve-assign@mitre.org
+To: berdario@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAFdyfB2D-63JUZbO_tU8sx2_pbS1e30cBemu81PNKABufdogpg@mail.gmail.com>
+Message-Id: <20160802224316.0A523B2E007@smtpvbsrv1.mitre.org>
+Date: Tue,  2 Aug 2016 18:43:16 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: CSRF in Grails console
 
-* Leonid Isaev <leonid.isaev@jila.colorado.edu>, 2018-09-05, 17:32:
->pdf files can contains things like javascript...
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Do any open-source PDF browsers actually execute embedded JS?
+> The Grails console (aka Grails Debug Console, Grails Web Console) was
+> vulnerable to CSRF.
+> 
+> https://grails.org/plugin/console
+> https://github.com/sheehan/grails-console
+> 
+> (this is the plugin, not to be confused with the command line grails
+> console: http://docs.grails.org/3.1.1/ref/Command%20Line/console.html
+> )
+> 
+> The fix has been made available in versions 1.5.10, 2.0.7. Versions up
+> to 1.5.9 and 2.0.6 are affected.
+> 
+> This allows an attacker to (create pages that when visited by a victim
+> will) forge requests that will execute arbitrary groovy code on the
+> backend (the documentation explains how to enable it in production,
+> and granting access to administrators only, so this is not simply a
+> development tool).
+> 
+> Bug tracker: https://github.com/sheehan/grails-console/issues/54
+> fix commit: https://github.com/sheehan/grails-console/commit/155e0f5f0fe3b3bd7027d730fa00bf0655f28207
 
--- 
-Jakub Wilk
+Use CVE-2016-6521.
+
+(Conceivably this could have had a CVE-2015 number if
+https://github.com/sheehan/grails-console/issues/24 were interpreted as
+a vulnerability disclosure; however issues/24 seems too vague.)
+
+
+> Unfortunately the Grails framework itself ships with some horribly
+> insecure defaults. As of 3.1.9 the template code dropped by `grails
+> create-app` will have a UrlMappings.groovy that will allow access to
+> Grails controllers actions via any HTTP method.
+
+It is possible that a behavior like this could have its own CVE ID if
+it is undocumented or interacts incorrectly with run-app. For example,
+http://docs.grails.org/1.3.9/guide/single.html#6.4.5%20Mapping%20to%20HTTP%20methods
+says "the HTTP method (GET, POST, PUT or DELETE)." Do you mean, for
+example, that the OPTIONS or TRACE method can allow access, but the
+documentation suggests that only GET, POST, PUT, and DELETE need to be
+anticipated?
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXoSGRAAoJEHb/MwWLVhi2gEIP/iwnGiItegQOEYvx1qpyJvGP
++dTJ3xgvB0Zc8L5e4VD6AUd2d687GKeLB4juOYWR9h7TGyu62X6KMfAVfSl/4D5n
+3N+DoZHuPIw6GlW9apWA9HeHg/PqUxV7in41wDRXkn1m1eD2Jz5zxm+ZaBrKmoOy
+DNFnjSSaUkNuQtPq2qstIGxZ+iLBlBSH0k4kR5MTIUEoZZ3E2DZrP+0x5v+8MaZn
+GCDfhJ0WWxUMr0d8lbpntZGWJU0hbacg2ImKDFSwhNkRR8r5CMzEK62p0ZqiEWNU
+0udvX42XXM4YUXg54fXpN8lkt6qd8QIpa0FXlFLN/Oa2auI2pU+RnQ607yc8KGzN
+1tiWXGQtxiWRQcZ8V93K5Ytj99qbpfyPRQpLtEX1GCilu/Bog2HCv9mFWmgTqib0
+3/80z6599TFmeSibxIz21qkGPtXjwxjEhwdaDuUNP3Cc6xQK9pS9Vq/GmoGCNR46
+ov/CpWbWEK058n6or0u7gl6rsJJNh55XKrXjfujrY+Dly3FQ0pULXPWnbsnFS4Vj
+J+nNiQnX2wuYOmf+RoRn1H7rxFj5+9+pkrQFNbZZFKUpmXchyI6TTPaq5Cfpm9X8
+oyyEV4ykiaOpH7CgHavqbhgfV3FkDBCPWb0iN2tgpK1rNEl84b18afRlVq+zVNBN
+INdR8i7XC8AJf0piGF8J
+=yHDR
+-----END PGP SIGNATURE-----
