@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2872" "Thursday" "22" "April" "2021" "11:02:11" "-0400" "David A. Wheeler" "dwheeler@dwheeler.com" nil "67" "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil "4" nil nil (number mark "U       dwheeler@dwh Apr 22   67/2872  " thread-indent "\"Re: [oss-security] Malicious commits to Linux kernel as part of university study\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["455" "Tuesday" "2" "August" "2016" "10:39:49" "+0100" "Ibrahim el-sayed" "i.elsayed92@gmail.com" "<CAJvHH_QoBJyo_qyOdgE-G=pMhZCfD0pt2f3WHhGjnw9KZMC5qA@mail.gmail.com>" "16" "[oss-security] CVE Request ImageMagick buffer overflow" nil nil nil "8" "2016080209:39:49" "[oss-security] CVE Request ImageMagick buffer overflow" (number mark "U       i.elsayed92@ Aug  2   16/455   " thread-indent "\"[oss-security] CVE Request ImageMagick buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11586 invoked by uid 550); 22 Apr 2021 15:02:42 -0000
+Received: (qmail 27790 invoked by uid 550); 2 Aug 2016 09:40:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,87 +12,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11568 invoked from network); 22 Apr 2021 15:02:42 -0000
-From: "David A. Wheeler" <dwheeler@dwheeler.com>
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
-Date: Thu, 22 Apr 2021 11:02:11 -0400
-References: <20210422065959.GI13079@scully.more-magic.net>
- <CAEo4CePqice09K5PPhmxwwF3jg=USrqRqM5FgVX_jCB8sZfDeA@mail.gmail.com>
- <20210422095945.GA2495@scully.more-magic.net>
-To: oss-security@lists.openwall.com
-In-Reply-To: <20210422095945.GA2495@scully.more-magic.net>
-Message-Id: <4DCB6EF3-73EE-4038-8437-FEB339F20F90@dwheeler.com>
-X-Mailer: Apple Mail (2.3608.120.23.2.4)
-Subject: Re: [oss-security] Malicious commits to Linux kernel as part of
- university study
+Received: (qmail 27770 invoked from network); 2 Aug 2016 09:40:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=VPjvW3MBVnFzb+7FODrVk3zqj3fljAUB4S5swvxhp9U=;
+        b=abRNxTwBKXBgeI1/TSGHufWXO6cELPFV9BaRilocxUju0d7Ki8UllMaQ0QCAeFBXSW
+         CCv3nzkF59q0Nj5pVQo4D4B7++40ByYlP8tJz9T+oXbsKddiCBLZz21KS2e9HaivTyhn
+         cBhZ2Y60J9D5l+kzTXF2lDxreuq6wF3vvKAoxGGCNO8nqyTxp7GjvzkZguy7ae3lhaRi
+         BHTCul9ZA6mvxjCbnh7WKXj+AWCjsBBCelYnHh7OKxXrH1B7Kx5eBEjxQlW1BYsL41ig
+         V3lJQp7SD91YuUHK4nq389zlGnckW5/J5k4GFrmyPWblJtAkTpA6bkY43kIFKEuRmnWX
+         P8fw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=VPjvW3MBVnFzb+7FODrVk3zqj3fljAUB4S5swvxhp9U=;
+        b=VyvzYH+LbX8HnQ3Uj0mnpkNWMynVcEj7QR/lcUcPsgqmAYbi2WT7MRee+IX4JT1FQP
+         E9IWteRx+IOgTs893DTtOXkccZ8pN6Qd9C9b1FFn6MPuvrtgSMMGle7/qZf2DKH87EYH
+         GNnLc0uOQmNMyg7WtbCyHWMaNX/40PvO/sGzL3viwuDeA9FJBzyD/t/hac7hw+ZRaIeB
+         y2fwQAyqJq72GHOU89vnC2aoQORqU00fwTiJC0D77KCQ1POifNM2b2vKHGYYorMJbTvt
+         C67+bUji/ij6kyfPQkt33zY8NcCU6jnDEl2KtWeRwB3Jn/v8kZ5kdFa9sB87nfdNFdwd
+         lJSQ==
+X-Gm-Message-State: AEkoouuLhCv5+LCk5qTr+9DbBFd5GviRQcE048HVX+wGgnwTygVSNNchXiMm1WPQl3RXKxzlsd/brcvCFV3eeA==
+X-Received: by 10.194.127.163 with SMTP id nh3mr55019859wjb.74.1470130830177;
+ Tue, 02 Aug 2016 02:40:30 -0700 (PDT)
+MIME-Version: 1.0
+From: Ibrahim el-sayed <i.elsayed92@gmail.com>
+Date: Tue, 2 Aug 2016 10:39:49 +0100
+Message-ID: <CAJvHH_QoBJyo_qyOdgE-G=pMhZCfD0pt2f3WHhGjnw9KZMC5qA@mail.gmail.com>
+To: cve-assign@mitre.org
+Cc: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=e89a8f83aa29e7fedb053913813f
+Subject: [oss-security] CVE Request ImageMagick buffer overflow
 
-Peter Bex:
-> The university of Minnesota has been banned from making any commits to
-> the Linux kernel after it was found out they'd been submitting bogus
-> patches to the LKML to knowingly introduce security issues:
-> https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
+--e89a8f83aa29e7fedb053913813f
+Content-Type: text/plain; charset=UTF-8
 
-I support research, but I personally think this work goes way beyond any et=
-hical boundaries.
-While I don=E2=80=99t know if it=E2=80=99s *illegal* (I=E2=80=99m not a law=
-yer!), it seems clear to me that these
-U of MN researchers were conducting experiments on people without their pri=
-or consent.
-In the US, experiments on people without their consent is generally forbidd=
-en.
-These researchers did their experiment *before* even consulting their Insti=
-tutional Review Board (IRB),
-a *huge* no-no, and then their IRB approved the non-consensual experiment a=
-nyway (!!!).
-
-GregKH=E2=80=99s response to this attack from the U of MN here:
-https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
-which reads in part:
-> Our community welcomes developers who wish to help and enhance Linux.
-> That is NOT what you are attempting to do here...
-> Our community does not appreciate being experimented on...
-
-More discussion: https://news.ycombinator.com/item?id=3D26887670
-
-Peter Bex:
-> I don't know the scope of this research, but it could involve other OSS
-> projects, now or in the future, as well.  Hence this e-mail.  If you feel
-> it's spam or needless drama, feel free to ignore.
-
-Since the researchers failed to get prior consent from the people
-being experimented on, I don=E2=80=99t think we can presume ethical behavio=
-r.
-I have no faith that these researchers limited their attacks.
-I hope they did, but I think we can take more proactive measures.
-
-I used the following shell command to search for potentially-concerning com=
-mits in git:
-
-git shortlog --summary --numbered --email | grep -E '(wu000273|kjlu|@umn.ed=
-u)'
-
-I recommend other OSS projects do something similar, just in case, unless
-we can have better verification that no other OSS projects were attacked.
-I welcome improved methods to find concerning proposals or patches;
-this is just a quick attempt to detect potential damage.
+Hi CVE assignemnt team,
+I would like to request a CVE for a buffer overflow that was found in
+ImageMagick. You can find the fix in the following commit:
+https://github.com/ImageMagick/ImageMagick/commit/76401e172ea3a55182be2b8e2aca4d07270f6da6
 
 
-On Thu, Apr 22, 2021 at 11:44:49AM +0200, Albert Veli wrote:
-> Supply chain attacks are a real threat to open source projects.
+Cheers,
+Ibrahim M. El-Sayed
+Security Engineer
+Website: https://www.ibrahim-elsayed.com
+@ibrahim_mosaad
 
-I completely agree. My work title is =E2=80=9CDirector of Open Source Suppl=
-y Chain Security=E2=80=9D,
-so I guess I=E2=80=99d have to say that :-), but I agree anyway :-).
-
-*ALL* OSS projects should review proposed changes for potential security
-issues, and harden their software & supply chain against attacks.
-I also welcome research to make that better!
-But we don=E2=80=99t need researchers who perform attacks
-on production systems without authorization, or perform
-attacks on developers without their consent.
-
---- David A. Wheeler
-
+--e89a8f83aa29e7fedb053913813f--
