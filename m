@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2499" "Wednesday" "20" "January" "2016" "12:05:02" "-0800" "Reed Loden" "reed@reedloden.com" "<CALPTtNVfowfZmQxBUjhGvC8b7quqnXLWQZL=2xBO7uD-MGvewg@mail.gmail.com>" "76" "[oss-security] CVE request: Two vulnerabilities in mapbox.js node module" nil nil nil "1" "2016012020:05:02" "[oss-security] CVE request: Two vulnerabilities in mapbox.js node module" (number mark "U       reed@reedlod Jan 20   76/2499  " thread-indent "\"[oss-security] CVE request: Two vulnerabilities in mapbox.js node module\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7219" "Tuesday" "2" "August" "2016" "16:09:46" "+0200" "Marcus Meissner" "meissner@suse.de" "<20160802140946.GC25831@suse.de>" "278" "Re: [oss-security] Ruby:HTTP Header injection in 'net/http'" nil nil nil "8" "2016080214:09:46" "[oss-security] Ruby:HTTP Header injection in 'net/http'" (number mark "U       meissner@sus Aug  2  278/7219  " thread-indent "\"Re: [oss-security] Ruby:HTTP Header injection in 'net/http'\"\n") "<CAPGxrc-M3V_ok8DFmu3fOogpX-Sr-eoy9zCMYqNGgCp73hu05Q@mail.gmail.com>" ("<CAPGxrc-M3V_ok8DFmu3fOogpX-Sr-eoy9zCMYqNGgCp73hu05Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22137 invoked by uid 550); 20 Jan 2016 20:05:34 -0000
+Received: (qmail 18390 invoked by uid 550); 2 Aug 2016 14:10:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,111 +12,299 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22117 invoked from network); 20 Jan 2016 20:05:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=reedloden.com; s=google;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        bh=g/ZB8BUwBmyyhbpmUhGtuHXI5xvB86i0sOVt+uIRc1k=;
-        b=L42xiti9XwWKUO/hOXXfWbpnktC/sB60qTuZwZAw2DZJWAf/wMym5ksUDZDoEEjcl3
-         6srLC4Grxv6rJMM7QPmyWmR/zd7UpoM6d5++fZKzcGYwLvB9Py6p88bfjJr/EmBSnZPl
-         8bdZ8aFwlGBx0ObuiwUgcwHDbGjzWWpDrASiY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-type;
-        bh=g/ZB8BUwBmyyhbpmUhGtuHXI5xvB86i0sOVt+uIRc1k=;
-        b=mluzN3T5bq5nEaB0MEYVVzyz2IhvfPxhN1BSwPbuXXJsw2MPMqs/4TVt+wK72ekWAP
-         A3VWftxFHDeDhLzQm36VP6WdQMu1R99yIfRckb2jYSjtN3YZ7J4QLfckdoHSOguJKSb0
-         nhYAalmcfHTwCqHosgjR3PYwt1ITub69tEYdVVNmISGQqKk3XRb+JHEJocW4166mGE49
-         Ew2QbS6apvElep6q6TTNtvVQZBz7g682ruEgcbMzCHj2nyykw3aVtRk/oyYGBYqrs2+8
-         yqRtEclcOwRaZkIOrYSE+UokIkVC+y2TydFXk/UfwC42+mMjX0PPWHOshYiO4fyUDPoD
-         +kzQ==
-X-Gm-Message-State: ALoCoQmD4JI1b04sw7tiJg+0tu/eOeOfQqXlcA9DEpzX7LLdvaTtP3pHtExoTF+J0GA4vM00l+UHgF0I5oREhs0tLy/MmKsOsKj9i4Asj4x854gKPIbm3L8=
-X-Received: by 10.140.20.145 with SMTP id 17mr48457740qgj.45.1453320321909;
- Wed, 20 Jan 2016 12:05:21 -0800 (PST)
+Received: (qmail 18372 invoked from network); 2 Aug 2016 14:10:00 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Tue, 2 Aug 2016 16:09:46 +0200
+From: Marcus Meissner <meissner@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20160802140946.GC25831@suse.de>
+References: <CAPGxrc-M3V_ok8DFmu3fOogpX-Sr-eoy9zCMYqNGgCp73hu05Q@mail.gmail.com>
 MIME-Version: 1.0
-From: Reed Loden <reed@reedloden.com>
-Date: Wed, 20 Jan 2016 12:05:02 -0800
-Message-ID: <CALPTtNVfowfZmQxBUjhGvC8b7quqnXLWQZL=2xBO7uD-MGvewg@mail.gmail.com>
-To: oss-security@lists.openwall.com, 
-	Assign a CVE Identifier <cve-assign@mitre.org>
-Cc: report@nodesecurity.io
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] CVE request: Two vulnerabilities in mapbox.js node module
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPGxrc-M3V_ok8DFmu3fOogpX-Sr-eoy9zCMYqNGgCp73hu05Q@mail.gmail.com>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Subject: Re: [oss-security] Ruby:HTTP Header injection in 'net/http'
 
-Noticed these via the Node Security Project.
+Hi,
 
-mapbox.js is "Mapbox JavaScript API, a Leaflet Plugin".
-http://mapbox.com/mapbox.js/
+was this ever accepted by the Ruby upstream team as valid bug?
 
-Homepage: https://github.com/mapbox/mapbox.js
+You seem to quote some bugtracker, where is it and is the bug public there?
 
-Download: https://www.npmjs.com/package/mapbox.js
+Ciao, Marcus
+On Sat, Jun 25, 2016 at 12:18:42PM +0800, redrain root wrote:
+> TIMELINE
+> rootredrain submitted a report to Ruby.
+> 
+> show raw
+> Jun 22nd
+> 
+> Hi,
+> 
+> I would like to report a HTTP Header injection vulnerability in
+> 'net/http' that allows attackers to inject arbitrary headers in
+> request even create a new evil request.
+> 
+> PoC
+> 
+> require 'net/http'
+> http = Net::HTTP.new('192.168.30.214','80')
+> res = http.get("/r.php HTTP/1.1\r\nx-injection: memeda")
+> 
+> Example
+> 
+> Server Code:
+> 
+> #!/usr/bin/env ruby
+> require 'sinatra'
+> require 'uri'
+> require 'net/http'
+> 
+> get '/' do
+>   'hello world'
+> end
+> 
+> post '/' do
+>   ip = params[:ip]
+>   port = params[:port]
+>   path = params[:path]
+> 
+>   # do what you want
+>   http = Net::HTTP.new ip, port.to_i
+>   res = http.get path
+> 
+>   res.body
+> 
+> end
+> 
+> post data:
+> 
+> ip=192.168.30.214&port=80&path=/r.php%20HTTP/1.1%0d%0ax-injection: memeda
+> 
+> print_r all HTTP Headers：
+> 
+> Create an evil request
+> 
+> post data:
+> 
+> server log:
+> 
+> Suggestion:
+> 
+> Should validate URI legality before send request
+> 
+> btw，
+> 
+> Cloud I have a CVEID with this vulnerability? reported by
+> @redrain(rootredrain@gmail.com) and@ztz(ztz5651483@gmail.com)
+> 
+> 4 attachments:
+> F100918: 123123.png
+> F100919: 222333.png
+> F100920: 4444.png
+> F100921: 5555.png
+> 
+> rootredrain posted a comment.
+> Jun 22nd (2 days ago)
+> 
+> The problem is this line in lib/net/http/generic_request.rb:324
+> 
+>   def write_header(sock, ver, path)
+>     buf = "#{@method} #{path} HTTP/#{ver}\r\n"
+>     each_capitalized do |k,v|
+>       buf << "#{k}: #{v}\r\n"
+>     end
+>     buf << "\r\n"
+>     sock.write buf
+>   end
+> 
+> "#{@method} #{path} HTTP/#{ver}\r\n" should be checked here to avoid
+> malicious input
+> 
+> shugo posted a comment.
+> Jun 24th (8 hrs ago)
+> 
+> Thanks for your report.
+> 
+> We don't consider this a vulnerability because Net::HTTP#get is not
+> designed to accept malicious input.
+> Applications have responsibility to verify input syntactically and
+> semantically (accepting all RFC2616-compliant input would not be a
+> good idea).
+> 
+> So we would like to handle this as a normal issue.
+> 
+> rootredrain posted a comment.
+> Jun 24th (2 hrs ago)
+> 
+> Hi shugo,
+> 
+> Thanks for the reply. Please don't leave this problem to developers,
+> they have uneven level at developing.
+> 
+> For example, assume we have a demo website, the only thing do is
+> generate a new HTTP request:
+> 
+> #!/usr/bin/env ruby
+> require 'sinatra'
+> 
+> get '/' do
+>   'hello world'
+> end
+> 
+> post '/' do
+>   ip = params[:ip]
+>   port = params[:port]
+>   path = params[:path]
+> 
+>   # send the request to another site
+>   http = Net::HTTP.new ip, port.to_i
+>   res = http.get path
+> 
+>   res.body
+> end
+> 
+> It's a common demand, right ?
+> 
+> But web developer may not realized that sinatra will auto decode url.
+> Attacker can encode \r\n to %0a%0d, send to the sinatra, sinatra will
+> decode url to \r\n and pass to thepath, finally cause a HTTP Header
+> Injection or CRLF Injection.
+> 
+> Please assume all input is malicious. Here is a similar vulnerability
+> in python: CVE-2016-5699
+> 
+> Here is what another HTTP lib Faraday do may change your mind.
+> 
+> lib/faraday/connection.rb:308
+> 
+> def url_prefix=(url, encoder = nil)
+>   uri = url_prefix = Utils.URI(url)
+>   self.path_prefix = uri.path
+>   # ... ... ...
+>   uri
+> end
+> 
+> uri = url_prefix = Utils.URI(url) try to convert url to URI, It will
+> raise an error whenurl is invalid.
+> 
+> lib/faraday/connection.rb:399
+> 
+> def build_exclusive_url(url = nil, params = nil, params_encoder = nil)
+>   url = nil if url.respond_to?(:empty?) and url.empty?
+>   base = url_prefix
+>   # ... ... ...
+>   uri = url ? base + url : base
+>   # ... ... ...
+> end
+> 
+> uri = url ? base + url : base will trigger another examination convert_to_uri:
+> 
+> def convert_to_uri(uri)
+>   if uri.is_a?(URI::Generic)
+>     uri
+>   elsif uri = String.try_convert(uri)
+>     parse(uri)
+>   else
+>     raise ArgumentError,
+>           "bad argument (expected URI object or URI string)"
+>   end
+> end
+> 
+> If url is invalid, it will raise an error.
+> 
+> Please let me know if you need more info.
+> 
+> tenderlove posted a comment.
+> Jun 24th (2 hrs ago)
+> 
+> It's a common demand, right ?
+> 
+> I'm not sure about that.
+> 
+> I think this is a bug we should probably address, but I don't think we
+> should consider this a vulnerability. Fetching arbitrary paths from
+> user input seems pretty dubious.
+> 
+> rootredrain posted a comment.
+> Jun 24th (about 1 hr ago)
+> 
+> Hi tenderlove,
+> 
+> Here is my point :
+> All input can not be trusted.
+> 
+> We should validate url in Net::HTTP
+> 
+> tenderlove posted a comment.
+> Jun 24th (about 1 hr ago)
+> 
+> All input can not be trusted.
+> 
+> Yes, people should be whitelisting paths passed in. An open proxy is
+> already a vulnerability, regardless of header injection.
+> 
+> As I said, we should treat this as a bug. But since an open proxy is
+> already a security problem (that we cannot fix), then I don't think
+> this bug should be treated as a security issue.
+> 
+> shugo posted a comment.
+> Jun 24th (34 mins ago)
+> 
+> But web developer may not realized that sinatra will auto decode url.
+> Attacker can encode \r\n to %0a%0d, send to the sinatra, sinatra will
+> decode url to \r\n and pass to the path, finally cause a HTTP Header
+> Injection or CRLF Injection.
+> 
+> In that case, it seems to be a bug of that application, not Net::HTTP#get.
+> 
+> I'm not against adding argument verification to Net::HTTP#get, though.
+> 
+> rootredrain posted a comment.
+> Jun 24th (29 mins ago)
+> 
+> But since an open proxy is already a security problem
+> 
+> Yes, an open proxy is already a vulnerability and you can't fix that,
+> but attack scenarios is not only include an open proxy, but also
+> include many other parts.
+> 
+> A site like google image, user can paste image url on it, then site
+> will request the resource. It's possible to suffer this attack.
+> 
+> Some video sites allow user reference outside resource. It's possible
+> to suffer this attack.
+> 
+> So you can not treat it occur in an unusual scenarios. I still
+> consider it was a security issue.
+> 
+> rootredrain posted a comment.
+> Jun 24th (27 mins ago)
+> 
+> If you believe this is not a issue, please allow the public disclosure.
+> 
+> tenderlove closed the report and changed the status to Informative.
+> Jun 24th (23 mins ago)
+> 
+> I've closed as informative, and I'll allow public disclosure.
+> 
+> tenderlove requested to disclose this report publicly.
+> Jun 24th (20 mins ago)
+> 
+> rootredrain has requested mediation from HackerOne Support.
+> Jun 24th (15 mins ago)
+> 
+> The HTTP scheme handler accepts percent-encoded values as part of the URL.
+> 
+> The generic_request.rb allows unsafe characters, it dosen't have any
+> safe filtration, attackers can cause actual security threat. so we
+> consider it is a vulnerability
+> 
 
-* Content Injection via TileJSON attribute
-
-  https://nodesecurity.io/advisories/49
-
-  Overview:
-
-  Mapbox.js versions 1.x prior to 1.6.5 and 2.x prior to 2.1.7 are vulnerable
-  to a cross-site-scripting attack in certain uncommon usage scenarios.
-
-  If you use L.mapbox.map or L.mapbox.tileLayer to load untrusted TileJSON
-  content from a non-Mapbox URL, it is possible for a malicious user with
-  control over the TileJSON content to inject script content into the
-  "attribution" value of the TileJSON which will be executed in the context of
-  the page using Mapbox.js.
-
-  Such usage is uncommon. The following usage scenarios are not vulnerable:
-
-  * only trusted TileJSON content is loaded
-  * TileJSON content comes only from mapbox.com URLs
-  * a Mapbox map ID is supplied, rather than a TileJSON URL
-
-  Remediation:
-
-  Upgrade to Mapbox.js version 2.1.7. If you are still using a 1.x version and
-  unable to upgrade to 2.1.7, upgrade to 1.6.5.
-
-  Credit: John Firebaugh
-
-
-* Content Injection via TileJSON Name
-
-  https://nodesecurity.io/advisories/74
-
-  Overview:
-
-  Mapbox.js versions 1.x prior to 1.6.6 and 2.x prior to 2.2.4 are vulnerable
-  to a cross-site-scripting attack in certain uncommon usage scenarios.
-
-  If you use L.mapbox.map and L.mapbox.shareControl it is possible for a
-  malicious user with control over the TileJSON content to inject script
-  content into the name value of the TileJSON. After clicking on the share
-  control, the malicious code will execute in the context of the page using
-  Mapbox.js.
-
-  Such usage is uncommon. L.mapbox.shareControl is not automatically added to
-  mapbox.js maps and must be explicitly added. The following usage scenarios
-  are not vulnerable:
-
-  * the map does not use a share control (L.mapbox.sharecontrol)
-  * only trusted TileJSON content is loaded
-
-  Remediation:
-
-  Upgrade to Mapbox.js version 2.2.4. If you are still using a 1.x version and
-  unable to upgrade to 2.2.4, upgrade to 1.6.6.
-
-  If you are unable to upgrade to either 2.2.4 or 1.6.6, you can also remove
-  instances of L.mapbox.shareControl from your maps.
-
-  Credit: Alexandra Ulsh
-
-
-The advisories state that a CVE has been requested, but I haven't seen any
-assignments yet. Please assign CVEs as appropriate.
-
-Thanks,
-~reed
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@suse.de>
