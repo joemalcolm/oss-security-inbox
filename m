@@ -1,110 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/04/11
-Message-ID: <6451341.vFYbS6xerg@blackgate>
-Date: Fri, 04 Nov 2016 15:43:31 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: jasper: use of uninitialized value in jpc_pi_nextcprl (jpc_t2cod.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/03/2
+Message-ID: <CAPGxrc9YpXo-DHd-oSOker5MhCAH1QoCW-6O4JE+pZScG79vng@mail.gmail.com>
+Date: Wed, 3 Aug 2016 13:14:50 +0800
+From: redrain root <rootredrain@...il.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: CVE request:Heap overflow vulns in MuPDF
 Content-Type: text/plain; charset=utf-8
 
-If suitable for a CVE please assign one. Thanks.
+Title: Heap overflow vulns in MuPDF
+Author: Yu Hong, yu.hong@...itin.com;Zheng Jihong,jihong.zheng@...itin.com
+Data: 2016-08-01
+Dowload Site: http://ghostscript.com/download;http://mupdf.com/downloads/
+Vendor: Ghostscript
+----------------------------------------------------------
+Vulnerability:
+Recently,I found a heap overflow vulnerability that cause this crash .
+I thought it a dangerous vulnerability because there are so many function
+point in the heap and the program have important the function "system".
 
-Description:
-jasper is an open-source initiative to provide a free software-based reference 
-implementation of the codec specified in the JPEG-2000 Part-1 standard.
+The location of this vulnerability is at "pdf_load_mesh_params" function,at
+ "source/pdf/pdf-shade.c" .
 
-I decided to try another round of fuzzing with the Memory Sanitizer enabled, 
-and I discovered that there is an use-of-uninitialized-value in 
-jpc_pi_nextcprl
+obj = pdf_dict_get(ctx, dict, PDF_NAME_Decode);
+if (pdf_array_len(ctx, obj) >= 6)
+{
+n = (pdf_array_len(ctx, obj) - 4) / 2;
+shade->u.m.x0 = pdf_to_real(ctx, pdf_array_get(ctx, obj, 0));
+shade->u.m.x1 = pdf_to_real(ctx, pdf_array_get(ctx, obj, 1));
+shade->u.m.y0 = pdf_to_real(ctx, pdf_array_get(ctx, obj, 2));
+shade->u.m.y1 = pdf_to_real(ctx, pdf_array_get(ctx, obj, 3));
+for (i = 0; i < n; i++)
+{
+shade->u.m.c0[i] = pdf_to_real(ctx, pdf_array_get(ctx, obj, 4 + i * 2));
+shade->u.m.c1[i] = pdf_to_real(ctx, pdf_array_get(ctx, obj, 5 + i * 2));
+}
+}
 
-The complete MSan output:
 
-# imginfo -f $FILE
-warning: trailing garbage in marker segment (14 bytes)                                                                                                                                                                                                                         
-warning: trailing garbage in marker segment (14 bytes)                                                                                                                                                                                                                         
-warning: ignoring unknown marker segment                                                                                                                                                                                                                                       
-type = 0xff41 (UNKNOWN); len = 20;01 87 01 00 00 00 00 00 00 00 00 00 00 00 00 
-00 00 00 warning: trailing garbage in marker segment (14 bytes)                                                                                                                                 
-==7937==WARNING: MemorySanitizer: use-of-uninitialized-value                                                                                                                                                                                                                   
-    #0 0x7fc562323907 in jpc_pi_nextcprl /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_t2cod.c:482:12                                                                                                                                     
-    #1 0x7fc562323907 in jpc_pi_next /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_t2cod.c:125                                                                                                                                            
-    #2 0x7fc56232aadc in jpc_dec_decodepkts /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_t2dec.c:441:14                                                                                                                                  
-    #3 0x7fc5621fa9f1 in jpc_dec_process_sod /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:594:6                                                                                                                                    
-    #4 0x7fc56220c574 in jpc_dec_decode /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:391:10                                                                                                                                        
-    #5 0x7fc56220c574 in jpc_decode /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:255                                                                                                                                               
-    #6 0x7fc5621ac5a4 in jp2_decode /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jp2/jp2_dec.c:215:21                                                                                                                                            
-    #7 0x7fc5620d69d1 in jas_image_decode /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/base/jas_image.c:396:16                                                                                                                                   
-    #8 0x557bb7618831 in main /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/appl/imginfo.c:203:16                                                                                                                                                           
-    #9 0x7fc5611e961f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                        
-    #10 0x557bb7599a28 in _init (/usr/bin/imginfo+0x1aa28)                                                                                                                                                                                                                     
-                                                                                                                                                                                                                                                                               
-  Uninitialized value was created by a heap allocation                                                                                                                                                                                                                         
-    #0 0x557bb75bf639 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/msan/msan_interceptors.cc:1002                                                                                                                           
-    #1 0x7fc5621507d4 in jas_malloc /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/base/jas_malloc.c:148:13                                                                                                                                        
-    #2 0x7fc562152520 in jas_alloc2 /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/base/jas_malloc.c:275:9                                                                                                                                         
-    #3 0x7fc56233360c in jpc_dec_pi_create /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_t2dec.c:506:30                                                                                                                                   
-    #4 0x7fc5621f2c71 in jpc_dec_tileinit /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:911:19                                                                                                                                      
-    #5 0x7fc5621f2c71 in jpc_dec_process_sod /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:560                                                                                                                                      
-    #6 0x7fc56220c574 in jpc_dec_decode /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:391:10                                                                                                                                        
-    #7 0x7fc56220c574 in jpc_decode /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:255                                                                                                                                               
-    #8 0x7fc5621ac5a4 in jp2_decode /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jp2/jp2_dec.c:215:21                                                                                                                                            
-    #9 0x7fc5620d69d1 in jas_image_decode /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/base/jas_image.c:396:16                                                                                                                                   
-    #10 0x557bb7618831 in main /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/appl/imginfo.c:203:16                                                                                                                                                          
-    #11 0x7fc5611e961f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                       
-                                                                                                                                                                                                                                                                               
-SUMMARY: MemorySanitizer: use-of-uninitialized-value /tmp/portage/media-
-libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_t2cod.c:482:12 
-in jpc_pi_nextcprl                                                                                                      
-Exiting
 
-Affected version:
-1.900.17
+the length of array return from "pdf_array_len"  not be checked. But the
+max size of "shade->u.m.C0/C1" is defined as a macro(32 as default). So if
+I make a pdf which have a large decode array. This code will cause a heap
+overflow .
 
-Fixed version:
-1.900.20
+And the overflow data could be control, And on the memory I overflow , I
+found a struct which full of function point. Maybe I can let it point to
+got table for a chance to call "system"
 
-Commit fix:
-https://github.com/mdadams/jasper/commit/1f0dfe5a42911b6880a1445f13f6d615ddb55387
+issue:
+http://bugs.ghostscript.com/show_bug.cgi?id=696954
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+fix code:
+http://git.ghostscript.com/?p=mupdf.git;h=39b0f07dd960f34e7e6bf230ffc3d87c41ef0f2e
 
-CVE:
-N/A
+PoC:
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00029-jasper-uninitvalue-jpc_pi_nextcprl
+reference attachment
 
-Timeline:
-2016-11-03: bug discovered and reported to upstream
-2016-11-04: upstream released a patch
-2016-11-04: blog post about the issue
+--from redrain 祝好
 
-Note:
-This bug was found with American Fuzzy Lop.
+Content of type "text/html" skipped
 
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/04/jasper-use-of-uninitialized-value-in-jpc_pi_nextcprl-jpc_t2cod-c
+Download attachment "p.pdf" of type "application/pdf" (10751 bytes)
