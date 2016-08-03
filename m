@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2084" "Wednesday" "2" "November" "2016" "08:09:59" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1611020809190.375@tvnag.unkk.fr>" "80" "[oss-security] [SECURITY ADVISORY] curl double-free in krb5 code" nil nil nil "11" "2016110207:09:59" "[oss-security] [SECURITY ADVISORY] curl double-free in krb5 code" (number mark "U       daniel@haxx. Nov  2   80/2084  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl double-free in krb5 code\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["755" "Wednesday" "3" "August" "2016" "14:16:00" "+0200" "Martin Prpic" "mprpic@redhat.com" "<87r3a6cakf.fsf@redhat.com>" "21" "[oss-security] CVE-2016-6301: busybox: NTP server denial of service flaw" nil nil nil "8" "2016080312:16:00" "[oss-security] CVE-2016-6301: busybox: NTP server denial of service flaw" (number mark "U       mprpic@redha Aug  3   21/755   " thread-indent "\"[oss-security] CVE-2016-6301: busybox: NTP server denial of service flaw\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7608 invoked by uid 550); 2 Nov 2016 07:10:14 -0000
+Received: (qmail 5231 invoked by uid 550); 3 Aug 2016 12:16:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,99 +12,37 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7436 invoked from network); 2 Nov 2016 07:10:12 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Wed, 2 Nov 2016 08:09:59 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
-Message-ID: <alpine.DEB.2.20.1611020809190.375@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
+Received: (qmail 5213 invoked from network); 3 Aug 2016 12:16:14 -0000
+From: Martin Prpic <mprpic@redhat.com>
+To: "oss-security\@lists.openwall.com" <oss-security@lists.openwall.com>
+User-agent: mu4e 0.9.9.5; emacs 24.3.1
+Date: Wed, 03 Aug 2016 14:16:00 +0200
+Message-ID: <87r3a6cakf.fsf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl double-free in krb5 code
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.26]); Wed, 03 Aug 2016 12:16:02 +0000 (UTC)
+Subject: [oss-security] CVE-2016-6301: busybox: NTP server denial of service flaw
 
-double-free in krb5 code
-========================
+Miroslav Lichvar of Red Hat reported a flaw in busybox's NTP
+implementation:
 
-Project cURL Security Advisory, November 2, 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20161102E.html)
+The busybox NTP implementation doesn't check the NTP mode of packets
+received on the server port and responds to any packet with the right
+size. This includes responses from another NTP server. An attacker can
+send a packet with a spoofed source address in order to create an
+infinite loop of responses between two busybox NTP servers. Adding more
+packets to the loop increases the traffic between the servers until one
+of them has a fully loaded CPU and/or network.
 
-VULNERABILITY
--------------
+Upstream patch:
 
-In curl's implementation of the Kerberos authentication mechanism, the
-function `read_data()` in security.c is used to fill the necessary krb5
-structures. When reading one of the length fields from the socket, it fails to
-ensure that the length parameter passed to realloc() is not set to 0.
+https://git.busybox.net/busybox/commit/?id=150dc7a2b483b8338a3e185c478b4b23ee884e71
 
-This would lead to realloc() getting called with a zero size and when doing so
-realloc() returns NULL *and* frees the memory - in contrary to normal
-realloc() fails where it only returns NULL - causing libcurl to free the
-memory *again* in the error path.
+RH bug:
 
-This flaw could be triggered by a malicious or just otherwise ill-behaving
-server.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-8619 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-This flaw exists in the following curl versions
-
-- Affected versions: curl 7.3 to and including 7.50.3
-- Not affected versions: curl < 7.3 and curl >= 7.51.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.51.0, the function reading data will consider reading a zero size
-to be an error and bail out.
-
-A [patch for CVE-2016-8619](https://curl.haxx.se/CVE-2016-8619.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.51.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Do not use KRB5
-
-TIME LINE
----------
-
-It was first reported to the curl project on September 23 by Cure53.
-
-We contacted distros@openwall on October 19.
-
-curl 7.51.0 was released on November 2 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-This vulnerability was found during a Secure Open Source audit performed by
-Cure53.
+https://bugzilla.redhat.com/show_bug.cgi?id=1363710
 
 -- 
-
-  / daniel.haxx.se
+Martin Prpič / Red Hat Product Security
