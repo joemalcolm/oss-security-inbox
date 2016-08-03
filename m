@@ -1,4 +1,9 @@
-Received: (qmail 18196 invoked by uid 550); 15 Dec 2023 20:55:18 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2653" "Wednesday" "3" "August" "2016" "09:05:26" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1608030901400.2418@tvnag.unkk.fr>" "89" "[oss-security] [SECURITY VULNERABILITY] curl: Re-using connections with wrong client cert" nil nil nil "8" "2016080307:05:26" "[oss-security] [SECURITY VULNERABILITY] curl: Re-using connections with wrong client cert" (number mark "U       daniel@haxx. Aug  3   89/2653  " thread-indent "\"[oss-security] [SECURITY VULNERABILITY] curl: Re-using connections with wrong client cert\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7241 invoked by uid 550); 3 Aug 2016 07:05:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,79 +12,109 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7925 invoked from network); 15 Dec 2023 20:48:30 -0000
-Date: Fri, 15 Dec 2023 21:48:20 +0100
-Author: Steffen Nurpmeso <steffen@sdaoden.eu>
-From: Steffen Nurpmeso <steffen@sdaoden.eu>
-To: oss-security@lists.openwall.com
-Message-ID: <20231215204820.fMhEka3U@steffen%sdaoden.eu>
-In-Reply-To: <ZXw5wvknxlxHfRkI@kasco.suse.de>
-References: <ZXr2P6zT-PLtWShn@kasco.suse.de>
- <20231214221502.aXOhm-Sw@steffen%sdaoden.eu> <ZXw5wvknxlxHfRkI@kasco.suse.de>
-Mail-Followup-To: oss-security@lists.openwall.com
-User-Agent: s-nail v14.9.24-576-g1e4ad72853
-OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
- url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
-BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
- the world can make no bugs.
-Subject: Re: [oss-security] XDG_RUNTIME_DIR "misuse" as $TMPDIR (was:
- Re: [oss-security] budgie-extras: multiple predictable /tmp path issues in
- various applications)
+Received: (qmail 6138 invoked from network); 3 Aug 2016 07:05:39 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+Date: Wed, 3 Aug 2016 09:05:26 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@giant.haxx.se
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
+Message-ID: <alpine.DEB.2.20.1608030901400.2418@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY VULNERABILITY] curl: Re-using connections with wrong client
+ cert
 
-Hello Matthias.
+Re-using connections with wrong client cert
+===========================================
 
-Matthias Gerstner wrote in
- <ZXw5wvknxlxHfRkI@kasco.suse.de>:
- |On Thu, Dec 14, 2023 at 11:15:02PM +0100, Steffen Nurpmeso wrote:
- |> All that makes me think whether XDG_RUNTIME_DIR is such a good
- |> target for temporary files, generally speaking.
- |
- |in general I would also not recommend using it for temporary files. At
- |least in this concrete case of the budgie-extras applications the files
- |placed in there can be considered small enough for a desktop environment.
- |
- |I recommended using XDG_RUNTIME_DIR as a quick fix for these issues, but
- |as I also tried to point out, I don't believe the way temporary files
- |are used here is a good design.
- |
- |At least the immediate dangers for security should be addressed by these
- |quick fixes applied, so sacrificing a bit of the cleanliness of the
- |filesystem seems justified.
+Project cURL Security Advisory, August 3rd 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20160803B.html)
 
-It was nothing against you personally, indeed.  But i have
-encountered the same advice fly by several times, and, by sheer
-accident, in a thread on openbsd-misc, cwm on wayland, just today.
-Ie that big composer problem i also have with Wayland was then
-addressed with a link to a "hikari" composer, which seems to be
-something "acceptible to me" in the Wayland future that we have to
-deal with (unfortunately), and in its README(.md that is) you read
+VULNERABILITY
+-------------
 
-  This section describes how to use `/tmp` as your
-  `XDG_RUNTIME_DIR`. Some Wayland clients (e.g. native Wayland
-  `firefox`) require `posix_fallocate` to work in that
-  directory.[.]
+libcurl did not consider client certificates when reusing TLS connections.
 
-  Additionally set `XDG_RUNTIME_DIR` to `/tmp` in your
-  environment.
+libcurl supports reuse of established connections for subsequent requests. It
+does this by keeping a few previous connections "alive" in a connection pool
+so that a subsequent request that can use one of them instead of creating a
+new connection will do so.
 
-I see this contradicts my statement somewhat, but the link
-XDG_RUNTIME_DIR and "temporary directory" tends to settle in the
-back of minds, which is all my lengthy mail was about.
+When using a client certificate for a connection that was then put into the
+connection pool, that connection could then wrongly get reused in a subsequent
+request to that same server that either didn't use a client certificate at all
+or that asked to use a different client certificate thus trying to tell the
+user that it is a different entity.
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
-|
-| Only in December: lightful Dubai COP28 Narendra Modi quote:
-|  A small part of humanity has ruthlessly exploited nature.
-|  But the entire humanity is bearing the cost of it,
-|  especially the inhabitants of the Global South.
-|  The selfishness of a few will lead the world into darkness,
-|  not just for themselves but for the entire world.
-|  [Christians might think of Revelation 11:18
-|    The nations were angry, and your wrath has come[.]
-|    [.]for destroying those who destroy the earth.
-|   But i find the above more kind, and much friendlier]
+This mistakenly using the wrong connection could of course lead to
+applications sending requests to the wrong realms of the server using
+authentication that it wasn't supposed to have for those operations.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This flaw also affects the curl command line tool.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-5420 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+This flaw is relevant for all versions of curl and libcurl that support
+SSL/TLS and client certificates.
+
+- Affected versions: libcurl 7.1 to and including 7.50.0
+- Not affected versions: libcurl >= 7.50.1
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+In version 7.50.1, curl will check that re-used connections have the correct
+client certificate (file name) before used.
+
+A [patch for CVE-2016-5420](https://curl.haxx.se/CVE-2016-5420.patch) is
+available. This patch relies on the
+[CVE-2016-5419](https://curl.haxx.se/docs/adv_20160803A.html) patch already
+having been applied.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.50.1
+
+  B - Apply the patch to your version and rebuild
+
+  C - Do not use client certificates
+
+TIME LINE
+---------
+
+This was figured out by curl security team members during our work with the
+20160803A flaw during June 2016. We contacted distros@openwall on July 31.
+
+libcurl 7.50.1 was released on August 3 2016, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Found by the curl security team. Patch by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
