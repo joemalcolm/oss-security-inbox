@@ -1,49 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/16/5
-Message-ID: <e4945331-396e-5696-1c67-70dbbcd20c32@halfdog.net>
-Date: Sat, 16 Jan 2016 16:39:43 +0000
-From: halfdog <me@...fdog.net>
-To: oss-security@...ts.openwall.com
-Subject: Setgid/Setuid binary writing privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/03/3
+Message-ID: <alpine.DEB.2.20.1608030900410.2418@tvnag.unkk.fr>
+Date: Wed, 3 Aug 2016 09:05:22 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY VULNERABILITY] curl: TLS session resumption client cert bypass 
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+TLS session resumption client cert bypass
+=========================================
 
-Hello List,
+Project cURL Security Advisory, August 3rd 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20160803A.html)
 
-As first shown in [0] for escalation from user "man:man" to "man:root"
-and later to "root:root", the issue was assigned low priority. Setgid
-directories are rare, user "man" is rarely used, so escalation risk is
-not so high. Apart from that, it was unclear, what would be correct
-behavior regarding POSIX.
+VULNERABILITY
+-------------
 
-Later on in [1], using the very same method with overlayfs was
-suitable to escalate from any user to root.
+libcurl would attempt to resume a TLS session even if the client certificate
+had changed. That is unacceptable since a server by specification is allowed
+to skip the client certificate check on resume, and may instead use the old
+identity which was established by the previous certificate (or no
+certificate).
 
-After looking at that more closely, I found today another method to
-escalate e.g. on Ubuntu Trusty/Wily to any group to be found with
-"find / -perm -02020", this is e.g. staff, mail, libuuid. As staff is
-has rwx permissions on python dist-packages and /var/local, any root
-process accessing those is at high risk to be used to escalate to uid
-root also.
+libcurl supports by default the use of TLS session id/ticket to resume
+previous TLS sessions to speed up subsequent TLS handshakes. They are used
+when for any reason an existing TLS connection couldn't be kept alive to make
+the next handshake faster.
 
-Hence it seems, that the problem [0] increases the attack surface in
-general. Should it therefore be treated as a security vulnerability
-and assigned a CVE?
+We are not aware of any exploit of this flaw.
 
-[0]
-http://www.halfdog.net/Security/2015/SetgidDirectoryPrivilegeEscalation/
-[1]
-http://www.halfdog.net/Security/2015/UserNamespaceOverlayfsSetuidWriteExec/
+INFO
+----
 
-- -- 
-http://www.halfdog.net/
-PGP: 156A AE98 B91F 0114 FE88 2BD8 C459 9386 feed a bee
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+This flaw also affects the curl command line tool.
 
-iEYEARECAAYFAlaacjYACgkQxFmThv7tq+6wDQCffUVFOpFxKUa+TfUQrJ+0WpLy
-FnwAn3FN/wVZIZiqZABh6obBTaat1VCb
-=Q9HM
------END PGP SIGNATURE-----
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-5419 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+This flaw is relevant for all versions of curl and libcurl that support TLS
+and client certificates.
+
+- Affected versions: libcurl 7.1 to and including 7.50.0
+- Not affected versions: libcurl >= 7.50.1
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+In version 7.50.1, TLS session resumption is disabled when a client certificate
+is used so that a subsequent connection attempt to the same server cannot risk
+getting a previously authenticated session resumed.
+
+A [patch for CVE-2016-5419](https://curl.haxx.se/CVE-2016-5419.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.50.1
+
+  B - Apply the patch to your version and rebuild
+
+  C - Set `CURLOPT_SSL_SESSIONID_CACHE` to 0L when using client certificates
+
+TIME LINE
+---------
+
+It was first reported to the curl project in April 2016 by Bru Rom. We
+contacted distros@...nwall on July 31.
+
+libcurl 7.50.1 was released on August 3 2016, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Contributions by Eric Rescorla and Ray Satiro. Patch by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
