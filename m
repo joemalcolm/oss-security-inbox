@@ -1,79 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/12/2
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0B9BCD9@EX02.corp.qihoo.net>
-Date: Tue, 12 Apr 2016 07:19:43 +0000
-From: 张开翔 <zhangkaixiang@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-3990 : out-of-bounds write in horizontalDifference8() in tiffcp tool
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/03/6
+Message-ID: <f6c1ae32-c8fa-96f2-a300-87fd0accd6fe@redhat.com>
+Date: Wed, 3 Aug 2016 09:27:00 +0200
+From: Daniel J Walsh <dwalsh@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: cve request: systemd-machined: information exposure for docker containers
 Content-Type: text/plain; charset=utf-8
 
-Details
-
-============
-
-Product: libtiff
-
-Affected Versions: <= 4.0.6
-
-CVE ID: CVE-2016-3990
-
-Tested system: CentOS Linux release 7.1.1503 64bit
-
-Vulnerability Type: out-of-bounds write
-Vendor URL: http://www.remotesensing.org/libtiff/
-
-Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
 
 
+On 08/01/2016 12:24 PM, Shiz wrote:
+>> On 28 Jul 2016, at 16:42, Simon McVittie <smcv@...ian.org> wrote:
+>>
+>> *Which* unprivileged user processes?
+>>
+>> If the unprivileged user processes are not in a container, they can get a
+>> significant amount of the same information by reading the host's /proc.
+> Except if a host is running with hidepid={1,2}, which is not entirely uncommon
+> especially in hardened systems. In that regard it /does/ qualify as infoleak.
+>
+> - Shiz
+Then simply rpm -e oci-register-machine
 
-Introduction
-
-============
-
-An out-of-bounds write flaw was found in libtiff v4.0.6 when using tiffcp command to handle malicious tiff file. The vulnerability exist in function horizontalDifference8()
-
-without checking the buffer length.An attacker could control the head data of next heap which contains pre_size field and size filed to result in DoS or may command execution..
-
-
-Source info
-
-============
-1082           wp += n + stride - 1;     /* point to last one */
-1083           ip += n + stride - 1;       /* point to last one */
-1084           n -= stride;
-1085           while (n > 0) {
-1086              REPEAT(stride, wp[0] = CLAMP(ip[0]);
-1087                            wp[stride] -= wp[0];
-1088                            wp[stride] &= mask;
-1089                            wp--; ip--)
-1090              n -= stride;
-1091           }
-1092           REPEAT(stride, wp[0] = CLAMP(ip[0]); wp--; ip--)
-
-
-Debug info
-
-============
-gdb �Cargs ./tiffcp poc.tif src1.tif tmpout.tif
---- --- ---
-Program received signal SIGSEGV, Segmentation fault.
-0x00007ffff6f943b9 in _int_free () from /lib64/libc.so.6
-(gdb) bt
-#0  0x00007ffff6f943b9 in _int_free () from /lib64/libc.so.6
-#1  0x00007ffff7a52721 in TIFFClose (tif=tif@...ry=0x625930) at tif_close.c:128
-#2  0x0000000000405160 in main (argc=3, argv=0x7fffffffe3b8) at tiffcp.c:305
-(gdb) x/2xg 0x625930-0x10
-0x625920:        0x00000000000000f0      0x0000000000000450
-(gdb) x/2xg 0x625930-0x10-0xf0
-0x625830:       0x0000000000040004     0x0000000003370424
-
-References:
-[1] http://www.remotesensing.org/libtiff/
-
-
-Thank you!
-
-Best Regards,
-
-Kaixiang Zhang
---- ---
