@@ -1,70 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/14/2
-Message-ID: <575FAA90.7040500@redhat.com>
-Date: Tue, 14 Jun 2016 06:56:16 +0000
-From: Tristan Cacqueray <tdecacqu@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA-2016-009] Neutron IPTables firewall anti-spoof protection bypass (CVE-2016-5362, CVE-2016-5363, CVE-2015-8914)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/03/4
+Message-ID: <alpine.DEB.2.20.1608030901400.2418@tvnag.unkk.fr>
+Date: Wed, 3 Aug 2016 09:05:26 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY VULNERABILITY] curl: Re-using connections with wrong client cert
 Content-Type: text/plain; charset=utf-8
 
-=====================================================================
-OSSA-2016-009: Neutron IPTables firewall anti-spoof protection bypass
-=====================================================================
+Re-using connections with wrong client cert
+===========================================
 
-:Date: June 14, 2016
-:CVE: CVE-2016-5362 (DHCP spoofing),
-      CVE-2016-5363 (MAC source address spoofing),
-      CVE-2015-8914 (ICMPv6 source address spoofing)
+Project cURL Security Advisory, August 3rd 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20160803B.html)
 
+VULNERABILITY
+-------------
 
-Affects
-~~~~~~~
-- Neutron: <=7.0.4, >=8.0.0 <=8.1.0
+libcurl did not consider client certificates when reusing TLS connections.
 
+libcurl supports reuse of established connections for subsequent requests. It
+does this by keeping a few previous connections "alive" in a connection pool
+so that a subsequent request that can use one of them instead of creating a
+new connection will do so.
 
-Description
-~~~~~~~~~~~
-Romain Aviolat from Nagravision and Dustin Lundquist from Blue Box
-Group, Inc independently reported vulnerabilities in Neutron anti-
-spoof protection. By forging DHCP discovery messages or non-IP
-traffic, such as ARP or ICMPv6, an instance may spoof IP or MAC source
-addresses on attached networks resulting in denial of services and/or
-traffic interception. Moreover when L2population isn't used, other
-tenants attached to a shared network are also vulnerable. Neutron
-setups using the IPTables firewall driver are affected.
+When using a client certificate for a connection that was then put into the
+connection pool, that connection could then wrongly get reused in a subsequent
+request to that same server that either didn't use a client certificate at all
+or that asked to use a different client certificate thus trying to tell the
+user that it is a different entity.
 
+This mistakenly using the wrong connection could of course lead to
+applications sending requests to the wrong realms of the server using
+authentication that it wasn't supposed to have for those operations.
 
-Patches
-~~~~~~~
-- https://review.openstack.org/299025 (MAC)    (Liberty)
-- https://review.openstack.org/303572 (DHCP)   (Liberty)
-- https://review.openstack.org/310652 (ICMPv6) (Liberty)
-- https://review.openstack.org/299023 (MAC)    (Mitaka)
-- https://review.openstack.org/303563 (DHCP)   (Mitaka)
-- https://review.openstack.org/310648 (ICMPv6) (Mitaka)
-- https://review.openstack.org/299021 (MAC)    (Newton)
-- https://review.openstack.org/300202 (DHCP)   (Newton)
-- https://review.openstack.org/300233 (ICMPv6) (Newton)
+We are not aware of any exploit of this flaw.
 
+INFO
+----
 
-Credits
-~~~~~~~
-- Romain Aviolat from Nagravision           (CVE-2015-8914)
-- Dustin Lundquist from Blue Box Group, Inc (CVE-2016-5362,
-                                             CVE-2016-5363)
+This flaw also affects the curl command line tool.
 
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-5420 to this issue.
 
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/bugs/1502933 (ICMPv6)
-- https://bugs.launchpad.net/bugs/1558658 (MAC, DHCP)
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-5362
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-5363
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8914
+AFFECTED VERSIONS
+-----------------
 
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+This flaw is relevant for all versions of curl and libcurl that support
+SSL/TLS and client certificates.
 
+- Affected versions: libcurl 7.1 to and including 7.50.0
+- Not affected versions: libcurl >= 7.50.1
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+In version 7.50.1, curl will check that re-used connections have the correct
+client certificate (file name) before used.
+
+A [patch for CVE-2016-5420](https://curl.haxx.se/CVE-2016-5420.patch) is
+available. This patch relies on the
+[CVE-2016-5419](https://curl.haxx.se/docs/adv_20160803A.html) patch already
+having been applied.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.50.1
+
+  B - Apply the patch to your version and rebuild
+
+  C - Do not use client certificates
+
+TIME LINE
+---------
+
+This was figured out by curl security team members during our work with the
+20160803A flaw during June 2016. We contacted distros@...nwall on July 31.
+
+libcurl 7.50.1 was released on August 3 2016, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Found by the curl security team. Patch by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
