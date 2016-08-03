@@ -1,131 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/12
-Message-Id: <E1c99mY-0008BI-Mf@xenbits.xenproject.org>
-Date: Tue, 22 Nov 2016 12:02:38 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 196 (CVE-2016-9377,CVE-2016-9378) - x86 software interrupt injection mis-handled
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/03/8
+Message-Id: <20160803121604.097D66C19BE@smtpvmsrv1.mitre.org>
+Date: Wed,  3 Aug 2016 08:16:04 -0400 (EDT)
+From: cve-assign@...re.org
+To: rootredrain@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request:Heap overflow vulns in MuPDF
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-     Xen Security Advisory CVE-2016-9377,CVE-2016-9378 / XSA-196
-                              version 3
+> The location of this vulnerability is at pdf_load_mesh_params function, at
+> source/pdf/pdf-shade.c
+> 
+> n = (pdf_array_len(ctx, obj) - 4) / 2;
+> 
+> the length of array return from pdf_array_len not be checked. But the
+> max size of "shade->u.m.C0/C1" is defined as a macro(32 as default). So if
+> I make a pdf which have a large decode array. This code will cause a heap
+> overflow.
+> 
+> And the overflow data could be control, And on the memory I overflow, I
+> found a struct which full of function point. Maybe I can let it point to
+> got table for a chance to call "system"
+> 
+> issue:
+> http://bugs.ghostscript.com/show_bug.cgi?id=696954
+> 
+> fix code:
+> http://git.ghostscript.com/?p=mupdf.git;h=39b0f07dd960f34e7e6bf230ffc3d87c41ef0f2e
 
-             x86 software interrupt injection mis-handled
+>> Make sure that number of colors in mesh params is valid.
 
-UPDATES IN VERSION 3
-====================
+>> -               n = (pdf_array_len(ctx, obj) - 4) / 2;
+>> +               n = fz_mini(FZ_MAX_COLORS, (pdf_array_len(ctx, obj) - 4) / 2);
 
-Public release.
+Use CVE-2016-6525.
 
-ISSUE DESCRIPTION
-=================
-
-There are two closely-related bugs.
-
-When Xen emulates instructions which generate software interrupts it
-needs to perform a privilege check involving an IDT lookup.  This
-check is sometimes erroneously conducted as if the IDT had the format
-for a 32-bit guest, when in fact it is in the 64-bit format.  Xen will
-then read the wrong part of the IDT and interpret it in an unintended
-manner.  (CVE-2016-9377)
-
-When Xen emulates instructions which generate software interrupts, and
-chooses to deliver the software interrupt, it may try to use the
-method intended for injecting exceptions.  This is incorrect, and
-results in a guest crash.  (CVE-2016-9378)
-
-These instructions are not ususally handled by the emulator.
-Exploiting the bug requires ability to force use of the emulator.
-
-IMPACT
-======
-
-An unprivileged guest user program may be able to crash the guest.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions 4.5 and newer are vulnerable.  Older versions are not
-vulnerable.
-
-The vulnerability is only exposed on AMD hardware lacking the NRip
-feature.  AMD hardware with the NRip feature, and all Intel hardware,
-is not vulnerable.
-
-Xen prints information about CPU features on boot.  If you see this:
-    (XEN) SVM: Supported advanced features:
-    ...
-    (XEN)  - Next-RIP Saved on #VMEXIT
-then you are not vulnerable because you have an AMD CPU with NRip.
-If you see this:
-    (XEN) VMX: Supported advanced features:
-then you are not vulnerable because you have an Intel CPU.
-
-The vulnerability is only exposed on HVM guests.
-
-ARM systems are NOT vulnerable.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this issue.
-
-CREDITS
-=======
-
-This issue was discovered by Andrew Cooper of Citrix.
-
-RESOLUTION
-==========
-
-Applying the attached patches resolves this issue.
-
-xsa196-000*.patch      xen-unstable, Xen 4.7.x, Xen 4.6.x, Xen 4.5.x
-
-$ sha256sum xsa196*
-c4122280f3786416231ae5f0660123446d29e9ac5cd3ffb92784ed36edeec8b7  xsa196-0001-x86-emul-Correct-the-IDT-entry-calculation-in-inject.patch
-25671c44c746d4d0e8f7e2b109926c013b440e0bf225156282052ec38536e347  xsa196-0002-x86-svm-Fix-injection-of-software-interrupts.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBAgAGBQJYNDMVAAoJEIP+FMlX6CvZZ7MH/36KnwbAxmRHtUDIpQF/Syoh
-Lc8s6gNV1oOzcCpFgz+gSyIOMzp7KWieKQiVX1HbI0lnLYK/sRa77VNV/Y9bUt+Y
-y9b9QOZRDHoO92dZ4Ym/hzdtaNkdOQX/JAfy+E5pCGuqPtH/Jy5NuwVL8W7V8PNM
-QTHmvbgB4/Y2U6QqWpIP+S7oC0A9iuIf9eekd6ZTpqTadPFylTe2WX22mns1TEtN
-3Z0NX737AjQLyUVnUoJ32sITCBk6tGutvvEmOc2Y+4eMrUvKSoafVy+5IZcTGwLp
-3ke5sDNN1tOpzmqbXgWXBsVkpjWf2i0NW0dl5jh8/tN5FtrTuByd193dJGSKzEE=
-=IE45
+iQIcBAEBCAAGBQJXod95AAoJEHb/MwWLVhi2vJsP/3mNzGB1iKiPpJuwf/CV+WTk
+Y1wTcD45iQMF5BxDWKaLbZkTzqIhLw7elQFn0EW5Yybc/v9h11Ok3qSP3vm4m7AY
+WIN/2r3T2JWaFyjogmvRn2o5+N5ffaqMFNxL5xV4DclQHqitSdztic9Ud0Kthpqu
+9rT/91hFTWzS7jzlwmMrurrTWQ4fDD7H8/c4QXGNu4E3iaYLEJuz6OUbyAn5N2/j
+B4dKCnDrkd+4nEneBFGS5FWak90g7BZQ7No9XugmsufiO26CzCv4SYDT2P+HGSul
+UDxUIJLxM2Uo7vL25UMiSTRT04jzpggdL/95QFUVzjvYZ/5Srpv/lYCoKV6+CpOF
+FIFGoeqMegIMKUcm7oGwRLpiJRZ7e2OUyZ3vVkCtohgmWHHq5UZ025FopRQZiYTi
+MlCjJm61RGZGQRefVuC56UH2GgQ7VWEtT7T4Lbqtyu9Oyuy7GM/YrDhgu8GFp16K
+L51V/3ohw3HrYtMlVIBP4orrhm7LLOZOG5jSO3yy88TgHGByqjlnhcMtvsWHsP1y
+NSG+xZGr85tx71Bpp8rvEKbsZKY0q7bJ/05kF1CrPeeJfex2nUX0TocUFKkZsqwh
+NKVXeOkjMv4TLpZ2z6dH5CX0NNVPZodBJJ5sJQW9Mk0lPnIOLS+Argm9OI7CKFbY
+h/Vh2BSu7slwycmNpQjZ
+=ZFaZ
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa196-0001-x86-emul-Correct-the-IDT-entry-calculation-in-inject.patch" of type "application/octet-stream" (2812 bytes)
-
-Download attachment "xsa196-0002-x86-svm-Fix-injection-of-software-interrupts.patch" of type "application/octet-stream" (3476 bytes)
