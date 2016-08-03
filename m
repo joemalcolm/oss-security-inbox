@@ -1,21 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/20/3
-Message-ID: <CAGkEBR4yVoadxHjbBO4WniwY+hWoV3jkOeWqDeCNon5aXk78dQ@mail.gmail.com>
-Date: Fri, 19 Feb 2016 21:06:49 +0530
-From: Shravan Kumar <shravan.kumar@...urelayer7.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/03/9
+Message-ID: <CAFdyfB2hwixWS3k1v=ZdPX4NRrBvzBNnseGv2HgFs3VNyobXPA@mail.gmail.com>
+Date: Wed, 3 Aug 2016 22:28:50 +0100
+From: Dario Bertini <berdario@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CSRF Vulnerability in Refinery CMS
+Subject: Grails Console is still vulnerable to CSRF CVE-2016-6521
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+In a previous email I announced that the issue was fixed in versions
+1.5.10, 2.0.7
 
-I would like to publically disclose  CSRF Vulnerabilities Found in Refinery
-CMS.
+I was wrong
 
-The Technical details and the POC can be found in this report
+https://github.com/sheehan/grails-console/issues/55
 
-https://securelayer7.net/penetration-testing-reports/Penetration-testing-report--open-source-Ruby-on-rails-Refinery-CMS.pdf
-
-Thanks & Regards,
-Shravan Kumar
-
+Hopefully this vuln will be closed for good soon
