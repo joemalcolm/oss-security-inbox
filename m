@@ -1,133 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/20/9
-Message-ID: <CANO=Ty0shFs5oAykxDPRsfMAw65bnEwCN7_m_df4j61XEpthBQ@mail.gmail.com>
-Date: Wed, 20 Jan 2016 10:25:42 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Prime example of a can of worms
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/04/1
+Message-Id: <20160804050241.66A89ABC600@smtpvmsrv1.mitre.org>
+Date: Thu,  4 Aug 2016 01:02:41 -0400 (EDT)
+From: cve-assign@...re.org
+To: zhangkaixiang@....cn
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 20, 2016 at 10:20 AM, Daniel Kahn Gillmor <dkg@...thhorseman.net
-> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> Hi Kurt--
->
-> On Wed 2016-01-20 10:45:07 -0500, Kurt Seifried wrote:
-> > I finally got the article written and published, it's at:
-> >
-> > https://securityblog.redhat.com/2016/01/20/primes-parameters-and-moduli/
->
-> Thanks for this writeup!
->
-> the chart at
->
-> https://securityblog.redhat.com/wp-content/uploads/2015/12/DH-Param-Compromise-300x269.jpg
-> uses the terms "keys" in the axis labels, but i think you mean "primes"
-> or "moduli".
->
+> I found a vulnerability in docker of the latest version which could
+> cause a Denial of Service, it results in a machine could not join the
+> swarm cluster after another node's repeatedly joining and quitting the
+> swarm for many times (taking my testing as example, it should need at
+> least one thousand times). Moreover, the docker debugging info
+> indicates the Dispatcher is stopped and ca server may exited
+> sometimes.
+> 
+> Login machine A1 and join the swarm ,and then quitted the swarm.
+> 
+> Login machine A2, repeatedly join and quit the swarm for 1000 times.
+> 
+> After finishing that, Login machine A1 again and attempt to join the swarm, it failed.
+> 
+> Error response from daemon: Timeout was reached before node was
+> joined. Attempt to join the cluster will continue in the background.
+> Use "docker info" command to see the current swarm status of your
+> node.
+> 
+> level=error
+> msg="failed to remove node"
+> 
+> level=error
+> msg="session failed"
+> error="rpc error: ... context canceled"
+> 
+> level=debug
+> msg="heartbeat expiration"
+> 
+> level=error
+> msg="failed deregistering node after heartbeat expiration"
+> error="... dispatcher is stopped"
 
-Sorry yes, although this also applies equally to keys/etc.
+Use CVE-2016-6595.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
->
-> > TL;DR: I found a lot of messy problems and no really good solutions. But
-> > ultimately we need to start using bigger keys/primes or this is all just
-> a
-> > waste of compute time (might as well go back to clear text).
->
-> yes, larger primes are clearly needed.
->
-> The discussion gets a little ways into the issue of negotiating primes
-> between peers, but doesn't address some underlying issues.
->
-> For one, the writeup addresses probabilistic primality tests, but
-> doesn't describe proofs of primality, which are significantly more
-> expensive to generate (and still probably more expensive to verify than
-> a short Miller-Rabin test).  But these proofs provide certainty in a way
-> that probabilistic tests might not.  If we're talking about runtime
-> primality checking when communicating with a potential adversary, are
-> there proofs about the (im)possibility of generating a pseudoprime that
-> is more or less likely to pass a miller-rabin test?
->
-
-I looked at this a bit and quite honestly the computational time involved
-is just to much to be useful, unless we're talking about generating a small
-set of highly trusted primes. For normal people, this just isn't feasible
-(witness prime generation taking between less then a second, and more than
-10 minutes, nobody wants to wait 10 minutes...).
-
-
->
-> Additionally, the fact that the modulus is prime is an insufficient test
-> -- it needs to be a prime of a certain structure, or else the remote
-> peer can force the user into a small subgroup, which can lead to
-> unknown-key-share attacks, key factorization, or other problems.
->
-> One approach is to require that moduli be safe primes (p = (q*2) + 1,
-> where q is also prime) and to verify that the peer's public share k is
-> in the range 1 < k < p-1 to avoid the small-subgroup attack of size 2.
-> This appears to be the best we know how to do with diffie hellman over
-> finite fields, but it limits the range of acceptable moduli even
-> further, and requires two primality tests for the peer seeing the primes
-> for the first time.
->
-> It's also worth noting that we have a similar concern with elliptic
-> curve DH (ECDH) -- the structure of the curve itself (which is the
-> equivalent of the generator and the modulus for finite-field diffie
-> hellman) is relevant to the security of the key exchange.
->
-
-Yup, that was a lesson learned.
-
-
->
-> In the ECDH space, there appears to be little argument about trying to
-> use a diversity of groups: while many specifications provide ways to use
-> custom (generically-specified) curves, pretty much no one uses them in
-> practice, and the custom-curve implementations are likely to be both
-> inefficient and leaky (to say nothing of the difficulty of verifying
-> that the offered curve is well-structured at runtime).  Indeed, the bulk
-> of the discussion around ECDH is about picking a small handful of good
-> curves that we can publicly vet, and then using those specific curves
-> everywhere (see curve 25519 and goldilocks 448, the CFRG's upcoming
-> recommendations).
->
-> Encouraging peers to select a diversity of large custom groups in for
-> finite-field DH seems likely to be slow (additional runtime checks, no
-> optimized implementations), buggy (missing or inadequate runtime checks,
-> side-channel leakage), and bandwidth-heavy (the moduli themselves must
-> be transmitted in addition to the public keys), and as you say, the
-> diversity of groups doesn't win you as much as just switching to larger
-> groups in the first place.
->
-> I agree that we need machinery in place to be able to relatively easily
-> drop believed-weak, widely-shared groups, and to introduce new
-> widely-shared groups.  But i'm not convinced that encouraging the use of
-> a diversity of groups is really the "Best Default/Operational" tradeoff,
-> as it is indicated in your chart, given the concerns above.
->
-
-Agreed, I listed the diversity more as a stop-gap for the cases where
-people have older hard/software (e.g. Java) that will never support larger
-primes/keys. At least then you don't get caught in dragnets for the
-default/commonly used primes.
-
-
->
-> Thanks very much for your analysis.
->
-> Regards,
->
->         --dkg
->
-
-
-
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+iQIcBAEBCAAGBQJXossBAAoJEHb/MwWLVhi2FJ8QALlp1bYssp66abNelRpjiQXl
+ylHYSBTYhSMIpguerzlQv88l+O13uLfLtsC/fHPqb9+/cDG1icNHIjKuussr4HeQ
+hy3DRSn0D+63XXXHjRG5hvpBP3Sf8irAz3lnwaEHj01hlILsAbAV0CuTP2+lBz3X
+QtIojkBnHUUz/glGCT8VMavS85MakRwM7CV2upLJZptHaOiQlR8pa06FOBCBzWjJ
+TsxdIFgnlEWomN0Lsf+IKD5uc6n+kmZzmyBNR9hHDCkTNJLRgMEvqVmK1nqVgQPS
+jzvdrZSKF+BxQfPmONgrvSfQpSlEbJ4GFTYN0qeHqpt8SRJLJ0Uuy1ukzd+j6S8G
+oTuA1fAJsZFwsku40usqv3lbeBGWMmxj4ORKNXZkqUZLOVwXN+p6xbDDC8Qm/p/O
+EEF124dGsxSvlcoAGpOqjAHkzB+vrCBsi0kMlsPTb6zKRZSX7ql9jaG6riFJ4H0E
+nKooj0RQRZGo2V1Z1NQDc4dMQtQ4HrRHKpDKp5snMdafbwR2DxAD2Kh862JYo2Pp
+3kmaQ/4X4oq3BFy9zwsAV3PZvBZJjerlk2MLxPktaQNSqKduriG9z9DxhPraQWaP
+kzml/+CylX7EEkV0hm+AZjt1+CMfxHAUQkvvRxi0NyhGLjqfIURI17CesCVNTYOS
+ww56x94Z2M9fplQcqRQK
+=Wgqx
+-----END PGP SIGNATURE-----
