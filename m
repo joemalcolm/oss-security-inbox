@@ -1,82 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/4
-Message-ID: <CANO=Ty18ABwOUHJs+U6OYjEJocDY9gg4702aZEyd7BZS6ZYpJg@mail.gmail.com>
-Date: Wed, 14 Dec 2016 07:24:19 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: CVE ID Requests <cve-assign@...re.org>
-Subject: Re: why many CVEs are ** RESERVED ** on Mitre
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/04/3
+Message-Id: <A341696A-69DE-484C-93CB-746F1B01A924@lukasa.co.uk>
+Date: Thu, 4 Aug 2016 10:18:55 +0100
+From: Cory Benfield <cory@...asa.co.uk>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-6581, Python HPACK and old Python Hyper releases: HPACK Bomb
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 14, 2016 at 1:44 AM, Sona Sarmadi <sona.sarmadi@...a.com> wrote:
+HPACK Bomb
+==========
 
-> Hi again,
->
-> Does anyone know why Mitre lists many CVEs ** RESERVED ** while they are
-> public (e.g. curl CVEs below)?
->
+Hyper Project security advisory, August 4th 2016.
 
-As per
-https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures#Description
+Vulnerability
+-------------
 
-Description[edit]
-This is a standardized text description of the issue(s). One common entry
-is:
+A HTTP/2 implementation built using the priority library could be targetted for
+a denial of service attack based on HPACK, specifically a so-called "HPACK
+Bomb" attack.
 
-** RESERVED ** This candidate has been reserved by an organization
-or individual that will use it when announcing a new security problem.
-When the candidate has been publicized, the details for this
-candidate will be provided.
+This attack occurs when an attacker inserts a header field that is exactly the
+size of the HPACK dynamic header table into the dynamic header table. The
+attacker can then send a header block that is simply repeated requests to
+expand that field in the dynamic table. This can lead to a gigantic compression
+ratio of 4,096 or better, meaning that 16kB of data can decompress to 64MB of
+data on the target machine.
 
-This means that the entry number has been reserved by Mitre for an issue or
-a CNA has reserved the number. So in the case where a CNA requests a block
-of CVE numbers in advance (e.g. Red Hat currently requests CVEs in blocks
-of 500), the CVE number will be marked as reserved even though the CVE
-itself may not be assigned by the CNA for some time. Until the CVE is
-assigned AND Mitre is made aware of it (e.g. the embargo passes and the
-issue is made public), AND Mitre has researched the issue and written a
-description of it, entries will show up as "** RESERVED **".
+It only takes a few such header blocks before the attacker has forced the
+target to allocate gigabytes of memory, which will take the process down. This
+requires relatively few resources on the part of the attacker.
 
-The good news is this is changing (MITRE will be able to accept
-descriptions/data from other parties at some point). I don't have an exact
-time frame though.
+While we are not aware of any attacker actively exploiting this vulnerability,
+it has been public disclosed in this report[1], and so users should assume that
+they are likely to be targetted by such an attack.
+
+Info
+----
+
+This issue has been given the name CVE-2016-6581.
+
+Affected Versions
+-----------------
+
+This issue affects all versions of the HPACK library prior to 2.3.0. It also
+affects versions of the Hyper client library earlier than 0.6.0, which bundled
+a copy of the HPACK library.
+
+The Solution
+------------
+
+In version 2.3.0, the HPACK library limits the maximum decompressed size of the
+header block. It does so by essentially adding support for the HTTP/2 setting
+``SETTINGS_MAX_HEADER_LIST_SIZE``. This value defaults to 64kB, but is
+user-configurable.
+
+If it is necessary to backport a patch, the patch can be found in
+this GitHub pull request[2].
+
+Recommendations
+---------------
+
+We suggest you take the following actions immediately, in order of preference:
+
+1. Update HPACK to 2.3.0 immediately.
+2. Backport the patch made available on GitHub.
+3. Substantially decrease the maximum size of the compressed header block your
+   application will accept, or alternatively ensure that each decompressed
+   header block is freed before your application processes the next one.
+
+If you have a copy of the Hyper client library, we recommend taking the
+following actions, in order of preference:
+
+1. Update hyper to any version later than 0.6.0
+2. Backport the patch made available on GitHub.
+
+Timeline
+--------
+
+This class of vulnerability was publicly reported in this report[1] on the
+3rd of August. We requested a CVE ID from Mitre the same day.
+
+HPACK 2.3.0 was released on the 4th of August, at the same time as the
+publication of this advisory.
 
 
+Thanks,
+
+Cory Benfield, on behalf of the Python Hyper project.
 
 
->
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-8615
->
-> https://curl.haxx.se/docs/security.html:
->
-> CVE-2016-8615
-> CVE-2016-8616
-> CVE-2016-8617
-> CVE-2016-8618
-> CVE-2016-8619
-> CVE-2016-8620
-> CVE-2016-8621
-> CVE-2016-8622
-> CVE-2016-8623
-> CVE-2016-8624
-> CVE-2016-8625
->
-> Shouldn't Mitre follow a process and update the page after CVEs have
-> been made public e.g. by upstream project? Or perhaps there is another
-> reason for these CVEs not to be updated?
->
-> Best,
-> ---------------------------------------
-> Sona Sarmadi
-> Security Responsible for Enea Linux
->
->
-
-
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+[1]: http://www.imperva.com/docs/Imperva_HII_HTTP2.pdf
+[2]: https://github.com/python-hyper/hpack/pull/56
