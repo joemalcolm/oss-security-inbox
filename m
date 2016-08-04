@@ -1,25 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/08/1
-Message-ID: <CAJmbs8i2AFb9ddx2HDSea-XLkR7rRFeM05epxtQzDzSa6ZST3A@mail.gmail.com>
-Date: Tue, 8 Nov 2016 08:49:09 +0700
-From: Maxim Solodovnik <solomax@...che.org>
-To: security@...nmeetings.apache.org, Brian Martin <bmartin@...able.com>,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  dev <dev@...nmeetings.apache.org>,  Openmeetings user-list <user@...nmeetings.apache.org>, user-russian@...nmeetings.apache.org,  announce@...che.org
-Subject: [CVE-2016-8736] Apache Openmeetings RMI Registry Java Deserialization RCE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/04/2
+Message-Id: <AE6B099E-CAAC-4258-9640-F024447258D7@lukasa.co.uk>
+Date: Thu, 4 Aug 2016 10:16:53 +0100
+From: Cory Benfield <cory@...asa.co.uk>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-6580, Python Priority: DoS via Unlimited Stream Insertion
 Content-Type: text/plain; charset=utf-8
 
-Severity: Moderate
+DoS via Unlimited Stream Insertion
+==================================
 
-Vendor: The Apache Software Foundation
+Hyper Project security advisory, August 4th 2016.
 
-Versions Affected: Apache OpenMeetings 3.1.0
+Vulnerability
+-------------
 
-Description: Apache Openmeetings is vulnerable to Remote Code
-Execution via RMI deserialization attack
+A HTTP/2 implementation built using the priority library could be targetted by
+a malicious peer by having that peer assign priority information for every
+possible HTTP/2 stream ID. The priority tree would happily continue to store
+the priority information for each stream, and would therefore allocate
+unbounded amounts of memory. Attempting to actually *use* a tree like this
+would also cause extremely high CPU usage to maintain the tree.
 
-The issue was fixed in 3.1.2
-All users are recommended to upgrade to Apache OpenMeetings 3.1.3
+We are not aware of any active exploits of this vulnerability, but as this
+class of attack was publicly described in this report[1], users should assume
+that they are at imminent risk of this kind of attack.
 
-Credit: This issue was identified by Jacob Baines, Tenable Network Security
+Info
+----
+
+This issue has been given the name CVE-2016-6580.
+
+Affected Versions
+-----------------
+
+This issue affects all versions of the priority library prior to 1.2.0.
+
+The Solution
+------------
+
+In version 1.2.0, the priority library limits the maximum number of streams
+that can be inserted into the tree. By default this limit is 1000, but it is
+user-configurable.
+
+If it is necessary to backport a patch, the patch can be found in
+this GitHub pull request[2].
+
+Recommendations
+---------------
+
+We suggest you take the following actions immediately, in order of preference:
+
+1. Update priority to 1.2.0 immediately, and consider revising the maximum
+   number of streams downward to a suitable value for your application.
+2. Backport the patch made available on GitHub.
+3. Manually enforce a limit on the number of priority settings you'll allow at
+   once.
+
+Timeline
+--------
+
+This class of vulnerability was publicly reported in this report[1] on the
+3rd of August. We requested a CVE ID from Mitre the same day.
+
+Priority 1.2.0 was released on the 4th of August, at the same time as the
+publication of this advisory.
 
 
-Apache OpenMeetings Team
+Thanks,
+
+Cory Benfield, on behalf of the Python Hyper project.
+
+
+[1]: http://www.imperva.com/docs/Imperva_HII_HTTP2.pdf
+[2]: https://github.com/python-hyper/priority/pull/23
