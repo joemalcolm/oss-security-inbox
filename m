@@ -1,4 +1,9 @@
-Received: (qmail 5524 invoked by uid 550); 27 Mar 2024 06:53:23 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2183" "Thursday" "4" "August" "2016" "10:16:53" "+0100" "Cory Benfield" "cory@lukasa.co.uk" "<AE6B099E-CAAC-4258-9640-F024447258D7@lukasa.co.uk>" "72" "[oss-security] CVE-2016-6580, Python Priority: DoS via Unlimited Stream Insertion" nil nil nil "8" "2016080409:16:53" "[oss-security] CVE-2016-6580, Python Priority: DoS via Unlimited Stream Insertion" (number mark "U       cory@lukasa. Aug  4   72/2183  " thread-indent "\"[oss-security] CVE-2016-6580, Python Priority: DoS via Unlimited Stream Insertion\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21560 invoked by uid 550); 4 Aug 2016 09:17:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,101 +12,111 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5506 invoked from network); 27 Mar 2024 06:53:23 -0000
-Date: Wed, 27 Mar 2024 07:58:00 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <p3977r70-o1oo-156p-4970-rr80638qo7s@unkk.fr>
-X-fromdanielhimself: yes
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl: CVE-2024-2004: Usage of disabled
- protocol
+Received: (qmail 21537 invoked from network); 4 Aug 2016 09:17:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=lukasa-co-uk.20150623.gappssmtp.com; s=20150623;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=+CRDv3fJ7fN4eSTZQD3g7MnglEZgOFkADhQv+Ec5FqQ=;
+        b=mTBUPGSon749gUPRWoDu/QG2QCWznGv8u1INI/cbqlweIBiLlJgBB6+fHr7OYyOtCX
+         VuCGX/87LGO+Zs3oJ2wLKT3XpRyJnIaOY7ig1G8Q6wvXJ8lJhlH6erx+1eacXhwhS8mA
+         SW+oRm378b3rIIAyhfNXdKvk6XYi/3l570gj5Hh2pP1zU4EUz6UI7W0LYrHsqf2/DOFR
+         wC6XIoq8RB8++h97/lM2jiYo9AvPNHilb8gJBQqhdBkPjye0kq/BGQMUlgoDN7OPgESr
+         1wpYQ2ei5QPoKzFMOxhRnuAitl7jDtgYxH6ED4qXCmgXt8SKnrmOEzvinY8fkr7kzRGA
+         sU/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=+CRDv3fJ7fN4eSTZQD3g7MnglEZgOFkADhQv+Ec5FqQ=;
+        b=flob4u+H5O0U+gTMybdL6rwActsj+g8iy1SYC6eVjhGXvl1ncMTeoDw8tVEZSCXniR
+         MxkpIgmx+OVWwQ4zHe0slivSWlqhHYYGEZHCRSvb4f5BA/mDfjm9X+NvC50RSL8EK5Q6
+         xjFEeKuHmfkRlviOEgsz9TFC30t1kgaTsNQRvLmhM9CStEfxoDJ3YYgvweVX/K5LE/eD
+         qkAjNDweGyeuPXeFaT+5IqUOP3FAHLjQBuK269k/o+6YBeaM4/oJqobiQ3ih6SOhott6
+         m2PU3CRJgs+uhgpZ4CPBV05K/H4vfi5AqtoeyV+8rJhuE21b6B1ZRUs5GQ/zczz414Tx
+         +05A==
+X-Gm-Message-State: AEkoouvWxU7ZLlIVdcu+qRJzARFjVdziHxfxKFVK4C3dRsoypQNy7jG3h14JJ5KXLF9wuw==
+X-Received: by 10.28.146.211 with SMTP id u202mr73237243wmd.54.1470302215511;
+        Thu, 04 Aug 2016 02:16:55 -0700 (PDT)
+From: Cory Benfield <cory@lukasa.co.uk>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 10.0 \(3204\))
+Message-Id: <AE6B099E-CAAC-4258-9640-F024447258D7@lukasa.co.uk>
+Date: Thu, 4 Aug 2016 10:16:53 +0100
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3204)
+Subject: [oss-security] CVE-2016-6580, Python Priority: DoS via Unlimited Stream Insertion
 
-Usage of disabled protocol
-==========================
+DoS via Unlimited Stream Insertion
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-Project curl Security Advisory, March 27 2024 -
-[Permalink](https://curl.se/docs/CVE-2024-2004.html)
+Hyper Project security advisory, August 4th 2016.
 
-VULNERABILITY
+Vulnerability
 -------------
 
-When a protocol selection parameter option disables all protocols without
-adding any then the default set of protocols would remain in the allowed set
-due to an error in the logic for removing protocols. The below command would
-perform a request to curl.se with a plaintext protocol which has been
-explicitly disabled.
+A HTTP/2 implementation built using the priority library could be targetted=
+ by
+a malicious peer by having that peer assign priority information for every
+possible HTTP/2 stream ID. The priority tree would happily continue to store
+the priority information for each stream, and would therefore allocate
+unbounded amounts of memory. Attempting to actually *use* a tree like this
+would also cause extremely high CPU usage to maintain the tree.
 
-     curl --proto -all,-http http://curl.se
+We are not aware of any active exploits of this vulnerability, but as this
+class of attack was publicly described in this report[1], users should assu=
+me
+that they are at imminent risk of this kind of attack.
 
-The flaw is only present if the set of selected protocols disables the entire
-set of available protocols, in itself a command with no practical use and
-therefore unlikely to be encountered in real situations. The curl security team
-has thus assessed this to be low severity bug.
-
-INFO
+Info
 ----
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2024-2004 to this issue.
+This issue has been given the name CVE-2016-6580.
 
-CWE-115: Misinterpretation of Input
-
-Severity: Low
-
-AFFECTED VERSIONS
+Affected Versions
 -----------------
 
-- Affected versions: curl 7.85.0 to and including 8.6.0
-- Not affected versions: curl < 7.85.0 and >= 8.7.0
-- Introduced-in: https://github.com/curl/curl/commit/e6f8445edef8e7996d1
+This issue affects all versions of the priority library prior to 1.2.0.
 
-libcurl is used by many applications, but not always advertised as such!
-
-This flaw is also accessible using the curl command line tool.
-
-SOLUTION
+The Solution
 ------------
 
-Starting in curl 8.7.0, the set of allowed protocols is cleared before the set
-of disabled protocols is inspected, leaving all protocols disabled even in the
-error path.
+In version 1.2.0, the priority library limits the maximum number of streams
+that can be inserted into the tree. By default this limit is 1000, but it is
+user-configurable.
 
-- Fixed-in: https://github.com/curl/curl/commit/17d302e56221
+If it is necessary to backport a patch, the patch can be found in
+this GitHub pull request[2].
 
-RECOMMENDATIONS
---------------
+Recommendations
+---------------
 
-  A - Upgrade curl to version 8.7.0
+We suggest you take the following actions immediately, in order of preferen=
+ce:
 
-  B - Apply the patch to your local version
+1. Update priority to 1.2.0 immediately, and consider revising the maximum
+   number of streams downward to a suitable value for your application.
+2. Backport the patch made available on GitHub.
+3. Manually enforce a limit on the number of priority settings you'll allow=
+ at
+   once.
 
-  C - Inspect any scripts which constructs curl commands with `--proto` options
-      to make sure there is at least one allowed protocol
-
-TIMELINE
+Timeline
 --------
 
-This issue was reported to the curl project on February 15, 2024. We contacted
-distros@openwall on March 19, 2024.
+This class of vulnerability was publicly reported in this report[1] on the
+3rd of August. We requested a CVE ID from Mitre the same day.
 
-curl 8.7.0 was released on March 27 2024 around 07:00 UTC, coordinated with
-the publication of this advisory.
+Priority 1.2.0 was released on the 4th of August, at the same time as the
+publication of this advisory.
 
-The curl security team is not aware of any active exploits using this
-vulnerability.
 
-CREDITS
--------
+Thanks,
 
-- Reported-by: Dan Fandrich
-- Patched-by: Daniel Gustafsson
+Cory Benfield, on behalf of the Python Hyper project.
 
-Thanks a lot!
 
--- 
-
-  / daniel.haxx.se
+[1]: http://www.imperva.com/docs/Imperva_HII_HTTP2.pdf
+[2]: https://github.com/python-hyper/priority/pull/23=
