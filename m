@@ -1,4 +1,9 @@
-Received: (qmail 30621 invoked by uid 550); 6 Oct 2025 08:03:31 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2239" "Thursday" "4" "August" "2016" "01:02:41" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160804050241.66A89ABC600@smtpvmsrv1.mitre.org>" "60" "[oss-security] Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node" nil nil nil "8" "2016080405:02:41" "[oss-security] Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node" (number mark "U       cve-assign@m Aug  4   60/2239  " thread-indent "\"[oss-security] Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node\"\n") "<5EDB84F4B23F5B4DB6500A89258280E0BD067A@EX02.corp.qihoo.net>" ("<5EDB84F4B23F5B4DB6500A89258280E0BD067A@EX02.corp.qihoo.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3115 invoked by uid 550); 4 Aug 2016 05:02:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,208 +12,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30583 invoked from network); 6 Oct 2025 08:03:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=more-magic.net; s=dkim-2016-12; h=Content-Type:MIME-Version:Message-ID:
-	Subject:To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=RPJn4yUzlhXZjfjEoYEi6CUqUeDpXd50iY8g9kwUf1o=; b=e5t9gLKLzhhwRZjoKCFq6rqRuq
-	RKgizRUW0cW/31C/ORaZldT5RMh3vNaAywLWBw2QPioCgN4JGIyEdbP3tjFDSM6EuoKrD3n8HrxBo
-	FQViRWZID6ogmc+Cl/0K+Az8Qs27stAoI4rUEXNoQpNQU7hHPac5mrJIPLoHRuVpC9Os=;
-Date: Mon, 6 Oct 2025 14:03:12 +0600
-From: Peter Bex <peter@more-magic.net>
-To: Open Source Security <oss-security@lists.openwall.com>
-Message-ID: <aON3wLp4RCWMoDFF@doggett>
-Mail-Followup-To: Open Source Security <oss-security@lists.openwall.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Subject: [oss-security] Resource consumption weakness in Postgres-using applications &
- frameworks
+Received: (qmail 3091 invoked from network); 4 Aug 2016 05:02:53 -0000
+From: cve-assign@mitre.org
+To: zhangkaixiang@360.cn
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <5EDB84F4B23F5B4DB6500A89258280E0BD067A@EX02.corp.qihoo.net>
+Message-Id: <20160804050241.66A89ABC600@smtpvmsrv1.mitre.org>
+Date: Thu,  4 Aug 2016 01:02:41 -0400 (EDT)
+Subject: [oss-security] Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node
 
-Hello all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-In "Paged Out!" magazine, issue #7, I posted an article[1] about a
-potential resource consumption weakness (aka potential DoS) in
-applications using Postgres.  This issue allows an attacker to
-force a sequential scan under certain conditions, regardless of any
-index.
+> I found a vulnerability in docker of the latest version which could
+> cause a Denial of Service, it results in a machine could not join the
+> swarm cluster after another node's repeatedly joining and quitting the
+> swarm for many times (taking my testing as example, it should need at
+> least one thousand times). Moreover, the docker debugging info
+> indicates the Dispatcher is stopped and ca server may exited
+> sometimes.
+> 
+> Login machine A1 and join the swarm ,and then quitted the swarm.
+> 
+> Login machine A2, repeatedly join and quit the swarm for 1000 times.
+> 
+> After finishing that, Login machine A1 again and attempt to join the swarm, it failed.
+> 
+> Error response from daemon: Timeout was reached before node was
+> joined. Attempt to join the cluster will continue in the background.
+> Use "docker info" command to see the current swarm status of your
+> node.
+> 
+> level=error
+> msg="failed to remove node"
+> 
+> level=error
+> msg="session failed"
+> error="rpc error: ... context canceled"
+> 
+> level=debug
+> msg="heartbeat expiration"
+> 
+> level=error
+> msg="failed deregistering node after heartbeat expiration"
+> error="... dispatcher is stopped"
 
-The issue itself was originally found by Jeremy Evans in 2022[2] using
-integer literals in SQL statements.  It had a broader impact than he
-originally thought because it can also be triggered with parameterized
-queries and prepared statements.  My article provides a deeper dive into
-exactly what goes wrong and a survey of which drivers are affected in
-some languages that I'm familiar with.
+Use CVE-2016-6595.
 
-I think it deserves some wider attention, as I've found it affects
-*probably* the majority of Python and Clojure applications that use
-Postgres.  The reason is that the most popular Postgres drivers for
-those two languages are affected.  I've contacted the authors of these
-drivers and they acknowledge the problem but also can't or don't want
-to fix it for compatibility reasons.  They agreed to add warnings to
-the documentation[3][4].
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-I don't have the time to investigate if and how every single framework
-and application in these languages are affected, which is why I want
-to raise it here.  Hopefully the right people are reading it and can
-weigh in with their expertise.  Perhaps others can investigate how
-other drivers in their favorite languages behave.
-
-Below you'll find a slightly extended version of my article.
-
-Cheers,
-Peter Bex
-
----
-
-Let's say you have an API that allows users to search on a field
-stored in an integer column COL.  The table is very big, so it has
-an index.  What if I told you it might be trivial to force a
-sequential scan through implicit casting?  Check out the following
-table:
-
-  Filter (WHERE) expression         | safe? | details
-  ----------------------------------+-------+-----------
-  col=1                             |  yes  | Index
-  col=1.0                           |  NO   | Seq scan
-  col='1.0'                         |  yes  | Error
-  col=4611686018427387904 -- (2^62) |  yes  | Index
-  col=9223372036854775808 -- (2^63) |  NO   | Seq scan
-  col='9223372036854775808'         |  yes  | Error
-  col=$1 / col=? / col=%s           |   ?   | It depends
-
-As you can see, even legitimate integer syntax can trigger sequential
-scans!  That's because Postgres parses overlong integers as NUMERIC.
-It can't use the index because the INT column must be cast before
-it can be compared to NUMERIC.
-
-If you quote the numeric literal, you get an error.  That's because
-quoted strings get parsed as per the _column's_ type.  This makes it
-much less ripe for abuse.
-
-== Drivers galore
-
-Postgres' wire protocol lets you send the type OID for query
-parameters to force them to be parsed according to that type.  If you
-send a zero OID, it auto-detects the type, like what happens when you
-type in a quoted literal in the psql(1) CLI.
-
-Some drivers set each parameter's OID based on the type of the
-parameter's value, which leads to the forced sequential scan
-behaviour.
-
-To test your driver's behaviour, first make sure that it can use the
-index (if there's not enough data, it might not use the index even if
-it could).  Run the equivalent of:
-
-  query('EXPLAIN SELECT FROM x WHERE col = $1', 1)
-
-Check that it says "Index Scan".  If you're satisfied that it works,
-perform the actual test:
-
-  query('EXPLAIN SELECT FROM x WHERE col = $1', 1.0)
-
-This should give an error.  If this gives you "Seq scan" in the
-plan, you know what's up.
-
-I've surveyed the _default_ behaviour of drivers in several languages,
-see the following table:
-
-  Language   | Driver(s)             | Safe?
-  -----------+-----------------------+-------
-  Clojure    | java.jdbc & next.jdbc | NO
-  Java       | (PG)JDBC              | ?
-  C          | libpq                 | ?
-  Scheme     | postgres egg          | yes
-  Ruby       | pg gem                | yes
-  Python     | psycopg (both 2 & 3)  | NO
-  PHP        | Plain pgsql & PDO     | yes
-  Node.JS    | node-postgres (aka pg)| NO
-
-Clojure's jdbc drivers use the .setObject() method from JDBC without a
-targetSqlType.  This means it picks an OID based on object's class.
-Psycopg 3 does something similar.  Psycopg 2 on the other hand doesn't
-use parameterized queries, but simply embeds the literals into the SQL
-where the placeholders are.  Funny enough it leads to the exact same
-problem because these literals aren't quoted in the case of integers.
-
-The question mark for Java JDBC and C's libpq indicates it's up to the
-user.  If you use .setObject() without a type in Java, or somehow(?) a
-user-supplied type in C, it's unsafe in the sense that the implicit
-cast will happen.
-
-== Fundamental analysis
-
-The problem with drivers automatically using the type of the
-user-supplied *value* in parameters is that it's the _wrong type_ to
-use.  Instead, one should use the type of the *column* that's compared
-against.
-
-The use of formats like JSON with ill-specified numerics compounds
-this effect.  Numbers may get parsed willy-nilly as integers or as
-floating-point numbers depending on the syntax.
-
-Programming languages with transparent support for arbitrarily large
-integers often don't meaningfully differentiate the type of such
-numbers from smaller ones.  This sneakily persists the problem even
-when the programmer performs strict validation of input types.
-They're all integers, after all!  The programmer now has to also
-remember to perform a strict range check.
-
-Meanwhile, Postgres does use a very distinct type for arbitrarily
-large numbers: NUMERIC.  This type is not even strictly integral; it
-can hold arbitrarily large decimal numbers as well.  Integral values
-in "standard" ranges may be interpreted as different actual types
-(i.e., int2, int4 and int8), but they're all proper integral types and
-can be mutually coerced transparently in such a way that any such type
-of index can be used with any other type.  But this doesn't work for
-NUMERIC.
-
-It is unfortunate that numbers with similar notation are parsed into
-types with wildly different behaviour.  Most drivers simply copy this
-behaviour by transparently marking bignums as NUMERIC.  This makes
-sense as it ensures consistent behaviour between parsed literals in
-SQL and parameterized arguments (which may be literals in the
-programming language).
-
-== Who is responsible?
-
-Note that I don't consider drivers automatic type assignment a
-vulnerability per se.  The responsibility to pass in the right type
-lies with the application or _perhaps_ the application framework.
-
-Theoretically, it _should_ be possible to improve the behaviour of
-Postgres itself by being smarter about values and ranges when casting.
-For example, out-of-range integral numerics can never be satisfied by
-an integer, so it could skip the fetch entirely.  Other comparisons on
-fractional numerics could be done smartly by rounding to an integer
-and comparing against that (i.e. effectively cast the literal value to
-the column's type).
-
-Practically, this would be tricky because casting is generic and
-extensible via e.g. CREATE CAST and CREATE TYPE.
-
-== Mitigations
-
-The best way to prevent this sort of thing from happening is to
-validate both the type _and_ the range of all user input on entry.
-
-If that's not an option and your driver does the wrong thing, you can
-use an explicit cast on the placeholder (e.g. $1::int) to force the
-correct type.
-
-As an extra safety measure, you can register a type conversion for
-bignums to return an error.  If you _need_ bignums in a query, you
-can use a wrapper type to indicate known-safe uses.
-
-Finally, you can always declare an expression index on the cast.
-Ugly, but it gets the job done.
-
-[1] https://pagedout.institute/download/PagedOut_007.pdf
-[2] https://code.jeremyevans.net/2022-11-01-forcing-sequential-scans-on-postgresql.html
-[3] https://github.com/psycopg/psycopg/issues/1134
-[4] https://github.com/seancorfield/next-jdbc/issues/307
+iQIcBAEBCAAGBQJXossBAAoJEHb/MwWLVhi2FJ8QALlp1bYssp66abNelRpjiQXl
+ylHYSBTYhSMIpguerzlQv88l+O13uLfLtsC/fHPqb9+/cDG1icNHIjKuussr4HeQ
+hy3DRSn0D+63XXXHjRG5hvpBP3Sf8irAz3lnwaEHj01hlILsAbAV0CuTP2+lBz3X
+QtIojkBnHUUz/glGCT8VMavS85MakRwM7CV2upLJZptHaOiQlR8pa06FOBCBzWjJ
+TsxdIFgnlEWomN0Lsf+IKD5uc6n+kmZzmyBNR9hHDCkTNJLRgMEvqVmK1nqVgQPS
+jzvdrZSKF+BxQfPmONgrvSfQpSlEbJ4GFTYN0qeHqpt8SRJLJ0Uuy1ukzd+j6S8G
+oTuA1fAJsZFwsku40usqv3lbeBGWMmxj4ORKNXZkqUZLOVwXN+p6xbDDC8Qm/p/O
+EEF124dGsxSvlcoAGpOqjAHkzB+vrCBsi0kMlsPTb6zKRZSX7ql9jaG6riFJ4H0E
+nKooj0RQRZGo2V1Z1NQDc4dMQtQ4HrRHKpDKp5snMdafbwR2DxAD2Kh862JYo2Pp
+3kmaQ/4X4oq3BFy9zwsAV3PZvBZJjerlk2MLxPktaQNSqKduriG9z9DxhPraQWaP
+kzml/+CylX7EEkV0hm+AZjt1+CMfxHAUQkvvRxi0NyhGLjqfIURI17CesCVNTYOS
+ww56x94Z2M9fplQcqRQK
+=Wgqx
+-----END PGP SIGNATURE-----
