@@ -1,60 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/21/3
-Message-Id: <20160621120053.0711D72E27D@smtpvbsrv1.mitre.org>
-Date: Tue, 21 Jun 2016 08:00:53 -0400 (EDT)
-From: cve-assign@...re.org
-To: lukas@...tcloud.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for PHP bug #68978: "XSS in header() with Internet Explorer" (2015)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/04/5
+Message-ID: <CACMN7ixDqDyOZGLEvsMUVHBiJ6crq8zdy+2mNfRooNhnk7CJ1g@mail.gmail.com>
+Date: Thu, 4 Aug 2016 16:27:12 -0700
+From: Sravya Tirukkovalur <sravya@...che.org>
+To: dev <dev@...try.apache.org>, security@...che.org,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: CVE-2016-0760: Hive builtin functions “reflect”, “reflect2”, and “java_method” are not blocked in Apache Sentry
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2016-0760: Hive builtin functions “reflect”, “reflect2”, and
+“java_method” are not blocked in Apache Sentry
 
-> PHP security bug #68978 (https://bugs.php.net/bug.php?id=68978) also
-> warrants a CVE identifier:
+Severity: Very Important
 
->> The filtering in header() function is not sufficient and this can
->> lead to header injection and content injection (XSS) when the client
->> is Internet Explorer (in every tested version).
+Vendor:
+The Apache Software Foundation
 
->> IE accepts %0A%20 or %0D%0A%20 as separator in HTTP while other
->> browser treat the new line beginning with space as the continuation
->> of the previous header. This can lead to header injection or content
->> injection (basically, XSS) in IE.
+Versions Affected:
+Sentry 1.5.1 and 1.6.0
 
-> PHP's documentation (http://php.net/manual/en/function.header.php)
-> explicitly states that since version 5.2.1 PHP natively prevents
-> header injections:
+Description:
+Some functions in Hive which allow arbitrary code to be executed are
+not blacklisted properly in some versions of Sentry, which would allow
+authenticated
+users to potentially use these functions for malicious purposes.
 
->> This function now prevents more than one header to be sent at once
->> as a protection against header injection attacks.
+Mitigation:
+Upgrade to 1.7.0 (or)
+Workaround - Users can explicitly configure the blacklist
+functions in the hive configuration by setting the property
+"hive.server2.builtin.udf.blacklist" to "reflect,reflect2,java_method"
 
-> My understanding is that the corresponding upstream commit can be
-> found at
-> https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b
+Credit:
+This issue was discovered by ﻿Ryan Pridgeon of Cloudera.
 
-Use CVE-2015-8935.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXaSwPAAoJEHb/MwWLVhi2PwAP/RxDG+I/240T4Bof1AeJd/0e
-h4da07InmmtISwUyEQJQVJMnZt+A0ewrwn+Ipdm8haaqwO3fsIrm0eRk2HR8VZQE
-Wf7cq1FIPaIwCTaAAEBOpMhXN3/A/GnOJC8gzKFZIvbDTFbs8F6kE6JBB3E52B07
-G940pVZtWNjhyeloo543q2Xt0eFy1CmFqxsf3vTQHgXU1y+twgpW9fd1kbyfz70t
-Cj53kZW8jcShxLzCc6nDeT91sBWM54v24h8zAiUCLMLCDvahfYzfOqqXRZHhEhcc
-sSkft1FdBO8ED4FXZ8r1n6hRdMrrbi2Y0DNxCxoEm77Yz6gqMg267RqxHbLdBVK+
-5f2WOc1Xhy3K09ORxjlu0fgqnSp9MhEwaQqo1oOu9xgQNvjKbn4gulSTH68St35h
-6zISQrWWYO/T9g/G+dEF/K/oNrjwfvhLdiGd4Np4GA/Z3rmBREXNCpjZ8lYQzZrk
-YoGWg5xSCkcy0W9uh0H6A/d9aDRKxixATbOx7HvaxeAB6jd7Xgr4Jlq7bbLPu1qu
-IqPrlNfES06j/06CFtdee6iPcBLz80gM/A5yxQ5fi/+nakkhb7PWYBQc9ilkChkq
-3DLtFno9zuERUN1skN2lsfSB8/dCWuhtzlCJFAENgw7BE3CkSDQ/x6oW7ELSK39k
-mP+W41Ni4/lIlRuf8zZn
-=0A1M
------END PGP SIGNATURE-----
