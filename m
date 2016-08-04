@@ -1,30 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/15/2
-Message-ID: <57385812.2030402@gmail.com>
-Date: Sun, 15 May 2016 19:05:54 +0800
-From: Baozeng Ding <sploving1@...il.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Cc: g.nault@...halink.fr
-Subject: Re: CVE Requests: Linux: use-after-free issue for ppp channel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/04/4
+Message-ID: <a5a9f33f-b61b-6f95-fa81-f0a3cd8defb1@securify.nl>
+Date: Thu, 4 Aug 2016 19:40:14 +0200
+From: Summer of Pwnage <lists@...urify.nl>
+To: oss-security@...ts.openwall.com
+Subject: Multiple Cross-Site Scripting vulnerabilities affecting seven WordPress Plugins
 Content-Type: text/plain; charset=utf-8
 
-It was introduced by
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=273ec51dd7ceaa76e038875d85061ec856d8905e
-Fixed in linux-stable 4.5.4 and longterm 3.2.80, 3.12.59, 3.14.69, 
-3.16.35, 4.4.10.
+Please see attached advisories for more information. These issues were 
+found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
+project. Its goal is to contribute to the security of popular, widely 
+used OSS projects in a fun and educational way.
 
-On 2016/5/11 23:37, Baozeng Ding wrote:
-> Hi all,
->    The ppp channel did not take reference on its network namespace 
-> when it was registered and unregistered, which causes a use-after-free 
-> issue. Details:
-> https://lkml.org/lkml/2016/3/17/569
-> Fixed via:
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1f461dcdd296eecedaffffc6bae2bfa90bd7eb89 
->
->
-> Could you please assign a CVE for this issue? Thanks.
->
-> Best Regards,
-> Baozeng
 
+
+View attachment "cross_site_scripting_in_activity_log_wordpress_plugin.txt" of type "text/plain" (3984 bytes)
+
+View attachment "cross_site_scripting_in_count_per_day_wordpress_plugin.txt" of type "text/plain" (3422 bytes)
+
+View attachment "cross_site_scripting_in_formbuilder_wordpress_plugin.txt" of type "text/plain" (4163 bytes)
+
+View attachment "cross_site_scripting_in_wordpress_landing_pages_plugin.txt" of type "text/plain" (3802 bytes)
+
+View attachment "cross_site_scripting_vulnerability_in_events_made_easy_wordpress_plugin.txt" of type "text/plain" (12233 bytes)
+
+View attachment "cross_site_scripting_vulnerability_in_search_function_activity_log_wordpress_plugin.txt" of type "text/plain" (3991 bytes)
+
+View attachment "stored_cross_site_scripting_vulnerability_in_count_per_day_wordpress_plugin.txt" of type "text/plain" (4232 bytes)
