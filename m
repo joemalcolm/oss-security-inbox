@@ -1,40 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/27/2
-Message-ID: <20160327113907.GA4476@eldamar.local>
-Date: Sun, 27 Mar 2016 13:39:07 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: CVE Request: pcre: Segmentation fault on certain input to regular expressions with nested alternatives when JIT is used
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/05/1
+Message-ID: <CAG0ev15p0b8Jd5paQn0VDcU0KKdLHhwTKXiSJJr9ysxAZC=fgg@mail.gmail.com>
+Date: Fri, 5 Aug 2016 11:39:40 +0800
+From: 0xr0ot <0xr0ot.sec@...il.com>
+To: oss-security@...ts.openwall.com, mobile.security@...sung.com
+Subject: Fwd: CVE request - samsumg android phone SVE-2016-6244 Possible Privilege Escalation in telecom
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+---------- Forwarded message ----------
+From: <cve-assign@...re.org>
+Date: 2016-08-03 20:50 GMT+08:00
+Subject: Re: CVE request - samsumg android phone SVE-2016-6244 Possible
+Privilege Escalation in telecom
+To: 0xr0ot.sec@...il.com
+Cc: cve-assign@...re.org
 
-On Sat, Mar 26, 2016 at 08:25:55AM +0100, Salvatore Bonaccorso wrote:
-> Hi
-> 
-> In Debian the following issue was reported (test case contained)
-> 
-> https://bugs.debian.org/819050
-> 
-> 
-> On certain input when processed for regular expressions with nested
-> alternatives and JIT is used, pcre3 can segfault, affecting in this
-> case suricata leading to at least a denial of service.
-> 
-> The problem was addressed upstream with commit:
-> http://vcs.pcre.org/pcre?view=revision&revision=1475
-> 
-> Can you assign a CVE for this issue?
 
-Additional information for this request: The issue seems to have been
-introduced with http://vcs.pcre.org/pcre?view=revision&revision=1434
-in 8.35.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Note that upstream of suricata tracks the issue in suricata in
-conjunction with pcre 8.35 with
-https://redmine.openinfosecfoundation.org/issues/1693
-to issue a warning.
+> http://security.samsungmobile.com/smrupdate.html#SMR-AUG-2016
 
-Regards,
-Salvatore
+> SVE-2016-6242: Possible Privilege Escalation in telecom
+>
+> Severity: Medium
+> Affected versions: L(5.0/5.1), M(6.0)
+> Reported on: May 11, 2016
+> Disclosure status: Privately disclosed.
+> A vulnerability in SpamCall Activity components of Telecom application
+> can make crash and reboot a device when the malformed serializable
+> object is passed.
+> The patch complements the exception handling routine to prevent crash.
+
+Use CVE-2016-6526.
+
+
+> SVE-2016-6244: Possible Privilege Escalation in telecom
+>
+> Severity: Medium
+> Affected versions: L(5.0/5.1), M(6.0)
+> Reported on: May 11, 2016
+> Disclosure status: Privately disclosed.
+> The vulnerability in SmartCall Activity components of Telecom
+> application can make crash and reboot a device when the malformed
+> serializable object is passed.
+> The patch complements the exception handling routine to prevent crash.
+
+Use CVE-2016-6527.
+
+- --
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXoefoAAoJEHb/MwWLVhi2vr0QAJ693LUFVlPVq2YI5Qp7Yeeb
+3MF/kN4Xa9IZGoxNtNomEKfewInUU3jec9nEVyobchIdsJzYzzeL2OMwVjh2CvXU
+UjCJylCCdzgXsOqCN2ULgLJlJP1zRHrptMkZsfYuJDIn5LFPtP//sBQuQe8Vmx7+
+UsRXCY6eOT+icS7puohFEaUs6eD96Hs/Zob+h5UOozmGQosdZMfLJHyPV30Nr4h9
+n/tqxVzWF/cnAZz6byui4y9zRrG7CtxsQ2VQvvVYR63iCJxziTFmBMqtkWnZrhvH
+CLKi8M5E5SN9hQvfKDobYUThoDrife5JcPftQr3tOVJSjYA0W6ZqcLP8Aclsko2X
+Fnw0SwVXUU80s2rFgZgVRgPHcrcA0EIiEXfrjxbIAU+ht8ACzQaSgF5Csc9/Jld3
+hkNEg3JSr5gJsdQNDNuhJA6ysyaPwh8p0X7+9nb84CYmpsMwKAi1BnWyl/FNrGR4
+NewVzNbLJmYZUBKjd1sMvn2Q+uvm+iRX9K+muikSXdj5vz5txXkQDU6Vy8Xwyja8
+O2gDMrGTzX9DqXpPKCrm8z93EJI+/PT/9DHmLCJwJahtl+u/yN+nagGLl2gtfMAw
+5nuE89pMAoZZ/sqBFQ3ir82mVJh/bm2T2sHO+R8ljvkHB3ERQrz3Hs7JIf4mCG1b
+cx4bYNZHgZIF+KP1I5oF
+=1SXm
+-----END PGP SIGNATURE-----
+
