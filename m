@@ -1,27 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/08/3
-Message-ID: <b1b03b6d-6ba0-7d13-a1e4-303acc20c731@securify.nl>
-Date: Tue, 8 Nov 2016 11:22:01 +0100
-From: Summer of Pwnage <lists@...urify.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/05/2
+Message-ID: <CACn5sdT2CujMX9oP11jmEHxX-BTCP7O-soxSaf+DMb4SxX=z0w@mail.gmail.com>
+Date: Fri, 5 Aug 2016 13:57:28 -0300
+From: Gustavo Grieco <gustavo.grieco@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities affecting five WordPress Plugins (XSS & object injection)
+Subject: Read out-of-bounds parsing bash code in GNU Bash 4.3
 Content-Type: text/plain; charset=utf-8
 
-Please see attached advisories for more information. These issues were 
-found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
-project. Its goal is to contribute to the security of popular, widely 
-used OSS projects in a fun and educational way.
+Hi,
 
+We recently found a read out-of-bounds parsing bash code in GNU Bash
+4.3. I tested this issue in Ubuntu 14.04.3 (x86_64) but other
+configurations could be affected. To reproduce:
 
+1. Recompile bash with ASAN:
 
+  $ ./configure --without-bash-malloc CFLAGS="-fsanitize=address -g
+-ggdb"  LDFLAGS="-fsanitize=address"
+  $ make
 
+(using valgrind will *not* expose this issue)
 
-View attachment "cross_site_scripting_in_calendar_wordpress_plugin.txt" of type "text/plain" (3378 bytes)
+2. Execute:
 
-View attachment "cross_site_scripting_vulnerability_in_caldera_forms_wordpress_plugin.txt" of type "text/plain" (4048 bytes)
+$ echo 5RzxHp0o0qmZ | base64 -d | ./bash -n
 
-View attachment "cross_site_scripting_vulnerability_in_quotes_collection_wordpress_plugin.txt" of type "text/plain" (4368 bytes)
+==27143== ERROR: AddressSanitizer: heap-buffer-overflow on address
+0x60040000b8b4 at pc 0x5614be bp 0x7fffffffcad0 sp 0x7fffffffcac8
+READ of size 4 at 0x60040000b8b4 thread T0
+...
 
-View attachment "persistent_cross_site_scripting_in_wassup_real_time_analytics_wordpress_plugin.txt" of type "text/plain" (4092 bytes)
+Using gdb we can obtain a clear backtrace:
 
-View attachment "yith_woocommerce_compare_wordpress_plugin_unauthenticated_php_object_injection_vulnerability.txt" of type "text/plain" (3270 bytes)
+Program received signal SIGABRT, Aborted.
+0x00007ffff468fcc9 in __GI_raise (sig=sig@...ry=6) at
+../nptl/sysdeps/unix/sysv/linux/raise.c:56
+56    ../nptl/sysdeps/unix/sysv/linux/raise.c: No existe el archivo o
+el directorio.
+(gdb) bt
+#0  0x00007ffff468fcc9 in __GI_raise (sig=sig@...ry=6) at
+../nptl/sysdeps/unix/sysv/linux/raise.c:56
+#1  0x00007ffff46930d8 in __GI_abort () at abort.c:89
+#2  0x00007ffff4e66829 in ?? () from /usr/lib/x86_64-linux-gnu/libasan.so.0
+#3  0x00007ffff4e5d3ec in ?? () from /usr/lib/x86_64-linux-gnu/libasan.so.0
+#4  0x00007ffff4e64012 in ?? () from /usr/lib/x86_64-linux-gnu/libasan.so.0
+#5  0x00007ffff4e63121 in __asan_report_error () from
+/usr/lib/x86_64-linux-gnu/libasan.so.0
+#6  0x00007ffff4e5d704 in __asan_report_load4 () from
+/usr/lib/x86_64-linux-gnu/libasan.so.0
+#7  0x00000000005614be in ansic_wshouldquote (string=0x60040000b8d0
+"ҩ\231") at strtrans.c:317
+#8  0x000000000056152d in ansic_shouldquote (string=0x60040000b8d0
+"ҩ\231") at strtrans.c:344
+#9  0x0000000000440192 in report_syntax_error (message=0x0) at
+/usr/src/local/bash/bash-4.3-patched/parse.y:5763
+#10 0x000000000043f7ed in yyerror (msg=0x5bb440 "syntax error") at
+/usr/src/local/bash/bash-4.3-patched/parse.y:5637
+#11 0x000000000042cecd in yyparse () at y.tab.c:3417
+#12 0x0000000000423440 in parse_command () at eval.c:238
+#13 0x0000000000423547 in read_command () at eval.c:282
+#14 0x00000000004231aa in reader_loop () at eval.c:145
+#15 0x000000000041f03c in main (argc=3, argv=0x7fffffffdfa8,
+env=0x7fffffffdfc8) at shell.c:755
+
+This issue was found using QuickFuzz. Please assign a CVE if suitable.
+
+Regards,
+Gustavo.
