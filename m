@@ -1,48 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/4
-Message-ID: <20160718073312.GA29485@openwall.com>
-Date: Mon, 18 Jul 2016 10:33:12 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/05/3
+Message-ID: <CACCOJE22F7zG5Ay1qL1bO0OvFyixGiuLOC_Y_L6tneeieVMdeA@mail.gmail.com>
+Date: Fri, 5 Aug 2016 20:23:57 +0800
+From: Idler <idler1984@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for webkit js engine javascriptcore
+Cc: anarcheuz@...il.com, cve-assign@...re.org
+Subject: CVE Request - Samsung Exynos fimg2d NULL Pointer Dereference
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-On Mon, Jul 18, 2016 at 02:25:17PM +0800, jun3 June wrote:
-> Please can I have CVE IDs assigned to the following vulnerabilities:
-> 
-> 1.javascriptcore vulnerability:
-> 
-> https://bugs.webkit.org/show_bug.cgi?id=158411
-> 
-> 2.the fix has landed in r201787: <http://trac.webkit.org/r201787>
+I'd like to request CVE for the following vulnerability fixed in
+Samsung Exynos fimg2d driver for Android:
 
-As a list moderator, I already regret having (reluctantly) accepted your
-message.  I thought it was just lacking detail in message body, which is
-against oss-security list content guidelines:
+Security bulletin: http://security.samsungmobile.com/smrupdate.html#SMR-AUG-2016
 
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+SVE-2016-6382: fimg2d NULL Pointer Dereference
 
-"At least the most essential part of your message (e.g., vulnerability
-detail or a PoC exploit) should in fact be in the message itself (and in
-plain text), rather than only included by reference to an external
-resource.  Posting links to relevant external resources as well is
-acceptable, but posting only links is not."
+Severity: Medium
+Affected versions: L(5.0/5.1), M(6.0) devices with Exynos7420 chipset
+Reported on: June 7, 2016
+Disclosure status: Privately disclosed.
+The vulnerability exists due to a null pointer dereference on fimg2d driver.
+The patch verifies if the object is null before dereferencing it.
 
-So I thought I'd just point out this to you like I do now (but
-off-list), for further occasions.  However, as it turns out the URL
-https://bugs.webkit.org/show_bug.cgi?id=158411 says "You are not
-authorized to access bug #158411. To see this bug, you must first log in
-to an account with the appropriate permissions." and the other URL is
-lacking direct detail on the bug as well (only talking about the fix).
-
-BTW, is it one vulnerability or more?  You wrote "vulnerabilities".
-
-Please post the detail in a "reply" to this message, and please
-include detail (not only URLs) in your postings going forward.  This
-last request/reminder applies to everyone posting to oss-security.
-
-Thanks,
-
-Alexander
+Best Regards,
+James Fang
