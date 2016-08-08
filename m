@@ -1,34 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/4
-Message-ID: <alpine.LFD.2.20.1609161611510.28695@wniryva>
-Date: Fri, 16 Sep 2016 16:15:24 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Qinghao Tang <luodalongde@...il.com>, zhenhao hong <zhenhaohong@...il.com>
-Subject: CVE request Qemu: virtio: null pointer dereference in virtqueu_map_desc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/08/1
+Message-ID: <CACn5sdREXWt6jR7FG49TQnBNc5wEwM=uP+WBGEJg1u-bmdMCdg@mail.gmail.com>
+Date: Mon, 8 Aug 2016 09:06:00 -0300
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Read out-of-bounds parsing bash code in GNU Bash 4.3
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Another read out-of-bounds was found but in the token_is_assignment
+function. Backtrace is here:
 
-Quick emulator(Qemu) built with the virtio framework is vulnerable to a null 
-pointer dereference flaw. It could occur if the guest was to set the I/O 
-descriptor buffer length to a large value.
+==15811== ERROR: AddressSanitizer: heap-buffer-overflow on address
+0x60640001b6f0 at pc 0x438bb1 bp 0x7fffffffca00 sp 0x7fffffffc9f8
+READ of size 1 at 0x60640001b6f0 thread T0
+...
+==15811== ABORTING
 
-A privileged user inside guest could use this flaw to crash the Qemu instance 
-on the host resulting in DoS.
+Program received signal SIGABRT, Aborted.
+0x00007ffff468fcc9 in __GI_raise (sig=sig@...ry=6) at
+../nptl/sysdeps/unix/sysv/linux/raise.c:56
+56    ../nptl/sysdeps/unix/sysv/linux/raise.c: No existe el archivo o
+el directorio.
+(gdb) bt
+#0  0x00007ffff468fcc9 in __GI_raise (sig=sig@...ry=6) at
+../nptl/sysdeps/unix/sysv/linux/raise.c:56
+#1  0x00007ffff46930d8 in __GI_abort () at abort.c:89
+#2  0x00007ffff4e66829 in ?? () from /usr/lib/x86_64-linux-gnu/libasan.so.0
+#3  0x00007ffff4e5d3ec in ?? () from /usr/lib/x86_64-linux-gnu/libasan.so.0
+#4  0x00007ffff4e64012 in ?? () from /usr/lib/x86_64-linux-gnu/libasan.so.0
+#5  0x00007ffff4e63121 in __asan_report_error () from
+/usr/lib/x86_64-linux-gnu/libasan.so.0
+#6  0x00007ffff4e5d6a4 in __asan_report_load1 () from
+/usr/lib/x86_64-linux-gnu/libasan.so.0
+#7  0x0000000000438bb1 in token_is_assignment (
+    t=0x60640001a500
+"a[\"${#a[@][@]}\"][\"${#a[@][@]}\"]=~a[\"${#a[@][@]}\"\"${#a[@]}\"]=~a[\"${#a[@]}\"]=~a[\"${#a[@][@]}\"][\"${#a[@][@]}\"]=~a[\"${#a[@][@]}\"\"${#a[@]}\"]=~a[\"${#a[@]}\"]=~a[\"${#a[@][@]}\"][\"${#a[@][@]}\"]=~a[\"${#a[@][@]}\""...,
+i=4591)
+    at /usr/src/local/bash/bash-4.3-patched/parse.y:4449
+#8  0x000000000043ad9c in read_token_word (character=61) at
+/usr/src/local/bash/bash-4.3-patched/parse.y:4753
+#9  0x00000000004327ed in read_token (command=0) at
+/usr/src/local/bash/bash-4.3-patched/parse.y:3217
+#10 0x0000000000430a06 in yylex () at
+/usr/src/local/bash/bash-4.3-patched/parse.y:2637
+#11 0x0000000000423ba7 in yyparse () at y.tab.c:2020
+#12 0x0000000000423440 in parse_command () at eval.c:238
+#13 0x0000000000423547 in read_command () at eval.c:282
+#14 0x00000000004231aa in reader_loop () at eval.c:145
+#15 0x000000000041f03c in main (argc=2, argv=0x7fffffffdfe8,
+env=0x7fffffffe000) at shell.c:755
 
-Upstream fix:
--------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg03546.html
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1376755
+A test case to reproduce this issue is attached (also parsing a bash
+file as the previous one). Please assign a CVE if suitable.
 
-This issue was independently reported by Qinghao Tang and Zhenhao Hong of the 
-Marvel Team of 360.cn Inc.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Regards,
+Gustavo.
+
+2016-08-05 13:57 GMT-03:00 Gustavo Grieco <gustavo.grieco@...il.com>:
+> Hi,
+>
+> We recently found a read out-of-bounds parsing bash code in GNU Bash
+> 4.3. I tested this issue in Ubuntu 14.04.3 (x86_64) but other
+> configurations could be affected. To reproduce:
+>
+> 1. Recompile bash with ASAN:
+>
+>   $ ./configure --without-bash-malloc CFLAGS="-fsanitize=address -g
+> -ggdb"  LDFLAGS="-fsanitize=address"
+>   $ make
+>
+> (using valgrind will *not* expose this issue)
+>
+> 2. Execute:
+>
+> $ echo 5RzxHp0o0qmZ | base64 -d | ./bash -n
+>
+> ==27143== ERROR: AddressSanitizer: heap-buffer-overflow on address
+> 0x60040000b8b4 at pc 0x5614be bp 0x7fffffffcad0 sp 0x7fffffffcac8
+> READ of size 4 at 0x60040000b8b4 thread T0
+> ...
+>
+> Using gdb we can obtain a clear backtrace:
+>
+> Program received signal SIGABRT, Aborted.
+> 0x00007ffff468fcc9 in __GI_raise (sig=sig@...ry=6) at
+> ../nptl/sysdeps/unix/sysv/linux/raise.c:56
+> 56    ../nptl/sysdeps/unix/sysv/linux/raise.c: No existe el archivo o
+> el directorio.
+> (gdb) bt
+> #0  0x00007ffff468fcc9 in __GI_raise (sig=sig@...ry=6) at
+> ../nptl/sysdeps/unix/sysv/linux/raise.c:56
+> #1  0x00007ffff46930d8 in __GI_abort () at abort.c:89
+> #2  0x00007ffff4e66829 in ?? () from /usr/lib/x86_64-linux-gnu/libasan.so.0
+> #3  0x00007ffff4e5d3ec in ?? () from /usr/lib/x86_64-linux-gnu/libasan.so.0
+> #4  0x00007ffff4e64012 in ?? () from /usr/lib/x86_64-linux-gnu/libasan.so.0
+> #5  0x00007ffff4e63121 in __asan_report_error () from
+> /usr/lib/x86_64-linux-gnu/libasan.so.0
+> #6  0x00007ffff4e5d704 in __asan_report_load4 () from
+> /usr/lib/x86_64-linux-gnu/libasan.so.0
+> #7  0x00000000005614be in ansic_wshouldquote (string=0x60040000b8d0
+> "ҩ\231") at strtrans.c:317
+> #8  0x000000000056152d in ansic_shouldquote (string=0x60040000b8d0
+> "ҩ\231") at strtrans.c:344
+> #9  0x0000000000440192 in report_syntax_error (message=0x0) at
+> /usr/src/local/bash/bash-4.3-patched/parse.y:5763
+> #10 0x000000000043f7ed in yyerror (msg=0x5bb440 "syntax error") at
+> /usr/src/local/bash/bash-4.3-patched/parse.y:5637
+> #11 0x000000000042cecd in yyparse () at y.tab.c:3417
+> #12 0x0000000000423440 in parse_command () at eval.c:238
+> #13 0x0000000000423547 in read_command () at eval.c:282
+> #14 0x00000000004231aa in reader_loop () at eval.c:145
+> #15 0x000000000041f03c in main (argc=3, argv=0x7fffffffdfa8,
+> env=0x7fffffffdfc8) at shell.c:755
+>
+> This issue was found using QuickFuzz. Please assign a CVE if suitable.
+>
+> Regards,
+> Gustavo.
+
+Download attachment "token_is_assignement.sh" of type "application/x-sh" (25624 bytes)
