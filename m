@@ -1,146 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/19/4
-Message-ID: <CAKws9z1pthfTVXjyyuXpbGK1Ya7bPk91QzY_4Mc61MxAJJ4rQA@mail.gmail.com>
-Date: Tue, 19 Jul 2016 01:03:26 -0400
-From: Scott Arciszewski <scott@...agonie.com>
-To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
-Subject: Re: Ruining the Magic of Magento's Encryption Library
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/08/2
+Message-ID: <etPan.57a899a7.19a79846.1a64@mirantis.com>
+Date: Mon, 8 Aug 2016 17:39:35 +0300
+From: Kirill Zaitsev <kzaitsev@...antis.com>
+To: oss-security@...ts.openwall.com
+Subject: RCE vulnerability in Openstack Murano using insecure YAML tags (CVE-2016-4972)
 Content-Type: text/plain; charset=utf-8
 
-EXHIBIT D
-=========
+==============================================================
+RCE vulnerability in Openstack Murano using insecure YAML tags
+==============================================================
 
-Yes, that is how Magento hashes passwords. Which is weird: They go out of
-their way to compare strings in constant-time, but they don't use a proper
-password hashing method (e.g. bcrypt).
-
-(Part of the sentence was lobbed off, due to stupidity and/or insanity
-caused by exposure to Magento's source code.)
+:Date: June 23, 2016
+:CVE: CVE-2016-4972
 
 
-Scott Arciszewski
-Chief Development Officer
-Paragon Initiative Enterprises <https://paragonie.com>
+Affects
+~~~~~~~
+- Murano: <=2015.1.1; <=1.0.2; ==2.0.0
+- Murano-dashboard: <=2015.1.1; <=1.0.2; ==2.0.0
+- Python-muranoclient: <=0.7.2; >=0.8.0<=0.8.4
 
-On Tue, Jul 19, 2016 at 12:56 AM, Scott Arciszewski <scott@...agonie.com>
-wrote:
 
-> Hello mcrypt, my old friend
-> I've come to exploit you again
-> Because a version slowly rotting
-> Is well-deserved for a boycotting
-> And the S-box that was planted in its GOST
-> Still remains
-> Within the sound of silence
->
-> ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8<
-> ~
->
-> Let's talk about Magento.
->
-> The Wikipedia page for Magento begins, "Magento is an open-source
-> e-commerce platform written in PHP." This bears emphasis: e-commerce
-> platform.
->
-> When I hear e-commerce, I think "financial information". I think "credit
-> card numbers" and "probably PCI-DSS violations should anything be obviously
-> stupid".
->
-> Let's look at how Magento implements cryptography, with a series of
-> exhibits followed by an explanation of what's happening and why it's
-> dangerous:
->
->   A.
-> https://github.com/magento/magento2/blob/6ea7d2d85cded3fa0fbcf4e7aa0dcd4edbf568a6/lib/internal/Magento/Framework/Encryption/Encryptor.php#L268-L320
->   B.
-> https://github.com/magento/magento2/blob/6ea7d2d85cded3fa0fbcf4e7aa0dcd4edbf568a6/lib/internal/Magento/Framework/Encryption/Encryptor.php#L390-L399
->   C.
-> https://github.com/magento/magento2/blob/6ea7d2d85cded3fa0fbcf4e7aa0dcd4edbf568a6/lib/internal/Magento/Framework/Encryption/Crypt.php#L63-L77
->
-> D.
-> https://github.com/magento/magento2/blob/6ea7d2d85cded3fa0fbcf4e7aa0dcd4edbf568a6/lib/internal/Magento/Framework/Encryption/Encryptor.php#L170
->
-> If you looked at the code, I promise this is every bit as bad as it looks
-> at a glance.
->
-> EXHIBIT A
-> =========
->
-> Magento's decryption expects up to 4 strings concatenated by a :
-> character. Depending on the number of pieces, it assumes a totally
-> different setup:
->
-> 1 piece: Blowfish, in ECB mode!
-> 2 or 3 pieces: Probably blowfish, but maybe AES or Rijndael-256, depending
-> on the integer supplied by the attacker.
-> 4 pieces: We finally get an initialization vector, which means CBC mode
-> can be used.
->
-> At no point do they authenticate _anything_, so no matter what:
->
-> - You get to control which branch is selected by breaking pieces off the
-> attacker-chosen message.
-> - You get to choose the ciphertext that the attempted decryption is
-> performed upon.
->
-> EXHIBIT B
-> =========
->
-> If you thought the ability to be encrypted with AES was a saving grace,
-> too bad. They hard-code your choice to ECB mode.
->
-> The only way you can get CBC mode (which, again, is unauthenticated) is to
-> use the non-standard Rijndael256 cipher.
->
-> EXHIBIT C
-> =========
->
-> If you thought it couldn't possibly get any worse, Magento's encryption
-> library will either:
->
-> - Give you an IV consisting entirely of NULL bytes.
-> - Generate it, using rand(), on a 62-character keyspace.
->
-> (Y'know, because it's not XORed with the plaintext in CBC mode and biases
-> aren't a concern or anything.)
->
-> EXHIBIT D
-> =========
->
-> Yes, that is how Magento hashes passwords. Which is weird: They go out of
-> their way to compare strings in constant-time, but
->
-> PUTTING IT ALL TOGETHER
-> =======================
->
-> An attacker has a great deal of control over the ciphertext, and
-> incidentally which cipher mode is used by the decryption routine.
-> Nothing is authenticated. At all.
-> ECB mode everywhere.
-> When CBC mode is actually used, it's used with a laughably weak IV and a
-> non-standard cipher. Also, unauthenticated.
->
-> Magento, one of the largest open source e-commerce platforms, ships a
-> broken cryptography library that clueless developers are probably using to
-> encrypt your credit card information for their client's customers.
->
-> Given the prevalence of ECB mode, and the weak IV used in CBC mode, you
-> should assume anything you encrypted with Magento's encryption library is
-> both:
->
-> - Decryptable, if an attacker can alter plaintexts or ciphertexts and
-> study the output of either operation, without the key
-> - Forgeable
->
-> This cryptography implementation is very irresponsible and, because
-> cryptography is involved, warrants immediate full disclosure so everyone
-> can cease to use their broken crypto as soon as possible.
->
-> If you need a remediation strategy, I've got you covered:
-> https://paragonie.com/blog/2015/11/choosing-right-cryptography-library-for-your-php-project-guide
->
-> Scott Arciszewski
-> Chief Development Officer
-> Paragon Initiative Enterprises <https://paragonie.com>
->
+Description
+~~~~~~~~~~~
+Kirill Zaitsev from Mirantis reported a vulnerability in OpenStack
+Murano applications processing. Using extended YAML tags in Murano
+application YAML files, an attacker can perform a Remote Code
+Execution attack.
 
+Vulnerability has been verified in all currently supported branches.
+Further examination of code suggest, that it is also present in kilo and
+juno versions of murano.
+
+Patches
+~~~~~~~
+- https://review.openstack.org/#/c/333444/ (Liberty)
+- https://review.openstack.org/#/c/333425/ (Liberty)
+- https://review.openstack.org/#/c/333432/ (Liberty)
+- https://review.openstack.org/#/c/333443/ (Mitaka)
+- https://review.openstack.org/#/c/333424/ (Mitaka)
+- https://review.openstack.org/#/c/333439/ (Mitaka)
+- https://review.openstack.org/#/c/333423/ (Newton)
+- https://review.openstack.org/#/c/333440/ (Newton)
+- https://review.openstack.org/#/c/333428/ (Newton)
+
+
+Credits
+~~~~~~~
+- Kirill Zaitsev from Mirantis (CVE-2016-4972)
+
+
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/python-muranoclient/+bug/1586078
+- https://bugs.launchpad.net/murano/+bug/1586079
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4972
+
+Notes
+~~~~~
+- Fixes for this bug are going to be included in the upcoming releases
+  of murano 1.0.3(liberty), 2.0.1(mitaka), 3.0.0(newton) and   
+  python-muranoclient 0.7.3(liberty), 0.8.5(mitaka), 0.9.0(newton)
+
+
+--   
+Kirill Zaitsev
+Murano Project Technical Lead
+Content of type "text/html" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
