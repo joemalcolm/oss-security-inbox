@@ -1,59 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/02/10
-Message-Id: <20160602161814.9F65C42E023@smtpvbsrv1.mitre.org>
-Date: Thu,  2 Jun 2016 12:18:14 -0400 (EDT)
-From: cve-assign@...re.org
-To: gustavo.grieco@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: DoS in phantomjs 2.1.1 rasterizing websites
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/09/1
+Message-ID: <20160808231510.6514ee1c@pc1>
+Date: Mon, 8 Aug 2016 23:15:10 -0700
+From: Hanno Böck <hanno@...eck.de>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>, cve-assign@...re.org
+Subject: MatrixSSL Bignum bugs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Wrote that about a week ago and forgot to forward it here, can't hurt
+if a few more people have a look.
 
-> A denegation of service vulnerability was found in phantomjs when it
-> is processing a particular svg file. This crash caused by a null
-> pointer dereference can be easily used by a malicious website to
-> avoid rasterizing when it is crawled using phantomjs 2.1.1. Previous
-> versions like 1.9.x are not affected. A reproducer is available here:
-> 
-> https://github.com/ariya/phantomjs/issues/14244
+--------
 
-Please provide more information about the threat model. Do you mean
-that a single PhantomJS process is commonly used to access a series of
-independently operated web sites, and the operator of any one web site
-could disrupt this use case by placing the crafted SVG file on their
-site? Or, do you mean that the only known impact is that one web-site
-operator could prevent PhantomJS access (e.g., screenshotting) of
-their own web site by using the crafted SVG file -- in other words,
-the crash would not realistically disrupt any use of PhantomJS by the
-same client to access other web sites?
+If you've been following my fuzzing work you will be aware that I've
+fuzzed various bignum libraries and found several bugs by comparing
+implementations against each other.
 
-Is ongoing use of PhantomJS disrupted only in the
-http://phantomjs.org/api/webserver/ case? In other words, any one
-web-site operator could crash the web server within PhantomJS, and
-there would be an outage until the web server within PhantomJS is
-manually restarted?
+I recently had a look at the MatrixSSL's modular exponentiation
+function, for reasons I'll explain later. I wrote a wrapper, similar to
+previous experiments, comparing its result to OpenSSL.
+https://github.com/hannob/bignum-fuzz/blob/master/openssl-vs-matrixssl-modexp.c
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+I immediately noted that the pstm_exptmod() function of MatrixSSL has
+certain limitations that weren't documented. If one tries to calculate
+a modular exponentiation with the base equal to the modulus (a^b mod a,
+code) it would return an error. If one tries to calculate a modular
+exponentiation with the base zero (0^b mod a, code) it would crash with
+an invalid free operation, potentially leading to memory corruption.
+https://github.com/hannob/bignum-fuzz/blob/master/matrixssl-base-zero.c
 
-iQIcBAEBCAAGBQJXUFvYAAoJEHb/MwWLVhi2qSAP/ieu7bSO3I9bPOqkc5+5YkI3
-/rjZASGY/nV5BCoDv0F7uv3AAKQYd+EzKoa9Nu6soOo2LCnhE4TdFL9VhdJQcSLk
-UwGcx+Iqk/s44igsWML2GnTOsSldxzLHKP9a1IDYj+lU+kZ07yYXytUlx1bbKJNZ
-w2nzT2+sn4V0pHkRMx0a8YkugzTJzD2MGkYxDsLUh0aTDvbA/U53S20obYe7wJjq
-xwinllQRW8cE/Rf0yglxbJpBeV3/dsdOcKC/lnNYbvGMDYWe3t8DIpqVdDXM7nlg
-NfqfDU7pl9q31FpEmxnSzTi7MmnWimgQbxAT/Jpi59sGIx0+XE9KqNdwPpj4YQYT
-FCUujyJBNNdU0+yLHi5NHb6fsT65Wq3AaTK/10220siLAfFfNU11bT/nIUv572Aa
-j81M04BwotyzuQE76MRrXZKswncHyYJZPY5LCvr4KfBntwBfxwJx/xxdSPOtQA59
-mkV1gvVBbL+ANJUZOPuiRNTi95UCTi4z9CEfNgIONCMxtLIvCJZ65QGDGvL+kV8o
-ko8+W5/7FWR2j53AhxGYICoiXlLc/v3OVektEx5LwFxp6Mc6IFqhbsnIy6m+p8NU
-JQVoDfj1NLy+oRzh+7aysYFOUxqAMU20fQLReZNfBmvjRz9DPiYnsZcmd8igYP6K
-4QzOCYC0rF1y6PbhjAd0
-=2USQ
------END PGP SIGNATURE-----
+In normal cryptographic operations these values should never appear.
+But these values are in many situations attacker controlled. One
+situation is during an RSA key exchange. What happens here is that a
+client encrypts a random secret with the server's key. However a
+malicious client could simply send a zero or the key's modulus here. I
+created a patch against openssl that allows to test this. Both values
+crash the MatrixSSL server. However the crash seems not to happen in
+pstm_exptmod(), it hits another bug earlier. In both cases the crash
+happens due to an invalid memory read in the function pstm_reverse(),
+which is not prepared for zero-sized inputs and will underflow the len
+variable.
+https://github.com/hannob/bignum-fuzz/blob/master/openssl-break-rsa-values.diff
+
+The crashes have been fixed in 3.8.4, but the pstm_exptmod() function
+still doesn't accept these inputs. However it no longer crashes with a
+zero base. It may be possible that these issues can be triggered
+through other code paths. I haven't tested Diffie Hellman key
+exchanges, which also allows putting attacker-controlled values into a
+modular exponentiation.
+http://www.matrixssl.org/blog/releases/matrixssl_3_8_4
+
+This is an interesting class of bugs. Bignum functions often aren't
+designed to handle all inputs and only consider values that make sense
+in the context of the cryptographic operations. However if they are
+attacker-controlled this may lead to problems. I just discovered a
+somewhat similar issue in Nettle. They switched their RSA
+implementation from GMP's mpz_powm() function to mpz_powm_sec(), which
+is supposed to be sidechannel resistant. However mpz_powm_sec() is no
+drop-in replacement. Unlike mpz_pown() it doesn't accept even moduli
+and crashes with a floating point error. Therefore when trying to use a
+specifically crafted RSA key with an even modulus this will crash.
+Fortunately this was discovered before the change made it into a
+release.
+https://lists.lysator.liu.se/pipermail/nettle-bugs/2016/003104.html
+
+But back to MatrixSSL: Independent of these corner case values that
+lead to failures I was able to identify an input value that caused a
+wrong calculation result.
+
+There's a particularly severe risk with calculation errors in the
+modulo exponentiation when it comes to the RSA algorithm. A common way
+to speed up the calculation of RSA signatures is an algorithm based on
+the chinese remainder theorem (CRT) that splits it up into two smaller
+calculations. However if one of these calculations goes wrong an
+attacker can learn the private key. Last year Florian Weimer observed
+that various devices had this error and he could extract their keys. He
+recently mentioned on the oss-security mailing list that he also
+observed this in devices using MatrixSSL.
+http://www.openwall.com/lists/oss-security/2016/06/27/1
+
+The way the MatrixSSL team "fixed" the miscalculation issue is not
+really satisfying: They now restrict the input to the pstm_exptmod()
+function to a set of bit sizes (512, 1024, 1536, 2048, 3072, 4096). My
+test input had a different bit size, therefore I cannot reproduce the
+miscalculation any more, but the underlying bug is most likely still
+there. I've tried to find inputs matching these restrictions and still
+causing wrong results, but without success yet. Independent of that the
+restriction means that connections to sites with unusual key sizes or
+Diffie Hellman moduli will no longer work. While they are not common,
+there is no rule that RSA keys or Diffie Hellman moduli need to have
+certain sizes.
+
+Despite the fact that the bug may be still there the CRT attack will
+probably no longer work. A protection mechanism against that was
+implemented in version 3.8.3.
+
+I got told by the MatrixSSL developers that their bignum code is based
+on libtommath. Therefore I also checked if the same bugs appeared
+there. That wasn't the case. The test input causing wrong results in
+MatrixSSL were correctly calculated by libtommath and it was also
+capable of correctly using a zero base or a base equal to the modulus.
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
