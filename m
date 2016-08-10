@@ -1,28 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/17
-Message-ID: <CALOY+aw+wkyLM1BkHGzPQzbP-8_-RM+hjRa6XyTv0Mnt8fLkaw@mail.gmail.com>
-Date: Thu, 27 Oct 2016 13:58:38 -0700
-From: Adith Sudhakar <adith.sudhakar@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/10/2
+Message-ID: <095c337c-63af-ecdd-866a-9d1918e4bfac@redhat.com>
+Date: Wed, 10 Aug 2016 15:04:50 -0400
+From: Daniel J Walsh <dwalsh@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2016-7067 - CSRF in Monit Service Manager
+Subject: Re: cve request: systemd-machined: information exposure for docker containers
 Content-Type: text/plain; charset=utf-8
 
-Hello,
 
-I'd found a CSRF issue in Monit(https://mmonit.com/monit/) in the Service
-Manager application that affects versions 5.19.0 and earlier. Red Hat has
-assigned CVE-2016-7067 to this issue. Monit has fixed this issue in version
-5.20.0
 
-Description:
-The forms in Monit's Service Manager are vulnerable to a cross site request
-forgery attack.
-Successful exploitation will enable an attacker to disable/enable all
-monitoring for a particular host, disable/enable monitoring for a specific
-service.
-
-Upstream Commit:
-https://bitbucket.org/tildeslash/monit/commits/c6ec3820e627f85417053e6336de2987f2d863e3?at=master
-
-Adith Sudhakar
-
+On 08/10/2016 03:00 PM, CAI Qian wrote:
+>
+> ----- Original Message -----
+>> From: "Daniel J Walsh" <dwalsh@...hat.com>
+>> To: oss-security@...ts.openwall.com
+>> Sent: Wednesday, August 3, 2016 3:27:00 AM
+>> Subject: Re: [oss-security] cve request: systemd-machined: information exposure for docker containers
+>>
+>>
+>>
+>> On 08/01/2016 12:24 PM, Shiz wrote:
+>>>> On 28 Jul 2016, at 16:42, Simon McVittie <smcv@...ian.org> wrote:
+>>>>
+>>>> *Which* unprivileged user processes?
+>>>>
+>>>> If the unprivileged user processes are not in a container, they can get a
+>>>> significant amount of the same information by reading the host's /proc.
+>>> Except if a host is running with hidepid={1,2}, which is not entirely
+>>> uncommon
+>>> especially in hardened systems. In that regard it /does/ qualify as
+>>> infoleak.
+>>>
+>>> - Shiz
+>> Then simply rpm -e oci-register-machine
+>>
+> Except people can't do that in OSes like atomic host.
+>    CAI Qian
+But people do not tend to have non privileged users logged into atomic host.
