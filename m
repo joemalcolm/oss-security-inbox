@@ -1,106 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/28/2
-Message-ID: <CACn5sdQFwV6SfDa=pgey+CMFp2N0RBSh69UFMtXOr9j+aZsE+A@mail.gmail.com>
-Date: Tue, 28 Jun 2016 08:57:03 +0200
-From: Gustavo Grieco <gustavo.grieco@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/10/1
+Message-ID: <739916702.1278914.1470855609597.JavaMail.zimbra@redhat.com>
+Date: Wed, 10 Aug 2016 15:00:09 -0400 (EDT)
+From: CAI Qian <caiqian@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Apache Xerces getLastExtEntityInfo Use-After-Free
+Subject: Re: cve request: systemd-machined: information exposure for docker containers
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-Is it related with CVE-2016-2099 still unfixed in 3.1.3
-(https://issues.apache.org/jira/browse/XERCESC-2066) ?
 
-Thanks!
-
-2016-06-28 8:50 GMT+02:00 Marco Grassi <marco.gra@...il.com>:
-> Hi,
->
-> the attached xml will trigger a UAF in xerces-c version 3.1.3 and the trunk
-> version
->
->
-> ➜  xml cat xerces_uaf | xerces-c-3.1.3/samples/StdInParse
-> =================================================================
-> ==16010==ERROR: AddressSanitizer: heap-use-after-free on address 0xf4a0dfcc
-> at pc 0x0836c7f4 bp 0xfff9a198 sp 0xfff9a188
-> READ of size 1 at 0xf4a0dfcc thread T0
->     #0 0x836c7f3 in
-> xercesc_3_1::ReaderMgr::getLastExtEntityInfo(xercesc_3_1::ReaderMgr::LastExtEntityInfo&)
-> const xercesc/internal/ReaderMgr.cpp:833
->     #1 0x83a42d4 in
-> xercesc_3_1::XMLScanner::emitError(xercesc_3_1::XMLErrs::Codes,
-> xercesc_3_1::XMLExcepts::Codes, unsigned short const*, unsigned short
-> const*, unsigned short const*, unsigned short const*)
-> xercesc/internal/XMLScanner.cpp:927
->     #2 0x8e40963 in
-> xercesc_3_1::IGXMLScanner::scanDocument(xercesc_3_1::InputSource const&)
-> xercesc/internal/IGXMLScanner.cpp:276
->     #3 0x84b4cca in xercesc_3_1::SAXParser::parse(xercesc_3_1::InputSource
-> const&) xercesc/parsers/SAXParser.cpp:575
->     #4 0x80533d6 in main src/StdInParse/StdInParse.cpp:186
->     #5 0xf6dd5636 in __libc_start_main (/lib32/libc.so.6+0x18636)
->     #6 0x80624f1
-> (/home/bob/VulnResearch/misc/xml/xerces-c-3.1.3/samples/StdInParse+0x80624f1)
->
-> 0xf4a0dfcc is located 44 bytes inside of 56-byte region
-> [0xf4a0dfa0,0xf4a0dfd8)
-> freed by thread T0 here:
->     #0 0xf7228034 in operator delete(void*)
-> (/usr/lib32/libasan.so.3+0xc5034)
->     #1 0x80992df in xercesc_3_1::XMemory::operator delete(void*)
-> xercesc/util/XMemory.cpp:89
->
-> previously allocated by thread T0 here:
->     #0 0xf72279b4 in operator new(unsigned int)
-> (/usr/lib32/libasan.so.3+0xc49b4)
->     #1 0x8357ad9 in xercesc_3_1::MemoryManagerImpl::allocate(unsigned int)
-> xercesc/internal/MemoryManagerImpl.cpp:40
->     #2 0x8099042 in xercesc_3_1::XMemory::operator new(unsigned int,
-> xercesc_3_1::MemoryManager*) xercesc/util/XMemory.cpp:68
->
-> SUMMARY: AddressSanitizer: heap-use-after-free
-> xercesc/internal/ReaderMgr.cpp:833 in
-> xercesc_3_1::ReaderMgr::getLastExtEntityInfo(xercesc_3_1::ReaderMgr::LastExtEntityInfo&)
-> const
-> Shadow bytes around the buggy address:
->   0x3e941ba0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
->   0x3e941bb0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
->   0x3e941bc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
->   0x3e941bd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
->   0x3e941be0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-> =>0x3e941bf0: fa fa fa fa fd fd fd fd fd[fd]fd fa fa fa fa fa
->   0x3e941c00: fd fd fd fd fd fd fd fa fa fa fa fa 00 00 00 00
->   0x3e941c10: 00 00 00 fa fa fa fa fa 00 00 00 00 00 00 00 00
->   0x3e941c20: fa fa fa fa 00 00 00 00 00 00 00 00 fa fa fa fa
->   0x3e941c30: 00 00 00 00 00 00 00 00 fa fa fa fa 00 00 00 00
->   0x3e941c40: 00 00 04 fa fa fa fa fa 00 00 00 00 00 00 04 fa
-> Shadow byte legend (one shadow byte represents 8 application bytes):
->   Addressable:           00
->   Partially addressable: 01 02 03 04 05 06 07
->   Heap left redzone:       fa
->   Heap right redzone:      fb
->   Freed heap region:       fd
->   Stack left redzone:      f1
->   Stack mid redzone:       f2
->   Stack right redzone:     f3
->   Stack partial redzone:   f4
->   Stack after return:      f5
->   Stack use after scope:   f8
->   Global redzone:          f9
->   Global init order:       f6
->   Poisoned by user:        f7
->   Container overflow:      fc
->   Array cookie:            ac
->   Intra object redzone:    bb
->   ASan internal:           fe
->   Left alloca redzone:     ca
->   Right alloca redzone:    cb
-> ==16010==ABORTING
->
->
->
-> Marco
->
-> https://marcograss.github.io/
+----- Original Message -----
+> From: "Daniel J Walsh" <dwalsh@...hat.com>
+> To: oss-security@...ts.openwall.com
+> Sent: Wednesday, August 3, 2016 3:27:00 AM
+> Subject: Re: [oss-security] cve request: systemd-machined: information exposure for docker containers
+> 
+> 
+> 
+> On 08/01/2016 12:24 PM, Shiz wrote:
+> >> On 28 Jul 2016, at 16:42, Simon McVittie <smcv@...ian.org> wrote:
+> >>
+> >> *Which* unprivileged user processes?
+> >>
+> >> If the unprivileged user processes are not in a container, they can get a
+> >> significant amount of the same information by reading the host's /proc.
+> > Except if a host is running with hidepid={1,2}, which is not entirely
+> > uncommon
+> > especially in hardened systems. In that regard it /does/ qualify as
+> > infoleak.
+> >
+> > - Shiz
+> Then simply rpm -e oci-register-machine
+> 
+Except people can't do that in OSes like atomic host.
+   CAI Qian
