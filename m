@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1493" "Wednesday" "27" "January" "2016" "12:40:44" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160127174044.A4E7C3AE070@smtpvbsrv1.mitre.org>" "39" "[oss-security] Re: CVE Request: Linux: NULL pointer dereference netfilter/nf_nat_redirect.c in nf_nat_redirect_ipv4 function" "^Cc:" nil nil "1" "2016012717:40:44" "[oss-security] Re: CVE Request: Linux: NULL pointer dereference netfilter/nf_nat_redirect.c in nf_nat_redirect_ipv4 function" (number mark "        cve-assign@m Jan 27   39/1493  " thread-indent "\"[oss-security] Re: CVE Request: Linux: NULL pointer dereference netfilter/nf_nat_redirect.c in nf_nat_redirect_ipv4 function\"\n") "<20160127154041.GA9254@eldamar.local>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1019" "Wednesday" "10" "August" "2016" "15:04:50" "-0400" "Daniel J Walsh" "dwalsh@redhat.com" "<095c337c-63af-ecdd-866a-9d1918e4bfac@redhat.com>" "30" "Re: [oss-security] cve request: systemd-machined: information exposure for docker containers" "^Date:" nil nil "8" "2016081019:04:50" "[oss-security] cve request: systemd-machined: information exposure for docker containers" (number mark "        dwalsh@redha Aug 10   30/1019  " thread-indent "\"Re: [oss-security] cve request: systemd-machined: information exposure for docker containers\"\n") "<739916702.1278914.1470855609597.JavaMail.zimbra@redhat.com>" ("<1304293369.8684866.1469539505676.JavaMail.zimbra@redhat.com>" "<20160727200021.GB3330@motoko>" "<B760F07C-908F-431A-8BCE-A3AE9E93E33F@nccgroup.trust>" "<CAEk6tEx0JRNX9q0k8JH2PNkGJO59WVVMhh4=3DkoQFMNkqY9LA@mail.gmail.com>" "<4b0070a9-e8c3-ac69-a410-2269d9d08b71@redhat.com>" "<20160728144249.GB23522@perpetual.pseudorandom.co.uk>" "<291B6ECE-2D59-435D-A986-4582022C9B21@shiz.me>" "<f6c1ae32-c8fa-96f2-a300-87fd0accd6fe@redhat.com>" "<739916702.1278914.1470855609597.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24075 invoked by uid 550); 27 Jan 2016 17:40:57 -0000
+Received: (qmail 3097 invoked by uid 550); 10 Aug 2016 19:05:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24057 invoked from network); 27 Jan 2016 17:40:56 -0000
-In-Reply-To: <20160127154041.GA9254@eldamar.local>
-Message-Id: <20160127174044.A4E7C3AE070@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Wed, 27 Jan 2016 12:40:44 -0500 (EST)
-From: cve-assign@mitre.org
+Received: (qmail 3078 invoked from network); 10 Aug 2016 19:05:03 -0000
+References: <1304293369.8684866.1469539505676.JavaMail.zimbra@redhat.com>
+ <20160727200021.GB3330@motoko>
+ <B760F07C-908F-431A-8BCE-A3AE9E93E33F@nccgroup.trust>
+ <CAEk6tEx0JRNX9q0k8JH2PNkGJO59WVVMhh4=3DkoQFMNkqY9LA@mail.gmail.com>
+ <4b0070a9-e8c3-ac69-a410-2269d9d08b71@redhat.com>
+ <20160728144249.GB23522@perpetual.pseudorandom.co.uk>
+ <291B6ECE-2D59-435D-A986-4582022C9B21@shiz.me>
+ <f6c1ae32-c8fa-96f2-a300-87fd0accd6fe@redhat.com>
+ <739916702.1278914.1470855609597.JavaMail.zimbra@redhat.com>
+Message-ID: <095c337c-63af-ecdd-866a-9d1918e4bfac@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
+MIME-Version: 1.0
+In-Reply-To: <739916702.1278914.1470855609597.JavaMail.zimbra@redhat.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Wed, 10 Aug 2016 19:04:50 +0000 (UTC)
+Date: Wed, 10 Aug 2016 15:04:50 -0400
+From: Daniel J Walsh <dwalsh@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Linux: NULL pointer dereference netfilter/nf_nat_redirect.c in nf_nat_redirect_ipv4 function
-To: carnil@debian.org
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=94f9cd81436c85d8c3a318ba92e236ede73752fc
-> netfilter: nf_nat_redirect: add missing NULL pointer check
-
-Use CVE-2015-8787.
+Subject: Re: [oss-security] cve request: systemd-machined: information
+ exposure for docker containers
+To: oss-security@lists.openwall.com
 
 
->> this was once fixed in 2003.
->> 
->> http://marc.info/?l=netfilter-devel&m=106668497403047&w=2
 
-Use CVE-2003-1604 for this similar issue in the past. The added test
-for "indev->ifa_list == NULL" existed in 2.6.0 but did not exist in
-2.5.75.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWqP+eAAoJEL54rhJi8gl5hr4P/jr7hZkO6mvdXvUvm2aHc4Xk
-9LgjyWsH0mtluEV50n8XiTMjpgCN0Zoyfyp5xKSPmrWDcPU18Va1f+9pdH1q8EW+
-V4YqsQPXm67JumFTvfZ0RkzFFtrCdAsHwjg0k1PBnAVj7Xv5P3vXOuEN+zyVUUIF
-uYdwzaROhD83abJEtTOP/iIchx8SL1tlj69C5zBSCJZDwkXt/4q4FvI0A3HBoPgx
-7DpkibYIVMl7/uPfDly2nc2r/uxWooqtm4CU4MB96hGp3kjM1feKtUDk0V0mj52m
-MXaSnjyGEES89ubuUGAnwA3QXOxm2NgBXzATbQXhtoaIiWY1ur+c4Couka2n0owu
-BfIhn2auRuMAdbUK9uMPzBPRj4BkGaMaJjbGsQa/Ldb/UiNoQ3O7jRQ3WkKlJPo8
-Qt0d3bDp+XUiv1O2j4Az4lr3uUNoc4M3VSEyfkXin0nIe7qmU7L0rPlKPg09zzo9
-i+C+jXffMb5tTghS0uKvkqLvtp1SdRmflhX+pq04giIhyJm96ySSHDAwUfwxOyPH
-5AZg0QgnfwXFPR/XdWBjlH65hufbDGHjghmMH5ZD/opobjefbx+nKGZaegBvANAW
-6aRWoefjVAfJ3ADf8IypDRpqL5dUiuZn8wy3cTY58eidQHz19YwHwZrFrDrygI8b
-1l+I4JYQ96Ugm67xWHvM
-=yd8J
------END PGP SIGNATURE-----
+On 08/10/2016 03:00 PM, CAI Qian wrote:
+>
+> ----- Original Message -----
+>> From: "Daniel J Walsh" <dwalsh@redhat.com>
+>> To: oss-security@lists.openwall.com
+>> Sent: Wednesday, August 3, 2016 3:27:00 AM
+>> Subject: Re: [oss-security] cve request: systemd-machined: information exposure for docker containers
+>>
+>>
+>>
+>> On 08/01/2016 12:24 PM, Shiz wrote:
+>>>> On 28 Jul 2016, at 16:42, Simon McVittie <smcv@debian.org> wrote:
+>>>>
+>>>> *Which* unprivileged user processes?
+>>>>
+>>>> If the unprivileged user processes are not in a container, they can get a
+>>>> significant amount of the same information by reading the host's /proc.
+>>> Except if a host is running with hidepid={1,2}, which is not entirely
+>>> uncommon
+>>> especially in hardened systems. In that regard it /does/ qualify as
+>>> infoleak.
+>>>
+>>> - Shiz
+>> Then simply rpm -e oci-register-machine
+>>
+> Except people can't do that in OSes like atomic host.
+>    CAI Qian
+But people do not tend to have non privileged users logged into atomic host.
