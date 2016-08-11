@@ -1,30 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/8
-Message-ID: <alpine.LFD.2.20.1609200003200.13498@wniryva>
-Date: Tue, 20 Sep 2016 00:11:37 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: liqiang6-s@....cn
-Subject: CVE Request Qemu: usb: xhci memory leakage during device unplug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/11/2
+Message-ID: <CAK=Phk4fLPV9eifFryXwAPwm3jKxrj25m2A4EDztFxYE-uhjxw@mail.gmail.com>
+Date: Thu, 11 Aug 2016 09:08:05 -0400
+From: Sylvain Corlay <sylvain.corlay@...il.com>
+To: oss-security@...ts.openwall.com, Fernando Perez <fperez@....gov>,  Matthias Bussonnier <mbussonnier@...keley.edu>, Jamie Whitacre <whitacre@...keley.edu>
+Subject: Re: CVE Request: ipywidgets executes untrusted JavaScript
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hello everyone,
 
-Quick Emulator(Qemu) built with the USB xHCI controller emulation support is 
-vulnerable to a memory leakage issue. It could occur while doing a USB device 
-unplug operation; Doing so repeatedly would result in leaking host memory, 
-affecting other services on the host.
+I am following up on this CVE request. Did we miss something in how the
+request is formulated?
 
-A privileged user inside guest could use this flaw to cause a DoS on the host 
-and/or potentially crash the Qemu process instance on the host.
+Thanks,
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg02773.html
+Sylvain
 
-This issue was reported by Mr Li Qiang of 360.cn Inc.
+On Fri, Jul 1, 2016 at 6:12 PM, Sylvain Corlay <sylvain.corlay@...il.com>
+wrote:
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+> *Description*
+>
+> ipywidgets version 5.1.5 (and the companion package widgetsnbextension
+> 1.2.3) fixes a security vulnerability which affects the usage of ipywidgets
+> in conjunction with the Jupyter Notebook. (The GitHub repository for the
+> project is https://github.com/ipython/ipywidgets)
+>
+> *Affected versions*
+>
+> The affected versions of ipywidgets are:
+>
+> ipywidgets version 5.0.0 ≤ V ≤ 5.1.4 (and widgetsnbextension < 1.2.3), …
+>
+> Only users who installed ipywidgets using pip or from source on the GitHub
+> repository are affected.
+>
+> Anaconda users are unaffected because the vulnerable version of ipywidget
+> has never been released to the default conda channel.
+>
+> *Resolution*
+>
+> We recently released ipywidgets version 5.1.5 (widgetsnbextension version
+> 1.2.3). You can check whether your system is affected by running the
+> following command:
+>
+>    >>> from distutils.version import LooseVersion as V
+>    >>> import ipywidgets
+>    >>> if V('5.0.0') <= V(ipywidgets.__version__) < V('5.1.5'):
+>    >>>     print("Upgrade ipywidgets to 5.1.5")
+>
+> If your system is vulnerable, you will see the following output:
+>
+>     Upgrade ipywidgets to 5.1.5
+>
+> If your system is vulnerable please upgrade to ipywidgets version 5.1.5.
+> Use the following command to install:
+>
+>    $ pip install "ipywidgets>=5.1.5"
+>
+> or
+>
+>    $ conda install "ipywidgets>=5.1.5"
+>
+> *Technical details*
+>
+> The vulnerability was discovered following an investigation of a potential
+> vulnerability reported by Brian Granger to the ipython-security mailing
+> list (security@...thon.org) on May 5.
+>
+> The reason for such behavior was determined on May 5 by Matthias
+> Bussonnier.
+>
+> A fix was proposed written and reviewed, then [merged](https://github.com/
+> ipython/ipywidgets/pull/591) into the development branch on May 20, and a
+> non vulnerable version released on May 25.
+>
+> A widget snapshotting feature introduced in ipywidgets 5.0.0 (
+> https://github.com/ipython/ipywidgets/pull/314/) allowed untrusted
+> javascript code to execute in an untrusted notebook on loading and saving
+> of a notebook.  A well crafted notebook could execute arbitrary code with
+> the rights of the current user in the context of the page, the notebook
+> server, and available kernels.
+>
+> We recommend immediate upgrade of the ipywidgets package.
+>
+> There is no simple configuration option that could mitigate the system for
+> vulnerability. The user must upgrade to ipywidget version 5.1.5 or
+> downgrade to 4.x.
+>
+> *Future Plan*
+>
+> The security issue resulted from the seemingly harmless combination of
+> calls:
+>
+>     json = cell.get_json()
+>     json = update_json(json)
+>     cell.clear_output()
+>     cell.from_json()
+>
+> The clear_output()  method has as a consequence to mark the cell as
+> trusted (as it has no output that can potentially execute javascript). This
+> is followed by the next call which can trigger JavaScript execution in the
+> page context.
+>
+> We plan on improving the notebook API so that clear_output() does not
+> change the trusted status of a cell (or a notebook), to prevent mistakes
+> like this from having security consequences. This will lead to the slight
+> behavior change that an empty cell with no output can be untrusted.
+>
+> We learned that we are not completely ready for fast release of security
+> fixes. The time from vulnerability discovery to available fix, release, and
+> announcement can and should be shorter.
+>
+> We encourage users who find possible security issues to notify
+> security@...thon.org.
+>
+> Thanks!
+>
+> The Jupyter team
+>
+
