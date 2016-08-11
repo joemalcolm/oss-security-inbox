@@ -1,44 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/08/2
-Message-ID: <20161108094831.GA22910@lorien.valinor.li>
-Date: Tue, 8 Nov 2016 10:48:31 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: CVE request: mat doesn't remove metadata in embedded images in PDFs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/11/7
+Message-ID: <alpine.LFD.2.20.1608120103530.6399@wniryva>
+Date: Fri, 12 Aug 2016 01:11:39 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request Qemu: buffer overflow in vmxnet_tx_pkt_parse_headers() in vmxnet3 device emulation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+   Hello,
 
-On Thu, Jun 02, 2016 at 06:02:40PM +0000, Holger Levsen wrote:
-> On Thu, Jun 02, 2016 at 12:21:34PM -0400, cve-assign@...re.org wrote:
-> > We think you mean that a CVE ID can exist with the rationale of:
-> > 
-> >   - as of version 0.7, there will be a required security update in
-> >     which the embedded-in-a-PDF security problem is resolved
-> > 
-> >   - the CVE ID is needed to tag that required security update
-> > 
-> >   - as of version 0.7, the https://mat.boum.org/ text may be changed
-> >     from "images embedded inside PDF may not be cleaned" to something
-> >     like "images embedded inside complex documents may not be cleaned,
-> >     but users can rely on cleaning in the specific case of PDF
-> >     documents"
-> > 
-> > Does that match your intention for the CVE ID?
-> 
-> yes.
-> 
-> Though I disagree with the 3rd paragraph a bit, I don't think it's that
-> hard to recursivly process files, eg both
-> https://tracker.debian.org/pkg/strip-nondeterminism (in perl) and
-> https://tracker.debian.org/pkg/diffoscope (in python) do that.
+Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support is 
+vulnerable to an OOB read access. In that it does not check if packet headers 
+does not check for IP header length. It could lead to a OOB access when 
+reading further packet data.
 
-FTR, in Debian for both Debian wheezy and Debian jessie the support
-for PDF was disabled entirely:
+Upstream patch:
+----------------
+   -> https://lists.gnu.org/archive/html/qemu-stable/2016-08/msg00077.html
 
-https://lists.debian.org/debian-lts-announce/2016/10/msg00006.html
-https://lists.debian.org/debian-security-announce/2016/msg00291.html
+This issue was reported by Li Qiang  if 360.cn Inc.
 
-Regards,
-Salvatore
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
