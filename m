@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["677" "Wednesday" "18" "January" "2017" "00:45:29" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1701180043410.31247@wniryva>" "20" "[oss-security] CVE request Qemu: audio: memory leakage in ac97 device" nil nil nil "1" "2017011719:15:29" "[oss-security] CVE request Qemu: audio: memory leakage in ac97 device" (number mark "U       ppandit@redh Jan 18   20/677   " thread-indent "\"[oss-security] CVE request Qemu: audio: memory leakage in ac97 device\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["582" "Friday" "12" "August" "2016" "01:24:44" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1608120118130.16386@wniryva>" "20" "[oss-security] CVE request Qemu: an infinite loop during packet fragmentation" nil nil nil "8" "2016081119:54:44" "[oss-security] CVE request Qemu: an infinite loop during packet fragmentation" (number mark "U       ppandit@redh Aug 12   20/582   " thread-indent "\"[oss-security] CVE request Qemu: an infinite loop during packet fragmentation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22020 invoked by uid 550); 17 Jan 2017 19:15:47 -0000
+Received: (qmail 12263 invoked by uid 550); 11 Aug 2016 19:55:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,34 +12,34 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21995 invoked from network); 17 Jan 2017 19:15:46 -0000
-Date: Wed, 18 Jan 2017 00:45:29 +0530 (IST)
+Received: (qmail 12245 invoked from network); 11 Aug 2016 19:55:03 -0000
+Date: Fri, 12 Aug 2016 01:24:44 +0530 (IST)
 From: P J P <ppandit@redhat.com>
 X-X-Sender: pjp@javelin
 To: oss security list <oss-security@lists.openwall.com>
 cc: Li Qiang <liqiang6-s@360.cn>
-Message-ID: <alpine.LFD.2.20.1701180043410.31247@wniryva>
+Message-ID: <alpine.LFD.2.20.1608120118130.16386@wniryva>
 MIME-Version: 1.0
 Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Tue, 17 Jan 2017 19:15:35 +0000 (UTC)
-Subject: [oss-security] CVE request Qemu: audio: memory leakage in ac97 device
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Thu, 11 Aug 2016 19:54:51 +0000 (UTC)
+Subject: [oss-security] CVE request Qemu: an infinite loop during packet fragmentation
 
-   Hello,
+    Hello,
 
-Quick Emulator(Qemu) built with the ac97 audio device emulation support is 
-vulnerable to a memory leakage issue. It could occur while doing a device 
-unplug operation; Doing so repeatedly would result in leaking host memory, 
-affecting other services on the host.
+Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support,
+with network abstraction layer is vulnerable to an infinite loop issue.
+It could occur while fragmenting packets in the device.
 
-A privileged user inside guest could use this flaw to cause a DoS and/or 
-potentially crash the Qemu process on the host.
+A privileged user inside guest could use this flaw to crash the Qemu instance 
+resulting in DoS.
 
 Upstream patch:
 ---------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg01740.html
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg01601.html
 
-This issue was reported by Mr Li Qiang of 360.cn Inc.
+This issue was reported by Li Qiang of 360.cn Inc.
+
 
 Thank you.
 --
