@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["15816" "Wednesday" "13" "May" "2015" "11:16:02" "+0000" "Xen.org security team" "security@xen.org" "<E1YsUdu-0008EI-DZ@xenbits.xen.org>" "324" "[oss-security] Xen Security Advisory 133 (CVE-2015-3456) - Privilege escalation via emulated floppy disk drive" nil nil nil "5" "2015051311:16:02" "[oss-security] Xen Security Advisory 133 (CVE-2015-3456) - Privilege escalation via emulated floppy disk drive" (number mark "        security@xen May 13  324/15816 " thread-indent "\"[oss-security] Xen Security Advisory 133 (CVE-2015-3456) - Privilege escalation via emulated floppy disk drive\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["15923" "Thursday" "11" "August" "2016" "12:30:05" "-0700" "Aaron Patterson" "tenderlove@ruby-lang.org" "<20160811193005.GB57149@TC.local>" "444" "[oss-security] Re: [CVE-2016-6316] Possible XSS Vulnerability in Action View" nil nil nil "8" "2016081119:30:05" "[oss-security] Re: [CVE-2016-6316] Possible XSS Vulnerability in Action View" (number mark "U       tenderlove@r Aug 11  444/15923 " thread-indent "\"[oss-security] Re: [CVE-2016-6316] Possible XSS Vulnerability in Action View\"\n") "<20160811175209.GA39068@TC.local>" ("<20160811175209.GA39068@TC.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26579 invoked by uid 550); 13 May 2015 11:16:28 -0000
+Received: (qmail 17784 invoked by uid 550); 11 Aug 2016 19:30:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,342 +11,490 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26521 invoked from network); 13 May 2015 11:16:21 -0000
-Message-Id: <E1YsUdu-0008EI-DZ@xenbits.xen.org>
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.428 (Entity 5.428)
-CC: Xen.org security team <security@xen.org>
-Date: Wed, 13 May 2015 11:16:02 +0000
-From: Xen.org security team <security@xen.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Xen Security Advisory 133 (CVE-2015-3456) - Privilege escalation
- via emulated floppy disk drive
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-
---=separator
-Content-Type: text/plain; charset="utf-8"
+Received: (qmail 17766 invoked from network); 11 Aug 2016 19:30:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tenderlovemaking-com.20150623.gappssmtp.com; s=20150623;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=suFxF01Ymu0LpN+Butck0k+PiSxx4+aLT60ZfrHtCD0=;
+        b=gGb1WlL7s814Ky8bKEdQtkpB5ZpoLKqW1u0/yQ4oqGOfH16WPoGbE0N5xBVAxRxZTF
+         sNMyfmtnEt17nkaXyH+Ln8h0JBoCHUTlsGi/o0+BRALSLIYdS7WnTVdDd1tYnXWDcEeW
+         pgkd6WagYGOqbohZZ0t7+cMvB73I8OVVnXKHgt7B+KTypNrVKdIxrcj0QQ8P/WRs9bnT
+         HYMlnX0xUtJTZrzQBE9y6yRtBZZU25CDsPz3LMlE383iboQEi7x5E5IriVbkTilvNF5r
+         G+cqE1u7iuDC3ywY4RRgCSLQBXG+SzgPIFlHYYjVhhAuTAbNoozAvcdtDfBwl2Lsw7gY
+         RKxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=suFxF01Ymu0LpN+Butck0k+PiSxx4+aLT60ZfrHtCD0=;
+        b=VLflCc+IgPVQiOuo1zfVNzx4wGKM6oPWqqPDoAQ9shf+DaTjhPB60BJgHmrw+OEtsg
+         AcB1aGoAayx3Y4Szq90Vlw0DqVAKKBbN5NTrw5ZIB+duN6MCFK74P2apnKTPfeycxOMI
+         eBeztfcTMmc/tiQNjjGTCqZ5eSOJs6T7GuVUxYvgeI84MacqbsxT9sm7LcUKl9vhAQpV
+         3pOeOy7tFqCghHdbeQoJKHf0NGPrNoHTQCLe4F8PI19Ozs4deprI3bP7hfZuDg6dSA9s
+         Kn7thQGAOnTMaxqVVVSwtQy2+UJlp8pNwDj5KxoEMX+ph1gFtsm2ZT4h9Qai5JYMBAVZ
+         GJyA==
+X-Gm-Message-State: AEkoouvXQKeGgXAM3uGz7xF5kLpY2Ezru/pzO6jv4u0ADXSS6ZGPbKfoSv28Us9TH3i2Dw==
+X-Received: by 10.98.63.1 with SMTP id m1mr20206366pfa.14.1470943809141;
+        Thu, 11 Aug 2016 12:30:09 -0700 (PDT)
+Sender: Aaron Patterson <aaron@tenderlovemaking.com>
+Date: Thu, 11 Aug 2016 12:30:05 -0700
+From: Aaron Patterson <tenderlove@ruby-lang.org>
+To: Aaron Patterson <tenderlove@ruby-lang.org>
+Cc: security@suse.de, rubyonrails-security@googlegroups.com,
+	oss-security@lists.openwall.com, ruby-security-ann@googlegroups.com
+Message-ID: <20160811193005.GB57149@TC.local>
+References: <20160811175209.GA39068@TC.local>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="1SQmhf2mF2YjsYvc"
 Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20160811175209.GA39068@TC.local>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: [oss-security] Re: [CVE-2016-6316] Possible XSS Vulnerability in Action View
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--1SQmhf2mF2YjsYvc
+Content-Type: multipart/mixed; boundary="9zSXsLTf0vkW971A"
+Content-Disposition: inline
 
-            Xen Security Advisory CVE-2015-3456 / XSA-133
-                              version 2
 
-          Privilege escalation via emulated floppy disk drive
+--9zSXsLTf0vkW971A
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-UPDATES IN VERSION 2
-====================
+Hi,
 
-Public release.
+There is a bug in the patch for the 3.2 series.  I've attached a
+combined patch here.  The attached patch is a combination of these two
+patches:
 
-ISSUE DESCRIPTION
-=================
+  https://github.com/rails/rails/commit/4bcccf5ecd81a6272479537911b7d9760c5=
+be164
+  https://github.com/rails/rails/commit/5aabcf25caefbe84f656256a9d3e7fc0c9e=
+14ecc
 
-The code in qemu which emulates a floppy disk controller did not
-correctly bounds check accesses to an array and therefore was
-vulnerable to a buffer overflow attack.
+Sorry for the problems.
 
-IMPACT
-======
+On Thu, Aug 11, 2016 at 10:52:09AM -0700, Aaron Patterson wrote:
+> # Possible XSS Vulnerability in Action View
+>=20
+> There is a possible XSS vulnerability in Action View.  Text declared as "=
+HTML
+> safe" will not have quotes escaped when used as attribute values in tag
+> helpers.  This vulnerability has been assigned the CVE identifier
+> CVE-2016-6316.
+>=20
+> Versions Affected:  >=3D 3.0.0.
+> Not affected:       < 3.0.0
+> Fixed Versions:     5.0.0.1, 4.2.7.1, 3.2.22.3
+>=20
+> Impact
+> ------
+> Text declared as "HTML safe" when passed as an attribute value to a tag h=
+elper
+> will not have quotes escaped which can lead to an XSS attack.  Impacted c=
+ode
+> looks something like this:
+>=20
+> ```
+> content_tag(:div, "hi", title: user_input.html_safe)
+> ```
+>=20
+> Some helpers like the `sanitize` helper will automatically mark strings as
+> "HTML safe", so impacted code could also look something like this:
+>=20
+> ```
+> content_tag(:div, "hi", title: sanitize(user_input))
+> ```
+>=20
+> All users running an affected release should either upgrade or use one of=
+ the
+> workarounds immediately.
+>=20
+> Releases
+> --------
+> The FIXED releases are available at the normal locations.
+>=20
+> Workarounds
+> -----------
+> You can work around this issue by either *not* marking arbitrary user inp=
+ut as
+> safe, or by manually escaping quotes like this:
+>=20
+> ```
+> def escape_quotes(value)
+>   value.gsub(/"/, '&quot;'.freeze)
+> end
+>=20
+> content_tag(:div, "hi", title: escape_quotes(sanitize(user_input)))
+> ```
+>=20
+> Patches
+> -------
+> To aid users who aren't able to upgrade immediately we have provided patc=
+hes for
+> the two supported release series. They are in git-am format and consist o=
+f a
+> single changeset.
+>=20
+> * 3-2-attribute-xss.patch - Patch for 3.2 series
+> * 4-2-attribute-xss.patch - Patch for 4.2 series
+> * 5-0-attribute-xss.patch - Patch for 5.0 series
+>=20
+> Please note that only the 5.0.x and 4.2.x series are supported at present=
+. Users
+> of earlier unsupported releases are advised to upgrade as soon as possibl=
+e as we
+> cannot guarantee the continued availability of security fixes for unsuppo=
+rted
+> releases.
+>=20
+> Credits
+> -------
+>=20
+> Thanks to Andrew Carpenter of Critical Juncture for reporting this issue =
+and
+> sending a patch to fix it!
+>=20
+> --=20
+> Aaron Patterson
+> http://tenderlovemaking.com/
 
-A guest which has access to an emulated floppy device can exploit this
-vulnerability to take over the qemu process elevating its privilege to
-that of the qemu process.
+> From cbdb7d367c4f15ecb85c308a0d78f61d629a74c1 Mon Sep 17 00:00:00 2001
+> From: Andrew Carpenter <andrew@criticaljuncture.org>
+> Date: Thu, 28 Jul 2016 16:12:21 -0700
+> Subject: [PATCH] ensure tag/content_tag escapes " in attribute vals
+>=20
+> Many helpers mark content as HTML-safe without escaping double quotes -- =
+including `sanitize`. Regardless of whether or not the attribute values are=
+ HTML-escaped, we want to be sure they don't include double quotes, as that=
+ can cause XSS issues. For example: `content_tag(:div, "foo", title: saniti=
+ze('" onmouseover=3D"alert(1);//'))`
+>=20
+> CVE-2016-6316
+> ---
+>  actionpack/lib/action_view/helpers/tag_helper.rb | 15 +++++++++++----
+>  actionpack/test/template/tag_helper_test.rb      | 10 ++++++++++
+>  2 files changed, 21 insertions(+), 4 deletions(-)
+>=20
+> diff --git a/actionpack/lib/action_view/helpers/tag_helper.rb b/actionpac=
+k/lib/action_view/helpers/tag_helper.rb
+> index 7f58a27..34741b8 100644
+> --- a/actionpack/lib/action_view/helpers/tag_helper.rb
+> +++ b/actionpack/lib/action_view/helpers/tag_helper.rb
+> @@ -141,20 +141,27 @@ module ActionView
+>                    unless v.is_a?(String) || v.is_a?(Symbol) || v.is_a?(B=
+igDecimal)
+>                      v =3D v.to_json
+>                    end
+> -                  v =3D ERB::Util.html_escape(v) if escape
+> -                  attrs << %(data-#{k.to_s.dasherize}=3D"#{v}")
+> +                  attrs << tag_option("data-#{k.to_s.dasherize}", v, esc=
+ape)
+>                  end
+>                elsif BOOLEAN_ATTRIBUTES.include?(key)
+>                  attrs << %(#{key}=3D"#{key}") if value
+>                elsif !value.nil?
+>                  final_value =3D value.is_a?(Array) ? value.join(" ") : v=
+alue
+> -                final_value =3D ERB::Util.html_escape(final_value) if es=
+cape
+> -                attrs << %(#{key}=3D"#{final_value}")
+> +                attrs << tag_option(key, value, escape)
+>                end
+>              end
+>              " #{attrs.sort * ' '}".html_safe unless attrs.empty?
+>            end
+>          end
+> +
+> +        def tag_option(key, value, escape)
+> +          if value.is_a?(Array)
+> +            value =3D escape ? safe_join(value, " ") : value.join(" ")
+> +          else
+> +            value =3D escape ? ERB::Util.html_escape(value) : value
+> +          end
+> +          %(#{key}=3D"#{value.gsub(/"/, '&quot;'.freeze)}")
+> +        end
+>      end
+>    end
+>  end
+> diff --git a/actionpack/test/template/tag_helper_test.rb b/actionpack/tes=
+t/template/tag_helper_test.rb
+> index e362955..9c3d636 100644
+> --- a/actionpack/test/template/tag_helper_test.rb
+> +++ b/actionpack/test/template/tag_helper_test.rb
+> @@ -101,6 +101,16 @@ class TagHelperTest < ActionView::TestCase
+>      end
+>    end
+>=20=20
+> +  def test_tag_does_not_honor_html_safe_double_quotes_as_attributes
+> +    assert_dom_equal '<p title=3D"&quot;">content</p>',
+> +      content_tag('p', "content", title: '"'.html_safe)
+> +  end
+> +
+> +  def test_data_tag_does_not_honor_html_safe_double_quotes_as_attributes
+> +    assert_dom_equal '<p data-title=3D"&quot;">content</p>',
+> +      content_tag('p', "content", data: { title: '"'.html_safe })
+> +  end
+> +
+>    def test_skip_invalid_escaped_attributes
+>      ['&1;', '&#1dfa3;', '& #123;'].each do |escaped|
+>        assert_equal %(<a href=3D"#{escaped.gsub(/&/, '&amp;')}" />), tag(=
+'a', :href =3D> escaped)
+> --=20
+> 2.8.1
+>=20
 
-VULNERABLE SYSTEMS
-==================
+> From e4abbc8636e1300d14b1fd7e3f05e4e25bc8289e Mon Sep 17 00:00:00 2001
+> From: Andrew Carpenter <andrew@criticaljuncture.org>
+> Date: Thu, 28 Jul 2016 16:12:21 -0700
+> Subject: [PATCH 1/2] ensure tag/content_tag escapes " in attribute vals
+>=20
+> Many helpers mark content as HTML-safe without escaping double quotes -- =
+including `sanitize`. Regardless of whether or not the attribute values are=
+ HTML-escaped, we want to be sure they don't include double quotes, as that=
+ can cause XSS issues. For example: `content_tag(:div, "foo", title: saniti=
+ze('" onmouseover=3D"alert(1);//'))`
+>=20
+> CVE-2016-6316
+> ---
+>  actionview/lib/action_view/helpers/tag_helper.rb |  2 +-
+>  actionview/test/template/tag_helper_test.rb      | 10 ++++++++++
+>  2 files changed, 11 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/actionview/lib/action_view/helpers/tag_helper.rb b/actionvie=
+w/lib/action_view/helpers/tag_helper.rb
+> index b203857..f09595d 100644
+> --- a/actionview/lib/action_view/helpers/tag_helper.rb
+> +++ b/actionview/lib/action_view/helpers/tag_helper.rb
+> @@ -181,7 +181,7 @@ module ActionView
+>            else
+>              value =3D escape ? ERB::Util.unwrapped_html_escape(value) : =
+value
+>            end
+> -          %(#{key}=3D"#{value}")
+> +          %(#{key}=3D"#{value.gsub(/"/, '&quot;'.freeze)}")
+>          end
+>      end
+>    end
+> diff --git a/actionview/test/template/tag_helper_test.rb b/actionview/tes=
+t/template/tag_helper_test.rb
+> index ce89d57..8332dd0 100644
+> --- a/actionview/test/template/tag_helper_test.rb
+> +++ b/actionview/test/template/tag_helper_test.rb
+> @@ -140,6 +140,16 @@ class TagHelperTest < ActionView::TestCase
+>      assert_equal '<p class=3D"song> play&gt;" />', str
+>    end
+>=20=20
+> +  def test_tag_does_not_honor_html_safe_double_quotes_as_attributes
+> +    assert_dom_equal '<p title=3D"&quot;">content</p>',
+> +      content_tag('p', "content", title: '"'.html_safe)
+> +  end
+> +
+> +  def test_data_tag_does_not_honor_html_safe_double_quotes_as_attributes
+> +    assert_dom_equal '<p data-title=3D"&quot;">content</p>',
+> +      content_tag('p', "content", data: { title: '"'.html_safe })
+> +  end
+> +
+>    def test_skip_invalid_escaped_attributes
+>      ['&1;', '&#1dfa3;', '& #123;'].each do |escaped|
+>        assert_equal %(<a href=3D"#{escaped.gsub(/&/, '&amp;')}" />), tag(=
+'a', :href =3D> escaped)
+> --=20
+> 2.8.1
+>=20
 
-All Xen systems running x86 HVM guests without stubdomains are
-vulnerable to this depending on the specific guest configuration. The
-default configuration is vulnerable.
+> From 0a3487c7a06a60569817266ffdd39ef0409839d4 Mon Sep 17 00:00:00 2001
+> From: Andrew Carpenter <andrew@criticaljuncture.org>
+> Date: Thu, 28 Jul 2016 16:12:21 -0700
+> Subject: [PATCH] ensure tag/content_tag escapes " in attribute vals
+>=20
+> Many helpers mark content as HTML-safe without escaping double quotes -- =
+including `sanitize`. Regardless of whether or not the attribute values are=
+ HTML-escaped, we want to be sure they don't include double quotes, as that=
+ can cause XSS issues. For example: `content_tag(:div, "foo", title: saniti=
+ze('" onmouseover=3D"alert(1);//'))`
+>=20
+> CVE-2016-6316
+> ---
+>  actionview/lib/action_view/helpers/tag_helper.rb |  2 +-
+>  actionview/test/template/tag_helper_test.rb      | 12 +++++++++++-
+>  2 files changed, 12 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/actionview/lib/action_view/helpers/tag_helper.rb b/actionvie=
+w/lib/action_view/helpers/tag_helper.rb
+> index 42e7358..ac26c29 100644
+> --- a/actionview/lib/action_view/helpers/tag_helper.rb
+> +++ b/actionview/lib/action_view/helpers/tag_helper.rb
+> @@ -189,7 +189,7 @@ def tag_option(key, value, escape)
+>            else
+>              value =3D escape ? ERB::Util.unwrapped_html_escape(value) : =
+value
+>            end
+> -          %(#{key}=3D"#{value}")
+> +          %(#{key}=3D"#{value.gsub(/"/, '&quot;'.freeze)}")
+>          end
+>      end
+>    end
+> diff --git a/actionview/test/template/tag_helper_test.rb b/actionview/tes=
+t/template/tag_helper_test.rb
+> index f3956a3..fe5ec03 100644
+> --- a/actionview/test/template/tag_helper_test.rb
+> +++ b/actionview/test/template/tag_helper_test.rb
+> @@ -150,6 +150,16 @@ def test_tag_honors_html_safe_with_escaped_array_cla=
+ss
+>      assert_equal '<p class=3D"song> play&gt;" />', str
+>    end
+>=20=20
+> +  def test_tag_does_not_honor_html_safe_double_quotes_as_attributes
+> +    assert_dom_equal '<p title=3D"&quot;">content</p>',
+> +      content_tag('p', "content", title: '"'.html_safe)
+> +  end
+> +
+> +  def test_data_tag_does_not_honor_html_safe_double_quotes_as_attributes
+> +    assert_dom_equal '<p data-title=3D"&quot;">content</p>',
+> +      content_tag('p', "content", data: { title: '"'.html_safe })
+> +  end
+> +
+>    def test_skip_invalid_escaped_attributes
+>      ['&1;', '&#1dfa3;', '& #123;'].each do |escaped|
+>        assert_equal %(<a href=3D"#{escaped.gsub(/&/, '&amp;')}" />), tag(=
+'a', :href =3D> escaped)
+> @@ -177,6 +187,6 @@ def test_aria_attributes
+>    def test_link_to_data_nil_equal
+>      div_type1 =3D content_tag(:div, 'test', { 'data-tooltip' =3D> nil })
+>      div_type2 =3D content_tag(:div, 'test', { data: {tooltip: nil} })
+> -    assert_dom_equal div_type1, div_type2=20
+> +    assert_dom_equal div_type1, div_type2
+>    end
+>  end
+> --=20
+> 2.8.1
+>=20
 
-Guests using either the traditional "qemu-xen" or upstream qemu device
-models are vulnerable.
 
-Guests using a qemu-dm stubdomain to run the device model are only
-vulnerable to takeover of that service domain.
 
-Systems running only x86 PV guests are not vulnerable.
 
-ARM systems are not vulnerable.
+--=20
+Aaron Patterson
+http://tenderlovemaking.com/
 
-MITIGATION
-==========
+--9zSXsLTf0vkW971A
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="3-2-attribute-xss.patch"
+Content-Transfer-Encoding: quoted-printable
 
-Enabling stubdomains will mitigate this issue, by reducing the
-escalation to only those privileges accorded to the service domain.
+=46rom 9441acff1a867f672449fef0ecf8908016652d51 Mon Sep 17 00:00:00 2001
+From: Andrew Carpenter <andrew@criticaljuncture.org>
+Date: Thu, 28 Jul 2016 16:12:21 -0700
+Subject: [PATCH] ensure tag/content_tag escapes " in attribute vals
 
-qemu-dm stubdomains are only available with the traditional "qemu-xen"
-version.
+Many helpers mark content as HTML-safe without escaping double quotes -- in=
+cluding `sanitize`. Regardless of whether or not the attribute values are H=
+TML-escaped, we want to be sure they don't include double quotes, as that c=
+an cause XSS issues. For example: `content_tag(:div, "foo", title: sanitize=
+('" onmouseover=3D"alert(1);//'))`
 
-CREDITS
-=======
+CVE-2016-6316
+---
+ actionpack/lib/action_view/helpers/tag_helper.rb | 16 ++++++++++++----
+ actionpack/test/template/tag_helper_test.rb      | 10 ++++++++++
+ 2 files changed, 22 insertions(+), 4 deletions(-)
 
-This issue was discovered by Jason Geffner, Senior Security Researcher
-at CrowdStrike.
+diff --git a/actionpack/lib/action_view/helpers/tag_helper.rb b/actionpack/=
+lib/action_view/helpers/tag_helper.rb
+index 7f58a27..6b659a7 100644
+--- a/actionpack/lib/action_view/helpers/tag_helper.rb
++++ b/actionpack/lib/action_view/helpers/tag_helper.rb
+@@ -10,6 +10,7 @@ module ActionView
+     module TagHelper
+       extend ActiveSupport::Concern
+       include CaptureHelper
++      include OutputSafetyHelper
+=20
+       BOOLEAN_ATTRIBUTES =3D %w(disabled readonly multiple checked autobuf=
+fer
+                            autoplay controls loop selected hidden scoped a=
+sync
+@@ -141,20 +142,27 @@ module ActionView
+                   unless v.is_a?(String) || v.is_a?(Symbol) || v.is_a?(Big=
+Decimal)
+                     v =3D v.to_json
+                   end
+-                  v =3D ERB::Util.html_escape(v) if escape
+-                  attrs << %(data-#{k.to_s.dasherize}=3D"#{v}")
++                  attrs << tag_option("data-#{k.to_s.dasherize}", v, escap=
+e)
+                 end
+               elsif BOOLEAN_ATTRIBUTES.include?(key)
+                 attrs << %(#{key}=3D"#{key}") if value
+               elsif !value.nil?
+                 final_value =3D value.is_a?(Array) ? value.join(" ") : val=
+ue
+-                final_value =3D ERB::Util.html_escape(final_value) if esca=
+pe
+-                attrs << %(#{key}=3D"#{final_value}")
++                attrs << tag_option(key, value, escape)
+               end
+             end
+             " #{attrs.sort * ' '}".html_safe unless attrs.empty?
+           end
+         end
++
++        def tag_option(key, value, escape)
++          if value.is_a?(Array)
++            value =3D escape ? safe_join(value, " ") : value.join(" ")
++          else
++            value =3D escape ? ERB::Util.html_escape(value) : value
++          end
++          %(#{key}=3D"#{value.gsub(/"/, '&quot;'.freeze)}")
++        end
+     end
+   end
+ end
+diff --git a/actionpack/test/template/tag_helper_test.rb b/actionpack/test/=
+template/tag_helper_test.rb
+index e362955..9c3d636 100644
+--- a/actionpack/test/template/tag_helper_test.rb
++++ b/actionpack/test/template/tag_helper_test.rb
+@@ -101,6 +101,16 @@ class TagHelperTest < ActionView::TestCase
+     end
+   end
+=20
++  def test_tag_does_not_honor_html_safe_double_quotes_as_attributes
++    assert_dom_equal '<p title=3D"&quot;">content</p>',
++      content_tag('p', "content", title: '"'.html_safe)
++  end
++
++  def test_data_tag_does_not_honor_html_safe_double_quotes_as_attributes
++    assert_dom_equal '<p data-title=3D"&quot;">content</p>',
++      content_tag('p', "content", data: { title: '"'.html_safe })
++  end
++
+   def test_skip_invalid_escaped_attributes
+     ['&1;', '&#1dfa3;', '& #123;'].each do |escaped|
+       assert_equal %(<a href=3D"#{escaped.gsub(/&/, '&amp;')}" />), tag('a=
+', :href =3D> escaped)
+--=20
+2.8.1
 
-RESOLUTION
-==========
 
-Applying the appropriate attached patch resolves this issue.
+--9zSXsLTf0vkW971A--
 
-xsa133-qemuu.patch           qemu-upstream-unstable, Xen 4.5.x, Xen 4.4.x
-xsa133-qemuu-4.3-4.2.patch   qemu-upstream-unstable, Xen 4.3.x, Xen 4.2.x
-xsa133-qemut.patch           qemu-xen-unstable, Xen 4.5.x, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
+--1SQmhf2mF2YjsYvc
+Content-Type: application/pgp-signature
 
-$ sha256sum xsa133*.patch
-e7ca0106a9d4bfe472b3b52bbed8646b47305634ff16c3e17ed6185296a7e7ff  xsa133-qemut.patch
-0cbc0415ef63bc195a0338441f3770d9fe6741e894879e35d1a6609ad028e42f  xsa133-qemuu.patch
-cf735c1ecb6a40ca57d408e5c01725eca5b9b0a14b1d31b4362dc3f036bdeb28  xsa133-qemuu-4.3-4.2.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches described above (or others which are
-substantially similar) is permitted during the embargo, even on
-public-facing systems with untrusted guest users and administrators.
-
-But: Deployment of the mitigation by enabling stubdomains is NOT
-permitted (except on systems used and administered only by
-organisations which are members of the Xen Project Security Issues
-Predisclosure List).  Specifically, deployment on public cloud systems
-is NOT permitted.  This is because this configuration change may be
-visible to the guest.
-
-Also, distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQEcBAEBAgAGBQJVUzJdAAoJEIP+FMlX6CvZnJcH/iszFBI+ltmOGxfCtSmnnkdu
-6GZUFCVimeVG2ZfDCe1Bvw63ZMeB8AMUr2KmFrg0pOfC7m1Mc/4UhczpqeY9G1i0
-kPCcNiK37Ju0otFN1AODHaYGhu6pgfTM+QV1muFVXHf9QibmH+vEy7HEN34Mtv/2
-gGRmxLJnkHFME2sISuqhDsxIMf5QWN28I412/QqK8/mJMuvCJHqbLs/fv9f0uj9g
-sgAVCb3gsqNS7SSK1v49PqK+lQV+BkPR8pi8ODdL301iZWfu8PbVpYa5A84LVQF0
-4ZnlVfWqeKXF7GlsuviinhQIoUIvSktf9tg65fM48Thk0UUp+MyHVkh4GkT/+Eo=
-=rN8t
+iQEcBAEBAgAGBQJXrNI9AAoJEJUxcLy0/6/GofoH/1kbIGy5lW3qCMBplSB4Fu3V
+543+PJW/pLEz/V/y0W5EvX81cjcYmregjbFX6uxxxmvtxFwnoQGHNifozoj03bqv
+L3FR6OkHIPMIPO8XHKyYWfJbIe1UfhJ5WuPjXkuL3aFRuzRMETmGMJ6yoAEkDk5w
+kIKfpJlVM94rAq9S28Fx6KucUPawXPJcd9Da1Dh13hvLGZU1ciAQ6G8fQs2LX4EX
+39hSzV8K/TqUyjWBxdb3y4dFiISKT8hFhLKhX1DXjxg3kq2HJdR/Bz8Owt8th7w3
+0h9s79aYoNqVbZTIVCo1WP6iRG8XUl1U/rkhDmEyiYZJx1LRQ+OnbHqpZ/mzrI4=
+=lrU4
 -----END PGP SIGNATURE-----
 
---=separator
-Content-Type: application/octet-stream; name="xsa133-qemut.patch"
-Content-Disposition: attachment; filename="xsa133-qemut.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSBhYzdkZGJlMzQyZDdhYTIzMDNjMzljYTczMWNjNjIyOWRiYmQ3Mzli
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBQZXRyIE1hdG91c2Vr
-IDxwbWF0b3VzZUByZWRoYXQuY29tPgpEYXRlOiBXZWQsIDYgTWF5IDIwMTUg
-MDk6NDg6NTkgKzAyMDAKU3ViamVjdDogW1BBVENIXSBmZGM6IGZvcmNlIHRo
-ZSBmaWZvIGFjY2VzcyB0byBiZSBpbiBib3VuZHMgb2YgdGhlIGFsbG9jYXRl
-ZCBidWZmZXIKCkR1cmluZyBwcm9jZXNzaW5nIG9mIGNlcnRhaW4gY29tbWFu
-ZHMgc3VjaCBhcyBGRF9DTURfUkVBRF9JRCBhbmQKRkRfQ01EX0RSSVZFX1NQ
-RUNJRklDQVRJT05fQ09NTUFORCB0aGUgZmlmbyBtZW1vcnkgYWNjZXNzIGNv
-dWxkCmdldCBvdXQgb2YgYm91bmRzIGxlYWRpbmcgdG8gbWVtb3J5IGNvcnJ1
-cHRpb24gd2l0aCB2YWx1ZXMgY29taW5nCmZyb20gdGhlIGd1ZXN0LgoKRml4
-IHRoaXMgYnkgbWFraW5nIHN1cmUgdGhhdCB0aGUgaW5kZXggaXMgYWx3YXlz
-IGJvdW5kZWQgYnkgdGhlCmFsbG9jYXRlZCBtZW1vcnkuCgpUaGlzIGlzIENW
-RS0yMDE1LTM0NTYuCgpTaWduZWQtb2ZmLWJ5OiBQZXRyIE1hdG91c2VrIDxw
-bWF0b3VzZUByZWRoYXQuY29tPgpSZXZpZXdlZC1ieTogSm9obiBTbm93IDxq
-c25vd0ByZWRoYXQuY29tPgotLS0KIGh3L2ZkYy5jIHwgMTcgKysrKysrKysr
-KystLS0tLS0KIDEgZmlsZSBjaGFuZ2VkLCAxMSBpbnNlcnRpb25zKCspLCA2
-IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2h3L2ZkYy5jIGIvaHcvZmRj
-LmMKaW5kZXggYjAwYTRlYy4uYWJhMDJlNCAxMDA2NDQKLS0tIGEvaHcvZmRj
-LmMKKysrIGIvaHcvZmRjLmMKQEAgLTEzMTgsNyArMTMxOCw3IEBAIHN0YXRp
-YyB1aW50MzJfdCBmZGN0cmxfcmVhZF9kYXRhIChmZGN0cmxfdCAqZmRjdHJs
-KQogewogICAgIGZkcml2ZV90ICpjdXJfZHJ2OwogICAgIHVpbnQzMl90IHJl
-dHZhbCA9IDA7Ci0gICAgaW50IHBvczsKKyAgICB1aW50MzJfdCBwb3M7CiAK
-ICAgICBjdXJfZHJ2ID0gZ2V0X2N1cl9kcnYoZmRjdHJsKTsKICAgICBmZGN0
-cmwtPmRzciAmPSB+RkRfRFNSX1BXUkRPV047CkBAIC0xMzI3LDggKzEzMjcs
-OCBAQCBzdGF0aWMgdWludDMyX3QgZmRjdHJsX3JlYWRfZGF0YSAoZmRjdHJs
-X3QgKmZkY3RybCkKICAgICAgICAgcmV0dXJuIDA7CiAgICAgfQogICAgIHBv
-cyA9IGZkY3RybC0+ZGF0YV9wb3M7CisgICAgcG9zICU9IEZEX1NFQ1RPUl9M
-RU47CiAgICAgaWYgKGZkY3RybC0+bXNyICYgRkRfTVNSX05PTkRNQSkgewot
-ICAgICAgICBwb3MgJT0gRkRfU0VDVE9SX0xFTjsKICAgICAgICAgaWYgKHBv
-cyA9PSAwKSB7CiAgICAgICAgICAgICBpZiAoZmRjdHJsLT5kYXRhX3BvcyAh
-PSAwKQogICAgICAgICAgICAgICAgIGlmICghZmRjdHJsX3NlZWtfdG9fbmV4
-dF9zZWN0KGZkY3RybCwgY3VyX2RydikpIHsKQEAgLTE2NzMsMTAgKzE2NzMs
-MTMgQEAgc3RhdGljIHZvaWQgZmRjdHJsX2hhbmRsZV9vcHRpb24gKGZkY3Ry
-bF90ICpmZGN0cmwsIGludCBkaXJlY3Rpb24pCiBzdGF0aWMgdm9pZCBmZGN0
-cmxfaGFuZGxlX2RyaXZlX3NwZWNpZmljYXRpb25fY29tbWFuZCAoZmRjdHJs
-X3QgKmZkY3RybCwgaW50IGRpcmVjdGlvbikKIHsKICAgICBmZHJpdmVfdCAq
-Y3VyX2RydiA9IGdldF9jdXJfZHJ2KGZkY3RybCk7CisgICAgdWludDMyX3Qg
-cG9zOwogCi0gICAgaWYgKGZkY3RybC0+Zmlmb1tmZGN0cmwtPmRhdGFfcG9z
-IC0gMV0gJiAweDgwKSB7CisgICAgcG9zID0gZmRjdHJsLT5kYXRhX3BvcyAt
-IDE7CisgICAgcG9zICU9IEZEX1NFQ1RPUl9MRU47CisgICAgaWYgKGZkY3Ry
-bC0+Zmlmb1twb3NdICYgMHg4MCkgewogICAgICAgICAvKiBDb21tYW5kIHBh
-cmFtZXRlcnMgZG9uZSAqLwotICAgICAgICBpZiAoZmRjdHJsLT5maWZvW2Zk
-Y3RybC0+ZGF0YV9wb3MgLSAxXSAmIDB4NDApIHsKKyAgICAgICAgaWYgKGZk
-Y3RybC0+Zmlmb1twb3NdICYgMHg0MCkgewogICAgICAgICAgICAgZmRjdHJs
-LT5maWZvWzBdID0gZmRjdHJsLT5maWZvWzFdOwogICAgICAgICAgICAgZmRj
-dHJsLT5maWZvWzJdID0gMDsKICAgICAgICAgICAgIGZkY3RybC0+Zmlmb1sz
-XSA9IDA7CkBAIC0xNzcxLDcgKzE3NzQsNyBAQCBzdGF0aWMgdWludDhfdCBj
-b21tYW5kX3RvX2hhbmRsZXJbMjU2XTsKIHN0YXRpYyB2b2lkIGZkY3RybF93
-cml0ZV9kYXRhIChmZGN0cmxfdCAqZmRjdHJsLCB1aW50MzJfdCB2YWx1ZSkK
-IHsKICAgICBmZHJpdmVfdCAqY3VyX2RydjsKLSAgICBpbnQgcG9zOworICAg
-IHVpbnQzMl90IHBvczsKIAogICAgIC8qIFJlc2V0IG1vZGUgKi8KICAgICBp
-ZiAoIShmZGN0cmwtPmRvciAmIEZEX0RPUl9uUkVTRVQpKSB7CkBAIC0xODE3
-LDcgKzE4MjAsOSBAQCBzdGF0aWMgdm9pZCBmZGN0cmxfd3JpdGVfZGF0YSAo
-ZmRjdHJsX3QgKmZkY3RybCwgdWludDMyX3QgdmFsdWUpCiAgICAgfQogCiAg
-ICAgRkxPUFBZX0RQUklOVEYoIiVzOiAlMDJ4XG4iLCBfX2Z1bmNfXywgdmFs
-dWUpOwotICAgIGZkY3RybC0+Zmlmb1tmZGN0cmwtPmRhdGFfcG9zKytdID0g
-dmFsdWU7CisgICAgcG9zID0gZmRjdHJsLT5kYXRhX3BvcysrOworICAgIHBv
-cyAlPSBGRF9TRUNUT1JfTEVOOworICAgIGZkY3RybC0+Zmlmb1twb3NdID0g
-dmFsdWU7CiAgICAgaWYgKGZkY3RybC0+ZGF0YV9wb3MgPT0gZmRjdHJsLT5k
-YXRhX2xlbikgewogICAgICAgICAvKiBXZSBub3cgaGF2ZSBhbGwgcGFyYW1l
-dGVycwogICAgICAgICAgKiBhbmQgd2lsbCBiZSBhYmxlIHRvIHRyZWF0IHRo
-ZSBjb21tYW5kCg==
-
---=separator
-Content-Type: application/octet-stream; name="xsa133-qemuu.patch"
-Content-Disposition: attachment; filename="xsa133-qemuu.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSBhYzdkZGJlMzQyZDdhYTIzMDNjMzljYTczMWNjNjIyOWRiYmQ3Mzli
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBQZXRyIE1hdG91c2Vr
-IDxwbWF0b3VzZUByZWRoYXQuY29tPgpEYXRlOiBXZWQsIDYgTWF5IDIwMTUg
-MDk6NDg6NTkgKzAyMDAKU3ViamVjdDogW1BBVENIXSBmZGM6IGZvcmNlIHRo
-ZSBmaWZvIGFjY2VzcyB0byBiZSBpbiBib3VuZHMgb2YgdGhlIGFsbG9jYXRl
-ZCBidWZmZXIKCkR1cmluZyBwcm9jZXNzaW5nIG9mIGNlcnRhaW4gY29tbWFu
-ZHMgc3VjaCBhcyBGRF9DTURfUkVBRF9JRCBhbmQKRkRfQ01EX0RSSVZFX1NQ
-RUNJRklDQVRJT05fQ09NTUFORCB0aGUgZmlmbyBtZW1vcnkgYWNjZXNzIGNv
-dWxkCmdldCBvdXQgb2YgYm91bmRzIGxlYWRpbmcgdG8gbWVtb3J5IGNvcnJ1
-cHRpb24gd2l0aCB2YWx1ZXMgY29taW5nCmZyb20gdGhlIGd1ZXN0LgoKRml4
-IHRoaXMgYnkgbWFraW5nIHN1cmUgdGhhdCB0aGUgaW5kZXggaXMgYWx3YXlz
-IGJvdW5kZWQgYnkgdGhlCmFsbG9jYXRlZCBtZW1vcnkuCgpUaGlzIGlzIENW
-RS0yMDE1LTM0NTYuCgpTaWduZWQtb2ZmLWJ5OiBQZXRyIE1hdG91c2VrIDxw
-bWF0b3VzZUByZWRoYXQuY29tPgpSZXZpZXdlZC1ieTogSm9obiBTbm93IDxq
-c25vd0ByZWRoYXQuY29tPgotLS0KIGh3L2Jsb2NrL2ZkYy5jIHwgMTcgKysr
-KysrKysrKystLS0tLS0KIDEgZmlsZSBjaGFuZ2VkLCAxMSBpbnNlcnRpb25z
-KCspLCA2IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2h3L2Jsb2NrL2Zk
-Yy5jIGIvaHcvYmxvY2svZmRjLmMKaW5kZXggZjcyYTM5Mi4uZDhhOGVkZCAx
-MDA2NDQKLS0tIGEvaHcvYmxvY2svZmRjLmMKKysrIGIvaHcvYmxvY2svZmRj
-LmMKQEAgLTE0OTcsNyArMTQ5Nyw3IEBAIHN0YXRpYyB1aW50MzJfdCBmZGN0
-cmxfcmVhZF9kYXRhKEZEQ3RybCAqZmRjdHJsKQogewogICAgIEZEcml2ZSAq
-Y3VyX2RydjsKICAgICB1aW50MzJfdCByZXR2YWwgPSAwOwotICAgIGludCBw
-b3M7CisgICAgdWludDMyX3QgcG9zOwogCiAgICAgY3VyX2RydiA9IGdldF9j
-dXJfZHJ2KGZkY3RybCk7CiAgICAgZmRjdHJsLT5kc3IgJj0gfkZEX0RTUl9Q
-V1JET1dOOwpAQCAtMTUwNiw4ICsxNTA2LDggQEAgc3RhdGljIHVpbnQzMl90
-IGZkY3RybF9yZWFkX2RhdGEoRkRDdHJsICpmZGN0cmwpCiAgICAgICAgIHJl
-dHVybiAwOwogICAgIH0KICAgICBwb3MgPSBmZGN0cmwtPmRhdGFfcG9zOwor
-ICAgIHBvcyAlPSBGRF9TRUNUT1JfTEVOOwogICAgIGlmIChmZGN0cmwtPm1z
-ciAmIEZEX01TUl9OT05ETUEpIHsKLSAgICAgICAgcG9zICU9IEZEX1NFQ1RP
-Ul9MRU47CiAgICAgICAgIGlmIChwb3MgPT0gMCkgewogICAgICAgICAgICAg
-aWYgKGZkY3RybC0+ZGF0YV9wb3MgIT0gMCkKICAgICAgICAgICAgICAgICBp
-ZiAoIWZkY3RybF9zZWVrX3RvX25leHRfc2VjdChmZGN0cmwsIGN1cl9kcnYp
-KSB7CkBAIC0xODUyLDEwICsxODUyLDEzIEBAIHN0YXRpYyB2b2lkIGZkY3Ry
-bF9oYW5kbGVfb3B0aW9uKEZEQ3RybCAqZmRjdHJsLCBpbnQgZGlyZWN0aW9u
-KQogc3RhdGljIHZvaWQgZmRjdHJsX2hhbmRsZV9kcml2ZV9zcGVjaWZpY2F0
-aW9uX2NvbW1hbmQoRkRDdHJsICpmZGN0cmwsIGludCBkaXJlY3Rpb24pCiB7
-CiAgICAgRkRyaXZlICpjdXJfZHJ2ID0gZ2V0X2N1cl9kcnYoZmRjdHJsKTsK
-KyAgICB1aW50MzJfdCBwb3M7CiAKLSAgICBpZiAoZmRjdHJsLT5maWZvW2Zk
-Y3RybC0+ZGF0YV9wb3MgLSAxXSAmIDB4ODApIHsKKyAgICBwb3MgPSBmZGN0
-cmwtPmRhdGFfcG9zIC0gMTsKKyAgICBwb3MgJT0gRkRfU0VDVE9SX0xFTjsK
-KyAgICBpZiAoZmRjdHJsLT5maWZvW3Bvc10gJiAweDgwKSB7CiAgICAgICAg
-IC8qIENvbW1hbmQgcGFyYW1ldGVycyBkb25lICovCi0gICAgICAgIGlmIChm
-ZGN0cmwtPmZpZm9bZmRjdHJsLT5kYXRhX3BvcyAtIDFdICYgMHg0MCkgewor
-ICAgICAgICBpZiAoZmRjdHJsLT5maWZvW3Bvc10gJiAweDQwKSB7CiAgICAg
-ICAgICAgICBmZGN0cmwtPmZpZm9bMF0gPSBmZGN0cmwtPmZpZm9bMV07CiAg
-ICAgICAgICAgICBmZGN0cmwtPmZpZm9bMl0gPSAwOwogICAgICAgICAgICAg
-ZmRjdHJsLT5maWZvWzNdID0gMDsKQEAgLTE5NTUsNyArMTk1OCw3IEBAIHN0
-YXRpYyB1aW50OF90IGNvbW1hbmRfdG9faGFuZGxlclsyNTZdOwogc3RhdGlj
-IHZvaWQgZmRjdHJsX3dyaXRlX2RhdGEoRkRDdHJsICpmZGN0cmwsIHVpbnQz
-Ml90IHZhbHVlKQogewogICAgIEZEcml2ZSAqY3VyX2RydjsKLSAgICBpbnQg
-cG9zOworICAgIHVpbnQzMl90IHBvczsKIAogICAgIC8qIFJlc2V0IG1vZGUg
-Ki8KICAgICBpZiAoIShmZGN0cmwtPmRvciAmIEZEX0RPUl9uUkVTRVQpKSB7
-CkBAIC0yMDA0LDcgKzIwMDcsOSBAQCBzdGF0aWMgdm9pZCBmZGN0cmxfd3Jp
-dGVfZGF0YShGREN0cmwgKmZkY3RybCwgdWludDMyX3QgdmFsdWUpCiAgICAg
-fQogCiAgICAgRkxPUFBZX0RQUklOVEYoIiVzOiAlMDJ4XG4iLCBfX2Z1bmNf
-XywgdmFsdWUpOwotICAgIGZkY3RybC0+Zmlmb1tmZGN0cmwtPmRhdGFfcG9z
-KytdID0gdmFsdWU7CisgICAgcG9zID0gZmRjdHJsLT5kYXRhX3BvcysrOwor
-ICAgIHBvcyAlPSBGRF9TRUNUT1JfTEVOOworICAgIGZkY3RybC0+Zmlmb1tw
-b3NdID0gdmFsdWU7CiAgICAgaWYgKGZkY3RybC0+ZGF0YV9wb3MgPT0gZmRj
-dHJsLT5kYXRhX2xlbikgewogICAgICAgICAvKiBXZSBub3cgaGF2ZSBhbGwg
-cGFyYW1ldGVycwogICAgICAgICAgKiBhbmQgd2lsbCBiZSBhYmxlIHRvIHRy
-ZWF0IHRoZSBjb21tYW5kCi0tIAoyLjEuMAoKCg==
-
---=separator
-Content-Type: application/octet-stream; name="xsa133-qemuu-4.3-4.2.patch"
-Content-Disposition: attachment; filename="xsa133-qemuu-4.3-4.2.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSBhYzdkZGJlMzQyZDdhYTIzMDNjMzljYTczMWNjNjIyOWRiYmQ3Mzli
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBQZXRyIE1hdG91c2Vr
-IDxwbWF0b3VzZUByZWRoYXQuY29tPgpEYXRlOiBXZWQsIDYgTWF5IDIwMTUg
-MDk6NDg6NTkgKzAyMDAKU3ViamVjdDogW1BBVENIXSBmZGM6IGZvcmNlIHRo
-ZSBmaWZvIGFjY2VzcyB0byBiZSBpbiBib3VuZHMgb2YgdGhlIGFsbG9jYXRl
-ZCBidWZmZXIKCkR1cmluZyBwcm9jZXNzaW5nIG9mIGNlcnRhaW4gY29tbWFu
-ZHMgc3VjaCBhcyBGRF9DTURfUkVBRF9JRCBhbmQKRkRfQ01EX0RSSVZFX1NQ
-RUNJRklDQVRJT05fQ09NTUFORCB0aGUgZmlmbyBtZW1vcnkgYWNjZXNzIGNv
-dWxkCmdldCBvdXQgb2YgYm91bmRzIGxlYWRpbmcgdG8gbWVtb3J5IGNvcnJ1
-cHRpb24gd2l0aCB2YWx1ZXMgY29taW5nCmZyb20gdGhlIGd1ZXN0LgoKRml4
-IHRoaXMgYnkgbWFraW5nIHN1cmUgdGhhdCB0aGUgaW5kZXggaXMgYWx3YXlz
-IGJvdW5kZWQgYnkgdGhlCmFsbG9jYXRlZCBtZW1vcnkuCgpUaGlzIGlzIENW
-RS0yMDE1LTM0NTYuCgpTaWduZWQtb2ZmLWJ5OiBQZXRyIE1hdG91c2VrIDxw
-bWF0b3VzZUByZWRoYXQuY29tPgpSZXZpZXdlZC1ieTogSm9obiBTbm93IDxq
-c25vd0ByZWRoYXQuY29tPgotLS0KIGh3L2ZkYy5jIHwgMTcgKysrKysrKysr
-KystLS0tLS0KIDEgZmlsZSBjaGFuZ2VkLCAxMSBpbnNlcnRpb25zKCspLCA2
-IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2h3L2ZkYy5jIGIvaHcvZmRj
-LmMKaW5kZXggZjcyYTM5Mi4uZDhhOGVkZCAxMDA2NDQKLS0tIGEvaHcvZmRj
-LmMKKysrIGIvaHcvZmRjLmMKQEAgLTE0OTcsNyArMTQ5Nyw3IEBAIHN0YXRp
-YyB1aW50MzJfdCBmZGN0cmxfcmVhZF9kYXRhKEZEQ3RybCAqZmRjdHJsKQog
-ewogICAgIEZEcml2ZSAqY3VyX2RydjsKICAgICB1aW50MzJfdCByZXR2YWwg
-PSAwOwotICAgIGludCBwb3M7CisgICAgdWludDMyX3QgcG9zOwogCiAgICAg
-Y3VyX2RydiA9IGdldF9jdXJfZHJ2KGZkY3RybCk7CiAgICAgZmRjdHJsLT5k
-c3IgJj0gfkZEX0RTUl9QV1JET1dOOwpAQCAtMTUwNiw4ICsxNTA2LDggQEAg
-c3RhdGljIHVpbnQzMl90IGZkY3RybF9yZWFkX2RhdGEoRkRDdHJsICpmZGN0
-cmwpCiAgICAgICAgIHJldHVybiAwOwogICAgIH0KICAgICBwb3MgPSBmZGN0
-cmwtPmRhdGFfcG9zOworICAgIHBvcyAlPSBGRF9TRUNUT1JfTEVOOwogICAg
-IGlmIChmZGN0cmwtPm1zciAmIEZEX01TUl9OT05ETUEpIHsKLSAgICAgICAg
-cG9zICU9IEZEX1NFQ1RPUl9MRU47CiAgICAgICAgIGlmIChwb3MgPT0gMCkg
-ewogICAgICAgICAgICAgaWYgKGZkY3RybC0+ZGF0YV9wb3MgIT0gMCkKICAg
-ICAgICAgICAgICAgICBpZiAoIWZkY3RybF9zZWVrX3RvX25leHRfc2VjdChm
-ZGN0cmwsIGN1cl9kcnYpKSB7CkBAIC0xODUyLDEwICsxODUyLDEzIEBAIHN0
-YXRpYyB2b2lkIGZkY3RybF9oYW5kbGVfb3B0aW9uKEZEQ3RybCAqZmRjdHJs
-LCBpbnQgZGlyZWN0aW9uKQogc3RhdGljIHZvaWQgZmRjdHJsX2hhbmRsZV9k
-cml2ZV9zcGVjaWZpY2F0aW9uX2NvbW1hbmQoRkRDdHJsICpmZGN0cmwsIGlu
-dCBkaXJlY3Rpb24pCiB7CiAgICAgRkRyaXZlICpjdXJfZHJ2ID0gZ2V0X2N1
-cl9kcnYoZmRjdHJsKTsKKyAgICB1aW50MzJfdCBwb3M7CiAKLSAgICBpZiAo
-ZmRjdHJsLT5maWZvW2ZkY3RybC0+ZGF0YV9wb3MgLSAxXSAmIDB4ODApIHsK
-KyAgICBwb3MgPSBmZGN0cmwtPmRhdGFfcG9zIC0gMTsKKyAgICBwb3MgJT0g
-RkRfU0VDVE9SX0xFTjsKKyAgICBpZiAoZmRjdHJsLT5maWZvW3Bvc10gJiAw
-eDgwKSB7CiAgICAgICAgIC8qIENvbW1hbmQgcGFyYW1ldGVycyBkb25lICov
-Ci0gICAgICAgIGlmIChmZGN0cmwtPmZpZm9bZmRjdHJsLT5kYXRhX3BvcyAt
-IDFdICYgMHg0MCkgeworICAgICAgICBpZiAoZmRjdHJsLT5maWZvW3Bvc10g
-JiAweDQwKSB7CiAgICAgICAgICAgICBmZGN0cmwtPmZpZm9bMF0gPSBmZGN0
-cmwtPmZpZm9bMV07CiAgICAgICAgICAgICBmZGN0cmwtPmZpZm9bMl0gPSAw
-OwogICAgICAgICAgICAgZmRjdHJsLT5maWZvWzNdID0gMDsKQEAgLTE5NTUs
-NyArMTk1OCw3IEBAIHN0YXRpYyB1aW50OF90IGNvbW1hbmRfdG9faGFuZGxl
-clsyNTZdOwogc3RhdGljIHZvaWQgZmRjdHJsX3dyaXRlX2RhdGEoRkRDdHJs
-ICpmZGN0cmwsIHVpbnQzMl90IHZhbHVlKQogewogICAgIEZEcml2ZSAqY3Vy
-X2RydjsKLSAgICBpbnQgcG9zOworICAgIHVpbnQzMl90IHBvczsKIAogICAg
-IC8qIFJlc2V0IG1vZGUgKi8KICAgICBpZiAoIShmZGN0cmwtPmRvciAmIEZE
-X0RPUl9uUkVTRVQpKSB7CkBAIC0yMDA0LDcgKzIwMDcsOSBAQCBzdGF0aWMg
-dm9pZCBmZGN0cmxfd3JpdGVfZGF0YShGREN0cmwgKmZkY3RybCwgdWludDMy
-X3QgdmFsdWUpCiAgICAgfQogCiAgICAgRkxPUFBZX0RQUklOVEYoIiVzOiAl
-MDJ4XG4iLCBfX2Z1bmNfXywgdmFsdWUpOwotICAgIGZkY3RybC0+Zmlmb1tm
-ZGN0cmwtPmRhdGFfcG9zKytdID0gdmFsdWU7CisgICAgcG9zID0gZmRjdHJs
-LT5kYXRhX3BvcysrOworICAgIHBvcyAlPSBGRF9TRUNUT1JfTEVOOworICAg
-IGZkY3RybC0+Zmlmb1twb3NdID0gdmFsdWU7CiAgICAgaWYgKGZkY3RybC0+
-ZGF0YV9wb3MgPT0gZmRjdHJsLT5kYXRhX2xlbikgewogICAgICAgICAvKiBX
-ZSBub3cgaGF2ZSBhbGwgcGFyYW1ldGVycwogICAgICAgICAgKiBhbmQgd2ls
-bCBiZSBhYmxlIHRvIHRyZWF0IHRoZSBjb21tYW5kCi0tIAoyLjEuMAoKCg==
-
---=separator--
+--1SQmhf2mF2YjsYvc--
