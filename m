@@ -1,53 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/10/15
-Message-ID: <87d1otk0an.fsf@prune.linuxpenguins.xyz>
-Date: Wed, 11 May 2016 08:36:48 +1000
-From: Brian May <brian@...uxpenguins.xyz>
-To: gustavo.grieco@...il.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE requests: DoS in librsvg parsing SVGs with circular definitions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/11/1
+Message-ID: <CABuU+O1eQnw21SVtGAf6YQyqEPpm=f4ntDLT0O9k37w9-fZ-MQ@mail.gmail.com>
+Date: Thu, 11 Aug 2016 12:49:25 +0200
+From: "F. Alonso" <rs@...skills.cz>
+To: oss-security@...ts.openwall.com
+Cc: CVE ID Requests <cve-assign@...re.org>
+Subject: CVE Requests Facebook HHVM
 Content-Type: text/plain; charset=utf-8
 
-Just did a git bisect against the source. Assuming I got this right, the
-following commits fixed the issue.
+Hi,
 
->> They affect the following functions:
->
->> * rsvg_cairo_pop_discrete_layer - rsvg_cairo_pop_render_stack -
->> rsvg_cairo_generate_mask: reproducible using circular-1.svg
->
-> Use CVE-2016-4347.
+The following commits patched several security flaws that I recently
+reported to Facebook's complete toolchain for the PHP language, HHVM [1]
+version 3.14.2 and 3.14.3.
 
-Fixed in:
-
-commit a51919f7e1ca9c535390a746fbf6e28c8402dc61
-Author: Benjamin Otte <otte@...hat.com>
-Date:   Wed Oct 7 08:45:37 2015 +0200
-
-    rsvg: Add rsvg_acquire_node()
-    
-    This function does proper recursion checks when looking up resources
-    from URLs and thereby helps avoiding infinite loops when cyclic
-    references span multiple types of elements.
+Could you assing CVEs for those issues?
 
 
->> * _rsvg_css_normalize_font_size: reproducible using circular-2.svg
->
-> Use CVE-2016-4348.
+-Fix out of bounds write access in
+mb_detect_encoding, mb_send_mail, mb_detect_order.
+https://github.com/facebook/hhvm/commit/365abe807cab2d60dc9ec307292a06181f77a9c2
 
-Fixed in:
+-Fix buffer overrun due to integer overflow in bcmath
+https://github.com/facebook/hhvm/commit/c00fc9d3003eb06226b58b6a48555f1456ee2475
 
-commit d1c9191949747f6dcfd207831d15dd4ba00e31f2
-Author: Benjamin Otte <otte@...hat.com>
-Date:   Wed Oct 7 05:31:08 2015 +0200
+-Fix integer overflow in StringUtil::implode
+https://github.com/facebook/hhvm/commit/2c9a8fcc73a151608634d3e712973d192027c271
 
-    state: Store mask as reference
-    
-    Instead of immediately looking up the mask, store the reference and look
-    it up on use.
+-Fix self recursion in compact
+https://github.com/facebook/hhvm/commit/e264f04ae825a5d97758130cf8eec99862517e7e
+
+-Fix recursion checks in array_*_recursive
+https://github.com/facebook/hhvm/commit/05e706d98f748f609b19d8697e490eaab5007d69
+
+-Fix infinite recursion in wddx
+https://github.com/facebook/hhvm/commit/1888810e77b446a79a7674784d5f139fcfa605e2
+
+[1] https://github.com/facebook/hhvm
 
 
-This fix is two commits before the other commit.
+Thank you,
+
 -- 
-Brian May <brian@...uxpenguins.xyz>
-https://linuxpenguins.xyz/brian/
+
+Francisco Alonso.
+http://twitter.com/revskills
+PGP: 0xE2E64DCA
+--
+
