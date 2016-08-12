@@ -1,4 +1,9 @@
-Received: (qmail 27852 invoked by uid 550); 21 Jun 2023 19:07:30 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6387" "Friday" "12" "August" "2016" "10:10:10" "+0000" "=?gb2312?B?wazSu7q6?=" "lianyihan@360.cn" "<A962A2D04FAB5C4499FEFD15B642FA0A011EF049@EX02.corp.qihoo.net>" "108" "[oss-security] [CVE-2016-6671] ffmpeg buffer overflow when decoding swf" "^Date:" nil nil "8" "2016081210:10:10" "[oss-security] [CVE-2016-6671] ffmpeg buffer overflow when decoding swf" (number mark "U       lianyihan@36 Aug 12  108/6387  " thread-indent "\"[oss-security] [CVE-2016-6671] ffmpeg buffer overflow when decoding swf\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21676 invoked by uid 550); 12 Aug 2016 11:24:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,119 +11,129 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13761 invoked from network); 21 Jun 2023 18:20:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1687371596; x=1689963596;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XW2wWn1SWv1eWX4/c66lEAqAtRAPQj9LsTo7jbDGLAI=;
-        b=aAAqJLxWZUvbOCxsqXNx3zyOWIZNLXOHemSksO22u+af5AdJMcz1C3OR/Ip4ssYBRT
-         VdpeCfErwL2FlWnTMQmig6gQot5F9gaz3Vb+8pjKFXNZZhGczeqS3GCavqWW/jnUt4ao
-         nh9GMgGU5KC8xAYZ4RHaJA0hM/z5uRa3xBRyOlJEsBacmm/qWqF+mvXy5I1eoYdRAaSB
-         eSs8GSXimMeeaTJa2UPNIDyaYPAMKAQDsKFPCCaBFRd9hQ8fan8wXcM+K4P5Hj8HX+P3
-         +3q9TAdTuBARlrcuJaoNrEqbOIO702sYc5L+sPWmp8y0/CoIc/k4LmymG6Gbf0o6P2xy
-         IbIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687371596; x=1689963596;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XW2wWn1SWv1eWX4/c66lEAqAtRAPQj9LsTo7jbDGLAI=;
-        b=I733rvx/0Pqfk90ojMmxPEW4CbTQZWu1wDJD0kHBwyfkIMvMl0cBwtFsxS3kl0osIT
-         TXo9k/PnGPbKkyOSzpfnkl1iZ0ic5/YoVg+tbpBQxD7U1SD9T7pcJ6X0BeJ402CfOc6M
-         o006BKh633zwXWhrZXViyJiat4h9F1JPjHKS0gTfoS6KP751ZiR7qd9yuGlq9osPv0D8
-         gYbXZFL1unu9UM3AiPqvGW168brq2qGsdiG4J4FpF81arYBbzRUihLZNUdn4Ff9WPX+T
-         pyeWRR0k2ILv3sJG5p2tnPTBmDyIC6OoHYUdJYLCytysc8b6+Az1Yr1mN2QrPFERNiI9
-         GZlw==
-X-Gm-Message-State: AC+VfDzRv1jIFcyfCUyfWdgO78ZqAzK/xaPSUwxlpHQYH5GijRsxjy6Z
-	Uh4r9IXLN0mtsNiJn78roePlOHR/cbVCZC2jM+Z31aHkjWkc4GWWyi0=
-X-Google-Smtp-Source: ACHHUZ6lvfk+Ede4TKg8ZpxnVwlsoGSxj7rqy9gnoA+37yzHu2ybL1NwTX/4GwA97ERjIDKHtJ9HOIDK69sk12upPno=
-X-Received: by 2002:a05:622a:1016:b0:3f9:ad2e:4801 with SMTP id
- d22-20020a05622a101600b003f9ad2e4801mr1046471qte.17.1687371595168; Wed, 21
- Jun 2023 11:19:55 -0700 (PDT)
+Received: (qmail 20166 invoked from network); 12 Aug 2016 10:10:23 -0000
+Thread-Topic: [CVE-2016-6671] ffmpeg buffer overflow when decoding swf
+Thread-Index: AdH0gYUExMQEPjaTRNiw3uMEtSaHQg==
+Message-ID: <A962A2D04FAB5C4499FEFD15B642FA0A011EF049@EX02.corp.qihoo.net>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.18.213.15]
+Content-Type: multipart/alternative;
+	boundary="_000_A962A2D04FAB5C4499FEFD15B642FA0A011EF049EX02corpqihoone_"
 MIME-Version: 1.0
-References: <CABdrxGCc8SFudn+Pv-3gZFXt-qeM7GSHbOp7F2iNeksqAmRrVQ@mail.gmail.com>
-In-Reply-To: <CABdrxGCc8SFudn+Pv-3gZFXt-qeM7GSHbOp7F2iNeksqAmRrVQ@mail.gmail.com>
-From: CJ Cullen <cjcullen@google.com>
-Date: Wed, 21 Jun 2023 11:19:42 -0700
-Message-ID: <CABdrxGCTFixuOZWpSVzgbVnj4Em=GpMgapSarnLHAV9+3CG0bw@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000089265005fea7d020"
-Subject: [oss-security] [kubernetes/kops] CVE-2023-1943: Privilege Escalation in kOps using
- GCE/GCP Provider in Gossip Mode
+Date: Fri, 12 Aug 2016 10:10:10 +0000
+From: =?gb2312?B?wazSu7q6?= <lianyihan@360.cn>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] [CVE-2016-6671] ffmpeg buffer overflow when decoding swf
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
---00000000000089265005fea7d020
-Content-Type: text/plain; charset="UTF-8"
+--_000_A962A2D04FAB5C4499FEFD15B642FA0A011EF049EX02corpqihoone_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-Issue Details
+DQpIaSAsIEmhr20gTGlhbiAsYSBzZWN1cml0eSByZXNlYXJjaGVyIGluIFFp
+aG9vIDM2MC4NCg0KSSBmb3VuZCBhIHZ1bG5lcmFiaWxpdHkgb2YgZmZtcGVn
+IC4NCg0KVGhpcyBpcyBhIGJ1ZmZlciBvdmVyZmxvdyB2dWxuZXJhYmlsaXR5
+IHdoZW4gZGVjb2Rpbmcgc3dmLCBhbmQgaGFzIGJlZW4gYXNzaWduZWQgdGhl
+IENWRSBpZGVudGlmaWVyIENWRS0yMDE2LTY2NzEgLg0KDQpWZXJzaW9uIEFm
+ZmVjdGVkOiAgPD0zLjEuMQ0KRml4ZWQgVmVyc2lvbjogICAgICAgIDMuMS4y
+DQoNCldlYiBzaXRlOiAgICBodHRwOi8vZmZtcGVnLm9yZy9zZWN1cml0eS5o
+dG1sDQoNClZ1bG5lcmFiaWxpdHkgZGV0YWlsOg0KDQoNCj09PT09PT09PT09
+PT09PT09PSB0ZXN0IGNvbW1hbmQgPT09PT09PT09PT09PT09PT09PT09PT0N
+Cg0KDQoNCkZmbXBlZyAtaSBwb2Muc3dmIC1iOnYgNjQwayAteSBvdXRwdXQu
+dHMNCg0KPT09PT09PT09PT09PT0gYWZmZWN0ZWQgY29kZSBhbmQgY3Jhc2gg
+aW5mbyA9PT09PT09PT09PT09PT09PQ0KDQpPbiBsaWJhdmNvZGVjL3Jhd2Rl
+Yy5jIDoNCg0KcmF3X2RlY29kZSgpDQp7DQqhrQ0KbWVtY3B5KGNvbnRleHQt
+PnBhbGV0dGUtPmRhdGEsIHBhbCwgYXZwa3QtPnNpemUgLSB2aWRfc2l6ZSk7
+ICAgICAgICAgICAgICAgICAgICAgICAgICAvLyBidWZmZXIgb3ZlcmZsb3cN
+CqGtDQp9DQoNCkJhY2sgdHJhY2U6DQogICAgICAgICMwICAweDAwMDA3ZjZh
+MTI4OTU1ZjcgaW4gcmFpc2UgKCkgZnJvbSAvbGliNjQvbGliYy5zby42DQoj
+MSAgMHgwMDAwN2Y2YTEyODk2Y2U4IGluIGFib3J0ICgpIGZyb20gL2xpYjY0
+L2xpYmMuc28uNg0KIzIgIDB4MDAwMDAwMDAwMDRkMGQ4NiBpbiBfX3Nhbml0
+aXplcjo6QWJvcnQoKSAoKQ0KICAgIGF0IC90bXAvbGx2bS0zLjguMHJjMy5z
+cmMvdXRpbHMvcmVsZWFzZS9maW5hbC9sbHZtLnNyYy9wcm9qZWN0cy9jb21w
+aWxlci1ydC9saWIvc2FuaXRpemVyX2NvbW1vbi9zYW5pdGl6ZXJfcG9zaXhf
+bGliY2RlcC5jYzoxMjQNCiMzICAweDAwMDAwMDAwMDA0YmViNjUgaW4gX19z
+YW5pdGl6ZXI6OkRpZSgpICgpDQogICAgYXQgL3RtcC9sbHZtLTMuOC4wcmMz
+LnNyYy91dGlscy9yZWxlYXNlL2ZpbmFsL2xsdm0uc3JjL3Byb2plY3RzL2Nv
+bXBpbGVyLXJ0L2xpYi9zYW5pdGl6ZXJfY29tbW9uL3Nhbml0aXplcl9jb21t
+b24uY2M6MTQ3DQojNCAgMHgwMDAwMDAwMDAwNGI4YTIyIGluIH5TY29wZWRJ
+bkVycm9yUmVwb3J0ICgpIGF0IC90bXAvbGx2bS0zLjguMHJjMy5zcmMvdXRp
+bHMvcmVsZWFzZS9maW5hbC9sbHZtLnNyYy9wcm9qZWN0cy9jb21waWxlci1y
+dC9saWIvYXNhbi9hc2FuX3JlcG9ydC5jYzo3MDkNCiM1ICAweDAwMDAwMDAw
+MDA0YjgzZDEgaW4gUmVwb3J0R2VuZXJpY0Vycm9yICgpIGF0IC90bXAvbGx2
+bS0zLjguMHJjMy5zcmMvdXRpbHMvcmVsZWFzZS9maW5hbC9sbHZtLnNyYy9w
+cm9qZWN0cy9jb21waWxlci1ydC9saWIvYXNhbi9hc2FuX3JlcG9ydC5jYzox
+MTExDQojNiAgMHgwMDAwMDAwMDAwNDljMGUyIGluIF9faW50ZXJjZXB0b3Jf
+bWVtY3B5ICgpDQogICBhdCAvdG1wL2xsdm0tMy44LjByYzMuc3JjL3V0aWxz
+L3JlbGVhc2UvZmluYWwvbGx2bS5zcmMvcHJvamVjdHMvY29tcGlsZXItcnQv
+bGliL2FzYW4vYXNhbl9pbnRlcmNlcHRvcnMuY2M6NDM4DQojNyAgMHgwMDAw
+MDAwMDAxNDQ0ZmRiIGluIHJhd19kZWNvZGUgKGF2Y3R4PTB4NjE5MDAwMDA4
+YzgwLCBkYXRhPTB4NjE1MDAwMDNjNTgwLCBnb3RfZnJhbWU9MHg3ZmZmODlj
+YWEwNDgsIGF2cGt0PTB4N2ZmZjg5Y2E5YTE4KQ0KICAgIGF0IGxpYmF2Y29k
+ZWMvcmF3ZGVjLmM6MzgxDQojOCAgMHgwMDAwMDAwMDAxNWU3ZjE4IGluIGF2
+Y29kZWNfZGVjb2RlX3ZpZGVvMiAoYXZjdHg9MHg2MTkwMDAwMDhjODAsIHBp
+Y3R1cmU9MHg2MTUwMDAwM2M1ODAsIGdvdF9waWN0dXJlX3B0cj0weDdmZmY4
+OWNhYTA0OCwgYXZwa3Q9MHg3ZmZmODljYTlmZjApDQogICAgYXQgbGliYXZj
+b2RlYy91dGlscy5jOjIyMjQNCiM5ICAweDAwMDAwMDAwMDA1Mjg1ZWUgaW4g
+ZGVjb2RlX3ZpZGVvIChpc3Q9MHg2MTQwMDAwMWJhNDAsIHBrdD0weDdmZmY4
+OWNhOWZmMCwgZ290X291dHB1dD0weDdmZmY4OWNhYTA0OCkgYXQgZmZtcGVn
+LmM6MjA4Nw0KIzEwIDB4MDAwMDAwMDAwMDUxNzMzYSBpbiBwcm9jZXNzX2lu
+cHV0X3BhY2tldCAoaXN0PTB4NjE0MDAwMDFiYTQwLCBwa3Q9MHg3ZmZmODlj
+YWE4ODgsIG5vX2VvZj0wKSBhdCBmZm1wZWcuYzoyMzQwDQojMTEgMHgwMDAw
+MDAwMDAwNTFlYzkzIGluIHByb2Nlc3NfaW5wdXQgKGZpbGVfaW5kZXg9MCkg
+YXQgZmZtcGVnLmM6NDAyMA0KIzEyIDB4MDAwMDAwMDAwMDUxNDc2MyBpbiB0
+cmFuc2NvZGVfc3RlcCAoKSBhdCBmZm1wZWcuYzo0MTA4DQojMTMgMHgwMDAw
+MDAwMDAwNTBkM2YxIGluIHRyYW5zY29kZSAoKSBhdCBmZm1wZWcuYzo0MTYy
+DQojMTQgMHgwMDAwMDAwMDAwNTBjMmU5IGluIG1haW4gKGFyZ2M9NiwgYXJn
+dj0weDdmZmY4OWNhYWQxOCkgYXQgZmZtcGVnLmM6NDM1NQ0KDQo9PT09PT09
+PT09PT09PT09PT09PT09IHBhdGNoID09PT09PT09PT09PT09PT09PT09PT09
+PT09PQ0KDQpGb3VuZC1ieTogPGxpYW55aWhhbkAzNjAuY24+DQpTaWduZWQt
+b2ZmLWJ5OiBNaWNoYWVsIE5pZWRlcm1heWVyIDxtaWNoYWVsQG5pZWRlcm1h
+eWVyLmNjPg0KLS0tDQpsaWJhdmNvZGVjL3Jhd2RlYy5jIHwgMjUgKysrKysr
+KysrKysrKysrKystLS0tLS0tLQ0KMSBmaWxlIGNoYW5nZWQsIDE3IGluc2Vy
+dGlvbnMoKyksIDggZGVsZXRpb25zKC0pDQoNCmRpZmYgLS1naXQgYS9saWJh
+dmNvZGVjL3Jhd2RlYy5jIGIvbGliYXZjb2RlYy9yYXdkZWMuYw0KaW5kZXgg
+NzY1ZTU2Ny4uZjk3YTgzOSAxMDA2NDQNCi0tLSBhL2xpYmF2Y29kZWMvcmF3
+ZGVjLmMNCisrKyBiL2xpYmF2Y29kZWMvcmF3ZGVjLmMNCkBAIC0zNjUsMjAg
+KzM2NSwyOSBAQCBzdGF0aWMgaW50IHJhd19kZWNvZGUoQVZDb2RlY0NvbnRl
+eHQgKmF2Y3R4LCB2b2lkICpkYT0NCnRhLCBpbnQgKmdvdF9mcmFtZSwNCiAg
+ICAgaWYgKGF2Y3R4LT5waXhfZm10ID0zRD0zRCBBVl9QSVhfRk1UX1BBTDgp
+IHsNCiAgICAgICAgIGNvbnN0IHVpbnQ4X3QgKnBhbCA9M0QgYXZfcGFja2V0
+X2dldF9zaWRlX2RhdGEoYXZwa3QsIEFWX1BLVF9EQVRBXz0NClBBTEVUVEUs
+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICBOVUxMKTsNCi0gICAgICAgIGlmIChwYWwpIHsNCi0gICAg
+ICAgICAgICBhdl9idWZmZXJfdW5yZWYoJmNvbnRleHQtPnBhbGV0dGUpOw0K
+KyAgICAgICAgaW50IHJldDsNCisgICAgICAgIGlmICghY29udGV4dC0+cGFs
+ZXR0ZSkNCiAgICAgICAgICAgICBjb250ZXh0LT5wYWxldHRlID0zRCBhdl9i
+dWZmZXJfYWxsb2MoQVZQQUxFVFRFX1NJWkUpOw0KLSAgICAgICAgICAgIGlm
+ICghY29udGV4dC0+cGFsZXR0ZSkgew0KLSAgICAgICAgICAgICAgICBhdl9i
+dWZmZXJfdW5yZWYoJmZyYW1lLT5idWZbMF0pOw0KLSAgICAgICAgICAgICAg
+ICByZXR1cm4gQVZFUlJPUihFTk9NRU0pOw0KLSAgICAgICAgICAgIH0NCisg
+ICAgICAgIGlmICghY29udGV4dC0+cGFsZXR0ZSkgew0KKyAgICAgICAgICAg
+IGF2X2J1ZmZlcl91bnJlZigmZnJhbWUtPmJ1ZlswXSk7DQorICAgICAgICAg
+ICAgcmV0dXJuIEFWRVJST1IoRU5PTUVNKTsNCisgICAgICAgIH0NCisgICAg
+ICAgIHJldCA9M0QgYXZfYnVmZmVyX21ha2Vfd3JpdGFibGUoJmNvbnRleHQt
+PnBhbGV0dGUpOw0KKyAgICAgICAgaWYgKHJldCA8IDApIHsNCisgICAgICAg
+ICAgICBhdl9idWZmZXJfdW5yZWYoJmZyYW1lLT5idWZbMF0pOw0KKyAgICAg
+ICAgICAgIHJldHVybiByZXQ7DQorICAgICAgICB9DQorDQorICAgICAgICBp
+ZiAocGFsKSB7DQogICAgICAgICAgICAgbWVtY3B5KGNvbnRleHQtPnBhbGV0
+dGUtPmRhdGEsIHBhbCwgQVZQQUxFVFRFX1NJWkUpOw0KICAgICAgICAgICAg
+IGZyYW1lLT5wYWxldHRlX2hhc19jaGFuZ2VkID0zRCAxOw0KICAgICAgICAg
+fSBlbHNlIGlmIChjb250ZXh0LT5pc19udXRfcGFsOCkgew0KICAgICAgICAg
+ICAgIGludCB2aWRfc2l6ZSA9M0QgYXZjdHgtPndpZHRoICogYXZjdHgtPmhl
+aWdodDsNCi0gICAgICAgICAgICBpZiAoYXZwa3QtPnNpemUgLSB2aWRfc2l6
+ZSkgew0KKyAgICAgICAgICAgIGludCBwYWxfc2l6ZSA9M0QgYXZwa3QtPnNp
+emUgLSB2aWRfc2l6ZTsNCisNCisgICAgICAgICAgICBpZiAoYXZwa3QtPnNp
+emUgPiB2aWRfc2l6ZSAmJiBwYWxfc2l6ZSA8PTNEIEFWUEFMRVRURV9TSVpF
+KSB7DQogICAgICAgICAgICAgICAgIHBhbCA9M0QgYXZwa3QtPmRhdGEgKyB2
+aWRfc2l6ZTsNCi0gICAgICAgICAgICAgICAgbWVtY3B5KGNvbnRleHQtPnBh
+bGV0dGUtPmRhdGEsIHBhbCwgYXZwa3QtPnNpemUgLSB2aWRfc2l6ZT0NCik7
+DQorICAgICAgICAgICAgICAgIG1lbWNweShjb250ZXh0LT5wYWxldHRlLT5k
+YXRhLCBwYWwsIHBhbF9zaXplKTsNCiAgICAgICAgICAgICAgICAgZnJhbWUt
+PnBhbGV0dGVfaGFzX2NoYW5nZWQgPTNEIDE7DQogICAgICAgICAgICAgfQ0K
+ICAgICAgICAgfQ0K
 
-A security issue was reported in kOps <https://github.com/kubernetes/kops>
-with the GCP Provider running in Gossip Mode
-<https://kops.sigs.k8s.io/gossip/>, where Node service account credentials
-could be used by a container running in the cluster to retrieve sensitive
-information from the state storage bucket and escalate to cluster-admin
-permissions.
-
-This issue has been rated High (CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H>),
-and assigned CVE-2023-1943.
-Affected Components and Configurations
-
-This bug affects the kOps GCP provider, only when running in Gossip Mode.
-See below for information about other providers.
-Affected Versions
-
-   -
-
-   v1.26.0 - v1.26.1
-   -
-
-   <v1.25.4
-
-Fixed Versions
-
-   -
-
-   v1.26.2
-   -
-
-   V1.25.4
-
-
-Recent kOps improvements have systematically reduced the potential for this
-class of attacks, by reducing or eliminating cloud credentials/privileges
-on the nodes.  The recommended versions vary by cloud:
-
-AWS users: should not be affected in recent versions.  kOps version 1.26
-(or later) is recommended, but not a critical update.
-
-GCE users: recommended kOps version is 1.26.3 (or later).
-
-DigitalOcean users: recommended kOps version is 1.27.0-alpha.2 (or later),
-with `--dns=none` for new clusters.  Cloud credentials have been removed
-from the nodes in this configuration.  Future versions will likely make
-dns=none the default.
-
-Hetzner users: recommended kOps version is 1.27.0-alpha.2 (or later).
-Cloud credentials have been removed from the nodes in this configuration.
-
-(Azure, Scaleway and other cloud providers are following the same approach,
-but as these are in alpha we recommend using the latest kOps version, and
-generally do not recommend production usage when in alpha).
-Detection
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@kubernetes.io
-Additional Details
-
-See kOps Issue #15539 <https://github.com/kubernetes/kops/issues/15539> for
-more details.
-Acknowledgements
-
-This vulnerability was reported by James Cleverley-Prance
-
-Thank You,
-
-CJ Cullen on behalf of the Kubernetes Security Response Committee
-
---00000000000089265005fea7d020--
+--_000_A962A2D04FAB5C4499FEFD15B642FA0A011EF049EX02corpqihoone_--
