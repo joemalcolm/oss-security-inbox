@@ -1,51 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/15/5
-Message-Id: <20161015164723.AD7EC6C0661@smtpvmsrv1.mitre.org>
-Date: Sat, 15 Oct 2016 12:47:23 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, psirt@...wei.com
-Subject: Re: CVE request Qemu: char: divide by zero error in serial_update_parameters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/12/7
+Message-ID: <10362931.IFcUaAqdOL@debian>
+Date: Fri, 12 Aug 2016 19:09:15 +0200
+From: Tim Rühsen <tim.ruehsen@....de>
+To: bug-wget@....org
+Cc: Kurt Seifried <kseifried@...hat.com>, oss-security <oss-security@...ts.openwall.com>, "dawid@...alhackers.com" <dawid@...alhackers.com>, "Misra, Deapesh" <dmisra@...isign.com>
+Subject: Re: [Bug-wget] CVE Request - Gnu Wget 1.17 - Design Error Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> Quick Emulator(Qemu) built with the 16550A UART emulation support is
-> vulnerable to a divide by zero issue. It could occur while updating serial
-> device parameters in 'serial_update_parameters'.
+On Donnerstag, 11. August 2016 21:34:14 CEST Kurt Seifried wrote:
+> On Thu, Aug 11, 2016 at 3:11 PM, Misra, Deapesh <dmisra@...isign.com> wrote:
+> > Hi,
+> > 
+> > ------------------
+> > - Background -
+> > ------------------
+> > 
+> > Here at iDefense, Verisign Inc, we have a Vulnerability Contributor
+> > Program (VCP) where we buy vulnerabilities.
+> > 
+> > Recently, security researcher Dawid Golunski sold us an interesting
+> > vulnerability within Wget. We asked Red Hat (secalert at redhat dot com)
+> > if
+> > they would help us with the co-ordination (patching, disclosure, etc) of
+> > this vulnerability. Once they graciously accepted, we discussed the
+> > vulnerability with them. After their initial triage, Red Hat recommended
+> > that we publicly post the details of this vulnerability to this mailing
+> > list for further discussion and hence this email.
 > 
-> A privileged guest user could use this flaw to crash the Qemu process instance
-> on the host, resulting in DoS.
+> That would have been me =).
 > 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02461.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1384909
+> > It is very easy for an attacker to win this race as the file only gets
+> > deleted after the HTTP connection is terminated. He can therefore keep the
+> > connection open as long as necessary to make use of the uploaded file.
+> > Below is proof of concept exploit that demonstrates this technique.
+> 
+> Please note that the attacker would also have to have access to the local
+> file system, either shell access or by some additional exploit,
+> additionally they would have to have read access to the file wget is
+> downloading (so same security context, or really poor permissions).
+> 
+> > it is evident that the accept/reject rule is applied only after the
+> > download. This seems to be a design decision which has a security aspect
+> > to
+> > it. As discussed above,
+> 
+> It has to be. a PHP script can serve any file type for example. To filter
+> on the URI is not what is being asked, the downloaded file is what is being
+> filtered.
+> 
+> >    - an attacker can ensure that the files which were not meant to be
+> > 
+> > downloaded are downloaded to the location on the victim server (which
+> > should be a publicly accessible location)
+> > 
+> >    - the attacker can keep the connection open, even if the file/s have
+> > 
+> > been downloaded on the victim server
+> > 
+> >    - the attacker can then access these files OR use them in a separate
+> > 
+> > attack
+> > 
+> >    - the victim server's security is impacted since the
+> > 
+> > developer/administrator was never warned explicitly that 'rejected files'
+> > can have a transient life on the victim server
+> > 
+> > 
+> > It looks like the design for wget needs to be changed so that the file it
+> > downloads to 'recursively search' through is not saved in a location which
+> > is accessible by the attacker. Additionally the documentation needs to be
+> > enhanced with the explicit mention of the 'transient nature' of the files
+> > which are to be rejected.
+> 
+> This is easily accomplished using a safe umask for the file.
+> 
+> Please note again that to exploit this you would need a situation where the
+> attacker can control what wget is fetching, or execute a man in the middle
+> attack, AND has local access to the system downloading the file AND has
+> permissions to read the file AND some sort of additional vulnerability that
+> requires being able to read a file in order to escalate privileges.
 
-Use CVE-2016-8669.
+If the attacker has local access AND controls a server, he can call wget 
+directly on most systems !? You mean, he wants to infect another user and 
+needs a script file and/or executable downloaded by this user... how does the 
+attacker convince the user to connect to his server with wget using -nH ?
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/char/serial.c but
-that may be an expected place for a later update.
+If we take all the above as given, there are many more attack vectors using 
+wget with different options.
+Also, if the victim accidentally uses -nH in a directory of (ld-loadable) 
+plugins or scripts... regularly checked and loaded/executed by some daemons or 
+tools.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+The only special thing I see in your report is the use of -A '*.jpg'. The 
+victim could simply rely on no other files as *.jpg' ever appear in the file 
+system. This wrong assumption can definitely lead to havoc - and the victim 
+would claim wget being responsible. I can follow that argument.
 
-iQIcBAEBCAAGBQJYAlsWAAoJEHb/MwWLVhi2ZNgP/3Q2O/R4RvBqZ3ySzmRc4kBJ
-KZMiY1SO+pPhKz2ogREuCqE6/ioBa9181Jcd7b+VsDXqhYLpIqvfr/gOA2QfQRJW
-OS2JYBpHf36RT8CzPnSKq825UjpYLj3tObbv/BiGuIEqU0Eky79Q/sFkOqCZJZn/
-vFKwuSqNtqcvD6c1fQWz5BQQhgYOqZtPNPeDvdV6AGSh7qny/wjpA57LrGqv16M+
-FX5iBo0nmOB9SPPHBGIMQlXq7hIq73mnhqu6hXNqrZo9ZDEBSf+t2bRzufNi4o47
-WefYhqJ/J8Sku+X28ul+BndLhmo/XYhlwXVgp4gv5I+ybEW/l+8+VZvRCyjiVmrl
-DtZyp9N2FMXqueJeMk85D7Qn2v6Us1gfLjk22GfYiP9H+z+8KGbiHf8EjHj7vuCC
-OFE0guEqT80ev/hAP65NAidxVxquuxEkAiu2gGDUhnImi5kBY038Df4mPju8tYIo
-W5H/kFK6vzHayyF8/JZlz5XbdhMQsX3aQ51sfvgxQTkyjNJ8/ZpLVDLdQRMmDpvG
-jE1QuOXaO+CNAnluwFfcGkkSA7JZw2AgVYGy8yWhHSF3eFG1YR5pf6eu+c0S+Oug
-rjATBMRpPmGi9WWooDi1i/F6FkFS/wTbHyUGeNtHG8lWqAWYFjV7IGyJ4IK1CICK
-3v8A+xpCXBAJY7oQbNmw
-=eIjR
------END PGP SIGNATURE-----
+Despite from this there are many ways to shoot oneself into the foot by using 
+wget without thinking first (or just accidentally). Just think of --trust-
+server-names, -O, -c, ..., e.g. downloading a ~/.bash_aliases (being executed 
+the next time you log in).
+
+> Wget is simply doing exactly what is asked of it, downloading files, and
+> once downloaded checking if you wanted to keep them or not. Same as any
+> HTTP(S) library that has a mirror function and filter function.
+> 
+> We welcome your comments/suggestions.
+
+We addressed this issue in wget2 - files just needed for parsing are kept in 
+memory and never appear in the file system.
+To fundamentally change the old wget's behavior, big parts have to be 
+rewritten... well, that is what we did for wget2.
+
+Maybe you could send your proof of concept via PM to the wget maintainers 
+(Giuseppe Scrivano <gscrivano@....org>, darshit shah <darnir@...il.com>, Tim 
+Rühsen <tim.ruehsen@....de>). So we have a test case and can perhaps develop a 
+fix or counter measure.
+Or do you think read+write just for the user are a reasonable fix ?
+
+Regards, Tim
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
