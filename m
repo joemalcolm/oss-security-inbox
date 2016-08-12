@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1321" "Wednesday" "4" "May" "2016" "21:50:09" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160505015009.9BE7BB2E106@smtpvbsrv1.mitre.org>" "32" "[oss-security] Re: CVE Request: kernel information leak vulnerability in llc module" "^Cc:" nil nil "5" "2016050501:50:09" "[oss-security] Re: CVE Request: kernel information leak vulnerability in llc module" (number mark "U       cve-assign@m May  4   32/1321  " thread-indent "\"[oss-security] Re: CVE Request: kernel information leak vulnerability in llc module\"\n") "<CABEk9YxcYnhx2VDgzVztLSdY0hjGe20=7P=yp6v3WyE9-tHyfQ@mail.gmail.com>" ("<CABEk9YxcYnhx2VDgzVztLSdY0hjGe20=7P=yp6v3WyE9-tHyfQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["508" "Friday" "12" "August" "2016" "17:03:51" "+0700" "Maxim Solodovnik" "solomax@apache.org" "<CAJmbs8iHGMwpVPfhindZrzn1tGjUVPtatDvB-LMx3+7rxAsgwQ@mail.gmail.com>" "19" "[oss-security] [CVE-2016-3089] Apache OpenMeetings XSS in SWF panel" nil nil nil "8" "2016081210:03:51" "[oss-security] [CVE-2016-3089] Apache OpenMeetings XSS in SWF panel" (number mark "U       solomax@apac Aug 12   19/508   " thread-indent "\"[oss-security] [CVE-2016-3089] Apache OpenMeetings XSS in SWF panel\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15841 invoked by uid 550); 5 May 2016 01:51:10 -0000
+Received: (qmail 20413 invoked by uid 550); 12 Aug 2016 11:24:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,45 +11,39 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15823 invoked from network); 5 May 2016 01:51:09 -0000
-In-Reply-To: <CABEk9YxcYnhx2VDgzVztLSdY0hjGe20=7P=yp6v3WyE9-tHyfQ@mail.gmail.com>
-Message-Id: <20160505015009.9BE7BB2E106@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, csong84@gatech.edu, taesoo@gatech.edu, insu@gatech.edu
-Date: Wed,  4 May 2016 21:50:09 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: kernel information leak vulnerability in llc module
-To: kangjielu@gmail.com
+Received: (qmail 17547 invoked from network); 12 Aug 2016 10:04:06 -0000
+X-Gm-Message-State: AEkoouvDGbanHdC4/YZy1ysN3QI/jyemy13pbiP1bnkvBEDxSNo4odXSvxze8nyp7OB+lF5jo41UNixFeOzBhA==
+X-Received: by 10.55.106.195 with SMTP id f186mr16021887qkc.92.1470996231491;
+ Fri, 12 Aug 2016 03:03:51 -0700 (PDT)
+MIME-Version: 1.0
+From: Maxim Solodovnik <solomax@apache.org>
+Date: Fri, 12 Aug 2016 17:03:51 +0700
+X-Gmail-Original-Message-ID: <CAJmbs8iHGMwpVPfhindZrzn1tGjUVPtatDvB-LMx3+7rxAsgwQ@mail.gmail.com>
+Message-ID: <CAJmbs8iHGMwpVPfhindZrzn1tGjUVPtatDvB-LMx3+7rxAsgwQ@mail.gmail.com>
+To: Matthew Daley <mattd@bugfuzz.com>, 
+	Openmeetings user-list <user@openmeetings.apache.org>, user-russian@openmeetings.apache.org, 
+	dev <dev@openmeetings.apache.org>, security@apache.org, 
+	oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Content-Type: multipart/alternative; boundary=001a114fddb8d81ea60539dcfffc
+Subject: [oss-security] [CVE-2016-3089] Apache OpenMeetings XSS in SWF panel
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--001a114fddb8d81ea60539dcfffc
+Content-Type: text/plain; charset=UTF-8
 
-> https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=b8670c09f37bdf2847cc44f36511a53afc6161fd
-> 
-> The stack object "info" has a total size of 12 bytes. Its last byte is
-> padding which is not initialized and leaked via "put_cmsg".
+Severity: Moderate
 
-Use CVE-2016-4485.
+Vendor: The Apache Software Foundation
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Versions Affected: Apache OpenMeetings 3.1.0
 
-iQIcBAEBCAAGBQJXKqYEAAoJEHb/MwWLVhi2M5wP/0oANDPgSueRVuJpx2mV9ltb
-/YPO3BK4nSjzmdEd9do+6mTmz75TWVCGxEO7ET81u3lBI4rlAVC3zetSZftxlrnd
-UXYYvJgAkk3wORJ3ixCki178EG/Koswdh/UENFp0wZl1gCFwWff+TBq6ZoWfX+/w
-o8iV7M/xdjHUqAwEn38VjSdldLnHINq4Q9nWUGth/2aTRDCeu/e4XqdCk77EyP5D
-JU0dLF2cTbJrJkpXfXdZ4LGniJqEu6Wfnv5OZGOgfDouo/uCnKn16tKOhDFxLEN8
-3pZpXo2FMS5+rk4txzS2mYxOJCgnlkXXZF6ANrMlGZGZPfUmufX2IaaE+umrqL0i
-RhGelyYLmDK90tJF7pvWR8KzExhB3x1g8A7TwoauIVwH8e1pEvNzP3AUF0ceA+IX
-aN0WhfYMw5WSByWk2Ouw6r5s3ztTSXWJ3uzHo3C8bpedyVyWe+1GonWqbSH/e48U
-5sXI59uR3rzOTOUCWCKcRv3fuvgE8t60hTMs7DDl3BP82v5cp0ykpP78Hz51amNV
-EdnTmIVCbPkv8WKxzHQ4gobqpSvIlLUFMJp4bA7dj/z4AZmBplNkq3W3xQr99U3t
-8m6hVzJXWaJBCOeSmV8eumRalJaljy29V55+wVwONxshjb+BdlnC7FbPUcelfhX+
-6p5OZ9IH0ZpR5Gs7oOsQ
-=SIWz
------END PGP SIGNATURE-----
+Description: The value of the URL's "swf" query parameter is interpolated
+into the JavaScript tag without being escaped, leading to the reflected XSS.
+
+All users are recommended to upgrade to Apache OpenMeetings 3.1.2
+
+Credit: This issue was identified by Matthew Daley
+
+Apache OpenMeetings Team
+
+--001a114fddb8d81ea60539dcfffc--
