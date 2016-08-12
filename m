@@ -1,43 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/26/2
-Message-Id: <20160126070228.0FB366C08F0@smtpvmsrv1.mitre.org>
-Date: Tue, 26 Jan 2016 02:02:28 -0500 (EST)
-From: cve-assign@...re.org
-To: fw@...eb.enyo.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Linux potential division by zero in TCP code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/12/3
+Message-ID: <CANO=Ty2f=cqmd14DeZkqW4FZeeh0w0RFKHZnCPa7471rsapVkQ@mail.gmail.com>
+Date: Thu, 11 Aug 2016 21:34:14 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: "dawid@...alhackers.com" <dawid@...alhackers.com>, "bug-wget@....org" <bug-wget@....org>
+Subject: Re: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, Aug 11, 2016 at 3:11 PM, Misra, Deapesh <dmisra@...isign.com> wrote:
 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=8b8a321ff72c785ed5e8b4cf6eda20b35d427390
+> Hi,
+>
+> ------------------
+> - Background -
+> ------------------
+>
+> Here at iDefense, Verisign Inc, we have a Vulnerability Contributor
+> Program (VCP) where we buy vulnerabilities.
+>
+> Recently, security researcher Dawid Golunski sold us an interesting
+> vulnerability within Wget. We asked Red Hat (secalert at redhat dot com) if
+> they would help us with the co-ordination (patching, disclosure, etc) of
+> this vulnerability. Once they graciously accepted, we discussed the
+> vulnerability with them. After their initial triage, Red Hat recommended
+> that we publicly post the details of this vulnerability to this mailing
+> list for further discussion and hence this email.
+>
+>
+That would have been me =).
 
-> This may lead to a div-by-zero if the connection starts another cwnd
-> reduction phase by setting tp->prior_cwnd to the current cwnd (0) in
-> tcp_init_cwnd_reduction().
 
-Use CVE-2016-2070.
+> It is very easy for an attacker to win this race as the file only gets
+> deleted after the HTTP connection is terminated. He can therefore keep the
+> connection open as long as necessary to make use of the uploaded file.
+> Below is proof of concept exploit that demonstrates this technique.
+>
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Please note that the attacker would also have to have access to the local
+file system, either shell access or by some additional exploit,
+additionally they would have to have read access to the file wget is
+downloading (so same security context, or really poor permissions).
 
-iQIcBAEBCAAGBQJWpxcsAAoJEL54rhJi8gl5VhcP/jESXeUc6StXDhNzxWKwNAMX
-HTJ6wMy29qNG2fvAQWPnS63CVvPbnlkbpLDpQ9b9oG0lJ76IPXjgBI2k9ZOUbaBO
-A8vRk4umLqEP5WySGa5GnJsz3MT01tD1nCsTMLaE0YxjL/4Jx7lpiC6HlKCz4yER
-6sEqrxqVhLEVYgQ1N+7+kay1HH6yNkoqu00Z1YjzlihoWFYJ1OGicdMuz6DojBOb
-fSKQBaSC471xNN3+NdEq/2b2C2mrqwxV9kTo34Wp0MOO6gXPy1cL89pvU9urN8WF
-c89+BM/alw2lZmHNtKKuQpYDxBoaA/NQiDGB866FeUrTp4N5CSN2wWSuINnBkQjl
-jCDp38o/LRwuzf1CXYMxJlf7ut2D+t5AWKC/ZfAHcb3CJyHRJ+Pdy1jpeJRWLt/o
-3YNvy/oxGhUSRAej0fsmCZlTfNV7xPdKWzfBizpZIDIHf73yJChVn3Sh2qXe+IAQ
-oJxnj9UYiafTKaHnJFmRUxUf0MtPBy5gu637hk7ej1tBqZY3HmaKxpth9d7BSKhV
-z4NNNhD+8TA2QQkgWiQkqOyc0gEDFI7mqqHkrCr0N0ybBQW7n5f+yXzvKQCcN2qa
-rvW5sQ727d1MnzmWeZYWiVY5w+RnxzwQgYrdcROLuV2zEgY6ENHhLVO5dObqErgZ
-tV9XXTx2FUTvFwOxMSzu
-=m2BO
------END PGP SIGNATURE-----
+
+> it is evident that the accept/reject rule is applied only after the
+> download. This seems to be a design decision which has a security aspect to
+> it. As discussed above,
+>
+
+It has to be. a PHP script can serve any file type for example. To filter
+on the URI is not what is being asked, the downloaded file is what is being
+filtered.
+
+
+>    - an attacker can ensure that the files which were not meant to be
+> downloaded are downloaded to the location on the victim server (which
+> should be a publicly accessible location)
+>    - the attacker can keep the connection open, even if the file/s have
+> been downloaded on the victim server
+>    - the attacker can then access these files OR use them in a separate
+> attack
+>    - the victim server's security is impacted since the
+> developer/administrator was never warned explicitly that 'rejected files'
+> can have a transient life on the victim server
+>
+>
+> It looks like the design for wget needs to be changed so that the file it
+> downloads to 'recursively search' through is not saved in a location which
+> is accessible by the attacker. Additionally the documentation needs to be
+> enhanced with the explicit mention of the 'transient nature' of the files
+> which are to be rejected.
+>
+
+This is easily accomplished using a safe umask for the file.
+
+Please note again that to exploit this you would need a situation where the
+attacker can control what wget is fetching, or execute a man in the middle
+attack, AND has local access to the system downloading the file AND has
+permissions to read the file AND some sort of additional vulnerability that
+requires being able to read a file in order to escalate privileges.
+
+Wget is simply doing exactly what is asked of it, downloading files, and
+once downloaded checking if you wanted to keep them or not. Same as any
+HTTP(S) library that has a mirror function and filter function.
+
+We welcome your comments/suggestions.
+>
+> thanks,
+>
+> Deapesh.
+> iDefense Labs, Verisign Inc.
+> http://www.verisign.com/en_US/security-services/security-
+> intelligence/vulnerability-reports/index.xhtml
+>
+> PS: I hope the maintainer Giuseppe Scrivano gets to see this via the
+> bug-wget list I have CC-ed.
+>
+>
+
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
