@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["574" "Sunday" "4" "December" "2016" "23:35:18" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<2349403.hFb0Mj2ZlT@arcadia>" "25" "Re: [oss-security] libav: multiple crashes from the Undefined Behavior Sanitizer" nil nil nil "12" "2016120422:35:18" "[oss-security] libav: multiple crashes from the Undefined Behavior Sanitizer" (number mark "U       ago@gentoo.o Dec  4   25/574   " thread-indent "\"Re: [oss-security] libav: multiple crashes from the Undefined Behavior Sanitizer\"\n") "<2421787.A5MWpBLn5b@arcadia>" ("<2421787.A5MWpBLn5b@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4817" "Friday" "12" "August" "2016" "07:18:53" "+0000" "=?gb2312?B?s8LI8Of5?=" "chenruiqi@360.cn" "<6D072F0A5597B449BEE8A9770E0BDBEA018D293C@EX01.corp.qihoo.net>" "82" "[oss-security] CVE request: XSS vuln in b2evolution v6.7.4" nil nil nil "8" "2016081207:18:53" "[oss-security] CVE request: XSS vuln in b2evolution v6.7.4" (number mark "U       chenruiqi@36 Aug 12   82/4817  " thread-indent "\"[oss-security] CVE request: XSS vuln in b2evolution v6.7.4\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24508 invoked by uid 550); 4 Dec 2016 22:34:01 -0000
+Received: (qmail 9526 invoked by uid 550); 12 Aug 2016 07:58:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,42 +12,102 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24487 invoked from network); 4 Dec 2016 22:34:00 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Date: Sun, 04 Dec 2016 23:35:18 +0100
-Message-ID: <2349403.hFb0Mj2ZlT@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
-In-Reply-To: <2421787.A5MWpBLn5b@arcadia>
-References: <2421787.A5MWpBLn5b@arcadia>
+Received: (qmail 22485 invoked from network); 12 Aug 2016 07:19:06 -0000
+From: =?gb2312?B?s8LI8Of5?= <chenruiqi@360.cn>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: CVE request: XSS vuln in b2evolution v6.7.4
+Thread-Index: AdH0aXpuEXmfrDxxQBuMcE/ER9vjNw==
+Date: Fri, 12 Aug 2016 07:18:53 +0000
+Message-ID: <6D072F0A5597B449BEE8A9770E0BDBEA018D293C@EX01.corp.qihoo.net>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.254.8.63]
+Content-Type: multipart/alternative;
+	boundary="_000_6D072F0A5597B449BEE8A9770E0BDBEA018D293CEX01corpqihoone_"
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-Subject: Re: [oss-security] libav: multiple crashes from the Undefined Behavior Sanitizer
+Subject: [oss-security] CVE request: XSS vuln in b2evolution v6.7.4
 
-On Thursday 01 December 2016 14:30:33 Agostino Sarubbo wrote:
-> Affected version / Tested on:
-> 11.8
-> Output/failure:
-> /tmp/portage/media-
-> video/libav-11.8/work/libav-11.8/libavcodec/get_bits.h:530:5: runtime err=
-or:
-> load of null pointer of type =E2=80=98int16_t=E2=80=99 (aka =E2=80=98shor=
-t=E2=80=99)
-> Commit fix:
-> N/A
-> Fixed version:
-> N/A
-> Testcase:
-> https://github.com/asarubbo/poc/blob/master/00042-libav-loadnullptr-get_b=
-its
-> _h
+--_000_6D072F0A5597B449BEE8A9770E0BDBEA018D293CEX01corpqihoone_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-Please ignore the issue above. It was already tracked as CVE-2016-8676.
+SSBmb3VuZCBhIFhTUyB2dWxuIGluIGIyZXZvbHV0aW9uIHY2LjcuNA0KDQpU
+aXRsZTogU3RvcmVkIFhTUyBpbiBiMmV2b2x1dGlvbiB2ZXJzaW9uIDYuNy40
+DQpBdXRob3I6IENoZW4gUnVpcWksIENoZW5ydWlxaUAzNjAuY24sIEBDb2Rl
+c2FmZSBUZWFtDQpEYXRlOiAyMDE2LTA4LTA5DQpEb3dubG9hZCBTaXRlOiBo
+dHRwOi8vYjJldm9sdXRpb24ubmV0L2Rvd25sb2Fkcy8NClZlbmRvcjogYjJl
+dm9sdXRpb24ubmV0DQpWZW5kb3IgTm90aWZpZWQ6IDIwMTYtMDgtMDkNClZl
+bmRvciBDb250YWN0OiBodHRwOi8vYjJldm9sdXRpb24ubmV0Lz9kaXNwPW1z
+Z2Zvcm0NCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpEaXNjcmlwdGlvbjoNCmIyZXZvbHV0
+aW9uIGlzIGEgY29udGVudCBhbmQgY29tbXVuaXR5IG1hbmFnZW1lbnQgc3lz
+dGVtIHdyaXR0ZW4gaW4gUEhQIGFuZCBiYWNrZWQgYnkgYSBNeVNRTCBkYXRh
+YmFzZS4gSXQgaXMgZGlzdHJpYnV0ZWQgYXMgZnJlZSBzb2Z0d2FyZSB1bmRl
+ciB0aGUgR05VIEdlbmVyYWwgUHVibGljIExpY2Vuc2UuDQpiMmV2b2x1dGlv
+biBvcmlnaW5hbGx5IHN0YXJ0ZWQgYXMgYSBtdWx0aS11c2VyIG11bHRpLWJs
+b2cgZW5naW5lIHdoZW4gRnJhbj9vaXMgUGxhbnF1ZSBmb3JrZWQgYjJldm9s
+dXRpb24gZnJvbSB2ZXJzaW9uIDAuNi4xIG9mIGIyL2NhZmVsb2cgaW4gMjAw
+My5bMl0gQSBtb3JlIHdpZGVseSBrbm93biBmb3JrIG9mIGIyL2NhZmVsb2cg
+aXMgV29yZFByZXNzLiBiMmV2b2x1dGlvbiBpcyBhdmFpbGFibGUgaW4gd2Vi
+IGhvc3QgY29udHJvbCBwYW5lbHMgYXMgYSAib25lIGNsaWNrIGluc3RhbGwi
+IHdlYiBhcHAuWzNdKFdpa2kpDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KVnVsbmVy
+YWJpbGl0eToNClRoZXJlIGlzIHN0b3JlZCBYU1MgaW4gYjJldm9sdXRpb24g
+dmVyc2lvbiA2LjcuNA0KQW55IHVzZXIgY2FuIGVkaXQgaGlzIG9yIGhlciB0
+d2l0dGVyIGluZm9tYXRpb24gYXQgJ1VzZXIgUHJvZmlsZScgd2l0aCBzb21l
+IGV2aWwgY29kZS4NCkFuZCB3aGVuIHRoZSBhZG1pbiBzZWUgdGhlIHVzZXIg
+cHJvZmlsZSBhdCBiYWNrLW9mZmljZSwgdGhlIHBhZ2UgaXMgbGFjayBvZiBm
+aWx0ZXIgdG8gcHJvdGVjdCB0aGUgYWRtaW4uDQoNClN0ZXAgMSA6IFJlZ2lz
+dGVyIGEgdXNlciBvZiB0aGUgd2ViLXNpdGUNClN0ZXAgMiA6IEVkaXQgdGhl
+IHR3aXR0ZXIgYXQgaHR0cDovLzE5Mi4xNjguMjA0LjEyOC9iMmV2b2x1dGlv
+bi9pbmRleC5waHA/ZGlzcD1wcm9maWxlIHdpdGggc29tZXRoaW5nIGxpa2Ug
+aHR0cHM6Ly90d2l0dGVyLmNvbS9rZXZpbm8ib25tb3VzZW92ZXI9ImFsZXJ0
+KDEpIm9uZXJyb3I9MQ0KU3RlcCAzIDogU2F2ZSB0aGUgY2hhbmdlcw0KU3Rl
+cCA0IDogVGhlIGFkbWluIHZpZXcgdGhlIHByb2ZpbGUgaW4gYmFjay1vZmZp
+Y2UgYXQgaHR0cDovLzE5Mi4xNjguMjA0LjEyOC9iMmV2b2x1dGlvbi9hZG1p
+bi5waHA/Y3RybD11c2VycyAsIHdoZW4gdGhlIG1vdXNlIG92ZXIgdGhlIGNv
+bnRlbnQsIHRoZSBYU1MgY29kZSBydW5zLg0KDQotLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0K
+UG9DIENvZGU6DQpQT1NUIC9iMmV2b2x1dGlvbi9odHNydi9wcm9maWxlX3Vw
+ZGF0ZS5waHAgSFRUUC8xLjENCkhvc3Q6IDE5Mi4xNjguMjA0LjEyOA0KVXNl
+ci1BZ2VudDogTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV09XNjQ7
+IHJ2OjQ3LjApIEdlY2tvLzIwMTAwMTAxIEZpcmVmb3gvNDcuMA0KQWNjZXB0
+OiB0ZXh0L2h0bWwsYXBwbGljYXRpb24veGh0bWwreG1sLGFwcGxpY2F0aW9u
+L3htbDtxPTAuOSwqLyo7cT0wLjgNCkFjY2VwdC1MYW5ndWFnZTogemgtQ04s
+emg7cT0wLjgsZW4tVVM7cT0wLjUsZW47cT0wLjMNCkFjY2VwdC1FbmNvZGlu
+ZzogZ3ppcCwgZGVmbGF0ZQ0KUmVmZXJlcjogaHR0cDovLzE5Mi4xNjguMjA0
+LjEyOC9iMmV2b2x1dGlvbi9pbmRleC5waHA/ZGlzcD1wcm9maWxlDQpDb29r
+aWU6IHNlc3Npb25fYjJldm9fMTkyXzE2OF8yMDRfMTI4PTQ5X0kwRW5WSGdE
+WEJLanNKZDBlOGZFaEs2R2E4MnhFR0R0OyBfX3NtVG9rZW49QWh1TlRaTkM4
+QmFNZkFWUVY3WnBUVzVhOyBldm9fc3R5bGU9VmFyaWF0aW9uDQpDb25uZWN0
+aW9uOiBjbG9zZQ0KQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi94LXd3dy1m
+b3JtLXVybGVuY29kZWQNCkNvbnRlbnQtTGVuZ3RoOiA2NTMNCg0KZWRpdGVk
+X3VzZXJfbG9naW49a2V2aW5vJmVkaXRlZF91c2VyX2ZpcnN0bmFtZT1rZXZp
+bm8mZWRpdGVkX3VzZXJfbGFzdG5hbWU9a2V2aW5vJmVkaXRlZF91c2VyX25p
+Y2tuYW1lPWtldmlubyZlZGl0ZWRfdXNlcl9nZW5kZXI9TSZlZGl0ZWRfdXNl
+cl9jdHJ5X0lEPSZlZGl0ZWRfdXNlcl9yZ25fSUQ9JmVkaXRlZF91c2VyX3N1
+YnJnX0lEPSZlZGl0ZWRfdXNlcl9jaXR5X0lEPSZlZGl0ZWRfdXNlcl9hZ2Vf
+bWluPSZlZGl0ZWRfdXNlcl9hZ2VfbWF4PSZvcmdhbml6YXRpb25zJTVCJTVE
+PSZ1Zl8zOD1rZXZpbm8mdWZfMzk9a2V2aW5vJnVmXzQwPWtldmlubyZ1Zl80
+MT1odHRwcyUzQSUyRiUyRnR3aXR0ZXIuY29tJTJGa2V2aW5vJTIyb25tb3Vz
+ZW92ZXIlM0QlMjJhbGVydCUyODElMjklMjJvbmVycm9yJTNEJTIyMSZ1Zl80
+Mj1odHRwcyUzQSUyRiUyRmZhY2Vib29rLmNvbSUyRmtldmlubyZ1Zl80Mz1o
+dHRwJTNBJTJGJTJGa2V2aW5vLm5ldCUyRmtldmlubyZuZXdfZmllbGRfdHlw
+ZT0zJmFjdGlvbkFycmF5JTVCdXBkYXRlJTVEPVNhdmUrQ2hhbmdlcyUyMSZj
+cnVtYl91c2VyPUNRN0xqQkRLbU1pbjh6cUJEbDA1MG5ORWJtSU5tSUdpJnVz
+ZXJfdGFiPXByb2ZpbGUmaWRlbnRpdHlfZm9ybT0xJnVzZXJfSUQ9OCZibG9n
+PTEmb3JpZ191c2VyX0lEPTgNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCkZpeCBDb2Rl
+Og0KVXBkYXRlIHRvIHRoZSB2ZXJzaW9uIDYuNy41DQpodHRwczovL2dpdGh1
+Yi5jb20vYjJldm9sdXRpb24vYjJldm9sdXRpb24vY29tbWl0LzgzYzQwMTI5
+ZjQ3MWI2NTk3NTU0OTFhMDJiMmFkOTgxOTk1ZDM3YzENCg0KQ291bGQgeW91
+IGFzc2lnbiBDVkUgaWQgZm9yIHRoaXM/DQoNClRoYW5rIHlvdQ0KDQpDaGVu
+IFJ1aXFpDQpDb2Rlc2FmZSBUZWFtDQo=
 
-
-
---=20
-Agostino Sarubbo
-Gentoo Linux Developer
+--_000_6D072F0A5597B449BEE8A9770E0BDBEA018D293CEX01corpqihoone_--
