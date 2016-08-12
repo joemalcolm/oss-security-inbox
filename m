@@ -1,22 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/14/4
-Message-ID: <3081339.jO4PGzo31U@debian>
-Date: Sun, 14 Aug 2016 21:24:49 +0200
-From: Tim Rühsen <tim.ruehsen@....de>
-To: bug-wget@....org
-Cc: "Misra, Deapesh" <dmisra@...isign.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "dawid@...alhackers.com" <dawid@...alhackers.com>
-Subject: Re: [Bug-wget] CVE Request - Gnu Wget 1.17 - Design Error Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/12/5
+Message-ID: <CAJmbs8iHGMwpVPfhindZrzn1tGjUVPtatDvB-LMx3+7rxAsgwQ@mail.gmail.com>
+Date: Fri, 12 Aug 2016 17:03:51 +0700
+From: Maxim Solodovnik <solomax@...che.org>
+To: Matthew Daley <mattd@...fuzz.com>,  Openmeetings user-list <user@...nmeetings.apache.org>, user-russian@...nmeetings.apache.org,  dev <dev@...nmeetings.apache.org>, security@...che.org,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [CVE-2016-3089] Apache OpenMeetings XSS in SWF panel
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: Moderate
 
-here is a patch to limit the file modes to u+rw for temp. downloaded files.
+Vendor: The Apache Software Foundation
 
-Not sure if your proof of concept still works or not - but it seems a good 
-thing anyways.
+Versions Affected: Apache OpenMeetings 3.1.0
 
-Regards, Tim
+Description: The value of the URL's "swf" query parameter is interpolated
+into the JavaScript tag without being escaped, leading to the reflected XSS.
 
-View attachment "0001-Limit-file-mode-to-u-rw-on-temp.-downloaded-files.patch" of type "text/x-patch" (1811 bytes)
+All users are recommended to upgrade to Apache OpenMeetings 3.1.2
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Credit: This issue was identified by Matthew Daley
+
+Apache OpenMeetings Team
+
