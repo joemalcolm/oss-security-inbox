@@ -1,58 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/08/2
-Message-Id: <20160108024157.4D16F6C0316@smtpvmsrv1.mitre.org>
-Date: Thu,  7 Jan 2016 21:41:57 -0500 (EST)
-From: cve-assign@...re.org
-To: limingxing@....cn
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Integer overflow in the JasPer's jas_matrix_create() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/14/3
+Message-ID: <20160814105011.GQ3971@scully.more-magic.net>
+Date: Sun, 14 Aug 2016 12:50:11 +0200
+From: Peter Bex <peter@...e-magic.net>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE request for buffer overrun in CHICKEN process-execute and process-spawn posix procedures
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello all,
 
->> https://bugzilla.redhat.com/show_bug.cgi?id=1294039
+I would like to request a CVE for a buffer overrun that
+was detected in CHICKEN Scheme's "process-execute" and
+"process-spawn" procedures from the posix unit.
 
-> We find a vulnerability in the way JasPer's jas_matrix_create()
-> function parsed certain JPEG 2000 image files.
-> 
-> jas_matrix_t *jas_matrix_create(int numrows, int numcols)
-> {
->         .......
-> 
->         if (matrix->maxrows_ > 0) {
->                 if (!(matrix->rows_ = jas_malloc(matrix->maxrows_ *
->                   sizeof(jas_seqent_t *)))) {
-> 
+CHICKEN preallocated an argument array of ARG_MAX items (or 256 if
+that was undefined), and an environment array of ENV_MAX items
+(or 1024 if that was undefined), and did not verify that the arguments
+or environment lists were less than this size, resulting in a buffer
+overrun if these lists were longer.
 
-> matrix->maxrows_ > 0 ,but matrix->maxrows_ *sizeof(jas_seqent_t *)
-> can cause Integer overflow.
-> 
-> Despite this library is used by many programs
-> (http://www.ece.uvic.ca/~frodo/jasper/#overview), there is no one
-> providing support.
+The full announcement can be found here:
+http://lists.nongnu.org/archive/html/chicken-announce/2016-08/msg00001.html
 
-Use CVE-2015-8751.
+The bugfix also fixed a memory leak in the same piece of code, which
+could potentially be used to cause resource exhaustion/denial of
+service situation.  Does this warrant another CVE?
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+The bug affects all releases of CHICKEN up to and including 4.11.
 
-iQIcBAEBCAAGBQJWjyCOAAoJEL54rhJi8gl5RR4P/3pDkCnol/Y59Nv9pK1kgVr0
-Mas2O+hkbbbQRKBtgPs01mACYZDjEontPtUib+oA2F0hFcb/TisQHf611b3SoDI+
-vxoSMA/qCXO66l7wpE7FmTOPYDCErpLtWEuYGC152BtEsaENE1vIwRYWx4Jshlem
-5XT8LATuUxAC82TObRMr1A5gvDcdgNV9vqmyoDtyAGU725wA9VXWgFAG/CYBbLUC
-wzdqAQ3v1p0cDL63MWfg1vGIxkpY6P7dU8yfQUbBflstfKg5m+z6WmFZdmalJbeO
-uo3bknyP651xKge8PDN6ftfJbsW15fOFM4M1a3Ei+hqylgbqDF0GbfHn7XP3cMZy
-KN2a18Xpj09EWcmZAccaYR26Bc6KY5/9ss8akviQ/BkW2dhoDBdk5Rtt4Fj/w34e
-o//6kv40U8BXa5HAwizagP3Ifzgc8SDXi1RRJgx42bKECrs2YWDNIG5h/+6rNVaV
-+NV3wRvVc98akqsAz85h4M/OEYHEuhOTnN1TNolD6HqsLU3cQV/r36zXF9xzYOcw
-m8Oc+Yyb6sWaMSmNQhwvVuyhtc7qtIA8yKEpeRfzIjJf861nYp+N9cTUbjW3+elx
-zSOuxO6sWcJwQ91igQCILNe3CGPmUtQ1DIpdLPFNTUZ4EJyAuHQ6efqB3+U16kjb
-6Suu6bvueINOqi+9q0Ff
-=1CNW
------END PGP SIGNATURE-----
+Cheers,
+Peter Bex
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
