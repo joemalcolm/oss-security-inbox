@@ -1,42 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/03/1
-Message-ID: <20160103133828.GA24661@tunkki>
-Date: Sun, 3 Jan 2016 15:38:28 +0200
-From: Henri Salo <henri@...v.fi>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com, Curesec Research Team <crt@...esec.com>
-Subject: CVE request: esoTalk 1.0.0g4 cross-site scripting vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/14/5
+Message-ID: <b84b5a3f-9e85-e3f2-fbbd-95dac3a76518@enea.com>
+Date: Sun, 14 Aug 2016 21:36:39 +0200
+From: Sona Sarmadi <sona.sarmadi@...a.com>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2016-5696: linux kernel - challange ack information leak.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi all,
 
-Hi,
+This vulnerability is currently only fixed in mainline kernels (4.7 &
+4.8). Does anyone know if there is any work ongoing to backport this fix
+to the  older versions?
 
-Please assign 2015 CVE identifier for esoTalk cross-site scripting
-vulnerability, thanks.
+Thanks
+//Sona
 
-Advisory: http://seclists.org/fulldisclosure/2015/Dec/112
-Curesec blog: https://blog.curesec.com/article/blog/esoTalk-100g4-XSS-124.html
-PoC: /conversations/a'";><img src=no onerror=alert(1)>?search=test
-Fix: https://github.com/esotalk/esoTalk/commit/b938c39a83b55ecddc74b09d1116c37df1f2567e
 
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+On 2016-07-12 06:33, Wade Mealing wrote:
+> Gday,
+>
+> Red Hat Product Security has been made aware of an important issue in
+> the Linux kernel's implementation of challenge ACKS as specified in
+> RFC 5961. An attacker which knows a connections client IP, server IP
+> and server port can abuse the challenge ACK mechanism
+> to determine the accuracy of a normally 'blind' attack on the client or server.
+>
+> Successful exploitation of this flaw could allow a remote attacker to
+> inject or control a TCP stream contents in a connection between a
+> Linux device and its connected client/server.
+>
+> * This does NOT mean that cryptographic information is exposed.
+> * This is not a Man in the Middle (MITM) attack.
+>
+> This was reported to Red Hat by Yue Cao, part of the Cyber Security
+> Group in the University of California
+>
+> Thanks,
+>
+> Wade Mealing
+> Red Hat Product Security Team
+>
+> Red Hat Bugzilla:
+>
+> https://bugzilla.redhat.com/show_bug.cgi?id=1354708
+>
+> Patch:
+>
+> https://www.mail-archive.com/netdev@vger.kernel.org/msg118677.html
 
-iQIcBAEBAgAGBQJWiSRUAAoJECet96ROqnV07PsQAJzRKRiQnLQ8cO6s0TAS5RVu
-UWM0xDrF+nEitcT8yIF1IXp7eBR9IUD31HOb1aRL0bt0lK0eC8JwZkidf/5ejaUU
-Mn8oTJWWfvHFe5dUAfuCEMnicd4YiJQ2s/+RA9kpo2MpV66mZvUxIvPqa4BdZeAQ
-ew/QWFFUbNTGbAD+LDX0Q6SE46Pp/yn3acfkrEdSSR3aylMS9J+CAgP4cZmIyQYD
-Itqqqgr4fl4SVLLP8VVcLmUyp0A6wGEeg1eqVf4Bn5r+ylfIpKcmMb2HgM+DX/oD
-fIpjMvasn1fA9t/j4dZgZZwfC/cQM+l6ZYARaykSess/Pfj7nnGT4gKA42rZdfWj
-36qFh1KJU4f6Z6VUYvXljKfddhhkyiHtfBdV38Rp1oRSX8PrFJkgolbrRSF/du6E
-ROKeIKy6nT7ZUYLEVBTOGrrO4M8J+TMxsFJ4/1JUE8JvxK2xz2t4/PTuhDyeLFTP
-oyUXl2xiXJDyMuPi9gQWP701h/gAi2QkjF5kpaK5Onn7EunP760i9/iD5KbgEd0f
-ALSBIfzAZI3U2eWA5soOkJ99lsX0sxvzcF9pk9ufk+wz0nCfI+yv45I2A5l6c2oy
-+ILTr5DGPtJU5hdd7zlpgepBKvc9rJmBDuNP4B7QhNYDREkpS9TVjjA//R/DfAT1
-LVMjYYTCftN/5jS+ReLC
-=Q5nX
------END PGP SIGNATURE-----
