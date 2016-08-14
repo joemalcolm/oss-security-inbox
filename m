@@ -1,29 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/6
-Message-ID: <3fd205c8.3e9.15795832e18.Coremail.hongkun.zeng@dbappsecurity.com.cn>
-Date: Wed, 5 Oct 2016 23:43:04 +0800 (GMT+08:00)
-From: "Hongkun Zeng" <hongkun.zeng@...ppsecurity.com.cn>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE-2016-7902: Dotclear <= 2.10.2 (Media Manager) Unrestricted File Upload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/14/2
+Message-ID: <20160814094637.GA29541@openwall.com>
+Date: Sun, 14 Aug 2016 12:46:37 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: gorgeous
 Content-Type: text/plain; charset=utf-8
 
-Vulnerability: Dotclear <= 2.10.2 (Media Manager) Unrestricted File Upload
-CVE: CVE-2016-7902
-Discovered by: Hongkun Zeng (http://www.dbappsecurity.com.cn/)
+Hi,
 
+Gorgeous or not, but with spam/phishing/malware like that, which tries
+not entirely unrelated combinations of source and destination e-mail
+addresses (presumably taken from people's compromised mailboxes or such,
+or/and from public mailing list archives indeed), it looks like we'll
+have to cut down on auto-approve for moderated mailing lists (and switch
+more lists to pre-moderation even for subscribers).  Unfortunately.
+I've just removed this particular address from auto-approve, and we'll
+be adjusting these settings to strike a balance between delivery delays
+and spam getting through.
 
-Dotclear is an open source blog publishing application distributed under the GNU GPLv2.
+On Sun, Aug 14, 2016 at 12:18:03PM +0300, squid3 wrote:
+> Dear, That stuff is just gorgeous, you have  to read about it more at
 
-
-The fileUnzip->unzip() method not properly verifying the extension of files in zip archive.
-This could be exploited to execute arbitrary PHP code by uploading a zip archive file contain the files which extensions (like .php.txt or .php%20).
-Successful exploitation of this vulnerability requires an account with permissions to manage media items.
-
-
-Fix commit: https://hg.dotclear.org/dotclear/rev/a9db771a5a70
-
-
-Best Regards,
-Hongkun Zeng
----------------------------------------------------
-hongkun.zeng@...ppsecurity.com.cn
+Alexander
