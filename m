@@ -1,41 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/4
-Message-ID: <20160115102631.Horde.lTAFZQ18vwx6AyvDNnMXTR9@mail.das-netzwerkteam.de>
-Date: Fri, 15 Jan 2016 10:26:31 +0000
-From: Mike Gabriel <mike.gabriel@...-netzwerkteam.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/15/6
+Message-ID: <20160815083632.GA1172@kroah.com>
+Date: Mon, 15 Aug 2016 10:36:32 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Security issues in GOsa
+Cc: cve-assign@...re.org
+Subject: Re: Linux tcp_xmit_retransmit_queue use after free on 4.8-rc1 / master
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Aug 15, 2016 at 04:10:57PM +0800, Marco Grassi wrote:
+> I just tried several times, but there is some filter that doesn't get along
+> well with the content or with my gmail.
+> 
+> The message keeps not getting delivered.
 
-GOsa is a framework written in PHP for LDAP-based management of  
-intranet infrastructures.
+You can't send html email to the vger.kernel.org lists.  If you want, I
+can forward this on.
 
-As part of upstream (I joined the team recently) I would like to make  
-you aware of (at least) two security issues +/- recently discovered:
+thanks,
 
-(1) Possibility of code injection when setting passwords for Samba.  
-Solved upstream:
-https://github.com/gosa-project/gosa-core/commit/a67a047cba2cdae8bccb0f0e2bc6d3eb45cfcbc8
-
-(2) XSS vulnerability during session log on. Solved upstream:
-https://github.com/gosa-project/gosa-core/commit/e35b990464a2c2cf64d6833a217ed944876e7732
-
-Please assign individual CVE Ids for both issues, if appropriate.
-
-Thanks,
-Mike
--- 
-
-DAS-NETZWERKTEAM
-mike gabriel, herweg 7, 24357 fleckeby
-fon: +49 (1520) 1976 148
-
-GnuPG Key ID 0x25771B31
-mail: mike.gabriel@...-netzwerkteam.de, http://das-netzwerkteam.de
-
-freeBusy:
-https://mail.das-netzwerkteam.de/mailxchange/kronolith/fb.php?u=m.gabriel%40das-netzwerkteam.de
-
-Content of type "application/pgp-signature" skipped
+greg k-h
