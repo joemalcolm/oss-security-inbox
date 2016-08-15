@@ -1,37 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/13/6
-Message-ID: <20161013125717.GA16563@kroah.com>
-Date: Thu, 13 Oct 2016 14:57:17 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/15/3
+Message-ID: <20160815075301.GD6359@kroah.com>
+Date: Mon, 15 Aug 2016 09:53:01 +0200
 From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)
+Subject: Re: CVE-2016-5696: linux kernel - challange ack information leak.
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 13, 2016 at 08:46:51AM -0400, Vladis Dronov wrote:
-> Hello,
+On Mon, Aug 15, 2016 at 06:23:04AM +0000, Sona Sarmadi wrote:
+> > > This vulnerability is currently only fixed in mainline kernels (4.7 &
+> > > 4.8). Does anyone know if there is any work ongoing to backport this
+> > > fix to the  older versions?
+> > 
+> > I just added the fix for this issue to the stable kernel queues and it will
+> > show up in the next stable releases, in about 2 days after it passes all of
+> > the needed review.
+> > 
+> > Hope this helps,
+> > 
+> > greg k-h
 > 
-> It was found that when gcc stack protector is turned on, proc_keys_show() can
-> cause a panic in the Linux kernel due to the stack corruption. This happens
-> because xbuf[] is not big enough to hold a 64-bit timeout value rendered as weeks.
-> 
-> CVE-2016-7042 was assigned to this flaw internally by the Red Hat. Please, use it
-> in the public communications regarding this flaw.
-> 
-> References:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1373966 (patch)
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1373499 (reproducer, patch)
-> 
-> Note: Unfortunately, I'm not sure if the patch was already sent to security@...nel.org
-> or alike by the patch author.
+> Great, thanks, this helps :)
 
-Nope, I don't think that security@...nel.org was sent the patch, but if
-the maintainer of the subsytem already knows about it (it looks like he
-wrote the patch), then there was no need to let that alias know about
-it, right?
-
-Any idea if this is going to be submitted to be merged upstream?
+You can _always_ just apply the patch to your local tree, there's never
+a need to wait for me to get a kernel out.  That's the advantage of
+having the source for your systems :)
 
 thanks,
 
