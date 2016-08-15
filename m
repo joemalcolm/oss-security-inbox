@@ -1,89 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/14/11
-Message-ID: <CANO=Ty0JNongOXWU3NE22_fEwAVHUW=ydeKhqv2zkwTP1sv53g@mail.gmail.com>
-Date: Wed, 14 Sep 2016 17:08:31 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Re: ADOdb PDO driver: incorrect quoting may allow SQL injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/15/5
+Message-ID: <CAFkTriKKuwHjAMgY7N6OCt2p=8SYL_coQFy+rXy1PzksF2+uyA@mail.gmail.com>
+Date: Mon, 15 Aug 2016 16:10:57 +0800
+From: Marco Grassi <marco.gra@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Linux tcp_xmit_retransmit_queue use after free on 4.8-rc1 / master
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 14, 2016 at 4:37 PM, Seth Arnold <seth.arnold@...onical.com>
-wrote:
+I just tried several times, but there is some filter that doesn't get along
+well with the content or with my gmail.
 
-> On Wed, Sep 14, 2016 at 10:22:58AM -0600, Kurt Seifried wrote:
-> > Ideally people should get CVEs and then post to oss-security with the
-> > information and the CVE. A lot of people consume the list data and the
-> > current method means that people end up searching their DBs, making sure
-> > it's new, then entering it, then updating it with a CVE. If people got
-> CVEs
-> > first this would vastly simplify things.
+The message keeps not getting delivered.
+
+Marco
+
+On Mon, Aug 15, 2016 at 3:54 PM, Greg KH <greg@...ah.com> wrote:
+
+> On Mon, Aug 15, 2016 at 09:20:17AM +0800, Marco Grassi wrote:
+> > Hello, this program will cause a use after free of read 4 in
+> > tcp_xmit_retransmit_queue or other tcp_ functions, often in another
+> totally
+> > unrelated process.
+> >
+> > reproducer + KASAN report is provided, tested on master available at the
+> > time of writing and on 4.8 rc1
 >
-> I don't like the idea of waiting on CVE assignment before posting
-> information here:
+> Did you send this to the netdev@...r.kernel.org mailing list so that it
+> can get fixed?  I don't see it there :(
 >
-> - MITRE's team does impressive work, but some assignments take
->   significantly longer than others; a request here, publicly, allows users
->   to mitigate or fix before a number is known.
+> thanks,
 >
-
-So join the DWF and help us get the OpenSource CVEs out quicker.
-
-
-> - In cases when there are no fixes yet, or incomplete fixes, it may not be
->   known how many CVEs are even needed -- making the issues widely known
->   earlier increases the chances of someone preparing patches, to clarify
->   how many issues existed.
+> greg k-h
 >
-
-Also solved in DWF land (
-https://github.com/distributedweaknessfiling/DWF-Database), I explicitly
-setup the DWF up to handle this, the database explicitly supports a
-"REPLACED_BY" state for a CVE:
-
-REPLACED_BY
-
-A list of one or more CVE's that have replaced this entry and what the
-relationship is (e.g. a CVE split may break a single existing CVE into
-multiple CVEs). The format is RELATION:CVE, if there are multiple entries
-they are comma separated (the entire field is quoted). Valid relationships
-are currently:
-
-DUPLICATE_OF
-SPLIT_TO
-SPLIT_FROM
-MERGED_TO
-MERGED_FROM
-REJECT
-
-This field is only used if the CVE is split/merged/found to be a duplicate
-or rejected.
-
-So if we need to clean things up later, we can easily.
-
-
-
->
-> - With MITRE's reduced scope of CVE coverage, there's the risk that
->   software that's important to list members or the wider computing public
->   may not get a number at all. Not getting a number assigned may give the
->   impression that the issue isn't important.
->
-
-This is the Open Source Security List. The DWF mandate is all Open Source.
-So once the DWF is up and running the Venn diagram of oss-security and DWF
-is basically a single circle =).
-
-
->
-> Thanks
->
-
-
-
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
 
