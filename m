@@ -1,15 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/05/2
-Message-ID: <CALx_OUD7KH_ZyfsCePr7YXd-VR2OjrZySLM0Wx-g34eD2q41JQ@mail.gmail.com>
-Date: Sat, 5 Nov 2016 00:05:35 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: dickey@....com
-Cc: redrain root <rootredrain@...il.com>, oss-security <oss-security@...ts.openwall.com>,  Assign a CVE Identifier <cve-assign@...re.org>,  "fulldisclosure@...lists.org" <fulldisclosure@...lists.org>
-Subject: Re: [FD] CVE request:Lynx invalid URL parsing with '?'
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/15/8
+Message-ID: <03d6de10-c70e-9dcf-321c-89c95dc14bcc@securify.nl>
+Date: Mon, 15 Aug 2016 18:25:24 +0200
+From: Summer of Pwnage <lists@...urify.nl>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities affecting eleven WordPress Plugins (XSS, CSRF, LFI & object injection)
 Content-Type: text/plain; charset=utf-8
 
-> Actually, it does parse correctly.  Go read RFC 1738.
+Please see attached advisories for more information. These issues were 
+found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
+project. Its goal is to contribute to the security of popular, widely 
+used OSS projects in a fun and educational way.
 
-IIRC, RFC 3986 "fixes" that, and so does https://url.spec.whatwg.org/.
 
-/mz
+
+
+View attachment "ajax_load_more_local_file_inclusion_vulnerability.txt" of type "text/plain" (4934 bytes)
+
+View attachment "cross_site_request_forgery_in_photo_gallery_wordpress_plugin_allows_adding_of_images.txt" of type "text/plain" (3309 bytes)
+
+View attachment "cross_site_request_forgery_in_photo_gallery_wordpress_plugin_allows_deleting_of_galleries.txt" of type "text/plain" (2905 bytes)
+
+View attachment "cross_site_request_forgery_in_photo_gallery_wordpress_plugin_allows_deleting_of_images.txt" of type "text/plain" (3321 bytes)
+
+View attachment "cross_site_request_forgery_vulnerability_in_add_from_server_wordpress_plugin.txt" of type "text/plain" (3941 bytes)
+
+View attachment "cross_site_request_forgery_vulnerability_in_email_users_wordpress_plugin.txt" of type "text/plain" (6119 bytes)
+
+View attachment "cross_site_scripting_cross_site_request_forgery_in_peter_s_login_redirect_wordpress_plugin.txt" of type "text/plain" (5160 bytes)
+
+View attachment "cross_site_scripting_in_link_library_wordpress_plugin.txt" of type "text/plain" (3141 bytes)
+
+View attachment "cross_site_scripting_in_store_locator_plus_for_wordpress.txt" of type "text/plain" (3985 bytes)
+
+View attachment "cross_site_scripting_vulnerability_in_google_maps_wordpress_plugin.txt" of type "text/plain" (3160 bytes)
+
+View attachment "ecwid_ecommerce_shopping_cart_wordpress_plugin_unauthenticated_php_object_injection_vulnerability.txt" of type "text/plain" (3036 bytes)
+
+View attachment "persistent_cross_site_scripting_in_magic_fields_1_wordpress_plugin.txt" of type "text/plain" (3454 bytes)
+
+View attachment "persistent_cross_site_scripting_in_magic_fields_2_wordpress_plugin.txt" of type "text/plain" (3746 bytes)
+
+View attachment "stored_cross_site_scripting_vulnerability_in_photo_gallery_wordpress_plugin.txt" of type "text/plain" (4334 bytes)
