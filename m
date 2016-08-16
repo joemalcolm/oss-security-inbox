@@ -1,58 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/18
-Message-Id: <20160316204230.64F63B2E03F@smtpvbsrv1.mitre.org>
-Date: Wed, 16 Mar 2016 16:42:30 -0400 (EDT)
-From: cve-assign@...re.org
-To: meissner@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@....net
-Subject: Re: CVE Request: PHP last release security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/16/3
+Message-ID: <40abdc05-0c65-860b-f657-827ba790078d@redhat.com>
+Date: Tue, 16 Aug 2016 15:38:02 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: firewalld: Firewall configuration can be modified by any logged in user
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi All,
 
-> https://bugs.php.net/bug.php?id=71610
+FirewallD provides dbus api for modification of configuration after user
+has been authenticated via polkit. This does not apply for 5 methods
+which can be called by any logged user using dbus api or firewall-cmd
+cli interface. Any predefined policy can be used, server or desktop.
 
->> Type Confusion Vulnerability - SOAP / make_http_soap_request()
+list of concerned dbus methods in firewalld.py
+addPassthrough
+removePassthrough
+addEntry
+removeEntry
+setEntries
 
->> Due to an insufficient validation of the cookies field when making SOAP http request
+Any locally logged in user, could use the above firewalld commands to
+tamper or change the firewall settings.
 
->> https://github.com/php/php-src/blob/master/ext/soap/php_http.c
+This flaw was introduced via the following commit:
+https://github.com/t-woerner/firewalld/commit/6b9867cd5c5e2c83adeec42666521a420e59ef11
 
->> There is lack of validation of 2nd/3rd elements in cookies array.
->>
->> and a type confusion occurs when they are no longer string.
+It affects all firewalld versions since 0.3.12
 
->> [2016-02-22 07:48 UTC] stas@....net
->> Fix added to security repo as eaf4e77190d402ea014207e9a7d5da1a4f3727ba
+We have assigned CVE-2016-5410 to this flaw and this issue was
+previously disclosed via the linux-distros mailing list.
 
-> https://git.php.net/?p=php-src.git;a=commit;h=eaf4e77190d402ea014207e9a7d5da1a4f3727ba
 
->> + Z_TYPE_P(tmp) != IS_STRING ||
+A proposed patch is enclosed with this email.
 
->> + Z_TYPE_P(tmp) != IS_STRING ||
+--- a/src/firewall/server/firewalld.py
++++ a/src/firewall/server/firewalld.py
+@@ -61,8 +61,8 @@ class FirewallD(slip.dbus.service.Object):
 
-Use CVE-2016-3185.
+     persistent = True
+     """ Make FirewallD persistent. """
+-    default_polkit_auth_required = config.dbus.PK_ACTION_INFO
+-    """ Use config.dbus.PK_ACTION_INFO as a default """
++    default_polkit_auth_required = config.dbus.PK_ACTION_CONFIG
++    """ Use config.dbus.PK_ACTION_CONFIG as a default """
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+     @handle_exceptions
+     def __init__(self, *args, **kwargs):
+@@ -2128,6 +2128,7 @@ class FirewallD(slip.dbus.service.Object):
 
-iQIcBAEBCAAGBQJW6cSpAAoJEL54rhJi8gl52JoP/iUez71uL5TXvf0ai43DamFe
-SeZ1FX93kZDkAtfgwrxif3IAXEuX0HlSJeLyuJx2pYDU4GzNEJlT7a+vUm5RK5Nt
-EoJRHI30Wpn6JB7UsV4SkYt0ZyRUjGS3849BuepBAAENyNkKhu0dyrbDXVvmfiVJ
-ELrFg+mNgAhRd5zsBhM63BaExC6a80gpahv/AN75Rz6qU5d8DDx4Q2c7dchme1sT
-mXz9cThT5Zs4kLo9T88QBd3jmsOwVZFqEsBkLCQBBrjNEZoCJlg+G8WAvaKPzPoh
-kV4Ni5qLI+ioW9eEVQQaSMZOYlOcPinqkDIKHk/1ileoTFrd97hKeEjHKwfjT2HT
-2vH3MAiE/yfGEpwqu+RPGPkvcKwo3js+djKOmA6d/jMwSf0ksw+MtJye0CcoEYNn
-iqgIJJgLGokzZ3qalJNXtGSDfxKwyYFpPTYGjLF8YERMFWfOWoNxetgJeT0Zc3pG
-4fz7Gz6MBUnl3eyFICw5bUtz2/kf9RddfzX5YZh2LytSCij+vvkBM4k2xAVFT8+T
-HJY6Ed3X+CGpwGTtd4aWdDRQk3R88xJ0kd1WO8bfFmAW+1zo2iRavYT7loZN1ErV
-KmLpeig/zoog/1yaQQwva43mNVaybTG7NYXbIxQCeohSbm8j5Rd7HbMfpN3WCPfm
-7CpwiKmNIpRcXm7hh1+n
-=bWUM
------END PGP SIGNATURE-----
+     # DIRECT PASSTHROUGH (tracked)
+
++    @slip.dbus.polkit.require_auth(config.dbus.PK_ACTION_DIRECT)
+     @dbus_service_method(config.dbus.DBUS_INTERFACE_DIRECT,
+in_signature='sas',
+                          out_signature='')
+     @dbus_handle_exceptions
+@@ -2141,6 +2142,7 @@ class FirewallD(slip.dbus.service.Object):
+         self.fw.direct.add_passthrough(ipv, args)
+         self.PassthroughAdded(ipv, args)
+
++    @slip.dbus.polkit.require_auth(config.dbus.PK_ACTION_DIRECT)
+     @dbus_service_method(config.dbus.DBUS_INTERFACE_DIRECT,
+in_signature='sas',
+                          out_signature='')
+     @dbus_handle_exceptions
+@@ -2256,6 +2258,7 @@ class FirewallD(slip.dbus.service.Object):
+
+     # set entries # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # #
+
++    @slip.dbus.polkit.require_auth(config.dbus.PK_ACTION_CONFIG)
+     @dbus_service_method(config.dbus.DBUS_INTERFACE_IPSET,
+in_signature='ss',
+                          out_signature='')
+     @dbus_handle_exceptions
+@@ -2268,6 +2271,7 @@ class FirewallD(slip.dbus.service.Object):
+         self.fw.ipset.add_entry(ipset, entry)
+         self.EntryAdded(ipset, entry)
+
++    @slip.dbus.polkit.require_auth(config.dbus.PK_ACTION_CONFIG)
+     @dbus_service_method(config.dbus.DBUS_INTERFACE_IPSET,
+in_signature='ss',
+                          out_signature='')
+     @dbus_handle_exceptions
+@@ -2301,7 +2305,7 @@ class FirewallD(slip.dbus.service.Object):
+         log.debug1("ipset.getEntries('%s')" % ipset)
+         return self.fw.ipset.get_entries(ipset)
+
+-    @slip.dbus.polkit.require_auth(config.dbus.PK_ACTION_INFO)
++    @slip.dbus.polkit.require_auth(config.dbus.PK_ACTION_CONFIG)
+     @dbus_service_method(config.dbus.DBUS_INTERFACE_IPSET,
+in_signature='sas')
+     @dbus_handle_exceptions
+     def setEntries(self, ipset, entries, sender=None): # pylint:
+disable=W0613
+
+
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
