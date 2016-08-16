@@ -1,42 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/22/2
-Message-ID: <20160422035737.GA14458@openwall.com>
-Date: Fri, 22 Apr 2016 06:57:37 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/16/2
+Message-ID: <8b386585-e699-ca12-56b3-6104701f9e9a@redhat.com>
+Date: Tue, 16 Aug 2016 15:34:54 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: s/party/hack like it's 1999
+Subject: cracklib: Stack-based buffer overflow when parsing large GECOS field
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 21, 2016 at 09:45:59PM +0200, Jakub Wilk wrote:
-> * up201407890@...nos.dcc.fc.up.pt, 2015-09-17, 18:03:
-> >'less' doesn't interpret escape sequences unless the -r switch is used, 
-> >so stop aliasing it to 'less -r' just because there's no colored 
-> >output.
-> 
-> As somebody else noted, it should be s/doesn't interpret/neutralizes/ or 
-> something. But that doesn't mean you should feel safe if you don't use 
-> -r.
-> 
-> For example, when git automatically spawns a pager, it puts R in the 
-> LESS environment variable. (That would be fine if git escaped \033 
-> before passing them to the pager, but it doesn't. Oddly, it does seem to 
-> escape other control characters.) Now, -R is less convenient than -r for 
-> hiding malicious code, but you could still set foreground and background 
-> to black in hope that the victim's terminal background is also black.
-> 
-> But even without -r or -R, one can use backspace characters to hide evil 
-> payload:
+Hi All,
 
-Right.  less has the -U option to prevent that.  And yes, it's too many
-options to remember, unfortunately.  Safe(r) use of less was previously
-discussed here:
+A security flaw was reported to us by CSG Labs, details as follows:
 
-http://www.openwall.com/lists/oss-security/2015/09/03/9
+A stack-based overflow was found in the way cracklib, a library used to
+stop users from choosing easy to guess passwords, handled large GECOS
+field in the /etc/passwd file. When an application compiled against the
+cracklib libary, such as "passwd" is used to parse the GECOS field, it
+could cause the application to crash or execute arbitary code with the
+permissions of the user running such an application.
 
-To view untrusted text files, use "less -nU".  Instead of "tail -f", use
-"less -nUEX +F".  Setting up aliases may help.
+To trigger the flaw, you need a specially-crafted "long" GECOS field,
+which can be done by a local user on the system. The attacker then needs
+to run some utility which uses cracklib to process this long GECOS field
+on the system. (such as "passwd" application which runs suid root)
 
-This assumes that your distro didn't setup a script in LESSOPEN that
-would do something dangerous for the given filename/suffix.
+All versions of the cracklib library shipped with Red Hat Enterprise
+Linux are compiled with FORTIFY_SOURCE, which detects the
+buffer-overflow and aborts the application safely.
 
-Alexander
+Therefore the maximum impact of this flaw is application crash.
+
+However, there may be other applications, distributions which dont
+compile cracklib with FORTIFY_SOURCE, and this can lead to easy code
+exec or even privsec.
+
+A proposed patch is available at:
+https://bugzilla.redhat.com/attachment.cgi?id=1188599
+
+This flaw was assigned CVE-2016-6318 and it was previously disclosed via
+linux-distros mailing list.
+
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
