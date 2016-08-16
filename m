@@ -1,50 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/15
-Message-Id: <20160224155524.A145E72E03D@smtpvbsrv1.mitre.org>
-Date: Wed, 24 Feb 2016 10:55:24 -0500 (EST)
-From: cve-assign@...re.org
-To: gustavo.grieco@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: [Pixman] create_bits(): Cast the result of height * stride to size_t
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/16/6
+Message-ID: <20160816201908.GB10132@kroah.com>
+Date: Tue, 16 Aug 2016 22:19:08 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2016-5696: linux kernel - challange ack information leak.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Aug 16, 2016 at 08:15:49PM +0200, Sona Sarmadi wrote:
+> 
+> 
+> On 2016-08-15 09:53, Greg KH wrote:
+> > On Mon, Aug 15, 2016 at 06:23:04AM +0000, Sona Sarmadi wrote:
+> >>>> This vulnerability is currently only fixed in mainline kernels (4.7 &
+> >>>> 4.8). Does anyone know if there is any work ongoing to backport this
+> >>>> fix to the  older versions?
+> >>> I just added the fix for this issue to the stable kernel queues and it will
+> >>> show up in the next stable releases, in about 2 days after it passes all of
+> >>> the needed review.
+> >>>
+> >>> Hope this helps,
+> >>>
+> >>> greg k-h
+> >> Great, thanks, this helps :)
+> > You can _always_ just apply the patch to your local tree, there's never
+> > a need to wait for me to get a kernel out.  That's the advantage of
+> > having the source for your systems :)
+> Yes, we can do that but sometimes the patches for newer kernels don't
+> apply cleanly on older versions.
+> There is always a risk that our home grown patches have undesired side
+> effects. We prefer your sign of approval on patches for older kernels :)
 
-> There is an (old) integer overflow in create_bits in the pixman library.
+Heh, fair enough.  This fix is now in the kernels that were released
+today (4.7.1, 4.6.7, 4.4.18, and 3.14.76), hope that helps.
 
-> https://web.archive.org/web/20141227044037/http://lists.freedesktop.org/archives/pixman/2014-April/003244.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=972647
-
-Use CVE-2014-9766.
-
-
-003244.html has this linked discussion, which is not part of the
-definition of the CVE-2014-9766 ID:
-
-  https://bugs.freedesktop.org/show_bug.cgi?id=69014
-  https://lists.freedesktop.org/archives/pixman/2013-September/002915.html
-  https://bugs.freedesktop.org/attachment.cgi?id=85448
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWzdF9AAoJEL54rhJi8gl5BlIQALu4bdEqoZE/fTlEJSOXQj2s
-4ZWZYb120yISoKjK3kHfGfDtJMi/JeEkXkMTkQjulreq/wYHBHnBeGBxJBw1laae
-7JtS8ULmmR8+WBd/X1ZTmfZ4VhwYcJn0utXaN7su0QK6a3YfG7DasL1Paywf1z6E
-eDMXRJgDE2ml3sHTyodAFvfHbYcpMK7EQao7HJA7o49Vr0NcNJVmW+pYqu0Hq0N+
-j+WilQ4eYiw1I6GgXxiQQlOKFKdnKmflOJXEJp8qMr8iokP9OX5ewN7d/007uZNA
-3gCzt7tpsBACzjx/01exaUdKOFDxHB+l1vglHiC2aFlLN46U637DiJpL0OMN+soF
-AYV0vRGIfxKZOSpSk4398gbX10kv2ew9uOG9UbzkRqneZmdXWqZXPMJ2eH/H2doV
-hdNpt7B+6mgKQpYZZI3OrMilj5ZXfGNc4R2RSt0ViTfabn6D5gYynTrE+Jh37mgZ
-phfBvReUZIP108iAgdxOOi2pLRuUYU4ayeDmQkhNQPaokoAyxkOdy7eorJC8yRD5
-HJ/sL6zKuLJkfaBrsr5zbOe3DD2VqtFQ/mGp0kgAjcKpgdvFyR5IG3n0JiBS+p8c
-Q/CC7tb/gFLJYR9fReUmeJJ4xIY6dzUaXRaxocWuSts8sOgwwyUEiIdDdEK3vxu2
-Gew7VEXZN1T9nBktQhgY
-=IpY0
------END PGP SIGNATURE-----
+greg k-h
