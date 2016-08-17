@@ -1,113 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/11
-Message-ID: <5253979.W8Yu5ZOxEb@blackgate>
-Date: Wed, 09 Nov 2016 15:44:26 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/17/11
+Message-ID: <CAE8hE=qv3Gbb2iyZyQ9Vfk0GiqXJPAdruQ3y9ucdVRzfBb2Aag@mail.gmail.com>
+Date: Wed, 17 Aug 2016 15:28:05 -0400
+From: Chaim Sanders <chaim@...imsanders.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: libdwarf: heap-based buffer overflow in dwarf_get_aranges_list (dwarf_arange.c)
+Subject: ModSecurity's OWASP CRS v3.0.0-rc1 Released.
 Content-Type: text/plain; charset=utf-8
 
-If it is suitable for a CVE please assign one. Thanks.
+The OWASP Core Rule Set team is proud to announce the first of two
+planned release candidates for the upcoming OWASP ModSecurity Core
+Rule Set v3.0.0.
 
-Description:
-libdwarf is a library to consume and produce DWARF debug information.
+This new release represents a huge step forward in terms of both
+capabilities and protections including:
 
-A fuzz on an updated version revealed a buffer overflow.
+- A 95% reduction in false positives for a typical CRS deployment
+using the default configuration.
+- Extended effectiveness and detection capabilities in numerous areas;
+namely Remote Command Execution and PHP injections (Walter Hop).
+- A simple to use, adjustable paranoia level that allows users to
+tailor their ruleset experience.
+- The capability to allow existing sites to try out the Core Rules by
+enabling the rules for only limited percentage of requests (Christian
+Folini).
 
-The complete ASan output:
+Please see the CHANGES document for a detailed list of new features
+and improvements.
+(https://github.com/SpiderLabs/owasp-modsecurity-crs/blob/v3.0.0-rc1/CHANGES)
 
-# dwarfdump $FILE
-==27460==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x60600000eff4 at pc 0x00000047349b bp 0x7ffd9feadaf0 sp 0x7ffd9fead2a0
-READ of size 2 at 0x60600000eff4 thread T0
-    #0 0x47349a in memcpy /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:438
-    #1 0x56cbe0 in dwarf_get_aranges_list 
-/tmp/dwarf-20161021/libdwarf/dwarf_arange.c:118:9
-    #2 0x56c0dc in dwarf_get_aranges 
-/tmp/dwarf-20161021/libdwarf/dwarf_arange.c:318:11
-    #3 0x50f103 in print_aranges 
-/tmp/dwarf-20161021/dwarfdump/print_aranges.c:145:12
-    #4 0x4fb2bf in process_one_file 
-/tmp/dwarf-20161021/dwarfdump/dwarfdump.c:1420:9
-    #5 0x4fb2bf in main /tmp/dwarf-20161021/dwarfdump/dwarfdump.c:654
-    #6 0x7f2b42a4461f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #7 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
+Our desire is to see the Core Rules project used as part of a defense
+in depth strategy to help effectively fight web application weaknesses
+with few side effects. As such we attempt to cut down on false
+positives as much as possible in the default install. This RC1
+therefore offers an opportunity for individuals to provide feedback
+and to report any other issues they may face. This is no longer aimed
+at ModSecurity experts. This is the Core Rules for the rest of us.
 
-0x60600000eff4 is located 0 bytes to the right of 52-byte region 
-[0x60600000efc0,0x60600000eff4)
-allocated by thread T0 here:
-    #0 0x4c0ad8 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52
-    #1 0x7f2b43b1e206 in __libelf_set_rawdata_wrlock /tmp/portage/dev-
-libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_getdata.c:318
+Please use the CRS GitHub
+(https://github.com/SpiderLabs/owasp-modsecurity-crs/releases/tag/v3.0.0-rc1)
+or the Core Rules mailing list to tell us about your experiences,
+including false positives or other issues with this release candidate.
+Our current timeline is to seek public feedback on RC1 for the next
+month, followed by an RC2 and subsequently a release.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:438 
-in memcpy
-Shadow bytes around the buggy address:
-  0x0c0c7fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0c7fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0c7fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0c7fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0c7fff9de0: 00 00 00 00 00 00 00 00 fa fa fa fa 00 00 00 00
-=>0x0c0c7fff9df0: 00 00 00 00 fa fa fa fa 00 00 00 00 00 00[04]fa
-  0x0c0c7fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0c7fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0c7fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0c7fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0c7fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==27460==ABORTING
+ For more information, please see the following blog post accompanying
+this release:
 
-Affected version:
-20161021
+https://www.trustwave.com/Resources/SpiderLabs-Blog/OWASP-ModSecurity-CRS-Version-3-0-RC1-Released/
 
-Fixed version:
-N/A
 
-Commit fix:
-https://sourceforge.net/p/libdwarf/code/ci/583f8834083b5ef834c497f5b47797e16101a9a6/
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00026-libdwarf-heapoverflow-dwarf_get_aranges_list
-
-Timeline:
-2016-11-02: bug discovered and reported to upstream
-2016-11-05: upstream released a patch
-2016-11-07: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/07/libdwarf-heap-based-buffer-overflow-in-dwarf_get_aranges_list-dwarf_arange-c
+Sincerely Chaim Sanders, on behalf of the Core Rules Set development team.
