@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["963" "Wednesday" "19" "August" "2015" "11:49:45" "+0200" "Marcus Meissner" "meissner@suse.de" "<20150819094945.GD6584@suse.de>" "34" "[oss-security] CVE Request: more php unserializing issues" nil nil nil "8" "2015081909:49:45" "[oss-security] CVE Request: more php unserializing issues" (number mark "U       meissner@sus Aug 19   34/963   " thread-indent "\"[oss-security] CVE Request: more php unserializing issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1220" "Wednesday" "17" "August" "2016" "19:58:19" "+0300" "Solar Designer" "solar@openwall.com" "<20160817165819.GA24935@openwall.com>" "34" "[oss-security] Libgcrypt and GnuPG 1.4 RNG output prediction" "^Cc:" nil nil "8" "2016081716:58:19" "[oss-security] Libgcrypt and GnuPG 1.4 RNG output prediction" (number mark "        solar@openwa Aug 17   34/1220  " thread-indent "\"[oss-security] Libgcrypt and GnuPG 1.4 RNG output prediction\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20295 invoked by uid 550); 19 Aug 2015 09:49:58 -0000
+Received: (qmail 16226 invoked by uid 550); 17 Aug 2016 16:58:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20274 invoked from network); 19 Aug 2015 09:49:58 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20150819094945.GD6584@suse.de>
-MIME-Version: 1.0
+Received: (qmail 16089 invoked from network); 17 Aug 2016 16:58:26 -0000
+Message-ID: <20160817165819.GA24935@openwall.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Date: Wed, 19 Aug 2015 11:49:45 +0200
-From: Marcus Meissner <meissner@suse.de>
+User-Agent: Mutt/1.4.2.3i
+Cc: Werner Koch <wk@gnupg.org>
+Date: Wed, 17 Aug 2016 19:58:19 +0300
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: more php unserializing issues
-To: OSS Security List <oss-security@lists.openwall.com>
+Subject: [oss-security] Libgcrypt and GnuPG 1.4 RNG output prediction
+To: oss-security@lists.openwall.com
 
 Hi,
 
-I am not sure these have CVE ids yet:
+This was just announced on gnupg-announce and Twitter @gnupg, and I
+think it should also be in here:
 
-https://bugs.php.net/bug.php?id=70068
-Dangling pointer in the unserialization of ArrayObject items
-	impact: remote code execution
+https://lists.gnupg.org/pipermail/gnupg-announce/2016q3/000395.html
 
+> Felix Drre and Vladimir Klebanov from the Karlsruhe Institute of
+> Technology found a bug in the mixing functions of Libgcrypt's random
+> number generator: An attacker who obtains 4640 bits from the RNG can
+> trivially predict the next 160 bits of output.  This bug exists since
+> 1998 in all GnuPG and Libgcrypt versions.
+> 
+> 
+> Impact
+> ======
+> All Libgcrypt and GnuPG versions released before 2016-08-17 are affected
+> on all platforms.
+> 
+> A first analysis on the impact of this bug in GnuPG shows that existing
+> RSA keys are not weakened.  For DSA and Elgamal keys it is also unlikely
+> that the private key can be predicted from other public information.
+> This needs more research and I would suggest _not to_ overhasty revoke
+> keys.
 
-https://bugs.php.net/bug.php?id=70166
-https://bugs.php.net/bug.php?id=70155 (dup)
-Use After Free Vulnerability in unserialize() with SPLArrayObject
+Also off Twitter:
 
-https://bugs.php.net/bug.php?id=70168
-Use After Free Vulnerability in unserialize() with SplObjectStorage
+<@rgacogne> @gnupg @solardiz The CVE number (CVE-2016-6316) seems to have been used to track another security issue rubygem-actionview, is that correct?
 
-https://bugs.php.net/bug.php?id=70169
-Use After Free Vulnerability in unserialize() with SplDoublyLinkedList
+There does in fact appear to be a CVE ID clash, with:
 
+http://www.openwall.com/lists/oss-security/2016/08/11/6
 
-These look like they can be exploited for code execution.
-
-
-https://bugs.php.net/bug.php?id=70019
-Files extracted from archive may be placed outside of destination directory
-
-(indirect reference also  https://msisac.cisecurity.org/advisories/2015/2015-091.cfm
- and the php release notes
- http://php.net/ChangeLog-5.php#5.4.44
- http://php.net/ChangeLog-5.php#5.5.28
- http://php.net/ChangeLog-5.php#5.6.12
-)
-
-Ciao, Marcus
+Alexander
