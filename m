@@ -1,23 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/24/3
-Message-ID: <CAAdSu-FbGNfOsfRv9saHTCso0fPQJ+QrJ5JamZf4_gcCq7LD6w@mail.gmail.com>
-Date: Fri, 24 Jun 2016 10:14:46 -0700
-From: Alvaro Hoyos <alvaro.hoyos@...login.com>
-To: ruby-security-ann@...glegroups.com, rubysec-announce@...glegroups.com,  oss-security@...ts.openwall.com
-Subject: [CVE-2016-5697] signature wrapping attack vulnerability in ruby-saml prior to version 1.3.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/17/6
+Message-ID: <CAKG8Do7icu-1yBEVZm4Rb9JnUP6Oxz2Rd__B+N_xbj88KTsE=A@mail.gmail.com>
+Date: Wed, 17 Aug 2016 18:03:05 +0200
+From: Cedric Buissart <cbuissar@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-4973 gcc: Targets using libssp for SSP are missing -D_FORTIFY_SOURCE functionality
 Content-Type: text/plain; charset=utf-8
 
-Overview:
-Ruby-saml prior to version 1.3.0 is vulnerable to an XML signature wrapping
-attack. Ruby-saml users must update to 1.3.0 version which implements 3
-extra validations to mitigate this kind of attack.
+Hi,
 
-Overall CVSS Score 6.1
+This is to disclose the following CVE:
 
-Fix: Add extra validations to prevent Signature wrapping attacks [1]
+CVE-2016-4973 gcc: Targets using libssp for SSP are missing
+-D_FORTIFY_SOURCE functionality
 
-[1] https://github.com/onelogin/ruby-saml
+It was found that targets using gcc's libssp library for Stack Smashing
+Protection (among others: Cygwin, MinGW, newlib, RTEMS; but not Glibc,
+Bionic, NetBSD which provide SSP in libc), are missing the Object Size
+Checking feature, even when explicitly requested with _FORTIFY_SOURCE.
+Vulnerable binaries compiled against such targets do not benefit of such
+protection, increasing the chances of success of a buffer overflow attack.
 
-alvaro j hoyos | chief information security officer |
-alvaro.hoyos@...login.com | +1 415.653.1893 | skype: alvaroonelogin
+There is currently no upstream patch. Discussions on the subject & patch
+proposal can be found in the Red Hat corresponding bugzilla :
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2016-4973
+
+Impact: Low
+
+CVSSv3 scoring : 3.6 CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:C/C:N/I:L/A:N
+
+Note regarding the scoring : only the GCC flaw was taken into account, not
+its potential combination with a flaw in an affected binary.
+
+The flaw was reported by Yaakov Selkowitz (Red Hat)
+
+Best regards,
+
+Cedric
+
+-- 
+Cedric Buissart,
+Product Security
 
