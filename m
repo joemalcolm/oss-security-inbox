@@ -1,26 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/11/1
-Message-ID: <878ttvw0ds.fsf@gnu.org>
-Date: Tue, 11 Oct 2016 14:11:59 +0200
-From: ludo@....org (Ludovic Courtès)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/17/9
+Message-ID: <CAKG8Do5ebwd1h2XAEYntLh0k4oes5pLRR0UOw2nEVwNFLhk3dg@mail.gmail.com>
+Date: Wed, 17 Aug 2016 19:30:10 +0200
+From: Cedric Buissart <cbuissar@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Andy Wingo <wingo@...ox.com>, Mark H Weaver <mhw@...ris.org>
-Subject: CVE request: GNU Guile <= 2.0.12: Thread-unsafe umask modification
+Subject: CVE-2016-5404 freeipa: Insufficient privileges check in certificate revocation
 Content-Type: text/plain; charset=utf-8
 
-The ‘mkdir’ procedure of GNU Guile, an implementation of the Scheme
-programming language, temporarily changed the process’ umask to zero.
-During that time window, in a multithreaded application, other threads
-could end up creating files with insecure permissions.  For example,
-‘mkdir’ without the optional ‘mode’ argument would create directories
-as 0777.
+Hi,
 
-This can be worked around by always passing the optional ‘mode’ argument
-to Guile’s ‘mkdir’ procedure.
+This is to disclose the following CVE:
 
-This will be fixed in Guile 2.0.13, to be released shortly.
+CVE-2016-5404 freeipa: Insufficient privileges check in certificate
+revocation
 
-Upstream bug report: http://bugs.gnu.org/24659
-Patch: http://git.savannah.gnu.org/cgit/guile.git/commit/?h=stable-2.0&id=245608911698adb3472803856019bdd5670b6614
+Description :
+An insufficient permission check issue was found in the way IPA server
+treats certificate revocation requests. An attacker logged in with the
+'retrieve certificate' permission enabled could use this flaw to revoke
+certificates, possibly triggering a denial of service attack.
 
-Ludo’.
+All versions are affected.
+
+Patches can be found on the corresponding Red Hat Bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2016-5404
+
+Impact: Moderate
+CVSS3 scoring : 4.3 CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L
+
+Reported by: Fraser Tweedale (Red Hat)
+
+Best Regards,
+
+-- 
+Cedric Buissart,
+Product Security
+
