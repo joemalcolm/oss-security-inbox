@@ -1,24 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/03/4
-Message-ID: <a4156d1d-7f4c-d5ea-0687-3dd6d9ace541@gmail.com>
-Date: Sat, 3 Dec 2016 12:22:43 +0800
-From: Baozeng Ding <sploving1@...il.com>
-To: cve-assign@...re.org, oss-security@...ts.openwall.com
-Cc: herbert@...dor.apana.org.au
-Subject: CVE Request: -- Linux kernel: double free in netlink_dump
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/17/7
+Message-ID: <20160817165819.GA24935@openwall.com>
+Date: Wed, 17 Aug 2016 19:58:19 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Werner Koch <wk@...pg.org>
+Subject: Libgcrypt and GnuPG 1.4 RNG output prediction
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
-A double free vulnerability was found in netlink_dump, which could cause a denial of service or possibly other unspecified impact. 
+Hi,
 
-Reference:
-------------------
-  --> http://lists.openwall.net/netdev/2016/05/15/69
+This was just announced on gnupg-announce and Twitter @gnupg, and I
+think it should also be in here:
 
-Fixed in upstream:
---------------------
-  --> https://github.com/torvalds/linux/commit/92964c79b357efd980812c4de5c1fd2ec8bb5520#diff-8eef21016eaab5b2a6e8019e94f4a710
+https://lists.gnupg.org/pipermail/gnupg-announce/2016q3/000395.html
 
-Could you please assign a CVE for this vulnerability? 
+> Felix Drre and Vladimir Klebanov from the Karlsruhe Institute of
+> Technology found a bug in the mixing functions of Libgcrypt's random
+> number generator: An attacker who obtains 4640 bits from the RNG can
+> trivially predict the next 160 bits of output.  This bug exists since
+> 1998 in all GnuPG and Libgcrypt versions.
+> 
+> 
+> Impact
+> ======
+> All Libgcrypt and GnuPG versions released before 2016-08-17 are affected
+> on all platforms.
+> 
+> A first analysis on the impact of this bug in GnuPG shows that existing
+> RSA keys are not weakened.  For DSA and Elgamal keys it is also unlikely
+> that the private key can be predicted from other public information.
+> This needs more research and I would suggest _not to_ overhasty revoke
+> keys.
 
-Thank you.
+Also off Twitter:
+
+<@rgacogne> @gnupg @solardiz The CVE number (CVE-2016-6316) seems to have been used to track another security issue rubygem-actionview, is that correct?
+
+There does in fact appear to be a CVE ID clash, with:
+
+http://www.openwall.com/lists/oss-security/2016/08/11/6
+
+Alexander
