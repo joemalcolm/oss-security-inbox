@@ -1,31 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/26/3
-Message-ID: <8284992.IKFRmaKcSl@blackgate>
-Date: Wed, 26 Oct 2016 10:08:56 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: Tavis Ormandy <taviso@...gle.com>
-Cc: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: Re: jasper: memory allocation failure in jas_malloc (jas_malloc.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/17/2
+Message-ID: <20160817121621.GA7146@kroah.com>
+Date: Wed, 17 Aug 2016 14:16:21 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2016-5696: linux kernel - challange ack information leak.
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 25 October 2016 12:13:44 Tavis Ormandy wrote:
-> I'm not sure I understand the concern here. Isn't it usually expected
-> that the administrator configures appropriate ulimits, and the code
-> should just handle allocation failure gracefully?
+On Wed, Aug 17, 2016 at 11:54:56AM +0000, Sona Sarmadi wrote:
 > 
-> If we are considering *not* implementing arbitrary hardcoded limits a
-> security problem, that seems like a significant change in software
-> design philosophy (I've heard it called the zero-one-infinity rule
-> before).
+> > > > You can _always_ just apply the patch to your local tree, there's
+> > > > never a need to wait for me to get a kernel out.  That's the
+> > > > advantage of having the source for your systems :)
+> > > Yes, we can do that but sometimes the patches for newer kernels don't
+> > > apply cleanly on older versions.
+> > > There is always a risk that our home grown patches have undesired side
+> > > effects. We prefer your sign of approval on patches for older kernels
+> > > :)
+> > 
+> > Heh, fair enough.  This fix is now in the kernels that were released today
+> > (4.7.1, 4.6.7, 4.4.18, and 3.14.76), hope that helps.
+> > 
+> > greg k-h
 > 
-> Tavis.
+> Thanks a lot Greg, yes this helps :) I could apply  patch from linux-3.14.y branch 
+> to linux-3.12.y as well (the code looks similar). 
 
-Tavis,
+Note, I got the patch a bit wrong, it's not as fast as it could be,
+here's an update to put on top of the one you took from 3.14.y:
+	https://git.kernel.org/cgit/linux/kernel/git/stable/stable-queue.git/commit/?id=e09bea58ec0552dbbf71fb22bf7a46da9a288fc8
 
-more or less I agree with you, but since time ago I saw that similar bugs 
-reveiced a CVE, I thought that these type of bugs could interest the community 
-and them I'm sharing them.
-If I'm not mistaken, CWE-789 covers these type of bugs.
+thanks,
 
---
-Agostino
+greg k-h
