@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1040" "Monday" "11" "January" "2016" "23:10:30" "+0100" "Pere Orga" "pere@orga.cat" "<CAMYtjAquOUMj3RB4gwqa11rMyCefH=GYAWSKYvO_7S1ygHNf8Q@mail.gmail.com>" "34" "[oss-security] CVE requests for Drupal contributed modules" nil nil nil "1" "2016011122:10:30" "[oss-security] CVE requests for Drupal contributed modules" (number mark "U       pere@orga.ca Jan 11   34/1040  " thread-indent "\"[oss-security] CVE requests for Drupal contributed modules\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1827" "Wednesday" "17" "August" "2016" "17:01:45" "+0200" "Gsunde Orangen" "gsunde.orangen@gmail.com" "<CAOTQaXEMKvWRH4Aexf3bXzsdx0488TkWmVq2-7+v4Ak7dar7jw@mail.gmail.com>" "52" "Re: [oss-security] CVE-2016-5696: linux kernel - challange ack information leak." "^Date:" nil nil "8" "2016081715:01:45" "[oss-security] CVE-2016-5696: linux kernel - challange ack information leak." (number mark "        gsunde.orang Aug 17   52/1827  " thread-indent "\"Re: [oss-security] CVE-2016-5696: linux kernel - challange ack information leak.\"\n") "<20160817121621.GA7146@kroah.com>" ("<CALJHwhTAvhAB0DPe2m7h1X_uoz9R5adTOpr-YVXUd6pX3WVNyg@mail.gmail.com>" "<b84b5a3f-9e85-e3f2-fbbd-95dac3a76518@enea.com>" "<20160814195158.GA19228@kroah.com>" "<3230301C09DEF9499B442BBE162C5E48ABE26AE4@SESTOEX04.enea.se>" "<20160815075301.GD6359@kroah.com>" "<8e047f04-5c48-aaa8-0e71-e06a44cb8a2c@enea.com>" "<20160816201908.GB10132@kroah.com>" "<3230301C09DEF9499B442BBE162C5E48ABE280AE@SESTOEX04.enea.se>" "<20160817121621.GA7146@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27798 invoked by uid 550); 11 Jan 2016 22:11:06 -0000
+Received: (qmail 20341 invoked by uid 550); 17 Aug 2016 15:01:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,66 +11,97 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27780 invoked from network); 11 Jan 2016 22:11:06 -0000
-X-Received: by 10.194.121.167 with SMTP id ll7mr125556281wjb.113.1452550250100;
- Mon, 11 Jan 2016 14:10:50 -0800 (PST)
+Received: (qmail 20321 invoked from network); 17 Aug 2016 15:01:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=O55fML+4Rta7zN5bAlXMX0RhXu26haecJttt4f66paE=;
+        b=gb5zFMXTHTKaQAVw5gOHdzOXzXEY14WyIS3zBsZCyTxtfU5NyApuBm4VSv1iOWmTAs
+         IXNABONcNYE8hYGA2kIW1nSosDhiBjTjN/OrKp7aJJaB7/e9qNtW7SXQjknpXYhssZ3+
+         5FN8nCllT34F1tIHEYX0DJz2h+7oZ4FISmePnSYD3WVdZTOq3j6gJ2OdI6xjtHo2OnmV
+         Xlg/05W0fOoUJ88vYKOZCTk3MmvZvmKTgyH6fSbWpT/nMt5DB3J25j3mKKBTVWz9wDSt
+         XKRjjCGPNiAJsBt+jDgJls7BemunaLvyczV13vhkdKz/0lto2A3PwpElcAsvozUa9aEB
+         quCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=O55fML+4Rta7zN5bAlXMX0RhXu26haecJttt4f66paE=;
+        b=j8w1+f285U0XPHInNNszVrtVVvmmOAfR8rRK/w3dynZa1xWPtTAE4Z5BwgdBwl+kv4
+         y61oA/HvJUhUt4lNNtv1CDvPrVU6H+Ip20Ux/Z0XQIfwgEU+kLhjgRvCnU3Ukk0gIkjc
+         JpAJMqu18b/LypQaKRQRbk5xIUt+u18UdRcrlcgrzz5S+sVRNcZD1EF6rQ6b2Zhfv8AX
+         ZYEphHZqJZYV83UYpDfn+Bhx3kNzizDs4zMF6M/kSjyPP09bCXN4CtzFUrr83QrKnqn7
+         lUMVnq8XcJIyGtov0d6FINNZ3tzBf4I3BHEe9cRzkk+vFHMRIfMM8vk99nYhQGbDJYVI
+         T2HQ==
+X-Gm-Message-State: AEkoouu5meAkgMvjD1sYGq8k1472OvMYk6/Vzn83pT8IsvGxk9Lj+N5ndri8jxjgaLm5R9v5wp3TmFycjuFfMw==
+X-Received: by 10.28.210.5 with SMTP id j5mr27401130wmg.67.1471446106472; Wed,
+ 17 Aug 2016 08:01:46 -0700 (PDT)
 MIME-Version: 1.0
-From: Pere Orga <pere@orga.cat>
-Date: Mon, 11 Jan 2016 23:10:30 +0100
-X-Gmail-Original-Message-ID: <CAMYtjAquOUMj3RB4gwqa11rMyCefH=GYAWSKYvO_7S1ygHNf8Q@mail.gmail.com>
-Message-ID: <CAMYtjAquOUMj3RB4gwqa11rMyCefH=GYAWSKYvO_7S1ygHNf8Q@mail.gmail.com>
+In-Reply-To: <20160817121621.GA7146@kroah.com>
+References: <CALJHwhTAvhAB0DPe2m7h1X_uoz9R5adTOpr-YVXUd6pX3WVNyg@mail.gmail.com>
+ <b84b5a3f-9e85-e3f2-fbbd-95dac3a76518@enea.com> <20160814195158.GA19228@kroah.com>
+ <3230301C09DEF9499B442BBE162C5E48ABE26AE4@SESTOEX04.enea.se>
+ <20160815075301.GD6359@kroah.com> <8e047f04-5c48-aaa8-0e71-e06a44cb8a2c@enea.com>
+ <20160816201908.GB10132@kroah.com> <3230301C09DEF9499B442BBE162C5E48ABE280AE@SESTOEX04.enea.se>
+ <20160817121621.GA7146@kroah.com>
+Message-ID: <CAOTQaXEMKvWRH4Aexf3bXzsdx0488TkWmVq2-7+v4Ak7dar7jw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a11468e0e7bbde7053a45be62
+Date: Wed, 17 Aug 2016 17:01:45 +0200
+From: Gsunde Orangen <gsunde.orangen@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2016-5696: linux kernel - challange ack
+ information leak.
 To: oss-security@lists.openwall.com
-Cc: Drupal Security Team <security@drupal.org>
+
+--001a11468e0e7bbde7053a45be62
 Content-Type: text/plain; charset=UTF-8
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator3111.hostgator.com
-X-AntiAbuse: Original Domain - lists.openwall.com
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - orga.cat
-X-BWhitelist: no
-X-Source-IP: 74.125.82.43
-X-Exim-ID: 1aIkfs-000U7m-11
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: (mail-wm0-f43.google.com) [74.125.82.43]:38126
-X-Source-Auth: pere@orga.cat
-X-Email-Count: 2
-X-Source-Cap: bmV0b2w7bmV0b2w7Z2F0b3IzMTExLmhvc3RnYXRvci5jb20=
-Subject: [oss-security] CVE requests for Drupal contributed modules
 
-Hi
+> > Heh, fair enough.  This fix is now in the kernels that were released
+today
+> > (4.7.1, 4.6.7, 4.4.18, and 3.14.76), hope that helps.
+It seems that Greg keeps on being bothered with questions ;-)
+Here's one more: the relevant Upstream commit
+75ff39ccc1bd5d3c455b6822ab09e533c551f758
+is referenced in all change logs of yesterday's kernel releases...
+... Except for: 4.7.1 (https://cdn.kernel.org/pub/
+linux/kernel/v4.x/ChangeLog-4.7.1)
+Did 4.7.1 miss the fix?
 
-Please can I have CVE IDs assigned to the following vulnerabilities:
+Thanks again,
+Gsunde
 
-SA-CONTRIB-2015-157 - Twilio - Moderately Critical - Access bypass
-https://www.drupal.org/node/2592901
+2016-08-17 14:16 GMT+02:00 Greg KH <greg@kroah.com>:
 
-SA-CONTRIB-2015-160 - Webform CiviCRM Integration - Moderately
-Critical - Cross Site Scripting (XSS)
-https://www.drupal.org/node/2592901
+> On Wed, Aug 17, 2016 at 11:54:56AM +0000, Sona Sarmadi wrote:
+> >
+> > > > > You can _always_ just apply the patch to your local tree, there's
+> > > > > never a need to wait for me to get a kernel out.  That's the
+> > > > > advantage of having the source for your systems :)
+> > > > Yes, we can do that but sometimes the patches for newer kernels don't
+> > > > apply cleanly on older versions.
+> > > > There is always a risk that our home grown patches have undesired
+> side
+> > > > effects. We prefer your sign of approval on patches for older kernels
+> > > > :)
+> > >
+> > > Heh, fair enough.  This fix is now in the kernels that were released
+> today
+> > > (4.7.1, 4.6.7, 4.4.18, and 3.14.76), hope that helps.
+> > >
+> > > greg k-h
+> >
+> > Thanks a lot Greg, yes this helps :) I could apply  patch from
+> linux-3.14.y branch
+> > to linux-3.12.y as well (the code looks similar).
+>
+> Note, I got the patch a bit wrong, it's not as fast as it could be,
+> here's an update to put on top of the one you took from 3.14.y:
+>         https://git.kernel.org/cgit/linux/kernel/git/stable/
+> stable-queue.git/commit/?id=e09bea58ec0552dbbf71fb22bf7a46da9a288fc8
+>
+> thanks,
+>
+> greg k-h
+>
 
-SA-CONTRIB-2015-166 - Encrypt - Moderately Critical - Weak Encryption
-https://www.drupal.org/node/2618362
-
-SA-CONTRIB-2015-167 - RESTful - Less Critical - Access bypass
-https://www.drupal.org/node/2627444
-
-SA-CONTRIB-2015-170 - Apache Solr Search - Moderately Critical - Access Bypass
-https://www.drupal.org/node/2627580
-
-SA-CONTRIB-2015-173 - Select2 Field Widget - Critical - Cross Site
-Scripting (XSS)
-https://www.drupal.org/node/2636352
-
-SA-CONTRIB-2015-174 - Open Atrium - Critical - Cross Site Scripting (XSS)
-https://www.drupal.org/node/2636380
-
-SA-CONTRIB-2015-175 - Block Class - Critical - Cross Site Scripting (XSS)
-https://www.drupal.org/node/2636502
-
-Regards
-
---
-Pere Orga on behalf of the Drupal Security team
+--001a11468e0e7bbde7053a45be62--
