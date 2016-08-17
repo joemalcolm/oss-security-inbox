@@ -1,138 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/20/1
-Message-Id: <20160120025110.E39DC42E01D@smtpvbsrv1.mitre.org>
-Date: Tue, 19 Jan 2016 21:51:10 -0500 (EST)
-From: cve-assign@...re.org
-To: fweimer@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE assignment request for security bugs fixed in glibc 2.23
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/17/12
+Message-ID: <np2ot9$gpa$1@blaine.gmane.org>
+Date: Thu, 18 Aug 2016 00:36:25 +0200
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Subject: MantisBT: XSS in view_all_bug_page.php
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Greetings,
 
-The MITRE CVE team generally can assign IDs for security-fix releases
-of products where a notable upstream vendor has already made a final
-determination of what issues are, from their perspective,
-vulnerabilities that require customers to perform a product update.
-This is, to some extent, independent of what our perspective otherwise
-would have been.
+Please assign a CVE ID for the following issue.
 
-Based on the set of issues mentioned, however, we probably don't have
-a shared understanding of what glibc bugs should be considered
-vulnerabilities and what ones should be considered ordinary bugs. This
-doesn't mean that there ought to be a decision process that is
-specific to glibc alone: there are people sending CVE ID requests to
-MITRE for other libraries, including similarly general-purpose
-libraries.
+Description
+-----------
+An XSS vulnerability was discovered in MantisBT's Filter API, affecting 
+the View Issues page. It is caused by unescaped output of the 
+'view_type' GPC parameter, and can be exploited as follows:
 
-Possibly part of the glibc vulnerability model is that memory-safety
-issues should be considered vulnerabilities, regardless of how
-unlikely it is for an attack to cross a privilege boundary. Similarly,
-possibly part of the model is that issues in which glibc simply
-provides the wrong answer are not vulnerabilities, regardless of
-whether there's a plausible scenario in which the wrong answer leads
-to a catastrophic security failure. If there should be some CVE IDs
-for wrong-answer issues, we don't know the best way to subdivide the
-space of wrong answers, e.g., wrong results in floating-point math are
-perhaps attackable less often than wrong results in string operations.
-None of this is going to be resolved today, so here are the five CVE
-IDs for the listed issues.
+http://example.com/mantis/view_all_bug_page.php?view_type="><script>alert('XSS');</script>
 
+To resolve the issue, the parameter's value is sanitized prior to being 
+stored in the filter, ensuring only authorized values 'simple' and 
+'advanced' are saved, and subsequently printed on the hidden form field.
 
-> Passing out of range data to strftime() causes a segfault
-> https://sourceware.org/bugzilla/show_bug.cgi?id=18985
-> 
-> Out-of-range time values passed to the strftime function may cause it to
-> crash, leading to a denial of service, or potentially disclosure
-> information.
+Affected versions
+-----------------
+- >= 1.2.0 (possibly older releases as well - not tested)
+- >= 1.3.0-beta.1
+- >= 2.0.0-beta.1
 
-Use CVE-2015-8776. We don't happen to know of any cases in which a
-reasonable application would, for example, allow a user to enter an
-integer value that refers to the 13th month in a way that crosses a
-privilege boundary. The glibc change might suggest that that
-application should be happy with output of the form "19 ? 2016" (the
-19th day of an unknown month in 2016). We feel that there's a
-(probably weak) argument that this is a defense-in-depth change to
-glibc, not a vulnerability fix, because there's no universally
-understood way for glibc to inform an arbitrary application that it
-has elected to produce a malformed, but memory-safe, result.
+Fixed in versions:
+------------------
+- 1.3.1
+- 2.0.0-beta.2
 
+As of this writing, these have not been released yet, but both should be 
+available in the coming days. Until then, installations should be 
+patched manually.
 
-> LD_POINTER_GUARD is not ignored for privileged binaries
-> https://sourceware.org/bugzilla/show_bug.cgi?id=18928
-> 
-> LD_POINTER_GUARD was an environment variable which controls
-> security-related behavior, but was not ignored for privileged binaries
-> (in AT_SECURE mode).  This might allow local attackers (who can supply
-> the environment variable) to bypass intended security restrictions.
+Please note that MantisBT 1.2.20 was the last release in the legacy 
+1.2.x series, which is no longer supported; this vulnerability will 
+therefore NOT be patched in 1.2. All installations are strongly advised 
+to upgrade to MantisBT 1.3.
 
-Use CVE-2015-8777. We don't feel that there is any way to conclude
-that this is a vulnerability unless confirmed by the upstream vendor
-(and it obviously is confirmed). For example, maybe LD_POINTER_GUARD
-was originally envisioned as a defense against remote attacks, and the
-ability of unprivileged local users to run setuid/setgid programs with
-LD_POINTER_GUARD=0 was an intentional workaround for scenarios in
-which pointer guarding was not working properly.
+Patch
+-----
+See Github [1]
+
+Credits
+-------
+The issue was discovered by Will Dollman of Netcraft Ltd, and fixed by 
+Damien Regad (MantisBT Developer).
+
+References
+----------
+Further details available in our issue tracker [2]
 
 
-> hcreate((size_t)-1) should fail with ENOMEM
-> https://sourceware.org/bugzilla/show_bug.cgi?id=18240
-> 
-> This is an integer overflow in hcreate and hcreate_r which can result in
-> an out-of-bound memory access.  This could lead to application crashes
-> or, potentially, arbitrary code execution.
-
-Use CVE-2015-8778. We don't happen to know of any cases in which an
-application allows a user to specify hcreate arguments in a way that
-crosses a privilege boundary.
+Best regards,
+D. Regad
+MantisBT Developer
+http://www.mantisbt.org
 
 
-> nan function unbounded stack allocation
-> https://sourceware.org/bugzilla/show_bug.cgi?id=16962
-> 
-> A stack overflow (unbounded alloca) can cause applications which process
-> long strings with the nan function to crash or, potentially, execute
-> arbitrary code.
-
-Use CVE-2014-9761. Here, it seems somewhat more plausible that the nan
-argument would ultimately originate from untrusted input in a way that
-crosses a privilege boundary. We don't know of a specific example that
-would be realistic.
+[1] https://github.com/mantisbt/mantisbt/commit/7086c2d8
+[2] https://mantisbt.org/bugs/view.php?id=21611
 
 
-> catopen() Multiple unbounded stack allocations
-> https://sourceware.org/bugzilla/show_bug.cgi?id=17905
-> 
-> A stack overflow (unbounded alloca) in the catopen function can cause
-> applications which pass long strings to the catopen function to crash
-> or, potentially execute arbitrary code.
-
-Use CVE-2015-8779. At least for the
-https://sourceware.org/bugzilla/show_bug.cgi?id=17905#c0 example, we
-don't happen to know of any cases in which an application allows a
-user to specify an arbitrary pathname in a way that crosses a
-privilege boundary, and then decides to catopen that pathname.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWnvVjAAoJEL54rhJi8gl5hXAQAJb94GQ4nmQNvRV/oxuJ8gkP
-GIjkWpfVAeHLJQZ4wxbFIBFrwexeimaZFICEyRnjsA8Jcw0vfdfKy+WbygpgmVuo
-jp38VYkreUXH1ZHJTEX+uTx7ySnKClccZ/599VwzYTMA5JI65srqtqMW52EOC0Lp
-nbqsW7aaQ9rJpXOqcgPNPHf01JIDOgzVMlIkzolWN5dP8YbwIvmWwfOQk0SePJj7
-6fhdj6M12Kob0uqytI4zTSnKa0z2qXC0SsoPgcxtWOqQut7oYhMESMD2a9zbhKPj
-5X4QdICT9ki86ysvujZV3+QoxkBJwd09nWY2AZm/vVgvTzNdArq2V+BPsNkLK+IJ
-xt1u385bw2GYjskLnr2UdyrbOQO5lqgcX9O/7+bzRbWhJsW58iIVwiX/a+slB7Bw
-CvaI565uncU6tR+UNUAT7BTJu2YLfGdqYzMG0G7rKmPVno0+q21cxjyigKpkRKxL
-yq95x3Ww/Yq4CIN4weGjAsOhtQ7h/5AP1D+aOgYp09KcvoKhV9meORCwmg0qZv5V
-RDr+7EquBWOuO84O8LnRcDFpiRPT+P1+CtS+YRo/tlLEVVTo5pe50+9t/7v7ey2o
-xta3mjd8tUdV4GWyItbn1Wzp0rv28/1kttlVJ6oUMpLzAFY8iQHJi+lmVtV+bDT2
-Ta6wlakhBjLtTQ7bCWtU
-=VJ/C
------END PGP SIGNATURE-----
