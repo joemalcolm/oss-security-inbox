@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1660" "Monday" "7" "September" "2015" "14:51:24" "+0200" "Marcus Meissner" "meissner@suse.de" "<20150907125124.GH5993@suse.de>" "42" "[oss-security] CVE Request: PHP remote exploits (even more)" nil nil nil "9" "2015090712:51:24" "[oss-security] CVE Request: PHP remote exploits (even more)" (number mark "U       meissner@sus Sep  7   42/1660  " thread-indent "\"[oss-security] CVE Request: PHP remote exploits (even more)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["953" "Wednesday" "17" "August" "2016" "20:32:40" "+0200" "Werner Koch" "wk@gnupg.org" "<87pop7utyu.fsf@wheatstone.g10code.de>" "34" "[oss-security] Re: Libgcrypt and GnuPG 1.4 RNG output prediction" "^Cc:" nil nil "8" "2016081718:32:40" "[oss-security] Re: Libgcrypt and GnuPG 1.4 RNG output prediction" (number mark "        wk@gnupg.org Aug 17   34/953   " thread-indent "\"[oss-security] Re: Libgcrypt and GnuPG 1.4 RNG output prediction\"\n") "<20160817165819.GA24935@openwall.com>" ("<20160817165819.GA24935@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7329 invoked by uid 550); 7 Sep 2015 12:51:38 -0000
+Received: (qmail 28204 invoked by uid 550); 17 Aug 2016 18:45:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7307 invoked from network); 7 Sep 2015 12:51:37 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Mon, 7 Sep 2015 14:51:24 +0200
-From: Marcus Meissner <meissner@suse.de>
-To: OSS Security List <oss-security@lists.openwall.com>, security@php.net,
-	cve-assign@mitre.org
-Message-ID: <20150907125124.GH5993@suse.de>
+Received: (qmail 24340 invoked from network); 17 Aug 2016 18:37:29 -0000
+References: <20160817165819.GA24935@openwall.com>
+Organisation: g10 Code GmbH
+X-message-flag: Mails containing HTML will not be read!
+	 Please send only plain text.
+OpenPGP: url=https://k.gnupg.net/80615870F5BAD690333686D0F2AD85AC1E42B367
+In-Reply-To: <20160817165819.GA24935@openwall.com> (Solar Designer's message
+	of "Wed, 17 Aug 2016 19:58:19 +0300")
+Message-ID: <87pop7utyu.fsf@wheatstone.g10code.de>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Subject: [oss-security] CVE Request: PHP remote exploits (even more)
-
-Hi,
-
-the last patch of PHP remote exploits have no CVEs assigned yet, but here are even more.
-
-Please assign CVEs.
-
-http://php.net/ChangeLog-5.php#5.4.45
-
-	https://bugs.php.net/bug.php?id=70172	Use After Free Vulnerability in unserialize() 
-		Given attacker input to unserialize() we should consider this a security issue.
-
-	https://bugs.php.net/bug.php?id=70219	Use after free vulnerability in session deserializer
-		Same.
-
-	https://bugs.php.net/bug.php?id=70388	SOAP serialize_function_call() type confusion / RCE
-		Definitely, even the summary has enough indication for me.
-
-	https://bugs.php.net/bug.php?id=70365	yet another use-after-free vulnerability in unserialize() with SplObjectStorage
-		I would also say this can be attacker driven, so needs a CVE.
-
-	https://bugs.php.net/bug.php?id=70366	yet another use-after-free vulnerability in unserialize() with SplDoublyLinkedL
-		Same.
-	
-	https://bugs.php.net/bug.php?id=69782	NULL pointer dereference
-		Denial of service, these queries might be fed from remote.
-
-Perhaps CVEs also for:
-	https://bugs.php.net/bug.php?id=70385	Buffer over-read in exif_read_data with TIFF IFD tag byte value of 32 bytes
-
-	Questionable. It seems no crash was observed, so no denial of service. At most a information leak.
-
-	https://bugs.php.net/bug.php?id=70312 	HAVAL gives wrong hashes in specific cases
-
-	Questionable. I am not sure this is attacker driveable or if an attacker could do anything with this.
+Content-Type: multipart/signed; boundary="=national-information-infrastructure-Glock-kilderkin-gamma-corporate=";
+	micalg=pgp-sha1; protocol="application/pgp-signature"
+Cc: oss-security@lists.openwall.com
+Date: Wed, 17 Aug 2016 20:32:40 +0200
+From: Werner Koch <wk@gnupg.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Libgcrypt and GnuPG 1.4 RNG output prediction
+To: Solar Designer <solar@openwall.com>
 
 
-	https://bugs.php.net/bug.php?id=70345
+On Wed, 17 Aug 2016 18:58, solar@openwall.com said:
 
-	Various PCRE issues caused by the regexp string. There has been a tendency to either declare this CVE worthy or
-	declare that its not attacker driven usually.
+> <@rgacogne> @gnupg @solardiz The CVE number (CVE-2016-6316) seems to have=
+ been used to track another security issue rubygem-actionview, is that corr=
+ect?
 
-Ciao, Marcus
+Sorry, that was my typo.  It is correct in the NEWS files and the commit
+messages.=20=20
+
+The reseachers forwarded me a mail with the CVE but I have not been put
+the loop, neither from RedHat, nor from Debian (as they usually do).
+
+
+Shalom-Salam,
+
+   Werner
+
+
+=2D-=20
+Die Gedanken sind frei.  Ausnahmen regelt ein Bundesgesetz.
+ /* Join us at OpenPGP.conf  <https://openpgp-conf.org> */
+
+--=national-information-infrastructure-Glock-kilderkin-gamma-corporate=
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iEYEARECAAYFAle0rckACgkQTwVA1Xf5X5XS2QCeMTgdPstlwlECEcAs7eF/RlIA
+UZQAnR2HhSJ8hWGHepts4wRsV1psfAre
+=GuDv
+-----END PGP SIGNATURE-----
+--=national-information-infrastructure-Glock-kilderkin-gamma-corporate=--
+
