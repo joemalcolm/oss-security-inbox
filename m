@@ -1,4 +1,9 @@
-Received: (qmail 32428 invoked by uid 550); 19 May 2026 21:25:12 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["845" "Wednesday" "17" "August" "2016" "19:30:10" "+0200" "Cedric Buissart" "cbuissar@redhat.com" "<CAKG8Do5ebwd1h2XAEYntLh0k4oes5pLRR0UOw2nEVwNFLhk3dg@mail.gmail.com>" "33" "[oss-security] CVE-2016-5404 freeipa: Insufficient privileges check in certificate revocation" nil nil nil "8" "2016081717:30:10" "[oss-security] CVE-2016-5404 freeipa: Insufficient privileges check in certificate revocation" (number mark "U       cbuissar@red Aug 17   33/845   " thread-indent "\"[oss-security] CVE-2016-5404 freeipa: Insufficient privileges check in certificate revocation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 18107 invoked by uid 550); 17 Aug 2016 17:30:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,122 +12,58 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 29906 invoked from network); 19 May 2026 19:59:21 -0000
-Message-ID: <ad67b17d-0686-4409-a5a0-aec72db16977@free.fr>
-Date: Tue, 19 May 2026 21:59:11 +0200
+Received: (qmail 18086 invoked from network); 17 Aug 2016 17:30:22 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=xrwH1HbjNjzyQCPErcGbsaL1YKqGadpu5bKGLv/18Nk=;
+        b=jJMAlO02sHvfiFZqZOcvt2aACHJ7kBxl9xcJSYYVKcE5IChxNf++hQ7DAEYTrsFvRh
+         YDJvS3dcwGz7K9Xrfy70eTr9wFXx3LIFNwgbP2eBwrGt6xUFayQpRu3WmTFDFqiysFGK
+         1Oy8rRVeXS86GQAWCCEqTXVAyzIiJ/hO/MH+SAv1OvxGgHDCCKgr8OPStWSM+hckbs5l
+         vP/rhLzvVn5psgRzfUazNmazRTsva/te3p8gwm4fjkbN6HbSkBIPV2EMYR+eXbAdmcm6
+         VWI+3eTqZ6+u7oR5LQX5ItzeRLViFiV3O2GWdyZ0WGHsGchOwarvVBfSKZlEZncOFbwm
+         61YA==
+X-Gm-Message-State: AEkoouvDkGCyDREU5laL3iPwk/LD4HWtm0F5poLLYoL73r3jbxMCu88kt93YzQ7xhMA2dUy09Vc9YbprP//YOZhF
+X-Received: by 10.98.33.72 with SMTP id h69mr76076523pfh.28.1471455011056;
+ Wed, 17 Aug 2016 10:30:11 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+From: Cedric Buissart <cbuissar@redhat.com>
+Date: Wed, 17 Aug 2016 19:30:10 +0200
+Message-ID: <CAKG8Do5ebwd1h2XAEYntLh0k4oes5pLRR0UOw2nEVwNFLhk3dg@mail.gmail.com>
 To: oss-security@lists.openwall.com
-References: <20260518220116.170677b2@riseup.net>
-Content-Language: en-US
-From: Gabriel Corona <gabriel.corona@free.fr>
-In-Reply-To: <20260518220116.170677b2@riseup.net>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------ENij3JYlF6M77CzsmGrWyFWq"
-Subject: Re: [oss-security] On the issue of MIME handlers that execute
- arbitrary code (e.g. Wine)
+Content-Type: multipart/alternative; boundary=001a113efdde3cd323053a47d1c7
+Subject: [oss-security] CVE-2016-5404 freeipa: Insufficient privileges check in certificate revocation
 
---------------ENij3JYlF6M77CzsmGrWyFWq
-Content-Type: multipart/mixed; boundary="------------esNHlRrjNDKoUBmgD1kkYCZH";
- protected-headers="v1"
-From: Gabriel Corona <gabriel.corona@free.fr>
-To: oss-security@lists.openwall.com
-Message-ID: <ad67b17d-0686-4409-a5a0-aec72db16977@free.fr>
-Subject: Re: [oss-security] On the issue of MIME handlers that execute
- arbitrary code (e.g. Wine)
-References: <20260518220116.170677b2@riseup.net>
-In-Reply-To: <20260518220116.170677b2@riseup.net>
+--001a113efdde3cd323053a47d1c7
+Content-Type: text/plain; charset=UTF-8
 
---------------esNHlRrjNDKoUBmgD1kkYCZH
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Hi,
 
-SGksDQoNCj4gICAgICBTZWN1cml0eSBOb3RlOiBOZXZlciBzZXQgYSBoYW5kbGVyIHRoYXQgd2ls
-bCBibGluZGx5IGV4ZWN1dGUgY29kZQ0KPiAgICAgIG9yIGNvbW1hbmRzIGZyb20gdGhlIGZpbGUg
-YmVpbmcgaGFuZGxlZC4gU3VjaCBiZWhhdmlvdXIgd2lsbCBzb29uZXINCj4gICAgICB0aGFuIGxh
-dGVyIGxlYWQgdG8gdW5pbnRlbmRlZCBjb2RlIGV4ZWN1dGlvbiBpLmUuIHRocm91Z2ggYSBjdXJp
-b3VzDQo+ICAgICAgdXNlciB0cnlpbmcgdG8gaW5zcGVjdCBhIGZyZXNobHkgZG93bmxvYWRlZCBm
-aWxlIGJ1dCBydW5uaW5nIGl0IGJ5DQo+ICAgICAgYWNjaWRlbnQuDQo+IA0KPiAgICAgIEtlZXBp
-bmcgb3BlbmluZyBhbmQgZXhlY3V0aW5nIHNlcGFyYXRlIGFjdGlvbnMgaGVscHMgd2l0aCBwZW9w
-bGUNCj4gICAgICBwcm90ZWN0aW5nIHRoZW1zZWx2ZXMgZnJvbSBtYWx3YXJlLCB0aGUgZGVmYXVs
-dCBoYW5kbGVyIGlzIGFuDQo+ICAgICAgb3BlbmVyLCBub3QgYSBydW5uZXIuDQo+IA0KPiB0bDtk
-ciBvZiB0aGUgcmVzdCBvZiB0aGlzOiBNb3N0IG9wZW4tc291cmNlIHByb2dyYW1zICh3aGV0aGVy
-IG9uDQo+IGFjY2lkZW50IG9yIG9uIHB1cnBvc2UpIHNlZW0gdG8gaGVlZCB0aGlzIGFkdmljZS4g
-U29tZSBvZiB0aGVtIGRvbid0Lg0KPiBUaG9zZSB0aGF0IGRvbid0IGFyZSBxdWl0ZSB1c2VmdWwg
-Zm9yIGVzY2FwaW5nIHNhbmRib3hlcy4NClllcywgTUlNRSB0eXBlIHJlZ2lzdHJhdGlvbiAoYW5k
-IFVSSSByZWdpc3RyYXRpb25zKSBoYXMgYSBodWdlIHBvdGVudGlhbCANCmZvciB0cmlnZ2VyaW5n
-IG1hbGljaW91cyBwYXlsb2FkIChvZnRlbiBsZWFkaW5nIHRvIGFyYml0cmFyeSBjb2RlIA0KZXhl
-Y3V0aW9uKSwgdGhyb3VnaCB3ZWIsIFBERnMsIGVtYWlscywgZXRjLiBBbnkgbWVkaWEgdHlwZSBv
-ciBVUkkgc2NoZW1lIA0KcmVnaXN0cmF0aW9uIGlzIGEgcG90ZW50aWFsIGF0dGFjayBzdXJmYWNl
-Lg0KDQpJIGhhdmUgYmVlbiBzY3JhdGNoaW5nIHRoYXQgaXRjaCBmb3Igc29tZSB0aW1lIGFuZCBo
-ZXJlIGFyZSBzb21lIA0KY29tbWVudHMgYW5kIGZpbmRpbmdzLg0KDQpTb21lIGZpbmRpbmdzOg0K
-DQoqIEFyZ3VtZW50IGluamVjdGlvbiBpbiBzZW5zaWJsZS1icm93c2VyIChDVkUtMjAxNy0xNzUx
-MikgWzFdDQoqIEFyZ3VtZW50IGluamVjdGlvbiBpbiB4ZGctb3BlbiAoQ1ZFLTIwMTctMTgyNjYp
-IFsxXQ0KKiBTaGVsbCBjb21tYW5kIGluamVjdGlvbiBpbiBsaWx5cG9uZCAoQ1ZFLTIwMTctMTc1
-MjMsIENWRS0yMDE4LTEwOTkyKSBbMV0NCiogTUlNRSB0eXBlIHNwb29maW5nIGluIEZpcmVmb3gv
-VGh1bmRlcmJpcmQgWzJdDQoqIFRodW5hciBmb3J3YXJkcyB0byBvdGhlciBwcm9ncmFtcyB3aGVu
-IHBhc3NlZCBhIGZpbGUgdGhyb3VnaCBDTEkgDQooQ1ZFLTIwMjEtMzI1NjMpIFsyXQ0KKiBQQ01h
-bkZNIGZvcndhcmRzIHRvIG90aGVyIHByb2dyYW1zIHdoZW4gcGFzc2VkIGEgZmlsZSB0aHJvdWdo
-IENMSSANCihzdGlsbCB3b3JraW5nKSBbMl0NCiogUENNYW5GTS1RdCBmb3J3YXJkcyB0byBvdGhl
-ciBwcm9ncmFtcyB3aGVuIHBhc3NlZCBhIGZpbGUgdGhyb3VnaCBDTEkgDQooc3RpbGwgd29ya2lu
-ZykgWzJdDQoqIEFyYml0cmFyeSBmaWxlIHdyaXRlIGluIFN0ZWxsYXJpdW0gZmlsZSBhc3NvY2lh
-dGlvbiAoQ1ZFLTIwMjMtMjgzNzEpICBbM10NCiogU2hlbGwgY29tbWFuZCBhbmQgRW1hY3MgTGlz
-cCBpbmplY3Rpb24gaW4gZW1hY3NjbGllbnQtbWFpbC5kZXNrdG9wICggDQpDVkUtMjAyMy0yNzk4
-NSwgQ1ZFLTIwMjMtMjc5ODYpIFs0XQ0KKiBBcmJpdHJhcnkgY29kZSBleGVjdXRpb24gdGhyb3Vn
-aCBraXR0eS1vcGVuLmRlc2t0b3AgZmlsZSBhc3NvY2lhdGlvbiBbNV0NCg0KVGhpcyB0eXBlIG9m
-IGlzc3VlIGlzIG5vdCB1bmNvbW1vbi4NCg0KU29tZSB0aW1lcyBhIG1hbGljaW91cyBiZWhhdmlv
-ciBjYW4gYmUgYWNoaWV2ZWQgYnkgY2hhaW5pbmcgc2V2ZXJhbCANCnByb2dyYW1zOg0KDQoqIElu
-IEZyZWVkZXNrdG9wLCBVUkkgcmVnaXN0cmF0aW9uIGlzIGEgc3BlY2lhbCBNSU1FIHJlZ2lzdHJh
-dGlvbiANCih4LXNjaGVtZS1oYW5kbGVyL2ZvbyksIGlmIGEgcHJvZ3JhbSBBIGlzIHJlZ2lzdGVy
-ZWQgYXMgaGFuZGxlciBmb3IgDQp4LXNjaGVtZS1oYW5kbGVyL2dlbywgc29tZSBwcm9ncmFtIEIg
-bWlnaHQgZGVjaWRlIHRvIGNhbGwgcHJvZ3JhbSBBIHRvIA0KaGFuZGxlIGZpbGVzIHNlcnZlZCB3
-aXRoIHRoZSB4LXNjaGVtZS1oYW5kbGVyL2dlbyBNSU1FIHR5cGUgKGVnLiBvbiB0aGUgDQp3ZWIs
-IGluIGVtYWlscykuIFRoaXMgY291bGQgaGF2ZSB1bmV4cGVjdGVkIGNvbnNlcXVlbmNlcyBpZiB0
-aGlzIHByb2dyYW0gDQpjb3VsZCB0cmlnZ2VyIGFyYml0cmFyeSBjb2RlICBleGVjdXRpb24gd2hl
-biBjYWxsZWQgdGhyb3VnaCBhIGZpbGUgYnV0IA0Kbm90IHRocm91Z2ggYSBVUkkuDQoNCiogV2hl
-biBjYWxsZWQgd2l0aCBhIGZpbGUgYXMgYXJndW1lbnQsIHNvbWUgZmlsZSBicm93c2VycyB3aWxs
-IHRyeSB0byANCm9wZW4gdGhlIGZpbGUgdXNpbmcgYW5vdGhlciBwcm9ncmFtLiBJIGNsYWltIHRo
-YXQgdGhpcyBtaWdodCBiZSB1bnNhZmUgDQphbmQgbWlnaHQgYmUgZXhwbG9pdGVkIHRvIGhpZGUg
-bWFsaWNpb3VzIHBheWxvYWQgYmVoaW5kIGFuIGlubm9jdW91cyANCm1lZGlhIHR5cGUgYW5kIHBy
-b2dyYW0gKCJpdCBpcyBzYWZlIHRvIG9wZW4gdGhpcyBmaWxlIHdpdGggbXkgZmlsZSANCmJyb3dz
-ZXIiKS4NCg0KU29tZSBNSU1FIGFuZCBVUkkgcmVnaXN0cmF0aW9uIGFyZSBzb21ld2hhdCBjcnlw
-dGljLiBUaGUgc2VtYW50aWMgb2YgDQpjYWxsaW5nIHRoZSBhc3NvY2lhdGVkIHByb2dyYW0gZm9y
-IGEgZ2l2ZW4gZmlsZSB0eXBlIG9yIFVSSSBzY2hlbWUgaXMgDQpub3QgYWx3YXlzIGNsZWFybHkg
-ZG9jdW1lbnRlZCB3aGljaCBtYWtlcyBhc3Nlc3NtZW50IGRpZmZpY3VsdC4gRm9yIA0KZXhhbXBs
-ZSBDaHJvbWUgcmVnaXN0ZXIgImdvb2dsZS1jaHJvbWU6IiBVUklzLiBTdGVhbSByZWdpc3RlcnMg
-InN0ZWFtOiIgDQphbmQgInN0ZWFtbGluazoiLCBnaXRnIHJlZ2lzdGVycyAiZ2l0ZzoiDQoNClsx
-XSBodHRwczovL3d3dy5nYWJyaWVsLnVyZGhyLmZyLzIwMTgvMDUvMjgvYnJvd3Nlci1pbmplY3Rp
-b25zLw0KWzJdIGh0dHBzOi8vd3d3LmdhYnJpZWwudXJkaHIuZnIvMjAyMy8wMy8wNy9taW1lLXR5
-cGUtc3Bvb2ZpbmcvDQpbM10gDQpodHRwczovL3d3dy5nYWJyaWVsLnVyZGhyLmZyLzIwMjMvMDYv
-MDgvYXJiaXRyYXJ5LWZpbGUtd3JpdGUtaW4tc3RlbGxhcml1bS1maWxlLWFzc29jaWF0aW9uLw0K
-WzRdIA0KaHR0cHM6Ly93d3cuZ2FicmllbC51cmRoci5mci8yMDIzLzA2LzA4L2VtYWNzY2xpZW50
-LW1haWwtc2hlbGwtZWxpc3AtaW5qZWN0aW9ucy8NCls1XSANCmh0dHBzOi8vd3d3LmdhYnJpZWwu
-dXJkaHIuZnIvMjAyMy8wOS8yMy9jb2RlLWV4ZWN1dGlvbi10aHJvdWdoLWtpdHR5LW9wZW4vDQoN
-ClJlZ2FyZHMsDQoNCkdhYnJpZWwNCg0K
+This is to disclose the following CVE:
 
---------------esNHlRrjNDKoUBmgD1kkYCZH--
+CVE-2016-5404 freeipa: Insufficient privileges check in certificate
+revocation
 
---------------ENij3JYlF6M77CzsmGrWyFWq
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+Description :
+An insufficient permission check issue was found in the way IPA server
+treats certificate revocation requests. An attacker logged in with the
+'retrieve certificate' permission enabled could use this flaw to revoke
+certificates, possibly triggering a denial of service attack.
 
------BEGIN PGP SIGNATURE-----
+All versions are affected.
 
-wsF5BAABCAAjFiEEleStherPvjH3F2XUIWPS9KpGc+gFAmoMwRAFAwAAAAAACgkQIWPS9KpGc+ie
-QBAAnXQ2RbJhxwk07Xs8kvm8CWInIgR30nMOkAup+caSu+YRVvOyHA2U673BTuVMc6eOsukrfKdN
-dKQAEb89E/CEZ3KOvOl7IFK7pVnEI9lEt+gANnKxE7kvSgU+SA9zjymnSfTFI8PRD4xri/+ZYVcM
-wvj3nhyaYeBWhhu329aFCZSYecdpmu/LUxzE+/ahqCoU96t68jayL16u2Nl/UplOyNoi5fh1Iwdz
-XxWDcVHNQ1C7DSHPfsw9JG3JXyMlZd9SvoIVrlJ0BaATgnDyfAG0Vw3ocngkrNh3CkgAHEMtHxSD
-82AOBf7qw37McVRxhCVApc4BLm9T8KfIGOx5KdZUkocacDuLJyYpDOFVljdTSyz/1QY+wfuqxi9u
-7oxV4mmRFapfb/mQPCELxnaNvk2VuI3k4Sa/gpCG0zNgFoBMR6gpF2NE+RBxcoDQvDZtZDuBdTZm
-1+oPqMW3/lw9TjFTCwvSoJTVbw4xKh1xVVZcTr11mAVIHmuSqS21JDG73fX1i2l8bAyp4VJu044p
-GO08eitwCBlVeO8n6vQKDKtKq9b3pNzJj0OsULCTXGnPa2i2w/CL8Qxy879tXHpl5QM0zArJawtM
-S8Z9hWRcQNV2pl+BTvPrn2DVNkxN16J+0wH8K9VcVA6hDq3DOEzE9Jz5IqGPd5auJVRFYci9JcSq
-io4=
-=u/If
------END PGP SIGNATURE-----
+Patches can be found on the corresponding Red Hat Bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2016-5404
 
---------------ENij3JYlF6M77CzsmGrWyFWq--
+Impact: Moderate
+CVSS3 scoring : 4.3 CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L
+
+Reported by: Fraser Tweedale (Red Hat)
+
+Best Regards,
+
+-- 
+Cedric Buissart,
+Product Security
+
+--001a113efdde3cd323053a47d1c7--
