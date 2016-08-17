@@ -1,51 +1,11 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/15/4
-Message-ID: <07b5ffe5-247c-63a3-6f3f-884a79ede301@upv.es>
-Date: Tue, 15 Nov 2016 20:11:11 +0000
-From: Hector Marco <hecmargi@....es>
-To: oss-security@...ts.openwall.com
-Cc: Ismael Ripoll <iripoll@...ca.upv.es>
-Subject: Re: [FD] CVE-2016-4484: - Cryptsetup Initrd root Shell
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/17/10
+Message-ID: <87pop7utyu.fsf@wheatstone.g10code.de>
+Date: Wed, 17 Aug 2016 20:32:40 +0200
+From: Werner Koch <wk@...pg.org>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Libgcrypt and GnuPG 1.4 RNG output prediction
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-
-It would be more precise to say "2:1.7.3-2" rather than "2:1".
-This number refers to the Debian package. It seems that Debian is using
-different version numbers for the "cryptsetup" package:
-
-https://security-tracker.debian.org/tracker/CVE-2016-4484
-
-We are not sure whether the last part of the version number (2:1.7.3-2)
-of the Debian package (1.7.3-2) is used to match with the cryptsetup
-version.
-
-Just to avoid confusion, the bug is on the scripts (initramfs) and not
-in the cryptsetup encryption/decryption algorithms.
-
-Regards,
-Hector Marco & Ismael Ripoll.
-
-
-> On Mon, Nov 14, 2016 at 08:45:51PM +0000, Hector Marco wrote:
->> Hello All,
->>
->> Affected package
->> ----------------
->> Cryptsetup <= 2:1
-> 
-> Hi,
-> 
-> Can you clarify which versions are affected?
-> 
-> The latest upstream version is 1.7.3:
-> 
-> https://gitlab.com/cryptsetup/cryptsetup/commits/master
-> 
-> What is the 2:1 version?
-> 
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Content of type "application/pgp-signature" skipped
