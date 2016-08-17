@@ -1,90 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/8
-Message-ID: <2195078.5G4Kuz0jSG@blackgate>
-Date: Tue, 18 Oct 2016 17:02:24 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/17/8
+Message-ID: <13b97dfc-e27f-ed00-3017-e7dd169d199b@archlinux.org>
+Date: Wed, 17 Aug 2016 19:05:06 +0200
+From: Remi Gacogne <rgacogne@...hlinux.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: snzip: memory allocation failure in work_buffer_resize (snzip.c)
+Cc: Werner Koch <wk@...pg.org>
+Subject: Re: Libgcrypt and GnuPG 1.4 RNG output prediction
 Content-Type: text/plain; charset=utf-8
 
-Description:
-snzip is a compression/decompression tool based on snappy.
+Hi,
 
-A fuzzing revealed a memory allocation failure.
+On 08/17/2016 06:58 PM, Solar Designer wrote:
+> <@rgacogne> @gnupg @solardiz The CVE number (CVE-2016-6316) seems to have been used to track another security issue rubygem-actionview, is that correct?
+> 
+> There does in fact appear to be a CVE ID clash, with:
+> 
+> http://www.openwall.com/lists/oss-security/2016/08/11/6
 
-The complete ASan output:
+Apparently the correct CVE number is CVE-2016-6313:
+https://twitter.com/gnupg/status/765956493720055808
 
-# snzip -d $FILE
-Ȥ�==12351==WARNING: AddressSanitizer failed to allocate 0xffffffffc8617364 
-bytes
-==12351==AddressSanitizer's allocator is terminating the process instead of 
-returning 0
-==12351==If you don't like this behavior set allocator_may_return_null=1
-==12351==AddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_allocator.cc:147 "((0)) != (0)" (0x0, 0x0)
-    #0 0x4ca7ed in AsanCheckFailed /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67                                                                                                                                   
-    #1 0x4d1323 in __sanitizer::CheckFailed(char const*, int, char const*, 
-unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:159                              
-    #2 0x4cf076 in __sanitizer::ReportAllocatorCannotReturnNull() 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_allocator.cc:147                                                                            
-    #3 0x424896 in 
-__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
-__asan::AsanMapUnmapCallback>, 
-__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->, __sanitizer::LargeMmapAllocator >::ReturnNullOrDie() /var/tmp/portage/sys-
-devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1317                                                                                                                                                                                                   
-    #4 0x424896 in __asan::Allocator::Allocate(unsigned long, unsigned long, 
-__sanitizer::BufferedStackTrace*, __asan::AllocType, bool) 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:359                       
-    #5 0x4205bd in __asan::Allocator::Reallocate(void*, unsigned long, 
-__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:539                                                      
-    #6 0x4205bd in __asan::asan_realloc(void*, unsigned long, 
-__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:732                                                               
-    #7 0x4c1231 in realloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:79                                                                                                                                  
-    #8 0x4fe72c in work_buffer_resize /tmp/portage/app-
-arch/snzip-1.0.3/work/snzip-1.0.3/snzip.c:584:13                                                                                                                                                                        
-    #9 0x51667b in snappy_java_uncompress /tmp/portage/app-
-arch/snzip-1.0.3/work/snzip-1.0.3/snappy-java-format.c:193:7                                                                                                                                                        
-    #10 0x4f68ea in main /tmp/portage/app-
-arch/snzip-1.0.3/work/snzip-1.0.3/snzip.c:401:11                                                                                                                                                                                     
-    #11 0x7fcbabbd261f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                       
-    #12 0x419988 in _init (/usr/bin/snzip+0x419988)
 
-Affected version:
-1.0.3
 
-Fixed version:
-N/A
 
-Commit fix:
-N/A
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-Timeline:
-2016-10-13: bug discovered
-2016-10-13: bug reported to upstream
-2016-10-08: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/10/18/snzip-memory-allocation-failure-in-work_buffer_resize-snzip-c
-
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
