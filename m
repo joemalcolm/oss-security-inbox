@@ -1,78 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/27/4
-Message-ID: <alpine.LFD.2.20.1607271946420.18244@wniryva>
-Date: Wed, 27 Jul 2016 20:30:01 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Stefan Hajnoczi <shajnocz@...hat.com>, sstabellini@...nel.org, zhenhaohong@...il.com
-Subject: CVE-2016-5403 Qemu: virtio: unbounded memory allocation on host via guest leading to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/17/1
+Message-ID: <3230301C09DEF9499B442BBE162C5E48ABE280AE@SESTOEX04.enea.se>
+Date: Wed, 17 Aug 2016 11:54:56 +0000
+From: Sona Sarmadi <sona.sarmadi@...a.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: CVE-2016-5696: linux kernel - challange ack information leak.
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
 
-Quick emulator(Qemu) built with the virtio framework is vulnerable to an 
-unbounded memory allocation issue. It was found that a malicious guest user 
-could submit more requests than the virtqueue size permits, without waiting 
-for their completion. This requires reusing vring descriptors in more than one 
-request, which is incorrect but possible. Processing a request allocates a 
-'VirtQueueElement' object and therefore causes unbounded memory allocation 
-controlled by the guest.
+> > > You can _always_ just apply the patch to your local tree, there's
+> > > never a need to wait for me to get a kernel out.  That's the
+> > > advantage of having the source for your systems :)
+> > Yes, we can do that but sometimes the patches for newer kernels don't
+> > apply cleanly on older versions.
+> > There is always a risk that our home grown patches have undesired side
+> > effects. We prefer your sign of approval on patches for older kernels
+> > :)
+> 
+> Heh, fair enough.  This fix is now in the kernels that were released today
+> (4.7.1, 4.6.7, 4.4.18, and 3.14.76), hope that helps.
+> 
+> greg k-h
 
-A privileged guest user could use this flaw to potentially crash the guest 
-resulting in DoS. Memory exhaustion would also affect other guests and 
-services running on the host.
+Thanks a lot Greg, yes this helps :) I could apply  patch from linux-3.14.y branch 
+to linux-3.12.y as well (the code looks similar). 
 
-This issue was discovered by Zhenhao Hong of the 360 Marvel Team.
-
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1358359
-
-Given below is a proposed patch to fix this issue:
-
-===
-virtio: error out if guest exceeds virtqueue size
-
-A broken or malicious guest can submit more requests than the virtqueue
-size permits.
-
-The guest can submit requests without bothering to wait for completion
-and is therefore not bound by virtqueue size.  This requires reusing
-vring descriptors in more than one request, which is incorrect but
-possible.  Processing a request allocates a VirtQueueElement and
-therefore causes unbounded memory allocation controlled by the guest.
-
-Exit with an error if the guest provides more requests than the
-virtqueue size permits.  This bounds memory allocation and makes the
-buggy guest visible to the user.
-
-Signed-off-by: Stefan Hajnoczi <stefanha@...hat.com>
----
-  hw/virtio/virtio.c | 5 +++++
-  1 file changed, 5 insertions(+)
-
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 18153d5..398c03f 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -561,6 +561,11 @@ void *virtqueue_pop(VirtQueue *vq, size_t sz)
-
-      max = vq->vring.num;
-
-+    if (vq->inuse >= max) {
-+        error_report("Virtqueue size exceeded");
-+        exit(1);
-+    }
-+
-      i = head = virtqueue_get_head(vq, vq->last_avail_idx++);
-      if (virtio_vdev_has_feature(vdev, VIRTIO_RING_F_EVENT_IDX)) {
-          vring_set_avail_event(vq, vq->last_avail_idx);
--- 
-2.7.4
-===
+//Sona
 
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
