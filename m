@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["10436" "Tuesday" "21" "July" "2020" "11:01:54" "+0000" "Xen.org security team" "security@xen.org" "<E1jxq1y-0007MA-2r@xenbits.xenproject.org>" "228" "[oss-security] Xen Security Advisory 329 v3 (CVE-2020-15852) - Linux ioperm bitmap context switching issues" "^CC:" nil nil "7" "2020072111:01:54" "[oss-security] Xen Security Advisory 329 v3 (CVE-2020-15852) - Linux ioperm bitmap context switching issues" (number mark "        security@xen Jul 21  228/10436 " thread-indent "\"[oss-security] Xen Security Advisory 329 v3 (CVE-2020-15852) - Linux ioperm bitmap context switching issues\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 329 v3 (CVE-2020-15852) - Linux ioperm bitmap context switching issues" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1501" "Thursday" "18" "August" "2016" "17:37:20" "+0100" "Andrew Gallagher" "andrewg@andrewg.com" "<39a367af-c84d-01cb-36eb-6732edfbdac2@andrewg.com>" "41" "Re: [oss-security] Re: Libgcrypt and GnuPG 1.4 RNG output prediction" "^Date:" nil nil "8" "2016081816:37:20" "[oss-security] Re: Libgcrypt and GnuPG 1.4 RNG output prediction" (number mark "        andrewg@andr Aug 18   41/1501  " thread-indent "\"Re: [oss-security] Re: Libgcrypt and GnuPG 1.4 RNG output prediction\"\n") "<87pop7utyu.fsf@wheatstone.g10code.de>" ("<20160817165819.GA24935@openwall.com>" "<87pop7utyu.fsf@wheatstone.g10code.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 25626 invoked by uid 550); 21 Jul 2020 11:02:14 -0000
+Received: (qmail 26540 invoked by uid 550); 18 Aug 2016 16:40:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,255 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24575 invoked from network); 21 Jul 2020 11:02:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type:Sender:Reply-To:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=rG/yjzz16rNFLpv3o/8yFDCoEwHYZ2FiTwqh9jkLt3M=; b=rx4xY51uu4vIg1rQZB6PVlYekh
-	n9YU/P4nL7fGhMMR1ssHfAcYdi4ImR26oW44a4SdEtDx/Uhve0Zu73JQ6SZytx4tHeZU3/jydqNR+
-	BG2aM91+m6URSSbNIOn9Yjfpg7hyKe0mFLZBe/fUUk8vl3L4mowutWmVf1EuI4bMP/50=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 26100 invoked from network); 18 Aug 2016 16:37:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=andrewg.com;
+	s=andrewg-com; t=1471538255;
+	bh=xvPmqrDmtS/Cf/bOhNSFpNfGQQm4Z/qTkkll3fSjaiM=;
+	h=Subject:To:References:From:Date:In-Reply-To:From;
+	b=XX1FB1OBHZQ9+Byf+dt2LBBJMEYwv9md9sd+LjkYOYFPBLPwXiizE4BnAFlUW6D/h
+	 cBuEfPYRPPviS9yqP25XqXGQx67KQgAgUWZOAvcHAaQv60xsYzc27V9zFH4dx4nNo9
+	 LBlcXPLTwY5R+gWRu5+aZheqKiQt6n5+KB07zCe2DWorHBg5pZcx1n4zN8bLi91Rgk
+	 pzx4r1CvPBZOQ+qdjJeq9E/BuqvtAbQS+Rl7YgSF/h0mnrKKKk3pEzWjhbVW3+h3hh
+	 YNs9V3ZIWd3nUquJ1F2VyGIuMRVAB5GzuvINuOxO5eyy2J16pBDoJS4aOmq3oo065p
+	 l0MNQJpgqMJKg==
+References: <20160817165819.GA24935@openwall.com>
+ <87pop7utyu.fsf@wheatstone.g10code.de>
+X-Enigmail-Draft-Status: N1110
+Message-ID: <39a367af-c84d-01cb-36eb-6732edfbdac2@andrewg.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.2.0
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-Message-Id: <E1jxq1y-0007MA-2r@xenbits.xenproject.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Date: Tue, 21 Jul 2020 11:01:54 +0000
-From: Xen.org security team <security@xen.org>
+In-Reply-To: <87pop7utyu.fsf@wheatstone.g10code.de>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="MwnCLuPCfpRAWdWrGaHMtM3D7SqrFaBvs"
+Date: Thu, 18 Aug 2016 17:37:20 +0100
+From: Andrew Gallagher <andrewg@andrewg.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Xen Security Advisory 329 v3 (CVE-2020-15852) - Linux ioperm
- bitmap context switching issues
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: Libgcrypt and GnuPG 1.4 RNG output prediction
+To: oss-security@lists.openwall.com
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+--MwnCLuPCfpRAWdWrGaHMtM3D7SqrFaBvs
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 17/08/16 19:32, Werner Koch wrote:
+>
 
-            Xen Security Advisory CVE-2020-15852 / XSA-329
-                              version 3
+Well this is an interesting glitch.
 
-             Linux ioperm bitmap context switching issues
+Werner used PGP/MIME, but something appears to have deleted the first
+mime-boundary, rendering the message unparseable. If you view the
+source you can see the plaintext, but MIME mail clients (including the
+openwall mailing list archive) can't.
 
-UPDATES IN VERSION 3
-====================
-
-CVE assigned.
-
-ISSUE DESCRIPTION
-=================
-
-Linux 5.5 overhauled the internal state handling for the iopl() and ioperm()
-system calls.  Unfortunately, one aspect on context switch wasn't wired up
-correctly for the Xen PVOps case.
-
-IMPACT
-======
-
-IO port permissions don't get rescinded when context switching to an
-unprivileged task.  Therefore, all userspace can use the IO ports granted to
-the most recently scheduled task with IO port permissions.
-
-VULNERABLE SYSTEMS
-==================
-
-Only x86 guests are vulnerable.
-
-All versions of Linux from 5.5 are potentially vulnerable.
-
-Linux is only vulnerable when running as x86 PV guest.  Linux is not
-vulnerable when running as an x86 HVM/PVH guests.
-
-The vulnerability can only be exploited in domains which have been granted
-access to IO ports by Xen.  This is typically only the hardware domain, and
-guests configured with PCI Passthrough.
-
-MITIGATION
-==========
-
-Running only HVM/PVH guests avoids the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Andy Lutomirski.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa329.patch           Linux 5.5 and later
-
-$ sha256sum xsa329*
-cdb5ac9bfd21192b5965e8ec0a1c4fcf12d0a94a962a8158cd27810e6aa362f0  xsa329.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+A
 
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+--MwnCLuPCfpRAWdWrGaHMtM3D7SqrFaBvs
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl8WytoMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ4wsH/0/2AMv2kb/Q6rfwlNLSrnDbK2b6bb/QUE+0GcHO
-vrJ7Su53xrt7mllk/P4jYmtXfyUeJzfsahdb5GQVh4GBxOA3YGgS5T4pdpnwNoFi
-NFZV35qOT0muwpjE/zoefKsESuvqWjd28Vssm4HrllJ4YqcGik9clo6Y5qWMFcFH
-rlgchZinl5RtqAzMnuOdirWir7Xika6KdkXWi56CjKZBB5ozoqfH5JKi/XbWbwrz
-ZoFHXwKRuckuQSxUlvdpmI7MZDyggii3OhdvA6fIMDWq58EjSVVatrvDxYsGRL8x
-4PXmFPBp+871GjLQuQZ294fZH3DaZLWSrzvmwC8uZJr5uds=
-=Wdnv
+iQIcBAEBCgAGBQJXteRKAAoJEFwexATVkGYpb4AP/Rt1C/gQGdNAS2hopKPDxOyB
+eMCHYbsKyAjZF3Jqd0SEIhqX+NFjEax0Z7aD08mVArraeu7SffITSdQ8FeSHMrDe
+kvYzRHmmtjhhsC71cRdtiTQEGNPG1PzxtFCXTSJf+cB7mdF0JTLrdy7v52t2c6vy
+gIm4hnMlzaUWoiCy1rfw0E/VNnJ5AMqz2vqySTfu967X5gmln3iTDWXnKuq1+rCi
+TijkElxN821b/Virr2m9ILDzy2OB6d51qfMBodmZUqzE9UpLRYhyo8yw5nogrtqy
+LuVMAgqIZy5Fm5kXMUyr8ZEIJl+TJ10/q13oZiVs1f8p4ccaIaylEZkT3ZStDwhs
+l/Rq51PjqedBu1ySUEcvIL61HAWWTPfzR5kMfYp+GZujvtcxAztFLq61dPHpWsx4
+H98k2EnYLoPMqHPWVeRdCxL/770GvmonhjbVAPTelU5VAwMAhksNxXEUTHZIwEkZ
+7diUj7+l+i/HUoergtvozZ2rpCMzf+DaW6zSll6R1GXYkL8nYjGAiiYwE+aCamax
+Ne3gOn6aPFhAnPuTFNzFiGScGCCEw/qSS/ey+QGdDs0QLiNoX9GjvceHGiz4CPRV
+tPT7yg/EeQhWyxZ6EdAIXNrWPKpiAa41xIZIsYGBiE1MQXyo8tuKQjz/gRimSqaG
+MQuqE2xRlUiFtr9uVeBW
+=c3dF
 -----END PGP SIGNATURE-----
 
---=separator
-Content-Type: application/octet-stream; name="xsa329.patch"
-Content-Disposition: attachment; filename="xsa329.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogQW5keSBMdXRvbWlyc2tpIDxsdXRvQGtlcm5lbC5vcmc+ClN1Ympl
-Y3Q6IHg4Ni9pb3Blcm06IEZpeCBpbyBiaXRtYXAgaW52YWxpZGF0aW9uIG9u
-IFhlbiBQVgoKdHNzX2ludmFsaWRhdGVfaW9fYml0bWFwKCkgd2Fzbid0IHdp
-cmVkIHVwIHByb3Blcmx5IHRocm91Z2ggdGhlIHB2b3AKbWFjaGluZXJ5LCBz
-byB0aGUgVFNTIGFuZCBYZW4ncyBpbyBiaXRtYXAgd291bGQgZ2V0IG91dCBv
-ZiBzeW5jCndoZW5ldmVyIGRpc2FibGluZyBhIHZhbGlkIGlvIGJpdG1hcC4K
-CkFkZCBhIG5ldyBwdm9wIGZvciB0c3NfaW52YWxpZGF0ZV9pb19iaXRtYXAo
-KSB0byBmaXggaXQuCgpUaGlzIGlzIFhTQS0zMjkuCgpGaXhlczogMjJmZTVi
-MDQzOWRkICgieDg2L2lvcGVybTogTW92ZSBUU1MgYml0bWFwIHVwZGF0ZSB0
-byBleGl0IHRvIHVzZXIgd29yayIpClNpZ25lZC1vZmYtYnk6IEFuZHkgTHV0
-b21pcnNraSA8bHV0b0BrZXJuZWwub3JnPgpSZXZpZXdlZC1ieTogSnVlcmdl
-biBHcm9zcyA8amdyb3NzQHN1c2UuY29tPgpSZXZpZXdlZC1ieTogVGhvbWFz
-IEdsZWl4bmVyIDx0Z2x4QGxpbnV0cm9uaXguZGU+CgpkaWZmIC0tZ2l0IGEv
-YXJjaC94ODYvaW5jbHVkZS9hc20vaW9fYml0bWFwLmggYi9hcmNoL3g4Ni9p
-bmNsdWRlL2FzbS9pb19iaXRtYXAuaAppbmRleCBhYzFhOTlmZmJkOGQuLjdm
-MDgwZjVjN2RlZiAxMDA2NDQKLS0tIGEvYXJjaC94ODYvaW5jbHVkZS9hc20v
-aW9fYml0bWFwLmgKKysrIGIvYXJjaC94ODYvaW5jbHVkZS9hc20vaW9fYml0
-bWFwLmgKQEAgLTE5LDEyICsxOSwyOCBAQCBzdHJ1Y3QgdGFza19zdHJ1Y3Q7
-CiB2b2lkIGlvX2JpdG1hcF9zaGFyZShzdHJ1Y3QgdGFza19zdHJ1Y3QgKnRz
-ayk7CiB2b2lkIGlvX2JpdG1hcF9leGl0KHN0cnVjdCB0YXNrX3N0cnVjdCAq
-dHNrKTsKIAorc3RhdGljIGlubGluZSB2b2lkIG5hdGl2ZV90c3NfaW52YWxp
-ZGF0ZV9pb19iaXRtYXAodm9pZCkKK3sKKwkvKgorCSAqIEludmFsaWRhdGUg
-dGhlIEkvTyBiaXRtYXAgYnkgbW92aW5nIGlvX2JpdG1hcF9iYXNlIG91dHNp
-ZGUgdGhlCisJICogVFNTIGxpbWl0IHNvIGFueSBzdWJzZXF1ZW50IEkvTyBh
-Y2Nlc3MgZnJvbSB1c2VyIHNwYWNlIHdpbGwKKwkgKiB0cmlnZ2VyIGEgI0dQ
-LgorCSAqCisJICogVGhpcyBpcyBjb3JyZWN0IGV2ZW4gd2hlbiBWTUVYSVQg
-cmV3cml0ZXMgdGhlIFRTUyBsaW1pdAorCSAqIHRvIDB4NjcgYXMgdGhlIG9u
-bHkgcmVxdWlyZW1lbnQgaXMgdGhhdCB0aGUgYmFzZSBwb2ludHMKKwkgKiBv
-dXRzaWRlIHRoZSBsaW1pdC4KKwkgKi8KKwl0aGlzX2NwdV93cml0ZShjcHVf
-dHNzX3J3Lng4Nl90c3MuaW9fYml0bWFwX2Jhc2UsCisJCSAgICAgICBJT19C
-SVRNQVBfT0ZGU0VUX0lOVkFMSUQpOworfQorCiB2b2lkIG5hdGl2ZV90c3Nf
-dXBkYXRlX2lvX2JpdG1hcCh2b2lkKTsKIAogI2lmZGVmIENPTkZJR19QQVJB
-VklSVF9YWEwKICNpbmNsdWRlIDxhc20vcGFyYXZpcnQuaD4KICNlbHNlCiAj
-ZGVmaW5lIHRzc191cGRhdGVfaW9fYml0bWFwIG5hdGl2ZV90c3NfdXBkYXRl
-X2lvX2JpdG1hcAorI2RlZmluZSB0c3NfaW52YWxpZGF0ZV9pb19iaXRtYXAg
-bmF0aXZlX3Rzc19pbnZhbGlkYXRlX2lvX2JpdG1hcAogI2VuZGlmCiAKICNl
-bHNlCmRpZmYgLS1naXQgYS9hcmNoL3g4Ni9pbmNsdWRlL2FzbS9wYXJhdmly
-dC5oIGIvYXJjaC94ODYvaW5jbHVkZS9hc20vcGFyYXZpcnQuaAppbmRleCA1
-Y2E1ZDI5N2RmNzUuLjNkMmFmZWNkZTUwYyAxMDA2NDQKLS0tIGEvYXJjaC94
-ODYvaW5jbHVkZS9hc20vcGFyYXZpcnQuaAorKysgYi9hcmNoL3g4Ni9pbmNs
-dWRlL2FzbS9wYXJhdmlydC5oCkBAIC0zMDIsNiArMzAyLDExIEBAIHN0YXRp
-YyBpbmxpbmUgdm9pZCB3cml0ZV9pZHRfZW50cnkoZ2F0ZV9kZXNjICpkdCwg
-aW50IGVudHJ5LCBjb25zdCBnYXRlX2Rlc2MgKmcpCiB9CiAKICNpZmRlZiBD
-T05GSUdfWDg2X0lPUExfSU9QRVJNCitzdGF0aWMgaW5saW5lIHZvaWQgdHNz
-X2ludmFsaWRhdGVfaW9fYml0bWFwKHZvaWQpCit7CisJUFZPUF9WQ0FMTDAo
-Y3B1LmludmFsaWRhdGVfaW9fYml0bWFwKTsKK30KKwogc3RhdGljIGlubGlu
-ZSB2b2lkIHRzc191cGRhdGVfaW9fYml0bWFwKHZvaWQpCiB7CiAJUFZPUF9W
-Q0FMTDAoY3B1LnVwZGF0ZV9pb19iaXRtYXApOwpkaWZmIC0tZ2l0IGEvYXJj
-aC94ODYvaW5jbHVkZS9hc20vcGFyYXZpcnRfdHlwZXMuaCBiL2FyY2gveDg2
-L2luY2x1ZGUvYXNtL3BhcmF2aXJ0X3R5cGVzLmgKaW5kZXggNzMyZjYyZTA0
-ZGRiLi44ZGZjYjI1MDhlNmQgMTAwNjQ0Ci0tLSBhL2FyY2gveDg2L2luY2x1
-ZGUvYXNtL3BhcmF2aXJ0X3R5cGVzLmgKKysrIGIvYXJjaC94ODYvaW5jbHVk
-ZS9hc20vcGFyYXZpcnRfdHlwZXMuaApAQCAtMTQxLDYgKzE0MSw3IEBAIHN0
-cnVjdCBwdl9jcHVfb3BzIHsKIAl2b2lkICgqbG9hZF9zcDApKHVuc2lnbmVk
-IGxvbmcgc3AwKTsKIAogI2lmZGVmIENPTkZJR19YODZfSU9QTF9JT1BFUk0K
-Kwl2b2lkICgqaW52YWxpZGF0ZV9pb19iaXRtYXApKHZvaWQpOwogCXZvaWQg
-KCp1cGRhdGVfaW9fYml0bWFwKSh2b2lkKTsKICNlbmRpZgogCmRpZmYgLS1n
-aXQgYS9hcmNoL3g4Ni9rZXJuZWwvcGFyYXZpcnQuYyBiL2FyY2gveDg2L2tl
-cm5lbC9wYXJhdmlydC5jCmluZGV4IDY3NGE3ZDY2ZDk2MC4uZGUyMTM4YmEz
-OGU1IDEwMDY0NAotLS0gYS9hcmNoL3g4Ni9rZXJuZWwvcGFyYXZpcnQuYwor
-KysgYi9hcmNoL3g4Ni9rZXJuZWwvcGFyYXZpcnQuYwpAQCAtMzI0LDcgKzMy
-NCw4IEBAIHN0cnVjdCBwYXJhdmlydF9wYXRjaF90ZW1wbGF0ZSBwdl9vcHMg
-PSB7CiAJLmNwdS5zd2FwZ3MJCT0gbmF0aXZlX3N3YXBncywKIAogI2lmZGVm
-IENPTkZJR19YODZfSU9QTF9JT1BFUk0KLQkuY3B1LnVwZGF0ZV9pb19iaXRt
-YXAJPSBuYXRpdmVfdHNzX3VwZGF0ZV9pb19iaXRtYXAsCisJLmNwdS5pbnZh
-bGlkYXRlX2lvX2JpdG1hcAk9IG5hdGl2ZV90c3NfaW52YWxpZGF0ZV9pb19i
-aXRtYXAsCisJLmNwdS51cGRhdGVfaW9fYml0bWFwCQk9IG5hdGl2ZV90c3Nf
-dXBkYXRlX2lvX2JpdG1hcCwKICNlbmRpZgogCiAJLmNwdS5zdGFydF9jb250
-ZXh0X3N3aXRjaAk9IHBhcmF2aXJ0X25vcCwKZGlmZiAtLWdpdCBhL2FyY2gv
-eDg2L2tlcm5lbC9wcm9jZXNzLmMgYi9hcmNoL3g4Ni9rZXJuZWwvcHJvY2Vz
-cy5jCmluZGV4IGYzNjJjZTBkNWFjMC4uZmU2N2RiZDc2ZTUxIDEwMDY0NAot
-LS0gYS9hcmNoL3g4Ni9rZXJuZWwvcHJvY2Vzcy5jCisrKyBiL2FyY2gveDg2
-L2tlcm5lbC9wcm9jZXNzLmMKQEAgLTMyMiwyMCArMzIyLDYgQEAgdm9pZCBh
-cmNoX3NldHVwX25ld19leGVjKHZvaWQpCiB9CiAKICNpZmRlZiBDT05GSUdf
-WDg2X0lPUExfSU9QRVJNCi1zdGF0aWMgaW5saW5lIHZvaWQgdHNzX2ludmFs
-aWRhdGVfaW9fYml0bWFwKHN0cnVjdCB0c3Nfc3RydWN0ICp0c3MpCi17Ci0J
-LyoKLQkgKiBJbnZhbGlkYXRlIHRoZSBJL08gYml0bWFwIGJ5IG1vdmluZyBp
-b19iaXRtYXBfYmFzZSBvdXRzaWRlIHRoZQotCSAqIFRTUyBsaW1pdCBzbyBh
-bnkgc3Vic2VxdWVudCBJL08gYWNjZXNzIGZyb20gdXNlciBzcGFjZSB3aWxs
-Ci0JICogdHJpZ2dlciBhICNHUC4KLQkgKgotCSAqIFRoaXMgaXMgY29ycmVj
-dCBldmVuIHdoZW4gVk1FWElUIHJld3JpdGVzIHRoZSBUU1MgbGltaXQKLQkg
-KiB0byAweDY3IGFzIHRoZSBvbmx5IHJlcXVpcmVtZW50IGlzIHRoYXQgdGhl
-IGJhc2UgcG9pbnRzCi0JICogb3V0c2lkZSB0aGUgbGltaXQuCi0JICovCi0J
-dHNzLT54ODZfdHNzLmlvX2JpdG1hcF9iYXNlID0gSU9fQklUTUFQX09GRlNF
-VF9JTlZBTElEOwotfQotCiBzdGF0aWMgaW5saW5lIHZvaWQgc3dpdGNoX3Rv
-X2JpdG1hcCh1bnNpZ25lZCBsb25nIHRpZnApCiB7CiAJLyoKQEAgLTM0Niw3
-ICszMzIsNyBAQCBzdGF0aWMgaW5saW5lIHZvaWQgc3dpdGNoX3RvX2JpdG1h
-cCh1bnNpZ25lZCBsb25nIHRpZnApCiAJICogdXNlciBtb2RlLgogCSAqLwog
-CWlmICh0aWZwICYgX1RJRl9JT19CSVRNQVApCi0JCXRzc19pbnZhbGlkYXRl
-X2lvX2JpdG1hcCh0aGlzX2NwdV9wdHIoJmNwdV90c3NfcncpKTsKKwkJdHNz
-X2ludmFsaWRhdGVfaW9fYml0bWFwKCk7CiB9CiAKIHN0YXRpYyB2b2lkIHRz
-c19jb3B5X2lvX2JpdG1hcChzdHJ1Y3QgdHNzX3N0cnVjdCAqdHNzLCBzdHJ1
-Y3QgaW9fYml0bWFwICppb2JtKQpAQCAtMzgwLDcgKzM2Niw3IEBAIHZvaWQg
-bmF0aXZlX3Rzc191cGRhdGVfaW9fYml0bWFwKHZvaWQpCiAJdTE2ICpiYXNl
-ID0gJnRzcy0+eDg2X3Rzcy5pb19iaXRtYXBfYmFzZTsKIAogCWlmICghdGVz
-dF90aHJlYWRfZmxhZyhUSUZfSU9fQklUTUFQKSkgewotCQl0c3NfaW52YWxp
-ZGF0ZV9pb19iaXRtYXAodHNzKTsKKwkJbmF0aXZlX3Rzc19pbnZhbGlkYXRl
-X2lvX2JpdG1hcCgpOwogCQlyZXR1cm47CiAJfQogCmRpZmYgLS1naXQgYS9h
-cmNoL3g4Ni94ZW4vZW5saWdodGVuX3B2LmMgYi9hcmNoL3g4Ni94ZW4vZW5s
-aWdodGVuX3B2LmMKaW5kZXggYWNjNDlmYTZhMDk3Li5jNDc1YTExYzY2MjAg
-MTAwNjQ0Ci0tLSBhL2FyY2gveDg2L3hlbi9lbmxpZ2h0ZW5fcHYuYworKysg
-Yi9hcmNoL3g4Ni94ZW4vZW5saWdodGVuX3B2LmMKQEAgLTg1MCw2ICs4NTAs
-MTcgQEAgc3RhdGljIHZvaWQgeGVuX2xvYWRfc3AwKHVuc2lnbmVkIGxvbmcg
-c3AwKQogfQogCiAjaWZkZWYgQ09ORklHX1g4Nl9JT1BMX0lPUEVSTQorc3Rh
-dGljIHZvaWQgeGVuX2ludmFsaWRhdGVfaW9fYml0bWFwKHZvaWQpCit7CisJ
-c3RydWN0IHBoeXNkZXZfc2V0X2lvYml0bWFwIGlvYml0bWFwID0geworCQku
-Yml0bWFwID0gMCwKKwkJLm5yX3BvcnRzID0gMCwKKwl9OworCisJbmF0aXZl
-X3Rzc19pbnZhbGlkYXRlX2lvX2JpdG1hcCgpOworCUhZUEVSVklTT1JfcGh5
-c2Rldl9vcChQSFlTREVWT1Bfc2V0X2lvYml0bWFwLCAmaW9iaXRtYXApOwor
-fQorCiBzdGF0aWMgdm9pZCB4ZW5fdXBkYXRlX2lvX2JpdG1hcCh2b2lkKQog
-ewogCXN0cnVjdCBwaHlzZGV2X3NldF9pb2JpdG1hcCBpb2JpdG1hcDsKQEAg
-LTEwNzksNiArMTA5MCw3IEBAIHN0YXRpYyBjb25zdCBzdHJ1Y3QgcHZfY3B1
-X29wcyB4ZW5fY3B1X29wcyBfX2luaXRjb25zdCA9IHsKIAkubG9hZF9zcDAg
-PSB4ZW5fbG9hZF9zcDAsCiAKICNpZmRlZiBDT05GSUdfWDg2X0lPUExfSU9Q
-RVJNCisJLmludmFsaWRhdGVfaW9fYml0bWFwID0geGVuX2ludmFsaWRhdGVf
-aW9fYml0bWFwLAogCS51cGRhdGVfaW9fYml0bWFwID0geGVuX3VwZGF0ZV9p
-b19iaXRtYXAsCiAjZW5kaWYKIAkuaW9fZGVsYXkgPSB4ZW5faW9fZGVsYXks
-Cg==
-
---=separator--
+--MwnCLuPCfpRAWdWrGaHMtM3D7SqrFaBvs--
