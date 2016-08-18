@@ -1,45 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/16
-Message-ID: <CALfBxETd+QLOhPkR=W9EZtvd8w7K15+bWVVDjAmQbG_x=5dqcg@mail.gmail.com>
-Date: Thu, 8 Sep 2016 14:58:12 +0200
-From: Andreas Lindh <addelindh@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, cve-assign@...re.org
-Subject: CVE for Sentry / OpenCFP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/21
+Message-ID: <3385bcd9-629a-5978-abfa-87cae962deb2@redhat.com>
+Date: Thu, 18 Aug 2016 20:16:27 +0200
+From: Adam Maris <amaris@...hat.com>
+To: oss-security@...ts.openwall.com, Marcus Meissner <meissner@...e.de>, Greg KH <greg@...ah.com>
+Cc: cve-assign@...re.org, security@...nel.org
+Subject: Re: Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
 Content-Type: text/plain; charset=utf-8
 
-Hi list,
 
-I recently reported an issue in the Sentry PHP auth framework that was
-exploitable in OpenCFP. The bug itself is in the password reset
-functionality, where the following code in Sentry is responsible for
-verifying that a supplied password reset code is the same that is stored in
-the database for a particular user.
 
-public function checkResetPasswordCode($resetCode)
-{
-return ($this->reset_password_code == $resetCode);
-}
+On 18/08/16 18:43, Ben Hutchings wrote:
+> On Thu, 2016-08-18 at 17:16 +0200, Marcus Meissner wrote:
+>> On Thu, Aug 18, 2016 at 04:57:24PM +0200, Greg KH wrote:
+>>> On Thu, Aug 18, 2016 at 04:39:57PM +0200, Marcus Meissner wrote:
+>>>> On Thu, Aug 18, 2016 at 04:30:14PM +0200, Greg KH wrote:
+>>>>> On Thu, Aug 18, 2016 at 04:22:16PM +0200, Marcus Meissner wrote:
+>>>>>> Hi,
+>>>>>>
+>>>>>> I think this does not have a CVE yet, please assign.
+>>>>>>
+>>>>>> https://www.spinics.net/lists/linux-usb/msg144177.html
+>>>>>>
+>>>>>> Headline:         Linux Kernel Panic Over USB with HID Keyboard wMaxPacketSize
+>>>>>> Platforms:        Ubuntu
+>>>>>> Versions:         Linux Kernel 4.4.0-22-generic
+>>>>> Huh?  It's much more pervasive than just that single platform or single
+>>>>> version.
+>>>> That was the quote from the original e-mail. I read further on it affects
+>>>> more kernel versions.
+>>>>   
+>>>>>> CVSS Score:       4.7
+>>>>>> CVSS Vector:      AV:L/AC:M/Au:N/C:N/I:N/A:C
+>>>>>> Filed Defects:
+>>>>>> Related Defects:
+>>>>>> CWE Tags:
+>>>>>> Cycle:
+>>>>>> Found by:         Jake Lamberson
+>>>>>>
+>>>>>>
+>>>>>> Linux Kernel panics when using an OHCI controller if a USB device reports being
+>>>>>> a generic HID keyboard and reports a wMaxPacketSize of over 4095. The OHCI
+>>>>>> controller driver fails to reserve bandwidth for the device, causing the
+>>>>>> keyboard handler to fail when attaching to the HID. Later, when the device is
+>>>>>> removed, the system crashes due to a null pointer dereference in a linked list
+>>>>>> of endpoint descriptors. The crash can be re-created using a Facedancer and UMAP
+>>>>>> software. Given an appropriately configured Facedancer and UMAP setup, the crash
+>>>>>> can be re-created with:
+>>>>>> sudo board=facedancer21 python3 umap.py -P /dev/serial_device_here -f 03:00:00:E:0046 -l LOG
+>>>>>>
+>>>>>> Note: OHCI is a USB 1.1 controller standard that can be included with devices
+>>>>>> that support either USB 1.1 or 2.0 as their highest USB spec. USB 3.0 devices
+>>>>>> all use xHCI, which implements USB 1.1, 2.0, and 3.0, making them immune to
+>>>>>> this particular bug.
+>>>>>>
+>>>>>> -----------------
+>>>>>>
+>>>>>> The proposed fixing patch is here:
+>>>>>> https://www.spinics.net/lists/linux-usb/msg144269.html
+>>>>>>
+>>>>>>
+>>>>>> It has not yet been committed to the USB tree or to Linus Tree as far as I see.
+>>>>> Not true, it is commit id aed9d65ac3278d4febd8665bd7db59ef53e825fe in
+>>>>> the usb tree and in linux-next and will be sent to Linus tomorrow.
+>>>> Ah sorry, only looked briefly.
+>>> This was also asked about 2 hours ago on the linux-usb mailing list, why
+>>> all of the sudden interest in something that we had been discussing for
+>>> weeks now in public?
+>> No one asked for a CVE before.
+>>
+>> If that email request was from Oliver Neukum, he pinged me on it, so I
+>> started acting on it, so that explains this parallelism.
+>>   
+>>>>> And are we really assigning CVE numbers for when you use an active
+>>>>> "hardware test probe"?  If so, how many are people going to be assigning
+>>>>> for these same problems on other operating systems?  :)
+>>>> I think attaching malicious USB devices and crashing the kernel should
+>>>> probably get CVE ids, or do you think it should not?
+>>> I don't know, that's why I'm asking, it requires "physical presence"
+>>> which is much different from most threat models that people work to
+>>> protect against.
+>> There has been quite a number of CVEs assigned to malicious USB devices
+>> this year already, this does not seem to be different.
+>>
+>> (e.g. CVE-2016-2384, CVE-2016-2188, CVE-2016-2187 etc.)
+> An attacker that has physical access to a USB port can short VCC to GND
+> and likely destroy chips.  If that is prevented by current limiting
+> they can still destroy the port with glue or corrosive liquid.  The
+> possibility of crashing the OS is (usually) a much less serious DoS and
+> doesn't seem to me to be worth worrying about.
 
-This code will return True or False, depending on whether the password
-reset codes match. The problem arises because the Sentry database schema
-defines the default value of the password reset code as NULL. Because of
-this, if an attacker can pass NULL to this function (by supplying it as a
-password reset code), the checkResetPasswordCode() function will return
-True, allowing the password change to go through.
+Attacker doesn't necessarily need to have physical access to USB port. 
+He can somehow
+hand USB off to the victim that will with good intentions stick it to 
+his USB port, unexpectedly
+causing kernel panic. Difference is that one probably wouldn't pour glue 
+or corrosive liquid
+into his USB port believing that nothing bad will happen.
 
-This is a write-up of how this was exploitable in OpenCFP:
-http://haxx.ml/post/149975211631/how-i-hacked-your-cfp-and-probably-some-other
+On the other hand, it's fairly minor issue, I admit that.
 
-This is the patch in OpenCFP:
-https://github.com/opencfp/opencfp/commit/2f747fc219b73f9b0a11308083d2a356056752a4
+Regards,
 
-This is the patch in Sentry:
-https://github.com/cartalyst/sentry/commit/c679730b8848686f59125cd821bf94946fb16a94
+-- 
+Adam Mariš, Red Hat Product Security
+1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
 
-Can I have CVEs assigned for this please? I am of the opinion that Sentry
-and OpenCFP should have their own separate CVEs, but that is of course up
-to Mitre to decide.
-
-Cheers,
-Andreas
 
