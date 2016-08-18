@@ -1,71 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/19/5
-Message-ID: <20160419083512.GB18866@kroah.com>
-Date: Tue, 19 Apr 2016 17:35:12 +0900
-From: Greg KH <greg@...ah.com>
-To: Marcus Meissner <meissner@...e.de>, Ignat Korchagin <ignat.korchagin@...il.com>
-Cc: OSS Security List <oss-security@...ts.openwall.com>, security@...nel.org
-Subject: Re: CVE Request: Linux kernel: remote buffer overflow in usbip
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/7
+Message-Id: <20160818033840.B027AB2E013@smtpvbsrv1.mitre.org>
+Date: Wed, 17 Aug 2016 23:38:40 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
+Subject: Re: CVE request Qemu: an infinite loop during packet fragmentation
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 19, 2016 at 10:06:43AM +0200, Marcus Meissner wrote:
-> Hi,
-> 
-> https://github.com/torvalds/linux/commit/b348d7dddb6c4fbfc810b7a0626e8ec9e29f7cbb
-> 
-> commit b348d7dddb6c4fbfc810b7a0626e8ec9e29f7cbb
-> Author: Ignat Korchagin <ignat.korchagin@...il.com>
-> Date:   Thu Mar 17 18:00:29 2016 +0000
-> 
->     USB: usbip: fix potential out-of-bounds write
-> 
->     Fix potential out-of-bounds write to urb->transfer_buffer
->     usbip handles network communication directly in the kernel. When receiving a
->     packet from its peer, usbip code parses headers according to protocol. As
->     part of this parsing urb->actual_length is filled. Since the input for
->     urb->actual_length comes from the network, it should be treated as untrusted.
->     Any entity controlling the network may put any value in the input and the
->     preallocated urb->transfer_buffer may not be large enough to hold the data.
->     Thus, the malicious entity is able to write arbitrary data to kernel memory.
-> 
->     Signed-off-by: Ignat Korchagin <ignat.korchagin@...il.com>
->     Signed-off-by: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
-> 
-> diff --git a/drivers/usb/usbip/usbip_common.c b/drivers/usb/usbip/usbip_common.c
-> index facaaf0..e40da77 100644
-> --- a/drivers/usb/usbip/usbip_common.c
-> +++ b/drivers/usb/usbip/usbip_common.c
-> @@ -741,6 +741,17 @@ int usbip_recv_xbuff(struct usbip_device *ud, struct urb *urb)
->         if (!(size > 0))
->                 return 0;
-> 
-> +       if (size > urb->transfer_buffer_length) {
-> +               /* should not happen, probably malicious packet */
-> +               if (ud->side == USBIP_STUB) {
-> +                       usbip_event_add(ud, SDEV_EVENT_ERROR_TCP);
-> +                       return 0;
-> +               } else {
-> +                       usbip_event_add(ud, VDEV_EVENT_ERROR_TCP);
-> +                       return -EPIPE;
-> +               }
-> +       }
-> +
->         ret = usbip_recv(ud->tcp_socket, urb->transfer_buffer, size);
->         if (ret != size) {
->                 dev_err(&urb->dev->dev, "recv xbuf, %d\n", ret);
-> 
-> Our USB developer confirms:
-> https://bugzilla.suse.com/show_bug.cgi?id=975945
-> |The vulnerability is true. If an attacker can get a malicious package
-> |into the connection the kernel will accept all of the data in that
-> |package whether it fits into the buffer or not.
-> |You can scribble about 1k into RAM, albeit at an unpredictable location.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I think Ignat already asked for a CVE for this through some other
-channel, and was going to announce it in some manner.
+> Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support,
+> with network abstraction layer is vulnerable to an infinite loop issue.
+> It could occur while fragmenting packets in the device.
+> 
+> A privileged user inside guest could use this flaw to crash the Qemu instance
+> resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg01601.html
+> http://git.qemu.org/?p=qemu.git;a=commit;h=ead315e43ea0c2ca3491209c6c8db8ce3f2bbe05
+> 
+> It is susceptible
+> to an infinite loop, if the current fragment length is zero.
 
-Ignat, did you do that?
+Use CVE-2016-6834.
 
-thanks,
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-greg k-h
+iQIcBAEBCAAGBQJXtSWUAAoJEHb/MwWLVhi2Y/sP/jxwMXiQrfXymrc2Ol3PCKxA
+S7jTAlxSjG8DCH3T20nblB4NBdN7JXdKhywmZVs24zFsVGUA6zHD+JFduMROpQzv
+p5GYv2WveqUGlgz0X96q6cIJOQh+iTwlw4SKcUxexK1iGGr/LrU9BTG+aIHLrOYe
+t2UBHt0avx9Sfy8PCWljU+xrLTzU1IULd0fU/qaBXrn5GMweo79JPnIPMq7bAx/1
+uUUod8hRnoEv04Pstv6k46NoF1IW0SFNol8i6NcZhxaGqD8viUmIaBoeSvfF3I6o
+xWK5NNoiROKXGgfzhqt/q3i9KurVwnaDFV5ZPeVPb0mss0HWB4Gloo9MdMa4fBAf
+UmHp2/mkIHqkJv9lqDidW2Qt+D9c5yJ/92f6Ym9hKX26Q1+UaD/MpJT5OXsj4Otu
+VcMR3tPjaSh3h9xYjmONBkbMmkum09KSTvfhGtssiQaAiTP18T60adLGGIPwBj/d
+gcVOANLF0gr4DlxYn0H0hD90Mw3eGK0ShU9Ny/K81z7hcUA8T/T4QVuFR7Va5tvJ
+USmd+HPrZzQcqeRV0oYmDqio+Dg9V8+0LrYILxA82+qv3w+/BoaEmYPkxFqNRleH
+6TPWLlewziXb14goepC7TAnUyPHTKxYkuOFqEXdaeGEW2X8KqDv1DwQy4sKCTFBj
+Ic0SqC5GnEEgFlo70OHN
+=59XJ
+-----END PGP SIGNATURE-----
