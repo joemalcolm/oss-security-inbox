@@ -1,52 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/04/8
-Message-Id: <20160604170442.A47D96C0729@smtpvmsrv1.mitre.org>
-Date: Sat,  4 Jun 2016 13:04:42 -0400 (EDT)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: three vulnerabilities in ImageMagick before 7.0.1-2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/15
+Message-ID: <20160818143957.GI2701@suse.de>
+Date: Thu, 18 Aug 2016 16:39:57 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: Greg KH <greg@...ah.com>
+Cc: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org, security@...nel.org
+Subject: Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, Aug 18, 2016 at 04:30:14PM +0200, Greg KH wrote:
+> On Thu, Aug 18, 2016 at 04:22:16PM +0200, Marcus Meissner wrote:
+> > Hi,
+> > 
+> > I think this does not have a CVE yet, please assign.
+> > 
+> > https://www.spinics.net/lists/linux-usb/msg144177.html
+> > 
+> > Headline:         Linux Kernel Panic Over USB with HID Keyboard wMaxPacketSize
+> > Platforms:        Ubuntu
+> > Versions:         Linux Kernel 4.4.0-22-generic
+> 
+> Huh?  It's much more pervasive than just that single platform or single
+> version.
 
-In case anyone needs background information about:
+That was the quote from the original e-mail. I read further on it affects
+more kernel versions.
+ 
+> > CVSS Score:       4.7
+> > CVSS Vector:      AV:L/AC:M/Au:N/C:N/I:N/A:C
+> > Filed Defects:    
+> > Related Defects:  
+> > CWE Tags:         
+> > Cycle:            
+> > Found by:         Jake Lamberson
+> > 
+> > 
+> > Linux Kernel panics when using an OHCI controller if a USB device reports being 
+> > a generic HID keyboard and reports a wMaxPacketSize of over 4095. The OHCI
+> > controller driver fails to reserve bandwidth for the device, causing the 
+> > keyboard handler to fail when attaching to the HID. Later, when the device is 
+> > removed, the system crashes due to a null pointer dereference in a linked list 
+> > of endpoint descriptors. The crash can be re-created using a Facedancer and UMAP 
+> > software. Given an appropriately configured Facedancer and UMAP setup, the crash 
+> > can be re-created with: 
+> > sudo board=facedancer21 python3 umap.py -P /dev/serial_device_here -f 03:00:00:E:0046 -l LOG
+> > 
+> > Note: OHCI is a USB 1.1 controller standard that can be included with devices
+> > that support either USB 1.1 or 2.0 as their highest USB spec. USB 3.0 devices
+> > all use xHCI, which implements USB 1.1, 2.0, and 3.0, making them immune to
+> > this particular bug.
+> > 
+> > -----------------
+> > 
+> > The proposed fixing patch is here:
+> > https://www.spinics.net/lists/linux-usb/msg144269.html
+> > 
+> > 
+> > It has not yet been committed to the USB tree or to Linus Tree as far as I see.
+> 
+> Not true, it is commit id aed9d65ac3278d4febd8665bd7db59ef53e825fe in
+> the usb tree and in linux-next and will be sent to Linus tomorrow.
 
-  https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-4562
-  https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-4563
-  https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-4564
+Ah sorry, only looked briefly.
 
-The person who requested these CVE IDs from MITRE provided a security
-advisory showing three independent problems (also with quite different
-attack methodologies) that each happens to have a resultant buffer
-overflow. However, they do not plan to make their security advisory
-public. The CVE descriptions are based only on the surface-level
-code-change information that is public in GitHub. For open-source
-software, it is relatively rare for someone to compose a detailed
-advisory about multiple CVEs and keep it permanently non-public, but
-this can happen. One of the effects of non-public advisories is that
-the number of CVEs may seem unrelated to the commit message.
+> And are we really assigning CVE numbers for when you use an active
+> "hardware test probe"?  If so, how many are people going to be assigning
+> for these same problems on other operating systems?  :)
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+I think attaching malicious USB devices and crashing the kernel should probably get CVE ids,
+or do you think it should not?
 
-iQIcBAEBCAAGBQJXUwPnAAoJEHb/MwWLVhi291MP/3wV+ZGCP8XJftP9nZez4apC
-VtgFMu00wh19tQDJoskUhagfuc0D74KSo0c9o/rrTpNVAIpxaPsEkjCqTCicThEv
-C55FqsDPIQo+XN8docdNFteYuuIwgt+thjMgmV1IuEdm4wbSCg0Ddm6vJGUUK9i7
-F965FZ2S8B10kDG3soX43VsRiRmJnyhJ+MhcyGyuaAKGqmtLUnw8rFm91qvhghD3
-abAV6PENb1abvBNzztYs1iWDtzCM/whIEVoRpH0qm/yTGin3/+Mo3SIcDVQ9/UQj
-VvpBhpzURoLJOrzVqrPWrQO4vOD8BYE0hwfn878//qKVPp0TfnPPqUzLpBTN9eZQ
-wv76w6/+1hoTKeuSrMfdAgqO/15pvB2iLWxBPjJcVVCyY32IalS1562LQxeVxqlC
-250OZWu4APlvXjoKos56WuV0CPohVEFhBtbmQ9qxoudkjejcDoWhmi/Z+Fh2ElHp
-n/LNiPWttWrrPzKb+s9GNvxXo2z9dDHbxVrBEOqppNwuynocCbmR4UGZc1vp9PQ7
-UhXFQ/y1guWTvOGw/NZR9kYJthN2o7p5P0ceHWRpPfqMQlTQEn0CTjShLCtXrZ2G
-nUiu3QT58FlP5hUfbjCQ+XGYj0lMcpBoN52AgiDxZL1BjKf15VIRsOLqwDSs144J
-UX+2kIOAvJIMLky69RL9
-=lITg
------END PGP SIGNATURE-----
+Ciao, Marcus
