@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3966" "Wednesday" "26" "October" "2016" "19:39:52" "+0200" "Solar Designer" "solar@openwall.com" "<20161026173951.GA21166@openwall.com>" "87" "Re: [oss-security] CVE-2016-1240 - Tomcat packaging on Debian-based distros - Local Root Privilege Escalation" nil nil nil "10" "2016102617:39:52" "[oss-security] CVE-2016-1240 - Tomcat packaging on Debian-based distros - Local Root Privilege Escalation" (number mark "U       solar@openwa Oct 26   87/3966  " thread-indent "\"Re: [oss-security] CVE-2016-1240 - Tomcat packaging on Debian-based distros - Local Root Privilege Escalation\"\n") "<CADSYzss90v5o_p40F5+_PHhS+EwP3K=FLsB-ak9xazRj9gtm6w@mail.gmail.com>" ("<CADSYzss90v5o_p40F5+_PHhS+EwP3K=FLsB-ak9xazRj9gtm6w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1470" "Wednesday" "17" "August" "2016" "23:41:31" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160818034131.1773BB2E013@smtpvbsrv1.mitre.org>" "38" "[oss-security] Re: CVE Request: Default password in openstack / crowbar trove" nil nil nil "8" "2016081803:41:31" "[oss-security] Re: CVE Request: Default password in openstack / crowbar trove" (number mark "U       cve-assign@m Aug 17   38/1470  " thread-indent "\"[oss-security] Re: CVE Request: Default password in openstack / crowbar trove\"\n") "<20160816094932.GA1197@suse.de>" ("<20160816094932.GA1197@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23932 invoked by uid 550); 26 Oct 2016 17:40:46 -0000
+Received: (qmail 13952 invoked by uid 550); 18 Aug 2016 03:41:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,104 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23671 invoked from network); 26 Oct 2016 17:40:07 -0000
-Date: Wed, 26 Oct 2016 19:39:52 +0200
-From: Solar Designer <solar@openwall.com>
-To: Dawid Golunski <dawid@legalhackers.com>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20161026173951.GA21166@openwall.com>
-References: <CADSYzss90v5o_p40F5+_PHhS+EwP3K=FLsB-ak9xazRj9gtm6w@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CADSYzss90v5o_p40F5+_PHhS+EwP3K=FLsB-ak9xazRj9gtm6w@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2016-1240 - Tomcat packaging on Debian-based distros - Local Root Privilege Escalation
+Received: (qmail 13934 invoked from network); 18 Aug 2016 03:41:42 -0000
+From: cve-assign@mitre.org
+To: meissner@suse.de
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20160816094932.GA1197@suse.de>
+Message-Id: <20160818034131.1773BB2E013@smtpvbsrv1.mitre.org>
+Date: Wed, 17 Aug 2016 23:41:31 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: Default password in openstack / crowbar trove
 
-Dawid,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Wed, Oct 26, 2016 at 02:05:11AM -0300, Dawid Golunski wrote:
-> I added a simple PoC video for the CVE-2016-1240 vulnerability.
+> In crowbar-openstack / trove , the trove service user has a default password.
 > 
-> In the PoC I used Ubuntu 16.04 with the latest tomcat7 package
-> (version: 7.0.68-ubuntu-0.1) installed from the default ubuntu repos
-> which appears vulnerable still.
+> https://bugzilla.suse.com/show_bug.cgi?id=991729
 > 
-> The video poc can be found at:
-> 
-> http://legalhackers.com/videos/Apache-Tomcat-DebPkg-Root-PrivEsc-Exploit.html
+> https://github.com/crowbar/crowbar-openstack/pull/485
 
-You call out distro vendors on very real security issues.  In fact,
-those distros should be embarrassed to still have previous millennium's
-issues like this, which are trivial to spot.  It probably means that
-their security teams are too disconnected from their packagers, and are
-not proactive.  You also bring this valuable information to the
-oss-security community.  Thank you for this.
+> https://github.com/crowbar/crowbar-openstack/pull/485/commits/869663d94daafe424dbf4f809a9ca68ab1b21873
 
-However, as you probably realize, you also abuse this mailing list to
-promote your website, at the expense of not including full detail in
-your postings themselves.  As I pointed out to you before, oss-security
-content guidelines:
+>> Force the trove service password to be random_password in the
+>> model, to match other services.
 
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+Use CVE-2016-6829.
 
-include this:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-"At least the most essential part of your message (e.g., vulnerability
-detail and/or exploit) should be directly included in the message itself
-(and in plain text), rather than only included by reference to an
-external resource.  Posting links to relevant external resources as well
-is acceptable, but posting only links is not.  Your message should remain
-valuable even with all of the external resources gone."
-
-I realize you couldn't have reasonably included a video (arguably, this
-means that a video is of little interest to oss-security, unless the
-information in it is unique and is not also available in text form), but
-you also violated this guideline in these related postings (which I
-appreciated otherwise):
-
-http://www.openwall.com/lists/oss-security/2016/10/01/3
-http://www.openwall.com/lists/oss-security/2016/10/10/2
-
-In those, you refer to very detailed advisories placed on your website,
-but you don't include the advisory texts in the postings themselves.
-You must be doing just that - in message body or text/plain attachments,
-please.  Will you correct this going forward?  (It is OK to also include
-URLs to your website, thereby promoting it, but not at the expense of
-the level of detail in the messages themselves.)
-
-If you continue to post link-mostly messages, we'll have the tough
-choice between:
-
-1. Let you post those anyway, and ignore the problem.  Unfortunately,
-this is likely to result in some others doing the same more.  (OTOH, it
-will also keep reminding people of just how bad it is not to have detail
-right in the messages.)
-
-2. Look for a volunteer who would post follow-ups or replacements to
-your postings, with actual detail in them.  (In fact, we could need a
-volunteer like this anyway, since non-detailed postings do happen once
-in a while, not only by you.)
-
-3. Reject your postings (for them violating the content guidelines), but
-that's counter-productive because the linked-to information is actually
-on-topic and valuable to this community (thank you for it, again!)
-
-Another guideline you violate is this:
-
-"Please don't cross-post messages to oss-security and other mailing
-lists at once, especially not to high-volume lists such as LKML and
-netdev, as this tends to result in threads that wander partially or
-fully off-topic (e.g., Linux kernel coding style detail may end up being
-discussed in comments to a patch posted to LKML, but it would be
-off-topic for oss-security).  If you feel that something needs to be
-posted to oss-security and to another list, please make separate
-postings.  You may mention the other posting(s) in your oss-security
-posting, and even link to other lists' archives."
-
-It's less important since you're only CC'ing security-focused lists so
-far, but I would appreciate it if you avoid the CC's anyway.
-
-Thanks,
-
-Alexander
+iQIcBAEBCAAGBQJXtSP/AAoJEHb/MwWLVhi2JGwQALK7eHbxUE3d/0pJEZT3Dh2W
+IvR9Q/LzSl+hyPSi/p3hYMV7//trwQHOkfJCIu/vCFXfPTXB67CyqBJNDP5HPBbb
+Te6iFpvOx1DbjDNI3gVnuEavz0/qrkmFtQ2ckAA2Fm+fbgu+osYrFB9H4HXl9FB6
+UXJLAQjl0PUqED+YWgcUWRE790y0Dy8Tec6yoHMYMbO9kd2vAaiB+pTHxi7Rj7NO
+JtiUif88dvAPvf9BPHdpZ1CWXrn5JMsmAzBEUfB2Agl+oQmvN1u7pjeq3WbflhkH
+Lxu30L3wUwA18KzHLO0Vu1JAG2hxZpntoTlFkJQON62b+YGrRnRiv6OG/+C1jsZ3
+I4nM/JlZCveWYivqmL33Yt0LTT78OvnpYr/rkxKX4iJvSFhoNaF6RPIIDMbwpKo6
+ARXS0oZfj81OLgv1l2n1SSUgs2PA0ak+FkKf4qN5/BYhcvHstIrB0Qtd7iMxoeXD
+1HkjdNIKO+RaOTUsU639awR5qNRax4R6XIUdixEvqC3dnw+FneSv1k8zGrXev1L1
+HbJWrc1Vcm08r8eh2B9RJcoDb/FmzYOslWF5XLWDAZ116w4TFzVDnqBLuas1HNoB
+AsDdtZFBl5uFYs0xBvWeoqp2mx+r0YIA4qaLItjEjg17W+kNnBYiKPos8jyjb8UF
+Kmk6i62iKxL5nMgFXXWt
+=2ckM
+-----END PGP SIGNATURE-----
