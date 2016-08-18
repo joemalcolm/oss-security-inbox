@@ -1,75 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/30/1
-Message-ID: <83a44672-b86b-08c3-689e-f55675c5f6b7@gmail.com>
-Date: Fri, 29 Jul 2016 20:42:03 -0700
-From: lazytyped <lazytyped@...il.com>
-To: Hanno Böck <hanno@...eck.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: Use after free in my_login() function of DBD::mysql (Perl module)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/16
+Message-ID: <20160818145724.GA32181@kroah.com>
+Date: Thu, 18 Aug 2016 16:57:24 +0200
+From: Greg KH <greg@...ah.com>
+To: Marcus Meissner <meissner@...e.de>
+Cc: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org, security@...nel.org
+Subject: Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
 Content-Type: text/plain; charset=utf-8
 
+On Thu, Aug 18, 2016 at 04:39:57PM +0200, Marcus Meissner wrote:
+> On Thu, Aug 18, 2016 at 04:30:14PM +0200, Greg KH wrote:
+> > On Thu, Aug 18, 2016 at 04:22:16PM +0200, Marcus Meissner wrote:
+> > > Hi,
+> > > 
+> > > I think this does not have a CVE yet, please assign.
+> > > 
+> > > https://www.spinics.net/lists/linux-usb/msg144177.html
+> > > 
+> > > Headline:         Linux Kernel Panic Over USB with HID Keyboard wMaxPacketSize
+> > > Platforms:        Ubuntu
+> > > Versions:         Linux Kernel 4.4.0-22-generic
+> > 
+> > Huh?  It's much more pervasive than just that single platform or single
+> > version.
+> 
+> That was the quote from the original e-mail. I read further on it affects
+> more kernel versions.
+>  
+> > > CVSS Score:       4.7
+> > > CVSS Vector:      AV:L/AC:M/Au:N/C:N/I:N/A:C
+> > > Filed Defects:    
+> > > Related Defects:  
+> > > CWE Tags:         
+> > > Cycle:            
+> > > Found by:         Jake Lamberson
+> > > 
+> > > 
+> > > Linux Kernel panics when using an OHCI controller if a USB device reports being 
+> > > a generic HID keyboard and reports a wMaxPacketSize of over 4095. The OHCI
+> > > controller driver fails to reserve bandwidth for the device, causing the 
+> > > keyboard handler to fail when attaching to the HID. Later, when the device is 
+> > > removed, the system crashes due to a null pointer dereference in a linked list 
+> > > of endpoint descriptors. The crash can be re-created using a Facedancer and UMAP 
+> > > software. Given an appropriately configured Facedancer and UMAP setup, the crash 
+> > > can be re-created with: 
+> > > sudo board=facedancer21 python3 umap.py -P /dev/serial_device_here -f 03:00:00:E:0046 -l LOG
+> > > 
+> > > Note: OHCI is a USB 1.1 controller standard that can be included with devices
+> > > that support either USB 1.1 or 2.0 as their highest USB spec. USB 3.0 devices
+> > > all use xHCI, which implements USB 1.1, 2.0, and 3.0, making them immune to
+> > > this particular bug.
+> > > 
+> > > -----------------
+> > > 
+> > > The proposed fixing patch is here:
+> > > https://www.spinics.net/lists/linux-usb/msg144269.html
+> > > 
+> > > 
+> > > It has not yet been committed to the USB tree or to Linus Tree as far as I see.
+> > 
+> > Not true, it is commit id aed9d65ac3278d4febd8665bd7db59ef53e825fe in
+> > the usb tree and in linux-next and will be sent to Linus tomorrow.
+> 
+> Ah sorry, only looked briefly.
 
+This was also asked about 2 hours ago on the linux-usb mailing list, why
+all of the sudden interest in something that we had been discussing for
+weeks now in public?
 
-On 7/29/16 8:58 AM, Hanno Böck wrote:
-> On Thu, 28 Jul 2016 06:31:20 -0700
-> lazytyped <lazytyped@...il.com> wrote:
->
->> Quick question:
->>
->> - I guess the affecting function call is the following:
->>
->>     do_error(dbh, mysql_errno(imp_dbh->pmysql),
->>                    mysql_error(imp_dbh->pmysql)
->> ,mysql_sqlstate(imp_dbh->pmysql));
->>
->> which one of those calls provides an exploitation path? They seem all
->> reads off the free'd structure.
->>
->> I see in the bug report: " (I think use after free's can be serious
->> and potentially lead to malfunction and security issues)" and would
->> like to understand more about the rationale.
-> Hi,
->
-> I don't have a practical exploit scenario, thus my careful wording (the
-> best answer to "is this exploitable?" is often simply "I don't know").
->
-> It's a use after free, should be undeniable that it should be fixed.
+> > And are we really assigning CVE numbers for when you use an active
+> > "hardware test probe"?  If so, how many are people going to be assigning
+> > for these same problems on other operating systems?  :)
+> 
+> I think attaching malicious USB devices and crashing the kernel should
+> probably get CVE ids, or do you think it should not?
 
-Yes, but whether this is a security bug or not is a different matter. 
-The main reason why I'm bringing this up is that security bugs have a 
-significantly different treatment by OS teams and a quite different 
-expectation of turnaround time by users/customers.
+I don't know, that's why I'm asking, it requires "physical presence"
+which is much different from most threat models that people work to
+protect against.
 
-But once a CVE is out (as is in this case), the bug has been officially 
-declared as a security issue, there is no turning back.
+thanks,
 
-So, yes, a use-after-free is a bug, but not necessarily a security one, 
-yet the CVE makes it as much, with all the associated process. It would 
-be great if we could get a bit more triaging by the owner of the code or 
-the submitter before declaring the bug one thing or the other 
-(especially in these days of projects like yours that bring in a lot of 
-reports -- and don't get me wrong, this is a very valuable effort).
-
->
-> But my highlevel understanding of what could happen in such a case: In a
-> multithreaded application using that module it may be possible that
-> another thread is allocating the free'd memory before do_error is
-> called and may fill the memory of the struct with attacker-controlled
-> content. Would require careful analysis of what do_error does exactly
-> whether that could lead to further bad things.
-
-Well, AddressSanitizer should have told you whether the access is a read 
-access (as I suspect) or a write access. A bit of code inspection (or 
-follow up from the code maintainer) should add to the picture.
-
-As things stand right now, it seems that this could be turned into an 
-infoleak (despite some CVSS high scores I've seen around). But 
-notwithstanding this, I think it might help the community in general if 
-we do not just blindly characterize bugs based on what class they 
-belong, but we get a bit more information/effort around them.
-
-
-        -  Enrico
-
->
-
+rgeg k-h
