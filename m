@@ -1,38 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/17
-Message-ID: <db3c98e6-3e7d-c98b-7cb1-777cf7d484a3@sysdream.com>
-Date: Wed, 5 Oct 2016 20:13:12 +0200
-From: Sysdream Labs <labs@...dream.com>
-To: oss-security@...ts.openwall.com
-Cc: spip-team-owner@...o.net
-Subject: SPIP vulnerabilities: request for 5 CVE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/19/2
+Message-ID: <57B63EBF.4010307@justinbull.ca>
+Date: Thu, 18 Aug 2016 19:03:27 -0400
+From: Justin Bull <me@...tinbull.ca>
+To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com, fulldisclosure@...lists.org
+Subject: [CVE-2016-6582] Doorkeeper gem does not revoke tokens & uses wrong auth/auth method
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Good evening everyone,
 
-We need 5 CVE ID for the following vulnerabilities found in SPIP <= 3.1.2 (http://www.spip.net/):
+A security bulletin for all of you.
 
-* Template Compiler/Composer PHP Code Execution
-* Cross-Site Request Forgery
-* Reflected Cross-Site Scripting
-* File Enumeration / Path Traversal
-* Server Side Request Forgery
+Software:
+--------
+Doorkeeper (https://github.com/doorkeeper-gem/doorkeeper)
 
-Thank you in advance,
+Description:
+----------
+Doorkeeper is an OAuth 2 provider for Rails written in Ruby.
+
+Affected Versions:
+---------------
+1.2.0 - 4.1.0 (all versions but latest patch supporting token revocation)
+
+Fixed Versions:
+-------------
+4.2.0 or apply this commit[0]
+
+Problem:
+--------
+Doorkeeper failed to implement OAuth 2.0 Token Revocation[1] (RFC
+7009[2]) in the following ways:
+
+1. Public clients making valid, unauthenticated calls to revoke a token
+would not have their token revoked
+2. Requests were not properly authenticating the *client credentials*
+but were, instead, looking at the access token in a second location
+3. Because of 2, the requests were also not authorizing confidential
+clients' ability to revoke a given token. It should only revoke tokens
+that belong to it.
+
+(see [3][4][5][6] for above statements)
+
+The security implication is: OAuth 2.0 clients who "log out" a user
+expect to have the corresponding access & refresh tokens revoked,
+preventing an attacker who may have already hijacked the session from
+continuing to impersonate the victim. Because of the bug described
+above, this is not the case. As far as OWASP is concerned, this counts
+as broken authentication design[7].
+
+MITRE has assigned CVE-2016-6582 due to the security issues raised. An
+attacker, thanks to 1, can replay a hijacked session after a victim logs
+out/revokes their token. Additionally, thanks to 2 & 3, an attacker via
+a compromised confidential client could "grief" other clients by
+revoking their tokens (albeit this is an exceptionally narrow attack
+with little value).
+
+Unless I'm mistaken, all clients (public or confidential) that send
+well-formed, RFC 7009 compliant requests are affected by this bug.
+
+Solution:
+-------
+
+Modify the controller so if the request comes from a public client
+revoke the token without auth/auth. If the client is confidential,
+authenticate the client per RFC 6749 Sec. 2.3[8] and authorize its
+ownership of the provided token. As per [0].
+
+Timeline:
+--------
+2016-08-03: Bug discovered
+2016-08-03: CVE requested, assigned, privately disclosed to maintainer,
+bugfix/patch authored
+2016-08-08: Maintainer tweaked patch
+2016-08-12: Jonathan Clem ( jclem) also discovered bug and publicly
+disclosed[6]
+2016-08-18: Patched version 4.2.0 is released
+
+Acknowledgements:
+-----------------
+Special thanks to the maintainer, Tute Costa (https://github.com/tute),
+for quickly collaborating with me to prepare & apply a patch.
+
+References:
+----------
+[0]:
+https://github.com/doorkeeper-gem/doorkeeper/commit/fb938051777a3c9cb071e96fc66458f8f615bd53
+[1]: https://github.com/doorkeeper-gem/doorkeeper/pull/374
+[2]: https://tools.ietf.org/html/rfc7009#section-2.1
+[3]:
+https://github.com/doorkeeper-gem/doorkeeper/blob/v4.1.0/app/controllers/doorkeeper/tokens_controller.rb#L13-L35
+[4]:
+https://github.com/doorkeeper-gem/doorkeeper/blob/master/lib/doorkeeper/helpers/controller.rb#L28-L30
+[5]:
+https://github.com/doorkeeper-gem/doorkeeper/blob/master/lib/doorkeeper/oauth/token.rb#L5-L23
+[6]: https://github.com/doorkeeper-gem/doorkeeper/issues/875
+[7]:
+https://www.owasp.org/index.php/Top_10_2013-A2-Broken_Authentication_and_Session_Management
+[8]: https://tools.ietf.org/html/rfc6749#section-2.3
 
 
-Best regards,
 
--- 
-SYSDREAM Labs <labs@...dream.com>
-
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
-
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
