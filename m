@@ -1,40 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/16/2
-Message-ID: <CADSYzsvQ2ZZA6kKd3NWv5CFEu8RxrL=+q7zgtnoZa-x_fL9BeA@mail.gmail.com>
-Date: Wed, 16 Nov 2016 01:15:02 -0200
-From: Dawid Golunski <dawid@...alhackers.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/11
+Message-ID: <73591310.lZD5iXrPXu@willoughby>
+Date: Thu, 18 Aug 2016 10:47:56 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Nginx (Debian-based distros) - Root Privilege Escalation Vulnerability (CVE-2016-1247)
+Subject: potrace: multiple crashes
 Content-Type: text/plain; charset=utf-8
 
-Vulnerability: Nginx (Debian-based distros) - Root Privilege
-Escalation Exploit (CVE-2016-1247)
+Hello,
 
-Discovered by: Dawid Golunski (@dawid_golunski)
-https://legalhackers.com
+the past year I discovered and documented multiple crashes in potrace:
 
-Nginx web server packaging on Debian-based distributions such as Debian or
-Ubuntu was found to create log directories with insecure permissions which
-can be exploited by malicious local attackers to escalate their privileges
-from nginx/web user (www-data) to root.
-The vulnerability could be easily exploited by attackers who have managed to
-compromise a web application hosted on Nginx server and gained access to
-www-data account to escalate their privileges to root without any
-admin interaction thanks to cron.daily.
+https://blogs.gentoo.org/ago/2016/08/08/potrace-multiple-three-null-pointer-dereference-in-bm_readbody_bmp-bitmap_io-c/
 
-Vulnerability fixed in the following packages:
-Nginx 1.6.2-5+deb8u3 package on Debian
-Nginx 1.10.0-0ubuntu0.16.04.3 on Ubuntu (16.04 LTS)
+https://blogs.gentoo.org/ago/2016/08/08/potrace-divide-by-zero-in-bm_new-bitmap-h/
+
+https://blogs.gentoo.org/ago/2016/08/08/potrace-multiplesix-heap-based-buffer-overflow-in-bm_readbody_bmp-bitmap_io-c/
+
+It could be obvious but each crash comes up from a different crafted 
+image.
 
 
-The up-to-date advisory can be found at:
+If you think that something is suitable for an identifier, please assign it.
+Thanks
 
-https://legalhackers.com/advisories/Nginx-Exploit-Deb-Root-PrivEsc-CVE-2016-1247.html
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
 
-For updates, follow:
-
-https://twitter.com/dawid_golunski
-
-Copy of the exploit is also attached to this message.
-
-Download attachment "nginxed-root.sh" of type "application/x-sh" (7235 bytes)
