@@ -1,70 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/19/7
-Message-Id: <20160819134656.11C416C56A8@smtpvmsrv1.mitre.org>
-Date: Fri, 19 Aug 2016 09:46:56 -0400 (EDT)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE request: MatrixSSL lack of RSA-CRT hardening
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/17
+Message-ID: <20160818151654.GK2701@suse.de>
+Date: Thu, 18 Aug 2016 17:16:54 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: Greg KH <greg@...ah.com>
+Cc: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org, security@...nel.org
+Subject: Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
->> Date: Mon, 27 Jun 2016 08:08:14 +0200
-
-> MatrixSSL 3.8.3 comes with this fix:
+On Thu, Aug 18, 2016 at 04:57:24PM +0200, Greg KH wrote:
+> On Thu, Aug 18, 2016 at 04:39:57PM +0200, Marcus Meissner wrote:
+> > On Thu, Aug 18, 2016 at 04:30:14PM +0200, Greg KH wrote:
+> > > On Thu, Aug 18, 2016 at 04:22:16PM +0200, Marcus Meissner wrote:
+> > > > Hi,
+> > > > 
+> > > > I think this does not have a CVE yet, please assign.
+> > > > 
+> > > > https://www.spinics.net/lists/linux-usb/msg144177.html
+> > > > 
+> > > > Headline:         Linux Kernel Panic Over USB with HID Keyboard wMaxPacketSize
+> > > > Platforms:        Ubuntu
+> > > > Versions:         Linux Kernel 4.4.0-22-generic
+> > > 
+> > > Huh?  It's much more pervasive than just that single platform or single
+> > > version.
+> > 
+> > That was the quote from the original e-mail. I read further on it affects
+> > more kernel versions.
+> >  
+> > > > CVSS Score:       4.7
+> > > > CVSS Vector:      AV:L/AC:M/Au:N/C:N/I:N/A:C
+> > > > Filed Defects:    
+> > > > Related Defects:  
+> > > > CWE Tags:         
+> > > > Cycle:            
+> > > > Found by:         Jake Lamberson
+> > > > 
+> > > > 
+> > > > Linux Kernel panics when using an OHCI controller if a USB device reports being 
+> > > > a generic HID keyboard and reports a wMaxPacketSize of over 4095. The OHCI
+> > > > controller driver fails to reserve bandwidth for the device, causing the 
+> > > > keyboard handler to fail when attaching to the HID. Later, when the device is 
+> > > > removed, the system crashes due to a null pointer dereference in a linked list 
+> > > > of endpoint descriptors. The crash can be re-created using a Facedancer and UMAP 
+> > > > software. Given an appropriately configured Facedancer and UMAP setup, the crash 
+> > > > can be re-created with: 
+> > > > sudo board=facedancer21 python3 umap.py -P /dev/serial_device_here -f 03:00:00:E:0046 -l LOG
+> > > > 
+> > > > Note: OHCI is a USB 1.1 controller standard that can be included with devices
+> > > > that support either USB 1.1 or 2.0 as their highest USB spec. USB 3.0 devices
+> > > > all use xHCI, which implements USB 1.1, 2.0, and 3.0, making them immune to
+> > > > this particular bug.
+> > > > 
+> > > > -----------------
+> > > > 
+> > > > The proposed fixing patch is here:
+> > > > https://www.spinics.net/lists/linux-usb/msg144269.html
+> > > > 
+> > > > 
+> > > > It has not yet been committed to the USB tree or to Linus Tree as far as I see.
+> > > 
+> > > Not true, it is commit id aed9d65ac3278d4febd8665bd7db59ef53e825fe in
+> > > the usb tree and in linux-next and will be sent to Linus tomorrow.
+> > 
+> > Ah sorry, only looked briefly.
 > 
-> https://github.com/matrixssl/matrixssl/blob/master/CHANGES.md#validation-of-rsa-signature-creation
+> This was also asked about 2 hours ago on the linux-usb mailing list, why
+> all of the sudden interest in something that we had been discussing for
+> weeks now in public?
+
+No one asked for a CVE before.
+
+If that email request was from Oliver Neukum, he pinged me on it, so I
+started acting on it, so that explains this parallelism.
+ 
+> > > And are we really assigning CVE numbers for when you use an active
+> > > "hardware test probe"?  If so, how many are people going to be assigning
+> > > for these same problems on other operating systems?  :)
+> > 
+> > I think attaching malicious USB devices and crashing the kernel should
+> > probably get CVE ids, or do you think it should not?
 > 
-> I think this warrants a CVE ID because RSA-CRT key leaks from
-> MatrixSSL have been observed in practice.
+> I don't know, that's why I'm asking, it requires "physical presence"
+> which is much different from most threat models that people work to
+> protect against.
 
->> Version 3.8.3 April 2016
->> 
->> BUG FIXES
->> 
->> Validation of RSA Signature Creation
+There has been quite a number of CVEs assigned to malicious USB devices
+this year already, this does not seem to be different.
 
->> An internal RSA validation of created signatures has been added to the
->> library in the psRsaEncryptPriv() function.
->> 
->> Security researcher Florian Weimer has shown it is possible for RSA
->> private key information to leak under some special failure
->> circumstances. Information on the exploit can be found here:
->> https://people.redhat.com/~fweimer/rsa-crt-leaks.pdf
->> 
->> The potential leak is only possible if a DHE_RSA based cipher suite is
->> supported on the server side. This is the only handshake combination
->> in which an RSA signature is sent over the wire (during the
->> SERVER_KEY_EXCHANGE message). The signature itself must have been
->> incorrectly generated for the exploit to be possible.
->> 
->> The additional signature validation test will now cause the TLS
->> handshake to fail prior to a faulty signature being sent to the
->> client.
+(e.g. CVE-2016-2384, CVE-2016-2188, CVE-2016-2187 etc.)
 
-Use CVE-2016-6882.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXtwzoAAoJEHb/MwWLVhi2EvwQAJZXlmmNwy/iDHfzIPx4J2Ai
-CuAnQ5mrHIACk77z496F8yxyjocM455UuBEaofIACrPbEFzIwV3+6cLPWCY59OcJ
-0XJ18AgUVxEYJyKlrIae5O3wTnrPix939TJvhuPn+YnuK6fNXtAk5PVCMWNWMyUD
-gCd2c3A2qDVJ+6lLmuTGnitZ8t0m88kUclzCfKMHK5ciYjDa8JcRoE9r45Ue2At0
-sRqdJ4OWcvSbIiHWA5zN43GZ13z3fKw2ev1NvWn2pKIhVj9SBzm+6kxzz/jTm5ZW
-o4Koam6Y59lspk5yXHCeDWpXuylYwn55pHTBQvTKjRSWh3kMXEx8/RR70qx4Z5Ow
-Wok13h9/1U6cn8wrbsJiODtW2eSvY/N/FHdRWlPj5sDR64PntUhxTR3l4WvgT8Pe
-ogn9m14ij8uc3/pwXyXECLSqXp8WchMEsmacPEitTxRfsXbA7LoqcuZ6pxxKefVY
-yxxmQHDKaoOD4U92hTW8zG+nGn1rMCvmA0lI2irrCthdW5oD929WNYTKPnalZJTe
-XPi+TqxyZq1ATJxN2fMtZHoXgtXxepmEeXQK+ZXowT3J7x5eHJ8ij6RKYHK4mW5/
-1QGHW0LMrycUgFoggOLPXDFm3Sgh/dOmTngRqR3GXssRPsBpbtBuSBBttwLXYB4o
-xLUdsD1hJSQLZkV5232f
-=yjNZ
------END PGP SIGNATURE-----
+Ciao, Marcus
