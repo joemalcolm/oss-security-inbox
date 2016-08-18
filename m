@@ -1,34 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/03/10
-Message-ID: <20160303110739.GE2384@sivokote.iziade.m$>
-Date: Thu, 3 Mar 2016 13:07:39 +0200
-From: Georgi Guninski <guninski@...inski.com>
-To: Steve Kinney <admin@...obilus.net>
-Cc: cypherpunks@...nks.org, oss-security@...ts.openwall.com, debian-legal@...ts.debian.org
-Subject: Re: According to www.virustotal.com, lists.debian.org are hosting attachment .DOC virus
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/12
+Message-ID: <8eff73fa-3688-7ae2-06d3-e45d22d3691c@redhat.com>
+Date: Thu, 18 Aug 2016 11:51:02 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-6323: Missing unwind information on ARM EABI (32-bit) causes backtrace generation to hang
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 03, 2016 at 04:57:15AM -0500, Steve Kinney wrote:
-> phooey.  I wanted to see what ClamAV said about it and what
-> the textual content was, but...
-> 
-> ~/Desktop $ wget
-> https://lists.debian.org/debian-consultants/2016/01/docyrW4BlUhzH.do
-> c
-> 
-> [...]
-> 
-> (lists.debian.org)|82.195.75.100|:443... connected.
-> HTTP request sent, awaiting response... 404 Not Found
-> 2016-03-03 04:49:28 ERROR 404: Not Found.
->
+Andreas Schwab of SuSE reported and fixed a glibc bug where the 
+makecontext function would create an execution context which is 
+incompatible with the unwinder, causing it to hang when the generation 
+of a backtrace is attempted:
 
-Try scanning the .doc urls in virustotal from archive.org:
+   https://sourceware.org/bugzilla/show_bug.cgi?id=20435
+ 
+https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=9e2ff6c9cc54c0b4402b8d49e4abe7000fde7617
 
-https://web.archive.org/web/20160303105351/https://lists.debian.org/debian-s390/2015/10/msg00002.html
-https://web.archive.org/web/20160303105748/https://lists.debian.org/debian-hurd/2015/10/msg00029.html
+This is a minor denial-of-service vulnerability.
 
+The bug is specific to ARM EABI (32-bit) and does not affect other 
+architectures.  So far, only certain applications compiled using gccgo 
+(not the main golang.org toolchain) are known to be affected.
 
-Make sure then to follow "Go to downloaded file analysis".
+Red Hat Product Security has assigned CVE-2016-6323 to this issue.
 
-
+Thanks,
+Florian
