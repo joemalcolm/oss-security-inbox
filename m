@@ -1,86 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/27/4
-Message-ID: <alpine.GSO.2.20.1605270933490.4552@freddy.simplesystems.org>
-Date: Fri, 27 May 2016 09:37:38 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security@...ts.openwall.com
-Subject: Security issues addressed in GraphicsMagick SVG reader
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/6
+Message-Id: <20160818033657.BE627B2E01B@smtpvbsrv1.mitre.org>
+Date: Wed, 17 Aug 2016 23:36:57 -0400 (EDT)
+From: cve-assign@...re.org
+To: marco.gra@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Linux tcp_xmit_retransmit_queue use after free on 4.8-rc1 / master
 Content-Type: text/plain; charset=utf-8
 
-===========================================
-SVG Security Improvements in GraphicsMagick
-===========================================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This is a summary of security improvements made to development
-GraphicsMagick's SVG reader since the 1.3.23 release.  These
-improvements were made in response to fuzz testing by Gustavo Grieco
-(using Quickfuzz) which and which resulted in CVE-2016-2317 and
-CVE-2016-2318.  We are thankful that Gustavo has been willing to
-continue fuzz testing as improvements have been made.
+> this program will cause a use after free of read 4 in
+> tcp_xmit_retransmit_queue or other tcp_ functions, often in another totally
+> unrelated process.
 
-While several implementation flaws were found and fixed, the most
-serious issue which has been addressed is that the SVG reader was
-doing no parameter value validation whatsoever.  Some algorithms are
-unstable given improper inputs (e.g. negative number).  Luckily, the
-SVG specification is very helpful with noting parameters which have
-restricted value ranges and this can be used as a guide.
+> tested on master available at the
+> time of writing and on 4.8 rc1
 
-The SVG renderer in GraphicsMagick (and the built-in SVG renderer in
-ImageMagick from which it originated) are based on a design where a
-SVG pre-processor translates from SVG XML syntax into a simpler
-internal textual form known as Magick Vector Graphics (MVG).  In most
-cases the pre-processor acts as a translator/re-formatter, but in some
-cases (e.g. for viewbox and affine transformations) it performs
-computations.  Validation checks are added to the SVG pre-processor
-whenever a value is used by computations.  Otherwise validation checks
-are primarily added at the MVG level.
+> [   21.446876] BUG: KASAN: use-after-free in
+> tcp_xmit_retransmit_queue+0xc75/0xdb0 at addr ffff88007a06d428
+> [   21.447953] Read of size 4 by task rsyslogd/1612
+> 
+> ...
+> 
+> ip6_dst_check+0x262/0x410
 
-These improvements were made:
+> syscall(SYS_socket, 0xaul, 0x1ul, 0x0ul, 0, 0, 0);
 
-* Validate that parameter token text was actually consumed and that
-   the token text does not overflow its buffer.
+Use CVE-2016-6828.
 
-* Correctly estimate memory requirements required by the
-   roundRectangle primitive.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-* Validate stroke path arguments.  In particular, reject negative
-   length values.
-
-* Validate stroke dash pattern arguments.  In particular, reject
-   negative length values.
-
-* Validate stroke-miterlimit values (must be >= 1.0)
-
-* Validate radialGradient angle values.
-
-* Check rectangle arguments for appropriate ranges (e.g. reject
-   negative width/height).
-
-* Check rounded rectangle arguments for appropriate ranges
-   (e.g. reject negative width/height/radius).
-
-* Check ellipse arguments for appropriate range (e.g. reject negative
-   radius).
-
-* Check viewbox arguments for appropriate ranges (e.g. reject negative
-   width/height).
-
-* Prohibit use of Magick-specific file name prefixes and suffix
-   arguments in SVG URLs.
-
-* Limit the allowed size of clip-path and gradient images.
-
-* Added drawing recursion detection.  This avoids hangs and stack
-   exhaustion given self-referential URLs in the SVG.
-
-* Fix usages of uninitialized memory discovered with some SVG files.
-
-
-Fuzz testing is an on-going process and we will continue to address
-any issues discovered.
-
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+iQIcBAEBCAAGBQJXtSOaAAoJEHb/MwWLVhi2eVYP/17p3S7V79KaB1JBE+6KR5Kg
+OFGawnxE05zFw+/YmhzmeiQY+YDEvEyNVvIcMhEmSksFkQofVodzJGKZ78f0K8Tz
+GrhHn+s/uc4KJTxacJAIFYG8ZbEw24A3fnN8wU+nBkjzwOiwiz4wsP54MC43PLQz
+azZC2d47rXfHwr9whoUFik5vi2HvU8AesDbRIFOK1g1U35Z0J7PybcZjh5NE5loP
+/8zGlYR602bCq7PfAvoYW34Ui0kHRqDu0PaRiLlLVVrAVwDOd20ZZPfqcF9DOW85
+aF2vwlttTyL+Ogy1StraNtq06XWICOMULR4l9Y5Q30438icDEiH6yW/aOccctG3j
+CKC0QOfNtvPI4HtVjPUgx92icRHsxh+/VBED4WxnF3iHBzLMRT9EBxTHAS3MV4oM
+mZmSRQsMiP0cgcmi7KEeej5RWh9YvmSCfgrBTxXDnLr3vXbDJpDTA5jzXXXXpxAY
+tluapbNlEffKrW6aspd6FnqSze9N7zQA6LxWmmpL9bUAFNp3EcLNFLis+e9RLPYy
+5Kz/+x1sB1IDldHANp8QsAGk+GvWGGSauOuFyKKP3s84Y0Da3shCw/LuEweo0qFP
+uapf8CH6uD8ZR3P/9AfiftpX+q0YNITdfsp6XbKtVRgW3fgg44UyRHP5zGUwkJWT
+b0SEiC2X+uIfP1/0CTqd
+=dKqq
+-----END PGP SIGNATURE-----
