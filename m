@@ -1,42 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/5
-Message-Id: <20160307030449.013306C0719@smtpvmsrv1.mitre.org>
-Date: Sun,  6 Mar 2016 22:04:49 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/8
+Message-Id: <20160818034004.E6E24B2E01B@smtpvbsrv1.mitre.org>
+Date: Wed, 17 Aug 2016 23:40:04 -0400 (EDT)
 From: cve-assign@...re.org
-To: carnil@...ian.org
+To: dregad@...tisbt.org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Dotclear: XSS vulnerability in comments managment page and media exclusion control enforcement
+Subject: Re: MantisBT: XSS in view_all_bug_page.php
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Dotclear, a web publishing software, fixed a cross-site scripting
-> vulnerability in 2.8.2. Additionally the media exlusion control in the
-> media manager was furhter enforced:
+> An XSS vulnerability was discovered in MantisBT's Filter API, affecting
+> the View Issues page. It is caused by unescaped output of the
+> 'view_type' GPC parameter, and can be exploited as follows:
 > 
-> https://dotclear.org/blog/post/2015/10/25/Dotclear-2.8.2
-
-> The XSS vulnerability was fixed with
+> /mantis/view_all_bug_page.php?view_type=[XSS]
 > 
-> https://hg.dotclear.org/dotclear/rev/65e65154dadf
+> To resolve the issue, the parameter's value is sanitized prior to being
+> stored in the filter, ensuring only authorized values 'simple' and
+> 'advanced' are saved, and subsequently printed on the hidden form field.
 > 
-> admin/comments.php
-> -  form::hidden(array('author'),preg_replace('/%/','%%',$author)).
-> +  form::hidden(array('author'),html::escapeHTML(preg_replace('/%/','%%',$author))).
+> https://github.com/mantisbt/mantisbt/commit/7086c2d8b4b20ac14013b36761ac04f0abf21a4e
+> https://mantisbt.org/bugs/view.php?id=21611
 
-Use CVE-2015-8831.
-
-
-> The second mentioned issue was addressed with
-> 
-> https://hg.dotclear.org/dotclear/rev/198580bc3d80
-> 
-> inc/core/class.dc.core.php
-> -  array('media_exclusion','string','/\.php[0-9]*$/i',
-> +  array('media_exclusion','string','/\.(phps?|pht(ml)?|phl)[0-9]*$/i',
-
-Use CVE-2015-8832.
+Use CVE-2016-6837.
 
 - -- 
 CVE Assignment Team
@@ -46,17 +34,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW3O4DAAoJEL54rhJi8gl5MnsQALSILA8PaHLFRRQbrXcz43e/
-PGGgyWrqqZQY5KvfLkDmcTSR7D9JuIFfQa0jU6I88h62PZ0jk8nWwrWdozOchgZW
-fyO2Zbdh3BMO3RW+hMnTpKVq66WvSFSs1vFIAG6y44RY7ddWCjVLWYw1r7MJnnNW
-gzyqH4QrMUFMr3eki8rWOWXX4gCZ104D25eChC406M08QGBO77xSYn5llK68CraS
-2HRFuVtUleHMgS/JkBS6VWd2dBYNQPaHtIUM+THvDePh9HV+J4jrS24qc6cDEsHR
-uFP/8oAn47ob8sJeSfdZp4Rqq8r12aOFsHReCQa69N/gaXtLdEFAuKJSx+yCClAR
-v0XcmlWUeum/3zr+/vTBXj+K+IESHPOWZl6YxuW125c1KgSba2rkeuORT/nq4R1l
-vraRd479fpA22+s5ii81EjxtEgGMKT/woHdxlJRgJeBCtiuXRYcoanS4QmNfw00C
-wasOMNYaaYwJtBOMDEgCLFZlvO3/7EuWPFZidoKTGc58o4fwz3TXEG7Ez8rVL9EF
-CaIzjl9wx5MLaLQhj6G8SgM3+mtDPN7/yLfDj0E7nhSsY9Sr98NXdlBIvrEbkNGK
-FBOFE/xQxzNKSDQI7+p+7pQ5drpIK/53GwcgVw4dbepNgJNn6DQVzDhiN92o+Kwx
-vMgmqdP5oqnZIf7Ya+V7
-=0vja
+iQIcBAEBCAAGBQJXtSbhAAoJEHb/MwWLVhi2y/sQAI4Zgb9yzisnCQlPnBFtPALu
+nSl9WntQBBBKSS/7EIv+4OntPTRF69ngqgLFSZRNBB8OAbOYxqhuxNKjx2O/t9HL
+3amuDNatrIQdvjd9dpd0yD23lIRRB3i7Zq+DzAPsEO2MwazQBtyHKTIGmmcYpGv9
+UsZ0Vw+jD3l16Z/9DfZINu+pBuUO0k7/zKlpQ4v2RRjq4J6RGrGMbR+lY4nP7sxm
+asQ5Mk9vz/Whpk7hAfYcAvSw2qb+K9bgTiLZ3HF/97kQCUTA+8VrCpVO8EG4k6Rz
+o+8jK2tZi3lRPlmzYIeVe+b3gLuyTvuYSNV1WbQllnjtU4NNaqgcXm3BxTEKmAqj
+IYo8OcZql1KDiVscDw8xuUTtPFmAqTtstUOh44DIVgzO0l4Rlz6PIF1kZ5IT8eFo
+d0YuCIrAOXSupfVASpffuHGNKwBniF+AoQYFAdG26XKIBDmir7y4vZIx/OPH257d
+sXTdJkzVhZuyQJWjVlOsV9tGIh/VkR/VO0vXj5Q02k//7AtmeLUf/utMVhNCOA0c
+MDxQatjIDh+eDfEFDlLY/FkeduHb2aJI9QiI1QRayE01C6+tJUo26mhGcqf0O7Wa
+Jgfd78fEaquju9kZ8TaR6qKVsABvEQWAesxVjfnrg5mk54rzbr09t3sqyVPpwNwy
+5ROx1/qpuWT03S5xW/PG
+=mmRp
 -----END PGP SIGNATURE-----
