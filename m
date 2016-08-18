@@ -1,38 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/20/1
-Message-Id: <92B9C3B6-236F-44BF-951C-2E3B3C6D466B@oracle.com>
-Date: Tue, 20 Sep 2016 09:29:55 +0100
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com
-Cc: Jan Schaumann <jschauma@...meister.org>, "chet.ramey" <chet.ramey@...e.edu>
-Subject: Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/5
+Message-Id: <20160818033529.60118ABC95B@smtpvmsrv1.mitre.org>
+Date: Wed, 17 Aug 2016 23:35:29 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
+Subject: Re: CVE Request Qemu: Information leak in vmxnet3_complete_packet
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> On 19 Sep 2016, at 19:32, Seth Arnold <seth.arnold@...onical.com> wrote:
+> Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support is
+> vulnerable to an information leakage issue. It could occur while processing
+> transmit(tx) queue, when it reaches the end of packet.
 > 
-> On Sun, Sep 18, 2016 at 08:06:57PM +0100, John Haxby wrote:
->>>>> A little while ago, one of our users discovered that by setting the
->>>>> hostname to $(something unpleasant), bash would run "something
->>>>> unpleasant" when it expanded \h in the prompt string.
->>> 
->>> This issue has been public since October, 2015 in Ubuntu's bug tracking
->>> system.
->>> 
->> 
->> Yes, the message was more to let people know that CVE-2016-0634  had
->> been assigned for this issue.   Do you have a link to the Ubuntu issue
->> and a different CVE number?
+> A privileged user inside guest could use this leak host memory bytes to a
+> guest.
 > 
-> Hello John; we did not assign a CVE number for this issue.
-> 
-> Bernd Dietzel reported it at:
-> https://bugs.launchpad.net/ubuntu/+source/bash/+bug/1507025
+> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg02108.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1366369
 
-Thanks.   CVE-2016-0634 can stand then.
+Use CVE-2016-6836.
 
-[The internal process we follow for acquiring CVEs is heavily oriented towards closed source so my apologies for not bringing this forward sooner.]
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/vmxnet3.c but
+that may be an expected place for a later update.
 
-jch
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Download attachment "signature.asc" of type "application/pgp-signature" (236 bytes)
+iQIcBAEBCAAGBQJXtSaEAAoJEHb/MwWLVhi2NPQP/jEAHJPU608e4Z/Oq5WhrH8e
+DMg3XVb8R8PvNlJ5IFAB6RLIYHDxZWJrA13XUV+bSz2rYV+8wSRGYsSLqhztOU8G
+NXuEO1a1bxeQI/Y/6IuZyuIJph5nvKJKx49pWZEMtLfTTk5NDvHO13GQxoHM9st8
+0RhDvPQ91fHhvDIIzFJOdvpn7LwEKCebtEb97mMmUza2d7QQIfgM2nSPAZwmbbHu
+kySYOO+Y0JkotjQCNRLg4ylBhr2u3P7V524HYIPvJy5Us4neNYk4876yHknOhmET
+JH9lVBVT5gb8vRNu6N6yw4cLia4CJGoZUgn7GFiKldIEZ8dDVyjdJ0VpTzCyIxbb
+o3w2iZbxUT34ZrUtZ7HNeX0eLwlDD/WH4SgQYl4VYr0wHffpE3w2luEBQh81xOLy
+lMZmSOpvYoL1OOS9+I7jsNBd6QzOzBMRQxLSyAVktFhgZCzp1Y+PDywFmdDXJJ/I
+qZ1e2kAWm+FfmOQ/ZKaqI0PEPpSKrONWJh/nEVy+HBTmCuOkGCDJMus3AKxEb5DP
+EYWvcZq7wWysQ6dcv/XpBt4sueKTUGhJOSK4EUP7ruUCH05O3sNduUU7eZKmMSJQ
+ZaC3drLG9yPRHQGHCwf+pL0RY05I3n34StIPRmVP4urOgUHdAOJ3yqQPOgrMwC4S
+p7oeXAQw0bpbfTAVXsgl
+=gIck
+-----END PGP SIGNATURE-----
