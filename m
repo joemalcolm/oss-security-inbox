@@ -1,4 +1,9 @@
-Received: (qmail 30021 invoked by uid 550); 10 Jul 2023 15:08:47 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1640" "Wednesday" "17" "August" "2016" "23:35:29" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160818033529.60118ABC95B@smtpvmsrv1.mitre.org>" "41" "[oss-security] Re: CVE Request Qemu: Information leak in vmxnet3_complete_packet" nil nil nil "8" "2016081803:35:29" "[oss-security] Re: CVE Request Qemu: Information leak in vmxnet3_complete_packet" (number mark "U       cve-assign@m Aug 17   41/1640  " thread-indent "\"[oss-security] Re: CVE Request Qemu: Information leak in vmxnet3_complete_packet\"\n") "<alpine.LFD.2.20.1608120047520.6399@wniryva>" ("<alpine.LFD.2.20.1608120047520.6399@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5558 invoked by uid 550); 18 Aug 2016 03:35:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,75 +12,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29978 invoked from network); 10 Jul 2023 15:08:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689001714; x=1691593714;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=M0ytNDJjdf43MhKBbyFjBNROlpA+aY1dFtlbJ89j540=;
-        b=NLIrD9Sj3JL2P5Bzx5amxzuiJckZ4SXqq2luVrzpmuOyMEEuHP9DHM+4csDXQ3zP26
-         RTNX7JULNmiCaV3HWcJmnW0XbabBxxTi5CxxT3Rn3P2enp+bzQS12HJUHSGAQmHSZGpB
-         bnJHG8dIo6YojdHFc1MJZBq0SAr6krHZndLTd8GhI6jSjznpBLUowT+pmqu7p0q8+BgG
-         oQ+pQzcyReVJg4S5c4DzRO0EEsxyQ5zgSPsGcQm0E7VXj8wiVRq2JQbXw6zvASY4kZKP
-         kNRu4CXipnaLlWu+Qr5tiHzWyvPZUM+oT4B0fmoGuuEuDJWNbWhPRp9j/N9mnr1b+nAt
-         BXUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689001714; x=1691593714;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=M0ytNDJjdf43MhKBbyFjBNROlpA+aY1dFtlbJ89j540=;
-        b=H3PyiHsQbQfFDAiAGp5AgMqJHXI6loJd2MH6DyDZuR9Eh8B63T9ifVkQcuUSGgjvMt
-         XBAtORU0Zdy7sn24a3G3QF7l9mgixPSZW90jEior6a7xuWM2ZghcDoBlXtAHqxI+anmd
-         f5iJDSKrXE0bb2FkwH5w3sd9zBAfcSFBA493UZQIUQivzHMDFEOhtHoGpth2MiLH5iZg
-         JTFSIPNHYk5X3OqoFnvVlFi8/HB2phrbZAcNiUN0+eNBFI7QnzVF86wtDFNR0LeJmCh9
-         piHhKwKW5a2/RPdyWXnHWbCUOO6CS3IIP522e95vQ0UcRU0IM4XZrJ60jIbnyfAWSvDe
-         +e4g==
-X-Gm-Message-State: ABy/qLYk1zr3UAY6XwphRYsWGrB7G6lZ9shVqEc24IYM+qm45GY3DzaY
-	31n91N+oEs8sS0dVjNvDzZpTXarw3kA8m0A5fgg3vscT
-X-Google-Smtp-Source: APBJJlHwRB2jErKiv4T5A/q79v6/KFEWLVoEe4g3lKRwYTtQK0Ol/wqC70llCdS/63Q8JGRfYq44tB5IFFP8iYwmflQ=
-X-Received: by 2002:a5d:54c2:0:b0:313:eb34:b23e with SMTP id
- x2-20020a5d54c2000000b00313eb34b23emr14849334wrv.49.1689001713911; Mon, 10
- Jul 2023 08:08:33 -0700 (PDT)
-MIME-Version: 1.0
-References: <f61029a1-f4dc-8fb3-a9c8-444901495532@apache.org>
-In-Reply-To: <f61029a1-f4dc-8fb3-a9c8-444901495532@apache.org>
-From: Brandon Perry <bperry.volatile@gmail.com>
-Date: Mon, 10 Jul 2023 10:08:22 -0500
-Message-ID: <CAOJKFBBeRpoYjwUsJNH=c5aAQ+H=rmGPiTUQ+qB7rZ0J1Qt+rQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000002ecd390600235b94"
-Subject: Re: [oss-security] CVE-2022-42009: Apache Ambari: A malicious
- authenticated user can remotely execute arbitrary code in the context of the application.
+Received: (qmail 5540 invoked from network); 18 Aug 2016 03:35:40 -0000
+From: cve-assign@mitre.org
+To: ppandit@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn
+In-Reply-To: <alpine.LFD.2.20.1608120047520.6399@wniryva>
+Message-Id: <20160818033529.60118ABC95B@smtpvmsrv1.mitre.org>
+Date: Wed, 17 Aug 2016 23:35:29 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request Qemu: Information leak in vmxnet3_complete_packet
 
---0000000000002ecd390600235b94
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Do you have an example proof of concept or a bug link for this?
+> Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support is
+> vulnerable to an information leakage issue. It could occur while processing
+> transmit(tx) queue, when it reaches the end of packet.
+> 
+> A privileged user inside guest could use this leak host memory bytes to a
+> guest.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg02108.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1366369
 
-On Mon, Jul 10, 2023 at 10:06=E2=80=AFAM Brahma Reddy Battula <brahma@apach=
-e.org>
-wrote:
+Use CVE-2016-6836.
 
-> Affected versions:
->
-> - Apache Ambari 2.7.0 through 2.7.6
->
-> Description:
->
-> SpringEL injection in the server agent in Apache Ambari version 2.7.0 to
-> 2.7.6 allows a malicious authenticated user to execute arbitrary code
-> remotely. Users are recommended to upgrade to 2.7.7.
->
-> Credit:
->
-> Jecki Go (jecgo@visa.com) (finder)
->
-> References:
->
-> https://ambari.apache.org/
-> https://www.cve.org/CVERecord?id=3DCVE-2022-42009
->
->
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/vmxnet3.c but
+that may be an expected place for a later update.
 
---0000000000002ecd390600235b94--
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXtSaEAAoJEHb/MwWLVhi2NPQP/jEAHJPU608e4Z/Oq5WhrH8e
+DMg3XVb8R8PvNlJ5IFAB6RLIYHDxZWJrA13XUV+bSz2rYV+8wSRGYsSLqhztOU8G
+NXuEO1a1bxeQI/Y/6IuZyuIJph5nvKJKx49pWZEMtLfTTk5NDvHO13GQxoHM9st8
+0RhDvPQ91fHhvDIIzFJOdvpn7LwEKCebtEb97mMmUza2d7QQIfgM2nSPAZwmbbHu
+kySYOO+Y0JkotjQCNRLg4ylBhr2u3P7V524HYIPvJy5Us4neNYk4876yHknOhmET
+JH9lVBVT5gb8vRNu6N6yw4cLia4CJGoZUgn7GFiKldIEZ8dDVyjdJ0VpTzCyIxbb
+o3w2iZbxUT34ZrUtZ7HNeX0eLwlDD/WH4SgQYl4VYr0wHffpE3w2luEBQh81xOLy
+lMZmSOpvYoL1OOS9+I7jsNBd6QzOzBMRQxLSyAVktFhgZCzp1Y+PDywFmdDXJJ/I
+qZ1e2kAWm+FfmOQ/ZKaqI0PEPpSKrONWJh/nEVy+HBTmCuOkGCDJMus3AKxEb5DP
+EYWvcZq7wWysQ6dcv/XpBt4sueKTUGhJOSK4EUP7ruUCH05O3sNduUU7eZKmMSJQ
+ZaC3drLG9yPRHQGHCwf+pL0RY05I3n34StIPRmVP4urOgUHdAOJ3yqQPOgrMwC4S
+p7oeXAQw0bpbfTAVXsgl
+=gIck
+-----END PGP SIGNATURE-----
