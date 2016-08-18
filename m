@@ -1,52 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/08/13
-Message-Id: <20160608204444.1EC5EB2E01A@smtpvbsrv1.mitre.org>
-Date: Wed,  8 Jun 2016 16:44:44 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE Request Qemu: scsi: megasas: information leakage in megasas_ctrl_get_info
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/19/3
+Message-ID: <CAN10O-b=zyuz3qvV3C_i0z8c-KJgwxkqppY3FVKF9=+RAKFPEw@mail.gmail.com>
+Date: Fri, 19 Aug 2016 09:59:16 +1000
+From: x ksi <s3810@...stk.edu.pl>
+To: oss-security@...ts.openwall.com
+Cc: eric.pruitt@...il.com, cve-assign@...re.org
+Subject: Re: Re: CVE request - slock, all versions NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hey,
 
-> Quick Emulator(Qemu) built with the MegaRAID SAS 8708EM2 Host Bus Adapter
-> emulation support is vulnerable to an information leakage issue. It could
-> occur while processing MegaRAID Firmware Interface(MFI) command to read device
-> control information in 'megasas_ctrl_get_info'.
-> 
-> A privileged user inside guest could use this flaw to leak host memory bytes.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1343909
-> https://lists.gnu.org/archive/html/qemu-devel/2016-06/msg01969.html
-> http://git.qemu.org/?p=qemu.git;a=commit;h=844864fbae66935951529408831c2f22367a57b6
+Just for the record... http://s1m0n.dft-labs.eu/files/slock/ . Vendor
+was notified about this issue on 2015-11-13.
 
->> While reading information via 'megasas_ctrl_get_info' routine,
->> a local bios version buffer isn't null terminated. Add the
->> terminating null byte to avoid any OOB access.
 
-Use CVE-2016-5337.
+Thanks,
+F
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXWIM7AAoJEHb/MwWLVhi2Xf4P/Ahd+5miydBOK6lpzPz8rCki
-yO1bf5RBSrxCs8mupwxK1jI8YgohSOwaeYrACwDeNTHnzJD7uc6MwvhWYvuMnv8D
-K///kKuhocZD8A1Ol5KSHxul/ukNv1+jMV+XhQZvHZh/qHFApCeJAldAvPh3tqrT
-Qt+8vCqoIQR14IbQMqLuC7peqBPOU9PuXv9xA3FYBxomlDCl+B3mfptLMuBCQ+hW
-EDTea9jmA6M5rzDY23/iWyauUgW65+ze2Cx6Y8+xtJbAsBgzJl66iJWKmhZ5xvhm
-qn7GWvN9YboqR+819cwmAHCDbPrE4UNfbst63W51epIj7eO5NQSVWb3INpV0rR8B
-P64vpoOdZ+C9Ur+IH3bSypGXVAa9E2caT5Wn/LLnumxyDRB+zuQcmXikGe5clROV
-rdA8Nq86HQEp+uax4j1KCjSJxeMWJ0C25QsNXVO5GZDBpJ7JAtpM0MSp1rh0KWPM
-jqHv24YdWfq1SO/6XmVIv8yhJfCjOiXRgiC8fvb9y92n2UgRf4Lp88BCYrl6FU1x
-vSph/1nqbl8WJqqRR3BYNCLaTEZUtuA6nxll6FttaGi/icWW6MB+B1QL4jQ1d2y3
-5tIvvUD+NgCsfGZAEq63Qi4H+XlG8DdIAADKa1mXSNp0ZUAivNBgnH4SdUIKkT0v
-5JkP8v9qRFtvQv9gceVV
-=Up/J
------END PGP SIGNATURE-----
+2016-08-19 7:13 GMT+10:00  <cve-assign@...re.org>:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+>> The screen locking application slock (http://tools.suckless.org/slock/)
+>> calls crypt(3) and uses the return value for strcmp(3) without checking
+>> to see if the return value of crypt(3) was a NULL pointer. If the hash
+>> returned by (getspnam()->sp_pwdp) is invalid, crypt(3) will return NULL
+>> and set errno to EINVAL. This will cause slock to segfault which then
+>> leaves the machine unprotected. A couple of common scenarios where this
+>> might happen are:
+>>
+>> - a machine using NSS for authentication; on the machine I discovered
+>>   this bug, (getspnam()->sp_pwdp) returns "*".
+>> - the user's account has been disabled for one reason or another; maybe
+>>   account expiry or password expiry.
+>
+> Use CVE-2016-6866.
+>
+> - --
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQIcBAEBCAAGBQJXtiRVAAoJEHb/MwWLVhi2sacP+gMeIHHCDQ9cy+JpK1eCnSCS
+> sazQCwgyDrGdrT9a842vGgkenEmHfeIwJHlpsMsmB4SBhRjUkWSMDKwh/VYyIFAI
+> U3bIi2B3jqG70onrQJnHPYisz/shOdyv5m4GxTCFVn17i0R4iJ9h3yO7coFG2QMT
+> GxMlm+QkxvUiTz4hEKI6pt7Cpca/5819cqs7fJr368zP1KB54b0dIRNFzFYMOyqk
+> Q6M9SvJICMz5j5rrxYFijhfTrB8AiuU0XNgwZs/sJhRXy8xdf1n+m5C60eDLG+o4
+> Qx2KzHhlDScl680OQNi77MCSHq8Ffb5bEWZDsxujqcN3p4JDGMTBKAJ2vWfDajog
+> 7Ugaqz4ddnj2EY8+ZL6jPzxq1HqBbUmwCCCwvoeltF6etclaGB4Hps6p7ffB3zQy
+> rXsAUC659T/xPURObeHB+krNEadz/lcx1/ucA7+DXmtBmd/oHDYsbwU91M/z+oCQ
+> 6K/CIT2ZTKbUPDP8mdQfpgPsURRXc+oMl8AsUf9OBlnNPn1MGeGfbNOUZz8tJnuT
+> coI//OylyihxjQaOK36vxTu4WtMtvH+bR6tH39TSTxyyKiOFG4xavWCJpshUwDa0
+> tx9QK6RbbWLfIm+PaSkiFqpsZ+oy25DI2FmUPe47u8qStCAVm5TSnOi3/YuPfTMr
+> osR1b1FAQ/zhY7kYhD1n
+> =HbWC
+> -----END PGP SIGNATURE-----
