@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4544" "Saturday" "2" "May" "2015" "22:25:46" "+0000" "mancha" "mancha1@zoho.com" "<20150502222546.GA23148@zoho.com>" "102" "Re: [oss-security] On sanctioned MITMs" nil nil nil "5" "2015050222:25:46" "[oss-security] On sanctioned MITMs" (number mark " r      mancha1@zoho May  2  102/4544  " thread-indent "\"Re: [oss-security] On sanctioned MITMs\"\n") "<E1868BE4-F7FC-406B-8DBD-4720F7F67A1F@orthanc.ca>" ("<20150501191522.GA18039@zoho.com>" "<5543DDB5.7030900@redhat.com>" "<20150501233935.GB18039@zoho.com>" "<E1868BE4-F7FC-406B-8DBD-4720F7F67A1F@orthanc.ca>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1761" "Wednesday" "17" "August" "2016" "23:32:17" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160818033217.E5376B2E013@smtpvbsrv1.mitre.org>" "43" "[oss-security] Re: CVE request: Qemu net: vmxnet3: use after free while writing" nil nil nil "8" "2016081803:32:17" "[oss-security] Re: CVE request: Qemu net: vmxnet3: use after free while writing" (number mark "U       cve-assign@m Aug 17   43/1761  " thread-indent "\"[oss-security] Re: CVE request: Qemu net: vmxnet3: use after free while writing\"\n") "<alpine.LFD.2.20.1608120639040.19256@wniryva>" ("<alpine.LFD.2.20.1608120639040.19256@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0003
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 16304 invoked by uid 550); 2 May 2015 22:26:11 -0000
+Received: (qmail 17769 invoked by uid 550); 18 Aug 2016 03:32:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,131 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16286 invoked from network); 2 May 2015 22:26:10 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
-  s=zapps768; d=zoho.com; 
-  h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; 
-  b=Wk9n3gaRLlAj222mENax54uLZUNWWSUIx+Ci4ZlaFFP08Zr8peO+lAd3z5Y7zoJa48WefiTlxCLX
-    ryrZb9kWbqCErFslyfzXl+wTnKwyeovGx8F4hFijDf4+YiEAdW4h  
-Message-ID: <20150502222546.GA23148@zoho.com>
-References: <20150501191522.GA18039@zoho.com>
- <5543DDB5.7030900@redhat.com>
- <20150501233935.GB18039@zoho.com>
- <E1868BE4-F7FC-406B-8DBD-4720F7F67A1F@orthanc.ca>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="fdj2RfSjLxBAspz7"
-Content-Disposition: inline
-In-Reply-To: <E1868BE4-F7FC-406B-8DBD-4720F7F67A1F@orthanc.ca>
-X-PGP-Key: http://hkps.pool.sks-keyservers.net/pks/lookup?op=vindex&search=0x25168eb24f0b22ac
-X-PGP-FP: 56B7 100E F4D5 811C 8FEF  ADD1 2516 8EB2 4F0B 22AC
-X-Zoho-Virus-Status: 1
-Cc: lyndon@orthanc.ca
-Date: Sat, 2 May 2015 22:25:46 +0000
-From: mancha <mancha1@zoho.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] On sanctioned MITMs
-To: oss-security@lists.openwall.com
+Received: (qmail 17751 invoked from network); 18 Aug 2016 03:32:29 -0000
+From: cve-assign@mitre.org
+To: ppandit@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn
+In-Reply-To: <alpine.LFD.2.20.1608120639040.19256@wniryva>
+Message-Id: <20160818033217.E5376B2E013@smtpvbsrv1.mitre.org>
+Date: Wed, 17 Aug 2016 23:32:17 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: Qemu net: vmxnet3: use after free while writing
 
---fdj2RfSjLxBAspz7
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Fri, May 01, 2015 at 07:40:51PM -0700, Lyndon Nerenberg wrote:
-> >> On 05/01/2015 01:15 PM, mancha wrote:
-> >>> Though Hushmail email credentials, for example, can't be sniffed
-> >>> in the segment connecting the client to CloudFlare, they are
-> >>> available to CloudFlare's infrastucture. Moreoever, there is no
-> >>> way for the client to verify that the segment connecting
-> >>> CloudFlare to the destination server is similarly encrypted (i.e.
-> >>> it might be in the clear as would be the case when using
-> >>> CloudFlare's "Flexible SSL" product).=20=20
-> >>>=20
-> >>> Hushmail's CloudFlare usage serves as an example that brings me to
-> >>> my general point.
-> >>>=20
-> >>> How should the security community view this growing use of
-> >>> sanctioned MITM in light of the ever-increasing amount of
-> >>> sensitive content sent over SSL/TLS encrypted channels (e.g.
-> >>> email, electronic banking, medical records, etc.)?
+> Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support is
+> vulnerable to a use-after-free issue. It could occur while writing to the
+> device once it's disabled.
+> 
+> A privileged user inside guest could use this issue to crash the Qemu
+> instance resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg01602.html
 
-> But also ask why they might use it.  E.g., in the presence of a DDOS
-> attack, many companies rely on infrastructure such as what Cloudflare
-> provides in order to keep their services running.  By their nature,
-> those mitigation services have to bust the SSL pipe to do what they
-> do.
+>> Vmxnet3 device emulator does not check if the device is active,
+>> before using it for write. It leads to a use after free issue,
+>> if the vmxnet3_io_bar0_write routine is called after the device is
+>> deactivated. Add check to avoid it.
+>> 
+>> http://git.qemu.org/?p=qemu.git;a=commit;h=6c352ca9b4ee3e1e286ea9e8434bd8e69ac7d0d8
 
-I kicked off my post mentioning DDoS mitigation was one of the reasons
-services contract with CDNs such as CloudFlare.
+Use CVE-2016-6833.
 
-> What I am not hearing anywhere in this conversation is a proposal for
-> how Cloudflare can provide the service they do, but in a manner that
-> doesn't require busting the SSL pipe in the middle.  There are MANY
-> people begging for an answer to that.  Do you have it?  If not, are
-> you prepared to see the services you "need" go offline when someone
-> decides to DDOS the provider?
->=20
-> That's not a rhetorical question.  For some people, the answer is
-> 'yes'.  But for most, it is 'no'.
-
-I agree achieving end-to-end (E2E) security with interposition is an
-interesting security research area. In fact, it would be great if as a
-result of this thread more members of the infosec and oss communities
-were motivated to tackle that.=20
-
-> In the specific Hushmail example, would it alleviate peoples concerns
-> if the Cloudflare MITM-busting behaviour took place entirely inside
-> Canada?  If not, how do you propose an alternative?
-
-Dean Pierce points out that outsourcing across national borders can have
-legal implications but this is outside of my area of expertise.
-
-> And what, exactly, is the attack vector you are trying to close down?
-> Is it the only one?  How do they interact?
->=20
-> --lyndon
-
-I've already alluded to the general security issues that arise in MITM
-setups. More specifically, breaking E2E security with interposition adds
-well-known complications/issues: rogue employees at the interposing
-service, increased attack surfaces, more points of failure, inability to
-verify path integrity, inability to verify content integrity,
-misconstruing of communications as E2E-secure by non-experts, among many
-others.=20
-
-As you said, lots of people are interested in ways of achieving E2E
-security with intermediation - precisely because there is recognition
-current TLS interposition models are not satisfactory.=20
-
-My specific interest is how OSS projects (e.g. browsers, TLS stacks,
-etc.) can address security issues that arise from SSL/TLS interposition.
-Also of interest is leveraging the intersection of infosec/oss/crypto to
-develop related innovations (e.g. interposition that coexists with
-uncompromised E2E security).=20
-
---mancha
-
---fdj2RfSjLxBAspz7
-Content-Type: application/pgp-signature
-
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCgAGBQJVRU7qAAoJEB4VYy8JqhaDePsP/iYAlJv4MJL603/Pp86KXqid
-J1Nn1TKpGv3GQJHuPpadlN+ykpIiqS1ZxKzYLpsKE2s4gAxhVmzhdBJKy5WphWLl
-EMKr/cWyHz1CYXFgsc1x1PeiA7REDqMvLZVoJVIkVSL1irafMGJiqcQ1REKgc/ee
-Cni9om03Dgw8LDdlHj+oAwI9kVlwcZBD22iT437M+Eu057izFkKLghIJUKTzgYYZ
-FPX/mKjhgO3wfNX3Ptd7rStkc/zAgbmbS8eYaS9dqIDYv7sIME8RP6PoeGjmcyVq
-KKy4xYgz5+oNbRbXxtBJyjB4Rq8NmMRnJkSdWgL3YOkS5g2AFRmN1LA5H8HM/i8M
-d9yOT72nvXYj9Olz/Z+IoJWYpH3Q8yQdB2TfP01/QUBvGT72jOhfXRCUn/+mDb8N
-YmLMX8EuHxm8s4lofJFbSUun8wzklZEFejUIt2K0q/kadlyzEl8ySvmpltBoVYGs
-U7PG/U7xS3xhLRf22Afe/N2Uq93l1IcIIMSdUP8apZ9+kZ9Ounc6tI0AXpE1Tmbq
-JsgN2KSSNv8ZmGFc88koQ9nScZbB/Yn9wTgw4EbakedgEAm4rvOYvVI1CpmS7jGl
-Eoo07XzTbjDcWA6sMRIG27bOvEmc/a1I6yZblI0MyzjWwCV8E6drADFSOQhEnPPu
-uTWqW+sGKKBDPG2foarQ
-=chDv
+iQIcBAEBCAAGBQJXtSdZAAoJEHb/MwWLVhi2yw0P/2UheT3YiLmXjnFeSLmHVpXp
+0MnPeMcnm4DYFmUZPTWgX9zJ4aR4hIsdsHjLE7MGxOfJ8WJpz8jRyr6E5KbJdnar
+yngQY4ibNZr9iejomCLtWiAzKzbv99LDtWel77ox1zmIPzGzuzESzx0J7S958n1X
+VXvDuNeEqSZhjueM92CzpZSywy3hiJolemnpzRXlzlhqsSykdoP5GriS58P9As8g
+3zRfQ5XQAEZ2WIJ3kOTXtsbpyZrVeWwAfU44Ls/N/yXK0MsVjdZctU381ZYuCYQV
+SUHKJhKlGeJB5qXk0DbuZ+/AdvDMAgFDd/XDVQYTB7/E9Gr9qi1STMnx6THjcIp+
+SXrEQoarAqldiYvu+p755Lq1zZ5NBwjoLqQYXGuM2lVi/14LPFDnsbDCAYUQQdfB
+7qRmiMSOujb5jXc1N0OVZLV/xIW3BMRB6O64jV+qGDFS4jXA8+ix8ay1l59pRa/h
+ByZE5eX6OQ+8Y1LXVydMn6jfU8wiow1NbQsG69wtFyEh9VSOaLQdHxj1vGaIH9mx
+A5aHzVeQAs6/I1u7e8dMtN7ZK5RKlhV71eYJ2kGnFK2HiPlCEdXtkBXlVdbgWGc9
+lv2LNUqp6qZNqR26PeJiTKfhnC+HIJrbbarHWp3grpB8E74kcnJgFll8ME0u2nzz
+6O5RnbATL0/ZH1uiz0YP
+=rso/
 -----END PGP SIGNATURE-----
-
---fdj2RfSjLxBAspz7--
-
