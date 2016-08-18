@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["612" "Thursday" "29" "June" "2017" "14:21:14" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1706291419220.1726@wniryva>" "22" "[oss-security] CVE-2017-10664 Qemu: qemu-nbd: server breaks with SIGPIPE upon client abort" "^Date:" nil nil "6" "2017062908:51:14" "[oss-security] CVE-2017-10664 Qemu: qemu-nbd: server breaks with SIGPIPE upon client abort" (number mark "U       ppandit@redh Jun 29   22/612   " thread-indent "\"[oss-security] CVE-2017-10664 Qemu: qemu-nbd: server breaks with SIGPIPE upon client abort\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1623" "Wednesday" "17" "August" "2016" "23:38:40" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160818033840.B027AB2E013@smtpvbsrv1.mitre.org>" "40" "[oss-security] Re: CVE request Qemu: an infinite loop during packet fragmentation" nil nil nil "8" "2016081803:38:40" "[oss-security] Re: CVE request Qemu: an infinite loop during packet fragmentation" (number mark "U       cve-assign@m Aug 17   40/1623  " thread-indent "\"[oss-security] Re: CVE request Qemu: an infinite loop during packet fragmentation\"\n") "<alpine.LFD.2.20.1608120118130.16386@wniryva>" ("<alpine.LFD.2.20.1608120118130.16386@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21641 invoked by uid 550); 29 Jun 2017 08:51:32 -0000
+Received: (qmail 25958 invoked by uid 550); 18 Aug 2016 03:38:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21623 invoked from network); 29 Jun 2017 08:51:31 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 5574240F14
-Authentication-Results: ext-mx06.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx06.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=ppandit@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 5574240F14
-X-X-Sender: pjp@javelin
-Message-ID: <alpine.LFD.2.20.1706291419220.1726@wniryva>
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Thu, 29 Jun 2017 08:51:19 +0000 (UTC)
-Date: Thu, 29 Jun 2017 14:21:14 +0530 (IST)
-From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2017-10664 Qemu: qemu-nbd: server breaks with SIGPIPE upon client
- abort
-To: oss security list <oss-security@lists.openwall.com>
+Received: (qmail 25940 invoked from network); 18 Aug 2016 03:38:52 -0000
+From: cve-assign@mitre.org
+To: ppandit@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn
+In-Reply-To: <alpine.LFD.2.20.1608120118130.16386@wniryva>
+Message-Id: <20160818033840.B027AB2E013@smtpvbsrv1.mitre.org>
+Date: Wed, 17 Aug 2016 23:38:40 -0400 (EDT)
+Subject: [oss-security] Re: CVE request Qemu: an infinite loop during packet fragmentation
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Quick Emulator(Qemu) built with the Network Block Device(NBD) Server support 
-is vulnerable to a crash via SIGPIPE signal. It could occur if a client aborts 
-connection due to any failure during negotiation.
+> Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support,
+> with network abstraction layer is vulnerable to an infinite loop issue.
+> It could occur while fragmenting packets in the device.
+> 
+> A privileged user inside guest could use this flaw to crash the Qemu instance
+> resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg01601.html
+> http://git.qemu.org/?p=qemu.git;a=commit;h=ead315e43ea0c2ca3491209c6c8db8ce3f2bbe05
+> 
+> It is susceptible
+> to an infinite loop, if the current fragment length is zero.
 
-A remote user/process could use this flaw to crash the qemu-nbd server 
-resulting in DoS.
+Use CVE-2016-6834.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-06/msg02693.html
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1466190
-
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+iQIcBAEBCAAGBQJXtSWUAAoJEHb/MwWLVhi2Y/sP/jxwMXiQrfXymrc2Ol3PCKxA
+S7jTAlxSjG8DCH3T20nblB4NBdN7JXdKhywmZVs24zFsVGUA6zHD+JFduMROpQzv
+p5GYv2WveqUGlgz0X96q6cIJOQh+iTwlw4SKcUxexK1iGGr/LrU9BTG+aIHLrOYe
+t2UBHt0avx9Sfy8PCWljU+xrLTzU1IULd0fU/qaBXrn5GMweo79JPnIPMq7bAx/1
+uUUod8hRnoEv04Pstv6k46NoF1IW0SFNol8i6NcZhxaGqD8viUmIaBoeSvfF3I6o
+xWK5NNoiROKXGgfzhqt/q3i9KurVwnaDFV5ZPeVPb0mss0HWB4Gloo9MdMa4fBAf
+UmHp2/mkIHqkJv9lqDidW2Qt+D9c5yJ/92f6Ym9hKX26Q1+UaD/MpJT5OXsj4Otu
+VcMR3tPjaSh3h9xYjmONBkbMmkum09KSTvfhGtssiQaAiTP18T60adLGGIPwBj/d
+gcVOANLF0gr4DlxYn0H0hD90Mw3eGK0ShU9Ny/K81z7hcUA8T/T4QVuFR7Va5tvJ
+USmd+HPrZzQcqeRV0oYmDqio+Dg9V8+0LrYILxA82+qv3w+/BoaEmYPkxFqNRleH
+6TPWLlewziXb14goepC7TAnUyPHTKxYkuOFqEXdaeGEW2X8KqDv1DwQy4sKCTFBj
+Ic0SqC5GnEEgFlo70OHN
+=59XJ
+-----END PGP SIGNATURE-----
