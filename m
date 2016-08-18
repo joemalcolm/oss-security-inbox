@@ -1,104 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/5
-Message-ID: <alpine.GSO.2.20.1605090828220.23612@freddy.simplesystems.org>
-Date: Mon, 9 May 2016 08:29:40 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security@...ts.openwall.com
-Subject: GraphicsMagick Response To "ImageTragick"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/4
+Message-Id: <20160818033356.CBAF3ABC95B@smtpvmsrv1.mitre.org>
+Date: Wed, 17 Aug 2016 23:33:56 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
+Subject: Re: CVE request Qemu: buffer overflow in vmxnet_tx_pkt_parse_headers() in vmxnet3 device emulation
 Content-Type: text/plain; charset=utf-8
 
-[ This is a re-post of what was sent to the GM announcements list ]
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This the GraphicsMagick project response to the unfortunate list of
-ImageMagick exploits listed on the web site at
-https://imagetragick.com/.  While GraphicsMagick forked from
-ImageMagick in 2002, it is reasonable to expect that much of the
-internal operation and architecture is still similar.  In fact, some
-of the claimed exploits (or similar) are relevant to GraphicsMagick.
+> Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support is
+> vulnerable to an OOB read access. In that it does not check if packet headers
+> does not check for IP header length. It could lead to a OOB access when
+> reading further packet data.
+> 
+> https://lists.gnu.org/archive/html/qemu-stable/2016-08/msg00077.html
 
-Based on the current issues described, this is how GraphicsMagick
-fares:
+>> I should have had marked it as "PATCH for v2.6.0"
 
-1. CVE-2016-3714 - Insufficient shell characters filtering
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/vmxnet_tx_pkt.c;hb=stable-2.6
+but that may be an expected place for a later update.
 
-    GraphicsMagick is not susceptible to remote code execution except
-    if gnuplot is installed (because gnuplot executes shell commands).
-    Gnuplot-shell based shell exploits are possible without a gnuplot
-    file being involved although gnuplot invokes the shell.  To fix
-    this, the "gplt" entry in the delegates.mgk file must be removed.
+Use CVE-2016-6835 for this buffer over-read.
 
-2. CVE-2016-3718 - SSRF
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-    GraphicsMagick has always supported HTTP and FTP URL requests from
-    the context of the executing process if it is linked with libxml2.
-    There is no sandboxing or policy to determine which HTTP and FTP
-    URLs should be allowed/denied because they should only be available
-    from outside the system, or in the public space outside
-    a "firewall".
-
-3. CVE-2016-3715 - File deletion
-
-    While the syntax is different from ImageMagick, GraphicsMagick does
-    support a file specification syntax "tmp:" which causes the input
-    file to be deleted after it is read.  This has limited use to hand
-    off responsibility for a temporary file to another process in order
-    to assure that the temporary file will be deleted once it is no
-    longer needed.  This feature will removed since it is not actually
-    necessary any more.
-
-4. CVE-2016-3716 - File moving
-
-     This is a two-factor attack and is actually file copying.  It is
-     not successful using GraphicsMagick.  MSL is an XML-based "script"
-     format which should never be allowed to be submitted and invoked
-     by an untrusted party.
-
-5. CVE-2016-3717 - Local file read
-
-     GraphicsMagick supports a "txt:" file specification syntax which
-     enables rendering all the lines of a text file as an image.  There
-     is also a "label:" file specification syntax which is capable of
-     rendering only the first line of a file.  Files ending with
-     extension ".txt" are automatically rendered into an image.  The
-     main concern with this is that sensitive data in a text file might
-     become rendered as an image on a web site.
-
-     Using an uploaded manual page with file extension ".man" or by
-     reading with "man:filename", the 'man' delegate can be used to
-     render any file on the system into Postscript if 'groff' is
-     installed.
-
-To resolve these concerns, several patches which should apply across
-most GraphicsMagick 1.3.XX releases have been developed and are
-attached:
-
-1. Remove automatic detection/execution of MVG based on file header or
-    file extension. [disable-mvg-ext.patch]
-
-2. Remove the ability to cause an input file to be deleted based on a
-    filename specification. [disable-tmp-magick-prefix.patch]
-
-3. Improve the safety of delegates.mgk by removing gnuplot support,
-    removing manual page support, and by adding -dSAFER to all
-    ghostscript invocations. [delegates-safer.patch]
-
-4. Sanity check the MVG image primitive filename argument to assure
-    that "magick:" prefix strings will not be interpreted.  Please note
-    that this patch will break intentional uses of magick prefix
-    strings in MVG and so some MVG scripts may fail.  We will search
-    for a more flexible solution. [image-sanity-check.patch]
-
-Please address any concerns to me (Bob Friesenhahn
-<bfriesen@...ple.dallas.tx.us>).
-
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-View attachment "delegates-safer.patch" of type "text/plain" (8361 bytes)
-
-View attachment "disable-mvg-ext.patch" of type "text/plain" (368 bytes)
-
-View attachment "disable-tmp-magick-prefix.patch" of type "text/plain" (514 bytes)
-
-View attachment "image-sanity-check.patch" of type "text/plain" (1220 bytes)
+iQIcBAEBCAAGBQJXtSYeAAoJEHb/MwWLVhi2nswP/Aw5kTs5PCe1z0fnBCxhLtGI
+38WLRfiQ3DlWCAun8FQDCKojRo9jOyLv7CCVzPSYR1i8AQ9ZQrtVy85i3i/up+rT
+nnvCqMqKK41W0YNUimyNItwbCVOKgmXwYVGSNn06twQsPuFY7xRlscxyO0NHw7zF
+3gX2aFNwmUZqGrndazp/afF9y4H1cebkcpqPtKWyv/VEfc/oyiC4MXA9NY/OuFQG
+oAce36Q9rz3RBtIn17RboZti0ADTPYLsGbeswKzNFY41CRP2hR2qDRUV5sDdXBqz
+EfcNbujQaJqsZ+OeMzAjKHwolyryjgme6mQHQwEiWithXjHFZ85DMuVTx/+lJNYr
+7xQoaQbDFqfHcRvxTZtbusTRanCCTMcz8dBFPpWL7XmDOS3ZHo9aOsfQM3+xXjXA
+INc6UO1qPtJPNlFCL0BA5NBKA2FL60OM4bP62zIDYieok6en6eijAjuk+muJVv2H
+ypDB1EEDhBqv3cPl2+Jo/4rwDGtrB5dOO5Troo3vxgCwrDGCloe1mkSL8TU3LP6W
+Egst/gUWMadzJBXz2M4rGEZCEzjdo1TB8M8c+kKWVhTZ+7xUbkX3zR8RZDcEsk7E
+zCjH/Dg/cM0UidQOAOu7ikJSlFlBUYDemsTR4a+3K+4UxKaec6LBnGJGeZZqFwv+
+Fs0fF7b7B7/9HhPKPunW
+=/MUT
+-----END PGP SIGNATURE-----
