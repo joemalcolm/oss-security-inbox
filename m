@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2730" "Wednesday" "16" "May" "2018" "08:26:01" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1805140831040.16381@tvnag.unkk.fr>" "92" "[oss-security] [SECURITY AVISORY] curl: RTSP bad headers buffer over-read" nil nil nil "5" "2018051606:26:01" "[oss-security] [SECURITY AVISORY] curl: RTSP bad headers buffer over-read" (number mark "U       daniel@haxx. May 16   92/2730  " thread-indent "\"[oss-security] [SECURITY AVISORY] curl: RTSP bad headers buffer over-read\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3063" "Thursday" "18" "August" "2016" "16:57:24" "+0200" "Greg KH" "greg@kroah.com" "<20160818145724.GA32181@kroah.com>" "74" "[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices" "^Cc:" nil nil "8" "2016081814:57:24" "[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices" (number mark "        greg@kroah.c Aug 18   74/3063  " thread-indent "\"[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices\"\n") "<20160818143957.GI2701@suse.de>" ("<20160818142216.GH2701@suse.de>" "<20160818143014.GA27854@kroah.com>" "<20160818143957.GI2701@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27837 invoked by uid 550); 16 May 2018 06:26:15 -0000
+Received: (qmail 20306 invoked by uid 550); 18 Aug 2016 14:57:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,112 +11,104 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26581 invoked from network); 16 May 2018 06:26:13 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Wed, 16 May 2018 08:26:01 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
-Message-ID: <alpine.DEB.2.20.1805140831040.16381@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
+Received: (qmail 20288 invoked from network); 18 Aug 2016 14:57:25 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=smtpout; bh=vkLB/NdnCOVVEmWlShLHLhogDbw=; b=qdyp4
+	Ypm1FFGlo4Dca/Aj7aPEHljWRmlK5hvwxbvXSNCoys+QNFk8Bq7PJEYBts+BLSIu
+	HB82PwfpH9ZgK7ELGcLpPk7LnjAViofMwbEByd0Bz6z1SU6KH7Y66WXd6h9HkWxq
+	HDtlygHDidQPFGXurEuWsQoPq0Nw2hjUZLyxnw=
+X-Sasl-enc: SmhbXIZ78GRfNYd/nSaF3BsLCbpSi4Me7BqOSPZIGMrp 1471532233
+Message-ID: <20160818145724.GA32181@kroah.com>
+References: <20160818142216.GH2701@suse.de>
+ <20160818143014.GA27854@kroah.com>
+ <20160818143957.GI2701@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY AVISORY] curl: RTSP bad headers buffer over-read
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20160818143957.GI2701@suse.de>
+User-Agent: Mutt/1.6.2 (2016-07-01)
+Cc: OSS Security List <oss-security@lists.openwall.com>,
+	cve-assign@mitre.org, security@kernel.org
+Date: Thu, 18 Aug 2016 16:57:24 +0200
+From: Greg KH <greg@kroah.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in
+ malicious USB devices
+To: Marcus Meissner <meissner@suse.de>
 
-RTSP bad headers buffer over-read
-=================================
+On Thu, Aug 18, 2016 at 04:39:57PM +0200, Marcus Meissner wrote:
+> On Thu, Aug 18, 2016 at 04:30:14PM +0200, Greg KH wrote:
+> > On Thu, Aug 18, 2016 at 04:22:16PM +0200, Marcus Meissner wrote:
+> > > Hi,
+> > > 
+> > > I think this does not have a CVE yet, please assign.
+> > > 
+> > > https://www.spinics.net/lists/linux-usb/msg144177.html
+> > > 
+> > > Headline:         Linux Kernel Panic Over USB with HID Keyboard wMaxPacketSize
+> > > Platforms:        Ubuntu
+> > > Versions:         Linux Kernel 4.4.0-22-generic
+> > 
+> > Huh?  It's much more pervasive than just that single platform or single
+> > version.
+> 
+> That was the quote from the original e-mail. I read further on it affects
+> more kernel versions.
+>  
+> > > CVSS Score:       4.7
+> > > CVSS Vector:      AV:L/AC:M/Au:N/C:N/I:N/A:C
+> > > Filed Defects:    
+> > > Related Defects:  
+> > > CWE Tags:         
+> > > Cycle:            
+> > > Found by:         Jake Lamberson
+> > > 
+> > > 
+> > > Linux Kernel panics when using an OHCI controller if a USB device reports being 
+> > > a generic HID keyboard and reports a wMaxPacketSize of over 4095. The OHCI
+> > > controller driver fails to reserve bandwidth for the device, causing the 
+> > > keyboard handler to fail when attaching to the HID. Later, when the device is 
+> > > removed, the system crashes due to a null pointer dereference in a linked list 
+> > > of endpoint descriptors. The crash can be re-created using a Facedancer and UMAP 
+> > > software. Given an appropriately configured Facedancer and UMAP setup, the crash 
+> > > can be re-created with: 
+> > > sudo board=facedancer21 python3 umap.py -P /dev/serial_device_here -f 03:00:00:E:0046 -l LOG
+> > > 
+> > > Note: OHCI is a USB 1.1 controller standard that can be included with devices
+> > > that support either USB 1.1 or 2.0 as their highest USB spec. USB 3.0 devices
+> > > all use xHCI, which implements USB 1.1, 2.0, and 3.0, making them immune to
+> > > this particular bug.
+> > > 
+> > > -----------------
+> > > 
+> > > The proposed fixing patch is here:
+> > > https://www.spinics.net/lists/linux-usb/msg144269.html
+> > > 
+> > > 
+> > > It has not yet been committed to the USB tree or to Linus Tree as far as I see.
+> > 
+> > Not true, it is commit id aed9d65ac3278d4febd8665bd7db59ef53e825fe in
+> > the usb tree and in linux-next and will be sent to Linus tomorrow.
+> 
+> Ah sorry, only looked briefly.
 
-Project curl Security Advisory, May 16th 2018 -
-[Permalink](https://curl.haxx.se/docs/adv_2018-b138.html)
+This was also asked about 2 hours ago on the linux-usb mailing list, why
+all of the sudden interest in something that we had been discussing for
+weeks now in public?
 
-VULNERABILITY
--------------
+> > And are we really assigning CVE numbers for when you use an active
+> > "hardware test probe"?  If so, how many are people going to be assigning
+> > for these same problems on other operating systems?  :)
+> 
+> I think attaching malicious USB devices and crashing the kernel should
+> probably get CVE ids, or do you think it should not?
 
-curl can be tricked into reading data beyond the end of a heap based buffer
-used to store downloaded content.
+I don't know, that's why I'm asking, it requires "physical presence"
+which is much different from most threat models that people work to
+protect against.
 
-When servers send RTSP responses back to curl, the data starts out with a set
-of headers. curl parses that data to separate it into a number of headers to
-deal with those appropriately and to find the end of the headers that signal
-the start of the "body" part.
+thanks,
 
-The function that splits up the response into headers is called
-`Curl_http_readwrite_headers()` and in situations where it can't find a single
-header in the buffer, it might end up leaving a pointer pointing into the
-buffer instead of to the start of the buffer which then later on may lead to
-an out of buffer read when code assumes that pointer points to a full buffer
-size worth of memory to use.
-
-This could potentially lead to information leakage but most likely a
-crash/denial of service for applications if a server triggers this flaw.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This bug was originally introduced in May 2003 in [this
-commit](https://github.com/curl/curl/commit/b2ef79ef3d47b37) but it didn't
-become a problem until we added RTSP in January 2010 in [this
-commit](https://github.com/curl/curl/commit/bc4582b68a673d3).
-
-We have only proven this to trigger with RTSP traffic even though this is code
-shared with HTTP. We believe this is not a problem for HTTP transfers.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2018-1000301 to this issue.
-
-CWE-126: Buffer Over-read
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.20.0 to and including curl 7.59.0
-- Not affected versions: curl < 7.20.0 and curl >= 7.60.0
-
-libcurl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-In curl version 7.60.0, curl makes sure to restore the pointer back to where
-its supposed to point.
-
-A [patch for CVE-2018-1000301](https://curl.haxx.se/CVE-2018-1000301.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.60.0
-
-  B - Apply the patch to your version and rebuild
-
-TIME LINE
----------
-
-It was reported to the curl project on March 24, 2018
-
-We contacted distros@openwall on May 7, 2018.
-
-curl 7.60.0 was released on May 16 2018, coordinated with the publication of
-this advisory.
-
-CREDITS
--------
-
-Detected by OSS-fuzz. Assisted by Max Dymond. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+rgeg k-h
