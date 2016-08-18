@@ -1,60 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/30/2
-Message-Id: <20160930065326.E65F713A5B9@smtpvmsrv1.mitre.org>
-Date: Fri, 30 Sep 2016 02:53:26 -0400 (EDT)
-From: cve-assign@...re.org
-To: jwilk@...lk.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: git-hub: missing sanitization of data received from GitHub
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/14
+Message-ID: <20160818143014.GA27854@kroah.com>
+Date: Thu, 18 Aug 2016 16:30:14 +0200
+From: Greg KH <greg@...ah.com>
+To: Marcus Meissner <meissner@...e.de>
+Cc: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org, security@...nel.org
+Subject: Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, Aug 18, 2016 at 04:22:16PM +0200, Marcus Meissner wrote:
+> Hi,
+> 
+> I think this does not have a CVE yet, please assign.
+> 
+> https://www.spinics.net/lists/linux-usb/msg144177.html
+> 
+> Headline:         Linux Kernel Panic Over USB with HID Keyboard wMaxPacketSize
+> Platforms:        Ubuntu
+> Versions:         Linux Kernel 4.4.0-22-generic
 
-> https://github.com/sociomantic-tsunami/git-hub/issues/197
-> 
-> When you ask it to clone a repository, it will call:
-> 
->    git clone <repourl> <reponame>
-> 
-> where both <repourl> and <reponame> come from GitHub API, without any
-> sanitization. Operators of the GitHub server (or a MitM attacker) could
-> exploit it for directory traversal or, more excitingly, for arbitrary code
-> execution, either via option injection, e.g.:
-> 
->    git clone 'git://-esystem("cowsay pwned > \x2fdev\x2ftty")/' --config=core.gitProxy=perl
-> 
-> or more directly with git-remote-ext, e.g.:
-> 
->    git clone 'ext::sh -c cowsay% pwned% >% /dev/tty' moo
+Huh?  It's much more pervasive than just that single platform or single
+version.
 
-Use CVE-2016-7793 for the missing validation of <repourl>, and use
-CVE-2016-7794 for the missing validation of <reponame>. Roughly
-speaking, the proper constraints on <reponame> will be simpler than
-the proper constraints on <repourl>. We do not feel it is sensible to
-break this down further (e.g., what specific validation rules are
-required by not yet implemented) because the validation strategy is
-still being discussed in 197.
+> CVSS Score:       4.7
+> CVSS Vector:      AV:L/AC:M/Au:N/C:N/I:N/A:C
+> Filed Defects:    
+> Related Defects:  
+> CWE Tags:         
+> Cycle:            
+> Found by:         Jake Lamberson
+> 
+> 
+> Linux Kernel panics when using an OHCI controller if a USB device reports being 
+> a generic HID keyboard and reports a wMaxPacketSize of over 4095. The OHCI
+> controller driver fails to reserve bandwidth for the device, causing the 
+> keyboard handler to fail when attaching to the HID. Later, when the device is 
+> removed, the system crashes due to a null pointer dereference in a linked list 
+> of endpoint descriptors. The crash can be re-created using a Facedancer and UMAP 
+> software. Given an appropriately configured Facedancer and UMAP setup, the crash 
+> can be re-created with: 
+> sudo board=facedancer21 python3 umap.py -P /dev/serial_device_here -f 03:00:00:E:0046 -l LOG
+> 
+> Note: OHCI is a USB 1.1 controller standard that can be included with devices
+> that support either USB 1.1 or 2.0 as their highest USB spec. USB 3.0 devices
+> all use xHCI, which implements USB 1.1, 2.0, and 3.0, making them immune to
+> this particular bug.
+> 
+> -----------------
+> 
+> The proposed fixing patch is here:
+> https://www.spinics.net/lists/linux-usb/msg144269.html
+> 
+> 
+> It has not yet been committed to the USB tree or to Linus Tree as far as I see.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Not true, it is commit id aed9d65ac3278d4febd8665bd7db59ef53e825fe in
+the usb tree and in linux-next and will be sent to Linus tomorrow.
 
-iQIcBAEBCAAGBQJX7gsWAAoJEHb/MwWLVhi2E8AP/j7PSkFw3SXjin0TVbXv3EmH
-xSGpLV0UKT6QUwq5UOU3t8B676rCoQR3u1p401pvQRiEBnRrLk9O/Qm4aQDovXvE
-NnT2D5nlc9XOOD9i2mffWsebhe/KXwIb8c9YLmBrhsIvQZxNlkn7SMz9VrkoI/Wp
-6qwcl05asMSaayrkSuZs73mpQU3vF2FK04hVK/LNsUT0Sym+XZG5Ir1I9zgrNsxB
-AqhdnL2ODDTIRB2f/0UQsLrokvFJwzaHfwkbUEw6g+e4e35gaPLzG7Si2o4cmGiE
-+WsyGZJV9owX/0yhxJ9VMxOC9wCr8KPNX+vJjEoAJWai3kDe7xGPSAPVEhICUmCN
-MfH7brfQV+wIXfqP4HTb+bFZmrkizQE4jowqqUObpWkpnAatmi8KrOTTUbx0ZIcX
-vmqdaRYFkS/66SRr47Dm05hZ/6WbcEbw5IemxNJtMYjDd/lgFJb0aTiJt1LjeaUc
-OzdmiD2cQRKlO7ylDsqtx0vIOC6+pM11waw+uhtwZxEHUZQrdHQ+q2sA/u6C2JEd
-8jx/5b/Tnudanx3FWlVTGOkiSqMtoSCVdeC1WcAECcRfx4dT0qgkoV5kT8RlRCcD
-3efnJPsEocUuPTNv22jzz+v2E8lFgjKYTmHxSLT+lG/XGmpQyIdRD+LyXebHS5Rj
-CKOO5Su92yI9fZCpnboN
-=2FzE
------END PGP SIGNATURE-----
+And are we really assigning CVE numbers for when you use an active
+"hardware test probe"?  If so, how many are people going to be assigning
+for these same problems on other operating systems?  :)
+
+thanks,
+
+greg k-h
