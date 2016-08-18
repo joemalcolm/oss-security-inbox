@@ -1,61 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/31/1
-Message-ID: <20160330204304.GD6207@thunk.org>
-Date: Wed, 30 Mar 2016 16:43:04 -0400
-From: Theodore Ts'o <tytso@....edu>
-To: Andreas Dilger <adilger@...ger.ca>
-Cc: Yves-Alexis Perez <corsac@...ian.org>, oss-security@...ts.openwall.com, Theodore Tso <tytso@...gle.com>, linux-ext4@...r.kernel.org
-Subject: Re: CVE Request - Linux kernel (multiple versions) ext2/ext3  filesystem DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/13
+Message-ID: <20160818142216.GH2701@suse.de>
+Date: Thu, 18 Aug 2016 16:22:16 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org
+Cc: security@...nel.org
+Subject: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 29, 2016 at 04:56:11PM -0600, Andreas Dilger wrote:
-> On Mar 29, 2016, at 3:14 PM, Yves-Alexis Perez <corsac@...ian.org> wrote:
-> > 
-> > [dropping MITRE from CC since it's not about the CVE]
-> > [adding ext and Theodore to CC]
-> > 
-> > On mar., 2016-03-29 at 19:24 +0200, Hugues ANGUELKOV wrote:
-> >> Hello,
-> >> 
-> >> The linux kernel is prone to a Denial of service when mounting specially
-> >> crafted ext2/ext3 (possibly ext4) filesystems. This occurs in the function
-> >> ext4_handle_error who call the panic function on precise circumstance.
-> > 
-> > Did you contact the upstream maintainers about this? I'm adding them just in
-> > case they're not already aware of that…
-> > 
-> >> This was tested on severals linux kernel version: 3.10, 3.18, 3.19, on
-> >> real hardware and Xen DomU PV & HVM (the crash report attached is from a
-> >> Fedora 3.18 PV DomU), from different distribution release: Ubuntu, CentOS,
-> >> Fedora, Linux Mint, QubesOS.
-> >> This a low security impact bug, because generally only root can mount
-> >> image, however on Desktop (or possibly server?) system configured with
-> >> automount the bug is easily triggable (think of android smartphone? Haven't
-> >> test yet).
-> 
-> It seems that the important point here is that the filesystem has
-> "s_errors=EXT4_ERRORS_PANIC" set in the superblock?  I don't think
-> the actual corruption that triggered the ext4_error() call is important,
-> since there are any number of other failure cases that could generate
-> a similar error.
-> 
-> It seems practical to change s_errors at mount time from EXT4_ERRORS_PANIC
-> to EXT4_ERRORS_RO for filesystems mounted by regular users.  The question
-> is whether there is a way for the ext4 code to know this at mount time?
+Hi,
 
-You can mount the file system with "mount -o errors=continue" and this
-will override the default behavior specified in the super block.
+I think this does not have a CVE yet, please assign.
 
-I would argue that a Desktop or server system that had automount
-should either (a) mount with -o errors=continue, or (b) force an fsck
-on the file system before mounting it.
+https://www.spinics.net/lists/linux-usb/msg144177.html
 
-So I think this is a particularly meaningless CVE, which is why I have
-zero respect for people who try to make any kind of conclusion based
-on CVE counts.   I certainly don't plan to do anything about this.
+Headline:         Linux Kernel Panic Over USB with HID Keyboard wMaxPacketSize
+Platforms:        Ubuntu
+Versions:         Linux Kernel 4.4.0-22-generic
+CVSS Score:       4.7
+CVSS Vector:      AV:L/AC:M/Au:N/C:N/I:N/A:C
+Filed Defects:    
+Related Defects:  
+CWE Tags:         
+Cycle:            
+Found by:         Jake Lamberson
 
-You might as well complain that since the system ships with a reboot
-command that can be executed by a clueless root user, that this is a
-potential DOS attack scenario deserving of a CVE....
 
-	      	     	      		   - Ted
+Linux Kernel panics when using an OHCI controller if a USB device reports being 
+a generic HID keyboard and reports a wMaxPacketSize of over 4095. The OHCI
+controller driver fails to reserve bandwidth for the device, causing the 
+keyboard handler to fail when attaching to the HID. Later, when the device is 
+removed, the system crashes due to a null pointer dereference in a linked list 
+of endpoint descriptors. The crash can be re-created using a Facedancer and UMAP 
+software. Given an appropriately configured Facedancer and UMAP setup, the crash 
+can be re-created with: 
+sudo board=facedancer21 python3 umap.py -P /dev/serial_device_here -f 03:00:00:E:0046 -l LOG
+
+Note: OHCI is a USB 1.1 controller standard that can be included with devices
+that support either USB 1.1 or 2.0 as their highest USB spec. USB 3.0 devices
+all use xHCI, which implements USB 1.1, 2.0, and 3.0, making them immune to
+this particular bug.
+
+-----------------
+
+The proposed fixing patch is here:
+https://www.spinics.net/lists/linux-usb/msg144269.html
+
+
+It has not yet been committed to the USB tree or to Linus Tree as far as I see.
+
+Ciao, Marcus
