@@ -1,50 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/22/3
-Message-Id: <20160122030033.C787672E00C@smtpvbsrv1.mitre.org>
-Date: Thu, 21 Jan 2016 22:00:33 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/10
+Message-Id: <20160818034250.D3AA3ABC96C@smtpvmsrv1.mitre.org>
+Date: Wed, 17 Aug 2016 23:42:50 -0400 (EDT)
 From: cve-assign@...re.org
-To: fk@...iankeil.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for Privoxy 3.0.24
+To: idler1984@...il.com
+Cc: cve-assign@...re.org, anarcheuz@...il.com, oss-security@...ts.openwall.com
+Subject: Re: CVE Request - Samsung Exynos fimg2d NULL Pointer Dereference
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> - Prevent invalid reads in case of corrupt chunk-encoded content.
->   http://ijbswa.cvs.sourceforge.net/viewvc/ijbswa/current/filters.c?r1=1.196&r2=1.197
+> I'd like to request CVE for the following vulnerability fixed in
+> Samsung Exynos fimg2d driver for Android:
+> 
+> Security bulletin: http://security.samsungmobile.com/smrupdate.html#SMR-AUG-2016
+> 
+> SVE-2016-6382: fimg2d NULL Pointer Dereference
+> 
+> Affected versions: L(5.0/5.1), M(6.0) devices with Exynos7420 chipset
 
-Use CVE-2016-1982 for the issues fixed in this revision: they all seem
-closely associated with CWE-130.
+> The vulnerability exists due to a null pointer dereference on fimg2d driver.
+> The patch verifies if the object is null before dereferencing it.
 
-
-> - Remove empty Host headers in client requests.
->   Previously they would result in invalid reads.
->   http://ijbswa.cvs.sourceforge.net/viewvc/ijbswa/current/parsers.c?r1=1.302&r2=1.303
-
-Use CVE-2016-1983 for this issue, which seems to be about falsely
-concluding that "Host: " is present after a check for only the "Host:"
-substring.
+Use CVE-2016-6604.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWoZpDAAoJEL54rhJi8gl5xdYP/jxEbGcBErFJ8dYGrSlbFB5a
-BDCgDl/Jxrsg/c6+dLLmhIWCSaho75yPoH0Y5kdTiPHpqBgGvZTLUpC4Djo7AIov
-oYIsV/IsOfmEyldsHD8oHg9AXMm/cob25M2Id9nQzqqwwa32w3FaXY14DPckJoC/
-sJnGy77ZO66n0kqSdc6D8E4irqpibzKfpwjfIb4YxcFRHjtEC2qjd4e/msM5ZqjU
-eOBa88nip/tYYozeSAAhWdMvtReIghqWFZP9WTg4BuNDk9rVFp2y7mhjkieLvu1A
-F1z84RSRgZr7/f7Y17PRBbi+f4/63xBSTFilboj3u2aqTGxtUScKa6Pa2ZZrntaf
-0noIpTr/R5QptbQOXDCrGMqMEysId1AD/zSs4qTAFJVOkWt+UYn4LaV7B7A51bSq
-BzC/f2A7mc72Gzcq0PLY6ZQV+ROgWRtpouHDiuhrUVPh/s18VREVyI7h5ZDBax9Z
-6vZ4O+nPj0ltY33GwkDsACLTteCYW97WI9twM47XTrZgcajwdz+B/DPc7iI6HQNq
-15QbuvibVIPlI89wpY+t0kPlRhq+Wt3hLwxTU1kns1KtbfyMvEL3h7frjUI8lQMl
-ZwocisN2A5aUMrAXR7ypO+KCvd/MooZC4bCmQ/7vA9D3Ud/DfMzM2Ozdzl7oRuo8
-lWNdVM9PB+NWRABUUny1
-=XMf+
+iQIcBAEBCAAGBQJXtShzAAoJEHb/MwWLVhi2leUP/02zyUfHhnmwTrd8RwCoGMDL
+nm+W6AToaFzif7Ihn4qTcRR2v5YCQkBx10mj+BJ5JrS48/Gh6h2A3zfP0VpkdpVi
+cROaCDhuYWDAEoKvgcFjvKLQbCUrEGUvUJzhToKj7cv95j237m7kXJfmc33tftla
+vipSUQTRqiBxSvnFIp/3xiA05N2dLi+4Yw7IN9FqwMkGse1n+4BhcE2iLgP/OoBq
+EUS/qn2xszN9jw5DcGlsZ5nFZMlm8Ru5pgaHERN785aNSZU1LlWTdZhvJlgmeiIw
+m/zHoV71T/4fh/FP2z+2EjW59lI/kQmJNKon/88EoNlCNTZQ+sQmgNNykYhvF9QP
+lBP1gCvVryHBDKKVwni7HjoMSMEtgbK3da/pqvR551bhWYt1f8xJUDyEol643GW6
+ViH/wjtA2L/BLFmmbPSX1jedgFCRYZ1pdV1vrJ+MgyAK+fi7ioLvIt/L1ygy5sTI
+pQHCRpzSgM0YsPhcS0QvTNoskA2XOltcW0KOgy3xg3EJvZVK2FppD850xXOOHSb8
+ykUJzg9WKzIcg/yJe2eb2Yeo8VdbI2lZTaRWRKFTNM1AdrHe4ZpFldDosAzHvZwH
+DrFsF+TbDXFJO8ke3WW0xTvTRwZumGfYaIYKuotQaunBTWvQUHt/yBJy+z+8hSRg
+dk1NFu/a5sPs6/cN5efe
+=5c4e
 -----END PGP SIGNATURE-----
