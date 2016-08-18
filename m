@@ -1,47 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/05/10
-Message-ID: <CA+q1=fSNAzwjywo9qnkRyO0S7refmUZFFciMyKcKE6oNoQjRLQ@mail.gmail.com>
-Date: Mon, 5 Sep 2016 16:06:10 -0700
-From: Diogo Mónica <diogo.monica@...ker.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/9
+Message-Id: <20160818034131.1773BB2E013@smtpvbsrv1.mitre.org>
+Date: Wed, 17 Aug 2016 23:41:31 -0400 (EDT)
+From: cve-assign@...re.org
+To: meissner@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Default password in openstack / crowbar trove
 Content-Type: text/plain; charset=utf-8
 
->
-> DoS is often a gray area. Obviously if I send 10 gigabits of request
-> traffic and swarm gets slow/non responsive the CVE response would be "Well
-> yeah... that's probably what happens if you saturate the network with
-> requests. No CVE for you" but if a single node behaves in an odd way and
-> prevents the whole system from working in an expected manner, that may be a
-> problem that is worth a CVE, especially if it can be triggered by an
-> attacker/less trusted user (classic trust boundary violation to quote
-> @sushidude).
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Again, there is no trust boundary violation. You have a token that allows
-you to join an unlimited number of workers. The system supports N workers,
-you join N + 1, the system starts rejecting new workers.
+> In crowbar-openstack / trove , the trove service user has a default password.
+> 
+> https://bugzilla.suse.com/show_bug.cgi?id=991729
+> 
+> https://github.com/crowbar/crowbar-openstack/pull/485
 
-No malicious attacker can ever join any workers unless they have the token,
-and if you are paranoid, you can always rotate the secret token after each
-worker join.
+> https://github.com/crowbar/crowbar-openstack/pull/485/commits/869663d94daafe424dbf4f809a9ca68ab1b21873
 
+>> Force the trove service password to be random_password in the
+>> model, to match other services.
 
-> Regardless of whether this is CVE worthy is there any plan to add rate
-> limiting or other protective measures to prevent a single badly
-> behaved/malicious node from making the swarm unable to operate normally? I
-> don't see any issues in https://github.com/docker/swarm/issues for this.
-> Thanks!
->
+Use CVE-2016-6829.
 
-I don't believe this is the right thread to discuss other topics. I'm here
-to get this CVE rescinded, since there is no reason for its existence in
-the first place.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-If you'd like to discuss any other matters related to docker or swarm, feel
-free to do so by either open an issue on our GH repository, or our forums:
-https://forums.docker.com.
-
-Thank you,
-Diogo Monica
-
+iQIcBAEBCAAGBQJXtSP/AAoJEHb/MwWLVhi2JGwQALK7eHbxUE3d/0pJEZT3Dh2W
+IvR9Q/LzSl+hyPSi/p3hYMV7//trwQHOkfJCIu/vCFXfPTXB67CyqBJNDP5HPBbb
+Te6iFpvOx1DbjDNI3gVnuEavz0/qrkmFtQ2ckAA2Fm+fbgu+osYrFB9H4HXl9FB6
+UXJLAQjl0PUqED+YWgcUWRE790y0Dy8Tec6yoHMYMbO9kd2vAaiB+pTHxi7Rj7NO
+JtiUif88dvAPvf9BPHdpZ1CWXrn5JMsmAzBEUfB2Agl+oQmvN1u7pjeq3WbflhkH
+Lxu30L3wUwA18KzHLO0Vu1JAG2hxZpntoTlFkJQON62b+YGrRnRiv6OG/+C1jsZ3
+I4nM/JlZCveWYivqmL33Yt0LTT78OvnpYr/rkxKX4iJvSFhoNaF6RPIIDMbwpKo6
+ARXS0oZfj81OLgv1l2n1SSUgs2PA0ak+FkKf4qN5/BYhcvHstIrB0Qtd7iMxoeXD
+1HkjdNIKO+RaOTUsU639awR5qNRax4R6XIUdixEvqC3dnw+FneSv1k8zGrXev1L1
+HbJWrc1Vcm08r8eh2B9RJcoDb/FmzYOslWF5XLWDAZ116w4TFzVDnqBLuas1HNoB
+AsDdtZFBl5uFYs0xBvWeoqp2mx+r0YIA4qaLItjEjg17W+kNnBYiKPos8jyjb8UF
+Kmk6i62iKxL5nMgFXXWt
+=2ckM
+-----END PGP SIGNATURE-----
