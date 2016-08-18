@@ -1,81 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/15
-Message-ID: <20160504122336.GA14517@notk.org>
-Date: Wed, 4 May 2016 14:23:36 +0200
-From: Adrien Nader <adrien@...k.org>
-To: oss-security@...ts.openwall.com
-Cc: David Moreno Montero <dmoreno@...albits.com>, Zachary Grafton <zachary.grafton@...il.com>, Remi Birot-Delrue <asgeir@...e.fr>
-Subject: Re: libonion 0.8 contains security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/22
+Message-ID: <20160818184456.GA16393@sinister.codevat.com>
+Date: Thu, 18 Aug 2016 11:44:56 -0700
+From: Eric Pruitt <eric.pruitt@...il.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE request - slock, all versions NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+The screen locking application slock (http://tools.suckless.org/slock/)
+calls crypt(3) and uses the return value for strcmp(3) without checking
+to see if the return value of crypt(3) was a NULL pointer. If the hash
+returned by (getspnam()->sp_pwdp) is invalid, crypt(3) will return NULL
+and set errno to EINVAL. This will cause slock to segfault which then
+leaves the machine unprotected. A couple of common scenarios where this
+might happen are:
 
-On Wed, May 04, 2016, Solar Designer wrote:
-> In particular, when the library is built with Linux epoll support and is
-> used in the pool of threads mode, as invoked with onion_new(O_POOL),
-> there was a file descriptor and data race condition between handling of
-> epoll events and timeout events.> 
-> [...]
+- a machine using NSS for authentication; on the machine I discovered
+  this bug, (getspnam()->sp_pwdp) returns "*".
+- the user's account has been disabled for one reason or another; maybe
+  account expiry or password expiry.
 
-This kind of issue is not limited to multi-threading: I've encountered
-the same thing (in another, non-free, product) because file descriptors
-were dup'ed() in order to ease management and were then passed to epoll.
+One approach to ensure slock will not run on machines without local
+hashes would be to check the return value of crypt("x", (...)->sp_pwdp)
+and verify that it returns a non NULL value before actually locking the
+screen.
 
-Doing this is probably a typical use of epoll. In man 7 epoll, the second
-question in the "Question and answers" section is:
-
-  What  happens  if you register the same file descriptor on an epoll
-  instance twice?
-
-  You will probably get EEXIST.  However, it is  possible  to  add  a
-  duplicate  (dup(2),  dup2(2),  fcntl(2) F_DUPFD) file descriptor to
-  the same epoll instance.  This can be a useful technique  for  fil‐
-  tering  events,  if  the  duplicate file descriptors are registered
-  with different events masks.
-
-In my case, one fd was used to wait on input operations and then dup'ed
-to be used for output operations. Otherwise we had to remember which
-flags had been set when we wanted to stop getting events about
-writeability (i.e. "was EPOLLIN also set?") and the logic was much more
-complex in the end.
-
-However, epoll_wait() can return events for both file descriptors in a
-single call and it is possible to free the associated data because of
-the first event, do some other work and then handle the work for the
-dup'ed file descriptor.
-
-The code isn't using one-shot and the fix was to invalidate the event
-set upon closing any connection, stop treating the current event batch
-and call epoll_wait() again (remember: not one-shot mode so no event is
-lost).
-
-> commit 4e111f30c1adf0ba0d5814a24f904dea35310a37
-> Author: Solar Designer <solar@...nwall.com>
-> Date:   Sun Mar 27 19:16:04 2016 +0300
-> 
->     Complete the implementation of Rich Felker's idea (partially introduced
->     with commit c80c46d5ff842291f0cce3917e7b8340c43d4315) to shutdown()
->     rather than close() on timeout, so that the fd is held until after
->     another one-shot epoll event arrives.  This way, we don't close the fd
->     (thereby not freeing it for possible reuse just yet) and don't free the
->     slot asynchronously to a possible event for the same slot on another
->     thread.  When we do receive another event for the shutdown() fd, we
->     expect that no concurrent event is being processed for the same fd and
->     the same slot due to the one-shot property of the epoll instance.
->     In other words, we postpone the potential fd and slot memory reuse until
->     after we're out of the asynchronous timeout handling and into the
->     per-slot synchronous one-shot event handling.
-> 
->     Handle timeouts in busy servers more optimally: check for them once per
->     second (and per thread for now) rather than once per event.
-
-I've also found myself calling shutdown() simply so that I could
-receive an error event and could then close everything, albeit in a
-slightly different context.
-
-I'm wondering if this is a common practice. I hadn't read about it I
-think and I'm once again wondering how many people do this. Also, does
-anyone know of more "usage tricks" than what is in man 7 epoll?
-
--- 
-Adrien Nader
+Eric
