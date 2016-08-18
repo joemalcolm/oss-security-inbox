@@ -1,4 +1,9 @@
-Received: (qmail 29788 invoked by uid 550); 11 Apr 2024 13:44:20 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4516" "Thursday" "18" "August" "2016" "20:16:27" "+0200" "Adam Maris" "amaris@redhat.com" "<3385bcd9-629a-5978-abfa-87cae962deb2@redhat.com>" "115" "Re: [oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices" "^Cc:" nil nil "8" "2016081818:16:27" "[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices" (number mark "        amaris@redha Aug 18  115/4516  " thread-indent "\"Re: [oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices\"\n") "<1471538630.13300.95.camel@decadent.org.uk>" ("<20160818142216.GH2701@suse.de>" "<20160818143014.GA27854@kroah.com>" "<20160818143957.GI2701@suse.de>" "<20160818145724.GA32181@kroah.com>" "<20160818151654.GK2701@suse.de>" "<1471538630.13300.95.camel@decadent.org.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 1539 invoked by uid 550); 18 Aug 2016 18:16:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,111 +11,140 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27701 invoked from network); 11 Apr 2024 08:33:09 -0000
-Authentication-Results: mail.absynth.de;
-	auth=pass smtp.auth=info@christopher-kunz.de smtp.mailfrom=info@christopher-kunz.de
-Message-ID: <b701b525-0c42-4b3a-a1a3-0ea68e864fbe@christopher-kunz.de>
-Date: Thu, 11 Apr 2024 10:32:59 +0200
+Received: (qmail 1514 invoked from network); 18 Aug 2016 18:16:44 -0000
+References: <20160818142216.GH2701@suse.de> <20160818143014.GA27854@kroah.com>
+ <20160818143957.GI2701@suse.de> <20160818145724.GA32181@kroah.com>
+ <20160818151654.GK2701@suse.de> <1471538630.13300.95.camel@decadent.org.uk>
+Message-ID: <3385bcd9-629a-5978-abfa-87cae962deb2@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: "Dr. Christopher Kunz" <info@christopher-kunz.de>
-To: oss-security@lists.openwall.com
-References: <607d5716-128f-44c5-ab52-6dde4ca6e8a4@christopher-kunz.de>
-Autocrypt: addr=info@christopher-kunz.de; keydata=
- xsDiBD3U55kRBADKaqmPY/RBZ0luAFvOsa2lqQN8qXEimlCrbe0+WWywWDYNO/0c5B1FhUt2
- heF12OV9u1ldDdynB/awdV3NYaoizce86XQzQGcPpIOlEgI9iTTc1FSP9zDkkljLMrMB8WGK
- Q8WH6yLT+BOTIoK/rMs9DEN0hcsxOZY1wTEzhOfewwCg/7fHkook6P1/O/iOG3k/r90Um98D
- /AvzlFtPaRn5qiCWjeopDW1RAJNLvWwKs1HHv8m1UOtMNisqObD3SuHn9lp4FfGAu7gaJoqI
- /l6Rk02dgmBq+gyV+qg8PYXMlhh0xEfEO/TPPjx+nZnDRvO59tOj0pg2GLpIvQtdlwow1Iq4
- r2XfHUk1b827GZGAg1+ckkkNSG24A/9l238stiojp+GYwpuYkGrxROSYX+0slzRc40DHjtrb
- Jidz2Usmilyvt5WA1iBmAKw3L2TLQKpLtxAkGWSrDfdnl38VrYGMEM6WVctY6TxrqzrQLhaw
- W+17goNN73S3uP3C0YrdVjZc5jl0xlfli4zP7HmxL1YyRlLQ22aVcdDmS80rQ2hyaXN0b3Bo
- ZXIgS3VueiA8aW5mb0BjaHJpc3RvcGhlci1rdW56LmRlPsJ4BBMRAgA4AhsDBgsJCAcDAgMV
- AgMDFgIBAh4BAheAFiEEyIKO0X3RkBHAiOpQXPou6zl6ysEFAmWdKLICGQEACgkQXPou6zl6
- ysEHsQCfeqMRH0HyzVzl6XyNrxXdi0kSacYAnjXCcViWthCxB04fgluoiFw7b02TzsFNBD3U
- 55kQCAD2Qle3CH8IF3KiutapQvMF6PlTETlPtvFuuUs4INoBp1ajFOmPQFXz0AfGy0OplK33
- TGSGSfgMg71l6RfUodNQ+PVZX9x2Uk89PY3bzpnhV5JZzf24rnRPxfx2vIPFRzBhznzJZv8V
- +bv9kV7HAarTW56NoKVyOtQa8L9GAFgr5fSI/VhOSdvNILSd5JEHNmszbDgNRR0PfIizHHxb
- LY7288kjwEPwpVsYjY67VYy4XTjTNP18F1dDox0YbN4zISy1Kv884bEpQBgRjXyEpwpy1obE
- AxnIByl6ypUM2Zafq9AKUJsCRtMIPWakXUGfnHy9iUsiGSa6q6Jew1XpMgs7AAICB/97dSwj
- NNOvwX1CYynQFaXrajIBF9fSZcOJNZ5vh/+ejkl2nobkQicbI97dKYttanBaF4O//lPjNcbO
- iXkiqEI8FQPyp5I+KIkVy6MiNM09zd0qHVwlihok2JG5wSGXfUsXjk3iPsxIVhWZSrB2q0By
- Av95xcvUtxQl5cCGGqTxBIsGjiN4wkDS0FNXFH2hOuH5pCl+cbDdZmYTc1O+aeSygvLN76gs
- tBgDODp8p2Fiu7RL99SRLTIHdniSvOr/bm4BDRYY0D6P/MoZQydZPMmZAOv3qnOkPox/9e5/
- zP8cmLm08gbez8wjfl6Rl5OjngTIatupEWXZK022C2+LJBeFwkwEGBECAAwFAj3U55kFGwwA
- AAAACgkQXPou6zl6ysHXxgCgw8C3Y9WTlhK6j3KgyciAF6X+odsAnja8RhnAa3HRM8YZbeaW
- DC6HBdDe
-In-Reply-To: <607d5716-128f-44c5-ab52-6dde4ca6e8a4@christopher-kunz.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] New Linux LPE via GSMIOC_SETCONF_DLCI?
-
-FWIW,
-
-on a freshly installed and fully updated default Debian 12 VM (from the 
-current netinst iso), the first two exploits yield different results.
-
-> PoC and writeup are here: 
-> https://github.com/YuriiCrimson/ExploitGSM/tree/main
-
-This, let's call it "Yurii's version", works as advertised:
-
-$ ./ExploitGSM debian
-kallsyms restricted, begin retvial kallsyms table
-detected kernel path-> /boot/vmlinuz-6.1.0-18-amd64
-detected compressed format -> xz
-Uncompressed kernel size -> 65902908
-successfully taken kernel!
-begin try leak startup_xen!
-startup_xen leaked address  -> ffffffff8c86f1c0
-text leaked address         -> ffffffff8a800000
-lockdep_map_size     -> 32
-spinlock_t_size      -> 4
-mutex_size           -> 32
-gsm_mux_event_offset -> 56
-Let go thread
-We get root, spawn shell
-root@debianexploitgsm:/root# id
-uid=0(root) gid=0(root) groups=0(root)
+In-Reply-To: <1471538630.13300.95.camel@decadent.org.uk>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Thu, 18 Aug 2016 18:16:33 +0000 (UTC)
+Cc: cve-assign@mitre.org, security@kernel.org
+Date: Thu, 18 Aug 2016 20:16:27 +0200
+From: Adam Maris <amaris@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: CVE Request: Linux kernel crash of OHCI when
+ plugging in malicious USB devices
+To: oss-security@lists.openwall.com, Marcus Meissner <meissner@suse.de>,
+        Greg KH <greg@kroah.com>
 
 
-> PoC: 
-> https://github.com/jmpe4x/GSM_Linux_Kernel_LPE_Nday_Exploit/tree/main 
 
-This one, however, segfaults. I recompiled it with debugging symbols and 
-ran it through a quick gdb:
+On 18/08/16 18:43, Ben Hutchings wrote:
+> On Thu, 2016-08-18 at 17:16 +0200, Marcus Meissner wrote:
+>> On Thu, Aug 18, 2016 at 04:57:24PM +0200, Greg KH wrote:
+>>> On Thu, Aug 18, 2016 at 04:39:57PM +0200, Marcus Meissner wrote:
+>>>> On Thu, Aug 18, 2016 at 04:30:14PM +0200, Greg KH wrote:
+>>>>> On Thu, Aug 18, 2016 at 04:22:16PM +0200, Marcus Meissner wrote:
+>>>>>> Hi,
+>>>>>>
+>>>>>> I think this does not have a CVE yet, please assign.
+>>>>>>
+>>>>>> https://www.spinics.net/lists/linux-usb/msg144177.html
+>>>>>>
+>>>>>> Headline:         Linux Kernel Panic Over USB with HID Keyboard wMax=
+PacketSize
+>>>>>> Platforms:        Ubuntu
+>>>>>> Versions:         Linux Kernel 4.4.0-22-generic
+>>>>> Huh?  It's much more pervasive than just that single platform or sing=
+le
+>>>>> version.
+>>>> That was the quote from the original e-mail. I read further on it affe=
+cts
+>>>> more kernel versions.
+>>>>=20=20=20
+>>>>>> CVSS Score:       4.7
+>>>>>> CVSS Vector:      AV:L/AC:M/Au:N/C:N/I:N/A:C
+>>>>>> Filed Defects:
+>>>>>> Related Defects:
+>>>>>> CWE Tags:
+>>>>>> Cycle:
+>>>>>> Found by:         Jake Lamberson
+>>>>>>
+>>>>>>
+>>>>>> Linux Kernel panics when using an OHCI controller if a USB device re=
+ports being
+>>>>>> a generic HID keyboard and reports a wMaxPacketSize of over 4095. Th=
+e OHCI
+>>>>>> controller driver fails to reserve bandwidth for the device, causing=
+ the
+>>>>>> keyboard handler to fail when attaching to the HID. Later, when the =
+device is
+>>>>>> removed, the system crashes due to a null pointer dereference in a l=
+inked list
+>>>>>> of endpoint descriptors. The crash can be re-created using a Facedan=
+cer and UMAP
+>>>>>> software. Given an appropriately configured Facedancer and UMAP setu=
+p, the crash
+>>>>>> can be re-created with:
+>>>>>> sudo board=3Dfacedancer21 python3 umap.py -P /dev/serial_device_here=
+ -f 03:00:00:E:0046 -l LOG
+>>>>>>
+>>>>>> Note: OHCI is a USB 1.1 controller standard that can be included wit=
+h devices
+>>>>>> that support either USB 1.1 or 2.0 as their highest USB spec. USB 3.=
+0 devices
+>>>>>> all use xHCI, which implements USB 1.1, 2.0, and 3.0, making them im=
+mune to
+>>>>>> this particular bug.
+>>>>>>
+>>>>>> -----------------
+>>>>>>
+>>>>>> The proposed fixing patch is here:
+>>>>>> https://www.spinics.net/lists/linux-usb/msg144269.html
+>>>>>>
+>>>>>>
+>>>>>> It has not yet been committed to the USB tree or to Linus Tree as fa=
+r as I see.
+>>>>> Not true, it is commit id aed9d65ac3278d4febd8665bd7db59ef53e825fe in
+>>>>> the usb tree and in linux-next and will be sent to Linus tomorrow.
+>>>> Ah sorry, only looked briefly.
+>>> This was also asked about 2 hours ago on the linux-usb mailing list, why
+>>> all of the sudden interest in something that we had been discussing for
+>>> weeks now in public?
+>> No one asked for a CVE before.
+>>
+>> If that email request was from Oliver Neukum, he pinged me on it, so I
+>> started acting on it, so that explains this parallelism.
+>>=20=20=20
+>>>>> And are we really assigning CVE numbers for when you use an active
+>>>>> "hardware test probe"?  If so, how many are people going to be assign=
+ing
+>>>>> for these same problems on other operating systems?  :)
+>>>> I think attaching malicious USB devices and crashing the kernel should
+>>>> probably get CVE ids, or do you think it should not?
+>>> I don't know, that's why I'm asking, it requires "physical presence"
+>>> which is much different from most threat models that people work to
+>>> protect against.
+>> There has been quite a number of CVEs assigned to malicious USB devices
+>> this year already, this does not seem to be different.
+>>
+>> (e.g. CVE-2016-2384, CVE-2016-2188, CVE-2016-2187 etc.)
+> An attacker that has physical access to a USB port can short VCC to GND
+> and likely destroy chips.  If that is prevented by current limiting
+> they can still destroy the port with glue or corrosive liquid.  The
+> possibility of crashing the OS is (usually) a much less serious DoS and
+> doesn't seem to me to be worth worrying about.
 
-Reading symbols from ./ExploitGSM...
-(gdb) run debian
-Starting program: 
-/home/absynth/GSM_Linux_Kernel_LPE_Nday_Exploit/ExploitGSM debian
-[Thread debugging using libthread_db enabled]
-Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+Attacker doesn't necessarily need to have physical access to USB port.=20
+He can somehow
+hand USB off to the victim that will with good intentions stick it to=20
+his USB port, unexpectedly
+causing kernel panic. Difference is that one probably wouldn't pour glue=20
+or corrosive liquid
+into his USB port believing that nothing bad will happen.
 
-Program received signal SIGSEGV, Segmentation fault.
-0x00000000004324f7 in __strcmp_avx2 ()
-(gdb) bt
-#0  0x00000000004324f7 in __strcmp_avx2 ()
-#1  0x0000000000401b5e in main (argc=2, argv=0x7fffffffe3f8) at 
-/home/absynth/GSM_Linux_Kernel_LPE_Nday_Exploit/main.c:552
-(gdb)
-
-Line 552 is the kernel release check, so a fairly straightforward piece 
-of code:
-
-         if (strcmp(iter_kernel->os_name, argv[1]) || 
-strcmp(iter_kernel->kernel, kernel_info.release))
-
-I'm not a C developer, so I'm not too sure what goes wrong here, but I 
-guess it's a simple fix.
-
-With regards to Yurii's PoC, I'd say that this can indeed be classified 
-as a working 0day LPE in the default configuration.
-
-We don't have a CVE for this yet, do we?
+On the other hand, it's fairly minor issue, I admit that.
 
 Regards,
 
---cku
+--=20
+Adam Mari=C5=A1, Red Hat Product Security
+1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
+
 
