@@ -1,45 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/18/11
-Message-ID: <20160418180230.GB53619@mail.corp.redhat.com>
-Date: Mon, 18 Apr 2016 14:02:31 -0400
-From: Randy Barlow <rbarlow@...hat.com>
-To: Pulp Users <pulp-list@...hat.com>, OSS Security <oss-security@...ts.openwall.com>
-Subject: CVE-2013-7450: Pulp < 2.3.0 distributed the same CA key to all users
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/2
+Message-Id: <20160818033014.3FFE33AE001@smtpvbsrv1.mitre.org>
+Date: Wed, 17 Aug 2016 23:30:14 -0400 (EDT)
+From: cve-assign@...re.org
+To: peter@...e-magic.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for buffer overrun in CHICKEN process-execute and process-spawn posix procedures
 Content-Type: text/plain; charset=utf-8
 
-Versions of Pulp < 2.3.0 distributed the same certificate authority key and
-certificate to all Pulp users[0]. This CA is used by the /login API call
-(pulp-admin login uses this call) to generate and sign a client certificate.
-This client certificate is then used for subsequent API calls.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Due to this vulnerability, remote attackers are able to obtain the CA key
-from the Pulp git repository and use it to generate valid client certificates
-for any Pulp installations that use the default CA. The Pulp documentation
-did not emphasize the importance of replacing this CA for production
-deployments, so there may be users who use this common CA key in production
-environments.
+> http://lists.nongnu.org/archive/html/chicken-announce/2016-08/msg00001.html
 
-Users are urged to replace the CA certificate and key on any Pulp
-installations that began their life with a version less than 2.3.0. Upgrading
-alone is not sufficient, as Pulp upgrades do not replace existing CA key
-pairs. Versions of Pulp >= 2.3.0 do ship a utility (pulp-gen-ca-certificate)
-that is capable of generating a new CA keypair for you, but it should be
-noted that there are some known local attacks that this script is vulnerable
-to as well[1][2]. The best option is to generate your own CA certificate if
-you are concerned about these local attacks.
+> I would like to request a CVE for a buffer overrun that
+> was detected in CHICKEN Scheme's "process-execute" and
+> "process-spawn" procedures from the posix unit.
+> 
+> CHICKEN preallocated an argument array of ARG_MAX items (or 256 if
+> that was undefined), and an environment array of ENV_MAX items
+> (or 1024 if that was undefined), and did not verify that the arguments
+> or environment lists were less than this size, resulting in a buffer
+> overrun if these lists were longer.
 
-Thanks to Sander Bos for notifying the Pulp team that we had neglected to
-acquire a CVE for this vulnerability at the time of its discovery.
+Use CVE-2016-6830.
 
 
-[0] CVE-2013-7450: https://bugzilla.redhat.com/show_bug.cgi?id=1003326
-[1] CVE-2016-3095 (fixed in Pulp >= 2.8.2):
-    http://www.openwall.com/lists/oss-security/2016/04/06/3
-[2] CVE-2016-3106 (planned for Pulp 2.8.3):
-    https://pulp.plan.io/issues/1827
+> The bugfix also fixed a memory leak in the same piece of code, which
+> could potentially be used to cause resource exhaustion/denial of
+> service situation.
 
--- 
-Randy Barlow
-irc:   bowlofeggs
+>> a memory leak existed in this code, which would be
+>> triggered when an error is raised during argument and environment
+>> processing (e.g., if one of the arguments wasn't a string).
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+> Does this warrant another CVE?
+
+Yes, use CVE-2016-6831 for the memory leak.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXtSRnAAoJEHb/MwWLVhi21jEQAKZvWLvq/uy2d4j31FTcH3Sx
+OjM5j9I+2/szLaexJcEHjQGLUL34NDem+CEizZa1lU2NXKFFlYYXE8CGDGtVyvG9
+M21Dxfq6QiSJv6WacORbLawUK6txSfBajOBu+DL36lr+Y6FSejh5zxwg/97E1Z97
+J+bpICS96zSUDx21rTVj6a7AT+C48vHsGXdZ214yiui6Grs1UjKEwbyJvYONJnEh
+qaUfZwxd1DMrp9mYLbTzC7YoaA8cpK4pa2XMj866Ek9zqd55W+IFrxTg7bapHrRY
+elZdeTuXyg4POQ/ZJFUkkRVUZt5Dfa5r2nhG6O6oYxCNIWcjCwNkEH3vy8Fqnstp
+60tAC2Plt/F58Or5rcgBMIPckf01rolGj23EOCKihuAqZC8iXyisaTWC80Bzvx9P
+9L3RBU4p956GpRvDyMONdq30bGgI5ICtpV6yJUgiuMIR3npoCkZqH8/ONSrxZjdj
+jPeikuZNGpzRmDqiKijG8PqXutTlnxNqiZ2sntFIzEgMrRYLtpaEqkXGJBOJiF/v
+NiVOPbvlnVNfkbLBj4MjFwhxD10a8Nb+VuIUJaSVAEUszFlpTCiA/cj1t3ZZb5MG
+bPumWrj0+22vn+C2V3KVlsevP8co68ggxydx2RYsbJ2gEQ7gkM904HFNkPfk1ZS2
+CpJ18WYaF6DGQvTX6wie
+=BpnE
+-----END PGP SIGNATURE-----
