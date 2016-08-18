@@ -1,68 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/19/11
-Message-Id: <20161019213549.6A26D52E018@smtpvbsrv1.mitre.org>
-Date: Wed, 19 Oct 2016 17:35:49 -0400 (EDT)
-From: cve-assign@...re.org
-To: jmm@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for tor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/18
+Message-ID: <39a367af-c84d-01cb-36eb-6732edfbdac2@andrewg.com>
+Date: Thu, 18 Aug 2016 17:37:20 +0100
+From: Andrew Gallagher <andrewg@...rewg.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Libgcrypt and GnuPG 1.4 RNG output prediction
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 17/08/16 19:32, Werner Koch wrote:
+>
 
-> https://blog.torproject.org/blog/tor-0289-released-important-fixes
-> https://github.com/torproject/tor/commit/3cea86eb2fbb65949673eb4ba8ebb695c87a57ce
-> https://trac.torproject.org/projects/tor/ticket/20384
+Well this is an interesting glitch.
 
-> Tor 0.2.8.9 backports a fix for a security hole in previous versions
-> of Tor that would allow a remote attacker to crash a Tor client,
-> hidden service, relay, or authority.
+Werner used PGP/MIME, but something appears to have deleted the first
+mime-boundary, rendering the message unparseable. If you view the
+source you can see the plaintext, but MIME mail clients (including the
+openwall mailing list archive) can't.
 
-> Prevent a class of security bugs caused by treating the contents of a
-> buffer chunk as if they were a NUL-terminated string. At least one
-> such bug seems to be present in all currently used versions of Tor,
-> and would allow an attacker to remotely crash most Tor instances,
-> especially those compiled with extra compiler hardening. With this
-> defense in place, such bugs can't crash Tor, though we should still
-> fix them as they occur. Closes ticket 20384
+A
 
-> Add a one-word sentinel value of 0x0 at the end of each buf_t chunk
-> 
-> This helps protect against bugs where any part of a buf_t's memory
-> is passed to a function that expects a NUL-terminated input.
 
-Here, we will assign the ID to the broadest possible interpretation of
-the issue, which perhaps can be restated as "Tor internal functions
-were entitled to expect that buf_t data had NUL termination, but the
-implementation of or/buffers.c did not ensure that NUL termination was
-present."
 
-Use CVE-2016-8860.
-
-With this CVE, any related "we should still fix them as they occur"
-patches can most likely be treated as defense-in-depth changes, and
-won't require separate CVE IDs.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYB+XHAAoJEHb/MwWLVhi2sBMP+wRQ7PiGfYaTU0Cym1dNAYpJ
-cXF5FHCE+wIRIzBh4DxPPPm/335kM4iLd/4mTL0Tt6OXRbqxHBcaGQlcEhchW4YH
-YCoTVuKDZDXo9OD1AaJtWVcV0b8AYk+H0uGCMarvnSiuO5b+149DQiFaSxE9ORVx
-z2c+2GzAXm+rI1kEfRVh/Ak1sVyW6fLh1zazMObvdrvEJutSJw9iVI8/hO6mgQ3I
-EMaqg4WjVdWuEcAfEDmqRT//AF41QsYUYQ916BluCNoMATqGT38IsU5a5ESScTi3
-P5cnEG0fn2KbXYbP449vLhyEOPzS/O/yZDcpiGmgn+Sr8znggwPoetVQ3C84jjVb
-FeyhMRwzEd+ugiSxSeGTja9sDGRugtkcR0XAsMEOn/0qnCTRPK2iTxq3EGt+F7lC
-4swukuQ6rJDY3qmn+7y8eUthu9Y87qwzsEd8l1WomtGLnyErEiolrJO7JngXYQuc
-IEZpoqvmonZd8WPOr4doMH9TT6ybpW7thA+DY1gt0EgsiYaITe9u6c7kcjkhR/5C
-9nda+YakEjAM6r/W0S3Xvo1iJ+k1ar5ZX37o5H/UqMFVtJqs5G8/d6Nejqn9ZiHJ
-m1hdRYbe2Pr0n2gZg1POhYs8JogcqXw6eTYJIAtKy1ssHKU0WnP5YRDiQ1wKWk3g
-RTr0TaPl+xvXHMUq+mxr
-=yC51
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
