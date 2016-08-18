@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1413" "Thursday" "28" "November" "2019" "20:46:55" "+0100" "Raphael Geissert" "geissert@debian.org" nil "38" nil "^Cc:" nil nil "11" nil nil (number mark "        geissert@deb Nov 28   38/1413  " thread-indent "\"[oss-security] Multiple issues in lemonldap-ng\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple issues in lemonldap-ng" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1542" "Wednesday" "17" "August" "2016" "23:42:50" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160818034250.D3AA3ABC96C@smtpvmsrv1.mitre.org>" "39" "[oss-security] Re: CVE Request - Samsung Exynos fimg2d NULL Pointer Dereference" nil nil nil "8" "2016081803:42:50" "[oss-security] Re: CVE Request - Samsung Exynos fimg2d NULL Pointer Dereference" (number mark "U       cve-assign@m Aug 17   39/1542  " thread-indent "\"[oss-security] Re: CVE Request - Samsung Exynos fimg2d NULL Pointer Dereference\"\n") "<CACCOJE22F7zG5Ay1qL1bO0OvFyixGiuLOC_Y_L6tneeieVMdeA@mail.gmail.com>" ("<CACCOJE22F7zG5Ay1qL1bO0OvFyixGiuLOC_Y_L6tneeieVMdeA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3143 invoked by uid 550); 28 Nov 2019 19:47:19 -0000
+Received: (qmail 23802 invoked by uid 550); 18 Aug 2016 03:43:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3108 invoked from network); 28 Nov 2019 19:47:18 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=cYB6/RQJdmCE0087pOOwJFnkTe9RuzkEPmW/JuO8nMc=;
-        b=rh8RXbKSISAfwdpwNPAHbl+rePgLGb1nvH0/jU/LBJj+lM3xWbaBnGvyLXXe9wJ89k
-         AtfdBJ2xT7EOIxyTwkJ+9XPguZ6N5mMl7yoxbehyB9hvcuIAnBevLIomXEt4xEi0iMr+
-         NrnX086CYiJifloAZ4xRRRI0NqI+MYnoXj0Hie4DpG3fYnrUnsdOZ50gjnEktHDt9ZvN
-         RJv8rVm4OtkEUhxVfjubZwiRTaPFyadl8qQDtyJKTxQyCBFk+1gXBLIJBV9dQtXQrdte
-         kSUQda7pntMAfS2rHV/dsXRlgTJuoPVsAA2U73z7ghbcAzbtvyd8nAU6HmYCjDrrQi2V
-         9Esg==
-X-Gm-Message-State: APjAAAVAGGfSiNZmLnU4Bo+g7KdvCy/tc4JtH6rfInP//ZCiDTKHyTbY
-	g3lwUKcfIXRn6dJxxk5OsDpBY6qdLSHpdEgAmu1TgdCbHYs931sX
-X-Google-Smtp-Source: APXvYqxxcYSXFuIVDgOicZIWDNkOGjUH4qAt8VFLcvHhOeYpQjcLZMlR/pGim0ypQih+kwanoDP5HrDfcaVeFxTb8HM=
-X-Received: by 2002:ab0:2a4f:: with SMTP id p15mr7072548uar.70.1574970426634;
- Thu, 28 Nov 2019 11:47:06 -0800 (PST)
-MIME-Version: 1.0
-Message-ID: <CAA7hUgF2iQ+danfsTDqjY2weCXGay71363bbgBWbb_6kyiBNgg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: yadd@debian.org
-Date: Thu, 28 Nov 2019 20:46:55 +0100
-From: Raphael Geissert <geissert@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Multiple issues in lemonldap-ng
-To: Open Source Security <oss-security@lists.openwall.com>
+Received: (qmail 23684 invoked from network); 18 Aug 2016 03:43:02 -0000
+From: cve-assign@mitre.org
+To: idler1984@gmail.com
+Cc: cve-assign@mitre.org, anarcheuz@gmail.com, oss-security@lists.openwall.com
+In-Reply-To: <CACCOJE22F7zG5Ay1qL1bO0OvFyixGiuLOC_Y_L6tneeieVMdeA@mail.gmail.com>
+Message-Id: <20160818034250.D3AA3ABC96C@smtpvmsrv1.mitre.org>
+Date: Wed, 17 Aug 2016 23:42:50 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request - Samsung Exynos fimg2d NULL Pointer Dereference
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Looking at lemonldap-ng I noticed that it uses low-level crypto
-primitives, not without some issues.
-Notably:
+> I'd like to request CVE for the following vulnerability fixed in
+> Samsung Exynos fimg2d driver for Android:
+> 
+> Security bulletin: http://security.samsungmobile.com/smrupdate.html#SMR-AUG-2016
+> 
+> SVE-2016-6382: fimg2d NULL Pointer Dereference
+> 
+> Affected versions: L(5.0/5.1), M(6.0) devices with Exynos7420 chipset
 
-* it uses AES in CBC mode directly without setting an IV to encrypt
-data that is stored client-side
-* that same data is not signed, only encrypted
+> The vulnerability exists due to a null pointer dereference on fimg2d driver.
+> The patch verifies if the object is null before dereferencing it.
 
-Despite my strong recommendation to use a library that abstracts some
-of the fine details, like NaCl, libsodium, etc, upstream has responded
-to the issue by issuing version 2.0.5 with the following changes[1]:
+Use CVE-2016-6604.
 
-* an IV is set but it might be generated with rand() and time() in
-case of urandom being unavailable or in case the code asks for a "low"
-mode
-* using sha256 as a checksum (literally just sha256 of the data, not
-HMAC-SHA256 despite the code using the name hmac in some places), as
-in: message = ENCRYPT(SHA256(data) || data, key, iv). Upstream calling
-this MtE and using this approach instead of my recommendation of using
-EtM
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Some "minor" issues were also fixed, like the use of a prng instead of a csprng.
-
-Tracked with issue #1823 [2], the main issue is still open to possibly
-use an abstraction library in a future version.
-
-I've neglected making a public report of this but I hope that it is
-going to help things move forward.
-
-[1]https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/merge_requests/81/diffs
-[2]https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/1823
-
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org
+iQIcBAEBCAAGBQJXtShzAAoJEHb/MwWLVhi2leUP/02zyUfHhnmwTrd8RwCoGMDL
+nm+W6AToaFzif7Ihn4qTcRR2v5YCQkBx10mj+BJ5JrS48/Gh6h2A3zfP0VpkdpVi
+cROaCDhuYWDAEoKvgcFjvKLQbCUrEGUvUJzhToKj7cv95j237m7kXJfmc33tftla
+vipSUQTRqiBxSvnFIp/3xiA05N2dLi+4Yw7IN9FqwMkGse1n+4BhcE2iLgP/OoBq
+EUS/qn2xszN9jw5DcGlsZ5nFZMlm8Ru5pgaHERN785aNSZU1LlWTdZhvJlgmeiIw
+m/zHoV71T/4fh/FP2z+2EjW59lI/kQmJNKon/88EoNlCNTZQ+sQmgNNykYhvF9QP
+lBP1gCvVryHBDKKVwni7HjoMSMEtgbK3da/pqvR551bhWYt1f8xJUDyEol643GW6
+ViH/wjtA2L/BLFmmbPSX1jedgFCRYZ1pdV1vrJ+MgyAK+fi7ioLvIt/L1ygy5sTI
+pQHCRpzSgM0YsPhcS0QvTNoskA2XOltcW0KOgy3xg3EJvZVK2FppD850xXOOHSb8
+ykUJzg9WKzIcg/yJe2eb2Yeo8VdbI2lZTaRWRKFTNM1AdrHe4ZpFldDosAzHvZwH
+DrFsF+TbDXFJO8ke3WW0xTvTRwZumGfYaIYKuotQaunBTWvQUHt/yBJy+z+8hSRg
+dk1NFu/a5sPs6/cN5efe
+=5c4e
+-----END PGP SIGNATURE-----
