@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3440" "Tuesday" "26" "July" "2016" "22:37:46" "+0200" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdSdMmGQrUjKfCsxdXRMDqwmGes82PrKxHqw83gkJ-+W6w@mail.gmail.com>" "82" "Re: [oss-security] CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7" nil nil nil "7" "2016072620:37:46" "[oss-security] CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7" (number mark "U       gustavo.grie Jul 26   82/3440  " thread-indent "\"Re: [oss-security] CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7\"\n") "<CAGkswnQeO6oXv+so+DRCMWHqpVKuKYjZ3dTo=gZo2GzycdArhw@mail.gmail.com>" ("<CAGkswnQeO6oXv+so+DRCMWHqpVKuKYjZ3dTo=gZo2GzycdArhw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3680" "Friday" "19" "August" "2016" "09:49:59" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160819134959.E8FB8332027@smtpvbsrv1.mitre.org>" "92" "[oss-security] Re: MatrixSSL Bignum bugs" "^Cc:" nil nil "8" "2016081913:49:59" "[oss-security] Re: MatrixSSL Bignum bugs" (number mark "        cve-assign@m Aug 19   92/3680  " thread-indent "\"[oss-security] Re: MatrixSSL Bignum bugs\"\n") "<20160808231510.6514ee1c@pc1>" ("<20160808231510.6514ee1c@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1811 invoked by uid 550); 26 Jul 2016 20:38:00 -0000
+Received: (qmail 5785 invoked by uid 550); 19 Aug 2016 13:50:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,123 +11,105 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 5747 invoked from network); 19 Aug 2016 13:50:11 -0000
+In-Reply-To: <20160808231510.6514ee1c@pc1>
+Message-Id: <20160819134959.E8FB8332027@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Fri, 19 Aug 2016 09:49:59 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1790 invoked from network); 26 Jul 2016 20:37:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=bFiJPNDiC+ZgP4UlcRRCHHAvR3NxfEeXMlHyPe+bJt8=;
-        b=KmwDoh+AsFnThieha0eGjDOddvwegm2ceyvIrFVcmUyaBIG3LwuKPN/nk9YXbnUN1S
-         P+grTD2hBXyYlCvpHccDzhyuOJJrkQVvSqiwXrcD/1lvSXtoOxBUwydXQzFQVXK8Llq1
-         6uzV8hcBPfaU8NKVBnL8Ck4hL9tpB1pW78NssXneBEjHBtT/lODHZQkpDxtYsZhbEs61
-         K7XY0G46fn0lXLrOLd5pkgwBybY6NC0YKV83duYdovHLVGmdS00BZHWO+h7n66gVV5uN
-         /KeQO1nE+p+pb0CzLyvlOtFWC7BGcrM4gYcA+q5YvLyvb25JEupY9Isf8a5dKeGJco12
-         30ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=bFiJPNDiC+ZgP4UlcRRCHHAvR3NxfEeXMlHyPe+bJt8=;
-        b=dA9n2xtP3je3j6vblSzq80uL3g8wVketa1T9DOaDal7jzxSF/T2Mjje0m4mS70zyYY
-         6ZeuEC8VWbzfCNsr+6PFugLKFfzI5XCmjLkz7l9CT8kcqGpc0Yw9MJg25diAF4QL3Vah
-         yVJAcoeA3lDhiovrMJnclekzV1d0uoooMo1BfbQ/qIlFkCDAdUzrreuMrvj0Ir+CPLh/
-         nHiPHzggIbuN+1+E0TMDLvdnSMBZCWRs/VQHkJda6pZafBObgMg8EgfTGqlJKvXrNScp
-         ewhcevhhezuH/l6SuMOZbZF9tnMeZ/OtA+N0IhJvMCqpvScRjXvpI3fBkhguohhaywhP
-         q7kw==
-X-Gm-Message-State: AEkoousXWN8LLuX+ewtGZqpmrRImTd3np7YHnSU2x1CUy2ilYyk1S3ys5s4Ey/Eqc3lERotMxxRrncSpxTK4Rw==
-X-Received: by 10.36.86.134 with SMTP id o128mr30470345itb.5.1469565467016;
- Tue, 26 Jul 2016 13:37:47 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CAGkswnQeO6oXv+so+DRCMWHqpVKuKYjZ3dTo=gZo2GzycdArhw@mail.gmail.com>
-References: <CAGkswnQeO6oXv+so+DRCMWHqpVKuKYjZ3dTo=gZo2GzycdArhw@mail.gmail.com>
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
-Date: Tue, 26 Jul 2016 22:37:46 +0200
-Message-ID: <CACn5sdSdMmGQrUjKfCsxdXRMDqwmGes82PrKxHqw83gkJ-+W6w@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Content-Type: text/plain; charset=UTF-8
-Subject: Re: [oss-security] CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7
+Subject: [oss-security] Re: MatrixSSL Bignum bugs
+To: hanno@hboeck.de
 
-Explicitly adding cve-assign to CC, this seems to have fallen through
-the cracks.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Regards,
+> http://www.matrixssl.org/blog/releases/matrixssl_3_8_4
 
-2016-07-13 19:53 GMT+02:00 Franco Costantini <franco.costantini.20@gmail.com>:
-> This issue was reported to Redhat secalert, they asked me to disclose it
-> publicly.
->
-> A write out-of-bounds parsing an ico file was found in gdk-pixbuf 2.30.7.
-> It's tested in Ubuntu 14.04, other versions can be affected (in Debian 8, an
-> assert inside gtk3 stops the execution before the crash). This issue can be
-> reproduced using eog:
->
->  (gdb) run crash.ico
->  Starting program: /usr/bin/eog crash.ico
->  [Thread debugging using libthread_db enabled]
->  Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
->  [New Thread 0x7fffec58e700 (LWP 3709)]
->  [New Thread 0x7fffebd8d700 (LWP 3710)]
->  [New Thread 0x7fffe9656700 (LWP 3711)]
->  [New Thread 0x7fffe8e55700 (LWP 3712)]
->
->  (eog:3705): EOG-WARNING **: Couldn't load icon: Icon 'image-loading' not
-> present in theme
->
->  Program received signal SIGSEGV, Segmentation fault.
->  [Switching to Thread 0x7fffe9656700 (LWP 3711)]
->  0x00007fffd83b428c in OneLine32 (context=0x7fffe0029820) at io-ico.c:589
->  (gdb) bt
->  #0  0x00007fffd83b428c in OneLine32 (context=0x7fffe0029820) at
-> io-ico.c:589
->  #1  OneLine (context=0x7fffe0029820) at io-ico.c:800
->  #2  gdk_pixbuf__ico_image_load_increment (data=0x7fffe0029820,
->      buf=0x7fffe001b852 "", size=0, error=0x7fffe9655b68) at io-ico.c:891
->  #3  0x00007ffff53e2665 in gdk_pixbuf_loader_load_module (
->      loader=loader@entry=0x7df420, image_type=image_type@entry=0x0,
->      error=error@entry=0x7fffe9655b68) at gdk-pixbuf-loader.c:443
->  #4  0x00007ffff53e2ee8 in gdk_pixbuf_loader_close (loader=0x7df420,
->      error=0xaa1aa0) at gdk-pixbuf-loader.c:808
->  #5  0x00000000004236ab in eog_image_load ()
->  #6  0x00000000004275d7 in ?? ()
->  #7  0x0000000000425959 in ?? ()
->  #8  0x00007ffff43eff05 in ?? () from /lib/x86_64-linux-gnu/libglib-2.0.so.0
->  #9  0x00007ffff3f53184 in start_thread (arg=0x7fffe9656700)
->      at pthread_create.c:312
->  #10 0x00007ffff3c8037d in clone ()
->      at ../sysdeps/unix/sysv/linux/x86_64/clone.S:111
->
-> The affected function is here:
->
->  static void OneLine32 (struct ico_progressive_state *context)
-> {
->         gint X;
->         guchar *Pixels;
->
->         X = 0;
->         if (context->Header.Negative == 0)
->                 Pixels = (context->pixbuf->pixels +
->                           context->pixbuf->rowstride *
->                           (context->Header.height - context->Lines - 1));
->         else
->                 Pixels = (context->pixbuf->pixels +
->                           context->pixbuf->rowstride *
->                           context->Lines);
->         while (X < context->Header.width) {
->                 Pixels[X * 4 + 0] = context->LineBuf[X * 4 + 2];
->                 Pixels[X * 4 + 1] = context->LineBuf[X * 4 + 1];
->                 Pixels[X * 4 + 2] = context->LineBuf[X * 4 + 0];
->                 Pixels[X * 4 + 3] = context->LineBuf[X * 4 + 3];
->                 X++;
->         }
-> }
->
-> The value of context->Header.height in OneLine32 is a very large number
-> (probably it wasn't validated correctly). Such value is used to calculate
-> where to write, resulting in an overflow where Pixels is written.
->
-> This issue was found using QuickFuzz, the file to reproduce it is attached.
-> Please assign a CVE if suitable.
->
-> Regards, Franco
+>> several issues related to RSA and bignum operations
+
+
+> If one tries to calculate a modular
+> exponentiation with the base zero (0^b mod a, code) it would crash with
+> an invalid free operation, potentially leading to memory corruption.
+> https://github.com/hannob/bignum-fuzz/blob/master/matrixssl-base-zero.c
+
+>> Testing MatrixSSL's pstm_exptmod with base zero
+
+Use CVE-2016-6885.
+
+
+> a malicious client could simply send a zero or the key's modulus here. I
+> created a patch against openssl that allows to test this. Both values
+> crash the MatrixSSL server. However the crash seems not to happen in
+> pstm_exptmod(), it hits another bug earlier. In both cases the crash
+> happens due to an invalid memory read in the function pstm_reverse(),
+> which is not prepared for zero-sized inputs and will underflow the len
+> variable.
+> https://github.com/hannob/bignum-fuzz/blob/master/openssl-break-rsa-values.diff
+
+>> This patch allows one to send malformed RSA encryptions during the handshake.
+>> One can either send zeros or the RSA key modulus. Both trigger a bug in
+>> MatrixSSL 3.8.3.
+
+As far as we can tell, here you are reporting a crash issue that is not
+identical to the "exponentiation with the base zero" issue.
+
+Use CVE-2016-6886.
+
+
+> Fortunately this was discovered before the change made it into a
+> release.
+> https://lists.lysator.liu.se/pipermail/nettle-bugs/2016/003104.html
+
+>> I'm considering the below patch
+
+>>> https://lists.lysator.liu.se/pipermail/nettle-bugs/2016/003099.html
+>>> Committed and pushed now
+
+There is no CVE ID for this "crashes with a floating point error"
+behavior that existed in the https://git.lysator.liu.se/nettle/nettle
+code as of approximately 2016-07-17 through 2016-07-31. The Nettle
+documentation at https://www.lysator.liu.se/~nisse/nettle/ doesn't
+specifically recommend that people ship unreleased Nettle code. A CVE
+ID isn't, in general, required for each issue noted at any arbitrary
+point during development.
+
+
+> I was able to identify an input value that caused a
+> wrong calculation result.
+> 
+> They now restrict the input to the pstm_exptmod()
+> function to a set of bit sizes (512, 1024, 1536, 2048, 3072, 4096). My
+> test input had a different bit size
+
+As far as we can tell, a "wrong calculation result" is not always a
+vulnerability on its own, and sometimes becomes relevant only when
+there is a composite with another issue. However, the set of other
+issues is not fully specified and thus we are assigning a CVE ID to
+the "wrong calculation result" itself in this specific case.
+
+Use CVE-2016-6887.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXtwz9AAoJEHb/MwWLVhi2o/YP/idLfMy+aLG2sgmccQASZZGz
+BSri6w0qzXrp3vta6zvU5NtGrFKe6728eteh+s5tzvQOx8cibQhkRf0rhV5+OVWR
+dW3zOU/8yy8ns7liFnCCzkT3N64ZX7D6m3x9xfeBd9qAVp57y0OetH54mEX3K3wK
+az47xi35WpQsGfXP6MWpxUXXNod5P/hu38TCH/siIImB/gNYgP9tmTBArsp63/M6
+wxRLl5/zkMYc727tfY2apoAnu7c3qEl2WDOe12P4/T77Cpjbv1mQhpXT3fUw2dff
+vCILkdN/YZM0X4zFL4MIUsTOcRX68YoP83npRCjb9q9OX6fTCeZGjAE1z2Kc0DJr
+aRqv++KmjMDWa9T+NJoczsNbxcnvoCJhUpGIsL2czEEb8qbBgllbyIlvlcuh2zYf
+6fxMNgPbInINglJt5j+LqxSspk4ZyMF9Ptf0zPuEOwikaLOtFI5C1AVyMiQMwO9q
+RwtJnW1X4heT2OeoLQApRS3vXABdViQiPVDCqbKeYd5HaDuT3FtDqGQRfTzbCgaP
+ixdotezrAC9HX/UB2WDYwSbDEIJolfnGbplGOfIuPSOsbAmQegj3fFvQg8bM/a8m
+nIwmJl9liXlFpdJo4WEL4i0nQqACtP7Y3cB9oZY2S1MR2+locsZJB40p6P4T4tjG
+p1ybwtmkWvayRh9TNjg7
+=a0WT
+-----END PGP SIGNATURE-----
