@@ -1,72 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/29/3
-Message-ID: <CALPTtNXUdK88B7J1SwsFpjDQeu5UJAnUiTd98UmiUEWQOmey7g@mail.gmail.com>
-Date: Mon, 29 Aug 2016 16:31:50 -0700
-From: Reed Loden <reed@...dloden.com>
-To: dregad@...tisbt.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: MantisBT weakened CSP when using bundled Gravatar plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/19/10
+Message-Id: <20160819141419.659526C1CE1@smtpvmsrv1.mitre.org>
+Date: Fri, 19 Aug 2016 10:14:19 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
+Subject: Re: CVE Request: Qemu: net: vmxnet: integer overflow in packet initialisation
 Content-Type: text/plain; charset=utf-8
 
-Any reason why you don't just always use the https:// version for Gravatar
-here? Why ever use http://? Even if the MantisBT install is on HTTP, best
-to always load any third-party resources over TLS to better protect against
-MITM.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Just surprised me to see this:
-https://github.com/mantisbt/mantisbt/blob/b3511d2feb47eaee41feb5f69cf3c8a2c9acd229/plugins/Gravatar/Gravatar.php#L165-L169
+> Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support, with
+> network abstraction layer is vulnerable to an integer overflow issue. It could
+> occur while initialisation of a new packets in the device.
+> 
+> A privileged user inside guest could use this flaw to crash the Qemu instance
+> resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg03176.html
+> http://git.qemu.org/?p=qemu.git;a=commit;h=47882fa4975bf0b58dd74474329fdd7154e8f04c
 
-~reed
+Use CVE-2016-6888.
 
-On Mon, Aug 29, 2016 at 2:51 PM, <cve-assign@...re.org> wrote:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
-> > MantisBT 1.3.0-rc.2 introduced a new bundled plugin to handle display of
-> > users' avatars using Gravatar.
-> >
-> > Instead of adding the Gravatar web site to the list of allowed image
-> > sources in MantisBT's Content Security Policy, the plugin was replacing
-> > the whole policy by:
-> >
-> >    img-src 'self' http://www.gravatar.com/
-> >
-> > instead of the more strict default one of:
-> >
-> >    default-src 'self'; frame-ancestors 'none'; style-src 'self';
-> >    script-src 'self'
-> >
-> > Relaxed policy allows execution of remote and inline scripts, e.g.
-> > potentially enabling XSS attacks.
-> >
-> > https://github.com/mantisbt/mantisbt/commit/
-> b3511d2feb47eaee41feb5f69cf3c8a2c9acd229
-> > https://mantisbt.org/bugs/view.php?id=21263
->
-> Use CVE-2016-7111.
->
-> - --
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->   http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
->
-> iQIcBAEBCAAGBQJXxK4MAAoJEHb/MwWLVhi2p3EQAKULs3JDc49mBXeyVZ24IUoE
-> 6iWcUGjwiE5cHXnAxcNKZZp7/xsFo9tgdLbLZ37x48kU1cwp/B/rnQQCWJHfUJxJ
-> gR0qIutmEWCAq3nIVC0IR+tBm//0iiJuTuRhH/NjE9W4+EBPPjIHkkHxvnWLqyJo
-> SWBP/JJDYbB8sQ366+WLrNHTdxK+keVcu406KrbagWhPaMG1C9QAkTeHRxovI/me
-> JkbA3cVjfmO9BjHrAkbEYEJRU6Qxn8XsXUNW8bGoHBUt4WFON8BOGpt6Yyn1iDCs
-> APOou4yZqMPM8jSnS8MOCM9POuuK8QNXMTLPgnMkxLcFntz79ogVmzJYfl6jyQ6V
-> PW2dNtFU03QTI4nvL2UbVi1+oEbZycQbRnU0If7wHjedXIekFEX2uik0fAnJRwAk
-> LDgT/+g6g02RJZPmteQFrT0ZtXav2rFiznHicL93mRLt1sOiE32ULJrQ8DLBP5SA
-> EYitfKS09oBLDdSC5k+wogX22UgoFm4xZLrauVbRMKUApZNvKVSAADNewmRopXKR
-> Fm2lDPJKmmb+oOWVBj7MDz7J9u1SvnyVieX+53E8Bt0tnr9KD5R61XNfjnKJtvZg
-> +2l+S8HEUN3FdDz2WINbs9z1Sd5Fok9jc+TQXeIXR07jPC+MKE26zywhIiMYIfl/
-> 2Rs4hh+EhmuT20OUq14x
-> =U1Gg
-> -----END PGP SIGNATURE-----
->
-
+iQIcBAEBCAAGBQJXtxPMAAoJEHb/MwWLVhi2qbAQALDW9gWAfIs1puoNmVxiPEJa
+gEP2H+cvJ7x28K4IY1o6F2AFK+W0rLFrnemsD3UhD48Nd0SqsRkZu9zkdlnO/i/l
+bbQ3N4h1Cnim+6EW5W59mTVCN+mKyC+UOFDXCqB+YYd2YcBJ1V0oLkxKF7sMWN91
+fxchTWC+cK8I9UAoHVRIerCds9QA/K1BUGimhkBBuijZ2PCt4InPi8wMSSxyfGh5
+Jy7V4tqNHZ2i+s6vR0CQtoIf6D4wUyHY2sombCx5yGiUz9bcPuYlRhQyGNaU2jbq
+QKcA5Wqvby5Gf4z4BsfrS2AbIjhEiy15oE0YNEuLjUaTHJlZ3vbpziio3YOyX7qZ
+0aj8xKcKlVJ9AIJytwSMkmoCiv0J9gMgDoTRxxtgSnVzvLMuZXoBavsiD5+8oDZU
+j2NEBioYRz+EOYit6eUhh3GRgKY1gIMVHAsWeH6+t8VXEaioQiL2gQEK5+bwitLi
+W1417UWUfEI0c7XMvLdVVLWtFPPyF5JfWj/c5irpc5SZYwcpyKQ7xJS+kVFSHvlC
+1j/BNWhZhsR4gBB/Etw/SwBSia7Y5zJoHlZuFeUUxAV5ijvS4sGfFWEO4QBRE37m
+97XWGYUA0wl3j2BqneI66hQzBt9E3yvKQ/5VFoWwRXDdQMy2I5j887OD4sOFbp2h
+l/dyBnupm8bwaOhskqL+
+=n7LW
+-----END PGP SIGNATURE-----
