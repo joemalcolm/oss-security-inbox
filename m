@@ -1,28 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/5
-Message-ID: <7d122efe56014dc0a9bda220bf3bda62@imshyb02.MITRE.ORG>
-Date: Thu, 8 Dec 2016 01:35:37 -0500
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liq3ea@...il.com>
-Subject: Re: CVE request: Qemu: usb: ehci: memory leakage in ehci_init_transfer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/19/7
+Message-Id: <20160819134656.11C416C56A8@smtpvmsrv1.mitre.org>
+Date: Fri, 19 Aug 2016 09:46:56 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: CVE request: MatrixSSL lack of RSA-CRT hardening
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Quick Emulator(Qemu) built with the USB EHCI Emulation support is vulnerable
-> to a memory leakage issue. It could occur while processing packet data in
-> 'ehci_init_transfer'.
-> 
-> A guest user/process could use this issue to leak host memory, resulting in
-> DoS for a host.
-> 
-> http://git.qemu.org/?p=qemu.git;a=commit;h=791f97758e223de3290592d169f8e6339c281714
+>> Date: Mon, 27 Jun 2016 08:08:14 +0200
 
->> it doesn't free the 'p->sgl'
+> MatrixSSL 3.8.3 comes with this fix:
+> 
+> https://github.com/matrixssl/matrixssl/blob/master/CHANGES.md#validation-of-rsa-signature-creation
+> 
+> I think this warrants a CVE ID because RSA-CRT key leaks from
+> MatrixSSL have been observed in practice.
 
-Use CVE-2016-9911.
+>> Version 3.8.3 April 2016
+>> 
+>> BUG FIXES
+>> 
+>> Validation of RSA Signature Creation
+
+>> An internal RSA validation of created signatures has been added to the
+>> library in the psRsaEncryptPriv() function.
+>> 
+>> Security researcher Florian Weimer has shown it is possible for RSA
+>> private key information to leak under some special failure
+>> circumstances. Information on the exploit can be found here:
+>> https://people.redhat.com/~fweimer/rsa-crt-leaks.pdf
+>> 
+>> The potential leak is only possible if a DHE_RSA based cipher suite is
+>> supported on the server side. This is the only handshake combination
+>> in which an RSA signature is sent over the wire (during the
+>> SERVER_KEY_EXCHANGE message). The signature itself must have been
+>> incorrectly generated for the exploit to be possible.
+>> 
+>> The additional signature validation test will now cause the TLS
+>> handshake to fail prior to a faulty signature being sent to the
+>> client.
+
+Use CVE-2016-6882.
 
 - -- 
 CVE Assignment Team
@@ -32,17 +54,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYSPv+AAoJEHb/MwWLVhi2zvsP/3xTTHAxpT0SXnVo/5KFX/lC
-ANh7j1y2R9GVOBkwczTqD0MFwNDEM1FVVzhE9XVu4TLaJ7PYgsQzPpT6K+nI+Vhs
-fWq7rHIgclE9X4MP94N/sMYyE4oZZ35uJm0qLnXxItiGoeFKTNkWHtw1SPSzRRIK
-UfJ+PaA14SSts9XJquaxNf/kEYpKFhtGfrU5rsQc1XxSxMHhlBRdwOFLbMqopFhN
-oes/HFAwqmXpdmqxvUmvBhvcH4HR5+8RB4W9wM5wU+EAirYTSA8g2LQQiiFna2B7
-ES0ef9tZ/2PelYnExPj51Xl6xe5xbSML1z4MpxDX7GLyo/3oqM7/bLzFU7vnzsL1
-tA0UM5ipwb0An6TQDX285nGToTQU2KYbVYghz81F9Sro+GkVFPov5rq0s8bH54m0
-4GruXSeGGL7YKlOYPCq03p+stCXjUZS2d53qwPKMBBLmtomuGMK6LaUZnQQSn44V
-h7tphm8Hvapb86rBkixCA5xXBvwSGdX5QZy23Ppr2FBrfkGT4VEpWBdCEkn9Y3q2
-UUs8MdH9XRTlmqdfLf5EJPI53eIhxFVdBQV9VPb+qzuLtDt6ei24p5EPUZACUte7
-69cwfYegHyJnSXfL/FNuWDcdf2qsc0P1vh5Ka2QwUDVyRSl9Ef8qCt899aFRNsy5
-xUILseRrS8HSXuXKTtrR
-=yc/x
+iQIcBAEBCAAGBQJXtwzoAAoJEHb/MwWLVhi2EvwQAJZXlmmNwy/iDHfzIPx4J2Ai
+CuAnQ5mrHIACk77z496F8yxyjocM455UuBEaofIACrPbEFzIwV3+6cLPWCY59OcJ
+0XJ18AgUVxEYJyKlrIae5O3wTnrPix939TJvhuPn+YnuK6fNXtAk5PVCMWNWMyUD
+gCd2c3A2qDVJ+6lLmuTGnitZ8t0m88kUclzCfKMHK5ciYjDa8JcRoE9r45Ue2At0
+sRqdJ4OWcvSbIiHWA5zN43GZ13z3fKw2ev1NvWn2pKIhVj9SBzm+6kxzz/jTm5ZW
+o4Koam6Y59lspk5yXHCeDWpXuylYwn55pHTBQvTKjRSWh3kMXEx8/RR70qx4Z5Ow
+Wok13h9/1U6cn8wrbsJiODtW2eSvY/N/FHdRWlPj5sDR64PntUhxTR3l4WvgT8Pe
+ogn9m14ij8uc3/pwXyXECLSqXp8WchMEsmacPEitTxRfsXbA7LoqcuZ6pxxKefVY
+yxxmQHDKaoOD4U92hTW8zG+nGn1rMCvmA0lI2irrCthdW5oD929WNYTKPnalZJTe
+XPi+TqxyZq1ATJxN2fMtZHoXgtXxepmEeXQK+ZXowT3J7x5eHJ8ij6RKYHK4mW5/
+1QGHW0LMrycUgFoggOLPXDFm3Sgh/dOmTngRqR3GXssRPsBpbtBuSBBttwLXYB4o
+xLUdsD1hJSQLZkV5232f
+=yjNZ
 -----END PGP SIGNATURE-----
