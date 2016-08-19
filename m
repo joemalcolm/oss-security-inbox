@@ -1,54 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/4
-Message-ID: <CAA7hUgHwN_AymJRzV8SRiAB0F6hyxxwx+O3X8j7+LKWOvypJiQ@mail.gmail.com>
-Date: Wed, 5 Oct 2016 13:06:03 +0200
-From: Raphael Geissert <geissert@...ian.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: openjpeg CVE-2016-3181, CVE-2016-3182 .. and CVE-2013-6045
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/19/4
+Message-ID: <CALJHwhQEOavmdQ_dqNS2k5b1SFuvKUBTuQtOySi6zUfgSQ3-1Q@mail.gmail.com>
+Date: Fri, 19 Aug 2016 17:10:30 +1000
+From: Wade Mealing <wmealing@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-6327 | Linux kernel crash in infiniband subsystem.
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+System using the infiniband support module ib_srpt were vulnerable to
+a denial of service by system crash by a local attacker who is able to
+abort writes to a device using this initiator.
 
-On 27 September 2016 at 03:24, Doran Moppert <dmoppert@...hat.com> wrote:
-> First, CVE-2016-3181 and CVE-2016-3182 have been identified by upstream as the
-> same underlying issue.
->
-> https://github.com/uclouvain/openjpeg/issues/724
->
->> Origin of the issue is the same as #725
->
-> https://github.com/uclouvain/openjpeg/issues/725
-[...]
-> .. it gets more interesting.  The reproducer on issue 725 happens to tickle
-> a flaw in a patch for CVE-2013-6045 that was posted here back when:
->
-> http://seclists.org/oss-sec/2013/q4/412
->
-> segfault-1.patch uses:
->
-> +               tilec->data = (int*) opj_aligned_malloc((comp0size+3) * sizeof(int));
->
-> which should have used compcsize instead of comp0size.
+There were multiple areas in which aborting a scsi command are able to
+be handled, moving this to the correct location in the state machine
+ensured that this condition was never triggered through this code
+path.
 
-Yes, indeed. This patch also introduced a regression in the processing
-of some images.
-Cf. https://bugs.debian.org/734238
+The null pointer situation was enabled via a non attacker controlled
+meset() call, and this is not a use after free.  From my undestanding
+it is a denial of service only.
 
-> This hasn't been an issue in upstream openjpeg releases for a long time ...
-> but there are LTS distributions around still shipping 1.5.1 (or 1.3) with the
-> patches from here applied.  Those should preferably upgrade to 1.5.2:  changing
-> comp0size to compcsize eliminates this particular crash, but the upstream fixes
-> that got into 1.5.2 seem to more thoroughly address some of the underlying
-> problems.
+Thanks,
 
-Do you specifically know of a distribution that still has that patch?
-If I remember the context correctly, the use of comp0size could then
-lead to a heap buffer overflow later on. Was that what you noticed?
+Wade Mealing
 
-In any case, the patch should indeed better be replaced by the one
-provided upstream (cf. the Debian bug report).
-
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+https://bugzilla.redhat.com/show_bug.cgi?id=1354525
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=51093254bf87
