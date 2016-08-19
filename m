@@ -1,34 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/06/2
-Message-ID: <20161106203524.hkl2ketyczothiuk@eldamar.local>
-Date: Sun, 6 Nov 2016 21:35:24 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Clarification about CVE-2016-1841 for libxslt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/19/8
+Message-Id: <20160819134816.658D36C568E@smtpvmsrv1.mitre.org>
+Date: Fri, 19 Aug 2016 09:48:16 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: CVE request: MatrixSSL lack of RSA-CRT hardening
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-CVE-2016-1841 is assigned for libxslt, and the CVE description from
-MITRE states:
+>> Date: Wed, 29 Jun 2016 09:08:49 +0200
 
-> libxslt, as used in Apple iOS before 9.3.2, OS X before 10.11.5,
-> tvOS before 9.2.1, and watchOS before 2.2.1, allows remote attackers
-> to execute arbitrary code or cause a denial of service (memory
-> corruption) via a crafted web site. 
+> https://github.com/matrixssl/matrixssl/blob/master/CHANGES.md
 
-Following the references from Apple, this seems to be related to an
-issue reported by Sebastian Apelt. Recent bug reports and commits
-related to issues reported by SEbastian Apelt seem to be:
+>> Version 3.8.3 April 2016
+>> 
+>> BUG FIXES
 
-https://bugzilla.gnome.org/show_bug.cgi?id=758291
+> ##Side Channel Vulnerability on RSA Cipher Suites
+> A Bleichenbacher variant attack, where certain information is leaked
+> from the results of a RSA private key operation has been reported by a
+> security researcher. The code has been updated to error without
+> providing any information on the premaster contents.
 
-with corresponding upstream commit:
+Use CVE-2016-6883.
 
-https://git.gnome.org/browse/libxslt/commit/?id=fc1ff481fd01e9a65a921c542fed68d8c965e8a3
 
-Is this CVE association correct?
+> ##Access Violation on Malicious TLS Record
+> TLS cipher suites with CBC mode in TLS 1.1 and 1.2 could have an access
+> violation (read beyond memory) with a maliciously crafted message.
 
-Regards,
-Salvatore
+Use CVE-2016-6884.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXtwzzAAoJEHb/MwWLVhi2xmgP/iD9XBpR+o52Gs61DvmXISo6
+dD2oDK7BZLV4VDNgQxYVE+s1cr4vjInh6F5AFp0DfV/ThhplpblJzyMC9V/8R5x7
+ifZmpJACnrBvsoObFy2gu/4AxNgN6CBT+x5HBehZLsp/v+IPEQoo+QSagRtpnqye
+XHg6epkDcGJELzyfr+QLKU7bXEZJ5NLCoMMudFqE9iPOOPVluybsk/r5jLCwzp5y
+R82f/C040qjIZtkrwvKukoWFR6cpuhNYTqxYPNK5HIk1XDsXik1DmXfUnklV5u8h
+/yzd1QHQiS1ajFQz49qlYpWK7qz6JNwjnX07Oqg4MUT1rVTB0GpZwIPllcgcLMfU
+f6wtY2KfarJLpI/+XuwPSCqAO1yblyHr21Z0EEOa/QwpOnXQEDbv4wPKNBU+QjDj
+/F88xB7HE5DFsWi/TDqTG3H0RKqauVPBiExwimNwvsG1c3v7iCBOmvCK2h5OWBOq
+SVUBXhoce+4/QSorL1Q3qsxRWdtjUV0MYmts/r/sJj8aR6pBe2vDEtg79aimaxSd
+cQS7Lgnul2zMb1cGm/AzoS5YSjwn16V9iOMbKCHy9jXh/qc+Rp5ZtdsM9ZkgO/Gb
+NcqjLyLM72SgdX2ewCbFgP7g7YfwWKyz3tUjKi/hQjr5bM/uUoZInQKuEF/B+vB7
+HShanqXyyZFlrLWiy6+R
+=jgkP
+-----END PGP SIGNATURE-----
