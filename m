@@ -1,42 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/20/1
-Message-ID: <dee4adeb-e6b5-b011-b1cc-7c8e76a3ed1f@redhat.com>
-Date: Thu, 20 Oct 2016 08:39:40 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: OpenSSH: Memory exhaustion issue found in OpenSSH
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/19/1
+Message-Id: <20160819001841.A0F926DC092@smtpvmsrv1.mitre.org>
+Date: Thu, 18 Aug 2016 20:18:41 -0400 (EDT)
+From: cve-assign@...re.org
+To: rs@...skills.cz
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Requests Facebook HHVM
 Content-Type: text/plain; charset=utf-8
 
-On 10/20/2016 03:02 AM, cve-assign@...re.org wrote:
->> The OpenSSH has a memory exhaustion bug in key exchange process. An
->> unauthenticated peer could repeat the KEXINIT and cause allocation of
->> up to 384MB(not 128MB that the official said). In the default case, an
->> attacker can build 100 such connections, which will consume 38400 MB
->> of memory on the server.
-> 
->> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/kex.c?rev=1.127&content-type=text/x-cvsweb-markup
-> 
->>> Unregister the KEXINIT handler after message has been received.
-> 
-> Use CVE-2016-8858.
-> 
-> 
-OpenSSH upstream dos not consider this as a security issue btw.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-It seems the only thing the attacker could do here, is self-dos his own
-connection. Regarding consuming memory on the server, by opening several
-concurrent connections at the same time, there are various protections
-available in opensshd_config file, such as "MaxStartups", which can
-limit the maximum number of sessions per network connections.
+> -Fix out of bounds write access in
+> mb_detect_encoding, mb_send_mail, mb_detect_order.
+> https://github.com/facebook/hhvm/commit/365abe807cab2d60dc9ec307292a06181f77a9c2
 
-This value is effectively set to 10:30:100 so maximum of 100 * 128 MB
-can be allocated, which is pretty much for unauthenticated user. Though
-the rate limiting starts to drop connection after 10, which is like 1GB
-and which should not hurt the server (though it is not cool).
+Use CVE-2016-6870. The scope of this CVE is all of the incorrect uses
+of strndup that were fixed in this commit. The commit message
+references t11337047, which possibly is a bug that was discovered much
+earlier. However, because we don't know of any earlier public
+disclosure of t11337047, there isn't a separate CVE ID for t11337047.
 
 
+> -Fix buffer overrun due to integer overflow in bcmath
+> https://github.com/facebook/hhvm/commit/c00fc9d3003eb06226b58b6a48555f1456ee2475
+
+Use CVE-2016-6871.
 
 
+> -Fix integer overflow in StringUtil::implode
+> https://github.com/facebook/hhvm/commit/2c9a8fcc73a151608634d3e712973d192027c271
 
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+Use CVE-2016-6872.
+
+
+> -Fix self recursion in compact
+> https://github.com/facebook/hhvm/commit/e264f04ae825a5d97758130cf8eec99862517e7e
+
+Use CVE-2016-6873.
+
+
+> -Fix recursion checks in array_*_recursive
+> https://github.com/facebook/hhvm/commit/05e706d98f748f609b19d8697e490eaab5007d69
+
+Use CVE-2016-6874.
+
+
+> -Fix infinite recursion in wddx
+> https://github.com/facebook/hhvm/commit/1888810e77b446a79a7674784d5f139fcfa605e2
+
+Use CVE-2016-6875.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXtk/uAAoJEHb/MwWLVhi2OFwP/Aig7rJ2rCVEyv+/KwDJBC+a
+ufukAbNgsFbzHChTJxntRrWS3PJt7DKkZ4a2wlPzdUd4rQKGFObmMMm4OIWw2xaj
+TiBngAelDRJNDNP/ZmkEySj9RGS33UMg+6QnI5pOFI3r7uXIqBau+cjIyq3diqUC
+NFlaiFy2TcIb82bYRET3r4SIk8019uaP2rfN5CDLKuNPpYIM3d/Xo0490MwufTHh
+QyTiFtFDwsZdtCQz5wFR949Lt+B6rEFdhzYDaqjJr9We6POxvy799/8LUI2UGtwN
+P6UiCzS1o/ybx6QCh+Lx7wDNBuT/3t0aeFhWx1FJuFodtF9yiILMxD4BpaARlnva
+4Nv/+TNhCmcGGLyE3wCrcAVeCX/QcsAaM9fXYVGy2SuqRmljW7sQIhpkaCIzQCwq
+EEGCZMeqPBZ1pMlIJgKmWa0PvKfkv0nDtNhQqNN57hS3YcePE8rShO7+/HYRQaYL
+zMe8u6OWVZr432Iwcia1Zjxnmi6ix1g3Ua8gz8oWAGrvw5/6T0gEzRyz+OB79+y+
+3OKeE/GDQA/aVRutZciQrrHT30uzkgwtoAQdafur5Cna0cEqRQnclcwFxUfPdpr4
+qJJFWH2vmPncge0xx2auUaDv8+7OBOonUvlmEWIfowSdg66D0Qm6EyqN6UNZqm5a
+tVSy0zt3nnIATS36SGDd
+=tBiw
+-----END PGP SIGNATURE-----
