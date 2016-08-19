@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1963" "Tuesday" "29" "September" "2015" "13:12:37" "+0200" "Andreas Stieger" "astieger@suse.com" "<560A7225.6020201@suse.com>" "55" "Re: [oss-security] Re: CVE request for wget" nil nil nil "9" "2015092911:12:37" "[oss-security] Re: CVE request for wget" (number mark "        astieger@sus Sep 29   55/1963  " thread-indent "\"Re: [oss-security] Re: CVE request for wget\"\n") "<20150925200413.DC3B16C406D@smtpvmsrv1.mitre.org>" ("<20150925200413.DC3B16C406D@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1552" "Friday" "19" "August" "2016" "10:14:19" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160819141419.659526C1CE1@smtpvmsrv1.mitre.org>" "37" "[oss-security] Re: CVE Request: Qemu: net: vmxnet: integer overflow in packet initialisation" nil nil nil "8" "2016081914:14:19" "[oss-security] Re: CVE Request: Qemu: net: vmxnet: integer overflow in packet initialisation" (number mark "U       cve-assign@m Aug 19   37/1552  " thread-indent "\"[oss-security] Re: CVE Request: Qemu: net: vmxnet: integer overflow in packet initialisation\"\n") "<alpine.LFD.2.20.1608191655520.5616@wniryva>" ("<alpine.LFD.2.20.1608191655520.5616@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27671 invoked by uid 550); 29 Sep 2015 11:13:17 -0000
+Received: (qmail 25604 invoked by uid 550); 19 Aug 2016 14:14:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26615 invoked from network); 29 Sep 2015 11:13:16 -0000
-References: <20150925200413.DC3B16C406D@smtpvmsrv1.mitre.org>
-X-Enigmail-Draft-Status: N1110
-Organization: SUSE Linux GmbH
-Message-ID: <560A7225.6020201@suse.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
-MIME-Version: 1.0
-In-Reply-To: <20150925200413.DC3B16C406D@smtpvmsrv1.mitre.org>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="lis0N21mbNMoNhufBUIGo4pVNSmU6Dnaw"
-Cc: oss-security@lists.openwall.com
-Date: Tue, 29 Sep 2015 13:12:37 +0200
-From: Andreas Stieger <astieger@suse.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE request for wget
-To: cve-assign@mitre.org
+Received: (qmail 24562 invoked from network); 19 Aug 2016 14:14:30 -0000
+From: cve-assign@mitre.org
+To: ppandit@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn
+In-Reply-To: <alpine.LFD.2.20.1608191655520.5616@wniryva>
+Message-Id: <20160819141419.659526C1CE1@smtpvmsrv1.mitre.org>
+Date: Fri, 19 Aug 2016 10:14:19 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: Qemu: net: vmxnet: integer overflow in packet initialisation
 
---lis0N21mbNMoNhufBUIGo4pVNSmU6Dnaw
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hello,
+> Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support, with
+> network abstraction layer is vulnerable to an integer overflow issue. It could
+> occur while initialisation of a new packets in the device.
+> 
+> A privileged user inside guest could use this flaw to crash the Qemu instance
+> resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg03176.html
+> http://git.qemu.org/?p=qemu.git;a=commit;h=47882fa4975bf0b58dd74474329fdd7154e8f04c
 
-On 09/25/2015 10:04 PM, cve-assign@mitre.org wrote:
-> > https://mailman.boum.org/pipermail/tails-dev/2015-August/009370.html
-> > https://lists.gnu.org/archive/html/bug-wget/2015-08/msg00020.html
-> >
-> http://git.savannah.gnu.org/cgit/wget.git/commit/?id=3D075d7556964f5a871a=
-73c22ac4b69f5361295099
->
-> We really don't understand what set of expectations led to this
-> becoming a CVE request for a vulnerability in wget.
+Use CVE-2016-6888.
 
-Possibly assignments for CWE-200 including CVE-2000-0649, CVE-2002-0422
-relating to exposure if an internal IP address of a communication partner.
-
-The remaining points are noted.
-
-Andreas
-
---=20
-Andreas Stieger <astieger@suse.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imend=F6rffer, Jane Smithard, Graham Norton, HRB=
- 21284 (AG N=FCrnberg)
-
-
-
-
---lis0N21mbNMoNhufBUIGo4pVNSmU6Dnaw
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQIcBAEBCgAGBQJWCnIuAAoJECzWqVXhWUVGyCAQAKk/pbCol1zT63N1R/XHpJ00
-uuH3E+ruZWodE6dOESl6ZR5MV3yTaMzP+1dNQdj4J4ZmQBUhjePNTbaGR3GUDGqC
-IHOib6tpOnuRK4AQ1UdhcLZSVtiS61yuE7HsvRjdEGj42+YLMJwVy3r4Rl0zFsvO
-rqDBatdfhV29B/mVB2qTot3QKI8eKTUu2r494UU0XFZLWVZN8kGXGvCpLnf+r+xb
-zb7w6vhDyCZHaTbjxrM4FGx/2JhjuPXNIjOukzJOKEws2qqfXjVixcLxIf42L9X8
-VAzjo9PGeqd/mSmZJkq/xKxtWt2ozvfdA62sGAxBvw5eTFNJiz9yUNlH96T5eoKZ
-Lj6Aq+WxvQNCYnM8ng2B5aBpBPn1yfhQCWt/uF4z6vU3iCFqRIfPL+2bOYXWhOLt
-ZQPNqOMXN+NLhY71LtQGA5D8kJr6gSfi5mm/CBnQ2H+oVl5yOVopNJrsfPNffO0C
-DenHwvbh0qRC0riBe6cJkf1inRsHvnZQzrCqa/cQYKLt2/gg7DnDIwAUqkyI9VRJ
-WUdpNpsiHjIzQuOT/qUnThsqZb+g4Hlz4DFbIH9ijWDMEEyRh9me92pHiuVVGO7U
-JaPw5rcCt4xuFfL09Lb/FP3ibV3wP9t7HTh08Glq6n1cMmaCoA6OBYcrZOCtA3FF
-g74NQjz20VA7Dn0CtJts
-=c35w
+iQIcBAEBCAAGBQJXtxPMAAoJEHb/MwWLVhi2qbAQALDW9gWAfIs1puoNmVxiPEJa
+gEP2H+cvJ7x28K4IY1o6F2AFK+W0rLFrnemsD3UhD48Nd0SqsRkZu9zkdlnO/i/l
+bbQ3N4h1Cnim+6EW5W59mTVCN+mKyC+UOFDXCqB+YYd2YcBJ1V0oLkxKF7sMWN91
+fxchTWC+cK8I9UAoHVRIerCds9QA/K1BUGimhkBBuijZ2PCt4InPi8wMSSxyfGh5
+Jy7V4tqNHZ2i+s6vR0CQtoIf6D4wUyHY2sombCx5yGiUz9bcPuYlRhQyGNaU2jbq
+QKcA5Wqvby5Gf4z4BsfrS2AbIjhEiy15oE0YNEuLjUaTHJlZ3vbpziio3YOyX7qZ
+0aj8xKcKlVJ9AIJytwSMkmoCiv0J9gMgDoTRxxtgSnVzvLMuZXoBavsiD5+8oDZU
+j2NEBioYRz+EOYit6eUhh3GRgKY1gIMVHAsWeH6+t8VXEaioQiL2gQEK5+bwitLi
+W1417UWUfEI0c7XMvLdVVLWtFPPyF5JfWj/c5irpc5SZYwcpyKQ7xJS+kVFSHvlC
+1j/BNWhZhsR4gBB/Etw/SwBSia7Y5zJoHlZuFeUUxAV5ijvS4sGfFWEO4QBRE37m
+97XWGYUA0wl3j2BqneI66hQzBt9E3yvKQ/5VFoWwRXDdQMy2I5j887OD4sOFbp2h
+l/dyBnupm8bwaOhskqL+
+=n7LW
 -----END PGP SIGNATURE-----
-
---lis0N21mbNMoNhufBUIGo4pVNSmU6Dnaw--
