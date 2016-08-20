@@ -1,4 +1,9 @@
-Received: (qmail 17672 invoked by uid 550); 3 May 2023 19:55:01 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2049" "Saturday" "20" "August" "2016" "11:05:10" "+0200" "Summer of Pwnage" "lists@securify.nl" "<cc5ec17a-0cae-f262-b865-243d67045ef9@securify.nl>" "44" "[oss-security] Path traversal vulnerability in WordPress Core Ajax handlers" nil nil nil "8" "2016082009:05:10" "[oss-security] Path traversal vulnerability in WordPress Core Ajax handlers" (number mark "U       lists@securi Aug 20   44/2049  " thread-indent "\"[oss-security] Path traversal vulnerability in WordPress Core Ajax handlers\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 17563 invoked by uid 550); 20 Aug 2016 09:05:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,47 +12,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17651 invoked from network); 3 May 2023 19:55:00 -0000
-From: "David A. Wheeler" <dwheeler@dwheeler.com>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.7\))
-Date: Wed, 3 May 2023 15:54:38 -0400
-References: <20230418154630.eoheygqyom3c7ovw@stig.io>
- <20230429100407.3yqdy2vtzokv3t5l@stig.io>
- <6d30fdfb-ad9a-2839-9ad1-93ff478a8459@thirddimension.net>
+Received: (qmail 17545 invoked from network); 20 Aug 2016 09:05:22 -0000
+X-Virus-Scanned: amavisd-new at pine.nl
+From: Summer of Pwnage <lists@securify.nl>
 To: oss-security@lists.openwall.com
-In-Reply-To: <6d30fdfb-ad9a-2839-9ad1-93ff478a8459@thirddimension.net>
-Message-Id: <30B5E64A-3EEE-4676-979C-A5A39373F46B@dwheeler.com>
-X-Mailer: Apple Mail (2.3608.120.23.2.7)
-Subject: Re: [oss-security] Perl's HTTP::Tiny has insecure TLS cert default,
- affecting CPAN.pm and other modules
+Organization: Securify B.V.
+Message-ID: <cc5ec17a-0cae-f262-b865-243d67045ef9@securify.nl>
+Date: Sat, 20 Aug 2016 11:05:10 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Path traversal vulnerability in WordPress Core Ajax handlers
 
+------------------------------------------------------------------------
+Path traversal vulnerability in WordPress Core Ajax handlers
+------------------------------------------------------------------------
+Yorick Koster, July 2016
 
+------------------------------------------------------------------------
+Abstract
+------------------------------------------------------------------------
+A path traversal vulnerability was found in the Core Ajax handlers of
+the WordPress Admin API. This issue can (potentially) be used by an
+authenticated user (Subscriber) to create a denial of service condition
+of an affected WordPress site.
 
-> On May 3, 2023, at 3:15 PM, Reid Sutherland <reid@thirddimension.net> wro=
-te:
->=20
-> Who actually decides when something receives a CVE?
+------------------------------------------------------------------------
+OVE ID
+------------------------------------------------------------------------
+OVE-20160712-0036
 
-There's a process for assigning CVEs. Anyone who wants to be able to assign=
- CVEs - that is, to become a CVE Numbering Authority (CNA) - has to follow =
-various processes. I'm sure it can be improved, like all things. I'm not di=
-rectly involved in this. You might find more information here:
-https://www.cve.org/ProgramOrganization/CNAs
+------------------------------------------------------------------------
+See also
+------------------------------------------------------------------------
+#37490 - Improve capability checks in wp_ajax_update_plugin() and
+wp_ajax_delete_plugin()
 
->  This can be used to defame projects and products as in this case.
+------------------------------------------------------------------------
+Tested versions
+------------------------------------------------------------------------
+This issue was successfully tested on the WordPress version 4.5.3.
 
+------------------------------------------------------------------------
+Fix
+------------------------------------------------------------------------
+WordPress version 4.6 mitigates this vulnerability by moving the CSRF
+check to the top of the affected method(s).
 
-Identifying a vulnerability does not defame a project. If a library has the=
- functionality to retrieve an https URLs, and fails to verify the server ce=
-rtificates by default, then I (and many others) would call that a vulnerabi=
-lity. After all, the default is what happens. If you request data from <htt=
-ps://google.com>, you wouldn't expect it to use the data from <https://godz=
-illa.com>. There's a general expectation that https://FPP provides a secure=
- connection to FOO (with confidentiality, integrity, and server authenticat=
-ion), unless you specially disable it.
+------------------------------------------------------------------------
+Details
+------------------------------------------------------------------------
+https://sumofpwn.nl/advisory/2016/path_traversal_vulnerability_in_wordpress_core_ajax_handlers.html
 
---- David A. Wheeler
-
+------------------------------------------------------------------------
+Summer of Pwnage (https://sumofpwn.nl) is a Dutch community project. Its
+goal is to contribute to the security of popular, widely used OSS
+projects in a fun and educational way.
