@@ -1,35 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/26/2
-Message-ID: <trinity-b4ba7486-1df9-44b1-927e-feeb38f0466e-1474851796223@3capp-gmx-bs55>
-Date: Mon, 26 Sep 2016 03:03:16 +0200
-From: cookieopfer@....net
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/20/1
+Message-ID: <cc5ec17a-0cae-f262-b865-243d67045ef9@securify.nl>
+Date: Sat, 20 Aug 2016 11:05:10 +0200
+From: Summer of Pwnage <lists@...urify.nl>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: ffmpeg afl bugs
+Subject: Path traversal vulnerability in WordPress Core Ajax handlers
 Content-Type: text/plain; charset=utf-8
 
+------------------------------------------------------------------------
+Path traversal vulnerability in WordPress Core Ajax handlers
+------------------------------------------------------------------------
+Yorick Koster, July 2016
 
+------------------------------------------------------------------------
+Abstract
+------------------------------------------------------------------------
+A path traversal vulnerability was found in the Core Ajax handlers of
+the WordPress Admin API. This issue can (potentially) be used by an
+authenticated user (Subscriber) to create a denial of service condition
+of an affected WordPress site.
 
-> Have fun with ffmpeg-h264-call-stack-overflow.mp4
-> > Perhaps you meant to share this file with this community?
+------------------------------------------------------------------------
+OVE ID
+------------------------------------------------------------------------
+OVE-20160712-0036
 
-yes, I forgot to mention it is in
-/usr/share/doc/afl/vuln_samples/ffmpeg-h264-call-stack-overflow.mp4
- 
-> Hmm... I think that
-> docs/vuln_samples/ffmpeg-h264-call-stack-overflow.mp4 is just a sample
-> file that comes with AFL (and dates back to December 2014). I doubt it
-> still crashes anything
+------------------------------------------------------------------------
+See also
+------------------------------------------------------------------------
+#37490 - Improve capability checks in wp_ajax_update_plugin() and
+wp_ajax_delete_plugin()
 
-see above! not crashing, but:
+------------------------------------------------------------------------
+Tested versions
+------------------------------------------------------------------------
+This issue was successfully tested on the WordPress version 4.5.3.
 
- "overread end of atom 'stsd' by 4294967134 bytes"
+------------------------------------------------------------------------
+Fix
+------------------------------------------------------------------------
+WordPress version 4.6 mitigates this vulnerability by moving the CSRF
+check to the top of the affected method(s).
 
-> and I'm not sure what the original reporter was trying to say.
-> 
-> /mz
+------------------------------------------------------------------------
+Details
+------------------------------------------------------------------------
+https://sumofpwn.nl/advisory/2016/path_traversal_vulnerability_in_wordpress_core_ajax_handlers.html
 
-I just can't fix it further on this machine, so I only could post the
-trace.
-
-Also thanks for afl-fuzz!
-Download attachment "ffmpeg-h264-call-stack-overflow.mp4" of type "video/mp4" (1259 bytes)
+------------------------------------------------------------------------
+Summer of Pwnage (https://sumofpwn.nl) is a Dutch community project. Its
+goal is to contribute to the security of popular, widely used OSS
+projects in a fun and educational way.
