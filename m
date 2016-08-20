@@ -1,38 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/04/5
-Message-ID: <56D9DD1F.1030302@cert.org>
-Date: Fri, 4 Mar 2016 14:08:15 -0500
-From: Art Manion <amanion@...t.org>
-To: Kurt Seifried <kseifried@...hat.com>, cve-editorial-board-list <cve-editorial-board-list@...TS.MITRE.ORG>, oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/20/4
+Message-ID: <DB3PR05MB217DBB2D4476DFBE907D6D8BE170@DB3PR05MB217.eurprd05.prod.outlook.com>
+Date: Sat, 20 Aug 2016 16:50:29 +0000
+From: Mauri Miettinen <Mauri.Miettinen@...dent.oulu.fi>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "ouspg@...oulu.fi" <ouspg@...oulu.fi>
+Subject: TLS testing results - OS distro vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 2016-03-04 13:24, Kurt Seifried wrote:
-> So I've now heard from several security researchers that they are unable
-> to get CVEs for issues that need CVEs (e.g. widely used
-> hardware/software with flaws that have real world impacts and need to be
-> properly tracked. This has definitely resulted in issues being
-> publicized with no CVE that then makes it much harder to track and deal
-> with these issues.
+To whom it may concern,
 
-I think it's been said on this list previously -- these are two separate
-activities:
+We developed a tool to check if languages and libraries verify TLS certificates properly.
+While testing this tool we did a shootout against supported versions of the
+some major Linux distributions. 
 
-1. Assigning IDs
+Results are available from:
 
-2. Analysis, deconfliction, write-up
+https://github.com/ouspg/trytls/blob/shootout-0.3/shootout/README.md
 
-Binding these together results in delay, because #2 takes considerably
-more calendar time and effort.  Another result is a limited but fairly
-high quality set of entries (once #2 is complete).
+It seems it may be unsafe to do TLS in some of the  common distros.
+E.g. the native Python version in the distros varies, and not all fixes have
+been backported. In these cases Python still doesn't always have certificate
+checking enabled by default.
 
-I share Kurt's concern that CVE is not meeting a researcher/disclosure
-use case of having IDs for vulnerabilities, and that the community will
-at some point stop bothering with CVE.
+We have contacted Python developers about the results. 
 
-I'm not sure how bad such an outcome would be, or what impact that would
-have on CVE.
+https://mail.python.org/pipermail/python-dev/2016-August/145815.html
 
- - Art
+They gave us a couple of good pointers on how configuration could be
+used to mitigate the issues in some of the distributions. We are afraid
+this is still a hazard where neither software developers or users realize
+that code that works well for the developer may not be safe for the users.
 
+Would you have any other resources, advice or pointers we should
+document when communicating about this in the TryTLS project?
 
+Mauri Miettinen
+
+PS. Results have indications of weak crypto issues as well.
