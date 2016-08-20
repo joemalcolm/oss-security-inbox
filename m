@@ -1,34 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/4
-Message-ID: <20160504040143.GC2319@hunt>
-Date: Tue, 3 May 2016 21:01:43 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/20/3
+Message-ID: <E28562C2-12D4-407B-BD2B-E154F5FCF884@trust-in-soft.com>
+Date: Sat, 20 Aug 2016 14:06:42 +0000
+From: Pascal Cuoq <cuoq@...st-in-soft.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "wk@...pg.org" <wk@...pg.org>, Raphaël Rieu-Helft <raphael.rieu-helft@...st-in-soft.com>
+Subject: memory issues in libksba 1.3.4 and git
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 03, 2016 at 08:42:30PM -0500, Bob Friesenhahn wrote:
-> >This appears to be executed via:
-> >https://sourceforge.net/p/graphicsmagick/code/ci/default/tree/magick/delegate.c
-> >which tries to escape arguments using UnixShellTextEscape(). This function
-> >appears to replace \`"$ chars with backslash-escaped versions. I'm not
-> >sure this is a safe mechanism either.
-> 
-> Please provide me with a working exploit.
+Hello all,
 
-Sorry, exploits aren't my strong suite.
+this GitHub commit illustrates a memory issue present in in libksba 1.3.4 and in the current git tree from git://git.gnupg.org/libksba.git :
 
-Shells are crazy things though -- | & || && and ; make it easy to execute
-additional commands. * ? {} and [] make it easy to turn "single" arguments
-into many arguments or get forbidden characters from the filesystem into
-the command line anyway. - can change behaviours of called programs. etc etc.
+https://github.com/pascal-cuoq/libksba-fork/commit/709642767fbf7f2030d89bca4e4b192d612400ae
 
-> Be aware that this quoting method is only used for the few delegates.mgk
-> rules which require shell-like syntax to work. Otherwise the external
-> program is run using execvp() without a shell.
+In summary:
 
-Now this I love to hear. execve() makes me happy.
+Executing “tests/cert-basic long_time.crt” allocates a disproportionate 33MB of memory. In the current libksba git snapshot, this memory is initialized to zero, which takes a couple of milliseconds (probably mostly spent handling pagefaults), which is more than it should take to parse a certificate of a few hundred bytes on a modern computer. In version 1.3.4, the memory is left uninitialized, so no time is wasted. The commit that causes the memory to be initialized is https://github.com/pascal-cuoq/libksba-fork/commit/2a9fc5654df497b91ab9b64e946c1e19371888e5 and this commit was applied to prevent uninitialized memory from being incorporated into computations.
 
-Thanks
+Executing “tests/cert-basic 90s.crt” allocates 60146387817 bytes (60GB). In the current libksba git snapshot, initializing this memory takes several seconds.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Executing “tests/cert-basic 0.0.0.0.0.crt” allocates 3MB of memory, which are either left uninitialized (1.3.4 version) or initialized to zero (git version). A large part of this memory is then converted to an “AuthorityKeyIdentifier”. In the git version, this produces a long sequence of 0.0.0.0... In version 1.3.4, since it's uninitialized memory that is used, the sequence may look different, and may contain secrets. “Secrets” here include cryptographic secrets that would unhygienically have been left in a freed memory block, but also addresses of variables, of library functions, etc. that might make another vulnerability exploitable.
+
+These inputs have been set to Werner Koch, privately as per his request, on May 25, June 11 and July 11. I am publishing them now so that anyone who uses or might want to use libksba to parse messages (received pre-authentification by definition) can make an informed choice considering the risks of denial of service and information leak.
+
+
+The inputs were found and kindly placed in the “hangs” result directory by afl-fuzz. The undefined behaviors caused by the inputs were investigated with tis-interpreter and a dependency analysis prototype developed by Raphaël Rieu-Helft. The results shown in https://github.com/pascal-cuoq/libksba-fork/blob/master/log were obtained by running ./autogen.sh, ./configure and make to build an instrumented version of libksba on a 128GiB Linux workstation (Ubuntu 16.04).
+
+Pascal
+
