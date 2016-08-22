@@ -1,53 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/26/1
-Message-ID: <576F61B4.1020505@plzdonthack.me>
-Date: Sat, 25 Jun 2016 23:01:40 -0600
-From: Scotty <sbauer@...donthack.me>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/13
+Message-ID: <20160822152448.GC3132@suse.de>
+Date: Mon, 22 Aug 2016 17:24:49 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE Request: Linux kernel HID: hiddev buffer overflows
+Cc: Adam Maris <amaris@...hat.com>, Greg KH <greg@...ah.com>, cve-assign@...re.org, security@...nel.org
+Subject: Re: Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
 Content-Type: text/plain; charset=utf-8
 
-Good evening,
+Hi,
 
-There is a small buffer overflow in the hiddev driver code which seems to have come due
-to a re-factor of the driver in 2008-ish.
+This seems a bit sore topic, and Mitre does not want to chime in.
 
-If a user-land process calls the hiddev ioctl with the HIDIOCGUSAGES or HIDIOCSUSAGES command,
-and passes a report id of HID_REPORT_ID_UNKNOWN it bypasses a series of bounds checks. Later in
-the code the attacker can loop on some controlled value and overwrite past the bounds of the
-uref_multi array or the value array.
+Perhaps we need to add more criteria to select CVE assignment.
 
-
-	switch (cmd) {
-...
-...
-...
-		case HIDIOCGUSAGES:
-/* HEAP OVERFLOW, Attacker controls num_values */
-			for (i = 0; i < uref_multi->num_values; i++)
-				uref_multi->values[i] =
-				    field->value[uref->usage_index + i];
-			if (copy_to_user(user_arg, uref_multi,
-					 sizeof(*uref_multi)))
-				goto fault;
-			goto goodreturn;
-		case HIDIOCSUSAGES:
-/* HEAP OVERFLOW, attacker controls num_values */
-			for (i = 0; i < uref_multi->num_values; i++)
-				field->value[uref->usage_index + i] =
-				    uref_multi->values[i];
-			goto goodreturn;
-		}
-
-The issue has been fixed upstream here:
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=93a2001bdfd5376c3dc2158653034c20392d15c5
-
-Attached is a PoC illustrating the issue. 
-
-Thank you.
+- simple DOS (e.g. NULL ptr dereference) when plugging in: No CVE
+- code execution (use after free, write overflows) when plugging in: Assign CVE
 
 
-View attachment "usb_hiddev.c" of type "text/x-csrc" (1677 bytes)
+That said, this leaves malicious USB devices posing as regular keyboards 
+for text injection unclassified ... 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Ciao, Marcus
+
+On Thu, Aug 18, 2016 at 09:50:24PM +0200, Willy Tarreau wrote:
+> On Thu, Aug 18, 2016 at 08:16:27PM +0200, Adam Maris wrote:
+> > Attacker doesn't necessarily need to have physical access to USB port. He
+> > can somehow
+> > hand USB off to the victim that will with good intentions stick it to his
+> > USB port, unexpectedly
+> > causing kernel panic. Difference is that one probably wouldn't pour glue or
+> > corrosive liquid
+> > into his USB port believing that nothing bad will happen.
+> 
+> Well, it happened to me when I was a kid, with a PS/2 port. I handed off
+> a device to someone of trust to connect to the PS/2 port and parallel port.
+> (PS/2 to pick the +5V). I wired it wrong and the motherboard died, as
+> amazing as it seems and the person didn't find it fun as it was not his PC.
+> 
+> So yes it can be done even without suspecting. It's easy to do whatever you
+> want using a USB stick. You can use the 3W it provides to charge a 300V
+> capacitor and discharge it on the D+/D- to test the clamping diodes
+> robustness, etc...
+> 
+> Thus I don't think either that something "only causing a panic" deserves
+> a CVE. It needs to be fixed however, for sure!
+> 
+> Regards,
+> Willy
+> 
+
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
