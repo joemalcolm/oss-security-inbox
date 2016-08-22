@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["929" "Tuesday" "16" "January" "2018" "16:38:07" "-0500" "Michael McNally" "mcnally@isc.org" "<c6a80b3d-e325-d09d-32f2-aa3ccb21be7a@isc.org>" "22" "[oss-security] ISC has announced CVE-2017-3144, a defect in ISC DHCP" nil nil nil "1" "2018011621:38:07" "[oss-security] ISC has announced CVE-2017-3144, a defect in ISC DHCP" (number mark "U       mcnally@isc. Jan 16   22/929   " thread-indent "\"[oss-security] ISC has announced CVE-2017-3144, a defect in ISC DHCP\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1382" "Monday" "22" "August" "2016" "10:42:09" "-0400" "Velmurugan Periasamy" "vel@apache.org" "<D3E08781.193C42%vel@apache.org>" "43" "[oss-security] CVE update (CVE-2016-5395) - Fixed in Apache Ranger 0.6.1" nil nil nil "8" "2016082214:42:09" "[oss-security] CVE update (CVE-2016-5395) - Fixed in Apache Ranger 0.6.1" (number mark "U       vel@apache.o Aug 22   43/1382  " thread-indent "\"[oss-security] CVE update (CVE-2016-5395) - Fixed in Apache Ranger 0.6.1\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26561 invoked by uid 550); 16 Jan 2018 21:38:24 -0000
+Received: (qmail 20403 invoked by uid 550); 22 Aug 2016 14:42:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,38 +12,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26533 invoked from network); 16 Jan 2018 21:38:23 -0000
-To: oss-security@lists.openwall.com
-From: Michael McNally <mcnally@isc.org>
-Message-ID: <c6a80b3d-e325-d09d-32f2-aa3ccb21be7a@isc.org>
-Date: Tue, 16 Jan 2018 16:38:07 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:52.0)
- Gecko/20100101 Thunderbird/52.5.2
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] ISC has announced CVE-2017-3144, a defect in ISC DHCP
+Received: (qmail 20385 invoked from network); 22 Aug 2016 14:42:30 -0000
+User-Agent: Microsoft-MacOutlook/14.6.6.160626
+Date: Mon, 22 Aug 2016 10:42:09 -0400
+From: Velmurugan Periasamy <vel@apache.org>
+To: "security@apache.org" <security@apache.org>,
+	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
+	"bugtraq@securityfocus.com" <bugtraq@securityfocus.com>,
+	<victor.hora@securusglobal.com>
+CC: "dev@ranger.incubator.apache.org" <dev@ranger.incubator.apache.org>,
+	"user@ranger.incubator.apache.org" <user@ranger.incubator.apache.org>,
+	"private@ranger.incubator.apache.org" <private@ranger.incubator.apache.org>,
+	Velmurugan Periasamy <vel@apache.org>
+Message-ID: <D3E08781.193C42%vel@apache.org>
+Thread-Topic: CVE update (CVE-2016-5395) - Fixed in Apache Ranger 0.6.1
+Mime-version: 1.0
+Content-type: multipart/alternative;
+	boundary="B_3554707337_12476631"
+Subject: [oss-security] CVE update (CVE-2016-5395) - Fixed in Apache Ranger 0.6.1
 
-Please be advised that ISC has publicly announced a vulnerability in
-ISC DHCP.
+--B_3554707337_12476631
+Content-type: text/plain;
+	charset="ISO-8859-1"
+Content-transfer-encoding: quoted-printable
 
-CVE-2017-3144 is a partial denial-of-service vector which can be used
-to exhaust the server's pool of socket descriptors if an attacker can
-open connections to the server's OMAPI control port.  If successfully
-exploited the attacker can prevent the operator from being able to
-connect to the server, for example to change server state or to add
-lease reservations without restarting the server.
+Hello:
 
-Since an unauthorized client should not be permitted access to this
-port under normal circumstances, we are recommending that most operators
-should simply secure access to the control port; however a patch which
-properly cleans up the hung socket descriptors is available upon request
-(and will be included in future maintenance releases.)
+Here=B9s a CVE update for Ranger 0.6.1 release. Please see below details.
 
-Our full CVE text can be found at https://kb.isc.org/article/AA-01541
+Release details can be found at
+https://cwiki.apache.org/confluence/display/RANGER/0.6.1+Release+-+Apache+Ra
+nger
 
---
-Michael McNally
-ISC Security Officer
+Thank you,
+Velmurugan Periasamy
+
+----------------------------------------------------------------------------
+-------------------
+CVE-2016-5395: Apache Ranger Stored Cross Site Scripting vulnerability
+----------------------------------------------------------------------------
+-------------------
+Severity: Normal=20
+Vendor: The Apache Software Foundation
+Versions Affected: All 0.5.x versions of Apache Ranger and version 0.6.0
+Users Affected: All users of ranger policy admin tool
+Description: Apache Ranger was found to be vulnerable to a
+Stored Cross-Site Scripting in the create user functionality. Admin users
+can
+store some arbitrary javascript code to be executed when normal users login
+and
+access policies.=20
+Fix details: Added logic to sanitize the user input
+Mitigation: Users should upgrade to 0.6.1 or later version of Apache Ranger
+with the fix.
+Credit: Thanks to Victor Hora from Securus Global for reporting this issue.
+----------------------------------------------------------------------------
+-------------------
+
+
+
+--B_3554707337_12476631--
+
 
