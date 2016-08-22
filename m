@@ -1,38 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/8
-Message-ID: <20161005184753.417dd846@pc1>
-Date: Wed, 5 Oct 2016 18:47:53 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/8
+Message-ID: <20160822111911.GA4540@openwall.com>
+Date: Mon, 22 Aug 2016 14:19:11 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
+Cc: Mauri Miettinen <Mauri.Miettinen@...dent.oulu.fi>, ouspg@...oulu.fi
+Subject: Re: TLS testing results - OS distro vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 5 Oct 2016 09:13:03 -0700
-Tavis Ormandy <taviso@...gle.com> wrote:
+On Mon, Aug 22, 2016 at 10:46:24AM +0200, Jakub Wilk wrote:
+> * Mauri Miettinen <Mauri.Miettinen@...dent.oulu.fi>, 2016-08-20, 16:50:
+> >We developed a tool to check if languages and libraries verify TLS 
+> >certificates properly. While testing this tool we did a shootout 
+> >against supported versions of the some major Linux distributions.
+> >
+> >Results are available from:
+> >
+> >https://github.com/ouspg/trytls/blob/shootout-0.3/shootout/README.md
+> 
+> How did you manage to run tests against Debian 7 (wheezy)? Your setup.py 
+> requires Python 2.7.9 or 3.4.0, but wheezy has only 2.7.3/3.2.3.
 
-> If you're using ImageMagick, I would recommend disabling the PS, EPS,
-> PDF and XPS coders in policy.xml. Applications like gimp, evince,
-> claws, and most other applications that generate thumbnails of PDF/PS
-> documents should probably not do so without a prompt (NOTE: A lot of
-> packages do this
+I think Mauri isn't subscribed - CC'ing.
 
-I was surprised to see evince in this list. It uses poppler for pdf and
-libspectre for postscript, so there seems to be no use of
-ghostscript (maybe in an older version).
-Also for claws the only use of ghostscript is in a plugin that's not
-enabled by default.
-
-While I agree that avoiding parsing for things like thumbnails should
-be tried I still wonder what the overall solution to this is. Because
-even if we avoid non-prompted ps parsing we still want to be able to
-parse PS files without code execution.
-Do you feel dSAFER could be secured or is this a loosing battle?
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
-
-Content of type "application/pgp-signature" skipped
+Alexander
