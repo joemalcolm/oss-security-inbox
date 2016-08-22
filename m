@@ -1,60 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/4
-Message-ID: <alpine.LFD.2.20.1605091734040.23120@wniryva>
-Date: Mon, 9 May 2016 17:40:04 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Michael Roth <mdroth@...ux.vnet.ibm.com>, Peter Maydell <peter.maydell@...aro.org>, Gerd Hoffmann <ghoffman@...hat.com>, Stefano Stabellini <sstabellini@...nel.org>, zuozhi.fzz@...baba-inc.com
-Subject: CVE-2016-3712 Qemu: vga: out-of-bounds read and integer overflow issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/16
+Message-ID: <20160822205542.GB12931@kroah.com>
+Date: Mon, 22 Aug 2016 16:55:42 -0400
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Cc: meissner@...e.de, cve-assign@...re.org
+Subject: Re: Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, Aug 22, 2016 at 02:37:17PM -0400, cve-assign@...re.org wrote:
+> There has been a related CVE for five years (CVE-2011-0640), although
+> selecting udev as the responsible component was probably not the right
+> approach, and maybe that CVE should be updated or rejected. We think
+> the current understanding, very roughly, is:
 
-   Hello,
+Yes, udev isn't the correct place for it, but I really don't know what
+would be.  What "tool" was assigned this CVE for other operating systems
+that do the same thing (all BSDs, OS-X, Windows, etc.)?
 
-An out-of-bounds read and integer overflow issue was reported in the Qemu 
-emulator's VGA module.
+> 
+>   - the Linux kernel does not require a configuration in which a newly
+>     connected USB device is recognized in any way
 
-Qemu VGA module allows guest to edit certain registers in 'vbe' and 'vga' 
-modes. ie. guest could set certain 'VGA' registers while in 'VBE' mode. This 
-leads to potential integer overflow or OOB read access issues in Qemu, 
-resulting in DoS by crashing the Qemu process on the host. (Moderate)
+I don't understand this statement, can you clarify?
 
-A privileged guest user could use this flaw to crash the Qemu process on the 
-host.
+The Linux kernel has a configuration that does not allow any USB devices
+to work, unless explicitly granted permission to do so by a userspace
+tool.  The device will be enumerated, but that is all, it is up to
+userspace to then tell the kernel to actually "use" the device.
+This feature has been present at the USB "device" level for quite some
+time, and at the USB "interface" level now for I think over a year (can
+dig it out if people really care, the work was done by someone from
+SuSE.)
 
-'CVE-2016-3712' has been assigned to this issue by Red Hat Inc. Patches are 
-attached herein to help fix this issue.
+Also, all Wireless USB devices operate in this manner "by default" for
+as long as Linux has supported Wireless USB devices (thankfully these
+devices are really rare.)
 
-This issue was discovered and reported by Zuozhi Fzz of Alibaba Inc.
+>   - a Linux distribution may ship with a default configuration in
+>     which a newly connected USB device can operate as a keyboard and
+>     inject text into an application
 
-Thank you.
-- --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Yes, but I don't understand, perhaps what you really mean to say is:
+	A Linux distribution may ship with a default configuration of
+	trusting all new devices that are plugged in without any form of
+	userspace authentication before they begin to operate.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+>   - some Linux distributions want to have this behavior, and their
+>     maintainers have concluded that there is no comprehensive method
+>     for "asking a user" about a new USB device in a way that is
+>     compatible with all use cases
 
-iQIcBAEBAgAGBQJXMH4cAAoJEN0TPTL+WwQfJQ8QAIskTPJjmQ5o2OMyIgTrFlTe
-suLiD/qRFInd/MpgeICalqVRBzxh5FdOUJWXCoDUbogPLdZ2LmUHBXL/LyjDK01O
-R118M3HYUxWGowPf5Jh+ir4/IPSZamTn0LFZAJCrwWW9dmdqcbnoClDxBm6wsDJD
-4uzYmYoHogQZ4DVVL8k9kRrQ1yIkftvwoYZCXN6ToikvXcbJxJdDnc5jQ9W/ABGV
-fAfJfsG1zbq2fXagfy+ChKJANse525TAKpTmTZXcZWyoE7JrIUFNFIsWWaBpuJdp
-yqj+T8EF0bDz2DxJlmlILkpqg48EaEFJlKBg0jlR8/hkNyl1wgEX+Y/C7mgJd2Om
-Dipwkk/G4/izUWls+IZijWeZ2Ge1ul4QG+sM0/InnYhTuyhq3Cw8E8Nt+ZOJHBKj
-/KOEYYPr7/QEIC41LKVatN2W5ai6mOSkiGD6qIuIvuR3dPhz7qhFZAML/1KAooAs
-QOTPxjqxuMvDUm4+KAF598WY+3UFpDeIF0LExc1bhrvEcrjlhC7ypm02d5WaOk26
-wkJQ4hJcbHRs/4vp8mMkpTdz8ccjzfbz3GI1GmSsxN5EbdLW4+r8xgGXZ0o0jwpX
-JJHtq1wikxab5+rgC/03oDlGcL2AtD7FvDJtcyGEl+5raDguwNrAuKZoF1cBnTVg
-MDzQ2/zuFdeJbIWydjL9
-=xwOS
------END PGP SIGNATURE-----
-View attachment "0005-vga-make-sure-vga-register-setup-for-vbe-stays-intac.patch" of type "text/plain" (2873 bytes)
+Huh?  There is such a method, Linux has supported this for a very long
+time (see above.)   It's up to the distro to decide to use it or not,
+that's their choice (hint, I don't blame them for making this choice,
+it's what almost all users expect and want as well...)
 
-View attachment "0004-vga-update-vga-register-setup-on-vbe-changes.patch" of type "text/plain" (948 bytes)
+>   - if anyone (whether a Linux distribution or other type of product)
+>     is announcing a required security update, in which software or
+>     configuration is being changed to address malicious keyboard
+>     attacks, then we can assign a CVE ID to associate with the update
+>     announcement
 
-View attachment "0003-vga-factor-out-vga-register-setup.patch" of type "text/plain" (5241 bytes)
+Why would a CVE be needed for a "my distro decides to not trust USB
+devices as much as your distro does" type decision?  This is just a
+matter of how a distribution configures their kernel, combined with
+their decision of how to deal with new USB devices.  Perhaps you could
+argue that some of those decisions might be "more secure" than others,
+but I don't see a "bug" that is resolved by deciding about this one way
+or the other, do you?
 
-View attachment "0002-vga-add-vbe_enabled-helper.patch" of type "text/plain" (2163 bytes)
+thanks,
+
+greg k-h
