@@ -1,44 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/05/7
-Message-Id: <20160905224147.43F636C0FB8@smtpvmsrv1.mitre.org>
-Date: Mon,  5 Sep 2016 18:41:47 -0400 (EDT)
-From: cve-assign@...re.org
-To: kdudka@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: [SECURITY VULNERABILITY] curl: Re-using connections with wrong client cert
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/2
+Message-ID: <CALJHwhSmb-Fx6VYaqW4FwNg=GTm=q2d7LqqoZ10U5TjA1=nTOA@mail.gmail.com>
+Date: Mon, 22 Aug 2016 15:28:51 +1000
+From: Wade Mealing <wmealing@...hat.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: CVE request: Linux kernel mbcache lock contention denial of service.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Gday,
 
-> libcurl built on top of NSS (Network Security Services) still incorrectly
-> re-uses client certificates if a certificate from file is used for one TLS
-> connection but no certificate is set for a subsequent TLS connection.
-> 
-> This problem was caused by an implementation detail of the NSS backend
-> in libcurl, which is orthogonal to the cause of CVE-2016-5420.
+A design flaw was found in the file extended attribute handling of the
+linux kernels handling of cached attributes.  Too many entries in the
+cache cause a soft lockup while attempting to iterate the cache and
+access relevant locks.
 
-Use CVE-2016-7141 for this additional vulnerability.
+Upstream has replaced the mbcache code with an updated version which
+was not a patch but a clear-cut reimplementation of the code, no
+single diff
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Soft lockup information is in both the bugzilla.kernel.org and
+referred to in the LWN article.  This would affect containers running
+with ext4 as it shares the same mbcache between all containers/host.
 
-iQIcBAEBCAAGBQJXzfQ7AAoJEHb/MwWLVhi2JxoP/jhAg0xmSqjBWgmM9DjHYtgE
-5mH15/YJkalUBLA1v3YFThjBxLgUsCDxzYozC282c536nPbGhOJsYJuyUW/U9EO9
-+hFC2a3i2Zthe8VQg78eIYN7XvrxsVwJrFlzH8yxtrZmOxgr0u4d+KwDYY6d83yQ
-hNvOlnoqKuVuuHI5xx7GciJvQZZJT8HzG5LbrwHX1oJUPPKkULK+47vKzXPdJqyp
-kpKkqa4qYxpnlg9CES1lRL5GQzzIaMWhX//qMy7Itkj+E58ww6e1h/YCa1krqRfV
-mDv05V+s+kofoPGUrcc2zqfM6PW5795QfJBOPK//vd7ugSTtj+OKhmL/YMwBP9w/
-ncDoOFzRm6lykh9s4huDTmV3oNQ/ohbtgRQNBVXl4CQ5G8cfKdjMCgxl6nTJXv74
-FIBUmQ9BzZrsSZjgOUYhbGDxTnnPR8H7mMu64nY+nNFDG6mEuTE+5J/QPNkrg5LJ
-TLFwQLijgy+ehn00Gp/c252OqgiWlOjVAUXjgEGqLlk4sXFGGu/sC0V89jRcbv/M
-L8mqa9E+5uarFRAuQF2aSv9C26ZcHwW6WKjO/T8BsLVYsQSi5RFCddx5NmqysRf7
-5Lguj0K9nCVYSkfkhS4Mwrj+sSbpTKDCeiMXfcfGA2gWjX2KWFQqboMoNEVNonDc
-0KNha7mMSmK/gVR3SCWO
-=LzSU
------END PGP SIGNATURE-----
+This did not affect Red Hat Enterprise Linux versions 5,6 or 7, so I
+can't validate the claim that it does affect other newer kernels.
+This may be worthwhile tracking for others who are affected by this
+flaw.
+
+For those following along at home, this seemed to be fixed in:
+
+ ±  git tag --contains be0726d33cb8f411945884664924bed3cb8c70ee
+v4.6
+
+However I can't be sure which factor introduced the issue, but I've
+been unable to reproduce with the given instructions.
+
+Thanks,
+
+Wade Mealing
+Red Hat Product Security
+
+Upstream discussion:
+https://lwn.net/Articles/668718/
+
+Bugzilla kernel submission:
+https://bugzilla.kernel.org/show_bug.cgi?id=107301
+
+Red Hat Bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=1360968
