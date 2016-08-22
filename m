@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["506" "Thursday" "27" "October" "2016" "08:35:01" "-0700" "Andy Lutomirski" "luto@kernel.org" "<CALCETrUyZyOgMNC7sN0s6+jfzZbou+butapbyu-PFev3GJgiww@mail.gmail.com>" "11" "[oss-security] CVE-2016-5195 test case" nil nil nil "10" "2016102715:35:01" "[oss-security] CVE-2016-5195 test case" (number mark "U       luto@kernel. Oct 27   11/506   " thread-indent "\"[oss-security] CVE-2016-5195 test case\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1193" "Monday" "22" "August" "2016" "15:58:02" "+0300" "Jani Kenttala" "jkenttal@ee.oulu.fi" "<20160822125802.GA3826@ee.oulu.fi>" "32" "Re: [oss-security] TLS testing results - OS distro vulnerabilities" "^Cc:" nil nil "8" "2016082212:58:02" "[oss-security] TLS testing results - OS distro vulnerabilities" (number mark "        jkenttal@ee. Aug 22   32/1193  " thread-indent "\"Re: [oss-security] TLS testing results - OS distro vulnerabilities\"\n") "<20160822111911.GA4540@openwall.com>" ("<DB3PR05MB217DBB2D4476DFBE907D6D8BE170@DB3PR05MB217.eurprd05.prod.outlook.com>" "<20160822084624.i4dbedj35qd3p22j@jwilk.net>" "<20160822111911.GA4540@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7755 invoked by uid 550); 27 Oct 2016 15:57:48 -0000
+Received: (qmail 5627 invoked by uid 550); 22 Aug 2016 13:08:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,29 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24042 invoked from network); 27 Oct 2016 15:35:41 -0000
-X-Gm-Message-State: ABUngvd9qHoWRgYrYXCSM0BPUSsBgxiZGy3nhmNpQRp1WnIzqmmTULCPu/9nszfIX1DlSJfak40hpvqAvXep+TOD
-X-Received: by 10.31.82.129 with SMTP id g123mr6728519vkb.55.1477582521776;
- Thu, 27 Oct 2016 08:35:21 -0700 (PDT)
+Received: (qmail 32097 invoked from network); 22 Aug 2016 12:58:27 -0000
+Message-ID: <20160822125802.GA3826@ee.oulu.fi>
+References: <DB3PR05MB217DBB2D4476DFBE907D6D8BE170@DB3PR05MB217.eurprd05.prod.outlook.com>
+ <20160822084624.i4dbedj35qd3p22j@jwilk.net>
+ <20160822111911.GA4540@openwall.com>
 MIME-Version: 1.0
-From: Andy Lutomirski <luto@kernel.org>
-Date: Thu, 27 Oct 2016 08:35:01 -0700
-X-Gmail-Original-Message-ID: <CALCETrUyZyOgMNC7sN0s6+jfzZbou+butapbyu-PFev3GJgiww@mail.gmail.com>
-Message-ID: <CALCETrUyZyOgMNC7sN0s6+jfzZbou+butapbyu-PFev3GJgiww@mail.gmail.com>
-To: oss security list <oss-security@lists.openwall.com>
-Content-Type: text/plain; charset=UTF-8
-X-Virus-Scanned: ClamAV using ClamSMTP
-Subject: [oss-security] CVE-2016-5195 test case
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20160822111911.GA4540@openwall.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Cc: oss-security@lists.openwall.com,
+        Mauri Miettinen <Mauri.Miettinen@student.oulu.fi>, ouspg@ee.oulu.fi
+Date: Mon, 22 Aug 2016 15:58:02 +0300
+From: Jani Kenttala <jkenttal@ee.oulu.fi>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] TLS testing results - OS distro vulnerabilities
+To: Solar Designer <solar@openwall.com>
 
-I sat on this longer than makes any sense given how easy to reproduce
-CVE-2016-5195 is, but here's a reasonably portable reproducer.  It's
-intended to have no side effects, but your mileage may vary.
+On Mon, Aug 22, 2016 at 02:19:11PM +0300, Solar Designer wrote:
+> On Mon, Aug 22, 2016 at 10:46:24AM +0200, Jakub Wilk wrote:
+> > * Mauri Miettinen <Mauri.Miettinen@student.oulu.fi>, 2016-08-20, 16:50:
+-snip-
+> > >Results are available from:
+> > >
+> > >https://github.com/ouspg/trytls/blob/shootout-0.3/shootout/README.md
+> > 
+> > How did you manage to run tests against Debian 7 (wheezy)? Your setup.py 
+> > requires Python 2.7.9 or 3.4.0, but wheezy has only 2.7.3/3.2.3.
+> 
+> I think Mauri isn't subscribed - CC'ing.
+> 
+> Alexander
 
-https://github.com/amluto/vulnerabilities/blob/master/others/CVE-2016-5195/test_CVE-2016-5195.c
+Hi!
 
-This will use /proc/self/mem or ptrace automatically, and it's
-intended to be portable to a wide range of kernels.  It's an improved
-version of the test case I originally sent out to distros (oops!).
+We used self-compiled python to run the tests against the older python bundled with the OS 
+(see Dockerfile at https://github.com/ouspg/trytls/blob/shootout-0.3/shootout/debian-7/Dockerfile).
 
---Andy
+To elaborate a bit, we are actually looking two different set of requirements.
+
+1) TryTLS runner itself requires 2.7.9 or 3.4.0
+2) However, it can call older python version (or what ever command) when executing the tests.
+
+That being said, python2-urllib2 did not execute cleanly with 2.7.3. 
+There is a pull request about that <https://github.com/ouspg/trytls/pull/237>, 
+and the corresponding result has been marked as N/A in the summary table.
+
+-- 
+-Jani
+
