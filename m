@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1163" "Friday" "10" "July" "2015" "16:34:49" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150710203449.0DD867BC176@smtpvmsrv1.mitre.org>" "31" "[oss-security] Re: Follow up: PowerDNS Security Advisory 2015-01" nil nil nil "7" "2015071020:34:49" "[oss-security] Re: Follow up: PowerDNS Security Advisory 2015-01" (number mark "        cve-assign@m Jul 10   31/1163  " thread-indent "\"[oss-security] Re: Follow up: PowerDNS Security Advisory 2015-01\"\n") "<559B9BD0.1080409@powerdns.com>" ("<559B9BD0.1080409@powerdns.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["876" "Monday" "22" "August" "2016" "16:16:45" "+0300" "Solar Designer" "solar@openwall.com" "<20160822131645.GA6176@openwall.com>" "20" "Re: [oss-security] memory issues in libksba 1.3.4 and git" nil nil nil "8" "2016082213:16:45" "[oss-security] memory issues in libksba 1.3.4 and git" (number mark "U       solar@openwa Aug 22   20/876   " thread-indent "\"Re: [oss-security] memory issues in libksba 1.3.4 and git\"\n") "<87mvk59d3f.fsf@wheatstone.g10code.de>" ("<E28562C2-12D4-407B-BD2B-E154F5FCF884@trust-in-soft.com>" "<8760qtaza4.fsf@wheatstone.g10code.de>" "<20160822111506.GA4403@openwall.com>" "<87mvk59d3f.fsf@wheatstone.g10code.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9727 invoked by uid 550); 10 Jul 2015 20:35:50 -0000
+Received: (qmail 30164 invoked by uid 550); 22 Aug 2016 13:17:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,44 +11,38 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9504 invoked from network); 10 Jul 2015 20:34:59 -0000
-In-Reply-To: <559B9BD0.1080409@powerdns.com>
-Message-Id: <20150710203449.0DD867BC176@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri, 10 Jul 2015 16:34:49 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Follow up: PowerDNS Security Advisory 2015-01
-To: pieter.lexis@powerdns.com
+Received: (qmail 29993 invoked from network); 22 Aug 2016 13:16:48 -0000
+Date: Mon, 22 Aug 2016 16:16:45 +0300
+From: Solar Designer <solar@openwall.com>
+To: Werner Koch <wk@gnupg.org>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20160822131645.GA6176@openwall.com>
+References: <E28562C2-12D4-407B-BD2B-E154F5FCF884@trust-in-soft.com> <8760qtaza4.fsf@wheatstone.g10code.de> <20160822111506.GA4403@openwall.com> <87mvk59d3f.fsf@wheatstone.g10code.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87mvk59d3f.fsf@wheatstone.g10code.de>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] memory issues in libksba 1.3.4 and git
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, Aug 22, 2016 at 02:56:20PM +0200, Werner Koch wrote:
+> On Mon, 22 Aug 2016 13:15, solar@openwall.com said:
+> > Werner, maybe you could try this old workaround for next time you post? -
+> >
+> >   (setq mml-insert-mime-headers-always t)
+> 
+> Done.  Thanks for pointing me to this setting; for reference this is:
+> 
+>   If non-nil, always put Content-Type: text/plain at top of empty parts.
+>   It is necessary to work against a bug in certain clients.
 
-> https://doc.powerdns.com/md/security/powerdns-advisory-2015-01/
-> Update 7th of July 2015: Toshifumi Sakaguchi discovered that the original fix was insufficient
+Thanks.  This appears to have made no effect, and thus didn't work
+around whatever ezmlm-idx bug(?) your messages are triggering here.
+Your messages are missing the Content-Type header for MIME parts that
+are not empty, so this does not literally fit the description above.
 
-For cases of an insufficient fix, an additional CVE ID is assigned.
-Use CVE-2015-5470. The reason for this CVE is apparently the absence
-of:
+Anyway, it's not a topic for oss-security.  I am merely noting that this
+is something I need to investigate and fix... eventually.
 
-   if (ret.length() > 1024)
-     throw MOADNSException("Total name too long");
-
-in PowerDNS Recursor 3.6.3 and 3.7.2 and Auth 3.3.2 and 3.4.4.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVoCm+AAoJEKllVAevmvmsCd0IAIYvsrFye9E332uBKjKKzo+V
-y2KfAeiN0qxnTL31MdYavs8ruWNkzQFgBSPKbhqYYPGKU661SMr+hDy2mVSicysY
-MywUEOamB4/9/vA11QV0P+KNhtUmwUJwL7FslAGveSZm+3OF9qxQPtIzNQQdh6J7
-YzEW1Xk5UxmjCJmWyzasFf39jAUax/RngvKtHYrUjGkNKZXWabCFqiZ5tO90ga+7
-sRhN1HSNSbxB2KMIFCqTMxe78xGV/8J7ifTihQBZe7gx2GbcoBLCf0v+N4mFTl6U
-Ziio5mchYZU5HLtdqwMxRg5/vDoxbGT7C1Nqg8rUZAgmFERzwrYzdax8HP/hzhk=
-=ONFs
------END PGP SIGNATURE-----
+Alexander
