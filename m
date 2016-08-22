@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3003" "Tuesday" "6" "October" "2015" "09:42:30" "+0300" "=?UTF-8?B?QW50aSBSw6Rpcw==?=" "antirais@gmail.com" "<56136D56.2000209@gmail.com>" "76" "[oss-security] Re: CVE-Request for stored WCI (a.k.a XSS) in Visual Form Builder 2.7.5 - 2.8.4" nil nil nil "10" "2015100606:42:30" "[oss-security] Re: CVE-Request for stored WCI (a.k.a XSS) in Visual Form Builder 2.7.5 - 2.8.4" (number mark "U       antirais@gma Oct  6   76/3003  " thread-indent "\"[oss-security] Re: CVE-Request for stored WCI (a.k.a XSS) in Visual Form Builder 2.7.5 - 2.8.4\"\n") "<55F67C1B.2020503@gmail.com>" ("<55F67C1B.2020503@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1757" "Monday" "22" "August" "2016" "17:24:49" "+0200" "Marcus Meissner" "meissner@suse.de" "<20160822152448.GC3132@suse.de>" "44" "Re: [oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices" "^Cc:" nil nil "8" "2016082215:24:49" "[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices" (number mark "        meissner@sus Aug 22   44/1757  " thread-indent "\"Re: [oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices\"\n") "<20160818195024.GB17944@1wt.eu>" ("<20160818142216.GH2701@suse.de>" "<20160818143014.GA27854@kroah.com>" "<20160818143957.GI2701@suse.de>" "<20160818145724.GA32181@kroah.com>" "<20160818151654.GK2701@suse.de>" "<1471538630.13300.95.camel@decadent.org.uk>" "<3385bcd9-629a-5978-abfa-87cae962deb2@redhat.com>" "<20160818195024.GB17944@1wt.eu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3715 invoked by uid 550); 6 Oct 2015 06:42:56 -0000
+Received: (qmail 20435 invoked by uid 550); 22 Aug 2016 15:25:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,108 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3663 invoked from network); 6 Oct 2015 06:42:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:references:message-id:date:user-agent:mime-version
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=wN5QoIF7Rq7mJDVjb8O1loOf9gR8I3h3clNw8DI76u4=;
-        b=OkcmMvara548n9f4JZGW7XuZO8wWl9Qww/g+AMOKTJTJXefOCmjFwzqv+Cllt4p6xC
-         Ktqi81mLBoatM2cKNjShSQLFOqrg1SB8PTxo3Dl2tHAy09Qfi/ogmI3YON3NbF/qJpC3
-         Da+drp6jkZoYwo9HL17gW7RtMrlQ/NHMTeJ5GfAzxlCp83iuS0w/Jo5WzS2Ly5jvn+2p
-         eewGAX4JWZzPksBl3SsLuUMZ2MENo7MWMuUtiAYfP4j7K458HfI0N+Bd/1CHAFw0/3gB
-         FMB9O0yjCDst/dTSXdwFTcJfCG4A/dMYcTZFYKysWru+qoiUHDR+tjjJJ4b0Hqp7Z4RR
-         k6dw==
-X-Received: by 10.112.163.99 with SMTP id yh3mr13682837lbb.121.1444113760513;
-        Mon, 05 Oct 2015 23:42:40 -0700 (PDT)
-From: =?UTF-8?Q?Anti_R=c3=a4is?= <antirais@gmail.com>
-To: oss-security@lists.openwall.com
-References: <55F67C1B.2020503@gmail.com>
-Message-ID: <56136D56.2000209@gmail.com>
-Date: Tue, 6 Oct 2015 09:42:30 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
+Received: (qmail 20417 invoked from network); 22 Aug 2016 15:25:01 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20160822152448.GC3132@suse.de>
+References: <20160818142216.GH2701@suse.de>
+ <20160818143014.GA27854@kroah.com>
+ <20160818143957.GI2701@suse.de>
+ <20160818145724.GA32181@kroah.com>
+ <20160818151654.GK2701@suse.de>
+ <1471538630.13300.95.camel@decadent.org.uk>
+ <3385bcd9-629a-5978-abfa-87cae962deb2@redhat.com>
+ <20160818195024.GB17944@1wt.eu>
 MIME-Version: 1.0
-In-Reply-To: <55F67C1B.2020503@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] Re: CVE-Request for stored WCI (a.k.a XSS) in Visual Form Builder
- 2.7.5 - 2.8.4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20160818195024.GB17944@1wt.eu>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Cc: Adam Maris <amaris@redhat.com>, Greg KH <greg@kroah.com>,
+	cve-assign@mitre.org, security@kernel.org
+Date: Mon, 22 Aug 2016 17:24:49 +0200
+From: Marcus Meissner <meissner@suse.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: CVE Request: Linux kernel crash of OHCI when
+ plugging in malicious USB devices
+To: oss-security@lists.openwall.com
 
-Hi!
+Hi,
 
-Has there been any movement on this matter or is this CVE request rejected?
+This seems a bit sore topic, and Mitre does not want to chime in.
 
-Anti
+Perhaps we need to add more criteria to select CVE assignment.
 
-On 14.09.2015 10:49, Anti Räis wrote:
-> Greetings,
->
-> I've discovered a vulnerability in the following component and would
-> like to request CVE-ID for it:
->
-> Product:       Visual Form Builder
-> (https://wordpress.org/plugins/visual-form-builder/)
-> Version:       2.7.5 - 2.8.4 (according to the source code), fixed in 2.8.5
-> Product-type:  Wordpress plugin
-> Vendor:        http://vfbpro.com/
-> Fixed:         2015-09-09, reported 2015-09-06
-> Changelog:    
-> https://plugins.trac.wordpress.org/changeset?old_path=%2Fvisual-form-builder%2Ftags%2F2.8.4&old=1244830&new_path=%2Fvisual-form-builder%2Ftags%2F2.8.5&new=1244830&sfp_email=&sfph_mail=
->
-> Description:
-> This plugin is used to create feedback forms. Unauthenticated user can submit 
-> malicious code and it is shown to the authenticated administrator in the entries 
-> page. Upon viewing the submitted entry, the attackers code executes resulting in 
-> web content injection attack (WCI, a.k.a XSS).
->
->
-> Vulnerability:
->
-> --- start visual-form-builder/includes/class-entries-detail.php ---
-> 160 case 'textarea' :
-> 161 case 'html' :
-> 162         ?>
-> 163         <tr valign="top">
-> 164                 <th scope="row"><label for="field[<?php echo $obj->id; ?>]"><?php echo stripslashes( $obj->name ); ?></label></th>
-> 165                 <td style="background:#eee;border:1px solid #ddd"><?php echo wpautop( stripslashes( wp_specialchars_decode( esc_html( $obj->value ) ) ) ); ?></td>
-> 166         </tr>
-> 167 <?php
-> 168         break;
-> 169 default :
-> 171         ?>
-> 172         <tr valign="top">
-> 173                 <th scope="row"><label for="field[<?php echo $obj->id; ?>]"><?php echo stripslashes( $obj->name ); ?></label></th>
-> 174                 <td style="background:#eee;border:1px solid #ddd"><?php echo stripslashes( wp_specialchars_decode( esc_html( $obj->value ) ) ); ?></td>
-> 175         </tr>
-> 176 <?php
-> 177         break;
-> --- end visual-form-builder/includes/class-entries-detail.php ---
->
-> The vulnerability lies in the following PHP code:
-> <?php echo stripslashes( wp_specialchars_decode( esc_html( $obj->value ) ) ); ?>
->
-> The $obj->value contains user supplied data and is escaped using the esc_html() 
-> and then HTML special characters are decoded using wp_specialchars_decode() 
-> which essentially neuters the esc_html(). Finally, the stripslashes() is 
-> applied, which removes '\' from the given argument.
->
-> Poc:
->     * Submit the following value in the form's text field:
->         \<svg/onload=alert(1)  ;
->
->     * authenticated administrator views the entry and executes the code
->         Visual Form Builder -> Entries -> (attacker's entry) -> View
->
-> Disclosure timeline:
->     2015-09-06 - discovery, contacted the developers
->     2015-09-08 - sent further details and requested feedback
->     2015-09-09 - new release with the fix was released
->
-> All the best,
->
-> Anti Räis
->
->
+- simple DOS (e.g. NULL ptr dereference) when plugging in: No CVE
+- code execution (use after free, write overflows) when plugging in: Assign CVE
 
+
+That said, this leaves malicious USB devices posing as regular keyboards 
+for text injection unclassified ... 
+
+Ciao, Marcus
+
+On Thu, Aug 18, 2016 at 09:50:24PM +0200, Willy Tarreau wrote:
+> On Thu, Aug 18, 2016 at 08:16:27PM +0200, Adam Maris wrote:
+> > Attacker doesn't necessarily need to have physical access to USB port. He
+> > can somehow
+> > hand USB off to the victim that will with good intentions stick it to his
+> > USB port, unexpectedly
+> > causing kernel panic. Difference is that one probably wouldn't pour glue or
+> > corrosive liquid
+> > into his USB port believing that nothing bad will happen.
+> 
+> Well, it happened to me when I was a kid, with a PS/2 port. I handed off
+> a device to someone of trust to connect to the PS/2 port and parallel port.
+> (PS/2 to pick the +5V). I wired it wrong and the motherboard died, as
+> amazing as it seems and the person didn't find it fun as it was not his PC.
+> 
+> So yes it can be done even without suspecting. It's easy to do whatever you
+> want using a USB stick. You can use the 3W it provides to charge a 300V
+> capacitor and discharge it on the D+/D- to test the clamping diodes
+> robustness, etc...
+> 
+> Thus I don't think either that something "only causing a panic" deserves
+> a CVE. It needs to be fixed however, for sure!
+> 
+> Regards,
+> Willy
+> 
+
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@suse.de>
