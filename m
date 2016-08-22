@@ -1,55 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/09/7
-Message-Id: <20160909144117.133EB332057@smtpvbsrv1.mitre.org>
-Date: Fri,  9 Sep 2016 10:41:17 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, luodalongde@...il.com, liqiang6-s@....cn
-Subject: Re: CVE Request Qemu: vmware_vga: OOB stack memory access when processing svga command
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/12
+Message-ID: <D3E08781.193C42%vel@apache.org>
+Date: Mon, 22 Aug 2016 10:42:09 -0400
+From: Velmurugan Periasamy <vel@...che.org>
+To: "security@...che.org" <security@...che.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "bugtraq@...urityfocus.com" <bugtraq@...urityfocus.com>, <victor.hora@...urusglobal.com>
+CC: "dev@...ger.incubator.apache.org" <dev@...ger.incubator.apache.org>, "user@...ger.incubator.apache.org" <user@...ger.incubator.apache.org>, "private@...ger.incubator.apache.org" <private@...ger.incubator.apache.org>, Velmurugan Periasamy <vel@...che.org>
+Subject: CVE update (CVE-2016-5395) - Fixed in Apache Ranger 0.6.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello:
 
-> Quick Emulator(Qemu) built with the VMware-SVGA "chipset" emulation support is
-> vulnerable to an OOB stack memory write issue. It could occur while processing
-> VGA commands in 'vmsvga_fifo_run' routine.
-> 
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg01764.html
+Here¹s a CVE update for Ranger 0.6.1 release. Please see below details.
 
->> When processing svga command DEFINE_CURSOR in vmsvga_fifo_run,
->> the computed BITMAP and PIXMAP size are checked against the
->> 'cursor.mask[]' and 'cursor.image[]' array sizes in bytes.
->> Correct these checks to avoid OOB memory access.
+Release details can be found at
+https://cwiki.apache.org/confluence/display/RANGER/0.6.1+Release+-+Apache+Ra
+nger
 
-Use CVE-2016-7170.
+Thank you,
+Velmurugan Periasamy
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/display/vmware_vga.c but
-that may be an expected place for a later update.
+----------------------------------------------------------------------------
+-------------------
+CVE-2016-5395: Apache Ranger Stored Cross Site Scripting vulnerability
+----------------------------------------------------------------------------
+-------------------
+Severity: Normal 
+Vendor: The Apache Software Foundation
+Versions Affected: All 0.5.x versions of Apache Ranger and version 0.6.0
+Users Affected: All users of ranger policy admin tool
+Description: Apache Ranger was found to be vulnerable to a
+Stored Cross-Site Scripting in the create user functionality. Admin users
+can
+store some arbitrary javascript code to be executed when normal users login
+and
+access policies. 
+Fix details: Added logic to sanitize the user input
+Mitigation: Users should upgrade to 0.6.1 or later version of Apache Ranger
+with the fix.
+Credit: Thanks to Victor Hora from Securus Global for reporting this issue.
+----------------------------------------------------------------------------
+-------------------
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX0sm4AAoJEHb/MwWLVhi2QsIP/1hKnB1uJWV/u/21SPfEbDSs
-LcjSDPxTljCGmH2AY3csiyhStvZNwQqkCiIr11ZC9Vq9EH/0dWvdO6MfN+Bcx6NT
-EczC6JpUbxGDlRPXx/+9A68KCXFNFBZG2qhntm0EXpn0r8LNE/6l/7EFuidd7daZ
-T8+zH1tn0PvRXT3k7tbKflxeTu/VppdJk9JHCgeTFkB6ENUdBSM/+me/ttFH4TcC
-BCVYzZ8leENIMZSSbnYEX/gvLLDDKIU0+1VvJzoqRDT/djG7grMrNMrEUBq0OaYl
-Hw1ME4zbh54xuMPLKriMLPtux5rc3zQzYtXqdIpR5u68GJrTp7OIyUPhhKEUEx3v
-xN0nAJnV67gBgUQliwyiZ/P3Mt6VCHzHdmytl2Te/DwoRgS1m04OjhLuJUFj9YXY
-0s3RoWa+U8hFvnS77H43pbMyIUnggf/ZXfy/bcjd43Hcevkoe9PJqbCifxVwTaG6
-8+lRoPB7552alZKBrpQt/nOnLdvsFN9FZt3B9yqNGTAvgYTNBIsIZ7MlHuAR0CME
-n34G5MbDBY9yb2USkW1jCstoqjwpwmA0+wV8pE8kVE8cg0ZXs9oCh1TGovqIF3c4
-zZMgpXHqCy7jdbzmsDu7vLVcGpnG2twNS4vHQTJCDCl5lECYJw52VENjUiolNNQ8
-zHBSkSZBXvMZRaT+5aIR
-=i+cy
------END PGP SIGNATURE-----
+
