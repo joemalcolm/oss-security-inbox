@@ -1,46 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/12/3
-Message-ID: <20160712091158.4wlwrde7wbcj6swo@jwilk.net>
-Date: Tue, 12 Jul 2016 11:14:53 +0200
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/4
+Message-ID: <CAKG8Do6pS1wRkC2YTU_btNED5Zhc71uchaC6g=FU4CrzUzt1Vw@mail.gmail.com>
+Date: Mon, 22 Aug 2016 10:16:30 +0200
+From: Cedric Buissart <cbuissar@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Pylint checks not as static as one would think
+Subject: Re: CVE-2016-5404 freeipa: Insufficient privileges check in certificate revocation
 Content-Type: text/plain; charset=utf-8
 
-* Jakub Wilk <jwilk@...lk.net>, 2014-09-29, 14:32:
->$ cat moo.py
->from _moo import *
+Patch for this incident is now upstream.
+For the master branch commit :
+https://git.fedorahosted.org/cgit/freeipa.git/commit/?id=cf74584d0f772f3f5eccc1d30c001e4212a104fd
+
+Other branches have been fixed too.
+
+Regards,
+
+Cedric
+
+On Wed, Aug 17, 2016 at 7:30 PM, Cedric Buissart <cbuissar@...hat.com>
+wrote:
+
+> Hi,
 >
->$ cat moo.c
->#include <stdio.h>
->#include <signal.h>
->void __attribute__((constructor)) moo() {
->	printf("moo!\n");
->	kill(0, SIGSEGV);
->}
+> This is to disclose the following CVE:
 >
->$ gcc -Wall -shared -fPIC moo.c -o _moo.so
+> CVE-2016-5404 freeipa: Insufficient privileges check in certificate
+> revocation
 >
->$ pylint moo.py
->No config file found, using default configuration
->moo!
->Segmentation fault
+> Description :
+> An insufficient permission check issue was found in the way IPA server
+> treats certificate revocation requests. An attacker logged in with the
+> 'retrieve certificate' permission enabled could use this flaw to revoke
+> certificates, possibly triggering a denial of service attack.
+>
+> All versions are affected.
+>
+> Patches can be found on the corresponding Red Hat Bugzilla:
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2016-5404
+>
+> Impact: Moderate
+> CVSS3 scoring : 4.3 CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L
+>
+> Reported by: Fraser Tweedale (Red Hat)
+>
+> Best Regards,
+>
+> --
+> Cedric Buissart,
+> Product Security
+>
 
-This was fixed in Pylint 1.4.0:
 
-|   * Added new options for controlling the loading of C extensions.
-|     By default, only C extensions from the stdlib will be loaded
-|     into the active Python interpreter for inspection, because they
-|     can run arbitrary code on import. The option
-|     `--extension-pkg-whitelist` can be used to specify modules
-|     or packages that are safe to load.
-
-Beware that by default Pylint reads configuration file from cwd, and 
-this configuration file can whitelist malicious extensions. You probably 
-want to use --rcfile=/dev/null when cwd is untrusted.
-
-And here's another code execution bug:
-https://github.com/PyCQA/pylint/issues/959
 
 -- 
-Jakub Wilk
+Cedric Buissart,
+Product Security
+
