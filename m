@@ -1,42 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/07/1
-Message-ID: <20160507042232.GA5286@eldamar.local>
-Date: Sat, 7 May 2016 06:22:32 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: Doug Ledford <dledford@...hat.com>, Red Hat Security Response Team <secalert@...hat.com>, Ben Hutchings <benh@...ian.org>
-Subject: CVE Request: Linux: IB/security: Restrict use of the write() interface'
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/3
+Message-Id: <20160822065107.12D721BE0E5@smtpvbsrv1.mitre.org>
+Date: Mon, 22 Aug 2016 02:51:07 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Path traversal vulnerability in WordPress Core Ajax handlers
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Jann Horn reported an issue in the infiniband stack. It has been fixed
-in v4.6-rc6 with commit e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3:
+> https://sumofpwn.nl/advisory/2016/path_traversal_vulnerability_in_wordpress_core_ajax_handlers.html
+> https://core.trac.wordpress.org/ticket/37490
 
-https://git.kernel.org/linus/e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3
-
-> IB/security: Restrict use of the write() interface
-> The drivers/infiniband stack uses write() as a replacement for
-> bi-directional ioctl().  This is not safe. There are ways to
-> trigger write calls that result in the return structure that
-> is normally written to user space being shunted off to user
-> specified kernel memory instead.
+> A path traversal vulnerability was found in the Core Ajax handlers of
+> the WordPress Admin API. This issue can (potentially) be used by an
+> authenticated user (Subscriber) to create a denial of service condition
+> of an affected WordPress site.
 > 
-> For the immediate repair, detect and deny suspicious accesses to
-> the write API.
-> 
-> For long term, update the user space libraries and the kernel API
-> to something that doesn't present the same security vulnerabilities
-> (likely a structured ioctl() interface).
-> 
-> The impacted uAPI interfaces are generally only available if
-> hardware from drivers/infiniband is installed in the system.
+> OVE-20160712-0036
 
-Could you assign a CVE for this issue?
+>> allows for a denial of service condition as the logged in attacker can
+>> use this flaw to read up to 8 KB of data from /dev/random. Doing this
+>> repeatedly will deplete the entropy pool, which causes /dev/random to
+>> block; blocking the PHP scripts. Using a very simple script, it is
+>> possible for an authenticated user (Subscriber) to bring down a
+>> WordPress site. It is also possible to trigger this issue via
+>> Cross-Site Request Forgery as the nonce check is done too late in this
+>> case.
 
-I'm just to avoid possible duplication as well Cc'ing Red Hat's
-secalert, since the commit was signed off by Doug Ledford
-<dledford@...hat.com>.
+>> wp-admin/admin-ajax.php
 
-Regards,
-Salvatore
+>> plugin=../../../../../../../../../../dev/random&action=update-plugin
+
+>> WordPress version 4.6 mitigates this vulnerability by moving the CSRF
+>> check to the top of the affected method(s).
+
+Use CVE-2016-6896 for the directory traversal vulnerability, and
+CVE-2016-6897 for the CSRF. (These two vulnerabilities have different
+affected versions.)
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXuqCFAAoJEHb/MwWLVhi2OjkP/0xA4Oj1fAED71fR5c2zMtg4
+fFuRRrbSltEIpWbLFi4vg7VAkOhYOqH6LbDPtehXDrZxJ5AFX7ifYyjprvxSLYvn
+STcG7ve521b+tPy+0GzdlrHpGRbk81Ekh57Gny9rXEym0msdWJD/zaDV0poJbdEV
+E76DEZuZ4eq1XoBQ6FsTvRFinsA7tCB5LjmCa+lZuG9xf4AYFDlMAUJu7I+/uxGO
+Ep/CUqYwASjZ50IYBwhbk138PbjEw1iZmcYytlkifACRk9GNmkb2ctt4QKoCIWml
+HPY6BnB26CKDGk490MPjLg6+jkAA1v+bTBru5dSMoLw3icAWfHefW/P5yH0S/HoX
+eU/RIaaxovd4fkKfzz8lBhWkARGPZrPUGyOIpvaLLgMPLF10xcBraJ32ygrPNndy
+ph418Yr4ZCraR9Tdg/EBZlS6Dlhztr16I+Z1FzXIyVemkxafYNAqhqJXUYgx9TFw
+IgS7Isk4+2XJQU0u76lIEFGBHsHV2j9tif6lu1ZsrZDKG2OhI09+KHW1wp8gTQKG
+QxlbBcl/sD4NBLm58vwdvLm9lMCxc6vv9jdK5hhfz4ATWHSsjTi1O6DC787qCfqW
+pnOjNghR3stX7DxzDQmMVFB30OaGMHQ5PGVk5CgK4SmBJuwtxYOBFK919f4KPmz6
+8ZrtIoD+v972q+r5kaMU
+=WwXr
+-----END PGP SIGNATURE-----
