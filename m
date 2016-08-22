@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1894" "Friday" "16" "December" "2016" "00:33:41" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<8c7f77c36aa246b9ad31e46f6e733414@imshyb02.MITRE.ORG>" "45" "[oss-security] Re: CVE Request - Exim 4.69-4.87 - disclosure of private information" nil nil nil "12" "2016121605:33:41" "[oss-security] Re: CVE Request - Exim 4.69-4.87 - disclosure of private information" (number mark "U       cve-assign@m Dec 16   45/1894  " thread-indent "\"[oss-security] Re: CVE Request - Exim 4.69-4.87 - disclosure of private information\"\n") "<20161215233645.GJ29010@jumper.schlittermann.de>" ("<20161215233645.GJ29010@jumper.schlittermann.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1797" "Sunday" "21" "August" "2016" "20:45:01" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty3Hd-hRYmfSsRoLoOwQC-Dvx+ENLDwM1bL3R6xKmhqukA@mail.gmail.com>" "55" "Re: [oss-security] TLS testing results - OS distro vulnerabilities" "^Cc:" nil nil "8" "2016082202:45:01" "[oss-security] TLS testing results - OS distro vulnerabilities" (number mark "        kseifried@re Aug 21   55/1797  " thread-indent "\"Re: [oss-security] TLS testing results - OS distro vulnerabilities\"\n") "<DB3PR05MB217DBB2D4476DFBE907D6D8BE170@DB3PR05MB217.eurprd05.prod.outlook.com>" ("<DB3PR05MB217DBB2D4476DFBE907D6D8BE170@DB3PR05MB217.eurprd05.prod.outlook.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 29744 invoked by uid 550); 16 Dec 2016 05:33:54 -0000
+Received: (qmail 9372 invoked by uid 550); 22 Aug 2016 02:45:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29726 invoked from network); 16 Dec 2016 05:33:53 -0000
-From: <cve-assign@mitre.org>
-To: <hs@schlittermann.de>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <20161215233645.GJ29010@jumper.schlittermann.de>
-Message-ID: <8c7f77c36aa246b9ad31e46f6e733414@imshyb02.MITRE.ORG>
-Date: Fri, 16 Dec 2016 00:33:41 -0500
+Received: (qmail 9350 invoked from network); 22 Aug 2016 02:45:14 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=tE3aHlRfi+E0rd2TrYTV/IZLZnpefunJBsCQgjaFwwg=;
+        b=FjuCw51tq3dTM+7sKvaA1ERQW2izwRT9QpDCIs3QRcbvrNDO7vEmnE9BCFDSfy6qo+
+         RJIBnJXdWd0mQzE/s4c5B1h1f6fUvccxw1SYB54TxwHu5Zu0VfvNUkVrF/ZkLCPq3siS
+         FMVN0SlmonSTVmtim9Z/YlccAO7SYH/f6W27zSWgXwYvLCWH+eEtJD2eJsNO202RNnkd
+         8yZCHZ+Yw3WqQbrGr7/F2wOlbbiXPuM6B9EX4M+T+v+qW2tFtws7JYIxZGuXdLYu4EWo
+         3HzJEGUCMs69FZJS83Hg5glei+YO3SS5zQ6s2mDkpTahIcDwK7GCA9YLfklGm7zCiUfr
+         3DLA==
+X-Gm-Message-State: AEkoouvWJ4ijy+J8srD0r2ggrdCNEROc3O7i1c7EuGxeE44KCyUkVkS3TocyASnNOL9VXC8L6HPM23eHddXTOHTv
+X-Received: by 10.202.72.71 with SMTP id v68mr11484034oia.70.1471833902416;
+ Sun, 21 Aug 2016 19:45:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE Request - Exim 4.69-4.87 - disclosure of private information
+In-Reply-To: <DB3PR05MB217DBB2D4476DFBE907D6D8BE170@DB3PR05MB217.eurprd05.prod.outlook.com>
+References: <DB3PR05MB217DBB2D4476DFBE907D6D8BE170@DB3PR05MB217.eurprd05.prod.outlook.com>
+Message-ID: <CANO=Ty3Hd-hRYmfSsRoLoOwQC-Dvx+ENLDwM1bL3R6xKmhqukA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a113db202ec285d053aa008b4
+Cc: "ouspg@ee.oulu.fi" <ouspg@ee.oulu.fi>
+Date: Sun, 21 Aug 2016 20:45:01 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] TLS testing results - OS distro vulnerabilities
+To: oss-security <oss-security@lists.openwall.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--001a113db202ec285d053aa008b4
+Content-Type: text/plain; charset=UTF-8
 
-> Heiko Schlittermann              - Exim developer
-> https://bugs.exim.org/show_bug.cgi?id=1996
-> Versions:   4.69 -> 4.87
-> If several conditions are met, Exim leaks private information to
-> a remote attacker.
+If you find apps/distros/etc that are NOT checking certificate validity
+properly please either ask for CVEs here or contact DWF for CVEs (for open
+source stuff). Thanks.
 
-Our guess is that a vendor's disclosure of an impact, product
-name, and affected versions means that this can be interpreted
-as a public security issue.
+On Sat, Aug 20, 2016 at 10:50 AM, Mauri Miettinen <
+Mauri.Miettinen@student.oulu.fi> wrote:
 
-Use CVE-2016-9963.
+> To whom it may concern,
+>
+> We developed a tool to check if languages and libraries verify TLS
+> certificates properly.
+> While testing this tool we did a shootout against supported versions of the
+> some major Linux distributions.
+>
+> Results are available from:
+>
+> https://github.com/ouspg/trytls/blob/shootout-0.3/shootout/README.md
+>
+> It seems it may be unsafe to do TLS in some of the  common distros.
+> E.g. the native Python version in the distros varies, and not all fixes
+> have
+> been backported. In these cases Python still doesn't always have
+> certificate
+> checking enabled by default.
+>
+> We have contacted Python developers about the results.
+>
+> https://mail.python.org/pipermail/python-dev/2016-August/145815.html
+>
+> They gave us a couple of good pointers on how configuration could be
+> used to mitigate the issues in some of the distributions. We are afraid
+> this is still a hazard where neither software developers or users realize
+> that code that works well for the developer may not be safe for the users.
+>
+> Would you have any other resources, advice or pointers we should
+> document when communicating about this in the TryTLS project?
+>
+> Mauri Miettinen
+>
+> PS. Results have indications of weak crypto issues as well.
 
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security says
-"List Content Guidelines ... Any security issues that you post to
-oss-security should be either already public or to be made public by
-your posting." It is uncommon to use oss-security as a CVE request
-channel when the amount of public information is minimal. (For other
-options, see the https://cveform.mitre.org and
-https://cve.mitre.org/cve/data_sources_product_coverage.html pages.)
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYU3xCAAoJEHb/MwWLVhi2qBcP/jPSJbi/fUupYnmT0UOE6bCl
-dcqr+7WdI4cuyBOtZiKtJbB5JsaPhuJlY2j+a1Qj9j/cPr03QjNcFuhX66hLFcvJ
-I7dJtvvSiLFZ49Ozr5r3HJi6FTmPbOaqRYgAZjcL3sMrn45al0dBY19NWUMZIpym
-NtSgkMEhnnABzOsyM3yMEircofLnZv9r3KPYkB1bKt4H3Zgo3/6j6dHZRd5ON+iT
-LN1d0fXLFUZABeanmWi1ccFlm83J0oaTFnU1U7MLuJtDaYxTSN8vYUpiPSVkctDL
-EFdNJokCOfQcn67wtgjW3871EuRqWanYptBgQuQmq4j51i0MKktxQnRzom8qNnKz
-6faWLL6xIxgRsIBM0hVJBjWYyg6SAGb/V5i3b+tAJhyCxse+PHfXg4WHofQip9BN
-ZoM8UcQDhDn01TLHaTvsd5H3pucxlk0jdDoum9CWcZBOfcc5NUnKkYuYntJDQ/rR
-Us+5Aaw8X+B8ZPE47NEwX7hAXHU5PzHU48fg+j6x3yYl3N9nwyhVsSbSxIQjjRd6
-iqAIMXGQGJ2KMZluEBjkhNNGAYSfXrLxi8rx6x0qj4y7RLBIp9B9M4eH5f3H/to4
-4BtIzUA5ZYdP20YE8VtGyRFd2aOGUMFf7BuoPgXgDXzflxGLMs4tmLNeTxxpyhMB
-ooGshm7DABkZ59MHc1ww
-=Q/MO
------END PGP SIGNATURE-----
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a113db202ec285d053aa008b4--
