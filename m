@@ -1,49 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/12/6
-Message-Id: <20160412113733.EA7506C0082@smtpvmsrv1.mitre.org>
-Date: Tue, 12 Apr 2016 07:37:33 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, oleksandr.bazhaniuk@...el.com
-Subject: Re: CVE request: Qemu: net: buffer overflow in stellaris_enet emulator
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/7
+Message-ID: <20160822111506.GA4403@openwall.com>
+Date: Mon, 22 Aug 2016 14:15:06 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Werner Koch <wk@...pg.org>, Pascal Cuoq <cuoq@...st-in-soft.com>, Rapha??l Rieu-Helft <raphael.rieu-helft@...st-in-soft.com>
+Subject: Re: memory issues in libksba 1.3.4 and git
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> Qemu emulator built with the Luminary Micro Stellaris Ethernet Controller is
-> vulnerable to a buffer overflow issue. It could occur while receiving network
-> packets in stellaris_enet_receive(), if the guest NIC is configured to accept
-> large(MTU) packets.
+I thought I had fixed that ezmlm-idx incompatibility with Werner's setup
+of Gnus, but it seems not - perhaps it's not exactly that same old bug,
+even if very similar:
+
+http://www.openwall.com/lists/oss-security/2016/08/18/20
+
+In those old bug reports, it was about MIME sections completely lacking
+headers.  In Werner's messages, the MIME section has only the
+Content-Transfer-Encoding header, but not a Content-Type header.
+
+Also, Werner's latest message appears to have an invalid boundary
+string.  (The previous message for which corruption occurred had a
+valid boundary string, even if unusual.  These unusual boundary strings
+might or might not be relevant to the problem.)  Specifically:
+
+--=SRI-target-ANDVT-Freeh-anthrax-[Hello-to-all-my-friends-and-fans-in=
+
+The "[" character isn't in the allowed set per RFC 2046:
+
+     boundary := 0*69<bchars> bcharsnospace
+
+     bchars := bcharsnospace / " "
+
+     bcharsnospace := DIGIT / ALPHA / "'" / "(" / ")" /
+                      "+" / "_" / "," / "-" / "." /
+                      "/" / ":" / "=" / "?"
+
+Unfortunately, the message corruption occurs post moderator approval, so
+I couldn't easily see whether it occurred this time or not without
+approving the message first.  I guess I'd need to debug it on a test
+list, re-injecting Werner's message on my own, but I don't currently
+have time for that.  I'll include Werner's original message below.
+
+Werner, maybe you could try this old workaround for next time you post? -
+
+  (setq mml-insert-mime-headers-always t)
+
+Thanks, and sorry, and yes this is pretty ridiculous.
+
+Alexander
+
+On Mon, Aug 22, 2016 at 12:11:47PM +0200, Werner Koch wrote:
+> On Sat, 20 Aug 2016 16:06, cuoq@...st-in-soft.com said:
 > 
-> A remote user/process could use this flaw to crash the Qemu process on a host,
-> resulting in DoS.
+> > These inputs have been set to Werner Koch, privately as per his
+> > request, on May 25, June 11 and July 11. I am publishing them now so
 > 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-04/msg01334.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1325884
-> http://git.qemu.org/?p=qemu.git;a=commit;h=3a15cc0e1ee7168db0782133d2607a6bfa422d66
-
-Use CVE-2016-4001.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXDN1qAAoJEL54rhJi8gl5hf8P/A+5Vn01oCk1xlc8z4he/gN6
-4LJ95B1hUQKaIestlMoKghcO/xbOhiYb84Yb47+iBbQopHVL5PsW5/aGSM6dwlPS
-Kw+VMM0EJjveTDy/cY47IEBCrghcKeoE1PPmgzMBGI9lzMgYRI8atQkyBxG1dHSb
-I1UxOursYDnVN+xdn/qYRYrOVzqgfb8pvEQ4TBXemrCvHCdYJndEBSFoePWVIN3m
-C4d/nRmncflKdm61P+q/7R1NrYcvunky1xR4rIKsTfZbnNVcdvDmQ7EDqdFyF3VL
-OWtiOFfwgn+cp2047RgRGecsdYSs7oCsdS9xmoAFLYYyBKHN1Z0Eh8I/+FY6Deby
-lyyfPPkS+ruJMAmuBIySGNhj+leyFM1JQ8mCgpQt29Hx20/uPmjtb2bwlUiO4WPC
-qfgqLE5QKwycMsvHgenG3v7BxXsBrlxEd6e3w44Vegl2rNHJLZxRvaYFNy0pKG4J
-RXYglpULTs8n9whj9ULWiS5hCyXrHMpz9HNtMGomUnQT1YB2EYvVJZDc54/Ff8nZ
-m06EPebckrb+696feEqTDBCoNPyj//AvII5kJyFuJyN1ZjsmHmN5mr2ycHUXmvrm
-dAYUM2wGxiERaeKFGEs2AF7vQU78UNB5CoE+TJT/Ge1dAs3zwSY0HaciwQ30Np2A
-R82cpClaOw8Zl6bghbmF
-=1M6c
------END PGP SIGNATURE-----
+> I am sorry about the delays.  I asked Pascal to discuss this privately
+> for the simple matter that I would anyway be the one to fix the things.
+> In the future I will take care to CC my co-hackers on such private mails
+> so they can jump in or remind me of such delays.
+> 
+> > that anyone who uses or might want to use libksba to parse messages
+> > (received pre-authentification by definition) can make an informed
+> > choice considering the risks of denial of service and information
+> 
+> I just release libksba 1.3.5 which limits the allocation to a 16 MiB
+> which is the best solution I could come up with.  Note that this parser
+> is only used for smallish ASN.1 objects like certificates or small parts
+> of of larger ASN.1 objects (like CRLs).
+> 
+> Thanks to Pascal for looking at Libksba.
+> 
+> 
+> Shalom-Salam,
+> 
+>    Werner
