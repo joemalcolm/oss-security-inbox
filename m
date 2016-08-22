@@ -1,25 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/22/1
-Message-ID: <20161022042012.GA20127@buzz.coreos.systems>
-Date: Fri, 21 Oct 2016 21:20:12 -0700
-From: Alex Crawford <alex.crawford@...eos.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Requesting membership to linux-distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/11
+Message-ID: <20160822131645.GA6176@openwall.com>
+Date: Mon, 22 Aug 2016 16:16:45 +0300
+From: Solar Designer <solar@...nwall.com>
+To: Werner Koch <wk@...pg.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: memory issues in libksba 1.3.4 and git
 Content-Type: text/plain; charset=utf-8
 
-On 10/21, Kurt Seifried wrote:
-> It looks like CoreOS is shipping Linux and respecting the various licenses
-> in a volume sufficient to make sense for them being given access to the
-> Linux distros list, and shipping security updates (I would say they could
-> benefit from shipping advisories, but they put the CVE's in the ChangeLog
-> so I really can't complain). Assuming they can handle embargoed issues (do
-> you have private bug tracking/code repos/CI/whatever else you need to ship
-> an update?) I would have no objections to them joining the Linux distros
-> list. Can you confirm you have infrastructure to handle embargoed issues?
+On Mon, Aug 22, 2016 at 02:56:20PM +0200, Werner Koch wrote:
+> On Mon, 22 Aug 2016 13:15, solar@...nwall.com said:
+> > Werner, maybe you could try this old workaround for next time you post? -
+> >
+> >   (setq mml-insert-mime-headers-always t)
+> 
+> Done.  Thanks for pointing me to this setting; for reference this is:
+> 
+>   If non-nil, always put Content-Type: text/plain at top of empty parts.
+>   It is necessary to work against a bug in certain clients.
 
-Yes, we have the infrastructure at CoreOS. We've dealt with embargoed
-releases in the past. Thank you for the consideration.
+Thanks.  This appears to have made no effect, and thus didn't work
+around whatever ezmlm-idx bug(?) your messages are triggering here.
+Your messages are missing the Content-Type header for MIME parts that
+are not empty, so this does not literally fit the description above.
 
--Alex
+Anyway, it's not a topic for oss-security.  I am merely noting that this
+is something I need to investigate and fix... eventually.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Alexander
