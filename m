@@ -1,4 +1,9 @@
-Received: (qmail 3479 invoked by uid 550); 14 May 2026 03:26:06 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["534" "Monday" "22" "August" "2016" "10:46:24" "+0200" "Jakub Wilk" "jwilk@jwilk.net" "<20160822084624.i4dbedj35qd3p22j@jwilk.net>" "14" "Re: [oss-security] TLS testing results - OS distro vulnerabilities" "^Date:" nil nil "8" "2016082208:46:24" "[oss-security] TLS testing results - OS distro vulnerabilities" (number mark "        jwilk@jwilk. Aug 22   14/534   " thread-indent "\"Re: [oss-security] TLS testing results - OS distro vulnerabilities\"\n") "<DB3PR05MB217DBB2D4476DFBE907D6D8BE170@DB3PR05MB217.eurprd05.prod.outlook.com>" ("<DB3PR05MB217DBB2D4476DFBE907D6D8BE170@DB3PR05MB217.eurprd05.prod.outlook.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 31754 invoked by uid 550); 22 Aug 2016 08:46:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,55 +11,36 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3460 invoked from network); 14 May 2026 03:26:06 -0000
-Date: Wed, 13 May 2026 23:25:57 -0400
-From: Jan Schaumann <jschauma@netmeister.org>
-To: oss-security@lists.openwall.com
-Message-ID: <agVAxc-23YmNDzN8@netmeister.org>
-References: <8733zvfucm.fsf@gentoo.org>
- <20260513173510.GA8455@openwall.com>
+Received: (qmail 30709 invoked from network); 22 Aug 2016 08:46:38 -0000
+Message-ID: <20160822084624.i4dbedj35qd3p22j@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <DB3PR05MB217DBB2D4476DFBE907D6D8BE170@DB3PR05MB217.eurprd05.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20260513173510.GA8455@openwall.com>
-Subject: Re: [oss-security] Linux kernel LPE ("fragnesia", copyfail 3.0)
+In-Reply-To: <DB3PR05MB217DBB2D4476DFBE907D6D8BE170@DB3PR05MB217.eurprd05.prod.outlook.com>
+User-Agent: Mutt/1.6.2-neo (2016-08-08)
+X-Ovh-Tracer-Id: 13538664908914939814
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeluddrfedugddtheculddtuddrfeeltddrtddtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
+Date: Mon, 22 Aug 2016 10:46:24 +0200
+From: Jakub Wilk <jwilk@jwilk.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] TLS testing results - OS distro vulnerabilities
+To: oss-security@lists.openwall.com
 
-Solar Designer <solar@openwall.com> wrote:
+* Mauri Miettinen <Mauri.Miettinen@student.oulu.fi>, 2016-08-20, 16:50:
+>We developed a tool to check if languages and libraries verify TLS 
+>certificates properly. While testing this tool we did a shootout 
+>against supported versions of the some major Linux distributions.
+>
+>Results are available from:
+>
+>https://github.com/ouspg/trytls/blob/shootout-0.3/shootout/README.md
 
-> On Thu, May 14, 2026 at 12:45:31AM +0900, Hyunwoo Kim wrote:
+How did you manage to run tests against Debian 7 (wheezy)? Your setup.py 
+requires Python 2.7.9 or 3.4.0, but wheezy has only 2.7.3/3.2.3.
 
-> > This vulnerability is a path that was accidentally activated _after_ the introduction of f4c50a4034e6 (2026-05-05), the patch for CVE-2026-43284 in the Dirty Frag chain.
-> > 
-> > In other words, the effective vulnerability window is from f4c50a4034e6 (2026-05-05) to upstream -- approximately 9 days.
-
-https://github.com/v12-security/pocs/tree/main/fragnesia
-claims "All versions affected by dirtyfrag are
-affected." and simultaneously "Any versions without
-this patch:
-https://lists.openwall.net/netdev/2026/05/13/79, so
-Linux kernels before May 13 2026."
-
-This reads to me as different from Hyunwoo's analysis.
-
-Is there consensus on which is correct?
-
-
-> On Wed, May 13, 2026 at 11:59:37AM +0100, Sam James wrote:
-> > v12-security have disclosed "Fragnesia" [0]. Quoting their disclosure:
-
-Am I correct in my understanding that this
-"disclosure" was done solely by dropping the code on
-GitHub, with no advance notification to the Linux
-kernel or distros?  Does that seem reasonable because
-it's adjacent to the vulnerability whose coattails it
-rides?
-
-I understand that the realistic utility of embargoes
-is currently shrinking dramatically, but this "drop it
-while it's hot" approach to seemingly promote yet
-another AI vulnerability discovery service is a trend
-I can't abide.
-
--Jan
+-- 
+Jakub Wilk
