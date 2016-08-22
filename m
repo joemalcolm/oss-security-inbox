@@ -1,53 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/8
-Message-ID: <c82384d8-0058-ae6b-81ee-b4b8d35ad22b@laposte.net>
-Date: Wed, 16 Mar 2016 10:17:35 +0100
-From: Laël Cellier <lael.cellier@...oste.net>
-To: Chris Williams <cwilliams@...pub.com>, oss-security@...ts.openwall.com
-Subject: Re: Exploitability of Git's CVE-2016-2315
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/9
+Message-ID: <20160822125802.GA3826@ee.oulu.fi>
+Date: Mon, 22 Aug 2016 15:58:02 +0300
+From: Jani Kenttala <jkenttal@...oulu.fi>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com, Mauri Miettinen <Mauri.Miettinen@...dent.oulu.fi>, ouspg@...oulu.fi
+Subject: Re: TLS testing results - OS distro vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Aug 22, 2016 at 02:19:11PM +0300, Solar Designer wrote:
+> On Mon, Aug 22, 2016 at 10:46:24AM +0200, Jakub Wilk wrote:
+> > * Mauri Miettinen <Mauri.Miettinen@...dent.oulu.fi>, 2016-08-20, 16:50:
+-snip-
+> > >Results are available from:
+> > >
+> > >https://github.com/ouspg/trytls/blob/shootout-0.3/shootout/README.md
+> > 
+> > How did you manage to run tests against Debian 7 (wheezy)? Your setup.py 
+> > requires Python 2.7.9 or 3.4.0, but wheezy has only 2.7.3/3.2.3.
+> 
+> I think Mauri isn't subscribed - CC'ing.
+> 
+> Alexander
 
-> Hi Laël,
->
-> Congrats on the GitHub bounty for the Git bug. I have a quick question about CVE-2016-2315: is it feasibly exploitable? Do you have to push a very large repository with very long strings to overflow the signed integer in path_name()?
->
-> Many thanks,
->
-> C.
->
-Yes, you have to create a repository path which is larger than 2³¹.
+Hi!
 
-However, you have the control at what place the remote code execution 
-should happen in the buffer. git objects are zlib compressed and git 
-Servers tend to allow downloading over https or (even better ssh) which 
-use zlib compression. This allow compress data twice (compressing a 
-second time tend to be efficient in zlib if the data is well compressible).
+We used self-compiled python to run the tests against the older python bundled with the OS 
+(see Dockerfile at https://github.com/ouspg/trytls/blob/shootout-0.3/shootout/debian-7/Dockerfile).
 
-If you find well zlib compressible data which you can combine with 
-assembly, you’ll probably be able to reduce network data to 
-200Mb. GitHub told they change their message if they could run the proof 
-on 
-https://github-enterprise.s3.amazonaws.com/hyperv/releases/github-enterprise-2.4.1.vhd 
-or 
-https://github-enterprise.s3.amazonaws.com/kvm/updates/github-enterprise-kvm-2.4.1.pkg 
-or 
-https://github-enterprise.s3.amazonaws.com/kvm/releases/github-enterprise-2.4.1.qcow2 
-or 
-https://github-enterprise.s3.amazonaws.com/esx/releases/github-enterprise-2.4.1.ova 
-or 
-https://github-enterprise.s3.amazonaws.com/xen/releases/github-enterprise-2.4.1.vhd
+To elaborate a bit, we are actually looking two different set of requirements.
 
-I used python gitdb to confirm the server side memory corruption. This 
-allowed me to leverage the bug.
-However, without a push command I can use, I had to build an ssh network 
-payload from the generated packfile (the ꜱꜱʜ protocol is simpler than 
-the ʜᴛᴛᴘꜱ one) that I could use with
-ssh -C -o compressionlevel=9 git@...hub.com git-receive-pack the/repo.git
+1) TryTLS runner itself requires 2.7.9 or 3.4.0
+2) However, it can call older python version (or what ever command) when executing the tests.
 
-Creating an ʜᴛᴛᴘꜱ version should possible, however curl doesn’t know 
-about ʜᴛᴛᴘ compression for uploading. So this require to pre compress 
-the payload and trick ʜᴛᴛᴘ headers
+That being said, python2-urllib2 did not execute cleanly with 2.7.3. 
+There is a pull request about that <https://github.com/ouspg/trytls/pull/237>, 
+and the corresponding result has been marked as N/A in the summary table.
 
-The git:// protocol doesn’t support compression, so only the packfile 
-compression remains.
+-- 
+-Jani
+
