@@ -1,23 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/16/1
-Message-ID: <20160816094932.GA1197@suse.de>
-Date: Tue, 16 Aug 2016 11:49:32 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org
-Subject: CVE Request: Default password in openstack / crowbar trove
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/5
+Message-ID: <20160822084624.i4dbedj35qd3p22j@jwilk.net>
+Date: Mon, 22 Aug 2016 10:46:24 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: TLS testing results - OS distro vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+* Mauri Miettinen <Mauri.Miettinen@...dent.oulu.fi>, 2016-08-20, 16:50:
+>We developed a tool to check if languages and libraries verify TLS 
+>certificates properly. While testing this tool we did a shootout 
+>against supported versions of the some major Linux distributions.
+>
+>Results are available from:
+>
+>https://github.com/ouspg/trytls/blob/shootout-0.3/shootout/README.md
 
-In crowbar-openstack / trove , the trove service user has a default password.
+How did you manage to run tests against Debian 7 (wheezy)? Your setup.py 
+requires Python 2.7.9 or 3.4.0, but wheezy has only 2.7.3/3.2.3.
 
-https://bugzilla.suse.com/show_bug.cgi?id=991729
-
-https://github.com/crowbar/crowbar-openstack/pull/485
-
-The patch changes it be randomly generated.
-
-Please assign a CVE id.
-The patch changes it be randomöly generated., the I
-
-Ciao, Marcus
+-- 
+Jakub Wilk
