@@ -1,107 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/14
-Message-ID: <1702944.HEYk80P7xf@arcadia>
-Date: Sat, 08 Oct 2016 22:21:25 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: graphicsmagick: stack-based buffer overflow in ReadSCTImage (sct.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/1
+Message-ID: <CANO=Ty3Hd-hRYmfSsRoLoOwQC-Dvx+ENLDwM1bL3R6xKmhqukA@mail.gmail.com>
+Date: Sun, 21 Aug 2016 20:45:01 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: "ouspg@...oulu.fi" <ouspg@...oulu.fi>
+Subject: Re: TLS testing results - OS distro vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Description:
-Graphicsmagick is an Image Processing System.
+If you find apps/distros/etc that are NOT checking certificate validity
+properly please either ask for CVEs here or contact DWF for CVEs (for open
+source stuff). Thanks.
 
-After the first round of fuzzing where I discovered some slowness issues that 
-make the fuzz hard, the second round revealed a stack-buffer-overflow.
+On Sat, Aug 20, 2016 at 10:50 AM, Mauri Miettinen <
+Mauri.Miettinen@...dent.oulu.fi> wrote:
 
-The complete ASan output:
+> To whom it may concern,
+>
+> We developed a tool to check if languages and libraries verify TLS
+> certificates properly.
+> While testing this tool we did a shootout against supported versions of the
+> some major Linux distributions.
+>
+> Results are available from:
+>
+> https://github.com/ouspg/trytls/blob/shootout-0.3/shootout/README.md
+>
+> It seems it may be unsafe to do TLS in some of the  common distros.
+> E.g. the native Python version in the distros varies, and not all fixes
+> have
+> been backported. In these cases Python still doesn't always have
+> certificate
+> checking enabled by default.
+>
+> We have contacted Python developers about the results.
+>
+> https://mail.python.org/pipermail/python-dev/2016-August/145815.html
+>
+> They gave us a couple of good pointers on how configuration could be
+> used to mitigate the issues in some of the distributions. We are afraid
+> this is still a hazard where neither software developers or users realize
+> that code that works well for the developer may not be safe for the users.
+>
+> Would you have any other resources, advice or pointers we should
+> document when communicating about this in the TryTLS project?
+>
+> Mauri Miettinen
+>
+> PS. Results have indications of weak crypto issues as well.
 
-# gm identify $FILE
-==23362==ERROR: AddressSanitizer: stack-buffer-overflow on address 
-0x7fffaab3b8e0 at pc 0x000000453e36 bp 0x7fffaab3b570 sp 0x7fffaab3ad20
-READ of size 769 at 0x7fffaab3b8e0 thread T0
-    #0 0x453e35 in StrtolFixAndCheck /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:2596
-    #1 0x4545c1 in __interceptor_strtol /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:633
-    #2 0x7f73e9a847df in ReadSCTImage /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/coders/sct.c:191:19
-    #3 0x7f73f473eb13 in ReadImage /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/constitute.c:1607:13
-    #4 0x7f73f473ca94 in PingImage /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/constitute.c:1370:9
-    #5 0x7f73f4651b25 in IdentifyImageCommand /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/command.c:8375:17
-    #6 0x7f73f465797c in MagickCommand /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/command.c:8865:17
-    #7 0x7f73f46cf6fe in GMCommandSingle /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/command.c:17379:10
-    #8 0x7f73f46cd926 in GMCommand /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/command.c:17432:16
-    #9 0x7f73f352a61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #10 0x418c88 in _init (/usr/bin/gm+0x418c88)
 
-Address 0x7fffaab3b8e0 is located in stack of thread T0 at offset 800 in frame
-    #0 0x7f73e9a8399f in ReadSCTImage /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/coders/sct.c:126
 
-  This frame has 2 object(s):
-    [32, 800) 'buffer'
-    [928, 930) 'magick' 0x10007555f710: 00 00 00 00 00 00 00 00 00 00 00 
-00[f2]f2 f2 f2
-  0x10007555f720: f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 02 f3 f3 f3
-  0x10007555f730: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x10007555f740: 00 00 00 00 00 00 00 00 f1 f1 f1 f1 04 f2 00 f2
-  0x10007555f750: f2 f2 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x10007555f760: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==23362==ABORTING
 
-Affected version:
-1.3.25
+-- 
 
-Fixed version:
-1.3.26 ( not yet released)
-
-Commit fix:
-http://hg.code.sf.net/p/graphicsmagick/code/rev/0a0dfa81906d
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Timeline:
-2016-09-09: bug discovered
-2016-09-09: bug reported privately to upstream
-2016-09-10: no upstream response
-2016-09-15: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/09/15/graphicsmagick-stack-based-buffer-overflow-in-readsctimage-sct-c/
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
