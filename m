@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["532" "Friday" "7" "April" "2017" "13:50:40" "-0400" "Frank Ch. Eigler" "fche@redhat.com" "<87d1cods3z.fsf@redhat.com>" "18" "[oss-security] Re: libxslt math.random issue" nil nil nil "4" "2017040717:50:40" "[oss-security] Re: libxslt math.random issue" (number mark "U       fche@redhat. Apr  7   18/532   " thread-indent "\"[oss-security] Re: libxslt math.random issue\"\n") "<87inmhek30.fsf@redhat.com>" ("<20170406054400.GC32355@suse.de>" "<455b67a9-6d14-b374-8140-51546a53738d@redhat.com>" "<87inmhek30.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2095" "Monday" "22" "August" "2016" "16:55:56" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160822205557.001A36FC085@smtpvmsrv1.mitre.org>" "52" "[oss-security] Re: CVE Request: lshell: shell outbreak vulnerabilities via bad syntax parse and multiline commands" nil nil nil "8" "2016082220:55:56" "[oss-security] Re: CVE Request: lshell: shell outbreak vulnerabilities via bad syntax parse and multiline commands" (number mark "U       cve-assign@m Aug 22   52/2095  " thread-indent "\"[oss-security] Re: CVE Request: lshell: shell outbreak vulnerabilities via bad syntax parse and multiline commands\"\n") "<20160822195435.naiv4hyfs6lxwenf@eldamar.local>" ("<20160822195435.naiv4hyfs6lxwenf@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 10211 invoked by uid 550); 7 Apr 2017 17:55:48 -0000
+Received: (qmail 27649 invoked by uid 550); 22 Aug 2016 20:56:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,43 +12,64 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5485 invoked from network); 7 Apr 2017 17:50:54 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com A2CBE9D404
-Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=fche@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com A2CBE9D404
-From: fche@redhat.com (Frank Ch. Eigler)
-To: oss-security@lists.openwall.com
-References: <20170406054400.GC32355@suse.de>
-	<455b67a9-6d14-b374-8140-51546a53738d@redhat.com>
-	<87inmhek30.fsf@redhat.com>
-Date: Fri, 07 Apr 2017 13:50:40 -0400
-In-Reply-To: <87inmhek30.fsf@redhat.com> (Frank Ch. Eigler's message of "Thu,
-	06 Apr 2017 09:34:11 -0400")
-Message-ID: <87d1cods3z.fsf@redhat.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Fri, 07 Apr 2017 17:50:42 +0000 (UTC)
-Subject: [oss-security] Re: libxslt math.random issue
+Received: (qmail 26556 invoked from network); 22 Aug 2016 20:56:08 -0000
+From: cve-assign@mitre.org
+To: carnil@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20160822195435.naiv4hyfs6lxwenf@eldamar.local>
+Message-Id: <20160822205557.001A36FC085@smtpvmsrv1.mitre.org>
+Date: Mon, 22 Aug 2016 16:55:56 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: lshell: shell outbreak vulnerabilities via bad syntax parse and multiline commands
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> 1/ Shell outbreak due to bad syntax parse
+>    - https://github.com/ghantoos/lshell/issues/147
+>    - https://bugs.debian.org/834949
+
+Use CVE-2016-6902.
 
 
-Florian Weimer wrote:
+> 2/ Shell outbreak with multiline commands
+>    - https://github.com/ghantoos/lshell/issues/149
+>    - Fix: https://github.com/ghantoos/lshell/commit/e72dfcd1f258193f9aaea3591ecbdaed207661a0
+>    - https://bugs.debian.org/834946
 
-> FWIW, why is glibc not doing srand(RANDOMVECTOR) during startup... :/
->
-> The C standard does not allow it.
->
-> =E2=80=9D
-> If rand is called before any calls to srand have been made, the same
-> sequence shall be generated as when srand is first called with a seed
-> value of 1.
-> =E2=80=9D
+Use CVE-2016-6903.
 
-Yes, but that does not imply that srand(1) needs to resolve to a
-build-constant value.  https://gitlab.com/fche/randomer salts it with a
-snippet from /dev/urandom, and stays POSIX-compatible & restartable.
 
-- FChE
+https://bugs.debian.org/834949 and https://bugs.debian.org/834946 also
+mention "Command parser in this shell is beyound of recovery." This
+suggests that other vulnerabilities may be fixed at the same time as
+issues/147, or that other vulnerabilities may be discovered. In
+particular,
+https://github.com/ghantoos/lshell/issues/147#issuecomment-241366750
+mentions a different attack methodology. At least for now,
+https://github.com/ghantoos/lshell/issues/147#issuecomment-241366750
+is within the scope of CVE-2016-6902. It is difficult to predict what
+other CVE IDs may be needed until there is further vendor followup
+about issues/147.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXu2Z5AAoJEHb/MwWLVhi2yV8P/jYtI8rE7dbkIHDCytF6ligt
+O586ap6xBzpt0x874jrEZvteWGm1qDmA0JhQsuRa6CAGWRwOy1DweZpppDZ0u3ic
+85dT8yQw+9Hz3eJe0G/M3WjSk6m2eeyUGf5N6817UAim/SM+RnNVfPrP+ytBCb5Z
+tpdXPW+BKJa1/FsSAcQ6+mzkpytPXb8DFdf9Tb82g8rAPZTMNw/beJXaBo4o+Btr
+ZYOv3QGkpubbak6TWVCI9mmbslekFKrcI7qKYwYAwkON4CUHkXg8/RhbMbLVDzlC
+sSlvPBiGibzm3uNtuMqkbVAKazrpad/NNwt/ioAVYltDOZjIs7jNPe7Va9YLKcBz
+33IVH9QQMQr5CRh5kYgV3coSMRvQfduIIE4I7HxlumlwGJKsvARQ4JiEYhoqrgKv
+/M1pzohNpg7TBW5RjHuYMZougbHa70tezV2+mtjdb28lB3DrsAafNPa+9R9cE+UB
+5fE4Qm7LYRqA4hNtut0OrdEF5zmJL1u8xuVOoj5pUdRDs4A9FL/hT8TEFXsQaknA
+nXNtI+bqYQxOqE1ZXg40WbN6Z/aeZYSIUXhZ1DdirCGqtEsnD6IJ07kch/QuZsUc
+Qd1IoN4d6fCfKcObz2AZ4fg+As7ndsmuMapi+VMPff3JZrqakQVroptK1K2gTHY2
+92ovu5VQOdGYAvoWVFQR
+=ICSm
+-----END PGP SIGNATURE-----
