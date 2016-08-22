@@ -1,31 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/8
-Message-ID: <eacf0ad3886d4928905ca3e10c529e80@imshyb02.MITRE.ORG>
-Date: Mon, 14 Nov 2016 13:36:58 -0500
-From: <cve-assign@...re.org>
-To: <ondrej@...y.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <team@...urity.debian.org>, <dariusz.dwornikowski@...put.poznan.pl>, <sam-k6mymjcnjpz3fmkieotlt7rbgvqt98qy@...iam.org>
-Subject: Re: Remote crash in MaraDNS 2.0.13 and git master
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/18
+Message-Id: <20160822225753.7B160B2E005@smtpvbsrv1.mitre.org>
+Date: Mon, 22 Aug 2016 18:57:53 -0400 (EDT)
+From: cve-assign@...re.org
+To: greg@...ah.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, meissner@...e.de
+Subject: Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> remote crash bug in MaraDNS 2.0.13 js_readuint16
+> What "tool" was assigned this CVE for other operating systems
+> that do the same thing (all BSDs, OS-X, Windows, etc.)?
 
-Use CVE-2016-9300.
-
-
-> remote crash bug in MaraDNS 2.0.13 js_substr
-
-Use CVE-2016-9301.
+We didn't find any information about a tool name and thus simply
+listed the OS itself (CVE-2011-0638, CVE-2011-0639).
 
 
-> remote crash bug in MaraDNS 2.0.13 process_query -> this in fact
-> looks like stack smashing, since it crashes on htons in an unrelated
-> place
+>>   - the Linux kernel does not require a configuration in which a newly
+>>     connected USB device is recognized in any way
 
-Use CVE-2016-9302.
+> I don't understand this statement, can you clarify?
+
+To clarify: the ability of an attacker to connect a USB device and
+trigger potentially unsafe device communication (e.g., injecting text
+into an application) does not mean that the Linux kernel is missing an
+access-control feature.
+
+
+>>    - a Linux distribution may ship with a default configuration in
+>>      which a newly connected USB device can operate as a keyboard and
+>>      inject text into an application
+
+> Yes, but I don't understand, perhaps what you really mean to say is:
+>        A Linux distribution may ship with a default configuration of
+>        trusting all new devices that are plugged in without any form of
+>        userspace authentication before they begin to operate.
+
+Agreed. If it is trusting all new devices in this way, it would also
+be trusting all new devices that wish to operate as keyboards.
+
+
+>>     there is no comprehensive method
+>>     for "asking a user" about a new USB device in a way that is
+>>     compatible with all use cases
+
+> Huh?
+
+A Linux distribution cannot expect that there is a logged-in user who
+can provide sane answers to questions about each new USB device at the
+instant that that device is connected. For example, there isn't a
+comprehensive solution of the form "a distribution must ensure that
+an application pops up a dialog asking about each new device."
+
+
+>>   - if anyone (whether a Linux distribution or other type of product)
+>>     is announcing a required security update, in which software or
+>>     configuration is being changed to address malicious keyboard
+>>     attacks, then we can assign a CVE ID to associate with the update
+>>     announcement
+
+> Why would a CVE be needed for a "my distro decides to not trust USB
+> devices as much as your distro does" type decision?
+
+To improve the usability of CVE for patch management, we allow a CVE
+mapping for an issue where the author of the code has announced a
+required security patch, even if the issue is not universally
+recognized as an exploitable vulnerability. This can be helpful in
+situations where a vendor has direct knowledge of advertised use cases
+or customer expectations. For example, if there's a Linux distro
+designed specifically for connecting compromised mobile phones over
+USB and initiating forensic analysis, then it's perhaps reasonable to
+say that unrestricted acceptance of new USB keyboards is a CVE-worthy
+vulnerability for that one distro.
 
 - -- 
 CVE Assignment Team
@@ -35,17 +83,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYKgMsAAoJEHb/MwWLVhi21GoP/3HGz6OGmr6WDKg+2+IUaD8h
-Rwgsw78MVxqrnq/gXwg0or2yYXXHxKyR12LlDmWADnqi7WtW7mM+4r3WSGb71Vqk
-jfCptES4/UqpCKdEV4+HQ5nVKFRhQo1zpEam+kHbS5OiB93GlhS3UByyaSyeRsnf
-ZnfdVl61NjCJHerb8lBEtYf0e5rA1SvspwfIiior6o9967X9Yrs9e2S0EidCl7dq
-WFwh1lXZCMgGw38WzeblKgm000ScDplTgAmu6yWMIoRgZeAIdy1605/iSoBPJfgD
-NS0wecALHmUqhYYeouBS/1l2FDg7pIpWWAo5s7fkiajxF8hvbUR1tTd2v1hOY8Xc
-+w4Hiao2j4BXd9ZoKCUGumV3d0eSksNx52ZgzN8oJxa+mX74iDG6abbTYSfzlAWG
-lmRFi94/0oeufIqD1aMaZ5jrMoWjjyPoum2L2Y31tUiJdFUktKJ9/6dW02wydNme
-UjZjkIwjL44DCz4WLfXqV/rIMyx/ZztVgneAAqUFn1ssHf51HyzQPSpgbRLgj9Gc
-ohRUn34JyZGbACYXm63pMjA01Z6FOCjlE+/kgGoNe56u+1i9UFPdaQs0OY4g9POF
-DXl6kHqYNxqxASk1Ms70epXt4b/pBHdGXzqFF5QmPPW5xXiubCswn13hZhM/lZRF
-tTzTS1vprIT3fYUXhjZn
-=B4JU
+iQIcBAEBCAAGBQJXu4LCAAoJEHb/MwWLVhi25yAQAIpHJGpnkiVI8osth0zpuGNJ
+RwNEne6YpaP0evP3Rj8RahQ8qMB0lEQPnH0sHliuRT5rUsZx40IEsHNoOOg8s5EE
+vKxuYU/lhrYsWPqYTkjKJjxvuLO2dARzytDkLCyK69snQzEBYY8i7YTlI/Q2+1Fd
+qKy0RlbJdrdGzjIuR+j3zovMna3qFIsnWPl0uVi5RQCM8S6AJy6KTCeSYurncsqu
+KDIjvWIWMavV5mTzy1RevSShB6StnP/F8MeUqIUF3xbIAfGOqG51mr7XnUYOEIPM
+U0imdTupQgJ4wJjYs7Q0RiSSUrlbLHWD+s7URoqez5rqMgbBc1ugq1uBlo5DBHWk
+uwEwn4mwVrMXu9k04yY8FyplntQDkDULKCCC1hsiExMO5gBhCDYi9CbYrTszP8NF
+q/ynMDJxOY5GmFPD5fafmKUKa3G+KXRt7MpU+LNfH5c7KiOcNOt7Igon2NI2RqOA
+HxliE2ZhB4kkf/qD+wqbVC0ZQegXnnKiIOEvFqUY2FpHOLvZ0A+EuIlGjy+N8zLW
+Eji1Imq6wr+p95eXzvp5w2fVVydujDQD/xI2p3isb7Tv640s4plC22rjMVPd0zbz
+hE6g97Q2gSzCsBnC3ZlF30PVeLw2vErlnFoBqy6IRgBRBNQCzv94SRy9DUNICKX+
+fhdbnuRUSLsHmqtLmH7+
+=fXqf
 -----END PGP SIGNATURE-----
