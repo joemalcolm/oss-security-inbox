@@ -1,78 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/03/1
-Message-Id: <20160203003333.A47A68BC0B7@smtpvmsrv1.mitre.org>
-Date: Tue,  2 Feb 2016 19:33:33 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/17
+Message-Id: <20160822205557.001A36FC085@smtpvmsrv1.mitre.org>
+Date: Mon, 22 Aug 2016 16:55:56 -0400 (EDT)
 From: cve-assign@...re.org
-To: hanno@...eck.de
+To: carnil@...ian.org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Miscomputations of elliptic curve scalar multiplications in Nettle
+Subject: Re: CVE Request: lshell: shell outbreak vulnerabilities via bad syntax parse and multiline commands
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> I discovered two carry propagation bugs
+> 1/ Shell outbreak due to bad syntax parse
+>    - https://github.com/ghantoos/lshell/issues/147
+>    - https://bugs.debian.org/834949
 
-> The P-256 bug is
-> in the C code and affects multiple architectures.
-> 
-> https://lists.lysator.liu.se/pipermail/nettle-bugs/2015/003028.html
-> 
-> secp256 calculation bug (already fixed)
-> 
-> Sat Dec 12 21:48:58 CET 2015
-> 
-> https://git.lysator.liu.se/nettle/nettle/commit/c71d2c9d20eeebb985e3872e4550137209e3ce4d
-> 
-> 2015-12-10
-
-Use CVE-2015-8803.
+Use CVE-2016-6902.
 
 
-> The P-384 bug is in
-> the assembly code and only affects 64 bit x86.
-> 
-> https://lists.lysator.liu.se/pipermail/nettle-bugs/2015/003024.html
-> 
-> Miscalculations on secp384 curve
-> 
-> Fri Dec 11 11:19:05 CET 2015
-> 
-> https://git.lysator.liu.se/nettle/nettle/commit/fa269b6ad06dd13c901dbd84a12e52b918a09cd7
-> 
-> 2015-12-15
+> 2/ Shell outbreak with multiline commands
+>    - https://github.com/ghantoos/lshell/issues/149
+>    - Fix: https://github.com/ghantoos/lshell/commit/e72dfcd1f258193f9aaea3591ecbdaed207661a0
+>    - https://bugs.debian.org/834946
 
-Use CVE-2015-8804.
+Use CVE-2016-6903.
 
 
-> Niels Moeller discovered
-> another carry propagation bug in P-256
->
-> https://git.lysator.liu.se/nettle/nettle/commit/c71d2c9d20eeebb985e3872e4550137209e3ce4d
->
-> 2015-12-10
-
-Use CVE-2015-8805.
+https://bugs.debian.org/834949 and https://bugs.debian.org/834946 also
+mention "Command parser in this shell is beyound of recovery." This
+suggests that other vulnerabilities may be fixed at the same time as
+issues/147, or that other vulnerabilities may be discovered. In
+particular,
+https://github.com/ghantoos/lshell/issues/147#issuecomment-241366750
+mentions a different attack methodology. At least for now,
+https://github.com/ghantoos/lshell/issues/147#issuecomment-241366750
+is within the scope of CVE-2016-6902. It is difficult to predict what
+other CVE IDs may be needed until there is further vendor followup
+about issues/147.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWsUqEAAoJEL54rhJi8gl5kBgP/3SoSxsZyGfBYj+2LR1uF/o7
-1cIStfXACb7RaB02DnCzkjxlBBPUxxPnZbW3nDR7XHe1n9dVSmWYavenQceikS2y
-EJmRuu6L7CaXDQ9nwj9kfmUaLoPmC737eD5vkUNu3gWyyDaDpeb4ve0UHNmInNRG
-efDC4MbT9Tmzhpfx0cDkG5hdPImWgNDQRf2loSZ2owy7XcH3a0U60kZ5mwXndQms
-eEzyj2tD4gE1VWbadjuqPplkyCjp39a30WhbWNAdizHKj5N4ai0+W7uy1P1y47qK
-BsRQwtPprsf/Vsozmf4y/tMwX4zB3DFLKq/Gtm7wjj43SSahMkN22d2tCxHfTfHB
-Cj8YciUtun9oGOPDFCMcwmzY6UrmR+Hn+DCmp821FrHD12JEaptB+BNvDkit1/0F
-lyMWCuoiqoUUplIYY3K33Ys5I8WFxw2E3eGrCmcNs3nZ+IOEqZRedwGElLFKISwJ
-EFA2fzJp0VI2jpq6+/S4d3F70BFjsZ1ZvVd+KIYvrncfOz0A76/xCWCo2spQFz39
-W3gsOVN5vPajqfI091nFwTaX3y7wqkFhb20YV11Pz38rgiM5Kfrgj03g5n1tF0oD
-7mSgLHCnI8Uz1UxJcTAYoAGHLxFZu4hM+CL5rVq3hVlUpZhj4fjE29LUdq16lYij
-dZFxx5TihZtuH0n6KxkM
-=5gQs
+iQIcBAEBCAAGBQJXu2Z5AAoJEHb/MwWLVhi2yV8P/jYtI8rE7dbkIHDCytF6ligt
+O586ap6xBzpt0x874jrEZvteWGm1qDmA0JhQsuRa6CAGWRwOy1DweZpppDZ0u3ic
+85dT8yQw+9Hz3eJe0G/M3WjSk6m2eeyUGf5N6817UAim/SM+RnNVfPrP+ytBCb5Z
+tpdXPW+BKJa1/FsSAcQ6+mzkpytPXb8DFdf9Tb82g8rAPZTMNw/beJXaBo4o+Btr
+ZYOv3QGkpubbak6TWVCI9mmbslekFKrcI7qKYwYAwkON4CUHkXg8/RhbMbLVDzlC
+sSlvPBiGibzm3uNtuMqkbVAKazrpad/NNwt/ioAVYltDOZjIs7jNPe7Va9YLKcBz
+33IVH9QQMQr5CRh5kYgV3coSMRvQfduIIE4I7HxlumlwGJKsvARQ4JiEYhoqrgKv
+/M1pzohNpg7TBW5RjHuYMZougbHa70tezV2+mtjdb28lB3DrsAafNPa+9R9cE+UB
+5fE4Qm7LYRqA4hNtut0OrdEF5zmJL1u8xuVOoj5pUdRDs4A9FL/hT8TEFXsQaknA
+nXNtI+bqYQxOqE1ZXg40WbN6Z/aeZYSIUXhZ1DdirCGqtEsnD6IJ07kch/QuZsUc
+Qd1IoN4d6fCfKcObz2AZ4fg+As7ndsmuMapi+VMPff3JZrqakQVroptK1K2gTHY2
+92ovu5VQOdGYAvoWVFQR
+=ICSm
 -----END PGP SIGNATURE-----
