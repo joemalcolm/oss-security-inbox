@@ -1,4 +1,9 @@
-Received: (qmail 27665 invoked by uid 550); 22 May 2026 19:39:58 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1794" "Tuesday" "23" "August" "2016" "17:04:37" "-0400" "CAI Qian" "caiqian@redhat.com" "<1439716096.1919046.1471986277289.JavaMail.zimbra@redhat.com>" "42" "[oss-security] cve request: overlayfs: Fix dentry reference leak" nil nil nil "8" "2016082321:04:37" "[oss-security] cve request: overlayfs: Fix dentry reference leak" (number mark "U       caiqian@redh Aug 23   42/1794  " thread-indent "\"[oss-security] cve request: overlayfs: Fix dentry reference leak\"\n") "<18949047.1914380.1471985043180.JavaMail.zimbra@redhat.com>" ("<18949047.1914380.1471985043180.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 24295 invoked by uid 550); 23 Aug 2016 21:04:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,208 +12,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 25753 invoked from network); 22 May 2026 19:27:41 -0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mVemPZt1t++Bow4luyptJFXo7B5aWUKuzD31daAYDfqVeagyBf7rtcs2Ck9KaSpncs7FZ+4XIAdFvDjYTnYigDwP/QIuOFSywTBzHBfjP7E8Vc0WLsiE3f1vinju5q3W3JxbEKxmnAJ7nlW2KV+Bpin38EIGi69lI0n5Gzn1bjLeySpx0LnKD+oLzMT1fKwo89FppF1x42awantNTkWsCTkCFAbckB3QkNPHAdnKqVfReNYdJxXlKLNzBVifh4Y5Xq/SAiFo1/0ogije/nl5IIifRI+gIwZYQeeRINIz/EeKaL2eDyXnssLQ+CH/NxHJ5sWZrSJj1419pGpIOcqqrA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AB6XMhPaIDHpZnWK4ejVkjzFSFPbJwdKg6Bx5uhlnx4=;
- b=j/Xs3VCQUJRUCt/E6z89XeV2cxkERFEVtsiixiYj+nAV2rWAZ0/FymDz68iWoWFuHKYDvE5g6e1oj+DqJiwfDJbOlkC9xp999Xfd3K+0ZmE4pH1Pbdb80wI/jKdXnEST0gjU1Ok2U0KiATnVJMCpOmrwaV7o8yMs5AigMj9u5puff85sJgB7UL9Pe980vq8Wmt+UGuKQN4d6dz+pua7S5AX6H9j9m0kwTeswH8FeNtC77EpsgaokHoT+/2ccSloyTOWbJKyECiyBiu7qxNlOBtgHHb5dVETuJuhFNqq7Qdlizw9hLrca6hMdZDgJ+egWHICf8sZSzZ9oXWzJttV1VQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=edgecast.io; dmarc=pass action=none header.from=edgecast.io;
- dkim=pass header.d=edgecast.io; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Edgecast.io;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AB6XMhPaIDHpZnWK4ejVkjzFSFPbJwdKg6Bx5uhlnx4=;
- b=EAqrFmj8RnP1dsj3KLeCTh9WqPMT/IiPt0hpuRCXdBHNZFjkL5z3gNc+muqhCtyCpGQQQXhkjTLI3RSoeBmJdwUA1f0kpmWSpOT5wCUu98kDYDxsXjs5caw3/uIklA9nYHrG+WCRUS/h1wiEPrpBTEDL83xW4sgqZ/IeSTAMMQuPOsGKcPWfyJV72HXn/Yf55RX1Ig9oTNUOsuHolTCvaZtB8kt52lGQZ4fKfj+w0bsHIrSnEDPlnGVUyHXdgDey7afnH2Xq5M73vBtT+/1yxcR0w2fPyudGwZyFRf6oogBvFgfsFbyacnj8uoq5SouChHwIolLfek+caO053WNNBg==
-From: Dan McDonald <danmcd@Edgecast.io>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: illumos: 18118 SCTP frees wrong-size, and need to keep private
- options
-Thread-Index: AQHc6gIcMj4MGKpthkqs2q0esupkAw==
-Date: Fri, 22 May 2026 19:27:27 +0000
-Message-ID: <157A3B07-0201-4B0A-844E-46AD31FFAF60@edgecast.io>
-References: <43DCFFB8-5859-4CA9-B09D-AE743E2261FA@edgecast.io>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=Edgecast.io;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: MWHPR06MB3373:EE_|LV3PR06MB9552:EE_
-x-ms-office365-filtering-correlation-id: ca50a0d8-c265-40f3-574b-08deb83828be
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|376014|1800799024|366016|18002099003|3023799007|6133799003|56012099003|38070700021|8096899003;
-x-microsoft-antispam-message-info:
- HrSCiAfH3cYOgcdvPhLEYehp1r+wKu4P4ktUpIBAFS+OUHlzvcibgB7m/XWhnSwMLpI1BHGDtIXrnRQcKg8hXrP4I9hLEQRxBWIHCzmCwWvdx1bMUDPatoBm6tE+UwnBrJ+dQXjHzpv5bu6rdUD3LuchfRZqDR1MLbK4Omw/+mUrn2cOL00YvM48U6k53FEFgzeq97nmaAlfPXdf7lo3Zzxa0iDYE66GPrLCi8zh82dM4KPTisTUUh2eO7o4JU2Bw8a+Dr3kARgfeKGoLCSGSRLT8tAVwhXSuL6q4lghKPNk47o8+PjffZnMpxEw5v/rNgCqyj2nGiCyQlhifzsKKk2xRGNmBbjaot8wrfhKp8C5A0w/OglhagJWVIT85rp1/QAUcEeRMXJFPKEpwVZ/gKfCo/Vf3znAVhw0bffS0h8dGoy+K4tbghUxrP25BpvOkOfks4MW3L0t8q5NtKWEHesRATgdgTRwmfyGop0qoxxQCB6eJst7eEFBt/bcT7DqjiBHc0PlU8gwMmLpsVLRP3QwF0h2rfPBT9MF02OwbZv9mq5Vhnh5+18jWpHahmPXwncxxTNnA4/14+qqUM+e06tePaB6ukBZur6dyPcGxrwvO7dnGClhUKL1fg/5ObHS6GbciGlufUWkM0kV7XQKEUKqA4FUBnQZt7xJHWuLi7cqGqbA2FCtUUDh1vZSJQxNcQwgGPNWJrwuSdDXfve1VQ==
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MWHPR06MB3373.namprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(18002099003)(3023799007)(6133799003)(56012099003)(38070700021)(8096899003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?T2VHZHh0eHUybExpUjFtdFhHSzRrZndGRVUydkUwV1NhME9ySlpmSUFqT2Ju?=
- =?utf-8?B?MVJzTTJKempwVkVYRXNsd1B5dkNSWDl6RDY2S29KdVBwZWZhQkp3MXNhb1Fm?=
- =?utf-8?B?L1N5Mm4yMHRSUkdLdGhhaHQweURHeGtmbWYxNFN5RXdnRVpzVFpjQ08xd2hG?=
- =?utf-8?B?MzVtK2pwV3J0Rng4YXk3Z1FOayttNEZtU0pUTW93b0hRUllabmtlTXpxaTVU?=
- =?utf-8?B?Qkl5V0NaNmppMzl0djRFT3BPNFd4Y2d3K3ErRFRiTkJ4MGRVWSszV3FkYWZZ?=
- =?utf-8?B?S3lsRUNWNm1zRlFmNTBUYW9zZzhpRUxMMExQYjZuU3R4RzdBcXRiUHpPckdX?=
- =?utf-8?B?RWZ6T2RybHFuRE1CekVyNURBK0tzR2N3UG1lUVg1bFFVWU5vZ2dDU2s4V1U2?=
- =?utf-8?B?MFFsQjQ0QW5LYk5rWm5mbE8zVjZTcGwrVmIveGFiUGtGN2w2K0hVb3h6U0s5?=
- =?utf-8?B?WTZrSkdoQjZoMXRXL3FweTlPeElNRC85TzBNM0hRRkk1ZE1MTTZBQ0RpQjYx?=
- =?utf-8?B?aWRTOHlpMG1vdnpnYWkySGgyWnlERCtocTdxcmRQeFlnNE96SWRmaG13SUdK?=
- =?utf-8?B?eEFDenFhcm5aZkdpVUczUnpGSXBudkhJdUdQMmVmaThQUmN4RndDT2hNOS9M?=
- =?utf-8?B?aFpXSWN3UHhUYkFSK1A5dDM3N1g3bGdFaWFFbk95UjhXM1l6c0VWMXFvQ2NW?=
- =?utf-8?B?LzhZUlpCdVgwUzUvQTlOMlI3dXVrenEzdWRYR3cvQmVsMURtbnFCMlJ3OW5W?=
- =?utf-8?B?Vm4ySlFRamZTVEU1WEIyZ3pUT1FtVXhhbFJRVGtGNEFtbi9QdXc1T2sxOHQw?=
- =?utf-8?B?cTJjZ2V4ajdRQm5DVVdINTA0bk1oREJjclllQys0Q1lTd1FZU2lTeEV1eHd2?=
- =?utf-8?B?aGJDa0s4WjN6VVRzd041TVB4TnpsNXE1QnVoRTE0MzhtWnVwTFN4QnZEejdz?=
- =?utf-8?B?MS9ONkpwU3dXb0IwN3djWEF0cWtjUnZiOVViUCs3QTlmSkxTNVAxVkNPOWh6?=
- =?utf-8?B?NG9EcEpiUkovZzlXU1hIcStrUS9UL3RwSDlScDVNMDhkR0xwU3YyU2lpbE0x?=
- =?utf-8?B?bU8wZm5YUWhQVE9wWGV2dHllYlpQQlRxU1hYSWJFbFJkRVdVRGMyNEx4T2Vu?=
- =?utf-8?B?Y2hueXVrcTM2b3JFR3lnTDZwMW43WDg2QTBXZExWT3B0MzJleHYrN2xwQ0dB?=
- =?utf-8?B?YVJJYnVjVHZJZnhnWTZtRnFENVpDd3RlS0FEWDI5c09BNENnUnRhNTZxaWRR?=
- =?utf-8?B?UmFkZjhMMmJQOEtia2h2a3l4aXl4emFKWnk1a2xySm5DR0hKMG9nd2RCcW4r?=
- =?utf-8?B?b09UQWhBQ2pMb20wOTNFMWlhS2NCWFlzTmNIclpWZWpUQU0vdlIzdFBpV0Uv?=
- =?utf-8?B?SUZmbjdCSXJ6VHpDWUU3bzJoQ3NLVXVqdTNLSERMTVZBS3ZxandtT1FvVEJJ?=
- =?utf-8?B?L0N1VUVNR0hHRjJrSS96UW4wRmhGZTRKc2tya243d3MzQzlCa3dSaWwxTmVO?=
- =?utf-8?B?RjV3TG9qNGZQb2VNZEhZcGkwWkFPVlBHcHhKTURCZm5EWGRFa3VFWFZGalMy?=
- =?utf-8?B?dDRQTWdvMzFqd1hzQ01UYmcxZjU5T2tCbDBwemRPaXpuaWhMTHNRaFVKQ3FX?=
- =?utf-8?B?amxyYkxjSTVkWi9pMWFHemZxMldlcmNWNEQ5N3BVN25LVFJoZWNkNlJrNXA0?=
- =?utf-8?B?OTl4eUlPNlEwemdDSHBhMWMzdS9OVHlwRlBHZ1ZjVHZSV0ErTHd2WVZoalBP?=
- =?utf-8?B?MjJ6ck44a0hFVFhsNU5XZmxJT09jWEtkRFJtUm5Icmh1RWMyZjhnRVQ4UXUr?=
- =?utf-8?B?M3dkeEF1dzBjTU13TFNOQWZkT3BZYmNBRVROcm9POVpqMzB5T2JNWXdhV3lw?=
- =?utf-8?B?c2pWVzN1b3BzNnNXZHhzTmdYalQ1N0wwK1E2Z3VnSHNuQlJRNFhLYVdxT0di?=
- =?utf-8?B?WDFXM1NSZDVsV2djMituOEo4WjE5YUN4Y3B6WFlvTmpKZHUvWDA5KzV2c011?=
- =?utf-8?B?dkl2amR5TTQ5V2wwYlRXbHFnYjE1ODd3NzhpS1ptOE5WZ1JoTUU0eU0vTXdJ?=
- =?utf-8?B?QUtCTStPblEzcW5PY01PUmVZMm50VlljaUpsMDI2V3pQd04wM3R6QUpURHMv?=
- =?utf-8?B?WlgyQS8wWlFYOU5mL3YxaW9MWDg5d0Ivc0JubkErdkh0SEt6YWZ2U2tXQmxw?=
- =?utf-8?B?dURtSFdzbm5Vekx6YzFueHh0cG9KTE9UWHdxU1UyT01CK2Zzc2krS2N5QVdL?=
- =?utf-8?B?OWRUQUZzZlpSUkpRU3h4WklkcEExZVAxak5TenNyb3VsbnVFdFo5VnMxeUk5?=
- =?utf-8?B?YVJ0VUhQTlVCdXVWd2RwcEpITEVGMXlMRVJ4VDlKYSs2bWJjNC9iUT09?=
-Content-Type: multipart/alternative;
-	boundary="_000_157A3B0702014B0A844E46AD31FFAF60edgecastio_"
+Received: (qmail 24277 invoked from network); 23 Aug 2016 21:04:50 -0000
+Date: Tue, 23 Aug 2016 17:04:37 -0400 (EDT)
+From: CAI Qian <caiqian@redhat.com>
+To: cve-assign@mitre.org
+Cc: oss-security@lists.openwall.com
+Message-ID: <1439716096.1919046.1471986277289.JavaMail.zimbra@redhat.com>
+In-Reply-To: <18949047.1914380.1471985043180.JavaMail.zimbra@redhat.com>
 MIME-Version: 1.0
-X-OriginatorOrg: Edgecast.io
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: MWHPR06MB3373.namprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ca50a0d8-c265-40f3-574b-08deb83828be
-X-MS-Exchange-CrossTenant-originalarrivaltime: 22 May 2026 19:27:27.4110
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 18601070-e698-4d97-89c0-868d773f2727
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: x2gcgBt9K8mtmKuMhVShQ2kc39LVLVzwDpQJqscpEgCXK52qBFXx+oqP24qqibwB/CWG7Xn12gaUVqWpqWwSsQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR06MB9552
-Subject: [oss-security] illumos: 18118 SCTP frees wrong-size, and need to keep private
- options
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.18.41.13]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - GC45 (Linux)/8.0.6_GA_5922)
+Thread-Topic: cve request: overlayfs: Fix dentry reference leak
+Thread-Index: eLQv49li1+ZU+vdPa07cIYCJ0TwFyQ==
+Subject: [oss-security] cve request: overlayfs: Fix dentry reference leak
 
---_000_157A3B0702014B0A844E46AD31FFAF60edgecastio_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+=== Description ===
+commit ab79efab0a0ba01a74df782eb7fa44b044dae8b5 upstream.
 
-aWxsdW1vcyBkaXN0cm9zIHNob3VsZCBob3RwYXRjaCBvciB1cGRhdGUgdG8gcHJldmVudCBhIHBv
-dGVudGlhbCBwcml2aWxlZ2UgZXNjYWxhdGlvbi4NCg0KT21uaU9TIGhhcyBhbHJlYWR5IGRyb3Bw
-ZWQgdXBkYXRlcyB2aWEgSVBTLg0KDQpTbWFydE9TIGhhcyBKVVNUIHJlc3B1biBsYXN0IHdlZWsn
-cyBiaXdlZWtseSByZWxlYXNlIHRvZGF5IHRvIGFkZCB0aGlzIGZpeC4NCk5leHQgd2VlaydzIGJp
-d2Vla2x5IHJlbGVhc2Ugd2lsbCBzdGlsbCBzaGlwLCBidXQgd2l0aCBvdGhlciB1cHN0cmVhbSBt
-ZXJnZXMgYXMgd2VsbC4NCg0KT3RoZXIgaWxsdW1vcyBkaXN0cmlidXRpb25zIGhhdmUgYmVlbiBp
-bmZvcm1lZCBhcyB3ZWxsLCBhbmQgb25lcyBsaWtlIE9wZW5JbmRpYW5hDQpmb2xsb3cgaWxsdW1v
-cy1nYXRlIHZlcnkgY2xvc2VseS4NCg0KVGhhbmtzLA0KRGFuDQoNCkJlZ2luIGZvcndhcmRlZCBt
-ZXNzYWdlOg0KDQpGcm9tOiBEYW4gTWNEb25hbGQgPGRhbm1jZEBFZGdlY2FzdC5pbz4NClN1Ympl
-Y3Q6IFtkZXZlbG9wZXJdIDE4MTE4IFNDVFAgZnJlZXMgd3Jvbmctc2l6ZSwgYW5kIG5lZWQgdG8g
-a2VlcCBwcml2YXRlIG9wdGlvbnMNCkRhdGU6IE1heSAyMiwgMjAyNiBhdCAxMTo0NjoxMOKAr0FN
-IEVEVA0KVG86IGlsbHVtb3MtZGV2ZWxvcGVyIDxkZXZlbG9wZXJAbGlzdHMuaWxsdW1vcy5vcmc+
-DQpSZXBseS1UbzogaWxsdW1vcy1kZXZlbG9wZXIgPGRldmVsb3BlckBsaXN0cy5pbGx1bW9zLm9y
-Zz4NCg0KSGkgZm9sa3MsDQoNCmlsbHVtb3MjMTgxMTggYWRkcmVzc2VzIHR3byByZWxhdGVkIHZ1
-bG5lcmFiaWxpdGllcyBpbiB0aGUgU0NUUCBzb2NrZXQNCmlvY3RsIHBhdGgsIGJvdGggcmVhY2hh
-YmxlIGJ5IGFueSB1bnByaXZpbGVnZWQgcHJvY2VzcyB0aGF0IGNhbiBvcGVuIGFuDQpTQ1RQIHNv
-Y2tldC4gVGhlIGZpcnN0IGlzIGEgaGVhcCBtZW1vcnkgY29ycnVwdGlvbiBpbiB0aGUgU0lPQ1ND
-VFBTT1BUDQppb2N0bCwgd2hlcmUgYSBidWZmZXIgaXMgYWxsb2NhdGVkIHdpdGggb25lIHNpemUg
-YnV0IGZyZWVkIHdpdGggYQ0KZGlmZmVyZW50ICh1c2VyLWNvbnRyb2xsZWQpIHNpemUgb24gdGhl
-IGVycm9yIHBhdGguIFRoZSBzZWNvbmQgZXhwb3Nlcw0KdGhlIGtlcm5lbC1wcml2YXRlIFNDVFBf
-VUNfU1dBUCBzb2NrZXQgb3B0aW9uIHRvIHVzZXJzcGFjZSwgYWxsb3dpbmcgYW4NCnVucHJpdmls
-ZWdlZCBjYWxsZXIgdG8gb3ZlcndyaXRlIHRoZSBTQ1RQIHNvY2tldCdzIHVwY2FsbCBoYW5kbGUg
-YW5kDQp1cGNhbGwgZnVuY3Rpb24gdGFibGUgd2l0aCBhcmJpdHJhcnkgdmFsdWVzLg0KDQpEaXN0
-cmlidXRpb25zIHNoaXBwaW5nIGlsbHVtb3Mgd2l0aCBTQ1RQIGVuYWJsZWQgc2hvdWxkIHRyZWF0
-IHRoaXMgYXMNCmEgaGlnaC1wcmlvcml0eSB1cGRhdGUuIEFueW9uZSBydW5uaW5nIG9uIHN5c3Rl
-bXMgd2hlcmUgdW50cnVzdGVkIGxvY2FsDQp1c2VycyAob3Igem9uZSB0ZW5hbnRzKSBjYW4gZXhl
-Y3V0ZSBjb2RlIHNob3VsZCBiZSBlc3BlY2lhbGx5IGF0dGVudGl2ZS4NCg0KSU1QQUNUOiBCb3Ro
-IGJ1Z3MgYXJlIHJlYWNoYWJsZSBmcm9tIGFueSB1bnByaXZpbGVnZWQgcHJvY2VzcyB3aXRoDQpw
-ZXJtaXNzaW9uIHRvIGNyZWF0ZSBhbiBTQ1RQIHNvY2tldCwgaW5jbHVkaW5nIGZyb20gd2l0aGlu
-IGEgbm9uLWdsb2JhbA0Kem9uZS4NCg0KVGhlIHdyb25nLXNpemUga21lbV9mcmVlKCkgbGV0cyB0
-aGUgY2FsbGVyIGZyZWUgYSBjaHVuayBpbnRvIHRoZSB3cm9uZw0Ka21lbSBjYWNoZSwgd2hpY2gg
-Y2FuIGJlIHN0ZWVyZWQgaW50byBjb3JydXB0aW9uIG9mIGFkamFjZW50IGhlYXANCm9iamVjdHMu
-DQoNClRoZSBTQ1RQX1VDX1NXQVAgZXhwb3N1cmUgbGV0cyB0aGUgY2FsbGVyIGluc3RhbGwgYXR0
-YWNrZXItY29udHJvbGxlZA0KcG9pbnRlcnMgdGhhdCB0aGUga2VybmVsIGxhdGVyIGRlcmVmZXJl
-bmNlcyBhbmQgY2FsbHMuIEluIGNvbmp1bmN0aW9uDQp3aXRoIG90aGVyIHRlY2huaXF1ZXMgaXQg
-Y291bGQgYWxsb3cga2VybmVsLW1vZGUgaW5zdHJ1Y3Rpb24tcG9pbnRlcg0KY29udHJvbCwgbGVh
-ZGluZyB0byBsb2NhbCBwcml2aWxlZ2UgZXNjYWxhdGlvbi4NCg0KQXQgYSBtaW5pbXVtLCBlaXRo
-ZXIgYnVnIGNhbiBiZSB1c2VkIHRvIHBhbmljIHRoZSBrZXJuZWwuDQoNCkFDVElPTjogUGxlYXNl
-IGJlIG9uIHRoZSBsb29rIG91dCBmb3IgcGF0Y2hlcyBmcm9tIHlvdXIgZGlzdHJpYnV0aW9uIGFu
-ZA0KYmUgcmVhZHkgdG8gdXBkYXRlLg0KDQpNSVRJR0FUSU9OUzogT24gc3lzdGVtcyB3aGVyZSBh
-biBpbW1lZGlhdGUga2VybmVsIHVwZGF0ZSBpcyBub3QgeWV0DQpwb3NzaWJsZSwgdGhlIFNDVFBf
-VUNfU1dBUCBleHBvc3VyZSAodGhlIG1vcmUgZGFuZ2Vyb3VzIG9mIHRoZSB0d28NCmlzc3Vlcykg
-Y2FuIGJlIG1pdGlnYXRlZCBvbiBhIHJ1bm5pbmcgZ2NjMTAtY29tcGlsZWQgbm9uLURFQlVHIGtl
-cm5lbA0Kd2l0aCBhIHNtYWxsIGhvdHBhdGNoIHRoYXQgcmV3cml0ZXMgdGhlIFNDVFBfVUNfU1dB
-UCBjYXNlIGluDQpzY3RwX3NldF9vcHQoKSB0byBmYWxsIHRocm91Z2ggdG8gdGhlIEVJTlZBTCBl
-cnJvciBwYXRoLiBUaGlzIHdpbGwNCmJyZWFrIHRoZSBpbi1rZXJuZWwgU0NUUCBwZWVsLW9mZiBw
-YXRoIHRoYXQgbGVnaXRpbWF0ZWx5IHJlbGllcyBvbg0KU0NUUF9VQ19TV0FQLCBidXQgdW5wcml2
-aWxlZ2VkIGFidXNlIG9mIHRoZSBvcHRpb24gaXMgY2xvc2VkIG9mZi4gVGhlDQp3cm9uZy1zaXpl
-IGttZW1fZnJlZSgpIGJ1ZyBkb2VzIG5vdCBoYXZlIGEgY2xlYW4gaG90cGF0Y2ggYW5kIHJlcXVp
-cmVzDQp0aGUgZnVsbCBmaXguDQoNCkJlZm9yZSBhcHBseWluZywgY29uZmlybSB0aGF0IHRoZSBk
-aXNhc3NlbWJseSBhcm91bmQgc2N0cF9zZXRfb3B0KzB4NTk4DQptYXRjaGVzIHRoZSBmb2xsb3dp
-bmcgb24geW91ciBydW5uaW5nIGtlcm5lbDoNCg0KIyBtZGIgLWtlICdzY3RwX3NldF9vcHQrMHg1
-OTg6OmRpcycNCnNjdHBfc2V0X29wdCsweDU3MDogICAgICAgICAgICAgc2V0bmUgICVkbA0Kc2N0
-cF9zZXRfb3B0KzB4NTczOiAgICAgICAgICAgICBhbmRsICAgJDB4N2YsJWVheA0Kc2N0cF9zZXRf
-b3B0KzB4NTc2OiAgICAgICAgICAgICBzaGxsICAgJDB4NywlZWR4DQpzY3RwX3NldF9vcHQrMHg1
-Nzk6ICAgICAgICAgICAgIG9ybCAgICAlZWR4LCVlYXgNCnNjdHBfc2V0X29wdCsweDU3YjogICAg
-ICAgICAgICAgbW92YiAgICVhbCwweDUzOCglcmJ4KQ0Kc2N0cF9zZXRfb3B0KzB4NTgxOiAgICAg
-ICAgICAgICBqbXAgICAgLTB4MzRlICAgPHNjdHBfc2V0X29wdCsweDIzOD4NCnNjdHBfc2V0X29w
-dCsweDU4NjogICAgICAgICAgICAgbm9wDQpzY3RwX3NldF9vcHQrMHg1ODg6ICAgICAgICAgICAg
-IGNtcGwgICAkMHgxNywlcjE1ZA0Kc2N0cF9zZXRfb3B0KzB4NThjOiAgICAgICAgICAgICBqZSAg
-ICAgKzB4MjMyICAgPHNjdHBfc2V0X29wdCsweDdjND4NCnNjdHBfc2V0X29wdCsweDU5MjogICAg
-ICAgICAgICAgamxlICAgICsweGUwICAgIDxzY3RwX3NldF9vcHQrMHg2Nzg+DQpzY3RwX3NldF9v
-cHQrMHg1OTg6ICAgICAgICAgICAgIGNtcGwgICAkMHhmZiwlcjE1ZA0Kc2N0cF9zZXRfb3B0KzB4
-NTlmOiAgICAgICAgICAgICBqbmUgICAgLTB4MzZkICAgPHNjdHBfc2V0X29wdCsweDIzOD4NCnNj
-dHBfc2V0X29wdCsweDVhNTogICAgICAgICAgICAgbW92cSAgIDB4ZmZmZmZmZmZmZmZmZmVmOCgl
-cmJwKSwlcmN4DQpzY3RwX3NldF9vcHQrMHg1YWM6ICAgICAgICAgICAgIG1vdnEgICAweDM3MCgl
-cmJ4KSwlcmF4DQpzY3RwX3NldF9vcHQrMHg1YjM6ICAgICAgICAgICAgIG1vdnEgICAoJXJjeCks
-JXJkeA0Kc2N0cF9zZXRfb3B0KzB4NWI2OiAgICAgICAgICAgICBtb3ZxICAgJXJkeCwweDFiMCgl
-cmF4KQ0Kc2N0cF9zZXRfb3B0KzB4NWJkOiAgICAgICAgICAgICBtb3ZxICAgMHgzNzAoJXJieCks
-JXJheA0Kc2N0cF9zZXRfb3B0KzB4NWM0OiAgICAgICAgICAgICBtb3ZxICAgMHg4KCVyY3gpLCVy
-ZHgNCnNjdHBfc2V0X29wdCsweDVjODogICAgICAgICAgICAgbW92cSAgICVyZHgsMHgxYTgoJXJh
-eCkNCnNjdHBfc2V0X29wdCsweDVjZjogICAgICAgICAgICAgam1wICAgIC0weDM5YyAgIDxzY3Rw
-X3NldF9vcHQrMHgyMzg+DQoNCklmIHRoZSBkaXNhc3NlbWJseSBtYXRjaGVzLCBhcHBseSB0aGUg
-aG90cGF0Y2ggYXMgcm9vdEBnbG9iYWwtem9uZToNCg0KPT09PT09PT09PT09PT09PT09PT09IChD
-dXQgdXAgdG8gYW5kIGluY2x1ZGluZyBoZXJlLikgPT09PT09PT09PT09PT09PT09PT09DQptZGIg
-LWt3ZSAnc2N0cF9zZXRfb3B0KzB4NTk4L3cweGZlZWINCm1kYiAta3dlICdzY3RwX3NldF9vcHQr
-MHg1YTAvVzB4ZmZmZmZjDQptZGIgLWt3ZSAnc2N0cF9zZXRfb3B0KzB4NTk4L1oweDk1ZTkwMDAw
-MDA2M2I4NDENCj09PT09PT09PT09PT09PT09PT09PSAoQ3V0IHVwIHRvIGFuZCBpbmNsdWRpbmcg
-aGVyZS4pID09PT09PT09PT09PT09PT09PT09PQ0KDQpBZnRlciBwYXRjaGluZywgdGhlIFNDVFBf
-VUNfU1dBUCBjYXNlIHNob3VsZCBkaXNhc3NlbWJsZSBhczoNCg0KIHNjdHBfc2V0X29wdCsweDU5
-ODogICAgICAgICAgICAgbW92bCAgICQweDYzLCVyOGQNCiBzY3RwX3NldF9vcHQrMHg1OWU6ICAg
-ICAgICAgICAgIGptcCAgICAtMHgzNmIgICA8c2N0cF9zZXRfb3B0KzB4MjM4Pg0KDQp3aGljaCBs
-b2FkcyBFTk9QUk9UT09QVCAoOTkgLyAweDYzKSBpbnRvIHRoZSByZXR2YWwgcmVnaXN0ZXIgYW5k
-IGp1bXBzIHRvDQp0aGUgY29tbW9uIGVycm9yLXJldHVybiBwYXRoLiBJZiB5b3VyIGtlcm5lbCBk
-b2VzIG5vdCBtYXRjaCB0aGUgZXhwZWN0ZWQNCmRpc2Fzc2VtYmx5IChkaWZmZXJlbnQgY29tcGls
-ZXIsIERFQlVHIGJ1aWxkLCBvciBhbHJlYWR5LWZpeGVkIHZlcnNpb24pLA0KZG8gTk9UIGFwcGx5
-IHRoZSBob3RwYXRjaCAtIHJlYWNoIG91dCBhbmQgd2Ugd2lsbCBoZWxwIHdvcmsgb3V0IHRoZQ0K
-Y29ycmVjdCBvZmZzZXRzIGZvciB5b3VyIGJ1aWxkLg0KDQpQbGVhc2UgcmVhY2ggb3V0IHRvIHVz
-IGlmIHlvdSBoYXZlIGFueSBxdWVzdGlvbnMsIHdoZXRoZXIgb24gdGhlIG1haWxpbmcNCmxpc3Qs
-IElSQywgb3Igb3RoZXJ3aXNlLCBhbmQgd2UnbGwgdHJ5IHRvIGhlbHAgYXMgd2UgY2FuLg0KDQpX
-ZSdkIGxpa2UgdG8gdGhhbmsgU291cnF1ZSBmb3IgZmluZGluZyBhbmQgcmVzcG9uc2libHkgZGlz
-Y2xvc2luZyB0aGVzZQ0KaXNzdWVzLCBhbmQgRGFuIE1jRG9uYWxkIGZvciB0aGUgYW5hbHlzaXMg
-YW5kIGZpeCwgYW5kIEFuZHkgRmlkZGFtYW4gZm9yDQp0aGUgYW5ub3VuY2VtZW50IHRleHQgYW5k
-IGltcHJvdmVkIGhvdHBhdGNoLg0KDQpUaGUgaWxsdW1vcyBTZWN1cml0eSBUZWFtDQoNCi0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KaWxsdW1vczogaWxsdW1vcy1k
-ZXZlbG9wZXINClBlcm1hbGluazogaHR0cHM6Ly9pbGx1bW9zLnRvcGljYm94LmNvbS9ncm91cHMv
-ZGV2ZWxvcGVyL1Q5ZTQwNDlhZThkZTM3MjFhLU0wZmIzOTA0Zjg2OGE3OTA4N2E4NDFiNmINCkRl
-bGl2ZXJ5IG9wdGlvbnM6IGh0dHBzOi8vaWxsdW1vcy50b3BpY2JveC5jb20vZ3JvdXBzL2RldmVs
-b3Blci9zdWJzY3JpcHRpb24NCg0K
+In ovl_copy_up_locked(), newdentry is leaked if the function exits through
+out_cleanup as this just to out after calling ovl_cleanup() - which doesn't
+actually release the ref on newdentry.
 
---_000_157A3B0702014B0A844E46AD31FFAF60edgecastio_--
+The out_cleanup segment should instead exit through out2 as certainly
+newdentry leaks - and possibly upper does also, though this isn't caught
+given the catch of newdentry.
+
+Without this fix, something like the following is seen:
+
+	BUG: Dentry ffff880023e9eb20{i=f861,n=#ffff880023e82d90} still in use (1) [unmount of tmpfs tmpfs]
+	BUG: Dentry ffff880023ece640{i=0,n=bigfile}  still in use (1) [unmount of tmpfs tmpfs]
+
+when unmounting the upper layer after an error occurred in copyup.
+
+An error can be induced by creating a big file in a lower layer with
+something like:
+
+	dd if=/dev/zero of=/lower/a/bigfile bs=65536 count=1 seek=$((0xf000))
+
+to create a large file (4.1G).  Overlay an upper layer that is too small
+(on tmpfs might do) and then induce a copy up by opening it writably.
+
+=== POC Exploit ===
+This can be reproduced in a DevOps environment when the docker runtime storage is on overlayfs over
+xfs as a local DoS. An attacker access to a developer account could run a crafted image from elsewhere
+like docker by creating a big file in the container filesystem and try to read it running by any
+user like below by forcing xfs_file_open() returns -EFBIG,
+
+$ cat Dockerfile
+FROM fedora
+USER nobody
+RUN dd if=/dev/zero of=/home/nobody/bigfile bs=1024k seek=2046 count=1
+ADD open /home/nobody
+CMD ["/home/nobody/open", "/home/nobody/bigfile"]
+
+and possibly trigger kernel dentry leaks inside the container that will eventually running out of
+kernel resources for other developers. Hence, a local DoS.
+   CAI Qian
