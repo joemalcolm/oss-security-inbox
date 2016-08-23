@@ -1,56 +1,189 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/1
-Message-ID: <56DCDDCD.8070600@treenet.co.nz>
-Date: Mon, 7 Mar 2016 14:47:57 +1300
-From: Amos Jeffries <squid3@...enet.co.nz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/23/6
+Message-ID: <1528713.C8CqGc87r5@arcadia>
+Date: Tue, 23 Aug 2016 20:40:27 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+Subject: Fuzzing jasper
 Content-Type: text/plain; charset=utf-8
 
-On 7/03/2016 9:39 a.m., Gsunde Orangen wrote:
-> I totally agree.
-> The concern addressed by Kurt initially is fully valid (for both
-> researchers and for companies that are not on Mitre's product/sources
-> list), so a new (better: additional) solution is required.
-> However, creating a new standard independently of CVE would be too
-> disruptive and be a disservice to the software industry.
-> I'd propose to work out a new solution together with Mitre, whilst
-> keeping the CVE IDs as today.
-> Since 2014, virtually unlimited number of CVE IDs can be assigned per
-> year [1], so a solution could be that
->  - Mitre continues to assign 4 and 5 digit IDs as today
->  - 6 digit IDs are reserved for the new process (hosted outside Mitre)
-> If more than one million vulnerabilities need to be addressed in one
-> year, we could follow the rule (odd digits -> Mitre, even digits ->
-> "other process")
-> From Mitre's POC, this "other process" would become a "CNA", just with
-> its own policy and process definition, not prescribed by Mitre.
-> It would soon become clear to everyone (and all tools and products that
-> rely on CVE) where to look at for the authoritative vulnerability
-> information.
+Hello all,
+
+I fuzzed jasper and it revealed some crashes, 
+we know that jasper has no more release(s) since a lot of time, so there are 
+some unfixed vulnerabilities.
+Based on what I said, I don't know if any of the following crashes have been 
+reported in the past.
+
+I know that Jasper clearly state about its capability on the BMP format, so if 
+you think that something is suitable for an identifier, please assign one.
+Thanks.
+
+NOTE: The command used in all cases was: imginfo $CRAFTED_IMAGE
 
 
-While reading this whole thread I have been thinking along very similar
-but slightly different lines.
+1)
+THE BMP FORMAT IS NOT FULLY SUPPORTED!
+THAT IS, THE JASPER SOFTWARE CANNOT DECODE ALL TYPES OF BMP DATA.
+IF YOU HAVE ANY PROBLEMS, PLEASE TRY CONVERTING YOUR IMAGE DATA
+TO THE PNM FORMAT, AND USING THIS FORMAT INSTEAD.
+skipping unknown data in BMP file
+ASAN:DEADLYSIGNAL
+=================================================================
+==13574==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
+0x000000527ec0 bp 0x7ffcf635ce10 sp 0x7ffcf635cae0 T0)
+    #0 0x527ebf in bmp_getdata /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:383:5
+    #1 0x527ebf in bmp_decode /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:190
+    #2 0x4f79dd in jas_image_decode /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/base/jas_image.c:379:16
+    #3 0x4f1bda in main /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/appl/imginfo.c:179:16
+    #4 0x7f3f0ced761f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #5 0x4194c8 in _init (/usr/bin/imginfo+0x4194c8)
 
-Right now as a vendor 'security desk' I/we have the situation where we
-have to allocate an internal reference ID anyway while awaiting Mitre
-assignment. These IDs are not spread so widely as CVE in the early
-stages, so we end up with other vendors and downstream distributions not
-quite in the same discussion loop allocating their own temporary numbers
-for the same issue. And some do anyway just because thats the way they
-operate.
-(Those aware of the history might recall this was the exact same
-situation which caused CVE to be created and centralized through Mitre
-in the first place.)
-
-Having an easily self-assigned OVI number does sound nice. At least for
-use as a temporary ID that can be publicly shared before the proper
-analysis can be completed by Mitre for a CVE, which can then sub-link.
-
-AYJ
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:383:5 in bmp_getdata
+==13574==ABORTING
 
 
+2)
+warning: trailing garbage in marker segment (2 bytes)                                                                                                                                          
+ASAN:DEADLYSIGNAL                                                                                                                                                                              
+=================================================================                                                                                                                              
+==13576==ERROR: AddressSanitizer: FPE on unknown address 0x00000056de64 (pc 
+0x00000056de64 bp 0x60200000ed32 sp 0x7ffc1b2ae000 T0)                                                             
+    #0 0x56de63 in jpc_dec_process_siz /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1195:17                                                       
+    #1 0x57bf9f in jpc_dec_decode /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:390:10                                                             
+    #2 0x57bf9f in jpc_decode /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:254                                                                    
+    #3 0x4f79dd in jas_image_decode /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/base/jas_image.c:379:16                                                        
+    #4 0x4f1bda in main /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/appl/imginfo.c:179:16                                                                                
+    #5 0x7f9b0ef8161f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                        
+    #6 0x4194c8 in _init (/usr/bin/imginfo+0x4194c8)                                                                                                                                           
+                                                                                                                                                                                               
+AddressSanitizer can not provide additional info.                                                                                                                                              
+SUMMARY: AddressSanitizer: FPE /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1195:17 in 
+jpc_dec_process_siz                                        
+==13576==ABORTING
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (835 bytes)
+3)
+warning: trailing garbage in marker segment (5 bytes)                                                                                                                                          
+ASAN:DEADLYSIGNAL                                                                                                                                                                              
+=================================================================                                                                                                                              
+==13578==ERROR: AddressSanitizer: FPE on unknown address 0x00000056dee4 (pc 
+0x00000056dee4 bp 0x60200000ed32 sp 0x7ffd7776d2e0 T0)                                                             
+    #0 0x56dee3 in jpc_dec_process_siz /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1197:18                                                       
+    #1 0x57bf9f in jpc_dec_decode /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:390:10                                                             
+    #2 0x57bf9f in jpc_decode /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:254                                                                    
+    #3 0x4f79dd in jas_image_decode /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/base/jas_image.c:379:16                                                        
+    #4 0x4f1bda in main /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/appl/imginfo.c:179:16                                                                                
+    #5 0x7f18d9ef761f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                        
+    #6 0x4194c8 in _init (/usr/bin/imginfo+0x4194c8)                                                                                                                                           
+                                                                                                                                                                                               
+AddressSanitizer can not provide additional info.                                                                                                                                              
+SUMMARY: AddressSanitizer: FPE /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1197:18 in 
+jpc_dec_process_siz                                        
+==13578==ABORTING
+
+
+4)
+Corrupt JPEG data: 1 extraneous bytes before marker 0xc4                                                                                                                                       
+=================================================================                                                                                                                              
+==13591==ERROR: AddressSanitizer: attempting double-free on 0x619000003780 in 
+thread T0:                                                                                                       
+    #0 0x4c0710 in free /var/tmp/temp/portage/sys-devel/llvm-3.8.0-
+r2/work/llvm-3.8.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:38                                                
+    #1 0x51f8f8 in mem_close /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/base/jas_stream.c:1073:3                                                              
+    #2 0x511c97 in jas_stream_close /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/base/jas_stream.c:460:2                                                        
+    #3 0x4f528f in jas_image_cmpt_destroy /tmp/portage/media-
+libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/base/jas_image.c:350:3                                                   
+    #4 0x4f528f in jas_image_cmpt_create /tmp/portage/media-
+libs/jasper-1.900.1-r9/work/jasper-1.900.1/src/libjasper/base/jas_image.c:340                                                      
+    #5 0x4fbf37 in jas_image_addcmpt /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/base/jas_image.c:676:18                                                       
+    #6 0x62e9b5 in jpg_mkimage /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/jpg/jpg_dec.c:247:7                                                                 
+    #7 0x62e9b5 in jpg_decode /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/jpg/jpg_dec.c:171                                                                    
+    #8 0x4f79dd in jas_image_decode /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/base/jas_image.c:379:16                                                        
+    #9 0x4f1bda in main /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/appl/imginfo.c:179:16                                                                                
+    #10 0x7f2f12fca61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #11 0x4194c8 in _init (/usr/bin/imginfo+0x4194c8)
+
+0x619000003780 is located 0 bytes inside of 1024-byte region 
+[0x619000003780,0x619000003b80)
+freed by thread T0 here:
+    #0 0x4c0d98 in realloc /var/tmp/temp/portage/sys-devel/llvm-3.8.0-
+r2/work/llvm-3.8.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:71
+    #1 0x51eeb2 in mem_resize /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/base/jas_stream.c:989:14
+    #2 0x51eeb2 in mem_write /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/base/jas_stream.c:1012
+
+previously allocated by thread T0 here:
+    #0 0x4c0a18 in malloc /var/tmp/temp/portage/sys-devel/llvm-3.8.0-
+r2/work/llvm-3.8.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52
+    #1 0x5111b9 in jas_stream_memopen /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/base/jas_stream.c:215:15
+
+SUMMARY: AddressSanitizer: double-free /var/tmp/temp/portage/sys-
+devel/llvm-3.8.0-r2/work/llvm-3.8.0.src/projects/compiler-
+rt/lib/asan/asan_malloc_linux.cc:38 in free
+==13591==ABORTING
+
+
+5)
+THE BMP FORMAT IS NOT FULLY SUPPORTED!                                                                                                                                                         
+THAT IS, THE JASPER SOFTWARE CANNOT DECODE ALL TYPES OF BMP DATA.                                                                                                                              
+IF YOU HAVE ANY PROBLEMS, PLEASE TRY CONVERTING YOUR IMAGE DATA                                                                                                                                
+TO THE PNM FORMAT, AND USING THIS FORMAT INSTEAD.                                                                                                                                              
+skipping unknown data in BMP file                                                                                                                                                              
+ASAN:DEADLYSIGNAL                                                                                                                                                                              
+=================================================================                                                                                                                              
+==13704==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
+0x000000528253 bp 0x7ffc34880750 sp 0x7ffc34880420 T0)                                                            
+    #0 0x528252 in bmp_getdata /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:385:5                                                                 
+    #1 0x528252 in bmp_decode /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:190                                                                    
+    #2 0x4f79dd in jas_image_decode /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/base/jas_image.c:379:16                                                        
+    #3 0x4f1bda in main /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/appl/imginfo.c:179:16                                                                                
+    #4 0x7f58cf3a461f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                        
+    #5 0x4194c8 in _init (/usr/bin/imginfo+0x4194c8)                                                                                                                                           
+                                                                                                                                                                                               
+AddressSanitizer can not provide additional info.                                                                                                                                              
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-libs/jasper-1.900.1-
+r9/work/jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:385:5 in bmp_getdata                                                 
+==13704==ABORTING
+
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
