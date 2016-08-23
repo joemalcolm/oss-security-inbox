@@ -1,28 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/17/9
-Message-ID: <df2fb53117de43a4b3a7884ff078adb4@imshyb02.MITRE.ORG>
-Date: Thu, 17 Nov 2016 18:28:44 -0500
-From: <cve-assign@...re.org>
-To: <fernando@...l-life.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <chet.ramey@...e.edu>
-Subject: Re: bash - popd controlled free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/23/1
+Message-Id: <20160823021006.4E21AB2E005@smtpvbsrv1.mitre.org>
+Date: Mon, 22 Aug 2016 22:10:06 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: libgd: Out-Of-Bounds Read in function read_image_tga of gd_tga.c
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> popd can be tricked to free a user supplied address in the following way:
-> 
-> $ popd +-111111
+> https://github.com/libgd/libgd/issues/248
+> https://github.com/libgd/libgd/pull/251
 
-> Program received signal SIGSEGV, Segmentation fault.
-> 0x0827f93a in popd_builtin (list=<optimized out>) at ./pushd.def:384
-> 384          free (pushd_directory_list[i]);
+> https://github.com/libgd/libgd/commit/3c2b605d72e8b080dace1d98a6e50b46c1d12186
+> https://github.com/libgd/libgd/commit/01c61f8ab110a77ae64b5ca67c244c728c506f03
 
-> This could be used to bypass restricted shells (rsh) on some
-> environments to cause use-after-free.
+> not a duplicate of issue #247
 
-Use CVE-2016-9401.
+Use CVE-2016-6905.
 
 - -- 
 CVE Assignment Team
@@ -32,17 +29,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYLjy/AAoJEHb/MwWLVhi2P8QQAKfY3sVxQ/vVBeiKqG+c61Jb
-l+HoVjuWR+OOFjJ/ugbeaSE1dYFCoQzoVx+/b4nhP4sNiZExs+Odj/A2cGCr6oAj
-1p9do/oEm7pE/n3VAhpqoLxnOflWvk/AOSLcR5kv2IyZWQxq/htBxdzuzdN3cdoz
-4L98GPPCAnF8rhHrHiLRfkDCiC5HbzfPouL9LegUYjHAVwE6IvW+Ckoqx6fX6Diw
-iXahNo0Rw4TR1HgGcp46AiThY98g1K2EeaAaz+bVNmnvX3jc+VTNkd2BMDj+QKJf
-g39zYpP5BDsPhgvJHT65gqnbiWbHP6SnrANgxR7n8W/WKm+X7NAoPCfsYj1OQ3Wd
-Q7UULEYZneqBwXmVrSD4IORTdOLEW1yL7FSfa6lKYpe33R32MTgOCu4oJNLWBzGy
-KtpPioEahBbNX+QeyEH7wDPILWn/KitZR5WIn/wfas84Z8Tfdb1EEyIq6V6J4NA9
-7IXDnwBWTG6Ipu0+VsiL2uvUUTjgiUZAo97YKblYyZmkVMKKG4Cg3CheciPbgVf8
-2qpEsc4ROKjZ0Y+KWP7yI8IfUQxvtw/mAiVIJds7D092VeM/EIbXlqT2kWc1g7nA
-47f94cLsskul95GeCyqZTidMMfTF+pu3RIJS8npWYXoCeh5qfFArTjsNgk2SqIHA
-HrJRIk35K2RgXQ3g6jFT
-=zUdd
+iQIcBAEBCAAGBQJXu7AVAAoJEHb/MwWLVhi2eK0P/1kUnZ5xbsYQA7kdibIGZRh/
+1uDvkgK49UoXXddlWxnvFZbzPQpYPk7FBifpiI56eeRyVVnxMKi339xlel6Otarm
+GNj61DqyjoApjAzN607eVEiMzC0GbqULshUDbq+grZ5j+R4pgkZNSNirSnELvopW
+cPmJyjJh33EdxR5WWoxyU2f4YC+EH+0NjNKHCwOSMduDCNS19giAQhZJWeYsqLgT
+C7ByFGK8CW8lB63/3BAvwaY+snTpKjPiQULrwmQ8O338YWSlxGxgq+GdG6UK2rmG
+SHcv9eA78TcPxe4wdP81Vlhcz2Fd90aJNyFiqnl7tWCDQi0zVzvhBVC/rQlzuBGl
+ntxNziqfkZw9LW6hI/5/BPoFJpDeLGDvtZ/aet1STEiXOGiWbC1HUMAMcrR+sDLx
+7Et/Z32MZqZr9g6ITSZwKOBSWLy+XpOYKnv/mxaxPALhnrylT7ohp02EeKZvQuhp
+mEUwskppVixHlwthva5YYcBTTjNmeuJU1c6ou1t3whMdFR5hx9N1kqAYCghUWAqv
+GjuYsh1SgPyWsxO9N4n+doukQy5kB6xNjRCRKgweVVY1xVtoTEaYOfTqroBfHCCC
+wQkrod4bjBqt0iJ1qc77MeBYvGWdcvOleT3Q/c+B9WGuvmKdDNTDgExbU7Pfcw0c
+z8Y4UiBXC4IMz5QB2i3d
+=0tY/
 -----END PGP SIGNATURE-----
