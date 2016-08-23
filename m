@@ -1,54 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/28/6
-Message-Id: <20160228155614.9D9FC6C05FA@smtpvmsrv1.mitre.org>
-Date: Sun, 28 Feb 2016 10:56:14 -0500 (EST)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: AMD newest ucode 0x06000832 for Piledriver-based CPUs seems to behave in a problematic way
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/23/4
+Message-ID: <CANO=Ty0qqSYWXQ2SfZuq8BOZ2rhGvg5mGxD2pB38HVvp1vvrwg@mail.gmail.com>
+Date: Tue, 23 Aug 2016 08:21:25 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Marcus Meissner <meissner@...e.de>, Adam Maris <amaris@...hat.com>, Greg KH <greg@...ah.com>,  CVE ID Requests <cve-assign@...re.org>, security@...nel.org
+Subject: Re: Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Mon, Aug 22, 2016 at 11:38 PM, Willy Tarreau <w@....eu> wrote:
+>
+> I'd classify it differently : something where a bug allows someone
+> unauthorized to do something he couldn't do differently needs a CVE.
+> That includes memory corruption, code execution, privilege increases,
+> local DoS/panic/oops by just executing an exploit, etc. Here we're
+> speaking about someone plugging some hardware into an open port which
+> immediately takes the whole system down. Sure, the faulty code makes
+> this possible. But the hardware is purposely designed for this. I can
+> also design some hardware which takes the system down and possibly even
+> fries it without involving the code at all. So once this device is
+> built, if we assign a CVE, nobody will fix it and it will not even
+> apply to any specific OS. Oh, after just one Google request I found
+> that I was not the first one to think about it, it already exists :
+>
+>    http://arstechnica.com/security/2015/10/usb-killer-
+> flash-drive-can-fry-your-computers-innards-in-seconds/
+>
 
-> ... leads to CPU execution flow
-> of the host kernel (the one running on bare metal) to be changed.
+Ah but defending against this sort of physical attack is actually quite
+easy, use a USB hub, or for higher assurance use a wireless USB hub. TBH
+I'm not sure what the difference is between say the above USB killer and a
+small taser or a small squirt bottle of saline solution.
 
-[ see also
-https://www.reddit.com/r/linux/comments/47s8a8/new_amd_microcode_vulnerability_from_unprivileged/ ]
+In general I should be able to plug USB devices into a computer without the
+computer succumbing to software based attacks (stuxnet anyone?).
 
-We don't think we can send any related AMD CVE ID or IDs here because
-this microcode isn't an open-source product:
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-  https://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/tree/LICENSE.amd-ucode
-  "You may not reverse engineer, decompile, or disassemble this Software
-  or any portion thereof."
-
-CVE IDs for AMD products are available from cve-assign@...re.org (we
-understand that the 0x06000832 information is directly relevant to use
-of open-source products; also, it's at least conceivable that someone
-will announce a security update to an open-source product with a
-workaround for the behavior, or for the existence, of 0x06000832).
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJW0xgeAAoJEL54rhJi8gl5KEwP/iy02HVY+3QifTREEpq93md0
-9hN9WwBItTU48PH0bYOHe7POBC0K5hmxhC9CE5iA53h+d9OiLnXxfQRjQUnrmylx
-78ZvZ0r7kmUoB6KcOgYXKXeEWleIpD3ca9eUAhEuIZjYbE7fxL3OJXW+cQ4IYL7P
-hGdpOajzckWRemiN3ELjQc2Lnitj6ef8suHbrHnQLaMHPjufaowJ/mPa3gtZgtC8
-0gAw2MGiyxHQ4GFDOWNmBICbTwiJWwRtMOJdSHX63zn518038MeLal/9UcQlcxPC
-Fi1oVTteJC2oh7iYhTjRXy8hYcGC7Wdefyg0rqQ4WgCkysYvOeYbpiREmG71e0mG
-9QsDCSKvnyolDBC+9aSsFFtC022kRzmdRCGBokPAaiXduXRYxcDJPUd07YBtIw5y
-5zfe/Z7wmKDiM+tDmVsUFqbW0Q0jccbBM/WsHJfAV2feYIDMC/gO1moPASeKbLrm
-ZYD+jc6k2CDq7NQZNTsCzOhUAM1rr2BQmuG1ZOxwkP5Tnv7Iku1X559vIdVZ3n7c
-ZxegRoUXMmCJalpzRCrRYtwL0ipvNvPAbwZ04hxiqQhlENLyBL/bAWRK90wYjlsS
-pUBjlSxsrJ21hm9CnoPonhkdMNCv+aFS5LTY+0WQ6uRXbjrRJ3cluS0ZGJ86HR22
-ZzYJ6UNbLzaxIdLe9qGe
-=Logq
------END PGP SIGNATURE-----
