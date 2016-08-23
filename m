@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3814" "Saturday" "20" "June" "2015" "17:12:27" "-0400" "Justin Bull" "me@justinbull.ca" "<0F109ADF-DF22-4D47-8810-6229FC0D4F73@justinbull.ca>" "117" "[oss-security] CVE Request: MITM & Shoulder-surfing vuln in Ruby OTP/HOTP/TOTP library \"ROPT\" " nil nil nil "6" "2015062021:12:27" "[oss-security] CVE Request: MITM & Shoulder-surfing vuln in Ruby OTP/HOTP/TOTP library \"ROPT\"" (number mark "        me@justinbul Jun 20  117/3814  " thread-indent "\"[oss-security] CVE Request: MITM & Shoulder-surfing vuln in Ruby OTP/HOTP/TOTP library \"ROPT\" \"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2216" "Tuesday" "23" "August" "2016" "15:01:07" "+0000" "Radzykewycz, T (Radzy)" "radzy@windriver.com" "<33006C99F5A5194A9B7A7715DFA3E3830110040393@ALA-MBA.corp.ad.wrs.com>" "50" "[oss-security] RE: [security-vendor] Re: [oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices" "^CC:" nil nil "8" "2016082315:01:07" "[oss-security] RE: [security-vendor] Re: [oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices" (number mark "        radzy@windri Aug 23   50/2216  " thread-indent "\"[oss-security] RE: [security-vendor] Re: [oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices\"\n") "<CANO=Ty0qqSYWXQ2SfZuq8BOZ2rhGvg5mGxD2pB38HVvp1vvrwg@mail.gmail.com>" ("<20160818142216.GH2701@suse.de>" "<20160818143014.GA27854@kroah.com>" "<20160818143957.GI2701@suse.de>" "<20160818145724.GA32181@kroah.com>" "<20160818151654.GK2701@suse.de>" "<1471538630.13300.95.camel@decadent.org.uk>" "<3385bcd9-629a-5978-abfa-87cae962deb2@redhat.com>" "<20160818195024.GB17944@1wt.eu>" "<20160822152448.GC3132@suse.de>" "<20160823053842.GB21570@1wt.eu>" "<CANO=Ty0qqSYWXQ2SfZuq8BOZ2rhGvg5mGxD2pB38HVvp1vvrwg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27753 invoked by uid 550); 20 Jun 2015 22:15:13 -0000
+Received: (qmail 12119 invoked by uid 550); 23 Aug 2016 15:06:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,146 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32594 invoked from network); 20 Jun 2015 21:12:52 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:content-type:subject:date:message-id:to
-         :mime-version;
-        bh=A6XJpqzD5gqH3uialfzeD+7k971i+LD+ZD0N133AWog=;
-        b=TSsp328DR3IgbngpSx53MIq4NeoB9Rfh2PrAjJ44fbERtkGG4uik9wjpx1Xz+0ZeS3
-         XuP/6WXebJURKvQ4tw/C5hwlKPp+bwQYc5cqs6IPX/b5/9OEAE/cPi2jFwlT4gfxAzQv
-         pnfgz1bvXNtuosIoPkNEE0Xh5BofkA2H82wzE3XlKLKB4n3qjzw1E2GCzrpyOLwrIZRV
-         WzLJ8bIRailS+nWXrSITDwHARNlnZJGjcMKWBvAzmCcQOOmNCD2FzODeQsmw0rEEluNE
-         acQq5xgOlUs/6lwXphcCDlKxK5J4c4IyI7DVGePzuj9nlgojmy4q/AOCS3aW+uDvcfrV
-         seTA==
-X-Gm-Message-State: ALoCoQko9PAeUZiAwmsFAhHvVofQrwliMss0kkO9owm3e6xzbf/034EHPykKu1E2ggVGLonMHAuP
-X-Received: by 10.107.7.142 with SMTP id g14mr10613709ioi.21.1434834760693;
-        Sat, 20 Jun 2015 14:12:40 -0700 (PDT)
-X-Pgp-Agent: GPGMail 2.5
-Content-Type: multipart/signed; boundary="Apple-Mail=_0DC32720-0510-4003-A745-98C55EF8D5A3"; protocol="application/pgp-signature"; micalg=pgp-sha512
-Message-Id: <0F109ADF-DF22-4D47-8810-6229FC0D4F73@justinbull.ca>
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2098\))
-X-Mailer: Apple Mail (2.2098)
-Date: Sat, 20 Jun 2015 17:12:27 -0400
-From: Justin Bull <me@justinbull.ca>
-Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: MITM & Shoulder-surfing vuln in Ruby OTP/HOTP/TOTP library "ROPT" 
-To: oss-security@lists.openwall.com
-
---Apple-Mail=_0DC32720-0510-4003-A745-98C55EF8D5A3
+Received: (qmail 3629 invoked from network); 23 Aug 2016 15:01:28 -0000
+Thread-Topic: [security-vendor] Re: [oss-security] Re: CVE Request: Linux
+ kernel crash of OHCI when plugging in malicious USB devices
+Thread-Index: AQHR/QUS2m25n2WeREehVA/Z6sZfCqBXDpGA//+VJH4=
+Message-ID: <33006C99F5A5194A9B7A7715DFA3E3830110040393@ALA-MBA.corp.ad.wrs.com>
+References: <20160818142216.GH2701@suse.de>
+ <20160818143014.GA27854@kroah.com> <20160818143957.GI2701@suse.de>
+ <20160818145724.GA32181@kroah.com> <20160818151654.GK2701@suse.de>
+ <1471538630.13300.95.camel@decadent.org.uk>
+ <3385bcd9-629a-5978-abfa-87cae962deb2@redhat.com>
+ <20160818195024.GB17944@1wt.eu> <20160822152448.GC3132@suse.de>
+ <20160823053842.GB21570@1wt.eu>,<CANO=Ty0qqSYWXQ2SfZuq8BOZ2rhGvg5mGxD2pB38HVvp1vvrwg@mail.gmail.com>
+In-Reply-To: <CANO=Ty0qqSYWXQ2SfZuq8BOZ2rhGvg5mGxD2pB38HVvp1vvrwg@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [147.11.216.194]
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
-
-Hello,
-
-Please excuse me if I=E2=80=99m doing this incorrectly, this is my first ti=
-me attempting to acquire a CVE ID for a discovered vulnerability.
-
-NOTE: I have already sent a similar email to MITRE requesting a CVE ID, but=
- been advised to submit here as well (then cancel the request to MITRE, sin=
-ce those poor folks deal with thousands of requests).
-
-
-=3D=3D Affected Software: =3D=3D
-
-The Ruby One Time Password Library (https://github.com/mdp/rotp)
-
-A ruby library for generating one time passwords (HOTP & TOTP) according to=
- RFC 4226 and RFC 6238.
-
-ROTP is compatible with the Google Authenticator available for Android and =
-iPhone.
+MIME-Version: 1.0
+CC: Marcus Meissner <meissner@suse.de>, Adam Maris <amaris@redhat.com>,
+        "Greg
+ KH" <greg@kroah.com>, CVE ID Requests <cve-assign@mitre.org>,
+        "security@kernel.org" <security@kernel.org>
+Date: Tue, 23 Aug 2016 15:01:07 +0000
+From: "Radzykewycz, T (Radzy)" <radzy@windriver.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] RE: [security-vendor] Re: [oss-security] Re: CVE Request: Linux
+ kernel crash of OHCI when plugging in malicious USB devices
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
 
-=3D=3D Type of Attack: =3D=3D
+________________________________________
+> From: Kurt Seifried [kseifried@redhat.com]
+> Sent: Tuesday, August 23, 2016 7:21 AM
+> To: oss-security
+> Cc: Marcus Meissner; Adam Maris; Greg KH; CVE ID Requests; security@kerne=
+l.org
+> Subject: [security-vendor] Re: [oss-security] Re: CVE Request: Linux kern=
+el crash of OHCI when plugging in malicious USB devices
+>=20
+> On Mon, Aug 22, 2016 at 11:38 PM, Willy Tarreau <w@1wt.eu> wrote:
+> >
+> > I'd classify it differently : something where a bug allows someone
+> > unauthorized to do something he couldn't do differently needs a CVE.
+> > That includes memory corruption, code execution, privilege increases,
+> > local DoS/panic/oops by just executing an exploit, etc. Here we're
+> > speaking about someone plugging some hardware into an open port which
+> > immediately takes the whole system down. Sure, the faulty code makes
+> > this possible. But the hardware is purposely designed for this. I can
+> > also design some hardware which takes the system down and possibly even
+> > fries it without involving the code at all. So once this device is
+> > built, if we assign a CVE, nobody will fix it and it will not even
+> > apply to any specific OS. Oh, after just one Google request I found
+> > that I was not the first one to think about it, it already exists :
+> >
+> >    http://arstechnica.com/security/2015/10/usb-killer-
+> > flash-drive-can-fry-your-computers-innards-in-seconds/
+> >
+>=20
+> Ah but defending against this sort of physical attack is actually quite
+> easy, use a USB hub, or for higher assurance use a wireless USB hub. TBH
+> I'm not sure what the difference is between say the above USB killer and a
+> small taser or a small squirt bottle of saline solution.
 
-- Man in The Middle
-- Shoulder Surfing
+If an attacker drops a bottle of saline solution on the floor
+outside the target's office, it's unlikely to be plugged in to
+the USB port.
 
+Enjoy!
 
-=3D=3D Versions affected: =3D=3D
+				-- radzy
 
-All versions.
-
-
-=3D=3D Description of Vulnerability: =3D=3D
-
-The TOTP feature of the software is not fully compliant with Section 5.2 of=
- RFC 6238[1] and does not =E2=80=9Cburn=E2=80=9D a successfully validated O=
-TP.
-
-When the provider sends a valid OTP to the verifier, the verify must not ac=
-cept subsequent submissions of the same OTP in that given time step. That i=
-s, in order to maintain the =E2=80=9COne-Time=E2=80=9D aspect of a One-Time=
- Password, it can be used once and only once.
-
-
-=3D=3D Impact / Attack: =3D=3D
-
-In a two-factor authentication context, an attacker could Man-in-The-Middle=
- the connection between the verifier and provider, obtain the username, pas=
-sword, & OTP values, and log in with the credentials within the current tim=
-e step (a 30 second window, if defaults are used). Arguably, this defeats t=
-he two-factor authentication since the OTP can be replayed multiple times.
-
-Alternatively, an attacker could =E2=80=9Cshoulder surf=E2=80=9D the victim=
-=E2=80=99s second factor device in lieu of compromising the connection.
-
-This information has been captured in the bug report to the maintainer of R=
-OTP[2].
-
-
-=3D=3D Solution: =3D=3D
-
-None yet, the fix[3] is not merged into codebase and not released.
-
-
-=3D=3D Acknowledgements: =3D=3D
-
-Thanks to Viliam Holub (https://github.com/vilda) for originally tipping me=
- off to the RFC non-compliance in software that utilizes the ROTP library[4=
-].
-
-
-=3D=3D References:=3D=3D
-
-[1]: https://tools.ietf.org/html/rfc6238#section-5.2
-[2]: https://github.com/mdp/rotp/issues/44
-[3]: https://github.com/mdp/rotp/pull/45
-[4]: https://github.com/tinfoil/devise-two-factor/issues/30
-
-
-Best Regards,
-
-Justin Bull
-PGP Fingerprint: E09D 38DE 8FB7 5745 2044 A0F4 1A2B DEAA 68FD B34C
-
-
---Apple-Mail=_0DC32720-0510-4003-A745-98C55EF8D5A3
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP using GPGMail
-
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
-
-iQIcBAEBCgAGBQJVhddHAAoJEESFZfv8+htYcNsP/jgRb67vam6tqzbGZcC18nr6
-9bw1l3ks+HC/zD2Yylz6A3qldunOJbSq0tdoUDWfMbN/pdCF09dH0OCFjVp0ZRMZ
-ejnNQ6w9sinDjwoBDIZmyxddpXQWnoupPTsLP7rNW6h9USAgSlKLWSOk2awY/fs6
-CWKQ0jyj/r0pus2SlF6FfbxpDx24ivfKWoEFYaTwjAu5Pj/As21oMGRCWb6BUM/q
-WsOapb7RG9KyAh3bXzWBcjN3eno45UuRuvpoc2+AlRcRq5zkqxqCCr0/RxA+uOKA
-SdFlA36EmO7iS/L4JUvpsgbdLgNmth5HUwLH+T59ZfLOmOrp3yGymwVs25FaPkWi
-GoCGtQKLoXdNLPBe4kjvwCzjrHQ/vSUhLadmN1v1W23jtPnoJypFYojGaTe2tk4m
-6Xt+N1+JwDjQ6udTASxvxffW7Ac22tYp7VX+ssIsNUW+bw88KCrB+u/1+dVQLrce
-snNp5R1du0M/R4+feiyQhEyjXlu3aOjgCbzf7pZ3klFDptMsPzbe0nebbrqJKtoB
-jCmsysik2YlMHaye8xnRpIX7H6qHSdrDgPcDboP3D2ZmhbizHc/SxnKBx4xGWlLt
-yn0D4XKLsA+MSRK6t4/EM5P81goaO8Yaw4CVGk61vL5i7IXIg9bgtd1CJQrPOEA4
-fX1PTxVhE4MmSGDz1vOL
-=FtqE
------END PGP SIGNATURE-----
-
---Apple-Mail=_0DC32720-0510-4003-A745-98C55EF8D5A3--
+> In general I should be able to plug USB devices into a computer without t=
+he
+> computer succumbing to software based attacks (stuxnet anyone?).
+>=20
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> Red Hat Product Security contact: secalert@redhat.com
