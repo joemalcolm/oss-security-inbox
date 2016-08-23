@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["768" "Friday" "29" "May" "2015" "22:05:26" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.11.1505292156260.17180@wniryva>" "23" "[oss-security] CVE request Linux kernel: ns: user namespaces panic" nil nil nil "5" "2015052916:35:26" "[oss-security] CVE request Linux kernel: ns: user namespaces panic" (number mark "        ppandit@redh May 29   23/768   " thread-indent "\"[oss-security] CVE request Linux kernel: ns: user namespaces panic\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1352" "Monday" "22" "August" "2016" "22:10:06" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160823021006.4E21AB2E005@smtpvbsrv1.mitre.org>" "35" "[oss-security] Re: CVE Request: libgd: Out-Of-Bounds Read in function read_image_tga of gd_tga.c" nil nil nil "8" "2016082302:10:06" "[oss-security] Re: CVE Request: libgd: Out-Of-Bounds Read in function read_image_tga of gd_tga.c" (number mark "U       cve-assign@m Aug 22   35/1352  " thread-indent "\"[oss-security] Re: CVE Request: libgd: Out-Of-Bounds Read in function read_image_tga of gd_tga.c\"\n") "<20160712130848.GA27890@lorien.valinor.li>" ("<20160712130848.GA27890@lorien.valinor.li>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28649 invoked by uid 550); 29 May 2015 16:35:45 -0000
+Received: (qmail 30266 invoked by uid 550); 23 Aug 2016 02:10:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,39 +11,48 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28628 invoked from network); 29 May 2015 16:35:44 -0000
-X-X-Sender: pjp@javelin
-Message-ID: <alpine.LFD.2.11.1505292156260.17180@wniryva>
-MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-cc: drew@sandstorm.io
-Date: Fri, 29 May 2015 22:05:26 +0530 (IST)
-From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request Linux kernel: ns: user namespaces panic
-To: oss security list <oss-security@lists.openwall.com>
+Received: (qmail 30248 invoked from network); 23 Aug 2016 02:10:18 -0000
+From: cve-assign@mitre.org
+To: carnil@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20160712130848.GA27890@lorien.valinor.li>
+Message-Id: <20160823021006.4E21AB2E005@smtpvbsrv1.mitre.org>
+Date: Mon, 22 Aug 2016 22:10:06 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: libgd: Out-Of-Bounds Read in function read_image_tga of gd_tga.c
 
-    Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Linux kernel built with the user namespaces support(CONFIG_USER_NS) is 
-vulnerable to a NULL pointer dereference flaw. It could occur when users in 
-user namespaces do unmount mounts.
+> https://github.com/libgd/libgd/issues/248
+> https://github.com/libgd/libgd/pull/251
 
-An unprivileged user could use this flaw to crash the system resulting in DoS.
+> https://github.com/libgd/libgd/commit/3c2b605d72e8b080dace1d98a6e50b46c1d12186
+> https://github.com/libgd/libgd/commit/01c61f8ab110a77ae64b5ca67c244c728c506f03
 
-Upstream fixes:
----------------
-   -> https://git.kernel.org/linus/820f9f147dcce2602eefd9b575bbbd9ea14f0953
-   -> https://git.kernel.org/linus/cd4a40174b71acd021877341684d8bb1dc8ea4ae
+> not a duplicate of issue #247
 
-It was introduced by:
----------------------
-   -> https://git.kernel.org/linus/ce07d891a0891d3c0d0c2d73d577490486b809e1
+Use CVE-2016-6905.
 
-Thank you Drew Fisher for reporting this issue to Fedora Security Team.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+iQIcBAEBCAAGBQJXu7AVAAoJEHb/MwWLVhi2eK0P/1kUnZ5xbsYQA7kdibIGZRh/
+1uDvkgK49UoXXddlWxnvFZbzPQpYPk7FBifpiI56eeRyVVnxMKi339xlel6Otarm
+GNj61DqyjoApjAzN607eVEiMzC0GbqULshUDbq+grZ5j+R4pgkZNSNirSnELvopW
+cPmJyjJh33EdxR5WWoxyU2f4YC+EH+0NjNKHCwOSMduDCNS19giAQhZJWeYsqLgT
+C7ByFGK8CW8lB63/3BAvwaY+snTpKjPiQULrwmQ8O338YWSlxGxgq+GdG6UK2rmG
+SHcv9eA78TcPxe4wdP81Vlhcz2Fd90aJNyFiqnl7tWCDQi0zVzvhBVC/rQlzuBGl
+ntxNziqfkZw9LW6hI/5/BPoFJpDeLGDvtZ/aet1STEiXOGiWbC1HUMAMcrR+sDLx
+7Et/Z32MZqZr9g6ITSZwKOBSWLy+XpOYKnv/mxaxPALhnrylT7ohp02EeKZvQuhp
+mEUwskppVixHlwthva5YYcBTTjNmeuJU1c6ou1t3whMdFR5hx9N1kqAYCghUWAqv
+GjuYsh1SgPyWsxO9N4n+doukQy5kB6xNjRCRKgweVVY1xVtoTEaYOfTqroBfHCCC
+wQkrod4bjBqt0iJ1qc77MeBYvGWdcvOleT3Q/c+B9WGuvmKdDNTDgExbU7Pfcw0c
+z8Y4UiBXC4IMz5QB2i3d
+=0tY/
+-----END PGP SIGNATURE-----
