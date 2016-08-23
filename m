@@ -1,4 +1,9 @@
-Received: (qmail 10073 invoked by uid 550); 1 May 2026 09:25:24 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4759" "Tuesday" "23" "August" "2016" "15:32:08" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160823193208.DB3356CC2D3@smtpvmsrv1.mitre.org>" "98" "[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices" "^Cc:" nil nil "8" "2016082319:32:08" "[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices" (number mark "        cve-assign@m Aug 23   98/4759  " thread-indent "\"[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices\"\n") "<20160823104855.GA10508@kroah.com>" ("<20160823104855.GA10508@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3757 invoked by uid 550); 23 Aug 2016 19:32:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,167 +11,111 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 3739 invoked from network); 23 Aug 2016 19:32:20 -0000
+In-Reply-To: <20160823104855.GA10508@kroah.com>
+Message-Id: <20160823193208.DB3356CC2D3@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, meissner@suse.de
+Date: Tue, 23 Aug 2016 15:32:08 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 10034 invoked from network); 1 May 2026 09:25:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=notcom.org;
-	s=jk; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:
-	Subject:To:From:Date:Reply-To:Cc:Content-ID:Content-Description:In-Reply-To:
-	References; bh=YCV5x3XhhmFSctcN9qyUeWRHmTJU/0c/87nUlw5Y5Qk=;
-	i=b49a205f73f09af5fde31f6781a721d6b26ace42@notcom.org; t=1777627525;
-	x=1778275525; b=ER3SlbKRKyGzh3kxdf/QIcyzW4wHQa+VmJ8tr+e6MKaMrwqEHBkEEm01bT6ti
-	mGfghOkqoPBLjmIM1Y4cSsMEEw+LyYsqf0rmuJDYIa61u5Poic/f4+8JkPmW0bZbH/GN/AM4il+L7
-	z5DBUc/n5nvqmWZi7Q7w1bYs+O2ZBWfuPih6U9N0o7hTh5/w7TelMHJ+zB8vWN0FyNjM0f6GPLHTJ
-	Prd0vosUO29mFbXEUB8cm5IrQcStg6nOfZ+UkHp1VBE+OO9LyzjxKFl7ia9pcrcvMPPyEOnqJNTQA
-	ay1JPj4Nux65TJ8mxHRzfbQwYHEpiYfqza4w/EGphvZKBojdwQ==;
-Date: Fri, 1 May 2026 12:25:09 +0300
-From: Valtteri Vuorikoski <vuori@notcom.org>
-To: oss-security@lists.openwall.com
-Message-ID: <afRr2BAmpEL8GnJM@donburi.himad.notcom.org>
-Mail-Followup-To: oss-security@lists.openwall.com
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-User-Agent: NeoMutt/20251211-3-1d6324
-Subject: [oss-security] CVE-2026-42167: SQL injection in ProFTPd prior to 1.3.9a
+Subject: [oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
+To: greg@kroah.com
 
-A third party advisory was posted announcing CVE-2026-42167, an SQL injection
-vulnerability in ProFTPd versions prior to 1.3.9a, at
-<https://zeropath.com/blog/proftpd-cve-2026-42167-auth-bypass-privesc-rce>. Exploitation
-requires use of mod_sql, which is apparently the case in many prepackaged shared
-hosting setups. (Reportedly this is also fixed in the pre-release version
-1.3.10rc1.)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The official site <https://www.proftpd.org> seems to be down at the moment so I
-don't know if or how this has been officially announced. Quotes from the above
-advisory:
+We're unsure whether all of your remaining questions are within the
+scope of the oss-security list. Some of them seem to be questions
+about CVE in general. We don't see much demand for CVE to be the
+mechanism by which people can make 100% of their decisions about
+whether to connect an arbitrary USB device.
 
-    ZeroPath Research discovered a SQL injection vulnerability in ProFTPD's mod_sql
-    extension. Depending on configuration, the flaw can be exploited before
-    authentication and may lead to authentication bypass, privilege escalation, or
-    remote code execution.
+> Are you really saying that you need authorship permission here in order
+> to create a CVE?
 
-    MITRE has assigned the flaw CVE-2026-42167 and rated it 8.1 on the CVSSv3
-    severity scale.
+If the author agrees that a CVE ID should exist, then that is
+typically sufficient (but typically not necessary) for CVE ID
+assignment. We don't think it is realistic to try to document every
+corner case here. For example, maybe an author agrees that a CVE ID
+should exist only because they have a totally incorrect understanding
+of what CVE is (e.g., they ask for a CVE ID for the mistake of
+releasing their code under the wrong license, and we refuse). As far
+as we know, people aren't abusing the authorship role to try to
+arrange for their own code to have as many CVEs as possible.
 
-[...]
+> Ok, but then why is this somehow CVE related if a Linux system can "not
+> handle" such a device?
 
-    Timeline
+An author could write userspace code that contains some type of logic
+or algorithm to determine whether to tell the kernel to use a USB
+device. Then, the author could decide that this logic or algorithm was
+wrong, and represented an exploitable vulnerability because it offered
+an attack mechanism that the author had not intended to offer.
+Finally, the author could ask for and obtain a CVE ID for their own
+vulnerable userspace code.
 
-    2026-03-28 — Issue reported to ProFTPD maintainers
-    2026-04-07 — ProFTPD maintainers and ZeroPath work to verify patch
-    2026-04-24 — CVE-2026-42167 issued
-    2026-04-27 — Commit af90843baf7dcb8c6be1e5261be2d0b5b5850673 fixes issue
-    2026-04-27 — 1.3.9a released with fix
+> So if an operating system were to not trust new USB
+> devices, it could then probably not be USB compliant.
 
-[...]
+We don't know to what extent userspace code is part of the "operating
+system." However, in the above scenario, the author could assert that
+their own userspace code was vulnerable, because they specifically
+wanted their userspace code to violate the USB specification by
+providing less "trust" than the specification requires.
 
-    mod_sql
+> Are you going to start filing CVEs against hardware specifications?
 
-    ProFTPD comes bundled with the mod_sql extension. When enabled, this
-    extension can power a wide range of functionality, from quota tracking, to ban
-    lists, to authentication.
+We probably don't have CVEs yet for hardware specifications, although
+we did have one CVE (CVE-2016-2427) for a specification that could
+conceivably have a hardware implementation.
 
-    Two capabilities are especially important for understanding CVE-2026-42167
-    and its impact.
-    
-    Authentication
+> So how could this ever be something that an operating system
+> could implement?
 
-    Using the SQLAuthenticate and SQLUserInfo directives, an admin can configure
-    ProFTPD to authenticate users against a SQL table instead of the local
-    /etc/passwd file. This can come in handy for use cases like web hosting —
-    it's not necessary to maintain full valid unix users for every FTP user, and
-    it's quick to update user records in a centralized database.
-    
-    Logging
+"pops up a dialog asking about each new USB device" could be
+implemented, and might prevent a malicious-keyboard attack some of the
+time, but it's a poor solution. So, if a random person picks one of
+the many real-life operating systems that don't pop up these dialogs,
+and wants a CVE ID to track the status of adding that poor solution,
+then we won't provide a CVE ID. If someone is the author of a
+hypothetical single-user operating system where this solution works
+and is requiring all of their customers to take a security update to
+version 1.1 with this solution, then they can have a CVE ID for the
+vulnerability in their version 1.0. We'll leave it at that. This list
+is about open-source software, not hypothetical software that will
+probably never exist.
 
-    Using the SQLNamedQuery and SQLLog statements, an admin can configure
-    ProFTPD to store its logs in a SQL database where they can be easily
-    accessed and aggregated. Like its SQL authentication feature, this is
-    especially useful for hosting services.
-    
-    The Flaw: CVE-2026-42167
-    
-    Logging: Key Attack Surface
+> In summary, yes, this is a mess where the physical world hits the
+> software world, and unless you all draw a _very_ clear line, this is
+> only going to get worse and worse.
 
-    Admins configure what gets logged to SQL with statements like these:
+Yes, the line will be drawn, but iteratively. We do generally agree
+with Willy's principle that "something where a bug allows someone
+unauthorized to do something he couldn't do differently needs a CVE."
+We also think that the author often has the clearest picture of
+whether "something he couldn't do differently" is actually true, and
+thus we feel that the author's perspective matters. We just don't
+believe that we can proactively identify every corner case.
 
-    SQLNamedQuery log_activity INSERT "'%U', '%r', '%m'" activity_log
-    SQLLog        *           log_activity
-    SQLLog        ERR_*       log_activity
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-    SQLLog selects particular commands to log. In this case all commands are
-    logged. SQLNamedQuery specifies how to insert log entries into the database.
-
-    Critically, the SQLNamedQuery includes magic % expansions, which get
-    replaced by data from the request. Many of these expansions are potentially
-    attacker-controlled, including:
-    
-    Variable	Meaning
-    %A	anonymous-login password string
-    %J	command parameters (everything after the verb)
-    %S	response message string (may include attacker input echoed back in errors)
-    %U	original username from USER (set before auth, available even on failed login)
-    %d	directory name (last path component)
-    %l	RFC 1413 ident response (attacker-controlled if they run identd)
-    %m	FTP method/verb (attacker chooses which command to send)
-    %r	full FTP command (verb + args)
-    %u	authenticated username
-    %{basename}	filename component of the path argument, no directory prefix
-
-    The attack surface here is obvious. Can an attacker use any of the parameters
-    they control to slip an injection into an admin-configured SQLNamedQuery logging
-    statement?
-
-[Abbreviated code samples demonstrating that the answer is yes]
-
-    Impact: RCE, Auth Bypass, Privesc and More Access Necessary
-
-    What an attacker can do with this vulnerability depends on the admin's ProFTPD
-    config. If the admin hasn't enabled mod_sql at all, or has not configured
-    mod_sql-based logging, their instances are not vulnerable.
-
-    If mod_sql logging is enabled, the access an attacker needs to get up to
-    mischief depends on how that logging is configured.
-
-    If pre-auth verbs like USER are logged, and that logging includes
-    attacker-controlled values like %U (the username), an attacker only needs
-    network access to the ProFTPD instance.
-
-    If post-auth verbs like STOR are logged in a way that includes
-    attacker-controlled values, like the filename (%f), then the attacker must
-    authenticate to exploit the issue (but this authentication can include anonymous
-    FTP login if the server is configured for anonymous access).
-
-    RCE
-
-    When ProFTPD connects to Postgres with superuser privileges, the impact extends
-    beyond database access. Existing Postgres command-execution primitives allow SQL
-    injection to be escalated to remote code execution in this configuration. (See
-    POCs for more details.)  Auth Bypass And Privilege Escalation
-
-    In the more common case, where a non-Postgres datastore is used, or ProFTPD is
-    not authenticating to Postgres with a superuser, attackers can bypass
-    authentication or expand their privileges if mod_sql is configured for
-    authentication via the SQLAuthenticate directive.
-
-    The malicious user simply inserts a record into the users table with the
-    privilege, home directory and password that they desire. They then login as this
-    user with the password they set.
-
-    If pre-auth input, like username, are logged, this means the attacker can bypass
-    authentication altogether. Even in cases where the attacker can only insert a
-    user record after authenticating, they can significantly expand their privilege
-    — e.g. setting their home directory to / so that they can browse and download
-    the entire filesystem, not just a constrained directory within it.
-
-[...]
-
-    Mitigation
-
-        Upgrade ProFTPD to at least 1.3.9a
-        If upgrade is not possible, disable logging via mod_sql
-        Monitor ProFTPD instances for suspicious activity
-
-[...]
+iQIcBAEBCAAGBQJXvKRCAAoJEHb/MwWLVhi2gPMP/R3kM1v3OeBEReKpGJSOxSJ0
+b3vHHscLpYmSbE+KgnYvG5pacSjj77b85HZ+iY3VLpRWSO4G9lD5yOqM2I95etJs
+2mU1CzXXUxpDYwPsDFnt7BRovL/4CVuUSaPe1C2fBdjLGkNxcxGwCkO+9BFDEoEj
+JvS65bXoG0sD+/AXBUIPs5j02Ul2Fx79/ByqfIbB02m2/LQLmrw6W3jbdLGn1ptT
+XYM9QiRjP5lvSe4t1wkvyM+Tke6iJHUQLpT00t0bW3NbV1DHFze3DKbAPo2KOTCU
+odLZL/Gd6EejzDgdj7it7skaDwX1FUNyRmO+wF2H3oppGRkTbuzN0ZNpFoJfXoZ4
+OR2tucLnsgGgBkDhxQDDTcahfbhjqk19gZBQIywEb1F3zj8Hpx4p4671YHlKh6l1
+H1EgF2ZYXcEr/054PmGdPUU7m8PyiFjVnlCBwu4p16B7HzxvJMzSTdDZR4rQe6wm
+R4mGLHa/kJIJrHRsNOuCWxc2fA+i4rWp6otDDoETyCYqVBKaTqtjRj3wRxAr2hj5
+5U6UTi3uGpzmwjjcitemckh/mg8M3FGgx9L5Z0NSSAgLsknxygm9YDS/OPrS/wOM
+Sq0ZQ7KqKIwHJ9i2vMlRfr/X3INYyRaIOSF34WQ5KE1BmvI6V9Tsnqa5ciTvo949
+QdAJvnGjGDYMIqVXixXJ
+=HAsi
+-----END PGP SIGNATURE-----
