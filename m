@@ -1,79 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/15/4
-Message-Id: <20160615024015.E24396C0201@smtpvmsrv1.mitre.org>
-Date: Tue, 14 Jun 2016 22:40:15 -0400 (EDT)
-From: cve-assign@...re.org
-To: jens.erat@...-konstanz.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: several SOGo issues (DOS, XSS, information leakage)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/23/2
+Message-ID: <20160823053842.GB21570@1wt.eu>
+Date: Tue, 23 Aug 2016 07:38:42 +0200
+From: Willy Tarreau <w@....eu>
+To: Marcus Meissner <meissner@...e.de>
+Cc: oss-security@...ts.openwall.com, Adam Maris <amaris@...hat.com>, Greg KH <greg@...ah.com>, cve-assign@...re.org, security@...nel.org
+Subject: Re: Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Marcus,
 
-We have a few questions about this. First, several of the
-https://sogo.nu/bugs URLs provide an "Access Denied" response and we
-were wondering whether that was intentional. MITRE has no role in
-determining the list charter, but
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security says
-"List Content Guidelines ... Any security issues that you post to
-oss-security should be either already public or to be made public by
-your posting."
+On Mon, Aug 22, 2016 at 05:24:49PM +0200, Marcus Meissner wrote:
+> Hi,
+> 
+> This seems a bit sore topic, and Mitre does not want to chime in.
+> 
+> Perhaps we need to add more criteria to select CVE assignment.
+> 
+> - simple DOS (e.g. NULL ptr dereference) when plugging in: No CVE
+> - code execution (use after free, write overflows) when plugging in: Assign CVE
 
-When required, CVE IDs can be assigned based on commits in conjunction
-with non-public bug reports; this potentially addresses all of the
-cases except for SOGo #3670, which is apparently not yet public at
-all.
+I'd classify it differently : something where a bug allows someone
+unauthorized to do something he couldn't do differently needs a CVE.
+That includes memory corruption, code execution, privilege increases,
+local DoS/panic/oops by just executing an exploit, etc. Here we're
+speaking about someone plugging some hardware into an open port which
+immediately takes the whole system down. Sure, the faulty code makes
+this possible. But the hardware is purposely designed for this. I can
+also design some hardware which takes the system down and possibly even
+fries it without involving the code at all. So once this device is
+built, if we assign a CVE, nobody will fix it and it will not even
+apply to any specific OS. Oh, after just one Google request I found
+that I was not the first one to think about it, it already exists :
 
-Also, your message didn't mention whether you are making the CVE
-request on behalf of the Inverse team, or whether you are noting
-issues that are security-related from your own perspective.
+   http://arstechnica.com/security/2015/10/usb-killer-flash-drive-can-fry-your-computers-innards-in-seconds/
 
-Going through the list of public issues:
+> That said, this leaves malicious USB devices posing as regular keyboards 
+> for text injection unclassified ... 
 
-SOGo #3510 - is the ultimate case of the entire issue summarized by
-"copies the attachment (into memcached?) and then eliminates the copy
-in the sogod. The memcached copy stays forever/until the SOGo service
-is restarted"? Or is there a second implementation error? It seems
-that part of the issue, but not all of it, is a feature request (SOGo
-#3135) suggesting that SOGo should have size limits because
-configuring limits at the level of the web server and SMTP server
-disrupts the user experience.
+You can't differenciate them from a real keyboard operated by someone
+typing from memory. It already happened to me at least once to enter
+some hex shell code via a keyboard connected to a KVM to try to recover
+access to a remote machine where the password was lost. How is this
+different from having an AVR-based Digispark, Trinklet or whatever
+allowing you to emulate a keyboard to inject code sequences ? I had
+one adding "+ +" to the user's .rhosts 1 minute after being plugged
+in some time ago (just as a proof of concept). The OS is not at fault
+here, only the user accepting to plug whatever into their system.
 
-SOGo #3695 is listed twice but the second one has 3696 in the URL. We
-are guessing that the second "SOGo #3695" is just a "SOGo #3696" typo.
-More importantly, are there two distinct code problems? Or is it a
-single code problem that is reachable with different attack vectors?
-
-SOGo #3718 has two identical
-"Issue: https://sogo.nu/bugs/view.php?id=3718" lines. Was one of them
-supposed to be a different URL?
-
-SOGo #2598 - we are able to assign CVE-2014 IDs. Does "SOGo #2598:
-Script injection in calendar title ... Reporter: Jens Erat" mean that
-your own discovery was only about the calendar title, and that
-additional attack vectors ("contacts module" and "CSS dialogs") were
-follow-on discoveries by the Inverse team?
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXYL+JAAoJEHb/MwWLVhi2PTsP/iNm7/+Zm9i08VM/T8HlRltR
-F38rhWFOg9tZ+zQcATWAYINlsTOGBAUpF7N/J2zVnxiY1ZyRTPl5KApqi0aN9d+H
-hlUMXl0mxxjxWLFEbOfkgZhiqKr+sE1S2KQ9aBaXV86DF1BEBVE0NiMzkgp+vipj
-s13AIn8CtcZbHpKYOwgfYqHdOEX0vgs8ap/WQL/JXYNKk0KXbF33DFXFui3vn3n4
-BkRDfb6MO1+DdA1yePtaTArY16RncvRwpWnbYhTT62nIQdQVUZ2digeGgD+Ob7/N
-ZNLt+MhfKXVFe5GuSl7J7mW4G22FSsAlvTUbt56g1ZUcz8HnrMP6IKxQPmELRYs+
-MZUiuoyHvsD274VjlCDLdn95vF7kLBIkTRDGLy4RNrDbvrZ/Yj0cG/qt5IK3AUL3
-fA29LlViMzjdUwH73IgC/Elt6+m4xJeECn/vBo5tjXzWv/Cg938oWZarXGm9w0XC
-100oSk9lbNT8dmWq04m90C0lg6h5c24v05vjlBmqnXQZbroBo0GN6ac6Z1quyAhS
-ncvbH0H4s4H9NIADedI8q1gzYTObgE3sa6AZTBt4xTzC3S3XuXZTupga6NCaXGJ1
-IlL51OwN4mLez1AmWe12iIFrAPDmCfwPA+QUQMyXsL+TT6WCo4oaCn7jOV4+Uieq
-tZ6r8wbwS5WPFqI+2lHU
-=EtEt
------END PGP SIGNATURE-----
+Cheers,
+Willy
