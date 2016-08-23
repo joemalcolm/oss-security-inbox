@@ -1,4 +1,9 @@
-Received: (qmail 28647 invoked by uid 550); 29 Mar 2024 21:53:40 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1726" "Tuesday" "23" "August" "2016" "08:21:25" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty0qqSYWXQ2SfZuq8BOZ2rhGvg5mGxD2pB38HVvp1vvrwg@mail.gmail.com>" "36" "Re: [oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices" "^Cc:" nil nil "8" "2016082314:21:25" "[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices" (number mark "        kseifried@re Aug 23   36/1726  " thread-indent "\"Re: [oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices\"\n") "<20160823053842.GB21570@1wt.eu>" ("<20160818142216.GH2701@suse.de>" "<20160818143014.GA27854@kroah.com>" "<20160818143957.GI2701@suse.de>" "<20160818145724.GA32181@kroah.com>" "<20160818151654.GK2701@suse.de>" "<1471538630.13300.95.camel@decadent.org.uk>" "<3385bcd9-629a-5978-abfa-87cae962deb2@redhat.com>" "<20160818195024.GB17944@1wt.eu>" "<20160822152448.GC3132@suse.de>" "<20160823053842.GB21570@1wt.eu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 23823 invoked by uid 550); 23 Aug 2016 14:21:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,80 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28610 invoked from network); 29 Mar 2024 21:53:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=anarazel.de; h=
-	cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1711749210; x=1711835610; bh=1m/IhYUzSn
-	CQS1sRYFMXGbchkRj4xtzjxp8uKOaib9w=; b=Km+QvpQCiAtiev8aAU6bg4RfAU
-	xsr6j5KaLAw/K0YHwzKycO3qLwhWGTisPtlaE6HPquqJf/x8bFCwtNWenr44baCT
-	jBbbylxsxw6Vu4hAOLLpE7BurEh22H3Nw3tI5Pugl00bfIMP/EYdOOtZc4Y2oY6f
-	NduwKLUyoZmZBbua2zCOuGkJFm6DMX0QhPFFadsbuhu2kNv6fDlbfnZv+5qWDYNo
-	Crz7AcssxDfPJx8CM5WOSW1jR0BZYXuB0iNSGGwBHoEUvt0jL3njfzenpHvT9+VT
-	dJif0n29dcY1S3lfxQEPqMTi+mCxkRzXd2EQwMjFw0zLpbvrlhrewcj0B83Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1711749210; x=1711835610; bh=1m/IhYUzSnCQS1sRYFMXGbchkRj4
-	xtzjxp8uKOaib9w=; b=poXplp5ZudhQ4xPv3BLtVXcz8ugUP9AkCX2CWtwYFTdI
-	eyqRrvL58ixXk53gsJE+7cLaGuZN4UNPIkqbkp9WsoTXSqqgb2bwByXNaEmYYtPa
-	Ttomazh8UEcXeocgMlYdhfnkQv/1glbBJaHcb2l5FG1VYQiBlHnVF2GlKkbPWsab
-	llgmT6hfh7FivLwS1mWx60SSpaonLs0lr7c5etv3VhvbtbKJhN2+1gBKm/73GGFW
-	d/puwD4Kp2lxCwPCeZ/nNt9IpNlxbsiLEt/VQOXborEeEDJ3OxN6aqb4aYti0JOn
-	JIOq+nVa6cbt2w+Q/MsJMUiuCAf1wt2y5fjktReepw==
-X-ME-Sender: <xms:WjgHZqyVuqUA4i6aPk3ksAxUIe1XH4zo-Z2V-GczNOLqy_-_UFag8g>
-    <xme:WjgHZmRecJ3DjV7rH-PKZSlEHLMx7w0cUQ0FzRCSUempmBQ6GT1A4oHGxPP2BZWjC
-    soiI0ct_KYV_AIS9Q>
-X-ME-Received: <xmr:WjgHZsVgNrHaKxl22mds90rhCo5pvdyW5vHvJx3ZMphCa-Jqv1T1iYrF7_9AC0-sGuEAUmAnQE3q4QgD6hjiKHWh9M43EvviN2ugkBkI_COdExIwdej6jggQTnM5>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddvvddgudehiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttd
-    ertddttddvnecuhfhrohhmpeetnhgurhgvshcuhfhrvghunhguuceorghnughrvghssegr
-    nhgrrhgriigvlhdruggvqeenucggtffrrghtthgvrhhnpedukefhkeelueegveetheelff
-    ffjeegleeuudelfeefuedtleffueejfffhueffudenucevlhhushhtvghrufhiiigvpedt
-    necurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvshesrghnrghrrgiivghlrdguvg
-X-ME-Proxy: <xmx:WjgHZgiel59qqmkD2bj6_KCMgzzbW1pESsXWUW3G1acnCYGGaTp6ig>
-    <xmx:WjgHZsA9LQekImo_dNceoHjfyegqiieaM_tdrzwaChBMPBjZAVekbg>
-    <xmx:WjgHZhJnpKGKyeL1jceWQgtvMOwCKhXiAB56R4v5lRE-hZJ-EslftQ>
-    <xmx:WjgHZjCgz5rOyOuTXh_RCXjj2nR3kk0EvNJ9_WFHt01pegdjsWuE3w>
-    <xmx:WjgHZnrx4h0thUMn2EYBXjnJVFzBA_aZmOc59o67h43iq4-wLKP0Hw>
-Feedback-ID: id4a34324:Fastmail
-Date: Fri, 29 Mar 2024 14:53:29 -0700
-From: Andres Freund <andres@anarazel.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20240329215329.mgpj6hjbk4hdxcwr@awork3.anarazel.de>
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
- <uu76c4$u7g$1@ciao.gmane.io>
- <20240329211052.GA2470@openwall.com>
+Received: (qmail 23787 invoked from network); 23 Aug 2016 14:21:37 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=f2MkfgUDarq97RZHJSUZoprmeegSAXppv09MMMWU6Jk=;
+        b=KpjFL44Xk7U4C5vvkdJ9fdaKh0N0u6S7RwxcqBrA5JlQq7y92brppE70KBqr6wY3Hy
+         pRf7BSfGo6aK4cv97/AR1r/bnitGKDEBJCGVpXfmsBDg/VgEFcvirerma//XFpoFCa3n
+         +0ZLJDQpgvfaXqvArkgQArA3qUv1/ugZi9PLWdnuB7Xz54OQSYh+/LnyP+G06G9Z6QZy
+         FguaQTZcVkxt3qFVDciRmaemiXpIo0u5z1xIo2wG3mgECqwfis0P85U9HdsHRAd+cU0q
+         zZXqme0DUw+VlTDm0croJ74u3j9nzG+LIIjbg1A5BxgXhNMwoeArlLBdB4wQ4MxIm65s
+         xCIg==
+X-Gm-Message-State: AEkoouuE1LNjwyZNbMhX44Te5azGdWkBrW9T7c5r26GfnthvHKP+xTfdilBOR3l51kC2ZMr7QW9cySDnUbyAg/KF
+X-Received: by 10.202.240.4 with SMTP id o4mr15376326oih.198.1471962086018;
+ Tue, 23 Aug 2016 07:21:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240329211052.GA2470@openwall.com>
-Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh
- server compromise
+In-Reply-To: <20160823053842.GB21570@1wt.eu>
+References: <20160818142216.GH2701@suse.de> <20160818143014.GA27854@kroah.com>
+ <20160818143957.GI2701@suse.de> <20160818145724.GA32181@kroah.com>
+ <20160818151654.GK2701@suse.de> <1471538630.13300.95.camel@decadent.org.uk>
+ <3385bcd9-629a-5978-abfa-87cae962deb2@redhat.com> <20160818195024.GB17944@1wt.eu>
+ <20160822152448.GC3132@suse.de> <20160823053842.GB21570@1wt.eu>
+Message-ID: <CANO=Ty0qqSYWXQ2SfZuq8BOZ2rhGvg5mGxD2pB38HVvp1vvrwg@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=94eb2c0943ee42ab31053abde16a
+Cc: Marcus Meissner <meissner@suse.de>, Adam Maris <amaris@redhat.com>, Greg KH <greg@kroah.com>, 
+	CVE ID Requests <cve-assign@mitre.org>, security@kernel.org
+Date: Tue, 23 Aug 2016 08:21:25 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: CVE Request: Linux kernel crash of OHCI when
+ plugging in malicious USB devices
+To: oss-security <oss-security@lists.openwall.com>
 
-Hi,
+--94eb2c0943ee42ab31053abde16a
+Content-Type: text/plain; charset=UTF-8
 
-On 2024-03-29 22:10:52 +0100, Solar Designer wrote:
-> On Fri, Mar 29, 2024 at 07:55:48PM -0000, Tavis Ormandy wrote:
-> > Thanks Andres, amazing work!
+On Mon, Aug 22, 2016 at 11:38 PM, Willy Tarreau <w@1wt.eu> wrote:
 >
-> Certainly, thank you very much Andres!  Many others have helped in
-> various ways as well, all of this is appreciated.
-> ...
-> 4. More findings were still being made and the wording of Andres'
-> posting improved per private feedback.
+> I'd classify it differently : something where a bug allows someone
+> unauthorized to do something he couldn't do differently needs a CVE.
+> That includes memory corruption, code execution, privilege increases,
+> local DoS/panic/oops by just executing an exploit, etc. Here we're
+> speaking about someone plugging some hardware into an open port which
+> immediately takes the whole system down. Sure, the faulty code makes
+> this possible. But the hardware is purposely designed for this. I can
+> also design some hardware which takes the system down and possibly even
+> fries it without involving the code at all. So once this device is
+> built, if we assign a CVE, nobody will fix it and it will not even
+> apply to any specific OS. Oh, after just one Google request I found
+> that I was not the first one to think about it, it already exists :
+>
+>    http://arstechnica.com/security/2015/10/usb-killer-
+> flash-drive-can-fry-your-computers-innards-in-seconds/
+>
 
-Indeed! I should really have called this out more explicitly. I'll blame
-nervousness and having had only a single coffee.  Thanks a lot to all that
-helped!
+Ah but defending against this sort of physical attack is actually quite
+easy, use a USB hub, or for higher assurance use a wireless USB hub. TBH
+I'm not sure what the difference is between say the above USB killer and a
+small taser or a small squirt bottle of saline solution.
 
-And sorry all for releasing this just before what for many is a holiday
-weekend.
+In general I should be able to plug USB devices into a computer without the
+computer succumbing to software based attacks (stuxnet anyone?).
 
-Greetings,
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
 
-Andres Freund
+--94eb2c0943ee42ab31053abde16a--
