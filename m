@@ -1,50 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/29/5
-Message-ID: <20160729115843.386c87dc@pc1>
-Date: Fri, 29 Jul 2016 11:58:43 -0400
-From: Hanno Böck <hanno@...eck.de>
-To: lazytyped <lazytyped@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: Use after free in my_login() function of DBD::mysql (Perl module)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/23/5
+Message-ID: <33006C99F5A5194A9B7A7715DFA3E3830110040393@ALA-MBA.corp.ad.wrs.com>
+Date: Tue, 23 Aug 2016 15:01:07 +0000
+From: "Radzykewycz, T (Radzy)" <radzy@...driver.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: Marcus Meissner <meissner@...e.de>, Adam Maris <amaris@...hat.com>, "Greg KH" <greg@...ah.com>, CVE ID Requests <cve-assign@...re.org>, "security@...nel.org" <security@...nel.org>
+Subject: RE: [security-vendor] Re: Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 28 Jul 2016 06:31:20 -0700
-lazytyped <lazytyped@...il.com> wrote:
 
-> Quick question:
+________________________________________
+> From: Kurt Seifried [kseifried@...hat.com]
+> Sent: Tuesday, August 23, 2016 7:21 AM
+> To: oss-security
+> Cc: Marcus Meissner; Adam Maris; Greg KH; CVE ID Requests; security@...nel.org
+> Subject: [security-vendor] Re: [oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
 > 
-> - I guess the affecting function call is the following:
+> On Mon, Aug 22, 2016 at 11:38 PM, Willy Tarreau <w@....eu> wrote:
+> >
+> > I'd classify it differently : something where a bug allows someone
+> > unauthorized to do something he couldn't do differently needs a CVE.
+> > That includes memory corruption, code execution, privilege increases,
+> > local DoS/panic/oops by just executing an exploit, etc. Here we're
+> > speaking about someone plugging some hardware into an open port which
+> > immediately takes the whole system down. Sure, the faulty code makes
+> > this possible. But the hardware is purposely designed for this. I can
+> > also design some hardware which takes the system down and possibly even
+> > fries it without involving the code at all. So once this device is
+> > built, if we assign a CVE, nobody will fix it and it will not even
+> > apply to any specific OS. Oh, after just one Google request I found
+> > that I was not the first one to think about it, it already exists :
+> >
+> >    http://arstechnica.com/security/2015/10/usb-killer-
+> > flash-drive-can-fry-your-computers-innards-in-seconds/
+> >
 > 
->    do_error(dbh, mysql_errno(imp_dbh->pmysql),
->                   mysql_error(imp_dbh->pmysql) 
-> ,mysql_sqlstate(imp_dbh->pmysql));
+> Ah but defending against this sort of physical attack is actually quite
+> easy, use a USB hub, or for higher assurance use a wireless USB hub. TBH
+> I'm not sure what the difference is between say the above USB killer and a
+> small taser or a small squirt bottle of saline solution.
+
+If an attacker drops a bottle of saline solution on the floor
+outside the target's office, it's unlikely to be plugged in to
+the USB port.
+
+Enjoy!
+
+				-- radzy
+
+> In general I should be able to plug USB devices into a computer without the
+> computer succumbing to software based attacks (stuxnet anyone?).
 > 
-> which one of those calls provides an exploitation path? They seem all 
-> reads off the free'd structure.
-> 
-> I see in the bug report: " (I think use after free's can be serious
-> and potentially lead to malfunction and security issues)" and would
-> like to understand more about the rationale.
-
-Hi,
-
-I don't have a practical exploit scenario, thus my careful wording (the
-best answer to "is this exploitable?" is often simply "I don't know").
-
-It's a use after free, should be undeniable that it should be fixed.
-
-But my highlevel understanding of what could happen in such a case: In a
-multithreaded application using that module it may be possible that
-another thread is allocating the free'd memory before do_error is
-called and may fill the memory of the struct with attacker-controlled
-content. Would require careful analysis of what do_error does exactly
-whether that could lead to further bad things.
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> Red Hat Product Security contact: secalert@...hat.com
