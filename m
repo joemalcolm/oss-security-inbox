@@ -1,23 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/04/8
-Message-ID: <1630041.nLTca8CMjC@xps>
-Date: Tue, 04 Oct 2016 23:35:00 +0200
-From: Albert Astals Cid <aacid@....org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>, security@....org
-Subject: KMail vulnerabilites: need 3 CVE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/24/2
+Message-ID: <57BD9BF5.2040501@cleal.org>
+Date: Wed, 24 Aug 2016 14:07:01 +0100
+From: Dominic Cleal <dominic@...al.org>
+To: oss-security@...ts.openwall.com
+Cc: foreman-security@...glegroups.com
+Subject: CVE-2016-6319: Foreman stored XSS in form label helpers
 Content-Type: text/plain; charset=utf-8
 
-Hi, Albert from KDE, can we get three CVE assigned for KMail?
+CVE-2016-6319: Foreman stored XSS in form label helpers
 
-Here are the summaries
+The "label" parameter of all form helpers used to construct web UI
+components was not escaped allowing XSS (cross-site scripting). The
+Foreman itself did not contain exploitable code but other plugins that
+relied on these form helpers could be vulnerable. One known vulnerable
+plugin is Remote Execution. All versions of this plugin are affected.
 
-KMail: HTML injection in plain text viewer
-KMail: JavaScript access to local and remote URLs
-KMail: JavaScript execution in HTML Mails
+Affects Foreman 1.6.0 and higher
+Fix released in Foreman 1.12.2
 
-Fixes for them are already in our various of our repos, I can link to them if 
-you need it, but i didn't since there's many of them (fixing spans through 
-various repos and commits) and didn't seem like it added much.
+Patch:
+https://github.com/theforeman/foreman/commit/0f35fe14acf0d0d3b55e9337bc5e2b9640ff2372
 
-Thanks,
-  Albert
+More information:
+https://theforeman.org/security.html#2016-6319
+http://projects.theforeman.org/issues/16024
+https://theforeman.org
+
+-- 
+Dominic Cleal
+dominic@...al.org
+
+
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
