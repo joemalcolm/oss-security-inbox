@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2381" "Monday" "20" "July" "2020" "20:40:54" "+0200" "Solar Designer" "solar@openwall.com" "<20200720184054.GA11135@openwall.com>" "38" "Re: [oss-security] Contributing Back" "^Date:" nil nil "7" "2020072018:40:54" "[oss-security] Contributing Back" (number mark "U       solar@openwa Jul 20   38/2381  " thread-indent "\"Re: [oss-security] Contributing Back\"\n") "<3f3d2ab5-259b-ab88-c7e4-7cc0efce3e7c@windriver.com>" ("<ea742763-f1bb-bf13-3ecf-f61aaf1e0b43@windriver.com>" "<20200711175842.GA8907@openwall.com>" "<3f3d2ab5-259b-ab88-c7e4-7cc0efce3e7c@windriver.com>") nil nil nil nil nil nil nil "Re: [oss-security] Contributing Back" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1915" "Wednesday" "24" "August" "2016" "16:28:12" "+0930" "Doran Moppert" "dmoppert@redhat.com" "<20160824065811.GB7400@sin.redhat.com>" "54" "[oss-security] CVE request - sudoers on Red Hat, Fedora, Mageia information disclosure" nil nil nil "8" "2016082406:58:12" "[oss-security] CVE request - sudoers on Red Hat, Fedora, Mageia information disclosure" (number mark "U       dmoppert@red Aug 24   54/1915  " thread-indent "\"[oss-security] CVE request - sudoers on Red Hat, Fedora, Mageia information disclosure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23657 invoked by uid 550); 20 Jul 2020 18:42:12 -0000
+Received: (qmail 7889 invoked by uid 550); 24 Aug 2016 13:03:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23555 invoked from network); 20 Jul 2020 18:41:48 -0000
-Message-ID: <20200720184054.GA11135@openwall.com>
-References: <ea742763-f1bb-bf13-3ecf-f61aaf1e0b43@windriver.com> <20200711175842.GA8907@openwall.com> <3f3d2ab5-259b-ab88-c7e4-7cc0efce3e7c@windriver.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3f3d2ab5-259b-ab88-c7e4-7cc0efce3e7c@windriver.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Mon, 20 Jul 2020 20:40:54 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Contributing Back
+Received: (qmail 5821 invoked from network); 24 Aug 2016 06:58:29 -0000
+Date: Wed, 24 Aug 2016 16:28:12 +0930
+From: Doran Moppert <dmoppert@redhat.com>
 To: oss-security@lists.openwall.com
+Message-ID: <20160824065811.GB7400@sin.redhat.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="k1lZvvs/B4yU6o8G"
+Content-Disposition: inline
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Wed, 24 Aug 2016 06:58:17 +0000 (UTC)
+Subject: [oss-security] CVE request - sudoers on Red Hat, Fedora, Mageia information
+ disclosure
 
-On Mon, Jul 13, 2020 at 03:37:03PM +0800, Zhang Xiao wrote:
-> ??? 2020/7/12 ??????1:58, Solar Designer ??????:
-> > On Thu, Jul 02, 2020 at 05:33:20PM +0800, Zhang Xiao wrote:
-> >> And, I have another point want to discuss. As we know, sometimes, the CVE and NVD website don't upgrade their web page timely. For example:
-> >>
-> >> the security maillist had an encrypted mail called "curl: overwrite local file with -J" in 20200617. It was a "pre-notification about a security advisory about to ship next week in sync with our next curl release", for CVE-2020-8177. On curl's git tree, that very bug did been fixed and released in 20200621:
-> >> https://github.com/curl/curl/commit/8236aba5854
-> >>
-> >> But, till now, both cve.mitre.org and nvd.nist.gov still mark this CVE as "RESERVED":
-> >> https://nvd.nist.gov/vuln/detail/CVE-2020-8177
-> >> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-8177
-> >>
-> >> So I wonder if that is also an contribution to remind them, if so, any advises to make it? And If it ca be defined as an contribution, we can take it. :-)
-> > We've received some responses in this thread regarding the specific
-> > example above, but I'd like more general responses please.  Is there a
-> > general task Wind River can reasonably help with for getting CVE details
-> > published for issues that pass the distros and/or oss-security lists,
-> > and how exactly could they help with that?
-> 
-> Actually, we are glad to make it for some customers are also pay
-> attention on these official web pages. We suppose it will be easy to
-> make it through the "notify a vulnerability publication
-> <https://cveform.mitre.org/>". But after I submitted the request I just
-> get a reply as "This CVE ID has been reserved by the CNA Hackerone and
-> we are currently waiting on them to submit the details." Seems only "the
-> CNA Hackerone" can make it. I have no idea on how to notify the "the CNA
-> Hackerone " to push it. :-(š Anyway, if possible we are glad to make it.
+--k1lZvvs/B4yU6o8G
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Once again, I think CVE-2020-8177 is more of an exception than the rule.
-I would be more interested in comments by "CVE experts" on whether the
-task Xiao proposes and volunteers for is in general worthwhile or not,
-and why.  Would similar "notify a vulnerability publication" reminders
-be desirable for issues that got the CVE IDs from one of the CNAs on the
-distros list?
+The inclusion of "INPUTRC" in env_keep in /etc/sudoers allowed
+information disclosure through readline-enabled programs parsing the
+named file with elevated privileges.  Local users with sudo access could
+read (portions of) specially-formatted files with elevated privileges.
+Future versions of readline will make the vulnerability more significant
+by showing error messages for malformed entries, rather than silently
+ignoring them.
 
-Thanks,
+This flaw is distribution-specific - upstream sudo does not include
+INPUTRC, and we are not aware at this time of any other distros that
+include it.
 
-Alexander
+The following packages address this issue:
+
+	sudo-1.8.15-2.fc22
+	sudo-1.8.15-2.fc23
+	sudo-1.8.16-4.fc24
+	sudo-1.8.17p1-1.mga5
+
+This was brought to our attention by Grisha Levit.
+
+https://bugzilla.redhat.com/show_bug.cgi?id=3D1339935
+
+--=20
+Doran Moppert
+Red Hat Product Security
+
+--k1lZvvs/B4yU6o8G
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBCgAGBQJXvUWDAAoJEGohqWcZR7qpMykP/03AOV3PN22zdHi1fjxNkhHQ
+L+TnbJFATvJikhs0qp4XKWAiNAZJSIcM9tE68IIGL0dhO7ZSnepUqkPdTqjUULu7
+kk4pWUvCsnLxSzH6ETqexYmf3Ir/JY6ZWRYKP2/CKVwOc3aHo7ytxbImIV+rs5zt
+hmrri8NPSQBfRl7IrRSH48F8fOt+SFL39zzZO3tVAgV6+/3TkQ8ysxaZ5aqFJQyF
+ZfYnm4ZzKmAT815cwx6f1RAPB9zULTxjOZkaA89sklZ0cHvQ04dZ486YokOnShfb
+/CoftNOUFXfSR5xLwyZo0v8cIY0RkJ2R7CbdbVvgcaVolKRDZTIXXievXEr20g5Z
+7iJgRBkq39Btg6yGgZqQfPq1mU/VXXQT0Cq40QNBujzh0us7Q+ARrjPaaxFTxXVu
+eQTrtDADoVn/jUKzqhcVxkrlii3xZv3y0OpuoK+tmq9xkdHPErq7zq2L+v/tW6Wv
+DTVguD2WWYjUj565YTOLyOJdJCiSAM4e8bjFBVMFXL8gA9/4x/GDVQJRlLE38ozY
+5WDgfIZ4EAMkLaLWnQUMAUjIQmmxBF+rgC4hsZt8ndFRYwXJvknM9nz8H2BfB2+M
+1T3TL1ti5aVya64IvoWx3X/4bdg9nF9H5Ab4XtFu86yTkYc+p2KWiahaYJ3THvR8
+ZJdSN8sOpM1VUTJRJcKp
+=qg+/
+-----END PGP SIGNATURE-----
+
+--k1lZvvs/B4yU6o8G--
