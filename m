@@ -1,56 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/10
-Message-Id: <20160916172432.9CAC052E020@smtpvbsrv1.mitre.org>
-Date: Fri, 16 Sep 2016 13:24:32 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, luodalongde@...il.com, zhenhaohong@...il.com
-Subject: Re: CVE request Qemu: virtio: null pointer dereference in virtqueu_map_desc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/24/1
+Message-ID: <20160824065811.GB7400@sin.redhat.com>
+Date: Wed, 24 Aug 2016 16:28:12 +0930
+From: Doran Moppert <dmoppert@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request - sudoers on Red Hat, Fedora, Mageia information disclosure
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+The inclusion of "INPUTRC" in env_keep in /etc/sudoers allowed
+information disclosure through readline-enabled programs parsing the
+named file with elevated privileges.  Local users with sudo access could
+read (portions of) specially-formatted files with elevated privileges.
+Future versions of readline will make the vulnerability more significant
+by showing error messages for malformed entries, rather than silently
+ignoring them.
 
-> Quick emulator(Qemu) built with the virtio framework is vulnerable to a null
-> pointer dereference flaw. It could occur if the guest was to set the I/O
-> descriptor buffer length to a large value.
-> 
-> A privileged user inside guest could use this flaw to crash the Qemu instance
-> on the host resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg03546.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1376755
+This flaw is distribution-specific - upstream sudo does not include
+INPUTRC, and we are not aware at this time of any other distros that
+include it.
 
->> virtio back end uses set of buffers to facilitate I/O operations.
->> If its size is too large, 'cpu_physical_memory_map' could return
->> a null address. This would result in a null dereference
->> while un-mapping descriptors. Add check to avoid it.
+The following packages address this issue:
 
-Use CVE-2016-7422.
+	sudo-1.8.15-2.fc22
+	sudo-1.8.15-2.fc23
+	sudo-1.8.16-4.fc24
+	sudo-1.8.17p1-1.mga5
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/virtio/virtio.c but
-that may be an expected place for a later update.
+This was brought to our attention by Grisha Levit.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+https://bugzilla.redhat.com/show_bug.cgi?id=1339935
 
-iQIcBAEBCAAGBQJX3CoJAAoJEHb/MwWLVhi22UAP/i8JPCu45VXEBOxfSHFq2RuT
-TFTLRJoGrzZSJmk0xJQzLevXfM/u/dP7M4bXXdiGETuXDoytygrZvpQX4TjhRcJa
-6B2gCLdlPpcH+m3BW9OzfR3mxMVwGwBMLpDIKo4lRMBkW4Sm9BT5druuJtnYqrpi
-28FtGgLimIIjWykf+XOPCSA1/7jOURlpQWp3AXzdJ4bbPekMIbwGjWDpsbxQFnWt
-UyutNxjJMXKegxNbgKmqtle6O63HewHzzmkMwFpq9VH6yA84kA3ckc+Kn5o88mAz
-4GOVBazW2WLaouT0mcNTSuEzKMVJZTFeMo9LkdOP70ds9ChkMUm4RE55jTTvy1HF
-0EE7q9z9dKnO0DWht7/KtBO4o7pPSiSvz3Amc56D4rUzww2w4SkBwwQp40Eyt9K0
-SNLEL62COpHMbqz0O+lZV/04ZgTvxwO82ALOOGHKzgFXEVZtr3QImugNKBDFItkF
-AzMP9005g6XoXKDNgMDJVz07cDiVU5/tOwTFaFe88CVJR6l9Ez6RSkMUbdloHZD0
-LlsaUPUhVLvKCV+RzUF1MH8Z8i4kIfbSkhSu65VqGeN05dUV+ClmUTj0Q10OGXnm
-UmsmrsdkTDRvye6giFtkXrnV6aPLNkY+SXIePG1IYChtR8XVrHH+3LNeFmkSUMJr
-r6mhE1RiIJ8ZeEkzvS3K
-=d+8E
------END PGP SIGNATURE-----
+-- 
+Doran Moppert
+Red Hat Product Security
+
+Content of type "application/pgp-signature" skipped
