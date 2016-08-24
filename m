@@ -1,53 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/28/5
-Message-Id: <20160928172659.DF3656C5385@smtpvmsrv1.mitre.org>
-Date: Wed, 28 Sep 2016 13:26:59 -0400 (EDT)
-From: cve-assign@...re.org
-To: jericho@...rition.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request - OpenSLP 2.0 Memory Corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/24/3
+Message-ID: <57BD9C57.9030203@cleal.org>
+Date: Wed, 24 Aug 2016 14:08:39 +0100
+From: Dominic Cleal <dominic@...al.org>
+To: oss-security@...ts.openwall.com
+Cc: foreman-security@...glegroups.com
+Subject: CVE-2016-6320: Foreman stored XSS in network interface device identifiers
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2016-6320: Foreman stored XSS in network interface device identifiers
 
-> : : https://sourceforge.net/p/openslp/mercurial/ci/34fb3aa5e6b4997fa21cb614e480de36da5dbc9a/
-> 
-> : Use CVE-2016-7567.
-> 
-> Why did this get a 2016 CVE?
+Network interface identifiers stored for hosts may contain HTML or
+JavaScript that allows a stored XSS (cross-site scripting) vulnerability
+when later viewing the host edit form, which contains detail on each
+stored network interface.
 
->> Bug 151: Fix memory corruption due to possible overflow in SLPFoldWhiteSpace
->> 
->> 2015-12-01
+This issue was reported by Sanket Jagtap.
 
-"possible overflow" in the 2015 reference was not interpreted to mean
-a definitive statement of a security problem, and the defining
-reference is the
-http://www.openwall.com/lists/oss-security/2016/09/27/4 posting
-itself, which occurred in 2016. In other words, either a CVE-2015-
-number or a CVE-2016- number may have been reasonable but we chose the
-latter.
+Affects Foreman 1.8.0 and higher
+Fix released in Foreman 1.12.2
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Patch:
+https://github.com/theforeman/foreman/commit/53081ea14b30d66f0d67b62fe950a2c1463225f5
 
-iQIcBAEBCAAGBQJX6/yDAAoJEHb/MwWLVhi2gXgQALabK0bQBMvo1WbF4nbg2zDB
-nJxmBxNLCbIE0EzGimrh/ytHwHO2eBpVxRsHTGBD9gkiKWi6IdlNk6nPqNndwmGf
-XfNVA/HCAd5LbuvkxOgYtAxTEWfvbvUqty5xtXl8Fr9OzBzO8D3a6IheTRgTqdP0
-VhOBUiLi9G/EEuDGIKP1ly5/1UhSWGc83itsjlR/4751EnXPkIX7xkp8QLged5pR
-YAoxVg66bbmuL5g9PKA+1Vit5MmlookIJ8t6CYcPHoSolmRc4Wfa7WDMxgxZrp63
-BkML/2DlFoM/zWP9APLOtlLN+tx2NuQKDv01f7t6zXD4nmZug/kK5CwOSErooM+l
-e/dga/C4SUzNzH1VHppFYyeZtzBBV7ggsW1d6GUp6OKQaBbd32st+18Qb9qiQ3HA
-Ina1/a+kiAL7yrSY07Rc06Z1P8KzhQTWK/apEnE/bLdSLtuFmDZtr0u80auLfZvy
-KOMOa1+UOhome6x8cs+oCMTF5/DxPF2+K1Jyss6uW8tFlfywLsnmkC7KLRSzsqzu
-KKEyrf5vCuZELF5V6UjYdgELTYcNJZmhjgBk8ReKofJ5AXHW+hRy7EagZnQ+9DX2
-K+Y6JubZxBI2Ie/8TZ+ec4Vf23E8xjPiRr7qxSYWxmBvzjNhwaWhgn1FQ0yG/+t3
-cYwq0Wg1ktDWw26KYtvm
-=l+Su
------END PGP SIGNATURE-----
+More information:
+https://theforeman.org/security.html#2016-6320
+http://projects.theforeman.org/issues/16022
+https://theforeman.org
+
+-- 
+Dominic Cleal
+dominic@...al.org
+
+
+
+
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
