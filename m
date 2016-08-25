@@ -1,287 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/02/7
-Message-ID: <20160802140946.GC25831@suse.de>
-Date: Tue, 2 Aug 2016 16:09:46 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Ruby:HTTP Header injection in 'net/http'
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/25/3
+Message-Id: <20160825174910.2A2096C0BE4@smtpvmsrv1.mitre.org>
+Date: Thu, 25 Aug 2016 13:49:10 -0400 (EDT)
+From: cve-assign@...re.org
+To: caiqian@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: cve request: overlayfs: Fix dentry reference leak
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-was this ever accepted by the Ruby upstream team as valid bug?
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ab79efab0a0ba01a74df782eb7fa44b044dae8b5
+> 
+> In ovl_copy_up_locked(), newdentry is leaked if the function exits through
+> out_cleanup as this just to out after calling ovl_cleanup() - which doesn't
+> actually release the ref on newdentry.
+> 
+> The out_cleanup segment should instead exit through out2 as certainly
+> newdentry leaks - and possibly upper does also, though this isn't caught
+> given the catch of newdentry.
+> 
+> Without this fix, something like the following is seen:
+> 
+>         BUG: Dentry ffff880023e9eb20{i=f861,n=#ffff880023e82d90} still in use (1) [unmount of tmpfs tmpfs]
+>         BUG: Dentry ffff880023ece640{i=0,n=bigfile}  still in use (1) [unmount of tmpfs tmpfs]
+> 
+> when unmounting the upper layer after an error occurred in copyup.
+> 
+> An error can be induced by creating a big file in a lower layer with
+> something like:
+> 
+>         dd if=/dev/zero of=/lower/a/bigfile bs=65536 count=1 seek=$((0xf000))
+> 
+> to create a large file (4.1G). Overlay an upper layer that is too small
+> (on tmpfs might do) and then induce a copy up by opening it writably.
+> 
+> === POC Exploit ===
+> This can be reproduced in a DevOps environment when the docker runtime storage is on overlayfs over
+> xfs as a local DoS. An attacker access to a developer account could run a crafted image from elsewhere
+> like docker by creating a big file in the container filesystem and try to read it running by any
+> user like below by forcing xfs_file_open() returns -EFBIG,
+> 
+> $ cat Dockerfile
+> FROM fedora
+> USER nobody
+> RUN dd if=/dev/zero of=/home/nobody/bigfile bs=1024k seek=2046 count=1
+> ADD open /home/nobody
+> CMD ["/home/nobody/open", "/home/nobody/bigfile"]
+> 
+> and possibly trigger kernel dentry leaks inside the container that will eventually running out of
+> kernel resources for other developers. Hence, a local DoS.
 
-You seem to quote some bugtracker, where is it and is the bug public there?
+Use CVE-2015-8953.
 
-Ciao, Marcus
-On Sat, Jun 25, 2016 at 12:18:42PM +0800, redrain root wrote:
-> TIMELINE
-> rootredrain submitted a report to Ruby.
-> 
-> show raw
-> Jun 22nd
-> 
-> Hi,
-> 
-> I would like to report a HTTP Header injection vulnerability in
-> 'net/http' that allows attackers to inject arbitrary headers in
-> request even create a new evil request.
-> 
-> PoC
-> 
-> require 'net/http'
-> http = Net::HTTP.new('192.168.30.214','80')
-> res = http.get("/r.php HTTP/1.1\r\nx-injection: memeda")
-> 
-> Example
-> 
-> Server Code:
-> 
-> #!/usr/bin/env ruby
-> require 'sinatra'
-> require 'uri'
-> require 'net/http'
-> 
-> get '/' do
->   'hello world'
-> end
-> 
-> post '/' do
->   ip = params[:ip]
->   port = params[:port]
->   path = params[:path]
-> 
->   # do what you want
->   http = Net::HTTP.new ip, port.to_i
->   res = http.get path
-> 
->   res.body
-> 
-> end
-> 
-> post data:
-> 
-> ip=192.168.30.214&port=80&path=/r.php%20HTTP/1.1%0d%0ax-injection: memeda
-> 
-> print_r all HTTP Headers：
-> 
-> Create an evil request
-> 
-> post data:
-> 
-> server log:
-> 
-> Suggestion:
-> 
-> Should validate URI legality before send request
-> 
-> btw，
-> 
-> Cloud I have a CVEID with this vulnerability? reported by
-> @redrain(rootredrain@...il.com) and@ztz(ztz5651483@...il.com)
-> 
-> 4 attachments:
-> F100918: 123123.png
-> F100919: 222333.png
-> F100920: 4444.png
-> F100921: 5555.png
-> 
-> rootredrain posted a comment.
-> Jun 22nd (2 days ago)
-> 
-> The problem is this line in lib/net/http/generic_request.rb:324
-> 
->   def write_header(sock, ver, path)
->     buf = "#{@...hod} #{path} HTTP/#{ver}\r\n"
->     each_capitalized do |k,v|
->       buf << "#{k}: #{v}\r\n"
->     end
->     buf << "\r\n"
->     sock.write buf
->   end
-> 
-> "#{@...hod} #{path} HTTP/#{ver}\r\n" should be checked here to avoid
-> malicious input
-> 
-> shugo posted a comment.
-> Jun 24th (8 hrs ago)
-> 
-> Thanks for your report.
-> 
-> We don't consider this a vulnerability because Net::HTTP#get is not
-> designed to accept malicious input.
-> Applications have responsibility to verify input syntactically and
-> semantically (accepting all RFC2616-compliant input would not be a
-> good idea).
-> 
-> So we would like to handle this as a normal issue.
-> 
-> rootredrain posted a comment.
-> Jun 24th (2 hrs ago)
-> 
-> Hi shugo,
-> 
-> Thanks for the reply. Please don't leave this problem to developers,
-> they have uneven level at developing.
-> 
-> For example, assume we have a demo website, the only thing do is
-> generate a new HTTP request:
-> 
-> #!/usr/bin/env ruby
-> require 'sinatra'
-> 
-> get '/' do
->   'hello world'
-> end
-> 
-> post '/' do
->   ip = params[:ip]
->   port = params[:port]
->   path = params[:path]
-> 
->   # send the request to another site
->   http = Net::HTTP.new ip, port.to_i
->   res = http.get path
-> 
->   res.body
-> end
-> 
-> It's a common demand, right ?
-> 
-> But web developer may not realized that sinatra will auto decode url.
-> Attacker can encode \r\n to %0a%0d, send to the sinatra, sinatra will
-> decode url to \r\n and pass to thepath, finally cause a HTTP Header
-> Injection or CRLF Injection.
-> 
-> Please assume all input is malicious. Here is a similar vulnerability
-> in python: CVE-2016-5699
-> 
-> Here is what another HTTP lib Faraday do may change your mind.
-> 
-> lib/faraday/connection.rb:308
-> 
-> def url_prefix=(url, encoder = nil)
->   uri = url_prefix = Utils.URI(url)
->   self.path_prefix = uri.path
->   # ... ... ...
->   uri
-> end
-> 
-> uri = url_prefix = Utils.URI(url) try to convert url to URI, It will
-> raise an error whenurl is invalid.
-> 
-> lib/faraday/connection.rb:399
-> 
-> def build_exclusive_url(url = nil, params = nil, params_encoder = nil)
->   url = nil if url.respond_to?(:empty?) and url.empty?
->   base = url_prefix
->   # ... ... ...
->   uri = url ? base + url : base
->   # ... ... ...
-> end
-> 
-> uri = url ? base + url : base will trigger another examination convert_to_uri:
-> 
-> def convert_to_uri(uri)
->   if uri.is_a?(URI::Generic)
->     uri
->   elsif uri = String.try_convert(uri)
->     parse(uri)
->   else
->     raise ArgumentError,
->           "bad argument (expected URI object or URI string)"
->   end
-> end
-> 
-> If url is invalid, it will raise an error.
-> 
-> Please let me know if you need more info.
-> 
-> tenderlove posted a comment.
-> Jun 24th (2 hrs ago)
-> 
-> It's a common demand, right ?
-> 
-> I'm not sure about that.
-> 
-> I think this is a bug we should probably address, but I don't think we
-> should consider this a vulnerability. Fetching arbitrary paths from
-> user input seems pretty dubious.
-> 
-> rootredrain posted a comment.
-> Jun 24th (about 1 hr ago)
-> 
-> Hi tenderlove,
-> 
-> Here is my point :
-> All input can not be trusted.
-> 
-> We should validate url in Net::HTTP
-> 
-> tenderlove posted a comment.
-> Jun 24th (about 1 hr ago)
-> 
-> All input can not be trusted.
-> 
-> Yes, people should be whitelisting paths passed in. An open proxy is
-> already a vulnerability, regardless of header injection.
-> 
-> As I said, we should treat this as a bug. But since an open proxy is
-> already a security problem (that we cannot fix), then I don't think
-> this bug should be treated as a security issue.
-> 
-> shugo posted a comment.
-> Jun 24th (34 mins ago)
-> 
-> But web developer may not realized that sinatra will auto decode url.
-> Attacker can encode \r\n to %0a%0d, send to the sinatra, sinatra will
-> decode url to \r\n and pass to the path, finally cause a HTTP Header
-> Injection or CRLF Injection.
-> 
-> In that case, it seems to be a bug of that application, not Net::HTTP#get.
-> 
-> I'm not against adding argument verification to Net::HTTP#get, though.
-> 
-> rootredrain posted a comment.
-> Jun 24th (29 mins ago)
-> 
-> But since an open proxy is already a security problem
-> 
-> Yes, an open proxy is already a vulnerability and you can't fix that,
-> but attack scenarios is not only include an open proxy, but also
-> include many other parts.
-> 
-> A site like google image, user can paste image url on it, then site
-> will request the resource. It's possible to suffer this attack.
-> 
-> Some video sites allow user reference outside resource. It's possible
-> to suffer this attack.
-> 
-> So you can not treat it occur in an unusual scenarios. I still
-> consider it was a security issue.
-> 
-> rootredrain posted a comment.
-> Jun 24th (27 mins ago)
-> 
-> If you believe this is not a issue, please allow the public disclosure.
-> 
-> tenderlove closed the report and changed the status to Informative.
-> Jun 24th (23 mins ago)
-> 
-> I've closed as informative, and I'll allow public disclosure.
-> 
-> tenderlove requested to disclose this report publicly.
-> Jun 24th (20 mins ago)
-> 
-> rootredrain has requested mediation from HackerOne Support.
-> Jun 24th (15 mins ago)
-> 
-> The HTTP scheme handler accepts percent-encoded values as part of the URL.
-> 
-> The generic_request.rb allows unsafe characters, it dosen't have any
-> safe filtration, attackers can cause actual security threat. so we
-> consider it is a vulnerability
-> 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
--- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
+iQIcBAEBCAAGBQJXvy6KAAoJEHb/MwWLVhi2I/0P/jwsVy+oxasVqe6Y/+Qnp//b
++Q/nqSAIG3+pEPx4YRFC48zHudluUk8unvFh+c2OeleZhVpUeDyVxvWNfU/iwcoq
+a0wo6yb742u7xK/LE1NzQMk50cvs9+RTpaF4bEWzGWYCCXPT84BhlXOdTWgfa0W6
+ctqhuyU0ZB8ugHq0wAwmoHzrOHpOz0Sz8ZaOJF/PXDy7OV/T/z+L8+I6A+NUDj9O
+zlnj51ibXJswO6JQnuc1ZRn9vKZnVau5I0JxA7xNBFpCHpVxMieM7lfVuWtt5pzs
+/tf4llYHc/OHL01Xexm+BD9BsTMVbW0+8MccIOty0w+oBgiwImTnJY8na1tKx0GY
+qnRYRL8LdaIRSgP+MlxO3lZ1dFnbS4tQnKvmXhBFmJ5/gyYBX5XYZeMSl+BeqyXR
+7j30GWdO7TYmtkfiUgyT4Rux9pbXIvdS70rBeFoShKdGW04bX4HZH1jy6rwqacA8
+MAA4C5rPC72TzFM5VXY41tKtCZkwTf/4w/oOAcVHi4V5H9OA3R7rAr68IP198MRS
++4UaUlHfFO17+fuxxF6gOBfdC8/gzLaH5j+8ixmpg6X1RVd+FX8FMU9COeodhbbi
+8GfFBxdtFklLDwgTmG60kDwXSAWjVS+qyS7sFCnUGYt613meRFQWzH+aMsskAHbj
+A0Wu0scFPJ8bSi12EaSZ
+=Cr9c
+-----END PGP SIGNATURE-----
