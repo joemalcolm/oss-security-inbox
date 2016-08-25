@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2998" "Saturday" "1" "August" "2015" "13:24:34" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150801172434.746C54D8BEC@smtpvbsrv1.mitre.org>" "71" "[oss-security] Re: CVE Request: devscripts: licensecheck: arbitrary shell command injection" nil nil nil "8" "2015080117:24:34" "[oss-security] Re: CVE Request: devscripts: licensecheck: arbitrary shell command injection" (number mark "        cve-assign@m Aug  1   71/2998  " thread-indent "\"[oss-security] Re: CVE Request: devscripts: licensecheck: arbitrary shell command injection\"\n") "<20150801050050.GA24937@eldamar.local>" ("<20150801050050.GA24937@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["984" "Thursday" "25" "August" "2016" "13:59:28" "-0500" "Jordan Bettis" "jordanb@hafd.org" "<57BF4010.8010409@hafd.org>" "20" "Re: [oss-security] CVE Request - Gnu Wget 1.17 - Design Error Vulnerability" "^Date:" nil nil "8" "2016082518:59:28" "[oss-security] CVE Request - Gnu Wget 1.17 - Design Error Vulnerability" (number mark "        jordanb@hafd Aug 25   20/984   " thread-indent "\"Re: [oss-security] CVE Request - Gnu Wget 1.17 - Design Error Vulnerability\"\n") "<CANO=Ty2f=cqmd14DeZkqW4FZeeh0w0RFKHZnCPa7471rsapVkQ@mail.gmail.com>" ("<F1719FA0B756A0418954A40BEB1A013849B1062B@BRN1WNEXMBX01.vcorp.ad.vrsn.com>" "<CANO=Ty2f=cqmd14DeZkqW4FZeeh0w0RFKHZnCPa7471rsapVkQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32257 invoked by uid 550); 1 Aug 2015 17:24:47 -0000
+Received: (qmail 16142 invoked by uid 550); 25 Aug 2016 19:04:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,84 +11,37 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32239 invoked from network); 1 Aug 2015 17:24:46 -0000
-In-Reply-To: <20150801050050.GA24937@eldamar.local>
-Message-Id: <20150801172434.746C54D8BEC@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Sat,  1 Aug 2015 13:24:34 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 13977 invoked from network); 25 Aug 2016 18:59:43 -0000
+Message-ID: <57BF4010.8010409@hafd.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+MIME-Version: 1.0
+References: <F1719FA0B756A0418954A40BEB1A013849B1062B@BRN1WNEXMBX01.vcorp.ad.vrsn.com> <CANO=Ty2f=cqmd14DeZkqW4FZeeh0w0RFKHZnCPa7471rsapVkQ@mail.gmail.com>
+In-Reply-To: <CANO=Ty2f=cqmd14DeZkqW4FZeeh0w0RFKHZnCPa7471rsapVkQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Date: Thu, 25 Aug 2016 13:59:28 -0500
+From: Jordan Bettis <jordanb@hafd.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: devscripts: licensecheck: arbitrary shell command injection
-To: carnil@debian.org
+Subject: Re: [oss-security] CVE Request - Gnu Wget 1.17 - Design Error Vulnerability
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> licensecheck is prone to arbitrary shell command injection via
-> shell metacharacters in filenames
+On 08/11/2016 10:34 PM, Kurt Seifried wrote:
 > 
-> https://bugs.debian.org/794260
-> https://anonscm.debian.org/cgit/collab-maint/devscripts.git/commit/?id=c0687bcde23108dd42e146573c368b6905e6b8e8
-
-Use CVE-2015-5704 for the issue involving shell metacharacters that
-was fixed in c0687bcde23108dd42e146573c368b6905e6b8e8.
-
-
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=794260#8
+> Please note that the attacker would also have to have access to the local
+> file system, either shell access or by some additional exploit,
+> additionally they would have to have read access to the file wget is
+> downloading (so same security context, or really poor permissions).
 > 
-> (If the variable were expanded by shell, command injection wouldn't be 
-> even possible. You could still exploit argument injection, but that's 
-> less exciting.)
+...
+> Please note again that to exploit this you would need a situation where the
+> attacker can control what wget is fetching, or execute a man in the middle
+> attack, AND has local access to the system downloading the file AND has
+> permissions to read the file AND some sort of additional vulnerability that
+> requires being able to read a file in order to escalate privileges.
+> 
 
-Yes, but argument injection is within the scope of CVE and seems to be
-relevant even in the patched code, i.e.,
+Suppose I convince web admin to wget jpeg files from my server into his
+web root. The jpeg directory also contains the file evil.php. During the
+download, evil.php now exists in his web root and I can cause it to be
+executed by visiting the correct path via http.
 
-  % touch -- -C
-  % ln -s /etc/passwd magic.mgc
-  % ls -l /etc/passwd
-  -rw-r--r-- 1 root root 1388 Jul 16 14:47 /etc/passwd
-  % licensecheck -- *C
-  /usr/bin/licensecheck warning: cannot parse file '-C' with mime type ''
-  % ls -l /etc/passwd
-  -rw-r--r-- 1 0 root 248 Aug  1 13:07 /etc/passwd
-
-In other words, we don't believe it's intentional behavior for
-licensecheck to operate on arbitrary files that have '-' at the
-beginning of their names, and use these names to construct unsafe
-command lines for the file program. The new spawn section perhaps
-should begin with
-
-  spawn(exec => ['file', '--brief', '--mime', '--dereference', '--', $file],
-
-instead. Use CVE-2015-5705 for this argument injection vulnerability.
-
-For now, we'll leave the open question of whether the file program
-should be following symlinks when creating a magic.mgc file in
-response to the -C option. Possibly file was supposed to be resilient
-in the face of unsafe directories, e.g., a legitimate user shouldn't
-need to be concerned about file overwrites when running "file *" in a
-directory where a local attacker has created a -C file and a symlink
-named magic.mgc. However, maybe the legitimate user is supposed to
-know to type "file -- *" whenever the directory might contain leading
-'-' characters in filenames. And maybe the legitimate user who
-directly enters -C on the command line actually wants magic.mgc to be
-created in the location specified by the symlink. It doesn't seem
-possible to decide whether there's a file vulnerability here without
-clarification from the author of file.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJVvP/TAAoJEKllVAevmvmsV0sIAL7zUQZr+qMT+n8fN6mdtroc
-wqgwVisSbNv1KfuzjPtQ0NZDLaO83gOs7Mx5HM/dZu/LAErFkfmzZpz+Cw3DYaqt
-cPCcwE+hPjylzsHNZYJvQaOzNqrM75tvmAvGRfaBTEiRkiW0fvkYsHr3wVi1VCqu
-lE304MuyzKuXNbBHPpM1G+RKWpkgHNmzQ57xGZ9GV+krO3MpkZ+na3wHAlnflBYv
-Q5klYBEOke8kvfnAQ2a7SL82sKhRmvNP5h+LS+IMb+Mg0zzTbt6HAqu4lNgWdKlP
-gkK3t5EOEwB9fikb6YYaHAxPF46cGgSGZDGakTzO50HfZK8xPv7/9u0qk8e4BhU=
-=CXEC
------END PGP SIGNATURE-----
