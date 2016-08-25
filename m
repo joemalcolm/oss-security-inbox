@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["571" "Wednesday" "16" "September" "2020" "15:09:39" "+0100" "Kaxil Naik" "kaxilnaik@gmail.com" "<CAH5JyZrCbbV0OgZ9A_+3GqiR6YkUX5SYV5oR35N_xEfa4_W0cg@mail.gmail.com>" "22" "[oss-security] Re: [CVE-2020-13944] Apache Airflow Reflected XSS via Origin Parameter <= 1.10.12" nil nil nil "9" "2020091614:09:39" "[oss-security] Re: [CVE-2020-13944] Apache Airflow Reflected XSS via Origin Parameter <= 1.10.12" (number mark "U       kaxilnaik@gm Sep 16   22/571   " thread-indent "\"[oss-security] Re: [CVE-2020-13944] Apache Airflow Reflected XSS via Origin Parameter <= 1.10.12\"\n") "<CAH5JyZrUWahjsjoU4pRRTSJwcCxcn_VqybXvhkpVdhwU_TmbKA@mail.gmail.com>" ("<CAH5JyZrUWahjsjoU4pRRTSJwcCxcn_VqybXvhkpVdhwU_TmbKA@mail.gmail.com>") nil nil nil nil nil nil nil "[oss-security] Re: [CVE-2020-13944] Apache Airflow Reflected XSS via Origin Parameter <= 1.10.12" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2989" "Thursday" "25" "August" "2016" "13:49:10" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160825174910.2A2096C0BE4@smtpvmsrv1.mitre.org>" "68" "[oss-security] Re: cve request: overlayfs: Fix dentry reference leak" nil nil nil "8" "2016082517:49:10" "[oss-security] Re: cve request: overlayfs: Fix dentry reference leak" (number mark "U       cve-assign@m Aug 25   68/2989  " thread-indent "\"[oss-security] Re: cve request: overlayfs: Fix dentry reference leak\"\n") "<1439716096.1919046.1471986277289.JavaMail.zimbra@redhat.com>" ("<1439716096.1919046.1471986277289.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15627 invoked by uid 550); 16 Sep 2020 14:53:08 -0000
+Received: (qmail 29777 invoked by uid 550); 25 Aug 2016 17:49:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,65 +12,80 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30185 invoked from network); 16 Sep 2020 14:10:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=jZHtL6sLnsRU/EmPFkTSFlCsdpPw4ItMJMjvZ92Yvjc=;
-        b=cZfsZRngFhIDBAg0LOXSV2YIJnQxvhxClGi+Bq+8ghqkpxRr7Nduff4VAQeoqPBSMQ
-         tiH434yXfpn0VtlWXPREzdZdLQlpxN7y+0M+C0YpoFXupbrAjEarnqIVuS5n8QTXO5cY
-         bA6iMR5BX+Nel3FW8jj1fvNoH4abHxKY5cNXSHugTn5cPmfG/Hz2E8PJiWGvpQBd6YQs
-         NB+7pSE4gdneZfUMKyJairUWLUMKeYglZBfMmr5xmYFdg9e6wGxaRTTpxJu7Ocul2T2G
-         RMYtZWHoUqC0BZXQahUuz/UlET/ww/mGQ5gDGPmPPmeHRRGaVKs0iCiyiOw1XSytHvqJ
-         Cn4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jZHtL6sLnsRU/EmPFkTSFlCsdpPw4ItMJMjvZ92Yvjc=;
-        b=Dl7aulwKDb2YHwh4gtfHeFfrWkTLnE7dETfBLrR2ttlCAdVuDy5pX8+WIO4oFopWlf
-         CAod0XNMNOiN6FG86BA6CNlH7JYPvaAWdSRPJCrktTHoxC37eG6CSoe6GsjCgc1UpzQB
-         0+602OIw684Ryh3RGL8JUfQ8VNYbcYoLm2MFpn/1VcsSbwonLtLP5a+L3lcO9FMUmdry
-         qp3/iOBPDOQEXo8605911ZSfxLKE4cfcfp56Kk/FZS6KQuoxOVxGPOr5CxJXmeaHh5rA
-         VcHa2Qhm/d6//l19f6tJl+4eSKM281DGliHCyNuv0QQwO855bpetlxCY5pLULRBT9Saw
-         tstA==
-X-Gm-Message-State: AOAM533Rb2Rea2ZBLsC5AlyUTCadv5jL/yEnDy0UNY3vMA8UYan/sFjy
-	kzBp0Cd0D4Rp7BHfSvKXBY4FNZpuf1OHEq3ZYWLGx8T+UUE=
-X-Google-Smtp-Source: ABdhPJxIVboCPBJlGgYmYJ1uZFLGSmW8sVTi/HO14yeOyDKaQFZynuzf8yNLpUIcKu+mG3hVAy1e7DIHd5y2mlI5vX8=
-X-Received: by 2002:a17:906:454a:: with SMTP id s10mr25296036ejq.138.1600265390648;
- Wed, 16 Sep 2020 07:09:50 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAH5JyZrUWahjsjoU4pRRTSJwcCxcn_VqybXvhkpVdhwU_TmbKA@mail.gmail.com>
-In-Reply-To: <CAH5JyZrUWahjsjoU4pRRTSJwcCxcn_VqybXvhkpVdhwU_TmbKA@mail.gmail.com>
-From: Kaxil Naik <kaxilnaik@gmail.com>
-Date: Wed, 16 Sep 2020 15:09:39 +0100
-Message-ID: <CAH5JyZrCbbV0OgZ9A_+3GqiR6YkUX5SYV5oR35N_xEfa4_W0cg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Cc: dev@airflow.apache.org
-Content-Type: multipart/alternative; boundary="00000000000027f6ae05af6ed268"
-Subject: [oss-security] Re: [CVE-2020-13944] Apache Airflow Reflected XSS via Origin
- Parameter <= 1.10.12
+Received: (qmail 29759 invoked from network); 25 Aug 2016 17:49:22 -0000
+From: cve-assign@mitre.org
+To: caiqian@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <1439716096.1919046.1471986277289.JavaMail.zimbra@redhat.com>
+Message-Id: <20160825174910.2A2096C0BE4@smtpvmsrv1.mitre.org>
+Date: Thu, 25 Aug 2016 13:49:10 -0400 (EDT)
+Subject: [oss-security] Re: cve request: overlayfs: Fix dentry reference leak
 
---00000000000027f6ae05af6ed268
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Correction the issue only affects < 1.10.12 (not <= 1.10.12)
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ab79efab0a0ba01a74df782eb7fa44b044dae8b5
+> 
+> In ovl_copy_up_locked(), newdentry is leaked if the function exits through
+> out_cleanup as this just to out after calling ovl_cleanup() - which doesn't
+> actually release the ref on newdentry.
+> 
+> The out_cleanup segment should instead exit through out2 as certainly
+> newdentry leaks - and possibly upper does also, though this isn't caught
+> given the catch of newdentry.
+> 
+> Without this fix, something like the following is seen:
+> 
+>         BUG: Dentry ffff880023e9eb20{i=f861,n=#ffff880023e82d90} still in use (1) [unmount of tmpfs tmpfs]
+>         BUG: Dentry ffff880023ece640{i=0,n=bigfile}  still in use (1) [unmount of tmpfs tmpfs]
+> 
+> when unmounting the upper layer after an error occurred in copyup.
+> 
+> An error can be induced by creating a big file in a lower layer with
+> something like:
+> 
+>         dd if=/dev/zero of=/lower/a/bigfile bs=65536 count=1 seek=$((0xf000))
+> 
+> to create a large file (4.1G). Overlay an upper layer that is too small
+> (on tmpfs might do) and then induce a copy up by opening it writably.
+> 
+> === POC Exploit ===
+> This can be reproduced in a DevOps environment when the docker runtime storage is on overlayfs over
+> xfs as a local DoS. An attacker access to a developer account could run a crafted image from elsewhere
+> like docker by creating a big file in the container filesystem and try to read it running by any
+> user like below by forcing xfs_file_open() returns -EFBIG,
+> 
+> $ cat Dockerfile
+> FROM fedora
+> USER nobody
+> RUN dd if=/dev/zero of=/home/nobody/bigfile bs=1024k seek=2046 count=1
+> ADD open /home/nobody
+> CMD ["/home/nobody/open", "/home/nobody/bigfile"]
+> 
+> and possibly trigger kernel dentry leaks inside the container that will eventually running out of
+> kernel resources for other developers. Hence, a local DoS.
 
-On Wed, Sep 16, 2020, 12:27 Kaxil Naik <kaxilnaik@gmail.com> wrote:
+Use CVE-2015-8953.
 
-> Versions Affected: <= 1.10.12
-> Description:
-> The "origin" parameter passed to some of the endpoints like '/trigger' was
-> vulnerable to XSS exploit.
->
-> Credit:
-> The issue was independently discovered and reported by Ali Al-Habsi of
-> Accellion & Everardo Padilla Saca.
->
-> Thanks,
-> Kaxil,
-> on behalf of Apache Airflow PMC
->
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
---00000000000027f6ae05af6ed268--
+iQIcBAEBCAAGBQJXvy6KAAoJEHb/MwWLVhi2I/0P/jwsVy+oxasVqe6Y/+Qnp//b
++Q/nqSAIG3+pEPx4YRFC48zHudluUk8unvFh+c2OeleZhVpUeDyVxvWNfU/iwcoq
+a0wo6yb742u7xK/LE1NzQMk50cvs9+RTpaF4bEWzGWYCCXPT84BhlXOdTWgfa0W6
+ctqhuyU0ZB8ugHq0wAwmoHzrOHpOz0Sz8ZaOJF/PXDy7OV/T/z+L8+I6A+NUDj9O
+zlnj51ibXJswO6JQnuc1ZRn9vKZnVau5I0JxA7xNBFpCHpVxMieM7lfVuWtt5pzs
+/tf4llYHc/OHL01Xexm+BD9BsTMVbW0+8MccIOty0w+oBgiwImTnJY8na1tKx0GY
+qnRYRL8LdaIRSgP+MlxO3lZ1dFnbS4tQnKvmXhBFmJ5/gyYBX5XYZeMSl+BeqyXR
+7j30GWdO7TYmtkfiUgyT4Rux9pbXIvdS70rBeFoShKdGW04bX4HZH1jy6rwqacA8
+MAA4C5rPC72TzFM5VXY41tKtCZkwTf/4w/oOAcVHi4V5H9OA3R7rAr68IP198MRS
++4UaUlHfFO17+fuxxF6gOBfdC8/gzLaH5j+8ixmpg6X1RVd+FX8FMU9COeodhbbi
+8GfFBxdtFklLDwgTmG60kDwXSAWjVS+qyS7sFCnUGYt613meRFQWzH+aMsskAHbj
+A0Wu0scFPJ8bSi12EaSZ
+=Cr9c
+-----END PGP SIGNATURE-----
