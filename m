@@ -1,38 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/02/7
-Message-ID: <20160602120051.GL26429@suse.de>
-Date: Thu, 2 Jun 2016 14:00:51 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: bad USB host adapter implementation can corrupt memory/brick machine
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/25/4
+Message-Id: <20160825175049.6E9186C0BB5@smtpvmsrv1.mitre.org>
+Date: Thu, 25 Aug 2016 13:50:49 -0400 (EDT)
+From: cve-assign@...re.org
+To: wmealing@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Linux kernel mbcache lock contention denial of service.
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 02, 2016 at 01:57:57PM +0200, Adam Maris wrote:
-> On 02/06/16 11:10, Marcus Meissner wrote:
-> 
-> > Hi,
-> >
-> > reported here:
-> >
-> > https://marc.info/?l=linux-usb&m=146480770532266&w=2
-> >
-> > issue is that the Frescologic device id 1009 host controller apparently
-> > has a broken XHCI STREAMS implementation which would lead to memory corruptions
-> >
-> > Redhat might have already assigned a CVE.
-> >
-> > I am not sure if this is controllable for code execution, but at least USB devices can be used
-> > to brick a machine with the kernel running (local denial of service)?
-> >
-> > Ciao, Marcus
-> 
-> Red Hat hasn't assigned CVE. Overall, this has only minor security
-> implications. Bricking machine doesn't seem to be easily reproducible,
-> since on the second tested mobo it merely showed as a random memory
-> corruption and hard locked system. It requires specific class of
-> external usb devices getting plugged into machine with specific broken
-> xhci controller.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hmm. Yes, if it cannot be attacker driven, then we could consider it a bug only.
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=be0726d33cb8f411945884664924bed3cb8c70ee
+> https://lwn.net/Articles/668718/
+> https://bugzilla.kernel.org/show_bug.cgi?id=107301
+> https://bugzilla.redhat.com/show_bug.cgi?id=1360968
+> 
+> A design flaw was found in the file extended attribute handling of the
+> linux kernels handling of cached attributes. Too many entries in the
+> cache cause a soft lockup while attempting to iterate the cache and
+> access relevant locks.
+> 
+> Upstream has replaced the mbcache code with an updated version which
+> was not a patch but a clear-cut reimplementation of the code, no
+> single diff
+> 
+> Soft lockup information is in both the bugzilla.kernel.org and
+> referred to in the LWN article. This would affect containers running
+> with ext4 as it shares the same mbcache between all containers/host.
+> 
+> This did not affect Red Hat Enterprise Linux versions 5,6 or 7, so I
+> can't validate the claim that it does affect other newer kernels.
+> This may be worthwhile tracking for others who are affected by this
+> flaw.
+> 
+> For those following along at home, this seemed to be fixed in:
+> 
+> git tag --contains be0726d33cb8f411945884664924bed3cb8c70ee
+> v4.6
 
-Ciao, Marcus
+Use CVE-2015-8952.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXvy76AAoJEHb/MwWLVhi2lYkQAI/LDJTd/giN+MF4gT6DZ4Db
+KZucD64daIHsBuKdvBWOTWhxGuFhCv1gGcfdJWZgTBWYow1yZx6HuxKQGfDGC1vh
+rsQt26tP8RXcW9NiflvPovC++78bYMZhu6bzqVk6K9K7W8C8JjVgX2iU8lUa8XKw
+Si1XKDN/jsXM+uyKrofVy/tYqDxYkQ9rDxVB8vpsJ6ezrN2WJiRfbTRnuMLE2BI6
+bAUb9yoNWBoNMrP1YVwEAQQgzVshwsuwaEzF77khV/hmaJsTwOaomYdIfuHoRrqq
+C02xBjvtzC3x79Tn71E29gfp+2/hK4E3fneQVRYO+3cShbcP8TADwEVSWGwuqOoM
+ANuE6m76rIaN3peTwpXIHOFEDDjV56mj+60jkErse4yMbwMC2htiLWzssP1AklcD
+y6/RpIoJLldhSJ+1KUjeAskCRozix2RTtyRveNK6ohD+BVRr6R3sfP9Y47RyIU36
+6cPOowJICw0T3IkmD8HUn+cY0di7KuaopMu89hTdyOtugFSuOFVHBVFjdSo/kkjV
+hgGExNuijnM/ts+vEVBB3UH7er3odyz7kTfPggr+pESZk2Jee4QMUQOlFMYgt9pW
+ZIBwiDtf1N0+1Dk/E7aJxQvThW80xirWgg5ZuzCeyVstwEjgKX728cy/Qa7g2WIk
+Zoe/WK1OI1qnr21ciAKg
+=bAj5
+-----END PGP SIGNATURE-----
