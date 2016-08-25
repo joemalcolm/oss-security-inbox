@@ -1,46 +1,145 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/14/7
-Message-ID: <20161014111338.GI31594@dhcp-25-225.brq.redhat.com>
-Date: Fri, 14 Oct 2016 13:13:39 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: John Haxby <john.haxby@...cle.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/25/1
+Message-ID: <57BE3588.40608@igalia.com>
+Date: Thu, 25 Aug 2016 02:02:16 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: "webkit-gtk@...ts.webkit.org" <webkit-gtk@...ts.webkit.org>
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK+ Security Advisory WSA-2016-0005
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 14, 2016 at 01:01:07PM +0200, Petr Matousek wrote:
-> On Fri, Oct 14, 2016 at 11:57:15AM +0100, John Haxby wrote:
-> > On 14/10/16 07:18, P J P wrote:
-> > > +-- On Thu, 13 Oct 2016, John Haxby wrote --+
-> > > | On 13/10/16 13:46, Vladis Dronov wrote:
-> > > | > https://bugzilla.redhat.com/show_bug.cgi?id=1373499 (reproducer, patch)
-> > > | 
-> > > | This bug isn't accessible.   Do you think you could post the reproducer
-> > > | or open the bug please?
-> > > 
-> > > Please see this one:
-> > >   -> https://bugzilla.redhat.com/show_bug.cgi?id=1373966
-> > > 
-> > > Thank you.
-> > 
-> > Sorry, that's not why I was asking.  You provided links to two bugs: one
-> > has the patch and a reproducer, the other has the patch.  Unfortunately
-> > the former is a link to a bug that no one outside Red Hat has access to.
-> >  In the past when people have posted links to oss-security that do not
-> > have general access the access permissions have been relaxed or the
-> > relevant content posted on the list.
-> > 
-> > That's what I was asking for:  inaccessible links are not helpful on an
-> > open list.
-> 
-> The other link to internal bug was posted by mistake. I am sorry for
-> that. https://bugzilla.redhat.com/show_bug.cgi?id=1373966 has all the
-> information we can share.
+------------------------------------------------------------------------
+WebKitGTK+ Security Advisory                               WSA-2016-0005
+------------------------------------------------------------------------
 
-Scratch that. 1373966 is a Fedora bug so I opened it. It is accessible
-now.
+Date reported      : August 25, 2016
+Advisory ID        : WSA-2016-0005
+Advisory URL       : https://webkitgtk.org/security/WSA-2016-0005.html
+CVE identifiers    : CVE-2016-4583, CVE-2016-4585, CVE-2016-4586,
+                     CVE-2016-4587, CVE-2016-4588, CVE-2016-4589,
+                     CVE-2016-4590, CVE-2016-4591, CVE-2016-4592,
+                     CVE-2016-4622, CVE-2016-4623, CVE-2016-4624,
+                     CVE-2016-4651.
 
-Thanks,
--- 
-Petr Matousek / Red Hat Product Security
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+Several vulnerabilities were discovered in WebKitGTK+.
+
+CVE-2016-4583
+    Versions affected: WebKitGTK+ before 2.12.2.
+    Credit to Roeland Krak.
+    WebKit in Apple iOS before 9.3.3, Safari before 9.1.2, and tvOS
+    before 9.2.2 allows remote attackers to bypass the Same Origin
+    Policy and obtain image date from an unintended web site via a
+    timing attack involving an SVG document.
+
+CVE-2016-4585
+    Versions affected: WebKitGTK+ before 2.12.1.
+    Credit to Takeshi Terada of Mitsui Bussan Secure Directions, Inc.
+    (www.mbsd.jp).
+    Cross-site scripting (XSS) vulnerability in the WebKit Page Loading
+    implementation in Apple iOS before 9.3.3, Safari before 9.1.2, and
+    tvOS before 9.2.2 allows remote attackers to inject arbitrary web
+    script or HTML via an HTTP response specifying redirection that is
+    mishandled by Safari.
+
+CVE-2016-4586
+    Versions affected: WebKitGTK+ before 2.12.1.
+    Credit to Apple.
+    WebKit in Apple Safari before 9.1.2 and tvOS before 9.2.2 allows
+    remote attackers to execute arbitrary code or cause a denial of
+    service (memory corruption) via a crafted web site.
+
+CVE-2016-4587
+    Versions affected: WebKitGTK+ before 2.10.1.
+    Credit to Apple.
+    WebKit in Apple iOS before 9.3.3 and tvOS before 9.2.2 allows remote
+    attackers to obtain sensitive information from uninitialized process
+    memory via a crafted web site.
+
+CVE-2016-4588
+    Versions affected: WebKitGTK+ before 2.12.3.
+    Credit to Apple.
+    WebKit in Apple tvOS before 9.2.2 allows remote attackers to execute
+    arbitrary code or cause a denial of service (memory corruption) via
+    a crafted web site.
+
+CVE-2016-4589
+    Versions affected: WebKitGTK+ before 2.12.3.
+    Credit to Tongbo Luo and Bo Qu of Palo Alto Networks.
+    WebKit in Apple iOS before 9.3.3, Safari before 9.1.2, and tvOS
+    before 9.2.2 allows remote attackers to execute arbitrary code or
+    cause a denial of service (memory corruption) via a crafted web
+    site, a different vulnerability than CVE-2016-4622, CVE-2016-4623,
+    and CVE-2016-4624.
+
+CVE-2016-4590
+    Versions affected: WebKitGTK+ before 2.12.4.
+    Credit to xisigr of Tencent's Xuanwu Lab (www.tencent.com).
+    WebKit in Apple iOS before 9.3.3 and Safari before 9.1.2 mishandles
+    about: URLs, which allows remote attackers to bypass the Same Origin
+    Policy via a crafted web site.
+
+CVE-2016-4591
+    Versions affected: WebKitGTK+ before 2.12.4.
+    Credit to ma.la of LINE Corporation.
+    WebKit in Apple iOS before 9.3.3, Safari before 9.1.2, and tvOS
+    before 9.2.2 mishandles the location variable, which allows remote
+    attackers to access the local filesystem via unspecified vectors.
+
+CVE-2016-4592
+    Versions affected: WebKitGTK+ before 2.10.5.
+    Credit to Mikhail.
+    WebKit in Apple iOS before 9.3.3, Safari before 9.1.2, and tvOS
+    before 9.2.2 allows remote attackers to cause a denial of service
+    (memory consumption) via a crafted web site.
+
+CVE-2016-4622
+    Versions affected: WebKitGTK+ before 2.12.4.
+    Credit to Samuel Gross working with Trend Micro's Zero Day
+    Initiative.
+    WebKit in Apple iOS before 9.3.3, Safari before 9.1.2, and tvOS
+    before 9.2.2 allows remote attackers to execute arbitrary code or
+    cause a denial of service (memory corruption) via a crafted web
+    site, a different vulnerability than CVE-2016-4589, CVE-2016-4623,
+    and CVE-2016-4624.
+
+CVE-2016-4623
+    Versions affected: WebKitGTK+ before 2.12.0.
+    Credit to Apple.
+    WebKit in Apple iOS before 9.3.3, Safari before 9.1.2, and tvOS
+    before 9.2.2 allows remote attackers to execute arbitrary code or
+    cause a denial of service (memory corruption) via a crafted web
+    site, a different vulnerability than CVE-2016-4589, CVE-2016-4622,
+    and CVE-2016-4624.
+
+CVE-2016-4624
+    Versions affected: WebKitGTK+ before 2.12.4.
+    Credit to Apple.
+    WebKit in Apple iOS before 9.3.3, Safari before 9.1.2, and tvOS
+    before 9.2.2 allows remote attackers to execute arbitrary code or
+    cause a denial of service (memory corruption) via a crafted web
+    site, a different vulnerability than CVE-2016-4589, CVE-2016-4622,
+    and CVE-2016-4623.
+
+CVE-2016-4651
+    Versions affected: WebKitGTK+ before 2.12.0.
+    Credit to Obscure.
+    Cross-site scripting (XSS) vulnerability in the WebKit JavaScript
+    bindings in Apple iOS before 9.3.3 and Safari before 9.1.2 allows
+    remote attackers to inject arbitrary web script or HTML via a
+    crafted HTTP/0.9 response, related to a "cross-protocol cross-site
+    scripting (XPXSS)" vulnerability.
+
+
+We recommend updating to the last stable version of WebKitGTK+. It is
+the best way of ensuring that you are running a safe version of
+WebKitGTK+. Please check our website for information about the last
+stable releases.
+
+Further information about WebKitGTK+ Security Advisories can be found
+at: https://webkitgtk.org/security.html
+
+The WebKitGTK+ team,
+August 25, 2016
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
