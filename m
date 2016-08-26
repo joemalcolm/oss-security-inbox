@@ -1,4 +1,9 @@
-Received: (qmail 23886 invoked by uid 550); 25 Jul 2023 17:16:51 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8931" "Friday" "26" "August" "2016" "21:32:05" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20160826213205.102bf6c0@pc1>" "188" "[oss-security] Multiple vulnerabilities in RPM =?UTF-8?B?4oCT?= and a rant" "^Cc:" nil nil "8" "2016082619:32:05" "[oss-security] Multiple vulnerabilities in RPM =?UTF-8?B?4oCT?= and a rant" (number mark "        hanno@hboeck Aug 26  188/8931  " thread-indent "\"[oss-security] Multiple vulnerabilities in RPM =?UTF-8?B?4oCT?= and a rant\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 18016 invoked by uid 550); 26 Aug 2016 19:32:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,48 +11,203 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 17992 invoked from network); 26 Aug 2016 19:32:18 -0000
+Message-ID: <20160826213205.102bf6c0@pc1>
+X-Mailer: Claws Mail 3.14.0 (GTK+ 2.24.30; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-15028-1472239925-0001-2"
+Cc: cve-assign@mitre.org
+Date: Fri, 26 Aug 2016 21:32:05 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21532 invoked from network); 25 Jul 2023 17:12:58 -0000
-DKIM-Filter: OpenDKIM Filter v2.10.3 james.steelbluetech.co.uk D1841BFC0B
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ehuk.net; s=default;
-	t=1690305165; bh=DcJrTfct5Kpqu1opgyjE+Wkkj22oyaC6so0wfcIXu0k=;
-	h=In-Reply-To:References:Date:Subject:From:To:Reply-To:From;
-	b=vEiQdyhzLBrZTFumaouZ4sTSG15u+urGw7NjTuMov+c4KYJevmqDrmh+g455+dakQ
-	 npeMcDbIWq7JxFKmI4H43x7dthAol4ijNo5n6G9EH6dqCnPOr4hZLTXHpl5GLeHBt/
-	 l2wJLunTziz7BASmXgTBB6C/AGSxR+TLlT+QJe4UMQZzoMVIUotLvPdmrRCxwlODts
-	 X8H7SP+uF+cRQqtKZ2zsFDklRK2djo49mVDltWgdy6+VfOhgufjhPevlELoEyUoTr4
-	 uwPQcanNOW64DefrCZzNQp8vmuBGEUGITVLdc6DTT2ToligEhU1jlmm8MNdiQTleLy
-	 8izoBesJlNU1Q==
-Message-ID: <ab2390108dee5325ff7683d404465e32.squirrel@ukinbox.ecrypt.net>
-In-Reply-To: <CUB4TMY2T01E.9PNA8WXRWGZR@sumire>
-References: <ZL6Kgih+pRaeA2e/@thinkstation.cmpxchg8b.net>
-    <43f83e16-e492-4540-b34d-d2b51da2bb74@canonical.com>
-    <ZL8lFPN2e+6jX5HH@largo.jsg.id.au> <CUB4TMY2T01E.9PNA8WXRWGZR@sumire>
-Date: Tue, 25 Jul 2023 18:12:44 +0100
-From: "Eddie Chapman" <eddie@ehuk.net>
+Subject: [oss-security] Multiple vulnerabilities in RPM =?UTF-8?B?4oCT?= and a rant
 To: oss-security@lists.openwall.com
-User-Agent: SquirrelMail/1.5.2 [SVN]
-MIME-Version: 1.0
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang
-Subject: Re: [oss-security] CVE-2023-20593: A use-after-free in AMD Zen2
- Processors
 
-alice wrote:
-> this is a disaster of a security announcement from AMD. nothing is fixed
-> except for epyc. the only workaround anyone really has is the chicken bit,
-> thankfully.
+--=_zucker.schokokeks.org-15028-1472239925-0001-2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Yes, very disappointing. Pure speculation; perhaps they were planning on
-disclosing at the end of the year with full set of Microcode ready but
-something we don't know (yet) forced them to disclose early. Who knows.
+https://blog.fuzzing-project.org/52-Multiple-vulnerabilities-in-RPM-and-a-r=
+ant.html
 
-Very unscientific and limited test but I just compiled qemu 7.2.4 on a
-gentoo workstation with a Ryzen 7 3700X (Zen 2) running linux kernel
-5.15.119. Took 5 min 37s. Rebooted into 5.15.122 with the chicken bit fix
-(confirmed in dmesg appears to be applied), compiled qemu again, this time
-it took 5 min 25s. So my initial impression is the chicken bit fix is fine
-in general but remains to be seen if certain workloads significantly
-impacted I guess.
 
+Last year in November I decided that it might be a good idea to fuzz
+the parsers of package management tools in Linux distributions. I
+quickly found a couple of issues in DPKG and RPM. For DPKG the process
+went very smooth. I reported them to Debian's security team, eight days
+later fixes and security advisories were published by both Debian and
+Ubuntu, the main distributions using DPKG. For RPM the process was a
+bit more difficult.
+
+If you want to report a bug to RPM you first may wonder where to report
+it. The RPM webpage [1] is a trac installation which has its own bug
+tracker. However if you try to register an account there you'll get
+forwarded to an HTTPS site with an expired certificate that doesn't
+match the domain name. In case you are brave and tell your browser to
+ignore all warnings you'll be greeted by a broken-looking trac without
+any CSS. Should you proceed and create an account you will learn that
+this doesn't help you, because in order to be allowed to report a bug
+you first have to ask on the mailing list or in the IRC channel for
+permission [2]. That's probably the point where many well-meaning bug
+reporters give up.
+
+Okay, but RPM stands for =E2=80=9CRed Hat package manager=E2=80=9D, so mayb=
+e Red Hat
+feels responsible. So I reported three bugs with sample files
+triggering them to the Red Hat security team on November 20th. The
+answer was =E2=80=93 to put it mildly =E2=80=93 a bit dissatisfying. I'll j=
+ust fully
+quote it: =E2=80=9CThanks for the report. We also received about 30+ crash
+reports in RPM from a different reporter recently so processing all of
+them (yours and the others) will take quite a bit of time. We simply
+don't have the resources to spend hours upon hours analyzing all crash
+reports.=E2=80=9D
+
+Okay, so I wasn't the only one fuzzing RPM and the maybe bugs will be
+fixed some day. I waited. In the meantime I got contacted by another
+person who also had tried to report fuzzing bugs in RPM and who has
+made similar experiences (maybe the same person who reported the 30+
+crashers, I don't know).
+
+In February I decided to ask what the state of things is. I also gave
+them a 30 day period until I'd publish the bugs (I know that it's now
+long past that, I shouldn't have let this issue wait so long). I ended
+up having a call with a Red Hat security team member and exchanged a
+couple of mails. I learned that RPM has a Github repository [3], which
+contains fixes for some (but not all) of the issues I reported, however
+that's nowhere referenced on its webpage. I then fuzzed the current RPM
+git code again and found two more issues I also reported to the Red Hat
+security team.
+
+Status today is that the latest release of RPM on its webpage =E2=80=93
+4.12.0.1 - is from July 2015, so all of the bugs still affect this
+release. However it seems there is an unofficial 4.13 release that's
+nowhere to be found on the RPM webpage, but Red Hat is using it
+together with some fixes [4]. And the Github repository says the latest
+release is 4.12.0, so according to three different sources three
+different versions are the current one (4.12.0, 4.12.0.1, 4.13).
+
+One of the bugs =E2=80=93 a stack overflow (write) - is still present in the
+latest code on Github.
+
+Commend and Conclusion
+
+This blog post probably reads like a big rant about how unprofessional
+Red Hat is in handling potential security issues. But this is contrary
+to my usual experience. I often see Red Hat developers being very
+active in the free software security community and often contributing
+in a positive way. Quite simply I expect better from Red Hat. This is
+not some dubious Enterprise vendor where I wouldn't be the least bit
+surprised of such a reaction.
+
+The development process of RPM seems to be totally chaotic, it's
+neither clear where one reports bugs nor where one gets the latest code
+and security bugs don't get fixed within a reasonable time.
+
+There's been some recent events that make me feel especially worried
+about this: An unknown person has created an entry in the Libarchive
+issue tracker [5] that points to an anonymous document [6] with a very
+detailed description of various security weaknesses in the FreeBSD
+update process (most of them are still unfixed). The most worrying
+thing about this is however that the anonymous post mentions the
+existence similar documents affecting multiple Linux distributions.
+These documents haven't shown up publicly yet and given the unclear
+nature of this incident it's hard to know whether they ever will become
+public or exist at all. But this should still be reason enough to have
+a closer look at potential security vulnerabilities in all pieces of
+Linux package management systems.
+
+I haven't analyzed the RPM installation process in detail, so I can't
+say how likely it is that the RPM tool ever sees a malformed input
+file. It seems downloads happen over HTTP, but the first thing that
+happens is a signature check. As the signature is part of the RPM file
+it already needs to be parsed for this. The exact impact of these bugs
+would require further analysis. But independent of how likely this is I
+think the parser in such a crucial piece of software should be robust.
+It should be safe to use the rpm tool to show info about a file on the
+command line.
+
+
+[1] http://rpm.org/
+[2] http://rpm.org/wiki/ReportingBugs
+[3] https://github.com/rpm-software-management/rpm
+[4]
+http://pkgs.fedoraproject.org/cgit/rpms/rpm.git/diff/rpm-4.13.0-rpmtd-out-o=
+f-bounds.patch?h=3Df22&id=3D165614f3dd42caa188f78b55e7723dad2900b2f4
+[5] https://github.com/libarchive/libarchive/issues/743 [6]
+https://gist.github.com/anonymous/e48209b03f1dd9625a992717e7b89c4f
+
+All bugs were found with the help of american fuzzy lop. Here are the
+bugs:
+
+Stack Overflow in glob() / rpmglob.c.
+Sample file (test with rpm -i [input]):
+https://crashes.fuzzing-project.org/rpm-stackoverflow-glob.rpm
+Unfixed in the current Git code.
+
+Heap out of bounds read in headerVerifyInfo() / header.c.
+Sample file (test with =E2=80=9Crpm -i [input]=E2=80=9D):
+https://crashes.fuzzing-project.org/rpm-heap-oob-read-headerVerifyInfo.rpm
+Git commit:
+https://github.com/rpm-software-management/rpm/commit/8e847d52c811e9a57239e=
+18672d40f781e0ec48e
+
+Null pointer access / segfault in stringFormat() / formats.c
+Sample file (test with =E2=80=9Crpm -i [input]=E2=80=9D):
+https://crashes.fuzzing-project.org/rpm-nullptr-rpmtdFormat.rpm
+Git commit:
+https://github.com/rpm-software-management/rpm/commit/cddf43a56f19711866371=
+f02f378dc4095b0fadd
+
+Out of bounds read in rpmtdGetNumber() / rpmtd.c
+Sample file (test with =E2=80=9Crpm -qi -p -- [input]=E2=80=9D)
+https://crashes.fuzzing-project.org/rpm-heap-oob-read-rpmtdGetNumber.rpm
+Git commit:
+https://github.com/rpm-software-management/rpm/commit/b722cf86200505b3e3fcb=
+b2095c4ff61f1f5a2ab
+
+Finally one annoying thing to admit: In my original report I included
+another segfault in headerVerifyInfo() with unclear reasons. However I
+am now unable to reproduce this one. It may be due to compiler options,
+different command line parameters or dependencies on my system that
+have changed. For completeness I'm still providing the sample file:
+https://crashes.fuzzing-project.org/rpm-segfault-headerVerifyInfo.rpm
+(Ideally the RPM developers should include all those sample files in a
+test suite they regularly run against an address sanitizer build of
+RPM.)
+
+Please also note that I expect this list to be incomplete and there are
+likely more issues that could be uncovered with further fuzzing. I'll
+test that once all the existing issues are fixed.
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+--=_zucker.schokokeks.org-15028-1472239925-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJXwJk1AAoJEKWIAHK7tR5CzeUP/1pBv1ILIOKCy2J5uYf8FI3D
+DVvN0SbGkt6GECMuTq6W6k2rb46wUag3S7wmLp+QVgFHtKnR8n1jpXafCfTIWRGA
+1FFrqm2n93QKipTB+21PsAr1UYSuRLW5Bu8zrvBEVVjYFAYj4GH2pEP7XOHmVso6
+3Fk4ODPS4Prd+8UXmpKTOhNqdCLfpoU6dDMhmnEvBvTZzywUAunI2dxKBP32iMaq
+jgjiSxk+H8m8yF4eeWf39IgibS5I6Dz6UHBRmTUsiv9NOl6LYpL42jNyrBbYgdu+
+DTWD+4IyRaXQjSSuH37sFm9THy5c7l2wWb/KcvaHT+vriD8IaT4o2RmIp8rVcNS7
+k5RTA6aWLmkbj8USXCKVZI9nk7Ff/yT8Gy7lr6qJcJo4exTsxzN0cuFWckPEwdNl
+9Nxk09NnGvZFf9+TqkUhYaiwJyAe5i1C89+E/CrSfRr4poJSwqfK9wAh9hn+A4vV
+6HXUz08GfGtDOA9NCpXEXoNUnUVaT5f7UIlwOwpx/dGQlGyKdJz8/RUPGph4psoV
+4nvO+emiXYzbj+ED7q1Yw6hNXTvtvE/++BRMIjafnuOILBSeJlkindmfDHCRbRoz
+JvFJqnAITrQiYliG/6Ifezxl+tg1kaHfrgPG+BT9SyQqXi2OGPqTxizX4HdRYWaz
+j3Ii/eoh5rggqZOuKwOP
+=TmMw
+-----END PGP SIGNATURE-----
+
+--=_zucker.schokokeks.org-15028-1472239925-0001-2--
