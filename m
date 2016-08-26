@@ -1,76 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/23/11
-Message-Id: <20160223231218.2F0D272E00C@smtpvbsrv1.mitre.org>
-Date: Tue, 23 Feb 2016 18:12:18 -0500 (EST)
-From: cve-assign@...re.org
-To: jsegitz@...e.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Security bugs in Linux kernel sound subsystem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/26/4
+Message-ID: <CANO=Ty3OM-PVZXDmPvrdVrxbHaz9zxGkTrUC=-cM9M0XQhadYw@mail.gmail.com>
+Date: Fri, 26 Aug 2016 13:46:40 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: CVE ID Requests <cve-assign@...re.org>
+Subject: Re: Multiple vulnerabilities in RPM – and a rant
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Fri, Aug 26, 2016 at 1:32 PM, Hanno Böck <hanno@...eck.de> wrote:
 
-> Dmitry Vyukov reported a series of kernel bugs in ALSA core that have been
-> triggered by syzkaller fuzzer. These can allow a user to DoS the system.
+> https://blog.fuzzing-project.org/52-Multiple-vulnerabilities-in-RPM-and-a-
+> rant.html
+>
+> Okay, but RPM stands for “Red Hat package manager”, so maybe Red Hat
+> feels responsible. So I reported three bugs with sample files
+>
 
-CVE-2016-2543
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=030e2c78d3a91dd0d27fef37e91950dde333eba1
+Actually it doesn't. RPM = RPM Package Manager (like GNU).
 
+http://www.rpm.org/
+https://en.wikipedia.org/wiki/RPM_Package_Manager
 
+Also I would note that Red Hat isn't the only user of RPM, there are a
+large number of distros that use RPM (e.g. SUSE).
 
-CVE-2016-2544
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=3567eb6af614dac436c4b16a8d426f9faed639b3
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-
-
-CVE-2016-2545
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ee8413b01045c74340aa13ad5bdf905de32be736
-
-
-
-CVE-2016-2546
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=af368027a49a751d6ff4ee9e3f9961f35bb4fede
-
-
-
-CVE-2016-2547
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b5a663aa426f4884c71cd8580adae73f33570f0d
-"A slave timer instance might be still accessible in a racy way while
-operating the master instance as it lacks of locking. Since the master
-operation is mostly protected with timer->lock, we should cope with it
-while changing the slave instance, too."
-
-
-CVE-2016-2548
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b5a663aa426f4884c71cd8580adae73f33570f0d
-"some linked lists (active_list and ack_list) of slave instances
-aren't unlinked immediately at stopping or closing, and this may lead
-to unexpected accesses."
-
-
-CVE-2016-2549
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=2ba1fe7a06d3624f9a7586d672b55f08f7c670f3
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWzOZUAAoJEL54rhJi8gl5YskP+QGN1GKhr14+DmEYJ6iVUnbE
-Sz2ZPVWcjHQ2aMmbqN86nHsUoju+hXpAM6EEpZ/AIw+yPBqiZfuRtyT9c7F8rKUt
-FQuBMzWa7kAHlx5r94qtNz1NQdZ8B8utsSVQ/Dt9b/bpPui3LYMEWM3ZwsxY5s0J
-dMGvai7y4y6ipqEFe2XfjP/JUMPU0XTSWeMcZKxNq0oaC7HzYdj7lSxr0uEbdZtJ
-jkSSZXnQFzvILtykzFPFCZoTSYtfs49i3ojk25aMDNMv30LbTrKU9Rbg8kvJmnaA
-ad327/wXtHfGv1y2VyzfiQMZQd59whIjOP6N+GFvCmE11h1K5TF7DBp0ko6H9aIN
-PGOGKhW9vrt9VNmxNcD34lP4WonIPHqo6H0KAx/admAXKJOzwQWlBwhTv1vPfDly
-zOAqnELRuKXN1vNatLsvec3CTF96y+brCgKkLpZX+fFmuC3t/4gi7DMoP3AQJeEG
-N/GGxtZ2EBlNTEbKq65XIjNU3xgI4RGYxTvZs636rDXI4I5vIuX78afLFC/kjWbP
-nSXxsFtCn6Amj9ZPrpzdvYpR0MtwC2kn8DfRPFcMyIFvWt5XKW0koq5rErOpDozr
-xuTG6W1gK5ROvoGk15Ht82D8rltgv7/Pggyoevw9eyp4AckyFUQzJ5ihnmSZeQ/0
-wKFVHjVNZCm0tfXoKnXA
-=v4ix
------END PGP SIGNATURE-----
