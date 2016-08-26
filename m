@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1489" "Wednesday" "18" "November" "2015" "16:03:47" "-0800" "Zach W." "kestrel@trylinux.us" "<564D11E3.2040606@trylinux.us>" "39" "Re: [oss-security] CVE-2015-7266" nil nil nil "11" "2015111900:03:47" "[oss-security] CVE-2015-7266" (number mark "U       kestrel@tryl Nov 18   39/1489  " thread-indent "\"Re: [oss-security] CVE-2015-7266\"\n") "<CANO=Ty19Qxu1jMUkpt59eAkfk4_JNLY7o5AzrzhKUx7tgsvQOg@mail.gmail.com>" ("<564D1096.5070901@trylinux.us>" "<CANO=Ty19Qxu1jMUkpt59eAkfk4_JNLY7o5AzrzhKUx7tgsvQOg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["892" "Friday" "26" "August" "2016" "13:46:40" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty3OM-PVZXDmPvrdVrxbHaz9zxGkTrUC=-cM9M0XQhadYw@mail.gmail.com>" "28" "=?UTF-8?B?UmU6IFtvc3Mtc2VjdXJpdHldIE11bHRpcGxlIHZ1bG5lcmFiaWxpdGllcyBpbiBSUE0g?==?UTF-8?B?4oCTIGFuZCBhIHJhbnQ=?=" "^Cc:" nil nil "8" "2016082619:46:40" "=?UTF-8?B?W29zcy1zZWN1cml0eV0=?= =?UTF-8?B?TXVsdGlwbGU=?= =?UTF-8?B?dnVsbmVyYWJpbGl0aWVz?= =?UTF-8?B?aW4=?= =?UTF-8?B?UlBN?= =?UTF-8?B?4oCT?= =?UTF-8?B?YW5k?= =?UTF-8?B?YQ==?= =?UTF-8?B?cmFudA==?=" (number mark "        kseifried@re Aug 26   28/892   " thread-indent "\"=?UTF-8?B?UmU6IFtvc3Mtc2VjdXJpdHldIE11bHRpcGxlIHZ1bG5lcmFiaWxpdGllcyBpbiBSUE0g?==?UTF-8?B?4oCTIGFuZCBhIHJhbnQ=?=\"\n") "<20160826213205.102bf6c0@pc1>" ("<20160826213205.102bf6c0@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18091 invoked by uid 550); 19 Nov 2015 00:05:34 -0000
+Received: (qmail 12257 invoked by uid 550); 26 Aug 2016 19:46:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17644 invoked from network); 19 Nov 2015 00:03:59 -0000
-To: oss-security@lists.openwall.com
-References: <564D1096.5070901@trylinux.us>
- <CANO=Ty19Qxu1jMUkpt59eAkfk4_JNLY7o5AzrzhKUx7tgsvQOg@mail.gmail.com>
-From: "Zach W." <kestrel@trylinux.us>
-Message-ID: <564D11E3.2040606@trylinux.us>
-Date: Wed, 18 Nov 2015 16:03:47 -0800
-User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
+Received: (qmail 12239 invoked from network); 26 Aug 2016 19:46:52 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=3J9GuL0BV4gqpWcaR0kpE0IDFFz7zBY+pEak0i5gH6Q=;
+        b=dITkr5cssS/YdJPGX2vnnpcu7rzivcoHgq/SDWWYry2tMoq262ubgu1dvoIcW2vf5S
+         8obyen5d6nvGwxu9RNmY/jAfawDeBulkdyLSaY+SsH6AtMpZAUKAZKVjprj9g5/Bpvw9
+         q0Ej2Qk4XJds91vsCvIsMPZGsggBhUrAxz5ppRCgkZ4P2ag7wFW4Cg4fpkOwKhK4mOoe
+         AZokAcx9rr32y2SJe0dy182qgHUE8+XIE7JEX/VJ/7DyI5zT6xLTJs2ppDdSARFXP0jL
+         meLjaLA8SAODqhn4mMnMojTwrMVID7OrY0GKdrqzpQQaCc3pBqWsIJQWhsojhZIMEJV7
+         w7cg==
+X-Gm-Message-State: AE9vXwNXPhshDM+88sd1xUGbSEdAXGtyztjK7PRbLCYq5ClHEdstluN7rescsn0JAkSm74h3Y/D2gknazrROm35O
+X-Received: by 10.202.237.204 with SMTP id l195mr3818229oih.68.1472240800636;
+ Fri, 26 Aug 2016 12:46:40 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CANO=Ty19Qxu1jMUkpt59eAkfk4_JNLY7o5AzrzhKUx7tgsvQOg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] CVE-2015-7266
+In-Reply-To: <20160826213205.102bf6c0@pc1>
+References: <20160826213205.102bf6c0@pc1>
+Message-ID: <CANO=Ty3OM-PVZXDmPvrdVrxbHaz9zxGkTrUC=-cM9M0XQhadYw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a113d30d2f24a7a053afec5df
+Cc: CVE ID Requests <cve-assign@mitre.org>
+Date: Fri, 26 Aug 2016 13:46:40 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: =?UTF-8?Q?Re=3A_=5Boss=2Dsecurity=5D_Multiple_vulnerabilities_in_RPM_?=
+	=?UTF-8?Q?=E2=80=93_and_a_rant?=
+To: oss-security <oss-security@lists.openwall.com>
 
-Hey Kurt,
+--001a113d30d2f24a7a053afec5df
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-I figured as much but since the vuln has been made public what happens now?
+On Fri, Aug 26, 2016 at 1:32 PM, Hanno B=C3=B6ck <hanno@hboeck.de> wrote:
 
-Zach W.
-
-On 11/18/2015 4:01 PM, Kurt Seifried wrote:
-> On Wed, Nov 18, 2015 at 4:58 PM, Zach W. <kestrel@trylinux.us> wrote:
+> https://blog.fuzzing-project.org/52-Multiple-vulnerabilities-in-RPM-and-a-
+> rant.html
 >
->> Hey all,
->>
->> Anybody have any idea what the deal is with this CVE, since it's
->> referenced in http://media.pixalate.com/white-papers/xindi.pdf? It's
->> being splattered all over the news, but the CVE is still in "reservered"
->>
->> Zach W.
->>
-> As per the Wikipedia entry:
->
-> https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures#Description
->
-> This is a standardized text description of the issue(s). One common entry
-> is:
->
-> ** RESERVED ** This candidate has been reserved by an organization
-> or individual that will use it when announcing a new security problem.
-> When the candidate has been publicized, the details for this
-> candidate will be provided.
->
-> This means that the entry number has been reserved by Mitre for an issue or
-> a CNA has reserved the number. So in the case where a CNA requests a block
-> of CVE numbers in advance (e.g. Red Hat currently requests CVEs in blocks
-> of 500), the CVE number will be marked as reserved even though the CVE
-> itself may not be assigned by the CNA for some time. Until the CVE is
-> assigned AND Mitre is made aware of it (e.g. the embargo passes and the
-> issue is made public), AND Mitre has researched the issue and written a
-> description of it, entries will show up as "** RESERVED **".
+> Okay, but RPM stands for =E2=80=9CRed Hat package manager=E2=80=9D, so ma=
+ybe Red Hat
+> feels responsible. So I reported three bugs with sample files
 >
 
+Actually it doesn't. RPM =3D RPM Package Manager (like GNU).
+
+http://www.rpm.org/
+https://en.wikipedia.org/wiki/RPM_Package_Manager
+
+Also I would note that Red Hat isn't the only user of RPM, there are a
+large number of distros that use RPM (e.g. SUSE).
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a113d30d2f24a7a053afec5df--
