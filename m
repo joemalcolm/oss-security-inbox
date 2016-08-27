@@ -1,41 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/27/3
-Message-ID: <20160227173409.GA3663@jwilk.net>
-Date: Sat, 27 Feb 2016 18:34:20 +0100
-From: Jakub Wilk <jwilk@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/28/1
+Message-ID: <ea35113c-d493-4bf7-ca47-9df7891dde67@mantisbt.org>
+Date: Sat, 27 Aug 2016 23:16:56 +0200
+From: Damien Regad <dregad@...tisbt.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Access to /dev/pts devices via pt_chown and user namespaces
+Subject: MantisBT weakened CSP when using bundled Gravatar plugin
 Content-Type: text/plain; charset=utf-8
 
-* Simon McVittie <smcv@...ian.org>, 2016-02-24, 07:01:
->>>Just for the record, pt_chown is not enabled by default in upstream 
->>>glibc starting with glibc-2.18, one has to specify --enable-pt_chown 
->>>configure option explicitly to build pt_chown.
->>
->>Thanks for that information. So for pt_chown, this could hopefully be 
->>just an Ubuntu issue.
->
->And Debian 8 (but not the future Debian 9, at least on Linux kernels), 
->and probably other distributions where backward compat was a concern.
->
-><https://bugs.debian.org/717544> has some interesting background. The 
->Debian and Ubuntu glibc maintainers tried turning off pt_chown in 2014, 
->but had to turn it back on because it caused too many regressions: in 
->particular "mount -t devpts devpts-foo chroot-foo/dev/pts" apparently 
->alters the mount options for the "real" /dev/pts, not just the one 
->being mounted in the chroot (presumably losing the noexec,nosuid,gid=5 
->and mode=620 or mode=600 options that are expected in Debian). I don't 
->know whether the default mount options were subsequently altered in 
->util-linux and/or the kernel as suggested on that bug, or whether 
->manually mounting devpts is just not going to be a supported action in 
->Debian 9.
+Greetings,
 
-grantpt() was fixed so that it works even when /dev/pts mount options 
-are "wrong":
-https://sourceware.org/ml/libc-alpha/2015-12/msg00151.html
+Please assign a CVE ID for the following issue.
 
-This is going to be backported to Debian 8 (jessie):
-https://bugs.debian.org/816023
+Description
+-----------
+MantisBT 1.3.0-rc.2 introduced a new bundled plugin to handle display of
+users' avatars using Gravatar.
 
--- 
-Jakub Wilk
+Instead of adding the Gravatar web site to the list of allowed image
+sources in MantisBT's Content Security Policy, the plugin was replacing
+the whole policy by:
+
+   img-src 'self' http://www.gravatar.com/
+
+instead of the more strict default one of:
+
+   default-src 'self'; frame-ancestors 'none'; style-src 'self';
+   script-src 'self'
+
+Relaxed policy allows execution of remote and inline scripts, e.g.
+potentially enabling XSS attacks.
+
+
+Affected versions
+-----------------
+- >= 1.3.0-rc.2
+- >= 2.0.0-beta.1
+
+Fixed in versions:
+------------------
+- 1.3.1
+- 2.0.0-beta.2
+
+As of this writing, these have not been released yet, but both should be
+available in the coming days. Until then, installations should be
+patched manually.
+
+As a workaround, disabling the Gravatar plugin restores the safer
+default policy.
+
+Patch
+-----
+See Github [1]
+
+Credits
+-------
+The issue was discovered by Johannes Schultz, and fixed by Victor Boctor
+(MantisBT Developer).
+
+References
+----------
+Further details available in our issue tracker [2]
+
+
+Best regards,
+D. Regad
+MantisBT Developer
+http://mantisbt.org
+
+
+[1] https://github.com/mantisbt/mantisbt/commit/b3511d2f
+[2] https://mantisbt.org/bugs/view.php?id=21263
+
