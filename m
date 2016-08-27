@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3026" "Friday" "14" "July" "2017" "17:52:01" "-0000" "Javantea" "jvoss@altsci.com" "<20170714175201.7C393138544@mail.altsci.com>" "78" "Re: [oss-security] Estimate for the total number of exploitable bugs in large linux distro?" "^Date:" nil nil "7" "2017071417:52:01" "[oss-security] Estimate for the total number of exploitable bugs in large linux distro?" (number mark "        jvoss@altsci Jul 14   78/3026  " thread-indent "\"Re: [oss-security] Estimate for the total number of exploitable bugs in large linux distro?\"\n") "<20170714093401.GB865@sivokote.iziade.m$>" ("<20170714094520.GA1885@kroah.com>" "<20170714093401.GB865@sivokote.iziade.m$>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1390" "Saturday" "27" "August" "2016" "23:16:56" "+0200" "Damien Regad" "dregad@mantisbt.org" "<ea35113c-d493-4bf7-ca47-9df7891dde67@mantisbt.org>" "64" "[oss-security] MantisBT weakened CSP when using bundled Gravatar plugin" nil nil nil "8" "2016082721:16:56" "[oss-security] MantisBT weakened CSP when using bundled Gravatar plugin" (number mark "U       dregad@manti Aug 27   64/1390  " thread-indent "\"[oss-security] MantisBT weakened CSP when using bundled Gravatar plugin\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7218 invoked by uid 550); 14 Jul 2017 17:55:03 -0000
+Received: (qmail 24182 invoked by uid 550); 28 Aug 2016 06:10:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,93 +11,106 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3691 invoked from network); 14 Jul 2017 17:50:09 -0000
-Content-Type: multipart/signed; micalg="pgp-sha512"; protocol="application/pgp-signature"; boundary="===============3320824639949037296=="
-MIME-Version: 1.0
-In-Reply-To: <20170714094520.GA1885@kroah.com>
-References: <20170714094520.GA1885@kroah.com> <20170714093401.GB865@sivokote.iziade.m$>
-Message-Id: <20170714175201.7C393138544@mail.altsci.com>
-Date: Fri, 14 Jul 2017 17:52:01 -0000
-From: Javantea <jvoss@altsci.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Estimate for the total number of exploitable bugs in large linux distro?
+Received: (qmail 16046 invoked from network); 27 Aug 2016 21:17:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:to:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=cIKspK7bUoCnu6P+GaiSmNVxrcBSs++tKfrVTlcWdTg=;
+        b=bgsH39zIInpyetJioUTVP6HmbaxmX99Ka7Js/t0V9+/IJ1NBK8eEnxsp9+6Z9Y+AIC
+         LoN68Q3Y34FAwUf3RBaQccFUO9KP8tthEV6YCMeo7lhKQepkE7rPSifGewq3wpjRl6CG
+         eA4pkdE9MAGvhMs+nJUTINXwaA3E8eUvHIwbPx2Hq/efWfTjQRI858KicuwGfBciLY2B
+         M2PNuxEGHoroeAQvDAir0EN7dgCBzkUE3EQIWJs3hRM+vMkbe6tWCm2V3NL8ASc7tiC5
+         4lo9U33LMcqP20WsreTFSNMrWtyall3OMJPNGcO8iXV02KrkQVt+VbwjcGwxONJqEw5b
+         hv/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:to:from:subject:message-id:date
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=cIKspK7bUoCnu6P+GaiSmNVxrcBSs++tKfrVTlcWdTg=;
+        b=MKIKUUa8FYQtD+7NDKz7slOQtfTIty6sidUeS/tqTtv21VlvokDm/1QwvCTHAGlnuJ
+         Tbrg0W6iIdKaTzKsHcybwP815z4jDuXcxCat+grcdbG2gesbdDGeUqyNLDXtFXqcJAPB
+         bFcTryjL3At0ByDc48r0SLMbYd1FU7j4bsHz2n8vpL+t/E9Ku/FJ8nV/LDnyUuklP/Ve
+         nja4M722CWLtriwqNugqjQ0AiYnrBNVRIHXJspTvo2nirmn3Z2jvSkv5malZvAwo7I9S
+         rw208hCjm+4SFYM1cCq8N0Y5mKUpNICLaopTTpA4Z60hn/bOe1sPUTdcFy/KnskloYwi
+         mjXg==
+X-Gm-Message-State: AE9vXwMqB6uXo4ptAK6x4Dv8Ob9HW3S15/gTFES7WDl7Neyx57E/pN78TUi/Rg9aPh4ySQ==
+X-Received: by 10.194.126.72 with SMTP id mw8mr8941572wjb.193.1472332618573;
+        Sat, 27 Aug 2016 14:16:58 -0700 (PDT)
+Sender: Damien Regad <dregad@gmail.com>
 To: oss-security@lists.openwall.com
-
---===============3320824639949037296==
-Content-Type: text/plain; charset="us-ascii"
+From: Damien Regad <dregad@mantisbt.org>
+Message-ID: <ea35113c-d493-4bf7-ca47-9df7891dde67@mantisbt.org>
+Date: Sat, 27 Aug 2016 23:16:56 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] MantisBT weakened CSP when using bundled Gravatar plugin
 
-On Fri, 14 Jul 2017 11:45:20 +0200, Greg KH wrote:
-> On Fri, Jul 14, 2017 at 12:34:01PM +0300, Georgi Guninski wrote:
->> What is an estimate for the total number of exploitable bugs in large
->> linux distro?
-> 
-> Define "exploitable" please.
-> 
-Let's assume exploitable means CVSS exploitability score >= 1.6. Therefore network attacks, and easy local attacks are acceptable.
+Greetings,
 
-> Define "large Linux Distro".
-> 
-Let's say Gentoo, Ubuntu, or Fedora.
+Please assign a CVE ID for the following issue.
 
->> Also, does the total number decrease, increase or change in other way
->> over time?
-> 
-> The world changes over time, why would the number not also change?
-> 
-> What exactly are you trying to determine here, and what kind of research
-> have you done to try to answer it yourself?
-> 
-> thanks,
-> 
-> greg k-h
-> 
-> 
-First you must accept that the most well-reasoned answer you will get will probably be off by an order of magnitude. One method of answering this question is to take the number of GLSAs, RHSAs, and USNs depending on which distro you want to track. If you multiply that number by 2, you'll have a reasonable guess. There's no guarantee that this number will be accurate because many bugs will last years or decades and many never become CVEs and thus won't become RHSAs, GLSAs, or USNs. Many bugs that are fixed in 2017 were present in 2016. Some fixed in 2017 weren't there in 2016.
+Description
+-----------
+MantisBT 1.3.0-rc.2 introduced a new bundled plugin to handle display of
+users' avatars using Gravatar.
 
-https://security.gentoo.org/glsa
-https://access.redhat.com/security/
-https://www.ubuntu.com/usn/
+Instead of adding the Gravatar web site to the list of allowed image
+sources in MantisBT's Content Security Policy, the plugin was replacing
+the whole policy by:
 
-Here is the code for Gentoo:
-for year in 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016; do echo -n "$year "; ls -1 /usr/portage/metadata/glsa/glsa-"$year"* |wc -l; done
-2007 264
-2008 208
-2009 153
-2010 43
-2011 47
-2012 149
-2013 98
-2014 242
-2015 97
-2016 162
+   img-src 'self' http://www.gravatar.com/
 
-This shows that GLSAs are neither increasing nor decreasing within the margin of error over the past 10 years.
+instead of the more strict default one of:
 
-Regards,
-Javantea
+   default-src 'self'; frame-ancestors 'none'; style-src 'self';
+   script-src 'self'
 
---===============3320824639949037296==
-Content-Type: application/pgp-signature; name="signature.asc"
-MIME-Version: 1.0
-Content-Disposition: attachment; filename="signature.asc"
+Relaxed policy allows execution of remote and inline scripts, e.g.
+potentially enabling XSS attacks.
 
------BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEuYE3Yh0wygXiwc1/PGjI28ung+8FAllpBL4ACgkQPGjI28un
-g++avw//c1iHn46bejJ462h9zXp9Fgh5GoNrQZT/ZgXlDrMyl6GtU7ebLfqf/4/B
-or4pFKuWFKPVJSHTOSnO5CKTUMgh0xLVP3oNkHG4xKsSb7zgw9s3P8fy83mQkyLc
-eCv/XMjEzv678QwdkZbuVz4k3TbAV94czVNVOtQCINSvY70HaEilhsujZm0HH6Lr
-pRhkTw237Yiz5OJHgLCGZJM+iFmGZ3n182FKMYXSMuQcfxKlSQO6kBlLl83yyFQH
-rBS0rRk69zevasQlxXvCgLbK8uvkrohj1jTdfPeurFE59hZ8n0Luu0gUBQKrcwM7
-xVAZqhkNzyZGXzgXfqWw/82PDvsbmPoRFUOEBlRSE2wvDlNLMoY/2osMWw81ikPC
-8CoL4qmFKf3Wb7S4OpCHR+66RsbCuA4RnflToLo1/POsYqwZHzrUncHBKz3esrtM
-M9DP52tWQUUZRcSH/HnqzNm7CMuSOG49mnMrlEG04g9boxJt0Gq9FgiEf/YULo6+
-jC3n5aP1ifjRIgJMM/8cUlClqGaFcVEq/f/wj4GnGlTiE6cHCA2Tvl9EmnNbHq/D
-8ELKnfYBHygPP6E8pLeMq/RMMWnImZCsQeA2HKaKDz1kIr4GbIgunIYOFrmyZ8Ps
-XTwxeCtGg+C6UipVCMSg9QclP1b/iNky8lCHa4cI+/WbpzjMRnI=
-=2ci3
------END PGP SIGNATURE-----
+Affected versions
+-----------------
+- >= 1.3.0-rc.2
+- >= 2.0.0-beta.1
 
---===============3320824639949037296==--
+Fixed in versions:
+------------------
+- 1.3.1
+- 2.0.0-beta.2
+
+As of this writing, these have not been released yet, but both should be
+available in the coming days. Until then, installations should be
+patched manually.
+
+As a workaround, disabling the Gravatar plugin restores the safer
+default policy.
+
+Patch
+-----
+See Github [1]
+
+Credits
+-------
+The issue was discovered by Johannes Schultz, and fixed by Victor Boctor
+(MantisBT Developer).
+
+References
+----------
+Further details available in our issue tracker [2]
+
+
+Best regards,
+D. Regad
+MantisBT Developer
+http://mantisbt.org
+
+
+[1] https://github.com/mantisbt/mantisbt/commit/b3511d2f
+[2] https://mantisbt.org/bugs/view.php?id=21263
+
