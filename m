@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["922" "Friday" "30" "September" "2016" "14:54:20" "+0800" "Carl Peng" "felixk3y@gmail.com" "<CAEiFw0URs1e9oVb-Jzh3qDe-bOyEVJo7iL3Bx0YFSTFK9FRB-A@mail.gmail.com>" "34" "[oss-security] CVE request: b2evolution 6.7.6 Object Injection vulnerability" "^Date:" nil nil "9" "2016093006:54:20" "[oss-security] CVE request: b2evolution 6.7.6 Object Injection vulnerability" (number mark "U       felixk3y@gma Sep 30   34/922   " thread-indent "\"[oss-security] CVE request: b2evolution 6.7.6 Object Injection vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1146" "Sunday" "28" "August" "2016" "05:56:27" "+0000" "Misra, Deapesh" "dmisra@verisign.com" "<E91F67A6-D25F-47ED-A6E5-14A4C6BDBD66@verisign.com>" "35" "[oss-security] Re: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability" "^CC:" nil nil "8" "2016082805:56:27" "[oss-security] Re: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability" (number mark "        dmisra@veris Aug 28   35/1146  " thread-indent "\"[oss-security] Re: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability\"\n") "<20160827190807.536C66C54F4@smtpvmsrv1.mitre.org>" ("<F1719FA0B756A0418954A40BEB1A013849B1062B@BRN1WNEXMBX01.vcorp.ad.vrsn.com>" "<20160827190807.536C66C54F4@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7304 invoked by uid 550); 30 Sep 2016 13:29:29 -0000
+Received: (qmail 13559 invoked by uid 550); 28 Aug 2016 11:32:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +11,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27798 invoked from network); 30 Sep 2016 06:54:32 -0000
+Received: (qmail 15479 invoked from network); 28 Aug 2016 05:56:44 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=/KJClajwMYehL8N1kGrX+ZVTxGSmlOFYrf+fbQwb46E=;
-        b=iL6RmoL+MSbCgfdIswBafmSpTT+D816Y0q1nKN5sp5PU/NWMysAlhQ6yOKeNsVrc3Z
-         QDPe9Y9yI462HWAYw10GrjoT0wj/MFw4CFWH3xdjbQOLNpfn0XknFsZlLHNBqZjThZAU
-         fQu0P4snQlNUR4I8uZecU7HLoM5wW1Yx1mBUARn9EMnex5nyqYjlkDFqqBvVaq6UFtTx
-         eQv61mFjJg+EuO7Pwlth+TxSY9uyXAo8X5PbGThBf0wNj4UsQ/dANrYuS0E0/uwy0ZRi
-         TZ/Z3yBd6Tm+z1qjrDQMcpryCDtc6PZPNUlM08izxMhbSbHkDytMp5Xp4bCyhLirLAIg
-         8feg==
+        d=verisign-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:thread-topic:thread-index:date:message-id
+         :references:in-reply-to:accept-language:content-language
+         :content-transfer-encoding:mime-version;
+        bh=lFYRfOWZpf+wRsGGxv8PPQiXpLXrPwNPKXDjPyd7CdA=;
+        b=WD8Ql0su1sYpe1kOREd+uwq4FIpkqq21CDicP0KjKh0K4VrPlFz1b7Po01LesvIHHD
+         G8empiPwGNa24YcQtAPmvCfojMtSgf8jR805qJexNm68F+6jZ/Bovfksn/qYw99kg01m
+         Djw3+1EUPkEZAjfAGCOEFsccMRz2tnuuNoC/wrCiAQRNv29Lq5PKZpdDDfmaAAqT4BKV
+         Yh8jDPTpm0xYptkV3PN5opnPMUhuI9uS4ly+U7ml4Uy3bVArK+v1O3ykxlyRVnwNh2oF
+         74br0oOXM56oVNxllyEDkvfOsr1hK3LFLuZebsbfSn030m1ING41FWW9QLFFofynod7p
+         V0Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=/KJClajwMYehL8N1kGrX+ZVTxGSmlOFYrf+fbQwb46E=;
-        b=Tg8Aas3qHOfYiwzCc/aw4jw511DIB00+5kYb0fUpeiysmHQzLhVsXO1aGfzqpg430+
-         V3GJOCKyvTy/Vb6raGN8GZQi/psj207uSFsUNSfC+Si5vCZT0sbFdwPeBQHEKaK1Dms0
-         VdmkOqAG8GcGR9hrKCPG/uZuPGxOKbGllviW2lzAn5iQ6nIPYNKo93lsQ7OeFJCGdMKw
-         RrbjO/rXmxtz/D01nLi5RnrJveuCSuP6W3HzRoY5TstbQkgNja2BJmkKN3GPagDumtUo
-         dm4dYO9CKD5svFLSlrD8gzJdgYdFY/r7dG/VFM16H79ffUuRpy0I/IakUSO9xEB5avPG
-         76BA==
-X-Gm-Message-State: AA6/9RnMJvRa9aKgoYB/T13wU/E3YCPuJN0712IK1XlXyXPnpkT/1fWJRvzim3LXZ0a4nPwiY36CzN1eBtMOLg==
-X-Received: by 10.28.62.2 with SMTP id l2mr2468753wma.117.1475218460563; Thu,
- 29 Sep 2016 23:54:20 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:thread-topic:thread-index
+         :date:message-id:references:in-reply-to:accept-language
+         :content-language:content-transfer-encoding:mime-version;
+        bh=lFYRfOWZpf+wRsGGxv8PPQiXpLXrPwNPKXDjPyd7CdA=;
+        b=DOz+u2HPYK3IDM2Ks/gzAJMA8GZMtAcKeXpjx+yHvg4Inh78mYoXqau+Q4ffvVt3Cj
+         Dv9XXx3tZJN2So/aPeo8aJA/tG22lBHE9JedlqEMU/81S1UqYEg4TV2yGM0EBklcvGk7
+         CDiu6K4pmGMuzK2bqkt2IjCNPhAdNzkYgv8smxP16AuKwxkUKuQuNJaesJWrQpjfAvr8
+         IXCzKX7HSk+JkFhKwHP8/TYjqrSkHOwtm/s/XIghiv+bpa3ZX3OKiqVxE5zhOjYmli/H
+         CJ+XYpuvl9/hu4RVo3tFrrAgpqdB6z5DtR3F3BGUQyW3vcGZROghgnRyd4FbRmSarMUa
+         AUpg==
+X-Gm-Message-State: AE9vXwNzIm5xfx+oqtqQtLsxQZrPFe8p/U+znpQNxTZMsdyZdg31wJiQ6UIqQewW3ZrwGSkJELHdbpCKjtfRnKatmdnLMNuA
+X-Received: by 10.55.132.71 with SMTP id g68mr12653844qkd.50.1472363792350;
+        Sat, 27 Aug 2016 22:56:32 -0700 (PDT)
+X-Relaying-Domain: verisign.com
+Thread-Topic: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability
+Thread-Index: AdH0FHmTbBUqcVEKSSiLw2onxQh3jAMo2WSAAA5C2a8=
+Message-ID: <E91F67A6-D25F-47ED-A6E5-14A4C6BDBD66@verisign.com>
+References: <F1719FA0B756A0418954A40BEB1A013849B1062B@BRN1WNEXMBX01.vcorp.ad.vrsn.com>,<20160827190807.536C66C54F4@smtpvmsrv1.mitre.org>
+In-Reply-To: <20160827190807.536C66C54F4@smtpvmsrv1.mitre.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Message-ID: <CAEiFw0URs1e9oVb-Jzh3qDe-bOyEVJo7iL3Bx0YFSTFK9FRB-A@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a1148ef624ee01a053db410db
-Date: Fri, 30 Sep 2016 14:54:20 +0800
-From: Carl Peng <felixk3y@gmail.com>
+CC: "dawid@legalhackers.com" <dawid@legalhackers.com>,
+        "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Sun, 28 Aug 2016 05:56:27 +0000
+From: "Misra, Deapesh" <dmisra@verisign.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: b2evolution 6.7.6 Object Injection vulnerability
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability
+To: "cve-assign@mitre.org" <cve-assign@mitre.org>
 
---001a1148ef624ee01a053db410db
-Content-Type: text/plain; charset=UTF-8
+Hi,
 
-hello,
- i reported a object injection vulnerability to b2evolution team, and now
-it has been fixed.
 
-Vulnerability:
-/htsrv/call_plugin.php #lines 31~40
-```
-param( 'params', 'string', null ); // serialized
-if( is_null($params) )
-{ // Default:
-$params = array();
-}
-else
-{ // params given. This may result in "false", but this means that
-unserializing failed.
-$params = @unserialize($params); //object injection
-}
-```
-The parameter of "params" may lead to Object Injection by sending
-"params=serialized+object+here"
-fixed:
-https://github.com/b2evolution/b2evolution/commit/25c21cf9cc4261324001f9039509710b37ee2c4d
+> On Aug 27, 2016, at 3:08 PM, "cve-assign@mitre.org" <cve-assign@mitre.org=
+> wrote:
+>=20
+> Maybe a marginally realistic exploitation scenario is for the
+> attacker to convey this message to potential victims:
 
-This issue was reported by Peng Hua of silence.com.cn Inc. and I would like
-to request CVE for this issue (if not done so).
+When I read the vulnerability report for the first time, this is the scenar=
+io I came up with to justify the security threat from this issue:
 
--------------------http://www.silence.com.cn/
-penghua@silence.com.cn
-PKAV Team
+(Hypothetical story of course)
+A group of developers decide to write their own version of the "internet ar=
+chive - way back machine". To keep things simple they decide to use the pow=
+er of wget within their PHP app.=20
 
---001a1148ef624ee01a053db410db--
+For their version one of the app, they decide to only allow the archiving a=
+nd viewing of jpeg files.=20
+
+They then set up their PHP app and solicit people to input in URLs of websi=
+tes with images which need to be archived.
+
+In this kind of "archiving website" scenario, the victim has to=20
+- solicit and accept URLs from untrustworthy parties
+- has to archive the specified files and then make the archived files avail=
+able
+
+
+Isn't this a common enough and plausible scenario which poses a security th=
+reat to the developers server ?
+
+Thanks,
+- deapesh.
+
