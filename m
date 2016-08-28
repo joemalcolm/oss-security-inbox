@@ -1,22 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/30/11
-Message-Id: <20160330232023.E7D568BC026@smtpvmsrv1.mitre.org>
-Date: Wed, 30 Mar 2016 19:20:23 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/28/3
+Message-Id: <20160828153329.EAB6252E01A@smtpvbsrv1.mitre.org>
+Date: Sun, 28 Aug 2016 11:33:29 -0400 (EDT)
 From: cve-assign@...re.org
-To: gustavo.grieco@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Heap overflow in VLC 2.1.6 processing wav files
+To: dmisra@...isign.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, dawid@...alhackers.com
+Subject: Re: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
->> https://bugs.launchpad.net/bugs/1533633
+> Isn't this a common enough and plausible scenario
 
-> It is evident that the memcpy operation has an abnormally large size
-> parameter (4290773038).
-
-Use CVE-2016-3941.
+We don't think that any realistic "internet archive - way back
+machine" clone would place any archived files into a directory from
+which the web server is able to do unrestricted code execution. From
+day one, they would store all untrusted files at a location that
+allows no code execution (or allows only sandboxed code execution), to
+enable later scalability to archiving of non-jpeg files.
 
 - -- 
 CVE Assignment Team
@@ -26,17 +28,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW/F7oAAoJEL54rhJi8gl5/fsP/0qZaXHxydl6ZJsxaqdac/Dy
-fWVmg594wITgIvtZFpLAZ5pQzGgskboaHJEBcTYkxgQIonJska7QVhNrHSusf2Q5
-ko1T1wkyioQu/en7CFTUBCr2OA5kOiAsSh4Z07zqjJanQHjQ9qvxwjcl+IzhNjJ7
-2ORdJA6NgfseN1m5G7WCos9HqiU+Z7Yah4g9UWkwInBrhU/ehVKAjcLUzH+wFPhQ
-SUx/IQ3hL6fSpY3sAJT2PPhm47Iswt3I6oXmVggMPhJ8rAJmlh51YJhuaPmMKPEI
-hj6X9byGBDhHMEosZzGptDK54Q9nd/CLSjGfW7W0Wzd5o5YOZKzFNgtHhFueCaVv
-CS7pqcmQRzzr6dRiAizjdss7EqJOLmnTGr42ZPQfH5uRg93N1KQyJcmQajkp2YpI
-2yy5hb8wBMfUek/dhCq+VGgwon37pQ46pR++uH3SeYLsmw9EopAKusWlMBqf8CF5
-/2BOHGey+MOKxnGBlGOzMQFseFeOfz1P0DgGvHcn3lOO/YYzmz8Jy94BsabeO58J
-/lnKvbw5rg7/8xYam8x3YKlXrxE1kZvkhr0/FGWL4TvlnRAQg8lNdfaJ+UwJewQ8
-DsJP8RzdLT7Mrwk+WInx3lCN4Gz44F27JvAVxv8KaN/M9ArDPLClUyCfDBMZCq4l
-u70+kK2KhEaAcjYB4cgR
-=SBqA
+iQIcBAEBCAAGBQJXwwOZAAoJEHb/MwWLVhi2KMQQAJn+5GP2E2L46kbkWCyC3raT
+EEtdOLAHMGf7p+9NrM9RySnzHSw26gG5gPTqmbby8OqEhZnv7SLN/c9YohHgyGJW
+HOUqF8wlpk7kHu2MZXRt/OblwgwEiWUuxoQ5iYejwO3/l/iyX+ePJIj+9F+pZ1c+
+j6Z4Yki2vBXgpYp9rRBQ7jIvwded+ircNeRV9VSsl/Ibfa6HktiaQPNpRskA1MJp
+k2pC/i3Bz+Dlk2NhjhitBl8LoXTzPldkoHuXqcf2L5lbyKXejwDKBma2HuWxwb+0
+GCYRtiaU/8Ok9669SknOdRXvancKqKMMQRYD826aYeR8Q38IFeSXxV9DD8bix9It
+nRw/cH6SX8wOcAIEZpPW1njDpNP6JhYsvQGJN6klAZWLk7dU6KL2rxFmwD8UNklU
+XS6p7fqmA6SkiRS3Qaz5R7z5WKIgvtflsuILUKDxneD6BV+DSM4JqDFq4fnWKhoj
+1gsjlNPZDuf20VkUN/E88BaN1sfAEecAvlGp9ztt3fIie4OyrVE7ELNw46QHmDJf
+0MB7RbAj+tXoLuYa62fYvkulLhW6aWc6f1PUFcSEdOHQ7IbSehs10WPewttKJsU6
+8Fn4LoAr0XXjE6BgUzIoXEyeakK/gtEIEX4OlbFF0xoKpZBCkRmSx4eykS7ZlmzJ
+mnehgTg6NjN2nNs7YLOD
+=1Xnl
 -----END PGP SIGNATURE-----
