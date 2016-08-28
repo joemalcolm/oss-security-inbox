@@ -1,18 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/12/8
-Message-ID: <20160512134518.GB17242@tunkki>
-Date: Thu, 12 May 2016 16:45:18 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: Reflected XSS in three Wordpress plugins.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/28/2
+Message-ID: <E91F67A6-D25F-47ED-A6E5-14A4C6BDBD66@verisign.com>
+Date: Sun, 28 Aug 2016 05:56:27 +0000
+From: "Misra, Deapesh" <dmisra@...isign.com>
+To: "cve-assign@...re.org" <cve-assign@...re.org>
+CC: "dawid@...alhackers.com" <dawid@...alhackers.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 11, 2016 at 12:28:33PM -0400, Larry W. Cashdollar wrote:
-> Download Site: https://wordpress.org/plugins/enhanced-tooltipglossary
-> DWF-2016-77246
-> Advisory: http://www.vapidlabs.com/wp/wp_advisory.php?v=37
+Hi,
 
-This seems to be fixed in 3.3.5 version (patch not tested by me).
 
--- 
-Henri Salo
+> On Aug 27, 2016, at 3:08 PM, "cve-assign@...re.org" <cve-assign@...re.org> wrote:
+> 
+> Maybe a marginally realistic exploitation scenario is for the
+> attacker to convey this message to potential victims:
+
+When I read the vulnerability report for the first time, this is the scenario I came up with to justify the security threat from this issue:
+
+(Hypothetical story of course)
+A group of developers decide to write their own version of the "internet archive - way back machine". To keep things simple they decide to use the power of wget within their PHP app. 
+
+For their version one of the app, they decide to only allow the archiving and viewing of jpeg files. 
+
+They then set up their PHP app and solicit people to input in URLs of websites with images which need to be archived.
+
+In this kind of "archiving website" scenario, the victim has to 
+- solicit and accept URLs from untrustworthy parties
+- has to archive the specified files and then make the archived files available
+
+
+Isn't this a common enough and plausible scenario which poses a security threat to the developers server ?
+
+Thanks,
+- deapesh.
+
