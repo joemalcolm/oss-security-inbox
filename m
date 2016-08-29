@@ -1,78 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/15/4
-Message-ID: <20161215100219.GA32322@tunkki>
-Date: Thu, 15 Dec 2016 12:02:19 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Cc: contact@...ecurity.ru
-Subject: CVE request: PT-2013-46 Local File Include in Nagios Looking Glass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/29/2
+Message-Id: <20160829215135.463377BC071@smtpvmsrv1.mitre.org>
+Date: Mon, 29 Aug 2016 17:51:35 -0400 (EDT)
+From: cve-assign@...re.org
+To: dregad@...tisbt.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: MantisBT weakened CSP when using bundled Gravatar plugin
 Content-Type: text/plain; charset=utf-8
 
-Could you assign 2013 CVE identifier for Local File Include vulnerability in
-Nagios Looking Glass, thanks.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Advisory below
-==============
+> MantisBT 1.3.0-rc.2 introduced a new bundled plugin to handle display of
+> users' avatars using Gravatar.
+> 
+> Instead of adding the Gravatar web site to the list of allowed image
+> sources in MantisBT's Content Security Policy, the plugin was replacing
+> the whole policy by:
+> 
+>    img-src 'self' http://www.gravatar.com/
+> 
+> instead of the more strict default one of:
+> 
+>    default-src 'self'; frame-ancestors 'none'; style-src 'self';
+>    script-src 'self'
+> 
+> Relaxed policy allows execution of remote and inline scripts, e.g.
+> potentially enabling XSS attacks.
+> 
+> https://github.com/mantisbt/mantisbt/commit/b3511d2feb47eaee41feb5f69cf3c8a2c9acd229
+> https://mantisbt.org/bugs/view.php?id=21263
 
------------------------------------------------------------
-  (PT-2013-46) Positive Technologies Security Advisory
-      Local File Include in Nagios Looking Glass
------------------------------------------------------------
+Use CVE-2016-7111.
 
----[ Vulnerable software ]
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Nagios Looking Glass
-Version: 1.1.0 beta 2 and earlier
-
-Link:
-http://exchange.nagios.org/directory/Addons/Frontends-(GUIs-and-CLIs)/Web-Interfaces/Nagios-Looking-Glass/details
-
----[ Severity level ]
-
-Severity level: High
-Impact: Files Reading
-Access Vector:  Remote
-CVSS v2:
-Base Score: 7.8
-Vector: (AV:N/AC:L/Au:N/C:C/I:N/A:N)
-
-CVE: not assigned
-
----[ Software description ]
-
-Nagios Looking Glass (NLG) is a web-based interface for Nagios that allows you
-to show at-a-glance, real-time server status to 3rd parties without giving them
-direct access to Nagios.
-
----[ Vulnerability description ]
-
-The specialists of the Positive Research center have detected a Local File
-Include vulnerability in Nagios Looking Glass.
-
-Application don't validates input data. That allows attackers to read config
-file. To exploit this vulnerability remote attacker shouldn't have privileges in
-Nagios Looking Glass.
-Vulnerability exists in server/s3_download.php.
-
----[ How to fix ]
-
-No solution
-
----[ Advisory status ]
-
-19.07.2013 - Vendor gets vulnerability details
-13.08.2013 - Vulnerability details were sent to CERT
-28.10.2013 - Public disclosure
-
----[ Credits ]
-
-The vulnerability was detected by Vyacheslav Egoshin, Positive Research Center
-(Positive Technologies Company)
-
----[ References ]
-
-http://en.securitylab.ru/lab/PT-2013-46
-Reports on the vulnerabilities previously discovered by Positive Research:
-
-http://www.ptsecurity.com/research/advisory/
-http://en.securitylab.ru/lab/
+iQIcBAEBCAAGBQJXxK4MAAoJEHb/MwWLVhi2p3EQAKULs3JDc49mBXeyVZ24IUoE
+6iWcUGjwiE5cHXnAxcNKZZp7/xsFo9tgdLbLZ37x48kU1cwp/B/rnQQCWJHfUJxJ
+gR0qIutmEWCAq3nIVC0IR+tBm//0iiJuTuRhH/NjE9W4+EBPPjIHkkHxvnWLqyJo
+SWBP/JJDYbB8sQ366+WLrNHTdxK+keVcu406KrbagWhPaMG1C9QAkTeHRxovI/me
+JkbA3cVjfmO9BjHrAkbEYEJRU6Qxn8XsXUNW8bGoHBUt4WFON8BOGpt6Yyn1iDCs
+APOou4yZqMPM8jSnS8MOCM9POuuK8QNXMTLPgnMkxLcFntz79ogVmzJYfl6jyQ6V
+PW2dNtFU03QTI4nvL2UbVi1+oEbZycQbRnU0If7wHjedXIekFEX2uik0fAnJRwAk
+LDgT/+g6g02RJZPmteQFrT0ZtXav2rFiznHicL93mRLt1sOiE32ULJrQ8DLBP5SA
+EYitfKS09oBLDdSC5k+wogX22UgoFm4xZLrauVbRMKUApZNvKVSAADNewmRopXKR
+Fm2lDPJKmmb+oOWVBj7MDz7J9u1SvnyVieX+53E8Bt0tnr9KD5R61XNfjnKJtvZg
++2l+S8HEUN3FdDz2WINbs9z1Sd5Fok9jc+TQXeIXR07jPC+MKE26zywhIiMYIfl/
+2Rs4hh+EhmuT20OUq14x
+=U1Gg
+-----END PGP SIGNATURE-----
