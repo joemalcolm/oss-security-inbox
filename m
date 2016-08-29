@@ -1,89 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/11/3
-Message-ID: <20160811175209.GA39068@TC.local>
-Date: Thu, 11 Aug 2016 10:52:10 -0700
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2016-6316] Possible XSS Vulnerability in Action View
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/29/3
+Message-ID: <CALPTtNXUdK88B7J1SwsFpjDQeu5UJAnUiTd98UmiUEWQOmey7g@mail.gmail.com>
+Date: Mon, 29 Aug 2016 16:31:50 -0700
+From: Reed Loden <reed@...dloden.com>
+To: dregad@...tisbt.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: MantisBT weakened CSP when using bundled Gravatar plugin
 Content-Type: text/plain; charset=utf-8
 
-# Possible XSS Vulnerability in Action View
+Any reason why you don't just always use the https:// version for Gravatar
+here? Why ever use http://? Even if the MantisBT install is on HTTP, best
+to always load any third-party resources over TLS to better protect against
+MITM.
 
-There is a possible XSS vulnerability in Action View.  Text declared as "HTML
-safe" will not have quotes escaped when used as attribute values in tag
-helpers.  This vulnerability has been assigned the CVE identifier
-CVE-2016-6316.
+Just surprised me to see this:
+https://github.com/mantisbt/mantisbt/blob/b3511d2feb47eaee41feb5f69cf3c8a2c9acd229/plugins/Gravatar/Gravatar.php#L165-L169
 
-Versions Affected:  >= 3.0.0.
-Not affected:       < 3.0.0
-Fixed Versions:     5.0.0.1, 4.2.7.1, 3.2.22.3
+~reed
 
-Impact
-------
-Text declared as "HTML safe" when passed as an attribute value to a tag helper
-will not have quotes escaped which can lead to an XSS attack.  Impacted code
-looks something like this:
+On Mon, Aug 29, 2016 at 2:51 PM, <cve-assign@...re.org> wrote:
 
-```
-content_tag(:div, "hi", title: user_input.html_safe)
-```
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+> > MantisBT 1.3.0-rc.2 introduced a new bundled plugin to handle display of
+> > users' avatars using Gravatar.
+> >
+> > Instead of adding the Gravatar web site to the list of allowed image
+> > sources in MantisBT's Content Security Policy, the plugin was replacing
+> > the whole policy by:
+> >
+> >    img-src 'self' http://www.gravatar.com/
+> >
+> > instead of the more strict default one of:
+> >
+> >    default-src 'self'; frame-ancestors 'none'; style-src 'self';
+> >    script-src 'self'
+> >
+> > Relaxed policy allows execution of remote and inline scripts, e.g.
+> > potentially enabling XSS attacks.
+> >
+> > https://github.com/mantisbt/mantisbt/commit/
+> b3511d2feb47eaee41feb5f69cf3c8a2c9acd229
+> > https://mantisbt.org/bugs/view.php?id=21263
+>
+> Use CVE-2016-7111.
+>
+> - --
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQIcBAEBCAAGBQJXxK4MAAoJEHb/MwWLVhi2p3EQAKULs3JDc49mBXeyVZ24IUoE
+> 6iWcUGjwiE5cHXnAxcNKZZp7/xsFo9tgdLbLZ37x48kU1cwp/B/rnQQCWJHfUJxJ
+> gR0qIutmEWCAq3nIVC0IR+tBm//0iiJuTuRhH/NjE9W4+EBPPjIHkkHxvnWLqyJo
+> SWBP/JJDYbB8sQ366+WLrNHTdxK+keVcu406KrbagWhPaMG1C9QAkTeHRxovI/me
+> JkbA3cVjfmO9BjHrAkbEYEJRU6Qxn8XsXUNW8bGoHBUt4WFON8BOGpt6Yyn1iDCs
+> APOou4yZqMPM8jSnS8MOCM9POuuK8QNXMTLPgnMkxLcFntz79ogVmzJYfl6jyQ6V
+> PW2dNtFU03QTI4nvL2UbVi1+oEbZycQbRnU0If7wHjedXIekFEX2uik0fAnJRwAk
+> LDgT/+g6g02RJZPmteQFrT0ZtXav2rFiznHicL93mRLt1sOiE32ULJrQ8DLBP5SA
+> EYitfKS09oBLDdSC5k+wogX22UgoFm4xZLrauVbRMKUApZNvKVSAADNewmRopXKR
+> Fm2lDPJKmmb+oOWVBj7MDz7J9u1SvnyVieX+53E8Bt0tnr9KD5R61XNfjnKJtvZg
+> +2l+S8HEUN3FdDz2WINbs9z1Sd5Fok9jc+TQXeIXR07jPC+MKE26zywhIiMYIfl/
+> 2Rs4hh+EhmuT20OUq14x
+> =U1Gg
+> -----END PGP SIGNATURE-----
+>
 
-Some helpers like the `sanitize` helper will automatically mark strings as
-"HTML safe", so impacted code could also look something like this:
-
-```
-content_tag(:div, "hi", title: sanitize(user_input))
-```
-
-All users running an affected release should either upgrade or use one of the
-workarounds immediately.
-
-Releases
---------
-The FIXED releases are available at the normal locations.
-
-Workarounds
------------
-You can work around this issue by either *not* marking arbitrary user input as
-safe, or by manually escaping quotes like this:
-
-```
-def escape_quotes(value)
-  value.gsub(/"/, '&quot;'.freeze)
-end
-
-content_tag(:div, "hi", title: escape_quotes(sanitize(user_input)))
-```
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
-
-* 3-2-attribute-xss.patch - Patch for 3.2 series
-* 4-2-attribute-xss.patch - Patch for 4.2 series
-* 5-0-attribute-xss.patch - Patch for 5.0 series
-
-Please note that only the 5.0.x and 4.2.x series are supported at present. Users
-of earlier unsupported releases are advised to upgrade as soon as possible as we
-cannot guarantee the continued availability of security fixes for unsupported
-releases.
-
-Credits
--------
-
-Thanks to Andrew Carpenter of Critical Juncture for reporting this issue and
-sending a patch to fix it!
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "3-2-attribute-xss.patch" of type "text/plain" (3218 bytes)
-
-View attachment "4-2-attribute-xss.patch" of type "text/plain" (2244 bytes)
-
-View attachment "5-0-attribute-xss.patch" of type "text/plain" (2591 bytes)
-
-Content of type "application/pgp-signature" skipped
