@@ -1,26 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/19/3
-Message-ID: <88E4FB7D4EC3E04EAA5DAFEB85C81D4232B14140@EX02.corp.qihoo.net>
-Date: Wed, 19 Oct 2016 01:36:31 +0000
-From: 石磊 <shilei-c@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "cve-assign@...re.org" <cve-assign@...re.org>
-Subject: CVE Request: OpenSSH: Memory exhaustion issue found in OpenSSH
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/29/1
+Message-ID: <217636066.6300862.1472459619099.JavaMail.zimbra@redhat.com>
+Date: Mon, 29 Aug 2016 04:33:39 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: me@...fdog.net
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request -- linux kernel: Setting a POSIX ACL via setxattr doesn't clear the setgid bit
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
+ 
+Honestly, I do not see a relation between this patch and overlays. The patch
+touches the code of underlying filesystems. So, most probably, upperdir ACL
+issue is not fixed by this suggested patch.
 
-The OpenSSH has a memory exhaustion bug in key exchange process.
-An unauthenticated peer could repeat the KEXINIT and cause allocation of up to 384MB(not 128MB that the official said).
-In the default case, an attacker can build 100 such connections, which will consume 38400 MB of memory on the server.
-
-The patch is here:
-http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/kex.c?rev=1.127&content-type=text/x-cvsweb-markup
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
 
 
---
-Regards,
+----- Original Message -----
+From: me@...fdog.net
+To: oss-security@...ts.openwall.com, "Vladis Dronov" <vdronov@...hat.com>
+Sent: Saturday, August 27, 2016 1:24:47 PM
+Subject: Re: [oss-security] CVE request -- linux kernel: Setting a POSIX ACL via setxattr doesn't clear the setgid bit
 
-Shi Lei / Gear Team, Qihoo 360 Inc.
-GPG Key ID 37048936 / 5C4C 85C6 068C A5A0 23FA  0294 D9CE 9C25 3704 8936
+Vladis Dronov writes:
+> Hello,
+>
+> We would like to ask for a CVE-ID for the following securuty flaw.
+>
+> When file permissions are modified via chmod(2) and the user is not in
+> the owning group or capable of CAP_FSETID, the setgid bit is cleared in
+> inode_change_ok().  Setting a POSIX ACL via setxattr(2) sets the file
+> permissions as well as the new ACL, but doesn't clear the setgid bit in
+> a similar way; this allows to bypass the check in chmod(2).
+> ...
 
+Does this also fix the upperdir ACL access gain from
+http://www.halfdog.net/Security/2016/UserNamespaceOverlayfsXattrSetgidPrivilegeEscalation/
+?
+
+The overlayfs upperdir part is already fixed, so the one would
+have to execute replacement commands for the steps already prohibited
+by the userns/overlayfs fixes.
+
+hd
