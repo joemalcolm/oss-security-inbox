@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["269" "Tuesday" "1" "November" "2016" "11:49:07" "+0100" "Martin Prpic" "mprpic@redhat.com" "<877f8na318.fsf@redhat.com>" "14" "[oss-security] RCE in Zabbix 2.2 to 3.0.3" nil nil nil "11" "2016110110:49:07" "[oss-security] RCE in Zabbix 2.2 to 3.0.3" (number mark "U       mprpic@redha Nov  1   14/269   " thread-indent "\"[oss-security] RCE in Zabbix 2.2 to 3.0.3\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1349" "Monday" "29" "August" "2016" "04:33:39" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<217636066.6300862.1472459619099.JavaMail.zimbra@redhat.com>" "37" "Re: [oss-security] CVE request -- linux kernel: Setting a POSIX ACL via setxattr doesn't clear the setgid bit" "^Cc:" nil nil "8" "2016082908:33:39" "[oss-security] CVE request -- linux kernel: Setting a POSIX ACL via setxattr doesn't clear the setgid bit" (number mark "        vdronov@redh Aug 29   37/1349  " thread-indent "\"Re: [oss-security] CVE request -- linux kernel: Setting a POSIX ACL via setxattr doesn't clear the setgid bit\"\n") "<201608271220.u7RCK1Dr005804@int-mx13.intmail.prod.int.phx2.redhat.com>" ("<183593889.43262406.1459342377531.JavaMail.zimbra@redhat.com>" "<18071790.5699934.1472202311154.JavaMail.zimbra@redhat.com>" "<201608271220.u7RCK1Dr005804@int-mx13.intmail.prod.int.phx2.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 23715 invoked by uid 550); 1 Nov 2016 10:49:22 -0000
+Received: (qmail 16156 invoked by uid 550); 29 Aug 2016 08:55:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,31 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23697 invoked from network); 1 Nov 2016 10:49:21 -0000
-From: Martin Prpic <mprpic@redhat.com>
-To: "oss security list" <oss-security@lists.openwall.com>
-User-agent: mu4e 0.9.9.5; emacs 24.3.1
-Date: Tue, 01 Nov 2016 11:49:07 +0100
-Message-ID: <877f8na318.fsf@redhat.com>
+Received: (qmail 3639 invoked from network); 29 Aug 2016 08:34:04 -0000
+Message-ID: <217636066.6300862.1472459619099.JavaMail.zimbra@redhat.com>
+In-Reply-To: <201608271220.u7RCK1Dr005804@int-mx13.intmail.prod.int.phx2.redhat.com>
+References: <183593889.43262406.1459342377531.JavaMail.zimbra@redhat.com> <18071790.5699934.1472202311154.JavaMail.zimbra@redhat.com> <201608271220.u7RCK1Dr005804@int-mx13.intmail.prod.int.phx2.redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Tue, 01 Nov 2016 10:49:09 +0000 (UTC)
-Subject: [oss-security] RCE in Zabbix 2.2 to 3.0.3
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.40.0.182]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF48 (Linux)/8.0.6_GA_5922)
+Thread-Topic: CVE request -- linux kernel: Setting a POSIX ACL via setxattr doesn't clear the setgid bit
+Thread-Index: BlCAxfZxE0RER3Y0nhcx/GimctXyEQ==
+Cc: oss-security@lists.openwall.com
+Date: Mon, 29 Aug 2016 04:33:39 -0400 (EDT)
+From: Vladis Dronov <vdronov@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE request -- linux kernel: Setting a POSIX ACL
+ via setxattr doesn't clear the setgid bit
+To: me@halfdog.net
 
 Hello,
+ 
+Honestly, I do not see a relation between this patch and overlays. The patch
+touches the code of underlying filesystems. So, most probably, upperdir ACL
+issue is not fixed by this suggested patch.
 
-Is there a CVE assigned to the issue leveraged in:
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
 
-https://www.exploit-db.com/exploits/39937/ ?
 
-I don't see anything noted in the 3.0.3 release notes:
+----- Original Message -----
+From: me@halfdog.net
+To: oss-security@lists.openwall.com, "Vladis Dronov" <vdronov@redhat.com>
+Sent: Saturday, August 27, 2016 1:24:47 PM
+Subject: Re: [oss-security] CVE request -- linux kernel: Setting a POSIX ACL via setxattr doesn't clear the setgid bit
 
-http://www.zabbix.com/rn3.0.3
+Vladis Dronov writes:
+> Hello,
+>
+> We would like to ask for a CVE-ID for the following securuty flaw.
+>
+> When file permissions are modified via chmod(2) and the user is not in
+> the owning group or capable of CAP_FSETID, the setgid bit is cleared in
+> inode_change_ok().  Setting a POSIX ACL via setxattr(2) sets the file
+> permissions as well as the new ACL, but doesn't clear the setgid bit in
+> a similar way; this allows to bypass the check in chmod(2).
+> ...
 
-Any info appreciated! Thanks!
+Does this also fix the upperdir ACL access gain from
+http://www.halfdog.net/Security/2016/UserNamespaceOverlayfsXattrSetgidPrivilegeEscalation/
+?
 
--- 
-Martin Prpič / Red Hat Product Security
+The overlayfs upperdir part is already fixed, so the one would
+have to execute replacement commands for the steps already prohibited
+by the userns/overlayfs fixes.
+
+hd
