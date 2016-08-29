@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1431" "Tuesday" "1" "September" "2015" "22:37:04" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty1z+6T=r0mef55Hd1tHfiDVLT77MaD9ddVvOnNKx5td0w@mail.gmail.com>" "39" "[oss-security] CVE REJECT CVE-2015-3287" nil nil nil "9" "2015090204:37:04" "[oss-security] CVE REJECT CVE-2015-3287" (number mark "        kseifried@re Sep  1   39/1431  " thread-indent "\"[oss-security] CVE REJECT CVE-2015-3287\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2434" "Monday" "29" "August" "2016" "16:31:50" "-0700" "Reed Loden" "reed@reedloden.com" "<CALPTtNXUdK88B7J1SwsFpjDQeu5UJAnUiTd98UmiUEWQOmey7g@mail.gmail.com>" "66" "Re: [oss-security] Re: MantisBT weakened CSP when using bundled Gravatar plugin" nil nil nil "8" "2016082923:31:50" "[oss-security] Re: MantisBT weakened CSP when using bundled Gravatar plugin" (number mark "U       reed@reedlod Aug 29   66/2434  " thread-indent "\"Re: [oss-security] Re: MantisBT weakened CSP when using bundled Gravatar plugin\"\n") "<20160829215135.463377BC071@smtpvmsrv1.mitre.org>" ("<ea35113c-d493-4bf7-ca47-9df7891dde67@mantisbt.org>" "<20160829215135.463377BC071@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27713 invoked by uid 550); 2 Sep 2015 04:37:17 -0000
+Received: (qmail 19748 invoked by uid 550); 29 Aug 2016 23:32:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,105 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27695 invoked from network); 2 Sep 2015 04:37:17 -0000
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 19730 invoked from network); 29 Aug 2016 23:32:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=reedloden.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=fhKWAeh+XrTmcjllmWkKN5lU7z5+lEJoKtw3B3cYN4Y=;
+        b=De51v/oyatwaCbcCPECOPzifCvXYxEh6HSeZON0m9YHm/FLRDduJ30IY/83Im2fWQO
+         7vnCxtNzFKEEn2pPVKuR6ZBlZj+pRvPHY0qb5xryZXpdKFMB2Q9s1ue/3W1ETXFCI6Ec
+         ay6MfKaGO63TlicsaLnL00hWXLr8I4VscSw/4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=fh16ZV3ZquCftv065yyY7kRMeHzwKp5m9SL2mYfftKM=;
-        b=UbyVMisFbrOMmMgyruGHENufEJ4xQfph5DXVe5CKM5TajjcorwmPGuCiOZgrl0OewK
-         xM4fnO0HITZRNCPmTJIg6QjVIKql/FbI11RNGcnMf4hf9gig+nH/DRnDpBh8TlC6vyGt
-         wzkIdqOtF+/BA49++d1N5H76vxD0UbUgCt7X3BxoGe0jQzs/NmgmDvx2GZsmdpB2AHNI
-         /H+9rz+8I6xln1kgPo8Vla/vJfvHO9onGJUOOX2ZE7U5ZmqyVtkiRS6Qn9iVM6HuCNBF
-         T9BHNUEoTrogL8nQmhkXFUVxrp6Hi48Lhr7vIZBWyObLh4r2wMBQWlnszl210a+cBYpl
-         i11A==
-X-Gm-Message-State: ALoCoQmECtCz7F3mqWgeQ63WHpHGlpsdeFviPSnIN7bbBpmnZAUPiGALiHgXmwTXyDpIif9DGuGr
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=fhKWAeh+XrTmcjllmWkKN5lU7z5+lEJoKtw3B3cYN4Y=;
+        b=fgI56T6hPOojCgi5NEJBrv2NlHN7dhPZ5adOFbLs2siuiM4WpFi52c0WMOZmCmMZfU
+         ffPRQOdFdYxQfJLdWLOl0RLs3oZFLZBD5pKaRn0f6AYJDbuHZeNWlvuuLseJZDzALifC
+         QzA+B649yI5To7AuUj0rCSbSASVoPfN//amHC5f4e+LAQLJ29Jcl1a8rwSt1Eq8Wyj85
+         PIFQhQ4RX9LbucpRj2Ag7RvGgRNr2TMu2Zmn27wE88+I3VPvVsmpnHhShXP7SLeN+qXm
+         CIlnFkdvyH+zWHxpch1oLdrT1UyCJaANGEjf4b4NN8OXHoGIfLj+fK2kS1S9u8YYu/iz
+         vGWA==
+X-Gm-Message-State: AE9vXwPacT8R235hGbgFoIatao0sP8zskj5MgT9MqywEwNNty1trUNAdLSTg5LVL4Acdi+CP+2ICHEKqgxW/Ha8G
+X-Received: by 10.36.85.3 with SMTP id e3mr1855561itb.8.1472513530954; Mon, 29
+ Aug 2016 16:32:10 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 10.170.165.197 with SMTP id h188mr1850468ykd.45.1441168624878;
- Tue, 01 Sep 2015 21:37:04 -0700 (PDT)
-Message-ID: <CANO=Ty1z+6T=r0mef55Hd1tHfiDVLT77MaD9ddVvOnNKx5td0w@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a113a2fe0f2d95e051ebc379f
-Date: Tue, 1 Sep 2015 22:37:04 -0600
-From: Kurt Seifried <kseifried@redhat.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE REJECT CVE-2015-3287
-To: oss-security <oss-security@lists.openwall.com>, cve-assign@mitre.org, 
-	security@openafs.org, security@samba.org
+In-Reply-To: <20160829215135.463377BC071@smtpvmsrv1.mitre.org>
+References: <ea35113c-d493-4bf7-ca47-9df7891dde67@mantisbt.org> <20160829215135.463377BC071@smtpvmsrv1.mitre.org>
+From: Reed Loden <reed@reedloden.com>
+Date: Mon, 29 Aug 2016 16:31:50 -0700
+Message-ID: <CALPTtNXUdK88B7J1SwsFpjDQeu5UJAnUiTd98UmiUEWQOmey7g@mail.gmail.com>
+To: dregad@mantisbt.org
+Cc: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a1144953ef09dd6053b3e4517
+Subject: Re: [oss-security] Re: MantisBT weakened CSP when using bundled
+ Gravatar plugin
 
---001a113a2fe0f2d95e051ebc379f
+--001a1144953ef09dd6053b3e4517
 Content-Type: text/plain; charset=UTF-8
 
-So I know we said no more CVE rejects here but this one is public and
-already a mess.
+Any reason why you don't just always use the https:// version for Gravatar
+here? Why ever use http://? Even if the MantisBT install is on HTTP, best
+to always load any third-party resources over TLS to better protect against
+MITM.
 
-Long story short I assigned the following CVE's to OpenAFS:
+Just surprised me to see this:
+https://github.com/mantisbt/mantisbt/blob/b3511d2feb47eaee41feb5f69cf3c8a2c9acd229/plugins/Gravatar/Gravatar.php#L165-L169
 
-CVE-2015-3282 OpenAFS: vos leaks stack data onto the wire in the clear when
-creating vldb entries
-CVE-2015-3283 OpenAFS: bos commands can be spoofed, including some which
-alter server state
-CVE-2015-3284 OpenAFS: pioctls leak kernel memory
-CVE-2015-3285 OpenAFS: kernel pioctl support for OSD command passing can
-trigger a panic
-CVE-2015-3286 OpenAFS: Solaris grouplist modifications for PAGs can panic
-or overwrite memory
+~reed
 
-however they also used CVE-2015-3287 for
-http://www.openafs.org/pages/security/OPENAFS-SA-2015-006.txt
+On Mon, Aug 29, 2016 at 2:51 PM, <cve-assign@mitre.org> wrote:
 
-I definitely did NOT assign CVE-2015-3287 to OpenAFS, I double checked my
-email to them and the commits to our file that we use to handle CVE
-assignments.
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+> > MantisBT 1.3.0-rc.2 introduced a new bundled plugin to handle display of
+> > users' avatars using Gravatar.
+> >
+> > Instead of adding the Gravatar web site to the list of allowed image
+> > sources in MantisBT's Content Security Policy, the plugin was replacing
+> > the whole policy by:
+> >
+> >    img-src 'self' http://www.gravatar.com/
+> >
+> > instead of the more strict default one of:
+> >
+> >    default-src 'self'; frame-ancestors 'none'; style-src 'self';
+> >    script-src 'self'
+> >
+> > Relaxed policy allows execution of remote and inline scripts, e.g.
+> > potentially enabling XSS attacks.
+> >
+> > https://github.com/mantisbt/mantisbt/commit/
+> b3511d2feb47eaee41feb5f69cf3c8a2c9acd229
+> > https://mantisbt.org/bugs/view.php?id=21263
+>
+> Use CVE-2016-7111.
+>
+> - --
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQIcBAEBCAAGBQJXxK4MAAoJEHb/MwWLVhi2p3EQAKULs3JDc49mBXeyVZ24IUoE
+> 6iWcUGjwiE5cHXnAxcNKZZp7/xsFo9tgdLbLZ37x48kU1cwp/B/rnQQCWJHfUJxJ
+> gR0qIutmEWCAq3nIVC0IR+tBm//0iiJuTuRhH/NjE9W4+EBPPjIHkkHxvnWLqyJo
+> SWBP/JJDYbB8sQ366+WLrNHTdxK+keVcu406KrbagWhPaMG1C9QAkTeHRxovI/me
+> JkbA3cVjfmO9BjHrAkbEYEJRU6Qxn8XsXUNW8bGoHBUt4WFON8BOGpt6Yyn1iDCs
+> APOou4yZqMPM8jSnS8MOCM9POuuK8QNXMTLPgnMkxLcFntz79ogVmzJYfl6jyQ6V
+> PW2dNtFU03QTI4nvL2UbVi1+oEbZycQbRnU0If7wHjedXIekFEX2uik0fAnJRwAk
+> LDgT/+g6g02RJZPmteQFrT0ZtXav2rFiznHicL93mRLt1sOiE32ULJrQ8DLBP5SA
+> EYitfKS09oBLDdSC5k+wogX22UgoFm4xZLrauVbRMKUApZNvKVSAADNewmRopXKR
+> Fm2lDPJKmmb+oOWVBj7MDz7J9u1SvnyVieX+53E8Bt0tnr9KD5R61XNfjnKJtvZg
+> +2l+S8HEUN3FdDz2WINbs9z1Sd5Fok9jc+TQXeIXR07jPC+MKE26zywhIiMYIfl/
+> 2Rs4hh+EhmuT20OUq14x
+> =U1Gg
+> -----END PGP SIGNATURE-----
+>
 
-I did in fact assign CVE-2015-3287 to Samba (for a still embargoed issue).
-I was notified of this duplicate issue by Samba (basically asking me what
-was going on).
-
-Mitre: can you please REJECT CVE-2015-3287 and assign a NEW CVE for the
-OpenAFS issue. I have assigned Samba a new CVE for their embargoed issue
-already. Thanks.
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
---001a113a2fe0f2d95e051ebc379f--
+--001a1144953ef09dd6053b3e4517--
