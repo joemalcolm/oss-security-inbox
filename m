@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1534" "Wednesday" "24" "October" "2018" "12:11:35" "-0700" "Jim Apple" "jbapple@cloudera.com" "<CAC-pSX1Lv8iv1ZKbi0++WtG-WaJSPZj-7r+o6pYBryMKxxqMNQ@mail.gmail.com>" "45" "[oss-security] Fwd: CVE-2018-11785 and CVE-2018-11792, was \"[ANNOUNCE] Apache Impala 3.0.1 release\"" nil nil nil "10" "2018102419:11:35" "[oss-security] Fwd: CVE-2018-11785 and CVE-2018-11792, was \"[ANNOUNCE] Apache Impala 3.0.1 release\"" (number mark "U       jbapple@clou Oct 24   45/1534  " thread-indent "\"[oss-security] Fwd: CVE-2018-11785 and CVE-2018-11792, was \"[ANNOUNCE] Apache Impala 3.0.1 release\"\"\n") "<CAC-pSX1E6o=VFeXSCdis+Pesa8BZBAhdP0zUZHL4W2fLWqEi4g@mail.gmail.com>" ("<CAC-pSX34B2CAAqq56EA4Hpv9uQ0uDYLeJQKgxO2LtFZW_KU0gQ@mail.gmail.com>" "<CAC-pSX1E6o=VFeXSCdis+Pesa8BZBAhdP0zUZHL4W2fLWqEi4g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3042" "Tuesday" "30" "August" "2016" "17:44:45" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160830214445.7AB4C8BC454@smtpvmsrv1.mitre.org>" "68" "[oss-security] Re: CVE request: Qemu: 9p: directory traversal flaw in 9p virtio backend" "^Cc:" nil nil "8" "2016083021:44:45" "[oss-security] Re: CVE request: Qemu: 9p: directory traversal flaw in 9p virtio backend" (number mark "        cve-assign@m Aug 30   68/3042  " thread-indent "\"[oss-security] Re: CVE request: Qemu: 9p: directory traversal flaw in 9p virtio backend\"\n") "<alpine.LFD.2.20.1608301244260.2278@wniryva>" ("<alpine.LFD.2.20.1608301244260.2278@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22304 invoked by uid 550); 24 Oct 2018 19:27:01 -0000
+Received: (qmail 26151 invoked by uid 550); 30 Aug 2016 21:44:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,88 +11,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 26133 invoked from network); 30 Aug 2016 21:44:57 -0000
+In-Reply-To: <alpine.LFD.2.20.1608301244260.2278@wniryva>
+Message-Id: <20160830214445.7AB4C8BC454@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, fwilhelm@ernw.de
+Date: Tue, 30 Aug 2016 17:44:45 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7515 invoked from network); 24 Oct 2018 19:12:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cloudera.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=YVCF/PpSSQ/1ZFfMbj2U/mKOY09ZnYHjmeahQog4wKM=;
-        b=ieUCkFs47TQwppU2adE1eTf5XlRiz6sUQ+277S2IWNNXduXqz/GvI1Me2IrqywcrZW
-         dh8iRFJFFxIWdYS1DY8IIgwv0952mNfVf6PM8q7qQIrG9dxXuEL5Yc5yYjzz6odUEuU8
-         rJK+PpMyqqTYtxFsieAZVKS01u69uxrqfCbjQAo0Y0nTf1CLkUwy99JKkTyxH3bt9+56
-         kTOxIBvQIGOcaYQdI3r7cdmWpUpSeNOpew4QI7Zw7k6oziDjtJsXuOkKYslUgPxblxCR
-         yFqaIeh0HFHcLsXIOcnSzRzyO9S4wpfvnnTz4L4ffmgjHU50AULW6radKxRDP/OOAAG0
-         kU9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=YVCF/PpSSQ/1ZFfMbj2U/mKOY09ZnYHjmeahQog4wKM=;
-        b=epRaMtBiujsicSVykGnwb6sZjBhrTc7sy7Lahi87wqXzHusdWvH5a1BswEIfh5gpPp
-         D/SkZnkHb2c+v7zBwVJ9Aj0Rs/MJoHWlcEhZ8wT99TUvsrA5f2bHOFIxSJIWHHldeNu2
-         KmWgagCoScE4MD783XDPKeJ1jYRjoIZy0sVqunLStnaGxy9sgdXsKOTIpSm7GU9hXVFD
-         H5ylWL7mECMNrYDQ8vRv/9rBbuxeYMPjCsSK4b67gLF6eByg+OSmwJ1zTpO4w1O7g9GZ
-         K9JKEFjcZq8aYmZY9wj4KrVN53S8IPWp23HW0RMdJEbnrDtpO/fUFTqkiEA0q0D6cNIX
-         cQRw==
-X-Gm-Message-State: AGRZ1gLRO0yeE+SUkTR+qJOY/UVFnkR7MWEPPATTMzg3PHtBBj15D2Aq
-	bA5CDOqXgv68CR4hGucbBlBYdBNCyy8kbAm9P7gBpQAdy/0=
-X-Google-Smtp-Source: AJdET5cFPD/ytqPOTWR52mV1U+p5Gwd7Nu/FCyUtuXrlzOaJjVeicsT76WLhsuriJxvb5GQwtvKxcp410OKK81Hi3ho=
-X-Received: by 2002:adf:93a5:: with SMTP id 34-v6mr1089311wrp.244.1540408331682;
- Wed, 24 Oct 2018 12:12:11 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAC-pSX34B2CAAqq56EA4Hpv9uQ0uDYLeJQKgxO2LtFZW_KU0gQ@mail.gmail.com>
- <CAC-pSX1E6o=VFeXSCdis+Pesa8BZBAhdP0zUZHL4W2fLWqEi4g@mail.gmail.com>
-In-Reply-To: <CAC-pSX1E6o=VFeXSCdis+Pesa8BZBAhdP0zUZHL4W2fLWqEi4g@mail.gmail.com>
-From: Jim Apple <jbapple@cloudera.com>
-Date: Wed, 24 Oct 2018 12:11:35 -0700
-Message-ID: <CAC-pSX1Lv8iv1ZKbi0++WtG-WaJSPZj-7r+o6pYBryMKxxqMNQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000006b7cf90578fe4307"
-Subject: [oss-security] Fwd: CVE-2018-11785 and CVE-2018-11792, was "[ANNOUNCE] Apache Impala
- 3.0.1 release"
+Subject: [oss-security] Re: CVE request: Qemu: 9p: directory traversal flaw in 9p virtio backend
+To: ppandit@redhat.com
 
---0000000000006b7cf90578fe4307
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Apache Impala just released version 3.0.1 to fix CVE-2018-11785 and
-CVE-2018-11792
+> Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9
+> File System(9pfs) support, is vulnerable to a directory/path traversal issue.
+> It could occur while creating or accessing files on a shared host directory.
+> 
+> A privileged user inside guest could use this flaw to access undue files on
+> the host.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg03917.html
+> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg04231.html
 
----------- Forwarded message ---------
-From: Jim Apple <jbapple@cloudera.com>
-Date: Wed, Oct 24, 2018 at 12:09 PM
-Subject: CVE-2018-11785 and CVE-2018-11792, was "[ANNOUNCE] Apache Impala
-3.0.1 release"
-To: <user@impala.apache.org>, dev@impala <dev@impala.apache.org>, Michael
-Ho <kwho@cloudera.com>, Fredy Wijaya <fwijaya@cloudera.com>, <
-security@apache.org>
+Use CVE-2016-7116 for the issue fixed by the
+http://git.qemu.org/?p=qemu.git;a=commit;h=56f101ecce0eafd09e2daf1c4eeb1377d6959261
+commit.
 
+We feel that it is possible that there are related issues that are
+also vulnerabilities.
 
-Additionally, this release was mainly to pick up two security fixes:
+http://git.qemu.org/?p=qemu.git;a=commit;h=fff39a7ad09da07ef490de05c92c91f22f8002f2
+mentions "Empty path components don't make sense for most commands and
+may cause undefined behavior, depending on the backend." The patch
+blocks these empty strings. Would it be best to consider this a
+vulnerability fix (i.e., because the undefined behavior might be
+security-relevant)?
 
-CVE-2018-11785:
-- Missing authorization check in Apache Impala allows a
-Kerberos-authenticated but unauthorized user to inject random data into a
-running query, leading to wrong results for a query
+http://git.qemu.org/?p=qemu.git;a=commit;h=fff39a7ad09da07ef490de05c92c91f22f8002f2
+also makes a change to forbid '/' characters, with the rationale that
+the specification requires clients to send individual path components,
+not full path strings or substrings containing a '/' character. Does
+this also fix a vulnerability?
 
-CVE-2018-11792 (IMPALA-7502):
-- ALTER TABLE/VIEW RENAME required ALTER on the old
-table. This may pose a potential security risk, such as having ALTER on a
-table and ALL on a particular database allows a user to move the table to a
-database with ALL, which will automatically grant that user with ALL
-privilege on that table due to the privilege inherited from the database
+http://git.qemu.org/?p=qemu.git;a=commit;h=805b5d98c649d26fc44d2d7755a97f18e62b438a
+prevents creating files named "." and ".." (just those two specific
+filenames, not all pathnames containing those characters). Does this
+also fix a vulnerability?
 
+It is possible that up to three additional CVE IDs are needed.
 
-On Wed, Oct 24, 2018 at 12:05 PM Jim Apple <jbapple@cloudera.com> wrote:
+Finally, if fixing the directory traversal itself requires both
+http://git.qemu.org/?p=qemu.git;a=commit;h=56f101ecce0eafd09e2daf1c4eeb1377d6959261
+and
+http://git.qemu.org/?p=qemu.git;a=commit;h=fff39a7ad09da07ef490de05c92c91f22f8002f2
+(for '/' characters), please let us know.
 
-> The Apache Impala PMC is announcing the release of Impala 3.0.1.
->
-> Impala is a high-performance distributed SQL engine.
->
-> The release is available at https://impala.apache.org/downloads.html
->
-> Thanks,
-> Jim Apple on behalf of the Apache Impala PMC
->
->
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
---0000000000006b7cf90578fe4307--
+iQIcBAEBCAAGBQJXxf2eAAoJEHb/MwWLVhi22MMP/im48rJglD7qNjob6Mqfim9G
+Kcl2QF4HSkV0XvgqAq8NUd2s4UHhI+iuRLSkpGW7DCKMTQjmN/xi8IV5WUo696rj
+OD09I4svi10o9WZIxnaNlAGsib1tPcutONQS+ul0j2MbVqIp8b9wnzeCNhSYyHXp
+KVTiquivOQPxb+tFtNRD/YM0ph1hIoEHKWhpPq2ZC8eqlLP8i5qjw9AHBPL/uTxY
+rMippuJCUrnzaZM7cQe2hr5Jf7HKScpct/DeZiU5uhZDYzwwSHa6vMVClN9xbvud
+nMbar9BKJIscSgSTJqmmSLlDinCGANsO6voEM3vpdr0u/ABy6mHfJCqgGFltesa/
+/pHBBDzYYHDzTCZ0FyvloRVPSkCRyoOa+5MUZ26d9b7/xApPCGrQDF3P+QIC1Qv1
+eEC+dTHHzxNzsFlvmlcPE4VPcRTg3tR6iLBGxwIRATs2JPgPREyuiJeo+jROAMxJ
+ivQfZos9O3Sxat/JfsFS9Dsu3fYKqQFBI2NNX03GK6Cj/MRKCGk4W+MPCyvLk3lV
+ArWo4yKI8/Rck4ufFOQ+Xe9vq8aqwPwKICX5yrzwOAwUvSgk1xL4BeanUKKWNYuK
+0DcHzhmdeG5/XfPUdTjFHkb4eJXQ5JwgEjfgG/gD+mt9SngzUwX54b5piaY3BdTI
+ARsgi+SnlhEpKAfzmkeJ
+=KDIm
+-----END PGP SIGNATURE-----
