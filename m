@@ -1,36 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/25/2
-Message-ID: <CAJmbs8g6dx16mtu8B6V29Zpasf5D_kj5mDuKDYXCTGm87xqA9A@mail.gmail.com>
-Date: Fri, 25 Mar 2016 15:55:44 +0600
-From: Maxim Solodovnik <solomax@...che.org>
-To: Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  security@...nmeetings.apache.org, security@...che.org,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [CVE-2016-0784] ZIP file path traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/31/2
+Message-ID: <nq55qe$v1e$1@blaine.gmane.org>
+Date: Wed, 31 Aug 2016 01:45:15 +0200
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Cc: Mantisbt-dev@...ts.sourceforge.net
+Subject: Re: MantisBT weakened CSP when using bundled Gravatar plugin
 Content-Type: text/plain; charset=utf-8
 
-Severity: Moderate
+On 2016-08-30 01:31, Reed Loden wrote:
+> Any reason why you don't just always use the https:// version for Gravatar
+> here? Why ever use http://? Even if the MantisBT install is on HTTP, best
+> to always load any third-party resources over TLS to better protect against
+> MITM.
+> 
+> Just surprised me to see this:
+> https://github.com/mantisbt/mantisbt/blob/b3511d2feb47eaee41feb5f69cf3c8a2c9acd229/plugins/Gravatar/Gravatar.php#L165-L169
 
-Vendor: The Apache Software Foundation
+Hi Reed,
 
-Versions Affected: Apache OpenMeetings 1.9.x - 3.1.0
+To be honest, I'm not quite sure, and never thought about it... I did
+not author this code, which has been like this since before I even
+joined the project [1]. The implementation of Gravatar as a plugin just
+recycled the existing code.
 
-Description:
-The Import/Export System Backups functionality in the OpenMeetings
-Administration
-menu (http://domain:5080/openmeetings/#admin/backup) is vulnerable to path
-traversal via specially crafted file names within ZIP archives. By uploading an
-archive containing a file named ../../../public/hello.txt will write
-the file “hello.txt”
-to the http://domain:5080/openmeetings/public/ directory. This could
-be used to, for example,
-overwrite the /usr/bin/convert file (or any other 3 rd party
-integrated executable)
-with a shell script, which would be executed the next time an image
-file is uploaded
-and imagemagick is invoked.
+IMO your suggestion to always use https makes sense, I'm cc'ing the
+MantisBT dev list as this is probably better discussed there. You're
+also welcome to open an issue in our tracker if you want.
 
-All users are recommended to upgrade to Apache OpenMeetings 3.1.1
+Cheers
+Damien
 
-Credit: This issue was identified by Andreas Lindh
+[1] https://mantisbt.org/bugs/view.php?id=8882
+    https://github.com/mantisbt/mantisbt/commit/241f91d59
 
 
-Apache OpenMeetings Team
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
