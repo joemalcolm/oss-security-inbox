@@ -1,69 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/20/5
-Message-ID: <1453296861.9500.81.camel@opteya.com>
-Date: Wed, 20 Jan 2016 14:34:21 +0100
-From: Yann Droneaud <ydroneaud@...eya.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/30/1
+Message-ID: <alpine.LFD.2.20.1608301244260.2278@wniryva>
+Date: Tue, 30 Aug 2016 12:45:44 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Felix Wilhelm <fwilhelm@...w.de>
+Subject: CVE request: Qemu: 9p: directory traversal flaw in 9p virtio backend
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+   Hello,
 
-Le lundi 18 janvier 2016 à 14:05 +0100, Florian Weimer a écrit :
-> On 01/15/2016 01:56 PM, Yann Droneaud wrote:
-> > Le vendredi 15 janvier 2016 à 12:06 +0100, Florian Weimer a écrit :
-> > > On 01/14/2016 06:13 PM, Qualys Security Advisory wrote:
-> > > > Internal stdio buffering is the most severe of the three
-> > > > problems discussed in this section, although GNU/Linux is not
-> > > > affected because the glibc mmap()s and munmap()s (and therefore
-> > > > cleanses) stdio buffers.
-> > > 
-> > > This will change in glibc 2.23, stdio will use regular malloc and
-> > > free for its buffers.  I did not expect this change to have
-> > > security implications.  Considering that the actual bug lies
-> > > elsewhere, and stdio usage is based on copying out of the buffer
-> > > (so leaks can still happen elsewhere), I do not wish to revert
-> > > this change.
-> > > 
-> > 
-> > Would setvbuf(stream, NULL, _IONBF, 0); be used to disable buffer
-> > before reading/writting sensible data to a stream ?
-> 
-> That entirely depends on how the data is read or written.  glibc will
-> make additional copies on the heap in some cases.  In any case, this
-> is an implementation detail.
-> 
+Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
+File System(9pfs) support, is vulnerable to a directory/path traversal issue. 
+It could occur while creating or accessing files on a shared host directory.
 
-So one should probably not use stdio stream (fgets(), fread(),
-fscanf(), fputs(), fwrite(), etc.) to load sensible data from/to,
-depending on the threat model. In particular, in case it's not from/to
-a local socket nor a pipe, reading or writing such data in cleartext
-might be bad idea after all).
+A privileged user inside guest could use this flaw to access undue files on 
+the host.
 
-> Even if the data is gone from the process image, the kernel or its
-> hypervisor may still keep copies, particularly if the data is (or was
-> once) on the file system.  It is very hard to override data reliably
-> on modern systems.
+Upstream patches:
+-----------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg03917.html
 
-If an userspace application is allowed to access sensitible
-information, this imply the kernel is also allowed to access it.
+Reference:
+----------
+   -> http://wiki.qemu.org/Documentation/9psetup
 
-Userspace has to trust kernel/hypervisor. And kernel/hypervisor has to
-work so that they are trustworthy from the userspace point of view,
-that is, to not exchange data between namespaces, users, processes when
-not explicitly allowed to.
+This flaw was reported by Mr Felix Wilhelm.
 
-AFAICT, having shadows / ghosts copies in kernelspace is not a problem
-*provided* it's harder for a malicious party to retrieve them through a
-kernel exploit than through an userspace exploit. And it should be !
-
-Anyway, having the (Linux) kernel clearing memory, buffers, whatever...
-as soon as it doesn't need them anymore will probably happen at some
-point to prevent most leak.
-
-Regards.
-
--- 
-Yann Droneaud
-OPTEYA
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
