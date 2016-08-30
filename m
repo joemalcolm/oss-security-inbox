@@ -1,38 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/31/4
-Message-ID: <4628FDFAEBD591408C8B1BDFCDEB862885A5ACF3@SRV01.softscheck.local>
-Date: Tue, 31 May 2016 11:48:52 +0000
-From: Lubomir Stroetmann <lubomir.stroetmann@...tscheck.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE Request: Reflected Cross-Site Scripting in TYPO3 Formhandler
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/30/3
+Message-Id: <20160830214445.7AB4C8BC454@smtpvmsrv1.mitre.org>
+Date: Tue, 30 Aug 2016 17:44:45 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, fwilhelm@...w.de
+Subject: Re: CVE request: Qemu: 9p: directory traversal flaw in 9p virtio backend
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I would like to request a CVE ID for the following XSS Vulnerability:
-https://typo3.org/news/article/cross-site-scripting-in-extension-formhandler-formhandler/ 
+> Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9
+> File System(9pfs) support, is vulnerable to a directory/path traversal issue.
+> It could occur while creating or accessing files on a shared host directory.
+> 
+> A privileged user inside guest could use this flaw to access undue files on
+> the host.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg03917.html
+> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg04231.html
 
- 
-Sincerely,
+Use CVE-2016-7116 for the issue fixed by the
+http://git.qemu.org/?p=qemu.git;a=commit;h=56f101ecce0eafd09e2daf1c4eeb1377d6959261
+commit.
 
-Lubomir Stroetmann
-Consultant
- 
-softScheck GmbH
-Büro: Bonner Str. 108, 53757 Sankt Augustin
-Telefon: +49 (2241) 255 43 - 0
-Fax: +49 (2241) 255 43 - 29
-www.softScheck.com
-www.it-sicherheitsgesetz.news
-Geschäftsführer: Prof. Dr. Hartmut Pohl
-Registergericht: Amtsgericht Köln HRB 72534
-Steuer-Nr. 223/5818/7372 USt-IdNr.: DE277769235
-Raiffeisenbank Sank Augustin eG IBAN DE69 3706 9707 1007 7240 19
-UBS Zürich IBAN CH47 0020 6206 1179 3801 U
+We feel that it is possible that there are related issues that are
+also vulnerabilities.
 
-PGP key ID: 0xB8669ED6997926B1
-PGP fingerprint: E119 C84C D97E 489C 17B8 60A9 B866 9ED6 9979 26B1
- 
+http://git.qemu.org/?p=qemu.git;a=commit;h=fff39a7ad09da07ef490de05c92c91f22f8002f2
+mentions "Empty path components don't make sense for most commands and
+may cause undefined behavior, depending on the backend." The patch
+blocks these empty strings. Would it be best to consider this a
+vulnerability fix (i.e., because the undefined behavior might be
+security-relevant)?
 
+http://git.qemu.org/?p=qemu.git;a=commit;h=fff39a7ad09da07ef490de05c92c91f22f8002f2
+also makes a change to forbid '/' characters, with the rationale that
+the specification requires clients to send individual path components,
+not full path strings or substrings containing a '/' character. Does
+this also fix a vulnerability?
 
-Download attachment "smime.p7s" of type "application/x-pkcs7-signature" (8737 bytes)
+http://git.qemu.org/?p=qemu.git;a=commit;h=805b5d98c649d26fc44d2d7755a97f18e62b438a
+prevents creating files named "." and ".." (just those two specific
+filenames, not all pathnames containing those characters). Does this
+also fix a vulnerability?
+
+It is possible that up to three additional CVE IDs are needed.
+
+Finally, if fixing the directory traversal itself requires both
+http://git.qemu.org/?p=qemu.git;a=commit;h=56f101ecce0eafd09e2daf1c4eeb1377d6959261
+and
+http://git.qemu.org/?p=qemu.git;a=commit;h=fff39a7ad09da07ef490de05c92c91f22f8002f2
+(for '/' characters), please let us know.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXxf2eAAoJEHb/MwWLVhi22MMP/im48rJglD7qNjob6Mqfim9G
+Kcl2QF4HSkV0XvgqAq8NUd2s4UHhI+iuRLSkpGW7DCKMTQjmN/xi8IV5WUo696rj
+OD09I4svi10o9WZIxnaNlAGsib1tPcutONQS+ul0j2MbVqIp8b9wnzeCNhSYyHXp
+KVTiquivOQPxb+tFtNRD/YM0ph1hIoEHKWhpPq2ZC8eqlLP8i5qjw9AHBPL/uTxY
+rMippuJCUrnzaZM7cQe2hr5Jf7HKScpct/DeZiU5uhZDYzwwSHa6vMVClN9xbvud
+nMbar9BKJIscSgSTJqmmSLlDinCGANsO6voEM3vpdr0u/ABy6mHfJCqgGFltesa/
+/pHBBDzYYHDzTCZ0FyvloRVPSkCRyoOa+5MUZ26d9b7/xApPCGrQDF3P+QIC1Qv1
+eEC+dTHHzxNzsFlvmlcPE4VPcRTg3tR6iLBGxwIRATs2JPgPREyuiJeo+jROAMxJ
+ivQfZos9O3Sxat/JfsFS9Dsu3fYKqQFBI2NNX03GK6Cj/MRKCGk4W+MPCyvLk3lV
+ArWo4yKI8/Rck4ufFOQ+Xe9vq8aqwPwKICX5yrzwOAwUvSgk1xL4BeanUKKWNYuK
+0DcHzhmdeG5/XfPUdTjFHkb4eJXQ5JwgEjfgG/gD+mt9SngzUwX54b5piaY3BdTI
+ARsgi+SnlhEpKAfzmkeJ
+=KDIm
+-----END PGP SIGNATURE-----
