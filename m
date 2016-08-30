@@ -1,63 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/09/1
-Message-ID: <20161009092824.GA5176@suse.de>
-Date: Sun, 9 Oct 2016 11:28:25 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: potrace: memory allocation failure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/30/2
+Message-ID: <alpine.LFD.2.20.1608302353500.6066@wniryva>
+Date: Tue, 30 Aug 2016 23:55:22 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Felix Wilhelm <fwilhelm@...w.de>
+Subject: Re: CVE request: Qemu: 9p: directory traversal flaw in 9p virtio backend
 Content-Type: text/plain; charset=utf-8
 
-Hi,
++-- On Tue, 30 Aug 2016, P J P wrote --+
+|   Hello,
+| 
+| Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9
+| File System(9pfs) support, is vulnerable to a directory/path traversal issue.
+| It could occur while creating or accessing files on a shared host directory.
+| 
+| A privileged user inside guest could use this flaw to access undue files on
+| the host.
+| 
+| Upstream patches:
+| -----------------
+|   -> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg03917.html
 
-did you attach the reproducer files somewhere?
+Few revised patches:
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg04231.html
 
-Ciao, Marcus
-On Sat, Oct 08, 2016 at 10:30:54PM +0200, Agostino Sarubbo wrote:
-> Description:
-> potrace is a utility that transforms bitmaps into vector graphics.
-> 
-> A crafted image, through a fuzz testing, causes the memory allocation to fail.
-> 
-> This is the first case where my ASan symbolyzer didn’t start up correctly. I’m 
-> reporting only what it prints at the end (not useful at all but demostrates a 
-> bit that the issue exist)
-> 
-> # potrace $FILE
-> potrace: warning: 2.hangs: premature end of file
-> ==13660==ERROR: AddressSanitizer failed to allocate 0x200003000 (8589946880) 
-> bytes of LargeMmapAllocator (error code: 12)
-> ==13660==AddressSanitizer CHECK failed: /var/tmp/portage/sys-
-> devel/llvm-3.8.1/work/llvm-3.8.1.src/projects/compiler-
-> rt/lib/sanitizer_common/sanitizer_common.cc:183 "((0 && "unable to mmap")) != 
-> (0)" (0x0, 0x0)
-> 
-> Affected version:
-> 1.13
-> 
-> Fixed version:
-> N/A
-> 
-> Commit fix:
-> N/A
-> 
-> Credit:
-> This bug was discovered by Agostino Sarubbo of Gentoo.
-> 
-> CVE:
-> N/A
-> 
-> Timeline:
-> 2016-08-26: bug discovered
-> 2016-08-27: bug reported privately to upstream
-> 2016-08-29: blog post about the issue
-> 
-> Note:
-> This bug was found with American Fuzzy Lop.
-> 
-> Permalink:
-> https://blogs.gentoo.org/ago/2016/08/29/potrace-memory-allocation-failure/
-> 
-> 
-
--- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
