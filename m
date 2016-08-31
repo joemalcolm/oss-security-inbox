@@ -1,4 +1,9 @@
-Received: (qmail 11706 invoked by uid 550); 14 Jun 2023 17:18:54 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6076" "Wednesday" "31" "August" "2016" "01:34:24" "+0100" "Ben Hutchings" "ben@decadent.org.uk" "<1472603664.25374.41.camel@decadent.org.uk>" "159" "[oss-security] CVE request: Kernel Oops when issuing fcntl on an AUFS directory" nil nil nil "8" "2016083100:34:24" "[oss-security] CVE request: Kernel Oops when issuing fcntl on an AUFS directory" (number mark "U       ben@decadent Aug 31  159/6076  " thread-indent "\"[oss-security] CVE request: Kernel Oops when issuing fcntl on an AUFS directory\"\n") "<20160830203305.GB3050@orkisz>" ("<20160830203305.GB3050@orkisz>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 17564 invoked by uid 550); 31 Aug 2016 03:26:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,151 +12,179 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7282 invoked from network); 14 Jun 2023 16:53:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686761622; x=1689353622;
-        h=content-transfer-encoding:content-language:to:subject:from
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=T7VB9vW6u2GDyp3ZDHcDEuBROYv+q6jPssjPc8y0aHw=;
-        b=EKa/8FC9Jv6APvIUJplUf7ASfuso9+Ba3dG8DsD8bmLj0VlQ0oY4VmcfXilnSl/1CG
-         UIgX8/CeuaOPp62fRiBVXofu49CL4HlflbByhqG4M0jOe+jmQ3bP0IeX1lBxJl1bmou5
-         7zSf6TR/QQ1Eb2imKTX9MSx+IGCeYZernxMYcJkVy76+j789rbyoffnboQziUyqiW8AC
-         uUgwlu2sT13C5IiVLt65ggBMAGgjzpAJ3q3ykPDyOwoyj9cCP467nAWx7BwCtHTFy4b/
-         W2YN4Cfi+pg+xtoWHcj7jc3MXl+rgU2cVMsGq1E8THA48QkpU82CETRyFlz+0/9/sTO/
-         chXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686761622; x=1689353622;
-        h=content-transfer-encoding:content-language:to:subject:from
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=T7VB9vW6u2GDyp3ZDHcDEuBROYv+q6jPssjPc8y0aHw=;
-        b=H04QUth8Rm0Mn3SEM9DjAeud374g5MHtSBAbwRqIKYN9MaHN9FUyBwlqmshbuQ/zaR
-         9cB9cHK2Ev72D53Gl8W+Krz/md2iiQvDMTB5ddccdJeYXZ+D4XZq5LGPFphVJKLqyOYk
-         8pOVOdivi4t7kLUOzsIsWXtb+I5meqqNU1/f+5OlZyCT50+La1ePxPJ3e12+OdN5LlUo
-         xTU0HrAmsuCTlUsvsohNGnW1uu6Hvu4lInoZoPVmM7TeRSYeRJSF2S3+uaZo2e4EsWgZ
-         WYarc1X804RY7lmNRSfj0aAtbDhVsK3HV0qfGjjzAkTwlmGk0JN5jOQveu01ln0ku5XK
-         oA3Q==
-X-Gm-Message-State: AC+VfDywbL9S0yYFGxJfFgFdIauCKuuxGOvxdSwEZnS5IG5/xm0HdU3Q
-	i9Yvubs/x3iiZcZ3NT8v6/F36lVAXPo=
-X-Google-Smtp-Source: ACHHUZ7orqv6INDNN+hOdGdvodFUVwbEdJRIRGDiXcWnhiB7hWTeGH2CW40XhFcbDWUe8luzxdVPJA==
-X-Received: by 2002:a17:907:6088:b0:971:484:6392 with SMTP id ht8-20020a170907608800b0097104846392mr16234568ejc.38.1686761622259;
-        Wed, 14 Jun 2023 09:53:42 -0700 (PDT)
-Message-ID: <b20ad75f-a368-b528-f471-aa3065483581@gmail.com>
-Date: Wed, 14 Jun 2023 18:53:40 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-From: Till Kamppeter <till.kamppeter@gmail.com>
-To: oss-security@lists.openwall.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2023-34095: cpdb-libs: Buffer overflows via scanf
+Received: (qmail 31744 invoked from network); 31 Aug 2016 00:34:41 -0000
+Message-ID: <1472603664.25374.41.camel@decadent.org.uk>
+From: Ben Hutchings <ben@decadent.org.uk>
+To: oss-security <oss-security@lists.openwall.com>
+Cc: Marcin Szewczyk <debian@wodny.org>, debian-lts@lists.debian.org
+Date: Wed, 31 Aug 2016 01:34:24 +0100
+In-Reply-To: <20160830203305.GB3050@orkisz>
+References: <20160830203305.GB3050@orkisz>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-/CNPELoTOsd1ph0tceEX"
+X-Mailer: Evolution 3.20.5-1 
+Mime-Version: 1.0
+X-SA-Exim-Connect-IP: 2a02:8011:400e:2:6f00:88c8:c921:d332
+X-SA-Exim-Mail-From: ben@decadent.org.uk
+X-SA-Exim-Scanned: No (on shadbolt.decadent.org.uk); SAEximRunCond expanded to false
+Subject: [oss-security] CVE request: Kernel Oops when issuing fcntl on an AUFS directory
 
-Following bug got reported to OpenPrinting's GitHub, repo cpdb-libs, as 
-a private (security) issue report, which is now published:
+--=-/CNPELoTOsd1ph0tceEX
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-https://github.com/OpenPrinting/cpdb-libs/security/advisories/GHSA-25j7-9gfc-f46x
+Marcin Szewczyk reported and diagnosed a bug in Debian's kernel
+packages that allows a denial of service (crash) by local users with
+access to an aufs filesystem. =C2=A0The bug is in a Debian-specific patch,
+not the upstream kernel or aufs code.
 
+The current version in Debian 7 'wheezy' (3.2.81-1) and the current propose=
+d update to Debian 8 'jessie' (3.16.36-1 are affected.
 
-Summary
+Ben.
 
-There's multiple instances of buffer overflows in this package via 
-improper use of scanf(3).
+On Tue, 2016-08-30 at 22:33 +0200, Marcin Szewczyk wrote:
+> Hi,
+>=20
+> the wheezy kernel upgrade from 3.2.78-1 to 3.2.81-1 added the SETFL
+> fcntl support code (#627782) which unfortunately results in a kernel
+> Oops when the fcntl is called on a directory. This breaks e.g. copying
+> files from an AUFS filesystem on a remote machine using scp.
+>
+> Minimal code to reproduce the problem:
+> #v+
+> #include <stdio.h>
+> #include <stdlib.h>
+> #include <fcntl.h>
+>=20
+> int main (int argc, char **argv) {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0const char *fname =3D NUL=
+L;
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0int fd;
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if (argc !=3D 2)
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0exit (1);
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0fname =3D argv[1];
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0fd =3D open (fname, O_RDO=
+NLY|O_NONBLOCK);
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0printf ("fd %d\n", fd);
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0fcntl (fd, F_SETFL, O_RDO=
+NLY);
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0return 0;
+> }
+> #v-
+>=20
+> Call the program on regular a file (nothing happens) and then on a
+> directory (Oops).
+>=20
+> The Oops happens in fs/fcntl.c:
+> #v+
+> if (!error && filp->f_op->owner &&
+> =C2=A0=C2=A0=C2=A0=C2=A0!strcmp(filp->f_op->owner->name, "aufs") &&
+> =C2=A0=C2=A0=C2=A0=C2=A0strstr(filp->f_op->owner->version, "+setfl"))
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0error =3D filp->f_op->set=
+fl(filp, arg);
+> #v-
+>=20
+> >=20
+> > From fs/aufs/inode.c:
+> #v+
+> case S_IFREG:
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0[...]
+> 	inode->i_fop =3D &aufs_file_fop;
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0[...]
+> case S_IFDIR:
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0[...]
+> 	inode->i_fop =3D &aufs_dir_fop;
+> #v-
+>=20
+> The aufs_file_fop structure sets the value of the .setfl member to
+> aufs_setfl (f_op.c). aufs_dir_fop (dir.c) on the other hand does not.
+>=20
+> dmesg:
+> #v+
+> [42990.915100] aufs 3.2.x+setfl-debian
+> [43046.383421] BUG: unable to handle kernel NULL pointer dereference
+> at=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0(null)
+> [43046.384011] IP: [<=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0(null)>]=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0(null)
+> [43046.384369] PGD 3d0f1067 PUD 3b8cc067 PMD 0=C2=A0
+> [43046.384688] Oops: 0010 [#1] SMP=C2=A0
+> [43046.385620] Call Trace:
+> [...]
+> [43046.385620]=C2=A0=C2=A0[<ffffffff81108701>] ? setfl+0xf1/0x157
+> [43046.385620]=C2=A0=C2=A0[<ffffffff81108b9e>] ? sys_fcntl+0x1dc/0x3b0
+> [43046.385620]=C2=A0=C2=A0[<ffffffff81358af2>] ? system_call_fastpath+0x1=
+6/0x1b
+> #v-
+>=20
+> gdb:
+> #v+
+> 0xffffffff811086d3 <+195>:=C2=A0=C2=A0=C2=A0callq=C2=A0=C2=A00xffffffff81=
+1b2bd2 <strcmp>
+> 0xffffffff811086d8 <+200>:=C2=A0=C2=A0=C2=A0test=C2=A0=C2=A0=C2=A0%eax,%e=
+ax
+> 0xffffffff811086da <+202>:=C2=A0=C2=A0=C2=A0jne=C2=A0=C2=A0=C2=A0=C2=A00x=
+ffffffff81108705 <setfl+245>
+> 0xffffffff811086dc <+204>:=C2=A0=C2=A0=C2=A0mov=C2=A0=C2=A0=C2=A0=C2=A00x=
+b0(%r13),%rdi
+> 0xffffffff811086e3 <+211>:=C2=A0=C2=A0=C2=A0mov=C2=A0=C2=A0=C2=A0=C2=A0$0=
+xffffffff814dc9e4,%rsi
+> 0xffffffff811086ea <+218>:=C2=A0=C2=A0=C2=A0callq=C2=A0=C2=A00xffffffff81=
+1b2e25 <strstr>
+> 0xffffffff811086ef <+223>:=C2=A0=C2=A0=C2=A0test=C2=A0=C2=A0=C2=A0%rax,%r=
+ax
+> 0xffffffff811086f2 <+226>:=C2=A0=C2=A0=C2=A0je=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A00xffffffff81108705 <setfl+245>
+> 0xffffffff811086f4 <+228>:=C2=A0=C2=A0=C2=A0mov=C2=A0=C2=A0=C2=A0=C2=A0%r=
+bp,%rsi
+> 0xffffffff811086f7 <+231>:=C2=A0=C2=A0=C2=A0mov=C2=A0=C2=A0=C2=A0=C2=A0%r=
+bx,%rdi
+> 0xffffffff811086fa <+234>:=C2=A0=C2=A0=C2=A0callq=C2=A0=C2=A0*0xd0(%r14)
+> 0xffffffff81108701 <+241>:=C2=A0=C2=A0=C2=A0test=C2=A0=C2=A0=C2=A0%eax,%e=
+ax
+> #v-
+>=20
+> Naturally it happens both on i686 and amd64.
+>=20
+> BTW, changelog link on the package's page[1] is dead.
+>=20
+> Interesting changelog's part:
+>=20
+> =C2=A0 * aufs: Make fcntl(F_SETFL, ...) work (Closes: #627782):
+> =C2=A0=C2=A0=C2=A0=C2=A0- for aufs: new f_op->setfl() to support fcntl(F_=
+SETFL)
+> =C2=A0=C2=A0=C2=A0=C2=A0- aufs: implement new f_op->setfl()
+> =C2=A0=C2=A0=C2=A0=C2=A0- fs: Fix ABI change for aufs F_SETFL fix
+>=20
+> Is there any chance for a fix in some future wheezy-lts update?
+>=20
+> [1] https://packages.debian.org/wheezy/linux-image-3.2.0-4-amd64
+>=20
+--=20
+Ben Hutchings
+Anthony's Law of Force: Don't force it, get a larger hammer.
 
+--=-/CNPELoTOsd1ph0tceEX
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 
-Details
+-----BEGIN PGP SIGNATURE-----
 
-cpdb-libs/tools/cpdb-text-frontend.c
+iQIcBAABCgAGBQJXxiYQAAoJEOe/yOyVhhEJBggQALlEA8iY9F2UWWAXop4X3S0u
+wcV6B8pBXo5KR30EyjVdajDmBSYfqgLWsa64RRsvlHahgVZPX10aDDcj+KzNJCzE
+rzrHkfkISVdg10uPqTFHtg1F3p+FZe8W2WwmC9uHLXDMob1JtlleJ4p9m9gm0LVe
+8kd+iu4Lh97jBxGZUyiHFSLy3K7ENgXfzKa8vsYdv3ydf5/7t+ZrNRc7AMdepLeZ
+x7NWDOlF2ndzA/g2hBOTQEOiN/MmYM2RD+OZZh7u1sPR6kI1iZPMirVe4Q6RAzsh
+zP0zkZ4NUq6l/DiQq9Bd/IzUePl+wdvHIjFYy11srK0DtmDluXwubuEdvOKDCVzX
+zpBGw8frYR7d6S3e+nm4OXWd7ZaK4YDLqenbxr45Cur0Z7SweMNktjo4cQo/P9WI
+ahtMFIBefoQVUAO04lbYOzG1SHI3JFFEsGFB7Jmr3xBWug93SkBavEwYh6bjP5MI
+j2/BorS9TOj+0IhEUjqwbmxV+oJvwYbgVF0LNk8bwD2mvERWSzKRE8g+h48xad2C
+Rc6TWX0PONKMUqeSO6vf/APE0DcWN9xaJFlrCxbyimjba2DM7Ot61m4MbGI0NICh
+rqV/zU91oCaxmPRAo87bxkRAfbCxVXdfnGTDTWm6noZ1+PrmedxOx5aarH/VwpDa
+GhO2lMI6L19URRBBsQIR
+=CeoV
+-----END PGP SIGNATURE-----
 
-
-Line 362 in 85555fb
-
-   else if (strcmp(buf, "print-file") == 0)
-
-              char printer_id[BUFSIZE], backend_name[BUFSIZE], 
-file_path[BUFSIZE];
-              scanf("%s%s%s", file_path, printer_id, backend_name);
-
-cpdb-libs/tools/cpdb-text-frontend.c
-
-
-Line 453 in 85555fb
-
-   else if (strcmp(buf, "get-all-translations") == 0)
-
-              char printer_id[BUFSIZE];
-              char backend_name[BUFSIZE];
-              scanf("%s%s", printer_id, backend_name);
-
-cpdb-libs/cpdb/cpdb-frontend.c
-
-
-Line 372 in 85555fb
-
-   PrintBackend *cpdbCreateBackendFromFile(GDBusConnection *connection,
-
-      char obj_path[CPDB_BSIZE];
-      /* ... */
-      if ((file = fopen(path, "r")) == NULL)
-      /* ... */
-      if (fscanf(file, "%s", obj_path) == 0)
-
-
-%s does not place bounds on the allowed input sizes.
-
-
-All scanf() or fscanf() calls in the cpdb-libs package which take 
-strings via %s format conversion directive read these strings into 
-buffers of 1024 characters of length (BUFSIZE). So one can easily 
-replace all occurences of %s by %1023s (accept a maximum of 1023 
-characters to leave space for terminating zero byte) in all lines 
-containing scanf or fscanf, easily automated by running four times the 
-command
-
-perl -p -i -e 's/(scanf\(.*?".*?)%s/\1%1023s/' cpdb/cpdb-frontend.c 
-tools/cpdb-text-frontend.c
-
-and checking with
-
-grep scanf */*.c
-
-
-Quick test/reproducer:
-
-Run
-
-cpdb-text-frontend
-
-and enter a command line (no valid command required, only arbitrary 
-characters) of more than 1024 characters. without the fix you will get a 
-segfault, with the fix no segfault and the overlength of the input gets 
-truncated.
-
-To test the fix in the libraries (not in cpdb-text-backend) you would 
-need to create a file named /tmp/org.openprinting.Backend.CUPS with its 
-first line having more than 1024 characters. Then run
-
-CPDB_DEBUG_LOGFILE=log.txt CPDB_DEBUG_LEVEL=debug 
-CPDB_BACKEND_INFO_DIR=/tmp cpdb-text-frontend
-
-With the original libcpdb-frontend.so.2.0.0 you will get a segmentation 
-fault, with the fix you will reach the command prompt of the text 
-frontend (but without printer list).
-
-
-The report got assigned CVE-2023-34095
-
-
-The fix is committed to the GIT repository of cpdb-libs:
-
-https://github.com/OpenPrinting/cpdb-libs/commit/f181bd1f1
-
-
-Package maintainers/security teams of the operating system 
-distributions, please apply the fix by then.
-
-The fix will be included in the upcoming releases.
-
-    Till
+--=-/CNPELoTOsd1ph0tceEX--
