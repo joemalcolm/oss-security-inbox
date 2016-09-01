@@ -1,45 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/23
-Message-ID: <33388c8f297f402d8aecd5805573e409@imshyb02.MITRE.ORG>
-Date: Tue, 22 Nov 2016 16:59:43 -0500
-From: <cve-assign@...re.org>
-To: <andreyknvl@...gle.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <dvyukov@...gle.com>, <kcc@...gle.com>
-Subject: Re: CVE Request: Linux: net/sctp: slab-out-of-bounds in sctp_sf_ootb
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/01/1
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BEB7C1@EX02.corp.qihoo.net>
+Date: Thu, 1 Sep 2016 03:13:06 +0000
+From: 张开翔 <zhangkaixiang@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "cve-assign@...re.org" <cve-assign@...re.org>
+Subject: cve request: docker swarm node Dos occurs when join a cluster failed using local CA certificate
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Docker swarm mode is used to form a swarm, coordinating tasks. Once a machine joins, it becomes a Swarm Node. Nodes can either be worker nodes or manager nodes.
+I found a vulnerability in docker of the latest version which could cause a Denial of Service, I created a CA certificate as the same way with docker, loading it when
+execute the command "docker swarm join --token SWMTKN-1-xx ip:port", however , distrust certificate results the swarm manger failed to authenticate during
+TLS handshake, trapping into infinite loop of session rebuilding , thus a remote node could not join the swarm cluster and even force to leave is in vain, this issue persists
+after restarts docker daemon on the remote node.
 
-> There's a bug in the Linux kernel sctp implementation which allows a
-> remote attacker to trigger a slab-out-of-bounds access with an offset
-> up to 64K bytes.
-> 
-> https://groups.google.com/forum/#!topic/syzkaller/pAUcHsUJbjk
-> https://github.com/torvalds/linux/commit/bf911e985d6bbaa328c20c3e05f4eb03de11fdd6
-> net/sctp/sm_statefuns.c
+# docker version
+Client:
+Version:      1.12.0-dev
+API version:  1.25
+Go version:   go1.6.3
+Git commit:   9c1be54-unsupported
+Built:        Fri Jul 29 15:40:52 2016
+OS/Arch:      linux/amd64
 
-Use CVE-2016-9555.
+Server:
+Version:      1.12.0-dev
+API version:  1.25
+Go version:   go1.6.3
+Git commit:   9c1be54-unsupported
+Built:        Fri Jul 29 15:40:52 2016
+OS/Arch:      linux/amd64
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+# docker swarm init
+Swarm initialized: current node (23m6ksr96whsvuo8lzokenju3) is now a manager.
 
-iQIcBAEBCAAGBQJYNL8aAAoJEHb/MwWLVhi2cu8P/R47S5O4YTuIR+YcW8hiCkto
-OGnhhbOWHa7Ts1nl7cXwRhhq2/D8uzjX/5LZsl+ziqrZcWNr9MM0KAXrL79aS79D
-mGr559SbkLiI0Z66mQy6dZyDx8H/ZuobxMbMc0FJ4vuJUAleiJPpyP+Gf8tFjrkX
-597yeMGSKX09+xDeIHIrVUoKvHRP4XhB3/ix4HJ3BiKeQCx3GMHxjJ/mCtVTYS01
-KTczF+cof/QJnwq5NdXFPA6zkNNRql9+KJPcJvNBNYUKURGTdDhASBEsqTrOJqrx
-cu4+plaZh/+9mynU3dEUH5swyFVW80yuHm8aLOjMQTk6N7PQmii8qcCxs+AXXF3v
-YgJ+EQR2Z7jA7yZtbSiiCnxxX730bHHPTKQhdRcfU5WRtOakdqFw4o/gwPT87+fM
-gTN4aGTRL7bD2/hlFrGlbF4G3y/sO95iD090TF5R7nu8PLOaiFgMWfhGqh4FX7Zr
-K28gExzc2LxdMwf2K2yEiGTehouqibWpF3Kos9OeagIqdVsfMUl4Jh1hhn3wKSwn
-kPi9RIdv0YZlXZZEcPH0UGg9HhpySE+5sXODal/KxmYbYskofSjmeCJRvl4/LbnY
-ymv3A7+mJ6vCuBQMOtLeQU7UuONKxh90qdNXJvbjyynO1rbOJUPlfqGQ9Dj5xaTT
-0ItazodRS8D9fpKt0PAh
-=u07t
------END PGP SIGNATURE-----
+To add a worker to this swarm, run the following command:
+    docker swarm join \
+    --token SWMTKN-1-30f6ibzpscqh05qqdog85ktr8ptcw7ttn4wy5cwixy1wfchhb9-aljewtdn5727g1pldxnevjh51 \
+    xx.xx.xx.xx:2377
+
+To add a manager to this swarm, run the following command:
+    docker swarm join \
+    --token SWMTKN-1-30f6ibzpscqh05qqdog85ktr8ptcw7ttn4wy5cwixy1wfchhb9-0p086z2sdbnpvognjmu76gpi6 \
+    xx.xx.xx.xx :2377
+
+Login in remote node ,create a CA certificate and private key as the docker’s way, then puts them to /var/lib/docker/swarm/certificate
+and named with “docker-swarm-ca.xxx”, execute the following commands:
+-----------------------------------------------------
+# docker swarm join --token SWMTKN-1-30f6ibzpscqh05qqdog85ktr8ptcw7ttn4wy5cwixy1wfchhb9-aljewtdn5727g1pldxnevjh51 xx.xx.xx.xx:2377
+Error response from daemon: Timeout was reached before node was joined. Attempt to join the cluster will continue in the background. Use "docker info" command to see the current swarm status of your node
+
+Some debugging information of docker daemon.
+        ---------------------------------------------------------
+time="2016-09-01T11:07:21.033209029+08:00" level=debug msg="(*session).start" module=agent
+time="2016-09-01T11:07:26.043671399+08:00" level=error msg="agent: session failed" error="session initiation timed out" module=agent
+time="2016-09-01T11:07:26.043717264+08:00" level=debug msg="agent: rebuild session" module=agent
+time="2016-09-01T11:07:28.931724333+08:00" level=debug msg="(*session).start" module=agent
+time="2016-09-01T11:07:33.943026665+08:00" level=error msg="agent: session failed" error="session initiation timed out" module=agent
+time="2016-09-01T11:07:33.943474051+08:00" level=debug msg="agent: rebuild session" module=agent
+… …
+
