@@ -1,35 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/31/3
-Message-ID: <1477914064.3558.4.camel@gmail.com>
-Date: Mon, 31 Oct 2016 07:41:04 -0400
-From: Daniel Micay <danielmicay@...il.com>
-To: kernel-hardening@...ts.openwall.com, oss-security@...ts.openwall.com
-Subject: Re: [kernel-hardening] Re: Stack guard canary massaging
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/01/2
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BEBCDB@EX02.corp.qihoo.net>
+Date: Thu, 1 Sep 2016 03:42:43 +0000
+From: 张开翔 <zhangkaixiang@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE Request: docker swarm node Dos occurs when join a cluster failed using local CA certificate
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2016-10-31 at 12:22 +0100, Solar Designer wrote:
-> On Mon, Oct 31, 2016 at 11:48:45AM +0100, Florian Weimer wrote:
-> > Sorry for cross-posting.
-> 
-> Sorry to bikeshed, but I think this isn't a kernel-hardening topic at
-> all, so the thread should continue on oss-security only, please.
-> 
-> Florian, if there's a reason why you think it's kernel-hardening
-> related, please let me know.  To me, it looks like userspace hardening
-> that is not even kernel-assisted (at least not directly in this place,
-> even though the kernel may have helped provide the random numbers).
-> 
-> If your cross-posting was to reach more of the right people, then you
-> have already done so, and they can join oss-security now. ;-)
-> 
-> Alexander
+Docker swarm mode is used to form a swarm, coordinating tasks. Once a machine joins, it becomes a Swarm Node. Nodes can either be worker nodes or manager nodes.
+I found a vulnerability in docker of the latest version which could cause a Denial of Service, I created a CA certificate as the same way with docker, loading it when
+execute the command "docker swarm join --token SWMTKN-1-xx ip:port", however , distrust certificate results the swarm manger failed to authenticate during
+TLS handshake, trapping into infinite loop of session rebuilding , thus a remote node could not join the swarm cluster and even force to leave is in vain, this issue persists
+after restarts docker daemon on the remote node.
 
-The kernel supports SSP but it doesn't appear to do the same thing.
+# docker version
+Client:
+Version:      1.12.0-dev
+API version:  1.25
+Go version:   go1.6.3
+Git commit:   9c1be54-unsupported
+Built:        Fri Jul 29 15:40:52 2016
+OS/Arch:      linux/amd64
 
-arch/*/include/asm/stackprotector.h
+Server:
+Version:      1.12.0-dev
+API version:  1.25
+Go version:   go1.6.3
+Git commit:   9c1be54-unsupported
+Built:        Fri Jul 29 15:40:52 2016
+OS/Arch:      linux/amd64
 
-Why do the non-x86 implementations XOR in LINUX_VERSION_CODE though? Is
-it supposed to be a placeholder for a random at compile-time value? :\
+# docker swarm init
+Swarm initialized: current node (23m6ksr96whsvuo8lzokenju3) is now a manager.
 
-It's not harmful but that's just... weird.
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+To add a worker to this swarm, run the following command:
+    docker swarm join \
+    --token SWMTKN-1-30f6ibzpscqh05qqdog85ktr8ptcw7ttn4wy5cwixy1wfchhb9-aljewtdn5727g1pldxnevjh51 \
+    xx.xx.xx.xx:2377
+
+To add a manager to this swarm, run the following command:
+    docker swarm join \
+    --token SWMTKN-1-30f6ibzpscqh05qqdog85ktr8ptcw7ttn4wy5cwixy1wfchhb9-0p086z2sdbnpvognjmu76gpi6 \
+    xx.xx.xx.xx :2377
+
+Login in remote node ,create a CA certificate and private key as the docker’s way, then puts them to /var/lib/docker/swarm/certificate
+and named with “docker-swarm-ca.xxx”, execute the following commands:
+-----------------------------------------------------
+# docker swarm join --token SWMTKN-1-30f6ibzpscqh05qqdog85ktr8ptcw7ttn4wy5cwixy1wfchhb9-aljewtdn5727g1pldxnevjh51 xx.xx.xx.xx:2377
+Error response from daemon: Timeout was reached before node was joined. Attempt to join the cluster will continue in the background. Use "docker info" command to see the current swarm status of your node
+
+Some debugging information of docker daemon.
+        ---------------------------------------------------------
+time="2016-09-01T11:07:21.033209029+08:00" level=debug msg="(*session).start" module=agent
+time="2016-09-01T11:07:26.043671399+08:00" level=error msg="agent: session failed" error="session initiation timed out" module=agent
+time="2016-09-01T11:07:26.043717264+08:00" level=debug msg="agent: rebuild session" module=agent
+time="2016-09-01T11:07:28.931724333+08:00" level=debug msg="(*session).start" module=agent
+time="2016-09-01T11:07:33.943026665+08:00" level=error msg="agent: session failed" error="session initiation timed out" module=agent
+time="2016-09-01T11:07:33.943474051+08:00" level=debug msg="agent: rebuild session" module=agent
+… …
+  now that we can’t join the swarm cluster, so just leave it,  but…
+# docker swarm leave --force
+Error response from daemon: context deadline exceeded
+
+  Ok, nothing can be done with swarm mode, neither joining nor quiting
+
+Please assign CVE IDs for the security issue ?
+
+  Best regards&
+  Kaixiang Zhang of the Cloud Security Team, Qihoo 360
+
