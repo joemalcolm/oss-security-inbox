@@ -1,98 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/20/4
-Message-Id: <20160920191158.DCC7442E014@smtpvbsrv1.mitre.org>
-Date: Tue, 20 Sep 2016 15:11:58 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Possible CVE for TLS protocol issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/02/7
+Message-ID: <CA+q1=fQRZYp6w5EA1=y+nHULCLpUNZTGGExpYg+n2SD-0sDR8g@mail.gmail.com>
+Date: Thu, 1 Sep 2016 20:30:15 -0700
+From: Diogo Mónica <diogo.monica@...ker.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+If you read the report, you'll see that no claims are made about shutting
+down the swarm. The reporter simply claims that no new nodes can join the
+swarm:
 
-> https://kcitls.org/
+"it results in a machine could not join the swarm cluster after another
+node’s repeatedly joining and quitting the swarm"
 
-Our initial thought is that the essence of the issue is stated very
-near the end of section 5.3 of the
-https://www.usenix.org/system/files/conference/woot15/woot15-paper-hlauschek.pdf
-document: "can derive the same master secret MS just by engaging in
-the exact same computation." We are not sure whether it makes sense to
-assign a CVE ID to a mathematical fact of that form. The vulnerability
-seems to be that the TLS protocol definition allows rsa_fixed_dh,
-dss_fixed_dh, rsa_fixed_ecdh, and ecdsa_fixed_ecdh, but protocol
-documentation such as RFC 5246 Appendix F does not explicitly point
-out the severity of the outcome when any arbitrary installed client
-certificate is compromised. It does, for example, say "For TLS to be
-able to provide a secure connection, both the client and server
-systems, keys, and applications must be secure," but it doesn't
-delineate the level of connection insecurity that results from a
-seemingly minor client insecurity.
+As we describe in our documentation, possession of the token gives the
+permission to join new workers. Joining new workers effectively means
+reserving some resources for your worker. If the system runs out of
+resources, I believe it is expected that no new workers should be able to
+join.
 
-Use CVE-2015-8960 for this vulnerability in the TLS documentation.
+Again, this is simply not a vulnerability of either Docker swarm or Docker
+swarmkit, and I kindly request that this CVE is rescinded.
 
-It is possible that other issues described in the
-woot15-paper-hlauschek.pdf paper, such as issues related to handling
-of key usage extensions, need their own separate CVE IDs.
 
-In addition, as suggested by section 5.2, a product that originally
-shipped with a compromised client certificate should, in many cases,
-be considered a vulnerable product, regardless of whether that client
-certificate has any known use for authenticating a client. We don't
-know whether there are a huge number of products that have, for
-example, installed test client certificates. Our initial thought is
-that there should be a unique CVE ID for any product that satisfies
-these criteria:
+On Thu, Sep 1, 2016 at 7:53 PM, Kurt Seifried <kseifried@...hat.com> wrote:
 
- - when the product was shipped, a default or recommended
-   configuration had an installed client certificate and associated
-   secret key that were both known to the general public (e.g., they
-   were known by anyone who had a copy of the product)
+> On Thu, Sep 1, 2016 at 8:48 PM, Diogo Monica <diogo.monica@...ker.com>
+> wrote:
+>
+> > Can you please describe how this vulnerability makes a worker node be
+> able
+> > to administer the swarm?
+> >
+>
+> It allows a worker node to disable and effectively shut down the swarm, I
+> assume shutting down the swan is an administrative function, if not please
+> let me know where the documentation for workers covers this (allowing a
+> worker to shutdown the swarm). Thanks!
+>
+>
+> >
+> >
+> >
+> >
+> >
+> >
+> > On Thu, Sep 1, 2016 at 7:12 PM -0700, "Kurt Seifried" <
+> > kseifried@...hat.com> wrote:
+> >
+> >
+> >
+> >
+> >
+> >
+> >
+> >
+> >
+> >
+> > On Thu, Sep 1, 2016 at 5:17 PM, Diogo Mónica
+> > wrote:
+> >
+> > > A few weeks ago (Aug 4, 2016), a CVE (CVE-2016-6595) describing a DoS
+> on
+> > > docker swarm got issued. We believe this not a real issue, and would
+> like
+> > > to have the CVE rescinded.
+> > >
+> > > The person reporting this "vulnerability" is exhausting the resources
+> of
+> > a
+> > > remote manager by doing hundreds of join/leave operations without
+> > removing
+> > > the state that is left by old nodes. At some point the manager
+> obviously
+> > > stops being able to accept new nodes, since it runs out of memory.
+> > >
+> > > Given that both for Docker swarm and for Docker Swarmkit nodes are
+> > > *required* to provide a secret token (it's actually the only mode of
+> > > operation), this means that no adversary can simply join nodes and
+> > exhaust
+> > > manager resources.
+> > >
+> > > We can't do anything about a manager running out of memory and not
+> being
+> > > able to add new legitimate nodes to the system. This is merely a
+> resource
+> > > provisioning issue, and definitely not a CVE worthy vulnerability.
+> > >
+> >
+> > I checked the documentation and it looks like a worker node is only
+> > supposed to work and is not supposed to be able to administer the swarm.
+> As
+> > such this is a trust boundary violation, and needs a CVE.
+> >
+> >
+> >
+> > > Thank you,
+> > > --
+> > > Diogo Mónica
+> > >
+> >
+> >
+> >
+> > --
+> >
+> > --
+> > Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> > PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> > Red Hat Product Security contact: secalert@...hat.com
+> >
+> >
+> >
+> >
+> >
+> >
+>
+>
+> --
+>
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> Red Hat Product Security contact: secalert@...hat.com
+>
 
- - the product can be used in a KCI attack, e.g., it meets all of the
-   requirements of section 5.1.1
 
- - the product could realistically be expected to need secure
-   communication with a server for which a certificate exists, from a
-   commonly recognized Certification Authority, meeting the
-   requirements of section 5.1.2 (e.g., this would often exclude a
-   product that can establish TLS sessions only to a server operated
-   by the vendor)
 
-Post-shipment compromise of a client certificate's secret key is
-currently outside the scope of CVE. The vulnerable behavior is
-releasing a product where a client certificate is installed and its
-secret key is already publicly documented.
+-- 
+Diogo Mónica
 
-Third-party suggestions for improving warning messages for
-client-certificate installation are also currently outside the scope
-of CVE. Although it might be nice for some products to have a warning
-of "Are you completely sure that you want to install this client
-certificate because no unauthorized party knows the secret key?" (or
-similar), we don't want to have free-for-all CVE ID assignment. For
-now, we'll let vendors have CVE IDs if they decide their existing
-certificate-installation dialog is a security problem and they compose
-a better dialog warning that's understandable by their customers.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX4YgdAAoJEHb/MwWLVhi2ygQP/0RLWIentfu+p3xBdmQ4YP5l
-sDb5xUVOsECGnFDEF2B/LnFRSk1nV8EcWPk+U8wB71ztqiLZ6y8mHRwb22P95Lef
-3fMcLhJ7GTNgPMoKXS4bNbUD4qKJsM1Rq4PR5mPrEh3XfSe4Ts4gsElwzmSOyf3k
-RODrZSymGOGl+TGHc0L8LpdUB7RPpsBlUcCw7kLXn82AKOPZBT8aoJFDpXcX+Ome
-sNU8AiiZbXpWtuJjZ3x5oQnGztkOIxTcI8zANZcUWDUNK1tFOKieiTyVWkx7dJ49
-yN07vfsWCQSKSIUd+pMRawXsaOSO6zTUufJoj9SbfNWtma5q60UythHS507afiq6
-AiIalyG3jYLg5Q9puSmbrfOFCsZ99slGZPfc683rwavUQ0M+kmA2HDwdd2NGt5I4
-wRO8p7wX02fH+4xLA9t3bbq+TYqR1vNnj6QjErjB9vHrVdTGJJIiMg+WD2QoH+PQ
-gQtk3p6tKI5awsnXu73dd7/G3Rd5mFoTX0xfygHca7z7DLirFSZ+hcx4/3+FIOyZ
-ZqHHVgxyt2awxyam0iudp1udqEOenIhpNNZqnTaAFaD6aENmMW0CV2SSSf6LkD3B
-x8s5RwE+uX1CKlhH1gkDqx7df6gFeUnNvcwoc5POF0JolevpHrtXSbwBHFFGeT6S
-AsswVVMQxPKkbxx40iqM
-=zIPv
------END PGP SIGNATURE-----
