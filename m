@@ -1,73 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/14
-Message-ID: <1462823339.4268.54.camel@opteya.com>
-Date: Mon, 09 May 2016 21:48:59 +0200
-From: Yann Droneaud <ydroneaud@...eya.com>
-To: oss-security@...ts.openwall.com
-Cc: Doug Ledford <dledford@...hat.com>, Red Hat Security Response Team <secalert@...hat.com>, Ben Hutchings <benh@...ian.org>,  linux-rdma@...r.kernel.org
-Subject: Re: CVE Request: Linux: IB/security: Restrict use of the write() interface'
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/02/3
+Message-ID: <5309095AF4F10E2D.C7403B94-0E12-4BBF-9F83-04F9E21584CD@mail.outlook.com>
+Date: Fri, 2 Sep 2016 02:48:30 +0000 (UTC)
+From: Diogo Monica <diogo.monica@...ker.com>
+To: oss-security <oss-security@...ts.openwall.com>,  oss-security@...ts.openwall.com
+Subject: Re: Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Can you please describe how this vulnerability makes a worker node be able to administer the swarm?
 
-Le samedi 07 mai 2016 à 06:22 +0200, Salvatore Bonaccorso a écrit :
-> 
-> Jann Horn reported an issue in the infiniband stack. It has been
-> fixed
-> in v4.6-rc6 with commit e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3:
-> 
-> https://git.kernel.org/linus/e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3
-> 
-> > 
-> > IB/security: Restrict use of the write() interface
-> > The drivers/infiniband stack uses write() as a replacement for
-> > bi-directional ioctl().  This is not safe. There are ways to
-> > trigger write calls that result in the return structure that
-> > is normally written to user space being shunted off to user
-> > specified kernel memory instead.
-> > 
-> > For the immediate repair, detect and deny suspicious accesses to
-> > the write API.
-> > 
-> > For long term, update the user space libraries and the kernel API
-> > to something that doesn't present the same security vulnerabilities
-> > (likely a structured ioctl() interface).
-> > 
-> > The impacted uAPI interfaces are generally only available if
-> > hardware from drivers/infiniband is installed in the system.
 
-As a workaround, I would suggest that systems which do not require
-(userspace) RDMA/Infiniband to blacklist/remove the following modules:
 
-  rdma_ucm
-  ib_uverbs
-  ib_ucm
-  ib_umad
 
-For example, adds the following in /etc/modprobe.d/blacklist.conf
 
-  blacklist rdma_ucm
-  blacklist ib_uverbs
-  blacklist ib_ucm
-  blacklist ib_umad
 
-Those building their own kernel might want to disable, if not already,
+On Thu, Sep 1, 2016 at 7:12 PM -0700, "Kurt Seifried" <kseifried@...hat.com> wrote:
 
-  CONFIG_INFINIBAND_USER_ACCESS, 
-  CONFIG_INFINIBAND_USER_MAD,
-  CONFIG_INFINIBAND_ADDR_TRANS
 
-(Unfortunately the last one will also disable those features:
-  iSCSI Extensions for RDMA (iSER)
-  iSCSI Extensions for RDMA (iSER) target support
-  RDS over Infiniband and iWARP
-  9P RDMA Transport (Experimental)
-  RPC-over-RDMA transport
-    (which actually disable NFSoRDMA))
 
-Regards.
 
--- 
-Yann Droneaud
-OPTEYA
+
+
+
+
+
+
+On Thu, Sep 1, 2016 at 5:17 PM, Diogo Mónica 
+wrote:
+
+> A few weeks ago (Aug 4, 2016), a CVE (CVE-2016-6595) describing a DoS on
+> docker swarm got issued. We believe this not a real issue, and would like
+> to have the CVE rescinded.
+>
+> The person reporting this "vulnerability" is exhausting the resources of a
+> remote manager by doing hundreds of join/leave operations without removing
+> the state that is left by old nodes. At some point the manager obviously
+> stops being able to accept new nodes, since it runs out of memory.
+>
+> Given that both for Docker swarm and for Docker Swarmkit nodes are
+> *required* to provide a secret token (it's actually the only mode of
+> operation), this means that no adversary can simply join nodes and exhaust
+> manager resources.
+>
+> We can't do anything about a manager running out of memory and not being
+> able to add new legitimate nodes to the system. This is merely a resource
+> provisioning issue, and definitely not a CVE worthy vulnerability.
+>
+
+I checked the documentation and it looks like a worker node is only
+supposed to work and is not supposed to be able to administer the swarm. As
+such this is a trust boundary violation, and needs a CVE.
+
+
+
+> Thank you,
+> --
+> Diogo Mónica
+>
+
+
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
+
+
+
+
 
