@@ -1,55 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/5
-Message-Id: <20161008153247.D98AD52E495@smtpvbsrv1.mitre.org>
-Date: Sat,  8 Oct 2016 11:32:47 -0400 (EDT)
-From: cve-assign@...re.org
-To: bfriesen@...ple.dallas.tx.us
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: GraphicsMagick CVE Request - WPG Reader Issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/02/5
+Message-ID: <CAEsznC6_Aeq_2HZNQdF=Z-daGkiR8GmHozqy+ZZfDLicHqZqww@mail.gmail.com>
+Date: Fri, 2 Sep 2016 11:42:31 +0300
+From: Lior Kaplan <kaplanlior@...il.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com, "security@....net" <security@....net>
+Subject: CVE assignment for PHP 5.6.25 and 7.0.10
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello Mitre team,
 
-> Two security issues have been discovered in the WPG format reader in
-> GraphicsMagick 1.3.25 (and earlier):
+Please consider CVE assignment for the following issues in PHP.
 
-> 1. In a build with QuantumDepth=8 (the default), there is no check
->     that the provided colormap is not larger than 256 entries,
->     resulting in potential heap overflow.
+Shared between PHP 5.6.25 and 7.0.10:
 
-Use CVE-2016-7996.
+Core:
+
+Bug #72663 <https://bugs.php.net/bug.php?id=72663> Create an Unexpected
+Object and Don't Invoke __wakeup() in Deserialization
+Bug #72681 <https://bugs.php.net/bug.php?id=72681> PHP Session Data
+Injection Vulnerability
+
+GD:
+
+Bug #72697 <https://bugs.php.net/bug.php?id=72697> select_colors write
+out-of-bounds
+Bug #72730 <https://bugs.php.net/bug.php?id=72730> imagegammacorrect allows
+arbitrary write access
 
 
-> 2. The assertion:
-> 
->     ReferenceBlob: Assertion `blob != (BlobInfo *) NULL' failed.
-> 
->     is thrown (causing a crash) for some files due to a logic error
->     which leads to passing a NULL pointer where a NULL pointer is not
->     allowed.
+EXIF:
 
-Use CVE-2016-7997.
+Bug #72627 <https://bugs.php.net/bug.php?id=72627> Memory Leakage In
+exif_process_IFD_in_TIFF
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX+RAuAAoJEHb/MwWLVhi266kQAJn9lLlFw8Vt4SormBLDwwDK
-+GL3m64NYAFDxIvMrtC4OceZbfMN+4MvcHdklyMLUb6Scgf0TngdKZ7AY24hc0P9
-NFetcPtjtfYcTDD2Z7yJ0kJgCPdxCkgmerfWin1hrPTlHiqDSSWaJdIzGsCkpMOo
-DT+kNIOU1UY+c52F7O189myEDNOVwllkbVW+FiaQao4k1nwIGzrlK0WhoP1wIcne
-ohk7K4yogJPosW1lPXsW7jsIbg6gk1Na/9wV/YBy2afg7/CiCwBcnWLd2l2ZqLNS
-sgvcY6IC0zua1h7cMLXDzSrRq7nv97TOyMKcfWu2iqNxRXqeIwqkzzbF9ExiuZ6i
-PhcSPjmkFe7AedrsiqZA06yOBX96duLw6RDe8t/ngKL5K4ZxAJ5RPfOiGPit/L6B
-Xb9i+c7uWG259v3Wz4D31/aOacHndtcCsTuL2s9ZGWbVsMmvw9bU7UFRebII/Qfp
-tXkmpt/BoMRshFmMu2SiC3YmDqTyrsZcBQ1luM0KPw3bZ6LITd5kg1M/TYiRvq3P
-PMeLpGjWr/g3Boe3vOkt3J2xTV0dG8i50kGffGOe89T+hMx953KU0qkuh/8kpjWa
-fO53Z7C9Y44YEIuz5AXJCDbTKabofiZ0jaN5yma9qfkxrJvmXtKXmTEsplC8aoYw
-EgvgIM89Lnrq7wmx4BRZ
-=tgOH
------END PGP SIGNATURE-----
+
+WDDX:
+
+Bug #72749 <https://bugs.php.net/bug.php?id=72749> wddx_deserialize allows
+illegal memory access
+Bug #72750 <https://bugs.php.net/bug.php?id=72750> wddx_deserialize null
+dereference
+Bug #72790 <https://bugs.php.net/bug.php?id=72790> wddx_deserialize null
+dereference with invalid xml
+Bug #72799 <https://bugs.php.net/bug.php?id=72799> wddx_deserialize null
+dereference in php_wddx_pop_element
+
+
+PHP 7.0.10 only:
+
+Core:
+
+Bug #72742 <https://bugs.php.net/bug.php?id=72742> memory allocator fails
+to realloc small block to large one
+
+
+cURL:
+
+Bug #72674 <https://bugs.php.net/bug.php?id=72674> Heap overflow in
+curl_escape
+
+Thanks,
+
+Kaplan
+
