@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7421" "Monday" "7" "June" "2021" "13:46:43" "+0200" "Oswald Buddenhagen" "oswald.buddenhagen@gmx.de" nil "197" "[oss-security] CVE-2021-3578: possible remote code execution in isync/mbsync" nil nil nil "6" nil nil (number mark "U       oswald.budde Jun  7  197/7421  " thread-indent "\"[oss-security] CVE-2021-3578: possible remote code execution in isync/mbsync\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-3578: possible remote code execution in isync/mbsync" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2410" "Thursday" "1" "September" "2016" "20:53:42" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty167nS9wG4_wkMDPT_kc4GFo7LLMZHqqhVv3JJNsX-uug@mail.gmail.com>" "98" "Re: [oss-security] Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node" nil nil nil "9" "2016090202:53:42" "[oss-security] Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node" (number mark "U       kseifried@re Sep  1   98/2410  " thread-indent "\"Re: [oss-security] Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node\"\n") "<5309095AF4F10E2D.C7403B94-0E12-4BBF-9F83-04F9E21584CD@mail.outlook.com>" ("<CA+q1=fSKUpSWOGusA99-_KkBZOxqjUzVZFSOQECgjAP+QMzuig@mail.gmail.com>" "<CANO=Ty2n6Nus2uJkaJ3OTWrt0wgeOU1zydjAZtABdmp_itpP0g@mail.gmail.com>" "<5309095AF4F10E2D.C7403B94-0E12-4BBF-9F83-04F9E21584CD@mail.outlook.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28599 invoked by uid 550); 7 Jun 2021 14:12:08 -0000
+Received: (qmail 9890 invoked by uid 550); 2 Sep 2016 02:53:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,213 +12,128 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18181 invoked from network); 7 Jun 2021 11:46:56 -0000
-Date: Mon, 7 Jun 2021 13:46:43 +0200
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To: isync-devel@lists.sourceforge.net
-Cc: oss-security@lists.openwall.com
-Message-ID: <YL4HIzhrA7I83MF0@ugly>
-Mail-Followup-To: isync-devel@lists.sourceforge.net,
-	oss-security@lists.openwall.com
+Received: (qmail 9869 invoked from network); 2 Sep 2016 02:53:54 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=f247egOzwPJGn+zzEXA5ZhPDOLRbOsolp7YTEhNDd4o=;
+        b=KrtAxaa57uxukNrSBppSUG+NmkzsQo+P9iEK2TBi+DaOQyGIAfAQRNqAtOXEnUxFTc
+         T37xYWwmr2AC5aCoxzJK4OJT5+wQd+4O8DyGTu8W0fc/86pQ/qtGdA+KSqNy/lKtpkmU
+         7ts7tboVtWQCM8+/CZCHUF+T29Y4vve9MvqiYtci9AynxjvSWMRXCSuvvwNrydO4vSzn
+         qrE22YVO/lym+AHrQnNnBjW4xjoaogmnRLMZWXQCHN++hoJH+ZjZJHf8TFuoq0599n4b
+         YV1s7GVh9YbROjREOZ5RECv18YABqq/jDNpgLOsFP92SsuwGr2M7S860vsLRFoYYfZ7S
+         /G9A==
+X-Gm-Message-State: AE9vXwMvDODFTdVPcqqaFAzE5dPc2IXQphvVHK6WH3ylzuyGKPdBYkFQnHdJlOwyNyuG7FZiCgrBekFb1Xf2NYUH
+X-Received: by 10.202.87.88 with SMTP id l85mr18270834oib.48.1472784822550;
+ Thu, 01 Sep 2016 19:53:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="nPYl9x/bkg5EdC7g"
-Content-Disposition: inline
-Subject: [oss-security] CVE-2021-3578: possible remote code execution in isync/mbsync
+In-Reply-To: <5309095AF4F10E2D.C7403B94-0E12-4BBF-9F83-04F9E21584CD@mail.outlook.com>
+References: <CA+q1=fSKUpSWOGusA99-_KkBZOxqjUzVZFSOQECgjAP+QMzuig@mail.gmail.com>
+ <CANO=Ty2n6Nus2uJkaJ3OTWrt0wgeOU1zydjAZtABdmp_itpP0g@mail.gmail.com> <5309095AF4F10E2D.C7403B94-0E12-4BBF-9F83-04F9E21584CD@mail.outlook.com>
+From: Kurt Seifried <kseifried@redhat.com>
+Date: Thu, 1 Sep 2016 20:53:42 -0600
+Message-ID: <CANO=Ty167nS9wG4_wkMDPT_kc4GFo7LLMZHqqhVv3JJNsX-uug@mail.gmail.com>
+To: oss-security <oss-security@lists.openwall.com>
+Content-Type: multipart/alternative; boundary=001a113d0cf22de509053b7d70d1
+Subject: Re: [oss-security] Re: cve request: docker swarmkit Dos occurs by
+ repeatly joining and quitting swam cluster as a node
 
---nPYl9x/bkg5EdC7g
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
+--001a113d0cf22de509053b7d70d1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-description:
+On Thu, Sep 1, 2016 at 8:48 PM, Diogo Monica <diogo.monica@docker.com>
+wrote:
 
-A flaw was found in mbsync before v1.3.6 and v1.4.2, where an unchecked
-pointer cast allows a malicious or compromised server to write an
-arbitrary integer value past the end of a heap-allocated structure by
-issuing an unexpected APPENDUID response. This could be plausibly
-exploited for remote code execution on the client.
+> Can you please describe how this vulnerability makes a worker node be able
+> to administer the swarm?
+>
 
-mitigation:
-
-upgrade to the freshly released v1.3.6 or v1.4.2 available from 
-https://sourceforge.net/projects/isync/files/isync/ , or apply the 
-matching attached patch.
-
-credit:
-
-This problem was found by Lukas Braun <koomi@moshbit.net> using a
-fuzzer.
-
-
---nPYl9x/bkg5EdC7g
-Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: attachment;
-	filename="fix-handling-of-unexpected-APPENDUID-response-code--1.3.patch"
-
->From 5fbed519180f155a017a438e479b6268b74b9526 Mon Sep 17 00:00:00 2001
-From: Oswald Buddenhagen <ossi@users.sf.net>
-Date: Wed, 14 Apr 2021 16:58:27 +0200
-Subject: [PATCH] fix handling of unexpected APPENDUID response code
-
-if the code was sent in response to anything but a STORE, we'd overwrite
-a data pointer in one of our imap_cmd subclasses, an allocator data
-structure, or the start of the next allocation, with an int that was
-completely under the server's control. it's plausible that this could be
-exploited for remote code execution.
-
-to avoid this, we could ensure that the object is of the right type
-prior to casting, by using a new flag in the parameter block. but it's
-easier to just dispose of the out_uid field altogether and reuse the uid
-field that is present in the parameter block anyway, but was used only
-for FETCH commands so far.
-
-this problem was found by Lukas Braun <koomi@moshbit.net> using a
-fuzzer.
----
- src/drv_imap.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
-
-diff --git a/src/drv_imap.c b/src/drv_imap.c
-index fbe2fed..4cc3b2a 100644
---- a/src/drv_imap.c
-+++ b/src/drv_imap.c
-@@ -181,7 +181,6 @@ typedef struct {
- 	imap_cmd_t gen;
- 	void (*callback)( int sts, uint uid, void *aux );
- 	void *callback_aux;
--	uint out_uid;
- } imap_cmd_out_uid_t;
- 
- typedef struct {
-@@ -1184,11 +1183,22 @@ parse_response_code( imap_store_t *ctx, imap_cmd_t *cmd, char *s )
- 		 */
- 		for (; isspace( (uchar)*p ); p++);
- 		error( "*** IMAP ALERT *** %s\n", p );
--	} else if (cmd && !strcmp( "APPENDUID", arg )) {
-+	} else if (!strcmp( "APPENDUID", arg )) {
-+		// The checks ensure that:
-+		// - cmd => this is the final tagged response of a command, at which
-+		//   point cmd was already removed from ctx->in_progress, so param.uid
-+		//   is available for reuse.
-+		// - !param.uid => the command isn't actually a FETCH. This doesn't
-+		//   really matter, as the field is safe to overwrite given the
-+		//   previous condition; it just has no effect for non-APPENDs.
-+		if (!cmd || cmd->param.uid) {
-+			error( "IMAP error: unexpected APPENDUID status\n" );
-+			return RESP_CANCEL;
-+		}
- 		if (!(arg = next_arg( &s )) ||
- 		    (ctx->uidvalidity = strtoul( arg, &earg, 10 ), *earg) ||
- 		    !(arg = next_arg( &s )) ||
--		    (((imap_cmd_out_uid_t *)cmd)->out_uid = strtoul( arg, &earg, 10 ), *earg))
-+		    (cmd->param.uid = strtoul( arg, &earg, 10 ), *earg))
- 		{
- 			error( "IMAP error: malformed APPENDUID status\n" );
- 			return RESP_CANCEL;
-@@ -2957,7 +2967,6 @@ imap_store_msg( store_t *gctx, msg_data_t *data, int to_trash,
- 	ctx->buffer_mem += data->len;
- 	cmd->gen.param.data_len = data->len;
- 	cmd->gen.param.data = data->data;
--	cmd->out_uid = 0;
- 
- 	if (to_trash) {
- 		cmd->gen.param.create = 1;
-@@ -2990,7 +2999,7 @@ imap_store_msg_p2( imap_store_t *ctx ATTR_UNUSED, imap_cmd_t *cmd, int response
- 	imap_cmd_out_uid_t *cmdp = (imap_cmd_out_uid_t *)cmd;
- 
- 	transform_msg_response( &response );
--	cmdp->callback( response, cmdp->out_uid, cmdp->callback_aux );
-+	cmdp->callback( response, cmdp->gen.param.uid, cmdp->callback_aux );
- }
- 
- /******************* imap_find_new_msgs *******************/
--- 
-2.31.1.2.g8c0bdb8a70
+It allows a worker node to disable and effectively shut down the swarm, I
+assume shutting down the swan is an administrative function, if not please
+let me know where the documentation for workers covers this (allowing a
+worker to shutdown the swarm). Thanks!
 
 
---nPYl9x/bkg5EdC7g
-Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: attachment;
-	filename="fix-handling-of-unexpected-APPENDUID-response-code--1.4.patch"
-
->From f77deb0282d064d817ce6cf903126247bf745ed3 Mon Sep 17 00:00:00 2001
-From: Oswald Buddenhagen <ossi@users.sf.net>
-Date: Wed, 14 Apr 2021 16:58:27 +0200
-Subject: [PATCH] fix handling of unexpected APPENDUID response code
-
-if the code was sent in response to anything but a STORE, we'd overwrite
-a data pointer in one of our imap_cmd subclasses, an allocator data
-structure, or the start of the next allocation, with an int that was
-completely under the server's control. it's plausible that this could be
-exploited for remote code execution.
-
-to avoid this, we could ensure that the object is of the right type
-prior to casting, by using a new flag in the parameter block. but it's
-easier to just dispose of the out_uid field altogether and reuse the uid
-field that is present in the parameter block anyway, but was used only
-for FETCH commands so far.
-
-this problem was found by Lukas Braun <koomi@moshbit.net> using a
-fuzzer.
----
- src/drv_imap.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
-
-diff --git a/src/drv_imap.c b/src/drv_imap.c
-index edae95c..3c85c4d 100644
---- a/src/drv_imap.c
-+++ b/src/drv_imap.c
-@@ -217,7 +217,6 @@ typedef union {
- 		IMAP_CMD
- 		void (*callback)( int sts, uint uid, void *aux );
- 		void *callback_aux;
--		uint out_uid;
- 	};
- } imap_cmd_out_uid_t;
- 
-@@ -1289,11 +1288,22 @@ parse_response_code( imap_store_t *ctx, imap_cmd_t *cmd, char *s )
- 		}
- 		for (; isspace( (uchar)*s ); s++);
- 		error( "*** IMAP ALERT *** %s\n", s );
--	} else if (cmd && !strcmp( "APPENDUID", arg )) {
-+	} else if (!strcmp( "APPENDUID", arg )) {
-+		// The checks ensure that:
-+		// - cmd => this is the final tagged response of a command, at which
-+		//   point cmd was already removed from ctx->in_progress, so param.uid
-+		//   is available for reuse.
-+		// - !param.uid => the command isn't actually a FETCH. This doesn't
-+		//   really matter, as the field is safe to overwrite given the
-+		//   previous condition; it just has no effect for non-APPENDs.
-+		if (!cmd || cmd->param.uid) {
-+			error( "IMAP error: unexpected APPENDUID status\n" );
-+			return RESP_CANCEL;
-+		}
- 		if (!(arg = next_arg( &s )) ||
- 		    (ctx->uidvalidity = strtoul( arg, &earg, 10 ), *earg) ||
- 		    !(arg = next_arg( &s )) ||
--		    (((imap_cmd_out_uid_t *)cmd)->out_uid = strtoul( arg, &earg, 10 ), *earg != ']'))
-+		    (cmd->param.uid = strtoul( arg, &earg, 10 ), *earg != ']'))
- 		{
- 			error( "IMAP error: malformed APPENDUID status\n" );
- 			return RESP_CANCEL;
-@@ -3167,7 +3177,6 @@ imap_store_msg( store_t *gctx, msg_data_t *data, int to_trash,
- 	ctx->buffer_mem += data->len;
- 	cmd->param.data_len = data->len;
- 	cmd->param.data = data->data;
--	cmd->out_uid = 0;
- 
- 	if (to_trash) {
- 		cmd->param.create = 1;
-@@ -3203,7 +3212,7 @@ imap_store_msg_p2( imap_store_t *ctx ATTR_UNUSED, imap_cmd_t *cmd, int response
- 	imap_cmd_out_uid_t *cmdp = (imap_cmd_out_uid_t *)cmd;
- 
- 	transform_msg_response( &response );
--	cmdp->callback( response, cmdp->out_uid, cmdp->callback_aux );
-+	cmdp->callback( response, cmdp->param.uid, cmdp->callback_aux );
- }
- 
- /******************* imap_find_new_msgs *******************/
--- 
-2.31.1.2.g8c0bdb8a70
+>
+>
+>
+>
+>
+>
+> On Thu, Sep 1, 2016 at 7:12 PM -0700, "Kurt Seifried" <
+> kseifried@redhat.com> wrote:
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+> On Thu, Sep 1, 2016 at 5:17 PM, Diogo M=C3=B3nica
+> wrote:
+>
+> > A few weeks ago (Aug 4, 2016), a CVE (CVE-2016-6595) describing a DoS on
+> > docker swarm got issued. We believe this not a real issue, and would li=
+ke
+> > to have the CVE rescinded.
+> >
+> > The person reporting this "vulnerability" is exhausting the resources of
+> a
+> > remote manager by doing hundreds of join/leave operations without
+> removing
+> > the state that is left by old nodes. At some point the manager obviously
+> > stops being able to accept new nodes, since it runs out of memory.
+> >
+> > Given that both for Docker swarm and for Docker Swarmkit nodes are
+> > *required* to provide a secret token (it's actually the only mode of
+> > operation), this means that no adversary can simply join nodes and
+> exhaust
+> > manager resources.
+> >
+> > We can't do anything about a manager running out of memory and not being
+> > able to add new legitimate nodes to the system. This is merely a resour=
+ce
+> > provisioning issue, and definitely not a CVE worthy vulnerability.
+> >
+>
+> I checked the documentation and it looks like a worker node is only
+> supposed to work and is not supposed to be able to administer the swarm. =
+As
+> such this is a trust boundary violation, and needs a CVE.
+>
+>
+>
+> > Thank you,
+> > --
+> > Diogo M=C3=B3nica
+> >
+>
+>
+>
+> --
+>
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> Red Hat Product Security contact: secalert@redhat.com
+>
+>
+>
+>
+>
+>
 
 
---nPYl9x/bkg5EdC7g--
+--=20
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a113d0cf22de509053b7d70d1--
