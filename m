@@ -1,31 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/11/3
-Message-ID: <20160711125157.7ed792f4@pc1>
-Date: Mon, 11 Jul 2016 12:51:57 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, Cedric Buissart <cbuissar@...hat.com>
-Subject: Re: CVE-2016-5011: util-linux: Extended partition loop in MBR partition table leads to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/02/2
+Message-ID: <CANO=Ty2n6Nus2uJkaJ3OTWrt0wgeOU1zydjAZtABdmp_itpP0g@mail.gmail.com>
+Date: Thu, 1 Sep 2016 20:12:04 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 11 Jul 2016 12:11:43 +0200
-Cedric Buissart <cbuissar@...hat.com> wrote:
+On Thu, Sep 1, 2016 at 5:17 PM, Diogo Mónica <diogo.monica@...ker.com>
+wrote:
 
-> CVE-2016-5011: util-linux: Extended partition loop in MBR partition
-> table leads to DoS
+> A few weeks ago (Aug 4, 2016), a CVE (CVE-2016-6595) describing a DoS on
+> docker swarm got issued. We believe this not a real issue, and would like
+> to have the CVE rescinded.
+>
+> The person reporting this "vulnerability" is exhausting the resources of a
+> remote manager by doing hundreds of join/leave operations without removing
+> the state that is left by old nodes. At some point the manager obviously
+> stops being able to accept new nodes, since it runs out of memory.
+>
+> Given that both for Docker swarm and for Docker Swarmkit nodes are
+> *required* to provide a secret token (it's actually the only mode of
+> operation), this means that no adversary can simply join nodes and exhaust
+> manager resources.
+>
+> We can't do anything about a manager running out of memory and not being
+> able to add new legitimate nodes to the system. This is merely a resource
+> provisioning issue, and definitely not a CVE worthy vulnerability.
+>
 
-Have you discovered this bug or do you know how it was discovered?
+I checked the documentation and it looks like a worker node is only
+supposed to work and is not supposed to be able to administer the swarm. As
+such this is a trust boundary violation, and needs a CVE.
 
-Was it found with fuzzing or code inspection?
 
-I have done fuzzing on partitioning tools before, however I hadn't
-found anything, this bug indicates I haven't looked enough :-)
+
+> Thank you,
+> --
+> Diogo Mónica
+>
+
 
 
 -- 
-Hanno Böck
-https://hboeck.de/
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-Content of type "application/pgp-signature" skipped
