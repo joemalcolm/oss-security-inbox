@@ -1,72 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/02/6
-Message-ID: <20161202104308.GE4706@hz1>
-Date: Fri, 2 Dec 2016 11:43:08 +0100
-From: Sébastien Delafond <seb@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/02/6
+Message-ID: <alpine.BSO.2.20.1609021547560.46085@natsu.mindrot.org>
+Date: Fri, 2 Sep 2016 15:52:06 +1000 (AEST)
+From: Damien Miller <djm@...drot.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: 2 issues in tomcat8 Debian packaging
+cc: Solar Designer <solar@...nwall.com>
+Subject: Re: CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Thu, 13 Aug 2015, Moritz Jodeit wrote:
 
-the Debian security team would like to requests 2 CVEs, for issues
-discovered by Paul Szabo in the tomcat8 Debian packaging.
+> On 12.08.2015 22:48, Solar Designer wrote:
+> > Thank you!
+> > 
+> > Are systems with "keyboard interactive" and "challenge-response"
+> > authentication disabled (all of PAMAuthenticationViaKbdInt,
+> > KbdInteractiveAuthentication, and ChallengeResponseAuthentication, as
+> > applicable to a given sshd version, set to no) affected by these issues
+> > as well?  The code appears to be specific to this mode, but it isn't
+> > immediately clear whether or not these configuration settings prevent
+> > the vulnerable code from being reached in the privsep monitor even when
+> > the privsep child is compromised.  If the settings do not currently
+> > prevent the code from being reached (I hope they do), then this should
+> > be corrected as a hardening measure.
+> 
+> As long as UsePAM is enabled in the configuration, all the PAM-related
+> monitor requests can be send to the monitor. This at least allows
+> triggering the use-after-free even if all the settings you mentioned
+> are set to "no". Not sure if a full authentication is possible in this
+> case though.
 
-  * Privilege escalation when upgrading tomcat8 package
-    https://bugs.debian.org/845393
+Solar just reminded me of this branch of this old thread, prompting
+me to tighten up OpenSSH's privilege separation monitor process:
 
-    > Having installed tomcat8, the directory /etc/tomcat8/Catalina is
-    > set writable by group tomcat8, as per the postinst script. Then
-    > the tomcat8 user, in the situation envisaged in DSA-3670 and
-    > DSA-3720, see also http://seclists.org/fulldisclosure/2016/Oct/4
-    > could use something like commands
-    > 
-    >   mv /etc/tomcat8/Catalina/localhost /tmp/
-    >   ln -s /etc/shadow /etc/tomcat8/Catalina/localhost
-    > 
-    > to create a symlink.
-    > 
-    > Then when the tomcat8 package is upgraded (e.g. for the next DSA),
-    > the postinst script runs
-    > 
-    >   chmod 775 /etc/tomcat8/Catalina /etc/tomcat8/Catalina/localhost
-    > 
-    > and that will make the /etc/shadow file world-readable (and
-    > group-writable). Other useful attacks might be to make the
-    > objects:
-    > 
-    >   /root/.Xauthority
-    >   /etc/ssh/ssh_host_dsa_key
-    > 
-    > world-readable; or make something (already owned by group tomcat8)
-    > group-writable (some "policy" setting maybe?).
+https://anongit.mindrot.org/openssh.git/commit/?id=775f8a23f235
+https://anongit.mindrot.org/openssh.git/commit/?id=7fd0ea8a1db4
+https://anongit.mindrot.org/openssh.git/commit/?id=b38b95f5bcc5
 
-  * Privilege escalation when removing tomcat8 package
-    https://bugs.debian.org/845395    
+(there'll be another one for GSSAPI once I can find someone to test it)
 
-    > Having installed tomcat8, the directory
-    > /etc/tomcat8/Catalina is set writable by group tomcat8, as
-    > per the postinst script. Then the tomcat8 user, in the
-    > situation envisaged in DSA-3670 and DSA-3720, see also
-    > http://seclists.org/fulldisclosure/2016/Oct/4
-    > 
-    > could use something like commands
-    > 
-    >   touch /etc/tomcat8/Catalina/attack
-    >   chmod 2747 /etc/tomcat8/Catalina/attack
-    > 
-    > Then if the tomcat8 package is removed (purged?), the
-    > postrm script runs
-    > 
-    >   chown -Rhf root:root /etc/tomcat8/
-    > 
-    > and that will leave the file world-writable, setgid root:
-    > 
-    >   # ls -l /etc/tomcat8/Catalina/attack
-    >   -rwxr-Srwx 1 root root 0 Nov 23 09:00 /etc/tomcat8/Catalina/attack
-    > 
-    > allowing "group root" access to the world.
+Together these more rigorously and explicitly enforce the expected
+request flow in the monitor process.
 
-Cheers,
+Thanks for the reminder :)
 
---Seb
+-d
