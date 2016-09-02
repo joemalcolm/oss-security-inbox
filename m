@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1826" "Monday" "24" "June" "2019" "13:00:28" "-0400" "David A. Wheeler" "dwheeler@dwheeler.com" "<E1hfSKS-00015J-V5@rmmprod07.runbox>" "38" "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" "^Date:" nil nil "6" "2019062417:00:28" "[oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" (number mark "        dwheeler@dwh Jun 24   38/1826  " thread-indent "\"Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz\"\n") "<alpine.LRH.2.21.1906241152180.4597@fairfax.gathman.org>" ("<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>" "<20190617113203.GH15432@suse.de>" "<CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>" "<alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>" "<alpine.LRH.2.21.1906241152180.4597@fairfax.gathman.org>") nil nil nil nil nil nil nil "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1393" "Friday" "2" "September" "2016" "11:42:31" "+0300" "Lior Kaplan" "kaplanlior@gmail.com" "<CAEsznC6_Aeq_2HZNQdF=Z-daGkiR8GmHozqy+ZZfDLicHqZqww@mail.gmail.com>" "61" "[oss-security] CVE assignment for PHP 5.6.25 and 7.0.10" nil nil nil "9" "2016090208:42:31" "[oss-security] CVE assignment for PHP 5.6.25 and 7.0.10" (number mark "U       kaplanlior@g Sep  2   61/1393  " thread-indent "\"[oss-security] CVE assignment for PHP 5.6.25 and 7.0.10\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27748 invoked by uid 550); 24 Jun 2019 17:00:41 -0000
+Received: (qmail 19572 invoked by uid 550); 2 Sep 2016 08:42:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +11,98 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27730 invoked from network); 24 Jun 2019 17:00:40 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-Mailer: RMM6
-References: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
- <20190617113203.GH15432@suse.de>
- <CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>
- <alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>
- <alpine.LRH.2.21.1906241152180.4597@fairfax.gathman.org>
-In-Reply-To: <alpine.LRH.2.21.1906241152180.4597@fairfax.gathman.org>
-Message-Id: <E1hfSKS-00015J-V5@rmmprod07.runbox>
-Date: Mon, 24 Jun 2019 13:00:28 -0400 (EDT)
-From: "David A. Wheeler" <dwheeler@dwheeler.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Thousands of vulnerabilities, almost no CVEs:
- OSS-Fuzz
-To: "oss-security" <oss-security@lists.openwall.com>
+Received: (qmail 19545 invoked from network); 2 Sep 2016 08:42:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=KmBTpAlktiSCbmK7KJ7x4dipah/v0he0CC+lc5vghpc=;
+        b=Z/D14pdF4yiF5NbjaV8fQyxIpwuXI+fxuwrCxgNhkNajNeV4jjTJsp4hmOKKgsR7A3
+         pCjx1Gr8v6XF27oT6hgMa0TKoOganNB/jiVc/yMi52ogg+w6XayeF7qAYE7/DMu1eZv9
+         tLyHToZiqC+YgTfQucwIvPsPEWk+jVV+hRq0Oml/stwi3eR8tELIy93lBbmaAZ5uLmE0
+         8vxp9eOp2/fKlTVyf1tS8yer5aPqBRUYr/mtt6XyrEfECfvorw6KdwZPjZ0m+dDP3Zr4
+         LLu3FLRDYf1E8JqW0BeB9lpzdzfna8tRycMuDuMhAmyvrEzKAA+tTjQMIlASCmXWhsUE
+         LNGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=KmBTpAlktiSCbmK7KJ7x4dipah/v0he0CC+lc5vghpc=;
+        b=m8BKOF33CQgJz++Q6GVS53H5dJoyIufMh9ZPNKUpJ/nK9sK1ThsFHh4snyksC2SQpd
+         bauPsWcNf9vKWiF5f/lgVZ+7Hw1ZPkgfGApu3vCXfQtvWjj+FNQEyp/mWvzLwJfJXJuX
+         wmkns5e4XLX3DOtV//m2ggtuQVw7wuNxUyt92nNKt00KCXuxMWKPM5+Wu/zBh4BzNKb3
+         yK3SOnqv23nF3MzA2eAhFyXItzoQ6va6vOoHLmbJkA134rJCMFlSD5SRdYKhUtMDlWOJ
+         DVI6MUod/CS8RWb+mtz27Bq+pslUOTx4+Vk9dSWo9furLlnafZzwisnTlP17oESTasxu
+         xY4w==
+X-Gm-Message-State: AE9vXwP7kEK6PguE5pmKapKTSmA+eUB3lUK0DHpuidF6CPmi0S8y+50+7tmQVkUH8rMrad7n6G+np0Y9Afr1Kw==
+X-Received: by 10.31.102.6 with SMTP id a6mr12302663vkc.85.1472805752450; Fri,
+ 02 Sep 2016 01:42:32 -0700 (PDT)
+MIME-Version: 1.0
+From: Lior Kaplan <kaplanlior@gmail.com>
+Date: Fri, 2 Sep 2016 11:42:31 +0300
+Message-ID: <CAEsznC6_Aeq_2HZNQdF=Z-daGkiR8GmHozqy+ZZfDLicHqZqww@mail.gmail.com>
+To: cve-assign@mitre.org
+Cc: oss-security@lists.openwall.com, "security@php.net" <security@php.net>
+Content-Type: multipart/alternative; boundary=94eb2c092d68b2b308053b824f32
+Subject: [oss-security] CVE assignment for PHP 5.6.25 and 7.0.10
 
-> On Mon, 24 Jun 2019, Bob Friesenhahn wrote:
-> > Most oss-fuzz issue detections are not CVE worthy.  For example, a one-=
-byte=20
-> > read "heap overflow" is not likely to cause any actual harm but oss-fuz=
-z=20
-> > would classify it as "heap overflow".
+--94eb2c092d68b2b308053b824f32
+Content-Type: text/plain; charset=UTF-8
 
-On Mon, 24 Jun 2019 11:59:43 -0400 (EDT), "Stuart D. Gathman" <stuart@gathm=
-an.org> wrote:
-> Nevertheless, it is a bug.  Fuzzers are amazing.  Going forward, the
-> best plan is for more projects to include fuzzing as part of the
-> build process testing.
+Hello Mitre team,
 
-It is a bug, fuzzers are amazing, and more projects should include fuzzing.
+Please consider CVE assignment for the following issues in PHP.
 
-But CVEs are supposed to only be assigned to vulnerabilities or exposures.
-Many bugs are not vulnerabilities or exposures that lead to vulnerabilities.
+Shared between PHP 5.6.25 and 7.0.10:
 
-If a bug *is* a vulnerability, then yes, it should have a CVE assignment,
-and there are clearly a lot of vulnerabilities without CVE assignments.
+Core:
 
-In particular, many organizations have a rapid upgrade process
-if some software version has a CVE, and a slow process otherwise.
-(There are things that need doing besides upgrading software.)
-If a particular version of software has a serious vulnerability, it needs a=
-t least one
-of the most serious vulnerabilities assigned a CVE so that people will upgr=
-ade
-it more rapidly.  In the end, the goal should be to get software fixed
-*and* deployed - if it's not deployed when it needs to be, it didn't help.
-Downstream needs to do their part by being prepared to upgrade... but
-suppliers need to make it clear why something needs to be upgraded quickly
-(if that's the case) so that the faster process will be used.
-We should be focusing on the "final impact", that is,
-we should be trying to reduce the cases where an attacker can exploit
-a known vulnerability in deployed software... *without* breaking the bank.
+Bug #72663 <https://bugs.php.net/bug.php?id=72663> Create an Unexpected
+Object and Don't Invoke __wakeup() in Deserialization
+Bug #72681 <https://bugs.php.net/bug.php?id=72681> PHP Session Data
+Injection Vulnerability
 
---- David A. Wheeler=
+GD:
+
+Bug #72697 <https://bugs.php.net/bug.php?id=72697> select_colors write
+out-of-bounds
+Bug #72730 <https://bugs.php.net/bug.php?id=72730> imagegammacorrect allows
+arbitrary write access
+
+
+EXIF:
+
+Bug #72627 <https://bugs.php.net/bug.php?id=72627> Memory Leakage In
+exif_process_IFD_in_TIFF
+
+
+
+WDDX:
+
+Bug #72749 <https://bugs.php.net/bug.php?id=72749> wddx_deserialize allows
+illegal memory access
+Bug #72750 <https://bugs.php.net/bug.php?id=72750> wddx_deserialize null
+dereference
+Bug #72790 <https://bugs.php.net/bug.php?id=72790> wddx_deserialize null
+dereference with invalid xml
+Bug #72799 <https://bugs.php.net/bug.php?id=72799> wddx_deserialize null
+dereference in php_wddx_pop_element
+
+
+PHP 7.0.10 only:
+
+Core:
+
+Bug #72742 <https://bugs.php.net/bug.php?id=72742> memory allocator fails
+to realloc small block to large one
+
+
+cURL:
+
+Bug #72674 <https://bugs.php.net/bug.php?id=72674> Heap overflow in
+curl_escape
+
+Thanks,
+
+Kaplan
+
+--94eb2c092d68b2b308053b824f32--
