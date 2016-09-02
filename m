@@ -1,32 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/22/12
-Message-ID: <3ffc286c0922469cb1c17303abd6674d@imshyb02.MITRE.ORG>
-Date: Thu, 22 Dec 2016 11:03:01 -0500
-From: <cve-assign@...re.org>
-To: <sylvain.sarmejeanne.ml@...il.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: Smack: TLS SecurityMode.required not always enforced, leading to striptls attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/02/9
+Message-Id: <20160902180635.8B84534E010@smtpvbsrv1.mitre.org>
+Date: Fri,  2 Sep 2016 14:06:35 -0400 (EDT)
+From: cve-assign@...re.org
+To: kaplanlior@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@....net
+Subject: Re: CVE assignment for PHP 5.6.25 and 7.0.10 - and libcurl
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> I reported a vulnerability in the Smack XMPP library where the security of
-> the TLS connection is not always enforced. By stripping the "starttls"
-> feature from the server response with a man-in-the-middle tool, an attacker
-> can force the client to authenticate in clear text even if the
-> "SecurityMode.required" TLS setting has been set. This is a race condition
-> issue so the attack will work after a few tries.
+> Bug #72663 <https://bugs.php.net/bug.php?id=72663> Create an Unexpected
+> Object and Don't Invoke __wakeup() in Deserialization
+> https://github.com/php/php-src/commit/20ce2fe8e3c211a42fee05a461a5881be9a8790e?w=1
 
-> https://community.igniterealtime.org/blogs/ignite/2016/11/22/smack-security-advisory-2016-11-22
-> https://issues.igniterealtime.org/browse/SMACK-739
-> https://github.com/igniterealtime/Smack/commit/a9d5cd4a611f47123f9561bc5a81a4555fe7cb04
-> https://github.com/igniterealtime/Smack/commit/059ee99ba0d5ff7758829acf5a9aeede09ec820b
+Use CVE-2016-7124 for this one issue, regardless of the subsequent
+behavior (i.e., either "i) The unexpected object was destroyed, invoke
+__destruct()" or "ii) The unexpected object wasn't destroyed, invoke
+more magic methods.").
 
->> smack-core/src/main/java/org/jivesoftware/smack/AbstractXMPPConnection.java
->> smack-tcp/src/main/java/org/jivesoftware/smack/tcp/XMPPTCPConnection.java
 
-Use CVE-2016-10027.
+> Bug #72681 <https://bugs.php.net/bug.php?id=72681> PHP Session Data
+> Injection Vulnerability
+> https://github.com/php/php-src/commit/8763c6090d627d8bb0ee1d030c30e58f406be9ce?w=1
+
+Use CVE-2016-7125.
+
+The scope of this CVE also includes the "The similar issue also exist
+in session php_binary handler" part of 72681.
+
+
+> Bug #72697 <https://bugs.php.net/bug.php?id=72697> select_colors write
+> out-of-bounds
+> https://github.com/php/php-src/commit/b6f13a5ef9d6280cf984826a5de012a32c396cd4?w=1
+
+Use CVE-2016-7126.
+
+
+> Bug #72730 <https://bugs.php.net/bug.php?id=72730> imagegammacorrect allows
+> arbitrary write access
+> https://github.com/php/php-src/commit/1bd103df00f49cf4d4ade2cfe3f456ac058a4eae?w=1
+
+Use CVE-2016-7127.
+
+
+> Bug #72627 <https://bugs.php.net/bug.php?id=72627> Memory Leakage In
+> exif_process_IFD_in_TIFF
+> https://github.com/php/php-src/commit/6dbb1ee46b5f4725cc6519abf91e512a2a10dfed?w=1
+
+Use CVE-2016-7128.
+
+
+> Bug #72749 <https://bugs.php.net/bug.php?id=72749> wddx_deserialize allows
+> illegal memory access
+> https://github.com/php/php-src/commit/426aeb2808955ee3d3f52e0cfb102834cdb836a5?w=1
+
+Use CVE-2016-7129.
+
+
+> Bug #72750 <https://bugs.php.net/bug.php?id=72750> wddx_deserialize null
+> dereference
+> https://github.com/php/php-src/commit/698a691724c0a949295991e5df091ce16f899e02?w=1
+
+Use CVE-2016-7130.
+
+
+> Bug #72790 <https://bugs.php.net/bug.php?id=72790> wddx_deserialize null
+> dereference with invalid xml
+> https://github.com/php/php-src/commit/a14fdb9746262549bbbb96abb87338bacd147e1b?w=1
+
+Use CVE-2016-7131.
+
+(72790 and 72799 are associated with the same commit. Not all of the
+commit is about the pop issue in 72799.)
+
+
+> Bug #72799 <https://bugs.php.net/bug.php?id=72799> wddx_deserialize null
+> dereference in php_wddx_pop_element
+> https://github.com/php/php-src/commit/a14fdb9746262549bbbb96abb87338bacd147e1b?w=1
+
+Use CVE-2016-7132.
+
+(72790 and 72799 are associated with the same commit. Not all of the
+commit is about the pop issue in 72799.)
+
+
+> Bug #72742 <https://bugs.php.net/bug.php?id=72742> memory allocator fails
+> to realloc small block to large one
+> https://github.com/php/php-src/commit/c2a13ced4272f2e65d2773e2ea6ca11c1ce4a911?w=1
+
+Use CVE-2016-7133.
+
+
+> Bug #72674 <https://bugs.php.net/bug.php?id=72674> Heap overflow in
+> curl_escape
+> https://github.com/php/php-src/commit/72dbb7f416160f490c4e9987040989a10ad431c7?w=1
+
+Use CVE-2016-7134 for the PHP vulnerability. In other words, PHP is
+intended to operate safely even with an unpatched copy of libcurl.
+
+This is associated with the
+https://curl.haxx.se/libcurl/c/curl_easy_escape.html and
+http://php.net/manual/en/function.curl-escape.php relationship. We
+feel that this may be a (minor) vulnerability in libcurl. It seems
+plausible that a libcurl application could accept arbitrary length URI
+components from an untrusted user, for use in GET requests to
+(probably) a hardcoded server name. However, it is possible that CVE
+ID assignment is already in progress for libcurl. If nobody knows,
+then we will contact curl-security@...x.se directly to ask.
+
+(As far as we can tell, it is not yet fixed on the
+https://github.com/curl/curl/commits/master/lib/escape.c page.)
 
 - -- 
 CVE Assignment Team
@@ -36,17 +121,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYW/idAAoJEHb/MwWLVhi2Ti0QAIWkl59R8amXlPpJJjU4Ydbl
-2ADm4yXOsRVnhy8QJ9u44ogteMANPZbuU006Q9ezeE2SIlLX1rcHeEsHy/nR9rNM
-us/Ip79ZIfDU1wuP1XjeIa1lO3Ldf0L2Wo9gX+JRaSyX+w0+WfIvmg40AtEehjfR
-2hAPY3ALuiVw4y3TY6eRk2e03f765ZnvIqbTSO3ayRJ5NYLQlvI15+1WIGTOoH8o
-nputmqaDb2/jIQUoI2bpRVAnbijmN1CCOEDT0n1e/F8MmxYKpuTLnde98KhDriz+
-o6OM5pYv0X1CnIb6RGzb2Brt2FUmqWvEAmnFoRknEy8UQ4iQWXRjoI/QQDMaI5ru
-WNaB2fUtplT4jQ2IeNLinFNwxbMYSaMrCWfNuIpuTANXXyF2PgKuYTA5JmwtJHkR
-pJuTRD+mfO1ybcyf/D678T3hldpC5NlMf9eRQDbB5h9viNLVBGhnulE/OPZpU+2R
-J3hvXAVpaGFHAQllBgSq8Ut7zsI5s7ZFoo2gWuHCA//dT+C6GjUs/h7w6wWK9iiU
-a932syiLLmT5HRCJwucEiwRk2KczVzMgai2FM1jSlDLoonw2nHqHe128rYcwGGQd
-DZeU/1e1ZYje1WLFCJzRuNGTesNwFdFhT/F3WLCrglANm1VfXuWyqtWMDSeInaf3
-MWbq6ZtaZvw40COKoh8r
-=4pVQ
+iQIcBAEBCAAGBQJXyb7tAAoJEHb/MwWLVhi2AaEQAKw2gJTWFh28/4amAkRFK5KF
+tnP6xJLeyOlFdzrty/EWzzCsWHX/30uc2KulranEUaC/89LIrl4QqsFHmDPdG7am
+Ai5zvsdW1NVz1fISzV1zYFX6FQBZTfr3VinQVY4Uacg743mn8Ewp+RvRAHelwBB3
+EvoBI5AkQlmWdSRamTiy+ionzNge9TlmgdCSdTfWGERYAfyaWRENNqOX/ocmb0p1
+M2YUbV7Hi2F1fRWiNyjdk+F+GLgEyercCDDwdnkc0L8mluH447ULDk2756Ww0+yZ
+yy1Jj+zgDmH62ps3lobik7dhuIEdIIUPCkY2W0WQXbLWFZusrBG9SkEQk2P99g65
+1Ajcuml+W2LyotgzIa+OOhlLb/+hw9+qsuyuXtYnhlBZ85wjeqNsLy+KduFQdX70
+jK82NAW4ZTujrbn/cBxn4ad0YDZCMQ8BkwtJEz722wruidAXFnfesqwTgBz+MoLA
+ukUKk4gkB/JEMDoVwZGeyEUKoy6Q3xllQHnP4l3nQC9FgZy/qXLShjhMk1N215ib
+1v0Ofk9QL3XRpww4JxepfbzCJe4NJaYPRC1vAvRHUYS+zvBny8PcE1NNKih6cCSt
+v0sXl7jOIEs1haHxU3kfCbjij8wCWdqFgSyL4FYD0WM6Xu3Jwa+zevkJ+hKKe37w
+BaxLqvFCiflOsCUKeMJU
+=3zTJ
 -----END PGP SIGNATURE-----
