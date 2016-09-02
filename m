@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1447" "Wednesday" "10" "June" "2015" "17:07:49" "+0200" "Vasyl Kaigorodov" "vkaigoro@redhat.com" "<20150610150749.GB18203@mail.corp.redhat.com>" "44" "[oss-security] CVE=2015-1234 disambiguation" nil nil nil "6" "2015061015:07:49" "[oss-security] CVE=2015-1234 disambiguation" (number mark "        vkaigoro@red Jun 10   44/1447  " thread-indent "\"[oss-security] CVE=2015-1234 disambiguation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4679" "Friday" "2" "September" "2016" "14:06:35" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160902180635.8B84534E010@smtpvbsrv1.mitre.org>" "127" "[oss-security] Re: CVE assignment for PHP 5.6.25 and 7.0.10 - and libcurl" nil nil nil "9" "2016090218:06:35" "[oss-security] Re: CVE assignment for PHP 5.6.25 and 7.0.10 - and libcurl" (number mark "U       cve-assign@m Sep  2  127/4679  " thread-indent "\"[oss-security] Re: CVE assignment for PHP 5.6.25 and 7.0.10 - and libcurl\"\n") "<CAEsznC6_Aeq_2HZNQdF=Z-daGkiR8GmHozqy+ZZfDLicHqZqww@mail.gmail.com>" ("<CAEsznC6_Aeq_2HZNQdF=Z-daGkiR8GmHozqy+ZZfDLicHqZqww@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19999 invoked by uid 550); 10 Jun 2015 14:54:21 -0000
+Received: (qmail 10041 invoked by uid 550); 2 Sep 2016 18:06:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +11,140 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19975 invoked from network); 10 Jun 2015 14:54:20 -0000
-Message-ID: <20150610150749.GB18203@mail.corp.redhat.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="2B/JsCI69OhZNC5r"
-Content-Disposition: inline
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-Cc: jburke@tanium.com
-Date: Wed, 10 Jun 2015 17:07:49 +0200
-From: Vasyl Kaigorodov <vkaigoro@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE=2015-1234 disambiguation
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Received: (qmail 9992 invoked from network); 2 Sep 2016 18:06:47 -0000
+From: cve-assign@mitre.org
+To: kaplanlior@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@php.net
+In-Reply-To: <CAEsznC6_Aeq_2HZNQdF=Z-daGkiR8GmHozqy+ZZfDLicHqZqww@mail.gmail.com>
+Message-Id: <20160902180635.8B84534E010@smtpvbsrv1.mitre.org>
+Date: Fri,  2 Sep 2016 14:06:35 -0400 (EDT)
+Subject: [oss-security] Re: CVE assignment for PHP 5.6.25 and 7.0.10 - and libcurl
 
---2B/JsCI69OhZNC5r
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hello,
+> Bug #72663 <https://bugs.php.net/bug.php?id=72663> Create an Unexpected
+> Object and Don't Invoke __wakeup() in Deserialization
+> https://github.com/php/php-src/commit/20ce2fe8e3c211a42fee05a461a5881be9a8790e?w=1
 
-I've spotted this on fulldisclosure mailing list today:
-http://seclists.org/fulldisclosure/2015/Jun/17
+Use CVE-2016-7124 for this one issue, regardless of the subsequent
+behavior (i.e., either "i) The unexpected object was destroyed, invoke
+__destruct()" or "ii) The unexpected object wasn't destroyed, invoke
+more magic methods.").
 
-It says CVE-2015-1234 was assigned to that issue, which I think is
-wrong, because this same CVE was mentioned by Google in their Chrome
-update in April 2015 [1]
-http://googlechromereleases.blogspot.cz/2015/04/stable-channel-update.html
 
-Can someone sched some light here?
-Explicitely added cve-assign, and Justin Burke (fuldisclosure post
-author).
+> Bug #72681 <https://bugs.php.net/bug.php?id=72681> PHP Session Data
+> Injection Vulnerability
+> https://github.com/php/php-src/commit/8763c6090d627d8bb0ee1d030c30e58f406be9ce?w=1
 
-Thanks.
---=20
-Vasyl Kaigorodov | Red Hat Product Security
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
-Free/Busy status: https://url.corp.redhat.com/vk-free-busy-status
+Use CVE-2016-7125.
 
-Come talk to Red Hat Product Security at the Summit!
-Red Hat Summit 2015 - https://www.redhat.com/summit/
+The scope of this CVE also includes the "The similar issue also exist
+in session php_binary handler" part of 72681.
 
---2B/JsCI69OhZNC5r
-Content-Type: application/pgp-signature
 
+> Bug #72697 <https://bugs.php.net/bug.php?id=72697> select_colors write
+> out-of-bounds
+> https://github.com/php/php-src/commit/b6f13a5ef9d6280cf984826a5de012a32c396cd4?w=1
+
+Use CVE-2016-7126.
+
+
+> Bug #72730 <https://bugs.php.net/bug.php?id=72730> imagegammacorrect allows
+> arbitrary write access
+> https://github.com/php/php-src/commit/1bd103df00f49cf4d4ade2cfe3f456ac058a4eae?w=1
+
+Use CVE-2016-7127.
+
+
+> Bug #72627 <https://bugs.php.net/bug.php?id=72627> Memory Leakage In
+> exif_process_IFD_in_TIFF
+> https://github.com/php/php-src/commit/6dbb1ee46b5f4725cc6519abf91e512a2a10dfed?w=1
+
+Use CVE-2016-7128.
+
+
+> Bug #72749 <https://bugs.php.net/bug.php?id=72749> wddx_deserialize allows
+> illegal memory access
+> https://github.com/php/php-src/commit/426aeb2808955ee3d3f52e0cfb102834cdb836a5?w=1
+
+Use CVE-2016-7129.
+
+
+> Bug #72750 <https://bugs.php.net/bug.php?id=72750> wddx_deserialize null
+> dereference
+> https://github.com/php/php-src/commit/698a691724c0a949295991e5df091ce16f899e02?w=1
+
+Use CVE-2016-7130.
+
+
+> Bug #72790 <https://bugs.php.net/bug.php?id=72790> wddx_deserialize null
+> dereference with invalid xml
+> https://github.com/php/php-src/commit/a14fdb9746262549bbbb96abb87338bacd147e1b?w=1
+
+Use CVE-2016-7131.
+
+(72790 and 72799 are associated with the same commit. Not all of the
+commit is about the pop issue in 72799.)
+
+
+> Bug #72799 <https://bugs.php.net/bug.php?id=72799> wddx_deserialize null
+> dereference in php_wddx_pop_element
+> https://github.com/php/php-src/commit/a14fdb9746262549bbbb96abb87338bacd147e1b?w=1
+
+Use CVE-2016-7132.
+
+(72790 and 72799 are associated with the same commit. Not all of the
+commit is about the pop issue in 72799.)
+
+
+> Bug #72742 <https://bugs.php.net/bug.php?id=72742> memory allocator fails
+> to realloc small block to large one
+> https://github.com/php/php-src/commit/c2a13ced4272f2e65d2773e2ea6ca11c1ce4a911?w=1
+
+Use CVE-2016-7133.
+
+
+> Bug #72674 <https://bugs.php.net/bug.php?id=72674> Heap overflow in
+> curl_escape
+> https://github.com/php/php-src/commit/72dbb7f416160f490c4e9987040989a10ad431c7?w=1
+
+Use CVE-2016-7134 for the PHP vulnerability. In other words, PHP is
+intended to operate safely even with an unpatched copy of libcurl.
+
+This is associated with the
+https://curl.haxx.se/libcurl/c/curl_easy_escape.html and
+http://php.net/manual/en/function.curl-escape.php relationship. We
+feel that this may be a (minor) vulnerability in libcurl. It seems
+plausible that a libcurl application could accept arbitrary length URI
+components from an untrusted user, for use in GET requests to
+(probably) a hardcoded server name. However, it is possible that CVE
+ID assignment is already in progress for libcurl. If nobody knows,
+then we will contact curl-security@haxx.se directly to ask.
+
+(As far as we can tell, it is not yet fixed on the
+https://github.com/curl/curl/commits/master/lib/escape.c page.)
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBAgAGBQJVeFLFAAoJECF7+fyrtugodEQH/iNxJf1knBrltkpbutBzWOcc
-esn87NkRMqiHWa7gczjuFp39pQSetgF3fXP1+3RwISY5CN7El50a4OzOT7PUC1rb
-dH9ekZC1m9RbADFpJcSFmILQs08kAg8milbY6dbRf2c8oL+qbZBChOREX56xWmBs
-OFNUotrAlBBeEHn06bgX8vsGFUxSAeuFc6dtoGIgVlwbTedDL08hmg+7dR6Q85MS
-NBhsC3B+eC8ifnG+xKV5Iu5o1Dmf5WErU7aROv7zU7WtAyJ59kwocUgPleI8Q/Vm
-ju1sZtcgX4BVq+fqGPmBoNaPr/Py+x2TEinRjQ4vLnxpoz8/oaX8ZR6vOboopSg=
-=60h6
+iQIcBAEBCAAGBQJXyb7tAAoJEHb/MwWLVhi2AaEQAKw2gJTWFh28/4amAkRFK5KF
+tnP6xJLeyOlFdzrty/EWzzCsWHX/30uc2KulranEUaC/89LIrl4QqsFHmDPdG7am
+Ai5zvsdW1NVz1fISzV1zYFX6FQBZTfr3VinQVY4Uacg743mn8Ewp+RvRAHelwBB3
+EvoBI5AkQlmWdSRamTiy+ionzNge9TlmgdCSdTfWGERYAfyaWRENNqOX/ocmb0p1
+M2YUbV7Hi2F1fRWiNyjdk+F+GLgEyercCDDwdnkc0L8mluH447ULDk2756Ww0+yZ
+yy1Jj+zgDmH62ps3lobik7dhuIEdIIUPCkY2W0WQXbLWFZusrBG9SkEQk2P99g65
+1Ajcuml+W2LyotgzIa+OOhlLb/+hw9+qsuyuXtYnhlBZ85wjeqNsLy+KduFQdX70
+jK82NAW4ZTujrbn/cBxn4ad0YDZCMQ8BkwtJEz722wruidAXFnfesqwTgBz+MoLA
+ukUKk4gkB/JEMDoVwZGeyEUKoy6Q3xllQHnP4l3nQC9FgZy/qXLShjhMk1N215ib
+1v0Ofk9QL3XRpww4JxepfbzCJe4NJaYPRC1vAvRHUYS+zvBny8PcE1NNKih6cCSt
+v0sXl7jOIEs1haHxU3kfCbjij8wCWdqFgSyL4FYD0WM6Xu3Jwa+zevkJ+hKKe37w
+BaxLqvFCiflOsCUKeMJU
+=3zTJ
 -----END PGP SIGNATURE-----
-
---2B/JsCI69OhZNC5r--
