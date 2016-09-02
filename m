@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1005" "Wednesday" "27" "January" "2016" "11:07:17" "-0700" "Richard Johnson" "rdump@river.com" "<56A90755.2030706@river.com>" "27" "Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" "^Cc:" nil nil "1" "2016012718:07:17" "[oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" (number mark "        rdump@river. Jan 27   27/1005  " thread-indent "\"Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes\"\n") "<CAOp4FwR2S=DRH2TDp_sFPbaDPRUf=-bcmTJxa0+tyP52_xvejw@mail.gmail.com>" ("<2413003.GtkKFizscD@chimera>" "<CAOp4FwR2S=DRH2TDp_sFPbaDPRUf=-bcmTJxa0+tyP52_xvejw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1642" "Friday" "2" "September" "2016" "15:52:06" "+1000" "Damien Miller" "djm@mindrot.org" "<alpine.BSO.2.20.1609021547560.46085@natsu.mindrot.org>" "37" "Re: [oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities" "^cc:" nil nil "9" "2016090205:52:06" "[oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities" (number mark "        djm@mindrot. Sep  2   37/1642  " thread-indent "\"Re: [oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities\"\n") "<55CBC694.7070706@bluefrostsecurity.de>" ("<55CA41A6.600@bluefrostsecurity.de>" "<20150812161103.GA11200@openwall.com>" "<55CBA372.6080102@bluefrostsecurity.de>" "<20150812204805.GA12880@openwall.com>" "<55CBC694.7070706@bluefrostsecurity.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 16012 invoked by uid 550); 28 Jan 2016 04:33:20 -0000
+Received: (qmail 19884 invoked by uid 550); 2 Sep 2016 09:49:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13337 invoked from network); 27 Jan 2016 18:07:32 -0000
-References: <2413003.GtkKFizscD@chimera>
- <CAOp4FwR2S=DRH2TDp_sFPbaDPRUf=-bcmTJxa0+tyP52_xvejw@mail.gmail.com>
-Message-ID: <56A90755.2030706@river.com>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:38.0)
- Gecko/20100101 Thunderbird/38.5.1
+Received: (qmail 3668 invoked from network); 2 Sep 2016 05:52:24 -0000
+In-Reply-To: <55CBC694.7070706@bluefrostsecurity.de>
+Message-ID: <alpine.BSO.2.20.1609021547560.46085@natsu.mindrot.org>
+References: <55CA41A6.600@bluefrostsecurity.de> <20150812161103.GA11200@openwall.com> <55CBA372.6080102@bluefrostsecurity.de> <20150812204805.GA12880@openwall.com> <55CBC694.7070706@bluefrostsecurity.de>
+User-Agent: Alpine 2.20 (BSO 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <CAOp4FwR2S=DRH2TDp_sFPbaDPRUf=-bcmTJxa0+tyP52_xvejw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: pool@lists.ntp.org, team@security.debian.org, secalert@redhat.com
-Date: Wed, 27 Jan 2016 11:07:17 -0700
-From: Richard Johnson <rdump@river.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.73 on UQ Mailhub
+X-Scanned-By: MIMEDefang 2.75 on 130.102.60.17
+X-UQ-FilterTime: 1472795530
+cc: Solar Designer <solar@openwall.com>
+Date: Fri, 2 Sep 2016 15:52:06 +1000 (AEST)
+From: Damien Miller <djm@mindrot.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6 pools
- for scanning purposes
+Subject: Re: [oss-security] CVE request - OpenSSH 6.9 PAM privilege separation
+ vulnerabilities
 To: oss-security@lists.openwall.com
 
-On 2016-01-27 06:05, Loganaden Velvindron wrote:
-> Shouldn't we have some kind of policy for operators participating in
-> pool.ntp.org to prevent such issues ?
+On Thu, 13 Aug 2015, Moritz Jodeit wrote:
 
+> On 12.08.2015 22:48, Solar Designer wrote:
+> > Thank you!
+> > 
+> > Are systems with "keyboard interactive" and "challenge-response"
+> > authentication disabled (all of PAMAuthenticationViaKbdInt,
+> > KbdInteractiveAuthentication, and ChallengeResponseAuthentication, as
+> > applicable to a given sshd version, set to no) affected by these issues
+> > as well?  The code appears to be specific to this mode, but it isn't
+> > immediately clear whether or not these configuration settings prevent
+> > the vulnerable code from being reached in the privsep monitor even when
+> > the privsep child is compromised.  If the settings do not currently
+> > prevent the code from being reached (I hope they do), then this should
+> > be corrected as a hardening measure.
+> 
+> As long as UsePAM is enabled in the configuration, all the PAM-related
+> monitor requests can be send to the monitor. This at least allows
+> triggering the use-after-free even if all the settings you mentioned
+> are set to "no". Not sure if a full authentication is possible in this
+> case though.
 
-If the issue is 'port scanning by the IPv6 NTP pool participant', why bother?
+Solar just reminded me of this branch of this old thread, prompting
+me to tighten up OpenSSH's privilege separation monitor process:
 
-Any IPv6 NTP pool provider will naturally have peer IPv6 addresses to use and
-record. It's one way that researchers at measurement organizations already
-track IPv6 use and growth.
+https://anongit.mindrot.org/openssh.git/commit/?id=775f8a23f235
+https://anongit.mindrot.org/openssh.git/commit/?id=7fd0ea8a1db4
+https://anongit.mindrot.org/openssh.git/commit/?id=b38b95f5bcc5
 
-Others can, do, and will use popular public services like NTP to enumerate and
-record active peer addresses as well. And some of those others will do things
-with that data.
+(there'll be another one for GSSAPI once I can find someone to test it)
 
-A policy that says "do not log peer addresses" would be nice for privacy
-reasons, and bad for maintenance reasons. Practically speaking, violations
-will be undetectable, and it'll be unenforceable.
+Together these more rigorously and explicitly enforce the expected
+request flow in the monitor process.
 
-Maybe a policy that says 'do not engage in DoS' instead?
+Thanks for the reminder :)
 
-Either way, when we don't want to be scanned, regardless of how the scanner
-gets their target addresses, we tend to use perimeter firewalls.
-
-
-Richard
-
+-d
