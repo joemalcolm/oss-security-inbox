@@ -1,26 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/16/5
-Message-ID: <1A3BE2DB-669B-4519-B07B-F1F51C5BA6D5@nccgroup.trust>
-Date: Sat, 16 Jul 2016 19:14:58 +0000
-From: Jesse Hertz <Jesse.Hertz@...group.trust>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "cve-assign@...re.org" <cve-assign@...re.org>
-Subject: Re: Multiple Bugs in OpenBSD Kernel 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/04/2
+Message-ID: <446d4d0f-af92-c072-11ce-12799951c482@sysdream.com>
+Date: Sun, 4 Sep 2016 12:29:46 +0200
+From: Sysdream Labs <labs@...dream.com>
+To: Henri Salo <henri@...v.fi>, cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE ID Request: FOG Project Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi, can you please assign CVE’s for the issues mentioned.
-> On Jul 14, 2016, at 5:23 PM, Jesse Hertz <Jesse.Hertz@...group.trust> wrote:
+Le 04/09/2016 à 08:35, Henri Salo a écrit :
+> On Tue, Jul 19, 2016 at 11:12:32AM +0200, Sysdream Labs wrote:
+>> SQL Injection
+>> Unauthenticated Remote Command Execution
 > 
-> It appears that me using HTML emails may have made the attachments unreadable on the web interface or for some users. Apologies. Here are the attachments again in a plaintext email.
+> Did these get CVE identifiers assigned?
 > 
-> I would also like to note (thanks to tj@...nbsd for pointing this out!) that with regard to the bugs requiring kern.usermount:
-> 
-> “these bugs are now root-only in -current since the kern.usermount option
-> was disabled and will be removed entirely. may be worth a mention on your
-> write-up. https://marc.info/?l=openbsd-cvs&m=146851081629533&w=2”
-> 
-> 
-> <kevent_panic.c><mmap_panic.c><mount_panic.c><thrsigdivert_panic.c><thrsleep_panic.c><tmpfs_mknod_panic.c><ufs_getdents_panic.c><unmount_panic.c>
+
+Hi,
+
+No, we did not receive a reply.
+
+Regards,
+
+-- 
+SYSDREAM Labs <labs@...dream.com>
+
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
+
+* Website: https://sysdream.com/
+* Twitter: @sysdream
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (497 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
