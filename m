@@ -1,25 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/05/7
-Message-ID: <20160305172039.GA20796@openwall.com>
-Date: Sat, 5 Mar 2016 20:20:39 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/04/3
+Message-ID: <87r38ze3vk.fsf@angela.anarc.at>
+Date: Sun, 04 Sep 2016 17:45:03 -0400
+From: anarcat@...ian.org (Antoine Beaupré)
 To: oss-security@...ts.openwall.com
-Cc: cve-editorial-board-list <cve-editorial-board-list@...TS.MITRE.ORG>
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+Subject: CVE ID request: certificate spoofing through crafted SASL message in inspircd, charybdis
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 04, 2016 at 02:08:15PM -0500, Art Manion wrote:
-> I think it's been said on this list previously -- these are two separate
-> activities:
-> 
-> 1. Assigning IDs
+inspircd published 2.0.23 that fixes an issue with SASL
+authentication. The details are here:
 
-Problem solved:
+http://www.inspircd.org/2016/09/03/v2023-released.html
 
-http://www.openwall.com/ove
+All versions are affected.
 
-> 2. Analysis, deconfliction, write-up
+Upstream hasn't requested a CVE yet. I told them I would request one
+from here on IRC.
 
-Having IDs is of some use even without or before all of that.
+It seems to also affect Charybdis, which fixed the issue in the
+upcoming 3.5.3 release:
 
-Alexander
+https://github.com/charybdis-ircd/charybdis/commit/818a3fda944b26d4814132cee14cfda4ea4aa824
+
+A.
+
+-- 
+All governments are run by liars and nothing they say should be
+believed.
+                       - I. F. Stone
