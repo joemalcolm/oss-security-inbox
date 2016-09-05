@@ -1,4 +1,9 @@
-Received: (qmail 30438 invoked by uid 550); 27 Feb 2026 19:39:17 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5491" "Monday" "5" "September" "2016" "14:14:32" "+0200" "Kamil Dudka" "kdudka@redhat.com" "<1649028.3J7HsOb28o@kdudka-nb>" "155" "[oss-security] Re: [SECURITY VULNERABILITY] curl: Re-using connections with wrong client cert" nil nil nil "9" "2016090512:14:32" "[oss-security] Re: [SECURITY VULNERABILITY] curl: Re-using connections with wrong client cert" (number mark "U       kdudka@redha Sep  5  155/5491  " thread-indent "\"[oss-security] Re: [SECURITY VULNERABILITY] curl: Re-using connections with wrong client cert\"\n") "<alpine.DEB.2.20.1608030901400.2418@tvnag.unkk.fr>" ("<alpine.DEB.2.20.1608030901400.2418@tvnag.unkk.fr>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 27918 invoked by uid 550); 5 Sep 2016 12:17:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,98 +12,176 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30407 invoked from network); 27 Feb 2026 19:39:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1772221148;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=trh/aaTUj7FUnxc6ysdFD6OYltAf6/XLgUFDpbHDUps=;
-	b=Xou8w+VMvVqHurKROvWfpflmcBpeeqzeVUllBz/4NuA4vv7KfGyVPZ3jrUWq9pNZDtIl44
-	MO5J6L0qUyXxRNtzVf8+dKxJMYcHTbBsD1WGKYyuz9WD1Ux9+x+c0XSHS+cOGcbCdBSb8F
-	FmkfT1EhVFM7cSJA6Y3VQkKan+2CEhg=
-X-MC-Unique: XoIlCpcgOFSIv1yoaaf3VA-1
-X-Mimecast-MFC-AGG-ID: XoIlCpcgOFSIv1yoaaf3VA_1772221145
-From: Florian Weimer <fweimer@redhat.com>
-To: Alan Coopersmith <alan.coopersmith@oracle.com>
-Cc: oss-security@lists.openwall.com
-In-Reply-To: <a671aebf-fc45-4d06-a1dd-5ed6664aaa3c@oracle.com> (Alan
-	Coopersmith's message of "Fri, 27 Feb 2026 10:38:40 -0800")
-References: <a671aebf-fc45-4d06-a1dd-5ed6664aaa3c@oracle.com>
-Date: Fri, 27 Feb 2026 20:39:01 +0100
-Message-ID: <lhu1pi6c6y2.fsf@oldenburg.str.redhat.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Received: (qmail 26317 invoked from network); 5 Sep 2016 12:14:42 -0000
+From: Kamil Dudka <kdudka@redhat.com>
+To: curl-users@cool.haxx.se, curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
+Cc: Daniel Stenberg <daniel@haxx.se>
+Date: Mon, 05 Sep 2016 14:14:32 +0200
+Message-ID: <1649028.3J7HsOb28o@kdudka-nb>
+User-Agent: KMail/4.14.10 (Linux/4.7.2-gentoo; KDE/4.14.20; x86_64; ; )
+In-Reply-To: <alpine.DEB.2.20.1608030901400.2418@tvnag.unkk.fr>
+References: <alpine.DEB.2.20.1608030901400.2418@tvnag.unkk.fr>
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: wVzwMxL_7S7wxrfIIKS2iaJ2_qPjs6H6-3Gj6K6YBDw_1772221145
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] OSEC-2026-01 in the OCaml runtime: Buffer
- Over-Read in OCaml Marshal Deserialization
+Content-Type: multipart/mixed; boundary="nextPart5440679.A0VIfQE1iZ"
+Content-Transfer-Encoding: 7Bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Mon, 05 Sep 2016 12:14:30 +0000 (UTC)
+Subject: [oss-security] Re: [SECURITY VULNERABILITY] curl: Re-using connections with wrong client cert
 
-* Alan Coopersmith:
+--nextPart5440679.A0VIfQE1iZ
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 
-> https://sympa.inria.fr/sympa/arc/ocsf-ocaml-security-announcements/2026-0=
-2/msg00000.html
-> announces:
->> From: Hannes Mehnert <hannes@mehnert.org>
->> To: ocsf-ocaml-security-announcements@inria.fr
->> Subject: [ocsf-ocaml-security-announcements] OSEC-2026-01 in the OCaml r=
-untime: Buffer Over-Read in OCaml Marshal Deserialization
->> Date: Tue, 17 Feb 2026 15:16:54 +0100
->> Dear everyone,
->> it is my pleasure to announce the first security announcement of
->> this year,
->> and the first on this mailing list.
->> It should any moment now also appear at
->> https://osv.dev/list?q=3DOSEC-2026-01
->> Human link:
->> https://github.com/ocaml/security-advisories/tree/main/advisories/2026/O=
-SEC-2026-01.md
+On Wednesday, August 03, 2016 09:05:26 Daniel Stenberg wrote:
+> Re-using connections with wrong client cert
+> ===========================================
+> 
+> Project cURL Security Advisory, August 3rd 2016 -
+> [Permalink](https://curl.haxx.se/docs/adv_20160803B.html)
 
-Surprised to read this.  I think this comment from 2018 is still
-appropriate:
+After torture-testing the patch for CVE-2016-5420, it was discovered that 
+libcurl built on top of NSS (Network Security Services) still incorrectly
+re-uses client certificates if a certificate from file is used for one TLS
+connection but no certificate is set for a subsequent TLS connection.
 
-| Marshal should not used in contexts where an attacker can control the
-| data. I don't believe it is, at least in any project I'm aware of, and
-| if it were, it's unlikely that those project perform enough check on
-| the result of Marshal to make the use safe anyway.
+This problem was caused by an implementation detail of the NSS backend
+in libcurl, which is orthogonal to the cause of CVE-2016-5420.  Users of 
+libcurl/NSS that load client certificates from files are encouraged to
+also apply the attached follow-up patch.
 
-<https://github.com/ocaml/ocaml/issues/7765#issuecomment-473076288>
+The original patch for CVE-2016-5420 has been amended to also contain the 
+attached patch:
 
-The demarshaller does not have access to type information from the
-program, so it has the ability to construct an arbitrary object graph.
+https://curl.haxx.se/CVE-2016-5420.patch
 
-The manual has a formatting glitch which hides the last sentence quoted
-below:
+> VULNERABILITY
+> -------------
+> 
+> libcurl did not consider client certificates when reusing TLS connections.
+> 
+> libcurl supports reuse of established connections for subsequent requests.
+> It does this by keeping a few previous connections "alive" in a connection
+> pool so that a subsequent request that can use one of them instead of
+> creating a new connection will do so.
+> 
+> When using a client certificate for a connection that was then put into the
+> connection pool, that connection could then wrongly get reused in a
+> subsequent request to that same server that either didn't use a client
+> certificate at all or that asked to use a different client certificate thus
+> trying to tell the user that it is a different entity.
+> 
+> This mistakenly using the wrong connection could of course lead to
+> applications sending requests to the wrong realms of the server using
+> authentication that it wasn't supposed to have for those operations.
+> 
+> We are not aware of any exploit of this flaw.
+> 
+> INFO
+> ----
+> 
+> This flaw also affects the curl command line tool.
+> 
+> The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+> CVE-2016-5420 to this issue.
+> 
+> AFFECTED VERSIONS
+> -----------------
+> 
+> This flaw is relevant for all versions of curl and libcurl that support
+> SSL/TLS and client certificates.
+> 
+> - Affected versions: libcurl 7.1 to and including 7.50.0
+> - Not affected versions: libcurl >= 7.50.1
+> 
+> libcurl is used by many applications, but not always advertised as such!
+> 
+> THE SOLUTION
+> ------------
+> 
+> In version 7.50.1, curl will check that re-used connections have the correct
+> client certificate (file name) before used.
+> 
+> A [patch for CVE-2016-5420](https://curl.haxx.se/CVE-2016-5420.patch) is
+> available. This patch relies on the
+> [CVE-2016-5419](https://curl.haxx.se/docs/adv_20160803A.html) patch already
+> having been applied.
+> 
+> RECOMMENDATIONS
+> ---------------
+> 
+> We suggest you take one of the following actions immediately, in order of
+> preference:
+> 
+>   A - Upgrade curl and libcurl to version 7.50.1
+> 
+>   B - Apply the patch to your version and rebuild
+> 
+>   C - Do not use client certificates
+> 
+> TIME LINE
+> ---------
+> 
+> This was figured out by curl security team members during our work with the
+> 20160803A flaw during June 2016. We contacted distros@openwall on July 31.
+> 
+> libcurl 7.50.1 was released on August 3 2016, coordinated with the
+> publication of this advisory.
+> 
+> CREDITS
+> -------
+> 
+> Found by the curl security team. Patch by Daniel Stenberg.
+> 
+> Thanks a lot!
+--nextPart5440679.A0VIfQE1iZ
+Content-Disposition: attachment; filename="0001-nss-refuse-previously-loaded-certificate-from-file.patch"
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/x-patch; charset="UTF-8"; name="0001-nss-refuse-previously-loaded-certificate-from-file.patch"
 
-| Warning: marshaling is currently not type-safe. The type of marshaled
-| data is not transmitted along the value of the data, making it
-| impossible to check that the data read back possesses the type
-| expected by the context. In particular, the result type of the
-| Marshal.from_* functions is given as 'a, but this is misleading: the
-| returned OCaml value does not possess type 'a for all 'a; it has one,
-| unique type which cannot be determined at compile-time. The programmer
-| should explicitly give the expected type of the returned value, using
-| the following syntax:
-|
-|    (Marshal.from_channel chan : type)
-|
-| Anything can happen at run-time if the object in the file does not
-| belong to the given type.
+>From ed60ce7ca2ad6866f87c8accd06a77e2aabc7c32 Mon Sep 17 00:00:00 2001
+From: Kamil Dudka <kdudka@redhat.com>
+Date: Mon, 22 Aug 2016 10:24:35 +0200
+Subject: [PATCH] nss: refuse previously loaded certificate from file
 
-<https://ocaml.org/manual/5.4/api/Marshal.html>
+... when we are not asked to use a certificate from file
+---
+ lib/vtls/nss.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-And the party supplying the serialized blob can chose whether the type
-matches.  So the inherent insecurity of unmarshalling (=E2=80=9CAnything can
-happen=E2=80=9D) is actually documented, just not very clearly.
+diff --git a/lib/vtls/nss.c b/lib/vtls/nss.c
+index ad33f25..e467360 100644
+--- a/lib/vtls/nss.c
++++ b/lib/vtls/nss.c
+@@ -1004,10 +1004,10 @@ static SECStatus SelectClientCert(void *arg, PRFileDesc *sock,
+   struct ssl_connect_data *connssl = (struct ssl_connect_data *)arg;
+   struct Curl_easy *data = connssl->data;
+   const char *nickname = connssl->client_nickname;
++  static const char pem_slotname[] = "PEM Token #1";
+ 
+   if(connssl->obj_clicert) {
+     /* use the cert/key provided by PEM reader */
+-    static const char pem_slotname[] = "PEM Token #1";
+     SECItem cert_der = { 0, NULL, 0 };
+     void *proto_win = SSL_RevealPinArg(sock);
+     struct CERTCertificateStr *cert;
+@@ -1069,6 +1069,12 @@ static SECStatus SelectClientCert(void *arg, PRFileDesc *sock,
+   if(NULL == nickname)
+     nickname = "[unknown]";
+ 
++  if(!strncmp(nickname, pem_slotname, sizeof(pem_slotname) - 1U)) {
++    failf(data, "NSS: refusing previously loaded certificate from file: %s",
++          nickname);
++    return SECFailure;
++  }
++
+   if(NULL == *pRetKey) {
+     failf(data, "NSS: private key not found for certificate: %s", nickname);
+     return SECFailure;
+-- 
+2.7.4
 
-Maybe time to send a PR.
 
-Thanks,
-Florian
+--nextPart5440679.A0VIfQE1iZ--
 
