@@ -1,116 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/20
-Message-ID: <alpine.NEB.2.11.1601191507010.10673@t1.m.reedmedia.net>
-Date: Tue, 19 Jan 2016 15:07:31 -0600 (CST)
-From: "Jeremy C. Reed" <jreed@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/05/4
+Message-ID: <CAL8hw9Go4v4Qah_Vxg0-C03C64FczjZ9b6qWYhd6802_LuYBjw@mail.gmail.com>
+Date: Mon, 5 Sep 2016 21:35:12 +0200
+From: Nathan Van Gheem <nathan.van.gheem@...ne.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2015-8705: Problems converting OPT resource records and ECS options to text format can cause BIND to terminate.
+Subject: Re: CVE request: Plone multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-CVE:                   CVE-2015-8705
-Document Version:      2.0
-Posting date:          19 January 2016
-Program Impacted:      BIND
-Versions affected:     9.10.0->9.10.3-P2
-Severity:              Medium
-Exploitable:           Remotely
+Hi,
 
-Description:
+Re-submitting again because I forgot one of the vulnerabilities.
 
-   In versions of BIND 9.10, errors can occur when OPT pseudo-RR
-   data or ECS options are formatted to text.  In 9.10.3 through
-   9.10.3-P2, the issue may result in a REQUIRE assertion failure
-   in buffer.c. In prior 9.10 versions, it may result in named
-   crashing (such as with a segmentation fault) or other misbehavior
-   due to a buffer overrun.
+Multiple vulnerabilities were recently patched.
 
-Impact:
 
-   This issue can affect both authoritative and recursive servers
-   if they are performing debug logging. (It may also crash related
-   tools which use the same code, such as dig or delv.)
+1. *filesystem information leak*: https://plone.org/security/
+hotfix/20160830/filesystem-information-leak
 
-CVSS Score:            5.4
-CVSS Vector:           (AV:N/AC:H/Au:N/C:N/I:N/A:C)
+Managers had the ability to find read files from the file system that the
+system user running the plone process had access to
 
-For more information on the Common Vulnerability Scoring System and
-to obtain your specific environmental score please visit:
-http://nvd.nist.gov/cvss.cfm?calculator&adv&version=2&vector=(AV:N/AC:H/Au:N/C:N/I:N/A:C)
+2. *Non-Persistent XSS in Plone forms*: https://plone.org/security/
+hotfix/20160830/non-persistent-xss-in-plone-forms
 
-Workarounds:
+z3c.form will currently accept data from GET requests when the form is
+supposed to be POST. This allows a user to inject a potential XSS attack
+into a form. With certain widgets in Plone admin forms, the input is
+expected to be safe and can cause a reflexive XSS attack. Additionally,
+there is potential for an attack that will trick a user into saving a
+persistent XSS.
 
-   CVE-2015-8705 can be avoided in named by disabling debug logging.
+3. *open redirection*:  https://plone.org/security/hotfix/20160830/open-
+redirection-in-plone
 
-Active exploits:
+In multiple places, Plone blindly uses the referer header to redirect a
+user to the next page after a particular action. An attacker could utilize
+this to draw a user into a redirection attack.
 
-   No known active exploits.
+4. *Non-Persistent XSS in Plone*: https://plone.org/security/
+hotfix/20160830/non-persistent-xss-in-plone-1
 
-Solution:
+Plone's URL checking infrastructure includes a method for checking if URLs
+valid and located in the Plone site. By passing javascript into this
+specially crafted url, XSS can be achieved.
 
-   Upgrade to the patched release most closely related to your
-   current version of BIND.  This can be downloaded from
-   http://www.isc.org/downloads.
+5. *Non-persistent XSS in Plone*:
+https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone
 
-   -  BIND 9 version 9.10.3-P3
+Plone has unescaped user input in a page template that is open to XSS.
 
-Acknowledgements:
+5. *Non-Persistent XSS in Plone Zope Management(ZMI)*:
+https://plone.org/security/hotfix/20160830/non-persistent-xss-in-zope2
 
-   ISC would like to thank Tatuya Jinmei of Infoblox for discovering
-   and reporting one of the issues corrected in this fix.
+In multiple places, Zope2's ZMI pages do not properly escape user input
 
-Document Revision History:
 
-   1.0 Advance Notification 12 January 2016
-   1.1 "Versions affected", "Severity", "Description",
-        and "Impact" information corrected. 15 January 2016
-   2.0 Public disclosure 19 January 2016
+Credits to all these go to Sebastian Perez
 
-Related Documents:
+All of these vulnerabilities have been patched with the hotfix release
+package(https://plone.org/security/hotfix/20160830) and are being
+incorporated upstream.
 
-   See our BIND9 Security Vulnerability Matrix at
-   https://kb.isc.org/article/AA-00913 for a complete listing of
-   Security Vulnerabilities and versions affected.
 
-If you'd like more information on ISC Subscription Support and
-Advance Security Notifications, please visit http://www.isc.org/support/.
+Thanks,
+Nathan
 
-Do you still have questions?  Questions regarding this advisory
-should go to security-officer@....org.  To report a new issue,
-please encrypt your message using security-officer@....org's PGP
-key which can be found here:
-   https://www.isc.org/downloads/software-support-policy/openpgp-key/.
-If you are unable to use encrypted email, you may also report new
-issues at: https://www.isc.org/community/report-bug/.
+On Mon, Sep 5, 2016 at 6:42 PM, Nathan Van Gheem <nathan.van.gheem@...ne.org
+> wrote:
 
-Note:
+> Hi,
+>
+> Multiple vulnerabilities were recently patched.
+>
+>
+> 1. *filesystem information leak*: https://plone.org/security/
+> hotfix/20160830/filesystem-information-leak
+>
+> Managers had the ability to find read files from the file system that the
+> system user running the plone process had access to
+>
+> 2. *Non-Persistent XSS in Plone forms*: https://plone.org/security/
+> hotfix/20160830/non-persistent-xss-in-plone-forms
+>
+> z3c.form will currently accept data from GET requests when the form is
+> supposed to be POST. This allows a user to inject a potential XSS attack
+> into a form. With certain widgets in Plone admin forms, the input is
+> expected to be safe and can cause a reflexive XSS attack. Additionally,
+> there is potential for an attack that will trick a user into saving a
+> persistent XSS.
+>
+> 3. *open redirection*:  https://plone.org/security/hotfix/20160830/open-
+> redirection-in-plone
+>
+> In multiple places, Plone blindly uses the referer header to redirect a
+> user to the next page after a particular action. An attacker could utilize
+> this to draw a user into a redirection attack.
+>
+> 4. *Non-Persistent XSS in Plone*: https://plone.org/security/
+> hotfix/20160830/non-persistent-xss-in-plone-1
+>
+> Plone's URL checking infrastructure includes a method for checking if URLs
+> valid and located in the Plone site. By passing javascript into this
+> specially crafted url, XSS can be achieved.
+>
+> 5. *Non-Persistent XSS in Plone Zope Management(ZMI)*:
+> https://plone.org/security/hotfix/20160830/non-persistent-xss-in-zope2
+>
+> In multiple places, Zope2's ZMI pages do not properly escape user input
+>
+>
+> Credits to all these go to Sebastian Perez
+>
+> All of these vulnerabilities have been patched with the hotfix release
+> package(https://plone.org/security/hotfix/20160830) and are being
+> incorporated upstream.
+>
+>
+> Thanks,
+> Nathan
+>
 
-   ISC patches only currently supported versions. When possible we
-   indicate EOL versions affected.  (For current information on
-   which versions are actively supported, please see
-   http://www.isc.org/downloads/).
-
-ISC Security Vulnerability Disclosure Policy:
-
-   Details of our current security advisory policy and practice can
-   be found here: https://kb.isc.org/article/AA-00861
-
-This Knowledge Base article: https://kb.isc.org/article/AA-01336
-is the complete and official security advisory document.
-
-Legal Disclaimer:
-
-   Internet Systems Consortium (ISC) is providing this notice on
-   an "AS IS" basis. No warranty or guarantee of any kind is expressed
-   in this notice and none should be implied. ISC expressly excludes
-   and disclaims any warranties regarding this notice or materials
-   referred to in this notice, including, without limitation, any
-   implied warranty of merchantability, fitness for a particular
-   purpose, absence of hidden defects, or of non-infringement. Your
-   use or reliance on this notice or materials referred to in this
-   notice is at your own risk. ISC may change this notice at any
-   time.  A stand-alone copy or paraphrase of the text of this
-   document that omits the document URL is an uncontrolled copy.
-   Uncontrolled copies may lack important information, be out of
-   date, or contain factual errors.
-
-(c) 2001-2016 Internet Systems Consortium
