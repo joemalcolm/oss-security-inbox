@@ -1,35 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/27/3
-Message-ID: <CAOp4FwR2S=DRH2TDp_sFPbaDPRUf=-bcmTJxa0+tyP52_xvejw@mail.gmail.com>
-Date: Wed, 27 Jan 2016 17:05:55 +0400
-From: Loganaden Velvindron <loganaden@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: pool@...ts.ntp.org, linuxbrad@...il.com, team@...urity.debian.org,  secalert@...hat.com
-Subject: Re: shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/05/10
+Message-ID: <CA+q1=fSNAzwjywo9qnkRyO0S7refmUZFFciMyKcKE6oNoQjRLQ@mail.gmail.com>
+Date: Mon, 5 Sep 2016 16:06:10 -0700
+From: Diogo Mónica <diogo.monica@...ker.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 27, 2016 at 3:24 PM, Luca BRUNO <lucab@...ian.org> wrote:
+>
+> DoS is often a gray area. Obviously if I send 10 gigabits of request
+> traffic and swarm gets slow/non responsive the CVE response would be "Well
+> yeah... that's probably what happens if you saturate the network with
+> requests. No CVE for you" but if a single node behaves in an odd way and
+> prevents the whole system from working in an expected manner, that may be a
+> problem that is worth a CVE, especially if it can be triggered by an
+> attacker/less trusted user (classic trust boundary violation to quote
+> @sushidude).
+>
 
-> [cross-posted to pool-ntp and oss-sec]
+Again, there is no trust boundary violation. You have a token that allows
+you to join an unlimited number of workers. The system supports N workers,
+you join N + 1, the system starts rejecting new workers.
+
+No malicious attacker can ever join any workers unless they have the token,
+and if you are paranoid, you can always rotate the secret token after each
+worker join.
+
+
+> Regardless of whether this is CVE worthy is there any plan to add rate
+> limiting or other protective measures to prevent a single badly
+> behaved/malicious node from making the swarm unable to operate normally? I
+> don't see any issues in https://github.com/docker/swarm/issues for this.
+> Thanks!
 >
-> Hi,
-> while reviewing network logs this morning I spotted some anomalies related
-> to scan probes, ntp.org pools and IPv6.
->
-> It looks like Brad already observed and blogged about this some days ago,
-> but I haven't seen this discussed in the usual ntp-pools, Debian and
-> oss-sec ML, so I'm reposting this here:
->
-> http://netpatterns.blogspot.de/2016/01/the-rising-sophistication-of-network.html
->
-> In summary, some machines (which seem related to the shodan.io scanning
-> project)
-> are actively participating in pool.ntp.org as IPv6 endpoints.
-> However, clients connecting to them for NTP timesync, are subsequently
-> scanned
-> by probes originating from *.scan6.shodan.io hosts.
->
->
-Shouldn't we have some kind of policy for operators participating in
-pool.ntp.org to prevent such issues ?
+
+I don't believe this is the right thread to discuss other topics. I'm here
+to get this CVE rescinded, since there is no reason for its existence in
+the first place.
+
+If you'd like to discuss any other matters related to docker or swarm, feel
+free to do so by either open an issue on our GH repository, or our forums:
+https://forums.docker.com.
+
+Thank you,
+Diogo Monica
 
