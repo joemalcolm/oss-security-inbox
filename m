@@ -1,123 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/31/1
-Message-ID: <1472603664.25374.41.camel@decadent.org.uk>
-Date: Wed, 31 Aug 2016 01:34:24 +0100
-From: Ben Hutchings <ben@...adent.org.uk>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Marcin Szewczyk <debian@...ny.org>, debian-lts@...ts.debian.org
-Subject: CVE request: Kernel Oops when issuing fcntl on an AUFS directory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/05/5
+Message-Id: <20160905215759.E575734E018@smtpvbsrv1.mitre.org>
+Date: Mon,  5 Sep 2016 17:57:59 -0400 (EDT)
+From: cve-assign@...re.org
+To: nathan.van.gheem@...ne.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Plone multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Marcin Szewczyk reported and diagnosed a bug in Debian's kernel
-packages that allows a denial of service (crash) by local users with
-access to an aufs filesystem.  The bug is in a Debian-specific patch,
-not the upstream kernel or aufs code.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The current version in Debian 7 'wheezy' (3.2.81-1) and the current proposed update to Debian 8 'jessie' (3.16.36-1 are affected.
+> All of these vulnerabilities have been patched with the hotfix release
+> package https://plone.org/security/hotfix/20160830 and are being
+> incorporated upstream.
 
-Ben.
+> 1. *filesystem information leak*: https://plone.org/security/hotfix/20160830/filesystem-information-leak
+> 
+> Managers had the ability to find read files from the file system that the
+> system user running the plone process had access to
 
-On Tue, 2016-08-30 at 22:33 +0200, Marcin Szewczyk wrote:
-> Hi,
-> 
-> the wheezy kernel upgrade from 3.2.78-1 to 3.2.81-1 added the SETFL
-> fcntl support code (#627782) which unfortunately results in a kernel
-> Oops when the fcntl is called on a directory. This breaks e.g. copying
-> files from an AUFS filesystem on a remote machine using scp.
->
-> Minimal code to reproduce the problem:
-> #v+
-> #include <stdio.h>
-> #include <stdlib.h>
-> #include <fcntl.h>
-> 
-> int main (int argc, char **argv) {
->         const char *fname = NULL;
->         int fd;
->         if (argc != 2)
->                 exit (1);
->         fname = argv[1];
->         fd = open (fname, O_RDONLY|O_NONBLOCK);
->         printf ("fd %d\n", fd);
->         fcntl (fd, F_SETFL, O_RDONLY);
->         return 0;
-> }
-> #v-
-> 
-> Call the program on regular a file (nothing happens) and then on a
-> directory (Oops).
-> 
-> The Oops happens in fs/fcntl.c:
-> #v+
-> if (!error && filp->f_op->owner &&
->     !strcmp(filp->f_op->owner->name, "aufs") &&
->     strstr(filp->f_op->owner->version, "+setfl"))
->         error = filp->f_op->setfl(filp, arg);
-> #v-
-> 
-> > 
-> > From fs/aufs/inode.c:
-> #v+
-> case S_IFREG:
->         [...]
-> 	inode->i_fop = &aufs_file_fop;
->         [...]
-> case S_IFDIR:
->         [...]
-> 	inode->i_fop = &aufs_dir_fop;
-> #v-
-> 
-> The aufs_file_fop structure sets the value of the .setfl member to
-> aufs_setfl (f_op.c). aufs_dir_fop (dir.c) on the other hand does not.
-> 
-> dmesg:
-> #v+
-> [42990.915100] aufs 3.2.x+setfl-debian
-> [43046.383421] BUG: unable to handle kernel NULL pointer dereference
-> at           (null)
-> [43046.384011] IP: [<          (null)>]           (null)
-> [43046.384369] PGD 3d0f1067 PUD 3b8cc067 PMD 0 
-> [43046.384688] Oops: 0010 [#1] SMP 
-> [43046.385620] Call Trace:
-> [...]
-> [43046.385620]  [<ffffffff81108701>] ? setfl+0xf1/0x157
-> [43046.385620]  [<ffffffff81108b9e>] ? sys_fcntl+0x1dc/0x3b0
-> [43046.385620]  [<ffffffff81358af2>] ? system_call_fastpath+0x16/0x1b
-> #v-
-> 
-> gdb:
-> #v+
-> 0xffffffff811086d3 <+195>:   callq  0xffffffff811b2bd2 <strcmp>
-> 0xffffffff811086d8 <+200>:   test   %eax,%eax
-> 0xffffffff811086da <+202>:   jne    0xffffffff81108705 <setfl+245>
-> 0xffffffff811086dc <+204>:   mov    0xb0(%r13),%rdi
-> 0xffffffff811086e3 <+211>:   mov    $0xffffffff814dc9e4,%rsi
-> 0xffffffff811086ea <+218>:   callq  0xffffffff811b2e25 <strstr>
-> 0xffffffff811086ef <+223>:   test   %rax,%rax
-> 0xffffffff811086f2 <+226>:   je     0xffffffff81108705 <setfl+245>
-> 0xffffffff811086f4 <+228>:   mov    %rbp,%rsi
-> 0xffffffff811086f7 <+231>:   mov    %rbx,%rdi
-> 0xffffffff811086fa <+234>:   callq  *0xd0(%r14)
-> 0xffffffff81108701 <+241>:   test   %eax,%eax
-> #v-
-> 
-> Naturally it happens both on i686 and amd64.
-> 
-> BTW, changelog link on the package's page[1] is dead.
-> 
-> Interesting changelog's part:
-> 
->   * aufs: Make fcntl(F_SETFL, ...) work (Closes: #627782):
->     - for aufs: new f_op->setfl() to support fcntl(F_SETFL)
->     - aufs: implement new f_op->setfl()
->     - fs: Fix ABI change for aufs F_SETFL fix
-> 
-> Is there any chance for a fix in some future wheezy-lts update?
-> 
-> [1] https://packages.debian.org/wheezy/linux-image-3.2.0-4-amd64
-> 
--- 
-Ben Hutchings
-Anthony's Law of Force: Don't force it, get a larger hammer.
+>> By using relative paths and guessing locations on a server Plone is
+>> installed on, an attacker can read data from a target server that the
+>> process running plone has permission to read. The attacker needs
+>> administrator privileges on the Plone site to perform this attack.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Use CVE-2016-7135.
+
+
+> 2. *Non-Persistent XSS in Plone forms*: https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone-forms
+> 
+> z3c.form will currently accept data from GET requests when the form is
+> supposed to be POST. This allows a user to inject a potential XSS attack
+> into a form. With certain widgets in Plone admin forms, the input is
+> expected to be safe and can cause a reflexive XSS attack. Additionally,
+> there is potential for an attack that will trick a user into saving a
+> persistent XSS.
+
+Use CVE-2016-7136 for the entire "accept data from GET requests when
+the form is supposed to be POST" issue, which apparently has security
+relevance for two different reasons ("reflexive XSS" and "saving a
+persistent XSS").
+
+
+> 3. *open redirection*:  https://plone.org/security/hotfix/20160830/open-redirection-in-plone
+> 
+> In multiple places, Plone blindly uses the referer header to redirect a
+> user to the next page after a particular action. An attacker could utilize
+> this to draw a user into a redirection attack.
+
+Use CVE-2016-7137.
+
+
+> 4. *Non-Persistent XSS in Plone*: https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone-1
+> 
+> Plone's URL checking infrastructure includes a method for checking if URLs
+> valid and located in the Plone site. By passing javascript into this
+> specially crafted url, XSS can be achieved.
+
+Use CVE-2016-7138.
+
+
+> 5. *Non-persistent XSS in Plone*:
+> https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone
+> 
+> Plone has unescaped user input in a page template that is open to XSS.
+
+Use CVE-2016-7139. (There were two issues numbered "5" in the
+http://openwall.com/lists/oss-security/2016/09/05/4 post.)
+
+
+> 5. *Non-Persistent XSS in Plone Zope Management(ZMI)*:
+> https://plone.org/security/hotfix/20160830/non-persistent-xss-in-zope2
+> 
+> In multiple places, Zope2's ZMI pages do not properly escape user input
+
+Use CVE-2016-7140. (There were two issues numbered "5" in the
+http://openwall.com/lists/oss-security/2016/09/05/4 post.)
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXzen4AAoJEHb/MwWLVhi2ikwP/RabVzndqLmnRSGFkekMvJoT
+svRXT3P+gz9rIRa8vG2JLljYOQz4E5IyXYIljoQhGn840uf8UBZcVvtC1P1IeHJc
+noAhNDXg7I13tWyaIc/h2eVCOjnRC2P/qj5fuw+9TyPBiEPZ/CIs5emDNzrRwyp1
+TbBDzhyWUXHYQmtYMzJt2XzYJxHFsC4O8wx7VDx7pvGgKzqHWW50CnOi69aw6AbI
+FN5InkQAUM/7ttDUcOnHG2MNMqwoTtPFLxzGBLURi3B86lhnVwEXe5vl+nCgjdCX
+r42ANgFPx+xNcIuuToTHtY/pguzCTG2NUFsU8I3Zn5U7jXLs95kkDBsUr7zwWWNi
+ftOwUQ79zIKaZL9eQq5cjLdB+gZqWIYaquj4d9lM04nFc7RjYYynhFzQWQmOVxeh
+8+JTJ230pfnK8jpdxDACQmRZyuAh1Lo3YjLLMd2BnvgtVdWHfe4bXfb7dQiGhCsV
+x0+mIgrIxEMrPuOTEGG8WmSPyqJyJpU90QxYQvjPcqKIAF9vqpFdJtiaXv977jfN
++38Tb1GvvBfSWjDFk6F+DX3isS0qwIQXhuWyVCqOCQYA7/NUVLPCvhNli9dG1Vf4
+gPvBLIvmbYNF73uT/A7aZ96+3hBLuUTnhfReTqO7T7HUsf+DtrMh1P4OI13GCzA3
+MHGqeXXgdxru82us5feg
+=UxLJ
+-----END PGP SIGNATURE-----
