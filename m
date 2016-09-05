@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["806" "Wednesday" "24" "June" "2015" "17:15:26" "+0200" "Responsive Disclosure | HSASec" "disclosure@hsasec.de" "<558AC98E.4070709@hsasec.de>" "39" "[oss-security] CVE Request for Wordpress-Plugin Broken Link Checker v1.10.8: Persistent XSS in admin panel enabled by modified headers" nil nil nil "6" "2015062415:15:26" "[oss-security] CVE Request for Wordpress-Plugin Broken Link Checker v1.10.8: Persistent XSS in admin panel enabled by modified headers" (number mark "U       disclosure@h Jun 24   39/806   " thread-indent "\"[oss-security] CVE Request for Wordpress-Plugin Broken Link Checker v1.10.8: Persistent XSS in admin panel enabled by modified headers\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1688" "Monday" "5" "September" "2016" "16:06:10" "-0700" "=?UTF-8?B?RGlvZ28gTcOzbmljYQ==?=" "diogo.monica@docker.com" "<CA+q1=fSNAzwjywo9qnkRyO0S7refmUZFFciMyKcKE6oNoQjRLQ@mail.gmail.com>" "42" "Re: [oss-security] Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node" nil nil nil "9" "2016090523:06:10" "[oss-security] Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node" (number mark "U       diogo.monica Sep  5   42/1688  " thread-indent "\"Re: [oss-security] Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node\"\n") "<CANO=Ty1MwPO8yXAiOyvgrynYrf1=on6wNd5sE6AzPYffyD=-dQ@mail.gmail.com>" ("<CA+q1=fSKUpSWOGusA99-_KkBZOxqjUzVZFSOQECgjAP+QMzuig@mail.gmail.com>" "<CANO=Ty2n6Nus2uJkaJ3OTWrt0wgeOU1zydjAZtABdmp_itpP0g@mail.gmail.com>" "<5309095AF4F10E2D.C7403B94-0E12-4BBF-9F83-04F9E21584CD@mail.outlook.com>" "<CANO=Ty167nS9wG4_wkMDPT_kc4GFo7LLMZHqqhVv3JJNsX-uug@mail.gmail.com>" "<CA+q1=fQRZYp6w5EA1=y+nHULCLpUNZTGGExpYg+n2SD-0sDR8g@mail.gmail.com>" "<CANO=Ty1MwPO8yXAiOyvgrynYrf1=on6wNd5sE6AzPYffyD=-dQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12167 invoked by uid 550); 24 Jun 2015 20:39:08 -0000
+Received: (qmail 1430 invoked by uid 550); 5 Sep 2016 23:06:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,65 +12,82 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24238 invoked from network); 24 Jun 2015 15:15:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1435158926; l=786;
-	s=domk; d=hsasec.de;
-	h=Content-Transfer-Encoding:Content-Type:Subject:To:MIME-Version:From:
-	Date;
-	bh=kqYgwHNk40/8OR7ZzxC3DzO3fduu2m0AMXPpxB2elfU=;
-	b=rV08GJJADdBEyYch39pFIYnPTKPOwxR4V3l+VjxWNrxaDonxnnuWPlGvUQb+RSPASV3
-	zRz2ZPxqHRANh9BKbE2qHTNiF9cfKCqlRlT8neWp8W4navUUxxdPrJcLeAyJQW1qGLPHr
-	TaiH7qaG80/lqaOUXtIR3KzORcX+kd7o9GU=
-X-RZG-AUTH: :KGUXdkynaOpIuw2sU0sXjKTpmRzvZPMbX+JtqaXWxFlXyUDoN0AUj/1RJ35EiJxWMQ==
-X-RZG-CLASS-ID: mo00
-Message-ID: <558AC98E.4070709@hsasec.de>
-Date: Wed, 24 Jun 2015 17:15:26 +0200
-From: Responsive Disclosure | HSASec <disclosure@hsasec.de>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+Received: (qmail 1411 invoked from network); 5 Sep 2016 23:06:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=docker.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=0qX/ykigdb/xj2/HFc3BdajXT1WVUC5B9aISsR8xc+s=;
+        b=ef0xj7ILYbjibeCCi+o5JmeHuCRyynHafpt7RpiAjbYF4nVPStJ7WB0wEsSWE572cI
+         rues6F+XKCD0YBtFk1TqnQXJU01rfAeQqFqsdXOOEHmAylTUUVhzljfiI6wJSdNSnjOb
+         n0ozAD6QGqSFDgQ6u7V37HQcRB9Q5BoXTB6KM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=0qX/ykigdb/xj2/HFc3BdajXT1WVUC5B9aISsR8xc+s=;
+        b=fMJcYt0CAFOYa3SGnqc27IvUsf2wTVdZ6/yEcyeCl3OG1J+ywxuQ81+LWvginVqyr7
+         zVrvQe+I25XJtg0Zgfel0Ac0xHx6BaIhwuCCA7KQnsj3DA+MABy8jMKnvD0LZMdVGY/a
+         mL4xlB0Tjqw3oKiq0kjyH8j6p0BNDtttVN+cwWYjjrVxlax3Cv3uGIBMPauKDYPkD/Hh
+         XnFnLsSXkUNj3zxmN9t5qTtC8qpHOrdk/2F07bhJiqhZ7duc33blCGlqbpI2vv0GSjzC
+         Fpe1Qhwj09SJkcU5fsOI2VTCKQnHnxHsHNAHN0rLso08tgA6ACcogp8GKSTAB18+1XUe
+         M9jw==
+X-Gm-Message-State: AE9vXwPDJRXhp7wp/IzE5q4XYYoA7R2GCj7a/VD6WH5XHwzxjNyyNoZn0CVkhaErnqYZnWNFWIfUl8rRIpqkKElh
+X-Received: by 10.28.32.207 with SMTP id g198mr7406427wmg.45.1473116791505;
+ Mon, 05 Sep 2016 16:06:31 -0700 (PDT)
 MIME-Version: 1.0
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, 
- cve-assign@mitre.org
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE Request for Wordpress-Plugin Broken Link Checker v1.10.8: Persistent
- XSS in admin panel enabled by modified headers
+In-Reply-To: <CANO=Ty1MwPO8yXAiOyvgrynYrf1=on6wNd5sE6AzPYffyD=-dQ@mail.gmail.com>
+References: <CA+q1=fSKUpSWOGusA99-_KkBZOxqjUzVZFSOQECgjAP+QMzuig@mail.gmail.com>
+ <CANO=Ty2n6Nus2uJkaJ3OTWrt0wgeOU1zydjAZtABdmp_itpP0g@mail.gmail.com>
+ <5309095AF4F10E2D.C7403B94-0E12-4BBF-9F83-04F9E21584CD@mail.outlook.com>
+ <CANO=Ty167nS9wG4_wkMDPT_kc4GFo7LLMZHqqhVv3JJNsX-uug@mail.gmail.com>
+ <CA+q1=fQRZYp6w5EA1=y+nHULCLpUNZTGGExpYg+n2SD-0sDR8g@mail.gmail.com> <CANO=Ty1MwPO8yXAiOyvgrynYrf1=on6wNd5sE6AzPYffyD=-dQ@mail.gmail.com>
+From: =?UTF-8?Q?Diogo_M=C3=B3nica?= <diogo.monica@docker.com>
+Date: Mon, 5 Sep 2016 16:06:10 -0700
+Message-ID: <CA+q1=fSNAzwjywo9qnkRyO0S7refmUZFFciMyKcKE6oNoQjRLQ@mail.gmail.com>
+To: oss-security <oss-security@lists.openwall.com>
+Content-Type: multipart/alternative; boundary=001a113d66be1221ab053bcabbb5
+Subject: Re: [oss-security] Re: cve request: docker swarmkit Dos occurs by
+ repeatly joining and quitting swam cluster as a node
 
-Greetings,
+--001a113d66be1221ab053bcabbb5
+Content-Type: text/plain; charset=UTF-8
 
-we discovered a vulnerability in the following component and want to
-request a CVE for it:
+>
+> DoS is often a gray area. Obviously if I send 10 gigabits of request
+> traffic and swarm gets slow/non responsive the CVE response would be "Well
+> yeah... that's probably what happens if you saturate the network with
+> requests. No CVE for you" but if a single node behaves in an odd way and
+> prevents the whole system from working in an expected manner, that may be a
+> problem that is worth a CVE, especially if it can be triggered by an
+> attacker/less trusted user (classic trust boundary violation to quote
+> @sushidude).
+>
 
-Product-Type:     
-Wordpress Plugin
+Again, there is no trust boundary violation. You have a token that allows
+you to join an unlimited number of workers. The system supports N workers,
+you join N + 1, the system starts rejecting new workers.
 
-Product:         
-Broken Link Checker (https://wordpress.org/plugins/broken-link-checker/)
-
-Version:         
-up to 1.10.8
-
-Vendor:         
-Janis Elsts (http://w-shadow.com/)
-
-Fixed:             
-reported: 2015-04-05
-fixed in version 1.10.9, 2015-06-19
-
-Changelog:         
-https://wordpress.org/plugins/broken-link-checker/changelog/
-
-PoC available:     
-yes (internal)
-
-Description:
-Persistent XSS in wordpress-admin-panel enabled by not proper sanitized
-HTTP-Headers.
-There are no special priviliges required to exploit this vulnerability.
-
-Researchers:
-* Michael Kapfer (Michael.Kapfer@hs-augsburg.de)
+No malicious attacker can ever join any workers unless they have the token,
+and if you are paranoid, you can always rotate the secret token after each
+worker join.
 
 
-Best regards,
- the HSASec-Team
- (https://www.hsasec.de)
+> Regardless of whether this is CVE worthy is there any plan to add rate
+> limiting or other protective measures to prevent a single badly
+> behaved/malicious node from making the swarm unable to operate normally? I
+> don't see any issues in https://github.com/docker/swarm/issues for this.
+> Thanks!
+>
+
+I don't believe this is the right thread to discuss other topics. I'm here
+to get this CVE rescinded, since there is no reason for its existence in
+the first place.
+
+If you'd like to discuss any other matters related to docker or swarm, feel
+free to do so by either open an issue on our GH repository, or our forums:
+https://forums.docker.com.
+
+Thank you,
+Diogo Monica
+
+--001a113d66be1221ab053bcabbb5--
