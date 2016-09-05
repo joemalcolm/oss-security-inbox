@@ -1,19 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/27/1
-Message-ID: <654bd3de.fa5.156cc59cf29.Coremail.hongkun.zeng@dbappsecurity.com.cn>
-Date: Sat, 27 Aug 2016 22:14:13 +0800 (GMT+08:00)
-From: 曾鸿坤 <hongkun.zeng@...ppsecurity.com.cn>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request - Intelliants Subrion CMS Arbitrary Files Delete
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/05/9
+Message-Id: <20160905230413.2A24973C3E1@smtpvmsrv1.mitre.org>
+Date: Mon,  5 Sep 2016 19:04:13 -0400 (EDT)
+From: cve-assign@...re.org
+To: nenolod@...eferenced.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE ID request: certificate spoofing through crafted SASL message in inspircd, charybdis
 Content-Type: text/plain; charset=utf-8
 
-Intelliants Subrion CMS Arbitrary Files Delete
-This vulnerability allows remote authenticated users to delete arbitrary files on the server.
-Fix commit: https://github.com/intelliants/subrion/commit/bf2596f2ab27e37456910886e69b48484a76dd64
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+> As is Nefarious:
+> 
+> https://github.com/evilnet/nefarious2/commit/f50a84bad996d438e7b31b9e74c32a41e43f8be5
 
-The auto-upgrader patch has been released.
-Could you allocate a CVE ID for this?
+Use CVE-2016-7145 for this issue only in the Nefarious 2 codebase.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Thank you
+iQIcBAEBCAAGBQJXzfmPAAoJEHb/MwWLVhi2ddEQAJT9z+GrwHozuewZnzrnsjnP
+Ttp6f5/53smFgZ583+v6u2nBOZo9FK4TpbdIbfauIor9zNiJ1GUBbmLBhOQzxtY7
+RzKTLr6s0yoXZxNd908axT9Udwv8Gy/9OvCPnlri7sgFaMgngjzn6PKnU2qWyJD7
+PRqdTKRyLaHJP0aTpx5ICKtkK1+4h7ZySZltTk8yAgpZX92G4Rv7AtusdD97l8dc
+l6kAZLVVT4WcaNWGQ515HZYmLLgq0T0/yAxeQ6usFetK0tSDxuWS2XGLYCjVugx2
+/TjGNyy0qself/BZ+8a4khXEnd1qh0UjUAIWdbkCJQpGqx4uB8trBe321aToh6BE
+BhSWL1jCrJI8CobEhDEQyK/oUdWRGbcy67vm6Z/SIle/iHOjXWV8ksye53ROuk01
+nKkPcH25Yl85vWrGbzg5mLGLzPN0m6o9Fl1s3hGnRdUX7bWT5vrXDwmGN9ohU7fj
+GukbbX/CajBcGl9o4M72ljnXXss9umSR7bTW1NYSim/oRtKUNMAQQU7gcMD9a1rN
+ROY9OMP7TYnUfa8skDkNBN6W5saqaGVsvTEIyahFxueSJcLkZa0wF85Kwp63P7PI
+cY1sospQrBTGZYaWfpRsqhw3AQSsAg5qi5hpxBD1MDfwkY27s8Yg4KzHGPw50w4Y
+YeJil6lI83C45YU9Zl1m
+=dre8
+-----END PGP SIGNATURE-----
