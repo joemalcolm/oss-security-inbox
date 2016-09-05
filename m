@@ -1,35 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/5
-Message-ID: <CANO=Ty3qgsHtaivrfwoB=ZdbgyE=z5+Q+HkhazE06ppDbw63RQ@mail.gmail.com>
-Date: Tue, 1 Mar 2016 10:33:17 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>, CVE ID Requests <cve-assign@...re.org>
-Subject: CVE's for SSLv2 support
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/05/11
+Message-ID: <CA+q1=fTZxdEBOCoUTSXgusCP1k4wm_fJJqSLyucqbjs5LE+1_A@mail.gmail.com>
+Date: Mon, 5 Sep 2016 16:26:02 -0700
+From: Diogo Mónica <diogo.monica@...ker.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: cve request: docker swarm node Dos occurs when join a cluster failed using local CA certificate
 Content-Type: text/plain; charset=utf-8
 
-So there is this proposed RFC:
+>From I can understand from this report, the author creates a swarm, messes
+with the local certificate for a worker, and then tries to join the swarm.
+The worker fails because the author messed with the local state.
 
-https://tools.ietf.org/html/rfc6176
+This does not make the manager not available to the rest of the worker
+nodes, and is essentially a self-DoS (I modified my local configuration in
+such a way that docker doesn't run).
 
-TL;DR: SSLv2 needs to be shot.
+A simple rm -rf /var/lib/docker/swarm should clean all the state. Not CVE
+worthy.
 
-Now we have yet another significant SSLv2 problem, DROWN, bad enough in
-fact that Red Hat has now disabled SSLv2 in OpenSSL by default (already
-done in NSS/GnuTLS), so from my vendor perspective, we're treating SSLv2
-support as a security problem, the solution of which is to remove said
-support.
-
-But more generally, should we look at assigning CVE's for support of SSLv2,
-much like we would for products supporting DES or other known insecure
-cryptographic algorithms, hashes, digests and protocols? My personal vote
-is for yes.
-
-
-
-
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+-- 
+Diogo Mónica
 
