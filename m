@@ -1,30 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/20/2
-Message-ID: <alpine.LFD.2.20.1612201818230.29699@wniryva>
-Date: Tue, 20 Dec 2016 18:19:47 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Zhenhao Hong <zhenhaohong@...il.com>
-Subject: CVE request Qemu: display: virtio-gpu: out of bounds read in virtio_gpu_set_scanout
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/05/1
+Message-ID: <1649028.3J7HsOb28o@kdudka-nb>
+Date: Mon, 05 Sep 2016 14:14:32 +0200
+From: Kamil Dudka <kdudka@...hat.com>
+To: curl-users@...l.haxx.se, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Cc: Daniel Stenberg <daniel@...x.se>
+Subject: Re: [SECURITY VULNERABILITY] curl: Re-using connections with wrong client cert
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Wednesday, August 03, 2016 09:05:26 Daniel Stenberg wrote:
+> Re-using connections with wrong client cert
+> ===========================================
+> 
+> Project cURL Security Advisory, August 3rd 2016 -
+> [Permalink](https://curl.haxx.se/docs/adv_20160803B.html)
 
-Quick Emulator(Qemu) built with the Virtio GPU Device emulator support is 
-vulnerable to an OOB read issue. It could occur while processing 
-'VIRTIO_GPU_CMD_SET_SCANOUT:' command.
+After torture-testing the patch for CVE-2016-5420, it was discovered that 
+libcurl built on top of NSS (Network Security Services) still incorrectly
+re-uses client certificates if a certificate from file is used for one TLS
+connection but no certificate is set for a subsequent TLS connection.
 
-A guest user/process could use this flaw to crash the Qemu process instance 
-resulting in Dos.
+This problem was caused by an implementation detail of the NSS backend
+in libcurl, which is orthogonal to the cause of CVE-2016-5420.  Users of 
+libcurl/NSS that load client certificates from files are encouraged to
+also apply the attached follow-up patch.
 
-Upstream patch:
----------------
-   -> http://git.qemu.org/?p=qemu.git;a=commit;h=acfc4846508a02cc4c83aa27799fd7
-   -> http://git.qemu.org/?p=qemu.git;a=commit;h=2fe760554eb3769d70f608a158474f
+The original patch for CVE-2016-5420 has been amended to also contain the 
+attached patch:
 
-This issue was reported by Zhenhao Hong, Marvel team of 360.cn Inc.
+https://curl.haxx.se/CVE-2016-5420.patch
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+> VULNERABILITY
+> -------------
+> 
+> libcurl did not consider client certificates when reusing TLS connections.
+> 
+> libcurl supports reuse of established connections for subsequent requests.
+> It does this by keeping a few previous connections "alive" in a connection
+> pool so that a subsequent request that can use one of them instead of
+> creating a new connection will do so.
+> 
+> When using a client certificate for a connection that was then put into the
+> connection pool, that connection could then wrongly get reused in a
+> subsequent request to that same server that either didn't use a client
+> certificate at all or that asked to use a different client certificate thus
+> trying to tell the user that it is a different entity.
+> 
+> This mistakenly using the wrong connection could of course lead to
+> applications sending requests to the wrong realms of the server using
+> authentication that it wasn't supposed to have for those operations.
+> 
+> We are not aware of any exploit of this flaw.
+> 
+> INFO
+> ----
+> 
+> This flaw also affects the curl command line tool.
+> 
+> The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+> CVE-2016-5420 to this issue.
+> 
+> AFFECTED VERSIONS
+> -----------------
+> 
+> This flaw is relevant for all versions of curl and libcurl that support
+> SSL/TLS and client certificates.
+> 
+> - Affected versions: libcurl 7.1 to and including 7.50.0
+> - Not affected versions: libcurl >= 7.50.1
+> 
+> libcurl is used by many applications, but not always advertised as such!
+> 
+> THE SOLUTION
+> ------------
+> 
+> In version 7.50.1, curl will check that re-used connections have the correct
+> client certificate (file name) before used.
+> 
+> A [patch for CVE-2016-5420](https://curl.haxx.se/CVE-2016-5420.patch) is
+> available. This patch relies on the
+> [CVE-2016-5419](https://curl.haxx.se/docs/adv_20160803A.html) patch already
+> having been applied.
+> 
+> RECOMMENDATIONS
+> ---------------
+> 
+> We suggest you take one of the following actions immediately, in order of
+> preference:
+> 
+>   A - Upgrade curl and libcurl to version 7.50.1
+> 
+>   B - Apply the patch to your version and rebuild
+> 
+>   C - Do not use client certificates
+> 
+> TIME LINE
+> ---------
+> 
+> This was figured out by curl security team members during our work with the
+> 20160803A flaw during June 2016. We contacted distros@...nwall on July 31.
+> 
+> libcurl 7.50.1 was released on August 3 2016, coordinated with the
+> publication of this advisory.
+> 
+> CREDITS
+> -------
+> 
+> Found by the curl security team. Patch by Daniel Stenberg.
+> 
+> Thanks a lot!
+View attachment "0001-nss-refuse-previously-loaded-certificate-from-file.patch" of type "text/x-patch" (1525 bytes)
