@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3360" "Wednesday" "23" "May" "2018" "06:32:23" "-0700" "Qualys Security Advisory" "qsa@qualys.com" "<20180523133223.GB27451@localhost.localdomain>" "92" "Re: [oss-security] Qualys Security Advisory - Procps-ng Audit Report" nil nil nil "5" "2018052313:32:23" "[oss-security] Qualys Security Advisory - Procps-ng Audit Report" (number mark "U       qsa@qualys.c May 23   92/3360  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - Procps-ng Audit Report\"\n") "<20180517171708.GA21447@localhost.localdomain>" ("<20180517171708.GA21447@localhost.localdomain>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1891" "Monday" "5" "September" "2016" "18:42:51" "+0200" "Nathan Van Gheem" "nathan.van.gheem@plone.org" "<CAL8hw9Hx1HH2DuD8RL1fMAK3SnXsnRSwkF-rb_26z2_Soq+PCg@mail.gmail.com>" "55" "[oss-security] CVE request: Plone multiple vulnerabilities" nil nil nil "9" "2016090516:42:51" "[oss-security] CVE request: Plone multiple vulnerabilities" (number mark "U       nathan.van.g Sep  5   55/1891  " thread-indent "\"[oss-security] CVE request: Plone multiple vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28553 invoked by uid 550); 23 May 2018 13:46:05 -0000
+Received: (qmail 8188 invoked by uid 550); 5 Sep 2016 17:38:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,134 +12,93 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21694 invoked from network); 23 May 2018 13:36:30 -0000
+Received: (qmail 9950 invoked from network); 5 Sep 2016 16:43:04 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=qualys.com; s=google;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=0ltyxrAEV9tl6x2QWJPb7uHD1ll3B+Ffqv8quMhIVIY=;
-        b=Rq8f+AUQiLfvknZlJ76NXjizRBW+fMis5mhmIBu/1PGeTZgmaRhs0BX9LA2vy64eVu
-         wxMq31OnS5S7KQrd+fepnkd5ENgjwRYIjDHxNr5Lz/gsRXy1pt9uSRnjiO0u7ktMslVx
-         OHOoz80lUA7vm7d0zjMtAlpgmFC5ETYSmwL7lfGPFl+h7eou/8+oYZK6Y6aookyJGRCv
-         vD+2TfvTxtiC3IbQFX4ZCMISjLAwSkbcbVfQ3udJH+yQZUTjHcDqSxxyrl9W6L5YvVGF
-         H5156DYkAC12NYa16bhigT+OblDl+SZNQDXoBNbxEFnlJcEKrMCzb/pXkx52BcKcDxZ0
-         EWEg==
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=7KT5JyxBSmbCjMpH6KvE+LgT/H0n6iuHusrTjrwMDag=;
+        b=vHAkFxY2SfcT4R5kAqFDaIjohnJC7AHQI37+p8pKSGjZLiVoWEwSN9DWHEOB0/0QGe
+         UZ50DyOaDNu4MRLeJVlQahRaXAzMMpJNFcDep7I7UIW0p50TTIySHrXJG+aA5UJB5MmX
+         pNkRA6zcyQ6OntxbpuRE3s9+KFNVs7hfPjlpSkaPiIakppUt2bzIed8x3QASQjP6dcIh
+         3yZ1Sx+mbP3r/dH+iuh/Yenv7s28/0GDu2NdKMWuDrJdIc0kZck8doWBha+PB6+7xhLL
+         Ktj0i0rdJ1GTTer2H33PlNyHMCOh7Bw1EoNXFNUJNqHStzTULd1Ic5MJsKwsnS4ZhBXG
+         vzpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=0ltyxrAEV9tl6x2QWJPb7uHD1ll3B+Ffqv8quMhIVIY=;
-        b=gbtRPLs6UzKFyC/MbFEf2jvz3qGh5B0Uy/1lyBBhkLlr/D9uwVp4TG9ZjTwuDjSsJE
-         /pMEtbiQ2QuXFe4/cXU3h4yGWEi5jCQcbq/4DdL54TpCLvUNiXqjB00qMuTt0PECZQ/V
-         +LPM/dZYUYxzd9GmD3viJzPHaamUD6maNVv3F1YL+pkVQOsZBw9cJKmtgBPbPRkxoS1/
-         QlhZd4TnyU7F87b31Fd/NibwIIeJWuioRkheXEWx9cigiLvj7he5ZTSY6K+SFAtAoXfG
-         eeCK3pWHrYfhM+XBguxllexlk8iDbGZ3zXSyJmbvh719BU4qkRMVuErm5SsEEXAUK+B8
-         47uw==
-X-Gm-Message-State: ALKqPwf+5IOyCQNJSbRqOPXmS4r2bBuu25yvL450JIs+i1kJNrJwMKjp
-	RccGy4K4Agw6SIawZpVSIkX6H8fm
-X-Google-Smtp-Source: AB8JxZq9H9vgWBd8oOa1w1b4NDB9GDnwYEPFcwyWzkuyM+TN8qC5u7SBYOEdaZP//eX/1QOCrkmTUQ==
-X-Received: by 2002:a62:8605:: with SMTP id x5-v6mr2958955pfd.103.1527082578124;
-        Wed, 23 May 2018 06:36:18 -0700 (PDT)
-Date: Wed, 23 May 2018 06:32:23 -0700
-From: Qualys Security Advisory <qsa@qualys.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20180523133223.GB27451@localhost.localdomain>
-References: <20180517171708.GA21447@localhost.localdomain>
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=7KT5JyxBSmbCjMpH6KvE+LgT/H0n6iuHusrTjrwMDag=;
+        b=GWWIsCz+eFPJiIxNibSU1dDvI1Xm4qsD3wAK9NOJ9yjzcd7DyQyrFXtfgS+wNgeeJp
+         E6kn+NjuanmGUEng3MvEx9ViUCgnYehDcRFTGuaPAS8yboFdpjtJpl2TK4KYQSupFkU+
+         wu0XhbtM7pAjfiaQtcj1vNZT5gV+4ZXdOPoqTFrRIJl8jr+I55oLv7gwMrJbRaMqCqgX
+         gREC0jMrrOQkr1BpMvNEniuZPseR6nbwo534N1NlciHm3AgPeHYq35OOn84Wi+VENdm8
+         VfMLxd3f0WPiuxac3PJ91vms0Ub0OFCKKwFNm7xJf1Tz12zXFRI8oWE1ebeGAHbH0IuQ
+         C8lg==
+X-Gm-Message-State: AE9vXwPZbP3uUxEVAfLKKoPGYkhs0XPhLIvz0vidjmp72WdluAeT2NVff2Ew+mRExbOlimnccQU79lPjgjbizA==
+X-Received: by 10.237.44.66 with SMTP id f60mr40023660qtd.11.1473093772236;
+ Mon, 05 Sep 2016 09:42:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180517171708.GA21447@localhost.localdomain>
-Subject: Re: [oss-security] Qualys Security Advisory - Procps-ng Audit Report
+Sender: vangheem@gmail.com
+From: Nathan Van Gheem <nathan.van.gheem@plone.org>
+Date: Mon, 5 Sep 2016 18:42:51 +0200
+X-Google-Sender-Auth: aPkQ_z5RoXuc_hVUPG_nT8iaZwA
+Message-ID: <CAL8hw9Hx1HH2DuD8RL1fMAK3SnXsnRSwkF-rb_26z2_Soq+PCg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=94eb2c06bee403f1dc053bc55f0a
+Subject: [oss-security] CVE request: Plone multiple vulnerabilities
 
-Hi all,
+--94eb2c06bee403f1dc053bc55f0a
+Content-Type: text/plain; charset=UTF-8
 
-As a follow-up to our procps-ng advisory, below are the answers to some
-frequently asked questions that you may find useful.
+Hi,
 
-> - which is the first version with the fixes, does it include all of the
-> fixes (and if not, what is it missing and are those missing fixes
-> important to have?), and where to download it?
+Multiple vulnerabilities were recently patched.
 
-Procps-ng 3.3.15 has been released and includes most of our patches; it
-is available at:
 
-https://sourceforge.net/projects/procps-ng/
+1. *filesystem information leak*:
+https://plone.org/security/hotfix/20160830/filesystem-information-leak
 
-The patches that are missing from procps-ng 3.3.15 are:
+Managers had the ability to find read files from the file system that the
+system user running the plone process had access to
 
-- 7 low-priority patches (0120-0126), which have not yet been validated
-  by upstream;
+2. *Non-Persistent XSS in Plone forms*:
+https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone-forms
 
-- most of our patches for top, which unfortunately have been reverted by
-  top's author; for example:
+z3c.form will currently accept data from GET requests when the form is
+supposed to be POST. This allows a user to inject a potential XSS attack
+into a form. With certain widgets in Plone admin forms, the input is
+expected to be safe and can cause a reflexive XSS attack. Additionally,
+there is potential for an attack that will trick a user into saving a
+persistent XSS.
 
-https://gitlab.com/procps-ng/procps/commit/c5026787156d23512487ad9bbf540be7e3ee8de1
-https://gitlab.com/procps-ng/procps/commit/c9dfcdebdc6b482ca2030c6ea3aa376c218232e9
+3. *open redirection*:
+https://plone.org/security/hotfix/20160830/open-redirection-in-plone
 
-> Can you let us know which patches the CVEs align with as it will
-> make chasing all of this down a lot easier, thanks!
+In multiple places, Plone blindly uses the referer header to redirect a
+user to the next page after a particular action. An attacker could utilize
+this to draw a user into a redirection attack.
 
-The patch for CVE-2018-1122 is:
-0097-top-Do-not-default-to-the-cwd-in-configs_read.patch
+4. *Non-Persistent XSS in Plone*:
+https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone-1
 
-The patch for CVE-2018-1123 is:
-0054-ps-output.c-Fix-outbuf-overflows-in-pr_args-etc.patch
+Plone's URL checking infrastructure includes a method for checking if URLs
+valid and located in the Plone site. By passing javascript into this
+specially crafted url, XSS can be achieved.
 
-The patch for CVE-2018-1124 is:
-0074-proc-readproc.c-Fix-bugs-and-overflows-in-file2strve.patch
+5. *Non-Persistent XSS in Plone Zope Management(ZMI)*:
+https://plone.org/security/hotfix/20160830/non-persistent-xss-in-zope2
 
-The patch for CVE-2018-1125 is:
-0008-pgrep-Prevent-a-potential-stack-based-buffer-overflo.patch
+In multiple places, Zope2's ZMI pages do not properly escape user input
 
-The patch for CVE-2018-1126 is:
-0035-proc-alloc.-Use-size_t-not-unsigned-int.patch
 
-The kernel patch for CVE-2018-1120 is:
-https://git.kernel.org/linus/7f7ccc2ccc2e70c6054685f5e3522efa81556830
+Credits to all these go to Sebastian Perez
 
-There is currently no patch for CVE-2018-1121, because no satisfactory
-solution (secure and efficient) has been found. Please feel free to
-suggest ideas here!
+All of these vulnerabilities have been patched with the hotfix release
+package(https://plone.org/security/hotfix/20160830) and are being
+incorporated upstream.
 
-> - which versions are vulnerable?
 
-We did not try to track down the first vulnerable version, but we had a
-quick look at procps 3.0.0 (from October 2002) and it was already
-vulnerable to the 5 CVEs.
+Thanks,
+Nathan
 
-> - which version was audited?
-
-We audited procps-ng 3.3.12 (the version used by many stable
-distributions), but we probably ended up reading most of the master
-branch too while writing the patches.
-
-> what testing have you done?
-
-Because procps-ng is a critical package, and because 126 patches
-introduce significant changes, here is what we did to minimize the
-risks:
-
-- we were two to perform the audit, and we decided to both write the
-  most important patches, independently; the final patches are the
-  result of this double-work, which clearly avoided a few bugs;
-
-- we ran procps-ng's test-suite ("make check") after each change;
-
-- we manually ran some tests after each major change, to make sure that
-  the code-path leading to the change is not broken, and to make sure
-  that the change actually fixes the issue;
-
-- we started sending our patches to upstream on March 30 (for reviewing
-  and testing), long before we contacted linux-distros@;
-
-- we contacted linux-distros@ on May 4, and were asked for an embargo
-  extension (for more time to review and test the patches), so we set
-  the Coordinated Release Date to May 17, 17:00 UTC (13 days -- almost
-  the maximum embargo, but we wanted to avoid releasing on a Friday).
-
-We are at your disposal for questions, comments, and further
-discussions. We thank Solar Designer and Kurt Seifried for their help!
-With best regards,
-
--- 
-the Qualys Security Advisory team
+--94eb2c06bee403f1dc053bc55f0a--
