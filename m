@@ -1,4 +1,9 @@
-Received: (qmail 23950 invoked by uid 550); 2 May 2024 21:36:19 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["933" "Monday" "5" "September" "2016" "17:26:06" "-0500" "William Pitcock" "nenolod@dereferenced.org" "<CA+T2pCG=MJMxQZXgGsCevny2_tSkiBcya-hebS8HxuEMCxQw_A@mail.gmail.com>" "38" "Re: [oss-security] CVE ID request: certificate spoofing through crafted SASL message in inspircd, charybdis" nil nil nil "9" "2016090522:26:06" "[oss-security] CVE ID request: certificate spoofing through crafted SASL message in inspircd, charybdis" (number mark "U       nenolod@dere Sep  5   38/933   " thread-indent "\"Re: [oss-security] CVE ID request: certificate spoofing through crafted SASL message in inspircd, charybdis\"\n") "<87r38ze3vk.fsf@angela.anarc.at>" ("<87r38ze3vk.fsf@angela.anarc.at>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7318 invoked by uid 550); 5 Sep 2016 22:27:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,98 +12,79 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20019 invoked from network); 2 May 2024 21:35:20 -0000
-From: Sam James <sam@gentoo.org>
-To: Solar Designer <solar@openwall.com>
-Cc: oss-security@lists.openwall.com
-In-Reply-To: <20240403205835.GA12974@openwall.com> (Solar Designer's message
-	of "Wed, 3 Apr 2024 22:58:35 +0200")
-Organization: Gentoo
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
-	<ZgcOVnk5hCVkDUt/@ycc.fr> <uu9f4s$oga$2@ciao.gmane.io>
-	<20240331213023.GA22787@openwall.com>
-	<cd985494-7e02-ab46-785d-78ba6eabae4d@gmail.com>
-	<20240403205835.GA12974@openwall.com>
-User-Agent: mu4e 1.12.4; emacs 30.0.50
-Date: Thu, 02 May 2024 22:35:02 +0100
-Message-ID: <87o79nlwxl.fsf@gentoo.org>
+Received: (qmail 5364 invoked from network); 5 Sep 2016 22:26:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dereferenced-org.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=VH1ezDbewhDR4Lvwd30jRhmdPnhMiLYbuqAAZkWTk8g=;
+        b=MrsMuGuIJqChD8jnnoBQjwfn+L6J/g45RsQ6Q4BM5ysLA7ZKCUUraapjwk19BiwstU
+         n5rPP+5tEs4hLKhew2nhJsIJXEpAfTCrlMEu/KGkTTSQzNX1fPM86lo4stlF5LrNcz3q
+         X7h/FSsU6OBLGQl2HjoIzSHVXUPSFZ0K0MCY+3C5NOZIlTeW0vOL5cJW6y7PnlDwM1bj
+         awBZFfC/Qh/z+R/cSSwJEfxGQYS8f42YBEQL108UZJJYU3qPKFilxbeFjCdGLlyxBRE+
+         hAoBz+f4eb8Z+oqU4G8VWLhzwEh72pu9BELRdmAW9+IqjfCA8/ikY5tIBbREadALAEJx
+         JyXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=VH1ezDbewhDR4Lvwd30jRhmdPnhMiLYbuqAAZkWTk8g=;
+        b=limoD4Xl//xpvQoFX/K6gy3MLl8vO0U4wQxxsAhF3Uj5s0sBm0p8Pl8hp+8Epy4POV
+         e62rPE1z8ayS7eobHxSrMQWsbHqVIv1MMc7zY7/iUJNccJMnp666OvzcbTmq4ShBpCMx
+         Upc66T9r0+/KbseXQvqwZjc/0+edUEaAQIh0DQTTOCgtv2MP/R/k7M++GdyTOoEONJas
+         Fz2pqIeB0EXbsaqA4eRs+4ThpoFPXe+Amtxll9VQ6WTpHY6jCgxLtSCFljnxM+VD98mK
+         35OFFiSXl3buoYdOpYMafTjPuDf46SR0tWd5LZTymovLA7CKNKLV8OsEqq33xWhnTb0b
+         yhiw==
+X-Gm-Message-State: AE9vXwOL7nA0Gevimdh0S7AJ7zyrafjLUOmBlQqx38Cw4khakqou0G2MFUuT3o3iDINfXBXk5XLf4YcGHfrx5Q==
+X-Received: by 10.55.195.146 with SMTP id r18mr14207811qkl.236.1473114366821;
+ Mon, 05 Sep 2016 15:26:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Subject: Re: [oss-security] escaping terminal control characters (was Re:
- backdoor in upstream xz/liblzma leading to ssh server compromise)
-
---=-=-=
-Content-Type: text/plain
+In-Reply-To: <87r38ze3vk.fsf@angela.anarc.at>
+References: <87r38ze3vk.fsf@angela.anarc.at>
+From: William Pitcock <nenolod@dereferenced.org>
+Date: Mon, 5 Sep 2016 17:26:06 -0500
+Message-ID: <CA+T2pCG=MJMxQZXgGsCevny2_tSkiBcya-hebS8HxuEMCxQw_A@mail.gmail.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE ID request: certificate spoofing through
+ crafted SASL message in inspircd, charybdis
 
-Solar Designer <solar@openwall.com> writes:
+Hello,
 
-> On Wed, Apr 03, 2024 at 11:03:17AM +1100, Matthew Fernandez wrote:
->> On 4/1/24 08:30, Solar Designer wrote:
->> >On Sat, Mar 30, 2024 at 04:37:48PM -0000, Tavis Ormandy wrote:
->> >>It was also pointed out they submitted an odd PR to libarchive:
->> >>
->> >>https://github.com/libarchive/libarchive/pull/1609
->> >>
->> >>In summary, they replaced calls to safe_fprintf() with fprintf() --
->> >>meaning control characters are no longer filtered from errors. That
->> >>seems pretty minor, but now that we know they were in the business of
->> >>obfuscating the presence of backdoors -- seems a bit suspicious.
->> >>
->> >>Regardless, that change has now been reverted:
->> >>
->> >>https://github.com/libarchive/libarchive/pull/2101
->> >
->> >This does look minor indeed - not usable for large-scale attacks, and
->> >libarchive is quite unique in that it even bothered to filter control
->> >characters, whereas most command-line tools outputting filenames don't
->> >bother.  My guess is it could have been an early experiment to see
->> >whether the project would accept PRs degrading security.
->> >
->> >That said, here's an excellent write-up by David Leadbeater on specific
->> >ways that specific terminal emulators may be usefully attacked with
->> >control sequences:
->> >
->> >https://dgl.cx/2023/09/ansi-terminal-security#vulnerabilities-using-kno=
-wn-replies
->>=20
->> Is the currently accepted wisdom that any application printing to=20
->> stdout/stderr should take steps to avoid control characters in the=20
->> output?
+UnrealIRCd is also affected:
+
+https://github.com/unrealircd/unrealircd/commit/f473e355e1dc422c4f019dbf86b=
+c50ba1a34a766
+
+As is Nefarious:
+
+https://github.com/evilnet/nefarious2/commit/f50a84bad996d438e7b31b9e74c32a=
+41e43f8be5
+
+William
+
+On Sun, Sep 4, 2016 at 4:45 PM, Antoine Beaupr=C3=A9 <anarcat@debian.org> w=
+rote:
+> inspircd published 2.0.23 that fixes an issue with SASL
+> authentication. The details are here:
 >
-> First, let's limit this to cases where the control characters come from
-> potentially untrusted input to the program.  Obviously, many programs
-> generate terminal escapes on their own (usually via a library), for
-> their intended functionality (colorized listings, TUIs, etc.)  Some
-> programs pass potential control characters from their trusted input.
+> http://www.inspircd.org/2016/09/03/v2023-released.html
 >
-> Second, I think no, there isn't currently an established opinion on
-> whether programs should perform such filtering of untrusted input.
-
-Lasse has put up an initial implementation for xz:
-https://github.com/tukaani-project/xz/pull/118.
-
-Comments are welcome. It was a TODO from a long time ago ;)
-
-We're not sure how much is overkill (or underkill) for this, especially
-given it gets harder when Unicode is involved.
-
-> [...]
-
-thanks,
-sam
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iOUEARYKAI0WIQQlpruI3Zt2TGtVQcJzhAn1IN+RkAUCZjQHBl8UgAAAAAAuAChp
-c3N1ZXItZnByQG5vdGF0aW9ucy5vcGVucGdwLmZpZnRoaG9yc2VtYW4ubmV0MjVB
-NkJCODhERDlCNzY0QzZCNTU0MUMyNzM4NDA5RjUyMERGOTE5MA8cc2FtQGdlbnRv
-by5vcmcACgkQc4QJ9SDfkZCa7AEAsSKiopElCyfDYKHncB3DIJg4KWgJzCqZGOwP
-RqqdZ1IBAJg6o9fKNSHXQP5P7HC6pK2vhzuD1ujHsbJ2fzPtBAME
-=gKxB
------END PGP SIGNATURE-----
---=-=-=--
+> All versions are affected.
+>
+> Upstream hasn't requested a CVE yet. I told them I would request one
+> from here on IRC.
+>
+> It seems to also affect Charybdis, which fixed the issue in the
+> upcoming 3.5.3 release:
+>
+> https://github.com/charybdis-ircd/charybdis/commit/818a3fda944b26d4814132=
+cee14cfda4ea4aa824
+>
+> A.
+>
+> --
+> All governments are run by liars and nothing they say should be
+> believed.
+>                        - I. F. Stone
