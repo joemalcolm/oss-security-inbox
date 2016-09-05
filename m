@@ -1,62 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/26/7
-Message-Id: <20160126174912.8D47B73C4C1@smtpvmsrv1.mitre.org>
-Date: Tue, 26 Jan 2016 12:49:12 -0500 (EST)
-From: cve-assign@...re.org
-To: limingxing@....cn
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/05/2
+Message-ID: <20160905135748.GA11745@kroah.com>
+Date: Mon, 5 Sep 2016 15:57:48 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: CVE request: Linux kernel mbcache lock contention denial of service.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> HTMLparser.c line:2517 :
+On Mon, Aug 22, 2016 at 03:28:51PM +1000, Wade Mealing wrote:
+> Gday,
 > 
->        return(xmlDictLookup(ctxt->dict, ctxt->input->cur - len, len));
+> A design flaw was found in the file extended attribute handling of the
+> linux kernels handling of cached attributes.  Too many entries in the
+> cache cause a soft lockup while attempting to iterate the cache and
+> access relevant locks.
 > 
-> "ctxt->input->cur - len"  cause Out-of-bounds Read.
+> Upstream has replaced the mbcache code with an updated version which
+> was not a patch but a clear-cut reimplementation of the code, no
+> single diff
 > 
-> heap-buffer-overflow
-> READ of size 1
-
-Use CVE-2016-2073.
-
-
-> From: Salvatore Bonaccorso
+> Soft lockup information is in both the bugzilla.kernel.org and
+> referred to in the LWN article.  This would affect containers running
+> with ext4 as it shares the same mbcache between all containers/host.
 > 
-> While checking upstream bugzilla to see if that was reported I noticed
+> This did not affect Red Hat Enterprise Linux versions 5,6 or 7, so I
+> can't validate the claim that it does affect other newer kernels.
+> This may be worthwhile tracking for others who are affected by this
+> flaw.
 > 
-> https://bugzilla.gnome.org/show_bug.cgi?id=749115
+> For those following along at home, this seemed to be fixed in:
 > 
-> Does this have the same root cause?
+>  ±  git tag --contains be0726d33cb8f411945884664924bed3cb8c70ee
+> v4.6
 
-The CVE-2016-2073 PoC is an '&' followed by three characters, one of
-which is a 0273 character. The PoC in 749115 has an unexpected
-character immediately after a "<!DOCTYPE html" substring. We feel that
-the CVE-2016-2073 report can have that unique ID on the basis of (at
-least) a different attack methodology. CVE assignment for 749115 is
-also possible unless 749115 already has a CVE ID.
+That commit is for only the ext2 filesystem, how would it fix an issue
+in ext4?
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+totally confused,
 
-iQIcBAEBCAAGBQJWp7B+AAoJEL54rhJi8gl5DrYP/210C002flIvBM/PY66OYkJw
-BXYc5DDLMANTpXaXoaHqYGODfRtwQjZF/sFYUgtOxFTYi3UCHxOpRNjhU77OOlQA
-7aNSZ+PU/Tl15dt7PEJWdNuK0mD9Lofzg6HhxkJD6F6EQHarH0NHIbdEGV6WKGGR
-c2hACkO8WLCQxd+914f5YJBPsd+pKmWADKcmjV3yQMSr+6irHfzp+9UEDX/ma/3b
-9yRwy+7Ubse2t5GNq/F4lepT2fF/lTLweNhSJgdzPg59/NGjf9ZBD14d/RmrRCgR
-KLlIjavWH8fGOAecBcyz7zVJAadQFOVy4DuCyOrvcVMJ6cCPjfv+oZD1r2COhPHW
-9kYlHo5icgJQU8m796+H4pC9a71ckCFZ2EZ7uy8nWS1SG7WmUMJjE5lryt4O9MFt
-8mmiJFXZGpX1gfaq2xHLkptGNMoaTkl+id2Vr/j2ATSCXHV3oNs4+IQLThp9vZ0Y
-q+fajmn0Yp0sO34/vWmDzoxvNWTuwf+LgPjFNsirG80a1Ivv2XtHaxh8G2xTCZh4
-L6gv9PT3ha/UK2RKQxB7atIt/LS2I+DqD72TckY69JygqFg43Q+QAdGQKn1YP2tA
-pgs1SmgAtfOCPoph+4BYZAyIvmMzVDfAI4kjJE7AlZqAIwO3mIxaDFEd1OW3u/JY
-fYAMTYnQVg9Ld8+b+XPY
-=QCuy
------END PGP SIGNATURE-----
+greg k-h
