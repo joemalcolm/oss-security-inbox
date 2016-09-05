@@ -1,27 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/19/10
-Message-Id: <20160819141419.659526C1CE1@smtpvmsrv1.mitre.org>
-Date: Fri, 19 Aug 2016 10:14:19 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/05/7
+Message-Id: <20160905224147.43F636C0FB8@smtpvmsrv1.mitre.org>
+Date: Mon,  5 Sep 2016 18:41:47 -0400 (EDT)
 From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE Request: Qemu: net: vmxnet: integer overflow in packet initialisation
+To: kdudka@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: [SECURITY VULNERABILITY] curl: Re-using connections with wrong client cert
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support, with
-> network abstraction layer is vulnerable to an integer overflow issue. It could
-> occur while initialisation of a new packets in the device.
+> libcurl built on top of NSS (Network Security Services) still incorrectly
+> re-uses client certificates if a certificate from file is used for one TLS
+> connection but no certificate is set for a subsequent TLS connection.
 > 
-> A privileged user inside guest could use this flaw to crash the Qemu instance
-> resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg03176.html
-> http://git.qemu.org/?p=qemu.git;a=commit;h=47882fa4975bf0b58dd74474329fdd7154e8f04c
+> This problem was caused by an implementation detail of the NSS backend
+> in libcurl, which is orthogonal to the cause of CVE-2016-5420.
 
-Use CVE-2016-6888.
+Use CVE-2016-7141 for this additional vulnerability.
 
 - -- 
 CVE Assignment Team
@@ -31,17 +28,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXtxPMAAoJEHb/MwWLVhi2qbAQALDW9gWAfIs1puoNmVxiPEJa
-gEP2H+cvJ7x28K4IY1o6F2AFK+W0rLFrnemsD3UhD48Nd0SqsRkZu9zkdlnO/i/l
-bbQ3N4h1Cnim+6EW5W59mTVCN+mKyC+UOFDXCqB+YYd2YcBJ1V0oLkxKF7sMWN91
-fxchTWC+cK8I9UAoHVRIerCds9QA/K1BUGimhkBBuijZ2PCt4InPi8wMSSxyfGh5
-Jy7V4tqNHZ2i+s6vR0CQtoIf6D4wUyHY2sombCx5yGiUz9bcPuYlRhQyGNaU2jbq
-QKcA5Wqvby5Gf4z4BsfrS2AbIjhEiy15oE0YNEuLjUaTHJlZ3vbpziio3YOyX7qZ
-0aj8xKcKlVJ9AIJytwSMkmoCiv0J9gMgDoTRxxtgSnVzvLMuZXoBavsiD5+8oDZU
-j2NEBioYRz+EOYit6eUhh3GRgKY1gIMVHAsWeH6+t8VXEaioQiL2gQEK5+bwitLi
-W1417UWUfEI0c7XMvLdVVLWtFPPyF5JfWj/c5irpc5SZYwcpyKQ7xJS+kVFSHvlC
-1j/BNWhZhsR4gBB/Etw/SwBSia7Y5zJoHlZuFeUUxAV5ijvS4sGfFWEO4QBRE37m
-97XWGYUA0wl3j2BqneI66hQzBt9E3yvKQ/5VFoWwRXDdQMy2I5j887OD4sOFbp2h
-l/dyBnupm8bwaOhskqL+
-=n7LW
+iQIcBAEBCAAGBQJXzfQ7AAoJEHb/MwWLVhi2JxoP/jhAg0xmSqjBWgmM9DjHYtgE
+5mH15/YJkalUBLA1v3YFThjBxLgUsCDxzYozC282c536nPbGhOJsYJuyUW/U9EO9
++hFC2a3i2Zthe8VQg78eIYN7XvrxsVwJrFlzH8yxtrZmOxgr0u4d+KwDYY6d83yQ
+hNvOlnoqKuVuuHI5xx7GciJvQZZJT8HzG5LbrwHX1oJUPPKkULK+47vKzXPdJqyp
+kpKkqa4qYxpnlg9CES1lRL5GQzzIaMWhX//qMy7Itkj+E58ww6e1h/YCa1krqRfV
+mDv05V+s+kofoPGUrcc2zqfM6PW5795QfJBOPK//vd7ugSTtj+OKhmL/YMwBP9w/
+ncDoOFzRm6lykh9s4huDTmV3oNQ/ohbtgRQNBVXl4CQ5G8cfKdjMCgxl6nTJXv74
+FIBUmQ9BzZrsSZjgOUYhbGDxTnnPR8H7mMu64nY+nNFDG6mEuTE+5J/QPNkrg5LJ
+TLFwQLijgy+ehn00Gp/c252OqgiWlOjVAUXjgEGqLlk4sXFGGu/sC0V89jRcbv/M
+L8mqa9E+5uarFRAuQF2aSv9C26ZcHwW6WKjO/T8BsLVYsQSi5RFCddx5NmqysRf7
+5Lguj0K9nCVYSkfkhS4Mwrj+sSbpTKDCeiMXfcfGA2gWjX2KWFQqboMoNEVNonDc
+0KNha7mMSmK/gVR3SCWO
+=LzSU
 -----END PGP SIGNATURE-----
