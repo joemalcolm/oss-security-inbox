@@ -1,4 +1,9 @@
-Received: (qmail 18209 invoked by uid 550); 12 Mar 2024 22:09:53 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3779" "Monday" "5" "September" "2016" "17:57:59" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160905215759.E575734E018@smtpvbsrv1.mitre.org>" "92" "[oss-security] Re: CVE request: Plone multiple vulnerabilities" nil nil nil "9" "2016090521:57:59" "[oss-security] Re: CVE request: Plone multiple vulnerabilities" (number mark "U       cve-assign@m Sep  5   92/3779  " thread-indent "\"[oss-security] Re: CVE request: Plone multiple vulnerabilities\"\n") "<CAL8hw9Go4v4Qah_Vxg0-C03C64FczjZ9b6qWYhd6802_LuYBjw@mail.gmail.com>" ("<CAL8hw9Go4v4Qah_Vxg0-C03C64FczjZ9b6qWYhd6802_LuYBjw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11981 invoked by uid 550); 5 Sep 2016 21:58:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,83 +12,104 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17916 invoked from network); 12 Mar 2024 21:39:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
- s=citron; t=1710279794; x=1710368682; h=date:author:from:to:subject:
-  message-id:in-reply-to:references:mail-followup-to:openpgp:author:from:
-  reply-to:subject:date:to:cc:in-reply-to:references:list-id:list-help:
-  list-unsubscribe:list-subscribe:list-post:list-owner:list-archive:
-  message-id:mime-version:content-type:content-transfer-encoding:
-  mail-followup-to:openpgp; bh=9BGDtLNrajXZhA//fdnuyPRg4+kASkBwNv78T6D9oYU=;
- b=DECLvwoBMSZrvYaeHXrgDm0ZQcRcqs2W2i5ttYFentXLMEsXjccRZcLMH7WefA1TtoJ7RnUU
-  Sdmeawpi/GE9LmmUXK186KG39voy+GNrXD++yxS9aVxdlGv4VxUwWTzf/pgiya8tQ1Ov4wCNrK
-  UKkjYo0IN1yFLuoumpf7D4dIZnt/8t3tvSM05KkZMdk7cAC8m7yz4PmNEU2M/P8zeGUyXpykcH
-  yQkS282Q9SDO+3v+R2rTkyQTPlyNzOwALCYXwtFKi8YW+Yus5B58xIKmj79SR4F2bFdwkb5bdw
-  xP3T6zTp/Sti0ipOiQmidvunqW9PhUh2+ACuo/uQEuTzS/XA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=sdaoden.eu;
- s=orange; t=1710279794; x=1710368682; h=date:author:from:to:subject:
-  message-id:in-reply-to:references:mail-followup-to:openpgp:author:from:
-  reply-to:subject:date:to:cc:in-reply-to:references:list-id:list-help:
-  list-unsubscribe:list-subscribe:list-post:list-owner:list-archive:
-  message-id:mime-version:content-type:content-transfer-encoding:
-  mail-followup-to:openpgp; bh=9BGDtLNrajXZhA//fdnuyPRg4+kASkBwNv78T6D9oYU=;
- b=QX81ct6bxpkVpINJNl7XapUtLAqzndC3RTaMS6DPmWOHRvzDpxPHBI50B/Fge+Xx0CspTn1W
-  fUfxvHqriJf7BQ==
-Date: Tue, 12 Mar 2024 21:54:40 +0100
-Author: Steffen Nurpmeso <steffen@sdaoden.eu>
-From: Steffen Nurpmeso <steffen@sdaoden.eu>
-To: oss-security@lists.openwall.com
-Message-ID: <20240312205440.nCrJJ0Zw@steffen%sdaoden.eu>
-In-Reply-To: <avwrjlt7heiiq64iy56v6raowqilc7ldg4ona2khtbfcl6n4mg@ay3mbinzz3fm>
-References: <gb6h5yblly7xer6jg6sgn7syzrze3jviotrmfsp3ifgy6rg2jr@igvcqdasmnof>
- <Ze_aAzVya8RMGDDZ@itl-email>
- <avwrjlt7heiiq64iy56v6raowqilc7ldg4ona2khtbfcl6n4mg@ay3mbinzz3fm>
-Mail-Followup-To: oss-security@lists.openwall.com
-User-Agent: s-nail v14.9.24-608-gfa6c5c5231
-OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
- url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
-BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
- the world can make no bugs.
-Subject: Re: [oss-security] Certificate policy: OCSP becomes optional
- and CRLs mandatory for public CAs on Friday
+Received: (qmail 11956 invoked from network); 5 Sep 2016 21:58:12 -0000
+From: cve-assign@mitre.org
+To: nathan.van.gheem@plone.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAL8hw9Go4v4Qah_Vxg0-C03C64FczjZ9b6qWYhd6802_LuYBjw@mail.gmail.com>
+Message-Id: <20160905215759.E575734E018@smtpvbsrv1.mitre.org>
+Date: Mon,  5 Sep 2016 17:57:59 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: Plone multiple vulnerabilities
 
-Valtteri Vuorikoski wrote in
- <avwrjlt7heiiq64iy56v6raowqilc7ldg4ona2khtbfcl6n4mg@ay3mbinzz3fm>:
- |On Tue, Mar 12, 2024 at 12:28:49AM -0400, Demi Marie Obenour wrote:
- |> macOS, iOS, Windows, and possibly Android have system certificate
- |> verifiers that can handle this easily.  For desktop and server Linux,
- |> should a CRLite package be included in system package managers?  Would
- |> it be feasible for WebPKI and {Open,Boring,Libre}SSL to handle CRLite,
- |> or does this mean that NSS should be used for certificate verification?
- |
- |I have no idea whether this idea has been discussed by distros or
- |implementors of said libraries. Perhaps someone directly involved can
- |weigh in on this.
- |
- |But on the face of it, CRLite-on-the-server sounds like a pretty good
- |idea for users who are fine with getting only a yes/no revocation
- |result (as opposed to the reason code and other details present in the
- |full CRL) and trusting the CRLite aggregator. Getting direct and
- |easy-to-deploy support in popular TLS libraries would seem like a net
- |positive for TLS security; needing to bring in a separate library, at
- |least if it's a relatively weighty one like NSS, probably wouldn't get
- |a lot of traction.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A lot of traction via push by giants should, in my opinion, be
-observed for DNSSEC and wonderful (imho) concepts like RFC 7250.
+> All of these vulnerabilities have been patched with the hotfix release
+> package https://plone.org/security/hotfix/20160830 and are being
+> incorporated upstream.
 
-If i understood this right the new postfix 3.9 series, when used
-with OpenSSL 3.2.0 and above, brings support for this TLS
-mechanism of the future.
+> 1. *filesystem information leak*: https://plone.org/security/hotfix/20160830/filesystem-information-leak
+> 
+> Managers had the ability to find read files from the file system that the
+> system user running the plone process had access to
 
-Unfortunately terms like "the future is now" have never been
-anything else but hollow words (or points to the wrong direction).
+>> By using relative paths and guessing locations on a server Plone is
+>> installed on, an attacker can read data from a target server that the
+>> process running plone has permission to read. The attacker needs
+>> administrator privileges on the Plone site to perform this attack.
 
-I do not know which other TLS libraries support RFC 7250 either.
+Use CVE-2016-7135.
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+
+> 2. *Non-Persistent XSS in Plone forms*: https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone-forms
+> 
+> z3c.form will currently accept data from GET requests when the form is
+> supposed to be POST. This allows a user to inject a potential XSS attack
+> into a form. With certain widgets in Plone admin forms, the input is
+> expected to be safe and can cause a reflexive XSS attack. Additionally,
+> there is potential for an attack that will trick a user into saving a
+> persistent XSS.
+
+Use CVE-2016-7136 for the entire "accept data from GET requests when
+the form is supposed to be POST" issue, which apparently has security
+relevance for two different reasons ("reflexive XSS" and "saving a
+persistent XSS").
+
+
+> 3. *open redirection*:  https://plone.org/security/hotfix/20160830/open-redirection-in-plone
+> 
+> In multiple places, Plone blindly uses the referer header to redirect a
+> user to the next page after a particular action. An attacker could utilize
+> this to draw a user into a redirection attack.
+
+Use CVE-2016-7137.
+
+
+> 4. *Non-Persistent XSS in Plone*: https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone-1
+> 
+> Plone's URL checking infrastructure includes a method for checking if URLs
+> valid and located in the Plone site. By passing javascript into this
+> specially crafted url, XSS can be achieved.
+
+Use CVE-2016-7138.
+
+
+> 5. *Non-persistent XSS in Plone*:
+> https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone
+> 
+> Plone has unescaped user input in a page template that is open to XSS.
+
+Use CVE-2016-7139. (There were two issues numbered "5" in the
+http://openwall.com/lists/oss-security/2016/09/05/4 post.)
+
+
+> 5. *Non-Persistent XSS in Plone Zope Management(ZMI)*:
+> https://plone.org/security/hotfix/20160830/non-persistent-xss-in-zope2
+> 
+> In multiple places, Zope2's ZMI pages do not properly escape user input
+
+Use CVE-2016-7140. (There were two issues numbered "5" in the
+http://openwall.com/lists/oss-security/2016/09/05/4 post.)
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXzen4AAoJEHb/MwWLVhi2ikwP/RabVzndqLmnRSGFkekMvJoT
+svRXT3P+gz9rIRa8vG2JLljYOQz4E5IyXYIljoQhGn840uf8UBZcVvtC1P1IeHJc
+noAhNDXg7I13tWyaIc/h2eVCOjnRC2P/qj5fuw+9TyPBiEPZ/CIs5emDNzrRwyp1
+TbBDzhyWUXHYQmtYMzJt2XzYJxHFsC4O8wx7VDx7pvGgKzqHWW50CnOi69aw6AbI
+FN5InkQAUM/7ttDUcOnHG2MNMqwoTtPFLxzGBLURi3B86lhnVwEXe5vl+nCgjdCX
+r42ANgFPx+xNcIuuToTHtY/pguzCTG2NUFsU8I3Zn5U7jXLs95kkDBsUr7zwWWNi
+ftOwUQ79zIKaZL9eQq5cjLdB+gZqWIYaquj4d9lM04nFc7RjYYynhFzQWQmOVxeh
+8+JTJ230pfnK8jpdxDACQmRZyuAh1Lo3YjLLMd2BnvgtVdWHfe4bXfb7dQiGhCsV
+x0+mIgrIxEMrPuOTEGG8WmSPyqJyJpU90QxYQvjPcqKIAF9vqpFdJtiaXv977jfN
++38Tb1GvvBfSWjDFk6F+DX3isS0qwIQXhuWyVCqOCQYA7/NUVLPCvhNli9dG1Vf4
+gPvBLIvmbYNF73uT/A7aZ96+3hBLuUTnhfReTqO7T7HUsf+DtrMh1P4OI13GCzA3
+MHGqeXXgdxru82us5feg
+=UxLJ
+-----END PGP SIGNATURE-----
