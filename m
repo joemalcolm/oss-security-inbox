@@ -1,21 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/8
-Message-ID: <CAHmME9p_NYhaR2Oa_3kOwPCnTFsAHZWa_Q2vYXDXLAuf0C7a5A@mail.gmail.com>
-Date: Fri, 15 Jan 2016 16:56:13 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>,  Qualys Security Advisory <qsa@...lys.com>
-Subject: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/06/4
+Message-ID: <alpine.LFD.2.20.1609061818400.23358@wniryva>
+Date: Tue, 6 Sep 2016 18:22:24 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Tom Victor <vv474172261@...il.com>
+Subject: CVE Request Qemu: scsi: mptsas: invalid memory access while building configuration pages
 Content-Type: text/plain; charset=utf-8
 
-Great work Qualys. One question about the PoC:
+   Hello,
 
-On Thu, Jan 14, 2016 at 6:13 PM, Qualys Security Advisory
-<qsa@...lys.com> wrote:
-> # env ROAMING="heap_massaging:linux" "`pwd`"/sshd -o ListenAddress=127.0.0.1:222 -o
-> UsePrivilegeSeparation=no -f /etc/ssh/sshd_config -h /etc/ssh/ssh_host_rsa_key
+Quick emulator(Qemu) built with the LSI SAS1068 Host Bus emulation support, is 
+vulnerable to an invalid memory access issue. It could occur while building 
+configuration page headers in 'mptsas_config_manufacturing_1'.
 
-Does your proof of concept patch actually include support for this
-heap_massaging mode?
+A privileged user inside guest could use this flaw to crash the Qemu process 
+on the host, resulting in DoS.
 
-Thanks,
-Jason
+Upstream patches:
+-----------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg04295.html
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg04296.html
+
+This issue was reported by Victor V of the Marvel Team, 360.cn Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
