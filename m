@@ -1,42 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/22/6
-Message-ID: <1466632135.2458.9.camel@nixnuts.net>
-Date: Wed, 22 Jun 2016 16:48:55 -0500
-From: John Lightsey <john@...nuts.net>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: SQL injection in MovableType xml-rpc interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/06/1
+Message-ID: <91298704-08e0-71ec-7839-b0aeb7978c68@suse.com>
+Date: Tue, 6 Sep 2016 11:47:52 +0200
+From: Andreas Stieger <astieger@...e.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Linux kernel mbcache lock contention denial of service.
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2016-06-22 at 17:34 -0400, cve-assign@...re.org wrote:
-> > SixApart just released new versions of MovableType 6.2 and 6.1 to fix an SQL
-> > injection in the xml-rpc interface. 
-> 
-> > https://movabletype.org/news/2016/06/movable_type_626_and_613_released.html
-> 
-> This says:
-> 
-> >> Previous versions, including Movable Type 6.2.4 and 6.1.2, are
-> >> susceptible to SQL injection attacks via XML-RPC interface.
-> 
-> >> AFFECTED VERSIONS OF MOVABLE TYPE
-> 
-> >>    Movable Type Pro 6.0.x, 6.1.x, 6.2.x
-> >>    Movable Type Advanced 6.0.x, 6.1.x, 6.2.x
-> 
-> Use CVE-2016-5742.
-> 
-> > The vulnerability also affects the older GPLv2 licensed MovableType
-> > 5.2.13.
-> 
-> Is there a separate public reference stating that 5.2.13 is affected?
-> Or, do you mean that you've done your own analysis and concluded
-> that 5.2.13 has the same vulnerability as 6.x? (Either one seems
-> fine, and wouldn't affect the number of CVE IDs - we are mostly
-> interested in linking the CVE to the primary-source reference about
-> the 5.2.13 vulnerability, if such a reference exists elsewhere.)
-> 
 
-I sent the original vulnerability report to SixApart and based my report on the
-5.2.13 version of the code.
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+
+On 09/05/2016 03:57 PM, Greg KH wrote:
+> On Mon, Aug 22, 2016 at 03:28:51PM +1000, Wade Mealing wrote:
+>> [...]
+>> Upstream has replaced the mbcache code with an updated version which
+>> was not a patch but a clear-cut reimplementation of the code, no
+>> single diff
+>> [...]
+>>  ±  git tag --contains be0726d33cb8f411945884664924bed3cb8c70ee
+>> v4.6
+> That commit is for only the ext2 filesystem, how would it fix an issue
+> in ext4?
+
+
+commit f9a61eb4e2471c56a63cd804c7474128138c38ac
+mbcache2: reimplement mbcache
+
+commit 82939d7999dfc1f1998c4b1c12e2f19edbdff272
+ext4: convert to mbcache2
+
+commit be0726d33cb8f411945884664924bed3cb8c70ee
+ext2: convert to mbcache2
+
+Andreas
+
+-- 
+Andreas Stieger <astieger@...e.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG Nürnberg)
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
