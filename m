@@ -1,67 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/22/1
-Message-ID: <20160322205839.GA30835@openwall.com>
-Date: Tue, 22 Mar 2016 23:58:39 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/06/2
+Message-ID: <alpine.LFD.2.20.1609061630270.20681@wniryva>
+Date: Tue, 6 Sep 2016 16:32:34 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>, Tom Victor <vv474172261@...il.com>
+Subject: CVE request: Qemu: scsi: pvscsi: OOB read and infinite loop while setting descriptor rings
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 09, 2015 at 02:26:39PM +0300, Solar Designer wrote:
-> On Sat, Jun 06, 2015 at 02:30:57PM +0300, Solar Designer wrote:
-> > The possibility of "struct iovec *iov" going out of range and the
-> > subsequent out of bounds metadata accesses feel much more severe than
-> > the out of bounds accesses to actual data in the userspace.
-> > "iov->iov_base += copy;" and "iov->iov_len -= copy;" might then be
-> > corrupting kernel memory.  It feels relatively unimportant what the
-> > resulting values of iov_base and iov_len will be for their intended
-> > purpose, since we use copy_from_user() / copy_to_user() on them anyway.
-> > It feels more important that these "+=" and "-=" operators directly
-> > modify individual words in kernel memory, albeit only slightly(?) out of
-> > bounds of the original iov array.  So maybe it's this risk that needs
-> > to be evaluated further.
-> 
-> Upon a closer look, it appears that this is in fact the impact Red Hat
-> had in mind as well.  I was not reading closely enough.  The "Doc Text"
-> field at https://bugzilla.redhat.com/show_bug.cgi?id=1202855 says:
-> 
-> "It was found that the Linux kernel's implementation of vectored pipe
-> read and write functionality did not take into account the I/O vectors
-> that were already processed when retrying after a failed atomic access
-> operation, potentially resulting in memory corruption due to an I/O
-> vector array overrun."
-> 
-> So we're on the same page regarding "I/O vector array overrun" (rather
-> than I/O data overrun) being the security issue here.
+   Hello,
 
-Apparently, this vulnerability is being used to root older Android
-devices, and as a result it has just been fixed for older Android:
+Quick Emulator(Qemu) built with the VMWARE PVSCSI paravirtual SCSI bus 
+emulation support is vulnerable to an OOB access and/or infinite loop issue. 
+It could occur while processing SCSI commands 'PVSCSI_CMD_SETUP_RINGS'.
 
-https://source.android.com/security/advisory/2016-03-18.html
+A privileged user inside guest could use this flaw to crash the Qemu process 
+resulting in DoS.
 
-"Google has become aware of a rooting application using an unpatched
-local elevation of privilege vulnerability in the kernel on some Android
-devices (CVE-2015-1805).  For this application to affect a device, the
-user must first install it.  We already block installation of rooting
-applications that use this vulnerability - both within Google Play and
-outside of Google Play - using Verify Apps, and have updated our systems
-to detect applications that use this specific vulnerability.
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg00050.html
 
-To provide a final layer of defense for this issue, partners were
-provided with a patch for this issue on March 16, 2016.  Nexus updates
-are being created and will be released within a few days.  Source code
-patches for this issue have been released to the Android Open Source
-Project (AOSP) repository."
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1373462
 
-The advisory above includes a bit more information, including links to
-AOSP commits, but no information on how the vulnerability is exploited,
-nor even the names of the "rooting applications".
 
-I heard of this from a tweet by @DaveManouchehri, asking for "the APK
-(or name) of the app that's exploiting CVE-2015-1805" - unfortunately, I
-have no answer.
+These issues were reported by Vivtor V and Li Quiang of 360.cn Inc.
 
-The primary reason I am posting this is so that other distros know the
-vulnerability was apparently shown to be exploitable.
-
-Alexander
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
