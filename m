@@ -1,45 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/06/1
-Message-ID: <91298704-08e0-71ec-7839-b0aeb7978c68@suse.com>
-Date: Tue, 6 Sep 2016 11:47:52 +0200
-From: Andreas Stieger <astieger@...e.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Linux kernel mbcache lock contention denial of service.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/06/3
+Message-ID: <alpine.LFD.2.20.1609061716580.21893@wniryva>
+Date: Tue, 6 Sep 2016 17:18:50 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request: Qemu: scsi: pvscsi: infintie loop when building SG list
 Content-Type: text/plain; charset=utf-8
 
+   Hello,
 
+Quick Emulator(Qemu) built with the VMWARE PVSCSI paravirtual SCSI bus 
+emulation support is vulnerable to an infinite loop issue. It could occur 
+while processing an IO request descriptor, building SG list.
 
-On 09/05/2016 03:57 PM, Greg KH wrote:
-> On Mon, Aug 22, 2016 at 03:28:51PM +1000, Wade Mealing wrote:
->> [...]
->> Upstream has replaced the mbcache code with an updated version which
->> was not a patch but a clear-cut reimplementation of the code, no
->> single diff
->> [...]
->>  ±  git tag --contains be0726d33cb8f411945884664924bed3cb8c70ee
->> v4.6
-> That commit is for only the ext2 filesystem, how would it fix an issue
-> in ext4?
+A privileged user inside guest could use this flaw to crash the Qemu process 
+resulting in DoS.
 
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg00772.html
 
-commit f9a61eb4e2471c56a63cd804c7474128138c38ac
-mbcache2: reimplement mbcache
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1373478
 
-commit 82939d7999dfc1f1998c4b1c12e2f19edbdff272
-ext4: convert to mbcache2
+This issue was reported by Li Qiang of 360.cn Inc.
 
-commit be0726d33cb8f411945884664924bed3cb8c70ee
-ext2: convert to mbcache2
-
-Andreas
-
--- 
-Andreas Stieger <astieger@...e.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG Nürnberg)
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
