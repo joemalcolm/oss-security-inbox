@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["868" "Sunday" "7" "July" "2019" "17:29:25" "-0400" "Stuart D. Gathman" "stuart@gathman.org" "<alpine.LRH.2.21.1907071720020.20952@fairfax.gathman.org>" "21" "Re: [oss-security] linux-distros membership application - Microsoft" "^Date:" nil nil "7" "2019070721:29:25" "[oss-security] linux-distros membership application - Microsoft" (number mark "        stuart@gathm Jul  7   21/868   " thread-indent "\"Re: [oss-security] linux-distros membership application - Microsoft\"\n") "<CAGUWgD8wwsx2QXcK_vc7LU+Ow1Bc5m7ockHrfEy+Z8cykYsZdA@mail.gmail.com>" ("<20190626141358.GK7898@sasha-vm>" "<20190627140321.GA29338@openwall.com>" "<20190627170508.GB11506@sasha-vm>" "<20190628125743.GA2187@openwall.com>" "<20190628170812.GG11506@sasha-vm>" "<20190706193737.GA23344@openwall.com>" "<CAGUWgD8wwsx2QXcK_vc7LU+Ow1Bc5m7ockHrfEy+Z8cykYsZdA@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] linux-distros membership application - Microsoft" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["669" "Tuesday" "6" "September" "2016" "17:18:50" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1609061716580.21893@wniryva>" "23" "[oss-security] CVE request: Qemu: scsi: pvscsi: infintie loop when building SG list" nil nil nil "9" "2016090611:48:50" "[oss-security] CVE request: Qemu: scsi: pvscsi: infintie loop when building SG list" (number mark "U       ppandit@redh Sep  6   23/669   " thread-indent "\"[oss-security] CVE request: Qemu: scsi: pvscsi: infintie loop when building SG list\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11302 invoked by uid 550); 8 Jul 2019 09:35:00 -0000
+Received: (qmail 28024 invoked by uid 550); 6 Sep 2016 11:49:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +11,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9943 invoked from network); 7 Jul 2019 21:29:44 -0000
-Authentication-Results: mail.gathman.org; iprev=pass policy.iprev="2001:470:8:809::2" (wiki.gathman.org); auth=pass (CRAM-MD5 sslbits=256) smtp.auth=stuart
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gathman.org; 
- i=@gathman.org; q=dns/txt; s=default; t=1562534968; 
- h=date : from : to : subject : in-reply-to : message-id : 
- references : mime-version : content-type : date : from : 
- subject; bh=64UCPcAe2zpQ3sVGtTB1VM98Az/DJjX5uhtV3goQas0=; 
- b=nIrGoCqVwxR8CXfdtDASDyHGdcqRiHuRyybn82w9psmeaWxaOU1gxPd4
- 4SfW1Vxehh9fJYIEr8tkvBnPfRP5MNayGEHKqSabhUgkoRMu9Kc2CjP0uF
- GutWyCialY02V96Y8Y54pS71rhCr875JlyX1Z1hyu/1rrE7iy0PMyu+hs=
-In-Reply-To: <CAGUWgD8wwsx2QXcK_vc7LU+Ow1Bc5m7ockHrfEy+Z8cykYsZdA@mail.gmail.com>
-Message-ID: <alpine.LRH.2.21.1907071720020.20952@fairfax.gathman.org>
-References: <20190626141358.GK7898@sasha-vm> <20190627140321.GA29338@openwall.com> <20190627170508.GB11506@sasha-vm> <20190628125743.GA2187@openwall.com> <20190628170812.GG11506@sasha-vm> <20190706193737.GA23344@openwall.com>
- <CAGUWgD8wwsx2QXcK_vc7LU+Ow1Bc5m7ockHrfEy+Z8cykYsZdA@mail.gmail.com>
-User-Agent: Alpine 2.21 (LRH 202 2017-01-01)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Date: Sun, 7 Jul 2019 17:29:25 -0400 (EDT)
-From: "Stuart D. Gathman" <stuart@gathman.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] linux-distros membership application -
- Microsoft
-To: oss-security@lists.openwall.com
+Received: (qmail 28006 invoked from network); 6 Sep 2016 11:49:07 -0000
+Date: Tue, 6 Sep 2016 17:18:50 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Li Qiang <liqiang6-s@360.cn>
+Message-ID: <alpine.LFD.2.20.1609061716580.21893@wniryva>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Tue, 06 Sep 2016 11:48:55 +0000 (UTC)
+Subject: [oss-security] CVE request: Qemu: scsi: pvscsi: infintie loop when building SG
+ list
 
-On Sun, 7 Jul 2019, Georgi Guninski wrote:
+   Hello,
 
-> No, it is not recent. The Halloween Documents are from 1998,
-> which makes 21 years.
+Quick Emulator(Qemu) built with the VMWARE PVSCSI paravirtual SCSI bus 
+emulation support is vulnerable to an infinite loop issue. It could occur 
+while processing an IO request descriptor, building SG list.
 
-Just as young people today have forgotten the "crimes" (not
-necessarily illegal, but widely regarded at unethical) of Microsoft
-in the past, so most of the management responsible for those crimes
-at Microsoft have moved on, and the company is changing.
+A privileged user inside guest could use this flaw to crash the Qemu process 
+resulting in DoS.
 
-On the same lines, do you believe Google continues to faithfully
-follow its founding mandate of "Don't be Evil"?
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg00772.html
 
-The only thing you can count on staying the same is the profit motive,
-it is required by law for a publicly owned corporation.  But profit can
-be pursued ethically - or not.
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1373478
 
--- 
- 	      Stuart D. Gathman <stuart@gathman.org>
-"Confutatis maledictis, flamis acribus addictis" - background song for
-a Microsoft sponsored "Where do you want to go from here?" commercial.
+This issue was reported by Li Qiang of 360.cn Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
