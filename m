@@ -1,4 +1,9 @@
-Received: (qmail 15370 invoked by uid 550); 14 Feb 2025 14:43:19 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["708" "Tuesday" "6" "September" "2016" "18:22:24" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1609061818400.23358@wniryva>" "20" "[oss-security] CVE Request Qemu: scsi: mptsas: invalid memory access while building configuration pages" nil nil nil "9" "2016090612:52:24" "[oss-security] CVE Request Qemu: scsi: mptsas: invalid memory access while building configuration pages" (number mark "U       ppandit@redh Sep  6   20/708   " thread-indent "\"[oss-security] CVE Request Qemu: scsi: mptsas: invalid memory access while building configuration pages\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 32431 invoked by uid 550); 6 Sep 2016 12:52:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,43 +12,37 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 20438 invoked from network); 14 Feb 2025 11:53:22 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Xue Weiming <mikexue@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <1526e64d-6ff0-bf7a-962d-4fa92aaa97e3@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 14 Feb 2025 11:53:11 +0000
+Received: (qmail 32410 invoked from network); 6 Sep 2016 12:52:41 -0000
+Date: Tue, 6 Sep 2016 18:22:24 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Tom Victor <vv474172261@gmail.com>
+Message-ID: <alpine.LFD.2.20.1609061818400.23358@wniryva>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-56180: Apache EventMesh: raft Hessian Deserialization
- Vulnerability allowing remote code execution 
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Tue, 06 Sep 2016 12:52:29 +0000 (UTC)
+Subject: [oss-security] CVE Request Qemu: scsi: mptsas: invalid memory access while building
+ configuration pages
 
-Severity: moderate
+   Hello,
 
-Affected versions:
+Quick emulator(Qemu) built with the LSI SAS1068 Host Bus emulation support, is 
+vulnerable to an invalid memory access issue. It could occur while building 
+configuration page headers in 'mptsas_config_manufacturing_1'.
 
-- Apache EventMesh unaffected
+A privileged user inside guest could use this flaw to crash the Qemu process 
+on the host, resulting in DoS.
 
-Description:
+Upstream patches:
+-----------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg04295.html
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg04296.html
 
-CWE-502 Deserialization of Untrusted Data at the eventmesh-meta-raft=C2=A0p=
-lugin=C2=A0module in Apache EventMesh master branch without release version=
- on windows\linux\mac os e.g. platforms allows attackers to send controlled=
- message and remote code execute=C2=A0via hessian deserialization rpc proto=
-col. Users can use the code under the master branch in project repo or vers=
-ion 1.11.0-release to fix this issue.
+This issue was reported by Victor V of the Marvel Team, 360.cn Inc.
 
-Credit:
-
-yulate (reporter)
-Au5t1n (reporter)
-h3h3qaq (reporter)
-X1r0z (reporter)
-
-References:
-
-https://eventmesh.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2024-56180
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
