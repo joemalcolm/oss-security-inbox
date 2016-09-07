@@ -1,49 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/25/1
-Message-ID: <20161225104410.GU5082@jumper.schlittermann.de>
-Date: Sun, 25 Dec 2016 11:44:10 +0100
-From: Heiko Schlittermann <hs@...littermann.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-9963 | Exim 4.87.1 released (Was: CVE Request - Exim 4.69-4.87) - disclosure of private information)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/07/5
+Message-ID: <alpine.LFD.2.20.1609071339140.25457@wniryva>
+Date: Wed, 7 Sep 2016 13:39:41 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: cve-assign@...re.org, vv474172261@...il.com
+Subject: Re: Re: CVE Request Qemu: scsi: mptsas: invalid memory access while building configuration pages
 Content-Type: text/plain; charset=utf-8
 
-I've uploaded Exim 4.87.1 to:
++-- On Tue, 6 Sep 2016, cve-assign@...re.org wrote --+
+| -----BEGIN PGP SIGNED MESSAGE-----
+| >> When LSI SAS1068 Host Bus emulator builds configuration page
+| >> headers, mptsas_config_pack() asserts to check returned size
+| >> value is within limit of 256 bytes. Fix that assert expression.
+| 
+| Our interpretation is that this assert issue is not an independently
+| relevant security problem, and does not need its own unique CVE ID.
 
-    ftp://ftp.exim.org/pub/exim/exim4/old/
-    git://git.exim.org/exim.git (tag exim-4_87_1)
-
-Whilst this release is superseeded by 4.88 already, you're urged
-to upgrade to 4.87.1, if 4.88 isn't an option for you yet.
-
-No features are added or removed. This release contains
-just a fix for CVE-2016-9963
-
-    - Fix CVE-2016-9963 - Info leak from DKIM.  When signing DKIM, if
-      either LMTP or PRDR was used for delivery, the key could appear in
-      logs.  Additionally, if the experimental feature "DSN_INFO" was used,
-      it could appear in DSN messages (and be sent offsite).
-
-For details about the CVE please see
-
-    https://exim.org/static/doc/CVE-2016-9963.txt
-
-The release files for 4.87.1 are signed with the PGP key 0xF69376CE,
-which has a uid "Heiko Schlittermann (HS12-RIPE) <hs@...littermann.de>".
-Please use your own discretion in assessing what trust paths you might
-have to this uid.
-
-In case on any problems please contact us on exim-users@...m.org
-or on the IRC channel #exim at freenode.
-
-Sorry for the release date.
-
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
--- 
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+That's right. Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
