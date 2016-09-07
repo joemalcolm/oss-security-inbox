@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3277" "Thursday" "2" "March" "2017" "16:35:37" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<899078.172023536-sendEmail@localhost>" "69" "[oss-security] podofo: NULL pointer dereference in PoDoFo::PdfColor::operator= (PdfColor.cpp)" nil nil nil "3" "2017030216:35:37" "[oss-security] podofo: NULL pointer dereference in PoDoFo::PdfColor::operator= (PdfColor.cpp)" (number mark "U       ago@gentoo.o Mar  2   69/3277  " thread-indent "\"[oss-security] podofo: NULL pointer dereference in PoDoFo::PdfColor::operator= (PdfColor.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2228" "Tuesday" "6" "September" "2016" "20:56:28" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160907005628.1FE726C547C@smtpvmsrv1.mitre.org>" "54" "[oss-security] Re: CVE Request Qemu: scsi: mptsas: invalid memory access while building configuration pages" nil nil nil "9" "2016090700:56:28" "[oss-security] Re: CVE Request Qemu: scsi: mptsas: invalid memory access while building configuration pages" (number mark "U       cve-assign@m Sep  6   54/2228  " thread-indent "\"[oss-security] Re: CVE Request Qemu: scsi: mptsas: invalid memory access while building configuration pages\"\n") "<alpine.LFD.2.20.1609061818400.23358@wniryva>" ("<alpine.LFD.2.20.1609061818400.23358@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20437 invoked by uid 550); 2 Mar 2017 16:35:56 -0000
+Received: (qmail 9411 invoked by uid 550); 7 Sep 2016 00:56:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,81 +12,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20195 invoked from network); 2 Mar 2017 16:35:53 -0000
-Message-ID: <899078.172023536-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Thu, 2 Mar 2017 16:35:37 +0000
-MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-303519.415742816"
-Subject: [oss-security] podofo: NULL pointer dereference in PoDoFo::PdfColor::operator= (PdfColor.cpp)
+Received: (qmail 9393 invoked from network); 7 Sep 2016 00:56:39 -0000
+From: cve-assign@mitre.org
+To: ppandit@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, vv474172261@gmail.com
+In-Reply-To: <alpine.LFD.2.20.1609061818400.23358@wniryva>
+Message-Id: <20160907005628.1FE726C547C@smtpvmsrv1.mitre.org>
+Date: Tue,  6 Sep 2016 20:56:28 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request Qemu: scsi: mptsas: invalid memory access while building configuration pages
 
-------MIME delimiter for sendEmail-303519.415742816
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Description:
-podofo is a C++ library to work with the PDF file format.
+> Quick emulator(Qemu) built with the LSI SAS1068 Host Bus emulation support, is
+> vulnerable to an invalid memory access issue. It could occur while building
+> configuration page headers in 'mptsas_config_manufacturing_1'.
+> 
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> on the host, resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg04295.html
 
-A fuzz on it discovered a null pointer dereference. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
+>> When LSI SAS1068 Host Bus emulator builds configuration page
+>> headers, the format string used in 'mptsas_config_manufacturing_1'
+>> was wrong. It could lead to an invalid memory access.
 
-The complete ASan output:
+Use CVE-2016-7157.
 
-# podofocolor dummy $FILE foo
-==9554==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x0000004ca47d bp 0x7fff58eb6bb0 sp 0x7fff58eb6330 T0)
-==9554==The signal is caused by a READ memory access.
-==9554==Hint: address points to the zero page.
-    #0 0x4ca47c in AddressIsPoisoned /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_mapping.h:321
-    #1 0x4ca47c in QuickCheckForUnpoisonedRegion /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:43
-    #2 0x4ca47c in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413
-    #3 0x7f5fc924b58d in PoDoFo::PdfColor::operator=(PoDoFo::PdfColor const&) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfColor.cpp:575:9
-    #4 0x52d31f in GraphicsStack::TGraphicsStackElement::operator=(GraphicsStack::TGraphicsStackElement const&) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/graphicsstack.h:46:29
-    #5 0x52d31f in GraphicsStack::TGraphicsStackElement::TGraphicsStackElement(GraphicsStack::TGraphicsStackElement const&) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/graphicsstack.h:41
-    #6 0x52c46a in GraphicsStack::Push() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/graphicsstack.cpp:40:27
-    #7 0x522005 in ColorChanger::ReplaceColorsInPage(PoDoFo::PdfCanvas*) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:187:35
-    #8 0x51ed8e in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:120:15
-    #9 0x51c06d in main /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/podofocolor.cpp:116:12
-    #10 0x7f5fc7d3261f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #11 0x428718 in _start (/usr/bin/podofocolor+0x428718)
-
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_mapping.h:321 in AddressIsPoisoned
-==9554==ABORTING
-
-Affected version:
-0.9.4
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00172-podofo-nullptr-PoDoFo-PdfColor-operator
-
-Timeline:
-2017-02-13: bug discovered
-2017-03-02: bug reported to upstream
-2017-03-02: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/03/02/podofo-null-pointer-dereference-in-podofopdfcoloroperator-pdfcolor-cpp
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/mptconfig.c but
+that may be an expected place for a later update.
 
 
-------MIME delimiter for sendEmail-303519.415742816--
+> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg04296.html
 
+>> When LSI SAS1068 Host Bus emulator builds configuration page
+>> headers, mptsas_config_pack() asserts to check returned size
+>> value is within limit of 256 bytes. Fix that assert expression.
+
+Our interpretation is that this assert issue is not an independently
+relevant security problem, and does not need its own unique CVE ID.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXz2PsAAoJEHb/MwWLVhi2XXcP/1ZIu5eguJjtVoGHYTsE8IrY
++4CzVNeYbdHFzIunDooQkT062zPsRzzBGIVYng2cSrAw5segRhmt6cQ/jbG6UNPe
+TPvsRpwlhm9qTpc0FSGpNW/lr4sWF8eIfJIvOmUcYp+j/MhlUlFFQbSL79AtABkr
+vnKTyqbVf6iwRM2UB+ywbzoD004eeZaefuVN13vk5GTjhRkxoeSyd4Erpe/E1IzP
+37Vsx0b1LdeNimkDJC0QfTxIHesRTcd9UkZq4No9Ztj4bBh0WIyhBZGS0W5FonUB
+H1tRHi/zSJlZKHhqhfoszM4xQOst0yfcOqOhUueX92zThAvt8FIPZJq9v23tg9ib
+9lYaX+1GzupRhqjbB+yDnUh8NLYhAQqpLAi/ryva1J3dsaVrbZyZwpwBZNjvUfG8
+2Vgf0s+4WTcLvaanYKh+T/tSwtHIeaHEh+O65vvPKVDbox9FSjgOlHzr9ANUks0v
+eoRz9telzBkKUOZMALOxIFRmB4z18a5il+MLsmV0cKM3jFSKrkx83d/L/t/3n7ub
+oBD3dAEHri+nH/MiIGZUBKrN6r1cD6tylySTvLerMQpH7C7ovxOIpTEWv1CW8FYg
+7OH6ZBGiH0QpjWI45vIVk1nrZ/H5krpPnmEnBJZIJ9v/H6nIVWoosP134GMAKjlL
+xQG3c8wAuTo62bt7kHsQ
+=yZzK
+-----END PGP SIGNATURE-----
