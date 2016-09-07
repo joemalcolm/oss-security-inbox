@@ -1,35 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/7
-Message-ID: <20160913165006.GA9055@openwall.com>
-Date: Tue, 13 Sep 2016 18:50:06 +0200
-From: Solar Designer <solar@...nwall.com>
-To: "vul @ 724safe" <vul@...safe.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Heapoverflow in giflib5.1.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/07/2
+Message-Id: <20160907005443.AF3AB6C5469@smtpvmsrv1.mitre.org>
+Date: Tue,  6 Sep 2016 20:54:43 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
+Subject: Re: CVE request: Qemu: scsi: pvscsi: infintie loop when building SG list
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 13, 2016 at 11:20:08PM +0800, vul @ 724safe wrote:
-> With Address Sanitizer there is aa heap overflow in giflib 5.1.4
-> More details are available at:
-> https://sourceforge.net/p/giflib/bugs/102/
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-When posting to oss-security, please include the actual detail right in
-your posting (up to 200 KB including MIME overhead, but of course try to
-keep it smaller than that if at all practical) - not only via external
-links.  I've attached the content of the above link now.  Luckily, this
-one PoC GIF file is tiny:
+> Quick Emulator(Qemu) built with the VMWARE PVSCSI paravirtual SCSI bus
+> emulation support is vulnerable to an infinite loop issue. It could occur
+> while processing an IO request descriptor, building SG list.
+> 
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg00772.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1373478
 
-$ base64 poc
-R0lGODdhKP9/AADZACwAHQAAKAAAAPngp5Lb5QAD4wAAAgAAOwAd
+>> In PVSCSI paravirtual SCSI bus, the request descriptor data
+>> length is defined to be 64 bit. While building SG list from
+>> a request descriptor, it gets truncated to 32bit in routine
+>> 'pvscsi_convert_sglist'. This could lead to an infinite loop
+>> situation for arbitrarily large 'dataLen' values. Check
+>> SG list element count to avoid  it.
 
-Ideally, you would also investigate and patch issues found by ASan,
-rather than merely include its output, but I realize we can't actually
-expect anything specific from volunteers.  So whatever we've got.
+Use CVE-2016-7156.
 
-Thanks,
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/vmw_pvscsi.c but
+that may be an expected place for a later update.
 
-Alexander
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-View attachment "giflib-102-Heap_overflow_in_gif2rgb.c.txt" of type "text/plain" (2519 bytes)
-
-Download attachment "poc" of type "application/octet-stream" (39 bytes)
+iQIcBAEBCAAGBQJXz2NGAAoJEHb/MwWLVhi2qM8P+gKKm8ns+cMWH6cCcT+M7Izh
+G3uH1T2Kgz+8JhXDAKAyYrCnPXFkrAHULGX8RYmZJ8pDeKpNfqcF6NIz8TqaF+e2
+1HHDKX7NsSn3ODL3KI0JdAq1nfQ4leut0h+6OQnAbUAVJJGplWNPfRd2eIqfOUHv
+/Ew51J6R6oEaVV/+QL8PYNz/7U2MbmlrH56Pj4v3pqzeEc4MJgkX5EcGc01n/vZd
+/ir6HjirzTajWsAoOZqRiQ9euentjOGwsTPIxCQ4v+MKWFdU+AdMonpoKic6dQj+
+IuVQA0y59pkcXxfcWOhGghanCYh3hvnrSWUtL/PDeUSufyAwKJaVoo/IPKtwZVMW
+PrsaxfPTzlYzwHc0usJPuMWjEytf9mWNU0jX/84tMNakTFLYXcCsAl9tH5iHmiVp
+MIvAACVTQSQ7qx6s4UTz5PLbln1kZ3E5ZsXEv5rTZktwQ+2FDl31nuNLKZckYxKw
+6bz4BHFO0FYmFU0TNjVIGfOypGh4ctX1N4pj9tAx87fk7+qT+LXDeNUztkW0nsdM
+7zMI193LH+SzTcDH0B7Fkyeg2K8CmqPnctaRdhHo/man9i/MEZUiYn3Skk+AhJd/
+yr3bwK5I1stfSSglp+uzjzLNZUQmg9sOA0aJrCddaQzyiNitusVDSCW6AKruBzln
+1pxmVAwD3Eyefat/NQi8
+=DZ2t
+-----END PGP SIGNATURE-----
