@@ -1,67 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/8
-Message-ID: <ea2555f7-dac3-948f-eef4-ff0dc624bddd@oracle.com>
-Date: Fri, 16 Sep 2016 17:16:06 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/07/8
+Message-ID: <nqpirj$fvm$1@blaine.gmane.org>
+Date: Wed, 07 Sep 2016 19:30:28 +0200
+From: Damien Regad <dregad@...tisbt.org>
 To: oss-security@...ts.openwall.com
-Cc: chet.ramey@...e.edu
-Subject: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
+Subject: ADOdb PDO driver: incorrect quoting may allow SQL injection
 Content-Type: text/plain; charset=utf-8
 
-Hello All,
+Greetings
 
-A little while ago, one of our users discovered that by setting the
-hostname to $(something unpleasant), bash would run "something
-unpleasant" when it expanded \h in the prompt string.
+jdavidlists reported an issue [1] with ADOdb 5.x, qstr() method,
+improperly quoting strings resulting in a potential SQL injection attack
+vector.
 
-We informed Chet (cc'd) and this has been fixed in the recently
-announced bash-4.4.
+This affects only PDO-based drivers, and only in the case where the
+query is built by inlining the quoted string, e.g.
 
-I believe the fix in parse.y is this (Chet, please correct me if I'm wrong):
+$strHack = 'xxxx\\\' OR 1 -- ';
+$sql = "SELECT * FROM employees WHERE name = " . $db->qstr( $strHack );
+$rs = $db->getAll($strSQL); // dumps the whole table
 
---------------------
-@@ -5569,9 +5703,17 @@ decode_prompt_string (string)
+Note that it is not recommended to write SQL as per the above example,
+the code should be rewritten to use query parameters, like
 
- 	    case 'h':
- 	    case 'H':
--	      temp = savestring (current_host_name);
--	      if (c == 'h' && (t = (char *)strchr (temp, '.')))
-+	      t_host = savestring (current_host_name);
-+	      if (c == 'h' && (t = (char *)strchr (t_host, '.')))
- 		*t = '\0';
-+	      if (promptvars || posixly_correct)
-+		/* Make sure that expand_prompt_string is called with a
-+		   second argument of Q_DOUBLE_QUOTES if we use this
-+		   function here. */
-+		temp = sh_backslash_quote_for_double_quotes (t_host);
-+	      else
-+		temp = savestring (t_host);
-+	      free (t_host);
- 	      goto add_string;
+$strHack = 'xxxx\\\' OR 1 -- ';
+$sql = "SELECT * FROM employees WHERE name = ?"
+$rs = $db->getAll($strSQL, array($strHack));
 
- 	    case '#':
---------------------
+Please let me know if a CVE is needed for this.
 
-There is a related fix (but not one necessarily covered by CVE-2016-0634):
+Patch for the issue is available [2], and will be included in upcoming
+ADOdb v5.20.7 release.
 
---------------------
-@@ -5479,7 +5609,11 @@ decode_prompt_string (string)
+Best regards
+Damien Regad
+ADOdb maintainer
 
- 	    case 's':
- 	      temp = base_pathname (shell_name);
--	      temp = savestring (temp);
-+	      /* Try to quote anything the user can set in the file system */
-+	      if (promptvars || posixly_correct)
-+		temp = sh_backslash_quote_for_double_quotes (temp);
-+	      else
-+		temp = savestring (temp);
- 	      goto add_string;
 
- 	    case 'v':
---------------------
+[1] https://github.com/ADOdb/ADOdb/issues/226
+[2] https://github.com/ADOdb/ADOdb/commit/bd9eca9
 
-I appreciate that it's relatively difficult to set the hostname to a
-string of your choosing but there are plenty of helpful agents that will
-call sethostname(2) on your behalf.
-
-jch
