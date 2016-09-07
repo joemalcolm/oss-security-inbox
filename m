@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["621" "Tuesday" "1" "March" "2016" "11:53:37" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty0ZOjCGL-iXCZ46FbSQ3i+fpGHBB6X1x2Agy9jftQ3ozA@mail.gmail.com>" "17" "[oss-security] Re: CVE's for SSLv2 support" "^Cc:" nil nil "3" "2016030118:53:37" "[oss-security] Re: CVE's for SSLv2 support" (number mark "        kseifried@re Mar  1   17/621   " thread-indent "\"[oss-security] Re: CVE's for SSLv2 support\"\n") "<20160301184339.B62C3ABC04A@smtpvmsrv1.mitre.org>" ("<CANO=Ty3qgsHtaivrfwoB=ZdbgyE=z5+Q+HkhazE06ppDbw63RQ@mail.gmail.com>" "<20160301184339.B62C3ABC04A@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2012" "Tuesday" "6" "September" "2016" "20:54:43" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160907005443.AF3AB6C5469@smtpvmsrv1.mitre.org>" "48" "[oss-security] Re: CVE request: Qemu: scsi: pvscsi: infintie loop when building SG list" nil nil nil "9" "2016090700:54:43" "[oss-security] Re: CVE request: Qemu: scsi: pvscsi: infintie loop when building SG list" (number mark "U       cve-assign@m Sep  6   48/2012  " thread-indent "\"[oss-security] Re: CVE request: Qemu: scsi: pvscsi: infintie loop when building SG list\"\n") "<alpine.LFD.2.20.1609061716580.21893@wniryva>" ("<alpine.LFD.2.20.1609061716580.21893@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3385 invoked by uid 550); 1 Mar 2016 18:53:50 -0000
+Received: (qmail 30521 invoked by uid 550); 7 Sep 2016 00:54:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3353 invoked from network); 1 Mar 2016 18:53:49 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=26zSdRs9SlcJLKuuCKxEKWbiFzwODXkJ3uKJZK18DKw=;
-        b=TegtXYh64vZipL6aXmKcYOvJcxt+PK79Ebq9hvlP014z+U0/WW21HKZoHG8huYn04/
-         QrppfBKA7AJevmMkWXWXDSkMLUI4BXc10zn/nzDfhnMoHANk+Oxp+bCkhUkjfpM9jNZV
-         7RTOYrawETPpXWIwrD/omndCcUqjyukQa3ThTAIMfT15cdruBSjtgv1PQlyMzrmYHtCt
-         y32DCmRUsFCkx6wrzZnAPn5PyWLeL72893yQlZF65vkg78edu1fOP9yxLZJjbMkCZeFc
-         UO1Sp4QVN9cgyRQiHlbVBRnLxVRdH/rmT7Z7vElYEyUo5uBAgMuHil3sGSFCt3JqpT+5
-         uLug==
-X-Gm-Message-State: AD7BkJIO6FS9bwNzIqHauuYRpcNlFNnNAS52cqlqwz/Fls8vI27YzZglSH6MM0ZPwXs1PSZhdPmO4eYR7jtwHo79
-MIME-Version: 1.0
-X-Received: by 10.13.235.7 with SMTP id u7mr12555812ywe.97.1456858417749; Tue,
- 01 Mar 2016 10:53:37 -0800 (PST)
-In-Reply-To: <20160301184339.B62C3ABC04A@smtpvmsrv1.mitre.org>
-References: <CANO=Ty3qgsHtaivrfwoB=ZdbgyE=z5+Q+HkhazE06ppDbw63RQ@mail.gmail.com>
-	<20160301184339.B62C3ABC04A@smtpvmsrv1.mitre.org>
-Message-ID: <CANO=Ty0ZOjCGL-iXCZ46FbSQ3i+fpGHBB6X1x2Agy9jftQ3ozA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=94eb2c0873067aaa92052d014864
-Cc: oss-security <oss-security@lists.openwall.com>
-Date: Tue, 1 Mar 2016 11:53:37 -0700
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE's for SSLv2 support
-To: CVE ID Requests <cve-assign@mitre.org>
+Received: (qmail 30461 invoked from network); 7 Sep 2016 00:54:55 -0000
+From: cve-assign@mitre.org
+To: ppandit@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn
+In-Reply-To: <alpine.LFD.2.20.1609061716580.21893@wniryva>
+Message-Id: <20160907005443.AF3AB6C5469@smtpvmsrv1.mitre.org>
+Date: Tue,  6 Sep 2016 20:54:43 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: Qemu: scsi: pvscsi: infintie loop when building SG list
 
---94eb2c0873067aaa92052d014864
-Content-Type: text/plain; charset=UTF-8
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Ok let me simplify:
+> Quick Emulator(Qemu) built with the VMWARE PVSCSI paravirtual SCSI bus
+> emulation support is vulnerable to an infinite loop issue. It could occur
+> while processing an IO request descriptor, building SG list.
+> 
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg00772.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1373478
 
-If a crypto library (e.g. OpenSSL, NSS) supports AND enables SSLv2 by
-default should it receive a CVE? Essentially we'd be saying "SSLv2 is so
-bad, that supporting/enabling it by default in a crypto library is CVE
-worthy" (essentially under the CVE assignment for "product makes a security
-claim that it fails to do properly").
+>> In PVSCSI paravirtual SCSI bus, the request descriptor data
+>> length is defined to be 64 bit. While building SG list from
+>> a request descriptor, it gets truncated to 32bit in routine
+>> 'pvscsi_convert_sglist'. This could lead to an infinite loop
+>> situation for arbitrarily large 'dataLen' values. Check
+>> SG list element count to avoid  it.
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
+Use CVE-2016-7156.
 
---94eb2c0873067aaa92052d014864--
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/vmw_pvscsi.c but
+that may be an expected place for a later update.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXz2NGAAoJEHb/MwWLVhi2qM8P+gKKm8ns+cMWH6cCcT+M7Izh
+G3uH1T2Kgz+8JhXDAKAyYrCnPXFkrAHULGX8RYmZJ8pDeKpNfqcF6NIz8TqaF+e2
+1HHDKX7NsSn3ODL3KI0JdAq1nfQ4leut0h+6OQnAbUAVJJGplWNPfRd2eIqfOUHv
+/Ew51J6R6oEaVV/+QL8PYNz/7U2MbmlrH56Pj4v3pqzeEc4MJgkX5EcGc01n/vZd
+/ir6HjirzTajWsAoOZqRiQ9euentjOGwsTPIxCQ4v+MKWFdU+AdMonpoKic6dQj+
+IuVQA0y59pkcXxfcWOhGghanCYh3hvnrSWUtL/PDeUSufyAwKJaVoo/IPKtwZVMW
+PrsaxfPTzlYzwHc0usJPuMWjEytf9mWNU0jX/84tMNakTFLYXcCsAl9tH5iHmiVp
+MIvAACVTQSQ7qx6s4UTz5PLbln1kZ3E5ZsXEv5rTZktwQ+2FDl31nuNLKZckYxKw
+6bz4BHFO0FYmFU0TNjVIGfOypGh4ctX1N4pj9tAx87fk7+qT+LXDeNUztkW0nsdM
+7zMI193LH+SzTcDH0B7Fkyeg2K8CmqPnctaRdhHo/man9i/MEZUiYn3Skk+AhJd/
+yr3bwK5I1stfSSglp+uzjzLNZUQmg9sOA0aJrCddaQzyiNitusVDSCW6AKruBzln
+1pxmVAwD3Eyefat/NQi8
+=DZ2t
+-----END PGP SIGNATURE-----
