@@ -1,35 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/24/5
-Message-Id: <20161024151612.199576C560A@smtpvmsrv1.mitre.org>
-Date: Mon, 24 Oct 2016 11:16:12 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/07/1
+Message-Id: <20160907005320.3015233E005@smtpvbsrv1.mitre.org>
+Date: Tue,  6 Sep 2016 20:53:20 -0400 (EDT)
 From: cve-assign@...re.org
 To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, hendersa@...ulus.org
-Subject: Re: CVE request Qemu: net: rtl8139: infinite loop while transmit in C+ mode
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn, vv474172261@...il.com
+Subject: Re: CVE request: Qemu: scsi: pvscsi: OOB read and infinite loop while setting descriptor rings
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Quick Emulator(Qemu) built with the RTL8139 ethernet controller emulation
-> support is vulnerable to an infinite loop issue. It could occur while
-> transmitting packets in C+ mode of operation.
+> Quick Emulator(Qemu) built with the VMWARE PVSCSI paravirtual SCSI bus
+> emulation support is vulnerable to an OOB access and/or infinite loop issue.
+> It could occur while processing SCSI commands 'PVSCSI_CMD_SETUP_RINGS'.
 > 
-> A privileged user inside guest could use this flaw to consume excessive CPU
-> cycles on the host, resulting in DoS situation.
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg00050.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1373462
 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg05495.html
+>> Vmware Paravirtual SCSI emulation uses command descriptors to
+>> process SCSI commands. These descriptors come with their ring
+>> buffers. A guest could set the page count for these rings to
+>> an arbitrary value, leading to infinite loop or OOB access.
+>> Add check to avoid it.
 
->> RTL8139 ethernet controller in C+ mode supports multiple
->> descriptor rings, each with maximum of 64 descriptors. While
->> processing transmit descriptor ring in 'rtl8139_cplus_transmit',
->> it does not limit the descriptor count and runs forever. Add
->> check to avoid it.
-
-Use CVE-2016-8910.
+Use CVE-2016-7155.
 
 This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/rtl8139.c but
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/vmw_pvscsi.c but
 that may be an expected place for a later update.
 
 - -- 
@@ -40,17 +41,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYDiS8AAoJEHb/MwWLVhi2MT0P/i1qqts1Nb1wttHz7EX/EAtm
-qiNtxE7/IMAfHoLZ7UKJWk08RPY6O3wz55lbcPdZFtzJav2Ch2tnG2r25+Lr3OFD
-yXD/zZrA7uxpZ+wyQoWa7m1oQkmaPMUdWDjAnFwOy2eMY6yv+YP9UbU5C1opAqhu
-BVYZOXn+4rBa0LyXmw2DyUvNb2a6ePzyXgrJ42LMIdzKHL4ksyOkQ0frYkB1Vns4
-LVDOE3OV7/LWMPOccwIOlUVHEc4cclMnsTQvVB67dNoiJanQV86+AmzdLsRwJqxr
-cy2O6tKG+Gjc7H90uVLOHwEwUMgjswpj2hD1oFZcqPnbsV9cpnFDgTDK/65mpkab
-oflQM68pdnPuWb05VgR+SAQ3jLTmRePaw73GEWi/vHXLNfLWkxmvqGevzV3swBDi
-VG8TnAyWF939pxWbULRSB/3q5aU69iHUM0WIDWZH/WuQ0jEaPrxJg7R8kiVcdt4J
-E+6mM7GQiGndSHXRyQjbf2SIVR80hNuWtctX3nkaZxWsIJTfFYCc8/Ae/M/HDdkf
-bZHhNK5y7rchWd9DYiRi9Knf4axoNe/KvGy4jVhQnwrN8IKaHVKDqbl6cNKDEpUP
-hPhKk+0JEjBFn0auboRZUUqAV90rwEl/VkMvz73WJU6IALhYNBoUkpDG5XewdA5W
-yfHvedUqbQn9vcV6cnf9
-=OGtv
+iQIcBAEBCAAGBQJXz2K3AAoJEHb/MwWLVhi2gXcP/iZr4mBbZqMJU/QngSo6pixg
+17eBrvWqWoFxB+h1Fh+etk5EXS8LB6L8vPz0BpyGjhixdF0z9N8rMKEu14nVZmY3
+R3IejY1e25gDuOZnX7pyR/4qTTE+ebYFg6DEU+vPiQslBrhMNj0ZB5VzF9uZD1kD
+6bnJkQIUJ51ZcnxQsu0V/Zk9Q+cJX2ctKQLa4GHubaKI0wKRRS0PB64XCxKGxPca
+r0oKV5CbSLU+0rXvG54GfzXwNFrVlQIssuYYMPMpGgMhIJRi/uq9g0hKvVC9BgX3
+HEwRbkDtp0I3pNlQsbJMO5JkTb78DQWfW+bZMgFAjFtFhbitVKwpOrEu/Afx/VID
+PrHITep4kYsALpJ3enfgJ1XpkpY9lKz3Y498ZRnfwQhMmGldiTO3mAAPDsrtOsLi
+Bn1A/Y86wWK1qnDjr6bsrxTu7x2dSV+W1As0ILfH+RA9FwjKI8mGUDk55u9b2g1o
+Nc4ow2jMj+YFvCS1p0auYKKGMI66weX3NFsPmw0HmeNRLcspr7p7Y/0VwgHeAUwf
+C5YSdNx2uhTlH4d6bxP0RlO2IeyBIkHCmsb69kNd10N7uaMmEsT9+xZHKB/z9QV9
+QaDqBu6mwyulj0UKycyafSmbk2p9BDHWYpCXGP3UpiSUkcxi/7v9YZYKSN4jQR0P
+geRSHxzwQBMdDP3RVrgX
+=Dx9R
 -----END PGP SIGNATURE-----
