@@ -1,45 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/9
-Message-ID: <064f9484fc644cd8b748db5f0810ae75@imshyb02.MITRE.ORG>
-Date: Thu, 10 Nov 2016 12:28:52 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/1
+Message-ID: <7abbad32-8eb7-bfa4-c38b-a4d598070600@yshi.me>
+Date: Thu, 8 Sep 2016 00:22:55 +0200
+From: yi <yi@...i.me>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request : Libtorrent 1.1.0 inflate_gzip denial of service
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi list,
 
-> https://blogs.gentoo.org/ago/2016/11/07/libming-listmp3-global-buffer-overflow-in-printmp3headers-listmp3-c
-> 
-> if you have a web application that calls
-> directly the listmp3 binary to parse untrusted mp3, then you are affected.
-> 
-> AddressSanitizer: global-buffer-overflow
-> READ of size 4
+I recently opened a bug on "Libtorrent 1.1.0" regarding malformed GZIP
+encoded responses that causes  denial of service.
 
-Use CVE-2016-9264 for this buffer over-read.
+For example, an attacker-controlled torrent tracker can crash victim torrent 
+clients by sending malformed GZIP responses.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+This bug has been fixed by the maintainer in master and the branch RC_1_1:
 
-iQIcBAEBCAAGBQJYJK0uAAoJEHb/MwWLVhi2AH0QALid3jJto+PIZZFy5SeUF38m
-YPTuN2gkmj/+xlSpC1wtRNlu40Ny+u6yixQsltfR8c5A52jeyx333xj8yzB4DmB1
-rTwfl5AqJR9GXslCdisocTEurfD8W5x7LIHcU4Xl+RBIUG0hc7gXo/QzNCqGYdxC
-KsSVvXHsd6YYIVv8NpCDhTv2bVpD0hmywyAYNcMJOckiPYzmnef1Mdj/Yo5irUO/
-9hCCt/nUloadqpvu9HST6Kb7oj7B36H7AtV7k3uWVhaCPmJIxu1btwaAd2i+y99R
-Nj5DUF4N1HrRemNEXEwlWQv/YQhc11hOvGlq1svkW/EO1qsVMUweiTgd/c/70xDE
-oEVXpBWJCaQLpUec8YYP5r4+3/1Ewk5ZqPLwM7uExGcAGew8QQX59QLdASOiKAJL
-H2W2ended2QV40IvMKkUwJWXqY+PYp6tX6rNs43vTdVM8StexBMPoGzyTbWuvDKq
-p25SKbBFgYSp7bg/p1AHVTODM0brcS6bOidzyoUpKYxm98jIn7RqN1y+jqw4SogJ
-EiVUZzfFOkM/nTn/wu8A0FzThtGZrjSLduYsYRi9hLVg++/U3gV4so4tEFDDblS6
-sjlMTDJ31ZbStX6AHK0UuArpWmJGD/GAUT0ZNL7LS6t+mxJxaMuL1mEECW1HJmUR
-B+SZwspusWrzIvf9p0yB
-=3Pz5
------END PGP SIGNATURE-----
+https://github.com/arvidn/libtorrent/issues/1021
+
+https://github.com/arvidn/libtorrent/pull/1022
+
+I also tested the bug with two "Libtorrent based" softwares :
+qBittorrent and Deluge. Both of them were affected and crashed on
+receiving the malformed response.
+
+
+Download attachment "0x0443D821.asc" of type "application/pgp-keys" (3114 bytes)
