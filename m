@@ -1,46 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/13/1
-Message-Id: <20160513031601.D166C72E017@smtpvbsrv1.mitre.org>
-Date: Thu, 12 May 2016 23:16:01 -0400 (EDT)
-From: cve-assign@...re.org
-To: jmm@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request : Use-after-free in openjpeg
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/07/9
+Message-ID: <43cd1612-2d42-a944-8089-bce6e48b45d6@canonical.com>
+Date: Wed, 7 Sep 2016 18:10:34 -0500
+From: Tyler Hicks <tyhicks@...onical.com>
+To: oss-security@...ts.openwall.com
+Cc: "security@...ntu.com" <security@...ntu.com>, Paolo Bacchilega <paobac@....gnome.org>
+Subject: CVE Request: File Roller path traversal
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+File Roller 3.5.4 through 3.20.2 was affected by a path traversal bug
+that could result in deleted files if a user were tricked into opening a
+malicious archive.
 
-> Use-after-free was found in openjpeg
-> (https://github.com/uclouvain/openjpeg). The vuln is fixed in version
-> 2.1.1 and was located in opj_j2k_write_mco function. More details are
-> available here : https://github.com/uclouvain/openjpeg/issues/563.
-> Is it possible to get a CVE for this ?
+3.20.3 news:
+http://ftp.gnome.org/mirror/gnome.org/sources/file-roller/3.20/file-roller-3.20.3.news
+3.21.90 news:
+http://ftp.gnome.org/mirror/gnome.org/sources/file-roller/3.21/file-roller-3.21.90.news
+Distro bug: https://launchpad.net/bugs/1171236
+Upstream bug: https://bugzilla.gnome.org/show_bug.cgi?id=698554
+Introduced by:
+https://git.gnome.org/browse/file-roller/commit/?id=34b64f3a897c4b4e8e180c028f326bc921eb08ec
+Fixed by:
+https://git.gnome.org/browse/file-roller/commit/?id=f70be1f41688859ec8dbe266df35a1839ceb96c5
 
->> https://github.com/uclouvain/openjpeg/commit/940100c28ae28931722290794889cf84a92c5f6f
->> j2k.c
+= Setup =
 
-Use CVE-2015-8871.
+Create /dev/shm/will-be-emptied/important.txt which will act as an
+important file that we wouldn't want to lose.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+$ mkdir -p /dev/shm/will-be-emptied/
+$ echo data > /dev/shm/will-be-emptied/important.txt
 
-iQIcBAEBCAAGBQJXNUZ9AAoJEHb/MwWLVhi2kZcP/iL6ppset8OqSb3ZD3OWUjaF
-JarptdmZEX7Ay6Kzt9BBfYqAhR+Nz3xIpQa+vvNDnvP+ITZ2m9J7zVbTd5iIRAkw
-FXe+6zhXwAGzjHCuFOVeDPZXyfB8v4tNCFNon4cpz0p+CDnJavo0ZQlsS4S8U8FN
-CbnuJUuz1EfbvGtG3GNh2yfdQCK9xX/qzdm+3TjM9FK+THqe3BvIBQ3PK+kEbcgv
-95kSt9rothzIdnE9llyosB5oQeaqgBPbksQUc1WB4OGz3H1aazjcSsGp+54bSaUu
-AgHyF1fRjiR0M771ouRMHo+Ug+0mvbWZiFpwPlzVGV2dPb4YLQpWvZVaOENwdcb9
-RWISBA1NcgbTWPBCJoLt7mgXOlHhm5qBkFXqwpO6ZfQDDoVlPHanp1MQ2CRur87r
-Z9FeRrYUuwH80ndtexD5zMCKnVup+tP6XXudeZJ1FmG394+7du/JnBznohBiPXTh
-K40wRp9mMjsv/jgDoS9Xg6+VzFVHHMvQ8m1KDJacmexHoLHubeAYc32RAJfAZMnC
-P1w3rSV32K6RKGIUnyINAgmzenrbuRxg96Ghq52djEvW2K9PyHFx26F4rlLnOPro
-M4ErrCfvcYNPuyX0vK2zvbzTFRPx5yt6WjAJ4P704fIEUqaDUSWdrYY6/exiN0Kp
-j4XA4VMjVHcbfrPwEW8t
-=s3Bf
------END PGP SIGNATURE-----
+= Test =
+
+1. Open the attached links.tar with File Roller
+
+  $ file-roller links.tar
+
+2. Double-click either of the "absolute" or "relative" files
+
+3. Close the opened Nautilus window as well as the File Roller window
+
+4. Check to see if /dev/shm/will-be-emptied/important.txt has been
+unintentionally deleted
+
+Tyler
+
+Download attachment "links.tar" of type "application/x-tar" (10240 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
