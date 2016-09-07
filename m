@@ -1,59 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/26/2
-Message-Id: <20160526061816.F37E46C0410@smtpvmsrv1.mitre.org>
-Date: Thu, 26 May 2016 02:18:16 -0400 (EDT)
-From: cve-assign@...re.org
-To: stefan.horlacher@...us-security.ch
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-Request: TYPO3 Extbase Missing Access Check
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/07/6
+Message-ID: <alpine.DEB.2.20.1609071338210.787@tvnag.unkk.fr>
+Date: Wed, 7 Sep 2016 13:39:36 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: Incorrect reuse of client certificates
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Incorrect reuse of client certificates 
+======================================
 
-> https://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2016-013/
-> TYPO3-CORE-SA-2016-013
-> 
-> Extbase request handling fails to implement a proper access check for
-> requested controller/ action combinations, which makes it possible for
-> an attacker to execute arbitrary Extbase actions by crafting a special
-> request. To successfully exploit this vulnerability, an attacker must
-> have access to at least one Extbase plugin or module action in a TYPO3
-> installation. The missing access check inevitably leads to information
-> disclosure or remote code execution, depending on the action that an
-> attacker is able to execute.
+Project cURL Security Advisory, September 7th 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20160907.html)
 
-> TYPO3 installations with at least one publicly available Extbase
-> action, are exploitable without any further authentication.
-> 
-> TYPO3 installations without publicly available Extbase actions, are
-> still exploitable for authenticated backend users with access to a
-> backend module, which is based on Extbase.
+VULNERABILITY
+-------------
 
-Use CVE-2016-5091 for both of these installation scenarios. As far as
-we can tell, the second scenario ("without publicly available") occurs
-only because TYPO3 Core code (or a copy of TYPO3 Core code) exists in,
-or is reachable by, a (supported or unsupported) backend module.
+libcurl built on top of NSS (Network Security Services) incorrectly re-used
+client certificates if a certificate from file was used for one TLS connection
+but no certificate set for a subsequent TLS connection.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+While the symptoms are similar to CVE-2016-5420 (Re-using connection with wrong
+client cert), this vulnerability was caused by an implementation detail of the
+NSS backend in libcurl, which is orthogonal to the cause of CVE-2016-5420.
 
-iQIcBAEBCAAGBQJXRpTJAAoJEHb/MwWLVhi2vU8P/34LeiCcFMQRXakBpAKqBQv5
-Vox2Wg1HJO0lkpbihKE3ixhvRawSJsT/5TKMqSdBJG5HWQblIOHW9S0JHAazfIge
-ezxJDJObtDGo8jjUERgvDAsYGgT/ZZ15ApVnCJYaVNc1ZKgM9f1/V044O8+mE1WX
-4B6thQZmmbpCK8KWBEwQ9uOxES0168tS4QQ6Iu2mst7vpXnak8RxU1wI8qawFo/7
-ySqgNdX6mqAo0TXQ/mPJxkT9sa/Mf+7Hr7L4K8ukRG8OkVaQ74Py4noy+XKm6lV6
-IvVN+ILFcu3XcPM98Civu8B6lRi61JGjC1VQwk1UP9mgqSQBrxTRWDQSBOUrvdEI
-YviIMAMSGEXhEQfG+peTVNJmR0SJr5DBhYn9UY5gHiqqM8q6XMsH6jVrbOYSy/KQ
-FVVc/9K32pPwG53A9lnNkNs6FFIKzLVDOGBS3zHU9YBprN6ulV1ApIWcWuQm+sZh
-81z/CzQZSLV3ovNYagmJpXyOIRmcWkfpD9YtIPwcdZWk3IuuynswSUBKlT57Mu+F
-4N3SmHtRAy40ZJA35KWvnCW2PwXV8CQx+EU9B8rGCVYcbGOxtG6BTElMS5fuBwsJ
-luwySw1sbQgDaECk9JKjTtwBl558KZALjzDXRd3aLv1dq8q9vd93rMifeShSTIlQ
-7Oi3kAkzjD1dNVXjhC12
-=A6Qx
------END PGP SIGNATURE-----
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This flaw also affects the curl command line tool.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-7141 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+This flaw is present in curl and libcurl only if they are built with the
+support for NSS and only if the libnsspem.so library is available at run-time.
+
+- Affected versions: libcurl 7.19.6 to and including 7.50.1
+- Not affected versions: libcurl >= 7.50.2
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+A fix for this flaw is included in libcurl 7.50.2 via
+[commit `curl-7_50_2~32`](https://github.com/curl/curl/commit/curl-7_50_2~32).
+For older releases of libcurl there is a
+[patch for CVE-2016-7141](https://curl.haxx.se/CVE-2016-7141.patch).
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Apply the patch on the source code of libcurl and rebuild.
+
+  B - Configure libcurl to use a different TLS backend and rebuild.
+
+  C - Use certificates from NSS database instead of loading them from files.
+
+TIME LINE
+---------
+
+This flaw was reported by Red Hat on August 22nd.  The patch fixing the flaw
+was published on September 5th.  CVE-2016-7141 was assigned to this flaw on
+September 6th.  This advisory was published on September 7th.
+
+CREDITS
+-------
+
+Reported by Red Hat.  Security advisory coordinated by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
