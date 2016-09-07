@@ -1,4 +1,9 @@
-Received: (qmail 28658 invoked by uid 550); 17 Apr 2026 08:34:12 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1958" "Tuesday" "6" "September" "2016" "20:53:20" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160907005320.3015233E005@smtpvbsrv1.mitre.org>" "47" "[oss-security] Re: CVE request: Qemu: scsi: pvscsi: OOB read and infinite loop while setting descriptor rings" nil nil nil "9" "2016090700:53:20" "[oss-security] Re: CVE request: Qemu: scsi: pvscsi: OOB read and infinite loop while setting descriptor rings" (number mark "U       cve-assign@m Sep  6   47/1958  " thread-indent "\"[oss-security] Re: CVE request: Qemu: scsi: pvscsi: OOB read and infinite loop while setting descriptor rings\"\n") "<alpine.LFD.2.20.1609061630270.20681@wniryva>" ("<alpine.LFD.2.20.1609061630270.20681@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21755 invoked by uid 550); 7 Sep 2016 00:53:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,49 +12,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 26242 invoked from network); 17 Apr 2026 08:17:06 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Luke Chen <showuon@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <b76c9d86-87ae-a60c-6b38-c968809df9c8@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 17 Apr 2026 08:15:56 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2026-33557: Apache Kafka: Missing JWT token validation in
- OAUTHBEARER authentication 
+Received: (qmail 21732 invoked from network); 7 Sep 2016 00:53:32 -0000
+From: cve-assign@mitre.org
+To: ppandit@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn, vv474172261@gmail.com
+In-Reply-To: <alpine.LFD.2.20.1609061630270.20681@wniryva>
+Message-Id: <20160907005320.3015233E005@smtpvbsrv1.mitre.org>
+Date: Tue,  6 Sep 2016 20:53:20 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: Qemu: scsi: pvscsi: OOB read and infinite loop while setting descriptor rings
 
-Severity: important=20
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Affected versions:
+> Quick Emulator(Qemu) built with the VMWARE PVSCSI paravirtual SCSI bus
+> emulation support is vulnerable to an OOB access and/or infinite loop issue.
+> It could occur while processing SCSI commands 'PVSCSI_CMD_SETUP_RINGS'.
+> 
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg00050.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1373462
 
-- Apache Kafka 4.1.0 through 4.1.1
+>> Vmware Paravirtual SCSI emulation uses command descriptors to
+>> process SCSI commands. These descriptors come with their ring
+>> buffers. A guest could set the page count for these rings to
+>> an arbitrary value, leading to infinite loop or OOB access.
+>> Add check to avoid it.
 
-Description:
+Use CVE-2016-7155.
 
-A possible security vulnerability has been identified in Apache Kafka.
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/vmw_pvscsi.c but
+that may be an expected place for a later update.
 
-By default, the broker property `sasl.oauthbearer.jwt.validator.class` is=
-=C2=A0set to `org.apache.kafka.common.security.oauthbearer.DefaultJwtValida=
-tor`. It accepts any JWT token without validating its=C2=A0signature, issue=
-r, or audience. An attacker can generate a JWT=C2=A0token from any issuer w=
-ith the `preferred_username` set to any user, and the broker will accept it.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-We advise the Kafka users using kafka v4.1.0 or v4.1.1 to set the config `s=
-asl.oauthbearer.jwt.validator.class` to `org.apache.kafka.common.security.o=
-authbearer.BrokerJwtValidator` explicitly to avoid this vulnerability. Sinc=
-e Kafka v4.1.2 and v4.2.0 and later, the issue is fixed and will correctly =
-validate the JWT token.
-
-Credit:
-
-=D0=9F=D0=B0=D0=B2=D0=B5=D0=BB =D0=A0=D0=BE=D0=BC=D0=B0=D0=BD=D0=BE=D0=B2 <=
-promanov1994@gmail.com> (finder)
-
-References:
-
-https://kafka.apache.org/cve-list
-https://kafka.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2026-33557
-
+iQIcBAEBCAAGBQJXz2K3AAoJEHb/MwWLVhi2gXcP/iZr4mBbZqMJU/QngSo6pixg
+17eBrvWqWoFxB+h1Fh+etk5EXS8LB6L8vPz0BpyGjhixdF0z9N8rMKEu14nVZmY3
+R3IejY1e25gDuOZnX7pyR/4qTTE+ebYFg6DEU+vPiQslBrhMNj0ZB5VzF9uZD1kD
+6bnJkQIUJ51ZcnxQsu0V/Zk9Q+cJX2ctKQLa4GHubaKI0wKRRS0PB64XCxKGxPca
+r0oKV5CbSLU+0rXvG54GfzXwNFrVlQIssuYYMPMpGgMhIJRi/uq9g0hKvVC9BgX3
+HEwRbkDtp0I3pNlQsbJMO5JkTb78DQWfW+bZMgFAjFtFhbitVKwpOrEu/Afx/VID
+PrHITep4kYsALpJ3enfgJ1XpkpY9lKz3Y498ZRnfwQhMmGldiTO3mAAPDsrtOsLi
+Bn1A/Y86wWK1qnDjr6bsrxTu7x2dSV+W1As0ILfH+RA9FwjKI8mGUDk55u9b2g1o
+Nc4ow2jMj+YFvCS1p0auYKKGMI66weX3NFsPmw0HmeNRLcspr7p7Y/0VwgHeAUwf
+C5YSdNx2uhTlH4d6bxP0RlO2IeyBIkHCmsb69kNd10N7uaMmEsT9+xZHKB/z9QV9
+QaDqBu6mwyulj0UKycyafSmbk2p9BDHWYpCXGP3UpiSUkcxi/7v9YZYKSN4jQR0P
+geRSHxzwQBMdDP3RVrgX
+=Dx9R
+-----END PGP SIGNATURE-----
