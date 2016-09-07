@@ -1,39 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/11
-Message-ID: <20161205154725.n4erh7wnftmlptz7@eldamar.local>
-Date: Mon, 5 Dec 2016 16:47:25 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: ondrej@...y.org, cve-assign@...re.org, team@...urity.debian.org, dariusz.dwornikowski@...put.poznan.pl, sam-k6mymjcnjpz3fmkieotlt7rbgvqt98qy@...iam.org
-Subject: Re: Re: Remote crash in MaraDNS 2.0.13 and git master
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/07/3
+Message-Id: <20160907005628.1FE726C547C@smtpvmsrv1.mitre.org>
+Date: Tue,  6 Sep 2016 20:56:28 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, vv474172261@...il.com
+Subject: Re: CVE Request Qemu: scsi: mptsas: invalid memory access while building configuration pages
 Content-Type: text/plain; charset=utf-8
 
-Hi MITRE CVE assigning team,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Mon, Nov 14, 2016 at 01:36:58PM -0500, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
+> Quick emulator(Qemu) built with the LSI SAS1068 Host Bus emulation support, is
+> vulnerable to an invalid memory access issue. It could occur while building
+> configuration page headers in 'mptsas_config_manufacturing_1'.
 > 
-> > remote crash bug in MaraDNS 2.0.13 js_readuint16
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> on the host, resulting in DoS.
 > 
-> Use CVE-2016-9300.
-> 
-> 
-> > remote crash bug in MaraDNS 2.0.13 js_substr
-> 
-> Use CVE-2016-9301.
-> 
-> 
-> > remote crash bug in MaraDNS 2.0.13 process_query -> this in fact
-> > looks like stack smashing, since it crashes on htons in an unrelated
-> > place
-> 
-> Use CVE-2016-9302.
+> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg04295.html
 
-According to the analysis of Sam Trenholme in
-https://bugs.debian.org/844121#32, and confirmed by Ondrej, afaics,
-those above would not be vulnerabilities in MaraDNS. Can you please
-reject those three CVEs?
+>> When LSI SAS1068 Host Bus emulator builds configuration page
+>> headers, the format string used in 'mptsas_config_manufacturing_1'
+>> was wrong. It could lead to an invalid memory access.
 
-Regards,
-Salvatore
+Use CVE-2016-7157.
+
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/mptconfig.c but
+that may be an expected place for a later update.
+
+
+> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg04296.html
+
+>> When LSI SAS1068 Host Bus emulator builds configuration page
+>> headers, mptsas_config_pack() asserts to check returned size
+>> value is within limit of 256 bytes. Fix that assert expression.
+
+Our interpretation is that this assert issue is not an independently
+relevant security problem, and does not need its own unique CVE ID.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJXz2PsAAoJEHb/MwWLVhi2XXcP/1ZIu5eguJjtVoGHYTsE8IrY
++4CzVNeYbdHFzIunDooQkT062zPsRzzBGIVYng2cSrAw5segRhmt6cQ/jbG6UNPe
+TPvsRpwlhm9qTpc0FSGpNW/lr4sWF8eIfJIvOmUcYp+j/MhlUlFFQbSL79AtABkr
+vnKTyqbVf6iwRM2UB+ywbzoD004eeZaefuVN13vk5GTjhRkxoeSyd4Erpe/E1IzP
+37Vsx0b1LdeNimkDJC0QfTxIHesRTcd9UkZq4No9Ztj4bBh0WIyhBZGS0W5FonUB
+H1tRHi/zSJlZKHhqhfoszM4xQOst0yfcOqOhUueX92zThAvt8FIPZJq9v23tg9ib
+9lYaX+1GzupRhqjbB+yDnUh8NLYhAQqpLAi/ryva1J3dsaVrbZyZwpwBZNjvUfG8
+2Vgf0s+4WTcLvaanYKh+T/tSwtHIeaHEh+O65vvPKVDbox9FSjgOlHzr9ANUks0v
+eoRz9telzBkKUOZMALOxIFRmB4z18a5il+MLsmV0cKM3jFSKrkx83d/L/t/3n7ub
+oBD3dAEHri+nH/MiIGZUBKrN6r1cD6tylySTvLerMQpH7C7ovxOIpTEWv1CW8FYg
+7OH6ZBGiH0QpjWI45vIVk1nrZ/H5krpPnmEnBJZIJ9v/H6nIVWoosP134GMAKjlL
+xQG3c8wAuTo62bt7kHsQ
+=yZzK
+-----END PGP SIGNATURE-----
