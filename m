@@ -1,102 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/02/5
-Message-ID: <20160502203045.GA5924@w1.fi>
-Date: Mon, 2 May 2016 23:30:45 +0300
-From: Jouni Malinen <j@...fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/07/4
+Message-ID: <alpine.GSO.2.20.1609062029590.6469@freddy.simplesystems.org>
+Date: Tue, 6 Sep 2016 20:50:23 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Subject: hostapd/wpa_supplicant - psk configuration parameter update allowing arbitrary data to be written
+Subject: GraphicsMagick 1.3.25 fixes some security issues
 Content-Type: text/plain; charset=utf-8
 
-psk configuration parameter update allowing arbitrary data to be written
+Yesterday GraphicsMagick 1.3.25 was released.  It fixes several 
+security issues:
 
-Published: May 2, 2016
-Identifier: related to CVE-2016-2447
-Latest version available from: http://w1.fi/security/2016-1/
+1. A last instance of CVE-2016-2317 (heap buffer overflow) in the MVG 
+rendering code (also impacts SVG).  This problem was originally 
+reported by Gustavo Grieco.
 
+2. A possible heap overflow of the EscapeParenthesis() function. 
+While I was not able to reproduce it for myself, the implementation is 
+replaced with a different algorithm.  This problem was reported by 
+Gustavo Grieco.
 
-Vulnerability
+3. The Utah RLE reader did not validate that header information was 
+reasonable given the file size and so it could cause huge memory 
+allocations and/or consume huge amounts of CPU.  This problem was 
+reported by Agostino Sarubbo.
 
-A vulnerability was found in how hostapd and wpa_supplicant writes the
-configuration file update for the WPA/WPA2 passphrase parameter. If this
-parameter has been updated to include control characters either through
-a WPS operation or through local configuration change over the
-wpa_supplicant control interface, the resulting configuration file may
-prevent the hostapd and wpa_supplicant from starting when the updated
-file is used. In addition for wpa_supplicant, it may be possible to load
-a local library file and execute code from there with the same
-privileges under which the wpa_supplicant process runs.
+4. The TIFF reader had a bug pertaining to use of TIFFGetField() when 
+a 'count' value is returned.  The bug caused a heap read overflow (due 
+to using strlcpy() to copy a possibly unterminated string) which could 
+allow an untrusted file to crash the software.
 
-The WPS trigger for this requires local user action to authorize the WPS
-operation in which a new configuration would be received. The attacker
-would also need to be in radio range of the device or have access to the
-IP network to act as a WPS External Registrar. Such an attack could
-result in denial of service by not allowing hostapd or wpa_supplicant to
-start after they have been stopped.
+The project appreciates the time and effort that various security 
+researchers have expended to identify security issues with the 
+software so that they may be fixed.
 
-The local configuration update through the control interface SET_NETWORK
-command could allow privilege escalation for the local user to run code
-from a locally stored library file under the same privileges as the
-wpa_supplicant process has. The assumption here is that a not fully
-trusted user/application might have access through a connection manager
-to set network profile parameters like psk, but would not have access to
-set other configuration file parameters. If the connection manager in
-such a case does not filter out control characters from the psk value,
-it could have been possible to practically update the global parameters
-by embedding a newline character within the psk value. In addition, the
-untrusted user/application would need to be able to install a library
-file somewhere on the device from where the wpa_supplicant process has
-privileges to load the library.
-
-Similarly to the SET_NETWORK case, if a connection manager exposes
-access to the SET_CRED or SET commands, similar issue with newline
-characters can exist as those commands do not filter out control
-characters from the value.
-
-It should also be noted that providing unlimited access to the
-wpa_supplicant control interface would allow arbitrary SET commands to
-be issued. Such unlimited access should not be provided to untrusted
-users/applications.
-
-
-Vulnerable versions/configurations
-
-For the local control interface attack vector:
-
-wpa_supplicant v0.4.0-v2.5 with control interface enabled
-
-update_config=1 must have been enabled in the configuration file.
-
-
-For the WPS attack vector:
-
-wpa_supplicant v0.6.7-v2.5 with CONFIG_WPS build option enabled
-hostapd v0.6.7-v2.5 with CONFIG_WPS build option enabled
-
-WPS needs to be enabled in the runtime operation and the WPS operation
-needs to have been authorized by the local user over the control
-interface. For wpa_supplicant, update_config=1 must have been enabled in
-the configuration file.
-
-
-Acknowledgments
-
-Thanks to Google for reporting this issue and Imre Rad of SEARCH-LAB
-Ltd. discovering it.
-
-
-Possible mitigation steps
-
-- Merge the following commits to hostapd/wpa_supplicant and rebuild it:
-
-  WPS: Reject a Credential with invalid passphrase
-  Reject psk parameter set with invalid passphrase character
-  Remove newlines from wpa_supplicant config network output
-  Reject SET_CRED commands with newline characters in the string values
-  Reject SET commands with newline characters in the string values
-
-  These patches are available from http://w1.fi/security/2016-1/
-
-- Update to wpa_supplicant v2.6 or newer, once available
-
+Bob
 -- 
-Jouni Malinen                                            PGP id EFC895FA
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
