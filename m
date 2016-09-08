@@ -1,39 +1,133 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/30/3
-Message-ID: <CAEiFw0URs1e9oVb-Jzh3qDe-bOyEVJo7iL3Bx0YFSTFK9FRB-A@mail.gmail.com>
-Date: Fri, 30 Sep 2016 14:54:20 +0800
-From: Carl Peng <felixk3y@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: b2evolution 6.7.6 Object Injection vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/10
+Message-Id: <E1bhy0k-0000uT-IV@xenbits.xenproject.org>
+Date: Thu, 08 Sep 2016 12:00:54 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 186 (CVE-2016-7093) - x86: Mishandling of instruction pointer truncation during emulation
 Content-Type: text/plain; charset=utf-8
 
-hello,
- i reported a object injection vulnerability to b2evolution team, and now
-it has been fixed.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Vulnerability:
-/htsrv/call_plugin.php #lines 31~40
-```
-param( 'params', 'string', null ); // serialized
-if( is_null($params) )
-{ // Default:
-$params = array();
-}
-else
-{ // params given. This may result in "false", but this means that
-unserializing failed.
-$params = @unserialize($params); //object injection
-}
-```
-The parameter of "params" may lead to Object Injection by sending
-"params=serialized+object+here"
-fixed:
-https://github.com/b2evolution/b2evolution/commit/25c21cf9cc4261324001f9039509710b37ee2c4d
+            Xen Security Advisory CVE-2016-7093 / XSA-186
+                              version 4
 
-This issue was reported by Peng Hua of silence.com.cn Inc. and I would like
-to request CVE for this issue (if not done so).
+      x86: Mishandling of instruction pointer truncation during emulation
 
--------------------http://www.silence.com.cn/
-penghua@...ence.com.cn
-PKAV Team
+UPDATES IN VERSION 4
+====================
 
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+When emulating HVM instructions, Xen uses a small i-cache for fetches
+from guest memory.  The code that handles cache misses does not check
+if the address from which it fetched lies within the cache before
+blindly writing to it.  As such it is possible for the guest to
+overwrite hypervisor memory.
+
+It is currently believed that the only way to trigger this bug is to
+use the way that Xen currently incorrectly wraps CS:IP in 16 bit
+modes.  The included patch prevents such wrapping.
+
+IMPACT
+======
+
+A malicious HVM guest administrator can escalate their privilege to that
+of the host.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 4.7.0 and later are vulnerable.
+Xen releases 4.6.3 and 4.5.3 are vulnerable.
+
+Xen releases 4.6.0 to 4.6.2 inclusive are NOT vulnerable.
+Xen releases 4.5.2 and earlier are NOT vulnerable.
+
+The vulnerability is only exposed to HVM guests on x86 hardware.
+
+The vulnerability is not exposed to x86 PV guests, or ARM guests.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Brian Marcotte.
+
+RESOLUTION
+==========
+
+Applying the first patch will resolve the issue.
+
+Users wishing to independently verify the correctness of the fix may
+find the second patch helpful.  The second patch makes it easier to
+use the "fep" (Force Emulation Prefix) feature to reproduce the
+erroneous condition in a test environment.  The "fep" feature requires
+explicit enablement on the hypervisor command line, and is unsuitable
+for production systems.  Accordingly, applying the second patch does
+not affect production systems and does not improve security.
+
+Xen version     First patch               Second patch
+ xen-unstable:   xsa186-0001-*.patch       xsa186-0002-*.patch
+ Xen 4.7.x:      xsa186-0001-*.patch       xsa186-4.7-0002-*.patch
+ Xen 4.6.3:      xsa186-0001-*.patch       xsa186-4.6-0002-*.patch
+ Xen 4.5.3:      xsa186-0001-*.patch       xsa186-4.6-0002-*.patch
+
+$ sha256sum xsa186*
+f2082a36d968a47e477bb5082d0e0aaa58e6cb3dc20b26389f043a9b7b595fa6  xsa186-0001-x86-emulate-Correct-boundary-interactions-of-emulate.patch
+412fa58edcbd1c7fdbfec7e28898cf98585593e6a24ccfb088dc0b84715286a5  xsa186-0002-hvm-fep-Allow-testing-of-instructions-crossing-the-1.patch
+7482a823c3443e26dee1111c4904162845eaa9f826aa7bf8348007406d91bddd  xsa186-4.6-0002-hvm-fep-Allow-testing-of-instructions-crossing-the.patch
+5a826a32763d82ac83c924f8c89d12aae5f069a4cbc7d5193aa8413a02b6dc05  xsa186-4.7-0002-hvm-fep-Allow-testing-of-instructions-crossing-the.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJX0VLsAAoJEIP+FMlX6CvZoUoIAMvgdMZRYdK5MaaRUAA1hDG3
+UFSxZCH8zja6wZG6WPNj7VqvEkQ2350oqb05BGB8jTFCmqtNDDIyHK68WaMpwDMv
+EEeetosujnlHTtVV7N8e0HO7F497PzZtzfniTyZc/h2Lna552ohMy/UcADtA7xxP
+IK6qwvxpkx1aLzsDFpHIdrVcttDD/oZcVbBFwcCAqK33eGNC3S6BJvIibCAKfO8h
+YKiAtvWUNsX/o4L9Zs4M50/pK3TzWsaDjfK3IX5LJPtsrcrKklrALVnDUOpTz1WA
+07UIk0BcrzicEuTvuATWSQ3nVxUXAH95io23PCniHHntBtYJHjGA5rIqX+tiN6w=
+=HT+K
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa186-0001-x86-emulate-Correct-boundary-interactions-of-emulate.patch" of type "application/octet-stream" (2346 bytes)
+
+Download attachment "xsa186-0002-hvm-fep-Allow-testing-of-instructions-crossing-the-1.patch" of type "application/octet-stream" (2441 bytes)
+
+Download attachment "xsa186-4.6-0002-hvm-fep-Allow-testing-of-instructions-crossing-the.patch" of type "application/octet-stream" (1516 bytes)
+
+Download attachment "xsa186-4.7-0002-hvm-fep-Allow-testing-of-instructions-crossing-the.patch" of type "application/octet-stream" (1113 bytes)
