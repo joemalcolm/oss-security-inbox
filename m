@@ -1,44 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/11/10
-Message-ID: <CAMYtjAquOUMj3RB4gwqa11rMyCefH=GYAWSKYvO_7S1ygHNf8Q@mail.gmail.com>
-Date: Mon, 11 Jan 2016 23:10:30 +0100
-From: Pere Orga <pere@...a.cat>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/15
+Message-ID: <20160908074133.GC8525@sin.redhat.com>
+Date: Thu, 8 Sep 2016 17:11:34 +0930
+From: Doran Moppert <dmoppert@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Drupal Security Team <security@...pal.org>
-Subject: CVE requests for Drupal contributed modules
+Subject: CVE request: libarchive (pre 3.2.0) denial of service with gzip quine
 Content-Type: text/plain; charset=utf-8
 
-Hi
+This was fixed in libarchive 3.2.0, but never got a CVE.
 
-Please can I have CVE IDs assigned to the following vulnerabilities:
+Upstream ticket:
 
-SA-CONTRIB-2015-157 - Twilio - Moderately Critical - Access bypass
-https://www.drupal.org/node/2592901
+https://github.com/libarchive/libarchive/issues/660
 
-SA-CONTRIB-2015-160 - Webform CiviCRM Integration - Moderately
-Critical - Cross Site Scripting (XSS)
-https://www.drupal.org/node/2592901
+Original report:
 
-SA-CONTRIB-2015-166 - Encrypt - Moderately Critical - Weak Encryption
-https://www.drupal.org/node/2618362
+https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=207362
 
-SA-CONTRIB-2015-167 - RESTful - Less Critical - Access bypass
-https://www.drupal.org/node/2627444
-
-SA-CONTRIB-2015-170 - Apache Solr Search - Moderately Critical - Access Bypass
-https://www.drupal.org/node/2627580
-
-SA-CONTRIB-2015-173 - Select2 Field Widget - Critical - Cross Site
-Scripting (XSS)
-https://www.drupal.org/node/2636352
-
-SA-CONTRIB-2015-174 - Open Atrium - Critical - Cross Site Scripting (XSS)
-https://www.drupal.org/node/2636380
-
-SA-CONTRIB-2015-175 - Block Class - Critical - Cross Site Scripting (XSS)
-https://www.drupal.org/node/2636502
-
-Regards
-
---
-Pere Orga on behalf of the Drupal Security team
+-- 
+Doran Moppert
+Red Hat Product Security
