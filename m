@@ -1,23 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/07/5
-Message-ID: <alpine.LFD.2.20.1609071339140.25457@wniryva>
-Date: Wed, 7 Sep 2016 13:39:41 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: cve-assign@...re.org, vv474172261@...il.com
-Subject: Re: Re: CVE Request Qemu: scsi: mptsas: invalid memory access while building configuration pages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/25
+Message-ID: <20160908230801.GA2048@openwall.com>
+Date: Fri, 9 Sep 2016 01:08:01 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Vahagn Vardanyan <vvvaagn@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: multiple crashes in radare2/radiff2
 Content-Type: text/plain; charset=utf-8
 
-+-- On Tue, 6 Sep 2016, cve-assign@...re.org wrote --+
-| -----BEGIN PGP SIGNED MESSAGE-----
-| >> When LSI SAS1068 Host Bus emulator builds configuration page
-| >> headers, mptsas_config_pack() asserts to check returned size
-| >> value is within limit of 256 bytes. Fix that assert expression.
-| 
-| Our interpretation is that this assert issue is not an independently
-| relevant security problem, and does not need its own unique CVE ID.
+Hi,
 
-That's right. Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+On Thu, Sep 08, 2016 at 05:34:09PM +0300, Vahagn Vardanyan wrote:
+> I created report
+> https://bugs.chromium.org/p/project-zero/issues/detail?id=933&can=1&q=&sort=-id
+
+Going to this URL, I am asked to login to a Google account (which I
+didn't).  Can you please post the contents of your report and Tavis'
+reply (as well as any other relevant replies) as a reply to this same
+thread here on oss-security?
+
+> Please tell how I can send crashes archive, thank you
+
+If your entire message including the 4/3 MIME overhead would be below
+200 KB, then please just attach this archive to the message.  Otherwise
+please come up with a smaller testcase (and attach it) or use an
+external URL for the file (but accessible to everyone without having to
+log in).  The former is strongly preferred.
+
+Thanks,
+
+Alexander
