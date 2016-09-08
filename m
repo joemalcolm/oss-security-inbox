@@ -1,21 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/03/13
-Message-ID: <20160303202958.GA15053@emyr.net>
-Date: Thu, 3 Mar 2016 20:29:58 +0000
-From: Luca Filipozzi <lfilipoz@...ian.org>
-To: oss-security@...ts.openwall.com, cypherpunks@...nks.org, debian-legal@...ts.debian.org, listmaster@...ts.debian.org
-Subject: Re: According to www.virustotal.com, lists.debian.org are hosting attachment .DOC virus
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/13
+Message-ID: <CAG0ev14nSoznVzbEEX82ECD4V1uoP2G3CD2fE3=9N9feQ=saiQ@mail.gmail.com>
+Date: Thu, 8 Sep 2016 11:17:34 +0800
+From: 0xr0ot <0xr0ot.sec@...il.com>
+To: cve-assign@...re.org, oss-security@...ts.openwall.com,  fulldisclosure@...lists.org
+Subject: CVE request - Samsumg Mobile Phone SVE-2016-6248: SystemUI Security issue
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 03, 2016 at 10:44:22AM +0200, Georgi Guninski wrote:
-> https://lists.debian.org/debian-consultants/2016/01/msg00000.html
+Hi,
 
-Debian Listmaster of the Day ® has already removed the attachment.
+Description of the potential vulnerability:
+SVE-2016-6248: SystemUI Security issue
+Severity: Medium
+Affected versions: L(5.0/5.1), M(6.0) devices with Exynos7420 chipset
+Reported on: June 7, 2016
+Disclosure status: Privately disclosed.
+The vulnerability exists due to a null pointer dereference on fimg2d driver.
+The patch verifies if the object is null before dereferencing it.
 
-For completeness: you could have clicked the button at upper-right of that page
-to report the message as spam.  I suspect that this would have been less effort
-than posting to three mailing lists but probably not as exciting as suggesting
-that Debian was 'hosting' viruses.
+Fix:
+http://security.samsungmobile.com/smrupdate.html#SMR-SEP-2016
+SVE-2016-6248: SystemUI Security issue
 
--- 
-Luca Filipozzi
+I report this to samsung, samsung reply to us if I want to get CVE request
+it by ourself.
+
+Best regards,
+Zhaozhanpeng(0xr0ot) of Cheetah Mobile.
+
