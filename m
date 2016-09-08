@@ -1,60 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/05/3
-Message-ID: <CAL8hw9Hx1HH2DuD8RL1fMAK3SnXsnRSwkF-rb_26z2_Soq+PCg@mail.gmail.com>
-Date: Mon, 5 Sep 2016 18:42:51 +0200
-From: Nathan Van Gheem <nathan.van.gheem@...ne.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Plone multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/7
+Message-Id: <20160908065608.DCC8913A1BE@smtpvmsrv1.mitre.org>
+Date: Thu,  8 Sep 2016 02:56:08 -0400 (EDT)
+From: cve-assign@...re.org
+To: yi@...i.me
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request : Libtorrent 1.1.0 inflate_gzip denial of service
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Multiple vulnerabilities were recently patched.
+> I recently opened a bug on "Libtorrent 1.1.0" regarding malformed GZIP
+> encoded responses that causes  denial of service.
+> 
+> For example, an attacker-controlled torrent tracker can crash victim torrent 
+> clients by sending malformed GZIP responses.
+> 
+> This bug has been fixed by the maintainer in master and the branch RC_1_1:
+> 
+> https://github.com/arvidn/libtorrent/issues/1021
+> 
+> https://github.com/arvidn/libtorrent/pull/1022
+> 
+> I also tested the bug with two "Libtorrent based" softwares :
+> qBittorrent and Deluge. Both of them were affected and crashed on
+> receiving the malformed response.
 
+> https://github.com/arvidn/libtorrent/commit/debf3c6e3688aab8394fe5c47737625faffe6f9e
+> 
+> puff.cpp
 
-1. *filesystem information leak*:
-https://plone.org/security/hotfix/20160830/filesystem-information-leak
+Use CVE-2016-7164.
 
-Managers had the ability to find read files from the file system that the
-system user running the plone process had access to
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-2. *Non-Persistent XSS in Plone forms*:
-https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone-forms
-
-z3c.form will currently accept data from GET requests when the form is
-supposed to be POST. This allows a user to inject a potential XSS attack
-into a form. With certain widgets in Plone admin forms, the input is
-expected to be safe and can cause a reflexive XSS attack. Additionally,
-there is potential for an attack that will trick a user into saving a
-persistent XSS.
-
-3. *open redirection*:
-https://plone.org/security/hotfix/20160830/open-redirection-in-plone
-
-In multiple places, Plone blindly uses the referer header to redirect a
-user to the next page after a particular action. An attacker could utilize
-this to draw a user into a redirection attack.
-
-4. *Non-Persistent XSS in Plone*:
-https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone-1
-
-Plone's URL checking infrastructure includes a method for checking if URLs
-valid and located in the Plone site. By passing javascript into this
-specially crafted url, XSS can be achieved.
-
-5. *Non-Persistent XSS in Plone Zope Management(ZMI)*:
-https://plone.org/security/hotfix/20160830/non-persistent-xss-in-zope2
-
-In multiple places, Zope2's ZMI pages do not properly escape user input
-
-
-Credits to all these go to Sebastian Perez
-
-All of these vulnerabilities have been patched with the hotfix release
-package(https://plone.org/security/hotfix/20160830) and are being
-incorporated upstream.
-
-
-Thanks,
-Nathan
-
+iQIcBAEBCAAGBQJX0QmmAAoJEHb/MwWLVhi2oXIP/ibAPUZFAW/XXP6iss3b04nk
+SLf+84eQSmM/2SwvyenV3esac9tUjzeJVqpAE2X66gI8hyYPd7sc4L4+nAgQcdfz
+5A6oeoQS2P0j9uSi5IdURWwKIFoXIcFIdW3qzC9oojtYdEVP+Xo4MkesW6kDKX2o
+eLA0cxtvfQk7NQqfLCKpRZZHlIbcco90sdQ3Flo+MrSaQZ87YR0ObnA4igFmOZQa
+Mf/M2gvRI703yLITvYrv1GmNDmi01q352jQrhYw3RUAvsHfv+ZbWlAKNOH4r7uMV
+u2S6gv4gI7ksEBg1HzUn0rk1Z3L0OuacCaaeKS+NfV12bVsZR+oaI8lz2L5weiOD
+LY5Z8Cecm58UgDfU5cRZyoug2caOkprVlABhuPcIazofH69Jz2h7ATiAniosL2qX
+3x+OPfZmAzkMC9C/6q2ga+ZjrEEjGEAEITV263K7vZaBTXRp+QLLZFOUHsyZO2wP
+MANrF9ELcaB6mnG0N1W5PmJJmaEKnkA19XmoLBHr9zzbWhS8n7Rm2ryQKSWphW6o
+P8579s3A6no+xxmsFbHU5aCwCQA/fwG2vV9ZLcaAq95k4ZxMwLT1Q+XLGa5idzHZ
+FvDvdpTNIgyJLOO1boSlrqx5u8O7n02Zs6WTtdfvnen1GF8Qpef1Un/bzuRDbq+C
+Op5ntMq/hNVu53sg1i+T
+=yPhy
+-----END PGP SIGNATURE-----
