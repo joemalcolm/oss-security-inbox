@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["12561" "Sunday" "1" "May" "2016" "16:54:10" "+0200" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdRjA1Vma3em7z0xyuV87_iggAojuFMFZLWKnEFOHww3hg@mail.gmail.com>" "229" "[oss-security] CVE request: DoS in multiple versions of GraphicsMagick" nil nil nil "5" "2016050114:54:10" "[oss-security] CVE request: DoS in multiple versions of GraphicsMagick" (number mark "U       gustavo.grie May  1  229/12561 " thread-indent "\"[oss-security] CVE request: DoS in multiple versions of GraphicsMagick\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1941" "Thursday" "8" "September" "2016" "02:53:27" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160908065327.6DEBD6C1B17@smtpvmsrv1.mitre.org>" "46" "[oss-security] Re: CVE Request: OpenJPEG Heap Buffer Overflow Issue" nil nil nil "9" "2016090806:53:27" "[oss-security] Re: CVE Request: OpenJPEG Heap Buffer Overflow Issue" (number mark "U       cve-assign@m Sep  8   46/1941  " thread-indent "\"[oss-security] Re: CVE Request: OpenJPEG Heap Buffer Overflow Issue\"\n") "<1F2D4DA31CA62740BFF46830A0E6A4F7066E5805@EXMBX-TJ002.tencent.com>" ("<1F2D4DA31CA62740BFF46830A0E6A4F7066E5805@EXMBX-TJ002.tencent.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13842 invoked by uid 550); 1 May 2016 14:54:22 -0000
+Received: (qmail 32165 invoked by uid 550); 8 Sep 2016 06:53:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,264 +12,58 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13821 invoked from network); 1 May 2016 14:54:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=Ub3DmouHAVi7NPIho/NqtPbIAa+7ENgoWCo0S6G2ztA=;
-        b=R3gqFpSmULnCFA2BNG1VgyeyldcMutdDCjv0lIzrNhnRK+MFR1sYljSxssSI7Qoipg
-         ts5knKpj44lFNFx7nAuJ5/VZJ7wmDgfCDRJhAiPDF0tncdKs30JKs4DYZ/ZIfXO5FlYU
-         XS1MdOwbULN9UrQxanFCy+qmrVnPFATBdnOpH+ZVIZ4Cenxh7UHkWOzwAorcSlZfXj0+
-         OZTazGtwtvZam6pqPBtvHG3lGVIL8v50/UgQ61kumotKn9yekyIA7i56qdyUIQ9LGdhB
-         CkaJlg9ytKjYP+1TW65dFEOCsbmALK1UysjAvR10GhGF7Mqp8sCPLpfqW0EG8SsnOw7m
-         AC/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=Ub3DmouHAVi7NPIho/NqtPbIAa+7ENgoWCo0S6G2ztA=;
-        b=JPODN+YTEZz0whTfVvDzhfbvRVQFio7mEd+4DBFNIgXZkPp92aiLCJZJLka6Ue2RVO
-         /HauZb21Trl5HGeYt8TnX+1SrC3zTlfVl3Z2vGMsdmKcL93syD4b2IDYojVhD/A5qheU
-         ziJtxhkY/r9wLhrLOwuWKHuSDNPnItGHe3emorQ9nDUdq/zMuuyKzuiAHcOS2rI3A2B+
-         4Ez5ONS3GPblaaHbYbQJRjTfZ/mvXEMDpaefQunS2naHFtrVmXszLDKhJbo/LHJ/WD8P
-         D6F8vPQItx1BWZ3qP0ZoMuhOxCW6e6ucflDmDNdFGOwnPBUM9+wgnNLS0PXaNARwnHlh
-         LLFw==
-X-Gm-Message-State: AOPr4FWruVWaAWUoHjLoiTA+sYuufY/sy/xeYWBu5zRTdwF3W20OxKjYs8qOnQJcyFLrNs/C8J4e68k16JdYwg==
-MIME-Version: 1.0
-X-Received: by 10.112.161.41 with SMTP id xp9mr12791275lbb.133.1462114450646;
- Sun, 01 May 2016 07:54:10 -0700 (PDT)
-Date: Sun, 1 May 2016 16:54:10 +0200
-Message-ID: <CACn5sdRjA1Vma3em7z0xyuV87_iggAojuFMFZLWKnEFOHww3hg@mail.gmail.com>
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/mixed; boundary=001a11c26b2a7414eb0531c90cf5
-Subject: [oss-security] CVE request: DoS in multiple versions of GraphicsMagick
+Received: (qmail 32144 invoked from network); 8 Sep 2016 06:53:39 -0000
+From: cve-assign@mitre.org
+To: winsonliu@tencent.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <1F2D4DA31CA62740BFF46830A0E6A4F7066E5805@EXMBX-TJ002.tencent.com>
+Message-Id: <20160908065327.6DEBD6C1B17@smtpvmsrv1.mitre.org>
+Date: Thu,  8 Sep 2016 02:53:27 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: OpenJPEG Heap Buffer Overflow Issue
 
---001a11c26b2a7414eb0531c90cf5
-Content-Type: multipart/alternative; boundary=001a11c26b2a7414e50531c90cf3
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
---001a11c26b2a7414e50531c90cf3
-Content-Type: text/plain; charset=UTF-8
+> I reported a security issue of OpenJPEG some days ago and it has been
+> fixed now. The fix is available at
+> https://github.com/uclouvain/openjpeg/commit/e078172b1c3f98d2219c37076b238fb759c751ea
+> 
+> A Heap Buffer Overflow (Out-of-Bounds Write) issue was found in
+> function opj_dwt_interleave_v of dwt.c. This vulnerability allows
+> remote attackers to execute arbitrary code on vulnerable installations
+> of OpenJPEG.
+> 
+> AddressSanitizer: heap-buffer-overflow
+> WRITE of size 4
 
-We recently tested GraphicsMagick with our tool and found two issues that
-causes DoS:
+e078172b1c3f98d2219c37076b238fb759c751ea modifies tcd.c not dwt.c - is this
+still the correct commit?
 
-* Infinite loop caused by converting a circularly defined svg file.
+Also, is this the same vulnerability as the
+https://pdfium.googlesource.com/pdfium/+/b6befb2ed2485a3805cddea86dc7574510178ea9
+(aka Chromium bug 632622) issue that was already assigned CVE-2016-5157 in the
+https://googlechromereleases.blogspot.com/2016/08/stable-channel-update-for-desktop_31.html
+post?
 
-* Arithmetic exception converting a svg file caused by a X%0 operation in
-magick/render.c:3800
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-    (long) (y-fill_pattern->tile_info.y) % fill_pattern->rows,
-
-Reproducers for both issues are attached. They are triggered by converting
-a svg to another format. Identification is not affected.
-These issues affect 1.3.18 and 1.3.23. Most likely other versions are
-vulnerable too.
-
-Regards,
-Gustavo
-
---001a11c26b2a7414e50531c90cf3
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>We recently tested GraphicsMagick with our tool and f=
-ound two issues that causes DoS:<br><br></div><div>* Infinite loop caused b=
-y converting a circularly defined svg file.<br><br></div><div>* Arithmetic =
-exception converting a svg file caused by a X%0 operation in magick/render.=
-c:3800<br><br>=C2=A0=C2=A0=C2=A0 (long) (y-fill_pattern-&gt;tile_info.y) % =
-fill_pattern-&gt;rows,<br></div><div><br></div><div>Reproducers for both is=
-sues are attached. They are triggered by converting a svg to another format=
-. Identification is not affected.<br></div><div>These issues affect 1.3.18 =
-and 1.3.23. Most likely other versions are vulnerable too.<br><br></div><di=
-v>Regards,<br></div><div>Gustavo<br></div><div><br></div></div>
-
---001a11c26b2a7414e50531c90cf3--
-
---001a11c26b2a7414eb0531c90cf5
-Content-Type: image/svg+xml; name="circular.svg"
-Content-Disposition: attachment; filename="circular.svg"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_inop5xvv0
-
-PD94bWwgdmVyc2lvbj0nMS4wJyA/Pgo8c3ZnIHZpZXdCb3g9IjYgLTE5IC0x
-NSAtMTUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1s
-bnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZlcnNp
-b249IjEuMSIgd2lkdGg9IjM2LjEyNDA5MzY4MTUxMzFpbiIgaGVpZ2h0PSI3
-NC41NzQ3Njg1Nzg1ODA4NG1tIj4KICA8ZGVzYz5iPC9kZXNjPgogIDxzdHls
-ZSB0eXBlPSJ0ZXh0L2NzcyI+IHsKfQogewp9CiB7CiAgYTogOwp9CiB7Cn0K
-IHsKfQogewogIGM6IDsKfQogewogIGM6IDsKfQogewp9CiB7Cn0KIHsKICBi
-OiA7Cn0KIHsKICBhOiA7Cn0KIHsKfQogewp9CiB7Cn0KIHsKICBhOiA7Cn0K
-IHsKfQogewogIGI6IDsKfQogewogIGE6IDsKfQogewp9Cjwvc3R5bGU+CiAg
-PGxpbmUgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI2LjUyMzMwMzYyODIxMDM5
-NiwgLTEuNjI2OTA2MjE1ODI1NTIyKSIgb3BhY2l0eT0iLTIuNzgxNDc0IiBm
-aWxsLW9wYWNpdHk9IjAuNDE5Njk1NzMiIHN0cm9rZS1vcGFjaXR5PSIwLjI5
-MDgyODgiIGZvbnQtc2l6ZT0iMC42ODgyNjE0NTQ3MDE3MzAxIiBmb250LWZh
-bWlseT0iYiIgZmlsbC1ydWxlPSJub256ZXJvIiBjbGlwLXJ1bGU9ImV2ZW5v
-ZGQiIGNsYXNzPSJhIiBpZD0iYiIgc3Ryb2tlLWRhc2hhcnJheT0iLTAuMjI0
-Mjk1NzUwMzY5MTIwMiIgY2xpcC1wYXRoPSJub25lIiBtYXJrZXItZW5kPSJu
-b25lIiBtYXJrZXItc3RhcnQ9Im5vbmUiIHgxPSItMS41NDIxMzkzODAyNzA5
-MzA0cHQiIHkxPSIxMzAlIiB4Mj0iMS4zMjgyMzc1NjQxNzMyODc1bW0iIHky
-PSIyLjI3MDkwOTgzNTY1ODc2NHB4IiAvPgogIDxsaW5lIHN0cm9rZS13aWR0
-aD0iLTIuMDQxODQ0OTkwMDMyNzk3M21tIiBmaWxsLW9wYWNpdHk9Ii0xNy4z
-OTcyNTciIHN0cm9rZS1vcGFjaXR5PSItMS4wOTM0NDMzIiBmb250LWZhbWls
-eT0iIiBjbGlwLXJ1bGU9Im5vbnplcm8iIGNsYXNzPSIiIHN0cm9rZS1kYXNo
-b2Zmc2V0PSItMS4yOTAyODM4NjY4NzA4MTU5cGMiIHRleHQtYW5jaG9yPSJl
-bmQiIGNsaXAtcGF0aD0idXJsKCNjKSIgbWFya2VyLWVuZD0idXJsKCNhKSIg
-bWFya2VyLW1pZD0idXJsKCNhKSIgeDE9IjUuMjIzODcyMzMzMjAxMDAzaW4i
-IHkxPSIwLjg4NzY0NDA3NzY5MTE2NjciIHgyPSIwLjY5MzgyNzc1MDA3Mzk0
-OThpbiIgeTI9Ii0wLjcyMDA3NzQ2ODIzNjQwMzhweCIgLz4KICA8Y2lyY2xl
-IHN0cm9rZS13aWR0aD0iMC4xMTA4Mzk0OTQ1ODYzMjg3NmNtIiBzdHJva2U9
-IiMwMDAxMDEiIGZpbGw9IiMwMTAxMDAiIHN0cm9rZS1taXRlcmxpbWl0PSIy
-LjA0NjY5MDIyNjY1MDY4MzUiIG9wYWNpdHk9IjIuMzgyODg2NiIgZmlsbC1v
-cGFjaXR5PSIwLjY1MTAzNjEiIGZvbnQtc2l6ZT0iLTI4NCUiIGZpbGwtcnVs
-ZT0ibm9uemVybyIgY2xpcC1ydWxlPSJldmVub2RkIiBjbGFzcz0iIiBzdHJv
-a2UtZGFzaG9mZnNldD0iLTAuMzExOTU3MDUwMDAxODgxOG1tIiBzdHJva2Ut
-ZGFzaGFycmF5PSItMS44Mzk0ODEwNzQ4NTg5MzI4Y20iIHRleHQtYW5jaG9y
-PSJtaWRkbGUiIG1hcmtlci1taWQ9InVybCgjYikiIGN4PSIxLjM1ODY0MzM3
-ODk2MTUxOHB4IiBjeT0iMS4wMjYyOTc5NTIwOTU3NzExcHgiIHI9IjEuNjA3
-NTUxMTExNTQ2NDQ4NSIgLz4KICA8bGluZSBzdHJva2Utd2lkdGg9Ii0wLjEw
-NzU0NDUxMTQzMDkzOTM4bW0iIGZpbGw9IiMwMDAwMDEiIHN0cm9rZS1saW5l
-Y2FwPSJidXR0IiBzdHJva2UtbWl0ZXJsaW1pdD0iLTAuNzg0MTE0ODA0ODA0
-NTkyMyIgdHJhbnNmb3JtPSIiIG9wYWNpdHk9IjAuOTM1OTQ3IiBmaWxsLW9w
-YWNpdHk9IjAuNTQ4MTA3NDUiIHN0cm9rZS1vcGFjaXR5PSItNC41NjU5MjIz
-IiBjbGFzcz0iIiBpZD0iYSIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjEuMTg5NjAy
-NzQyMTY2OTc4OGVtIiBzdHJva2UtZGFzaGFycmF5PSIwLjM2NjI2MzY0MTg2
-NDg0MzlwdCIgdGV4dC1hbmNob3I9InN0YXJ0IiBjbGlwLXBhdGg9InVybCgj
-YikiIG1hcmtlci1lbmQ9InVybCgjYikiIG1hcmtlci1zdGFydD0ibm9uZSIg
-bWFya2VyLW1pZD0ibm9uZSIgeDE9IjUuMzIzNTQ4MjU3NjI0NTIxZW0iIHkx
-PSItMC4zNjMzNzk3MjQyMTM5MTc0ZW0iIHgyPSItMS43MTU2MjM2MTg2OTM1
-MDVwdCIgeTI9IjAuMTY2MTczMTE3NjUwNzMwODRjbSIgLz4KICA8cmVjdCBz
-dHJva2Utd2lkdGg9Ii0wLjMwMzIyMTMwNTQ2NDExOTdlbSIgZmlsbD0idXJs
-KCNhKSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLW1pdGVybGlt
-aXQ9IjAuNzI3MDkwMTc3MTM1ODQ5MSIgdHJhbnNmb3JtPSIiIG9wYWNpdHk9
-IjEuMjg5NTIxMiIgc3Ryb2tlLW9wYWNpdHk9Ii0wLjI0NjM2NDc5IiBjbGlw
-LXJ1bGU9Im5vbnplcm8iIG1hc2s9Im5vbmUiIGNsYXNzPSJhIiBzdHJva2Ut
-ZGFzaG9mZnNldD0iLTAuODA1MDkzOTAzMjY4NzMyNmVtIiB0ZXh0LWFuY2hv
-cj0ibWlkZGxlIiBjbGlwLXBhdGg9InVybCgjYSkiIG1hcmtlci1lbmQ9InVy
-bCgjYikiIHdpZHRoPSIwLjE2Nzc4MjkyNDcyNjMwNzc0IiBoZWlnaHQ9IjAu
-ODYxOTU1NzQ5NTgxMTMwN2NtIiB4PSItMC4zNDEzMDQ2ODc1OTI3NTNwYyIg
-eT0iLTEuODQxMjUzMTAxNjU2OTU3cHQiIHJ4PSIxLjEwNTUzMDQ5NjY5Nzgz
-OXB0IiByeT0iLTc1JSIgLz4KICA8cGF0aCBmaWxsPSJub25lIiBzdHJva2Ut
-bGluZWNhcD0ic3F1YXJlIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJv
-a2UtbWl0ZXJsaW1pdD0iMC4yNTMyNzM4Mzg1MDU0NjAzIiB0cmFuc2Zvcm09
-InNjYWxlKDAuMjEwODMyMzY4NzQxNTc0MDIsIDE2LjE3MzY0MTY4MDUzMjU3
-KSIgb3BhY2l0eT0iLTMuNDIyNjM5NiIgc3Ryb2tlLW9wYWNpdHk9Ii0wLjE2
-ODM1MzMiIGZvbnQtZmFtaWx5PSJhIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGNs
-YXNzPSJiIiBpZD0iYyIgc3Ryb2tlLWRhc2hvZmZzZXQ9Ii0wLjkzNTgyNTUw
-MTA4NTkxMTYiIGNsaXAtcGF0aD0ibm9uZSIgbWFya2VyLXN0YXJ0PSJ1cmwo
-I2IpIiAvPgogIDx0ZXh0IHN0cm9rZS13aWR0aD0iLTAuNDUyODI0MDI5NTIy
-ODI5NjNlbSIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgc3Ryb2tlLW1pdGVy
-bGltaXQ9IjAuOTc1Nzc0NDEwNDIzNDI4MyIgZmlsbC1vcGFjaXR5PSIzLjc4
-NDExMjIiIHN0cm9rZS1vcGFjaXR5PSItNS43OTgxMTY3IiBmaWxsLXJ1bGU9
-Im5vbnplcm8iIGNsYXNzPSIiIGNsaXAtcGF0aD0idXJsKCNhKSIgeD0iMC4w
-ZW0iIHk9IjAuMGNtIiBkeD0iMC4wcGMiIGR5PSIwLjBlbSIgcm90YXRlPSIw
-LjAiIHRleHRMZW5ndGg9IjAuMzc0MjI0NzE3MjM4MDQ3NHB0IiAvPgogIDx0
-ZXh0IHN0cm9rZT0iIzAwMDEwMSIgZmlsbD0iIzAxMDAwMSIgc3Ryb2tlLWxp
-bmVjYXA9InNxdWFyZSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tl
-LW1pdGVybGltaXQ9Ii0wLjcwNTEzMDc2NTA5MjA4MzEiIHRyYW5zZm9ybT0i
-c2tld1goLTIwLjMzNzAzNTQ5NDI5OTA4NykiIG9wYWNpdHk9IjAuNDAzMDUx
-NiIgZmlsbC1vcGFjaXR5PSItMi4yMjIyNzk4IiBzdHJva2Utb3BhY2l0eT0i
-LTEuOTk0ODQ4NSIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9Im5v
-bnplcm8iIGNsYXNzPSIiIGlkPSJiIiBzdHJva2UtZGFzaGFycmF5PSItMC44
-MTg1MTUyNzUyMzkyMDhjbSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xpcC1w
-YXRoPSJ1cmwoI2EpIiB5PSIwLjAiIGR4PSIwJSIgZHk9IjAlIj5iPC90ZXh0
-PgogIDxjaXJjbGUgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVqb2luPSJyb3Vu
-ZCIgc3Ryb2tlLW1pdGVybGltaXQ9Ii0yLjUwOTY4NjE1MTI2MDAzNCIgdHJh
-bnNmb3JtPSJ0cmFuc2xhdGUoLTAuNjIzMjIzNzg3NDgwODMwMSwgMi4xMjQ4
-MjE5NzY1MzQxMTkpIiBvcGFjaXR5PSIxLjQ1OTM4NjMiIG1hc2s9InVybCgj
-YSkiIGNsYXNzPSIiIHN0cm9rZS1kYXNob2Zmc2V0PSItMC44MTg1Mzk3MTUx
-NzAzNTY1aW4iIG1hcmtlci1zdGFydD0ibm9uZSIgY3g9Ii0xLjEyMTE5NjAz
-MTYwOTI1MzNtbSIgY3k9Ii0xLjUzMTQ2OTgxMDE0NzA2M3BjIiByPSItMTgu
-MTc4NTEyNTIwODM5NzhwYyIgLz4KICA8cG9seWxpbmUgc3Ryb2tlLXdpZHRo
-PSIzNC42ODYwNzE3NTE5MzgwNGNtIiBzdHJva2U9InVybCgjYikiIHN0cm9r
-ZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49ImJldmVsIiB0cmFu
-c2Zvcm09Im1hdHJpeCgtMi42MjMxMTUwMTgwMzUxMjgsIC0xOC43MjY2NTI3
-MzAyMDcxOCwgLTEuNzI0NTA4ODg5NjYxMDUzMiwgMC4xOTI0MTQ0Njg5NTUx
-OTQ2MiwgMS4zMDQ5NzcyNzk2MDM5MDUsIC00LjIyNzY2ODkzMjY5ODY3OCki
-IGZpbGwtb3BhY2l0eT0iLTEuMjIzMDEwOCIgc3Ryb2tlLW9wYWNpdHk9IjAu
-MTQ0NDM1NTEiIGZvbnQtc2l6ZT0iLTc2JSIgZmlsbC1ydWxlPSJub256ZXJv
-IiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIG1hc2s9InVybCgjYikiIGNsYXNzPSJi
-IiBpZD0iYSIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAuODI0Mzk1OTcwMTcyOTYz
-MXB0IiBzdHJva2UtZGFzaGFycmF5PSItMS42ODgxNjI1NTA1NTc0Njk2aW4i
-IHRleHQtYW5jaG9yPSJzdGFydCIgbWFya2VyLWVuZD0idXJsKCNiKSIgbWFy
-a2VyLXN0YXJ0PSJub25lIiBwb2ludHM9IjAuMCwwLjAiIC8+CiAgPGxpbmUg
-c3Ryb2tlLXdpZHRoPSItMy4wNTE4NjU4MTMyNjQ1OGNtIiBmaWxsPSIjMDEw
-MDAxIiBzdHJva2UtbWl0ZXJsaW1pdD0iMi41MzUyMTk5MDcwNTg5MjYzIiB0
-cmFuc2Zvcm09InNrZXdZKDMuMDY3MjYzNzI0MjIyOTQ0NCkiIGNsaXAtcnVs
-ZT0ibm9uemVybyIgY2xhc3M9IiIgaWQ9ImEiIHN0cm9rZS1kYXNoYXJyYXk9
-IiIgbWFya2VyLWVuZD0ibm9uZSIgbWFya2VyLXN0YXJ0PSJ1cmwoI2EpIiBt
-YXJrZXItbWlkPSJub25lIiB4MT0iLTAuMzI2MzE3NTMxNjEzOTE1NDdlbSIg
-eTE9IjAuODM0OTE3MDMyNzcxODE0NiIgeDI9Ii0wLjc2NDk2MDk0MjczNTE5
-NjNlbSIgeTI9Ii04Mi43MjU5MDg3Mzk1MjU3ZW0iIC8+CiAgPGltYWdlIGZp
-bGw9InVybCgjYykiIHN0cm9rZS1saW5lam9pbj0iYmV2ZWwiIGZpbGwtb3Bh
-Y2l0eT0iLTEwLjE5MDE5NiIgZm9udC1zaXplPSIxLjU2NjM0NjkyNTEzOTA0
-NzJlbSIgZm9udC1mYW1pbHk9ImMiIG1hc2s9Im5vbmUiIGNsYXNzPSIiIGlk
-PSJjIiBzdHJva2UtZGFzaG9mZnNldD0iLTAuMTU5Njg5Nzk0NTg2NTk3MTht
-bSIgc3Ryb2tlLWRhc2hhcnJheT0iMi45NDEzMzU2NjU3OTg4NDFlbSIgdGV4
-dC1hbmNob3I9ImVuZCIgbWFya2VyLWVuZD0ibm9uZSIgbWFya2VyLW1pZD0i
-dXJsKCNjKSIgd2lkdGg9IjMuNDA1MzQxMDkwNzEzMjA5bW0iIGhlaWdodD0i
-Mi4yNTI3NDYxMDQ1NTMzOTQ1cHQiIHg9IjIuNDkzOTcwMDg5NDUzMzkwNWlu
-IiB5PSItMS44MzkxODg1MzQxMjg3MTYyIiB4bGluazpocmVmPSIjYSIgLz4K
-ICA8bGluZSBzdHJva2Utd2lkdGg9IjEuNjc0NzUzMTgxNDM4MDQ3MmUtMm1t
-IiBzdHJva2U9Im5vbmUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHRyYW5z
-Zm9ybT0ic2NhbGUoMC4xMjI5MzI3OTUwODE1MDU3MywgMy4yMjQ4Mzk4NDk3
-NzQ4MzgpIiBvcGFjaXR5PSItMC40NTIyNzQyNiIgZmlsbC1vcGFjaXR5PSIz
-LjU2NzY2NzIiIHN0cm9rZS1vcGFjaXR5PSIwLjQzOTU0NDE0IiBmaWxsLXJ1
-bGU9Im5vbnplcm8iIGNsaXAtcnVsZT0ibm9uemVybyIgbWFzaz0ibm9uZSIg
-Y2xhc3M9ImIiIGlkPSJiIiBzdHJva2UtZGFzaGFycmF5PSIiIHRleHQtYW5j
-aG9yPSJlbmQiIGNsaXAtcGF0aD0ibm9uZSIgbWFya2VyLWVuZD0idXJsKCNj
-KSIgbWFya2VyLXN0YXJ0PSJ1cmwoI2IpIiBtYXJrZXItbWlkPSJub25lIiB4
-MT0iMS4zODE5MTUyOTc0NDU4MjIyaW4iIHkxPSIxLjEyNzkxMTQ4NjA0NjMw
-MThweCIgeDI9Ii0wLjg4NzAzMDEwMDM4OTcyMTQiIHkyPSIwLjI2MDI4ODM3
-MTc2MDgwOTQzIiAvPgogIDxsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5l
-Y2FwPSJyb3VuZCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEuMjExNzQ4MDczOTc3
-NTkxNyIgb3BhY2l0eT0iMi4wMDI4OTI1IiBmaWxsLW9wYWNpdHk9IjMuOTE4
-MzA0M2UtMiIgZm9udC1zaXplPSItMS42ODI5MDA2ODUzODMyODM3aW4iIGNs
-aXAtcnVsZT0iZXZlbm9kZCIgY2xhc3M9IiIgaWQ9ImMiIHN0cm9rZS1kYXNo
-b2Zmc2V0PSIxLjQ5ODY0MjQ4NjgyNzk1MzNpbiIgdGV4dC1hbmNob3I9InN0
-YXJ0IiBjbGlwLXBhdGg9InVybCgjYikiIG1hcmtlci1zdGFydD0idXJsKCNj
-KSIgeDE9Ii0wLjYyMTIwODc1MDc0ODcyNzhweCIgeTE9IjAuMjk2Mjg4OTU0
-NjU3MjA0MmVtIiB4Mj0iMC4xOTE2Mzg5Njg2MzIwODM2OG1tIiB5Mj0iLTAu
-OTc4NzQzMDQ3MzYwNjM2OG1tIiAvPgo8L3N2Zz4K
-
---001a11c26b2a7414eb0531c90cf5
-Content-Type: image/svg+xml; name="sigfpe.svg"
-Content-Disposition: attachment; filename="sigfpe.svg"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_inop5xxm1
-
-PD94bWwgdmVyc2lvbj0nMS4wJyA/Pgo8c3ZnIHZpZXdCb3g9IjEgNCAxIDIi
-IHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxp
-bms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZlcnNpb249IjEu
-MSIgd2lkdGg9Ii0zLjM5NzYzOTMxODk4NDA4ODhpbiIgaGVpZ2h0PSIyOS4w
-ODI1MDI0MTk5OTgxN3B4Ij4KICA8ZGVzYz5hPC9kZXNjPgogIDxzdHlsZSB0
-eXBlPSJ0ZXh0L2NzcyI+IHsKfQogewp9CiB7Cn0KIHsKfQogewp9Cjwvc3R5
-bGU+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImIiIGdyYWRp
-ZW50VHJhbnNmb3JtPSIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNl
-IiBzcHJlYWRNZXRob2Q9InJlZmxlY3QiIHgxPSIxNzU4JSIgeTE9Ii0yLjIy
-MDE3OTI0NTA4MTkyNTNjbSIgeDI9IjcuNDg5ODMxMjQyNTYzMTU5NXB4IiB5
-Mj0iOS40Mzg1NTk1MzMyNDA2MDNjbSI+CiAgICAgIDxzdG9wIG9mZnNldD0i
-MCUiIHN0b3AtY29sb3I9IiMwMTAwMDAiIC8+CiAgICA8L2xpbmVhckdyYWRp
-ZW50PgogIDwvZGVmcz4KICA8Y2lyY2xlIHN0cm9rZS1saW5lY2FwPSJzcXVh
-cmUiIHN0cm9rZS1saW5lam9pbj0ibWl0ZXIiIHN0cm9rZS1taXRlcmxpbWl0
-PSIwLjAiIHRyYW5zZm9ybT0iIiBvcGFjaXR5PSIwLjAiIGZpbGwtb3BhY2l0
-eT0iMC4wIiBmb250LWZhbWlseT0iIiBtYXNrPSJ1cmwoI2MpIiBjbGFzcz0i
-IiBpZD0iYiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAuMCIgdGV4dC1hbmNob3I9
-InN0YXJ0IiBtYXJrZXItZW5kPSJ1cmwoI2EpIiBjeD0iMC4waW4iIHI9IjAu
-MGNtIiAvPgogIDxlbGxpcHNlIHN0cm9rZS13aWR0aD0iMC4wZW0iIGZpbGw9
-InVybCgjYikiIHN0cm9rZS1taXRlcmxpbWl0PSIwLjAiIHRyYW5zZm9ybT0i
-IiBmaWxsLW9wYWNpdHk9IjAuMCIgc3Ryb2tlLW9wYWNpdHk9IjAuMCIgZm9u
-dC1zaXplPSIwJSIgZmlsbC1ydWxlPSJub256ZXJvIiBjbGlwLXJ1bGU9Im5v
-bnplcm8iIG1hc2s9Im5vbmUiIGNsYXNzPSIiIGlkPSJhIiB0ZXh0LWFuY2hv
-cj0ic3RhcnQiIGNsaXAtcGF0aD0idXJsKCNiKSIgbWFya2VyLWVuZD0idXJs
-KCNhKSIgY3g9IjAuMGluIiBjeT0iMC4wZW0iIHJ4PSIwLjBwdCIgcnk9IjAu
-MHB4IiAvPgogIDxpbWFnZSBzdHJva2Utd2lkdGg9IjAuMHB4IiBmaWxsPSIj
-MDAwMTAxIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2UtbWl0ZXJs
-aW1pdD0iMC4wIiB0cmFuc2Zvcm09IiIgZmlsbC1vcGFjaXR5PSIwLjAiIHN0
-cm9rZS1vcGFjaXR5PSIwLjAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1y
-dWxlPSJldmVub2RkIiBjbGFzcz0iIiBpZD0iYSIgdGV4dC1hbmNob3I9ImVu
-ZCIgY2xpcC1wYXRoPSJ1cmwoI2IpIiBtYXJrZXItbWlkPSJ1cmwoI2EpIiB3
-aWR0aD0iMCUiIGhlaWdodD0iMCUiIHk9IjAlIiB4bGluazpocmVmPSIjYSIg
-Lz4KPC9zdmc+Cg==
-
---001a11c26b2a7414eb0531c90cf5--
+iQIcBAEBCAAGBQJX0QmYAAoJEHb/MwWLVhi2JuIQAInY8Bed/W9wZwgmO4peepl7
+lOJptN9utdMwCdYEug6NzCFjpcUslSmrBQcNdXEGMoPw5rku/Hw73sHNbhdfM71I
+TDU2OEwzSNQeo+4m/3rXMlYyHwOqHMp3owHQnl5JWJRcz6hhmI/JpokWxKncthtb
+rpywwao89VJZJf5GLF7RQFXvHwlREP+D3XYrW0cbqEfOrUAQ7oxK5OaFCa30NWrh
+ISJ4iDalfTeWr7x98Bb3X6v40dL7bkUtuWHnqFN+LwuBJL2MlJ74XmsdIDrSXGOf
+grrpU1sMGZ+yJhbc+4n6JcTxXI6/AWOaKqn/pkCG8UkNL/LxzuaGmIYguGecYh7V
+2tc5e7IZ4IzCYNaRUKKLAtlfENMbOn8IqL0zFWXRoSzw7YcSw24s1A0hzEBiPonS
+cPWGhMYsu4bCmJmZZenuKNIKx/CuOZq+YgyFpXjowUxFGpZwOk9eVPnpmK8CRl7z
+kGaS33l9yElstG1gsPeGDxZYHtG09z/T/VrJWIHNieTMUOEO0LZf8+xG5bfXWC1A
+y5S6GCFOSM+8QrvPHgua4l8h7uAxbCVKlLqahOVhID83sCKKTWyxLGa+1FtPIsRH
+zTmEMeS0Q6JytXc7f2DitI9t/hEEh877xQLRWactOBmP19XdC+rCLcBZcoksK8UB
+2osVa1EkAYD9ZVrCOo0i
+=CVgG
+-----END PGP SIGNATURE-----
