@@ -1,53 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/19/7
-Message-ID: <20160719125119.GA7146@suse.de>
-Date: Tue, 19 Jul 2016 14:51:19 +0200
-From: Sebastian Krahmer <krahmer@...e.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/23
+Message-ID: <CAGoY5PK+Y9PwBH7x2N4DCdJ9cxu6M4kHMYA52KAFn=Ly5_Y=0g@mail.gmail.com>
+Date: Thu, 8 Sep 2016 17:34:09 +0300
+From: Vahagn Vardanyan <vvvaagn@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: ebiederm@...ssion.com
-Subject: Re: subuid security patches for shadow package
+Subject: multiple crashes in radare2/radiff2
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 19, 2016 at 11:39:15AM +0200, Sebastian Krahmer wrote:
-> Hi
-> 
-> The shadow package contains newuidmap and newgidmap suid
-> binaries in order to allow users to take advantage of the
-> userns feature of uid-mappings.
-> 
-> I added patches here:
-> 
-> https://bugzilla.suse.com/show_bug.cgi?id=979282
-> 
-> they consist of:
-> 
-> 1) Removing getlogin() to find out about users.
->    It relies on utmp, which is not a trusted base of info (group writable).
-> 
-> 2) Cleaning up UID retrieval and computation. The 'long long' code was
->    totally unclear to me, as the numbers are converted to ulong right
->    afterwards anyway. Additionally there was a *int overflow*, which can be
->    tested via 'newuidmap $$ 0 10000 -1' (given that 10000 is listed as allowed)
->    which produces no error but tries to write large "count" values to the uid_map
->    file. Kernel may check for overflows itself, but it should not be allowed
->    by a suid binary to be written in the first place.
+Hi there
 
-After checking some kernels, it looks like this int wrap is exploitable as a LPE,
-as kernel is using 32bit uid's that are truncated from unsigned longs (64bit on x64)
-as returned by simple_strtoul() [map_write()]. So newuidmap and kernel have an entire
-different view on the upper and lower bounds, making newuidmap overflow (and pass)
-and still being in bounds inside the kernel.
+I created report
+https://bugs.chromium.org/p/project-zero/issues/detail?id=933&can=1&q=&sort=-id
+but got invalid status, Tavis Ormandy recommend for I will resend to
+this email :-)
 
-Maybe it would be wise to align integer widths of kernel and the userspace
-tools.
+Please tell how I can send crashes archive, thank you
 
-So everyone shipping newuidmap as mode 04755 should fix it. :)
 
-Sebastian
+Radare2 (https://github.com/radare/radare2) is a complete framework
+for reverse-engineering and analyzing binaries. Radare2 use
+Radare2 also have radiff2 tools, which use can compare 2 binary files.
 
--- 
+Usage: radiff2 [-abcCdjrspOxvV] [-g sym] [-t %] [file] [file]
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.com - SuSE Security Team
+With use afl & address-sanitize founded multiple crashes (crashes.zip)
+and small test is a small_test
+
+
+for test it, I wrote small program
+
+/* hello.c */
+#include <stdio.h>
+
+int main (void)
+{
+	printf ("Hello World\n");
+}
+
+compile it with
+
+clang hello.c
+
+and get a.out file.
+
+for reproduce need call radiff2 with next parameters
+./radiff2 -g sym a.out 	small_test
 
