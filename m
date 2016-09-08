@@ -1,4 +1,9 @@
-Received: (qmail 3882 invoked by uid 550); 6 Mar 2026 15:17:59 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6566" "Thursday" "8" "September" "2016" "03:13:15" "+0000" "=?gb2312?B?d2luc29ubGl1KMH1v8Yp?=" "winsonliu@tencent.com" "<1F2D4DA31CA62740BFF46830A0E6A4F7066E5805@EXMBX-TJ002.tencent.com>" "111" "[oss-security] CVE Request: OpenJPEG Heap Buffer Overflow Issue" nil nil nil "9" "2016090803:13:15" "[oss-security] CVE Request: OpenJPEG Heap Buffer Overflow Issue" (number mark "U       winsonliu@te Sep  8  111/6566  " thread-indent "\"[oss-security] CVE Request: OpenJPEG Heap Buffer Overflow Issue\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21759 invoked by uid 550); 8 Sep 2016 03:15:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,71 +12,132 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1778 invoked from network); 6 Mar 2026 15:17:03 -0000
-Date: Fri, 6 Mar 2026 16:16:49 +0100
-From: Solar Designer <solar@openwall.com>
-To: Guillem Jover <guillem@debian.org>,
-	Ron Ben Yizhak <ron.benyizhak@safebreach.com>,
-	Justin Swartz <justin.swartz@risingedge.co.za>,
-	bug-inetutils@gnu.org, oss-security@lists.openwall.com,
-	simon@josefsson.org, auerswal@unix-ag.uni-kl.de,
-	Salvatore Bonaccorso <carnil@debian.org>
-Message-ID: <20260306151649.GB16746@openwall.com>
-References: <CAB1hGqQwnSzEqtrefwqAxD+rWGu_EXVDmu-btMrNYqMzkzc9Kw@mail.gmail.com> <20260206172730.GA12303@unix-ag.uni-kl.de> <877bso8mhf.fsf@josefsson.org> <20260224011702.27987-1-justin.swartz@risingedge.co.za> <CAB1hGqSJPOQwc8h7g4u4WXjtDSupwkA8HjzEyU2gzbL5uavneg@mail.gmail.com> <aaGJlbbLS7cp0H-i@thunder.hadrons.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aaGJlbbLS7cp0H-i@thunder.hadrons.org>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2026-28372: Telnetd Vulnerability Report
+Received: (qmail 21710 invoked from network); 8 Sep 2016 03:15:30 -0000
+From: =?gb2312?B?d2luc29ubGl1KMH1v8Yp?= <winsonliu@tencent.com>
+To: oss-security <oss-security@lists.openwall.com>
+CC: cve-assign <cve-assign@mitre.org>
+Thread-Topic: CVE Request: OpenJPEG Heap Buffer Overflow Issue
+Thread-Index: AdIJfu89NF/CYQzBRZqvEkGPw8dDhQ==
+Date: Thu, 8 Sep 2016 03:13:15 +0000
+Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F7066E5805@EXMBX-TJ002.tencent.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.4.75.28]
+Content-Type: multipart/alternative;
+	boundary="_000_1F2D4DA31CA62740BFF46830A0E6A4F7066E5805EXMBXTJ002tence_"
+MIME-Version: 1.0
+Subject: [oss-security] CVE Request: OpenJPEG Heap Buffer Overflow Issue
 
-Hi Guillem and Salvatore,
+--_000_1F2D4DA31CA62740BFF46830A0E6A4F7066E5805EXMBXTJ002tence_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-On Fri, Feb 27, 2026 at 01:09:57PM +0100, Guillem Jover wrote:
-> On Tue, 2026-02-24 at 11:57:34 +0200, Ron Ben Yizhak wrote:
-> > I’d like to ensure we follow the standard CVE process here. Standard
-> > practice dictates that a CVE is issued per individual fix. Generally, once
-> > a fix is merged and released, it is assigned its own CVE. Even if that fix
-> > is later bypassed, the original merge stands as a unique event in the
-> > codebase, meaning we should issue two separate CVEs rather than grouping
-> > them.
-> 
-> Salvatore Bonaccorso from the Debian Security Team got a CVE assigned
-> for this, see <https://www.cve.org/CVERecord?id=CVE-2026-28372>. I'll
-> update the Debian packaging on the next upload to point to that.
+SGksDQoNClRoaXMgaXMgS2UgZnJvbSBUZW5jZW50J3MgWHVhbnd1IExBQi4g
+SSByZXBvcnRlZCBhIHNlY3VyaXR5IGlzc3VlIG9mIE9wZW5KUEVHIHNvbWUg
+ZGF5cyBhZ28gYW5kIGl0IGhhcyBiZWVuIGZpeGVkIG5vdy4gVGhlIGZpeCBp
+cyBhdmFpbGFibGUgYXQgaHR0cHM6Ly9naXRodWIuY29tL3VjbG91dmFpbi9v
+cGVuanBlZy9jb21taXQvZTA3ODE3MmIxYzNmOThkMjIxOWMzNzA3NmIyMzhm
+Yjc1OWM3NTFlYSAuIENvdWxkIHlvdSBwbGVhc2UgYXNzaWduIGEgQ1ZFIG51
+bWJlciBmb3IgaXQ/DQoNClRoYW5rcy4NCg0KUmVnYXJkcywNCktlDQpUZW5j
+ZW50J3MgWHVhbnd1IExBQg0KDQoNCkRFU0NSSVBUSU9ODQo9PT09PT09PT09
+PT09PQ0KQSBIZWFwIEJ1ZmZlciBPdmVyZmxvdyAoT3V0LW9mLUJvdW5kcyBX
+cml0ZSkgaXNzdWUgd2FzIGZvdW5kIGluIGZ1bmN0aW9uIG9wal9kd3RfaW50
+ZXJsZWF2ZV92IG9mIGR3dC5jLiBUaGlzIHZ1bG5lcmFiaWxpdHkgYWxsb3dz
+IHJlbW90ZSBhdHRhY2tlcnMgdG8gZXhlY3V0ZSBhcmJpdHJhcnkgY29kZSBv
+biB2dWxuZXJhYmxlIGluc3RhbGxhdGlvbnMgb2YgT3BlbkpQRUcuDQoNCg0K
+Q1JFRElUDQo9PT09PT09PT09PT09PQ0KVGhpcyB2dWxuZXJhYmlsaXR5IHdh
+cyBkaXNjb3ZlcmVkIGJ5IEtlIExpdSBvZiBUZW5jZW50J3MgWHVhbnd1IExB
+Qi4NCg0KDQpURVNURUQgVkVSU0lPTg0KPT09PT09PT09PT09PT0NCk1hc3Rl
+ciB2ZXJzaW9uIG9mIE9wZW5KUEVHICg0YTJhODY5KQ0KDQoNCkVYQ0VQVElP
+TiBMT0cNCj09PT09PT09PT09PT09DQo9PTU1NzY9PUVSUk9SOiBBZGRyZXNz
+U2FuaXRpemVyOiBoZWFwLWJ1ZmZlci1vdmVyZmxvdyBvbiBhZGRyZXNzIDB4
+YjRmMDE5N2MgYXQgcGMgMHhiNzQ4ZjdlMyBicCAweGJmOWMxZDM4IHNwIDB4
+YmY5YzFkMzANCldSSVRFIG9mIHNpemUgNCBhdCAweGI0ZjAxOTdjIHRocmVh
+ZCBUMA0KICAgICMwIDB4Yjc0OGY3ZTIgaW4gb3BqX2R3dF9pbnRlcmxlYXZl
+X3Ygc3JjL2xpYi9vcGVuanAyL2R3dC5jOjI2ODo3DQogICAgIzEgMHhiNzQ3
+NjFlZSBpbiBvcGpfZHd0X2RlY29kZV90aWxlIHNyYy9saWIvb3BlbmpwMi9k
+d3QuYzo2MDk6NA0KICAgICMyIDB4Yjc0NzQxMDggaW4gb3BqX2R3dF9kZWNv
+ZGUgc3JjL2xpYi9vcGVuanAyL2R3dC5jOjQ3Nzo5DQogICAgIzMgMHhiNzcz
+MjllMiBpbiBvcGpfdGNkX2R3dF9kZWNvZGUgc3JjL2xpYi9vcGVuanAyL3Rj
+ZC5jOjE2MTk6MzENCiAgICAjNCAweGI3NzJmZmNjIGluIG9wal90Y2RfZGVj
+b2RlX3RpbGUgc3JjL2xpYi9vcGVuanAyL3RjZC5jOjEzMDY6MjANCiAgICAj
+NSAweGI3NGU5YTBlIGluIG9wal9qMmtfZGVjb2RlX3RpbGUgc3JjL2xpYi9v
+cGVuanAyL2oyay5jOjgxMzQ6MTUNCiAgICAjNiAweGI3NTc1MzU0IGluIG9w
+al9qMmtfZGVjb2RlX3RpbGVzIHNyYy9saWIvb3BlbmpwMi9qMmsuYzo5NzYx
+OjIzDQogICAgIzcgMHhiNzRjZWU0YyBpbiBvcGpfajJrX2V4ZWMgc3JjL2xp
+Yi9vcGVuanAyL2oyay5jOjczNTA6NDMNCiAgICAjOCAweGI3NTA1NzhiIGlu
+IG9wal9qMmtfZGVjb2RlIHNyYy9saWIvb3BlbmpwMi9qMmsuYzo5OTU5OjE1
+DQogICAgIzkgMHhiNzVjYTBkZSBpbiBvcGpfanAyX2RlY29kZSBzcmMvbGli
+L29wZW5qcDIvanAyLmM6MTQ5Mjo4DQogICAgIzEwIDB4Yjc2MzRlYjggaW4g
+b3BqX2RlY29kZSBzcmMvbGliL29wZW5qcDIvb3BlbmpwZWcuYzo0MTI6MTAN
+CiAgICAjMTEgMHg4MTQwMzA0IGluIG1haW4gc3JjL2Jpbi9qcDIvb3BqX2Rl
+Y29tcHJlc3MuYzoxMzMyOjEwDQogICAgIzEyIDB4YjcxY2JhZjIgaW4gX19s
+aWJjX3N0YXJ0X21haW4gL2J1aWxkL2VnbGliYy1YNGJuQnovZWdsaWJjLTIu
+MTkvY3N1L2xpYmMtc3RhcnQuYzoyODcNCiAgICAjMTMgMHg4MDc4MWViIGlu
+IF9zdGFydCAoYmluL29wal9kZWNvbXByZXNzKzB4ODA3ODFlYikNCg0KMHhi
+NGYwMTk3YyBpcyBsb2NhdGVkIDQgYnl0ZXMgdG8gdGhlIGxlZnQgb2YgMTAy
+OC1ieXRlIHJlZ2lvbiBbMHhiNGYwMTk4MCwweGI0ZjAxZDg0KQ0KYWxsb2Nh
+dGVkIGJ5IHRocmVhZCBUMCBoZXJlOg0KICAgICMwIDB4ODExMDk0OSBpbiBf
+X2ludGVyY2VwdG9yX3Bvc2l4X21lbWFsaWduIChiaW4vb3BqX2RlY29tcHJl
+c3MrMHg4MTEwOTQ5KQ0KICAgICMxIDB4Yjc3NTMzZGMgaW4gb3BqX2FsaWdu
+ZWRfYWxsb2NfbiBzcmMvbGliL29wZW5qcDIvb3BqX21hbGxvYy5jOjYxOjcN
+CiAgICAjMiAweGI3NzUyZWQzIGluIG9wal9hbGlnbmVkX21hbGxvYyBzcmMv
+bGliL29wZW5qcDIvb3BqX21hbGxvYy5jOjIwODoxMA0KICAgICMzIDB4Yjc0
+NzRkMDggaW4gb3BqX2R3dF9kZWNvZGVfdGlsZSBzcmMvbGliL29wZW5qcDIv
+ZHd0LmM6NTc2OjIyDQogICAgIzQgMHhiNzQ3NDEwOCBpbiBvcGpfZHd0X2Rl
+Y29kZSBzcmMvbGliL29wZW5qcDIvZHd0LmM6NDc3OjkNCiAgICAjNSAweGI3
+NzMyOWUyIGluIG9wal90Y2RfZHd0X2RlY29kZSBzcmMvbGliL29wZW5qcDIv
+dGNkLmM6MTYxOTozMQ0KICAgICM2IDB4Yjc3MmZmY2MgaW4gb3BqX3RjZF9k
+ZWNvZGVfdGlsZSBzcmMvbGliL29wZW5qcDIvdGNkLmM6MTMwNjoyMA0KICAg
+ICM3IDB4Yjc0ZTlhMGUgaW4gb3BqX2oya19kZWNvZGVfdGlsZSBzcmMvbGli
+L29wZW5qcDIvajJrLmM6ODEzNDoxNQ0KICAgICM4IDB4Yjc1NzUzNTQgaW4g
+b3BqX2oya19kZWNvZGVfdGlsZXMgc3JjL2xpYi9vcGVuanAyL2oyay5jOjk3
+NjE6MjMNCiAgICAjOSAweGI3NGNlZTRjIGluIG9wal9qMmtfZXhlYyBzcmMv
+bGliL29wZW5qcDIvajJrLmM6NzM1MDo0Mw0KICAgICMxMCAweGI3NTA1Nzhi
+IGluIG9wal9qMmtfZGVjb2RlIHNyYy9saWIvb3BlbmpwMi9qMmsuYzo5OTU5
+OjE1DQogICAgIzExIDB4Yjc1Y2EwZGUgaW4gb3BqX2pwMl9kZWNvZGUgc3Jj
+L2xpYi9vcGVuanAyL2pwMi5jOjE0OTI6OA0KICAgICMxMiAweGI3NjM0ZWI4
+IGluIG9wal9kZWNvZGUgc3JjL2xpYi9vcGVuanAyL29wZW5qcGVnLmM6NDEy
+OjEwDQogICAgIzEzIDB4ODE0MDMwNCBpbiBtYWluIHNyYy9iaW4vanAyL29w
+al9kZWNvbXByZXNzLmM6MTMzMjoxMA0KICAgICMxNCAweGI3MWNiYWYyIGlu
+IF9fbGliY19zdGFydF9tYWluIC9idWlsZC9lZ2xpYmMtWDRibkJ6L2VnbGli
+Yy0yLjE5L2NzdS9saWJjLXN0YXJ0LmM6Mjg3DQoNClNVTU1BUlk6IEFkZHJl
+c3NTYW5pdGl6ZXI6IGhlYXAtYnVmZmVyLW92ZXJmbG93IHNyYy9saWIvb3Bl
+bmpwMi9kd3QuYzoyNjggb3BqX2R3dF9pbnRlcmxlYXZlX3YNClNoYWRvdyBi
+eXRlcyBhcm91bmQgdGhlIGJ1Z2d5IGFkZHJlc3M6DQogIDB4MzY5ZTAyZDA6
+IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZh
+IGZhDQogIDB4MzY5ZTAyZTA6IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZh
+IGZhIGZhIGZhIGZhIGZhIGZhIGZhDQogIDB4MzY5ZTAyZjA6IGZhIGZhIGZh
+IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhDQogIDB4
+MzY5ZTAzMDA6IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZh
+IGZhIGZhIGZhIGZhDQogIDB4MzY5ZTAzMTA6IGZhIGZhIGZhIGZhIGZhIGZh
+IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhDQo9PjB4MzY5ZTAzMjA6
+IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZh
+W2ZhXQ0KICAweDM2OWUwMzMwOiAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAw
+MCAwMCAwMCAwMCAwMCAwMCAwMCAwMA0KICAweDM2OWUwMzQwOiAwMCAwMCAw
+MCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMA0KICAw
+eDM2OWUwMzUwOiAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAw
+MCAwMCAwMCAwMCAwMA0KICAweDM2OWUwMzYwOiAwMCAwMCAwMCAwMCAwMCAw
+MCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMA0KICAweDM2OWUwMzcw
+OiAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAw
+MCAwMA0KU2hhZG93IGJ5dGUgbGVnZW5kIChvbmUgc2hhZG93IGJ5dGUgcmVw
+cmVzZW50cyA4IGFwcGxpY2F0aW9uIGJ5dGVzKToNCiAgQWRkcmVzc2FibGU6
+ICAgICAgICAgICAwMA0KICBQYXJ0aWFsbHkgYWRkcmVzc2FibGU6IDAxIDAy
+IDAzIDA0IDA1IDA2IDA3DQogIEhlYXAgbGVmdCByZWR6b25lOiAgICAgICBm
+YQ0KICBIZWFwIHJpZ2h0IHJlZHpvbmU6ICAgICAgZmINCiAgRnJlZWQgaGVh
+cCByZWdpb246ICAgICAgIGZkDQogIFN0YWNrIGxlZnQgcmVkem9uZTogICAg
+ICBmMQ0KICBTdGFjayBtaWQgcmVkem9uZTogICAgICAgZjINCiAgU3RhY2sg
+cmlnaHQgcmVkem9uZTogICAgIGYzDQogIFN0YWNrIHBhcnRpYWwgcmVkem9u
+ZTogICBmNA0KICBTdGFjayBhZnRlciByZXR1cm46ICAgICAgZjUNCiAgU3Rh
+Y2sgdXNlIGFmdGVyIHNjb3BlOiAgIGY4DQogIEdsb2JhbCByZWR6b25lOiAg
+ICAgICAgICBmOQ0KICBHbG9iYWwgaW5pdCBvcmRlcjogICAgICAgZjYNCiAg
+UG9pc29uZWQgYnkgdXNlcjogICAgICAgIGY3DQogIENvbnRhaW5lciBvdmVy
+ZmxvdzogICAgICBmYw0KICBBcnJheSBjb29raWU6ICAgICAgICAgICAgYWMN
+CiAgSW50cmEgb2JqZWN0IHJlZHpvbmU6ICAgIGJiDQogIEFTYW4gaW50ZXJu
+YWw6ICAgICAgICAgICBmZQ0KICBMZWZ0IGFsbG9jYSByZWR6b25lOiAgICAg
+Y2ENCiAgUmlnaHQgYWxsb2NhIHJlZHpvbmU6ICAgIGNiDQo9PTU1NzY9PUFC
+T1JUSU5HDQo=
 
-The CVE description says:
-
-"telnetd in GNU inetutils through 2.7 allows privilege escalation that
-can be exploited by abusing systemd service credentials support added to
-the login(1) implementation of util-linux in release 2.40. This is
-related to client control over the CREDENTIALS_DIRECTORY environment
-variable, and requires an unprivileged local user to create a
-login.noauth file."
-
-So is this CVE only for the attack vector reported by Ron Ben Yizhak,
-and not also for the other attack vector and more general issue reported
-by Justin Swartz?
-
-If so, are you going to assign a second CVE for the more general issue?
-
-I am not convinced "the standard CVE process" is exactly as Ron Ben
-Yizhak describes it above, but I don't mind doing things in this way.
-
-It sometimes happens that a fix is released as being for a certain CVE,
-and then a second CVE has to be assigned for the "incomplete fix", where
-the incompleteness of the first fix is the new vulnerability.  But with
-no CVE assigned yet, we didn't have to do it this way.  We could have
-one CVE for the set of issues, and not treat "the original merge" as
-fixing any CVE at all.
-
-But again, I don't mind, and I understand that we also need to enable
-researchers to find and report such issues during work hours, which
-means making employers happy with credits and CVEs.  It isn't wrong to
-have separate CVEs, so we may.
-
-Just need to clarify.
-
-Alexander
+--_000_1F2D4DA31CA62740BFF46830A0E6A4F7066E5805EXMBXTJ002tence_--
