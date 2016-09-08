@@ -1,44 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/15/8
-Message-ID: <03d6de10-c70e-9dcf-321c-89c95dc14bcc@securify.nl>
-Date: Mon, 15 Aug 2016 18:25:24 +0200
-From: Summer of Pwnage <lists@...urify.nl>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities affecting eleven WordPress Plugins (XSS, CSRF, LFI & object injection)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/17
+Message-ID: <CANO=Ty1b8mrUZQQuxwiVykKg1C-_qxbfuczbQxEL=8cBYfG9Nw@mail.gmail.com>
+Date: Thu, 8 Sep 2016 09:02:24 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>, security@...stis.co
+Subject: CVEs for public Kibana / logstash issues
 Content-Type: text/plain; charset=utf-8
 
-Please see attached advisories for more information. These issues were 
-found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
-project. Its goal is to contribute to the security of popular, widely 
-used OSS projects in a fun and educational way.
+I just checked https://www.elastic.co/community/security and the Kibana
+issues do not have CVEs, can you please assign CVEs for:
 
+Kibana:
 
+ESA-2016-05 2016-09-06
+Version 2.4.0 of the Reporting plugin is vulnerable to a CSRF vulnerability
+that could allow an attacker to generate superfluous reports whenever an
+authenticated Kibana user navigates to a specially-crafted page. Users of
+the Reporting plugin should upgrade Kibana to 4.6.1 and Reporting to 2.4.1.
 
+ESA-2016-04 2016-08-03
+When a custom output is configured for logging in versions of Kibana before
+4.5.4 and 4.1.11, cookies and authorization headers could be written to the
+log files. This information could be used to hijack sessions of other users
+when using Kibana behind some form of authentication such as Shield. Users
+should upgrade to 4.5.4 or 4.1.11.
 
-View attachment "ajax_load_more_local_file_inclusion_vulnerability.txt" of type "text/plain" (4934 bytes)
+ESA-2016-03 2016-08-03
+Versions of Kibana before 4.5.4 and 4.1.11 are vulnerable to an XSS attack
+that would allow an attacker to execute arbitrary JavaScript in users'
+browsers. Users should upgrade to 4.5.4 or 4.1.11.
 
-View attachment "cross_site_request_forgery_in_photo_gallery_wordpress_plugin_allows_adding_of_images.txt" of type "text/plain" (3309 bytes)
+Logstash:
 
-View attachment "cross_site_request_forgery_in_photo_gallery_wordpress_plugin_allows_deleting_of_galleries.txt" of type "text/plain" (2905 bytes)
+ESA-2016-02 2016-07-07
+Prior to version 2.3.4, Elasticsearch Output plugin would log to file HTTP
+authorization headers which could contain sensitive information. Users who
+secure communication from Logstash to Elasticsearch via Basic Authorization
+using Elastic Shield or other systems are advised to upgrade to this
+version.
 
-View attachment "cross_site_request_forgery_in_photo_gallery_wordpress_plugin_allows_deleting_of_images.txt" of type "text/plain" (3321 bytes)
+ESA-2016-01 2016-02-02
+Prior to version 2.1.2, the CSV output can be attacked via engineered input
+that will create malicious formulas in the CSV data. Users that currently
+use Logstash CSV output plugin or may want to use it in the future should
+upgrade to 2.2.0 or 2.1.2.
 
-View attachment "cross_site_request_forgery_vulnerability_in_add_from_server_wordpress_plugin.txt" of type "text/plain" (3941 bytes)
+Thanks
 
-View attachment "cross_site_request_forgery_vulnerability_in_email_users_wordpress_plugin.txt" of type "text/plain" (6119 bytes)
+-- 
 
-View attachment "cross_site_scripting_cross_site_request_forgery_in_peter_s_login_redirect_wordpress_plugin.txt" of type "text/plain" (5160 bytes)
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-View attachment "cross_site_scripting_in_link_library_wordpress_plugin.txt" of type "text/plain" (3141 bytes)
-
-View attachment "cross_site_scripting_in_store_locator_plus_for_wordpress.txt" of type "text/plain" (3985 bytes)
-
-View attachment "cross_site_scripting_vulnerability_in_google_maps_wordpress_plugin.txt" of type "text/plain" (3160 bytes)
-
-View attachment "ecwid_ecommerce_shopping_cart_wordpress_plugin_unauthenticated_php_object_injection_vulnerability.txt" of type "text/plain" (3036 bytes)
-
-View attachment "persistent_cross_site_scripting_in_magic_fields_1_wordpress_plugin.txt" of type "text/plain" (3454 bytes)
-
-View attachment "persistent_cross_site_scripting_in_magic_fields_2_wordpress_plugin.txt" of type "text/plain" (3746 bytes)
-
-View attachment "stored_cross_site_scripting_vulnerability_in_photo_gallery_wordpress_plugin.txt" of type "text/plain" (4334 bytes)
