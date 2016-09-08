@@ -1,67 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/9
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0B97349@EX02.corp.qihoo.net>
-Date: Fri, 8 Apr 2016 07:10:54 +0000
-From: 张开翔 <zhangkaixiang@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-3632 - libtiff 4.0.6 illegel write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/19
+Message-ID: <149ffd43-942f-3e77-31dc-897e0ccec1e2@securify.nl>
+Date: Thu, 8 Sep 2016 19:27:41 +0200
+From: Summer of Pwnage <lists@...urify.nl>
+To: oss-security@...ts.openwall.com
+Subject: Persistent Cross-Site Scripting vulnerability in WordPress due to unsafe processing of file names
 Content-Type: text/plain; charset=utf-8
 
-Details
+------------------------------------------------------------------------
+Persistent Cross-Site Scripting vulnerability in WordPress due to unsafe
+processing of file names
+------------------------------------------------------------------------
+Han Sahin, July 2016
 
-=======
+------------------------------------------------------------------------
+Abstract
+------------------------------------------------------------------------
+A persistent Cross-Site Scripting (XSS) vulnerability has been found in
+WordPress. An attacker can create a specially crafted image file name
+which, when uploaded in WordPress, injects malicious JavaScript code
+into the application. An attacker can use this vulnerability to perform
+a wide variety of actions, such as stealing victims' session tokens or
+login credentials, and performing arbitrary actions on their behalf.
 
+------------------------------------------------------------------------
+OVE ID
+------------------------------------------------------------------------
+OVE-20160724-0018
 
+------------------------------------------------------------------------
+Tested versions
+------------------------------------------------------------------------
+This issue was successfully tested on WordPress [2] 4.5.3.
 
-Product: libtiff
+------------------------------------------------------------------------
+Fix
+------------------------------------------------------------------------
+This vulnerability is resolved in WordPress 4.6.1 [3] (Release Notes
+[4]).
 
-Affected Versions: <= 4.0.6
-
-Vulnerability Type: Illegel write
-
-Vendor URL:  http://www.remotesensing.org/libtiff/
-
-CVE ID: CVE-2016-3632
-
-Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
-
-
-
+------------------------------------------------------------------------
 Introduction
+------------------------------------------------------------------------
+WordPress Media Upload functionality is used to upload image, audio,
+video and other allowed file extensions. The uploaded media types are
+automatically available to public users via so called public 'Attachment
+Pages'.
 
-Illegal write occurs in the _TIFFVGetField function in tif_dirinfo.c when using thumbnail command, which allows attackers to exploit this issue to cause denial-of-service or may command excution.
+------------------------------------------------------------------------
+Details
+------------------------------------------------------------------------
+WordPress performs insufficient validation on the file name of uploaded
+media types and in specific images. The file name of an image is used as
+image Title (meta) in so called ‘attachment pages’ (HTML). An
+attacker can exploit this vulnerability by crafting an image file name
+with Cross-Site Scripting payload and lure an admin into uploading the
+image with the malicious file name.
 
+------------------------------------------------------------------------
+Limitations
+------------------------------------------------------------------------
 
+Operating System
 
-libtiff/tif_dir.c:1073
-1068                                          if (fip->field_type == TIFF_ASCII
-1069                                              || fip->field_readcount == TIFF_VARIABLE
-1070                                              || fip->field_readcount == TIFF_VARIABLE2
-1071                                              || fip->field_readcount == TIFF_SPP
-1072                                              || tv->count > 1) {
-1073                                                 *va_arg(ap, void **) = tv->value;
-1074                                                 ret_val = 1;
+Please note that the WordPress admin (victim) needs to use an operating
+system like for example Mac or Linux. These provide extended file name
+capabilities necessary for an attacker to be able to successfully use
+this vulnerability.
 
-gdb  --args  thumbnail  _ TIFFVGetField.tif  tmpout.tif
-……
-Program received signal SIGSEGV, Segmentation fault.
-_TIFFVGetField (tif=<optimized out>, tag=<optimized out>, ap=<optimized out>) at tif_dir.c:1073
-1073                                                                           *va_arg(ap, void **) = tv->value;
-Missing separate debuginfos, use: dnf debuginfo-install glibc-2.22-10.fc23.x86_64 libjpeg-turbo-1.4.1-2.fc23.x86_64
-(gdb) bt
-#0  _TIFFVGetField (tif=<optimized out>, tag=<optimized out>, ap=<optimized out>) at tif_dir.c:1073
-#1  0x00007ffff7a6b5e1 in TIFFGetField (tif=tif@...ry=0x60a930, tag=tag@...ry=326) at tif_dir.c:1158
-#2  0x00000000004034a1 in cpTag (type=TIFF_LONG, count=<optimized out>, tag=<optimized out>, out=<optimized out>, in=<optimized out>) at thumbnail.c:167
-#3  cpTags (out=<optimized out>, in=<optimized out>) at thumbnail.c:297
-#4  cpIFD (out=<optimized out>, in=<optimized out>) at thumbnail.c:373
-#5  main (argc=<optimized out>, argv=<optimized out>) at thumbnail.c:124
-(gdb) x/xw ap-4
-0xbffff2bc:        0x00000001
+Social Engineering
 
-References:
-[1] http://www.remotesensing.org/libtiff/
+For the attack to succeed the following conditions have to be met:
 
+- A WordPress admin uploads a malicious image file requested by a user
+this admin trusts or a popular malicious image that was spread via
+social media. This involves social engineering. In the Proof of Concept
+the file name cengizhansahinsumofpwn<img src=a
+onerror=alert(document.cookie)>.jpg was used.
 
-Thank you!
+- An attacker can now determine if the file name with which the
+malicious file is available on the WordPress site. With this information
+he can spread the URL to end users and the WordPress admin.
 
-Best Regards,
+------------------------------------------------------------------------
+References
+------------------------------------------------------------------------
+[1] 
+https://sumofpwn.nl/advisory/2016/persistent_cross_site_scripting_vulnerability_in_wordpress_due_to_unsafe_processing_of_file_names.html
+[2] https://wordpress.org/
+[3] https://wordpress.org/wordpress-4.6.1.zip
+[4] 
+https://wordpress.org/news/2016/09/wordpress-4-6-1-security-and-maintenance-release/
