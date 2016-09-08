@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1828" "Thursday" "18" "August" "2016" "19:54:52" "+0300" "Solar Designer" "solar@openwall.com" "<20160818165452.GA6708@openwall.com>" "34" "Re: [oss-security] Libgcrypt and GnuPG 1.4 RNG output prediction" "^Date:" nil nil "8" "2016081816:54:52" "[oss-security] Libgcrypt and GnuPG 1.4 RNG output prediction" (number mark "        solar@openwa Aug 18   34/1828  " thread-indent "\"Re: [oss-security] Libgcrypt and GnuPG 1.4 RNG output prediction\"\n") "<39a367af-c84d-01cb-36eb-6732edfbdac2@andrewg.com>" ("<20160817165819.GA24935@openwall.com>" "<87pop7utyu.fsf@wheatstone.g10code.de>" "<39a367af-c84d-01cb-36eb-6732edfbdac2@andrewg.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7281" "Thursday" "8" "September" "2016" "05:54:36" "+0000" "=?gb2312?B?d2luc29ubGl1KMH1v8Yp?=" "winsonliu@tencent.com" "<1F2D4DA31CA62740BFF46830A0E6A4F7066E5C45@EXMBX-TJ002.tencent.com>" "122" "[oss-security] CVE Request: OpenJPEG Integer Overflow Issue" nil nil nil "9" "2016090805:54:36" "[oss-security] CVE Request: OpenJPEG Integer Overflow Issue" (number mark "U       winsonliu@te Sep  8  122/7281  " thread-indent "\"[oss-security] CVE Request: OpenJPEG Integer Overflow Issue\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13565 invoked by uid 550); 18 Aug 2016 16:56:11 -0000
+Received: (qmail 22481 invoked by uid 550); 8 Sep 2016 05:54:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,144 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9725 invoked from network); 18 Aug 2016 16:55:02 -0000
-Message-ID: <20160818165452.GA6708@openwall.com>
-References: <20160817165819.GA24935@openwall.com> <87pop7utyu.fsf@wheatstone.g10code.de> <39a367af-c84d-01cb-36eb-6732edfbdac2@andrewg.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <39a367af-c84d-01cb-36eb-6732edfbdac2@andrewg.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 18 Aug 2016 19:54:52 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Libgcrypt and GnuPG 1.4 RNG output prediction
-To: oss-security@lists.openwall.com
+Received: (qmail 22460 invoked from network); 8 Sep 2016 05:54:51 -0000
+From: =?gb2312?B?d2luc29ubGl1KMH1v8Yp?= <winsonliu@tencent.com>
+To: oss-security <oss-security@lists.openwall.com>
+CC: cve-assign <cve-assign@mitre.org>
+Thread-Topic: CVE Request: OpenJPEG Integer Overflow Issue
+Thread-Index: AdIJlXqFwBMjjoPxSGC3V2IMaGzUwA==
+Date: Thu, 8 Sep 2016 05:54:36 +0000
+Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F7066E5C45@EXMBX-TJ002.tencent.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.4.75.28]
+Content-Type: multipart/alternative;
+	boundary="_000_1F2D4DA31CA62740BFF46830A0E6A4F7066E5C45EXMBXTJ002tence_"
+MIME-Version: 1.0
+Subject: [oss-security] CVE Request: OpenJPEG Integer Overflow Issue
 
-Here's what Werner wrote in that message, regarding the CVE ID:
-> Sorry, that was my typo.  It is correct in the NEWS files and the commit
-> messages.
-> 
-> The reseachers forwarded me a mail with the CVE but I have not been put
-> the loop, neither from RedHat, nor from Debian (as they usually do).
+--_000_1F2D4DA31CA62740BFF46830A0E6A4F7066E5C45EXMBXTJ002tence_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-More interesting are these tweets:
+SGksDQoNClRoaXMgaXMgS2UgZnJvbSBUZW5jZW50J3MgWHVhbnd1IExBQi4g
+SSByZXBvcnRlZCBhIHNlY3VyaXR5IGlzc3VlIG9mIE9wZW5KUEVHIHNvbWUg
+ZGF5cyBhZ28gYW5kIGl0IGhhcyBiZWVuIGZpeGVkIG5vdy4gVGhlIGZpeCBp
+cyBhdmFpbGFibGUgYXQgaHR0cHM6Ly9naXRodWIuY29tL3VjbG91dmFpbi9v
+cGVuanBlZy9jb21taXQvYzE2YmMwNTdiYTNmMTI1MDUxYzk5NjZjZjFmNWI2
+OGEwNTY4MWRlNCBhbmQgaHR0cHM6Ly9naXRodWIuY29tL3VjbG91dmFpbi9v
+cGVuanBlZy9jb21taXQvZWYwMWYxOGRmYzY3ODBiNzc2ZDA2NzRlZDNlNzQx
+NWM2ZWY1NGQyNCAuDQoNCkNvdWxkIHlvdSBwbGVhc2UgYXNzaWduIGEgQ1ZF
+IG51bWJlciBmb3IgaXQ/DQoNClRoYW5rcy4NCg0KUmVnYXJkcywNCktlDQpU
+ZW5jZW50J3MgWHVhbnd1IExBQg0KDQoNCkRFU0NSSVBUSU9ODQo9PT09PT09
+PT09PT09PQ0KQW4gaW50ZWdlciBvdmVyZmxvdyBpc3N1ZSBleGlzdHMgaW4g
+ZnVuY3Rpb24gb3BqX3BpX2NyZWF0ZV9kZWNvZGUgb2YgcGkuYy4gSXQgY2Fu
+IGxlYWQgdG8gT3V0LU9mLUJvdW5kcyBSZWFkIGFuZCBPdXQtT2YtQm91bmRz
+IFdyaXRlIGluIGZ1bmN0aW9uIG9wal9waV9uZXh0X2Nwcmwgb2YgcGkuYyAo
+ZnVuY3Rpb24gb3BqX3BpX25leHRfbHJjcCwgb3BqX3BpX25leHRfcmxjcCwg
+b3BqX3BpX25leHRfcnBjbCwgb3BqX3BpX25leHRfcGNybCBtYXkgYWxzbyBi
+ZSB2dWxuZXJhYmxlKS4gVGhpcyB2dWxuZXJhYmlsaXR5IGFsbG93cyByZW1v
+dGUgYXR0YWNrZXJzIHRvIGV4ZWN1dGUgYXJiaXRyYXJ5IGNvZGUgb24gdnVs
+bmVyYWJsZSBpbnN0YWxsYXRpb25zIG9mIE9wZW5KUEVHLg0KDQoNCkNSRURJ
+VA0KPT09PT09PT09PT09PT0NClRoaXMgdnVsbmVyYWJpbGl0eSB3YXMgZGlz
+Y292ZXJlZCBieSBLZSBMaXUgb2YgVGVuY2VudCdzIFh1YW53dSBMQUIuDQoN
+Cg0KVEVTVEVEIFZFUlNJT04NCj09PT09PT09PT09PT09DQpNYXN0ZXIgdmVy
+c2lvbiBvZiBPcGVuSlBFRyAoMjAxNi8wOC8xNikNCg0KDQpFWENFUFRJT04g
+TE9HDQo9PT09PT09PT09PT09PQ0KPT0xMDA3ND09RVJST1I6IEFkZHJlc3NT
+YW5pdGl6ZXI6IGhlYXAtYnVmZmVyLW92ZXJmbG93IG9uIGFkZHJlc3MgMHhh
+ZDkzNzBhMCBhdCBwYyAweGI3NjdiYTUwIGJwIDB4YmZmMWFkNzggc3AgMHhi
+ZmYxYWQ3MA0KUkVBRCBvZiBzaXplIDIgYXQgMHhhZDkzNzBhMCB0aHJlYWQg
+VDANCiAgICAjMCAweGI3NjdiYTRmIGluIG9wal9waV9uZXh0X2Nwcmwgc3Jj
+L2xpYi9vcGVuanAyL3BpLmM6NTQxOjEyDQogICAgIzEgMHhiNzY2NDRlNyBp
+biBvcGpfcGlfbmV4dCBzcmMvbGliL29wZW5qcDIvcGkuYzoxODcyOjExDQog
+ICAgIzIgMHhiNzZjZDBhZiBpbiBvcGpfdDJfZGVjb2RlX3BhY2tldHMgc3Jj
+L2xpYi9vcGVuanAyL3QyLmM6NDEyOjI0DQogICAgIzMgMHhiNzcxZWU2ZSBp
+biBvcGpfdGNkX3QyX2RlY29kZSBzcmMvbGliL29wZW5qcDIvdGNkLmM6MTU0
+NzoxNQ0KICAgICM0IDB4Yjc3MWRlMTYgaW4gb3BqX3RjZF9kZWNvZGVfdGls
+ZSBzcmMvbGliL29wZW5qcDIvdGNkLmM6MTI4NjoxNQ0KICAgICM1IDB4Yjc0
+ZDdhMGUgaW4gb3BqX2oya19kZWNvZGVfdGlsZSBzcmMvbGliL29wZW5qcDIv
+ajJrLmM6ODEzNDoxNQ0KICAgICM2IDB4Yjc1NjMzNTQgaW4gb3BqX2oya19k
+ZWNvZGVfdGlsZXMgc3JjL2xpYi9vcGVuanAyL2oyay5jOjk3NjE6MjMNCiAg
+ICAjNyAweGI3NGJjZTRjIGluIG9wal9qMmtfZXhlYyBzcmMvbGliL29wZW5q
+cDIvajJrLmM6NzM1MDo0Mw0KICAgICM4IDB4Yjc0ZjM3OGIgaW4gb3BqX2oy
+a19kZWNvZGUgc3JjL2xpYi9vcGVuanAyL2oyay5jOjk5NTk6MTUNCiAgICAj
+OSAweGI3NWI4MGRlIGluIG9wal9qcDJfZGVjb2RlIHNyYy9saWIvb3Blbmpw
+Mi9qcDIuYzoxNDkyOjgNCiAgICAjMTAgMHhiNzYyMmViOCBpbiBvcGpfZGVj
+b2RlIHNyYy9saWIvb3BlbmpwMi9vcGVuanBlZy5jOjQxMjoxMA0KICAgICMx
+MSAweDgxNDAzMDQgaW4gbWFpbiBzcmMvYmluL2pwMi9vcGpfZGVjb21wcmVz
+cy5jOjEzMzI6MTANCiAgICAjMTIgMHhiNzFiOWFmMiBpbiBfX2xpYmNfc3Rh
+cnRfbWFpbiAvYnVpbGQvZWdsaWJjLVg0Ym5Cei9lZ2xpYmMtMi4xOS9jc3Uv
+bGliYy1zdGFydC5jOjI4Nw0KICAgICMxMyAweDgwNzgxZWIgaW4gX3N0YXJ0
+IChiaW4vb3BqX2RlY29tcHJlc3MrMHg4MDc4MWViKQ0KDQpBZGRyZXNzU2Fu
+aXRpemVyIGNhbiBub3QgZGVzY3JpYmUgYWRkcmVzcyBpbiBtb3JlIGRldGFp
+bCAod2lsZCBtZW1vcnkgYWNjZXNzIHN1c3BlY3RlZCkuDQpTVU1NQVJZOiBB
+ZGRyZXNzU2FuaXRpemVyOiBoZWFwLWJ1ZmZlci1vdmVyZmxvdyBzcmMvbGli
+L29wZW5qcDIvcGkuYzo1NDEgb3BqX3BpX25leHRfY3BybA0KU2hhZG93IGJ5
+dGVzIGFyb3VuZCB0aGUgYnVnZ3kgYWRkcmVzczoNCiAgMHgzNWIyNmRjMDog
+ZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEg
+ZmENCiAgMHgzNWIyNmRkMDogZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEg
+ZmEgZmEgZmEgZmEgZmEgZmEgZmENCiAgMHgzNWIyNmRlMDogZmEgZmEgZmEg
+ZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmENCiAgMHgz
+NWIyNmRmMDogZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEg
+ZmEgZmEgZmEgZmENCiAgMHgzNWIyNmUwMDogZmEgZmEgZmEgZmEgZmEgZmEg
+ZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmENCj0+MHgzNWIyNmUxMDog
+ZmEgZmEgZmEgZmFbZmFdZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEg
+ZmENCiAgMHgzNWIyNmUyMDogZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEg
+ZmEgZmEgZmEgZmEgZmEgZmEgZmENCiAgMHgzNWIyNmUzMDogZmEgZmEgZmEg
+ZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmENCiAgMHgz
+NWIyNmU0MDogZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEg
+ZmEgZmEgZmEgZmENCiAgMHgzNWIyNmU1MDogZmEgZmEgZmEgZmEgZmEgZmEg
+ZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmENCiAgMHgzNWIyNmU2MDog
+ZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEg
+ZmENClNoYWRvdyBieXRlIGxlZ2VuZCAob25lIHNoYWRvdyBieXRlIHJlcHJl
+c2VudHMgOCBhcHBsaWNhdGlvbiBieXRlcyk6DQogIEFkZHJlc3NhYmxlOiAg
+ICAgICAgICAgMDANCiAgUGFydGlhbGx5IGFkZHJlc3NhYmxlOiAwMSAwMiAw
+MyAwNCAwNSAwNiAwNw0KICBIZWFwIGxlZnQgcmVkem9uZTogICAgICAgZmEN
+CiAgSGVhcCByaWdodCByZWR6b25lOiAgICAgIGZiDQogIEZyZWVkIGhlYXAg
+cmVnaW9uOiAgICAgICBmZA0KICBTdGFjayBsZWZ0IHJlZHpvbmU6ICAgICAg
+ZjENCiAgU3RhY2sgbWlkIHJlZHpvbmU6ICAgICAgIGYyDQogIFN0YWNrIHJp
+Z2h0IHJlZHpvbmU6ICAgICBmMw0KICBTdGFjayBwYXJ0aWFsIHJlZHpvbmU6
+ICAgZjQNCiAgU3RhY2sgYWZ0ZXIgcmV0dXJuOiAgICAgIGY1DQogIFN0YWNr
+IHVzZSBhZnRlciBzY29wZTogICBmOA0KICBHbG9iYWwgcmVkem9uZTogICAg
+ICAgICAgZjkNCiAgR2xvYmFsIGluaXQgb3JkZXI6ICAgICAgIGY2DQogIFBv
+aXNvbmVkIGJ5IHVzZXI6ICAgICAgICBmNw0KICBDb250YWluZXIgb3ZlcmZs
+b3c6ICAgICAgZmMNCiAgQXJyYXkgY29va2llOiAgICAgICAgICAgIGFjDQog
+IEludHJhIG9iamVjdCByZWR6b25lOiAgICBiYg0KICBBU2FuIGludGVybmFs
+OiAgICAgICAgICAgZmUNCiAgTGVmdCBhbGxvY2EgcmVkem9uZTogICAgIGNh
+DQogIFJpZ2h0IGFsbG9jYSByZWR6b25lOiAgICBjYg0KPT0xMDA3ND09QUJP
+UlRJTkcNCg0KDQpTT1VSQ0UgQ09ERQ0KPT09PT09PT09PT09PT0NCjEuIE9P
+QiByZWFkIGFuZCBPT0Igd3JpdGUgZXhpc3QgaW4gZnVuY3Rpb24gb3BqX3Bp
+X25leHRfY3BybCwgZnVuY3Rpb24gb3BqX3BpX25leHRfbHJjcCwgb3BqX3Bp
+X25leHRfcmxjcCwgb3BqX3BpX25leHRfcnBjbCwgb3BqX3BpX25leHRfcGNy
+bCBtYXkgYWxzbyBiZSB2dWxuZXJhYmxlLg0KDQpzdGF0aWMgT1BKX0JPT0wg
+b3BqX3BpX25leHRfY3BybChvcGpfcGlfaXRlcmF0b3JfdCAqIHBpKSB7DQog
+ICAgLy8gLi4uDQogICAgZm9yIChwaS0+bGF5bm8gPSBwaS0+cG9jLmxheW5v
+MDsgcGktPmxheW5vIDwgcGktPnBvYy5sYXlubzE7IHBpLT5sYXlubysrKSB7
+DQogICAgICAgIGluZGV4ID0gcGktPmxheW5vICogcGktPnN0ZXBfbCArIHBp
+LT5yZXNubyAqIHBpLT5zdGVwX3IgKyBwaS0+Y29tcG5vICogcGktPnN0ZXBf
+YyArIHBpLT5wcmVjbm8gKiBwaS0+c3RlcF9wOw0KICAgICAgICBpZiAoIXBp
+LT5pbmNsdWRlW2luZGV4XSkgeyAgICAgIC8vIC0tLS0+IE91dC1PZi1Cb3Vu
+ZHMgUmVhZCEhIQ0KICAgICAgICAgICAgcGktPmluY2x1ZGVbaW5kZXhdID0g
+MTsgICAgIC8vIC0tLS0+IE91dC1PZi1Cb3VuZHMgV3JpdGUhISENCiAgICAg
+ICAgICAgIHJldHVybiBPUEpfVFJVRTsNCiAgICAgICAgfQ0KICAgIC8vIC4u
+Lg0KICAgIHJldHVybiBPUEpfRkFMU0U7DQp9DQoNCjIuIEludGVnZXIgb3Zl
+cmZsb3cgZXhpc3RzIGluIGZ1bmN0aW9uIG9wal9waV9jcmVhdGVfZGVjb2Rl
+Lg0KDQpvcGpfcGlfaXRlcmF0b3JfdCAqb3BqX3BpX2NyZWF0ZV9kZWNvZGUo
+b3BqX2ltYWdlX3QgKnBfaW1hZ2UsDQogICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgb3BqX2NwX3QgKnBfY3AsDQogICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgT1BKX1VJTlQzMiBwX3Rp
+bGVfbm8pDQp7DQogICAgLy8gLi4uDQogICAgbF9zdGVwX3AgPSAxOw0KICAg
+IGxfc3RlcF9jID0gbF9tYXhfcHJlYyAqIGxfc3RlcF9wOw0KICAgIGxfc3Rl
+cF9yID0gcF9pbWFnZS0+bnVtY29tcHMgKiBsX3N0ZXBfYzsNCiAgICBsX3N0
+ZXBfbCA9IGxfbWF4X3JlcyAqIGxfc3RlcF9yOw0KDQogICAgLyogc2V0IHZh
+bHVlcyBmb3IgZmlyc3QgcGFja2V0IGl0ZXJhdG9yICovDQogICAgbF9jdXJy
+ZW50X3BpID0gbF9waTsNCg0KICAgIC8qIG1lbW9yeSBhbGxvY2F0aW9uIGZv
+ciBpbmNsdWRlICovDQogICAgbF9jdXJyZW50X3BpLT5pbmNsdWRlID0gKE9Q
+Sl9JTlQxNiopIG9wal9jYWxsb2MoDQogICAgICAgIChsX3RjcC0+bnVtbGF5
+ZXJzICsxKSAqIGxfc3RlcF9sLCBzaXplb2YoT1BKX0lOVDE2KSk7ICAgLy8g
+LS0tLT4gSW50ZWdlciBPdmVyZmxvdyEhIQ0KICAgIC8vIC4uLg0KfQ0K
 
-<@gnupg> @hanno They will present their paper at http://CCS2016.org.  A preprint can now be found here: http://formal.iti.kit.edu/~klebanov/
-<gnupg> The paper about the Libgcrypt RNG bug has meanwhile been published:\nhttp://formal.iti.kit.edu/~klebanov/pubs/libgcrypt-cve-2016-6313.pdf
-
-On Thu, Aug 18, 2016 at 05:37:20PM +0100, Andrew Gallagher wrote:
-> Werner used PGP/MIME, but something appears to have deleted the first
-> mime-boundary, rendering the message unparseable. If you view the
-> source you can see the plaintext, but MIME mail clients (including the
-> openwall mailing list archive) can't.
-
-Yes, unfortunately.  I investigated this yesterday, and it appears to be
-a long-standing bug in ezmlm-idx (hopefully already patched in newer
-versions, but I didn't check), which is triggered by Gnus, depending on
-a combination of settings on both sides - specifically, when a MIME
-section does not include a Content-Type header, yet the list is
-configured to remove sections with some MIME types.  The MIME type
-should then default to text/plain, and the section preserved, but
-ezmlm-idx would forget to set a flag indicating that such section is OK
-to keep.  I think I've patched this on the server now, but I didn't
-test.  Previous discoveries of the bug:
-
-https://lists.oasis-open.org/archives/docbook/200402/msg00068.html
-https://web.archive.org/web/20051201155347/http://www.csi.hu/mw/ezmlm-idx_mimeremove_bug.txt
-http://osdir.com/ml/mail.ezmlm/2002-07/msg00016.html
-
-Alexander
+--_000_1F2D4DA31CA62740BFF46830A0E6A4F7066E5C45EXMBXTJ002tence_--
