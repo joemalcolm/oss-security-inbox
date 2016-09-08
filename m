@@ -1,44 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/14
-Message-ID: <20160310170710.GM1250@sentinelchicken.org>
-Date: Thu, 10 Mar 2016 09:07:11 -0800
-From: Tim <tim-security@...tinelchicken.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/18
+Message-Id: <20160908171737.A9CCD52E01E@smtpvbsrv1.mitre.org>
+Date: Thu,  8 Sep 2016 13:17:37 -0400 (EDT)
+From: cve-assign@...re.org
+To: dmoppert@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: libarchive (pre 3.2.0) denial of service with gzip quine
 Content-Type: text/plain; charset=utf-8
 
-> > I'm one of the admins of the public bugzilla at bugs.freedesktop.org, and
-> > I've had to deal with spam there, and I've seen reports of spams in other
-> > public bugzillas for open source projects.
-> > 
-> > github requires account creation as well, and I'm sure we've all seen out
-> > of control comment threads there that had to be locked down to stop abuse.
-> > 
-> 
-> Then the next level is to require not only e-mail validation but also to
-> solve a captcha for creating a new account.
-> 
-> Or even harder, to require any account with less than 10 comments to
-> solve a captcha for any new comment. That way the annoyance for legit
-> users is temporal (up to the 10th comment), meanwhile for spammers is
-> not, because their account is probably going to be blocked before they
-> reach the 10th comment and have to start again with a new account.
-> 
-> I'm not saying that some level of moderation is required. Of course it
-> is. But I think that if proper antispam measures are implemented, then
-> the level of moderation required is relatively low, and can be done by
-> the bugzilla admins without much effort.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+> This was fixed in libarchive 3.2.0, but never got a CVE.
+> 
+> Upstream ticket:
+> 
+> https://github.com/libarchive/libarchive/issues/660
+> 
+> Original report:
+> 
+> https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=207362
 
-Right, this is my thinking as well.  If you create very high barriers
-to automated spamming, and protect against DDoS, then the level of
-manual spam should be low enough that minimal moderation would be
-required.  Of course you could also start white listing people who
-have posted more than N approved comments, etc.  And apply some
-bayesian filters on new postings from unknown people.  It's all
-doable, and likely less work than what the CVE moderators have to do
-now.  The hard work is building the system initially and finding a way
-to get enough volunteers involved for distributed hosting and
-moderation.
+Use CVE-2016-7166.
 
-tim
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJX0ZzHAAoJEHb/MwWLVhi2eIsP/RiYpHsHUUOkbj4ZwPiaeUri
+FdB3DXqHIw7rh8sUFFWiwBuYVhOINLyEwAz9mHU9lqjMLNGvbgcA9++bC6506n6B
+qVc8KQtMzOFtanRlC221OBccjFrYquKXmJYMcyPj4L9/0PQhZY7WIXY45kAgad7Y
+0ihdIkcfDZoCogVRMU68+Z1tpzKsU/VjHAjRX78vP7DxqSuhOinI3Bs+NIM8UwY8
+E/oyutjKbFqLxqe3ggOtXh/MYniWD11RaL4xt2k4wVOgJia01YJ+xDlRvES4iMON
+meFsRIGWeRhHSY1sg4WYyONzb7H/HX0QuODsTr6vF7CaDjiwL4145bjhoP9Icb5n
+BZEBrtnjjEFwJENwI13lrmQpdV/HL4hFJ20AuYxTPlKvneV2zlZ72s7wxxqsuo5G
+kUKH5e48cZ8CG+JKkF0it86wszqA/5RIgH1rOaexMLi3Gc56b52S6GxOqJA79LQZ
+P5xSPSgZRxTzblUyqF53fLV1sVKwvGLOgxWPcwbF4IeTH8bNt0w8vuIMnnMplKuS
+KYEvoutuNi2E8mmD8xIQ8V96/Oqxth/IO31EQL+GozTOBzH4o8SFi8QodPtfmp/i
+9jJEP1xn0tn26t7v8Wz6BS2jCr7SvqOynZXO/Ymichhg5VIFFZd/LTH7LMDx336H
+XD+j8qjHOKLO8GPz7O7z
+=VcJZ
+-----END PGP SIGNATURE-----
