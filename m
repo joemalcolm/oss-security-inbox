@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["478" "Sunday" "3" "May" "2015" "18:24:35" "+0200" "Sebastian Andrzej Siewior" "cve-announce@ml.breakpoint.cc" "<20150503162435.GA2122@breakpoint.cc>" "11" "[oss-security] CVE request - clamav - crash during algorithmic detection on crafted PE file" nil nil nil "5" "2015050316:24:35" "[oss-security] CVE request - clamav - crash during algorithmic detection on crafted PE file" (number mark "        cve-announce May  3   11/478   " thread-indent "\"[oss-security] CVE request - clamav - crash during algorithmic detection on crafted PE file\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["248" "Thursday" "8" "September" "2016" "17:11:34" "+0930" "Doran Moppert" "dmoppert@redhat.com" "<20160908074133.GC8525@sin.redhat.com>" "13" "[oss-security] CVE request: libarchive (pre 3.2.0) denial of service with gzip quine" nil nil nil "9" "2016090807:41:34" "[oss-security] CVE request: libarchive (pre 3.2.0) denial of service with gzip quine" (number mark "U       dmoppert@red Sep  8   13/248   " thread-indent "\"[oss-security] CVE request: libarchive (pre 3.2.0) denial of service with gzip quine\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17914 invoked by uid 550); 3 May 2015 16:24:48 -0000
+Received: (qmail 3149 invoked by uid 550); 8 Sep 2016 12:48:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,27 +11,29 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17807 invoked from network); 3 May 2015 16:24:47 -0000
-Message-ID: <20150503162435.GA2122@breakpoint.cc>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Date: Sun, 3 May 2015 18:24:35 +0200
-From: Sebastian Andrzej Siewior <cve-announce@ml.breakpoint.cc>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request - clamav - crash during algorithmic detection on crafted
- PE file
+Received: (qmail 23814 invoked from network); 8 Sep 2016 07:41:51 -0000
+Date: Thu, 8 Sep 2016 17:11:34 +0930
+From: Doran Moppert <dmoppert@redhat.com>
 To: oss-security@lists.openwall.com
+Message-ID: <20160908074133.GC8525@sin.redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Thu, 08 Sep 2016 07:41:39 +0000 (UTC)
+Subject: [oss-security] CVE request: libarchive (pre 3.2.0) denial of service with gzip quine
 
-Clamav [0] is a virus scanning tool which is able to detect malware called
-"W32.Polipos.A". During its detection it may crash due to an integer
-underflow while examining its PE-sections.
-This bug has been fixed [1] and is part of the 0.98.7 release.
-This bug has been discovered by AFL [3], american fuzzy lop
+This was fixed in libarchive 3.2.0, but never got a CVE.
 
-[0] http://www.clamav.net/
-[1] https://github.com/vrtadmin/clamav-devel/commit/a7bdfb4f0d3210eeab49280726ff3ea6d703280e
-[2] http://lcamtuf.coredump.cx/afl/
+Upstream ticket:
 
-Sebastian
+https://github.com/libarchive/libarchive/issues/660
+
+Original report:
+
+https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=207362
+
+-- 
+Doran Moppert
+Red Hat Product Security
