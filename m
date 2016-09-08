@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7656" "Thursday" "14" "April" "2016" "13:03:47" "+0000" "Xen.org security team" "security@xen.org" "<E1aqgvz-0001Vr-5I@xenbits.xenproject.org>" "188" "[oss-security] Xen Security Advisory 174 (CVE-2016-3961) - hugetlbfs use may crash PV Linux guests" "^CC:" nil nil "4" "2016041413:03:47" "[oss-security] Xen Security Advisory 174 (CVE-2016-3961) - hugetlbfs use may crash PV Linux guests" (number mark "U       security@xen Apr 14  188/7656  " thread-indent "\"[oss-security] Xen Security Advisory 174 (CVE-2016-3961) - hugetlbfs use may crash PV Linux guests\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1506" "Thursday" "8" "September" "2016" "14:58:12" "+0200" "Andreas Lindh" "addelindh@gmail.com" "<CALfBxETd+QLOhPkR=W9EZtvd8w7K15+bWVVDjAmQbG_x=5dqcg@mail.gmail.com>" "40" "[oss-security] CVE for Sentry / OpenCFP" nil nil nil "9" "2016090812:58:12" "[oss-security] CVE for Sentry / OpenCFP" (number mark "U       addelindh@gm Sep  8   40/1506  " thread-indent "\"[oss-security] CVE for Sentry / OpenCFP\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5518 invoked by uid 550); 14 Apr 2016 13:04:12 -0000
+Received: (qmail 30203 invoked by uid 550); 8 Sep 2016 13:24:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,206 +11,76 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5499 invoked from network); 14 Apr 2016 13:04:12 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.505 (Entity 5.505)
-Message-Id: <E1aqgvz-0001Vr-5I@xenbits.xenproject.org>
-CC: Xen.org security team <security@xen.org>
-Date: Thu, 14 Apr 2016 13:03:47 +0000
-From: Xen.org security team <security@xen.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Xen Security Advisory 174 (CVE-2016-3961) - hugetlbfs use may
- crash PV Linux guests
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
+Received: (qmail 20147 invoked from network); 8 Sep 2016 12:58:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=OUze5ior8FIq2+jfidrNzsmFRyDJSUWdpfymSUYt0uc=;
+        b=UgvzteTrfLT1CMgkWkTFBFfcr2uF51ZOMGucyXgWBBgkale5qNPDMjDrjAqlnHd9rl
+         Cdp7NbWcHDFWil0BTQgVAIUIBHl3EfZ6e1mhgEFRn+RZBX3FutIByrFXB2Z+I4Ei/7vF
+         2HkJ1+kOh5DJsga0EpPdMsDVubHkaodawGW+Qzaf/BnwjT83RZm11yf+yhP7O9HPkAwX
+         TI2fTPtG1mVK3J/vL/eosoq8o+AJo0RT1OT6FkEaYqNtVQyPYifdm1OtdsZZyLsopxDk
+         zQHcISM/j3+vOd31DAjDC1DrfMYUIm4dPZvST/OhoKHm7gt1QbGH28T3H87XzaL7FeXK
+         VKIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=OUze5ior8FIq2+jfidrNzsmFRyDJSUWdpfymSUYt0uc=;
+        b=gHItac/kdEFQFi/9qBksCwnua/vzdDA2r9YfRs92/cJOxlj/Sd566AoLAbZAclH29V
+         dCl2QTUtDir+Zde1ERKxs4fVm2H/ufEFgS1esVs5V2k3YTU5wBQ/yv1FEWPGlv0fzSO+
+         ThPQQu1vfjf4AGhlNiLxpvWOPPEGKblM2oN7Raoa6xDjpNTuWNfxyMtxn8xDpkEEbcWX
+         eYPkqIBNud/yaODe1m1Ul6rjcr/64rcn3rVact7fFbvYgM4V0OoSxBp2PXkvjLEPLCvs
+         uH+gbwmmfaUsH4R/BdokP7LBer451ymHOMd6yTWtIsCs7pgAJw6EZi8q+9P1JVxbbV1k
+         Cd4g==
+X-Gm-Message-State: AE9vXwMksufr/jFrvW2yWd+5yiBSY7dC6I2J/I+CAgKFDvCwccE/8YBF7byIFq7aspVAkys7a3oXvIhuTC3Csg==
+X-Received: by 10.129.109.201 with SMTP id i192mr11491605ywc.4.1473339492824;
+ Thu, 08 Sep 2016 05:58:12 -0700 (PDT)
+MIME-Version: 1.0
+From: Andreas Lindh <addelindh@gmail.com>
+Date: Thu, 8 Sep 2016 14:58:12 +0200
+Message-ID: <CALfBxETd+QLOhPkR=W9EZtvd8w7K15+bWVVDjAmQbG_x=5dqcg@mail.gmail.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, cve-assign@mitre.org
+Content-Type: multipart/alternative; boundary=001a114e81d21a809f053bfe95bd
+Subject: [oss-security] CVE for Sentry / OpenCFP
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+--001a114e81d21a809f053bfe95bd
+Content-Type: text/plain; charset=UTF-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi list,
 
-            Xen Security Advisory CVE-2016-3961 / XSA-174
-                              version 3
+I recently reported an issue in the Sentry PHP auth framework that was
+exploitable in OpenCFP. The bug itself is in the password reset
+functionality, where the following code in Sentry is responsible for
+verifying that a supplied password reset code is the same that is stored in
+the database for a particular user.
 
-                hugetlbfs use may crash PV Linux guests
+public function checkResetPasswordCode($resetCode)
+{
+return ($this->reset_password_code == $resetCode);
+}
 
-UPDATES IN VERSION 3
-====================
+This code will return True or False, depending on whether the password
+reset codes match. The problem arises because the Sentry database schema
+defines the default value of the password reset code as NULL. Because of
+this, if an attacker can pass NULL to this function (by supplying it as a
+password reset code), the checkResetPasswordCode() function will return
+True, allowing the password change to go through.
 
-Public release.
+This is a write-up of how this was exploitable in OpenCFP:
+http://haxx.ml/post/149975211631/how-i-hacked-your-cfp-and-probably-some-other
 
-ISSUE DESCRIPTION
-=================
+This is the patch in OpenCFP:
+https://github.com/opencfp/opencfp/commit/2f747fc219b73f9b0a11308083d2a356056752a4
 
-Huge (2Mb) pages are generally unavailable to PV guests.  Since x86
-Linux pvops-based kernels are generally multi purpose, they would
-normally be built with hugetlbfs support enabled.  Use of that
-functionality by an application in a PV guest would cause an
-infinite page fault loop, and an OOPS to occur upon an attempt to
-terminate the hung application.
+This is the patch in Sentry:
+https://github.com/cartalyst/sentry/commit/c679730b8848686f59125cd821bf94946fb16a94
 
-IMPACT
-======
+Can I have CVEs assigned for this please? I am of the opinion that Sentry
+and OpenCFP should have their own separate CVEs, but that is of course up
+to Mitre to decide.
 
-Depending on the guest kernel configuration, the OOPS could result
-in a kernel crash (guest DoS).
+Cheers,
+Andreas
 
-VULNERABLE SYSTEMS
-==================
-
-All upstream x86 Linux versions operating as PV Xen guests are
-vulnerable.
-
-ARM systems are not vulnerable.  x86 HVM guests are not vulnerable.
-
-x86 Linux versions derived from linux-2.6.18-xen.hg (XenoLinux) are not
-vulnerable.
-
-Oracle Unbreakable Enterprise Kernels are not vulnerable.
-
-We believe that non-Linux guests are not vulnerable, as we are not
-aware of any with an analogous bug.
-
-MITIGATION
-==========
-
-Running only HVM guests will avoid this issue.
-
-Not enabling hugetlbfs use, by not altering the boot time default value
-of zero in /proc/sys/vm/nr_hugepages (which can only be written by the
-root user) will avoid this issue.
-
-It is possible that disabling (or not enabling) the "panic on OOPS"
-behavior (via use of the "oops=panic" command line option or the
-"panic_on_oops" sysctl) will also avoid this issue, by limiting the
-effect to an application crash.  We are not currently sure whether
-this is an effective mitigation, as we are not sure whether any locks
-or mutexes are held at the point of the crash.
-
-CREDITS
-=======
-
-This issue was discovered by Vitaly Kuznetsov from Red Hat.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa174.patch           Linux 4.5.x ... 3.10.x
-
-$ sha256sum xsa174*
-cbec70e183f76b4081ebba05c0a8105bd4952d164a2e5c40528c05bf8861ddef  xsa174.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of patches or mitigations is NOT permitted (except where
-all the affected systems and VMs are administered and used only by
-organisations which are members of the Xen Project Security Issues
-Predisclosure List).  Specifically, deployment on public cloud systems
-is NOT permitted.
-
-This is because such host configuration changes would be user mode
-visible, which could lead to the rediscovery of the vulnerability.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJXD5UqAAoJEIP+FMlX6CvZtAEIAKUf33cM1Gs+Y8Yt+s3FLvqR
-RW9Ktbz0dqMfL+4govcvfbI5CdtB75ZWp6T4rrjGrtIvljEJWAERasKA0anIW00I
-5duFtbFN+nPlmdZUfGIW3G6kpveSstOICVxqKPn0chN7VuTZJvzogc9t9PTtvwpX
-+UkzvUvMacu0u8H0mJFjcuS/xFeS5LaosOCrJwAWKP1je6fwc217MrYm8LH6vwGr
-K7yJVnEih0XGv5hy9ufwcF5SI0d4CSilcxfFAqKJkRwQ2SSbsF2BXN1j11Eqmua3
-ARif+g3qBH6uH+RT6bclUOUO3vCKcReBWjRCF+bbsdDMCmSLwdkQK8xtu7N/Tys=
-=u89I
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa174.patch"
-Content-Disposition: attachment; filename="xsa174.patch"
-Content-Transfer-Encoding: base64
-
-eDg2L3hlbjogc3VwcHJlc3MgaHVnZXRsYmZzIGluIFBWIGd1ZXN0cwoKSHVn
-ZSBwYWdlcyBhcmUgbm90IG5vcm1hbGx5IGF2YWlsYWJsZSB0byBQViBndWVz
-dHMuIE5vdCBzdXBwcmVzc2luZwpodWdldGxiZnMgdXNlIHJlc3VsdHMgaW4g
-YW4gZW5kbGVzcyBsb29wIG9mIHBhZ2UgZmF1bHRzIHdoZW4gdXNlciBtb2Rl
-CmNvZGUgdHJpZXMgdG8gYWNjZXNzIGEgaHVnZXRsYmZzIG1hcHBlZCBhcmVh
-IChzaW5jZSB0aGUgaHlwZXJ2aXNvcgpkZW5pZXMgc3VjaCBQVEVzIHRvIGJl
-IGNyZWF0ZWQsIGJ1dCBlcnJvciBpbmRpY2F0aW9ucyBjYW4ndCBiZQpwcm9w
-YWdhdGVkIG91dCBvZiB4ZW5fc2V0X3B0ZV9hdCgpLCBqdXN0IGxpa2UgZm9y
-IHZhcmlvdXMgb2YgaXRzCnNpYmxpbmdzKSwgYW5kIC0gb25jZSBraWxsZWQg
-aW4gYW4gb29wcyBsaWtlIHRoaXM6CgprZXJuZWwgQlVHIGF0IC4uLi9mcy9o
-dWdldGxiZnMvaW5vZGUuYzo0MjghCmludmFsaWQgb3Bjb2RlOiAwMDAwIFsj
-MV0gU01QIApNb2R1bGVzIGxpbmtlZCBpbjogLi4uClN1cHBvcnRlZDogWWVz
-CkNQVTogMiBQSUQ6IDYwODggQ29tbTogaHVnZXRsYmZzIFRhaW50ZWQ6IEcg
-ICAgICAgIFcgICAgICAgICA0LjQuMC0yMDE2LTAxLTIwLXB2ICMyCkhhcmR3
-YXJlIG5hbWU6IC4uLgp0YXNrOiBmZmZmODgwODA1OTIwNWMwIHRpOiBmZmZm
-ODgwODAzYzg0MDAwIHRhc2sudGk6IGZmZmY4ODA4MDNjODQwMDAKUklQOiBl
-MDMwOls8ZmZmZmZmZmY4MTFjMzMzYj5dICBbPGZmZmZmZmZmODExYzMzM2I+
-XSByZW1vdmVfaW5vZGVfaHVnZXBhZ2VzKzB4MjViLzB4MzIwClJTUDogZTAy
-YjpmZmZmODgwODAzYzg3OWE4ICBFRkxBR1M6IDAwMDEwMjAyClJBWDogMDAw
-MDAwMDAwMDc3YTRkYiBSQlg6IGZmZmZlYTAwMWFjZmYwMDAgUkNYOiAwMDAw
-MDAwMDc4NDE3ZDM4ClJEWDogMDAwMDAwMDAwMDAwMDAwMCBSU0k6IDAwMDAw
-MDAwN2UxNTRmYTcgUkRJOiBmZmZmODgwODA1ZDcwOTYwClJCUDogMDAwMDAw
-MDAwMDAwMDk2MCBSMDg6IDAwMDAwMDAwMDAwMDAwMDAgUjA5OiAwMDAwMDAw
-MDAwMDAwMDAwClIxMDogMDAwMDAwMDAwMDAwMDAwMCBSMTE6IDAwMDAwMDAw
-MDAwMDAwMDEgUjEyOiAwMDAwMDAwMDAwMDAwMDAwClIxMzogZmZmZjg4MDgw
-NzQ4NjAxOCBSMTQ6IDAwMDAwMDAwMDAwMDAwMDAgUjE1OiBmZmZmODgwODAz
-Yzg3YWYwCkZTOiAgMDAwMDdmODVmYThiODcwMCgwMDAwKSBHUzpmZmZmODgw
-ODBiNjQwMDAwKDAwMDApIGtubEdTOjAwMDAwMDAwMDAwMDAwMDAKQ1M6ICBl
-MDMzIERTOiAwMDAwIEVTOiAwMDAwIENSMDogMDAwMDAwMDA4MDA1MDAzYgpD
-UjI6IDAwMDA3Zjg1ZmEwMDAwMDAgQ1IzOiAwMDAwMDAwMDAxYTBhMDAwIENS
-NDogMDAwMDAwMDAwMDA0MDY2MApTdGFjazoKIGZmZmY4ODAwMDAwMDBmYjAg
-ZmZmZjg4MDgwM2M4N2ExOCBmZmZmODgwODAzYzg3YWU4IGZmZmY4ODA4MDU5
-MjA1YzAKIGZmZmY4ODA4MDNjODdhZjAgZmZmZjg4MDgwM2M4N2FlOCBmZmZm
-ODgwODA3NDg2MDE4IDAwMDAwMDAwMDAwMDAwMDAKIGZmZmZmZmZmODFiZjZl
-NjAgZmZmZjg4MDgwNzQ4NjE2OCAwMDAwMDNmZmZmZmZmZmZmIDAwMDAwMDAw
-MDNjODc3NTgKQ2FsbCBUcmFjZToKIFs8ZmZmZmZmZmY4MTFjMzQxNT5dIGh1
-Z2V0bGJmc19ldmljdF9pbm9kZSsweDE1LzB4NDAKIFs8ZmZmZmZmZmY4MTE2
-N2IzZD5dIGV2aWN0KzB4YmQvMHgxYjAKIFs8ZmZmZmZmZmY4MTE2NTE0YT5d
-IF9fZGVudHJ5X2tpbGwrMHgxOWEvMHgxZjAKIFs8ZmZmZmZmZmY4MTE2NWIw
-ZT5dIGRwdXQrMHgxZmUvMHgyMjAKIFs8ZmZmZmZmZmY4MTE1MDUzNT5dIF9f
-ZnB1dCsweDE1NS8weDIwMAogWzxmZmZmZmZmZjgxMDc5ZmMwPl0gdGFza193
-b3JrX3J1bisweDYwLzB4YTAKIFs8ZmZmZmZmZmY4MTA2MzUxMD5dIGRvX2V4
-aXQrMHgxNjAvMHg0MDAKIFs8ZmZmZmZmZmY4MTA2MzdlYj5dIGRvX2dyb3Vw
-X2V4aXQrMHgzYi8weGEwCiBbPGZmZmZmZmZmODEwNmU4YmQ+XSBnZXRfc2ln
-bmFsKzB4MWVkLzB4NDcwCiBbPGZmZmZmZmZmODEwMGY4NTQ+XSBkb19zaWdu
-YWwrMHgxNC8weDExMAogWzxmZmZmZmZmZjgxMDAzMGU5Pl0gcHJlcGFyZV9l
-eGl0X3RvX3VzZXJtb2RlKzB4ZTkvMHhmMAogWzxmZmZmZmZmZjgxNDE3OGE1
-Pl0gcmV0aW50X3VzZXIrMHg4LzB4MTMKClRoaXMgaXMgWFNBLTE3NC4KClJl
-cG9ydGVkLWJ5OiBWaXRhbHkgS3V6bmV0c292IDx2a3V6bmV0c0ByZWRoYXQu
-Y29tPgpTaWduZWQtb2ZmLWJ5OiBKYW4gQmV1bGljaCA8amJldWxpY2hAc3Vz
-ZS5jb20+CkNjOiBzdGFibGVAdmdlci5rZXJuZWwub3JnCi0tLQp2MjogTWFr
-ZSBYZW4taW5zcGVjaWZpYywgYnkgdXNpbmcgY3B1X2hhc19wc2UuCgotLS0g
-YS9hcmNoL3g4Ni9pbmNsdWRlL2FzbS9odWdldGxiLmgKKysrIGIvYXJjaC94
-ODYvaW5jbHVkZS9hc20vaHVnZXRsYi5oCkBAIC00LDYgKzQsNyBAQAogI2lu
-Y2x1ZGUgPGFzbS9wYWdlLmg+CiAjaW5jbHVkZSA8YXNtLWdlbmVyaWMvaHVn
-ZXRsYi5oPgogCisjZGVmaW5lIGh1Z2VwYWdlc19zdXBwb3J0ZWQoKSBjcHVf
-aGFzX3BzZQogCiBzdGF0aWMgaW5saW5lIGludCBpc19odWdlcGFnZV9vbmx5
-X3JhbmdlKHN0cnVjdCBtbV9zdHJ1Y3QgKm1tLAogCQkJCQkgdW5zaWduZWQg
-bG9uZyBhZGRyLAo=
-
---=separator--
+--001a114e81d21a809f053bfe95bd--
