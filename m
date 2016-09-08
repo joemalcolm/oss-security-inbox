@@ -1,40 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/18/2
-Message-ID: <CAP145piPtZJb=PqZT6-JJudkfryeyU4YM03D4uFFEDa5rUFF5A@mail.gmail.com>
-Date: Fri, 18 Mar 2016 15:28:11 +0100
-From: Robert Święcki <robert@...ecki.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: AMD newest ucode 0x06000832 for Piledriver-based CPUs seems to behave in a problematic way
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/4
+Message-Id: <20160908065142.EF4D81BE24C@smtpvbsrv1.mitre.org>
+Date: Thu,  8 Sep 2016 02:51:42 -0400 (EDT)
+From: cve-assign@...re.org
+To: tyhicks@...onical.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, paobac@....gnome.org, security@...ntu.com
+Subject: Re: CVE Request: File Roller path traversal
 Content-Type: text/plain; charset=utf-8
 
-2016-02-28 5:28 GMT+01:00 Robert Święcki <robert@...ecki.net>:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> AMD newest public ucode 0x06000832 for Piledriver-based CPUs (newer
-> AMD FX, and Opteron 3300/4300/6300 series) seems to be broken. Under
-> certain conditions it allows unprivileged users running under qemu VMs
-> to affect the host Linux kernel in a problematic manner: the CPU
-> starts to behave in an erratic way, and it leads to CPU execution flow
-> of the host kernel (the one running on bare metal) to be changed.
+> File Roller 3.5.4 through 3.20.2 was affected by a path traversal bug
+> that could result in deleted files if a user were tricked into opening a
+> malicious archive.
+> 
+> http://ftp.gnome.org/mirror/gnome.org/sources/file-roller/3.20/file-roller-3.20.3.news
+> http://ftp.gnome.org/mirror/gnome.org/sources/file-roller/3.21/file-roller-3.21.90.news
+> Distro bug: https://launchpad.net/bugs/1171236
+> Upstream bug: https://bugzilla.gnome.org/show_bug.cgi?id=698554
+> Fixed by:
+> https://git.gnome.org/browse/file-roller/commit/?id=f70be1f41688859ec8dbe266df35a1839ceb96c5
 
-It seems that AMD (somewhat silently) released - in
-https://lkml.org/lkml/2016/3/17/43 - a new microcode for 15th family
-of AMD CPUs.
+Use CVE-2016-7162.
 
-I applied this patch to the previous ucode, and got this -
-http://alt.swiecki.net/.a/amd-ucode-20160316.tbz2 - which resulted in:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-[1634167.526985] microcode: CPU0: new patch_level=0x0600084f
-[1634167.560059] microcode: CPU2: new patch_level=0x0600084f
-[1634167.584795] microcode: CPU4: new patch_level=0x0600084f
-[1634167.609298] microcode: CPU6: new patch_level=0x0600084f
-
-Quick testing suggests that bugs from 0x06000832 and 0x06000836 ucode
-versions are gone. Unfortunately it's not published yet on
-http://www.amd64.org/microcode.html nor the new README/errata is
-available, so I have no more details on that, but given that AMD
-promised new ucode in March fixing this problem - as per
-http://www.theregister.co.uk/2016/03/06/amd_microcode_6000836_fix/ -
-this might be it.
-
--- 
-Robert Święcki
+iQIcBAEBCAAGBQJX0QmDAAoJEHb/MwWLVhi2DqkQAI/f8t2ZR6E+2yHJ1My3OBum
+2yuJFIdnkCzGonivRLk5l8Gj7v9tKMwqOP8HUFSy6bBzGy3fA+DOiAhjq+WJoGSQ
+tbjn2ATBnS4KylAJCD0luGV50A/qEo/kZ50K4+pVlK/jVOH5oQepxCFWrh9Nybnc
+9gr4DCwXubsi1l5Pjr1KzDZQyJInDdVH/Q4RlN7g3ZkenzFoMOWtQoeIsOnnfpw4
+3XTDto5EW4mAq/4kUFGoxAScpu3qhIVMU9ms6mL9KeSkRzXUl5Hrn4VYvHKya8fY
+Mpa+6dVrLYkkdB3ey76LJhTYQcx4qdNTjtgf+c0SmUjoqNaWIno1YkfajRWEEhyO
+fQzDyySAidxZMjG2wkqOn0rVAkJ2kRbStbAPNnS/RrGowp4GTGkmUvqxrv/+R3T0
+msdoVlz4DEy1RpNLI5uEfmKOJDtoRVHYgqm1S+VLokMRahA/Lcru+pgTzIzAJnwV
++WHMUEVHur0fMdWVvdbtyYJKS5ti72HSxXM8182neiwA9yJH/Z+S4v5PMH4aGaHv
+riPEgRVpKLMPFnqV0zl6AuJWL4ljLRF2yhcrjcFlkNGk2vs95gEdeZv64xiLIW09
+k1eMhHaw9ZkWiJ/vaynDZrJ7NcvbI5PX6yVXNGEW+EA0csTHlm83w3cALY4ii+pq
+qrPRq/IrV7vf/vMs8Dmn
+=zLoP
+-----END PGP SIGNATURE-----
