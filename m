@@ -1,18 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/11
-Message-ID: <20161018170935.GA26921@inutil.org>
-Date: Tue, 18 Oct 2016 19:09:35 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request for tor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/16
+Message-ID: <CALfBxETd+QLOhPkR=W9EZtvd8w7K15+bWVVDjAmQbG_x=5dqcg@mail.gmail.com>
+Date: Thu, 8 Sep 2016 14:58:12 +0200
+From: Andreas Lindh <addelindh@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, cve-assign@...re.org
+Subject: CVE for Sentry / OpenCFP
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign a CVE ID for
-https://blog.torproject.org/blog/tor-0289-released-important-fixes
+Hi list,
 
-Fix: https://github.com/torproject/tor/commit/3cea86eb2fbb65949673eb4ba8ebb695c87a57ce
-Bug: https://trac.torproject.org/projects/tor/ticket/20384
+I recently reported an issue in the Sentry PHP auth framework that was
+exploitable in OpenCFP. The bug itself is in the password reset
+functionality, where the following code in Sentry is responsible for
+verifying that a supplied password reset code is the same that is stored in
+the database for a particular user.
+
+public function checkResetPasswordCode($resetCode)
+{
+return ($this->reset_password_code == $resetCode);
+}
+
+This code will return True or False, depending on whether the password
+reset codes match. The problem arises because the Sentry database schema
+defines the default value of the password reset code as NULL. Because of
+this, if an attacker can pass NULL to this function (by supplying it as a
+password reset code), the checkResetPasswordCode() function will return
+True, allowing the password change to go through.
+
+This is a write-up of how this was exploitable in OpenCFP:
+http://haxx.ml/post/149975211631/how-i-hacked-your-cfp-and-probably-some-other
+
+This is the patch in OpenCFP:
+https://github.com/opencfp/opencfp/commit/2f747fc219b73f9b0a11308083d2a356056752a4
+
+This is the patch in Sentry:
+https://github.com/cartalyst/sentry/commit/c679730b8848686f59125cd821bf94946fb16a94
+
+Can I have CVEs assigned for this please? I am of the opinion that Sentry
+and OpenCFP should have their own separate CVEs, but that is of course up
+to Mitre to decide.
 
 Cheers,
-        Moritz
+Andreas
+
