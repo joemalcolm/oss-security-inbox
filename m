@@ -1,82 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/9
-Message-ID: <alpine.GSO.2.20.1605091330140.27960@freddy.simplesystems.org>
-Date: Mon, 9 May 2016 13:53:28 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security@...ts.openwall.com
-Subject: Re: GraphicsMagick Response To "ImageTragick"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/8
+Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F7066E5F15@EXMBX-TJ002.tencent.com>
+Date: Thu, 8 Sep 2016 07:33:43 +0000
+From: winsonliu(刘科) <winsonliu@...cent.com>
+To: cve-assign <cve-assign@...re.org>
+CC: cve-assign <cve-assign@...re.org>, oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Re: CVE Request: OpenJPEG Heap Buffer Overflow Issue(Internet mail)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 9 May 2016, Simon McVittie wrote:
+> e078172b1c3f98d2219c37076b238fb759c751ea modifies tcd.c not dwt.c - is this still the correct commit?
+Yes, the issue was triggered in dwt.c but can be fixed in tcd.c.
+
+> Is it the same as Chromium bug 632622 that was already assigned CVE-2016-5157?
+I think so.
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> I reported a security issue of OpenJPEG some days ago and it has been
+> fixed now. The fix is available at
+> https://github.com/uclouvain/openjpeg/commit/e078172b1c3f98d2219c37076b238fb759c751ea
 >
->> 2. CVE-2016-3718 - SSRF
->>
->>    GraphicsMagick has always supported HTTP and FTP URL requests from
->>    the context of the executing process if it is linked with libxml2.
->>    There is no sandboxing or policy to determine which HTTP and FTP
->>    URLs should be allowed/denied because they should only be available
->>    from outside the system, or in the public space outside
->>    a "firewall".
+> A Heap Buffer Overflow (Out-of-Bounds Write) issue was found in
+> function opj_dwt_interleave_v of dwt.c. This vulnerability allows
+> remote attackers to execute arbitrary code on vulnerable installations
+> of OpenJPEG.
 >
-> I'm not sure whether I'm understanding "because they should..."
-> correctly.
->
-> To be clear, are you saying that running GraphicsMagick code on a host
-> that is whitelisted in someone's IP address ACL, has access to a LAN
-> where the wider Internet does not, or has private services on the
-> loopback interface is not a supported situation?
+> AddressSanitizer: heap-buffer-overflow
+> WRITE of size 4
 
-The SVG and MVG formats are able to submit http and ftp URL requests. 
-The allowed URLs are not restricted by policy as they would be if SVG 
-was running in a web browser.  My point is that the URLs are requested 
-from the perspective of the user id and host where the process is 
-running.  If this is on the back-side of a firewall, then it may be 
-possible to access URLs which otherwise could not be accessed.
+e078172b1c3f98d2219c37076b238fb759c751ea modifies tcd.c not dwt.c - is this
+still the correct commit?
 
-> Is there a subset of "safe" image formats that is known not to induce
-> these requests, and where they *would* be considered to be a bug?  I would
-> be surprised if this happened when resizing or manipulating common bitmap
-> formats like JPEG, PNG, GIF, BMP, and one of the mitigations recommended
-> on imagetragick.com has been to limit the formats that will be accepted.
+Also, is this the same vulnerability as the
+https://pdfium.googlesource.com/pdfium/+/b6befb2ed2485a3805cddea86dc7574510178ea9
+(aka Chromium bug 632622) issue that was already assigned CVE-2016-5157 in the
+https://googlechromereleases.blogspot.com/2016/08/stable-channel-update-for-desktop_31.html
+post?
 
-Outside of the utilities themselves, or applications based on the 
-libraries, only SVG, MVG, and MSL (Magick Scripting Language) are able 
-to submit URL requests.  MSL should be viewed as a scripting format 
-rather than being a file format.
+- --
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
->> 4. CVE-2016-3716 - File moving
->>
->>     This is a two-factor attack and is actually file copying.  It is
->>     not successful using GraphicsMagick.  MSL is an XML-based "script"
->>     format which should never be allowed to be submitted and invoked
->>     by an untrusted party.
->
-> Is there any situation where GraphicsMagick will interpret a file of
-> unspecified format as MSL, for instance recognizing it by extension or
-> magic number?
+iQIcBAEBCAAGBQJX0QmYAAoJEHb/MwWLVhi2JuIQAInY8Bed/W9wZwgmO4peepl7
+lOJptN9utdMwCdYEug6NzCFjpcUslSmrBQcNdXEGMoPw5rku/Hw73sHNbhdfM71I
+TDU2OEwzSNQeo+4m/3rXMlYyHwOqHMp3owHQnl5JWJRcz6hhmI/JpokWxKncthtb
+rpywwao89VJZJf5GLF7RQFXvHwlREP+D3XYrW0cbqEfOrUAQ7oxK5OaFCa30NWrh
+ISJ4iDalfTeWr7x98Bb3X6v40dL7bkUtuWHnqFN+LwuBJL2MlJ74XmsdIDrSXGOf
+grrpU1sMGZ+yJhbc+4n6JcTxXI6/AWOaKqn/pkCG8UkNL/LxzuaGmIYguGecYh7V
+2tc5e7IZ4IzCYNaRUKKLAtlfENMbOn8IqL0zFWXRoSzw7YcSw24s1A0hzEBiPonS
+cPWGhMYsu4bCmJmZZenuKNIKx/CuOZq+YgyFpXjowUxFGpZwOk9eVPnpmK8CRl7z
+kGaS33l9yElstG1gsPeGDxZYHtG09z/T/VrJWIHNieTMUOEO0LZf8+xG5bfXWC1A
+y5S6GCFOSM+8QrvPHgua4l8h7uAxbCVKlLqahOVhID83sCKKTWyxLGa+1FtPIsRH
+zTmEMeS0Q6JytXc7f2DitI9t/hEEh877xQLRWactOBmP19XdC+rCLcBZcoksK8UB
+2osVa1EkAYD9ZVrCOo0i
+=CVgG
+-----END PGP SIGNATURE-----
 
-There is no detection of MSL by its header but the MSL reader will be 
-dispatched to by a .MSL extension.  It requires adding only one line 
-of code to block responding to the MSL extension.
-
-There has been little mention of SVG, but in both GraphicsMagick and 
-ImageMagick the native SVG renderer works by pre-processing SVG into a 
-MVG file.  The MVG file is then executed.  The SVG pre-processor is 
-not very robust so it is possible to inject arbitrary strings from the 
-SVG into MVG, and (with correct quoting) insert new commands into the 
-MVG stream.  Due to this, MVG needs to behave securely while it is 
-executing MVG delivered from SVG.  Otherwise it is my opinion that MVG 
-is an internal implementation format (not a file exchange format) 
-which should be allowed to support extensions peculiar to 
-GraphicsMagick and is not a scary dangerous thing.
-
-The focus of https://imagetragick.com/ on MVG has brought attention to 
-it, and tarnished its reputation, but (provided it is not executed by 
-default) the focus should be on assuring that formats assumed to be 
-secure (e.g. SVG and WMF) are read/rendered securely.
-
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
