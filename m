@@ -1,24 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/2
-Message-ID: <1889645664.9659032.1453204718551.JavaMail.zimbra@redhat.com>
-Date: Tue, 19 Jan 2016 06:58:38 -0500 (EST)
-From: Wade Mealing <wmealing@...hat.com>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Linux kernel: use after free in keyring facility.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/5
+Message-Id: <20160908065327.6DEBD6C1B17@smtpvmsrv1.mitre.org>
+Date: Thu,  8 Sep 2016 02:53:27 -0400 (EDT)
+From: cve-assign@...re.org
+To: winsonliu@...cent.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: OpenJPEG Heap Buffer Overflow Issue
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-It was reported that possible use-after-free vulnerability in keyring facility, possibly leading to local privilege escalation was found. The function join_session_keyring in security/keys/process_keys.c holds a reference to the requested keyring, but if that keyring is the same as the one being currently used by the process, the kernel wouldn't decrease keyring->usage before returning to userspace. The usage field can be overflowed causing use-after-free on the keyring object.
+> I reported a security issue of OpenJPEG some days ago and it has been
+> fixed now. The fix is available at
+> https://github.com/uclouvain/openjpeg/commit/e078172b1c3f98d2219c37076b238fb759c751ea
+> 
+> A Heap Buffer Overflow (Out-of-Bounds Write) issue was found in
+> function opj_dwt_interleave_v of dwt.c. This vulnerability allows
+> remote attackers to execute arbitrary code on vulnerable installations
+> of OpenJPEG.
+> 
+> AddressSanitizer: heap-buffer-overflow
+> WRITE of size 4
 
-This was introduced in commit 3a50597de8635cd05133bd12c95681c82fe7b878.
+e078172b1c3f98d2219c37076b238fb759c751ea modifies tcd.c not dwt.c - is this
+still the correct commit?
 
-Perception point reported this vulnerability to Red Hat and it has been assigned CVE-2016_0728.  
+Also, is this the same vulnerability as the
+https://pdfium.googlesource.com/pdfium/+/b6befb2ed2485a3805cddea86dc7574510178ea9
+(aka Chromium bug 632622) issue that was already assigned CVE-2016-5157 in the
+https://googlechromereleases.blogspot.com/2016/08/stable-channel-update-for-desktop_31.html
+post?
 
-Red Hat Bugzilla flaw:
- https://bugzilla.redhat.com/show_bug.cgi?id=1297475
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Investigation:
- http://perception-point.io/2016/01/14/analysis-and-exploitation-of-a-linux-kernel-vulnerability-cve-2016-0728/
-
-Patches will be available shortly with the upstream fix and are also explained in the investigation link above.
+iQIcBAEBCAAGBQJX0QmYAAoJEHb/MwWLVhi2JuIQAInY8Bed/W9wZwgmO4peepl7
+lOJptN9utdMwCdYEug6NzCFjpcUslSmrBQcNdXEGMoPw5rku/Hw73sHNbhdfM71I
+TDU2OEwzSNQeo+4m/3rXMlYyHwOqHMp3owHQnl5JWJRcz6hhmI/JpokWxKncthtb
+rpywwao89VJZJf5GLF7RQFXvHwlREP+D3XYrW0cbqEfOrUAQ7oxK5OaFCa30NWrh
+ISJ4iDalfTeWr7x98Bb3X6v40dL7bkUtuWHnqFN+LwuBJL2MlJ74XmsdIDrSXGOf
+grrpU1sMGZ+yJhbc+4n6JcTxXI6/AWOaKqn/pkCG8UkNL/LxzuaGmIYguGecYh7V
+2tc5e7IZ4IzCYNaRUKKLAtlfENMbOn8IqL0zFWXRoSzw7YcSw24s1A0hzEBiPonS
+cPWGhMYsu4bCmJmZZenuKNIKx/CuOZq+YgyFpXjowUxFGpZwOk9eVPnpmK8CRl7z
+kGaS33l9yElstG1gsPeGDxZYHtG09z/T/VrJWIHNieTMUOEO0LZf8+xG5bfXWC1A
+y5S6GCFOSM+8QrvPHgua4l8h7uAxbCVKlLqahOVhID83sCKKTWyxLGa+1FtPIsRH
+zTmEMeS0Q6JytXc7f2DitI9t/hEEh877xQLRWactOBmP19XdC+rCLcBZcoksK8UB
+2osVa1EkAYD9ZVrCOo0i
+=CVgG
+-----END PGP SIGNATURE-----
