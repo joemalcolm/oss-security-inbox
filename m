@@ -1,28 +1,120 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/01/5
-Message-ID: <alpine.GSO.2.20.1610011036390.13801@freddy.simplesystems.org>
-Date: Sat, 1 Oct 2016 10:43:18 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security@...ts.openwall.com
-Subject: GraphicsMagick CVE request: 8BIM/8BIMW unsigned underflow leads to heap overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/9
+Message-Id: <E1bhy0g-0000t7-JQ@xenbits.xenproject.org>
+Date: Thu, 08 Sep 2016 12:00:50 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 185 (CVE-2016-7092) - x86: Disallow L3 recursive pagetable for 32-bit PV guests
 Content-Type: text/plain; charset=utf-8
 
-Today we received a report from Marco Grassi about a heap overflow in 
-the 8BIM reader.  8BIM is a metadata chunk often attached to JPEG 
-files.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-After investigation it was found that there was a small unsigned 
-overflow leading to a huge size value, which then resulted in a heap 
-overflow (causing a crash).
+            Xen Security Advisory CVE-2016-7092 / XSA-185
+                              version 3
 
-We believe that this issue exists in all GraphicsMagick releases to 
-date (including 1.3.25).
+        x86: Disallow L3 recursive pagetable for 32-bit PV guests
 
-The fix to this may be found in GraphicsMagick Mercurial at 
-"https://sourceforge.net/p/graphicsmagick/code/ci/5c7b6d6094a25e99c57f8b18343914ebfd8213ef/".
+UPDATES IN VERSION 3
+====================
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+On real hardware, a 32-bit PAE guest must leave the USER and RW bit
+clear in L3 pagetable entries, but the pagetable walk behaves as if
+they were set.  (The L3 entries are cached in processor registers, and
+don't actually form part of the pagewalk.)
+
+When running a 32-bit PV guest on a 64-bit Xen, Xen must always OR in
+the USER and RW bits for L3 updates for the guest to observe
+architectural behaviour.  This is unsafe in combination with recursive
+pagetables.
+
+As there is no way to construct an L3 recursive pagetable in native
+32-bit PAE mode, disallow this option in 32-bit PV guests.
+
+IMPACT
+======
+
+A malicious 32-bit PV guest administrator can escalate their privilege
+to that of the host.
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen are vulnerable.
+
+Only 64-bit builds of the hypervisor are vulnerable.  For Xen 4.3 and
+earlier, 32-bit builds of the hypervisor are not vulnerable.
+
+The vulnerability is only exposed to 32-bit PV guests on x86 hardware.
+
+The vulnerability is not exposed to 64-bit PV guests, x86 HVM guests,
+or ARM guests.
+
+MITIGATION
+==========
+
+Running only 64-bit PV or HVM guests will avoid this vulnerability.
+
+CREDITS
+=======
+
+This issue was found in parallel by multiple discoverers, who each
+disclosed it to the Xen Project Security Team.
+
+The first report to us was made by Jérémie Boutoille of Quarkslab.
+The second report, one working day later, by Shangcong Luan of Alibaba
+Cloud.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa185.patch           xen-unstable - Xen 4.4
+
+$ sha256sum xsa185*
+3328a1953ecdf4de35462ea8396b0927171d718e95f73a87a7f651427bd8f8b4  xsa185.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJX0VLpAAoJEIP+FMlX6CvZ/koH/0hN8oXOpBPVgsr5d+ylYFBU
+We948VVN/0uthy9IgI1DBnjM2tjoGgy0w7c7dKWUD3ACTvdIq4hWZywA+6uMIwb5
+aneB7hgZZ1i/ie1kAwMl96hdWgPGaXjL1r19WxslgOnr2TkH/9zlAaBvhFkbL+/c
+cw2lI+AOmhB/VOtNfXYd81qxdSUBUPz2DfiOEjgVx8e8E+q/S5dJO1L41kqRt1bM
+ENG8NtaxBrXAtZzilxOPVPmQmvSSegTjZMshGhx29wIgUy4R/HnsoYW7OklZQDhU
+6DV7WUSlrUU5vlIhwQVIZidXpyhzLBLnR5GS0R4CKcYSb6pRQ8FO3TG81TmO/6Q=
+=NDX0
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa185.patch" of type "application/octet-stream" (1312 bytes)
