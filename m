@@ -1,88 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/10
-Message-ID: <5728D478.3090005@lsexperts.de>
-Date: Tue, 3 May 2016 18:40:24 +0200
-From: LSE-Advisories <advisories@...xperts.de>
-To: bugtraq@...urityfocus.com, oss-security@...ts.openwall.com, submissions@...ketstormsecurity.org, fulldisclosure@...lists.org, bugs@...uritytracker.com
-Subject: LSE Leading Security Experts GmbH - LSE-2016-02-03 - OXID eShop Path Traversal Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/24
+Message-Id: <20160908221651.01CE834E00D@smtpvbsrv1.mitre.org>
+Date: Thu,  8 Sep 2016 18:16:51 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Persistent Cross-Site Scripting vulnerability in WordPress due to unsafe processing of file names
 Content-Type: text/plain; charset=utf-8
 
-=== LSE Leading Security Experts GmbH - Security Advisory 2016-02-03 ===
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-OXID eShop Path Traversal Vulnerability
-------------------------------------------------------------------------
+> https://wordpress.org/news/2016/09/wordpress-4-6-1-security-and-maintenance-release/
 
-Affected Versions
-=================
-Community Edition 4.9.7
-
-Issue Overview
-==============
-Vulnerability Type: path traversal, privilege escalation
-Version: Tested in Community Edition 4.9.7
-Technical Risk: high
-Likelihood of Exploitation: medium
-Vendor: OXID eSales AG
-Vendor URL: https://www.oxid-esales.com
-Credits: LSE Leading Security Experts GmbH employee Tim Herres
-Advisory URL: https://www.lsexperts.de/advisories/lse-2016-02-03.txt
-Advisory Status: Public
-CVE-Number: NA
-CVE URL: NA
-OVE-ID:OVE-20160419-0002
-OVI-ID:OVI-2016-7988
-CWE-ID: CWE-22
-CVSS 2.0: 3.5  (AV:N/AC:M/Au:S/C:P/I:N/A:N)
+(Please note the "extra" CVE ID below for the other vulnerability
+fixed in 4.6.1.)
 
 
+> a cross-site scripting vulnerability via image filename, reported by
+> SumOfPwn researcher Cengiz Han Sahin
 
-Impact
-======
-A missing file path validation allows an authenticated user with permission
-to add or edit products to read any file on the file system without permissions.
-
+Use CVE-2016-7168.
 
 
-Issue Description
-=================
-While conducting an internal evaluation of the software, LSE Leading
-Security Experts GmbH discovered a path traversal vulnerability in the product
-downloads function. A user with permissions to change or add products may change
-the Downloads name to a local file (e.g. "../../../config.inc.php"). This may lead
-to a privilege escalation.
+> lure an admin into uploading the image with the malicious file name
+
+> A WordPress admin uploads a malicious image file requested by a user
+> this admin trusts or a popular malicious image that was spread via
+> social media.
+
+We are not sure whether this CVE-2016-7168 issue is best interpreted
+as a vulnerability. We think it means that the admin has the
+unfiltered_html capability, and proceeds with uploading the file even
+though its name (which contains an embedded IMG string with
+onerror=alert in the PoC) is visible to the admin. It seems to be more
+of a design change in which the meaning of unfiltered_html is slightly
+redefined, in a way that is helpful to many users but not all.
+
+One counterargument use case is:
+
+  - the admin of WordPress site A observes that all of their images
+    are being stolen for use on WordPress site B
+
+  - the process for stealing the images keeps each original filename
+
+  - the admin of WordPress site A specifically wants one image
+    filename to contain JavaScript code, as part of an effort to
+    identify the operators of WordPress site B (this JavaScript code
+    has no effect on site visitors when encountered in the context of
+    WordPress site A)
+
+  - the admin of WordPress site A has always relied on the Media
+    Upload functionality in wp-admin/media-new.php for entering these
+    filenames, and this is now broken with the upgrade to 4.6.1
 
 
+> a path traversal vulnerability in the upgrade package uploader,
+> reported by Dominik Schilling from the WordPress security team
 
+Use CVE-2016-7169.
 
-Temporary Workaround and Fix
-============================
-Install latest update 4.9.8/5.2.8
-See http://wiki.oxidforge.org/Downloads/4.9.8_5.2.8
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-Proof of Concept
-================
-Create a new product in the backend. In the "Downloads" tab set "name of the uploaded
-file" to "../../../config.inc.php". Go to the frontend and buy the related product.
-Move to "My account" and choose the download section. Download the file and enjoy
-full database credentials.
-
-History
-=======
-2016-02-05 Issue discovered
-2016-02-22 Vendor contacted
-2016-02-24 Vendor confirmed
-2016-05-03 Vendor released patch
-2016-05-03 Advisory release
-
-
-GPG Signature
-=============
-This advisory is signed with the GPG key of the
-LSE Leading Security Experts GmbH advisories team.
-The key can be downloaded here: https://www.lsexperts.de/advisories-key-99E3277C.asc
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQIcBAEBCAAGBQJX0eL2AAoJEHb/MwWLVhi2Lh4P/2cDC6Zf4kN3HFWGcb9W2imm
+gzqdAzr2nX29Jj3JDpRuNMEI+2M2eO8uNXCwMbyTd0bOTjtkUsclvnI5uuD/Of6N
+J3+uj5h75yHcEaB6sHNnDRYaViUiLaHZEvpTsre+O47p1kQwR8OlTB65W4IkE6bH
+NeA0K/TxpOtoIpPnHtnozgEpjUfTKfyppbyasRs7jxK4y6IG5wsZSjWKR5JjD2i/
+0JafwL4KFqRwTDy3DqtRLGzOzL0gQqDPQ4peFK/uvwqDTg/VEUqcgLtvovX2PZes
+VJWfqAjH51jXy9/A8MFyZqkpZQ71miNe+K2edMXSeXWps6YEjP/UH/zgDCg7HXof
+2e3j7l37sN3Z2KYZcD0qnd7ZhYmSgfpadOP9XFAj/jd9Fp5m/laU8uu+JjHBKntZ
+Iy30HYcNJpVvysoBtFFEW49ehjVbRMtfYMlK0I9cZmWMWPK9U98HstQlD67jkzkc
+FpBI5wt/YNZFRzVCBu/NnvgYxP78/tF++gvKz9xc0k7xv6DDxbUwd5EcTKD15nJU
+DT0s4kFfaFGEbPOY42XCPdKLpF30tQnsYduoFJNGJSW84sY8P+E0t0vh8dIUgeni
+iyboz/dba+EAqfmVnDz38f2aR+hv14B7xxdGwBhEr0Z9tFtW7bnLp3KOKMuw/m5s
+nVA/yYzhdOE+0L98iiGf
+=g17f
+-----END PGP SIGNATURE-----
