@@ -1,44 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/2
-Message-ID: <20161122051648.GI10528@kcwu.csie.org>
-Date: Tue, 22 Nov 2016 13:16:48 +0800
-From: Kuang-che Wu <kcwu@...e.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: w3m - multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/14
+Message-ID: <CAG0ev14edKkjOwT=xdu2HtfHgeFK9mBCysZPGYvY+tg0UHceiQ@mail.gmail.com>
+Date: Thu, 8 Sep 2016 13:39:25 +0800
+From: 0xr0ot <0xr0ot.sec@...il.com>
+To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
+Subject: Fwd: [scr231911] SVE-2016-6248: SystemUI Security issue
 Content-Type: text/plain; charset=utf-8
 
-Following are security flaws that I reported to debian's w3m.
-https://github.com/tats/w3m
+---------- Forwarded message ----------
+From: <cve-request@...re.org>
+Date: 2016-09-08 13:34 GMT+08:00
+Subject: Re: [scr231911] SVE-2016-6248: SystemUI Security issue
+To: 0xr0ot.sec@...il.com
+Cc: cve-request@...re.org
 
-These issues are all fixed in 0.5.3-33 (v0.5.3+git20161120) released
-at Nov 20, 2016.
 
-Please assign CVEs if you think they are suitable for identifiers.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Serious issues
-- https://github.com/tats/w3m/issues/29 global-buffer-overflow write
+> The vulnerability exists due to a null pointer dereference on fimg2d
+> driver. The patch verifies if the object is null before dereferencing
+> it.
+>
+> ------------------------------------------
+>
+> [VulnerabilityType Other]
+> Null Pointer Dereference
+>
+> ------------------------------------------
+>
+> [Affected Product Code Base]
+> Samsung Mobile - L(5.0/5.1), M(6.0) devices with Exynos7420 chipset
+>
+> ------------------------------------------
+>
+> [Affected Component]
+> SystemUI Security issue,L(5.0/5.1), M(6.0) devices with Exynos7420
+> chipset
+>
+> ------------------------------------------
+>
+> [Attack Type]
+> Local
+>
+> ------------------------------------------
+>
+> [Impact Denial of Service]
+> true
+>
+> ------------------------------------------
+>
+> [Reference]
+> http://security.samsungmobile.com/smrupdate.html#SMR-SEP-2016
+>
+> SVE-2016-6248: SystemUI Security issue
 
-Moderate issues
-(the crash point looks not-explitable but I am not sure whether the root cause
- of them could be reused as exploit gadget)
-- https://github.com/tats/w3m/issues/32 null deref
-- https://github.com/tats/w3m/issues/33 null deref
-- https://github.com/tats/w3m/issues/35 near-null deref
-- https://github.com/tats/w3m/issues/36 stack overflow
-- https://github.com/tats/w3m/issues/37 stack overflow
-- https://github.com/tats/w3m/issues/38 heap overflow read + deref
-- https://github.com/tats/w3m/issues/39 null deref
-- https://github.com/tats/w3m/issues/40 null deref
-- https://github.com/tats/w3m/issues/41 global-buffer-overflow read
-- https://github.com/tats/w3m/issues/42 null deref
-- https://github.com/tats/w3m/issues/43 global-buffer-overflow read
+Use CVE-2016-7160.
 
-Low severity
-- https://github.com/tats/w3m/issues/23 OOM
+- --
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-All issues are found by afl-fuzz.
+iQIcBAEBCAAGBQJX0PgNAAoJEHb/MwWLVhi2paUP/0v/GUG5AWUFg6tUgN7g1i0O
+uRypo3e1aM9OHq3BznGaqBKWUNcbOI8wqcddvQ/9OBNSGxWP393CzxA1qv49HdTd
+q2Uz/5en+sapcNQLG397HCDqaYEo5XskPkMHhro/mhjKHrHPgXkLRjGZirjmOAdS
+0BWAF75iLZKPG6MCIGFMdu5pGYSkGHPGVQ0gSDGaxRxQG77ZmdmfXRkHktGI0+LG
+qL08nISmUddbvr/EhQyHo8mx+v1M2Bo0htOv/Xc2W4JUPKqopYJQpLjJ14eZwxbK
+qPFPr+5nFJH/Vqv6DX19sxsczcykIch5RG7JiwZ4Zchm1RqPFEn14FWVeRW0RBv/
+crl3+QYo3bEzBK8UNulLYhopJ3yHzoASbsbOuCSzIRshMdbV8sXadWfIZQajGNyp
+4bCwcCZ3xdeGilrbXq2Q9ANvYFdmpO5Sp9FLSx6JpCOBfyO+fn812n/y8OskNLBl
+3P0A570RcxcUUDMbeJj39jFj2M1aJTC4RzyjSKFnu8sjtUyhRwXMHUsstp76Y4VS
+OdauchtnREtY3F7FxIXbP2ROZLKVdWvc/08QW2NoY/j/eLJChu1J3NNrHgTOgAI2
+zRBV/kPt50oV06VJADf+Tw4jEdAAZFmgN5ZroWrGiYjNIc9eNt0tpuBPL+qhK7KC
+GmNvf2YbCpAd6YInIhVp
+=x9Z8
+-----END PGP SIGNATURE-----
 
-Regards,
-kcwu
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
