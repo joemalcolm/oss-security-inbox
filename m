@@ -1,127 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/15/6
-Message-Id: <1F4307CC-21CD-4712-95AE-65813E5A2903@gmail.com>
-Date: Thu, 15 Dec 2016 10:04:56 -0600
-From: Brandon Perry <bperry.volatile@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-9584: heap use-after-free on libical
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/11
+Message-Id: <E1bhy0m-0000vj-TN@xenbits.xenproject.org>
+Date: Thu, 08 Sep 2016 12:00:56 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 188 (CVE-2016-7154) - use after free in FIFO event channel code
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> On Dec 15, 2016, at 8:38 AM, Agustin Mista <mista.agustin@...il.com> wrote:
-> 
-> We found a heap use-after-free in a recent revision of libical (
-> f3688b444f820cecf51b1539b0856a392c0fdb0f),
-> using a specially crafted ics file. This bugs looks particularly dangerous
-> since it allows to read a big chunk of the heap memory.
-> 
-> The address sanitizer report is as follows:
-> 
-> ==14573==ERROR: AddressSanitizer: heap-use-after-free on address
-> 0x60700001e394 at pc 0x00000044478e bp 0x7fffffffc4a0 sp 0x7fffffffbc28
-> READ of size 62 at 0x60700001e394 thread T0
-> #0 0x44478d (/home/agustin/Code/libical/build/src/test/parser+0x44478d)
-> #1 0x444eb3 (/home/agustin/Code/libical/build/src/test/parser+0x444eb3)
-> #2 0x4461f0 (/home/agustin/Code/libical/build/src/test/parser+0x4461f0)
-> #3 0x7ffff7b519e8 (/home/agustin/Code/libical/build/lib/libical.so.2+
-> 0x19a9e8)
-> #4 0x7ffff7b5a40f (/home/agustin/Code/libical/build/lib/libical.so.2+
-> 0x1a340f)
-> #5 0x7ffff7add113 (/home/agustin/Code/libical/build/lib/libical.so.2+
-> 0x126113)
-> #6 0x7ffff7a978ec (/home/agustin/Code/libical/build/lib/libical.so.2+
-> 0xe08ec)
-> #7 0x7ffff7a97b4a (/home/agustin/Code/libical/build/lib/libical.so.2+
-> 0xe0b4a)
-> #8 0x7ffff7a96f11 (/home/agustin/Code/libical/build/lib/libical.so.2+
-> 0xdff11)
-> #9 0x4b8db7 (/home/agustin/Code/libical/build/src/test/parser+0x4b8db7)
-> #10 0x7ffff61baf44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
-> #11 0x4b829c (/home/agustin/Code/libical/build/src/test/parser+0x4b829c)
-> 
-> 0x60700001e394 is located 4 bytes inside of 66-byte region [0x60700001e390,
-> 0x60700001e3d2)
-> freed by thread T0 here:
-> #0 0x49a99b (/home/agustin/Code/libical/build/src/test/parser+0x49a99b)
-> #1 0x7ffff7abab48 (/home/agustin/Code/libical/build/lib/libical.so.2+
-> 0x103b48)
-> #2 0x7ffff7ad0da1 (/home/agustin/Code/libical/build/lib/libical.so.2+
-> 0x119da1)
-> #3 0x4b8cde (/home/agustin/Code/libical/build/src/test/parser+0x4b8cde)
-> #4 0x7ffff61baf44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
-> 
-> previously allocated by thread T0 here:
-> #0 0x49ac1b (/home/agustin/Code/libical/build/src/test/parser+0x49ac1b)
-> #1 0x7ffff7aba55a (/home/agustin/Code/libical/build/lib/libical.so.2+
-> 0x10355a)
-> #2 0x7ffff7ad7777 (/home/agustin/Code/libical/build/lib/libical.so.2+
-> 0x120777)
-> #3 0x7ffff7ad808a (/home/agustin/Code/libical/build/lib/libical.so.2+
-> 0x12108a)
-> #4 0x7ffff7ad0220 (/home/agustin/Code/libical/build/lib/libical.so.2+
-> 0x119220)
-> #5 0x4b8cde (/home/agustin/Code/libical/build/src/test/parser+0x4b8cde)
-> #6 0x7ffff61baf44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
-> 
-> SUMMARY: AddressSanitizer: heap-use-after-free ??:0 ??
-> Shadow bytes around the buggy address:
-> 0x0c0e7fffbc20: fd fd fd fd fd fd fd fd fa fa fa fa fd fd fd fd
-> 0x0c0e7fffbc30: fd fd fd fd fd fd fa fa fa fa fd fd fd fd fd fd
-> 0x0c0e7fffbc40: fd fd fd fd fa fa fa fa fd fd fd fd fd fd fd fd
-> 0x0c0e7fffbc50: fd fd fa fa fa fa fd fd fd fd fd fd fd fd fd fd
-> 0x0c0e7fffbc60: fa fa fa fa fd fd fd fd fd fd fd fd fd fd fa fa
-> =>0x0c0e7fffbc70: fa fa[fd]fd fd fd fd fd fd fd fd fa fa fa fa fa
-> 0x0c0e7fffbc80: fd fd fd fd fd fd fd fd fd fd fa fa fa fa 00 00
-> 0x0c0e7fffbc90: 00 00 00 00 00 00 03 fa fa fa fa fa fd fd fd fd
-> 0x0c0e7fffbca0: fd fd fd fd fd fa fa fa fa fa fd fd fd fd fd fd
-> 0x0c0e7fffbcb0: fd fd fd fd fa fa fa fa fd fd fd fd fd fd fd fd
-> 0x0c0e7fffbcc0: fd fd fa fa fa fa fd fd fd fd fd fd fd fd fd fd
-> 
-> 
-> And the backtrace is available here:
-> 
-> #0 0x00007ffff61cfc37 in __GI_raise (sig=sig@...ry=6)
-> at ../nptl/sysdeps/unix/sysv/linux/raise.c:56
-> #1 0x00007ffff61d3028 in __GI_abort () at abort.c:89
-> #2 0x00000000004b1356 in __sanitizer::Abort() ()
-> #3 0x00000000004a2037 in __asan::AsanDie() ()
-> #4 0x00000000004a8a6f in __sanitizer::Die() ()
-> #5 0x00000000004a06cb in __asan::ScopedInErrorReport::~ScopedInErrorReport()
-> ()
-> #6 0x00000000004a0211 in __asan_report_error ()
-> #7 0x00000000004447a9 in printf_common(void*, char const*, __va_list_tag*)
-> ()
-> #8 0x0000000000444eb4 in vsnprintf ()
-> #9 0x00000000004461f1 in snprintf ()
-> #10 0x00007ffff7b519e9 in icalreqstattype_as_string_r (stat=...)
-> at /home/agustin/Code/libical/src/libical/icaltypes.c:171
-> #11 0x00007ffff7b5a410 in icalvalue_as_ical_string_r (value=0x60e0000280c0)
-> at /home/agustin/Code/libical/src/libical/icalvalue.c:1208
-> #12 0x00007ffff7add114 in icalproperty_as_ical_string_r
-> (prop=0x6060000010a0)
-> at /home/agustin/Code/libical/src/libical/icalproperty.c:442
-> #13 0x00007ffff7a978ed in icalcomponent_as_ical_string_r
-> (impl=0x60700001e7f0)
-> at /home/agustin/Code/libical/src/libical/icalcomponent.c:291
-> #14 0x00007ffff7a97b4b in icalcomponent_as_ical_string_r
-> (impl=0x60700000ded0)
-> at /home/agustin/Code/libical/src/libical/icalcomponent.c:300
-> #15 0x00007ffff7a96f12 in icalcomponent_as_ical_string (impl=0x60700000ded0)
-> at /home/agustin/Code/libical/src/libical/icalcomponent.c:247
-> #16 0x00000000004b8db8 in main (argc=2, argv=0x7fffffffdf08)
-> at /home/agustin/Code/libical/src/test/icaltestparser.c:109
-> 
-> It is worth to mention there is a very similar bug found (CVE-2016-5824) on
-> the libical version used by
-> Thunderbird but we think is *not* the same as this one. In fact, we've
-> tested it on Thunderbird and it does *not* crash.
+            Xen Security Advisory CVE-2016-7154 / XSA-188
+                              version 3
 
-I’ve found multiple use-after-frees in libical that affected Thunderbird that did not cause Thunderbird to crash. Did you run this through valgrind or are you using Thunderbird not crashing as evidence it isn’t vulnerable.
+               use after free in FIFO event channel code
 
-> 
-> The reproducer is available upon request.
-> 
-> Unfortunately, there is no fix yet, but upstream is working on it.
-> 
-> Regards.
+UPDATES IN VERSION 3
+====================
 
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+When the EVTCHNOP_init_control operation is called with a bad guest
+frame number, it takes an error path which frees a control structure
+without also clearing the corresponding pointer.  Certain subsequent
+operations (EVTCHNOP_expand_array or another EVTCHNOP_init_control),
+upon finding the non-NULL pointer, continue operation assuming it
+points to allocated memory.
+
+IMPACT
+======
+
+A malicious guest administrator can crash the host, leading to a DoS.
+Arbitrary code execution (and therefore privilege escalation), and
+information leaks, cannot be excluded.
+
+VULNERABLE SYSTEMS
+==================
+
+Only Xen 4.4 is vulnerable.  Xen versions 4.5 and later as well as Xen
+versions 4.3 and earlier are not vulnerable.
+
+MITIGATION
+==========
+
+There is no mitigation available.
+
+CREDITS
+=======
+
+This issue was discovered by Mikhail Gorobets of Advanced Threat
+Research, Intel Security.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa188.patch           Xen 4.4.x
+
+$ sha256sum xsa188*
+9f374c2e1437ad71369f41275e7b333e7b7691a783ba693ee567c899bd78c722  xsa188.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJX0VLuAAoJEIP+FMlX6CvZNjYH/RVxqYegZpfj0aiT5pai/a0i
+PgPSoMccGoSSVTXzivXUTZS3fTIqfTpd4SQHu2Q2dUqbb6zcPqd3NzF7Jl9IMwLk
+JHZwPYXOsZ0D6thFAMYFpjHOWXv7+1Mw7Np82PaA2yAUad+kxUORiJeL1RAE6zG/
+xsAR7PTl2mK1Ae9lqDtKLijn0cnicAYoKiSlta8M0T5Sp79CT3xsfHiBbaWUBCcI
+gmOW76RUbfOwn2kmhFJ4X5bwSzEhM93pQu7hJCmuwAADc8ezEEFv2lsUm5W8hkmW
+a8V2nuqM+prbxY8JI3XbKJm5YrmHQpnX4FiBn13DZeUsaukT4Q1EltP1z/XvJto=
+=jzF5
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa188.patch" of type "application/octet-stream" (833 bytes)
