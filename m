@@ -1,28 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/15
-Message-ID: <20160822195435.naiv4hyfs6lxwenf@eldamar.local>
-Date: Mon, 22 Aug 2016 21:54:35 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: lshell: shell outbreak vulnerabilities via bad syntax parse and multiline commands
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/09/4
+Message-ID: <alpine.LFD.2.20.1609091835510.24544@wniryva>
+Date: Fri, 9 Sep 2016 18:38:08 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Qinghao Tang <luodalongde@...il.com>, Li Qiang <liqiang6-s@....cn>
+Subject: CVE Request Qemu: vmware_vga: OOB stack memory access when processing svga command
 Content-Type: text/plain; charset=utf-8
 
-Hi
+   Hello,
 
-Two shell outbreak vulnerability for lshell, a shell coded in python,
-that is intended to restrict a user's environment to only a limited
-sets of commands.
+Quick Emulator(Qemu) built with the VMware-SVGA "chipset" emulation support is 
+vulnerable to an OOB stack memory write issue. It could occur while processing 
+VGA commands in 'vmsvga_fifo_run' routine.
 
-1/ Shell outbreak due to bad syntax parse
-   - https://github.com/ghantoos/lshell/issues/147
-   - https://bugs.debian.org/834949
+A privileged user inside guest could use this flaw to crash the Qemu process 
+resulting in DoS.
 
-2/ Shell outbreak with multiline commands
-   - https://github.com/ghantoos/lshell/issues/149
-   - Fix: https://github.com/ghantoos/lshell/commit/e72dfcd1f258193f9aaea3591ecbdaed207661a0
-   - https://bugs.debian.org/834946
+Upstream fix:
+-------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg01764.html
 
-Could you please assign two CVEs for those lshell issues?
+This issue was independently reported by Qinghao Tang and Li Qiang of 360.cn 
+Inc.
 
-Regards,
-Salvatore
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
