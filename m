@@ -1,4 +1,9 @@
-Received: (qmail 21736 invoked by uid 550); 13 Jul 2024 11:59:36 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3968" "Friday" "9" "September" "2016" "13:30:11" "+0200" "Remi Gacogne" "remi.gacogne@powerdns.com" "<a3531031-58b5-2210-8e5f-f997cd07be27@powerdns.com>" "98" "[oss-security] PowerDNS Security Advisory 2016-01: Crafted queries can cause unexpected backend load" nil nil nil "9" "2016090911:30:11" "[oss-security] PowerDNS Security Advisory 2016-01: Crafted queries can cause unexpected backend load" (number mark "U       remi.gacogne Sep  9   98/3968  " thread-indent "\"[oss-security] PowerDNS Security Advisory 2016-01: Crafted queries can cause unexpected backend load\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1574 invoked by uid 550); 9 Sep 2016 11:51:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,74 +12,120 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28353 invoked from network); 12 Jul 2024 23:15:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720826110; x=1721430910; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:references:subject:to
-         :mime-version:user-agent:reply-to:from:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HNNHo9146C/1yvCGLFoxKFpsYwHeEZeE0QwnIXR/4hM=;
-        b=TZwDMwc8YKG5qaM/JjF8ldn71Ry/OZ7StMChBXpnR5tUo0V8HDiHlHqmTok4WamfDI
-         ac20h1WrwaasAgQqIsYVZliWKWHhOk953pEjv2WdmTDSZMTGR+53atJd0DjORN5G3na2
-         /C9F0JqOn3lrMsv1AeEcyWn19Ad2Bpx5Fa3GOzGk/G1T7XagCit/d5RLcroAKTxFeQhw
-         iyZJiU5yA5HxGtN33f1cXpjCiPh3sCre4GtV9oEijdHTqjZjWvcFmrmG7jsxWS52ga2T
-         0XEzs0UARTFWw4k6ZXuY6tN/nj7JUR5mvlJ7XLOz702NTxTHjxaUke+0vY7XRWjqJr5P
-         otfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720826110; x=1721430910;
-        h=content-transfer-encoding:in-reply-to:references:subject:to
-         :mime-version:user-agent:reply-to:from:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HNNHo9146C/1yvCGLFoxKFpsYwHeEZeE0QwnIXR/4hM=;
-        b=qU9BSarh659I/7m4895LFEXRMuhGRcv8mNKDTF3yQvRDCLROnavGZYsnO7LNcOFOJH
-         DdnH8RZSO/+CJdXwErw+jRngwu2lCrkzf/0g8PeEGnv+eOEL89+mP7cBuCnxXUvjL1ht
-         3ojZAVXSA9coWvGW+VRyuee84H3+pYD2NnV1KKwD1Sn/nM4rjt/C46IpbJiBKGUjUp2h
-         jY1l6wCr1MDYWrXnltzAznX3DIeMoo4fXDtnii4TTfnFRe7rFwrwr23RoAShO991xcZq
-         N5Srk7FZeLHl7agnR2iQqGq96LXWc2kf9qKm+GJ1jiIdt9kIFUGB/OtXnJlUteS8Unaz
-         cSIw==
-X-Gm-Message-State: AOJu0Ywwo9Mb7WbvpJaOaqXmgruuuizeIs+9fKNp31UHncia1MlwOByL
-	dJypWXnyAR2yHmAJLhqDRqP9HpeklHVyPuUQH0Mk4DkiRcV9SnBbPFofWg==
-X-Google-Smtp-Source: AGHT+IGWG0jrdm4NayKi39Fndkdbihw30Pzez+J7XXkiR7glPCVTeO1xRTKlTHGplBzkAxV9lvP5Tw==
-X-Received: by 2002:a05:6830:11c2:b0:703:79c6:a9ba with SMTP id 46e09a7af769-70379c6ac98mr11143717a34.7.1720826109793;
-        Fri, 12 Jul 2024 16:15:09 -0700 (PDT)
-Message-ID: <6691B8FB.1040403@gmail.com>
-Date: Fri, 12 Jul 2024 18:15:07 -0500
-From: Jacob Bachmeyer <jcb62281@gmail.com>
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.22) Gecko/20090807 SeaMonkey/1.1.17 Mnenhy/0.7.6.0
-MIME-Version: 1.0
+Received: (qmail 13641 invoked from network); 9 Sep 2016 11:30:26 -0000
+X-Virus-Scanned: Debian amavisd-new at imap.open-xchange.com
 To: oss-security@lists.openwall.com
-References: <CAN_LGv0tC7ef+0BV=m7i_9caO2g+B-SkqENT=w-=uif7ntsqjw@mail.gmail.com>
-In-Reply-To: <CAN_LGv0tC7ef+0BV=m7i_9caO2g+B-SkqENT=w-=uif7ntsqjw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] backtrace_symbols() misuse by Ceph and its supposedly-safe
- use
+From: Remi Gacogne <remi.gacogne@powerdns.com>
+Message-ID: <a3531031-58b5-2210-8e5f-f997cd07be27@powerdns.com>
+Date: Fri, 9 Sep 2016 13:30:11 +0200
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="7S2BBLkIpfrvmU9eUarHIff2OFRR4JUvJ"
+X-purgate-ID: 151428::1473420614-000075C5-8F10396A/0/0
+X-purgate-type: clean
+X-purgate-size: 4132
+X-purgate-Ad: Categorized by eleven eXpurgate (R) http://www.eleven.de
+X-purgate: This mail is considered clean (visit http://www.eleven.de for further information)
+X-purgate: clean
+Subject: [oss-security] PowerDNS Security Advisory 2016-01: Crafted queries can cause
+ unexpected backend load
 
-Alexander Patrakov wrote:
-> [...]
-> What would be a good solution (as in: something that does not convert
-> crashes into deadlocks) here? I understand that, after memory
-> corruption, we are already in the UB territory, but is there anything
-> better possible than what is implemented?
+--7S2BBLkIpfrvmU9eUarHIff2OFRR4JUvJ
+Content-Type: multipart/mixed; boundary="pjDHBubVdgVLI443jW4mm9moQwdMwsrEg";
+ protected-headers="v1"
+From: Remi Gacogne <remi.gacogne@powerdns.com>
+To: oss-security@lists.openwall.com
+Message-ID: <a3531031-58b5-2210-8e5f-f997cd07be27@powerdns.com>
+Subject: PowerDNS Security Advisory 2016-01: Crafted queries can cause
+ unexpected backend load
 
-I would suggest a monitor daemon that runs GDB to get the backtrace.  
-The simplest way to do this would require Ceph to have its own 
-supervisor (not unique; PostgreSQL has long had a "postmaster" process 
-that manages the worker "postgres" backend processes) and provide each 
-daemon with a pipe back to the supervisor; the fatal error handler need 
-only write(2) to the pipe from a static string and/or fixed buffer (to 
-report a signal number) and then enter an infinite loop; the supervisor 
-then kills the crashed process, possibly after attaching GDB and 
-collecting a backtrace.
+--pjDHBubVdgVLI443jW4mm9moQwdMwsrEg
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Alternately, simply run the Ceph daemons with `ulimit -c` nonzero and 
-collect the core files.  The core files can be analyzed using GDB after 
-the fact.  No dedicated supervisor needed here, only kernel facilities.
+Hi All,
 
-The central problem here, as I understand it, is trying to do too much 
-in a process that has gone into undefined behavior.  Attaching GDB or 
-dumping a core file both sidestep that problem.
+Two security issues of medium severity have been reported to us by
+Florian Heinz and Martin Kluge in PowerDNS Authoritative Server <=3D
+3.4.9. We released PowerDNS Authoritative 3.4.10 a week ago, fixing both
+issues. PowerDNS Authoritative 4.0.x and PowerDNS Recursor are not affected.
+
+The corresponding security advisory is provided below, and can also be
+found at: https://doc.powerdns.com/md/security/powerdns-advisory-2016-01/
+
+Please feel free to contact me directly if you have any question.
 
 
--- Jacob
+PowerDNS Security Advisory 2016-01: Crafted queries can cause unexpected
+backend load
 
+CVE: CVE-2016-5426, CVE-2016-5427
+Date: 9th of September 2016
+Credit: Florian Heinz and Martin Kluge
+Affects: PowerDNS Authoritative Server up to and including 3.4.9
+Not affected: PowerDNS Authoritative Server 3.4.10, 4.x
+Severity: Medium
+Impact: Degraded service or Denial of service
+Exploit: This problem can be triggered by sending specially crafted
+query packets
+Risk of system compromise: No
+Solution: Upgrade to a non-affected version
+Workaround: Run dnsdist with the rules provided below in front of
+potentially affected servers, or dimension the backend capacity so that
+it can handle the increased load.
+
+Two issues have been found in PowerDNS Authoritative Server allowing a
+remote, unauthenticated attacker to cause an abnormal load on the
+PowerDNS backend by sending crafted DNS queries, which might result in a
+partial denial of service if the backend becomes overloaded. SQL
+backends for example are particularly vulnerable to this kind of
+unexpected load if they have not been dimensioned for it.
+The first issue is based on the fact that PowerDNS Authoritative Server
+accepts queries with a qname's length larger than 255 bytes. This issue
+has been assigned CVE-2016-5426.
+The second issue is based on the fact that PowerDNS Authoritative Server
+does not properly handle dot inside labels. This issue has been assigned
+CVE-2016-5427.
+Both issues have been addressed by this commit:
+https://github.com/PowerDNS/pdns/commit/881b5b03a590198d03008e4200dd00cc537=
+712f3
+
+PowerDNS Authoritative Server up to and including 3.4.9 is affected. No
+other versions are affected. The PowerDNS Recursor is not affected.
+
+dnsdist can be used to block crafted queries, using
+QNameWireLengthRule() to block queries with a qname larger than 255
+bytes and QNameLabelsCountRule() to block queries with a very large
+amount of labels. Please note that restricting the number of labels in a
+query might lead to unexpected issues, especially with DNSSEC-enabled
+domains.
+
+We'd like to thank Florian Heinz and Martin Kluge for finding and
+subsequently reporting this issue.
+
+
+--=20
+Remi Gacogne
+PowerDNS.COM BV - https://www.powerdns.com/
+
+
+--pjDHBubVdgVLI443jW4mm9moQwdMwsrEg--
+
+--7S2BBLkIpfrvmU9eUarHIff2OFRR4JUvJ
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBCgAGBQJX0p1DAAoJEKII7U+K9YRGN6kH/0DbiGyuqLPGQQ44Zh+b7NCF
+7tXoY28YfCvwZ5K9Zza34JXHaqMFqpQyjw6iQPWkik4VyxxPjee/OuvY24u7QxGD
+kxxWXNjIQREpKmHW0kTtj/gnCHlqHQo1DFvVTFpg4g8y7kg82vgtpQMsu3Ok7Jha
+/xVvL3SITcT6VS9oyKCDntOUnUS32bXaUzZsJoGFH1Ah98Xm8JJhxW1TvCL1AHg/
+Omw5rqsiI6a7L2SvWRiAqju34OCmMI475IEXcq2TNF5IL3HRUVvhqHqw2Eowf+E5
++NMJAKJos+fzfkk2zHCKp9wLjxVdePoqs85zvvqBgtG+UFCx7h5WickuS9qPbCE=
+=XLFR
+-----END PGP SIGNATURE-----
+
+--7S2BBLkIpfrvmU9eUarHIff2OFRR4JUvJ--
