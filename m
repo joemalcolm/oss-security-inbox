@@ -1,29 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/24/4
-Message-ID: <alpine.LFD.2.20.1605241505150.26750@wniryva>
-Date: Tue, 24 May 2016 15:07:37 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE Request: Qemu: scsi: mptsas infinite loop in mptsas_fetch_requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/10/1
+Message-ID: <CAJ_zFkLW1NM5Gp2bmuLjw45A+ffSFquNrEjxXxtZ4KNXO2US0w@mail.gmail.com>
+Date: Fri, 9 Sep 2016 15:57:35 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: multiple crashes in radare2/radiff2
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Thu, Sep 8, 2016 at 4:08 PM, Solar Designer <solar@...nwall.com> wrote:
+>
+> Hi,
+>
+> On Thu, Sep 08, 2016 at 05:34:09PM +0300, Vahagn Vardanyan wrote:
+> > I created report
+> > https://bugs.chromium.org/p/project-zero/issues/detail?id=933&can=1&q=&sort=-id
+>
+> Going to this URL, I am asked to login to a Google account (which I
+> didn't).  Can you please post the contents of your report and Tavis'
+> reply (as well as any other relevant replies) as a reply to this same
+> thread here on oss-security?
 
-Quick Emulator(Qemu) built with the LSI SAS1068 Host Bus Adapter emulation 
-support is vulnerable to an infinite loop issue. It could occur while fetching 
-new requests in mptsas_fetch_requests().
+I'm not involved at all.
 
-A privileged user inside guest could use this flaw to consume excessive host 
-resources or crash the Qemu process resulting in DoS.
+AFAICT, the reporter was trying to create issues in our private issue
+tracker, and then emailed me asking why the issues were being
+automatically closed.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04027.html
+Trying to be helpful, I suggested using oss-security instead.
 
-This issue was discovered and reported by Li Qiang of 360.cn Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Tavis.
