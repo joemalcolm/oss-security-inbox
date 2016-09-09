@@ -1,35 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/17/2
-Message-ID: <20160817121621.GA7146@kroah.com>
-Date: Wed, 17 Aug 2016 14:16:21 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/09/1
+Message-Id: <585826E9-17D1-4276-A300-32BD760AAF32@topsec.com.cn>
+Date: Fri, 9 Sep 2016 14:40:07 +0800
+From: ChenQin <chenqin@...sec.com.cn>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-5696: linux kernel - challange ack information leak.
+Cc: cve-assign@...re.org
+Subject: CVE request for webp:index overflow,used by memcpy later 
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 17, 2016 at 11:54:56AM +0000, Sona Sarmadi wrote:
-> 
-> > > > You can _always_ just apply the patch to your local tree, there's
-> > > > never a need to wait for me to get a kernel out.  That's the
-> > > > advantage of having the source for your systems :)
-> > > Yes, we can do that but sometimes the patches for newer kernels don't
-> > > apply cleanly on older versions.
-> > > There is always a risk that our home grown patches have undesired side
-> > > effects. We prefer your sign of approval on patches for older kernels
-> > > :)
-> > 
-> > Heh, fair enough.  This fix is now in the kernels that were released today
-> > (4.7.1, 4.6.7, 4.4.18, and 3.14.76), hope that helps.
-> > 
-> > greg k-h
-> 
-> Thanks a lot Greg, yes this helps :) I could apply  patch from linux-3.14.y branch 
-> to linux-3.12.y as well (the code looks similar). 
+Product: A new image format for the Web:Webp
+in function:ReadFunc
 
-Note, I got the patch a bit wrong, it's not as fast as it could be,
-here's an update to put on top of the one you took from 3.14.y:
-	https://git.kernel.org/cgit/linux/kernel/git/stable/stable-queue.git/commit/?id=e09bea58ec0552dbbf71fb22bf7a46da9a288fc8
+fixed here:
+https://chromium-review.googlesource.com/#/c/355380/
+https://cr-rev.appspot.com/bb50bf42b0a39bc378401a2d5d8eaa678813a92f
 
-thanks,
 
-greg k-h
+regards.
+—————
+anonymous,alpha lab,topsec
