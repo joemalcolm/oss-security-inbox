@@ -1,30 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/14
-Message-ID: <20160503181505.GA8195@openwall.com>
-Date: Tue, 3 May 2016 21:15:05 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/09/6
+Message-ID: <2068016.NGJ2REXo3s@willoughby>
+Date: Fri, 09 Sep 2016 16:29:51 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
+Subject: ettercap: etterlog: multiple crashes
 Content-Type: text/plain; charset=utf-8
 
-Thank you for bringing this in here, Ryan.
+Hello,
 
-On Tue, May 03, 2016 at 10:59:12AM -0700, Ryan Huber wrote:
-> What are "magic bytes"?
-> 
-> The first few bytes of a file can often used to identify the type of
-> file. Some examples are GIF images, which start with the hex bytes "47
-> 49 46 38", and JPEG images, which start with "FF D8". This list on
-> Wikipedia has the magic bytes for most common file types.
+etterlog which is part off ettercap, crashes when try to reads malformed data.
 
-It may be preferable to refer to ImageMagick's own list of magics.
-HD Moore tweeted the relevant links:
+Basically, the tool should read what you capture with YOUR ettercap, but since 
+ettercap is one of the valid tools for MITM, there are dozens of blog post 
+about how to use it, so there could be posts where malicious users make 
+available crafted datafile to show something.
 
-<hdmoore> Two reasons you probably shouldn't be using ImageMagick in your web applications: https://github.com/ImageMagick/ImageMagick/blob/8c9d68ca4241b6faafa7a35658a125c3500a5edf/MagickCore/magic.c#L89 & https://github.com/ImageMagick/ImageMagick/blob/e93e339c0a44cec16c08d78241f7aa3754485004/www/source/delegates.xml#L62
-<hdmoore> ImageTragick: Upload(meme.png)->(IM detects non-png format based on file magic)->(IM uses insecure delegates to decode)->Shells!
+Details:
+https://blogs.gentoo.org/ago/2016/09/06/ettercap-etterlog-multiple-three-heap-based-buffer-overflow-el_profiles-c/
 
-> ImageMagick also disclosed this on their forum a few hours ago.
+https://blogs.gentoo.org/ago/2016/09/09/ettercap-etterlog-null-pointer-dereference-in-fingerprint_search-ec_fingerprint-c/
 
-https://www.imagemagick.org/discourse-server/viewtopic.php?f=4&t=29588
 
-Alexander
+If you think that something is suitable for an identifier, please assign one.
+Thanks.
+
+--
+Agostino
