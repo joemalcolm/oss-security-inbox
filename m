@@ -1,4 +1,9 @@
-Received: (qmail 17845 invoked by uid 550); 10 Aug 2023 13:05:56 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["756" "Friday" "9" "September" "2016" "15:57:35" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkLW1NM5Gp2bmuLjw45A+ffSFquNrEjxXxtZ4KNXO2US0w@mail.gmail.com>" "22" "Re: [oss-security] multiple crashes in radare2/radiff2" nil nil nil "9" "2016090922:57:35" "[oss-security] multiple crashes in radare2/radiff2" (number mark "U       taviso@googl Sep  9   22/756   " thread-indent "\"Re: [oss-security] multiple crashes in radare2/radiff2\"\n") "<20160908230801.GA2048@openwall.com>" ("<CAGoY5PK+Y9PwBH7x2N4DCdJ9cxu6M4kHMYA52KAFn=Ly5_Y=0g@mail.gmail.com>" "<20160908230801.GA2048@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 24270 invoked by uid 550); 10 Sep 2016 01:09:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,117 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17499 invoked from network); 10 Aug 2023 08:43:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nearform.com;
- h=content-type:content-type:date:date:from:from:in-reply-to:in-reply-to:message-id:message-id:mime-version:mime-version:references:references:subject:subject:to:to;
- s=selector-1636637189; bh=9gXUBXD6gNDwsgLnreNajC0SFQ5aqyDnka+GAgN+edY=;
- b=GpEsMPI2FqMaJA5zwRr1JCuLhHVFqmVN0guagAwD91C9yzRtmITctUAB2n1qkmSzWb6pR/cBcAjdJX3Qn90dyS9ksaEVzfZntz/csv2boIyYIrc2Ry6BV1P3KFjZU/hsUgIPuzrmlQNfLpCU4kCYCpl6nGjkhPuNmIeudlKBX58m8bIHU1QFpWvrSqXlxR3fe/O2r2+ok9/tkqYky2XVCMVLZ2Xs8Z8m+Gp0BWdtKCgbqH930/6StEecpWpHeVNe50rw/Co1pcavpg5mKclJVI7mukSW1MQU3f9J1srXWOCVRvl2VIijT/kplblMIZp0NJmhrakwHmFuLoeXXRjp1A==
-X-MDID: 1691604910-4rU5L0CiWNXx
-Resent-From: "Proofpoint Essentials" <do-not-reply@proofpointessentials.com>
-Resent-To: <oss-security@lists.openwall.com>
-Resent-Date: Wed,  9 Aug 2023 18:15:10 +0000 (UTC)
-Resent-Message-ID: <4rU5L0CiWNXx-SXL3xrXECSF1@eu1-mdac18-33.ams.mdlocal>
+Received: (qmail 12218 invoked from network); 9 Sep 2016 22:58:08 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nearform.com; s=gmail; t=1691604907; x=1692209707;
-        h=mime-version:subject:references:in-reply-to:message-id:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9gXUBXD6gNDwsgLnreNajC0SFQ5aqyDnka+GAgN+edY=;
-        b=fZGTqBD1tuX3n4C7bUnBKaM0yL0NeYmWXu1jU3+IjOi0PBUYhi8MaOeEwW8fos1FKj
-         PxNjZgJle0voMf/JfO4nP0gMej7YvN72cBnoU1MJi/RV6Hw9AEMsC7FYyF3m6+G//KSo
-         AS8ZLbz6vAkKkqRpcbvC2VVsyviPvCFwm/KUQFZ9TF4GVUcI6AM34RI6KbJjAqVX1PYS
-         8lhSJTV6KJhllQPAb52xK/0cAj9QBUb1euaLMxGGlhpcPHeaoR4qqQPa8duAe/8TZ91f
-         tc4qOSoXcOdW4QvEBHEtkkPPyiAR54e1X/TIZRDzs+bBlpZL1TXiWGkY/8TDVxgKWD90
-         UQgQ==
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=BFfkuv2qEh1yXXWFdSeC3ScVy6UIeBlAmcV9ZKrG9+Y=;
+        b=hoXU0tyarXWGzxPrkcrPsqgXtrpMW8D5Xx7XYv1g7H4iYFE2v3Lr63Oe215kYdKSEL
+         woGBAYHp0djuO9cKqIhkLVj612J7Mas8PWBRox6ciza1AIfnxOFvW7UxXmfgQtRA9/aR
+         MmEDS/uBJb0ub9Jka+atzpIlNOQDKjnm0gkkVxX5HYU8AYb+judj2Mu+Y8oA4+Vm3dOf
+         wE0YXmDrlkYrEfq1hOOeuWSyN5SqlQoVM3IzU/PCaK7QoqelRiSv7BEChf7zSF1gUuK3
+         rmA+xQrWI9YF+8/AGOGeAuxZxsqtF6/xXNcp7iG7E8wXr8J9XP4jJvjqrVhHpgipz0Pt
+         L7RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691604907; x=1692209707;
-        h=mime-version:subject:references:in-reply-to:message-id:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9gXUBXD6gNDwsgLnreNajC0SFQ5aqyDnka+GAgN+edY=;
-        b=D2CBSSH/NIsXR3GKYI2yqTL+Gv+b+epNXi9hp08E/2Zy8jhm4y/naL0fXWNc7/yfOu
-         skYNLXJ8/YVEFBxftxli8Uv4kw8ZPkxDN819Qj7u4FP1i0PfTsjJOgmG9t+ewPlGJjxm
-         8ljjQKDdj+Fv7ZEvz1gMKeB2shQWn6X2rDtoalKAV9p2YExRQbD5SA3TO9oWGVqz4B5M
-         0QxeBHvS7LgRdgj0D+aINyaycRF+bg4KpPSBCpCkf3p09XNzbykOLadSE2G0oOfIcUa7
-         O1yHj1Yvp7GxFXqBFY7lLA1eeonbiXHy8AnpTijbSJevOQmE4+/Jw+YCcgxibQmCrht3
-         WlDQ==
-X-Gm-Message-State: AOJu0Ywev2ZNv6sGbU5dkb2F/I+QC8dnmDkDQZkChNDn3MschHg+Ce7F
-	stR+4RvdevawlbFiJ7p9P79tf9/GQOdz4p+qFZV0S9buuOC9mV9/8sBo5vDrq6hScP+wF+CgQ+E
-	EVFXWBPBSN/jGeBeAdKxfLwDjPhhqVAZ6Aauk6dzR1zEUlOWllpGU1jo1enUecuVb
-X-Received: by 2002:a05:6a00:16c4:b0:676:ba7f:7906 with SMTP id l4-20020a056a0016c400b00676ba7f7906mr549112pfc.3.1691604907696;
-        Wed, 09 Aug 2023 11:15:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFNOAKsT8b0/ckNlmEIAql15jeCKqK5XOPZkIVSYpy7zhR9mXC7/rGGm3VZOWaQkB/Gy8J99W+Uew==
-X-Received: by 2002:a05:6a00:16c4:b0:676:ba7f:7906 with SMTP id l4-20020a056a0016c400b00676ba7f7906mr549100pfc.3.1691604907258;
-        Wed, 09 Aug 2023 11:15:07 -0700 (PDT)
-Date: Wed, 9 Aug 2023 11:15:06 -0700 (PDT)
-From: Rafael Silva <rafael.silva@nearform.com>
-To:  <oss-security@lists.openwall.com>
-Message-Id: <ab9626a5-56c5-48e7-8422-323fb09cb276n@googlegroups.com>
-In-Reply-To: <52675ba7-064f-4273-bc15-53bd8394482an@googlegroups.com>
-References: <f3d796bc-e2ff-4d61-8820-e10ca8068ad4n@googlegroups.com>
- <52675ba7-064f-4273-bc15-53bd8394482an@googlegroups.com>
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=BFfkuv2qEh1yXXWFdSeC3ScVy6UIeBlAmcV9ZKrG9+Y=;
+        b=Ei2Q1LH0VcQS7xT/nCl2sVUdgKEB4707PWIzIAhCcnqP/EQux6eqTWW+wPMat6LyZZ
+         whfgHMIMXadVMWMtO+XAhJd7Xiyp+tnPBG0FYNdPj4y5zodZGR5IDWB7eaJ9xrMa6YY7
+         xWT8qXfGk6wUMW+bONowbM19bD5MP/RBNetrlALkUfFrdIWGhNVhWDsMpiuNXOtq+G7T
+         6GNLQijcB6dhLXUM++qQ3tI8aNzsH7kL+s03oTtTwcAEE3oKzAEXddHCpL+zQjj6lkR/
+         8hxolPBnmWO8mPCNapVeX2dIODA8LKIObO2zJzpK2rPntzPAP0VlLproBvvEfmKM4y7J
+         fXNA==
+X-Gm-Message-State: AE9vXwM+xSKaY6o5ZTUiUyb0lLuklh2V90vdcng0V6H+PWKxZdCwlH4J1qe1pUdBdUJ2KR5IIvO6CD8/177H4b4V
+X-Received: by 10.31.174.131 with SMTP id x125mr4245145vke.11.1473461876357;
+ Fri, 09 Sep 2016 15:57:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_19340_581568219.1691604906745"
-X-MDID-O:
- eu1;ams;1691604910;4rU5L0CiWNXx;<rafael.silva@nearform.com>;11bfa6aa9c040cf23bc591a6d91f8f65
-Subject: [oss-security] Fwd: Node.js security updates for all active release lines, August
- 2023
-
-------=_Part_19340_581568219.1691604906745
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_19341_1766522372.1691604906745"
-
-------=_Part_19341_1766522372.1691604906745
+In-Reply-To: <20160908230801.GA2048@openwall.com>
+References: <CAGoY5PK+Y9PwBH7x2N4DCdJ9cxu6M4kHMYA52KAFn=Ly5_Y=0g@mail.gmail.com>
+ <20160908230801.GA2048@openwall.com>
+Message-ID: <CAJ_zFkLW1NM5Gp2bmuLjw45A+ffSFquNrEjxXxtZ4KNXO2US0w@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Date: Fri, 9 Sep 2016 15:57:35 -0700
+From: Tavis Ormandy <taviso@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] multiple crashes in radare2/radiff2
+To: oss-security@lists.openwall.com
 
+On Thu, Sep 8, 2016 at 4:08 PM, Solar Designer <solar@openwall.com> wrote:
+>
+> Hi,
+>
+> On Thu, Sep 08, 2016 at 05:34:09PM +0300, Vahagn Vardanyan wrote:
+> > I created report
+> > https://bugs.chromium.org/p/project-zero/issues/detail?id=933&can=1&q=&sort=-id
+>
+> Going to this URL, I am asked to login to a Google account (which I
+> didn't).  Can you please post the contents of your report and Tavis'
+> reply (as well as any other relevant replies) as a reply to this same
+> thread here on oss-security?
 
+I'm not involved at all.
 
----------- Forwarded message ---------
-From: Rafael Silva <rafael.silva@nearform.com>
-Date: Wednesday, August 9, 2023 at 3:14:35=E2=80=AFPM UTC-3
-Subject: Re: Node.js security updates for all active release lines, August=
-=20
-2023
-To: nodejs-sec <nodejs-sec@googlegroups.com>
+AFAICT, the reporter was trying to create issues in our private issue
+tracker, and then emailed me asking why the issues were being
+automatically closed.
 
+Trying to be helpful, I suggested using oss-security instead.
 
-The planned security releases are now available. You can read more about=20
-the details in=20
-https://nodejs.org/en/blog/vulnerability/august-2023-security-releases/.
-
-On Monday, July 31, 2023 at 11:48:26=E2=80=AFAM UTC-3 Rafael Silva wrote:
-
-The Node.js project will release new versions of all supported release=20
-lines on or shortly after Tuesday, August 8th, 2023.
-
-For more information see:=20
-https://nodejs.org/en/blog/vulnerability/august-2023-security-releases/
-
-
-------=_Part_19341_1766522372.1691604906745
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-
-<br /><br /><div><div dir=3D"auto">---------- Forwarded message ---------<b=
-r />From: <span dir=3D"auto">Rafael Silva &lt;rafael.silva@nearform.com&gt;=
-</span><br />Date: Wednesday, August 9, 2023 at 3:14:35=E2=80=AFPM UTC-3<br=
- />Subject: Re: Node.js security updates for all active release lines, Augu=
-st 2023<br />To: <span dir=3D"auto">nodejs-sec &lt;nodejs-sec@googlegroups.=
-com&gt;</span><br /></div><br /><br />The planned security releases are now=
- available. You can read more about the details in <a href=3D"https://nodej=
-s.org/en/blog/vulnerability/august-2023-security-releases/" target=3D"_blan=
-k" rel=3D"nofollow">https://nodejs.org/en/blog/vulnerability/august-2023-se=
-curity-releases/</a>.<br /><br /><div><div dir=3D"auto">On Monday, July 31,=
- 2023 at 11:48:26=E2=80=AFAM UTC-3 Rafael Silva wrote:<br /></div><blockquo=
-te style=3D"margin: 0px 0px 0px 0.8ex; border-left: 1px solid rgb(204, 204,=
- 204); padding-left: 1ex;">The Node.js project will release new versions of=
- all supported release lines on or shortly after Tuesday, August 8th, 2023.=
-<div><br /></div><div>For more information see: <a href=3D"https://nodejs.o=
-rg/en/blog/vulnerability/august-2023-security-releases/" rel=3D"nofollow" t=
-arget=3D"_blank">https://nodejs.org/en/blog/vulnerability/august-2023-secur=
-ity-releases/</a><br /></div></blockquote></div></div>=
-
-------=_Part_19341_1766522372.1691604906745--
-
-------=_Part_19340_581568219.1691604906745--
+Tavis.
