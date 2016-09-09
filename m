@@ -1,44 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/22/4
-Message-Id: <20160122143319.A768273C204@smtpvmsrv1.mitre.org>
-Date: Fri, 22 Jan 2016 09:33:19 -0500 (EST)
-From: cve-assign@...re.org
-To: gustavo.grieco@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: out-of-bounds write with cpio 2.11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/09/5
+Message-ID: <1695997.I5q5FJauoq@willoughby>
+Date: Fri, 09 Sep 2016 15:59:04 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+Subject: Re: GraphicsMagick 1.3.25 fixes some security issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tuesday 06 September 2016 20:50:23 Bob Friesenhahn wrote:
+> 4. The TIFF reader had a bug pertaining to use of TIFFGetField() when 
+> a 'count' value is returned.  The bug caused a heap read overflow (due 
+> to using strlcpy() to copy a possibly unterminated string) which could 
+> allow an untrusted file to crash the software.
 
-> in the parsing of cpio files
-> 
-> AddressSanitizer: heap-buffer-overflow
-> WRITE of size 2
-> 
-> util.c:1392 cpio_safer_name_suffix
 
-Use CVE-2016-2037.
+For who is interested, the details of the issue N° 4 are documented here:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+https://blogs.gentoo.org/ago/2016/08/23/graphicsmagick-two-heap-based-buffer-overflow-in-readtiffimage-tiff-c/[1] 
 
-iQIcBAEBCAAGBQJWoj0bAAoJEL54rhJi8gl5AHUP/RkKp+uneF867005iGi48jaF
-VpkwLC6mGHB/xFRvMCi1JQIHbtWY2sjaCxhNeBtLrQ2T6rp+ob+L2OORnbT3lyJe
-5qPSgp5mxFhlyWOJESoT8Hvla3AYpbkzb2vN1IrHvFgyFstRUjwvTdFv/Pup7En7
-B8jbbLNUsgFlAO7orTd9jLi4CrZTVyy1qOb9E7cs7hwPyyvWRaxQWOmR27gjr9Vx
-1MWh5L7v8VFvE4zP9AvVH+o3jId3LKoQyiwPc9+mHJcEDk6a1O+me/bXaDufcMN1
-k5orCuAq1GJ71MAbCFYbO7A/xZic8gUZ6nOzeLcSAWZALP9XJrX93ZF74ldcl165
-MrX6js5WXAE81jXCCWDlBj+ee7A5OazgCRTrSxSIjYfQU94oSKBch56fXwC1yS+M
-htjPXgs2ILv/HmFDWgxZpipdFuFSBqboHc8kjq0dA+6a3C7iRqsXzLHU9MGJsGiH
-lfBfDYMcBbb7rE9ryBAomV7jq9BD6xoaKTYXIjQ4ynrJxOY1jfn0mITPltikEF8/
-iOkgg3s9oZbY5DPwVfae7n6gPvpcQPJl9guEpGdmRrgW85NNUf6goDrgTIokwdoZ
-HCnTSwjv8i1Wg3tqvt6kvy0ssWAe0GwGCbgJyBmp/sq/LXb2TZ/XTG/a94scX40D
-p67V2HPHK+2GL8/v32B/
-=Vsja
------END PGP SIGNATURE-----
+
+The same block of code, which was rewritten because of the overflows, 
+contains also a null pointer access:
+
+https://blogs.gentoo.org/ago/2016/09/07/graphicsmagick-null-pointer-dereference-in-magickstrlcpy-utility-c/[2] 
+
+
+Unfortunately this problem was not reproducible by Mr Friesenhahn, but 
+seems to be disappeared after the commit which fixed the overflows.
+
+--
+Agostino
+
+--------
+[1] https://blogs.gentoo.org/ago/2016/08/23/graphicsmagick-two-heap-based-buffer-overflow-in-readtiffimage-tiff-c/
+[2] https://blogs.gentoo.org/ago/2016/09/07/graphicsmagick-null-pointer-dereference-in-magickstrlcpy-utility-c/
+
