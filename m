@@ -1,33 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/28/1
-Message-ID: <alpine.LFD.2.20.1610281122370.12679@wniryva>
-Date: Fri, 28 Oct 2016 11:24:17 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request  Qemu: 9pfs: information leakage via xattribute
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/09/11
+Message-Id: <20160909174108.D61853AE004@smtpvbsrv1.mitre.org>
+Date: Fri,  9 Sep 2016 13:41:08 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: ettercap: etterlog: multiple crashes
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
-File System(9pfs) support, is vulnerable to an information leakage issue. It 
-could occur by accessing xattribute value before it's written to.
+> Basically, the tool should read what you capture with YOUR ettercap, but since
+> ettercap is one of the valid tools for MITM, there are dozens of blog post
+> about how to use it, so there could be posts where malicious users make
+> available crafted datafile to show something.
+> 
+> Details:
+> https://blogs.gentoo.org/ago/2016/09/06/ettercap-etterlog-multiple-three-heap-based-buffer-overflow-el_profiles-c/
+> 
+> https://blogs.gentoo.org/ago/2016/09/09/ettercap-etterlog-null-pointer-dereference-in-fingerprint_search-ec_fingerprint-c/
 
-A privileged user inside guest could use this flaw to leak host memory bytes.
+These are crashes of a command-line program, not a program that is
+supposed to continue running to handle a series of inputs. No write
+access is reported. Also, running etterlog on an arbitrary
+attacker-modified .ecp or .eci file probably would occur very rarely.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg01790.html
+The "(three) heap-based buffer overflow" report is exclusively about
+"AddressSanitizer: heap-buffer-overflow ... READ." It's apparently
+about an attacker who fuzzes a file so that an IP address-length field
+is a large number rather than, for example, 4 or 32. A memcmp reads
+out-of-bounds data but the flow of control isn't altered. Also, this
+happens in the etterlog source code (utils/etterlog/el_profiles.c),
+not in library code that might be used in other applications.
 
-Reference:
-----------
-   -> http://wiki.qemu.org/Documentation/9psetup
+We feel that these crashes are just an inconvenience, not a security
+risk, and there are no CVE IDs at this time.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-This issue was reported by Li Qiang of 360.cn Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+iQIcBAEBCAAGBQJX0vOmAAoJEHb/MwWLVhi2ImQP/iRxxu9CbxT/TCTi1OK83Zzl
+2gEwUhdrwMgYif9A5baHjQNcVgj/L6djdku6//6KL1WczXodGTbh+SD+bgZM4Yqm
+2zR9+4jGn11PerC/7/Zs0arZSPBYwgo30gFvo4/UA1AOb+Z8dWJYl0vLGPfaS1Pa
+tlW2+ZkCwjMmpeR70+u915X+r2vmi/ELtnvIdDD+51xOS2St+ts4yIOOzEP8ju0A
+wghxGl+9m1Mzj8Ky5A6l2TPEuNrVGDP2GjIdbpc26ne6Kt8Xe/Sm1nYaWAogZKAv
+dfCvK84ReBaX0xBxsJMYk32+XP57xOWEyg1CKYH36ZGLszTwru7MuiUtv1L4aHZ2
+dqusZYwHdYSjB8cewZLf+QlbnqgTvt24g+Iw/F2J/fCi3QuwqWOABTvK4odWXMwS
+r7gL5DRMMWMs8zZkhDT1+C4hygl3cCIa8iGHUzPEjT3VZl7K9rlc1pGGEM23+GmR
+7ac74iOy3FYJFEev4Ko9IDaJqv6nxOQLVuuEaSFH27WAJPQ54e3xkQ39m6wz2fFT
+/hqEEONrzyyxcuErHyDzj+qQM1P/iBTmwMVsUVav9tcR3jKCWJi/bd4KsMeX0bKb
+YQe7ZkjTYHVR5CMNsh0aPJwjWVAZXOHdE2NcpBpagheV0+4P6hcwx2NKPJwgLmu1
+B1w0CaBwAR1ftKSN4Npm
+=fytj
+-----END PGP SIGNATURE-----
