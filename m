@@ -1,62 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/29/8
-Message-Id: <20160429161308.1775333600A@smtpvbsrv1.mitre.org>
-Date: Fri, 29 Apr 2016 12:13:08 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/09/8
+Message-Id: <20160909144538.607BF6C5187@smtpvmsrv1.mitre.org>
+Date: Fri,  9 Sep 2016 10:45:38 -0400 (EDT)
 From: cve-assign@...re.org
-To: mprpic@...hat.com
+To: chenqin@...sec.com.cn
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: three issues in libksba
+Subject: Re: CVE request for webp:index overflow,used by memcpy later
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Denial of Service due to stack overflow in src/ber-decoder.c
-> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=07116a314f4dcd4d96990bbd74db95a03a9f650a
+> Product: A new image format for the Web:Webp
+> in function:ReadFunc
+> 
+> fixed here:
+> https://chromium-review.googlesource.com/#/c/355380/
+> https://cr-rev.appspot.com/bb50bf42b0a39bc378401a2d5d8eaa678813a92f
 
-Use CVE-2016-4353. (This CVE is about changing the type of error
-handling after a decoder stack overflow. It is not about changing the
-decoder so that a decoder stack overflow occurs in fewer cases.)
+Do you know whether Google already assigned a CVE ID to this issue? If
+not, do you have access to any of the Google web pages that might
+contain the CVE ID if it exists?
 
+An attempt to retrieve the above cr-rev.appspot.com URL results in:
 
-> Integer overflow in the BER decoder src/ber-decoder.c
-> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=aea7b6032865740478ca4b706850a5217f1c3887
+  Location: https://chromium.googlesource.com/chromium/src/+/bb50bf42b0a39bc378401a2d5d8eaa678813a92f
 
->> The actual bug described below is due to assigning an int
->> (val.length) to a size_t (ti.length). The int was too large and thus
->> negative so that the condition to check for too large objects didn't
->> worked. Changing the type would have been enough but other conditions
->> are possible. Thus the introduction of sum_a1_a2_ge_b for overflow
->> checking and checks when adding 100 extra bytes to malloc calls are
->> added.
+and that second URL results in:
 
-We consider this two separate issues.
+  404 Not Found
 
-Use CVE-2016-4354 for the use of an incorrect integer data type.
+Also, https://chromium-review.googlesource.com/#/c/355380/ refers to
+https://bugs.chromium.org/p/webp/issues/detail?id=302 but that is
+currently not a public bug page.
 
-Use CVE-2016-4355 for the cases in which the code was simply making no
-attempt to check for an integer overflow (the "+ 100" cases and the
-"+= d->val.length" case).
-
-
-> Integer overflow in the DN decoder src/dn.c
-> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=243d12fdec66a4360fbb3e307a046b39b5b4ffc3
-
-This might be an error in the original
-https://security.gentoo.org/glsa/201604-04 advisory. We did not notice
-any obvious relationship between
-243d12fdec66a4360fbb3e307a046b39b5b4ffc3 and an integer overflow fix.
-The 243d12fdec66a4360fbb3e307a046b39b5b4ffc3 commit message seems to
-focus on "read access out of bounds." Also, there is no other recent
-commit at
-http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=history;f=src/dn.c
-that refers to an integer overflow. Possibly there was an inapplicable
-copy-and-paste of "Integer overflow in the" from the previous report
-about the BER decoder.
-
-Use CVE-2016-4356 for the 243d12fdec66a4360fbb3e307a046b39b5b4ffc3
-issue that is described as "Fix encoding of invalid utf-8 strings in
-dn.c" and "read access out of bounds."
+Finally, https://chromium-review.googlesource.com/#/c/355380/
+indicates that this is an issue in the examples/pngdec.c file. A crash
+bug in an example program does not necessarily qualify for a CVE ID.
+However, in this case, examples/pngdec.c is apparently used to build a
+library called libexample_dec, and it's conceivable that arbitrary
+applications rely on libexample_dec. (It also seems unlikely that a
+Google product relies on libexample_dec; that may be a reason that
+Google did not assign a CVE ID.)
 
 - -- 
 CVE Assignment Team
@@ -66,17 +51,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXI4eHAAoJEHb/MwWLVhi2ZvoP/0tfBkT4Iqjsya7V3BthT3ne
-p9wDYxI8Tre5Qza/lteablh3FicO4I8e4EFjghxYEd51lbVXerJBJNqo3vcZsDzD
-2lozbI0YooCsiE9Z2kESUFpT4agPg2yLamjFqmw4kxK71RTq+FDke5GTmbAK05WR
-ir4VoTsK1qPUB6mcq2qqylXjs/ulGL/pkd6SuJJAVp9YEExh2kgiey+1KtIDGeij
-4NnzJ5a7syT6VxyX/JfwNaLuNlfv6vddqJyp7NWAa/0B3y7n+6gjyVjyAuwZYsiN
-wbVJOw9p6TSVPp1VX7GOoxj/bWn9fiOfMzCsun0Oajq4Te9aXrCZODy9aWivaRlH
-2XMFUEHfELQV8UzvwJb1hA1PISzvzYheWxSNyncxiojKvJbKmi8UvrkVWYUXaGKl
-OFO6DcsoCnVpYwMAelN5Ir1hgsJ6dr73ssxuVFgO9jwAteDoqikE8HFVm5cJTELP
-q6Q9QecnHAA7aJ32PqcGd2sd10+majAejMZV5MZpoLTWUkH/1+olFGR1njpvegyK
-tepkG9onPWFXQ2iUbTpUxQzmgYYNrwdtmU+0TgFKXOcfLV8W88w7v22sfdhLUgj0
-sm4ckXuxB0fO+6TyVo/ZRVibm7UPjacrubB8f65lUTUldbx+3Wtwgl3+MWAKbpT4
-TBr+InX8c9ul3DacR4iv
-=u1+d
+iQIcBAEBCAAGBQJX0sqnAAoJEHb/MwWLVhi2E28QALdM2bA72+4irx6Sh61s5JsS
+rToRlvwZpIS5vvDm4TQQOhnviGTGSbUhwuA30p/0Xb8/35gKIhV70QLxIDLZPmHj
+gTBowDLV5ffddz5mVkL2cXMnecChuT1v2QsO4jW4WCx/yZoDYrDKTbPiwUENb/pU
+I6jg4k1uOJYpvLnPFT56kXD4BDeApqFjAZEfgG7lcdSDIKGN/tNr4kiCsrUVGqE6
+oZyQFJz/BvWmncIEcTBkc7aHxXsUdt6rSMuL5QyapilGBclj7M5NmK82Bq+SDNfD
+QTVX1fp7gCL8NNDI1SJKBjX/KEp4bGp4NKavifxaZmEn5pq2vBp4uItD/5rn0m6T
+nvp7Zvztv0YgdBrlY5M1fhhEo3YFO0+x+NXkBfsi8sbV1G+jQaG1jmjYPQHJaa2e
+A/fMInUDO+XqtJBnUPXTM+ZKINj6hH63ar+xi+Dsva8ri++kNooFlMeabpKw7AmQ
++X1RWDqDbWD9sBneG4MBhem3mZRbmvwQGLyBDO84Zxqq4a55ymA+wjz//La00Vn1
+G5Qo6rhZFEIUWyqdTkeCE6DLuTtq0xopa+B70WI+MSrq3Bi4QGYNFylyBFURgxns
+qzXbRUNqx1F6IrdsljMSyhzB9xwMD6EZUoEiRqFQYt/BDXfk3JqyP6bfapE8ZcyA
+jYF48PtLBOUE6wVh0UJi
+=scJU
 -----END PGP SIGNATURE-----
