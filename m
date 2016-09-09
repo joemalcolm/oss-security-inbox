@@ -1,39 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/11/3
-Message-ID: <20161011144645.GB3606@kroah.com>
-Date: Tue, 11 Oct 2016 16:46:45 +0200
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: linux kernel do_blockdev_direct_IO invalid memory access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/09/7
+Message-Id: <20160909144117.133EB332057@smtpvbsrv1.mitre.org>
+Date: Fri,  9 Sep 2016 10:41:17 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, luodalongde@...il.com, liqiang6-s@....cn
+Subject: Re: CVE Request Qemu: vmware_vga: OOB stack memory access when processing svga command
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 11, 2016 at 10:22:48PM +0800, Marco Grassi wrote:
-> Hello,
-> 
-> I posted this to ask feedback on security at kernel dot org, but I think my
-> mail got bounced back. Not sure if from the mailing list or from some
-> single recipient.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-It got there, you could have given us a few more hours to respond,
-especially as most of the USA was still asleep, and others of us were in
-a conference during the day in Europe. :(
+> Quick Emulator(Qemu) built with the VMware-SVGA "chipset" emulation support is
+> vulnerable to an OOB stack memory write issue. It could occur while processing
+> VGA commands in 'vmsvga_fifo_run' routine.
+> 
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg01764.html
 
-> Anyway reposting here,
-> 
-> the following program will cause a invalid memory access
-> 
-> BUG: KASAN: wild-memory-access on address 0005080000000000
-> 
-> See this link for the full sanitizer report, stacktrace and trigger poc
-> 
-> https://gist.github.com/marcograss/40850adb3c599ac38e0beac31617d56b
-> 
-> tested on current master, with KASAN.
+>> When processing svga command DEFINE_CURSOR in vmsvga_fifo_run,
+>> the computed BITMAP and PIXMAP size are checked against the
+>> 'cursor.mask[]' and 'cursor.image[]' array sizes in bytes.
+>> Correct these checks to avoid OOB memory access.
 
-Can you take this to the linux-fsdevel mailing list now that you have
-made it public?  That's the best place to resolve this.
+Use CVE-2016-7170.
 
-thanks,
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/display/vmware_vga.c but
+that may be an expected place for a later update.
 
-greg k-h
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJX0sm4AAoJEHb/MwWLVhi2QsIP/1hKnB1uJWV/u/21SPfEbDSs
+LcjSDPxTljCGmH2AY3csiyhStvZNwQqkCiIr11ZC9Vq9EH/0dWvdO6MfN+Bcx6NT
+EczC6JpUbxGDlRPXx/+9A68KCXFNFBZG2qhntm0EXpn0r8LNE/6l/7EFuidd7daZ
+T8+zH1tn0PvRXT3k7tbKflxeTu/VppdJk9JHCgeTFkB6ENUdBSM/+me/ttFH4TcC
+BCVYzZ8leENIMZSSbnYEX/gvLLDDKIU0+1VvJzoqRDT/djG7grMrNMrEUBq0OaYl
+Hw1ME4zbh54xuMPLKriMLPtux5rc3zQzYtXqdIpR5u68GJrTp7OIyUPhhKEUEx3v
+xN0nAJnV67gBgUQliwyiZ/P3Mt6VCHzHdmytl2Te/DwoRgS1m04OjhLuJUFj9YXY
+0s3RoWa+U8hFvnS77H43pbMyIUnggf/ZXfy/bcjd43Hcevkoe9PJqbCifxVwTaG6
+8+lRoPB7552alZKBrpQt/nOnLdvsFN9FZt3B9yqNGTAvgYTNBIsIZ7MlHuAR0CME
+n34G5MbDBY9yb2USkW1jCstoqjwpwmA0+wV8pE8kVE8cg0ZXs9oCh1TGovqIF3c4
+zZMgpXHqCy7jdbzmsDu7vLVcGpnG2twNS4vHQTJCDCl5lECYJw52VENjUiolNNQ8
+zHBSkSZBXvMZRaT+5aIR
+=i+cy
+-----END PGP SIGNATURE-----
