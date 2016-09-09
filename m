@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7720" "Thursday" "9" "August" "2018" "16:21:03" "+0200" "Andrey Konovalov" "andreyknvl@gmail.com" "<CA+fCnZfFwCd3icBUzH__C7XaCV-We8AaXzGw12zZ-OsuFckGWA@mail.gmail.com>" "163" "[oss-security] Re: Linux kernel: CVE-2017-18344: arbitrary-read vulnerability in the timer subsystem" "^Cc:" nil nil "8" "2018080914:21:03" "[oss-security] Re: Linux kernel: CVE-2017-18344: arbitrary-read vulnerability in the timer subsystem" (number mark "        andreyknvl@g Aug  9  163/7720  " thread-indent "\"[oss-security] Re: Linux kernel: CVE-2017-18344: arbitrary-read vulnerability in the timer subsystem\"\n") "<CA+fCnZcE=6dyUeU9CazgUR_yHTerNYXiK0gQNzjFSwjG=G-1uQ@mail.gmail.com>" ("<CA+fCnZcE=6dyUeU9CazgUR_yHTerNYXiK0gQNzjFSwjG=G-1uQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2444" "Friday" "9" "September" "2016" "13:41:08" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160909174108.D61853AE004@smtpvbsrv1.mitre.org>" "51" "[oss-security] Re: ettercap: etterlog: multiple crashes" nil nil nil "9" "2016090917:41:08" "[oss-security] Re: ettercap: etterlog: multiple crashes" (number mark "U       cve-assign@m Sep  9   51/2444  " thread-indent "\"[oss-security] Re: ettercap: etterlog: multiple crashes\"\n") "<2068016.NGJ2REXo3s@willoughby>" ("<2068016.NGJ2REXo3s@willoughby>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3175 invoked by uid 550); 9 Aug 2018 14:21:16 -0000
+Received: (qmail 24328 invoked by uid 550); 9 Sep 2016 17:41:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,208 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3157 invoked from network); 9 Aug 2018 14:21:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=NpIcCF+X5RbGhGy2+pAePtswG9ilTMlNljWy0kZR5MY=;
-        b=hhrxqyIHbXAZ3jBE5FckCYP2j6amvisjC3d44W/xrbMFQMmy2H/YjID/6wALUIx6LG
-         oHAbUnF/cmZHN8GhElc/IUv1tkHHJL2vlI7CG4BRePSk6PHYej/erQcI16c60IWlr53K
-         d6HuZe1uV0zekzQzpuhcF2arjm7DT5ebsUIKfBjjB5r6Qzlayx/cDWe4l2ADBSTS3BSr
-         Z1Qe5st97dapUnvfN1nG860rhS/M6CZogpg/MxiqVGuRHNGBGo693/ncJrIHO/O/UyFB
-         CuhcECgv3zWJddsPUF/5AK9aCUu7MQ7vblvi5JL43rJbAoPpTJ6iyTzpX1F0zplj5xZI
-         nzuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=NpIcCF+X5RbGhGy2+pAePtswG9ilTMlNljWy0kZR5MY=;
-        b=DQfzndOgmOdexbi/Xi40zNn3Dz/yHSEtBvDGaE1z8K1U6fSv9j3TAvc6eKqnoHwDCJ
-         Am6xkmuzQaSvKvBg9c0DgWlXp/1iKBTJaIGVV8MGQBQ0zY/3sCMpU12JEEFOBSSl1wlR
-         /OJ2ZuAs4hDN2WKytytVtcCfeiqa+tu/TXcIr6sMfrVMi/n4MWM/rzKToAOD2nSn3UlU
-         FsBWKqrn9Rg60UsvxB19CZXOK95DF1wuiabciy+u3pR/rehgdt5rL+8e4tEMrLBrZO/V
-         ZgqI7C7E3IX3t0CaD8jY85jJ2/SSYVtYRJObj7PTwtm4ogWQ9YHVD9qrvVupCb0YaJ1u
-         v18A==
-X-Gm-Message-State: AOUpUlHWtwHpLlt7hitYbZjGKYVnD9cRcglzqAKcIZOtHfjYlX1S4cOf
-	/7NdaJL3mFGMwUjO0eIiZA/fRLP6qm7cOzU8qsAzuUSP
-X-Google-Smtp-Source: AA+uWPyqJvSBFsBXjq8vIF+8qSTh62t+5inM3x2GuvNOxFo0YLQoSBnhOODaU8xu5FDoHNHH1h5+Ugu5YjqfjHpdp58=
-X-Received: by 2002:a19:db94:: with SMTP id t20-v6mr1717416lfi.126.1533824464336;
- Thu, 09 Aug 2018 07:21:04 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CA+fCnZcE=6dyUeU9CazgUR_yHTerNYXiK0gQNzjFSwjG=G-1uQ@mail.gmail.com>
-References: <CA+fCnZcE=6dyUeU9CazgUR_yHTerNYXiK0gQNzjFSwjG=G-1uQ@mail.gmail.com>
-Message-ID: <CA+fCnZfFwCd3icBUzH__C7XaCV-We8AaXzGw12zZ-OsuFckGWA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: Kostya Serebryany <kcc@google.com>, Dmitry Vyukov <dvyukov@google.com>, 
-	Alexander Potapenko <glider@google.com>, Kees Cook <keescook@google.com>
-Date: Thu, 9 Aug 2018 16:21:03 +0200
-From: Andrey Konovalov <andreyknvl@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Linux kernel: CVE-2017-18344: arbitrary-read vulnerability in the
- timer subsystem
-To: oss-security@lists.openwall.com
+Received: (qmail 24302 invoked from network); 9 Sep 2016 17:41:20 -0000
+From: cve-assign@mitre.org
+To: ago@gentoo.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <2068016.NGJ2REXo3s@willoughby>
+Message-Id: <20160909174108.D61853AE004@smtpvbsrv1.mitre.org>
+Date: Fri,  9 Sep 2016 13:41:08 -0400 (EDT)
+Subject: [oss-security] Re: ettercap: etterlog: multiple crashes
 
-On Thu, Aug 2, 2018 at 8:57 PM, Andrey Konovalov <andreyknvl@gmail.com> wrote:
-> Hi!
->
-> Syzkaller/syzbot found a global-out-of-bounds bug in the timer
-> subsystem of the Linux kernel [1], that is exploitable and can be used
-> to gain an arbitrary-read primitive. This allows to access kernel
-> memory and leak keys, credentials or other sensitive information that
-> is stored there (so the bug has a similar impact to Meltdown). I'll
-> share a PoC exploit in a week.
->
-> The bug was introduced in commit 57b8015e ("posix-timers: Show
-> sigevent info in proc file") [2] in 3.10 and fixed by commit cef31d9a
-> ("posix-timer: Properly check sigevent->sigev_notify") [3] in
-> 4.15-rc4. The bug only affects kernels that have CONFIG_POSIX_TIMERS
-> and CONFIG_CHECKPOINT_RESTORE enabled, which is done by a lot of
-> modern distros.
->
-> This bug has been fixed in Ubuntu 16.04 [7], but still affects at
-> least CentOS 7 at this moment (at least 3.10.0-862.9.1.el7.x86_64 that
-> I've checked). I haven't checked the other distros.
->
-> I've contacted linux-distros@ today and was asked to post to
-> oss-security@ right away, since the issue is already public (and has
-> been for the last 8 months, see the timeline below).
->
-> ======
->
-> Description from MITRE [4]:
->
-> The timer_create syscall implementation in kernel/time/posix-timers.c
-> in the Linux kernel before 4.14.8 doesn't properly validate the
-> sigevent->sigev_notify field, which leads to out-of-bounds access in
-> the show_timer function (called when /proc/$PID/timers is read). This
-> allows userspace applications to read arbitrary kernel memory (on a
-> kernel built with CONFIG_POSIX_TIMERS and CONFIG_CHECKPOINT_RESTORE).
->
-> ======
->
-> I thought it would be quite interesting to see when some Linux distros
-> fixed this bug, since there was no CVE requested and assigned until
-> recently.
->
-> Initially I was only looking at Ubuntu 16.04, here's the related timeline:
->
-> * Nov 30, 2017 - the bug reported by syzbot [5]
-> * Dec 15, 2017 - the fix committed upstream [3]
-> * Feb 17, 2018 - the fix backported to the 4.4 stable kernel branch [6]
-> * Mar 15, 2018 - the fix added to the Ubuntu Xenial 4.4 kernel branch [7]
-> * Jul 25, 2018 - CVE requested
-> * Aug 2, 2018 - notified linux-distros@
-> * Aug 2, 2018 - announcement on oss-security@
->
-> In this particular case of a somewhat "scary" bug there was a window
-> of 3.5 months between the bug being reported and the fixing commit
-> reaching the Ubuntu Xenial 4.4 kernel branch. This gives some insight
-> into how much time it usually takes for a fix to travel from upstream
-> through stable into a distro kernel when there's no CVE. Compared to
-> the 14 days, that distros are usually given to fix a security bug
-> reported through linux-distros@, that seems rather long.
->
-> Then I decided to take a look at the CentOS kernel. I was quite
-> surprised to find out that this bug hasn't been fixed there at all. I
-> was under the impression that most Linux distros either follow stable
-> kernel branches or monitor upstream commits for security related fixes
-> themselves. It seems that this is not the case. Perhaps this fix was
-> missed because CentOS 7 kernel is based on the 3.10 kernel version,
-> and the 3.10 stable kernel release stopped being supported in November
-> 2017.
->
-> This is just one bug though. Right now there are 700+ fixed bugs
-> reported by syzbot [8] and 200+ more, which are still not fixed [9].
-> Almost none of them have CVEs (if anybody want to practice requesting
-> CVEs, go for it). There are also ~9000 fixes backported to 4.4 stable
-> kernel. Some of them are security relevant and don't have CVEs. On top
-> of that apparently there are ~700 fixes that are missing in the 4.4
-> stable kernel [10].
->
-> It seems that a CVE is required for a particular security related fix
-> to end up in distro kernels, but there are no CVEs requested for most
-> of the bugs that are being fixed. So there's this inconsistency
-> between the Linux kernel community that just fixes the bugs without
-> bothering about CVEs and the distros, which require CVEs to apply
-> fixes to their kernels.
->
-> Just some thoughts :)
->
-> Thanks!
->
-> ======
->
-> [1] https://syzkaller.appspot.com/bug?id=e4cd90db60c4517094c0ffcb9468de1bf86809e7
->
-> [2] https://github.com/torvalds/linux/commit/57b8015e07a70301e9ec9f324db1a8b73b5a1e2b
->
-> [3] https://github.com/torvalds/linux/commit/cef31d9af908243421258f1df35a4a644604efbe
->
-> [4] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-18344
->
-> [5] https://groups.google.com/d/msg/syzkaller-bugs/9mUyHIix2ys/bTLPoT-kAgAJ
->
-> [6] https://lkml.org/lkml/2018/2/17/139
->
-> [7] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1756121
->
-> [8] https://syzkaller.appspot.com/
->
-> [9] https://syzkaller.appspot.com/?fixed=upstream
->
-> [10] https://twitter.com/grsecurity/status/1022599945604526087
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I've uploaded the exploit:
-https://github.com/xairy/kernel-exploits/blob/master/CVE-2017-18344/poc.c
+> Basically, the tool should read what you capture with YOUR ettercap, but since
+> ettercap is one of the valid tools for MITM, there are dozens of blog post
+> about how to use it, so there could be posts where malicious users make
+> available crafted datafile to show something.
+> 
+> Details:
+> https://blogs.gentoo.org/ago/2016/09/06/ettercap-etterlog-multiple-three-heap-based-buffer-overflow-el_profiles-c/
+> 
+> https://blogs.gentoo.org/ago/2016/09/09/ettercap-etterlog-null-pointer-dereference-in-fingerprint_search-ec_fingerprint-c/
 
-The exploit allows to read arbitrary virtual or physical (within the
-physmap) memory, to dump virtual memory that belongs to a particular
-process by its pid and to search the physical memory for a pattern
-(only the start of each page though, but that's enough to locate at
-least /etc/shadow). See the comment in the exploit source code for a
-usage example that shows how to read /etc/shadow on Ubuntu xenial
-4.13.0-38-generic. The exploit bypasses KASLR and SMEP, but doesn't
-bypass SMAP.
+These are crashes of a command-line program, not a program that is
+supposed to continue running to handle a series of inputs. No write
+access is reported. Also, running etterlog on an arbitrary
+attacker-modified .ecp or .eci file probably would occur very rarely.
 
-The bug is that the timer_create syscall doesn't validate the
-sigevent->sigev_notify value and then uses it to address a global
-array of strings in show_timer() when /proc/PID/timers is read. By
-providing a large sigev_notify value we can cause a
-global-out-of-bounds access that results in nstr[notify &
-~SIGEV_THREAD_ID] overflowing 8 bytes and ending up in the userspace.
-We can then mmap the accessed userspace page and put an arbitrary
-address there, which allows us to read arbitrary kernel memory. Since
-the kernel accesses the userspace here, the exploit attempt would be
-caught by SMAP.
+The "(three) heap-based buffer overflow" report is exclusively about
+"AddressSanitizer: heap-buffer-overflow ... READ." It's apparently
+about an attacker who fuzzes a file so that an IP address-length field
+is a large number rather than, for example, 4 or 32. A memcmp reads
+out-of-bounds data but the flow of control isn't altered. Also, this
+happens in the etterlog source code (utils/etterlog/el_profiles.c),
+not in library code that might be used in other applications.
 
-Since kernel image location is randomized due to KASLR we can't know
-in advance which page exactly we should mmap. However since the kernel
-usually lies in a known address range [0xffffffff81000000, ...), we
-can mmap a huge chunk of userspace memory that would catch the access
-wherever the kernel image is placed. We can then bisect the exact
-location by filling half of the mapped memory with one pointer and the
-other half with another and reading /proc/PID/timers to see which one
-got accessed. At this point we know the exact address in the userspace
-where we can place a pointer to read kernel data.
+We feel that these crashes are just an inconvenience, not a security
+risk, and there are no CVE IDs at this time.
 
-We could now calculate the kernel location based on this userspace
-address, but instead for whatever reason I leak the first IDT entry
-(which is divide_error) and calculate kernel image address based on
-that. The location of physmap is also randomized due to KASLR on some
-kernels (where CONFIG_RANDOMIZE_MEMORY=y), so we read the
-page_offset_base global variable value to find out the physmap
-location. It should be possible to find the location of all required
-kernel symbols heuristically instead of hard coding offsets, but I
-haven't really explored this.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Now we can read arbitrary physical memory through physmap. The
-/etc/shadow content always seems to be page aligned, so we can search
-the beginning of each page for something like 'root:!:' and locate it
-in the physical memory. We can also walk the list of running tasks
-starting with init_task and dump memory that belongs to a particular
-tasks by walking the page tables that belong to it. Dumping and
-inspecting memory for gnome-keyring-daemon for example allows us to
-find out user password.
-
-Thanks!
+iQIcBAEBCAAGBQJX0vOmAAoJEHb/MwWLVhi2ImQP/iRxxu9CbxT/TCTi1OK83Zzl
+2gEwUhdrwMgYif9A5baHjQNcVgj/L6djdku6//6KL1WczXodGTbh+SD+bgZM4Yqm
+2zR9+4jGn11PerC/7/Zs0arZSPBYwgo30gFvo4/UA1AOb+Z8dWJYl0vLGPfaS1Pa
+tlW2+ZkCwjMmpeR70+u915X+r2vmi/ELtnvIdDD+51xOS2St+ts4yIOOzEP8ju0A
+wghxGl+9m1Mzj8Ky5A6l2TPEuNrVGDP2GjIdbpc26ne6Kt8Xe/Sm1nYaWAogZKAv
+dfCvK84ReBaX0xBxsJMYk32+XP57xOWEyg1CKYH36ZGLszTwru7MuiUtv1L4aHZ2
+dqusZYwHdYSjB8cewZLf+QlbnqgTvt24g+Iw/F2J/fCi3QuwqWOABTvK4odWXMwS
+r7gL5DRMMWMs8zZkhDT1+C4hygl3cCIa8iGHUzPEjT3VZl7K9rlc1pGGEM23+GmR
+7ac74iOy3FYJFEev4Ko9IDaJqv6nxOQLVuuEaSFH27WAJPQ54e3xkQ39m6wz2fFT
+/hqEEONrzyyxcuErHyDzj+qQM1P/iBTmwMVsUVav9tcR3jKCWJi/bd4KsMeX0bKb
+YQe7ZkjTYHVR5CMNsh0aPJwjWVAZXOHdE2NcpBpagheV0+4P6hcwx2NKPJwgLmu1
+B1w0CaBwAR1ftKSN4Npm
+=fytj
+-----END PGP SIGNATURE-----
