@@ -1,4 +1,9 @@
-Received: (qmail 20352 invoked by uid 550); 27 Apr 2022 06:40:30 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1316" "Friday" "9" "September" "2016" "15:59:04" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<1695997.I5q5FJauoq@willoughby>" "39" "Re: [oss-security] GraphicsMagick 1.3.25 fixes some security issues" nil nil nil "9" "2016090913:59:04" "[oss-security] GraphicsMagick 1.3.25 fixes some security issues" (number mark "U       ago@gentoo.o Sep  9   39/1316  " thread-indent "\"Re: [oss-security] GraphicsMagick 1.3.25 fixes some security issues\"\n") "<alpine.GSO.2.20.1609062029590.6469@freddy.simplesystems.org>" ("<alpine.GSO.2.20.1609062029590.6469@freddy.simplesystems.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 10196 invoked by uid 550); 9 Sep 2016 13:59:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,105 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20311 invoked from network); 27 Apr 2022 06:40:30 -0000
-Date: Wed, 27 Apr 2022 08:40:18 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <nno31819-r6r5-o5q5-53q1-285qn67925p@unkk.fr>
-X-fromdanielhimself: yes
+Received: (qmail 10178 invoked from network); 9 Sep 2016 13:59:22 -0000
+Message-ID: <1695997.I5q5FJauoq@willoughby>
+User-Agent: KMail/4.14.10 (Linux/4.4.6-gentoo; KDE/4.14.20; x86_64; ; )
+In-Reply-To: <alpine.GSO.2.20.1609062029590.6469@freddy.simplesystems.org>
+References: <alpine.GSO.2.20.1609062029590.6469@freddy.simplesystems.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl OAUTH2 bearer bypass in connection re-use
+Content-Type: multipart/alternative; boundary="nextPart2273483.libHqEvIZJ"
+Content-Transfer-Encoding: 7Bit
+Cc: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
+Date: Fri, 09 Sep 2016 15:59:04 +0200
+From: Agostino Sarubbo <ago@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] GraphicsMagick 1.3.25 fixes some security issues
+To: oss-security@lists.openwall.com
 
-OAUTH2 bearer bypass in connection re-use
-=========================================
+--nextPart2273483.libHqEvIZJ
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
 
-Project curl Security Advisory, April 27th 2022 -
-[Permalink](https://curl.se/docs/CVE-2022-22576.html)
+On Tuesday 06 September 2016 20:50:23 Bob Friesenhahn wrote:
+> 4. The TIFF reader had a bug pertaining to use of TIFFGetField() when=20
+> a 'count' value is returned.  The bug caused a heap read overflow (due=20
+> to using strlcpy() to copy a possibly unterminated string) which could=20
+> allow an untrusted file to crash the software.
 
-VULNERABILITY
--------------
 
-libcurl might reuse OAUTH2-authenticated connections without properly making
-sure that the connection was authenticated with the same credentials as set
-for this transfer. This affects SASL-enabled protocols: SMPTP(S), IMAP(S),
-POP3(S) and LDAP(S) (openldap only).
+For who is interested, the details of the issue N=C2=B0 4 are documented he=
+re:
 
-libcurl maintains a pool of live connections after a transfer has completed
-(sometimes called the connection cache). This pool of connections is then gone
-through when a new transfer is requested and if there is a live connection
-available that can be reused, it is preferred instead of creating a new one.
+https://blogs.gentoo.org/ago/2016/08/23/graphicsmagick-two-heap-based-buffe=
+r-overflow-in-readtiffimage-tiff-c/[1]=20
 
-Due to this security vulnerability, a connection that is successfully created
-and authenticated with a user name + OAUTH2 bearer could subsequently be
-erroneously reused even for user + [other OAUTH2 bearer], even though that
-might not even be a valid bearer. This could lead to an authentication bypass,
-either by mistake or by a malicious actor.
 
-We are not aware of any exploit of this flaw.
+The same block of code, which was rewritten because of the overflows,=20
+contains also a null pointer access:
 
-INFO
-----
+https://blogs.gentoo.org/ago/2016/09/07/graphicsmagick-null-pointer-derefer=
+ence-in-magickstrlcpy-utility-c/[2]=20
 
-This flaw was introduced in curl in 2013 with the commit series that started
-with [19a05c908f7d8b](https://github.com/curl/curl/commit/19a05c908f7d8b).
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2022-22576 to this issue.
+Unfortunately this problem was not reproducible by Mr Friesenhahn, but=20
+seems to be disappeared after the commit which fixed the overflows.
 
-CWE-305: Authentication Bypass by Primary Weakness
+--
+Agostino
 
-Severity: Medium
+--------
+[1] https://blogs.gentoo.org/ago/2016/08/23/graphicsmagick-two-heap-based-b=
+uffer-overflow-in-readtiffimage-tiff-c/
+[2] https://blogs.gentoo.org/ago/2016/09/07/graphicsmagick-null-pointer-der=
+eference-in-magickstrlcpy-utility-c/
 
-AFFECTED VERSIONS
------------------
+--nextPart2273483.libHqEvIZJ--
 
-- Affected versions: curl 7.33.0 to and including 7.82.0
-- Not affected versions: curl < 7.33.0 and curl >= 7.83.0
-
-Note that libcurl is used by many applications, but not always advertised as
-such.
-
-THE SOLUTION
-------------
-
-A [fix for CVE-2022-22576](https://github.com/curl/curl/commit/852aa5ad351ea53e5f)
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.83.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Set the bearer string as password *as well* when using OAUTH2 bearer
-      authentication with these protocols.
-
-TIME LINE
----------
-
-It was first reported to the curl project on March 18 2022. We contacted
-distros@openwall on April 18.
-
-libcurl 7.83.0 was released on April 27 2022, coordinated with the
-publication of this advisory.
-
-CREDITS
--------
-
-Reported and patched by Patrick Monnerat.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
