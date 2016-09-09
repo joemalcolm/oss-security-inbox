@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1917" "Thursday" "11" "February" "2016" "16:02:37" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160211210237.884E272E025@smtpvbsrv1.mitre.org>" "53" "[oss-security] Re: CVE requests: Multiple vulnerabilities in GraphicsMagick parsing and processing SVG files" nil nil nil "2" "2016021121:02:37" "[oss-security] Re: CVE requests: Multiple vulnerabilities in GraphicsMagick parsing and processing SVG files" (number mark "U       cve-assign@m Feb 11   53/1917  " thread-indent "\"[oss-security] Re: CVE requests: Multiple vulnerabilities in GraphicsMagick parsing and processing SVG files\"\n") "<CACn5sdTk+VizwzyfMXDUJuEZi9fEv_OUav73NRobrb6D2ruLxQ@mail.gmail.com>" ("<CACn5sdTk+VizwzyfMXDUJuEZi9fEv_OUav73NRobrb6D2ruLxQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["713" "Friday" "9" "September" "2016" "16:29:51" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<2068016.NGJ2REXo3s@willoughby>" "20" "[oss-security] ettercap: etterlog: multiple crashes" nil nil nil "9" "2016090914:29:51" "[oss-security] ettercap: etterlog: multiple crashes" (number mark "U       ago@gentoo.o Sep  9   20/713   " thread-indent "\"[oss-security] ettercap: etterlog: multiple crashes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26156 invoked by uid 550); 11 Feb 2016 21:02:52 -0000
+Received: (qmail 32571 invoked by uid 550); 9 Sep 2016 14:30:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,65 +12,34 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26113 invoked from network); 11 Feb 2016 21:02:49 -0000
-From: cve-assign@mitre.org
-To: gustavo.grieco@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CACn5sdTk+VizwzyfMXDUJuEZi9fEv_OUav73NRobrb6D2ruLxQ@mail.gmail.com>
-Message-Id: <20160211210237.884E272E025@smtpvbsrv1.mitre.org>
-Date: Thu, 11 Feb 2016 16:02:37 -0500 (EST)
-Subject: [oss-security] Re: CVE requests: Multiple vulnerabilities in GraphicsMagick parsing and processing SVG files
+Received: (qmail 32542 invoked from network); 9 Sep 2016 14:30:08 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
+To: oss-security@lists.openwall.com
+Date: Fri, 09 Sep 2016 16:29:51 +0200
+Message-ID: <2068016.NGJ2REXo3s@willoughby>
+User-Agent: KMail/4.14.10 (Linux/4.4.6-gentoo; KDE/4.14.20; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] ettercap: etterlog: multiple crashes
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> We recently tested the last release of GraphicsMagick (1.3.23)
+etterlog which is part off ettercap, crashes when try to reads malformed data.
 
-> AddressSanitizer: heap-buffer-overflow
-> WRITE of size 8
->     #0 0x5a892b in TracePoint magick/render.c:5125
-> 
-> AddressSanitizer: stack-buffer-overflow
-> WRITE of size 1
->     #0 0x60ba3a in GetToken magick/utility.c:2638
-> 
-> AddressSanitizer: heap-buffer-overflow on address
-> WRITE of size 8
->     #0 0x93c004 in GetTransformTokens coders/svg.c:361
+Basically, the tool should read what you capture with YOUR ettercap, but since 
+ettercap is one of the valid tools for MITM, there are dozens of blog post 
+about how to use it, so there could be posts where malicious users make 
+available crafted datafile to show something.
 
-Use CVE-2016-2317 for this set of three issues.
+Details:
+https://blogs.gentoo.org/ago/2016/09/06/ettercap-etterlog-multiple-three-heap-based-buffer-overflow-el_profiles-c/
+
+https://blogs.gentoo.org/ago/2016/09/09/ettercap-etterlog-null-pointer-dereference-in-fingerprint_search-ec_fingerprint-c/
 
 
-> AddressSanitizer: SEGV on unknown address 0x000000000000
->     #0 0x59866a in DrawImage magick/render.c:2999
-> 
-> AddressSanitizer: SEGV on unknown address 0x000000000000
->     #0 0x945793 in SVGStartElement coders/svg.c:1757
-> 
-> AddressSanitizer: SEGV on unknown address 0x000000000000
->     #0 0x5a396c in TraceArcPath magick/render.c:4550
+If you think that something is suitable for an identifier, please assign one.
+Thanks.
 
-Use CVE-2016-2318 for this set of three issues.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWvPYNAAoJEL54rhJi8gl55cQP/1ueHEBup/X4TOOAKln/6MVO
-QcV/hhBnq6kGVbw/YM0zgTogAqJQUS9HOWrMAf09o9xs44k8A8D3hR4OV+vaQAAg
-hKgtqqEcj5Tl6bf8FPlxNFW4ZuA6XsNJTxwCUNGy//QDD1Ozqy4GxxCL82Sp0zZT
-fp/isPP7uaOrOMc/A+c5z6ak4NN6LEJYY8Ze4x/kqLSSbPEi5pyrBBJQLHhdLYTF
-tpQ9NYR63SkKkJCgJbAh9pZTVLmdQ8SMbV7YYKnLxuQN2Jjhbjs6KKkiL3vntxFe
-0yw7S+oH3c7pCyQIA43mJYqLNj1Ij4ZIJqnpaCFsUEk/bPMnzjGUtGZGsm6KZMkM
-qHDiukkRnVpF9vGtTVPu3aUZ13EJWzUoVln8QPr3rSKavHXTTiFdG7WvL2ThEEZd
-1tzMpi3IrhGe01ISv5JK/qxcJHBrEDr89tOPnwdsi9A3NeLfgxQz1myhesG+8uk0
-zwcmFsR/nz36s2udFTjRxe4a/mHKaYurXtYr6+sB55sHs/qLJb00BX0cP3Kv9ga/
-VbCRMuN4SciVkd3o/b7NGY/YeW9lYYVgvd/bzfPivOVMjywkDmpbkvhbo/TJNg/1
-DSTX/g1o5cBI6QKXYNoz4p6Pa+NwJStsdbo76gkyfh5OPxe/HdPlBDgfQz6lVRgC
-rOktkYCy3VMBOzVl2KEH
-=uMbR
------END PGP SIGNATURE-----
+--
+Agostino
