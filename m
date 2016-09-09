@@ -1,48 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/28/4
-Message-ID: <CADSYzsu6L7vk1bbmQeYsc3ov1qufgyPXtsP-oV0RGGOjUAkLHw@mail.gmail.com>
-Date: Wed, 28 Dec 2016 03:03:39 -0200
-From: Dawid Golunski <dawid@...alhackers.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/09/3
+Message-ID: <a3531031-58b5-2210-8e5f-f997cd07be27@powerdns.com>
+Date: Fri, 9 Sep 2016 13:30:11 +0200
+From: Remi Gacogne <remi.gacogne@...erdns.com>
 To: oss-security@...ts.openwall.com
-Subject: PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit (CVE-2016-10045) (Bypass of the CVE-2016-1033 patch)
+Subject: PowerDNS Security Advisory 2016-01: Crafted queries can cause unexpected backend load
 Content-Type: text/plain; charset=utf-8
 
-PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit
-(CVE-2016-10045) (Bypass for the CVE-2016-1033 patch)
+Hi All,
 
-Discovered by Dawid Golunski (@dawid_golunski)
-https://legalhackers.com
+Two security issues of medium severity have been reported to us by
+Florian Heinz and Martin Kluge in PowerDNS Authoritative Server <=
+3.4.9. We released PowerDNS Authoritative 3.4.10 a week ago, fixing both
+issues. PowerDNS Authoritative 4.0.x and PowerDNS Recursor are not affected.
 
-Desc:
+The corresponding security advisory is provided below, and can also be
+found at: https://doc.powerdns.com/md/security/powerdns-advisory-2016-01/
 
-I discovered that the current PHPMailer versions (< 5.2.20) were still
-vulnerable to RCE as it is possible to bypass the currently available
-patch.
-
-This was reported responsibly to the vendor & assigned a CVEID on the
-26th of December.
-The vendor has been working on a new patch which would fix the problem but
-not break the RFC too badly. The patch should be published very soon.
-
-I'm releasing this as a 0day without the new patch available publicly
-as a potential bypass was publicly discussed on oss-sec with Solar
-Designer in the PHPMailer < 5.2.18 thread, so holding the advisory
-further would serve no purpose.
+Please feel free to contact me directly if you have any question.
 
 
-Current advisory URL:
+PowerDNS Security Advisory 2016-01: Crafted queries can cause unexpected
+backend load
 
-https://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CVE-2016-10045-Vuln-Patch-Bypass.html
+CVE: CVE-2016-5426, CVE-2016-5427
+Date: 9th of September 2016
+Credit: Florian Heinz and Martin Kluge
+Affects: PowerDNS Authoritative Server up to and including 3.4.9
+Not affected: PowerDNS Authoritative Server 3.4.10, 4.x
+Severity: Medium
+Impact: Degraded service or Denial of service
+Exploit: This problem can be triggered by sending specially crafted
+query packets
+Risk of system compromise: No
+Solution: Upgrade to a non-affected version
+Workaround: Run dnsdist with the rules provided below in front of
+potentially affected servers, or dimension the backend capacity so that
+it can handle the increased load.
 
-More updates soon at:
+Two issues have been found in PowerDNS Authoritative Server allowing a
+remote, unauthenticated attacker to cause an abnormal load on the
+PowerDNS backend by sending crafted DNS queries, which might result in a
+partial denial of service if the backend becomes overloaded. SQL
+backends for example are particularly vulnerable to this kind of
+unexpected load if they have not been dimensioned for it.
+The first issue is based on the fact that PowerDNS Authoritative Server
+accepts queries with a qname's length larger than 255 bytes. This issue
+has been assigned CVE-2016-5426.
+The second issue is based on the fact that PowerDNS Authoritative Server
+does not properly handle dot inside labels. This issue has been assigned
+CVE-2016-5427.
+Both issues have been addressed by this commit:
+https://github.com/PowerDNS/pdns/commit/881b5b03a590198d03008e4200dd00cc537712f3
 
-https://twitter.com/dawid_golunski
+PowerDNS Authoritative Server up to and including 3.4.9 is affected. No
+other versions are affected. The PowerDNS Recursor is not affected.
+
+dnsdist can be used to block crafted queries, using
+QNameWireLengthRule() to block queries with a qname larger than 255
+bytes and QNameLabelsCountRule() to block queries with a very large
+amount of labels. Please note that restricting the number of labels in a
+query might lead to unexpected issues, especially with DNSSEC-enabled
+domains.
+
+We'd like to thank Florian Heinz and Martin Kluge for finding and
+subsequently reporting this issue.
 
 
 -- 
-Regards,
-Dawid Golunski
-https://legalhackers.com
-t: @dawid_golunski
+Remi Gacogne
+PowerDNS.COM BV - https://www.powerdns.com/
 
-View attachment "PHPMailer-fix-bypass.txt" of type "text/plain" (6286 bytes)
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
