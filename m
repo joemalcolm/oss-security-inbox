@@ -1,62 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/22/5
-Message-Id: <20160622213446.7624B6C01D7@smtpvmsrv1.mitre.org>
-Date: Wed, 22 Jun 2016 17:34:46 -0400 (EDT)
-From: cve-assign@...re.org
-To: john@...nuts.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: SQL injection in MovableType xml-rpc interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/09/10
+Message-ID: <CANO=Ty3juci9AThs7OTWMSoCuJyGEeAiJ+j8qJPgn6mj-Xs91A@mail.gmail.com>
+Date: Fri, 9 Sep 2016 09:42:12 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>, security@...stis.co
+Subject: Re: CVEs for public Kibana / logstash issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+As per discussion with MITRE the DWF will assign these CVEs (I had assumed
+Elastic.co had asked for some already hence the public query). The CVEs for
+this are in commit:
+https://github.com/distributedweaknessfiling/DWF-Database/commit/b894223ca5da3dd5bb9dde8ba6b13cf2c53fa1fe
 
-> SixApart just released new versions of MovableType 6.2 and 6.1 to fix an SQL
-> injection in the xml-rpc interface. 
+On Thu, Sep 8, 2016 at 9:02 AM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-> https://movabletype.org/news/2016/06/movable_type_626_and_613_released.html
+> I just checked https://www.elastic.co/community/security and the Kibana
+> issues do not have CVEs, can you please assign CVEs for:
+>
+> Kibana:
+>
+> ESA-2016-05 2016-09-06
+> Version 2.4.0 of the Reporting plugin is vulnerable to a CSRF
+> vulnerability that could allow an attacker to generate superfluous reports
+> whenever an authenticated Kibana user navigates to a specially-crafted page. Users
+> of the Reporting plugin should upgrade Kibana to 4.6.1 and Reporting to
+> 2.4.1.
+>
 
-This says:
+CVE-2016-1000218
 
->> Previous versions, including Movable Type 6.2.4 and 6.1.2, are
->> susceptible to SQL injection attacks via XML-RPC interface.
 
->> AFFECTED VERSIONS OF MOVABLE TYPE
+>
+> ESA-2016-04 2016-08-03
+> When a custom output is configured for logging in versions of Kibana
+> before 4.5.4 and 4.1.11, cookies and authorization headers could be written
+> to the log files. This information could be used to hijack sessions of
+> other users when using Kibana behind some form of authentication such as
+> Shield. Users should upgrade to 4.5.4 or 4.1.11.
+>
 
->>    Movable Type Pro 6.0.x, 6.1.x, 6.2.x
->>    Movable Type Advanced 6.0.x, 6.1.x, 6.2.x
+CVE-2016-1000219
 
-Use CVE-2016-5742.
 
-> The vulnerability also affects the older GPLv2 licensed MovableType
-> 5.2.13.
+>
+> ESA-2016-03 2016-08-03
+> Versions of Kibana before 4.5.4 and 4.1.11 are vulnerable to an XSS attack
+> that would allow an attacker to execute arbitrary JavaScript in users'
+> browsers. Users should upgrade to 4.5.4 or 4.1.11.
+>
 
-Is there a separate public reference stating that 5.2.13 is affected?
-Or, do you mean that you've done your own analysis and concluded
-that 5.2.13 has the same vulnerability as 6.x? (Either one seems
-fine, and wouldn't affect the number of CVE IDs - we are mostly
-interested in linking the CVE to the primary-source reference about
-the 5.2.13 vulnerability, if such a reference exists elsewhere.)
+CVE-2016-1000220
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXawQKAAoJEHb/MwWLVhi25CYP/1ndEBhuECXE1ewc2We9koth
-yYPF2n523eUcrcl5gZIKsfFnZBAiGSQTiGqCpjtZ6DFF8JkGS8gr+QCe6y6yzF0x
-ayljwMsxMzHG0QMEmM0v/KKeIGacLTfsKwfOMLiVM5xsXURXZXxP7oifneTS75Rj
-wWFW1KQqz6tpQi4NNQp5jCu2R1hv+JrXTX2x/NlG5sUSsxZ96+8JFVckLqVrzLo1
-HVaZBHkYvRgdntGmt24yH6fMGBHGpTGGP2mMTiYDA736dcgk2fv6QB7HPiPAXl9D
-BYeZpa1A4vnmMaGB7rC2A56yChJ2cbcGr1AZZGlwHaIqWJhm5Qh/eP6AE7y+0ank
-0xQe9DBPzTB7YUzBzdnIIgVjA1cgTxUhfryOAdnb1ci3E6hLVSwdKbMEzaIg63fG
-nD7Vv2QBTuFhr3wkvugnHadW8oAsfPqeM6nr1uTjzhERQa6PBundQLzsDRBk3aUT
-95V8WoZ0yv+32KV5WyZzZM2VuywD6cWW85OVRQM2wFMi4Z8K91fl9qr0IaEwRr45
-U8wOnCOHCRRGLFjArlc+5uDQ5cEZBE+449ZIxUE+Pa2ljRW5oz172Dzam2jF+hS9
-5sN2dVRZ7EX6AZkXb4npt1HKivne3W770qirZmoR+W/VZCm6Fb3bOx4+Aft/2Guh
-XonC8O8zTCjrRB4/KmoS
-=CU2Q
------END PGP SIGNATURE-----
+>
+> Logstash:
+>
+> ESA-2016-02 2016-07-07
+> Prior to version 2.3.4, Elasticsearch Output plugin would log to file HTTP
+> authorization headers which could contain sensitive information. Users
+> who secure communication from Logstash to Elasticsearch via Basic
+> Authorization using Elastic Shield or other systems are advised to upgrade
+> to this version.
+>
+
+CVE-2016-1000221
+
+
+>
+> ESA-2016-01 2016-02-02
+> Prior to version 2.1.2, the CSV output can be attacked via engineered
+> input that will create malicious formulas in the CSV data. Users that
+> currently use Logstash CSV output plugin or may want to use it in the
+> future should upgrade to 2.2.0 or 2.1.2.
+>
+
+CVE-2016-1000222
+
+
+>
+> Thanks
+>
+> --
+>
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> Red Hat Product Security contact: secalert@...hat.com
+>
+
+
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
