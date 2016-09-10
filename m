@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1444" "Tuesday" "22" "September" "2015" "16:54:14" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150922205414.044EE6C0091@smtpvmsrv1.mitre.org>" "38" "[oss-security] Re: CVE Request: gollum information disclosure vulnerability" nil nil nil "9" "2015092220:54:14" "[oss-security] Re: CVE Request: gollum information disclosure vulnerability" (number mark "        cve-assign@m Sep 22   38/1444  " thread-indent "\"[oss-security] Re: CVE Request: gollum information disclosure vulnerability\"\n") "<55FEA7E1.1070007@uu.nl>" ("<55FEA7E1.1070007@uu.nl>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1471" "Saturday" "10" "September" "2016" "12:44:13" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160910164413.9514542E026@smtpvbsrv1.mitre.org>" "37" "[oss-security] Re: autotrace: out-of-bounds write" nil nil nil "9" "2016091016:44:13" "[oss-security] Re: autotrace: out-of-bounds write" (number mark "U       cve-assign@m Sep 10   37/1471  " thread-indent "\"[oss-security] Re: autotrace: out-of-bounds write\"\n") "<6437795.J0nPW8acoZ@arcadia>" ("<6437795.J0nPW8acoZ@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22315 invoked by uid 550); 22 Sep 2015 20:54:25 -0000
+Received: (qmail 7469 invoked by uid 550); 10 Sep 2016 16:44:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22295 invoked from network); 22 Sep 2015 20:54:25 -0000
-In-Reply-To: <55FEA7E1.1070007@uu.nl>
-Message-Id: <20150922205414.044EE6C0091@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue, 22 Sep 2015 16:54:14 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: gollum information disclosure vulnerability
-To: d.ometto@gmail.com
+Received: (qmail 7437 invoked from network); 10 Sep 2016 16:44:25 -0000
+From: cve-assign@mitre.org
+To: ago@gentoo.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <6437795.J0nPW8acoZ@arcadia>
+Message-Id: <20160910164413.9514542E026@smtpvbsrv1.mitre.org>
+Date: Sat, 10 Sep 2016 12:44:13 -0400 (EDT)
+Subject: [oss-security] Re: autotrace: out-of-bounds write
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> A vulnerability has been found in the gollum wiki, which allows
-> attackers to gain read access to arbitrary files on the system.
+> with Address Sanitizer I found that each bmp you try to manage with autotrace
+> causes an out-of-bounds write.
 > 
-> Website: https://github.com/gollum/gollum
-> Affected versions: 4.0.0 and earlier
-> Patched version: 4.0.1
-> 
-> https://github.com/gollum/gollum/commit/ce68a88293ce3b18c261312392ad33a88bb69ea1
+> https://blogs.gentoo.org/ago/2016/09/10/autotrace-heap-based-buffer-overflow-in-pstoedit_suffix_table_init-output-pstoedit-c/
 
-> +  halt 500 unless tempfile.is_a? Tempfile
+>> autotrace: heap-based buffer overflow in pstoedit_suffix_table_init (output-pstoedit.c)
+>> 
+>> AddressSanitizer: heap-buffer-overflow
+>> WRITE of size 8
 
-Use CVE-2015-7314.
+Use CVE-2016-7392.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWAb0kAAoJEL54rhJi8gl5b04QAKUS3eQcfKwMz1IpPGFw2fo8
-XzZVU0frlXw5aLzvFK22MW6auTWtsa3CnwBOFDwEFXvfN3V3p4uLjsTLIVN2WWij
-GMhqXZKe07bQpXOrO0li0PeAHCkPSjwCLMpK98odXR3tRXbKp5fHEfGjfpg+6u98
-Sq2bavxC6wCBIbF9k6wmWkJ/uGzSt6jNqt/sOQ/oVsNUJ9BdPhKIa9IypaPB8r1R
-DXVI9W29rFAqFnkMXSGY4+tLQJhIsySnKjhJ8ViDVYNTD45eUsjJAawXhxbGJafz
-SqKBfADfXpWNA6p2Vvfyyi3ys8v0jnN/fZqmROulBd0XUq+KMVFOe7NLalC7fcxh
-aN8Q66JfroHcyb0hPw92sYpivyUSxz4prCOc2w0OPH1CvxACMqfVzCeq4TGZuMlO
-VJBRnxhrhNWRTAIW/x+9OSMXJfglyKdF5pDtdSqYO+UoG5ND6n4rABPogRXknP0I
-6cdaFpfRtOKWoDZqqANV8M7I956Vyol/kRkuVr8r+iHUfL/LWAh7iOqYlq82EmXo
-Gb9koVcOLMKjUnzF4ELC2qjt8Z4U8jK5p9L3z7cD+NOyFhfOHNKGkO1X5H4lpyjr
-S0valRAG6k1+ptHknNz9l+fzsJmPnL0D51yWSiX+/Pkx7HKu7v9Q5a3PgPAyhyeu
-s8IpKgVaqe63J6di8cGR
-=o7Ih
+iQIcBAEBCAAGBQJX1Df+AAoJEHb/MwWLVhi2el8QALQETkVVm3W/OW5YeG8BHI+y
+mukTPkQsJ08ToNBHyo6Q8DjAP6mLgR5sN65QGJfkCEbb+T2IJVPwJ17fYWfXeS+k
+hc79XGKWhRHrz+KGhL/9ljkgNMrFfXWfZ2MkS+Vhkv2f68bPDATxYXJlyVt/vKus
+UBwVk7DxfsURUe/hwWzzYiEFn2D8VyVaUkh+SveDQUbJWgytthNnvVBKGoeKXUzF
+jjmzRHXuwh++gG+IA1lsns6tpxsGP1Or7izMPwIvjSY0leTWF9nNT+xNftU535RC
+l0Bj4ldNeytGf3N9f6dqbUO4cuK6/Os73/QcplI2PXK7eV3y/8V+qmrFFgVn1u4p
+hXO5X1oMsG9AYJirud9EzqCSvlSuxlpuSzm4UgzGqXt2tyFT1XMw593X3C0RK0mt
+pWgt5RW6xrKNiEjL9muog4koPBiADGj1RyiOHJc7C+yrZ71+4pYq4NtEld3AUhPR
+x1cOss+Vu2MINRfFjlLhRFfhFIFNsit0HgxTH+2SMzwBZovXGrgLY+i2mC2WEwPt
+R4QXL0yuV2vIopghiH2Z2i8oWee6ukGTZk5ivmDElG/Hzr6COvUA0lTEsrkSNnXR
+JBJZBuEO2v55X/edX7C5chUaJxy82lPBjkJLNVZDHnI5wG5Qp6fbKBe4tVvAIHjU
+Q3X6ps58802kUEaVqOxq
+=poZW
 -----END PGP SIGNATURE-----
