@@ -1,23 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/07/5
-Message-Id: <20160507151734.68C826C0716@smtpvmsrv1.mitre.org>
-Date: Sat,  7 May 2016 11:17:34 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/10/3
+Message-Id: <20160910164413.9514542E026@smtpvbsrv1.mitre.org>
+Date: Sat, 10 Sep 2016 12:44:13 -0400 (EDT)
 From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, benh@...ian.org
-Subject: Re: CVE Request: Linux: [media] videobuf2-v4l2: Verify planes array in buffer dequeueing
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: autotrace: out-of-bounds write
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://git.kernel.org/linus/2c1f6951a8a82e6de0d82b1158b5e493fc6c54ab
+> with Address Sanitizer I found that each bmp you try to manage with autotrace
+> causes an out-of-bounds write.
 > 
-> __fill_v4l2_buffer() however uses the number of planes from the dequeued
-> videobuf2 buffer, overwriting kernel memory ...
-> if the user provided fewer planes than the dequeued buffer had.
+> https://blogs.gentoo.org/ago/2016/09/10/autotrace-heap-based-buffer-overflow-in-pstoedit_suffix_table_init-output-pstoedit-c/
 
-Use CVE-2016-4568.
+>> autotrace: heap-based buffer overflow in pstoedit_suffix_table_init (output-pstoedit.c)
+>> 
+>> AddressSanitizer: heap-buffer-overflow
+>> WRITE of size 8
+
+Use CVE-2016-7392.
 
 - -- 
 CVE Assignment Team
@@ -27,17 +31,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXLgZSAAoJEHb/MwWLVhi20G8QALSR5YnhenGOLq7Om8MR3oNK
-Y5cyZXw4E/4h9n1z1/HZ/2yn+xh52oEgQ4utPTFRzCB/yOjBW+qMGf+j3AGCRqA4
-g7WKkRmqMp9nKMhnCrCcxFC+NsnN+tySE9Nk01nHO8EGPqHBbe+HBtg2SGOuYs2I
-oCH/NZlZdb/LOCKZKAkqbLoVn5jHyKsHMYd16LVSbHDKRazMhH2IAPI1g8BgLuym
-kEDVKUEwXazwuGATpRbIf2lSVZ5Qz5RhxDEntWMR5rR/w2RLcmTUfIHTkbEVoS35
-QwV8pn+qgOEqZ1BdskOsYb8Cxc3rg+J8qusYa/xpkq3l3z9veMr/1tmcYbmWMZGb
-/yWSm2R2Oy/t0jP0B421o+2FIFkqY6CXIypk1c4wpNLBzE2JlJoaymoQrwDrITHE
-EANQ/dp9WJeNdXiuFH9wfIgQXo+Z48JhWrpdN3rleLB6Foezg/0a4tuqGCKoHdly
-hGCI6Xx0OJKSq2ZBW6kW9ZvPATs0BY76/N9BAuxGKlTew7qiU7JeuF3Y0HGzIqpj
-DUHAhNWj9/+QDPQXPQxVRoNc1m62M8pR9s7hw8dM2Fbc/kmcxV+oQTxKVoOjQryJ
-XJE8+7oHZjWgGr1CUIrczk5ugZVhIjB63xj8YWPUxyKiOoWUhz1MRdWoAu42cEtx
-I80GkBp5znEdyshOx9Rg
-=eGPg
+iQIcBAEBCAAGBQJX1Df+AAoJEHb/MwWLVhi2el8QALQETkVVm3W/OW5YeG8BHI+y
+mukTPkQsJ08ToNBHyo6Q8DjAP6mLgR5sN65QGJfkCEbb+T2IJVPwJ17fYWfXeS+k
+hc79XGKWhRHrz+KGhL/9ljkgNMrFfXWfZ2MkS+Vhkv2f68bPDATxYXJlyVt/vKus
+UBwVk7DxfsURUe/hwWzzYiEFn2D8VyVaUkh+SveDQUbJWgytthNnvVBKGoeKXUzF
+jjmzRHXuwh++gG+IA1lsns6tpxsGP1Or7izMPwIvjSY0leTWF9nNT+xNftU535RC
+l0Bj4ldNeytGf3N9f6dqbUO4cuK6/Os73/QcplI2PXK7eV3y/8V+qmrFFgVn1u4p
+hXO5X1oMsG9AYJirud9EzqCSvlSuxlpuSzm4UgzGqXt2tyFT1XMw593X3C0RK0mt
+pWgt5RW6xrKNiEjL9muog4koPBiADGj1RyiOHJc7C+yrZ71+4pYq4NtEld3AUhPR
+x1cOss+Vu2MINRfFjlLhRFfhFIFNsit0HgxTH+2SMzwBZovXGrgLY+i2mC2WEwPt
+R4QXL0yuV2vIopghiH2Z2i8oWee6ukGTZk5ivmDElG/Hzr6COvUA0lTEsrkSNnXR
+JBJZBuEO2v55X/edX7C5chUaJxy82lPBjkJLNVZDHnI5wG5Qp6fbKBe4tVvAIHjU
+Q3X6ps58802kUEaVqOxq
+=poZW
 -----END PGP SIGNATURE-----
