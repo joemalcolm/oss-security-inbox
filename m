@@ -1,100 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/13
-Message-ID: <84vb2uf9zm.fsf@sauna.l.org>
-Date: Wed, 04 May 2016 12:28:13 +0300
-From: Timo Juhani Lindfors <timo.lindfors@....fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-4338: Zabbix Agent 3.0.1 mysql.size shell command injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/11/1
+Message-ID: <CANO=Ty3puYF=K=ZicQvBiVyXVUgt7UM5FBqLF_KZGNk+op42sQ@mail.gmail.com>
+Date: Sat, 10 Sep 2016 21:00:11 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Possible CVE request for Redis docker container
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-4338: Zabbix Agent 3.0.1 mysql.size shell command injection
---------------------------------------------------------------------
+So we have this:
 
-Affected products
-=================
+https://github.com/dxa4481/Damn-Vulnerable-Redis-Container
 
-At least Zabbix Agent 1:3.0.1-1+wheezy from
-http://repo.zabbix.com/zabbix/3.0/debian is vulnerable. Other versions
-were not tested.
+I wanted to run it by the OSS-Security community first to gather other
+points of view/feedback before going to the CVE board.
 
-Background
-==========
+So:
 
-"Zabbix agent is deployed on a monitoring target to actively monitor
- local resources and applications (hard drives, memory, processor
- statistics etc).
+1) Currently services that don't require auth don't get a CVE for that
+specifically (e/g. memcached), so as long as it is clearly stated as such
+(no auth supported, use something else to control access), however what
+about implementations of these services (e.g. VM appliances, docker
+containers) that don't explicitly warn, and fail to implement any
+protection, should they continue to not get CVEs?
 
- The agent gathers operational information locally and reports data to
- Zabbix server for further processing. In case of failures (such as a
- hard disk running full or a crashed service process), Zabbix server
- can actively alert the administrators of the particular machine that
- reported the failure.
+I'm inclined to say "it depends", e.g. if the appliance/container only
+includes a vulnerable service (say a memcached container) and nothing else
+then no CVE, but if a container/appliance is part of a larger composed
+product (e.g. a webserver, web app and memcached), and it can result in a
+security vulnerability then I would expect a CVE to be issued.
 
- Zabbix agents are extremely efficient because of use of native system
- calls for gathering statistical information."
 
- -- https://www.zabbix.com/documentation/3.0/manual/concepts/agent
+2) Services that are capable of authentication but do not have it enabled.
+Same reasoning as above. On it's own you're expected to set it up properly.
+If it's part of a larger composed product I would expect it to be setup
+properly.
 
-Description
-===========
+So in the case of https://github.com/dxa4481/Damn-Vulnerable-Redis-Container
+ I'm inclined to say no CVE for the redis only container, but if a product
+uses this container then it may be getting a CVE if it exposes it.
 
-Zabbix agent listens on port 10050 for connections from the Zabbix
-server. The commands can be built-in or user-defined.
+But then practically speaking we end up with N+1 CVEs for "X uses redis
+container in insecure manner" rather then a single blanket CVE for "redis
+container is insecure". So like I said, I'd like to get some community
+feedback before I take this to the CVE board.
 
-The mysql.size user parameter defined in
-/etc/zabbix/zabbix_agentd.d/userparameter_mysql.conf takes three input
-parameters and uses a shell script to generate an SQL query:
+-- 
 
-UserParameter=mysql.size[*],echo "select sum($(case "$3" in both|"") echo "data_length+index_length";; data|index) echo "$3_length";; free) echo "data_free";; esac)) from information_schema.tables$([[ "$1" = "all" || ! "$1" ]] || echo " where table_schema='$1'")$([[ "$2" = "all" || ! "$2" ]] || echo "and table_name='$2'");" | HOME=/var/lib/zabbix mysql -N
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-The code assumes that /bin/sh is bash that supports the [[ compound
-command. However, if /bin/sh is for example dash the statement
-
-[[ "$1" = "all" || ! "$1" ]]
-
-ends up executing the command "$1" with the argument "]]".
-
-Exploit
-=======
-
-Zabbix sanitizes the input and blocks many dangerous characters
-("\\'\"`*?[]{}~$!&;()<>|#@\n"). Since we cannot use quotes we cannot
-give our shell commands any parameters which significantly reduces the
-impact of this vulnerability. If you find a way to execute arbitrary
-commands using this flaw I'd be really interested in the details. The
-following proof-of-concept shows how the vulnerability can be used
-escalate privileges locally:
-
-$ echo -en '#!/bin/bash\necho "This code is running as $(id)" 1>&2\n' > /tmp/owned
-$ chmod a+rx /tmp/owned
-$ echo 'mysql.size[/tmp/owned,all,both]' | nc localhost 10050 | cat -A
-ZBXD^AM-^O^@^@^@^@^@^@^@sh: 1: [[: not found$
-This code is running as uid=110(zabbix) gid=114(zabbix) groups=114(zabbix)$
-sh: 1: [[: not found$
-sh: 1: all: not found$
-
-The exploit of course assumes that the Server line in the
-configuration includes "127.0.0.1". If the agent is configured to
-accept connections only from the Zabbix server. In that case this
-issue can only be exploited from the server or by spoofing the IP
-address of the server (with for example ARP spoofing).
-
-Since output of the command is piped to mysql it might be possible to
-also execute some SQL commands in the database.
-
-Author
-======
-
-This issue was discovered by Timo Lindfors from Nixu Corporation.
-
-Timeline
-========
-
-2016-04-19: Issue discovered and reported internally for verification.
-2016-04-21: Issue reported to vendor.
-2016-04-22: Vendor acknowledges vulnerability and starts patching.
-2016-04-26: Asked status update from vendor.
-2016-04-26: Vendor responds that the issue is still being patched.
-2016-04-26: CVE requested from MITRE.
-2016-04-28: MITRE assigned CVE-2016-4338 for this vulnerability.
-2016-05-02: Vendor published details in the issue tracker https://support.zabbix.com/browse/ZBX-10741
