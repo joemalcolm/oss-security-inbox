@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1217" "Tuesday" "12" "February" "2019" "15:42:35" "-0800" "Bryan Call" "bcall@apache.org" "<D6664661-1212-4DB1-9238-2D50DF8D0332@apache.org>" "42" "[oss-security] [CVE-2018-11783] Apache Traffic Server vulnerability with sslheader plugin" "^Date:" nil nil "2" "2019021223:42:35" "[oss-security] [CVE-2018-11783] Apache Traffic Server vulnerability with sslheader plugin" (number mark "        bcall@apache Feb 12   42/1217  " thread-indent "\"[oss-security] [CVE-2018-11783] Apache Traffic Server vulnerability with sslheader plugin\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3121" "Monday" "12" "September" "2016" "02:19:33" "+0000" "=?gb2312?B?s8LI8Of5?=" "chenruiqi@360.cn" "<6D072F0A5597B449BEE8A9770E0BDBEA018D3CBA@EX01.corp.qihoo.net>" "54" "[oss-security] CVE Request: XSS vulns in b2evolution v6.7.5" "^Date:" nil nil "9" "2016091202:19:33" "[oss-security] CVE Request: XSS vulns in b2evolution v6.7.5" (number mark "U       chenruiqi@36 Sep 12   54/3121  " thread-indent "\"[oss-security] CVE Request: XSS vulns in b2evolution v6.7.5\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29920 invoked by uid 550); 13 Feb 2019 11:08:18 -0000
+Received: (qmail 3677 invoked by uid 550); 12 Sep 2016 02:22:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26448 invoked from network); 12 Feb 2019 23:42:50 -0000
+Received: (qmail 3287 invoked from network); 12 Sep 2016 02:19:45 -0000
+Thread-Topic: CVE Request: XSS vulns in b2evolution v6.7.5
+Thread-Index: AQHSDJrIjlP2OhyDkUuB/Aijftxiuw==
+Message-ID: <6D072F0A5597B449BEE8A9770E0BDBEA018D3CBA@EX01.corp.qihoo.net>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.254.9.42]
 Content-Type: multipart/alternative;
-	boundary="Apple-Mail=_2D3517ED-4572-4FDE-97B3-3D3B3ABFA4CC"
-Mime-Version: 1.0 (Mac OS X Mail 12.1 \(3445.101.1\))
-Message-Id: <D6664661-1212-4DB1-9238-2D50DF8D0332@apache.org>
-X-Mailer: Apple Mail (2.3445.101.1)
-Date: Tue, 12 Feb 2019 15:42:35 -0800
-From: Bryan Call <bcall@apache.org>
+	boundary="_000_6D072F0A5597B449BEE8A9770E0BDBEA018D3CBAEX01corpqihoone_"
+MIME-Version: 1.0
+Date: Mon, 12 Sep 2016 02:19:33 +0000
+From: =?gb2312?B?s8LI8Of5?= <chenruiqi@360.cn>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [CVE-2018-11783] Apache Traffic Server vulnerability with sslheader
- plugin
-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: XSS vulns in b2evolution v6.7.5
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
---Apple-Mail=_2D3517ED-4572-4FDE-97B3-3D3B3ABFA4CC
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+--_000_6D072F0A5597B449BEE8A9770E0BDBEA018D3CBAEX01corpqihoone_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-CVE-2018-11783: Apache Traffic Server vulnerability with sslheader plugin
+SSBoYXZlIGZvdW5kIDIgWFNTIHZ1bG5zIGluIGIyZXZvbHV0aW9uIHYgNi43
+LjUNCg0KVGl0bGU6IFN0b3JlZCBYU1MgaW4gYjJldm9sdXRpb24gdmVyc2lv
+biA2LjcuNSBhbWQgYmVmb3JlDQpBdXRob3I6IENoZW4gUnVpcWksIENoZW5y
+dWlxaUAzNjAuY24sIEBDb2Rlc2FmZSBUZWFtDQpEb3dubG9hZCBTaXRlOiBo
+dHRwOi8vYjJldm9sdXRpb24ubmV0L2Rvd25sb2Fkcy8NClZlbmRvcjogYjJl
+dm9sdXRpb24ubmV0DQpWZW5kb3IgTm90aWZpZWQ6IDIwMTYtMDgtMTINClZl
+bmRvciBDb250YWN0OiBodHRwOi8vYjJldm9sdXRpb24ubmV0Lz9kaXNwPW1z
+Z2Zvcm0NCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpEaXNjcmlwdGlvbjoNCmIyZXZvbHV0
+aW9uIGlzIGEgY29udGVudCBhbmQgY29tbXVuaXR5IG1hbmFnZW1lbnQgc3lz
+dGVtIHdyaXR0ZW4gaW4gUEhQIGFuZCBiYWNrZWQgYnkgYSBNeVNRTCBkYXRh
+YmFzZS4gSXQgaXMgZGlzdHJpYnV0ZWQgYXMgZnJlZSBzb2Z0d2FyZSB1bmRl
+ciB0aGUgR05VIEdlbmVyYWwgUHVibGljIExpY2Vuc2UuDQpiMmV2b2x1dGlv
+biBvcmlnaW5hbGx5IHN0YXJ0ZWQgYXMgYSBtdWx0aS11c2VyIG11bHRpLWJs
+b2cgZW5naW5lIHdoZW4gRnJhbj9vaXMgUGxhbnF1ZSBmb3JrZWQgYjJldm9s
+dXRpb24gZnJvbSB2ZXJzaW9uIDAuNi4xIG9mIGIyL2NhZmVsb2cgaW4gMjAw
+My5bMl0gQSBtb3JlIHdpZGVseSBrbm93biBmb3JrIG9mIGIyL2NhZmVsb2cg
+aXMgV29yZFByZXNzLiBiMmV2b2x1dGlvbiBpcyBhdmFpbGFibGUgaW4gd2Vi
+IGhvc3QgY29udHJvbCBwYW5lbHMgYXMgYSAib25lIGNsaWNrIGluc3RhbGwi
+IHdlYiBhcHAuWzNdKFdpa2kpDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KVnVsbmVy
+YWJpbGl0eToNClRoZXJlIGlzIHN0b3JlZCBYU1MgaW4gYjJldm9sdXRpb24g
+dmVyc2lvbiA2LjcuNQ0KQW55IHVzZXIgY2FuIHBvc3QgYSBmb3J1bSB3aXRo
+IHNvbWUgZXZpbCBjb2RlIGluIGl0Lg0KUG9zdCBhIGZvcnVtIHdpdGggc29t
+ZSB0aGluZyBsaWtlDQpbdGVzdF9mb3J1bV94c3NdKGh0dHA6Ly90ZXN0LmZv
+cnVtLnhzcyJvbm1vdXNlb3Zlcj0iYWxlcnQoMSkib249IjEgInRlc3RfZm9y
+dW1feHNzIikNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCkZpeCBjb2RlOg0KaHR0cHM6
+Ly9naXRodWIuY29tL2IyZXZvbHV0aW9uL2IyZXZvbHV0aW9uL2NvbW1pdC85
+YTRhYjg1NDM5ZDFiODM4ZWU3YjhlZWViYmY1OTE3NGJiNzg3ODExDQotLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLQ0KVnVsbmVyYWJpbGl0eToNClRoZXJlIGlz
+IHN0b3JlZCBYU1MgaW4gYjJldm9sdXRpb24gdmVyc2lvbiA2LjcuNQ0KQW4g
+YXV0aGVudGljIHVzZXIgY2FuIGluamVjdCBqYXZhc2NyaXB0IGNvZGUgaW4g
+dGhlIHdlYnNpdGUgaGVhZGVyLg0KRWRpdCB0aGUgIlNob3J0IHNpdGUgbmFt
+ZSIgYXQgc2V0X3NldHRpbmdzIHdpdGggc29tZXRoaW5nIGxpa2UNCnRlc3Rf
+c2hvcnRfbmFtZV94c3MiIG9ubW91c2VvdmVyPWFsZXJ0KDEpIG9uDQotLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCkZpeCBjb2RlOg0KaHR0cHM6
+Ly9naXRodWIuY29tL2IyZXZvbHV0aW9uL2IyZXZvbHV0aW9uL2NvbW1pdC9k
+ZDk3NWZmZjdmY2U4MWJmMTJmOWM1OWVkYjFhOTk0NzU3NDdjODNjDQoNCg0K
+Q291bGQgeW91IGFzc2lnbiBDVkUgaWQgZm9yIHRob3NlPw0KDQpUaGFuayB5
+b3UNCg0KQ2hlbiBSdWlxaQ0KQ29kZXNhZmUgVGVhbQ0K
 
-Reported By:
-Nikhil Marathe
-
-Vendor:
-The Apache Software Foundation
-
-Version Affected:
-ATS 6.0.0 to 6.2.3
-ATS 7.0.0 to 7.1.5
-ATS 8.0.0 to 8.0.1
-
-Description:
-sslheaders plugin extracts information from the client certificate and sets=
- headers in the request based on the configuration of the plugin.  The plug=
-in doesn't strip the headers from the request in some scenarios.
-
-Mitigation:
-6.x users should upgrade to 7.1.6, 8.0.2, or later versions
-7.x users should upgrade to 7.1.6 or later versions
-8.x users should upgrade to 8.0.2 or later versions
-
-References:
-	Downloads:
-		https://trafficserver.apache.org/downloads <https://trafficserver.apache.=
-org/downloads>
-	Github Pull Request:
-		https://github.com/apache/trafficserver/pull/4701 <https://github.com/apa=
-che/trafficserver/pull/4701>
-	CVE:
-		https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2018-11783 <https://=
-cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2018-11783>
-
--Bryan=
-
---Apple-Mail=_2D3517ED-4572-4FDE-97B3-3D3B3ABFA4CC--
+--_000_6D072F0A5597B449BEE8A9770E0BDBEA018D3CBAEX01corpqihoone_--
