@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1471" "Tuesday" "20" "October" "2015" "20:26:55" "+0300" "gremlin@gremlin.ru" "gremlin@gremlin.ru" "<20151020172655.GA23437@gremlin.ru>" "36" "Re: [oss-security] Prime example of a can of worms" nil nil nil "10" "2015102017:26:55" "[oss-security] Prime example of a can of worms" (number mark "        gremlin@grem Oct 20   36/1471  " thread-indent "\"Re: [oss-security] Prime example of a can of worms\"\n") "<CANO=Ty2kaJ3cyiq=-QAoSK3+0cw9QXdnam0H3Mqx6gNHVAcKrQ@mail.gmail.com>" ("<CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>" "<CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com>" "<20151019193411.GA15710@hunt>" "<87eggqmta9.fsf@alice.fifthhorseman.net>" "<CANO=Ty2ffi_iLEzRzX4rBi-7xLg8p8BmbfxZZVPZdh1ORmPFsw@mail.gmail.com>" "<76804C86-B1DC-44C1-9CD8-65A9A3915EB7@shub-internet.org>" "<CANO=Ty2kaJ3cyiq=-QAoSK3+0cw9QXdnam0H3Mqx6gNHVAcKrQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1031" "Tuesday" "13" "September" "2016" "08:02:56" "+1000" "Brian May" "brian@linuxpenguins.xyz" "<87mvjcojxr.fsf@prune.linuxpenguins.xyz>" "28" "Re: [oss-security] autotrace: out-of-bounds write" nil nil nil "9" "2016091222:02:56" "[oss-security] autotrace: out-of-bounds write" (number mark "U       brian@linuxp Sep 13   28/1031  " thread-indent "\"Re: [oss-security] autotrace: out-of-bounds write\"\n") "<6437795.J0nPW8acoZ@arcadia>" ("<6437795.J0nPW8acoZ@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12125 invoked by uid 550); 20 Oct 2015 17:27:09 -0000
+Received: (qmail 7249 invoked by uid 550); 12 Sep 2016 22:03:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,44 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12107 invoked from network); 20 Oct 2015 17:27:09 -0000
-Message-ID: <20151020172655.GA23437@gremlin.ru>
-References: <CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com> <CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com> <20151019193411.GA15710@hunt> <87eggqmta9.fsf@alice.fifthhorseman.net> <CANO=Ty2ffi_iLEzRzX4rBi-7xLg8p8BmbfxZZVPZdh1ORmPFsw@mail.gmail.com> <76804C86-B1DC-44C1-9CD8-65A9A3915EB7@shub-internet.org> <CANO=Ty2kaJ3cyiq=-QAoSK3+0cw9QXdnam0H3Mqx6gNHVAcKrQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANO=Ty2kaJ3cyiq=-QAoSK3+0cw9QXdnam0H3Mqx6gNHVAcKrQ@mail.gmail.com>
-OpenPGP: id=8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8
-X-PGP-PubKey: 0xEF3B1FA8
-X-PGP-Fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
-Date: Tue, 20 Oct 2015 20:26:55 +0300
-From: gremlin@gremlin.ru
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Prime example of a can of worms
+Received: (qmail 6140 invoked from network); 12 Sep 2016 22:03:15 -0000
+X-Virus-Scanned: amavisd-new at kolabnow.com
+From: Brian May <brian@linuxpenguins.xyz>
 To: oss-security@lists.openwall.com
+In-Reply-To: <6437795.J0nPW8acoZ@arcadia>
+References: <6437795.J0nPW8acoZ@arcadia>
+Date: Tue, 13 Sep 2016 08:02:56 +1000
+Message-ID: <87mvjcojxr.fsf@prune.linuxpenguins.xyz>
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: Re: [oss-security] autotrace: out-of-bounds write
 
-On 2015-10-20 10:22:40 -0600, Kurt Seifried wrote:
+Agostino Sarubbo <ago@gentoo.org> writes:
 
- > 1) in openssl does the -2/-5 option matter with respect to
- > security?
+> with Address Sanitizer I found that each bmp you try to manage with autotrace 
+> causes an out-of-bounds write.
+>
+> Details:
+> https://blogs.gentoo.org/ago/2016/09/10/autotrace-heap-based-buffer-overflow-in-pstoedit_suffix_table_init-output-pstoedit-c/
 
-Actually, no: it's just a "generator", so it can be almost any small
-prime number - say, 3 or 7 or whatever. It can even be just co-prime
-to group modulo base.
+I have had a look at CVE-2016-7392 in autotrace, in Debian wheezy. From
+a quick glance at source code, the code does:
 
-However, the value 2 is the default in OpenSSL, so there may be some
-space for experiments with birthdays paradox... especially when the
-modulo is small.
+XMALLOC(pstoedit_suffix_table, sizeof(char *) * 2 * (dd_tmp - dd_start) + 1);
 
- > 2) Openssl/gnutls (and likely others) all apparently have
- > slight variations on how they generate/test primes [...]
- > this worries me, diversity is good, but if not implemented
- > correctly. Do any best practices actually exist?
+Which I believe is the same as:
 
-All implementations I know of simply use the randomized algorithms
-with Miller-Rabin primality test.
+XMALLOC(pstoedit_suffix_table, (sizeof(char *) * 2 * (dd_tmp - dd_start)) + 1);
 
- > 3) in testing for primeness how sure are we? Reading
-[wikipedia: "Miller-Rabin primality test"]
- > and so on these tests are all "probably prime" but I can't find
- > any data to show that e.g. given this set of large primes, tested
- > against the various traditional primality methods, and then brute
- > forced to confirm they are prime/not prime, what % failed?
+i.e. the code leaves room for one byte at the end. However we store a
+(char *) at the very end. Which I think might be more then one byte:
 
-There's the Agrawal-Kayal-Saxena primality test, but I'm unaware of
-any attempts to use it for checking the prime candidates which passed
-the Miller-Rabin primality test.
+pstoedit_suffix_table[2 * (dd_tmp - dd_start)] = NULL;
 
+My testing indicates the problem goes away if you change the line to:
 
+XMALLOC(pstoedit_suffix_table, sizeof(char *) * (2 * (dd_tmp - dd_start) + 1));
 -- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin נעי gremlin פ‏כ ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+Brian May <brian@linuxpenguins.xyz>
+https://linuxpenguins.xyz/brian/
