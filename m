@@ -1,68 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/25/3
-Message-ID: <56CEDD29.5050809@oracle.com>
-Date: Thu, 25 Feb 2016 10:53:29 +0000
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/12/7
+Message-ID: <87mvjcojxr.fsf@prune.linuxpenguins.xyz>
+Date: Tue, 13 Sep 2016 08:02:56 +1000
+From: Brian May <brian@...uxpenguins.xyz>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: bash-completion: dequote command injection
+Subject: Re: autotrace: out-of-bounds write
 Content-Type: text/plain; charset=utf-8
 
-On 24/02/16 21:58, Kurt Seifried wrote:
-> I think in this case it's pretty simply "dequoting should not result in
-> code execution" much like the various deserialization flaws (they should
-> deserialize the data, not execute random stuff).
+Agostino Sarubbo <ago@...too.org> writes:
 
-My immediate assumption was that an unprivileged user could leave
-something lying around that root could complete on.
+> with Address Sanitizer I found that each bmp you try to manage with autotrace 
+> causes an out-of-bounds write.
+>
+> Details:
+> https://blogs.gentoo.org/ago/2016/09/10/autotrace-heap-based-buffer-overflow-in-pstoedit_suffix_table_init-output-pstoedit-c/
 
-Within bash-completion, most of the uses of dequote are to find a config
-file so there'd be a degree of social engineering to persuade root to
-use a config file of your choice.   The other main use seems to be in
-_parse_help() and _parse_usage() which parse gnu-style help and
-bsd-style usage respectively and that might not need as much social
-engineering to exploit.  I didn't investigate further.
+I have had a look at CVE-2016-7392 in autotrace, in Debian wheezy. From
+a quick glance at source code, the code does:
 
-Whether or not this turns out to be exploitable at all in
-bash-completion, I do agree with Kurt though.
+XMALLOC(pstoedit_suffix_table, sizeof(char *) * 2 * (dd_tmp - dd_start) + 1);
 
-jch
+Which I believe is the same as:
 
-> 
-> On Wed, Feb 24, 2016 at 2:56 PM, Fernando Muñoz <fernando@...l-life.com>
-> wrote:
-> 
->> Hello Eric,
->>
->> I never mentioned privilege escalation.
->>
->> This issue how ever could appear when a different application uses
->> user input and calls "dequote" function that not only dequotes, but
->> also executes it as a command. If mitre doesn't consider it CVE worth,
->> that's OK!
->>
->> Regards.
->>
->>
->>
->> On Wed, Feb 24, 2016 at 3:58 PM, Eric Blake <eblake@...hat.com> wrote:
->>> On 02/24/2016 12:08 PM, Fernando Muñoz wrote:
->>>> Marcelo Echeverria and Fernando Muñoz discovered that the dequote
->>>> function included in bash-completion allows to execute arbitrary
->>>> commands since it uses the eval function to call printf and perform
->>>> the actual dequoting. bash-completion is included on Debian, Ubuntu
->>>> OpenSuse [1] and probably other distros.
->>>
->>> But what is the privilege escalation?  This is no different than
->>> incorrectly using 'eval' in a shell script - you may have buggy code,
->>> and have an easy-to-trigger bug, but if you can't escalate privileges,
->>> how it is a CVE?
->>>
->>> --
->>> Eric Blake   eblake redhat com    +1-919-301-3266
->>> Libvirt virtualization library http://libvirt.org
->>>
->>
-> 
-> 
-> 
+XMALLOC(pstoedit_suffix_table, (sizeof(char *) * 2 * (dd_tmp - dd_start)) + 1);
 
+i.e. the code leaves room for one byte at the end. However we store a
+(char *) at the very end. Which I think might be more then one byte:
+
+pstoedit_suffix_table[2 * (dd_tmp - dd_start)] = NULL;
+
+My testing indicates the problem goes away if you change the line to:
+
+XMALLOC(pstoedit_suffix_table, sizeof(char *) * (2 * (dd_tmp - dd_start) + 1));
+-- 
+Brian May <brian@...uxpenguins.xyz>
+https://linuxpenguins.xyz/brian/
