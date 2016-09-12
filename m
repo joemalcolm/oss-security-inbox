@@ -1,88 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/1
-Message-ID: <20160119083335.GD24547@suse.de>
-Date: Tue, 19 Jan 2016 09:33:36 +0100
-From: Johannes Segitz <jsegitz@...e.com>
-To: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Security bugs in Linux kernel sound subsystem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/12/4
+Message-ID: <20160912103527.GA3003@openwall.com>
+Date: Mon, 12 Sep 2016 12:35:27 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2016-6662 - MySQL Remote Root Code Execution / Privilege Escalation ( 0day )
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Sep 12, 2016 at 06:09:10AM -0300, Dawid Golunski wrote:
+> Vulnerability: MySQL Remote Root Code Execution / Privilege Escalation 0day
+> CVE: CVE-2016-6662
+> Severity: Critical
+> Affected MySQL versions (including the latest):
+> <= 5.7.15
+> <= 5.6.33
+> <= 5.5.52
 
-Dmitry Vyukov reported a series of kernel bugs in ALSA core that have been
-triggered by syzkaller fuzzer. These can allow a user to DoS the system.
+> http://legalhackers.com/advisories/MySQL-Exploit-Remote-Root-Code-Execution-Privesc-CVE-2016-6662.html
 
-Please assign CVEs to the issues listed below. Thanks.
+Thank you for posting this.  For archival, and to comply with
+oss-security content guidelines, I am attaching a text/plain version of
+the above advisory (which includes a lot of detail not in your posting).
 
-(the link
-http://lkml.kernel.org/r/CACT4Y+borJj9XYEtXzLUbH9gUipPi9TQaj_O8Sw3tNUvFODPZA@mail.gmail.com
-is dead, 
-http://www.spinics.net/lists/alsa-devel/msg45102.html should contain the
-information)
+Also, to add detail on the disclosure timeline: Dawid brought this to
+the distros list yesterday (Sunday).
 
------ Forwarded message from Takashi Iwai -----
+As I had pointed out in a reply on distros, it is not entirely clear
+what exact issue the CVE-2016-6662 identifier is for.  The advisory
+talks about multiple sysadmin practices, packaging issues, dangerous
+features of MySQL, and finally of safe_mysqld including the data
+directory in its search path for my.cnf.  I guess it would be most
+reasonable to have the CVE ID refer only to the latter aspect, but
+confirmation/clarification is needed.  As it is, it's unclear from the
+advisory what exact "vulnerabilities were patched by PerconaDB and
+MariaDB vendors" (the advisory says so), and it is unclear what Oracle
+and distros "fixing" CVE-2016-6662 would mean.
 
-- NULL dereference via ALSA sequencer access:
-  http://lkml.kernel.org/r/CACT4Y+auYVVmKL37ijBWamQQ7zGKVVFHemyAiELW5DC0Fz7V3g@mail.gmail.com
-  ('sound: GPF in snd_seq_fifo_clear')
+Also, in this paragraph I guess the advisory wanted to refer to the
+upcoming CVE-2016-6663 (I have no idea what that issue is, beyond what
+the advisory says), like it does in a few other places:
 
-  The fix is on Linus tree,
-  commit 030e2c78d3a91dd0d27fef37e91950dde333eba1
-    ALSA: seq: Fix missing NULL check at remove_events ioctl
+"It is worth to note that attackers could use one of the other vulnerabilities discovered
+by the author of this advisory which has been assigned a CVEID of CVE-2016-6662 and is
+pending disclosure. The undisclosed vulnerability makes it easy for certain attackers to
+create /var/lib/mysql/my.cnf file with arbitrary contents without the FILE privilege
+requirement."
 
-- Race at ALSA sequencer timer setup and close:
-  http://lkml.kernel.org/r/CACT4Y+borJj9XYEtXzLUbH9gUipPi9TQaj_O8Sw3tNUvFODPZA@mail.gmail.com
-  ('sound: use-after-free in snd_timer_stop')
+Alexander
 
-  The fix is on Linus tree,
-  commit 3567eb6af614dac436c4b16a8d426f9faed639b3
-    ALSA: seq: Fix race at timer setup and close
-
-- Race among ALSA timer ioctls:
-  this is triggered by a few different fuzzer cases, and involved with
-  multiple fix commits.
-
-  http://lkml.kernel.org/r/CACT4Y+ZrVvE3dgcYHRdHDG0X316VgC-=pr2U-233vVn_QbHZHw@mail.gmail.com
-  ('sound: use-after-free in snd_timer_interrupt')
-
-  http://lkml.kernel.org/r/CACT4Y+bC5FMVFuk1VcqVtMyqvDyeKN4NrdxV+5eX93_Zr8L63Q@mail.gmail.com
-  ('sound: GPF in snd_timer_user_params')
-
-  http://lkml.kernel.org/r/CACT4Y+akV9XyDC_kmBQZV-26Py13E6sYASXaP4GKLNbRh6nZnA@mail.gmail.com
-  ('sound: use-after-free in snd_timer_user_ioctl')
-
-  The fixes are the following commits on Linus tree,
-  ee8413b01045c74340aa13ad5bdf905de32be736
-    ALSA: timer: Fix double unlink of active_list
-
-  af368027a49a751d6ff4ee9e3f9961f35bb4fede
-    ALSA: timer: Fix race among timer ioctls
-
-  b5a663aa426f4884c71cd8580adae73f33570f0d
-    ALSA: timer: Harden slave timer list handling
-
-- Deadlock at ALSA hrtimer concurrent accesses:
-  http://lkml.kernel.org/r/CACT4Y+a3YzyNbgeeg2Dr2dDcUtP+=D6DxQ7Dkjn-+rEXEAP5vw@mail.gmail.com
-  ('sound: spinlock lockup in sound/core/timer.c')
-
-  Further tracked at the thread
-  http://lkml.kernel.org/r/CACT4Y+YPVUCTenSZjLfMf08NHJm1u3--Qm6a32oTdCmxUGkC0Q@mail.gmail.com
-
-  The fix is in sound git tree for-linus branch, will send a pull
-  request in a couple of days:
-  git://git.kernel.org/pub/scm/linux/kernel/git/tiwai/sound.git
-  
-  commit 2ba1fe7a06d3624f9a7586d672b55f08f7c670f3
-    ALSA: hrtimer: Fix stall by hrtimer_cancel()
-
-
------ End forwarded message -----
-
-Johannes
--- 
-GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nürnberg)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+View attachment "MySQL-Exploit-Remote-Root-Code-Execution-Privesc-CVE-2016-6662.txt" of type "text/plain" (35918 bytes)
