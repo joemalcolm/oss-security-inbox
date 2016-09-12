@@ -1,71 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/10
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0B97359@EX02.corp.qihoo.net>
-Date: Fri, 8 Apr 2016 07:12:28 +0000
-From: 张开翔 <zhangkaixiang@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-3631 - libtiff 4.0.6 illegel read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/12/3
+Message-ID: <CADSYzstomCU7KFOqX1u30Cej=OG3-FjCMpHPvsoCysHPoen1jw@mail.gmail.com>
+Date: Mon, 12 Sep 2016 06:09:10 -0300
+From: Dawid Golunski <dawid@...alhackers.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-6662 - MySQL Remote Root Code Execution / Privilege Escalation ( 0day )
 Content-Type: text/plain; charset=utf-8
 
-Details
+Vulnerability: MySQL Remote Root Code Execution / Privilege Escalation 0day
+CVE: CVE-2016-6662
+Severity: Critical
+Affected MySQL versions (including the latest):
+<= 5.7.15
+<= 5.6.33
+<= 5.5.52
 
-=======
+Discovered by:
+Dawid Golunski
+http://legalhackers.com
 
+An independent research has revealed multiple severe MySQL vulnerabilities.
+This advisory focuses on a critical vulnerability with a CVEID of CVE-2016-6662.
+The vulnerability affects MySQL servers in all version branches
+(5.7, 5.6, and 5.5) including the latest versions, and could be exploited by
+both local and remote attackers.
+Both the authenticated access to MySQL database (via network
+connection or web interfaces such as phpMyAdmin) and SQL Injection
+could be used as exploitation vectors.
 
+Successful exploitation could allow attackers to execute arbitrary code with
+root privileges which would then allow them to fully compromise the server on
+which an affected version of MySQL is running.
 
-Product: libtiff
+This advisory provides a (limited) Proof-Of-Concept MySQL exploit
+which demonstrates how Remote Root Code Execution could be achieved by
+attackers.
+Full PoC (which works on default installations without the need for
+the attacker to find writable config files) will be provided later on
+to give users a chance to react to this advisory as the issue has not
+been patched by all the
+affected vendors yet despite efforts.
 
-Affected Versions: <= 4.0.6
+The exploitation is interesting in the way that it involves an
+oldschool LD_PRELOAD environment variable and that it targets a
+service that doesn't
+serve requests as root but could still be tricked to get root RCE when
+restarted.
+Might give you strange feelings when restarting mysql service the next time ;)
 
-Vulnerability Type: Illegel read
+The advisory is available at:
 
-Vendor URL: http://www.libtiff.org/
-
-CVE ID: CVE-2016-3631
-
-Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
-
-
-
-Introduction
-
-Illegal read occurs in the cpStrips and cpTiles function in thumbnail.c in thumbnail allows attackers to exploit this issue to cause denial-of-service.
-
-
-
-libtiff/tools/thumbnail.c:314.
-313  for (s = 0; s < ns; s++) {
-314    if (bytecounts[s] > (uint64) bufsize) {
-315         buf = (unsigned char *)_TIFFrealloc(buf, (tmsize_t)bytecounts[s]);
-316         if (!buf)
-317             goto bad;
-318         bufsize = (tmsize_t)bytecounts[s];
-319      }
-320      if (TIFFReadRawStrip(in, s, buf, (tmsize_t)bytecounts[s]) < 0 ||
-321         TIFFWriteRawStrip(out, s, buf, (tmsize_t)bytecounts[s]) < 0) {
-322         _TIFFfree(buf);
-323         return 0;
-324      }
-325  }
-
-gdb  --args  thumbnail  cpStrips.tif  tmpout.tif
-……
-Program received signal SIGSEGV, Segmentation fault.
-0x0804c7bf in cpStrips (out=<optimized out>, in=0x8164530) at thumbnail.c:314
-314          if (bytecounts[s] > (uint64) bufsize) {
-(gdb) bt
-#0  0x0804c7bf in cpStrips (out=<optimized out>, in=0x8164530) at thumbnail.c:314
-#1  cpIFD (out=<optimized out>, in=<optimized out>) at thumbnail.c:378
-#2  main (argc=3, argv=0xbffff384) at thumbnail.c:124
-(gdb) p *bytecounts
-
-Cannot access memory at address 0x42900001
-
-References:
-[1] http://www.remotesensing.org/libtiff/
+http://legalhackers.com/advisories/MySQL-Exploit-Remote-Root-Code-Execution-Privesc-CVE-2016-6662.html
 
 
-Thank you!
-
-Best Regards,
-
+-- 
+Regards,
+Dawid Golunski
+http://legalhackers.com
