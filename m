@@ -1,4 +1,9 @@
-Received: (qmail 19944 invoked by uid 550); 22 May 2026 22:15:07 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2842" "Monday" "12" "September" "2016" "07:58:16" "-0300" "Dawid Golunski" "dawid@legalhackers.com" "<CADSYzss4ZyRdBEHjDtXD4YcbrEJ6Kxvj_yUJTOmY-McGvm4KDg@mail.gmail.com>" "69" "Re: [oss-security] CVE-2016-6662 - MySQL Remote Root Code Execution / Privilege Escalation ( 0day )" nil nil nil "9" "2016091210:58:16" "[oss-security] CVE-2016-6662 - MySQL Remote Root Code Execution / Privilege Escalation ( 0day )" (number mark "U       dawid@legalh Sep 12   69/2842  " thread-indent "\"Re: [oss-security] CVE-2016-6662 - MySQL Remote Root Code Execution / Privilege Escalation ( 0day )\"\n") "<20160912103527.GA3003@openwall.com>" ("<CADSYzstomCU7KFOqX1u30Cej=OG3-FjCMpHPvsoCysHPoen1jw@mail.gmail.com>" "<20160912103527.GA3003@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5242 invoked by uid 550); 12 Sep 2016 11:21:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,112 +12,109 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 19903 invoked from network); 22 May 2026 22:15:07 -0000
-Date: Sat, 23 May 2026 00:14:57 +0200
-From: Christian Brabandt <cb@256bit.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ahDVYasrm561zdna@256bit.org>
+Received: (qmail 26434 invoked from network); 12 Sep 2016 10:58:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=legalhackers-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=Z5QEz0IHZy35vP8f5uJhweie/Vgd924m8w2aFK2GN0k=;
+        b=uU+XcfBfFLShmX4ua0hDRXNrIIq2i150hAF1ezh07izN//WYHZplcF2/6l1CXYudhm
+         iRQNVSKsuwMKZUvnA5o8NZw6h7pKtLQIrglfTJfzMquUKkmjU3/HTlSbFAM7gDoBb4Mr
+         iToAkObBmLZ4ZUUR67HyrF3G+oW3BF2sufGV6kVWk/u6lP8mNMjwKzsHqEzokvRd+wef
+         o5XTa+iklkkN4JP8PCh2A4ff7FyAmt4YQjLwHfEaQCpoFJr5a3gNFAJaF523e1wizH26
+         qJc6NKoiKtV30ili7caa+Zex1k8jpD0RH2JyNPanMTCzV7ymTY7opI6SVw4EGMWcnrBM
+         1cQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=Z5QEz0IHZy35vP8f5uJhweie/Vgd924m8w2aFK2GN0k=;
+        b=PiHRpZyq+onw503HB8EIEN0krytYtSTkf8iDkJ/r6OspgIV0EYehbWv9uwKi8Vib07
+         wul1juztASY6m2uvg7WiFRKaxaeGvZjrcxPA3sLQd3+f5PcGmpUE7Scx+P5mvZVzzFBv
+         TWhWz1FE8rN39xYxmM2/7v1xA+KFxBEmK0FjBK/4pkWyvJntRS5A/GyRTSEwtJZf2ZmH
+         MxnHXLpBCCxnfCzV45ReFvc/rz+DhtXY9xiTlVnd9y6vfgxgEAqK4PcR+h0tUYEcqIEN
+         vf4pKDeB4/iBfziYFW2x6VU3p4ky9mzya7NpUe+zG8XvTm+eSsKqxlSymeQzqYCMJmau
+         vvog==
+X-Gm-Message-State: AE9vXwNnNf7q3P1SBo9VYhIm1yhtzj+8fYisfkzVSXQ3vdH327+5x/Jd0aYrqwM+Rb3T74Y9g4YW10RLUpRTzw==
+X-Received: by 10.31.83.65 with SMTP id h62mr11102446vkb.63.1473677897294;
+ Mon, 12 Sep 2016 03:58:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] [vim-security] Multiple Memory Safety Issues in Vim Spell File
- Parser affects Vim < 9.2.0513
+In-Reply-To: <20160912103527.GA3003@openwall.com>
+References: <CADSYzstomCU7KFOqX1u30Cej=OG3-FjCMpHPvsoCysHPoen1jw@mail.gmail.com>
+ <20160912103527.GA3003@openwall.com>
+From: Dawid Golunski <dawid@legalhackers.com>
+Date: Mon, 12 Sep 2016 07:58:16 -0300
+Message-ID: <CADSYzss4ZyRdBEHjDtXD4YcbrEJ6Kxvj_yUJTOmY-McGvm4KDg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Subject: Re: [oss-security] CVE-2016-6662 - MySQL Remote Root Code Execution /
+ Privilege Escalation ( 0day )
 
-Multiple Memory Safety Issues in Vim Spell File Parser affects Vim < 9.2.0513
-=============================================================================
-Date: 22.05.2026
-Severity: Medium
-CVE: *requested, not yet assigned*
-CWE: Out-of-bounds Read (CWE-125),
-     Use of Uninitialized Resource (CWE-908),
-     Uncontrolled Recursion (CWE-674)
+Hi Alexander,
 
-## Summary
-Three related memory-safety issues exist in the Vim spell file (`.spl`)
-parser in `src/spellfile.c`.  A crafted spell file can cause:
+I was just going to reply to your email you sent earlier.
+Thanks for the feedback. I actually updated the introduction after your email.
+The advisory focuses on CVE-2016-6662 vulnerability which lets users
+to modify/create my.cnf files. A fix would prevent users from writing
+to my.cnf config.
 
-1. a heap out-of-bounds read in `read_tree_node()` via a `BY_INDEX`
-   shared tree node that references an uninitialized array position,
-2. a one-byte heap out-of-bounds read in `tree_count_words()` past the
-   end of the word-tree byte array, and
-3. a stack overflow in `read_tree_node()` through uncontrolled recursion
-   on a deep linear node chain.
+And yes there's a typo in the last paragraph made after a few
+sleepless nights ;) I've fixed it now.
 
-Because the `'spelllang'` option can be set from a modeline, a text
-file modeline can trigger spell file loading if a malicious `.spl` file
-has been planted on the runtimepath, which can happen when cloning a vim
-package.
+The CVE-2016-6663 is not public yet. I refer to it in the advisory to
+give some heads up in case someone wanted to discard this issue based
+on reasoning that FILE privs are not common and that they will never
+be pwned etc. It'll soon be published then it'll be clear what this
+CVEID is about ;)
 
-## Description
+Cheers.
 
-### 1. Uninitialized shared-node target in read_tree_node()
-In `spell_read_tree()` the byte array `bp` for a word tree was allocated
-with `alloc(len)` and not zero-initialized, while the companion index
-array used `lalloc_clear()`.  The tree parser validated `BY_INDEX`
-shared-node references only against `maxidx` (the allocated array
-size), not against positions that were actually written by
-`read_tree_node()`.  A crafted file can declare a `<nodecount>` larger
-than the tree it serializes and include a `BY_INDEX` reference into the
-unwritten tail, leaving `byts[N]` containing uninitialized heap data.
 
-On `z=` (spell suggest) or `spellsuggest()`, the suggestion walk reads
-`byts[arridx]` as a sibling count and iterates that many slots,
-producing a further out-of-bounds heap read with an attacker-influenced
-length.
 
-### 2. Missing length guard in tree_count_words()
-`tree_count_words()` skipped runs of trailing NUL siblings with
-`while (byts[n + 1] == 0)` and had no length guard.  The structurally
-identical loop in `sug_filltree()` already carried
-`n + 1 < slang->sl_fbyts_len && ...` with the explicit comment
-"But don't go over the end."; that guard had not been propagated to
-`tree_count_words()`.  When called during `.sug` file loading on a
-tree whose final sibling is `BY_NOFLAGS`, the walk reads one byte past
-the end of the byts array.
+On Mon, Sep 12, 2016 at 7:35 AM, Solar Designer <solar@openwall.com> wrote:
+> On Mon, Sep 12, 2016 at 06:09:10AM -0300, Dawid Golunski wrote:
+>> Vulnerability: MySQL Remote Root Code Execution / Privilege Escalation 0day
+>> CVE: CVE-2016-6662
+>> Severity: Critical
+>> Affected MySQL versions (including the latest):
+>> <= 5.7.15
+>> <= 5.6.33
+>> <= 5.5.52
+>
+>> http://legalhackers.com/advisories/MySQL-Exploit-Remote-Root-Code-Execution-Privesc-CVE-2016-6662.html
+>
+> Thank you for posting this.  For archival, and to comply with
+> oss-security content guidelines, I am attaching a text/plain version of
+> the above advisory (which includes a lot of detail not in your posting).
+>
+> Also, to add detail on the disclosure timeline: Dawid brought this to
+> the distros list yesterday (Sunday).
+>
+> As I had pointed out in a reply on distros, it is not entirely clear
+> what exact issue the CVE-2016-6662 identifier is for.  The advisory
+> talks about multiple sysadmin practices, packaging issues, dangerous
+> features of MySQL, and finally of safe_mysqld including the data
+> directory in its search path for my.cnf.  I guess it would be most
+> reasonable to have the CVE ID refer only to the latter aspect, but
+> confirmation/clarification is needed.  As it is, it's unclear from the
+> advisory what exact "vulnerabilities were patched by PerconaDB and
+> MariaDB vendors" (the advisory says so), and it is unclear what Oracle
+> and distros "fixing" CVE-2016-6662 would mean.
+>
+> Also, in this paragraph I guess the advisory wanted to refer to the
+> upcoming CVE-2016-6663 (I have no idea what that issue is, beyond what
+> the advisory says), like it does in a few other places:
+>
+> "It is worth to note that attackers could use one of the other vulnerabilities discovered
+> by the author of this advisory which has been assigned a CVEID of CVE-2016-6662 and is
+> pending disclosure. The undisclosed vulnerability makes it easy for certain attackers to
+> create /var/lib/mysql/my.cnf file with arbitrary contents without the FILE privilege
+> requirement."
+>
+> Alexander
 
-### 3. Uncontrolled recursion in read_tree_node()
-`read_tree_node()` recursed once per non-shared, non-end-of-word
-sibling without a depth limit.  A crafted `.spl` file containing a
-linear chain of nodes (siblingcount=1, non-NUL byte at each level)
-drives the recursion to a depth bounded only by the declared
-`<nodecount>` (a 4-byte field).  On default 8 MB stacks, approximately
-88,000 nested frames exhaust the stack and crash Vim with SIGSEGV.
 
-## Impact
-Issues 1 and 2 are out-of-bounds heap reads with attacker-influenced
-range; the practical outcome is a crash of the Vim process and a small
-window of uninitialized or adjacent heap data being consumed by the
-suggestion algorithm.  Issue 3 reliably crashes Vim through stack
-exhaustion.
 
-Exploitation requires a malicious `.spl` file to be present on the
-runtimepath and the victim to either:
-
-- explicitly enable spell checking with the matching language
-- open any text file containing a modeline that sets `'spelllang'` and
-  enables `'spell'`, while `'modeline'` is enabled.
-
-The severity is rated Medium because exploitation requires both a
-planted spell file and a separate triggering action by the victim, and
-the practical outcome is a crash rather than code execution.
-
-## Acknowledgements
-The Vim project would like to thank github user tacdm for reporting and
-analyzing the issues and suggesting fixes.
-
-## References
-The issues have been fixed as of Vim patch [v9.2.0513](https://github.com/vim/vim/releases/tag/v9.2.0513).
-- [Commit](https://github.com/vim/vim/commit/25e4e46c584840806b45da20ed)
-- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-3h95-3962-mmvf)
-
-Thanks,
-Christian
 -- 
-Die Genies brechen die Bahnen, und die schönen Geister ebnen und
-verschönern sie.
-		-- Georg Christoph Lichtenberg
+Regards,
+Dawid Golunski
+http://legalhackers.com
