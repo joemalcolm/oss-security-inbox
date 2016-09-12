@@ -1,46 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/7
-Message-ID: <bc666ad7d07148c9989b5e2b083442fc@imshyb02.MITRE.ORG>
-Date: Mon, 14 Nov 2016 13:34:55 -0500
-From: <cve-assign@...re.org>
-To: <brian.carpenter@...il.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: libtiff: read outside buffer in _TIFFPrintField()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/12/1
+Message-ID: <6D072F0A5597B449BEE8A9770E0BDBEA018D3CBA@EX01.corp.qihoo.net>
+Date: Mon, 12 Sep 2016 02:19:33 +0000
+From: 陈瑞琦 <chenruiqi@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE Request: XSS vulns in b2evolution v6.7.5
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+I have found 2 XSS vulns in b2evolution v 6.7.5
 
-> http://bugzilla.maptools.org/show_bug.cgi?id=2590
+Title: Stored XSS in b2evolution version 6.7.5 amd before
+Author: Chen Ruiqi, Chenruiqi@....cn, @Codesafe Team
+Download Site: http://b2evolution.net/downloads/
+Vendor: b2evolution.net
+Vendor Notified: 2016-08-12
+Vendor Contact: http://b2evolution.net/?disp=msgform
+--------------------------------------------------------------------------------------------------------
+Discription:
+b2evolution is a content and community management system written in PHP and backed by a MySQL database. It is distributed as free software under the GNU General Public License.
+b2evolution originally started as a multi-user multi-blog engine when Fran?ois Planque forked b2evolution from version 0.6.1 of b2/cafelog in 2003.[2] A more widely known fork of b2/cafelog is WordPress. b2evolution is available in web host control panels as a "one click install" web app.[3](Wiki)
+-----------------------------------------------------------------------------------------------------------
+Vulnerability:
+There is stored XSS in b2evolution version 6.7.5
+Any user can post a forum with some evil code in it.
+Post a forum with some thing like
+[test_forum_xss](http://test.forum.xss"onmouseover="alert(1)"on="1 "test_forum_xss")
+----------------------------------------------------------------------------------------------------------
+Fix code:
+https://github.com/b2evolution/b2evolution/commit/9a4ab85439d1b838ee7b8eeebbf59174bb787811
+-----------------------------------------------------------------------------------------------------------------
+Vulnerability:
+There is stored XSS in b2evolution version 6.7.5
+An authentic user can inject javascript code in the website header.
+Edit the "Short site name" at set_settings with something like
+test_short_name_xss" onmouseover=alert(1) on
+------------------------------------------------------------------------------------------------------------------------
+Fix code:
+https://github.com/b2evolution/b2evolution/commit/dd975fff7fce81bf12f9c59edb1a99475747c83c
 
-> AddressSanitizer: SEGV on unknown address 0x7faf9b2d2000
 
->> * libtiff/tif_dirread.c: in TIFFFetchNormalTag(), make sure that
->> values of tags with TIFF_SETGET_C16_ASCII / TIFF_SETGET_C32_ASCII
->> access are null terminated, to avoid potential read outside buffer
->> in _TIFFPrintField().
+Could you assign CVE id for those?
 
-Use CVE-2016-9297.
+Thank you
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYKgMmAAoJEHb/MwWLVhi2PioP/jm0R6nmT1TNWfIenph7XvVp
-rrxXbx0spg1BFsDDvP44kzFYvn4EAH+mCW8HyKpV3dGGLL6PO22cOivt15K0EKKc
-ImyY2E3j8PKR5lzdHcLYGjiBTOT+psZhZtEhaVkELjpgPq4mJqbmbdMyjYMdseav
-+x9r2vptrj6zf875gY23FsEEXEWyF+wML15jViClSmrUYcTZQtR52Sr6IZrUIlDR
-rw4sr7l6M2H92CIrFqGl1ltF23BIjR75vMlxabze244XFoOIWo8cBcI04ncKJ404
-3hDzdeBHLzJFltoKygb8dhGdWF0xfonAG4P6Mt04yFLDBsI1M0Sial6kcrWj2XSh
-Br27MgPKH9gIOLAdUmaUFkO+gu92DEZGUMOtvBJHjRrZ2M1USrIH+bVBAJubdZGb
-L2Y6rVLHhC0pfIA21It4f1JjTsb3PODlSO/mNd6ZF/E37/MDEWoel7BCGBvBnuLg
-NmcxWKDw3kPsxnHhujrHoNHemnOP9lGsCbT8mMX+yCYphUc2+OO4inwAWO2N+gGT
-wFIJRl7TkQUzKNsvUdU0L1+sHjA5T1SKWjrEABfuEAlcUNmLm9AnSfkVMZDbIphm
-765VnjGxzU9dQCcC2L3ZrjbLVEwDMgdXPzJ5ncV9+kmklmFSkQSTBsOD2vgggq5p
-rkvWKAOzbWcHI90QV0lL
-=9TM7
------END PGP SIGNATURE-----
+Chen Ruiqi
+Codesafe Team
